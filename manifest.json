@@ -1,25 +1,30 @@
 {
     "short_name": "SC Wiki",
     "name": "Star Citizen Wiki",
-    "icons": [{
-        "src": "images/touch/icon-128x128.png",
-        "type": "image/png",
-        "sizes": "128x128"
-  }, {
-        "src": "images/touch/apple-touch-icon.png",
-        "type": "image/png",
-        "sizes": "152x152"
-  }, {
-        "src": "images/touch/ms-touch-icon-144x144-precomposed.png",
-        "type": "image/png",
-        "sizes": "144x144"
-  }, {
-        "src": "images/touch/chrome-touch-icon-192x192.png",
-        "type": "image/png",
-        "sizes": "192x192"
-  }],
+    "icons": [
+        {
+            "src": "/images/touch/icon-128x128.png",
+            "type": "image/png",
+            "sizes": "128x128"
+        },
+        {
+            "src": "/images/touch/apple-touch-icon.png",
+            "type": "image/png",
+            "sizes": "152x152"
+        },
+        {
+            "src": "/images/touch/ms-touch-icon-144x144-precomposed.png",
+            "type": "image/png",
+            "sizes": "144x144"
+        },
+        {
+            "src": "/images/touch/chrome-touch-icon-192x192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        }
+    ],
     "start_url": "/Star_Citizen_Wiki",
-    "background_color": "#F6F9FA",
+    "background_color": "#f6f9fa",
     "display": "standalone",
-    "theme_color": "#0A1B2C"
+    "theme_color": "#0a1b2c"
 }

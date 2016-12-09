@@ -1,42 +1,54 @@
 {
-	"name": "Citizen",
-	"author": [
-		"alistair3149",
-	],
-	"url": "https://starcitizen.tools",
-	"descriptionmsg": "citizen-skin-desc",
-	"namemsg": "skinname-citizen",
-	"license-name": "GPL-2.0+",
-	"type": "skin",
-	"requires": {
-		"MediaWiki": ">= 1.27.0"
-	},
-	"ValidSkinNames": {
-		"citizen": "Citizen"
-	},
-	"AutoloadClasses": {
-		"SkinCitizen": "SkinCitizen.php"
-	},
-	"MessageDirs": {
-		"Citizen": "i18n"
-	},
-	"ResourceModules": {
-		"skins.citizen": {
-				"styles": {
-						"resources/screen.less": { "media": "screen" },
-						"resources/print.less": { "media": "print" }
-				}
-		},
-        "skins.citizen.js": {
+    "name": "Citizen",
+    "version": "0.1",
+    "author": "alistair3149",
+    "url": "https://starcitizen.tools",
+    "descriptionmsg": "citizen-skin-desc",
+    "namemsg": "skinname-citizen",
+    "license-name": "GPL-2.0+",
+    "type": "skin",
+    "requires": {
+        "MediaWiki": ">= 1.27.0"
+    },
+    "ValidSkinNames": {
+        "citizen": "Citizen"
+    },
+    "AutoloadClasses": {
+        "SkinCitizen": "SkinCitizen.php",
+		"CitizenTemplate": "CitizenTemplate.php"
+    },
+    "MessageDirs": {
+        "Citizen": "i18n"
+    },
+    "ResourceModules": {
+        "skins.citizen": {
+            "styles": {
+                "resources/libraries/normalise.css": {
+                    "media": "screen"
+                },
+                "resources/screen-common.less": {
+                    "media": "screen"
+                },
+                "resources/screen-desktop.less": {
+                    "media": "screen and (min-width: 751px)"
+                },
+                "resources/screen-mobile.less": {
+                    "media": "screen and (max-width: 750px)"
+                },
+                "resources/print.css": {
+                    "media": "print"
+                }
+            },
+            "skins.citizen.js": {
                 "scripts": [
-                    "citizen.js"
+                    "resources/main.js"
                 ],
-                "position": "top",
-                "dependencies": "jquery.ui.dialog"
+                "position": "top"
             }
-	},
-	"ResourceFileModulePaths": {
-		"localBasePath": "",
-		"remoteSkinPath": "Citizen"
-	},
+        },
+        "ResourceFileModulePaths": {
+            "localBasePath": "",
+            "remoteSkinPath": "Citizen"
+        }
+    }
 }
