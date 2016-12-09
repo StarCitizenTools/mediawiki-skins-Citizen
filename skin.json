@@ -15,7 +15,7 @@
     },
     "AutoloadClasses": {
         "SkinCitizen": "SkinCitizen.php",
-		"CitizenTemplate": "CitizenTemplate.php"
+        "CitizenTemplate": "CitizenTemplate.php"
     },
     "MessageDirs": {
         "Citizen": "i18n"
@@ -38,17 +38,17 @@
                 "resources/print.css": {
                     "media": "print"
                 }
-            },
-            "skins.citizen.js": {
-                "scripts": [
-                    "resources/main.js"
-                ],
-                "position": "top"
             }
         },
-        "ResourceFileModulePaths": {
-            "localBasePath": "",
-            "remoteSkinPath": "Citizen"
+        "skins.citizen.js": {
+            "scripts": [
+                    "resources/main.js"
+                ],
+            "position": "top"
         }
+    },
+    "ResourceFileModulePaths": {
+        "localBasePath": "",
+        "remoteSkinPath": "Citizen"
     }
 }
