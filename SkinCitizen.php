@@ -38,8 +38,8 @@ class SkinCitizen extends SkinTemplate {
 		parent::initPage( $out );
         $out->addMeta( 'viewport', 'width=device-width, initial-scale=1' );
 		$out->addModules( 'skins.citizen.js' );
-        $out->addHeadItem("manifest", '<link rel="manifest" href="../manifest.json">
-');
+        $out->addHeadItem( 'manifest', '<link rel="manifest" href="../manifest.json">
+' );
 	}
 
 	/**
