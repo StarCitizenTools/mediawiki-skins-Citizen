@@ -1,0 +1,42 @@
+{
+	"name": "Citizen",
+	"author": [
+		"alistair3149",
+	],
+	"url": "https://starcitizen.tools",
+	"descriptionmsg": "citizen-skin-desc",
+	"namemsg": "skinname-citizen",
+	"license-name": "GPL-2.0+",
+	"type": "skin",
+	"requires": {
+		"MediaWiki": ">= 1.27.0"
+	},
+	"ValidSkinNames": {
+		"citizen": "Citizen"
+	},
+	"AutoloadClasses": {
+		"SkinCitizen": "SkinCitizen.php"
+	},
+	"MessageDirs": {
+		"Citizen": "i18n"
+	},
+	"ResourceModules": {
+		"skins.citizen": {
+				"styles": {
+						"resources/screen.less": { "media": "screen" },
+						"resources/print.less": { "media": "print" }
+				}
+		},
+        "skins.citizen.js": {
+                "scripts": [
+                    "citizen.js"
+                ],
+                "position": "top",
+                "dependencies": "jquery.ui.dialog"
+            }
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "",
+		"remoteSkinPath": "Citizen"
+	},
+}
