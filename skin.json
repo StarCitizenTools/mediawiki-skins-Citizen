@@ -44,7 +44,7 @@
             "scripts": [
                     "resources/main.js"
                 ],
-            "position": "top"
+            "position": "bottom"
         }
     },
     "ResourceFileModulePaths": {
