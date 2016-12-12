@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Purodha"
+		]
+	},
+	"getdata": "Daate holle!",
+	"externaldata-desc": "Määt et müjjelich, Date en beshtemmpte Fomaate fun främbde <i lang=\"en\">URLs</i>, Daatebangke, un ander Quälle ze holle.",
+	"externaldata-no-param-specified": "Fähler: Dä Parramehter „$1“ es nit aanjejovve.",
+	"externaldata-web-invalid-format": "Dat Formaat es onjöltsch: „$1“",
+	"externaldata-ldap-unable-to-connect": "Kann nit noh $1 verbenge",
+	"externaldata-xml-error": "Fähler em XML, op Reih $2: $1",
+	"externaldata-invalid-json": "Fähler: Onjöltesch <i lang=\"en\" xml:lang=\"en\" dir=\"ltr\" title=\"JavaScript Object Notation\">JSON</i>.",
+	"externaldata-db-incomplete-information": "<span style=\"text-transform: uppercase\">Fähler:</span> De Enfomazjuhne vör di ẞööver-Kännong sin nit kumplätt.",
+	"externaldata-db-could-not-get-url": "Kunnt {{PLURAL:$1|noh eimohl Versöhke|och noh $1 Mohl Versöhke|ohne enne Versöhk}} nix vun däm <i lang=\"en\">URL</i> krijje.",
+	"externaldata-db-unknown-type": "<span style=\"text-transform: uppercase\">Fähler:</span> Di Zoot Datebangk es unbikannt.",
+	"externaldata-db-could-not-connect": "<span style=\"text-transform: uppercase\">Fähler:</span> Kunnt kein Verbendung noh dä Datebangk krijje.",
+	"externaldata-db-unknown-collection": "<span style=\"text-transform: uppercase\">Fähler:</span> Dat es en onbikannte <i lang\"en\">MongoDB</i>-Zosammeschtällong.",
+	"externaldata-db-no-return-values": "<span style=\"text-transform: uppercase\">Fähler:</span> Kein Wääte för Zerökzeävve aanjejovve.",
+	"externaldata-db-invalid-query": "Onjöltesch Frooch aan de Datebangk."
+}

@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Charmed94",
+			"Milicevic01",
+			"Михајло Анђелковић"
+		]
+	},
+	"getdata": "Преузми податке",
+	"externaldata-desc": "Омогућава преузимање података из спољашњих адреса, бази података и других извора",
+	"externaldata-ldap-unable-to-connect": "Повезивање на $1 није успело",
+	"externaldata-xml-error": "XML грешка: $1 по линији $2",
+	"externaldata-db-incomplete-information": "Грешка: Непотпуни подаци за овај ID сервера.",
+	"externaldata-db-could-not-get-url": "Преузимање адресе после $1 {{PLURAL:$1|покушаја}} није успело.",
+	"externaldata-db-unknown-type": "Грешка: Непозната врста базе података.",
+	"externaldata-db-could-not-connect": "Грешка: Повезивање с базом података није успело.",
+	"externaldata-db-no-return-values": "Грешка: Повратне вредности нису одређене.",
+	"externaldata-db-invalid-query": "Неисправан упит."
+}

@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Anakmalaysia"
+		]
+	},
+	"getdata": "Dapatkan data",
+	"externaldata-desc": "Membolehkan pengambilan data berstruktur dari URL luaran, pangkalan data atau sumber-sumber lain",
+	"externaldata-web-invalid-format": "Format tidak sah: \"$1\"",
+	"externaldata-ldap-unable-to-connect": "Tidak dapat bersambung dengan $1",
+	"externaldata-xml-error": "Ralat XML: $1 di baris $2",
+	"externaldata-db-incomplete-information": "Ralat: Maklumat tidak lengkap untuk ID pelayan ini.",
+	"externaldata-db-could-not-get-url": "URL tidak dapat diterima selepas $1 cubaan.",
+	"externaldata-db-unknown-type": "Ralat: Jenis pangkalan data tidak dikenali.",
+	"externaldata-db-could-not-connect": "Ralat: Tidak dapat bersambung dengan pangkalan data.",
+	"externaldata-db-unknown-collection": "Ralat: Koleksi MongoDB tidak dikenali.",
+	"externaldata-db-no-return-values": "Ralat: Tiada nilai pulangan yang ditentukan.",
+	"externaldata-db-invalid-query": "Pertanyaan tidak sah."
+}

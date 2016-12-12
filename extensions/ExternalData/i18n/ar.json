@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"DRIHEM",
+			"Imksa",
+			"Meno25",
+			"OsamaK"
+		]
+	},
+	"getdata": "الحصول على البيانات",
+	"externaldata-desc": "يسمح باسترجاع البيانات الهيكلية من مسارات خارجية، قواعد البيانات ومصادر أخرى",
+	"externaldata-web-invalid-format": "إمتداد خاطئ: \"$1\"",
+	"externaldata-ldap-unable-to-connect": "تعذّر الاتصال ب$1",
+	"externaldata-xml-error": "خطأ XML: $1 عند السطر $2",
+	"externaldata-db-incomplete-information": "خطأ: معلومات غير كاملة عن هوية هذا الخادوم.",
+	"externaldata-db-could-not-get-url": "تعذّر الحصول على المسار بعد {{PLURAL:$1||محاولة واحدة|محاوتين|$1 محاولات|$1 محاولة }}.",
+	"externaldata-db-unknown-type": "خطأ: نوع قاعدة بيانات غير معروف.",
+	"externaldata-db-could-not-connect": "خطأ: تعذّر الاتصال بقاعدة البيانات.",
+	"externaldata-db-no-return-values": "خطأ: لم تحدد أي قيم عائدة.",
+	"externaldata-db-invalid-query": "استعلام غير صالح."
+}

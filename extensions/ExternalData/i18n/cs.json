@@ -1,0 +1,25 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jkjk",
+			"Matěj Grabovský",
+			"Mormegil",
+			"Reaperman",
+			"XenoPheX"
+		]
+	},
+	"getdata": "Získat data",
+	"externaldata-desc": "Umožňuje získávání strukturovaných dat z externích webových stránek, databází a jiných zdrojů",
+	"externaldata-no-param-specified": "Chyba: Nebyl zadán parametr „$1“.",
+	"externaldata-web-invalid-format": "Neplatný formát: „$1“",
+	"externaldata-ldap-unable-to-connect": "Nepodařilo se spojit s $1",
+	"externaldata-xml-error": "Chyba XML: $1 na řádku $2",
+	"externaldata-invalid-json": "Chyba: Neplatný JSON.",
+	"externaldata-db-incomplete-information": "Chyba: Nekompletní informace pro toto ID databáze.",
+	"externaldata-db-could-not-get-url": "Nepodařilo se získat URL po $1 {{PLURAL:$1|pokusu|pokusech}}.",
+	"externaldata-db-unknown-type": "Chyba: Neznámý typ databáze.",
+	"externaldata-db-could-not-connect": "Chyba: Nepodařilo se připojit k databázi.",
+	"externaldata-db-unknown-collection": "Chyba: Neznámá kolekce MongoDB.",
+	"externaldata-db-no-return-values": "Chyba: Nebyly zadány návratové hodnoty.",
+	"externaldata-db-invalid-query": "Neplatný požadavek."
+}

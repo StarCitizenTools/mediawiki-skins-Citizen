@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Gunnernett",
+			"Harald Khan",
+			"Njardarlogar"
+		]
+	},
+	"getdata": "Hent data",
+	"externaldata-desc": "Gjev høve til å henta strukturerte data frå eksterne URL-ar, databasar og andre kjelder",
+	"externaldata-ldap-unable-to-connect": "Kunne ikkje kopla til $1",
+	"externaldata-xml-error": "XML-feil: $1 på line $2",
+	"externaldata-db-incomplete-information": "Feil: Ufullstendig informasjon for denne tenar-ID-en.",
+	"externaldata-db-could-not-get-url": "Kunne ikkje henta URL etter {{PLURAL:$1|eitt forsøk|$1 forsøk}}.",
+	"externaldata-db-unknown-type": "Feil: Ukjend databasetype.",
+	"externaldata-db-could-not-connect": "Feil: Kunne ikkje kopla til databasen.",
+	"externaldata-db-no-return-values": "Feil: Ingen returverdiar oppgjevne.",
+	"externaldata-db-invalid-query": "Ugyldig spørjing."
+}

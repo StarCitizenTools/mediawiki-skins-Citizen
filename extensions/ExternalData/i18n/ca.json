@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Paucabot",
+			"Solde"
+		]
+	},
+	"getdata": "Obtenir dades",
+	"externaldata-xml-error": "Error XML: $1 a la línia $2",
+	"externaldata-db-unknown-type": "Error: Tipus de base de dades desconegut.",
+	"externaldata-db-could-not-connect": "Error: No s'ha pogut connectar a la base de dades.",
+	"externaldata-db-invalid-query": "Consulta no vàlida."
+}

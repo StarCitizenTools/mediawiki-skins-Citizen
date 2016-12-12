@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jnanaranjan Sahu"
+		]
+	},
+	"getdata": "ତଥ୍ୟ ହାସଲ କରିବେ",
+	"externaldata-ldap-unable-to-connect": "$1ସହ ସଂଯୋଗ କରାଯାଇପାରିଲା ନାହିଁ",
+	"externaldata-db-could-not-connect": "ଅସୁବିଧା : ଡାଟାବେସ ସହ ସଂଯୋଗ କରାଯାଇପାରିଲା ନାହିଁ ।"
+}

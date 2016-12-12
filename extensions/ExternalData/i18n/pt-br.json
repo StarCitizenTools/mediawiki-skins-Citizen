@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eduardo.mps",
+			"Giro720",
+			"Jaideraf"
+		]
+	},
+	"getdata": "Obter dados",
+	"externaldata-desc": "Permite a obtenção de dados em CSV, JSON e XML a partir de URLs externos, banco de dados e outras fontes",
+	"externaldata-no-param-specified": "Erro: nenhum parâmetro \"$1\" especificado.",
+	"externaldata-web-invalid-format": "Formato inválido: \"$1\"",
+	"externaldata-ldap-unable-to-connect": "Não foi possível conectar-se a $1",
+	"externaldata-xml-error": "Erro no XML: $1 na linha $2",
+	"externaldata-invalid-json": "Erro: JSON inválido.",
+	"externaldata-db-incomplete-information": "Erro: informação incompleta para o ID deste servidor</P>",
+	"externaldata-db-could-not-get-url": "Não foi possível obter o URL após $1 {{PLURAL:$1|tentativa|tentativas}}.",
+	"externaldata-db-unknown-type": "Erro: tipo de base de dados desconhecido.",
+	"externaldata-db-could-not-connect": "Erro: não foi possível conectar-se a base de dados.",
+	"externaldata-db-unknown-collection": "Erro: coleção do MongoDB desconhecida.",
+	"externaldata-db-no-return-values": "Erro: nenhum valor de retorno especificado.",
+	"externaldata-db-invalid-query": "Consulta inválida."
+}

@@ -1,0 +1,27 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ainali",
+			"Boivie",
+			"Lokal Profil",
+			"Najami",
+			"Per",
+			"Tobulos1",
+			"WikiPhoenix"
+		]
+	},
+	"getdata": "Hämta data",
+	"externaldata-desc": "Ger möjlighet att hämta strukturerad data från externa URL:er, databaser och andra källor",
+	"externaldata-no-param-specified": "Fel: Ingen \"$1\" parameter specificerad.",
+	"externaldata-web-invalid-format": "Ogiltigt format: \"$1\"",
+	"externaldata-ldap-unable-to-connect": "Kunde inte koppla till $1",
+	"externaldata-xml-error": "XML-fel: $1 på rad $2",
+	"externaldata-invalid-json": "Fel: Ogiltig JSON.",
+	"externaldata-db-incomplete-information": "Fel: Informationen för server-ID inte komplett.",
+	"externaldata-db-could-not-get-url": "Kunde inte hämta URL på $1 {{PLURAL:$1|försök|försök}}.",
+	"externaldata-db-unknown-type": "Fel: Okänd databastyp.",
+	"externaldata-db-could-not-connect": "Fel: Kunde inte koppla till databasen.",
+	"externaldata-db-unknown-collection": "Fel: Okänd MongoDB samling.",
+	"externaldata-db-no-return-values": "Fel: Inga returvärden specificerade.",
+	"externaldata-db-invalid-query": "Ogiltig fråga."
+}

@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Yaron Koren"
+		]
+	},
+	"getdata": "Get data",
+	"externaldata-desc": "Allows for retrieving structured data from external URLs, databases and other sources",
+	"externaldata-no-param-specified": "Error: No \"$1\" parameter specified.",
+	"externaldata-web-invalid-format": "Invalid format: \"$1\".",
+	"externaldata-ldap-unable-to-connect": "Unable to connect to $1.",
+	"externaldata-xml-error": "XML error: $1 at line $2.",
+	"externaldata-invalid-json": "Error: Invalid JSON.",
+	"externaldata-db-incomplete-information": "Error: Incomplete information for this database ID.",
+	"externaldata-db-could-not-get-url": "Could not get URL after $1 {{PLURAL:$1|try|tries}}.",
+	"externaldata-db-unknown-type": "Error: Unknown database type.",
+	"externaldata-db-could-not-connect": "Error: Could not connect to database.",
+	"externaldata-db-unknown-collection": "Error: Unknown MongoDB collection.",
+	"externaldata-db-no-return-values": "Error: No return values specified.",
+	"externaldata-db-invalid-query": "Invalid query."
+}

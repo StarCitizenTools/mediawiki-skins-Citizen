@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Minh Nguyen",
+			"Vinhtantran"
+		]
+	},
+	"getdata": "Lấy dữ liệu",
+	"externaldata-desc": "Cho phép truy xuất dữ liệu từ các địa chỉ URL bên ngoài, cơ sở dữ liệu, và nguồn khác",
+	"externaldata-xml-error": "Lỗi XML ở dòng $2: $1"
+}

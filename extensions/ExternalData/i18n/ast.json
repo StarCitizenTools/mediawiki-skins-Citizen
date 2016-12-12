@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Xuacu"
+		]
+	},
+	"getdata": "Recuperar datos",
+	"externaldata-desc": "Permite recuperar datos estructuraos de direiciones URL, bases de datos y otres fontes esternes",
+	"externaldata-no-param-specified": "Error: Nun s'especificó dengún parámetru «$1».",
+	"externaldata-web-invalid-format": "Formatu inválidu: \"$1\"",
+	"externaldata-ldap-unable-to-connect": "Nun se pudo coneutar con $1",
+	"externaldata-xml-error": "Error XML: $1 na llinia $2",
+	"externaldata-invalid-json": "Error: JSON inválidu",
+	"externaldata-db-incomplete-information": "Error: Información incompleta pa esta ID de sirvidor.",
+	"externaldata-db-could-not-get-url": "Nun se pudo recuperar la URL dempués de $1 {{PLURAL:$1|intentu|intentos}}.",
+	"externaldata-db-unknown-type": "Error: Triba de base de datos desconocida.",
+	"externaldata-db-could-not-connect": "Error: Nun se pudo coneutar cola base de datos.",
+	"externaldata-db-unknown-collection": "Fallu: Coleición MongoDB desconocida.",
+	"externaldata-db-no-return-values": "Error: Nun s'especificaron valores de retornu.",
+	"externaldata-db-invalid-query": "Consulta inválida."
+}

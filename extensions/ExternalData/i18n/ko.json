@@ -1,0 +1,24 @@
+{
+	"@metadata": {
+		"authors": [
+			"Daisy2002",
+			"Priviet",
+			"Yjs5497",
+			"아라"
+		]
+	},
+	"getdata": "데이터 가져오기",
+	"externaldata-desc": "외부 URL, 데이터베이스 및 다른 출처에서 구조화된 데이터를 가져올 수 있게 하기",
+	"externaldata-no-param-specified": "오류: 지정된 \"$1\" 변수가 없습니다.",
+	"externaldata-web-invalid-format": "\"$1\" 상태가 잘못되었습니다.",
+	"externaldata-ldap-unable-to-connect": "$1에 연결할 수 없습니다.",
+	"externaldata-xml-error": "XML 오류: $2 줄에서 $1 오류 발생.",
+	"externaldata-invalid-json": "오류: 잘못된 JSON입니다.",
+	"externaldata-db-incomplete-information": "오류: 데이터베이스 ID 정보가 충분하지 않습니다.",
+	"externaldata-db-could-not-get-url": "$1 {{PLURAL:$1|번의 시도}}에도 URL을 가져올 수 없었습니다.",
+	"externaldata-db-unknown-type": "오류: 알 수 없는 데이터베이스 형식입니다.",
+	"externaldata-db-could-not-connect": "오류: 데이터베이스에 연결할 수 없습니다.",
+	"externaldata-db-unknown-collection": "오류: 알 수 없는 MongoDB 집합입니다.",
+	"externaldata-db-no-return-values": "오류: 지정된 반환 값이 없습니다.",
+	"externaldata-db-invalid-query": "유효하지 않은 쿼리"
+}

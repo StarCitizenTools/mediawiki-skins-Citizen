@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Азат Хәлилов",
+			"Айбикә"
+		]
+	},
+	"getdata": "Мәғлүмәттәр алырға",
+	"externaldata-desc": "Тышҡы адрестарҙан, мәғлүмәттәр базаһынан һәм башҡа сығанаҡтарҙан структураға һалынған мәғлүмәттәр алырға ярҙам итә",
+	"externaldata-no-param-specified": "Хата: «$1» параметры күрһәтелмәгән.",
+	"externaldata-web-invalid-format": "Рөхсәт ителмәгән формат:  \"$1\"",
+	"externaldata-ldap-unable-to-connect": " $1 тоташып булмай",
+	"externaldata-xml-error": "XML хата. $1 $2 юлында",
+	"externaldata-invalid-json": "Хата: Рөхсәт ителмәгән JSON",
+	"externaldata-db-incomplete-information": "Хата: Был ID сервер өсөн мәғлүмәт тулы түгел.",
+	"externaldata-db-could-not-get-url": " $1 {{PLURAL:$1|мөмкинлектән}} һуң URL алып булманы",
+	"externaldata-db-unknown-type": "Хата: Билдәһеҙ мәғлүмәт базаһы",
+	"externaldata-db-could-not-connect": "Хата: Мәғлүмәт базаһы менән бәйләнеш булдырып булмай",
+	"externaldata-db-unknown-collection": "Хата: Билдәһеҙ коллекция MongoDB.",
+	"externaldata-db-no-return-values": "Хата: Кире ҡайтара торған билдәләр күрһәтелмәгән",
+	"externaldata-db-invalid-query": "Хаталы һорау"
+}

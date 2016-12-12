@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"McDutchie"
+		]
+	},
+	"getdata": "Obtener datos",
+	"externaldata-desc": "Permitte recuperar datos structurate ab adresses URL, bases de datos e altere fontes externe",
+	"externaldata-no-param-specified": "Error: Nulle parametro \"$1\" specificate.",
+	"externaldata-web-invalid-format": "Formato invalide: \"$1\"",
+	"externaldata-ldap-unable-to-connect": "Impossibile connecter se a $1",
+	"externaldata-xml-error": "Error de XML: $1 al linea $2",
+	"externaldata-invalid-json": "Error: JSON invalide.",
+	"externaldata-db-incomplete-information": "Error: Information incomplete pro iste ID de servitor.",
+	"externaldata-db-could-not-get-url": "Non poteva obtener le URL post $1 {{PLURAL:$1|tentativa|tentativas}}.",
+	"externaldata-db-unknown-type": "Error: Typo de base de datos incognite.",
+	"externaldata-db-could-not-connect": "Error: Impossibile connecter se al base de datos.",
+	"externaldata-db-unknown-collection": "Error: Collection MongoDB incognite.",
+	"externaldata-db-no-return-values": "Error: Nulle valor de retorno specificate.",
+	"externaldata-db-invalid-query": "Consulta invalide."
+}

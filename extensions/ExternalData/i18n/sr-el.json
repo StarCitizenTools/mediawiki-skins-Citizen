@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"Michaello",
+			"Milicevic01"
+		]
+	},
+	"getdata": "Preuzmi podatke",
+	"externaldata-desc": "Omogućava preuzimanje podataka iz spoljašnjih adresa, bazi podataka i drugih izvora",
+	"externaldata-ldap-unable-to-connect": "Povezivanje na $1 nije uspelo",
+	"externaldata-xml-error": "XML greška: $1 po liniji $2",
+	"externaldata-db-incomplete-information": "Greška: Nepotpuni podaci za ovaj ID servera.",
+	"externaldata-db-could-not-get-url": "Preuzimanje adrese posle $1 {{PLURAL:$1|pokušaja}} nije uspelo.",
+	"externaldata-db-unknown-type": "Greška: Nepoznata vrsta baze podataka.",
+	"externaldata-db-could-not-connect": "Greška: Povezivanje s bazom podataka nije uspelo.",
+	"externaldata-db-no-return-values": "Greška: Povratne vrednosti nisu određene.",
+	"externaldata-db-invalid-query": "Neispravan upit."
+}

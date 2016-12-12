@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ashok modhvadia",
+			"KartikMistry"
+		]
+	},
+	"getdata": "માહિતી પ્રાપ્ત કરો",
+	"externaldata-desc": "બાહ્ય કડીઓ, ડેટાબેઝ અને અન્ય સ્રોતોમાંથી માહિતીની પુન:પ્રાપ્તિની છુટ",
+	"externaldata-invalid-json": "ક્ષતિ: અયોગ્ય JSON"
+}

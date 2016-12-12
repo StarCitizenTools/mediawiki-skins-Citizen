@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Als-Chlämens",
+			"Als-Holder"
+		]
+	},
+	"getdata": "Date hole",
+	"externaldata-desc": "Erlaubt strukturierti Daten abzruefe vu extärne URL un andre Quälle",
+	"externaldata-web-invalid-format": "Ungültigs Format: „$1“",
+	"externaldata-ldap-unable-to-connect": "Cha kei Verbindig härstellen zue $1",
+	"externaldata-xml-error": "XML-Fähler: $1 in dr Zyyle $2",
+	"externaldata-db-incomplete-information": "Fähler: Nit vollständigi Information fir die Server-ID.",
+	"externaldata-db-could-not-get-url": "Cha d URL nit finde no $1 {{PLURAL:$1|Versuech|Versuech}}.",
+	"externaldata-db-unknown-type": "Fähler: Nit bekannte Datebanktyp.",
+	"externaldata-db-could-not-connect": "Fähler: Cha kei Verbindig härstelle zue dr Datebank.",
+	"externaldata-db-no-return-values": "Fähler: Kei Ruckgabewärt spezifiziert.",
+	"externaldata-db-invalid-query": "Nit giltigi Umfrog."
+}

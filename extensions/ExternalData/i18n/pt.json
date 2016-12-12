@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Giro720",
+			"Hamilton Abreu",
+			"Waldir",
+			"Vitorvicentevalente"
+		]
+	},
+	"getdata": "Obter dados",
+	"externaldata-desc": "Permite a importação de dados estruturados a partir de URLs, bases de dados e outras fontes externas",
+	"externaldata-no-param-specified": "Erro: Nenhum parâmetro \"$1\" especificado.",
+	"externaldata-web-invalid-format": "Formato inválido: \"$1\"",
+	"externaldata-ldap-unable-to-connect": "Não foi possível estabelecer ligação a $1",
+	"externaldata-xml-error": "Erro XML: $1 na linha $2",
+	"externaldata-invalid-json": "Erro: Código JSON inválido.",
+	"externaldata-db-incomplete-information": "Erro: Informação incompleta para este identificador de servidor.",
+	"externaldata-db-could-not-get-url": "Não foi possível importar a URL após {{PLURAL:$1|uma tentativa|$1 tentativas}}.",
+	"externaldata-db-unknown-type": "Erro: Tipo de base de dados desconhecido.",
+	"externaldata-db-could-not-connect": "Erro: Não foi possível estabelecer ligação à base de dados.",
+	"externaldata-db-no-return-values": "Erro: Não foram especificados valores de retorno.",
+	"externaldata-db-invalid-query": "Consulta inválida."
+}

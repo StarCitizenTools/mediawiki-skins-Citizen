@@ -1,0 +1,24 @@
+{
+	"@metadata": {
+		"authors": [
+			"Fryed-peach",
+			"Schu",
+			"Shirayuki",
+			"青子守歌"
+		]
+	},
+	"getdata": "データ取得",
+	"externaldata-desc": "外部 URL やデータベース、その他のソースからデータを取得できるようにする",
+	"externaldata-no-param-specified": "エラー: パラメーター「$1」が指定されていません。",
+	"externaldata-web-invalid-format": "無効な書式:「$1」",
+	"externaldata-ldap-unable-to-connect": "$1 に接続できません。",
+	"externaldata-xml-error": "XML エラー: 行 $2 で $1",
+	"externaldata-invalid-json": "エラー: 無効な JSON です。",
+	"externaldata-db-incomplete-information": "エラー: このデータベース ID に対する情報が不十分です。",
+	"externaldata-db-could-not-get-url": "$1 回試行しましたが URL を取得できませんでした。",
+	"externaldata-db-unknown-type": "エラー: データベースの種類が不明です。",
+	"externaldata-db-could-not-connect": "エラー: データベースに接続できませんでした。",
+	"externaldata-db-unknown-collection": "エラー: 不明な MongoDB コレクションです。",
+	"externaldata-db-no-return-values": "エラー: 戻り値が指定されていません。",
+	"externaldata-db-invalid-query": "無効なクエリです。"
+}

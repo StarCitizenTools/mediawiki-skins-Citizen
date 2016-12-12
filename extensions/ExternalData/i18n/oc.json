@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cedric31"
+		]
+	},
+	"getdata": "Obténer de donadas",
+	"externaldata-desc": "Permet de recuperar de donadas estructuradas a partir d'URL extèrnas, de bancas de donadas e d'autras fonts",
+	"externaldata-ldap-unable-to-connect": "Impossible de se connectar a $1",
+	"externaldata-xml-error": "Error XML : $1 a la linha $2",
+	"externaldata-db-incomplete-information": "Error : Informacions incompletas per aqueste identificant de servidor.",
+	"externaldata-db-could-not-get-url": "Impossible d'obténer l'URL aprèp $1 {{PLURAL:$1|ensag|ensages}}.",
+	"externaldata-db-unknown-type": "ERROR: Tipe de banca de donadas desconegut.",
+	"externaldata-db-could-not-connect": "Error : Impossible de se connectar a la banca de donadas.",
+	"externaldata-db-no-return-values": "Error : Cap de valor de retorn es pas estada especificada.",
+	"externaldata-db-invalid-query": "Requèsta invalida."
+}

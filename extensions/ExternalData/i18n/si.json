@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"පසිඳු කාවින්ද"
+		]
+	},
+	"getdata": "දත්ත ලබා ගන්න",
+	"externaldata-web-invalid-format": "වලංගු නොවන ආකෘතිය: \"$1\"",
+	"externaldata-ldap-unable-to-connect": "$1 වෙත සම්බන්ධ විය නොහැක",
+	"externaldata-xml-error": "XML දෝෂය: $1 පේළිය $2",
+	"externaldata-db-unknown-type": "දෝෂය: නොදන්නා දත්ත සංචිත වර්ගය.",
+	"externaldata-db-could-not-connect": "දෝෂය: දත්ත සංචිතය වෙත සම්බන්ධ විය නොහැක.",
+	"externaldata-db-invalid-query": "වලංගු නොවන ප්‍රශ්නය."
+}

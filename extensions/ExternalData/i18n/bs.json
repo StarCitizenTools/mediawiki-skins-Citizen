@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"CERminator"
+		]
+	},
+	"getdata": "Uzmi podatke",
+	"externaldata-desc": "Omogućuje za preuzimanje strukturnih podataka iz vanjskih URLova, baza podataka i drugih izvora",
+	"externaldata-ldap-unable-to-connect": "Ne može se spojiti na $1",
+	"externaldata-xml-error": "XML greška: $1 na liniji $2",
+	"externaldata-db-incomplete-information": "Greška: Nepotpune informacije za ovaj ID servera.",
+	"externaldata-db-could-not-get-url": "Nije pronađen URL nakon $1 {{PLURAL:$1|pokušaja|pokušaja}}.",
+	"externaldata-db-unknown-type": "Greška: Nepoznat tip baze podataka.",
+	"externaldata-db-could-not-connect": "Greška: Ne može se spojiti na bazu podataka.",
+	"externaldata-db-no-return-values": "Greška: Nije navedena povratna vrijednost.",
+	"externaldata-db-invalid-query": "Nevaljan upit."
+}

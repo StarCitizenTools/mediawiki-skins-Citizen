@@ -1,0 +1,6 @@
+[gerrit]
+host=gerrit.wikimedia.org
+port=29418
+project=mediawiki/extensions/ExternalData
+defaultbranch=REL1_27
+defaultrebase=0

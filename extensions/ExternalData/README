@@ -1,0 +1,111 @@
+External Data extension
+
+        Version 1.8.2
+        Yaron Koren and (many) others
+
+This is free software licensed under the GNU General Public License. Please
+see http://www.gnu.org/copyleft/gpl.html for further details, including the
+full text and terms of the license.
+
+== Overview ==
+
+External Data is an extension to MediaWiki that allows for retrieving data
+from various sources: external URLs and local wiki pages (in CSV, GFF, JSON
+and XML formats), database tables, and LDAP servers.
+
+The extension defines the following parser functions: #get_web_data,
+#get_soap_data, #get_file_data, #get_db_data, #get_ldap_data,
+#external_value, #for_external_table, #display_external_table,
+#store_external_table and #clear_external_data. They are described below:
+
+* #get_web_data retrieves the data from a URL that holds CSV, GFF,
+JSON or XML, and assigns it to local variables or arrays.
+
+* #get_soap_data retrieves data from a URL via SOAP.
+
+* #get_file_data retrieves data from a local file, that can be in any of
+the same formats that #get_web_data handles.
+
+* #get_db_data retrieves data from a database, using (in most cases)
+SQL-like syntax, and assigns it to local variables or arrays.
+
+* #get_ldap_data retrieves data from an LDAP server and assigns it to
+local variables.
+
+* #external_value displays the value of any retrieved variable, or the
+first value if it's an array.
+
+* #for_external_table applies processing onto multiple rows retrieved by
+any of the #get_*_data functions
+
+* #display_external_table is like #for_external_table, but passes the
+values of each row to a template, which handles the formatting.
+
+* #store_external_table mimics a call to the Semantic Internal Objects
+extension's #set_internal parser function onto each row retrieved by
+any of the #get_*_data functions, in order to store the entire array
+of data semantically.
+
+* #clear_external_data erases the current set of retrieved data.
+
+In addition, the extension defines a new special page, 'GetData', that
+exports selected rows from a wiki page that holds CSV data, in a format
+that is readable by #get_web_data.
+
+For more information, see the extension homepage at:
+http://www.mediawiki.org/wiki/Extension:External_Data
+
+== Requirements ==
+
+This version of the External Data extension requires MediaWiki 1.17 or higher.
+
+== Installation ==
+
+To install the extension, place the entire 'ExternalData' directory
+within your MediaWiki 'extensions' directory, then add the following
+line to your 'LocalSettings.php' file:
+
+     require_once( "$IP/extensions/ExternalData/ExternalData.php" );
+
+To cache the data from the URLs being accessed, you can call the contents
+of ExternalData.sql in your database, then add the following to
+LocalSettings.php:
+
+     $edgCacheTable = 'ed_url_cache';
+
+You should also add a line like the following, to set the expiration time
+of the cache, in seconds; this line will cache data for a week:
+
+     $edgCacheExpireTime = 7 * 24 * 60 * 60; 
+
+You can also set for string replacements to be done on the URLs you call,
+for instance to hide API keys:
+
+     $edgStringReplacements['MY_API_KEY'] = 'abcd1324';
+
+You can create a "whitelist" to allow retrieval of data only from trusted
+sites, in the manner of MediaWiki's $wgAllowExternalImagesFrom - if you
+are hiding API keys, it is very much recommended to create such a
+whitelist, to prevent users from being able to discover their values:
+
+     $edgAllowExternalDataFrom = array('http://example.com/api');
+
+Finally, to use the database or LDAP retrieval capabilities, you need to
+set connection settings as well - see the online documentation for more
+information.
+
+== Contact ==
+
+Most comments, questions, suggestions and bug reports should be sent to
+the Semantic MediaWiki mailing list:
+
+ https://lists.sourceforge.net/lists/listinfo/semediawiki-user
+
+Although the External Data extension in general is independent of Semantic
+MediaWiki, the fact that it uses Semantic Internal Objects for one of its
+functions, along with the fact that the two extensions are often used
+together, means that it can be considered part of the Semantic MediaWiki
+family for communication purposes.
+
+If possible, please add "[ED]" at the beginning of the subject line, to
+clarify the subject matter.

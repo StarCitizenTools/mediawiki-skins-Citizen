@@ -1,0 +1,24 @@
+{
+	"@metadata": {
+		"authors": [
+			"Dead3y3",
+			"Fryed-peach",
+			"Shirayuki",
+			"Umherirrender"
+		]
+	},
+	"getdata": "{{doc-special|GetData}}",
+	"externaldata-desc": "{{desc|name=External Data|url=https://www.mediawiki.org/wiki/Extension:External_Data}}",
+	"externaldata-no-param-specified": "The error message if a parameter to some parser function is not set. Parameters:\n* $1 - parameter name. any one of the following: <code>url</code>, <code>data</code>, <code>filter</code>, <code>domain</code>, <code>db</code>, <code>from</code>",
+	"externaldata-web-invalid-format": "The error message if #get_web_data is called with an invalid format value.\n\nParameters:\n* $1 - invalid file format. Valid formats are: \"xml\", \"xml with xpath\", \"csv\", \"csv with header\", \"json\", and \"gff\"",
+	"externaldata-ldap-unable-to-connect": "The error message if #get_ldap_data can't connect to the LDAP server.\n\nParameters:\n* $1 - the LDAP server name",
+	"externaldata-xml-error": "The error message if #get_web_data can't parse an XML file. Parameters:\n* $1 - error message which are returned by PHP's <code>xml_error_string()</code>\n* $2 - line number",
+	"externaldata-invalid-json": "The error message if the URL being accessed does not contain valid JSON",
+	"externaldata-db-incomplete-information": "Used as error message.\n\nDatabase server, database type, database directory, database username and/or database password are not specified.",
+	"externaldata-db-could-not-get-url": "Parameters:\n* $1 - number of HTTP tries",
+	"externaldata-db-unknown-type": "Used as error message when creating a database object with using the specified information.",
+	"externaldata-db-could-not-connect": "Used as error message when connecting to the database system.",
+	"externaldata-db-unknown-collection": "The error message if #get_db_data can't find the specified \"collection\" when connecting to MongoDB.",
+	"externaldata-db-no-return-values": "Used as error message, if the number of the specified columns is zero.\n\nIf successful, the system returns values in the specified columns.",
+	"externaldata-db-invalid-query": "Used as error message, if the query has been failed."
+}

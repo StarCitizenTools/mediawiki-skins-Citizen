@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bennylin",
+			"Farras",
+			"IvanLanin",
+			"Iwan Novirion"
+		]
+	},
+	"getdata": "Ambil data",
+	"externaldata-desc": "Memungkinkan untuk mengambil data terstruktur dari URL eksternal, database dan sumber lainnya",
+	"externaldata-web-invalid-format": "Format salah: \"$1\"",
+	"externaldata-ldap-unable-to-connect": "Tidak dapat terhubung ke $1",
+	"externaldata-xml-error": "Galat XML: $1 pada baris $2",
+	"externaldata-db-incomplete-information": "Galat: Informasi tak lengkap untuk ID server ini.",
+	"externaldata-db-could-not-get-url": "Tidak dapat mengambil URL setelah dicoba {{PLURAL:$1||}}$1 kali.",
+	"externaldata-db-unknown-type": "Galat: Jenis basis data tidak diketahui.",
+	"externaldata-db-could-not-connect": "Galat: Tidak dapat terhubung ke basis data.",
+	"externaldata-db-no-return-values": "Galat: Nilai pengembalian tidak dispesifikasi.",
+	"externaldata-db-invalid-query": "Kueri tidak sah."
+}

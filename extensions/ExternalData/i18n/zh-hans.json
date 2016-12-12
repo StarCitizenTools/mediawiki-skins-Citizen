@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Hydra",
+			"Liuxinyu970226",
+			"Yfdyh000"
+		]
+	},
+	"getdata": "获取数据",
+	"externaldata-desc": "允许从外部URL，数据库及其他来源接收结构化数据",
+	"externaldata-no-param-specified": "错误：未指定“$1”参数。",
+	"externaldata-web-invalid-format": "无效的格式：“$1”",
+	"externaldata-ldap-unable-to-connect": "无法连接到 $1",
+	"externaldata-xml-error": "XML错误：$1 在行 $2",
+	"externaldata-invalid-json": "错误：无效的JSON",
+	"externaldata-db-incomplete-information": "错误：此服务器ID信息不完整。",
+	"externaldata-db-could-not-get-url": "$1次尝试后仍无法获取URL。",
+	"externaldata-db-unknown-type": "错误：未知的数据库类型。",
+	"externaldata-db-could-not-connect": "错误：无法连接到数据库。",
+	"externaldata-db-unknown-collection": "错误：未知的MongoDB集合。",
+	"externaldata-db-no-return-values": "错误：没有返回指定的值。",
+	"externaldata-db-invalid-query": "无效的查询。"
+}

@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Chaduvari",
+			"Kiranmayee"
+		]
+	},
+	"getdata": "విషయములు తీసుకునిరా",
+	"externaldata-ldap-unable-to-connect": "$1 కు కనెక్టు కాలేకున్నాం"
+}

@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Effeietsanders",
+			"SPQRobin",
+			"Siebrand"
+		]
+	},
+	"getdata": "Gegevens ophalen",
+	"externaldata-desc": "Maakt het mogelijk gegevens van externe URL's, database en andere externe bronnen op te halen",
+	"externaldata-no-param-specified": "Fout: er is geen parameter \"$1\" opgegeven.",
+	"externaldata-web-invalid-format": "Ongeldige indeling: \"$1\"",
+	"externaldata-ldap-unable-to-connect": "Het was niet mogelijk te verbinden met $1",
+	"externaldata-xml-error": "XML-fout: $1 op regel $2",
+	"externaldata-invalid-json": "Fout: ongeldige JSON",
+	"externaldata-db-incomplete-information": "Fout: onvolledige informatie voor dit servernummer.",
+	"externaldata-db-could-not-get-url": "Na $1 {{PLURAL:$1|poging|pogingen}} gaf de URL geen resultaat.",
+	"externaldata-db-unknown-type": "Fout: onbekend databasetype.",
+	"externaldata-db-could-not-connect": "Fout: het was niet mogelijk met de database te verbinden.",
+	"externaldata-db-unknown-collection": "Fout: onbekende MongoDB-verzameling.",
+	"externaldata-db-no-return-values": "Fout: er zijn geen return-waarden ingesteld.",
+	"externaldata-db-invalid-query": "Ongeldige zoekopdracht."
+}

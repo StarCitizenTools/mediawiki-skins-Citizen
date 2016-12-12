@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Michawiki"
+		]
+	},
+	"getdata": "Daty wobstarać",
+	"externaldata-desc": "Zmóžnja wotwołowanje strukturowanych datow z eksternych URL, datowych bankow a druhich žórłow",
+	"externaldata-no-param-specified": "Zmylk: Žadyn parameter \"$1\" podaty.",
+	"externaldata-web-invalid-format": "Njepłaćiwy format: \"$1\"",
+	"externaldata-ldap-unable-to-connect": "Njemóžno z $1 zwjazać",
+	"externaldata-xml-error": "Zmylk XML: $1 na lince $2",
+	"externaldata-invalid-json": "Zmylk: Njepłaćiwy JSON.",
+	"externaldata-db-incomplete-information": "'''Zmylk: Njedospołne informacije za ID tutoho serwera.'''",
+	"externaldata-db-could-not-get-url": "Njebě móžno URL po $1 {{PLURAL:$1|pospyće|pospytomaj|pospytach|pospytach}} dóstać.",
+	"externaldata-db-unknown-type": "'''Zmylk: Njeznaty typ datoweje banki.'''",
+	"externaldata-db-could-not-connect": "'''Zmylk: Njemóžno z datowej banku zwjazać.'''",
+	"externaldata-db-unknown-collection": "Zmylk: Njeznata MongoDB-zběrka.",
+	"externaldata-db-no-return-values": "'''Zmylk: Žane hódnoty wróćenja podate.'''",
+	"externaldata-db-invalid-query": "Njepłaćiwe naprašowanje."
+}

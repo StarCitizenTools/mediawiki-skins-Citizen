@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"VASANTH S.N."
+		]
+	},
+	"getdata": "ಮಾಹಿತಿಯನ್ನು ಪಡೆ",
+	"externaldata-web-invalid-format": "ಅಸಿಂಧು ವಿನ್ಯಾಸ: \"$1\".",
+	"externaldata-ldap-unable-to-connect": "$1.ಗೆ ಸಂಪರ್ಕಿಸಲು ಸಾದ್ಯವಾಗುತ್ತಿಲ್ಲ",
+	"externaldata-invalid-json": "ದೋಷ:ಅಸಮರ್ಪಕ JSON.",
+	"externaldata-db-incomplete-information": "ದೋಷ:ದತ್ತಾಂಶ ಐಡಿ ಬಗ್ಗೆ ಅಸಂಪೂರ್ಣ ಮಾಹಿತಿ.",
+	"externaldata-db-unknown-type": "ದೋಷ:ಆಜ್ಞಾತ ದತ್ತಸಂಚಯ ಮಾದರಿ.",
+	"externaldata-db-could-not-connect": "ದೋಷ:ದತ್ತಸಂಚಯವನ್ನು ಸಂಪರ್ಕಿಸಲು ಸಾದ್ಯವಾಗುತ್ತಿಲ್ಲ.",
+	"externaldata-db-invalid-query": "ಅಸಿಂಧು ಪ್ರಶ್ನೆ."
+}

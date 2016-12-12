@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"Harald Khan",
+			"Nghtwlkr",
+			"Njardarlogar",
+			"Danmichaelo"
+		]
+	},
+	"getdata": "Hent data",
+	"externaldata-desc": "Gir mulighet til å hente strukturerte data fra eksterne internettadresser, databaser og andre kilder",
+	"externaldata-ldap-unable-to-connect": "Klarte ikke å koble til $1",
+	"externaldata-xml-error": "XML-feil: $1 på linje $2",
+	"externaldata-db-incomplete-information": "Feil: Ufullstendig informasjon for denne tjener-IDen.",
+	"externaldata-db-could-not-get-url": "Klarte ikke hente URL etter {{PLURAL:$1|ett forsøk|$1 forsøk}}.",
+	"externaldata-db-unknown-type": "Feil: Ukjent databasetype.",
+	"externaldata-db-could-not-connect": "Feil: Kunne ikke koble til database.",
+	"externaldata-db-no-return-values": "Feil: Ingen returverdi spesifisert.",
+	"externaldata-db-invalid-query": "Ugyldig spørring."
+}

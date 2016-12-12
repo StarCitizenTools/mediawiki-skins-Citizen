@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Armin1392",
+			"Mjbmr"
+		]
+	},
+	"getdata": "دریافت اطلاعات",
+	"externaldata-desc": "اجازه برای بازیابی اطلاعات ساخته شده از یوآرال‌های خارجی، پایگاه‌های اطلاعاتی و دیگر منابع",
+	"externaldata-no-param-specified": "خطا: هیچ پارامتر \"$1\" تعیین نشده‌است.",
+	"externaldata-web-invalid-format": "فرمت نامعتبر: \"$1\".",
+	"externaldata-ldap-unable-to-connect": "قادر نبودن اتصال به $1",
+	"externaldata-xml-error": "خطای ایکس‌ام‌ال: $1 در خط $2",
+	"externaldata-invalid-json": "خطا: جی‌سون نامعتبر.",
+	"externaldata-db-incomplete-information": "خطا: اطلاعات ناقص برای شناسهٔ این پایگاه اطلاعاتی.",
+	"externaldata-db-could-not-get-url": "پس از $1 {{PLURAL:$1|try|tries}}، یوآرال نتوانست دریافت شود.",
+	"externaldata-db-unknown-type": "خطا: نوع پایگاه اطلاعاتی ناشناخته.",
+	"externaldata-db-could-not-connect": "خطا: نتوانست به پایگاه اطلاعاتی متصل شود.",
+	"externaldata-db-unknown-collection": "خطا: مجموعهٔ مونگودی‌بی ناشناخته.",
+	"externaldata-db-no-return-values": "خطا: بدون بازگشت ارزش‌های تعیین شده.",
+	"externaldata-db-invalid-query": "سوال نامعتبر."
+}

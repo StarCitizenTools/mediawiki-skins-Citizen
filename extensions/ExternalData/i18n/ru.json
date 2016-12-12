@@ -1,0 +1,24 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ferrer",
+			"Kaganer",
+			"Okras",
+			"Александр Сигачёв"
+		]
+	},
+	"getdata": "Получить данные",
+	"externaldata-desc": "Позволяет получать структурированные данные с внешних адресов, баз данных и других источников",
+	"externaldata-no-param-specified": "Ошибка: Не указан параметр «$1».",
+	"externaldata-web-invalid-format": "Недопустимый формат:  \"$1\"",
+	"externaldata-ldap-unable-to-connect": "Не удаётся подключиться к $1",
+	"externaldata-xml-error": "Ошибка XML. $1 в строке $2",
+	"externaldata-invalid-json": "Ошибка: Недопустимый JSON",
+	"externaldata-db-incomplete-information": "ОШИБКА. Неполная информация для этого ID сервера.",
+	"externaldata-db-could-not-get-url": "Не удалось получить URL после $1 {{PLURAL:$1|попытки|попыток}}.",
+	"externaldata-db-unknown-type": "ОШИБКА. Неизвестный тип базы данных.",
+	"externaldata-db-could-not-connect": "ОШИБКА. Не удаётся подключиться к базе данных.",
+	"externaldata-db-unknown-collection": "Ошибка: Неизвестная коллекция MongoDB.",
+	"externaldata-db-no-return-values": "ОШИБКА. Не указаны возвращаемые значение.",
+	"externaldata-db-invalid-query": "Ошибочный запрос."
+}

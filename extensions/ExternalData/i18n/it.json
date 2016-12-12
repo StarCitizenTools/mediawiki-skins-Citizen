@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Beta16",
+			"Pietrodn"
+		]
+	},
+	"getdata": "Ottieni dati",
+	"externaldata-desc": "Consente di recuperare dati strutturati da URL esterni, database o altre sorgenti",
+	"externaldata-no-param-specified": "Errore: nessun parametro \"$1\" specificato.",
+	"externaldata-web-invalid-format": "Formato non valido: \"$1\"",
+	"externaldata-ldap-unable-to-connect": "Impossibile connettersi a $1",
+	"externaldata-xml-error": "Errore XML: $1 alla linea $2",
+	"externaldata-invalid-json": "Errore: JSON non valido",
+	"externaldata-db-incomplete-information": "Errore: informazioni incomplete per questo server ID.",
+	"externaldata-db-could-not-get-url": "Impossibile raggiungere l'URL dopo $1 {{PLURAL:$1|tentativo|tentativi}}.",
+	"externaldata-db-unknown-type": "Errore: tipo di database sconosciuto.",
+	"externaldata-db-could-not-connect": "Errore: impossibile connettersi al database.",
+	"externaldata-db-unknown-collection": "Errore: collezione MongoDB sconosciuta.",
+	"externaldata-db-no-return-values": "Errore: non è stato specificato alcun valore di ritorno.",
+	"externaldata-db-invalid-query": "Query non valida."
+}

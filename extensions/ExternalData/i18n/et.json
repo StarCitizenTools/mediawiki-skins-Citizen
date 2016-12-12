@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Pikne"
+		]
+	},
+	"externaldata-db-unknown-type": "Tõrge: Tundmatu andmebaasi tüüp.",
+	"externaldata-db-could-not-connect": "Tõrge: Andmebaasiga ei saa ühendust.",
+	"externaldata-db-invalid-query": "Vigane päring."
+}

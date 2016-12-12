@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"Borichèt",
+			"Dragonòt"
+		]
+	},
+	"getdata": "Oten dij dat",
+	"externaldata-desc": "A përmët d'arcuperé dat struturà da adrësse dl'aragnà esterne, base ëd dàit e d'àutre sorgiss",
+	"externaldata-web-invalid-format": "Formà pa bon: \"$1\"",
+	"externaldata-ldap-unable-to-connect": "A peul pa coleghesse a $1",
+	"externaldata-xml-error": "Eror XML: $1 a la linia $2",
+	"externaldata-db-incomplete-information": "Eror: Anformassion pa completa për sto server ID-sì.",
+	"externaldata-db-could-not-get-url": "A peul pa oten-e l'URL d'apress ëd $1 {{PLURAL:$1|preuva|preuve}}.",
+	"externaldata-db-unknown-type": "Eror: Sòrt ëd database pa conossùa",
+	"externaldata-db-could-not-connect": "Eror: a peul pa coleghesse al database.",
+	"externaldata-db-unknown-collection": "Eoro: Colession MongoDB pa conossùa.",
+	"externaldata-db-no-return-values": "Eror: Pa gnun valor d'artorn spessifià.",
+	"externaldata-db-invalid-query": "Ciamà pa bon-a."
+}

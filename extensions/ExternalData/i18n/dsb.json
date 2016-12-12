@@ -1,0 +1,18 @@
+{
+	"@metadata": {
+		"authors": [
+			"Michawiki"
+		]
+	},
+	"getdata": "Daty wobstaraś",
+	"externaldata-desc": "Zmóžnja wótwołowanje strukturěrowanych datow z eksternych URL, datowych bankow a drugich žrědłow",
+	"externaldata-web-invalid-format": "Njepłaśiwy format: \"$1\"",
+	"externaldata-ldap-unable-to-connect": "Njemóžno z $1 zwězaś",
+	"externaldata-xml-error": "Zmólka XML: $1 na smužce $2",
+	"externaldata-db-incomplete-information": "'''Zmólka: Njedopołne informacije za toś ten serwerowy ID.'''",
+	"externaldata-db-could-not-get-url": "Njemóžno URL pó $1 {{PLURAL:$1|wopyśe|wopytoma|wopytach|wopytach}} dostaś.",
+	"externaldata-db-unknown-type": "'''Zmólka: Njeznata datowa banka.'''",
+	"externaldata-db-could-not-connect": "'''Zmólka: Njemóžno z datoweju banku zwězaś.'''",
+	"externaldata-db-no-return-values": "'''Zmólka: Žedne gódnoty slědkdaśa pódane.'''",
+	"externaldata-db-invalid-query": "Njepłaśiwe napšašowanje."
+}

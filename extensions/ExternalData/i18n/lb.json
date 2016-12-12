@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Robby"
+		]
+	},
+	"getdata": "Donnéeë kréien",
+	"externaldata-desc": "Erlaabt et Donnéeën vun externen URLen, Datebanken an anere Quellen ze verschaffen",
+	"externaldata-no-param-specified": "Feeler: Keen \"$1\"-Parameter spezifizéiert.",
+	"externaldata-web-invalid-format": "Net valabele Format: \"$1\"",
+	"externaldata-ldap-unable-to-connect": "Onméiglech sech op $1 ze connectéieren",
+	"externaldata-xml-error": "XML Feeler: $1 an der Linn $2",
+	"externaldata-invalid-json": "Feeler:JSON net valabel.",
+	"externaldata-db-incomplete-information": "Feeler: Informatioun fir dës Server ID net komplett.",
+	"externaldata-db-could-not-get-url": "D'URL konnt no {{PLURAL:$1|enger Kéier|$1 Versich}} net opgemaach ginn.",
+	"externaldata-db-unknown-type": "Feeler: Onbekannten Datebank-Typ.",
+	"externaldata-db-could-not-connect": "Feeler: D'Verbindung mat der Datebank konnt net opgebaut ginn.",
+	"externaldata-db-unknown-collection": "Feeler:Onbekannte MongoDB Sammlung.",
+	"externaldata-db-no-return-values": "Feeler: Kee Retour-Wäert festgeluecht.",
+	"externaldata-db-invalid-query": "Net valabel Ufro."
+}

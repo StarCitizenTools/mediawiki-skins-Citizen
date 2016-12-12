@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Lam-ang"
+		]
+	},
+	"getdata": "Agala ti datos",
+	"externaldata-desc": "Mangpalubos para iti panagala ti naestruktura a datos manipud kadagiti akin-ruar nga URL, dagiti database ken dagiti dadduma pay a taudan",
+	"externaldata-no-param-specified": "Biddut: Awan ti parametro ti \"$1\" a nainaganan.",
+	"externaldata-web-invalid-format": "Imbalido a pormat: \"$1\"",
+	"externaldata-ldap-unable-to-connect": "Di mabalin a maikonekta iti $1",
+	"externaldata-xml-error": "Biddut ti XML: $1 iti linia $2",
+	"externaldata-invalid-json": "Biddut: Imbalido a JSON.",
+	"externaldata-db-incomplete-information": "Biddut: Saan a kompleto a pakaammo para iti daytoy nga ID ti database.",
+	"externaldata-db-could-not-get-url": "Saan a makaala iti URL kalpasan ti $1 {{PLURAL:$1|panagipadas|panagipadpadas}}.",
+	"externaldata-db-unknown-type": "Biddut: Di ammo a kita ti database.",
+	"externaldata-db-could-not-connect": "Biddut: Saan a makaikonekta iti database.",
+	"externaldata-db-unknown-collection": "Biddut: Di ammo nga urnong ti MongoDB.",
+	"externaldata-db-no-return-values": "Biddut: Awan ti naisubli kadagiti pateg a nainaganan.",
+	"externaldata-db-invalid-query": "Imbalido a panagusisa."
+}

@@ -1,0 +1,24 @@
+{
+	"@metadata": {
+		"authors": [
+			"BeginaFelicysym",
+			"Chrumps",
+			"Leinad",
+			"Sp5uhe"
+		]
+	},
+	"getdata": "Pobierz dane",
+	"externaldata-desc": "Umożliwia pobieranie strukturalnych danych z zewnętrznych adresów URL, baz danych i innych źródeł",
+	"externaldata-no-param-specified": "Błąd: Nie podano parametru „$1”.",
+	"externaldata-web-invalid-format": "Nieprawidłowy format: \"$1\"",
+	"externaldata-ldap-unable-to-connect": "Nie można połączyć się z $1",
+	"externaldata-xml-error": "Błąd XML – $1 w wierszu $2",
+	"externaldata-invalid-json": "Błąd: Nieprawidłowy JSON",
+	"externaldata-db-incomplete-information": "Błąd – niepełne informacje o tym identyfikatorze serwera.",
+	"externaldata-db-could-not-get-url": "Nie można uzyskać adresu URL po $1 {{PLURAL:$1|próbie|próbach}}.",
+	"externaldata-db-unknown-type": "Błąd: Nieznany typ bazy danych.",
+	"externaldata-db-could-not-connect": "Błąd: Nie można połączyć się z bazą danych.",
+	"externaldata-db-unknown-collection": "Błąd: Nieznany zbiór MongoDB.",
+	"externaldata-db-no-return-values": "Błąd – nie określono zwracanej wartości.",
+	"externaldata-db-invalid-query": "Nieprawidłowe zapytanie."
+}

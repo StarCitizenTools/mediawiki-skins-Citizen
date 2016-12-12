@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Fohanno",
+			"Fulup",
+			"Y-M D"
+		]
+	},
+	"getdata": "Tapout roadennoù",
+	"externaldata-desc": "Talvezout a ra da adtapout roadennoù frammet adalek URLoù diavaez, diazoù titouroù ha mammennoù all.",
+	"externaldata-no-param-specified": "Fazi : an arventenn \"$1\" n'eo ket bet diferet.",
+	"externaldata-web-invalid-format": "Furmad direizh : \"$1\"",
+	"externaldata-ldap-unable-to-connect": "Ne c'haller ket kevreañ ouzh $1",
+	"externaldata-xml-error": "Fazi XML : $1 el linenn $2",
+	"externaldata-invalid-json": "Fazi : JSON direizh",
+	"externaldata-db-incomplete-information": "Fazi : Titouroù diglok evit an ID servijer-mañ.",
+	"externaldata-db-could-not-get-url": "Dibosupl eo tapout an URL goude $1 {{PLURAL:$1|taol-esae|taol-esae}}.",
+	"externaldata-db-unknown-type": "Fazi : Seurt diaz roadennoù dianav",
+	"externaldata-db-could-not-connect": "Fazi : Ne c'haller ket kevreañ ouzh an diaz roadennoù.",
+	"externaldata-db-no-return-values": "Fazi : N'eus bet resisaet talvoud distro ebet.",
+	"externaldata-db-invalid-query": "Reked direizh."
+}

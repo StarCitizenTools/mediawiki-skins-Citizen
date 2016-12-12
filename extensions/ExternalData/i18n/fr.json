@@ -1,0 +1,26 @@
+{
+	"@metadata": {
+		"authors": [
+			"Crochet.david",
+			"Gomoko",
+			"IAlex",
+			"McDutchie",
+			"PieRRoMaN",
+			"Shirayuki"
+		]
+	},
+	"getdata": "Obtenir des données",
+	"externaldata-desc": "Permet de récupérer des données structurées à partir d'URL externes, de bases de données et d'autres sources",
+	"externaldata-no-param-specified": "Erreur : Aucun paramètre « $1 » spécifié.",
+	"externaldata-web-invalid-format": "Format invalide: \"$1\"",
+	"externaldata-ldap-unable-to-connect": "Impossible de se connecter à $1",
+	"externaldata-xml-error": "Erreur XML : $1 à la ligne $2",
+	"externaldata-invalid-json": "Erreur : JSON non valide",
+	"externaldata-db-incomplete-information": "Erreur : Informations incomplètes pour cet identifiant de serveur.",
+	"externaldata-db-could-not-get-url": "Impossible d'obtenir l'URL après $1 {{PLURAL:$1|essais}}.",
+	"externaldata-db-unknown-type": "ERREUR: Type de base de données inconnu.",
+	"externaldata-db-could-not-connect": "Erreur : Impossible de se connecter à la base de données.",
+	"externaldata-db-unknown-collection": "Erreur: Collection MongoDB inconnue.",
+	"externaldata-db-no-return-values": "Erreur : Aucune valeur de retour n'a été spécifiée.",
+	"externaldata-db-invalid-query": "Requête invalide."
+}

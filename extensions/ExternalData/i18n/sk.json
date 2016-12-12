@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Helix84"
+		]
+	},
+	"getdata": "Získať dáta",
+	"externaldata-desc": "Umožňuje získavanie štrukturovaných údajov z externých URL, databáz a iných zdrojov",
+	"externaldata-ldap-unable-to-connect": "Nepodarilo sa pripojiť k $1",
+	"externaldata-xml-error": "Chyba XML: $1 na riadku $2",
+	"externaldata-db-incomplete-information": "Chyba: Nekompletné informácie s týmto ID servera.",
+	"externaldata-db-could-not-get-url": "Nepodarilo sa získať URL po $1 {{PLURAL:$1|pokuse|pokusoch}}.",
+	"externaldata-db-unknown-type": "Chyba: Neznámy typ databázy.",
+	"externaldata-db-could-not-connect": "Chyba: Nepodarilo sa pripojiť k databáze.",
+	"externaldata-db-no-return-values": "Chyba: Neboli zadané žiadne návratové hodnoty.",
+	"externaldata-db-invalid-query": "Neplatná požiadavka."
+}
