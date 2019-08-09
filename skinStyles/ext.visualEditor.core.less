@@ -1,0 +1,53 @@
+/*
+ * Citizen - Visual Editor Styles
+ * https://starcitizen.tools
+*/
+
+@import '../resources/variables.less';
+
+.ve-activated {
+	#mw-sidebar-sitename {
+		top: @sidebar-sitename-height + @header-height * 2 + @margin-side;
+	}
+
+	#page-tools {
+		z-index: 1; // Fix collision
+		pointer-events: auto;
+		opacity: 1;
+	}
+}
+
+// Fix weird compressed text bug
+.ve-init-mw-tempWikitextEditorWidget {
+	width: 100%!important;
+}
+
+// Match animation
+.ve-init-mw-desktopArticleTarget-toolbar-open > .oo-ui-toolbar-bar {
+	transition: @transition-transform!important;
+}
+
+// Make toolbar more mobile friendly, well at least I did by best
+.ve-init-mw-desktopArticleTarget-toolbar {
+	margin: -20px -20px 20px -20px!important; // Bypass @media screen styles
+}
+
+// Stick with the header
+.nav-down ~ .mw-body {
+	.ve-ui-toolbar-floating > .oo-ui-toolbar-bar {
+		transform: translateY( @header-height );
+	}
+}
+
+.ve-ui-surface-placeholder, .ve-ui-surface .ve-ce-documentNode {
+	padding: 0;
+}
+
+.ve-init-mw-desktopArticleTarget .CodeMirror {
+	padding: 0;
+	line-height: @content-line-height; // Lining up syntax highlighter
+}
+
+.ve-init-mw-desktopArticleTarget .CodeMirror-code *, .ve-init-mw-desktopArticleTarget .ve-ui-mwWikitextSurface .ve-ce-paragraphNode {
+	line-height: @content-line-height; // Lining up syntax highlighter
+}

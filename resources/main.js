@@ -1,1 +1,1 @@
-/* JavaScript for the Citizen skin */
+/* JavaScript for the Example skin */
