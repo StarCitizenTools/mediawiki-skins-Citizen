@@ -1,0 +1,151 @@
+//
+// Citizen - Page Tools Styles
+// https://starcitizen.tools
+// TODO: RTL styles and more flexible
+//
+
+// Hide selected item
+.mw-portlet li.selected {
+  .mixin-screen-reader-text;
+}
+
+#page-tools {
+  z-index: 5;
+  position: absolute;
+  margin-top: 1.3rem;
+  display: flex;
+  transform: translateX(~"calc( (100vw - @{page-width}) / 2 - @{margin-side} * 2 - 100%)"); // magic
+
+  h3 {
+    .mixin-screen-reader-text;
+  }
+
+  ul {
+    margin: 0;
+    display: flex;
+    list-style: none;
+  }
+
+  li {
+    margin: 0;
+  }
+
+  #p-views {
+    li > a {
+      .resource-loader-icon-link;
+      padding: 5px;
+      opacity: @opacity-icon;
+      transition: @transition-opacity;
+
+      &:hover {
+        opacity: @opacity-icon-active;
+      }
+
+      &:after {
+        .resource-loader-icon;
+      }
+
+      span {
+        .mixin-screen-reader-text;
+      }
+    }
+  }
+
+  #p-actions {
+    > nav {
+      .resource-loader-icon-link;
+      padding: 5px;
+      cursor: pointer;
+      // transition: @transition-opacity-quick; - Hidden behind the menu anyways
+
+      // TODO: Need to make value more flexible
+      ul {
+        z-index: -1;
+        pointer-events: none;
+        .menu-container;
+        position: absolute;
+        opacity: 0;
+        .boxshadow(4);
+        transition: @transition-opacity-quick, @transition-box-shadow-quick;
+
+        a {
+          .menu-item-link;
+          justify-content: space-between;
+          font-size: @ui-menu-text;
+          padding: @padding-menu-item;
+
+          &:after {
+            .resource-loader-list-icon;
+            margin-left: @icon-padding;
+            opacity: @opacity-icon;
+          }
+
+          &:hover,
+          &:active,
+          &:focus {
+            &:after {
+              opacity: @opacity-icon-active;
+            }
+          }
+
+          &:hover {
+            .menu-item-link-hover;
+          }
+
+          &:active {
+            .menu-item-link-active;
+          }
+
+          &:focus {
+            .menu-item-link-focus;
+          }
+        }
+      }
+
+      &:before {
+        .resource-loader-menu-icon;
+        opacity: @opacity-icon;
+      }
+
+/*
+ *    Hidden behind the menu anyways
+ *    &:hover:after {
+ *      opacity: @opacity-icon-active;
+ *    }
+*/
+
+      &:hover ul {
+        z-index: 5;
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+  }
+}
+
+// TODO: Flexible value
+@media only screen and (max-width: 1250px) {
+  #page-tools {
+    position: relative;
+    margin-left: @margin-side / 2;
+    float: right;
+    transform: none;
+
+    #p-actions > nav ul {
+      right: 0;
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  #page-tools {
+    position: relative;
+    margin-left: 0;
+    transform: none;
+    float: none;
+
+    #p-actions > nav ul {
+      right: unset;
+    }
+  }
+}
