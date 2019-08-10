@@ -11,6 +11,7 @@
 
 html {
 	font-size: @html-font-size;
+	scroll-padding-top: @header-height + @margin-side; // fixed header offset, supported by major browsers
   scroll-behavior: smooth; // not supported by IE, Edge, Safari, and Opera, use JQuery as fallback
 }
 
@@ -114,7 +115,7 @@ a {
 .mw-body,
 .parsoid-body {
 	margin-top: @header-height + @margin-side;
-  padding: 0 @margin-side 120px;
+  padding: 0 @margin-side;
 	min-height: 60vh; // avoid footer being in the middle of the page
 	direction: ltr;
 }
@@ -472,15 +473,85 @@ a {
 	}
 }
 
+.catlinks {
+	margin: 0 @negative-margin;
+	padding: @margin-side;
+	line-height: 1.2;
+
+	.mw-normal-catlinks {
+		font-size: 0; // Hide colon
+
+		> a {
+			display: block;
+			color: @color-content-caption;
+			font-size: @content-caption-size;
+			text-transform: uppercase;
+    	letter-spacing: 1px;
+		}
+
+		> ul {
+			margin: @content-margin-top 0 0 0;
+			display: flex;
+			flex-wrap: wrap;
+			font-size: @content-caption-size; // Reset font
+
+			li {
+				display: block;
+				margin: 0 @margin-side / 2 @margin-side / 2 0;
+				padding: 0;
+				border: 0;
+
+				&:first-of-type {
+					margin-left: 0;
+				}
+
+				a {
+					padding: @margin-side / 4 @margin-side / 2;
+					display: block;
+					border: 1px solid @base-90;
+					background-color: @base-90;
+					color: @color-content-caption!important; // Override other styles
+					transition: @transition-background-quick, @transition-color-quick, @transition-border-quick;
+
+					&:hover {
+						background-color: @color-link-active;
+						border-color: @color-link-active;
+						color:@base-100!important;
+					}
+					&.new:hover {
+						background-color: @color-link-new-active;
+						border-color: @color-link-new-active;
+					}
+				}
+			}
+		}
+	}
+}
+
 // TODO: Flexible value
-@media only screen and (max-width: 1250px) {
+@screen1: @page-width + @margin-side * 2;
+@screen2: @footer-width;
+@screen3: @footer-width + @margin-side * 8;
+
+@media only screen and (max-width: @screen1) {
+	.catlinks {
+		margin: 0!important; // somehow got overrided
+		padding: @margin-side 0;
+	}
+}
+
+@media only screen and (max-width: @screen2) {
   .mw-editsection {
     position: relative!important;
     transform: none!important;
   }
+
+	.catlinks {
+		margin: 0 ~"calc((100vw - @{page-width}) / -2)";
+	}
 }
 
-@media only screen and (max-width: 1450px) {
+@media only screen and (max-width: @screen3) {
 	.webfonts-changed .toc {
 		display: block!important; // Hide until everything is loaded
 	}
@@ -493,7 +564,7 @@ a {
 		height: 100vh;
     margin-top: -@header-height;
     padding: 0;
-		box-shadow: @shadow-button;
+		.boxshadow(3);
 
 		&:before,
 		&:after {
@@ -516,11 +587,13 @@ a {
 				display: block;
 				background-color: @base-90;
 				border-radius: 100%;
-				box-shadow: @shadow-button;
+				.boxshadow(4);
 				transform: translate(0px, @header-height + @margin-side);
 				transition: @transition-opacity, @transition-transform;
 
 				&:hover {
+					.boxshadow(5);
+
 					&:before {
 						opacity: @opacity-icon-active;
 					}

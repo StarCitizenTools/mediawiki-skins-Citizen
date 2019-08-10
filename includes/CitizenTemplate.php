@@ -68,8 +68,8 @@ class CitizenTemplate extends BaseTemplate {
 						Html::rawElement( 'div', [ 'class' => 'printfooter' ],
 							$this->get( 'printfooter' )
 						) .
-						$this->getCategoryLinks() .
-						$this->getPageLinks()
+						$this->getPageLinks() .
+						$this->getCategoryLinks()
 					) .
 					$this->getDataAfterContent() .
 					$this->get( 'debughtml' )
