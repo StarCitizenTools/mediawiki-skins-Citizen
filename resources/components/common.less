@@ -550,22 +550,35 @@ a {
 	}
 }
 
-div.tleft, div.floatleft, table.floatleft {
+div.tleft, div.floatleft, table.floatleft,
+div.tright, div.floatright, table.floatright {
+	z-index: 2;
+	position: relative;
 	margin: 0.6rem 1.4rem;
-  margin-left: @negative-margin;
 	transition: @transition-margin;
 }
 
+div.tleft, div.floatleft, table.floatleft {
+  margin-left: @negative-margin;
+}
+
 div.tright, div.floatright, table.floatright {
-	margin: 0.6rem 1.4rem;
   margin-right: @negative-margin;
-	transition: @transition-margin;
 }
 
 figcaption,
 .thumbcaption {
 	margin: @content-margin-top / 2 0 0;
-	font-size: @content-caption-size
+	font-size: @content-caption-size;
+}
+
+.thumb {
+	> .thumbinner > a.new {
+		display: block;
+		padding: @margin-side / 2;
+		background-color: @base-80;
+		font-size: @content-caption-size;
+	}
 }
 
 // TODO: Flexible value
@@ -698,6 +711,12 @@ figcaption,
 
 	div.tright, div.floatright, table.floatright {
 	  margin-right: 0;
+	}
+
+	div.tleft, div.floatleft, table.floatleft,
+	div.tright, div.floatright, table.floatright {
+		z-index: 0; // Reset so it doesn't cover ToC
+		position: relative;
 	}
 }
 
