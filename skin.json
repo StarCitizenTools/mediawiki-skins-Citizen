@@ -166,6 +166,8 @@
 	},
 	"ResourceModuleSkinStyles": {
 		"citizen": {
+			"+mediawiki.special.changeslist": "skinStyles/mediawiki.special.changeslist.less",
+			"+mediawiki.special.changeslist.enhanced": "skinStyles/mediawiki.special.changeslist.enhanced.less",
 			"+ext.echo.styles.badge": "skinStyles/echo.styles.badge.less",
 			"+ext.relatedArticles.cards": "skinStyles/ext.relatedArticles.cards.less",
 			"+ext.relatedArticles.readMore": "skinStyles/ext.relatedArticles.readMore.less",
