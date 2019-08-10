@@ -550,10 +550,46 @@ a {
 	}
 }
 
+div.tleft, div.floatleft, table.floatleft {
+	margin: 0.6rem 1.4rem;
+  margin-left: @negative-margin;
+	transition: @transition-margin;
+}
+
+div.tright, div.floatright, table.floatright {
+	margin: 0.6rem 1.4rem;
+  margin-right: @negative-margin;
+	transition: @transition-margin;
+}
+
+figcaption,
+.thumbcaption {
+	margin: @content-margin-top / 2 0 0;
+	font-size: @content-caption-size
+}
+
 // TODO: Flexible value
+@screen0: @page-width + @margin-side * 7;
 @screen1: @page-width + @margin-side * 2;
 @screen2: @footer-width;
 @screen3: @footer-width + @margin-side * 8;
+
+@media only screen and (max-width: @screen0) {
+	div.tleft, div.floatleft, table.floatleft,
+	div.tright, div.floatright, table.floatright {
+		margin: 0.6rem -@margin-side!important;
+		width: 100vw;
+		display: flex;
+    justify-content: center;
+	  float: unset;
+		clear: none;
+	}
+
+	figcaption,
+	.thumbcaption {
+		text-align: center!important;
+	}
+}
 
 @media only screen and (max-width: @screen1) {
 	.catlinks,
@@ -654,6 +690,14 @@ a {
 		~ .mw-body .mw-body-content #mw-content-text .mw-parser-output .toc .toctoggle a {
 			transform: none;
 		}
+	}
+
+	div.tleft, div.floatleft, table.floatleft {
+	  margin-left: 0;
+	}
+
+	div.tright, div.floatright, table.floatright {
+	  margin-right: 0;
 	}
 }
 
