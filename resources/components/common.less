@@ -220,22 +220,6 @@ a {
 				order: -1; // Make sure that header is the first
 			}
 
-			p {
-				overflow-wrap: break-word;
-			}
-
-			&>h1, &>h2 {
-				margin-top: @content-margin-top * 3;
-			}
-
-			&>h3, &>h4, &>h5, &>h6, &>p+p {
-		    margin-top: @content-margin-top * 2;
-		  }
-
-		  &>h1+h2, &>h2+h3, &>h3+h4, &>h4+h5, &>h5+h6, &>p, &>table {
-		    margin-top: @content-margin-top;
-		  }
-
 			&>h1, &>h2, &>h3, &>h4, &>h5, &>h6 {
 				display: flex;
 				align-items: center;
@@ -318,6 +302,7 @@ a {
 
 				.toctitle {
 					h2 {
+						margin: 0;
 						color: @base-50;
 						font-size: @ui-menu-text-big;
 					}
@@ -439,6 +424,22 @@ a {
     font-weight: 600;
   }
 
+	p {
+		overflow-wrap: break-word;
+	}
+
+	h1, h2 {
+		margin-top: @content-margin-top * 3;
+	}
+
+	h3, h4, h5, h6, p+p {
+		margin-top: @content-margin-top * 2;
+	}
+
+	h1+h2, h2+h3, h3+h4, h4+h5, h5+h6, p, table {
+		margin-top: @content-margin-top;
+	}
+
 	ul {
 		margin: 0.8rem 0 0 1.6rem;
 	}
@@ -446,6 +447,7 @@ a {
 
 // Namespace button
 #p-namespaces {
+	float: right;
 	margin: 0 @negative-margin;
 	padding: @margin-side;
 
@@ -539,12 +541,14 @@ a {
 					transition: @transition-background-quick,
 											@transition-color-quick,
 											@transition-border-quick,
+											@transition-transform-quick,
 											@transition-box-shadow-quick;
 
 					&:hover {
 						background-color: @color-link-active;
 						border-color: @color-link-active;
 						color:@base-100!important;
+						transform: translateY(-2px);
 						.boxshadow(2);
 					}
 					&.new:hover {
@@ -587,12 +591,6 @@ figcaption,
 		font-size: @content-caption-size;
 	}
 }
-
-// TODO: Flexible value
-@screen0: @page-width - @margin-side * 7;
-@screen1: @page-width + @margin-side * 2;
-@screen2: @footer-width;
-@screen3: @footer-width + @margin-side * 8;
 
 @media only screen and (max-width: @screen0) {
 	div.tleft, div.floatleft, table.floatleft,
