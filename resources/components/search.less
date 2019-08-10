@@ -27,7 +27,12 @@
         width: 0;
         max-width: calc(~"100vw -" @icon-box-size * 2 + @icon-padding * 4 + @margin-side );
         border: 1px solid @base-90;
-        transition: @transition-width;
+        transition: @transition-width, @transition-box-shadow;
+
+        &:focus {
+          outline: 0;
+          .boxshadow(5);
+        }
       }
 
       // Search field button
