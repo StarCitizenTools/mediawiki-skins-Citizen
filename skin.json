@@ -173,6 +173,8 @@
 			"+ext.relatedArticles.cards": "skinStyles/ext.relatedArticles.cards.less",
 			"+ext.relatedArticles.readMore": "skinStyles/ext.relatedArticles.readMore.less",
 			"+ext.translate": "skinStyles/ext.translate.less",
+			"+ext.translate.editor": "skinStyles/ext.translate.editor.less",
+			"+ext.translate.loader": "skinStyles/ext.translate.loader.less",
 			"+ext.translate.special.translate": "skinStyles/ext.translate.special.translate.less",
 			"+ext.translate.messagetable": "skinStyles/ext.translate.messagetable.less",
 			"+ext.translate.tag.languages": "skinStyles/ext.translate.tag.languages.less",
