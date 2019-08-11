@@ -63,7 +63,8 @@
 				"watch": "resources/images/icons/eye.svg",
 				"unwatch": "resources/images/icons/eyeClosed.svg",
 				"talk": "resources/images/icons/discussion.svg",
-				"nstab-main": "resources/images/icons/article.svg"
+				"nstab-main": "resources/images/icons/article.svg",
+				"translate": "resources/images/icons/language.svg"
 			}
 		},
 		"skins.citizen.icons.p": {
