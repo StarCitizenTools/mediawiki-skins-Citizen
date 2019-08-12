@@ -155,6 +155,28 @@
   }
 }
 
+.suggestions {
+  .boxshadow(4);
+
+  .suggestions-results {
+    border: 0;
+
+    .suggestions-result {
+      padding: @margin-side / 2  15px;
+    }
+  }
+
+  .suggestions-special {
+    padding: @margin-side / 2  15px;
+    border: 0;
+    background-color: @base-90;
+  }
+
+  .suggestions-result-current {
+    background-color: @accent-10;
+  }
+}
+
 // RTL tweaks
 .rtl {
   #site-search {
