@@ -32,6 +32,11 @@
 	padding: @content-margin-top 0 0 0;
 	display: flex;
 	width: auto;
+	visibility: hidden; // Hide dots
+
+	> * {
+		visibility: visible;
+	}
 }
 
 .mw-pt-languages-selected,
@@ -45,7 +50,7 @@
 }
 
 .mw-pt-progress {
-	margin: 0 @margin-side / 2 @margin-side / 2 0;
+	margin: 0 0 @margin-side / 2 0;
 	padding: @margin-side / 4 @margin-side / 2;
   display: block;
   border: 1px solid @base-90;
