@@ -6,6 +6,10 @@
 @import '../resources/variables.less';
 
 .ve-activated {
+	.mw-header-container {
+		background-color: white;
+	}
+
 	#mw-sidebar-sitename {
 		top: @sidebar-sitename-height + @header-height * 2 + @margin-side;
 	}
@@ -14,6 +18,18 @@
 		z-index: 1; // Fix collision
 		pointer-events: auto;
 		opacity: 1;
+	}
+
+	#mw-bottombar {
+		display: none;
+	}
+}
+
+.ve-ui-overlay {
+	font-family: @fonts;
+	
+	&-global {
+		z-index: 12; // Higher than header
 	}
 }
 

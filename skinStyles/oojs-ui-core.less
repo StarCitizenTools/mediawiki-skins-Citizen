@@ -1,7 +1,10 @@
 /*
- * Citizen - OOJS-UI Core Styles
+ * Citizen - OOJS-UI Styles
  * https://starcitizen.tools
 */
+
+@import '../resources/variables.less';
+@import '../resources/mixins.less';
 
 /*!
  * Based on OOUI v0.26.4
@@ -14,11 +17,32 @@
  * Date: 2018-04-17T22:24:02Z
  */
 
-@import '../resources/variables.less';
-@import '../resources/mixins.less';
+.oo-ui-popupWidget-popup {
+ border: 0;
+ border-radius: 0;
+ .boxshadow(4);
+}
 
- .oo-ui-popupWidget-popup {
-   border: 0;
-   border-radius: 0;
-   .boxshadow(4);
- }
+.oo-ui-buttonElement > .oo-ui-buttonElement-button {
+  border-radius: 0;
+}
+
+.oo-ui-buttonElement-framed > .oo-ui-buttonElement-button {
+ border-radius: 0;
+}
+
+.oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button {
+    background-color: @base-80;
+    border-color: @base-80;
+
+    &:hover {
+      border-color: @base-100;
+      .boxshadow(3);
+    }
+}
+
+.oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button:active,
+.oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button:active:focus,
+.oo-ui-buttonElement-framed.oo-ui-widget-enabled.oo-ui-buttonElement-pressed > .oo-ui-buttonElement-button {
+  border-color: #c8ccd1;
+}
