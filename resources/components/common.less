@@ -119,6 +119,22 @@ a {
 			color: @color-link-active;
 		}
 	}
+
+	&.mw-selflink {
+		color: inherit;
+		font-weight: bold;
+		text-decoration: inherit;
+
+		&:hover {
+			cursor: inherit;
+			text-decoration: inherit;
+		}
+
+		&:active,
+		&:visited {
+			color: inherit;
+		}
+	}
 }
 
 .error {
@@ -234,7 +250,7 @@ a {
 				justify-content: space-between;
 			}
 
-			a:not(.external) {
+			a:not(.external):not(.selflink) {
 				.link-content-text(@color-link-active);
 
 				&.new {
@@ -281,7 +297,7 @@ a {
 				}
 			}
 
-			.toc {
+			#toc {
 				position: fixed;
 				max-width: 450px;
 				height: ~'calc( 100vh - @{header-height} * 2 - @{margin-side} * 4 )';
