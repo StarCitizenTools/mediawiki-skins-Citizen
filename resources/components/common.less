@@ -341,11 +341,24 @@ a {
 					display: flex;
 				}
 
+				li {
+					color: @base-50;
+				}
+
+				li.active {
+					color: @accent-50!important;
+
+					> a {
+						color: inherit!important;
+					}
+				}
+
 				a {
 						display: inline-block;
 						margin-top: @content-margin-top;
 						color: @base-50;
 						background: 0;
+						transition-duration: 0s!important; // Turn off transitions
 
 						&:hover {
 							color: @base-30!important;

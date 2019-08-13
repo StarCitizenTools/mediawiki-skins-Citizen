@@ -34,7 +34,8 @@
 		"skins.citizen.js": {
 			"scripts": [
 				"resources/main.js",
-				"resources/scripts/Header.js"
+				"resources/scripts/Header.js",
+				"resources/scripts/ToC.js"
 			]
 		},
 		"skins.citizen.icons": {
