@@ -10,6 +10,11 @@
 	"requires": {
 		"MediaWiki": ">= 1.31.0"
 	},
+	"config": {
+		"MFEnableManifest": true,
+		"MFManifestThemeColor": "#131a21",
+		"MFManifestBackgroundColor": "#fff"
+	},
 	"ValidSkinNames": {
 		"citizen": "Citizen"
 	},
@@ -200,7 +205,11 @@
 	"AutoloadClasses": {
 		"SkinCitizen": "includes/SkinCitizen.php",
 		"CitizenTemplate": "includes/CitizenTemplate.php",
-		"CitizenHooks": "includes/CitizenHooks.php"
+		"CitizenHooks": "includes/CitizenHooks.php",
+		"ApiWebappManifest": "includes/api/ApiWebappManifest.php"
+	},
+	"APIModules": {
+		"webapp-manifest": "ApiWebappManifest"
 	},
 	"Hooks": {
 		"ThumbnailBeforeProduceHTML": [

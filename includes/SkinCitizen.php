@@ -24,6 +24,21 @@ class SkinCitizen extends SkinTemplate {
 			'IE=edge'
 		);
 
+		if ( $this->getConfig()->get( 'MFEnableManifest' ) ) {
+			$out->addLink(
+				[
+					'rel' => 'manifest',
+					'href' => wfExpandUrl(
+						wfAppendQuery(
+							wfScript( 'api' ),
+							[ 'action' => 'webapp-manifest' ]
+						),
+						PROTO_RELATIVE
+					)
+				]
+			);
+		}
+
 		$out->addModuleStyles( [
 			'mediawiki.skinning.content.externallinks',
 			'skins.citizen',
