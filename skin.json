@@ -38,6 +38,11 @@
 				"resources/scripts/ToC.js"
 			]
 		},
+		"skins.citizen.bpd": {
+			"scripts": [
+				"resources/lazyload.js"
+			]
+		},
 		"skins.citizen.icons": {
 			"class": "ResourceLoaderImageModule",
 			"selector": "#citizen-ui-{name} > *:after",
@@ -194,7 +199,13 @@
 	},
 	"AutoloadClasses": {
 		"SkinCitizen": "includes/SkinCitizen.php",
-		"CitizenTemplate": "includes/CitizenTemplate.php"
+		"CitizenTemplate": "includes/CitizenTemplate.php",
+		"CitizenHooks": "includes/CitizenHooks.php"
+	},
+	"Hooks": {
+		"ThumbnailBeforeProduceHTML": [
+			"CitizenHooks::ThumbnailBeforeProduceHTML"
+		]
 	},
 	"manifest_version": 1
 }

@@ -43,6 +43,11 @@ class SkinCitizen extends SkinTemplate {
 		] );
 	}
 
+	public static function BeforePageDisplay($out, $skin) {
+			$out->addModules( 'skins.citizen.bpd' );
+			return true;
+	}
+
 	/**
 	 * @param $out OutputPage
 	 */
