@@ -23,7 +23,11 @@ class SkinCitizen extends SkinTemplate {
 		$out->addMeta( 'http:X-UA-Compatible',
 			'IE=edge'
 		);
-
+		// Theme color
+		$out->addMeta( 'theme_color',
+			$this->getConfig()->get( 'MFManifestThemeColor' )
+		);
+		// Generate manifest
 		if ( $this->getConfig()->get( 'MFEnableManifest' ) ) {
 			$out->addLink(
 				[
