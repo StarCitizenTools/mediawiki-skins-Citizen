@@ -24,7 +24,7 @@ class SkinCitizen extends SkinTemplate {
 			'IE=edge'
 		);
 		// Theme color
-		$out->addMeta( 'theme_color',
+		$out->addMeta( 'theme-color',
 			$this->getConfig()->get( 'MFManifestThemeColor' )
 		);
 		// Generate manifest

@@ -13,6 +13,7 @@ class ApiWebappManifest extends ApiBase {
 		$config = $this->getConfig();
 		$resultObj = $this->getResult();
 		$resultObj->addValue( null, 'name', $config->get( 'Sitename' ) );
+		$resultObj->addValue( null, 'short_name', $config->get( 'Sitename' ) ); // Might as well add shortname
 		$resultObj->addValue( null, 'orientation', 'portrait' );
 		$resultObj->addValue( null, 'dir', $config->get( 'ContLang' )->getDir() );
 		$resultObj->addValue( null, 'lang', $config->get( 'LanguageCode' ) );
