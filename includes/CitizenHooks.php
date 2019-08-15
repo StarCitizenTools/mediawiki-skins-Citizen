@@ -32,20 +32,38 @@ class CitizenHooks {
 		return true;
 	}
 
+
+	public static function onOutputPageBeforeHTML( &$out, &$text ) {
+
+		return true;
+	}
+
 	/**
 	 * Lazyload images
 	 * Modified from the Lazyload extension
+	 * Looks for thumbnail and swap src to data-src
 	 */
 	public static function ThumbnailBeforeProduceHTML($thumb, &$attribs, &$linkAttribs) {
-		global $wgRequest, $wgTitle;
-		if (defined('MW_API') && $wgRequest->getVal('action') === 'parse') return true;
-		if (isset($wgTitle) && $wgTitle->getNamespace() === NS_FILE) return true;
-		$attribs['data-src'] = $attribs['src'];
 
-		$attribs['src'] = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-		if (isset($attribs['srcset'])) {
-				$attribs['data-srcset'] = $attribs['srcset'];
-				unset($attribs['srcset']);
+		$file = $thumb->getFile();
+
+		if ( $file ) {
+			global $wgRequest, $wgTitle;
+			if (defined('MW_API') && $wgRequest->getVal('action') === 'parse') return true;
+			if (isset($wgTitle) && $wgTitle->getNamespace() === NS_FILE) return true;
+
+			// Set lazy class for the img
+			$attribs['class'] = 'lazy';
+			// Native API
+			$attribs['loading'] = 'lazy';
+			
+			$attribs['data-src'] = $attribs['src'];
+
+			$attribs['src'] = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+			if (isset($attribs['srcset'])) {
+					$attribs['data-srcset'] = $attribs['srcset'];
+					unset($attribs['srcset']);
+			}
 		}
 		return true;
 	}

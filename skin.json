@@ -216,6 +216,9 @@
 		"BeforePageDisplay": [
 			"CitizenHooks::BeforePageDisplay"
 		],
+		"onOutputPageBeforeHTML": [
+			"CitizenHooks::onOutputPageBeforeHTML"
+		],
 		"ThumbnailBeforeProduceHTML": [
 			"CitizenHooks::ThumbnailBeforeProduceHTML"
 		]
