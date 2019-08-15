@@ -1,0 +1,36 @@
+//
+// Citizen - Wikitable Styles
+// https://starcitizen.tools
+//
+
+table.wikitable {
+  background-color: transparent;
+  color: @base-20;
+  border: 0;
+  tr {
+    vertical-align: top;
+
+    th {
+      padding: @margin-side / 2 @margin-side @margin-side / 2 0;
+      border: 0;
+      border-top: 2px solid currentColor;
+      color: @base-30;
+      background-color: transparent;
+      font-size: @content-caption-size;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-align: left;
+    }
+
+    td {
+      border: 0;
+      border-bottom: 1px solid @base-80;
+      padding: @margin-side / 2 @margin-side @margin-side / 2 0;
+      font-size: @content-monospace-size;
+    }
+
+    &:hover {
+      background-color: @base-90;
+    }
+  }
+}

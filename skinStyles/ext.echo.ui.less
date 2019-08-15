@@ -1,0 +1,41 @@
+/*
+ * Citizen - Echo Styles
+ * https://starcitizen.tools
+*/
+
+@import '../resources/variables.less';
+@import '../resources/mixins.less';
+
+.mw-echo-ui-overlay {
+	z-index: 6;
+}
+
+.mw-echo-ui-notificationBadgeButtonPopupWidget-popup > .oo-ui-popupWidget-popup > .oo-ui-popupWidget-head {
+	position: relative;
+	z-index: 2;
+	border: 0!important;
+	.boxshadow(2);
+}
+
+.mw-echo-ui-notificationBadgeButtonPopupWidget-popup > .oo-ui-popupWidget-popup > .oo-ui-popupWidget-footer {
+	border-color: @base-80!important;
+}
+
+// 500px or below will break the message box, +40px margin
+@media only screen and (max-width: 540px) {
+	.mw-echo-ui-notificationBadgeButtonPopupWidget-popup {
+		left: 0!important;
+
+		> .oo-ui-popupWidget-popup {
+			width: auto!important;
+
+			> .oo-ui-popupWidget-body {
+				width: auto!important;
+			}
+		}
+
+    > .oo-ui-popupWidget-anchor {
+      display: none;
+    }
+	}
+}

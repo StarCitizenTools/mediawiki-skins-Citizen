@@ -1,0 +1,220 @@
+//
+// Citizen - Footer Styles
+// https://starcitizen.tools
+//
+
+
+#footer {
+  z-index: 9; // High enough so it covers the floating UI
+  overflow: hidden; //stop background hacks from destroying viewbox
+  width: 100vw;
+  position: relative;
+  direction: ltr;
+  margin-top: @margin-side * 2;
+  color: @color-footer-text;
+  background: @color-footer-background-50;
+  font-size: @ui-menu-text;
+  line-height: @footer-line-height;
+
+  a {
+    color: @color-footer-link;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: @color-footer-link-active;
+      text-decoration: none;
+    }
+  }
+
+  ul, li {
+    margin: 0;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  div {
+    display: flex;
+  }
+
+  // Bless Flexbox for saving me from PHP nightmare
+  // OPTIMIZE: Implement nightmare
+  &-list {
+    margin: 0 auto!important;
+    max-width: @footer-width;
+    display: flex;
+    flex-wrap: wrap;
+
+    > li {
+      position: relative;
+      padding-left: @margin-side;
+      padding-right: @margin-side;
+    }
+
+    #lastmod {
+      order: 1;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      display: flex;
+
+      a {
+        margin-right: 5px;
+      }
+
+      // Change icon
+      &:before {
+        margin-right: @icon-padding;
+        .resource-loader-list-icon;
+        opacity: @opacity-icon;
+      }
+
+      // Background
+      &:after {
+        content: "";
+        background-color: @color-footer-background-60;
+        height: 100%;
+        width: 600vw; // so long so it is always there
+        top: 0;
+        margin: 0 -100vw; // so long so you can't see the end
+        display: block;
+        z-index: -1;
+        position: absolute;
+        overflow: hidden; // now you literally can't see the end
+      }
+    }
+
+    #sitelogo {
+      order: 2;
+    }
+
+    #sitetitle {
+      order: 3;
+      width: 100%;
+      margin-top: @margin-side * 3;
+      margin-bottom: @margin-side / 2;
+
+      .mw-wiki-title {
+        color: @base-90;
+        font-size: 20px;
+        letter-spacing: 2px;
+      }
+    }
+
+    #sitedesc {
+      order: 4;
+      margin-top: @margin-side / 2;
+    }
+
+    #about {
+      order: 10;
+    }
+
+    #privacy {
+      order: 11;
+    }
+
+    #disclaimer {
+      order: 12;
+    }
+
+    #about,
+    #privacy,
+    #disclaimer {
+      margin: 0 @margin-side / 2;
+      padding: 0;
+
+      a {
+        padding: 10px;
+        display: block;
+      }
+    }
+
+    #sitedesc,
+    #copyright {
+      margin-bottom: @margin-side / 2;
+      width: 100%;
+    }
+
+    #copyright{
+      margin-top: @margin-side;
+      order: 20;
+      opacity: 0.5;
+      font-size: 12px;
+    }
+  }
+
+  &-container-icons {
+    margin-top: @margin-side * 2;
+    background-color: @color-footer-background-40;
+
+    #footer-bottom-container {
+      margin: 0 auto;
+      padding: @margin-side / 2 0;
+      width: 100%;
+      max-width: @footer-width;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+
+      #mw-footer-tagline {
+        padding: 10px 20px;
+      }
+
+      #footer-icons {
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        a {
+          padding: 15px 10px;
+          height: 50px;
+          display: block;
+          opacity: 0.5;
+          transition: @transition-opacity;
+
+          &:before {
+            content:"";
+            .resource-loader-icon;
+            display: block;
+            background-size: contain;
+          }
+
+          &:hover {
+            opacity: 0.7;
+          }
+
+
+          img {
+            display: none; // hide placeholder images
+          }
+        }
+      }
+    }
+  }
+
+  // Icon styles
+  &-madebyico a {
+    width: 50px;
+  }
+
+  &-gdprcomplianceico a {
+    width: 50px;
+  }
+
+  &-monitoredbyico a {
+    width: 95px;
+    margin-bottom: -3px; //dirty fix
+  }
+
+  &-poweredbyico a {
+    width: 95px;
+  }
+
+  &-copyrightico a {
+    width: 110px;
+  }
+}
