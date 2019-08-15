@@ -16,7 +16,9 @@ if( typeof IntersectionObserver !== "undefined" && "forEach" in NodeList.prototy
         changes.forEach(function(change) {
             if(change.isIntersecting) {
                 change.target.setAttribute("src", change.target.getAttribute("data-src"));
-                change.target.setAttribute("srcset", change.target.getAttribute("data-srcset"));
+                if(change.target.hasAttribute("srcset")) {
+                    change.target.setAttribute("srcset", change.target.getAttribute("data-srcset"));
+                }
                 observer.unobserve(change.target);
             }
         });

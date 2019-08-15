@@ -42,7 +42,7 @@ class CitizenHooks {
 		if (isset($wgTitle) && $wgTitle->getNamespace() === NS_FILE) return true;
 		$attribs['data-src'] = $attribs['src'];
 
-		//$attribs['src'] = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+		$attribs['src'] = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 		if (isset($attribs['srcset'])) {
 				$attribs['data-srcset'] = $attribs['srcset'];
 				unset($attribs['srcset']);
