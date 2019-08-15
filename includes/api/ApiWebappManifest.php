@@ -18,8 +18,8 @@ class ApiWebappManifest extends ApiBase {
 		$resultObj->addValue( null, 'dir', $config->get( 'ContLang' )->getDir() );
 		$resultObj->addValue( null, 'lang', $config->get( 'LanguageCode' ) );
 		$resultObj->addValue( null, 'display', 'standalone' ); // Changed to standalone to provide better experience
-		$resultObj->addValue( null, 'theme_color', $config->get( 'MFManifestThemeColor' ) );
-		$resultObj->addValue( null, 'background_color', $config->get( 'MFManifestBackgroundColor' ) );
+		$resultObj->addValue( null, 'theme_color', $config->get( 'CitizenManifestThemeColor' ) );
+		$resultObj->addValue( null, 'background_color', $config->get( 'CitizenManifestBackgroundColor' ) );
 		$resultObj->addValue( null, 'start_url', Title::newMainPage()->getLocalUrl() );
 
 		$icons = [];

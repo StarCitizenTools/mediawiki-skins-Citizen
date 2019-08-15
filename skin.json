@@ -11,9 +11,10 @@
 		"MediaWiki": ">= 1.31.0"
 	},
 	"config": {
-		"MFEnableManifest": true,
-		"MFManifestThemeColor": "#131a21",
-		"MFManifestBackgroundColor": "#fff"
+		"CitizenThemeColor": "#131a21",
+		"CitizenEnableManifest": true,
+		"CitizenManifestThemeColor": "#131a21",
+		"CitizenManifestBackgroundColor": "#fff"
 	},
 	"ValidSkinNames": {
 		"citizen": "Citizen"
@@ -39,13 +40,13 @@
 		"skins.citizen.js": {
 			"scripts": [
 				"resources/main.js",
-				"resources/scripts/Header.js",
-				"resources/scripts/ToC.js"
+				"resources/scripts/header.js",
+				"resources/scripts/toc.js"
 			]
 		},
 		"skins.citizen.bpd": {
 			"scripts": [
-				"resources/lazyload.js"
+				"resources/scripts/lazyload.js"
 			]
 		},
 		"skins.citizen.icons": {
@@ -212,6 +213,9 @@
 		"webapp-manifest": "ApiWebappManifest"
 	},
 	"Hooks": {
+		"BeforePageDisplay": [
+			"CitizenHooks::BeforePageDisplay"
+		],
 		"ThumbnailBeforeProduceHTML": [
 			"CitizenHooks::ThumbnailBeforeProduceHTML"
 		]

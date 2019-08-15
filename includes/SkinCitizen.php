@@ -25,10 +25,10 @@ class SkinCitizen extends SkinTemplate {
 		);
 		// Theme color
 		$out->addMeta( 'theme-color',
-			$this->getConfig()->get( 'MFManifestThemeColor' )
+			$this->getConfig()->get( 'CitizenThemeColor' )
 		);
 		// Generate manifest
-		if ( $this->getConfig()->get( 'MFEnableManifest' ) ) {
+		if ( $this->getConfig()->get( 'CitizenEnableManifest' ) ) {
 			$out->addLink(
 				[
 					'rel' => 'manifest',
@@ -60,11 +60,6 @@ class SkinCitizen extends SkinTemplate {
 		$out->addModules( [
 			'skins.citizen.js'
 		] );
-	}
-
-	public static function BeforePageDisplay($out, $skin) {
-			$out->addModules( 'skins.citizen.bpd' );
-			return true;
 	}
 
 	/**
