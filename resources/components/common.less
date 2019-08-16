@@ -519,6 +519,77 @@ a {
     img {
         vertical-align: middle;
     }
+
+    div.tleft,
+    div.floatleft,
+    table.floatleft,
+    div.tright,
+    div.floatright,
+    table.floatright {
+        z-index: 2;
+        position: relative;
+        margin: 0.6rem 1.4rem;
+        transition: @transition-margin;
+    }
+
+    div.tleft,
+    div.floatleft,
+    table.floatleft {
+        margin-left: @negative-margin;
+    }
+
+    div.tright,
+    div.floatright,
+    table.floatright {
+        margin-right: @negative-margin;
+    }
+
+    figcaption,
+    .thumbcaption {
+        margin: @content-margin-top / 2 0 0;
+        color: @base-30;
+        font-size: @content-caption-size;
+    }
+
+    .thumb {
+        >.thumbinner {
+            >a {
+                transition: @transition-box-shadow-quick  !important;
+
+                &:hover:not(.lazy) {
+                    background: 0 !important;
+                    .boxshadow(2);
+                }
+
+                &:before {
+                    content: none;
+                }
+
+                &.new {
+                    padding: @margin-side / 2;
+                    background-color: @base-80;
+                    font-size: @content-caption-size;
+                }
+            }
+        }
+    }
+
+    a.image {
+        display: block;
+        overflow: hidden;
+        width: fit-content; // Get rid of extra pixels from thumbinner
+
+        img {
+            filter: none;
+            transition: @transition-filter;
+
+            &.lazy {
+                display: block;
+                background-color: @base-90;
+                filter: blur(20px);
+            }
+        }
+    }
 }
 
 // Namespace button
@@ -635,77 +706,6 @@ a {
                     }
                 }
             }
-        }
-    }
-}
-
-div.tleft,
-div.floatleft,
-table.floatleft,
-div.tright,
-div.floatright,
-table.floatright {
-    z-index: 2;
-    position: relative;
-    margin: 0.6rem 1.4rem;
-    transition: @transition-margin;
-}
-
-div.tleft,
-div.floatleft,
-table.floatleft {
-    margin-left: @negative-margin;
-}
-
-div.tright,
-div.floatright,
-table.floatright {
-    margin-right: @negative-margin;
-}
-
-figcaption,
-.thumbcaption {
-    margin: @content-margin-top / 2 0 0;
-    color: @base-30;
-    font-size: @content-caption-size;
-}
-
-.thumb {
-    >.thumbinner {
-        >a {
-            transition: @transition-box-shadow-quick !important;
-
-            &:hover:not(.lazy) {
-                background: 0 !important;
-                .boxshadow(2);
-            }
-
-            &:before {
-                content: none;
-            }
-
-            &.new {
-                padding: @margin-side / 2;
-                background-color: @base-80;
-                font-size: @content-caption-size;
-            }
-        }
-    }
-}
-
-a.image {
-    display: block;
-    overflow: hidden;
-    width: fit-content; // Get rid of extra pixels from thumbinner
-
-    img {
-        filter: none;
-        transition: @transition-filter;
-
-        &.lazy {
-            display: block;
-            background-color: @base-90;
-            filter: blur(20px);
         }
     }
 }
