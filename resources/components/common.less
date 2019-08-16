@@ -675,6 +675,17 @@ figcaption,
         >a {
             display: block;
             overflow: hidden;
+            width: fit-content; // Get rid of extra pixels from thumbinner
+            transition: @transition-box-shadow-quick!important;
+
+            &:hover:not(.lazy) {
+            	background: 0!important;
+            	.boxshadow(2);
+            }
+
+            &:before {
+            	content: none;
+            }
 
             &.new {
                 padding: @margin-side / 2;
@@ -690,6 +701,7 @@ figcaption,
 	transition: @transition-filter;
 
 	&.lazy {
+		display: block;
 		background-color: @base-90;
 		filter: blur(20px);
 	}

@@ -55,7 +55,7 @@ class CitizenHooks {
 			$attribs['data-src'] = $attribs['src'];
 
 			// Replace src with small size image
-			$attribs['src'] = preg_replace('/\/+(\d+)px-/s', '/10px-', $attribs['src']);
+			$attribs['src'] = preg_replace('#/\d+px-#', '/10px-', $attribs['src']);
 			// $attribs['src'] = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
 			if (isset($attribs['srcset'])) {
