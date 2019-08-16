@@ -523,6 +523,7 @@ a {
 
 // Namespace button
 #p-namespaces {
+	position: relative;
     float: right;
     margin: 0 @negative-margin;
     padding: @margin-side;
@@ -676,6 +677,11 @@ figcaption,
         background-color: @base-80;
         font-size: @content-caption-size;
     }
+}
+
+// Hide edit button when user is not logged in
+.not-logged .mw-editsection {
+    display: none!important;
 }
 
 @media only screen and (max-width: @screen0) {

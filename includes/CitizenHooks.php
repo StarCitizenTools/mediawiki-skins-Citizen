@@ -32,12 +32,6 @@ class CitizenHooks {
 		return true;
 	}
 
-
-	public static function onOutputPageBeforeHTML( &$out, &$text ) {
-
-		return true;
-	}
-
 	/**
 	 * Lazyload images
 	 * Modified from the Lazyload extension
@@ -54,9 +48,10 @@ class CitizenHooks {
 
 			// Set lazy class for the img
 			$attribs['class'] = 'lazy';
+			
 			// Native API
 			$attribs['loading'] = 'lazy';
-			
+
 			$attribs['data-src'] = $attribs['src'];
 
 			$attribs['src'] = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
