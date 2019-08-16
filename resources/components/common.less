@@ -274,10 +274,10 @@ a {
                 }
 
                 /* Doesn't work for some reason
-				&:visited {
-					background-image: linear-gradient(to right, @color-link-visited 0, @color-link-visited 100%)!important;
-				}
-				*/
+                &:visited {
+                    background-image: linear-gradient(to right, @color-link-visited 0, @color-link-visited 100%)!important;
+                }
+                */
             }
 
             .mw-editsection {
@@ -556,9 +556,13 @@ a {
             >a {
                 transition: @transition-box-shadow-quick  !important;
 
-                &:hover:not(.lazy) {
+                &:hover:not(.lazy):not(.new) {
                     background: 0 !important;
                     .boxshadow(2);
+
+                    img {
+                        transform: scale(1.1);
+                    }
                 }
 
                 &:before {
@@ -567,8 +571,11 @@ a {
 
                 &.new {
                     padding: @margin-side / 2;
+                    display: block;
                     background-color: @base-80;
                     font-size: @content-caption-size;
+                    transition: @transition-background-quick,
+                        @transition-color-quick !important;
                 }
             }
         }
@@ -581,12 +588,12 @@ a {
 
         img {
             filter: none;
-            transition: @transition-filter;
+            transition: @transition-filter, @transition-transform-quick;
 
             &.lazy {
                 display: block;
                 background-color: @base-90;
-                filter: blur(20px);
+                filter: blur(8px);
             }
         }
     }
@@ -763,74 +770,98 @@ a {
         display: block !important; // Hide until everything is loaded
     }
 
-    .mw-body-content #mw-content-text .mw-parser-output #toc {
+    .mw-body-content {
 
-        display: none;
-        background: @base-100;
-        z-index: 2;
-        height: 100vh;
-        margin-top: -@header-height;
-        padding: 0;
-        .boxshadow(3);
-
-        &:before,
-        &:after {
-            content: unset; // Disable fade
+        div.tleft,
+        div.floatleft,
+        table.floatleft {
+            margin-left: 0;
         }
 
-        .toctoggle {
-            display: block;
-            font-size: 0;
+        div.tright,
+        div.floatright,
+        table.floatright {
+            margin-right: 0;
+        }
 
-            a {
-                position: fixed;
-                z-index: 7;
-                right: 0;
-                bottom: 0;
-                margin: @margin-side;
-                padding: 0 @margin-side / 2;
-                width: 39px;
-                height: 56px;
+        div.tleft,
+        div.floatleft,
+        table.floatleft,
+        div.tright,
+        div.floatright,
+        table.floatright {
+            z-index: 0; // Reset so it doesn't cover ToC
+            position: relative;
+        }
+
+        #mw-content-text .mw-parser-output #toc {
+            display: none;
+            background: @base-100;
+            z-index: 2;
+            height: 100vh;
+            margin-top: -@header-height;
+            padding: 0;
+            .boxshadow(3);
+
+            &:before,
+            &:after {
+                content: unset; // Disable fade
+            }
+
+            .toctoggle {
                 display: block;
-                background-color: @base-90;
-                border-radius: 100%;
-                .boxshadow(4);
-                transform: translate(0px, @header-height + @margin-side);
-                transition: @transition-opacity, @transition-transform, @transition-box-shadow-quick;
-                transition-duration: 0.5s !important; // Override duration 0 for ToC
+                font-size: 0;
 
-                &:hover {
-                    .boxshadow(5);
+                a {
+                    position: fixed;
+                    z-index: 7;
+                    right: 0;
+                    bottom: 0;
+                    margin: @margin-side;
+                    padding: 0 @margin-side / 2;
+                    width: 39px;
+                    height: 56px;
+                    display: block;
+                    background-color: @base-90;
+                    border-radius: 100%;
+                    .boxshadow(4);
+                    transform: translate(0px, @header-height + @margin-side);
+                    transition: @transition-opacity, @transition-transform, @transition-box-shadow-quick;
+                    transition-duration: 0.5s !important; // Override duration 0 for ToC
+
+                    &:hover {
+                        .boxshadow(5);
+
+                        &:before {
+                            opacity: @opacity-icon-active;
+                        }
+                    }
 
                     &:before {
-                        opacity: @opacity-icon-active;
+                        .resource-loader-icon;
+                        display: block;
+                        opacity: @opacity-icon;
                     }
                 }
+            }
 
-                &:before {
-                    .resource-loader-icon;
-                    display: block;
-                    opacity: @opacity-icon;
+            .toctitle h2 {
+                display: none;
+            }
+
+            &.tochidden {
+                >ul {
+                    display: none !important; // Reset hide
+                    transform: translateX(300px + @margin-side);
                 }
             }
-        }
 
-        .toctitle h2 {
-            display: none;
-        }
-
-        &.tochidden {
             >ul {
-                display: none !important; // Reset hide
-                transform: translateX(300px + @margin-side);
+                margin: 0 @margin-side;
+                padding: @header-height + @margin-side 0 @header-height + @margin-side * 2; // More scroll spaces
+                transform: none;
+                transition: @transition-transform;
             }
-        }
-
-        >ul {
-            margin: 0 @margin-side;
-            padding: @header-height + @margin-side 0 @header-height + @margin-side * 2; // More scroll spaces
-            transform: none;
-            transition: @transition-transform;
         }
     }
 
@@ -839,35 +870,13 @@ a {
             transform: none;
         }
     }
-
-    div.tleft,
-    div.floatleft,
-    table.floatleft {
-        margin-left: 0;
-    }
-
-    div.tright,
-    div.floatright,
-    table.floatright {
-        margin-right: 0;
-    }
-
-    div.tleft,
-    div.floatleft,
-    table.floatleft,
-    div.tright,
-    div.floatright,
-    table.floatright {
-        z-index: 0; // Reset so it doesn't cover ToC
-        position: relative;
-    }
 }
 
 /*
 // Logged in styles
 .not-logged {
-	.mw-editsection {
-		display: none!important; // Hide edit icons when not logged in
-	}
+    .mw-editsection {
+        display: none!important; // Hide edit icons when not logged in
+    }
 }
 */
