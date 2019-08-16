@@ -48,13 +48,16 @@ class CitizenHooks {
 
 			// Set lazy class for the img
 			$attribs['class'] = 'lazy';
-			
+
 			// Native API
 			$attribs['loading'] = 'lazy';
 
 			$attribs['data-src'] = $attribs['src'];
 
-			$attribs['src'] = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+			// Replace src with small size image
+			$attribs['src'] = preg_replace('/\/+(\d+)px-/s', '/10px-', $attribs['src']);
+			// $attribs['src'] = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
 			if (isset($attribs['srcset'])) {
 					$attribs['data-srcset'] = $attribs['srcset'];
 					unset($attribs['srcset']);

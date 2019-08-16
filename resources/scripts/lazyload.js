@@ -13,6 +13,7 @@ if ("loading" in HTMLImageElement.prototype) {
         if (img.hasAttribute("data-srcset")) {
             img.setAttribute("srcset", img.getAttribute("data-srcset"));
         }
+        img.classList.remove("lazy");
     });
 } else {
     // IntersectionObserver API
@@ -27,6 +28,7 @@ if ("loading" in HTMLImageElement.prototype) {
                     if (change.target.hasAttribute("data-srcset")) {
                         change.target.setAttribute("srcset", change.target.getAttribute("data-srcset"));
                     }
+                    change.target.classList.remove("lazy");
                     observer.unobserve(change.target);
                 }
             });
