@@ -673,18 +673,15 @@ figcaption,
 .thumb {
     >.thumbinner {
         >a {
-            display: block;
-            overflow: hidden;
-            width: fit-content; // Get rid of extra pixels from thumbinner
-            transition: @transition-box-shadow-quick!important;
+            transition: @transition-box-shadow-quick !important;
 
             &:hover:not(.lazy) {
-            	background: 0!important;
-            	.boxshadow(2);
+                background: 0 !important;
+                .boxshadow(2);
             }
 
             &:before {
-            	content: none;
+                content: none;
             }
 
             &.new {
@@ -696,15 +693,21 @@ figcaption,
     }
 }
 
-.image img {
-	filter: none;
-	transition: @transition-filter;
+a.image {
+    display: block;
+    overflow: hidden;
+    width: fit-content; // Get rid of extra pixels from thumbinner
 
-	&.lazy {
-		display: block;
-		background-color: @base-90;
-		filter: blur(20px);
-	}
+    img {
+        filter: none;
+        transition: @transition-filter;
+
+        &.lazy {
+            display: block;
+            background-color: @base-90;
+            filter: blur(20px);
+        }
+    }
 }
 
 // Hide edit button when user is not logged in
