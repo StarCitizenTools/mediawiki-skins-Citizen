@@ -778,9 +778,10 @@ class CitizenTemplate extends BaseTemplate {
 				] );
 
 				// Site logo
-				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitelogo' ],
-					$this->getLogo()
-				);
+				// $linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitelogo' ],
+				// 	$this->getLogo()
+				// );
+				
 				// Site title
 				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitetitle' ],
 					$this->getSiteTitle('text')
