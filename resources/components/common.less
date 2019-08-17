@@ -518,13 +518,16 @@ a {
 
     dl,
     dd {
-    	margin: 0;
+        margin: 0;
     }
 
     img {
         vertical-align: middle;
     }
 
+    div.tnone,
+    div.floatnone,
+    table.floatnone,
     div.tleft,
     div.floatleft,
     table.floatleft,
@@ -537,12 +540,36 @@ a {
         transition: @transition-margin;
     }
 
+    div.tnone,
+    div.floatnone,
+    table.floatnone {
+        display: flex;
+        justify-content: center;
+
+        >* {
+            width: 100% !important;
+            height: auto;
+        }
+
+        .thumbinner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    div.tnone,
+    div.floatnone,
+    table.floatnone,
     div.tleft,
     div.floatleft,
     table.floatleft {
         margin-left: @negative-margin;
     }
 
+    div.tnone,
+    div.floatnone,
+    table.floatnone,
     div.tright,
     div.floatright,
     table.floatright {
@@ -580,7 +607,7 @@ a {
                     background-color: @base-80;
                     font-size: @content-caption-size;
                     transition: @transition-background-quick,
-                        @transition-color-quick !important;
+                        @transition-color-quick  !important;
                 }
             }
         }
@@ -722,6 +749,12 @@ a {
     }
 }
 
+.plainlist ol, .plainlist ul {
+    line-height: inherit;
+    list-style: none none;
+    margin: 0;
+}
+
 // Hide edit button when user is not logged in
 .not-logged .mw-editsection {
     display: none !important;
@@ -729,6 +762,9 @@ a {
 
 @media only screen and (max-width: @screen0) {
 
+    div.tnone,
+    div.floatnone,
+    table.floatnone,
     div.tleft,
     div.floatleft,
     table.floatleft,
@@ -768,6 +804,19 @@ a {
     #p-namespaces {
         margin: 0~"calc((100vw - @{page-width}) / -2)";
     }
+    .mw-body-content {
+	    div.tnone,
+	    div.floatnone,
+	    table.floatnone {
+	    	margin: 0.6rem ~"calc((100vw - @{page-width}) / -2)";
+
+	        a.image,
+	        a.image>img {
+	            width: 100% !important;
+	            height: auto !important;
+	        }
+	    }
+	}
 }
 
 @media only screen and (max-width: @screen3) {
