@@ -749,7 +749,8 @@ a {
     }
 }
 
-.plainlist ol, .plainlist ul {
+.plainlist ol,
+.plainlist ul {
     line-height: inherit;
     list-style: none none;
     margin: 0;
@@ -771,8 +772,8 @@ a {
     div.tright,
     div.floatright,
     table.floatright {
-        margin: 0.6rem -@margin-side  !important;
-        width: 100vw;
+        margin: 0.6rem -@margin-side !important;
+        width: 100vw !important;
         display: flex;
         justify-content: center;
         float: unset;
@@ -804,19 +805,21 @@ a {
     #p-namespaces {
         margin: 0~"calc((100vw - @{page-width}) / -2)";
     }
-    .mw-body-content {
-	    div.tnone,
-	    div.floatnone,
-	    table.floatnone {
-	    	margin: 0.6rem ~"calc((100vw - @{page-width}) / -2)";
 
-	        a.image,
-	        a.image>img {
-	            width: 100% !important;
-	            height: auto !important;
-	        }
-	    }
-	}
+    .mw-body-content {
+
+        div.tnone,
+        div.floatnone,
+        table.floatnone {
+            margin: 0.6rem~"calc((100vw - @{page-width}) / -2)";
+
+            a.image,
+            a.image>img {
+                width: 100% !important;
+                height: auto !important;
+            }
+        }
+    }
 }
 
 @media only screen and (max-width: @screen3) {
