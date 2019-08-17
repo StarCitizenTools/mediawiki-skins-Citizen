@@ -193,6 +193,7 @@
 			"+ext.popups.main": "skinStyles/ext.popups.main.less",
 			"+ext.relatedArticles.cards": "skinStyles/ext.relatedArticles.cards.less",
 			"+ext.relatedArticles.readMore": "skinStyles/ext.relatedArticles.readMore.less",
+			"+ext.Tabber": "skinStyles/ext.Tabber.less",
 			"+ext.translate": "skinStyles/ext.translate.less",
 			"+ext.translate.editor": "skinStyles/ext.translate.editor.less",
 			"+ext.translate.loader": "skinStyles/ext.translate.loader.less",
