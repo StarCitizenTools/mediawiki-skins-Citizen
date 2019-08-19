@@ -39,25 +39,22 @@ const ScrollSpy = () => {
 }
 
 const CheckToC = () => {
-    var ToC = document.getElementById("toc");
-    if (toc) {
+    if (document.getElementById("toc")) {
         SmoothScroll();
         ScrollSpy();
     }
 }
 
-function ready(callbackFunc) {
-    if (document.readyState !== 'loading') {
-        CheckToC();
-    } else if (document.addEventListener) {
-        // All modern browsers to register DOMContentLoaded
-        document.addEventListener('DOMContentLoaded', callbackFunc);
-    } else {
-        // Old IE browsers
-        document.attachEvent('onreadystatechange', function() {
-            if (document.readyState === 'complete') {
-                CheckToC();
-            }
-        });
-    }
+if (document.readyState !== 'loading') {
+    CheckToC();
+} else if (document.addEventListener) {
+    // All modern browsers to register DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', CheckToC);
+} else {
+    // Old IE browsers
+    document.attachEvent('onreadystatechange', function() {
+        if (document.readyState === 'complete') {
+            CheckToC();
+        }
+    });
 }

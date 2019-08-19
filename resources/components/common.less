@@ -942,14 +942,14 @@ a {
     }
 }
 
-@media only screen and (max-width: @screen4) {
+@media only screen and (min-width: @screen4) {
     div.tnone,
     div.floatnone,
     table.floatnone,
     div.tleft,
     div.floatleft,
     table.floatleft {
-        margin-left: @negative-margin;
+        margin-left: @negative-margin!important;
     }
 
     div.tnone,
@@ -958,7 +958,7 @@ a {
     div.tright,
     div.floatright,
     table.floatright {
-        margin-right: @negative-margin;
+        margin-right: @negative-margin!important;
     }
 }
 
