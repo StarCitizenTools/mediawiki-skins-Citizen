@@ -179,6 +179,7 @@
 	},
 	"ResourceModuleSkinStyles": {
 		"citizen": {
+			"+mediawiki.page.gallery.styles": "skinStyles/mediawiki.page.gallery.styles.less",
 			"+mediawiki.action.view.filepage": "skinStyles/mediawiki.action.view.filepage.less",
 			"+mediawiki.special.changeslist": "skinStyles/mediawiki.special.changeslist.less",
 			"+mediawiki.special.changeslist.enhanced": "skinStyles/mediawiki.special.changeslist.enhanced.less",

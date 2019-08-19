@@ -5,7 +5,6 @@
  * Lazyloading images with Native API or IntersectionObserver
  */
 
-
 // Native API
 if ("loading" in HTMLImageElement.prototype) {
     document.querySelectorAll("img.lazy").forEach(function(img) {
