@@ -942,6 +942,26 @@ a {
     }
 }
 
+@media only screen and (max-width: @screen4) {
+    div.tnone,
+    div.floatnone,
+    table.floatnone,
+    div.tleft,
+    div.floatleft,
+    table.floatleft {
+        margin-left: @negative-margin;
+    }
+
+    div.tnone,
+    div.floatnone,
+    table.floatnone,
+    div.tright,
+    div.floatright,
+    table.floatright {
+        margin-right: @negative-margin;
+    }
+}
+
 /*
 // Logged in styles
 .not-logged {
