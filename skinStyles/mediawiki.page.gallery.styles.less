@@ -7,7 +7,7 @@
 @import '../resources/mixins.less';
 
 ul.gallery {
-    margin: @content-margin-top * 2 @negative-margin;
+    margin: @content-margin-top * 2 @negative-margin!important;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
@@ -40,14 +40,14 @@ div.gallerytext {
     display: none;
 }
 
-@media only screen and (max-width: @footer-width) {
+@media only screen and (max-width: @screen1) {
     ul.gallery {
-        margin: @content-margin-top * 2 0;
+        margin: @content-margin-top * 2 0!important;
     }
 }
 
-@media only screen and (max-width: @footer-width) {
+@media only screen and (max-width: @screen2) {
     ul.gallery {
-        margin: @content-margin-top * 2 -@margin-side;
+        margin: @content-margin-top * 2 -@margin-side!important;
     }
 }
