@@ -1,6 +1,7 @@
 /*
 * Scroll up Header
 * Modified from https://codepen.io/sajjad/pen/vgEZNy
+* TODO: Convert to Vanilla JS
 */
 
 // Hide header on scroll down
