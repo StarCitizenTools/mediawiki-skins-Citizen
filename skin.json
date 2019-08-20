@@ -115,7 +115,8 @@
 			"images": {
 				"mainpage-description": "resources/images/icons/home.svg",
 				"recentchanges": "resources/images/icons/history.svg",
-				"randompage": "resources/images/icons/random.svg"
+				"randompage": "resources/images/icons/random.svg",
+				"help": "resources/images/icons/help.svg"
 			}
 		},
 		"skins.citizen.icons.t": {
@@ -126,6 +127,10 @@
 			"images": {
 				"whatlinkshere": "resources/images/icons/whatlinkshere.svg",
 				"recentchangeslinked": "resources/images/icons/history.svg",
+				"contributions": "resources/images/icons/contributions.svg",
+				"log": "resources/images/icons/journal.svg",
+				"blockip": "resources/images/icons/block.svg",
+				"userrights": "resources/images/icons/users.svg",
 				"upload": "resources/images/icons/upload.svg",
 				"specialpages": "resources/images/icons/specialpages.svg",
 				"print": "resources/images/icons/download.svg",
