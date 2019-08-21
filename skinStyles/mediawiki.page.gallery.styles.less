@@ -8,7 +8,7 @@
 
 ul.gallery {
     position: relative;
-    margin: @content-margin-top * 2 @negative-margin!important;
+    margin: @content-margin-top * 2 @negative-margin !important;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
@@ -27,6 +27,7 @@ li.gallerybox div.thumb {
 li.gallerybox,
 li.gallerybox>div {
     width: fit-content !important;
+    height: auto !important;
 }
 
 li.gallerybox,
@@ -43,12 +44,12 @@ div.gallerytext {
 
 @media only screen and (max-width: @screen2) {
     ul.gallery {
-        margin: @content-margin-top * 2 0!important;
+        margin: @content-margin-top * 2 0 !important;
     }
 }
 
 @media only screen and (max-width: @screen1) {
     ul.gallery {
-        margin: @content-margin-top * 2 -@margin-side!important;
+        margin: @content-margin-top * 2 -@margin-side !important;
     }
 }

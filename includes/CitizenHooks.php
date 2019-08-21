@@ -53,10 +53,20 @@ class CitizenHooks {
 			$attribs['loading'] = 'lazy';
 
 			$attribs['data-src'] = $attribs['src'];
+			$attribs['data-width'] = $attribs['width'];
+			$attribs['data-height'] = $attribs['height'];
 
 			// Replace src with small size image
 			$attribs['src'] = preg_replace('#/\d+px-#', '/10px-', $attribs['src']);
 			// $attribs['src'] = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
+			// So that the 10px thumbnail is enlarged to the right size
+			$attribs['width'] = $attribs['data-width'];
+			$attribs['height'] = $attribs['data-height'];
+
+			// Clean up
+			unset($attribs['data-width']);
+			unset($attribs['data-height']);
 
 			if (isset($attribs['srcset'])) {
 					$attribs['data-srcset'] = $attribs['srcset'];
