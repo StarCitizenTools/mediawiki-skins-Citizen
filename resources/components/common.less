@@ -523,8 +523,6 @@ a {
 
     img {
         vertical-align: middle;
-        max-width: 100vw;
-        height: auto;
     }
 
     .mw-references-wrap {
@@ -597,6 +595,8 @@ a {
     }
 
     .thumb {
+        overflow: hidden;
+        
         >.thumbinner {
             >a {
                 transition: @transition-box-shadow-quick  !important;
