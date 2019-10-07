@@ -310,7 +310,15 @@
 
 @media only screen and (max-width: @screen2) {
   .mw-header-container {
-    background: linear-gradient(#fff 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.01) 100%);
+    background: @base-100;
+
+    .nav-down {
+      border-bottom: 1px solid @base-80;
+      .boxshadow(2);
+    }
+    .nav-up {
+      box-shadow: none;
+    }
   }
 }
 
