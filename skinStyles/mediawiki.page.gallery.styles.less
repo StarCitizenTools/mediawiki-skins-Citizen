@@ -8,7 +8,7 @@
 
 ul.gallery {
     position: relative;
-    margin: @content-margin-top * 2 @negative-margin !important;
+    margin: @content-margin-top * 2 @negative-margin  !important;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
@@ -45,11 +45,19 @@ div.gallerytext {
 @media only screen and (max-width: @screen2) {
     ul.gallery {
         margin: @content-margin-top * 2 0 !important;
+        overflow: hidden; // Hack to avoid viewpoint move
+    }
+
+    li.gallerybox,
+    li.gallerybox div,
+    li.gallerybox a.image,
+    li.gallerybox a.image img {
+        transition: none; // Performance tweaks
     }
 }
 
 @media only screen and (max-width: @screen1) {
     ul.gallery {
-        margin: @content-margin-top * 2 -@margin-side !important;
+        margin: @content-margin-top * 2 -@margin-side  !important;
     }
 }
