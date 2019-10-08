@@ -32,11 +32,14 @@ function hasScrolled() {
     if (st > lastScrollTop && st > navbarHeight){
         // Scroll Down
         $('header').removeClass('nav-down').addClass('nav-up');
+    } else if (document.scrollTop == 0){
+    	// Remove class when header is back in place
+    	$('header').removeClass('nav-down')
     } else {
-        // Scroll Up
-        if(st + $(window).height() < $(document).height()) {
-            $('header').removeClass('nav-up').addClass('nav-down');
-        }
+    	// Scroll Up
+    	if(st + $(window).height() < $(document).height()) {
+        	$('header').removeClass('nav-up').addClass('nav-down');
+    	}
     }
 
     lastScrollTop = st;
