@@ -28,13 +28,13 @@ function hasScrolled() {
     if (Math.abs(lastScrollTop - st) <= delta)
         return;
 
-    // If scrolled down and past the navbar, add class .nav-up.
-    if (st > lastScrollTop && st > navbarHeight) {
+    // Remove class when header is back in place
+    if (document.scrollTop == 0) {
+        $('header').removeClass('nav-down')
+    } else if (st > lastScrollTop && st > navbarHeight) {
+        // If scrolled down and past the navbar, add class .nav-up.
         // Scroll Down
         $('header').removeClass('nav-down').addClass('nav-up');
-    } else if (document.scrollTop == 0) {
-        // Remove class when header is back in place
-        $('header').removeClass('nav-down')
     } else {
         // Scroll Up
         if (st + $(window).height() < $(document).height()) {
