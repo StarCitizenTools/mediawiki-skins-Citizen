@@ -30,7 +30,7 @@ function hasScrolled() {
 
     // Remove class when header is back in place
     if (document.scrollTop == 0) {
-        $('header').removeClass('nav-down')
+        $('header').removeClass('nav-down');
     } else if (st > lastScrollTop && st > navbarHeight) {
         // If scrolled down and past the navbar, add class .nav-up.
         // Scroll Down
