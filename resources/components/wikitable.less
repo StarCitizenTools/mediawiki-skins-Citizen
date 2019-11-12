@@ -4,37 +4,39 @@
 //
 
 table.wikitable {
-  background-color: transparent;
-  color: @base-20;
-  border: 0;
-  tr {
-    vertical-align: top;
+    background-color: transparent;
+    color: @base-20;
+    border: 0;
 
-    th {
-      padding: @margin-side / 2 @margin-side @margin-side / 2 0;
-      border: 0;
-      border-top: 2px solid @base-50;
-      color: @base-30;
-      background-color: transparent;
-      font-size: @content-caption-size;
-      text-align: left;
-    }
+    tr {
+        vertical-align: top;
 
-    td {
-      border: 0;
-      border-bottom: 1px solid @base-80;
-      padding: @margin-side / 2 @margin-side @margin-side / 2 0;
-      font-size: @content-monospace-size;
-    }
+        th {
+            color: @base-30;
+            background-color: transparent;
+            font-size: @content-caption-size;
+            text-align: left;
+        }
 
-    &:hover {
-      background-color: @base-90;
+        td {
+            font-size: @content-monospace-size;
+        }
+
+        th,
+        td {
+            padding: @margin-side / 2 @margin-side @margin-side / 2 0;
+            border: 0;
+            border-bottom: 1px solid @base-80;
+        }
+
+        &:hover {
+            background-color: @base-90;
+        }
     }
-  }
 }
 
 @media only screen and (max-width: @screen2) {
-  table.wikiatble {
-    white-space: nowrap;
-  }
+    table.wikiatble {
+        white-space: nowrap;
+    }
 }
