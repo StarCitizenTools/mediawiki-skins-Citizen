@@ -255,6 +255,12 @@ a {
     z-index: 0;
     color: @color-content-text;
 
+    #contentSub,
+    #contentSub2 {
+    	color: @base-30;
+        font-size: @content-caption-size;
+    }
+
     #mw-content-text {
 
         .mw-parser-output {
@@ -488,10 +494,10 @@ a {
     }
 
     h3 {
-		font-weight: 400;
+        font-weight: 400;
     }
 
-	h1,
+    h1,
     h2,
     h5,
     h6 {
@@ -609,7 +615,7 @@ a {
 
     .thumb {
         overflow: hidden;
-        
+
         >.thumbinner {
             >a {
                 transition: @transition-box-shadow-quick  !important;
@@ -798,7 +804,7 @@ a {
     div.tright,
     div.floatright,
     table.floatright {
-        margin: 0.6rem -@margin-side !important;
+        margin: 0.6rem -@margin-side  !important;
         width: 100vw !important;
         display: flex;
         justify-content: center;
@@ -956,13 +962,14 @@ a {
 }
 
 @media only screen and (min-width: @screen4) {
+
     div.tnone,
     div.floatnone,
     table.floatnone,
     div.tleft,
     div.floatleft,
     table.floatleft {
-        margin-left: @negative-margin!important;
+        margin-left: @negative-margin !important;
     }
 
     div.tnone,
@@ -971,7 +978,7 @@ a {
     div.tright,
     div.floatright,
     table.floatright {
-        margin-right: @negative-margin!important;
+        margin-right: @negative-margin !important;
     }
 }
 
