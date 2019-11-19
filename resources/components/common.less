@@ -17,7 +17,7 @@ html {
 
 html,
 body {
-    height: 100%;
+    min-height: 100%;
     margin: 0;
     padding: 0;
     font-family: @fonts;
@@ -88,6 +88,21 @@ pre,
 
 textarea {
     width: 100%;
+}
+
+dl {
+    margin-top: 0.2em;
+    margin-bottom: 0.5em;
+}
+
+dd {
+    margin-left: 1.6em;
+    margin-bottom: 0.1em;
+}
+
+dt {
+    margin-bottom: 0.1em;
+    font-weight: bold;
 }
 
 td {
@@ -168,8 +183,8 @@ a {
 }
 
 #siteNotice {
-	margin: -@margin-side -@margin-side @margin-side -@margin-side;
-	padding: 10px;
+    margin: -@margin-side -@margin-side @margin-side -@margin-side;
+    padding: 10px;
     width: 100vw;
     background: @red-30;
     color: @base-100;
@@ -549,11 +564,6 @@ a {
         ul {
             margin: 0 0 0 1.6rem;
         }
-    }
-
-    dl,
-    dd {
-        margin: 0;
     }
 
     img {
