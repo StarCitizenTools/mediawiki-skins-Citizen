@@ -179,10 +179,10 @@ a {
 
 #siteNotice {
     margin: -@margin-side -@margin-side @margin-side -@margin-side;
-    padding: 10px;
+    padding: @margin-side / 2 @margin-side;
     z-index: 1;
     position: relative;
-    width: 100vw;
+    width: ~'calc(100vw - 40px)';
     background: @red-30;
     color: @base-100;
     font-size: @content-monospace-size;
@@ -243,7 +243,7 @@ a {
         padding-top: 1.2rem;
         color: @base-10;
         overflow: inherit; // black magic to wrap in small screen devices
-    	line-height: 1.2;
+        line-height: 1.2;
     }
 
     #siteSub {
