@@ -71,7 +71,7 @@
       // Show drawer
       ~ #mw-header-menu-drawer {
         transform: none;
-        will-change: none;
+        will-change: unset;
       }
 
       // Transform all the slices of hamburger into a crossmark
@@ -134,7 +134,7 @@
   }
 
   &-drawer {
-    position: absolute;
+    position: fixed;
     z-index: 4;
     top: 0;
     padding-top: @header-height;
