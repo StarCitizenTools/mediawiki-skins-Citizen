@@ -555,10 +555,10 @@ a {
     }
 
     ul {
-        margin: 0.8rem 0 0 1.6rem;
+        margin: @content-margin-top 0 0 @content-margin-top * 2;
 
         ul {
-            margin: 0 0 0 1.6rem;
+            margin: 0 0 0 @content-margin-top * 2;
         }
     }
 
@@ -567,12 +567,16 @@ a {
     }
 
     .mw-references-wrap {
-        margin: 0.8rem 0 0 0;
+        margin: @content-margin-top 0 0 0;
         color: @base-30;
         font-size: @content-small-text-size;
 
+        &.mw-references-columns {
+            margin: @content-margin-top @negative-margin 0 @negative-margin;
+        }
+
         .references {
-            margin: 0 1.6rem;
+            margin: 0 @content-margin-top * 2;
         }
     }
 
@@ -860,6 +864,12 @@ a {
     }
 
     .mw-body-content {
+
+        .mw-references-wrap {
+            &.mw-references-columns {
+                margin: @content-margin-top 0 0 0;
+            }
+        }
 
         div.tnone,
         div.floatnone,
