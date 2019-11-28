@@ -896,6 +896,10 @@ a {
 @media only screen and (max-width: @screen3) {
     .webfonts-changed #toc {
         display: block !important; // Hide until everything is loaded
+
+        >ul {
+            display: none; // Hide ToC on site load
+        }
     }
 
     .mw-body-content {
