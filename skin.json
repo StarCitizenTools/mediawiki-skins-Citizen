@@ -174,7 +174,8 @@
 				"poweredby": "resources/images/badges/PoweredByMediawiki.svg",
 				"monitoredby": "resources/images/badges/MonitoredByWikiApiary.svg",
 				"gdprcompliance": "resources/images/badges/GDPR.svg",
-				"madeby": "resources/images/badges/MadeByTheCommunity.svg"
+				"madeby": "resources/images/badges/MadeByTheCommunity.svg",
+				"partof": "resources/images/badges/StarCitizenTools.svg"
 			}
 		}
 	},
