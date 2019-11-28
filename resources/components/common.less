@@ -958,11 +958,16 @@ a {
                     transition-duration: 0.5s !important; // Override duration 0 for ToC
 
                     &:hover {
+                        background-color: @menu-item-link-hover;
                         .boxshadow(5);
 
                         &:before {
                             opacity: @opacity-icon-active;
                         }
+                    }
+
+                    &:focus {
+                        background-color: @menu-item-link-active;
                     }
 
                     &:before {
