@@ -406,16 +406,17 @@ a {
 
                     >a {
                         color: inherit !important;
-                        border-right: 3px solid;
+                        border-color: currentColor;
                     }
                 }
 
                 a {
                     display: inline-block;
                     margin-top: @content-margin-top;
-                    padding-right: 20px;
+                    padding-right: 17px;
                     color: @base-50;
                     background: 0;
+                    border-right: 3px solid transparent;
                     transition-duration: 0s !important; // Turn off transitions
 
                     &:hover {
@@ -465,6 +466,10 @@ a {
                     max-height:~'calc( 100vh - @{header-height} * 2 - @{margin-side} * 4 )';
                     overflow: visible auto;
                     display: block;
+                }
+
+                ul {
+                    margin: 0;
                 }
 
                 ul,
