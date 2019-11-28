@@ -406,12 +406,14 @@ a {
 
                     >a {
                         color: inherit !important;
+                        border-right: 3px solid;
                     }
                 }
 
                 a {
                     display: inline-block;
                     margin-top: @content-margin-top;
+                    padding-right: 20px;
                     color: @base-50;
                     background: 0;
                     transition-duration: 0s !important; // Turn off transitions
@@ -456,22 +458,13 @@ a {
 
                 >ul {
                     direction: rtl; // Hack to force right alignment, need to fix for RTL
-                    margin: @content-margin-top / 2 3px 0 0;
+                    margin: @content-margin-top / 2 0 0 0;
                     position: relative;
                     z-index: 2;
                     border-right: 1px dashed;
                     max-height:~'calc( 100vh - @{header-height} * 2 - @{margin-side} * 4 )';
                     overflow: visible auto;
                     display: block;
-
-                    >li {
-                        margin-right: -3px;
-                    }
-                }
-
-                ul {
-                    list-style-type: disc;
-                    list-style-position: inside;
                 }
 
                 ul,
