@@ -992,6 +992,7 @@ a {
                 display: none; // Hide until interacted
                 margin: 0 @margin-side;
                 padding: @header-height + @margin-side 0 @header-height + @margin-side * 2; // More scroll spaces
+                max-height: ~"calc( 100vh - "@header-height * 2 + @margin-side * 3 ~")";
                 transform: none;
                 transition: @transition-transform;
             }
