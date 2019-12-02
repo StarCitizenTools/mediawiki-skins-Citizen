@@ -2,8 +2,114 @@
 
 /* Hide some extra stuff from print view (some of the navigation is already hidden automatically, but not all) */
 .mw-indicators,
+.toctoggle,
+.mw-side,
+.noprint,
 #p-logo,
 #catlinks,
-#mw-footer {
-	display: none;
+#p-namespaces,
+#mw-bottombar,
+.hatnote,
+.mbox,
+footer {
+    display: none !important;
+}
+
+* {
+    box-shadow: none !important;
+}
+
+html,
+body {
+    color: @base-20;
+}
+
+p,
+ul,
+ol {
+    margin: 0.8rem 0 0 0;
+}
+
+.mw-body .firstHeading {
+    margin: 0;
+    padding-top: 1.2rem;
+    color: @base-10;
+    overflow: inherit;
+    line-height: 1.2;
+}
+
+.mw-body h1,
+.mw-body-content h1 {
+    font-size: 2rem;
+}
+
+.mw-body-content {
+
+    line-height: 1.6;
+    font-size: 1rem;
+
+    p {
+        line-height: inherit;
+        overflow-wrap: break-word;
+    }
+
+    h2 {
+        font-size: @content-h2-size;
+    }
+
+    h3 {
+        font-size: @content-h3-size;
+    }
+
+    h4 {
+        font-size: @content-h4-size;
+    }
+
+    h5 {
+        font-size: @content-h5-size;
+    }
+
+    h6 {
+        font-size: @content-h6-size;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0;
+        padding: 0;
+        color: @color-content-header;
+    }
+
+    h1+h2,
+    h2+h3,
+    h3+h4,
+    h4+h5,
+    h5+h6,
+    p,
+    table {
+        margin-top: @content-margin-top;
+    }
+
+    ul {
+        margin: @content-margin-top 0 0 @content-margin-top * 2;
+
+        ul {
+            margin: 0 0 0 @content-margin-top * 2;
+        }
+    }
+}
+
+.mw-body #siteSub {
+    display: block;
+    margin: .4rem 0 1.6rem;
+    color: @base-30;
+    font-size: 0.8125rem;
+}
+
+.infobox {
+    background: @base-100  !important;
 }
