@@ -84,16 +84,35 @@
 @color-footer-link: #cfdee8;
 @color-footer-link-active: @base-80;
 
+// Dark mode colors
+@dark-bg-0: #11151d;
+@dark-bg-10: #1d2129;
+@dark-bg-20: #22262d;
+@dark-bg-30: #24272f;
+@dark-bg-40: #2b2f36;
+@dark-bg-50: #33363d;
+@dark-bg-60: #34383f;
+
+@dark-text-100: #e0e1e2;
+@dark-text-90: #c1c2c5;
+@dark-text-80: #a0a1a5;
+@dark-text-70: #86888c;
+@dark-text-60: #6c6e73;
+
+@dark-color-link: @color-link-active;
+@dark-color-link-new: @color-link-new-active;
+@dark-color-link-visited: @color-link-visited-active;
+
 /*
  * Transitions
 */
 @transition-color-quick: color 0.2s ease;
-@transition-transform: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
-@transition-transform-quick: transform 0.2s cubic-bezier(0.77,0.2,0.05,1.0);
-@transition-width: width 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
-@transition-height: height 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
-@transition-margin: margin 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
-@transition-padding: padding 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+@transition-transform: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+@transition-transform-quick: transform 0.2s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+@transition-width: width 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+@transition-height: height 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+@transition-margin: margin 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+@transition-padding: padding 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
 @transition-background-quick: background 0.2s ease;
 @transition-background: background 0.55s ease;
 @transition-opacity: opacity 0.55s ease;
@@ -178,8 +197,8 @@
  * Viewports
  */
 
- @screen0: @page-width - @margin-side * 7; // 720px
- @screen1: @page-width + @margin-side * 2; // 900px
- @screen2: @footer-width; // 1290px
- @screen3: @footer-width + @margin-side * 8; // 1450px
- @screen4: @footer-width - (@negative-margin * 2); // 1720px
+@screen0: @page-width - @margin-side * 7; // 720px
+@screen1: @page-width + @margin-side * 2; // 900px
+@screen2: @footer-width; // 1290px
+@screen3: @footer-width + @margin-side * 8; // 1450px
+@screen4: @footer-width - (@negative-margin * 2); // 1720px

@@ -1,0 +1,124 @@
+//
+// Citizen - Dark mode Styles
+// https://starcitizen.tools
+//
+
+@media (prefers-color-scheme: dark) {
+
+    html,
+    body {
+        background: @dark-bg-0;
+        color: @dark-text-90;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: @dark-bg-60;
+    }
+
+    * {
+        scrollbar-color: @dark-bg-60 transparent;
+    }
+
+    a,
+    a:visited,
+    .mw-body-content #mw-content-text .mw-parser-output #toc li.active {
+        color: @dark-color-link;
+    }
+
+    .mw-body-content #mw-content-text .mw-parser-output #toc li.active {
+        color: @dark-color-link  !important;
+    }
+
+    a.new {
+        color: @dark-color-link-new  !important;
+    }
+
+    .catlinks .mw-normal-catlinks>ul li a {
+        background-color: @dark-bg-10;
+        border-color: @dark-bg-10;
+    }
+
+    #p-namespaces ul li a {
+        background-color: @dark-bg-10;
+        border-color: @dark-bg-20;
+    }
+
+    #mw-header-menu-drawer {
+        background: @dark-bg-40;
+    }
+
+    #page-tools #p-actions>nav ul {
+        background: @dark-bg-50;
+    }
+
+    #mw-header-menu-drawer-container #mw-user-links #p-personal {
+        border-color: @dark-bg-50;
+    }
+
+    #site-search #p-search #searchInput {
+        background: @dark-bg-40;
+        border-color: @dark-bg-50;
+    }
+
+    #site-search #search-icon-container #search-icon {
+        border-color: @base-0;
+    }
+
+    #mw-header-menu-toggle span,
+    #site-search #search-icon-container #search-icon:before,
+    #site-search #search-icon-container #search-icon:after,
+    #site-search>input:checked:hover~#search-icon-container #search-icon {
+        background: @base-0;
+    }
+
+    .mw-body .firstHeading,
+    .mw-body-content h1,
+    .mw-body-content h2,
+    .mw-body-content h3,
+    .mw-body-content h4,
+    .mw-body-content h5,
+    .mw-body-content h6,
+    #mw-header-menu .mw-wiki-title,
+    #mw-header-menu-drawer-container h3 {
+        color: @dark-text-100;
+    }
+
+    .mw-body #siteSub,
+    #mw-header-menu-drawer-container a,
+    .mw-body-content #mw-content-text .mw-parser-output #toc a:hover {
+        color: @dark-text-80  !important;
+    }
+
+    a.mw-wiki-title,
+    .mw-body-content #mw-content-text .mw-parser-output #toc a {
+        color: @dark-text-70;
+    }
+
+    .mw-body-content #mw-content-text .mw-parser-output #toc:before,
+    .mw-body-content #mw-content-text .mw-parser-output #toc:after {
+        background: linear-gradient(@dark-bg-0, rgba(0, 0, 0, 0.001));
+    }
+
+    #page-tools #p-views li>a:after,
+    #page-tools #p-actions>nav:before,
+    #mw-header-menu-drawer-container a:after,
+    .mw-editsection>a:before,
+    #pt-notifications-alert .mw-echo-notifications-badge:before,
+    #pt-notifications-notice .mw-echo-notifications-badge:before,
+    #p-namespaces ul li a:after {
+        filter: invert(1);
+    }
+
+    @media only screen and (max-width: 1290px) {
+
+        .mw-header-container,
+        .mw-body-content #mw-content-text .mw-parser-output #toc {
+            background: @dark-bg-0;
+        }
+
+        .mw-header-container.nav-down {
+            border-color: @dark-bg-20;
+        }
+
+    }
+}
