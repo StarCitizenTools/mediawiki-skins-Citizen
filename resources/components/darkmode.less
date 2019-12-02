@@ -19,6 +19,14 @@
         scrollbar-color: @dark-bg-60 transparent;
     }
 
+    pre,
+    code,
+    .mw-code {
+        color: @dark-text-90;
+        background-color: @dark-bg-10;
+        border: 1px solid @dark-bg-20;
+    }
+
     a,
     a:visited,
     .mw-body-content #mw-content-text .mw-parser-output #toc li.active {
@@ -43,6 +51,15 @@
         border-color: @dark-bg-20;
     }
 
+    table.wikitable tr:hover {
+        background-color: @dark-bg-10;
+    }
+
+    table.wikitable tr th,
+    table.wikitable tr td {
+        border-color: @dark-bg-20;
+    }
+
     #mw-header-menu-drawer {
         background: @dark-bg-40;
     }
@@ -61,14 +78,14 @@
     }
 
     #site-search #search-icon-container #search-icon {
-        border-color: @base-0;
+        border-color: @base-100;
     }
 
     #mw-header-menu-toggle span,
     #site-search #search-icon-container #search-icon:before,
     #site-search #search-icon-container #search-icon:after,
     #site-search>input:checked:hover~#search-icon-container #search-icon {
-        background: @base-0;
+        background: @base-100;
     }
 
     .mw-body .firstHeading,
@@ -83,7 +100,12 @@
         color: @dark-text-100;
     }
 
+    table.wikitable {
+        color: @dark-text-90;
+    }
+
     .mw-body #siteSub,
+    table.wikitable tr th,
     #mw-header-menu-drawer-container a,
     .mw-body-content #mw-content-text .mw-parser-output #toc a:hover {
         color: @dark-text-80  !important;
