@@ -138,29 +138,29 @@
     #p-namespaces ul li a:after {
         filter: invert(1);
     }
+}
 
-    @media only screen and (max-width: 1290px) {
+@media only screen and (max-width: 1290px) and (prefers-color-scheme: dark) {
 
-        .mw-header-container,
-        .mw-body-content #mw-content-text .mw-parser-output #toc {
-            background: @dark-bg-0;
-        }
+    .mw-header-container,
+    .mw-body-content #mw-content-text .mw-parser-output #toc {
+        background: @dark-bg-0;
+    }
 
-        .mw-header-container.nav-down {
-            border-color: @dark-bg-20;
-        }
+    .mw-header-container.nav-down {
+        border-color: @dark-bg-20;
+    }
+
+}
+
+@media only screen and (max-width: 1450px) and (prefers-color-scheme: dark) {
+
+    .mw-body-content #mw-content-text .mw-parser-output #toc .toctoggle a {
+        background-color: @dark-bg-50;
 
     }
 
-    @media only screen and (max-width: 1450px) {
-
-        .mw-body-content #mw-content-text .mw-parser-output #toc .toctoggle a {
-            background-color: @dark-bg-50;
-
-        }
-
-        .mw-body-content #mw-content-text .mw-parser-output #toc .toctoggle a:before {
-            filter: invert(1);
-        }
+    .mw-body-content #mw-content-text .mw-parser-output #toc .toctoggle a:before {
+        filter: invert(1);
     }
 }
