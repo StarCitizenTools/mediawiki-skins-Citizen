@@ -51,6 +51,12 @@
         border-color: @dark-bg-20;
     }
 
+    #mw-header-menu-drawer-container a:hover {
+        background-color: @dark-bg-60;
+        color: @dark-text-90  !important;
+        ;
+    }
+
     table.wikitable tr:hover {
         background-color: @dark-bg-10;
     }
@@ -142,5 +148,17 @@
             border-color: @dark-bg-20;
         }
 
+    }
+
+    @media only screen and (max-width: 1450px) {
+
+        .mw-body-content #mw-content-text .mw-parser-output #toc .toctoggle a {
+            background-color: @dark-bg-50;
+
+        }
+
+        .mw-body-content #mw-content-text .mw-parser-output #toc .toctoggle a:before {
+            filter: invert(1);
+        }
     }
 }
