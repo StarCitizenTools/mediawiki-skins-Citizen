@@ -161,12 +161,21 @@
 
 @media only screen and (max-width: 1450px) and (prefers-color-scheme: dark) {
 
-    .mw-body-content #mw-content-text .mw-parser-output #toc .toctoggle a {
-        background-color: @dark-bg-50;
+    .mw-body-content #mw-content-text .mw-parser-output #toc {
 
+        .toctoggle a {
+            background-color: @dark-bg-50;
+
+            &:before {
+                filter: invert(1);
+            }
+
+            &:hover,
+            &:focus {
+                background-color: @accent-10;
+            }
+
+        }
     }
 
-    .mw-body-content #mw-content-text .mw-parser-output #toc .toctoggle a:before {
-        filter: invert(1);
-    }
 }
