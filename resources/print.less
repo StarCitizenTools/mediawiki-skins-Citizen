@@ -38,6 +38,10 @@ ol {
     border: 0;
 }
 
+.mw-body {
+    color: @base-20;
+}
+
 .mw-wiki-title,
 .mw-body h1,
 .mw-body-content h1,
@@ -132,6 +136,7 @@ ol {
 
     ul {
         margin: @content-margin-top 0 0 @content-margin-top * 2;
+        padding: 0;
 
         ul {
             margin: 0 0 0 @content-margin-top * 2;
@@ -159,6 +164,18 @@ ol {
 
 #footer {
     margin-top: 2rem;
+    font-size: @content-monospace-size;
+    color: @base-30;
+}
+
+#footer-list {
+    padding: 0;
+    list-style: none;
+}
+
+#sitetitle {
+    margin-top: @content-margin-top;
+    margin-bottom: @content-margin-top / 2;
 }
 
 .mw-wiki-title {
@@ -170,4 +187,5 @@ ol {
 
 .infobox {
     background: @base-100  !important;
+    border: 1px solid @base-30;
 }
