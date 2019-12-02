@@ -42,13 +42,19 @@ ol {
 
 .mw-body h1,
 .mw-body-content h1 {
-    font-size: 2rem;
+    font-size: @content-h1-size;
 }
 
 .mw-body-content {
 
-    line-height: 1.6;
-    font-size: 1rem;
+    line-height: @content-line-height;
+    font-size: @content-body-size;
+
+    #contentSub,
+    #contentSub2 {
+        color: @base-30;
+        font-size: @content-caption-size;
+    }
 
     p {
         line-height: inherit;
@@ -109,7 +115,7 @@ ol {
     display: block;
     margin: .4rem 0 1.6rem;
     color: @base-30;
-    font-size: 0.8125rem;
+    font-size: @content-caption-size;
 }
 
 .infobox {
