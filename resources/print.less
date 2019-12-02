@@ -13,7 +13,7 @@
 #mw-bottombar,
 .hatnote,
 .mbox,
-footer {
+#footer-container-icons {
     display: none !important;
 }
 
@@ -30,6 +30,15 @@ p,
 ul,
 ol {
     margin: 0.8rem 0 0 0;
+}
+
+.mw-wiki-title,
+.mw-body h1,
+.mw-body-content h1,
+.mw-body-content h2,
+.mw-body-content h3,
+.mw-body-content h4 {
+    font-family: @fonts-secondary;
 }
 
 .mw-body .firstHeading {
@@ -92,6 +101,19 @@ ol {
         color: @color-content-header;
     }
 
+    h1,
+    h2 {
+        margin-top: @content-margin-top * 3;
+    }
+
+    h3,
+    h4,
+    h5,
+    h6,
+    p+p {
+        margin-top: @content-margin-top * 2;
+    }
+
     h1+h2,
     h2+h3,
     h3+h4,
@@ -116,6 +138,21 @@ ol {
     margin: .4rem 0 1.6rem;
     color: @base-30;
     font-size: @content-caption-size;
+}
+
+#mw-wrapper,
+#footer-list {
+    display: flex;
+    flex-direction: column;
+}
+
+#mw-sidebar-sitename,
+#lastmod {
+    order: -1;
+}
+
+.mw-wiki-title {
+	color: @base-30;
 }
 
 .infobox {
