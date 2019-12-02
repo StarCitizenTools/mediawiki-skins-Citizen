@@ -24,12 +24,18 @@
 html,
 body {
     color: @base-20;
+    font-family: @fonts;
 }
 
 p,
 ul,
 ol {
     margin: 0.8rem 0 0 0;
+}
+
+#toc {
+    background: none;
+    border: 0;
 }
 
 .mw-wiki-title,
@@ -151,8 +157,15 @@ ol {
     order: -1;
 }
 
+#footer {
+    margin-top: 2rem;
+}
+
 .mw-wiki-title {
-	color: @base-30;
+    color: @base-30;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 .infobox {
