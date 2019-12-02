@@ -27,16 +27,14 @@
 
 .mw-changeslist {
     h4 {
-        position: sticky;
         top: 0;
         border-top: 2px solid currentColor;
-        color: @base-50 !important;
+        color: @base-50  !important;
         padding: @margin-side / 2 0 !important;
-        background: @base-100; // Sticky header BG
-        font-size: @content-caption-size !important;
+        font-size: @content-caption-size  !important;
         letter-spacing: 1px;
         text-transform: uppercase;
-        font-family: @fonts !important;
+        font-family: @fonts  !important;
         font-weight: 600 !important;
     }
 
@@ -64,6 +62,23 @@
             background-color: @base-90;
             color: @base-30;
             font-size: @content-caption-size;
+        }
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .mw-changeslist {
+        h4 {
+            color: @dark-text-60  !important;
+        }
+
+        .mw-tag-markers {
+
+            .mw-tag-marker {
+                border-color: @dark-bg-10;
+                background-color: @dark-bg-10;
+                color: @dark-text-80;
+            }
         }
     }
 }

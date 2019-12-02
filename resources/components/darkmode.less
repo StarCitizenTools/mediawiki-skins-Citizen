@@ -27,6 +27,13 @@
         border: 1px solid @dark-bg-20;
     }
 
+    input,
+    select {
+        border: 1px solid @dark-bg-50;
+        background: @dark-bg-40;
+        color: @dark-text-80;
+    }
+
     a,
     a:visited,
     .mw-body-content #mw-content-text .mw-parser-output #toc li.active {
@@ -74,12 +81,8 @@
         background: @dark-bg-50;
     }
 
+    #site-search #p-search #searchInput,
     #mw-header-menu-drawer-container #mw-user-links #p-personal {
-        border-color: @dark-bg-50;
-    }
-
-    #site-search #p-search #searchInput {
-        background: @dark-bg-40;
         border-color: @dark-bg-50;
     }
 
@@ -142,9 +145,12 @@
 
 @media only screen and (max-width: 1290px) and (prefers-color-scheme: dark) {
 
-    .mw-header-container,
-    .mw-body-content #mw-content-text .mw-parser-output #toc {
+    .mw-header-container {
         background: @dark-bg-0;
+    }
+
+    .mw-body-content #mw-content-text .mw-parser-output #toc {
+        background: @dark-bg-40;
     }
 
     .mw-header-container.nav-down {
