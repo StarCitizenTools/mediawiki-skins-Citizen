@@ -67,9 +67,21 @@
 }
 
 @media (prefers-color-scheme: dark) {
+    .rcoptions {
+        color: @dark-text-90;
+    }
+
     .mw-changeslist {
         h4 {
             color: @dark-text-60  !important;
+        }
+
+        &-legend {
+            border-color: @dark-bg-20;
+        }
+
+        .comment {
+            color: @dark-text-80;
         }
 
         .mw-tag-markers {
