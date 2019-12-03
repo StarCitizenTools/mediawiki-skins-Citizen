@@ -82,13 +82,18 @@
         background: @dark-bg-40;
     }
 
-    #page-tools #p-actions>nav ul {
+    #page-tools #p-actions>nav ul,
+    .suggestions-results {
         background: @dark-bg-50;
     }
 
     #site-search #p-search #searchInput,
     #mw-header-menu-drawer-container #mw-user-links #p-personal {
         border-color: @dark-bg-50;
+    }
+
+    .suggestions .suggestions-special {
+        background: @dark-bg-60;
     }
 
     #site-search #search-icon-container #search-icon {
@@ -114,7 +119,11 @@
         color: @dark-text-100;
     }
 
-    table.wikitable {
+    table.wikitable,
+    .suggestions a.mw-searchSuggest-link,
+    .suggestions a.mw-searchSuggest-link:hover,
+    .suggestions a.mw-searchSuggest-link:active,
+    .suggestions a.mw-searchSuggest-link:focus {
         color: @dark-text-90;
     }
 
