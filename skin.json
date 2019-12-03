@@ -1,6 +1,7 @@
 {
 	"name": "Citizen",
 	"namemsg": "skinname-citizen",
+	"version": "1.0.0",
 	"author": "alistair3149",
 	"url": "https://starcitizen.tools",
 	"descriptionmsg": "citizen-desc",
