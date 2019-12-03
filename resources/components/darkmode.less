@@ -82,9 +82,12 @@
         background: @dark-bg-40;
     }
 
-    #page-tools #p-actions>nav ul,
-    .suggestions-results {
+    #page-tools #p-actions>nav ul {
         background: @dark-bg-50;
+    }
+
+    .suggestions-results {
+        background: @dark-bg-50 !important;
     }
 
     #site-search #p-search #searchInput,
@@ -123,7 +126,8 @@
     .suggestions a.mw-searchSuggest-link,
     .suggestions a.mw-searchSuggest-link:hover,
     .suggestions a.mw-searchSuggest-link:active,
-    .suggestions a.mw-searchSuggest-link:focus {
+    .suggestions a.mw-searchSuggest-link:focus,
+    .suggestions-result {
         color: @dark-text-90;
     }
 
