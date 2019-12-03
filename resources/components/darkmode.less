@@ -87,7 +87,7 @@
     }
 
     .suggestions-results {
-        background: @dark-bg-50 !important;
+        background: @dark-bg-50  !important;
     }
 
     #site-search #p-search #searchInput,
@@ -122,13 +122,22 @@
         color: @dark-text-100;
     }
 
-    table.wikitable,
+    table.wikitable {
+        color: @dark-text-90;
+    }
+
     .suggestions a.mw-searchSuggest-link,
     .suggestions a.mw-searchSuggest-link:hover,
     .suggestions a.mw-searchSuggest-link:active,
     .suggestions a.mw-searchSuggest-link:focus,
-    .suggestions-result {
-        color: @dark-text-90;
+    .suggestions-result,
+    .suggestions-special .special-query {
+        color: @dark-text-90 !important;
+    }
+
+    .suggestions-result-current {
+        background: #2a4b8d !important;
+        color: @dark-text-100 !important;
     }
 
     .mw-body-content #contentSub,
