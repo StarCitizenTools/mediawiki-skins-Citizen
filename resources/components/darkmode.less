@@ -100,17 +100,17 @@
     }
 
     .suggestions .suggestions-special {
-        background: @dark-bg-60;
+        background: @dark-bg-40;
     }
 
-    #site-search #search-icon-container #search-icon {
+    #site-search #search-icon-container #search-icon,
+    #site-search>input:checked:hover~#search-icon-container #search-icon {
         border-color: @base-100;
     }
 
     #mw-header-menu-toggle span,
     #site-search #search-icon-container #search-icon:before,
-    #site-search #search-icon-container #search-icon:after,
-    #site-search>input:checked:hover~#search-icon-container #search-icon {
+    #site-search #search-icon-container #search-icon:after {
         background: @base-100;
     }
 
