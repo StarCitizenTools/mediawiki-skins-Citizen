@@ -28,6 +28,16 @@
     }
 }
 
+.ext-related-articles-card-extract:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 10%;
+    height: 1em;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
+}
+
 @media (prefers-color-scheme: dark) {
     .ext-related-articles-card-list {
         .ext-related-articles-card {
@@ -44,5 +54,9 @@
                 color: @dark-text-100;
             }
         }
+    }
+
+    .ext-related-articles-card-extract:after {
+        background: linear-gradient(to right, rgba(255, 255, 255, 0), @dark-bg-30 50%);
     }
 }
