@@ -12,9 +12,9 @@
 		"MediaWiki": ">= 1.31.0"
 	},
 	"config": {
-		"CitizenThemeColor": "#131a21",
+		"CitizenThemeColor": "#11151d",
 		"CitizenEnableManifest": true,
-		"CitizenManifestThemeColor": "#131a21",
+		"CitizenManifestThemeColor": "#11151d",
 		"CitizenManifestBackgroundColor": "#fff"
 	},
 	"ValidSkinNames": {
