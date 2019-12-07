@@ -98,3 +98,21 @@
         padding: 0 @margin-side;
     }
 }
+
+@media (prefers-color-scheme: dark) {
+
+    #filetoc,
+    .fullMedia {
+        background-color: @dark-bg-10;
+        border-color: @dark-bg-20;
+    }
+
+    .fullImageLink {
+        background-color: @dark-bg-10;
+
+        .mw-filepage-resolutioninfo {
+            border-color: @dark-bg-20;
+        }
+
+    }
+}

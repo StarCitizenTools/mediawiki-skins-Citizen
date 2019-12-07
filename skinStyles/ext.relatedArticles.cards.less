@@ -41,8 +41,12 @@
 @media (prefers-color-scheme: dark) {
     .ext-related-articles-card-list {
         .ext-related-articles-card {
-            border-color: @dark-bg-40;
+            border-color: @dark-bg-40  !important;
             background-color: @dark-bg-30;
+        }
+
+        .ext-related-articles-card-thumb {
+            background-color: @dark-bg-10;
         }
 
         h3 {
