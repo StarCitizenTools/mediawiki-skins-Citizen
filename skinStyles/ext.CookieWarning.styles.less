@@ -7,55 +7,64 @@
 @import '../resources/mixins.less';
 
 .mw-cookiewarning-container {
-	top: unset;
-	right: 0;
-	bottom: @margin-side;
-	margin: 0 auto;
-	padding: 0;
-	max-width: @page-width;
-	opacity: 1;
-	background: @base-20;
-	font-size: @content-small-text-size;
-	font-weight: 400;
-	.boxshadow(5);
+    top: unset;
+    right: 0;
+    bottom: @margin-side;
+    margin: 0 auto;
+    padding: 0;
+    max-width: @page-width;
+    opacity: 1;
+    background: @base-20;
+    font-size: @content-small-text-size;
+    font-weight: 400;
+    .boxshadow(5);
 
-	.mw-cookiewarning-text {
-		display: flex;
+    .mw-cookiewarning-text {
+        display: flex;
+        line-height: 1.4;
 
-		span {
-			margin: 0;
-			padding: @margin-side * 0.75 @margin-side;
-			line-height: 1.4;
-			display: block;
-			flex-grow: 1;
-		}
+        span {
+            margin: 0;
+            padding: @margin-side * 0.75 @margin-side;
+            display: block;
+            flex-grow: 1;
+        }
 
-		form {
-			display: block;
-		}
+        form {
+            display: block;
+        }
 
-		.mw-cookiewarning-dismiss {
-			background: @base-10;
-			transition: @transition-background-quick;
+        .mw-cookiewarning-dismiss {
+            background: @accent-50;
+            transition: @transition-background-quick;
 
-			&:hover {
-				background: @base-0;
-			}
-		}
+            &:hover {
+                background: @accent-10;
+            }
+        }
 
-		a,
-		.mw-cookiewarning-dismiss {
-			margin: 0;
-			padding: @margin-side / 2 @margin-side;
-			border-radius: 0;
-			font-weight: 400;
-		}
-	}
+        >a {
+            background: @base-10;
+            transition: @transition-background-quick;
+
+            &:hover {
+                background: @base-0;
+            }
+        }
+
+        a,
+        .mw-cookiewarning-dismiss {
+            margin: 0;
+            padding: @margin-side * 0.75 @margin-side;
+            border-radius: 0;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+    }
 }
 
 @media only screen and (max-width: @screen1) {
-	.mw-cookiewarning-container {
-		max-width: none;
-		bottom: 0;
-	}
-}
+    .mw-cookiewarning-container {
+        max-width: none;
+        bottom: 0;
+    }
