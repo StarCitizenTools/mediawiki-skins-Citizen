@@ -119,14 +119,19 @@
       order: 12;
     }
 
+    #cookie {
+      order: 13;
+    }
+
     #about,
     #privacy,
-    #disclaimer {
-      margin: 0 @margin-side / 2;
+    #disclaimer,
+    #cookie {
+      margin: 0;
       padding: 0;
 
       a {
-        padding: 10px;
+        padding: @margin-side / 2 @margin-side;
         display: block;
       }
     }
