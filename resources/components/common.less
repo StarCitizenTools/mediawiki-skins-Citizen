@@ -89,6 +89,25 @@ cite {
     font-style: inherit;
 }
 
+fieldset {
+    border: 1px solid @base-80;
+    color: @base-30;
+    font-size: @content-monospace-size;
+    margin: @content-margin-top 0;
+    padding: @content-margin-top / 2 @margin-side;
+}
+
+fieldset>table {
+    margin-top: 0 !important;
+}
+
+legend {
+    font-weight: bold;
+    color: @base-20;
+    margin: 0 -@margin-side / 2;
+    padding: @margin-side / 2;
+}
+
 textarea {
     width: 100%;
 }
