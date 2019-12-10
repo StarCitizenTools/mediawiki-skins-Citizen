@@ -46,11 +46,12 @@ ul {
 
 ul,
 ol {
-    margin: @content-margin-top 0 0 @content-margin-top * 3;
     padding: 0;
 }
 
 p,
+ul,
+ol,
 dl {
     margin: @content-margin-top 0 0 0;
 }
@@ -557,6 +558,14 @@ a {
 
         ul {
             margin: 0 0 0 @content-margin-top * 2;
+        }
+    }
+
+    ol {
+        margin: @content-margin-top 0 0 @content-margin-top * 3;
+
+        ol {
+            margin: 0 0 0 @content-margin-top * 3;
         }
     }
 
