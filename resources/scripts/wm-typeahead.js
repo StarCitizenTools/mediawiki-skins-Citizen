@@ -193,7 +193,9 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             return;
         }
 
-        hostname = '//' + searchLang + '.wikipedia.org/w/api.php?';
+        // Change sitename here
+        // TODO: Make it configurable from the skin
+        hostname = '//' + 'scwdev.czen.me/api.php?';
 
         // If script already exists, remove it.
         if (script) {
@@ -318,9 +320,10 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
                 style: (sanitizedThumbURL) ? 'background-image:url(' + sanitizedThumbURL + ')' : false
             }, '');
 
+            // TODO: Make it configurable from the skin
             suggestionLink = mw.html.element('a', {
                 'class': 'suggestion-link',
-                href: 'https://' + searchLang + '.wikipedia.org/wiki/' + encodeURIComponent(page.title.replace(/ /gi, '_'))
+                href: 'https://' + 'scwdev.czen.me/' + encodeURIComponent(page.title.replace(/ /gi, '_'))
             }, new mw.html.Raw(suggestionText + suggestionThumbnail));
 
             string += suggestionLink;
