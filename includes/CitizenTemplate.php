@@ -288,8 +288,7 @@ class CitizenTemplate extends BaseTemplate {
 			[
 				'action' => $this->get( 'wgScript' ),
 				'role' => 'search',
-				'class' => 'mw-portlet',
-				'id' => 'p-search'
+				'id' => 'search-form'
 			]
 		);
 		$html .= Html::hidden( 'title', $this->get( 'searchtitle' ) );
