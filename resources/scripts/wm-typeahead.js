@@ -413,16 +413,25 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             console.log("Deleted Prev Callbacks");
 
             if (document.activeElement !== searchEl) {
+
+            	console.log("Not search El");
+
                 return;
             }
+
+            console.log("Yes search El");
 
             suggestions = (xhrResults.query && xhrResults.query.pages) ?
                 xhrResults.query.pages : [];
 
+            console.log("before item in suggestions");
+                
             for (item in suggestions) {
                 result = suggestions[item];
                 orderedResults[result.index - 1] = result;
             }
+
+            console.log("after item in suggestions");
 
             templateDOMString = generateTemplateString(orderedResults);
 
