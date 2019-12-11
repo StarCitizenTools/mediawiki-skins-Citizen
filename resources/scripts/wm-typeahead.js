@@ -402,9 +402,15 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             templateDOMString,
             listEl;
 
+        console.log("Defined vars in OpensearchCallback");
+
         return function(xhrResults) {
 
+        	console.log("Returned xhrResults");
+
             window.callbackStack.deletePrevCallbacks(callbackIndex);
+
+            console.log("Deleted Prev Callbacks");
 
             if (document.activeElement !== searchEl) {
                 return;
