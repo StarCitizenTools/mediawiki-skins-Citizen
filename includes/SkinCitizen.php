@@ -27,6 +27,15 @@ class SkinCitizen extends SkinTemplate {
 		$out->addMeta( 'theme-color',
 			$this->getConfig()->get( 'CitizenThemeColor' )
 		);
+		// Preconnect origin
+		if ( $this->getConfig()->get( 'CitizenEnablePreconnect' ) ) {
+			$out->addLink(
+				[
+					'rel' => 'preconnect',
+					'href' => $this->getConfig()->get( 'CitizenPreconnectOrigin' )
+				]
+			);
+		}
 		// Generate manifest
 		if ( $this->getConfig()->get( 'CitizenEnableManifest' ) ) {
 			$out->addLink(
