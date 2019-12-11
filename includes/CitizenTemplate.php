@@ -292,11 +292,7 @@ class CitizenTemplate extends BaseTemplate {
 			]
 		);
 		$html .= Html::hidden( 'title', $this->get( 'searchtitle' ) );
-		$html .= Html::rawElement(
-			'h3',
-			[],
-			Html::label( $this->getMsg( 'search' )->text(), 'searchInput' )
-		);
+		$html .= Html::rawElement( Html::label( $this->getMsg( 'search' )->text(), 'searchInput' ) );
 		$html .= $this->makeSearchInput( [ 'id' => 'searchInput' ] );
 		$html .= $this->makeSearchButton( 'go', [ 'id' => 'searchGoButton', 'class' => 'searchButton' ] );
 		$html .= Html::closeElement( 'form' );
