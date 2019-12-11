@@ -5,7 +5,7 @@
 
 /* global wmTest, WMTypeAhead, _, addEvent */
 
-( function ( wmTest, WMTypeAhead ) {
+( function ( WMTypeAhead ) {
 
 	var inputEvent,
 		searchInput = document.getElementById( 'search-input' ),
@@ -29,4 +29,4 @@
 	}, 100 ) );
 	*/
 
-}( wmTest, WMTypeAhead ) );
+}( WMTypeAhead ) );
