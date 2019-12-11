@@ -479,8 +479,12 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
     };
 };
 
+/** 
+* Below are additional dependency extracted from polyfills.js
+* TODO: Optimize and clear unneeded code
+*/
+
 /**
- * Extracted from polyfills.js
  * Detects reported or approximate device pixel ratio.
  * * 1.0 means 1 CSS pixel is 1 hardware pixel
  * * 2.0 means 1 CSS pixel is 2 hardware pixels
@@ -516,5 +520,19 @@ function getDevicePixelRatio () {
 		// Legacy browsers...
 		// Assume 1 if unknown.
 		return 1;
+	}
+}
+
+function addEvent( obj, evt, fn ) {
+
+	if ( !obj ) {
+		return;
+	}
+
+	if ( obj.addEventListener ) {
+		obj.addEventListener( evt, fn, false );
+	} else if ( obj.attachEvent ) {
+		attachedEvents.push( [ obj, evt, fn ] );
+		obj.attachEvent( 'on' + evt, fn );
 	}
 }
