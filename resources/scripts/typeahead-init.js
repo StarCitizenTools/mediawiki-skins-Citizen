@@ -24,7 +24,7 @@
 	 * Attaching type-ahead query action to 'input' event.
 	 */
 	addEvent( searchInput, inputEvent, _.debounce( function () {
-		typeAhead.query( searchInput.value, document.getElementById( 'searchLanguage' ).value );
+		typeAhead.query( searchInput.value );
 	}, 100 ) );
 
 }( WMTypeAhead ) );
