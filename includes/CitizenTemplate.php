@@ -280,6 +280,8 @@ class CitizenTemplate extends BaseTemplate {
 
 	/**
 	 * Generates the search form
+	 * In order to use the old opensearch, change search-input to searchInput
+	 * See T219590 for more details
 	 * @return string html
 	 */
 	protected function getSearch() {

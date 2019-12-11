@@ -67,7 +67,8 @@ class SkinCitizen extends SkinTemplate {
 			'skins.citizen.icons.badges'
 		] );
 		$out->addModules( [
-			'skins.citizen.js'
+			'skins.citizen.js',
+			'skins.citizen.search'
 		] );
 	}
 

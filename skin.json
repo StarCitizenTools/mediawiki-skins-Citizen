@@ -47,6 +47,12 @@
 				"resources/scripts/toc.js"
 			]
 		},
+		"skins.citizen.search": {
+			"scripts": [
+				"resources/scripts/wm-typeahead.js",
+				"resources/scripts/typeahead-init.js"
+			]
+		},
 		"skins.citizen.bpd": {
 			"scripts": [
 				"resources/scripts/lazyload.js"
