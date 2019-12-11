@@ -9,7 +9,7 @@
 
 	var inputEvent,
 		searchInput = document.getElementById( 'search-input' ),
-		typeAhead = new WMTypeAhead( 'search-form', 'searchInput' );
+		typeAhead = new WMTypeAhead( 'search-form', 'search-input' );
 
 	/**
 	 * Testing for 'input' event and falling back to 'propertychange' event for IE.
