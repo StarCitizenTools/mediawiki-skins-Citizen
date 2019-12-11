@@ -280,6 +280,8 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             pageDescription = '',
             i;
 
+        console.log("Called Template String");
+
         for (i = 0; i < suggestions.length; i++) {
 
             if (!suggestions[i]) {
@@ -393,7 +395,6 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             templateDOMString,
             listEl;
 
-        console.log("checked");
         return function(xhrResults) {
 
             window.callbackStack.deletePrevCallbacks(callbackIndex);
@@ -412,6 +413,8 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 
             templateDOMString = generateTemplateString(orderedResults);
 
+            console.log("Generated Template String");
+
             ssActiveIndex.setMax(orderedResults.length);
             ssActiveIndex.clear();
 
@@ -426,6 +429,8 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
                 addEvent(listEl, 'mouseenter', toggleActiveClass.bind(this, listEl, typeAheadItems));
                 addEvent(listEl, 'mouseleave', toggleActiveClass.bind(this, listEl, typeAheadItems));
             }
+
+            console.log("Added mouse events");
         };
     };
 
