@@ -393,6 +393,7 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             templateDOMString,
             listEl;
 
+        console.log("checked");
         return function(xhrResults) {
 
             window.callbackStack.deletePrevCallbacks(callbackIndex);
