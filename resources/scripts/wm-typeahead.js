@@ -205,12 +205,14 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
         script = document.createElement('script');
         script.id = 'api_opensearch';
 
+        // Removed description prop
+        // TODO: Use text extract or PCS for description
         callbackIndex = window.callbackStack.addCallback(window.portalOpensearchCallback);
         searchQuery = {
             action: 'query',
             format: 'json',
             generator: 'prefixsearch',
-            prop: 'pageprops|pageimages|description',
+            prop: 'pageprops|pageimages',
             redirects: '',
             ppprop: 'displaytitle',
             piprop: 'thumbnail',
