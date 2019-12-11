@@ -415,7 +415,8 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             if (document.activeElement !== searchEl) {
 
             	console.log("Not search El");
-
+            	console.log(searchEl);
+            	
                 return;
             }
 
