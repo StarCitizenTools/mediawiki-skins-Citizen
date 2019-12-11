@@ -205,9 +205,14 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
         script = document.createElement('script');
         script.id = 'api_opensearch';
 
+        console.log("Created API script");
+
         // Removed description prop
         // TODO: Use text extract or PCS for description
+
         callbackIndex = window.callbackStack.addCallback(window.portalOpensearchCallback);
+        console.log("Called callback index");
+
         searchQuery = {
             action: 'query',
             format: 'json',
@@ -226,6 +231,8 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 
         script.src = hostname + serialize(searchQuery);
         docHead.appendChild(script);
+
+        console.log("Query script loaded");
     }
 
     // END loadQueryScript
