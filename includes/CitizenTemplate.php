@@ -292,8 +292,8 @@ class CitizenTemplate extends BaseTemplate {
 			]
 		);
 		$html .= Html::hidden( 'title', $this->get( 'searchtitle' ) );
-		$html .= Html::label( $this->getMsg( 'search' )->text(), 'search-input' );
-		$html .= $this->makeSearchInput( [ 'id' => 'search-input' ] );
+		$html .= Html::label( $this->getMsg( 'search' )->text(), 'search-input', 'class' => 'screen-reader-text' );
+		$html .= $this->makeSearchInput( [ 'id' => 'search-input', 'type' => 'search' ] );
 		$html .= $this->makeSearchButton( 'go', [ 'id' => 'search-button' ] );
 		$html .= Html::closeElement( 'form' );
 
