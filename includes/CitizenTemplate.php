@@ -32,7 +32,7 @@ class CitizenTemplate extends BaseTemplate {
 						$this->getUserIcons()
 					) .
 					// Search bar
-					$this->getSearchButton()
+					$this->getSearchToggle()
 				)
 			) .
 			// Main body
@@ -126,15 +126,15 @@ class CitizenTemplate extends BaseTemplate {
 	 * Generates the search button
 	 * @return string html
 	 */
-	 protected function getSearchButton() {
+	 protected function getSearchToggle() {
 		$titleButton = 'Toggle Search';
 
  		$html = Html::rawElement( 'div', [ 'class' => 'mw-header-end', 'id' => 'site-search' ],
-			Html::rawElement( 'input', [ 'type' => 'checkbox', 'role' => 'button', 'title' => $titleButton ]) .
+			Html::rawElement( 'input', [ 'type' => 'checkbox', 'role' => 'button', 'title' => $titleButton, 'id' => 'search-toggle' ]) .
 
 			// Search button
-			Html::rawElement( 'div', [ 'id' => 'search-icon-container' ],
-				Html::rawElement( 'div', [ 'id' => 'search-icon' ] )
+			Html::rawElement( 'div', [ 'id' => 'search-toggle-icon-container' ],
+				Html::rawElement( 'div', [ 'id' => 'search-toggle-icon' ] )
 			) .
 
 			// Search form
