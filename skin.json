@@ -51,6 +51,9 @@
 			"scripts": [
 				"resources/scripts/wm-typeahead.js",
 				"resources/scripts/typeahead-init.js"
+			],
+			"dependencies": [
+				"mediawiki.Title"
 			]
 		},
 		"skins.citizen.bpd": {
