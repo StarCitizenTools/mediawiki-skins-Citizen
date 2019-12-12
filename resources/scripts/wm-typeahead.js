@@ -308,7 +308,7 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             descriptionText = '';
 
             // Check if description exists
-            if (pageDescription) {
+            if (pageDescription || pageDescription != '...') {
                 // If the description is an array, use the first item
                 if (typeof pageDescription === 'object' && pageDescription[0]) {
                     descriptionText = pageDescription[0].toString();
