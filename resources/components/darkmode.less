@@ -129,22 +129,17 @@
         color: @dark-text-100;
     }
 
-    table.wikitable {
+    table.wikitable,
+    .suggestion-title {
         color: @dark-text-90;
     }
 
-    .suggestions a.mw-searchSuggest-link,
-    .suggestions a.mw-searchSuggest-link:hover,
-    .suggestions a.mw-searchSuggest-link:active,
-    .suggestions a.mw-searchSuggest-link:focus,
-    .suggestions-result,
-    .suggestions-special .special-query {
-        color: @dark-text-90  !important;
+    .suggestion-link.active {
+        background-color: @accent-10;
     }
 
-    .suggestions-result-current {
-        background: #2a4b8d !important;
-        color: @dark-text-100  !important;
+    .suggestion-link.active .suggestion-title {
+        color: @accent-90;
     }
 
     .mw-body-content #contentSub,
@@ -152,7 +147,8 @@
     .mw-body #siteSub,
     table.wikitable tr th,
     #mw-header-menu-drawer-container a,
-    .mw-body-content #mw-content-text .mw-parser-output #toc a:hover {
+    .mw-body-content #mw-content-text .mw-parser-output #toc a:hover,
+    .suggestion-description {
         color: @dark-text-80  !important;
     }
 
