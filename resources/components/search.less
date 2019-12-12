@@ -3,6 +3,8 @@
 // https://starcitizen.tools
 //
 
+@suggestion-max-width: 400px + @icon-box-size + @icon-padding * 2; // 454px
+
 // TODO: Make it configurable and flexible
 #site-search {
 
@@ -161,7 +163,7 @@
 .suggestions-dropdown {
     background: @base-100;
     .boxshadow(4);
-    width: calc(~"400px +"@icon-box-size + @icon-padding * 2);
+    width: @suggestion-max-width;
     max-width: calc(~"100vw -"@icon-box-size + @icon-padding * 2 + @margin-side );
 }
 
@@ -229,7 +231,9 @@ a.suggestion-link:hover {
     }
 }
 
-@media only screen and (max-width: 400px + @icon-box-size + @icon-padding * 2) {
+
+
+@media only screen and (max-width: @suggestion-max-width) {
     .suggestions-dropdown {
         position: fixed;
         left: 0;
