@@ -190,6 +190,14 @@
 				"madeby": "resources/images/badges/MadeByTheCommunity.svg",
 				"partof": "resources/images/badges/StarCitizenTools.svg"
 			}
+		},
+		"skins.citizen.icons.search": {
+			"class": "ResourceLoaderImageModule",
+			"selector": ".suggestion-thumbnail",
+			"useDataURI": false,
+			"images": {
+				"noimage": "resources/images/cards/noimage.svg"
+			}
 		}
 	},
 	"ResourceFileModulePaths": {
