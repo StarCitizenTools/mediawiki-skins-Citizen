@@ -228,3 +228,13 @@ a.suggestion-link:hover {
         }
     }
 }
+
+@media only screen and (max-width: 400px + @icon-box-size + @icon-padding * 2) {
+    .suggestions-dropdown {
+        position: fixed;
+        left: 0;
+        top: @header-height + 1px;
+        max-width: 100vw;
+        height: calc(~"100vh -" @header-height + 1px);
+    }
+}
