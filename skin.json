@@ -13,8 +13,8 @@
 	},
 	"config": {
 		"CitizenThemeColor": "#11151d",
-		"CitizenEnablePreconnect": false,
-		"CitizenPreconnectOrigin": "",
+		"CitizenEnablePreconnect": true,
+		"CitizenPreconnectOrigin": "https://www.google-analytics.com",
 		"CitizenEnableManifest": true,
 		"CitizenManifestThemeColor": "#11151d",
 		"CitizenManifestBackgroundColor": "#fff"
