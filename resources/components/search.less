@@ -18,6 +18,9 @@
 
         // Search field
         #search-input {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
             padding: 12px 15px;
             width: 0;
             max-width: calc(~"100vw -"@icon-box-size * 2 + @icon-padding * 4 + @margin-side );
@@ -158,7 +161,7 @@
 .suggestions-dropdown {
     background: @base-100;
     .boxshadow(4);
-    width: calc(~"400px +"@icon-box-size + @icon-padding * 2 );
+    width: calc(~"400px +"@icon-box-size + @icon-padding * 2);
     max-width: calc(~"100vw -"@icon-box-size + @icon-padding * 2 + @margin-side );
 }
 
