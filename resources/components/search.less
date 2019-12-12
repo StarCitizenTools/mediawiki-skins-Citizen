@@ -153,6 +153,25 @@
 .suggestions-dropdown {
     background: @base-100;
     .boxshadow(4);
+
+    .suggestion-link {
+        display: block;
+        position: relative;
+        min-height: 2rem;
+        width: 100%;
+        padding: 1rem 1rem 1rem 5.375rem;
+    }
+
+    .suggestion-thumbnail {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100%;
+        width: 4.375rem; // 70px
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 }
 
 // RTL tweaks
