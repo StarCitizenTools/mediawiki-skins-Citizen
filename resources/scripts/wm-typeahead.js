@@ -205,13 +205,10 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
         script = document.createElement('script');
         script.id = 'api_opensearch';
 
-        console.log("Created API script");
-
         // Removed description prop
         // TODO: Use text extract or PCS for description
 
         callbackIndex = window.callbackStack.addCallback(window.portalOpensearchCallback);
-        console.log("Called callback index");
 
         searchQuery = {
             action: 'query',
@@ -231,8 +228,6 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 
         script.src = hostname + serialize(searchQuery);
         docHead.appendChild(script);
-
-        console.log("Query script loaded");
     }
 
     // END loadQueryScript
@@ -286,8 +281,6 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             descriptionText = '',
             pageDescription = '',
             i;
-
-        console.log("Called Template String");
 
         for (i = 0; i < suggestions.length; i++) {
 
@@ -402,41 +395,23 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             templateDOMString,
             listEl;
 
-        console.log("Defined vars in OpensearchCallback");
-
         return function(xhrResults) {
-
-        	console.log("Returned xhrResults");
 
             window.callbackStack.deletePrevCallbacks(callbackIndex);
 
-            console.log("Deleted Prev Callbacks");
-
             if (document.activeElement !== searchEl) {
-
-            	console.log("Not search El");
-            	console.log(searchEl);
-            	
                 return;
             }
-
-            console.log("Yes search El");
 
             suggestions = (xhrResults.query && xhrResults.query.pages) ?
                 xhrResults.query.pages : [];
 
-            console.log("before item in suggestions");
-                
             for (item in suggestions) {
                 result = suggestions[item];
                 orderedResults[result.index - 1] = result;
             }
 
-            console.log("after item in suggestions");
-
             templateDOMString = generateTemplateString(orderedResults);
-
-            console.log("Generated Template String");
 
             ssActiveIndex.setMax(orderedResults.length);
             ssActiveIndex.clear();
@@ -452,8 +427,6 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
                 addEvent(listEl, 'mouseenter', toggleActiveClass.bind(this, listEl, typeAheadItems));
                 addEvent(listEl, 'mouseleave', toggleActiveClass.bind(this, listEl, typeAheadItems));
             }
-
-            console.log("Added mouse events");
         };
     };
 
