@@ -205,11 +205,11 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
         script = document.createElement('script');
         script.id = 'api_opensearch';
 
-        // Removed description prop
-        // TODO: Use text extract or PCS for description
 
         callbackIndex = window.callbackStack.addCallback(window.portalOpensearchCallback);
 
+        // Removed description prop
+        // TODO: Use text extract or PCS for description
         searchQuery = {
             action: 'query',
             format: 'json',
