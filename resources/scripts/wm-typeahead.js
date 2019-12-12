@@ -195,7 +195,7 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 
         // Change sitename here
         // TODO: Make it configurable from the skin
-        hostname = '//' + 'scwdev.czen.me/api.php?';
+        hostname = '//' + wgServer + wgScriptPath + '/api.php?';
 
         // If script already exists, remove it.
         if (script) {
@@ -332,7 +332,7 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             // TODO: Make it configurable from the skin
             suggestionLink = mw.html.element('a', {
                 'class': 'suggestion-link',
-                href: 'https://' + 'scwdev.czen.me/' + encodeURIComponent(page.title.replace(/ /gi, '_'))
+                href: 'https://' + wgServer + '/' + encodeURIComponent(page.title.replace(/ /gi, '_'))
             }, new mw.html.Raw(suggestionText + suggestionThumbnail));
 
             string += suggestionLink;
