@@ -215,7 +215,7 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             format: 'json',
             generator: 'prefixsearch',
             prop: 'pageprops|pageimages|extracts',
-            exlimit: '1',
+            exlimit: '6',
             exintro: 1,
             exchars: '100',
             explaintext: 1,
@@ -294,7 +294,7 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 
             page = suggestions[i];
             // Changed to TextExtracts
-            pageDescription = page.extracts || '';
+            pageDescription = page.extract || '';
 
             // Ensure that the value from the previous iteration isn't used
             sanitizedThumbURL = false;
