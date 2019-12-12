@@ -214,7 +214,11 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             action: 'query',
             format: 'json',
             generator: 'prefixsearch',
-            prop: 'pageprops|pageimages',
+            prop: 'pageprops|pageimages|extracts',
+            exlimit: '1',
+            exintro: 1,
+            exchars: '100',
+            explaintext: 1,
             redirects: '',
             ppprop: 'displaytitle',
             piprop: 'thumbnail',
@@ -289,7 +293,8 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             }
 
             page = suggestions[i];
-            pageDescription = page.description || '';
+            // Changed to TextExtracts
+            pageDescription = page.extracts || '';
 
             // Ensure that the value from the previous iteration isn't used
             sanitizedThumbURL = false;
