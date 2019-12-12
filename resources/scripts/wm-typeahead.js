@@ -308,7 +308,7 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             descriptionText = '';
 
             // Check if description exists
-            if (pageDescription || pageDescription != '...') {
+            if (pageDescription) {
                 // If the description is an array, use the first item
                 if (typeof pageDescription === 'object' && pageDescription[0]) {
                     descriptionText = pageDescription[0].toString();
@@ -316,6 +316,11 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
                     // Otherwise, use the description as is.
                     descriptionText = pageDescription.toString();
                 }
+            }
+
+            // Filter out no text from TextExtracts
+            if (descriptionText == '...') {
+                descriptionText = '';
             }
 
             suggestionDescription = mw.html.element('p', { 'class': 'suggestion-description' }, descriptionText);
