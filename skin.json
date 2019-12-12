@@ -13,11 +13,14 @@
 	},
 	"config": {
 		"CitizenThemeColor": "#11151d",
-		"CitizenEnablePreconnect": true,
-		"CitizenPreconnectOrigin": "https://www.google-analytics.com",
+		"CitizenEnablePreconnect": false,
+		"CitizenPreconnectOrigin": "",
 		"CitizenEnableManifest": true,
 		"CitizenManifestThemeColor": "#11151d",
 		"CitizenManifestBackgroundColor": "#fff"
+	},
+	"ConfigRegistry": {
+		"Citizen": "GlobalVarConfig::newInstance"
 	},
 	"ValidSkinNames": {
 		"citizen": "Citizen"
