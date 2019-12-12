@@ -33,6 +33,23 @@ class CitizenHooks {
 	}
 
 	/**
+	 * ResourceLoaderGetConfigVars hook handler for setting a config variable
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/ResourceLoaderGetConfigVars
+	 *
+	 * @param array &$vars Array of variables to be added into the output of the startup module.
+	 * @return bool
+	 */
+	public static function onResourceLoaderGetConfigVars( &$vars ) {
+		$config = MediaWikiServices::getInstance()->getConfigFactory()
+			->makeConfig( 'Citizen' );
+			
+		$vars['wgCitizenEnablePreconnect'] = $config->get( 'CitizenEnablePreconnect' );
+		$vars['wgCitizenPreconnectOrigin'] = $config->get( 'CitizenPreconnectOrigin' );
+
+		return true;
+	}
+
+	/**
 	 * Lazyload images
 	 * Modified from the Lazyload extension
 	 * Looks for thumbnail and swap src to data-src
