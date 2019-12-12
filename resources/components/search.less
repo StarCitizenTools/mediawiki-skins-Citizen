@@ -159,7 +159,6 @@
     display: block;
     position: relative;
     min-height: 2rem * @content-scaling;
-    width: 100%;
     padding: 1rem 1rem 1rem 8.5rem * @content-scaling;
 }
 
@@ -175,13 +174,13 @@
 }
 
 .suggestion-highlight {
-    font-style: normal;
-    text-decoration: underline;
+    font-weight: 400;
 }
 
 .suggestion-description {
     color: @base-30;
     margin: 0;
+    font-family: @fonts;
     font-size: 1.3rem * @content-scaling;
     line-height: 1.43rem * @content-scaling;
 }
@@ -196,6 +195,7 @@ a.suggestion-link:hover {
 }
 
 .suggestion-thumbnail {
+    background-color: @base-80;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
