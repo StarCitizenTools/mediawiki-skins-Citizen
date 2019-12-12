@@ -217,7 +217,7 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             prop: 'pageprops|pageimages|extracts',
             exlimit: '6',
             exintro: 1,
-            exchars: '100',
+            exchars: '60',
             explaintext: 1,
             redirects: '',
             ppprop: 'displaytitle',
