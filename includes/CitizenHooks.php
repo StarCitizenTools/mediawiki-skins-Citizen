@@ -18,6 +18,7 @@
  * @file
  */
 
+use MediaWiki\MediaWikiServices;
 
 /**
  * Hook handlers for Citizen skin.
@@ -42,7 +43,7 @@ class CitizenHooks {
 	public static function onResourceLoaderGetConfigVars( &$vars ) {
 		$config = MediaWikiServices::getInstance()->getConfigFactory()
 			->makeConfig( 'Citizen' );
-			
+
 		$vars['wgCitizenEnablePreconnect'] = $config->get( 'CitizenEnablePreconnect' );
 		$vars['wgCitizenPreconnectOrigin'] = $config->get( 'CitizenPreconnectOrigin' );
 
