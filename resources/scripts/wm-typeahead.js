@@ -195,7 +195,7 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 
         // Change sitename here
         // TODO: Make it configurable from the skin
-        hostname = wgServer + wgScriptPath + '/api.php?';
+        hostname = mw.config.get('wgServer') + mw.config.get('wgScriptPath')+ '/api.php?';
 
         // If script already exists, remove it.
         if (script) {
@@ -217,7 +217,7 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             prop: 'pageprops|pageimages|extracts',
             exlimit: '6',
             exintro: 1,
-            exchars: '60',
+            exchars: mw.config.get( 'wgCitizenExchars' ),
             explaintext: 1,
             redirects: '',
             ppprop: 'displaytitle',
@@ -332,7 +332,7 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             // TODO: Make it configurable from the skin
             suggestionLink = mw.html.element('a', {
                 'class': 'suggestion-link',
-                href: wgServer + '/' + encodeURIComponent(page.title.replace(/ /gi, '_'))
+                href: mw.config.get('wgServer') + '/' + encodeURIComponent(page.title.replace(/ /gi, '_'))
             }, new mw.html.Raw(suggestionText + suggestionThumbnail));
 
             string += suggestionLink;

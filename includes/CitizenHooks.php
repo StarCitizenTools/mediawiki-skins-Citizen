@@ -44,8 +44,7 @@ class CitizenHooks {
 		$config = MediaWikiServices::getInstance()->getConfigFactory()
 			->makeConfig( 'Citizen' );
 
-		$vars['wgCitizenEnablePreconnect'] = $config->get( 'CitizenEnablePreconnect' );
-		$vars['wgCitizenPreconnectOrigin'] = $config->get( 'CitizenPreconnectOrigin' );
+		$vars['wgCitizenExchars'] = $config->get( 'CitizenExchars' );
 
 		return true;
 	}
