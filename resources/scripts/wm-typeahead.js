@@ -214,7 +214,7 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             action: 'query',
             format: 'json',
             generator: 'prefixsearch',
-            prop: 'pageprops|pageimages|extracts',
+            prop: 'pageprops|pageimages|description|extracts',
             exlimit: '6',
             exintro: 1,
             exchars: mw.config.get( 'wgCitizenSearchExchars' ),
@@ -293,8 +293,8 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
             }
 
             page = suggestions[i];
-            // Changed to TextExtracts
-            pageDescription = page.extract || '';
+            // Description > TextExtracts
+            pageDescription = page.description || page.extract || '';
 
             // Ensure that the value from the previous iteration isn't used
             sanitizedThumbURL = false;
