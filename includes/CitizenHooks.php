@@ -44,7 +44,7 @@ class CitizenHooks {
 		$config = MediaWikiServices::getInstance()->getConfigFactory()
 			->makeConfig( 'Citizen' );
 
-		$vars['wgCitizenExchars'] = $config->get( 'CitizenExchars' );
+		$vars['wgCitizenSearchExchars'] = $config->get( 'CitizenSearchExchars' );
 
 		return true;
 	}
