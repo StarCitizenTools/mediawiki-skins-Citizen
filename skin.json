@@ -11,14 +11,50 @@
 	"requires": {
 		"MediaWiki": ">= 1.31.0"
 	},
+	"config_prefix": "Citizen",
 	"config": {
-		"CitizenThemeColor": "#11151d",
-		"CitizenEnablePreconnect": false,
-		"CitizenPreconnectOrigin": "",
-		"CitizenEnableManifest": true,
-		"CitizenManifestThemeColor": "#11151d",
-		"CitizenManifestBackgroundColor": "#fff",
-		"CitizenExchars": 60
+		"ThemeColor": {
+			"value": "#11151d",
+			"description": "The theme color defined in the meta tag",
+			"descriptionmsg": "citizen-config-themecolor",
+			"public": "true"
+		},
+		"EnablePreconnect": {
+			"value": false,
+			"description": "Enable or disable preconnect to required origin",
+			"descriptionmsg": "citizen-config-enablepreconnect",
+			"public": "true"
+		},
+		"PreconnectOrigin": {
+			"value": "",
+			"description": "The URL for preconnect to required origin",
+			"descriptionmsg": "citizen-config-preconnectorigin",
+			"public": "true"
+		},
+		"EnableManifest": {
+			"value": true,
+			"description": "Enable or disable web app manifest",
+			"descriptionmsg": "citizen-config-enablemanifest",
+			"public": "true"
+		},
+		"ManifestThemeColor": {
+			"value": "#11151d",
+			"description": "The theme color defined in the web app manifest",
+			"descriptionmsg": "citizen-config-manfiestthemecolor",
+			"public": "true"
+		},
+		"ManifestBackgroundColor": {
+			"value": "#fff",
+			"description": "The background color defined in the web app manifest",
+			"descriptionmsg": "citizen-config-manifestbackgroundcolor",
+			"public": "true"
+		},
+		"SearchExchars": {
+			"value": 60,
+			"description": "The character limit for the description in search suggestion",
+			"descriptionmsg": "citizen-config-searchexchars",
+			"public": "true"
+		}
 	},
 	"ConfigRegistry": {
 		"Citizen": "GlobalVarConfig::newInstance"
@@ -255,5 +291,5 @@
 			"CitizenHooks::ThumbnailBeforeProduceHTML"
 		]
 	},
-	"manifest_version": 1
+	"manifest_version": 2
 }
