@@ -44,6 +44,7 @@ class CitizenHooks {
 		$config = MediaWikiServices::getInstance()->getConfigFactory()
 			->makeConfig( 'Citizen' );
 
+		$vars['wgCitizenMaxSearchResults'] = $config->get( 'CitizenMaxSearchResults' );
 		$vars['wgCitizenSearchExchars'] = $config->get( 'CitizenSearchExchars' );
 
 		return true;
