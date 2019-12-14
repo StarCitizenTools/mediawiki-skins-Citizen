@@ -49,6 +49,12 @@
 			"descriptionmsg": "citizen-config-manifestbackgroundcolor",
 			"public": true
 		},
+		"MaxSearchResults": {
+			"value": 6,
+			"description": "The max number of suggestions in search result",
+			"descriptionmsg": "citizen-config-maxsearchresults",
+			"public": true
+		},
 		"SearchExchars": {
 			"value": 60,
 			"description": "The character limit for the description in search suggestion",
