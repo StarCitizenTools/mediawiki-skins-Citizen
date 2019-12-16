@@ -12,6 +12,7 @@
         position: absolute;
         z-index: -1; // Not interactable
         margin: 7px 0 8px; // 1px h3 screen reader
+        display: flex;
         top: 0;
         right: @icon-box-size + @icon-padding * 2;
         opacity: 0;
@@ -42,8 +43,6 @@
             height: 42px;
             border: 0;
             cursor: pointer; //somehow it is not pointer
-            display: flex;
-            justify-content: center;
 
             img {
                 filter: invert(1);
