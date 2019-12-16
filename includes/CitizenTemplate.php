@@ -296,7 +296,8 @@ class CitizenTemplate extends BaseTemplate {
 		$html .= Html::hidden( 'title', $this->get( 'searchtitle' ) );
 		$html .= Html::label( $this->getMsg( 'search' )->text(), 'search-input', [ 'class' => 'screen-reader-text' ] );
 		$html .= $this->makeSearchInput( [ 'id' => 'search-input', 'type' => 'search' ] );
-		$html .= $this->makeSearchButton( 'go', [ 'id' => 'search-button' ] );
+		$html .= $this->makeSearchButton( 'image', [ 'id' => 'search-button', 'src' => $this->getSkin()->getSkinStylePath( 'resources/images/icons/search.svg') ] );
+		// $html .= $this->makeSearchButton( 'go', [ 'id' => 'search-button' ] );
 		$html .= Html::closeElement( 'form' );
 
 		return $html;
