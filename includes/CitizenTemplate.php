@@ -96,10 +96,15 @@ class CitizenTemplate extends BaseTemplate {
 	 */
 	protected function getBottomBar() {
 
+		$linkDiscord = 'https://discord.gg/3kjftWK';
+		$titleDiscord = 'Contact Us on Discord';
+		$textDiscord = 'Discord';
+
+/*
 		$linkButton = $this->getConfig()->get( 'CitizenButtonLink' );
 		$titleButton = $this->getConfig()->get( 'CitizenButtonTitle' );
 		$textButton = $this->getConfig()->get( 'CitizenButtonText' );
-
+*/
 		$html = Html::openElement( 'div', [ 'id' => 'mw-bottombar' ] );
 
 		$html .= Html::rawElement( 'div', [ 'id' => 'mw-bottombar-buttons' ],
