@@ -13,6 +13,24 @@
 	},
 	"config_prefix": "wgCitizen",
 	"config": {
+		"ButtonLink": {
+			"value": "",
+			"description": "The link of the floating action button",
+			"descriptionmsg": "citizen-config-buttonlink",
+			"public": true
+		},
+		"ButtonLabel": {
+			"value": "",
+			"description": "The label of the floating action button",
+			"descriptionmsg": "citizen-config-buttonlabel",
+			"public": true
+		},
+		"ButtonTitle": {
+			"value": "",
+			"description": "The title in the link element of the floating action button",
+			"descriptionmsg": "citizen-config-buttontitle",
+			"public": true
+		},
 		"ThemeColor": {
 			"value": "#11151d",
 			"description": "The theme color defined in the meta tag",
@@ -111,7 +129,7 @@
 			"defaultColor": "#000",
 			"useDataURI": false,
 			"images": {
-				"discord": "resources/images/icons/discord.svg"
+				"button": "resources/images/icons/discord.svg"
 			}
 		},
 		"skins.citizen.icons.ca": {

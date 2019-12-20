@@ -96,26 +96,16 @@ class CitizenTemplate extends BaseTemplate {
 	 */
 	protected function getBottomBar() {
 
-		$linkDiscord = 'https://discord.gg/3kjftWK';
-		$titleDiscord = 'Contact Us on Discord';
-		$textDiscord = 'Discord';
-		/*
-		$linkReddit = 'https://www.reddit.com/r/starcitizen';
-		$titleReddit = 'Visit /r/starcitizen';
-		$textReddit = 'Reddit';
-		*/
+		$linkButton = $this->getConfig()->get( 'CitizenButtonLink' );
+		$titleButton = $this->getConfig()->get( 'CitizenButtonTitle' );
+		$textButton = $this->getConfig()->get( 'CitizenButtonText' );
 
 		$html = Html::openElement( 'div', [ 'id' => 'mw-bottombar' ] );
 
-		$html .= Html::rawElement( 'div', [ 'id' => 'mw-bottombar-contact' ],
-			Html::rawElement( 'div', [ 'class' => 'citizen-ui-icon', 'id' => 'citizen-ui-discord' ],
-				Html::rawElement( 'a', [ 'href' => $linkDiscord, 'title' => $titleDiscord, 'rel' => 'noopener noreferrer', 'target' => '_blank' ], $textDiscord )
+		$html .= Html::rawElement( 'div', [ 'id' => 'mw-bottombar-buttons' ],
+			Html::rawElement( 'div', [ 'class' => 'citizen-ui-icon', 'id' => 'citizen-ui-button' ],
+				Html::rawElement( 'a', [ 'href' => $linkButton, 'title' => $titleButton, 'rel' => 'noopener noreferrer', 'target' => '_blank' ], $textButton )
 			)
-			/*
-			Html::rawElement( 'div', [ 'class' => 'citizen-ui-icon', 'id' => 'citizen-ui-reddit' ],
-				Html::rawElement( 'a', [ 'href' => $linkReddit, 'title' => $titleReddit, 'target' => '_blank' ], $textReddit )
-			)
-			*/
 		);
 		$html .= Html::closeElement( 'div' );
 
