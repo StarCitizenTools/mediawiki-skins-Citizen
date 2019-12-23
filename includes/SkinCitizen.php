@@ -17,7 +17,7 @@ class SkinCitizen extends SkinTemplate {
 	public function initPage( OutputPage $out ) {
 		// Responsive layout
 		$out->addMeta( 'viewport',
-			'width=device-width, initial-scale=1'
+			'width=device-width, initial-scale=1.0'
 		);
 		// Theme color
 		$out->addMeta( 'theme-color',
