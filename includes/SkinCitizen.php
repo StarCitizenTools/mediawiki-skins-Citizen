@@ -47,6 +47,14 @@ class SkinCitizen extends SkinTemplate {
 				]
 			);
 		}
+		// Referrer policy
+		// iOS Safari, IE, Edge compatiblity
+		$out->addMeta( 'referrer',
+			'strict-origin'
+		);
+		$out->addMeta( 'referrer',
+			'strict-origin-when-cross-origin'
+		);
 
 		$out->addModuleStyles( [
 			'mediawiki.skinning.content.externallinks',
