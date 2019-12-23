@@ -19,10 +19,6 @@ class SkinCitizen extends SkinTemplate {
 		$out->addMeta( 'viewport',
 			'width=device-width, initial-scale=1'
 		);
-		// Edge compatibility
-		$out->addMeta( 'http:X-UA-Compatible',
-			'IE=edge'
-		);
 		// Theme color
 		$out->addMeta( 'theme-color',
 			$this->getConfig()->get( 'CitizenThemeColor' )
