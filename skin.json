@@ -43,10 +43,10 @@
 			"descriptionmsg": "citizen-config-hstsmaxage",
 			"public": true
 		},
-		"CitizenHSTSMaxAge": {
+		"HSTSIncludeSubdomains": {
 			"value": false,
-			"description": "Enable or disable HTTP Strict Transport Security",
-			"descriptionmsg": "citizen-config-enablehsts",
+			"description": "Apply HSTS to all of the site's subdomains",
+			"descriptionmsg": "citizen-config-hstsincludesubdomains",
 			"public": true
 		},
 		"EnableDenyXFrameOptions": {
