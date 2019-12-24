@@ -25,16 +25,28 @@
 			"descriptionmsg": "citizen-config-enablepreconnect",
 			"public": true
 		},
-		"PreconnectOrigin": {
+		"PreconnectURL": {
 			"value": "",
 			"description": "The URL for preconnect to required origin",
 			"descriptionmsg": "citizen-config-preconnectorigin",
 			"public": true
 		},
-		"EnableManifest": {
-			"value": true,
-			"description": "Enable or disable web app manifest",
-			"descriptionmsg": "citizen-config-enablemanifest",
+		"EnableHSTS": {
+			"value": false,
+			"description": "Enable or disable HTTP Strict Transport Security",
+			"descriptionmsg": "citizen-config-enablehsts",
+			"public": true
+		},
+		"HSTSMaxAge": {
+			"value": 300,
+			"description": "Time in second that the browser should remember that a site is only to be accessed using HTTPS",
+			"descriptionmsg": "citizen-config-hstsmaxage",
+			"public": true
+		},
+		"CitizenHSTSMaxAge": {
+			"value": false,
+			"description": "Enable or disable HTTP Strict Transport Security",
+			"descriptionmsg": "citizen-config-enablehsts",
 			"public": true
 		},
 		"EnableDenyXFrameOptions": {
@@ -47,6 +59,12 @@
 			"value": false,
 			"description": "Enable or disable strict-origin-when-cross-origin referrer policy",
 			"descriptionmsg": "citizen-config-enablestrictreferrerpolicy",
+			"public": true
+		},
+		"EnableManifest": {
+			"value": true,
+			"description": "Enable or disable web app manifest",
+			"descriptionmsg": "citizen-config-enablemanifest",
 			"public": true
 		},
 		"ManifestThemeColor": {

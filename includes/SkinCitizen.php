@@ -28,7 +28,7 @@ class SkinCitizen extends SkinTemplate {
 			$out->addLink(
 				[
 					'rel' => 'preconnect',
-					'href' => $this->getConfig()->get( 'CitizenPreconnectOrigin' )
+					'href' => $this->getConfig()->get( 'CitizenPreconnectURL' )
 				]
 			);
 		}
@@ -46,6 +46,22 @@ class SkinCitizen extends SkinTemplate {
 					)
 				]
 			);
+		}
+		// HSTS
+		if ( $this->getConfig()->get( 'CitizenEnableHSTS' ) ) {
+
+			$hstsmaxage = $this->getConfig()->get( 'CitizenHSTSMaxAge' );
+			$hstsincludesubdomains = $this->getConfig()->get( 'CitizenHSTSIncludeSubdomains' );
+
+			// HSTS max age
+			if ( is_int( $hstsmaxage ) ) {
+				$hstsmaxage = max($hstsmaxage, 0);
+			} else {
+				// Default to 5 mins if input is invalid
+				$hstsmaxage = 300;
+			}
+
+			$out->getRequest()->response()->header( 'Strict-Transport-Security: max-age=' . $hstsmaxage . ( $hstsincludesubdomains ? '; includeSubDomains' : '' ) );
 		}
 		// Deny X-Frame-Options
 		if ( $this->getConfig()->get( 'CitizenEnableDenyXFrameOptions' ) ) {
