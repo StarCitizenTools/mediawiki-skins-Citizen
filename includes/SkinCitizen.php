@@ -52,6 +52,7 @@ class SkinCitizen extends SkinTemplate {
 
 			$hstsmaxage = $this->getConfig()->get( 'CitizenHSTSMaxAge' );
 			$hstsincludesubdomains = $this->getConfig()->get( 'CitizenHSTSIncludeSubdomains' );
+			$hstspreload = $this->getConfig()->get( 'CitizenHSTSPreload' );
 
 			// HSTS max age
 			if ( is_int( $hstsmaxage ) ) {
@@ -61,7 +62,7 @@ class SkinCitizen extends SkinTemplate {
 				$hstsmaxage = 300;
 			}
 
-			$out->getRequest()->response()->header( 'Strict-Transport-Security: max-age=' . $hstsmaxage . ( $hstsincludesubdomains ? '; includeSubDomains' : '' ) );
+			$out->getRequest()->response()->header( 'Strict-Transport-Security: max-age=' . $hstsmaxage . ( $hstsincludesubdomains ? '; includeSubDomains' : '' ) . ( $hstspreload ? '; preload' : '' ) );
 		}
 		// Deny X-Frame-Options
 		if ( $this->getConfig()->get( 'CitizenEnableDenyXFrameOptions' ) ) {

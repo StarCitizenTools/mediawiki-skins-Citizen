@@ -49,6 +49,12 @@
 			"descriptionmsg": "citizen-config-hstsincludesubdomains",
 			"public": true
 		},
+		"HSTSPreload": {
+			"value": false,
+			"description": "Enable or disable HSTS preload",
+			"descriptionmsg": "citizen-config-hstspreload",
+			"public": true
+		},
 		"EnableDenyXFrameOptions": {
 			"value": false,
 			"description": "Enable or disable the deny X-Frame-Options header",
