@@ -37,6 +37,12 @@
 			"descriptionmsg": "citizen-config-enablemanifest",
 			"public": true
 		},
+		"EnableReferrerPolicy": {
+			"value": false,
+			"description": "Enable or disable strict-origin-when-cross-origin referrer policy",
+			"descriptionmsg": "citizen-config-enablereferrerpolicy",
+			"public": true
+		},
 		"ManifestThemeColor": {
 			"value": "#11151d",
 			"description": "The theme color defined in the web app manifest",
