@@ -39,7 +39,7 @@
 		},
 		"EnableCSPReportMode": {
 			"value": false,
-			"description": "Enable or disable Content Security Policy report mode, it will override the CSP when enabled",
+			"description": "Enable or disable Content Security Policy report only mode, it will override the CSP when enabled",
 			"descriptionmsg": "citizen-config-enablecspreportmode",
 			"public": true
 		},

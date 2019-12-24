@@ -47,6 +47,8 @@ class SkinCitizen extends SkinTemplate {
 				]
 			);
 		}
+
+		// HTTP headers
 		// CSP
 		if ( $this->getConfig()->get( 'CitizenEnableCSP' ) ) {
 
