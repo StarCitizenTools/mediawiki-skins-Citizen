@@ -85,6 +85,18 @@
 			"descriptionmsg": "citizen-config-enablestrictreferrerpolicy",
 			"public": true
 		},
+		"EnableFeaturePolicy": {
+			"value": false,
+			"description": "Enable or disable Feature Policy",
+			"descriptionmsg": "citizen-config-enablefeaturepolicy",
+			"public": true
+		},
+		"FeaturePolicyDirective": {
+			"value": "",
+			"description": "The string of your Feature Policy directive",
+			"descriptionmsg": "citizen-config-featurepolicydirective",
+			"public": true
+		},
 		"EnableManifest": {
 			"value": true,
 			"description": "Enable or disable web app manifest",

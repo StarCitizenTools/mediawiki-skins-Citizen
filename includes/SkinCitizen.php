@@ -93,6 +93,13 @@ class SkinCitizen extends SkinTemplate {
 			);
 			$out->getRequest()->response()->header( 'Referrer-Policy: strict-origin-when-cross-origin' );
 		}
+		// Feature policy
+		if ( $this->getConfig()->get( 'CitizenEnableFeaturePolicy' ) ) {
+
+			$fpdirective = $this->getConfig()->get( 'CitizenFeaturePolicyDirective' );
+
+			$out->getRequest()->response()->header( 'Feature-Policy: ' . $fpdirective );
+		}
 
 		$out->addModuleStyles( [
 			'mediawiki.skinning.content.externallinks',
