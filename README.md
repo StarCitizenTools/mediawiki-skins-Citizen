@@ -7,6 +7,7 @@ Citizen is a responsive skin for [MediaWiki](https://www.mediawiki.org) built by
 * **Lazyload images**: Improve load time of your wiki and avoid unnessecary image downloads. 🚀
 * **Native light/dark mode support**: Respect OS and app configuration for light and dark mode. ☀️🌙
 * **Webapp manifest**: Give a more app-like experience when user add your wiki to their home screen. 📱
+* **HTTP security response headers**: Enhance the security of your wiki from HTTP response headers. 🔒🔑
 
 ## Configurations
 This section is still WIP. Please refer to the skin.json for more instructions!
