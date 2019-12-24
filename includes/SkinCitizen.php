@@ -47,8 +47,12 @@ class SkinCitizen extends SkinTemplate {
 				]
 			);
 		}
-		// Referrer policy
-		if ( $this->getConfig()->get( 'CitizenEnableReferrerPolicy' ) ) {
+		// Deny X-Frame-Options
+		if ( $this->getConfig()->get( 'EnableDenyXFrameOptions' ) ) {
+			$out->getRequest()->response()->header( 'X-Frame-Options: deny' );
+		}
+		// Strict referrer policy
+		if ( $this->getConfig()->get( 'CitizenEnableStrictReferrerPolicy' ) ) {
 			// iOS Safari, IE, Edge compatiblity
 			$out->addMeta( 'referrer',
 				'strict-origin'
