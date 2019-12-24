@@ -48,7 +48,7 @@ class SkinCitizen extends SkinTemplate {
 			);
 		}
 		// Deny X-Frame-Options
-		if ( $this->getConfig()->get( 'EnableDenyXFrameOptions' ) ) {
+		if ( $this->getConfig()->get( 'CitizenEnableDenyXFrameOptions' ) ) {
 			$out->getRequest()->response()->header( 'X-Frame-Options: deny' );
 		}
 		// Strict referrer policy
