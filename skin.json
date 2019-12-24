@@ -31,6 +31,24 @@
 			"descriptionmsg": "citizen-config-preconnectorigin",
 			"public": true
 		},
+		"EnableCSP": {
+			"value": false,
+			"description": "Enable or disable Content Security Policy",
+			"descriptionmsg": "citizen-config-enablecsp",
+			"public": true
+		},
+		"EnableCSPReportMode": {
+			"value": false,
+			"description": "Enable or disable Content Security Policy report mode, it will override the CSP when enabled",
+			"descriptionmsg": "citizen-config-enablecspreportmode",
+			"public": true
+		},
+		"CSPDirective": {
+			"value": "",
+			"description": "The string of your CSP directive",
+			"descriptionmsg": "citizen-config-cspdirective",
+			"public": true
+		},
 		"EnableHSTS": {
 			"value": false,
 			"description": "Enable or disable HTTP Strict Transport Security",

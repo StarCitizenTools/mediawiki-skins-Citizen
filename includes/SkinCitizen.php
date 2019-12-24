@@ -47,6 +47,18 @@ class SkinCitizen extends SkinTemplate {
 				]
 			);
 		}
+		// CSP
+		if ( $this->getConfig()->get( 'CitizenEnableCSP' ) ) {
+
+			$cspdirective = $this->getConfig()->get( 'CitizenCSPDirective' );
+
+			// Check if report mode is enabled
+			if ( $this->getConfig()->get( 'CitizenEnableCSPReportMode' ) ) {
+				$out->getRequest()->response()->header( 'Content-Security-Policy-Report-Only: ' . $cspdirective );
+			} else {
+				$out->getRequest()->response()->header( 'Content-Security-Policy: ' . $cspdirective );
+			}
+		}
 		// HSTS
 		if ( $this->getConfig()->get( 'CitizenEnableHSTS' ) ) {
 
