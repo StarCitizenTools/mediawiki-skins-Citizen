@@ -65,7 +65,7 @@ class CitizenHooks {
 			if (isset($wgTitle) && $wgTitle->getNamespace() === NS_FILE) return true;
 
 			// Set lazy class for the img
-			$attribs['class'] = 'lazy';
+			$attribs['class'] .= 'lazy';
 
 			// Native API
 			$attribs['loading'] = 'lazy';
