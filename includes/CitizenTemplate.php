@@ -96,9 +96,9 @@ class CitizenTemplate extends BaseTemplate {
 	 */
 	protected function getBottomBar() {
 
-		$linkDiscord = 'https://discord.gg/3kjftWK';
-		$titleDiscord = 'Contact Us on Discord';
-		$textDiscord = 'Discord';
+		$linkButton = 'https://discord.gg/3kjftWK';
+		$titleButton = 'Contact Us on Discord';
+		$textButton = 'Discord';
 
 /*
 		$linkButton = $this->getConfig()->get( 'CitizenButtonLink' );
