@@ -1,107 +1,205 @@
 <?php
+
 /**
  * SkinTemplate class for the Citizen skin
  *
  * @ingroup Skins
  */
 class SkinCitizen extends SkinTemplate {
-	public $skinname = 'citizen',
-		$stylename = 'Citizen',
-		$template = 'CitizenTemplate';
+	public $skinName = 'citizen';
+	public $styleName = 'Citizen';
+	public $template = 'CitizenTemplate';
+
+	/**
+	 * @var OutputPage
+	 */
+	private $out;
 
 	/**
 	 * ResourceLoader
 	 *
-	 * @param $out OutputPage
+	 * @param OutputPage $out
 	 */
 	public function initPage( OutputPage $out ) {
+		$this->out = $out;
 		// Responsive layout
-		$out->addMeta( 'viewport',
-			'width=device-width, initial-scale=1.0'
-		);
+		$out->addMeta( 'viewport', 'width=device-width, initial-scale=1.0' );
+
 		// Theme color
-		$out->addMeta( 'theme-color',
-			$this->getConfig()->get( 'CitizenThemeColor' )
-		);
+		$out->addMeta( 'theme-color', $this->getConfigValue( 'CitizenThemeColor' ) ?? '' );
+
 		// Preconnect origin
-		if ( $this->getConfig()->get( 'CitizenEnablePreconnect' ) ) {
-			$out->addLink(
-				[
-					'rel' => 'preconnect',
-					'href' => $this->getConfig()->get( 'CitizenPreconnectURL' )
-				]
-			);
-		}
+		$this->addPreConnect();
+
 		// Generate manifest
-		if ( $this->getConfig()->get( 'CitizenEnableManifest' ) ) {
-			$out->addLink(
-				[
-					'rel' => 'manifest',
-					'href' => wfExpandUrl(
-						wfAppendQuery(
-							wfScript( 'api' ),
-							[ 'action' => 'webapp-manifest' ]
-						),
-						PROTO_RELATIVE
-					)
-				]
-			);
-		}
+		$this->addManifest();
 
 		// HTTP headers
 		// CSP
-		if ( $this->getConfig()->get( 'CitizenEnableCSP' ) ) {
+		$this->addCSP();
 
-			$cspdirective = $this->getConfig()->get( 'CitizenCSPDirective' );
+		// HSTS
+		$this->addHSTS();
+
+		// Deny X-Frame-Options
+		$this->addXFrameOptions();
+
+		// Strict referrer policy
+		$this->addStrictReferrerPolicy();
+
+		// Feature policy
+		$this->addFeaturePolicy();
+
+		$this->addModules();
+	}
+
+	/**
+	 * getConfig() wrapper to catch exceptions.
+	 * Returns null on exception
+	 *
+	 * @param string $key
+	 * @return mixed|null
+	 * @see SkinTemplate::getConfig()
+	 */
+	private function getConfigValue( $key ) {
+		try {
+			$value = $this->getConfig()->get( $key );
+		} catch ( ConfigException $e ) {
+			$value = null;
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Adds a preconnect header if enabled in 'CitizenEnablePreconnect'
+	 */
+	private function addPreConnect() {
+		if ( $this->getConfigValue( 'CitizenEnablePreconnect' ) === true ) {
+			$this->out->addLink( [
+				'rel' => 'preconnect',
+				'href' => $this->getConfigValue( 'CitizenPreconnectURL' ),
+			] );
+		}
+	}
+
+	/**
+	 * Adds the manifest if enabled in 'CitizenEnableManifest'.
+	 * Manifest link will be empty if wfExpandUrl throws an exception.
+	 */
+	private function addManifest() {
+		if ( $this->getConfigValue( 'CitizenEnableManifest' ) === true ) {
+			try {
+				$href =
+					wfExpandUrl( wfAppendQuery( wfScript( 'api' ),
+						[ 'action' => 'webapp-manifest' ] ), PROTO_RELATIVE );
+			} catch ( Exception $e ) {
+				$href = '';
+			}
+
+			$this->out->addLink( [
+				'rel' => 'manifest',
+				'href' => $href,
+			] );
+		}
+	}
+
+	/**
+	 * Adds the csp directive if enabled in 'CitizenEnableCSP'.
+	 * Directive holds the content of 'CitizenCSPDirective'.
+	 */
+	private function addCSP() {
+		if ( $this->getConfigValue( 'CitizenEnableCSP' ) === true ) {
+
+			$cspDirective = $this->getConfigValue( 'CitizenCSPDirective' ) ?? '';
+			$cspMode = 'Content-Security-Policy';
 
 			// Check if report mode is enabled
-			if ( $this->getConfig()->get( 'CitizenEnableCSPReportMode' ) ) {
-				$out->getRequest()->response()->header( 'Content-Security-Policy-Report-Only: ' . $cspdirective );
-			} else {
-				$out->getRequest()->response()->header( 'Content-Security-Policy: ' . $cspdirective );
+			if ( $this->getConfigValue( 'CitizenEnableCSPReportMode' ) !== null ) {
+				$cspMode = 'Content-Security-Policy-Report-Only';
 			}
-		}
-		// HSTS
-		if ( $this->getConfig()->get( 'CitizenEnableHSTS' ) ) {
 
-			$hstsmaxage = $this->getConfig()->get( 'CitizenHSTSMaxAge' );
-			$hstsincludesubdomains = $this->getConfig()->get( 'CitizenHSTSIncludeSubdomains' );
-			$hstspreload = $this->getConfig()->get( 'CitizenHSTSPreload' );
+			$this->out->getRequest()->response()->header( sprintf( '%s: %s', $cspMode,
+				$cspDirective ) );
+		}
+	}
+
+	/**
+	 * Adds the HSTS Header. If no max age or an invalid max age is set a default of 300 will be
+	 * applied.
+	 * Preload and Include Subdomains can be enabled by setting 'CitizenHSTSIncludeSubdomains'
+	 * and/or 'CitizenHSTSPreload' to true.
+	 */
+	private function addHSTS() {
+		if ( $this->getConfigValue( 'CitizenEnableHSTS' ) === true ) {
+
+			$maxAge = $this->getConfigValue( 'CitizenHSTSMaxAge' );
+			$includeSubdomains = $this->getConfigValue( 'CitizenHSTSIncludeSubdomains' ) ?? false;
+			$preload = $this->getConfigValue( 'CitizenHSTSPreload' ) ?? false;
 
 			// HSTS max age
-			if ( is_int( $hstsmaxage ) ) {
-				$hstsmaxage = max($hstsmaxage, 0);
+			if ( is_int( $maxAge ) ) {
+				$maxAge = max( $maxAge, 0 );
 			} else {
 				// Default to 5 mins if input is invalid
-				$hstsmaxage = 300;
+				$maxAge = 300;
 			}
 
-			$out->getRequest()->response()->header( 'Strict-Transport-Security: max-age=' . $hstsmaxage . ( $hstsincludesubdomains ? '; includeSubDomains' : '' ) . ( $hstspreload ? '; preload' : '' ) );
+			$hstsHeader = 'Strict-Transport-Security: max-age=' . $maxAge;
+
+			if ( $includeSubdomains ) {
+				$hstsHeader .= '; includeSubDomains';
+			}
+
+			if ( $preload ) {
+				$hstsHeader .= '; preload';
+			}
+
+			$this->out->getRequest()->response()->header( $hstsHeader );
 		}
-		// Deny X-Frame-Options
-		if ( $this->getConfig()->get( 'CitizenEnableDenyXFrameOptions' ) ) {
-			$out->getRequest()->response()->header( 'X-Frame-Options: deny' );
+	}
+
+	/**
+	 * Adds the X-Frame-Options header if set in 'CitizenEnableDenyXFrameOptions'
+	 */
+	private function addXFrameOptions() {
+		if ( $this->getConfigValue( 'CitizenEnableDenyXFrameOptions' ) === true ) {
+			$this->out->getRequest()->response()->header( 'X-Frame-Options: deny' );
 		}
-		// Strict referrer policy
-		if ( $this->getConfig()->get( 'CitizenEnableStrictReferrerPolicy' ) ) {
+	}
+
+	/**
+	 * Adds the referrer header if enabled in 'CitizenEnableStrictReferrerPolicy'
+	 */
+	private function addStrictReferrerPolicy() {
+		if ( $this->getConfigValue( 'CitizenEnableStrictReferrerPolicy' ) === true ) {
 			// iOS Safari, IE, Edge compatiblity
-			$out->addMeta( 'referrer',
-				'strict-origin'
-			);
-			$out->addMeta( 'referrer',
-				'strict-origin-when-cross-origin'
-			);
-			$out->getRequest()->response()->header( 'Referrer-Policy: strict-origin-when-cross-origin' );
+			$this->out->addMeta( 'referrer', 'strict-origin' );
+			$this->out->addMeta( 'referrer', 'strict-origin-when-cross-origin' );
+			$this->out->getRequest()
+				->response()
+				->header( 'Referrer-Policy: strict-origin-when-cross-origin' );
 		}
-		// Feature policy
-		if ( $this->getConfig()->get( 'CitizenEnableFeaturePolicy' ) ) {
+	}
 
-			$fpdirective = $this->getConfig()->get( 'CitizenFeaturePolicyDirective' );
+	/**
+	 * Adds the Feature policy header to the response if enabled in 'CitizenFeaturePolicyDirective'
+	 */
+	private function addFeaturePolicy() {
+		if ( $this->getConfigValue( 'CitizenEnableFeaturePolicy' ) === true ) {
 
-			$out->getRequest()->response()->header( 'Feature-Policy: ' . $fpdirective );
+			$featurePolicy = $this->getConfigValue( 'CitizenFeaturePolicyDirective' ) ?? '';
+
+			$this->out->getRequest()->response()->header( sprintf( 'Feature-Policy: %s',
+				$featurePolicy ) );
 		}
+	}
 
-		$out->addModuleStyles( [
+	/**
+	 * Adds all needed skin modules
+	 */
+	private function addModules() {
+		$this->out->addModuleStyles( [
 			'mediawiki.skinning.content.externallinks',
 			'skins.citizen',
 			'skins.citizen.icons',
@@ -114,18 +212,12 @@ class SkinCitizen extends SkinTemplate {
 			'skins.citizen.icons.pt',
 			'skins.citizen.icons.footer',
 			'skins.citizen.icons.badges',
-			'skins.citizen.icons.search'
+			'skins.citizen.icons.search',
 		] );
-		$out->addModules( [
-			'skins.citizen.js',
-			'skins.citizen.search'
-		] );
-	}
 
-	/**
-	 * @param $out OutputPage
-	 */
-	function setupSkinUserCss( OutputPage $out ) {
-		parent::setupSkinUserCss( $out );
+		$this->out->addModules( [
+			'skins.citizen.js',
+			'skins.citizen.search',
+		] );
 	}
 }
