@@ -3,209 +3,201 @@
 // https://starcitizen.tools
 //
 
-@media (prefers-color-scheme: dark) {
+@media ( prefers-color-scheme: dark ) {
+	html,
+	body {
+		background: @dark-bg-0;
+		color: @dark-text-90;
+	}
 
-    html,
-    body {
-        background: @dark-bg-0;
-        color: @dark-text-90;
-    }
+	::-webkit-scrollbar-thumb {
+		background-color: @dark-bg-60;
+	}
 
-    ::-webkit-scrollbar-thumb {
-        background-color: @dark-bg-60;
-    }
+	* {
+		scrollbar-color: @dark-bg-60 transparent;
+	}
 
-    * {
-        scrollbar-color: @dark-bg-60 transparent;
-    }
+	pre,
+	code,
+	.mw-code {
+		color: @dark-text-90;
+		background-color: @dark-bg-10;
+		border: 1px solid @dark-bg-20;
+	}
 
-    pre,
-    code,
-    .mw-code {
-        color: @dark-text-90;
-        background-color: @dark-bg-10;
-        border: 1px solid @dark-bg-20;
-    }
+	input,
+	select,
+	textarea {
+		border: 1px solid @dark-bg-50;
+		background: @dark-bg-40;
+		color: @dark-text-80;
+	}
 
-    input,
-    select,
-    textarea {
-        border: 1px solid @dark-bg-50;
-        background: @dark-bg-40;
-        color: @dark-text-80;
-    }
+	fieldset {
+		color: @dark-text-90;
+		border-color: @dark-bg-20;
+	}
 
-    fieldset {
-        color: @dark-text-90;
-        border-color: @dark-bg-20;
-    }
+	legend {
+		color: @dark-text-100;
+	}
 
-    legend {
-        color: @dark-text-100;
-    }
+	a,
+	a:visited,
+	a.external,
+	.mw-body-content #mw-content-text .mw-parser-output #toc li.active {
+		color: @dark-color-link;
+	}
 
-    a,
-    a:visited,
-    a.external,
-    .mw-body-content #mw-content-text .mw-parser-output #toc li.active {
-        color: @dark-color-link;
-    }
+	.mw-body-content #mw-content-text .mw-parser-output #toc li.active {
+		color: @dark-color-link !important;
+	}
 
-    .mw-body-content #mw-content-text .mw-parser-output #toc li.active {
-        color: @dark-color-link  !important;
-    }
+	a.new {
+		color: @dark-color-link-new !important;
+	}
 
-    a.new {
-        color: @dark-color-link-new  !important;
-    }
+	.catlinks .mw-normal-catlinks > ul li a {
+		background-color: @dark-bg-10;
+		border-color: @dark-bg-10;
+	}
 
-    .catlinks .mw-normal-catlinks>ul li a {
-        background-color: @dark-bg-10;
-        border-color: @dark-bg-10;
-    }
+	#p-namespaces ul li a {
+		background-color: @dark-bg-10;
+		border-color: @dark-bg-20;
+	}
 
-    #p-namespaces ul li a {
-        background-color: @dark-bg-10;
-        border-color: @dark-bg-20;
-    }
+	#mw-header-menu-drawer-container a:hover {
+		background-color: @dark-bg-60;
+		color: @dark-text-90 !important;
+	}
 
-    #mw-header-menu-drawer-container a:hover {
-        background-color: @dark-bg-60;
-        color: @dark-text-90  !important;
-        ;
-    }
+	table.wikitable tr:hover {
+		background-color: @dark-bg-10;
+	}
 
-    table.wikitable tr:hover {
-        background-color: @dark-bg-10;
-    }
+	table.wikitable tr th,
+	table.wikitable tr td {
+		border-color: @dark-bg-20;
+	}
 
-    table.wikitable tr th,
-    table.wikitable tr td {
-        border-color: @dark-bg-20;
-    }
+	#mw-header-menu-drawer {
+		background: @dark-bg-40;
+	}
 
-    #mw-header-menu-drawer {
-        background: @dark-bg-40;
-    }
+	#page-tools #p-actions > nav ul {
+		background: @dark-bg-50;
+	}
 
-    #page-tools #p-actions>nav ul {
-        background: @dark-bg-50;
-    }
+	.suggestions-dropdown,
+	#site-search #search-form #search-input {
+		background: @dark-bg-50 !important;
+	}
 
-    .suggestions-dropdown,
-    #site-search #search-form #search-input {
-        background: @dark-bg-50  !important;
-    }
+	#mw-header-menu-drawer-container #mw-user-links #p-personal {
+		border-color: @dark-bg-50;
+	}
 
-    #mw-header-menu-drawer-container #mw-user-links #p-personal {
-        border-color: @dark-bg-50;
-    }
+	.suggestion-link,
+	#site-search #search-form #search-input {
+		border-color: @dark-bg-60;
+	}
 
-    .suggestion-link,
-    #site-search #search-form #search-input {
-        border-color: @dark-bg-60;
-    }
+	#site-search #search-toggle-icon-container #search-toggle-icon,
+	#site-search > input:checked:hover ~ #search-toggle-icon-container #search-toggle-icon {
+		border-color: @base-100;
+	}
 
-    #site-search #search-toggle-icon-container #search-toggle-icon,
-    #site-search>input:checked:hover~#search-toggle-icon-container #search-toggle-icon {
-        border-color: @base-100;
-    }
+	#mw-header-menu-toggle span,
+	#site-search #search-toggle-icon-container #search-toggle-icon:before,
+	#site-search #search-toggle-icon-container #search-toggle-icon:after {
+		background: @base-100;
+	}
 
-    #mw-header-menu-toggle span,
-    #site-search #search-toggle-icon-container #search-toggle-icon:before,
-    #site-search #search-toggle-icon-container #search-toggle-icon:after {
-        background: @base-100;
-    }
+	.mw-body .firstHeading,
+	.mw-body-content h1,
+	.mw-body-content h2,
+	.mw-body-content h3,
+	.mw-body-content h4,
+	.mw-body-content h5,
+	.mw-body-content h6,
+	#mw-header-menu .mw-wiki-title,
+	#mw-header-menu-drawer-container h3 {
+		color: @dark-text-100;
+	}
 
-    .mw-body .firstHeading,
-    .mw-body-content h1,
-    .mw-body-content h2,
-    .mw-body-content h3,
-    .mw-body-content h4,
-    .mw-body-content h5,
-    .mw-body-content h6,
-    #mw-header-menu .mw-wiki-title,
-    #mw-header-menu-drawer-container h3 {
-        color: @dark-text-100;
-    }
+	table.wikitable,
+	.suggestion-title {
+		color: @dark-text-90;
+	}
 
-    table.wikitable,
-    .suggestion-title {
-        color: @dark-text-90;
-    }
+	.suggestion-link.active {
+		background-color: @accent-10;
+	}
 
-    .suggestion-link.active {
-        background-color: @accent-10;
-    }
+	.suggestion-link.active .suggestion-title {
+		color: @accent-90;
+	}
 
-    .suggestion-link.active .suggestion-title {
-        color: @accent-90;
-    }
+	.mw-body-content #contentSub,
+	.mw-body-content #contentSub2,
+	.mw-body #siteSub,
+	table.wikitable tr th,
+	#mw-header-menu-drawer-container a,
+	.mw-body-content #mw-content-text .mw-parser-output #toc a:hover,
+	.suggestion-description {
+		color: @dark-text-80 !important;
+	}
 
-    .mw-body-content #contentSub,
-    .mw-body-content #contentSub2,
-    .mw-body #siteSub,
-    table.wikitable tr th,
-    #mw-header-menu-drawer-container a,
-    .mw-body-content #mw-content-text .mw-parser-output #toc a:hover,
-    .suggestion-description {
-        color: @dark-text-80  !important;
-    }
+	a.mw-wiki-title,
+	.mw-body-content #mw-content-text .mw-parser-output #toc a {
+		color: @dark-text-70;
+	}
 
-    a.mw-wiki-title,
-    .mw-body-content #mw-content-text .mw-parser-output #toc a {
-        color: @dark-text-70;
-    }
+	.mw-body-content #mw-content-text .mw-parser-output #toc:before,
+	.mw-body-content #mw-content-text .mw-parser-output #toc:after {
+		background: linear-gradient( @dark-bg-0, rgba( 0, 0, 0, 0.001 ) );
+	}
 
-    .mw-body-content #mw-content-text .mw-parser-output #toc:before,
-    .mw-body-content #mw-content-text .mw-parser-output #toc:after {
-        background: linear-gradient(@dark-bg-0, rgba(0, 0, 0, 0.001));
-    }
-
-    #page-tools #p-views li>a:after,
-    #page-tools #p-actions>nav:before,
-    #mw-header-menu-drawer-container a:after,
-    .mw-editsection>a:before,
-    #pt-notifications-alert .mw-echo-notifications-badge:before,
-    #pt-notifications-notice .mw-echo-notifications-badge:before,
-    #p-namespaces ul li a:after {
-        filter: invert(1);
-    }
+	#page-tools #p-views li > a:after,
+	#page-tools #p-actions > nav:before,
+	#mw-header-menu-drawer-container a:after,
+	.mw-editsection > a:before,
+	#pt-notifications-alert .mw-echo-notifications-badge:before,
+	#pt-notifications-notice .mw-echo-notifications-badge:before,
+	#p-namespaces ul li a:after {
+		filter: invert( 1 );
+	}
 }
 
-@media only screen and (max-width: 1290px) and (prefers-color-scheme: dark) {
+@media only screen and ( max-width: 1290px ) and ( prefers-color-scheme: dark ) {
+	.mw-header-container {
+		background: @dark-bg-0;
+	}
 
-    .mw-header-container {
-        background: @dark-bg-0;
-    }
+	.mw-body-content #mw-content-text .mw-parser-output #toc {
+		background: @dark-bg-40;
+	}
 
-    .mw-body-content #mw-content-text .mw-parser-output #toc {
-        background: @dark-bg-40;
-    }
-
-    .mw-header-container.nav-down {
-        border-color: @dark-bg-20;
-    }
-
+	.mw-header-container.nav-down {
+		border-color: @dark-bg-20;
+	}
 }
 
-@media only screen and (max-width: 1450px) and (prefers-color-scheme: dark) {
+@media only screen and ( max-width: 1450px ) and ( prefers-color-scheme: dark ) {
+	.mw-body-content #mw-content-text .mw-parser-output #toc {
+		.toctoggle a {
+			background-color: @dark-bg-50;
 
-    .mw-body-content #mw-content-text .mw-parser-output #toc {
+			&:before {
+				filter: invert( 1 );
+			}
 
-        .toctoggle a {
-            background-color: @dark-bg-50;
-
-            &:before {
-                filter: invert(1);
-            }
-
-            &:hover,
-            &:focus {
-                background-color: @accent-10;
-            }
-
-        }
-    }
-
+			&:hover,
+			&:focus {
+				background-color: @accent-10;
+			}
+		}
+	}
 }

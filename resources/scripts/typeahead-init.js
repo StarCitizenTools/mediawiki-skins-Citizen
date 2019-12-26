@@ -2,14 +2,12 @@
  * Based on https://gerrit.wikimedia.org/g/wikimedia/portals/+/refs/heads/master
  * See T219590 for more details
  */
-
-/* global wmTest, WMTypeAhead, _, addEvent */
-
+/* global WMTypeAhead, _, addEvent */
 ( function ( WMTypeAhead ) {
 
 	let inputEvent,
-		searchInput = document.getElementById('search-input'),
-		typeAhead = new WMTypeAhead('search-form', 'search-input');
+		searchInput = document.getElementById( 'search-input' ),
+		typeAhead = new WMTypeAhead( 'search-form', 'search-input' );
 
 	/**
 	 * Testing for 'input' event and falling back to 'propertychange' event for IE.

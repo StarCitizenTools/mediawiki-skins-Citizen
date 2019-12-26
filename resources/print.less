@@ -16,32 +16,32 @@
 #footer-container-icons,
 .tabbernav,
 .embedvideo {
-    display: none !important;
+	display: none !important;
 }
 
 * {
-    box-shadow: none !important;
+	box-shadow: none !important;
 }
 
 html,
 body {
-    color: @base-20;
-    font-family: @fonts;
+	color: @base-20;
+	font-family: @fonts;
 }
 
 p,
 ul,
 ol {
-    margin: 0.8rem 0 0 0;
+	margin: 0.8rem 0 0 0;
 }
 
 #toc {
-    background: none;
-    border: 0;
+	background: none;
+	border: 0;
 }
 
 .mw-body {
-    color: @base-20;
+	color: @base-20;
 }
 
 .mw-wiki-title,
@@ -50,152 +50,153 @@ ol {
 .mw-body-content h2,
 .mw-body-content h3,
 .mw-body-content h4 {
-    font-family: @fonts-secondary;
+	font-family: @fonts-secondary;
 }
 
 .mw-body .firstHeading {
-    margin: 0;
-    padding-top: 1.2rem;
-    color: @base-10;
-    overflow: inherit;
-    line-height: 1.2;
+	margin: 0;
+	padding-top: 1.2rem;
+	color: @base-10;
+	overflow: inherit;
+	line-height: 1.2;
 }
 
 .mw-body h1,
 .mw-body-content h1 {
-    font-size: @content-h1-size;
+	font-size: @content-h1-size;
 }
 
 .mw-body-content {
+	line-height: @content-line-height;
+	font-size: @content-body-size;
 
-    line-height: @content-line-height;
-    font-size: @content-body-size;
+	#contentSub,
+	#contentSub2 {
+		color: @base-30;
+		font-size: @content-caption-size;
+	}
 
-    #contentSub,
-    #contentSub2 {
-        color: @base-30;
-        font-size: @content-caption-size;
-    }
+	p {
+		line-height: inherit;
+		overflow-wrap: break-word;
+	}
 
-    p {
-        line-height: inherit;
-        overflow-wrap: break-word;
-    }
+	h2 {
+		font-size: @content-h2-size;
+	}
 
-    h2 {
-        font-size: @content-h2-size;
-    }
+	h3 {
+		font-size: @content-h3-size;
+	}
 
-    h3 {
-        font-size: @content-h3-size;
-    }
+	h4 {
+		font-size: @content-h4-size;
+	}
 
-    h4 {
-        font-size: @content-h4-size;
-    }
+	h5 {
+		font-size: @content-h5-size;
+	}
 
-    h5 {
-        font-size: @content-h5-size;
-    }
+	h6 {
+		font-size: @content-h6-size;
+	}
 
-    h6 {
-        font-size: @content-h6-size;
-    }
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		margin: 0;
+		padding: 0;
+		color: @color-content-header;
+	}
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        margin: 0;
-        padding: 0;
-        color: @color-content-header;
-    }
+	h1,
+	h2 {
+		margin-top: @content-margin-top * 3;
+	}
 
-    h1,
-    h2 {
-        margin-top: @content-margin-top * 3;
-    }
+	h3,
+	h4,
+	h5,
+	h6,
+	p + p {
+		margin-top: @content-margin-top * 2;
+	}
 
-    h3,
-    h4,
-    h5,
-    h6,
-    p+p {
-        margin-top: @content-margin-top * 2;
-    }
+	/* stylelint-disable no-descending-specificity */
+	h1 + h2,
+	h2 + h3,
+	h3 + h4,
+	h4 + h5,
+	h5 + h6,
+	p,
+	table {
+		margin-top: @content-margin-top;
+	}
+	/* stylelint-enable */
 
-    h1+h2,
-    h2+h3,
-    h3+h4,
-    h4+h5,
-    h5+h6,
-    p,
-    table {
-        margin-top: @content-margin-top;
-    }
+	ul {
+		margin: @content-margin-top 0 0 @content-margin-top * 2;
+		padding: 0;
 
-    ul {
-        margin: @content-margin-top 0 0 @content-margin-top * 2;
-        padding: 0;
-
-        ul {
-            margin: 0 0 0 @content-margin-top * 2;
-        }
-    }
+		ul {
+			margin: 0 0 0 @content-margin-top * 2;
+		}
+	}
 }
 
 .mw-body #siteSub {
-    display: block;
-    margin: .4rem 0 1.6rem;
-    color: @base-30;
-    font-size: @content-caption-size;
+	display: block;
+	margin: 0.4rem 0 1.6rem;
+	color: @base-30;
+	font-size: @content-caption-size;
 }
 
 #mw-wrapper,
 #footer-list {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 #mw-sidebar-sitename,
 #lastmod {
-    order: -1;
+	order: -1;
 }
 
 #footer {
-    margin-top: 2rem;
-    font-size: @content-monospace-size;
-    color: @base-30;
+	margin-top: 2rem;
+	font-size: @content-monospace-size;
+	color: @base-30;
 }
 
 #footer-list {
-    padding: 0;
-    list-style: none;
+	padding: 0;
+	list-style: none;
 }
 
 #sitetitle {
-    margin-top: @content-margin-top;
-    margin-bottom: @content-margin-top / 2;
+	margin-top: @content-margin-top;
+	margin-bottom: @content-margin-top / 2;
 }
 
 .mw-wiki-title {
-    color: @base-30;
-    font-size: 1.2rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+	color: @base-30;
+	font-size: 1.2rem;
+	text-transform: uppercase;
+	letter-spacing: 2px;
 }
 
 .gallery {
-    margin: 0 !important;
+	margin: 0 !important;
 }
 
 .infobox {
-    background: @base-100  !important;
-    border: 1px solid @base-30  !important;
+	background: @base-100 !important;
+	border: 1px solid @base-30 !important;
 }
 
 .tabbertab {
-    display: block !important;
+	display: block !important;
 }

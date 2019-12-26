@@ -4,55 +4,55 @@
 //
 
 #mw-bottombar {
-  position: fixed;
-  bottom: 0;
-  display: flex;
-  justify-content: space-between;
-  transform: translate(0px, @header-height + @margin-side);
-  transition: @transition-transform;
+	position: fixed;
+	bottom: 0;
+	display: flex;
+	justify-content: space-between;
+	transform: translate( 0, @header-height + @margin-side );
+	transition: @transition-transform;
 
-  &-buttons {
-    display: flex;
-    margin: @margin-side;
-    padding: 0 @margin-side / 2;
-    background-color: #7289da; // Discord color
-    border-radius: 100%;
-    .boxshadow(4);
-    transition: @transition-transform-quick, @transition-box-shadow-quick;
+	&-buttons {
+		display: flex;
+		margin: @margin-side;
+		padding: 0 @margin-side / 2;
+		background-color: #7289da; // Discord color
+		border-radius: 100%;
+		.boxshadow(4);
+		transition: @transition-transform-quick, @transition-box-shadow-quick;
 
-    .citizen-ui-icon {
-      > a {
-        width: @icon-box-size + @icon-padding;
-        height: @header-height;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-indent: -1000px; // Hide text
+		.citizen-ui-icon {
+			> a {
+				width: @icon-box-size + @icon-padding;
+				height: @header-height;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				text-indent: -1000px; // Hide text
 
-        &:after {
-          display: block;
-          .resource-loader-menu-icon;
-          transition: @transition-opacity;
-          opacity: 1;
-        }
+				&:after {
+					display: block;
+					.resource-loader-menu-icon;
+					transition: @transition-opacity;
+					opacity: 1;
+				}
 
-        &:hover {
-          &:after {
-            opacity: 0.7;
-          }
-        }
-      }
-    }
-  }
+				&:hover {
+					&:after {
+						opacity: 0.7;
+					}
+				}
+			}
+		}
+	}
 }
 
 // Movable navigation bar
 .nav-up ~ #mw-bottombar {
-  transform: none;
+	transform: none;
 }
 
-@media only screen and (max-width: @screen0) {
-  #mw-bottombar {
-    display: none;
-  }
+@media only screen and ( max-width: @screen0 ) {
+	#mw-bottombar {
+		display: none;
+	}
 }

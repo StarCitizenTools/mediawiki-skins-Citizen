@@ -7,59 +7,58 @@
 @import '../resources/mixins.less';
 
 ul.gallery {
-    position: relative;
-    margin: @content-margin-top @negative-margin @content-margin-top * 2 !important;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+	position: relative;
+	margin: @content-margin-top @negative-margin @content-margin-top * 2 !important;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 }
 
 li.gallerybox {
-    margin: 2px;
-    display: block;
+	margin: 2px;
+	display: block;
 }
 
 li.gallerybox div.thumb {
-    margin: 0;
+	margin: 0;
 }
 
 li.gallerybox,
-li.gallerybox>div {
-    width: fit-content !important;
-    height: auto !important;
+li.gallerybox > div {
+	width: fit-content !important;
+	height: auto !important;
 }
 
 li.gallerybox,
 li.gallerybox div,
 li.gallerybox a.image,
 li.gallerybox a.image img {
-    transition: @transition-width,
-        @transition-height;
+	transition: @transition-width, @transition-height;
 }
 
 div.gallerytext {
-    display: none;
+	display: none;
 }
 
-@media only screen and (max-width: @screen2) {
-    ul.gallery {
-        margin: @content-margin-top 0 @content-margin-top * 2 !important;
-        overflow: hidden; // Hack to avoid viewpoint move
-    }
+@media only screen and ( max-width: @screen2 ) {
+	ul.gallery {
+		margin: @content-margin-top 0 @content-margin-top * 2 !important;
+		overflow: hidden; // Hack to avoid viewpoint move
+	}
 
-    li.gallerybox,
-    li.gallerybox div,
-    li.gallerybox a.image,
-    li.gallerybox a.image img {
-        width: 100vw !important;
-        height: auto !important;
-        transition: none; // Performance tweaks
-    }
+	li.gallerybox,
+	li.gallerybox div,
+	li.gallerybox a.image,
+	li.gallerybox a.image img {
+		width: 100vw !important;
+		height: auto !important;
+		transition: none; // Performance tweaks
+	}
 }
 
-@media only screen and (max-width: @screen1) {
-    ul.gallery {
-        margin: @content-margin-top -@margin-side @content-margin-top * 2 !important;
-    }
+@media only screen and ( max-width: @screen1 ) {
+	ul.gallery {
+		margin: @content-margin-top -@margin-side @content-margin-top * 2 !important;
+	}
 }
