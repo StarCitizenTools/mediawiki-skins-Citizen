@@ -344,7 +344,9 @@
 	},
 	"ResourceModuleSkinStyles": {
 		"citizen": {
+			"+mediawiki.htmlform.ooui.styles": "skinStyles/mediawiki.htmlform.ooui.styles.less",
 			"+mediawiki.page.gallery.styles": "skinStyles/mediawiki.page.gallery.styles.less",
+			"+mediawiki.action.history.styles": "skinStyles/mediawiki.action.history.styles.less",
 			"+mediawiki.action.view.filepage": "skinStyles/mediawiki.action.view.filepage.less",
 			"+mediawiki.special.changeslist": "skinStyles/mediawiki.special.changeslist.less",
 			"+mediawiki.special.changeslist.enhanced": "skinStyles/mediawiki.special.changeslist.enhanced.less",
@@ -354,6 +356,8 @@
 			"+oojs-ui-widgets": "skinStyles/oojs-ui-widgets.less",
 			"+oojs-ui-windows": "skinStyles/oojs-ui-windows.less",
 			"+mmv": "skinStyles/mmv.less",
+			"+mw.rcfilters.ui.ChangesListWrapperWidget": "skinStyles/mw.rcfilters.ui.ChangesListWrapperWidget.less",
+			"+mw.rcfilters.ui.FilterTagMultiselectWidget": "skinStyles/mw.rcfilters.ui.FilterTagMultiselectWidget.less",
 			"ext.CookieWarning.styles": "skinStyles/ext.CookieWarning.styles.less",
 			"+ext.echo.styles.badge": "skinStyles/ext.echo.styles.badge.less",
 			"+ext.echo.ui": "skinStyles/ext.echo.ui.less",
