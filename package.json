@@ -2,7 +2,7 @@
 	"private": true,
 	"scripts": {
 		"test": "grunt test",
-		"doc": "jsduck"
+		"doc": "jsdoc"
 	},
 	"devDependencies": {
 		"eslint-config-wikimedia": "0.15.0",
@@ -10,7 +10,8 @@
 		"grunt-banana-checker": "0.8.1",
 		"grunt-eslint": "22.0.0",
 		"grunt-stylelint": "0.13.0",
-		"stylelint-config-wikimedia": "0.8.0"
+		"stylelint-config-wikimedia": "0.8.0",
+		"jsdoc": "3.6.3"
 	},
 	"eslintIgnore": [
 		"vendor/**",
