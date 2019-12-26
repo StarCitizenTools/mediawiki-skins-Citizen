@@ -1,0 +1,33 @@
+/*
+ * Citizen - Recent Changes Styles
+ * https://starcitizen.tools
+*/
+
+@import '../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	@keyframes fadeBlue {
+		60% {
+			border-top-color: @accent-50;
+		}
+
+		100% {
+			border-top-color: @dark-bg-30;
+		}
+	}
+
+	.mw-rcfilters-ui-changesListWrapperWidget {
+		&-previousChangesIndicator {
+			border-top: 2px solid @dark-bg-30;
+		}
+
+		&-enhanced-grey td:not( :nth-child( -n+2 ) ) {
+			/* background-color: @light-gray; */
+		}
+
+		.mw-changeslist-legend {
+			background-color: @dark-bg-0;
+			border: 1px solid @dark-bg-30;
+		}
+	}
+}

@@ -1,0 +1,53 @@
+/*
+ * Citizen - Filter Tag Multi Select Widget Styles
+ * https://starcitizen.tools
+*/
+
+@import '../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	.mw-rcfilters-ui-filterTagMultiselectWidget {
+		&.oo-ui-widget-enabled {
+			.oo-ui-tagMultiselectWidget-handle {
+				border: 1px solid @dark-bg-50;
+				background-color: @dark-bg-10;
+			}
+		}
+
+		.mw-rcfilters-collapsed & {
+			border-bottom: 1px solid @dark-bg-50;
+
+			.mw-rcfilters-ui-filterTagMultiselectWidget-wrapper-hideshow {
+				border-left: 1px solid @dark-bg-50;
+			}
+		}
+
+		.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled &-emphasize.oo-ui-tagMultiselectWidget-handle {
+			background-color: @dark-bg-20;
+		}
+
+		&-wrapper {
+			&-content {
+				&-title {
+					color: @dark-text-80;
+				}
+
+				&-savedQueryTitle {
+					color: @dark-text-90;
+				}
+			}
+		}
+
+		&-views {
+			&-select {
+				&-widget.oo-ui-widget {
+					border: 1px solid @dark-bg-50;
+				}
+			}
+		}
+
+		&-emptyFilters {
+			color: @dark-text-70;
+		}
+	}
+}

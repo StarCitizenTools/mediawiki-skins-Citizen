@@ -66,6 +66,10 @@
 	#p-namespaces ul li a {
 		background-color: @dark-bg-10;
 		border-color: @dark-bg-20;
+
+		&:hover {
+			background-color: @dark-bg-20;
+		}
 	}
 
 	#mw-header-menu-drawer-container a:hover {
@@ -168,6 +172,110 @@
 	#pt-notifications-notice .mw-echo-notifications-badge:before,
 	#p-namespaces ul li a:after {
 		filter: invert( 1 );
+	}
+
+	/**
+	Settings Page lower button container
+	 */
+	.mw-prefs-buttons {
+		background-color: transparent;
+		border-color: @dark-bg-50;
+	}
+
+	/**
+	Recent Changes Page
+	 */
+	.mw-rcfilters-ui-filterTagMultiselectWidget {
+		&.oo-ui-widget-enabled {
+			.oo-ui-tagMultiselectWidget-handle {
+				border: 1px solid @dark-bg-50;
+				background-color: @dark-bg-10;
+			}
+		}
+
+		.mw-rcfilters-collapsed & {
+			border-bottom: 1px solid @dark-bg-50;
+
+			.mw-rcfilters-ui-filterTagMultiselectWidget-wrapper-hideshow {
+				border-left: 1px solid @dark-bg-50;
+			}
+		}
+
+		.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled &-emphasize.oo-ui-tagMultiselectWidget-handle {
+			background-color: @dark-bg-20;
+		}
+
+		&-wrapper {
+			&-content {
+				&-title {
+					color: @dark-text-80;
+				}
+
+				&-savedQueryTitle {
+					color: @dark-text-90;
+				}
+			}
+		}
+
+		&-views {
+			&-select {
+				&-widget.oo-ui-widget {
+					border: 1px solid @dark-bg-50;
+				}
+			}
+		}
+
+		&-emptyFilters {
+			color: @dark-text-70;
+		}
+	}
+
+	@keyframes fadeBlue {
+		60% {
+			border-top-color: @accent-50;
+		}
+
+		100% {
+			border-top-color: @dark-bg-30;
+		}
+	}
+
+	.mw-rcfilters-ui-changesListWrapperWidget {
+		&-previousChangesIndicator {
+			border-top: 2px solid @dark-bg-30;
+		}
+
+		&-enhanced-grey td:not( :nth-child( -n+2 ) ) {
+			/* background-color: @light-gray; */
+		}
+
+		.mw-changeslist-legend {
+			background-color: @dark-bg-0 !important;
+			border: 1px solid @dark-bg-30 !important;
+		}
+	}
+
+	/**
+	Diff view from diff.css
+	 */
+	.diff-context {
+		background: @dark-bg-10;
+		border-color: @dark-bg-20;
+		color: @dark-text-90;
+	}
+
+	/* TODO */
+	.diff-addedline .diffchange {
+		background: #d8ecff;
+	}
+
+	.diff-deletedline .diffchange {
+		background: #feeec8;
+	}
+
+	.mw-diff-movedpara-left:after,
+	.mw-diff-movedpara-right:after {
+		color: @dark-text-90;
 	}
 }
 
