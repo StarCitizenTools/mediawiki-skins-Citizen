@@ -1,4 +1,4 @@
-name: MediaWiki PHP
+name: PHP
 
 on: [push]
 
