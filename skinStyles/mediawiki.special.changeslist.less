@@ -10,87 +10,86 @@
  */
 
 #siteSub {
-    display: none !important;
+	display: none !important;
 }
 
 .rcoptions {
-    margin: @content-margin-top * 2 0;
-    padding: 0;
-    border: 0;
-    font-size: @content-monospace-size;
-    color: @base-20;
+	margin: @content-margin-top * 2 0;
+	padding: 0;
+	border: 0;
+	font-size: @content-monospace-size;
+	color: @base-20;
 
-    legend {
-        display: none;
-    }
+	legend {
+		display: none;
+	}
 }
 
 .mw-changeslist {
-    h4 {
-        top: 0;
-        border-top: 2px solid currentColor;
-        color: @base-50  !important;
-        padding: @margin-side / 2 0 !important;
-        font-size: @content-caption-size  !important;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        font-family: @fonts  !important;
-        font-weight: 600 !important;
-    }
+	h4 {
+		top: 0;
+		border-top: 2px solid currentColor;
+		color: @base-50 !important;
+		padding: @margin-side / 2 0 !important;
+		font-size: @content-caption-size !important;
+		letter-spacing: 1px;
+		text-transform: uppercase;
+		font-family: @fonts !important;
+		font-weight: 600 !important;
+	}
 
-    .comment {
-        margin-top: @content-margin-top / 2;
-        display: block;
-        color: @base-30;
-        font-size: @content-monospace-size;
-    }
+	.comment {
+		margin-top: @content-margin-top / 2;
+		display: block;
+		color: @base-30;
+		font-size: @content-monospace-size;
+	}
 
-    .mw-tag-markers {
-        margin-top: @content-margin-top / 2;
-        display: flex;
-        visibility: hidden; // Hide other stuff
-        white-space: nowrap;
-        overflow: auto;
+	.mw-tag-markers {
+		margin-top: @content-margin-top / 2;
+		display: flex;
+		visibility: hidden; // Hide other stuff
+		white-space: nowrap;
+		overflow: auto;
 
-        .mw-tag-marker {
-            visibility: visible;
-            order: -1;
-            margin-right: @margin-side / 2;
-            padding: @margin-side / 4 @margin-side / 2;
-            display: block;
-            border: 1px solid @base-90;
-            background-color: @base-90;
-            color: @base-30;
-            font-size: @content-caption-size;
-        }
-    }
+		.mw-tag-marker {
+			visibility: visible;
+			order: -1;
+			margin-right: @margin-side / 2;
+			padding: @margin-side / 4 @margin-side / 2;
+			display: block;
+			border: 1px solid @base-90;
+			background-color: @base-90;
+			color: @base-30;
+			font-size: @content-caption-size;
+		}
+	}
 }
 
-@media (prefers-color-scheme: dark) {
-    .rcoptions {
-        color: @dark-text-90;
-    }
+@media ( prefers-color-scheme: dark ) {
+	.rcoptions {
+		color: @dark-text-90;
+	}
 
-    .mw-changeslist {
-        h4 {
-            color: @dark-text-60  !important;
-        }
+	.mw-changeslist {
+		h4 {
+			color: @dark-text-60 !important;
+		}
 
-        &-legend {
-            border-color: @dark-bg-20;
-        }
+		&-legend {
+			border-color: @dark-bg-20;
+		}
 
-        .comment {
-            color: @dark-text-80;
-        }
+		.comment {
+			color: @dark-text-80;
+		}
 
-        .mw-tag-markers {
-
-            .mw-tag-marker {
-                border-color: @dark-bg-10;
-                background-color: @dark-bg-10;
-                color: @dark-text-80;
-            }
-        }
-    }
+		.mw-tag-markers {
+			.mw-tag-marker {
+				border-color: @dark-bg-10;
+				background-color: @dark-bg-10;
+				color: @dark-text-80;
+			}
+		}
+	}
 }

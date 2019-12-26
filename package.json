@@ -13,6 +13,10 @@
 		"stylelint-config-wikimedia": "0.8.0"
 	},
 	"eslintIgnore": [
-		"vendor/**"
-	]
+		"vendor/**",
+		"node_modules/**"
+	],
+	"jshintConfig": {
+		"esversion": 6
+	}
 }
