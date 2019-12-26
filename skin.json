@@ -1,7 +1,7 @@
 {
 	"name": "Citizen",
 	"namemsg": "skinname-citizen",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"author": "alistair3149",
 	"url": "https://starcitizen.tools",
 	"descriptionmsg": "citizen-desc",
@@ -128,25 +128,25 @@
 		},
 		"EnableButton": {
 			"value": false,
-			"description": "Enable or disable the bottom left button",
+			"description": "Enable or disable the floating action button on the bottom left",
 			"descriptionmsg": "citizen-config-enablebutton",
 			"public": true
 		},
 		"ButtonLink": {
 			"value": "",
-			"description": "Link the button leads to",
+			"description": "The URL of the FAB button",
 			"descriptionmsg": "citizen-config-buttonlink",
 			"public": true
 		},
 		"ButtonTitle": {
 			"value": "",
-			"description": "Button title on hover",
+			"description": "The title of the link element on the FAB",
 			"descriptionmsg": "citizen-config-buttontitle",
 			"public": true
 		},
 		"ButtonText": {
 			"value": "",
-			"description": "Button link text",
+			"description": "The text of the FAB",
 			"descriptionmsg": "citizen-config-buttontext",
 			"public": true
 		},

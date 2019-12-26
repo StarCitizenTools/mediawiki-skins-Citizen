@@ -1,0 +1,17 @@
+{
+	"private": true,
+	"scripts": {
+		"test": "grunt test"
+	},
+	"devDependencies": {
+		"eslint-config-wikimedia": "0.13.1",
+		"grunt": "1.0.4",
+		"grunt-banana-checker": "0.8.1",
+		"grunt-eslint": "21.0.0",
+		"grunt-stylelint": "0.11.1",
+		"stylelint-config-wikimedia": "0.6.0"
+	},
+	"eslintIgnore": [
+		"vendor/**"
+	]
+}
