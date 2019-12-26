@@ -1,4 +1,4 @@
-name: JavaScript
+name: JS-JSON-CSS-LESS
 
 on: [push]
 
@@ -16,7 +16,7 @@ jobs:
         npm install --save-dev eslint-config-wikimedia
 
     - name: Generate documentation
-      run: jsdoc
+      run: npm run doc
       
     - name: Grunt test
       run: grunt test
