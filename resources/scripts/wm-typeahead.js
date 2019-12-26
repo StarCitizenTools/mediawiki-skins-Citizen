@@ -23,8 +23,6 @@
  *
  */
 
-/* global addEvent, getDevicePixelRatio */
-
 window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no-unused-vars
 
 	var typeAheadID = 'typeahead-suggestions',
@@ -33,7 +31,6 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 		searchEl = document.getElementById(searchInput),
 		thumbnailSize = getDevicePixelRatio() * 80,
 		maxSearchResults = mw.config.get( 'wgCitizenMaxSearchResults' ),
-		searchLang,
 		searchString,
 		typeAheadItems,
 		activeItem,
@@ -186,7 +183,6 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 			searchQuery;
 
 		// Variables declared in parent function.
-		searchLang = encodeURIComponent(lang) || 'en';
 		searchString = encodeURIComponent(string);
 		if (searchString.length === 0) {
 			clearTypeAhead();
