@@ -3,6 +3,64 @@
  * See T219590 for more details
  */
 
+ /**
+* Below are additional dependency extracted from polyfills.js
+* TODO: Optimize and clear unneeded code
+*/
+
+/**
+ * Detects reported or approximate device pixel ratio.
+ * * 1.0 means 1 CSS pixel is 1 hardware pixel
+ * * 2.0 means 1 CSS pixel is 2 hardware pixels
+ * * etc.
+ *
+ * Uses window.devicePixelRatio if available, or CSS media queries on IE.
+ *
+ * @returns {number} Device pixel ratio
+ */
+function getDevicePixelRatio () {
+
+	if ( window.devicePixelRatio !== undefined ) {
+		// Most web browsers:
+		// * WebKit (Safari, Chrome, Android browser, etc)
+		// * Opera
+		// * Firefox 18+
+		return window.devicePixelRatio;
+	} else if ( window.msMatchMedia !== undefined ) {
+		// Windows 8 desktops / tablets, probably Windows Phone 8
+		//
+		// IE 10 doesn't report pixel ratio directly, but we can get the
+		// screen DPI and divide by 96. We'll bracket to [1, 1.5, 2.0] for
+		// simplicity, but you may get different values depending on zoom
+		// factor, size of screen and orientation in Metro IE.
+		if ( window.msMatchMedia( '(min-resolution: 192dpi)' ).matches ) {
+			return 2;
+		} else if ( window.msMatchMedia( '(min-resolution: 144dpi)' ).matches ) {
+			return 1.5;
+		} else {
+			return 1;
+		}
+	} else {
+		// Legacy browsers...
+		// Assume 1 if unknown.
+		return 1;
+	}
+}
+
+function addEvent( obj, evt, fn ) {
+
+	if ( !obj ) {
+		return;
+	}
+
+	if ( obj.addEventListener ) {
+		obj.addEventListener( evt, fn, false );
+	} else if ( obj.attachEvent ) {
+		attachedEvents.push( [ obj, evt, fn ] );
+		obj.attachEvent( 'on' + evt, fn );
+	}
+}
+
 /**
  * WMTypeAhead.
  * Displays search suggestions with thumbnail and description
@@ -175,7 +233,7 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 	 * @param {string} lang - ISO code of language to search in.
 	 */
 
-	function loadQueryScript(string, lang) {
+	function loadQueryScript(string) {
 		var script = document.getElementById('api_opensearch'),
 			docHead = document.getElementsByTagName('head')[0],
 			hostname,
@@ -491,61 +549,3 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 		query: loadQueryScript
 	};
 };
-
-/**
-* Below are additional dependency extracted from polyfills.js
-* TODO: Optimize and clear unneeded code
-*/
-
-/**
- * Detects reported or approximate device pixel ratio.
- * * 1.0 means 1 CSS pixel is 1 hardware pixel
- * * 2.0 means 1 CSS pixel is 2 hardware pixels
- * * etc.
- *
- * Uses window.devicePixelRatio if available, or CSS media queries on IE.
- *
- * @returns {number} Device pixel ratio
- */
-function getDevicePixelRatio () {
-
-	if ( window.devicePixelRatio !== undefined ) {
-		// Most web browsers:
-		// * WebKit (Safari, Chrome, Android browser, etc)
-		// * Opera
-		// * Firefox 18+
-		return window.devicePixelRatio;
-	} else if ( window.msMatchMedia !== undefined ) {
-		// Windows 8 desktops / tablets, probably Windows Phone 8
-		//
-		// IE 10 doesn't report pixel ratio directly, but we can get the
-		// screen DPI and divide by 96. We'll bracket to [1, 1.5, 2.0] for
-		// simplicity, but you may get different values depending on zoom
-		// factor, size of screen and orientation in Metro IE.
-		if ( window.msMatchMedia( '(min-resolution: 192dpi)' ).matches ) {
-			return 2;
-		} else if ( window.msMatchMedia( '(min-resolution: 144dpi)' ).matches ) {
-			return 1.5;
-		} else {
-			return 1;
-		}
-	} else {
-		// Legacy browsers...
-		// Assume 1 if unknown.
-		return 1;
-	}
-}
-
-function addEvent( obj, evt, fn ) {
-
-	if ( !obj ) {
-		return;
-	}
-
-	if ( obj.addEventListener ) {
-		obj.addEventListener( evt, fn, false );
-	} else if ( obj.attachEvent ) {
-		attachedEvents.push( [ obj, evt, fn ] );
-		obj.attachEvent( 'on' + evt, fn );
-	}
-}
