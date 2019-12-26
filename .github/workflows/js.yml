@@ -15,5 +15,8 @@ jobs:
         npm install --save-dev grunt-eslint
         npm install --save-dev eslint-config-wikimedia
 
+    - name: Generate documentation
+      run: jsdoc
+      
     - name: Grunt test
       run: grunt test
