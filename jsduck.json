@@ -1,0 +1,15 @@
+{
+	"--title": "Citizen - Documentation",
+	"--output": "docs",
+	"--categories": ".jsduck/categories.json",
+	"--eg-iframe": ".jsduck/eg-iframe.html",
+	"--tags": ".jsduck/CustomTags.rb",
+	"--processes": "0",
+	"--warnings-exit-nonzero": true,
+	"--builtin-classes": true,
+	"--warnings": ["-nodoc(class,public)", "-global"],
+	"--": [
+		".jsduck/external.js",
+		"resources/scripts"
+	]
+}
