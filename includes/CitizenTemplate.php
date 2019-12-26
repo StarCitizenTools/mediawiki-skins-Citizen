@@ -1,86 +1,33 @@
 <?php
+
+use MediaWiki\MediaWikiServices;
+
 /**
  * BaseTemplate class for the Citizen skin
- *
+ * TODO: Add missing title to buttons
  * @ingroup Skins
  */
- //TODO: Add missing title to buttons
 class CitizenTemplate extends BaseTemplate {
 	/**
 	 * Outputs the entire contents of the page
 	 */
 	public function execute() {
-		$html = '';
-		$html .= $this->get( 'headelement' );
-		$loggedinclass = 'not-logged';
+		$html = $this->get( 'headelement' );
+		$loggedInClass = 'not-logged';
 
 		// Add class if logged in
 		if ( $this->getSkin()->getUser()->isLoggedIn() ) {
-			$loggedinclass .= 'logged-in';
+			$loggedInClass = 'logged-in';
 		}
 
-		$html .= Html::rawElement( 'div', [ 'class' => $loggedinclass, 'id' => 'mw-wrapper' ],
-			// Header
-			Html::rawElement( 'header', [ 'class' => 'mw-header-container', 'id' => 'mw-navigation' ],
-				Html::rawElement( 'div', [ 'class' => 'mw-header-icons'],
-					// Site navigation menu
-					$this->getHamburgerMenu()
-				) .
-				Html::rawElement( 'div', [ 'class' => 'mw-header-icons'],
-					// User icons
-					Html::rawElement( 'div', [ 'class' => 'mw-header', 'id' => 'user-icons' ],
-						$this->getUserIcons()
-					) .
-					// Search bar
-					$this->getSearchToggle()
-				)
-			) .
-			// Main body
-			Html::rawElement( 'main', [ 'class' => 'mw-body', 'id' => 'content', 'role' => 'main' ],
-			  // Container for compatiblity with extensions
-				Html::rawElement( 'section', [ 'id' => 'mw-body-container' ],
-					$this->getSiteNotice() .
-					$this->getNewTalk() .
-					$this->getIndicators() .
-					// Page editing and tools
-					$this->getPageTools() .
-					Html::rawElement( 'h1',
-						[
-							'class' => 'firstHeading',
-							'lang' => $this->get( 'pageLanguage' )
-						],
-						$this->get( 'title' )
-					) .
-					Html::rawElement( 'div', [ 'id' => 'siteSub' ],
-						$this->getMsg( 'tagline' )->parse()
-					) .
-					Html::rawElement( 'div', [ 'class' => 'mw-body-content' ],
-						Html::rawElement( 'div', [ 'id' => 'contentSub' ],
-							$this->getPageSubtitle() .
-							Html::rawElement(
-								'p',
-								[],
-								$this->get( 'undelete' )
-							)
-						) .
-						$this->get( 'bodycontent' ) .
-						$this->getClear() .
-						Html::rawElement( 'div', [ 'class' => 'printfooter' ],
-							$this->get( 'printfooter' )
-						) .
-						$this->getPageLinks() .
-						$this->getCategoryLinks()
-					) .
-					$this->getDataAfterContent() .
-					$this->get( 'debughtml' )
-					)
-				) .
-				$this->getFooterBlock() .
-				// Site title for sidebar
-				Html::rawElement( 'div', [ 'id' => 'mw-sidebar-sitename', 'role' => 'banner' ],
-					$this->getSiteTitle('link')
-				) .
-				$this->getBottomBar()
+		$html .= Html::rawElement(
+			'div',
+			[ 'class' => $loggedInClass, 'id' => 'mw-wrapper' ],
+			$this->getHeader() .
+			$this->getMainBody() .
+			$this->getFooterBlock() .
+			$this->getSideTitle() .
+			$this->getBottomBar()
 		);
 
 		$html .= $this->getTrail();
@@ -91,87 +38,228 @@ class CitizenTemplate extends BaseTemplate {
 	}
 
 	/**
+	 * The header containing the mobile site navigation and user icons + search
+	 *
+	 * @return string Header
+	 */
+	protected function getHeader() {
+		$header =
+			Html::openElement( 'header',
+				[ 'class' => 'mw-header-container', 'id' => 'mw-navigation' ] );
+
+		// Site navigation menu
+		$navigation =
+			Html::rawElement(
+				'div',
+				[ 'class' => 'mw-header-icons' ],
+				$this->getHamburgerMenu()
+			);
+
+		// User icons and Search bar
+		$userIconsSearchBar =
+			Html::rawElement(
+				'div',
+				[ 'class' => 'mw-header-icons' ],
+				Html::rawElement(
+					'div',
+					[ 'class' => 'mw-header', 'id' => 'user-icons' ],
+					$this->getUserIcons()
+				) .
+				$this->getSearchToggle()
+			);
+
+		return $header . $navigation . $userIconsSearchBar . Html::closeElement( 'header' );
+	}
+
+	/**
+	 * The main body holding all content
+	 *
+	 * @return string Main Body
+	 */
+	protected function getMainBody() {
+		return Html::rawElement(
+			'main',
+			[ 'class' => 'mw-body', 'id' => 'content', 'role' => 'main' ],
+			// Container for compatibility with extensions
+			Html::rawElement(
+				'section',
+				[ 'id' => 'mw-body-container' ],
+				$this->getSiteNotice() .
+				$this->getNewTalk() .
+				$this->getIndicators() .
+				$this->getPageTools() .
+				Html::rawElement(
+					'h1',
+					[ 'class' => 'firstHeading', 'lang' => $this->get( 'pageLanguage' ) ],
+					$this->get( 'title' )
+				) .
+				Html::rawElement(
+					'div',
+					[ 'id' => 'siteSub' ],
+					$this->getMsg( 'tagline' )->parse()
+				) .
+				Html::rawElement(
+					'div',
+					[ 'class' => 'mw-body-content' ],
+					Html::rawElement(
+						'div',
+						[ 'id' => 'contentSub' ],
+						$this->getPageSubtitle() .
+						Html::rawElement(
+							'p',
+							[],
+							$this->get( 'undelete' )
+						)
+					) .
+					$this->get( 'bodycontent' ) .
+					$this->getClear() .
+					Html::rawElement(
+						'div',
+						[ 'class' => 'printfooter' ],
+						$this->get( 'printfooter' )
+					) .
+					$this->getPageLinks() .
+					$this->getCategoryLinks()
+				) .
+				$this->getDataAfterContent() .
+				$this->get( 'debughtml' )
+			)
+		);
+	}
+
+	/**
+	 * The rotated site title
+	 *
+	 * @return string
+	 */
+	protected function getSideTitle() {
+		return Html::rawElement(
+			'div',
+			[ 'id' => 'mw-sidebar-sitename', 'role' => 'banner' ],
+			$this->getSiteTitle( 'link' )
+		);
+	}
+
+	/**
 	 * Generates the bottom bar
 	 * @return string html
 	 */
 	protected function getBottomBar() {
+		try {
+			$buttonEnabled = $this->config->get( 'CitizenEnableButton' );
+			$buttonLink = $this->config->get( 'CitizenButtonLink' );
+			$buttonTitle = $this->config->get( 'CitizenButtonTitle' );
+			$buttonText = $this->config->get( 'CitizenButtonText' );
+		} catch ( ConfigException $e ) {
+			return '';
+		}
 
-		$linkButton = 'https://discord.gg/3kjftWK';
-		$titleButton = 'Contact Us on Discord';
-		$textButton = 'Discord';
+		if ( $buttonEnabled === false ) {
+			return '';
+		}
 
-/*
-		$linkButton = $this->getConfig()->get( 'CitizenButtonLink' );
-		$titleButton = $this->getConfig()->get( 'CitizenButtonTitle' );
-		$textButton = $this->getConfig()->get( 'CitizenButtonText' );
-*/
-		$html = Html::openElement( 'div', [ 'id' => 'mw-bottombar' ] );
-
-		$html .= Html::rawElement( 'div', [ 'id' => 'mw-bottombar-buttons' ],
-			Html::rawElement( 'div', [ 'class' => 'citizen-ui-icon', 'id' => 'citizen-ui-button' ],
-				Html::rawElement( 'a', [ 'href' => $linkButton, 'title' => $titleButton, 'rel' => 'noopener noreferrer', 'target' => '_blank' ], $textButton )
+		return Html::rawElement(
+			'div',
+			[ 'id' => 'mw-bottombar' ],
+			Html::rawElement(
+		'div',
+				[ 'id' => 'mw-bottombar-buttons' ],
+				Html::rawElement(
+					'div',
+					[ 'class' => 'citizen-ui-icon', 'id' => 'citizen-ui-button' ],
+					Html::rawElement(
+						'a',
+						[
+							'href' => $buttonLink,
+							'title' => $buttonTitle,
+							'rel' => 'noopener noreferrer',
+							'target' => '_blank',
+						],
+						$buttonText
+					)
+				)
 			)
 		);
-		$html .= Html::closeElement( 'div' );
-
-		return $html;
 	}
 
 	/**
 	 * Generates the search button
 	 * @return string html
 	 */
-	 protected function getSearchToggle() {
-		$titleButton = 'Toggle Search';
-
- 		$html = Html::rawElement( 'div', [ 'class' => 'mw-header-end', 'id' => 'site-search' ],
-			Html::rawElement( 'input', [ 'type' => 'checkbox', 'role' => 'button', 'title' => $titleButton, 'id' => 'search-toggle' ]) .
-
-			// Search button
-			Html::rawElement( 'div', [ 'id' => 'search-toggle-icon-container' ],
-				Html::rawElement( 'div', [ 'id' => 'search-toggle-icon' ] )
+	protected function getSearchToggle() {
+		return Html::rawElement(
+			'div',
+			[ 'class' => 'mw-header-end', 'id' => 'site-search' ],
+			Html::rawElement(
+				'input',
+				[
+					'type' => 'checkbox',
+					'role' => 'button',
+					'title' => 'Toggle Search',
+					'id' => 'search-toggle',
+				]
 			) .
-
+			// Search button
+			Html::rawElement(
+				'div',
+				[ 'id' => 'search-toggle-icon-container' ],
+				Html::rawElement(
+					'div',
+					[ 'id' => 'search-toggle-icon' ]
+				)
+			) .
 			// Search form
 			$this->getSearch()
 		);
- 		return $html;
- 	}
+	}
 
 	/**
 	 * Generates the hamburger menu
 	 * @return string html
 	 */
-	 protected function getHamburgerMenu() {
-		$titleButton = 'Toggle Menu';
+	protected function getHamburgerMenu() {
+		$html = Html::openElement(
+			'div',
+			[ 'class' => 'mw-header-end', 'id' => 'mw-header-menu' ]
+		);
 
- 		$html = Html::openElement( 'div', [ 'class' => 'mw-header-end', 'id' => 'mw-header-menu' ]);
-		$html .= Html::rawElement( 'input', [ 'type' => 'checkbox', 'role' => 'button', 'title' => $titleButton ]);
+		$html .= Html::rawElement(
+			'input',
+			[ 'type' => 'checkbox', 'role' => 'button', 'title' => 'Toggle Menu' ]
+		);
 
 		// Actual hamburger
-		$html .= Html::openElement( 'div', [ 'id' => 'mw-header-menu-toggle' ]);
-		for ($i = 1; $i <= 3; $i++) {
+		$html .= Html::openElement( 'div', [ 'id' => 'mw-header-menu-toggle' ] );
+
+		for ( $i = 1; $i <= 3; $i++ ) {
 			$html .= Html::rawElement( 'span' );
 		}
 		$html .= Html::closeElement( 'div' );
+
 		// Get sidebar links
-		$html .= Html::rawElement( 'div', [ 'id' => 'mw-header-menu-drawer' ],
-			Html::rawElement( 'div', [ 'id' => 'mw-header-menu-drawer-container' ],
-				$this->getSiteTitle('text') .
+		$html .= Html::rawElement(
+			'div',
+			[ 'id' => 'mw-header-menu-drawer' ],
+			Html::rawElement(
+				'div',
+				[ 'id' => 'mw-header-menu-drawer-container' ],
+				$this->getSiteTitle( 'text' ) .
 				// Container for navigation and tools
-				Html::rawElement( 'div', [ 'id' => 'p-nt-container' ],
+				Html::rawElement(
+					'div',
+					[ 'id' => 'p-nt-container' ],
 					$this->getSiteNavigation()
 				) .
 				$this->getUserLinks()
 			)
 		);
- 		$html .= Html::closeElement( 'div' );
 
- 		return $html;
- 	}
+		return $html . Html::closeElement( 'div' );
+	}
 
 	/**
 	 * Generates the sitetitle
+	 * @param string $option
 	 * @return string html
 	 */
 	protected function getSiteTitle( $option ) {
@@ -179,28 +267,25 @@ class CitizenTemplate extends BaseTemplate {
 		$language = $this->getSkin()->getLanguage();
 		$siteTitle = $language->convert( $this->getMsg( 'sitetitle' )->escaped() );
 
-		switch ( $option ) {
-			case 'link':
-				$html .= Html::rawElement(
-					'a',
-					[
-						'id' => 'p-banner',
-						'class' => 'mw-wiki-title',
-						'href' => $this->data['nav_urls']['mainpage']['href']
-					] + Linker::tooltipAndAccesskeyAttribs( 'p-logo' ),
-					$siteTitle
-				);
-				break;
-			case 'text':
-				$html .= Html::rawElement(
-					'span',
-					[
-						'id' => 'p-banner',
-						'class' => 'mw-wiki-title',
-					],
-					$siteTitle
-				);
-				break;
+		if ( $option === 'link' ) {
+			$html .= Html::rawElement(
+				'a',
+				[
+					'id' => 'p-banner',
+					'class' => 'mw-wiki-title',
+					'href' => $this->data['nav_urls']['mainpage']['href'],
+				] + Linker::tooltipAndAccesskeyAttribs( 'p-logo' ),
+				$siteTitle
+			);
+		} elseif ( $option === 'text' ) {
+			$html .= Html::rawElement(
+				'span',
+				[
+					'id' => 'p-banner',
+					'class' => 'mw-wiki-title',
+				],
+				$siteTitle
+			);
 		}
 
 		return $html;
@@ -215,15 +300,9 @@ class CitizenTemplate extends BaseTemplate {
 		$language = $this->getSkin()->getLanguage();
 		$siteDesc = $language->convert( $this->getMsg( 'citizen-footer-desc' )->escaped() );
 
-			$html .= Html::rawElement(
-				'span',
-				[
-					'id' => 'mw-footer-desc'
-				],
-				$siteDesc
-			);
-
-		return $html;
+		return $html . Html::rawElement( 'span', [
+				'id' => 'mw-footer-desc',
+			], $siteDesc );
 	}
 
 	/**
@@ -235,15 +314,9 @@ class CitizenTemplate extends BaseTemplate {
 		$language = $this->getSkin()->getLanguage();
 		$siteTagline = $language->convert( $this->getMsg( 'citizen-footer-tagline' )->escaped() );
 
-			$html .= Html::rawElement(
-				'span',
-				[
-					'id' => 'mw-footer-tagline'
-				],
-				$siteTagline
-			);
-
-		return $html;
+		return $html . Html::rawElement( 'span', [
+				'id' => 'mw-footer-tagline',
+			], $siteTagline );
 	}
 
 	/**
@@ -253,24 +326,17 @@ class CitizenTemplate extends BaseTemplate {
 	 * @return string html
 	 */
 	protected function getLogo( $id = 'p-logo' ) {
-		$html = Html::openElement(
-			'div',
-			[
-				'id' => $id,
-				'class' => 'mw-portlet',
-				'role' => 'banner'
-			]
-		);
-		$html .= Html::element(
-			'a',
-			[
+		$html = Html::openElement( 'div', [
+			'id' => $id,
+			'class' => 'mw-portlet',
+			'role' => 'banner',
+		] );
+		$html .= Html::element( 'a', [
 				'href' => $this->data['nav_urls']['mainpage']['href'],
 				'class' => 'mw-wiki-logo',
-			] + Linker::tooltipAndAccesskeyAttribs( 'p-logo' )
-		);
-		$html .= Html::closeElement( 'div' );
+			] + Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) );
 
-		return $html;
+		return $html . Html::closeElement( 'div' );
 	}
 
 	/**
@@ -280,22 +346,21 @@ class CitizenTemplate extends BaseTemplate {
 	 * @return string html
 	 */
 	protected function getSearch() {
-		$html = Html::openElement(
-			'form',
-			[
-				'action' => $this->get( 'wgScript' ),
-				'role' => 'search',
-				'id' => 'search-form'
-			]
-		);
+		$html = Html::openElement( 'form', [
+			'action' => $this->get( 'wgScript' ),
+			'role' => 'search',
+			'id' => 'search-form',
+		] );
 		$html .= Html::hidden( 'title', $this->get( 'searchtitle' ) );
-		$html .= Html::label( $this->getMsg( 'search' )->text(), 'search-input', [ 'class' => 'screen-reader-text' ] );
+		$html .= Html::label( $this->getMsg( 'search' )->text(), 'search-input',
+			[ 'class' => 'screen-reader-text' ] );
 		$html .= $this->makeSearchInput( [ 'id' => 'search-input', 'type' => 'search' ] );
-		$html .= $this->makeSearchButton( 'image', [ 'id' => 'search-button', 'src' => $this->getSkin()->getSkinStylePath( 'resources/images/icons/search.svg') ] );
-		// $html .= $this->makeSearchButton( 'go', [ 'id' => 'search-button' ] );
-		$html .= Html::closeElement( 'form' );
+		$html .= $this->makeSearchButton( 'image', [
+			'id' => 'search-button',
+			'src' => $this->getSkin()->getSkinStylePath( 'resources/images/icons/search.svg' ),
+		] );
 
-		return $html;
+		return $html . Html::closeElement( 'form' );
 	}
 
 	/**
@@ -304,8 +369,8 @@ class CitizenTemplate extends BaseTemplate {
 	 * Or get rid of this entirely, and take the specific bits to use wherever you actually want them
 	 *  * Toolbox is the page/site tools that appears under the sidebar in vector
 	 *  * Languages is the interlanguage links on the page via en:... es:... etc
-	 *  * Default is each user-specified box as defined on MediaWiki:Sidebar; you will still need a foreach loop
-	 *    to parse these.
+	 *  * Default is each user-specified box as defined on MediaWiki:Sidebar;
+	 *    you will still need a foreach loop to parse these.
 	 * @return string html
 	 */
 	protected function getSiteNavigation() {
@@ -338,14 +403,15 @@ class CitizenTemplate extends BaseTemplate {
 					break;
 			}
 		}
+
 		return $html;
 	}
+
 	/**
 	 * Generates user icon bar
 	 * @return string html
 	 */
 	protected function getUserIcons() {
-
 		$personalTools = $this->getPersonalTools();
 		$html = '';
 
@@ -368,12 +434,10 @@ class CitizenTemplate extends BaseTemplate {
 				$iconList .= $this->makeListItem( $key, $item );
 			}
 
-			$html .= Html::rawElement(
-				'div',
-				[ 'id' => 'p-personal-extra', 'class' => 'p-body' ],
-				Html::rawElement( 'ul', [], $iconList )
-			);
+			$html .= Html::rawElement( 'div', [ 'id' => 'p-personal-extra', 'class' => 'p-body' ],
+				Html::rawElement( 'ul', [], $iconList ) );
 		}
+
 		return $html;
 	}
 
@@ -382,13 +446,11 @@ class CitizenTemplate extends BaseTemplate {
 	 * @return string html
 	 */
 	protected function getUserLinks() {
-
 		$personalTools = $this->getPersonalTools();
 
 		$html = '';
 
 		// Move the Echo badges and ULS out of default list
-		$extraTools = [];
 		if ( isset( $personalTools['notifications-alert'] ) ) {
 			unset( $personalTools['notifications-alert'] );
 		}
@@ -401,9 +463,8 @@ class CitizenTemplate extends BaseTemplate {
 
 		$html .= Html::openElement( 'div', [ 'id' => 'mw-user-links' ] );
 		$html .= $this->getPortlet( 'personal', $personalTools, 'personaltools' );
-		$html .= Html::closeElement( 'div' );
 
-		return $html;
+		return $html . Html::closeElement( 'div' );
 	}
 
 	/**
@@ -429,10 +490,7 @@ class CitizenTemplate extends BaseTemplate {
 	protected function getVariants() {
 		$html = '';
 		if ( count( $this->data['content_navigation']['variants'] ) > 0 ) {
-			$html .= $this->getPortlet(
-				'variants',
-				$this->data['content_navigation']['variants']
-			);
+			$html .= $this->getPortlet( 'variants', $this->data['content_navigation']['variants'] );
 		}
 
 		return $html;
@@ -440,27 +498,47 @@ class CitizenTemplate extends BaseTemplate {
 
 	/**
 	 * Generates page-related tools
+	 * Possible visibility conditions:
+	 * * true: always visible (bool)
+	 * * false: never visible (bool)
+	 * * 'login': only visible if logged in (string)
+	 * * 'permission-*': only visible if user has permission
+	 *   e.g. permission-edit = only visible if user can edit pages
 	 * @return string html
 	 */
 	protected function getPageTools() {
 		$html = '';
-		// Only display if user is logged in
-		// TODO: Make it check for EDIT permission instead
-		if ( $this->getSkin()->getUser()->isLoggedIn() ) {
 
-			$html .= Html::openElement( 'div', [ 'class' => 'mw-side', 'id' => 'page-tools' ]);
+		try {
+			$condition = $this->config->get( 'CitizenShowPageTools' );
+		} catch ( ConfigException $e ) {
+			$condition = false;
+		}
+
+		if ( $condition === 'login' ) {
+			$condition = $this->getSkin()->getUser()->isLoggedIn();
+		}
+
+		if ( is_string( $condition ) && strpos( $condition, 'permission' ) === 0 ) {
+			$permission = substr( $condition, 11 );
+			try {
+				$condition = MediaWikiServices::getInstance()->getPermissionManager()->userCan(
+					$permission, $this->getSkin()->getUser(), $this->getSkin()->getTitle() );
+			} catch ( Exception $e ) {
+				$condition = false;
+			}
+		}
+
+		// Only display if user is logged in
+		if ( $condition === true ) {
+			$html .= Html::openElement( 'div', [ 'class' => 'mw-side', 'id' => 'page-tools' ] );
 			// 'View' actions for the page: view, edit, view history, etc
-			$html .= $this->getPortlet(
-				'views',
-				$this->data['content_navigation']['views']
-			);
+			$html .= $this->getPortlet( 'views', $this->data['content_navigation']['views'] );
 			// Other actions for the page: move, delete, protect, everything else
-			$html .= $this->getPortlet(
-				'actions',
-				$this->data['content_navigation']['actions']
-			);
+			$html .= $this->getPortlet( 'actions', $this->data['content_navigation']['actions'] );
 			$html .= Html::closeElement( 'div' );
 		}
+
 		return $html;
 	}
 
@@ -469,16 +547,14 @@ class CitizenTemplate extends BaseTemplate {
 	 * @return string html
 	 */
 	protected function getPageLinks() {
-		// Namespaces: links for 'content' and 'talk' for namespaces with talkpages. Otherwise is just the content.
+		// Namespaces: links for 'content' and 'talk' for namespaces with talkpages.
+		// Otherwise is just the content.
 		// Usually rendered as tabs on the top of the page.
-		$html = $this->getPortlet(
-			'namespaces',
-			$this->data['content_navigation']['namespaces']
-		);
-		// Language variant options
-		$html .= $this->getVariants();
+		$html = $this->getPortlet( 'namespaces', $this->data['content_navigation']['namespaces'] );
 
-		return $html;
+		// Language variant options
+
+		return $html . $this->getVariants();
 	}
 
 	/**
@@ -488,7 +564,7 @@ class CitizenTemplate extends BaseTemplate {
 	protected function getSiteNotice() {
 		return $this->getIfExists( 'sitenotice', [
 			'wrapper' => 'div',
-			'parameters' => [ 'id' => 'siteNotice' ]
+			'parameters' => [ 'id' => 'siteNotice' ],
 		] );
 	}
 
@@ -499,7 +575,7 @@ class CitizenTemplate extends BaseTemplate {
 	protected function getNewTalk() {
 		return $this->getIfExists( 'newtalk', [
 			'wrapper' => 'div',
-			'parameters' => [ 'class' => 'usermessage' ]
+			'parameters' => [ 'class' => 'usermessage' ],
 		] );
 	}
 
@@ -537,21 +613,18 @@ class CitizenTemplate extends BaseTemplate {
 	 */
 	protected function getIfExists( $object, $setOptions = [] ) {
 		$options = $setOptions + [
-			'wrapper' => 'none',
-			'parameters' => []
-		];
+				'wrapper' => 'none',
+				'parameters' => [],
+			];
 
 		$html = '';
 
 		if ( $this->data[$object] ) {
-			if ( $options['wrapper'] == 'none' ) {
+			if ( $options['wrapper'] === 'none' ) {
 				$html .= $this->get( $object );
 			} else {
-				$html .= Html::rawElement(
-					$options['wrapper'],
-					$options['parameters'],
-					$this->get( $object )
-				);
+				$html .= Html::rawElement( $options['wrapper'], $options['parameters'],
+					$this->get( $object ) );
 			}
 		}
 
@@ -571,21 +644,21 @@ class CitizenTemplate extends BaseTemplate {
 	protected function getPortlet( $name, $content, $msg = null, $setOptions = [] ) {
 		// random stuff to override with any provided options
 		$options = $setOptions + [
-			// extra classes/ids
-			'id' => 'p-' . $name,
-			'class' => 'mw-portlet',
-			'extra-classes' => '',
-			// what to wrap the body list in, if anything
-			'body-wrapper' => 'nav',
-			'body-id' => null,
-			'body-class' => 'mw-portlet-body',
-			// makeListItem options
-			'list-item' => [ 'text-wrapper' => [ 'tag' => 'span' ] ],
-			// option to stick arbitrary stuff at the beginning of the ul
-			'list-prepend' => '',
-			// old toolbox hook support (use: [ 'SkinTemplateToolboxEnd' => [ &$skin, true ] ])
-			'hooks' => ''
-		];
+				// extra classes/ids
+				'id' => 'p-' . $name,
+				'class' => 'mw-portlet',
+				'extra-classes' => '',
+				// what to wrap the body list in, if anything
+				'body-wrapper' => 'nav',
+				'body-id' => null,
+				'body-class' => 'mw-portlet-body',
+				// makeListItem options
+				'list-item' => [ 'text-wrapper' => [ 'tag' => 'span' ] ],
+				// option to stick arbitrary stuff at the beginning of the ul
+				'list-prepend' => '',
+				// old toolbox hook support (use: [ 'SkinTemplateToolboxEnd' => [ &$skin, true ] ])
+				'hooks' => '',
+			];
 
 		// Handle the different $msg possibilities
 		if ( $msg === null ) {
@@ -609,9 +682,9 @@ class CitizenTemplate extends BaseTemplate {
 		$labelId = Sanitizer::escapeIdForAttribute( "p-$name-label" );
 
 		if ( is_array( $content ) ) {
-			$contentText = Html::openElement( 'ul',
-				[ 'lang' => $this->get( 'userlang' ), 'dir' => $this->get( 'dir' ) ]
-			);
+			$contentText =
+				Html::openElement( 'ul',
+					[ 'lang' => $this->get( 'userlang' ), 'dir' => $this->get( 'dir' ) ] );
 			$contentText .= $options['list-prepend'];
 			foreach ( $content as $key => $item ) {
 				$contentText .= $this->makeListItem( $key, $item, $options['list-item'] );
@@ -640,7 +713,7 @@ class CitizenTemplate extends BaseTemplate {
 			'role' => 'navigation',
 			'id' => Sanitizer::escapeIdForAttribute( $options['id'] ),
 			'title' => Linker::titleAttrib( $options['id'] ),
-			'aria-labelledby' => $labelId
+			'aria-labelledby' => $labelId,
 		];
 		if ( !is_array( $options['class'] ) ) {
 			$class = [ $options['class'] ];
@@ -648,12 +721,13 @@ class CitizenTemplate extends BaseTemplate {
 		if ( !is_array( $options['extra-classes'] ) ) {
 			$extraClasses = [ $options['extra-classes'] ];
 		}
-		$divOptions['class'] = array_merge( $class, $extraClasses );
+		$divOptions['class'] =
+			array_merge( $class ?? $options['class'], $extraClasses ?? $options['extra-classes'] );
 
 		$labelOptions = [
 			'id' => $labelId,
 			'lang' => $this->get( 'userlang' ),
-			'dir' => $this->get( 'dir' )
+			'dir' => $this->get( 'dir' ),
 		];
 
 		if ( $options['body-wrapper'] !== 'none' ) {
@@ -661,20 +735,15 @@ class CitizenTemplate extends BaseTemplate {
 			if ( is_string( $options['body-id'] ) ) {
 				$bodyDivOptions['id'] = $options['body-id'];
 			}
-			$body = Html::rawElement( $options['body-wrapper'], $bodyDivOptions,
-				$contentText .
-				$this->getAfterPortlet( $name )
-			);
+			$body =
+				Html::rawElement( $options['body-wrapper'], $bodyDivOptions,
+					$contentText . $this->getAfterPortlet( $name ) );
 		} else {
 			$body = $contentText . $this->getAfterPortlet( $name );
 		}
 
-		$html = Html::rawElement( 'div', $divOptions,
-			Html::rawElement( 'h3', $labelOptions, $msgString ) .
-			$body
-		);
-
-		return $html;
+		return Html::rawElement( 'div', $divOptions,
+			Html::rawElement( 'h3', $labelOptions, $msgString ) . $body );
 	}
 
 	/**
@@ -687,11 +756,14 @@ class CitizenTemplate extends BaseTemplate {
 	 * @return string html
 	 */
 	protected function deprecatedHookHack( $hook, $hookOptions = [] ) {
-		$hookContents = '';
 		ob_start();
-		Hooks::run( $hook, $hookOptions );
-		$hookContents = ob_get_contents();
-		ob_end_clean();
+		try {
+			Hooks::run( $hook, $hookOptions );
+		} catch ( Exception $e ) {
+			// Do nothing
+		}
+
+		$hookContents = ob_get_clean();
 		if ( !trim( $hookContents ) ) {
 			$hookContents = '';
 		}
@@ -717,12 +789,12 @@ class CitizenTemplate extends BaseTemplate {
 	protected function getFooterBlock( $setOptions = [] ) {
 		// Set options and fill in defaults
 		$options = $setOptions + [
-			'id' => 'footer',
-			'order' => 'linksfirst',
-			'link-prefix' => 'footer',
-			'icon-style' => 'icononly',
-			'link-style' => 'flat'
-		];
+				'id' => 'footer',
+				'order' => 'linksfirst',
+				'link-prefix' => 'footer',
+				'icon-style' => 'icononly',
+				'link-style' => 'flat',
+			];
 
 		$validFooterIcons = $this->getFooterIcons( $options['icon-style'] );
 		$validFooterLinks = $this->getFooterLinks( $options['link-style'] );
@@ -732,24 +804,23 @@ class CitizenTemplate extends BaseTemplate {
 			'id' => $options['id'],
 			'role' => 'contentinfo',
 			'lang' => $this->get( 'userlang' ),
-			'dir' => $this->get( 'dir' )
+			'dir' => $this->get( 'dir' ),
 		] );
 
 		$iconsHTML = '';
 		if ( count( $validFooterIcons ) > 0 ) {
-			$iconsHTML .= Html::openElement( 'div', [ 'id' => "{$options['link-prefix']}-container-icons"] );
-			$iconsHTML .= Html::openElement( 'div', [ 'id' => "footer-bottom-container"] );
+			$iconsHTML .= Html::openElement( 'div',
+				[ 'id' => "{$options['link-prefix']}-container-icons" ] );
+			$iconsHTML .= Html::openElement( 'div', [ 'id' => 'footer-bottom-container' ] );
 
 			// Get tagline
-			$iconsHTML .= $this -> getFooterTagline();
+			$iconsHTML .= $this->getFooterTagline();
 
 			$iconsHTML .= Html::openElement( 'ul', [ 'id' => "{$options['link-prefix']}-icons" ] );
 			foreach ( $validFooterIcons as $blockName => $footerIcons ) {
 				$iconsHTML .= Html::openElement( 'li', [
-					'id' => Sanitizer::escapeIdForAttribute(
-						"{$options['link-prefix']}-{$blockName}ico"
-					),
-					'class' => 'footer-icons'
+					'id' => Sanitizer::escapeIdForAttribute( "{$options['link-prefix']}-{$blockName}ico" ),
+					'class' => 'footer-icons',
 				] );
 				foreach ( $footerIcons as $icon ) {
 					$iconsHTML .= $this->getSkin()->makeFooterIcon( $icon );
@@ -763,75 +834,57 @@ class CitizenTemplate extends BaseTemplate {
 
 		$linksHTML = '';
 		if ( count( $validFooterLinks ) > 0 ) {
-			$linksHTML .= Html::openElement( 'div', [ 'id' => "{$options['link-prefix']}-container-list" ] );
-			if ( $options['link-style'] == 'flat' ) {
+			$linksHTML .= Html::openElement( 'div',
+				[ 'id' => "{$options['link-prefix']}-container-list" ] );
+			if ( $options['link-style'] === 'flat' ) {
 				$linksHTML .= Html::openElement( 'ul', [
 					'id' => "{$options['link-prefix']}-list",
-					'class' => 'footer-places'
+					'class' => 'footer-places',
 				] );
 
-				// Site logo
-				// $linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitelogo' ],
-				// 	$this->getLogo()
-				// );
-				
 				// Site title
 				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitetitle' ],
-					$this->getSiteTitle('text')
-				);
+					$this->getSiteTitle( 'text' ) );
 				// Site description
 				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitedesc' ],
-					$this->getFooterDesc()
-				);
+					$this->getFooterDesc() );
 
 				foreach ( $validFooterLinks as $link ) {
-					$linksHTML .= Html::rawElement(
-						'li',
-						[ 'id' => Sanitizer::escapeIdForAttribute( $link ) ],
-						$this->get( $link )
-					);
+					$linksHTML .= Html::rawElement( 'li',
+						[ 'id' => Sanitizer::escapeIdForAttribute( $link ) ], $this->get( $link ) );
 				}
 				$linksHTML .= Html::closeElement( 'ul' );
 			} else {
-				$linksHTML .= Html::openElement( 'div', [ 'id' => "{$options['link-prefix']}-list" ] );
+				$linksHTML .= Html::openElement( 'div',
+					[ 'id' => "{$options['link-prefix']}-list" ] );
 				foreach ( $validFooterLinks as $category => $links ) {
-					$linksHTML .= Html::openElement( 'ul',
-						[ 'id' => Sanitizer::escapeIdForAttribute(
-							"{$options['link-prefix']}-{$category}"
-						) ]
-					);
+					$linksHTML .= Html::openElement( 'ul', [
+						'id' => Sanitizer::escapeIdForAttribute( "{$options['link-prefix']}-{$category}" ),
+					] );
 					foreach ( $links as $link ) {
-						$linksHTML .= Html::rawElement(
-							'li',
-							[ 'id' => Sanitizer::escapeIdForAttribute(
-								"{$options['link-prefix']}-{$category}-{$link}"
-							) ],
-							$this->get( $link )
-						);
+						$linksHTML .= Html::rawElement( 'li', [
+							'id' => Sanitizer::escapeIdForAttribute( "{$options['link-prefix']}-{$category}-{$link}" ),
+						], $this->get( $link ) );
 					}
 					$linksHTML .= Html::closeElement( 'ul' );
 				}
 				// Site title
 				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'footer-sitetitle' ],
-					$this->getSiteTitle('text')
-				);
+					$this->getSiteTitle( 'text' ) );
 				// Site logo
 				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'footer-sitelogo' ],
-					$this->getLogo()
-				);
+					$this->getLogo() );
 				$linksHTML .= Html::closeElement( 'div' );
 			}
 			$linksHTML .= Html::closeElement( 'div' );
 		}
 
-		if ( $options['order'] == 'iconsfirst' ) {
+		if ( $options['order'] === 'iconsfirst' ) {
 			$html .= $iconsHTML . $linksHTML;
 		} else {
 			$html .= $linksHTML . $iconsHTML;
 		}
 
-		$html .= $this->getClear() . Html::closeElement( 'footer' );
-
-		return $html;
+		return $html . $this->getClear() . Html::closeElement( 'footer' );
 	}
 }

@@ -1,43 +1,58 @@
 /*
  * Scroll up Header
  * Modified from https://codepen.io/sajjad/pen/vgEZNy
- * TODO: Convert to Vanilla JS
  */
 
-// Hide header on scroll down
-var didScroll;
-var lastScrollTop = 0;
-var delta = 0;
-var navbarHeight = $('.mw-header-container').outerHeight();
+(function () {
+	// Hide header on scroll down
+	let didScroll;
+	let lastScrollTop = 0;
+	const delta = 0;
+	const header = document.getElementsByTagName('header')[0];
+	let navbarHeight = 0;
+	const headerContainer = document.querySelector('.mw-header-container');
+	if (headerContainer !== null) {
+		navbarHeight = headerContainer.offsetHeight;
+	}
 
-$(window).scroll(function(event) {
-    didScroll = true;
-});
+	window.addEventListener('scroll', () => {
+		didScroll = true;
+	});
 
-setInterval(function() {
-    if (didScroll) {
-        hasScrolled();
-        didScroll = false;
-    }
-}, 250);
+	setInterval(function () {
+		if (didScroll) {
+			hasScrolled();
+			didScroll = false;
+		}
+	}, 250);
 
-function hasScrolled() {
-    var st = $(this).scrollTop();
+	function hasScrolled() {
+		const st = window.scrollY;
 
-    // Make scroll more than delta
-    if (Math.abs(lastScrollTop - st) <= delta)
-        return;
+		// Make scroll more than delta
+		if (Math.abs(lastScrollTop - st) <= delta) {
+			return;
+		}
 
-    if (st > lastScrollTop && st > navbarHeight) {
-        // If scrolled down and past the navbar, add class .nav-up.
-        // Scroll Down
-        $('header').removeClass('nav-down').addClass('nav-up');
-    } else {
-        // Scroll Up
-        if (st + $(window).height() < $(document).height()) {
-            $('header').removeClass('nav-up').addClass('nav-down');
-        }
-    }
+		if (st > lastScrollTop && st > navbarHeight) {
+			// If scrolled down and past the navbar, add class .nav-up.
+			// Scroll Down
+			header.classList.remove('nav-down');
+			header.classList.add('nav-up');
+		} else {
+			// Scroll Up
+			const body = document.body;
+			const html = document.documentElement;
 
-    lastScrollTop = st;
-}
+			const documentHeight = Math.max(body.scrollHeight, body.offsetHeight,
+				html.clientHeight, html.scrollHeight, html.offsetHeight);
+
+			if (st + window.innerHeight < documentHeight) {
+				header.classList.remove('nav-up');
+				header.classList.add('nav-down');
+			}
+		}
+
+		lastScrollTop = st;
+	}
+})();

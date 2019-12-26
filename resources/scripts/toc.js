@@ -6,55 +6,62 @@
  */
 
 const SmoothScroll = () => {
-    if (!'scrollBehavior' in document.documentElement.style) {
-        const navLinks = document.querySelectorAll('#toc a');
+	if (!('scrollBehavior' in document.documentElement.style)) {
+		const navLinks = document.querySelectorAll('#toc a');
 
-        for (let n in navLinks) {
-            if (navLinks.hasOwnProperty(n)) {
-                navLinks[n].addEventListener('click', e => {
-                    e.preventDefault();
-                    document.querySelector(navLinks[n].hash)
-                        .scrollIntoView({
-                            behavior: "smooth"
-                        });
-                });
-            }
-        }
-    }
-}
+		const eventListener = e => {
+			e.preventDefault();
+			document.querySelector(navLinks[n].hash)
+				.scrollIntoView({
+					behavior: "smooth"
+				});
+		};
+
+		for (let n in navLinks) {
+			if (navLinks.hasOwnProperty(n)) {
+				navLinks[n].addEventListener('click', eventListener);
+			}
+		}
+	}
+};
 
 const ScrollSpy = () => {
-    const sections = document.querySelectorAll('.mw-headline');
+	const sections = document.querySelectorAll('.mw-headline');
 
-    window.onscroll = () => {
-        const scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
+	window.addEventListener('scroll', () => {
+		const scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
 
-        for (let s in sections)
-            if (sections.hasOwnProperty(s) && sections[s].offsetTop <= scrollPos) {
-                const id = mw.util.escapeIdForAttribute(sections[s].id);
-                document.querySelector('.active').classList.remove('active');
-                document.querySelector(`a[href*="${ id }"]`).parentNode.classList.add('active');
-            }
-    }
-}
+		for (let s in sections) {
+			if (sections.hasOwnProperty(s) && sections[s].offsetTop <= scrollPos) {
+				const id = mw.util.escapeIdForAttribute(sections[s].id);
+				document.querySelector('.active').classList.remove('active');
+
+				const node = document.querySelector(`a[href * = "${id}"]`).parentNode;
+				if (node !== null) {
+					node.classList.add('active');
+				}
+			}
+		}
+	});
+};
 
 const CheckToC = () => {
-    if (document.getElementById("toc")) {
-        SmoothScroll();
-        ScrollSpy();
-    }
-}
+	if (document.getElementById('toc')) {
+		SmoothScroll();
+		ScrollSpy();
+	}
+};
 
 if (document.readyState !== 'loading') {
-    CheckToC();
+	CheckToC();
 } else if (document.addEventListener) {
-    // All modern browsers to register DOMContentLoaded
-    document.addEventListener('DOMContentLoaded', CheckToC);
+	// All modern browsers to register DOMContentLoaded
+	document.addEventListener('DOMContentLoaded', CheckToC);
 } else {
-    // Old IE browsers
-    document.attachEvent('onreadystatechange', function() {
-        if (document.readyState === 'complete') {
-            CheckToC();
-        }
-    });
+	// Old IE browsers
+	document.attachEvent('onreadystatechange', function () {
+		if (document.readyState === 'complete') {
+			CheckToC();
+		}
+	});
 }

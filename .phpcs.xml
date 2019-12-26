@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<ruleset>
+    <rule ref="./vendor/mediawiki/mediawiki-codesniffer/MediaWiki" />
+    <file>.</file>
+    <exclude-pattern>vendor</exclude-pattern>
+</ruleset>

@@ -18,18 +18,31 @@
  * @file
  */
 
+namespace Citizen;
+
+use ConfigException;
+use Exception;
 use MediaWiki\MediaWikiServices;
+use OutputPage;
+use RequestContext;
+use Skin;
+use ThumbnailImage;
 
 /**
  * Hook handlers for Citizen skin.
  *
  * Hook handler method names should be in the form of:
- *	on<HookName>()
+ *    on<HookName>()
  */
 class CitizenHooks {
-
-	public static function BeforePageDisplay($out, $skin) {
+	/**
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 * @return bool
+	 */
+	public static function onBeforePageDisplay( $out, $skin ) {
 		$out->addModules( 'skins.citizen.bpd' );
+
 		return true;
 	}
 
@@ -41,11 +54,25 @@ class CitizenHooks {
 	 * @return bool
 	 */
 	public static function onResourceLoaderGetConfigVars( &$vars ) {
-		$config = MediaWikiServices::getInstance()->getConfigFactory()
-			->makeConfig( 'Citizen' );
+		try {
+			$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Citizen' );
+		} catch ( Exception $e ) {
+			return false;
+		}
 
-		$vars['wgCitizenMaxSearchResults'] = $config->get( 'CitizenMaxSearchResults' );
-		$vars['wgCitizenSearchExchars'] = $config->get( 'CitizenSearchExchars' );
+		try {
+			$vars['wgCitizenMaxSearchResults'] = $config->get( 'CitizenMaxSearchResults' );
+		} catch ( ConfigException $e ) {
+			// Should not happen
+			$vars['wgCitizenMaxSearchResults'] = 6;
+		}
+
+		try {
+			$vars['wgCitizenSearchExchars'] = $config->get( 'CitizenSearchExchars' );
+		} catch ( ConfigException $e ) {
+			// Should not happen
+			$vars['wgCitizenSearchExchars'] = 60;
+		}
 
 		return true;
 	}
@@ -54,18 +81,28 @@ class CitizenHooks {
 	 * Lazyload images
 	 * Modified from the Lazyload extension
 	 * Looks for thumbnail and swap src to data-src
+	 *
+	 * @param ThumbnailImage $thumb
+	 * @param array &$attribs
+	 * @param array &$linkAttribs
+	 * @return bool
 	 */
-	public static function ThumbnailBeforeProduceHTML($thumb, &$attribs, &$linkAttribs) {
-
+	public static function onThumbnailBeforeProduceHTML( $thumb, &$attribs, &$linkAttribs ) {
 		$file = $thumb->getFile();
 
-		if ( $file ) {
-			global $wgRequest, $wgTitle;
-			if (defined('MW_API') && $wgRequest->getVal('action') === 'parse') return true;
-			if (isset($wgTitle) && $wgTitle->getNamespace() === NS_FILE) return true;
+		if ( $file !== null ) {
+			$request = RequestContext::getMain()->getRequest();
+
+			if ( defined( 'MW_API' ) && $request->getVal( 'action' ) === 'parse' ) {
+				return true;
+			}
 
 			// Set lazy class for the img
-			$attribs['class'] .= ' lazy';
+			if ( isset( $attribs['class'] ) ) {
+				$attribs['class'] .= 'lazy';
+			} else {
+				$attribs['class'] = 'lazy';
+			}
 
 			// Native API
 			$attribs['loading'] = 'lazy';
@@ -75,22 +112,21 @@ class CitizenHooks {
 			$attribs['data-height'] = $attribs['height'];
 
 			// Replace src with small size image
-			$attribs['src'] = preg_replace('#/\d+px-#', '/10px-', $attribs['src']);
-			// $attribs['src'] = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+			$attribs['src'] = preg_replace( '#/\d+px-#', '/10px-', $attribs['src'] );
 
 			// So that the 10px thumbnail is enlarged to the right size
 			$attribs['width'] = $attribs['data-width'];
 			$attribs['height'] = $attribs['data-height'];
 
 			// Clean up
-			unset($attribs['data-width']);
-			unset($attribs['data-height']);
+			unset( $attribs['data-width'], $attribs['data-height'] );
 
-			if (isset($attribs['srcset'])) {
-					$attribs['data-srcset'] = $attribs['srcset'];
-					unset($attribs['srcset']);
+			if ( isset( $attribs['srcset'] ) ) {
+				$attribs['data-srcset'] = $attribs['srcset'];
+				unset( $attribs['srcset'] );
 			}
 		}
+
 		return true;
 	}
 }

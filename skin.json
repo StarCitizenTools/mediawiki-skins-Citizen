@@ -5,7 +5,6 @@
 	"author": "alistair3149",
 	"url": "https://starcitizen.tools",
 	"descriptionmsg": "citizen-desc",
-	"namemsg": "skinname-citizen",
 	"license-name": "GPL-3.0",
 	"type": "skin",
 	"requires": {
@@ -125,6 +124,36 @@
 			"value": 60,
 			"description": "The character limit for the description in search suggestion",
 			"descriptionmsg": "citizen-config-searchexchars",
+			"public": true
+		},
+		"EnableButton": {
+			"value": false,
+			"description": "Enable or disable the bottom left button",
+			"descriptionmsg": "citizen-config-enablebutton",
+			"public": true
+		},
+		"ButtonLink": {
+			"value": "",
+			"description": "Link the button leads to",
+			"descriptionmsg": "citizen-config-buttonlink",
+			"public": true
+		},
+		"ButtonTitle": {
+			"value": "",
+			"description": "Button title on hover",
+			"descriptionmsg": "citizen-config-buttontitle",
+			"public": true
+		},
+		"ButtonText": {
+			"value": "",
+			"description": "Button link text",
+			"descriptionmsg": "citizen-config-buttontext",
+			"public": true
+		},
+		"ShowPageTools": {
+			"value": true,
+			"description": "Page tools visibility condition",
+			"descriptionmsg": "citizen-config-showpagetools",
 			"public": true
 		}
 	},
@@ -346,21 +375,21 @@
 	"AutoloadClasses": {
 		"SkinCitizen": "includes/SkinCitizen.php",
 		"CitizenTemplate": "includes/CitizenTemplate.php",
-		"CitizenHooks": "includes/CitizenHooks.php",
-		"ApiWebappManifest": "includes/api/ApiWebappManifest.php"
+		"Citizen\\CitizenHooks": "includes/CitizenHooks.php",
+		"Citizen\\ApiWebappManifest": "includes/api/ApiWebappManifest.php"
 	},
 	"APIModules": {
-		"webapp-manifest": "ApiWebappManifest"
+		"webapp-manifest": "Citizen\\ApiWebappManifest"
 	},
 	"Hooks": {
 		"BeforePageDisplay": [
-			"CitizenHooks::BeforePageDisplay"
+			"Citizen\\CitizenHooks::onBeforePageDisplay"
 		],
 		"ResourceLoaderGetConfigVars": [
-			"CitizenHooks::onResourceLoaderGetConfigVars"
+			"Citizen\\CitizenHooks::onResourceLoaderGetConfigVars"
 		],
 		"ThumbnailBeforeProduceHTML": [
-			"CitizenHooks::ThumbnailBeforeProduceHTML"
+			"Citizen\\CitizenHooks::onThumbnailBeforeProduceHTML"
 		]
 	},
 	"manifest_version": 2
