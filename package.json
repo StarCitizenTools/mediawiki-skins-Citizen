@@ -2,7 +2,7 @@
 	"private": true,
 	"scripts": {
 		"test": "grunt test",
-		"doc": "jsdoc -c jsdoc.json"
+		"doc": "jsdoc -c jsdoc.json -r"
 	},
 	"devDependencies": {
 		"eslint-config-wikimedia": "0.15.0",
