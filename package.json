@@ -15,7 +15,8 @@
 	},
 	"eslintIgnore": [
 		"vendor/**",
-		"node_modules/**"
+		"node_modules/**",
+		"out/**",
 	],
 	"jshintConfig": {
 		"esversion": 6
