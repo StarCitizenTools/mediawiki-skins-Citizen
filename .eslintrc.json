@@ -2,10 +2,14 @@
 	"root": true,
 	"extends": [
 		"wikimedia/client",
-		"wikimedia/jquery"
+		"wikimedia/jquery",
+		"wikimedia/mediawiki"
 	],
 	"globals": {
-		"mw": false,
-		"OO": false
+		"OO": "readonly"
+		// Project-wide globals.
+	},
+	"rules": {
+		// Project-wide rule variations. Keep to a minimum.
 	}
 }
