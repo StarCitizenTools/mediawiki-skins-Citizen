@@ -5,6 +5,9 @@
 		"wikimedia/jquery",
 		"wikimedia/mediawiki"
 	],
+	"env": {
+        "es6": true
+    },
 	"globals": {
 		"OO": "readonly"
 		// Project-wide globals.
