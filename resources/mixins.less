@@ -30,7 +30,7 @@
 }
 
 .resource-loader-icon() {
-	content: "";
+	content: '';
 	position: absolute;
 	width: inherit;
 	height: inherit;
@@ -39,7 +39,7 @@
 }
 
 .resource-loader-menu-icon() {
-	content: "";
+	content: '';
 	position: absolute;
 	width: @icon-box-size;
 	height: @icon-box-size;
@@ -48,7 +48,7 @@
 }
 
 .resource-loader-list-icon() {
-	content: "";
+	content: '';
 	position: relative;
 	flex-shrink: 0;
 	align-self: center;
@@ -67,65 +67,67 @@
 
 .menu-item-link() {
 	display: flex;
-	color: @color-item-text!important;
+	color: @color-item-text !important;
 	transition: @transition-background-quick, @transition-color-quick;
 }
 
 .menu-item-link-hover() {
-	color: @color-item-text-hover!important;
+	color: @color-item-text-hover !important;
 	background-color: @menu-item-link-hover;
 }
 
 .menu-item-link-active() {
-	color: @color-item-text-active!important;
-	background-color:  @menu-item-link-active;
+	color: @color-item-text-active !important;
+	background-color: @menu-item-link-active;
 }
 
 .menu-item-link-focus() {
-	color: @color-item-text-active!important;
-	background-color:  @menu-item-link-active;
+	color: @color-item-text-active !important;
+	background-color: @menu-item-link-active;
 }
 
 // Button Styles
 .button-blue() {
 	background-color: @accent-50;
-	color: @base-80!important;
+	color: @base-80 !important;
 	transition: @transition-background-quick, @transition-color-quick;
 }
 
 .button-blue-active() {
 	background-color: @accent-10;
-	color: @base-100!important;
+	color: @base-100 !important;
 }
 
 .button-red() {
 	background-color: @red-50;
-	color: @base-80!important;
+	color: @base-80 !important;
 	transition: @transition-background-quick, @transition-color-quick;
 }
 
 .button-red-active() {
 	background-color: @red-30;
-	color: @base-100!important;
+	color: @base-100 !important;
 }
 
 // Link styles
 .link-content-text(@color) {
-	background-image: linear-gradient(to right, @color 0, @color 100%);
+	background-image: linear-gradient( to right, @color 0, @color 100% );
 	background-repeat: no-repeat;
 	background-size: 0 100%;
 	transition: @transition-background-quick, @transition-color-quick;
 
+	/* stylelint-disable declaration-property-value-blacklist */
 	&:hover {
 		outline: none;
-		color: white!important;
-		background-size: 100% 100%!important;
+		color: #fff !important;
+		background-size: 100% 100% !important;
 	}
+	/* stylelint-enable */
 }
 
 // Gradient overflow
 .gradient-overflow(@position) {
-	content: "";
+	content: '';
 	position: fixed;
 	z-index: 3;
 	width: 100%;
@@ -135,20 +137,20 @@
 
 // Box-shadow
 // https://codepen.io/sdthornton/pen/wBZdXq
-.boxshadow(@level: 1){
-    & when (@level = 1) {
-        box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.06); // Cards
-    }
-    & when (@level = 2) {
-        box-shadow: 0 3px 6px rgba(0,0,0,0.04), 0 3px 6px rgba(0,0,0,0.0575);
-    }
-    & when (@level = 3) {
-        box-shadow: 0 10px 20px rgba(0,0,0,0.0475), 0 6px 6px rgba(0,0,0,0.0575); // Drawer
-    }
-    & when (@level = 4) {
-        box-shadow: 0 14px 28px rgba(0,0,0,0.0625), 0 10px 10px rgba(0,0,0,0.055); // FAB, floating elements
-    }
-    & when (@level = 5) {
-        box-shadow: 0 19px 38px rgba(0,0,0,0.075), 0 15px 12px rgba(0,0,0,0.055); // Dialogs
-    }
+.boxshadow(@level: 1) {
+	& when (@level = 1) {
+		box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.03 ), 0 1px 2px rgba( 0, 0, 0, 0.06 ); // Cards
+	}
+	& when (@level = 2) {
+		box-shadow: 0 3px 6px rgba( 0, 0, 0, 0.04 ), 0 3px 6px rgba( 0, 0, 0, 0.0575 );
+	}
+	& when (@level = 3) {
+		box-shadow: 0 10px 20px rgba( 0, 0, 0, 0.0475 ), 0 6px 6px rgba( 0, 0, 0, 0.0575 ); // Drawer
+	}
+	& when (@level = 4) {
+		box-shadow: 0 14px 28px rgba( 0, 0, 0, 0.0625 ), 0 10px 10px rgba( 0, 0, 0, 0.055 ); // FAB, floating elements
+	}
+	& when (@level = 5) {
+		box-shadow: 0 19px 38px rgba( 0, 0, 0, 0.075 ), 0 15px 12px rgba( 0, 0, 0, 0.055 ); // Dialogs
+	}
 }

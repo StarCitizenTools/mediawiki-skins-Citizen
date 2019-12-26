@@ -30,7 +30,7 @@
 				}
 
 				> span {
-					position: relative!important;
+					position: relative !important;
 					clip: unset;
 					width: auto;
 					height: auto;
@@ -44,7 +44,7 @@
 .tux-messagelist,
 .tux-action-bar,
 .tux-messagetable-header.floating {
-	margin: 0 @negative-margin!important;
+	margin: 0 @negative-margin !important;
 }
 
 .tux-action-bar.floating,
@@ -59,18 +59,18 @@
 }
 
 .tux-messagelist,
-.tux-action-bar:not(.floating) {
-	width: auto!important;
+.tux-action-bar:not( .floating ) {
+	width: auto !important;
 }
 
 .tux-messagetable-header {
 	padding: 0; // Reserve spaces for tabs
 	display: flex;
-  align-items: center;
+	align-items: center;
 
 	&.floating {
 		> div:first-of-type {
-			padding: 0px 20px 10px;
+			padding: 0 20px 10px;
 		}
 	}
 }
@@ -80,6 +80,7 @@
 		&.selected {
 			border: 0;
 		}
+
 		a {
 			color: @base-50;
 			padding: @margin-side / 2 @margin-side;
@@ -97,7 +98,7 @@
 	}
 
 	.more {
-		padding: @margin-side / 2 @margin-side!important;
+		padding: @margin-side / 2 @margin-side !important;
 
 		> ul {
 			margin: 0;
@@ -115,7 +116,7 @@
 
 				a {
 					margin: 0;
-					padding: 10px 15px!important;
+					padding: 10px 15px !important;
 				}
 
 				input {
@@ -130,7 +131,7 @@
 	}
 }
 
-@media only screen and (max-width: @screen2) {
+@media only screen and ( max-width: @screen2 ) {
 	#page-tools {
 		margin: 0 auto @margin-side * 2;
 		float: none;
@@ -146,14 +147,14 @@
 	.tux-messagelist,
 	.tux-action-bar,
 	.tux-messagetable-header.floating {
-		margin: 0 ~"calc((100vw - @{page-width}) / -2)"!important;
+		margin: 0 ~'calc((100vw - @{page-width}) / -2)' !important;
 	}
 }
 
-@media only screen and (max-width: @screen1) {
+@media only screen and ( max-width: @screen1 ) {
 	.tux-messagelist,
 	.tux-action-bar,
 	.tux-messagetable-header.floating {
-		margin: 0 -@margin-side!important; // fill margin
+		margin: 0 -@margin-side !important; // fill margin
 	}
 }

@@ -8,53 +8,53 @@
 */
 
 .mw-header-container {
-    position: fixed;
-    z-index: 10;
-    top: 0;
-    width: 100vw;
-    height: @header-height;
-    display: flex;
-    justify-content: space-between;
-    font-family: @fonts-secondary;
-    transition: @transition-transform;
+	position: fixed;
+	z-index: 10;
+	top: 0;
+	width: 100vw;
+	height: @header-height;
+	display: flex;
+	justify-content: space-between;
+	font-family: @fonts-secondary;
+	transition: @transition-transform;
 
-    ul {
-        list-style: none;
-    }
+	ul {
+		list-style: none;
+	}
 
-    ul,
-    li {
-        margin: 0;
-        display: block;
-    }
+	ul,
+	li {
+		margin: 0;
+		display: block;
+	}
 
-    // Hide header when scroll
-    &.nav-up {
-        transform: translate(0px, -@header-height);
-    }
+	// Hide header when scroll
+	&.nav-up {
+		transform: translate( 0, -@header-height );
+	}
 
-    .mw-header-icons {
-        display: inherit;
-    }
+	.mw-header-icons {
+		display: inherit;
+	}
 
-    .mw-header-end {
-        width: @icon-box-size + @margin-side + @icon-padding;
-        height: @header-height;
-        user-select: none;
+	.mw-header-end {
+		width: @icon-box-size + @margin-side + @icon-padding;
+		height: @header-height;
+		user-select: none;
 
-        // Input button hack
-        >input {
-            width: inherit;
-            height: inherit;
-            position: absolute;
-            z-index: 8;
-            margin: 0;
-            display: block;
-            opacity: 0;
-            cursor: pointer;
-            -webkit-touch-callout: none;
-        }
-    }
+		// Input button hack
+		> input {
+			width: inherit;
+			height: inherit;
+			position: absolute;
+			z-index: 8;
+			margin: 0;
+			display: block;
+			opacity: 0;
+			cursor: pointer;
+			-webkit-touch-callout: none;
+		}
+	}
 }
 
 /*
@@ -62,281 +62,277 @@
  * Modified from https://codepen.io/erikterwan/pen/EVzeRP and https://codepen.io/oxla/pen/zgvqmM
  */
 #mw-header-menu {
+	.mw-wiki-title {
+		letter-spacing: 2px;
+	}
 
-    .mw-wiki-title {
-        letter-spacing: 2px;
-    }
+	input {
+		&:checked {
 
-    input {
-        &:checked {
+			// Show drawer
+			~ #mw-header-menu-drawer {
+				transform: none;
+				will-change: unset;
+			}
 
-            // Show drawer
-            ~#mw-header-menu-drawer {
-                transform: none;
-                will-change: unset;
-            }
+			// Transform all the slices of hamburger into a crossmark
+			~ #mw-header-menu-toggle > span {
+				opacity: @opacity-icon;
+				transform: rotate( 45deg ) translate( -5px, -7px );
 
-            // Transform all the slices of hamburger into a crossmark
-            ~#mw-header-menu-toggle>span {
-                opacity: @opacity-icon;
-                transform: rotate(45deg) translate(-5px, -7px);
+				// Reflect line
+				&:nth-last-child( 2 ) {
+					transform: rotate( -45deg ) translate( -2px, 6px );
+				}
 
-                // Reflect line
-                &:nth-last-child(2) {
-                    transform: rotate(-45deg) translate(-2px, 6px);
-                }
+				// Hide line
+				&:nth-last-child( 3 ) {
+					opacity: 0;
+					transform: rotate( 0deg ) scale( 0.2, 0.2 );
+				}
+			}
+		}
 
-                // Hide line
-                &:nth-last-child(3) {
-                    opacity: 0;
-                    transform: rotate(0deg) scale(0.2, 0.2);
-                }
-            }
-        }
+		// Hover state
+		&:hover ~ #mw-header-menu-toggle > span {
+			opacity: @opacity-icon-active;
 
-        // Hover state
-        &:hover~#mw-header-menu-toggle>span {
-            opacity: @opacity-icon-active;
+			&:first-child {
+				transform: translate( -50%, 0 );
+			}
+		}
+	}
 
-            &:first-child {
-                transform: translate(-50%, 0);
-            }
-        }
-    }
+	&-toggle {
+		width: @icon-size;
+		height: @icon-size;
+		margin: (@header-height - @icon-size) / 2 @icon-padding (@header-height - @icon-size) / 2 (@icon-margin * 2 + @margin-side * 2) / 2;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 
-    &-toggle {
-        width: @icon-size;
-        height: @icon-size;
-        margin: (@header-height - @icon-size) / 2 @icon-padding (@header-height - @icon-size) / 2 (@icon-margin * 2 + @margin-side * 2) / 2;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+		span {
+			z-index: 5;
+			margin: 1.5px 0;
+			width: @icon-size;
+			height: 2px;
+			display: block;
+			background: @base-0;
+			opacity: @opacity-icon;
+			transform-origin: 4px 0;
+			transition: @transition-transform, @transition-background-quick, @transition-opacity;
 
-        span {
-            z-index: 5;
-            margin: 1.5px 0;
-            width: @icon-size;
-            height: 2px;
-            display: block;
-            background: @base-0;
-            opacity: @opacity-icon;
-            transform-origin: 4px 0px;
-            transition: @transition-transform,
-                @transition-background-quick,
-                @transition-opacity;
+			&:first-child {
+				transform-origin: 0% 0%;
+			}
 
-            &:first-child {
-                transform-origin: 0% 0%;
-            }
+			&:nth-last-child( 2 ) {
+				transform-origin: 0% 100%;
+			}
+		}
+	}
 
-            &:nth-last-child(2) {
-                transform-origin: 0% 100%;
-            }
-        }
-    }
+	&-drawer {
+		position: fixed;
+		z-index: 4;
+		top: 0;
+		padding-top: @header-height;
+		width: @drawer-width;
+		max-width: 100vw; // In case if someone has super small screen
+		height: 100vh;
+		.boxshadow(3);
+		background: @menu-background;
+		transform-origin: 0% 0%;
+		transform: translate( -110%, 0 ); // Shadow bleeding with 100%
+		transition: @transition-transform;
+		will-change: transform; // Help with performance
 
-    &-drawer {
-        position: fixed;
-        z-index: 4;
-        top: 0;
-        padding-top: @header-height;
-        width: @drawer-width;
-        max-width: 100vw; // In case if someone has super small screen
-        height: 100vh;
-        .boxshadow(3);
-        background: @menu-background;
-        transform-origin: 0% 0%;
-        transform: translate(-110%, 0); // Shadow bleeding with 100%
-        transition: @transition-transform;
-        will-change: transform; // Help with performance
+		&-container {
+			height: ~'calc(100vh - @{header-height})';
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			transition: @transition-height;
 
-        &-container {
-            height:~"calc(100vh - @{header-height})";
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: @transition-height;
+			.mw-wiki-title {
+				padding: @margin-side;
+			}
 
-            .mw-wiki-title {
-                padding: @margin-side;
-            }
+			#p-nt-container {
+				overflow: auto;
+				overscroll-behavior: contain;
+				flex-grow: 1;
+			}
 
-            #p-nt-container {
-                overflow: auto;
-                overscroll-behavior: contain;
-                flex-grow: 1;
-            }
+			#p-navigation-label {
+				.mixin-screen-reader-text;
+			}
 
-            #p-navigation-label {
-                .mixin-screen-reader-text;
-            }
+			#mw-user-links {
+				#p-personal {
+					margin-top: @margin-side / 2;
+					padding-top: @margin-side / 2;
+					border-top: 1px solid @base-80;
 
-            #mw-user-links {
+					h3 {
+						.mixin-screen-reader-text;
+					}
 
-                #p-personal {
-                    margin-top: @margin-side / 2;
-                    padding-top: @margin-side / 2;
-                    border-top: 1px solid @base-80;
+					#pt-userpage {
+						margin-bottom: @margin-side / 2;
 
-                    h3 {
-                        .mixin-screen-reader-text;
-                    }
+						a {
+							justify-content: unset;
 
-                    #pt-userpage {
-                        margin-bottom: @margin-side / 2;
+							&:after {
+								margin: 0;
+								width: @icon-box-size;
+								height: @icon-box-size;
+							}
+						}
 
-                        a {
-                            justify-content: unset;
+						span {
+							order: 2;
+							padding-left: @margin-side;
+						}
+					}
 
-                            &:after {
-                                margin: 0;
-                                width: @icon-box-size;
-                                height: @icon-box-size;
-                            }
-                        }
+					#pt-login {
+						a {
+							.button-blue;
 
-                        span {
-                            order: 2;
-                            padding-left: @margin-side;
-                        }
-                    }
+							&:hover,
+							&:active,
+							&:focus {
+								.button-blue-active;
+							}
+						}
+					}
 
-                    #pt-login {
-                        a {
-                            .button-blue;
+					#pt-logout {
+						a {
+							.button-red;
 
-                            &:hover,
-                            &:active,
-                            &:focus {
-                                .button-blue-active;
-                            }
-                        }
-                    }
+							&:hover,
+							&:active,
+							&:focus {
+								.button-red-active;
+							}
+						}
+					}
+				}
+			}
 
-                    #pt-logout {
-                        a {
-                            .button-red;
+			h3 {
+				margin: @margin-side / 2 0 0 0;
+				padding: @margin-side / 2 @margin-side;
+				color: @color-item-header;
+				font-size: @ui-menu-header;
+				font-weight: normal;
+				letter-spacing: 1px;
+			}
 
-                            &:hover,
-                            &:active,
-                            &:focus {
-                                .button-red-active;
-                            }
-                        }
-                    }
-                }
-            }
+			span {
+				display: block;
+			}
 
-            h3 {
-                margin: @margin-side / 2 0 0 0;
-                padding: @margin-side / 2 @margin-side;
-                color: @color-item-header;
-                font-size: @ui-menu-header;
-                font-weight: normal;
-                letter-spacing: 1px;
-            }
+			a {
+				.menu-item-link;
+				align-items: center;
+				justify-content: space-between;
+				padding: @padding-menu-item-big;
+				font-size: @ui-menu-text-big;
+				font-family: @fonts;
 
-            span {
-                display: block;
-            }
+				&:after {
+					.resource-loader-list-icon;
+					margin-left: @icon-padding;
+					opacity: 0.4;
+					display: block;
+					background-size: contain;
+					transition: @transition-opacity-quick;
+				}
 
-            a {
-                .menu-item-link;
-                align-items: center;
-                justify-content: space-between;
-                padding: @padding-menu-item-big;
-                font-size: @ui-menu-text-big;
-                font-family: @fonts;
+				&:hover {
+					.menu-item-link-hover;
 
-                &:after {
-                    .resource-loader-list-icon;
-                    margin-left: @icon-padding;
-                    opacity: 0.4;
-                    display: block;
-                    background-size: contain;
-                    transition: @transition-opacity-quick;
-                }
+					&:after {
+						opacity: 0.6;
+					}
+				}
 
-                &:hover {
-                    .menu-item-link-hover;
+				&:active {
+					.menu-item-link-active;
+				}
 
-                    &:after {
-                        opacity: 0.6;
-                    }
-                }
-
-                &:active {
-                    .menu-item-link-active;
-                }
-
-                &:focus {
-                    .menu-item-link-focus;
-                }
-            }
-        }
-    }
+				&:focus {
+					.menu-item-link-focus;
+				}
+			}
+		}
+	}
 }
 
 // Sidebar site title
 #mw-sidebar-sitename {
-    position: fixed;
-    visibility: visible;
-    top: @sidebar-sitename-height + @header-height + @margin-side;
-    left: @margin-side;
-    font-size: 11px;
-    letter-spacing: 4px;
-    transform: translateY(0) rotate(-90deg);
-    transform-origin: top left;
-    transition: @transition-transform, @transition-opacity;
+	position: fixed;
+	visibility: visible;
+	top: @sidebar-sitename-height + @header-height + @margin-side;
+	left: @margin-side;
+	font-size: 11px;
+	letter-spacing: 4px;
+	transform: translateY( 0 ) rotate( -90deg );
+	transform-origin: top left;
+	transition: @transition-transform, @transition-opacity;
 }
 
 // Nav up stuff
 .nav-up {
-    ~#mw-sidebar-sitename {
-        transform: translateY(-54px) rotate(-90deg);
-    }
+	~ #mw-sidebar-sitename {
+		transform: translateY( -54px ) rotate( -90deg );
+	}
 
-    #mw-header-menu-drawer-container {
-        height: 100vh;
-    }
+	#mw-header-menu-drawer-container {
+		height: 100vh;
+	}
 }
 
 // Bypass calculation
 @mw-sidebar-sitename-max-width: @margin-side * 5 + @page-width;
 
-@media only screen and (max-width: @mw-sidebar-sitename-max-width) {
-    #mw-sidebar-sitename {
-        z-index: -1; // remove link
-        opacity: 0; // hide visual
-    }
+@media only screen and ( max-width: @mw-sidebar-sitename-max-width ) {
+	#mw-sidebar-sitename {
+		z-index: -1; // remove link
+		opacity: 0; // hide visual
+	}
 }
 
-@media only screen and (max-width: @screen2) {
-    .mw-header-container {
-        background: @base-100;
+@media only screen and ( max-width: @screen2 ) {
+	.mw-header-container {
+		background: @base-100;
 
-        &.nav-down {
-            border-bottom: 1px solid @base-80;
-            .boxshadow(2);
-        }
+		&.nav-down {
+			border-bottom: 1px solid @base-80;
+			.boxshadow(2);
+		}
 
-        &.nav-up {
-            box-shadow: none;
-        }
-    }
+		&.nav-up {
+			box-shadow: none;
+		}
+	}
 }
 
 /*
  * User icon bar
  */
 #p-personal-extra {
-    ul {
-        height: 56px;
-        display: flex;
-        align-items: center;
-    }
+	ul {
+		height: 56px;
+		display: flex;
+		align-items: center;
+	}
 }
 
 /*
@@ -345,23 +341,23 @@
 #feedlinks,
 #pt-anontalk,
 #pt-anoncontribs {
-    display: none;
+	display: none;
 }
 
 // RTL tweaks
 .rtl {
-    #mw-sidebar-sitename {
-        left: unset;
-        right: @margin-side;
-        transform: translateY(0) rotate(90deg);
-        transform-origin: top right;
-    }
+	#mw-sidebar-sitename {
+		left: unset;
+		right: @margin-side;
+		transform: translateY( 0 ) rotate( 90deg );
+		transform-origin: top right;
+	}
 
-    .nav-up~#mw-sidebar-sitename {
-        transform: translateY(-54px) rotate(90deg);
-    }
+	.nav-up ~ #mw-sidebar-sitename {
+		transform: translateY( -54px ) rotate( 90deg );
+	}
 
-    #mw-header-menu-drawer {
-        transform: translate(100%, 0);
-    }
+	#mw-header-menu-drawer {
+		transform: translate( 100%, 0 );
+	}
 }
