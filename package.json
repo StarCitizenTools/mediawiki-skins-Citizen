@@ -16,7 +16,7 @@
 	"eslintIgnore": [
 		"vendor/**",
 		"node_modules/**",
-		"out/**",
+		"out/**"
 	],
 	"jshintConfig": {
 		"esversion": 6
