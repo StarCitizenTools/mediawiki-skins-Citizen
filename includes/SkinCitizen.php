@@ -6,8 +6,8 @@
  * @ingroup Skins
  */
 class SkinCitizen extends SkinTemplate {
-	public $skinName = 'citizen';
-	public $styleName = 'Citizen';
+	public $skinname = 'citizen';
+	public $stylename = 'Citizen';
 	public $template = 'CitizenTemplate';
 
 	/**
