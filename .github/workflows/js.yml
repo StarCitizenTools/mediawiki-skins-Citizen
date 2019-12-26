@@ -14,3 +14,6 @@ jobs:
       run: |
         npm install --save-dev grunt-eslint
         npm install --save-dev eslint-config-wikimedia
+
+    - name: Grunt test
+      run: grunt test
