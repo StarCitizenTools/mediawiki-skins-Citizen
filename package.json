@@ -9,8 +9,8 @@
 		"grunt": "1.0.4",
 		"grunt-banana-checker": "0.8.1",
 		"grunt-eslint": "22.0.0",
-		"grunt-stylelint": "0.12.0",
-		"stylelint-config-wikimedia": "0.7.0"
+		"grunt-stylelint": "0.13.0",
+		"stylelint-config-wikimedia": "0.8.0"
 	},
 	"eslintIgnore": [
 		"vendor/**"
