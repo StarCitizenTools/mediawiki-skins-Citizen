@@ -6,6 +6,8 @@
 		"wikimedia/mediawiki"
 	],
 	"env": {
+		"browser": true,
+		"commonjs": true,
         "es6": true
     },
 	"globals": {
