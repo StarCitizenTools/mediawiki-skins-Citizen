@@ -12,8 +12,7 @@ jobs:
       
     - name: Install dependencies
       run: |
-        npm install --save-dev grunt-eslint
-        npm install --save-dev eslint-config-wikimedia
+        npm install --save-dev
 
     #- name: Generate documentation
     #  run: npm run doc
