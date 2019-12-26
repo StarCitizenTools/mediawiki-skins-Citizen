@@ -1,4 +1,14 @@
 {
+	"name": "mediawiki/citizen-skin",
+	"type": "mediawiki-skin",
+	"description": "A responsive skin developed for the Star Citizen Wiki",
+	"keywords": [
+		"MediaWiki",
+		"skin"
+	],
+	"homepage": "https://starcitizen.tools",
+	"readme": "README.md",
+	"license": "GPL-3.0",
 	"require-dev": {
 		"jakub-onderka/php-parallel-lint": "1.0.0",
 		"mediawiki/mediawiki-codesniffer": "28.0.0",
