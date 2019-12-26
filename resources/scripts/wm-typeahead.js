@@ -3,7 +3,7 @@
  * See T219590 for more details
  */
 
- /**
+/**
 * Below are additional dependency extracted from polyfills.js
 * TODO: Optimize and clear unneeded code
 */
@@ -16,9 +16,9 @@
  *
  * Uses window.devicePixelRatio if available, or CSS media queries on IE.
  *
- * @returns {number} Device pixel ratio
+ * @return {number} Device pixel ratio
  */
-function getDevicePixelRatio () {
+function getDevicePixelRatio() {
 
 	if ( window.devicePixelRatio !== undefined ) {
 		// Most web browsers:
@@ -56,7 +56,7 @@ function addEvent( obj, evt, fn ) {
 	if ( obj.addEventListener ) {
 		obj.addEventListener( evt, fn, false );
 	} else if ( obj.attachEvent ) {
-		attachedEvents.push( [ obj, evt, fn ] );
+		obj.attachedEvents.push( [ obj, evt, fn ] );
 		obj.attachEvent( 'on' + evt, fn );
 	}
 }
@@ -81,12 +81,12 @@ function addEvent( obj, evt, fn ) {
  *
  */
 
-window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no-unused-vars
+window.WMTypeAhead = function ( appendTo, searchInput ) {
 
-	var typeAheadID = 'typeahead-suggestions',
-		typeAheadEl = document.getElementById(typeAheadID), // Type-ahead DOM element.
-		appendEl = document.getElementById(appendTo),
-		searchEl = document.getElementById(searchInput),
+	let typeAheadID = 'typeahead-suggestions',
+		typeAheadEl = document.getElementById( typeAheadID ), // Type-ahead DOM element.
+		appendEl = document.getElementById( appendTo ),
+		searchEl = document.getElementById( searchInput ),
 		thumbnailSize = getDevicePixelRatio() * 80,
 		maxSearchResults = mw.config.get( 'wgCitizenMaxSearchResults' ),
 		searchString,
@@ -95,10 +95,10 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 		ssActiveIndex;
 
 	// Only create typeAheadEl once on page.
-	if (!typeAheadEl) {
-		typeAheadEl = document.createElement('div');
+	if ( !typeAheadEl ) {
+		typeAheadEl = document.createElement( 'div' );
 		typeAheadEl.id = typeAheadID;
-		appendEl.appendChild(typeAheadEl);
+		appendEl.appendChild( typeAheadEl );
 	}
 
 	/**
@@ -107,16 +107,16 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 	 * @param {Object} obj - object whose properties will be serialized
 	 * @return {string}
 	 */
-	function serialize(obj) {
-		var serialized = [],
+	function serialize( obj ) {
+		let serialized = [],
 			prop;
 
-		for (prop in obj) {
-			if (obj.hasOwnProperty(prop)) { // eslint-disable-line no-prototype-builtins
-				serialized.push(prop + '=' + encodeURIComponent(obj[prop]));
+		for ( prop in obj ) {
+			if ( obj.hasOwnProperty( prop ) ) { // eslint-disable-line no-prototype-builtins
+				serialized.push( prop + '=' + encodeURIComponent( obj[ prop ] ) );
 			}
 		}
-		return serialized.join('&');
+		return serialized.join( '&' );
 	}
 
 	/**
@@ -127,26 +127,26 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 	window.callbackStack = {
 		queue: {},
 		index: -1,
-		incrementIndex: function() {
+		incrementIndex: function () {
 			this.index += 1;
 			return this.index;
 		},
-		addCallback: function(func) {
-			var index = this.incrementIndex();
-			this.queue[index] = func(index);
+		addCallback: function ( func ) {
+			const index = this.incrementIndex();
+			this.queue[ index ] = func( index );
 			return index;
 		},
-		deleteSelfFromQueue: function(i) {
-			delete this.queue[i];
+		deleteSelfFromQueue: function ( i ) {
+			delete this.queue[ i ];
 		},
-		deletePrevCallbacks: function(j) {
-			var callback;
+		deletePrevCallbacks: function ( j ) {
+			let callback;
 
-			this.deleteSelfFromQueue(j);
+			this.deleteSelfFromQueue( j );
 
-			for (callback in this.queue) {
-				if (callback < j) {
-					this.queue[callback] = this.deleteSelfFromQueue.bind(
+			for ( callback in this.queue ) {
+				if ( callback < j ) {
+					this.queue[ callback ] = this.deleteSelfFromQueue.bind(
 						window.callbackStack, callback
 					);
 				}
@@ -162,27 +162,27 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 	ssActiveIndex = {
 		index: -1,
 		max: maxSearchResults,
-		setMax: function(x) {
+		setMax: function ( x ) {
 			this.max = x;
 		},
-		increment: function(i) {
+		increment: function ( i ) {
 			this.index += i;
-			if (this.index < 0) {
-				this.setIndex(this.max - 1);
+			if ( this.index < 0 ) {
+				this.setIndex( this.max - 1 );
 			} // Index reaches top
-			if (this.index === this.max) {
-				this.setIndex(0);
+			if ( this.index === this.max ) {
+				this.setIndex( 0 );
 			} // Index reaches bottom
 			return this.index;
 		},
-		setIndex: function(i) {
-			if (i <= this.max - 1) {
+		setIndex: function ( i ) {
+			if ( i <= this.max - 1 ) {
 				this.index = i;
 			}
 			return this.index;
 		},
-		clear: function() {
-			this.setIndex(-1);
+		clear: function () {
+			this.setIndex( -1 );
 		}
 	};
 
@@ -197,14 +197,14 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 	 *
 	 */
 	function clearTypeAhead() {
-		setTimeout(function() {
-			var searchScript = document.getElementById('api_opensearch');
+		setTimeout( function () {
+			const searchScript = document.getElementById( 'api_opensearch' );
 			typeAheadEl.innerHTML = '';
-			if (searchScript) {
+			if ( searchScript ) {
 				searchScript.src = false;
 			}
 			ssActiveIndex.clear();
-		}, 300);
+		}, 300 );
 	}
 
 	/**
@@ -218,9 +218,9 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 	 *
 	 * @param {Event} e
 	 */
-	function forceLinkFollow(e) {
-		var el = e.relatedTarget;
-		if (el && /suggestion-link/.test(el.className)) {
+	function forceLinkFollow( e ) {
+		const el = e.relatedTarget;
+		if ( el && /suggestion-link/.test( el.className ) ) {
 			window.location = el.href;
 		}
 	}
@@ -233,34 +233,33 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 	 * @param {string} lang - ISO code of language to search in.
 	 */
 
-	function loadQueryScript(string) {
-		var script = document.getElementById('api_opensearch'),
-			docHead = document.getElementsByTagName('head')[0],
+	function loadQueryScript( string ) {
+		let script = document.getElementById( 'api_opensearch' ),
+			docHead = document.getElementsByTagName( 'head' )[ 0 ],
 			hostname,
 			callbackIndex,
 			searchQuery;
 
 		// Variables declared in parent function.
-		searchString = encodeURIComponent(string);
-		if (searchString.length === 0) {
+		searchString = encodeURIComponent( string );
+		if ( searchString.length === 0 ) {
 			clearTypeAhead();
 			return;
 		}
 
 		// Change sitename here
 		// TODO: Make it configurable from the skin
-		hostname = mw.config.get('wgServer') + mw.config.get('wgScriptPath') + '/api.php?';
+		hostname = mw.config.get( 'wgServer' ) + mw.config.get( 'wgScriptPath' ) + '/api.php?';
 
 		// If script already exists, remove it.
-		if (script) {
-			docHead.removeChild(script);
+		if ( script ) {
+			docHead.removeChild( script );
 		}
 
-		script = document.createElement('script');
+		script = document.createElement( 'script' );
 		script.id = 'api_opensearch';
 
-
-		callbackIndex = window.callbackStack.addCallback(window.portalOpensearchCallback);
+		callbackIndex = window.callbackStack.addCallback( window.portalOpensearchCallback );
 
 		// Removed description prop
 		// TODO: Use text extract or PCS for description
@@ -284,8 +283,8 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 			callback: 'callbackStack.queue[' + callbackIndex + ']'
 		};
 
-		script.src = hostname + serialize(searchQuery);
-		docHead.appendChild(script);
+		script.src = hostname + serialize( searchQuery );
+		docHead.appendChild( script );
 	}
 
 	// END loadQueryScript
@@ -298,24 +297,24 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 	 * @param {string} searchString - The string to highlight.
 	 * @return {string} The title with highlighted part in an <em> tag.
 	 */
-	function highlightTitle(title, searchString) {
+	function highlightTitle( title, searchString ) {
 
-		var sanitizedSearchString = mw.html.escape(mw.RegExp.escape(searchString)),
-			searchRegex = new RegExp(sanitizedSearchString, 'i'),
-			startHighlightIndex = title.search(searchRegex),
-			formattedTitle = mw.html.escape(title),
+		let sanitizedSearchString = mw.html.escape( mw.RegExp.escape( searchString ) ),
+			searchRegex = new RegExp( sanitizedSearchString, 'i' ),
+			startHighlightIndex = title.search( searchRegex ),
+			formattedTitle = mw.html.escape( title ),
 			endHighlightIndex,
 			strong,
 			beforeHighlight,
 			aferHighlight;
 
-		if (startHighlightIndex >= 0) {
+		if ( startHighlightIndex >= 0 ) {
 
 			endHighlightIndex = startHighlightIndex + sanitizedSearchString.length;
-			strong = title.substring(startHighlightIndex, endHighlightIndex);
-			beforeHighlight = title.substring(0, startHighlightIndex);
-			aferHighlight = title.substring(endHighlightIndex, title.length);
-			formattedTitle = beforeHighlight + mw.html.element('em', { 'class': 'suggestion-highlight' }, strong) + aferHighlight;
+			strong = title.substring( startHighlightIndex, endHighlightIndex );
+			beforeHighlight = title.substring( 0, startHighlightIndex );
+			aferHighlight = title.substring( endHighlightIndex, title.length );
+			formattedTitle = beforeHighlight + mw.html.element( 'em', { class: 'suggestion-highlight' }, strong ) + aferHighlight;
 		}
 
 		return formattedTitle;
@@ -327,8 +326,8 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 	 * @param {Array} suggestions - An array of search suggestion results.
 	 * @return {string} A string representing the search suggestions DOM
 	 */
-	function generateTemplateString(suggestions) {
-		var string = '<div class="suggestions-dropdown">',
+	function generateTemplateString( suggestions ) {
+		let string = '<div class="suggestions-dropdown">',
 			suggestionLink,
 			suggestionThumbnail,
 			suggestionText,
@@ -340,32 +339,32 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 			pageDescription = '',
 			i;
 
-		for (i = 0; i < suggestions.length; i++) {
+		for ( i = 0; i < suggestions.length; i++ ) {
 
-			if (!suggestions[i]) {
+			if ( !suggestions[ i ] ) {
 				continue;
 			}
 
-			page = suggestions[i];
+			page = suggestions[ i ];
 			// Description > TextExtracts
 			pageDescription = page.description || page.extract || '';
 
 			// Ensure that the value from the previous iteration isn't used
 			sanitizedThumbURL = false;
 
-			if (page.thumbnail && page.thumbnail.source) {
-				sanitizedThumbURL = page.thumbnail.source.replace(/"/g, '%22');
-				sanitizedThumbURL = sanitizedThumbURL.replace(/'/g, '%27');
+			if ( page.thumbnail && page.thumbnail.source ) {
+				sanitizedThumbURL = page.thumbnail.source.replace( /"/g, '%22' );
+				sanitizedThumbURL = sanitizedThumbURL.replace( /'/g, '%27' );
 			}
 
 			// Ensure that the value from the previous iteration isn't used
 			descriptionText = '';
 
 			// Check if description exists
-			if (pageDescription) {
+			if ( pageDescription ) {
 				// If the description is an array, use the first item
-				if (typeof pageDescription === 'object' && pageDescription[0]) {
-					descriptionText = pageDescription[0].toString();
+				if ( typeof pageDescription === 'object' && pageDescription[ 0 ] ) {
+					descriptionText = pageDescription[ 0 ].toString();
 				} else {
 					// Otherwise, use the description as is.
 					descriptionText = pageDescription.toString();
@@ -373,26 +372,26 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 			}
 
 			// Filter out no text from TextExtracts
-			if (descriptionText == '...') {
+			if ( descriptionText === '...' ) {
 				descriptionText = '';
 			}
 
-			suggestionDescription = mw.html.element('p', { 'class': 'suggestion-description' }, descriptionText);
+			suggestionDescription = mw.html.element( 'p', { class: 'suggestion-description' }, descriptionText );
 
-			suggestionTitle = mw.html.element('h3', { 'class': 'suggestion-title' }, new mw.html.Raw(highlightTitle(page.title, searchString)));
+			suggestionTitle = mw.html.element( 'h3', { class: 'suggestion-title' }, new mw.html.Raw( highlightTitle( page.title, searchString ) ) );
 
-			suggestionText = mw.html.element('div', { 'class': 'suggestion-text' }, new mw.html.Raw(suggestionTitle + suggestionDescription));
+			suggestionText = mw.html.element( 'div', { class: 'suggestion-text' }, new mw.html.Raw( suggestionTitle + suggestionDescription ) );
 
-			suggestionThumbnail = mw.html.element('div', {
-				'class': 'suggestion-thumbnail',
-				style: (sanitizedThumbURL) ? 'background-image:url(' + sanitizedThumbURL + ')' : false
-			}, '');
+			suggestionThumbnail = mw.html.element( 'div', {
+				class: 'suggestion-thumbnail',
+				style: ( sanitizedThumbURL ) ? 'background-image:url(' + sanitizedThumbURL + ')' : false
+			}, '' );
 
 			// TODO: Make it configurable from the skin
-			suggestionLink = mw.html.element('a', {
-				'class': 'suggestion-link',
-				href: mw.config.get('wgServer') + '/' + encodeURIComponent(page.title.replace(/ /gi, '_'))
-			}, new mw.html.Raw(suggestionText + suggestionThumbnail));
+			suggestionLink = mw.html.element( 'a', {
+				class: 'suggestion-link',
+				href: mw.config.get( 'wgServer' ) + '/' + encodeURIComponent( page.title.replace( / /gi, '_' ) )
+			}, new mw.html.Raw( suggestionText + suggestionThumbnail ) );
 
 			string += suggestionLink;
 
@@ -412,26 +411,25 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 	 * @param {NodeList} collection Sibling items.
 	 */
 
-	function toggleActiveClass(item, collection) {
-
-		var activeClass = ' active', // Prefixed with space.
+	function toggleActiveClass( item, collection ) {
+		let activeClass = ' active', // Prefixed with space.
 			colItem,
 			i;
 
-		for (i = 0; i < collection.length; i++) {
+		for ( i = 0; i < collection.length; i++ ) {
 
-			colItem = collection[i];
+			colItem = collection[ i ];
 			// Remove the class name from everything except item.
-			if (colItem !== item) {
-				colItem.className = colItem.className.replace(activeClass, '');
+			if ( colItem !== item ) {
+				colItem.className = colItem.className.replace( activeClass, '' );
 			} else {
 				// If item has class name, remove it
-				if (/ active/.test(item.className)) {
-					item.className = item.className.replace(activeClass, '');
+				if ( / active/.test( item.className ) ) {
+					item.className = item.className.replace( activeClass, '' );
 				} else {
 					// It item doesn't have class name, add it.
 					item.className += activeClass;
-					ssActiveIndex.setIndex(i);
+					ssActiveIndex.setIndex( i );
 				}
 			}
 		}
@@ -449,9 +447,8 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 	 * @param {number} i
 	 * @return {Function}
 	 */
-	window.portalOpensearchCallback = function(i) {
-
-		var callbackIndex = i,
+	window.portalOpensearchCallback = function ( i ) {
+		let callbackIndex = i,
 			orderedResults = [],
 			suggestions,
 			item,
@@ -459,37 +456,38 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 			templateDOMString,
 			listEl;
 
-		return function(xhrResults) {
+		return function ( xhrResults ) {
+			window.callbackStack.deletePrevCallbacks( callbackIndex );
 
-			window.callbackStack.deletePrevCallbacks(callbackIndex);
-
-			if (document.activeElement !== searchEl) {
+			if ( document.activeElement !== searchEl ) {
 				return;
 			}
 
-			suggestions = (xhrResults.query && xhrResults.query.pages) ?
+			suggestions = ( xhrResults.query && xhrResults.query.pages ) ?
 				xhrResults.query.pages : [];
 
-			for (item in suggestions) {
-				result = suggestions[item];
-				orderedResults[result.index - 1] = result;
+			for ( item in suggestions ) {
+				if ( Object.prototype.hasOwnProperty.call( suggestions, item ) ) {
+					result = suggestions[ item ];
+					orderedResults[ result.index - 1 ] = result;
+				}
 			}
 
-			templateDOMString = generateTemplateString(orderedResults);
+			templateDOMString = generateTemplateString( orderedResults );
 
-			ssActiveIndex.setMax(orderedResults.length);
+			ssActiveIndex.setMax( orderedResults.length );
 			ssActiveIndex.clear();
 
 			typeAheadEl.innerHTML = templateDOMString;
 
-			typeAheadItems = typeAheadEl.childNodes[0].childNodes;
+			typeAheadItems = typeAheadEl.childNodes[ 0 ].childNodes;
 
 			// Attaching hover events
-			for (i = 0; i < typeAheadItems.length; i++) {
-				listEl = typeAheadItems[i];
+			for ( i = 0; i < typeAheadItems.length; i++ ) {
+				listEl = typeAheadItems[ i ];
 				// Requires the addEvent global polyfill
-				addEvent(listEl, 'mouseenter', toggleActiveClass.bind(this, listEl, typeAheadItems));
-				addEvent(listEl, 'mouseleave', toggleActiveClass.bind(this, listEl, typeAheadItems));
+				addEvent( listEl, 'mouseenter', toggleActiveClass.bind( this, listEl, typeAheadItems ) );
+				addEvent( listEl, 'mouseleave', toggleActiveClass.bind( this, listEl, typeAheadItems ) );
 			}
 		};
 	};
@@ -500,49 +498,49 @@ window.WMTypeAhead = function(appendTo, searchInput) { // eslint-disable-line no
 	 *
 	 * @param {event} event
 	 */
-	function keyboardEvents(event) {
+	function keyboardEvents( event ) {
 
-		var e = event || window.event,
+		let e = event || window.event,
 			keycode = e.which || e.keyCode,
 			suggestionItems,
 			searchSuggestionIndex;
 
-		if (!typeAheadEl.firstChild) {
+		if ( !typeAheadEl.firstChild ) {
 			return;
 		}
 
-		if (keycode === 40 || keycode === 38) {
+		if ( keycode === 40 || keycode === 38 ) {
 			suggestionItems = typeAheadEl.firstChild.childNodes;
 
-			if (keycode === 40) {
-				searchSuggestionIndex = ssActiveIndex.increment(1);
+			if ( keycode === 40 ) {
+				searchSuggestionIndex = ssActiveIndex.increment( 1 );
 			} else {
-				searchSuggestionIndex = ssActiveIndex.increment(-1);
+				searchSuggestionIndex = ssActiveIndex.increment( -1 );
 			}
 
-			activeItem = (suggestionItems) ? suggestionItems[searchSuggestionIndex] : false;
+			activeItem = ( suggestionItems ) ? suggestionItems[ searchSuggestionIndex ] : false;
 
-			toggleActiveClass(activeItem, suggestionItems);
+			toggleActiveClass( activeItem, suggestionItems );
 
 		}
-		if (keycode === 13 && activeItem) {
+		if ( keycode === 13 && activeItem ) {
 
-			if (e.preventDefault) {
+			if ( e.preventDefault ) {
 				e.preventDefault();
 			} else {
-				(e.returnValue = false);
+				( e.returnValue = false );
 			}
 
-			activeItem.children[0].click();
+			activeItem.children[ 0 ].click();
 		}
 	}
 
-	addEvent(searchEl, 'keydown', keyboardEvents);
+	addEvent( searchEl, 'keydown', keyboardEvents );
 
-	addEvent(searchEl, 'blur', function(e) {
+	addEvent( searchEl, 'blur', function ( e ) {
 		clearTypeAhead();
-		forceLinkFollow(e);
-	});
+		forceLinkFollow( e );
+	} );
 
 	return {
 		typeAheadEl: typeAheadEl,
