@@ -1,5 +1,6 @@
 {
 	"extends": "stylelint-config-wikimedia",
+	"ignoreFiles": "out/**",
 	"rules": {
 		"linebreaks": null,
 		"unit-blacklist": null,
