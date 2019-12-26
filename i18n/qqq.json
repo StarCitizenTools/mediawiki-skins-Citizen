@@ -3,5 +3,5 @@
 		"authors": [ "alistair3149" ]
 	},
 	"skinname-citizen": "{{name}}",
-	"citizen-desc": "{{desc|what=skin|name=Citizen|url=https://starcitizen.tools}}"
+	"citizen-desc": "{{desc|what=skin|name=Citizen|url=https://github.com/StarCitizenTools/mediawiki-skins-Citizen}}"
 }
