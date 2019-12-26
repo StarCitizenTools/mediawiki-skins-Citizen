@@ -1,0 +1,16 @@
+name: JavaScript
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+      
+    - name: Install dependencies
+      run: |
+        npm install --save-dev grunt-eslint
+        npm install --save-dev eslint-config-wikimedia
