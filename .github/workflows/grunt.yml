@@ -20,8 +20,8 @@ jobs:
       run: |
         npm install --save-dev
 
-    #- name: Generate documentation
-    #  run: npm run doc
+    - name: Generate documentation
+      run: npm run doc
       
-    - name: Grunt test
-      run: grunt test
+    - name: Run Grunt test
+      run: npm run test
