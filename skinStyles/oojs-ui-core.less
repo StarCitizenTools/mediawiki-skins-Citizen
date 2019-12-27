@@ -64,6 +64,13 @@
 }
 
 @media ( prefers-color-scheme: dark ) {
+	.oo-ui-pendingElement-pending {
+		background-color: @dark-bg-20;
+		background-image: -webkit-linear-gradient( 135deg, @dark-bg-0 25%, transparent 25%, transparent 50%, @dark-bg-0 50%, @dark-bg-0 75%, transparent 75%, transparent );
+		background-image: -moz-linear-gradient( 135deg, @dark-bg-0 25%, transparent 25%, transparent 50%, @dark-bg-0 50%, @dark-bg-0 75%, transparent 75%, transparent );
+		background-image: linear-gradient( 135deg, @dark-bg-0 25%, transparent 25%, transparent 50%, @dark-bg-0 50%, @dark-bg-0 75%, transparent 75%, transparent );
+	}
+
 	.oo-ui-buttonElement-frameless {
 		&.oo-ui-widget-enabled {
 			&.oo-ui-buttonElement-pressed {
@@ -173,41 +180,6 @@
 		border-color: @dark-bg-50;
 	}
 
-	/*  .oo-ui-popupWidget-anchored-top {
-	.oo-ui-popupWidget-anchor{
-	  &:before {
-		border-bottom-color: @dark-bg-50;
-	  }
-
-	  &:after {
-		border-bottom-color: @dark-bg-0;
-	  }
-	}
-  }
-
-  .oo-ui-popupWidget-anchored-bottom {
-	.oo-ui-popupWidget-anchor{
-	  &:before {
-		border-bottom-color: @dark-bg-50;
-	  }
-
-	  &:after {
-		border-bottom-color: @dark-bg-0;
-	  }
-	}
-  }
-
-  .oo-ui-popupWidget-anchored-start {
-	.oo-ui-popupWidget-anchor{
-	  &:before {
-		border-bottom-color: @dark-bg-50;
-	  }
-
-	  &:after {
-		border-bottom-color: @dark-bg-0;
-	  }
-	}
-  } */
 	.oo-ui-popupWidget-anchored-top,
 	.oo-ui-popupWidget-anchored-bottom,
 	.oo-ui-popupWidget-anchored-start,
