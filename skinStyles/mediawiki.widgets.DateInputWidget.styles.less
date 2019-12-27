@@ -1,0 +1,24 @@
+/*
+ * Citizen - Widget Datetime
+ * https://starcitizen.tools
+*/
+
+@import '../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	.mw-widget-dateInputWidget {
+		&-handle {
+			background-color: @dark-bg-0;
+			color: @dark-text-100;
+			border-color: @dark-bg-50;
+		}
+
+		&.oo-ui-widget-enabled {
+			.mw-widget-dateInputWidget-handle {
+				&:hover {
+					border-color: @dark-bg-60;
+				}
+			}
+		}
+	}
+}
