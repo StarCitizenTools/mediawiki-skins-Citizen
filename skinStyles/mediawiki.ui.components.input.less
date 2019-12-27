@@ -1,0 +1,24 @@
+/*
+ * Citizen - Inputs
+ * https://starcitizen.tools
+*/
+
+@import '../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	.mw-ui-input {
+		background-color: @dark-bg-0;
+		color: @dark-text-100;
+		border: 1px solid @dark-bg-50;
+		box-shadow: inset 0 0 0 0.1em @dark-bg-0;
+
+		&:hover {
+			border-color: @dark-bg-60;
+		}
+
+		&:disabled {
+			border-color: @dark-bg-20;
+			color: @dark-text-70;
+		}
+	}
+}
