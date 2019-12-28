@@ -279,14 +279,13 @@
 #mw-sidebar-sitename {
 	position: fixed;
 	visibility: visible;
-	top: 0;
+	top: @header-height;
 	left: @margin-side;
 	font-size: 11px;
 	letter-spacing: 4px;
 	transform: translateY( 100% ) translateX( -100% ) rotate( -90deg );
 	transform-origin: top right;
 	transition: @transition-transform, @transition-opacity;
-	padding-right: 90px;
 	-webkit-font-smoothing: subpixel-antialiased;
 }
 
