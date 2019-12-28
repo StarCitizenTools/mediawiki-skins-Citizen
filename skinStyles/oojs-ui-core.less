@@ -65,6 +65,7 @@
 
 @media ( prefers-color-scheme: dark ) {
 	.oo-ui-pendingElement-pending {
+    /* Find a better way to replace the progress bar */
 		background-color: @dark-bg-20 !important;
 		background-image: -webkit-linear-gradient( 135deg, @dark-bg-0 25%, transparent 25%, transparent 50%, @dark-bg-0 50%, @dark-bg-0 75%, transparent 75%, transparent ) !important;
 		background-image: -moz-linear-gradient( 135deg, @dark-bg-0 25%, transparent 25%, transparent 50%, @dark-bg-0 50%, @dark-bg-0 75%, transparent 75%, transparent ) !important;
@@ -108,12 +109,12 @@
 	.oo-ui-buttonElement-framed {
 		&.oo-ui-widget-enabled {
 			> .oo-ui-buttonElement-button {
-				background-color: @dark-bg-10;
+				background-color: @dark-bg-50;
 				color: @dark-text-90;
 				border-color: @dark-bg-50;
 
 				&:hover {
-					background-color: @dark-bg-0;
+					background-color: @dark-bg-40;
 					color: @dark-text-80;
 					border-color: @dark-bg-50;
 				}
@@ -129,7 +130,7 @@
 			&.oo-ui-buttonElement-pressed > .oo-ui-buttonElement-button {
 				background-color: @dark-bg-30;
 				color: @dark-text-90;
-				border-color: @dark-bg-60;
+				border-color: @dark-bg-60 !important;
 			}
 		}
 
@@ -176,7 +177,7 @@
 	}
 
 	.oo-ui-popupWidget-popup {
-		background-color: @dark-bg-0;
+		background-color: @dark-bg-50;
 		border-color: @dark-bg-50;
 	}
 
@@ -190,7 +191,7 @@
 			}
 
 			&:after {
-				border-bottom-color: @dark-bg-0;
+				border-bottom-color: @dark-bg-50;
 			}
 		}
 	}
