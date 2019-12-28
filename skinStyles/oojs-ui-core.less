@@ -64,6 +64,11 @@
 }
 
 @media ( prefers-color-scheme: dark ) {
+	.oo-ui-iconElement-icon,
+	.oo-ui-indicator-down {
+		filter: invert( 1 ) hue-rotate( 180deg );
+	}
+
 	.oo-ui-pendingElement-pending {
 		/* Find a better way to replace the progress bar */
 		background-color: @dark-bg-20 !important;
