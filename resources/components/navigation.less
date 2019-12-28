@@ -292,7 +292,7 @@
 // Nav up stuff
 .nav-up {
 	~ #mw-sidebar-sitename {
-		transform: translateY( -54px ) translateX( -100% ) rotate( -90deg );
+		transform: translateY( @header-height - @margin-side ) translateX( -100% ) rotate( -90deg );
 	}
 
 	#mw-header-menu-drawer-container {
@@ -355,7 +355,7 @@
 	}
 
 	.nav-up ~ #mw-sidebar-sitename {
-		transform: translateY( -54px ) rotate( 90deg );
+		transform: translateY( @header-height - @margin-side ) rotate( 90deg );
 	}
 
 	#mw-header-menu-drawer {
