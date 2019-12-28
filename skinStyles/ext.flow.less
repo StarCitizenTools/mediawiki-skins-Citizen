@@ -1,0 +1,260 @@
+/*
+ * Citizen - Flow extension
+ * https://starcitizen.tools
+*/
+
+@import '../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	/**
+	board/topic/meta.less
+	 */
+	.flow-topic-meta {
+		color: @dark-text-80;
+
+		a.expand-collapse-posts-link:not( :hover ) {
+			color: @dark-text-80;
+		}
+	}
+
+	/**
+	board/topic/post.less
+	 */
+	.flow-post {
+		color: @dark-text-90;
+
+		.flow-author {
+			color: @dark-text-90;
+		}
+
+		.mw-content-ltr & {
+			.flow-replies {
+				border-left: 1px solid @dark-bg-30;
+			}
+		}
+
+		.mw-content-rtl & {
+			.flow-replies {
+				border-right: 1px solid @dark-bg-30;
+			}
+		}
+	}
+
+	.flow-post-meta {
+		color: @dark-text-70;
+	}
+
+	.flow-post-meta-actions {
+		a {
+			&:after {
+				color: @dark-text-70;
+			}
+		}
+	}
+
+	/**
+	board/topic/summary.less
+	 */
+	.flow-topic-summary-container {
+		.flow-topic-summary,
+		.flow-ui-editTopicSummaryWidget {
+			border-top: 1px solid @dark-bg-30;
+
+			.flow-topic-summary-author {
+				color: @dark-text-80;
+			}
+		}
+	}
+
+	/**
+	board/topic/titlebar.less
+	 */
+	.flow-topic-titlebar {
+		background-color: @dark-bg-20;
+	}
+
+	.flow-moderated-topic-title {
+		color: @dark-text-80;
+	}
+
+	/**
+	board/menu.less
+	 */
+	div > .flow-menu {
+		&.flow-menu-hoverable:hover,
+		&.focus {
+			.flow-menu-js-drop a {
+				border-color: transparent;
+				background: transparent;
+				background: rgba( 0, 0, 0, 0.05 );
+
+				.caret {
+					border-top-color: @dark-bg-0;
+				}
+			}
+		}
+
+		ul {
+			background: @dark-bg-0;
+			border: 1px solid @dark-bg-50;
+			box-shadow: 0 2px 2px 0 rgba( 0, 0, 0, 0.25 );
+
+			> section:not( :first-of-type ) > li:first-of-type,
+			li.flow-menu-section:not( :first-of-type ) {
+				border-top: 1px solid @dark-bg-30;
+			}
+		}
+
+		.flow-menu-js-drop {
+			a {
+				color: @dark-text-80;
+			}
+		}
+	}
+
+	/**
+	board/moderated.less
+	 */
+	.flow-topic-moderatestate-lock {
+		.flow-topic-titlebar {
+			background-color: @dark-bg-10;
+		}
+	}
+
+	.flow-post-moderated .flow-author a,
+	.flow-moderated-post-content {
+		color: @dark-text-80;
+	}
+
+	/**
+	board/navigation.less
+	 */
+	.flow-board-navigation {
+		.flow-board-navigation-inner {
+			border-bottom: 1px solid @dark-bg-30;
+		}
+
+		a {
+			&:link,
+			&:visited {
+				color: @dark-text-80;
+			}
+
+			&:hover,
+			&:focus,
+			&.flow-board-navigator-link-highlight {
+				color: @dark-text-100;
+			}
+		}
+
+		&.flow-board-navigation-affixed {
+			background: @dark-bg-0;
+		}
+	}
+
+	/**
+	board/replycount.less
+	 */
+	.flow-reply-count {
+		/* color: @dark-bg-30; */
+
+		.flow-reply-count-number {
+			color: @dark-text-80;
+		}
+	}
+
+	/**
+	board/terms-of-use.less
+	 */
+	.flow-terms-of-use {
+		color: @dark-text-80;
+	}
+
+	/**
+	mediawiki.ui/forms.less
+	 */
+	.flow-ui-input-replacement-anchor.mw-ui-input {
+		color: @dark-text-70;
+	}
+
+	/**
+	mediawiki.ui/modal.less
+	 */
+	.flow-ui-modal {
+		background: fade( @dark-bg-0, 75% );
+	}
+
+	.flow-ui-modal-layout {
+		background: @dark-bg-0;
+		box-shadow: 0 4px 0 0 @dark-bg-30, 0 0 0 1px @dark-bg-30;
+		color: @dark-text-90;
+	}
+
+	.flow-ui-modal-heading {
+		color: @dark-text-90;
+		border-bottom: 1px solid @dark-bg-30;
+	}
+
+	.flow-ui-modal-heading-prev {
+		border-right: 1px solid @dark-bg-30;
+		color: @dark-text-80;
+	}
+
+	.flow-ui-modal-heading-next {
+		border-left: 1px solid @dark-bg-30;
+		color: @dark-text-80;
+	}
+
+	/**
+	mediawiki.ui/tooltips.less
+	 */
+	.flow-ui-tooltip {
+		background-color: @dark-bg-0;
+		color: @dark-text-90;
+
+		.flow-ui-tooltip-triangle {
+			&:after {
+				background: @dark-bg-0;
+			}
+		}
+
+		&.flow-ui-tooltip-up {
+			.flow-ui-tooltip-triangle {
+				&:after {
+
+					/* @noflip */
+					.box-shadow( ~'0 0 1px 0 @{dark-bg-30}' );
+				}
+			}
+		}
+
+		&.flow-ui-tooltip-down {
+			.flow-ui-tooltip-triangle {
+				&:after {
+					/* @noflip */
+					.box-shadow( ~'0 -1.5px 0 1.5px @{dark-bg-30}, 0 0 1px 0 @{dark-bg-30}' );
+				}
+			}
+		}
+
+		// triangle at left
+		&.flow-ui-tooltip-left {
+			.flow-ui-tooltip-triangle {
+				&:after {
+					/* @noflip */
+					.box-shadow( ~'1.5px 0 0 1.5px @{dark-bg-30}, 0 0 1px 0 @{dark-bg-30}' );
+				}
+			}
+		}
+
+		// triangle at right
+		&.flow-ui-tooltip-right {
+			.flow-ui-tooltip-triangle {
+				&:after {
+					/* @noflip */
+					.box-shadow( ~'0 1.5px 0 1.5px @{dark-bg-30}, 0 0 1px 0 @{dark-bg-30}' );
+				}
+			}
+		}
+	}
+}

@@ -358,6 +358,7 @@
 			"+mediawiki.diff.styles": "skinStyles/mediawiki.diff.styles.less",
 			"+mediawiki.ui.input": "skinStyles/mediawiki.ui.components.input.less",
 			"+mediawiki.ui.checkbox": "skinStyles/mediawiki.ui.components.checkbox.less",
+			"+mediawiki.ui.button": "skinStyles/mediawiki.ui.components.button.less",
 			"+mediawiki.legacy.shared": "skinStyles/mediawiki.legacy.shared.less",
 			"+oojs-ui-core.styles": "skinStyles/oojs-ui-core.less",
 			"+oojs-ui-toolbars": "skinStyles/oojs-ui-toolbars.less",
@@ -381,7 +382,10 @@
 			"+ext.translate.tag.languages": "skinStyles/ext.translate.tag.languages.less",
 			"+ext.uls.common": "skinStyles/ext.uls.common.less",
 			"+ext.uls.pt": "skinStyles/ext.uls.pt.less",
-			"+ext.visualEditor.core": "skinStyles/ext.visualEditor.core.less"
+			"+ext.visualEditor.core": "skinStyles/ext.visualEditor.core.less",
+			"+ext.flow": "skinStyles/ext.flow.less",
+			"+ext.flow.ui": "skinStyles/ext.flow.ui.less",
+			"+ext.flow.styles.base": "skinStyles/ext.flow.styles.base.less"
 		}
 	},
 	"AutoloadClasses": {
