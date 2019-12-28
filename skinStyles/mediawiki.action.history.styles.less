@@ -1,0 +1,18 @@
+/*
+ * Citizen - Page History Styles
+ * https://starcitizen.tools
+*/
+
+@import '../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	#pagehistory li {
+		border: 1px solid @dark-bg-0;
+	}
+
+	#pagehistory li.selected {
+		background-color: @dark-bg-10;
+		color: @dark-text-90;
+		border: 1px dashed @dark-bg-50;
+	}
+}

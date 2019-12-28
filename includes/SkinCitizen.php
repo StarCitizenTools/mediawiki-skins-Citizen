@@ -115,7 +115,7 @@ class SkinCitizen extends SkinTemplate {
 			$cspMode = 'Content-Security-Policy';
 
 			// Check if report mode is enabled
-			if ( $this->getConfigValue( 'CitizenEnableCSPReportMode' ) !== null ) {
+			if ( $this->getConfigValue( 'CitizenEnableCSPReportMode' ) === true ) {
 				$cspMode = 'Content-Security-Policy-Report-Only';
 			}
 

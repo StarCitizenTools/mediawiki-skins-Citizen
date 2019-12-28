@@ -1,0 +1,193 @@
+/*
+ * Citizen - Recent Changes Styles
+ * TODO Split into separate files
+ * https://starcitizen.tools
+*/
+
+@import '../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	/**
+  mw.rcfilters.ui.ChangesListWrapperWidget.less
+   */
+	@keyframes fadeBlue {
+		60% {
+			border-top-color: @accent-50;
+		}
+
+		100% {
+			border-top-color: @dark-bg-30 !important;
+		}
+	}
+
+	.mw-rcfilters-ui-changesListWrapperWidget {
+		&-previousChangesIndicator {
+			border-top: 2px solid @dark-bg-30 !important;
+		}
+
+		&-enhanced-grey td:not( :nth-child( -n+2 ) ) {
+			/* background-color: @light-gray; */
+		}
+
+		.mw-changeslist-legend {
+			background-color: @dark-bg-0 !important;
+			border: 1px solid @dark-bg-30 !important;
+		}
+	}
+
+	/**
+	mw.rcfilters.ui.FilterTagMultiselectWidget.less
+	 */
+	.mw-rcfilters-ui-filterTagMultiselectWidget {
+		&.oo-ui-widget-enabled {
+			.oo-ui-tagMultiselectWidget-handle {
+				border: 1px solid @dark-bg-50 !important;
+				background-color: @dark-bg-10 !important;
+			}
+		}
+
+		.mw-rcfilters-collapsed & {
+			border-bottom: 1px solid @dark-bg-50 !important;
+
+			.mw-rcfilters-ui-filterTagMultiselectWidget-wrapper-hideshow {
+				border-left: 1px solid @dark-bg-50 !important;
+			}
+		}
+
+		.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled &-emphasize.oo-ui-tagMultiselectWidget-handle {
+			background-color: @dark-bg-20 !important;
+		}
+
+		&-wrapper {
+			&-content {
+				&-title {
+					color: @dark-text-80 !important;
+				}
+
+				&-savedQueryTitle {
+					color: @dark-text-90 !important;
+				}
+			}
+		}
+
+		&-views {
+			&-select {
+				&-widget.oo-ui-widget {
+					border: 1px solid @dark-bg-50 !important;
+				}
+			}
+		}
+
+		&-emptyFilters {
+			color: @dark-text-70 !important;
+		}
+	}
+
+	/**
+	mw.rcfilters.ui.FilterMenuOptionWidget.less
+	 */
+	.mw-rcfilters-ui-filterMenuOptionWidget {
+		&:hover,
+		&:active {
+			background-color: @dark-bg-0 !important;
+		}
+
+		&:not( :last-child ):not( .mw-rcfilters-ui-itemMenuOptionWidget-identifier-talk ) {
+			border-bottom-color: @dark-bg-20 !important;
+		}
+
+		&.oo-ui-flaggedElement-muted {
+			&:not( .oo-ui-optionWidget-selected ) {
+				background-color: @dark-bg-10 !important;
+			}
+
+			.mw-rcfilters-ui-itemMenuOptionWidget-label-title,
+			.mw-rcfilters-ui-itemMenuOptionWidget-label-desc {
+				color: @dark-text-80 !important;
+			}
+
+			&.oo-ui-optionWidget-highlighted {
+				background-color: @dark-bg-20 !important;
+				color: @dark-text-100 !important;
+			}
+		}
+	}
+
+	/**
+	mw.rcfilters.ui.FilterMenuHeaderWidget.less
+	 */
+	.mw-rcfilters-ui-filterMenuHeaderWidget {
+		&-title {
+			color: @dark-text-80 !important;
+		}
+
+		&-header {
+			border-bottom: 1px solid @dark-bg-30 !important;
+			background-color: @dark-bg-10 !important;
+		}
+	}
+
+	/**
+	mw.rcfilters.ui.FilterMenuSectionOptionWidget.less
+	 */
+	.mw-rcfilters-ui-filterMenuSectionOptionWidget {
+		background-color: @dark-bg-20 !important;
+
+		&-header-title.oo-ui-labelElement-label {
+			color: @dark-text-80 !important;
+		}
+	}
+
+	/**
+	mw.rcfilters.ui.TagItemWidget.less
+	 */
+	.mw-rcfilters-ui-tagItemWidget {
+		&.oo-ui-flaggedElement-muted.oo-ui-tagItemWidget.oo-ui-widget-enabled {
+			background-color: @dark-bg-20 !important;
+			border-color: @dark-bg-30 !important;
+
+			.oo-ui-labelElement-label {
+				color: @dark-text-70 !important;
+			}
+		}
+
+		.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined &-selected.oo-ui-tagItemWidget.oo-ui-widget-enabled {
+			background-color: @accent-10 !important;
+		}
+
+		&-popup-content {
+			color: @dark-text-80 !important;
+		}
+	}
+
+	/**
+	mw.rcfilters.ui.ItemMenuOptionWidget.less
+	 */
+	.mw-rcfilters-ui-itemMenuOptionWidget {
+		&:not( :last-child ):not( .mw-rcfilters-ui-itemMenuOptionWidget-identifier-talk ) {
+			border-bottom: 1px solid @dark-bg-20 !important;
+		}
+
+		&-view-namespaces {
+			border-top: 4px solid @dark-bg-30 !important;
+		}
+
+		&:hover {
+			background-color: @dark-bg-10 !important;
+		}
+
+		&.oo-ui-optionWidget-selected {
+			background-color: @accent-10 !important;
+		}
+
+		&-label {
+			&-title {
+				color: @dark-text-90 !important;
+			}
+
+			&-desc {
+				color: @dark-text-80 !important;
+			}
+		}
+	}
+}

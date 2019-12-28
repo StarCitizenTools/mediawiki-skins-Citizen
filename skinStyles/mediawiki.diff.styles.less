@@ -1,0 +1,28 @@
+/*
+ * Citizen - Diff Styles
+ * https://starcitizen.tools
+*/
+
+@import '../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	.diff-context {
+		background: @dark-bg-10;
+		border-color: @dark-bg-20;
+		color: @dark-text-90;
+	}
+
+	/* TODO */
+	.diff-addedline .diffchange {
+		background: #d8ecff;
+	}
+
+	.diff-deletedline .diffchange {
+		background: #feeec8;
+	}
+
+	.mw-diff-movedpara-left:after,
+	.mw-diff-movedpara-right:after {
+		color: @dark-text-90;
+	}
+}

@@ -66,11 +66,23 @@
 	#p-namespaces ul li a {
 		background-color: @dark-bg-10;
 		border-color: @dark-bg-20;
+
+		&:hover {
+			background-color: @dark-bg-20;
+		}
 	}
 
-	#mw-header-menu-drawer-container a:hover {
-		background-color: @dark-bg-60;
-		color: @dark-text-90 !important;
+	#mw-header-menu-drawer-container a {
+		&:hover {
+			background-color: @dark-bg-60;
+			color: @dark-text-90 !important;
+		}
+
+		&:active,
+		&:focus {
+			color: @dark-text-100 !important;
+			background-color: @accent-10;
+		}
 	}
 
 	table.wikitable tr:hover {

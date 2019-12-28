@@ -99,7 +99,7 @@ class CitizenHooks {
 
 			// Set lazy class for the img
 			if ( isset( $attribs['class'] ) ) {
-				$attribs['class'] .= 'lazy';
+				$attribs['class'] .= ' lazy';
 			} else {
 				$attribs['class'] = 'lazy';
 			}
