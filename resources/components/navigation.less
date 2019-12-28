@@ -279,19 +279,20 @@
 #mw-sidebar-sitename {
 	position: fixed;
 	visibility: visible;
-	top: @sidebar-sitename-height + @header-height + @margin-side;
+	top: @header-height;
 	left: @margin-side;
 	font-size: 11px;
 	letter-spacing: 4px;
-	transform: translateY( 0 ) rotate( -90deg );
-	transform-origin: top left;
+	transform: translateY( 100% ) translateX( -100% ) rotate( -90deg );
+	transform-origin: top right;
 	transition: @transition-transform, @transition-opacity;
+	-webkit-font-smoothing: subpixel-antialiased;
 }
 
 // Nav up stuff
 .nav-up {
 	~ #mw-sidebar-sitename {
-		transform: translateY( -54px ) rotate( -90deg );
+		transform: translateY( @header-height - @margin-side ) translateX( -100% ) rotate( -90deg );
 	}
 
 	#mw-header-menu-drawer-container {
@@ -354,7 +355,7 @@
 	}
 
 	.nav-up ~ #mw-sidebar-sitename {
-		transform: translateY( -54px ) rotate( 90deg );
+		transform: translateY( @header-height - @margin-side ) rotate( 90deg );
 	}
 
 	#mw-header-menu-drawer {
