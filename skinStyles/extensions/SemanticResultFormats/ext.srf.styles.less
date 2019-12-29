@@ -1,0 +1,35 @@
+/*
+ * Citizen - SRF styles
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	.srf-spinner.text {
+		color: @dark-text-70;
+	}
+
+	.srf-notification-content {
+		color: @dark-text-100;
+	}
+
+	fieldset#mw-prefsection-smw-srf {
+		border: 0 solid @accent-10;
+		border-top: 1px solid @accent-10;
+	}
+
+	fieldset#mw-prefsection-smw-srf-eventcalendar-options {
+		border: 0 solid @accent-10;
+		border-top: 1px solid @dark-bg-20;
+	}
+
+	fieldset#mw-prefsection-smw-srf-datatables-options {
+		border: 0 solid @accent-10;
+		border-top: 1px solid @dark-bg-20;
+	}
+
+	#mw-prefsection-smw-srf .oo-ui-fieldsetLayout-header .oo-ui-labelElement-label {
+		color: @accent-10;
+	}
+}
