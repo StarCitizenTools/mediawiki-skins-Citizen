@@ -1,0 +1,36 @@
+/*
+ * Citizen - ULS Styles
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+@import '../../../resources/mixins.less';
+
+// Need important to override
+.uls-menu {
+	border: 0 !important;
+	border-radius: 0;
+	.boxshadow(5)!important;
+}
+
+.uls-search {
+	z-index: 1;
+	position: relative;
+	border: 0;
+	transition: @transition-box-shadow;
+	.boxshadow(2);
+
+	&:focus-within {
+		.boxshadow(3);
+	}
+}
+
+// Gotta fix this for mobile
+.uls-narrow {
+	left: 0 !important;
+	width: 100% !important;
+}
+
+#uls-settings-block {
+	border-color: @base-80 !important;
+}
