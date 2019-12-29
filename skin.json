@@ -364,13 +364,13 @@
 			"+ext.uls.common": "skinStyles/extensions/uls/ext.uls.common.less",
 			"+ext.uls.pt": "skinStyles/extensions/uls/ext.uls.pt.less",
 
-			"ext.CookieWarning.styles": "skinStyles/extensions/ext.CookieWarning.styles.less",
+			"ext.CookieWarning.styles": "skinStyles/extensions/cookie_warning/ext.CookieWarning.styles.less",
 
-			"+ext.popups.main": "skinStyles/extensions/ext.popups.main.less",
+			"+ext.popups.main": "skinStyles/extensions/popups/ext.popups.main.less",
 
-			"+ext.Tabber": "skinStyles/extensions/ext.Tabber.less",
+			"+ext.Tabber": "skinStyles/extensions/tabber/ext.Tabber.less",
 
-			"+ext.visualEditor.core": "skinStyles/extensions/ext.visualEditor.core.less",
+			"+ext.visualEditor.core": "skinStyles/extensions/visual_editor/ext.visualEditor.core.less",
 
 			"+mediawiki.action.history.styles": "skinStyles/mediawiki/action/mediawiki.action.history.styles.less",
 			"+mediawiki.action.view.filepage": "skinStyles/mediawiki/action/mediawiki.action.view.filepage.less",
