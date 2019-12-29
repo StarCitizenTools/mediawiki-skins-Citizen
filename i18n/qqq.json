@@ -1,6 +1,9 @@
 {
 	"@metadata": {
-		"authors": [ "alistair3149" ]
+		"authors": [ 
+			"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
+			"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
+		]
 	},
 	"skinname-citizen": "{{name}}",
 	"citizen-desc": "{{desc|what=skin|name=Citizen|url=https://github.com/StarCitizenTools/mediawiki-skins-Citizen}}"
