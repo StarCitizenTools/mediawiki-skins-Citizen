@@ -1,0 +1,36 @@
+/*
+ * Citizen - SMW Table Styles
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	.smw-table-header {
+		background-color: @dark-bg-20;
+	}
+
+	.smw-table-cell,
+	.smw-table-head {
+		border: 1px solid @dark-bg-50;
+	}
+
+	.smw-table-header {
+		background-color: @dark-bg-20;
+	}
+
+	.smw-table-footer {
+		background-color: @dark-bg-20;
+	}
+
+	/**
+	Should probably be -50
+	*/
+	.smw-table-sort-asc:after {
+		color: @dark-text-60;
+	}
+
+	.smw-table-sort-desc:after {
+		color: @dark-text-60;
+	}
+}
