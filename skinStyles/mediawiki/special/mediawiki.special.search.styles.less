@@ -1,0 +1,46 @@
+/*
+ * Citizen - Search Page Styles
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+/* Special:Search */
+.search-types {
+	ul {
+		margin: 0 !important; // Cancel out ul margin from common
+	}
+}
+
+@media ( prefers-color-scheme: dark ) {
+	.mw-search-profile-tabs {
+		background-color: @dark-bg-10;
+		border: 1px solid @dark-bg-30;
+	}
+
+	.search-types .current a {
+		color: @dark-text-90;
+	}
+
+	.results-info {
+		color: @dark-text-80;
+	}
+
+	#mw-searchoptions {
+		background-color: @dark-bg-10;
+		border: 1px solid @dark-bg-30;
+	}
+
+	#mw-searchoptions .divider {
+		border-bottom: 1px solid @dark-bg-20;
+	}
+
+	#mw-search-interwiki {
+		border: 1px solid @dark-bg-50;
+	}
+
+	.mw-search-interwiki-project {
+		background-color: @dark-bg-20;
+		border-top: 1px solid @dark-bg-30;
+	}
+}

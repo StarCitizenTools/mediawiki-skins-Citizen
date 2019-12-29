@@ -344,48 +344,62 @@
 	},
 	"ResourceModuleSkinStyles": {
 		"citizen": {
-			"+mediawiki.htmlform.ooui.styles": "skinStyles/mediawiki.htmlform.ooui.styles.less",
-			"+mediawiki.page.gallery.styles": "skinStyles/mediawiki.page.gallery.styles.less",
-			"+mediawiki.action.history.styles": "skinStyles/mediawiki.action.history.styles.less",
-			"+mediawiki.action.view.filepage": "skinStyles/mediawiki.action.view.filepage.less",
-			"+mediawiki.special": "skinStyles/mediawiki.special.less",
-			"+mediawiki.special.changeslist": "skinStyles/mediawiki.special.changeslist.less",
-			"+mediawiki.special.changeslist.enhanced": "skinStyles/mediawiki.special.changeslist.enhanced.less",
-			"+mediawiki.special.search.styles": "skinStyles/mediawiki.special.search.styles.less",
-			"+mediawiki.special.userlogin.login.styles": "skinStyles/mediawiki.special.userlogin.login.styles.less",
-			"+mediawiki.special.apisandbox": "skinStyles/mediawiki.special.apisandbox.less",
-			"+mediawiki.special.preferences.styles.ooui": "skinStyles/mediawiki.special.preferences.styles.ooui.less",
-			"+mediawiki.diff.styles": "skinStyles/mediawiki.diff.styles.less",
-			"+mediawiki.ui.input": "skinStyles/mediawiki.ui.components.input.less",
-			"+mediawiki.ui.checkbox": "skinStyles/mediawiki.ui.components.checkbox.less",
-			"+mediawiki.ui.button": "skinStyles/mediawiki.ui.components.button.less",
-			"+mediawiki.legacy.shared": "skinStyles/mediawiki.legacy.shared.less",
-			"+oojs-ui-core.styles": "skinStyles/oojs-ui-core.less",
-			"+oojs-ui-toolbars": "skinStyles/oojs-ui-toolbars.less",
-			"+oojs-ui-widgets": "skinStyles/oojs-ui-widgets.less",
-			"+oojs-ui-windows": "skinStyles/oojs-ui-windows.less",
-			"+mmv": "skinStyles/mmv.less",
-			"+mediawiki.rcfilters.filters.base.styles": "skinStyles/mediawiki.rcfilters.filters.base.styles.less",
-			"+mediawiki.widgets.DateInputWidget.styles": "skinStyles/mediawiki.widgets.DateInputWidget.styles.less",
-			"ext.CookieWarning.styles": "skinStyles/ext.CookieWarning.styles.less",
-			"+ext.echo.styles.badge": "skinStyles/ext.echo.styles.badge.less",
-			"+ext.echo.ui": "skinStyles/ext.echo.ui.less",
-			"+ext.popups.main": "skinStyles/ext.popups.main.less",
-			"+ext.relatedArticles.cards": "skinStyles/ext.relatedArticles.cards.less",
-			"+ext.relatedArticles.readMore": "skinStyles/ext.relatedArticles.readMore.less",
-			"+ext.Tabber": "skinStyles/ext.Tabber.less",
-			"+ext.translate": "skinStyles/ext.translate.less",
-			"+ext.translate.editor": "skinStyles/ext.translate.editor.less",
-			"+ext.translate.loader": "skinStyles/ext.translate.loader.less",
-			"+ext.translate.special.translate": "skinStyles/ext.translate.special.translate.less",
-			"+ext.translate.messagetable": "skinStyles/ext.translate.messagetable.less",
-			"+ext.translate.tag.languages": "skinStyles/ext.translate.tag.languages.less",
-			"+ext.uls.common": "skinStyles/ext.uls.common.less",
-			"+ext.uls.pt": "skinStyles/ext.uls.pt.less",
-			"+ext.visualEditor.core": "skinStyles/ext.visualEditor.core.less",
-			"+ext.flow": "skinStyles/ext.flow.less",
-			"+ext.flow.ui": "skinStyles/ext.flow.ui.less",
-			"+ext.flow.styles.base": "skinStyles/ext.flow.styles.base.less"
+			"+ext.echo.styles.badge": "skinStyles/extensions/echo/ext.echo.styles.badge.less",
+			"+ext.echo.ui": "skinStyles/extensions/echo/ext.echo.ui.less",
+
+			"+ext.flow": "skinStyles/extensions/flow/ext.flow.less",
+			"+ext.flow.styles.base": "skinStyles/extensions/flow/ext.flow.styles.base.less",
+			"+ext.flow.ui": "skinStyles/extensions/flow/ext.flow.ui.less",
+
+			"+ext.relatedArticles.cards": "skinStyles/extensions/related_articles/ext.relatedArticles.cards.less",
+			"+ext.relatedArticles.readMore": "skinStyles/extensions/related_articles/ext.relatedArticles.readMore.less",
+
+			"+ext.translate": "skinStyles/extensions/translate/ext.translate.less",
+			"+ext.translate.editor": "skinStyles/extensions/translate/ext.translate.editor.less",
+			"+ext.translate.loader": "skinStyles/extensions/translate/ext.translate.loader.less",
+			"+ext.translate.messagetable": "skinStyles/extensions/translate/ext.translate.messagetable.less",
+			"+ext.translate.special.translate": "skinStyles/extensions/translate/ext.translate.special.translate.less",
+			"+ext.translate.tag.languages": "skinStyles/extensions/translate/ext.translate.tag.languages.less",
+
+			"+ext.uls.common": "skinStyles/extensions/uls/ext.uls.common.less",
+			"+ext.uls.pt": "skinStyles/extensions/uls/ext.uls.pt.less",
+
+			"ext.CookieWarning.styles": "skinStyles/extensions/ext.CookieWarning.styles.less",
+
+			"+ext.popups.main": "skinStyles/extensions/ext.popups.main.less",
+
+			"+ext.Tabber": "skinStyles/extensions/ext.Tabber.less",
+
+			"+ext.visualEditor.core": "skinStyles/extensions/ext.visualEditor.core.less",
+
+			"+mediawiki.action.history.styles": "skinStyles/mediawiki/action/mediawiki.action.history.styles.less",
+			"+mediawiki.action.view.filepage": "skinStyles/mediawiki/action/mediawiki.action.view.filepage.less",
+
+			"+mediawiki.special": "skinStyles/mediawiki/special/mediawiki.special.less",
+			"+mediawiki.special.apisandbox": "skinStyles/mediawiki/special/mediawiki.special.apisandbox.less",
+			"+mediawiki.special.changeslist.enhanced": "skinStyles/mediawiki/special/mediawiki.special.changeslist.enhanced.less",
+			"+mediawiki.special.changeslist": "skinStyles/mediawiki/special/mediawiki.special.changeslist.less",
+			"+mediawiki.special.preferences.styles.ooui": "skinStyles/mediawiki/special/mediawiki.special.preferences.styles.ooui.less",
+			"+mediawiki.special.search.styles": "skinStyles/mediawiki/special/mediawiki.special.search.styles.less",
+			"+mediawiki.special.userlogin.login.styles": "skinStyles/mediawiki/special/mediawiki.special.userlogin.login.styles.less",
+
+			"+mediawiki.ui.button": "skinStyles/mediawiki/ui/mediawiki.ui.components.button.less",
+			"+mediawiki.ui.checkbox": "skinStyles/mediawiki/ui/mediawiki.ui.components.checkbox.less",
+			"+mediawiki.ui.input": "skinStyles/mediawiki/ui/mediawiki.ui.components.input.less",
+
+			"+mediawiki.diff.styles": "skinStyles/mediawiki/mediawiki.diff.styles.less",
+			"+mediawiki.htmlform.ooui.styles": "skinStyles/mediawiki/mediawiki.htmlform.ooui.styles.less",
+			"+mediawiki.legacy.shared": "skinStyles/mediawiki/mediawiki.legacy.shared.less",
+			"+mediawiki.page.gallery.styles": "skinStyles/mediawiki/mediawiki.page.gallery.styles.less",
+			"+mediawiki.rcfilters.filters.base.styles": "skinStyles/mediawiki/mediawiki.rcfilters.filters.base.styles.less",
+			"+mediawiki.widgets.DateInputWidget.styles": "skinStyles/mediawiki/mediawiki.widgets.DateInputWidget.styles.less",
+
+			"+oojs-ui-core.styles": "skinStyles/oojs/oojs-ui-core.less",
+			"+oojs-ui-toolbars": "skinStyles/oojs/oojs-ui-toolbars.less",
+			"+oojs-ui-widgets": "skinStyles/oojs/oojs-ui-widgets.less",
+			"+oojs-ui-windows": "skinStyles/oojs/oojs-ui-windows.less",
+
+			"+mmv": "skinStyles/mmv.less"
 		}
 	},
 	"AutoloadClasses": {

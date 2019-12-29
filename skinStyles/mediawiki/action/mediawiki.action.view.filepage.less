@@ -1,0 +1,132 @@
+/*
+ * Citizen - File Page Styles
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+@import '../../../resources/mixins.less';
+
+#filetoc {
+	margin: 0;
+	padding: 0;
+	overflow: auto;
+	white-space: nowrap;
+	display: flex;
+	border-color: @base-80;
+	transition: @transition-margin, @transition-padding;
+
+	li {
+		padding: 0;
+		display: block;
+
+		a {
+			padding: @margin-side / 2 @margin-side;
+			display: block;
+			transition: @transition-background-quick;
+
+			&:hover {
+				background-color: @base-80;
+			}
+		}
+	}
+}
+
+.fullImageLink {
+	margin: 0 @negative-margin;
+	max-width: @footer-width - 10px; // 1280px - image size 4
+	background-color: @base-90;
+
+	> a {
+		display: block;
+		pointer-events: none;
+
+		> img {
+			margin: 0 auto;
+			max-width: 100%;
+			height: auto;
+			display: block;
+			.boxshadow(1);
+		}
+	}
+
+	.mw-filepage-resolutioninfo {
+		padding: @margin-side / 2 @margin-side;
+		border: 1px solid @base-80;
+		text-align: center;
+		transition: @transition-margin, @transition-padding;
+	}
+}
+
+.fullMedia {
+	padding: @margin-side / 2 @margin-side;
+	border: 1px solid @base-80;
+	border-top: 0;
+	background-color: @base-90;
+	font-size: smaller;
+	text-align: center;
+	transition: @transition-margin;
+
+	.mw-mmv-filepage-buttons {
+		margin-top: @margin-side / 2;
+		display: flex;
+		justify-content: center;
+	}
+}
+
+@media only screen and ( max-width: @screen2 ) {
+	.fullImageLink {
+		/* stylelint-disable unit-no-unknown */
+		margin: 0~'calc((100vw - @{page-width}) / -2)';
+		/* stylelint-enable */
+
+		.mw-filepage-resolutioninfo,
+		.fullMedia {
+			margin: 0;
+		}
+	}
+}
+
+@media only screen and ( max-width: @screen1 ) {
+	#filetoc,
+	.fullImageLink,
+	.fullMedia {
+		margin: 0 -@margin-side;
+	}
+
+	#filetoc {
+		padding: 0 @margin-side;
+	}
+}
+
+@media ( prefers-color-scheme: dark ) {
+	#filetoc,
+	.fullMedia {
+		background-color: @dark-bg-10;
+		border-color: @dark-bg-20;
+	}
+
+	.fullImageLink {
+		background-color: @dark-bg-10;
+
+		.mw-filepage-resolutioninfo {
+			border-color: @dark-bg-20;
+		}
+	}
+
+	#filetoc li a:hover {
+		background-color: @dark-bg-40;
+	}
+
+	.mw_metadata td,
+	.mw_metadata th {
+		border: 1px solid @dark-bg-50;
+	}
+
+	.mw_metadata th {
+		background-color: @dark-bg-10;
+	}
+
+	.mw_metadata td {
+		background-color: @dark-bg-20;
+	}
+}

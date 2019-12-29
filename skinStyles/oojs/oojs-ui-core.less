@@ -1,0 +1,415 @@
+/*
+ * Citizen - OOJS-UI Styles
+ * https://starcitizen.tools
+*/
+
+@import '../../resources/variables.less';
+@import '../../resources/mixins.less';
+
+/*!
+ * Based on OOUI v0.26.4
+ * https://www.mediawiki.org/wiki/OOUI
+ *
+ * Copyright 2011–2018 OOUI Team and other contributors.
+ * Released under the MIT license
+ * http://oojs.mit-license.org
+ *
+ * Date: 2018-04-17T22:24:02Z
+ */
+
+.oo-ui-popupWidget-popup {
+	border: 0;
+	border-radius: 0;
+	.boxshadow(4);
+}
+
+.oo-ui-buttonElement > .oo-ui-buttonElement-button {
+	border-radius: 0;
+}
+
+.oo-ui-buttonElement-framed > .oo-ui-buttonElement-button {
+	border-radius: 0;
+}
+
+.oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button {
+	background-color: @base-90;
+	border-color: @base-90;
+
+	&:hover {
+		border-color: @base-100;
+		.boxshadow(3);
+	}
+}
+
+.oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button:active,
+.oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button:active:focus,
+.oo-ui-buttonElement-framed.oo-ui-widget-enabled.oo-ui-buttonElement-pressed > .oo-ui-buttonElement-button {
+	border-color: #c8ccd1;
+}
+
+.oo-ui-textInputWidget input,
+.oo-ui-textInputWidget textarea {
+	border-color: @base-80;
+	border-radius: 0;
+	.boxshadow(1);
+}
+
+.oo-ui-textInputWidget.oo-ui-widget-enabled input,
+.oo-ui-textInputWidget.oo-ui-widget-enabled textarea {
+	.boxshadow(1);
+
+	&:focus {
+		.boxshadow(3);
+	}
+}
+
+@media ( prefers-color-scheme: dark ) {
+	.oo-ui-iconElement-icon,
+	.oo-ui-indicator-down {
+		filter: invert( 1 ) hue-rotate( 180deg );
+	}
+
+	.oo-ui-pendingElement-pending {
+		/* Find a better way to replace the progress bar */
+		background-color: @dark-bg-20 !important;
+		background-image: -webkit-linear-gradient( 135deg, @dark-bg-0 25%, transparent 25%, transparent 50%, @dark-bg-0 50%, @dark-bg-0 75%, transparent 75%, transparent ) !important;
+		background-image: -moz-linear-gradient( 135deg, @dark-bg-0 25%, transparent 25%, transparent 50%, @dark-bg-0 50%, @dark-bg-0 75%, transparent 75%, transparent ) !important;
+		background-image: linear-gradient( 135deg, @dark-bg-0 25%, transparent 25%, transparent 50%, @dark-bg-0 50%, @dark-bg-0 75%, transparent 75%, transparent ) !important;
+	}
+
+	.oo-ui-buttonElement-frameless {
+		&.oo-ui-widget-enabled {
+			&.oo-ui-buttonElement-pressed {
+				> input {
+					&.oo-ui-buttonElement-button {
+						color: @dark-text-100;
+					}
+				}
+			}
+
+			.oo-ui-buttonElement-button {
+				&:active {
+					color: @dark-text-100;
+				}
+			}
+
+			> .oo-ui-buttonElement-button {
+				color: @dark-text-90;
+
+				&:hover {
+					color: @dark-text-80;
+				}
+			}
+		}
+
+		&.oo-ui-widget-disabled {
+			color: @dark-text-70;
+
+			> .oo-ui-buttonElement-button {
+				color: @dark-text-70;
+			}
+		}
+	}
+
+	.oo-ui-buttonElement-framed {
+		&.oo-ui-widget-enabled {
+			> .oo-ui-buttonElement-button {
+				background-color: @dark-bg-50;
+				color: @dark-text-90;
+				border-color: @dark-bg-50;
+
+				&:hover {
+					background-color: @dark-bg-40;
+					color: @dark-text-80;
+					border-color: @dark-bg-50;
+				}
+
+				&:active,
+				&:active:focus {
+					background-color: @dark-bg-30;
+					color: @dark-text-90;
+					border-color: @dark-bg-60;
+				}
+			}
+
+			&.oo-ui-buttonElement-pressed > .oo-ui-buttonElement-button {
+				background-color: @dark-bg-30;
+				color: @dark-text-90;
+				border-color: @dark-bg-60 !important;
+			}
+		}
+
+		&.oo-ui-widget-disabled {
+			> .oo-ui-buttonElement-button {
+				background-color: @dark-bg-30;
+				color: @dark-text-60;
+				border-color: @dark-bg-30;
+			}
+		}
+	}
+
+	.oo-ui-panelLayout-framed {
+		border-color: @dark-bg-50 !important;
+	}
+
+	.oo-ui-optionWidget {
+		&.oo-ui-widget-disabled {
+			color: @dark-text-70;
+		}
+	}
+
+	.oo-ui-radioSelectWidget:focus [ type='radio' ]:checked + span:before {
+		border-color: @dark-bg-0;
+	}
+
+	.oo-ui-labelWidget.oo-ui-inline-help {
+		color: @dark-text-80;
+	}
+
+	.oo-ui-buttonGroupWidget {
+		.oo-ui-buttonElement-framed {
+			&.oo-ui-widget-disabled + .oo-ui-widget-disabled > .oo-ui-buttonElement-button {
+				border-left-color: @dark-bg-0;
+			}
+		}
+
+		&.oo-ui-widget-enabled {
+			.oo-ui-buttonElement.oo-ui-toggleWidget-on + .oo-ui-toggleWidget-on > .oo-ui-buttonElement-button,
+			.oo-ui-buttonElement.oo-ui-toggleWidget-on + .oo-ui-toggleWidget-on > .oo-ui-buttonElement-button:active {
+				border-left-color: @dark-bg-50;
+			}
+		}
+	}
+
+	.oo-ui-popupWidget-popup {
+		background-color: @dark-bg-50;
+		border-color: @dark-bg-50;
+	}
+
+	.oo-ui-popupWidget-anchored-top,
+	.oo-ui-popupWidget-anchored-bottom,
+	.oo-ui-popupWidget-anchored-start,
+	.oo-ui-popupWidget-anchored-end {
+		.oo-ui-popupWidget-anchor {
+			&:before {
+				border-bottom-color: @dark-bg-50;
+			}
+
+			&:after {
+				border-bottom-color: @dark-bg-50;
+			}
+		}
+	}
+
+	.oo-ui-checkboxInputWidget [ type='checkbox' ] {
+		+ span {
+			background-color: @dark-bg-0;
+			border-color: @dark-bg-60;
+		}
+
+		&:indeterminate + span:before {
+			background-color: @dark-bg-0;
+		}
+
+		&:disabled + span {
+			background-color: @dark-bg-30;
+			border-color: @dark-bg-30;
+		}
+	}
+
+	.oo-ui-dropdownInputWidget {
+		select {
+			border-color: @dark-bg-50;
+		}
+
+		&.oo-ui-widget-enabled {
+			background-color: @dark-bg-10;
+
+			&:hover {
+				background-color: @dark-bg-0;
+			}
+
+			select {
+				color: @dark-text-90;
+
+				&:hover {
+					color: @dark-text-80;
+					border-color: @dark-bg-50;
+				}
+
+				&:active {
+					color: @dark-text-90;
+					border-color: @dark-bg-60;
+				}
+			}
+		}
+
+		&.oo-ui-widget-disabled {
+			background-color: @dark-bg-20;
+
+			select {
+				color: @dark-text-70;
+				border-color: @dark-bg-30;
+			}
+		}
+	}
+
+	.oo-ui-radioInputWidget [ type='radio' ] {
+		+ span {
+			background-color: @dark-bg-0;
+			border-color: @dark-bg-60;
+		}
+
+		&:disabled {
+			+ span {
+				background-color: @dark-bg-30;
+				border-color: @dark-bg-30;
+			}
+
+			&:checked + span {
+				background-color: @dark-bg-0;
+			}
+		}
+	}
+
+	.oo-ui-radioInputWidget.oo-ui-widget-enabled [ type='radio' ]:checked:hover + span {
+		border-color: @dark-bg-0;
+	}
+
+	.oo-ui-textInputWidget {
+		.oo-ui-inputWidget-input {
+			background-color: @dark-bg-0 !important;
+			color: @dark-text-100 !important;
+			border-color: @dark-bg-50 !important;
+		}
+
+		.oo-ui-pendingElement-pending {
+			background-color: @dark-bg-20;
+		}
+
+		> .oo-ui-labelElement-label {
+			color: @dark-text-70;
+		}
+
+		&.oo-ui-widget-enabled {
+			.oo-ui-inputWidget-input::placeholder {
+				color: @dark-text-70;
+			}
+
+			.oo-ui-inputWidget-input[ readonly ] {
+				background-color: @dark-bg-10;
+			}
+
+			&:hover {
+				.oo-ui-inputWidget-input {
+					border-color: @dark-bg-60;
+				}
+			}
+		}
+
+		&.oo-ui-widget-disabled {
+			.oo-ui-inputWidget-input {
+				background-color: @dark-bg-20;
+				-webkit-text-fill-color: @dark-text-70;
+				color: @dark-text-70;
+				text-shadow: 0 1px 1px @dark-bg-0;
+				border-color: @dark-bg-30;
+			}
+
+			> .oo-ui-labelElement-label {
+				color: @dark-text-70;
+				text-shadow: 0 1px 1px @dark-bg-0;
+			}
+		}
+	}
+
+	.oo-ui-menuSelectWidget {
+		background-color: @dark-bg-10;
+		border-color: @dark-bg-50;
+	}
+
+	.oo-ui-menuOptionWidget {
+		&.oo-ui-optionWidget-highlighted {
+			background-color: @dark-bg-20;
+			color: @dark-text-100;
+		}
+
+		&.oo-ui-optionWidget-selected {
+			background-color: @dark-bg-20;
+		}
+
+		&.oo-ui-widget-enabled {
+			&.oo-ui-optionWidget {
+				color: @dark-text-90;
+			}
+		}
+	}
+
+	.oo-ui-menuSectionOptionWidget {
+		color: @dark-text-70;
+	}
+
+	.oo-ui-dropdownWidget-handle {
+		border-color: @dark-bg-50;
+	}
+
+	.oo-ui-dropdownWidget {
+		&.oo-ui-widget-enabled {
+			.oo-ui-dropdownWidget-handle {
+				background-color: @dark-bg-10;
+				color: @dark-text-90;
+
+				&:hover {
+					background-color: @dark-bg-0;
+					color: @dark-text-80;
+					border-color: @dark-bg-50;
+				}
+
+				&:active {
+					color: @dark-text-100;
+					border-color: @dark-bg-60;
+				}
+			}
+
+			&.oo-ui-dropdownWidget-open {
+				.oo-ui-dropdownWidget-handle {
+					background-color: @dark-bg-0;
+				}
+			}
+		}
+
+		&.oo-ui-widget-disabled {
+			.oo-ui-dropdownWidget-handle {
+				color: @dark-text-70;
+				text-shadow: 0 1px 1px @dark-bg-0;
+				border-color: @dark-bg-30;
+				background-color: @dark-bg-20;
+			}
+		}
+	}
+
+	.oo-ui-comboBoxInputWidget-open {
+		.oo-ui-comboBoxInputWidget-dropdownButton {
+			> .oo-ui-buttonElement-button {
+				background-color: @dark-bg-0;
+			}
+		}
+	}
+
+	.oo-ui-multioptionWidget {
+		&.oo-ui-widget-disabled {
+			color: @dark-text-70;
+		}
+	}
+
+	.oo-ui-progressBarWidget {
+		background-color: @dark-bg-0;
+		border-color: @dark-bg-50;
+
+		&.oo-ui-widget-disabled {
+			.oo-ui-progressBarWidget-bar {
+				background-color: @dark-bg-30;
+			}
+		}
+	}
+}
