@@ -1,0 +1,41 @@
+/*
+ * Citizen - Recent Changes Styles
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+/*!
+ * Styling for Special:Watchlist and Special:RecentChanges when preference 'usenewrc'
+ * a.k.a. Enhanced Recent Changes is enabled.
+ */
+
+table.mw-enhanced-rc {
+	margin: 0 !important;
+	padding: @margin-side / 2 0;
+	border-bottom: 1px solid @base-80;
+	transition: @transition-background-quick;
+
+	&:hover {
+		background-color: @base-90;
+	}
+}
+
+.mw-enhanced-rc-nested {
+	margin-top: @margin-side / 4;
+	display: block;
+
+	.mw-tag-markers {
+		margin: @margin-side / 4;
+	}
+}
+
+@media ( prefers-color-scheme: dark ) {
+	table.mw-enhanced-rc {
+		border-color: @dark-bg-20;
+
+		&:hover {
+			background-color: @dark-bg-10;
+		}
+	}
+}

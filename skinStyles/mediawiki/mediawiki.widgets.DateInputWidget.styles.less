@@ -1,0 +1,80 @@
+/*
+ * Citizen - Widget Datetime
+ * https://starcitizen.tools
+*/
+
+@import '../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	.mw-widget-dateInputWidget {
+		&-handle {
+			background-color: @dark-bg-0;
+			color: @dark-text-100;
+			border-color: @dark-bg-50;
+		}
+
+		&.oo-ui-widget-enabled {
+			.mw-widget-dateInputWidget-handle {
+				&:hover {
+					border-color: @dark-bg-60;
+				}
+			}
+		}
+
+		&-calendar {
+			background-color: @dark-bg-0 !important;
+		}
+
+		&.oo-ui-widget-disabled {
+			.mw-widget-dateInputWidget-handle {
+				background-color: @dark-bg-20 !important;
+				color: @dark-text-70 !important;
+				border-color: @dark-bg-30 !important;
+				text-shadow: 0 1px 1px @dark-bg-0 !important;
+			}
+		}
+	}
+
+	/**
+Calendar
+TODO move into separate file?
+ */
+	.mw-widgets-datetime-calendarWidget {
+		background-color: @dark-bg-0 !important;
+		border-color: @dark-bg-50 !important;
+
+		&-grid {
+			.mw-widgets-datetime-calendarWidget-cell {
+				&.mw-widgets-datetime-calendarWidget-extra .oo-ui-buttonElement-button {
+					.oo-ui-labelElement-label {
+						color: @dark-text-70 !important;
+					}
+				}
+			}
+		}
+	}
+
+	/**
+mw.widgets.CalendarWidget.less
+  TODO move into separate file?
+ */
+	.mw-widget-calendarWidget {
+		border: 1px solid @dark-bg-50 !important;
+
+		&-day {
+			color: @dark-text-90 !important;
+		}
+
+		&-day-heading {
+			color: @dark-text-80 !important;
+		}
+
+		&-day-additional {
+			color: @dark-text-60 !important;
+
+			&:hover {
+				color: @dark-text-90 !important;
+			}
+		}
+	}
+}
