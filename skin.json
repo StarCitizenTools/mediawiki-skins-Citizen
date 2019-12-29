@@ -2,7 +2,10 @@
 	"name": "Citizen",
 	"namemsg": "skinname-citizen",
 	"version": "0.4.0",
-	"author": "alistair3149",
+	"author": [
+		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
+		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
+	],
 	"url": "https://github.com/StarCitizenTools/mediawiki-skins-Citizen",
 	"descriptionmsg": "citizen-desc",
 	"license-name": "GPL-3.0",
