@@ -374,6 +374,10 @@
 			"+smw.tableprinter.datatables.styles": "skinStyles/extensions/SemanticMediaWiki/smw.tableprinter.datatables.styles.less",
 			"+smw.tippy": "skinStyles/extensions/SemanticMediaWiki/smw.tippy.less",
 
+			"+ext.srf.datatables": "skinStyles/extensions/SemanticResultFormats/datatables/ext.srf.datatables.less",
+			"+ext.srf.datatables.basic": "skinStyles/extensions/SemanticResultFormats/datatables/ext.srf.datatables.basic.less",
+			"+ext.srf.datatables.bootstrap": "skinStyles/extensions/SemanticResultFormats/datatables/ext.srf.datatables.bootstrap.less",
+
 			"+ext.translate": "skinStyles/extensions/Translate/ext.translate.less",
 			"+ext.translate.editor": "skinStyles/extensions/Translate/ext.translate.editor.less",
 			"+ext.translate.loader": "skinStyles/extensions/Translate/ext.translate.loader.less",
