@@ -23,7 +23,7 @@ jobs:
     - name: Generate documentation
       run: npm run doc
 
-    - name: Fix stuff
+    - name: Run stylelint autofix
       run: npm run fix
       
     - name: Run Grunt test
