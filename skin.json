@@ -404,6 +404,7 @@
 
 			"+ext.srf.jqplot.chart": "skinStyles/extensions/SemanticResultFormats/jqplot/ext.srf.jqplot.chart.less",
 
+			"+ext.jquery.blockUI": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.blockUI.less",
 			"+ext.jquery.fancybox": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.fancybox.less",
 			"+ext.jquery.fullcalendar": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.fullcalendar.less",
 			"+ext.jquery.jqgrid": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.jqgrid.less",
@@ -421,6 +422,8 @@
 			"+ext.srf.util.grid": "skinStyles/extensions/SemanticResultFormats/util/ext.srf.util.grid.less",
 
 			"+ext.srf.styles": "skinStyles/extensions/SemanticResultFormats/ext.srf.styles.less",
+
+			"+onoi.dataTables.styles": "skinStyles/extensions/SemanticResultFormats/jquery/jquery.dataTables.less",
 
 			"+ext.translate": "skinStyles/extensions/Translate/ext.translate.less",
 			"+ext.translate.editor": "skinStyles/extensions/Translate/ext.translate.editor.less",
