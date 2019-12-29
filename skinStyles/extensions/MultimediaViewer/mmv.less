@@ -1,0 +1,55 @@
+/*
+ * Citizen - MultimediaViewer Styles
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+@import '../../../resources/mixins.less';
+
+.mw-mmv-image-metadata {
+	border-color: @base-80;
+}
+
+.mw-mmv-stripe-button.mw-mmv-description-page-button,
+.mw-mmv-stripe-button.mw-mmv-description-page-button:active,
+.mw-mmv-stripe-button.mw-mmv-description-page-button:visited {
+	margin: 0;
+	padding: 18px 16px;
+	border-radius: 0;
+	font-size: @ui-menu-text;
+}
+
+@media only screen and ( max-width: 560px ) {
+	.mw-mmv-image-metadata-links-column {
+		width: auto; // Fix mobile bouncing
+		float: none;
+	}
+
+	.mw-mmv-untruncated {
+		.mw-mmv-image-metadata-desc-column,
+		.mw-mmv-image-metadata-links-column {
+			width: auto;
+			max-width: none;
+		}
+	}
+}
+
+@media ( prefers-color-scheme: dark ) {
+	.mw-mmv-post-image {
+		background-color: @dark-bg-0;
+		color: @dark-text-100;
+	}
+
+	.mw-mmv-image-metadata {
+		background-color: @dark-bg-10;
+		border-color: @dark-bg-20;
+	}
+
+	.mw-mmv-credit {
+		color: @dark-text-90;
+	}
+
+	.mw-mmv-image-links li {
+		color: @dark-text-80;
+	}
+}

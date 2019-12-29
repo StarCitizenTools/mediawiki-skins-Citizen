@@ -1,0 +1,42 @@
+/*
+ * Citizen - SMW Tippy Tooltips
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	.tippy-header {
+		background-color: @dark-bg-10;
+		border-bottom: 1px solid @dark-bg-20;
+	}
+
+	.tippy-bottom {
+		background-color: @dark-bg-0;
+		border-top: 1px solid @dark-bg-20;
+	}
+
+	.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow,
+	.tippy-tooltip.light-theme[ x-placement^='bottom' ] .tippy-arrow,
+	.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow:after,
+	.tippy-tooltip.light-theme[ x-placement^='bottom' ] .tippy-arrow:after {
+		border-bottom-color: @dark-bg-10;
+	}
+
+	.tippy-cancel {
+		color: @dark-text-100;
+		text-shadow: 0 1px 0 @dark-bg-0;
+	}
+
+	.tippy-cancel:hover {
+		color: @dark-text-100;
+	}
+
+	.tippy-warning-circle {
+		background-color: @yellow-50;
+	}
+
+	.tippy-error-circle {
+		background-color: @red-50;
+	}
+}

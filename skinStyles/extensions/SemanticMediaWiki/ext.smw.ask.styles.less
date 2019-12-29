@@ -1,0 +1,150 @@
+/*
+ * Citizen - SMW Special Ask
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	.smw-ask-toplinks {
+		background-color: @dark-bg-10;
+	}
+
+	.smw-ask-toplinks-edit {
+		border-right: 3px solid @dark-bg-0;
+	}
+
+	.smw-ask-condition fieldset,
+	.smw-ask-printhead fieldset {
+		border: 1px solid @dark-bg-50;
+	}
+
+	.smw-ask-query .smw-table-row .smw-table-cell {
+		border: 1px solid @dark-bg-50;
+	}
+
+	.smw-ask-options-row-odd {
+		background: @dark-bg-20;
+	}
+
+	.smw-ask-options-row-even {
+		background: @dark-bg-0;
+	}
+
+	.smw-ask-button {
+		color: @dark-text-80;
+		border: 1px solid @dark-bg-20;
+	}
+
+	.smw-ask-button-submit input {
+		border: 1px solid @dark-bg-10;
+		background-color: @dark-bg-20;
+		color: @dark-text-70;
+	}
+
+	.smw-ask-button-submit input:hover {
+		background-color: @dark-bg-30;
+		border-color: @dark-bg-20;
+	}
+
+	.smw-ask-button-right {
+		color: @dark-text-80;
+		border: 1px solid @dark-bg-20;
+	}
+
+	.smw-ask-button:hover {
+		background-color: @dark-bg-10;
+	}
+
+	.smw-ask-button input {
+		color: @dark-text-100 !important;
+	}
+
+	.smw-ask-button-lblue {
+		color: @dark-text-100;
+		background-color: #5bc0de;
+		border-color: #46b8da;
+	}
+
+	.smw-ask-button-lblue:hover {
+		background-color: #31b0d5;
+		border-color: #269abc;
+	}
+
+	.smw-ask-button-dblue {
+		color: @dark-text-100;
+		background-color: #337ab7;
+		border-color: #2e6da4;
+	}
+
+	.smw-ask-button-dblue:hover {
+		background-color: #286090;
+		border-color: #204d74;
+	}
+
+	.smw-ask-button-lgrey {
+		background-color: @dark-bg-20;
+		border-color: @dark-bg-30;
+	}
+
+	.smw-ask-button-lgrey:hover {
+		background-color: @dark-bg-30;
+		border-color: @dark-bg-30;
+	}
+
+	.smw-ask-button a,
+	.smw-ask-button a:hover,
+	.smw-ask-button a:focus,
+	.smw-ask-button a:active,
+	.smw-ask-button a:visited {
+		color: @dark-text-80;
+	}
+
+	.smw-ask-button-lblue a,
+	.smw-ask-button-lblue a:hover,
+	.smw-ask-button-lblue a:focus,
+	.smw-ask-button-lblue a:active,
+	.smw-ask-button-lblue a:visited {
+		color: @dark-text-100;
+	}
+
+	.smw-ask-button-dblue a,
+	.smw-ask-button-dblue a:hover,
+	.smw-ask-button-dblue a:focus,
+	.smw-ask-button-dblue a:active,
+	.smw-ask-button-dblue a:visited {
+		color: @dark-text-100;
+	}
+
+	.smw-ask-search fieldset,
+	.smw-ask-format fieldset,
+	.smw-ask-options fieldset {
+		border: 1px solid @dark-bg-50;
+	}
+
+	.strike > span:before,
+	.strike > span:after {
+		background: @dark-bg-50;
+	}
+
+	.smw-ask-sort-input input,
+	.smw-propertysubject-input {
+		border: 1px solid @dark-bg-50;
+	}
+
+	#options-toggle:not( :checked ) + #options-list .options-parameter-list:after {
+		background-image: linear-gradient( to bottom, rgba( 0, 0, 0, 0 ), @dark-bg-0 90% );
+	}
+
+	.slowfade textarea::placeholder {
+		color: @dark-text-60;
+	}
+
+	.export-links li {
+		border-left: 1px solid @dark-bg-50;
+	}
+
+	.smw-tabs input.nav-tab:checked + label.nav-label.result-cache {
+		border-top: 2px solid @yellow-50;
+	}
+}
