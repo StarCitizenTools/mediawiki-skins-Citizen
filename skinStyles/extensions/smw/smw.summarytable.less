@@ -1,0 +1,28 @@
+/*
+ * Citizen - SMW Special Ask
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	.smw-summarytable .smw-table-cell,
+	.smw-table-head {
+		border: 1px solid @dark-bg-50;
+		border-bottom: 1px solid @dark-bg-20;
+	}
+
+	@media screen and ( max-width: 800px ) {
+		.smw-summarytable .smw-table-row .smwpropname {
+			border-bottom: 0 solid @dark-bg-20;
+		}
+
+		.smw-summarytable-imagecolumn .smw-summarytable-image {
+			border-top: 1px solid @dark-bg-20;
+		}
+
+		.smw-summarytable-columns .smw-summarytable-columns-2:first-child {
+			border-bottom: 1px solid @dark-bg-20;
+		}
+	}
+}

@@ -1,0 +1,66 @@
+/*
+ * Citizen - SMW Special Admin
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	.smw-admin-deprecation-notice-docu-section {
+		background-color: #fcf8e3;
+		border-color: #faf2cc;
+		color: #8a6d3b;
+	}
+
+	.smw-admin-deprecation fieldset {
+		border-top: 1px solid @dark-bg-50;
+	}
+
+	.smw-admin-hr {
+		background-color: @dark-bg-20;
+	}
+
+	.smw-special-filter-button {
+		color: @dark-text-80;
+		border: 1px solid @dark-bg-20;
+	}
+
+	.smw-special-filter-button:hover {
+		background-color: @dark-bg-10;
+	}
+
+	.smw-special-filter-button a,
+	.smw-special-filter-button a:hover,
+	.smw-special-filter-button a:focus,
+	.smw-special-filter-button a:active,
+	.smw-special-filter-button a:visited {
+		color: @dark-text-80;
+	}
+
+	.smw-admin section {
+		border: 0 solid @dark-bg-50;
+	}
+
+	.smw-admin input.nav-tab:checked + label.nav-label {
+		border: 1px solid @dark-bg-50;
+		border-top: 2px solid @yellow-50;
+		border-bottom: 1px solid @dark-bg-0;
+	}
+
+	.smw-admin input.nav-tab:checked + label.nav-label.smw-tab-warning {
+		border-top: 2px solid @red-50;
+	}
+
+	.client-nojs .smw-admin-supplementary-duplookup-content:after {
+		color: @red-50;
+		background-color: @dark-bg-20;
+	}
+
+	.smw-admin h3,
+	.smw-admin h4,
+	h3.smw-title,
+	h4.smw-title,
+	h3 .smw-title {
+		background: @dark-bg-10;
+	}
+}

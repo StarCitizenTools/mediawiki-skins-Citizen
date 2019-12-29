@@ -1,0 +1,127 @@
+/*
+ * Citizen - SMW Special Ask
+ * https://starcitizen.tools
+ * TODO CHECK 'smw/ext.smw.table.css'
+*/
+
+@import '../../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	.smw-property-page-content-line {
+		border-bottom: 1px solid @dark-bg-20;
+	}
+
+	.smw-property-page-results .value-row:hover {
+		background-color: @dark-bg-10;
+	}
+
+	.smw-property-page-results .header-row > .header-title {
+		border-bottom: 1px solid @dark-bg-20;
+	}
+
+	.smw-ui-pagination .page-link {
+		color: #007bff;
+		background-color: @dark-bg-0;
+		border: 1px solid @dark-bg-20;
+	}
+
+	.smw-ui-pagination .page-link:hover {
+		color: #0056b3;
+		background-color: @dark-bg-20;
+		border-color: @dark-bg-30;
+	}
+
+	.smw-ui-pagination .page-link.link-disabled {
+		color: @dark-text-70;
+		background-color: @dark-bg-0;
+		border-color: @dark-bg-20;
+	}
+
+	.smw-ui-pagination .page-link.link-active {
+		color: @dark-text-100;
+		background-color: #007bff;
+		border-color: #007bff;
+	}
+
+	.smw-property-page-results .header-title {
+		color: @dark-text-80;
+		background-color: @dark-bg-0;
+	}
+
+	.list-pager-value-filter input {
+		color: @dark-text-90;
+		background-color: @dark-bg-0;
+		border: 1px solid @dark-bg-20;
+	}
+
+	.smw-ui-input-filter {
+		color: #007bff;
+		background-color: @dark-bg-0;
+		border: 1px solid @dark-bg-20;
+	}
+
+	.smw-ui-input-filter input {
+		border: 0 solid @dark-bg-20 !important;
+		border-left: 1px solid @dark-bg-20 !important;
+		color: @dark-text-80 !important;
+	}
+
+	.smw-property-page-results .header-title {
+		border-bottom: 1px solid @dark-bg-20;
+	}
+
+	.smw-property-page-results.legacy .header-title {
+		border-bottom: 0 solid @dark-bg-20;
+	}
+
+	.usage-count,
+	.item-count {
+		background-color: rgba( 27, 31, 35, 0.04 );
+		color: @dark-text-70;
+	}
+
+	#tab-smw-property-value:checked + label.nav-label .usage-count,
+	#tab-smw-concept-list:checked + label.nav-label .usage-count,
+	#tab-smw-property-subp:checked + label.nav-label .item-count,
+	#tab-smw-property-errp:checked + label.nav-label .item-count,
+	#tab-smw-property-redi:checked + label.nav-label .item-count,
+	#tab-smw-type-list:checked + label.nav-label .item-count,
+	#tab-smw-property-spec:checked + label.nav-label .item-count {
+		background-color: rgba( 27, 31, 35, 0.08 );
+		color: #444d56;
+	}
+
+	#tab-smw-property-value:checked + label.nav-label .usage-count.moderate,
+	#tab-smw-concept-list:checked + label.nav-label .usage-count.moderate {
+		background-color: rgba( 43, 157, 239, 0.18 );
+		color: #444d56;
+	}
+
+	#tab-smw-property-value:checked + label.nav-label .usage-count.high,
+	#tab-smw-concept-list:checked + label.nav-label .usage-count.high {
+		background-color: rgba( 186, 0, 0, 0.16 );
+		color: #444d56;
+	}
+
+	.smw-property input.nav-tab:checked + label.nav-label.smw-tab-warning,
+	.smw-concept input.nav-tab:checked + label.nav-label.smw-tab-warning,
+	.smw-types input.nav-tab:checked + label.nav-label.smw-tab-warning {
+		border-top: 2px solid @red-50;
+	}
+
+	.smw-property input.nav-tab:checked + label.nav-label.smw-tab-spec,
+	.smw-concept input.nav-tab:checked + label.nav-label.smw-tab-spec {
+		border-top: 2px solid @yellow-50;
+	}
+
+	.smw-property input.nav-tab:checked + label#tab-label-smw-property-constraint.nav-label {
+		border-top: 2px solid @accent-50;
+	}
+
+	@media screen and ( max-width: 800px ) {
+		.smw-property-page-results .header-title:first-child,
+		.smw-property-page-results .header-row > .header-title:first-child {
+			border-bottom: 1px solid @dark-bg-20;
+		}
+	}
+}
