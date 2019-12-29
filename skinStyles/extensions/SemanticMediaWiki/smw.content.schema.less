@@ -1,0 +1,84 @@
+/*
+ * Citizen - SMW Special Ask
+ * https://starcitizen.tools
+ * TODO CHECK 'smw/ext.smw.table.css'
+*/
+
+@import '../../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	.content-highlight {
+		border-top: 1px solid @dark-bg-20;
+		border-left: 1px solid @dark-bg-20;
+		border-right: 1px solid @dark-bg-20;
+		border-bottom: 1px solid @dark-bg-20;
+	}
+
+	.content-no-highlight-o {
+		background-color: @dark-bg-10;
+		border-top: 1px solid @dark-bg-20;
+		border-left: 1px solid @dark-bg-20;
+		border-right: 1px solid @dark-bg-20;
+		border-bottom: 1px solid @dark-bg-20;
+	}
+
+	.unknown-type .content-highlight {
+		border-top: 1px solid @dark-bg-20;
+	}
+
+	.schema-tags {
+		border-bottom: 1px solid @dark-bg-20;
+		border-left: 1px solid @dark-bg-20;
+		border-right: 1px solid @dark-bg-20;
+		background-color: @dark-bg-10;
+	}
+
+	.schema-tags:first-child {
+		border: 1px solid @dark-bg-20;
+		background-color: @dark-bg-10;
+	}
+
+	.schema-tags li {
+		border-left: 1px solid @dark-bg-50;
+	}
+
+	.smw-schema-description {
+		color: @dark-text-70;
+	}
+
+	.schema-error {
+		color: @red-50;
+	}
+
+	h3.smw-title {
+		background: @dark-bg-10;
+		color: @dark-text-100;
+	}
+
+	.smw-schema #tab-schema-usage:checked + label.nav-label .item-count {
+		background-color: rgba( 27, 31, 35, 0.08 );
+		color: @dark-text-80;
+	}
+
+	.smw-schema section {
+		border-top: 1px solid @dark-bg-20;
+		border-left: 0 solid @dark-bg-20;
+		border-right: 0 solid @dark-bg-20;
+	}
+
+	.smw-schema input.nav-tab:checked + label.nav-label {
+		border: 1px solid @dark-bg-20;
+		border-top: 2px solid #337ab7;
+		border-bottom: 1px solid @dark-bg-0;
+	}
+
+	.smw-schema input.nav-tab:checked + label.nav-label.error-label {
+		border-top: 2px solid @red-50;
+	}
+
+	.schema-summary .smw-table-cell,
+	.smw-table-head {
+		border: 1px solid @dark-bg-50;
+		border-bottom: 1px solid @dark-bg-20;
+	}
+}

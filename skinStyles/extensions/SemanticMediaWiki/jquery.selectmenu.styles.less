@@ -1,0 +1,284 @@
+/*
+ * Citizen - SMW Special Ask
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	/**
+	jquery/jquery.selectmenu.css
+	 */
+	.sm_target_clicked {
+		background-color: @dark-bg-20;
+		border-color: rgba( 27, 31, 35, 0.35 );
+		box-shadow: inset 0 0.15em 0.3em rgba( 27, 31, 35, 0.15 );
+	}
+
+	.sm_sub_header:hover {
+		color: @dark-text-100 !important;
+	}
+
+	.sm_sub_header button {
+		color: @dark-text-100;
+	}
+
+	.sm_container {
+		border: 1px solid @dark-bg-30;
+		background-color: @dark-bg-10;
+		box-shadow: 0 3px 12px rgba( 0, 0, 0, 0.2 );
+		-moz-box-shadow: 0 3px 12px rgba( 0, 0, 0, 0.2 );
+		-webkit-box-shadow: 0 3px 12px rgba( 0, 0, 0, 0.2 );
+	}
+
+	.sm_header > h3 {
+		color: @dark-text-90;
+	}
+
+	.sm_header button {
+		color: @dark-text-60;
+	}
+
+	.sm_header button:hover {
+		color: @dark-text-100;
+	}
+
+	.sm_input {
+		background-color: @dark-bg-0;
+		border: 1px solid @dark-bg-20;
+		-webkit-box-shadow: inset 0 1px 1px rgba( 0, 0, 0, 0.075 );
+		-moz-box-shadow: inset 0 1px 1px rgba( 0, 0, 0, 0.075 );
+		box-shadow: inset 0 1px 1px rgba( 0, 0, 0, 0.075 );
+	}
+
+	.sm_input:focus {
+		border: 1px solid @dark-bg-50;
+		box-shadow: 0 0 0 3px rgba( 150, 150, 150, 0.2 );
+	}
+
+	div.sm_clear_btn {
+		color: @dark-text-70;
+	}
+
+	div.sm_clear_btn:hover {
+		color: @dark-text-100;
+	}
+
+	.sm_result_area {
+		background-color: @dark-bg-0;
+	}
+
+	.sm_result_area.sm_list_mode {
+		border-top: 1px solid @dark-bg-20;
+	}
+
+	div.sm_result_area.shadowDown {
+		box-shadow: 0 3px 12px rgba( 0, 0, 0, 0.2 );
+		-moz-box-shadow: 0 3px 12px rgba( 0, 0, 0, 0.2 );
+		-webkit-box-shadow: 0 3px 12px rgba( 0, 0, 0, 0.2 );
+	}
+
+	div.sm_result_area.shadowUp {
+		box-shadow: 0 -1px 12px rgba( 0, 0, 0, 0.2 );
+		-moz-box-shadow: 0 -1px 12px rgba( 0, 0, 0, 0.2 );
+		-webkit-box-shadow: 0 -1px 12px rgba( 0, 0, 0, 0.2 );
+	}
+
+	.sm_result_tabs {
+		border-bottom: 1px solid @dark-bg-20;
+	}
+
+	.sm_result_tabs ul li a {
+		color: @dark-text-70;
+	}
+
+	.sm_result_tabs ul li a.active {
+		color: @dark-text-90;
+		background-color: @dark-bg-0;
+		border-color: @dark-bg-20;
+		border-bottom-color: @dark-bg-0;
+	}
+
+	.sm_arrow_bottom > .sm_arrow {
+		border-bottom-color: @dark-bg-50;
+		border-bottom-color: rgba( 0, 0, 0, 0.25 );
+	}
+
+	.sm_arrow_bottom > .sm_arrow:after {
+		border-bottom-color: @dark-bg-0;
+	}
+
+	.sm_arrow_bottom > .sm_arrow.sm_have_title:after {
+		border-bottom-color: @dark-bg-10;
+	}
+
+	.sm_arrow_top > .sm_arrow {
+		border-top-color: @dark-bg-50;
+		border-top-color: rgba( 0, 0, 0, 0.25 );
+	}
+
+	.sm_arrow_top > .sm_arrow:after {
+		border-top-color: @dark-bg-0;
+	}
+
+	.sm_results {
+		background-color: @dark-bg-0;
+	}
+
+	.sm_regular .sm_results > li:hover {
+		background-color: #53a4ea;
+		color: @dark-text-100;
+	}
+
+	.sm_regular .sm_results > li:hover a {
+		color: @dark-text-100;
+	}
+
+	.sm_regular .sm_results > li.sm_disabled,
+	.sm_regular .sm_results > li.sm_disabled:hover,
+	.sm_regular .sm_results > li.sm_disabled a {
+		background-color: @dark-bg-0;
+		color: @dark-text-70;
+	}
+
+	.sm_regular .sm_results > li.sm_header,
+	.sm_regular .sm_results > li.sm_header:hover,
+	.sm_regular .sm_results > li.sm_header a {
+		background-color: @dark-bg-0;
+		color: @dark-text-100;
+	}
+
+	.sm_results > li {
+		color: @dark-text-100;
+	}
+
+	.sm_results > li > a {
+		color: @dark-text-100;
+	}
+
+	.sm_results > li.sm_divider {
+		border-bottom: 1px solid @dark-bg-20;
+	}
+
+	ul.sm_results > li.sm_over {
+		background-color: #53a4ea !important;
+		color: @dark-text-100 !important;
+	}
+
+	.sm_control_box {
+		background-color: @dark-bg-0;
+		border-top: 1px solid @dark-bg-20;
+	}
+
+	.sm_control_box button {
+		background-color: @dark-bg-10;
+		color: @dark-text-80;
+	}
+
+	.sm_control_box button:hover {
+		background-color: @dark-bg-20;
+		color: @dark-text-100;
+	}
+
+	div.sm_container_combo {
+		border: 1px solid @dark-bg-30;
+		-webkit-box-shadow: inset 0 1px 1px rgba( 0, 0, 0, 0.075 );
+		-moz-box-shadow: inset 0 1px 1px rgba( 0, 0, 0, 0.075 );
+		box-shadow: inset 0 1px 1px rgba( 0, 0, 0, 0.075 );
+	}
+
+	div.sm_container_combo.sm_disabled,
+	div.sm_container_combo.sm_disabled ul.sm_element_box,
+	div.sm_container_combo.sm_disabled .sm_input {
+		background-color: @dark-bg-20;
+	}
+
+	div.sm_container_combo.sm_container_open {
+		-webkit-box-shadow: inset 0 1px 1px rgba( 0, 0, 0, 0.075 ), 0 0 8px rgba( 82, 168, 236, 0.6 );
+		-moz-box-shadow: inset 0 1px 1px rgba( 0, 0, 0, 0.075 ), 0 0 8px rgba( 82, 168, 236, 0.6 );
+		box-shadow: inset 0 1px 1px rgba( 0, 0, 0, 0.075 ), 0 0 8px rgba( 82, 168, 236, 0.6 );
+		border: 1px solid #75b9f0;
+	}
+
+	input.sm_combo_input[ readonly ],
+	input.sm_combo_input[ disabled ] {
+		background-color: @dark-bg-0;
+	}
+
+	ul.sm_element_box li.selected_tag {
+		border: 1px solid @dark-bg-50;
+		background-color: @dark-bg-20;
+		box-shadow: 0 0 2px @dark-bg-0 inset, 0 1px 0 rgba( 0, 0, 0, 0.05 );
+	}
+
+	.sm_input_off {
+		background: @dark-bg-20;
+		color: @dark-text-90;
+	}
+
+	.sm_navi {
+		background: @dark-bg-20;
+		border-bottom: 1px solid @accent-90;
+	}
+
+	.sm_navi > p > a:link,
+	.sm_navi > p > a:visited,
+	.sm_navi > p > a:hover,
+	.sm_navi > p > a:active {
+		color: @accent-50;
+	}
+
+	.sm_navi > p {
+		color: @dark-text-100;
+	}
+
+	.sm_navi > p > a > .current {
+		color: @accent-10;
+	}
+
+	.sm_navi > p > .page_end {
+		color: @dark-text-70;
+	}
+
+	.sm_container > .sm_select_ng {
+		background: @red-90;
+	}
+
+	div.sm_result_area div.pagination > ul > li > a {
+		background-color: @dark-bg-0;
+		color: @dark-text-70;
+	}
+
+	div.sm_result_area div.pagination > ul > li > a:hover {
+		color: @dark-text-100;
+		background-color: @dark-bg-20;
+	}
+
+	div.sm_result_area div.pagination > ul > li.disabled > a {
+		color: @dark-text-80;
+	}
+
+	div.sm_result_area div.pagination > ul > li.disabled > a:hover {
+		color: @dark-text-80;
+		background-color: @dark-bg-0;
+	}
+
+	div.sm_result_area div.pagination > ul > li.pageInfoBox > a {
+		color: @dark-text-70;
+	}
+
+	div.sm_result_area div.pagination > ul > li.pageInfoBox > a:hover {
+		color: @dark-text-70;
+	}
+
+	/**
+	smw/smw.selectmenu.css
+	 */
+	.smw-selectmenu-button {
+		color: @dark-text-80;
+	}
+
+	.smw-selectmenu-label {
+		color: @dark-text-80;
+	}
+}

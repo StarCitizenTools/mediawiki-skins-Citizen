@@ -1,0 +1,70 @@
+/*
+ * Citizen - SMW Vertical Tabs
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	div.smw-vtab-nav button {
+		background-color: @dark-bg-0;
+		color: #428bca;
+	}
+
+	div.smw-vtab-nav button a {
+		color: #428bca;
+	}
+
+	div.smw-vtab-nav.nav-right button {
+		border-left: 1px solid @dark-bg-20;
+	}
+
+	div.smw-vtab-nav.nav-left button {
+		border-right: 1px solid @dark-bg-20;
+	}
+
+	div.smw-vtab-nav button:hover {
+		background-color: @dark-bg-20;
+		border-color: @dark-bg-30;
+	}
+
+	div.smw-vtab-nav.nav-right button:hover {
+		border-left: 1px solid @dark-bg-20;
+	}
+
+	div.smw-vtab-nav.nav-left button:hover {
+		border-right: 1px solid @dark-bg-20;
+	}
+
+	div.smw-vtab-nav button.active {
+		background-color: @dark-bg-0;
+		border: 1px solid @dark-bg-20;
+		color: @dark-text-100;
+	}
+
+	div.smw-vtab-nav button.active a {
+		color: @dark-text-100;
+	}
+
+	div.smw-vtab-nav.nav-right button.active,
+	div.smw-vtab-nav.nav-right button.active a {
+		border-color: @dark-bg-20;
+	}
+
+	div.smw-vtab-nav.nav-left button.active,
+	div.smw-vtab-nav.nav-left button.active a {
+		border-color: @dark-bg-20;
+	}
+
+	.smw-vtab-content {
+		border: 1px solid @dark-bg-30;
+	}
+
+	div.smw-vtab-nav .smw-vtab-warning a {
+		color: @yellow-50;
+	}
+
+	div.smw-vtab-nav .smw-vtab-warning.active a {
+		color: @yellow-30;
+	}
+}

@@ -1,0 +1,58 @@
+/*
+ * Citizen - Flow Styles Base
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	.flow-component {
+		.flow-list {
+			li:hover {
+				background: @dark-bg-20;
+			}
+		}
+	}
+
+	.flow-revision-content {
+		background-color: @dark-bg-20;
+		color: @dark-text-70;
+	}
+
+	.flow-no-more,
+	.flow-undo {
+		color: @dark-text-70;
+	}
+
+	.flow-ui-boardDescriptionWidget-editButton.oo-ui-widget.oo-ui-buttonElement .oo-ui-buttonElement-button {
+		border-color: transparent;
+	}
+
+	.flow-component.flow-board-page {
+		.flow-board-header {
+			background-color: @dark-bg-10;
+			box-shadow: -2px 0 0 0 rgba( 0, 0, 0, 0.1 );
+		}
+	}
+
+	.flow-component.flow-board-page.flow-full-height-side-rail {
+		.flow-board-header:before {
+			background-color: @dark-bg-10;
+			box-shadow: -2px 0 0 0 rgba( 0, 0, 0, 0.1 );
+		}
+	}
+
+	.flow-component {
+		.mw-ui-icon-before:before,
+		.oo-ui-indicatorElement-indicator,
+		.oo-ui-iconElement-icon {
+			filter: invert( 1 ) hue-rotate( 180deg );
+		}
+
+		.flow-menu {
+			.mw-ui-button.mw-ui-quiet {
+				color: @dark-text-90;
+			}
+		}
+	}
+}

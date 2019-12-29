@@ -1,0 +1,119 @@
+/*
+ * Citizen - SMW Lib Tippy
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	/**
+  	tippy.css
+    */
+	.tippy-tooltip {
+		color: @dark-text-100;
+		background-color: #333;
+	}
+
+	/**
+  	light-border.css
+    */
+	.tippy-tooltip.light-border-theme {
+		background-color: @dark-bg-0;
+		border: 1px solid rgba( 0, 8, 16, 0.15 );
+		color: @dark-text-90;
+		box-shadow: 0 3px 14px -0.5px rgba( 0, 8, 16, 0.08 );
+	}
+
+	.tippy-tooltip.light-border-theme .tippy-backdrop {
+		background-color: @dark-bg-0;
+	}
+
+	.tippy-tooltip.light-border-theme .tippy-roundarrow {
+		fill: @dark-bg-0;
+	}
+
+	.tippy-tooltip.light-border-theme .tippy-roundarrow:after {
+		fill: rgba( 0, 8, 16, 0.15 );
+	}
+
+	.tippy-tooltip.light-border-theme[ x-placement^='top' ] .tippy-arrow {
+		border-top-color: @dark-bg-0;
+	}
+
+	.tippy-tooltip.light-border-theme[ x-placement^='top' ] .tippy-arrow:after {
+		border-top: 7px solid @dark-bg-0;
+	}
+
+	.tippy-tooltip.light-border-theme[ x-placement^='top' ] .tippy-arrow:before {
+		border-top: 7px solid rgba( 0, 8, 16, 0.2 );
+	}
+
+	.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow {
+		border-bottom-color: @dark-bg-0;
+	}
+
+	.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow:after {
+		border-bottom: 7px solid @dark-bg-0;
+	}
+
+	.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow:before {
+		border-bottom: 7px solid rgba( 0, 8, 16, 0.2 );
+	}
+
+	.tippy-tooltip.light-border-theme[ x-placement^='left' ] .tippy-arrow {
+		border-left-color: @dark-bg-0;
+	}
+
+	.tippy-tooltip.light-border-theme[ x-placement^='left' ] .tippy-arrow:after {
+		border-left: 7px solid @dark-bg-0;
+	}
+
+	.tippy-tooltip.light-border-theme[ x-placement^='left' ] .tippy-arrow:before {
+		border-left: 7px solid rgba( 0, 8, 16, 0.2 );
+	}
+
+	.tippy-tooltip.light-border-theme[ x-placement^='right' ] .tippy-arrow {
+		border-right-color: @dark-bg-0;
+	}
+
+	.tippy-tooltip.light-border-theme[ x-placement^='right' ] .tippy-arrow:after {
+		border-right: 7px solid @dark-bg-0;
+	}
+
+	.tippy-tooltip.light-border-theme[ x-placement^='right' ] .tippy-arrow:before {
+		border-right: 7px solid rgba( 0, 8, 16, 0.2 );
+	}
+
+	/**
+  	light.css
+    */
+	.tippy-tooltip.light-theme {
+		color: @dark-text-90;
+		box-shadow: 0 0 20px 4px rgba( 154, 161, 177, 0.15 ), 0 4px 80px -8px rgba( 36, 40, 47, 0.25 ), 0 4px 4px -2px rgba( 91, 94, 105, 0.15 );
+		background-color: @dark-bg-0;
+	}
+
+	.tippy-tooltip.light-theme[ x-placement^='top' ] .tippy-arrow {
+		border-top: 8px solid @dark-bg-0;
+	}
+
+	.tippy-tooltip.light-theme[ x-placement^='bottom' ] .tippy-arrow {
+		border-bottom: 8px solid @dark-bg-0;
+	}
+
+	.tippy-tooltip.light-theme[ x-placement^='left' ] .tippy-arrow {
+		border-left: 8px solid @dark-bg-0;
+	}
+
+	.tippy-tooltip.light-theme[ x-placement^='right' ] .tippy-arrow {
+		border-right: 8px solid @dark-bg-0;
+	}
+
+	.tippy-tooltip.light-theme .tippy-backdrop {
+		background-color: @dark-bg-0;
+	}
+
+	.tippy-tooltip.light-theme .tippy-roundarrow {
+		fill: @dark-bg-0;
+	}
+}
