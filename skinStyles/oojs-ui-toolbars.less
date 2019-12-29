@@ -43,7 +43,9 @@
 	}
 
 	.oo-ui-toolGroup,
-	.oo-ui-toolbar-actions .oo-ui-toolGroup {
+	.oo-ui-toolbar-actions .oo-ui-toolGroup,
+	.oo-ui-toolbar-actions > .oo-ui-toolbar:not(:last-child),
+	.oo-ui-toolbar-position-top .ve-ui-toolbarDialog-position-above {
 		border-color: @dark-bg-20;
 	}
 
@@ -54,10 +56,6 @@
 		.oo-ui-tool-link .oo-ui-tool-title {
 			color: @dark-text-100;
 		}
-	}
-
-	.oo-ui-toolbar-position-top .ve-ui-toolbarDialog-position-above {
-		border-color: @dark-bg-20;
 	}
 
 	.oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle:hover,
