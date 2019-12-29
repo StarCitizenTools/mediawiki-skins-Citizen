@@ -3,7 +3,7 @@
 	"scripts": {
 		"test": "grunt test",
 		"doc": "jsdoc resources/main.js -c jsdoc.json -r",
-		"fix": "stylelint '**' --fix"
+		"fix": "stylelint '**/*.less' '**/*.css' --fix"
 	},
 	"devDependencies": {
 		"eslint-config-wikimedia": "0.15.0",
