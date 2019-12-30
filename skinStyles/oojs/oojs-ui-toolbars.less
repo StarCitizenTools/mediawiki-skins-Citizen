@@ -38,21 +38,22 @@
 
 @media ( prefers-color-scheme: dark ) {
 	.oo-ui-toolbar-bar {
-    	background-color: @dark-bg-20;
-    	color: @dark-text-100;
+		background-color: @dark-bg-20;
+		color: @dark-text-100;
 	}
 
 	.oo-ui-toolGroup,
 	.oo-ui-toolbar-actions .oo-ui-toolGroup,
-	.oo-ui-toolbar-actions > .oo-ui-toolbar:not(:last-child),
+	.oo-ui-toolbar-actions > .oo-ui-toolbar:not( :last-child ),
 	.oo-ui-toolbar-position-top .ve-ui-toolbarDialog-position-above {
 		border-color: @dark-bg-20;
 	}
 
 	.oo-ui-popupToolGroup {
 		.oo-ui-toolGroup-tools {
-    		background-color: @dark-bg-20;
+			background-color: @dark-bg-20;
 		}
+
 		.oo-ui-tool-link .oo-ui-tool-title {
 			color: @dark-text-100;
 		}
@@ -60,7 +61,194 @@
 
 	.oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle:hover,
 	.oo-ui-listToolGroup .oo-ui-tool.oo-ui-widget-enabled:hover {
-    	background-color: @dark-bg-10;
-    	color: @dark-text-100;
+		background-color: @dark-bg-10;
+		color: @dark-text-100;
+	}
+
+	.oo-ui-tool.oo-ui-widget-enabled .oo-ui-tool-link:focus {
+		outline: 1px solid @accent-50;
+		box-shadow: inset 0 0 0 1px solid @accent-50;
+	}
+
+	.oo-ui-toolGroup {
+		border-right: 1px solid @dark-bg-20;
+	}
+
+	.oo-ui-toolbar-actions .oo-ui-toolGroup {
+		border-left: 1px solid @dark-bg-20;
+	}
+
+	.oo-ui-barToolGroup-tools.oo-ui-toolGroup-enabled-tools > .oo-ui-tool:not( .oo-ui-toolGroupTool ).oo-ui-widget-enabled:hover {
+		background-color: @dark-bg-20;
+	}
+
+	.oo-ui-barToolGroup-tools.oo-ui-toolGroup-enabled-tools > .oo-ui-tool:not( .oo-ui-toolGroupTool ).oo-ui-widget-enabled > .oo-ui-tool-link .oo-ui-tool-title {
+		color: @dark-text-90;
+	}
+
+	.oo-ui-barToolGroup-tools.oo-ui-toolGroup-enabled-tools > .oo-ui-tool:not( .oo-ui-toolGroupTool ).oo-ui-tool-active {
+		background-color: @accent-10;
+	}
+
+	.oo-ui-barToolGroup-tools.oo-ui-toolGroup-enabled-tools > .oo-ui-tool:not( .oo-ui-toolGroupTool ).oo-ui-tool-active:hover {
+		background-color: rgba( 41, 98, 204, 0.1 );
+	}
+
+	.oo-ui-barToolGroup-tools.oo-ui-toolGroup-enabled-tools > .oo-ui-tool:not( .oo-ui-toolGroupTool ).oo-ui-tool-active > .oo-ui-tool-link .oo-ui-tool-title {
+		color: @accent-50;
+	}
+
+	.oo-ui-barToolGroup-tools.oo-ui-toolGroup-enabled-tools .oo-ui-tool.oo-ui-widget-disabled > .oo-ui-tool-link .oo-ui-tool-title,
+	.oo-ui-barToolGroup-tools.oo-ui-toolGroup-disabled-tools .oo-ui-tool > .oo-ui-tool-link .oo-ui-tool-title {
+		color: @dark-text-70;
+	}
+
+	.oo-ui-popupToolGroup-header {
+		color: @dark-text-70;
+	}
+
+	.oo-ui-popupToolGroup-tools {
+		background-color: @dark-bg-0;
+		border: 1px solid @dark-bg-30;
+		box-shadow: 0 2px 2px 0 rgba( 0, 0, 0, 0.25 );
+	}
+
+	.oo-ui-popupToolGroup-tools .oo-ui-tool-link .oo-ui-tool-title {
+		color: @dark-text-90;
+	}
+
+	.oo-ui-popupToolGroup-tools .oo-ui-tool-link .oo-ui-tool-accel {
+		color: @dark-text-70;
+	}
+
+	.oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle:hover {
+		background-color: @dark-bg-20;
+	}
+
+	.oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle:active {
+		background-color: @accent-10;
+	}
+
+	.oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle:focus {
+		outline: 1px solid @accent-50;
+		box-shadow: inset 0 0 0 1px solid @accent-50;
+	}
+
+	.oo-ui-toolbar-actions .oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle:hover {
+		border-right-color: @dark-bg-20;
+	}
+
+	.oo-ui-toolbar-actions .oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle:active {
+		border-right-color: @accent-10;
+	}
+
+	.oo-ui-toolbar-actions .oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle:focus {
+		border-right-color: @accent-50;
+	}
+
+	.oo-ui-popupToolGroup.oo-ui-popupToolGroup-active > .oo-ui-popupToolGroup-handle {
+		background-color: @accent-10;
+		color: @accent-50;
+	}
+
+	.oo-ui-popupToolGroup.oo-ui-popupToolGroup-active > .oo-ui-popupToolGroup-handle:hover {
+		background-color: rgba( 41, 98, 204, 0.1 );
+		color: @accent-50;
+	}
+
+	.oo-ui-popupToolGroup-tools .oo-ui-tool-active.oo-ui-widget-enabled .oo-ui-tool-link .oo-ui-tool-title {
+		color: @accent-50;
+	}
+
+	.oo-ui-popupToolGroup-tools .oo-ui-tool.oo-ui-widget-enabled .oo-ui-tool-link:focus {
+		box-shadow: inset 0 0 0 2px @accent-50;
+	}
+
+	.oo-ui-listToolGroup-tools .oo-ui-tool.oo-ui-widget-enabled:hover {
+		background-color: @dark-bg-20;
+		color: @dark-text-100;
+	}
+
+	.oo-ui-listToolGroup-tools .oo-ui-tool-active.oo-ui-widget-enabled {
+		background-color: @accent-10;
+	}
+
+	.oo-ui-listToolGroup-tools .oo-ui-tool-active.oo-ui-widget-enabled:hover {
+		background-color: rgba( 41, 98, 204, 0.1 );
+	}
+
+	.oo-ui-listToolGroup-tools .oo-ui-tool-active.oo-ui-widget-enabled .oo-ui-tool-link .oo-ui-tool-title {
+		color: @accent-50;
+	}
+
+	.oo-ui-listToolGroup.oo-ui-widget-disabled,
+	.oo-ui-listToolGroup-tools .oo-ui-tool.oo-ui-widget-disabled .oo-ui-tool-title {
+		color: @dark-text-70;
+	}
+
+	.oo-ui-menuToolGroup-tools .oo-ui-tool.oo-ui-widget-enabled:hover {
+		background-color: rgba( 41, 98, 204, 0.1 );
+	}
+
+	.oo-ui-menuToolGroup-tools .oo-ui-tool.oo-ui-tool-active {
+		background-color: @accent-10;
+	}
+
+	.oo-ui-menuToolGroup.oo-ui-widget-disabled,
+	.oo-ui-menuToolGroup-tools .oo-ui-tool.oo-ui-widget-disabled .oo-ui-tool-title {
+		color: @dark-text-70;
+	}
+
+	.oo-ui-toolbar-bar {
+		background-color: @dark-bg-0;
+		color: @dark-text-90;
+	}
+
+	.oo-ui-toolbar-position-top > .oo-ui-toolbar-bar {
+		border-bottom: 1px solid @dark-bg-30;
+		box-shadow: 0 1px 1px 0 rgba( 0, 0, 0, 0.1 );
+	}
+
+	.oo-ui-toolbar-position-bottom > .oo-ui-toolbar-bar {
+		border-top: 1px solid @dark-bg-30;
+		box-shadow: 0 -1px 1px 0 rgba( 0, 0, 0, 0.1 );
+	}
+
+	.oo-ui-toolbar-narrow.oo-ui-toolbar-position-top .oo-ui-toolbar-bar:after {
+		border-bottom: 1px solid @dark-bg-30;
+	}
+
+	.oo-ui-toolbar-narrow.oo-ui-toolbar-position-bottom .oo-ui-toolbar-bar:after {
+		border-top: 1px solid @dark-bg-30;
+	}
+
+	.oo-ui-toolbar-actions > .oo-ui-buttonElement.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-buttonElement-button:focus {
+		box-shadow: inset 0 0 0 2px @accent-50, inset 0 0 0 3px @dark-bg-0;
+	}
+
+	.oo-ui-toolbar-actions > .oo-ui-buttonGroupWidget > .oo-ui-popupToolGroup.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-popupToolGroup-handle {
+		color: @dark-text-100;
+		background-color: @accent-50;
+		border-color: @accent-50;
+	}
+
+	.oo-ui-toolbar-actions > .oo-ui-buttonGroupWidget > .oo-ui-popupToolGroup.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-popupToolGroup-handle:hover {
+		background-color: #447ff5;
+		border-color: #447ff5;
+	}
+
+	.oo-ui-toolbar-actions > .oo-ui-buttonGroupWidget > .oo-ui-popupToolGroup.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-popupToolGroup-handle:active,
+	.oo-ui-toolbar-actions > .oo-ui-buttonGroupWidget > .oo-ui-popupToolGroup.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-popupToolGroup-handle:active:focus,
+	.oo-ui-toolbar-actions > .oo-ui-buttonGroupWidget > .oo-ui-popupToolGroup.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive.oo-ui-buttonElement-pressed > .oo-ui-popupToolGroup-handle,
+	.oo-ui-toolbar-actions > .oo-ui-buttonGroupWidget > .oo-ui-popupToolGroup.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive.oo-ui-buttonElement-active > .oo-ui-popupToolGroup-handle,
+	.oo-ui-toolbar-actions > .oo-ui-buttonGroupWidget > .oo-ui-popupToolGroup.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive.oo-ui-popupToolGroup-active > .oo-ui-popupToolGroup-handle {
+		color: @dark-text-100;
+		background-color: @accent-10;
+		border-color: @accent-10;
+	}
+
+	.oo-ui-toolbar-actions > .oo-ui-buttonGroupWidget > .oo-ui-popupToolGroup.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-popupToolGroup-handle:focus {
+		border-color: @accent-50;
+		box-shadow: inset 0 0 0 1px solid @accent-50, inset 0 0 0 2px @dark-bg-0;
 	}
 }
