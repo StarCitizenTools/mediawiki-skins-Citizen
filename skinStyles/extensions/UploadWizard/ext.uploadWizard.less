@@ -1,0 +1,136 @@
+/*
+ * Citizen - Upload Wizard
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	/**
+	resources/jquery.arrowSteps/jquery.arrowSteps.css
+	 */
+	.arrowSteps {
+		border: 1px solid @dark-bg-30;
+	}
+
+	.arrowSteps li {
+		color: @dark-text-70;
+		background-color: @dark-bg-20;
+	}
+
+	#mwe-upwiz-steps li.head {
+		color: @accent-90;
+		background-color: @accent-10;
+	}
+
+	.arrowSteps li.arrow:after {
+		border-left-color: @dark-bg-20;
+	}
+
+	.arrowSteps li.arrow:before {
+		border-left-color: @dark-bg-0;
+	}
+
+	#mwe-upwiz-steps li.head:after {
+		border-left-color: @accent-10;
+	}
+
+	/**
+	resources/uw.CopyMetadataWidget.less
+	 */
+	.mwe-upwiz-copyMetadataWidget {
+		border-top: 1px solid @dark-bg-30;
+		border-bottom: 1px solid @dark-bg-30;
+	}
+
+	/**
+	resources/uploadWizard.css
+	 */
+	#mwe-upwiz-steps {
+		background-color: @dark-bg-0;
+	}
+
+	.mwe-upwiz-file.odd .mwe-upwiz-visible-file {
+		background: @dark-bg-10;
+	}
+
+	.mwe-upwiz-file:hover .mwe-upwiz-visible-file {
+		background: @dark-bg-30 !important;
+	}
+
+	.mwe-upwiz-file-status {
+		color: @dark-text-70;
+	}
+
+	.mwe-upwiz-patent-rights .oo-ui-panelLayout .oo-ui-panelLayout:not( :last-child ) {
+		box-shadow: 0 1em 1px -1em @dark-bg-30;
+	}
+
+	.mwe-upwiz-patent-rights-filelist {
+		box-shadow: 0 0 1px 0 @dark-bg-30;
+	}
+
+	.mwe-upwiz-patent-weapon-policy {
+		border: 1px solid @dark-bg-30;
+		background-color: @dark-bg-20;
+	}
+
+	.mwe-upwiz-license-metadata {
+		border: 1px solid @dark-bg-30;
+		background-color: @dark-bg-20;
+	}
+
+	#mwe-upwiz-flickr-disclaimer {
+		background-color: @accent-10;
+	}
+
+	.filled + .filled {
+		border-top: 1px solid @dark-bg-30;
+	}
+
+	.mwe-upwiz-status-error {
+		color: @red-50;
+	}
+
+	.mwe-upwiz-thumbnail {
+		background-color: @dark-bg-0;
+	}
+
+	#mwe-upwiz-deeds-thumbnails {
+		background-color: @dark-bg-10;
+	}
+
+	.mwe-upwiz-thumbnail-link canvas,
+	.mwe-upwiz-thumbnail-link img {
+		box-shadow: 0 0 5px @dark-bg-50;
+	}
+
+	.mwe-readonly {
+		background-color: @dark-bg-0;
+	}
+
+	.mwe-upwiz-deed-license-group-subhead {
+		color: @dark-text-70;
+	}
+
+	.mwe-upwiz-objref-pick-image input:disabled + label {
+		color: @dark-text-70;
+	}
+
+	/**
+  resources/uw.FieldLayout.less
+   */
+	.mwe-upwiz-fieldLayout {
+		.mwe-upwiz-fieldLayout-indicator {
+			color: @dark-text-70;
+		}
+	}
+
+	/**
+  resources/details/uw.SingleLanguageInputWidget.less
+   */
+	.mwe-upwiz-singleLanguageInputWidget {
+		background-color: @dark-bg-10;
+		border: 1px solid @dark-bg-20;
+	}
+}

@@ -399,6 +399,10 @@
 
 			"+ext.Tabber": "skinStyles/extensions/Tabber/ext.Tabber.less",
 
+			"+ext.uploadWizard.uploadCampaign.display": "skinStyles/extensions/UploadWizard/ext.uploadWizard.uploadCampaign.display.less",
+			"+ext.uploadWizard.uploadCampaign.list": "skinStyles/extensions/UploadWizard/ext.uploadWizard.uploadCampaign.list.less",
+			"+ext.uploadWizard": "skinStyles/extensions/UploadWizard/ext.uploadWizard.less",
+
 			"+ext.visualEditor.core": "skinStyles/extensions/VisualEditor/ext.visualEditor.core.less",
       
 			"+ext.wikiEditor": "skinStyles/extensions/WikiEditor/ext.wikiEditor.less",
