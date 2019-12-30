@@ -347,6 +347,9 @@
 	},
 	"ResourceModuleSkinStyles": {
 		"citizen": {
+			"+ext.advancedSearch.initialstyles": "skinStyles/extensions/AdvancedSearch/ext.advancedSearch.initialstyles.less",
+			"+ext.advancedSearch.styles": "skinStyles/extensions/AdvancedSearch/ext.advancedSearch.styles.less",
+
 			"+ext.echo.styles.badge": "skinStyles/extensions/Echo/ext.echo.styles.badge.less",
 			"+ext.echo.ui": "skinStyles/extensions/Echo/ext.echo.ui.less",
 
