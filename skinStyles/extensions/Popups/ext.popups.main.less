@@ -28,5 +28,15 @@
 		.mwe-popups-extract[ dir='ltr' ]:after {
 			background-image: linear-gradient( to right, rgba( 255, 255, 255, 0 ), @dark-bg-50 50% );
 		}
+
+		&.mwe-popups-no-image-pointer {
+			&:before {
+				border-bottom-color: @dark-bg-50;
+			}
+
+			&:after {
+				border-bottom-color: @dark-bg-50;
+			}
+		}
 	}
 }
