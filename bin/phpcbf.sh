@@ -8,7 +8,7 @@ $root/vendor/bin/phpcbf $@
 exit=$?
 
 # Exit code 1 is used to indicate that all fixable errors were fixed correctly.
-if [[ $exit == 1 ]]; then
+if [ $exit == 1 ]; then
 	exit=0
 fi
 
