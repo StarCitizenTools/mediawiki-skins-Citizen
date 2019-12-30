@@ -354,6 +354,9 @@
 			"+ext.flow.styles.base": "skinStyles/extensions/Flow/ext.flow.styles.base.less",
 			"+ext.flow.ui": "skinStyles/extensions/Flow/ext.flow.ui.less",
 
+			"+ext.Lingo": "skinStyles/extensions/Lingo/ext.Lingo.less",
+			"+ext.Lingo.jquery.qtip": "skinStyles/extensions/Lingo/ext.Lingo.jquery.qtip.less",
+
 			"+ext.relatedArticles.cards": "skinStyles/extensions/RelatedArticles/ext.relatedArticles.cards.less",
 			"+ext.relatedArticles.readMore": "skinStyles/extensions/RelatedArticles/ext.relatedArticles.readMore.less",
 
