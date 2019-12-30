@@ -1,0 +1,18 @@
+/*
+ * Citizen - Advanced Search Initial Styles
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	.client-js {
+		.mw-search-spinner {
+			&:before,
+			&:after,
+			& .mw-search-spinner-bounce {
+				background-color: @dark-text-70;
+			}
+		}
+	}
+}

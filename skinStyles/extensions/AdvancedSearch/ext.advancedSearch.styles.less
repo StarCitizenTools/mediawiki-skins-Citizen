@@ -1,0 +1,56 @@
+/*
+ * Citizen - Advanced Search Styles
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	.mw-advancedSearch-fieldContainer {
+		background: linear-gradient( rgba( 0, 0, 0, 0.1 ), @dark-bg-0 0.5em );
+		border: solid 1px @dark-bg-30;
+
+		fieldset {
+			border-top: solid 1px @dark-bg-30;
+		}
+
+		.oo-ui-labelElement > .oo-ui-fieldsetLayout-header > .oo-ui-labelElement-label {
+			background: @dark-bg-0;
+			color: @dark-text-80;
+		}
+	}
+
+	.mw-advancedSearch-expandablePane-button {
+		&.oo-ui-widget-enabled.oo-ui-buttonWidget {
+			&.oo-ui-buttonElement-pressed > .oo-ui-buttonElement-button {
+				background-color: @dark-bg-10;
+			}
+
+			> .oo-ui-buttonElement-button:hover {
+				background-color: @dark-bg-10;
+				color: @dark-text-90;
+			}
+		}
+	}
+
+	.mw-advancedSearch-namespace-selection {
+		border: solid 1px @dark-bg-50;
+		background: @dark-bg-10;
+	}
+
+	.mw-advancedSearch-namespace-border {
+		border-top: 4px solid @dark-bg-30;
+		border-bottom: 1px solid @dark-bg-30;
+	}
+
+	.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined .oo-ui-tagItemWidget.oo-ui-widget-enabled {
+		&.selected {
+			background-color: @accent-10;
+			border-color: @accent-50;
+		}
+	}
+
+	.oo-ui-popupWidget-popup .mw-advancedSearch-tooltip-head {
+		color: @dark-text-70;
+	}
+}
