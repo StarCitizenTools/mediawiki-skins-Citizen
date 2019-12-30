@@ -22,9 +22,15 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
     
-    - name: Composer test
+    - name: Run Composer test
       run: composer test
-
+    
+    - name: Attempt to auto fix the issue and recheck
+      if: failure()
+      run: |
+        composer fix
+        composer test
+    
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
