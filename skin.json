@@ -395,6 +395,8 @@
 
 			"+ext.visualEditor.core": "skinStyles/extensions/VisualEditor/ext.visualEditor.core.less",
 
+			"+capiunto.infobox.main": "skinStyles/extensions/Capiunto/capiunto.infobox.main.less",
+
 			"+mediawiki.action.history.styles": "skinStyles/mediawiki/action/mediawiki.action.history.styles.less",
 			"+mediawiki.action.view.filepage": "skinStyles/mediawiki/action/mediawiki.action.view.filepage.less",
 
