@@ -22,9 +22,18 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
     
-    - name: Composer test
+    - name: Run Composer test
       run: composer test
-
+    
+    - name: Attempt to auto fix the issues
+      if: failure()
+      run: composer fix
+      
+      # Use failure() because phpcbf always return a failure
+    - name: Re-test if the issues are resolved
+      if: failure()
+      run: composer test
+    
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
