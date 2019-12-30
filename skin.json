@@ -394,8 +394,10 @@
 			"+ext.Tabber": "skinStyles/extensions/Tabber/ext.Tabber.less",
 
 			"+ext.visualEditor.core": "skinStyles/extensions/VisualEditor/ext.visualEditor.core.less",
-
+      
 			"+ext.wikiEditor": "skinStyles/extensions/WikiEditor/ext.wikiEditor.less",
+      
+			"+capiunto.infobox.main": "skinStyles/extensions/Capiunto/capiunto.infobox.main.less",
 
 			"+mediawiki.action.history.styles": "skinStyles/mediawiki/action/mediawiki.action.history.styles.less",
 			"+mediawiki.action.view.filepage": "skinStyles/mediawiki/action/mediawiki.action.view.filepage.less",
