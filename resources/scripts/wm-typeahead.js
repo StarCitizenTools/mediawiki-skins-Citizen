@@ -87,6 +87,9 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 		typeAheadEl = document.getElementById( typeAheadID ), // Type-ahead DOM element.
 		appendEl = document.getElementById( appendTo ),
 		searchEl = document.getElementById( searchInput ),
+		server = mw.config.get( 'wgServer' ),
+		articleurl = server + mw.config.get( 'wgArticlePath' ).replace('$1', ''),
+		apiurl = server + mw.config.get( 'wgScriptPath' ) + '/api.php?',
 		thumbnailSize = getDevicePixelRatio() * 80,
 		maxSearchResults = mw.config.get( 'wgCitizenMaxSearchResults' ),
 		searchString,
@@ -248,10 +251,6 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			return;
 		}
 
-		// Change sitename here
-		// TODO: Make it configurable from the skin
-		hostname = mw.config.get( 'wgServer' ) + mw.config.get( 'wgScriptPath' ) + '/api.php?';
-
 		// If script already exists, remove it.
 		if ( script ) {
 			docHead.removeChild( script );
@@ -284,7 +283,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			callback: 'callbackStack.queue[' + callbackIndex + ']'
 		};
 
-		script.src = hostname + serialize( searchQuery );
+		script.src = apiurl + serialize( searchQuery );
 		docHead.appendChild( script );
 	}
 
@@ -391,7 +390,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			// TODO: Make it configurable from the skin
 			suggestionLink = mw.html.element( 'a', {
 				class: 'suggestion-link',
-				href: mw.config.get( 'wgServer' ) + '/' + encodeURIComponent( page.title.replace( / /gi, '_' ) )
+				href: articleurl + encodeURIComponent( page.title.replace( / /gi, '_' ) )
 			}, new mw.html.Raw( suggestionText + suggestionThumbnail ) );
 
 			string += suggestionLink;
