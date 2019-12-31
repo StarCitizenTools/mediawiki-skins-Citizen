@@ -44,9 +44,6 @@ class SkinCitizen extends SkinTemplate {
 		// Deny X-Frame-Options
 		$this->addXFrameOptions();
 
-		// Strict referrer policy
-		$this->addStrictReferrerPolicy();
-
 		// Feature policy
 		$this->addFeaturePolicy();
 
@@ -165,20 +162,6 @@ class SkinCitizen extends SkinTemplate {
 	private function addXFrameOptions() {
 		if ( $this->getConfigValue( 'CitizenEnableDenyXFrameOptions' ) === true ) {
 			$this->out->getRequest()->response()->header( 'X-Frame-Options: deny' );
-		}
-	}
-
-	/**
-	 * Adds the referrer header if enabled in 'CitizenEnableStrictReferrerPolicy'
-	 */
-	private function addStrictReferrerPolicy() {
-		if ( $this->getConfigValue( 'CitizenEnableStrictReferrerPolicy' ) === true ) {
-			// iOS Safari, IE, Edge compatiblity
-			$this->out->addMeta( 'referrer', 'strict-origin' );
-			$this->out->addMeta( 'referrer', 'strict-origin-when-cross-origin' );
-			$this->out->getRequest()
-				->response()
-				->header( 'Referrer-Policy: strict-origin-when-cross-origin' );
 		}
 	}
 
