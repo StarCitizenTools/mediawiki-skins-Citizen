@@ -80,12 +80,6 @@ WIP section, refer to below:
 			"descriptionmsg": "citizen-config-enabledenyxframeoptions",
 			"public": true
 		},
-		"EnableStrictReferrerPolicy": {
-			"value": false,
-			"description": "Enable or disable strict-origin-when-cross-origin referrer policy",
-			"descriptionmsg": "citizen-config-enablestrictreferrerpolicy",
-			"public": true
-		},
 		"EnableFeaturePolicy": {
 			"value": false,
 			"description": "Enable or disable Feature Policy",
