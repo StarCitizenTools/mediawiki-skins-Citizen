@@ -240,7 +240,6 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	function loadQueryScript( string ) {
 		let script = document.getElementById( 'api_opensearch' ),
 			docHead = document.getElementsByTagName( 'head' )[ 0 ],
-			hostname,
 			callbackIndex,
 			searchQuery;
 
