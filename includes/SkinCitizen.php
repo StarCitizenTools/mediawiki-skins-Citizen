@@ -44,6 +44,9 @@ class SkinCitizen extends SkinTemplate {
 		// Deny X-Frame-Options
 		$this->addXFrameOptions();
 
+		// X-XSS-Protection
+		$this->addXXSSProtection();
+		
 		// Feature policy
 		$this->addFeaturePolicy();
 
@@ -162,6 +165,16 @@ class SkinCitizen extends SkinTemplate {
 	private function addXFrameOptions() {
 		if ( $this->getConfigValue( 'CitizenEnableDenyXFrameOptions' ) === true ) {
 			$this->out->getRequest()->response()->header( 'X-Frame-Options: deny' );
+		}
+	}
+
+
+	/**
+	 * Adds the X-XSS-Protection header if set in 'CitizenEnableXXSSProtection'
+	 */
+	private function addXXSSProtection() {
+		if ( $this->getConfigValue( 'CitizenEnableXXSSProtection' ) === true ) {
+			$this->out->getRequest()->response()->header( 'X-XSS-Protection: 1; mode=block' );
 		}
 	}
 

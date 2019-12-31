@@ -80,6 +80,12 @@ WIP section, refer to below:
 			"descriptionmsg": "citizen-config-enabledenyxframeoptions",
 			"public": true
 		},
+		"EnableXXSSProtection": {
+			"value": false,
+			"description": "Enable or disable the X-XSS-Protection header",
+			"descriptionmsg": "citizen-config-enablexxssprotection",
+			"public": true
+		},
 		"EnableFeaturePolicy": {
 			"value": false,
 			"description": "Enable or disable Feature Policy",
