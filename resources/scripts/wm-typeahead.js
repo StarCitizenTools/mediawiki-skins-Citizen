@@ -305,7 +305,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 		api.get(searchQuery)
 			.done((data) => {
 				clearTypeAheadElements();
-				callbackStack.queue[callbackIndex](data);
+				window.callbackStack.queue[callbackIndex](data);
 			});
 	} // END loadQueryScript
 
