@@ -92,7 +92,8 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 		searchString,
 		typeAheadItems,
 		activeItem,
-		ssActiveIndex;
+		ssActiveIndex,
+		extractsChars = mw.config.get( 'wgCitizenSearchExchars' );
 
 	// Only create typeAheadEl once on page.
 	if ( !typeAheadEl ) {
@@ -268,9 +269,9 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			format: 'json',
 			generator: 'prefixsearch',
 			prop: 'pageprops|pageimages|description|extracts',
-			exlimit: mw.config.get( 'wgCitizenMaxSearchResults' ),
+			exlimit: maxSearchResults,
 			exintro: 1,
-			exchars: mw.config.get( 'wgCitizenSearchExchars' ),
+			exchars: extractsChars,
 			explaintext: 1,
 			redirects: '',
 			ppprop: 'displaytitle',
