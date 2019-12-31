@@ -383,6 +383,57 @@
 			"+smw.tableprinter.datatables.styles": "skinStyles/extensions/SemanticMediaWiki/smw.tableprinter.datatables.styles.less",
 			"+smw.tippy": "skinStyles/extensions/SemanticMediaWiki/smw.tippy.less",
 
+			"+ext.srf.d3.chart.bubble": "skinStyles/extensions/SemanticResultFormats/d3/ext.srf.d3.chart.bubble.less",
+			"+ext.srf.d3.chart.treemap": "skinStyles/extensions/SemanticResultFormats/d3/ext.srf.d3.chart.treemap.less",
+			"+ext.srf.d3.common": "skinStyles/extensions/SemanticResultFormats/d3/ext.srf.d3.common.less",
+
+			"+ext.srf.datatables": "skinStyles/extensions/SemanticResultFormats/datatables/ext.srf.datatables.less",
+			"+ext.srf.datatables.basic": "skinStyles/extensions/SemanticResultFormats/datatables/ext.srf.datatables.basic.less",
+			"+ext.srf.datatables.bootstrap": "skinStyles/extensions/SemanticResultFormats/datatables/ext.srf.datatables.bootstrap.less",
+
+			"+ext.srf.eventcalendar": "skinStyles/extensions/SemanticResultFormats/eventcalendar/ext.srf.eventcalendar.less",
+
+			"+ext.srf.filtered.calendar-view": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.calendar-view.less",
+			"+ext.srf.filtered.distance-view": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.distance-view.less",
+			"+ext.srf.filtered": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.less",
+			"+ext.srf.filtered.map-view.leaflet": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.map-view.leaflet.less",
+			"+ext.srf.filtered.number-filter": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.number-filter.less",
+			"+ext.srf.filtered.slider": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.slider.less",
+			"+ext.srf.filtered.value-filter": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.value-filter.less",
+			"+ext.srf.filtered.value-filter.select": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.value-filter.select.less",
+
+			"+ext.srf.flot.core": "skinStyles/extensions/SemanticResultFormats/flot/ext.srf.flot.core.less",
+
+			"+ext.srf.formats.media": "skinStyles/extensions/SemanticResultFormats/formats/ext.srf.formats.media.less",
+			"+ext.srf.formats.tagcloud": "skinStyles/extensions/SemanticResultFormats/formats/ext.srf.formats.tagcloud.less",
+
+			"+ext.srf.gallery.carousel": "skinStyles/extensions/SemanticResultFormats/gallery/ext.srf.gallery.carousel.less",
+			"+ext.srf.gallery.overlay": "skinStyles/extensions/SemanticResultFormats/gallery/ext.srf.gallery.overlay.less",
+			"+ext.srf.gallery.slideshow": "skinStyles/extensions/SemanticResultFormats/gallery/ext.srf.gallery.slideshow.less",
+
+			"+ext.srf.jqplot.chart": "skinStyles/extensions/SemanticResultFormats/jqplot/ext.srf.jqplot.chart.less",
+
+			"+ext.jquery.blockUI": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.blockUI.less",
+			"+ext.jquery.fancybox": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.fancybox.less",
+			"+ext.jquery.fullcalendar": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.fullcalendar.less",
+			"+ext.jquery.jqgrid": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.jqgrid.less",
+			"+ext.jquery.jqplot.core": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.jqplot.core.less",
+			"+ext.jquery.multiselect.filter": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.multiselect.filter.less",
+
+			"+ext.srf.listwidget": "skinStyles/extensions/SemanticResultFormats/listwidget/ext.srf.listwidget.less",
+
+			"+ext.srf.pagewidget.carousel": "skinStyles/extensions/SemanticResultFormats/pagewidget/ext.srf.pagewidget.carousel.less",
+
+			"+ext.srf.slideshow": "skinStyles/extensions/SemanticResultFormats/slideshow/ext.srf.slideshow.less",
+
+			"+ext.srf.smile.timeline.core": "skinStyles/extensions/SemanticResultFormats/timeline/ext.srf.smile.timeline.core.less",
+
+			"+ext.srf.util.grid": "skinStyles/extensions/SemanticResultFormats/util/ext.srf.util.grid.less",
+
+			"+ext.srf.styles": "skinStyles/extensions/SemanticResultFormats/ext.srf.styles.less",
+
+			"+onoi.dataTables.styles": "skinStyles/extensions/SemanticResultFormats/jquery/jquery.dataTables.less",
+
 			"+ext.translate": "skinStyles/extensions/Translate/ext.translate.less",
 			"+ext.translate.editor": "skinStyles/extensions/Translate/ext.translate.editor.less",
 			"+ext.translate.loader": "skinStyles/extensions/Translate/ext.translate.loader.less",

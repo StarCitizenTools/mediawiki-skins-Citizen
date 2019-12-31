@@ -1,0 +1,84 @@
+/*
+ * Citizen - SRF Datatables
+ * https://starcitizen.tools
+*/
+
+@import '../../../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	table.dataTable thead th {
+		border-bottom: 1px solid @dark-bg-10;
+	}
+
+	table.dataTable tfoot th {
+		border-top: 1px solid @dark-bg-10;
+	}
+
+	table.dataTable tr.odd {
+		background-color: @dark-bg-20;
+	}
+
+	table.dataTable tr.even {
+		background-color: @dark-bg-0;
+	}
+
+	table.dataTable tr.odd td.sorting_1 {
+		background-color: @dark-bg-50;
+	}
+
+	table.dataTable tr.odd td.sorting_2 {
+		background-color: @dark-bg-40;
+	}
+
+	table.dataTable tr.odd td.sorting_3 {
+		background-color: @dark-bg-30;
+	}
+
+	table.dataTable tr.even td.sorting_1 {
+		background-color: @dark-bg-20;
+	}
+
+	table.dataTable tr.even td.sorting_2 {
+		background-color: @dark-bg-10;
+	}
+
+	table.dataTable tr.even td.sorting_3 {
+		background-color: @dark-bg-0;
+	}
+
+	.paginate_disabled_previous,
+	.paginate_enabled_previous,
+	.paginate_disabled_next,
+	.paginate_enabled_next {
+		color: @dark-text-100 !important;
+	}
+
+	.paginate_disabled_previous,
+	.paginate_disabled_next {
+		color: @dark-text-80 !important;
+	}
+
+	.paging_full_numbers a.paginate_button,
+	.paging_full_numbers a.paginate_active {
+		border: 1px solid @dark-bg-50;
+		color: @dark-text-90 !important;
+	}
+
+	.paging_full_numbers a.paginate_button {
+		background-color: @dark-bg-20;
+	}
+
+	.paging_full_numbers a.paginate_button:hover {
+		background-color: @dark-bg-30;
+	}
+
+	.paging_full_numbers a.paginate_active {
+		background-color: @accent-10;
+	}
+
+	.dataTables_processing {
+		border: 1px solid @dark-bg-20;
+		color: @dark-text-60;
+		background-color: @dark-bg-0;
+	}
+}

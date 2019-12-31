@@ -1,0 +1,85 @@
+/*
+ * Citizen - SRF Eventcalendar
+ * https://starcitizen.tools
+*/
+
+@import '../../../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	.srf-ui-legendList,
+	.srf-ui-legendList-sel {
+		color: @dark-text-90;
+	}
+
+	.srf-ui-legendList.basic {
+		background-color: @dark-bg-0;
+		border: 1px solid @dark-bg-20;
+	}
+
+	.srf-ui-legendList.top.basic {
+		background-image: linear-gradient( to top, @dark-bg-0, @dark-bg-10 );
+	}
+
+	.srf-ui-legendList.bottom.basic {
+		background-image: linear-gradient( to bottom, @dark-bg-0, @dark-bg-10 );
+	}
+
+	.srf-ui-legend-square {
+		background: @dark-bg-0;
+	}
+
+	.srf-ui-square {
+		border: 3px solid @accent-50;
+	}
+
+	.srf-ui-circle {
+		background: @red-50;
+	}
+
+	.srf-calendarpane fieldset {
+		border: 1px solid @dark-bg-20;
+	}
+
+	.srf-calendarpane .section-header {
+		color: @dark-text-100;
+	}
+
+	.srf-calendarpane .ui-sortable-placeholder {
+		border: 1px dotted @dark-bg-0;
+	}
+
+	.srf-calendarpane .reset-link {
+		background-color: @dark-bg-0;
+		color: @accent-50;
+	}
+
+	.srf-calendarpane .mini-calendar {
+		background-color: @dark-bg-0;
+	}
+
+	.srf-calendarpane .mini-calendar .options input {
+		border: 1px solid @dark-bg-30;
+		-webkit-box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.1 ) inset, 0 1px 0 rgba( 0, 0, 0, 0.2 );
+		-moz-box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.1 ) inset, 0 1px 0 rgba( 0, 0, 0, 0.2 );
+		box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.1 ) inset, 0 1px 0 rgba( 0, 0, 0, 0.2 );
+	}
+
+	.srf-calendarpane select {
+		border: 1px solid @dark-bg-30;
+		-webkit-box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.1 ) inset, 0 1px 0 rgba( 0, 0, 0, 0.2 );
+		-moz-box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.1 ) inset, 0 1px 0 rgba( 0, 0, 0, 0.2 );
+		box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.1 ) inset, 0 1px 0 rgba( 0, 0, 0, 0.2 );
+	}
+
+	.srf-calendarpane input[ readonly='readonly' ] {
+		background-color: @dark-bg-20;
+	}
+
+	.srf-calendarpane .legend fieldset {
+		background-color: @dark-bg-0;
+	}
+
+	.srf-calendarpane .parameters fieldset {
+		background-color: @dark-bg-0;
+	}
+}
