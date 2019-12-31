@@ -6,5 +6,8 @@
 		]
 	},
 	"skinname-citizen": "{{name}}",
-	"citizen-desc": "{{desc|what=skin|name=Citizen|url=https://github.com/StarCitizenTools/mediawiki-skins-Citizen}}"
+	"citizen-desc": "{{desc|what=skin|name=Citizen|url=https://github.com/StarCitizenTools/mediawiki-skins-Citizen}}",
+
+	"citizen-search-loading-msg": "Message displayed while loading search results",
+	"citizen-search-no-results-msg": "Message displayed if no results could be found"
 }

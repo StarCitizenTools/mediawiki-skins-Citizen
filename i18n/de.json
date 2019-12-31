@@ -3,5 +3,8 @@
 		"authors": [ "[https://www.mediawiki.org/wiki/User:Octfx Octfx]" ]
 	},
 	"skinname-citizen": "Citizen",
-	"citizen-desc": "Ein responsive Skin entwickelt für das Star Citizen Wiki"
+	"citizen-desc": "Ein responsive Skin entwickelt für das Star Citizen Wiki",
+
+	"citizen-search-loading-msg": "Lade",
+	"citizen-search-no-results-msg": "Keine Ergebnisse gefunden"
 }
