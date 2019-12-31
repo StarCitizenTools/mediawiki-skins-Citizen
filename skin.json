@@ -1,7 +1,7 @@
 {
 	"name": "Citizen",
 	"namemsg": "skinname-citizen",
-	"version": "0.4.0",
+	"version": "0.5.0",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
@@ -347,12 +347,18 @@
 	},
 	"ResourceModuleSkinStyles": {
 		"citizen": {
+			"+ext.advancedSearch.initialstyles": "skinStyles/extensions/AdvancedSearch/ext.advancedSearch.initialstyles.less",
+			"+ext.advancedSearch.styles": "skinStyles/extensions/AdvancedSearch/ext.advancedSearch.styles.less",
+
 			"+ext.echo.styles.badge": "skinStyles/extensions/Echo/ext.echo.styles.badge.less",
 			"+ext.echo.ui": "skinStyles/extensions/Echo/ext.echo.ui.less",
 
 			"+ext.flow": "skinStyles/extensions/Flow/ext.flow.less",
 			"+ext.flow.styles.base": "skinStyles/extensions/Flow/ext.flow.styles.base.less",
 			"+ext.flow.ui": "skinStyles/extensions/Flow/ext.flow.ui.less",
+
+			"+ext.Lingo": "skinStyles/extensions/Lingo/ext.Lingo.less",
+			"+ext.Lingo.jquery.qtip": "skinStyles/extensions/Lingo/ext.Lingo.jquery.qtip.less",
 
 			"+ext.relatedArticles.cards": "skinStyles/extensions/RelatedArticles/ext.relatedArticles.cards.less",
 			"+ext.relatedArticles.readMore": "skinStyles/extensions/RelatedArticles/ext.relatedArticles.readMore.less",
@@ -393,7 +399,15 @@
 
 			"+ext.Tabber": "skinStyles/extensions/Tabber/ext.Tabber.less",
 
+			"+ext.uploadWizard.uploadCampaign.display": "skinStyles/extensions/UploadWizard/ext.uploadWizard.uploadCampaign.display.less",
+			"+ext.uploadWizard.uploadCampaign.list": "skinStyles/extensions/UploadWizard/ext.uploadWizard.uploadCampaign.list.less",
+			"+ext.uploadWizard": "skinStyles/extensions/UploadWizard/ext.uploadWizard.less",
+
 			"+ext.visualEditor.core": "skinStyles/extensions/VisualEditor/ext.visualEditor.core.less",
+      
+			"+ext.wikiEditor": "skinStyles/extensions/WikiEditor/ext.wikiEditor.less",
+      
+			"+capiunto.infobox.main": "skinStyles/extensions/Capiunto/capiunto.infobox.main.less",
 
 			"+mediawiki.action.history.styles": "skinStyles/mediawiki/action/mediawiki.action.history.styles.less",
 			"+mediawiki.action.view.filepage": "skinStyles/mediawiki/action/mediawiki.action.view.filepage.less",
@@ -421,6 +435,8 @@
 			"+oojs-ui-toolbars": "skinStyles/oojs/oojs-ui-toolbars.less",
 			"+oojs-ui-widgets": "skinStyles/oojs/oojs-ui-widgets.less",
 			"+oojs-ui-windows": "skinStyles/oojs/oojs-ui-windows.less",
+
+			"+jquery.ui.core.styles": "skinStyles/jquery.ui/smoothness/jquery.ui.theme.less",
 
 			"+mmv": "skinStyles/extensions/MultimediaViewer/mmv.less"
 		}

@@ -1,0 +1,23 @@
+/*
+ * Citizen - Lingo
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	span.mw-lingo-term {
+		border-bottom: 1px dotted @accent-50;
+
+		&:hover {
+			background-color: rgba( 0, 0, 0, 0.1 );
+		}
+	}
+
+	.mw-lingo-tooltip {
+		color: @dark-text-80;
+		background-color: @dark-bg-0;
+		border: 1px solid @dark-bg-20;
+		box-shadow: 1px 1px 3px 1px rgba( 0, 0, 0, 0.15 );
+	}
+}

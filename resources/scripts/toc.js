@@ -33,9 +33,13 @@ const SmoothScroll = () => {
 				if ( Object.prototype.hasOwnProperty.call( sections, section ) &&
 					sections[ section ].offsetTop <= scrollPos ) {
 					const id = mw.util.escapeIdForAttribute( sections[ section ].id ),
-						node = document.querySelector( `a[href * = "${id}"]` ).parentNode;
+						node = document.querySelector( `a[href * = "${id}"]` ).parentNode,
+						active = document.querySelector( '.active' );
 
-					document.querySelector( '.active' ).classList.remove( 'active' );
+					if (active !== null) {
+						active.classList.remove( 'active' );
+					}
+
 					if ( node !== null ) {
 						node.classList.add( 'active' );
 					}

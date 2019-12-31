@@ -196,6 +196,20 @@ class SkinCitizen extends SkinTemplate {
 	}
 
 	/**
+	 * Returns the javascript entry modules to load. Only modules that need to
+	 * be overriden or added conditionally should be placed here.
+	 * @return array
+	 */
+	public function getDefaultModules() {
+		$modules = parent::getDefaultModules();
+		
+		// disable default skin search modules
+		$modules['search'] = [];
+
+		return $modules;
+	}
+
+	/**
 	 * Adds all needed skin modules
 	 */
 	private function addModules() {
