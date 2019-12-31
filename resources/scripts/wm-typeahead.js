@@ -242,6 +242,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 
 	/**
 	 * Card displayed if no results could be found
+	 * @param {string} searchString - The search string.
 	 * @returns {string}
 	 */
 	function getNoResultsIndicator( searchString ) {
