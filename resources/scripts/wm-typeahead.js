@@ -244,7 +244,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	 * Card displayed if no results could be found
 	 * @returns {string}
 	 */
-	function getNoResultsIndicator() {
+	function getNoResultsIndicator( searchString ) {
 		const titlemsg = mw.message('citizen-search-no-results-title').plain(),
 		descmsg = mw.message('citizen-search-no-results-desc').plain();
 
@@ -357,7 +357,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			i;
 
 		if (suggestions.length === 0){
-			return getNoResultsIndicator();
+			return getNoResultsIndicator( searchString );
 		}
 
 		for ( i = 0; i < suggestions.length; i++ ) {

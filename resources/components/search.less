@@ -224,6 +224,21 @@ a.suggestion-link:hover {
 	left: 0;
 }
 
+.suggestion-placeholder {
+	.suggestion-title {
+		width: 30%;
+		height: 1.6rem * @content-scaling;
+	}
+	.suggestion-description {
+		width: 70%;
+		height: 1.3rem * @content-scaling;
+	}
+	.suggestion-title,
+	.suggestion-description {
+		background-color: @base-90;
+	}
+}
+
 // RTL tweaks
 .rtl {
 	#site-search {
