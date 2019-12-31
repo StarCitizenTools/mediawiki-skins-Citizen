@@ -7,6 +7,8 @@ root=$( dirname $0 )/..
 $root/vendor/bin/phpcbf $@
 exit=$?
 
+echo $?
+
 # Exit code 1 is used to indicate that all fixable errors were fixed correctly.
 if [[ $exit == 1 ]]; then
 	exit=0
