@@ -196,6 +196,14 @@
 				"resources/scripts/underscore.partial.js",
 				"resources/scripts/wm-typeahead.js",
 				"resources/scripts/typeahead-init.js"
+			],
+			"dependencies": [
+				"mediawiki.api",
+				"oojs-ui-core.styles"
+			],
+			"messages": [
+				"citizen-search-loading-msg",
+				"citizen-search-no-results-msg"
 			]
 		},
 		"skins.citizen.bpd": {
