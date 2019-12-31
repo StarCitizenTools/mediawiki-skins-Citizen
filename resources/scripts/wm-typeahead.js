@@ -230,7 +230,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	function getLoadingIndicator() {
 		return `
 <div class="suggestions-dropdown">
-	<span class="suggestion-link oo-ui-pendingElement-pending">
+	<span class="suggestion-link">
 		<div class="suggestion-text suggestion-placeholder">
 			<h3 class="suggestion-title"></h3>
 			<p class="suggestion-description"></p>
