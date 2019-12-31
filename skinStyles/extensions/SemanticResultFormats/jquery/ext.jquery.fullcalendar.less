@@ -1,0 +1,157 @@
+/*
+ * Citizen - SRF jQuery Fullcalendar
+ * https://starcitizen.tools
+*/
+
+@import '../../../../resources/variables.less';
+
+.srf-container {
+	&.fc {
+		table {
+			display: table;
+		}
+	}
+}
+
+@media ( prefers-color-scheme: dark ) {
+	.fc-highlight {
+		background: @green-90;
+	}
+
+	.fc-bgevent {
+		background: @green-50;
+	}
+
+	.fc-nonbusiness {
+		background: @accent-90;
+	}
+
+	.fc-state-default {
+		background-color: @dark-bg-10;
+		background-image: none;
+		border-color: @dark-bg-20 @dark-bg-20 @dark-bg-30;
+		color: @dark-text-80;
+		text-shadow: 0 1px 1px rgba( 0, 0, 0, 0.75 );
+		box-shadow: inset 0 1px 0 rgba( 0, 0, 0, 0.2 ), 0 1px 2px rgba( 0, 0, 0, 0.05 );
+	}
+
+	.fc-state-hover,
+	.fc-state-down,
+	.fc-state-active,
+	.fc-state-disabled {
+		color: @dark-text-80;
+		background-color: @dark-bg-20;
+	}
+
+	.fc-state-hover {
+		color: @dark-text-80;
+	}
+
+	.fc-state-down,
+	.fc-state-active {
+		background-color: @dark-bg-30;
+		box-shadow: inset 0 2px 4px rgba( 0, 0, 0, 0.15 ), 0 1px 2px rgba( 0, 0, 0, 0.05 );
+	}
+
+	.fc-popover {
+		box-shadow: 0 2px 6px rgba( 0, 0, 0, 0.15 );
+	}
+
+	.fc-event {
+		border: 1px solid @accent-50;
+	}
+
+	.fc-event,
+	.fc-event-dot {
+		background-color: @accent-50;
+	}
+
+	.fc-event,
+	.fc-event:hover {
+		color: @dark-text-100;
+	}
+
+	.fc-event .fc-bg {
+		background: @dark-bg-0;
+	}
+
+	.fc-event.fc-selected {
+		box-shadow: 0 2px 5px rgba( 0, 0, 0, 0.2 );
+	}
+
+	.fc-event.fc-selected.fc-dragging {
+		box-shadow: 0 2px 7px rgba( 0, 0, 0, 0.3 );
+	}
+
+	.fc-h-event.fc-selected .fc-resizer {
+		background: @dark-bg-0;
+	}
+
+	.fc-day-grid-event.fc-selected:after {
+		background: @dark-bg-0;
+	}
+
+	.fc-now-indicator {
+		border: 0 solid @red-50;
+	}
+
+	.fc-unthemed th,
+	.fc-unthemed td,
+	.fc-unthemed thead,
+	.fc-unthemed tbody,
+	.fc-unthemed .fc-divider,
+	.fc-unthemed .fc-row,
+	.fc-unthemed .fc-content,
+	.fc-unthemed .fc-popover,
+	.fc-unthemed .fc-list-view,
+	.fc-unthemed .fc-list-heading td {
+		border-color: @dark-bg-30;
+	}
+
+	.fc-unthemed .fc-popover {
+		background-color: @dark-bg-0;
+	}
+
+	.fc-unthemed .fc-divider,
+	.fc-unthemed .fc-popover .fc-header,
+	.fc-unthemed .fc-list-heading td {
+		background: @dark-bg-20;
+	}
+
+	.fc-unthemed .fc-popover .fc-header .fc-close {
+		color: @dark-text-70;
+	}
+
+	.fc-unthemed td.fc-today {
+		background: @dark-bg-50;
+	}
+
+	.fc-unthemed .fc-disabled-day {
+		background: @dark-bg-30;
+	}
+
+	.fc-unthemed .fc-list-item:hover td {
+		background-color: @dark-bg-10;
+	}
+
+	.ui-widget .fc-event {
+		color: @dark-text-100;
+	}
+
+	.fc-bootstrap4 a.fc-event:not( [ href ] ):not( [ tabindex ] ) {
+		color: @dark-text-100;
+	}
+
+	.fc-basic-view .fc-day-top .fc-week-number {
+		background-color: @dark-bg-20;
+		color: @dark-text-70;
+	}
+
+	.fc-time-grid-event.fc-selected .fc-resizer {
+		background: @dark-bg-0;
+	}
+
+	.fc-unthemed .fc-list-empty {
+		background-color: @dark-bg-20;
+	}
+}

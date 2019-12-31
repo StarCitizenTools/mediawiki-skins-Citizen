@@ -1,0 +1,22 @@
+/*
+ * Citizen - SRF Filtered Value Filter
+ * https://starcitizen.tools
+*/
+
+@import '../../../../resources/variables.less';
+
+@media ( prefers-color-scheme: dark ) {
+	.filtered-filters .filtered-value {
+		border: 1px solid @dark-bg-50;
+
+		.filtered-value-switches {
+			border-bottom: 1px solid @dark-bg-50;
+		}
+
+		.select2-container--default.select2-container--focus {
+			.select2-selection--multiple {
+				border: solid @dark-bg-60 1px;
+			}
+		}
+	}
+}

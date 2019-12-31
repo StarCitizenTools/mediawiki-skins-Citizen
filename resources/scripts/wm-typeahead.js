@@ -87,12 +87,16 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 		typeAheadEl = document.getElementById( typeAheadID ), // Type-ahead DOM element.
 		appendEl = document.getElementById( appendTo ),
 		searchEl = document.getElementById( searchInput ),
+		server = mw.config.get( 'wgServer' ),
+		articleurl = server + mw.config.get( 'wgArticlePath' ).replace('$1', ''),
+		apiurl = server + mw.config.get( 'wgScriptPath' ) + '/api.php?',
 		thumbnailSize = getDevicePixelRatio() * 80,
 		maxSearchResults = mw.config.get( 'wgCitizenMaxSearchResults' ),
 		searchString,
 		typeAheadItems,
 		activeItem,
-		ssActiveIndex;
+		ssActiveIndex,
+		extractsChars = mw.config.get( 'wgCitizenSearchExchars' );
 
 	// Only create typeAheadEl once on page.
 	if ( !typeAheadEl ) {
@@ -236,7 +240,6 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	function loadQueryScript( string ) {
 		let script = document.getElementById( 'api_opensearch' ),
 			docHead = document.getElementsByTagName( 'head' )[ 0 ],
-			hostname,
 			callbackIndex,
 			searchQuery;
 
@@ -246,10 +249,6 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			clearTypeAhead();
 			return;
 		}
-
-		// Change sitename here
-		// TODO: Make it configurable from the skin
-		hostname = mw.config.get( 'wgServer' ) + mw.config.get( 'wgScriptPath' ) + '/api.php?';
 
 		// If script already exists, remove it.
 		if ( script ) {
@@ -268,9 +267,9 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			format: 'json',
 			generator: 'prefixsearch',
 			prop: 'pageprops|pageimages|description|extracts',
-			exlimit: mw.config.get( 'wgCitizenMaxSearchResults' ),
+			exlimit: maxSearchResults,
 			exintro: 1,
-			exchars: mw.config.get( 'wgCitizenSearchExchars' ),
+			exchars: extractsChars,
 			explaintext: 1,
 			redirects: '',
 			ppprop: 'displaytitle',
@@ -283,7 +282,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			callback: 'callbackStack.queue[' + callbackIndex + ']'
 		};
 
-		script.src = hostname + serialize( searchQuery );
+		script.src = apiurl + serialize( searchQuery );
 		docHead.appendChild( script );
 	}
 
@@ -390,7 +389,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			// TODO: Make it configurable from the skin
 			suggestionLink = mw.html.element( 'a', {
 				class: 'suggestion-link',
-				href: mw.config.get( 'wgServer' ) + '/' + encodeURIComponent( page.title.replace( / /gi, '_' ) )
+				href: articleurl + encodeURIComponent( page.title.replace( / /gi, '_' ) )
 			}, new mw.html.Raw( suggestionText + suggestionThumbnail ) );
 
 			string += suggestionLink;
