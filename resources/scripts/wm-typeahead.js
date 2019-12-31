@@ -245,8 +245,8 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	 * @returns {string}
 	 */
 	function getNoResultsIndicator() {
-		const titlemsg = mw.message('citizen-search-no-results-title').plain();
-		const descmsg = mw.message('citizen-search-no-results-desc').plain();
+		const titlemsg = mw.message('citizen-search-no-results-title').plain(),
+		descmsg = mw.message('citizen-search-no-results-desc').plain();
 
 		return `
 <div class="suggestions-dropdown">
