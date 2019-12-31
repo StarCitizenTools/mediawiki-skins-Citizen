@@ -8,6 +8,6 @@
 	"skinname-citizen": "Citizen",
 	"citizen-desc": "A responsive skin developed for the Star Citizen Wiki",
 
-	"citizen-search-loading-msg": "Loading",
-	"citizen-search-no-results-msg": "No results found"
+	"citizen-search-no-results-title": "Sorry we couldn't find ",
+	"citizen-search-no-results-desc": "Maybe continue to search for pages containing "
 }

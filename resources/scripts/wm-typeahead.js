@@ -228,14 +228,12 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	 * @returns {string}
 	 */
 	function getLoadingIndicator() {
-		const message = mw.message('citizen-search-loading-msg').plain();
-
 		return `
 <div class="suggestions-dropdown">
 	<span class="suggestion-link oo-ui-pendingElement-pending">
-		<div class="suggestion-text">
-			<h3 class="suggestion-title">` + message + `</h3>
-			<p class="suggestion-description">...</p>
+		<div class="suggestion-text suggestion-placeholder">
+			<h3 class="suggestion-title"></h3>
+			<p class="suggestion-description"></p>
 		</div>
 		<div class="suggestion-thumbnail"></div>
 	</span>
@@ -247,14 +245,15 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	 * @returns {string}
 	 */
 	function getNoResultsIndicator() {
-		const message = mw.message('citizen-search-no-results-msg').plain();
+		const titlemsg = mw.message('citizen-search-no-results-title').plain();
+		const descmsg = mw.message('citizen-search-no-results-desc').plain();
 
 		return `
 <div class="suggestions-dropdown">
 	<span class="suggestion-link">
 		<div class="suggestion-text">
-			<h3 class="suggestion-title">` + message + `</h3>
-			<p class="suggestion-description"></p>
+			<h3 class="suggestion-title">` + titlemsg + searchString `</h3>
+			<p class="suggestion-description">` + descmsg + searchString `</p>
 		</div>
 		<div class="suggestion-thumbnail"></div>
 	</span>
