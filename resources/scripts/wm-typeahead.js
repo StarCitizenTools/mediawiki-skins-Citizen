@@ -80,7 +80,6 @@ function addEvent( obj, evt, fn ) {
  * typeAhead.query('search string', 'en');
  *
  */
-
 window.WMTypeAhead = function ( appendTo, searchInput ) {
 
 	let typeAheadID = 'typeahead-suggestions',
@@ -88,39 +87,21 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 		appendEl = document.getElementById( appendTo ),
 		searchEl = document.getElementById( searchInput ),
 		server = mw.config.get( 'wgServer' ),
-		articleurl = server + mw.config.get( 'wgArticlePath' ).replace('$1', ''),
-		apiurl = server + mw.config.get( 'wgScriptPath' ) + '/api.php?',
+		articleurl = server + mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
 		thumbnailSize = getDevicePixelRatio() * 80,
 		maxSearchResults = mw.config.get( 'wgCitizenMaxSearchResults' ),
 		searchString,
 		typeAheadItems,
 		activeItem,
 		ssActiveIndex,
-		extractsChars = mw.config.get( 'wgCitizenSearchExchars' );
+		extractsChars = mw.config.get( 'wgCitizenSearchExchars' ),
+		api = new mw.Api();
 
 	// Only create typeAheadEl once on page.
 	if ( !typeAheadEl ) {
 		typeAheadEl = document.createElement( 'div' );
 		typeAheadEl.id = typeAheadID;
 		appendEl.appendChild( typeAheadEl );
-	}
-
-	/**
-	 * Serializes a JS object into a URL parameter string.
-	 *
-	 * @param {Object} obj - object whose properties will be serialized
-	 * @return {string}
-	 */
-	function serialize( obj ) {
-		let serialized = [],
-			prop;
-
-		for ( prop in obj ) {
-			if ( obj.hasOwnProperty( prop ) ) { // eslint-disable-line no-prototype-builtins
-				serialized.push( prop + '=' + encodeURIComponent( obj[ prop ] ) );
-			}
-		}
-		return serialized.join( '&' );
 	}
 
 	/**
@@ -191,6 +172,20 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	};
 
 	/**
+	 * Removed the actual child nodes from typeAheadEl
+	 * @see {typeAheadEl}
+	 */
+	function clearTypeAheadElements() {
+		if ( typeof typeAheadEl === 'undefined' ) {
+			return;
+		}
+
+		while ( typeAheadEl.firstChild !== null ) {
+			typeAheadEl.removeChild( typeAheadEl.firstChild );
+		}
+	}
+
+	/**
 	 * Removes the type-ahead suggestions from the DOM.
 	 * Reason for timeout: The typeahead is set to clear on input blur.
 	 * When a user clicks on a search suggestion, they triggers the input blur
@@ -202,11 +197,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	 */
 	function clearTypeAhead() {
 		setTimeout( function () {
-			const searchScript = document.getElementById( 'api_opensearch' );
-			typeAheadEl.innerHTML = '';
-			if ( searchScript ) {
-				searchScript.src = false;
-			}
+			clearTypeAheadElements();
 			ssActiveIndex.clear();
 		}, 300 );
 	}
@@ -230,17 +221,51 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	}
 
 	/**
+	 * Card displayed while loading search results
+	 * @return {string}
+	 */
+	function getLoadingIndicator() {
+		return '<div class="suggestions-dropdown">' +
+			'<div class="suggestion-link">' +
+				'<div class="suggestion-text suggestion-placeholder">' +
+					'<h3 class="suggestion-title"></h3>' +
+					'<p class="suggestion-description"></p>' +
+				'</div>' +
+				'<div class="suggestion-thumbnail"></div>' +
+			'</div>' +
+		'</div>';
+	}
+
+	/**
+	 * Card displayed if no results could be found
+	 * @param {string} searchString - The search string.
+	 * @return {string}
+	 */
+	function getNoResultsIndicator( searchString ) {
+		const titlemsg = mw.message( 'citizen-search-no-results-title', searchString ).text(),
+			descmsg = mw.message( 'citizen-search-no-results-desc', searchString ).text();
+
+		return `
+<div class="suggestions-dropdown">
+	<div class="suggestion-link">
+		<div class="suggestion-text">
+			<h3 class="suggestion-title">` + titlemsg + `</h3>
+			<p class="suggestion-description">` + descmsg + `</p>
+		</div>
+		<div class="suggestion-thumbnail"></div>
+	</div>
+</div>`;
+	}
+
+	/**
 	 * Inserts script element containing the Search API results into document head.
 	 * The script itself calls the 'portalOpensearchCallback' callback function,
 	 *
 	 * @param {string} string - query string to search.
 	 * @param {string} lang - ISO code of language to search in.
 	 */
-
 	function loadQueryScript( string ) {
-		let script = document.getElementById( 'api_opensearch' ),
-			docHead = document.getElementsByTagName( 'head' )[ 0 ],
-			callbackIndex,
+		let callbackIndex,
 			searchQuery;
 
 		// Variables declared in parent function.
@@ -250,21 +275,11 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			return;
 		}
 
-		// If script already exists, remove it.
-		if ( script ) {
-			docHead.removeChild( script );
-		}
-
-		script = document.createElement( 'script' );
-		script.id = 'api_opensearch';
-
 		callbackIndex = window.callbackStack.addCallback( window.portalOpensearchCallback );
 
 		// Removed description prop
 		// TODO: Use text extract or PCS for description
 		searchQuery = {
-			action: 'query',
-			format: 'json',
 			generator: 'prefixsearch',
 			prop: 'pageprops|pageimages|description|extracts',
 			exlimit: maxSearchResults,
@@ -278,15 +293,17 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			pilimit: maxSearchResults,
 			gpssearch: string,
 			gpsnamespace: 0,
-			gpslimit: maxSearchResults,
-			callback: 'callbackStack.queue[' + callbackIndex + ']'
+			gpslimit: maxSearchResults
 		};
 
-		script.src = apiurl + serialize( searchQuery );
-		docHead.appendChild( script );
-	}
+		typeAheadEl.innerHTML = getLoadingIndicator();
 
-	// END loadQueryScript
+		api.get( searchQuery )
+			.done( ( data ) => {
+				clearTypeAheadElements();
+				window.callbackStack.queue[ callbackIndex ]( data, string );
+			} );
+	} // END loadQueryScript
 
 	/**
 	 * Highlights the part of the suggestion title that matches the search query.
@@ -297,7 +314,6 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	 * @return {string} The title with highlighted part in an <em> tag.
 	 */
 	function highlightTitle( title, searchString ) {
-
 		let sanitizedSearchString = mw.html.escape( mw.RegExp.escape( searchString ) ),
 			searchRegex = new RegExp( sanitizedSearchString, 'i' ),
 			startHighlightIndex = title.search( searchRegex ),
@@ -308,7 +324,6 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			aferHighlight;
 
 		if ( startHighlightIndex >= 0 ) {
-
 			endHighlightIndex = startHighlightIndex + sanitizedSearchString.length;
 			strong = title.substring( startHighlightIndex, endHighlightIndex );
 			beforeHighlight = title.substring( 0, startHighlightIndex );
@@ -338,8 +353,11 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			pageDescription = '',
 			i;
 
-		for ( i = 0; i < suggestions.length; i++ ) {
+		if ( suggestions.length === 0 ) {
+			return getNoResultsIndicator( searchString );
+		}
 
+		for ( i = 0; i < suggestions.length; i++ ) {
 			if ( !suggestions[ i ] ) {
 				continue;
 			}
@@ -409,14 +427,12 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	 * @param {HTMLElement} item Item to add active class to.
 	 * @param {NodeList} collection Sibling items.
 	 */
-
 	function toggleActiveClass( item, collection ) {
 		let activeClass = ' active', // Prefixed with space.
 			colItem,
 			i;
 
 		for ( i = 0; i < collection.length; i++ ) {
-
 			colItem = collection[ i ];
 			// Remove the class name from everything except item.
 			if ( colItem !== item ) {
@@ -455,7 +471,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			templateDOMString,
 			listEl;
 
-		return function ( xhrResults ) {
+		return function ( xhrResults, queryString ) {
 			window.callbackStack.deletePrevCallbacks( callbackIndex );
 
 			if ( document.activeElement !== searchEl ) {
@@ -464,6 +480,11 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 
 			suggestions = ( xhrResults.query && xhrResults.query.pages ) ?
 				xhrResults.query.pages : [];
+
+			if ( suggestions.length === 0 ) {
+				typeAheadEl.innerHTML = getNoResultsIndicator( queryString );
+				return;
+			}
 
 			for ( item in suggestions ) {
 				if ( Object.prototype.hasOwnProperty.call( suggestions, item ) ) {
@@ -498,7 +519,6 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	 * @param {event} event
 	 */
 	function keyboardEvents( event ) {
-
 		let e = event || window.event,
 			keycode = e.which || e.keyCode,
 			suggestionItems,
