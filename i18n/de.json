@@ -5,6 +5,6 @@
 	"skinname-citizen": "Citizen",
 	"citizen-desc": "Ein responsive Skin entwickelt für das Star Citizen Wiki",
 
-	"citizen-search-no-results-title": "Keine Ergebnisse gefunden",
-	"citizen-search-no-results-desc": "Maybe continue to search for pages containing "
+	"citizen-search-no-results-title": "Entschuldige, wir konnten zu <em>'$1'</em> nichts finden.",
+	"citizen-search-no-results-desc": "Versuche weiter nach Seiten zu suchen, die <em>'$1'</em> enthalten."
 }

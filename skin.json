@@ -202,8 +202,8 @@
 				"oojs-ui-core.styles"
 			],
 			"messages": [
-				"citizen-search-loading-msg",
-				"citizen-search-no-results-msg"
+				"citizen-search-no-results-title",
+				"citizen-search-no-results-desc"
 			]
 		},
 		"skins.citizen.bpd": {

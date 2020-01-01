@@ -80,7 +80,6 @@ function addEvent( obj, evt, fn ) {
  * typeAhead.query('search string', 'en');
  *
  */
-
 window.WMTypeAhead = function ( appendTo, searchInput ) {
 
 	let typeAheadID = 'typeahead-suggestions',
@@ -88,7 +87,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 		appendEl = document.getElementById( appendTo ),
 		searchEl = document.getElementById( searchInput ),
 		server = mw.config.get( 'wgServer' ),
-		articleurl = server + mw.config.get( 'wgArticlePath' ).replace('$1', ''),
+		articleurl = server + mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
 		thumbnailSize = getDevicePixelRatio() * 80,
 		maxSearchResults = mw.config.get( 'wgCitizenMaxSearchResults' ),
 		searchString,
@@ -104,8 +103,6 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 		typeAheadEl.id = typeAheadID;
 		appendEl.appendChild( typeAheadEl );
 	}
-
-
 
 	/**
 	 * Keeps track of the search query callbacks. Consists of an array of
@@ -179,12 +176,12 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	 * @see {typeAheadEl}
 	 */
 	function clearTypeAheadElements() {
-		if (typeof typeAheadEl === "undefined") {
+		if ( typeof typeAheadEl === 'undefined' ) {
 			return;
 		}
 
-		while (typeAheadEl.firstChild !== null) {
-			typeAheadEl.removeChild(typeAheadEl.firstChild);
+		while ( typeAheadEl.firstChild !== null ) {
+			typeAheadEl.removeChild( typeAheadEl.firstChild );
 		}
 	}
 
@@ -225,39 +222,38 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 
 	/**
 	 * Card displayed while loading search results
-	 * @returns {string}
+	 * @return {string}
 	 */
 	function getLoadingIndicator() {
-		return `
-<div class="suggestions-dropdown">
-	<span class="suggestion-link">
-		<div class="suggestion-text suggestion-placeholder">
-			<h3 class="suggestion-title"></h3>
-			<p class="suggestion-description"></p>
-		</div>
-		<div class="suggestion-thumbnail"></div>
-	</span>
-</div>`;
+		return '<div class="suggestions-dropdown">' +
+			'<div class="suggestion-link">' +
+				'<div class="suggestion-text suggestion-placeholder">' +
+					'<h3 class="suggestion-title"></h3>' +
+					'<p class="suggestion-description"></p>' +
+				'</div>' +
+				'<div class="suggestion-thumbnail"></div>' +
+			'</div>' +
+		'</div>';
 	}
 
 	/**
 	 * Card displayed if no results could be found
 	 * @param {string} searchString - The search string.
-	 * @returns {string}
+	 * @return {string}
 	 */
 	function getNoResultsIndicator( searchString ) {
-		const titlemsg = mw.message('citizen-search-no-results-title').plain(),
-		descmsg = mw.message('citizen-search-no-results-desc').plain();
+		const titlemsg = mw.message( 'citizen-search-no-results-title', searchString ).text(),
+			descmsg = mw.message( 'citizen-search-no-results-desc', searchString ).text();
 
 		return `
 <div class="suggestions-dropdown">
-	<span class="suggestion-link">
+	<div class="suggestion-link">
 		<div class="suggestion-text">
-			<h3 class="suggestion-title">` + titlemsg + searchString `</h3>
-			<p class="suggestion-description">` + descmsg + searchString `</p>
+			<h3 class="suggestion-title">` + titlemsg + `</h3>
+			<p class="suggestion-description">` + descmsg + `</p>
 		</div>
 		<div class="suggestion-thumbnail"></div>
-	</span>
+	</div>
 </div>`;
 	}
 
@@ -297,16 +293,16 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			pilimit: maxSearchResults,
 			gpssearch: string,
 			gpsnamespace: 0,
-			gpslimit: maxSearchResults,
+			gpslimit: maxSearchResults
 		};
 
 		typeAheadEl.innerHTML = getLoadingIndicator();
 
-		api.get(searchQuery)
-			.done((data) => {
+		api.get( searchQuery )
+			.done( ( data ) => {
 				clearTypeAheadElements();
-				window.callbackStack.queue[callbackIndex](data);
-			});
+				window.callbackStack.queue[ callbackIndex ]( data, string );
+			} );
 	} // END loadQueryScript
 
 	/**
@@ -357,7 +353,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			pageDescription = '',
 			i;
 
-		if (suggestions.length === 0){
+		if ( suggestions.length === 0 ) {
 			return getNoResultsIndicator( searchString );
 		}
 
@@ -475,7 +471,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			templateDOMString,
 			listEl;
 
-		return function ( xhrResults ) {
+		return function ( xhrResults, queryString ) {
 			window.callbackStack.deletePrevCallbacks( callbackIndex );
 
 			if ( document.activeElement !== searchEl ) {
@@ -484,6 +480,11 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 
 			suggestions = ( xhrResults.query && xhrResults.query.pages ) ?
 				xhrResults.query.pages : [];
+
+			if ( suggestions.length === 0 ) {
+				typeAheadEl.innerHTML = getNoResultsIndicator( queryString );
+				return;
+			}
 
 			for ( item in suggestions ) {
 				if ( Object.prototype.hasOwnProperty.call( suggestions, item ) ) {
