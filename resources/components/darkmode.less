@@ -182,11 +182,13 @@
 		filter: invert( 1 );
 	}
 
-	.suggestion-title,
-    .suggestion-description  {
-    	background: @dark-bg-20;
-        background: linear-gradient(to right, @dark-bg-40 8%, @dark-bg-30 38%, @dark-bg-40 54%);
-    }
+	.suggestion-placeholder {
+		.suggestion-title,
+	    .suggestion-description  {
+	    	background: @dark-bg-20;
+	        background: linear-gradient(to right, @dark-bg-40 8%, @dark-bg-30 38%, @dark-bg-40 54%);
+	    }
+	}
 }
 
 @media only screen and ( max-width: 1290px ) and ( prefers-color-scheme: dark ) {
