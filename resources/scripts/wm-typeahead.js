@@ -294,18 +294,18 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 
 		switch (descriptionSource) {
 			case 'wikidata':
-				parameters.prop += '|description';
+				searchQuery.prop += '|description';
 				break;
 			case 'textextracts':
-				parameters.prop += '|extracts';
-				parameters.exchars = '60';
-				parameters.exintro = '1';
-				parameters.exlimit = maxSearchResults;
-				parameters.explaintext = '1';
+				searchQuery.prop += '|extracts';
+				searchQuery.exchars = '60';
+				searchQuery.exintro = '1';
+				searchQuery.exlimit = maxSearchResults;
+				searchQuery.explaintext = '1';
 				break;
 			case 'pagedescription':
-				parameters.prop += '|pageprops';
-				parameters.ppprop = 'description';
+				searchQuery.prop += '|pageprops';
+				searchQuery.ppprop = 'description';
 				break;
 		}
 
