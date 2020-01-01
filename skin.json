@@ -118,7 +118,7 @@
 			"public": true
 		},
 		"SearchDescriptionSource": {
-			"value": "TextExtracts",
+			"value": "textextracts",
 			"description": "The source of the short description in the suggestions",
 			"descriptionmsg": "citizen-config-searchdescriptionsource",
 			"public": true
