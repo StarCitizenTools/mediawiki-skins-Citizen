@@ -116,16 +116,16 @@ WIP section, refer to below:
 			"descriptionmsg": "citizen-config-manifestbackgroundcolor",
 			"public": true
 		},
+		"SearchDescriptionSource": {
+			"value": "TextExtracts",
+			"description": "The source of the short description in the suggestions",
+			"descriptionmsg": "citizen-config-searchdescriptionsource",
+			"public": true
+		},
 		"MaxSearchResults": {
 			"value": 6,
 			"description": "The max number of suggestions in search result",
 			"descriptionmsg": "citizen-config-maxsearchresults",
-			"public": true
-		},
-		"SearchExchars": {
-			"value": 60,
-			"description": "The character limit for the description in search suggestion",
-			"descriptionmsg": "citizen-config-searchexchars",
 			"public": true
 		},
 		"EnableButton": {

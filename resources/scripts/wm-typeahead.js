@@ -89,12 +89,12 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 		server = mw.config.get( 'wgServer' ),
 		articleurl = server + mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
 		thumbnailSize = getDevicePixelRatio() * 80,
+		descriptionSource = mw.config.get( 'wgCitizenSearchDescriptionSource' ),
 		maxSearchResults = mw.config.get( 'wgCitizenMaxSearchResults' ),
 		searchString,
 		typeAheadItems,
 		activeItem,
 		ssActiveIndex,
-		extractsChars = mw.config.get( 'wgCitizenSearchExchars' ),
 		api = new mw.Api();
 
 	// Only create typeAheadEl once on page.
@@ -281,11 +281,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 		// TODO: Use text extract or PCS for description
 		searchQuery = {
 			generator: 'prefixsearch',
-			prop: 'pageprops|pageimages|description|extracts',
-			exlimit: maxSearchResults,
-			exintro: 1,
-			exchars: extractsChars,
-			explaintext: 1,
+			prop: 'pageprops|pageimages',
 			redirects: '',
 			ppprop: 'displaytitle',
 			piprop: 'thumbnail',
@@ -295,6 +291,23 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			gpsnamespace: 0,
 			gpslimit: maxSearchResults
 		};
+
+		switch (descriptionSource) {
+			case 'wikidata':
+				parameters.prop += '|description';
+				break;
+			case 'textextracts':
+				parameters.prop += '|extracts';
+				parameters.exchars = '60';
+				parameters.exintro = '1';
+				parameters.exlimit = maxSearchResults;
+				parameters.explaintext = '1';
+				break;
+			case 'pagedescription':
+				parameters.prop += '|pageprops';
+				parameters.ppprop = 'description';
+				break;
+		}
 
 		typeAheadEl.innerHTML = getLoadingIndicator();
 
@@ -363,8 +376,18 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			}
 
 			page = suggestions[ i ];
-			// Description > TextExtracts
-			pageDescription = page.description || page.extract || '';
+
+			switch (descriptionSource) {
+				case 'wikidata':
+					pageDescription = page.description || '';
+					break;
+				case 'textextracts':
+					pageDescription = page.extract || '';
+					break;
+				case 'pagedescription':
+					pageDescription = page.pageprops.description || '';
+					break;
+			}
 
 			// Ensure that the value from the previous iteration isn't used
 			sanitizedThumbURL = false;
