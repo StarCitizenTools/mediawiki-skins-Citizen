@@ -61,17 +61,17 @@ class CitizenHooks {
 		}
 
 		try {
+			$vars['wgCitizenSearchDescriptionSource'] = $config->get( 'CitizenSearchDescriptionSource' );
+		} catch ( ConfigException $e ) {
+			// Should not happen
+			$vars['wgCitizenSearchDescriptionSource'] = 'textextracts';
+		}
+
+		try {
 			$vars['wgCitizenMaxSearchResults'] = $config->get( 'CitizenMaxSearchResults' );
 		} catch ( ConfigException $e ) {
 			// Should not happen
 			$vars['wgCitizenMaxSearchResults'] = 6;
-		}
-
-		try {
-			$vars['wgCitizenSearchExchars'] = $config->get( 'CitizenSearchExchars' );
-		} catch ( ConfigException $e ) {
-			// Should not happen
-			$vars['wgCitizenSearchExchars'] = 60;
 		}
 
 		return true;
