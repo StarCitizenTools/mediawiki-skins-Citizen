@@ -336,6 +336,7 @@ class CitizenTemplate extends BaseTemplate {
 				'id' => 'p-logo',
 				'class' => 'mw-wiki-logo',
 			] + Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) );
+		return $html;
 	}
 
 	/**
