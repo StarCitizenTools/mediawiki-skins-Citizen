@@ -331,7 +331,7 @@ class CitizenTemplate extends BaseTemplate {
 	 * @return string html
 	 */
 	protected function getLogo() {
-		$html = Html::element( 'a', [
+		$html = Html::rawElement( 'a', [
 				'href' => $this->data['nav_urls']['mainpage']['href'],
 				'id' => 'p-logo',
 				'class' => 'mw-wiki-logo',
