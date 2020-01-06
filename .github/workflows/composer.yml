@@ -32,10 +32,10 @@ jobs:
       run: composer test
 
     - name: Push the changes
-      if: git status --porcelain || exit
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        git status --porcelain || exit
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@users.noreply.github.com"
         git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
