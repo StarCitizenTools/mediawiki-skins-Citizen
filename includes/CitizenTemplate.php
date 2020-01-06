@@ -252,7 +252,7 @@ class CitizenTemplate extends BaseTemplate {
 				// Container for navigation and tools
 				Html::rawElement(
 					'div',
-					[ 'id' => 'p-nt-container' ],
+					[ 'class' => 'mw-nav-links' ],
 					$this->getSiteNavigation()
 				) .
 				$this->getUserLinks()
