@@ -36,7 +36,7 @@ const SmoothScroll = () => {
 						node = document.querySelector( `a[href * = "${id}"]` ).parentNode,
 						active = document.querySelector( '.active' );
 
-					if (active !== null) {
+					if ( active !== null ) {
 						active.classList.remove( 'active' );
 					}
 

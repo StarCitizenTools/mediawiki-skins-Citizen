@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: wm-typeahead.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: wm-typeahead.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * Based on https://gerrit.wikimedia.org/g/wikimedia/portals/+/refs/heads/master
  * See T219590 for more details
  */
@@ -130,7 +158,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			this.deleteSelfFromQueue( j );
 
 			for ( callback in this.queue ) {
-				if ( callback < j ) {
+				if ( callback &lt; j ) {
 					this.queue[ callback ] = this.deleteSelfFromQueue.bind(
 						window.callbackStack, callback
 					);
@@ -152,7 +180,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 		},
 		increment: function ( i ) {
 			this.index += i;
-			if ( this.index < 0 ) {
+			if ( this.index &lt; 0 ) {
 				this.setIndex( this.max - 1 );
 			} // Index reaches top
 			if ( this.index === this.max ) {
@@ -161,7 +189,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			return this.index;
 		},
 		setIndex: function ( i ) {
-			if ( i <= this.max - 1 ) {
+			if ( i &lt;= this.max - 1 ) {
 				this.index = i;
 			}
 			return this.index;
@@ -215,7 +243,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	 */
 	function forceLinkFollow( e ) {
 		const el = e.relatedTarget;
-		if ( el && /suggestion-link/.test( el.className ) ) {
+		if ( el &amp;&amp; /suggestion-link/.test( el.className ) ) {
 			window.location = el.href;
 		}
 	}
@@ -225,15 +253,15 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	 * @return {string}
 	 */
 	function getLoadingIndicator() {
-		return '<div class="suggestions-dropdown">' +
-			'<div class="suggestion-link">' +
-				'<div class="suggestion-text suggestion-placeholder">' +
-					'<h3 class="suggestion-title"></h3>' +
-					'<p class="suggestion-description"></p>' +
-				'</div>' +
-				'<div class="suggestion-thumbnail"></div>' +
-			'</div>' +
-		'</div>';
+		return '&lt;div class="suggestions-dropdown">' +
+			'&lt;div class="suggestion-link">' +
+				'&lt;div class="suggestion-text suggestion-placeholder">' +
+					'&lt;h3 class="suggestion-title">&lt;/h3>' +
+					'&lt;p class="suggestion-description">&lt;/p>' +
+				'&lt;/div>' +
+				'&lt;div class="suggestion-thumbnail">&lt;/div>' +
+			'&lt;/div>' +
+		'&lt;/div>';
 	}
 
 	/**
@@ -246,15 +274,15 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			descmsg = mw.message( 'citizen-search-no-results-desc', searchString ).text();
 
 		return `
-< div class = "suggestions-dropdown" >
-	< div class = "suggestion-link" >
-		< div class = "suggestion-text" >
-			< h3 class = "suggestion-title" > ` + titlemsg + ` < / h3 >
-			< p class = "suggestion-description" > ` + descmsg + ` < / p >
-		< / div >
-		< div class = "suggestion-thumbnail" > < / div >
-	< / div >
-< / div > `;
+&lt; div class = "suggestions-dropdown" >
+	&lt; div class = "suggestion-link" >
+		&lt; div class = "suggestion-text" >
+			&lt; h3 class = "suggestion-title" > ` + titlemsg + ` &lt; / h3 >
+			&lt; p class = "suggestion-description" > ` + descmsg + ` &lt; / p >
+		&lt; / div >
+		&lt; div class = "suggestion-thumbnail" > &lt; / div >
+	&lt; / div >
+&lt; / div > `;
 	}
 
 	/**
@@ -292,7 +320,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			gpslimit: maxSearchResults
 		};
 
-		switch ( descriptionSource ) {
+		switch (descriptionSource) {
 			case 'wikidata':
 				searchQuery.prop += '|description';
 				break;
@@ -324,7 +352,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	 *
 	 * @param {string} title - The title of the search suggestion.
 	 * @param {string} searchString - The string to highlight.
-	 * @return {string} The title with highlighted part in an <em> tag.
+	 * @return {string} The title with highlighted part in an &lt;em> tag.
 	 */
 	function highlightTitle( title, searchString ) {
 		let sanitizedSearchString = mw.html.escape( mw.RegExp.escape( searchString ) ),
@@ -354,7 +382,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	 * @return {string} A string representing the search suggestions DOM
 	 */
 	function generateTemplateString( suggestions ) {
-		let string = '<div class="suggestions-dropdown">',
+		let string = '&lt;div class="suggestions-dropdown">',
 			suggestionLink,
 			suggestionThumbnail,
 			suggestionText,
@@ -370,14 +398,14 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			return getNoResultsIndicator( searchString );
 		}
 
-		for ( i = 0; i < suggestions.length; i++ ) {
+		for ( i = 0; i &lt; suggestions.length; i++ ) {
 			if ( !suggestions[ i ] ) {
 				continue;
 			}
 
 			page = suggestions[ i ];
 
-			switch ( descriptionSource ) {
+			switch (descriptionSource) {
 				case 'wikidata':
 					pageDescription = page.description || '';
 					break;
@@ -392,7 +420,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			// Ensure that the value from the previous iteration isn't used
 			sanitizedThumbURL = false;
 
-			if ( page.thumbnail && page.thumbnail.source ) {
+			if ( page.thumbnail &amp;&amp; page.thumbnail.source ) {
 				sanitizedThumbURL = page.thumbnail.source.replace( /"/g, '%22' );
 				sanitizedThumbURL = sanitizedThumbURL.replace( /'/g, '%27' );
 			}
@@ -403,7 +431,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			// Check if description exists
 			if ( pageDescription ) {
 				// If the description is an array, use the first item
-				if ( typeof pageDescription === 'object' && pageDescription[ 0 ] ) {
+				if ( typeof pageDescription === 'object' &amp;&amp; pageDescription[ 0 ] ) {
 					descriptionText = pageDescription[ 0 ].toString();
 				} else {
 					// Otherwise, use the description as is.
@@ -437,7 +465,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 
 		}
 
-		string += '</div>';
+		string += '&lt;/div>';
 
 		return string;
 	} // END generateTemplateString
@@ -455,7 +483,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			colItem,
 			i;
 
-		for ( i = 0; i < collection.length; i++ ) {
+		for ( i = 0; i &lt; collection.length; i++ ) {
 			colItem = collection[ i ];
 			// Remove the class name from everything except item.
 			if ( colItem !== item ) {
@@ -501,7 +529,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 				return;
 			}
 
-			suggestions = ( xhrResults.query && xhrResults.query.pages ) ?
+			suggestions = ( xhrResults.query &amp;&amp; xhrResults.query.pages ) ?
 				xhrResults.query.pages : [];
 
 			if ( suggestions.length === 0 ) {
@@ -526,7 +554,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			typeAheadItems = typeAheadEl.childNodes[ 0 ].childNodes;
 
 			// Attaching hover events
-			for ( i = 0; i < typeAheadItems.length; i++ ) {
+			for ( i = 0; i &lt; typeAheadItems.length; i++ ) {
 				listEl = typeAheadItems[ i ];
 				// Requires the addEvent global polyfill
 				addEvent( listEl, 'mouseenter', toggleActiveClass.bind( this, listEl, typeAheadItems ) );
@@ -565,7 +593,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			toggleActiveClass( activeItem, suggestionItems );
 
 		}
-		if ( keycode === 13 && activeItem ) {
+		if ( keycode === 13 &amp;&amp; activeItem ) {
 
 			if ( e.preventDefault ) {
 				e.preventDefault();
@@ -589,3 +617,26 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 		query: loadQueryScript
 	};
 };
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="window.WMTypeAhead.html">WMTypeAhead</a></li></ul><h3>Global</h3><ul><li><a href="global.html#getDevicePixelRatio">getDevicePixelRatio</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Jan 06 2020 19:31:51 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
