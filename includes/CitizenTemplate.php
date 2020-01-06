@@ -246,7 +246,7 @@ class CitizenTemplate extends BaseTemplate {
 				Html::rawElement(
 				'div',
 				[ 'id' => 'mw-header-banner' ],
-					$this->getSiteLogo() .
+					$this->getLogo() .
 					$this->getSiteTitle( 'text' )
 				) .
 				// Container for navigation and tools
