@@ -243,7 +243,12 @@ class CitizenTemplate extends BaseTemplate {
 			Html::rawElement(
 				'div',
 				[ 'id' => 'mw-header-menu-drawer-container' ],
-				$this->getSiteTitle( 'text' ) .
+				Html::rawElement(
+				'div',
+				[ 'id' => 'mw-header-banner' ],
+					$this->getSiteLogo() .
+					$this->getSiteTitle( 'text' )
+				) .
 				// Container for navigation and tools
 				Html::rawElement(
 					'div',
