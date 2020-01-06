@@ -245,7 +245,7 @@ class CitizenTemplate extends BaseTemplate {
 				[ 'id' => 'mw-header-menu-drawer-container' ],
 				Html::rawElement(
 				'div',
-				[ 'id' => 'mw-header-banner' ],
+				[ 'id' => 'mw-header-banner', 'role' => 'banner' ],
 					$this->getLogo() .
 					$this->getSiteTitle( 'text' )
 				) .
@@ -331,17 +331,11 @@ class CitizenTemplate extends BaseTemplate {
 	 * @return string html
 	 */
 	protected function getLogo( $id = 'p-logo' ) {
-		$html = Html::openElement( 'div', [
-			'id' => $id,
-			'class' => 'mw-portlet',
-			'role' => 'banner',
-		] );
 		$html .= Html::element( 'a', [
 				'href' => $this->data['nav_urls']['mainpage']['href'],
+				'id' => 'p-logo',
 				'class' => 'mw-wiki-logo',
 			] + Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) );
-
-		return $html . Html::closeElement( 'div' );
 	}
 
 	/**
