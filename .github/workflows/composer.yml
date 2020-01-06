@@ -32,6 +32,7 @@ jobs:
       run: composer test
 
     - name: Push the changes
+      if: git status --porcelain || exit
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
