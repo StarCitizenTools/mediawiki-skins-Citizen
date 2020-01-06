@@ -330,7 +330,7 @@ class CitizenTemplate extends BaseTemplate {
 	 *
 	 * @return string html
 	 */
-	protected function getLogo( $id = 'p-logo' ) {
+	protected function getLogo() {
 		$html = Html::element( 'a', [
 				'href' => $this->data['nav_urls']['mainpage']['href'],
 				'id' => 'p-logo',
