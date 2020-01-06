@@ -26,7 +26,7 @@ jobs:
     - name: Run stylelint autofix
       run: npm run fix
       
-    - name: Run Grunt test
+    - name: Run eslint and stylelint test
       run: npm run test
 
     # Only patch code when it is a push event
