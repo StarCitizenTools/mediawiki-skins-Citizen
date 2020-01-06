@@ -2,5 +2,6 @@
 <ruleset>
     <rule ref="./vendor/mediawiki/mediawiki-codesniffer/MediaWiki" />
     <file>.</file>
-    <exclude-pattern>vendor</exclude-pattern>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/out/*</exclude-pattern>
 </ruleset>

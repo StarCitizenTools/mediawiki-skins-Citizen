@@ -246,15 +246,15 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			descmsg = mw.message( 'citizen-search-no-results-desc', searchString ).text();
 
 		return `
-<div class="suggestions-dropdown">
-	<div class="suggestion-link">
-		<div class="suggestion-text">
-			<h3 class="suggestion-title">` + titlemsg + `</h3>
-			<p class="suggestion-description">` + descmsg + `</p>
-		</div>
-		<div class="suggestion-thumbnail"></div>
-	</div>
-</div>`;
+< div class = "suggestions-dropdown" >
+	< div class = "suggestion-link" >
+		< div class = "suggestion-text" >
+			< h3 class = "suggestion-title" > ` + titlemsg + ` < / h3 >
+			< p class = "suggestion-description" > ` + descmsg + ` < / p >
+		< / div >
+		< div class = "suggestion-thumbnail" > < / div >
+	< / div >
+< / div > `;
 	}
 
 	/**
@@ -292,7 +292,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			gpslimit: maxSearchResults
 		};
 
-		switch (descriptionSource) {
+		switch ( descriptionSource ) {
 			case 'wikidata':
 				searchQuery.prop += '|description';
 				break;
@@ -377,7 +377,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 
 			page = suggestions[ i ];
 
-			switch (descriptionSource) {
+			switch ( descriptionSource ) {
 				case 'wikidata':
 					pageDescription = page.description || '';
 					break;
