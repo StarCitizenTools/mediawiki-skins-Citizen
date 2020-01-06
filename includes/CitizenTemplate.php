@@ -326,8 +326,6 @@ class CitizenTemplate extends BaseTemplate {
 
 	/**
 	 * Generates the logo
-	 * @param string $id
-	 *
 	 * @return string html
 	 */
 	protected function getLogo() {
