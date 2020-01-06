@@ -220,7 +220,7 @@ class CitizenTemplate extends BaseTemplate {
 	protected function getHamburgerMenu() {
 		$html = Html::openElement(
 			'div',
-			[ 'class' => 'mw-header-end', 'id' => 'mw-header-menu' ]
+			[ 'class' => 'mw-header-end mw-header-menu' ]
 		);
 
 		$html .= Html::rawElement(
@@ -229,7 +229,7 @@ class CitizenTemplate extends BaseTemplate {
 		);
 
 		// Actual hamburger
-		$html .= Html::openElement( 'div', [ 'id' => 'mw-header-menu-toggle' ] );
+		$html .= Html::openElement( 'div', [ 'class' => 'mw-header-menu-toggle' ] );
 
 		for ( $i = 1; $i <= 3; $i++ ) {
 			$html .= Html::rawElement( 'span' );
