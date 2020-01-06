@@ -29,7 +29,9 @@ jobs:
     - name: Run Grunt test
       run: npm run test
 
+    # Only patch code when it is a push event
     - name: Push the changes
+      if: github.event_name == 'push'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
