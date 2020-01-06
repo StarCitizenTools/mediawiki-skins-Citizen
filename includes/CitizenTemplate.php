@@ -135,7 +135,7 @@ class CitizenTemplate extends BaseTemplate {
 	protected function getSideTitle() {
 		return Html::rawElement(
 			'div',
-			[ 'id' => 'mw-sidebar-sitename', 'role' => 'banner' ],
+			[ 'class' => 'mw-sidebar-sitename', 'role' => 'banner' ],
 			$this->getSiteTitle( 'link' )
 		);
 	}
@@ -239,13 +239,13 @@ class CitizenTemplate extends BaseTemplate {
 		// Get sidebar links
 		$html .= Html::rawElement(
 			'div',
-			[ 'id' => 'mw-header-menu-drawer' ],
+			[ 'class' => 'mw-header-menu-drawer' ],
 			Html::rawElement(
 				'div',
-				[ 'id' => 'mw-header-menu-drawer-container' ],
+				[ 'class' => 'mw-header-menu-drawer-container' ],
 				Html::rawElement(
 				'div',
-				[ 'id' => 'mw-header-banner', 'role' => 'banner' ],
+				[ 'class' => 'mw-header-banner', 'role' => 'banner' ],
 					$this->getLogo() .
 					$this->getSiteTitle( 'text' )
 				) .
@@ -460,7 +460,7 @@ class CitizenTemplate extends BaseTemplate {
 			unset( $personalTools['uls'] );
 		}
 
-		$html .= Html::openElement( 'div', [ 'id' => 'mw-user-links' ] );
+		$html .= Html::openElement( 'div', [ 'class' => 'mw-user-links' ] );
 		$html .= $this->getPortlet( 'personal', $personalTools, 'personaltools' );
 
 		return $html . Html::closeElement( 'div' );

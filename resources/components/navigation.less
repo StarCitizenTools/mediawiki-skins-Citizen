@@ -61,18 +61,18 @@
  * Hamburger menu
  * Modified from https://codepen.io/erikterwan/pen/EVzeRP and https://codepen.io/oxla/pen/zgvqmM
  */
-#mw-header-menu {
+.mw-header-menu {
 	input {
 		&:checked {
 
 			// Show drawer
-			~ #mw-header-menu-drawer {
+			~ .mw-header-menu-drawer {
 				transform: none;
 				will-change: unset;
 			}
 
 			// Transform all the slices of hamburger into a crossmark
-			~ #mw-header-menu-toggle > span {
+			~ .mw-header-menu-toggle > span {
 				opacity: @opacity-icon;
 				transform: rotate( 45deg ) translate( -5px, -7px );
 
@@ -90,7 +90,7 @@
 		}
 
 		// Hover state
-		&:hover ~ #mw-header-menu-toggle > span {
+		&:hover ~ .mw-header-menu-toggle > span {
 			opacity: @opacity-icon-active;
 
 			&:first-child {
@@ -167,7 +167,7 @@
 				.mixin-screen-reader-text;
 			}
 
-			#mw-user-links {
+			.mw-user-links {
 				#p-personal {
 					padding-top: @margin-side / 2;
 					border-top: 1px solid @base-80;
@@ -272,26 +272,29 @@
 }
 
 // Sidebar site title
-#mw-sidebar-sitename {
+.mw-sidebar-sitename {
 	position: fixed;
 	visibility: visible;
 	top: @header-height;
 	left: @margin-side;
 	font-size: 11px;
-	letter-spacing: 4px;
 	transform: translateY( 100% ) translateX( -100% ) rotate( -90deg );
 	transform-origin: top right;
 	transition: @transition-transform, @transition-opacity;
 	-webkit-font-smoothing: subpixel-antialiased;
+
+	.mw-wiki-title {
+		letter-spacing: 4px;
+	}
 }
 
 // Nav up stuff
 .nav-up {
-	~ #mw-sidebar-sitename {
+	~ .mw-sidebar-sitename {
 		transform: translateY( -@header-height + @margin-side ) translateX( -100% ) rotate( -90deg );
 	}
 
-	#mw-header-menu-drawer-container {
+	.mw-header-menu-drawer-container {
 		height: 100vh;
 	}
 }
@@ -300,7 +303,7 @@
 @mw-sidebar-sitename-max-width: @margin-side * 5 + @page-width;
 
 @media only screen and ( max-width: @mw-sidebar-sitename-max-width ) {
-	#mw-sidebar-sitename {
+	.mw-sidebar-sitename {
 		z-index: -1; // remove link
 		opacity: 0; // hide visual
 	}
@@ -343,18 +346,18 @@
 
 // RTL tweaks
 .rtl {
-	#mw-sidebar-sitename {
+	.mw-sidebar-sitename {
 		left: unset;
 		right: @margin-side;
 		transform: translateY( 0 ) rotate( 90deg );
 		transform-origin: top right;
 	}
 
-	.nav-up ~ #mw-sidebar-sitename {
+	.nav-up ~ .mw-sidebar-sitename {
 		transform: translateY( @header-height - @margin-side ) rotate( 90deg );
 	}
 
-	#mw-header-menu-drawer {
+	.mw-header-menu-drawer {
 		transform: translate( 100%, 0 );
 	}
 }
