@@ -23,12 +23,12 @@ jobs:
       run: composer install --prefer-dist --no-progress --no-suggest
     
     # Bypass the phpcbf non-standard exit code  
-    - name: Run composer fix
+    - name: Run phpcbf
       run: |
         sh ./bin/phpcbf.sh
         composer fix
 
-    - name: Run Composer test
+    - name: Run parallel-lint, phpcs, minus-x
       run: composer test
 
     # Only patch code when it is a push event
