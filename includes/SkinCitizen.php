@@ -46,7 +46,7 @@ class SkinCitizen extends SkinTemplate {
 
 		// X-XSS-Protection
 		$this->addXXSSProtection();
-		
+
 		// Feature policy
 		$this->addFeaturePolicy();
 
@@ -168,7 +168,6 @@ class SkinCitizen extends SkinTemplate {
 		}
 	}
 
-
 	/**
 	 * Adds the X-XSS-Protection header if set in 'CitizenEnableXXSSProtection'
 	 */
@@ -198,7 +197,7 @@ class SkinCitizen extends SkinTemplate {
 	 */
 	public function getDefaultModules() {
 		$modules = parent::getDefaultModules();
-		
+
 		// disable default skin search modules
 		$modules['search'] = [];
 
