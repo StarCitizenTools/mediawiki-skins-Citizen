@@ -791,27 +791,22 @@ class CitizenTemplate extends BaseTemplate {
 				'link-prefix' => 'footer',
 				'icon-style' => 'icononly',
 			];
-
 		$validFooterIcons = $this->getFooterIcons( $options['icon-style'] );
 		$validFooterLinks = $this->getFooterLinks();
 		$html = '';
-
 		$html .= Html::openElement( 'footer', [
 			'id' => $options['id'],
 			'role' => 'contentinfo',
 			'lang' => $this->get( 'userlang' ),
 			'dir' => $this->get( 'dir' ),
 		] );
-
 		$iconsHTML = '';
 		if ( count( $validFooterIcons ) > 0 ) {
 			$iconsHTML .= Html::openElement( 'div',
 				[ 'id' => "{$options['link-prefix']}-container-icons" ] );
 			$iconsHTML .= Html::openElement( 'div', [ 'id' => 'footer-bottom-container' ] );
-
 			// Get tagline
 			$iconsHTML .= $this->getFooterTagline();
-
 			$iconsHTML .= Html::openElement( 'ul', [ 'id' => "{$options['link-prefix']}-icons" ] );
 			foreach ( $validFooterIcons as $blockName => $footerIcons ) {
 				$iconsHTML .= Html::openElement( 'li', [
@@ -827,7 +822,6 @@ class CitizenTemplate extends BaseTemplate {
 			$iconsHTML .= Html::closeElement( 'div' );
 			$iconsHTML .= Html::closeElement( 'div' );
 		}
-
 		$linksHTML = '';
 		if ( count( $validFooterLinks ) > 0 ) {
 			$linksHTML .= Html::openElement( 'div',
@@ -836,14 +830,12 @@ class CitizenTemplate extends BaseTemplate {
 				'id' => "{$options['link-prefix']}-list",
 				'class' => 'footer-places',
 			] );
-
 			// Site title
 			$linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitetitle' ],
 				$this->getSiteTitle( 'text' ) );
 			// Site description
 			$linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitedesc' ],
 				$this->getFooterDesc() );
-
 			foreach ( $validFooterLinks as $link ) {
 				$linksHTML .= Html::rawElement( 'li',
 					[ 'id' => Sanitizer::escapeIdForAttribute( $link ) ], $this->get( $link ) );
@@ -851,13 +843,11 @@ class CitizenTemplate extends BaseTemplate {
 			$linksHTML .= Html::closeElement( 'ul' );
 			$linksHTML .= Html::closeElement( 'div' );
 		}
-
 		if ( $options['order'] === 'iconsfirst' ) {
 			$html .= $iconsHTML . $linksHTML;
 		} else {
 			$html .= $linksHTML . $iconsHTML;
 		}
-
 		return $html . $this->getClear() . Html::closeElement( 'footer' );
 	}
 }
