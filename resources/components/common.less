@@ -54,10 +54,6 @@ dl {
 	margin: @content-margin-top 0 0 0;
 }
 
-p:first-of-type {
-	margin-top: 0;
-}
-
 pre,
 code,
 tt,
@@ -513,6 +509,10 @@ a {
 	p {
 		line-height: inherit;
 		overflow-wrap: break-word;
+	}
+	
+	p:first-of-type {
+		margin-top: 0;
 	}
 
 	h2 {
