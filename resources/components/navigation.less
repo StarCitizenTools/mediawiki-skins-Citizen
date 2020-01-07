@@ -157,6 +157,7 @@
 				border-bottom: 1px solid @base-80;
 				display: flex;
 				flex-direction: column;
+				transition: @transition-border;
 
 				.mw-wiki-logo {
 					margin-bottom: @margin-side;
@@ -166,11 +167,14 @@
 					background-position: left center;
 					background-repeat: no-repeat;
 					background-size: contain;
+					transition: @transition-height;
+					will-change: height;
 				}
 
 				.mw-wiki-title {
-					margin-top: @margin-side;
-					display: none;
+					opacity: 1;
+					height: auto;
+					transition: @transition-height, @transition-opacity;
 				}
 			}
 
@@ -323,11 +327,14 @@
 		border-color: transparent;
 
 		.mw-wiki-logo {
-			display: none;
+			margin: 0;
+			height: 0;
 		}
 
 		.mw-wiki-title {
-			display: block;
+			margin-top: 20px;
+    		height: auto;
+    		pacity: 1;
 		}
 	}
 }
@@ -339,11 +346,14 @@
 			border-color: transparent;
 
 			.mw-wiki-logo {
-				display: none;
+				margin: 0;
+				height: 0;
 			}
 
 			.mw-wiki-title {
-				display: block;
+				margin-top: 20px;
+    			height: auto;
+    			opacity: 1;
 			}
 		}
 	}
