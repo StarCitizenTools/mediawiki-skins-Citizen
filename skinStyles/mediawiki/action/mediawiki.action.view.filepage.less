@@ -73,6 +73,49 @@
 	}
 }
 
+.multipageimage {
+	display: flex;
+	justify-content: center;
+	overflow: visible;
+
+	.fullImageLink {
+		margin: 0 !important;
+	}
+
+	> a > img {
+		margin: 0;
+	}
+
+	tr {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.multipageimagenavbox {
+		margin-top: 0.8rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		.thumb {
+			margin: 0 !important;
+
+			&:first-of-type {
+				order: -1;
+			}
+
+			.lazy {
+				filter: none !important;
+			}
+		}
+
+		hr,
+		br {
+			display: none;
+		}
+	}
+}
+
 @media only screen and ( max-width: @screen2 ) {
 	.fullImageLink {
 		/* stylelint-disable unit-no-unknown */
