@@ -779,6 +779,7 @@ class CitizenTemplate extends BaseTemplate {
 	 * * 'link-prefix' to set the prefix for all link and block ids; most skins use 'f' or 'footer',
 	 *   as in id='f-whatever' vs id='footer-whatever'
 	 * * 'icon-style' to pass to getFooterIcons: "icononly", "nocopyright"
+	 * * 'link-style' to pass to getFooterLinks: "flat" to disable categorisation of links in a
 	 *   nested array
 	 *
 	 * @return string html
@@ -790,9 +791,10 @@ class CitizenTemplate extends BaseTemplate {
 				'order' => 'linksfirst',
 				'link-prefix' => 'footer',
 				'icon-style' => 'icononly',
+				'link-style' => 'flat',
 			];
 		$validFooterIcons = $this->getFooterIcons( $options['icon-style'] );
-		$validFooterLinks = $this->getFooterLinks();
+		$validFooterLinks = $this->getFooterLinks( $options['link-style'] );
 		$html = '';
 		$html .= Html::openElement( 'footer', [
 			'id' => $options['id'],
@@ -826,21 +828,44 @@ class CitizenTemplate extends BaseTemplate {
 		if ( count( $validFooterLinks ) > 0 ) {
 			$linksHTML .= Html::openElement( 'div',
 				[ 'id' => "{$options['link-prefix']}-container-list" ] );
-			$linksHTML .= Html::openElement( 'ul', [
-				'id' => "{$options['link-prefix']}-list",
-				'class' => 'footer-places',
-			] );
-			// Site title
-			$linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitetitle' ],
-				$this->getSiteTitle( 'text' ) );
-			// Site description
-			$linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitedesc' ],
-				$this->getFooterDesc() );
-			foreach ( $validFooterLinks as $link ) {
-				$linksHTML .= Html::rawElement( 'li',
-					[ 'id' => Sanitizer::escapeIdForAttribute( $link ) ], $this->get( $link ) );
+			if ( $options['link-style'] === 'flat' ) {
+				$linksHTML .= Html::openElement( 'ul', [
+					'id' => "{$options['link-prefix']}-list",
+					'class' => 'footer-places',
+				] );
+				// Site title
+				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitetitle' ],
+					$this->getSiteTitle( 'text' ) );
+				// Site description
+				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitedesc' ],
+					$this->getFooterDesc() );
+				foreach ( $validFooterLinks as $link ) {
+					$linksHTML .= Html::rawElement( 'li',
+						[ 'id' => Sanitizer::escapeIdForAttribute( $link ) ], $this->get( $link ) );
+				}
+				$linksHTML .= Html::closeElement( 'ul' );
+			} else {
+				$linksHTML .= Html::openElement( 'div',
+					[ 'id' => "{$options['link-prefix']}-list" ] );
+				foreach ( $validFooterLinks as $category => $links ) {
+					$linksHTML .= Html::openElement( 'ul', [
+						'id' => Sanitizer::escapeIdForAttribute( "{$options['link-prefix']}-{$category}" ),
+					] );
+					foreach ( $links as $link ) {
+						$linksHTML .= Html::rawElement( 'li', [
+							'id' => Sanitizer::escapeIdForAttribute( "{$options['link-prefix']}-{$category}-{$link}" ),
+						], $this->get( $link ) );
+					}
+					$linksHTML .= Html::closeElement( 'ul' );
+				}
+				// Site title
+				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'footer-sitetitle' ],
+					$this->getSiteTitle( 'text' ) );
+				// Site logo
+				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'footer-sitelogo' ],
+					$this->getLogo() );
+				$linksHTML .= Html::closeElement( 'div' );
 			}
-			$linksHTML .= Html::closeElement( 'ul' );
 			$linksHTML .= Html::closeElement( 'div' );
 		}
 		if ( $options['order'] === 'iconsfirst' ) {
