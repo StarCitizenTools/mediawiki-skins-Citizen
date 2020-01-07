@@ -61,22 +61,18 @@
  * Hamburger menu
  * Modified from https://codepen.io/erikterwan/pen/EVzeRP and https://codepen.io/oxla/pen/zgvqmM
  */
-#mw-header-menu {
-	.mw-wiki-title {
-		letter-spacing: 2px;
-	}
-
+.mw-header-menu {
 	input {
 		&:checked {
 
 			// Show drawer
-			~ #mw-header-menu-drawer {
+			~ .mw-header-menu-drawer {
 				transform: none;
 				will-change: unset;
 			}
 
 			// Transform all the slices of hamburger into a crossmark
-			~ #mw-header-menu-toggle > span {
+			~ .mw-header-menu-toggle > span {
 				opacity: @opacity-icon;
 				transform: rotate( 45deg ) translate( -5px, -7px );
 
@@ -94,7 +90,7 @@
 		}
 
 		// Hover state
-		&:hover ~ #mw-header-menu-toggle > span {
+		&:hover ~ .mw-header-menu-toggle > span {
 			opacity: @opacity-icon-active;
 
 			&:first-child {
@@ -156,22 +152,43 @@
 			justify-content: space-between;
 			transition: @transition-height;
 
-			.mw-wiki-title {
-				padding: @margin-side;
+			.mw-header-banner {
+				padding: 0 @margin-side @margin-side / 2 @margin-side;
+				border-bottom: 1px solid @base-80;
+				display: flex;
+				flex-direction: column;
+
+				.mw-wiki-logo {
+					margin-bottom: @margin-side / 2;
+					width: 120px;
+					height: 120px;
+					display: block;
+					background-position: left center;
+					background-repeat: no-repeat;
+					background-size: contain;
+					transition: @transition-height;
+					will-change: height;
+				}
+
+				.mw-wiki-title {
+					opacity: 0;
+					height: 0;
+					transition: @transition-height, @transition-opacity;
+				}
 			}
 
-			#p-nt-container {
-				padding-bottom: @margin-side / 2;
+			.mw-nav-links {
+				padding: @margin-side / 2 0;
 				overflow: auto;
 				overscroll-behavior: contain;
 				flex-grow: 1;
+
+				#p-navigation-label {
+					.mixin-screen-reader-text;
+				}
 			}
 
-			#p-navigation-label {
-				.mixin-screen-reader-text;
-			}
-
-			#mw-user-links {
+			.mw-user-links {
 				#p-personal {
 					padding-top: @margin-side / 2;
 					border-top: 1px solid @base-80;
@@ -225,6 +242,43 @@
 				}
 			}
 
+			.mw-nav-links,
+			.mw-user-links {
+				a {
+					.menu-item-link;
+					align-items: center;
+					justify-content: space-between;
+					padding: @padding-menu-item-big;
+					font-size: @ui-menu-text-big;
+					font-family: @fonts;
+
+					&:after {
+						.resource-loader-list-icon;
+						margin-left: @icon-padding;
+						opacity: 0.4;
+						display: block;
+						background-size: contain;
+						transition: @transition-opacity-quick;
+					}
+
+					&:hover {
+						.menu-item-link-hover;
+
+						&:after {
+							opacity: 0.6;
+						}
+					}
+
+					&:active {
+						.menu-item-link-active;
+					}
+
+					&:focus {
+						.menu-item-link-focus;
+					}
+				}
+			}
+
 			h3 {
 				margin: @margin-side / 2 0 0 0;
 				padding: @margin-side / 2 @margin-side;
@@ -237,66 +291,70 @@
 			span {
 				display: block;
 			}
-
-			a {
-				.menu-item-link;
-				align-items: center;
-				justify-content: space-between;
-				padding: @padding-menu-item-big;
-				font-size: @ui-menu-text-big;
-				font-family: @fonts;
-
-				&:after {
-					.resource-loader-list-icon;
-					margin-left: @icon-padding;
-					opacity: 0.4;
-					display: block;
-					background-size: contain;
-					transition: @transition-opacity-quick;
-				}
-
-				&:hover {
-					.menu-item-link-hover;
-
-					&:after {
-						opacity: 0.6;
-					}
-				}
-
-				&:active {
-					.menu-item-link-active;
-				}
-
-				&:focus {
-					.menu-item-link-focus;
-				}
-			}
 		}
 	}
 }
 
 // Sidebar site title
-#mw-sidebar-sitename {
+.mw-sidebar-sitename {
 	position: fixed;
 	visibility: visible;
 	top: @header-height;
 	left: @margin-side;
 	font-size: 11px;
-	letter-spacing: 4px;
 	transform: translateY( 100% ) translateX( -100% ) rotate( -90deg );
 	transform-origin: top right;
 	transition: @transition-transform, @transition-opacity;
 	-webkit-font-smoothing: subpixel-antialiased;
+
+	.mw-wiki-title {
+		letter-spacing: 4px;
+	}
 }
 
 // Nav up stuff
 .nav-up {
-	~ #mw-sidebar-sitename {
+	~ .mw-sidebar-sitename {
 		transform: translateY( -@header-height + @margin-side ) translateX( -100% ) rotate( -90deg );
 	}
 
-	#mw-header-menu-drawer-container {
+	.mw-header-menu-drawer-container {
 		height: 100vh;
+
+		.mw-header-banner {
+			border-color: transparent;
+
+			.mw-wiki-logo {
+				margin: 0;
+				height: 0;
+			}
+
+			.mw-wiki-title {
+				margin-top: 20px;
+				height: auto;
+				opacity: 1;
+			}
+		}
+	}
+}
+
+// Only show title when screen height is less than 800px
+@media only screen and ( max-height: 800px ) {
+	.mw-header-menu-drawer-container {
+		.mw-header-banner {
+			border-color: transparent;
+
+			.mw-wiki-logo {
+				margin: 0;
+				height: 0;
+			}
+
+			.mw-wiki-title {
+				margin-top: 20px;
+				height: auto;
+				opacity: 1;
+			}
+		}
 	}
 }
 
@@ -304,7 +362,7 @@
 @mw-sidebar-sitename-max-width: @margin-side * 5 + @page-width;
 
 @media only screen and ( max-width: @mw-sidebar-sitename-max-width ) {
-	#mw-sidebar-sitename {
+	.mw-sidebar-sitename {
 		z-index: -1; // remove link
 		opacity: 0; // hide visual
 	}
@@ -347,18 +405,18 @@
 
 // RTL tweaks
 .rtl {
-	#mw-sidebar-sitename {
+	.mw-sidebar-sitename {
 		left: unset;
 		right: @margin-side;
 		transform: translateY( 0 ) rotate( 90deg );
 		transform-origin: top right;
 	}
 
-	.nav-up ~ #mw-sidebar-sitename {
+	.nav-up ~ .mw-sidebar-sitename {
 		transform: translateY( @header-height - @margin-side ) rotate( 90deg );
 	}
 
-	#mw-header-menu-drawer {
+	.mw-header-menu-drawer {
 		transform: translate( 100%, 0 );
 	}
 }

@@ -135,7 +135,7 @@ class CitizenTemplate extends BaseTemplate {
 	protected function getSideTitle() {
 		return Html::rawElement(
 			'div',
-			[ 'id' => 'mw-sidebar-sitename', 'role' => 'banner' ],
+			[ 'class' => 'mw-sidebar-sitename', 'role' => 'banner' ],
 			$this->getSiteTitle( 'link' )
 		);
 	}
@@ -220,7 +220,7 @@ class CitizenTemplate extends BaseTemplate {
 	protected function getHamburgerMenu() {
 		$html = Html::openElement(
 			'div',
-			[ 'class' => 'mw-header-end', 'id' => 'mw-header-menu' ]
+			[ 'class' => 'mw-header-end mw-header-menu' ]
 		);
 
 		$html .= Html::rawElement(
@@ -229,7 +229,7 @@ class CitizenTemplate extends BaseTemplate {
 		);
 
 		// Actual hamburger
-		$html .= Html::openElement( 'div', [ 'id' => 'mw-header-menu-toggle' ] );
+		$html .= Html::openElement( 'div', [ 'class' => 'mw-header-menu-toggle' ] );
 
 		for ( $i = 1; $i <= 3; $i++ ) {
 			$html .= Html::rawElement( 'span' );
@@ -239,15 +239,20 @@ class CitizenTemplate extends BaseTemplate {
 		// Get sidebar links
 		$html .= Html::rawElement(
 			'div',
-			[ 'id' => 'mw-header-menu-drawer' ],
+			[ 'class' => 'mw-header-menu-drawer' ],
 			Html::rawElement(
 				'div',
-				[ 'id' => 'mw-header-menu-drawer-container' ],
-				$this->getSiteTitle( 'text' ) .
+				[ 'class' => 'mw-header-menu-drawer-container' ],
+				Html::rawElement(
+				'div',
+				[ 'class' => 'mw-header-banner', 'role' => 'banner' ],
+					$this->getLogo() .
+					$this->getSiteTitle( 'text' )
+				) .
 				// Container for navigation and tools
 				Html::rawElement(
 					'div',
-					[ 'id' => 'p-nt-container' ],
+					[ 'class' => 'mw-nav-links' ],
 					$this->getSiteNavigation()
 				) .
 				$this->getUserLinks()
@@ -321,22 +326,15 @@ class CitizenTemplate extends BaseTemplate {
 
 	/**
 	 * Generates the logo
-	 * @param string $id
-	 *
 	 * @return string html
 	 */
-	protected function getLogo( $id = 'p-logo' ) {
-		$html = Html::openElement( 'div', [
-			'id' => $id,
-			'class' => 'mw-portlet',
-			'role' => 'banner',
-		] );
-		$html .= Html::element( 'a', [
+	protected function getLogo() {
+		$html = Html::rawElement( 'a', [
 				'href' => $this->data['nav_urls']['mainpage']['href'],
+				'id' => 'p-logo',
 				'class' => 'mw-wiki-logo',
 			] + Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) );
-
-		return $html . Html::closeElement( 'div' );
+		return $html;
 	}
 
 	/**
@@ -461,7 +459,7 @@ class CitizenTemplate extends BaseTemplate {
 			unset( $personalTools['uls'] );
 		}
 
-		$html .= Html::openElement( 'div', [ 'id' => 'mw-user-links' ] );
+		$html .= Html::openElement( 'div', [ 'class' => 'mw-user-links' ] );
 		$html .= $this->getPortlet( 'personal', $personalTools, 'personaltools' );
 
 		return $html . Html::closeElement( 'div' );
@@ -781,7 +779,6 @@ class CitizenTemplate extends BaseTemplate {
 	 * * 'link-prefix' to set the prefix for all link and block ids; most skins use 'f' or 'footer',
 	 *   as in id='f-whatever' vs id='footer-whatever'
 	 * * 'icon-style' to pass to getFooterIcons: "icononly", "nocopyright"
-	 * * 'link-style' to pass to getFooterLinks: "flat" to disable categorisation of links in a
 	 *   nested array
 	 *
 	 * @return string html
@@ -793,11 +790,10 @@ class CitizenTemplate extends BaseTemplate {
 				'order' => 'linksfirst',
 				'link-prefix' => 'footer',
 				'icon-style' => 'icononly',
-				'link-style' => 'flat',
 			];
 
 		$validFooterIcons = $this->getFooterIcons( $options['icon-style'] );
-		$validFooterLinks = $this->getFooterLinks( $options['link-style'] );
+		$validFooterLinks = $this->getFooterLinks();
 		$html = '';
 
 		$html .= Html::openElement( 'footer', [
@@ -836,46 +832,23 @@ class CitizenTemplate extends BaseTemplate {
 		if ( count( $validFooterLinks ) > 0 ) {
 			$linksHTML .= Html::openElement( 'div',
 				[ 'id' => "{$options['link-prefix']}-container-list" ] );
-			if ( $options['link-style'] === 'flat' ) {
-				$linksHTML .= Html::openElement( 'ul', [
-					'id' => "{$options['link-prefix']}-list",
-					'class' => 'footer-places',
-				] );
+			$linksHTML .= Html::openElement( 'ul', [
+				'id' => "{$options['link-prefix']}-list",
+				'class' => 'footer-places',
+			] );
 
-				// Site title
-				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitetitle' ],
-					$this->getSiteTitle( 'text' ) );
-				// Site description
-				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitedesc' ],
-					$this->getFooterDesc() );
+			// Site title
+			$linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitetitle' ],
+				$this->getSiteTitle( 'text' ) );
+			// Site description
+			$linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitedesc' ],
+				$this->getFooterDesc() );
 
-				foreach ( $validFooterLinks as $link ) {
-					$linksHTML .= Html::rawElement( 'li',
-						[ 'id' => Sanitizer::escapeIdForAttribute( $link ) ], $this->get( $link ) );
-				}
-				$linksHTML .= Html::closeElement( 'ul' );
-			} else {
-				$linksHTML .= Html::openElement( 'div',
-					[ 'id' => "{$options['link-prefix']}-list" ] );
-				foreach ( $validFooterLinks as $category => $links ) {
-					$linksHTML .= Html::openElement( 'ul', [
-						'id' => Sanitizer::escapeIdForAttribute( "{$options['link-prefix']}-{$category}" ),
-					] );
-					foreach ( $links as $link ) {
-						$linksHTML .= Html::rawElement( 'li', [
-							'id' => Sanitizer::escapeIdForAttribute( "{$options['link-prefix']}-{$category}-{$link}" ),
-						], $this->get( $link ) );
-					}
-					$linksHTML .= Html::closeElement( 'ul' );
-				}
-				// Site title
-				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'footer-sitetitle' ],
-					$this->getSiteTitle( 'text' ) );
-				// Site logo
-				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'footer-sitelogo' ],
-					$this->getLogo() );
-				$linksHTML .= Html::closeElement( 'div' );
+			foreach ( $validFooterLinks as $link ) {
+				$linksHTML .= Html::rawElement( 'li',
+					[ 'id' => Sanitizer::escapeIdForAttribute( $link ) ], $this->get( $link ) );
 			}
+			$linksHTML .= Html::closeElement( 'ul' );
 			$linksHTML .= Html::closeElement( 'div' );
 		}
 
