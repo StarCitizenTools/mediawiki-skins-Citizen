@@ -329,13 +329,11 @@ class CitizenTemplate extends BaseTemplate {
 	 * @return string html
 	 */
 	protected function getLogo() {
-		$siteTitle = $language->convert( $this->getMsg( 'sitetitle' )->escaped() );
 		$html = Html::rawElement( 'a', [
 				'href' => $this->data['nav_urls']['mainpage']['href'],
 				'id' => 'p-logo',
 				'class' => 'mw-wiki-logo',
-				'title' => $siteTitle,
-			] );
+			] + Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) );
 		return $html;
 	}
 
