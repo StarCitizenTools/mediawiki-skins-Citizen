@@ -153,12 +153,13 @@
 			transition: @transition-height;
 
 			.mw-header-banner {
-				padding: 0 @margin-side @margin-side @margin-side;
+				padding: 0 @margin-side @margin-side / 2 @margin-side;
 				border-bottom: 1px solid @base-80;
 				display: flex;
 				flex-direction: column;
 
 				.mw-wiki-logo {
+					margin-bottom: @margin-side;
 					width: 120px;
 					height: 120px;
 					display: block;
@@ -168,7 +169,7 @@
 				}
 
 				.mw-wiki-title {
-					padding-top: 20px;
+					margin: @margin-side 0 @margin-side / 2 0;
 					display: none;
 				}
 			}
