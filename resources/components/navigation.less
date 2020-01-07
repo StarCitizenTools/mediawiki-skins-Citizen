@@ -157,7 +157,6 @@
 				border-bottom: 1px solid @base-80;
 				display: flex;
 				flex-direction: column;
-				transition: @transition-border;
 
 				.mw-wiki-logo {
 					margin-bottom: @margin-side;
@@ -172,8 +171,8 @@
 				}
 
 				.mw-wiki-title {
-					opacity: 1;
-					height: auto;
+					opacity: 0;
+					height: 0;
 					transition: @transition-height, @transition-opacity;
 				}
 			}
