@@ -168,6 +168,7 @@
 				}
 
 				.mw-wiki-title {
+					padding-top: 20px;
 					display: none;
 				}
 			}
@@ -315,6 +316,27 @@
 
 	.mw-header-menu-drawer-container {
 		height: 100vh;
+	}
+
+	.mw-header-banner {
+		.mw-wiki-logo {
+			display: none;
+		}
+		.mw-wiki-title {
+			display: block;
+		}
+	}
+}
+
+// Only show title when screen height is less than 800px
+@media only screen and ( max-height: 800px ) {
+	.mw-header-banner {
+		.mw-wiki-logo {
+			display: none;
+		}
+		.mw-wiki-title {
+			display: block;
+		}
 	}
 }
 
