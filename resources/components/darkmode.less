@@ -72,16 +72,21 @@
 		}
 	}
 
-	.mw-header-menu-drawer-container a {
-		&:hover {
-			background-color: @dark-bg-60;
-			color: @dark-text-90 !important;
-		}
+	.mw-header-menu-drawer-container {
+		.mw-nav-links,
+		.mw-user-links {
+			a {
+				&:hover {
+					background-color: @dark-bg-60;
+					color: @dark-text-90 !important;
+				}
 
-		&:active,
-		&:focus {
-			color: @dark-text-100 !important;
-			background-color: @accent-10;
+				&:active,
+				&:focus {
+					color: @dark-text-100 !important;
+					background-color: @accent-10;
+				}
+			}
 		}
 	}
 
@@ -156,7 +161,8 @@
 	.mw-body-content #contentSub2,
 	.mw-body #siteSub,
 	table.wikitable tr th,
-	.mw-header-menu-drawer-container a,
+	.mw-header-menu-drawer-container .mw-nav-links a,
+	.mw-header-menu-drawer-container .mw-user-links a,
 	.mw-body-content #mw-content-text .mw-parser-output #toc a:hover,
 	.suggestion-description {
 		color: @dark-text-80 !important;
@@ -174,7 +180,8 @@
 
 	#page-tools #p-views li > a:after,
 	#page-tools #p-actions > nav:before,
-	.mw-header-menu-drawer-container a:after,
+	.mw-header-menu-drawer-container .mw-nav-links a:after,
+	.mw-header-menu-drawer-container .mw-user-links a:after,
 	.mw-editsection > a:before,
 	#pt-notifications-alert .mw-echo-notifications-badge:before,
 	#pt-notifications-notice .mw-echo-notifications-badge:before,
