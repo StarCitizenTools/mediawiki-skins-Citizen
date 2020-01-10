@@ -177,15 +177,15 @@ class SkinCitizen extends SkinTemplate {
 		}
 	}
 
-	/**	
-	 * Adds the referrer header if enabled in 'CitizenEnableStrictReferrerPolicy'	
-	 */	
-	private function addStrictReferrerPolicy() {	
-		if ( $this->getConfigValue( 'CitizenEnableStrictReferrerPolicy' ) === true ) {	
+	/**
+	 * Adds the referrer header if enabled in 'CitizenEnableStrictReferrerPolicy'
+	 */
+	private function addStrictReferrerPolicy() {
+		if ( $this->getConfigValue( 'CitizenEnableStrictReferrerPolicy' ) === true ) {
 			// iOS Safari, IE, Edge compatiblity
-			$this->out->getRequest()->response()->header( 'Referrer-Policy: strict-origin' );	
-			$this->out->getRequest()->response()->header( 'Referrer-Policy: strict-origin-when-cross-origin' );	
-		}	
+			$this->out->getRequest()->response()->header( 'Referrer-Policy: strict-origin' );
+			$this->out->getRequest()->response()->header( 'Referrer-Policy: strict-origin-when-cross-origin' );
+		}
 	}
 
 	/**
