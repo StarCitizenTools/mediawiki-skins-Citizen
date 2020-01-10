@@ -178,6 +178,17 @@ class SkinCitizen extends SkinTemplate {
 	}
 
 	/**
+	 * Adds the referrer header if enabled in 'CitizenEnableStrictReferrerPolicy'
+	 */
+	private function addStrictReferrerPolicy() {
+		if ( $this->getConfigValue( 'CitizenEnableStrictReferrerPolicy' ) === true ) {
+			// iOS Safari, IE, Edge compatiblity
+			$this->out->getRequest()->response()->header( 'Referrer-Policy: strict-origin' );
+			$this->out->getRequest()->response()->header( 'Referrer-Policy: strict-origin-when-cross-origin' );
+		}
+	}
+
+	/**
 	 * Adds the Feature policy header to the response if enabled in 'CitizenFeaturePolicyDirective'
 	 */
 	private function addFeaturePolicy() {
