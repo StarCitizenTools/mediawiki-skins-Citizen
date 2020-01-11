@@ -90,7 +90,7 @@ class CitizenHooks {
 	public static function onThumbnailBeforeProduceHTML( $thumb, &$attribs, &$linkAttribs ) {
 		try {
 			$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Citizen' );
-			$thumbSize = $config->get( 'ThumbnailSize' );
+			$thumbSize = $config->get( 'CitizenThumbnailSize' );
 		} catch ( ConfigException $e ) {
 			wfLogWarning( sprintf( 'Could not get config for "$wgThumbnailSize". Defaulting to "10". %s',
 				$e->getMessage() ) );
