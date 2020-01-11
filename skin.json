@@ -164,6 +164,12 @@
 			"description": "Page tools visibility condition",
 			"descriptionmsg": "citizen-config-showpagetools",
 			"public": true
+		},
+		"ThumbnailSize": {
+			"value": 10,
+			"description": "Thumbnail size to use for lazy-loading",
+			"descriptionmsg": "citizen-config-thumbnailsize",
+			"public": true
 		}
 	},
 	"ConfigRegistry": {
