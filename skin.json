@@ -170,7 +170,7 @@
 			"description": "Thumbnail size to use for lazy-loading",
 			"descriptionmsg": "citizen-config-thumbnailsize",
 			"public": true
-		},
+		}
 	},
 	"ConfigRegistry": {
 		"Citizen": "GlobalVarConfig::newInstance"
