@@ -88,6 +88,16 @@ class CitizenHooks {
 	 * @return bool
 	 */
 	public static function onThumbnailBeforeProduceHTML( $thumb, &$attribs, &$linkAttribs ) {
+		try {
+			$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Citizen' );
+			$thumbSize = $config->get( 'ThumbnailSize' );
+		} catch ( ConfigException $e ) {
+			wfLogWarning( sprintf( 'Could not get config for "$wgThumbnailSize". Defaulting to "10". %s',
+				$e->getMessage() ) );
+
+			$thumbSize = 10;
+		}
+
 		$file = $thumb->getFile();
 
 		if ( $file !== null ) {
@@ -112,7 +122,8 @@ class CitizenHooks {
 			$attribs['data-height'] = $attribs['height'];
 
 			// Replace src with small size image
-			$attribs['src'] = preg_replace( '#/\d+px-#', '/10px-', $attribs['src'] );
+			$attribs['src'] =
+				preg_replace( '#/\d+px-#', sprintf( '/%upx-', $thumbSize ), $attribs['src'] );
 
 			// So that the 10px thumbnail is enlarged to the right size
 			$attribs['width'] = $attribs['data-width'];
