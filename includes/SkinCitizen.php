@@ -47,6 +47,9 @@ class SkinCitizen extends SkinTemplate {
 		// X-XSS-Protection
 		$this->addXXSSProtection();
 
+		// Referrer policy
+		$this->addStrictReferrerPolicy();
+
 		// Feature policy
 		$this->addFeaturePolicy();
 
