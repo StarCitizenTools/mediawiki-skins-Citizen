@@ -114,6 +114,27 @@ textarea {
 	width: 100%;
 }
 
+blockquote {
+	margin: @content-margin-top * 2 * @content-scaling;
+	padding: 0 @content-margin-top * 4 * @content-scaling;
+	color: @base-30;
+	font-family: @fonts-serif;
+	font-size: @content-quote-primary-size;
+	font-style: italic;
+
+	cite {
+		display: block;
+		margin-top: @content-margin-top * @content-scaling;
+		font-family: @fonts;
+		font-size: @content-quote-secondary-size;
+		font-style: normal;
+
+		&:before {
+			content: '— ';
+		}
+	}
+}
+
 dd {
 	margin-left: @content-margin-top * 2;
 	margin-bottom: 0.1rem;
@@ -680,6 +701,7 @@ a {
 		margin: @content-margin-top / 2 0 0;
 		color: @base-30;
 		font-size: @content-caption-size;
+		font-style: italic;
 	}
 
 	.thumb {
@@ -1054,6 +1076,7 @@ a {
 		margin-right: @negative-margin !important;
 	}
 }
+
 /*
 // Logged in styles
 .not-logged {
