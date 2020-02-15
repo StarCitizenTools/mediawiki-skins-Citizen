@@ -43,7 +43,6 @@ function ScrollSpy() {
                 if (active !== null) {
                     active.classList.remove("active");
                 }
-
                 if (node !== null) {
                     node.classList.add("active");
                 }
