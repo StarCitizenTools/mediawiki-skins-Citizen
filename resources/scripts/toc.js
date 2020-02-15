@@ -28,7 +28,7 @@ function ScrollSpy() {
     var sections = document.querySelectorAll(".mw-headline");
     window.addEventListener("scroll", function() {
         var scrollPos = document.documentElement.scrollTop || document.body.scrollTop,
-            sectionm id;
+            section, id;
 
         for (section in sections) {
             if (
