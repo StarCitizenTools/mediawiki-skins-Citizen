@@ -11,7 +11,9 @@ module.exports = function ( grunt ) {
 			options: {
 				reportUnusedDisableDirectives: true,
 				extensions: [ '.js', '.json' ],
-				fix: true
+				cache: true,
+				fix: true,
+				force: true
 			},
 			all: [
 				'**/*.js{,on}',

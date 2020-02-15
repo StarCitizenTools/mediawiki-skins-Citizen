@@ -4,20 +4,5 @@
 		"wikimedia/client",
 		"wikimedia/jquery",
 		"wikimedia/mediawiki"
-	],
-	"env": {
-		"browser": true,
-		"commonjs": true,
-        "es6": true
-    },
-	"globals": {
-		// Project-wide globals.
-		"OO": "readonly"	
-	},
-	"parserOptions": {
-		"ecmaVersion": 6
- 	},
-	"rules": {
-		// Project-wide rule variations. Keep to a minimum.
-	}
+	]
 }
