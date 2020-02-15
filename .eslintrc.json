@@ -4,5 +4,12 @@
 		"wikimedia/client",
 		"wikimedia/jquery",
 		"wikimedia/mediawiki"
-	]
+	],
+	"env": {
+		"commonjs": true
+	},
+	"globals": {
+		"OO": "readonly",
+		"require": "readonly"
+	}
 }
