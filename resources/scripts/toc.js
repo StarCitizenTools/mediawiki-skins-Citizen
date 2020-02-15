@@ -22,7 +22,8 @@ function SmoothScroll() {
             }
         }
     }
-},
+}
+
 function ScrollSpy() {
     var sections = document.querySelectorAll(".mw-headline");
     window.addEventListener("scroll", function() {
@@ -49,13 +50,14 @@ function ScrollSpy() {
             }
         }
     });
-},
+}
+
 function CheckToC() {
     if (document.getElementById("toc")) {
         SmoothScroll();
         ScrollSpy();
     }
-};
+}
 
 if (document.readyState !== "loading") {
     CheckToC();
