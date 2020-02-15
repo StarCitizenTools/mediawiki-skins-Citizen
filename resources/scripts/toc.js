@@ -25,10 +25,10 @@ function SmoothScroll() {
 }
 
 function ScrollSpy() {
-    var sections = document.querySelectorAll(".mw-headline");
-    window.addEventListener("scroll", function() {
-        var scrollPos = document.documentElement.scrollTop || document.body.scrollTop,
-            section, id;
+	var sections = document.querySelectorAll(".mw-headline");
+	window.addEventListener("scroll", function() {
+		var scrollPos = document.documentElement.scrollTop || document.body.scrollTop,
+			section, id;
 
 		for (section in sections) {
 			if (
