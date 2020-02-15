@@ -15,7 +15,10 @@ module.exports = function ( grunt ) {
 				fix: true,
 				force: true
 			},
-			all: '.'
+			all: [
+				'**/*.js{,on}',
+				'!{vendor,node_modules,docs}/**'
+			]
 		},
 		stylelint: {
 			all: [
