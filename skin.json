@@ -184,8 +184,12 @@
 		]
 	},
 	"ResourceModules": {
-		"skins.citizen": {
+		"skins.citizen.styles": {
 			"class": "ResourceLoaderSkinModule",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
 			"styles": {
 				"resources/screen.less": {
 					"media": "screen"
@@ -196,14 +200,14 @@
 				"resources/font-face.less": {}
 			}
 		},
-		"skins.citizen.js": {
+		"skins.citizen.scripts": {
 			"scripts": [
 				"resources/main.js",
 				"resources/scripts/header.js",
 				"resources/scripts/toc.js"
 			]
 		},
-		"skins.citizen.search": {
+		"skins.citizen.search.scripts": {
 			"scripts": [
 				"resources/scripts/underscore.partial.js",
 				"resources/scripts/wm-typeahead.js",
@@ -218,7 +222,7 @@
 				"citizen-search-no-results-desc"
 			]
 		},
-		"skins.citizen.bpd": {
+		"skins.citizen.lazyload.scripts": {
 			"scripts": [
 				"resources/scripts/lazyload.js"
 			]

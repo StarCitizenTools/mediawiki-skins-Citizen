@@ -224,7 +224,7 @@ class SkinCitizen extends SkinTemplate {
 	private function addModules() {
 		$this->out->addModuleStyles( [
 			'mediawiki.skinning.content.externallinks',
-			'skins.citizen',
+			'skins.citizen.styles',
 			'skins.citizen.icons',
 			'skins.citizen.icons.ca',
 			'skins.citizen.icons.p',
@@ -239,8 +239,8 @@ class SkinCitizen extends SkinTemplate {
 		] );
 
 		$this->out->addModules( [
-			'skins.citizen.js',
-			'skins.citizen.search',
+			'skins.citizen.scripts',
+			'skins.citizen.search.scripts',
 		] );
 	}
 }
