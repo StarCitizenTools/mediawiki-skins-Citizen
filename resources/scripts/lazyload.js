@@ -5,6 +5,8 @@
  * Lazyloading images with Native API or IntersectionObserver
  */
 
+var observer;
+
 // Native API
 if ('loading' in HTMLImageElement.prototype) {
 	document.querySelectorAll('img.lazy').forEach(function(img) {
@@ -19,7 +21,7 @@ if ('loading' in HTMLImageElement.prototype) {
 } else {
 	// IntersectionObserver API
 	if (typeof IntersectionObserver !== 'undefined' && 'forEach' in NodeList.prototype) {
-		var observer = new IntersectionObserver(function(changes) {
+		observer = new IntersectionObserver(function(changes) {
 			if ('connection' in navigator && navigator.connection.saveData === true) {
 				return;
 			}

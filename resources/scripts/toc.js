@@ -28,17 +28,16 @@ function ScrollSpy() {
 	var sections = document.querySelectorAll(".mw-headline");
 	window.addEventListener("scroll", function() {
 		var scrollPos = document.documentElement.scrollTop || document.body.scrollTop,
-			section, id;
+			section, id, node, active;
 
 		for (section in sections) {
 			if (
 				Object.prototype.hasOwnProperty.call(sections, section) &&
 				sections[section].offsetTop <= scrollPos
 			) {
-				id = mw.util.escapeIdForAttribute(sections[section].id),
-					node = document.querySelector('a[href * = "'.concat(id, '"]'))
-					.parentNode,
-					active = document.querySelector(".active");
+				id = mw.util.escapeIdForAttribute(sections[section].id);
+				node = document.querySelector('a[href * = "'.concat(id, '"]')).parentNode;
+				active = document.querySelector(".active");
 				if (active !== null) {
 					active.classList.remove("active");
 				}
