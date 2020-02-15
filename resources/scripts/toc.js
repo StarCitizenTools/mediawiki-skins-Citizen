@@ -16,12 +16,12 @@ function SmoothScroll() {
             });
         };
 
-        for (link in navLinks) {
-            if (Object.prototype.hasOwnProperty.call(navLinks, link)) {
-                navLinks[link].addEventListener("click", eventListener);
-            }
-        }
-    }
+		for (link in navLinks) {
+			if (Object.prototype.hasOwnProperty.call(navLinks, link)) {
+				navLinks[link].addEventListener("click", eventListener);
+			}
+		}
+	}
 }
 
 function ScrollSpy() {
@@ -39,35 +39,34 @@ function ScrollSpy() {
                     node = document.querySelector('a[href * = "'.concat(id, '"]'))
                     .parentNode,
                     active = document.querySelector(".active");
-
-                if (active !== null) {
-                    active.classList.remove("active");
-                }
-                if (node !== null) {
-                    node.classList.add("active");
-                }
-            }
-        }
-    });
+				if (active !== null) {
+					active.classList.remove("active");
+				}
+				if (node !== null) {
+					node.classList.add("active");
+				}
+			}
+		}
+	});
 }
 
 function CheckToC() {
-    if (document.getElementById("toc")) {
-        SmoothScroll();
-        ScrollSpy();
-    }
+	if (document.getElementById("toc")) {
+		SmoothScroll();
+		ScrollSpy();
+	}
 }
 
 if (document.readyState !== "loading") {
-    CheckToC();
+	CheckToC();
 } else if (document.addEventListener) {
-    // All modern browsers to register DOMContentLoaded
-    document.addEventListener("DOMContentLoaded", CheckToC);
+	// All modern browsers to register DOMContentLoaded
+	document.addEventListener("DOMContentLoaded", CheckToC);
 } else {
-    // Old IE browsers
-    document.attachEvent("onreadystatechange", function() {
-        if (document.readyState === "complete") {
-            CheckToC();
-        }
-    });
+	// Old IE browsers
+	document.attachEvent("onreadystatechange", function() {
+		if (document.readyState === "complete") {
+			CheckToC();
+		}
+	});
 }
