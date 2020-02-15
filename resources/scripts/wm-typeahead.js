@@ -2,14 +2,10 @@
  * Based on https://gerrit.wikimedia.org/g/wikimedia/portals/+/refs/heads/master
  * See T219590 for more details
  */
-
-/* eslint-env node, es6 */
-
 /**
 * Below are additional dependency extracted from polyfills.js
 * TODO: Optimize and clear unneeded code
 */
-
 /**
  * Detects reported or approximate device pixel ratio.
  * * 1.0 means 1 CSS pixel is 1 hardware pixel
@@ -20,6 +16,7 @@
  *
  * @return {number} Device pixel ratio
  */
+ /* eslint-disable */
 function getDevicePixelRatio() {
 
 	if ( window.devicePixelRatio !== undefined ) {
