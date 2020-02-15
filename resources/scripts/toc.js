@@ -5,66 +5,67 @@
  * Smooth scroll fallback and Scrollspy
  */
 
-const SmoothScroll = () => {
-		if ( !( 'scrollBehavior' in document.documentElement.style ) ) {
-			const navLinks = document.querySelectorAll( '#toc a' ),
-				eventListener = e => {
-					e.preventDefault();
-					e.target.scrollIntoView( {
-						behavior: 'smooth'
-					} );
-				};
+var SmoothScroll = function SmoothScroll() {
+        if (!("scrollBehavior" in document.documentElement.style)) {
+            var navLinks = document.querySelectorAll("#toc a"),
+                eventListener = function eventListener(e) {
+                    e.preventDefault();
+                    e.target.scrollIntoView({
+                        behavior: "smooth"
+                    });
+                };
 
-			for ( let link in navLinks ) {
-				if ( Object.prototype.hasOwnProperty.call( navLinks, link ) ) {
-					navLinks[ link ].addEventListener( 'click', eventListener );
-				}
-			}
-		}
-	},
+            for (var link in navLinks) {
+                if (Object.prototype.hasOwnProperty.call(navLinks, link)) {
+                    navLinks[link].addEventListener("click", eventListener);
+                }
+            }
+        }
+    },
+    ScrollSpy = function ScrollSpy() {
+        var sections = document.querySelectorAll(".mw-headline");
+        window.addEventListener("scroll", function() {
+            var scrollPos =
+                document.documentElement.scrollTop || document.body.scrollTop;
 
-	ScrollSpy = () => {
-		const sections = document.querySelectorAll( '.mw-headline' );
+            for (var section in sections) {
+                if (
+                    Object.prototype.hasOwnProperty.call(sections, section) &&
+                    sections[section].offsetTop <= scrollPos
+                ) {
+                    var id = mw.util.escapeIdForAttribute(sections[section].id),
+                        node = document.querySelector('a[href * = "'.concat(id, '"]'))
+                        .parentNode,
+                        active = document.querySelector(".active");
 
-		window.addEventListener( 'scroll', () => {
-			const scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
+                    if (active !== null) {
+                        active.classList.remove("active");
+                    }
 
-			for ( let section in sections ) {
-				if ( Object.prototype.hasOwnProperty.call( sections, section ) &&
-					sections[ section ].offsetTop <= scrollPos ) {
-					const id = mw.util.escapeIdForAttribute( sections[ section ].id ),
-						node = document.querySelector( `a[href * = "${id}"]` ).parentNode,
-						active = document.querySelector( '.active' );
+                    if (node !== null) {
+                        node.classList.add("active");
+                    }
+                }
+            }
+        });
+    },
+    CheckToC = function CheckToC() {
+        if (document.getElementById("toc")) {
+            SmoothScroll();
+            ScrollSpy();
+        }
+    };
 
-					if ( active !== null ) {
-						active.classList.remove( 'active' );
-					}
-
-					if ( node !== null ) {
-						node.classList.add( 'active' );
-					}
-				}
-			}
-		} );
-	},
-
-	CheckToC = () => {
-		if ( document.getElementById( 'toc' ) ) {
-			SmoothScroll();
-			ScrollSpy();
-		}
-	};
-
-if ( document.readyState !== 'loading' ) {
-	CheckToC();
-} else if ( document.addEventListener ) {
-	// All modern browsers to register DOMContentLoaded
-	document.addEventListener( 'DOMContentLoaded', CheckToC );
+if (document.readyState !== "loading") {
+    CheckToC();
+} else if (document.addEventListener) {
+    // All modern browsers to register DOMContentLoaded
+    document.addEventListener("DOMContentLoaded", CheckToC);
 } else {
-	// Old IE browsers
-	document.attachEvent( 'onreadystatechange', function () {
-		if ( document.readyState === 'complete' ) {
-			CheckToC();
-		}
-	} );
+    // Old IE browsers
+    document.attachEvent("onreadystatechange", function() {
+        if (document.readyState === "complete") {
+            CheckToC();
+        }
+    });
 }
