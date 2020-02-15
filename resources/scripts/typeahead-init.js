@@ -2,6 +2,8 @@
  * Based on https://gerrit.wikimedia.org/g/wikimedia/portals/+/refs/heads/master
  * See T219590 for more details
  */
+
+/* eslint-env node, es6 */
 /* global WMTypeAhead, _, addEvent */
 ( function ( WMTypeAhead ) {
 
