@@ -6,15 +6,15 @@
  */
 
 function SmoothScroll() {
-    var navLinks, eventListener, link;
-    if (!("scrollBehavior" in document.documentElement.style)) {
-        navLinks = document.querySelectorAll("#toc a");
-        eventListener = function eventListener(e) {
-            e.preventDefault();
-            e.target.scrollIntoView({
-                behavior: "smooth"
-            });
-        };
+	var navLinks, eventListener, link;
+	if (!("scrollBehavior" in document.documentElement.style)) {
+		navLinks = document.querySelectorAll("#toc a");
+		eventListener = function eventListener(e) {
+			e.preventDefault();
+			e.target.scrollIntoView({
+				behavior: "smooth"
+			});
+		};
 
 		for (link in navLinks) {
 			if (Object.prototype.hasOwnProperty.call(navLinks, link)) {
@@ -25,20 +25,20 @@ function SmoothScroll() {
 }
 
 function ScrollSpy() {
-    var sections = document.querySelectorAll(".mw-headline");
-    window.addEventListener("scroll", function() {
-        var scrollPos = document.documentElement.scrollTop || document.body.scrollTop,
-            sectionm id;
+	var sections = document.querySelectorAll(".mw-headline");
+	window.addEventListener("scroll", function() {
+		var scrollPos = document.documentElement.scrollTop || document.body.scrollTop,
+			sectionm id;
 
-        for (section in sections) {
-            if (
-                Object.prototype.hasOwnProperty.call(sections, section) &&
-                sections[section].offsetTop <= scrollPos
-            ) {
-                id = mw.util.escapeIdForAttribute(sections[section].id),
-                    node = document.querySelector('a[href * = "'.concat(id, '"]'))
-                    .parentNode,
-                    active = document.querySelector(".active");
+		for (section in sections) {
+			if (
+				Object.prototype.hasOwnProperty.call(sections, section) &&
+				sections[section].offsetTop <= scrollPos
+			) {
+				id = mw.util.escapeIdForAttribute(sections[section].id),
+					node = document.querySelector('a[href * = "'.concat(id, '"]'))
+					.parentNode,
+					active = document.querySelector(".active");
 				if (active !== null) {
 					active.classList.remove("active");
 				}
