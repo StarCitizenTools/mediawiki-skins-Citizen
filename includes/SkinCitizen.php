@@ -215,9 +215,6 @@ class SkinCitizen extends SkinTemplate {
 		// Replace the search module
 		$modules['search'] = 'skins.citizen.search.scripts';
 
-		// Dequeue default watch module (not needed, no watchstar in this skin)
-		$modules['watch'] = [];
-
 		return $modules;
 	}
 
