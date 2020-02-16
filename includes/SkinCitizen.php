@@ -22,28 +22,34 @@ class SkinCitizen extends SkinTemplate {
 	 */
 	public function initPage( OutputPage $out ) {
 		$this->out = $out;
-
 		// Responsive layout
 		$out->addMeta( 'viewport', 'width=device-width, initial-scale=1.0' );
+
 		// Theme color
 		$out->addMeta( 'theme-color', $this->getConfigValue( 'CitizenThemeColor' ) ?? '' );
 
 		// Preconnect origin
 		$this->addPreConnect();
+
 		// Generate manifest
 		$this->addManifest();
 
 		// HTTP headers
 		// CSP
 		$this->addCSP();
+
 		// HSTS
 		$this->addHSTS();
+
 		// Deny X-Frame-Options
 		$this->addXFrameOptions();
+
 		// X-XSS-Protection
 		$this->addXXSSProtection();
+
 		// Referrer policy
 		$this->addStrictReferrerPolicy();
+
 		// Feature policy
 		$this->addFeaturePolicy();
 
@@ -206,9 +212,7 @@ class SkinCitizen extends SkinTemplate {
 	public function getDefaultModules() {
 		$modules = parent::getDefaultModules();
 
-		// Use Citizen skin styles
-		$modules['styles']['skin'][] = 'skins.citizen.styles';
-		// Replace search module with a custom one
+		// Replace the search module
 		$modules['search'] = 'skins.citizen.search.scripts';
 
 		return $modules;
@@ -220,10 +224,7 @@ class SkinCitizen extends SkinTemplate {
 	private function addModules() {
 		$this->out->addModuleStyles( [
 			'mediawiki.skinning.content.externallinks',
-		] );
-
-		$this->out->addModules( [
-			'skins.citizen.scripts',
+			'skins.citizen.styles',
 			'skins.citizen.icons',
 			'skins.citizen.icons.ca',
 			'skins.citizen.icons.p',
@@ -235,6 +236,10 @@ class SkinCitizen extends SkinTemplate {
 			'skins.citizen.icons.footer',
 			'skins.citizen.icons.badges',
 			'skins.citizen.icons.search',
+		] );
+
+		$this->out->addModules( [
+			'skins.citizen.scripts',
 		] );
 	}
 }
