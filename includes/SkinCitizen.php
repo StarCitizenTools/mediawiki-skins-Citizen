@@ -212,19 +212,35 @@ class SkinCitizen extends SkinTemplate {
 	public function getDefaultModules() {
 		$modules = parent::getDefaultModules();
 
-		// disable default skin search modules
+		$modules['styles']['core'] = $this->getSkinStyles();
+		// Replace search module with a custom one
 		$modules['search'] = 'skins.citizen.search.scripts';
 
 		return $modules;
 	}
 
 	/**
+	 * Provide styles required to present the server rendered page in this skin. Additional styles
+	 * may be loaded dynamically by the client.
+	 *
+	 * Any styles returned by this method are loaded on the critical rendering path as linked
+	 * stylesheets. I.e., they are required to load on the client before first paint.
+	 *
+	 * @return array
+	 */
+	protected function getSkinStyles(): array {
+		$styles = [
+			'skins.citizen.styles',
+			'mediawiki.skinning.content.externallinks',
+		];
+	}
+
+	/**
 	 * Adds all needed skin modules
 	 */
 	private function addModules() {
-		$this->out->addModuleStyles( [
-			'mediawiki.skinning.content.externallinks',
-			'skins.citizen.styles',
+		$this->out->addModules( [
+			'skins.citizen.scripts',
 			'skins.citizen.icons',
 			'skins.citizen.icons.ca',
 			'skins.citizen.icons.p',
@@ -236,10 +252,6 @@ class SkinCitizen extends SkinTemplate {
 			'skins.citizen.icons.footer',
 			'skins.citizen.icons.badges',
 			'skins.citizen.icons.search',
-		] );
-
-		$this->out->addModules( [
-			'skins.citizen.scripts',
 		] );
 	}
 }
