@@ -36,7 +36,7 @@ function ScrollSpy() {
 				sections[section].offsetTop <= scrollPos
 			) {
 				id = mw.util.escapeIdForAttribute(sections[section].id);
-				node = document.querySelector("a[href * = '#" + id + "']").parentNode;
+				node = document.querySelector("a[href='#" + id + "']").parentNode;
 				active = document.querySelector(".active");
 				if (active !== null) {
 					active.classList.remove("active");
