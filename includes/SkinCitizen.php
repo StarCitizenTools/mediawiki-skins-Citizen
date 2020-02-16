@@ -21,7 +21,7 @@ class SkinCitizen extends SkinTemplate {
 	 * @param OutputPage $out
 	 */
 	public function initPage( OutputPage $out ) {
-		parent::initPage( $out );
+		$this->out = $out;
 
 		// Responsive layout
 		$out->addMeta( 'viewport', 'width=device-width, initial-scale=1.0' );
