@@ -213,7 +213,7 @@ class SkinCitizen extends SkinTemplate {
 		$modules = parent::getDefaultModules();
 
 		// disable default skin search modules
-		$modules['search'] = 'skins.citizen.search';
+		$modules['search'] = 'skins.citizen.search.scripts';
 
 		return $modules;
 	}
@@ -224,7 +224,7 @@ class SkinCitizen extends SkinTemplate {
 	private function addModules() {
 		$this->out->addModuleStyles( [
 			'mediawiki.skinning.content.externallinks',
-			'skins.citizen',
+			'skins.citizen.styles',
 			'skins.citizen.icons',
 			'skins.citizen.icons.ca',
 			'skins.citizen.icons.p',
@@ -239,7 +239,7 @@ class SkinCitizen extends SkinTemplate {
 		] );
 
 		$this->out->addModules( [
-			'skins.citizen.js',
+			'skins.citizen.scripts',
 		] );
 	}
 }
