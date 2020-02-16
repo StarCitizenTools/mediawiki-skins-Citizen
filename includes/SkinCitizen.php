@@ -21,7 +21,7 @@ class SkinCitizen extends SkinTemplate {
 	 * @param OutputPage $out
 	 */
 	public function initPage( OutputPage $out ) {
-		parent::initPage( $out );
+		$this->out = $out;
 
 		// Responsive layout
 		$out->addMeta( 'viewport', 'width=device-width, initial-scale=1.0' );
@@ -206,8 +206,6 @@ class SkinCitizen extends SkinTemplate {
 	public function getDefaultModules() {
 		$modules = parent::getDefaultModules();
 
-		// Add Citizen skin styles
-		$modules['styles']['skin'] = $this->getSkinStyles();
 		// Replace search module with a custom one
 		$modules['search'] = 'skins.citizen.search.scripts';
 
@@ -215,27 +213,14 @@ class SkinCitizen extends SkinTemplate {
 	}
 
 	/**
-	 * Provide styles required to present the server rendered page in this skin. Additional styles
-	 * may be loaded dynamically by the client.
-	 *
-	 * Any styles returned by this method are loaded on the critical rendering path as linked
-	 * stylesheets. I.e., they are required to load on the client before first paint.
-	 *
-	 * @return array
-	 */
-	protected function getSkinStyles(): array {
-		$styles = [
-			'mediawiki.skinning.content.externallinks',
-			'skins.citizen.styles',
-		];
-
-		return $styles;
-	}
-
-	/**
 	 * Adds all needed skin modules
 	 */
 	private function addModules() {
+		$this->out->addModuleStyles( [
+			'mediawiki.skinning.content.externallinks',
+			'skins.citizen',
+		] );
+
 		$this->out->addModules( [
 			'skins.citizen.scripts',
 			'skins.citizen.icons',
