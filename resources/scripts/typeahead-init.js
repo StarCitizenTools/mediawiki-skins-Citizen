@@ -1,8 +1,9 @@
+/* eslint-disable */
 /**
  * Based on https://gerrit.wikimedia.org/g/wikimedia/portals/+/refs/heads/master
  * See T219590 for more details
  */
-/* eslint-disable */
+
 /* global WMTypeAhead, _, addEvent */
 ( function ( WMTypeAhead ) {
 

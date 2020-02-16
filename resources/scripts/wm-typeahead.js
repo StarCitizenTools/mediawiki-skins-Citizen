@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * Based on https://gerrit.wikimedia.org/g/wikimedia/portals/+/refs/heads/master
  * See T219590 for more details
@@ -16,7 +17,6 @@
  *
  * @return {number} Device pixel ratio
  */
- /* eslint-disable */
 function getDevicePixelRatio() {
 
 	if ( window.devicePixelRatio !== undefined ) {
