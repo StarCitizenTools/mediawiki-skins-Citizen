@@ -21,7 +21,7 @@ class SkinCitizen extends SkinTemplate {
 	 * @param OutputPage $out
 	 */
 	public function initPage( OutputPage $out ) {
-		$this->out = $out;
+		parent::initPage( $out );
 
 		// Responsive layout
 		$out->addMeta( 'viewport', 'width=device-width, initial-scale=1.0' );
@@ -205,8 +205,9 @@ class SkinCitizen extends SkinTemplate {
 	 */
 	public function getDefaultModules() {
 		$modules = parent::getDefaultModules();
+
 		// Add Citizen skin styles
-		$modules['styles']['core'] = $this->getSkinStyles();
+		$modules['styles']['skin'] = $this->getSkinStyles();
 		// Replace search module with a custom one
 		$modules['search'] = 'skins.citizen.search.scripts';
 
@@ -222,7 +223,7 @@ class SkinCitizen extends SkinTemplate {
 	 *
 	 * @return array
 	 */
-	private function getSkinStyles(): array {
+	protected function getSkinStyles(): array {
 		$styles = [
 			'mediawiki.skinning.content.externallinks',
 			'skins.citizen.styles',
