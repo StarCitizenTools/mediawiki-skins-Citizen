@@ -233,6 +233,8 @@ class SkinCitizen extends SkinTemplate {
 			'skins.citizen.styles',
 			'mediawiki.skinning.content.externallinks',
 		];
+		
+		return $styles;
 	}
 
 	/**
