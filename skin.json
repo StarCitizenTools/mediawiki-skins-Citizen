@@ -186,6 +186,11 @@
 	"ResourceModules": {
 		"skins.citizen.styles": {
 			"class": "ResourceLoaderSkinModule",
+			"features": [ "elements", "content", "interface", "logo" ],
+			"targets": [
+				"desktop",
+				"mobile"
+			],
 			"styles": {
 				"resources/screen.less": {
 					"media": "screen"

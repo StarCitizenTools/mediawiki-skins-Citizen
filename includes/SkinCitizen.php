@@ -206,6 +206,8 @@ class SkinCitizen extends SkinTemplate {
 	public function getDefaultModules() {
 		$modules = parent::getDefaultModules();
 
+		// Use Citizen skin styles
+		$modules['styles']['skin'][] = 'skins.citizen.styles';
 		// Replace search module with a custom one
 		$modules['search'] = 'skins.citizen.search.scripts';
 
@@ -218,7 +220,6 @@ class SkinCitizen extends SkinTemplate {
 	private function addModules() {
 		$this->out->addModuleStyles( [
 			'mediawiki.skinning.content.externallinks',
-			'skins.citizen.styles',
 		] );
 
 		$this->out->addModules( [
