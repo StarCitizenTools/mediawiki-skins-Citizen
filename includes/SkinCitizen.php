@@ -21,7 +21,7 @@ class SkinCitizen extends SkinTemplate {
 	 * @param OutputPage $out
 	 */
 	public function initPage( OutputPage $out ) {
-		$this->out = $out;
+		parent::initPage( $out );
 		// Responsive layout
 		$out->addMeta( 'viewport', 'width=device-width, initial-scale=1.0' );
 
@@ -29,31 +29,31 @@ class SkinCitizen extends SkinTemplate {
 		$out->addMeta( 'theme-color', $this->getConfigValue( 'CitizenThemeColor' ) ?? '' );
 
 		// Preconnect origin
-		$this->addPreConnect();
+		$out->addPreConnect();
 
 		// Generate manifest
-		$this->addManifest();
+		$out->addManifest();
 
 		// HTTP headers
 		// CSP
-		$this->addCSP();
+		$out->addCSP();
 
 		// HSTS
-		$this->addHSTS();
+		$out->addHSTS();
 
 		// Deny X-Frame-Options
-		$this->addXFrameOptions();
+		$out->addXFrameOptions();
 
 		// X-XSS-Protection
-		$this->addXXSSProtection();
+		$out->addXXSSProtection();
 
 		// Referrer policy
-		$this->addStrictReferrerPolicy();
+		$out->addStrictReferrerPolicy();
 
 		// Feature policy
-		$this->addFeaturePolicy();
+		$out->addFeaturePolicy();
 
-		$this->addModules();
+		$out->addModules();
 	}
 
 	/**
@@ -233,7 +233,7 @@ class SkinCitizen extends SkinTemplate {
 			'skins.citizen.styles',
 			'mediawiki.skinning.content.externallinks',
 		];
-		
+
 		return $styles;
 	}
 
