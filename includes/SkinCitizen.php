@@ -213,7 +213,7 @@ class SkinCitizen extends SkinTemplate {
 		$modules = parent::getDefaultModules();
 
 		// disable default skin search modules
-		$modules['search'] = [];
+		$modules['search'] = 'skins.citizen.search.scripts';
 
 		return $modules;
 	}
@@ -240,7 +240,6 @@ class SkinCitizen extends SkinTemplate {
 
 		$this->out->addModules( [
 			'skins.citizen.scripts',
-			'skins.citizen.search.scripts',
 		] );
 	}
 }
