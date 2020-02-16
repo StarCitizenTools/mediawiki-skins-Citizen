@@ -205,7 +205,7 @@ class SkinCitizen extends SkinTemplate {
 	 */
 	public function getDefaultModules() {
 		$modules = parent::getDefaultModules();
-
+		// Add Citizen skin styles
 		$modules['styles']['core'] = $this->getSkinStyles();
 		// Replace search module with a custom one
 		$modules['search'] = 'skins.citizen.search.scripts';
@@ -222,10 +222,10 @@ class SkinCitizen extends SkinTemplate {
 	 *
 	 * @return array
 	 */
-	protected function getSkinStyles(): array {
+	private function getSkinStyles(): array {
 		$styles = [
-			'skins.citizen.styles',
 			'mediawiki.skinning.content.externallinks',
+			'skins.citizen.styles',
 		];
 
 		return $styles;
