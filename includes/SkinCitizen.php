@@ -22,38 +22,32 @@ class SkinCitizen extends SkinTemplate {
 	 */
 	public function initPage( OutputPage $out ) {
 		parent::initPage( $out );
+
 		// Responsive layout
 		$out->addMeta( 'viewport', 'width=device-width, initial-scale=1.0' );
-
 		// Theme color
 		$out->addMeta( 'theme-color', $this->getConfigValue( 'CitizenThemeColor' ) ?? '' );
 
 		// Preconnect origin
-		$out->addPreConnect();
-
+		$this->addPreConnect();
 		// Generate manifest
-		$out->addManifest();
+		$this->addManifest();
 
 		// HTTP headers
 		// CSP
-		$out->addCSP();
-
+		$this->addCSP();
 		// HSTS
-		$out->addHSTS();
-
+		$this->addHSTS();
 		// Deny X-Frame-Options
-		$out->addXFrameOptions();
-
+		$this->addXFrameOptions();
 		// X-XSS-Protection
-		$out->addXXSSProtection();
-
+		$this->addXXSSProtection();
 		// Referrer policy
-		$out->addStrictReferrerPolicy();
-
+		$this->addStrictReferrerPolicy();
 		// Feature policy
-		$out->addFeaturePolicy();
+		$this->addFeaturePolicy();
 
-		$out->addModules();
+		$this->addModules();
 	}
 
 	/**
