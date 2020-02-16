@@ -41,7 +41,7 @@ class CitizenHooks {
 	 * @return bool
 	 */
 	public static function onBeforePageDisplay( $out, $skin ) {
-		$out->addModules( 'skins.citizen.bpd' );
+		$out->addModules( 'skins.citizen.lazyload.scripts' );
 
 		return true;
 	}

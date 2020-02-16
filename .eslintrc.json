@@ -6,18 +6,10 @@
 		"wikimedia/mediawiki"
 	],
 	"env": {
-		"browser": true,
-		"commonjs": true,
-        "es6": true
-    },
-	"globals": {
-		// Project-wide globals.
-		"OO": "readonly"	
+		"commonjs": true
 	},
-	"parserOptions": {
-		"ecmaVersion": 6
- 	},
-	"rules": {
-		// Project-wide rule variations. Keep to a minimum.
+	"globals": {
+		"OO": "readonly",
+		"require": "readonly"
 	}
 }

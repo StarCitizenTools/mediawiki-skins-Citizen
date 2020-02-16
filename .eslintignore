@@ -1,0 +1,4 @@
+# ES6 files
+resources/scripts/typeahead-init.js
+resources/scripts/underscore.partial.js
+resources/scripts/wm-typeahead.js

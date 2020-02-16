@@ -1,7 +1,7 @@
 {
 	"name": "Citizen",
 	"namemsg": "skinname-citizen",
-	"version": "0.7.1",
+	"version": "0.7.2",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
@@ -184,8 +184,13 @@
 		]
 	},
 	"ResourceModules": {
-		"skins.citizen": {
+		"skins.citizen.styles": {
 			"class": "ResourceLoaderSkinModule",
+			"features": [ "elements", "content", "interface", "logo" ],
+			"targets": [
+				"desktop",
+				"mobile"
+			],
 			"styles": {
 				"resources/screen.less": {
 					"media": "screen"
@@ -196,14 +201,13 @@
 				"resources/font-face.less": {}
 			}
 		},
-		"skins.citizen.js": {
+		"skins.citizen.scripts": {
 			"scripts": [
-				"resources/main.js",
 				"resources/scripts/header.js",
 				"resources/scripts/toc.js"
 			]
 		},
-		"skins.citizen.search": {
+		"skins.citizen.search.scripts": {
 			"scripts": [
 				"resources/scripts/underscore.partial.js",
 				"resources/scripts/wm-typeahead.js",
@@ -218,7 +222,7 @@
 				"citizen-search-no-results-desc"
 			]
 		},
-		"skins.citizen.bpd": {
+		"skins.citizen.lazyload.scripts": {
 			"scripts": [
 				"resources/scripts/lazyload.js"
 			]
