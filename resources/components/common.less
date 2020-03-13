@@ -888,12 +888,26 @@ a {
 	div.tright,
 	div.floatright,
 	table.floatright {
-		margin: 0.6rem -@margin-side !important;
 		width: 100vw !important;
-		display: flex;
-		justify-content: center;
 		float: unset;
 		clear: none;
+	}
+
+	div.tnone,
+	div.floatnone,
+	div.tleft,
+	div.floatleft,
+	div.tright,
+	div.floatright {
+		margin: 0.6rem -@margin-side !important;
+		display: flex;
+		justify-content: center;
+	}
+
+	table.floatnone,
+	table.floatleft,
+	table.floatright {
+		padding: 0 @margin-side;
 	}
 
 	figcaption,
