@@ -28,7 +28,6 @@ body {
 }
 
 table {
-	// TEMP solution to fix overflow
 	display: block;
 	max-width: 100vw;
 	overflow: auto;
@@ -661,8 +660,7 @@ a {
 	}
 
 	div.tnone,
-	div.floatnone,
-	table.floatnone {
+	div.floatnone {
 		display: flex;
 		justify-content: center;
 
@@ -892,10 +890,24 @@ a {
 	table.floatright {
 		margin: 0.6rem -@margin-side !important;
 		width: 100vw !important;
-		display: flex;
-		justify-content: center;
 		float: unset;
 		clear: none;
+	}
+
+	div.tnone,
+	div.floatnone,
+	div.tleft,
+	div.floatleft,
+	div.tright,
+	div.floatright {
+		display: flex;
+		justify-content: center;
+	}
+
+	table.floatnone,
+	table.floatleft,
+	table.floatright {
+		padding: 0 @margin-side;
 	}
 
 	figcaption,
