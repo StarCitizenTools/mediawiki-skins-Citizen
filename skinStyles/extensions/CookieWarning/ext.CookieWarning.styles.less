@@ -82,7 +82,15 @@
 	.mw-cookiewarning-container .mw-cookiewarning-text {
 		flex-wrap: wrap;
 
-		span,
+		a {
+			width: ~'calc(50vw - @{margin-side} * 2)';
+    		justify-content: center;
+		}
+
+		.mw-cookiewarning-dismiss {
+			width: 50vw;
+		}
+
 		a,
 		.mw-cookiewarning-dismiss {
 			padding: @margin-side / 2 @margin-side;
