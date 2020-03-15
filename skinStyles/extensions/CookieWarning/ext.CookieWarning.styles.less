@@ -80,7 +80,13 @@
 
 @media only screen and ( max-width: 480px ) {
 	.mw-cookiewarning-container .mw-cookiewarning-text {
+		/* Hack to hide nbsp */
+		font-size: 0;
 		flex-wrap: wrap;
+
+		span {
+			font-size: @content-small-text-size;
+		}
 
 		a {
 			width: ~'calc(50vw - @{margin-side} * 2)';
