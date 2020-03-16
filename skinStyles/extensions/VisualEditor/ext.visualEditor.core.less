@@ -8,6 +8,10 @@
 .ve-activated {
 	.mw-header-container {
 		background-color: #fff;
+
+		&:before {
+			box-shadow: none;
+		}
 	}
 
 	#mw-sidebar-sitename {
@@ -75,5 +79,9 @@
 		.mw-header-container {
 			background-color: @dark-bg-0;
 		}
+	}
+
+	.ve-init-mw-desktopArticleTarget .CodeMirror {
+		color: @dark-text-90;
 	}
 }
