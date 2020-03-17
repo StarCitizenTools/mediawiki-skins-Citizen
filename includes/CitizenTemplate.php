@@ -348,6 +348,7 @@ class CitizenTemplate extends BaseTemplate {
 			'action' => $this->get( 'wgScript' ),
 			'role' => 'search',
 			'id' => 'search-form',
+			'autocomplete' => 'off',
 		] );
 		$html .= Html::hidden( 'title', $this->get( 'searchtitle' ) );
 		$html .= Html::label( $this->getMsg( 'search' )->text(), 'search-input',
