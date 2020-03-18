@@ -980,7 +980,7 @@ a {
 		#mw-content-text .mw-parser-output #toc {
 			display: none;
 			background: @base-100;
-			z-index: 2;
+			z-index: 10;
 			height: 100vh;
 			margin-top: -@header-height;
 			padding: 0;
@@ -1047,7 +1047,7 @@ a {
 			> ul {
 				display: none; // Hide until interacted
 				margin: 0 @margin-side;
-				padding: @header-height + @margin-side 0 @header-height + @margin-side * 2; // More scroll spaces
+				padding: @header-height + @margin-side 0 @header-height + @margin-side * 2 @margin-side; // More scroll spaces
 				max-height: ~'calc( 100vh - '@header-height * 2 + @margin-side * 3 ~')';
 				transform: none;
 				transition: @transition-transform;
