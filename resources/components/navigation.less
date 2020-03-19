@@ -25,6 +25,7 @@
 		right: 0;
 		box-shadow: 0 0 50px @header-height rgba( 255, 255, 255, 1 );
 		z-index: -1;
+		transition: @transition-box-shadow;
 	}
 
 	ul {
@@ -40,6 +41,10 @@
 	// Hide header when scroll
 	&.nav-up {
 		transform: translate( 0, -@header-height );
+
+		&:before {
+			box-shadow: none!important;
+		}
 	}
 
 	.mw-header-icons {
