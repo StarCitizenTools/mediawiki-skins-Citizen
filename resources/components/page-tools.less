@@ -10,6 +10,7 @@
 }
 
 #page-tools {
+	z-index: 5;
 	position: absolute;
 	margin-top: 1.3rem;
 	display: flex;
@@ -125,6 +126,7 @@
 // TODO: Flexible value
 @media only screen and ( max-width: @screen2 ) {
 	#page-tools {
+		z-index: unset;
 		position: relative;
 		margin-left: @margin-side / 2;
 		float: right;
