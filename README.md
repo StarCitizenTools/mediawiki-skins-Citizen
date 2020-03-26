@@ -21,11 +21,20 @@ Name | Description | Values | Default
 `$wgCitizenMaxSearchResults` | Max number of search suggestions | Integer > 0 | `6`
 
 ### Security-related
+#### Content Security Policy (CSP)
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
 `$wgCitizenEnableCSP` | Enable or disable [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy), as an alternative to [`$wgCSPHeader`](https://www.mediawiki.org/wiki/Manual:$wgCSPHeader) in Mediawiki 1.32+ | `true` - enable; `false` - disable | `false`
 `$wgCitizenEnableCSPReportMode` | Enable or disable [CSP report only mode](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only), overrides `$wgCitizenEnableCSP` | `true` - enable; `false` - disable | `false`
 `$wgCitizenCSPDirective` | The string of yourr CSP directive | See the [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) page | ``
+
+#### HTTP Strict Transport Security (HSTS)
+Name | Description | Values | Default
+:--- | :--- | :--- | :---
+`$wgCitizenEnableHSTS` | Enable or disable [HTTP Strict Transport Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) | `true` - enable; `false` - disable | `false`
+`$wgCitizenHSTSMaxAge` | Time in second that the browser should remember that a site is only to be accessed using HTTPS | Integer > 0 | `300`
+`$wgCitizenHSTSIncludeSubdomains` | Apply HSTS to all of the site's subdomains | `true` - enable; `false` - disable | `false`
+`$wgCitizenHSTSPreload` | Enable or disable [HSTS preload](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security#Preloading_Strict_Transport_Security) | `true` - enable; `false` - disable | `false`
 
 ### Webapp manifest
 Name | Description | Values | Default
