@@ -26,7 +26,7 @@ Name | Description | Values | Default
 :--- | :--- | :--- | :---
 `$wgCitizenEnableCSP` | Enable or disable [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy), as an alternative to [`$wgCSPHeader`](https://www.mediawiki.org/wiki/Manual:$wgCSPHeader) in Mediawiki 1.32+ | `true` - enable; `false` - disable | `false`
 `$wgCitizenEnableCSPReportMode` | Enable or disable [CSP report only mode](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only), overrides `$wgCitizenEnableCSP` | `true` - enable; `false` - disable | `false`
-`$wgCitizenCSPDirective` | The string of yourr CSP directive | See the [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) page | ``
+`$wgCitizenCSPDirective` | The string of yourr CSP directive | See the [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) page | 
 
 #### HTTP Strict Transport Security (HSTS)
 Name | Description | Values | Default
@@ -35,6 +35,15 @@ Name | Description | Values | Default
 `$wgCitizenHSTSMaxAge` | Time in second that the browser should remember that a site is only to be accessed using HTTPS | Integer > 0 | `300`
 `$wgCitizenHSTSIncludeSubdomains` | Apply HSTS to all of the site's subdomains | `true` - enable; `false` - disable | `false`
 `$wgCitizenHSTSPreload` | Enable or disable [HSTS preload](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security#Preloading_Strict_Transport_Security) | `true` - enable; `false` - disable | `false`
+
+#### Other security headers
+Name | Description | Values | Default
+:--- | :--- | :--- | :---
+`$wgCitizenEnableDenyXFrameOptions` | Enable or disable the deny [X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) header | `true` - enable; `false` - disable | `false`
+`$wgCitizenEnableXXSSProtection` | Enable or disable the [X-XSS-Protection header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection) | `true` - enable; `false` - disable | `false`
+`$wgCitizenEnableStrictReferrerPolicy` | Enable or disable `strict-origin-when-cross-origin` [referrer policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) header, should be used in conjunction with [`$wgReferrerPolicy`](https://www.mediawiki.org/wiki/Manual:$wgReferrerPolicy) as that only outputs the meta tags | `true` - enable; `false` - disable | `false`
+`$wgCitizenEnableFeaturePolicy` | Enable or disable [Feature Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy) | `true` - enable; `false` - disable | `false`
+`$wgCitizenFeaturePolicyDirective` | The string of your Feature Policy directive | See the [Feature Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy) page | 
 
 ### Webapp manifest
 Name | Description | Values | Default
@@ -46,6 +55,8 @@ Name | Description | Values | Default
 ### Miscellaneous
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
+`$wgCitizenEnablePreconnect` | Enable or disable [preconnect to required origin](https://web.dev/uses-rel-preconnect/) | `true` - enable; `false` - disable | `false`
+`$wgCitizenPreconnectURL` | The URL for preconnect to required origin | URL | 
 `$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#11151d`
     
 ## Requirements
