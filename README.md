@@ -55,6 +55,8 @@ Name | Description | Values | Default
 ### Miscellaneous
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
+`$wgCitizenShowPageTools` | The condition of page tools visibility | `true` - always visible; `login` - visible to logged-in users; `permission` - visible to users with the right permissions | `true`
+`$wgCitizenThumbnailSize` | Thumbnail size in pixels to use for lazy-loading placeholder | Integer > 0 | `10`
 `$wgCitizenEnablePreconnect` | Enable or disable [preconnect to required origin](https://web.dev/uses-rel-preconnect/) | `true` - enable; `false` - disable | `false`
 `$wgCitizenPreconnectURL` | The URL for preconnect to required origin | URL | 
 `$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#11151d`
