@@ -13,6 +13,14 @@ Live demo can be seen at the [Star Citizen Wiki](https://starcitizen.tools).
 * **Webapp manifest**: Give a more app-like experience when user add your wiki to their home screen. 📱
 * **HTTP security response headers**: Enhance the security of your wiki from HTTP response headers. 🔒🔑
 
+## Installation
+1. [Download](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/archive/master.zip) place the file(s) in a directory called `Citizen` in your `skins/` folder.
+2. Add the following code at the bottom of your LocalSettings.php:
+```php
+wfLoadSkin( 'Citizen' );
+```
+3. **✔️Done** - Navigate to Special:Version on your wiki to verify that the skin is successfully installed.
+
 ## Configurations
 ### Search suggestions
 Name | Description | Values | Default
