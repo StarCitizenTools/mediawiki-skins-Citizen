@@ -5,6 +5,9 @@
 	"skinname-citizen": "Citizen",
 	"citizen-desc": "Ein responsive Skin entwickelt für das Star Citizen Wiki",
 
+	"citizen-footer-desc": "Bearbeiten Sie diesen Text auf MediaWiki:Citizen-footer-desc",
+	"citizen-footer-tagline": "Bearbeiten Sie diesen Text auf MediaWiki:Citizen-footer-tagline",
+	
 	"citizen-search-no-results-title": "Entschuldige, wir konnten zu <em>'$1'</em> nichts finden.",
 	"citizen-search-no-results-desc": "Versuche weiter nach Seiten zu suchen, die <em>'$1'</em> enthalten."
 }
