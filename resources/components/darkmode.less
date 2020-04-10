@@ -50,10 +50,6 @@
 		color: @dark-color-link;
 	}
 
-	.mw-body-content #mw-content-text .mw-parser-output #toc li.active {
-		color: @dark-color-link !important;
-	}
-
 	a.new {
 		color: @dark-color-link-new !important;
 	}
@@ -169,14 +165,18 @@
 		color: @dark-text-80 !important;
 	}
 
+	.mw-body-content #mw-content-text .mw-parser-output #toc li.active a,
+	.mw-body-content #mw-content-text .mw-parser-output #toc li.active li {
+		color: @dark-text-80;
+	}
+
 	a.mw-wiki-title,
 	.mw-body-content #mw-content-text .mw-parser-output #toc a {
 		color: @dark-text-70;
 	}
 
-	.mw-body-content #mw-content-text .mw-parser-output #toc:before,
-	.mw-body-content #mw-content-text .mw-parser-output #toc:after {
-		background: linear-gradient( @dark-bg-0, rgba( 0, 0, 0, 0.001 ) );
+	.mw-body-content #mw-content-text .mw-parser-output #toc {
+		color: @dark-text-60;
 	}
 
 	#page-tools #p-views li > a:after,

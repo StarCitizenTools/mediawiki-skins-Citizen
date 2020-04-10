@@ -402,27 +402,14 @@ a {
 			#toc {
 				position: fixed;
 				max-width: 450px;
-				height: ~'calc( 100vh - @{header-height} * 2 - @{margin-side} * 4 )';
+				height: ~'calc( 100vh - @{header-height} * 2 - @{margin-side} * 2 )';
 				top: @header-height;
 				right: 0;
-				padding: @margin-side * 2 @margin-side;
+				padding: @margin-side;
 				color: @base-70;
 
 				&::-webkit-scrollbar {
 					width: 0; // Hide bar on toc
-				}
-
-				@top: linear-gradient(white, rgba(255, 255, 255, 0.001));
-				@bottom: linear-gradient(rgba(255, 255, 255, 0.001), white);
-
-				&:before {
-					top: @header-height;
-					.gradient-overflow(@top);
-				}
-
-				&:after {
-					bottom: @header-height - @margin-side;
-					.gradient-overflow(@bottom);
 				}
 
 				.toctitle {
@@ -444,22 +431,34 @@ a {
 				}
 
 				li {
-					color: @base-50;
+					&.toclevel-2,
+					&.toclevel-3,
+					&.toclevel-4,
+					&.toclevel-5,
+					&.toclevel-6 {
+						margin-right: 0.3rem;
+						border-right: 1px dashed;
+					}
 				}
 
 				li.active {
-					color: @accent-50 !important;
+					color: @accent-50;
 
 					> a {
 						color: inherit !important;
 						border-color: currentColor;
 					}
+
+					a,
+					li {
+						color: @base-30;
+					}
 				}
 
 				a {
 					display: inline-block;
-					margin-top: @content-margin-top;
-					padding-right: 17px;
+					margin: @content-margin-top * 0.375 0;
+					padding-right: 12px;
 					color: @base-50;
 					background: 0;
 					border-right: 3px solid transparent;
@@ -502,17 +501,6 @@ a {
 					}
 				}
 
-				> ul {
-					margin: @content-margin-top / 2 0 0 0;
-					position: relative;
-					z-index: 2;
-					border-right: 1px dashed;
-					max-height: ~'calc( 100vh - @{header-height} * 2 - @{margin-side} * 4 )';
-					overflow: visible auto;
-					overscroll-behavior: contain;
-					display: block;
-				}
-
 				ul {
 					margin: 0;
 					list-style: none;
@@ -521,6 +509,17 @@ a {
 				ul,
 				.toctitle {
 					text-align: right;
+				}
+
+				> ul {
+					margin: @content-margin-top * 0.75 0 0 0;
+					position: relative;
+					z-index: 2;
+					border-right: 1px dashed;
+					max-height: ~'calc( 100vh - @{header-height} * 2 - @{margin-side} * 2 )';
+					overflow: visible auto;
+					overscroll-behavior: contain;
+					display: block;
 				}
 			}
 		}
