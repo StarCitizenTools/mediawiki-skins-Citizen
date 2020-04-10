@@ -50,10 +50,6 @@
 		color: @dark-color-link;
 	}
 
-	.mw-body-content #mw-content-text .mw-parser-output #toc li.active {
-		color: @dark-color-link !important;
-	}
-
 	a.new {
 		color: @dark-color-link-new !important;
 	}
@@ -165,10 +161,13 @@
 	.mw-header-menu-drawer-container .mw-nav-links a,
 	.mw-header-menu-drawer-container .mw-user-links a,
 	.mw-body-content #mw-content-text .mw-parser-output #toc a:hover,
-	.mw-body-content #mw-content-text .mw-parser-output #toc li.active a,
-	.mw-body-content #mw-content-text .mw-parser-output #toc li.active li,
 	.suggestion-description {
 		color: @dark-text-80 !important;
+	}
+
+	.mw-body-content #mw-content-text .mw-parser-output #toc li.active a,
+	.mw-body-content #mw-content-text .mw-parser-output #toc li.active li {
+		color: @dark-text-80;
 	}
 
 	a.mw-wiki-title,
