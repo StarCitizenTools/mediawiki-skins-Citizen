@@ -444,11 +444,18 @@ a {
 				}
 
 				li {
-					color: @base-50;
+					&.toclevel-2,
+					&.toclevel-3,
+					&.toclevel-4,
+					&.toclevel-5,
+					&.toclevel-6 {
+						margin-right: 0.3rem;
+    					border-right: 1px dashed;
+					}
 				}
 
 				li.active {
-					color: @accent-50 !important;
+					color: @accent-50;
 
 					> a {
 						color: inherit !important;
