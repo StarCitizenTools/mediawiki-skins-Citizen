@@ -402,27 +402,14 @@ a {
 			#toc {
 				position: fixed;
 				max-width: 450px;
-				height: ~'calc( 100vh - @{header-height} * 2 - @{margin-side} * 4 )';
+				height: ~'calc( 100vh - @{header-height} * 2 - @{margin-side} * 2 )';
 				top: @header-height;
 				right: 0;
-				padding: @margin-side * 2 @margin-side;
+				padding: @margin-side;
 				color: @base-70;
 
 				&::-webkit-scrollbar {
 					width: 0; // Hide bar on toc
-				}
-
-				@top: linear-gradient(white, rgba(255, 255, 255, 0.001));
-				@bottom: linear-gradient(rgba(255, 255, 255, 0.001), white);
-
-				&:before {
-					top: @header-height;
-					.gradient-overflow(@top);
-				}
-
-				&:after {
-					bottom: @header-height - @margin-side;
-					.gradient-overflow(@bottom);
 				}
 
 				.toctitle {
@@ -524,7 +511,7 @@ a {
 					position: relative;
 					z-index: 2;
 					border-right: 1px dashed;
-					max-height: ~'calc( 100vh - @{header-height} * 2 - @{margin-side} * 4 )';
+					max-height: ~'calc( 100vh - @{header-height} * 2 - @{margin-side} * 2 )';
 					overflow: visible auto;
 					overscroll-behavior: contain;
 					display: block;
