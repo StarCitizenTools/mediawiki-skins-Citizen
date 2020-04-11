@@ -24,7 +24,6 @@ class CitizenTemplate extends BaseTemplate {
 
 		// TODO: Convert the rest to Mustache
 		ob_start();
-		?>
 		$loggedInClass = 'not-logged';
 
 		// Add class if logged in
@@ -45,7 +44,6 @@ class CitizenTemplate extends BaseTemplate {
 		$html .= $this->getTrail();
 
 		echo $html;
-		<?php
 		$params['html-unported'] = ob_get_contents();
 		ob_end_clean();
 
