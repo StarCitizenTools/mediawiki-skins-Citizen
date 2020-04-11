@@ -12,7 +12,19 @@ class CitizenTemplate extends BaseTemplate {
 	 * Outputs the entire contents of the page
 	 */
 	public function execute() {
-		$html = $this->get( 'headelement' );
+		// Naming conventions for Mustache parameters:
+		// - Prefix "is" for boolean values.
+		// - Prefix "msg-" for interface messages.
+		// - Prefix "page-" for data relating to the current page (e.g. Title, WikiPage, or OutputPage).
+		// - Prefix "html-" for raw HTML (in front of other keys, if applicable).
+		// - Conditional values are null if absent.
+		$params = [
+			'html-headelement' => $this->get( 'headelement', '' ),
+		];
+
+		// TODO: Convert the rest to Mustache
+		ob_start();
+		
 		$loggedInClass = 'not-logged';
 
 		// Add class if logged in
@@ -34,7 +46,12 @@ class CitizenTemplate extends BaseTemplate {
 		$html .= Html::closeElement( 'body' );
 		$html .= Html::closeElement( 'html' );
 
-		echo $html;
+		$params['html-unported'] = ob_get_contents();
+		ob_end_clean();
+
+		// Prepare and output the HTML response
+		$templates = new TemplateParser( __DIR__ . '/templates' );
+		echo $templates->processTemplate( 'index', $params );
 	}
 
 	/**
