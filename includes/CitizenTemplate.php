@@ -43,8 +43,8 @@ class CitizenTemplate extends BaseTemplate {
 		);
 
 		$html .= $this->getTrail();
-		$html .= Html::closeElement( 'body' );
-		$html .= Html::closeElement( 'html' );
+
+		echo $html;
 		<?php
 		$params['html-unported'] = ob_get_contents();
 		ob_end_clean();
