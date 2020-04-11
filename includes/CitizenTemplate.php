@@ -24,7 +24,7 @@ class CitizenTemplate extends BaseTemplate {
 
 		// TODO: Convert the rest to Mustache
 		ob_start();
-		
+
 		$loggedInClass = 'not-logged';
 
 		// Add class if logged in
