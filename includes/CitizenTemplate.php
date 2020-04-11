@@ -32,7 +32,7 @@ class CitizenTemplate extends BaseTemplate {
 			$loggedInClass = 'logged-in';
 		}
 
-		$html .= Html::rawElement(
+		$html = Html::rawElement(
 			'div',
 			[ 'class' => $loggedInClass, 'id' => 'mw-wrapper' ],
 			$this->getHeader() .
