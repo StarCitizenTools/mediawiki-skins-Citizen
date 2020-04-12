@@ -20,6 +20,8 @@ class CitizenTemplate extends BaseTemplate {
 		// - Conditional values are null if absent.
 		$params = [
 			'html-headelement' => $this->get( 'headelement', '' ),
+			// From BaseTemplate::getTrail (handles bottom JavaScript)
+			'html-printtail' => $this->getTrail(),
 		];
 
 		// TODO: Convert the rest to Mustache
@@ -40,8 +42,6 @@ class CitizenTemplate extends BaseTemplate {
 			$this->getSideTitle() .
 			$this->getBottomBar()
 		);
-
-		$html .= $this->getTrail();
 
 		echo $html;
 		$params['html-unported'] = ob_get_contents();
