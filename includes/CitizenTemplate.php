@@ -26,22 +26,12 @@ class CitizenTemplate extends BaseTemplate {
 
 		// TODO: Convert the rest to Mustache
 		ob_start();
-		$loggedInClass = 'not-logged';
 
-		// Add class if logged in
-		if ( $this->getSkin()->getUser()->isLoggedIn() ) {
-			$loggedInClass = 'logged-in';
-		}
-
-		$html = Html::rawElement(
-			'div',
-			[ 'class' => $loggedInClass, 'id' => 'mw-wrapper' ],
-			$this->getHeader() .
-			$this->getMainBody() .
-			$this->getFooterBlock() .
-			$this->getSideTitle() .
-			$this->getBottomBar()
-		);
+		$html = $this->getHeader();
+		$html .= $this->getMainBody();
+		$html .= $this->getFooterBlock();
+		$html .= $this->getSideTitle();
+		$html .= $this->getBottomBar();
 
 		echo $html;
 		$params['html-unported'] = ob_get_contents();
