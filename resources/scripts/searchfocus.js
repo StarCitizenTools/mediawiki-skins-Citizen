@@ -11,9 +11,9 @@ var searchToggle = document.getElementById('search-toggle');
 searchToggle.addEventListener("click", searchInputFocus);
 
 function searchInputFocus() {
-    var searchInput = document.getElementById('search-input');
+	var searchInput = document.getElementById('search-input');
 
-    if (searchToggle.checked != false) {
-        searchInput.focus();
-    }
+	if (searchToggle.checked != false) {
+		searchInput.focus();
+	}
 }
