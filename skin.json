@@ -204,7 +204,8 @@
 		"skins.citizen.scripts": {
 			"scripts": [
 				"resources/scripts/header.js",
-				"resources/scripts/toc.js"
+				"resources/scripts/toc.js",
+				"resources/scripts/searchfocus.js"
 			]
 		},
 		"skins.citizen.search.scripts": {
