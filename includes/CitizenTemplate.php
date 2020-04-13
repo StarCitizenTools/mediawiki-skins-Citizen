@@ -20,6 +20,36 @@ class CitizenTemplate extends BaseTemplate {
 		// - Conditional values are null if absent.
 		$params = [
 			'html-headelement' => $this->get( 'headelement', '' ),
+			'html-sitenotice' => $this->get( 'sitenotice', null ),
+			'html-indicators' => $this->getIndicators(),
+			// From Skin::getNewtalks(). Always returns string, cast to null if empty
+			'html-newtalk' => $this->get( 'newtalk', '' ) ?: null,
+			'page-langcode' => $this->getSkin()->getTitle()->getPageViewLanguage()->getHtmlCode(),
+
+			// Remember that the string '0' is a valid title.
+			// From OutputPage::getPageTitle, via ::setPageTitle().
+			'html-title' => $this->get( 'title', '' ),
+
+			'html-prebodyhtml' => $this->get( 'prebodyhtml', '' ),
+			'msg-tagline' => $this->getMsg( 'tagline' )->text(),
+			// TODO: mediawiki/SkinTemplate should expose langCode and langDir properly.
+			'html-userlangattributes' => $this->get( 'userlangattributes', '' ),
+			// From OutputPage::getSubtitle()
+			'html-subtitle' => $this->get( 'subtitle', '' ),
+
+			// TODO: Use directly Skin::getUndeleteLink() directly.
+			// Always returns string, cast to null if empty.
+			'html-undelete' => $this->get( 'undelete', null ) ?: null,
+
+			// Result of OutputPage::addHTML calls
+			'html-bodycontent' => $this->get( 'bodycontent' ),
+
+			'html-printfooter' => $this->get( 'printfooter', null ),
+			'html-catlinks' => $this->get( 'catlinks', '' ),
+			'html-dataAfterContent' => $this->get( 'dataAfterContent', '' ),
+			// From MWDebug::getHTMLDebugLog (when $wgShowDebug is enabled)
+			'html-debuglog' => $this->get( 'debughtml', '' ),
+
 			// From BaseTemplate::getTrail (handles bottom JavaScript)
 			'html-printtail' => $this->getTrail(),
 		];
@@ -30,19 +60,36 @@ class CitizenTemplate extends BaseTemplate {
 		$html = $this->getHeader();
 
 		echo $html;
-		$params['html-unported1'] = ob_get_contents();
+		$params['html-unported-header'] = ob_get_contents();
+		ob_end_clean();
+
+		// TODO: Convert the page tools to Mustache
+		ob_start();
+
+		$html = $this->getPageTools();
+
+		echo $html;
+		$params['html-unported-pagetools'] = ob_get_contents();
+		ob_end_clean();
+
+		// TODO: Convert the page links to Mustache
+		ob_start();
+
+		$html = $this->getPageLinks();
+
+		echo $html;
+		$params['html-unported-pagelinks'] = ob_get_contents();
 		ob_end_clean();
 
 		// TODO: Convert the rest to Mustache
 		ob_start();
 
-		$html = $this->getMainBody();
 		$html .= $this->getFooterBlock();
 		$html .= $this->getSideTitle();
 		$html .= $this->getBottomBar();
 
 		echo $html;
-		$params['html-unported2'] = ob_get_contents();
+		$params['html-unported'] = ob_get_contents();
 		ob_end_clean();
 
 		// Prepare and output the HTML response
@@ -82,62 +129,6 @@ class CitizenTemplate extends BaseTemplate {
 			);
 
 		return $header . $navigation . $userIconsSearchBar . Html::closeElement( 'header' );
-	}
-
-	/**
-	 * The main body holding all content
-	 *
-	 * @return string Main Body
-	 */
-	protected function getMainBody() {
-		return Html::rawElement(
-			'main',
-			[ 'class' => 'mw-body', 'id' => 'content', 'role' => 'main' ],
-			// Container for compatibility with extensions
-			Html::rawElement(
-				'section',
-				[ 'id' => 'mw-body-container' ],
-				$this->getSiteNotice() .
-				$this->getNewTalk() .
-				$this->getIndicators() .
-				$this->getPageTools() .
-				Html::rawElement(
-					'h1',
-					[ 'class' => 'firstHeading', 'lang' => $this->get( 'pageLanguage' ) ],
-					$this->get( 'title' )
-				) .
-				Html::rawElement(
-					'div',
-					[ 'id' => 'siteSub' ],
-					$this->getMsg( 'tagline' )->parse()
-				) .
-				Html::rawElement(
-					'div',
-					[ 'class' => 'mw-body-content' ],
-					Html::rawElement(
-						'div',
-						[ 'id' => 'contentSub' ],
-						$this->getPageSubtitle() .
-						Html::rawElement(
-							'p',
-							[],
-							$this->get( 'undelete' )
-						)
-					) .
-					$this->get( 'bodycontent' ) .
-					$this->getClear() .
-					Html::rawElement(
-						'div',
-						[ 'class' => 'printfooter' ],
-						$this->get( 'printfooter' )
-					) .
-					$this->getPageLinks() .
-					$this->getCategoryLinks()
-				) .
-				$this->getDataAfterContent() .
-				$this->get( 'debughtml' )
-			)
-		);
 	}
 
 	/**
@@ -567,80 +558,6 @@ class CitizenTemplate extends BaseTemplate {
 		// Language variant options
 
 		return $html . $this->getVariants();
-	}
-
-	/**
-	 * Generates siteNotice, if any
-	 * @return string html
-	 */
-	protected function getSiteNotice() {
-		return $this->getIfExists( 'sitenotice', [
-			'wrapper' => 'div',
-			'parameters' => [ 'id' => 'siteNotice' ],
-		] );
-	}
-
-	/**
-	 * Generates new talk message banner, if any
-	 * @return string html
-	 */
-	protected function getNewTalk() {
-		return $this->getIfExists( 'newtalk', [
-			'wrapper' => 'div',
-			'parameters' => [ 'class' => 'usermessage' ],
-		] );
-	}
-
-	/**
-	 * Generates subtitle stuff, if any
-	 * @return string html
-	 */
-	protected function getPageSubtitle() {
-		return $this->getIfExists( 'subtitle', [ 'wrapper' => 'p' ] );
-	}
-
-	/**
-	 * Generates category links, if any
-	 * @return string html
-	 */
-	protected function getCategoryLinks() {
-		return $this->getIfExists( 'catlinks' );
-	}
-
-	/**
-	 * Generates data after content stuff, if any
-	 * @return string html
-	 */
-	protected function getDataAfterContent() {
-		return $this->getIfExists( 'dataAfterContent' );
-	}
-
-	/**
-	 * Simple wrapper for random if-statement-wrapped $this->data things
-	 *
-	 * @param string $object name of thing
-	 * @param array $setOptions
-	 *
-	 * @return string html
-	 */
-	protected function getIfExists( $object, $setOptions = [] ) {
-		$options = $setOptions + [
-				'wrapper' => 'none',
-				'parameters' => [],
-			];
-
-		$html = '';
-
-		if ( $this->data[$object] ) {
-			if ( $options['wrapper'] === 'none' ) {
-				$html .= $this->get( $object );
-			} else {
-				$html .= Html::rawElement( $options['wrapper'], $options['parameters'],
-					$this->get( $object ) );
-			}
-		}
-
-		return $html;
 	}
 
 	/**

@@ -3,12 +3,36 @@
 		`</head>` and contains `meta` tags and ResourceLoader internals.
 	string html-printtail HTML to render at the end of the page contained necessary script tags for
 		ResourceLoader terminated with `</body></html>`.
+	string|null html-sitenotice the contents of a banner defined in MediaWiki:Sitenotice.
+		Also used by CentralNotice to inject banners.
+	string html-indicators raw HTML containing wiki-defined badges such as "good article",
+		"featured article". An empty string if none are defined.
+	string page-langcode the content language of the article. Assumed to be escaped HTML.
+	string html-newtalk
 }}
 
 {{{html-headelement}}}
-{{! html-unported outputs everything else }}
-{{{html-unported1}}}
-{{{html-unported2}}}
+{{{html-unported-header}}}
+<main id="content" class="mw-body">
+	{{#html-sitenotice}}<div id="siteNotice" class="mw-body-content">{{{html-sitenotice}}}</div>{{/html-sitenotice}}
+	{{#html-newtalk}}<div class="usermessage">{{{html-newtalk}}}</div>{{/html-newtalk}}
+	{{{html-indicators}}}
+	{{{html-unported-pagetools}}}
+	<h1 id="firstHeading" class="firstHeading" lang="{{page-langcode}}">{{{html-title}}}</h1>
+	<div id="siteSub">{{msg-tagline}}</div>
+	{{{html-prebodyhtml}}}
+	<div id="bodyContent" class="mw-body-content">
+		<div id="contentSub"{{{html-userlangattributes}}}>{{{html-subtitle}}}</div>
+		{{#html-undelete}}<div id="contentSub2">{{{html-undelete}}}</div>{{/html-undelete}}
+		{{{html-bodycontent}}}
+		{{#html-printfooter}}<div class="printfooter">{{{html-printfooter}}}</div>{{/html-printfooter}}
+		{{{html-unported-pagelinks}}}
+		{{{html-catlinks}}}
+		{{{html-dataAfterContent}}}
+		{{{html-debuglog}}}
+	</div>
+</main>
+{{{html-unported}}}
 {{{html-printtail}}}
 </body>
 </html>
