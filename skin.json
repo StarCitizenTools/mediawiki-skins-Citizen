@@ -244,6 +244,7 @@
 			"useDataURI": false,
 			"images": {
 				"view": "resources/images/icons/article.svg",
+				"viewsource": "resources/images/icons/eye.svg",
 				"ve-edit": "resources/images/icons/ve-edit.svg",
 				"edit": "resources/images/icons/edit.svg",
 				"history": "resources/images/icons/history.svg",
