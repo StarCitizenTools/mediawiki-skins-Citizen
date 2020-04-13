@@ -24,17 +24,25 @@ class CitizenTemplate extends BaseTemplate {
 			'html-printtail' => $this->getTrail(),
 		];
 
-		// TODO: Convert the rest to Mustache
+		// TODO: Convert the header to Mustache
 		ob_start();
 
 		$html = $this->getHeader();
-		$html .= $this->getMainBody();
+
+		echo $html;
+		$params['html-unported1'] = ob_get_contents();
+		ob_end_clean();
+
+		// TODO: Convert the rest to Mustache
+		ob_start();
+
+		$html = $this->getMainBody();
 		$html .= $this->getFooterBlock();
 		$html .= $this->getSideTitle();
 		$html .= $this->getBottomBar();
 
 		echo $html;
-		$params['html-unported'] = ob_get_contents();
+		$params['html-unported2'] = ob_get_contents();
 		ob_end_clean();
 
 		// Prepare and output the HTML response
