@@ -8,6 +8,40 @@ use MediaWiki\MediaWikiServices;
  * @ingroup Skins
  */
 class CitizenTemplate extends BaseTemplate {
+	/** @var TemplateParser */
+	private $templateParser;
+	/** @var string File name of the root (master) template without folder path and extension */
+	private $templateRoot;
+
+	/**
+	 * @param Config $config
+	 * @param TemplateParser $templateParser
+	 * @param bool $isLegacy
+	 */
+	public function __construct(
+		Config $config,
+		TemplateParser $templateParser
+	) {
+		parent::__construct( $config );
+
+		$this->templateParser = $templateParser;
+		$this->templateRoot = 'index';
+	}
+
+	/**
+	 * The template parser might be undefined. This function will check if it set first
+	 *
+	 * @return TemplateParser
+	 */
+	protected function getTemplateParser() {
+		if ( $this->templateParser === null ) {
+			throw new \LogicException(
+				'TemplateParser has to be set first via setTemplateParser method'
+			);
+		}
+		return $this->templateParser;
+	}
+
 	/**
 	 * Outputs the entire contents of the page
 	 */
