@@ -14,7 +14,9 @@
 {{{html-headelement}}}
 {{{html-unported-header}}}
 <main id="content" class="mw-body">
-	<div id="siteNotice" class="mw-body-content">{{{html-sitenotice}}}</div>
+	{{#html-sitenotice}}
+		<div id="siteNotice" class="mw-body-content">{{{html-sitenotice}}}</div>
+	{{/html-sitenotice}}
 	{{#html-newtalk}}<div class="usermessage">{{{html-newtalk}}}</div>{{/html-newtalk}}
 	{{{html-indicators}}}
 	{{{html-unported-pagetools}}}
