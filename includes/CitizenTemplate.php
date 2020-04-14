@@ -16,7 +16,6 @@ class CitizenTemplate extends BaseTemplate {
 	/**
 	 * @param Config $config
 	 * @param TemplateParser $templateParser
-	 * @param bool $isLegacy
 	 */
 	public function __construct(
 		Config $config,
