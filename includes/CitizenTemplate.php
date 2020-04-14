@@ -129,8 +129,8 @@ class CitizenTemplate extends BaseTemplate {
 		ob_end_clean();
 
 		// Prepare and output the HTML response
-		$templates = new TemplateParser( __DIR__ . '/templates' );
-		echo $templates->processTemplate( 'index', $params );
+		$tp = $this->getTemplateParser();
+		echo $tp->processTemplate( $this->templateRoot, $params );
 	}
 
 	/**
