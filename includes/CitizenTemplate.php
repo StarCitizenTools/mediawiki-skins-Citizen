@@ -52,6 +52,10 @@ class CitizenTemplate extends BaseTemplate {
 
 			// From BaseTemplate::getTrail (handles bottom JavaScript)
 			'html-printtail' => $this->getTrail(),
+			'data-footer' => [
+				'html-userlangattributes' => $this->get( 'userlangattributes', '' ),
+				'array-footer-rows' => $this->getTemplateFooterRows(),
+			],
 		];
 
 		// TODO: Convert the header to Mustache
@@ -84,7 +88,6 @@ class CitizenTemplate extends BaseTemplate {
 		// TODO: Convert the rest to Mustache
 		ob_start();
 
-		$html = $this->getFooterBlock();
 		$html .= $this->getSideTitle();
 		$html .= $this->getBottomBar();
 
@@ -701,109 +704,51 @@ class CitizenTemplate extends BaseTemplate {
 	}
 
 	/**
-	 * Better renderer for getFooterIcons and getFooterLinks, based on Vector
-	 *
-	 * @param array $setOptions Miscellaneous other options
-	 * * 'id' for footer id
-	 * * 'order' to determine whether icons or links appear first: 'iconsfirst' or links, though in
-	 *   practice we currently only check if it is or isn't 'iconsfirst'
-	 * * 'link-prefix' to set the prefix for all link and block ids; most skins use 'f' or 'footer',
-	 *   as in id='f-whatever' vs id='footer-whatever'
-	 * * 'icon-style' to pass to getFooterIcons: "icononly", "nocopyright"
-	 * * 'link-style' to pass to getFooterLinks: "flat" to disable categorisation of links in a
-	 *   nested array
-	 *
-	 * @return string html
+	 * Get rows that make up the footer
+	 * @return array for use in Mustache template describing the footer elements.
 	 */
-	protected function getFooterBlock( $setOptions = [] ) {
-		// Set options and fill in defaults
-		$options = $setOptions + [
-				'id' => 'footer',
-				'order' => 'linksfirst',
-				'link-prefix' => 'footer',
-				'icon-style' => 'icononly',
-				'link-style' => 'flat',
+	private function getTemplateFooterRows() : array {
+		$footerRows = [];
+		foreach ( $this->getFooterLinks() as $category => $links ) {
+			$items = [];
+			$rowId = "footer-$category";
+
+			foreach ( $links as $link ) {
+				$items[] = [
+					'id' => "$rowId-$link",
+					'html' => $this->get( $link, '' ),
+				];
+			}
+
+			$footerRows[] = [
+				'id' => $rowId,
+				'className' => '',
+				'array-items' => $items
 			];
-		$validFooterIcons = $this->getFooterIcons( $options['icon-style'] );
-		$validFooterLinks = $this->getFooterLinks( $options['link-style'] );
-		$html = '';
-		$html .= Html::openElement( 'footer', [
-			'id' => $options['id'],
-			'role' => 'contentinfo',
-			'lang' => $this->get( 'userlang' ),
-			'dir' => $this->get( 'dir' ),
-		] );
-		$iconsHTML = '';
-		if ( count( $validFooterIcons ) > 0 ) {
-			$iconsHTML .= Html::openElement( 'div',
-				[ 'id' => "{$options['link-prefix']}-container-icons" ] );
-			$iconsHTML .= Html::openElement( 'div', [ 'id' => 'footer-bottom-container' ] );
-			// Get tagline
-			$iconsHTML .= $this->getFooterTagline();
-			$iconsHTML .= Html::openElement( 'ul', [ 'id' => "{$options['link-prefix']}-icons" ] );
-			foreach ( $validFooterIcons as $blockName => $footerIcons ) {
-				$iconsHTML .= Html::openElement( 'li', [
-					'id' => Sanitizer::escapeIdForAttribute( "{$options['link-prefix']}-{$blockName}ico" ),
-					'class' => 'footer-icons',
-				] );
-				foreach ( $footerIcons as $icon ) {
-					$iconsHTML .= $this->getSkin()->makeFooterIcon( $icon );
+		}
+
+		// If footer icons are enabled append to the end of the rows
+		$footerIcons = $this->getFooterIcons( 'icononly' );
+		if ( count( $footerIcons ) > 0 ) {
+			$items = [];
+			foreach ( $footerIcons as $blockName => $blockIcons ) {
+				$html = '';
+				foreach ( $blockIcons as $icon ) {
+					$html .= $this->getSkin()->makeFooterIcon( $icon );
 				}
-				$iconsHTML .= Html::closeElement( 'li' );
+				$items[] = [
+					'id' => 'footer-' . htmlspecialchars( $blockName ) . 'ico',
+					'html' => $html,
+				];
 			}
-			$iconsHTML .= Html::closeElement( 'ul' );
-			$iconsHTML .= Html::closeElement( 'div' );
-			$iconsHTML .= Html::closeElement( 'div' );
+
+			$footerRows[] = [
+				'id' => 'footer-icons',
+				'className' => 'noprint',
+				'array-items' => $items,
+			];
 		}
-		$linksHTML = '';
-		if ( count( $validFooterLinks ) > 0 ) {
-			$linksHTML .= Html::openElement( 'div',
-				[ 'id' => "{$options['link-prefix']}-container-list" ] );
-			if ( $options['link-style'] === 'flat' ) {
-				$linksHTML .= Html::openElement( 'ul', [
-					'id' => "{$options['link-prefix']}-list",
-					'class' => 'footer-places',
-				] );
-				// Site title
-				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitetitle' ],
-					$this->getSiteTitle( 'text' ) );
-				// Site description
-				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitedesc' ],
-					$this->getFooterDesc() );
-				foreach ( $validFooterLinks as $link ) {
-					$linksHTML .= Html::rawElement( 'li',
-						[ 'id' => Sanitizer::escapeIdForAttribute( $link ) ], $this->get( $link ) );
-				}
-				$linksHTML .= Html::closeElement( 'ul' );
-			} else {
-				$linksHTML .= Html::openElement( 'div',
-					[ 'id' => "{$options['link-prefix']}-list" ] );
-				foreach ( $validFooterLinks as $category => $links ) {
-					$linksHTML .= Html::openElement( 'ul', [
-						'id' => Sanitizer::escapeIdForAttribute( "{$options['link-prefix']}-{$category}" ),
-					] );
-					foreach ( $links as $link ) {
-						$linksHTML .= Html::rawElement( 'li', [
-							'id' => Sanitizer::escapeIdForAttribute( "{$options['link-prefix']}-{$category}-{$link}" ),
-						], $this->get( $link ) );
-					}
-					$linksHTML .= Html::closeElement( 'ul' );
-				}
-				// Site title
-				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'footer-sitetitle' ],
-					$this->getSiteTitle( 'text' ) );
-				// Site logo
-				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'footer-sitelogo' ],
-					$this->getLogo() );
-				$linksHTML .= Html::closeElement( 'div' );
-			}
-			$linksHTML .= Html::closeElement( 'div' );
-		}
-		if ( $options['order'] === 'iconsfirst' ) {
-			$html .= $iconsHTML . $linksHTML;
-		} else {
-			$html .= $linksHTML . $iconsHTML;
-		}
-		return $html . $this->getClear() . Html::closeElement( 'footer' );
+
+		return $footerRows;
 	}
 }

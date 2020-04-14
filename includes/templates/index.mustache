@@ -5,10 +5,24 @@
 		ResourceLoader terminated with `</body></html>`.
 	string|null html-sitenotice the contents of a banner defined in MediaWiki:Sitenotice.
 		Also used by CentralNotice to inject banners.
+	string page-langcode the content language of the article. Assumed to be escaped HTML.
+	string html-newtalk
 	string html-indicators raw HTML containing wiki-defined badges such as "good article",
 		"featured article". An empty string if none are defined.
 	string page-langcode the content language of the article. Assumed to be escaped HTML.
-	string html-newtalk
+	string html-title
+	string msg-tagline
+	string html-prebodyhtml
+	string html-subtitle
+	string html-undelete
+	string html-bodycontent
+	string html-printfooter
+	string html-catlinks
+	string html-debuglog
+	string html-dataAfterContent
+	object data-footer for footer template partial. see Footer.mustache for documentation.
+	string html-printtail HTML to render at the end of the page contained necessary script tags for
+		ResourceLoader terminated with `</body></html>`.
 }}
 
 {{{html-headelement}}}
@@ -37,6 +51,7 @@
 	</div>
 </main>
 {{{html-unported}}}
+{{#data-footer}}{{>Footer}}{{/data-footer}}
 {{{html-printtail}}}
 </body>
 </html>
