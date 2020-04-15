@@ -1,6 +1,5 @@
   
 {{!
-	WIP
 	@typedef object footerItem
 	@prop string id of list item element
 	@prop string html of list item
@@ -13,10 +12,13 @@
 
 	string|null html-userlangattributes a string of attribute HTML
 	footerRow[] array-footer-rows iterable list of footer rows
+	string msg-footer-desc
+	string msg-footer-tagline
 }}
 <footer id="footer" role="contentinfo" {{{html-userlangattributes}}}>
 	<div class="last-modified-bar"></div>
 	<div class="footer-content">
+		<span id="mw-footer-desc">{{{msg-footer-desc}}}</span>
 		{{#array-footer-rows}}
 		<ul id="{{id}}" class="{{className}}">
 			{{#array-items}}
@@ -24,5 +26,6 @@
 			{{/array-items}}
 		</ul>
 		{{/array-footer-rows}}
+		<span id="mw-footer-tagline">{{{msg-footer-tagline}}}</span>
 	</div>
 </footer>
