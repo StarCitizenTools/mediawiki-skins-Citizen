@@ -62,6 +62,7 @@ class CitizenTemplate extends BaseTemplate {
 			'html-printtail' => $this->getTrail() . '</body></html>',
 			'data-footer' => [
 				'html-userlangattributes' => $this->get( 'userlangattributes', '' ),
+				'html-lastmodified' => $this->get( 'lastmodified', '' ),
 				'array-footer-rows' => $this->getTemplateFooterRows(),
 				'msg-footer-desc' => $this->getMsg( 'citizen-footer-desc' )->text(),
 				'msg-footer-tagline' => $this->getMsg( 'citizen-footer-tagline' )->text(),
