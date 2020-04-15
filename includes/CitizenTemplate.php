@@ -51,7 +51,7 @@ class CitizenTemplate extends BaseTemplate {
 			'html-debuglog' => $this->get( 'debughtml', '' ),
 
 			// From BaseTemplate::getTrail (handles bottom JavaScript)
-			'html-printtail' => $this->getTrail(),
+			'html-printtail' => $this->getTrail() . '</body></html>',
 			'data-footer' => [
 				'html-userlangattributes' => $this->get( 'userlangattributes', '' ),
 				'array-footer-rows' => $this->getTemplateFooterRows(),
