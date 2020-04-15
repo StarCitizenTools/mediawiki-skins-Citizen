@@ -8,6 +8,9 @@
 	"skinname-citizen": "{{name}}",
 	"citizen-desc": "{{desc|what=skin|name=Citizen|url=https://github.com/StarCitizenTools/mediawiki-skins-Citizen}}",
 
+	"citizen.css": "{{optional}}",
+	"citizen.js": "{{optional}}",
+
 	"citizen-footer-desc": "Edit this text on MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Edit this text on MediaWiki:Citizen-footer-tagline",
 	
