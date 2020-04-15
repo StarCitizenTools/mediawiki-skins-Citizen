@@ -54,6 +54,8 @@ class CitizenTemplate extends BaseTemplate {
 			'html-printtail' => $this->getTrail() . '</body></html>',
 			'data-footer' => [
 				'html-userlangattributes' => $this->get( 'userlangattributes', '' ),
+				'msg-footer-desc' => $this->getMsg( 'citizen-footer-desc' )->text(),
+				'msg-footer-tagline' => $this->getMsg( 'citizen-footer-tagline' )->text(),
 				'array-footer-rows' => $this->getTemplateFooterRows(),
 			],
 		];
@@ -301,34 +303,6 @@ class CitizenTemplate extends BaseTemplate {
 		}
 
 		return $html;
-	}
-
-	/**
-	 * Generates the description for footer
-	 * @return string html
-	 */
-	protected function getFooterDesc() {
-		$html = '';
-		$language = $this->getSkin()->getLanguage();
-		$siteDesc = $language->convert( $this->getMsg( 'citizen-footer-desc' )->escaped() );
-
-		return $html . Html::rawElement( 'span', [
-				'id' => 'mw-footer-desc',
-			], $siteDesc );
-	}
-
-	/**
-	 * Generates the tagline for footer
-	 * @return string html
-	 */
-	protected function getFooterTagline() {
-		$html = '';
-		$language = $this->getSkin()->getLanguage();
-		$siteTagline = $language->convert( $this->getMsg( 'citizen-footer-tagline' )->escaped() );
-
-		return $html . Html::rawElement( 'span', [
-				'id' => 'mw-footer-tagline',
-			], $siteTagline );
 	}
 
 	/**
