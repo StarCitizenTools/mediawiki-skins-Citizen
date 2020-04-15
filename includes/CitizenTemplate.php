@@ -88,7 +88,7 @@ class CitizenTemplate extends BaseTemplate {
 		// TODO: Convert the rest to Mustache
 		ob_start();
 
-		$html .= $this->getSideTitle();
+		$html = $this->getSideTitle();
 		$html .= $this->getBottomBar();
 
 		echo $html;
