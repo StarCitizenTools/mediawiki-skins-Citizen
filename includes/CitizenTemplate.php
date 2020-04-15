@@ -57,8 +57,8 @@ class CitizenTemplate extends BaseTemplate {
 				'array-footer-rows' => $this->getTemplateFooterRows(),
 			],
 
-			'msg-footer-desc' => $this->getMsg( 'citizen-footer-desc' )->text(),
-			'msg-footer-tagline' => $this->getMsg( 'citizen-footer-tagline' )->text(),
+			'msg-footer-desc' => $this->getMsg( 'citizen-footer-desc' )->escaped(),
+			'msg-footer-tagline' => $this->getMsg( 'citizen-footer-tagline' )->escaped(),
 		];
 
 		// TODO: Convert the header to Mustache
