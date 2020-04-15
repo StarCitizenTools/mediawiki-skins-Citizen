@@ -15,9 +15,17 @@ class CitizenTemplate extends BaseTemplate {
 		// Naming conventions for Mustache parameters:
 		// - Prefix "is" for boolean values.
 		// - Prefix "msg-" for interface messages.
-		// - Prefix "page-" for data relating to the current page (e.g. Title, WikiPage, or OutputPage).
 		// - Prefix "html-" for raw HTML (in front of other keys, if applicable).
-		// - Conditional values are null if absent.
+		// - Prefix "data-" for an array of template parameters that should be passed directly
+		//   to a template partial.
+		// - Prefix "array-" for lists of any values.
+		//
+		// Source of value (first or second segment)
+		// - Segment "page-" for data relating to the current page (e.g. Title, WikiPage, or OutputPage).
+		// - Segment "hook-" for any thing generated from a hook.
+		//   It should be followed by the name of the hook in hyphenated lowercase.
+		//
+		// Conditionally used values must use null to indicate absence (not false or '').
 		$params = [
 			'html-headelement' => $this->get( 'headelement', '' ),
 			'html-sitenotice' => $this->get( 'sitenotice', null ),
@@ -55,10 +63,9 @@ class CitizenTemplate extends BaseTemplate {
 			'data-footer' => [
 				'html-userlangattributes' => $this->get( 'userlangattributes', '' ),
 				'array-footer-rows' => $this->getTemplateFooterRows(),
+				'msg-footer-desc' => $this->getMsg( 'citizen-footer-desc' )->text(),
+				'msg-footer-tagline' => $this->getMsg( 'citizen-footer-tagline' )->text(),
 			],
-
-			'msg-footer-desc' => $this->getMsg( 'citizen-footer-desc' )->escaped(),
-			'msg-footer-tagline' => $this->getMsg( 'citizen-footer-tagline' )->escaped(),
 		];
 
 		// TODO: Convert the header to Mustache
