@@ -519,13 +519,13 @@
 		}
 	},
 	"AutoloadClasses": {
+		"ApiWebappManifest": "includes/api/ApiWebappManifest.php",
 		"SkinCitizen": "includes/SkinCitizen.php",
 		"CitizenTemplate": "includes/CitizenTemplate.php",
-		"Citizen\\CitizenHooks": "includes/CitizenHooks.php",
-		"Citizen\\ApiWebappManifest": "includes/api/ApiWebappManifest.php"
+		"Citizen\\CitizenHooks": "includes/CitizenHooks.php"
 	},
 	"APIModules": {
-		"webapp-manifest": "Citizen\\ApiWebappManifest"
+		"webapp-manifest": "ApiWebappManifest"
 	},
 	"Hooks": {
 		"BeforePageDisplay": [
