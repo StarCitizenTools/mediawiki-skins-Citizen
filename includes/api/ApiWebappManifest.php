@@ -1,7 +1,5 @@
 <?php
 
-namespace Citizen;
-
 use ApiBase;
 use ApiFormatJson;
 use ApiResult;
