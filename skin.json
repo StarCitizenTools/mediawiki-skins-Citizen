@@ -525,7 +525,9 @@
 		"Citizen\\ApiWebappManifest": "includes/api/ApiWebappManifest.php"
 	},
 	"APIModules": {
-		"webapp-manifest": "Citizen\\ApiWebappManifest"
+		"webapp-manifest": {
+			"class": "Citizen\\ApiWebappManifest"
+		}
 	},
 	"Hooks": {
 		"BeforePageDisplay": [
