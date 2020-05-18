@@ -42,6 +42,7 @@ jobs:
         git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
         git add .
         git commit -am "Github CI lint - phpcbf" || echo "No changes to commit"
+        git pull
         git push
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
