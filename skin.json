@@ -346,7 +346,7 @@
 		},
 		"skins.citizen.icons.badges": {
 			"class": "ResourceLoaderImageModule",
-			"selector": ".footer-icons a[href*=\"{name}\"]:before",
+			"selector": ".footer-icons a[href*='{name}']:before",
 			"defaultColor": "#fff",
 			"useDataURI": false,
 			"images": {
