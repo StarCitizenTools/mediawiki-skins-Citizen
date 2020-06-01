@@ -108,7 +108,7 @@ class CitizenTemplate extends BaseTemplate {
 
 		// Prepare and output the HTML response
 		$templates = new TemplateParser( __DIR__ . '/templates' );
-		echo $templates->processTemplate( 'index', $params );
+		echo $templates->processTemplate( 'skin', $params );
 	}
 
 	/**
