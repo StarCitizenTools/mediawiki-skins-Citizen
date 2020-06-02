@@ -62,11 +62,12 @@ class CitizenTemplate extends BaseTemplate {
 			'html-printtail' => $this->getTrail() . '</body></html>',
 			'data-footer' => [
 				'html-userlangattributes' => $this->get( 'userlangattributes', '' ),
-				'html-lastmodified' => $data['lastmod'],
 				'array-footer-rows' => $this->getTemplateFooterRows(),
 				'msg-footer-desc' => $this->getMsg( 'citizen-footer-desc' )->text(),
 				'msg-footer-tagline' => $this->getMsg( 'citizen-footer-tagline' )->text(),
 			],
+
+			'msg-sitetitle' => $this->getMsg( 'sitetitle' )->text(),
 		];
 
 		// TODO: Convert the header to Mustache
