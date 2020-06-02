@@ -62,6 +62,7 @@ class CitizenTemplate extends BaseTemplate {
 			'html-printtail' => $this->getTrail() . '</body></html>',
 			'data-footer' => [
 				'html-userlangattributes' => $this->get( 'userlangattributes', '' ),
+				'html-lastmodified' => $this->getLastMod(),
 				'array-footer-rows' => $this->getTemplateFooterRows(),
 				'msg-citizen-footer-desc' => $this->getMsg( 'citizen-footer-desc' )->text(),
 				'msg-citizen-footer-tagline' => $this->getMsg( 'citizen-footer-tagline' )->text(),
@@ -688,6 +689,22 @@ class CitizenTemplate extends BaseTemplate {
 	}
 
 	/**
+	 * Get last modified message
+	 * @return string html
+	 */
+	private function getLastMod() {
+		$html = '';
+		$footerLinks = $this->getFooterLinks();
+
+		if ( in_array('lastmod', $footerLinks['info']) ) {
+			$key = array_search('lastmod', $footerLinks['info']);
+			$html = $this->get( $footerLinks['info'][$key], '' );
+		}
+
+		return $html;
+	}
+
+	/**
 	 * Get rows that make up the footer
 	 * @return array for use in Mustache template describing the footer elements.
 	 */
@@ -697,11 +714,15 @@ class CitizenTemplate extends BaseTemplate {
 			$items = [];
 			$rowId = "footer-$category";
 
+			
 			foreach ( $links as $link ) {
-				$items[] = [
-					'id' => "$rowId-$link",
-					'html' => $this->get( $link, '' ),
-				];
+				// Unset lastmod from footer link
+				if ( $link !== 'lastmod' ) {
+					$items[] = [
+						'id' => "$rowId-$link",
+						'html' => $this->get( $link, '' ),
+					];
+				}
 			}
 
 			$footerRows[] = [
