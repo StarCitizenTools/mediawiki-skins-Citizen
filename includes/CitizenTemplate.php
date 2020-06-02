@@ -696,8 +696,8 @@ class CitizenTemplate extends BaseTemplate {
 		$html = '';
 		$footerLinks = $this->getFooterLinks();
 
-		if ( in_array('lastmod', $footerLinks['info']) ) {
-			$key = array_search('lastmod', $footerLinks['info']);
+		if ( in_array( 'lastmod', $footerLinks['info'] ) ) {
+			$key = array_search( 'lastmod', $footerLinks['info'] );
 			$html = $this->get( $footerLinks['info'][$key], '' );
 		}
 
@@ -714,7 +714,6 @@ class CitizenTemplate extends BaseTemplate {
 			$items = [];
 			$rowId = "footer-$category";
 
-			
 			foreach ( $links as $link ) {
 				// Unset lastmod from footer link
 				if ( $link !== 'lastmod' ) {
