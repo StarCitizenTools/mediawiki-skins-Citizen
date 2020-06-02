@@ -63,8 +63,8 @@ class CitizenTemplate extends BaseTemplate {
 			'data-footer' => [
 				'html-userlangattributes' => $this->get( 'userlangattributes', '' ),
 				'array-footer-rows' => $this->getTemplateFooterRows(),
-				'msg-footer-desc' => $this->getMsg( 'citizen-footer-desc' )->text(),
-				'msg-footer-tagline' => $this->getMsg( 'citizen-footer-tagline' )->text(),
+				'msg-citizen-footer-desc' => $this->getMsg( 'citizen-footer-desc' )->text(),
+				'msg-citizen-footer-tagline' => $this->getMsg( 'citizen-footer-tagline' )->text(),
 			],
 
 			'msg-sitetitle' => $this->getMsg( 'sitetitle' )->text(),

@@ -11,15 +11,16 @@
 
 	string|null html-userlangattributes a string of attribute HTML
 	footerRow[] array-footer-rows iterable list of footer rows
-	string msg-footer-desc
-	string msg-footer-tagline
+	string msg-sitetitle
+	string msg-citizen-footer-desc
+	string msg-citizen-footer-tagline
 }}
 
 <footer id="footer" role="contentinfo" {{{html-userlangattributes}}}>
 	<div class="last-modified-bar">{{{html-lastmodified}}}</div>
 	<div class="footer-content">
 		<div id="footer-sitetitle">{{{msg-sitetitle}}}</div>
-		<div id="footer-desc">{{{msg-footer-desc}}}</div>
+		<div id="footer-desc">{{{msg-citizen-footer-desc}}}</div>
 		{{#array-footer-rows}}
 		<ul id="{{id}}" class="{{className}}">
 			{{#array-items}}
@@ -27,6 +28,6 @@
 			{{/array-items}}
 		</ul>
 		{{/array-footer-rows}}
-		<div id="footer-tagline">{{{msg-footer-tagline}}}</div>
+		<div id="footer-tagline">{{{msg-citizen-footer-tagline}}}</div>
 	</div>
 </footer>
