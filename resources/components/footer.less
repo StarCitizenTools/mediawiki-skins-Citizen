@@ -18,9 +18,9 @@
 	&-icon {
 		margin-right: @icon-padding;
 		width: 20px;
-    	height: 20px;
-    	background-repeat: no-repeat;
-    	background-position: center;
+		height: 20px;
+		background-repeat: no-repeat;
+		background-position: center;
 		opacity: @opacity-icon;
 	}
 
@@ -62,26 +62,26 @@
 		padding: 0 @margin-side;
 		max-width: @footer-width;
 		display: flex;
-    	flex-direction: column;
+		flex-direction: column;
 
-    	> ul,
-    	> div {
+		> ul,
+		> div {
 			margin: @margin-side / 2 0;
-    	}
+		}
 	}
 
 	&-bottom {
 		margin-top: @margin-side * 1.5;
 		background-color: @color-footer-background-40;
 
-    	&-content {
-    		margin: 0 auto;
+		&-content {
+			margin: 0 auto;
 			padding: @margin-side / 2 @margin-side;
 			max-width: @footer-width;
 			display: flex;
 			align-items: center;
-    		justify-content: space-between;
-    	}
+			justify-content: space-between;
+		}
 	}
 
 	&-sitetitle {
@@ -93,12 +93,10 @@
 		margin: 0 -@margin-side !important;
 		display: flex;
 
-
 		li a {
 			padding: @margin-side / 2 @margin-side;
 			display: block;
 		}
-
 	}
 
 	&-info {
@@ -116,20 +114,20 @@
 
 	&-icons {
 		margin: 0;
-    	display: flex;
+		display: flex;
 
-    	a {
-    		padding: @margin-side * 0.75 @margin-side / 2;
-    		height: 50px; // CSS hack to force SVG icon to appear
-    		display: flex;
-    		justify-content: center;
-    		align-items: center;
-    		opacity: 0.5;
-    		transition: @transition-opacity;
+		a {
+			padding: @margin-side * 0.75 @margin-side / 2;
+			height: 50px; // CSS hack to force SVG icon to appear
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			opacity: 0.5;
+			transition: @transition-opacity;
 
-    		img {
-    			display: none; // Hack to hide original icons
-    		}
+			img {
+				display: none; // Hack to hide original icons
+			}
 
 			&:before {
 				content: '';
@@ -138,10 +136,10 @@
 				background-size: contain;
 			}
 
-    		&:hover {
-    			opacity: 0.7;
-    		}
-    	}
+			&:hover {
+				opacity: 0.7;
+			}
+		}
 	}
 
 	// Icon styles
