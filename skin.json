@@ -345,16 +345,17 @@
 		},
 		"skins.citizen.icons.badges": {
 			"class": "ResourceLoaderImageModule",
-			"selector": "#footer-{name}ico a:before",
+			"selector": "#footer-icons a[href*='{name}']:before",
 			"defaultColor": "#fff",
 			"useDataURI": false,
 			"images": {
-				"copyright": "resources/images/badges/CCBYSA4.svg",
-				"poweredby": "resources/images/badges/PoweredByMediawiki.svg",
-				"monitoredby": "resources/images/badges/MonitoredByWikiApiary.svg",
-				"gdprcompliance": "resources/images/badges/GDPR.svg",
-				"madeby": "resources/images/badges/MadeByTheCommunity.svg",
-				"partof": "resources/images/badges/StarCitizenTools.svg"
+				"by-sa": "resources/images/badges/CCBYSA.svg",
+				"mediawiki": "resources/images/badges/MediaWiki.svg",
+				"wikiapiary": "resources/images/badges/WikiApiary.svg",
+				"miraheze": "resources/images/badges/Miraheze.svg",
+				"gdpr": "resources/images/badges/GDPR.svg",
+				"robertsspaceindustries": "resources/images/badges/StarCitizenCommunity.svg",
+				"starcitizen.tools": "resources/images/badges/StarCitizenTools.svg"
 			}
 		},
 		"skins.citizen.icons.search": {
@@ -524,7 +525,9 @@
 		"Citizen\\ApiWebappManifest": "includes/api/ApiWebappManifest.php"
 	},
 	"APIModules": {
-		"webapp-manifest": "Citizen\\ApiWebappManifest"
+		"webapp-manifest": {
+			"class": "Citizen\\ApiWebappManifest"
+		}
 	},
 	"Hooks": {
 		"BeforePageDisplay": [

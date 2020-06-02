@@ -32,7 +32,7 @@
 }
 
 #footer {
-	z-index: 9; // High enough so it covers the floating UI
+	z-index: 8; // High enough so it covers the floating UI
 	clear: both;
 	position: relative;
 	direction: ltr;
@@ -141,32 +141,36 @@
 			&:hover {
 				opacity: 0.7;
 			}
+
+			// Icon styles
+			&[ href*='starcitizen.tools' ] {
+				width: 50px;
+			}
+
+			&[ href*='robertsspaceindustries' ] {
+				width: 50px;
+			}
+
+			&[ href*='gdpr' ] {
+				width: 50px;
+			}
+
+			&[ href*='wikiapiary' ] {
+				width: 95px;
+				margin-bottom: -3px; //dirty fix
+			}
+
+			&[ href*='mediawiki' ] {
+				width: 95px;
+			}
+
+			&[ href*='miraheze' ] {
+				width: 95px;
+			}
+
+			&[ href*='by-sa' ] {
+				width: 110px;
+			}
 		}
-	}
-
-	// Icon styles
-	&-partofico a {
-		width: 50px;
-	}
-
-	&-madebyico a {
-		width: 50px;
-	}
-
-	&-gdprcomplianceico a {
-		width: 50px;
-	}
-
-	&-monitoredbyico a {
-		width: 95px;
-		margin-bottom: -3px; //dirty fix
-	}
-
-	&-poweredbyico a {
-		width: 95px;
-	}
-
-	&-copyrightico a {
-		width: 110px;
 	}
 }

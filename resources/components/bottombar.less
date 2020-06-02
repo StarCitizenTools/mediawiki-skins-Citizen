@@ -14,7 +14,6 @@
 	&-buttons {
 		display: flex;
 		margin: @margin-side;
-		padding: 0 @margin-side / 2;
 		background-color: #7289da; // Discord color
 		border-radius: 100%;
 		.boxshadow(4);
@@ -22,7 +21,7 @@
 
 		.citizen-ui-icon {
 			> a {
-				width: @icon-box-size + @icon-padding;
+				width: @header-height;
 				height: @header-height;
 				display: flex;
 				align-items: center;
@@ -34,6 +33,7 @@
 					.resource-loader-menu-icon;
 					transition: @transition-opacity;
 					opacity: 1;
+					position: relative; // temp override
 				}
 
 				&:hover {

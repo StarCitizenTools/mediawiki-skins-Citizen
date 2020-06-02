@@ -18,6 +18,10 @@
 		top: @header-height + @margin-side + 42px;
 	}
 
+	#content {
+		z-index: 9; // Higher than footer
+	}
+
 	#page-tools {
 		z-index: 1; // Fix collision
 		pointer-events: auto;

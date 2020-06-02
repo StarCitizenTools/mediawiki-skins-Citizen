@@ -10,11 +10,19 @@
 	border: 0;
 	border-radius: 0;
 	.boxshadow(4);
+
+	> div > a > svg {
+		background-color: @base-80;
+	}
 }
 
 @media ( prefers-color-scheme: dark ) {
 	.mwe-popups {
 		background: @dark-bg-50;
+
+		> div > a > svg {
+			background-color: @dark-bg-40;
+		}
 
 		&.mwe-popups-image-tri:after {
 			border-color: @dark-bg-50;
@@ -29,7 +37,53 @@
 			background-image: linear-gradient( to right, rgba( 255, 255, 255, 0 ), @dark-bg-50 50% );
 		}
 
-		&.mwe-popups-no-image-pointer {
+		&.mwe-popups-no-image-tri {
+			&:before {
+				border-top-color: @dark-bg-50;
+			}
+
+			&:after {
+				border-top-color: @dark-bg-50;
+			}
+
+			&.flipped_x {
+				&:before {
+					border-top-color: @dark-bg-50;
+				}
+
+				&:after {
+					border-top-color: @dark-bg-50;
+				}
+			}
+		}
+
+		&.flipped_x.mwe-popups-is-tall {
+			&:before {
+				border-top-color: @dark-bg-50;
+			}
+		}
+
+		&.flipped_x_y {
+			&:before {
+				border-bottom-color: @dark-bg-50;
+			}
+
+			&:after {
+				border-bottom-color: @dark-bg-50;
+			}
+
+			&.mwe-popups-is-tall {
+				&:before {
+					border-bottom-color: @dark-bg-50;
+				}
+
+				&:after {
+					border-bottom-color: @dark-bg-50;
+				}
+			}
+		}
+
+		&.flipped_y {
 			&:before {
 				border-bottom-color: @dark-bg-50;
 			}
