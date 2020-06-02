@@ -63,9 +63,10 @@ class CitizenTemplate extends BaseTemplate {
 			'data-footer' => [
 				'html-userlangattributes' => $this->get( 'userlangattributes', '' ),
 				'html-lastmodified' => $this->getLastMod(),
-				'array-footer-rows' => $this->getTemplateFooterRows(),
 				'msg-citizen-footer-desc' => $this->getMsg( 'citizen-footer-desc' )->text(),
+				'array-footer-rows' => $this->getFooterRows(),
 				'msg-citizen-footer-tagline' => $this->getMsg( 'citizen-footer-tagline' )->text(),
+				'array-footer-icons' => $this->getFooterIconsRow(),
 			],
 
 			'msg-sitetitle' => $this->getMsg( 'sitetitle' )->text(),
@@ -693,12 +694,14 @@ class CitizenTemplate extends BaseTemplate {
 	 * @return string html
 	 */
 	private function getLastMod() {
-		$html = '';
+		$html = null;
 		$footerLinks = $this->getFooterLinks();
 
-		if ( in_array( 'lastmod', $footerLinks['info'] ) ) {
-			$key = array_search( 'lastmod', $footerLinks['info'] );
-			$html = $this->get( $footerLinks['info'][$key], '' );
+		if ( isset( $footerLinks['info'] ) ) {
+			if ( in_array( 'lastmod', $footerLinks['info'] ) ) {
+				$key = array_search( 'lastmod', $footerLinks['info'] );
+				$html = $this->get( $footerLinks['info'][$key], '' );
+			}
 		}
 
 		return $html;
@@ -708,13 +711,37 @@ class CitizenTemplate extends BaseTemplate {
 	 * Get rows that make up the footer
 	 * @return array for use in Mustache template describing the footer elements.
 	 */
-	private function getTemplateFooterRows() : array {
+	private function getFooterRows() : array {
 		$footerRows = [];
-		foreach ( $this->getFooterLinks() as $category => $links ) {
+		$footerLinks = $this->getFooterLinks();
+
+		foreach ( $footerLinks as $category => $links ) {
 			$items = [];
 			$rowId = "footer-$category";
 
-			foreach ( $links as $link ) {
+			// Unset footer-info
+			if ( $category !== 'info' ) {
+				foreach ( $links as $link ) {
+					$items[] = [
+						'id' => "$rowId-$link",
+						'html' => $this->get( $link, '' ),
+					];
+				}
+
+				$footerRows[] = [
+					'id' => $rowId,
+					'className' => '',
+					'array-items' => $items
+				];
+			}
+		}
+
+		// Append footer-info after links
+		if ( isset( $footerLinks['info'] ) ) {
+			$items = [];
+			$rowId = "footer-info";
+
+			foreach ( $footerLinks['info'] as $link ) {
 				// Unset lastmod from footer link
 				if ( $link !== 'lastmod' ) {
 					$items[] = [
@@ -730,6 +757,16 @@ class CitizenTemplate extends BaseTemplate {
 				'array-items' => $items
 			];
 		}
+
+		return $footerRows;
+	}
+
+	/**
+	 * Get footer icons
+	 * @return array for use in Mustache template describing the footer icons.
+	 */
+	private function getFooterIconsRow() : array {
+		$footerRows = [];
 
 		// If footer icons are enabled append to the end of the rows
 		$footerIcons = $this->getFooterIcons( 'icononly' );

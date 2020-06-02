@@ -17,9 +17,16 @@
 }}
 
 <footer id="footer" role="contentinfo" {{{html-userlangattributes}}}>
-	<div class="last-modified-bar">{{{html-lastmodified}}}</div>
-	<div class="footer-content">
-		<div id="footer-sitetitle">{{{msg-sitetitle}}}</div>
+	{{#html-lastmodified}}
+	<div class="last-modified-bar">
+		<div class="last-modified-bar-content">
+			<span class="last-modified-bar-icon"></span>
+			<span class="last-modified-bar-text">{{{.}}}</span>
+		</div>
+	</div>
+	{{/html-lastmodified}}
+	<div id="footer-content">
+		<div id="footer-sitetitle" class="mw-wiki-title">{{{msg-sitetitle}}}</div>
 		<div id="footer-desc">{{{msg-citizen-footer-desc}}}</div>
 		{{#array-footer-rows}}
 		<ul id="{{id}}" class="{{className}}">
@@ -28,6 +35,17 @@
 			{{/array-items}}
 		</ul>
 		{{/array-footer-rows}}
-		<div id="footer-tagline">{{{msg-citizen-footer-tagline}}}</div>
+	</div>
+	<div id="footer-bottom">
+		<div id="footer-bottom-content">
+			<div id="footer-tagline">{{{msg-citizen-footer-tagline}}}</div>
+			{{#array-footer-icons}}
+			<ul id="{{id}}" class="{{className}}">
+				{{#array-items}}
+				<li id="{{id}}">{{{html}}}</li>
+				{{/array-items}}
+			</ul>
+			{{/array-footer-icons}}
+		</div>
 	</div>
 </footer>

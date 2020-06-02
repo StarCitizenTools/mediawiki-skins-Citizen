@@ -336,7 +336,7 @@
 		},
 		"skins.citizen.icons.footer": {
 			"class": "ResourceLoaderImageModule",
-			"selector": "#footer #{name}:before",
+			"selector": ".last-modified-bar-icon",
 			"defaultColor": "#fff",
 			"useDataURI": false,
 			"images": {
