@@ -14,8 +14,12 @@
 		}
 	}
 
-	#mw-sidebar-sitename {
-		top: @header-height + @margin-side + 42px;
+	.mw-sidebar-sitename {
+		margin-top: 42px;
+	}
+
+	#content {
+		z-index: 9; // Higher than footer
 	}
 
 	#content {
