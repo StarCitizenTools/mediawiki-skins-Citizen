@@ -79,6 +79,7 @@
 			padding: @margin-side / 2 @margin-side;
 			max-width: @footer-width;
 			display: flex;
+			flex-wrap: wrap;
 			align-items: center;
 			justify-content: space-between;
 		}
@@ -92,6 +93,7 @@
 	&-places {
 		margin: 0 -@margin-side !important;
 		display: flex;
+		flex-wrap: wrap;
 
 		li a {
 			padding: @margin-side / 2 @margin-side;
@@ -113,7 +115,7 @@
 	}
 
 	&-icons {
-		margin: 0;
+		margin: 0 -@margin-side / 2;
 		display: flex;
 
 		a {
