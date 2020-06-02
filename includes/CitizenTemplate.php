@@ -12,29 +12,106 @@ class CitizenTemplate extends BaseTemplate {
 	 * Outputs the entire contents of the page
 	 */
 	public function execute() {
-		$html = $this->get( 'headelement' );
-		$loggedInClass = 'not-logged';
+		// Naming conventions for Mustache parameters:
+		// - Prefix "is" for boolean values.
+		// - Prefix "msg-" for interface messages.
+		// - Prefix "html-" for raw HTML (in front of other keys, if applicable).
+		// - Prefix "data-" for an array of template parameters that should be passed directly
+		//   to a template partial.
+		// - Prefix "array-" for lists of any values.
+		//
+		// Source of value (first or second segment)
+		// - Segment "page-" for data relating to the current page (e.g. Title, WikiPage, or OutputPage).
+		// - Segment "hook-" for any thing generated from a hook.
+		//   It should be followed by the name of the hook in hyphenated lowercase.
+		//
+		// Conditionally used values must use null to indicate absence (not false or '').
+		$params = [
+			'html-headelement' => $this->get( 'headelement', '' ),
+			'html-sitenotice' => $this->get( 'sitenotice', null ),
+			'html-indicators' => $this->getIndicators(),
+			// From Skin::getNewtalks(). Always returns string, cast to null if empty
+			'html-newtalk' => $this->get( 'newtalk', '' ) ?: null,
+			'page-langcode' => $this->getSkin()->getTitle()->getPageViewLanguage()->getHtmlCode(),
 
-		// Add class if logged in
-		if ( $this->getSkin()->getUser()->isLoggedIn() ) {
-			$loggedInClass = 'logged-in';
-		}
+			// Remember that the string '0' is a valid title.
+			// From OutputPage::getPageTitle, via ::setPageTitle().
+			'html-title' => $this->get( 'title', '' ),
 
-		$html .= Html::rawElement(
-			'div',
-			[ 'class' => $loggedInClass, 'id' => 'mw-wrapper' ],
-			$this->getHeader() .
-			$this->getMainBody() .
-			$this->getFooterBlock() .
-			$this->getSideTitle() .
-			$this->getBottomBar()
-		);
+			'html-prebodyhtml' => $this->get( 'prebodyhtml', '' ),
+			'msg-tagline' => $this->getMsg( 'tagline' )->text(),
+			// TODO: mediawiki/SkinTemplate should expose langCode and langDir properly.
+			'html-userlangattributes' => $this->get( 'userlangattributes', '' ),
+			// From OutputPage::getSubtitle()
+			'html-subtitle' => $this->get( 'subtitle', '' ),
 
-		$html .= $this->getTrail();
-		$html .= Html::closeElement( 'body' );
-		$html .= Html::closeElement( 'html' );
+			// TODO: Use directly Skin::getUndeleteLink() directly.
+			// Always returns string, cast to null if empty.
+			'html-undelete' => $this->get( 'undelete', null ) ?: null,
+
+			// Result of OutputPage::addHTML calls
+			'html-bodycontent' => $this->get( 'bodycontent' ),
+
+			'html-printfooter' => $this->get( 'printfooter', null ),
+			'html-catlinks' => $this->get( 'catlinks', '' ),
+			'html-dataAfterContent' => $this->get( 'dataAfterContent', '' ),
+			// From MWDebug::getHTMLDebugLog (when $wgShowDebug is enabled)
+			'html-debuglog' => $this->get( 'debughtml', '' ),
+
+			// From BaseTemplate::getTrail (handles bottom JavaScript)
+			'html-printtail' => $this->getTrail() . '</body></html>',
+			'data-footer' => [
+				'html-userlangattributes' => $this->get( 'userlangattributes', '' ),
+				'html-lastmodified' => $this->getLastMod(),
+				'msg-citizen-footer-desc' => $this->getMsg( 'citizen-footer-desc' )->text(),
+				'array-footer-rows' => $this->getFooterRows(),
+				'msg-citizen-footer-tagline' => $this->getMsg( 'citizen-footer-tagline' )->text(),
+				'array-footer-icons' => $this->getFooterIconsRow(),
+			],
+
+			'msg-sitetitle' => $this->getMsg( 'sitetitle' )->text(),
+		];
+
+		// TODO: Convert the header to Mustache
+		ob_start();
+
+		$html = $this->getHeader();
 
 		echo $html;
+		$params['html-unported-header'] = ob_get_contents();
+		ob_end_clean();
+
+		// TODO: Convert the page tools to Mustache
+		ob_start();
+
+		$html = $this->getPageTools();
+
+		echo $html;
+		$params['html-unported-pagetools'] = ob_get_contents();
+		ob_end_clean();
+
+		// TODO: Convert the page links to Mustache
+		ob_start();
+
+		$html = $this->getPageLinks();
+
+		echo $html;
+		$params['html-unported-pagelinks'] = ob_get_contents();
+		ob_end_clean();
+
+		// TODO: Convert the rest to Mustache
+		ob_start();
+
+		$html = $this->getSideTitle();
+		$html .= $this->getBottomBar();
+
+		echo $html;
+		$params['html-unported'] = ob_get_contents();
+		ob_end_clean();
+
+		// Prepare and output the HTML response
+		$templates = new TemplateParser( __DIR__ . '/templates' );
+		echo $templates->processTemplate( 'skin', $params );
 	}
 
 	/**
@@ -69,62 +146,6 @@ class CitizenTemplate extends BaseTemplate {
 			);
 
 		return $header . $navigation . $userIconsSearchBar . Html::closeElement( 'header' );
-	}
-
-	/**
-	 * The main body holding all content
-	 *
-	 * @return string Main Body
-	 */
-	protected function getMainBody() {
-		return Html::rawElement(
-			'main',
-			[ 'class' => 'mw-body', 'id' => 'content', 'role' => 'main' ],
-			// Container for compatibility with extensions
-			Html::rawElement(
-				'section',
-				[ 'id' => 'mw-body-container' ],
-				$this->getSiteNotice() .
-				$this->getNewTalk() .
-				$this->getIndicators() .
-				$this->getPageTools() .
-				Html::rawElement(
-					'h1',
-					[ 'class' => 'firstHeading', 'lang' => $this->get( 'pageLanguage' ) ],
-					$this->get( 'title' )
-				) .
-				Html::rawElement(
-					'div',
-					[ 'id' => 'siteSub' ],
-					$this->getMsg( 'tagline' )->parse()
-				) .
-				Html::rawElement(
-					'div',
-					[ 'class' => 'mw-body-content' ],
-					Html::rawElement(
-						'div',
-						[ 'id' => 'contentSub' ],
-						$this->getPageSubtitle() .
-						Html::rawElement(
-							'p',
-							[],
-							$this->get( 'undelete' )
-						)
-					) .
-					$this->get( 'bodycontent' ) .
-					$this->getClear() .
-					Html::rawElement(
-						'div',
-						[ 'class' => 'printfooter' ],
-						$this->get( 'printfooter' )
-					) .
-					$this->getPageLinks() .
-					$this->getCategoryLinks()
-				) .
-				$this->getDataAfterContent() .
-				$this->get( 'debughtml' )
-			)
-		);
 	}
 
 	/**
@@ -294,34 +315,6 @@ class CitizenTemplate extends BaseTemplate {
 		}
 
 		return $html;
-	}
-
-	/**
-	 * Generates the description for footer
-	 * @return string html
-	 */
-	protected function getFooterDesc() {
-		$html = '';
-		$language = $this->getSkin()->getLanguage();
-		$siteDesc = $language->convert( $this->getMsg( 'citizen-footer-desc' )->escaped() );
-
-		return $html . Html::rawElement( 'span', [
-				'id' => 'mw-footer-desc',
-			], $siteDesc );
-	}
-
-	/**
-	 * Generates the tagline for footer
-	 * @return string html
-	 */
-	protected function getFooterTagline() {
-		$html = '';
-		$language = $this->getSkin()->getLanguage();
-		$siteTagline = $language->convert( $this->getMsg( 'citizen-footer-tagline' )->escaped() );
-
-		return $html . Html::rawElement( 'span', [
-				'id' => 'mw-footer-tagline',
-			], $siteTagline );
 	}
 
 	/**
@@ -557,80 +550,6 @@ class CitizenTemplate extends BaseTemplate {
 	}
 
 	/**
-	 * Generates siteNotice, if any
-	 * @return string html
-	 */
-	protected function getSiteNotice() {
-		return $this->getIfExists( 'sitenotice', [
-			'wrapper' => 'div',
-			'parameters' => [ 'id' => 'siteNotice' ],
-		] );
-	}
-
-	/**
-	 * Generates new talk message banner, if any
-	 * @return string html
-	 */
-	protected function getNewTalk() {
-		return $this->getIfExists( 'newtalk', [
-			'wrapper' => 'div',
-			'parameters' => [ 'class' => 'usermessage' ],
-		] );
-	}
-
-	/**
-	 * Generates subtitle stuff, if any
-	 * @return string html
-	 */
-	protected function getPageSubtitle() {
-		return $this->getIfExists( 'subtitle', [ 'wrapper' => 'p' ] );
-	}
-
-	/**
-	 * Generates category links, if any
-	 * @return string html
-	 */
-	protected function getCategoryLinks() {
-		return $this->getIfExists( 'catlinks' );
-	}
-
-	/**
-	 * Generates data after content stuff, if any
-	 * @return string html
-	 */
-	protected function getDataAfterContent() {
-		return $this->getIfExists( 'dataAfterContent' );
-	}
-
-	/**
-	 * Simple wrapper for random if-statement-wrapped $this->data things
-	 *
-	 * @param string $object name of thing
-	 * @param array $setOptions
-	 *
-	 * @return string html
-	 */
-	protected function getIfExists( $object, $setOptions = [] ) {
-		$options = $setOptions + [
-				'wrapper' => 'none',
-				'parameters' => [],
-			];
-
-		$html = '';
-
-		if ( $this->data[$object] ) {
-			if ( $options['wrapper'] === 'none' ) {
-				$html .= $this->get( $object );
-			} else {
-				$html .= Html::rawElement( $options['wrapper'], $options['parameters'],
-					$this->get( $object ) );
-			}
-		}
-
-		return $html;
-	}
-
-	/**
 	 * Generates a block of navigation links with a header
 	 *
 	 * @param string $name
@@ -771,109 +690,106 @@ class CitizenTemplate extends BaseTemplate {
 	}
 
 	/**
-	 * Better renderer for getFooterIcons and getFooterLinks, based on Vector
-	 *
-	 * @param array $setOptions Miscellaneous other options
-	 * * 'id' for footer id
-	 * * 'order' to determine whether icons or links appear first: 'iconsfirst' or links, though in
-	 *   practice we currently only check if it is or isn't 'iconsfirst'
-	 * * 'link-prefix' to set the prefix for all link and block ids; most skins use 'f' or 'footer',
-	 *   as in id='f-whatever' vs id='footer-whatever'
-	 * * 'icon-style' to pass to getFooterIcons: "icononly", "nocopyright"
-	 * * 'link-style' to pass to getFooterLinks: "flat" to disable categorisation of links in a
-	 *   nested array
-	 *
+	 * Get last modified message
 	 * @return string html
 	 */
-	protected function getFooterBlock( $setOptions = [] ) {
-		// Set options and fill in defaults
-		$options = $setOptions + [
-				'id' => 'footer',
-				'order' => 'linksfirst',
-				'link-prefix' => 'footer',
-				'icon-style' => 'icononly',
-				'link-style' => 'flat',
+	private function getLastMod() {
+		$html = null;
+		$footerLinks = $this->getFooterLinks();
+
+		if ( isset( $footerLinks['info'] ) ) {
+			if ( in_array( 'lastmod', $footerLinks['info'] ) ) {
+				$key = array_search( 'lastmod', $footerLinks['info'] );
+				$html = $this->get( $footerLinks['info'][$key], '' );
+			}
+		}
+
+		return $html;
+	}
+
+	/**
+	 * Get rows that make up the footer
+	 * @return array for use in Mustache template describing the footer elements.
+	 */
+	private function getFooterRows() : array {
+		$footerRows = [];
+		$footerLinks = $this->getFooterLinks();
+
+		foreach ( $footerLinks as $category => $links ) {
+			$items = [];
+			$rowId = "footer-$category";
+
+			// Unset footer-info
+			if ( $category !== 'info' ) {
+				foreach ( $links as $link ) {
+					$items[] = [
+						'id' => "$rowId-$link",
+						'html' => $this->get( $link, '' ),
+					];
+				}
+
+				$footerRows[] = [
+					'id' => $rowId,
+					'className' => '',
+					'array-items' => $items
+				];
+			}
+		}
+
+		// Append footer-info after links
+		if ( isset( $footerLinks['info'] ) ) {
+			$items = [];
+			$rowId = "footer-info";
+
+			foreach ( $footerLinks['info'] as $link ) {
+				// Unset lastmod from footer link
+				if ( $link !== 'lastmod' ) {
+					$items[] = [
+						'id' => "$rowId-$link",
+						'html' => $this->get( $link, '' ),
+					];
+				}
+			}
+
+			$footerRows[] = [
+				'id' => $rowId,
+				'className' => '',
+				'array-items' => $items
 			];
-		$validFooterIcons = $this->getFooterIcons( $options['icon-style'] );
-		$validFooterLinks = $this->getFooterLinks( $options['link-style'] );
-		$html = '';
-		$html .= Html::openElement( 'footer', [
-			'id' => $options['id'],
-			'role' => 'contentinfo',
-			'lang' => $this->get( 'userlang' ),
-			'dir' => $this->get( 'dir' ),
-		] );
-		$iconsHTML = '';
-		if ( count( $validFooterIcons ) > 0 ) {
-			$iconsHTML .= Html::openElement( 'div',
-				[ 'id' => "{$options['link-prefix']}-container-icons" ] );
-			$iconsHTML .= Html::openElement( 'div', [ 'id' => 'footer-bottom-container' ] );
-			// Get tagline
-			$iconsHTML .= $this->getFooterTagline();
-			$iconsHTML .= Html::openElement( 'ul', [ 'id' => "{$options['link-prefix']}-icons" ] );
-			foreach ( $validFooterIcons as $blockName => $footerIcons ) {
-				$iconsHTML .= Html::openElement( 'li', [
-					'id' => Sanitizer::escapeIdForAttribute( "{$options['link-prefix']}-{$blockName}ico" ),
-					'class' => 'footer-icons',
-				] );
-				foreach ( $footerIcons as $icon ) {
-					$iconsHTML .= $this->getSkin()->makeFooterIcon( $icon );
+		}
+
+		return $footerRows;
+	}
+
+	/**
+	 * Get footer icons
+	 * @return array for use in Mustache template describing the footer icons.
+	 */
+	private function getFooterIconsRow() : array {
+		$footerRows = [];
+
+		// If footer icons are enabled append to the end of the rows
+		$footerIcons = $this->getFooterIcons( 'icononly' );
+		if ( count( $footerIcons ) > 0 ) {
+			$items = [];
+			foreach ( $footerIcons as $blockName => $blockIcons ) {
+				$html = '';
+				foreach ( $blockIcons as $icon ) {
+					$html .= $this->getSkin()->makeFooterIcon( $icon );
 				}
-				$iconsHTML .= Html::closeElement( 'li' );
+				$items[] = [
+					'id' => 'footer-' . htmlspecialchars( $blockName ) . 'ico',
+					'html' => $html,
+				];
 			}
-			$iconsHTML .= Html::closeElement( 'ul' );
-			$iconsHTML .= Html::closeElement( 'div' );
-			$iconsHTML .= Html::closeElement( 'div' );
+
+			$footerRows[] = [
+				'id' => 'footer-icons',
+				'className' => 'noprint',
+				'array-items' => $items,
+			];
 		}
-		$linksHTML = '';
-		if ( count( $validFooterLinks ) > 0 ) {
-			$linksHTML .= Html::openElement( 'div',
-				[ 'id' => "{$options['link-prefix']}-container-list" ] );
-			if ( $options['link-style'] === 'flat' ) {
-				$linksHTML .= Html::openElement( 'ul', [
-					'id' => "{$options['link-prefix']}-list",
-					'class' => 'footer-places',
-				] );
-				// Site title
-				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitetitle' ],
-					$this->getSiteTitle( 'text' ) );
-				// Site description
-				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'sitedesc' ],
-					$this->getFooterDesc() );
-				foreach ( $validFooterLinks as $link ) {
-					$linksHTML .= Html::rawElement( 'li',
-						[ 'id' => Sanitizer::escapeIdForAttribute( $link ) ], $this->get( $link ) );
-				}
-				$linksHTML .= Html::closeElement( 'ul' );
-			} else {
-				$linksHTML .= Html::openElement( 'div',
-					[ 'id' => "{$options['link-prefix']}-list" ] );
-				foreach ( $validFooterLinks as $category => $links ) {
-					$linksHTML .= Html::openElement( 'ul', [
-						'id' => Sanitizer::escapeIdForAttribute( "{$options['link-prefix']}-{$category}" ),
-					] );
-					foreach ( $links as $link ) {
-						$linksHTML .= Html::rawElement( 'li', [
-							'id' => Sanitizer::escapeIdForAttribute( "{$options['link-prefix']}-{$category}-{$link}" ),
-						], $this->get( $link ) );
-					}
-					$linksHTML .= Html::closeElement( 'ul' );
-				}
-				// Site title
-				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'footer-sitetitle' ],
-					$this->getSiteTitle( 'text' ) );
-				// Site logo
-				$linksHTML .= Html::rawElement( 'li', [ 'id' => 'footer-sitelogo' ],
-					$this->getLogo() );
-				$linksHTML .= Html::closeElement( 'div' );
-			}
-			$linksHTML .= Html::closeElement( 'div' );
-		}
-		if ( $options['order'] === 'iconsfirst' ) {
-			$html .= $iconsHTML . $linksHTML;
-		} else {
-			$html .= $linksHTML . $iconsHTML;
-		}
-		return $html . $this->getClear() . Html::closeElement( 'footer' );
+
+		return $footerRows;
 	}
 }

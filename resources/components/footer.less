@@ -3,10 +3,37 @@
 // https://starcitizen.tools
 //
 
+.last-modified-bar {
+	background: @color-footer-background-60;
+
+	&-content {
+		margin: 0 auto;
+		padding: 12px @margin-side;
+		width: 100%;
+		max-width: @footer-width;
+		display: flex;
+		align-items: center;
+	}
+
+	&-icon {
+		margin-right: @icon-padding;
+		width: 20px;
+		height: 20px;
+		background-repeat: no-repeat;
+		background-position: center;
+		opacity: @opacity-icon;
+	}
+
+	&-text {
+		a {
+			margin-right: 5px;
+		}
+	}
+}
+
 #footer {
 	z-index: 8; // High enough so it covers the floating UI
-	overflow: hidden; //stop background hacks from destroying viewbox
-	width: 100vw;
+	clear: both;
 	position: relative;
 	direction: ltr;
 	margin-top: @margin-side * 2;
@@ -26,218 +53,124 @@
 		}
 	}
 
-	ul,
-	li {
-		margin: 0;
-	}
-
 	li {
 		list-style: none;
 	}
 
-	div {
-		display: flex;
-	}
-
-	// Bless Flexbox for saving me from PHP nightmare
-	// OPTIMIZE: Implement nightmare
-	&-list {
-		margin: 0 auto !important;
+	&-content {
+		margin: @margin-side * 2.5 auto 0 auto;
+		padding: 0 @margin-side;
 		max-width: @footer-width;
 		display: flex;
-		flex-wrap: wrap;
+		flex-direction: column;
 
-		> li {
-			position: relative;
-			padding-left: @margin-side;
-			padding-right: @margin-side;
-		}
-
-		#lastmod {
-			order: -1;
-			padding-top: 12px;
-			padding-bottom: 12px;
-			display: flex;
-
-			a {
-				margin-right: 5px;
-			}
-
-			// Change icon
-			&:before {
-				margin-right: @icon-padding;
-				.resource-loader-list-icon;
-				opacity: @opacity-icon;
-			}
-
-			// Background
-			&:after {
-				content: '';
-				background-color: @color-footer-background-60;
-				height: 100%;
-				width: 600vw; // so long so it is always there
-				top: 0;
-				margin: 0 -100vw; // so long so you can't see the end
-				display: block;
-				z-index: -1;
-				position: absolute;
-				overflow: hidden; // now you literally can't see the end
-			}
-		}
-
-		#sitelogo {
-			order: 2;
-		}
-
-		#sitetitle {
-			order: 3;
-			width: 100%;
-			margin-top: @margin-side * 3;
-			margin-bottom: @margin-side / 2;
-
-			.mw-wiki-title {
-				color: @base-90;
-				font-size: 20px;
-			}
-		}
-
-		#sitedesc {
-			order: 4;
-			margin-top: @margin-side / 2;
-		}
-
-		#about {
-			order: 10;
-		}
-
-		#privacy {
-			order: 11;
-		}
-
-		#disclaimer {
-			order: 12;
-		}
-
-		#cookiestatement {
-			order: 13;
-		}
-
-		#termsofservice {
-			order: 14;
-		}
-
-		#about,
-		#privacy,
-		#disclaimer,
-		#cookiestatement,
-		#termsofservice,
-		#mobileview {
-			margin: 0;
-			padding: 0;
-
-			a {
-				padding: @margin-side / 2 @margin-side;
-				display: block;
-			}
-		}
-
-		#sitedesc,
-		#copyright {
-			margin-bottom: @margin-side / 2;
-			width: 100%;
-		}
-
-		#copyright {
-			margin-top: @margin-side;
-			order: 20;
-			opacity: 0.5;
-			font-size: 12px;
+		> ul,
+		> div {
+			margin: @margin-side / 2 0;
 		}
 	}
 
-	&-container-icons {
-		margin-top: @margin-side * 2;
+	&-bottom {
+		margin-top: @margin-side * 1.5;
 		background-color: @color-footer-background-40;
 
-		#footer-bottom-container {
+		&-content {
 			margin: 0 auto;
-			padding: @margin-side / 2 0;
-			width: 100%;
+			padding: @margin-side / 2 @margin-side;
 			max-width: @footer-width;
 			display: flex;
 			flex-wrap: wrap;
 			align-items: center;
 			justify-content: space-between;
-
-			#mw-footer-tagline {
-				padding: 10px 20px;
-			}
-
-			#footer-icons {
-				padding: 0 10px;
-				display: flex;
-				align-items: center;
-				flex-wrap: wrap;
-
-				a {
-					padding: 15px 10px;
-					height: 50px;
-					display: block;
-					opacity: 0.5;
-					transition: @transition-opacity;
-
-					&:before {
-						content: '';
-						.resource-loader-icon;
-						display: block;
-						background-size: contain;
-					}
-
-					&:hover {
-						opacity: 0.7;
-					}
-
-					img {
-						display: none; // hide placeholder images
-					}
-				}
-
-				li {
-					display: flex;
-				}
-			}
 		}
 	}
 
-	// Icon styles
-	.footer-icons {
-		a[ href*='starcitizen.tools' ] {
-			width: 50px;
-		}
+	&-sitetitle {
+		color: @base-90;
+		font-size: 20px;
+	}
 
-		a[ href*='robertsspaceindustries' ] {
-			width: 50px;
-		}
+	&-places {
+		margin: 0 -@margin-side !important;
+		display: flex;
+		flex-wrap: wrap;
 
-		a[ href*='gdpr' ] {
-			width: 50px;
+		li a {
+			padding: @margin-side / 2 @margin-side;
+			display: block;
 		}
+	}
 
-		a[ href*='wikiapiary' ] {
-			width: 95px;
-			margin-bottom: -3px; //dirty fix
+	&-info {
+		opacity: 0.5;
+		font-size: 12px;
+
+		li {
+			margin: @margin-side / 2 0;
 		}
+	}
 
-		a[ href*='mediawiki' ] {
-			width: 95px;
-		}
+	&-tagline {
+		padding: @margin-side / 2 0;
+	}
 
-		a[ href*='miraheze' ] {
-			width: 95px;
-		}
+	&-icons {
+		margin: 0 -@margin-side / 2;
+		display: flex;
 
-		a[ href*='by-sa' ] {
-			width: 110px;
+		a {
+			padding: @margin-side * 0.75 @margin-side / 2;
+			height: 50px; // CSS hack to force SVG icon to appear
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			opacity: 0.5;
+			transition: @transition-opacity;
+
+			img {
+				display: none; // Hack to hide original icons
+			}
+
+			&:before {
+				content: '';
+				.resource-loader-icon;
+				display: block;
+				background-size: contain;
+			}
+
+			&:hover {
+				opacity: 0.7;
+			}
+
+			// Icon styles
+			&[ href*='starcitizen.tools' ] {
+				width: 50px;
+			}
+
+			&[ href*='robertsspaceindustries' ] {
+				width: 50px;
+			}
+
+			&[ href*='gdpr' ] {
+				width: 50px;
+			}
+
+			&[ href*='wikiapiary' ] {
+				width: 95px;
+				margin-bottom: -3px; //dirty fix
+			}
+
+			&[ href*='mediawiki' ] {
+				width: 95px;
+			}
+
+			&[ href*='miraheze' ] {
+				width: 95px;
+			}
+
+			&[ href*='by-sa' ] {
+				width: 110px;
+			}
 		}
 	}
 }

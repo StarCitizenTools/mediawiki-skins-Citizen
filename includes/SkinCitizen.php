@@ -212,6 +212,9 @@ class SkinCitizen extends SkinTemplate {
 	public function getDefaultModules() {
 		$modules = parent::getDefaultModules();
 
+		// Dequeue default content modules (toc, sortable, collapsible, etc.)
+		$modules['content'] = [];
+
 		// Replace the search module
 		$modules['search'] = 'skins.citizen.search.scripts';
 

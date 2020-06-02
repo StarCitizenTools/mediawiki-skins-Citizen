@@ -1,7 +1,7 @@
 {
 	"name": "Citizen",
 	"namemsg": "skinname-citizen",
-	"version": "0.7.5",
+	"version": "0.8.0",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
@@ -186,7 +186,6 @@
 	"ResourceModules": {
 		"skins.citizen.styles": {
 			"class": "ResourceLoaderSkinModule",
-			"features": [ "elements", "content", "interface", "logo" ],
 			"targets": [
 				"desktop",
 				"mobile"
@@ -337,7 +336,7 @@
 		},
 		"skins.citizen.icons.footer": {
 			"class": "ResourceLoaderImageModule",
-			"selector": "#footer #{name}:before",
+			"selector": ".last-modified-bar-icon",
 			"defaultColor": "#fff",
 			"useDataURI": false,
 			"images": {
@@ -346,7 +345,7 @@
 		},
 		"skins.citizen.icons.badges": {
 			"class": "ResourceLoaderImageModule",
-			"selector": ".footer-icons a[href*='{name}']:before",
+			"selector": "#footer-icons a[href*='{name}']:before",
 			"defaultColor": "#fff",
 			"useDataURI": false,
 			"images": {
