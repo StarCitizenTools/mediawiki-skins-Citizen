@@ -17,6 +17,7 @@ html {
 html,
 body {
 	min-height: 100%;
+	overflow-x: hidden; // prevent overflow from scrollbar
 	margin: 0;
 	padding: 0;
 	background: @base-100;
@@ -218,11 +219,6 @@ a {
 /*
  * Content
 */
-
-#mw-wrapper {
-	overflow: hidden;
-}
-
 .mw-body,
 .parsoid-body {
 	margin-top: @header-height + @margin-side;
@@ -849,11 +845,6 @@ a {
 	margin: 0;
 }
 
-// Hide edit button when user is not logged in
-.not-logged .mw-editsection {
-	display: none !important;
-}
-
 @media only screen and ( max-width: @screen0 ) {
 	div.tnone,
 	div.floatnone,
@@ -1068,12 +1059,3 @@ a {
 		margin-right: @negative-margin !important;
 	}
 }
-
-/*
-// Logged in styles
-.not-logged {
-    .mw-editsection {
-        display: none!important; // Hide edit icons when not logged in
-    }
-}
-*/

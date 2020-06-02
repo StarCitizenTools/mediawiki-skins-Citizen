@@ -1,0 +1,33 @@
+ {{!
+	@typedef object footerItem
+	@prop string id of list item element
+	@prop string html of list item
+	@prop footerItem[] items
+
+	@typedef object footerRow
+	@prop string className of list element
+	@prop string id of list element
+	@prop footerItem[] array-items
+
+	string|null html-userlangattributes a string of attribute HTML
+	footerRow[] array-footer-rows iterable list of footer rows
+	string msg-sitetitle
+	string msg-citizen-footer-desc
+	string msg-citizen-footer-tagline
+}}
+
+<footer id="footer" role="contentinfo" {{{html-userlangattributes}}}>
+	<div class="last-modified-bar">{{{html-lastmodified}}}</div>
+	<div class="footer-content">
+		<div id="footer-sitetitle">{{{msg-sitetitle}}}</div>
+		<div id="footer-desc">{{{msg-citizen-footer-desc}}}</div>
+		{{#array-footer-rows}}
+		<ul id="{{id}}" class="{{className}}">
+			{{#array-items}}
+			<li id="{{id}}">{{{html}}}</li>
+			{{/array-items}}
+		</ul>
+		{{/array-footer-rows}}
+		<div id="footer-tagline">{{{msg-citizen-footer-tagline}}}</div>
+	</div>
+</footer>
