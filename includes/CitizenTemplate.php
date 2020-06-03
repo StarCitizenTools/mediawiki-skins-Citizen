@@ -63,6 +63,7 @@ class CitizenTemplate extends BaseTemplate {
 			'data-footer' => [
 				'html-userlangattributes' => $this->get( 'userlangattributes', '' ),
 				'html-lastmodified' => $this->getLastMod(),
+				'msg-sitetitle' => $this->getMsg( 'sitetitle' )->text(),
 				'msg-citizen-footer-desc' => $this->getMsg( 'citizen-footer-desc' )->text(),
 				'array-footer-rows' => $this->getFooterRows(),
 				'msg-citizen-footer-tagline' => $this->getMsg( 'citizen-footer-tagline' )->text(),
@@ -71,7 +72,6 @@ class CitizenTemplate extends BaseTemplate {
 
 			'msg-sitetitle' => $this->getMsg( 'sitetitle' )->text(),
 			'main-page-href' => Skin::makeMainPageUrl(),
-			'main-page-tooltip' => Linker::tooltipAndAccesskeyAttribs( 'p-logo' ),
 		];
 
 		// TODO: Convert the header to Mustache

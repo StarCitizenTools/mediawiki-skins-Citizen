@@ -30,7 +30,7 @@
 		<div id="footer-sitetitle" class="mw-wiki-title">{{{msg-sitetitle}}}</div>
 		<div id="footer-desc">{{{msg-citizen-footer-desc}}}</div>
 		{{#array-footer-rows}}
-		<ul id="{{id}}" class="{{className}}">
+		<ul id="{{id}}" {{#className}}class="{{.}}"{{/className}}>
 			{{#array-items}}
 			<li id="{{id}}">{{{html}}}</li>
 			{{/array-items}}
@@ -41,7 +41,7 @@
 		<div id="footer-bottom-content">
 			<div id="footer-tagline">{{{msg-citizen-footer-tagline}}}</div>
 			{{#array-footer-icons}}
-			<ul id="{{id}}" class="{{className}}">
+			<ul id="{{id}}" {{#className}}class="{{.}}"{{/className}}>
 				{{#array-items}}
 				<li id="{{id}}">{{{html}}}</li>
 				{{/array-items}}
