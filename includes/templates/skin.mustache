@@ -21,6 +21,8 @@
 	string html-debuglog
 	string html-dataAfterContent
 	object data-footer for footer template partial. see Footer.mustache for documentation.
+	string html-mainpage-attributes
+	string msg-sitetitle
 	string html-printtail HTML to render at the end of the page contained necessary script tags for
 		ResourceLoader terminated with `</body></html>`.
 }}
@@ -52,7 +54,7 @@
 </main>
 {{#data-footer}}{{>Footer}}{{/data-footer}}
 <div class="mw-sidebar-sitename" role="banner">
-	<a class="mw-wiki-title" href="{{{main-page-href}}}">{{{msg-sitetitle}}}</a>
+	<a class="mw-wiki-title" {{{html-mainpage-attributes}}}>{{{msg-sitetitle}}}</a>
 </div>
 {{{html-unported}}}
 {{{html-printtail}}}

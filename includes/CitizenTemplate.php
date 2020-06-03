@@ -71,7 +71,11 @@ class CitizenTemplate extends BaseTemplate {
 			],
 
 			'msg-sitetitle' => $this->getMsg( 'sitetitle' )->text(),
-			'main-page-href' => Skin::makeMainPageUrl(),
+			'html-mainpage-attributes' => Xml::expandAttributes(
+				Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) + [
+					'href' => Skin::makeMainPageUrl(),
+				]
+			),
 		];
 
 		// TODO: Convert the header to Mustache
