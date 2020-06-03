@@ -53,6 +53,12 @@
 		}
 	}
 
+	ul {
+		margin: 0;
+		display: flex;
+    	flex-wrap: wrap;
+	}
+
 	li {
 		list-style: none;
 	}
@@ -65,11 +71,6 @@
 		max-width: @footer-width;
 		display: flex;
 		flex-direction: column;
-
-		> ul,
-		> div {
-			margin: @margin-side / 2 0;
-		}
 	}
 
 	&-bottom {
@@ -88,8 +89,13 @@
 	}
 
 	&-sitetitle {
+		margin: @margin-side / 2 0;
 		color: @base-90;
 		font-size: 20px;
+	}
+
+	&-desc {
+		margin: @margin-side / 2 0;
 	}
 
 	&-places {
@@ -104,6 +110,7 @@
 	}
 
 	&-info {
+		margin-top: @margin-side / 2;
 		opacity: 0.5;
 		font-size: 12px;
 
