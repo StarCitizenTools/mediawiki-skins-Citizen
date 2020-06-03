@@ -78,13 +78,29 @@ class CitizenTemplate extends BaseTemplate {
 			),
 		];
 
-		// TODO: Convert the header to Mustache
+		// TODO: Convert the rest of the header to Mustache
 		ob_start();
 
-		$html = $this->getHeader();
+		$html = $this->getHamburgerMenu();
 
 		echo $html;
-		$params['html-unported-header'] = ob_get_contents();
+		$params['html-unported-hamburgermenu'] = ob_get_contents();
+		ob_end_clean();
+
+		ob_start();
+
+		$html = $this->getUserIcons();
+
+		echo $html;
+		$params['html-unported-usericons'] = ob_get_contents();
+		ob_end_clean();
+
+		ob_start();
+
+		$html = $this->getSearch();
+
+		echo $html;
+		$params['html-unported-search'] = ob_get_contents();
 		ob_end_clean();
 
 		// TODO: Convert the page tools to Mustache
@@ -117,40 +133,6 @@ class CitizenTemplate extends BaseTemplate {
 		// Prepare and output the HTML response
 		$templates = new TemplateParser( __DIR__ . '/templates' );
 		echo $templates->processTemplate( 'skin', $params );
-	}
-
-	/**
-	 * The header containing the mobile site navigation and user icons + search
-	 *
-	 * @return string Header
-	 */
-	protected function getHeader() {
-		$header =
-			Html::openElement( 'header',
-				[ 'class' => 'mw-header-container', 'id' => 'mw-navigation' ] );
-
-		// Site navigation menu
-		$navigation =
-			Html::rawElement(
-				'div',
-				[ 'class' => 'mw-header-icons' ],
-				$this->getHamburgerMenu()
-			);
-
-		// User icons and Search bar
-		$userIconsSearchBar =
-			Html::rawElement(
-				'div',
-				[ 'class' => 'mw-header-icons' ],
-				Html::rawElement(
-					'div',
-					[ 'class' => 'mw-header', 'id' => 'user-icons' ],
-					$this->getUserIcons()
-				) .
-				$this->getSearchToggle()
-			);
-
-		return $header . $navigation . $userIconsSearchBar . Html::closeElement( 'header' );
 	}
 
 	/**
@@ -196,61 +178,12 @@ class CitizenTemplate extends BaseTemplate {
 	}
 
 	/**
-	 * Generates the search button
-	 * @return string html
-	 */
-	protected function getSearchToggle() {
-		return Html::rawElement(
-			'div',
-			[ 'class' => 'mw-header-end', 'id' => 'site-search' ],
-			Html::rawElement(
-				'input',
-				[
-					'type' => 'checkbox',
-					'role' => 'button',
-					'title' => 'Toggle Search',
-					'id' => 'search-toggle',
-				]
-			) .
-			// Search button
-			Html::rawElement(
-				'div',
-				[ 'id' => 'search-toggle-icon-container' ],
-				Html::rawElement(
-					'div',
-					[ 'id' => 'search-toggle-icon' ]
-				)
-			) .
-			// Search form
-			$this->getSearch()
-		);
-	}
-
-	/**
 	 * Generates the hamburger menu
 	 * @return string html
 	 */
 	protected function getHamburgerMenu() {
-		$html = Html::openElement(
-			'div',
-			[ 'class' => 'mw-header-end mw-header-menu' ]
-		);
-
-		$html .= Html::rawElement(
-			'input',
-			[ 'type' => 'checkbox', 'role' => 'button', 'title' => 'Toggle Menu' ]
-		);
-
-		// Actual hamburger
-		$html .= Html::openElement( 'div', [ 'class' => 'mw-header-menu-toggle' ] );
-
-		for ( $i = 1; $i <= 3; $i++ ) {
-			$html .= Html::rawElement( 'span' );
-		}
-		$html .= Html::closeElement( 'div' );
-
 		// Get sidebar links
-		$html .= Html::rawElement(
+		$html = Html::rawElement(
 			'div',
 			[ 'class' => 'mw-header-menu-drawer' ],
 			Html::rawElement(
@@ -272,7 +205,7 @@ class CitizenTemplate extends BaseTemplate {
 			)
 		);
 
-		return $html . Html::closeElement( 'div' );
+		return $html;
 	}
 
 	/**
