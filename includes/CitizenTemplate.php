@@ -70,6 +70,7 @@ class CitizenTemplate extends BaseTemplate {
 			],
 
 			'msg-sitetitle' => $this->getMsg( 'sitetitle' )->text(),
+			'main-page-href' => Skin::makeMainPageUrl(),
 		];
 
 		// TODO: Convert the header to Mustache
@@ -102,8 +103,7 @@ class CitizenTemplate extends BaseTemplate {
 		// TODO: Convert the rest to Mustache
 		ob_start();
 
-		$html = $this->getSideTitle();
-		$html .= $this->getBottomBar();
+		$html = $this->getBottomBar();
 
 		echo $html;
 		$params['html-unported'] = ob_get_contents();
@@ -146,19 +146,6 @@ class CitizenTemplate extends BaseTemplate {
 			);
 
 		return $header . $navigation . $userIconsSearchBar . Html::closeElement( 'header' );
-	}
-
-	/**
-	 * The rotated site title
-	 *
-	 * @return string
-	 */
-	protected function getSideTitle() {
-		return Html::rawElement(
-			'div',
-			[ 'class' => 'mw-sidebar-sitename', 'role' => 'banner' ],
-			$this->getSiteTitle( 'link' )
-		);
 	}
 
 	/**
