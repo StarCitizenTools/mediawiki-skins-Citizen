@@ -12,6 +12,41 @@ class CitizenTemplate extends BaseTemplate {
 	 * Outputs the entire contents of the page
 	 */
 	public function execute() {
+		// TODO: Convert the rest of the header to Mustache
+		ob_start();
+
+		$html = $this->getHamburgerMenu();
+
+		echo $html;
+		$htmlUnportedHamburgermenu = ob_get_contents();
+		ob_end_clean();
+
+		ob_start();
+
+		$html = $this->getUserIcons();
+
+		echo $html;
+		$htmlUnportedUsericons = ob_get_contents();
+		ob_end_clean();
+
+		// TODO: Convert the page tools to Mustache
+		ob_start();
+
+		$html = $this->getPageTools();
+
+		echo $html;
+		$params['html-unported-pagetools'] = ob_get_contents();
+		ob_end_clean();
+
+		// TODO: Convert the page links to Mustache
+		ob_start();
+
+		$html = $this->getPageLinks();
+
+		echo $html;
+		$params['html-unported-pagelinks'] = ob_get_contents();
+		ob_end_clean();
+
 		// Naming conventions for Mustache parameters:
 		// - Prefix "is" for boolean values.
 		// - Prefix "msg-" for interface messages.
@@ -29,8 +64,14 @@ class CitizenTemplate extends BaseTemplate {
 		$params = [
 			'html-headelement' => $this->get( 'headelement', '' ),
 
-			'msg-citizen-header-menu-toggle' => $this->getMsg( 'citizen-header-menu-toggle' )->text(),
-			'msg-citizen-header-search-toggle' => $this->getMsg( 'citizen-header-search-toggle' )->text(),
+			'data-header' => [
+				'msg-citizen-header-menu-toggle' => $this->getMsg( 'citizen-header-menu-toggle' )->text(),
+				'msg-citizen-header-search-toggle' => $this->getMsg( 'citizen-header-search-toggle' )->text(),
+				'data-searchbox' => $this->buildSearchbox(),
+
+				'html-unported-hamburgermenu' => $htmlUnportedHamburgermenu,
+				'html-unported-usericons' => $htmlUnportedUsericons,
+			],
 
 			'html-sitenotice' => $this->get( 'sitenotice', null ),
 			'html-indicators' => $this->getIndicators(),
@@ -85,52 +126,32 @@ class CitizenTemplate extends BaseTemplate {
 			'data-bottombar' => $this->buildBottombar(),
 		];
 
-		// TODO: Convert the rest of the header to Mustache
-		ob_start();
-
-		$html = $this->getHamburgerMenu();
-
-		echo $html;
-		$params['html-unported-hamburgermenu'] = ob_get_contents();
-		ob_end_clean();
-
-		ob_start();
-
-		$html = $this->getUserIcons();
-
-		echo $html;
-		$params['html-unported-usericons'] = ob_get_contents();
-		ob_end_clean();
-
-		ob_start();
-
-		$html = $this->getSearch();
-
-		echo $html;
-		$params['html-unported-search'] = ob_get_contents();
-		ob_end_clean();
-
-		// TODO: Convert the page tools to Mustache
-		ob_start();
-
-		$html = $this->getPageTools();
-
-		echo $html;
-		$params['html-unported-pagetools'] = ob_get_contents();
-		ob_end_clean();
-
-		// TODO: Convert the page links to Mustache
-		ob_start();
-
-		$html = $this->getPageLinks();
-
-		echo $html;
-		$params['html-unported-pagelinks'] = ob_get_contents();
-		ob_end_clean();
-
 		// Prepare and output the HTML response
 		$templates = new TemplateParser( __DIR__ . '/templates' );
 		echo $templates->processTemplate( 'skin', $params );
+	}
+
+	/**
+	 * Render the search box
+	 * TODO: Use standardized classes and IDs
+	 * @return array
+	 */
+	private function buildSearchbox() : array {
+		$config = $this->config;
+		$props = [
+			'form-action' => $config->get( 'Script' ),
+			'html-input' => $this->makeSearchInput( [ 'id' => 'search-input' ] ),
+			'html-button-search' => $this->makeSearchButton(
+				'image',
+				[ 
+					'id' => 'search-button',
+					'src' => $this->getSkin()->getSkinStylePath( 'resources/images/icons/search.svg' ),
+				]
+			),
+			'msg-search' => $this->msg( 'search' ),
+			'page-title' => SpecialPage::getTitleFor( 'Search' )->getPrefixedDBkey(),
+		];
+		return $props;
 	}
 
 	/**
@@ -232,31 +253,6 @@ class CitizenTemplate extends BaseTemplate {
 	}
 
 	/**
-	 * Generates the search form
-	 * In order to use the old opensearch, change search-input to searchInput
-	 * See T219590 for more details
-	 * @return string html
-	 */
-	protected function getSearch() {
-		$html = Html::openElement( 'form', [
-			'action' => $this->get( 'wgScript' ),
-			'role' => 'search',
-			'id' => 'search-form',
-			'autocomplete' => 'off',
-		] );
-		$html .= Html::hidden( 'title', $this->get( 'searchtitle' ) );
-		$html .= Html::label( $this->getMsg( 'search' )->text(), 'search-input',
-			[ 'class' => 'screen-reader-text' ] );
-		$html .= $this->makeSearchInput( [ 'id' => 'search-input', 'type' => 'search' ] );
-		$html .= $this->makeSearchButton( 'image', [
-			'id' => 'search-button',
-			'src' => $this->getSkin()->getSkinStylePath( 'resources/images/icons/search.svg' ),
-		] );
-
-		return $html . Html::closeElement( 'form' );
-	}
-
-	/**
 	 * Generates the sidebar
 	 * Set the elements to true to allow them to be part of the sidebar
 	 * Or get rid of this entirely, and take the specific bits to use wherever you actually want them
@@ -270,7 +266,6 @@ class CitizenTemplate extends BaseTemplate {
 		$html = '';
 
 		$sidebar = $this->getSidebar();
-		$sidebar['SEARCH'] = false;
 		$sidebar['TOOLBOX'] = true;
 		$sidebar['LANGUAGES'] = false;
 
@@ -282,9 +277,6 @@ class CitizenTemplate extends BaseTemplate {
 			$name = (string)$name;
 
 			switch ( $name ) {
-				case 'SEARCH':
-					$html .= $this->getSearch();
-					break;
 				case 'TOOLBOX':
 					$html .= $this->getPortlet( 'tb', $this->getToolbox(), 'toolbox' );
 					break;
