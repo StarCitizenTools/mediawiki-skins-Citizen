@@ -28,6 +28,10 @@ class CitizenTemplate extends BaseTemplate {
 		// Conditionally used values must use null to indicate absence (not false or '').
 		$params = [
 			'html-headelement' => $this->get( 'headelement', '' ),
+
+			'msg-citizen-header-menu-toggle' => $this->getMsg( 'citizen-header-menu-toggle' )->text(),
+			'msg-citizen-header-search-toggle' => $this->getMsg( 'citizen-header-search-toggle' )->text(),
+
 			'html-sitenotice' => $this->get( 'sitenotice', null ),
 			'html-indicators' => $this->getIndicators(),
 			// From Skin::getNewtalks(). Always returns string, cast to null if empty
@@ -60,6 +64,7 @@ class CitizenTemplate extends BaseTemplate {
 
 			// From BaseTemplate::getTrail (handles bottom JavaScript)
 			'html-printtail' => $this->getTrail() . '</body></html>',
+
 			'data-footer' => [
 				'html-userlangattributes' => $this->get( 'userlangattributes', '' ),
 				'html-lastmodified' => $this->getLastMod(),

@@ -11,6 +11,9 @@
 	"citizen.css": "/* All CSS here will be loaded for users of the Citizen skin */",
 	"citizen.js": "/* All JavaScript here will be loaded for users of the Citizen skin */",
 
+	"citizen-header-menu-toggle": "Toggle menu",
+	"citizen-header-search-toggle": "Toggle search",
+
 	"citizen-footer-desc": "Edit this text on MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Edit this text on MediaWiki:Citizen-footer-tagline",
 
