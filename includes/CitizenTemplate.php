@@ -143,8 +143,7 @@ class CitizenTemplate extends BaseTemplate {
 			'html-input' => $this->makeSearchInput( [ 'id' => 'search-input' ] ),
 			'html-button-search' => $this->makeSearchButton(
 				'image',
-				[ 
-					'id' => 'search-button',
+				[ 'id' => 'search-button',
 					'src' => $this->getSkin()->getSkinStylePath( 'resources/images/icons/search.svg' ),
 				]
 			),
