@@ -3,7 +3,7 @@
 // https://starcitizen.tools
 //
 
-#mw-bottombar {
+.mw-bottombar {
 	position: fixed;
 	bottom: 0;
 	display: flex;
@@ -47,12 +47,12 @@
 }
 
 // Movable navigation bar
-.nav-up ~ #mw-bottombar {
+.nav-up ~ .mw-bottombar {
 	transform: none;
 }
 
 @media only screen and ( max-width: @screen0 ) {
-	#mw-bottombar {
+	.mw-bottombar {
 		display: none;
 	}
 }

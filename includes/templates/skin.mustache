@@ -23,6 +23,7 @@
 	object data-footer for footer template partial. see Footer.mustache for documentation.
 	string html-mainpage-attributes
 	string msg-sitetitle
+	object data-bottombar for bottom template partial. see Bottombar.mustache for documentation.
 	string html-printtail HTML to render at the end of the page contained necessary script tags for
 		ResourceLoader terminated with `</body></html>`.
 }}
@@ -56,5 +57,5 @@
 <aside class="mw-sidebar-sitename">
 	<a class="mw-wiki-title" {{{html-mainpage-attributes}}}>{{{msg-sitetitle}}}</a>
 </aside>
-{{{html-unported}}}
+{{#data-bottombar}}{{>Bottombar}}{{/data-bottombar}}
 {{{html-printtail}}}

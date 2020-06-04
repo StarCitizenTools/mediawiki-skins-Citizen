@@ -81,6 +81,8 @@ class CitizenTemplate extends BaseTemplate {
 					'href' => Skin::makeMainPageUrl(),
 				]
 			),
+
+			'data-bottombar' => $this->buildBottombar(),
 		];
 
 		// TODO: Convert the rest of the header to Mustache
@@ -126,25 +128,18 @@ class CitizenTemplate extends BaseTemplate {
 		$params['html-unported-pagelinks'] = ob_get_contents();
 		ob_end_clean();
 
-		// TODO: Convert the rest to Mustache
-		ob_start();
-
-		$html = $this->getBottomBar();
-
-		echo $html;
-		$params['html-unported'] = ob_get_contents();
-		ob_end_clean();
-
 		// Prepare and output the HTML response
 		$templates = new TemplateParser( __DIR__ . '/templates' );
 		echo $templates->processTemplate( 'skin', $params );
 	}
 
 	/**
-	 * Generates the bottom bar
-	 * @return string html
+	 * Render the bottom bar
+	 * TODO: Convert button text to i18n message.
+	 * TODO: Refactor the bottom bar to be customizable
+	 * @return array
 	 */
-	protected function getBottomBar() {
+	private function buildBottombar() {
 		try {
 			$buttonEnabled = $this->config->get( 'CitizenEnableButton' );
 			$buttonLink = $this->config->get( 'CitizenButtonLink' );
@@ -158,28 +153,11 @@ class CitizenTemplate extends BaseTemplate {
 			return '';
 		}
 
-		return Html::rawElement(
-			'div',
-			[ 'id' => 'mw-bottombar' ],
-			Html::rawElement(
-		'div',
-				[ 'id' => 'mw-bottombar-buttons' ],
-				Html::rawElement(
-					'div',
-					[ 'class' => 'citizen-ui-icon', 'id' => 'citizen-ui-button' ],
-					Html::rawElement(
-						'a',
-						[
-							'href' => $buttonLink,
-							'title' => $buttonTitle,
-							'rel' => 'noopener noreferrer',
-							'target' => '_blank',
-						],
-						$buttonText
-					)
-				)
-			)
-		);
+		return [
+			'html-citizen-bottombar-button-href' => $buttonLink,
+			'html-citizen-bottombar-button-title' => $buttonTitle,
+			'html-citizen-bottombar-button-text' => $buttonText
+		];
 	}
 
 	/**
