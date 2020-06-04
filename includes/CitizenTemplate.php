@@ -12,15 +12,7 @@ class CitizenTemplate extends BaseTemplate {
 	 * Outputs the entire contents of the page
 	 */
 	public function execute() {
-		// TODO: Convert the rest of the header to Mustache
-		ob_start();
-
-		$html = $this->getHamburgerMenu();
-
-		echo $html;
-		$htmlUnportedHamburgermenu = ob_get_contents();
-		ob_end_clean();
-
+		// TODO: Convert to Mustache
 		ob_start();
 
 		$html = $this->getUserIcons();
@@ -29,7 +21,6 @@ class CitizenTemplate extends BaseTemplate {
 		$htmlUnportedUsericons = ob_get_contents();
 		ob_end_clean();
 
-		// TODO: Convert the page tools to Mustache
 		ob_start();
 
 		$html = $this->getPageTools();
@@ -38,7 +29,6 @@ class CitizenTemplate extends BaseTemplate {
 		$params['html-unported-pagetools'] = ob_get_contents();
 		ob_end_clean();
 
-		// TODO: Convert the page links to Mustache
 		ob_start();
 
 		$html = $this->getPageLinks();
@@ -64,12 +54,19 @@ class CitizenTemplate extends BaseTemplate {
 		$params = [
 			'html-headelement' => $this->get( 'headelement', '' ),
 
+			'msg-sitetitle' => $this->getMsg( 'sitetitle' )->text(),
+			'html-mainpage-attributes' => Xml::expandAttributes(
+				Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) + [
+					'href' => Skin::makeMainPageUrl(),
+				]
+			),
+
 			'data-header' => [
 				'msg-citizen-header-menu-toggle' => $this->getMsg( 'citizen-header-menu-toggle' )->text(),
+				'data-menu' => $this->buildMenu(),
 				'msg-citizen-header-search-toggle' => $this->getMsg( 'citizen-header-search-toggle' )->text(),
 				'data-searchbox' => $this->buildSearchbox(),
 
-				'html-unported-hamburgermenu' => $htmlUnportedHamburgermenu,
 				'html-unported-usericons' => $htmlUnportedUsericons,
 			],
 
@@ -116,19 +113,59 @@ class CitizenTemplate extends BaseTemplate {
 				'array-footer-icons' => $this->getFooterIconsRow(),
 			],
 
-			'msg-sitetitle' => $this->getMsg( 'sitetitle' )->text(),
-			'html-mainpage-attributes' => Xml::expandAttributes(
-				Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) + [
-					'href' => Skin::makeMainPageUrl(),
-				]
-			),
-
 			'data-bottombar' => $this->buildBottombar(),
 		];
 
 		// Prepare and output the HTML response
 		$templates = new TemplateParser( __DIR__ . '/templates' );
 		echo $templates->processTemplate( 'skin', $params );
+	}
+
+	/**
+	 * Render the navigation menu
+	 * @return array
+	 */
+	private function buildMenu() : array {
+		ob_start();
+
+		$html = $this->getSiteNavigation();
+
+		echo $html;
+		$htmlUnportedSitenav = ob_get_contents();
+		ob_end_clean();
+
+		ob_start();
+
+		$html = $this->getUserLinks();
+
+		echo $html;
+		$htmlUnportedUserlinks = ob_get_contents();
+		ob_end_clean();
+
+		$props = [
+			'data-logo' => $this->buildLogo(),
+			'html-unported-sitenav' => $htmlUnportedSitenav,
+			'html-unported-userlinks' => $htmlUnportedUserlinks,
+		];
+		return $props;
+	}
+
+	/**
+	 * Render the logo
+	 * TODO: Use standardize classes and IDs
+	 * TODO: Rebuild icon function based on Desktop Improvement Project
+	 * @return array
+	 */
+	private function buildLogo() : array {
+		$props = [
+			'msg-sitetitle' => $this->getMsg( 'sitetitle' )->text(),
+			'html-mainpage-attributes' => Xml::expandAttributes(
+				Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) + [
+					'href' => Skin::makeMainPageUrl(),
+				]
+			),
+		];
+		return $props;
 	}
 
 	/**
@@ -174,37 +211,6 @@ class CitizenTemplate extends BaseTemplate {
 	}
 
 	/**
-	 * Generates the hamburger menu
-	 * @return string html
-	 */
-	protected function getHamburgerMenu() {
-		// Get sidebar links
-		$html = Html::rawElement(
-			'div',
-			[ 'class' => 'mw-header-menu-drawer' ],
-			Html::rawElement(
-				'div',
-				[ 'class' => 'mw-header-menu-drawer-container' ],
-				Html::rawElement(
-				'div',
-				[ 'class' => 'mw-header-banner', 'role' => 'banner' ],
-					$this->getLogo() .
-					$this->getSiteTitle( 'text' )
-				) .
-				// Container for navigation and tools
-				Html::rawElement(
-					'div',
-					[ 'class' => 'mw-nav-links' ],
-					$this->getSiteNavigation()
-				) .
-				$this->getUserLinks()
-			)
-		);
-
-		return $html;
-	}
-
-	/**
 	 * Generates the sitetitle
 	 * @param string $option
 	 * @return string html
@@ -235,19 +241,6 @@ class CitizenTemplate extends BaseTemplate {
 			);
 		}
 
-		return $html;
-	}
-
-	/**
-	 * Generates the logo
-	 * @return string html
-	 */
-	protected function getLogo() {
-		$html = Html::rawElement( 'a', [
-				'href' => $this->data['nav_urls']['mainpage']['href'],
-				'id' => 'p-logo',
-				'class' => 'mw-wiki-logo',
-			] + Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) );
 		return $html;
 	}
 
