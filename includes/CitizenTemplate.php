@@ -4,7 +4,6 @@ use MediaWiki\MediaWikiServices;
 
 /**
  * BaseTemplate class for the Citizen skin
- * TODO: Add missing title to buttons
  * @ingroup Skins
  */
 class CitizenTemplate extends BaseTemplate {
@@ -123,6 +122,7 @@ class CitizenTemplate extends BaseTemplate {
 
 	/**
 	 * Render the navigation menu
+	 * TODO: Convert the rest to Mustache
 	 * @return array
 	 */
 	private function buildMenu() : array {
@@ -211,40 +211,6 @@ class CitizenTemplate extends BaseTemplate {
 	}
 
 	/**
-	 * Generates the sitetitle
-	 * @param string $option
-	 * @return string html
-	 */
-	protected function getSiteTitle( $option ) {
-		$html = '';
-		$language = $this->getSkin()->getLanguage();
-		$siteTitle = $language->convert( $this->getMsg( 'sitetitle' )->escaped() );
-
-		if ( $option === 'link' ) {
-			$html .= Html::rawElement(
-				'a',
-				[
-					'id' => 'p-banner',
-					'class' => 'mw-wiki-title',
-					'href' => $this->data['nav_urls']['mainpage']['href'],
-				] + Linker::tooltipAndAccesskeyAttribs( 'p-logo' ),
-				$siteTitle
-			);
-		} elseif ( $option === 'text' ) {
-			$html .= Html::rawElement(
-				'span',
-				[
-					'id' => 'p-banner',
-					'class' => 'mw-wiki-title',
-				],
-				$siteTitle
-			);
-		}
-
-		return $html;
-	}
-
-	/**
 	 * Generates the sidebar
 	 * Set the elements to true to allow them to be part of the sidebar
 	 * Or get rid of this entirely, and take the specific bits to use wherever you actually want them
@@ -259,7 +225,6 @@ class CitizenTemplate extends BaseTemplate {
 
 		$sidebar = $this->getSidebar();
 		$sidebar['TOOLBOX'] = true;
-		$sidebar['LANGUAGES'] = false;
 
 		foreach ( $sidebar as $name => $content ) {
 			if ( $content === false ) {
@@ -271,9 +236,6 @@ class CitizenTemplate extends BaseTemplate {
 			switch ( $name ) {
 				case 'TOOLBOX':
 					$html .= $this->getPortlet( 'tb', $this->getToolbox(), 'toolbox' );
-					break;
-				case 'LANGUAGES':
-					$html .= $this->getLanguageLinks();
 					break;
 				default:
 					$html .= $this->getPortlet( $name, $content['content'] );
@@ -342,20 +304,6 @@ class CitizenTemplate extends BaseTemplate {
 		$html .= $this->getPortlet( 'personal', $personalTools, 'personaltools' );
 
 		return $html . Html::closeElement( 'div' );
-	}
-
-	/**
-	 * In other languages list
-	 *
-	 * @return string html
-	 */
-	protected function getLanguageLinks() {
-		$html = '';
-		if ( $this->data['language_urls'] !== false ) {
-			$html .= $this->getPortlet( 'lang', $this->data['language_urls'], 'otherlanguages' );
-		}
-
-		return $html;
 	}
 
 	/**
