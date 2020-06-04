@@ -139,25 +139,18 @@ class CitizenTemplate extends BaseTemplate {
 	 * TODO: Refactor the bottom bar to be customizable
 	 * @return array
 	 */
-	private function buildBottombar() {
-		try {
-			$buttonEnabled = $this->config->get( 'CitizenEnableButton' );
-			$buttonLink = $this->config->get( 'CitizenButtonLink' );
-			$buttonTitle = $this->config->get( 'CitizenButtonTitle' );
-			$buttonText = $this->config->get( 'CitizenButtonText' );
-		} catch ( ConfigException $e ) {
-			return '';
-		}
-
+	private function buildBottombar() : array {
+		$config = $this->config;
+		$buttonEnabled = $config->get( 'CitizenEnableButton' );
 		if ( $buttonEnabled === false ) {
 			return '';
 		}
-
-		return [
-			'html-citizen-bottombar-button-href' => $buttonLink,
-			'html-citizen-bottombar-button-title' => $buttonTitle,
-			'html-citizen-bottombar-button-text' => $buttonText
+		$props = [
+			'html-citizen-bottombar-button-href' => $config->get( 'CitizenButtonLink' ),
+			'html-citizen-bottombar-button-title' => $config->get( 'CitizenButtonTitle' ),
+			'html-citizen-bottombar-button-text' => $config->get( 'CitizenButtonText' ),
 		];
+		return $props;
 	}
 
 	/**
