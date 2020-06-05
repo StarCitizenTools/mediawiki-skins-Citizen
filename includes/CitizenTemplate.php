@@ -45,7 +45,7 @@ class CitizenTemplate extends BaseTemplate {
 				'msg-citizen-header-menu-toggle' => $this->getMsg( 'citizen-header-menu-toggle' )->text(),
 				'data-menu' => $this->buildMenu(),
 				'msg-citizen-header-search-toggle' => $this->getMsg( 'citizen-header-search-toggle' )->text(),
-				'data-extratools' => $this->buildExtratools(),
+				'data-extratools' => $this->buildExtraTools(),
 				'data-searchbox' => $this->buildSearchbox(),
 			],
 
@@ -186,6 +186,8 @@ class CitizenTemplate extends BaseTemplate {
 		$firstPortal = $props[0] ?? null;
 		if ( $firstPortal ) {
 			$firstPortal[ 'class' ] .= ' portal-first';
+			// Hide label for first portal
+			$firstPortal[ 'label-class' ] .= 'screen-reader-text';
 		}
 
 		$personalTools = $this->getPersonalTools();
@@ -200,11 +202,15 @@ class CitizenTemplate extends BaseTemplate {
 			unset( $personalTools['uls'] );
 		}
 
+		$personalToolsPortal = $this->getMenuData( 'personal', $personalTools );
+		// Hide label for personal tools
+		$personalToolsPortal[ 'label-class' ] .= 'screen-reader-text';
+
 		return [
 			'data-logo' => $this->buildLogo(),
-			'array-portals-rest' => array_slice( $props, 1 ),
 			'data-portals-first' => $firstPortal,
-			'data-personal-menu' => $this->getMenuData( 'personal', $personalTools ),
+			'array-portals-rest' => array_slice( $props, 1 ),
+			'data-personal-menu' => $personalToolsPortal,
 		];
 	}
 
@@ -245,9 +251,12 @@ class CitizenTemplate extends BaseTemplate {
 			$extraTools['uls'] = $personalTools['uls'];
 		}
 
-		$extratoolsMenu = $this->getMenuData( 'personal-extra', $extraTools );
+		$extraToolsPortal = $this->getMenuData( 'personal-extra', $extraTools );
 
-		return $extratoolsMenu;
+		// Hide label for extra tools
+		$extraToolsPortal[ 'label-class' ] .= 'screen-reader-text';
+
+		return $extraToolsPortal;
 	}
 
 	/**
@@ -526,6 +535,7 @@ class CitizenTemplate extends BaseTemplate {
 		$msgObj = $this->getMsg( self::MENU_LABEL_KEYS[ $label ] ?? $label );
 		$props = [
 			'id' => "p-$label",
+			'label-class' => '',
 			'label-id' => "p-{$label}-label",
 			// If no message exists fallback to plain text (T252727)
 			'label' => $msgObj->exists() ? $msgObj->text() : $label,
@@ -551,17 +561,17 @@ class CitizenTemplate extends BaseTemplate {
 	 * @return string html
 	 */
 	private function getLastMod() {
-		$html = null;
+		$lastMod = null;
 		$footerLinks = $this->getFooterLinks();
 
 		if ( isset( $footerLinks['info'] ) ) {
 			if ( in_array( 'lastmod', $footerLinks['info'] ) ) {
 				$key = array_search( 'lastmod', $footerLinks['info'] );
-				$html = $this->get( $footerLinks['info'][$key], '' );
+				$lastMod = $this->get( $footerLinks['info'][$key], '' );
 			}
 		}
 
-		return $html;
+		return $lastMod;
 	}
 
 	/**

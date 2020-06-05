@@ -196,20 +196,12 @@
 				overflow: auto;
 				overscroll-behavior: contain;
 				flex-grow: 1;
-
-				#p-navigation-label {
-					.mixin-screen-reader-text;
-				}
 			}
 
 			.mw-user-links {
 				#p-personal {
 					padding-top: @margin-side / 2;
 					border-top: 1px solid @base-80;
-
-					h3 {
-						.mixin-screen-reader-text;
-					}
 
 					#pt-userpage {
 						margin-bottom: @margin-side / 2;
@@ -382,10 +374,6 @@
  * User icon bar
  */
 #p-personal-extra {
-	&-label {
-		.mixin-screen-reader-text;
-	}
-
 	ul {
 		height: 56px;
 		display: flex;
