@@ -17,31 +17,6 @@ class CitizenTemplate extends BaseTemplate {
 	 * Outputs the entire contents of the page
 	 */
 	public function execute() {
-		// TODO: Convert to Mustache
-		ob_start();
-
-		$html = $this->getUserIcons();
-
-		echo $html;
-		$htmlUnportedUsericons = ob_get_contents();
-		ob_end_clean();
-
-		ob_start();
-
-		$html = $this->getPageTools();
-
-		echo $html;
-		$params['html-unported-pagetools'] = ob_get_contents();
-		ob_end_clean();
-
-		ob_start();
-
-		$html = $this->getPageLinks();
-
-		echo $html;
-		$params['html-unported-pagelinks'] = ob_get_contents();
-		ob_end_clean();
-
 		// Naming conventions for Mustache parameters:
 		// - Prefix "is" for boolean values.
 		// - Prefix "msg-" for interface messages.
@@ -120,6 +95,31 @@ class CitizenTemplate extends BaseTemplate {
 
 			'data-bottombar' => $this->buildBottombar(),
 		];
+
+		// TODO: Convert to Mustache
+		ob_start();
+
+		$html = $this->getUserIcons();
+
+		echo $html;
+		$htmlUnportedUsericons = ob_get_contents();
+		ob_end_clean();
+
+		ob_start();
+
+		$html = $this->getPageTools();
+
+		echo $html;
+		$params['html-unported-pagetools'] = ob_get_contents();
+		ob_end_clean();
+
+		ob_start();
+
+		$html = $this->getPageLinks();
+
+		echo $html;
+		$params['html-unported-pagelinks'] = ob_get_contents();
+		ob_end_clean();
 
 		// Prepare and output the HTML response
 		$templates = new TemplateParser( __DIR__ . '/templates' );
