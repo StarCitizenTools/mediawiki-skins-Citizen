@@ -15,7 +15,9 @@
 		</div>
 	</div>
 	<div class="mw-header-icons">
-		<div class="mw-header" id="user-icons">{{{html-unported-usericons}}}</div>
+		<div class="mw-header" id="user-icons">
+			{{#data-extratools}}{{>Portal}}{{/data-extratools}}
+		</div>
 		<div class="mw-header-end" id="site-search">
 			<input type="checkbox" role="button" title="{{msg-citizen-header-search-toggle}}" id="search-toggle" />
 			<div id="search-toggle-icon-container">

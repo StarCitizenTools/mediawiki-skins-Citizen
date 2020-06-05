@@ -17,15 +17,6 @@ class CitizenTemplate extends BaseTemplate {
 	 * Outputs the entire contents of the page
 	 */
 	public function execute() {
-		// TODO: Convert to Mustache
-		ob_start();
-
-		$html = $this->getUserIcons();
-
-		echo $html;
-		$htmlUnportedUsericons = ob_get_contents();
-		ob_end_clean();
-
 		// Naming conventions for Mustache parameters:
 		// - Prefix "is" for boolean values.
 		// - Prefix "msg-" for interface messages.
@@ -54,9 +45,8 @@ class CitizenTemplate extends BaseTemplate {
 				'msg-citizen-header-menu-toggle' => $this->getMsg( 'citizen-header-menu-toggle' )->text(),
 				'data-menu' => $this->buildMenu(),
 				'msg-citizen-header-search-toggle' => $this->getMsg( 'citizen-header-search-toggle' )->text(),
+				'data-extratools' => $this->buildExtratools(),
 				'data-searchbox' => $this->buildSearchbox(),
-
-				'html-unported-usericons' => $htmlUnportedUsericons,
 			],
 
 			'html-sitenotice' => $this->get( 'sitenotice', null ),
@@ -129,7 +119,7 @@ class CitizenTemplate extends BaseTemplate {
 
 	/**
 	 * Render the navigation menu
-	 * TODO: Convert the rest to Mustache
+	 * Based on Vector (be3843e)
 	 * @return array
 	 */
 	private function buildMenu() : array {
@@ -237,6 +227,30 @@ class CitizenTemplate extends BaseTemplate {
 	}
 
 	/**
+	 * Render notification badges and ULS button
+	 * @return array
+	 */
+	private function buildExtratools() {
+		$personalTools = $this->getPersonalTools();
+
+		// Create the Echo badges and ULS
+		$extraTools = [];
+		if ( isset( $personalTools['notifications-alert'] ) ) {
+			$extraTools['notifications-alert'] = $personalTools['notifications-alert'];
+		}
+		if ( isset( $personalTools['notifications-notice'] ) ) {
+			$extraTools['notifications-notice'] = $personalTools['notifications-notice'];
+		}
+		if ( isset( $personalTools['uls'] ) ) {
+			$extraTools['uls'] = $personalTools['uls'];
+		}
+
+		$extratoolsMenu = $this->getMenuData( 'personal-extra', $extraTools );
+
+		return $extratoolsMenu;
+	}
+
+	/**
 	 * Render the search box
 	 * TODO: Use standardized classes and IDs
 	 * @return array
@@ -276,40 +290,6 @@ class CitizenTemplate extends BaseTemplate {
 			'html-citizen-bottombar-button-text' => $config->get( 'CitizenButtonText' ),
 		];
 		return $props;
-	}
-
-	/**
-	 * Generates user icon bar
-	 * @return string html
-	 */
-	protected function getUserIcons() {
-		$personalTools = $this->getPersonalTools();
-		$html = '';
-
-		// Create the Echo badges and ULS
-		$extraTools = [];
-		if ( isset( $personalTools['notifications-alert'] ) ) {
-			$extraTools['notifications-alert'] = $personalTools['notifications-alert'];
-		}
-		if ( isset( $personalTools['notifications-notice'] ) ) {
-			$extraTools['notifications-notice'] = $personalTools['notifications-notice'];
-		}
-		if ( isset( $personalTools['uls'] ) ) {
-			$extraTools['uls'] = $personalTools['uls'];
-		}
-
-		// Place the extra icons/outside stuff
-		if ( !empty( $extraTools ) ) {
-			$iconList = '';
-			foreach ( $extraTools as $key => $item ) {
-				$iconList .= $this->makeListItem( $key, $item );
-			}
-
-			$html .= Html::rawElement( 'div', [ 'id' => 'p-personal-extra', 'class' => 'p-body' ],
-				Html::rawElement( 'ul', [], $iconList ) );
-		}
-
-		return $html;
 	}
 
 	/**
@@ -561,7 +541,7 @@ class CitizenTemplate extends BaseTemplate {
 
 		// Mark the portal as empty if it has no content
 		$class = ( count( $urls ) == 0 && !$props['html-after-portal'] )
-			? 'vector-menu-empty emptyPortlet' : '';
+			? 'mw-portal-empty' : '';
 		$props['class'] = $class;
 		return $props;
 	}
