@@ -162,7 +162,7 @@ class CitizenTemplate extends BaseTemplate {
 					break;
 				case 'LANGUAGES':
 					$languages = $skin->getLanguages();
-					$portal = $this->getMenuData( 'lang', $languages);
+					$portal = $this->getMenuData( 'lang', $languages );
 					// The language portal will be added provided either
 					// languages exist or there is a value in html-after-portal
 					// for example to show the add language wikidata link (T252800)
