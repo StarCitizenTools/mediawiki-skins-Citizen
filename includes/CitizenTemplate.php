@@ -7,6 +7,12 @@ use MediaWiki\MediaWikiServices;
  * @ingroup Skins
  */
 class CitizenTemplate extends BaseTemplate {
+	/** @var array of alternate message keys for menu labels */
+	private const MENU_LABEL_KEYS = [
+		'tb' => 'toolbox',
+		'personal' => 'personaltools',
+	];
+
 	/**
 	 * Outputs the entire contents of the page
 	 */
@@ -126,28 +132,89 @@ class CitizenTemplate extends BaseTemplate {
 	 * @return array
 	 */
 	private function buildMenu() : array {
-		ob_start();
+		$skin = $this->getSkin();
+		$portals = $skin->buildSidebar();
+		$props = [];
 
-		$html = $this->getSiteNavigation();
+		// Render portals
+		foreach ( $portals as $name => $content ) {
+			if ( $content === false ) {
+				continue;
+			}
 
-		echo $html;
-		$htmlUnportedSitenav = ob_get_contents();
-		ob_end_clean();
+			// Numeric strings gets an integer when set as key, cast back - T73639
+			$name = (string)$name;
 
-		ob_start();
+			switch ( $name ) {
+				case 'SEARCH':
+					break;
+				case 'TOOLBOX':
+					$portal = $this->getMenuData( 'tb',  $this->getToolbox() );
+					// Run deprecated hooks.
+					$citizenTemplate = $this;
+					ob_start();
+					// Use SidebarBeforeOutput instead.
+					Hooks::run( 'SkinTemplateToolboxEnd', [ &$citizenTemplate, true ] );
+					$htmlhookitems = ob_get_clean();
+					$portal['html-items'] .= $htmlhookitems;
+					$props[] = $portal;
+					break;
+				case 'LANGUAGES':
+					$languages = $skin->getLanguages();
+					$portal = $this->getMenuData( 'lang', $languages);
+					// The language portal will be added provided either
+					// languages exist or there is a value in html-after-portal
+					// for example to show the add language wikidata link (T252800)
+					if ( count( $languages ) || $portal['html-after-portal'] ) {
+						$props[] = $portal;
+					}
+					break;
+				default:
+					// Historically some portals have been defined using HTML rather than arrays.
+					// Let's move away from that to a uniform definition.
+					if ( !is_array( $content ) ) {
+						$html = $content;
+						$content = [];
+						wfDeprecated(
+							"`content` field in portal $name must be array."
+								. "Previously it could be a string but this is no longer supported.",
+							'1.35.0'
+						);
+					} else {
+						$html = false;
+					}
+					$portal = $this->getMenuData( $name, $content );
+					if ( $html ) {
+						$portal['html-items'] .= $html;
+					}
+					$props[] = $portal;
+					break;
+			}
+		}
 
-		$html = $this->getUserLinks();
+		$firstPortal = $props[0] ?? null;
+		if ( $firstPortal ) {
+			$firstPortal[ 'class' ] .= ' portal-first';
+		}
 
-		echo $html;
-		$htmlUnportedUserlinks = ob_get_contents();
-		ob_end_clean();
+		$personalTools = $this->getPersonalTools();
+		// Move the Echo badges and ULS out of default list
+		if ( isset( $personalTools['notifications-alert'] ) ) {
+			unset( $personalTools['notifications-alert'] );
+		}
+		if ( isset( $personalTools['notifications-notice'] ) ) {
+			unset( $personalTools['notifications-notice'] );
+		}
+		if ( isset( $personalTools['uls'] ) ) {
+			unset( $personalTools['uls'] );
+		}
 
-		$props = [
+		return [
 			'data-logo' => $this->buildLogo(),
-			'html-unported-sitenav' => $htmlUnportedSitenav,
-			'html-unported-userlinks' => $htmlUnportedUserlinks,
+			'array-portals-rest' => array_slice( $props, 1 ),
+			'data-portals-first' => $firstPortal,
+			'data-personal-menu' => $this->getMenuData( 'personal', $personalTools ),
 		];
-		return $props;
 	}
 
 	/**
@@ -211,42 +278,6 @@ class CitizenTemplate extends BaseTemplate {
 	}
 
 	/**
-	 * Generates the sidebar
-	 * Set the elements to true to allow them to be part of the sidebar
-	 * Or get rid of this entirely, and take the specific bits to use wherever you actually want them
-	 *  * Toolbox is the page/site tools that appears under the sidebar in vector
-	 *  * Languages is the interlanguage links on the page via en:... es:... etc
-	 *  * Default is each user-specified box as defined on MediaWiki:Sidebar;
-	 *    you will still need a foreach loop to parse these.
-	 * @return string html
-	 */
-	protected function getSiteNavigation() {
-		$html = '';
-
-		$sidebar = $this->getSidebar();
-		$sidebar['TOOLBOX'] = true;
-
-		foreach ( $sidebar as $name => $content ) {
-			if ( $content === false ) {
-				continue;
-			}
-			// Numeric strings gets an integer when set as key, cast back - T73639
-			$name = (string)$name;
-
-			switch ( $name ) {
-				case 'TOOLBOX':
-					$html .= $this->getPortlet( 'tb', $this->getToolbox(), 'toolbox' );
-					break;
-				default:
-					$html .= $this->getPortlet( $name, $content['content'] );
-					break;
-			}
-		}
-
-		return $html;
-	}
-
-	/**
 	 * Generates user icon bar
 	 * @return string html
 	 */
@@ -278,32 +309,6 @@ class CitizenTemplate extends BaseTemplate {
 		}
 
 		return $html;
-	}
-
-	/**
-	 * Generates user tools menu
-	 * @return string html
-	 */
-	protected function getUserLinks() {
-		$personalTools = $this->getPersonalTools();
-
-		$html = '';
-
-		// Move the Echo badges and ULS out of default list
-		if ( isset( $personalTools['notifications-alert'] ) ) {
-			unset( $personalTools['notifications-alert'] );
-		}
-		if ( isset( $personalTools['notifications-notice'] ) ) {
-			unset( $personalTools['notifications-notice'] );
-		}
-		if ( isset( $personalTools['uls'] ) ) {
-			unset( $personalTools['uls'] );
-		}
-
-		$html .= Html::openElement( 'div', [ 'class' => 'mw-user-links' ] );
-		$html .= $this->getPortlet( 'personal', $personalTools, 'personaltools' );
-
-		return $html . Html::closeElement( 'div' );
 	}
 
 	/**
@@ -520,6 +525,44 @@ class CitizenTemplate extends BaseTemplate {
 		}
 
 		return $hookContents;
+	}
+
+	/**
+	 * @param string $label to be used to derive the id and human readable label of the menu
+	 *  If the key has an entry in the constant MENU_LABEL_KEYS then that message will be used for the
+	 *  human readable text instead.
+	 * @param array $urls to convert to list items stored as string in html-items key
+	 * @param array $options (optional) to be passed to makeListItem
+	 * @return array
+	 */
+	private function getMenuData(
+		string $label,
+		array $urls = [],
+		array $options = []
+	) : array {
+		// For some menu items, there is no language key corresponding with its menu key.
+		// These inconsitencies are captured in MENU_LABEL_KEYS
+		$msgObj = $this->getMsg( self::MENU_LABEL_KEYS[ $label ] ?? $label );
+		$props = [
+			'id' => "p-$label",
+			'label-id' => "p-{$label}-label",
+			// If no message exists fallback to plain text (T252727)
+			'label' => $msgObj->exists() ? $msgObj->text() : $label,
+			'html-items' => '',
+			'html-tooltip' => Linker::tooltip( 'p-' . $label ),
+		];
+
+		foreach ( $urls as $key => $item ) {
+			$props['html-items'] .= $this->makeListItem( $key, $item, $options );
+		}
+
+		$props['html-after-portal'] = $this->getAfterPortlet( $label );
+
+		// Mark the portal as empty if it has no content
+		$class = ( count( $urls ) == 0 && !$props['html-after-portal'] )
+			? 'vector-menu-empty emptyPortlet' : '';
+		$props['class'] = $class;
+		return $props;
 	}
 
 	/**

@@ -7,8 +7,11 @@
 			{{#data-logo}}{{>Logo}}{{/data-logo}}
 		</div>
 		<div class="mw-nav-links">
-			{{{html-unported-sitenav}}}
+			{{#data-portals-first}}{{>Portal}}{{/data-portals-first}}
+			{{#array-portals-rest}}{{>Portal}}{{/array-portals-rest}}
 		</div>
-		{{{html-unported-userlinks}}}
+		<div class="mw-user-links">
+		{{#data-personal-menu}}{{>Portal}}{{/data-personal-menu}}
+		</div>
 	</div>
 </div>
