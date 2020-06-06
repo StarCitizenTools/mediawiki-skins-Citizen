@@ -36,7 +36,12 @@
 	{{/html-sitenotice}}
 	{{#html-newtalk}}<div class="usermessage">{{{html-newtalk}}}</div>{{/html-newtalk}}
 	{{{html-indicators}}}
-	{{{html-unported-pagetools}}}
+	{{#data-pagetools}}
+		<div class="mw-side" id="page-tools">
+			{{#data-page-actions}}{{>Portal}}{{/data-page-actions}}
+			{{#data-page-actions-more}}{{>Portal}}{{/data-page-actions-more}}
+		</div>
+	{{/data-pagetools}}
 	<h1 id="firstHeading" class="firstHeading" lang="{{page-langcode}}">{{{html-title}}}</h1>
 	<div id="siteSub">{{msg-tagline}}</div>
 	{{{html-prebodyhtml}}}
@@ -47,7 +52,10 @@
 		{{#html-printfooter}}
 			<div class="printfooter">{{{html-printfooter}}}</div>
 		{{/html-printfooter}}
-		{{{html-unported-pagelinks}}}
+		{{#data-pagelinks}}
+			{{#data-namespaces}}{{>Portal}}{{/data-namespaces}}
+			{{#data-variants}}{{>Portal}}{{/data-variants}}
+		{{/data-pagelinks}}
 		{{{html-catlinks}}}
 		{{{html-dataAfterContent}}}
 		{{{html-debuglog}}}

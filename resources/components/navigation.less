@@ -207,10 +207,12 @@
 						margin-bottom: @margin-side / 2;
 
 						a {
-							justify-content: unset;
+							flex-direction: row-reverse;
+    						justify-content: flex-end;
 
 							&:after {
 								margin: 0;
+								margin-right: @margin-side;
 								width: @icon-box-size;
 								height: @icon-box-size;
 							}

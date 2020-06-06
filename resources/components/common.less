@@ -741,10 +741,6 @@ a {
 	margin: 0 @negative-margin;
 	padding: @margin-side;
 
-	&-label {
-		.mixin-screen-reader-text;
-	}
-
 	ul {
 		margin: 1.6rem 0 0 0;
 		display: flex;
@@ -758,6 +754,7 @@ a {
 				align-items: center;
 				padding: 0.4rem 0.8rem;
 				border: 1px solid @base-80;
+				color: @base-20;
 				background-color: @base-90;
 				transition: @transition-background-quick, @transition-box-shadow-quick;
 				.boxshadow(1);
@@ -765,10 +762,6 @@ a {
 				&:hover {
 					background-color: @base-80;
 					.boxshadow(2);
-				}
-
-				span {
-					color: @base-20;
 				}
 
 				&:after {
