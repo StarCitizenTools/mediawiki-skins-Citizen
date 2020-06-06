@@ -7,7 +7,7 @@
 
 // TODO: Make it configurable and flexible
 #site-search {
-	#search-form {
+	#searchform {
 		position: absolute;
 		z-index: -1; // Not interactable
 		margin: 7px 0 8px; // 1px h3 screen reader
@@ -19,7 +19,7 @@
 		transition: @transition-opacity;
 
 		// Search field
-		#search-input {
+		#searchInput {
 			-webkit-appearance: none;
 			-moz-appearance: none;
 			appearance: none;
@@ -37,7 +37,7 @@
 		}
 
 		// Search field button
-		#search-button {
+		#searchButton {
 			.button-blue;
 			width: @icon-box-size + @icon-padding * 2;
 			height: 42px;
@@ -102,11 +102,11 @@
 
 	#search-toggle {
 		&:checked {
-			~ #search-form {
+			~ #searchform {
 				z-index: 10;
 				opacity: 1;
 
-				#search-input {
+				#searchInput {
 					width: 400px;
 				}
 			}
@@ -253,7 +253,7 @@ a.suggestion-link:hover {
 // RTL tweaks
 .rtl {
 	#site-search {
-		#search-form {
+		#searchform {
 			left: @icon-box-size + @margin-side + @icon-padding;
 			right: unset;
 		}
