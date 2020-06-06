@@ -196,10 +196,6 @@
 				overflow: auto;
 				overscroll-behavior: contain;
 				flex-grow: 1;
-
-				#p-navigation-label {
-					.mixin-screen-reader-text;
-				}
 			}
 
 			.mw-user-links {
@@ -207,18 +203,16 @@
 					padding-top: @margin-side / 2;
 					border-top: 1px solid @base-80;
 
-					h3 {
-						.mixin-screen-reader-text;
-					}
-
 					#pt-userpage {
 						margin-bottom: @margin-side / 2;
 
 						a {
-							justify-content: unset;
+							flex-direction: row-reverse;
+    						justify-content: flex-end;
 
 							&:after {
 								margin: 0;
+								margin-right: @margin-side;
 								width: @icon-box-size;
 								height: @icon-box-size;
 							}
@@ -300,10 +294,6 @@
 				font-size: @ui-menu-header;
 				font-weight: normal;
 				letter-spacing: 1px;
-			}
-
-			span {
-				display: block;
 			}
 		}
 	}

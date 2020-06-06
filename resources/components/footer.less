@@ -9,7 +9,6 @@
 	&-content {
 		margin: 0 auto;
 		padding: 12px @margin-side;
-		width: 100%;
 		max-width: @footer-width;
 		display: flex;
 		align-items: center;
@@ -31,7 +30,7 @@
 	}
 }
 
-#footer {
+.mw-footer {
 	z-index: 8; // High enough so it covers the floating UI
 	clear: both;
 	position: relative;
@@ -41,8 +40,6 @@
 	background: @color-footer-background-50;
 	font-size: @ui-menu-text;
 	line-height: @footer-line-height;
-	display: flex;
-	flex-direction: column;
 
 	a {
 		color: @color-footer-link;
@@ -55,22 +52,24 @@
 		}
 	}
 
+	ul {
+		margin: 0;
+		display: flex;
+		flex-wrap: wrap;
+	}
+
 	li {
 		list-style: none;
 	}
+}
 
+#footer {
 	&-content {
-		margin: @margin-side * 2.5 auto 0 auto;
+		margin: 0 auto;
 		padding: 0 @margin-side;
-		width: 100%;
 		max-width: @footer-width;
 		display: flex;
 		flex-direction: column;
-
-		> ul,
-		> div {
-			margin: @margin-side / 2 0;
-		}
 	}
 
 	&-bottom {
@@ -89,8 +88,13 @@
 	}
 
 	&-sitetitle {
+		margin: @margin-side * 2.5 0 @margin-side / 2 0;
 		color: @base-90;
 		font-size: 20px;
+	}
+
+	&-desc {
+		margin: @margin-side / 2 0;
 	}
 
 	&-places {
@@ -105,6 +109,7 @@
 	}
 
 	&-info {
+		margin-top: @margin-side / 2;
 		opacity: 0.5;
 		font-size: 12px;
 

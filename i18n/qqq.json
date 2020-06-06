@@ -11,6 +11,9 @@
 	"citizen.css": "{{optional}}",
 	"citizen.js": "{{optional}}",
 
+	"citizen-header-menu-toggle": "Tooltip of menu toggle in header",
+	"citizen-header-search-toggle": "Tooltip of search toggle in header",
+
 	"citizen-footer-desc": "Edit this text on MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Edit this text on MediaWiki:Citizen-footer-tagline",
 	

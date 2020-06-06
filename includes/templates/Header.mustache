@@ -1,0 +1,29 @@
+ {{!
+	string msg-citizen-header-menu-toggle tooltip for menu toggle
+	string msg-citizen-header-search-toggle tooltip for search toggle
+}}
+<header class="mw-header-container" id="mw-navigation">
+	<div class="mw-header-icons">
+		<div class="mw-header-menu mw-header-end">
+			<input type="checkbox" role="button" title="{{msg-citizen-header-menu-toggle}}" />
+			<div class="mw-header-menu-toggle">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			{{#data-menu}}{{>Menu}}{{/data-menu}}
+		</div>
+	</div>
+	<div class="mw-header-icons">
+		<div class="mw-header" id="user-icons">
+			{{#data-extratools}}{{>Portal}}{{/data-extratools}}
+		</div>
+		<div class="mw-header-end" id="site-search">
+			<input type="checkbox" role="button" title="{{msg-citizen-header-search-toggle}}" id="search-toggle" />
+			<div id="search-toggle-icon-container">
+				<div id="search-toggle-icon"></div>
+			</div>
+			{{#data-searchbox}}{{>Searchbox}}{{/data-searchbox}}
+		</div>
+	</div>
+</header>

@@ -5,7 +5,7 @@
 //
 
 // Hide selected item
-.mw-portlet li.selected {
+.mw-portal .selected {
 	.mixin-screen-reader-text;
 }
 
@@ -15,10 +15,6 @@
 	margin-top: 1.3rem;
 	display: flex;
 	transform: translateX( ~'calc( (100vw - @{page-width}) / 2 - @{margin-side} * 2 - 100%)' ); // magic
-
-	h3 {
-		.mixin-screen-reader-text;
-	}
 
 	ul {
 		margin: 0;
@@ -53,73 +49,64 @@
 	}
 
 	#p-actions {
-		> nav {
-			.resource-loader-icon-link;
-			padding: 5px;
-			cursor: pointer;
-			// transition: @transition-opacity-quick; - Hidden behind the menu anyways
+		.resource-loader-icon-link;
+		padding: 5px;
+		cursor: pointer;
+		// transition: @transition-opacity-quick; - Hidden behind the menu anyways
 
-			// TODO: Need to make value more flexible
-			ul {
-				z-index: -1;
-				pointer-events: none;
-				.menu-container;
-				position: absolute;
-				opacity: 0;
-				.boxshadow(4);
-				transition: @transition-opacity-quick, @transition-box-shadow-quick;
+		// TODO: Need to make value more flexible
+		ul {
+			z-index: -1;
+			pointer-events: none;
+			.menu-container;
+			position: absolute;
+			opacity: 0;
+			.boxshadow(4);
+			transition: @transition-opacity-quick, @transition-box-shadow-quick;
 
-				a {
-					.menu-item-link;
-					justify-content: space-between;
-					font-size: @ui-menu-text;
-					padding: @padding-menu-item;
+			a {
+				.menu-item-link;
+				justify-content: space-between;
+				font-size: @ui-menu-text;
+				padding: @padding-menu-item;
 
+				&:after {
+					.resource-loader-list-icon;
+					margin-left: @icon-padding;
+					opacity: @opacity-icon;
+				}
+
+				&:hover,
+				&:active,
+				&:focus {
 					&:after {
-						.resource-loader-list-icon;
-						margin-left: @icon-padding;
-						opacity: @opacity-icon;
-					}
-
-					&:hover,
-					&:active,
-					&:focus {
-						&:after {
-							opacity: @opacity-icon-active;
-						}
-					}
-
-					&:hover {
-						.menu-item-link-hover;
-					}
-
-					&:active {
-						.menu-item-link-active;
-					}
-
-					&:focus {
-						.menu-item-link-focus;
+						opacity: @opacity-icon-active;
 					}
 				}
-			}
 
-			&:before {
-				.resource-loader-menu-icon;
-				opacity: @opacity-icon;
-			}
+				&:hover {
+					.menu-item-link-hover;
+				}
 
-			/*
- *    Hidden behind the menu anyways
- *    &:hover:after {
- *      opacity: @opacity-icon-active;
- *    }
-*/
+				&:active {
+					.menu-item-link-active;
+				}
 
-			&:hover ul {
-				z-index: 5;
-				opacity: 1;
-				pointer-events: auto;
+				&:focus {
+					.menu-item-link-focus;
+				}
 			}
+		}
+
+		&:before {
+			.resource-loader-menu-icon;
+			opacity: @opacity-icon;
+		}
+
+		&:hover ul {
+			z-index: 5;
+			opacity: 1;
+			pointer-events: auto;
 		}
 	}
 }

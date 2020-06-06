@@ -17,35 +17,39 @@
 	string msg-citizen-footer-tagline
 }}
 
-<footer id="footer" role="contentinfo" {{{html-userlangattributes}}}>
+<footer class="mw-footer" {{{html-userlangattributes}}}>
 	{{#html-lastmodified}}
 	<div class="last-modified-bar">
 		<div class="last-modified-bar-content">
-			<span class="last-modified-bar-icon"></span>
-			<span class="last-modified-bar-text">{{{.}}}</span>
+			<div class="last-modified-bar-icon"></div>
+			<div class="last-modified-bar-text">{{{.}}}</div>
 		</div>
 	</div>
 	{{/html-lastmodified}}
 	<div id="footer-content">
-		<div id="footer-sitetitle" class="mw-wiki-title">{{{msg-sitetitle}}}</div>
-		<div id="footer-desc">{{{msg-citizen-footer-desc}}}</div>
+		<h2 id="footer-sitetitle" class="mw-wiki-title">{{{msg-sitetitle}}}</h2>
+		<p id="footer-desc">{{{msg-citizen-footer-desc}}}</p>
 		{{#array-footer-rows}}
-		<ul id="{{id}}" class="{{className}}">
-			{{#array-items}}
-			<li id="{{id}}">{{{html}}}</li>
-			{{/array-items}}
-		</ul>
+		<nav id="{{id}}" {{#className}}class="{{.}}"{{/className}}>
+			<ul>
+				{{#array-items}}
+				<li id="{{id}}">{{{html}}}</li>
+				{{/array-items}}
+			</ul>
+		</nav>
 		{{/array-footer-rows}}
 	</div>
 	<div id="footer-bottom">
 		<div id="footer-bottom-content">
 			<div id="footer-tagline">{{{msg-citizen-footer-tagline}}}</div>
 			{{#array-footer-icons}}
-			<ul id="{{id}}" class="{{className}}">
-				{{#array-items}}
-				<li id="{{id}}">{{{html}}}</li>
-				{{/array-items}}
-			</ul>
+			<nav id="{{id}}" {{#className}}class="{{.}}"{{/className}}>
+				<ul>
+					{{#array-items}}
+					<li id="{{id}}">{{{html}}}</li>
+					{{/array-items}}
+				</ul>
+			</nav>
 			{{/array-footer-icons}}
 		</div>
 	</div>
