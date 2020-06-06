@@ -257,10 +257,10 @@ class CitizenTemplate extends BaseTemplate {
 		$config = $this->config;
 		$props = [
 			'form-action' => $config->get( 'Script' ),
-			'html-input' => $this->makeSearchInput( [ 'id' => 'search-input' ] ),
+			'html-input' => $this->makeSearchInput( [ 'id' => 'searchInput' ] ),
 			'html-button-search' => $this->makeSearchButton(
 				'image',
-				[ 'id' => 'search-button',
+				[ 'id' => 'searchButton',
 					'src' => $this->getSkin()->getSkinStylePath( 'resources/images/icons/search.svg' ),
 				]
 			),

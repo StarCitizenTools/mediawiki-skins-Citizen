@@ -9,7 +9,7 @@
 var searchToggle = document.getElementById( 'search-toggle' );
 
 function searchInputFocus() {
-	var searchInput = document.getElementById( 'search-input' );
+	var searchInput = document.getElementById( 'searchInput' );
 
 	if ( searchToggle.checked !== false ) {
 		searchInput.focus();

@@ -5,9 +5,9 @@
 	string html-input raw HTML containing the input box of the search box
 	string html-button-search raw HTML containing the button of the search box
 }}
-<form action="{{form-action}}" role="search" id="search-form">
+<form action="{{form-action}}" role="search" id="searchform">
 	<input type="hidden" name="title" value="{{page-title}}">
-	<label class="screen-reader-text" for="search-input">{{msg-search}}</label>
+	<label class="screen-reader-text" for="searchInput">{{msg-search}}</label>
 	{{{html-input}}}
 	{{{html-button-search}}}
 </form>
