@@ -317,14 +317,13 @@ class CitizenTemplate extends BaseTemplate {
 			}
 
 			$props = [
-				'data-page-actions' =>  $actionhtml,
-				'data-page-actions-more' =>  $actionmorehtml,
+				'data-page-actions' => $actionhtml,
+				'data-page-actions-more' => $actionmorehtml,
 			];
 		}
 
 		return $props;
 	}
-
 
 	/**
 	* Render page-related links at the bottom
