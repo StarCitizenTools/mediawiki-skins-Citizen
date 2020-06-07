@@ -88,7 +88,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 		searchEl = document.getElementById( searchInput ),
 		server = mw.config.get( 'wgServer' ),
 		articleurl = server + mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
-		thumbnailSize = getDevicePixelRatio() * 80,
+		thumbnailSize = Math.round( getDevicePixelRatio() * 80 ),
 		descriptionSource = mw.config.get( 'wgCitizenSearchDescriptionSource' ),
 		maxSearchResults = mw.config.get( 'wgCitizenMaxSearchResults' ),
 		searchString,

@@ -25,7 +25,7 @@
 	&-link {
 		display: block;
 		position: relative;
-		min-height: 2rem * @content-scaling;
+		min-height: 3.2rem * @content-scaling;
 		padding: 1rem 1rem 1rem 8.5rem * @content-scaling;
 		border-bottom: 1px solid @base-90;
 
@@ -74,12 +74,12 @@
 		.suggestion {
 			&-title {
 				width: 30%;
-				height: 1.6rem * @content-scaling;
+				height: 1.6rem * @content-scaling * 1.125; // MAGIC
 			}
 
 			&-description {
 				width: 70%;
-				height: 1.3rem * @content-scaling;
+				height: 1.3rem * @content-scaling * 1.077; // MAGIC
 			}
 
 			&-title,
