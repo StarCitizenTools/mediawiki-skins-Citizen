@@ -228,6 +228,7 @@ class SkinCitizen extends SkinTemplate {
 		$this->out->addModuleStyles( [
 			'mediawiki.skinning.content.externallinks',
 			'skins.citizen.styles',
+			'skins.citizen.styles.fonts',
 			'skins.citizen.icons',
 			'skins.citizen.icons.ca',
 			'skins.citizen.icons.p',
