@@ -1,0 +1,183 @@
+//
+// Citizen - Search styles
+// https://starcitizen.tools
+//
+
+@import '../variables.less';
+@import '../mixins.less';
+
+@suggestion-max-width: 400px + @icon-box-size + @icon-padding * 2; // 454px
+
+#typeahead-suggestions {
+	position: absolute;
+	top: @header-height;
+	z-index: 99999;
+}
+
+.suggestions-dropdown {
+	background: @base-100;
+	.boxshadow(4);
+	width: @suggestion-max-width;
+	max-width: calc( ~'100vw -'@icon-box-size + @icon-padding * 2 + @margin-side );
+}
+
+.suggestion {
+	&-link {
+		display: block;
+		position: relative;
+		min-height: 2rem * @content-scaling;
+		padding: 1rem 1rem 1rem 8.5rem * @content-scaling;
+		border-bottom: 1px solid @base-90;
+
+		&.active {
+			background-color: @accent-90;
+
+			.suggestion-title {
+				color: @accent-50;
+			}
+		}
+	}
+
+	&-title {
+		margin: 0 0 0.78rem * @content-scaling 0;
+		color: @base-30;
+		font-size: 1.6rem * @content-scaling;
+		line-height: 1.872rem * @content-scaling;
+	}
+
+	&-highlight {
+		color: @base-10;
+		font-style: normal;
+	}
+
+	&-description {
+		color: @base-30;
+		margin: 0;
+		font-family: @fonts;
+		font-size: 1.3rem * @content-scaling;
+		line-height: 1.43rem * @content-scaling;
+	}
+
+	&-thumbnail {
+		background-color: @base-80;
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		height: 100%;
+		width: 7rem * @content-scaling;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	&-placeholder {
+		.suggestion {
+			&-title {
+				width: 30%;
+				height: 1.6rem * @content-scaling;
+			}
+
+			&-description {
+				width: 70%;
+				height: 1.3rem * @content-scaling;
+			}
+
+			&-title,
+			&-description {
+				animation-duration: 1.8s;
+				animation-fill-mode: forwards;
+				animation-iteration-count: infinite;
+				animation-name: placeHolderShimmer;
+				animation-timing-function: linear;
+				background: @base-70;
+				background: linear-gradient( to right, @base-90 8%, @base-80 38%, @base-90 54% );
+				background-size: 1000px 640px;
+				position: relative;
+			}
+		}
+	}
+}
+
+/* using element selector to override default anchor styles */
+a.suggestion-link:hover {
+	text-decoration: none;
+}
+
+// RTL tweaks
+.rtl {
+	#searchform {
+		left: @icon-box-size + @margin-side + @icon-padding;
+		right: unset;
+	}
+}
+
+@media only screen and ( max-width: @suggestion-max-width ) {
+	.suggestions-dropdown {
+		position: fixed;
+		left: 0;
+		top: @header-height + 1px;
+		max-width: 100vw;
+
+		&:after {
+			content: '';
+			width: 100vw;
+			height: 100vh;
+			background: #000;
+			display: block;
+			opacity: 0.7;
+			position: fixed;
+		}
+	}
+}
+
+@keyframes placeHolderShimmer {
+	0% {
+		background-position: -468px 0;
+	}
+
+	100% {
+		background-position: 468px 0;
+	}
+}
+
+@media ( prefers-color-scheme: dark ) {
+	.suggestions-dropdown {
+		background: @dark-bg-50;
+	}
+
+	.suggestion {
+		&-link {
+			border-color: @dark-bg-60;
+
+			&.active {
+				background-color: @accent-10;
+
+				.suggestion-title {
+					color: @accent-90;
+				}
+			}
+		}
+
+		&-title {
+			color: @dark-text-70;
+		}
+
+		&-highlight {
+			color: @dark-text-90;
+		}
+
+		&-description {
+			color: @dark-text-80;
+		}
+
+		&-placeholder {
+			.suggestion {
+				&-title,
+				&-description {
+					background: @dark-bg-20;
+					background: linear-gradient( to right, @dark-bg-40 8%, @dark-bg-30 38%, @dark-bg-40 54% );
+				}
+			}
+		}
+	}
+}

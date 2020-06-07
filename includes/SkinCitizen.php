@@ -213,7 +213,11 @@ class SkinCitizen extends SkinTemplate {
 		$modules = parent::getDefaultModules();
 
 		// Replace the search module
-		$modules['search'] = 'skins.citizen.scripts.search';
+		$modules['search'] = [
+			'skins.citizen.scripts.search',
+			'skins.citizen.styles.search',
+			'skins.citizen.icons.search',
+		];
 
 		return $modules;
 	}
@@ -236,7 +240,6 @@ class SkinCitizen extends SkinTemplate {
 			'skins.citizen.icons.pt',
 			'skins.citizen.icons.footer',
 			'skins.citizen.icons.badges',
-			'skins.citizen.icons.search',
 		] );
 
 		$this->out->addModules( [
