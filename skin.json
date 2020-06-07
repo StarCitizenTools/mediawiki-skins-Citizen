@@ -214,6 +214,7 @@
 				"oojs-ui-core.styles"
 			],
 			"messages": [
+				"citizen-search-fulltext",
 				"citizen-search-no-results-title",
 				"citizen-search-no-results-desc"
 			]

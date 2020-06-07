@@ -88,6 +88,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 		searchEl = document.getElementById( searchInput ),
 		server = mw.config.get( 'wgServer' ),
 		articleurl = server + mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
+		searchurl = server + mw.config.get( 'wgScriptPath' ) + '/index.php?title=Special%3ASearch&search=',
 		thumbnailSize = Math.round( getDevicePixelRatio() * 80 ),
 		descriptionSource = mw.config.get( 'wgCitizenSearchDescriptionSource' ),
 		maxSearchResults = mw.config.get( 'wgCitizenMaxSearchResults' ),
@@ -237,6 +238,20 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 				'</div>' +
 				'<div class="suggestion-thumbnail"></div>' +
 			'</div>' +
+		'</div>';
+	}
+
+	/**
+	 * Card displayed if no results could be found
+	 * @param {string} searchString - The search string.
+	 * @return {string}
+	 */
+	function getSuggestionSpecial( searchString ) {
+		const msg = mw.message( 'citizen-search-fulltext' ).text(),
+			href = searchurl + searchString + '&fulltext=1';
+
+		return '<a id="suggestion-special" href="' + href + '">' +
+			'<div id="suggestion-special-text">' + msg + '&nbsp;<em class="suggestion-highlight">' + searchString + '</em></div>' +
 		'</div>';
 	}
 
@@ -417,8 +432,10 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			}, new mw.html.Raw( suggestionText + suggestionThumbnail ) );
 
 			string += suggestionLink;
-
 		}
+
+		suggestionSpecial = getSuggestionSpecial( searchString );
+		string += suggestionSpecial;
 
 		string += '</div>';
 

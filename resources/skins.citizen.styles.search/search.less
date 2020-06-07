@@ -41,7 +41,7 @@
 	&-title {
 		margin: 0 0 0.78rem * @content-scaling 0;
 		color: @base-10;
-		font-size: 1.6rem * @content-scaling;
+		font-size: @content-h6-size;
 		line-height: 1.872rem * @content-scaling;
 	}
 
@@ -54,7 +54,7 @@
 		color: @base-30;
 		margin: 0;
 		font-family: @fonts;
-		font-size: 1.3rem * @content-scaling;
+		font-size: @content-caption-size;
 		line-height: 1.43rem * @content-scaling;
 	}
 
@@ -68,6 +68,22 @@
 		position: absolute;
 		top: 0;
 		left: 0;
+	}
+}
+
+#suggestion-special {
+	padding: 1rem;
+	display: block;
+	color: @base-10;
+
+	&-text {
+		font-size: @content-caption-size;
+		font-family: @fonts;
+		font-weight: bold;
+	}
+
+	&:hover {
+		background-color: @accent-90;
 	}
 }
 
@@ -131,6 +147,14 @@ a.suggestion-link:hover {
 
 		&-description {
 			color: @dark-text-70;
+		}
+	}
+
+	#suggestion-special {
+		color: @dark-text-90;
+
+		&:hover {
+			background-color: @accent-10;
 		}
 	}
 }
