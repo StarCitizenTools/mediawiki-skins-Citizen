@@ -17,7 +17,5 @@
 	"citizen-footer-desc": "Edit this text on MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Edit this text on MediaWiki:Citizen-footer-tagline",
 
-	"citizen-search-fulltext": "Search pages containing",
-	"citizen-search-no-results-title": "Sorry we couldn't find $1",
-	"citizen-search-no-results-desc": "Maybe continue to search for pages containing $1"
+	"citizen-search-fulltext": "Search pages containing"
 }

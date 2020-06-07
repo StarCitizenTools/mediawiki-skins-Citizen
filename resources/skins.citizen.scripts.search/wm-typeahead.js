@@ -226,26 +226,6 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	 * @param {string} searchString - The search string.
 	 * @return {string}
 	 */
-	function getNoResultsIndicator( searchString ) {
-		const titlemsg = mw.message( 'citizen-search-no-results-title', searchString ).text(),
-			descmsg = mw.message( 'citizen-search-no-results-desc', searchString ).text();
-
-		return '<div class="suggestions-dropdown" >' +
-			'<div class="suggestion-link">' +
-				'<div class="suggestion-text">' +
-					'<h3 class="suggestion-title">' + titlemsg + '</h3>' +
-					'<p class="suggestion-description">' + descmsg + '</p>' +
-				'</div>' +
-				'<div class="suggestion-thumbnail"></div>' +
-			'</div>' +
-		'</div>';
-	}
-
-	/**
-	 * Card displayed if no results could be found
-	 * @param {string} searchString - The search string.
-	 * @return {string}
-	 */
 	function getSuggestionSpecial( searchString ) {
 		const msg = mw.message( 'citizen-search-fulltext' ).text(),
 			href = searchurl + searchString + '&fulltext=1';
@@ -358,14 +338,20 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			suggestionText,
 			suggestionTitle,
 			suggestionDescription,
+			suggestionSpecial,
 			page,
 			sanitizedThumbURL = false,
 			descriptionText = '',
 			pageDescription = '',
 			i;
 
+		suggestionSpecial = getSuggestionSpecial( searchString );
+
 		if ( suggestions.length === 0 ) {
-			return getNoResultsIndicator( searchString );
+			string += suggestionSpecial;
+			string += '</div>';
+
+			return string;
 		}
 
 		for ( i = 0; i < suggestions.length; i++ ) {
@@ -434,7 +420,6 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			string += suggestionLink;
 		}
 
-		suggestionSpecial = getSuggestionSpecial( searchString );
 		string += suggestionSpecial;
 
 		string += '</div>';
@@ -505,7 +490,9 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 				xhrResults.query.pages : [];
 
 			if ( suggestions.length === 0 ) {
-				typeAheadEl.innerHTML = getNoResultsIndicator( queryString );
+				typeAheadEl.innerHTML = '<div class="suggestions-dropdown">' + 
+				getSuggestionSpecial( queryString ) + 
+				'</div>';
 				return;
 			}
 
