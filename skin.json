@@ -135,30 +135,6 @@
 			"descriptionmsg": "citizen-config-maxsearchresults",
 			"public": true
 		},
-		"EnableButton": {
-			"value": false,
-			"description": "Enable or disable the floating action button on the bottom left",
-			"descriptionmsg": "citizen-config-enablebutton",
-			"public": true
-		},
-		"ButtonLink": {
-			"value": "",
-			"description": "The URL of the FAB button",
-			"descriptionmsg": "citizen-config-buttonlink",
-			"public": true
-		},
-		"ButtonTitle": {
-			"value": "",
-			"description": "The title of the link element on the FAB",
-			"descriptionmsg": "citizen-config-buttontitle",
-			"public": true
-		},
-		"ButtonText": {
-			"value": "",
-			"description": "The text of the FAB",
-			"descriptionmsg": "citizen-config-buttontext",
-			"public": true
-		},
 		"ShowPageTools": {
 			"value": true,
 			"description": "Page tools visibility condition",
@@ -225,15 +201,6 @@
 			"scripts": [
 				"resources/scripts/lazyload.js"
 			]
-		},
-		"skins.citizen.icons": {
-			"class": "ResourceLoaderImageModule",
-			"selector": "#citizen-ui-{name} > *:after",
-			"defaultColor": "#000",
-			"useDataURI": false,
-			"images": {
-				"button": "resources/images/icons/discord.svg"
-			}
 		},
 		"skins.citizen.icons.ca": {
 			"class": "ResourceLoaderImageModule",

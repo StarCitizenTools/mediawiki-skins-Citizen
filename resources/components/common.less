@@ -6,6 +6,29 @@
 @import 'mediawiki.mixins';
 
 /*
+ * Hacks
+ * TODO: Find a place to put them
+*/
+
+// Hide RSS icon
+a.feedlink {
+	background: none !important;
+}
+
+// CSS checkbox hack
+.mw-checkbox-hack {
+	width: @icon-box-size + @margin-side + @icon-padding;
+	height: @header-height;
+	position: absolute;
+	z-index: 8;
+	margin: 0;
+	display: block;
+	opacity: 0;
+	cursor: pointer;
+	-webkit-touch-callout: none;
+}
+
+/*
  * Framework
 */
 html {

@@ -95,8 +95,6 @@ class CitizenTemplate extends BaseTemplate {
 				'msg-citizen-footer-tagline' => $this->getMsg( 'citizen-footer-tagline' )->text(),
 				'array-footer-icons' => $this->getFooterIconsRow(),
 			],
-
-			'data-bottombar' => $this->buildBottombar(),
 		];
 
 		// Prepare and output the HTML response
@@ -348,26 +346,6 @@ class CitizenTemplate extends BaseTemplate {
 			'data-variants' => $variantshtml,
 		];
 
-		return $props;
-	}
-
-	/**
-	 * Render the bottom bar
-	 * TODO: Convert button text to i18n message.
-	 * TODO: Refactor the bottom bar to be customizable
-	 * @return array
-	 */
-	private function buildBottombar() : array {
-		$config = $this->config;
-		$buttonEnabled = $config->get( 'CitizenEnableButton' );
-		if ( $buttonEnabled === false ) {
-			return '';
-		}
-		$props = [
-			'html-citizen-bottombar-button-href' => $config->get( 'CitizenButtonLink' ),
-			'html-citizen-bottombar-button-title' => $config->get( 'CitizenButtonTitle' ),
-			'html-citizen-bottombar-button-text' => $config->get( 'CitizenButtonText' ),
-		];
 		return $props;
 	}
 
