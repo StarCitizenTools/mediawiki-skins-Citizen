@@ -40,13 +40,13 @@
 
 	&-title {
 		margin: 0 0 0.78rem * @content-scaling 0;
-		color: @base-30;
+		color: @base-10;
 		font-size: 1.6rem * @content-scaling;
 		line-height: 1.872rem * @content-scaling;
 	}
 
 	&-highlight {
-		color: @base-10;
+		color: @base-30;
 		font-style: normal;
 	}
 
@@ -68,33 +68,6 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-	}
-
-	&-placeholder {
-		.suggestion {
-			&-title {
-				width: 30%;
-				height: 1.6rem * @content-scaling * 1.125; // MAGIC
-			}
-
-			&-description {
-				width: 70%;
-				height: 1.3rem * @content-scaling * 1.077; // MAGIC
-			}
-
-			&-title,
-			&-description {
-				animation-duration: 1.8s;
-				animation-fill-mode: forwards;
-				animation-iteration-count: infinite;
-				animation-name: placeHolderShimmer;
-				animation-timing-function: linear;
-				background: @base-70;
-				background: linear-gradient( to right, @base-90 8%, @base-80 38%, @base-90 54% );
-				background-size: 1000px 640px;
-				position: relative;
-			}
-		}
 	}
 }
 
@@ -130,16 +103,6 @@ a.suggestion-link:hover {
 	}
 }
 
-@keyframes placeHolderShimmer {
-	0% {
-		background-position: -468px 0;
-	}
-
-	100% {
-		background-position: 468px 0;
-	}
-}
-
 @media ( prefers-color-scheme: dark ) {
 	.suggestions-dropdown {
 		background: @dark-bg-50;
@@ -159,25 +122,15 @@ a.suggestion-link:hover {
 		}
 
 		&-title {
-			color: @dark-text-70;
-		}
-
-		&-highlight {
 			color: @dark-text-90;
 		}
 
-		&-description {
-			color: @dark-text-80;
+		&-highlight {
+			color: @dark-text-70;
 		}
 
-		&-placeholder {
-			.suggestion {
-				&-title,
-				&-description {
-					background: @dark-bg-20;
-					background: linear-gradient( to right, @dark-bg-40 8%, @dark-bg-30 38%, @dark-bg-40 54% );
-				}
-			}
+		&-description {
+			color: @dark-text-70;
 		}
 	}
 }

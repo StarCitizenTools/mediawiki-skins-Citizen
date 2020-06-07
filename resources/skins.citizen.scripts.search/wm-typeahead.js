@@ -221,22 +221,6 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	}
 
 	/**
-	 * Card displayed while loading search results
-	 * @return {string}
-	 */
-	function getLoadingIndicator() {
-		return '<div class="suggestions-dropdown">' +
-			'<div class="suggestion-link">' +
-				'<div class="suggestion-text suggestion-placeholder">' +
-					'<h3 class="suggestion-title"></h3>' +
-					'<p class="suggestion-description"></p>' +
-				'</div>' +
-				'<div class="suggestion-thumbnail"></div>' +
-			'</div>' +
-		'</div>';
-	}
-
-	/**
 	 * Card displayed if no results could be found
 	 * @param {string} searchString - The search string.
 	 * @return {string}
@@ -308,7 +292,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 				break;
 		}
 
-		typeAheadEl.innerHTML = getLoadingIndicator();
+		// typeAheadEl.innerHTML = getLoadingIndicator();
 
 		api.get( searchQuery )
 			.done( ( data ) => {
