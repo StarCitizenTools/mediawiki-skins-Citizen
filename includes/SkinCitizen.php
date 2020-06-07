@@ -213,11 +213,13 @@ class SkinCitizen extends SkinTemplate {
 		$modules = parent::getDefaultModules();
 
 		// Replace the search module
-		$modules['search'] = [
-			'skins.citizen.scripts.search',
-			'skins.citizen.styles.search',
-			'skins.citizen.icons.search',
-		];
+		if ( $this->getConfigValue( 'CitizenEnableSearch' ) === true ) {
+			$modules['search'] = [
+				'skins.citizen.scripts.search',
+				'skins.citizen.styles.search',
+				'skins.citizen.icons.search',
+			];
+		}
 
 		return $modules;
 	}

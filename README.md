@@ -25,6 +25,7 @@ wfLoadSkin( 'Citizen' );
 ### Search suggestions
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
+`$wgCitizenEnableSearch` | Enable or disable rich search suggestions |`true` - enable; `false` - disable | `true`
 `$wgCitizenSearchDescriptionSource` | Source of description text on search suggestions | `wikidata` - Use description provided by [WikibaseLib](Extension:WikibaseLib) or [ShortDescription](https://www.mediawiki.org/wiki/Extension:ShortDescription); `textextracts` - Use description provided by [TextExtracts](https://www.mediawiki.org/wiki/Extension:TextExtracts); `pagedescription` - Use description provided by [Description2](https://www.mediawiki.org/wiki/Extension:Description2) or any other extension that sets the `description` page property | `textextracts`
 `$wgCitizenMaxSearchResults` | Max number of search suggestions | Integer > 0 | `6`
 

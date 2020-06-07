@@ -123,6 +123,12 @@
 			"descriptionmsg": "citizen-config-manifestbackgroundcolor",
 			"public": true
 		},
+		"EnableSearch": {
+			"value": true,
+			"description": "Enable or disable rich search suggestions",
+			"descriptionmsg": "citizen-config-enablesearch",
+			"public": true
+		},
 		"SearchDescriptionSource": {
 			"value": "textextracts",
 			"description": "The source of the short description in the suggestions",
