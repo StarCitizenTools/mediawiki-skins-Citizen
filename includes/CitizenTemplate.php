@@ -42,9 +42,7 @@ class CitizenTemplate extends BaseTemplate {
 			),
 
 			'data-header' => [
-				'msg-citizen-header-menu-toggle' => $this->getMsg( 'citizen-header-menu-toggle' )->text(),
-				'data-menu' => $this->buildMenu(),
-				'msg-citizen-header-search-toggle' => $this->getMsg( 'citizen-header-search-toggle' )->text(),
+				'data-drawer' => $this->buildDrawer(),
 				'data-extratools' => $this->getExtraTools(),
 				'data-searchbox' => $this->buildSearchbox(),
 			],
@@ -107,11 +105,11 @@ class CitizenTemplate extends BaseTemplate {
 	}
 
 	/**
-	 * Render the navigation menu
+	 * Render the navigation drawer
 	 * Based on Vector (be3843e)
 	 * @return array
 	 */
-	private function buildMenu() : array {
+	private function buildDrawer() : array {
 		$skin = $this->getSkin();
 		$portals = $skin->buildSidebar();
 		$props = [];
@@ -196,6 +194,7 @@ class CitizenTemplate extends BaseTemplate {
 		$personalToolsPortal[ 'label-class' ] .= 'screen-reader-text';
 
 		return [
+			'msg-citizen-drawer-toggle' => $this->getMsg( 'citizen-drawer-toggle' )->text(),
 			'data-logo' => $this->buildLogo(),
 			'data-portals-first' => $firstPortal,
 			'array-portals-rest' => array_slice( $props, 1 ),
@@ -256,6 +255,7 @@ class CitizenTemplate extends BaseTemplate {
 	private function buildSearchbox() : array {
 		$config = $this->config;
 		$props = [
+			'msg-citizen-search-toggle' => $this->getMsg( 'citizen-search-toggle' )->text(),
 			'form-action' => $config->get( 'Script' ),
 			'html-input' => $this->makeSearchInput( [ 'id' => 'searchInput' ] ),
 			'html-button-search' => $this->makeSearchButton(

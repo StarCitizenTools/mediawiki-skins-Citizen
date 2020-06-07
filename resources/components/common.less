@@ -989,9 +989,6 @@ a {
 					background-color: @base-90;
 					border-radius: 100%;
 					.boxshadow(4);
-					transform: translate( 0, @header-height + @margin-side );
-					transition: @transition-opacity, @transition-transform, @transition-box-shadow-quick;
-					transition-duration: 0.5s !important; // Override duration 0 for ToC
 
 					&:hover {
 						background-color: @menu-item-link-hover;
@@ -1033,12 +1030,6 @@ a {
 				transform: none;
 				transition: @transition-transform;
 			}
-		}
-	}
-
-	.nav-up {
-		~ .mw-body .mw-body-content #mw-content-text .mw-parser-output #toc .toctoggle a {
-			transform: none;
 		}
 	}
 }

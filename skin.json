@@ -202,7 +202,6 @@
 		},
 		"skins.citizen.scripts": {
 			"scripts": [
-				"resources/scripts/header.js",
 				"resources/scripts/toc.js",
 				"resources/scripts/searchfocus.js"
 			]
@@ -331,7 +330,9 @@
 				"mycontris": "resources/images/icons/contributions.svg",
 				"logout": "resources/images/icons/logOut.svg",
 				"createaccount": "resources/images/icons/userAvatar.svg",
-				"login": "resources/images/icons/logOut.svg"
+				"login": "resources/images/icons/logOut.svg",
+				"anontalk": "resources/images/icons/userTalk.svg",
+				"anoncontribs": "resources/images/icons/contributions.svg"
 			}
 		},
 		"skins.citizen.icons.footer": {

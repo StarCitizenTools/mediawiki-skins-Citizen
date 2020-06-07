@@ -5,6 +5,25 @@
 	string html-input raw HTML containing the input box of the search box
 	string html-button-search raw HTML containing the button of the search box
 }}
+<input
+	type="checkbox" 
+	id="search-toggle" 
+	class="mw-checkbox-hack" 
+	role="button" 
+	title="{{msg-citizen-search-toggle}}" 
+	aria-labelledby="search-toggle-label" 
+	aria-controls="searchform">
+<label
+	id="search-toggle-label" 
+	class="screen-reader-text" 
+	for="search-toggle">
+	{{msg-citizen-search-toggle}}
+</label>
+<div id="search-toggle-icon">
+	<div id="search-toggle-icon-1" class="search-toggle-icon-div"></div>
+	<div id="search-toggle-icon-2" class="search-toggle-icon-div"></div>
+	<div id="search-toggle-icon-3" class="search-toggle-icon-div"></div>
+</div>
 <form action="{{form-action}}" role="search" id="searchform">
 	<input type="hidden" name="title" value="{{page-title}}">
 	<label class="screen-reader-text" for="searchInput">{{msg-search}}</label>

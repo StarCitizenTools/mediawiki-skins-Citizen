@@ -1,0 +1,206 @@
+//
+// Citizen - Searchbox styles
+// https://starcitizen.tools
+//
+
+#search {
+	&-toggle {
+		right: 0; // align checkbox with icon
+
+		&-icon {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: @icon-box-size + @margin-side + @icon-padding;
+			height: @header-height;
+			opacity: @opacity-icon;
+			transition: @transition-transform-quick, @transition-height-quick, @transition-opacity-quick, @transition-border-color-quick;
+
+			&-1 {
+				top: 7px;
+				left: 12px;
+				height: 10px;
+				transform: rotate( -45deg );
+			}
+
+			&-2 {
+				margin-top: -2px;
+				margin-left: -2px;
+				width: 10px;
+				height: 10px;
+				border: solid 2px @base-0;
+				border-radius: 100%;
+				transform: rotate( -45deg );
+			}
+
+			&-3 {
+				opacity: 0;
+				top: 0px;
+				left: -7px;
+				height: 18px;
+				transform: rotate( -135deg );
+			}
+
+			&-1,
+			&-3 {
+				width: 2px;
+				background-color: @base-0;
+			}
+		}
+
+		&:checked {
+			~ #searchform {
+				z-index: 10;
+				opacity: 1;
+				pointer-events: auto; // clickable
+
+				#searchInput {
+					width: 400px;
+				}
+			}
+
+			~ #search-toggle-icon {
+				#search-toggle-icon {
+					&-2 {
+						border-color: transparent;
+					}
+
+					&-1 {
+						height: 18px;
+						transform: translate( -5px, -7px ) rotate(135deg);
+					}
+
+					&-3 {
+						opacity: 1;
+					}
+				}
+
+				&:hover {
+					border-color: @base-0;
+
+					#search-toggle-icon-3 {
+						opacity: 0;
+					}
+				}
+			}
+
+			&:hover {
+				~ #search-toggle-icon {
+					#search-toggle-icon {
+						&-1 {
+							height: 12px;
+							transform: translate(-5px,-7px) rotate(135deg);
+						}
+
+						&-2 {
+							border-color: transparent;
+						}
+
+						&-3 {
+							height: 12px;
+						}
+					}
+				}
+			}
+		}
+
+		&:hover {
+			~ #search-toggle-icon {
+				opacity: @opacity-icon-active;
+
+				#search-toggle-icon {
+					&-1 {
+						height: 6px;
+						transform: translate(2px, 2px) rotate(-45deg);
+					}
+				}
+			}
+		}
+	}
+
+	&form {
+		position: absolute;
+		z-index: -1; // not interactable
+		margin: 7px 0 8px; // 1px h3 screen reader
+		display: flex;
+		top: 0;
+		right: @icon-box-size + @icon-padding * 2;
+		opacity: 0;
+		.boxshadow(4);
+		transition: @transition-opacity;
+		pointer-events: none; // not clickable
+	}
+
+	&Input {
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		padding: 12px 15px;
+		width: 0;
+		height: 42px;
+		max-width: calc( ~'100vw -'@icon-box-size * 2 + @icon-padding * 4 + @margin-side );
+		border: 1px solid @base-90;
+		transition: @transition-width, @transition-box-shadow;
+
+		&:focus {
+			outline: 0;
+			.boxshadow(5);
+		}
+	}
+
+	&Button {
+		.button-blue;
+		width: @icon-box-size + @icon-padding * 2;
+		height: 42px;
+		border: 0;
+		cursor: pointer; //somehow it is not pointer
+
+		img {
+			filter: invert( 1 );
+			width: 16px;
+		}
+
+		&:hover,
+		&:active,
+		&:focus {
+			.button-blue-active;
+		}
+	}
+}
+
+.search {
+	&-toggle-icon-div {
+		position: relative;
+		transition: inherit;
+	}
+}
+
+@media ( prefers-color-scheme: dark ) {
+	#search {
+		&-toggle {
+			&-icon {
+				opacity: 0.4;
+
+				&-2 {
+					border-color: @base-100;
+				}
+
+				&-1,
+				&-3 {
+					background: @base-100;
+				}
+			}
+
+			&:hover {
+				~ #search-toggle-icon {
+					opacity: 0.6;
+				}
+			}
+		}
+
+		&Input {
+			border-color: @dark-bg-60;
+			background: @dark-bg-50 !important;
+		}
+	}
+}

@@ -1,0 +1,323 @@
+/*
+ * Citizen - Drawer styles
+ * https://starcitizen.tools
+*/
+
+#mw-drawer {
+	&-button {
+		&-icon {
+			width: @icon-size;
+			height: @icon-size;
+			margin: (@header-height - @icon-size) / 2 @icon-padding (@header-height - @icon-size) / 2 (@icon-margin * 2 + @margin-side * 2) / 2;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+
+			&-1 {
+				transform-origin: 0% 0%;
+			}
+
+			&-2 {
+				transform-origin: 0% 100%;
+			}
+		}
+
+		&:checked {
+			// Transform all the slices of the button into a crossmark
+			~ #mw-drawer-button-icon {
+				#mw-drawer-button-icon {
+					&-1 {
+						opacity: 0;
+						transform: rotate( 0deg ) scale( 0.2, 0.2 );
+					}
+					// Reflect line
+					&-2 {
+						transform: rotate( -45deg ) translate( -2px, 6px );
+					}
+
+					// Hide line
+					&-3 {
+						transform: rotate( 45deg ) translate( -5px, -7px );
+					}
+				}
+
+				.mw-drawer-button-icon {
+					&-div {
+						opacity: @opacity-icon;
+					}
+				}
+			}
+
+			// Show drawer
+			~ #mw-drawer-menu {
+				transform: none;
+				will-change: unset;
+			}
+		}
+
+		&:hover {
+			~ #mw-drawer-button-icon {
+				#mw-drawer-button-icon {
+					&-1 {
+						transform: translate( -50%, 0 );
+					}
+				}
+
+				.mw-drawer-button-icon {
+					&-div {
+						opacity: @opacity-icon-active;
+					}
+				}
+			}
+		}
+	}
+
+	&-menu {
+		position: fixed;
+		z-index: 4;
+		top: 0;
+		padding-top: @header-height;
+		width: @drawer-width;
+		max-width: 100vw; // in case if someone has super small screen
+		height: ~'calc(100vh - @{header-height})';
+		.boxshadow(3);
+		background: @menu-background;
+		display: flex;
+		flex-direction: column;
+		transform-origin: 0% 0%;
+		transform: translate( -110%, 0 ); // shadow bleeding with 100%
+		transition: @transition-transform;
+		will-change: transform; // help with performance
+
+		&-logo {
+			padding: 0 @margin-side @margin-side / 2 @margin-side;
+			border-bottom: 1px solid @base-80;
+			display: flex;
+			flex-direction: column;
+
+			.mw-wiki-logo {
+				margin-bottom: @margin-side / 2;
+				width: 120px;
+				height: 120px;
+				display: block;
+				background-position: left center;
+				background-repeat: no-repeat;
+				background-size: contain;
+			}
+
+			.mw-wiki-title {
+				opacity: 0;
+				height: 0;
+			}
+		}
+
+		&-main {
+			padding: @margin-side / 2 0;
+			overflow: auto;
+			overscroll-behavior: contain;
+			flex-grow: 1;
+
+			h3 {
+				margin: @margin-side / 2 0 0 0;
+				padding: @margin-side / 2 @margin-side;
+				color: @color-item-header;
+				font-size: @ui-menu-header;
+				font-weight: normal;
+				letter-spacing: 1px;
+			}
+		}
+
+		&-main,
+		&-user {
+			a {
+				.menu-item-link;
+				align-items: center;
+				justify-content: space-between;
+				padding: @padding-menu-item-big;
+				font-size: @ui-menu-text-big;
+				font-family: @fonts;
+
+				&:after {
+					.resource-loader-list-icon;
+					margin-left: @icon-padding;
+					opacity: 0.4;
+					display: block;
+					background-size: contain;
+					transition: @transition-opacity-quick;
+				}
+
+				&:hover {
+					.menu-item-link-hover;
+
+					&:after {
+						opacity: 0.6;
+					}
+				}
+
+				&:active {
+					.menu-item-link-active;
+				}
+
+				&:focus {
+					.menu-item-link-focus;
+				}
+			}
+		}
+	}
+}
+
+.mw-drawer {
+	&-button {
+		&-icon {
+			&-div {
+				z-index: 5;
+				margin: 1.5px 0;
+				width: @icon-size;
+				height: 2px;
+				display: block;
+				background: @base-0;
+				opacity: @opacity-icon;
+				transform-origin: 4px 0;
+				transition: @transition-transform-quick, @transition-background-quick, @transition-opacity-quick;
+			}
+		}
+	}
+}
+
+#p-personal {
+	padding-top: @margin-side / 2;
+	border-top: 1px solid @base-80;
+
+	#pt-userpage {
+		margin-bottom: @margin-side / 2;
+
+		a {
+			flex-direction: row-reverse;
+			justify-content: flex-end;
+
+			&:after {
+				margin: 0;
+				margin-right: @margin-side;
+				width: @icon-box-size;
+				height: @icon-box-size;
+			}
+		}
+
+		span {
+			order: 2;
+			padding-left: @margin-side;
+		}
+	}
+
+	#pt-login {
+		a {
+			.button-blue;
+
+			&:hover,
+			&:active,
+			&:focus {
+				.button-blue-active;
+			}
+		}
+	}
+
+	#pt-logout {
+		a {
+			.button-red;
+
+			&:hover,
+			&:active,
+			&:focus {
+				.button-red-active;
+			}
+		}
+	}
+}
+
+// Only show title when screen height is less than 800px
+@media only screen and ( max-height: 800px ) {
+	#mw-drawer-menu-logo {
+		.mw-wiki-logo {
+			margin: 0;
+			height: 0;
+		}
+
+		.mw-wiki-title {
+			margin-top: 20px;
+			height: auto;
+			opacity: 1;
+		}
+	}
+}
+
+@media ( prefers-color-scheme: dark ) {
+	#mw-drawer {
+		&-button {
+			&:hover {
+				~ #mw-drawer-button-icon {
+					.mw-drawer-button-icon {
+						&-div {
+							opacity: 0.6;
+						}
+					}
+				}
+			}
+		}
+		&-menu {
+			background: @dark-bg-40;
+
+			&-logo {
+				border-color: @dark-bg-50;
+
+				.mw-wiki-title {
+					color: @dark-text-100;
+				}
+			}
+
+			&-main {
+				h3 {
+					color: @dark-text-100;
+				}
+			}
+
+			&-main,
+			&-user {
+				a {
+					color: @dark-text-80 !important;
+
+					&:hover {
+						background-color: @dark-bg-60;
+						color: @dark-text-90 !important;
+					}
+
+					&:active,
+					&:focus {
+						color: @dark-text-100 !important;
+						background-color: @accent-10;
+					}
+
+					&:after {
+						filter: invert( 1 );
+					}
+				}
+			}
+		}
+	}
+
+	.mw-drawer {
+		&-button {
+			&-icon {
+				&-div {
+					opacity: 0.4;
+					background: @base-100;
+				}
+			}
+		}
+	}
+
+	#p-personal {
+		border-color: @dark-bg-50;
+	}
+}
