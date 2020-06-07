@@ -490,8 +490,8 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 				xhrResults.query.pages : [];
 
 			if ( suggestions.length === 0 ) {
-				typeAheadEl.innerHTML = '<div class="suggestions-dropdown">' + 
-				getSuggestionSpecial( queryString ) + 
+				typeAheadEl.innerHTML = '<div class="suggestions-dropdown">' +
+				getSuggestionSpecial( queryString ) +
 				'</div>';
 				return;
 			}
