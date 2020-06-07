@@ -185,15 +185,15 @@
 		},
 		"skins.citizen.scripts": {
 			"scripts": [
-				"resources/scripts/toc.js",
-				"resources/scripts/searchfocus.js"
+				"resources/skins.citizen.scripts/toc.js",
+				"resources/skins.citizen.scripts/searchfocus.js"
 			]
 		},
-		"skins.citizen.search.scripts": {
+		"skins.citizen.scripts.search": {
 			"scripts": [
-				"resources/scripts/underscore.partial.js",
-				"resources/scripts/wm-typeahead.js",
-				"resources/scripts/typeahead-init.js"
+				"resources/skins.citizen.scripts.search/underscore.partial.js",
+				"resources/skins.citizen.scripts.search/wm-typeahead.js",
+				"resources/skins.citizen.scripts.search/typeahead-init.js"
 			],
 			"dependencies": [
 				"mediawiki.api",
@@ -204,9 +204,9 @@
 				"citizen-search-no-results-desc"
 			]
 		},
-		"skins.citizen.lazyload.scripts": {
+		"skins.citizen.scripts.lazyload": {
 			"scripts": [
-				"resources/scripts/lazyload.js"
+				"resources/skins.citizen.scripts.lazyload/lazyload.js"
 			]
 		},
 		"skins.citizen.icons.ca": {
@@ -324,13 +324,13 @@
 			"defaultColor": "#fff",
 			"useDataURI": false,
 			"images": {
-				"by-sa": "resources/images/badges/CCBYSA.svg",
-				"mediawiki": "resources/images/badges/MediaWiki.svg",
-				"wikiapiary": "resources/images/badges/WikiApiary.svg",
-				"miraheze": "resources/images/badges/Miraheze.svg",
-				"gdpr": "resources/images/badges/GDPR.svg",
-				"robertsspaceindustries": "resources/images/badges/StarCitizenCommunity.svg",
-				"starcitizen.tools": "resources/images/badges/StarCitizenTools.svg"
+				"by-sa": "resources/skins.citizen.icons.badges/CCBYSA.svg",
+				"mediawiki": "resources/skins.citizen.icons.badges/MediaWiki.svg",
+				"wikiapiary": "resources/skins.citizen.icons.badges/WikiApiary.svg",
+				"miraheze": "resources/skins.citizen.icons.badges/Miraheze.svg",
+				"gdpr": "resources/skins.citizen.icons.badges/GDPR.svg",
+				"robertsspaceindustries": "resources/skins.citizen.icons.badges/StarCitizenCommunity.svg",
+				"starcitizen.tools": "resources/skins.citizen.icons.badges/StarCitizenTools.svg"
 			}
 		},
 		"skins.citizen.icons.search": {
