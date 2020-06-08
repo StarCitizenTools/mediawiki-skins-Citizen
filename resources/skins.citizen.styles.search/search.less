@@ -73,10 +73,19 @@
 
 #suggestion-special {
 	padding: 1rem;
-	display: block;
+	display: flex;
 	color: @base-10;
+	align-items: center;
+
+	&-icon {
+		margin: 0 14px 0 10px;
+		width: 20px;
+		height: 20px;
+		background-repeat: no-repeat;
+	}
 
 	&-text {
+		padding: 5px 0; // make it looks more center aligned
 		font-size: @content-caption-size;
 		font-family: @fonts;
 		font-weight: bold;

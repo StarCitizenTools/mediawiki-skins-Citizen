@@ -348,10 +348,11 @@
 		},
 		"skins.citizen.icons.search": {
 			"class": "ResourceLoaderImageModule",
-			"selector": ".suggestion-thumbnail",
+			"selector": "{name}",
 			"useDataURI": false,
 			"images": {
-				"noimage": "resources/images/cards/noimage.svg"
+				".suggestion-thumbnail": "resources/skins.citizen.icons.search/noimage.svg",
+				"#suggestion-special-icon": "resources/skins.citizen.icons.search/searchfulltext.svg"
 			}
 		}
 	},

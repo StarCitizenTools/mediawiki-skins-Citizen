@@ -231,7 +231,10 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			href = searchurl + searchString + '&fulltext=1';
 
 		return '<a id="suggestion-special" href="' + href + '">' +
-			'<div id="suggestion-special-text">' + msg + '&nbsp;<em class="suggestion-highlight">' + searchString + '</em></div>' +
+			'<div id="suggestion-special-icon"></div>' +
+			'<div id="suggestion-special-text">' + msg +
+				'&nbsp;<em class="suggestion-highlight">' +searchString +
+			'</em></div>' +
 		'</div>';
 	}
 
