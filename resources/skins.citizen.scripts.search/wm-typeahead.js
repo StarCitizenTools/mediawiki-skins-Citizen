@@ -346,6 +346,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			sanitizedThumbURL = false,
 			descriptionText = '',
 			pageDescription = '',
+			suggestionLinkID,
 			i;
 
 		suggestionSpecial = getSuggestionSpecial( searchString );
@@ -403,6 +404,15 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 				descriptionText = '';
 			}
 
+			// Add ID if first or last suggestion
+			if ( i === 0 ) {
+				suggestionLinkID = 'suggestion-link-first';
+			} else if ( i === suggestions.length - 1 ) {
+				suggestionLinkID = 'suggestion-link-last';
+			} else {
+				suggestionLinkID = '';
+			}
+
 			suggestionDescription = mw.html.element( 'p', { class: 'suggestion-description' }, descriptionText );
 
 			suggestionTitle = mw.html.element( 'h3', { class: 'suggestion-title' }, new mw.html.Raw( highlightTitle( page.title, searchString ) ) );
@@ -414,11 +424,11 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 				style: ( sanitizedThumbURL ) ? 'background-image:url(' + sanitizedThumbURL + ')' : false
 			}, '' );
 
-			// TODO: Make it configurable from the skin
 			suggestionLink = mw.html.element( 'a', {
 				class: 'suggestion-link',
+				id: suggestionLinkID,
 				href: articleurl + encodeURIComponent( page.title.replace( / /gi, '_' ) )
-			}, new mw.html.Raw( suggestionText + suggestionThumbnail ) );
+			}, new mw.html.Raw( suggestionThumbnail + suggestionText ) );
 
 			string += suggestionLink;
 		}
