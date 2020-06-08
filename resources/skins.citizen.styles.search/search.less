@@ -20,6 +20,7 @@
 	display: flex; // Needed to show margin
 	flex-direction: column;
 	background: @base-100;
+	border-radius: 0 0 @border-radius-large @border-radius-large;
 	.boxshadow(4);
 }
 
@@ -67,6 +68,7 @@
 		width: 70px;
 		min-width: 70px; // so it won't be squeezed by the content text
 		height: 60px;
+		border-radius: @border-radius-medium;
 		background-color: @base-80;
 		background-position: center center;
 		background-repeat: no-repeat;
@@ -88,6 +90,7 @@
 	&-special {
 		padding: 1rem;
 		border-top: 1px solid @base-80;
+		border-radius: 0 0 @border-radius-large @border-radius-large;
 		display: flex;
 		color: @base-10;
 		align-items: center;
