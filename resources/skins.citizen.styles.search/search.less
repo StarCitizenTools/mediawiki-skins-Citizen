@@ -39,11 +39,12 @@
 	}
 
 	&-text {
-		margin-left: 20px;
+		margin-left: 15px;
 	}
 
 	&-title {
 		margin: 0 0 0.78rem * @content-scaling 0;
+		display: inline-block; // so that the margin does not occupy space
 		color: @base-10;
 		font-size: @content-h6-size;
 		line-height: 1.872rem * @content-scaling;
@@ -64,6 +65,7 @@
 
 	&-thumbnail {
 		width: 70px;
+		min-width: 70px; // so it won't be squeezed by the content text
 		height: 60px;
 		background-color: @base-80;
 		background-position: center center;
