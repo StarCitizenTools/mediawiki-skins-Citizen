@@ -3,11 +3,40 @@
 // https://starcitizen.tools
 //
 
+@search-bar-icon-size: 14px;
+
 #search {
-	&-toggle {
-		right: 0; // align checkbox with icon
+	&form {
+		position: absolute;
+		z-index: -1; // not interactable
+		margin: 7px 0 8px; // 1px h3 screen reader
+		display: flex;
+		top: 0;
+		right: @margin-side / 2;
+		opacity: 0;
+		.boxshadow(4);
+		transition: @transition-opacity;
+		pointer-events: none; // not clickable
 
 		&-icon {
+			position: absolute;
+			margin-left: @search-bar-icon-size;
+			width: @search-bar-icon-size;
+			height: @search-bar-height;
+			opacity: @opacity-icon;
+			background-size: contain;
+    		background-repeat: no-repeat;
+    		background-position: center;
+		}
+	}
+
+	&-toggle {
+		right: 0; // align checkbox with icon
+		z-index: 21; // override to be on top of the form
+
+		&-icon {
+			position: relative;
+			z-index: 20; // stay on top of search form
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -37,7 +66,7 @@
 				opacity: 0;
 				top: 0;
 				left: -7px;
-				height: 18px;
+				height: 14px;
 				transform: rotate( -135deg );
 			}
 
@@ -55,7 +84,7 @@
 				pointer-events: auto; // clickable
 
 				#searchInput {
-					width: 454px;
+					width: @search-bar-width;
 				}
 			}
 
@@ -66,7 +95,7 @@
 					}
 
 					&-1 {
-						height: 18px;
+						height: 14px;
 						transform: translate( -5px, -7px ) rotate( 135deg );
 					}
 
@@ -118,27 +147,15 @@
 		}
 	}
 
-	&form {
-		position: absolute;
-		z-index: -1; // not interactable
-		margin: 7px 0 8px; // 1px h3 screen reader
-		display: flex;
-		top: 0;
-		right: @icon-box-size + @icon-padding * 2;
-		opacity: 0;
-		.boxshadow(4);
-		transition: @transition-opacity;
-		pointer-events: none; // not clickable
-	}
-
 	&Input {
 		-webkit-appearance: none;
 		-moz-appearance: none;
 		appearance: none;
-		padding: 12px 15px;
+		padding: 12px @icon-box-size + @icon-padding 12px @search-bar-icon-size * 3;
+		padding-right:  @icon-box-size + @icon-padding;
 		width: 0;
-		height: 42px;
-		max-width: calc( ~'100vw -'@icon-box-size * 2 + @icon-padding * 4 + @margin-side );
+		height: @search-bar-height;
+		max-width: calc( ~'100vw -'@margin-side );
 		border: 1px solid @base-90;
 		transition: @transition-width, @transition-box-shadow;
 
@@ -158,6 +175,13 @@
 
 @media ( prefers-color-scheme: dark ) {
 	#search {
+		&form {
+			&-icon {
+				opacity: 0.4;
+				filter: invert(1);
+			}
+		}
+
 		&-toggle {
 			&-icon {
 				opacity: 0.4;
