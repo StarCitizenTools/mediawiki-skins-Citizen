@@ -10,7 +10,7 @@
 
 #typeahead-suggestions {
 	position: absolute;
-	top: @header-height;
+	top: 42px;
 	z-index: 99999;
 }
 
@@ -129,18 +129,8 @@ a.suggestion-link:hover {
 	.suggestions-dropdown {
 		position: fixed;
 		left: 0;
-		top: @header-height + 1px;
+		top: @header-height;
 		max-width: 100vw;
-
-		&:after {
-			content: '';
-			width: 100vw;
-			height: 100vh;
-			background: #000;
-			display: block;
-			opacity: 0.7;
-			position: fixed;
-		}
 	}
 }
 
