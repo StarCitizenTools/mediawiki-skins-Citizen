@@ -55,7 +55,7 @@
 				pointer-events: auto; // clickable
 
 				#searchInput {
-					width: 400px;
+					width: 454px;
 				}
 			}
 
@@ -145,25 +145,6 @@
 		&:focus {
 			outline: 0;
 			.boxshadow(5);
-		}
-	}
-
-	&Button {
-		.button-blue;
-		width: @icon-box-size + @icon-padding * 2;
-		height: 42px;
-		border: 0;
-		cursor: pointer; //somehow it is not pointer
-
-		img {
-			filter: invert( 1 );
-			width: 16px;
-		}
-
-		&:hover,
-		&:active,
-		&:focus {
-			.button-blue-active;
 		}
 	}
 }

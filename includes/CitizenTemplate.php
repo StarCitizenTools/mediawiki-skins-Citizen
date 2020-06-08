@@ -256,12 +256,6 @@ class CitizenTemplate extends BaseTemplate {
 			'msg-citizen-search-toggle' => $this->getMsg( 'citizen-search-toggle' )->text(),
 			'form-action' => $config->get( 'Script' ),
 			'html-input' => $this->makeSearchInput( [ 'id' => 'searchInput' ] ),
-			'html-button-search' => $this->makeSearchButton(
-				'image',
-				[ 'id' => 'searchButton',
-					'src' => $this->getSkin()->getSkinStylePath( 'resources/images/icons/search.svg' ),
-				]
-			),
 			'msg-search' => $this->getMsg( 'search' )->text(),
 			'page-title' => SpecialPage::getTitleFor( 'Search' )->getPrefixedDBkey(),
 		];
