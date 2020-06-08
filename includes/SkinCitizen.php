@@ -234,8 +234,6 @@ class SkinCitizen extends SkinTemplate {
 			'skins.citizen.styles.fonts',
 			'skins.citizen.icons',
 			'skins.citizen.icons.ca',
-			'skins.citizen.icons.p',
-			'skins.citizen.icons.toc',
 			'skins.citizen.icons.es',
 			'skins.citizen.icons.n',
 			'skins.citizen.icons.t',

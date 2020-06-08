@@ -222,6 +222,22 @@
 				"resources/skins.citizen.scripts.lazyload/lazyload.js"
 			]
 		},
+		"skins.citizen.icons": {
+			"class": "ResourceLoaderImageModule",
+			"selector": "{name}",
+			"defaultColor": "#000",
+			"useDataURI": false,
+			"images": {
+				".toctoggle > a:before": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/toc-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/toc-rtl.svg"
+					}
+				},
+				"#p-actions:before": "resources/skins.citizen.icons/more.svg",
+				"#searchform-icon": "resources/images/icons/search.svg"
+			}
+		},
 		"skins.citizen.icons.ca": {
 			"class": "ResourceLoaderImageModule",
 			"selector": "#ca-{name} > *:after",
@@ -242,24 +258,6 @@
 				"talk": "resources/images/icons/discussion.svg",
 				"nstab-main": "resources/images/icons/article.svg",
 				"translate": "resources/images/icons/language.svg"
-			}
-		},
-		"skins.citizen.icons.p": {
-			"class": "ResourceLoaderImageModule",
-			"selector": "#p-{name}:before",
-			"defaultColor": "#000",
-			"useDataURI": false,
-			"images": {
-				"actions": "resources/images/icons/more.svg"
-			}
-		},
-		"skins.citizen.icons.toc": {
-			"class": "ResourceLoaderImageModule",
-			"selector": ".toctoggle > a:before",
-			"defaultColor": "#000",
-			"useDataURI": false,
-			"images": {
-				"": "resources/images/icons/ToC.svg"
 			}
 		},
 		"skins.citizen.icons.es": {

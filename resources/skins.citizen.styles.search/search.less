@@ -6,8 +6,6 @@
 @import '../variables.less';
 @import '../mixins.less';
 
-@suggestion-max-width: 400px + @icon-box-size + @icon-padding * 2; // 454px
-
 #typeahead-suggestions {
 	position: absolute;
 	top: 42px;
@@ -15,7 +13,7 @@
 }
 
 .suggestions-dropdown {
-	width: @suggestion-max-width;
+	width: @search-bar-width;
 	max-width: calc( ~'100vw -'@icon-box-size + @icon-padding * 2 + @margin-side );
 	display: flex; // Needed to show margin
 	flex-direction: column;
@@ -128,7 +126,7 @@ a.suggestion-link:hover {
 	}
 }
 
-@media only screen and ( max-width: @suggestion-max-width ) {
+@media only screen and ( max-width: @search-bar-width ) {
 	.suggestions-dropdown {
 		position: fixed;
 		left: 0;
