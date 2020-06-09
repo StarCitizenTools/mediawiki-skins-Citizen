@@ -373,7 +373,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 					pageDescription = page.extract || '';
 					break;
 				case 'pagedescription':
-					pageDescription = page.pageprops.description || '';
+					pageDescription =  page.pageprops.description.substring(0, 60) + '...' || '';
 					break;
 			}
 
