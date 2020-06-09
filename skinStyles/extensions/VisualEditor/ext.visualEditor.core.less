@@ -6,12 +6,12 @@
 @import '../../../resources/variables.less';
 
 .ve-activated {
-	.mw-header-container {
-		background-color: #fff;
+	.mw-header {
+		background-color: @header-background-color-light;
+	}
 
-		&:before {
-			box-shadow: none;
-		}
+	#mw-header-background {
+		box-shadow: none;
 	}
 
 	.mw-sidebar-sitename {
@@ -84,8 +84,8 @@
 
 @media ( prefers-color-scheme: dark ) {
 	.ve-activated {
-		.mw-header-container {
-			background-color: @dark-bg-0;
+		.mw-header {
+			background-color: @header-background-color-dark;
 		}
 	}
 

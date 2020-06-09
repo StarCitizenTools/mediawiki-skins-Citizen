@@ -1,7 +1,7 @@
 {
 	"name": "Citizen",
 	"namemsg": "skinname-citizen",
-	"version": "0.8.2",
+	"version": "0.8.3",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
@@ -123,6 +123,12 @@
 			"descriptionmsg": "citizen-config-manifestbackgroundcolor",
 			"public": true
 		},
+		"EnableSearch": {
+			"value": true,
+			"description": "Enable or disable rich search suggestions",
+			"descriptionmsg": "citizen-config-enablesearch",
+			"public": true
+		},
 		"SearchDescriptionSource": {
 			"value": "textextracts",
 			"description": "The source of the short description in the suggestions",
@@ -133,30 +139,6 @@
 			"value": 6,
 			"description": "The max number of suggestions in search result",
 			"descriptionmsg": "citizen-config-maxsearchresults",
-			"public": true
-		},
-		"EnableButton": {
-			"value": false,
-			"description": "Enable or disable the floating action button on the bottom left",
-			"descriptionmsg": "citizen-config-enablebutton",
-			"public": true
-		},
-		"ButtonLink": {
-			"value": "",
-			"description": "The URL of the FAB button",
-			"descriptionmsg": "citizen-config-buttonlink",
-			"public": true
-		},
-		"ButtonTitle": {
-			"value": "",
-			"description": "The title of the link element on the FAB",
-			"descriptionmsg": "citizen-config-buttontitle",
-			"public": true
-		},
-		"ButtonText": {
-			"value": "",
-			"description": "The text of the FAB",
-			"descriptionmsg": "citizen-config-buttontext",
 			"public": true
 		},
 		"ShowPageTools": {
@@ -196,44 +178,65 @@
 				},
 				"resources/print.less": {
 					"media": "print"
-				},
-				"resources/font-face.less": {}
+				}
 			}
+		},
+		"skins.citizen.styles.fonts": {
+			"class": "ResourceLoaderSkinModule",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"styles": [ "resources/skins.citizen.styles.fonts/font-face.less" ]
+		},
+		"skins.citizen.styles.search": {
+			"class": "ResourceLoaderSkinModule",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"styles": [ "resources/skins.citizen.styles.search/search.less" ]
 		},
 		"skins.citizen.scripts": {
 			"scripts": [
-				"resources/scripts/header.js",
-				"resources/scripts/toc.js",
-				"resources/scripts/searchfocus.js"
+				"resources/skins.citizen.scripts/toc.js",
+				"resources/skins.citizen.scripts/searchfocus.js"
 			]
 		},
-		"skins.citizen.search.scripts": {
+		"skins.citizen.scripts.search": {
 			"scripts": [
-				"resources/scripts/underscore.partial.js",
-				"resources/scripts/wm-typeahead.js",
-				"resources/scripts/typeahead-init.js"
+				"resources/skins.citizen.scripts.search/underscore.partial.js",
+				"resources/skins.citizen.scripts.search/wm-typeahead.js",
+				"resources/skins.citizen.scripts.search/typeahead-init.js"
 			],
 			"dependencies": [
 				"mediawiki.api",
 				"oojs-ui-core.styles"
 			],
 			"messages": [
-				"citizen-search-no-results-title",
-				"citizen-search-no-results-desc"
+				"citizen-search-fulltext"
 			]
 		},
-		"skins.citizen.lazyload.scripts": {
+		"skins.citizen.scripts.lazyload": {
 			"scripts": [
-				"resources/scripts/lazyload.js"
+				"resources/skins.citizen.scripts.lazyload/lazyload.js"
 			]
 		},
 		"skins.citizen.icons": {
 			"class": "ResourceLoaderImageModule",
-			"selector": "#citizen-ui-{name} > *:after",
+			"selector": "{name}",
 			"defaultColor": "#000",
 			"useDataURI": false,
 			"images": {
-				"button": "resources/images/icons/discord.svg"
+				".toctoggle > a:before": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/toc-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/toc-rtl.svg"
+					}
+				},
+				"#p-actions:before": "resources/skins.citizen.icons/more.svg",
+				"#searchform-icon": "resources/images/icons/search.svg",
+				"#searchform-random": "resources/images/icons/random.svg"
 			}
 		},
 		"skins.citizen.icons.ca": {
@@ -256,24 +259,6 @@
 				"talk": "resources/images/icons/discussion.svg",
 				"nstab-main": "resources/images/icons/article.svg",
 				"translate": "resources/images/icons/language.svg"
-			}
-		},
-		"skins.citizen.icons.p": {
-			"class": "ResourceLoaderImageModule",
-			"selector": "#p-{name}:before",
-			"defaultColor": "#000",
-			"useDataURI": false,
-			"images": {
-				"actions": "resources/images/icons/more.svg"
-			}
-		},
-		"skins.citizen.icons.toc": {
-			"class": "ResourceLoaderImageModule",
-			"selector": ".toctoggle > a:before",
-			"defaultColor": "#000",
-			"useDataURI": false,
-			"images": {
-				"": "resources/images/icons/ToC.svg"
 			}
 		},
 		"skins.citizen.icons.es": {
@@ -331,7 +316,9 @@
 				"mycontris": "resources/images/icons/contributions.svg",
 				"logout": "resources/images/icons/logOut.svg",
 				"createaccount": "resources/images/icons/userAvatar.svg",
-				"login": "resources/images/icons/logOut.svg"
+				"login": "resources/images/icons/logOut.svg",
+				"anontalk": "resources/images/icons/userTalk.svg",
+				"anoncontribs": "resources/images/icons/contributions.svg"
 			}
 		},
 		"skins.citizen.icons.footer": {
@@ -349,21 +336,22 @@
 			"defaultColor": "#fff",
 			"useDataURI": false,
 			"images": {
-				"by-sa": "resources/images/badges/CCBYSA.svg",
-				"mediawiki": "resources/images/badges/MediaWiki.svg",
-				"wikiapiary": "resources/images/badges/WikiApiary.svg",
-				"miraheze": "resources/images/badges/Miraheze.svg",
-				"gdpr": "resources/images/badges/GDPR.svg",
-				"robertsspaceindustries": "resources/images/badges/StarCitizenCommunity.svg",
-				"starcitizen.tools": "resources/images/badges/StarCitizenTools.svg"
+				"by-sa": "resources/skins.citizen.icons.badges/CCBYSA.svg",
+				"mediawiki": "resources/skins.citizen.icons.badges/MediaWiki.svg",
+				"wikiapiary": "resources/skins.citizen.icons.badges/WikiApiary.svg",
+				"miraheze": "resources/skins.citizen.icons.badges/Miraheze.svg",
+				"gdpr": "resources/skins.citizen.icons.badges/GDPR.svg",
+				"robertsspaceindustries": "resources/skins.citizen.icons.badges/StarCitizenCommunity.svg",
+				"starcitizen.tools": "resources/skins.citizen.icons.badges/StarCitizenTools.svg"
 			}
 		},
 		"skins.citizen.icons.search": {
 			"class": "ResourceLoaderImageModule",
-			"selector": ".suggestion-thumbnail",
+			"selector": "{name}",
 			"useDataURI": false,
 			"images": {
-				"noimage": "resources/images/cards/noimage.svg"
+				".suggestion-thumbnail": "resources/skins.citizen.icons.search/noimage.svg",
+				"#suggestion-special-icon": "resources/skins.citizen.icons.search/searchfulltext.svg"
 			}
 		}
 	},

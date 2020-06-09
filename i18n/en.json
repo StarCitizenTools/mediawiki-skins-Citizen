@@ -11,12 +11,11 @@
 	"citizen.css": "/* All CSS here will be loaded for users of the Citizen skin */",
 	"citizen.js": "/* All JavaScript here will be loaded for users of the Citizen skin */",
 
-	"citizen-header-menu-toggle": "Toggle menu",
-	"citizen-header-search-toggle": "Toggle search",
+	"citizen-drawer-toggle": "Toggle menu",
+	"citizen-search-toggle": "Toggle search",
 
 	"citizen-footer-desc": "Edit this text on MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Edit this text on MediaWiki:Citizen-footer-tagline",
 
-	"citizen-search-no-results-title": "Sorry we couldn't find '$1'",
-	"citizen-search-no-results-desc": "Maybe continue to search for pages containing '$1'"
+	"citizen-search-fulltext": "Search pages containing"
 }

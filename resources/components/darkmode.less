@@ -68,24 +68,6 @@
 		}
 	}
 
-	.mw-header-menu-drawer-container {
-		.mw-nav-links,
-		.mw-user-links {
-			a {
-				&:hover {
-					background-color: @dark-bg-60;
-					color: @dark-text-90 !important;
-				}
-
-				&:active,
-				&:focus {
-					color: @dark-text-100 !important;
-					background-color: @accent-10;
-				}
-			}
-		}
-	}
-
 	table.wikitable tr:hover {
 		background-color: @dark-bg-10;
 	}
@@ -95,38 +77,8 @@
 		border-color: @dark-bg-20;
 	}
 
-	.mw-header-menu-drawer {
-		background: @dark-bg-40;
-	}
-
 	#page-tools #p-actions ul {
 		background: @dark-bg-50;
-	}
-
-	.suggestions-dropdown,
-	#site-search #searchform #searchInput {
-		background: @dark-bg-50 !important;
-	}
-
-	.mw-header-menu-drawer-container .mw-header-banner,
-	.mw-header-menu-drawer-container .mw-user-links #p-personal {
-		border-color: @dark-bg-50;
-	}
-
-	.suggestion-link,
-	#site-search #searchform #searchInput {
-		border-color: @dark-bg-60;
-	}
-
-	#site-search #search-toggle-icon-container #search-toggle-icon,
-	#site-search > input:checked:hover ~ #search-toggle-icon-container #search-toggle-icon {
-		border-color: @base-100;
-	}
-
-	.mw-header-menu-toggle span,
-	#site-search #search-toggle-icon-container #search-toggle-icon:before,
-	#site-search #search-toggle-icon-container #search-toggle-icon:after {
-		background: @base-100;
 	}
 
 	.mw-body .firstHeading,
@@ -135,33 +87,19 @@
 	.mw-body-content h3,
 	.mw-body-content h4,
 	.mw-body-content h5,
-	.mw-body-content h6,
-	.mw-header-menu .mw-wiki-title,
-	.mw-header-menu-drawer-container h3 {
+	.mw-body-content h6 {
 		color: @dark-text-100;
 	}
 
-	table.wikitable,
-	.suggestion-title {
+	table.wikitable {
 		color: @dark-text-90;
-	}
-
-	.suggestion-link.active {
-		background-color: @accent-10;
-	}
-
-	.suggestion-link.active .suggestion-title {
-		color: @accent-90;
 	}
 
 	.mw-body-content #contentSub,
 	.mw-body-content #contentSub2,
 	.mw-body #siteSub,
 	table.wikitable tr th,
-	.mw-header-menu-drawer-container .mw-nav-links a,
-	.mw-header-menu-drawer-container .mw-user-links a,
-	.mw-body-content #mw-content-text .mw-parser-output #toc a:hover,
-	.suggestion-description {
+	.mw-body-content #mw-content-text .mw-parser-output #toc a:hover {
 		color: @dark-text-80 !important;
 	}
 
@@ -181,35 +119,11 @@
 
 	#page-tools #p-views li > a:after,
 	#page-tools #p-actions:before,
-	.mw-header-menu-drawer-container .mw-nav-links a:after,
-	.mw-header-menu-drawer-container .mw-user-links a:after,
 	.mw-editsection > a:before,
 	#pt-notifications-alert .mw-echo-notifications-badge:before,
 	#pt-notifications-notice .mw-echo-notifications-badge:before,
 	#p-namespaces ul li a:after {
 		filter: invert( 1 );
-	}
-
-	.suggestion-placeholder {
-		.suggestion-title,
-		.suggestion-description {
-			background: @dark-bg-20;
-			background: linear-gradient( to right, @dark-bg-40 8%, @dark-bg-30 38%, @dark-bg-40 54% );
-		}
-	}
-
-	.mw-header-container:before {
-		box-shadow: 0 0 50px @header-height @dark-bg-0;
-	}
-
-	.mw-header-menu-toggle span,
-	#site-search #search-toggle-icon-container #search-toggle-icon {
-		opacity: 0.4;
-	}
-
-	.mw-header-menu input:hover ~ .mw-header-menu-toggle > span,
-	#site-search #search-toggle:hover ~ #search-toggle-icon-container #search-toggle-icon {
-		opacity: 0.6;
 	}
 
 	ol.references li:target,

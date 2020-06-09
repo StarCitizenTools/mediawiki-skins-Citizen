@@ -1,0 +1,57 @@
+/*
+ * Citizen - Header styles
+ * https://starcitizen.tools
+*/
+
+.mw-header {
+	position: fixed;
+	z-index: 10;
+	top: 0;
+	width: 100%;
+	height: @header-height;
+	display: flex;
+	justify-content: space-between;
+	font-family: @fonts-secondary;
+
+	&-tools {
+		display: inherit;
+	}
+
+	ul {
+		list-style: none;
+	}
+
+	ul,
+	li {
+		margin: 0;
+		display: block;
+	}
+}
+
+#mw-header {
+	&-background {
+		position: absolute;
+		left: 0;
+		right: 0;
+		box-shadow: 0 0 50px @header-height @header-background-color-light;
+		z-index: -1;
+		transition: @transition-box-shadow;
+	}
+}
+
+// User icon bar
+#p-personal-extra {
+	ul {
+		height: 56px;
+		display: flex;
+		align-items: center;
+	}
+}
+
+@media ( prefers-color-scheme: dark ) {
+	#mw-header {
+		&-background {
+			box-shadow: 0 0 50px @header-height @header-background-color-dark !important;
+		}
+	}
+}

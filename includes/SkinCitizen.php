@@ -212,11 +212,14 @@ class SkinCitizen extends SkinTemplate {
 	public function getDefaultModules() {
 		$modules = parent::getDefaultModules();
 
-		// Dequeue default content modules (toc, sortable, collapsible, etc.)
-		$modules['content'] = [];
-
 		// Replace the search module
-		$modules['search'] = 'skins.citizen.search.scripts';
+		if ( $this->getConfigValue( 'CitizenEnableSearch' ) === true ) {
+			$modules['search'] = [
+				'skins.citizen.scripts.search',
+				'skins.citizen.styles.search',
+				'skins.citizen.icons.search',
+			];
+		}
 
 		return $modules;
 	}
@@ -228,17 +231,15 @@ class SkinCitizen extends SkinTemplate {
 		$this->out->addModuleStyles( [
 			'mediawiki.skinning.content.externallinks',
 			'skins.citizen.styles',
+			'skins.citizen.styles.fonts',
 			'skins.citizen.icons',
 			'skins.citizen.icons.ca',
-			'skins.citizen.icons.p',
-			'skins.citizen.icons.toc',
 			'skins.citizen.icons.es',
 			'skins.citizen.icons.n',
 			'skins.citizen.icons.t',
 			'skins.citizen.icons.pt',
 			'skins.citizen.icons.footer',
 			'skins.citizen.icons.badges',
-			'skins.citizen.icons.search',
 		] );
 
 		$this->out->addModules( [

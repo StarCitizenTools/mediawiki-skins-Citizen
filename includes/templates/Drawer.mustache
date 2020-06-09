@@ -1,0 +1,34 @@
+{{!
+	string msg-citizen-drawer-toggle The label used by the drawer button.
+}}
+<input 
+	type="checkbox" 
+	id="mw-drawer-button" 
+	class="mw-checkbox-hack"  
+	role="button" 
+	title="{{msg-citizen-drawer-toggle}}" 
+	aria-labelledby="mw-drawer-button-label" 
+	aria-controls="mw-drawer">
+<label
+	id="mw-drawer-button-label" 
+	class="screen-reader-text" 
+	for="mw-drawer-button">
+	{{msg-citizen-drawer-toggle}}
+</label>
+<div id="mw-drawer-button-icon">
+	<div id="mw-drawer-button-icon-1" class="mw-drawer-button-icon-div"></div>
+	<div id="mw-drawer-button-icon-2" class="mw-drawer-button-icon-div"></div>
+	<div id="mw-drawer-button-icon-3" class="mw-drawer-button-icon-div"></div>
+</div>
+<nav id="mw-drawer-menu">
+	<section id="mw-drawer-menu-logo" role="banner">
+		{{#data-logo}}{{>Logo}}{{/data-logo}}
+	</section>
+	<section id="mw-drawer-menu-main">
+		{{#data-portals-first}}{{>Menu}}{{/data-portals-first}}
+		{{#array-portals-rest}}{{>Menu}}{{/array-portals-rest}}
+	</section>
+	<section id="mw-drawer-menu-user" class="mw-user-links">
+	{{#data-personal-menu}}{{>Menu}}{{/data-personal-menu}}
+	</section>
+</nav>

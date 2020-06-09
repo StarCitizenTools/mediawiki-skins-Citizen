@@ -38,8 +38,8 @@
 	{{{html-indicators}}}
 	{{#data-pagetools}}
 		<div class="mw-side" id="page-tools">
-			{{#data-page-actions}}{{>Portal}}{{/data-page-actions}}
-			{{#data-page-actions-more}}{{>Portal}}{{/data-page-actions-more}}
+			{{#data-page-actions}}{{>Menu}}{{/data-page-actions}}
+			{{#data-page-actions-more}}{{>Menu}}{{/data-page-actions-more}}
 		</div>
 	{{/data-pagetools}}
 	<h1 id="firstHeading" class="firstHeading" lang="{{page-langcode}}">{{{html-title}}}</h1>
@@ -53,8 +53,8 @@
 			<div class="printfooter">{{{html-printfooter}}}</div>
 		{{/html-printfooter}}
 		{{#data-pagelinks}}
-			{{#data-namespaces}}{{>Portal}}{{/data-namespaces}}
-			{{#data-variants}}{{>Portal}}{{/data-variants}}
+			{{#data-namespaces}}{{>Menu}}{{/data-namespaces}}
+			{{#data-variants}}{{>Menu}}{{/data-variants}}
 		{{/data-pagelinks}}
 		{{{html-catlinks}}}
 		{{{html-dataAfterContent}}}
@@ -65,5 +65,4 @@
 <aside class="mw-sidebar-sitename">
 	<a class="mw-wiki-title" {{{html-mainpage-attributes}}}>{{{msg-sitetitle}}}</a>
 </aside>
-{{#data-bottombar}}{{>Bottombar}}{{/data-bottombar}}
 {{{html-printtail}}}

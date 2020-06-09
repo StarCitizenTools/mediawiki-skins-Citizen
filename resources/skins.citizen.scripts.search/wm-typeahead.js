@@ -88,7 +88,8 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 		searchEl = document.getElementById( searchInput ),
 		server = mw.config.get( 'wgServer' ),
 		articleurl = server + mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
-		thumbnailSize = getDevicePixelRatio() * 80,
+		searchurl = server + mw.config.get( 'wgScriptPath' ) + '/index.php?title=Special%3ASearch&search=',
+		thumbnailSize = Math.round( getDevicePixelRatio() * 80 ),
 		descriptionSource = mw.config.get( 'wgCitizenSearchDescriptionSource' ),
 		maxSearchResults = mw.config.get( 'wgCitizenMaxSearchResults' ),
 		searchString,
@@ -221,38 +222,19 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	}
 
 	/**
-	 * Card displayed while loading search results
-	 * @return {string}
-	 */
-	function getLoadingIndicator() {
-		return '<div class="suggestions-dropdown">' +
-			'<div class="suggestion-link">' +
-				'<div class="suggestion-text suggestion-placeholder">' +
-					'<h3 class="suggestion-title"></h3>' +
-					'<p class="suggestion-description"></p>' +
-				'</div>' +
-				'<div class="suggestion-thumbnail"></div>' +
-			'</div>' +
-		'</div>';
-	}
-
-	/**
 	 * Card displayed if no results could be found
 	 * @param {string} searchString - The search string.
 	 * @return {string}
 	 */
-	function getNoResultsIndicator( searchString ) {
-		const titlemsg = mw.message( 'citizen-search-no-results-title', searchString ).text(),
-			descmsg = mw.message( 'citizen-search-no-results-desc', searchString ).text();
+	function getSuggestionSpecial( searchString ) {
+		const msg = mw.message( 'citizen-search-fulltext' ).text(),
+			href = searchurl + searchString + '&fulltext=1';
 
-		return '<div class="suggestions-dropdown" >' +
-			'<div class="suggestion-link">' +
-				'<div class="suggestion-text">' +
-					'<h3 class="suggestion-title">' + titlemsg + '</h3>' +
-					'<p class="suggestion-description">' + descmsg + '</p>' +
-				'</div>' +
-				'<div class="suggestion-thumbnail"></div>' +
-			'</div>' +
+		return '<a id="suggestion-special" href="' + href + '">' +
+			'<div id="suggestion-special-icon"></div>' +
+			'<div id="suggestion-special-text">' + msg +
+				'&nbsp;<em class="suggestion-highlight">' + searchString +
+			'</em></div>' +
 		'</div>';
 	}
 
@@ -308,7 +290,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 				break;
 		}
 
-		typeAheadEl.innerHTML = getLoadingIndicator();
+		// typeAheadEl.innerHTML = getLoadingIndicator();
 
 		api.get( searchQuery )
 			.done( ( data ) => {
@@ -359,14 +341,21 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			suggestionText,
 			suggestionTitle,
 			suggestionDescription,
+			suggestionSpecial,
 			page,
 			sanitizedThumbURL = false,
 			descriptionText = '',
 			pageDescription = '',
+			suggestionLinkID,
 			i;
 
+		suggestionSpecial = getSuggestionSpecial( searchString );
+
 		if ( suggestions.length === 0 ) {
-			return getNoResultsIndicator( searchString );
+			string += suggestionSpecial;
+			string += '</div>';
+
+			return string;
 		}
 
 		for ( i = 0; i < suggestions.length; i++ ) {
@@ -415,6 +404,15 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 				descriptionText = '';
 			}
 
+			// Add ID if first or last suggestion
+			if ( i === 0 ) {
+				suggestionLinkID = 'suggestion-link-first';
+			} else if ( i === suggestions.length - 1 ) {
+				suggestionLinkID = 'suggestion-link-last';
+			} else {
+				suggestionLinkID = '';
+			}
+
 			suggestionDescription = mw.html.element( 'p', { class: 'suggestion-description' }, descriptionText );
 
 			suggestionTitle = mw.html.element( 'h3', { class: 'suggestion-title' }, new mw.html.Raw( highlightTitle( page.title, searchString ) ) );
@@ -426,15 +424,16 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 				style: ( sanitizedThumbURL ) ? 'background-image:url(' + sanitizedThumbURL + ')' : false
 			}, '' );
 
-			// TODO: Make it configurable from the skin
 			suggestionLink = mw.html.element( 'a', {
 				class: 'suggestion-link',
+				id: suggestionLinkID,
 				href: articleurl + encodeURIComponent( page.title.replace( / /gi, '_' ) )
-			}, new mw.html.Raw( suggestionText + suggestionThumbnail ) );
+			}, new mw.html.Raw( suggestionThumbnail + suggestionText ) );
 
 			string += suggestionLink;
-
 		}
+
+		string += suggestionSpecial;
 
 		string += '</div>';
 
@@ -504,7 +503,9 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 				xhrResults.query.pages : [];
 
 			if ( suggestions.length === 0 ) {
-				typeAheadEl.innerHTML = getNoResultsIndicator( queryString );
+				typeAheadEl.innerHTML = '<div class="suggestions-dropdown">' +
+				getSuggestionSpecial( queryString ) +
+				'</div>';
 				return;
 			}
 

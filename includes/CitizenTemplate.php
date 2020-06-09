@@ -42,9 +42,7 @@ class CitizenTemplate extends BaseTemplate {
 			),
 
 			'data-header' => [
-				'msg-citizen-header-menu-toggle' => $this->getMsg( 'citizen-header-menu-toggle' )->text(),
-				'data-menu' => $this->buildMenu(),
-				'msg-citizen-header-search-toggle' => $this->getMsg( 'citizen-header-search-toggle' )->text(),
+				'data-drawer' => $this->buildDrawer(),
 				'data-extratools' => $this->getExtraTools(),
 				'data-searchbox' => $this->buildSearchbox(),
 			],
@@ -97,8 +95,6 @@ class CitizenTemplate extends BaseTemplate {
 				'msg-citizen-footer-tagline' => $this->getMsg( 'citizen-footer-tagline' )->text(),
 				'array-footer-icons' => $this->getFooterIconsRow(),
 			],
-
-			'data-bottombar' => $this->buildBottombar(),
 		];
 
 		// Prepare and output the HTML response
@@ -107,11 +103,11 @@ class CitizenTemplate extends BaseTemplate {
 	}
 
 	/**
-	 * Render the navigation menu
+	 * Render the navigation drawer
 	 * Based on Vector (be3843e)
 	 * @return array
 	 */
-	private function buildMenu() : array {
+	private function buildDrawer() : array {
 		$skin = $this->getSkin();
 		$portals = $skin->buildSidebar();
 		$props = [];
@@ -196,6 +192,7 @@ class CitizenTemplate extends BaseTemplate {
 		$personalToolsPortal[ 'label-class' ] .= 'screen-reader-text';
 
 		return [
+			'msg-citizen-drawer-toggle' => $this->getMsg( 'citizen-drawer-toggle' )->text(),
 			'data-logo' => $this->buildLogo(),
 			'data-portals-first' => $firstPortal,
 			'array-portals-rest' => array_slice( $props, 1 ),
@@ -256,16 +253,13 @@ class CitizenTemplate extends BaseTemplate {
 	private function buildSearchbox() : array {
 		$config = $this->config;
 		$props = [
+			'msg-citizen-search-toggle' => $this->getMsg( 'citizen-search-toggle' )->text(),
 			'form-action' => $config->get( 'Script' ),
 			'html-input' => $this->makeSearchInput( [ 'id' => 'searchInput' ] ),
-			'html-button-search' => $this->makeSearchButton(
-				'image',
-				[ 'id' => 'searchButton',
-					'src' => $this->getSkin()->getSkinStylePath( 'resources/images/icons/search.svg' ),
-				]
-			),
 			'msg-search' => $this->getMsg( 'search' )->text(),
 			'page-title' => SpecialPage::getTitleFor( 'Search' )->getPrefixedDBkey(),
+			'html-random-href' => Skin::makeSpecialUrl( 'Randompage' ),
+			'msg-random' => $this->getMsg( 'Randompage' )->text(),
 		];
 		return $props;
 	}
@@ -289,7 +283,7 @@ class CitizenTemplate extends BaseTemplate {
 
 		// Login-based condition, return true if condition is met
 		if ( $condition === 'login' ) {
-			$condition = $skin()->getUser()->isLoggedIn();
+			$condition = $skin->getUser()->isLoggedIn();
 		}
 
 		// Permission-based condition, return true if condition is met
@@ -348,26 +342,6 @@ class CitizenTemplate extends BaseTemplate {
 			'data-variants' => $variantshtml,
 		];
 
-		return $props;
-	}
-
-	/**
-	 * Render the bottom bar
-	 * TODO: Convert button text to i18n message.
-	 * TODO: Refactor the bottom bar to be customizable
-	 * @return array
-	 */
-	private function buildBottombar() : array {
-		$config = $this->config;
-		$buttonEnabled = $config->get( 'CitizenEnableButton' );
-		if ( $buttonEnabled === false ) {
-			return '';
-		}
-		$props = [
-			'html-citizen-bottombar-button-href' => $config->get( 'CitizenButtonLink' ),
-			'html-citizen-bottombar-button-title' => $config->get( 'CitizenButtonTitle' ),
-			'html-citizen-bottombar-button-text' => $config->get( 'CitizenButtonText' ),
-		];
 		return $props;
 	}
 
