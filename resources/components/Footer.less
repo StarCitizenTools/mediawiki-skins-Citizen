@@ -126,6 +126,10 @@
 		margin: 0 -@margin-side / 2;
 		display: flex;
 
+		li {
+			display: flex; // Horizontally aligned with there are two icons in the same li
+		}
+
 		a {
 			padding: @margin-side * 0.75 @margin-side / 2;
 			height: 50px; // CSS hack to force SVG icon to appear
