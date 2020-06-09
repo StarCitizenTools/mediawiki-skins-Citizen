@@ -147,6 +147,12 @@
 			"descriptionmsg": "citizen-config-showpagetools",
 			"public": true
 		},
+		"EnableLazyload": {
+			"value": true,
+			"description": "Enable or disable image lazyloading",
+			"descriptionmsg": "citizen-config-enablelazyload",
+			"public": true
+		},
 		"ThumbnailSize": {
 			"value": 10,
 			"description": "Thumbnail size to use for lazy-loading",

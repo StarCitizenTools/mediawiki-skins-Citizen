@@ -41,7 +41,16 @@ class CitizenHooks {
 	 * @return bool
 	 */
 	public static function onBeforePageDisplay( $out, $skin ) {
-		$out->addModules( 'skins.citizen.scripts.lazyload' );
+		try {
+			$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Citizen' );
+			$lazyloadEnabled = $config->get( 'CitizenEnableLazyload' );
+		} catch ( Exception $e ) {
+			return false;
+		}
+
+		if ( $lazyloadEnabled === true ) {
+			$out->addModules( 'skins.citizen.scripts.lazyload' );
+		}
 
 		return true;
 	}
@@ -90,6 +99,7 @@ class CitizenHooks {
 	public static function onThumbnailBeforeProduceHTML( $thumb, &$attribs, &$linkAttribs ) {
 		try {
 			$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Citizen' );
+			$lazyloadEnabled = $config->get( 'CitizenEnableLazyload' );
 			$thumbSize = $config->get( 'CitizenThumbnailSize' );
 		} catch ( ConfigException $e ) {
 			wfLogWarning( sprintf( 'Could not get config for "$wgThumbnailSize". Defaulting to "10". %s',
@@ -97,43 +107,46 @@ class CitizenHooks {
 			$thumbSize = 10;
 		}
 
-		$file = $thumb->getFile();
+		// Replace thumbnail if lazyload is enabled
+		if ( $lazyloadEnabled === true ) {
+			$file = $thumb->getFile();
 
-		if ( $file !== null ) {
-			$request = RequestContext::getMain()->getRequest();
+			if ( $file !== null ) {
+				$request = RequestContext::getMain()->getRequest();
 
-			if ( defined( 'MW_API' ) && $request->getVal( 'action' ) === 'parse' ) {
-				return true;
-			}
+				if ( defined( 'MW_API' ) && $request->getVal( 'action' ) === 'parse' ) {
+					return true;
+				}
 
-			// Set lazy class for the img
-			if ( isset( $attribs['class'] ) ) {
-				$attribs['class'] .= ' lazy';
-			} else {
-				$attribs['class'] = 'lazy';
-			}
+				// Set lazy class for the img
+				if ( isset( $attribs['class'] ) ) {
+					$attribs['class'] .= ' lazy';
+				} else {
+					$attribs['class'] = 'lazy';
+				}
 
-			// Native API
-			$attribs['loading'] = 'lazy';
+				// Native API
+				$attribs['loading'] = 'lazy';
 
-			$attribs['data-src'] = $attribs['src'];
-			$attribs['data-width'] = $attribs['width'];
-			$attribs['data-height'] = $attribs['height'];
+				$attribs['data-src'] = $attribs['src'];
+				$attribs['data-width'] = $attribs['width'];
+				$attribs['data-height'] = $attribs['height'];
 
-			// Replace src with small size image
-			$attribs['src'] =
-				preg_replace( '#/\d+px-#', sprintf( '/%upx-', $thumbSize ), $attribs['src'] );
+				// Replace src with small size image
+				$attribs['src'] =
+					preg_replace( '#/\d+px-#', sprintf( '/%upx-', $thumbSize ), $attribs['src'] );
 
-			// So that the 10px thumbnail is enlarged to the right size
-			$attribs['width'] = $attribs['data-width'];
-			$attribs['height'] = $attribs['data-height'];
+				// So that the 10px thumbnail is enlarged to the right size
+				$attribs['width'] = $attribs['data-width'];
+				$attribs['height'] = $attribs['data-height'];
 
-			// Clean up
-			unset( $attribs['data-width'], $attribs['data-height'] );
+				// Clean up
+				unset( $attribs['data-width'], $attribs['data-height'] );
 
-			if ( isset( $attribs['srcset'] ) ) {
-				$attribs['data-srcset'] = $attribs['srcset'];
-				unset( $attribs['srcset'] );
+				if ( isset( $attribs['srcset'] ) ) {
+					$attribs['data-srcset'] = $attribs['srcset'];
+					unset( $attribs['srcset'] );
+				}
 			}
 		}
 
