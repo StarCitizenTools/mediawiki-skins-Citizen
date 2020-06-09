@@ -18,13 +18,30 @@
 
 		&-icon {
 			position: absolute;
-			margin-left: @search-bar-icon-size;
-			width: @search-bar-icon-size;
+			width: @search-bar-height;
 			height: @search-bar-height;
 			opacity: @opacity-icon;
-			background-size: contain;
+			background-size: 14px;
 			background-repeat: no-repeat;
 			background-position: center;
+		}
+
+		&-random {
+			position: absolute;
+			z-index: 22; // slightly higher than the toggle
+			right: 38px;
+			width: @search-bar-height;
+			height: @search-bar-height;
+			opacity: @opacity-icon;
+			background-size: 18px;
+			background-repeat: no-repeat;
+    		background-position: center;
+    		transition: @transition-transform-quick, @transition-opacity-quick;
+
+    		&:hover {
+    			opacity: @opacity-icon-active;
+    			transform: rotate(30deg);
+    		}
 		}
 	}
 
@@ -149,8 +166,7 @@
 		-webkit-appearance: none;
 		-moz-appearance: none;
 		appearance: none;
-		padding: 12px @icon-box-size + @icon-padding 12px @search-bar-icon-size * 3;
-		padding-right: @icon-box-size + @icon-padding;
+		padding: 12px @icon-box-size + @icon-padding + @search-bar-height 12px @search-bar-height;
 		width: 0;
 		height: @search-bar-height;
 		max-width: calc( ~'100vw -'@margin-side );
@@ -174,9 +190,14 @@
 @media ( prefers-color-scheme: dark ) {
 	#search {
 		&form {
-			&-icon {
+			&-icon,
+			&-random {
 				opacity: 0.4;
 				filter: invert( 1 );
+			}
+
+			&-random:hover {
+				opacity: 0.6;
 			}
 		}
 

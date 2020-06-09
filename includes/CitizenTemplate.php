@@ -258,6 +258,8 @@ class CitizenTemplate extends BaseTemplate {
 			'html-input' => $this->makeSearchInput( [ 'id' => 'searchInput' ] ),
 			'msg-search' => $this->getMsg( 'search' )->text(),
 			'page-title' => SpecialPage::getTitleFor( 'Search' )->getPrefixedDBkey(),
+			'html-random-href' => Skin::makeSpecialUrl( 'Randompage' ),
+			'msg-random' => $this->getMsg( 'Randompage' )->text(),
 		];
 		return $props;
 	}

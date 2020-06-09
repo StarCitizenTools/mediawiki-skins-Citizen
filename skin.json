@@ -235,7 +235,8 @@
 					}
 				},
 				"#p-actions:before": "resources/skins.citizen.icons/more.svg",
-				"#searchform-icon": "resources/images/icons/search.svg"
+				"#searchform-icon": "resources/images/icons/search.svg",
+				"#searchform-random": "resources/images/icons/random.svg"
 			}
 		},
 		"skins.citizen.icons.ca": {
