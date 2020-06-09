@@ -254,7 +254,7 @@ class CitizenTemplate extends BaseTemplate {
 		$config = $this->config;
 
 		$toggleMsg = $this->getMsg( 'citizen-search-toggle' )->text();
-		$accessKey = Linker::accesskey('search');
+		$accessKey = Linker::accesskey( 'search' );
 
 		$props = [
 			'msg-citizen-search-toggle' => $toggleMsg,
