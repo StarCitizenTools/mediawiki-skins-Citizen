@@ -200,7 +200,7 @@
 		"skins.citizen.scripts": {
 			"scripts": [
 				"resources/skins.citizen.scripts/toc.js",
-				"resources/skins.citizen.scripts/searchfocus.js"
+				"resources/skins.citizen.scripts/search.js"
 			]
 		},
 		"skins.citizen.scripts.search": {
