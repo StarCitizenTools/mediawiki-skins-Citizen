@@ -252,8 +252,13 @@ class CitizenTemplate extends BaseTemplate {
 	 */
 	private function buildSearchbox() : array {
 		$config = $this->config;
+
+		$toggleMsg = $this->getMsg( 'citizen-search-toggle' )->text();
+		$accessKey = Linker::accesskey('search');
+
 		$props = [
-			'msg-citizen-search-toggle' => $this->getMsg( 'citizen-search-toggle' )->text(),
+			'msg-citizen-search-toggle' => $toggleMsg,
+			'msg-citizen-search-toggle-shortcut' => $toggleMsg . ' [alt-shift-' . $accessKey . ']',
 			'form-action' => $config->get( 'Script' ),
 			'html-input' => $this->makeSearchInput( [ 'id' => 'searchInput' ] ),
 			'msg-search' => $this->getMsg( 'search' )->text(),
