@@ -13,11 +13,13 @@
 		right: @margin-side / 2;
 		opacity: 0;
 		.boxshadow(4);
+		border-radius: @border-radius-large;
 		transition: @transition-opacity;
 		pointer-events: none; // not clickable
 
 		&-icon {
 			position: absolute;
+			z-index: 110;
 			width: @search-bar-height;
 			height: @search-bar-height;
 			opacity: @opacity-icon;
@@ -28,7 +30,7 @@
 
 		&-random {
 			position: absolute;
-			z-index: 22; // slightly higher than the toggle
+			z-index: 120;
 			right: 38px;
 			width: @search-bar-height;
 			height: @search-bar-height;
@@ -163,14 +165,17 @@
 	}
 
 	&Input {
+		appearance: none;
 		-webkit-appearance: none;
 		-moz-appearance: none;
-		appearance: none;
-		padding: 12px @icon-box-size + @icon-padding + @search-bar-height 12px @search-bar-height;
+		z-index: 100;
+		padding: 8px @icon-box-size + @icon-padding + @search-bar-height 8px @search-bar-height;
 		width: 0;
 		height: @search-bar-height;
 		max-width: calc( ~'100vw -'@margin-side );
+		background: @base-100;
 		border: 1px solid @base-90;
+		border-radius: @border-radius-large;
 		transition: @transition-width, @transition-box-shadow;
 
 		&:focus {
@@ -184,6 +189,20 @@
 	&-toggle-icon-div {
 		position: relative;
 		transition: inherit;
+	}
+}
+
+@media only screen and ( max-width: @search-bar-width ) {
+	#searchform:before {
+		content: "";
+    	display: block;
+	    position: fixed;
+	    top: 0;
+	    left: 0;
+	    right: 0;
+	    bottom: 0;
+	    background: @base-100;
+	    opacity: .9;
 	}
 }
 
@@ -224,7 +243,13 @@
 
 		&Input {
 			border-color: @dark-bg-60;
-			background: @dark-bg-50 !important;
+			background: @dark-bg-50;
 		}
+	}
+}
+
+@media only screen and ( max-width: @search-bar-width )  and ( prefers-color-scheme: dark ) {
+	#searchform:before {
+		background: @dark-bg-50;
 	}
 }
