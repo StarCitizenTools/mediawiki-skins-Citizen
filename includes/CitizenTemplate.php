@@ -281,7 +281,7 @@ class CitizenTemplate extends BaseTemplate {
 
 		// Login-based condition, return true if condition is met
 		if ( $condition === 'login' ) {
-			$condition = $skin()->getUser()->isLoggedIn();
+			$condition = $skin->getUser()->isLoggedIn();
 		}
 
 		// Permission-based condition, return true if condition is met
