@@ -7,6 +7,7 @@
 
 .ve-activated {
 	.mw-header {
+		z-index: 3; // Move lower to accompany VE
 		background-color: @header-background-color-light;
 	}
 
@@ -18,22 +19,24 @@
 		margin-top: 42px;
 	}
 
-	.mw-body {
-		z-index: 20; // Higher than footer
-	}
-
 	#page-tools {
 		z-index: 1; // Fix collision
 		pointer-events: auto;
 		opacity: 1;
 	}
 
-	#mw-bottombar {
-		display: none;
+	.mw-footer {
+		z-index: 2; // Fix collision with VE elements
 	}
 }
 
 .ve-ui {
+	&-toolbar {
+		&-floating {
+			z-index: 4;
+		}
+	}
+
 	&-overlay {
 		font-family: @fonts;
 
@@ -58,6 +61,10 @@
 .ve-init-mw-desktopArticleTarget {
 	&-toolbar {
 		margin: -20px -20px 20px -20px !important; // Bypass @media screen styles
+
+		&.ve-ui-toolbar-floating > .oo-ui-toolbar-bar {
+			top: 56px; // Fixed under header
+		}
 	}
 
 	.CodeMirror {
@@ -164,7 +171,14 @@
 		}
 	}
 
-	.ve-init-mw-desktopArticleTarget .CodeMirror {
-		color: @dark-text-90;
+	.ve-init-mw-desktopArticleTarget {
+		&-toolbar {
+			&.ve-ui-toolbar-floating > .oo-ui-toolbar-bar {
+				top: 0px; // stick to top
+			}
+		}
+		.CodeMirror {
+			color: @dark-text-90;
+		}
 	}
 }
