@@ -39,11 +39,11 @@
 
 	&-surface {
 		.ve-ce-documentNode {
-			padding: 0;
+			padding: 0 !important;
 		}
 
 		&-placeholder {
-			padding: 0;
+			padding: 0 !important;
 		}
 	}
 
@@ -88,7 +88,7 @@
 	}
 
 	.CodeMirror {
-		padding: 0;
+		padding: 0 !important;
 		line-height: @content-line-height; // Lining up syntax highlighter
 
 		&-code * {
@@ -106,6 +106,10 @@
 @media ( max-width: 800px ) {
 	.ve-init-mw-desktopArticleTarget {
 		&-toolbar {
+			&.ve-ui-toolbar-floating > .oo-ui-toolbar-bar {
+				top: 0; // stick to top
+			}
+
 			// Hide some dropdown tools in smaller screen
 			// format - Paragraph
 			// strcture - List bullet
@@ -189,12 +193,6 @@
 	}
 
 	.ve-init-mw-desktopArticleTarget {
-		&-toolbar {
-			&.ve-ui-toolbar-floating > .oo-ui-toolbar-bar {
-				top: 0; // stick to top
-			}
-		}
-
 		.CodeMirror {
 			color: @dark-text-90;
 		}
