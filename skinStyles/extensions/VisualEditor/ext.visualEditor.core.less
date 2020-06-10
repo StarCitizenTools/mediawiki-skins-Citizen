@@ -19,7 +19,7 @@
 	}
 
 	.mw-body {
-		z-index: 9; // Higher than footer
+		z-index: 20; // Higher than footer
 	}
 
 	#page-tools {
@@ -55,17 +55,9 @@
 	width: 100% !important;
 }
 
-// Make toolbar more mobile friendly
-// Well at least I did by best
 .ve-init-mw-desktopArticleTarget {
 	&-toolbar {
 		margin: -20px -20px 20px -20px !important; // Bypass @media screen styles
-
-		&-open {
-			.oo-ui-toolbar-bar {
-				transition: @transition-transform !important;
-			}
-		}
 	}
 
 	.CodeMirror {
@@ -79,6 +71,40 @@
 
 	.ve-ui-mwWikitextSurface .ve-ce-paragraphNode {
 		line-height: @content-line-height; // Lining up syntax highlighter
+	}
+}
+
+// Make toolbar more smaller screen friendly
+// Well at least I did by best
+@media ( max-width: 800px ) {
+	.ve-init-mw-desktopArticleTarget {
+		&-toolbar {
+			// Hide some dropdown tools in smaller screen
+			// format - Paragraph
+			// strcture - List bullet
+			// insert - Insert
+			.ve-test-toolbar {
+				&-format,
+				&-structure,
+				&-insert {
+					display: none;
+				}
+			}
+
+			// Hide some button tools in smaller screen
+			// link - Link
+			// specialCharacter - Special character
+			// help - Help
+			// notices - Notices
+			.oo-ui-tool-name {
+				&-link,
+				&-specialCharacter
+				&-help,
+				&-notices {
+					display: none;
+				}
+			}
+		}
 	}
 }
 
