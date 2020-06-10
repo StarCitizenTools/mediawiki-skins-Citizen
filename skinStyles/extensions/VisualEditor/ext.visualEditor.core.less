@@ -37,6 +37,16 @@
 		}
 	}
 
+	&-surface {
+		.ve-ce-documentNode {
+			padding: 0;
+		}
+
+		&-placeholder {
+			padding: 0;
+		}
+	}
+
 	&-overlay {
 		font-family: @fonts;
 
@@ -68,6 +78,7 @@
 	}
 
 	.CodeMirror {
+		padding: 0;
 		line-height: @content-line-height; // Lining up syntax highlighter
 
 		&-code * {
@@ -84,10 +95,6 @@
 // Well at least I did by best
 @media ( max-width: 800px ) {
 	.ve-init-mw-desktopArticleTarget {
-		#bodyContent {
-			margin: 0 -20px;
-		}
-
 		&-toolbar {
 			// Hide some dropdown tools in smaller screen
 			// format - Paragraph
