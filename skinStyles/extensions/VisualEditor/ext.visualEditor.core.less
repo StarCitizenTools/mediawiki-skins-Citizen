@@ -105,8 +105,12 @@
 
 			// Hide help, notices, and menu button
 			.ve-ui-targetToolbar {
-				.oo-ui-toolbar-actions .oo-ui-toolGroup:not( :last-child ) {
-					display: none;
+				.oo-ui-toolbar-actions {
+					.oo-ui-toolGroup {
+						&:not( :last-child ) {
+							display: none;
+						}
+					}
 				}
 			}
 
@@ -142,7 +146,7 @@
 				}
 
 				.oo-ui-labelElement-label {
-					display: none;
+					display: none !important;
 				}
 			}
 		}
