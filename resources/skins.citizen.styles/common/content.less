@@ -1,0 +1,10 @@
+.mw-body-content {
+	// Apply only to internal link
+	a[href^="/"] {
+		.link-content-text(@color-link-active);
+
+		&.new {
+			background-image: linear-gradient( to right, @color-link-new-active 0, @color-link-new-active 100% );
+		}
+	}
+}
