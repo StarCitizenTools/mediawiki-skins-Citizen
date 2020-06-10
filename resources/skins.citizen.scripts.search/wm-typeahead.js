@@ -581,7 +581,10 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 
 	addEvent( searchEl, 'blur', function ( e ) {
 		clearTypeAhead();
-		forceLinkFollow( e );
+		// Don't interfere with special clicks (e.g. to open in new tab)
+		if ( !( e.which !== 1 || e.altKey || e.ctrlKey || e.shiftKey || e.metaKey ) ) {
+			forceLinkFollow( e );
+		}
 	} );
 
 	return {
