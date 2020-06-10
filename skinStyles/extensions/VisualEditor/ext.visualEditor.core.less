@@ -98,9 +98,50 @@
 			// notices - Notices
 			.oo-ui-tool-name {
 				&-link,
-				&-specialCharacter,
-				&-help,
-				&-notices {
+				&-specialCharacter {
+					display: none !important;
+				}
+			}
+
+			// Hide help, notices, and menu button
+			.ve-ui-targetToolbar {
+				.oo-ui-toolbar-actions .oo-ui-toolGroup:not(:last-child) {
+					display: none;
+				}
+			}
+
+			// Shorten save button
+			// Use CSS magic to create an icon
+			// Will change if I figure out a way to load the icon only for VE
+			.ve-ui-toolbar-saveButton {
+				> .oo-ui-buttonElement-button {
+					padding: 0 !important;
+					width: 60px !important;
+					height: 42px !important;
+
+					&:before {
+						top: 12px;
+						transform: rotate(-45deg);
+					}
+
+					&:after {
+						bottom: 12px;
+						transform: rotate(45deg);
+					}
+
+					&:before,
+					&:after {
+						content: "";
+					    position: absolute;
+					    left: 30px;
+					    display: block;
+					    width: 2px;
+					    height: 11px;
+    					background: white;
+					}
+				}
+
+				.oo-ui-labelElement-label {
 					display: none;
 				}
 			}
