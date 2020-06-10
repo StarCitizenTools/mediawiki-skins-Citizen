@@ -1,7 +1,7 @@
 {
 	"name": "Citizen",
 	"namemsg": "skinname-citizen",
-	"version": "0.8.3",
+	"version": "0.8.4",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
@@ -457,7 +457,7 @@
 			"+ext.uploadWizard.uploadCampaign.list": "skinStyles/extensions/UploadWizard/ext.uploadWizard.uploadCampaign.list.less",
 			"+ext.uploadWizard": "skinStyles/extensions/UploadWizard/ext.uploadWizard.less",
 
-			"+ext.visualEditor.core": "skinStyles/extensions/VisualEditor/ext.visualEditor.core.less",
+			"+ext.visualEditor.desktopArticleTarget.init": "skinStyles/extensions/VisualEditor/ext.visualEditor.less",
       
 			"+ext.wikiEditor": "skinStyles/extensions/WikiEditor/ext.wikiEditor.less",
       
