@@ -1,0 +1,27 @@
+// Citizen main styles
+
+@import '../variables.less';
+@import '../mixins.less';
+
+@media screen {
+	@import 'common/common.less';
+	@import 'common/wikitable.less';
+
+	// Components
+	@import 'Header.less';
+	@import 'Drawer.less';
+	@import 'Searchbox.less';
+	@import 'Pagetools.less';
+	@import 'Menu.less';
+	@import 'Sidebar.less';
+	@import 'Footer.less';
+
+	// Miscellaneous
+	@import 'darkmode.less';
+	@import 'scrollbar.less';
+	@import 'reducemotion.less';
+}	
+
+@media print {
+	@import 'common/print.less';
+}
