@@ -18,11 +18,7 @@
 		margin-top: 42px;
 	}
 
-	#content {
-		z-index: 9; // Higher than footer
-	}
-
-	#content {
+	.mw-body {
 		z-index: 9; // Higher than footer
 	}
 
@@ -37,11 +33,20 @@
 	}
 }
 
-.ve-ui-overlay {
-	font-family: @fonts;
+.ve-ui {
+	&-overlay {
+		font-family: @fonts;
 
-	&-global {
-		z-index: 12; // Higher than header
+		&-global {
+			z-index: 12; // Higher than header
+		}
+
+		&-surface {
+			&-placeholder,
+			.ve-ce-documentNode {
+				padding: 0;
+			}
+		}
 	}
 }
 
@@ -50,36 +55,39 @@
 	width: 100% !important;
 }
 
-// Match animation
-.ve-init-mw-desktopArticleTarget-toolbar-open > .oo-ui-toolbar-bar {
-	transition: @transition-transform !important;
-}
+// Make toolbar more mobile friendly
+// Well at least I did by best
+.ve-init-mw-desktopArticleTarget {
+	&-toolbar {
+		margin: -20px -20px 20px -20px !important; // Bypass @media screen styles
 
-// Make toolbar more mobile friendly, well at least I did by best
-.ve-init-mw-desktopArticleTarget-toolbar {
-	margin: -20px -20px 20px -20px !important; // Bypass @media screen styles
-}
+		&-open {
+			.oo-ui-toolbar-bar {
+				transition: @transition-transform !important;
+			}
+		}
 
-// Stick with the header
-.nav-down ~ .mw-body {
-	.ve-ui-toolbar-floating > .oo-ui-toolbar-bar {
-		transform: translateY( @header-height );
+		> .oo-ui-toolbar-bar {
+			> .oo-ui-toolbar-tools {
+				white-space: nowrap;
+				overflow: auto;
+				display: block;
+			}
+		}
 	}
-}
 
-.ve-ui-surface-placeholder,
-.ve-ui-surface .ve-ce-documentNode {
-	padding: 0;
-}
+	.CodeMirror {
+		padding: 0;
+		line-height: @content-line-height; // Lining up syntax highlighter
 
-.ve-init-mw-desktopArticleTarget .CodeMirror {
-	padding: 0;
-	line-height: @content-line-height; // Lining up syntax highlighter
-}
+		&-code * {
+			line-height: @content-line-height; // Lining up syntax highlighter
+		}
+	}
 
-.ve-init-mw-desktopArticleTarget .CodeMirror-code *,
-.ve-init-mw-desktopArticleTarget .ve-ui-mwWikitextSurface .ve-ce-paragraphNode {
-	line-height: @content-line-height; // Lining up syntax highlighter
+	.ve-ui-mwWikitextSurface .ve-ce-paragraphNode {
+		line-height: @content-line-height; // Lining up syntax highlighter
+	}
 }
 
 @media ( prefers-color-scheme: dark ) {
