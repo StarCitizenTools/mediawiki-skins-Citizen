@@ -1,0 +1,200 @@
+/*
+ * Citizen - Visual Editor Styles
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+.ve-activated {
+	.mw-header {
+		z-index: 3; // Move lower to accompany VE
+		background-color: @header-background-color-light;
+	}
+
+	#mw-header-background {
+		box-shadow: none;
+	}
+
+	.mw-sidebar-sitename {
+		margin-top: 42px;
+	}
+
+	#page-tools {
+		z-index: 1; // Fix collision
+		pointer-events: auto;
+		opacity: 1;
+	}
+
+	.mw-footer {
+		z-index: 2; // Fix collision with VE elements
+	}
+}
+
+.ve-ui {
+	&-toolbar {
+		&-floating {
+			z-index: 4;
+		}
+	}
+
+	&-surface {
+		.ve-ce-documentNode {
+			padding: 0 !important;
+		}
+
+		&-placeholder {
+			padding: 0 !important;
+		}
+	}
+
+	&-overlay {
+		font-family: @fonts;
+
+		&-global {
+			z-index: 100 !important;
+		}
+
+		&-surface {
+			&-placeholder,
+			.ve-ce-documentNode {
+				padding: 0;
+			}
+		}
+	}
+}
+
+// Fix weird compressed text bug
+.ve-init-mw-tempWikitextEditorWidget {
+	width: 100% !important;
+	background: transparent;
+}
+
+.ve-init-mw-desktopArticleTarget {
+	&-toolbar {
+		margin: -20px -20px 20px -20px !important; // Bypass @media screen styles
+
+		&.ve-ui-toolbar-floating > .oo-ui-toolbar-bar {
+			top: 56px; // Fixed under header
+		}
+
+		&Placeholder {
+			border: 0;
+			box-shadow: none;
+
+			&-open {
+				height: 42px;
+			}
+		}
+	}
+
+	.CodeMirror {
+		padding: 0 !important;
+		line-height: @content-line-height; // Lining up syntax highlighter
+
+		&-code * {
+			line-height: @content-line-height; // Lining up syntax highlighter
+		}
+	}
+
+	.ve-ui-mwWikitextSurface .ve-ce-paragraphNode {
+		line-height: @content-line-height; // Lining up syntax highlighter
+	}
+}
+
+// Make toolbar more smaller screen friendly
+// Well at least I did by best
+@media ( max-width: 800px ) {
+	.ve-init-mw-desktopArticleTarget {
+		&-toolbar {
+			&.ve-ui-toolbar-floating > .oo-ui-toolbar-bar {
+				top: 0; // stick to top
+			}
+
+			// Hide some dropdown tools in smaller screen
+			// format - Paragraph
+			// strcture - List bullet
+			// insert - Insert
+			.ve-test-toolbar {
+				&-format,
+				&-structure,
+				&-insert {
+					display: none;
+				}
+			}
+
+			// Hide some button tools in smaller screen
+			// link - Link
+			// specialCharacter - Special character
+			// help - Help
+			// notices - Notices
+			.oo-ui-tool-name {
+				&-link,
+				&-specialCharacter {
+					display: none !important;
+				}
+			}
+
+			// Hide help, notices, and menu button
+			.oo-ui-toolbar-actions {
+				> .ve-ui-toolbar > .oo-ui-toolbar-bar > .oo-ui-toolbar-tools {
+					.oo-ui-toolGroup {
+						&:first-child,
+						&:nth-child( 2 ) {
+							display: none;
+						}
+					}
+				}
+			}
+
+			// Shorten save button
+			// Use CSS magic to create an icon
+			// Will change if I figure out a way to load the icon only for VE
+			.ve-ui-toolbar-saveButton {
+				> .oo-ui-buttonElement-button {
+					padding: 0 !important;
+					width: 60px !important;
+					height: 42px !important;
+
+					&:before {
+						top: 12px;
+						transform: rotate( -45deg );
+					}
+
+					&:after {
+						bottom: 12px;
+						transform: rotate( 45deg );
+					}
+
+					&:before,
+					&:after {
+						content: '';
+						position: absolute;
+						left: 30px;
+						display: block;
+						width: 2px;
+						height: 11px;
+						background: #fff;
+					}
+				}
+
+				.oo-ui-labelElement-label {
+					display: none !important;
+				}
+			}
+		}
+	}
+}
+
+@media ( prefers-color-scheme: dark ) {
+	.ve-activated {
+		.mw-header {
+			background-color: @header-background-color-dark;
+		}
+	}
+
+	.ve-init-mw-desktopArticleTarget {
+		.CodeMirror {
+			color: @dark-text-90;
+		}
+	}
+}
