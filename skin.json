@@ -225,7 +225,6 @@
 			"class": "ResourceLoaderImageModule",
 			"selector": "{name}",
 			"defaultColor": "#000",
-			"useDataURI": false,
 			"images": {
 				".toctoggle > a:before": {
 					"file": {
@@ -242,7 +241,6 @@
 			"class": "ResourceLoaderImageModule",
 			"selector": "#ca-{name} > *:after",
 			"defaultColor": "#000",
-			"useDataURI": false,
 			"images": {
 				"view": "resources/images/icons/article.svg",
 				"viewsource": "resources/images/icons/eye.svg",
@@ -264,7 +262,6 @@
 			"class": "ResourceLoaderImageModule",
 			"selector": ".mw-editsection > a{name}:before",
 			"defaultColor": "#000",
-			"useDataURI": false,
 			"images": {
 				"": "resources/images/icons/edit.svg",
 				".mw-editsection-visualeditor": "resources/images/icons/ve-edit.svg"
@@ -274,7 +271,6 @@
 			"class": "ResourceLoaderImageModule",
 			"selector": "#n-{name} > *:after",
 			"defaultColor": "#000",
-			"useDataURI": false,
 			"images": {
 				"mainpage-description": "resources/images/icons/home.svg",
 				"recentchanges": "resources/images/icons/history.svg",
@@ -286,7 +282,6 @@
 			"class": "ResourceLoaderImageModule",
 			"selector": "#t-{name} > *:after",
 			"defaultColor": "#000",
-			"useDataURI": false,
 			"images": {
 				"whatlinkshere": "resources/images/icons/whatlinkshere.svg",
 				"recentchangeslinked": "resources/images/icons/history.svg",
@@ -305,7 +300,6 @@
 			"class": "ResourceLoaderImageModule",
 			"selector": "#pt-{name} > *:after",
 			"defaultColor": "#000",
-			"useDataURI": false,
 			"images": {
 				"userpage": "resources/images/icons/userNormal.svg",
 				"mytalk": "resources/images/icons/userTalk.svg",
@@ -323,17 +317,13 @@
 		"skins.citizen.icons.footer": {
 			"class": "ResourceLoaderImageModule",
 			"selector": ".last-modified-bar-icon",
-			"defaultColor": "#fff",
-			"useDataURI": false,
 			"images": {
-				"lastmod": "resources/images/icons/history_white.svg"
+				"lastmod": "resources/skins.citizen.icons.footer/history_white.svg"
 			}
 		},
 		"skins.citizen.icons.badges": {
 			"class": "ResourceLoaderImageModule",
 			"selector": "#footer-icons a[href*='{name}']:before",
-			"defaultColor": "#fff",
-			"useDataURI": false,
 			"images": {
 				"by-sa": "resources/skins.citizen.icons.badges/CCBYSA.svg",
 				"mediawiki": "resources/skins.citizen.icons.badges/MediaWiki.svg",
