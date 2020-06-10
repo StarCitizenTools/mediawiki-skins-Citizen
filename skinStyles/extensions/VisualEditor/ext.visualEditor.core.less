@@ -38,7 +38,7 @@
 		font-family: @fonts;
 
 		&-global {
-			z-index: 12; // Higher than header
+			z-index: 100; // Higher than header
 		}
 
 		&-surface {
@@ -61,7 +61,6 @@
 	}
 
 	.CodeMirror {
-		padding: 0;
 		line-height: @content-line-height; // Lining up syntax highlighter
 
 		&-code * {
@@ -78,6 +77,10 @@
 // Well at least I did by best
 @media ( max-width: 800px ) {
 	.ve-init-mw-desktopArticleTarget {
+		#bodyContent {
+			margin: 0 -20px;
+		}
+
 		&-toolbar {
 			// Hide some dropdown tools in smaller screen
 			// format - Paragraph
