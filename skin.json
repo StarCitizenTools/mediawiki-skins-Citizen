@@ -178,14 +178,7 @@
 				"desktop",
 				"mobile"
 			],
-			"styles": {
-				"resources/screen.less": {
-					"media": "screen"
-				},
-				"resources/print.less": {
-					"media": "print"
-				}
-			}
+			"styles": [ "resources/skins.citizen.styles/skin.less" ]
 		},
 		"skins.citizen.styles.fonts": {
 			"class": "ResourceLoaderSkinModule",
