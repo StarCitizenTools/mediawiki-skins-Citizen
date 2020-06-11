@@ -1,5 +1,8 @@
-.mw-body-content {
-	// Apply only to internal link
+#mw-content-text {
+	/*
+	 * Interal link styles
+	 * Only apply to internal links in article
+	*/
 	a[ href^='/' ] {
 		.link-content-text(@color-link-active);
 
@@ -7,9 +10,6 @@
 			background-image: linear-gradient( to right, @color-link-new-active 0, @color-link-new-active 100% );
 		}
 	}
-}
-
-#mw-content-text {
 	/*
 	 * Float styles
 	 * Only apply to immediate childs as float classes

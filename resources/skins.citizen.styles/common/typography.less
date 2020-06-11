@@ -9,3 +9,154 @@ body {
 	// -webkit-font-smoothing: antialiased; /* Chrome, Safari */
 	// -moz-osx-font-smoothing: grayscale; /* Firefox */
 }
+
+input {
+	font-family: @fonts; // Override browser's default
+}
+
+pre,
+code,
+tt,
+kbd,
+samp,
+.mw-code {
+	font-family: @fonts-monospace;
+	font-size: @content-monospace-size;
+}
+
+cite {
+	font-style: inherit;
+}
+
+fieldset {
+	font-size: @content-monospace-size;
+}
+
+legend {
+	font-weight: bold;
+}
+
+blockquote {
+	font-family: @fonts-serif;
+	font-size: @content-quote-primary-size;
+	font-style: italic;
+
+	cite {
+		font-family: @fonts;
+		font-size: @content-quote-secondary-size;
+		font-style: normal;
+	}
+}
+
+dt {
+	font-weight: bold;
+}
+
+sub,
+sup,
+span.reference {
+	font-size: 80%;
+}
+
+figcaption,
+.thumbcaption {
+	font-size: @content-caption-size;
+	font-style: italic;
+}
+
+#contentSub,
+#contentSub2 {
+	font-size: @content-caption-size;
+}
+
+#siteSub {
+	font-size: @content-caption-size;
+}
+
+.mw-wiki-title {
+	font-family: @fonts-secondary;
+	font-weight: normal;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+}
+
+.thumbinner {
+	.new {
+		font-size: @content-caption-size;
+	}
+}
+
+.error {
+	font-size: unset;
+	font-weight: normal;
+}
+
+.mw-references-wrap {
+	font-size: @content-small-text-size;
+}
+
+.mw-body {
+	// h1's can exist outside of mw-body-content so some heading styles
+	// need to be defined in mw-body as well
+	& h1,
+	&-content h1,
+	&-content h2,
+	&-content h3,
+	&-content h4 {
+		font-family: @fonts-secondary;
+	}
+
+	& h1,
+	&-content h1 {
+		font-size: @content-h1-size;
+	}
+
+	&-content h1,
+	&-content h2 {
+		font-weight: bold;
+		line-height: 1.2;
+	}
+
+	.firstHeading {
+		line-height: 1.2;
+	}
+
+	&-content {
+		font-size: @content-body-size;
+		line-height: @content-line-height;
+
+		h2 {
+			font-size: @content-h2-size;
+		}
+
+		h3 {
+			font-size: @content-h3-size;
+		}
+
+		h4 {
+			font-size: @content-h4-size;
+		}
+
+		h5 {
+			font-size: @content-h5-size;
+		}
+
+		h6 {
+			font-size: @content-h6-size;
+		}
+
+		h3,
+		h4,
+		h5,
+		h6 {
+			font-weight: bold;
+		}
+	}
+}
+
+@media ( max-width: @screen0 ) {
+	figcaption,
+	.thumbcaption {
+		text-align: center;
+	}
+}
