@@ -24,10 +24,6 @@
 		display: none;
 	}
 
-	&text {
-		max-width: 250px;
-	}
-
 	li {
 		&.toclevel-2,
 		&.toclevel-3,
@@ -85,7 +81,8 @@
 		position: relative;
 		z-index: 2;
 		border-left: 1px dashed;
-		max-height: ~'calc( 100vh - @{header-height} * 2 - @{margin-side} * 2 )';
+		max-width: ~'calc( (100vw - '@page-width + @margin-side * 4~' ) / 2 )';
+		max-height: ~'calc( 100vh - '@header-height * 2 - @margin-side * 2~' )';
 		overflow: visible auto;
 		overscroll-behavior: contain;
 		display: block;
@@ -166,6 +163,7 @@
 			display: none; // Hide until interacted
 			margin: 0 @margin-side !important;
 			padding: @header-height + @margin-side @margin-side @margin-side * 2 0; // More scroll spaces
+			max-width: none; 
 			max-height: ~'calc( 100vh - '@header-height + @margin-side * 3 ~')';
 			transform: none;
 			transition: @transition-transform;
