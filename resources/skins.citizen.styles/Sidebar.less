@@ -1,15 +1,15 @@
 .mw-sidebar-sitename {
 	position: fixed;
 	visibility: visible;
-	top: @header-height + @margin-side;
-	right: @margin-side + 12px;
+	bottom: @margin-side;
+	left: @margin-side;
 	font-size: 11px;
-	transform: rotate( -90deg );
-	transform-origin: top right;
-	transition: @transition-transform, @transition-opacity;
+	transition: @transition-opacity;
 	-webkit-font-smoothing: subpixel-antialiased;
 
 	.mw-wiki-title {
+		display: block;
+		width: 100px;
 		letter-spacing: 4px;
 	}
 }
