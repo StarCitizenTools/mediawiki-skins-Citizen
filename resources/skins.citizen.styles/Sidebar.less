@@ -1,10 +1,10 @@
 .mw-sidebar-sitename {
 	position: fixed;
 	visibility: visible;
-	top: @header-height;
-	left: @margin-side;
+	top: @header-height + @margin-side;
+	right: @margin-side + 12px;
 	font-size: 11px;
-	transform: translateY( 100% ) translateX( -100% ) rotate( -90deg );
+	transform: rotate(-90deg);
 	transform-origin: top right;
 	transition: @transition-transform, @transition-opacity;
 	-webkit-font-smoothing: subpixel-antialiased;
@@ -14,10 +14,7 @@
 	}
 }
 
-// Bypass calculation
-@mw-sidebar-sitename-max-width: @margin-side * 5 + @page-width;
-
-@media ( max-width: @mw-sidebar-sitename-max-width ) {
+@media ( max-width: @screen2 ) {
 	.mw-sidebar-sitename {
 		z-index: -1; // remove link
 		opacity: 0; // hide visual
