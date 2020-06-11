@@ -55,7 +55,7 @@
 
 	a {
 		display: inline-block;
-		margin: @content-margin-top * 0.375 0;
+		margin: @content-margin-top / 4 0;
 		padding-left: 9px;
 		color: @base-50;
 		border-left: 3px solid transparent;
@@ -164,9 +164,9 @@
 
 		> ul {
 			display: none; // Hide until interacted
-			margin: 0 @margin-side;
-			padding: @header-height + @margin-side 0 @header-height + @margin-side * 2 @margin-side; // More scroll spaces
-			max-height: ~'calc( 100vh - '@header-height * 2 + @margin-side * 3 ~')';
+			margin: 0 @margin-side !important
+			padding: @header-height + @margin-side @margin-side @margin-side * 2 0; // More scroll spaces
+			max-height: ~'calc( 100vh - '@header-height + @margin-side * 3 ~')';
 			transform: none;
 			transition: @transition-transform;
 		}
