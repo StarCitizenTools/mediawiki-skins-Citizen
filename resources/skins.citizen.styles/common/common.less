@@ -282,9 +282,8 @@ a {
 
 	.firstHeading {
 		margin: 0;
-		padding-top: 1.2rem;
 		color: @base-10;
-		overflow: inherit; // black magic to wrap in small screen devices
+		overflow-wrap: break-word; // Break word instead of overflow if title is too long
 		line-height: 1.2;
 	}
 
