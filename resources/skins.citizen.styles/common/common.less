@@ -67,16 +67,6 @@ dl {
 
 pre,
 code,
-tt,
-kbd,
-samp,
-.mw-code {
-	font-family: @fonts-monospace;
-	font-size: @content-monospace-size;
-}
-
-pre,
-code,
 .mw-code {
 	color: @base-0;
 	background-color: @base-90;
@@ -94,18 +84,9 @@ pre,
 	white-space: pre-wrap;
 }
 
-cite {
-	font-style: inherit;
-}
-
-input {
-	font-family: @fonts;
-}
-
 fieldset {
 	border: 1px solid @base-80;
 	color: @base-30;
-	font-size: @content-monospace-size;
 	margin: @content-margin-top 0;
 	padding: @content-margin-top / 2 @margin-side;
 }
@@ -115,7 +96,6 @@ fieldset > table {
 }
 
 legend {
-	font-weight: bold;
 	color: @base-20;
 	margin: 0;
 	padding: 4px;
@@ -129,16 +109,10 @@ blockquote {
 	margin: @content-margin-top * 2 * @content-scaling;
 	padding: 0 @content-margin-top * 4 * @content-scaling;
 	color: @base-30;
-	font-family: @fonts-serif;
-	font-size: @content-quote-primary-size;
-	font-style: italic;
 
 	cite {
 		display: block;
 		margin-top: @content-margin-top * @content-scaling;
-		font-family: @fonts;
-		font-size: @content-quote-secondary-size;
-		font-style: normal;
 
 		&:before {
 			content: '— ';
@@ -152,7 +126,6 @@ dd {
 }
 
 dt {
-	margin-bottom: 0.1rem;
 	font-weight: bold;
 }
 
@@ -239,11 +212,6 @@ a {
 }
 
 .mw-wiki-title {
-	font-family: @fonts-secondary !important;
-	font-weight: normal;
-	text-transform: uppercase;
-	letter-spacing: 2px;
-
 	a& {
 		color: @base-50;
 		transition: @transition-opacity;
@@ -257,47 +225,28 @@ a {
 	}
 }
 
+figcaption,
+.thumbcaption {
+	margin: @content-margin-top / 2 0 0;
+	color: @base-30;
+}
+
 .mw-body {
-
-	// h1's can exist outside of mw-body-content so some heading styles
-	// need to be defined in mw-body as well
-	& h1,
-	&-content h1,
-	&-content h2,
-	&-content h3,
-	&-content h4 {
-		font-family: @fonts-secondary;
-	}
-
-	& h1,
-	&-content h1 {
-		font-size: @content-h1-size;
-	}
-
-	&-content h1,
-	&-content h2 {
-		font-weight: 600;
-		line-height: 1.2;
-	}
-
 	.firstHeading {
 		margin: 0;
 		color: @base-10;
 		overflow-wrap: break-word; // Break word instead of overflow if title is too long
-		line-height: 1.2;
 	}
 
 	#siteSub {
 		display: block;
 		margin: 0.4rem 0 1.6rem;
 		color: @base-30;
-		font-size: @content-caption-size;
 	}
 
 	.mw-indicators {
 		float: right;
 		line-height: @content-line-height;
-		font-size: @content-body-size;
 		/* Ensure that this is displayed on top of .mw-body-content and clickable */
 		position: relative;
 		z-index: 1;
@@ -315,18 +264,15 @@ a {
 	}
 }
 
+#contentSub,
+#contentSub2 {
+	color: @base-30;
+}
+
 .mw-body-content {
 	position: relative;
 	.content-center;
-	line-height: @content-line-height;
-	font-size: @content-body-size;
 	z-index: 0;
-
-	#contentSub,
-	#contentSub2 {
-		color: @base-30;
-		font-size: @content-caption-size;
-	}
 
 	#mw-content-text {
 		.mw-parser-output {
@@ -381,28 +327,7 @@ a {
 	}
 
 	p {
-		line-height: inherit;
 		overflow-wrap: break-word;
-	}
-
-	h2 {
-		font-size: @content-h2-size;
-	}
-
-	h3 {
-		font-size: @content-h3-size;
-	}
-
-	h4 {
-		font-size: @content-h4-size;
-	}
-
-	h5 {
-		font-size: @content-h5-size;
-	}
-
-	h6 {
-		font-size: @content-h6-size;
 	}
 
 	table {
@@ -418,7 +343,6 @@ a {
 		margin: 0;
 		padding: 0;
 		color: @color-content-header;
-		font-weight: 600;
 	}
 
 	h1,
@@ -464,16 +388,9 @@ a {
 		vertical-align: middle;
 	}
 
-	sub,
-	sup,
-	span.reference {
-		font-size: 80%;
-	}
-
 	.mw-references-wrap {
 		margin: @content-margin-top 0 0 0;
 		color: @base-30;
-		font-size: @content-small-text-size;
 
 		&.mw-references-columns {
 			margin: @content-margin-top @negative-margin 0 @negative-margin;
@@ -486,14 +403,6 @@ a {
 				margin-bottom: @content-margin-top / 4;
 			}
 		}
-	}
-
-	figcaption,
-	.thumbcaption {
-		margin: @content-margin-top / 2 0 0;
-		color: @base-30;
-		font-size: @content-caption-size;
-		font-style: italic;
 	}
 
 	.thumb {
@@ -520,7 +429,6 @@ a {
 					padding: @margin-side / 2;
 					display: block;
 					background-color: @base-80;
-					font-size: @content-caption-size;
 					transition: @transition-background-quick, @transition-color-quick !important;
 				}
 			}
@@ -593,66 +501,6 @@ a {
 	}
 }
 
-.catlinks {
-	margin: 0 @negative-margin;
-	padding: @margin-side;
-	line-height: 1.2;
-
-	.mw-normal-catlinks {
-		font-size: 0; // Hide colon
-
-		> a {
-			display: block;
-			color: @color-content-caption;
-			font-size: @content-caption-size;
-			text-transform: uppercase;
-			letter-spacing: 1px;
-		}
-
-		> ul {
-			margin: 0;
-			padding-top: @content-margin-top;
-			display: flex;
-			flex-wrap: wrap;
-			font-size: @content-caption-size; // Reset font
-
-			li {
-				display: block;
-				margin: 0 @margin-side / 2 @margin-side / 2 0;
-				padding: 0;
-				border: 0;
-
-				&:first-of-type {
-					margin-left: 0;
-				}
-
-				a {
-					padding: @margin-side / 4 @margin-side / 2;
-					display: block;
-					border: 1px solid @base-90;
-					background-color: @base-90;
-					color: @color-content-caption !important; // Override other styles
-					.boxshadow(1);
-					transition: @transition-background-quick, @transition-color-quick, @transition-border-quick, @transition-transform-quick, @transition-box-shadow-quick;
-
-					&:hover {
-						background-color: @color-link-active;
-						border-color: @color-link-active;
-						color: @base-100 !important;
-						transform: translateY( -2px );
-						.boxshadow(2);
-					}
-
-					&.new:hover {
-						background-color: @color-link-new-active;
-						border-color: @color-link-new-active;
-					}
-				}
-			}
-		}
-	}
-}
-
 .plainlist ol,
 .plainlist ul {
 	line-height: inherit;
@@ -660,15 +508,7 @@ a {
 	margin: 0;
 }
 
-@media ( max-width: @screen0 ) {
-	figcaption,
-	.thumbcaption {
-		text-align: center !important;
-	}
-}
-
 @media ( max-width: @screen1 ) {
-	.catlinks,
 	#p-namespaces {
 		margin: 0 !important; // somehow got overrided
 		padding: @margin-side 0;
@@ -681,7 +521,6 @@ a {
 		transform: none !important;
 	}
 
-	.catlinks,
 	#p-namespaces {
 		margin: 0~'calc((100vw - @{page-width}) / -2)';
 	}
