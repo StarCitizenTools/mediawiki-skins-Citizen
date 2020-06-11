@@ -16,23 +16,23 @@
 	 * are used in other places as well
 	*/
 	> .mw-parser-output {
-		div.tnone,
-		div.floatnone,
-		table.floatnone,
-		div.tleft,
-		div.floatleft,
-		table.floatleft,
-		div.tright,
-		div.floatright,
-		table.floatright {
+		> div.tnone,
+		> div.floatnone,
+		> table.floatnone,
+		> div.tleft,
+		> div.floatleft,
+		> table.floatleft,
+		> div.tright,
+		> div.floatright,
+		> table.floatright {
 			z-index: 2;
 			position: relative;
 			margin: 0.6rem 1.4rem;
 			transition: @transition-margin;
 		}
 
-		div.tnone,
-		div.floatnone {
+		> div.tnone,
+		> div.floatnone {
 			display: flex;
 			justify-content: center;
 
@@ -48,21 +48,21 @@
 			}
 		}
 
-		div.tnone,
-		div.floatnone,
-		table.floatnone,
-		div.tleft,
-		div.floatleft,
-		table.floatleft {
+		> div.tnone,
+		> div.floatnone,
+		> table.floatnone,
+		> div.tleft,
+		> div.floatleft,
+		> table.floatleft {
 			margin-left: @negative-margin / 2;
 		}
 
-		div.tnone,
-		div.floatnone,
-		table.floatnone,
-		div.tright,
-		div.floatright,
-		table.floatright {
+		> div.tnone,
+		> div.floatnone,
+		> table.floatnone,
+		> div.tright,
+		> div.floatright,
+		> table.floatright {
 			margin-right: @negative-margin / 2;
 		}
 	}
