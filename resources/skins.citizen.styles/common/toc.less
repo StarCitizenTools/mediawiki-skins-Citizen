@@ -3,7 +3,7 @@
 	max-width: 450px;
 	height: ~'calc( 100vh - @{header-height} * 2 - @{margin-side} * 2 )';
 	top: @header-height;
-	right: 0;
+	left: 0;
 	padding: @margin-side;
 	color: @base-70;
 
@@ -24,19 +24,14 @@
 		display: none;
 	}
 
-	&text {
-		max-width: 250px;
-		direction: ltr;
-	}
-
 	li {
 		&.toclevel-2,
 		&.toclevel-3,
 		&.toclevel-4,
 		&.toclevel-5,
 		&.toclevel-6 {
-			margin-right: 0.3rem;
-			border-right: 1px dashed;
+			margin-left: 9px;
+			border-left: 1px dashed;
 		}
 	}
 
@@ -56,10 +51,10 @@
 
 	a {
 		display: inline-block;
-		margin: @content-margin-top * 0.375 0;
-		padding-right: 12px;
+		margin: @content-margin-top / 4 0;
+		padding-left: 9px;
 		color: @base-50;
-		border-right: 3px solid transparent;
+		border-left: 3px solid transparent;
 
 		&:hover {
 			color: @base-30;
@@ -77,21 +72,17 @@
 	}
 
 	ul {
-		margin: 0;
+		margin: 0 !important;
 		list-style: none;
 	}
 
-	ul,
-	&title {
-		text-align: right !important; // Override default styles
-	}
-
 	> ul {
-		margin: @content-margin-top * 0.75 0 0 0;
+		margin: @content-margin-top * 0.75 0 0 0 !important;
 		position: relative;
 		z-index: 2;
-		border-right: 1px dashed;
-		max-height: ~'calc( 100vh - @{header-height} * 2 - @{margin-side} * 2 )';
+		border-left: 1px dashed;
+		max-width: ~'calc( (100vw - '@page-width + @margin-side * 4~' ) / 2 )';
+		max-height: ~'calc( 100vh - '@header-height * 2 - @margin-side * 2~' )';
 		overflow: visible auto;
 		overscroll-behavior: contain;
 		display: block;
@@ -170,9 +161,10 @@
 
 		> ul {
 			display: none; // Hide until interacted
-			margin: 0 @margin-side;
-			padding: @header-height + @margin-side 0 @header-height + @margin-side * 2 @margin-side; // More scroll spaces
-			max-height: ~'calc( 100vh - '@header-height * 2 + @margin-side * 3 ~')';
+			margin: 0 @margin-side !important;
+			padding: @header-height + @margin-side @margin-side @margin-side * 2 0; // More scroll spaces
+			max-width: none;
+			max-height: ~'calc( 100vh - '@header-height + @margin-side * 3 ~')';
 			transform: none;
 			transition: @transition-transform;
 		}

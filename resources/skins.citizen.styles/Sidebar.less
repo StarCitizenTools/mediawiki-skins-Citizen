@@ -1,23 +1,20 @@
 .mw-sidebar-sitename {
 	position: fixed;
 	visibility: visible;
-	top: @header-height;
+	bottom: @margin-side;
 	left: @margin-side;
 	font-size: 11px;
-	transform: translateY( 100% ) translateX( -100% ) rotate( -90deg );
-	transform-origin: top right;
-	transition: @transition-transform, @transition-opacity;
+	transition: @transition-opacity;
 	-webkit-font-smoothing: subpixel-antialiased;
 
 	.mw-wiki-title {
+		display: block;
+		width: 100px;
 		letter-spacing: 4px;
 	}
 }
 
-// Bypass calculation
-@mw-sidebar-sitename-max-width: @margin-side * 5 + @page-width;
-
-@media ( max-width: @mw-sidebar-sitename-max-width ) {
+@media ( max-width: @screen2 ) {
 	.mw-sidebar-sitename {
 		z-index: -1; // remove link
 		opacity: 0; // hide visual
