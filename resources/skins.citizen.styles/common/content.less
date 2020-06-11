@@ -15,7 +15,7 @@
 	 * Only apply to immediate childs as float classes
 	 * are used in other places as well
 	*/
-	>.mw-parser-output {
+	> .mw-parser-output {
 		div.tnone,
 		div.floatnone,
 		table.floatnone,
@@ -70,34 +70,34 @@
 
 @media ( max-width: @screen0 ) {
 	#mw-content-text {
-		>.mw-parser-output {
-			>div.tnone,
-			>div.floatnone,
-			>table.floatnone,
-			>div.tleft,
-			>div.floatleft,
-			>table.floatleft,
-			>div.tright,
-			>div.floatright,
-			>table.floatright {
+		> .mw-parser-output {
+			> div.tnone,
+			> div.floatnone,
+			> table.floatnone,
+			> div.tleft,
+			> div.floatleft,
+			> table.floatleft,
+			> div.tright,
+			> div.floatright,
+			> table.floatright {
 				margin: 0.6rem -@margin-side !important;
 				width: 100vw !important;
 				float: unset;
 				clear: none;
 			}
 
-			>div.tnone,
-			>div.floatnone,
-			>div.tleft,
-			>div.floatleft,
-			>div.tright,
-			>div.floatright {
+			> div.tnone,
+			> div.floatnone,
+			> div.tleft,
+			> div.floatleft,
+			> div.tright,
+			> div.floatright {
 				display: flex;
 				justify-content: center;
 			}
 
-			>table.floatleft,
-			>table.floatright {
+			> table.floatleft,
+			> table.floatright {
 				padding: 0 @margin-side;
 			}
 		}
@@ -106,10 +106,10 @@
 
 @media ( max-width: @screen2 ) {
 	#mw-content-text {
-		>.mw-parser-output {
-			>div.tnone,
-			>div.floatnone,
-			>table.floatnone {
+		> .mw-parser-output {
+			> div.tnone,
+			> div.floatnone,
+			> table.floatnone {
 				margin: 0.6rem~'calc((100vw - @{page-width}) / -2)';
 
 				a.image,
@@ -119,33 +119,34 @@
 				}
 			}
 
-			>table.floatnone {
+			> table.floatnone {
 				padding: 0 @margin-side;
 			}
 		}
 	}
 }
+
 @media ( max-width: @screen3 ) {
 	#mw-content-text {
-		>.mw-parser-output {
-			>div.tleft,
-			>div.floatleft,
-			>table.floatleft {
+		> .mw-parser-output {
+			> div.tleft,
+			> div.floatleft,
+			> table.floatleft {
 				margin-left: 0;
 			}
 
-			>div.tright,
-			>div.floatright,
-			>table.floatright {
+			> div.tright,
+			> div.floatright,
+			> table.floatright {
 				margin-right: 0;
 			}
 
-			>div.tleft,
-			>div.floatleft,
-			>table.floatleft,
-			>div.tright,
-			>div.floatright,
-			>table.floatright {
+			> div.tleft,
+			> div.floatleft,
+			> table.floatleft,
+			> div.tright,
+			> div.floatright,
+			> table.floatright {
 				z-index: 0; // Reset so it doesn't cover ToC
 				position: relative;
 			}
@@ -155,22 +156,22 @@
 
 @media ( min-width: @screen4 ) {
 	#mw-content-text {
-		>.mw-parser-output {
-			>div.tnone,
-			>div.floatnone,
-			>table.floatnone,
-			>div.tleft,
-			>div.floatleft,
-			>table.floatleft {
+		> .mw-parser-output {
+			> div.tnone,
+			> div.floatnone,
+			> table.floatnone,
+			> div.tleft,
+			> div.floatleft,
+			> table.floatleft {
 				margin-left: @negative-margin !important;
 			}
 
-			>div.tnone,
-			>div.floatnone,
-			>table.floatnone,
-			>div.tright,
-			>div.floatright,
-			>table.floatright {
+			> div.tnone,
+			> div.floatnone,
+			> table.floatnone,
+			> div.tright,
+			> div.floatright,
+			> table.floatright {
 				margin-right: @negative-margin !important;
 			}
 		}
