@@ -39,9 +39,7 @@
 	}
 
 	a,
-	a:visited,
-	a.external,
-	.mw-body-content #mw-content-text .mw-parser-output #toc li.active {
+	a.external {
 		color: @dark-color-link;
 	}
 
@@ -93,23 +91,12 @@
 	.mw-body-content #contentSub,
 	.mw-body-content #contentSub2,
 	.mw-body #siteSub,
-	table.wikitable tr th,
-	.mw-body-content #mw-content-text .mw-parser-output #toc a:hover {
+	table.wikitable tr th {
 		color: @dark-text-80 !important;
 	}
 
-	.mw-body-content #mw-content-text .mw-parser-output #toc li.active a,
-	.mw-body-content #mw-content-text .mw-parser-output #toc li.active li {
-		color: @dark-text-80;
-	}
-
-	a.mw-wiki-title,
-	.mw-body-content #mw-content-text .mw-parser-output #toc a {
+	a.mw-wiki-title {
 		color: @dark-text-70;
-	}
-
-	.mw-body-content #mw-content-text .mw-parser-output #toc {
-		color: @dark-text-60;
 	}
 
 	#page-tools #p-views li > a:after,
@@ -124,24 +111,5 @@
 	ol.references li:target,
 	sup.reference:target {
 		background-color: @accent-10;
-	}
-}
-
-@media ( max-width: 1450px ) and ( prefers-color-scheme: dark ) {
-	.mw-body-content #mw-content-text .mw-parser-output #toc {
-		background: @dark-bg-40;
-
-		.toctoggle a {
-			background-color: @dark-bg-50;
-
-			&:before {
-				filter: invert( 1 );
-			}
-
-			&:hover,
-			&:focus {
-				background-color: @accent-10;
-			}
-		}
 	}
 }
