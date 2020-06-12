@@ -22,6 +22,10 @@ wfLoadSkin( 'Citizen' );
 3. **✔️Done** - Navigate to Special:Version on your wiki to verify that the skin is successfully installed.
 
 ## Configurations
+The skin works out of the box without any configurations. The config flags allow more customization on the specific features in the skin. Note that by default all security-related features are turned off to ensure maximum compatiability.
+
+Note that if you have a lot of users that does not use javascript, it is recommended to turn off image lazyload as it requires javascript to display images properly.
+
 ### Search suggestions
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
@@ -71,7 +75,6 @@ Name | Description | Values | Default
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
 `$wgCitizenShowPageTools` | The condition of page tools visibility | `true` - always visible; `login` - visible to logged-in users; `permission` - visible to users with the right permissions | `true`
-`$wgCitizenThumbnailSize` | Thumbnail size in pixels to use for lazy-loading placeholder | Integer > 0 | `10`
 `$wgCitizenEnablePreconnect` | Enable or disable [preconnect to required origin](https://web.dev/uses-rel-preconnect/) | `true` - enable; `false` - disable | `false`
 `$wgCitizenPreconnectURL` | The URL for preconnect to required origin | URL | 
 `$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#11151d`
