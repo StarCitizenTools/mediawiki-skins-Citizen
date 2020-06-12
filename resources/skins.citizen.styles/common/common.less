@@ -219,37 +219,35 @@ figcaption,
 	}
 }
 
-.mw-body {
-	.firstHeading {
-		margin: 0;
-		color: @base-10;
-		overflow-wrap: break-word; // Break word instead of overflow if title is too long
-	}
+.firstHeading {
+	margin: 0;
+	color: @base-10;
+	overflow-wrap: break-word; // Break word instead of overflow if title is too long
+}
 
-	#siteSub {
-		display: block;
-		margin: 0.4rem 0 1.6rem;
-		color: @base-30;
-	}
+#siteSub {
+	display: block;
+	margin: 0.4rem 0 1.6rem;
+	color: @base-30;
+}
 
-	.mw-indicators {
-		float: right;
-		line-height: @content-line-height;
-		/* Ensure that this is displayed on top of .mw-body-content and clickable */
-		position: relative;
-		z-index: 1;
-	}
+.mw-indicators {
+	float: right;
+	line-height: @content-line-height;
+	/* Ensure that this is displayed on top of .mw-body-content and clickable */
+	position: relative;
+	z-index: 1;
+}
 
-	.mw-indicator {
-		display: inline-block;
-		zoom: 1;
-		*display: inline; // stylelint-disable declaration-block-no-duplicate-properties
-	}
+.mw-indicator {
+	display: inline-block;
+	zoom: 1;
+	*display: inline; // stylelint-disable declaration-block-no-duplicate-properties
+}
 
-	.firstHeading,
-	#siteSub {
-		.content-center;
-	}
+.firstHeading,
+#siteSub {
+	.content-center;
 }
 
 #contentSub,
@@ -395,53 +393,6 @@ figcaption,
 	}
 }
 
-// Namespace button
-#p-namespaces {
-	position: relative;
-	float: right;
-	margin: 0 @negative-margin;
-	padding: @margin-side;
-
-	ul {
-		margin: 1.6rem 0 0 0;
-		display: flex;
-		justify-content: flex-end; // Right align
-
-		li {
-			list-style: none;
-
-			a {
-				display: flex;
-				align-items: center;
-				padding: 0.4rem 0.8rem;
-				border: 1px solid @base-80;
-				color: @base-20;
-				background-color: @base-90;
-				transition: @transition-background-quick, @transition-box-shadow-quick;
-				.boxshadow(1);
-
-				&:hover {
-					background-color: @base-80;
-					.boxshadow(2);
-				}
-
-				&:after {
-					order: -1;
-					content: '';
-					position: relative;
-					width: 14px;
-					height: 14px;
-					margin-right: 8px;
-					background-size: contain;
-					background-repeat: no-repeat;
-					background-position: center;
-					opacity: 0.5;
-				}
-			}
-		}
-	}
-}
-
 .plainlist ol,
 .plainlist ul {
 	line-height: inherit;
@@ -449,20 +400,9 @@ figcaption,
 	margin: 0;
 }
 
-@media ( max-width: @screen1 ) {
-	#p-namespaces {
-		margin: 0 !important; // somehow got overrided
-		padding: @margin-side 0;
-	}
-}
-
 @media ( max-width: @screen2 ) {
 	.mw-editsection {
 		position: relative !important;
 		transform: none !important;
-	}
-
-	#p-namespaces {
-		margin: 0~'calc((100vw - @{page-width}) / -2)';
 	}
 }
