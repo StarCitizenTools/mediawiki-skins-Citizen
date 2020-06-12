@@ -1,27 +1,4 @@
 /*
- * Hacks
- * TODO: Find a place to put them
-*/
-
-// Hide RSS icon
-a.feedlink {
-	background: none !important;
-}
-
-// CSS checkbox hack
-.mw-checkbox-hack {
-	width: @icon-box-size + @margin-side + @icon-padding;
-	height: @header-height;
-	position: absolute;
-	z-index: 8;
-	margin: 0;
-	display: block;
-	opacity: 0;
-	cursor: pointer;
-	-webkit-touch-callout: none;
-}
-
-/*
  * Framework
 */
 html {
@@ -179,19 +156,6 @@ a {
 
 .nowrap {
 	white-space: nowrap;
-}
-
-.screen-reader-text {
-	//.mixin-screen-reader-text;
-	display: block !important;
-	position: absolute !important;
-	clip: rect( 1px, 1px, 1px, 1px ) !important;
-	width: 1px !important;
-	height: 1px !important;
-	margin: -1px !important;
-	border: 0 !important;
-	padding: 0 !important;
-	overflow: hidden !important;
 }
 
 /*
