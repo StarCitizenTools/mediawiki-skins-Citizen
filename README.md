@@ -3,12 +3,13 @@
 
 Citizen is a responsive skin for [MediaWiki](https://www.mediawiki.org) built by the [Star Citizen Wiki](https://starcitizen.tools) team. Although it is specifically built for the Star Citizen Wiki, the skin should be able to run on any Mediawiki installation that is 1.31 or higher. Due to resource constraints, we might not be able to provide full support for setups that are vastly different than us, but please feel free to submit patches or bug report!
 
-Live demo can be seen at the [Star Citizen Wiki](https://starcitizen.tools).
+Live demo can be seen at the [Star Citizen Wiki](https://starcitizen.tools), more avaliable [https://wikiapiary.com/wiki/Skin:Citizen here].
 
 ## Notable features
 * **Fully responsive skin**: Responsive and able to adapt to different screen sizes. 📱💻🖥️
-* **Rich search suggestions**: More helpful search suggestions with images and descriptions. 🔍👀
-* **Lazyload images**: Improve load time of your wiki and avoid unnessecary image downloads. 🚀
+* **Persistent ToC**: Access ToC anywhere in the article. Tracking require JS. 🔍📖
+* **Rich search suggestions**: More helpful search suggestions with images and descriptions. Require JS. 🔍👀
+* **Lazyload images**: Improve load time of your wiki and avoid unnessecary image downloads. Require JS. 🚀
 * **Native light/dark mode support**: Respect OS and app configuration for light and dark mode. ☀️🌙
 * **Webapp manifest**: Give a more app-like experience when user add your wiki to their home screen. 📱
 * **HTTP security response headers**: Enhance the security of your wiki from HTTP response headers. 🔒🔑
@@ -22,9 +23,12 @@ wfLoadSkin( 'Citizen' );
 3. **✔️Done** - Navigate to Special:Version on your wiki to verify that the skin is successfully installed.
 
 ## Configurations
-The skin works out of the box without any configurations. The config flags allow more customization on the specific features in the skin. Note that by default all security-related features are turned off to ensure maximum compatiability.
+**The skin works out of the box without any configurations.** 
+The config flags allow more customization on the specific features in the skin. 
 
-Note that if you have a lot of users that does not use javascript, it is recommended to turn off image lazyload as it requires javascript to display images properly.
+Note that:
+* By default all security-related features are turned off to ensure maximum compatiability.
+* If you have a lot of users that does not use javascript, it is recommended to turn off image lazyload as it requires javascript to display images properly.
 
 ### Search suggestions
 Name | Description | Values | Default
@@ -81,3 +85,4 @@ Name | Description | Values | Default
     
 ## Requirements
 * [MediaWiki](https://www.mediawiki.org) 1.31 or later
+
