@@ -1,7 +1,7 @@
 {
 	"name": "Citizen",
 	"namemsg": "skinname-citizen",
-	"version": "0.9.0",
+	"version": "0.9.1",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
@@ -195,6 +195,14 @@
 				"mobile"
 			],
 			"styles": [ "resources/skins.citizen.styles.search/search.less" ]
+		},
+		"skins.citizen.styles.lazyload": {
+			"class": "ResourceLoaderSkinModule",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"styles": [ "resources/skins.citizen.styles.lazyload/lazyload.less" ]
 		},
 		"skins.citizen.scripts": {
 			"scripts": [

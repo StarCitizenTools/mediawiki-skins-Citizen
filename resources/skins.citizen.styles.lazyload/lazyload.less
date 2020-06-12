@@ -1,0 +1,33 @@
+//
+// Citizen - Lazyload styles
+// https://starcitizen.tools
+//
+
+@import '../variables.less';
+
+.mw-body-content {
+	a.image {
+		img {
+			filter: none;
+			transition: @transition-filter, @transition-transform-quick;
+		}
+
+		.lazy {
+			display: block;
+			background-color: @base-90;
+			filter: blur( 8px ); // Blur the image
+			transform: scale( 1.1 );  // Prevent white edges
+			overflow: hidden;
+		}
+	}
+}
+
+@media ( prefers-color-scheme: dark ) {
+	.mw-body-content {
+		a.image {
+			.lazy {
+				background-color: @dark-bg-10;
+			}
+		}
+	}
+}

@@ -49,6 +49,7 @@ class CitizenHooks {
 		}
 
 		if ( $lazyloadEnabled === true ) {
+			$out->addModules( 'skins.citizen.styles.lazyload' );
 			$out->addModules( 'skins.citizen.scripts.lazyload' );
 		}
 
