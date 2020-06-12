@@ -62,6 +62,10 @@ figcaption,
 .thumbcaption {
 	font-size: @content-caption-size;
 	font-style: italic;
+
+	i {
+		font-style: normal;
+	}
 }
 
 #contentSub,
@@ -155,8 +159,10 @@ figcaption,
 }
 
 @media ( max-width: @screen0 ) {
-	figcaption,
-	.thumbcaption {
-		text-align: center;
+	#mw-content-text {
+		figcaption,
+		.thumbcaption {
+			text-align: center;
+		}
 	}
 }
