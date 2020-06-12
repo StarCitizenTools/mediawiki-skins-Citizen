@@ -107,16 +107,20 @@
 		margin-left: @margin-side / 2;
 		float: right;
 		transform: none;
+	}
 
-		#p-actions > nav ul {
+	#p-actions {
+		> ul {
 			right: 0;
 		}
 	}
 }
 
 @media ( max-width: 500px ) {
-	#p-actions > nav ul {
-		right: unset;
+	#p-actions {
+		> ul {
+			right: unset;
+		}
 	}
 }
 
@@ -124,6 +128,21 @@
 	#p-actions {
 		ul {
 			background: @dark-bg-50;
+
+			a {
+				color: @dark-text-80 !important;
+
+				&:hover {
+					background-color: @dark-bg-60;
+					color: @dark-text-90 !important;
+				}
+
+				&:active,
+				&:focus {
+					color: @dark-text-100 !important;
+					background-color: @accent-10;
+				}
+			}
 		}
 
 		&:before {
