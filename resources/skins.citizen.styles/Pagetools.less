@@ -2,6 +2,7 @@
 	position: absolute;
 	display: flex;
 	transform: translateX( ~'calc( (100vw - @{page-width}) / 2 - @{margin-side} * 2 - 100%)' ); // magic
+	z-index: 1;
 
 	ul {
 		margin: 0;
@@ -12,89 +13,89 @@
 	li {
 		margin: 0;
 	}
+}
 
-	#p-views {
-		li > a {
-			.resource-loader-icon-link;
-			padding: 5px;
-			font-size: 0;
-			opacity: @opacity-icon;
-			transition: @transition-opacity;
+#p-views {
+	li > a {
+		.resource-loader-icon-link;
+		padding: 5px;
+		font-size: 0;
+		opacity: @opacity-icon;
+		transition: @transition-opacity;
 
-			&:hover {
-				opacity: @opacity-icon-active;
-			}
+		&:hover {
+			opacity: @opacity-icon-active;
+		}
+
+		&:after {
+			.resource-loader-icon;
+		}
+
+		span {
+			.mixin-screen-reader-text;
+		}
+	}
+}
+
+#p-actions {
+	.resource-loader-icon-link;
+	padding: 5px;
+	cursor: pointer;
+	// transition: @transition-opacity-quick; - Hidden behind the menu anyways
+
+	// TODO: Need to make value more flexible
+	ul {
+		z-index: -1;
+		pointer-events: none;
+		.menu-container;
+		position: absolute;
+		opacity: 0;
+		.boxshadow(4);
+		transition: @transition-opacity-quick, @transition-box-shadow-quick;
+
+		a {
+			.menu-item-link;
+			justify-content: space-between;
+			font-size: @ui-menu-text;
+			padding: @padding-menu-item;
 
 			&:after {
-				.resource-loader-icon;
+				.resource-loader-list-icon;
+				margin-left: @icon-padding;
+				opacity: @opacity-icon;
 			}
 
-			span {
-				.mixin-screen-reader-text;
+			&:hover,
+			&:active,
+			&:focus {
+				&:after {
+					opacity: @opacity-icon-active;
+				}
+			}
+
+			&:hover {
+				.menu-item-link-hover;
+			}
+
+			&:active {
+				.menu-item-link-active;
+			}
+
+			&:focus {
+				.menu-item-link-focus;
 			}
 		}
 	}
 
-	#p-actions {
-		.resource-loader-icon-link;
-		padding: 5px;
-		cursor: pointer;
-		// transition: @transition-opacity-quick; - Hidden behind the menu anyways
+	&:before {
+		.resource-loader-menu-icon;
+		opacity: @opacity-icon;
+	}
 
-		// TODO: Need to make value more flexible
-		ul {
-			z-index: -1;
-			pointer-events: none;
-			.menu-container;
-			position: absolute;
-			opacity: 0;
-			.boxshadow(4);
-			transition: @transition-opacity-quick, @transition-box-shadow-quick;
-
-			a {
-				.menu-item-link;
-				justify-content: space-between;
-				font-size: @ui-menu-text;
-				padding: @padding-menu-item;
-
-				&:after {
-					.resource-loader-list-icon;
-					margin-left: @icon-padding;
-					opacity: @opacity-icon;
-				}
-
-				&:hover,
-				&:active,
-				&:focus {
-					&:after {
-						opacity: @opacity-icon-active;
-					}
-				}
-
-				&:hover {
-					.menu-item-link-hover;
-				}
-
-				&:active {
-					.menu-item-link-active;
-				}
-
-				&:focus {
-					.menu-item-link-focus;
-				}
-			}
-		}
-
-		&:before {
-			.resource-loader-menu-icon;
-			opacity: @opacity-icon;
-		}
-
-		&:hover ul {
-			z-index: 5;
-			opacity: 1;
-			pointer-events: auto;
-		}
+	&:hover ul {
+		z-index: 5;
+		opacity: 1;
+		pointer-events: auto;
 	}
 }
 
@@ -114,9 +115,25 @@
 }
 
 @media ( max-width: 500px ) {
-	#page-tools {
-		#p-actions > nav ul {
-			right: unset;
+	#p-actions > nav ul {
+		right: unset;
+	}
+}
+
+@media ( prefers-color-scheme: dark ) {
+	#p-actions{
+		ul {
+			background: @dark-bg-50;
+		}
+
+		&:before {
+			filter: invert( 1 );
+		}
+	}
+
+	#p-views {
+		li > a:after {
+			filter: invert( 1 );
 		}
 	}
 }
