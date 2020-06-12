@@ -225,6 +225,36 @@ figcaption,
 	color: @base-30;
 }
 
+.thumb {
+	overflow: hidden;
+
+	> .thumbinner {
+		> a {
+			transition: @transition-box-shadow-quick !important;
+
+			&:hover:not( .lazy ):not( .new ) {
+				background: 0 !important;
+				.boxshadow(2);
+
+				img {
+					transform: scale( 1.1 );
+				}
+			}
+
+			&:before {
+				content: none;
+			}
+
+			&.new {
+				padding: @margin-side / 2;
+				display: block;
+				background-color: @base-80;
+				transition: @transition-background-quick, @transition-color-quick !important;
+			}
+		}
+	}
+}
+
 .mw-body {
 	.firstHeading {
 		margin: 0;
@@ -267,58 +297,6 @@ figcaption,
 	position: relative;
 	.content-center;
 	z-index: 0;
-
-	#mw-content-text {
-		.mw-parser-output {
-			.mw-headline {
-				order: -1; // Make sure that header is the first
-			}
-
-			& > h1,
-			& > h2,
-			& > h3,
-			& > h4,
-			& > h5,
-			& > h6 {
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-			}
-
-			.mw-editsection {
-				position: absolute;
-				display: flex;
-				margin: 0;
-				left: 0;
-				transform: ~'translateX(calc(-100% - @{margin-side}))';
-
-				a {
-					.resource-loader-icon-link-small;
-					padding: @margin-side / 4;
-					opacity: @opacity-icon;
-					transition: @transition-opacity;
-					text-indent: -9999px; // Hide text
-					background: 0 !important; // Cancel above styles
-
-					&:before {
-						.resource-loader-icon;
-						background-size: contain;
-						display: block;
-					}
-
-					&:hover,
-					&:active,
-					&:focus {
-						opacity: @opacity-icon-active;
-					}
-				}
-
-				> span {
-					display: none;
-				}
-			}
-		}
-	}
 
 	p {
 		overflow-wrap: break-word;
@@ -382,53 +360,6 @@ figcaption,
 		vertical-align: middle;
 	}
 
-	.mw-references-wrap {
-		margin: @content-margin-top 0 0 0;
-		color: @base-30;
-
-		&.mw-references-columns {
-			margin: @content-margin-top @negative-margin 0 @negative-margin;
-		}
-
-		.references {
-			margin: 0 @content-margin-top * 2;
-
-			li {
-				margin-bottom: @content-margin-top / 4;
-			}
-		}
-	}
-
-	.thumb {
-		overflow: hidden;
-
-		> .thumbinner {
-			> a {
-				transition: @transition-box-shadow-quick !important;
-
-				&:hover:not( .lazy ):not( .new ) {
-					background: 0 !important;
-					.boxshadow(2);
-
-					img {
-						transform: scale( 1.1 );
-					}
-				}
-
-				&:before {
-					content: none;
-				}
-
-				&.new {
-					padding: @margin-side / 2;
-					display: block;
-					background-color: @base-80;
-					transition: @transition-background-quick, @transition-color-quick !important;
-				}
-			}
-		}
-	}
-
 	a.image {
 		display: block;
 		overflow: hidden;
@@ -443,6 +374,58 @@ figcaption,
 				background-color: @base-90;
 				filter: blur( 8px );
 				overflow: hidden;
+			}
+		}
+	}
+}
+
+#mw-content-text {
+	.mw-parser-output {
+		.mw-headline {
+			order: -1; // Make sure that header is the first
+		}
+
+		& > h1,
+		& > h2,
+		& > h3,
+		& > h4,
+		& > h5,
+		& > h6 {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.mw-editsection {
+			position: absolute;
+			display: flex;
+			margin: 0;
+			left: 0;
+			transform: ~'translateX(calc(-100% - @{margin-side}))';
+
+			a {
+				.resource-loader-icon-link-small;
+				padding: @margin-side / 4;
+				opacity: @opacity-icon;
+				transition: @transition-opacity;
+				text-indent: -9999px; // Hide text
+				background: 0 !important; // Cancel above styles
+
+				&:before {
+					.resource-loader-icon;
+					background-size: contain;
+					display: block;
+				}
+
+				&:hover,
+				&:active,
+				&:focus {
+					opacity: @opacity-icon-active;
+				}
+			}
+
+			> span {
+				display: none;
 			}
 		}
 	}
@@ -517,13 +500,5 @@ figcaption,
 
 	#p-namespaces {
 		margin: 0~'calc((100vw - @{page-width}) / -2)';
-	}
-
-	.mw-body-content {
-		.mw-references-wrap {
-			&.mw-references-columns {
-				margin: @content-margin-top 0 0 0;
-			}
-		}
 	}
 }
