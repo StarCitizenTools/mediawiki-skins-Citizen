@@ -2,7 +2,6 @@
 	position: fixed;
 	z-index: -1; // So that it is below float objects in content
 	max-width: 450px;
-	height: ~'calc( 100vh - @{header-height} * 2 - @{margin-side} * 2 )';
 	top: @header-height;
 	left: 0;
 	padding: @margin-side;
@@ -83,7 +82,7 @@
 		z-index: 2;
 		border-left: 1px dashed;
 		max-width: ~'calc( (100vw - '@page-width + @margin-side * 4~' ) / 2 )';
-		max-height: ~'calc( 100vh - '@header-height * 2 - @margin-side * 2~' )';
+		max-height: ~'calc( 100vh - '@header-height * 2 + @margin-side * 4~' )';
 		overflow: visible auto;
 		overscroll-behavior: contain;
 		display: block;

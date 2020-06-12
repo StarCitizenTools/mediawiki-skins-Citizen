@@ -70,3 +70,10 @@
 		margin: 0~'calc((100vw - @{page-width}) / -2)';
 	}
 }
+
+@media ( prefers-color-scheme: dark ) {
+	.catlinks .mw-normal-catlinks > ul li a {
+		background-color: @dark-bg-10;
+		border-color: @dark-bg-10;
+	}
+}

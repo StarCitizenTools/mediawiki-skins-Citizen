@@ -55,3 +55,14 @@
 		}
 	}
 }
+
+@media ( prefers-color-scheme: dark ) {
+	#pt-notifications {
+		&-alert,
+		&-notice {
+			.mw-echo-notifications-badge:before {
+				filter: invert( 1 );
+			}
+		}
+	}
+}

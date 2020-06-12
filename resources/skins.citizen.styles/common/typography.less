@@ -53,8 +53,7 @@ dt {
 }
 
 sub,
-sup,
-span.reference {
+sup {
 	font-size: 80%;
 }
 
@@ -62,6 +61,10 @@ figcaption,
 .thumbcaption {
 	font-size: @content-caption-size;
 	font-style: italic;
+
+	i {
+		font-style: normal;
+	}
 }
 
 #contentSub,
@@ -89,10 +92,6 @@ figcaption,
 .error {
 	font-size: unset;
 	font-weight: normal;
-}
-
-.mw-references-wrap {
-	font-size: @content-small-text-size;
 }
 
 .mw-body {
@@ -155,8 +154,10 @@ figcaption,
 }
 
 @media ( max-width: @screen0 ) {
-	figcaption,
-	.thumbcaption {
-		text-align: center;
+	#mw-content-text {
+		figcaption,
+		.thumbcaption {
+			text-align: center;
+		}
 	}
 }

@@ -41,3 +41,24 @@ table.wikitable {
 		white-space: nowrap;
 	}
 }
+
+@media ( prefers-color-scheme: dark ) {
+	table.wikitable {
+		color: @dark-text-90;
+
+		tr {
+			th {
+				color: @dark-text-80;
+			}
+
+			th,
+			td {
+				border-color: @dark-bg-20;
+			}
+
+			&:hover {
+				background-color: @dark-bg-10;
+			}
+		}
+	}
+}
