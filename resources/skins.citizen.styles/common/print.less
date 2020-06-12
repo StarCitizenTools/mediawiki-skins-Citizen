@@ -3,18 +3,18 @@
  * Hide some extra stuff from print view
  * (some of the navigation is already hidden automatically, but not all)
 */
+.mw-header,
 .mw-indicators,
 .toctoggle,
 .mw-side,
 .noprint,
-#p-logo,
 #catlinks,
 #p-namespaces,
-#mw-bottombar,
+#p-variants,
+#footer-bottom,
 .hatnote,
 .mbox,
 .mw-sidebar-sitename,
-#footer-container-icons,
 .tabbernav,
 .embedvideo {
 	display: none !important;
@@ -148,38 +148,26 @@ ol {
 	}
 }
 
-.mw-body #siteSub {
+#siteSub {
 	display: block;
-	margin: 0.4rem 0 1.6rem;
-	color: @base-30;
+    margin: 0.4rem 0 1.6rem;
+    color: #72777d;
+    font-size: 0.8125rem;
+}
+
+.mw-footer {
+	padding-top: 1rem;
+	border-top: 1px solid @base-30;
+
+	ul {
+		padding: 0;
+		list-style-type: none;
+	}
+}
+
+.last-modified-bar {
+	padding-bottom: 1rem;
 	font-size: @content-caption-size;
-}
-
-#mw-wrapper,
-#footer-list {
-	display: flex;
-	flex-direction: column;
-}
-
-#mw-sidebar-sitename,
-#lastmod {
-	order: -1;
-}
-
-#footer {
-	margin-top: 2rem;
-	font-size: @content-monospace-size;
-	color: @base-30;
-}
-
-#footer-list {
-	padding: 0;
-	list-style: none;
-}
-
-#sitetitle {
-	margin-top: @content-margin-top;
-	margin-bottom: @content-margin-top / 2;
 }
 
 .mw-wiki-title {
