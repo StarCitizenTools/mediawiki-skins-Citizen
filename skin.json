@@ -196,6 +196,14 @@
 			],
 			"styles": [ "resources/skins.citizen.styles.search/search.less" ]
 		},
+		"skins.citizen.styles.lazyload": {
+			"class": "ResourceLoaderSkinModule",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"styles": [ "resources/skins.citizen.styles.lazyload/lazyload.less" ]
+		},
 		"skins.citizen.scripts": {
 			"scripts": [
 				"resources/skins.citizen.scripts/toc.js",
