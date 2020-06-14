@@ -169,6 +169,15 @@ a {
 	direction: ltr;
 }
 
+.mw-body-content {
+	.plainlist ol,
+	.plainlist ul {
+		line-height: inherit;
+		list-style: none none;
+		margin: 0;
+	}
+}
+
 .mw-wiki-title {
 	a& {
 		color: @base-50;
@@ -231,13 +240,6 @@ figcaption,
 	display: inline-block;
 	zoom: 1;
 	*display: inline; // stylelint-disable declaration-block-no-duplicate-properties
-}
-
-.plainlist ol,
-.plainlist ul {
-	line-height: inherit;
-	list-style: none none;
-	margin: 0;
 }
 
 @media ( max-width: @screen2 ) {
