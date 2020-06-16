@@ -36,27 +36,6 @@ use ThumbnailImage;
  */
 class CitizenHooks {
 	/**
-	 * @param OutputPage $out
-	 * @param Skin $skin
-	 * @return bool
-	 */
-	public static function onBeforePageDisplay( $out, $skin ) {
-		try {
-			$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Citizen' );
-			$lazyloadEnabled = $config->get( 'CitizenEnableLazyload' );
-		} catch ( Exception $e ) {
-			return false;
-		}
-
-		if ( $lazyloadEnabled === true ) {
-			$out->addModules( 'skins.citizen.styles.lazyload' );
-			$out->addModules( 'skins.citizen.scripts.lazyload' );
-		}
-
-		return true;
-	}
-
-	/**
 	 * ResourceLoaderGetConfigVars hook handler for setting a config variable
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/ResourceLoaderGetConfigVars
 	 *

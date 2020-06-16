@@ -250,6 +250,11 @@ class SkinCitizen extends SkinTemplate {
 			'skins.citizen.icons.badges',
 		] );
 
+		// Add lazyload-related modules
+		if ( $this->getConfigValue( 'CitizenEnableLazyload' ) === true ) {
+			$this->out->addModuleStyles( [ 'skins.citizen.styles.lazyload' ] );
+			$this->out->addModules( [ 'skins.citizen.scripts.lazyload' ] );
+		}
 		$this->out->addModules( [
 			'skins.citizen.scripts',
 		] );

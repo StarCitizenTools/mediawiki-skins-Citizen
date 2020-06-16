@@ -529,9 +529,6 @@
 		}
 	},
 	"Hooks": {
-		"BeforePageDisplay": [
-			"Citizen\\CitizenHooks::onBeforePageDisplay"
-		],
 		"ResourceLoaderGetConfigVars": [
 			"Citizen\\CitizenHooks::onResourceLoaderGetConfigVars"
 		],
