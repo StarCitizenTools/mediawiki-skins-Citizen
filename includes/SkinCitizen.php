@@ -211,6 +211,7 @@ class SkinCitizen extends SkinTemplate {
 	 */
 	public function getDefaultModules() {
 		$modules = parent::getDefaultModules();
+		$out = $this->getOutput();
 
 		// Replace the search module
 		if ( $this->getConfigValue( 'CitizenEnableSearch' ) === true ) {
@@ -220,6 +221,12 @@ class SkinCitizen extends SkinTemplate {
 				'skins.citizen.icons.search',
 			];
 		}
+
+		if ( $out->isTOCEnabled() ) {
+			// Disable style condition loading due to pop in
+            // $modules['content'][] = 'skins.citizen.styles.toc';
+            $modules['content'][] = 'skins.citizen.scripts.toc';
+         }
 
 		return $modules;
 	}
@@ -232,6 +239,7 @@ class SkinCitizen extends SkinTemplate {
 			'mediawiki.skinning.content.externallinks',
 			'skins.citizen.styles',
 			'skins.citizen.styles.fonts',
+			'skins.citizen.styles.toc',
 			'skins.citizen.icons',
 			'skins.citizen.icons.ca',
 			'skins.citizen.icons.es',

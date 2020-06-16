@@ -188,6 +188,14 @@
 			],
 			"styles": [ "resources/skins.citizen.styles.fonts/font-face.less" ]
 		},
+		"skins.citizen.styles.toc": {
+			"class": "ResourceLoaderSkinModule",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"styles": [ "resources/skins.citizen.styles.toc/toc.less" ]
+		},
 		"skins.citizen.styles.search": {
 			"class": "ResourceLoaderSkinModule",
 			"targets": [
@@ -206,8 +214,12 @@
 		},
 		"skins.citizen.scripts": {
 			"scripts": [
-				"resources/skins.citizen.scripts/toc.js",
 				"resources/skins.citizen.scripts/search.js"
+			]
+		},
+		"skins.citizen.scripts.toc": {
+			"scripts": [
+				"resources/skins.citizen.scripts.toc/toc.js"
 			]
 		},
 		"skins.citizen.scripts.search": {
