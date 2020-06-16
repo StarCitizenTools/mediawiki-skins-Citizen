@@ -1,8 +1,28 @@
 <?php
+/**
+ * Citizen - A responsive skin developed for the Star Citizen Wiki
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ * @ingroup Skins
+ */
 
 /**
  * SkinTemplate class for the Citizen skin
- *
  * @ingroup Skins
  */
 class SkinCitizen extends SkinTemplate {
@@ -211,6 +231,7 @@ class SkinCitizen extends SkinTemplate {
 	 */
 	public function getDefaultModules() {
 		$modules = parent::getDefaultModules();
+		$out = $this->getOutput();
 
 		// Replace the search module
 		if ( $this->getConfigValue( 'CitizenEnableSearch' ) === true ) {
@@ -221,17 +242,25 @@ class SkinCitizen extends SkinTemplate {
 			];
 		}
 
+		if ( $out->isTOCEnabled() ) {
+			// Disable style condition loading due to pop in
+			// $modules['content'][] = 'skins.citizen.styles.toc';
+			$modules['content'][] = 'skins.citizen.scripts.toc';
+		}
+
 		return $modules;
 	}
 
 	/**
 	 * Adds all needed skin modules
+	 * TODO: Replace with getDefaultModules() when we move to min 1.35
 	 */
 	private function addModules() {
 		$this->out->addModuleStyles( [
 			'mediawiki.skinning.content.externallinks',
 			'skins.citizen.styles',
 			'skins.citizen.styles.fonts',
+			'skins.citizen.styles.toc',
 			'skins.citizen.icons',
 			'skins.citizen.icons.ca',
 			'skins.citizen.icons.es',
@@ -242,6 +271,11 @@ class SkinCitizen extends SkinTemplate {
 			'skins.citizen.icons.badges',
 		] );
 
+		// Add lazyload-related modules
+		if ( $this->getConfigValue( 'CitizenEnableLazyload' ) === true ) {
+			$this->out->addModuleStyles( [ 'skins.citizen.styles.lazyload' ] );
+			$this->out->addModules( [ 'skins.citizen.scripts.lazyload' ] );
+		}
 		$this->out->addModules( [
 			'skins.citizen.scripts',
 		] );

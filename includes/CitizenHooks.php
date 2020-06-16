@@ -1,8 +1,10 @@
 <?php
 /**
+ * Citizen - A responsive skin developed for the Star Citizen Wiki
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -23,9 +25,7 @@ namespace Citizen;
 use ConfigException;
 use Exception;
 use MediaWiki\MediaWikiServices;
-use OutputPage;
 use RequestContext;
-use Skin;
 use ThumbnailImage;
 
 /**
@@ -35,27 +35,6 @@ use ThumbnailImage;
  *    on<HookName>()
  */
 class CitizenHooks {
-	/**
-	 * @param OutputPage $out
-	 * @param Skin $skin
-	 * @return bool
-	 */
-	public static function onBeforePageDisplay( $out, $skin ) {
-		try {
-			$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Citizen' );
-			$lazyloadEnabled = $config->get( 'CitizenEnableLazyload' );
-		} catch ( Exception $e ) {
-			return false;
-		}
-
-		if ( $lazyloadEnabled === true ) {
-			$out->addModules( 'skins.citizen.styles.lazyload' );
-			$out->addModules( 'skins.citizen.scripts.lazyload' );
-		}
-
-		return true;
-	}
-
 	/**
 	 * ResourceLoaderGetConfigVars hook handler for setting a config variable
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/ResourceLoaderGetConfigVars
