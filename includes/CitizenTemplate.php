@@ -32,6 +32,7 @@ class CitizenTemplate extends BaseTemplate {
 	private const MENU_LABEL_KEYS = [
 		'tb' => 'toolbox',
 		'personal' => 'personaltools',
+		'lang' => 'otherlanguages',
 	];
 
 	/**
@@ -147,13 +148,6 @@ class CitizenTemplate extends BaseTemplate {
 					break;
 				case 'TOOLBOX':
 					$portal = $this->getMenuData( 'tb',  $this->getToolbox() );
-					// Run deprecated hooks.
-					$citizenTemplate = $this;
-					ob_start();
-					// Use SidebarBeforeOutput instead.
-					Hooks::run( 'SkinTemplateToolboxEnd', [ &$citizenTemplate, true ] );
-					$htmlhookitems = ob_get_clean();
-					$portal['html-items'] .= $htmlhookitems;
 					$props[] = $portal;
 					break;
 				case 'LANGUAGES':
