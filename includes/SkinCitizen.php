@@ -224,9 +224,9 @@ class SkinCitizen extends SkinTemplate {
 
 		if ( $out->isTOCEnabled() ) {
 			// Disable style condition loading due to pop in
-            // $modules['content'][] = 'skins.citizen.styles.toc';
-            $modules['content'][] = 'skins.citizen.scripts.toc';
-         }
+			// $modules['content'][] = 'skins.citizen.styles.toc';
+			$modules['content'][] = 'skins.citizen.scripts.toc';
+		}
 
 		return $modules;
 	}
