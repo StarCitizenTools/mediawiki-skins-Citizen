@@ -23,9 +23,7 @@ namespace Citizen;
 use ConfigException;
 use Exception;
 use MediaWiki\MediaWikiServices;
-use OutputPage;
 use RequestContext;
-use Skin;
 use ThumbnailImage;
 
 /**
