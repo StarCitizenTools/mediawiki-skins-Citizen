@@ -48,11 +48,12 @@
 
 @media ( prefers-color-scheme: dark ) {
 	.oo-ui-windowManager-modal > .oo-ui-dialog > .oo-ui-window-frame {
-		background-color: @dark-bg-50;
+		background-color: @dark-bg-0;
 	}
 
 	.oo-ui-processDialog-content .oo-ui-window-body {
 		border-color: @dark-bg-40;
+		outline: 1px solid @dark-bg-30;
 	}
 
 	.oo-ui-messageDialog-content > .oo-ui-window-foot {
@@ -81,10 +82,6 @@
 
 	.oo-ui-messageDialog-actions-vertical .oo-ui-actionWidget {
 		border-bottom: 1px solid @dark-bg-50;
-	}
-
-	.oo-ui-processDialog-content .oo-ui-window-body {
-		outline: 1px solid @dark-bg-30;
 	}
 
 	.oo-ui-processDialog-actions-safe .oo-ui-actionWidget.oo-ui-buttonElement-frameless:hover,
@@ -133,10 +130,6 @@
 	.oo-ui-windowManager-modal > .oo-ui-dialog {
 		background-color: rgba( 0, 0, 0, 0.5 );
 		z-index: 10;
-	}
-
-	.oo-ui-windowManager-modal > .oo-ui-dialog > .oo-ui-window-frame {
-		background-color: @dark-bg-0;
 	}
 
 	.oo-ui-windowManager-modal.oo-ui-windowManager-floating > .oo-ui-dialog > .oo-ui-window-frame {

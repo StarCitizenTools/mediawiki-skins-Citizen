@@ -1,0 +1,58 @@
+name: MediaWiki CI
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Install dependencies
+      run: |
+        composer validate
+        npm install --save-dev
+        composer install --prefer-dist --no-progress --no-suggest
+
+    # Bypass the phpcbf non-standard exit code  
+    - name: Check PHP
+      run: |
+        sh ./bin/phpcbf.sh
+        composer fix
+        composer test
+
+    - name: Check Javascript
+      run: |
+        npm run lint:fix:js
+        npm run lint:js
+
+    - name: Check CSS/LESS
+      run: |
+        npm run lint:fix:styles
+        npm run lint:styles
+
+    - name: Check i18n
+      run: |
+        npm run lint:i18n
+
+    # Only patch code when it is a push event
+    - name: Push the changes
+      if: github.event_name == 'push'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@users.noreply.github.com"
+        git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+        git add .
+        git commit -am "Make a dinner reservation - MediaWiki CI" -m "I clean up code to MediaWiki standards" || echo "No changes to commit"
+        git pull --rebase
+        git push

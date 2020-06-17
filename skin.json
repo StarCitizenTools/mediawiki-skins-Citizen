@@ -1,14 +1,14 @@
 {
 	"name": "Citizen",
 	"namemsg": "skinname-citizen",
-	"version": "0.9.1",
+	"version": "0.9.2",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
 	],
 	"url": "https://www.mediawiki.org/wiki/Skin:Citizen",
 	"descriptionmsg": "citizen-desc",
-	"license-name": "GPL-3.0",
+	"license-name": "GPL-3.0-or-later",
 	"type": "skin",
 	"requires": {
 		"MediaWiki": ">= 1.31.0"
@@ -186,23 +186,7 @@
 				"desktop",
 				"mobile"
 			],
-			"styles": [ "resources/skins.citizen.styles.fonts/font-face.less" ]
-		},
-		"skins.citizen.styles.toc": {
-			"class": "ResourceLoaderSkinModule",
-			"targets": [
-				"desktop",
-				"mobile"
-			],
-			"styles": [ "resources/skins.citizen.styles.toc/toc.less" ]
-		},
-		"skins.citizen.styles.search": {
-			"class": "ResourceLoaderSkinModule",
-			"targets": [
-				"desktop",
-				"mobile"
-			],
-			"styles": [ "resources/skins.citizen.styles.search/search.less" ]
+			"styles": [ "resources/skins.citizen.styles.fonts/skins.citizen.styles.fonts.less" ]
 		},
 		"skins.citizen.styles.lazyload": {
 			"class": "ResourceLoaderSkinModule",
@@ -210,16 +194,32 @@
 				"desktop",
 				"mobile"
 			],
-			"styles": [ "resources/skins.citizen.styles.lazyload/lazyload.less" ]
+			"styles": [ "resources/skins.citizen.styles.lazyload/skins.citizen.styles.lazyload.less" ]
+		},
+		"skins.citizen.styles.search": {
+			"class": "ResourceLoaderSkinModule",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"styles": [ "resources/skins.citizen.styles.search/skins.citizen.styles.search.less" ]
+		},
+		"skins.citizen.styles.toc": {
+			"class": "ResourceLoaderSkinModule",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"styles": [ "resources/skins.citizen.styles.toc/skins.citizen.styles.toc.less" ]
 		},
 		"skins.citizen.scripts": {
 			"scripts": [
-				"resources/skins.citizen.scripts/search.js"
+				"resources/skins.citizen.scripts/skins.citizen.scripts.js"
 			]
 		},
-		"skins.citizen.scripts.toc": {
+		"skins.citizen.scripts.lazyload": {
 			"scripts": [
-				"resources/skins.citizen.scripts.toc/toc.js"
+				"resources/skins.citizen.scripts.lazyload/skins.citizen.scripts.lazyload.js"
 			]
 		},
 		"skins.citizen.scripts.search": {
@@ -236,9 +236,9 @@
 				"citizen-search-fulltext"
 			]
 		},
-		"skins.citizen.scripts.lazyload": {
+		"skins.citizen.scripts.toc": {
 			"scripts": [
-				"resources/skins.citizen.scripts.lazyload/lazyload.js"
+				"resources/skins.citizen.scripts.toc/skins.citizen.scripts.toc.js"
 			]
 		},
 		"skins.citizen.icons": {
