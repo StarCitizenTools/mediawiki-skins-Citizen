@@ -253,8 +253,8 @@
 					}
 				},
 				"#p-actions:before": "resources/skins.citizen.icons/more.svg",
-				"#searchform-icon": "resources/images/icons/search.svg",
-				"#searchform-random": "resources/images/icons/random.svg"
+				"#searchform-icon": "resources/skins.citizen.icons/shared/search.svg",
+				"#searchform-random": "resources/skins.citizen.icons/shared/random.svg"
 			}
 		},
 		"skins.citizen.icons.ca": {
@@ -262,20 +262,20 @@
 			"selector": "#ca-{name} > *:after",
 			"defaultColor": "#000",
 			"images": {
-				"view": "resources/images/icons/article.svg",
-				"viewsource": "resources/images/icons/eye.svg",
-				"ve-edit": "resources/images/icons/ve-edit.svg",
-				"edit": "resources/images/icons/edit.svg",
-				"history": "resources/images/icons/history.svg",
-				"delete": "resources/images/icons/delete.svg",
-				"move": "resources/images/icons/move.svg",
-				"protect": "resources/images/icons/lock.svg",
-				"unprotect": "resources/images/icons/unLock.svg",
-				"watch": "resources/images/icons/eye.svg",
-				"unwatch": "resources/images/icons/eyeClosed.svg",
-				"talk": "resources/images/icons/discussion.svg",
-				"nstab-main": "resources/images/icons/article.svg",
-				"translate": "resources/images/icons/language.svg"
+				"view": "resources/skins.citizen.icons/shared/article.svg",
+				"viewsource": "resources/skins.citizen.icons/shared/eye.svg",
+				"ve-edit": "resources/skins.citizen.icons/shared/ve-edit.svg",
+				"edit": "resources/skins.citizen.icons/shared/edit.svg",
+				"history": "resources/skins.citizen.icons/shared/history.svg",
+				"delete": "resources/skins.citizen.icons/shared/delete.svg",
+				"move": "resources/skins.citizen.icons/shared/move.svg",
+				"protect": "resources/skins.citizen.icons/shared/lock.svg",
+				"unprotect": "resources/skins.citizen.icons/shared/unLock.svg",
+				"watch": "resources/skins.citizen.icons/shared/eye.svg",
+				"unwatch": "resources/skins.citizen.icons/shared/eyeClosed.svg",
+				"talk": "resources/skins.citizen.icons/shared/discussion.svg",
+				"nstab-main": "resources/skins.citizen.icons/shared/article.svg",
+				"translate": "resources/skins.citizen.icons/shared/language.svg"
 			}
 		},
 		"skins.citizen.icons.es": {
@@ -283,8 +283,8 @@
 			"selector": ".mw-editsection > a{name}:before",
 			"defaultColor": "#000",
 			"images": {
-				"": "resources/images/icons/edit.svg",
-				".mw-editsection-visualeditor": "resources/images/icons/ve-edit.svg"
+				"": "resources/skins.citizen.icons/shared/edit.svg",
+				".mw-editsection-visualeditor": "resources/skins.citizen.icons/shared/ve-edit.svg"
 			}
 		},
 		"skins.citizen.icons.n": {
@@ -292,10 +292,10 @@
 			"selector": "#n-{name} > *:after",
 			"defaultColor": "#000",
 			"images": {
-				"mainpage-description": "resources/images/icons/home.svg",
-				"recentchanges": "resources/images/icons/history.svg",
-				"randompage": "resources/images/icons/random.svg",
-				"help": "resources/images/icons/help.svg"
+				"mainpage-description": "resources/skins.citizen.icons/shared/home.svg",
+				"recentchanges": "resources/skins.citizen.icons/shared/history.svg",
+				"randompage": "resources/skins.citizen.icons/shared/random.svg",
+				"help": "resources/skins.citizen.icons/shared/help.svg"
 			}
 		},
 		"skins.citizen.icons.t": {
@@ -303,17 +303,17 @@
 			"selector": "#t-{name} > *:after",
 			"defaultColor": "#000",
 			"images": {
-				"whatlinkshere": "resources/images/icons/whatlinkshere.svg",
-				"recentchangeslinked": "resources/images/icons/history.svg",
-				"contributions": "resources/images/icons/contributions.svg",
-				"log": "resources/images/icons/journal.svg",
-				"blockip": "resources/images/icons/block.svg",
-				"userrights": "resources/images/icons/users.svg",
-				"upload": "resources/images/icons/upload.svg",
-				"specialpages": "resources/images/icons/specialpages.svg",
-				"print": "resources/images/icons/download.svg",
-				"permalink": "resources/images/icons/link.svg",
-				"info": "resources/images/icons/info.svg"
+				"whatlinkshere": "resources/skins.citizen.icons/shared/whatlinkshere.svg",
+				"recentchangeslinked": "resources/skins.citizen.icons/shared/history.svg",
+				"contributions": "resources/skins.citizen.icons/shared/contributions.svg",
+				"log": "resources/skins.citizen.icons/shared/journal.svg",
+				"blockip": "resources/skins.citizen.icons/shared/block.svg",
+				"userrights": "resources/skins.citizen.icons/shared/users.svg",
+				"upload": "resources/skins.citizen.icons/shared/upload.svg",
+				"specialpages": "resources/skins.citizen.icons/shared/specialpages.svg",
+				"print": "resources/skins.citizen.icons/shared/download.svg",
+				"permalink": "resources/skins.citizen.icons/shared/link.svg",
+				"info": "resources/skins.citizen.icons/shared/info.svg"
 			}
 		},
 		"skins.citizen.icons.pt": {
@@ -321,17 +321,17 @@
 			"selector": "#pt-{name} > *:after",
 			"defaultColor": "#000",
 			"images": {
-				"userpage": "resources/images/icons/userNormal.svg",
-				"mytalk": "resources/images/icons/userTalk.svg",
-				"preferences": "resources/images/icons/settings.svg",
-				"betafeatures": "resources/images/icons/beta.svg",
-				"watchlist": "resources/images/icons/watchlist.svg",
-				"mycontris": "resources/images/icons/contributions.svg",
-				"logout": "resources/images/icons/logOut.svg",
-				"createaccount": "resources/images/icons/userAvatar.svg",
-				"login": "resources/images/icons/logOut.svg",
-				"anontalk": "resources/images/icons/userTalk.svg",
-				"anoncontribs": "resources/images/icons/contributions.svg"
+				"userpage": "resources/skins.citizen.icons/shared/userNormal.svg",
+				"mytalk": "resources/skins.citizen.icons/shared/userTalk.svg",
+				"preferences": "resources/skins.citizen.icons/shared/settings.svg",
+				"betafeatures": "resources/skins.citizen.icons/shared/beta.svg",
+				"watchlist": "resources/skins.citizen.icons/shared/watchlist.svg",
+				"mycontris": "resources/skins.citizen.icons/shared/contributions.svg",
+				"logout": "resources/skins.citizen.icons/shared/logOut.svg",
+				"createaccount": "resources/skins.citizen.icons/shared/userAvatar.svg",
+				"login": "resources/skins.citizen.icons/shared/logOut.svg",
+				"anontalk": "resources/skins.citizen.icons/shared/userTalk.svg",
+				"anoncontribs": "resources/skins.citizen.icons/shared/contributions.svg"
 			}
 		},
 		"skins.citizen.icons.footer": {
