@@ -99,7 +99,7 @@ class ApiWebappManifest extends ApiBase {
 	 * Calls getConfig. Returns empty string on exception or $default;
 	 *
 	 * @param string $key
-	 * @param string|integer $default
+	 * @param string|int|null $default
 	 * @return mixed|string
 	 * @see Config::get()
 	 */
