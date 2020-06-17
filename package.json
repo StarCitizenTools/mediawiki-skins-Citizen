@@ -6,11 +6,14 @@
 		"lint:fix:styles": "npm -s run lint:styles -- --fix",
 		"lint:js": "eslint --cache --max-warnings 0 .",
 		"lint:styles": "stylelint \"**/*.{less,css}\"",
-		"lint:i18n": "banana-checker --requireLowerCase=0 i18n/"
+		"lint:i18n": "banana-checker --requireLowerCase=0 i18n/",
+		"doc": "jsdoc -c jsdoc.json"
 	},
 	"devDependencies": {
 		"eslint-config-wikimedia": "0.15.3",
 		"grunt-banana-checker": "0.9.0",
+		"jsdoc": "3.6.3",
+		"jsdoc-wmf-theme": "0.0.3",
 		"stylelint-config-wikimedia": "0.10.1"
 	},
 	"jshintConfig": {
