@@ -51,7 +51,6 @@ class ApiWebappManifest extends ApiBase {
 	/**
 	 * @param ApiResult $result
 	 */
-	// TODO: Add support for 192 and 512px icons
 	private function addIcons( $result ) {
 		$icons = [];
 
@@ -100,7 +99,7 @@ class ApiWebappManifest extends ApiBase {
 	 * Calls getConfig. Returns empty string on exception or $default;
 	 *
 	 * @param string $key
-	 * @param string|integer $default
+	 * @param string|int|null $default
 	 * @return mixed|string
 	 * @see Config::get()
 	 */

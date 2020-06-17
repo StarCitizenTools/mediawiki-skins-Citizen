@@ -1,3 +1,9 @@
+/.storybook/
+/docs/
+/i18n/
+/node_modules/
+/vendor/
+
 # ES6 files
 resources/skins.citizen.scripts.search/typeahead-init.js
 resources/skins.citizen.scripts.search/underscore.partial.js

@@ -12,6 +12,18 @@
 				background: @dark-bg-20;
 			}
 		}
+
+		.mw-ui-icon-before:before,
+		.oo-ui-indicatorElement-indicator,
+		.oo-ui-iconElement-icon {
+			filter: invert( 1 ) hue-rotate( 180deg );
+		}
+
+		.flow-menu {
+			.mw-ui-button.mw-ui-quiet {
+				color: @dark-text-90;
+			}
+		}
 	}
 
 	.flow-revision-content {
@@ -39,20 +51,6 @@
 		.flow-board-header:before {
 			background-color: @dark-bg-10;
 			box-shadow: -2px 0 0 0 rgba( 0, 0, 0, 0.1 );
-		}
-	}
-
-	.flow-component {
-		.mw-ui-icon-before:before,
-		.oo-ui-indicatorElement-indicator,
-		.oo-ui-iconElement-icon {
-			filter: invert( 1 ) hue-rotate( 180deg );
-		}
-
-		.flow-menu {
-			.mw-ui-button.mw-ui-quiet {
-				color: @dark-text-90;
-			}
 		}
 	}
 }

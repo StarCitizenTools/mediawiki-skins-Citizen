@@ -340,9 +340,9 @@ class CitizenTemplate extends BaseTemplate {
 	}
 
 	/**
-	* Render page-related links at the bottom
-	* @return string html
-	*/
+	 * Render page-related links at the bottom
+	 * @return string html
+	 */
 	private function buildPageLinks() : array {
 		$contentNavigation = $this->data['content_navigation'];
 
