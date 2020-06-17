@@ -54,4 +54,5 @@ jobs:
         git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
         git add .
         git commit -am "Make a dinner reservation - MediaWiki CI" -m "I clean up code to MediaWiki standards" || echo "No changes to commit"
+        git pull --rebase
         git push
