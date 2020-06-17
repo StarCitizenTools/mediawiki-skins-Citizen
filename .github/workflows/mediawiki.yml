@@ -30,17 +30,17 @@ jobs:
         composer test
 
     - name: Check Javascript
-      run: /
+      run: |
         npm run lint:fix:js
         npm run lint:js
 
     - name: Check CSS/LESS
-      run: /
+      run: |
         npm run lint:fix:styles
         npm run lint:styles
 
     - name: Check i18n
-      run: /
+      run: |
         npm run lint:i18n
 
     # Only patch code when it is a push event
