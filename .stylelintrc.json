@@ -1,14 +1,7 @@
 {
 	"extends": "stylelint-config-wikimedia",
-	"ignoreFiles": "out/**",
 	"rules": {
-		"linebreaks": null,
-		"unit-blacklist": null,
-		"selector-max-id": 10,
-		"declaration-no-important": null,
-		"no-descending-specificity": null,
-		"time-min-milliseconds": 1,
-		"unit-no-unknown": null,
-		"no-duplicate-selectors": null
+		"selector-max-id": null,
+		"no-descending-specificity": null
 	}
 }
