@@ -1,5 +1,5 @@
 # Citizen
-![](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/workflows/Composer/badge.svg) ![](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/workflows/Grunt/badge.svg)
+![](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/workflows/MediaWiki%20CI/badge.svg)
 
 Citizen is a responsive skin for [MediaWiki](https://www.mediawiki.org) built by the [Star Citizen Wiki](https://starcitizen.tools) team. Although it is specifically built for the Star Citizen Wiki, the skin should be able to run on any Mediawiki installation that is 1.31 or higher. Due to resource constraints, we might not be able to provide full support for setups that are vastly different than us, but please feel free to submit patches or bug report!
 

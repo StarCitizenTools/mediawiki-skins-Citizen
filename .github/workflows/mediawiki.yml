@@ -1,4 +1,4 @@
-name: MediaWiki CI Lite
+name: MediaWiki CI
 
 on:
   push:
