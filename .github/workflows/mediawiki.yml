@@ -53,5 +53,5 @@ jobs:
         git config --global user.email "github-actions@users.noreply.github.com"
         git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
         git add .
-        git commit -am "Github CI lint - eslint/stylelint" || echo "No changes to commit"
+        git commit -am "MediaWiki CI" || echo "No changes to commit"
         git push
