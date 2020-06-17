@@ -5,6 +5,10 @@
  * Smooth scroll fallback and Scrollspy
  */
 
+/**
+ * Implement smooth scroll when an item in table of content is clicked.
+ * @constructor
+ */
 function SmoothScroll() {
 	var navLinks, eventListener, link;
 	if ( !( 'scrollBehavior' in document.documentElement.style ) ) {
@@ -24,6 +28,10 @@ function SmoothScroll() {
 	}
 }
 
+/**
+ * Add active HTML class to items in table of content based on user viewport.
+ * @constructor
+ */
 function ScrollSpy() {
 	var sections = document.querySelectorAll( '.mw-headline' );
 	window.addEventListener( 'scroll', function () {
@@ -49,6 +57,10 @@ function ScrollSpy() {
 	} );
 }
 
+/**
+ * Run SmoothScroll() and ScrollSpy() when table of content is present.
+ * @constructor
+ */
 function CheckToC() {
 	if ( document.getElementById( 'toc' ) ) {
 		SmoothScroll();
