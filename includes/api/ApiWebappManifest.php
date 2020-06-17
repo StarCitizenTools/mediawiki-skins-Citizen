@@ -51,7 +51,6 @@ class ApiWebappManifest extends ApiBase {
 	/**
 	 * @param ApiResult $result
 	 */
-	// TODO: Add support for 192 and 512px icons
 	private function addIcons( $result ) {
 		$icons = [];
 
