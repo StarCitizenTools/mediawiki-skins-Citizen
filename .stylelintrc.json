@@ -2,6 +2,8 @@
 	"extends": "stylelint-config-wikimedia",
 	"rules": {
 		"selector-max-id": null,
-		"no-descending-specificity": null
+		"no-descending-specificity": null,
+		"declaration-no-important": null,
+		"unit-blacklist": null
 	}
 }
