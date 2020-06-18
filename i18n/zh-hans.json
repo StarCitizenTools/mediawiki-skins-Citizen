@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Alistair3149"
+		]
+	},
+	"skinname-citizen": "Citizen",
+	"citizen-desc": "为星际公民百科而开发的响应式皮肤",
+	"citizen.css": "/* 这里的任何CSS将为使用Citizen皮肤的用户加载 */",
+	"citizen.js": "/* 这里的任何JavaScript将为使用Citizen皮肤的用户加载 */",
+	"citizen-drawer-toggle": "切换菜单",
+	"citizen-search-toggle": "切换搜索",
+	"citizen-footer-desc": "在 MediaWiki:Citizen-footer-desc 编辑此文本",
+	"citizen-footer-tagline": "在 MediaWiki:Citizen-footer-tagline 编辑此文本",
+	"citizen-search-fulltext": "搜索包含"
+}
