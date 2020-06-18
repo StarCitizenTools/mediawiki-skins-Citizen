@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Alistair3149"
+		]
+	},
+	"skinname-citizen": "Citizen",
+	"citizen-desc": "為星際公民百科而開發的響應式佈景主題",
+	"citizen.css": "/* 此 CSS 會用於使用 Citizen 佈景主題的使用者 */",
+	"citizen.js": "/* 此 Javascript 會用於使用 Citizen 佈景主題的使用者 */",
+	"citizen-drawer-toggle": "切換菜單",
+	"citizen-search-toggle": "切換搜尋",
+	"citizen-footer-desc": "在 MediaWiki:Citizen-footer-desc 編輯此文字",
+	"citizen-footer-tagline": "在 MediaWiki:Citizen-footer-tagline 編輯此文字",
+	"citizen-search-fulltext": "搜尋包含"
+}
