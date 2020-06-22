@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"BaRaN6161 TURK"
+		]
+	},
+	"skinname-citizen": "Citizen",
+	"citizen-desc": "Star Citizen Viki için geliştirilmiş duyarlı bir görünüm",
+	"citizen.css": "/* Buradaki tüm CSS'ler Citizen görünüm  kullanıcıları için yüklenecek */",
+	"citizen.js": "/* Buradaki tüm JavaScript Citizen  görünümü kullanıcıları için yüklenecek */",
+	"citizen-drawer-toggle": "Menüyü değiştir",
+	"citizen-search-toggle": "Aramayı değiştir",
+	"citizen-footer-desc": "Bu metni MediaWiki:Citizen-footer-desc üzerinde düzenle",
+	"citizen-footer-tagline": "Bu metni MediaWiki:Citizen-footer-tagline üzerinde düzenle",
+	"citizen-search-fulltext": "İçeren sayfaları ara"
+}
