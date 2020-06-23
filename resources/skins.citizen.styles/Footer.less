@@ -127,58 +127,9 @@
 		}
 
 		a {
-			padding: @margin-side * 0.75 @margin-side / 2;
-			height: 50px; // CSS hack to force SVG icon to appear
+			padding: 15px 10px;
 			display: flex;
-			justify-content: center;
 			align-items: center;
-			opacity: 0.5;
-			transition: @transition-opacity;
-
-			img {
-				display: none; // Hack to hide original icons
-			}
-
-			&:before {
-				content: '';
-				.resource-loader-icon;
-				display: block;
-				background-size: contain;
-			}
-
-			&:hover {
-				opacity: 0.7;
-			}
-
-			// Icon styles
-			&[ href*='starcitizen.tools' ] {
-				width: 50px;
-			}
-
-			&[ href*='robertsspaceindustries' ] {
-				width: 50px;
-			}
-
-			&[ href*='gdpr' ] {
-				width: 50px;
-			}
-
-			&[ href*='wikiapiary' ] {
-				width: 95px;
-				margin-bottom: -3px; //dirty fix
-			}
-
-			&[ href*='mediawiki' ] {
-				width: 95px;
-			}
-
-			&[ href*='miraheze' ] {
-				width: 95px;
-			}
-
-			&[ href*='by-sa' ] {
-				width: 110px;
-			}
 		}
 	}
 }

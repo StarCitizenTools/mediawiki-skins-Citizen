@@ -341,19 +341,6 @@
 				"lastmod": "resources/skins.citizen.icons.footer/history_white.svg"
 			}
 		},
-		"skins.citizen.icons.badges": {
-			"class": "ResourceLoaderImageModule",
-			"selector": "#footer-icons a[href*='{name}']:before",
-			"images": {
-				"by-sa": "resources/skins.citizen.icons.badges/CCBYSA.svg",
-				"mediawiki": "resources/skins.citizen.icons.badges/MediaWiki.svg",
-				"wikiapiary": "resources/skins.citizen.icons.badges/WikiApiary.svg",
-				"miraheze": "resources/skins.citizen.icons.badges/Miraheze.svg",
-				"gdpr": "resources/skins.citizen.icons.badges/GDPR.svg",
-				"robertsspaceindustries": "resources/skins.citizen.icons.badges/StarCitizenCommunity.svg",
-				"starcitizen.tools": "resources/skins.citizen.icons.badges/StarCitizenTools.svg"
-			}
-		},
 		"skins.citizen.icons.search": {
 			"class": "ResourceLoaderImageModule",
 			"selector": "{name}",
