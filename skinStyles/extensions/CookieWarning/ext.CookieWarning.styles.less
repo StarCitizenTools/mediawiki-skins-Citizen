@@ -9,13 +9,15 @@
 .mw-cookiewarning-container {
 	top: unset;
 	right: 0;
-	bottom: @margin-side;
+	bottom: 0;
 	margin: 0 auto;
 	padding: 0;
-	max-width: @page-width;
+	max-width: @screen2;
+	border-radius: @border-radius-large @border-radius-large 0 0;
+	overflow: hidden;
 	opacity: 1;
-	background: @base-20;
-	font-size: @content-small-text-size;
+	background: @dark-bg-60;
+	font-size: @content-monospace-size;
 	font-weight: normal;
 	.boxshadow(5);
 
@@ -23,55 +25,39 @@
 		display: flex;
 		line-height: 1.4;
 
-		> * {
-			display: flex;
-			align-items: center;
-		}
-
-		span {
+		> span {
 			margin: 0;
-			padding: @margin-side * 0.75 @margin-side;
+			padding: @margin-side;
 			display: block;
 			flex-grow: 1;
 		}
 
+		> form {
+			display: block;
+		}
+
+		> a {
+			margin: 0;
+			padding: @margin-side / 2 @margin-side;
+			height: auto;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
 		.mw-cookiewarning-dismiss {
-			background: @accent-50;
+			margin: 0;
+			padding: @margin-side / 2 @margin-side;
 			height: 100%;
+			border-radius: 0;
+			line-height: 1.4;
+			background: @accent-50;
+			transition: @transition-background-quick;
 
 			&:hover {
 				background: @accent-10;
 			}
 		}
-
-		> a {
-			background: @base-10;
-
-			&:hover {
-				background: @base-0;
-			}
-		}
-
-		a,
-		.mw-cookiewarning-dismiss {
-			margin: 0;
-			padding: @margin-side * 0.75 @margin-side;
-			border-radius: 0;
-			font-weight: normal;
-			line-height: 1.4;
-			transition: @transition-background-quick;
-		}
-
-		a {
-			height: auto;
-		}
-	}
-}
-
-@media only screen and ( max-width: @screen1 ) {
-	.mw-cookiewarning-container {
-		max-width: none;
-		bottom: 0;
 	}
 }
 
@@ -81,22 +67,14 @@
 		font-size: 0;
 		flex-wrap: wrap;
 
-		span {
+		> span {
 			font-size: @content-small-text-size;
 		}
 
-		a {
-			width: ~'calc(50vw - @{margin-side} * 2)';
-			justify-content: center;
-		}
-
+		> form,
+		> a,
 		.mw-cookiewarning-dismiss {
-			width: 50vw;
-		}
-
-		a,
-		.mw-cookiewarning-dismiss {
-			padding: @margin-side / 2 @margin-side;
+			width: 100%;
 		}
 	}
 }
