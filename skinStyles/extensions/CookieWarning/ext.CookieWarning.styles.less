@@ -9,11 +9,12 @@
 .mw-cookiewarning-container {
 	top: unset;
 	right: 0;
-	bottom: @margin-side;
+	bottom: 0;
 	margin: 0 auto;
 	padding: 0;
-	max-width: @page-width;
-	border-radius: @border-radius-large;
+	max-width: @screen2;
+	border-radius: @border-radius-large @border-radius-large 0 0;
+	overflow: hidden;
 	opacity: 1;
 	background: @base-20;
 	font-size: @content-small-text-size;
@@ -29,6 +30,10 @@
 			padding: @margin-side * 0.75 @margin-side;
 			display: block;
 			flex-grow: 1;
+		}
+
+		form {
+			display: block;
 		}
 
 		.mw-cookiewarning-dismiss {
@@ -51,13 +56,6 @@
 	}
 }
 
-@media only screen and ( max-width: @screen1 ) {
-	.mw-cookiewarning-container {
-		max-width: none;
-		bottom: 0;
-	}
-}
-
 @media only screen and ( max-width: 480px ) {
 	.mw-cookiewarning-container .mw-cookiewarning-text {
 		/* Hack to hide nbsp */
@@ -68,10 +66,14 @@
 			font-size: @content-small-text-size;
 		}
 
-		.mw-cookiewarning-dismiss {
-			width: 50vw;
+		form {
+			width: 100%;
 		}
-		
+
+		.mw-cookiewarning-dismiss {
+			width: 100%;
+		}
+
 		.mw-cookiewarning-dismiss {
 			padding: @margin-side / 2 @margin-side;
 		}
