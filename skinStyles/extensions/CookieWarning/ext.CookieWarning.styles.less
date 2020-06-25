@@ -25,23 +25,31 @@
 		display: flex;
 		line-height: 1.4;
 
-		span {
+		>span {
 			margin: 0;
 			padding: @margin-side;
 			display: block;
 			flex-grow: 1;
 		}
 
-		form {
+		>form {
 			display: block;
+		}
+
+		>a {
+			margin: 0;
+			padding: @margin-side;
+    		height: auto;
+    		display: flex;
+    		justify-content: center;
+    		align-items: center;
 		}
 
 		.mw-cookiewarning-dismiss {
 			margin: 0;
-			padding: @margin-side * 0.75 @margin-side;
+			padding: @margin-side / 2 @margin-side;
 			height: 100%;
 			border-radius: 0;
-			font-weight: normal;
 			line-height: 1.4;
 			background: @accent-50;
 			transition: @transition-background-quick;
@@ -59,16 +67,13 @@
 		font-size: 0;
 		flex-wrap: wrap;
 
-		span {
+		>span {
 			font-size: @content-small-text-size;
 		}
 
-		form {
-			width: 100%;
-		}
-
+		>form,
+		>a,
 		.mw-cookiewarning-dismiss {
-			padding: @margin-side / 2 @margin-side;
 			width: 100%;
 		}
 	}
