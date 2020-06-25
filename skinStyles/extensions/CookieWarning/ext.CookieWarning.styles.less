@@ -37,21 +37,18 @@
 		}
 
 		.mw-cookiewarning-dismiss {
-			background: @accent-50;
+			margin: 0;
+			padding: @margin-side * 0.75 @margin-side;
 			height: 100%;
+			border-radius: 0;
+			font-weight: normal;
+			line-height: 1.4;
+			background: @accent-50;
+			transition: @transition-background-quick;
 
 			&:hover {
 				background: @accent-10;
 			}
-		}
-
-		.mw-cookiewarning-dismiss {
-			margin: 0;
-			padding: @margin-side * 0.75 @margin-side;
-			border-radius: 0;
-			font-weight: normal;
-			line-height: 1.4;
-			transition: @transition-background-quick;
 		}
 	}
 }
