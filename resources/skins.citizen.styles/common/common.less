@@ -230,16 +230,18 @@ figcaption,
 
 .mw-indicators {
 	float: right;
-	line-height: @content-line-height;
 	/* Ensure that this is displayed on top of .mw-body-content and clickable */
 	position: relative;
 	z-index: 1;
 }
 
-.mw-indicator {
-	display: inline-block;
-	zoom: 1;
-	*display: inline; // stylelint-disable declaration-block-no-duplicate-properties
+/* Wider page width for special pages */
+.ns--1 {
+	.firstHeading,
+	#siteSub,
+	.mw-body-content {
+		max-width: @screen2;
+	}
 }
 
 @media ( max-width: @screen2 ) {
