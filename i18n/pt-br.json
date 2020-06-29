@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eduardo Addad de Oliveira",
+			"Rafaelff"
+		]
+	},
+	"skinname-citizen": "Citizen",
+	"citizen-desc": "Uma aparência responsiva desenvolvida para o Star Citizen Wiki",
+	"citizen.css": "/* Todo o CSS aqui será carregado para usuários do tema Citizen */",
+	"citizen.js": "/* Todo o JavaScript aqui será carregado para os usuários do tema Citizen */",
+	"citizen-drawer-toggle": "Ativa o menu",
+	"citizen-search-toggle": "Ativa a pesquisa",
+	"citizen-footer-desc": "Edite este texto em MediaWiki:Citizen-footer-desc",
+	"citizen-footer-tagline": "Edite este texto em MediaWiki:Citizen-footer-tagline",
+	"citizen-search-fulltext": "Páginas de pesquisa que contêm"
+}
