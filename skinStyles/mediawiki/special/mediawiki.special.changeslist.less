@@ -19,6 +19,12 @@
 	legend {
 		padding: 0;
 	}
+
+	// Needed additional parent to override
+	.mw-changeslist-legend {
+		border-color: @base-80;
+		border-radius: @border-radius-small;
+	}
 }
 
 .mw-changeslist {
@@ -28,11 +34,6 @@
 		padding: @margin-side / 2 0 !important;
 		font-size: @content-caption-size !important;
 		font-family: @fonts !important;
-	}
-
-	&-legend {
-		border-color: @base-80;
-		border-radius: @border-radius-small;
 	}
 
 	.comment {
@@ -49,16 +50,16 @@
 @media ( prefers-color-scheme: dark ) {
 	.rcoptions {
 		color: @dark-text-90;
+
+		.mw-changeslist-legend {
+			border-color: @dark-bg-20;
+		}
 	}
 
 	.mw-changeslist {
 		h4 {
 			color: @dark-text-60 !important;
 			border-color: @dark-bg-20;
-		}
-
-		&-legend {
-			border-color: @dark-bg-20 !important;
 		}
 
 		.comment {
