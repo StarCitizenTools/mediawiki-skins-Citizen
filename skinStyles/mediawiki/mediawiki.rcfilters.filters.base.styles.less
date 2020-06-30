@@ -4,6 +4,7 @@
  * https://starcitizen.tools
 */
 
+@import '../../resources/mixins.less';
 @import '../../resources/variables.less';
 
 // Required to override
@@ -17,10 +18,19 @@ body {
 			}
 
 			&-views-select-widget {
-				.oo-ui-widget {
+				&.oo-ui-widget {
 					border-color: @base-80;
 				}
 			}
+		}
+
+		&-menuSelectWidget {
+			.boxshadow(4);
+		}
+
+		&-filterMenuHeaderWidget-header {
+			border-color: @base-80;
+			.boxshadow(2);
 		}
 
 		&-changesListWrapperWidget {
