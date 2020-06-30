@@ -15,9 +15,15 @@
 
 .rcoptions {
 	margin: @content-margin-top * 2 0;
+	padding: 0;
+	border: 0;
 
 	legend {
-		padding: 0;
+		margin-bottom: @margin-side / 2;
+		padding: @margin-side / 2 0;
+		width: 100%;
+		border-bottom: 1px solid @base-80;
+		font-size: @content-small-text-size;
 	}
 
 	// Needed additional parent to override
@@ -51,6 +57,10 @@
 	.rcoptions {
 		color: @dark-text-90;
 
+		legend {
+			border-color: @dark-bg-20;
+		}
+
 		.mw-changeslist-legend {
 			border-color: @dark-bg-20;
 		}
@@ -58,7 +68,7 @@
 
 	.mw-changeslist {
 		h4 {
-			color: @dark-text-60 !important;
+			color: @dark-text-80 !important;
 			border-color: @dark-bg-20;
 		}
 
