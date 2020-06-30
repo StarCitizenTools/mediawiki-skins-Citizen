@@ -6,6 +6,28 @@
 
 @import '../../resources/variables.less';
 
+.mw-rcfilters-ui {
+	&-filterTagMultiselectWidget {
+		&.oo-ui-widget-enabled {
+			.oo-ui-tagMultiselectWidget-handle {
+				border-color: @base-80;
+			}
+		}
+
+		&-views-select-widget {
+			.oo-ui-widget {
+				border-color: @base-80;
+			}
+		}
+	}
+
+	&-changesListWrapperWidget {
+		.mw-changeslist-legend {
+			border-color: @base-80;
+		}
+	}
+}
+
 @media ( prefers-color-scheme: dark ) {
 	/**
   mw.rcfilters.ui.ChangesListWrapperWidget.less
