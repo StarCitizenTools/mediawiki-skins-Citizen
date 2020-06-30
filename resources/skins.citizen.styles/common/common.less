@@ -30,12 +30,6 @@ ul {
 	list-style-type: square;
 }
 
-input {
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-}
-
 ul,
 ol {
 	padding: 0;
@@ -53,7 +47,6 @@ code,
 .mw-code {
 	color: @base-0;
 	background-color: @base-90;
-	border: 1px solid @base-80;
 }
 
 code {
@@ -68,7 +61,6 @@ pre,
 }
 
 fieldset {
-	border: 1px solid @base-80;
 	color: @base-30;
 	margin: @content-margin-top 0;
 	padding: @content-margin-top / 2 @margin-side;
@@ -79,9 +71,17 @@ fieldset > table {
 }
 
 legend {
-	color: @base-20;
+	color: @base-30;
 	margin: 0;
 	padding: 4px;
+}
+
+input,
+pre,
+code,
+fieldset,
+select {
+	border: 1px solid @base-80;
 }
 
 textarea {
@@ -294,7 +294,7 @@ figcaption,
 	}
 
 	legend {
-		color: @dark-text-100;
+		color: @dark-text-80;
 	}
 
 	a,
