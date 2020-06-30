@@ -4,7 +4,44 @@
  * https://starcitizen.tools
 */
 
+@import '../../resources/mixins.less';
 @import '../../resources/variables.less';
+
+// Required to override
+body {
+	.mw-rcfilters-ui {
+		&-filterTagMultiselectWidget {
+			&.oo-ui-widget-enabled {
+				.oo-ui-tagMultiselectWidget-handle {
+					border-color: @base-80;
+					.boxshadow(1);
+				}
+			}
+
+			&-views-select-widget {
+				&.oo-ui-widget {
+					border-color: @base-80;
+					.boxshadow(1);
+				}
+			}
+		}
+
+		&-menuSelectWidget {
+			.boxshadow(4);
+		}
+
+		&-filterMenuHeaderWidget-header {
+			border-color: @base-80;
+			.boxshadow(2);
+		}
+
+		&-changesListWrapperWidget {
+			.mw-changeslist-legend {
+				border-color: @base-80;
+			}
+		}
+	}
+}
 
 @media ( prefers-color-scheme: dark ) {
 	/**
