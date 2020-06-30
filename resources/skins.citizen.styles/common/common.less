@@ -53,7 +53,6 @@ code,
 .mw-code {
 	color: @base-0;
 	background-color: @base-90;
-	border: 1px solid @base-80;
 }
 
 code {
@@ -68,7 +67,6 @@ pre,
 }
 
 fieldset {
-	border: 1px solid @base-80;
 	color: @base-30;
 	margin: @content-margin-top 0;
 	padding: @content-margin-top / 2 @margin-side;
@@ -82,6 +80,13 @@ legend {
 	color: @base-20;
 	margin: 0;
 	padding: 4px;
+}
+
+input,
+pre,
+code,
+fieldset {
+	border: 1px solid @base-80;
 }
 
 textarea {
