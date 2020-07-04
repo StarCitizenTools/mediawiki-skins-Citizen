@@ -73,10 +73,9 @@
 		position: fixed;
 		z-index: 4;
 		top: 0;
-		padding-top: @header-height;
 		width: @drawer-width;
 		max-width: 100vw; // in case if someone has super small screen
-		height: ~'calc(100vh - @{header-height})';
+		height: 100%;
 		.boxshadow(3);
 		border-radius: 0 @border-radius-large @border-radius-large 0;
 		background: @menu-background;
@@ -88,7 +87,7 @@
 		will-change: transform; // help with performance
 
 		&-logo {
-			padding: 0 @margin-side @margin-side / 2 @margin-side;
+			padding: @header-height @margin-side @margin-side / 2 @margin-side;
 			border-bottom: 1px solid @base-80;
 			display: flex;
 			flex-direction: column;
