@@ -5,7 +5,7 @@
 		]
 	},
 	"skinname-citizen": "Citizen",
-	"citizen-desc": "Un habillage dynamique développé pour le wiki Star Citizen",
+	"citizen-skin-desc": "Un habillage dynamique développé pour le wiki Star Citizen",
 	"citizen.css": "/* La totalité du CSS placé ici s’appliquera aux utilisateurs de l’habillage Citizen */",
 	"citizen.js": "/* La totalité du JavaScript placé ici s’appliquera aux utilisateurs de l’habillage Citizen */",
 	"citizen-drawer-toggle": "Activer/désactiver le menu",

@@ -6,7 +6,7 @@
 		]
 	},
 	"skinname-citizen": "{{name}}",
-	"citizen-desc": "{{desc|what=skin|name=Citizen|url=https://github.com/StarCitizenTools/mediawiki-skins-Citizen}}",
+	"citizen-skin-desc": "{{desc|what=skin|name=Citizen|url=https://github.com/StarCitizenTools/mediawiki-skins-Citizen}}",
 	"citizen.css": "{{optional}}",
 	"citizen.js": "{{optional}}",
 	"citizen-drawer-toggle": "Tooltip of drawer menu toggle",

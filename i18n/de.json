@@ -5,7 +5,7 @@
 		]
 	},
 	"skinname-citizen": "Citizen",
-	"citizen-desc": "Ein responsive Skin entwickelt für das Star Citizen Wiki",
+	"citizen-skin-desc": "Ein responsive Skin entwickelt für das Star Citizen Wiki",
 	"citizen-footer-desc": "Bearbeiten Sie diesen Text auf MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Bearbeiten Sie diesen Text auf MediaWiki:Citizen-footer-tagline"
 }
