@@ -13,162 +13,37 @@
 	"requires": {
 		"MediaWiki": ">= 1.31.0"
 	},
-	"config_prefix": "wgCitizen",
-	"config": {
-		"ThemeColor": {
-			"value": "#11151d",
-			"description": "The theme color defined in the meta tag",
-			"descriptionmsg": "citizen-config-themecolor",
-			"public": true
-		},
-		"EnablePreconnect": {
-			"value": false,
-			"description": "Enable or disable preconnect to required origin",
-			"descriptionmsg": "citizen-config-enablepreconnect",
-			"public": true
-		},
-		"PreconnectURL": {
-			"value": "",
-			"description": "The URL for preconnect to required origin",
-			"descriptionmsg": "citizen-config-preconnectorigin",
-			"public": true
-		},
-		"EnableCSP": {
-			"value": false,
-			"description": "Enable or disable Content Security Policy",
-			"descriptionmsg": "citizen-config-enablecsp",
-			"public": true
-		},
-		"EnableCSPReportMode": {
-			"value": false,
-			"description": "Enable or disable Content Security Policy report only mode, it will override the CSP when enabled",
-			"descriptionmsg": "citizen-config-enablecspreportmode",
-			"public": true
-		},
-		"CSPDirective": {
-			"value": "",
-			"description": "The string of your CSP directive",
-			"descriptionmsg": "citizen-config-cspdirective",
-			"public": true
-		},
-		"EnableHSTS": {
-			"value": false,
-			"description": "Enable or disable HTTP Strict Transport Security",
-			"descriptionmsg": "citizen-config-enablehsts",
-			"public": true
-		},
-		"HSTSMaxAge": {
-			"value": 300,
-			"description": "Time in second that the browser should remember that a site is only to be accessed using HTTPS",
-			"descriptionmsg": "citizen-config-hstsmaxage",
-			"public": true
-		},
-		"HSTSIncludeSubdomains": {
-			"value": false,
-			"description": "Apply HSTS to all of the site's subdomains",
-			"descriptionmsg": "citizen-config-hstsincludesubdomains",
-			"public": true
-		},
-		"HSTSPreload": {
-			"value": false,
-			"description": "Enable or disable HSTS preload",
-			"descriptionmsg": "citizen-config-hstspreload",
-			"public": true
-		},
-		"EnableDenyXFrameOptions": {
-			"value": false,
-			"description": "Enable or disable the deny X-Frame-Options header",
-			"descriptionmsg": "citizen-config-enabledenyxframeoptions",
-			"public": true
-		},
-		"EnableXXSSProtection": {
-			"value": false,
-			"description": "Enable or disable the X-XSS-Protection header",
-			"descriptionmsg": "citizen-config-enablexxssprotection",
-			"public": true
-		},
-		"EnableStrictReferrerPolicy": {	
-			"value": false,	
-			"description": "Enable or disable strict-origin-when-cross-origin referrer policy",	
-			"descriptionmsg": "citizen-config-enablestrictreferrerpolicy",	
-			"public": true	
-		},
-		"EnableFeaturePolicy": {
-			"value": false,
-			"description": "Enable or disable Feature Policy",
-			"descriptionmsg": "citizen-config-enablefeaturepolicy",
-			"public": true
-		},
-		"FeaturePolicyDirective": {
-			"value": "",
-			"description": "The string of your Feature Policy directive",
-			"descriptionmsg": "citizen-config-featurepolicydirective",
-			"public": true
-		},
-		"EnableManifest": {
-			"value": true,
-			"description": "Enable or disable web app manifest",
-			"descriptionmsg": "citizen-config-enablemanifest",
-			"public": true
-		},
-		"ManifestThemeColor": {
-			"value": "#11151d",
-			"description": "The theme color defined in the web app manifest",
-			"descriptionmsg": "citizen-config-manfiestthemecolor",
-			"public": true
-		},
-		"ManifestBackgroundColor": {
-			"value": "#fff",
-			"description": "The background color defined in the web app manifest",
-			"descriptionmsg": "citizen-config-manifestbackgroundcolor",
-			"public": true
-		},
-		"EnableSearch": {
-			"value": true,
-			"description": "Enable or disable rich search suggestions",
-			"descriptionmsg": "citizen-config-enablesearch",
-			"public": true
-		},
-		"SearchDescriptionSource": {
-			"value": "textextracts",
-			"description": "The source of the short description in the suggestions",
-			"descriptionmsg": "citizen-config-searchdescriptionsource",
-			"public": true
-		},
-		"MaxSearchResults": {
-			"value": 6,
-			"description": "The max number of suggestions in search result",
-			"descriptionmsg": "citizen-config-maxsearchresults",
-			"public": true
-		},
-		"ShowPageTools": {
-			"value": true,
-			"description": "Page tools visibility condition",
-			"descriptionmsg": "citizen-config-showpagetools",
-			"public": true
-		},
-		"EnableLazyload": {
-			"value": true,
-			"description": "Enable or disable image lazyloading",
-			"descriptionmsg": "citizen-config-enablelazyload",
-			"public": true
-		},
-		"ThumbnailSize": {
-			"value": 10,
-			"description": "Thumbnail size to use for lazy-loading",
-			"descriptionmsg": "citizen-config-thumbnailsize",
-			"public": true
-		}
-	},
-	"ConfigRegistry": {
-		"Citizen": "GlobalVarConfig::newInstance"
-	},
 	"ValidSkinNames": {
 		"citizen": "Citizen"
 	},
 	"MessagesDirs": {
 		"Citizen": [
 			"i18n"
+		]
+	},
+	"AutoloadClasses": {
+		"SkinCitizen": "includes/SkinCitizen.php",
+		"CitizenTemplate": "includes/CitizenTemplate.php",
+		"Citizen\\CitizenHooks": "includes/CitizenHooks.php",
+		"Citizen\\ApiWebappManifest": "includes/api/ApiWebappManifest.php"
+	},
+	"AutoloadNamespaces": {
+		"Citizen\\": "includes/"
+	},
+	"ConfigRegistry": {
+		"Citizen": "GlobalVarConfig::newInstance"
+	},
+	"APIModules": {
+		"webapp-manifest": {
+			"class": "Citizen\\ApiWebappManifest"
+		}
+	},
+	"Hooks": {
+		"ResourceLoaderGetConfigVars": [
+			"Citizen\\CitizenHooks::onResourceLoaderGetConfigVars"
+		],
+		"ThumbnailBeforeProduceHTML": [
+			"Citizen\\CitizenHooks::onThumbnailBeforeProduceHTML"
 		]
 	},
 	"ResourceModules": {
@@ -504,24 +379,152 @@
 			"+mmv": "skinStyles/extensions/MultimediaViewer/mmv.less"
 		}
 	},
-	"AutoloadClasses": {
-		"SkinCitizen": "includes/SkinCitizen.php",
-		"CitizenTemplate": "includes/CitizenTemplate.php",
-		"Citizen\\CitizenHooks": "includes/CitizenHooks.php",
-		"Citizen\\ApiWebappManifest": "includes/api/ApiWebappManifest.php"
-	},
-	"APIModules": {
-		"webapp-manifest": {
-			"class": "Citizen\\ApiWebappManifest"
+		"config_prefix": "wgCitizen",
+	"config": {
+		"ThemeColor": {
+			"value": "#11151d",
+			"description": "The theme color defined in the meta tag",
+			"descriptionmsg": "citizen-config-themecolor",
+			"public": true
+		},
+		"EnablePreconnect": {
+			"value": false,
+			"description": "Enable or disable preconnect to required origin",
+			"descriptionmsg": "citizen-config-enablepreconnect",
+			"public": true
+		},
+		"PreconnectURL": {
+			"value": "",
+			"description": "The URL for preconnect to required origin",
+			"descriptionmsg": "citizen-config-preconnectorigin",
+			"public": true
+		},
+		"EnableCSP": {
+			"value": false,
+			"description": "Enable or disable Content Security Policy",
+			"descriptionmsg": "citizen-config-enablecsp",
+			"public": true
+		},
+		"EnableCSPReportMode": {
+			"value": false,
+			"description": "Enable or disable Content Security Policy report only mode, it will override the CSP when enabled",
+			"descriptionmsg": "citizen-config-enablecspreportmode",
+			"public": true
+		},
+		"CSPDirective": {
+			"value": "",
+			"description": "The string of your CSP directive",
+			"descriptionmsg": "citizen-config-cspdirective",
+			"public": true
+		},
+		"EnableHSTS": {
+			"value": false,
+			"description": "Enable or disable HTTP Strict Transport Security",
+			"descriptionmsg": "citizen-config-enablehsts",
+			"public": true
+		},
+		"HSTSMaxAge": {
+			"value": 300,
+			"description": "Time in second that the browser should remember that a site is only to be accessed using HTTPS",
+			"descriptionmsg": "citizen-config-hstsmaxage",
+			"public": true
+		},
+		"HSTSIncludeSubdomains": {
+			"value": false,
+			"description": "Apply HSTS to all of the site's subdomains",
+			"descriptionmsg": "citizen-config-hstsincludesubdomains",
+			"public": true
+		},
+		"HSTSPreload": {
+			"value": false,
+			"description": "Enable or disable HSTS preload",
+			"descriptionmsg": "citizen-config-hstspreload",
+			"public": true
+		},
+		"EnableDenyXFrameOptions": {
+			"value": false,
+			"description": "Enable or disable the deny X-Frame-Options header",
+			"descriptionmsg": "citizen-config-enabledenyxframeoptions",
+			"public": true
+		},
+		"EnableXXSSProtection": {
+			"value": false,
+			"description": "Enable or disable the X-XSS-Protection header",
+			"descriptionmsg": "citizen-config-enablexxssprotection",
+			"public": true
+		},
+		"EnableStrictReferrerPolicy": {	
+			"value": false,	
+			"description": "Enable or disable strict-origin-when-cross-origin referrer policy",	
+			"descriptionmsg": "citizen-config-enablestrictreferrerpolicy",	
+			"public": true	
+		},
+		"EnableFeaturePolicy": {
+			"value": false,
+			"description": "Enable or disable Feature Policy",
+			"descriptionmsg": "citizen-config-enablefeaturepolicy",
+			"public": true
+		},
+		"FeaturePolicyDirective": {
+			"value": "",
+			"description": "The string of your Feature Policy directive",
+			"descriptionmsg": "citizen-config-featurepolicydirective",
+			"public": true
+		},
+		"EnableManifest": {
+			"value": true,
+			"description": "Enable or disable web app manifest",
+			"descriptionmsg": "citizen-config-enablemanifest",
+			"public": true
+		},
+		"ManifestThemeColor": {
+			"value": "#11151d",
+			"description": "The theme color defined in the web app manifest",
+			"descriptionmsg": "citizen-config-manfiestthemecolor",
+			"public": true
+		},
+		"ManifestBackgroundColor": {
+			"value": "#fff",
+			"description": "The background color defined in the web app manifest",
+			"descriptionmsg": "citizen-config-manifestbackgroundcolor",
+			"public": true
+		},
+		"EnableSearch": {
+			"value": true,
+			"description": "Enable or disable rich search suggestions",
+			"descriptionmsg": "citizen-config-enablesearch",
+			"public": true
+		},
+		"SearchDescriptionSource": {
+			"value": "textextracts",
+			"description": "The source of the short description in the suggestions",
+			"descriptionmsg": "citizen-config-searchdescriptionsource",
+			"public": true
+		},
+		"MaxSearchResults": {
+			"value": 6,
+			"description": "The max number of suggestions in search result",
+			"descriptionmsg": "citizen-config-maxsearchresults",
+			"public": true
+		},
+		"ShowPageTools": {
+			"value": true,
+			"description": "Page tools visibility condition",
+			"descriptionmsg": "citizen-config-showpagetools",
+			"public": true
+		},
+		"EnableLazyload": {
+			"value": true,
+			"description": "Enable or disable image lazyloading",
+			"descriptionmsg": "citizen-config-enablelazyload",
+			"public": true
+		},
+		"ThumbnailSize": {
+			"value": 10,
+			"description": "Thumbnail size to use for lazy-loading",
+			"descriptionmsg": "citizen-config-thumbnailsize",
+			"public": true
 		}
-	},
-	"Hooks": {
-		"ResourceLoaderGetConfigVars": [
-			"Citizen\\CitizenHooks::onResourceLoaderGetConfigVars"
-		],
-		"ThumbnailBeforeProduceHTML": [
-			"Citizen\\CitizenHooks::onThumbnailBeforeProduceHTML"
-		]
 	},
 	"manifest_version": 2
 }
