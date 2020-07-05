@@ -5,7 +5,7 @@
 		]
 	},
 	"skinname-citizen": "Citizen",
-	"citizen-desc": "為星際公民百科而開發的響應式佈景主題",
+	"citizen-skin-desc": "為星際公民百科而開發的響應式佈景主題",
 	"citizen.css": "/* 此 CSS 會用於使用 Citizen 佈景主題的使用者 */",
 	"citizen.js": "/* 此 Javascript 會用於使用 Citizen 佈景主題的使用者 */",
 	"citizen-drawer-toggle": "切換菜單",
