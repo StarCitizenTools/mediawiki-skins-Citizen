@@ -27,7 +27,7 @@ use ApiFormatJson;
 use ApiResult;
 use ConfigException;
 use Exception;
-use MWHttpRequest;
+use MediaWiki\MediaWikiServices;
 use Title;
 
 /**
@@ -83,7 +83,9 @@ class ApiWebappManifest extends ApiBase {
 				return;
 			}
 
-			$request = MWHttpRequest::factory( $appleTouchIconUrl );
+			$request = MediaWikiServices::getInstance()
+				->getHttpRequestFactory()
+				->create( $appleTouchIconUrl );
 			$request->execute();
 			$appleTouchIconContent = $request->getContent();
 
