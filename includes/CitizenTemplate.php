@@ -37,6 +37,7 @@ class CitizenTemplate extends BaseTemplate {
 
 	/**
 	 * Outputs the entire contents of the page
+	 * @throws MWException
 	 */
 	public function execute() {
 		// Naming conventions for Mustache parameters:
@@ -128,6 +129,8 @@ class CitizenTemplate extends BaseTemplate {
 	 * Render the navigation drawer
 	 * Based on Vector (be3843e)
 	 * @return array
+	 * @throws MWException
+	 * @throws Exception
 	 */
 	private function buildDrawer() : array {
 		$skin = $this->getSkin();
@@ -156,7 +159,7 @@ class CitizenTemplate extends BaseTemplate {
 					// The language portal will be added provided either
 					// languages exist or there is a value in html-after-portal
 					// for example to show the add language wikidata link (T252800)
-					if ( count( $languages ) || $portal['html-after-portal'] ) {
+					if ( $portal['html-after-portal'] || count( $languages ) ) {
 						$props[] = $portal;
 					}
 					break;
@@ -220,9 +223,10 @@ class CitizenTemplate extends BaseTemplate {
 	 * TODO: Use standardize classes and IDs
 	 * TODO: Rebuild icon function based on Desktop Improvement Project
 	 * @return array
+	 * @throws MWException
 	 */
 	private function buildLogo() : array {
-		$props = [
+		return [
 			'msg-sitetitle' => $this->getMsg( 'sitetitle' )->text(),
 			'html-mainpage-attributes' => Xml::expandAttributes(
 				Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) + [
@@ -230,14 +234,13 @@ class CitizenTemplate extends BaseTemplate {
 				]
 			),
 		];
-		return $props;
 	}
 
 	/**
 	 * Echo notification badges and ULS button
 	 * @return array
 	 */
-	private function getExtratools() {
+	private function getExtratools(): array {
 		$personalTools = $this->getPersonalTools();
 
 		// Create the Echo badges and ULS
@@ -264,6 +267,7 @@ class CitizenTemplate extends BaseTemplate {
 	 * Render the search box
 	 * TODO: Use standardized classes and IDs
 	 * @return array
+	 * @throws MWException
 	 */
 	private function buildSearchbox() : array {
 		$config = $this->config;
@@ -271,7 +275,7 @@ class CitizenTemplate extends BaseTemplate {
 		$toggleMsg = $this->getMsg( 'citizen-search-toggle' )->text();
 		$accessKey = Linker::accesskey( 'search' );
 
-		$props = [
+		return [
 			'msg-citizen-search-toggle' => $toggleMsg,
 			'msg-citizen-search-toggle-shortcut' => $toggleMsg . ' [alt-shift-' . $accessKey . ']',
 			'form-action' => $config->get( 'Script' ),
@@ -281,7 +285,6 @@ class CitizenTemplate extends BaseTemplate {
 			'html-random-href' => Skin::makeSpecialUrl( 'Randompage' ),
 			'msg-random' => $this->getMsg( 'Randompage' )->text(),
 		];
-		return $props;
 	}
 
 	/**
@@ -292,9 +295,9 @@ class CitizenTemplate extends BaseTemplate {
 	 * * 'login': only visible if logged in (string)
 	 * * 'permission-*': only visible if user has permission
 	 *   e.g. permission-edit = only visible if user can edit pages
-	 * @return string html
+	 * @return array html
 	 */
-	protected function buildPageTools() {
+	protected function buildPageTools(): array {
 		$config = $this->config;
 		$skin = $this->getSkin();
 		$condition = $config->get( 'CitizenShowPageTools' );
@@ -341,7 +344,7 @@ class CitizenTemplate extends BaseTemplate {
 
 	/**
 	 * Render page-related links at the bottom
-	 * @return string html
+	 * @return array html
 	 */
 	private function buildPageLinks() : array {
 		$contentNavigation = $this->data['content_navigation'];
@@ -357,12 +360,10 @@ class CitizenTemplate extends BaseTemplate {
 			$variantshtml[ 'label-class' ] .= 'screen-reader-text';
 		}
 
-		$props = [
+		return [
 			'data-namespaces' => $namespaceshtml,
 			'data-variants' => $variantshtml,
 		];
-
-		return $props;
 	}
 
 	/**
@@ -373,11 +374,9 @@ class CitizenTemplate extends BaseTemplate {
 		$lastMod = null;
 		$footerLinks = $this->getFooterLinks();
 
-		if ( isset( $footerLinks['info'] ) ) {
-			if ( in_array( 'lastmod', $footerLinks['info'] ) ) {
-				$key = array_search( 'lastmod', $footerLinks['info'] );
-				$lastMod = $this->get( $footerLinks['info'][$key], '' );
-			}
+		if ( isset( $footerLinks['info'] ) && in_array( 'lastmod', $footerLinks['info'], true ) ) {
+			$key = array_search( 'lastmod', $footerLinks['info'], true );
+			$lastMod = $this->get( $footerLinks['info'][$key], '' );
 		}
 
 		return $lastMod;
@@ -502,7 +501,7 @@ class CitizenTemplate extends BaseTemplate {
 		$props['html-after-portal'] = $this->getAfterPortlet( $label );
 
 		// Mark the portal as empty if it has no content
-		$class = ( count( $urls ) == 0 && !$props['html-after-portal'] )
+		$class = ( count( $urls ) === 0 && !$props['html-after-portal'] )
 			? ' mw-portal-empty' : '';
 		$props['class'] = $class;
 		return $props;
