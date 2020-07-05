@@ -1,17 +1,13 @@
 {
 	"root": true,
 	"extends": [
-		"wikimedia/client",
-		"wikimedia/jquery",
-		"wikimedia/mediawiki"
+		"wikimedia",
+		"wikimedia/language/es6"
 	],
-	"globals": {
-		"require": "readonly",
-		"module": "readonly"
+	"env": {
+		"browser": true
 	},
-	"rules": {
-		"one-var": "off",
-		"//": ["off", "ResourceLoader's `packageFiles` do not require wrapping but the `module` option is only available in ES6+."],
-		"no-implicit-globals": "off"
+	"parserOptions": {
+		"sourceType": "module"
 	}
 }
