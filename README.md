@@ -9,7 +9,7 @@ Live demo can be seen at the [Star Citizen Wiki](https://starcitizen.tools), mor
 * **Fully responsive skin**: Responsive and able to adapt to different screen sizes. 📱💻🖥️
 * **Persistent ToC**: Access ToC anywhere in the article. ***Tracking require JS.*** 🔍📖
 * **Rich search suggestions**: More helpful search suggestions with images and descriptions. ***Require JS.*** 🔍👀
-* **Lazyload images**: Improve load time of your wiki and avoid unnessecary image downloads. ***Require JS.*** 🚀
+* **Lazyload images**: Improve load time of your wiki and avoid unnecessary image downloads. ***Require JS.*** 🚀
 * **Native light/dark mode support**: Respect OS and app configuration for light and dark mode. ☀️🌙
 * **Webapp manifest**: Give a more app-like experience when user add your wiki to their home screen. 📱
 * **HTTP security response headers**: Enhance the security of your wiki from HTTP response headers. 🔒🔑
@@ -27,8 +27,8 @@ wfLoadSkin( 'Citizen' );
 The config flags allow more customization on the specific features in the skin. 
 
 Note that:
-* By default all security-related features are turned off to ensure maximum compatiability.
-* If you have a lot of users that does not use javascript, it is recommended to turn off image lazyload as it requires javascript to display images properly.
+* By default, all security-related features are turned off to ensure maximum compatibility.
+* If you have a lot of users that do not use javascript, it is recommended to turn off lazyloading of images as it requires javascript to display images properly.
 
 ### Search suggestions
 Name | Description | Values | Default
