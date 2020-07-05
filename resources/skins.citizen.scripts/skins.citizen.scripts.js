@@ -11,6 +11,7 @@ var searchToggle = document.getElementById( 'search-toggle' ),
 
 /**
  * Focus in search box when search toggle checkbox is checked.
+ *
  * @constructor
  */
 function searchInputFocus() {
@@ -21,6 +22,7 @@ function searchInputFocus() {
 
 /**
  * Check search toggle checkbox when search box is in focus.
+ *
  * @constructor
  */
 function searchToggleCheck() {

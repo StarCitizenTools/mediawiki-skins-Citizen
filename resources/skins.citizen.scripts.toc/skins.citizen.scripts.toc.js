@@ -7,6 +7,7 @@
 
 /**
  * Implement smooth scroll when an item in table of content is clicked.
+ *
  * @constructor
  */
 function SmoothScroll() {
@@ -30,6 +31,7 @@ function SmoothScroll() {
 
 /**
  * Add active HTML class to items in table of content based on user viewport.
+ *
  * @constructor
  */
 function ScrollSpy() {
@@ -59,6 +61,7 @@ function ScrollSpy() {
 
 /**
  * Run SmoothScroll() and ScrollSpy() when table of content is present.
+ *
  * @constructor
  */
 function CheckToC() {
