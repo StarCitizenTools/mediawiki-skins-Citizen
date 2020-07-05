@@ -4,21 +4,24 @@
  *
  * Lazyloading images with Native API or IntersectionObserver
  */
+( function () {
+	var observer;
 
-var observer;
+	// Native API
+	if ( 'loading' in HTMLImageElement.prototype ) {
+		document.querySelectorAll( 'img.lazy' ).forEach( function ( img ) {
+			img.setAttribute( 'src', img.getAttribute( 'data-src' ) );
 
-// Native API
-if ( 'loading' in HTMLImageElement.prototype ) {
-	document.querySelectorAll( 'img.lazy' ).forEach( function ( img ) {
-		img.setAttribute( 'src', img.getAttribute( 'data-src' ) );
+			if ( img.hasAttribute( 'data-srcset' ) ) {
+				img.setAttribute( 'srcset', img.getAttribute( 'data-srcset' ) );
+			}
 
-		if ( img.hasAttribute( 'data-srcset' ) ) {
-			img.setAttribute( 'srcset', img.getAttribute( 'data-srcset' ) );
-		}
+			img.classList.remove( 'lazy' );
+		} );
 
-		img.classList.remove( 'lazy' );
-	} );
-} else {
+		return;
+	}
+
 	// IntersectionObserver API
 	if ( typeof IntersectionObserver !== 'undefined' && 'forEach' in NodeList.prototype ) {
 		observer = new IntersectionObserver( function ( changes ) {
@@ -39,8 +42,9 @@ if ( 'loading' in HTMLImageElement.prototype ) {
 				}
 			} );
 		} );
+
 		document.querySelectorAll( 'img.lazy' ).forEach( function ( img ) {
 			observer.observe( img );
 		} );
 	}
-}
+}() );
