@@ -84,7 +84,7 @@ class CitizenHooks {
 		} catch ( ConfigException $e ) {
 			wfLogWarning( sprintf( 'Could not get config for "$wgThumbnailSize". Defaulting to "10". %s',
 				$e->getMessage() ) );
-			$lazyloadEnabled = true;
+			$lazyloadEnabled = false;
 			$thumbSize = 10;
 		}
 

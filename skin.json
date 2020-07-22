@@ -514,7 +514,7 @@
 			"public": true
 		},
 		"EnableLazyload": {
-			"value": true,
+			"value": false,
 			"description": "Enable or disable image lazyloading",
 			"descriptionmsg": "citizen-config-enablelazyload",
 			"public": true

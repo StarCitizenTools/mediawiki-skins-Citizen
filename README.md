@@ -40,7 +40,7 @@ Name | Description | Values | Default
 ### Image lazyload
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
-`$wgCitizenEnableLazyload` | Enable or disable image lazyloading | `true` - enable; `false` - disable | `true`
+`$wgCitizenEnableLazyload` | Enable or disable image lazyloading | `true` - enable; `false` - disable | `false`
 `$wgCitizenThumbnailSize` | Thumbnail size in pixels to use for lazy-loading placeholder | Integer > 0 | `10`
 
 ### Security-related
