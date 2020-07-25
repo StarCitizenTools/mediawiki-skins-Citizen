@@ -235,6 +235,8 @@
 			"+ext.advancedSearch.initialstyles": "skinStyles/extensions/AdvancedSearch/ext.advancedSearch.initialstyles.less",
 			"+ext.advancedSearch.styles": "skinStyles/extensions/AdvancedSearch/ext.advancedSearch.styles.less",
 
+			"+ext.categoryTree.css": "skinStyles/extensions/CategoryTree/ext.categoryTree.css.less",
+
 			"+ext.cite.styles": "skinStyles/extensions/Cite/ext.cite.styles.less",
 
 			"+ext.echo.styles.badge": "skinStyles/extensions/Echo/ext.echo.styles.badge.less",
