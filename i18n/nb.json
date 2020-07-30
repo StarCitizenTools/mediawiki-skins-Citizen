@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jon Harald Søby"
+		]
+	},
+	"skinname-citizen": "Citizen",
+	"citizen-skin-desc": "Ei responsiv drakt utviklet for Star Citizen Wiki",
+	"citizen.css": "/* CSS her blir lastet for de som bruker drakta Citizen */",
+	"citizen.js": "/* Javascript i denne fila vil gjelde brukere av drakta Citizen */",
+	"citizen-drawer-toggle": "Vis/skjul meny",
+	"citizen-search-toggle": "Vis/skjul søk",
+	"citizen-footer-desc": "Rediger denne teksten i MediaWiki:Citizen-footer-desc",
+	"citizen-footer-tagline": "Rediger denne teksten i MediaWiki:Citizen-footer-tagline",
+	"citizen-search-fulltext": "Søk etter sider som inneholder"
+}
