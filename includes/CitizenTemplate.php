@@ -36,10 +36,9 @@ class CitizenTemplate extends BaseTemplate {
 	];
 
 	/**
-	 * Outputs the entire contents of the page
-	 * @throws MWException
+	 * @return array Returns an array of data used by Citizen skin.
 	 */
-	public function execute() {
+	private function getSkinData() : array {
 		// Naming conventions for Mustache parameters:
 		// - Prefix "is" for boolean values.
 		// - Prefix "msg-" for interface messages.
@@ -54,7 +53,7 @@ class CitizenTemplate extends BaseTemplate {
 		//   It should be followed by the name of the hook in hyphenated lowercase.
 		//
 		// Conditionally used values must use null to indicate absence (not false or '').
-		$params = [
+		$skinData = [
 			'html-headelement' => $this->get( 'headelement', '' ),
 
 			'msg-sitetitle' => $this->getMsg( 'sitetitle' )->text(),
@@ -120,9 +119,15 @@ class CitizenTemplate extends BaseTemplate {
 			],
 		];
 
-		// Prepare and output the HTML response
-		$templates = new TemplateParser( __DIR__ . '/templates' );
-		echo $templates->processTemplate( 'skin', $params );
+		return $skinData;
+	}
+
+	/**
+	 * Renders the entire contents of the HTML page.
+	 */
+	public function execute() {
+		$tp = new TemplateParser( __DIR__ . '/templates' );
+		echo $tp->processTemplate( 'skin', $this->getSkinData() );
 	}
 
 	/**

@@ -72,8 +72,6 @@ class SkinCitizen extends SkinTemplate {
 
 		// Feature policy
 		$this->addFeaturePolicy();
-
-		$this->addModules();
 	}
 
 	/**
@@ -225,13 +223,40 @@ class SkinCitizen extends SkinTemplate {
 	}
 
 	/**
-	 * Returns the javascript entry modules to load. Only modules that need to
-	 * be overriden or added conditionally should be placed here.
+	 * @inheritDoc
 	 * @return array
 	 */
 	public function getDefaultModules() {
 		$modules = parent::getDefaultModules();
 		$out = $this->getOutput();
+
+		$modules['styles'] = [
+			'mediawiki.skinning.content.externallinks',
+			'skins.citizen.styles',
+			'skins.citizen.styles.fonts',
+			'skins.citizen.styles.toc',
+			'skins.citizen.icons',
+			'skins.citizen.icons.ca',
+			'skins.citizen.icons.es',
+			'skins.citizen.icons.n',
+			'skins.citizen.icons.t',
+			'skins.citizen.icons.pt',
+			'skins.citizen.icons.footer',
+			'skins.citizen.icons.badges',
+		];
+		$modules['citizen'][] = 'skins.citizen.scripts';
+
+		// Add lazyload-related modules
+		if ( $this->getConfigValue( 'CitizenEnableLazyload' ) === true ) {
+			$modules['styles'] = array_merge(
+				$modules['styles'],
+				[ 'skins.citizen.styles.lazyload' ]
+			);
+			$modules['citizen'] = array_merge(
+				$modules['citizen'],
+				[ 'skins.citizen.scripts.lazyload' ]
+			);
+		}
 
 		// Replace the search module
 		if ( $this->getConfigValue( 'CitizenEnableSearch' ) === true ) {
@@ -249,35 +274,5 @@ class SkinCitizen extends SkinTemplate {
 		}
 
 		return $modules;
-	}
-
-	/**
-	 * Adds all needed skin modules
-	 * TODO: Replace with getDefaultModules() when we move to min 1.35
-	 */
-	private function addModules() {
-		$this->out->addModuleStyles( [
-			'mediawiki.skinning.content.externallinks',
-			'skins.citizen.styles',
-			'skins.citizen.styles.fonts',
-			'skins.citizen.styles.toc',
-			'skins.citizen.icons',
-			'skins.citizen.icons.ca',
-			'skins.citizen.icons.es',
-			'skins.citizen.icons.n',
-			'skins.citizen.icons.t',
-			'skins.citizen.icons.pt',
-			'skins.citizen.icons.footer',
-			'skins.citizen.icons.badges',
-		] );
-
-		// Add lazyload-related modules
-		if ( $this->getConfigValue( 'CitizenEnableLazyload' ) === true ) {
-			$this->out->addModuleStyles( [ 'skins.citizen.styles.lazyload' ] );
-			$this->out->addModules( [ 'skins.citizen.scripts.lazyload' ] );
-		}
-		$this->out->addModules( [
-			'skins.citizen.scripts',
-		] );
 	}
 }
