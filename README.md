@@ -84,5 +84,6 @@ Name | Description | Values | Default
 `$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#11151d`
     
 ## Requirements
-* [MediaWiki](https://www.mediawiki.org) 1.31 or later
+* [MediaWiki](https://www.mediawiki.org) 1.35 or later
+* For the legacy version that supports MediaWiki 1.35 or above, check the REL1_31 branch.
 
