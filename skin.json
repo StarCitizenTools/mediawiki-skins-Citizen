@@ -1,6 +1,6 @@
 {
 	"name": "Citizen",
-	"version": "0.9.4",
+	"version": "0.9.5",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
@@ -11,7 +11,7 @@
 	"license-name": "GPL-3.0-or-later",
 	"type": "skin",
 	"requires": {
-		"MediaWiki": ">= 1.31.0"
+		"MediaWiki": ">= 1.35.0"
 	},
 	"ValidSkinNames": {
 		"citizen": "Citizen"
