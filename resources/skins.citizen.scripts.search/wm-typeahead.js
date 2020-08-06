@@ -308,7 +308,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	 * @return {string} The title with highlighted part in an <em> tag.
 	 */
 	function highlightTitle( title, searchString ) {
-		let sanitizedSearchString = mw.html.escape( mw.RegExp.escape( searchString ) ),
+		let sanitizedSearchString = mw.html.escape( mw.util.escapeRegExp( searchString ) ),
 			searchRegex = new RegExp( sanitizedSearchString, 'i' ),
 			startHighlightIndex = title.search( searchRegex ),
 			formattedTitle = mw.html.escape( title ),
