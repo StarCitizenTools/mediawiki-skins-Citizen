@@ -77,6 +77,12 @@ class CitizenHooks {
 	 * @return bool
 	 */
 	public static function onThumbnailBeforeProduceHTML( $thumb, &$attribs, &$linkAttribs ) {
+		// It's better to exit before any additional check
+		// Seems like the hook somehow affected other skins
+		if ( $context->getSkin() !== 'citizen' ) {
+			return;
+		}
+
 		try {
 			$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Citizen' );
 			$lazyloadEnabled = $config->get( 'CitizenEnableLazyload' );
