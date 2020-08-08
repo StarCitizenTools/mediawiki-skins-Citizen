@@ -39,6 +39,10 @@ class CitizenTemplate extends BaseTemplate {
 	 * @return array Returns an array of data used by Citizen skin.
 	 */
 	private function getSkinData() : array {
+		$skin = $this->getSkin();
+		$out = $skin->getOutput();
+		$title = $out->getTitle();
+
 		// Naming conventions for Mustache parameters:
 		// - Prefix "is" for boolean values.
 		// - Prefix "msg-" for interface messages.
@@ -53,10 +57,13 @@ class CitizenTemplate extends BaseTemplate {
 		//   It should be followed by the name of the hook in hyphenated lowercase.
 		//
 		// Conditionally used values must use null to indicate absence (not false or '').
-		$skinData = [
-			'html-headelement' => $this->get( 'headelement', '' ),
+		// From Skin::getNewtalks(). Always returns string, cast to null if empty.
+		$newTalksHtml = $skin->getNewtalks() ?: null;
 
-			'msg-sitetitle' => $this->getMsg( 'sitetitle' )->text(),
+		$skinData = [
+			'html-headelement' => $out->headElement( $skin ),
+
+			'msg-sitetitle' => $skin->msg( 'sitetitle' )->text(),
 			'html-mainpage-attributes' => Xml::expandAttributes(
 				Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) + [
 					'href' => Skin::makeMainPageUrl(),
@@ -69,39 +76,37 @@ class CitizenTemplate extends BaseTemplate {
 				'data-searchbox' => $this->buildSearchbox(),
 			],
 
-			'html-sitenotice' => $this->get( 'sitenotice', null ),
+			'html-site-notice' => $this->get( 'sitenotice', null ),
 			'html-indicators' => $this->getIndicators(),
 
 			'data-pagetools' => $this->buildPageTools(),
 
-			// From Skin::getNewtalks(). Always returns string, cast to null if empty
-			'html-newtalk' => $this->get( 'newtalk', '' ) ?: null,
-			'page-langcode' => $this->getSkin()->getTitle()->getPageViewLanguage()->getHtmlCode(),
+			'html-newtalk' => $newTalksHtml ? '<div class="usermessage">' . $newTalksHtml . '</div>' : '',
+			'page-langcode' => $title->getPageViewLanguage()->getHtmlCode(),
 
 			// Remember that the string '0' is a valid title.
 			// From OutputPage::getPageTitle, via ::setPageTitle().
-			'html-title' => $this->get( 'title', '' ),
+			'html-title' => $out->getPageTitle(),
 
 			'html-prebodyhtml' => $this->get( 'prebodyhtml', '' ),
-			'msg-tagline' => $this->getMsg( 'tagline' )->text(),
-			// TODO: mediawiki/SkinTemplate should expose langCode and langDir properly.
-			'html-userlangattributes' => $this->get( 'userlangattributes', '' ),
+			'msg-tagline' => $skin->msg( 'tagline' )->text(),
+			'html-user-language-attributes' => $this->get( 'userlangattributes', '' ),
 			// From OutputPage::getSubtitle()
 			'html-subtitle' => $this->get( 'subtitle', '' ),
 
 			// TODO: Use directly Skin::getUndeleteLink() directly.
 			// Always returns string, cast to null if empty.
-			'html-undelete' => $this->get( 'undelete', null ) ?: null,
+			'html-undelete-link' => $this->get( 'undelete', null ) ?: null,
 
 			// Result of OutputPage::addHTML calls
-			'html-bodycontent' => $this->get( 'bodycontent' ),
+			'html-body-content' => $this->get( 'bodycontent' ),
 
-			'html-printfooter' => $this->get( 'printfooter', null ),
+			'html-printfooter' => $skin->printSource(),
 
 			'data-pagelinks' => $this->buildPageLinks(),
 
-			'html-catlinks' => $this->get( 'catlinks', '' ),
-			'html-dataAfterContent' => $this->get( 'dataAfterContent', '' ),
+			'html-categories' => $skin->getCategories(),
+			'html-after-content' => $this->get( 'dataAfterContent', '' ),
 			// From MWDebug::getHTMLDebugLog (when $wgShowDebug is enabled)
 			'html-debuglog' => $this->get( 'debughtml', '' ),
 
@@ -111,10 +116,10 @@ class CitizenTemplate extends BaseTemplate {
 			'data-footer' => [
 				'html-userlangattributes' => $this->get( 'userlangattributes', '' ),
 				'html-lastmodified' => $this->getLastMod(),
-				'msg-sitetitle' => $this->getMsg( 'sitetitle' )->text(),
-				'msg-citizen-footer-desc' => $this->getMsg( 'citizen-footer-desc' )->text(),
+				'msg-sitetitle' => $skin->msg( 'sitetitle' )->text(),
+				'msg-citizen-footer-desc' => $skin->msg( 'citizen-footer-desc' )->text(),
 				'array-footer-rows' => $this->getFooterRows(),
-				'msg-citizen-footer-tagline' => $this->getMsg( 'citizen-footer-tagline' )->text(),
+				'msg-citizen-footer-tagline' => $skin->msg( 'citizen-footer-tagline' )->text(),
 				'array-footer-icons' => $this->getFooterIconsRow(),
 			],
 		];

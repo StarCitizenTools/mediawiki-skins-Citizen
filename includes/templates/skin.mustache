@@ -14,12 +14,10 @@
 	string msg-tagline
 	string html-prebodyhtml
 	string html-subtitle
-	string html-undelete
-	string html-bodycontent
-	string html-printfooter
-	string html-catlinks
-	string html-debuglog
-	string html-dataAfterContent
+	string html-undelete-link
+	string html-body-content
+	string html-categories
+	string html-after-content
 	object data-footer for footer template partial. see Footer.mustache for documentation.
 	string html-mainpage-attributes
 	string msg-sitetitle
@@ -31,10 +29,8 @@
 {{{html-headelement}}}
 {{#data-header}}{{>Header}}{{/data-header}}
 <main class="mw-body" id="content">
-	{{#html-sitenotice}}
-		<div id="siteNotice" class="mw-body-content">{{{.}}}</div>
-	{{/html-sitenotice}}
-	{{#html-newtalk}}<div class="usermessage">{{{html-newtalk}}}</div>{{/html-newtalk}}
+	<div id="siteNotice" class="mw-body-content">{{{html-site-notice}}}</div>
+	{{{html-newtalk}}}
 	{{{html-indicators}}}
 	{{#data-pagetools}}
 		<div class="mw-side" id="page-tools">
@@ -46,21 +42,17 @@
 	<div id="siteSub">{{msg-tagline}}</div>
 	{{{html-prebodyhtml}}}
 	<div id="bodyContent" class="mw-body-content">
-		<div id="contentSub"{{{html-userlangattributes}}}>{{{html-subtitle}}}</div>
-		{{#html-undelete}}<div id="contentSub2">{{{html-undelete}}}</div>{{/html-undelete}}
-		{{{html-bodycontent}}}
-		{{#html-printfooter}}
-			<div class="printfooter">{{{html-printfooter}}}</div>
-		{{/html-printfooter}}
+		<div id="contentSub"{{{html-user-language-attributes}}}>{{{html-subtitle}}}</div>
+		{{#html-undelete-link}}<div id="contentSub2">{{{html-undelete-link}}}</div>{{/html-undelete-link}}
+		{{{html-body-content}}}
 		{{#data-pagelinks}}
 			{{#data-namespaces}}{{>Menu}}{{/data-namespaces}}
 			{{#data-variants}}{{>Menu}}{{/data-variants}}
 		{{/data-pagelinks}}
-		{{{html-catlinks}}}
-		{{{html-dataAfterContent}}}
-		{{{html-debuglog}}}
+		{{{html-categories}}}
 	</div>
 </main>
+{{{html-after-content}}}
 {{#data-footer}}{{>Footer}}{{/data-footer}}
 <aside class="mw-sidebar-sitename">
 	<a class="mw-wiki-title" {{{html-mainpage-attributes}}}>{{{msg-sitetitle}}}</a>
