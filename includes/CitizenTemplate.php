@@ -36,6 +36,13 @@ class CitizenTemplate extends BaseTemplate {
 	];
 
 	/**
+	 * @return Config
+	 */
+	private function getConfig() {
+		return $this->config;
+	}
+
+	/**
 	 * @return array Returns an array of data used by Citizen skin.
 	 */
 	private function getSkinData() : array {
@@ -73,7 +80,7 @@ class CitizenTemplate extends BaseTemplate {
 			'data-header' => [
 				'data-drawer' => $this->buildDrawer(),
 				'data-extratools' => $this->getExtraTools(),
-				'data-searchbox' => $this->buildSearchbox(),
+				'data-search-box' => $this->buildSearchProps(),
 			],
 
 			'html-site-notice' => $this->get( 'sitenotice', null ),
@@ -275,14 +282,14 @@ class CitizenTemplate extends BaseTemplate {
 
 	/**
 	 * Render the search box
-	 * TODO: Use standardized classes and IDs
 	 * @return array
 	 * @throws MWException
 	 */
-	private function buildSearchbox() : array {
-		$config = $this->config;
+	private function buildSearchProps() : array {
+		$config = $this->getConfig();
+		$skin = $this->getSkin();
 
-		$toggleMsg = $this->getMsg( 'citizen-search-toggle' )->text();
+		$toggleMsg = $skin->msg( 'citizen-search-toggle' )->text();
 		$accessKey = Linker::accesskey( 'search' );
 
 		return [
@@ -290,10 +297,10 @@ class CitizenTemplate extends BaseTemplate {
 			'msg-citizen-search-toggle-shortcut' => $toggleMsg . ' [alt-shift-' . $accessKey . ']',
 			'form-action' => $config->get( 'Script' ),
 			'html-input' => $this->makeSearchInput( [ 'id' => 'searchInput' ] ),
-			'msg-search' => $this->getMsg( 'search' )->text(),
+			'msg-search' => $skin->msg( 'search' ),
 			'page-title' => SpecialPage::getTitleFor( 'Search' )->getPrefixedDBkey(),
 			'html-random-href' => Skin::makeSpecialUrl( 'Randompage' ),
-			'msg-random' => $this->getMsg( 'Randompage' )->text(),
+			'msg-random' => $skin->msg( 'Randompage' )->text(),
 		];
 	}
 
@@ -308,7 +315,7 @@ class CitizenTemplate extends BaseTemplate {
 	 * @return array html
 	 */
 	protected function buildPageTools(): array {
-		$config = $this->config;
+		$config = $this->getConfig();
 		$skin = $this->getSkin();
 		$condition = $config->get( 'CitizenShowPageTools' );
 		$contentNavigation = $this->data['content_navigation'];
