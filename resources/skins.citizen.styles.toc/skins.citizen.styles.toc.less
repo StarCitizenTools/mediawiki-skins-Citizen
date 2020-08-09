@@ -143,11 +143,15 @@
 				}
 			}
 
+<<<<<<< HEAD
 			&checkbox:checked ~ ul {
 				transform: translateX( -300px - @margin-side );
 			}
 
 			&checkbox:not( :checked ) ~ ul {
+=======
+			&checkbox:not(:checked) ~ ul {
+>>>>>>> Tweak ToC toggle behavior
 				transform: none;
 			}
 		}
@@ -166,6 +170,7 @@
 			background: @base-100;
 			border-radius: 0 @border-radius-large @border-radius-large 0;
 			.boxshadow(3);
+			transform: translateX( -300px - @margin-side );
 			transition: @transition-transform;
 		}
 	}
