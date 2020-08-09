@@ -24,9 +24,6 @@ namespace Citizen;
 
 use ApiBase;
 use ApiFormatJson;
-use ApiResult;
-use ConfigException;
-use Exception;
 use MediaWiki\MediaWikiServices;
 use Title;
 
