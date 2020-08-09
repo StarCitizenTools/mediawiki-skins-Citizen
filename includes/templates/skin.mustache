@@ -1,14 +1,14 @@
 {{!
+	string|null html-site-notice the contents of a banner defined in MediaWiki:Sitenotice.
+		Also used by CentralNotice to inject banners into Vector.
+	Indicator[] array-indicators wiki-defined badges such as "good article",
+		"featured article". An empty array if none are defined.
 	string html-headelement a string of attribute HTML that begins with `<html>` and ends with
 		`</head>` and contains `meta` tags and ResourceLoader internals.
 	string html-printtail HTML to render at the end of the page contained necessary script tags for
 		ResourceLoader terminated with `</body></html>`.
-	string|null html-sitenotice the contents of a banner defined in MediaWiki:Sitenotice.
-		Also used by CentralNotice to inject banners.
 	string page-langcode the content language of the article. Assumed to be escaped HTML.
 	string html-newtalk
-	string html-indicators raw HTML containing wiki-defined badges such as "good article",
-		"featured article". An empty string if none are defined.
 	string page-langcode the content language of the article. Assumed to be escaped HTML.
 	string html-title
 	string msg-tagline
@@ -30,8 +30,8 @@
 {{#data-header}}{{>Header}}{{/data-header}}
 <main class="mw-body" id="content">
 	<div id="siteNotice" class="mw-body-content">{{{html-site-notice}}}</div>
+	{{>Indicators}}
 	{{{html-newtalk}}}
-	{{{html-indicators}}}
 	{{#data-pagetools}}
 		<div class="mw-side" id="page-tools">
 			{{#data-page-actions}}{{>Menu}}{{/data-page-actions}}

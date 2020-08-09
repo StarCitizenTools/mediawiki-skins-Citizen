@@ -21,6 +21,8 @@
  * @ingroup Skins
  */
 
+use Wikimedia\WrappedString;
+
 /**
  * SkinTemplate class for the Citizen skin
  * @ingroup Skins
@@ -31,9 +33,103 @@ class SkinCitizen extends SkinTemplate {
 	public $template = 'CitizenTemplate';
 
 	/**
-	 * @var OutputPage
+	 * @inheritDoc
+	 * @return array
 	 */
-	private $out;
+	public function getDefaultModules() {
+		$modules = parent::getDefaultModules();
+		$out = $this->getOutput();
+
+		$modules['styles'] = [
+			'mediawiki.skinning.content.externallinks',
+			'skins.citizen.styles',
+			'skins.citizen.styles.fonts',
+			'skins.citizen.styles.toc',
+			'skins.citizen.icons',
+			'skins.citizen.icons.ca',
+			'skins.citizen.icons.es',
+			'skins.citizen.icons.n',
+			'skins.citizen.icons.t',
+			'skins.citizen.icons.pt',
+			'skins.citizen.icons.footer',
+			'skins.citizen.icons.badges',
+		];
+		$modules['citizen'][] = 'skins.citizen.scripts';
+
+		// Add lazyload-related modules
+		if ( $this->getConfigValue( 'CitizenEnableLazyload' ) === true ) {
+			$modules['styles'] = array_merge(
+				$modules['styles'],
+				[ 'skins.citizen.styles.lazyload' ]
+			);
+			$modules['citizen'] = array_merge(
+				$modules['citizen'],
+				[ 'skins.citizen.scripts.lazyload' ]
+			);
+		}
+
+		// Replace the search module
+		if ( $this->getConfigValue( 'CitizenEnableSearch' ) === true ) {
+			$modules['search'] = [
+				'skins.citizen.scripts.search',
+				'skins.citizen.styles.search',
+				'skins.citizen.icons.search',
+			];
+		}
+
+		if ( $out->isTOCEnabled() ) {
+			// Disable style condition loading due to pop in
+			// $modules['content'][] = 'skins.citizen.styles.toc';
+			$modules['content'][] = 'skins.citizen.scripts.toc';
+		}
+
+		return $modules;
+	}
+
+	/**
+	 * @internal only for use inside CitizenTemplate
+	 * @return array of data for a Mustache template
+	 */
+	public function getTemplateData() {
+		$out = $this->getOutput();
+		$title = $out->getTitle();
+
+		$indicators = [];
+		foreach ( $out->getIndicators() as $id => $content ) {
+			$indicators[] = [
+				'id' => Sanitizer::escapeIdForAttribute( "mw-indicator-$id" ),
+				'class' => 'mw-indicator',
+				'html' => $content,
+			];
+		}
+
+		$printFooter = Html::rawElement(
+			'div',
+			[ 'class' => 'printfooter' ],
+			$this->printSource()
+		);
+
+		return [
+			// Data objects:
+			'array-indicators' => $indicators,
+			// HTML strings:
+			'html-printtail' => WrappedString::join( "\n", [
+				MWDebug::getHTMLDebugLog(),
+				MWDebug::getDebugHTML( $this->getContext() ),
+				$this->bottomScripts(),
+				wfReportTime( $out->getCSP()->getNonce() )
+			] ) . '</body></html>',
+			'html-site-notice' => $this->getSiteNotice(),
+			'html-user-language-attributes' => $this->prepareUserLanguageAttributes(),
+			'html-subtitle' => $this->prepareSubtitle(),
+			// Always returns string, cast to null if empty.
+			'html-undelete-link' => $this->prepareUndeleteLink() ?: null,
+			// Result of OutputPage::addHTML calls
+			'html-body-content' => $this->wrapHTML( $title, $out->mBodytext )
+				. $printFooter,
+			'html-after-content' => $this->afterContentHook(),
+		];
+	}
 
 	/**
 	 * ResourceLoader
@@ -220,59 +316,5 @@ class SkinCitizen extends SkinTemplate {
 			$this->out->getRequest()->response()->header( sprintf( 'Feature-Policy: %s',
 				$featurePolicy ) );
 		}
-	}
-
-	/**
-	 * @inheritDoc
-	 * @return array
-	 */
-	public function getDefaultModules() {
-		$modules = parent::getDefaultModules();
-		$out = $this->getOutput();
-
-		$modules['styles'] = [
-			'mediawiki.skinning.content.externallinks',
-			'skins.citizen.styles',
-			'skins.citizen.styles.fonts',
-			'skins.citizen.styles.toc',
-			'skins.citizen.icons',
-			'skins.citizen.icons.ca',
-			'skins.citizen.icons.es',
-			'skins.citizen.icons.n',
-			'skins.citizen.icons.t',
-			'skins.citizen.icons.pt',
-			'skins.citizen.icons.footer',
-			'skins.citizen.icons.badges',
-		];
-		$modules['citizen'][] = 'skins.citizen.scripts';
-
-		// Add lazyload-related modules
-		if ( $this->getConfigValue( 'CitizenEnableLazyload' ) === true ) {
-			$modules['styles'] = array_merge(
-				$modules['styles'],
-				[ 'skins.citizen.styles.lazyload' ]
-			);
-			$modules['citizen'] = array_merge(
-				$modules['citizen'],
-				[ 'skins.citizen.scripts.lazyload' ]
-			);
-		}
-
-		// Replace the search module
-		if ( $this->getConfigValue( 'CitizenEnableSearch' ) === true ) {
-			$modules['search'] = [
-				'skins.citizen.scripts.search',
-				'skins.citizen.styles.search',
-				'skins.citizen.icons.search',
-			];
-		}
-
-		if ( $out->isTOCEnabled() ) {
-			// Disable style condition loading due to pop in
-			// $modules['content'][] = 'skins.citizen.styles.toc';
-			$modules['content'][] = 'skins.citizen.scripts.toc';
-		}
-
-		return $modules;
 	}
 }

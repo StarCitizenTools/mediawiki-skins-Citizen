@@ -67,7 +67,7 @@ class CitizenTemplate extends BaseTemplate {
 		// From Skin::getNewtalks(). Always returns string, cast to null if empty.
 		$newTalksHtml = $skin->getNewtalks() ?: null;
 
-		$skinData = [
+		$skinData = $skin->getTemplateData() + [
 			'html-headelement' => $out->headElement( $skin ),
 
 			'msg-sitetitle' => $skin->msg( 'sitetitle' )->text(),
@@ -83,9 +83,6 @@ class CitizenTemplate extends BaseTemplate {
 				'data-search-box' => $this->buildSearchProps(),
 			],
 
-			'html-site-notice' => $this->get( 'sitenotice', null ),
-			'html-indicators' => $this->getIndicators(),
-
 			'data-pagetools' => $this->buildPageTools(),
 
 			'html-newtalk' => $newTalksHtml ? '<div class="usermessage">' . $newTalksHtml . '</div>' : '',
@@ -97,33 +94,13 @@ class CitizenTemplate extends BaseTemplate {
 
 			'html-prebodyhtml' => $this->get( 'prebodyhtml', '' ),
 			'msg-tagline' => $skin->msg( 'tagline' )->text(),
-			'html-user-language-attributes' => $this->get( 'userlangattributes', '' ),
-			// From OutputPage::getSubtitle()
-			'html-subtitle' => $this->get( 'subtitle', '' ),
-
-			// TODO: Use directly Skin::getUndeleteLink() directly.
-			// Always returns string, cast to null if empty.
-			'html-undelete-link' => $this->get( 'undelete', null ) ?: null,
-
-			// Result of OutputPage::addHTML calls
-			'html-body-content' => $this->get( 'bodycontent' ),
-
-			'html-printfooter' => $skin->printSource(),
 
 			'data-pagelinks' => $this->buildPageLinks(),
 
 			'html-categories' => $skin->getCategories(),
-			'html-after-content' => $this->get( 'dataAfterContent', '' ),
-			// From MWDebug::getHTMLDebugLog (when $wgShowDebug is enabled)
-			'html-debuglog' => $this->get( 'debughtml', '' ),
-
-			// From BaseTemplate::getTrail (handles bottom JavaScript)
-			'html-printtail' => $this->getTrail() . '</body></html>',
 
 			'data-footer' => [
-				'html-userlangattributes' => $this->get( 'userlangattributes', '' ),
 				'html-lastmodified' => $this->getLastMod(),
-				'msg-sitetitle' => $skin->msg( 'sitetitle' )->text(),
 				'msg-citizen-footer-desc' => $skin->msg( 'citizen-footer-desc' )->text(),
 				'array-footer-rows' => $this->getFooterRows(),
 				'msg-citizen-footer-tagline' => $skin->msg( 'citizen-footer-tagline' )->text(),
