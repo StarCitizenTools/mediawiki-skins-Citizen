@@ -39,73 +39,45 @@ class ApiWebappManifest extends ApiBase {
 	 * Execute the requested Api actions.
 	 */
 	public function execute() {
+		$services = MediaWikiServices::getInstance();
+
+		$config = $this->getConfig();
 		$resultObj = $this->getResult();
-		$resultObj->addValue( null, 'name', $this->getConfigSafe( 'Sitename' ) );
-		// Might as well add shortname
-		$resultObj->addValue( null, 'short_name', $this->getConfigSafe( 'Sitename' ) );
-
+		$resultObj->addValue( null, 'name', $config->get( 'Sitename' ) );
 		$resultObj->addValue( null, 'orientation', 'portrait' );
+		$resultObj->addValue( null, 'dir', $services->getContentLanguage()->getDir() );
+		$resultObj->addValue( null, 'lang', $config->get( 'LanguageCode' ) );
+		$resultObj->addValue( null, 'display', 'browser' );
+		$resultObj->addValue( null, 'theme_color', $config->get( 'CitizenManifestThemeColor' ) );
+		$resultObj->addValue( null, 'background_color', $config->get( 'CitizenManifestBackgroundColor' ) );
+		$resultObj->addValue( null, 'start_url', Title::newMainPage()->getLocalURL() );
 
-		if ( $this->getConfigSafe( 'ContLang', false ) !== false ) {
-			$resultObj->addValue( null, 'dir', $this->getConfigSafe( 'ContLang' )->getDir() );
-		}
-		$resultObj->addValue( null, 'lang', $this->getConfigSafe( 'LanguageCode' ) );
-
-		// Changed to standalone to provide better experience
-		$resultObj->addValue( null, 'display', 'standalone' );
-
-		$resultObj->addValue( null, 'theme_color',
-			$this->getConfigSafe( 'CitizenManifestThemeColor' ) );
-		$resultObj->addValue( null, 'background_color',
-			$this->getConfigSafe( 'CitizenManifestBackgroundColor' ) );
-
-		$resultObj->addValue( null, 'start_url', Title::newMainPage()->getLocalUrl() );
-
-		$this->addIcons( $resultObj );
-
-		$main = $this->getMain();
-		$main->setCacheControl( [ 's-maxage' => 86400, 'max-age' => 86400 ] );
-		$main->setCacheMode( 'public' );
-	}
-
-	/**
-	 * @param ApiResult $result
-	 */
-	private function addIcons( $result ) {
 		$icons = [];
 
-		$appleTouchIcon = $this->getConfigSafe( 'AppleTouchIcon', false );
-
+		$appleTouchIcon = $config->get( 'AppleTouchIcon' );
 		if ( $appleTouchIcon !== false ) {
-			try {
-				$appleTouchIconUrl = wfExpandUrl( $appleTouchIcon, PROTO_CURRENT );
-			} catch ( Exception $e ) {
-				return;
-			}
-
-			$request = MediaWikiServices::getInstance()
-				->getHttpRequestFactory()
-				->create( $appleTouchIconUrl );
+			$appleTouchIconUrl = wfExpandUrl( $appleTouchIcon, PROTO_CURRENT );
+			$request = $services->getHttpRequestFactory()->create( $appleTouchIconUrl, [], __METHOD__ );
 			$request->execute();
 			$appleTouchIconContent = $request->getContent();
-
 			if ( !empty( $appleTouchIconContent ) ) {
 				$appleTouchIconSize = getimagesizefromstring( $appleTouchIconContent );
 			}
-
 			$icon = [
-				'src' => $appleTouchIcon,
+				'src' => $appleTouchIcon
 			];
-
 			if ( isset( $appleTouchIconSize ) && $appleTouchIconSize !== false ) {
 				$icon['sizes'] = $appleTouchIconSize[0] . 'x' . $appleTouchIconSize[1];
 				$icon['type'] = $appleTouchIconSize['mime'];
 			}
-
 			$icons[] = $icon;
 		}
 
-		$result->addValue( null, 'icons', $icons );
+		$resultObj->addValue( null, 'icons', $icons );
+
+		$main = $this->getMain();
+		$main->setCacheControl( [ 's-maxage' => 86400, 'max-age' => 86400 ] );
+		$main->setCacheMode( 'public' );
 	}
 
 	/**
@@ -115,21 +87,5 @@ class ApiWebappManifest extends ApiBase {
 	 */
 	public function getCustomPrinter() {
 		return new ApiFormatJson( $this->getMain(), 'json' );
-	}
-
-	/**
-	 * Calls getConfig. Returns empty string on exception or $default;
-	 *
-	 * @param string $key
-	 * @param string|int|null $default
-	 * @return mixed|string
-	 * @see Config::get()
-	 */
-	private function getConfigSafe( $key, $default = null ) {
-		try {
-			return $this->getConfig()->get( $key );
-		} catch ( ConfigException $e ) {
-			return $default ?? '';
-		}
 	}
 }
