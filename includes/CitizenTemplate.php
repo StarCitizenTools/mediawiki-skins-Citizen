@@ -99,13 +99,7 @@ class CitizenTemplate extends BaseTemplate {
 
 			'html-categories' => $skin->getCategories(),
 
-			'data-footer' => [
-				'html-lastmodified' => $this->getLastMod(),
-				'msg-citizen-footer-desc' => $skin->msg( 'citizen-footer-desc' )->text(),
-				'array-footer-rows' => $this->getFooterRows(),
-				'msg-citizen-footer-tagline' => $skin->msg( 'citizen-footer-tagline' )->text(),
-				'array-footer-icons' => $this->getFooterIconsRow(),
-			],
+			'data-footer' => $this->getFooterData(),
 		];
 
 		return $skinData;
@@ -361,28 +355,21 @@ class CitizenTemplate extends BaseTemplate {
 	}
 
 	/**
-	 * Get last modified message
-	 * @return string html
+	 * Get rows that make up the footer
+	 * @return array for use in Mustache template describing the footer elements.
 	 */
-	private function getLastMod() {
-		$lastMod = null;
+	private function getFooterData() : array {
+		$skin = $this->getSkin();
 		$footerLinks = $this->getFooterLinks();
+		$lastMod = null;
+		$footerRows = [];
+		$footerIconRows = [];
 
+		// Get last modified message
 		if ( isset( $footerLinks['info'] ) && in_array( 'lastmod', $footerLinks['info'], true ) ) {
 			$key = array_search( 'lastmod', $footerLinks['info'], true );
 			$lastMod = $this->get( $footerLinks['info'][$key], '' );
 		}
-
-		return $lastMod;
-	}
-
-	/**
-	 * Get rows that make up the footer
-	 * @return array for use in Mustache template describing the footer elements.
-	 */
-	private function getFooterRows() : array {
-		$footerRows = [];
-		$footerLinks = $this->getFooterLinks();
 
 		foreach ( $footerLinks as $category => $links ) {
 			$items = [];
@@ -427,16 +414,6 @@ class CitizenTemplate extends BaseTemplate {
 			];
 		}
 
-		return $footerRows;
-	}
-
-	/**
-	 * Get footer icons
-	 * @return array for use in Mustache template describing the footer icons.
-	 */
-	private function getFooterIconsRow() : array {
-		$footerRows = [];
-
 		// If footer icons are enabled append to the end of the rows
 		$footerIcons = $this->getFooterIcons( 'icononly' );
 		if ( count( $footerIcons ) > 0 ) {
@@ -444,7 +421,7 @@ class CitizenTemplate extends BaseTemplate {
 			foreach ( $footerIcons as $blockName => $blockIcons ) {
 				$html = '';
 				foreach ( $blockIcons as $icon ) {
-					$html .= $this->getSkin()->makeFooterIcon( $icon );
+					$html .= $skin->makeFooterIcon( $icon );
 				}
 				$items[] = [
 					'id' => 'footer-' . htmlspecialchars( $blockName ) . 'ico',
@@ -452,14 +429,22 @@ class CitizenTemplate extends BaseTemplate {
 				];
 			}
 
-			$footerRows[] = [
+			$footerIconRows[] = [
 				'id' => 'footer-icons',
 				'className' => 'noprint',
 				'array-items' => $items,
 			];
 		}
 
-		return $footerRows;
+		$data = [
+			'html-lastmodified' => $lastMod,
+			'array-footer-rows' => $footerRows,
+			'array-footer-icons' => $footerIconRows,
+			'msg-citizen-footer-desc' => $skin->msg( 'citizen-footer-desc' )->text(),
+			'msg-citizen-footer-tagline' => $skin->msg( 'citizen-footer-tagline' )->text(),
+		];
+
+		return $data;
 	}
 
 	/**
