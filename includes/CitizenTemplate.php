@@ -115,7 +115,7 @@ class CitizenTemplate extends BaseTemplate {
 
 	/**
 	 * Render the navigation drawer
-	 * Based on Vector (be3843e)
+	 * Based on Vector
 	 * @return array
 	 * @throws MWException
 	 * @throws Exception
@@ -124,6 +124,7 @@ class CitizenTemplate extends BaseTemplate {
 		$skin = $this->getSkin();
 		$portals = $skin->buildSidebar();
 		$props = [];
+		$languages = null;
 
 		// Render portals
 		foreach ( $portals as $name => $content ) {
@@ -138,17 +139,17 @@ class CitizenTemplate extends BaseTemplate {
 				case 'SEARCH':
 					break;
 				case 'TOOLBOX':
-					$portal = $this->getMenuData( 'tb',  $this->getToolbox() );
+					$portal = $this->getMenuData( 'tb',  $content );
 					$props[] = $portal;
 					break;
 				case 'LANGUAGES':
 					$languages = $skin->getLanguages();
-					$portal = $this->getMenuData( 'lang', $languages );
+					$portal = $this->getMenuData( 'lang', $content );
 					// The language portal will be added provided either
 					// languages exist or there is a value in html-after-portal
 					// for example to show the add language wikidata link (T252800)
-					if ( $portal['html-after-portal'] || count( $languages ) ) {
-						$props[] = $portal;
+					if ( count( $content ) || $portal['html-after-portal'] ) {
+						$languages = $portal;
 					}
 					break;
 				default:
@@ -202,6 +203,7 @@ class CitizenTemplate extends BaseTemplate {
 			'data-logo' => $this->buildLogo(),
 			'data-portals-first' => $firstPortal,
 			'array-portals-rest' => array_slice( $props, 1 ),
+			'data-portals-languages' => $languages,
 			'data-personal-menu' => $personalToolsPortal,
 		];
 	}
