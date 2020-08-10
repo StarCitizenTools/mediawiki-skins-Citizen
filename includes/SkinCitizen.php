@@ -21,153 +21,554 @@
  * @ingroup Skins
  */
 
-use Wikimedia\WrappedString;
+use MediaWiki\MediaWikiServices;
 
 /**
- * SkinTemplate class for the Citizen skin
+ * Skin subclass for Citizen
  * @ingroup Skins
  */
-class SkinCitizen extends SkinTemplate {
-	public $skinname = 'citizen';
-	public $stylename = 'Citizen';
-	public $template = 'CitizenTemplate';
+class SkinCitizen extends SkinMustache {
+	/** @var array of alternate message keys for menu labels */
+	private const MENU_LABEL_KEYS = [
+		'tb' => 'toolbox',
+		'personal' => 'personaltools',
+		'lang' => 'otherlanguages',
+	];
 
 	/**
-	 * @inheritDoc
-	 * @return array
-	 */
-	public function getDefaultModules() {
-		$modules = parent::getDefaultModules();
-		$out = $this->getOutput();
-
-		$modules['styles'] = [
-			'mediawiki.skinning.content.externallinks',
-			'skins.citizen.styles',
-			'skins.citizen.styles.fonts',
-			'skins.citizen.styles.toc',
-			'skins.citizen.icons',
-			'skins.citizen.icons.ca',
-			'skins.citizen.icons.es',
-			'skins.citizen.icons.n',
-			'skins.citizen.icons.t',
-			'skins.citizen.icons.pt',
-			'skins.citizen.icons.footer',
-			'skins.citizen.icons.badges',
-		];
-		$modules['citizen'][] = 'skins.citizen.scripts';
-
-		// Add lazyload-related modules
-		if ( $this->getConfigValue( 'CitizenEnableLazyload' ) === true ) {
-			$modules['styles'] = array_merge(
-				$modules['styles'],
-				[ 'skins.citizen.styles.lazyload' ]
-			);
-			$modules['citizen'] = array_merge(
-				$modules['citizen'],
-				[ 'skins.citizen.scripts.lazyload' ]
-			);
-		}
-
-		// Replace the search module
-		if ( $this->getConfigValue( 'CitizenEnableSearch' ) === true ) {
-			$modules['search'] = [
-				'skins.citizen.scripts.search',
-				'skins.citizen.styles.search',
-				'skins.citizen.icons.search',
-			];
-		}
-
-		if ( $out->isTOCEnabled() ) {
-			// Disable style condition loading due to pop in
-			// $modules['content'][] = 'skins.citizen.styles.toc';
-			$modules['content'][] = 'skins.citizen.scripts.toc';
-		}
-
-		return $modules;
-	}
-
-	/**
-	 * @internal only for use inside CitizenTemplate
-	 * @return array of data for a Mustache template
-	 */
-	public function getTemplateData() {
-		$out = $this->getOutput();
-		$title = $out->getTitle();
-
-		$indicators = [];
-		foreach ( $out->getIndicators() as $id => $content ) {
-			$indicators[] = [
-				'id' => Sanitizer::escapeIdForAttribute( "mw-indicator-$id" ),
-				'class' => 'mw-indicator',
-				'html' => $content,
-			];
-		}
-
-		$printFooter = Html::rawElement(
-			'div',
-			[ 'class' => 'printfooter' ],
-			$this->printSource()
-		);
-
-		return [
-			// Data objects:
-			'array-indicators' => $indicators,
-			// HTML strings:
-			'html-printtail' => WrappedString::join( "\n", [
-				MWDebug::getHTMLDebugLog(),
-				MWDebug::getDebugHTML( $this->getContext() ),
-				$this->bottomScripts(),
-				wfReportTime( $out->getCSP()->getNonce() )
-			] ) . '</body></html>',
-			'html-site-notice' => $this->getSiteNotice(),
-			'html-user-language-attributes' => $this->prepareUserLanguageAttributes(),
-			'html-subtitle' => $this->prepareSubtitle(),
-			// Always returns string, cast to null if empty.
-			'html-undelete-link' => $this->prepareUndeleteLink() ?: null,
-			// Result of OutputPage::addHTML calls
-			'html-body-content' => $this->wrapHTML( $title, $out->mBodytext )
-				. $printFooter,
-			'html-after-content' => $this->afterContentHook(),
-		];
-	}
-
-	/**
-	 * ResourceLoader
+	 * Overrides template, styles and scripts module
 	 *
-	 * @param OutputPage $out
+	 * @inheritDoc
 	 */
-	public function initPage( OutputPage $out ) {
-		$this->out = $out;
+	public function __construct( $options = [] ) {
+		$skin = $this;
+		$out = $skin->getOutput();
+		$config = $this->getConfig();
+
 		// Responsive layout
+		// Replace with core responsive option if it is implemented in 1.36+
 		$out->addMeta( 'viewport', 'width=device-width, initial-scale=1.0' );
 
 		// Theme color
 		$out->addMeta( 'theme-color', $this->getConfigValue( 'CitizenThemeColor' ) ?? '' );
 
-		// Preconnect origin
-		$this->addPreConnect();
+		// Load Citizen search suggestion modules if enabled
+		if ( $this->getConfigValue( 'CitizenEnableSearch' ) === true ) {
+			$options['scripts'] = array_merge (
+				$options['scripts'],
+				[ 'skins.citizen.scripts.search' ]
+			);
+			$options['styles'] = array_merge ( 
+				$options['styles'],
+				[ 
+					'skins.citizen.styles.search',
+					'skins.citizen.icons.search'
+				]
+			);
+		}
 
-		// Generate manifest
-		$this->addManifest();
+		// Load Citizen image lazyload modules if enabled
+		if ( $this->getConfigValue( 'CitizenEnableLazyload' ) === true ) {
+			$options['scripts'] = array_merge (
+				$options['scripts'],
+				[ 'skins.citizen.scripts.lazyload' ]
+			);
+			$options['styles'] = array_merge ( 
+				$options['styles'],
+				[ 'skins.citizen.styles.lazyload' ]
+			);
+		}
+
+		// Load table of content script if ToC presents
+		if ( $out->isTOCEnabled() ) {
+			// Disabled style condition loading due to pop in
+			$options['scripts'] = array_merge (
+				$options['scripts'],
+				[ 'skins.citizen.scripts.toc' ]
+			);
+		}
+
+		// Generate webapp manifest
+		$skin->addManifest();
+
+		// Preconnect origin
+		$skin->addPreConnect();
 
 		// HTTP headers
 		// CSP
-		$this->addCSP();
+		$skin->addCSP();
 
 		// HSTS
-		$this->addHSTS();
+		$skin->addHSTS();
 
 		// Deny X-Frame-Options
-		$this->addXFrameOptions();
+		$skin->addXFrameOptions();
 
 		// X-XSS-Protection
-		$this->addXXSSProtection();
+		$skin->addXXSSProtection();
 
 		// Referrer policy
-		$this->addStrictReferrerPolicy();
+		$skin->addStrictReferrerPolicy();
 
 		// Feature policy
-		$this->addFeaturePolicy();
+		$skin->addFeaturePolicy();
+
+		$options['templateDirectory'] = __DIR__ . '/templates';
+		parent::__construct( $options );
+	}
+
+	/**
+	 * @return array Returns an array of data used by Citizen skin.
+	 */
+	public function getTemplateData() : array {
+		$skin = $this;
+		$out = $skin->getOutput();
+		$title = $out->getTitle();
+
+		// Naming conventions for Mustache parameters:
+		// - Prefix "is" for boolean values.
+		// - Prefix "msg-" for interface messages.
+		// - Prefix "html-" for raw HTML (in front of other keys, if applicable).
+		// - Prefix "data-" for an array of template parameters that should be passed directly
+		//   to a template partial.
+		// - Prefix "array-" for lists of any values.
+		//
+		// Source of value (first or second segment)
+		// - Segment "page-" for data relating to the current page (e.g. Title, WikiPage, or OutputPage).
+		// - Segment "hook-" for any thing generated from a hook.
+		//   It should be followed by the name of the hook in hyphenated lowercase.
+		//
+		// Conditionally used values must use null to indicate absence (not false or '').
+		// From Skin::getNewtalks(). Always returns string, cast to null if empty.
+		$newTalksHtml = $skin->getNewtalks() ?: null;
+
+		$skinData = parent::getTemplateData() + [
+			'msg-sitetitle' => $skin->msg( 'sitetitle' )->text(),
+			'html-mainpage-attributes' => Xml::expandAttributes(
+				Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) + [
+					'href' => Skin::makeMainPageUrl(),
+				]
+			),
+
+			'data-header' => [
+				'data-drawer' => $this->buildDrawer(),
+				'data-extratools' => $this->getExtraTools(),
+				'data-search-box' => $this->buildSearchProps(),
+			],
+
+			'data-pagetools' => $this->buildPageTools(),
+
+			'html-newtalk' => $newTalksHtml ? '<div class="usermessage">' . $newTalksHtml . '</div>' : '',
+			'page-langcode' => $title->getPageViewLanguage()->getHtmlCode(),
+
+			// Remember that the string '0' is a valid title.
+			// From OutputPage::getPageTitle, via ::setPageTitle().
+			'html-title' => $out->getPageTitle(),
+
+			'msg-tagline' => $skin->msg( 'tagline' )->text(),
+
+			'data-pagelinks' => $this->buildPageLinks(),
+
+			'html-categories' => $skin->getCategories(),
+
+			'data-footer' => $this->getFooterData(),
+		];
+
+		return $skinData;
+	}
+
+		/**
+	 * Get rows that make up the footer
+	 * @return array for use in Mustache template describing the footer elements.
+	 */
+	private function getFooterData() : array {
+		$skin = $this;
+		$footerLinks = $this->getFooterLinks();
+		$lastMod = null;
+		$footerRows = [];
+		$footerIconRows = [];
+
+		// Get last modified message
+		if ( isset( $footerLinks['info']['lastmod'] ) ) {
+			$lastMod = $footerLinks['info']['lastmod'];
+		}
+
+		foreach ( $footerLinks as $category => $links ) {
+			$items = [];
+			$rowId = "footer-$category";
+
+			// Unset footer-info
+			if ( $category !== 'info' ) {
+				foreach ( $links as $key => $link ) {
+					// Link may be null. If so don't include it.
+					if ( $link ) {
+						$items[] = [
+							'id' => "$rowId-$key",
+							'html' => $link,
+						];
+					}
+				}
+
+				$footerRows[] = [
+					'id' => $rowId,
+					'className' => null,
+					'array-items' => $items
+				];
+			}
+		}
+
+		// Append footer-info after links
+		if ( isset( $footerLinks['info'] ) ) {
+			$items = [];
+			$rowId = "footer-info";
+
+			foreach ( $footerLinks['info'] as $key => $link ) {
+				// Don't include lastmod and null link
+				if ( $key !== 'lastmod' && $link ) {
+					$items[] = [
+						'id' => "$rowId-$key",
+						'html' => $link,
+					];
+				}
+			}
+
+			$footerRows[] = [
+				'id' => $rowId,
+				'className' => null,
+				'array-items' => $items
+			];
+		}
+
+		// If footer icons are enabled append to the end of the rows
+		$footerIcons = $this->getFooterIcons();
+		if ( count( $footerIcons ) > 0 ) {
+			$items = [];
+			foreach ( $footerIcons as $blockName => $blockIcons ) {
+				$html = '';
+				foreach ( $blockIcons as $icon ) {
+					// Only output icons which have an image.
+					// For historic reasons this mimics the `icononly` option
+					// for BaseTemplate::getFooterIcons.
+					if ( is_string( $icon ) || isset( $icon['src'] ) ) {
+						$html .= $skin->makeFooterIcon( $icon );
+					}
+				}
+				// For historic reasons this mimics the `icononly` option
+				// for BaseTemplate::getFooterIcons. Empty rows should not be output.
+				if ( $html ) {
+					$items[] = [
+						'id' => 'footer-' . htmlspecialchars( $blockName ) . 'ico',
+						'html' => $html,
+					];
+				}
+			}
+
+			$footerIconRows[] = [
+				'id' => 'footer-icons',
+				'className' => 'noprint',
+				'array-items' => $items,
+			];
+		}
+
+		$data = [
+			'html-lastmodified' => $lastMod,
+			'array-footer-rows' => $footerRows,
+			'array-footer-icons' => $footerIconRows,
+			'msg-citizen-footer-desc' => $skin->msg( 'citizen-footer-desc' )->text(),
+			'msg-citizen-footer-tagline' => $skin->msg( 'citizen-footer-tagline' )->text(),
+		];
+
+		return $data;
+	}
+
+	/**
+	 * Render the navigation drawer
+	 * Based on Vector
+	 * @return array
+	 * @throws MWException
+	 * @throws Exception
+	 */
+	public function buildDrawer() {
+		$skin = $this;
+		$portals = parent::buildSidebar();
+		$props = [];
+		$languages = null;
+
+		// Render portals
+		foreach ( $portals as $name => $content ) {
+			if ( $content === false ) {
+				continue;
+			}
+
+			// Numeric strings gets an integer when set as key, cast back - T73639
+			$name = (string)$name;
+
+			switch ( $name ) {
+				case 'SEARCH':
+					break;
+				case 'TOOLBOX':
+					$portal = $this->getMenuData( 'tb',  $content );
+					$props[] = $portal;
+					break;
+				case 'LANGUAGES':
+					$languages = $skin->getLanguages();
+					$portal = $this->getMenuData( 'lang', $content );
+					// The language portal will be added provided either
+					// languages exist or there is a value in html-after-portal
+					// for example to show the add language wikidata link (T252800)
+					if ( count( $content ) || $portal['html-after-portal'] ) {
+						$languages = $portal;
+					}
+					break;
+				default:
+					// Historically some portals have been defined using HTML rather than arrays.
+					// Let's move away from that to a uniform definition.
+					if ( !is_array( $content ) ) {
+						$html = $content;
+						$content = [];
+						wfDeprecated(
+							"`content` field in portal $name must be array."
+								. "Previously it could be a string but this is no longer supported.",
+							'1.35.0'
+						);
+					} else {
+						$html = false;
+					}
+					$portal = $this->getMenuData( $name, $content );
+					if ( $html ) {
+						$portal['html-items'] .= $html;
+					}
+					$props[] = $portal;
+					break;
+			}
+		}
+
+		$firstPortal = $props[0] ?? null;
+		if ( $firstPortal ) {
+			$firstPortal[ 'class' ] .= ' portal-first';
+			// Hide label for first portal
+			$firstPortal[ 'label-class' ] .= 'screen-reader-text';
+		}
+
+		$personalTools = self::getPersonalToolsForMakeListItem(
+			$this->buildPersonalUrls()
+		);
+		// Move the Echo badges and ULS out of default list
+		if ( isset( $personalTools['notifications-alert'] ) ) {
+			unset( $personalTools['notifications-alert'] );
+		}
+		if ( isset( $personalTools['notifications-notice'] ) ) {
+			unset( $personalTools['notifications-notice'] );
+		}
+		if ( isset( $personalTools['uls'] ) ) {
+			unset( $personalTools['uls'] );
+		}
+
+		$personalToolsPortal = $this->getMenuData( 'personal', $personalTools );
+		// Hide label for personal tools
+		$personalToolsPortal[ 'label-class' ] .= 'screen-reader-text';
+
+		return [
+			'msg-citizen-drawer-toggle' => $skin->msg( 'citizen-drawer-toggle' )->text(),
+			'data-logo' => $this->buildLogo(),
+			'data-portals-first' => $firstPortal,
+			'array-portals-rest' => array_slice( $props, 1 ),
+			'data-portals-languages' => $languages,
+			'data-personal-menu' => $personalToolsPortal,
+		];
+	}
+
+	/**
+	 * Render the logo
+	 * TODO: Use standardize classes and IDs
+	 * TODO: Rebuild icon function based on Desktop Improvement Project
+	 * @return array
+	 * @throws MWException
+	 */
+	private function buildLogo() : array {
+		$skin = $this;
+
+		return [
+			'msg-sitetitle' => $skin->msg( 'sitetitle' )->text(),
+			'html-mainpage-attributes' => Xml::expandAttributes(
+				Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) + [
+					'href' => Skin::makeMainPageUrl(),
+				]
+			),
+		];
+	}
+
+	/**
+	 * Echo notification badges and ULS button
+	 * @return array
+	 */
+	private function getExtratools(): array {
+		$personalTools = self::getPersonalToolsForMakeListItem(
+			$this->buildPersonalUrls()
+		);
+
+		// Create the Echo badges and ULS
+		$extraTools = [];
+		if ( isset( $personalTools['notifications-alert'] ) ) {
+			$extraTools['notifications-alert'] = $personalTools['notifications-alert'];
+		}
+		if ( isset( $personalTools['notifications-notice'] ) ) {
+			$extraTools['notifications-notice'] = $personalTools['notifications-notice'];
+		}
+		if ( isset( $personalTools['uls'] ) ) {
+			$extraTools['uls'] = $personalTools['uls'];
+		}
+
+		$html = $this->getMenuData( 'personal-extra', $extraTools );
+
+		// Hide label for extra tools
+		$html[ 'label-class' ] .= 'screen-reader-text';
+
+		return $html;
+	}
+
+	/**
+	 * Render the search box
+	 * @return array
+	 * @throws MWException
+	 */
+	private function buildSearchProps() : array {
+		$config = $this->getConfig();
+		$skin = $this->getSkin();
+
+		$toggleMsg = $skin->msg( 'citizen-search-toggle' )->text();
+		$accessKey = Linker::accesskey( 'search' );
+
+		return [
+			'msg-citizen-search-toggle' => $toggleMsg,
+			'msg-citizen-search-toggle-shortcut' => $toggleMsg . ' [alt-shift-' . $accessKey . ']',
+			'form-action' => $this->getConfigValue( 'Script' ),
+			'html-input' => $this->makeSearchInput( [ 'id' => 'searchInput' ] ),
+			'msg-search' => $skin->msg( 'search' ),
+			'page-title' => SpecialPage::getTitleFor( 'Search' )->getPrefixedDBkey(),
+			'html-random-href' => Skin::makeSpecialUrl( 'Randompage' ),
+			'msg-random' => $skin->msg( 'Randompage' )->text(),
+		];
+	}
+
+	/**
+	 * Render page-related tools
+	 * Possible visibility conditions:
+	 * * true: always visible (bool)
+	 * * false: never visible (bool)
+	 * * 'login': only visible if logged in (string)
+	 * * 'permission-*': only visible if user has permission
+	 *   e.g. permission-edit = only visible if user can edit pages
+	 * @return array html
+	 */
+	protected function buildPageTools(): array {
+		$config = $this->getConfig();
+		$skin = $this;
+		$condition = $this->getConfigValue( 'CitizenShowPageTools' );
+		$contentNavigation = $this->buildContentNavigationUrls();
+		$props = [];
+
+		// Login-based condition, return true if condition is met
+		if ( $condition === 'login' ) {
+			$condition = $skin->getUser()->isLoggedIn();
+		}
+
+		// Permission-based condition, return true if condition is met
+		if ( is_string( $condition ) && strpos( $condition, 'permission' ) === 0 ) {
+			$permission = substr( $condition, 11 );
+			try {
+				$condition = MediaWikiServices::getInstance()->getPermissionManager()->userCan(
+					$permission, $skin->getUser(), $skin->getTitle() );
+			} catch ( Exception $e ) {
+				$condition = false;
+			}
+		}
+
+		if ( $condition === true ) {
+
+			$actionhtml = $this->getMenuData( 'views', $contentNavigation[ 'views' ] ?? [] );
+			$actionmorehtml = $this->getMenuData( 'actions', $contentNavigation[ 'actions' ] ?? [] );
+
+			if ( $actionhtml ) {
+				$actionhtml[ 'label-class' ] .= 'screen-reader-text';
+			}
+
+			if ( $actionmorehtml ) {
+				$actionmorehtml[ 'label-class' ] .= 'screen-reader-text';
+			}
+
+			$props = [
+				'data-page-actions' => $actionhtml,
+				'data-page-actions-more' => $actionmorehtml,
+			];
+		}
+
+		return $props;
+	}
+
+	/**
+	 * Render page-related links at the bottom
+	 * @return array html
+	 */
+	private function buildPageLinks() : array {
+		$contentNavigation = $this->buildContentNavigationUrls();
+
+		$namespaceshtml = $this->getMenuData( 'namespaces', $contentNavigation[ 'namespaces' ] ?? [] );
+		$variantshtml = $this->getMenuData( 'variants', $contentNavigation[ 'variants' ] ?? [] );
+
+		if ( $namespaceshtml ) {
+			$namespaceshtml[ 'label-class' ] .= 'screen-reader-text';
+		}
+
+		if ( $variantshtml ) {
+			$variantshtml[ 'label-class' ] .= 'screen-reader-text';
+		}
+
+		return [
+			'data-namespaces' => $namespaceshtml,
+			'data-variants' => $variantshtml,
+		];
+	}
+
+	/**
+	 * @param string $label to be used to derive the id and human readable label of the menu
+	 *  If the key has an entry in the constant MENU_LABEL_KEYS then that message will be used for the
+	 *  human readable text instead.
+	 * @param array $urls to convert to list items stored as string in html-items key
+	 * @param array $options (optional) to be passed to makeListItem
+	 * @return array
+	 */
+	private function getMenuData(
+		string $label,
+		array $urls = [],
+		array $options = []
+	) : array {
+		$skin = $this->getSkin();
+
+		// For some menu items, there is no language key corresponding with its menu key.
+		// These inconsitencies are captured in MENU_LABEL_KEYS
+		$msgObj = $skin->msg( self::MENU_LABEL_KEYS[ $label ] ?? $label );
+		$props = [
+			'id' => "p-$label",
+			'label-class' => null,
+			'label-id' => "p-{$label}-label",
+			// If no message exists fallback to plain text (T252727)
+			'label' => $msgObj->exists() ? $msgObj->text() : $label,
+			'html-items' => '',
+			'html-tooltip' => Linker::tooltip( 'p-' . $label ),
+		];
+
+		foreach ( $urls as $key => $item ) {
+			$props['html-items'] .= $this->makeListItem( $key, $item, $options );
+		}
+
+		$props['html-after-portal'] = $this->getAfterPortlet( $label );
+
+		// Mark the portal as empty if it has no content
+		$class = ( count( $urls ) === 0 && !$props['html-after-portal'] )
+			? ' mw-portal-empty' : '';
+		$props['class'] = $class;
+		return $props;
 	}
 
 	/**
@@ -189,22 +590,12 @@ class SkinCitizen extends SkinTemplate {
 	}
 
 	/**
-	 * Adds a preconnect header if enabled in 'CitizenEnablePreconnect'
-	 */
-	private function addPreConnect() {
-		if ( $this->getConfigValue( 'CitizenEnablePreconnect' ) === true ) {
-			$this->out->addLink( [
-				'rel' => 'preconnect',
-				'href' => $this->getConfigValue( 'CitizenPreconnectURL' ),
-			] );
-		}
-	}
-
-	/**
 	 * Adds the manifest if enabled in 'CitizenEnableManifest'.
 	 * Manifest link will be empty if wfExpandUrl throws an exception.
 	 */
 	private function addManifest() {
+		$out = $this->getOutput();
+
 		if ( $this->getConfigValue( 'CitizenEnableManifest' ) === true ) {
 			try {
 				$href =
@@ -214,9 +605,23 @@ class SkinCitizen extends SkinTemplate {
 				$href = '';
 			}
 
-			$this->out->addLink( [
+			$out->addLink( [
 				'rel' => 'manifest',
 				'href' => $href,
+			] );
+		}
+	}
+
+	/**
+	 * Adds a preconnect header if enabled in 'CitizenEnablePreconnect'
+	 */
+	private function addPreConnect() {
+		$out = $this->getOutput();
+
+		if ( $this->getConfigValue( 'CitizenEnablePreconnect' ) === true ) {
+			$out->addLink( [
+				'rel' => 'preconnect',
+				'href' => $this->getConfigValue( 'CitizenPreconnectURL' ),
 			] );
 		}
 	}
@@ -226,6 +631,8 @@ class SkinCitizen extends SkinTemplate {
 	 * Directive holds the content of 'CitizenCSPDirective'.
 	 */
 	private function addCSP() {
+		$out = $this->getOutput();
+
 		if ( $this->getConfigValue( 'CitizenEnableCSP' ) === true ) {
 
 			$cspDirective = $this->getConfigValue( 'CitizenCSPDirective' ) ?? '';
@@ -236,7 +643,7 @@ class SkinCitizen extends SkinTemplate {
 				$cspMode = 'Content-Security-Policy-Report-Only';
 			}
 
-			$this->out->getRequest()->response()->header( sprintf( '%s: %s', $cspMode,
+			$out->getRequest()->response()->header( sprintf( '%s: %s', $cspMode,
 				$cspDirective ) );
 		}
 	}
@@ -248,6 +655,8 @@ class SkinCitizen extends SkinTemplate {
 	 * and/or 'CitizenHSTSPreload' to true.
 	 */
 	private function addHSTS() {
+		$out = $this->getOutput();
+
 		if ( $this->getConfigValue( 'CitizenEnableHSTS' ) === true ) {
 
 			$maxAge = $this->getConfigValue( 'CitizenHSTSMaxAge' );
@@ -272,7 +681,7 @@ class SkinCitizen extends SkinTemplate {
 				$hstsHeader .= '; preload';
 			}
 
-			$this->out->getRequest()->response()->header( $hstsHeader );
+			$out->getRequest()->response()->header( $hstsHeader );
 		}
 	}
 
@@ -280,8 +689,10 @@ class SkinCitizen extends SkinTemplate {
 	 * Adds the X-Frame-Options header if set in 'CitizenEnableDenyXFrameOptions'
 	 */
 	private function addXFrameOptions() {
+		$out = $this->getOutput();
+
 		if ( $this->getConfigValue( 'CitizenEnableDenyXFrameOptions' ) === true ) {
-			$this->out->getRequest()->response()->header( 'X-Frame-Options: deny' );
+			$out->getRequest()->response()->header( 'X-Frame-Options: deny' );
 		}
 	}
 
@@ -289,8 +700,10 @@ class SkinCitizen extends SkinTemplate {
 	 * Adds the X-XSS-Protection header if set in 'CitizenEnableXXSSProtection'
 	 */
 	private function addXXSSProtection() {
+		$out = $this->getOutput();
+
 		if ( $this->getConfigValue( 'CitizenEnableXXSSProtection' ) === true ) {
-			$this->out->getRequest()->response()->header( 'X-XSS-Protection: 1; mode=block' );
+			$out->getRequest()->response()->header( 'X-XSS-Protection: 1; mode=block' );
 		}
 	}
 
@@ -298,10 +711,12 @@ class SkinCitizen extends SkinTemplate {
 	 * Adds the referrer header if enabled in 'CitizenEnableStrictReferrerPolicy'
 	 */
 	private function addStrictReferrerPolicy() {
+		$out = $this->getOutput();
+
 		if ( $this->getConfigValue( 'CitizenEnableStrictReferrerPolicy' ) === true ) {
 			// iOS Safari, IE, Edge compatiblity
-			$this->out->getRequest()->response()->header( 'Referrer-Policy: strict-origin' );
-			$this->out->getRequest()->response()->header( 'Referrer-Policy: strict-origin-when-cross-origin' );
+			$out->getRequest()->response()->header( 'Referrer-Policy: strict-origin' );
+			$out->getRequest()->response()->header( 'Referrer-Policy: strict-origin-when-cross-origin' );
 		}
 	}
 
@@ -309,11 +724,13 @@ class SkinCitizen extends SkinTemplate {
 	 * Adds the Feature policy header to the response if enabled in 'CitizenFeaturePolicyDirective'
 	 */
 	private function addFeaturePolicy() {
+		$out = $this->getOutput();
+
 		if ( $this->getConfigValue( 'CitizenEnableFeaturePolicy' ) === true ) {
 
 			$featurePolicy = $this->getConfigValue( 'CitizenFeaturePolicyDirective' ) ?? '';
 
-			$this->out->getRequest()->response()->header( sprintf( 'Feature-Policy: %s',
+			$out->getRequest()->response()->header( sprintf( 'Feature-Policy: %s',
 				$featurePolicy ) );
 		}
 	}

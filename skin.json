@@ -14,7 +14,33 @@
 		"MediaWiki": ">= 1.35.0"
 	},
 	"ValidSkinNames": {
-		"citizen": "Citizen"
+		"citizen": {
+			"class": "SkinCitizen",
+			"@args": "See SkinCitizen::__construct for more detail.",
+			"args": [
+				{
+					"name": "citizen",
+					"scripts": [
+						"skins.citizen.scripts"
+					],
+					"styles": [
+						"mediawiki.skinning.content.externallinks",
+						"skins.citizen.styles",
+						"skins.citizen.styles.fonts",
+						"skins.citizen.styles.toc",
+						"skins.citizen.icons",
+						"skins.citizen.icons.ca",
+						"skins.citizen.icons.es",
+						"skins.citizen.icons.n",
+						"skins.citizen.icons.t",
+						"skins.citizen.icons.pt",
+						"skins.citizen.icons.footer",
+						"skins.citizen.icons.badges"
+					]
+				}
+			]
+		}
+
 	},
 	"MessagesDirs": {
 		"Citizen": [
@@ -23,7 +49,6 @@
 	},
 	"AutoloadClasses": {
 		"SkinCitizen": "includes/SkinCitizen.php",
-		"CitizenTemplate": "includes/CitizenTemplate.php",
 		"Citizen\\CitizenHooks": "includes/CitizenHooks.php",
 		"Citizen\\ApiWebappManifest": "includes/api/ApiWebappManifest.php"
 	},

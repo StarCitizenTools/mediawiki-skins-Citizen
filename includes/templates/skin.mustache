@@ -3,10 +3,6 @@
 		Also used by CentralNotice to inject banners into Vector.
 	Indicator[] array-indicators wiki-defined badges such as "good article",
 		"featured article". An empty array if none are defined.
-	string html-headelement a string of attribute HTML that begins with `<html>` and ends with
-		`</head>` and contains `meta` tags and ResourceLoader internals.
-	string html-printtail HTML to render at the end of the page contained necessary script tags for
-		ResourceLoader terminated with `</body></html>`.
 	string page-langcode the content language of the article. Assumed to be escaped HTML.
 	string html-newtalk
 	string page-langcode the content language of the article. Assumed to be escaped HTML.
@@ -26,7 +22,6 @@
 		ResourceLoader terminated with `</body></html>`.
 }}
 
-{{{html-headelement}}}
 {{#data-header}}{{>Header}}{{/data-header}}
 <main class="mw-body" id="content">
 	<div id="siteNotice" class="mw-body-content">{{{html-site-notice}}}</div>
@@ -40,7 +35,6 @@
 	{{/data-pagetools}}
 	<h1 id="firstHeading" class="firstHeading" lang="{{page-langcode}}">{{{html-title}}}</h1>
 	<div id="siteSub">{{msg-tagline}}</div>
-	{{{html-prebodyhtml}}}
 	<div id="bodyContent" class="mw-body-content">
 		<div id="contentSub"{{{html-user-language-attributes}}}>{{{html-subtitle}}}</div>
 		{{#html-undelete-link}}<div id="contentSub2">{{{html-undelete-link}}}</div>{{/html-undelete-link}}
@@ -57,4 +51,3 @@
 <aside class="mw-sidebar-sitename">
 	<a class="mw-wiki-title" {{{html-mainpage-attributes}}}>{{{msg-sitetitle}}}</a>
 </aside>
-{{{html-printtail}}}
