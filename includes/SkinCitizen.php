@@ -189,7 +189,7 @@ class SkinCitizen extends SkinMustache {
 		$footerIconRows = [];
 
 		// Get last modified message
-		if ( isset( $footerLinks['info']['lastmod'] ) ) {
+		if ( $footerLinks['info']['lastmod'] && isset( $footerLinks['info']['lastmod'] ) ) {
 			$lastMod = $footerLinks['info']['lastmod'];
 		}
 
