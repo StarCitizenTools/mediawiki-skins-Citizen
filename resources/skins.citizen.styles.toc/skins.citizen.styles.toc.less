@@ -192,7 +192,6 @@
 
 	@media ( max-width: @screen3 ) {
 		.toc {
-			background: @dark-bg-40;
 
 			&togglelabel {
 				background-color: @dark-bg-50;
@@ -205,6 +204,10 @@
 				&:focus {
 					background-color: @accent-10;
 				}
+			}
+
+			> ul {
+				background: @dark-bg-40;
 			}
 		}
 	}
