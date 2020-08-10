@@ -52,7 +52,7 @@ class SkinCitizen extends SkinMustache {
 		$out->addMeta( 'theme-color', $this->getConfigValue( 'CitizenThemeColor' ) ?? '' );
 
 		// Load Citizen search suggestion modules if enabled
-		// TODO: Avoid eager loading. check T233677 for details 
+		// TODO: Avoid eager loading. check T233677 for details
 		if ( $this->getConfigValue( 'CitizenEnableSearch' ) === true ) {
 			$options['scripts'] = array_merge(
 				$options['scripts'],
