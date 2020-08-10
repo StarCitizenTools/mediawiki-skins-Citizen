@@ -125,10 +125,12 @@ class SkinCitizen extends SkinMustache {
 		$out = $skin->getOutput();
 		$title = $out->getTitle();
 
-		// Naming conventions for Mustache parameters:
-		// - Prefix "is" for boolean values.
-		// - Prefix "msg-" for interface messages.
-		// - Prefix "html-" for raw HTML (in front of other keys, if applicable).
+		// Naming conventions for Mustache parameters.
+		//
+		// Value type (first segment):
+		// - Prefix "is" or "has" for boolean values.
+		// - Prefix "msg-" for interface message text.
+		// - Prefix "html-" for raw HTML.
 		// - Prefix "data-" for an array of template parameters that should be passed directly
 		//   to a template partial.
 		// - Prefix "array-" for lists of any values.
@@ -139,7 +141,6 @@ class SkinCitizen extends SkinMustache {
 		//   It should be followed by the name of the hook in hyphenated lowercase.
 		//
 		// Conditionally used values must use null to indicate absence (not false or '').
-		// From Skin::getNewtalks(). Always returns string, cast to null if empty.
 		$newTalksHtml = $skin->getNewtalks() ?: null;
 
 		$skinData = parent::getTemplateData() + [
@@ -177,10 +178,10 @@ class SkinCitizen extends SkinMustache {
 		return $skinData;
 	}
 
-		/**
-		 * Get rows that make up the footer
-		 * @return array for use in Mustache template describing the footer elements.
-		 */
+	/**
+	 * Get rows that make up the footer
+	 * @return array for use in Mustache template describing the footer elements.
+	 */
 	private function getFooterData() : array {
 		$skin = $this;
 		$footerLinks = $this->getFooterLinks();
@@ -283,7 +284,8 @@ class SkinCitizen extends SkinMustache {
 
 	/**
 	 * Render the navigation drawer
-	 * Based on Vector
+	 * Based on buildSidebar()
+	 *
 	 * @return array
 	 * @throws MWException
 	 * @throws Exception
@@ -380,8 +382,8 @@ class SkinCitizen extends SkinMustache {
 
 	/**
 	 * Render the logo
-	 * TODO: Use standardize classes and IDs
 	 * TODO: Rebuild icon function based on Desktop Improvement Project
+	 *
 	 * @return array
 	 * @throws MWException
 	 */
@@ -400,6 +402,7 @@ class SkinCitizen extends SkinMustache {
 
 	/**
 	 * Echo notification badges and ULS button
+	 *
 	 * @return array
 	 */
 	private function getExtratools(): array {
@@ -429,6 +432,7 @@ class SkinCitizen extends SkinMustache {
 
 	/**
 	 * Render the search box
+	 *
 	 * @return array
 	 * @throws MWException
 	 */
@@ -459,6 +463,7 @@ class SkinCitizen extends SkinMustache {
 	 * * 'login': only visible if logged in (string)
 	 * * 'permission-*': only visible if user has permission
 	 *   e.g. permission-edit = only visible if user can edit pages
+	 *
 	 * @return array html
 	 */
 	protected function buildPageTools(): array {
@@ -508,6 +513,7 @@ class SkinCitizen extends SkinMustache {
 
 	/**
 	 * Render page-related links at the bottom
+	 *
 	 * @return array html
 	 */
 	private function buildPageLinks() : array {
