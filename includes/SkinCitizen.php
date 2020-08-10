@@ -43,7 +43,6 @@ class SkinCitizen extends SkinMustache {
 	public function __construct( $options = [] ) {
 		$skin = $this;
 		$out = $skin->getOutput();
-		$config = $this->getConfig();
 
 		// Responsive layout
 		// Replace with core responsive option if it is implemented in 1.36+
@@ -53,6 +52,7 @@ class SkinCitizen extends SkinMustache {
 		$out->addMeta( 'theme-color', $this->getConfigValue( 'CitizenThemeColor' ) ?? '' );
 
 		// Load Citizen search suggestion modules if enabled
+		// TODO: Avoid eager loading. check T233677 for details 
 		if ( $this->getConfigValue( 'CitizenEnableSearch' ) === true ) {
 			$options['scripts'] = array_merge(
 				$options['scripts'],
@@ -437,7 +437,6 @@ class SkinCitizen extends SkinMustache {
 	 * @throws MWException
 	 */
 	private function buildSearchProps() : array {
-		$config = $this->getConfig();
 		$skin = $this->getSkin();
 
 		$toggleMsg = $skin->msg( 'citizen-search-toggle' )->text();
@@ -467,7 +466,6 @@ class SkinCitizen extends SkinMustache {
 	 * @return array html
 	 */
 	protected function buildPageTools(): array {
-		$config = $this->getConfig();
 		$skin = $this;
 		$condition = $this->getConfigValue( 'CitizenShowPageTools' );
 		$contentNavigation = $this->buildContentNavigationUrls();
