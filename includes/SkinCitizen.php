@@ -54,13 +54,13 @@ class SkinCitizen extends SkinMustache {
 
 		// Load Citizen search suggestion modules if enabled
 		if ( $this->getConfigValue( 'CitizenEnableSearch' ) === true ) {
-			$options['scripts'] = array_merge (
+			$options['scripts'] = array_merge(
 				$options['scripts'],
 				[ 'skins.citizen.scripts.search' ]
 			);
-			$options['styles'] = array_merge ( 
+			$options['styles'] = array_merge(
 				$options['styles'],
-				[ 
+				[
 					'skins.citizen.styles.search',
 					'skins.citizen.icons.search'
 				]
@@ -69,11 +69,11 @@ class SkinCitizen extends SkinMustache {
 
 		// Load Citizen image lazyload modules if enabled
 		if ( $this->getConfigValue( 'CitizenEnableLazyload' ) === true ) {
-			$options['scripts'] = array_merge (
+			$options['scripts'] = array_merge(
 				$options['scripts'],
 				[ 'skins.citizen.scripts.lazyload' ]
 			);
-			$options['styles'] = array_merge ( 
+			$options['styles'] = array_merge(
 				$options['styles'],
 				[ 'skins.citizen.styles.lazyload' ]
 			);
@@ -82,7 +82,7 @@ class SkinCitizen extends SkinMustache {
 		// Load table of content script if ToC presents
 		if ( $out->isTOCEnabled() ) {
 			// Disabled style condition loading due to pop in
-			$options['scripts'] = array_merge (
+			$options['scripts'] = array_merge(
 				$options['scripts'],
 				[ 'skins.citizen.scripts.toc' ]
 			);
@@ -178,9 +178,9 @@ class SkinCitizen extends SkinMustache {
 	}
 
 		/**
-	 * Get rows that make up the footer
-	 * @return array for use in Mustache template describing the footer elements.
-	 */
+		 * Get rows that make up the footer
+		 * @return array for use in Mustache template describing the footer elements.
+		 */
 	private function getFooterData() : array {
 		$skin = $this;
 		$footerLinks = $this->getFooterLinks();
