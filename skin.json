@@ -64,12 +64,8 @@
 		}
 	},
 	"Hooks": {
-		"ResourceLoaderGetConfigVars": [
-			"Citizen\\CitizenHooks::onResourceLoaderGetConfigVars"
-		],
-		"ThumbnailBeforeProduceHTML": [
-			"Citizen\\CitizenHooks::onThumbnailBeforeProduceHTML"
-		]
+		"ResourceLoaderGetConfigVars": "Citizen\\CitizenHooks::onResourceLoaderGetConfigVars",
+		"ThumbnailBeforeProduceHTML": "Citizen\\CitizenHooks::onThumbnailBeforeProduceHTML"
 	},
 	"ResourceModules": {
 		"skins.citizen.styles": {
