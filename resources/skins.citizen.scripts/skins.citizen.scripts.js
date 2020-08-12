@@ -1,9 +1,6 @@
 /*
- * Citizen - Search JS
+ * Citizen - Core JS
  * https://starcitizen.tools
- *
- * Focus on search input when checkbox is toggled
- * Open the search box when the input is in focus
  */
 
 var searchToggle = document.getElementById( 'search-toggle' ),
@@ -31,5 +28,9 @@ function searchToggleCheck() {
 	}
 }
 
-searchToggle.addEventListener( 'click', searchInputFocus );
-searchInput.addEventListener( 'focus', searchToggleCheck );
+function main() {
+	searchToggle.addEventListener( 'click', searchInputFocus );
+	searchInput.addEventListener( 'focus', searchToggleCheck );
+}
+
+main();
