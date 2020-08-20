@@ -71,26 +71,22 @@ class CitizenHooks {
 	 * Modified from the Lazyload extension
 	 * Looks for thumbnail and swap src to data-src
 	 *
-	 * @param ThumbnailImage $thumb
+	 * @param ThumbnailImage $thumbnail
 	 * @param array &$attribs
 	 * @param array &$linkAttribs
 	 * @return bool
 	 */
-	public static function onThumbnailBeforeProduceHTML( $thumb, &$attribs, &$linkAttribs ) {
+	public static function onThumbnailBeforeProduceHTML( $thumbnail, &$attribs, &$linkAttribs ) {
 		try {
 			$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Citizen' );
 			$lazyloadEnabled = $config->get( 'CitizenEnableLazyload' );
-			$thumbSize = $config->get( 'CitizenThumbnailSize' );
 		} catch ( ConfigException $e ) {
-			wfLogWarning( sprintf( 'Could not get config for "$wgThumbnailSize". Defaulting to "10". %s',
-				$e->getMessage() ) );
 			$lazyloadEnabled = false;
-			$thumbSize = 10;
 		}
 
 		// Replace thumbnail if lazyload is enabled
 		if ( $lazyloadEnabled === true ) {
-			$file = $thumb->getFile();
+			$file = $thumbnail->getFile();
 
 			if ( $file !== null ) {
 				$request = RequestContext::getMain()->getRequest();
@@ -110,23 +106,11 @@ class CitizenHooks {
 				$attribs['loading'] = 'lazy';
 
 				$attribs['data-src'] = $attribs['src'];
-				$attribs['data-width'] = $attribs['width'];
-				$attribs['data-height'] = $attribs['height'];
-
-				// Replace src with small size image
-				$attribs['src'] =
-					preg_replace( '#/\d+px-#', sprintf( '/%upx-', $thumbSize ), $attribs['src'] );
-
-				// So that the 10px thumbnail is enlarged to the right size
-				$attribs['width'] = $attribs['data-width'];
-				$attribs['height'] = $attribs['data-height'];
-
-				// Clean up
-				unset( $attribs['data-width'], $attribs['data-height'] );
+				$attribs['src'] = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D';
 
 				if ( isset( $attribs['srcset'] ) ) {
 					$attribs['data-srcset'] = $attribs['srcset'];
-					unset( $attribs['srcset'] );
+					$attribs['srcset'] = '';
 				}
 			}
 		}

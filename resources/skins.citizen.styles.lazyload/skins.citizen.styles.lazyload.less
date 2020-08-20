@@ -7,17 +7,15 @@
 
 .mw-body-content {
 	a.image {
-		img {
-			filter: none;
-			transition: @transition-filter, @transition-transform-quick;
-		}
+		background-color: @base-90;
 
 		.lazy {
-			display: block;
-			background-color: @base-90;
-			filter: blur( 8px ); // Blur the image
-			transform: scale( 1.1 );  // Prevent white edges
-			overflow: hidden;
+			opacity: 0;
+		}
+
+		img {
+			opacity: 1;
+			transition: @transition-opacity-quick;
 		}
 	}
 }
@@ -25,9 +23,7 @@
 @media ( prefers-color-scheme: dark ) {
 	.mw-body-content {
 		a.image {
-			.lazy {
-				background-color: @dark-bg-10;
-			}
+			background-color: @dark-bg-10;
 		}
 	}
 }
