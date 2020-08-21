@@ -26,6 +26,7 @@ use ConfigException;
 use Exception;
 use MediaWiki\MediaWikiServices;
 use RequestContext;
+use ResourceLoaderContext;
 use ThumbnailImage;
 
 /**
@@ -64,6 +65,29 @@ class CitizenHooks {
 		}
 
 		return true;
+	}
+
+	/**
+	 * SkinPageReadyConfig hook handler
+	 *
+	 * Replace searchModule provided by skin.
+	 *
+	 * @since 1.35
+	 * @param ResourceLoaderContext $context
+	 * @param mixed[] &$config Associative array of configurable options
+	 * @return void This hook must not abort, it must return no value
+	 */
+	public static function onSkinPageReadyConfig(
+		ResourceLoaderContext $context,
+		array &$config
+	) {
+		// It's better to exit before any additional check
+		if ( $context->getSkin() !== 'citizen' ) {
+			return;
+		}
+
+		// Tell the `mediawiki.page.ready` module not to wire up search.
+		$config['search'] = false;
 	}
 
 	/**

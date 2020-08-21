@@ -65,6 +65,7 @@
 	},
 	"Hooks": {
 		"ResourceLoaderGetConfigVars": "Citizen\\CitizenHooks::onResourceLoaderGetConfigVars",
+		"SkinPageReadyConfig": "Citizen\\CitizenHooks::onSkinPageReadyConfig",
 		"ThumbnailBeforeProduceHTML": "Citizen\\CitizenHooks::onThumbnailBeforeProduceHTML"
 	},
 	"ResourceModules": {
