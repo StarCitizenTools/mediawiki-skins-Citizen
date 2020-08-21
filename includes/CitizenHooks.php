@@ -23,7 +23,6 @@
 namespace Citizen;
 
 use ConfigException;
-use Exception;
 use MediaWiki\MediaWikiServices;
 use RequestContext;
 use ResourceLoaderContext;
