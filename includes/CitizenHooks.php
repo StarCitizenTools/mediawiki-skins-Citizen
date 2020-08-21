@@ -45,20 +45,14 @@ class CitizenHooks {
 	 */
 	public static function onResourceLoaderGetConfigVars( &$vars ) {
 		try {
-			$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Citizen' );
-		} catch ( Exception $e ) {
-			return false;
-		}
-
-		try {
-			$vars['wgCitizenSearchDescriptionSource'] = $config->get( 'CitizenSearchDescriptionSource' );
+			$vars['wgCitizenSearchDescriptionSource'] = self::getSkinConfig( 'CitizenSearchDescriptionSource' );
 		} catch ( ConfigException $e ) {
 			// Should not happen
 			$vars['wgCitizenSearchDescriptionSource'] = 'textextracts';
 		}
 
 		try {
-			$vars['wgCitizenMaxSearchResults'] = $config->get( 'CitizenMaxSearchResults' );
+			$vars['wgCitizenMaxSearchResults'] = self::getSkinConfig( 'CitizenMaxSearchResults' );
 		} catch ( ConfigException $e ) {
 			// Should not happen
 			$vars['wgCitizenMaxSearchResults'] = 6;
@@ -102,8 +96,7 @@ class CitizenHooks {
 	 */
 	public static function onThumbnailBeforeProduceHTML( $thumbnail, &$attribs, &$linkAttribs ) {
 		try {
-			$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Citizen' );
-			$lazyloadEnabled = $config->get( 'CitizenEnableLazyload' );
+			$lazyloadEnabled = self::getSkinConfig( 'CitizenEnableLazyload' );
 		} catch ( ConfigException $e ) {
 			$lazyloadEnabled = false;
 		}
@@ -140,5 +133,16 @@ class CitizenHooks {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Get a skin configuration variable.
+	 *
+	 * @param string $name Name of configuration option.
+	 * @return mixed Value configured.
+	 * @throws \ConfigException
+	 */
+	private static function getSkinConfig( $name ) {
+		return MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Citizen' )->get( $name );
 	}
 }
