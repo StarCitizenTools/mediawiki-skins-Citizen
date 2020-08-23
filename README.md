@@ -84,5 +84,5 @@ Name | Description | Values | Default
     
 ## Requirements
 * [MediaWiki](https://www.mediawiki.org) 1.35 or later
-* For the legacy version that supports MediaWiki 1.31 or above, check the REL1_31 branch.
+* For the legacy versions, check the other release branches.
 
