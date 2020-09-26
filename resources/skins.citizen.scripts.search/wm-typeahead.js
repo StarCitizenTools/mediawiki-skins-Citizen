@@ -233,7 +233,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 		return '<a id="suggestion-special" href="' + href + '">' +
 			'<div id="suggestion-special-icon"></div>' +
 			'<div id="suggestion-special-text">' + msg +
-				'&nbsp;<em class="suggestion-highlight">' + searchString +
+				'&nbsp;<em class="suggestion-highlight">' + decodeURI( searchString ) +
 			'</em></div>' +
 		'</div>';
 	}
@@ -308,7 +308,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	 * @return {string} The title with highlighted part in an <em> tag.
 	 */
 	function highlightTitle( title, searchString ) {
-		let sanitizedSearchString = mw.html.escape( mw.RegExp.escape( searchString ) ),
+		let sanitizedSearchString = mw.html.escape( mw.util.escapeRegExp( searchString ) ),
 			searchRegex = new RegExp( sanitizedSearchString, 'i' ),
 			startHighlightIndex = title.search( searchRegex ),
 			formattedTitle = mw.html.escape( title ),

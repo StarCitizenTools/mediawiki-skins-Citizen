@@ -71,16 +71,20 @@ function CheckToC() {
 	}
 }
 
-if ( document.readyState !== 'loading' ) {
-	CheckToC();
-} else if ( document.addEventListener ) {
-	// All modern browsers to register DOMContentLoaded
-	document.addEventListener( 'DOMContentLoaded', CheckToC );
-} else {
-	// Old IE browsers
-	document.attachEvent( 'onreadystatechange', function () {
-		if ( document.readyState === 'complete' ) {
-			CheckToC();
-		}
-	} );
+function main() {
+	if ( document.readyState !== 'loading' ) {
+		CheckToC();
+	} else if ( document.addEventListener ) {
+		// All modern browsers to register DOMContentLoaded
+		document.addEventListener( 'DOMContentLoaded', CheckToC );
+	} else {
+		// Old IE browsers
+		document.attachEvent( 'onreadystatechange', function () {
+			if ( document.readyState === 'complete' ) {
+				CheckToC();
+			}
+		} );
+	}
 }
+
+main();

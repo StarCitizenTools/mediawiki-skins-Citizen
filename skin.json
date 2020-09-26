@@ -1,6 +1,6 @@
 {
 	"name": "Citizen",
-	"version": "0.9.4",
+	"version": "1.0.0",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
@@ -11,10 +11,36 @@
 	"license-name": "GPL-3.0-or-later",
 	"type": "skin",
 	"requires": {
-		"MediaWiki": ">= 1.31.0"
+		"MediaWiki": ">= 1.35.0"
 	},
 	"ValidSkinNames": {
-		"citizen": "Citizen"
+		"citizen": {
+			"class": "SkinCitizen",
+			"@args": "See SkinCitizen::__construct for more detail.",
+			"args": [
+				{
+					"name": "citizen",
+					"scripts": [
+						"skins.citizen.scripts"
+					],
+					"styles": [
+						"mediawiki.skinning.content.externallinks",
+						"skins.citizen.styles",
+						"skins.citizen.styles.fonts",
+						"skins.citizen.styles.toc",
+						"skins.citizen.icons",
+						"skins.citizen.icons.ca",
+						"skins.citizen.icons.es",
+						"skins.citizen.icons.n",
+						"skins.citizen.icons.t",
+						"skins.citizen.icons.pt",
+						"skins.citizen.icons.footer",
+						"skins.citizen.icons.badges"
+					]
+				}
+			]
+		}
+
 	},
 	"MessagesDirs": {
 		"Citizen": [
@@ -23,7 +49,6 @@
 	},
 	"AutoloadClasses": {
 		"SkinCitizen": "includes/SkinCitizen.php",
-		"CitizenTemplate": "includes/CitizenTemplate.php",
 		"Citizen\\CitizenHooks": "includes/CitizenHooks.php",
 		"Citizen\\ApiWebappManifest": "includes/api/ApiWebappManifest.php"
 	},
@@ -39,12 +64,9 @@
 		}
 	},
 	"Hooks": {
-		"ResourceLoaderGetConfigVars": [
-			"Citizen\\CitizenHooks::onResourceLoaderGetConfigVars"
-		],
-		"ThumbnailBeforeProduceHTML": [
-			"Citizen\\CitizenHooks::onThumbnailBeforeProduceHTML"
-		]
+		"ResourceLoaderGetConfigVars": "Citizen\\CitizenHooks::onResourceLoaderGetConfigVars",
+		"SkinPageReadyConfig": "Citizen\\CitizenHooks::onSkinPageReadyConfig",
+		"ThumbnailBeforeProduceHTML": "Citizen\\CitizenHooks::onThumbnailBeforeProduceHTML"
 	},
 	"ResourceModules": {
 		"skins.citizen.styles": {
@@ -121,7 +143,7 @@
 			"selector": "{name}",
 			"defaultColor": "#000",
 			"images": {
-				".toctoggle > a:before": {
+				".toctogglelabel:before": {
 					"file": {
 						"ltr": "resources/skins.citizen.icons/toc-ltr.svg",
 						"rtl": "resources/skins.citizen.icons/toc-rtl.svg"
@@ -519,12 +541,6 @@
 			"value": false,
 			"description": "Enable or disable image lazyloading",
 			"descriptionmsg": "citizen-config-enablelazyload",
-			"public": true
-		},
-		"ThumbnailSize": {
-			"value": 10,
-			"description": "Thumbnail size to use for lazy-loading",
-			"descriptionmsg": "citizen-config-thumbnailsize",
 			"public": true
 		}
 	},

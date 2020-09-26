@@ -23,9 +23,9 @@
 namespace Citizen;
 
 use ConfigException;
-use Exception;
 use MediaWiki\MediaWikiServices;
 use RequestContext;
+use ResourceLoaderContext;
 use ThumbnailImage;
 
 /**
@@ -44,20 +44,14 @@ class CitizenHooks {
 	 */
 	public static function onResourceLoaderGetConfigVars( &$vars ) {
 		try {
-			$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Citizen' );
-		} catch ( Exception $e ) {
-			return false;
-		}
-
-		try {
-			$vars['wgCitizenSearchDescriptionSource'] = $config->get( 'CitizenSearchDescriptionSource' );
+			$vars['wgCitizenSearchDescriptionSource'] = self::getSkinConfig( 'CitizenSearchDescriptionSource' );
 		} catch ( ConfigException $e ) {
 			// Should not happen
 			$vars['wgCitizenSearchDescriptionSource'] = 'textextracts';
 		}
 
 		try {
-			$vars['wgCitizenMaxSearchResults'] = $config->get( 'CitizenMaxSearchResults' );
+			$vars['wgCitizenMaxSearchResults'] = self::getSkinConfig( 'CitizenMaxSearchResults' );
 		} catch ( ConfigException $e ) {
 			// Should not happen
 			$vars['wgCitizenMaxSearchResults'] = 6;
@@ -67,30 +61,48 @@ class CitizenHooks {
 	}
 
 	/**
+	 * SkinPageReadyConfig hook handler
+	 *
+	 * Replace searchModule provided by skin.
+	 *
+	 * @since 1.35
+	 * @param ResourceLoaderContext $context
+	 * @param mixed[] &$config Associative array of configurable options
+	 * @return void This hook must not abort, it must return no value
+	 */
+	public static function onSkinPageReadyConfig(
+		ResourceLoaderContext $context,
+		array &$config
+	) {
+		// It's better to exit before any additional check
+		if ( $context->getSkin() !== 'citizen' ) {
+			return;
+		}
+
+		// Tell the `mediawiki.page.ready` module not to wire up search.
+		$config['search'] = false;
+	}
+
+	/**
 	 * Lazyload images
 	 * Modified from the Lazyload extension
 	 * Looks for thumbnail and swap src to data-src
 	 *
-	 * @param ThumbnailImage $thumb
+	 * @param ThumbnailImage $thumbnail
 	 * @param array &$attribs
 	 * @param array &$linkAttribs
 	 * @return bool
 	 */
-	public static function onThumbnailBeforeProduceHTML( $thumb, &$attribs, &$linkAttribs ) {
+	public static function onThumbnailBeforeProduceHTML( $thumbnail, &$attribs, &$linkAttribs ) {
 		try {
-			$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Citizen' );
-			$lazyloadEnabled = $config->get( 'CitizenEnableLazyload' );
-			$thumbSize = $config->get( 'CitizenThumbnailSize' );
+			$lazyloadEnabled = self::getSkinConfig( 'CitizenEnableLazyload' );
 		} catch ( ConfigException $e ) {
-			wfLogWarning( sprintf( 'Could not get config for "$wgThumbnailSize". Defaulting to "10". %s',
-				$e->getMessage() ) );
 			$lazyloadEnabled = false;
-			$thumbSize = 10;
 		}
 
 		// Replace thumbnail if lazyload is enabled
 		if ( $lazyloadEnabled === true ) {
-			$file = $thumb->getFile();
+			$file = $thumbnail->getFile();
 
 			if ( $file !== null ) {
 				$request = RequestContext::getMain()->getRequest();
@@ -110,27 +122,26 @@ class CitizenHooks {
 				$attribs['loading'] = 'lazy';
 
 				$attribs['data-src'] = $attribs['src'];
-				$attribs['data-width'] = $attribs['width'];
-				$attribs['data-height'] = $attribs['height'];
-
-				// Replace src with small size image
-				$attribs['src'] =
-					preg_replace( '#/\d+px-#', sprintf( '/%upx-', $thumbSize ), $attribs['src'] );
-
-				// So that the 10px thumbnail is enlarged to the right size
-				$attribs['width'] = $attribs['data-width'];
-				$attribs['height'] = $attribs['data-height'];
-
-				// Clean up
-				unset( $attribs['data-width'], $attribs['data-height'] );
+				$attribs['src'] = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D';
 
 				if ( isset( $attribs['srcset'] ) ) {
 					$attribs['data-srcset'] = $attribs['srcset'];
-					unset( $attribs['srcset'] );
+					$attribs['srcset'] = '';
 				}
 			}
 		}
 
 		return true;
+	}
+
+	/**
+	 * Get a skin configuration variable.
+	 *
+	 * @param string $name Name of configuration option.
+	 * @return mixed Value configured.
+	 * @throws \ConfigException
+	 */
+	private static function getSkinConfig( $name ) {
+		return MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Citizen' )->get( $name );
 	}
 }

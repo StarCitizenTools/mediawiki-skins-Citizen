@@ -1,7 +1,7 @@
 # Citizen
 ![](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/workflows/MediaWiki%20CI/badge.svg)
 
-Citizen is a responsive skin for [MediaWiki](https://www.mediawiki.org) built by the [Star Citizen Wiki](https://starcitizen.tools) team. Although it is specifically built for the Star Citizen Wiki, the skin should be able to run on any Mediawiki installation that is 1.31 or higher. Due to resource constraints, we might not be able to provide full support for setups that are vastly different than us, but please feel free to submit patches or bug report!
+Citizen is a responsive skin for [MediaWiki](https://www.mediawiki.org) built by the [Star Citizen Wiki](https://starcitizen.tools) team. Although it is specifically built for the Star Citizen Wiki, the skin should be able to run on any Mediawiki installation that is **1.35 or higher**. Due to resource constraints, we might not be able to provide full support for setups that are vastly different than us, but please feel free to submit patches or bug report!
 
 Live demo can be seen at the [Star Citizen Wiki](https://starcitizen.tools), more avaliable [here](https://wikiapiary.com/wiki/Skin:Citizen).
 
@@ -41,7 +41,6 @@ Name | Description | Values | Default
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
 `$wgCitizenEnableLazyload` | Enable or disable image lazyloading | `true` - enable; `false` - disable | `false`
-`$wgCitizenThumbnailSize` | Thumbnail size in pixels to use for lazy-loading placeholder | Integer > 0 | `10`
 
 ### Security-related
 #### Content Security Policy (CSP)
@@ -84,5 +83,6 @@ Name | Description | Values | Default
 `$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#11151d`
     
 ## Requirements
-* [MediaWiki](https://www.mediawiki.org) 1.31 or later
+* [MediaWiki](https://www.mediawiki.org) 1.35 or later
+* For the legacy versions, check the other release branches.
 
