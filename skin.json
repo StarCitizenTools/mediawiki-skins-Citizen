@@ -112,6 +112,9 @@
 		"skins.citizen.scripts": {
 			"scripts": [
 				"resources/skins.citizen.scripts/skins.citizen.scripts.js"
+			],
+			"dependencies": [
+				"mediawiki.page.ready"
 			]
 		},
 		"skins.citizen.scripts.lazyload": {
