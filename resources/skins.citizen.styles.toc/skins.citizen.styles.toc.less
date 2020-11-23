@@ -144,7 +144,7 @@
 			}
 
 			&checkbox:not( :checked ) ~ ul {
-				transform: none;
+				transform: translateX( -300px - @margin-side );
 			}
 		}
 
@@ -162,7 +162,7 @@
 			background: @base-100;
 			border-radius: 0 @border-radius-large @border-radius-large 0;
 			.boxshadow(3);
-			transform: translateX( -300px - @margin-side );
+			transform: none;
 			transition: @transition-transform;
 		}
 	}
