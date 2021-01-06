@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-
+    name: Test and lint
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -55,6 +55,6 @@ jobs:
         git config --global user.email "github-actions@users.noreply.github.com"
         git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
         git add .
-        git commit -am "Make a dinner reservation - MediaWiki CI" -m "I clean up code to MediaWiki standards" || echo "No changes to commit"
+        git commit -am "ci: lint code to MediaWiki standards" -m "Check commit and GitHub actions for more details" || echo "No changes to commit"
         git pull --rebase
         git push
