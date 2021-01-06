@@ -22,7 +22,7 @@ jobs:
       run: |
         composer validate
         npm install --save-dev
-        composer install --prefer-dist --no-progress --no-suggest
+        composer install --prefer-dist --no-progress
 
     # Bypass the phpcbf non-standard exit code  
     - name: Check PHP
