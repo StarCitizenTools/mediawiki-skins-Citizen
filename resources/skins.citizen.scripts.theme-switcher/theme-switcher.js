@@ -3,47 +3,54 @@
  * https://starcitizen.tools
  */
 
-(() => {
-    if (typeof window.mw === 'undefined') {
-        return;
-    }
+( function () {
+	var isGlobalAutoSet,
+		isUserPreferenceAuto,
+		enable,
+		switchColorScheme,
+		useDarkTheme,
+		prefersColorSchemeDarkQuery;
 
-    const isGlobalAutoSet = window.mw.config.get('wgCitizenColorScheme') === 'auto' || window.mw.config.get('wgCitizenColorScheme') === null;
+	if ( typeof window.mw === 'undefined' ) {
+		return;
+	}
 
-    const isUserPreferenceAuto = window.mw.user.options.get('citizen-color-scheme') === 'auto';
+	isGlobalAutoSet = window.mw.config.get( 'wgCitizenColorScheme' ) === 'auto' ||
+        window.mw.config.get( 'wgCitizenColorScheme' ) === null;
 
-    const enable = isGlobalAutoSet || isUserPreferenceAuto;
+	isUserPreferenceAuto = window.mw.user.options.get( 'citizen-color-scheme' ) === 'auto';
 
-    if (!enable) {
-        return;
-    }
+	enable = isGlobalAutoSet || isUserPreferenceAuto;
 
-    const switchColorScheme = (useDark) => {
-        let dark;
-        
-        if (useDark) {
-            document.documentElement.classList.add('skin-citizen-dark');
-            document.documentElement.classList.remove('skin-citizen-light');
-            dark = true
-        } else {
-            document.documentElement.classList.add('skin-citizen-light');
-            document.documentElement.classList.remove('skin-citizen-dark');
-            dark = false
-        }
+	if ( !enable ) {
+		return;
+	}
 
-        try {
-            localStorage.setItem('skin-citizen-dark', dark);
-        } catch (e) {}
-    };
+	switchColorScheme = function ( useDark ) {
+		var dark;
 
-    let useDarkTheme;
-    try {
-        useDarkTheme = localStorage.getItem('skin-citizen-dark');
-    } catch (e) {}
+		if ( useDark ) {
+			document.documentElement.classList.add( 'skin-citizen-dark' );
+			document.documentElement.classList.remove( 'skin-citizen-light' );
+			dark = true;
+		} else {
+			document.documentElement.classList.add( 'skin-citizen-light' );
+			document.documentElement.classList.remove( 'skin-citizen-dark' );
+			dark = false;
+		}
 
-    const prefersColorSchemeDarkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+		try {
+			localStorage.setItem( 'skin-citizen-dark', dark );
+		} catch ( e ) {}
+	};
 
-    if (useDarkTheme || prefersColorSchemeDarkQuery.matches) {
-        switchColorScheme(true)
-    }
-})();
+	try {
+		useDarkTheme = localStorage.getItem( 'skin-citizen-dark' );
+	} catch ( e ) {}
+
+	prefersColorSchemeDarkQuery = window.matchMedia( '(prefers-color-scheme: dark)' );
+
+	if ( useDarkTheme || prefersColorSchemeDarkQuery.matches ) {
+		switchColorScheme( true );
+	}
+}() );
