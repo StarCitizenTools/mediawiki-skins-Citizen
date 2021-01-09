@@ -6,7 +6,7 @@
 ( function () {
 	var isGlobalAutoSet,
 		isUserPreferenceAuto,
-		enable,
+		enableAutoSwitcher,
 		switchColorScheme,
 		useDarkTheme,
 		prefersColorSchemeDarkQuery;
@@ -20,9 +20,9 @@
 
 	isUserPreferenceAuto = window.mw.user.options.get( 'citizen-color-scheme' ) === 'auto';
 
-	enable = isGlobalAutoSet || isUserPreferenceAuto;
+	enableAutoSwitcher = isGlobalAutoSet || isUserPreferenceAuto;
 
-	if ( !enable ) {
+	if ( !enableAutoSwitcher ) {
 		return;
 	}
 
