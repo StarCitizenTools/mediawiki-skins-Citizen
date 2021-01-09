@@ -27,6 +27,7 @@ use MediaWiki\MediaWikiServices;
 use RequestContext;
 use ResourceLoaderContext;
 use ThumbnailImage;
+use User;
 
 /**
  * Hook handlers for Citizen skin.
@@ -144,4 +145,31 @@ class CitizenHooks {
 	private static function getSkinConfig( $name ) {
 		return MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Citizen' )->get( $name );
 	}
+
+    /**
+     * @param User $user
+     * @param array $preferences
+     */
+    public static function onGetPreferences( $user, &$preferences ) {
+        $options = MediaWikiServices::getInstance()
+            ->getUserOptionsLookup()
+            ->getOptions( $user );
+
+        if ( $options['skin'] !== 'citizen' ) {
+            return;
+        }
+
+        // A checkbox
+        $preferences['citizen-color-scheme'] = [
+            'type' => 'select',
+            'label-message' => 'citizen-upo-style', // a system message
+            'section' => 'rendering/skin',
+            'options' => [
+                wfMessage( 'citizen-upo-style-auto' )->escaped() => 'auto',
+                wfMessage( 'citizen-upo-style-light' )->escaped() => 'light',
+                wfMessage( 'citizen-upo-style-dark' )->escaped() => 'dark',
+            ],
+            'default' => $options['citizen-color-scheme'] ?? 'auto'
+        ];
+    }
 }

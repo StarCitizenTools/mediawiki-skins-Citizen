@@ -8,5 +8,10 @@
 	"skinname-citizen": "Citizen",
 	"citizen-skin-desc": "Ein responsive Skin entwickelt für das Star Citizen Wiki",
 	"citizen-footer-desc": "Bearbeiten Sie diesen Text auf MediaWiki:Citizen-footer-desc",
-	"citizen-footer-tagline": "Bearbeiten Sie diesen Text auf MediaWiki:Citizen-footer-tagline"
+	"citizen-footer-tagline": "Bearbeiten Sie diesen Text auf MediaWiki:Citizen-footer-tagline",
+
+	"citizen-upo-style": "Skin Citizen Farbschema",
+	"citizen-upo-style-auto": "Automatisch",
+	"citizen-upo-style-light": "Hell",
+	"citizen-upo-style-dark":  "Dunkel"
 }
