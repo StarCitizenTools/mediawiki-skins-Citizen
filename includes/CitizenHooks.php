@@ -169,7 +169,7 @@ class CitizenHooks {
         // A checkbox
         $preferences['citizen-color-scheme'] = [
             'type' => 'select',
-            'label-message' => 'citizen-upo-style', // a system message
+            'label-message' => 'citizen-upo-style',
             'section' => 'rendering/skin',
             'options' => [
                 wfMessage( 'citizen-upo-style-auto' )->escaped() => 'auto',

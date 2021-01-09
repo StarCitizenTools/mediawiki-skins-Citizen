@@ -736,6 +736,13 @@ class SkinCitizen extends SkinMustache {
 		}
 	}
 
+    /**
+     * Sets the corresponding color scheme class on the <html> element
+     * If the color scheme is set to auto, the theme switcher script will be added
+     *
+     * @param OutputPage $out
+     * @param array $skinOptions
+     */
 	private function setSkinColorScheme( OutputPage $out, array &$skinOptions ) {
         $options = MediaWikiServices::getInstance()
             ->getUserOptionsLookup()
