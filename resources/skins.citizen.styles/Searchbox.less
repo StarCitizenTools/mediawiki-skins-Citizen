@@ -70,7 +70,7 @@
 				margin-left: -2px;
 				width: 10px;
 				height: 10px;
-				border: solid 2px @base-0;
+				border: solid 2px var( --search-toggle-icon-2-border-color );
 				border-radius: 100%;
 				transform: rotate( -45deg );
 			}
@@ -86,7 +86,7 @@
 			&-1,
 			&-3 {
 				width: 2px;
-				background-color: @base-0;
+				background-color: var( --search-toggle-icon-1-3-background-color );
 			}
 		}
 
@@ -169,8 +169,8 @@
 		width: 0;
 		height: @search-bar-height;
 		max-width: calc( ~'100vw -'@margin-side );
-		background: @base-100;
-		border: 1px solid @base-90;
+		background: var( --search-Input-background-color );
+		border: 1px solid var( --search-Input-border-color );
 		border-radius: @border-radius-small;
 		transition: @transition-width, @transition-box-shadow;
 
@@ -247,27 +247,7 @@
 	}
 }
 
-@media ( max-width: @search-bar-width ) {
-	#search {
-		&form:before {
-			content: '';
-			display: block;
-			position: fixed;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background: @base-100;
-			opacity: 0.9;
-		}
-
-		&Input {
-			transition: none; // Width transition does not play well on mobile
-		}
-	}
-}
-
-@media ( prefers-color-scheme: dark ) {
+.skin-citizen-dark {
 	#search {
 		&form {
 			&-icon,
@@ -284,15 +264,6 @@
 		&-toggle {
 			&-icon {
 				opacity: 0.4;
-
-				&-2 {
-					border-color: @base-100;
-				}
-
-				&-1,
-				&-3 {
-					background: @base-100;
-				}
 			}
 
 			&:hover {
@@ -301,16 +272,25 @@
 				}
 			}
 		}
-
-		&Input {
-			border-color: @dark-bg-60;
-			background: @dark-bg-50;
-		}
 	}
 }
 
-@media ( max-width: @search-bar-width )  and ( prefers-color-scheme: dark ) {
-	#searchform:before {
-		background: @dark-bg-50;
+@media ( max-width: @search-bar-width ) {
+	#search {
+		&form:before {
+			content: '';
+			display: block;
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: var( --search-searchform-before-background-color );
+			opacity: 0.9;
+		}
+
+		&Input {
+			transition: none; // Width transition does not play well on mobile
+		}
 	}
 }

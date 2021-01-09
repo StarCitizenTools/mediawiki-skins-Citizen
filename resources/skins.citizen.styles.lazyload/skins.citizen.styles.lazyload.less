@@ -5,9 +5,17 @@
 
 @import '../variables.less';
 
+:root {
+	--lazyload-mw-body-content-a-image-background-color: @base-90;
+}
+
+:root.skin-citizen-dark {
+	--lazyload-mw-body-content-a-image-background-color: @dark-bg-10;
+}
+
 .mw-body-content {
 	a.image {
-		background-color: @base-90;
+		background-color: var( --lazyload-mw-body-content-a-image-background-color );
 
 		.lazy {
 			opacity: 0;
@@ -16,14 +24,6 @@
 		img {
 			opacity: 1;
 			transition: @transition-opacity-quick;
-		}
-	}
-}
-
-@media ( prefers-color-scheme: dark ) {
-	.mw-body-content {
-		a.image {
-			background-color: @dark-bg-10;
 		}
 	}
 }

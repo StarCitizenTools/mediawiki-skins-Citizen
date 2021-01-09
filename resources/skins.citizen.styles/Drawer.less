@@ -11,11 +11,11 @@
 			justify-content: center;
 
 			&-1 {
-				transform-origin: 0% 0%;
+				transform-origin: 0 0;
 			}
 
 			&-2 {
-				transform-origin: 0% 100%;
+				transform-origin: 0 100%;
 			}
 		}
 
@@ -81,17 +81,17 @@
 		height: 100%;
 		.boxshadow(3);
 		border-radius: 0 @border-radius-large @border-radius-large 0;
-		background: @menu-background;
+		background: var( --drawer-mw-drawer-menu-background-color );
 		display: flex;
 		flex-direction: column;
-		transform-origin: 0% 0%;
+		transform-origin: 0 0;
 		transform: translate( -110%, 0 ); // shadow bleeding with 100%
 		transition: @transition-transform;
 		will-change: transform; // help with performance
 
 		&-logo {
 			padding: @header-height @margin-side @margin-side / 2 @margin-side;
-			border-bottom: 1px solid @base-80;
+			border-bottom: 1px solid var( --drawer-mw-drawer-menu-logo-border-color );
 			display: flex;
 			flex-direction: column;
 
@@ -108,6 +108,7 @@
 			.mw-wiki-title {
 				opacity: 0;
 				height: 0;
+				color: var( --drawer-mw-drawer-menu-logo-mw-wiki-title-color );
 			}
 		}
 
@@ -120,7 +121,7 @@
 			h3 {
 				margin: @margin-side / 2 0 0 0;
 				padding: @margin-side / 2 @margin-side;
-				color: @color-item-header;
+				color: var( --drawer-mw-drawer-menu-main-h3-color );
 				font-size: @ui-menu-header;
 				font-weight: normal;
 				letter-spacing: 1px;
@@ -175,7 +176,7 @@
 				height: 2px;
 				border-radius: @border-radius-large;
 				display: block;
-				background: @base-0;
+				background: var( --drawer-mw-drawer-button-icon-div-background-color );
 				opacity: @opacity-icon;
 				transform-origin: 4px 0;
 				transition: @transition-transform-quick, @transition-background-quick, @transition-opacity-quick;
@@ -186,7 +187,7 @@
 
 #p-personal {
 	padding-top: @margin-side / 2;
-	border-top: 1px solid @base-80;
+	border-top: 1px solid var( --drawer-p-personal-border-color );
 
 	#pt-userpage {
 		margin-bottom: @margin-side / 2;
@@ -242,6 +243,44 @@
 	}
 }
 
+.skin-citizen-dark {
+	#mw-drawer {
+		&-menu {
+			&-main,
+			&-user {
+				a {
+					&:after {
+						filter: invert( 1 );
+					}
+				}
+			}
+		}
+
+		&-button {
+			&:hover {
+				~ #mw-drawer-button-icon {
+					.mw-drawer-button-icon {
+						&-div {
+							opacity: 0.6;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.mw-drawer {
+		&-button {
+			&-icon {
+				&-div {
+					opacity: 0.4;
+				}
+			}
+		}
+	}
+}
+
+
 // Only show title when screen height is less than 800px
 @media ( max-height: 800px ) {
 	#mw-drawer-menu-logo {
@@ -255,76 +294,5 @@
 			height: auto;
 			opacity: 1;
 		}
-	}
-}
-
-@media ( prefers-color-scheme: dark ) {
-	#mw-drawer {
-		&-button {
-			&:hover {
-				~ #mw-drawer-button-icon {
-					.mw-drawer-button-icon {
-						&-div {
-							opacity: 0.6;
-						}
-					}
-				}
-			}
-		}
-
-		&-menu {
-			background: @dark-bg-40;
-
-			&-logo {
-				border-color: @dark-bg-50;
-
-				.mw-wiki-title {
-					color: @dark-text-100;
-				}
-			}
-
-			&-main {
-				h3 {
-					color: @dark-text-100;
-				}
-			}
-
-			&-main,
-			&-user {
-				a {
-					color: @dark-text-80 !important;
-
-					&:hover {
-						background-color: @dark-bg-60;
-						color: @dark-text-90 !important;
-					}
-
-					&:active,
-					&:focus {
-						color: @dark-text-100 !important;
-						background-color: @accent-10;
-					}
-
-					&:after {
-						filter: invert( 1 );
-					}
-				}
-			}
-		}
-	}
-
-	.mw-drawer {
-		&-button {
-			&-icon {
-				&-div {
-					opacity: 0.4;
-					background: @base-100;
-				}
-			}
-		}
-	}
-
-	#p-personal {
-		border-color: @dark-bg-50;
 	}
 }

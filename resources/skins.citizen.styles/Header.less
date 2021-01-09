@@ -27,7 +27,7 @@
 		position: absolute;
 		left: 0;
 		right: 0;
-		box-shadow: 0 0 50px @header-height @header-background-color-light;
+		box-shadow: 0 0 50px @header-height var( --header-mw-header-background-box-shadow-color );
 		z-index: -1;
 		transition: @transition-box-shadow;
 	}
@@ -39,13 +39,5 @@
 		height: 56px;
 		display: flex;
 		align-items: center;
-	}
-}
-
-@media ( prefers-color-scheme: dark ) {
-	#mw-header {
-		&-background {
-			box-shadow: 0 0 50px @header-height @header-background-color-dark !important;
-		}
 	}
 }

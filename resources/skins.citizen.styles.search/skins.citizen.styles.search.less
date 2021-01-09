@@ -6,6 +6,44 @@
 @import '../variables.less';
 @import '../mixins.less';
 
+:root {
+	--suggestion-dropdown-background-color: @base-100;
+
+	--suggestion-link-active-background-color: @accent-90;
+	--suggestion-link-active-suggestion-title-color: @accent-50;
+
+	--suggestion-title-color: @base-10;
+
+	--suggestion-highlight-color: @base-30;
+
+	--suggestion-description-color: @base-30;
+
+	--suggestion-thumbnail-background-color: @base-80;
+
+	--suggestion-special-border-color: @base-80;
+	--suggestion-special-hover-background-color: @accent-90;
+	--suggestion-special-color: @base-10;
+}
+
+:root.skin-citizen-dark {
+	--suggestion-dropdown-background-color: @dark-bg-50;
+
+	--suggestion-link-active-background-color: @accent-10;
+	--suggestion-link-active-suggestion-title-color: @accent-90;
+
+	--suggestion-title-color: @dark-text-90;
+
+	--suggestion-highlight-color: @dark-text-70;
+
+	--suggestion-description-color: @dark-text-70;
+
+	--suggestion-thumbnail-background-color: @base-80;
+
+	--suggestion-special-border-color: @dark-bg-40;
+	--suggestion-special-hover-background-color: @accent-10;
+	--suggestion-special-color: @dark-text-90;
+}
+
 #typeahead-suggestions {
 	position: absolute;
 	top: 38px;
@@ -18,7 +56,7 @@
 	max-width: calc( ~'100vw -'@icon-box-size + @icon-padding * 2 + @margin-side );
 	display: flex; // Needed to show margin
 	flex-direction: column;
-	background: @base-100;
+	background: var( --suggestion-dropdown-background-color );
 	border-radius: 0 0 @border-radius-large @border-radius-large;
 	.boxshadow(4);
 }
@@ -30,10 +68,10 @@
 		align-items: center;
 
 		&.active {
-			background-color: @accent-90;
+			background-color: var( --suggestion-link-active-background-color );
 
 			.suggestion-title {
-				color: @accent-50;
+				color: var( --suggestion-link-active-suggestion-title-color );
 			}
 		}
 	}
@@ -45,18 +83,18 @@
 	&-title {
 		margin: 0 0 0.78rem * @content-scaling 0;
 		display: inline-block; // so that the margin does not occupy space
-		color: @base-10;
+		color: var( --suggestion-title-color );
 		font-size: @content-h6-size;
 		line-height: 1.872rem * @content-scaling;
 	}
 
 	&-highlight {
-		color: @base-30;
+		color: var( --suggestion-highlight-color );
 		font-style: normal;
 	}
 
 	&-description {
-		color: @base-30;
+		color: var( --suggestion-description-color );
 		margin: 0;
 		font-family: @fonts;
 		font-size: @content-caption-size;
@@ -68,7 +106,7 @@
 		min-width: 70px; // so it won't be squeezed by the content text
 		height: 60px;
 		border-radius: @border-radius-small;
-		background-color: @base-80;
+		background-color: var( --suggestion-thumbnail-background-color );
 		background-position: center center;
 		background-repeat: no-repeat;
 		background-size: cover;
@@ -135,46 +173,5 @@ a.suggestion-link:hover {
 		position: fixed;
 		left: 0;
 		max-width: 100vw;
-	}
-}
-
-@media ( prefers-color-scheme: dark ) {
-	.suggestions-dropdown {
-		background: @dark-bg-50;
-	}
-
-	.suggestion {
-		&-link {
-			&.active {
-				background-color: @accent-10;
-
-				.suggestion-title {
-					color: @accent-90;
-				}
-			}
-		}
-
-		&-title {
-			color: @dark-text-90;
-		}
-
-		&-highlight {
-			color: @dark-text-70;
-		}
-
-		&-description {
-			color: @dark-text-70;
-		}
-	}
-
-	#suggestion {
-		&-special {
-			border-color: @dark-bg-40;
-			color: @dark-text-90;
-
-			&:hover {
-				background-color: @accent-10;
-			}
-		}
 	}
 }

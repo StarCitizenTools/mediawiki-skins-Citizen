@@ -14,15 +14,13 @@
 	}
 }
 
+a.mw-wiki-title {
+	color: var( --sidebar-a-mw-wiki-title-color );
+}
+
 @media ( max-width: @screen2 ) {
 	.mw-sidebar-sitename {
 		z-index: -1; // remove link
 		opacity: 0; // hide visual
-	}
-}
-
-@media ( prefers-color-scheme: dark ) {
-	a.mw-wiki-title {
-		color: @dark-text-70;
 	}
 }
