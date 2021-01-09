@@ -1,6 +1,6 @@
 {
 	"name": "Citizen",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
@@ -24,7 +24,6 @@
 						"skins.citizen.scripts"
 					],
 					"styles": [
-						"mediawiki.skinning.content.externallinks",
 						"skins.citizen.styles",
 						"skins.citizen.styles.fonts",
 						"skins.citizen.styles.toc",
@@ -113,6 +112,9 @@
 		"skins.citizen.scripts": {
 			"scripts": [
 				"resources/skins.citizen.scripts/skins.citizen.scripts.js"
+			],
+			"dependencies": [
+				"mediawiki.page.ready"
 			]
 		},
 		"skins.citizen.scripts.lazyload": {

@@ -290,11 +290,14 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 				break;
 		}
 
-		// typeAheadEl.innerHTML = getLoadingIndicator();
+		// Add loading animation when suggestion is loading
+		appendEl.classList.add( 'search-form__loading' );
 
 		api.get( searchQuery )
 			.done( ( data ) => {
 				clearTypeAheadElements();
+				// Clean up loading animation after result ls loaded
+				appendEl.classList.remove( 'search-form__loading' );
 				window.callbackStack.queue[ callbackIndex ]( data, string );
 			} );
 	} // END loadQueryScript

@@ -11,7 +11,10 @@
 	},
 	"rules": {
 		"one-var": "off",
-		"//": ["off", "ResourceLoader's `packageFiles` do not require wrapping but the `module` option is only available in ES6+."],
+		"//": [
+			"off",
+			"ResourceLoader's `packageFiles` do not require wrapping but the `module` option is only available in ES6+."
+		],
 		"no-implicit-globals": "off"
 	}
 }

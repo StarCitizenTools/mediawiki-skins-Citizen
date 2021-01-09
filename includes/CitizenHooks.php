@@ -58,6 +58,13 @@ class CitizenHooks {
 			$vars['wgCitizenMaxSearchResults'] = 6;
 		}
 
+		try {
+			$vars['wgCitizenEnableSearch'] = self::getSkinConfig( 'CitizenEnableSearch' );
+		} catch ( ConfigException $e ) {
+			// Should not happen
+			$vars['wgCitizenEnableSearch'] = true;
+		}
+
 		return true;
 	}
 

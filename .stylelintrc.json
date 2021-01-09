@@ -4,6 +4,6 @@
 		"selector-max-id": null,
 		"no-descending-specificity": null,
 		"declaration-no-important": null,
-		"unit-blacklist": null
+		"unit-disallowed-list": null
 	}
 }

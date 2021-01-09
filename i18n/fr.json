@@ -2,15 +2,16 @@
 	"@metadata": {
 		"authors": [
 			"Abijeet Patro",
-			"Pamputt"
+			"Pamputt",
+			"Verdy p"
 		]
 	},
 	"skinname-citizen": "Citizen",
-	"citizen-skin-desc": "Un habillage dynamique développé pour le wiki Star Citizen",
-	"citizen.css": "/* La totalité du CSS placé ici s’appliquera aux utilisateurs de l’habillage Citizen */",
-	"citizen.js": "/* La totalité du JavaScript placé ici s’appliquera aux utilisateurs de l’habillage Citizen */",
-	"citizen-drawer-toggle": "Activer/désactiver le menu",
-	"citizen-search-toggle": "Activer/désactiver la recherche",
+	"citizen-skin-desc": "Un habillage dynamique développé pour le wiki Star Citizen.",
+	"citizen.css": "/* La totalité du CSS placé ici s’appliquera aux utilisateurs de l’habillage Citizen. */",
+	"citizen.js": "/* La totalité du JavaScript placé ici s’appliquera aux utilisateurs de l’habillage Citizen. */",
+	"citizen-drawer-toggle": "Basculer le menu",
+	"citizen-search-toggle": "Basculer la recherche",
 	"citizen-footer-desc": "Modifier ce texte sur MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Modifier ce texte sur MediaWiki:Citizen-footer-tagline",
 	"citizen-search-fulltext": "Rechercher les pages contenant"

@@ -4,7 +4,8 @@
  */
 
 var searchToggle = document.getElementById( 'search-toggle' ),
-	searchInput = document.getElementById( 'searchInput' );
+	searchInput = document.getElementById( 'searchInput' ),
+	pageReady = require( ( 'mediawiki.page.ready' ) );
 
 /**
  * Focus in search box when search toggle checkbox is checked.
@@ -31,6 +32,11 @@ function searchToggleCheck() {
 function main() {
 	searchToggle.addEventListener( 'click', searchInputFocus );
 	searchInput.addEventListener( 'focus', searchToggleCheck );
+	pageReady.loadSearchModule(
+		// Decide between new Citizen implementation or core
+		mw.config.get( 'wgCitizenEnableSearch' ) ?
+			'skins.citizen.scripts.search' : 'mediawiki.searchSuggest'
+	);
 }
 
 main();

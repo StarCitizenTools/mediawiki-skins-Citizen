@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Sabelöga"
+		]
+	},
+	"skinname-citizen": "Citizen",
+	"citizen-skin-desc": "Ett responsiv utseende utvecklat för Star Citizen Wiki",
+	"citizen.css": "/* All CSS här kommer laddas in för användare av utseendet Citizen */",
+	"citizen.js": "/* All JavaScript här kommer laddas in för användare av utseendet Citizen */",
+	"citizen-drawer-toggle": "Visa/dölj menyn",
+	"citizen-search-toggle": "Visa/dölj sök",
+	"citizen-footer-desc": "Redigera den här texten på MediaWiki:Citizen-footer-desc",
+	"citizen-footer-tagline": "Redigera den här texten på MediaWiki:Citizen-footer-tagline",
+	"citizen-search-fulltext": "Sökningar som innehåller"
+}

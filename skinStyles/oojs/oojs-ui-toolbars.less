@@ -65,6 +65,11 @@
 		color: @dark-text-100;
 	}
 
+	.oo-ui-tool.oo-ui-widget-enabled > .oo-ui-tool-link:hover {
+		background-color: @dark-bg-20;
+		color: @dark-text-100;
+	}
+
 	.oo-ui-tool.oo-ui-widget-enabled .oo-ui-tool-link:focus {
 		outline: 1px solid @accent-50;
 		box-shadow: inset 0 0 0 1px solid @accent-50;
@@ -149,6 +154,10 @@
 	.oo-ui-popupToolGroup.oo-ui-popupToolGroup-active > .oo-ui-popupToolGroup-handle {
 		background-color: @accent-10;
 		color: @accent-50;
+
+		.oo-ui-labelElement-label {
+			color: @dark-text-100;
+		}
 	}
 
 	.oo-ui-popupToolGroup.oo-ui-popupToolGroup-active > .oo-ui-popupToolGroup-handle:hover {
@@ -164,17 +173,12 @@
 		box-shadow: inset 0 0 0 2px @accent-50;
 	}
 
-	.oo-ui-listToolGroup-tools .oo-ui-tool.oo-ui-widget-enabled:hover {
-		background-color: @dark-bg-20;
-		color: @dark-text-100;
-	}
-
 	.oo-ui-listToolGroup-tools .oo-ui-tool-active.oo-ui-widget-enabled {
+		&:hover {
+			background-color: rgba( 41, 98, 204, 0.1 );
+			color: @dark-text-100;
+		}
 		background-color: @accent-10;
-	}
-
-	.oo-ui-listToolGroup-tools .oo-ui-tool-active.oo-ui-widget-enabled:hover {
-		background-color: rgba( 41, 98, 204, 0.1 );
 	}
 
 	.oo-ui-listToolGroup-tools .oo-ui-tool-active.oo-ui-widget-enabled .oo-ui-tool-link .oo-ui-tool-title {
@@ -232,6 +236,12 @@
 		border-color: #447ff5;
 	}
 
+	.oo-ui-tool.oo-ui-widget-enabled > .oo-ui-tool-link:active,
+	.oo-ui-tool.oo-ui-widget-enabled > .oo-ui-tool-link:active:focus,
+	.oo-ui-tool.oo-ui-widget-enabled.oo-ui-tool-active > .oo-ui-tool-link,
+	.oo-ui-tool.oo-ui-widget-enabled.oo-ui-popupToolGroup-active > .oo-ui-tool-link,
+	.oo-ui-tool.oo-ui-widget-enabled.oo-ui-tool-active > .oo-ui-tool-link .oo-ui-tool-title,
+	.oo-ui-tool.oo-ui-widget-enabled.oo-ui-popupToolGroup-active > .oo-ui-tool-link .oo-ui-tool-title,
 	.oo-ui-toolbar-actions > .oo-ui-buttonGroupWidget > .oo-ui-popupToolGroup.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-popupToolGroup-handle:active,
 	.oo-ui-toolbar-actions > .oo-ui-buttonGroupWidget > .oo-ui-popupToolGroup.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-popupToolGroup-handle:active:focus,
 	.oo-ui-toolbar-actions > .oo-ui-buttonGroupWidget > .oo-ui-popupToolGroup.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive.oo-ui-buttonElement-pressed > .oo-ui-popupToolGroup-handle,
@@ -245,5 +255,11 @@
 	.oo-ui-toolbar-actions > .oo-ui-buttonGroupWidget > .oo-ui-popupToolGroup.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-popupToolGroup-handle:focus {
 		border-color: @accent-50;
 		box-shadow: inset 0 0 0 1px solid @accent-50, inset 0 0 0 2px @dark-bg-0;
+	}
+
+	.oo-ui-barToolGroup-tools.oo-ui-toolGroup-enabled-tools .oo-ui-tool.oo-ui-widget-disabled.oo-ui-flaggedElement-primary > .oo-ui-tool-link,
+	.oo-ui-barToolGroup-tools.oo-ui-toolGroup-disabled-tools .oo-ui-tool.oo-ui-flaggedElement-primary > .oo-ui-tool-link {
+		background-color: @dark-bg-30;
+		border-color: @dark-bg-30;
 	}
 }

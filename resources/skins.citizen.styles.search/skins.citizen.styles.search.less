@@ -168,6 +168,74 @@ a.suggestion-link:hover {
 	}
 }
 
+/**
+ * Loading indicator for search widget
+ * Based on Vector
+ *
+ * By adding a class on the parent search form
+ * <div id="searchform" class="search-form__loader"></div>
+ * A pseudo element is added via ':after' that adds the loading indicator.
+ *
+ * After appearing for more than a second, a progress-bar animation appears
+ * above the loading indicator.
+ *
+ **/
+#searchform.search-form__loading:after {
+	// Placeholder text
+	content: 'loading';
+	// Position loader below the input.
+	display: block;
+	position: absolute;
+	top: 100%;
+	width: 100%;
+	// Overlay the form
+	margin-top: -@search-loader-progress-bar-height;
+	z-index: 999;
+	// Ensure it doesn't extend beyond the input.
+	box-sizing: border-box;
+	// Align style with the form
+	border-radius: 0 0 @border-radius-large @border-radius-large;
+	// Hide text in case it extends beyond the input.
+	height: @search-loader-progress-bar-height;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	// Add a progress-bar to the loading indicator,
+	// but only show it animating after 1 second of loading.
+	background: /*image*/ linear-gradient( 90deg, @accent-50 0%, @accent-50 100% )
+		/* position / size*/ -10% 0 ~'/' 0 @search-loader-progress-bar-height
+		/* repeat */ no-repeat,transparent;
+	// Animates the progress-bar.
+	animation: search-loader-progress-bar
+		/* duration */ 1200ms
+		/* timing function */ linear
+		/* delay */ 1000ms
+		/* iteration count */ infinite
+		/* fill direction */ alternate;
+}
+
+@keyframes search-loader-progress-bar {
+	0% {
+		background-size: 0 @search-loader-progress-bar-height;
+		background-position: -10% 0;
+	}
+
+	30% {
+		background-size: 30% @search-loader-progress-bar-height;
+		background-position: -10% 0;
+	}
+
+	70% {
+		background-size: 30% @search-loader-progress-bar-height;
+		background-position: 110% 0;
+	}
+
+	100% {
+		background-size: 0 @search-loader-progress-bar-height;
+		background-position: 110% 0;
+	}
+}
+
 @media only screen and ( max-width: @search-bar-width ) {
 	.suggestions-dropdown {
 		position: fixed;

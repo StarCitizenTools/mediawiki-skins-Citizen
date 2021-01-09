@@ -131,6 +131,7 @@
 		height: 100%;
 		margin-top: -@header-height;
 		padding: 0;
+		transform: translateX( -100% );
 
 		&:before,
 		&:after {
@@ -146,7 +147,7 @@
 			&label {
 				position: fixed;
 				z-index: 7;
-				right: 0;
+				right: -100vw;
 				bottom: 0;
 				margin: @margin-side;
 				padding: 0 @margin-side / 2;
@@ -178,7 +179,7 @@
 			}
 
 			&checkbox:not( :checked ) ~ ul {
-				transform: none;
+				transform: translateX( -300px - @margin-side );
 			}
 		}
 
@@ -196,7 +197,7 @@
 			background: var( --screen3-toc-ul-background-color );
 			border-radius: 0 @border-radius-large @border-radius-large 0;
 			.boxshadow(3);
-			transform: translateX( -300px - @margin-side );
+			transform: translateX( 100% );
 			transition: @transition-transform;
 		}
 	}

@@ -14,7 +14,7 @@ function SmoothScroll() {
 	var navLinks, eventListener, link;
 	if ( !( 'scrollBehavior' in document.documentElement.style ) ) {
 		navLinks = document.querySelectorAll( '#toc a' );
-		eventListener = function eventListener( e ) {
+		eventListener = function clickHandler( e ) {
 			e.preventDefault();
 			e.target.scrollIntoView( {
 				behavior: 'smooth'
