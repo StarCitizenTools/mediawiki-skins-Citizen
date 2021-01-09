@@ -736,32 +736,32 @@ class SkinCitizen extends SkinMustache {
 		}
 	}
 
-    /**
-     * Sets the corresponding color scheme class on the <html> element
-     * If the color scheme is set to auto, the theme switcher script will be added
-     *
-     * @param OutputPage $out
-     * @param array $skinOptions
-     */
+	/**
+	 * Sets the corresponding color scheme class on the <html> element
+	 * If the color scheme is set to auto, the theme switcher script will be added
+	 *
+	 * @param OutputPage $out
+	 * @param array &$skinOptions
+	 */
 	private function setSkinColorScheme( OutputPage $out, array &$skinOptions ) {
-        $options = MediaWikiServices::getInstance()
-            ->getUserOptionsLookup()
-            ->getOptions( $this->getUser() );
+		$options = MediaWikiServices::getInstance()
+			->getUserOptionsLookup()
+			->getOptions( $this->getUser() );
 
-        $skinStyle = $this->getConfigValue( 'ColorScheme' );
+		$skinStyle = $this->getConfigValue( 'ColorScheme' );
 
-        $setDarkClass = $skinStyle === 'dark' || $options['citizen-color-scheme'] === 'dark';
-        $setLightClass = $skinStyle === 'light' || $options['citizen-color-scheme'] === 'light';
+		$setDarkClass = $skinStyle === 'dark' || $options['citizen-color-scheme'] === 'dark';
+		$setLightClass = $skinStyle === 'light' || $options['citizen-color-scheme'] === 'light';
 
-        if ( $setDarkClass ) {
-            $out->addHtmlClasses( 'skin-citizen-dark' );
-        } elseif ($setLightClass) {
-            $out->addHtmlClasses( 'skin-citizen-light' );
-        } else {
-            $skinOptions['scripts'] = array_merge(
-                $skinOptions['scripts'],
-                [ 'skins.citizen.scripts.theme-switcher' ]
-            );
-        }
-    }
+		if ( $setDarkClass ) {
+			$out->addHtmlClasses( 'skin-citizen-dark' );
+		} elseif ( $setLightClass ) {
+			$out->addHtmlClasses( 'skin-citizen-light' );
+		} else {
+			$skinOptions['scripts'] = array_merge(
+				$skinOptions['scripts'],
+				[ 'skins.citizen.scripts.theme-switcher' ]
+			);
+		}
+	}
 }
