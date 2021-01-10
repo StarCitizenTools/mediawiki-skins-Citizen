@@ -1,6 +1,6 @@
 table.wikitable {
 	background-color: transparent;
-	color: @base-20;
+	color: var( --wikitable-color );
 	border: 0;
 	border-collapse: collapse;
 
@@ -13,7 +13,7 @@ table.wikitable {
 		vertical-align: top;
 
 		th {
-			color: @base-30;
+			color: var( --wikitable-tr-th-color );
 			background-color: transparent;
 			font-size: @content-caption-size;
 			text-align: left;
@@ -27,11 +27,11 @@ table.wikitable {
 		td {
 			padding: @margin-side / 2 @margin-side @margin-side / 2 0;
 			border: 0;
-			border-bottom: 1px solid @base-80;
+			border-bottom: 1px solid var( --wikitable-tr-th-border-color );
 		}
 
 		&:hover {
-			background-color: @base-90;
+			background-color: var( --wikitable-tr-hover-background-color );
 		}
 	}
 }
@@ -39,26 +39,5 @@ table.wikitable {
 @media ( max-width: @screen2 ) {
 	table.wikiatble {
 		white-space: nowrap;
-	}
-}
-
-@media ( prefers-color-scheme: dark ) {
-	table.wikitable {
-		color: @dark-text-90;
-
-		tr {
-			th {
-				color: @dark-text-80;
-			}
-
-			th,
-			td {
-				border-color: @dark-bg-20;
-			}
-
-			&:hover {
-				background-color: @dark-bg-10;
-			}
-		}
 	}
 }

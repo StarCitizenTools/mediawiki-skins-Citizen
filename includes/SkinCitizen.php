@@ -108,6 +108,8 @@ class SkinCitizen extends SkinMustache {
 		// Feature policy
 		$skin->addFeaturePolicy();
 
+		$this->setSkinColorScheme( $out, $options );
+
 		$options['templateDirectory'] = __DIR__ . '/templates';
 		parent::__construct( $options );
 	}
@@ -731,6 +733,35 @@ class SkinCitizen extends SkinMustache {
 
 			$out->getRequest()->response()->header( sprintf( 'Feature-Policy: %s',
 				$featurePolicy ) );
+		}
+	}
+
+	/**
+	 * Sets the corresponding color scheme class on the <html> element
+	 * If the color scheme is set to auto, the theme switcher script will be added
+	 *
+	 * @param OutputPage $out
+	 * @param array &$skinOptions
+	 */
+	private function setSkinColorScheme( OutputPage $out, array &$skinOptions ) {
+		$options = MediaWikiServices::getInstance()
+			->getUserOptionsLookup()
+			->getOptions( $this->getUser() );
+
+		$skinStyle = $this->getConfigValue( 'ColorScheme' );
+
+		$setDarkClass = $skinStyle === 'dark' || $options['citizen-color-scheme'] === 'dark';
+		$setLightClass = $skinStyle === 'light' || $options['citizen-color-scheme'] === 'light';
+
+		if ( $setDarkClass ) {
+			$out->addHtmlClasses( 'skin-citizen-dark' );
+		} elseif ( $setLightClass ) {
+			$out->addHtmlClasses( 'skin-citizen-light' );
+		} else {
+			$skinOptions['scripts'] = array_merge(
+				$skinOptions['scripts'],
+				[ 'skins.citizen.scripts.theme-switcher' ]
+			);
 		}
 	}
 }

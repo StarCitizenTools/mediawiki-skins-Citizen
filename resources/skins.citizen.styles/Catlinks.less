@@ -34,9 +34,9 @@
 				a {
 					padding: @margin-side / 4 @margin-side / 2;
 					display: block;
-					border: 1px solid @base-90;
-					background-color: @base-90;
-					color: @color-content-caption !important; // Override other styles
+					border: 1px solid var( --catlinks-ul-li-a-border-color );
+					background-color: var( --catlinks-ul-li-a-background-color );
+					color: var( --catlinks-ul-li-a-color ) !important; // Overr
 					.boxshadow(1);
 					transition: @transition-background-quick, @transition-color-quick, @transition-border-quick, @transition-transform-quick, @transition-box-shadow-quick;
 
@@ -68,12 +68,5 @@
 @media ( max-width: @screen2 ) {
 	.catlinks {
 		margin: 0 ~'calc((100vw - @{page-width}) / -2)';
-	}
-}
-
-@media ( prefers-color-scheme: dark ) {
-	.catlinks .mw-normal-catlinks > ul li a {
-		background-color: @dark-bg-10;
-		border-color: @dark-bg-10;
 	}
 }

@@ -17,5 +17,10 @@
 	"citizen-footer-desc": "Edit this text on MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Edit this text on MediaWiki:Citizen-footer-tagline",
 
-	"citizen-search-fulltext": "Search pages containing"
+	"citizen-search-fulltext": "Search pages containing",
+
+	"citizen-upo-style": "Skin Citizen Color Scheme",
+	"citizen-upo-style-auto": "Auto",
+	"citizen-upo-style-light": "Light",
+	"citizen-upo-style-dark":  "Dark"
 }
