@@ -15,10 +15,10 @@
 		return;
 	}
 
-	isGlobalAutoSet = window.mw.config.get( 'wgCitizenColorScheme' ) === 'auto' ||
-        window.mw.config.get( 'wgCitizenColorScheme' ) === null;
+	isGlobalAutoSet = window.mw.config.get( 'wgCitizenThemeDefault' ) === 'auto' ||
+        window.mw.config.get( 'wgCitizenThemeDefault' ) === null;
 
-	isUserPreferenceAuto = window.mw.user.options.get( 'citizen-color-scheme' ) === 'auto';
+	isUserPreferenceAuto = window.mw.user.options.get( 'CitizenThemeUser' ) === 'auto';
 
 	enableAutoSwitcher = isGlobalAutoSet || isUserPreferenceAuto;
 

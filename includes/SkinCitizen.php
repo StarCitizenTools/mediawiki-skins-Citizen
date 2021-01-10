@@ -44,6 +44,9 @@ class SkinCitizen extends SkinMustache {
 		$skin = $this;
 		$out = $skin->getOutput();
 
+		// Theme handler
+		$skin->setSkinTheme( $out, $options );
+
 		// Responsive layout
 		// Replace with core responsive option if it is implemented in 1.36+
 		$out->addMeta( 'viewport', 'width=device-width, initial-scale=1.0' );
@@ -107,8 +110,6 @@ class SkinCitizen extends SkinMustache {
 
 		// Feature policy
 		$skin->addFeaturePolicy();
-
-		$this->setSkinColorScheme( $out, $options );
 
 		$options['templateDirectory'] = __DIR__ . '/templates';
 		parent::__construct( $options );
@@ -737,27 +738,26 @@ class SkinCitizen extends SkinMustache {
 	}
 
 	/**
-	 * Sets the corresponding color scheme class on the <html> element
-	 * If the color scheme is set to auto, the theme switcher script will be added
+	 * Sets the corresponding theme class on the <html> element
+	 * If the theme is set to auto, the theme switcher script will be added
 	 *
 	 * @param OutputPage $out
 	 * @param array &$skinOptions
 	 */
-	private function setSkinColorScheme( OutputPage $out, array &$skinOptions ) {
-		$options = MediaWikiServices::getInstance()
-			->getUserOptionsLookup()
-			->getOptions( $this->getUser() );
+	private function setSkinTheme( OutputPage $out, array &$skinOptions ) {
+		// Set theme to site theme
+		$theme = $this->getConfigValue( 'CitizenThemeDefault' );
 
-		$skinStyle = $this->getConfigValue( 'ColorScheme' );
+		// Set theme to user theme if registered
+		if ( $this->getUser()->isRegistered() ) {
+			$theme = $this->getUser()->getOption( 'CitizenThemeUser' );
+		}
 
-		$setDarkClass = $skinStyle === 'dark' || $options['citizen-color-scheme'] === 'dark';
-		$setLightClass = $skinStyle === 'light' || $options['citizen-color-scheme'] === 'light';
+		// Add HTML class based on theme set
+		$out->addHtmlClasses( 'skin-citizen-' . $theme );
 
-		if ( $setDarkClass ) {
-			$out->addHtmlClasses( 'skin-citizen-dark' );
-		} elseif ( $setLightClass ) {
-			$out->addHtmlClasses( 'skin-citizen-light' );
-		} else {
+		// Load theme switcher script if auto
+		if ( $theme === 'auto' ) {
 			$skinOptions['scripts'] = array_merge(
 				$skinOptions['scripts'],
 				[ 'skins.citizen.scripts.theme-switcher' ]

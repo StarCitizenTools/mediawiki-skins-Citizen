@@ -416,6 +416,12 @@
 	},
 	"config_prefix": "wgCitizen",
 	"config": {
+		"ThemeDefault": {
+			"value": "auto",
+			"description": "Default theme of the skin. Valid values are 'light', 'dark' and 'auto'.",
+			"descriptionmsg": "citizen-config-themedefault",
+			"public": true
+		},
 		"ThemeColor": {
 			"value": "#11151d",
 			"description": "The theme color defined in the meta tag",
@@ -552,12 +558,6 @@
 			"value": false,
 			"description": "Enable or disable image lazyloading",
 			"descriptionmsg": "citizen-config-enablelazyload",
-			"public": true
-		},
-		"ColorScheme": {
-			"value": "auto",
-			"description": "Skin style to use. Valid values are 'light', 'dark' and 'auto'.",
-			"descriptionmsg": "citizen-config-skinstyle",
 			"public": true
 		}
 	},
