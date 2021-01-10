@@ -10,8 +10,8 @@
 	"citizen-footer-desc": "Bearbeiten Sie diesen Text auf MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Bearbeiten Sie diesen Text auf MediaWiki:Citizen-footer-tagline",
 
-	"citizen-upo-style": "Skin Citizen Farbschema",
-	"citizen-upo-style-auto": "Automatisch",
-	"citizen-upo-style-light": "Hell",
-	"citizen-upo-style-dark":  "Dunkel"
+	"prefs-citizen-theme-label": "Thema",
+	"prefs-citizen-theme-option-auto": "Automatisch",
+	"prefs-citizen-theme-option-light": "Hell",
+	"prefs-citizen-theme-option-dark":  "Dunkel"
 }

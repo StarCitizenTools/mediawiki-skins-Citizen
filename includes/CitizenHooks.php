@@ -154,29 +154,46 @@ class CitizenHooks {
 	}
 
 	/**
-	 * @param User $user
-	 * @param array &$preferences
+	 * Add Citizen preferences to the user's Special:Preferences page directly underneath skins.
+	 * Based on Vector's implementation
+	 *
+	 * @param User $user User whose preferences are being modified.
+	 * @param array[] &$prefs Preferences description array, to be fed to a HTMLForm object.
 	 */
-	public static function onGetPreferences( $user, &$preferences ) {
-		$options = MediaWikiServices::getInstance()
-			->getUserOptionsLookup()
-			->getOptions( $user );
-
-		if ( $options['skin'] !== 'citizen' ) {
-			return;
-		}
-
-		// A checkbox
-		$preferences['CitizenThemeUser'] = [
-			'type' => 'select',
-			'label-message' => 'citizen-upo-style',
-			'section' => 'rendering/skin',
-			'options' => [
-				wfMessage( 'citizen-upo-style-auto' )->escaped() => 'auto',
-				wfMessage( 'citizen-upo-style-light' )->escaped() => 'light',
-				wfMessage( 'citizen-upo-style-dark' )->escaped() => 'dark',
+	public static function onGetPreferences( $user, &$prefs ) {
+		// Preferences to add.
+		$citizenPrefs = [
+			'CitizenThemeUser' => [
+				'type' => 'select',
+				// Droptown title
+				'label-message' => 'prefs-citizen-theme-label',
+				// The tab location and title of the section to insert the checkbox. The bit after the slash
+				// indicates that a prefs-skin-prefs string will be provided.
+				'section' => 'rendering/skin/skin-prefs',
+				'options' => [
+					wfMessage( 'prefs-citizen-theme-option-auto' )->escaped() => 'auto',
+					wfMessage( 'prefs-citizen-theme-option-light' )->escaped() => 'light',
+					wfMessage( 'prefs-citizen-theme-option-dark' )->escaped() => 'dark',
+				],
+				'default' => 'auto',
+				// Only show this section when the Citizen skin is checked. The JavaScript client also uses
+				// this state to determine whether to show or hide the whole section.
+				'hide-if' => [ '!==', 'wpskin', 'citizen' ],
 			],
-			'default' => $options['CitizenThemeUser'] ?? 'auto'
 		];
+
+		// Seek the skin preference section to add Citizen preferences just below it.
+		$skinSectionIndex = array_search( 'skin', array_keys( $prefs ) );
+		if ( $skinSectionIndex !== false ) {
+			// Skin preference section found. Inject Citizen skin-specific preferences just below it.
+			// This pattern can be found in Popups too. See T246162.
+			$citizenSectionIndex = $skinSectionIndex + 1;
+			$prefs = array_slice( $prefs, 0, $citizenSectionIndex, true )
+				+ $citizenPrefs
+				+ array_slice( $prefs, $citizenSectionIndex, null, true );
+		} else {
+			// Skin preference section not found. Just append Citizen skin-specific preferences.
+			$prefs += $citizenPrefs;
+		}
 	}
 }

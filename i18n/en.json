@@ -19,8 +19,8 @@
 
 	"citizen-search-fulltext": "Search pages containing",
 
-	"citizen-upo-style": "Skin Citizen Color Scheme",
-	"citizen-upo-style-auto": "Auto",
-	"citizen-upo-style-light": "Light",
-	"citizen-upo-style-dark":  "Dark"
+	"prefs-citizen-theme-label": "Theme",
+	"prefs-citizen-theme-option-auto": "Auto",
+	"prefs-citizen-theme-option-light": "Light",
+	"prefs-citizen-theme-option-dark":  "Dark"
 }
