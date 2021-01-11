@@ -782,8 +782,8 @@ class SkinCitizen extends SkinMustache {
 			] );
 		}
 
-		// Script content at 'skins.citizen.scripts.theme-switcher/inline.js
+		// Script content at 'skins.citizen.scripts.theme/inline.js
 		$this->getOutput()->addHeadItem( 'theme-switcher', '<script>(()=>{try{const t=document.cookie.match(/skin-citizen-theme=(dark|light|auto)/),e=null!==t?t.pop():null;null!==e&&(document.documentElement.classList.remove(...["auto","dark","light"].map(t=>"skin-citizen-"+t)),document.documentElement.classList.add("skin-citizen-"+e))}catch(t){}})();</script>' );
-		$this->getOutput()->addModules( 'skins.citizen.scripts.theme-switcher' );
+		$this->getOutput()->addModules( 'skins.citizen.scripts.theme' );
 	}
 }

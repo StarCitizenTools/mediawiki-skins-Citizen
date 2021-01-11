@@ -35,7 +35,7 @@
 						"skins.citizen.icons.pt",
 						"skins.citizen.icons.footer",
 						"skins.citizen.icons.badges",
-						"skins.citizen.icons.theme-switcher"
+						"skins.citizen.icons.theme"
 					]
 				}
 			]
@@ -138,9 +138,9 @@
 				"citizen-search-fulltext"
 			]
 		},
-		"skins.citizen.scripts.theme-switcher": {
+		"skins.citizen.scripts.theme": {
 			"scripts": [
-				"resources/skins.citizen.scripts.theme-switcher/theme-switcher.js"
+				"resources/skins.citizen.scripts.theme/theme-switcher.js"
 			],
 			"dependencies": [
 				"mediawiki.api",
@@ -261,13 +261,13 @@
 				"#suggestion-special-icon": "resources/skins.citizen.icons.search/searchfulltext.svg"
 			}
 		},
-		"skins.citizen.icons.theme-switcher": {
+		"skins.citizen.icons.theme": {
 			"class": "ResourceLoaderImageModule",
 			"selector": ".theme-toggle-{name}",
 			"useDataURI": false,
 			"images": {
-				"light": "resources/skins.citizen.icons.theme-switcher/dark_mode.svg",
-				"dark": "resources/skins.citizen.icons.theme-switcher/light_mode.svg"
+				"light": "resources/skins.citizen.icons.theme/theme-dark.svg",
+				"dark": "resources/skins.citizen.icons.theme/theme-light.svg"
 			}
 		}
 	},
