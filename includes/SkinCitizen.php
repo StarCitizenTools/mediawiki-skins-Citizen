@@ -45,7 +45,7 @@ class SkinCitizen extends SkinMustache {
 		$out = $skin->getOutput();
 
 		// Theme handler
-		$skin->setSkinTheme( $out );
+		$skin->setSkinTheme( $out, $options );
 
 		// Responsive layout
 		// Replace with core responsive option if it is implemented in 1.36+
@@ -760,7 +760,7 @@ class SkinCitizen extends SkinMustache {
 	 *
 	 * @param OutputPage $out
 	 */
-	private function setSkinTheme( OutputPage $out ) {
+	private function setSkinTheme( OutputPage $out, array &$options ) {
 		// Set theme to site theme
 		$theme = $this->getConfigValue( 'CitizenThemeDefault' ) ?? 'auto';
 
@@ -784,6 +784,15 @@ class SkinCitizen extends SkinMustache {
 
 		// Script content at 'skins.citizen.scripts.theme/inline.js
 		$this->getOutput()->addHeadItem( 'theme-switcher', '<script>(()=>{try{const t=document.cookie.match(/skin-citizen-theme=(dark|light|auto)/),e=null!==t?t.pop():null;null!==e&&(document.documentElement.classList.remove(...["auto","dark","light"].map(t=>"skin-citizen-"+t)),document.documentElement.classList.add("skin-citizen-"+e))}catch(t){}})();</script>' );
-		$this->getOutput()->addModules( 'skins.citizen.scripts.theme' );
+
+		// Add styles and scripts module
+		$options['scripts'] = array_merge(
+			$options['scripts'],
+			[ 'skins.citizen.scripts.theme' ]
+		);
+		$options['styles'] = array_merge(
+			$options['styles'],
+			[ 'skins.citizen.styles.theme' ]
+		);
 	}
 }

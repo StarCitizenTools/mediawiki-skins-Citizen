@@ -25,6 +25,7 @@
 					],
 					"styles": [
 						"skins.citizen.styles",
+						"skins.citizen.styles.theme",
 						"skins.citizen.styles.fonts",
 						"skins.citizen.styles.toc",
 						"skins.citizen.icons",
@@ -78,6 +79,14 @@
 				"mobile"
 			],
 			"styles": [ "resources/skins.citizen.styles/skin.less" ]
+		},
+		"skins.citizen.styles.theme": {
+			"class": "ResourceLoaderSkinModule",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"styles": [ "resources/skins.citizen.styles.theme/skins.citizen.styles.theme.less" ]
 		},
 		"skins.citizen.styles.fonts": {
 			"class": "ResourceLoaderSkinModule",
