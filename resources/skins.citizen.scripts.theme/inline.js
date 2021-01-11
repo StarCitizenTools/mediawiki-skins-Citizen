@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*
  * Citizen - Inline script used in SkinCitizen.php
  *
