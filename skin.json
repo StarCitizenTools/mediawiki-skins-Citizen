@@ -125,7 +125,8 @@
 				"resources/skins.citizen.scripts/skins.citizen.scripts.js"
 			],
 			"dependencies": [
-				"mediawiki.page.ready"
+				"mediawiki.page.ready",
+				"mediawiki.cookie"
 			]
 		},
 		"skins.citizen.scripts.lazyload": {
