@@ -8,16 +8,16 @@
 
 ul.gallery {
 	position: relative;
-	margin: @content-margin-top @negative-margin @content-margin-top * 2 !important;
-	padding: 0;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	padding: 0;
+	margin: @content-margin-top @negative-margin @content-margin-top * 2 !important;
 }
 
 li.gallerybox {
-	margin: 2px;
 	display: block;
+	margin: 2px;
 }
 
 li.gallerybox div.thumb {
@@ -43,8 +43,8 @@ div.gallerytext {
 
 @media only screen and ( max-width: @screen2 ) {
 	ul.gallery {
-		margin: @content-margin-top 0 @content-margin-top * 2 !important;
 		overflow: hidden; // Hack to avoid viewpoint move
+		margin: @content-margin-top 0 @content-margin-top * 2 !important;
 	}
 
 	li.gallerybox,

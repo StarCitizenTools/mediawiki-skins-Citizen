@@ -21,8 +21,8 @@
 				opacity: 1;
 
 				&:hover {
-					opacity: 1;
 					color: @color-link-active;
+					opacity: 1;
 				}
 
 				&:after {
@@ -31,10 +31,10 @@
 
 				> span {
 					position: relative !important;
-					clip: unset;
 					width: auto;
 					height: auto;
 					margin: 0;
+					clip: unset;
 				}
 			}
 		}
@@ -64,9 +64,9 @@
 }
 
 .tux-messagetable-header {
-	padding: 0; // Reserve spaces for tabs
 	display: flex;
 	align-items: center;
+	padding: 0; // Reserve spaces for tabs
 
 	&.floating {
 		> div:first-of-type {
@@ -82,9 +82,9 @@
 		}
 
 		a {
-			color: @base-50;
-			padding: @margin-side / 2 @margin-side;
 			display: block;
+			padding: @margin-side / 2 @margin-side;
+			color: @base-50;
 			transition: @transition-color-quick;
 
 			&:hover {
@@ -101,22 +101,22 @@
 		padding: @margin-side / 2 @margin-side !important;
 
 		> ul {
-			margin: 0;
-			padding: 8px 0;
-			width: auto;
 			top: 0;
 			left: 0;
+			width: auto;
+			padding: 8px 0;
 			border: 0;
+			margin: 0;
 			.boxshadow(5);
 
 			li {
 				padding: 0;
-				white-space: nowrap;
 				font-size: @ui-menu-text-big;
+				white-space: nowrap;
 
 				a {
-					margin: 0;
 					padding: 10px 15px !important;
+					margin: 0;
 				}
 
 				input {
@@ -133,9 +133,9 @@
 
 @media only screen and ( max-width: @screen2 ) {
 	#page-tools {
+		max-width: @page-width;
 		margin: 0 auto @margin-side * 2;
 		float: none;
-		max-width: @page-width;
 
 		#p-views {
 			ul {

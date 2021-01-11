@@ -8,31 +8,31 @@
 
 .mw-pt-languages {
 	display: block;
-	border: 0;
 	width: auto;
-	background: 0;
-	margin: 0;
 	padding: @margin-side 0;
+	border: 0;
+	margin: 0;
+	background: 0;
 }
 
 .mw-pt-languages-label {
 	display: block;
-	border: 0;
+	width: auto;
 	padding: 0;
-	color: @base-30;
+	border: 0;
 	background: 0;
+	color: @base-30;
 	font-size: 0.8125rem;
 	font-weight: normal;
-	text-transform: uppercase;
 	letter-spacing: 1px;
-	width: auto;
+	text-transform: uppercase;
 }
 
 .mw-pt-languages-list {
-	padding: @content-margin-top 0 0 0;
 	display: flex;
-	flex-wrap: wrap;
 	width: auto;
+	flex-wrap: wrap;
+	padding: @content-margin-top 0 0 0;
 	visibility: hidden; // Hide dots
 
 	> * {
@@ -51,15 +51,15 @@
 }
 
 .mw-pt-progress {
-	margin: 0 0 @margin-side / 2 0;
-	padding: @margin-side / 4 @margin-side / 2;
 	display: block;
+	padding: @margin-side / 4 @margin-side / 2;
 	border: 1px solid @base-90;
+	margin: 0 0 @margin-side / 2 0;
 	background: @base-90;
 	color: @base-30;
 	font-size: @content-caption-size;
-	.boxshadow(1);
 	transition: @transition-transform-quick, @transition-box-shadow-quick;
+	.boxshadow(1);
 
 	&:hover {
 		.boxshadow(2);
@@ -72,25 +72,25 @@
 }
 
 .mw-pt-progress--low {
-	background: @red-50;
 	border-color: @red-50;
+	background: @red-50;
 	color: @base-100 !important; // bypass visited styles
 }
 
 .mw-pt-progress--med {
-	background: @yellow-50;
 	border-color: @yellow-50;
+	background: @yellow-50;
 	color: @base-100 !important; // bypass visited styles
 }
 
 .mw-pt-progress--high {
-	background: @green-50;
 	border-color: @green-50;
+	background: @green-50;
 	color: @base-100 !important; // bypass visited styles
 }
 
 .mw-pt-progress--complete {
-	background: @green-30;
 	border-color: @green-30;
+	background: @green-30;
 	color: @base-100 !important; // bypass visited styles
 }
