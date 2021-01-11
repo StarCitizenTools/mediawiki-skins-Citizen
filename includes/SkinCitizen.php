@@ -775,15 +775,15 @@ class SkinCitizen extends SkinMustache {
 
 		// Add HTML class based on theme set
 		$out->addHtmlClasses( 'skin-citizen-' . $theme );
-		if ($this->getRequest()->getCookie('skin-citizen-theme-override') === null) {
+		if ( $this->getRequest()->getCookie( 'skin-citizen-theme-override' ) === null ) {
 			// Only set the theme cookie if the theme wasn't overridden by the user through the button
-			$this->getRequest()->response()->setCookie('skin-citizen-theme', $theme, 0, [
+			$this->getRequest()->response()->setCookie( 'skin-citizen-theme', $theme, 0, [
 				'httpOnly' => false,
-			]);
+			] );
 		}
 
 		// Script content at 'skins.citizen.scripts.theme-switcher/inline.js
-		$this->getOutput()->addHeadItem('theme-switcher', '<script>(()=>{try{const t=document.cookie.match(/skin-citizen-theme=(dark|light|auto)/),e=null!==t?t.pop():null;null!==e&&(document.documentElement.classList.remove(...["auto","dark","light"].map(t=>"skin-citizen-"+t)),document.documentElement.classList.add("skin-citizen-"+e))}catch(t){}})();</script>');
-		$this->getOutput()->addModules('skins.citizen.scripts.theme-switcher');
+		$this->getOutput()->addHeadItem( 'theme-switcher', '<script>(()=>{try{const t=document.cookie.match(/skin-citizen-theme=(dark|light|auto)/),e=null!==t?t.pop():null;null!==e&&(document.documentElement.classList.remove(...["auto","dark","light"].map(t=>"skin-citizen-"+t)),document.documentElement.classList.add("skin-citizen-"+e))}catch(t){}})();</script>' );
+		$this->getOutput()->addModules( 'skins.citizen.scripts.theme-switcher' );
 	}
 }

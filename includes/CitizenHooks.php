@@ -208,9 +208,9 @@ class CitizenHooks {
 	 * @return bool|void True or no return value to continue or false to abort
 	 */
 	public static function onPreferencesFormPreSave( $formData, $form, $user, &$result, $oldUserOptions	) {
-		if (isset($formData['CitizenThemeUser']) && $formData['CitizenThemeUser'] !== 'auto') {
+		if ( isset( $formData['CitizenThemeUser'] ) && $formData['CitizenThemeUser'] !== 'auto' ) {
 			// Reset override cookie from theme toggle
-			$form->getOutput()->getRequest()->response()->setCookie('skin-citizen-theme-override', null);
+			$form->getOutput()->getRequest()->response()->setCookie( 'skin-citizen-theme-override', null );
 		}
 	}
 }
