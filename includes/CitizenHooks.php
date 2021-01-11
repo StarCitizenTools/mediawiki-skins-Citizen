@@ -175,7 +175,7 @@ class CitizenHooks {
 					wfMessage( 'prefs-citizen-theme-option-light' )->escaped() => 'light',
 					wfMessage( 'prefs-citizen-theme-option-dark' )->escaped() => 'dark',
 				],
-				'default' => 'auto',
+				'default' => MediaWikiServices::getInstance()->getUserOptionsLookup()->getOption($user, 'CitizenThemeUser') ?? 'auto',
 				// Only show this section when the Citizen skin is checked. The JavaScript client also uses
 				// this state to determine whether to show or hide the whole section.
 				'hide-if' => [ '!==', 'wpskin', 'citizen' ],

@@ -51,7 +51,6 @@ main();
 
 	toggleBtn.addEventListener( 'click', function ( clickEvent ) {
 		try {
-
 			theme = theme === 'dark' ? 'light' : 'dark';
 
 			clickEvent.target.classList.remove( 'theme-toggle-light', 'theme-toggle-dark' );
@@ -66,21 +65,7 @@ main();
 			} catch ( e ) {
 			}
 
-			[ 'auto', 'dark', 'light' ].map( function ( themeSuffix ) {
-				// * skin-citizen-auto
-				// * skin-citizen-dark
-				// * skin-citizen-light
-				return 'skin-citizen-' + themeSuffix;
-			} ).forEach( function ( cssClass ) {
-				// * skin-citizen-auto
-				// * skin-citizen-dark
-				// * skin-citizen-light
-				document.documentElement.classList.remove( cssClass );
-			} );
-			// * skin-citizen-auto
-			// * skin-citizen-dark
-			// * skin-citizen-light
-			document.documentElement.classList.add( 'skin-citizen-' + theme );
+			window.switchTheme();
 		} catch ( e ) {
 		}
 	} );

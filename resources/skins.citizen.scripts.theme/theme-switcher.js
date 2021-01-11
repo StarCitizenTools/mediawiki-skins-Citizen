@@ -6,7 +6,17 @@
 ( function () {
 	var prefersColorSchemeDarkQuery,
 		userTheme,
-		theme;
+		theme,
+		setCookieChangeTheme;
+
+	setCookieChangeTheme = function ( themeName ) {
+		try {
+			window.mw.cookie.set( 'skin-citizen-theme', themeName );
+		} catch ( e ) {
+		}
+
+		window.switchTheme();
+	};
 
 	if ( typeof window.mw === 'undefined' ) {
 		return;
@@ -26,6 +36,7 @@
 	if ( theme !== 'auto' ) {
 		return;
 	}
+
 	try {
 		if ( window.mw.cookie.get( 'skin-citizen-theme-override' ) === '1' ) {
 			return;
@@ -33,21 +44,14 @@
 	} catch ( e ) {}
 
 	prefersColorSchemeDarkQuery = window.matchMedia( '(prefers-color-scheme: dark)' );
+	theme = 'light';
 	if ( prefersColorSchemeDarkQuery.matches ) {
 		theme = 'dark';
 	}
 
-	prefersColorSchemeDarkQuery.addEventListener( 'change', function ( e ) {
-		if ( e.matches ) {
-			theme = 'dark';
-		} else {
-			theme = 'light';
-		}
-	} );
+	setCookieChangeTheme( theme );
 
-	try {
-		window.mw.cookie.set( 'skin-citizen-theme', null );
-		window.mw.cookie.set( 'skin-citizen-theme', theme );
-	} catch ( e ) {
-	}
+	prefersColorSchemeDarkQuery.addEventListener( 'change', function ( e ) {
+		setCookieChangeTheme( e.matches ? 'dark' : 'light' );
+	} );
 }() );
