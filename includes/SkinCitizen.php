@@ -462,11 +462,10 @@ class SkinCitizen extends SkinMustache {
 	private function buildThemeToggleProps() : array {
 		$skin = $this->getSkin();
 
-		$toggleMsg = $skin->msg( 'citizen-search-toggle' )->text();
-		$accessKey = Linker::accesskey( 'search' );
+		$toggleMsg = $skin->msg( 'citizen-theme-toggle' )->text();
 
 		return [
-			'msg-citizen-theme-toggle-shortcut' => $toggleMsg . ' [alt-shift-' . $accessKey . ']',
+			'msg-citizen-theme-toggle-shortcut' => $toggleMsg,
 		];
 	}
 

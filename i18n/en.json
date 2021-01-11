@@ -1,6 +1,6 @@
 {
 	"@metadata": {
-		"authors": [ 
+		"authors": [
 			"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 			"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
 		]
@@ -13,6 +13,7 @@
 
 	"citizen-drawer-toggle": "Toggle menu",
 	"citizen-search-toggle": "Toggle search",
+	"citizen-theme-toggle": "Toggle theme color",
 
 	"citizen-footer-desc": "Edit this text on MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Edit this text on MediaWiki:Citizen-footer-tagline",
