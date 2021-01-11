@@ -4,7 +4,7 @@
  *
  * https://starcitizen.tools
  */
-(() => {
+window.switchTheme = () => {
 	try {
 		const cookieTheme = document.cookie.match(/skin-citizen-theme=(dark|light|auto)/);
 		const theme = cookieTheme !== null ? cookieTheme.pop() : null;
@@ -17,4 +17,8 @@
 		}
 	} catch (e) {
 	}
+}
+
+(() => {
+	window.switchTheme()
 })();
