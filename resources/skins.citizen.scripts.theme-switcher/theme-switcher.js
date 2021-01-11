@@ -4,53 +4,50 @@
  */
 
 ( function () {
-	var isGlobalAutoSet,
-		isUserPreferenceAuto,
-		enableAutoSwitcher,
-		switchColorScheme,
-		useDarkTheme,
-		prefersColorSchemeDarkQuery;
+	var prefersColorSchemeDarkQuery,
+		userTheme,
+		theme;
 
 	if ( typeof window.mw === 'undefined' ) {
 		return;
 	}
 
-	isGlobalAutoSet = window.mw.config.get( 'wgCitizenThemeDefault' ) === 'auto' ||
-        window.mw.config.get( 'wgCitizenThemeDefault' ) === null;
-
-	isUserPreferenceAuto = window.mw.user.options.get( 'CitizenThemeUser' ) === 'auto';
-
-	enableAutoSwitcher = isGlobalAutoSet || isUserPreferenceAuto;
-
-	if ( !enableAutoSwitcher ) {
-		return;
+	theme = window.mw.config.get( 'wgCitizenThemeDefault' );
+	if ( theme === null ) {
+		theme = 'auto';
 	}
 
-	switchColorScheme = function ( useDark ) {
-		var dark;
+	userTheme = window.mw.user.options.get( 'CitizenThemeUser' );
 
-		if ( useDark ) {
-			document.documentElement.classList.add( 'skin-citizen-dark' );
-			document.documentElement.classList.remove( 'skin-citizen-light' );
-			dark = true;
-		} else {
-			document.documentElement.classList.add( 'skin-citizen-light' );
-			document.documentElement.classList.remove( 'skin-citizen-dark' );
-			dark = false;
-		}
+	if ( userTheme !== null ) {
+		theme = userTheme;
+	}
 
-		try {
-			localStorage.setItem( 'skin-citizen-dark', dark );
-		} catch ( e ) {}
-	};
-
+	if ( theme !== 'auto' ) {
+		return;
+	}
 	try {
-		useDarkTheme = localStorage.getItem( 'skin-citizen-dark' );
+		if ( window.mw.cookie.get( 'skin-citizen-theme-override' ) === '1' ) {
+			return;
+		}
 	} catch ( e ) {}
 
 	prefersColorSchemeDarkQuery = window.matchMedia( '(prefers-color-scheme: dark)' );
+	if ( prefersColorSchemeDarkQuery.matches ) {
+		theme = 'dark';
+	}
 
-	if ( useDarkTheme || prefersColorSchemeDarkQuery.matches ) {
-		switchColorScheme( true );
+	prefersColorSchemeDarkQuery.addEventListener( 'change', function ( e ) {
+		if ( e.matches ) {
+			theme = 'dark';
+		} else {
+			theme = 'light';
+		}
+	} );
+
+	try {
+		window.mw.cookie.set( 'skin-citizen-theme', null );
+		window.mw.cookie.set( 'skin-citizen-theme', theme );
+	} catch ( e ) {
 	}
 }() );

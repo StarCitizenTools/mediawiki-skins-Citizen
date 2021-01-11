@@ -34,7 +34,8 @@
 						"skins.citizen.icons.t",
 						"skins.citizen.icons.pt",
 						"skins.citizen.icons.footer",
-						"skins.citizen.icons.badges"
+						"skins.citizen.icons.badges",
+						"skins.citizen.icons.theme-switcher"
 					]
 				}
 			]
@@ -66,7 +67,8 @@
 		"ResourceLoaderGetConfigVars": "Citizen\\CitizenHooks::onResourceLoaderGetConfigVars",
 		"SkinPageReadyConfig": "Citizen\\CitizenHooks::onSkinPageReadyConfig",
 		"ThumbnailBeforeProduceHTML": "Citizen\\CitizenHooks::onThumbnailBeforeProduceHTML",
-		"GetPreferences": "Citizen\\CitizenHooks::onGetPreferences"
+		"GetPreferences": "Citizen\\CitizenHooks::onGetPreferences",
+		"PreferencesFormPreSave": "Citizen\\CitizenHooks::onPreferencesFormPreSave"
 	},
 	"ResourceModules": {
 		"skins.citizen.styles": {
@@ -141,7 +143,8 @@
 				"resources/skins.citizen.scripts.theme-switcher/theme-switcher.js"
 			],
 			"dependencies": [
-				"mediawiki.api"
+				"mediawiki.api",
+				"mediawiki.cookie"
 			]
 		},
 		"skins.citizen.scripts.toc": {
@@ -256,6 +259,15 @@
 			"images": {
 				".suggestion-thumbnail": "resources/skins.citizen.icons.search/noimage.svg",
 				"#suggestion-special-icon": "resources/skins.citizen.icons.search/searchfulltext.svg"
+			}
+		},
+		"skins.citizen.icons.theme-switcher": {
+			"class": "ResourceLoaderImageModule",
+			"selector": ".theme-toggle-{name}",
+			"useDataURI": false,
+			"images": {
+				"light": "resources/skins.citizen.icons.theme-switcher/dark_mode.svg",
+				"dark": "resources/skins.citizen.icons.theme-switcher/light_mode.svg"
 			}
 		}
 	},
@@ -377,9 +389,9 @@
 			"+ext.uploadWizard": "skinStyles/extensions/UploadWizard/ext.uploadWizard.less",
 
 			"+ext.visualEditor.desktopArticleTarget.init": "skinStyles/extensions/VisualEditor/ext.visualEditor.less",
-      
+
 			"+ext.wikiEditor": "skinStyles/extensions/WikiEditor/ext.wikiEditor.less",
-      
+
 			"+capiunto.infobox.main": "skinStyles/extensions/Capiunto/capiunto.infobox.main.less",
 
 			"+mediawiki.action.history.styles": "skinStyles/mediawiki/action/mediawiki.action.history.styles.less",
@@ -494,11 +506,11 @@
 			"descriptionmsg": "citizen-config-enablexxssprotection",
 			"public": true
 		},
-		"EnableStrictReferrerPolicy": {	
-			"value": false,	
-			"description": "Enable or disable strict-origin-when-cross-origin referrer policy",	
-			"descriptionmsg": "citizen-config-enablestrictreferrerpolicy",	
-			"public": true	
+		"EnableStrictReferrerPolicy": {
+			"value": false,
+			"description": "Enable or disable strict-origin-when-cross-origin referrer policy",
+			"descriptionmsg": "citizen-config-enablestrictreferrerpolicy",
+			"public": true
 		},
 		"EnableFeaturePolicy": {
 			"value": false,
