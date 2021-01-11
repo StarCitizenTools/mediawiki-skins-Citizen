@@ -2,9 +2,9 @@
 	position: fixed;
 	z-index: 10;
 	top: 0;
+	display: flex;
 	width: 100%;
 	height: @header-height;
-	display: flex;
 	justify-content: space-between;
 
 	&-tools {
@@ -17,18 +17,18 @@
 
 	ul,
 	li {
-		margin: 0;
 		display: block;
+		margin: 0;
 	}
 }
 
 #mw-header {
 	&-background {
 		position: absolute;
-		left: 0;
-		right: 0;
-		box-shadow: 0 0 50px @header-height var( --header-mw-header-background-box-shadow-color );
 		z-index: -1;
+		right: 0;
+		left: 0;
+		box-shadow: 0 0 50px @header-height var( --header-mw-header-background-box-shadow-color );
 		transition: @transition-box-shadow;
 	}
 }
@@ -36,8 +36,8 @@
 // User icon bar
 #p-personal-extra {
 	ul {
-		height: 56px;
 		display: flex;
+		height: 56px;
 		align-items: center;
 	}
 }

@@ -24,8 +24,8 @@
 }
 
 .oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button {
-	background-color: @base-90;
 	border-color: @base-90;
+	background-color: @base-90;
 
 	&:hover {
 		border-color: @base-100;
@@ -109,36 +109,36 @@
 	.oo-ui-buttonElement-framed {
 		&.oo-ui-widget-enabled {
 			> .oo-ui-buttonElement-button {
+				border-color: @dark-bg-50;
 				background-color: @dark-bg-50;
 				color: @dark-text-90;
-				border-color: @dark-bg-50;
 
 				&:hover {
+					border-color: @dark-bg-50;
 					background-color: @dark-bg-40;
 					color: @dark-text-80;
-					border-color: @dark-bg-50;
 				}
 
 				&:active,
 				&:active:focus {
+					border-color: @dark-bg-60;
 					background-color: @dark-bg-30;
 					color: @dark-text-90;
-					border-color: @dark-bg-60;
 				}
 			}
 
 			&.oo-ui-buttonElement-pressed > .oo-ui-buttonElement-button {
+				border-color: @dark-bg-60 !important;
 				background-color: @dark-bg-30;
 				color: @dark-text-90;
-				border-color: @dark-bg-60 !important;
 			}
 		}
 
 		&.oo-ui-widget-disabled {
 			> .oo-ui-buttonElement-button {
+				border-color: @dark-bg-30;
 				background-color: @dark-bg-30;
 				color: @dark-text-60;
-				border-color: @dark-bg-30;
 			}
 		}
 	}
@@ -177,8 +177,8 @@
 	}
 
 	.oo-ui-popupWidget-popup {
-		background-color: @dark-bg-50;
 		border-color: @dark-bg-50;
+		background-color: @dark-bg-50;
 	}
 
 	.oo-ui-popupWidget-anchored-top,
@@ -198,8 +198,8 @@
 
 	.oo-ui-checkboxInputWidget [ type='checkbox' ] {
 		+ span {
-			background-color: @dark-bg-0;
 			border-color: @dark-bg-60;
+			background-color: @dark-bg-0;
 		}
 
 		&:indeterminate + span:before {
@@ -207,8 +207,8 @@
 		}
 
 		&:disabled + span {
-			background-color: @dark-bg-30;
 			border-color: @dark-bg-30;
+			background-color: @dark-bg-30;
 		}
 	}
 
@@ -228,13 +228,13 @@
 				color: @dark-text-90;
 
 				&:hover {
-					color: @dark-text-80;
 					border-color: @dark-bg-50;
+					color: @dark-text-80;
 				}
 
 				&:active {
-					color: @dark-text-90;
 					border-color: @dark-bg-60;
+					color: @dark-text-90;
 				}
 			}
 		}
@@ -243,22 +243,22 @@
 			background-color: @dark-bg-20;
 
 			select {
-				color: @dark-text-70;
 				border-color: @dark-bg-30;
+				color: @dark-text-70;
 			}
 		}
 	}
 
 	.oo-ui-radioInputWidget [ type='radio' ] {
 		+ span {
-			background-color: @dark-bg-0;
 			border-color: @dark-bg-60;
+			background-color: @dark-bg-0;
 		}
 
 		&:disabled {
 			+ span {
-				background-color: @dark-bg-30;
 				border-color: @dark-bg-30;
+				background-color: @dark-bg-30;
 			}
 
 			&:checked + span {
@@ -273,9 +273,9 @@
 
 	.oo-ui-textInputWidget {
 		.oo-ui-inputWidget-input {
+			border-color: @dark-bg-50 !important;
 			background-color: @dark-bg-0 !important;
 			color: @dark-text-100 !important;
-			border-color: @dark-bg-50 !important;
 		}
 
 		.oo-ui-pendingElement-pending {
@@ -304,11 +304,11 @@
 
 		&.oo-ui-widget-disabled {
 			.oo-ui-inputWidget-input {
-				background-color: @dark-bg-20;
-				-webkit-text-fill-color: @dark-text-70;
-				color: @dark-text-70;
-				text-shadow: 0 1px 1px @dark-bg-0;
 				border-color: @dark-bg-30;
+				background-color: @dark-bg-20;
+				color: @dark-text-70;
+				-webkit-text-fill-color: @dark-text-70;
+				text-shadow: 0 1px 1px @dark-bg-0;
 			}
 
 			> .oo-ui-labelElement-label {
@@ -319,8 +319,8 @@
 	}
 
 	.oo-ui-menuSelectWidget {
-		background-color: @dark-bg-10;
 		border-color: @dark-bg-50 !important;
+		background-color: @dark-bg-10;
 	}
 
 	.oo-ui-menuOptionWidget {
@@ -355,14 +355,14 @@
 				color: @dark-text-90;
 
 				&:hover {
+					border-color: @dark-bg-50;
 					background-color: @dark-bg-0;
 					color: @dark-text-80;
-					border-color: @dark-bg-50;
 				}
 
 				&:active {
-					color: @dark-text-100;
 					border-color: @dark-bg-60;
+					color: @dark-text-100;
 				}
 			}
 
@@ -375,10 +375,10 @@
 
 		&.oo-ui-widget-disabled {
 			.oo-ui-dropdownWidget-handle {
-				color: @dark-text-70;
-				text-shadow: 0 1px 1px @dark-bg-0;
 				border-color: @dark-bg-30;
 				background-color: @dark-bg-20;
+				color: @dark-text-70;
+				text-shadow: 0 1px 1px @dark-bg-0;
 			}
 		}
 	}
@@ -398,8 +398,8 @@
 	}
 
 	.oo-ui-progressBarWidget {
-		background-color: @dark-bg-0;
 		border-color: @dark-bg-50;
+		background-color: @dark-bg-0;
 
 		&.oo-ui-widget-disabled {
 			.oo-ui-progressBarWidget-bar {

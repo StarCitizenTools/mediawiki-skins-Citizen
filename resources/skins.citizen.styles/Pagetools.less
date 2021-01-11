@@ -1,12 +1,12 @@
 #page-tools {
 	position: absolute;
+	z-index: 1;
 	display: flex;
 	transform: translateX( ~'calc( (100vw - @{page-width}) / 2 - @{margin-side} * 2 - 100%)' ); // magic
-	z-index: 1;
 
 	ul {
-		margin: 0;
 		display: flex;
+		margin: 0;
 		list-style: none;
 	}
 
@@ -45,19 +45,19 @@
 
 	// TODO: Need to make value more flexible
 	ul {
-		z-index: -1;
-		pointer-events: none;
-		.menu-container;
 		position: absolute;
+		z-index: -1;
 		opacity: 0;
-		.boxshadow(4);
+		pointer-events: none;
 		transition: @transition-opacity-quick, @transition-box-shadow-quick;
+		.menu-container;
+		.boxshadow(4);
 
 		a {
 			.menu-item-link;
 			justify-content: space-between;
-			font-size: @ui-menu-text;
 			padding: @padding-menu-item;
+			font-size: @ui-menu-text;
 
 			&:after {
 				.resource-loader-list-icon;
@@ -116,8 +116,8 @@
 // TODO: Flexible value
 @media ( max-width: @screen2 ) {
 	#page-tools {
-		z-index: unset;
 		position: relative;
+		z-index: unset;
 		margin-left: @margin-side / 2;
 		float: right;
 		transform: none;

@@ -47,8 +47,8 @@
 		> div.tright,
 		> div.floatright,
 		> table.floatright {
-			z-index: 2;
 			position: relative;
+			z-index: 2;
 			margin: 0.6rem 1.4rem;
 			transition: @transition-margin;
 		}
@@ -107,23 +107,23 @@
 
 		.mw-editsection {
 			position: absolute;
+			left: 0;
 			display: flex;
 			margin: 0;
-			left: 0;
 			transform: ~'translateX(calc(-100% - @{margin-side}))';
 
 			a {
 				.resource-loader-icon-link-small;
 				padding: @margin-side / 4;
-				opacity: @opacity-icon;
-				transition: @transition-opacity;
-				text-indent: -9999px; // Hide text
 				background: 0 !important; // Cancel above styles
+				opacity: @opacity-icon;
+				text-indent: -9999px; // Hide text
+				transition: @transition-opacity;
 
 				&:before {
 					.resource-loader-icon;
-					background-size: contain;
 					display: block;
+					background-size: contain;
 				}
 
 				&:hover,
@@ -160,8 +160,8 @@
 	h4,
 	h5,
 	h6 {
-		margin: 0;
 		padding: 0;
+		margin: 0;
 		color: @color-content-header;
 	}
 
@@ -244,10 +244,10 @@
 			> div.tright,
 			> div.floatright,
 			> table.floatright {
-				margin: 0.6rem -@margin-side !important;
 				width: 100vw;
-				float: unset;
+				margin: 0.6rem -@margin-side !important;
 				clear: none;
+				float: unset;
 			}
 
 			> div.tnone,
@@ -311,8 +311,8 @@
 			> div.tright,
 			> div.floatright,
 			> table.floatright {
-				z-index: 0; // Reset so it doesn't cover ToC
 				position: relative;
+				z-index: 0; // Reset so it doesn't cover ToC
 			}
 		}
 	}

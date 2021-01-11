@@ -1,6 +1,6 @@
 .catlinks {
-	margin: 0 @negative-margin;
 	padding: @margin-side;
+	margin: 0 @negative-margin;
 	line-height: 1.2;
 
 	.mw-normal-catlinks {
@@ -10,47 +10,47 @@
 			display: block;
 			color: @color-content-caption;
 			font-size: @content-caption-size;
-			text-transform: uppercase;
 			letter-spacing: 1px;
+			text-transform: uppercase;
 		}
 
 		> ul {
-			margin: 0;
-			padding-top: @content-margin-top;
 			display: flex;
 			flex-wrap: wrap;
+			padding-top: @content-margin-top;
+			margin: 0;
 			font-size: @content-caption-size; // Reset font
 
 			li {
 				display: block;
-				margin: 0 @margin-side / 2 @margin-side / 2 0;
 				padding: 0;
 				border: 0;
+				margin: 0 @margin-side / 2 @margin-side / 2 0;
 
 				&:first-of-type {
 					margin-left: 0;
 				}
 
 				a {
-					padding: @margin-side / 4 @margin-side / 2;
 					display: block;
+					padding: @margin-side / 4 @margin-side / 2;
 					border: 1px solid var( --catlinks-ul-li-a-border-color );
 					background-color: var( --catlinks-ul-li-a-background-color );
 					color: var( --catlinks-ul-li-a-color ) !important; // Overr
-					.boxshadow(1);
 					transition: @transition-background-quick, @transition-color-quick, @transition-border-quick, @transition-transform-quick, @transition-box-shadow-quick;
+					.boxshadow(1);
 
 					&:hover {
-						background-color: @color-link-active;
 						border-color: @color-link-active;
+						background-color: @color-link-active;
 						color: @base-100 !important;
 						transform: translateY( -2px );
 						.boxshadow(2);
 					}
 
 					&.new:hover {
-						background-color: @color-link-new-active;
 						border-color: @color-link-new-active;
+						background-color: @color-link-new-active;
 					}
 				}
 			}
@@ -60,8 +60,8 @@
 
 @media ( max-width: @screen1 ) {
 	.catlinks {
-		margin: 0 !important; // somehow got overrided
 		padding: @margin-side 0;
+		margin: 0 !important; // somehow got overrided
 	}
 }
 

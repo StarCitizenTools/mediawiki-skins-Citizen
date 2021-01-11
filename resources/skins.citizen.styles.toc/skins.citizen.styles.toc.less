@@ -38,9 +38,9 @@
 .toc {
 	position: fixed;
 	z-index: -1; // So that it is below float objects in content
-	max-width: 450px;
 	top: @header-height;
 	left: 0;
+	max-width: 450px;
 	padding: @margin-side;
 	color: var( --toc-color );
 
@@ -72,8 +72,8 @@
 		&.toclevel-4,
 		&.toclevel-5,
 		&.toclevel-6 {
-			margin-left: 9px;
 			border-left: 1px dashed;
+			margin-left: 9px;
 		}
 	}
 
@@ -81,8 +81,8 @@
 		color: var( --toc-li-active-a-li-color );
 
 		> a {
-			color: inherit !important;
 			border-color: currentColor;
+			color: inherit !important;
 		}
 
 		a,
@@ -93,10 +93,10 @@
 
 	a {
 		display: inline-block;
-		margin: @content-margin-top / 4 0;
 		padding-left: 9px;
-		color: var( --toc-a-color );
 		border-left: 3px solid transparent;
+		margin: @content-margin-top / 4 0;
+		color: var( --toc-a-color );
 
 		&:hover {
 			color: var( --toc-a-hover-color );
@@ -113,15 +113,15 @@
 	}
 
 	> ul {
-		margin: @content-margin-top * 0.75 0 0 0 !important;
 		position: relative;
 		z-index: 2;
-		border-left: 1px dashed;
+		display: block;
+		overflow: visible auto;
 		max-width: ~'calc( (100vw - '@page-width + @margin-side * 4 ~' ) / 2 )';
 		max-height: ~'calc( 100vh - '@header-height * 2 + @margin-side * 4 ~' )';
-		overflow: visible auto;
+		border-left: 1px dashed;
+		margin: @content-margin-top * 0.75 0 0 0 !important;
 		overscroll-behavior: contain;
-		display: block;
 	}
 }
 
@@ -129,8 +129,8 @@
 	.toc {
 		z-index: 10;
 		height: 100%;
-		margin-top: -@header-height;
 		padding: 0;
+		margin-top: -@header-height;
 		transform: translateX( -100% );
 
 		&:before,
@@ -149,11 +149,11 @@
 				z-index: 7;
 				right: -100vw;
 				bottom: 0;
-				margin: @margin-side;
-				padding: 0 @margin-side / 2;
+				display: block;
 				width: 39px;
 				height: 56px;
-				display: block;
+				padding: 0 @margin-side / 2;
+				margin: @margin-side;
 				background-color: var( --screen3-toc-toggle-label-background-color );
 				border-radius: 100%;
 				.boxshadow(4);
@@ -189,16 +189,16 @@
 
 		> ul {
 			display: block !important; // So that animation is visible
-			margin: 0 !important;
-			padding: @header-height + @margin-side @margin-side @margin-side * 2 @margin-side / 2 !important; // More scroll spaces
 			max-width: none;
 			height: 100%;
 			max-height: ~'calc( 100vh - '@header-height + @margin-side * 3 ~')';
+			padding: @header-height + @margin-side @margin-side @margin-side * 2 @margin-side / 2 !important; // More scroll spaces
+			margin: 0 !important;
 			background: var( --screen3-toc-ul-background-color );
 			border-radius: 0 @border-radius-large @border-radius-large 0;
-			.boxshadow(3);
 			transform: translateX( 100% );
 			transition: @transition-transform;
+			.boxshadow(3);
 		}
 	}
 

@@ -7,15 +7,15 @@
 @import '../../../resources/mixins.less';
 
 .ext-related-articles-card-list {
-	margin-top: 0;
-	padding-top: @content-margin-top; // Give room for shadows and translate
 	overflow: visible; // Show shadow
+	padding-top: @content-margin-top; // Give room for shadows and translate
+	margin-top: 0;
 
 	.ext-related-articles-card {
 		border: 1px solid @base-80 !important;
 		border-radius: 0 !important;
-		.boxshadow(1);
 		transition: @transition-transform-quick;
+		.boxshadow(1);
 
 		&:hover {
 			.boxshadow(3);
@@ -29,13 +29,13 @@
 }
 
 .ext-related-articles-card-extract:after {
-	content: '';
 	position: absolute;
 	right: 0;
 	bottom: 0;
 	width: 10%;
 	height: 1em;
 	background: linear-gradient( to right, rgba( 255, 255, 255, 0 ), rgba( 255, 255, 255, 1 ) 50% );
+	content: '';
 }
 
 .skin-citizen-dark {

@@ -21,8 +21,8 @@
 
 	#page-tools {
 		z-index: 1; // Fix collision
-		pointer-events: auto;
 		opacity: 1;
+		pointer-events: auto;
 	}
 
 	.mw-footer {
@@ -151,9 +151,9 @@
 			// Will change if I figure out a way to load the icon only for VE
 			.ve-ui-toolbar-saveButton {
 				> .oo-ui-buttonElement-button {
-					padding: 0 !important;
 					width: 60px !important;
 					height: 42px !important;
+					padding: 0 !important;
 
 					&:before {
 						top: 12px;
@@ -167,13 +167,13 @@
 
 					&:before,
 					&:after {
-						content: '';
 						position: absolute;
 						left: 30px;
 						display: block;
 						width: 2px;
 						height: 11px;
 						background: #fff;
+						content: '';
 					}
 				}
 
@@ -200,8 +200,8 @@
 
 	.ve-ui-mwSaveDialog {
 		&-options {
-			background-color: @dark-bg-50;
 			border-color: @dark-bg-40;
+			background-color: @dark-bg-50;
 		}
 
 		&--editSummary-count {
