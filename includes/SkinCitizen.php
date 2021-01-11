@@ -759,6 +759,7 @@ class SkinCitizen extends SkinMustache {
 	 * If the theme is set to auto, the theme switcher script will be added
 	 *
 	 * @param OutputPage $out
+	 * @param array $options
 	 */
 	private function setSkinTheme( OutputPage $out, array &$options ) {
 		// Set theme to site theme
@@ -783,7 +784,10 @@ class SkinCitizen extends SkinMustache {
 		}
 
 		// Script content at 'skins.citizen.scripts.theme/inline.js
-		$this->getOutput()->addHeadItem( 'theme-switcher', '<script>(()=>{try{const t=document.cookie.match(/skin-citizen-theme=(dark|light|auto)/),e=null!==t?t.pop():null;null!==e&&(document.documentElement.classList.remove(...["auto","dark","light"].map(t=>"skin-citizen-"+t)),document.documentElement.classList.add("skin-citizen-"+e))}catch(t){}})();</script>' );
+		$this->getOutput()->addHeadItem( 
+			'theme-switcher',
+			'<script>(()=>{try{const t=document.cookie.match(/skin-citizen-theme=(dark|light|auto)/),e=null!==t?t.pop():null;null!==e&&(document.documentElement.classList.remove(...["auto","dark","light"].map(t=>"skin-citizen-"+t)),document.documentElement.classList.add("skin-citizen-"+e))}catch(t){}})();</script>' 
+		);
 
 		// Add styles and scripts module
 		$options['scripts'] = array_merge(
