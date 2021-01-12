@@ -5,14 +5,14 @@
 
 @import '../../../resources/variables.less';
 
-@media ( prefers-color-scheme: dark ) {
+.skin-citizen-dark {
 	#pagehistory li {
 		border: 1px solid @dark-bg-0;
 	}
 
 	#pagehistory li.selected {
+		border: 1px dashed @dark-bg-50;
 		background-color: @dark-bg-10;
 		color: @dark-text-90;
-		border: 1px dashed @dark-bg-50;
 	}
 }

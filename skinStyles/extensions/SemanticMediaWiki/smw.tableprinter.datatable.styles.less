@@ -6,20 +6,20 @@
 
 @import '../../../resources/variables.less';
 
-@media ( prefers-color-scheme: dark ) {
+.skin-citizen-dark {
 	.smw-datatable table.dataTable.no-footer {
 		border-bottom: 1px solid @dark-bg-50;
 	}
 
 	.smw-datatable table.dataTable tfoot td {
-		border-bottom: 1px solid @dark-bg-50;
 		border-top: 1px solid @dark-bg-50;
+		border-bottom: 1px solid @dark-bg-50;
 	}
 
 	.smw-datatable table.dataTable.compact tfoot th,
 	.smw-datatable table.dataTable.compact tfoot td {
-		border-bottom: 1px solid @dark-bg-50;
 		border-top: 1px solid @dark-bg-50;
+		border-bottom: 1px solid @dark-bg-50;
 	}
 
 	.smw-datatable table.dataTable thead th,
@@ -39,20 +39,20 @@
 
 	.smw-datatable .dataTables_wrapper .dataTables_paginate .paginate_button.current,
 	.smw-datatable .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+		border-color: @dark-bg-30;
 		background: @dark-bg-30;
 		color: @dark-text-90;
-		border-color: @dark-bg-30;
 	}
 
 	.smw-datatable .dataTables_wrapper .dataTables_paginate .paginate_button {
-		color: @dark-text-90;
 		border-color: @dark-bg-20;
+		color: @dark-text-90;
 	}
 
 	.smw-datatable .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+		border-color: @accent-50;
 		background: @accent-50;
 		color: @dark-text-100;
-		border-color: @accent-50;
 	}
 
 	.smw-datatable .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
@@ -62,13 +62,13 @@
 	}
 
 	.smw-datatable .dataTables_wrapper .dataTables_filter input {
-		color: @dark-text-90;
 		border-color: @dark-bg-20;
+		color: @dark-text-90;
 	}
 
 	.smw-datatable .dataTables_wrapper select {
-		color: @dark-text-90;
 		border-color: @dark-bg-20;
+		color: @dark-text-90;
 	}
 
 	.smw-datatable .dataTables_wrapper select:focus,
@@ -87,8 +87,8 @@
 	}
 
 	.smw-datatable-button {
-		color: #586069;
 		border: 1px solid @dark-bg-20;
+		color: #586069;
 	}
 
 	.smw-datatable-button:hover {

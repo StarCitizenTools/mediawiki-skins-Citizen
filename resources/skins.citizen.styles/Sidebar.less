@@ -1,11 +1,11 @@
 .mw-sidebar-sitename {
 	position: fixed;
-	visibility: visible;
 	bottom: @margin-side;
 	left: @margin-side;
 	font-size: 11px;
-	transition: @transition-opacity;
 	-webkit-font-smoothing: subpixel-antialiased;
+	transition: @transition-opacity;
+	visibility: visible;
 
 	.mw-wiki-title {
 		display: block;
@@ -14,15 +14,13 @@
 	}
 }
 
+a.mw-wiki-title {
+	color: var( --color-base--subtle );
+}
+
 @media ( max-width: @screen2 ) {
 	.mw-sidebar-sitename {
 		z-index: -1; // remove link
 		opacity: 0; // hide visual
-	}
-}
-
-@media ( prefers-color-scheme: dark ) {
-	a.mw-wiki-title {
-		color: @dark-text-70;
 	}
 }

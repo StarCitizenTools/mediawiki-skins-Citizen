@@ -5,13 +5,13 @@
 
 @import '../../../resources/variables.less';
 
-@media ( prefers-color-scheme: dark ) {
+.skin-citizen-dark {
 	/**
 	jquery/jquery.selectmenu.css
 	 */
 	.sm_target_clicked {
-		background-color: @dark-bg-20;
 		border-color: rgba( 27, 31, 35, 0.35 );
+		background-color: @dark-bg-20;
 		box-shadow: inset 0 0.15em 0.3em rgba( 27, 31, 35, 0.15 );
 	}
 
@@ -26,9 +26,9 @@
 	.sm_container {
 		border: 1px solid @dark-bg-30;
 		background-color: @dark-bg-10;
-		box-shadow: 0 3px 12px rgba( 0, 0, 0, 0.2 );
 		-moz-box-shadow: 0 3px 12px rgba( 0, 0, 0, 0.2 );
 		-webkit-box-shadow: 0 3px 12px rgba( 0, 0, 0, 0.2 );
+		box-shadow: 0 3px 12px rgba( 0, 0, 0, 0.2 );
 	}
 
 	.sm_header > h3 {
@@ -44,8 +44,8 @@
 	}
 
 	.sm_input {
-		background-color: @dark-bg-0;
 		border: 1px solid @dark-bg-20;
+		background-color: @dark-bg-0;
 		-webkit-box-shadow: inset 0 1px 1px rgba( 0, 0, 0, 0.075 );
 		-moz-box-shadow: inset 0 1px 1px rgba( 0, 0, 0, 0.075 );
 		box-shadow: inset 0 1px 1px rgba( 0, 0, 0, 0.075 );
@@ -73,15 +73,15 @@
 	}
 
 	div.sm_result_area.shadowDown {
-		box-shadow: 0 3px 12px rgba( 0, 0, 0, 0.2 );
 		-moz-box-shadow: 0 3px 12px rgba( 0, 0, 0, 0.2 );
 		-webkit-box-shadow: 0 3px 12px rgba( 0, 0, 0, 0.2 );
+		box-shadow: 0 3px 12px rgba( 0, 0, 0, 0.2 );
 	}
 
 	div.sm_result_area.shadowUp {
-		box-shadow: 0 -1px 12px rgba( 0, 0, 0, 0.2 );
 		-moz-box-shadow: 0 -1px 12px rgba( 0, 0, 0, 0.2 );
 		-webkit-box-shadow: 0 -1px 12px rgba( 0, 0, 0, 0.2 );
+		box-shadow: 0 -1px 12px rgba( 0, 0, 0, 0.2 );
 	}
 
 	.sm_result_tabs {
@@ -93,10 +93,10 @@
 	}
 
 	.sm_result_tabs ul li a.active {
-		color: @dark-text-90;
-		background-color: @dark-bg-0;
 		border-color: @dark-bg-20;
 		border-bottom-color: @dark-bg-0;
+		background-color: @dark-bg-0;
+		color: @dark-text-90;
 	}
 
 	.sm_arrow_bottom > .sm_arrow {
@@ -166,8 +166,8 @@
 	}
 
 	.sm_control_box {
-		background-color: @dark-bg-0;
 		border-top: 1px solid @dark-bg-20;
+		background-color: @dark-bg-0;
 	}
 
 	.sm_control_box button {
@@ -194,10 +194,10 @@
 	}
 
 	div.sm_container_combo.sm_container_open {
+		border: 1px solid #75b9f0;
 		-webkit-box-shadow: inset 0 1px 1px rgba( 0, 0, 0, 0.075 ), 0 0 8px rgba( 82, 168, 236, 0.6 );
 		-moz-box-shadow: inset 0 1px 1px rgba( 0, 0, 0, 0.075 ), 0 0 8px rgba( 82, 168, 236, 0.6 );
 		box-shadow: inset 0 1px 1px rgba( 0, 0, 0, 0.075 ), 0 0 8px rgba( 82, 168, 236, 0.6 );
-		border: 1px solid #75b9f0;
 	}
 
 	input.sm_combo_input[ readonly ],
@@ -217,8 +217,8 @@
 	}
 
 	.sm_navi {
-		background: @dark-bg-20;
 		border-bottom: 1px solid @accent-90;
+		background: @dark-bg-20;
 	}
 
 	.sm_navi > p > a:link,
@@ -250,8 +250,8 @@
 	}
 
 	div.sm_result_area div.pagination > ul > li > a:hover {
-		color: @dark-text-100;
 		background-color: @dark-bg-20;
+		color: @dark-text-100;
 	}
 
 	div.sm_result_area div.pagination > ul > li.disabled > a {
@@ -259,8 +259,8 @@
 	}
 
 	div.sm_result_area div.pagination > ul > li.disabled > a:hover {
-		color: @dark-text-80;
 		background-color: @dark-bg-0;
+		color: @dark-text-80;
 	}
 
 	div.sm_result_area div.pagination > ul > li.pageInfoBox > a {

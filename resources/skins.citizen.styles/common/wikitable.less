@@ -1,8 +1,8 @@
 table.wikitable {
-	background-color: transparent;
-	color: @base-20;
-	border: 0;
+	border: 0; // Override core MW styles
+	background-color: transparent; // Override core MW  styles
 	border-collapse: collapse;
+	color: var( --color-base ); // Override core MW  styles
 
 	caption {
 		margin-top: @content-margin-top;
@@ -13,8 +13,8 @@ table.wikitable {
 		vertical-align: top;
 
 		th {
-			color: @base-30;
 			background-color: transparent;
+			color: var( --color-base--subtle );
 			font-size: @content-caption-size;
 			text-align: left;
 		}
@@ -27,11 +27,11 @@ table.wikitable {
 		td {
 			padding: @margin-side / 2 @margin-side @margin-side / 2 0;
 			border: 0;
-			border-bottom: 1px solid @base-80;
+			border-bottom: 1px solid var( --border-color-base );
 		}
 
 		&:hover {
-			background-color: @base-90;
+			background-color: var( --background-color-quiet--hover );
 		}
 	}
 }
@@ -39,26 +39,5 @@ table.wikitable {
 @media ( max-width: @screen2 ) {
 	table.wikiatble {
 		white-space: nowrap;
-	}
-}
-
-@media ( prefers-color-scheme: dark ) {
-	table.wikitable {
-		color: @dark-text-90;
-
-		tr {
-			th {
-				color: @dark-text-80;
-			}
-
-			th,
-			td {
-				border-color: @dark-bg-20;
-			}
-
-			&:hover {
-				background-color: @dark-bg-10;
-			}
-		}
 	}
 }

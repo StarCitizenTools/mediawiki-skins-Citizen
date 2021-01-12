@@ -5,23 +5,23 @@
 
 @import '../../../resources/variables.less';
 
-@media ( prefers-color-scheme: dark ) {
+.skin-citizen-dark {
 	/**
   	tippy.css
     */
 	.tippy-tooltip {
-		color: @dark-text-100;
 		background-color: @dark-bg-20;
+		color: @dark-text-100;
 	}
 
 	/**
   	light-border.css
     */
 	.tippy-tooltip.light-border-theme {
-		background-color: @dark-bg-0;
 		border: 1px solid rgba( 0, 8, 16, 0.15 );
-		color: @dark-text-90;
+		background-color: @dark-bg-0;
 		box-shadow: 0 3px 14px -0.5px rgba( 0, 8, 16, 0.08 );
+		color: @dark-text-90;
 	}
 
 	.tippy-tooltip.light-border-theme .tippy-backdrop {
@@ -88,9 +88,9 @@
   	light.css
     */
 	.tippy-tooltip.light-theme {
-		color: @dark-text-90;
-		box-shadow: 0 0 20px 4px rgba( 154, 161, 177, 0.15 ), 0 4px 80px -8px rgba( 36, 40, 47, 0.25 ), 0 4px 4px -2px rgba( 91, 94, 105, 0.15 );
 		background-color: @dark-bg-0;
+		box-shadow: 0 0 20px 4px rgba( 154, 161, 177, 0.15 ), 0 4px 80px -8px rgba( 36, 40, 47, 0.25 ), 0 4px 4px -2px rgba( 91, 94, 105, 0.15 );
+		color: @dark-text-90;
 	}
 
 	.tippy-tooltip.light-theme[ x-placement^='top' ] .tippy-arrow {

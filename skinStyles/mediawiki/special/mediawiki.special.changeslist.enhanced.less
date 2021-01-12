@@ -11,10 +11,10 @@
  */
 
 table.mw-enhanced-rc {
-	margin: 0 !important;
-	font-size: @content-monospace-size;
 	padding: @margin-side / 2 0;
 	border-bottom: 1px solid @base-80;
+	margin: 0 !important;
+	font-size: @content-monospace-size;
 	transition: @transition-background-quick;
 
 	&:hover {
@@ -23,15 +23,15 @@ table.mw-enhanced-rc {
 }
 
 .mw-enhanced-rc-nested {
-	margin-top: @margin-side / 4;
 	display: block;
+	margin-top: @margin-side / 4;
 
 	.mw-tag-markers {
 		margin: @margin-side / 4;
 	}
 }
 
-@media ( prefers-color-scheme: dark ) {
+.skin-citizen-dark {
 	table.mw-enhanced-rc {
 		border-color: @dark-bg-20;
 

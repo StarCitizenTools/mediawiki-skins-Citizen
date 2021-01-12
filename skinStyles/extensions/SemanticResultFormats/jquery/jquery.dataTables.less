@@ -6,7 +6,7 @@
 
 @import '../../../../resources/variables.less';
 
-@media ( prefers-color-scheme: dark ) {
+.skin-citizen-dark {
 	table.dataTable thead th,
 	table.dataTable thead td {
 		border-bottom: 1px solid @dark-bg-0;
@@ -181,9 +181,9 @@
 
 	.dataTables_wrapper .dataTables_paginate .paginate_button.current,
 	.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-		color: @dark-text-90;
 		border: 1px solid @dark-bg-50;
 		background: @dark-bg-0 linear-gradient( to bottom, @dark-bg-0 0%, @dark-bg-20 100% );
+		color: @dark-text-90;
 	}
 
 	.dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
@@ -193,9 +193,9 @@
 	}
 
 	.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-		color: @dark-text-100;
 		border: 1px solid @dark-bg-0;
 		background: @dark-bg-20 linear-gradient( to bottom, @dark-bg-20 0%, @dark-bg-0 100% );
+		color: @dark-text-100;
 	}
 
 	.dataTables_wrapper .dataTables_paginate .paginate_button:active {

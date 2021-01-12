@@ -12,79 +12,73 @@
 // Set content to be at the center
 .content-center() {
 	max-width: @page-width;
-	margin-left: auto;
 	margin-right: auto;
+	margin-left: auto;
 }
 
 // Prepare for RL icons
 .resource-loader-icon-link() {
+	display: block;
 	width: @icon-box-size;
 	height: @icon-box-size;
-	display: block;
 }
 
 .resource-loader-icon-link-small() {
+	display: block;
 	width: @icon-size;
 	height: @icon-size;
-	display: block;
 }
 
 .resource-loader-icon() {
-	content: '';
 	position: absolute;
 	width: inherit;
 	height: inherit;
-	background-repeat: no-repeat;
 	background-position: center;
+	background-repeat: no-repeat;
+	content: '';
 }
 
 .resource-loader-menu-icon() {
-	content: '';
 	position: absolute;
 	width: @icon-box-size;
 	height: @icon-box-size;
-	background-repeat: no-repeat;
 	background-position: center;
+	background-repeat: no-repeat;
+	content: '';
 }
 
 .resource-loader-list-icon() {
-	content: '';
 	position: relative;
-	flex-shrink: 0;
-	align-self: center;
 	width: @icon-size;
 	height: @icon-size;
-	background-repeat: no-repeat;
+	flex-shrink: 0;
+	align-self: center;
 	background-position: center;
+	background-repeat: no-repeat;
+	content: '';
 }
 
 // Material-like menu
 .menu-container() {
-	padding: 8px 0;
-	background-color: @menu-background;
-	border-radius: @border-radius-medium;
 	display: block;
+	padding: 8px 0;
+	background-color: var( --background-color-dp-08 );
+	border-radius: @border-radius-medium;
 }
 
 .menu-item-link() {
 	display: flex;
-	color: @color-item-text !important;
+	color: var( --color-base ) !important;
+	font-weight: 450;
 	transition: @transition-background-quick, @transition-color-quick;
 }
 
 .menu-item-link-hover() {
-	color: @color-item-text-hover !important;
-	background-color: @menu-item-link-hover;
+	background-color: var( --background-color-primary--hover );
 }
 
 .menu-item-link-active() {
-	color: @color-item-text-active !important;
-	background-color: @menu-item-link-active;
-}
-
-.menu-item-link-focus() {
-	color: @color-item-text-active !important;
-	background-color: @menu-item-link-active;
+	background-color: var( --background-color-primary--active );
 }
 
 // Button Styles
@@ -119,21 +113,21 @@
 
 	/* stylelint-disable declaration-property-value-disallowed-list */
 	&:hover {
-		outline: none;
-		color: #fff !important;
 		background-size: 100% 100% !important;
+		color: #fff !important;
+		outline: none;
 	}
 	/* stylelint-enable */
 }
 
 // Gradient overflow
 .gradient-overflow(@position) {
-	content: '';
 	position: fixed;
 	z-index: 3;
 	width: 100%;
 	height: @margin-side * 2;
 	background: @position;
+	content: '';
 }
 
 // Box-shadow
@@ -170,16 +164,16 @@
 		clear: both;
 		// Margin collapsing as feature. Apply it.
 		& when ( @collapse ) {
-			content: '';
 			display: block;
+			content: '';
 		}
 	}
 	// Margin collapsing as bug. Prevent it.
 	& when not ( @collapse ) {
 		&:before,
 		&:after {
-			content: '';
 			display: table;
+			content: '';
 		}
 	}
 }

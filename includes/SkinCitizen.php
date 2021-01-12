@@ -44,6 +44,9 @@ class SkinCitizen extends SkinMustache {
 		$skin = $this;
 		$out = $skin->getOutput();
 
+		// Theme handler
+		$skin->setSkinTheme( $out, $options );
+
 		// Responsive layout
 		// Replace with core responsive option if it is implemented in 1.36+
 		$out->addMeta( 'viewport', 'width=device-width, initial-scale=1.0' );
@@ -150,6 +153,7 @@ class SkinCitizen extends SkinMustache {
 				'data-drawer' => $this->buildDrawer(),
 				'data-extratools' => $this->getExtraTools(),
 				'data-search-box' => $this->buildSearchProps(),
+				'data-theme-toggle' => $this->buildThemeToggleProps(),
 			],
 
 			'data-pagetools' => $this->buildPageTools(),
@@ -386,6 +390,7 @@ class SkinCitizen extends SkinMustache {
 		$skin = $this;
 
 		return [
+			'data-logos' => ResourceLoaderSkinModule::getAvailableLogos( $this->getConfig() ),
 			'msg-sitetitle' => $skin->msg( 'sitetitle' )->text(),
 			'html-mainpage-attributes' => Xml::expandAttributes(
 				Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) + [
@@ -446,6 +451,22 @@ class SkinCitizen extends SkinMustache {
 			'page-title' => SpecialPage::getTitleFor( 'Search' )->getPrefixedDBkey(),
 			'html-random-href' => Skin::makeSpecialUrl( 'Randompage' ),
 			'msg-random' => $skin->msg( 'Randompage' )->text(),
+		];
+	}
+
+	/**
+	 * Render the theme toggle
+	 *
+	 * @return array
+	 * @throws MWException
+	 */
+	private function buildThemeToggleProps() : array {
+		$skin = $this->getSkin();
+
+		$toggleMsg = $skin->msg( 'citizen-theme-toggle' )->text();
+
+		return [
+			'msg-citizen-theme-toggle-shortcut' => $toggleMsg,
 		];
 	}
 
@@ -732,5 +753,51 @@ class SkinCitizen extends SkinMustache {
 			$out->getRequest()->response()->header( sprintf( 'Feature-Policy: %s',
 				$featurePolicy ) );
 		}
+	}
+
+	/**
+	 * Sets the corresponding theme class on the <html> element
+	 * If the theme is set to auto, the theme switcher script will be added
+	 *
+	 * @param OutputPage $out
+	 * @param array &$options
+	 */
+	private function setSkinTheme( OutputPage $out, array &$options ) {
+		// Set theme to site theme
+		$theme = $this->getConfigValue( 'CitizenThemeDefault' ) ?? 'auto';
+
+		// Set theme to user theme if registered
+		if ( $this->getUser()->isRegistered() ) {
+			$theme = MediaWikiServices::getInstance()->getUserOptionsLookup()->getOption(
+				$this->getUser(),
+				'CitizenThemeUser',
+				'auto'
+			);
+		}
+
+		// Add HTML class based on theme set
+		$out->addHtmlClasses( 'skin-citizen-' . $theme );
+		if ( $this->getRequest()->getCookie( 'skin-citizen-theme-override' ) === null ) {
+			// Only set the theme cookie if the theme wasn't overridden by the user through the button
+			$this->getRequest()->response()->setCookie( 'skin-citizen-theme', $theme, 0, [
+				'httpOnly' => false,
+			] );
+		}
+
+		// Script content at 'skins.citizen.scripts.theme/inline.js
+		$this->getOutput()->addHeadItem( 'theme-switcher', '<script>window.switchTheme=(()=>{try{const t=document.cookie.match(/skin-citizen-theme=(dark|light|auto)/),e=null!==t?t.pop():null;null!==e&&(document.documentElement.classList.remove(...["auto","dark","light"].map(t=>"skin-citizen-"+t)),document.documentElement.classList.add("skin-citizen-"+e))}catch(t){}}),window.switchTheme();</script>' );
+
+		// Add styles and scripts module
+		if ( $theme === 'auto' ) {
+			$options['scripts'] = array_merge(
+				$options['scripts'],
+				[ 'skins.citizen.scripts.theme' ]
+			);
+		}
+
+		$options['styles'] = array_merge(
+			$options['styles'],
+			[ 'skins.citizen.styles.theme' ]
+		);
 	}
 }

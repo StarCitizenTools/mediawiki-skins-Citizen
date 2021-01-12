@@ -4,11 +4,11 @@
 .toc {
 	position: fixed;
 	z-index: -1; // So that it is below float objects in content
-	max-width: 450px;
 	top: @header-height;
 	left: 0;
+	max-width: 450px;
 	padding: @margin-side;
-	color: @base-70;
+	color: var( --color-base--subtle );
 
 	&::-webkit-scrollbar {
 		width: 0; // Hide bar on toc
@@ -17,8 +17,10 @@
 	&title {
 		h2 {
 			margin: 0;
-			color: @base-50 !important;
-			font-size: @ui-menu-text-big;
+			color: var( --color-base--subtle ) !important;
+			font-size: @ui-menu-text;
+			font-weight: normal;
+			letter-spacing: 0.75px;
 		}
 	}
 
@@ -38,34 +40,38 @@
 		&.toclevel-4,
 		&.toclevel-5,
 		&.toclevel-6 {
-			margin-left: 9px;
 			border-left: 1px dashed;
+			margin-left: 9px;
 		}
 	}
 
 	li.active {
-		color: @accent-50;
+		color: var( --color-primary );
 
 		> a {
-			color: inherit !important;
 			border-color: currentColor;
+			color: inherit !important;
 		}
 
 		a,
 		li {
-			color: @base-30;
+			color: var( --color-base );
 		}
 	}
 
 	a {
 		display: inline-block;
-		margin: @content-margin-top / 4 0;
 		padding-left: 9px;
-		color: @base-50;
 		border-left: 3px solid transparent;
+		margin: @content-margin-top / 4 0;
+		color: var( --color-base--subtle );
 
 		&:hover {
-			color: @base-30;
+			color: var( --color-base );
+		}
+
+		&:active {
+			color: var( --color-base--subtle );
 		}
 	}
 
@@ -79,15 +85,15 @@
 	}
 
 	> ul {
-		margin: @content-margin-top * 0.75 0 0 0 !important;
 		position: relative;
 		z-index: 2;
-		border-left: 1px dashed;
+		display: block;
+		overflow: visible auto;
 		max-width: ~'calc( (100vw - '@page-width + @margin-side * 4 ~' ) / 2 )';
 		max-height: ~'calc( 100vh - '@header-height * 2 + @margin-side * 4 ~' )';
-		overflow: visible auto;
+		border-left: 1px dashed;
+		margin: @content-margin-top * 0.75 0 0 0 !important;
 		overscroll-behavior: contain;
-		display: block;
 	}
 }
 
@@ -95,8 +101,8 @@
 	.toc {
 		z-index: 10;
 		height: 100%;
-		margin-top: -@header-height;
 		padding: 0;
+		margin-top: -@header-height;
 		transform: translateX( -100% );
 
 		&:before,
@@ -115,17 +121,17 @@
 				z-index: 7;
 				right: -100vw;
 				bottom: 0;
-				margin: @margin-side;
-				padding: 0 @margin-side / 2;
+				display: block;
 				width: 39px;
 				height: 56px;
-				display: block;
-				background-color: @base-90;
+				padding: 0 @margin-side / 2;
+				margin: @margin-side;
+				background-color: var( --background-color-dp-06 );
 				border-radius: 100%;
 				.boxshadow(4);
 
 				&:hover {
-					background-color: @menu-item-link-hover;
+					background-color: var( --background-color-dp-12 );
 					.boxshadow(5);
 
 					&:before {
@@ -133,8 +139,8 @@
 					}
 				}
 
-				&:focus {
-					background-color: @menu-item-link-active;
+				&:active {
+					background-color: var( --background-color-dp-02 );
 				}
 
 				&:before {
@@ -155,59 +161,26 @@
 
 		> ul {
 			display: block !important; // So that animation is visible
-			margin: 0 !important;
-			padding: @header-height + @margin-side @margin-side @margin-side * 2 @margin-side / 2 !important; // More scroll spaces
 			max-width: none;
 			height: 100%;
 			max-height: ~'calc( 100vh - '@header-height + @margin-side * 3 ~')';
-			background: @base-100;
+			padding: @header-height + @margin-side @margin-side @margin-side * 2 @margin-side / 2 !important; // More scroll spaces
+			border-color: transparent;
+			margin: 0 !important;
+			background: var( --background-color-dp-16 );
 			border-radius: 0 @border-radius-large @border-radius-large 0;
-			.boxshadow(3);
 			transform: translateX( 100% );
 			transition: @transition-transform;
-		}
-	}
-}
-
-@media ( prefers-color-scheme: dark ) {
-	.toc {
-		color: @dark-text-60;
-
-		a {
-			color: @dark-text-70;
-
-			&:hover {
-				color: @dark-text-80;
-			}
-		}
-
-		li.active {
-			color: @dark-color-link;
-
-			a,
-			li {
-				color: @dark-text-80;
-			}
+			.boxshadow(3);
 		}
 	}
 
-	@media ( max-width: @screen3 ) {
+	.skin-citizen-dark {
 		.toc {
 			&togglelabel {
-				background-color: @dark-bg-50;
-
 				&:before {
 					filter: invert( 1 );
 				}
-
-				&:hover,
-				&:focus {
-					background-color: @accent-10;
-				}
-			}
-
-			> ul {
-				background: @dark-bg-40;
 			}
 		}
 	}

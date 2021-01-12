@@ -5,7 +5,7 @@
 
 @import '../../../../resources/variables.less';
 
-@media ( prefers-color-scheme: dark ) {
+.skin-citizen-dark {
 	.leaflet-container a {
 		color: @color-link;
 		-webkit-tap-highlight-color: rgba( 51, 181, 229, 0.4 );
@@ -30,8 +30,8 @@
 
 	.leaflet-bar a,
 	.leaflet-bar a:hover {
-		background-color: @dark-bg-0;
 		border-bottom: 1px solid @dark-bg-30;
+		background-color: @dark-bg-0;
 		color: @dark-text-100;
 	}
 
@@ -45,13 +45,13 @@
 	}
 
 	.leaflet-control-layers {
-		box-shadow: 0 1px 5px rgba( 0, 0, 0, 0.4 );
 		background: @dark-bg-0;
+		box-shadow: 0 1px 5px rgba( 0, 0, 0, 0.4 );
 	}
 
 	.leaflet-control-layers-expanded {
-		color: @dark-text-90;
 		background: @dark-bg-0;
+		color: @dark-text-90;
 	}
 
 	.leaflet-control-layers-separator {
@@ -90,8 +90,8 @@
 	.leaflet-popup-content-wrapper,
 	.leaflet-popup-tip {
 		background: @dark-bg-0;
-		color: @dark-text-90;
 		box-shadow: 0 3px 14px rgba( 0, 0, 0, 0.4 );
+		color: @dark-text-90;
 	}
 
 	.leaflet-container a.leaflet-popup-close-button {
@@ -103,8 +103,8 @@
 	}
 
 	.leaflet-popup-scrolled {
-		border-bottom: 1px solid @dark-bg-20;
 		border-top: 1px solid @dark-bg-20;
+		border-bottom: 1px solid @dark-bg-20;
 	}
 
 	.leaflet-oldie .leaflet-control-zoom,
@@ -115,15 +115,15 @@
 	}
 
 	.leaflet-div-icon {
-		background: @dark-bg-0;
 		border: 1px solid @dark-bg-60;
+		background: @dark-bg-0;
 	}
 
 	.leaflet-tooltip {
-		background-color: @dark-bg-0;
 		border: 1px solid @dark-bg-0;
-		color: @dark-text-90;
+		background-color: @dark-bg-0;
 		box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.4 );
+		color: @dark-text-90;
 	}
 
 	.leaflet-tooltip-top:before {

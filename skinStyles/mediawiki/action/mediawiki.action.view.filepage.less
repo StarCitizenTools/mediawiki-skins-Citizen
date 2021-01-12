@@ -7,21 +7,21 @@
 @import '../../../resources/mixins.less';
 
 #filetoc {
-	margin: 0;
-	padding: 0;
-	overflow: auto;
-	white-space: nowrap;
 	display: flex;
+	overflow: auto;
+	padding: 0;
 	border-color: @base-80;
+	margin: 0;
 	transition: @transition-margin, @transition-padding;
+	white-space: nowrap;
 
 	li {
-		padding: 0;
 		display: block;
+		padding: 0;
 
 		a {
-			padding: @margin-side / 2 @margin-side;
 			display: block;
+			padding: @margin-side / 2 @margin-side;
 			transition: @transition-background-quick;
 
 			&:hover {
@@ -32,8 +32,8 @@
 }
 
 .fullImageLink {
-	margin: 0 @negative-margin;
 	max-width: @footer-width - 10px; // 1280px - image size 4
+	margin: 0 @negative-margin;
 	background-color: @base-90;
 
 	> a {
@@ -41,10 +41,10 @@
 		pointer-events: none;
 
 		> img {
-			margin: 0 auto;
+			display: block;
 			max-width: 100%;
 			height: auto;
-			display: block;
+			margin: 0 auto;
 			.boxshadow(1);
 		}
 	}
@@ -67,16 +67,16 @@
 	transition: @transition-margin;
 
 	.mw-mmv-filepage-buttons {
-		margin-top: @margin-side / 2;
 		display: flex;
 		justify-content: center;
+		margin-top: @margin-side / 2;
 	}
 }
 
 .multipageimage {
 	display: flex;
-	justify-content: center;
 	overflow: visible;
+	justify-content: center;
 
 	.fullImageLink {
 		margin: 0 !important;
@@ -92,10 +92,10 @@
 	}
 
 	.multipageimagenavbox {
-		margin-top: 0.8rem;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		margin-top: 0.8rem;
 
 		.thumb {
 			margin: 0 !important;
@@ -141,11 +141,11 @@
 	}
 }
 
-@media ( prefers-color-scheme: dark ) {
+.skin-citizen-dark {
 	#filetoc,
 	.fullMedia {
-		background-color: @dark-bg-10;
 		border-color: @dark-bg-20;
+		background-color: @dark-bg-10;
 	}
 
 	.fullImageLink {

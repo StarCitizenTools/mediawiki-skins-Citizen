@@ -1,27 +1,30 @@
+.search-container {
+	position: relative;
+}
 
 #search {
 	&form {
 		position: absolute;
 		z-index: -1; // not interactable
-		margin: 7px 0 8px; // 1px h3 screen reader
-		display: flex;
 		top: 0;
 		right: @margin-side / 2;
-		opacity: 0;
-		.boxshadow(4);
+		display: flex;
+		margin: 7px 0 8px; // 1px h3 screen reader
 		border-radius: @border-radius-small;
-		transition: @transition-opacity;
+		opacity: 0;
 		pointer-events: none; // not clickable
+		transition: @transition-opacity;
+		.boxshadow(4);
 
 		&-icon {
 			position: absolute;
 			z-index: 110;
 			width: @search-bar-height;
 			height: @search-bar-height;
-			opacity: @opacity-icon;
-			background-size: 14px;
-			background-repeat: no-repeat;
 			background-position: center;
+			background-repeat: no-repeat;
+			background-size: 14px;
+			opacity: @opacity-icon;
 		}
 
 		&-random {
@@ -30,10 +33,10 @@
 			right: 38px;
 			width: @search-bar-height;
 			height: @search-bar-height;
-			opacity: @opacity-icon;
-			background-size: 18px;
-			background-repeat: no-repeat;
 			background-position: center;
+			background-repeat: no-repeat;
+			background-size: 18px;
+			opacity: @opacity-icon;
 			transition: @transition-transform-quick, @transition-opacity-quick;
 
 			&:hover {
@@ -44,18 +47,17 @@
 	}
 
 	&-toggle {
-		right: 0; // align checkbox with icon
 		z-index: 21; // override to be on top of the form
+		right: 0; // align checkbox with icon
 
 		&-icon {
 			position: relative;
 			z-index: 20; // stay on top of search form
 			display: flex;
-			align-items: center;
-			justify-content: center;
 			width: @icon-box-size + @margin-side + @icon-padding;
 			height: @header-height;
-			opacity: @opacity-icon;
+			align-items: center;
+			justify-content: center;
 			transition: @transition-transform-quick, @transition-height-quick, @transition-opacity-quick, @transition-border-color-quick;
 
 			&-1 {
@@ -66,27 +68,28 @@
 			}
 
 			&-2 {
-				margin-top: -2px;
-				margin-left: -2px;
 				width: 10px;
 				height: 10px;
-				border: solid 2px @base-0;
+				/* Use background-color variable because it is a part of the logo */
+				border: solid 2px var( --background-color-icon );
+				margin-top: -2px;
+				margin-left: -2px;
 				border-radius: 100%;
 				transform: rotate( -45deg );
 			}
 
 			&-3 {
-				opacity: 0;
 				top: 0;
 				left: -7px;
 				height: 14px;
+				opacity: 0;
 				transform: rotate( -135deg );
 			}
 
 			&-1,
 			&-3 {
 				width: 2px;
-				background-color: @base-0;
+				background-color: var( --background-color-icon );
 			}
 		}
 
@@ -141,6 +144,22 @@
 						&-3 {
 							height: 12px;
 						}
+
+						&-1,
+						&-3 {
+							background-color: var( --background-color-icon--hover );
+						}
+					}
+				}
+			}
+
+			&:active {
+				~ #search-toggle-icon {
+					#search-toggle-icon {
+						&-1,
+						&-3 {
+							background-color: var( --background-color-icon--active );
+						}
 					}
 				}
 			}
@@ -148,12 +167,29 @@
 
 		&:hover {
 			~ #search-toggle-icon {
-				opacity: @opacity-icon-active;
-
 				#search-toggle-icon {
 					&-1 {
 						height: 6px;
+						background-color: var( --background-color-icon--hover );
 						transform: translate( 2px, 2px ) rotate( -45deg );
+					}
+
+					&-2 {
+						border-color: var( --background-color-icon--hover );
+					}
+				}
+			}
+		}
+
+		&:active {
+			~ #search-toggle-icon {
+				#search-toggle-icon {
+					&-1 {
+						background-color: var( --background-color-icon--active );
+					}
+
+					&-2 {
+						border-color: var( --background-color-icon--active );
 					}
 				}
 			}
@@ -161,20 +197,21 @@
 	}
 
 	&Input {
-		appearance: none;
+		z-index: 100;
+		width: 0;
+		max-width: calc( ~'100vw -'@margin-side );
+		height: @search-bar-height;
+		padding: 8px @icon-box-size + @icon-padding + @search-bar-height + @margin-side / 2 8px @search-bar-height;
+		border: 1px solid var( --border-color-base--lighter );
 		-webkit-appearance: none;
 		-moz-appearance: none;
-		z-index: 100;
-		padding: 8px @icon-box-size + @icon-padding + @search-bar-height + @margin-side / 2 8px @search-bar-height;
-		width: 0;
-		height: @search-bar-height;
-		max-width: calc( ~'100vw -'@margin-side );
-		background: @base-100;
-		border: 1px solid @base-90;
+		appearance: none;
+		background: var( --background-color-dp-03 );
 		border-radius: @border-radius-small;
-		transition: @transition-width, @transition-box-shadow;
+		transition: @transition-width, @transition-background, @transition-box-shadow;
 
 		&:focus {
+			background-color: var( --background-color-dp-08 );
 			outline: 0;
 			.boxshadow(5);
 		}
@@ -247,70 +284,38 @@
 	}
 }
 
-@media ( max-width: @search-bar-width ) {
-	#search {
-		&form:before {
-			content: '';
-			display: block;
-			position: fixed;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background: @base-100;
-			opacity: 0.9;
-		}
-
-		&Input {
-			transition: none; // Width transition does not play well on mobile
-		}
-	}
-}
-
-@media ( prefers-color-scheme: dark ) {
+.skin-citizen-dark {
 	#search {
 		&form {
 			&-icon,
 			&-random {
-				opacity: 0.4;
 				filter: invert( 1 );
+				opacity: 0.4;
 			}
 
 			&-random:hover {
 				opacity: 0.6;
 			}
 		}
-
-		&-toggle {
-			&-icon {
-				opacity: 0.4;
-
-				&-2 {
-					border-color: @base-100;
-				}
-
-				&-1,
-				&-3 {
-					background: @base-100;
-				}
-			}
-
-			&:hover {
-				~ #search-toggle-icon {
-					opacity: 0.6;
-				}
-			}
-		}
-
-		&Input {
-			border-color: @dark-bg-60;
-			background: @dark-bg-50;
-		}
 	}
 }
 
-@media ( max-width: @search-bar-width )  and ( prefers-color-scheme: dark ) {
-	#searchform:before {
-		background: @dark-bg-50;
+@media ( max-width: @search-bar-width ) {
+	#search {
+		&form:before {
+			position: fixed;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			display: block;
+			background: var( --background-color-dp-03 );
+			content: '';
+			opacity: 0.9;
+		}
+
+		&Input {
+			transition: none; // Width transition does not play well on mobile
+		}
 	}
 }

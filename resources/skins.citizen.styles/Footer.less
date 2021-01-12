@@ -2,19 +2,19 @@
 	background: @color-footer-background-60;
 
 	&-content {
-		margin: 0 auto;
-		padding: 12px @margin-side;
-		max-width: @footer-width;
 		display: flex;
+		max-width: @footer-width;
 		align-items: center;
+		padding: 12px @margin-side;
+		margin: 0 auto;
 	}
 
 	&-icon {
-		margin-right: @icon-padding;
 		width: 20px;
 		height: 20px;
-		background-repeat: no-repeat;
+		margin-right: @icon-padding;
 		background-position: center;
+		background-repeat: no-repeat;
 		opacity: @opacity-icon;
 	}
 
@@ -26,13 +26,13 @@
 }
 
 .mw-footer {
-	z-index: 8; // High enough so it covers the floating UI
-	clear: both;
 	position: relative;
-	direction: ltr;
+	z-index: 8; // High enough so it covers the floating UI
 	margin-top: @margin-side * 2;
-	color: @color-footer-text;
 	background: @color-footer-background-50;
+	clear: both;
+	color: @color-footer-text;
+	direction: ltr;
 	font-size: @ui-menu-text;
 	line-height: @footer-line-height;
 
@@ -49,9 +49,9 @@
 	}
 
 	ul {
-		margin: 0;
 		display: flex;
 		flex-wrap: wrap;
+		margin: 0;
 	}
 
 	li {
@@ -61,11 +61,11 @@
 
 #footer {
 	&-content {
-		margin: 0 auto;
-		padding: 0 @margin-side;
-		max-width: @footer-width;
 		display: flex;
+		max-width: @footer-width;
 		flex-direction: column;
+		padding: 0 @margin-side;
+		margin: 0 auto;
 	}
 
 	&-bottom {
@@ -73,13 +73,13 @@
 		background-color: @color-footer-background-40;
 
 		&-content {
-			margin: 0 auto;
-			padding: @margin-side / 2 @margin-side;
-			max-width: @footer-width;
 			display: flex;
+			max-width: @footer-width;
 			flex-wrap: wrap;
 			align-items: center;
 			justify-content: space-between;
+			padding: @margin-side / 2 @margin-side;
+			margin: 0 auto;
 		}
 	}
 
@@ -94,20 +94,20 @@
 	}
 
 	&-places {
-		margin: 0 -@margin-side !important;
 		display: flex;
 		flex-wrap: wrap;
+		margin: 0 -@margin-side !important;
 
 		li a {
-			padding: @margin-side / 2 @margin-side;
 			display: block;
+			padding: @margin-side / 2 @margin-side;
 		}
 	}
 
 	&-info {
 		margin-top: @margin-side / 2;
-		opacity: 0.5;
 		font-size: 12px;
+		opacity: 0.5;
 
 		li {
 			margin: @margin-side / 2 0;
@@ -119,17 +119,17 @@
 	}
 
 	&-icons {
-		margin: 0 -@margin-side / 2;
 		display: flex;
+		margin: 0 -@margin-side / 2;
 
 		li {
 			display: flex; // Horizontally aligned with there are two icons in the same li
 		}
 
 		a {
-			padding: 15px 10px;
 			display: flex;
 			align-items: center;
+			padding: 15px 10px;
 		}
 	}
 }

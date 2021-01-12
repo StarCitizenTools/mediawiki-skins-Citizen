@@ -23,8 +23,8 @@
 }
 
 .oo-ui-processDialog-content .oo-ui-window-body {
-	outline: 0;
 	border-bottom: 1px solid @base-80;
+	outline: 0;
 }
 
 .oo-ui-windowManager-modal.oo-ui-windowManager-floating > .oo-ui-dialog > .oo-ui-window-frame {
@@ -35,17 +35,17 @@
 .oo-ui-processDialog-actions-safe .oo-ui-actionWidget.oo-ui-buttonElement-framed,
 .oo-ui-processDialog-actions-primary .oo-ui-actionWidget.oo-ui-buttonElement-framed,
 .oo-ui-processDialog-actions-other .oo-ui-actionWidget.oo-ui-buttonElement-framed {
-	margin: 0;
 	height: 100%;
+	margin: 0;
 
 	> a.oo-ui-buttonElement-button {
-		height: 100%;
 		display: flex;
+		height: 100%;
 		align-items: center;
 	}
 }
 
-@media ( prefers-color-scheme: dark ) {
+.skin-citizen-dark {
 	.oo-ui-windowManager-modal > .oo-ui-dialog > .oo-ui-window-frame {
 		background-color: @dark-bg-0;
 	}
@@ -127,8 +127,8 @@
 	}
 
 	.oo-ui-windowManager-modal > .oo-ui-dialog {
-		background-color: rgba( 0, 0, 0, 0.5 );
 		z-index: 10;
+		background-color: rgba( 0, 0, 0, 0.5 );
 	}
 
 	.oo-ui-windowManager-modal.oo-ui-windowManager-floating > .oo-ui-dialog > .oo-ui-window-frame {

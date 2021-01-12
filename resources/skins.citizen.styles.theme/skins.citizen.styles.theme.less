@@ -1,0 +1,25 @@
+@import '../variables.less';
+
+.mw-theme-toggle {
+	width: @icon-box-size + @margin-side;
+	height: @header-height;
+	border: 0;
+	background-color: transparent;
+	background-position: center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	font-size: 0;
+	opacity: @opacity-icon;
+	outline: 0;
+	transition: @transition-transform-quick, @transition-opacity-quick;
+
+	&:hover {
+		opacity: @opacity-icon-active;
+	}
+}
+
+.skin-citizen-dark {
+	.mw-theme-toggle {
+		filter: invert( 1 );
+	}
+}

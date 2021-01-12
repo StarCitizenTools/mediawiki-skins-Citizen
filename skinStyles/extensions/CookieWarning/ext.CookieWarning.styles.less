@@ -10,15 +10,15 @@
 	top: unset;
 	right: 0;
 	bottom: 0;
-	margin: 0 auto;
-	padding: 0;
-	max-width: @screen2;
-	border-radius: @border-radius-large @border-radius-large 0 0;
 	overflow: hidden;
-	opacity: 1;
+	max-width: @screen2;
+	padding: 0;
+	margin: 0 auto;
 	background: @dark-bg-60;
+	border-radius: @border-radius-large @border-radius-large 0 0;
 	font-size: @content-monospace-size;
 	font-weight: normal;
+	opacity: 1;
 	.boxshadow(5);
 
 	.mw-cookiewarning-text {
@@ -26,10 +26,10 @@
 		line-height: 1.4;
 
 		> span {
-			margin: 0;
-			padding: @margin-side;
 			display: block;
 			flex-grow: 1;
+			padding: @margin-side;
+			margin: 0;
 		}
 
 		> form {
@@ -37,21 +37,21 @@
 		}
 
 		> a {
-			margin: 0;
-			padding: @margin-side / 2 @margin-side;
-			height: auto;
 			display: flex;
-			justify-content: center;
+			height: auto;
 			align-items: center;
+			justify-content: center;
+			padding: @margin-side / 2 @margin-side;
+			margin: 0;
 		}
 
 		.mw-cookiewarning-dismiss {
-			margin: 0;
-			padding: @margin-side / 2 @margin-side;
 			height: 100%;
+			padding: @margin-side / 2 @margin-side;
+			margin: 0;
+			background: @accent-50;
 			border-radius: 0;
 			line-height: 1.4;
-			background: @accent-50;
 			transition: @transition-background-quick;
 
 			&:hover {
@@ -63,9 +63,9 @@
 
 @media only screen and ( max-width: 480px ) {
 	.mw-cookiewarning-container .mw-cookiewarning-text {
+		flex-wrap: wrap;
 		/* Hack to hide nbsp */
 		font-size: 0;
-		flex-wrap: wrap;
 
 		> span {
 			font-size: @content-small-text-size;

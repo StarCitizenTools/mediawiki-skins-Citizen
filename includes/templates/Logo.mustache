@@ -1,6 +1,28 @@
 {{!
-
+	LogoDefinition logo
+	string html-mainpage-attributes link to the main page
+	string msg-sitesubtitle the contents of the sitesubtitle message key
 }}
-<a {{{html-mainpage-attributes}}} class="mw-wiki-logo">
+<a {{{html-mainpage-attributes}}} class="mw-logo">
+	{{#data-logos}}
+	{{#icon}}
+	{{! alt is provided for valid HTML but given aria-hidden not needed. }}
+	<img class="mw-logo-icon" src="{{.}}" alt=""
+		aria-hidden="true" height="50" width="50">
+	{{/icon}}
+	<span class="mw-logo-container">
+		{{#wordmark}}
+		<img class="mw-logo-wordmark" alt="{{msg-sitetitle}}"
+			src="{{src}}" width="{{width}}" height="{{height}}">
+		{{/wordmark}}
+		{{^wordmark}}
+		<strong class="mw-logo-wordmark">{{msg-sitetitle}}</strong>
+		{{/wordmark}}
+		{{#tagline}}
+		<img class="mw-logo-tagline"
+			alt="{{msg-sitesubtitle}}"
+			src="{{src}}" width="{{width}}" height="{{height}}">
+		{{/tagline}}
+	</span>
+	{{/data-logos}}
 </a>
-<div class="mw-wiki-title">{{{msg-sitetitle}}}</div>

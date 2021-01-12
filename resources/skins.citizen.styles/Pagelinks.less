@@ -1,14 +1,14 @@
 // Namespace button
 #p-namespaces {
 	position: relative;
-	float: right;
-	margin: 0 @negative-margin;
 	padding: @margin-side;
+	margin: 0 @negative-margin;
+	float: right;
 
 	ul {
-		margin: 1.6rem 0 0 0;
 		display: flex;
 		justify-content: flex-end; // Right align
+		margin: 1.6rem 0 0 0;
 
 		li {
 			list-style: none;
@@ -17,27 +17,32 @@
 				display: flex;
 				align-items: center;
 				padding: 0.4rem 0.8rem;
-				border: 1px solid @base-80;
-				color: @base-20;
-				background-color: @base-90;
+				border: 1px solid var( --border-color-base--lighter );
+				background-color: var( --background-color-framed );
+				color: var( --color-base--subtle );
 				transition: @transition-background-quick, @transition-box-shadow-quick;
 				.boxshadow(1);
 
 				&:hover {
-					background-color: @base-80;
+					background-color: var( --background-color-framed--hover );
 					.boxshadow(2);
 				}
 
+				&:active {
+					background-color: var( --background-color-framed--active );
+					.boxshadow(0);
+				}
+
 				&:after {
-					order: -1;
-					content: '';
 					position: relative;
 					width: 14px;
 					height: 14px;
+					order: -1;
 					margin-right: 8px;
-					background-size: contain;
-					background-repeat: no-repeat;
 					background-position: center;
+					background-repeat: no-repeat;
+					background-size: contain;
+					content: '';
 					opacity: 0.5;
 				}
 			}
@@ -45,32 +50,25 @@
 	}
 }
 
+.skin-citizen-dark {
+	#p-namespaces {
+		ul li a {
+			&:after {
+				filter: invert( 1 );
+			}
+		}
+	}
+}
+
 @media ( max-width: @screen1 ) {
 	#p-namespaces {
-		margin: 0 !important; // somehow got overrided
 		padding: @margin-side 0;
+		margin: 0 !important; // somehow got overrided
 	}
 }
 
 @media ( max-width: @screen2 ) {
 	#p-namespaces {
 		margin: 0 ~'calc((100vw - @{page-width}) / -2)';
-	}
-}
-
-@media ( prefers-color-scheme: dark ) {
-	#p-namespaces {
-		ul li a {
-			background-color: @dark-bg-10;
-			border-color: @dark-bg-20;
-
-			&:hover {
-				background-color: @dark-bg-20;
-			}
-
-			&:after {
-				filter: invert( 1 );
-			}
-		}
 	}
 }

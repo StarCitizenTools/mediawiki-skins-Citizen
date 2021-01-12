@@ -5,7 +5,7 @@
 
 @import '../../../../resources/variables.less';
 
-@media ( prefers-color-scheme: dark ) {
+.skin-citizen-dark {
 	.srf-datatables .bordered-table {
 		border: 1px solid @dark-bg-20;
 	}
@@ -55,8 +55,8 @@
 	}
 
 	.srf-datatables table .blue {
-		color: @accent-50;
 		border-bottom-color: @accent-50;
+		color: @accent-50;
 	}
 
 	.srf-datatables table .headerSortUp.blue,
@@ -65,8 +65,8 @@
 	}
 
 	.srf-datatables table .green {
-		color: @green-50;
 		border-bottom-color: @green-50;
+		color: @green-50;
 	}
 
 	.srf-datatables table .headerSortUp.green,
@@ -75,8 +75,8 @@
 	}
 
 	.srf-datatables table .red {
-		color: @red-30;
 		border-bottom-color: @red-30;
+		color: @red-30;
 	}
 
 	.srf-datatables table .headerSortUp.red,
@@ -85,8 +85,8 @@
 	}
 
 	.srf-datatables table .yellow {
-		color: @yellow-50;
 		border-bottom-color: @yellow-50;
+		color: @yellow-50;
 	}
 
 	.srf-datatables table .headerSortUp.yellow,
@@ -95,8 +95,8 @@
 	}
 
 	.srf-datatables table .orange {
-		color: @yellow-30;
 		border-bottom-color: @yellow-30;
+		color: @yellow-30;
 	}
 
 	.srf-datatables table .headerSortUp.orange,
@@ -108,9 +108,9 @@
 	.srf-datatables textarea,
 	.srf-datatables select,
 	.srf-datatables .uneditable-input {
-		color: @dark-text-70;
-		background-color: @dark-bg-20;
 		border: 1px solid @dark-bg-30;
+		background-color: @dark-bg-20;
+		color: @dark-text-70;
 	}
 
 	.srf-datatables input[ type='file' ] {
@@ -123,8 +123,8 @@
 	}
 
 	.srf-datatables .uneditable-input {
-		background-color: @dark-bg-0;
 		border-color: @dark-bg-20;
+		background-color: @dark-bg-0;
 		-webkit-box-shadow: inset 0 1px 2px rgba( 0, 0, 0, 0.025 );
 		-moz-box-shadow: inset 0 1px 2px rgba( 0, 0, 0, 0.025 );
 		box-shadow: inset 0 1px 2px rgba( 0, 0, 0, 0.025 );
@@ -159,8 +159,8 @@
 	input[ readonly ],
 	select[ readonly ],
 	textarea[ readonly ] {
-		background-color: @dark-bg-10;
 		border-color: @dark-bg-20;
+		background-color: @dark-bg-10;
 	}
 
 	.srf-datatables .inline-inputs {
@@ -169,16 +169,16 @@
 
 	.srf-datatables .input-prepend .add-on,
 	.srf-datatables .input-append .add-on {
-		background: @dark-bg-10;
 		border: 1px solid @dark-bg-20;
+		background: @dark-bg-10;
 		color: @dark-text-70;
 		text-shadow: 0 1px 0 @dark-bg-0;
 	}
 
 	.srf-datatables .input-prepend .active,
 	.srf-datatables .input-append .active {
-		background: @green-90;
 		border-color: @green-50;
+		background: @green-90;
 	}
 
 	.srf-datatables .inputs-list label strong {
@@ -208,20 +208,20 @@
 	}
 
 	.srf-datatables .ui-button-primary {
-		color: @dark-text-100;
+		border-color: rgba( 0, 0, 0, 0.1 ) rgba( 0, 0, 0, 0.1 ) rgba( 0, 0, 0, 0.25 );
 		background-color: @accent-50;
 		background-image: none;
+		color: @dark-text-100;
 		text-shadow: 0 -1px 0 rgba( 0, 0, 0, 0.25 );
-		border-color: rgba( 0, 0, 0, 0.1 ) rgba( 0, 0, 0, 0.1 ) rgba( 0, 0, 0, 0.25 );
 	}
 
 	.srf-datatables .ui-button {
-		text-shadow: 0 1px 1px rgba( 0, 0, 0, 0.75 );
-		color: @dark-text-90;
-		background-color: @dark-bg-10;
-		background-image: none !important;// linear-gradient( @dark-bg-20, @dark-bg-20 25%, @dark-bg-0 ) !important;
 		border: 1px solid @dark-bg-30 !important;
 		border-bottom-color: @dark-bg-50;
+		background-color: @dark-bg-10;
+		background-image: none !important;
 		box-shadow: inset 0 1px 0 rgba( 0, 0, 0, 0.2 ), 0 1px 2px rgba( 0, 0, 0, 0.05 );
+		color: @dark-text-90;
+		text-shadow: 0 1px 1px rgba( 0, 0, 0, 0.75 );// linear-gradient( @dark-bg-20, @dark-bg-20 25%, @dark-bg-0 ) !important;
 	}
 }

@@ -1,6 +1,6 @@
 {
 	"name": "Citizen",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
@@ -25,6 +25,7 @@
 					],
 					"styles": [
 						"skins.citizen.styles",
+						"skins.citizen.styles.theme",
 						"skins.citizen.styles.fonts",
 						"skins.citizen.styles.toc",
 						"skins.citizen.icons",
@@ -34,7 +35,8 @@
 						"skins.citizen.icons.t",
 						"skins.citizen.icons.pt",
 						"skins.citizen.icons.footer",
-						"skins.citizen.icons.badges"
+						"skins.citizen.icons.badges",
+						"skins.citizen.icons.theme"
 					]
 				}
 			]
@@ -65,7 +67,9 @@
 	"Hooks": {
 		"ResourceLoaderGetConfigVars": "Citizen\\CitizenHooks::onResourceLoaderGetConfigVars",
 		"SkinPageReadyConfig": "Citizen\\CitizenHooks::onSkinPageReadyConfig",
-		"ThumbnailBeforeProduceHTML": "Citizen\\CitizenHooks::onThumbnailBeforeProduceHTML"
+		"ThumbnailBeforeProduceHTML": "Citizen\\CitizenHooks::onThumbnailBeforeProduceHTML",
+		"GetPreferences": "Citizen\\CitizenHooks::onGetPreferences",
+		"PreferencesFormPreSave": "Citizen\\CitizenHooks::onPreferencesFormPreSave"
 	},
 	"ResourceModules": {
 		"skins.citizen.styles": {
@@ -74,7 +78,17 @@
 				"desktop",
 				"mobile"
 			],
+			"features": [],
 			"styles": [ "resources/skins.citizen.styles/skin.less" ]
+		},
+		"skins.citizen.styles.theme": {
+			"class": "ResourceLoaderSkinModule",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"features": [],
+			"styles": [ "resources/skins.citizen.styles.theme/skins.citizen.styles.theme.less" ]
 		},
 		"skins.citizen.styles.fonts": {
 			"class": "ResourceLoaderSkinModule",
@@ -82,6 +96,7 @@
 				"desktop",
 				"mobile"
 			],
+			"features": [],
 			"styles": [ "resources/skins.citizen.styles.fonts/skins.citizen.styles.fonts.less" ]
 		},
 		"skins.citizen.styles.lazyload": {
@@ -90,6 +105,7 @@
 				"desktop",
 				"mobile"
 			],
+			"features": [],
 			"styles": [ "resources/skins.citizen.styles.lazyload/skins.citizen.styles.lazyload.less" ]
 		},
 		"skins.citizen.styles.search": {
@@ -98,6 +114,7 @@
 				"desktop",
 				"mobile"
 			],
+			"features": [],
 			"styles": [ "resources/skins.citizen.styles.search/skins.citizen.styles.search.less" ]
 		},
 		"skins.citizen.styles.toc": {
@@ -106,6 +123,7 @@
 				"desktop",
 				"mobile"
 			],
+			"features": [],
 			"styles": [ "resources/skins.citizen.styles.toc/skins.citizen.styles.toc.less" ]
 		},
 		"skins.citizen.scripts": {
@@ -113,7 +131,8 @@
 				"resources/skins.citizen.scripts/skins.citizen.scripts.js"
 			],
 			"dependencies": [
-				"mediawiki.page.ready"
+				"mediawiki.page.ready",
+				"mediawiki.cookie"
 			]
 		},
 		"skins.citizen.scripts.lazyload": {
@@ -133,6 +152,15 @@
 			],
 			"messages": [
 				"citizen-search-fulltext"
+			]
+		},
+		"skins.citizen.scripts.theme": {
+			"scripts": [
+				"resources/skins.citizen.scripts.theme/theme-switcher.js"
+			],
+			"dependencies": [
+				"mediawiki.api",
+				"mediawiki.cookie"
 			]
 		},
 		"skins.citizen.scripts.toc": {
@@ -247,6 +275,15 @@
 			"images": {
 				".suggestion-thumbnail": "resources/skins.citizen.icons.search/noimage.svg",
 				"#suggestion-special-icon": "resources/skins.citizen.icons.search/searchfulltext.svg"
+			}
+		},
+		"skins.citizen.icons.theme": {
+			"class": "ResourceLoaderImageModule",
+			"selector": ".theme-toggle-{name}",
+			"useDataURI": false,
+			"images": {
+				"light": "resources/skins.citizen.icons.theme/theme-dark.svg",
+				"dark": "resources/skins.citizen.icons.theme/theme-light.svg"
 			}
 		}
 	},
@@ -368,9 +405,9 @@
 			"+ext.uploadWizard": "skinStyles/extensions/UploadWizard/ext.uploadWizard.less",
 
 			"+ext.visualEditor.desktopArticleTarget.init": "skinStyles/extensions/VisualEditor/ext.visualEditor.less",
-      
+
 			"+ext.wikiEditor": "skinStyles/extensions/WikiEditor/ext.wikiEditor.less",
-      
+
 			"+capiunto.infobox.main": "skinStyles/extensions/Capiunto/capiunto.infobox.main.less",
 
 			"+mediawiki.action.history.styles": "skinStyles/mediawiki/action/mediawiki.action.history.styles.less",
@@ -405,8 +442,14 @@
 			"+mmv": "skinStyles/extensions/MultimediaViewer/mmv.less"
 		}
 	},
-		"config_prefix": "wgCitizen",
+	"config_prefix": "wgCitizen",
 	"config": {
+		"ThemeDefault": {
+			"value": "auto",
+			"description": "Default theme of the skin. Valid values are 'light', 'dark' and 'auto'.",
+			"descriptionmsg": "citizen-config-themedefault",
+			"public": true
+		},
 		"ThemeColor": {
 			"value": "#11151d",
 			"description": "The theme color defined in the meta tag",
@@ -479,11 +522,11 @@
 			"descriptionmsg": "citizen-config-enablexxssprotection",
 			"public": true
 		},
-		"EnableStrictReferrerPolicy": {	
-			"value": false,	
-			"description": "Enable or disable strict-origin-when-cross-origin referrer policy",	
-			"descriptionmsg": "citizen-config-enablestrictreferrerpolicy",	
-			"public": true	
+		"EnableStrictReferrerPolicy": {
+			"value": false,
+			"description": "Enable or disable strict-origin-when-cross-origin referrer policy",
+			"descriptionmsg": "citizen-config-enablestrictreferrerpolicy",
+			"public": true
 		},
 		"EnableFeaturePolicy": {
 			"value": false,
