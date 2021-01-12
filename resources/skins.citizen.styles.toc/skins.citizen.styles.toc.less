@@ -1,40 +1,6 @@
 @import '../variables.less';
 @import '../mixins.less';
 
-:root {
-	--toc-color: @base-70;
-
-	--toc-title-h2-color: @base-50;
-
-	--toc-li-active-color: @accent-50;
-	--toc-li-active-a-li-color: @base-30;
-
-	--toc-a-color: @base-50;
-	--toc-a-hover-color: @base-30;
-
-	--screen3-toc-toggle-label-background-color: @base-90;
-	--screen3-toc-toggle-label-hover-background-color: @base-80;
-	--screen3-toc-toggle-label-focus-background-color: @accent-90;
-	--screen3-toc-ul-background-color: @base-100;
-}
-
-:root.skin-citizen-dark {
-	--toc-color: @dark-text-60;
-
-	--toc-title-h2-color: @base-50;
-
-	--toc-li-active-color: @color-link--active;
-	--toc-li-active-a-li-color: @dark-text-80;
-
-	--toc-a-color: @dark-text-70;
-	--toc-a-hover-color: @dark-text-80;
-
-	--screen3-toc-toggle-label-background-color: @dark-bg-50;
-	--screen3-toc-toggle-label-hover-background-color: @accent-10;
-	--screen3-toc-toggle-label-focus-background-color: @accent-10;
-	--screen3-toc-ul-background-color: @dark-bg-40;
-}
-
 .toc {
 	position: fixed;
 	z-index: -1; // So that it is below float objects in content
@@ -42,7 +8,7 @@
 	left: 0;
 	max-width: 450px;
 	padding: @margin-side;
-	color: var( --toc-color );
+	color: var( --color-base--subtle );
 
 	&::-webkit-scrollbar {
 		width: 0; // Hide bar on toc
@@ -51,8 +17,10 @@
 	&title {
 		h2 {
 			margin: 0;
-			color: var( --toc-title-h2-color ) !important;
-			font-size: @ui-menu-text-big;
+			color: var( --color-base--subtle ) !important;
+			font-size: @ui-menu-text;
+			font-weight: normal;
+			letter-spacing: 0.75px;
 		}
 	}
 
@@ -78,7 +46,7 @@
 	}
 
 	li.active {
-		color: var( --toc-li-active-a-li-color );
+		color: var( --color-primary );
 
 		> a {
 			border-color: currentColor;
@@ -87,7 +55,7 @@
 
 		a,
 		li {
-			color: var( --toc-li-active-a-li-color );
+			color: var( --color-base );
 		}
 	}
 
@@ -96,10 +64,14 @@
 		padding-left: 9px;
 		border-left: 3px solid transparent;
 		margin: @content-margin-top / 4 0;
-		color: var( --toc-a-color );
+		color: var( --color-base--subtle );
 
 		&:hover {
-			color: var( --toc-a-hover-color );
+			color: var( --color-base );
+		}
+
+		&:active {
+			color: var( --color-base--subtle );
 		}
 	}
 
@@ -154,12 +126,12 @@
 				height: 56px;
 				padding: 0 @margin-side / 2;
 				margin: @margin-side;
-				background-color: var( --screen3-toc-toggle-label-background-color );
+				background-color: var( --background-color-dp-06 );
 				border-radius: 100%;
 				.boxshadow(4);
 
 				&:hover {
-					background-color: var( --screen3-toc-toggle-label-hover-background-color );
+					background-color: var( --background-color-dp-12 );
 					.boxshadow(5);
 
 					&:before {
@@ -167,8 +139,8 @@
 					}
 				}
 
-				&:focus {
-					background-color: var( --screen3-toc-toggle-label-focus-background-color );
+				&:active {
+					background-color: var( --background-color-dp-02 );
 				}
 
 				&:before {
@@ -193,8 +165,9 @@
 			height: 100%;
 			max-height: ~'calc( 100vh - '@header-height + @margin-side * 3 ~')';
 			padding: @header-height + @margin-side @margin-side @margin-side * 2 @margin-side / 2 !important; // More scroll spaces
+			border-color: transparent;
 			margin: 0 !important;
-			background: var( --screen3-toc-ul-background-color );
+			background: var( --background-color-dp-16 );
 			border-radius: 0 @border-radius-large @border-radius-large 0;
 			transform: translateX( 100% );
 			transition: @transition-transform;
