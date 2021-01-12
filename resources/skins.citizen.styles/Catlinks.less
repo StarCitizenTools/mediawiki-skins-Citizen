@@ -34,23 +34,23 @@
 				a {
 					display: block;
 					padding: @margin-side / 4 @margin-side / 2;
-					border: 1px solid var( --catlinks-ul-li-a-border-color );
-					background-color: var( --catlinks-ul-li-a-background-color );
-					color: var( --catlinks-ul-li-a-color ) !important; // Overr
+					border: 1px solid var( --border-color-base--lighter );
+					background-color: var( --background-color-framed );
+					color: var( --color-base--subtle ) !important; // Override
 					transition: @transition-background-quick, @transition-color-quick, @transition-border-quick, @transition-transform-quick, @transition-box-shadow-quick;
 					.boxshadow(1);
 
 					&:hover {
-						border-color: @color-link-active;
-						background-color: @color-link-active;
+						border-color: @color-link--hover;
+						background-color: @color-link--hover;
 						color: @base-100 !important;
 						transform: translateY( -2px );
 						.boxshadow(2);
 					}
 
 					&.new:hover {
-						border-color: @color-link-new-active;
-						background-color: @color-link-new-active;
+						border-color: @color-link-new--hover;
+						background-color: @color-link-new--hover;
 					}
 				}
 			}

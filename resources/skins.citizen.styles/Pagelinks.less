@@ -17,15 +17,20 @@
 				display: flex;
 				align-items: center;
 				padding: 0.4rem 0.8rem;
-				border: 1px solid var( --pagelinks-p-namespaces-ul-li-a-border-color );
-				background-color: var( --pagelinks-p-namespaces-ul-li-a-background-color );
-				color: var( --pagelinks-p-namespaces-ul-li-a-color );
+				border: 1px solid var( --border-color-base--lighter );
+				background-color: var( --background-color-framed );
+				color: var( --color-base--subtle );
 				transition: @transition-background-quick, @transition-box-shadow-quick;
 				.boxshadow(1);
 
 				&:hover {
-					background-color: var( --pagelinks-p-namespaces-ul-li-a-hover-background-color );
+					background-color: var( --background-color-framed--hover );
 					.boxshadow(2);
+				}
+
+				&:active {
+					background-color: var( --background-color-framed--active );
+					.boxshadow(0);
 				}
 
 				&:after {

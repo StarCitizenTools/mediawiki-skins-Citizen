@@ -1,8 +1,8 @@
 table.wikitable {
-	border: 0;
-	background-color: transparent;
+	border: 0; // Override core MW styles
+	background-color: transparent; // Override core MW  styles
 	border-collapse: collapse;
-	color: var( --wikitable-color );
+	color: var( --color-base ); // Override core MW  styles
 
 	caption {
 		margin-top: @content-margin-top;
@@ -14,7 +14,7 @@ table.wikitable {
 
 		th {
 			background-color: transparent;
-			color: var( --wikitable-tr-th-color );
+			color: var( --color-base--subtle );
 			font-size: @content-caption-size;
 			text-align: left;
 		}
@@ -27,11 +27,11 @@ table.wikitable {
 		td {
 			padding: @margin-side / 2 @margin-side @margin-side / 2 0;
 			border: 0;
-			border-bottom: 1px solid var( --wikitable-tr-th-border-color );
+			border-bottom: 1px solid var( --border-color-base );
 		}
 
 		&:hover {
-			background-color: var( --wikitable-tr-hover-background-color );
+			background-color: var( --background-color-quiet--hover );
 		}
 	}
 }

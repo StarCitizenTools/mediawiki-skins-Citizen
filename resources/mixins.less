@@ -62,29 +62,23 @@
 .menu-container() {
 	display: block;
 	padding: 8px 0;
-	background-color: var( --menu-container-background-color );
+	background-color: var( --background-color-dp-08 );
 	border-radius: @border-radius-medium;
 }
 
 .menu-item-link() {
 	display: flex;
-	color: var( --menu-item-link-color ) !important;
+	color: var( --color-base ) !important;
+	font-weight: 450;
 	transition: @transition-background-quick, @transition-color-quick;
 }
 
 .menu-item-link-hover() {
-	background-color: var( --menu-item-link-hover-background-color );
-	color: var( --menu-item-link-hover-color ) !important;
+	background-color: var( --background-color-quiet--hover );
 }
 
 .menu-item-link-active() {
-	background-color: var( --menu-item-link-active-focus-background-color );
-	color: var( --menu-item-link-active-focus-color ) !important;
-}
-
-.menu-item-link-focus() {
-	background-color: var( --menu-item-link-active-focus-background-color );
-	color: var( --menu-item-link-active-focus-color ) !important;
+	background-color: var( --background-color-quiet--active );
 }
 
 // Button Styles

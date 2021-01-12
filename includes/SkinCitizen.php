@@ -390,6 +390,7 @@ class SkinCitizen extends SkinMustache {
 		$skin = $this;
 
 		return [
+			'data-logos' => ResourceLoaderSkinModule::getAvailableLogos( $this->getConfig() ),
 			'msg-sitetitle' => $skin->msg( 'sitetitle' )->text(),
 			'html-mainpage-attributes' => Xml::expandAttributes(
 				Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) + [

@@ -1,13 +1,11 @@
 .firstHeading {
 	margin: 0;
-	color: var( --content-firstHeading-color );
 	overflow-wrap: break-word; // Break word instead of overflow if title is too long
 }
 
 #siteSub {
 	display: block;
 	margin: 0.4rem 0 1.6rem;
-	color: var( --content-sub-color );
 }
 
 .firstHeading,
@@ -15,9 +13,10 @@
 	.content-center;
 }
 
+#siteSub,
 #contentSub,
 #contentSub2 {
-	color: var( --content-sub-color );
+	color: var( --color-base--subtle );
 }
 
 #mw-content-text {
@@ -26,10 +25,10 @@
 	 * Only apply to internal links in article
 	*/
 	a[ href^='/' ]:not( .image ) {
-		.link-content-text(@color-link-active);
+		.link-content-text(@color-link--active);
 
 		&.new {
-			background-image: linear-gradient( to right, @color-link-new-active 0, @color-link-new-active 100% );
+			background-image: linear-gradient( to right, @color-link-new--hover 0, @color-link-new--hover 100% );
 		}
 	}
 	/*
@@ -162,7 +161,6 @@
 	h6 {
 		padding: 0;
 		margin: 0;
-		color: @color-content-header;
 	}
 
 	h1,
@@ -211,24 +209,6 @@
 	a.image {
 		display: block;
 		overflow: hidden;
-	}
-}
-
-.skin-citizen-dark {
-	.mw-body .firstHeading,
-	.mw-body-content h1,
-	.mw-body-content h2,
-	.mw-body-content h3,
-	.mw-body-content h4,
-	.mw-body-content h5,
-	.mw-body-content h6 {
-		color: var( --content-firstHeading-color );
-	}
-
-	.mw-body-content #contentSub,
-	.mw-body-content #contentSub2,
-	.mw-body #siteSub {
-		color: var( --content-sub-color ) !important;
 	}
 }
 

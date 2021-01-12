@@ -11,9 +11,18 @@ body {
 	min-height: 100%;
 	padding: 0;
 	margin: 0;
-	background: var( --common-html-background );
-	color: var( --common-html-color );
+	background: var( --background-color-dp-00 );
+	color: var( --color-base );
 	overflow-x: hidden; // prevent overflow from scrollbar
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: var( --color-base--emphasized );
 }
 
 table {
@@ -45,9 +54,8 @@ dl {
 pre,
 code,
 .mw-code {
-	border: var( --common-pre-border );
-	background-color: var( --common-pre-background );
-	color: var( --common-pre-color );
+	border: 1px solid var( --border-color-base );
+	background-color: var( --background-color-framed );
 }
 
 code {
@@ -64,16 +72,13 @@ pre,
 input,
 select,
 textarea {
-	border: var( --common-input-border );
-	background-color: var( --common-input-background );
-	color: var( --common-input-color );
+	background-color: var( --background-color-framed );
+	color: inherit;
 }
 
 fieldset {
 	padding: @content-margin-top / 2 @margin-side;
-	border-color: var( --common-fieldset-border-color );
 	margin: @content-margin-top 0;
-	color: var( --common-fieldset-color );
 }
 
 fieldset > table {
@@ -83,7 +88,7 @@ fieldset > table {
 legend {
 	padding: 4px;
 	margin: 0;
-	color: var( --common-legend-color );
+	color: var( --color-base--subtle );
 }
 
 input,
@@ -92,7 +97,7 @@ code,
 fieldset,
 select,
 textarea {
-	border: var( --common-input-border );
+	border: 1px solid var( --border-color-base );
 }
 
 textarea {
@@ -130,7 +135,7 @@ td {
 }
 
 a {
-	color: @color-link;
+	color: var( --color-link );
 	text-decoration: none !important;
 
 	&:not( [ href ] ) {
@@ -139,14 +144,22 @@ a {
 	}
 
 	&:hover {
-		color: var( --common-link-color );
+		color: var( --color-link--hover );
+	}
+
+	&:active {
+		color: var( --color-link--active );
 	}
 
 	&.new {
-		color: var( --common-link-new-color ) !important; // Override visited
+		color: var( --color-link-new ) !important; // Override visited
 
 		&:hover {
-			color: @color-link-new-active !important;
+			color: var( --color-link-new--hover ) !important;
+		}
+
+		&:active {
+			color: var( --color-link-new--active ) !important;
 		}
 	}
 
@@ -168,7 +181,7 @@ a {
 
 .error {
 	padding: 2px 4px;
-	background-color: @red-90;
+	background-color: var( --background-color-destructive );
 }
 
 .nowrap {
@@ -237,11 +250,25 @@ figcaption,
 			&.new {
 				display: block;
 				padding: @margin-side / 2;
-				background-color: @base-80;
+				background-color: var( --background-color-framed );
 				transition: @transition-background-quick, @transition-color-quick;
 			}
 		}
 	}
+}
+
+div.tleft,
+div.floatleft,
+table.floatleft {
+	clear: left;
+	float: left;
+}
+
+div.tright,
+div.floatright,
+table.floatright {
+	clear: right;
+	float: right;
 }
 
 .mw-indicators {
@@ -249,6 +276,15 @@ figcaption,
 	position: relative;
 	z-index: 1;
 	float: right;
+}
+
+.printfooter {
+	display: none;
+}
+
+div.patrollink {
+	font-size: 75%;
+	text-align: right;
 }
 
 /* Wider page width for special pages */

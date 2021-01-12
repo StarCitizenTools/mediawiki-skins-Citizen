@@ -40,12 +40,6 @@
 						transform: rotate( 45deg ) translate( -5px, -7px );
 					}
 				}
-
-				.mw-drawer-button-icon {
-					&-div {
-						opacity: @opacity-icon;
-					}
-				}
 			}
 
 			// Show drawer
@@ -65,7 +59,17 @@
 
 				.mw-drawer-button-icon {
 					&-div {
-						opacity: @opacity-icon-active;
+						background-color: var( --background-color-icon--hover );
+					}
+				}
+			}
+		}
+
+		&:active {
+			~ #mw-drawer-button-icon {
+				.mw-drawer-button-icon {
+					&-div {
+						background-color: var( --background-color-icon--active );
 					}
 				}
 			}
@@ -81,7 +85,7 @@
 		max-width: 100vw; // in case if someone has super small screen
 		height: 100%;
 		flex-direction: column;
-		background: var( --drawer-mw-drawer-menu-background-color );
+		background-color: var( --background-color-dp-16 );
 		border-radius: 0 @border-radius-large @border-radius-large 0;
 		transform: translate( -110%, 0 ); // shadow bleeding with 100%
 		transform-origin: 0 0;
@@ -93,23 +97,7 @@
 			display: flex;
 			flex-direction: column;
 			padding: @header-height @margin-side @margin-side / 2 @margin-side;
-			border-bottom: 1px solid var( --drawer-mw-drawer-menu-logo-border-color );
-
-			.mw-wiki-logo {
-				display: block;
-				width: 120px;
-				height: 120px;
-				margin-bottom: @margin-side / 2;
-				background-position: left center;
-				background-repeat: no-repeat;
-				background-size: contain;
-			}
-
-			.mw-wiki-title {
-				height: 0;
-				color: var( --drawer-mw-drawer-menu-logo-mw-wiki-title-color );
-				opacity: 0;
-			}
+			border-bottom: 1px solid var( --border-color-base );
 		}
 
 		&-main {
@@ -121,21 +109,22 @@
 			h3 {
 				padding: @margin-side / 2 @margin-side;
 				margin: @margin-side / 2 0 0 0;
-				color: var( --drawer-mw-drawer-menu-main-h3-color );
-				font-size: @ui-menu-header;
+				color: var( --color-base--subtle );
+				font-size: inherit;
 				font-weight: normal;
-				letter-spacing: 1px;
+				letter-spacing: 0.75px;
 			}
 		}
 
 		&-main,
 		&-user {
+			font-size: @ui-menu-text;
+
 			a {
 				.menu-item-link;
 				align-items: center;
 				justify-content: space-between;
 				padding: @padding-menu-item-big;
-				font-size: @ui-menu-text-big;
 
 				&:after {
 					.resource-loader-list-icon;
@@ -157,10 +146,6 @@
 				&:active {
 					.menu-item-link-active;
 				}
-
-				&:focus {
-					.menu-item-link-focus;
-				}
 			}
 		}
 	}
@@ -175,9 +160,8 @@
 				width: @icon-size;
 				height: 2px;
 				margin: 1.5px 0;
-				background: var( --drawer-mw-drawer-button-icon-div-background-color );
+				background-color: var( --background-color-icon );
 				border-radius: @border-radius-large;
-				opacity: @opacity-icon;
 				transform-origin: 4px 0;
 				transition: @transition-transform-quick, @transition-background-quick, @transition-opacity-quick;
 			}
@@ -187,7 +171,7 @@
 
 #p-personal {
 	padding-top: @margin-side / 2;
-	border-top: 1px solid var( --drawer-p-personal-border-color );
+	border-top: 1px solid var( --border-color-base );
 
 	#pt-userpage {
 		margin-bottom: @margin-side / 2;
@@ -254,44 +238,6 @@
 					}
 				}
 			}
-		}
-
-		&-button {
-			&:hover {
-				~ #mw-drawer-button-icon {
-					.mw-drawer-button-icon {
-						&-div {
-							opacity: 0.6;
-						}
-					}
-				}
-			}
-		}
-	}
-
-	.mw-drawer {
-		&-button {
-			&-icon {
-				&-div {
-					opacity: 0.4;
-				}
-			}
-		}
-	}
-}
-
-// Only show title when screen height is less than 800px
-@media ( max-height: 800px ) {
-	#mw-drawer-menu-logo {
-		.mw-wiki-logo {
-			height: 0;
-			margin: 0;
-		}
-
-		.mw-wiki-title {
-			height: auto;
-			margin-top: 20px;
-			opacity: 1;
 		}
 	}
 }
