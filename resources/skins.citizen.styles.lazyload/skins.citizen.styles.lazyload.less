@@ -5,17 +5,9 @@
 
 @import '../variables.less';
 
-:root {
-	--lazyload-mw-body-content-a-image-background-color: @base-90;
-}
-
-:root.skin-citizen-dark {
-	--lazyload-mw-body-content-a-image-background-color: @dark-bg-10;
-}
-
 .mw-body-content {
 	a.image {
-		background-color: var( --lazyload-mw-body-content-a-image-background-color );
+		background-color: var( --background-color-framed );
 
 		.lazy {
 			opacity: 0;
