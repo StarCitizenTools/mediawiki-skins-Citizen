@@ -78,13 +78,7 @@
 				"desktop",
 				"mobile"
 			],
-			"features": {
-				"normalize": false,
-				"elements": false,
-				"content": false,
-				"interface": false,
-				"legacy": false
-			},
+			"features": [],
 			"styles": [ "resources/skins.citizen.styles/skin.less" ]
 		},
 		"skins.citizen.styles.theme": {
