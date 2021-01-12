@@ -10,7 +10,7 @@ Live demo can be seen at the [Star Citizen Wiki](https://starcitizen.tools), mor
 * **Persistent ToC**: Access ToC anywhere in the article. ***Tracking require JS.*** 🔍📖
 * **Rich search suggestions**: More helpful search suggestions with images and descriptions. ***Require JS.*** 🔍👀
 * **Lazyload images**: Improve load time of your wiki and avoid unnecessary image downloads. ***Require JS.*** 🚀
-* **Native light/dark mode support**: Respect OS and app configuration for light and dark mode. ☀️🌙
+* **Light/dark mode support**: Switch between light and dark mode. ☀️🌙
 * **Webapp manifest**: Give a more app-like experience when user add your wiki to their home screen. 📱
 * **HTTP security response headers**: Enhance the security of your wiki from HTTP response headers. 🔒🔑
 
