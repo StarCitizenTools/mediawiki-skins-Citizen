@@ -30,6 +30,13 @@ Note that:
 * By default, all security-related features are turned off to ensure maximum compatibility.
 * If you have a lot of users that do not use javascript, it is recommended to turn off lazyloading of images as it requires javascript to display images properly.
 
+### Appearance
+Name | Description | Values | Default
+:--- | :--- | :--- | :---
+`$wgCitizenThemeDefault` | The default theme of the skin | `auto` - switch between light and dark according to OS/browser settings; `light`; `dark` | `auto`
+`$wgCitizenShowPageTools` | The condition of page tools visibility | `true` - always visible; `login` - visible to logged-in users; `permission` - visible to users with the right permissions | `true`
+`$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#11151d`
+
 ### Search suggestions
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
@@ -77,7 +84,6 @@ Name | Description | Values | Default
 ### Miscellaneous
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
-`$wgCitizenShowPageTools` | The condition of page tools visibility | `true` - always visible; `login` - visible to logged-in users; `permission` - visible to users with the right permissions | `true`
 `$wgCitizenEnablePreconnect` | Enable or disable [preconnect to required origin](https://web.dev/uses-rel-preconnect/) | `true` - enable; `false` - disable | `false`
 `$wgCitizenPreconnectURL` | The URL for preconnect to required origin | URL | 
 `$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#11151d`
