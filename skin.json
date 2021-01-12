@@ -93,13 +93,7 @@
 				"desktop",
 				"mobile"
 			],
-			"features": {
-				"normalize": false,
-				"elements": false,
-				"content": false,
-				"interface": false,
-				"legacy": false
-			},
+			"features": [],
 			"styles": [ "resources/skins.citizen.styles.theme/skins.citizen.styles.theme.less" ]
 		},
 		"skins.citizen.styles.fonts": {
@@ -108,13 +102,7 @@
 				"desktop",
 				"mobile"
 			],
-			"features": {
-				"normalize": false,
-				"elements": false,
-				"content": false,
-				"interface": false,
-				"legacy": false
-			},
+			"features": [],
 			"styles": [ "resources/skins.citizen.styles.fonts/skins.citizen.styles.fonts.less" ]
 		},
 		"skins.citizen.styles.lazyload": {
@@ -123,13 +111,7 @@
 				"desktop",
 				"mobile"
 			],
-			"features": {
-				"normalize": false,
-				"elements": false,
-				"content": false,
-				"interface": false,
-				"legacy": false
-			},
+			"features": [],
 			"styles": [ "resources/skins.citizen.styles.lazyload/skins.citizen.styles.lazyload.less" ]
 		},
 		"skins.citizen.styles.search": {
@@ -138,13 +120,7 @@
 				"desktop",
 				"mobile"
 			],
-			"features": {
-				"normalize": false,
-				"elements": false,
-				"content": false,
-				"interface": false,
-				"legacy": false
-			},
+			"features": [],
 			"styles": [ "resources/skins.citizen.styles.search/skins.citizen.styles.search.less" ]
 		},
 		"skins.citizen.styles.toc": {
@@ -153,13 +129,7 @@
 				"desktop",
 				"mobile"
 			],
-			"features": {
-				"normalize": false,
-				"elements": false,
-				"content": false,
-				"interface": false,
-				"legacy": false
-			},
+			"features": [],
 			"styles": [ "resources/skins.citizen.styles.toc/skins.citizen.styles.toc.less" ]
 		},
 		"skins.citizen.scripts": {
