@@ -784,16 +784,16 @@ class SkinCitizen extends SkinMustache {
 		}
 
 		// Script content at 'skins.citizen.scripts.theme/inline.js
-		$this->getOutput()->addHeadItem(
-			'theme-switcher',
-			'<script>(()=>{try{const t=document.cookie.match(/skin-citizen-theme=(dark|light|auto)/),e=null!==t?t.pop():null;null!==e&&(document.documentElement.classList.remove(...["auto","dark","light"].map(t=>"skin-citizen-"+t)),document.documentElement.classList.add("skin-citizen-"+e))}catch(t){}})();</script>'
- );
+		$this->getOutput()->addHeadItem( 'theme-switcher', '<script>window.switchTheme=(()=>{try{const t=document.cookie.match(/skin-citizen-theme=(dark|light|auto)/),e=null!==t?t.pop():null;null!==e&&(document.documentElement.classList.remove(...["auto","dark","light"].map(t=>"skin-citizen-"+t)),document.documentElement.classList.add("skin-citizen-"+e))}catch(t){}}),window.switchTheme();</script>' );
 
 		// Add styles and scripts module
-		$options['scripts'] = array_merge(
-			$options['scripts'],
-			[ 'skins.citizen.scripts.theme' ]
-		);
+		if ( $theme === 'auto' ) {
+			$options['scripts'] = array_merge(
+				$options['scripts'],
+				[ 'skins.citizen.scripts.theme' ]
+			);
+		}
+
 		$options['styles'] = array_merge(
 			$options['styles'],
 			[ 'skins.citizen.styles.theme' ]
