@@ -30,18 +30,10 @@
 		padding: 8px 20px;
 
 		&.active {
-			background-color: var( --background-color-primary );
+			background-color: var( --background-color-primary--hover );
 
 			&:active {
-				background-color: @background-color-primary--active;
-			}
-
-			.suggestion-title {
-				color: var( --color-primary );
-
-				&:active {
-					color: var( --color-primary--active );
-				}
+				background-color: var( --background-color-primary--active );
 			}
 		}
 	}
