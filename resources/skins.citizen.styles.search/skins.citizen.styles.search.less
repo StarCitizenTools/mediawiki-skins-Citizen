@@ -6,44 +6,6 @@
 @import '../variables.less';
 @import '../mixins.less';
 
-:root {
-	--suggestion-dropdown-background-color: @base-100;
-
-	--suggestion-link-active-background-color: @accent-90;
-	--suggestion-link-active-suggestion-title-color: @accent-50;
-
-	--suggestion-title-color: @base-10;
-
-	--suggestion-highlight-color: @base-30;
-
-	--suggestion-description-color: @base-30;
-
-	--suggestion-thumbnail-background-color: @base-80;
-
-	--suggestion-special-border-color: @base-80;
-	--suggestion-special-hover-background-color: @accent-90;
-	--suggestion-special-color: @base-10;
-}
-
-:root.skin-citizen-dark {
-	--suggestion-dropdown-background-color: @dark-bg-50;
-
-	--suggestion-link-active-background-color: @accent-10;
-	--suggestion-link-active-suggestion-title-color: @accent-90;
-
-	--suggestion-title-color: @dark-text-90;
-
-	--suggestion-highlight-color: @dark-text-70;
-
-	--suggestion-description-color: @dark-text-70;
-
-	--suggestion-thumbnail-background-color: @base-80;
-
-	--suggestion-special-border-color: @dark-bg-40;
-	--suggestion-special-hover-background-color: @accent-10;
-	--suggestion-special-color: @dark-text-90;
-}
-
 #typeahead-suggestions {
 	position: absolute;
 	z-index: 90;
@@ -56,7 +18,7 @@
 	max-width: calc( ~'100vw -'@icon-box-size + @icon-padding * 2 + @margin-side );
 	flex-direction: column;
 	padding-top: 4px;
-	background: var( --suggestion-dropdown-background-color );
+	background: var( --background-color-dp-08 );
 	border-radius: 0 0 @border-radius-large @border-radius-large;
 	.boxshadow(4);
 }
@@ -68,10 +30,18 @@
 		padding: 8px 20px;
 
 		&.active {
-			background-color: var( --suggestion-link-active-background-color );
+			background-color: var( --background-color-primary );
+
+			&:active {
+				background-color: @background-color-primary--active;
+			}
 
 			.suggestion-title {
-				color: var( --suggestion-link-active-suggestion-title-color );
+				color: var( --color-primary );
+
+				&:active {
+					color: var( --color-primary--active );
+				}
 			}
 		}
 	}
@@ -83,19 +53,19 @@
 	&-title {
 		display: inline-block; // so that the margin does not occupy space
 		margin: 0 0 0.78rem * @content-scaling 0;
-		color: var( --suggestion-title-color );
+		color: var( --color-base );
 		font-size: @content-h6-size;
 		line-height: 1.872rem * @content-scaling;
 	}
 
 	&-highlight {
-		color: var( --suggestion-highlight-color );
+		color: var( --color-base--subtle );
 		font-style: normal;
 	}
 
 	&-description {
 		margin: 0;
-		color: var( --suggestion-description-color );
+		color: var( --color-base--subtle );
 		font-family: @fonts;
 		font-size: @content-caption-size;
 		line-height: 1.43rem * @content-scaling;
@@ -105,7 +75,7 @@
 		width: 70px;
 		min-width: 70px; // so it won't be squeezed by the content text
 		height: 60px;
-		background-color: var( --suggestion-thumbnail-background-color );
+		background-color: var( --background-color-framed );
 		background-position: center center;
 		background-repeat: no-repeat;
 		background-size: cover;
@@ -128,9 +98,9 @@
 		display: flex;
 		align-items: center;
 		padding: 1rem;
-		border-top: 1px solid @base-80;
+		border-top: 1px solid var( --border-color-base );
 		border-radius: 0 0 @border-radius-large @border-radius-large;
-		color: @base-10;
+		color: var( --color-base );
 
 		&-icon {
 			width: 20px;
@@ -150,7 +120,7 @@
 		}
 
 		&:hover {
-			background-color: @accent-90;
+			background-color: var( --background-color-primary );
 		}
 	}
 }
@@ -203,7 +173,7 @@ a.suggestion-link:hover {
 		/* fill direction */ alternate;
 	// Add a progress-bar to the loading indicator,
 	// but only show it animating after 1 second of loading.
-	background: /*image*/ linear-gradient( 90deg, @accent-50 0%, @accent-50 100% )
+	background: /*image*/ linear-gradient( 90deg, var( --color-primary ) 0%, var( --color-primary ) 100% )
 		/* position / size*/ -10% 0 ~'/' 0 @search-loader-progress-bar-height
 		/* repeat */ no-repeat,transparent;
 	// Align style with the form

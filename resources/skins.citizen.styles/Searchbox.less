@@ -208,9 +208,10 @@
 		appearance: none;
 		background: var( --background-color-dp-03 );
 		border-radius: @border-radius-small;
-		transition: @transition-width, @transition-box-shadow;
+		transition: @transition-width, @transition-background, @transition-box-shadow;
 
 		&:focus {
+			background-color: var( --background-color-dp-08 );
 			outline: 0;
 			.boxshadow(5);
 		}
