@@ -83,8 +83,7 @@
 				"elements": false,
 				"content": false,
 				"interface": false,
-				"legacy": false,
-				"toc": false
+				"legacy": false
 			},
 			"styles": [ "resources/skins.citizen.styles/skin.less" ]
 		},
@@ -99,8 +98,7 @@
 				"elements": false,
 				"content": false,
 				"interface": false,
-				"legacy": false,
-				"toc": false
+				"legacy": false
 			},
 			"styles": [ "resources/skins.citizen.styles.theme/skins.citizen.styles.theme.less" ]
 		},
@@ -115,8 +113,7 @@
 				"elements": false,
 				"content": false,
 				"interface": false,
-				"legacy": false,
-				"toc": false
+				"legacy": false
 			},
 			"styles": [ "resources/skins.citizen.styles.fonts/skins.citizen.styles.fonts.less" ]
 		},
@@ -131,8 +128,7 @@
 				"elements": false,
 				"content": false,
 				"interface": false,
-				"legacy": false,
-				"toc": false
+				"legacy": false
 			},
 			"styles": [ "resources/skins.citizen.styles.lazyload/skins.citizen.styles.lazyload.less" ]
 		},
@@ -147,8 +143,7 @@
 				"elements": false,
 				"content": false,
 				"interface": false,
-				"legacy": false,
-				"toc": false
+				"legacy": false
 			},
 			"styles": [ "resources/skins.citizen.styles.search/skins.citizen.styles.search.less" ]
 		},
@@ -163,8 +158,7 @@
 				"elements": false,
 				"content": false,
 				"interface": false,
-				"legacy": false,
-				"toc": false
+				"legacy": false
 			},
 			"styles": [ "resources/skins.citizen.styles.toc/skins.citizen.styles.toc.less" ]
 		},
