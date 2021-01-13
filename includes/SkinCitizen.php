@@ -148,6 +148,7 @@ class SkinCitizen extends SkinMustache {
 					'href' => Skin::makeMainPageUrl(),
 				]
 			),
+			'data-logos' => ResourceLoaderSkinModule::getAvailableLogos( $this->getConfig() ),
 
 			'data-header' => [
 				'data-drawer' => $this->buildDrawer(),
@@ -371,32 +372,10 @@ class SkinCitizen extends SkinMustache {
 
 		return [
 			'msg-citizen-drawer-toggle' => $skin->msg( 'citizen-drawer-toggle' )->text(),
-			'data-logo' => $this->buildLogo(),
 			'data-portals-first' => $firstPortal,
 			'array-portals-rest' => array_slice( $props, 1 ),
 			'data-portals-languages' => $languages,
 			'data-personal-menu' => $personalToolsPortal,
-		];
-	}
-
-	/**
-	 * Render the logo
-	 * TODO: Rebuild icon function based on Desktop Improvement Project
-	 *
-	 * @return array
-	 * @throws MWException
-	 */
-	private function buildLogo() : array {
-		$skin = $this;
-
-		return [
-			'data-logos' => ResourceLoaderSkinModule::getAvailableLogos( $this->getConfig() ),
-			'msg-sitetitle' => $skin->msg( 'sitetitle' )->text(),
-			'html-mainpage-attributes' => Xml::expandAttributes(
-				Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) + [
-					'href' => Skin::makeMainPageUrl(),
-				]
-			),
 		];
 	}
 
