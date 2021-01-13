@@ -4,6 +4,7 @@
 		"stylelint-config-wikimedia"
 	],
 	"rules": {
+		"font-weight-notation": null,
 		"selector-max-id": null,
 		"no-descending-specificity": null,
 		"declaration-no-important": null,
