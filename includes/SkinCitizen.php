@@ -351,7 +351,7 @@ class SkinCitizen extends SkinMustache {
 			$firstPortal[ 'label-class' ] .= 'screen-reader-text';
 		}
 
-		$personalTools = self::getPersonalToolsForMakeListItem(
+		$personalTools = $this->getPersonalToolsForMakeListItem(
 			$this->buildPersonalUrls()
 		);
 		// Move the Echo badges and ULS out of default list
