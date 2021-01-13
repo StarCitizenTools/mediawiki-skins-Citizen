@@ -351,7 +351,7 @@ class SkinCitizen extends SkinMustache {
 			$firstPortal[ 'label-class' ] .= 'screen-reader-text';
 		}
 
-		$personalTools = self::getPersonalToolsForMakeListItem(
+		$personalTools = $this->getPersonalToolsForMakeListItem(
 			$this->buildPersonalUrls()
 		);
 		// Move the Echo badges and ULS out of default list
@@ -773,6 +773,11 @@ class SkinCitizen extends SkinMustache {
 				'CitizenThemeUser',
 				'auto'
 			);
+		}
+
+		$cookieTheme = $this->getRequest()->getCookie( 'skin-citizen-theme', null, 'auto' );
+		if ( $cookieTheme !== 'auto' ) {
+			$theme = $cookieTheme;
 		}
 
 		// Add HTML class based on theme set

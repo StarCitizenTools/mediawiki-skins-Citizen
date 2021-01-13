@@ -5,14 +5,12 @@
 
 @import '../../../resources/variables.less';
 
-.skin-citizen-dark {
-	.client-js {
-		.mw-search-spinner {
-			&:before,
-			&:after,
-			& .mw-search-spinner-bounce {
-				background-color: @dark-text-70;
-			}
+.client-js.skin-citizen-dark {
+	.mw-search-spinner {
+		&:before,
+		&:after,
+		& .mw-search-spinner-bounce {
+			background-color: @dark-text-70;
 		}
 	}
 }
