@@ -7,224 +7,75 @@
 @import '../../resources/mixins.less';
 @import '../../resources/variables.less';
 
-// Required to override
-body {
+.skin-citizen {
 	.mw-rcfilters-ui {
-		&-filterTagMultiselectWidget {
-			&.oo-ui-widget-enabled {
-				.oo-ui-tagMultiselectWidget-handle {
-					border-color: @base-80;
-					.boxshadow(1);
+		&-filter {
+			&TagMultiselectWidget {
+				&.oo-ui-widget-enabled {
+					.oo-ui-tagMultiselectWidget-handle {
+						background-color: var( --background-color-framed );
+						border-color: var( --border-color-base );
+					}
+				}
+
+				&-views-select-widget {
+					&.oo-ui-widget {
+						border-color: var( --border-color-base );
+					}
+				}
+
+				&-wrapper-content-title {
+					color: var( --color-base );
 				}
 			}
 
-			&-views-select-widget {
-				&.oo-ui-widget {
-					border-color: @base-80;
+			&Menu {
+				&HeaderWidget {
+					&-header {
+						background-color: var( --background-color-dp-16 );
+						border-color: var( --border-color-base--darker );
+						.boxshadow(2);
+					}
+
+					&-title {
+						color: var( --color-base );
+					}
+				}
+
+				&SectionOptionWidget {
+					background-color: var( --background-color-framed );
 					.boxshadow(1);
+
+					&-header-title.oo-ui-labelElement-label {
+						color: var( --color-base--subtle );
+					}
+				}
+
+				&OptionWidget.oo-ui-flaggedElement-muted:not(.oo-ui-optionWidget-selected) {
+					background-color: var( --background-color-framed );
 				}
 			}
 		}
 
-		&-menuSelectWidget {
-			.boxshadow(4);
-		}
-
-		&-filterMenuHeaderWidget-header {
-			border-color: @base-80;
-			.boxshadow(2);
-		}
-
-		&-changesListWrapperWidget {
-			.mw-changeslist-legend {
-				border-color: @base-80;
-			}
-		}
-	}
-}
-
-.skin-citizen-dark {
-	/**
-  mw.rcfilters.ui.ChangesListWrapperWidget.less
-   */
-	@keyframes fadeBlue {
-		60% {
-			border-top-color: @accent-50;
-		}
-
-		100% {
-			border-top-color: @dark-bg-30 !important;
-		}
-	}
-
-	.mw-rcfilters-ui-changesListWrapperWidget {
-		&-previousChangesIndicator {
-			border-top: 2px solid @dark-bg-30 !important;
-		}
-
-		&-enhanced-grey td:not( :nth-child( -n+2 ) ) {
-			/* background-color: @light-gray; */
-		}
-
-		.mw-changeslist-legend {
-			border: 1px solid @dark-bg-30 !important;
-			background-color: @dark-bg-0 !important;
-		}
-	}
-
-	/**
-	mw.rcfilters.ui.FilterTagMultiselectWidget.less
-	 */
-	.mw-rcfilters-ui-filterTagMultiselectWidget {
-		&.oo-ui-widget-enabled {
-			.oo-ui-tagMultiselectWidget-handle {
-				border: 1px solid @dark-bg-50 !important;
-				background-color: @dark-bg-10 !important;
-			}
-		}
-
-		.mw-rcfilters-collapsed & {
-			border-bottom: 1px solid @dark-bg-50 !important;
-
-			.mw-rcfilters-ui-filterTagMultiselectWidget-wrapper-hideshow {
-				border-left: 1px solid @dark-bg-50 !important;
-			}
-		}
-
-		.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled &-emphasize.oo-ui-tagMultiselectWidget-handle {
-			background-color: @dark-bg-20 !important;
-		}
-
-		&-wrapper {
-			&-content {
+		&-itemMenuOptionWidget {
+			&-label {
 				&-title {
-					color: @dark-text-80 !important;
+					color: var( --color-base--emphasized );
 				}
 
-				&-savedQueryTitle {
-					color: @dark-text-90 !important;
+				&-desc {
+					color: var( --color-base--subtle );
 				}
 			}
-		}
 
-		&-views {
-			&-select {
-				&-widget.oo-ui-widget {
-					border: 1px solid @dark-bg-50 !important;
-				}
+			&:not(:last-child):not(.mw-rcfilters-ui-itemMenuOptionWidget-identifier-talk) {
+				border-color: var( --border-color-base );
 			}
 		}
 
-		&-emptyFilters {
-			color: @dark-text-70 !important;
-		}
-	}
-
-	/**
-	mw.rcfilters.ui.FilterMenuOptionWidget.less
-	 */
-	.mw-rcfilters-ui-filterMenuOptionWidget {
-		&:hover,
-		&:active {
-			background-color: @dark-bg-0 !important;
-		}
-
-		&:not( :last-child ):not( .mw-rcfilters-ui-itemMenuOptionWidget-identifier-talk ) {
-			border-bottom-color: @dark-bg-20 !important;
-		}
-
-		&.oo-ui-flaggedElement-muted {
-			&:not( .oo-ui-optionWidget-selected ) {
-				background-color: @dark-bg-10 !important;
-			}
-
-			.mw-rcfilters-ui-itemMenuOptionWidget-label-title,
-			.mw-rcfilters-ui-itemMenuOptionWidget-label-desc {
-				color: @dark-text-80 !important;
-			}
-
-			&.oo-ui-optionWidget-highlighted {
-				background-color: @dark-bg-20 !important;
-				color: @dark-text-100 !important;
-			}
-		}
-	}
-
-	/**
-	mw.rcfilters.ui.FilterMenuHeaderWidget.less
-	 */
-	.mw-rcfilters-ui-filterMenuHeaderWidget {
-		&-title {
-			color: @dark-text-80 !important;
-		}
-
-		&-header {
-			border-bottom: 1px solid @dark-bg-30 !important;
-			background-color: @dark-bg-10 !important;
-		}
-	}
-
-	/**
-	mw.rcfilters.ui.FilterMenuSectionOptionWidget.less
-	 */
-	.mw-rcfilters-ui-filterMenuSectionOptionWidget {
-		background-color: @dark-bg-20 !important;
-
-		&-header-title.oo-ui-labelElement-label {
-			color: @dark-text-80 !important;
-		}
-	}
-
-	/**
-	mw.rcfilters.ui.TagItemWidget.less
-	 */
-	.mw-rcfilters-ui-tagItemWidget {
-		&.oo-ui-flaggedElement-muted.oo-ui-tagItemWidget.oo-ui-widget-enabled {
-			border-color: @dark-bg-30 !important;
-			background-color: @dark-bg-20 !important;
-
-			.oo-ui-labelElement-label {
-				color: @dark-text-70 !important;
-			}
-		}
-
-		.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined &-selected.oo-ui-tagItemWidget.oo-ui-widget-enabled {
-			background-color: @accent-10 !important;
-		}
-
-		&-popup-content {
-			color: @dark-text-80 !important;
-		}
-	}
-
-	/**
-	mw.rcfilters.ui.ItemMenuOptionWidget.less
-	 */
-	.mw-rcfilters-ui-itemMenuOptionWidget {
-		&:not( :last-child ):not( .mw-rcfilters-ui-itemMenuOptionWidget-identifier-talk ) {
-			border-bottom: 1px solid @dark-bg-20 !important;
-		}
-
-		&-view-namespaces {
-			border-top: 4px solid @dark-bg-30 !important;
-		}
-
-		&:hover {
-			background-color: @dark-bg-10 !important;
-		}
-
-		&.oo-ui-optionWidget-selected {
-			background-color: @accent-10 !important;
-		}
-
-		&-label {
-			&-title {
-				color: @dark-text-90 !important;
-			}
-
-			&-desc {
-				color: @dark-text-80 !important;
-			}
+		&-changesListWrapperWidget .mw-changeslist-legend {
+			background-color: var( --background-color-framed );
+			border-color: var( --border-color-base );
 		}
 	}
 }
