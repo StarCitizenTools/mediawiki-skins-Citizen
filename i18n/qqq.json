@@ -17,8 +17,8 @@
 	"citizen-footer-tagline": "Edit this text on MediaWiki:Citizen-footer-tagline",
 	"citizen-search-fulltext": "Fulltext search suggestion",
 
-	"prefs-citizen-theme-label": "Label for the theme dropdown in Special:Preferences",
-	"prefs-citizen-theme-option-auto": "Auto",
-	"prefs-citizen-theme-option-light": "Light",
-	"prefs-citizen-theme-option-dark":  "Dark"
+	"prefs-citizen-theme-label": "Tooltip for the theme dropdown in Special:Preferences",
+	"prefs-citizen-theme-option-auto": "Label for the auto theme option",
+	"prefs-citizen-theme-option-light": "Label for the light theme option",
+	"prefs-citizen-theme-option-dark":  "Label for the dark theme option"
 }
