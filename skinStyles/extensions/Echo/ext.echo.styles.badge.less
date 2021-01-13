@@ -10,24 +10,19 @@
 	&-alert,
 	&-notice {
 		.mw-echo-notifications-badge {
-			top: -1000px; // Default was -1005px for some reason
+			top: 0;
 			width: @icon-box-size + @icon-padding;
 			height: @header-height;
 			margin: 0;
+			background-position: center;
+			background-repeat: no-repeat;
+			opacity: 0.4;
+			transition: @transition-opacity-quick, @transition-transform-quick;
 
 			&:hover,
 			&:focus,
 			&:active {
-				&:before {
-					opacity: 0.6 !important; // override all styles
-				}
-			}
-
-			// Icon tweaks
-			&:before {
-				background-position: center;
-				opacity: 0.4;
-				transition: @transition-opacity-quick, @transition-transform-quick;
+				opacity: 0.6 !important; // override all styles
 			}
 
 			// Badge tweaks
@@ -37,7 +32,7 @@
 			}
 
 			&.mw-echo-notifications-badge-all-read {
-				opacity: 0.75; // 0.75 * 0.4 = 0.3
+				opacity: 0.3; // 0.75 * 0.4 = 0.3
 			}
 		}
 	}
@@ -48,9 +43,7 @@
 			&:hover,
 			&:focus,
 			&:active {
-				&:before {
-					transform: rotateZ( 20deg );
-				}
+				transform: rotateZ( 20deg );
 			}
 		}
 	}
