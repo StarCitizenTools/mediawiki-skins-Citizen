@@ -775,6 +775,11 @@ class SkinCitizen extends SkinMustache {
 			);
 		}
 
+		$cookieTheme = $this->getRequest()->getCookie( 'skin-citizen-theme', null, 'auto' );
+		if ( $cookieTheme !== 'auto' ) {
+		    $theme = $cookieTheme;
+        }
+
 		// Add HTML class based on theme set
 		$out->addHtmlClasses( 'skin-citizen-' . $theme );
 		if ( $this->getRequest()->getCookie( 'skin-citizen-theme-override' ) === null ) {
