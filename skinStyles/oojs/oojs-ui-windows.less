@@ -7,132 +7,90 @@
 @import '../../resources/mixins.less';
 
 /*!
- * OOUI v0.26.4
+ * Based on OOUI v0.39.3
  * https://www.mediawiki.org/wiki/OOUI
  *
- * Copyright 2011–2018 OOUI Team and other contributors.
+ * Copyright 2011–2020 OOUI Team and other contributors.
  * Released under the MIT license
  * http://oojs.mit-license.org
  *
- * Date: 2018-04-17T22:24:02Z
+ * Date: 2020-07-10T06:32:25Z
  */
 
-.oo-ui-dialog-content > .oo-ui-window-head {
-	z-index: 3; // To show the shadow
-	.boxshadow(2);
+.oo-ui-messageDialog-content > .oo-ui-window-foot {
+	outline: 1px solid var( --border-color-base );
 }
 
-.oo-ui-processDialog-content .oo-ui-window-body {
-	border-bottom: 1px solid @base-80;
-	outline: 0;
+.oo-ui-messageDialog-title {
+	color: var( --color-base--emphasized );
+}
+
+.oo-ui-messageDialog-message {
+	color: var( --color-base );
+}
+
+.oo-ui-messageDialog-actions-horizontal .oo-ui-actionWidget {
+	border-right: 1px solid var( --border-color-base );
+}
+
+.oo-ui-messageDialog-actions-vertical .oo-ui-actionWidget {
+	border-bottom: 1px solid var( --border-color-base );
+}
+
+.oo-ui-processDialog-content .oo-ui-window-head,
+.oo-ui-processDialog-content .oo-ui-window-foot {
+	outline: 1px solid var( --border-color-base--lighter );
+}
+
+.oo-ui-processDialog .oo-ui-actionWidget:not( .oo-ui-flaggedElement-progressive ):not( .oo-ui-flaggedElement-destructive ) > .oo-ui-buttonElement-button:hover,
+.oo-ui-processDialog .oo-ui-actionWidget:not( .oo-ui-flaggedElement-progressive ):not( .oo-ui-flaggedElement-destructive ) > .oo-ui-buttonElement-button:active {
+	border-right-color: var( --border-color-base--lighter );
+}
+
+.oo-ui-processDialog .oo-ui-actionWidget:not( .oo-ui-flaggedElement-progressive ):not( .oo-ui-flaggedElement-destructive ) > .oo-ui-buttonElement-button:focus {
+	border-color: var( --color-primary );
+}
+
+.oo-ui-processDialog-actions-primary .oo-ui-actionWidget > .oo-ui-buttonElement-button {
+	border-left-color: var( --border-color-base--lighter );
+}
+
+.oo-ui-processDialog-actions-primary .oo-ui-actionWidget:not( .oo-ui-flaggedElement-progressive ):not( .oo-ui-flaggedElement-destructive ) > .oo-ui-buttonElement-button:hover,
+.oo-ui-processDialog-actions-primary .oo-ui-actionWidget:not( .oo-ui-flaggedElement-progressive ):not( .oo-ui-flaggedElement-destructive ) > .oo-ui-buttonElement-button:active {
+	border-left-color: var( --border-color-base--lighter );
+}
+
+.oo-ui-processDialog-actions-primary .oo-ui-actionWidget:not( .oo-ui-flaggedElement-progressive ):not( .oo-ui-flaggedElement-destructive ) > .oo-ui-buttonElement-button:focus {
+	border-color: var( --color-primary );
+}
+
+.oo-ui-processDialog-actions-safe .oo-ui-actionWidget > .oo-ui-buttonElement-button,
+.oo-ui-processDialog-actions-other .oo-ui-actionWidget > .oo-ui-buttonElement-button {
+	border-right-color: var( --border-color-base--lighter );
+}
+
+.oo-ui-processDialog-actions-safe .oo-ui-widget-enabled.oo-ui-iconElement:not( .oo-ui-labelElement ) > .oo-ui-buttonElement-button:hover {
+	border-right-color: var( --border-color-base--lighter );
+	background-color: var( --background-color-framed--hover );
+}
+
+.oo-ui-processDialog-actions-safe .oo-ui-widget-enabled.oo-ui-iconElement:not( .oo-ui-labelElement ) > .oo-ui-buttonElement-button:active {
+	border-right-color: var( --border-color-base--lighter );
+	background-color: var( --background-color-framed--active );
+}
+
+.oo-ui-processDialog-actions-safe .oo-ui-widget-enabled.oo-ui-iconElement:not( .oo-ui-labelElement ) > .oo-ui-buttonElement-button:focus {
+	border-color: var( --color-primary );
+}
+
+.oo-ui-processDialog-errors-title {
+	color: var( --color-base--emphasized );
+}
+
+.oo-ui-windowManager-modal > .oo-ui-dialog > .oo-ui-window-frame {
+	background-color: var( --background-color-dp-24 );
 }
 
 .oo-ui-windowManager-modal.oo-ui-windowManager-floating > .oo-ui-dialog > .oo-ui-window-frame {
-	border: 0;
-	.boxshadow(5);
-}
-
-.oo-ui-processDialog-actions-safe .oo-ui-actionWidget.oo-ui-buttonElement-framed,
-.oo-ui-processDialog-actions-primary .oo-ui-actionWidget.oo-ui-buttonElement-framed,
-.oo-ui-processDialog-actions-other .oo-ui-actionWidget.oo-ui-buttonElement-framed {
-	height: 100%;
-	margin: 0;
-
-	> a.oo-ui-buttonElement-button {
-		display: flex;
-		height: 100%;
-		align-items: center;
-	}
-}
-
-.skin-citizen-dark {
-	.oo-ui-windowManager-modal > .oo-ui-dialog > .oo-ui-window-frame {
-		background-color: @dark-bg-0;
-	}
-
-	.oo-ui-processDialog-content .oo-ui-window-body {
-		border-color: @dark-bg-40;
-		outline: 1px solid @dark-bg-30;
-	}
-
-	.oo-ui-messageDialog-content > .oo-ui-window-foot {
-		outline: 1px solid @dark-bg-50;
-	}
-
-	.oo-ui-messageDialog-title {
-		color: @dark-text-100;
-	}
-
-	.oo-ui-messageDialog-message {
-		color: @dark-text-90;
-	}
-
-	.oo-ui-messageDialog-actions .oo-ui-actionWidget.oo-ui-widget-enabled.oo-ui-flaggedElement-progressive .oo-ui-buttonElement-button:active {
-		background-color: rgba( 8, 126, 204, 0.1 );
-	}
-
-	.oo-ui-messageDialog-actions .oo-ui-actionWidget.oo-ui-widget-enabled.oo-ui-flaggedElement-destructive .oo-ui-buttonElement-button:active {
-		background-color: rgba( 212, 83, 83, 0.1 );
-	}
-
-	.oo-ui-messageDialog-actions-horizontal .oo-ui-actionWidget {
-		border-right: 1px solid @dark-bg-50;
-	}
-
-	.oo-ui-messageDialog-actions-vertical .oo-ui-actionWidget {
-		border-bottom: 1px solid @dark-bg-50;
-	}
-
-	.oo-ui-processDialog-actions-safe .oo-ui-actionWidget.oo-ui-buttonElement-frameless:hover,
-	.oo-ui-processDialog-actions-primary .oo-ui-actionWidget.oo-ui-buttonElement-frameless:hover {
-		background-color: rgba( 0, 0, 0, 0.05 );
-	}
-
-	.oo-ui-processDialog-actions-safe .oo-ui-actionWidget.oo-ui-buttonElement-frameless:active,
-	.oo-ui-processDialog-actions-primary .oo-ui-actionWidget.oo-ui-buttonElement-frameless:active {
-		background-color: rgba( 0, 0, 0, 0.1 );
-	}
-
-	.oo-ui-processDialog-actions-safe .oo-ui-actionWidget.oo-ui-buttonElement-frameless.oo-ui-flaggedElement-progressive:hover,
-	.oo-ui-processDialog-actions-primary .oo-ui-actionWidget.oo-ui-buttonElement-frameless.oo-ui-flaggedElement-progressive:hover {
-		background-color: rgba( 8, 126, 204, 0.05 );
-	}
-
-	.oo-ui-processDialog-actions-safe .oo-ui-actionWidget.oo-ui-buttonElement-frameless.oo-ui-flaggedElement-progressive:active,
-	.oo-ui-processDialog-actions-primary .oo-ui-actionWidget.oo-ui-buttonElement-frameless.oo-ui-flaggedElement-progressive:active {
-		background-color: rgba( 8, 126, 204, 0.1 );
-	}
-
-	.oo-ui-processDialog-actions-safe .oo-ui-actionWidget.oo-ui-buttonElement-frameless.oo-ui-flaggedElement-destructive:hover,
-	.oo-ui-processDialog-actions-primary .oo-ui-actionWidget.oo-ui-buttonElement-frameless.oo-ui-flaggedElement-destructive:hover {
-		background-color: rgba( 212, 83, 83, 0.05 );
-	}
-
-	.oo-ui-processDialog-actions-safe .oo-ui-actionWidget.oo-ui-buttonElement-frameless.oo-ui-flaggedElement-destructive:active,
-	.oo-ui-processDialog-actions-primary .oo-ui-actionWidget.oo-ui-buttonElement-frameless.oo-ui-flaggedElement-destructive:active {
-		background-color: rgba( 212, 83, 83, 0.1 );
-	}
-
-	.oo-ui-processDialog-errors {
-		background-color: rgba( 0, 0, 0, 0.9 );
-	}
-
-	.oo-ui-processDialog-errors-title {
-		color: @dark-text-100;
-	}
-
-	.oo-ui-processDialog-error {
-		border: 1px solid @red-50;
-		background-color: @red-90;
-	}
-
-	.oo-ui-windowManager-modal > .oo-ui-dialog {
-		z-index: 10;
-		background-color: rgba( 0, 0, 0, 0.5 );
-	}
-
-	.oo-ui-windowManager-modal.oo-ui-windowManager-floating > .oo-ui-dialog > .oo-ui-window-frame {
-		border: 1px solid @dark-bg-50;
-		box-shadow: 0 2px 2px 0 rgba( 0, 0, 0, 0.25 );
-	}
+	border: 1px solid var( --border-color-base--lighter );
 }
