@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Abijeet Patro",
+			"Gomoko",
 			"Pamputt",
 			"Verdy p"
 		]
@@ -12,7 +13,12 @@
 	"citizen.js": "/* La totalité du JavaScript placé ici s’appliquera aux utilisateurs de l’habillage Citizen. */",
 	"citizen-drawer-toggle": "Basculer le menu",
 	"citizen-search-toggle": "Basculer la recherche",
+	"citizen-theme-toggle": "Basculer la couleur du thème",
 	"citizen-footer-desc": "Modifier ce texte sur MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Modifier ce texte sur MediaWiki:Citizen-footer-tagline",
-	"citizen-search-fulltext": "Rechercher les pages contenant"
+	"citizen-search-fulltext": "Rechercher les pages contenant",
+	"prefs-citizen-theme-label": "Thème",
+	"prefs-citizen-theme-option-auto": "Automatique",
+	"prefs-citizen-theme-option-light": "Clair",
+	"prefs-citizen-theme-option-dark": "Sombre"
 }

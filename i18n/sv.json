@@ -10,7 +10,12 @@
 	"citizen.js": "/* All JavaScript här kommer laddas in för användare av utseendet Citizen */",
 	"citizen-drawer-toggle": "Visa/dölj menyn",
 	"citizen-search-toggle": "Visa/dölj sök",
+	"citizen-theme-toggle": "Växla temafärg",
 	"citizen-footer-desc": "Redigera den här texten på MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Redigera den här texten på MediaWiki:Citizen-footer-tagline",
-	"citizen-search-fulltext": "Sökningar som innehåller"
+	"citizen-search-fulltext": "Sökningar som innehåller",
+	"prefs-citizen-theme-label": "Tema",
+	"prefs-citizen-theme-option-auto": "Automatisk",
+	"prefs-citizen-theme-option-light": "Ljust",
+	"prefs-citizen-theme-option-dark": "Mörkt"
 }

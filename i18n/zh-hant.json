@@ -11,7 +11,12 @@
 	"citizen.js": "/* 此 Javascript 會用於使用 Citizen 佈景主題的使用者 */",
 	"citizen-drawer-toggle": "切換菜單",
 	"citizen-search-toggle": "切換搜尋",
+	"citizen-theme-toggle": "切換主題",
 	"citizen-footer-desc": "在 MediaWiki:Citizen-footer-desc 編輯此文字",
 	"citizen-footer-tagline": "在 MediaWiki:Citizen-footer-tagline 編輯此文字",
-	"citizen-search-fulltext": "搜尋包含"
+	"citizen-search-fulltext": "搜尋包含",
+	"prefs-citizen-theme-label": "主題",
+	"prefs-citizen-theme-option-auto": "自動",
+	"prefs-citizen-theme-option-light": "明亮",
+	"prefs-citizen-theme-option-dark": "陰暗"
 }

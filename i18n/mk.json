@@ -11,7 +11,12 @@
 	"citizen.js": "/* Сиот тука поставен JavaScript ќе им се вчитува на корисниците што го користат рувото „Граѓанин“ */",
 	"citizen-drawer-toggle": "Дај/скриј мени",
 	"citizen-search-toggle": "Дај/скриј пребарување",
+	"citizen-theme-toggle": "Смени боја на изгледот",
 	"citizen-footer-desc": "Уредете го овој текст на MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Уредете го овој текст на MediaWiki:Citizen-footer-tagline",
-	"citizen-search-fulltext": "Пребарај страници што содржат"
+	"citizen-search-fulltext": "Пребарај страници што содржат",
+	"prefs-citizen-theme-label": "Изглед",
+	"prefs-citizen-theme-option-auto": "Авто",
+	"prefs-citizen-theme-option-light": "Светол",
+	"prefs-citizen-theme-option-dark": "Темен"
 }

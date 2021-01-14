@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Abijeet Patro",
-			"BaRaN6161 TURK"
+			"BaRaN6161 TURK",
+			"Sadrettin"
 		]
 	},
 	"skinname-citizen": "Citizen",
@@ -13,5 +14,9 @@
 	"citizen-search-toggle": "Aramayı değiştir",
 	"citizen-footer-desc": "Bu metni MediaWiki:Citizen-footer-desc üzerinde düzenle",
 	"citizen-footer-tagline": "Bu metni MediaWiki:Citizen-footer-tagline üzerinde düzenle",
-	"citizen-search-fulltext": "İçeren sayfaları ara"
+	"citizen-search-fulltext": "İçeren sayfaları ara",
+	"prefs-citizen-theme-label": "Tema",
+	"prefs-citizen-theme-option-auto": "Otomatik",
+	"prefs-citizen-theme-option-light": "Açık",
+	"prefs-citizen-theme-option-dark": "Koyu"
 }

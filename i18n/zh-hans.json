@@ -13,5 +13,9 @@
 	"citizen-search-toggle": "切换搜索",
 	"citizen-footer-desc": "在 MediaWiki:Citizen-footer-desc 编辑此文本",
 	"citizen-footer-tagline": "在 MediaWiki:Citizen-footer-tagline 编辑此文本",
-	"citizen-search-fulltext": "搜索包含"
+	"citizen-search-fulltext": "搜索包含",
+	"prefs-citizen-theme-label": "主题",
+	"prefs-citizen-theme-option-auto": "自动",
+	"prefs-citizen-theme-option-light": "日间",
+	"prefs-citizen-theme-option-dark": "夜间"
 }

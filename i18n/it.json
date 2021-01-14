@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Beta16"
+		]
+	},
+	"citizen.css": "/* Il codice CSS inserito qui viene caricato dagli utenti che usano il tema Citizen */",
+	"citizen.js": "/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano il tema Citizen */",
+	"prefs-citizen-theme-label": "Tema",
+	"prefs-citizen-theme-option-auto": "Automatico",
+	"prefs-citizen-theme-option-light": "Chiaro",
+	"prefs-citizen-theme-option-dark": "Scuro"
+}

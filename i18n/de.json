@@ -9,9 +9,8 @@
 	"citizen-skin-desc": "Ein responsive Skin entwickelt für das Star Citizen Wiki",
 	"citizen-footer-desc": "Bearbeiten Sie diesen Text auf MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Bearbeiten Sie diesen Text auf MediaWiki:Citizen-footer-tagline",
-
 	"prefs-citizen-theme-label": "Thema",
 	"prefs-citizen-theme-option-auto": "Automatisch",
 	"prefs-citizen-theme-option-light": "Hell",
-	"prefs-citizen-theme-option-dark":  "Dunkel"
+	"prefs-citizen-theme-option-dark": "Dunkel"
 }

@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Narazeni"
+		]
+	},
+	"prefs-citizen-theme-label": "ფონი",
+	"prefs-citizen-theme-option-auto": "ავტო",
+	"prefs-citizen-theme-option-light": "მორჩე",
+	"prefs-citizen-theme-option-dark": "რუმე"
+}

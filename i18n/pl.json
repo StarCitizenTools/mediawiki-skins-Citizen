@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kareyac"
+		]
+	},
+	"prefs-citizen-theme-label": "Motyw",
+	"prefs-citizen-theme-option-auto": "Automatycznie",
+	"prefs-citizen-theme-option-light": "Jasna",
+	"prefs-citizen-theme-option-dark": "Ciemna"
+}

@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kareyac"
+		]
+	},
+	"prefs-citizen-theme-label": "Тема оформления",
+	"prefs-citizen-theme-option-auto": "Авто",
+	"prefs-citizen-theme-option-light": "Светлая",
+	"prefs-citizen-theme-option-dark": "Тёмная"
+}
