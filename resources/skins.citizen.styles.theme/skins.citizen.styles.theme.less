@@ -9,12 +9,16 @@
 	background-repeat: no-repeat;
 	cursor: pointer;
 	font-size: 0;
-	opacity: @opacity-icon;
+	opacity: var( --opacity-icon-base );
 	outline: 0;
 	transition: @transition-transform-quick, @transition-opacity-quick;
 
 	&:hover {
-		opacity: @opacity-icon-active;
+		opacity: var( --opacity-icon-base--hover );
+	}
+
+	&:active {
+		opacity: var( --opacity-icon-base--active );
 	}
 }
 
