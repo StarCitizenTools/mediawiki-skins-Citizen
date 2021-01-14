@@ -20,11 +20,15 @@
 		.resource-loader-icon-link;
 		padding: 5px;
 		font-size: 0;
-		opacity: @opacity-icon;
-		transition: @transition-opacity;
+		opacity: var( --opacity-icon-base );
+		transition: @transition-opacity-quick;
 
 		&:hover {
-			opacity: @opacity-icon-active;
+			opacity: var( --opacity-icon-base--hover );
+		}
+
+		&:active {
+			opacity: var( --opacity-icon-base--active );
 		}
 
 		&:after {
@@ -62,30 +66,28 @@
 			&:after {
 				.resource-loader-list-icon;
 				margin-left: @icon-padding;
-				opacity: @opacity-icon;
-			}
-
-			&:hover,
-			&:active,
-			&:focus {
-				&:after {
-					opacity: @opacity-icon-active;
-				}
+				opacity: var( --opacity-icon-base );
 			}
 
 			&:hover {
 				.menu-item-link-hover;
+				&:after {
+					opacity: var( --opacity-icon-base--hover );
+				}
 			}
 
 			&:active {
 				.menu-item-link-active;
+				&:after {
+					opacity: var( --opacity-icon-base--active );
+				}
 			}
 		}
 	}
 
 	&:before {
 		.resource-loader-menu-icon;
-		opacity: @opacity-icon;
+		opacity: var( --opacity-icon-base );
 	}
 
 	&:hover ul {
@@ -102,7 +104,8 @@
 		}
 	}
 
-	#p-views {
+	#p-views,
+	#p-actions {
 		li > a:after {
 			filter: invert( 1 );
 		}

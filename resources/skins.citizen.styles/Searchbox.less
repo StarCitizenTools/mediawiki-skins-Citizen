@@ -24,7 +24,7 @@
 			background-position: center;
 			background-repeat: no-repeat;
 			background-size: 14px;
-			opacity: @opacity-icon;
+			opacity: var( --opacity-icon-base );
 		}
 
 		&-random {
@@ -36,12 +36,16 @@
 			background-position: center;
 			background-repeat: no-repeat;
 			background-size: 18px;
-			opacity: @opacity-icon;
+			opacity: var( --opacity-icon-base );
 			transition: @transition-transform-quick, @transition-opacity-quick;
 
 			&:hover {
-				opacity: @opacity-icon-active;
+				opacity: var( --opacity-icon-base--hover );
 				transform: rotate( 30deg );
+			}
+
+			&:active {
+				opacity: var( --opacity-icon-base--active );
 			}
 		}
 	}
@@ -290,11 +294,6 @@
 			&-icon,
 			&-random {
 				filter: invert( 1 );
-				opacity: 0.4;
-			}
-
-			&-random:hover {
-				opacity: 0.6;
 			}
 		}
 	}
