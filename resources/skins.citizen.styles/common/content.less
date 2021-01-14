@@ -25,10 +25,10 @@
 	 * Only apply to internal links in article
 	*/
 	a[ href^='/' ]:not( .image ) {
-		.link-content-text(@color-primary--hover);
+		.link-content-text( var(--color-primary--hover) );
 
 		&.new {
-			background-image: linear-gradient( to right, @color-link-new--hover 0, @color-link-new--hover 100% );
+			background-image: linear-gradient( to right, var( --color-destructive--hover ) 0, var( --color-destructive--hover ) 100% );
 		}
 	}
 	/*
