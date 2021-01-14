@@ -7,273 +7,326 @@
 @import '../../resources/mixins.less';
 
 /*!
- * OOUI v0.26.4
+ * Based on OOUI v0.39.3
  * https://www.mediawiki.org/wiki/OOUI
  *
- * Copyright 2011–2018 OOUI Team and other contributors.
+ * Copyright 2011–2020 OOUI Team and other contributors.
  * Released under the MIT license
  * http://oojs.mit-license.org
  *
- * Date: 2018-04-17T22:24:02Z
+ * Date: 2020-07-10T06:32:25Z
  */
 
-.oo-ui-bookletLayout > .oo-ui-menuLayout-menu {
-	border-color: @base-80;
+.oo-ui-bookletLayout-outlinePanel > .oo-ui-outlineControlsWidget {
+	border-top: 1px solid var( --border-color-base--lighter );
 }
 
-.oo-ui-searchWidget-query {
-	border: 0;
-	.boxshadow(2);
+.oo-ui-bookletLayout > .oo-ui-menuLayout-menu {
+	border-right: 1px solid var( --border-color-base--lighter );
+}
+
+.oo-ui-buttonSelectWidget .oo-ui-buttonOptionWidget.oo-ui-widget-disabled + .oo-ui-widget-disabled > .oo-ui-buttonElement-button {
+	border-left-color: var( --background-color-framed--hover );
+}
+
+.oo-ui-buttonSelectWidget.oo-ui-widget-enabled:focus .oo-ui-buttonOptionWidget.oo-ui-optionWidget-selected .oo-ui-buttonElement-button {
+	border-color: var( --color-primary );
+	box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px #fff;
+}
+
+.oo-ui-toggleButtonWidget.oo-ui-widget-enabled.oo-ui-buttonElement-frameless.oo-ui-toggleWidget-on .oo-ui-buttonElement-button > .oo-ui-iconElement-icon:not( .oo-ui-image-invert ) {
+	opacity: var( --opacity-icon-base--active );
+}
+
+.oo-ui-toggleSwitchWidget {
+	border: 1px solid var( --border-color-base );
+	background-color: var( --background-color-framed );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled .oo-ui-toggleSwitchWidget-grip {
+	border: 1px solid var( --border-color-base );
+	background-color: var( --background-color-framed );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:hover {
+	border-color: var( --color-primary--hover );
+	background-color: var( --background-color-framed--hover );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:hover .oo-ui-toggleSwitchWidget-grip {
+	border-color: var( --color-primary--hover );
+	background-color: var( --background-color-framed--hover );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:active,
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:active:hover,
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:active:focus {
+	border-color: var( --color-primary--active );
+	background-color: var( --color-primary--active );
+	box-shadow: inset 0 0 0 1px var( --color-primary--active );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:focus {
+	border-color: var( --color-primary );
+	box-shadow: inset 0 0 0 1px var( --color-primary );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:focus .oo-ui-toggleSwitchWidget-grip {
+	border-color: var( --color-primary );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled.oo-ui-toggleWidget-on {
+	border-color: var( --color-primary );
+	background-color: var( --color-primary );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled.oo-ui-toggleWidget-on:hover {
+	border-color: var( --color-primary--hover );
+	background-color: var( --color-primary--hover );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled.oo-ui-toggleWidget-on:active,
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled.oo-ui-toggleWidget-on:active:hover {
+	border-color: var( --color-primary--active );
+	background-color: var( --color-primary--active );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled.oo-ui-toggleWidget-on:focus {
+	border-color: var( --color-primary );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-disabled {
+	border-color: var( --background-color-framed--active );
+	background-color: var( --background-color-framed--active );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-disabled.oo-ui-toggleWidget-off .oo-ui-toggleSwitchWidget-grip {
+	border: 1px solid var( --background-color-framed--hover );
+	box-shadow: inset 0 0 0 1px var( --background-color-framed--hover );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-disabled.oo-ui-toggleWidget-on .oo-ui-toggleSwitchWidget-grip {
+	background-color: var( --background-color-framed--hover );
+}
+
+.oo-ui-selectFileWidget-dropTarget {
+	border: 1px solid var( --border-color-input );
+	background-color: var( --background-color-dp-00 );
+}
+
+.oo-ui-selectFileWidget.oo-ui-widget-enabled.oo-ui-selectFileWidget-dropTarget {
+	background-color: var( --background-color-dp-00 );
+}
+
+.oo-ui-selectFileWidget.oo-ui-widget-enabled.oo-ui-selectFileWidget-dropTarget:hover {
+	border-color: var( --border-color-input--hover );
+}
+
+.oo-ui-selectFileWidget.oo-ui-widget-enabled.oo-ui-selectFileWidget-canDrop.oo-ui-selectFileWidget-dropTarget,
+.oo-ui-selectFileWidget.oo-ui-widget-enabled.oo-ui-selectFileWidget-canDrop .oo-ui-selectFileInputWidget-info > .oo-ui-inputWidget-input {
+	background-color: var( --background-color-primary--hover );
+	color: var( --color-base--emphasized );
+}
+
+.oo-ui-selectFileWidget.oo-ui-widget-disabled.oo-ui-selectFileWidget-dropTarget,
+.oo-ui-selectFileWidget.oo-ui-selectFileInputWidget-empty.oo-ui-widget-disabled.oo-ui-selectFileWidget-dropTarget {
+	border-color: var( --background-color-framed--active );
+	background-color: var( --background-color-framed--active );
+}
+
+.oo-ui-outlineSelectWidget:focus {
+	box-shadow: inset 0 0 0 2px var( --color-primary );
+}
+
+.oo-ui-outlineOptionWidget.oo-ui-optionWidget-highlighted {
+	background-color: var( --background-color-quiet--hover );
+	color: var( --color-base--emphasized );
+}
+
+.oo-ui-outlineOptionWidget.oo-ui-optionWidget-selected {
+	background-color: var( --background-color-primary--hover );
+	color: var( --color-base--emphasized );
+}
+
+.oo-ui-outlineOptionWidget.oo-ui-optionWidget-pressed {
+	background-color: var( --background-color-primary--active );
+	color: var( --color-base--emphasized );
+}
+
+.oo-ui-outlineOptionWidget.oo-ui-indicatorElement .oo-ui-indicatorElement-indicator {
+	opacity: var( --opacity-icon-base );
+}
+
+.oo-ui-outlineControlsWidget {
+	background-color: var( --background-color-dp-00 );
+}
+
+.oo-ui-tabSelectWidget-framed {
+	background-color: var( --background-color-framed );
+}
+
+.oo-ui-tabSelectWidget-frameless {
+	box-shadow: inset 0 -1px 0 0 var( --border-color-base );
+}
+
+.oo-ui-tabOptionWidget {
+	color: var( --color-base );
+}
+
+.oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget.oo-ui-optionWidget-selected {
+	background-color: var( --background-color-framed--hover );
+	color: var( --color-base );
+}
+
+.oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget.oo-ui-optionWidget-selected .oo-ui-labelElement-label {
+	border-bottom-color: var( --background-color-framed--hover );
+}
+
+.oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget.oo-ui-widget-enabled:hover {
+	background-color: var( --background-color-quiet--hover );
+	color: var( --color-base--emphasized );
+}
+
+.oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget.oo-ui-widget-enabled:active {
+	background-color: var( --background-color-quiet--active );
+	color: var( --color-base--emphasized );
+}
+
+.oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget.oo-ui-widget-enabled.oo-ui-optionWidget-selected:hover {
+	background-color: var( --background-color-quiet--hover );
+}
+
+.oo-ui-tabSelectWidget-framed.oo-ui-widget-enabled:focus .oo-ui-tabOptionWidget.oo-ui-optionWidget-selected .oo-ui-labelElement-label {
+	border-bottom-color: var( --color-primary );
+}
+
+.oo-ui-tabSelectWidget-frameless .oo-ui-tabOptionWidget {
+	box-shadow: inset 0 0 0 0 var( --color-primary );
+}
+
+.oo-ui-tabSelectWidget-frameless .oo-ui-tabOptionWidget.oo-ui-optionWidget-selected {
+	box-shadow: inset 0 -2px 0 0 var( --color-primary );
+	color: var( --color-primary );
+}
+
+.oo-ui-tabSelectWidget-frameless .oo-ui-tabOptionWidget.oo-ui-widget-enabled:hover {
+	box-shadow: inset 0 -2px 0 0 var( --color-primary--hover );
+	color: var( --color-primary--hover );
+}
+
+.oo-ui-tabSelectWidget-frameless .oo-ui-tabOptionWidget.oo-ui-widget-enabled:active {
+	box-shadow: inset 0 -2px 0 0 var( --color-primary--active );
+	color: var( --color-primary--active );
+}
+
+.oo-ui-tabSelectWidget-frameless.oo-ui-widget-enabled:focus .oo-ui-tabOptionWidget.oo-ui-optionWidget-selected {
+	box-shadow: inset 0 0 0 2px var( --color-primary );
+}
+
+.oo-ui-tagMultiselectWidget-handle {
+	border: 1px solid var( --border-color-input );
+}
+
+.oo-ui-tagMultiselectWidget-handle > .oo-ui-tagMultiselectWidget-content > input {
+	color: var( --color-base--emphasized );
+}
+
+.oo-ui-tagMultiselectWidget-handle > .oo-ui-tagMultiselectWidget-content > input::placeholder {
+	color: var( --color-base--subtle );
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled {
+	background-color: var( --background-color-dp-00 );
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-inlined:hover .oo-ui-tagMultiselectWidget-handle {
+	border-color: var( --border-color-input--hover );
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-inlined.oo-ui-tagMultiselectWidget-focus .oo-ui-tagMultiselectWidget-handle {
+	border-color: var( --color-primary );
+	box-shadow: inset 0 0 0 1px var( --color-primary );
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-inlined.oo-ui-flaggedElement-invalid .oo-ui-tagMultiselectWidget-handle,
+.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-inlined.oo-ui-flaggedElement-invalid:hover .oo-ui-tagMultiselectWidget-handle {
+	border-color: var( --color-destructive );
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined {
+	background-color: var( --background-color-framed );
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined .oo-ui-tagItemWidget.oo-ui-widget-enabled {
+	background-color: var( --background-color-framed--hover );
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined.oo-ui-flaggedElement-invalid .oo-ui-inputWidget-input {
+	border-color: var( --color-destructive );
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-flaggedElement-invalid .oo-ui-inputWidget-input {
+	color: var( --color-destructive );
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-widget-disabled .oo-ui-tagMultiselectWidget-handle {
+	border-color: var( --background-color-framed--active );
+	background-color: var( --background-color-framed--active );
+	color: var( ---color-base--subtle );
+	text-shadow: 0 1px 1px var( --background-color-framed--hover );
 }
 
 .oo-ui-tagItemWidget {
-	border-color: @base-80;
+	border: 1px solid var( --border-color-base );
 }
 
-.skin-citizen-dark {
-	.oo-ui-bookletLayout-outlinePanel {
-		> .oo-ui-outlineControlsWidget {
-			border-top: 1px solid @dark-bg-30;
-		}
-	}
+.oo-ui-tagItemWidget.oo-ui-widget-enabled {
+	color: var( --color-base );
+}
 
-	.oo-ui-bookletLayout {
-		> .oo-ui-menuLayout-menu {
-			border-right: 1px solid @dark-bg-30;
-		}
-	}
+.oo-ui-tagItemWidget.oo-ui-widget-enabled:hover {
+	border-color: var( --border-color-base );
+	background-color: var( --background-color-framed--hover );
+	color: var( --color-base--subtle );
+}
 
-	.oo-ui-buttonSelectWidget {
-		.oo-ui-buttonOptionWidget.oo-ui-widget-disabled + .oo-ui-widget-disabled > .oo-ui-buttonElement-button {
-			border-left-color: @dark-bg-0;
-		}
-	}
+.oo-ui-tagItemWidget.oo-ui-widget-enabled:focus {
+	border-color: var( --color-primary );
+	box-shadow: inset 0 0 0 1px var( --color-primary );
+}
 
-	.oo-ui-toggleSwitchWidget {
-		border-color: @dark-bg-60;
-		background-color: @dark-bg-10;
+.oo-ui-tagItemWidget.oo-ui-widget-enabled:not( .oo-ui-tagItemWidget-fixed ) {
+	background-color: var( --background-color-framed );
+}
 
-		&.oo-ui-widget-enabled {
-			.oo-ui-toggleSwitchWidget-grip {
-				border-color: @dark-bg-60;
-				background-color: @dark-bg-10;
-			}
+.oo-ui-tagItemWidget.oo-ui-widget-enabled.oo-ui-flaggedElement-invalid {
+	border-color: var( --color-destructive );
+}
 
-			&:hover {
-				background-color: @dark-bg-0;
+.oo-ui-tagItemWidget.oo-ui-widget-enabled.oo-ui-flaggedElement-invalid:hover {
+	border-color: var( --color-destructive );
+}
 
-				.oo-ui-toggleSwitchWidget-grip {
-					background-color: @dark-bg-0;
-				}
-			}
+.oo-ui-tagItemWidget.oo-ui-widget-enabled.oo-ui-flaggedElement-invalid:focus {
+	border-color: #d33;
+	box-shadow: inset 0 0 0 1px var( --color-destructive );
+}
 
-			&:active,
-			&:active:hover,
-			&:active:focus {
-				.oo-ui-toggleSwitchWidget-grip {
-					border-color: @dark-bg-0;
-					background-color: @dark-bg-0;
-				}
-			}
+.oo-ui-tagItemWidget.oo-ui-widget-enabled .oo-ui-buttonElement-button:hover {
+	background-color: var( --background-color-framed--hover );
+}
 
-			&.oo-ui-toggleWidget-on {
-				.oo-ui-toggleSwitchWidget-grip {
-					border-color: @dark-bg-0;
-					background-color: @dark-bg-0;
-				}
+.oo-ui-tagItemWidget.oo-ui-widget-enabled .oo-ui-buttonElement-button:active {
+	background-color: var( --background-color-framed--active );
+}
 
-				&:focus:before {
-					border-color: @dark-bg-0;
-				}
-			}
-		}
+.oo-ui-tagItemWidget.oo-ui-widget-disabled {
+	border-color: var( --background-color-framed--active );
+	background-color: var( --background-color-framed--active );
+	color: var( ---color-base--subtle );
+	text-shadow: 0 1px 1px var( --background-color-framed--hover );
+}
 
-		&.oo-ui-widget-disabled {
-			border-color: @dark-bg-30;
-			background-color: @dark-bg-30;
-
-			&.oo-ui-toggleWidget-off .oo-ui-toggleSwitchWidget-grip {
-				border-color: @dark-bg-0;
-				box-shadow: inset 0 0 0 1px @dark-bg-0;
-			}
-
-			&.oo-ui-toggleWidget-on .oo-ui-toggleSwitchWidget-grip {
-				background-color: @dark-bg-0;
-			}
-		}
-	}
-
-	.oo-ui-selectFileWidget-dropTarget {
-		border-color: @dark-bg-50;
-		background-color: @dark-bg-0;
-	}
-
-	.oo-ui-selectFileWidget {
-		&.oo-ui-widget-enabled {
-			&.oo-ui-selectFileWidget-dropTarget {
-				background-color: @dark-bg-0;
-
-				&:hover {
-					border-color: @dark-bg-60;
-				}
-			}
-
-			&.oo-ui-selectFileWidget-canDrop {
-				&.oo-ui-selectFileWidget-dropTarget,
-				.oo-ui-selectFileInputWidget-info > .oo-ui-inputWidget-input {
-					background-color: @dark-bg-20;
-				}
-			}
-		}
-
-		&.oo-ui-widget-disabled.oo-ui-selectFileWidget-dropTarget,
-		&.oo-ui-selectFileInputWidget-empty.oo-ui-widget-disabled.oo-ui-selectFileWidget-dropTarget {
-			border-color: @dark-bg-30;
-			background-color: @dark-bg-20;
-		}
-	}
-
-	.oo-ui-outlineOptionWidget {
-		&.oo-ui-optionWidget-highlighted {
-			background-color: @dark-bg-20;
-			color: @dark-text-100;
-		}
-
-		&.oo-ui-optionWidget-selected {
-			background-color: @dark-bg-20;
-		}
-	}
-
-	.oo-ui-outlineControlsWidget {
-		background-color: @dark-bg-0;
-	}
-
-	.oo-ui-tabSelectWidget {
-		background-color: @dark-bg-20;
-	}
-
-	.oo-ui-tabOptionWidget {
-		color: @dark-text-80;
-
-		&.oo-ui-optionWidget-selected {
-			background-color: @dark-bg-0;
-			color: @dark-text-100;
-
-			.oo-ui-labelElement-label {
-				border-bottom-color: @dark-bg-0;
-			}
-		}
-
-		&.oo-ui-widget-enabled {
-			&:hover {
-				background-color: rgba( 0, 0, 0, 0.3 );
-				color: @dark-text-90;
-			}
-
-			&:active {
-				background-color: rgba( 0, 0, 0, 0.8 );
-				color: @dark-text-100;
-			}
-
-			&.oo-ui-optionWidget-selected {
-				&:hover {
-					background-color: @dark-bg-0;
-				}
-			}
-		}
-	}
-
-	.oo-ui-tagMultiselectWidget-handle {
-		border-color: @dark-bg-50;
-
-		> .oo-ui-tagMultiselectWidget-content {
-			> input {
-				color: @dark-text-100;
-
-				&::placeholder {
-					color: @dark-text-70;
-				}
-			}
-		}
-	}
-
-	.oo-ui-tagMultiselectWidget {
-		&.oo-ui-widget-enabled {
-			.oo-ui-tagMultiselectWidget-handle {
-				background-color: @dark-bg-0;
-			}
-
-			&.oo-ui-tagMultiselectWidget-inlined {
-				&:hover {
-					.oo-ui-tagMultiselectWidget-handle {
-						border-color: @dark-text-70;
-					}
-				}
-			}
-
-			&.oo-ui-tagMultiselectWidget-outlined {
-				.oo-ui-tagMultiselectWidget-handle {
-					background-color: @dark-bg-10;
-
-					&.oo-ui-widget-enabled {
-						background-color: @dark-bg-0;
-					}
-				}
-
-				.oo-ui-tagItemWidget {
-					&.oo-ui-widget-enabled {
-						background-color: @dark-bg-0;
-					}
-				}
-			}
-		}
-
-		&.oo-ui-widget-disabled {
-			.oo-ui-tagMultiselectWidget-handle {
-				border-color: @dark-bg-30;
-				background-color: @dark-bg-20;
-				color: @dark-text-70;
-				text-shadow: 0 1px 1px @dark-bg-0;
-			}
-		}
-	}
-
-	.oo-ui-tagItemWidget {
-		border-color: @dark-bg-50;
-
-		&.oo-ui-widget-enabled {
-			color: @dark-text-90;
-
-			&:hover {
-				border-color: @dark-bg-50;
-				background-color: @dark-bg-0;
-				color: @dark-text-80;
-			}
-
-			&:not( .oo-ui-tagItemWidget-fixed ) {
-				background-color: @dark-bg-10;
-			}
-
-			.oo-ui-buttonElement-button {
-				&:hover {
-					background-color: @dark-bg-0;
-				}
-
-				&:active {
-					background-color: @dark-bg-30;
-				}
-			}
-		}
-
-		&.oo-ui-widget-disabled {
-			border-color: @dark-bg-30;
-			background-color: @dark-bg-20;
-			color: @dark-text-70;
-			text-shadow: 0 1px 1px @dark-bg-0;
-		}
-	}
-
-	.oo-ui-searchWidget-query {
-		border-bottom: 1px solid @dark-bg-30;
-	}
+.oo-ui-searchWidget-query {
+	border-bottom: 1px solid var( --border-color-base--lighter );
 }
