@@ -681,3 +681,10 @@
 .oo-ui-progressBarWidget.oo-ui-widget-disabled .oo-ui-progressBarWidget-bar {
 	background-color: var( --background-color-framed--active );
 }
+
+// Invert icon for dark mode
+.skin-citizen-dark {
+	.oo-ui-iconElement-icon {
+		filter: invert( 1 ) hue-rotate( 180deg );
+	}
+}
