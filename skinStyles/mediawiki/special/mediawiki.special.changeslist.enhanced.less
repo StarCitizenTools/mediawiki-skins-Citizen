@@ -12,13 +12,13 @@
 
 table.mw-enhanced-rc {
 	padding: @margin-side / 2 0;
-	border-bottom: 1px solid @base-80;
+	border-bottom: 1px solid var( --border-color-base );
 	margin: 0 !important;
 	font-size: @content-monospace-size;
 	transition: @transition-background-quick;
 
 	&:hover {
-		background-color: @base-90;
+		background-color: var( --background-color-quiet--hover );
 	}
 }
 
@@ -28,15 +28,5 @@ table.mw-enhanced-rc {
 
 	.mw-tag-markers {
 		margin: @margin-side / 4;
-	}
-}
-
-.skin-citizen-dark {
-	table.mw-enhanced-rc {
-		border-color: @dark-bg-20;
-
-		&:hover {
-			background-color: @dark-bg-10;
-		}
 	}
 }

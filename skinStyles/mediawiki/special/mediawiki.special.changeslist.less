@@ -18,7 +18,7 @@
 .mw-rcfilters-disabled {
 	.mw-specialpage-summary {
 		margin: 0.4rem 0 1.6rem;
-		color: @base-30;
+		color: var( --color-base--subtle );
 		font-size: @content-caption-size;
 
 		p {
@@ -35,65 +35,35 @@
 	legend {
 		width: 100%;
 		padding: @margin-side / 2 0;
-		border-bottom: 1px solid @base-80;
+		border-bottom: 1px solid var( --border-color-base );
 		margin-bottom: @margin-side / 2;
 		font-size: @content-small-text-size;
-	}
-
-	// Needed additional parent to override
-	.mw-changeslist-legend {
-		border-color: @base-80;
-		border-radius: @border-radius-small;
 	}
 }
 
 .mw-changeslist {
 	h4 {
 		padding: @margin-side / 2 0 !important;
-		border-bottom: 1px solid @base-80;
-		color: @base-30 !important;
+		border-bottom: 1px solid var( --border-color-base );
+		color: var( --color-base--subtle ) !important;
 		font-family: @fonts !important;
 		font-size: @content-caption-size !important;
 	}
 
 	.comment {
-		color: @base-30;
+		color: var( --color-base--subtle );
+	}
+
+	// Need additional parent to override
+	.mw-changeslist-legend {
+		border-color: var( --border-color-base );
+		background-color: var( --background-color-framed );
+		border-radius: @border-radius-small;
 	}
 
 	.mw-tag-markers {
 		.mw-tag-marker {
-			color: @base-30;
-		}
-	}
-}
-
-.skin-citizen-dark {
-	.rcoptions {
-		color: @dark-text-90;
-
-		legend {
-			border-color: @dark-bg-20;
-		}
-
-		.mw-changeslist-legend {
-			border-color: @dark-bg-20;
-		}
-	}
-
-	.mw-changeslist {
-		h4 {
-			border-color: @dark-bg-20;
-			color: @dark-text-80 !important;
-		}
-
-		.comment {
-			color: @dark-text-80;
-		}
-
-		.mw-tag-markers {
-			.mw-tag-marker {
-				color: @dark-text-80;
-			}
+			color: var( --color-base--subtle );
 		}
 	}
 }
