@@ -135,18 +135,22 @@
 					.boxshadow(5);
 
 					&:before {
-						opacity: @opacity-icon-active;
+						opacity: var( --opacity-icon-base--hover );
 					}
 				}
 
 				&:active {
 					background-color: var( --background-color-dp-02 );
+
+					&:before {
+						opacity: var( --opacity-icon-base--active );
+					}
 				}
 
 				&:before {
 					.resource-loader-icon;
 					display: block;
-					opacity: @opacity-icon;
+					opacity: var( --opacity-icon-base );
 				}
 			}
 

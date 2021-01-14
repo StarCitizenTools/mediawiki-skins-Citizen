@@ -25,10 +25,10 @@
 	 * Only apply to internal links in article
 	*/
 	a[ href^='/' ]:not( .image ) {
-		.link-content-text(@color-primary--hover);
+		.link-content-text( var(--color-primary--hover) );
 
 		&.new {
-			background-image: linear-gradient( to right, @color-link-new--hover 0, @color-link-new--hover 100% );
+			background-image: linear-gradient( to right, var( --color-destructive--hover ) 0, var( --color-destructive--hover ) 100% );
 		}
 	}
 	/*
@@ -115,9 +115,9 @@
 				.resource-loader-icon-link-small;
 				padding: @margin-side / 4;
 				background: 0 !important; // Cancel above styles
-				opacity: @opacity-icon;
+				opacity: var( --opacity-icon-base );
 				text-indent: -9999px; // Hide text
-				transition: @transition-opacity;
+				transition: @transition-opacity-quick;
 
 				&:before {
 					.resource-loader-icon;
@@ -125,10 +125,12 @@
 					background-size: contain;
 				}
 
-				&:hover,
-				&:active,
-				&:focus {
-					opacity: @opacity-icon-active;
+				&:hover {
+					opacity: var( --opacity-icon-base--hover );
+				}
+
+				&:active {
+					opacity: var( --opacity-icon-base--active );
 				}
 			}
 

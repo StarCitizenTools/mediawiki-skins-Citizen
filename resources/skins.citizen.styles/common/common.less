@@ -72,6 +72,7 @@ pre,
 input,
 select,
 textarea {
+	border: 1px solid var( --border-color-input );
 	background-color: var( --background-color-framed );
 	color: inherit;
 }
@@ -89,15 +90,6 @@ legend {
 	padding: 4px;
 	margin: 0;
 	color: var( --color-base--subtle );
-}
-
-input,
-pre,
-code,
-fieldset,
-select,
-textarea {
-	border: 1px solid var( --border-color-base );
 }
 
 textarea {
@@ -152,14 +144,14 @@ a {
 	}
 
 	&.new {
-		color: var( --color-link-new ) !important; // Override visited
+		color: var( --color-destructive ) !important; // Override visited
 
 		&:hover {
-			color: var( --color-link-new--hover ) !important;
+			color: var( --color-destructive--hover ) !important;
 		}
 
 		&:active {
-			color: var( --color-link-new--active ) !important;
+			color: var( --color-destructive--active ) !important;
 		}
 	}
 
@@ -205,20 +197,6 @@ a {
 		margin: 0;
 		line-height: inherit;
 		list-style: none none;
-	}
-}
-
-.mw-wiki-title {
-	a& {
-		color: @base-50;
-		transition: @transition-opacity;
-
-		&:hover,
-		&:active,
-		&:focus {
-			color: @base-30;
-			text-decoration: none;
-		}
 	}
 }
 
