@@ -9,6 +9,9 @@
 
 .skin-citizen {
 	.mw-rcfilters-ui {
+		// To fix the weird button gapping issue
+		font-size: 0.875rem;
+
 		&-filter {
 			&TagMultiselectWidget {
 				&.oo-ui-widget-enabled {
@@ -85,5 +88,14 @@
 			border-color: var( --border-color-base );
 			background-color: var( --background-color-framed );
 		}
+
+		&-datePopupWidget {
+			border-color: var( --border-color-base );
+		}
+	}
+
+	// Override input field style because it feels out of place
+	.oo-ui-textInputWidget .oo-ui-inputWidget-input {
+		border-color: var( --border-color-base );
 	}
 }
