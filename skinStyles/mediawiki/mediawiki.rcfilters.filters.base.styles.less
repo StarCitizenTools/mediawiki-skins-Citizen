@@ -54,6 +54,11 @@
 				&OptionWidget.oo-ui-flaggedElement-muted:not( .oo-ui-optionWidget-selected ) {
 					background-color: var( --background-color-framed );
 				}
+
+				&SelectWidget-footer {
+					border-top: 1px solid var(--border-color-base--darker);
+					background-color: var(--background-color-dp-16);
+				}
 			}
 		}
 
@@ -79,6 +84,10 @@
 			&:not( :last-child ):not( .mw-rcfilters-ui-itemMenuOptionWidget-identifier-talk ) {
 				border-color: var( --border-color-base );
 			}
+		}
+
+		&-viewSwitchWidget label.oo-ui-labelWidget {
+			color: var(--color-base--subtle);
 		}
 
 		&-changesListWrapperWidget .mw-changeslist-legend {
