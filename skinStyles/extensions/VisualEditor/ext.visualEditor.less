@@ -8,15 +8,11 @@
 .ve-activated {
 	.mw-header {
 		z-index: 3; // Move lower to accompany VE
-		background-color: @header-background-color-light;
+		background-color: var( --background-color-dp-00 );
 	}
 
 	#mw-header-background {
 		box-shadow: none;
-	}
-
-	.mw-sidebar-sitename {
-		margin-top: 42px;
 	}
 
 	#page-tools {
@@ -59,6 +55,21 @@
 			.ve-ce-documentNode {
 				padding: 0;
 			}
+		}
+	}
+
+	&-mwSaveDialog {
+		&-options {
+			border-color: var( --border-color-base );
+			background-color: var( --background-color-framed );
+		}
+
+		&--editSummary-count {
+			border-color: var( --border-color-base );
+		}
+
+		&-license {
+			color: var( --color-base--subtle );
 		}
 	}
 }
@@ -110,39 +121,25 @@
 				top: 0; // stick to top
 			}
 
-			// Hide some dropdown tools in smaller screen
-			// format - Paragraph
-			// strcture - List bullet
-			// insert - Insert
-			.ve-test-toolbar {
+			.ve-ui-toolbar-group {
+				// Hide some dropdown tools in smaller screen
+				// format - Paragraph
+				// link - Link
+				// strcture - List bullet
+				// insert - Insert
+				// specialCharacter - Special character
+				// help - Help
+				// notices - Notices
+				// pageMenu - Menu
 				&-format,
-				&-structure,
-				&-insert {
-					display: none;
-				}
-			}
-
-			// Hide some button tools in smaller screen
-			// link - Link
-			// specialCharacter - Special character
-			// help - Help
-			// notices - Notices
-			.oo-ui-tool-name {
 				&-link,
-				&-specialCharacter {
-					display: none !important;
-				}
-			}
-
-			// Hide help, notices, and menu button
-			.oo-ui-toolbar-actions {
-				> .ve-ui-toolbar > .oo-ui-toolbar-bar > .oo-ui-toolbar-tools {
-					.oo-ui-toolGroup {
-						&:first-child,
-						&:nth-child( 2 ) {
-							display: none;
-						}
-					}
+				&-structure,
+				&-insert,
+				&-specialCharacter,
+				&-help,
+				&-notices,
+				&-pageMenu {
+					display: none;
 				}
 			}
 
@@ -150,62 +147,35 @@
 			// Use CSS magic to create an icon
 			// Will change if I figure out a way to load the icon only for VE
 			.ve-ui-toolbar-saveButton {
-				> .oo-ui-buttonElement-button {
-					width: 60px !important;
-					height: 42px !important;
-					padding: 0 !important;
+				width: 60px !important;
+				height: 42px !important;
+				padding: 0 !important;
 
-					&:before {
-						top: 12px;
-						transform: rotate( -45deg );
-					}
-
-					&:after {
-						bottom: 12px;
-						transform: rotate( 45deg );
-					}
-
-					&:before,
-					&:after {
-						position: absolute;
-						left: 30px;
-						display: block;
-						width: 2px;
-						height: 11px;
-						background: #fff;
-						content: '';
-					}
+				&:before {
+					top: 12px;
+					transform: rotate( -45deg );
 				}
 
-				.oo-ui-labelElement-label {
+				&:after {
+					bottom: 12px;
+					transform: rotate( 45deg );
+				}
+
+				&:before,
+				&:after {
+					position: absolute;
+					left: 30px;
+					display: block;
+					width: 2px;
+					height: 11px;
+					background: #fff;
+					content: '';
+				}
+
+				.oo-ui-tool-title {
 					display: none !important;
 				}
 			}
-		}
-	}
-}
-
-.skin-citizen-dark {
-	&.ve-activated {
-		.mw-header {
-			background-color: @header-background-color-dark;
-		}
-	}
-
-	.ve-init-mw-desktopArticleTarget {
-		.CodeMirror {
-			color: @dark-text-90;
-		}
-	}
-
-	.ve-ui-mwSaveDialog {
-		&-options {
-			border-color: @dark-bg-40;
-			background-color: @dark-bg-50;
-		}
-
-		&--editSummary-count {
-			border-color: @dark-bg-40;
 		}
 	}
 }
