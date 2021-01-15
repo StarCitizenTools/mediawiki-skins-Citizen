@@ -16,13 +16,15 @@
 			margin: 0;
 			background-position: center;
 			background-repeat: no-repeat;
-			opacity: 0.4;
+			opacity: var( --opacity-icon-base );
 			transition: @transition-opacity-quick, @transition-transform-quick;
 
-			&:hover,
-			&:focus,
+			&:hover {
+				opacity: var( --opacity-icon-base--hover ) !important; // override all styles
+			}
+
 			&:active {
-				opacity: 0.6 !important; // override all styles
+				opacity: var( --opacity-icon-base--active ) !important;
 			}
 
 			// Badge tweaks
@@ -32,7 +34,7 @@
 			}
 
 			&.mw-echo-notifications-badge-all-read {
-				opacity: 0.3; // 0.75 * 0.4 = 0.3
+				opacity: var( --opacity-base--disabled );
 			}
 		}
 	}
