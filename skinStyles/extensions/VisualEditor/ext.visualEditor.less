@@ -28,6 +28,10 @@
 
 .ve-ui {
 	&-toolbar {
+		> .oo-ui-toolbar-bar {
+			background-color: var( --background-color-dp-00 );
+		}
+
 		&-floating {
 			z-index: 4;
 		}
@@ -115,6 +119,12 @@
 // Make toolbar more smaller screen friendly
 // Well at least I did by best
 @media ( max-width: 800px ) {
+	.ve-activated {
+		.mw-header {
+			background-color: transparent; // Because header is taller than toolbar
+		}
+	}
+
 	.ve-init-mw-desktopArticleTarget {
 		&-toolbar {
 			&.ve-ui-toolbar-floating > .oo-ui-toolbar-bar {
