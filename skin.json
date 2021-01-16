@@ -282,8 +282,8 @@
 			"selector": ".theme-toggle-{name}",
 			"useDataURI": false,
 			"images": {
-				"light": "resources/skins.citizen.icons.theme/theme-dark.svg",
-				"dark": "resources/skins.citizen.icons.theme/theme-light.svg"
+				"light": "resources/skins.citizen.icons/shared/moon.svg",
+				"dark": "resources/skins.citizen.icons/shared/bright.svg"
 			}
 		}
 	},
