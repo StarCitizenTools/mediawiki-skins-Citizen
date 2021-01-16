@@ -5,32 +5,16 @@
 
 @import '../../../resources/variables.less';
 
-.skin-citizen-dark {
-	.mw-email-not-authenticated .oo-ui-labelWidget,
-	.mw-email-none .oo-ui-labelWidget {
-		padding: 0.5em;
-		border: 1px solid @yellow-50;
-		background-color: @dark-bg-10;
-		color: @dark-text-100;
-	}
-
-	.mw-prefs-buttons {
-		border-color: @dark-bg-30;
-		background-color: @dark-bg-0;
-	}
-
-	.mw-prefs-tabs-wrapper.oo-ui-panelLayout-framed,
-	.mw-prefs-tabs > .oo-ui-menuLayout-content > .oo-ui-indexLayout-stackLayout > .oo-ui-tabPanelLayout {
-		border-color: @dark-bg-30;
-	}
-
-	.client-nojs {
-		.mw-prefs-tabs {
-			.mw-prefs-section-fieldset {
-				> .oo-ui-fieldsetLayout-group {
-					border-top: 1px solid @dark-bg-30;
-				}
-			}
+.mw-prefs {
+	&-tabs {
+		&-wrapper.oo-ui-panelLayout-framed,
+		> .oo-ui-menuLayout-content > .oo-ui-indexLayout-stackLayout > .oo-ui-tabPanelLayout {
+			border-color: var( --border-color-base );
 		}
+	}
+
+	&-buttons {
+		border-color: var( --border-color-base );
+		background-color: transparent;
 	}
 }
