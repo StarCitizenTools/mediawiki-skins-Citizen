@@ -3,6 +3,80 @@
 }
 
 #search {
+	&-checkbox {
+		&:checked {
+			~ #searchform {
+				z-index: 10;
+				opacity: 1;
+				pointer-events: auto; // clickable
+
+				#searchInput {
+					width: @search-bar-width;
+				}
+			}
+
+			~ #search-toggle-icon {
+				#search-toggle-icon {
+					&-2 {
+						border-color: transparent;
+					}
+
+					&-1 {
+						height: 14px;
+						transform: translate3d( -5px, -7px, 0 ) rotate( 135deg );
+					}
+
+					&-3 {
+						opacity: 1;
+					}
+				}
+
+				&:hover {
+					border-color: @base-0;
+
+					#search-toggle-icon-3 {
+						opacity: 0;
+					}
+				}
+			}
+
+			&:hover {
+				~ #search-toggle-icon {
+					#search-toggle-icon {
+						&-1 {
+							height: 12px;
+							transform: translate3d( -5px, -7px, 0 ) rotate( 135deg );
+						}
+
+						&-2 {
+							border-color: transparent;
+						}
+
+						&-3 {
+							height: 12px;
+						}
+
+						&-1,
+						&-3 {
+							background-color: var( --background-color-icon--hover );
+						}
+					}
+				}
+			}
+
+			&:active {
+				~ #search-toggle-icon {
+					#search-toggle-icon {
+						&-1,
+						&-3 {
+							background-color: var( --background-color-icon--active );
+						}
+					}
+				}
+			}
+		}
+	}
+
 	&form {
 		position: absolute;
 		z-index: -1; // not interactable
@@ -53,13 +127,15 @@
 	&-toggle {
 		z-index: 21; // override to be on top of the form
 		right: 0; // align checkbox with icon
+		width: var( --width-button-corner );
+		height: var( --height-header );
 
 		&-icon {
 			position: relative;
 			z-index: 20; // stay on top of search form
 			display: flex;
-			width: @icon-box-size + @margin-side + @icon-padding;
-			height: @header-height;
+			width: var( --width-button-corner );
+			height: var( --height-header );
 			align-items: center;
 			justify-content: center;
 			transition: @transition-transform-quick, @transition-height-quick, @transition-opacity-quick, @transition-border-color-quick;
@@ -67,7 +143,7 @@
 			&-1 {
 				top: 7px;
 				left: 12px;
-				height: 10px;
+				height: 7px;
 				transform: rotate( -45deg );
 			}
 
@@ -97,85 +173,13 @@
 			}
 		}
 
-		&:checked {
-			~ #searchform {
-				z-index: 10;
-				opacity: 1;
-				pointer-events: auto; // clickable
-
-				#searchInput {
-					width: @search-bar-width;
-				}
-			}
-
-			~ #search-toggle-icon {
-				#search-toggle-icon {
-					&-2 {
-						border-color: transparent;
-					}
-
-					&-1 {
-						height: 14px;
-						transform: translate( -5px, -7px ) rotate( 135deg );
-					}
-
-					&-3 {
-						opacity: 1;
-					}
-				}
-
-				&:hover {
-					border-color: @base-0;
-
-					#search-toggle-icon-3 {
-						opacity: 0;
-					}
-				}
-			}
-
-			&:hover {
-				~ #search-toggle-icon {
-					#search-toggle-icon {
-						&-1 {
-							height: 12px;
-							transform: translate( -5px, -7px ) rotate( 135deg );
-						}
-
-						&-2 {
-							border-color: transparent;
-						}
-
-						&-3 {
-							height: 12px;
-						}
-
-						&-1,
-						&-3 {
-							background-color: var( --background-color-icon--hover );
-						}
-					}
-				}
-			}
-
-			&:active {
-				~ #search-toggle-icon {
-					#search-toggle-icon {
-						&-1,
-						&-3 {
-							background-color: var( --background-color-icon--active );
-						}
-					}
-				}
-			}
-		}
-
 		&:hover {
 			~ #search-toggle-icon {
 				#search-toggle-icon {
 					&-1 {
 						height: 6px;
 						background-color: var( --background-color-icon--hover );
-						transform: translate( 2px, 2px ) rotate( -45deg );
+						transform: translate3d( 2px, 2px, 0 ) rotate( -45deg );
 					}
 
 					&-2 {
@@ -259,7 +263,7 @@
 				~ #search-toggle-icon {
 					#search-toggle-icon {
 						&-1 {
-							transform: translate( -5px, -7px ) rotate( -135deg );
+							transform: translate3d( -5px, -7px, 0 ) rotate( -135deg );
 						}
 					}
 				}
@@ -268,7 +272,7 @@
 					~ #search-toggle-icon {
 						#search-toggle-icon {
 							&-1 {
-								transform: translate( -5px, -7px ) rotate( -135deg );
+								transform: translate3d( -5px, -7px, 0 ) rotate( -135deg );
 							}
 						}
 					}
@@ -279,7 +283,7 @@
 				~ #search-toggle-icon {
 					#search-toggle-icon {
 						&-1 {
-							transform: translate( 2px, 2px ) rotate( 45deg );
+							transform: translate3d( 2px, 2px, 0 ) rotate( 45deg );
 						}
 					}
 				}
