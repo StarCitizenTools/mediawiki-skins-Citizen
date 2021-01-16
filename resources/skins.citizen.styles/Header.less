@@ -1,10 +1,13 @@
 .mw-header {
+	--width-button-base: ~'calc(var(--size-icon) + var(--padding-page))';
+	--width-button-corner: ~'calc(var(--size-icon) + var(--padding-page) * 2)';
 	position: fixed;
 	z-index: 10;
 	top: 0;
+	right: 0;
+	left: 0;
 	display: flex;
-	width: 100%;
-	height: @header-height;
+	height: var( --height-header );
 	justify-content: space-between;
 
 	&-tools {
@@ -20,15 +23,13 @@
 		display: block;
 		margin: 0;
 	}
-}
 
-#mw-header {
-	&-background {
+	&:before {
 		position: absolute;
-		z-index: -1;
 		right: 0;
 		left: 0;
-		box-shadow: 0 0 50px @header-height var( --background-color-dp-00 );
+		box-shadow: 0 0 50px var( --height-header ) var( --background-color-dp-00 );
+		content: '';
 	}
 }
 
@@ -36,7 +37,7 @@
 #p-personal-extra {
 	ul {
 		display: flex;
-		height: 56px;
+		height: var( --height-header );
 		align-items: center;
 	}
 }

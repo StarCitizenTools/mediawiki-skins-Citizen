@@ -3,16 +3,14 @@
 }}
 <input 
 	type="checkbox" 
-	id="mw-drawer-button" 
-	class="mw-checkbox-hack"  
-	role="button" 
-	title="{{msg-citizen-drawer-toggle}}" 
-	aria-labelledby="mw-drawer-button-label" 
-	aria-controls="mw-drawer">
+	id="mw-drawer-checkbox" 
+	class="mw-checkbox-hack-checkbox">
 <label
-	id="mw-drawer-button-label" 
-	class="screen-reader-text" 
-	for="mw-drawer-button">
+	id="mw-drawer-button" 
+	class="mw-checkbox-hack-button" 
+	for="mw-drawer-checkbox"
+	role="button"
+	aria-controls="mw-drawer">
 	{{msg-citizen-drawer-toggle}}
 </label>
 <div id="mw-drawer-button-icon">
@@ -20,16 +18,16 @@
 	<div id="mw-drawer-button-icon-2" class="mw-drawer-button-icon-div"></div>
 	<div id="mw-drawer-button-icon-3" class="mw-drawer-button-icon-div"></div>
 </div>
-<nav id="mw-drawer-menu">
-	<section id="mw-drawer-menu-logo" role="banner">
+<nav id="mw-drawer">
+	<section id="mw-drawer-logo" role="banner">
 		{{>Logo}}
 	</section>
-	<section id="mw-drawer-menu-main">
+	<section id="mw-drawer-main">
 		{{#data-portals-first}}{{>Menu}}{{/data-portals-first}}
 		{{#array-portals-rest}}{{>Menu}}{{/array-portals-rest}}
 		{{#data-portals-languages}}{{>Menu}}{{/data-portals-languages}}
 	</section>
-	<section id="mw-drawer-menu-user" class="mw-user-links">
+	<section id="mw-drawer-user" class="mw-user-links">
 	{{#data-personal-menu}}{{>Menu}}{{/data-personal-menu}}
 	</section>
 </nav>

@@ -45,23 +45,6 @@
 
 @color-accent-30--darken: #26437f;
 
-/**
- * Dark theme color palette
- * Background color is used instead of shadow to show elevation
- * and hierarchy in dark theme
- * See https://material.io/design/color/dark-theme.html#properties
- */
-@dark-color-base0:	#131a21;	// Surface color
-@dark-color-base10: #1f262c; 	// 5% white overlay
-@dark-color-base20: #242a31;	// 7% white overlay
-@dark-color-base30: #262c32;	// 8% white overlay
-@dark-color-base40: #282f35;	// 9% white overlay
-@dark-color-base50: #2d3339;	// 11% white overlay
-@dark-color-base60: #30363c;	// 12% white overlay
-@dark-color-base70: #343a40;	// 14% white overlay
-@dark-color-base80: #363c42;	// 15% white overlay
-@dark-color-base90: #393f45;	// 16% white overlay
-
 /* Background Colors */
 @background-color-dp-00:			@color-base100;
 @background-color-dp-01:			@color-base100;
@@ -115,6 +98,15 @@
 @opacity-icon-base--hover:	0.6;
 @opacity-icon-base--active:	0.8;
 
+/* == Box Model properties == */
+/* `--*size` variables are used for `*width` & `*height` properties. */
+@size-icon:		20px;
+@height-header:	56px;
+
+/* Paddings */
+@padding-page:	20px;
+
+/* Border */
 /* Border Colors */
 @border-color-base:				rgba( 0, 0, 0, 0.05 );
 @border-color-base--lighter:	rgba( 0, 0, 0, 0.02 );
@@ -122,6 +114,23 @@
 // To blend better with OOUI styles
 @border-color-input:			@border-color-base;
 @border-color-input--hover:		rgba( 0, 0, 0, 0.4 );
+
+/**
+ * Dark theme color palette
+ * Background color is used instead of shadow to show elevation
+ * and hierarchy in dark theme
+ * See https://material.io/design/color/dark-theme.html#properties
+ */
+@dark-color-base0:	#131a21;	// Surface color
+@dark-color-base10: #1f262c; 	// 5% white overlay
+@dark-color-base20: #242a31;	// 7% white overlay
+@dark-color-base30: #262c32;	// 8% white overlay
+@dark-color-base40: #282f35;	// 9% white overlay
+@dark-color-base50: #2d3339;	// 11% white overlay
+@dark-color-base60: #30363c;	// 12% white overlay
+@dark-color-base70: #343a40;	// 14% white overlay
+@dark-color-base80: #363c42;	// 15% white overlay
+@dark-color-base90: #393f45;	// 16% white overlay
 
 /* Background Colors */
 @dark-background-color-dp-00:			@dark-color-base0;
