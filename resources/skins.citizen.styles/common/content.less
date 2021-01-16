@@ -20,23 +20,24 @@
 }
 
 #mw-content-text {
-	/*
-	 * Interal link styles
-	 * Only apply to internal links in article
-	*/
-	a[ href^='/' ]:not( .image ) {
-		.link-content-text( var(--color-primary--hover) );
-
-		&.new {
-			background-image: linear-gradient( to right, var( --color-destructive--hover ) 0, var( --color-destructive--hover ) 100% );
-		}
-	}
-	/*
-	 * Float styles
-	 * Only apply to immediate childs as float classes
-	 * are used in other places as well
-	*/
 	> .mw-parser-output {
+		/*
+		 * Interal link styles
+		 * Only apply to internal links in article
+		*/
+		a[ href^='/' ]:not( .image ):not( .external ) {
+			.link-content-text( var(--color-primary--hover) );
+
+			&.new {
+				background-image: linear-gradient( to right, var( --color-destructive--hover ) 0, var( --color-destructive--hover ) 100% );
+			}
+		}
+
+		/*
+		 * Float styles
+		 * Only apply to immediate childs as float classes
+		 * are used in other places as well
+		*/
 		> div.tnone,
 		> div.floatnone,
 		> table.floatnone,
