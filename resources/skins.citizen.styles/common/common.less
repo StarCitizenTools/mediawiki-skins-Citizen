@@ -3,7 +3,7 @@
 */
 html {
 	scroll-behavior: smooth; // not supported by IE, Edge, Safari, and Opera, use JQuery as fallback
-	scroll-padding-top: @header-height + @margin-side; // fixed header offset, supported by major browsers
+	scroll-padding-top: ~'var(--height-header) + 20px'; // fixed header offset, supported by major browsers
 }
 
 html,
@@ -78,7 +78,7 @@ textarea {
 }
 
 fieldset {
-	padding: @content-margin-top / 2 @margin-side;
+	padding: @content-margin-top / 2 20px;
 	border: 1px solid var( --border-color-base );
 	margin: @content-margin-top 0;
 }
@@ -187,8 +187,8 @@ a {
 .mw-body,
 .parsoid-body {
 	min-height: 80vh; // avoid footer being in the middle of the page
-	padding: 0 @margin-side;
-	margin-top: @header-height + @margin-side;
+	padding: 0 var( --padding-page );
+	margin-top: ~'calc(var( --height-header ) + 20px)';
 	direction: ltr;
 }
 

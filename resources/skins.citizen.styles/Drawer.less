@@ -97,9 +97,7 @@
 	}
 
 	&-logo {
-		display: flex;
-		flex-direction: column;
-		padding: @header-height @margin-side @margin-side / 2 @margin-side;
+		padding: var( --height-header ) var( --padding-page ) 10px var( --padding-page );
 		border-bottom: 1px solid var( --border-color-base );
 	}
 
@@ -180,8 +178,6 @@
 	border-top: 1px solid var( --border-color-base );
 
 	#pt-userpage {
-		margin-bottom: @margin-side / 2;
-
 		a {
 			flex-direction: row-reverse;
 			justify-content: flex-end;
@@ -190,7 +186,7 @@
 				width: @icon-box-size;
 				height: @icon-box-size;
 				margin: 0;
-				margin-right: @margin-side;
+				margin-right: 16px;
 			}
 		}
 
