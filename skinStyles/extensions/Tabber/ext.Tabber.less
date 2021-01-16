@@ -9,8 +9,10 @@
 	ul.tabbernav {
 		display: flex;
 		overflow: auto;
+		flex-wrap: wrap;
 		padding: 0;
 		border: 0;
+		margin: 0.4rem 0;
 		font-family: inherit;
 		font-size: inherit;
 
@@ -18,22 +20,19 @@
 			display: block;
 			padding: 0;
 
-			&:first-child a {
-				padding-left: 0;
-			}
-
 			&.tabberactive a {
-				color: @accent-50;
+				color: var( --color-primary );
 				pointer-events: none;
 			}
 
 			a {
 				display: block;
-				padding: @margin-side / 2;
+				padding: 4px 0;
 				border: 0;
-				margin: 0;
+				margin: 0 12px 0 0;
 				background: 0 !important; // To override hover styles
-				color: @base-50;
+				color: var( --color-base--subtle );
+				font-weight: 450;
 
 				&:hover {
 					border: 0;
@@ -49,5 +48,13 @@
 }
 
 .mw-body-content #mw-content-text .mw-parser-output .tabber .tabbernav a:hover {
-	color: @base-30 !important; // Override sigh
+	color: var( --color-base ) !important; // Override sigh
+}
+
+@media ( max-width: @screen2 ) {
+	.tabber {
+		ul.tabbernav {
+			flex-wrap: nowrap;
+		}
+	}
 }
