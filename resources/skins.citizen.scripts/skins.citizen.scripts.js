@@ -3,7 +3,7 @@
  * https://starcitizen.tools
  */
 
-var searchToggle = document.getElementById( 'search-toggle' ),
+var searchToggle = document.getElementById( 'search-checkbox' ),
 	searchInput = document.getElementById( 'searchInput' ),
 	pageReady = require( ( 'mediawiki.page.ready' ) );
 
