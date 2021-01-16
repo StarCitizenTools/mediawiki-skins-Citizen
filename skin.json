@@ -127,8 +127,10 @@
 			"styles": [ "resources/skins.citizen.styles.toc/skins.citizen.styles.toc.less" ]
 		},
 		"skins.citizen.scripts": {
-			"scripts": [
-				"resources/skins.citizen.scripts/skins.citizen.scripts.js"
+			"packageFiles": [
+				"resources/skins.citizen.scripts/skin.js",
+				"resources/skins.citizen.scripts/themeToggle.js",
+				"resources/skins.citizen.scripts/search.js"
 			],
 			"dependencies": [
 				"mediawiki.page.ready",

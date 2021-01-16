@@ -2,7 +2,7 @@
 	position: absolute;
 	z-index: 1;
 	display: flex;
-	transform: translateX( ~'calc( (100vw - @{page-width}) / 2 - @{margin-side} * 2 - 100%)' ); // magic
+	transform: translate3d( ~'calc( (100vw - var( --width-layout )) / 2 - var( --padding-page ) * 2 - 100%)', 0, 0 ); // magic
 
 	ul {
 		display: flex;

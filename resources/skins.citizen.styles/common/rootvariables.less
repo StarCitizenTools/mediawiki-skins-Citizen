@@ -9,7 +9,6 @@
  * Base theme
  */
 :root {
-	/* == Colors == */
 	/* Background Colors */
 	--background-color-dp-00: @background-color-dp-00;
 	--background-color-dp-01: @background-color-dp-01;
@@ -62,10 +61,6 @@
 
 	/* Size */
 	--size-icon: @size-icon;
-	--height-header: @height-header;
-
-	/* Paddings */
-	--padding-page: @padding-page;
 
 	/* Border Colors */
 	--border-color-base: @border-color-base;
@@ -75,11 +70,19 @@
 	--border-color-input--hover: @border-color-input--hover;
 }
 
+html {
+	/* Size */
+	--height-header: @height-header;
+	--width-layout: @width-layout;
+
+	/* Paddings */
+	--padding-page: @padding-page;
+}
+
 /**
  * Dark theme
  */
 :root.skin-citizen-dark {
-	/* == Colors == */
 	/* Background Colors */
 	--background-color-dp-00: @dark-background-color-dp-00;
 	--background-color-dp-01: @dark-background-color-dp-01;
