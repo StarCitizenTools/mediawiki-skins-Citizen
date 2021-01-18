@@ -6,6 +6,32 @@
 // Import MediaWiki-supplied mixins
 @import 'mediawiki.mixins';
 
+/* == Breakpoints == */
+/**
+ * Minimum available screen width at which a device can be considered a mobile device
+ * Many older feature phones have screens smaller than this value.
+ */
+@width-breakpoint-mobile: 320px;
+
+/**
+ * Minimum available screen width at which a device can be considered a tablet
+ * The number is currently based on the device width of a Samsung Galaxy S5 mini and is low
+ * enough to cover iPad (768px).
+ */
+@width-breakpoint-tablet: 720px;
+
+/* Minimum available screen width at which a device can be considered a desktop. */
+@width-breakpoint-desktop: 1000px;
+
+/* Wider desktop breakpoint */
+@width-breakpoint-desktop-wide: 1300px;
+
+/* Width when content center on pages with ToC */
+@width-breakpoint-desktop-wider: @width-breakpoint-desktop + @width-toc * 2;
+
+/* Extra wide desktop breakpoint */
+@width-breakpoint-desktop-extrawide: 2000px;
+
 /* == Colors == */
 /**
  * Based WikimediaUI (`wmui`) color palette
@@ -102,7 +128,8 @@
 /* `--*size` variables are used for `*width` & `*height` properties. */
 @size-icon:		20px;
 @height-header:	56px;
-@width-layout:	860px;
+@width-layout:	@width-breakpoint-desktop - 2 * @padding-page;
+@width-toc: @width-breakpoint-desktop-wide - @width-breakpoint-desktop;
 
 /* Paddings */
 @padding-page:	20px;

@@ -3,11 +3,10 @@
 
 .toc {
 	position: fixed;
-	z-index: -1; // So that it is below float objects in content
 	top: @header-height;
 	left: 0;
-	max-width: 450px;
-	padding: @margin-side;
+	max-width: @width-toc - @padding-page * 2;
+	padding: @padding-page;
 	color: var( --color-base--subtle );
 	font-size: @ui-menu-text;
 
@@ -89,7 +88,6 @@
 		z-index: 2;
 		display: block;
 		overflow: visible auto;
-		max-width: ~'calc( (100vw - '@page-width + @margin-side * 4 ~' ) / 2 )';
 		max-height: ~'calc( 100vh - '@header-height * 2 + @margin-side * 4 ~' )';
 		margin: @content-margin-top * 0.75 0 0 0 !important;
 		font-weight: 450;
@@ -97,7 +95,7 @@
 	}
 }
 
-@media ( max-width: @screen3 ) {
+@media ( max-width: @width-breakpoint-desktop-wide ) {
 	.toc {
 		z-index: 10;
 		height: 100%;
@@ -155,7 +153,7 @@
 			}
 
 			&checkbox:not( :checked ) ~ ul {
-				transform: translateX( -300px - @margin-side );
+				transform: translateX( -@width-toc - @margin-side );
 			}
 		}
 
@@ -186,6 +184,17 @@
 					filter: invert( 1 );
 				}
 			}
+		}
+	}
+}
+
+@media ( min-width: @width-breakpoint-desktop-wide ) and ( max-width: @width-breakpoint-desktop-wider ) {
+	.skin-citizen-has-toc {
+		.firstHeading,
+		#siteSub,
+		.mw-body-content {
+			margin-right: 0;
+			margin-left: @width-toc - @padding-page;
 		}
 	}
 }
