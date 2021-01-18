@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ykhwong"
+		]
+	},
+	"citizen-theme-toggle": "테마 색 켜고 끄기",
+	"prefs-citizen-theme-label": "테마",
+	"prefs-citizen-theme-option-auto": "자동",
+	"prefs-citizen-theme-option-light": "밝음",
+	"prefs-citizen-theme-option-dark": "어두움"
+}

@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Abijeet Patro",
-			"Alistair3149"
+			"Alistair3149",
+			"Yfdyh000"
 		]
 	},
 	"skinname-citizen": "Citizen",
@@ -11,6 +12,7 @@
 	"citizen.js": "/* 这里的任何JavaScript将为使用Citizen皮肤的用户加载 */",
 	"citizen-drawer-toggle": "切换菜单",
 	"citizen-search-toggle": "切换搜索",
+	"citizen-theme-toggle": "切换主题颜色",
 	"citizen-footer-desc": "在 MediaWiki:Citizen-footer-desc 编辑此文本",
 	"citizen-footer-tagline": "在 MediaWiki:Citizen-footer-tagline 编辑此文本",
 	"citizen-search-fulltext": "搜索包含",

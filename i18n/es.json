@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Fitoschido",
+			"MarleneR329"
+		]
+	},
+	"prefs-citizen-theme-label": "Tema",
+	"prefs-citizen-theme-option-auto": "Automático",
+	"prefs-citizen-theme-option-light": "Claro",
+	"prefs-citizen-theme-option-dark": "Oscuro"
+}

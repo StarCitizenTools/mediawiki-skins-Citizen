@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Saederup92"
+		]
+	},
+	"prefs-citizen-theme-label": "Tema",
+	"prefs-citizen-theme-option-auto": "Automatisk",
+	"prefs-citizen-theme-option-light": "Lys",
+	"prefs-citizen-theme-option-dark": "Mørk"
+}
