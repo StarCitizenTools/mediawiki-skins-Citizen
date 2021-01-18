@@ -3,7 +3,7 @@
 
 .toc {
 	position: fixed;
-	top: @header-height;
+	top: var( --height-header );
 	left: 0;
 	max-width: @width-toc - @padding-page * 2;
 	padding: @padding-page;
@@ -97,11 +97,11 @@
 
 @media ( max-width: @width-breakpoint-desktop-wide ) {
 	.toc {
-		z-index: 10;
+		z-index: 11; // Higher than header
 		height: 100%;
 		padding: 0;
-		margin-top: -@header-height;
-		transform: translateX( -100% );
+		margin-top: ~'calc( var( --height-header ) * -1 )';
+		pointer-events: none;
 
 		&:before,
 		&:after {
@@ -117,7 +117,7 @@
 			&label {
 				position: fixed;
 				z-index: 7;
-				right: -100vw;
+				right: 0;
 				bottom: 0;
 				display: block;
 				width: 39px;
@@ -126,6 +126,7 @@
 				margin: @margin-side;
 				background-color: var( --background-color-dp-06 );
 				border-radius: 100%;
+				pointer-events: auto;
 				.boxshadow(4);
 
 				&:hover {
@@ -152,26 +153,33 @@
 				}
 			}
 
-			&checkbox:not( :checked ) ~ ul {
-				transform: translateX( -@width-toc - @margin-side );
+			&checkbox:not( :checked ) {
+				~ .toctitle h2,
+				~ ul {
+					transform: translateX( -@width-toc - @margin-side );
+				}
 			}
 		}
 
 		&title h2 {
-			display: none;
+			position: absolute;
+			z-index: 3;
+			max-width: @width-toc;
+			padding: 10px var( --padding-page ) 0 var( --padding-page );
+			margin-top: var( --height-header );
+			transition: @transition-transform;
 		}
 
 		> ul {
 			display: block !important; // So that animation is visible
 			max-width: none;
 			height: 100%;
-			max-height: ~'calc( 100vh - '@header-height + @margin-side * 3 ~')';
-			padding: @header-height + @margin-side @margin-side @margin-side * 2 @margin-side / 2 !important; // More scroll spaces
-			border-color: transparent;
+			max-height: ~'calc( 100vh - var( --height-header ) - 24px - 0.6rem - 20px )';
+			padding: ~'calc( var( --height-header ) + 24px + 0.6rem ) var( --padding-page ) 20px var( --padding-page )';
 			margin: 0 !important;
 			background: var( --background-color-dp-16 );
 			border-radius: 0 @border-radius-large @border-radius-large 0;
-			transform: translateX( 100% );
+			pointer-events: auto;
 			transition: @transition-transform;
 			.boxshadow(3);
 		}
