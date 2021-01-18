@@ -1,8 +1,7 @@
 #page-tools {
-	position: absolute;
-	z-index: 1;
 	display: flex;
-	transform: translate3d( ~'calc( (100vw - var( --width-layout )) / 2 - var( --padding-page ) * 2 - 100%)', 0, 0 ); // magic
+	margin-left: 10px;
+	float: right;
 
 	ul {
 		display: flex;
@@ -51,6 +50,7 @@
 	ul {
 		position: absolute;
 		z-index: -1;
+		right: @padding-page / 2;
 		opacity: 0;
 		pointer-events: none;
 		transition: @transition-opacity-quick, @transition-box-shadow-quick;
@@ -110,31 +110,6 @@
 	#p-actions {
 		li > a:after {
 			filter: invert( 1 );
-		}
-	}
-}
-
-// TODO: Flexible value
-@media ( max-width: @screen2 ) {
-	#page-tools {
-		position: relative;
-		z-index: unset;
-		margin-left: @margin-side / 2;
-		float: right;
-		transform: none;
-	}
-
-	#p-actions {
-		> ul {
-			right: 0;
-		}
-	}
-}
-
-@media ( max-width: 500px ) {
-	#p-actions {
-		> ul {
-			right: unset;
 		}
 	}
 }

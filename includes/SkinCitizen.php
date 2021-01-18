@@ -79,6 +79,8 @@ class SkinCitizen extends SkinMustache {
 
 		// Load table of content script if ToC presents
 		if ( $out->isTOCEnabled() ) {
+			// Add class to body that notifies the page has TOC
+			$out->addBodyClasses( 'skin-citizen-has-toc' );
 			// Disabled style condition loading due to pop in
 			$options['scripts'] = array_merge(
 				$options['scripts'],

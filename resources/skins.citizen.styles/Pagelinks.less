@@ -1,14 +1,13 @@
 // Namespace button
 #p-namespaces {
 	position: relative;
-	padding: @margin-side;
-	margin: 0 @negative-margin;
+	padding-top: 2.4rem;
 	float: right;
 
 	ul {
 		display: flex;
 		justify-content: flex-end; // Right align
-		margin: 1.6rem 0 0 0;
+		margin: 0;
 
 		li {
 			list-style: none;
@@ -57,18 +56,5 @@
 				filter: invert( 1 );
 			}
 		}
-	}
-}
-
-@media ( max-width: @screen1 ) {
-	#p-namespaces {
-		padding: @margin-side 0;
-		margin: 0 !important; // somehow got overrided
-	}
-}
-
-@media ( max-width: @screen2 ) {
-	#p-namespaces {
-		margin: 0 ~'calc((100vw - @{page-width}) / -2)';
 	}
 }

@@ -1,16 +1,12 @@
 .firstHeading {
-	margin: 0;
+	margin-top: 0;
+	margin-bottom: 0.2rem;
 	overflow-wrap: break-word; // Break word instead of overflow if title is too long
 }
 
 #siteSub {
 	display: block;
-	margin: 0.4rem 0 1.6rem;
-}
-
-.firstHeading,
-#siteSub {
-	.content-center;
+	margin-bottom: 1.6rem;
 }
 
 #siteSub,
@@ -32,68 +28,9 @@
 				background-image: linear-gradient( to right, var( --color-destructive--hover ) 0, var( --color-destructive--hover ) 100% );
 			}
 		}
-
-		/*
-		 * Float styles
-		 * Only apply to immediate childs as float classes
-		 * are used in other places as well
-		*/
-		> div.tnone,
-		> div.floatnone,
-		> table.floatnone,
-		> div.tleft,
-		> div.floatleft,
-		> table.floatleft,
-		> div.tright,
-		> div.floatright,
-		> table.floatright {
-			position: relative;
-			z-index: 2;
-			margin: 0.6rem 1.4rem;
-			transition: @transition-margin;
-		}
-
-		> div.tnone,
-		> div.floatnone {
-			display: flex;
-			justify-content: center;
-
-			> * {
-				width: 100% !important;
-				height: auto;
-			}
-
-			.thumbinner {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-			}
-		}
-
-		> div.tnone,
-		> div.floatnone,
-		> table.floatnone,
-		> div.tleft,
-		> div.floatleft,
-		> table.floatleft {
-			margin-left: @negative-margin / 2;
-		}
-
-		> div.tnone,
-		> div.floatnone,
-		> table.floatnone,
-		> div.tright,
-		> div.floatright,
-		> table.floatright {
-			margin-right: @negative-margin / 2;
-		}
 	}
 
 	.mw-parser-output {
-		.mw-headline {
-			order: -1; // Make sure that header is the first
-		}
-
 		& > h1,
 		& > h2,
 		& > h3,
@@ -102,15 +39,11 @@
 		& > h6 {
 			display: flex;
 			align-items: center;
-			justify-content: space-between;
 		}
 
 		.mw-editsection {
-			position: absolute;
-			left: 0;
 			display: flex;
-			margin: 0;
-			transform: ~'translateX(calc(-100% - var( --padding-page )))';
+			margin-left: 10px;
 
 			a {
 				.resource-loader-icon-link-small;
@@ -143,11 +76,6 @@
 }
 
 .mw-body-content {
-	position: relative;
-	.content-center;
-	z-index: 0;
-	.mixin-clearfix();
-
 	p {
 		overflow-wrap: break-word;
 	}
@@ -212,115 +140,5 @@
 	a.image {
 		display: block;
 		overflow: hidden;
-	}
-}
-
-@media ( max-width: @screen0 ) {
-	#mw-content-text {
-		> .mw-parser-output {
-			> div.tnone,
-			> div.floatnone,
-			> table.floatnone,
-			> div.tleft,
-			> div.floatleft,
-			> table.floatleft,
-			> div.tright,
-			> div.floatright,
-			> table.floatright {
-				width: 100vw;
-				margin: ~'0.6rem calc(-1 * var( --padding-page )) !important';
-				clear: none;
-				float: unset;
-			}
-
-			> div.tnone,
-			> div.floatnone,
-			> div.tleft,
-			> div.floatleft,
-			> div.tright,
-			> div.floatright {
-				display: flex;
-				justify-content: center;
-			}
-
-			> table.floatleft,
-			> table.floatright {
-				padding: 0 var( --padding-page );
-			}
-		}
-	}
-}
-
-@media ( max-width: @screen2 ) {
-	#mw-content-text {
-		> .mw-parser-output {
-			> div.tnone,
-			> div.floatnone,
-			> table.floatnone {
-				margin: 0.6rem ~'calc((100vw - var( --width-layout )) / -2)';
-
-				a.image,
-				a.image > img {
-					width: 100% !important;
-					height: auto !important;
-				}
-			}
-
-			> table.floatnone {
-				padding: 0 var( --padding-page );
-			}
-		}
-	}
-}
-
-@media ( max-width: @screen3 ) {
-	#mw-content-text {
-		> .mw-parser-output {
-			> div.tleft,
-			> div.floatleft,
-			> table.floatleft {
-				margin-left: 0;
-			}
-
-			> div.tright,
-			> div.floatright,
-			> table.floatright {
-				margin-right: 0;
-			}
-
-			> div.tleft,
-			> div.floatleft,
-			> table.floatleft,
-			> div.tright,
-			> div.floatright,
-			> table.floatright {
-				position: relative;
-				z-index: 0; // Reset so it doesn't cover ToC
-			}
-		}
-	}
-}
-
-@media ( min-width: @screen4 ) {
-	#mw-content-text {
-		> .mw-parser-output {
-			> div.tnone,
-			> div.floatnone,
-			> table.floatnone,
-			> div.tleft,
-			> div.floatleft,
-			> table.floatleft {
-				margin-left: @negative-margin !important;
-			}
-
-			> div.tnone,
-			> div.floatnone,
-			> table.floatnone,
-			> div.tright,
-			> div.floatright,
-			> table.floatright {
-				margin-right: @negative-margin !important;
-			}
-		}
 	}
 }
