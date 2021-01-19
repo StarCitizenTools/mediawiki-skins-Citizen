@@ -291,22 +291,22 @@ class SkinCitizen extends SkinMustache {
 	 * @return array
 	 */
 	private function getLogoData() : array {
-         $logoData = ResourceLoaderSkinModule::getAvailableLogos( $this->getConfig() );
-         // check if the logo supports variants
-         $variantsLogos = $logoData['variants'] ?? null;
-         if ( $variantsLogos ) {
-             $preferred = $this->getOutput()->getTitle()
-                 ->getPageViewLanguage()->getCode();
-             $variantOverrides = $variantsLogos[$preferred] ?? null;
-             // Overrides the logo
-             if ( $variantOverrides ) {
-                 foreach ( $variantOverrides as $key => $val ) {
-                     $logoData[$key] = $val;
-                 }
-             }
-         }
-         return $logoData;
-    }
+		 $logoData = ResourceLoaderSkinModule::getAvailableLogos( $this->getConfig() );
+		 // check if the logo supports variants
+		 $variantsLogos = $logoData['variants'] ?? null;
+		 if ( $variantsLogos ) {
+			 $preferred = $this->getOutput()->getTitle()
+				 ->getPageViewLanguage()->getCode();
+			 $variantOverrides = $variantsLogos[$preferred] ?? null;
+			 // Overrides the logo
+			 if ( $variantOverrides ) {
+				 foreach ( $variantOverrides as $key => $val ) {
+					 $logoData[$key] = $val;
+				 }
+			 }
+		 }
+		 return $logoData;
+	}
 
 	/**
 	 * Render the navigation drawer
