@@ -5,6 +5,7 @@
 	pointer-events: none;
 	user-select: none;
 	visibility: hidden;
+	transition: @transition-opacity-quick;
 
 	&-checkbox {
 		&:checked {
@@ -14,7 +15,11 @@
 				visibility: visible;
 
 				&-button {
-					opacity: var( --opacity-icon-base--active );
+					opacity: var( --opacity-icon-base--hover );
+
+					&:active {
+						opacity: var( --opacity-icon-base--active );
+					}
 				}
 			}
 		}
@@ -46,14 +51,15 @@
 }
 
 #p-personal {
-	position: absolute;
+	position: fixed;
 	top: var( --height-header );
+	left: 0;
 	right: 0;
 	margin: 0;
+	min-width: 250px;
 
 	ul {
 		overflow: hidden; // So that hover state is rounded
-		width: 200px;
 		border: 1px solid var( --border-color-base--lighter );
 		background-color: var( --background-color-dp-08 );
 		border-radius: @border-radius-medium;
@@ -142,5 +148,12 @@
 	#personalmenu-button:before,
 	#p-personal a:after {
 		filter: invert( 1 );
+	}
+}
+
+@media ( min-width: @width-breakpoint-tablet ) {
+	#p-personal {
+		position: absolute;
+		left: unset;
 	}
 }
