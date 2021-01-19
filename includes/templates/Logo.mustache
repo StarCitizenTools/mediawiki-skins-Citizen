@@ -5,18 +5,20 @@
 }}
 {{#data-logos}}
 <a {{{html-mainpage-attributes}}} class="mw-logo">
-	{{#icon}}
 	{{! alt is provided for valid HTML but given aria-hidden not needed. }}
-	<img class="mw-logo-icon" src="{{.}}" alt=""
-		aria-hidden="true" height="50" width="50">
-	{{/icon}}
+	<img class="mw-logo-icon" src="{{!
+		Pick an icon based on this order: SVG > Icon > 1x
+		Need a better way to indent the syntax below
+		}}{{#svg}}{{.}}{{/svg}}{{!
+		}}{{^svg}}{{!
+			}}{{#icon}}{{.}}{{/icon}}{{!
+			}}{{^icon}}{{!
+				}}{{#1x}}{{.}}{{/1x}}{{!
+			}}{{/icon}}{{!
+		}}{{/svg}}"{{!
+		}}alt="" aria-hidden="true" height="50" width="50">
 	<span class="mw-logo-container">
 		{{>Wordmark}}
-		{{#tagline}}
-		<img class="mw-logo-tagline"
-			alt="{{msg-sitesubtitle}}"
-			src="{{src}}" width="{{width}}" height="{{height}}">
-		{{/tagline}}
 	</span>
 </a>
 {{/data-logos}}
