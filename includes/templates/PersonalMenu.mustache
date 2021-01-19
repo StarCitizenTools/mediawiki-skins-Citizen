@@ -1,0 +1,19 @@
+{{!
+	string msg-citizen-drawer-toggle The label used by the drawer button.
+}}
+<input 
+	type="checkbox" 
+	id="personalmenu-checkbox" 
+	class="mw-checkbox-hack-checkbox">
+<label
+	id="personalmenu-button" 
+	class="mw-checkbox-hack-button" 
+	for="personalmenu-checkbox"
+	role="button"
+	title="{{msg-citizen-personalmenu-toggle}}"
+	aria-controls="personalmenu">
+	{{msg-citizen-personalmenu-toggle}}
+</label>
+<nav id="personalmenu">
+	{{#data-personal-menu-list}}{{>Menu}}{{/data-personal-menu-list}}
+</nav>

@@ -181,9 +181,10 @@
 						"rtl": "resources/skins.citizen.icons/toc-rtl.svg"
 					}
 				},
-				"#p-actions:before": "resources/skins.citizen.icons/more.svg",
+				"#personalmenu-button:before": "resources/skins.citizen.icons/shared/userAvatar.svg",
 				"#searchform-icon": "resources/skins.citizen.icons/shared/search.svg",
-				"#searchform-random": "resources/skins.citizen.icons/shared/random.svg"
+				"#searchform-random": "resources/skins.citizen.icons/shared/random.svg",
+				"#p-actions:before": "resources/skins.citizen.icons/more.svg"
 			}
 		},
 		"skins.citizen.icons.ca": {

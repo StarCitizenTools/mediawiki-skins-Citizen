@@ -83,25 +83,31 @@
 
 // Button Styles
 .button-blue() {
-	background-color: @accent-50;
-	color: @base-80 !important;
+	background-color: var( --color-primary );
+	color: #fff !important;
 	transition: @transition-background-quick, @transition-color-quick;
+}
+
+.button-blue-hover() {
+	background-color: var( --color-primary--hover );
 }
 
 .button-blue-active() {
-	background-color: @accent-10;
-	color: @base-100 !important;
+	background-color: var( --color-primary--active );
 }
 
 .button-red() {
-	background-color: @red-50;
-	color: @base-80 !important;
+	background-color: var( --color-destructive );
+	color: #fff !important;
 	transition: @transition-background-quick, @transition-color-quick;
 }
 
+.button-red-hover() {
+	background-color: var( --color-destructive--hover );
+}
+
 .button-red-active() {
-	background-color: @red-30;
-	color: @base-100 !important;
+	background-color: var( --color-destructive--active );
 }
 
 // Link styles

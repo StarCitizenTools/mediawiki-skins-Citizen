@@ -12,6 +12,7 @@
 	"citizen.js": "/* All JavaScript here will be loaded for users of the Citizen skin */",
 
 	"citizen-drawer-toggle": "Toggle menu",
+	"citizen-personalmenu-toggle": "Toggle personal menu",
 	"citizen-search-toggle": "Toggle search",
 	"citizen-theme-toggle": "Toggle theme color",
 

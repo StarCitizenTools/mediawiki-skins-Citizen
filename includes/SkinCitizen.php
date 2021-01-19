@@ -155,8 +155,9 @@ class SkinCitizen extends SkinMustache {
 			'data-header' => [
 				'data-drawer' => $this->buildDrawer(),
 				'data-extratools' => $this->getExtraTools(),
-				'data-search-box' => $this->buildSearchProps(),
+				'data-personal-menu' => $this->buildPersonalMenu(),
 				'data-theme-toggle' => $this->buildThemeToggleProps(),
+				'data-search-box' => $this->buildSearchProps(),
 			],
 
 			'data-pagetools' => $this->buildPageTools(),
@@ -378,6 +379,21 @@ class SkinCitizen extends SkinMustache {
 			$firstPortal[ 'label-class' ] .= 'screen-reader-text';
 		}
 
+		return [
+			'msg-citizen-drawer-toggle' => $skin->msg( 'citizen-drawer-toggle' )->text(),
+			'data-portals-first' => $firstPortal,
+			'array-portals-rest' => array_slice( $props, 1 ),
+			'data-portals-languages' => $languages,
+		];
+	}
+
+	/**
+	 * Build Personal Tools menu
+	 *
+	 * @return array
+	 */
+	private function buildPersonalMenu(): array {
+		$skin = $this;
 		$personalTools = $this->getPersonalToolsForMakeListItem(
 			$this->buildPersonalUrls()
 		);
@@ -392,16 +408,13 @@ class SkinCitizen extends SkinMustache {
 			unset( $personalTools['uls'] );
 		}
 
-		$personalToolsPortal = $this->getMenuData( 'personal', $personalTools );
+		$personalMenu = $this->getMenuData( 'personal', $personalTools );
 		// Hide label for personal tools
-		$personalToolsPortal[ 'label-class' ] .= 'screen-reader-text';
+		$personalMenu[ 'label-class' ] .= 'screen-reader-text';
 
 		return [
-			'msg-citizen-drawer-toggle' => $skin->msg( 'citizen-drawer-toggle' )->text(),
-			'data-portals-first' => $firstPortal,
-			'array-portals-rest' => array_slice( $props, 1 ),
-			'data-portals-languages' => $languages,
-			'data-personal-menu' => $personalToolsPortal,
+			'msg-citizen-personalmenu-toggle' => $skin->msg( 'citizen-personalmenu-toggle' )->text(),
+			'data-personal-menu-list' => $personalMenu,
 		];
 	}
 
