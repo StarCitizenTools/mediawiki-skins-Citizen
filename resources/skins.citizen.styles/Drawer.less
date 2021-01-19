@@ -12,6 +12,7 @@
 	transform: translate3d( -110%, 0, 0 ); // shadow bleeding with 100%
 	transform-origin: 0 0;
 	transition: @transition-transform;
+	user-select: none;
 	will-change: transform; // help with performance
 	.boxshadow(3);
 
@@ -48,6 +49,7 @@
 	}
 
 	&-button {
+		position: absolute;
 		width: var( --width-button-corner );
 		height: var( --height-header );
 
@@ -101,10 +103,11 @@
 		border-bottom: 1px solid var( --border-color-base );
 	}
 
-	&-main {
+	&-menu {
 		overflow: auto;
 		flex-grow: 1;
 		padding: @margin-side / 2 0;
+		font-size: @ui-menu-text;
 		overscroll-behavior: contain;
 
 		h3 {
@@ -115,11 +118,6 @@
 			font-weight: normal;
 			letter-spacing: 0.75px;
 		}
-	}
-
-	&-main,
-	&-user {
-		font-size: @ui-menu-text;
 
 		a {
 			.menu-item-link;
@@ -173,71 +171,8 @@
 	}
 }
 
-#p-personal {
-	padding-top: @margin-side / 2;
-	border-top: 1px solid var( --border-color-base );
-
-	#pt-userpage {
-		a {
-			flex-direction: row-reverse;
-			justify-content: flex-end;
-
-			&:after {
-				width: @icon-box-size;
-				height: @icon-box-size;
-				margin: 0;
-				margin-right: 16px;
-			}
-		}
-
-		span {
-			order: 2;
-			padding-left: @margin-side;
-		}
-	}
-
-	#pt-login {
-		a {
-			.button-blue;
-
-			&:hover,
-			&:active,
-			&:focus {
-				.button-blue-active;
-			}
-		}
-	}
-
-	#pt-logout {
-		a {
-			.button-red;
-
-			&:hover,
-			&:active,
-			&:focus {
-				.button-red-active;
-			}
-		}
-	}
-
-	// Rounded edge for the last button
-	#pt-login,
-	#pt-logout {
-		a {
-			border-radius: 0 0 @border-radius-large 0;
-		}
-	}
-}
-
 .skin-citizen-dark {
-	#mw-drawer {
-		&-main,
-		&-user {
-			a {
-				&:after {
-					filter: invert( 1 );
-				}
-			}
-		}
+	#mw-drawer-menu a:after {
+		filter: invert( 1 );
 	}
 }
