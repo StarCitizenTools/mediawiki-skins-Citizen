@@ -150,7 +150,7 @@ class SkinCitizen extends SkinMustache {
 					'href' => Skin::makeMainPageUrl(),
 				]
 			),
-			'data-logos' => ResourceLoaderSkinModule::getAvailableLogos( $this->getConfig() ),
+			'data-logos' => $this->getLogoData(),
 
 			'data-header' => [
 				'data-drawer' => $this->buildDrawer(),
@@ -283,6 +283,30 @@ class SkinCitizen extends SkinMustache {
 
 		return $data;
 	}
+
+	/**
+	 * Get and pick the correct logo based on types and variants
+	 * Based on getLogoData() in MW 1.36
+	 *
+	 * @return array
+	 */
+	private function getLogoData() : array {
+         $logoData = ResourceLoaderSkinModule::getAvailableLogos( $this->getConfig() );
+         // check if the logo supports variants
+         $variantsLogos = $logoData['variants'] ?? null;
+         if ( $variantsLogos ) {
+             $preferred = $this->getOutput()->getTitle()
+                 ->getPageViewLanguage()->getCode();
+             $variantOverrides = $variantsLogos[$preferred] ?? null;
+             // Overrides the logo
+             if ( $variantOverrides ) {
+                 foreach ( $variantOverrides as $key => $val ) {
+                     $logoData[$key] = $val;
+                 }
+             }
+         }
+         return $logoData;
+    }
 
 	/**
 	 * Render the navigation drawer
