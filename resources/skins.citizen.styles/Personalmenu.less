@@ -3,9 +3,9 @@
 	font-size: @ui-menu-text;
 	opacity: 0;
 	pointer-events: none;
+	transition: @transition-opacity-quick;
 	user-select: none;
 	visibility: hidden;
-	transition: @transition-opacity-quick;
 
 	&-checkbox {
 		&:checked {
@@ -53,10 +53,10 @@
 #p-personal {
 	position: fixed;
 	top: var( --height-header );
-	left: 0;
 	right: 0;
-	margin: 0;
+	left: 0;
 	min-width: 250px;
+	margin: 0;
 
 	ul {
 		overflow: hidden; // So that hover state is rounded
