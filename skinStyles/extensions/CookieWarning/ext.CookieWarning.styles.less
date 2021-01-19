@@ -10,8 +10,10 @@
 	top: unset;
 	right: 0;
 	bottom: 0;
+	display: flex;
 	overflow: hidden;
 	max-width: @screen2;
+	justify-content: space-between;
 	padding: 0;
 	margin: 0 auto;
 	background: @dark-bg-60;
@@ -23,12 +25,13 @@
 
 	.mw-cookiewarning-text {
 		display: flex;
+		align-items: center;
 		line-height: 1.4;
 
 		> span {
 			display: block;
 			flex-grow: 1;
-			padding: @margin-side;
+			padding: var( --padding-page );
 			margin: 0;
 		}
 
@@ -37,42 +40,50 @@
 		}
 
 		> a {
-			display: flex;
 			height: auto;
-			align-items: center;
-			justify-content: center;
-			padding: @margin-side / 2 @margin-side;
-			margin: 0;
+			background: transparent;
 		}
 
 		.mw-cookiewarning-dismiss {
 			height: 100%;
-			padding: @margin-side / 2 @margin-side;
+			padding: 10px var( --padding-page );
 			margin: 0;
-			background: @accent-50;
+			background: var( --color-primary );
 			border-radius: 0;
 			line-height: 1.4;
 			transition: @transition-background-quick;
 
 			&:hover {
-				background: @accent-10;
+				background: var( --color-primary--hover );
+			}
+
+			&:active {
+				background: var( --color-primary--active );
 			}
 		}
 	}
 }
 
-@media only screen and ( max-width: 480px ) {
-	.mw-cookiewarning-container .mw-cookiewarning-text {
+@media only screen and ( max-width: @width-breakpoint-tablet ) {
+	.mw-cookiewarning-container {
 		flex-wrap: wrap;
-		/* Hack to hide nbsp */
-		font-size: 0;
 
-		> span {
-			font-size: @content-small-text-size;
+		.mw-cookiewarning-text {
+			flex-wrap: wrap;
+			/* Hack to hide nbsp */
+			font-size: 0;
+
+			> span {
+				font-size: @content-small-text-size;
+			}
+
+			> a {
+				width: 100%;
+				text-align: center;
+			}
 		}
 
 		> form,
-		> a,
 		.mw-cookiewarning-dismiss {
 			width: 100%;
 		}
