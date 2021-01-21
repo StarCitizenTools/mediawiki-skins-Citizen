@@ -397,6 +397,7 @@ class SkinCitizen extends SkinMustache {
 		$personalTools = $this->getPersonalToolsForMakeListItem(
 			$this->buildPersonalUrls()
 		);
+
 		// Move the Echo badges and ULS out of default list
 		if ( isset( $personalTools['notifications-alert'] ) ) {
 			unset( $personalTools['notifications-alert'] );
@@ -406,6 +407,10 @@ class SkinCitizen extends SkinMustache {
 		}
 		if ( isset( $personalTools['uls'] ) ) {
 			unset( $personalTools['uls'] );
+		}
+
+		if ( $this->getUser()->isLoggedIn() ) {
+			$personalTools = $this->addUserGroupsToMenu( $personalTools );
 		}
 
 		$personalMenu = $this->getMenuData( 'personal', $personalTools );
@@ -419,12 +424,68 @@ class SkinCitizen extends SkinMustache {
 	}
 
 	/**
+	 * This adds all explicit user groups as links to the personal menu
+	 * Links are added right below the user page link
+	 * Wrapped in an <li> element with id 'pt-usergroups'
+	 *
+	 * @param array $originalUrls The original personal tools urls
+	 *
+	 * @return array
+	 */
+	private function addUserGroupsToMenu( $originalUrls ) {
+		$personalTools = [];
+
+		$userPage = array_shift( $originalUrls );
+
+		// This does not return implicit groups
+		$groups = MediaWikiServices::getInstance()->getUserGroupManager()->getUserGroups( $this->getUser() );
+
+		// If the user has only implicit groups return early
+		if ( empty( $groups ) ) {
+			return $originalUrls;
+		}
+
+		$groupLinks = [];
+		$msgName = 'group-%s';
+
+		foreach ( $groups as $group ) {
+			$groupPage = Title::newFromText(
+				$this->msg( sprintf( $msgName, $group ) )->text(),
+				NS_PROJECT
+			);
+
+			$groupLinks[$group] = [
+				'msg' => sprintf( $msgName, $group ),
+				'href' => $groupPage->getLinkURL(), // Nullpointer should not happen
+				'tooltiponly' => true,
+				'id' => sprintf( $msgName, $group ),
+				// 'exists' => $groupPage->exists() - This will add an additional DB call
+			];
+		}
+
+		$userGroups = [
+			'id' => 'pt-usergroups',
+			'links' => $groupLinks
+		];
+
+		// The following defines the order of links added
+		$personalTools['userpage'] = $userPage;
+		$personalTools['usergroups'] = $userGroups;
+
+		foreach ( $originalUrls as $key => $url ) {
+			$personalTools[$key] = $url;
+		}
+
+		return $personalTools;
+	}
+
+	/**
 	 * Echo notification badges and ULS button
 	 *
 	 * @return array
 	 */
 	private function getExtratools(): array {
-		$personalTools = self::getPersonalToolsForMakeListItem(
+		$personalTools = $this->getPersonalToolsForMakeListItem(
 			$this->buildPersonalUrls()
 		);
 
@@ -603,7 +664,7 @@ class SkinCitizen extends SkinMustache {
 		$props['html-after-portal'] = $this->getAfterPortlet( $label );
 
 		// Mark the portal as empty if it has no content
-		$class = ( count( $urls ) === 0 && !$props['html-after-portal'] )
+		$class = ( empty( $urls ) && !$props['html-after-portal'] )
 			? ' mw-portal-empty' : '';
 		$props['class'] = $class;
 		return $props;
