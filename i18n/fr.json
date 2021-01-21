@@ -12,6 +12,7 @@
 	"citizen.css": "/* La totalité du CSS placé ici s’appliquera aux utilisateurs de l’habillage Citizen. */",
 	"citizen.js": "/* La totalité du JavaScript placé ici s’appliquera aux utilisateurs de l’habillage Citizen. */",
 	"citizen-drawer-toggle": "Basculer le menu",
+	"citizen-personalmenu-toggle": "Basculer le menu personnel",
 	"citizen-search-toggle": "Basculer la recherche",
 	"citizen-theme-toggle": "Basculer la couleur du thème",
 	"citizen-footer-desc": "Modifier ce texte sur MediaWiki:Citizen-footer-desc",

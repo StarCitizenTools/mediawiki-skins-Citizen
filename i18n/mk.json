@@ -10,6 +10,7 @@
 	"citizen.css": "/* Сиот тука поставен JavaScript ќе им се вчитува на корисниците што го користат рувото „Граѓанин“ */",
 	"citizen.js": "/* Сиот тука поставен JavaScript ќе им се вчитува на корисниците што го користат рувото „Граѓанин“ */",
 	"citizen-drawer-toggle": "Дај/скриј мени",
+	"citizen-personalmenu-toggle": "Дај/скриј лично мени",
 	"citizen-search-toggle": "Дај/скриј пребарување",
 	"citizen-theme-toggle": "Смени боја на изгледот",
 	"citizen-footer-desc": "Уредете го овој текст на MediaWiki:Citizen-footer-desc",
