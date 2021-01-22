@@ -251,7 +251,6 @@
 			"selector": "#pt-{name} > *:after",
 			"defaultColor": "#000",
 			"images": {
-				"userpage": "resources/skins.citizen.icons/shared/userNormal.svg",
 				"mytalk": "resources/skins.citizen.icons/shared/userTalk.svg",
 				"preferences": "resources/skins.citizen.icons/shared/settings.svg",
 				"betafeatures": "resources/skins.citizen.icons/shared/beta.svg",
