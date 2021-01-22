@@ -66,51 +66,79 @@
 		.boxshadow(4);
 	}
 
-	a {
-		.menu-item-link;
-		align-items: center;
-		justify-content: space-between;
-		padding: 10px 20px;
-
-		&:after {
-			.resource-loader-list-icon;
-			display: block;
-			margin-left: @icon-padding;
-			background-size: contain;
-			opacity: var( --opacity-icon-base );
-			transition: @transition-opacity-quick;
-		}
-
-		&:hover {
-			.menu-item-link-hover;
+	li:not( #pt-usergroups ):not( #pt-userpage ) {
+		a {
+			.menu-item-link;
+			align-items: center;
+			justify-content: space-between;
+			padding: 10px 20px;
 
 			&:after {
-				opacity: var( --opacity-icon-base--hover );
+				.resource-loader-list-icon;
+				display: block;
+				margin-left: @icon-padding;
+				background-size: contain;
+				opacity: var( --opacity-icon-base );
+				transition: @transition-opacity-quick;
 			}
-		}
 
-		&:active {
-			.menu-item-link-active;
+			&:hover {
+				.menu-item-link-hover;
 
-			&:after {
-				opacity: var( --opacity-icon-base--active );
+				&:after {
+					opacity: var( --opacity-icon-base--hover );
+				}
+			}
+
+			&:active {
+				.menu-item-link-active;
+
+				&:after {
+					opacity: var( --opacity-icon-base--active );
+				}
 			}
 		}
 	}
 
 	#pt-userpage {
+		padding: 16px 12px 0 12px;
+
 		a {
 			justify-content: flex-start;
-			padding: 20px;
-			border-bottom: 1px solid var( --border-color-base );
+			padding: 4px 8px;
+			color: var( --color-base--emphasized ) !important;
+			font-size: 16px;
+			font-weight: 600;
 			word-break: break-word;
+		}
+	}
 
-			&:after {
-				width: 20px;
-				height: 20px;
-				order: -1;
-				margin-right: 15px;
-				margin-left: 0;
+	#pt-usergroups {
+		display: flex;
+		flex-wrap: wrap;
+		padding: 0 16px 10px 16px;
+		border-bottom: 1px solid var( --border-color-base );
+
+		a {
+			padding: 2px 4px;
+			color: var( --color-base--subtle );
+		}
+	}
+
+	#pt-userpage,
+	#pt-usergroups {
+		line-height: 1;
+
+		a {
+			display: block;
+			transition: @transition-color-quick;
+
+			&:hover {
+				color: var( --color-primary--hover ) !important;
+			}
+
+			&:active {
+				color: var( --color-primary--active ) !important;
 			}
 		}
 	}
