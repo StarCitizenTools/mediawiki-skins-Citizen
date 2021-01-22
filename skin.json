@@ -130,7 +130,8 @@
 			"packageFiles": [
 				"resources/skins.citizen.scripts/skin.js",
 				"resources/skins.citizen.scripts/themeToggle.js",
-				"resources/skins.citizen.scripts/search.js"
+				"resources/skins.citizen.scripts/search.js",
+				"resources/skins.citizen.scripts/checkboxHack.js"
 			],
 			"dependencies": [
 				"mediawiki.page.ready",
