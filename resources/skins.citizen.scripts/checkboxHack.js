@@ -1,18 +1,23 @@
 var DRAWER_ID = 'mw-drawer',
+	DRAWER_BUTTON_ID = 'mw-drawer-button',
 	DRAWER_CHECKBOX_ID = 'mw-drawer-checkbox',
 	PERSONAL_MENU_ID = 'p-personal',
+	PERSONAL_MENU_BUTTON_ID = 'personalmenu-button',
 	PERSONAL_MENU_CHECKBOX_ID = 'personalmenu-checkbox';
 
 /**
  * Uncheck CSS hack checkbox when clicked outside
  *
  * @param {HTMLElement} element
+ * @param {HTMLElement} button
  * @param {HTMLElement} checkbox
  */
-function uncheckOnClickOutside( element, checkbox ) {
+function uncheckOnClickOutside( element, button, checkbox ) {
 	var listener = function ( e ) {
 		if ( e.target !== checkbox && e.target !== element ) {
-			checkbox.checked = false;
+			if ( e.target !== button ) {
+				checkbox.checked = false;
+			}
 			document.removeEventListener( 'click', listener );
 		}
 	};
@@ -28,11 +33,13 @@ function uncheckOnClickOutside( element, checkbox ) {
  */
 function init() {
 	var drawer = document.getElementById( DRAWER_ID ),
+		drawerButton = document.getElementById( DRAWER_BUTTON_ID ),
 		drawerCheckbox = document.getElementById( DRAWER_CHECKBOX_ID ),
 		personalMenu = document.getElementById( PERSONAL_MENU_ID ),
+		personalMenuButton = document.getElementById( PERSONAL_MENU_BUTTON_ID ),
 		personalMenuCheckbox = document.getElementById( PERSONAL_MENU_CHECKBOX_ID );
-	uncheckOnClickOutside( drawer, drawerCheckbox );
-	uncheckOnClickOutside( personalMenu, personalMenuCheckbox );
+	uncheckOnClickOutside( drawer, drawerButton, drawerCheckbox );
+	uncheckOnClickOutside( personalMenu, personalMenuButton, personalMenuCheckbox );
 }
 
 module.exports = {
