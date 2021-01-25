@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Abijeet Patro",
+			"Agaafd",
 			"BaRaN6161 TURK",
 			"Sadrettin"
 		]
@@ -11,7 +12,9 @@
 	"citizen.css": "/* Buradaki tüm CSS'ler Citizen görünüm  kullanıcıları için yüklenecek */",
 	"citizen.js": "/* Buradaki tüm JavaScript Citizen  görünümü kullanıcıları için yüklenecek */",
 	"citizen-drawer-toggle": "Menüyü değiştir",
+	"citizen-personalmenu-toggle": "Kişisel menüyü aç / kapat",
 	"citizen-search-toggle": "Aramayı değiştir",
+	"citizen-theme-toggle": "Tema rengi aç/kapa",
 	"citizen-footer-desc": "Bu metni MediaWiki:Citizen-footer-desc üzerinde düzenle",
 	"citizen-footer-tagline": "Bu metni MediaWiki:Citizen-footer-tagline üzerinde düzenle",
 	"citizen-search-fulltext": "İçeren sayfaları ara",

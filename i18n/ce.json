@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Умар"
+		]
+	},
+	"prefs-citizen-theme-label": "Кечяран тема",
+	"prefs-citizen-theme-option-auto": "Авто",
+	"prefs-citizen-theme-option-light": "Сирла",
+	"prefs-citizen-theme-option-dark": "Бодане"
+}

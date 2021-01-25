@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Abijeet Patro",
-			"Alistair3149"
+			"Alistair3149",
+			"Kly"
 		]
 	},
 	"skinname-citizen": "Citizen",
@@ -10,6 +11,7 @@
 	"citizen.css": "/* 此 CSS 會用於使用 Citizen 佈景主題的使用者 */",
 	"citizen.js": "/* 此 Javascript 會用於使用 Citizen 佈景主題的使用者 */",
 	"citizen-drawer-toggle": "切換菜單",
+	"citizen-personalmenu-toggle": "切換個人選單",
 	"citizen-search-toggle": "切換搜尋",
 	"citizen-theme-toggle": "切換主題",
 	"citizen-footer-desc": "在 MediaWiki:Citizen-footer-desc 編輯此文字",
