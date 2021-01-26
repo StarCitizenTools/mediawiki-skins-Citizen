@@ -53,3 +53,10 @@ a.image > img {
 		float: right;
 	}
 }
+
+/* Wider page width for special pages */
+@media ( min-width: @width-breakpoint-desktop-wide ) {
+	.ns--1 {
+		--width-layout: @width-breakpoint-desktop-wide - @padding-page * 2;
+	}
+}
