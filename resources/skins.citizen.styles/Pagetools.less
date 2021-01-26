@@ -1,7 +1,8 @@
-#page-tools {
+.page-actions {
 	display: flex;
-	margin-left: 10px;
-	float: right;
+	margin-left: -12px; // To align with page padding
+	font-size: @ui-menu-text;
+	font-weight: 450;
 
 	ul {
 		display: flex;
@@ -16,41 +17,87 @@
 
 #p-views {
 	li > a {
-		.resource-loader-icon-link;
-		padding: 5px;
+		display: flex;
+		align-items: center;
+		padding: 8px 12px;
+		margin-right: 4px;
+		border-radius: @border-radius-medium;
+		color: var( --color-base--subtle );
 		font-size: 0;
-		opacity: var( --opacity-icon-base );
-		transition: @transition-opacity-quick;
+		transition: @transition-background-quick;
+
+		&:after {
+			width: var( --size-icon );
+			height: var( --size-icon );
+			order: -1; // Move icon before the text
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: var( --size-icon );
+			content: '';
+			opacity: var( --opacity-icon-base );
+			transition: @transition-opacity-quick;
+		}
 
 		&:hover {
-			opacity: var( --opacity-icon-base--hover );
+			background-color: var( --background-color-quiet--hover );
+
+			&:after {
+				opacity: var( --opacity-icon-base--hover );
+			}
 		}
 
 		&:active {
-			opacity: var( --opacity-icon-base--active );
-		}
+			background-color: var( --background-color-quiet--active );
 
-		&:after {
-			.resource-loader-icon;
+			&:after {
+				opacity: var( --opacity-icon-base--active );
+			}
 		}
 
 		span {
 			.mixin-screen-reader-text;
 		}
 	}
+
+	#ca-edit {
+		order: 99; // Put it to the last
+
+		> a {
+			background-color: var( --color-primary );
+			color: #fff;
+
+			&:after {
+				filter: invert( 1 );
+				// white icon
+				opacity: 1;
+			}
+
+			&:hover {
+				background-color: var( --color-primary--hover );
+			}
+
+			&:active {
+				background-color: var( --color-primary--active );
+			}
+		}
+	}
 }
 
 #p-actions {
-	.resource-loader-icon-link;
-	padding: 5px;
+	display: block;
+	width: var( --size-icon );
+	height: var( --size-icon );
+	padding: 8px;
 	cursor: pointer;
 	// transition: @transition-opacity-quick; - Hidden behind the menu anyways
 
-	// TODO: Need to make value more flexible
 	ul {
 		position: absolute;
 		z-index: -1;
-		right: @padding-page / 2;
+		right: 0;
+		left: 0;
+		border: 1px solid var( --border-color-base--lighter );
+		margin-top: 5px;
 		opacity: 0;
 		pointer-events: none;
 		transition: @transition-opacity-quick, @transition-box-shadow-quick;
@@ -60,8 +107,7 @@
 		a {
 			.menu-item-link;
 			justify-content: space-between;
-			padding: @padding-menu-item;
-			font-size: @ui-menu-text;
+			padding: 10px var( --padding-page );
 
 			&:after {
 				.resource-loader-list-icon;
@@ -88,7 +134,11 @@
 	}
 
 	&:before {
-		.resource-loader-menu-icon;
+		display: block;
+		width: var( --size-icon );
+		height: var( --size-icon );
+		background-size: var( --size-icon );
+		content: '';
 		opacity: var( --opacity-icon-base );
 	}
 
@@ -110,6 +160,27 @@
 	#p-actions {
 		li > a:after {
 			filter: invert( 1 );
+		}
+	}
+}
+
+@media ( min-width: @width-breakpoint-tablet ) {
+	#p-views {
+		li > a {
+			font-size: @ui-menu-text;
+
+			&:after {
+				margin-right: 8px;
+			}
+		}
+	}
+
+	#p-actions {
+		ul {
+			position: relative;
+			right: unset;
+			left: -172px;
+			width: 200px;
 		}
 	}
 }

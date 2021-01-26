@@ -1,11 +1,21 @@
 @width-breakpoint-desktop-wider: @width-breakpoint-desktop + @width-toc * 2;
 
-.firstHeading,
-#siteSub,
+.mw-body-header,
 .mw-body-content {
 	max-width: var( --width-layout );
 	margin-right: auto;
 	margin-left: auto;
+}
+
+.mw-body-header {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 0.8rem;
+}
+
+.page-heading {
+	flex-grow: 1;
+	margin-bottom: 0.8rem;
 }
 
 .mw-body-content {
