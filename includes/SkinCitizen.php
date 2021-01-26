@@ -435,8 +435,6 @@ class SkinCitizen extends SkinMustache {
 	private function addUserGroupsToMenu( $originalUrls ) {
 		$personalTools = [];
 
-		$userPage = array_shift( $originalUrls );
-
 		// This does not return implicit groups
 		$groups = MediaWikiServices::getInstance()->getUserGroupManager()->getUserGroups( $this->getUser() );
 
@@ -445,6 +443,7 @@ class SkinCitizen extends SkinMustache {
 			return $originalUrls;
 		}
 
+		$userPage = array_shift( $originalUrls );
 		$groupLinks = [];
 		$msgName = 'group-%s';
 
