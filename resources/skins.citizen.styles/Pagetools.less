@@ -22,9 +22,9 @@
 		padding: 8px 12px;
 		margin-right: 4px;
 		border-radius: @border-radius-medium;
-		color: var( --color-base--subtle );
+		color: var( --color-base );
 		font-size: 0;
-		transition: @transition-background-quick;
+		transition: @transition-background-quick, @transition-color-quick;
 
 		&:after {
 			width: var( --size-icon );
@@ -40,6 +40,7 @@
 
 		&:hover {
 			background-color: var( --background-color-quiet--hover );
+			color: var( --color-base--emphasized );
 
 			&:after {
 				opacity: var( --opacity-icon-base--hover );
@@ -48,6 +49,7 @@
 
 		&:active {
 			background-color: var( --background-color-quiet--active );
+			color: var( --color-base--subtle );
 
 			&:after {
 				opacity: var( --opacity-icon-base--active );
