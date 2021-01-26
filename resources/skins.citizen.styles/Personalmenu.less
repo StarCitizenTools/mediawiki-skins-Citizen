@@ -98,6 +98,35 @@
 				}
 			}
 		}
+
+		// Need to be specific to override
+		&#pt-login {
+			a {
+				.button-blue;
+
+				&:hover {
+					.button-blue-hover;
+				}
+
+				&:active {
+					.button-blue-active;
+				}
+			}
+		}
+
+		&#pt-logout {
+			a {
+				.button-red;
+
+				&:hover {
+					.button-red-hover;
+				}
+
+				&:active {
+					.button-red-active;
+				}
+			}
+		}
 	}
 
 	#pt-userpage {
@@ -139,34 +168,6 @@
 
 			&:active {
 				color: var( --color-primary--active ) !important;
-			}
-		}
-	}
-
-	#pt-login {
-		a {
-			.button-blue;
-
-			&:hover {
-				.button-blue-hover;
-			}
-
-			&:active {
-				.button-blue-active;
-			}
-		}
-	}
-
-	#pt-logout {
-		a {
-			.button-red;
-
-			&:hover {
-				.button-red-hover;
-			}
-
-			&:active {
-				.button-red-active;
 			}
 		}
 	}
