@@ -234,11 +234,10 @@ figcaption,
 	}
 }
 
+// TODO: Think of better places to put indicators;
 .mw-indicators {
-	/* Ensure that this is displayed on top of .mw-body-content and clickable */
-	position: relative;
-	z-index: 1;
-	float: right;
+	font-size: @ui-menu-text;
+	text-align: right;
 }
 
 .printfooter {
@@ -248,15 +247,6 @@ figcaption,
 div.patrollink {
 	font-size: 75%;
 	text-align: right;
-}
-
-/* Wider page width for special pages */
-.ns--1 {
-	.firstHeading,
-	#siteSub,
-	.mw-body-content {
-		max-width: @screen2;
-	}
 }
 
 .skin-citizen-dark {
