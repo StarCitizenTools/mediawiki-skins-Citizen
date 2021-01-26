@@ -236,8 +236,10 @@ figcaption,
 
 // TODO: Think of better places to put indicators;
 .mw-indicators {
+	padding-left: 10px;
+	border-left: 1px solid var( --border-color-base );
+	margin-left: 10px;
 	font-size: @ui-menu-text;
-	text-align: right;
 }
 
 .printfooter {
@@ -252,5 +254,9 @@ div.patrollink {
 .skin-citizen-dark {
 	.mw-editsection > a:before {
 		filter: invert( 1 );
+	}
+
+	.mw-indicator {
+		filter: invert( 1 ) hue-rotate( 180deg );
 	}
 }
