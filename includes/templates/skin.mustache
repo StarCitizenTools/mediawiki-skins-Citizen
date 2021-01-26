@@ -25,11 +25,13 @@
 {{#data-header}}{{>Header}}{{/data-header}}
 <main class="mw-body" id="content">
 	<div id="siteNotice" class="mw-body-content">{{{html-site-notice}}}</div>
-	{{>Indicators}}
 	{{{html-newtalk}}}
 	<header class="mw-body-header">
 		<div class="page-heading">
-			<h1 id="firstHeading" class="firstHeading" lang="{{page-langcode}}">{{{html-title}}}</h1>
+			<div class="firstHeading-container">
+				<h1 id="firstHeading" class="firstHeading" lang="{{page-langcode}}">{{{html-title}}}</h1>
+				{{>Indicators}}
+			</div>
 			<div id="siteSub">{{msg-tagline}}</div>
 		</div>
 		{{#data-pagetools}}
