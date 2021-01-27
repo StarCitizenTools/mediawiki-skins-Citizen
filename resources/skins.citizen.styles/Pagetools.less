@@ -61,9 +61,23 @@
 		}
 	}
 
-	#ca-edit {
-		order: 99; // Put it to the last
+	// VE styles shouldn't be core but it is just a few lines :/
+	#ca-ve-edit {
+		order: 98; // Before source edit
 
+		> a {
+			padding-right: 16px;
+			// Merge button with source edit
+			margin-right: -12px;
+		}
+	}
+
+	#ca-edit {
+		order: 99; // Align to last
+	}
+
+	#ca-edit,
+	#ca-ve-edit {
 		> a {
 			background-color: var( --color-primary );
 			color: #fff;
