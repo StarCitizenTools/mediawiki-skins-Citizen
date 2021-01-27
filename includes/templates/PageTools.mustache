@@ -1,0 +1,16 @@
+{{!
+	object data-page-views
+	object data-page-actions
+	object data-page-toolbox
+}}
+{{#data-pagetools}}
+	<div class="page-actions">
+		{{#data-page-views}}{{>Menu}}{{/data-page-views}}
+		<div class="page-actions-more">
+			<nav class="page-actions-more-menu">
+				{{#data-page-actions}}{{>Menu}}{{/data-page-actions}}
+				{{#data-page-toolbox}}{{>Menu}}{{/data-page-toolbox}}
+			</nav>
+		</div>
+	</div>
+{{/data-pagetools}}

@@ -336,8 +336,6 @@ class SkinCitizen extends SkinMustache {
 				case 'SEARCH':
 					break;
 				case 'TOOLBOX':
-					$portal = $this->getMenuData( 'tb',  $content );
-					$props[] = $portal;
 					break;
 				case 'LANGUAGES':
 					$languages = $skin->getLanguages();
@@ -562,7 +560,8 @@ class SkinCitizen extends SkinMustache {
 	protected function buildPageTools(): array {
 		$skin = $this;
 		$condition = $this->getConfigValue( 'CitizenShowPageTools' );
-		$contentNavigation = $this->buildContentNavigationUrls();
+		$contentNavigation = parent::buildContentNavigationUrls();
+		$portals = parent::buildSidebar();
 		$props = [];
 
 		// Login-based condition, return true if condition is met
@@ -583,20 +582,22 @@ class SkinCitizen extends SkinMustache {
 
 		if ( $condition === true ) {
 
-			$actionhtml = $this->getMenuData( 'views', $contentNavigation[ 'views' ] ?? [] );
-			$actionmorehtml = $this->getMenuData( 'actions', $contentNavigation[ 'actions' ] ?? [] );
+			$viewshtml = $this->getMenuData( 'views', $contentNavigation[ 'views' ] ?? [] );
+			$actionshtml = $this->getMenuData( 'actions', $contentNavigation[ 'actions' ] ?? [] );
+			$toolboxhtml = $this->getMenuData( 'tb',  $portals['TOOLBOX'] ?? [] );
 
-			if ( $actionhtml ) {
-				$actionhtml[ 'label-class' ] .= 'screen-reader-text';
+			if ( $viewshtml ) {
+				$viewshtml[ 'label-class' ] .= 'screen-reader-text';
 			}
 
-			if ( $actionmorehtml ) {
-				$actionmorehtml[ 'label-class' ] .= 'screen-reader-text';
+			if ( $actionshtml ) {
+				$actionshtml[ 'label-class' ] .= 'screen-reader-text';
 			}
 
 			$props = [
-				'data-page-actions' => $actionhtml,
-				'data-page-actions-more' => $actionmorehtml,
+				'data-page-views' => $viewshtml,
+				'data-page-actions' => $actionshtml,
+				'data-page-toolbox' => $toolboxhtml,
 			];
 		}
 
