@@ -34,12 +34,7 @@
 			</div>
 			<div id="siteSub">{{msg-tagline}}</div>
 		</div>
-		{{#data-pagetools}}
-		<div class="page-actions">
-			{{#data-page-actions}}{{>Menu}}{{/data-page-actions}}
-			{{#data-page-actions-more}}{{>Menu}}{{/data-page-actions-more}}
-		</div>
-		{{/data-pagetools}}
+		{{>PageTools}}
 	</header>
 	<div id="bodyContent" class="mw-body-content">
 		<div id="contentSub"{{{html-user-language-attributes}}}>{{{html-subtitle}}}</div>

@@ -1,9 +1,20 @@
-// Hide selected item
-.mw-portal .selected {
-	.mixin-screen-reader-text;
-}
+.mw-portal {
+	h3 {
+		padding: 10px var( --padding-page );
+		margin: 10px 0 0 0;
+		color: var( --color-base--subtle );
+		font-size: inherit;
+		font-weight: normal;
+		letter-spacing: 0.75px;
+	}
 
-// Hide more button when it is empty
-.mw-portal-empty {
-	display: none !important;
+	// Hide selected item
+	.selected {
+		.mixin-screen-reader-text;
+	}
+
+	// Hide empty menu
+	&-empty {
+		display: none !important;
+	}
 }
