@@ -309,7 +309,7 @@ class SkinCitizen extends SkinMustache {
 		 return $logoData;
 	}
 
-    /**
+	/**
 	 * Render the navigation drawer
 	 * Based on buildSidebar()
 	 *
@@ -376,9 +376,9 @@ class SkinCitizen extends SkinMustache {
 			// Hide label for first portal
 			$firstPortal[ 'label-class' ] .= 'screen-reader-text';
 
-			if (isset($firstPortal['html-items'])) {
-			    $this->addToolboxLinksToDrawer($firstPortal['html-items']);
-            }
+			if ( isset( $firstPortal['html-items'] ) ) {
+				$this->addToolboxLinksToDrawer( $firstPortal['html-items'] );
+			}
 		}
 
 		return [
@@ -389,44 +389,43 @@ class SkinCitizen extends SkinMustache {
 		];
 	}
 
-    /**
-     * @inheritDoc
-     *
-     * Manually disable links to upload and speacial pages
-     * as they are moved from the toolbox to the drawer
-     *
-     * @return array
-     */
-    protected function buildNavUrls()
-    {
-        $urls = parent::buildNavUrls();
+	/**
+	 * @inheritDoc
+	 *
+	 * Manually disable links to upload and speacial pages
+	 * as they are moved from the toolbox to the drawer
+	 *
+	 * @return array
+	 */
+	protected function buildNavUrls() {
+		$urls = parent::buildNavUrls();
 
-        $urls['upload'] = false;
-        $urls['specialpages'] = false;
+		$urls['upload'] = false;
+		$urls['specialpages'] = false;
 
-        return $urls;
-    }
+		return $urls;
+	}
 
-    /**
-     * Add a link to special pages and the upload form to the first portal in the drawer
-     *
-     * @param string $htmlItems
-     *
-     * @return void
-     */
-	private function addToolboxLinksToDrawer(&$htmlItems) {
-        // First add a link to special pages
-        $htmlItems .= $this->makeListItem( 'specialpages', [
-            'href' => self::makeSpecialUrl('specialpages'),
-            'id' => 't-specialpages'
-        ]);
+	/**
+	 * Add a link to special pages and the upload form to the first portal in the drawer
+	 *
+	 * @param string &$htmlItems
+	 *
+	 * @return void
+	 */
+	private function addToolboxLinksToDrawer( &$htmlItems ) {
+		// First add a link to special pages
+		$htmlItems .= $this->makeListItem( 'specialpages', [
+			'href' => self::makeSpecialUrl( 'specialpages' ),
+			'id' => 't-specialpages'
+		] );
 
-        // Then add a link to the upload form
-        $htmlItems .= $this->makeListItem( 'upload', [
-            'href' => self::makeSpecialUrl('upload'),
-            'id' => 't-upload'
-        ]);
-    }
+		// Then add a link to the upload form
+		$htmlItems .= $this->makeListItem( 'upload', [
+			'href' => self::makeSpecialUrl( 'upload' ),
+			'id' => 't-upload'
+		] );
+	}
 
 	/**
 	 * Build Personal Tools menu
