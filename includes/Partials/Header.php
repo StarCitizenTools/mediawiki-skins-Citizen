@@ -49,7 +49,7 @@ final class Header extends Partial {
 	 */
 	public function buildPersonalMenu(): array {
 		$personalTools = $this->skin->getPersonalToolsForMakeListItem(
-			$this->skin->buildPersonalUrls()
+			$this->skin->buildPersonalUrlsPublic()
 		);
 
 		// Move the Echo badges and ULS out of default list
@@ -84,7 +84,7 @@ final class Header extends Partial {
 	 */
 	public function getExtratools(): array {
 		$personalTools = $this->skin->getPersonalToolsForMakeListItem(
-			$this->skin->buildPersonalUrls()
+			$this->skin->buildPersonalUrlsPublic()
 		);
 
 		// Create the Echo badges and ULS

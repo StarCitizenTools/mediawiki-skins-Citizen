@@ -33,7 +33,7 @@ final class PageLinks extends Partial {
 	 * @return array html
 	 */
 	public function buildPageLinks() : array {
-		$contentNavigation = $this->skin->buildContentNavigationUrls();
+		$contentNavigation = $this->skin->buildContentNavigationUrlsPublic();
 
 		$namespaceshtml = $this->skin->getMenuData( 'namespaces', $contentNavigation[ 'namespaces' ] ?? [] );
 		$variantshtml = $this->skin->getMenuData( 'variants', $contentNavigation[ 'variants' ] ?? [] );
