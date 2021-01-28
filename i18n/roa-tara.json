@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Joetaras"
+		]
+	},
+	"skinname-citizen": "Citizen",
+	"citizen.css": "/* Tutte le CSS aqquà avène carecate pe le utinde ca ausane 'a masckere Citizen */",
+	"citizen.js": "/* Tutte le JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Citizen */",
+	"prefs-citizen-theme-label": "Teme",
+	"prefs-citizen-theme-option-auto": "Auto",
+	"prefs-citizen-theme-option-light": "Chiare",
+	"prefs-citizen-theme-option-dark": "Scure"
+}

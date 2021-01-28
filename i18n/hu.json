@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Hanna Tardos"
+		]
+	},
+	"prefs-citizen-theme-label": "Téma",
+	"prefs-citizen-theme-option-auto": "Automatikus",
+	"prefs-citizen-theme-option-light": "Világos",
+	"prefs-citizen-theme-option-dark": "Sötét"
+}
