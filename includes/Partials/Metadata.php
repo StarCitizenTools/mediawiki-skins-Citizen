@@ -25,26 +25,9 @@ declare( strict_types=1 );
 
 namespace Citizen\Partials;
 
-use Citizen\GetConfigTrait;
 use Exception;
-use OutputPage;
 
-class Metadata {
-
-	use GetConfigTrait;
-
-	/**
-	 * @var OutputPage
-	 */
-	private $out;
-
-	/**
-	 * Metadata constructor.
-	 * @param OutputPage $out
-	 */
-	public function __construct( OutputPage $out ) {
-		$this->out = $out;
-	}
+final class Metadata extends Partial {
 
 	/**
 	 * Adds metadata to the output page

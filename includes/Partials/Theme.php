@@ -25,29 +25,12 @@ declare( strict_types=1 );
 
 namespace Citizen\Partials;
 
-use Citizen\GetConfigTrait;
 use MediaWiki\MediaWikiServices;
-use OutputPage;
 
 /**
  * Theme switcher partial of Skin Citizen
  */
-class Theme {
-
-	use GetConfigTrait;
-
-	/**
-	 * @var OutputPage
-	 */
-	private $out;
-
-	/**
-	 * Theme constructor.
-	 * @param OutputPage $out
-	 */
-	public function __construct( OutputPage $out ) {
-		$this->out = $out;
-	}
+final class Theme extends Partial {
 
 	/**
 	 * Sets the corresponding theme class on the <html> element

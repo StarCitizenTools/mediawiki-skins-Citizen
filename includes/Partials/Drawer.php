@@ -28,7 +28,6 @@ namespace Citizen\Partials;
 use Exception;
 use ResourceLoaderSkinModule;
 use Skin;
-use SkinCitizen;
 
 /**
  * Drawer partial of Skin Citizen
@@ -38,21 +37,7 @@ use SkinCitizen;
  *   + Special Pages Link
  *   + Upload Link
  */
-class Drawer {
-
-	/**
-	 * @var Skin
-	 */
-	private $skin;
-
-	/**
-	 * Drawer constructor.
-	 * @param SkinCitizen $skin
-	 */
-	public function __construct( SkinCitizen $skin ) {
-		$this->skin = $skin;
-	}
-
+final class Drawer extends Partial {
 	/**
 	 * Get and pick the correct logo based on types and variants
 	 * Based on getLogoData() in MW 1.36
@@ -61,8 +46,10 @@ class Drawer {
 	 */
 	public function getLogoData() : array {
 		$logoData = ResourceLoaderSkinModule::getAvailableLogos( $this->skin->getConfig() );
+
 		// check if the logo supports variants
 		$variantsLogos = $logoData['variants'] ?? null;
+
 		if ( $variantsLogos ) {
 			$preferred = $this->skin->getOutput()->getTitle()
 				->getPageViewLanguage()->getCode();
@@ -74,6 +61,7 @@ class Drawer {
 				}
 			}
 		}
+
 		return $logoData;
 	}
 

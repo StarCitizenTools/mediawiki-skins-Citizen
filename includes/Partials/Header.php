@@ -25,13 +25,10 @@ declare( strict_types=1 );
 
 namespace Citizen\Partials;
 
-use Citizen\GetConfigTrait;
 use Linker;
 use MediaWiki\MediaWikiServices;
 use MWException;
-use OutputPage;
 use Skin;
-use SkinCitizen;
 use SpecialPage;
 use Title;
 
@@ -43,30 +40,7 @@ use Title;
  * - Search
  * - Theme Toggle
  */
-class Header {
-
-	use GetConfigTrait;
-
-	/**
-	 * @var Skin
-	 */
-	private $skin;
-
-	/**
-	 * Needed for trait
-	 *
-	 * @var OutputPage
-	 */
-	private $out;
-
-	/**
-	 * Header constructor.
-	 * @param SkinCitizen $skin
-	 */
-	public function __construct( SkinCitizen $skin ) {
-		$this->skin = $skin;
-		$this->out = $skin->getOutput();
-	}
+final class Header extends Partial {
 
 	/**
 	 * Build Personal Tools menu
