@@ -21,13 +21,22 @@
  * @ingroup Skins
  */
 
-use MediaWiki\MediaWikiServices;
+use Citizen\GetConfigTrait;
+use Citizen\Partials\Drawer;
+use Citizen\Partials\Footer;
+use Citizen\Partials\Header;
+use Citizen\Partials\Metadata;
+use Citizen\Partials\PageLinks;
+use Citizen\Partials\PageTools;
+use Citizen\Partials\Theme;
 
 /**
  * Skin subclass for Citizen
  * @ingroup Skins
  */
 class SkinCitizen extends SkinMustache {
+	use GetConfigTrait;
+
 	/** @var array of alternate message keys for menu labels */
 	private const MENU_LABEL_KEYS = [
 		'tb' => 'toolbox',
@@ -44,15 +53,13 @@ class SkinCitizen extends SkinMustache {
 		$skin = $this;
 		$out = $skin->getOutput();
 
+		$metadata = new Metadata( $this );
+		$skinTheme = new Theme( $this );
+
+		$metadata->addMetadata();
+
 		// Theme handler
-		$skin->setSkinTheme( $out, $options );
-
-		// Responsive layout
-		// Replace with core responsive option if it is implemented in 1.36+
-		$out->addMeta( 'viewport', 'width=device-width, initial-scale=1.0' );
-
-		// Theme color
-		$out->addMeta( 'theme-color', $this->getConfigValue( 'CitizenThemeColor' ) ?? '' );
+		$skinTheme->setSkinTheme( $options );
 
 		// Load Citizen search suggestion styles if enabled
 		if ( $this->getConfigValue( 'CitizenEnableSearch' ) === true ) {
@@ -88,42 +95,23 @@ class SkinCitizen extends SkinMustache {
 			);
 		}
 
-		// Generate webapp manifest
-		$skin->addManifest();
-
-		// Preconnect origin
-		$skin->addPreConnect();
-
-		// HTTP headers
-		// CSP
-		$skin->addCSP();
-
-		// HSTS
-		$skin->addHSTS();
-
-		// Deny X-Frame-Options
-		$skin->addXFrameOptions();
-
-		// X-XSS-Protection
-		$skin->addXXSSProtection();
-
-		// Referrer policy
-		$skin->addStrictReferrerPolicy();
-
-		// Feature policy
-		$skin->addFeaturePolicy();
-
 		$options['templateDirectory'] = __DIR__ . '/templates';
 		parent::__construct( $options );
 	}
 
 	/**
 	 * @return array Returns an array of data used by Citizen skin.
+	 * @throws MWException
 	 */
 	public function getTemplateData() : array {
-		$skin = $this;
-		$out = $skin->getOutput();
+		$out = $this->getOutput();
 		$title = $out->getTitle();
+
+		$header = new Header( $this );
+		$drawer = new Drawer( $this );
+		$footer = new Footer( $this );
+		$links = new PageLinks( $this );
+		$tools = new PageTools( $this );
 
 		// Naming conventions for Mustache parameters.
 		//
@@ -141,26 +129,26 @@ class SkinCitizen extends SkinMustache {
 		//   It should be followed by the name of the hook in hyphenated lowercase.
 		//
 		// Conditionally used values must use null to indicate absence (not false or '').
-		$newTalksHtml = $skin->getNewtalks() ?: null;
+		$newTalksHtml = $this->getNewtalks() ?: null;
 
-		$skinData = parent::getTemplateData() + [
-			'msg-sitetitle' => $skin->msg( 'sitetitle' )->text(),
+		return parent::getTemplateData() + [
+			'msg-sitetitle' => $this->msg( 'sitetitle' )->text(),
 			'html-mainpage-attributes' => Xml::expandAttributes(
 				Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) + [
 					'href' => Skin::makeMainPageUrl(),
 				]
 			),
-			'data-logos' => $this->getLogoData(),
+			'data-logos' => $drawer->getLogoData(),
 
 			'data-header' => [
-				'data-drawer' => $this->buildDrawer(),
-				'data-extratools' => $this->getExtraTools(),
-				'data-personal-menu' => $this->buildPersonalMenu(),
-				'data-theme-toggle' => $this->buildThemeToggleProps(),
-				'data-search-box' => $this->buildSearchProps(),
+				'data-drawer' => $drawer->buildDrawer(),
+				'data-extratools' => $header->getExtraTools(),
+				'data-personal-menu' => $header->buildPersonalMenu(),
+				'data-theme-toggle' => $header->buildThemeToggleProps(),
+				'data-search-box' => $header->buildSearchProps(),
 			],
 
-			'data-pagetools' => $this->buildPageTools(),
+			'data-pagetools' => $tools->buildPageTools(),
 
 			'html-newtalk' => $newTalksHtml ? '<div class="usermessage">' . $newTalksHtml . '</div>' : '',
 			'page-langcode' => $title->getPageViewLanguage()->getHtmlCode(),
@@ -169,506 +157,50 @@ class SkinCitizen extends SkinMustache {
 			// From OutputPage::getPageTitle, via ::setPageTitle().
 			'html-title' => $out->getPageTitle(),
 
-			'msg-tagline' => $skin->msg( 'tagline' )->text(),
+			'msg-tagline' => $this->msg( 'tagline' )->text(),
 
-			'data-pagelinks' => $this->buildPageLinks(),
+			'data-pagelinks' => $links->buildPageLinks(),
 
-			'html-categories' => $skin->getCategories(),
+			'html-categories' => $this->getCategories(),
 
-			'data-footer' => $this->getFooterData(),
-		];
-
-		return $skinData;
-	}
-
-	/**
-	 * Get rows that make up the footer
-	 * @return array for use in Mustache template describing the footer elements.
-	 */
-	private function getFooterData() : array {
-		$skin = $this;
-		$footerLinks = $this->getFooterLinks();
-		$lastMod = null;
-		$footerRows = [];
-		$footerIconRows = [];
-
-		// Get last modified message
-		if ( $footerLinks['info']['lastmod'] && isset( $footerLinks['info']['lastmod'] ) ) {
-			$lastMod = $footerLinks['info']['lastmod'];
-		}
-
-		foreach ( $footerLinks as $category => $links ) {
-			$items = [];
-			$rowId = "footer-$category";
-
-			// Unset footer-info
-			if ( $category !== 'info' ) {
-				foreach ( $links as $key => $link ) {
-					// Link may be null. If so don't include it.
-					if ( $link ) {
-						$items[] = [
-							'id' => "$rowId-$key",
-							'html' => $link,
-						];
-					}
-				}
-
-				$footerRows[] = [
-					'id' => $rowId,
-					'className' => null,
-					'array-items' => $items
-				];
-			}
-		}
-
-		// Append footer-info after links
-		if ( isset( $footerLinks['info'] ) ) {
-			$items = [];
-			$rowId = "footer-info";
-
-			foreach ( $footerLinks['info'] as $key => $link ) {
-				// Don't include lastmod and null link
-				if ( $key !== 'lastmod' && $link ) {
-					$items[] = [
-						'id' => "$rowId-$key",
-						'html' => $link,
-					];
-				}
-			}
-
-			$footerRows[] = [
-				'id' => $rowId,
-				'className' => null,
-				'array-items' => $items
-			];
-		}
-
-		// If footer icons are enabled append to the end of the rows
-		$footerIcons = $this->getFooterIcons();
-		if ( count( $footerIcons ) > 0 ) {
-			$items = [];
-			foreach ( $footerIcons as $blockName => $blockIcons ) {
-				$html = '';
-				foreach ( $blockIcons as $icon ) {
-					// Only output icons which have an image.
-					// For historic reasons this mimics the `icononly` option
-					// for BaseTemplate::getFooterIcons.
-					if ( is_string( $icon ) || isset( $icon['src'] ) ) {
-						$html .= $skin->makeFooterIcon( $icon );
-					}
-				}
-				// For historic reasons this mimics the `icononly` option
-				// for BaseTemplate::getFooterIcons. Empty rows should not be output.
-				if ( $html ) {
-					$items[] = [
-						'id' => 'footer-' . htmlspecialchars( $blockName ) . 'ico',
-						'html' => $html,
-					];
-				}
-			}
-
-			$footerIconRows[] = [
-				'id' => 'footer-icons',
-				'className' => 'noprint',
-				'array-items' => $items,
-			];
-		}
-
-		$data = [
-			'html-lastmodified' => $lastMod,
-			'array-footer-rows' => $footerRows,
-			'array-footer-icons' => $footerIconRows,
-			'msg-citizen-footer-desc' => $skin->msg( 'citizen-footer-desc' )->text(),
-			'msg-citizen-footer-tagline' => $skin->msg( 'citizen-footer-tagline' )->text(),
-		];
-
-		return $data;
-	}
-
-	/**
-	 * Get and pick the correct logo based on types and variants
-	 * Based on getLogoData() in MW 1.36
-	 *
-	 * @return array
-	 */
-	private function getLogoData() : array {
-		 $logoData = ResourceLoaderSkinModule::getAvailableLogos( $this->getConfig() );
-		 // check if the logo supports variants
-		 $variantsLogos = $logoData['variants'] ?? null;
-		 if ( $variantsLogos ) {
-			 $preferred = $this->getOutput()->getTitle()
-				 ->getPageViewLanguage()->getCode();
-			 $variantOverrides = $variantsLogos[$preferred] ?? null;
-			 // Overrides the logo
-			 if ( $variantOverrides ) {
-				 foreach ( $variantOverrides as $key => $val ) {
-					 $logoData[$key] = $val;
-				 }
-			 }
-		 }
-		 return $logoData;
-	}
-
-	/**
-	 * Render the navigation drawer
-	 * Based on buildSidebar()
-	 *
-	 * @return array
-	 * @throws MWException
-	 * @throws Exception
-	 */
-	public function buildDrawer() {
-		$skin = $this;
-		$portals = parent::buildSidebar();
-		$props = [];
-		$languages = null;
-
-		// Render portals
-		foreach ( $portals as $name => $content ) {
-			if ( $content === false ) {
-				continue;
-			}
-
-			// Numeric strings gets an integer when set as key, cast back - T73639
-			$name = (string)$name;
-
-			switch ( $name ) {
-				case 'SEARCH':
-				case 'TOOLBOX':
-					break;
-				case 'LANGUAGES':
-					$languages = $skin->getLanguages();
-					$portal = $this->getMenuData( 'lang', $content );
-					// The language portal will be added provided either
-					// languages exist or there is a value in html-after-portal
-					// for example to show the add language wikidata link (T252800)
-					if ( count( $content ) || $portal['html-after-portal'] ) {
-						$languages = $portal;
-					}
-					break;
-				default:
-					// Historically some portals have been defined using HTML rather than arrays.
-					// Let's move away from that to a uniform definition.
-					if ( !is_array( $content ) ) {
-						$html = $content;
-						$content = [];
-						wfDeprecated(
-							"`content` field in portal $name must be array."
-								. "Previously it could be a string but this is no longer supported.",
-							'1.35.0'
-						);
-					} else {
-						$html = false;
-					}
-					$portal = $this->getMenuData( $name, $content );
-					if ( $html ) {
-						$portal['html-items'] .= $html;
-					}
-					$props[] = $portal;
-					break;
-			}
-		}
-
-		$firstPortal = $props[0] ?? null;
-
-		if ( $firstPortal ) {
-			$firstPortal[ 'class' ] .= ' portal-first';
-			// Hide label for first portal
-			$firstPortal[ 'label-class' ] .= 'screen-reader-text';
-
-			if ( isset( $firstPortal['html-items'] ) ) {
-				$this->addToolboxLinksToDrawer( $firstPortal['html-items'] );
-			}
-		}
-
-		return [
-			'msg-citizen-drawer-toggle' => $skin->msg( 'citizen-drawer-toggle' )->text(),
-			'data-portals-first' => $firstPortal,
-			'array-portals-rest' => array_slice( $props, 1 ),
-			'data-portals-languages' => $languages,
+			'data-footer' => $footer->getFooterData(),
 		];
 	}
 
 	/**
-	 * @inheritDoc
-	 *
-	 * Manually disable links to upload and speacial pages
-	 * as they are moved from the toolbox to the drawer
+	 * Change access to public, as it is used in partials
 	 *
 	 * @return array
 	 */
-	protected function buildNavUrls() {
-		$urls = parent::buildNavUrls();
-
-		$urls['upload'] = false;
-		$urls['specialpages'] = false;
-
-		return $urls;
+	final public function buildPersonalUrlsPublic() {
+		return parent::buildPersonalUrls();
 	}
 
 	/**
-	 * Add a link to special pages and the upload form to the first portal in the drawer
-	 *
-	 * @param string &$htmlItems
-	 *
-	 * @return void
-	 */
-	private function addToolboxLinksToDrawer( &$htmlItems ) {
-		// First add a link to special pages
-		$htmlItems .= $this->makeListItem( 'specialpages', [
-			'href' => self::makeSpecialUrl( 'Specialpages' ),
-			'id' => 't-specialpages'
-		] );
-
-		// Then add a link to the upload form
-		$htmlItems .= $this->makeListItem( 'upload', [
-			'href' => self::makeSpecialUrl( 'Upload' ),
-			'id' => 't-upload'
-		] );
-	}
-
-	/**
-	 * Build Personal Tools menu
+	 * Change access to public, as it is used in partials
 	 *
 	 * @return array
 	 */
-	private function buildPersonalMenu(): array {
-		$skin = $this;
-		$personalTools = $this->getPersonalToolsForMakeListItem(
-			$this->buildPersonalUrls()
-		);
-
-		// Move the Echo badges and ULS out of default list
-		if ( isset( $personalTools['notifications-alert'] ) ) {
-			unset( $personalTools['notifications-alert'] );
-		}
-		if ( isset( $personalTools['notifications-notice'] ) ) {
-			unset( $personalTools['notifications-notice'] );
-		}
-		if ( isset( $personalTools['uls'] ) ) {
-			unset( $personalTools['uls'] );
-		}
-
-		if ( $this->getUser()->isLoggedIn() ) {
-			$personalTools = $this->addUserGroupsToMenu( $personalTools );
-		}
-
-		$personalMenu = $this->getMenuData( 'personal', $personalTools );
-		// Hide label for personal tools
-		$personalMenu[ 'label-class' ] .= 'screen-reader-text';
-
-		return [
-			'msg-citizen-personalmenu-toggle' => $skin->msg( 'citizen-personalmenu-toggle' )->text(),
-			'data-personal-menu-list' => $personalMenu,
-		];
+	final public function getFooterLinksPublic() {
+		return parent::getFooterLinks();
 	}
 
 	/**
-	 * This adds all explicit user groups as links to the personal menu
-	 * Links are added right below the user page link
-	 * Wrapped in an <li> element with id 'pt-usergroups'
-	 *
-	 * @param array $originalUrls The original personal tools urls
+	 * Change access to public, as it is used in partials
 	 *
 	 * @return array
 	 */
-	private function addUserGroupsToMenu( $originalUrls ) {
-		$personalTools = [];
-
-		// This does not return implicit groups
-		$groups = MediaWikiServices::getInstance()->getUserGroupManager()->getUserGroups( $this->getUser() );
-
-		// If the user has only implicit groups return early
-		if ( empty( $groups ) ) {
-			return $originalUrls;
-		}
-
-		$userPage = array_shift( $originalUrls );
-		$groupLinks = [];
-		$msgName = 'group-%s';
-
-		foreach ( $groups as $group ) {
-			$groupPage = Title::newFromText(
-				$this->msg( sprintf( $msgName, $group ) )->text(),
-				NS_PROJECT
-			);
-
-			$groupLinks[$group] = [
-				'msg' => sprintf( $msgName, $group ),
-				'href' => $groupPage->getLinkURL(), // Nullpointer should not happen
-				'tooltiponly' => true,
-				'id' => sprintf( $msgName, $group ),
-				// 'exists' => $groupPage->exists() - This will add an additional DB call
-			];
-		}
-
-		$userGroups = [
-			'id' => 'pt-usergroups',
-			'links' => $groupLinks
-		];
-
-		// The following defines the order of links added
-		$personalTools['userpage'] = $userPage;
-		$personalTools['usergroups'] = $userGroups;
-
-		foreach ( $originalUrls as $key => $url ) {
-			$personalTools[$key] = $url;
-		}
-
-		return $personalTools;
+	final public function getFooterIconsPublic() {
+		return parent::getFooterIcons();
 	}
 
 	/**
-	 * Echo notification badges and ULS button
+	 * Change access to public, as it is used in partials
 	 *
 	 * @return array
 	 */
-	private function getExtratools(): array {
-		$personalTools = $this->getPersonalToolsForMakeListItem(
-			$this->buildPersonalUrls()
-		);
-
-		// Create the Echo badges and ULS
-		$extraTools = [];
-		if ( isset( $personalTools['notifications-alert'] ) ) {
-			$extraTools['notifications-alert'] = $personalTools['notifications-alert'];
-		}
-		if ( isset( $personalTools['notifications-notice'] ) ) {
-			$extraTools['notifications-notice'] = $personalTools['notifications-notice'];
-		}
-		if ( isset( $personalTools['uls'] ) ) {
-			$extraTools['uls'] = $personalTools['uls'];
-		}
-
-		$html = $this->getMenuData( 'personal-extra', $extraTools );
-
-		// Hide label for extra tools
-		$html[ 'label-class' ] .= 'screen-reader-text';
-
-		return $html;
-	}
-
-	/**
-	 * Render the search box
-	 *
-	 * @return array
-	 * @throws MWException
-	 */
-	private function buildSearchProps() : array {
-		$skin = $this->getSkin();
-
-		$toggleMsg = $skin->msg( 'citizen-search-toggle' )->text();
-		$accessKey = Linker::accesskey( 'search' );
-
-		return [
-			'msg-citizen-search-toggle' => $toggleMsg,
-			'msg-citizen-search-toggle-shortcut' => $toggleMsg . ' [alt-shift-' . $accessKey . ']',
-			'form-action' => $this->getConfigValue( 'Script' ),
-			'html-input' => $this->makeSearchInput( [ 'id' => 'searchInput' ] ),
-			'msg-search' => $skin->msg( 'search' ),
-			'page-title' => SpecialPage::getTitleFor( 'Search' )->getPrefixedDBkey(),
-			'html-random-href' => Skin::makeSpecialUrl( 'Randompage' ),
-			'msg-random' => $skin->msg( 'Randompage' )->text(),
-		];
-	}
-
-	/**
-	 * Render the theme toggle
-	 *
-	 * @return array
-	 * @throws MWException
-	 */
-	private function buildThemeToggleProps() : array {
-		$skin = $this->getSkin();
-
-		$toggleMsg = $skin->msg( 'citizen-theme-toggle' )->text();
-
-		return [
-			'msg-citizen-theme-toggle-shortcut' => $toggleMsg,
-		];
-	}
-
-	/**
-	 * Render page-related tools
-	 * Possible visibility conditions:
-	 * * true: always visible (bool)
-	 * * false: never visible (bool)
-	 * * 'login': only visible if logged in (string)
-	 * * 'permission-*': only visible if user has permission
-	 *   e.g. permission-edit = only visible if user can edit pages
-	 *
-	 * @return array html
-	 */
-	protected function buildPageTools(): array {
-		$skin = $this;
-		$condition = $this->getConfigValue( 'CitizenShowPageTools' );
-		$contentNavigation = parent::buildContentNavigationUrls();
-		$portals = parent::buildSidebar();
-		$props = [];
-
-		// Login-based condition, return true if condition is met
-		if ( $condition === 'login' ) {
-			$condition = $skin->getUser()->isLoggedIn();
-		}
-
-		// Permission-based condition, return true if condition is met
-		if ( is_string( $condition ) && strpos( $condition, 'permission' ) === 0 ) {
-			$permission = substr( $condition, 11 );
-			try {
-				$condition = MediaWikiServices::getInstance()->getPermissionManager()->userCan(
-					$permission, $skin->getUser(), $skin->getTitle() );
-			} catch ( Exception $e ) {
-				$condition = false;
-			}
-		}
-
-		if ( $condition === true ) {
-
-			$viewshtml = $this->getMenuData( 'views', $contentNavigation[ 'views' ] ?? [] );
-			$actionshtml = $this->getMenuData( 'actions', $contentNavigation[ 'actions' ] ?? [] );
-			$toolboxhtml = $this->getMenuData( 'tb',  $portals['TOOLBOX'] ?? [] );
-
-			if ( $viewshtml ) {
-				$viewshtml[ 'label-class' ] .= 'screen-reader-text';
-			}
-
-			if ( $actionshtml ) {
-				$actionshtml[ 'label-class' ] .= 'screen-reader-text';
-			}
-
-			$props = [
-				'data-page-views' => $viewshtml,
-				'data-page-actions' => $actionshtml,
-				'data-page-toolbox' => $toolboxhtml,
-			];
-		}
-
-		return $props;
-	}
-
-	/**
-	 * Render page-related links at the bottom
-	 *
-	 * @return array html
-	 */
-	private function buildPageLinks() : array {
-		$contentNavigation = $this->buildContentNavigationUrls();
-
-		$namespaceshtml = $this->getMenuData( 'namespaces', $contentNavigation[ 'namespaces' ] ?? [] );
-		$variantshtml = $this->getMenuData( 'variants', $contentNavigation[ 'variants' ] ?? [] );
-
-		if ( $namespaceshtml ) {
-			$namespaceshtml[ 'label-class' ] .= 'screen-reader-text';
-		}
-
-		if ( $variantshtml ) {
-			$variantshtml[ 'label-class' ] .= 'screen-reader-text';
-		}
-
-		return [
-			'data-namespaces' => $namespaceshtml,
-			'data-variants' => $variantshtml,
-		];
+	final public function buildContentNavigationUrlsPublic() {
+		return parent::buildContentNavigationUrls();
 	}
 
 	/**
@@ -679,7 +211,7 @@ class SkinCitizen extends SkinMustache {
 	 * @param array $options (optional) to be passed to makeListItem
 	 * @return array
 	 */
-	private function getMenuData(
+	public function getMenuData(
 		string $label,
 		array $urls = [],
 		array $options = []
@@ -713,217 +245,19 @@ class SkinCitizen extends SkinMustache {
 	}
 
 	/**
-	 * getConfig() wrapper to catch exceptions.
-	 * Returns null on exception
+	 * @inheritDoc
 	 *
-	 * @param string $key
-	 * @return mixed|null
-	 * @see SkinTemplate::getConfig()
-	 */
-	private function getConfigValue( $key ) {
-		try {
-			$value = $this->getConfig()->get( $key );
-		} catch ( ConfigException $e ) {
-			$value = null;
-		}
-
-		return $value;
-	}
-
-	/**
-	 * Adds the manifest if enabled in 'CitizenEnableManifest'.
-	 * Manifest link will be empty if wfExpandUrl throws an exception.
-	 */
-	private function addManifest() {
-		$out = $this->getOutput();
-
-		if ( $this->getConfigValue( 'CitizenEnableManifest' ) === true ) {
-			try {
-				$href =
-					wfExpandUrl( wfAppendQuery( wfScript( 'api' ),
-						[ 'action' => 'webapp-manifest' ] ), PROTO_RELATIVE );
-			} catch ( Exception $e ) {
-				$href = '';
-			}
-
-			$out->addLink( [
-				'rel' => 'manifest',
-				'href' => $href,
-			] );
-		}
-	}
-
-	/**
-	 * Adds a preconnect header if enabled in 'CitizenEnablePreconnect'
-	 */
-	private function addPreConnect() {
-		$out = $this->getOutput();
-
-		if ( $this->getConfigValue( 'CitizenEnablePreconnect' ) === true ) {
-			$out->addLink( [
-				'rel' => 'preconnect',
-				'href' => $this->getConfigValue( 'CitizenPreconnectURL' ),
-			] );
-		}
-	}
-
-	/**
-	 * Adds the csp directive if enabled in 'CitizenEnableCSP'.
-	 * Directive holds the content of 'CitizenCSPDirective'.
-	 */
-	private function addCSP() {
-		$out = $this->getOutput();
-
-		if ( $this->getConfigValue( 'CitizenEnableCSP' ) === true ) {
-
-			$cspDirective = $this->getConfigValue( 'CitizenCSPDirective' ) ?? '';
-			$cspMode = 'Content-Security-Policy';
-
-			// Check if report mode is enabled
-			if ( $this->getConfigValue( 'CitizenEnableCSPReportMode' ) === true ) {
-				$cspMode = 'Content-Security-Policy-Report-Only';
-			}
-
-			$out->getRequest()->response()->header( sprintf( '%s: %s', $cspMode,
-				$cspDirective ) );
-		}
-	}
-
-	/**
-	 * Adds the HSTS Header. If no max age or an invalid max age is set a default of 300 will be
-	 * applied.
-	 * Preload and Include Subdomains can be enabled by setting 'CitizenHSTSIncludeSubdomains'
-	 * and/or 'CitizenHSTSPreload' to true.
-	 */
-	private function addHSTS() {
-		$out = $this->getOutput();
-
-		if ( $this->getConfigValue( 'CitizenEnableHSTS' ) === true ) {
-
-			$maxAge = $this->getConfigValue( 'CitizenHSTSMaxAge' );
-			$includeSubdomains = $this->getConfigValue( 'CitizenHSTSIncludeSubdomains' ) ?? false;
-			$preload = $this->getConfigValue( 'CitizenHSTSPreload' ) ?? false;
-
-			// HSTS max age
-			if ( is_int( $maxAge ) ) {
-				$maxAge = max( $maxAge, 0 );
-			} else {
-				// Default to 5 mins if input is invalid
-				$maxAge = 300;
-			}
-
-			$hstsHeader = 'Strict-Transport-Security: max-age=' . $maxAge;
-
-			if ( $includeSubdomains ) {
-				$hstsHeader .= '; includeSubDomains';
-			}
-
-			if ( $preload ) {
-				$hstsHeader .= '; preload';
-			}
-
-			$out->getRequest()->response()->header( $hstsHeader );
-		}
-	}
-
-	/**
-	 * Adds the X-Frame-Options header if set in 'CitizenEnableDenyXFrameOptions'
-	 */
-	private function addXFrameOptions() {
-		$out = $this->getOutput();
-
-		if ( $this->getConfigValue( 'CitizenEnableDenyXFrameOptions' ) === true ) {
-			$out->getRequest()->response()->header( 'X-Frame-Options: deny' );
-		}
-	}
-
-	/**
-	 * Adds the X-XSS-Protection header if set in 'CitizenEnableXXSSProtection'
-	 */
-	private function addXXSSProtection() {
-		$out = $this->getOutput();
-
-		if ( $this->getConfigValue( 'CitizenEnableXXSSProtection' ) === true ) {
-			$out->getRequest()->response()->header( 'X-XSS-Protection: 1; mode=block' );
-		}
-	}
-
-	/**
-	 * Adds the referrer header if enabled in 'CitizenEnableStrictReferrerPolicy'
-	 */
-	private function addStrictReferrerPolicy() {
-		$out = $this->getOutput();
-
-		if ( $this->getConfigValue( 'CitizenEnableStrictReferrerPolicy' ) === true ) {
-			// iOS Safari, IE, Edge compatiblity
-			$out->getRequest()->response()->header( 'Referrer-Policy: strict-origin' );
-			$out->getRequest()->response()->header( 'Referrer-Policy: strict-origin-when-cross-origin' );
-		}
-	}
-
-	/**
-	 * Adds the Feature policy header to the response if enabled in 'CitizenFeaturePolicyDirective'
-	 */
-	private function addFeaturePolicy() {
-		$out = $this->getOutput();
-
-		if ( $this->getConfigValue( 'CitizenEnableFeaturePolicy' ) === true ) {
-
-			$featurePolicy = $this->getConfigValue( 'CitizenFeaturePolicyDirective' ) ?? '';
-
-			$out->getRequest()->response()->header( sprintf( 'Feature-Policy: %s',
-				$featurePolicy ) );
-		}
-	}
-
-	/**
-	 * Sets the corresponding theme class on the <html> element
-	 * If the theme is set to auto, the theme switcher script will be added
+	 * Manually disable links to upload and special pages
+	 * as they are moved from the toolbox to the drawer
 	 *
-	 * @param OutputPage $out
-	 * @param array &$options
+	 * @return array
 	 */
-	private function setSkinTheme( OutputPage $out, array &$options ) {
-		// Set theme to site theme
-		$theme = $this->getConfigValue( 'CitizenThemeDefault' ) ?? 'auto';
+	protected function buildNavUrls() {
+		$urls = parent::buildNavUrls();
 
-		// Set theme to user theme if registered
-		if ( $this->getUser()->isRegistered() ) {
-			$theme = MediaWikiServices::getInstance()->getUserOptionsLookup()->getOption(
-				$this->getUser(),
-				'CitizenThemeUser',
-				'auto'
-			);
-		}
+		$urls['upload'] = false;
+		$urls['specialpages'] = false;
 
-		$cookieTheme = $this->getRequest()->getCookie( 'skin-citizen-theme', null, 'auto' );
-		if ( $cookieTheme !== 'auto' ) {
-			$theme = $cookieTheme;
-		}
-
-		// Add HTML class based on theme set
-		$out->addHtmlClasses( 'skin-citizen-' . $theme );
-		if ( $this->getRequest()->getCookie( 'skin-citizen-theme-override' ) === null ) {
-			// Only set the theme cookie if the theme wasn't overridden by the user through the button
-			$this->getRequest()->response()->setCookie( 'skin-citizen-theme', $theme, 0, [
-				'httpOnly' => false,
-			] );
-		}
-
-		// Script content at 'skins.citizen.scripts.theme/inline.js
-		$this->getOutput()->addHeadItem( 'theme-switcher', '<script>window.switchTheme=(()=>{try{const t=document.cookie.match(/skin-citizen-theme=(dark|light|auto)/),e=null!==t?t.pop():null;null!==e&&(document.documentElement.classList.remove(...["auto","dark","light"].map(t=>"skin-citizen-"+t)),document.documentElement.classList.add("skin-citizen-"+e))}catch(t){}}),window.switchTheme();</script>' );
-
-		// Add styles and scripts module
-		if ( $theme === 'auto' ) {
-			$options['scripts'] = array_merge(
-				$options['scripts'],
-				[ 'skins.citizen.scripts.theme' ]
-			);
-		}
-
-		$options['styles'] = array_merge(
-			$options['styles'],
-			[ 'skins.citizen.styles.theme' ]
-		);
+		return $urls;
 	}
 }
