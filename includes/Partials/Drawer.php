@@ -26,8 +26,11 @@ declare( strict_types=1 );
 namespace Citizen\Partials;
 
 use Exception;
+use ExtensionRegistry;
+use MWException;
 use ResourceLoaderSkinModule;
 use Skin;
+use SpecialPage;
 
 /**
  * Drawer partial of Skin Citizen
@@ -149,6 +152,7 @@ final class Drawer extends Partial {
 	 * @param string &$htmlItems
 	 *
 	 * @return void
+	 * @throws MWException
 	 */
 	private function addToolboxLinksToDrawer( &$htmlItems ) {
 		// First add a link to special pages
@@ -157,9 +161,15 @@ final class Drawer extends Partial {
 			'id' => 't-specialpages'
 		] );
 
+		$uploadHref = Skin::makeSpecialUrl( 'Upload' );
+
+		if ( ExtensionRegistry::getInstance()->isLoaded( 'Upload Wizard' ) ) {
+			$uploadHref = SpecialPage::getTitleFor( 'UploadWizard' )->getLocalURL();
+		}
+
 		// Then add a link to the upload form
 		$htmlItems .= $this->skin->makeListItem( 'upload', [
-			'href' => Skin::makeSpecialUrl( 'Upload' ),
+			'href' => $uploadHref,
 			'id' => 't-upload'
 		] );
 	}
