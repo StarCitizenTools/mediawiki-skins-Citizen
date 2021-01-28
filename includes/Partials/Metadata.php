@@ -38,6 +38,10 @@ class Metadata {
 	 */
 	private $out;
 
+	/**
+	 * Metadata constructor.
+	 * @param OutputPage $out
+	 */
 	public function __construct( OutputPage $out ) {
 		$this->out = $out;
 	}
@@ -85,7 +89,7 @@ class Metadata {
 	 */
 	private function addManifest() {
 		if ( $this->getConfigValue( 'CitizenEnableManifest' ) !== true ) {
-return;
+			return;
 		}
 
 		try {
@@ -107,7 +111,7 @@ return;
 	 */
 	private function addPreConnect() {
 		if ( $this->getConfigValue( 'CitizenEnablePreconnect' ) !== true ) {
-return;
+			return;
 		}
 
 		$this->out->addLink( [

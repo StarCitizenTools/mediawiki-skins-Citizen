@@ -26,10 +26,14 @@ declare( strict_types=1 );
 namespace Citizen\Partials;
 
 use Citizen\GetConfigTrait;
+use Linker;
 use MediaWiki\MediaWikiServices;
 use MWException;
 use OutputPage;
 use Skin;
+use SkinCitizen;
+use SpecialPage;
+use Title;
 
 /**
  * Header partial of Skin Citizen
@@ -55,7 +59,11 @@ class Header {
 	 */
 	private $out;
 
-	public function __construct( \SkinCitizen $skin ) {
+	/**
+	 * Header constructor.
+	 * @param SkinCitizen $skin
+	 */
+	public function __construct( SkinCitizen $skin ) {
 		$this->skin = $skin;
 		$this->out = $skin->getOutput();
 	}
@@ -133,7 +141,7 @@ class Header {
 	 */
 	public function buildSearchProps() : array {
 		$toggleMsg = $this->skin->msg( 'citizen-search-toggle' )->text();
-		$accessKey = \Linker::accesskey( 'search' );
+		$accessKey = Linker::accesskey( 'search' );
 
 		return [
 			'msg-citizen-search-toggle' => $toggleMsg,
@@ -141,7 +149,7 @@ class Header {
 			'form-action' => $this->getConfigValue( 'Script' ),
 			'html-input' => $this->skin->makeSearchInput( [ 'id' => 'searchInput' ] ),
 			'msg-search' => $this->skin->msg( 'search' ),
-			'page-title' => \SpecialPage::getTitleFor( 'Search' )->getPrefixedDBkey(),
+			'page-title' => SpecialPage::getTitleFor( 'Search' )->getPrefixedDBkey(),
 			'html-random-href' => Skin::makeSpecialUrl( 'Randompage' ),
 			'msg-random' => $this->skin->msg( 'Randompage' )->text(),
 		];
@@ -185,14 +193,15 @@ class Header {
 		$msgName = 'group-%s';
 
 		foreach ( $groups as $group ) {
-			$groupPage = \Title::newFromText(
+			$groupPage = Title::newFromText(
 				$this->skin->msg( sprintf( $msgName, $group ) )->text(),
 				NS_PROJECT
 			);
 
 			$groupLinks[$group] = [
 				'msg' => sprintf( $msgName, $group ),
-				'href' => $groupPage->getLinkURL(), // Nullpointer should not happen
+				// Nullpointer should not happen
+				'href' => $groupPage->getLinkURL(),
 				'tooltiponly' => true,
 				'id' => sprintf( $msgName, $group ),
 				// 'exists' => $groupPage->exists() - This will add an additional DB call

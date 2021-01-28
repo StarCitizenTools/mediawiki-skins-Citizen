@@ -105,8 +105,8 @@ class SkinCitizen extends SkinMustache {
 		$out = $this->getOutput();
 		$title = $out->getTitle();
 
-		$skinDrawer = new Drawer( $this );
-		$skinHeader = new Header( $this );
+		$drawer = new Drawer( $this );
+		$header = new Header( $this );
 
 		// Naming conventions for Mustache parameters.
 		//
@@ -133,14 +133,14 @@ class SkinCitizen extends SkinMustache {
 					'href' => Skin::makeMainPageUrl(),
 				]
 			),
-			'data-logos' => $skinDrawer->getLogoData(),
+			'data-logos' => $drawer->getLogoData(),
 
 			'data-header' => [
-				'data-drawer' => $skinDrawer->buildDrawer(),
-				'data-extratools' => $skinHeader->getExtraTools(),
-				'data-personal-menu' => $skinHeader->buildPersonalMenu(),
-				'data-theme-toggle' => $skinHeader->buildThemeToggleProps(),
-				'data-search-box' => $skinHeader->buildSearchProps(),
+				'data-drawer' => $drawer->buildDrawer(),
+				'data-extratools' => $header->getExtraTools(),
+				'data-personal-menu' => $header->buildPersonalMenu(),
+				'data-theme-toggle' => $header->buildThemeToggleProps(),
+				'data-search-box' => $header->buildSearchProps(),
 			],
 
 			'data-pagetools' => $this->buildPageTools(),
@@ -380,15 +380,13 @@ class SkinCitizen extends SkinMustache {
 			];
 		}
 
-		$data = [
+		return [
 			'html-lastmodified' => $lastMod,
 			'array-footer-rows' => $footerRows,
 			'array-footer-icons' => $footerIconRows,
 			'msg-citizen-footer-desc' => $skin->msg( 'citizen-footer-desc' )->text(),
 			'msg-citizen-footer-tagline' => $skin->msg( 'citizen-footer-tagline' )->text(),
 		];
-
-		return $data;
 	}
 
 	/**

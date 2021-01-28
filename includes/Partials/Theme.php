@@ -41,6 +41,10 @@ class Theme {
 	 */
 	private $out;
 
+	/**
+	 * Theme constructor.
+	 * @param OutputPage $out
+	 */
 	public function __construct( OutputPage $out ) {
 		$this->out = $out;
 	}
@@ -79,6 +83,7 @@ class Theme {
 		}
 
 		// Script content at 'skins.citizen.scripts.theme/inline.js
+        // @phpcs:ignore Generic.Files.LineLength.TooLong
 		$this->out->getOutput()->addHeadItem( 'theme-switcher', '<script>window.switchTheme=(()=>{try{const t=document.cookie.match(/skin-citizen-theme=(dark|light|auto)/),e=null!==t?t.pop():null;null!==e&&(document.documentElement.classList.remove(...["auto","dark","light"].map(t=>"skin-citizen-"+t)),document.documentElement.classList.add("skin-citizen-"+e))}catch(t){}}),window.switchTheme();</script>' );
 
 		// Add styles and scripts module

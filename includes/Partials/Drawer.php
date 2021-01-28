@@ -45,6 +45,10 @@ class Drawer {
 	 */
 	private $skin;
 
+	/**
+	 * Drawer constructor.
+	 * @param SkinCitizen $skin
+	 */
 	public function __construct( SkinCitizen $skin ) {
 		$this->skin = $skin;
 	}
