@@ -50,7 +50,6 @@
 	},
 	"AutoloadClasses": {
 		"SkinCitizen": "includes/SkinCitizen.php",
-		"Citizen\\CitizenHooks": "includes/CitizenHooks.php",
 		"Citizen\\ApiWebappManifest": "includes/api/ApiWebappManifest.php"
 	},
 	"AutoloadNamespaces": {
@@ -64,12 +63,26 @@
 			"class": "Citizen\\ApiWebappManifest"
 		}
 	},
+	"HookHandlers": {
+		"PreferenceHooks": {
+			"class": "Citizen\\Hooks\\PreferenceHooks"
+		},
+		"ResourceLoaderHooks": {
+			"class": "Citizen\\Hooks\\ResourceLoaderHooks"
+		},
+		"SkinHooks": {
+			"class": "Citizen\\Hooks\\SkinHooks"
+		},
+		"ThumbnailHooks": {
+			"class": "Citizen\\Hooks\\ThumbnailHooks"
+		}
+	},
 	"Hooks": {
-		"ResourceLoaderGetConfigVars": "Citizen\\CitizenHooks::onResourceLoaderGetConfigVars",
-		"SkinPageReadyConfig": "Citizen\\CitizenHooks::onSkinPageReadyConfig",
-		"ThumbnailBeforeProduceHTML": "Citizen\\CitizenHooks::onThumbnailBeforeProduceHTML",
-		"GetPreferences": "Citizen\\CitizenHooks::onGetPreferences",
-		"PreferencesFormPreSave": "Citizen\\CitizenHooks::onPreferencesFormPreSave"
+		"ResourceLoaderGetConfigVars": "ResourceLoaderHooks",
+		"SkinPageReadyConfig": "SkinHooks",
+		"ThumbnailBeforeProduceHTML": "ThumbnailHooks",
+		"GetPreferences": "PreferenceHooks",
+		"PreferencesFormPreSave": "PreferenceHooks"
 	},
 	"ResourceModules": {
 		"skins.citizen.styles": {
