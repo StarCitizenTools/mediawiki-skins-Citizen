@@ -21,7 +21,7 @@
  * @ingroup Skins
  */
 
-declare(strict_types=1);
+declare( strict_types=1 );
 
 namespace Citizen\Partials;
 
@@ -38,138 +38,137 @@ use SkinCitizen;
  *   + Special Pages Link
  *   + Upload Link
  */
-class Drawer
-{
-    /**
-     * @var Skin $skin
-     */
-    private $skin;
+class Drawer {
 
-    public function __construct(SkinCitizen $skin)
-    {
-        $this->skin = $skin;
-    }
+	/**
+	 * @var Skin
+	 */
+	private $skin;
 
-    /**
-     * Get and pick the correct logo based on types and variants
-     * Based on getLogoData() in MW 1.36
-     *
-     * @return array
-     */
-    public function getLogoData() : array {
-        $logoData = ResourceLoaderSkinModule::getAvailableLogos( $this->skin->getConfig() );
-        // check if the logo supports variants
-        $variantsLogos = $logoData['variants'] ?? null;
-        if ( $variantsLogos ) {
-            $preferred = $this->skin->getOutput()->getTitle()
-                ->getPageViewLanguage()->getCode();
-            $variantOverrides = $variantsLogos[$preferred] ?? null;
-            // Overrides the logo
-            if ( $variantOverrides ) {
-                foreach ( $variantOverrides as $key => $val ) {
-                    $logoData[$key] = $val;
-                }
-            }
-        }
-        return $logoData;
-    }
+	public function __construct( SkinCitizen $skin ) {
+		$this->skin = $skin;
+	}
 
-    /**
-     * Render the navigation drawer
-     * Based on buildSidebar()
-     *
-     * @return array
-     * @throws Exception
-     */
-    public function buildDrawer() {
-        $portals = $this->skin->buildSidebar();
-        $props = [];
-        $languages = null;
+	/**
+	 * Get and pick the correct logo based on types and variants
+	 * Based on getLogoData() in MW 1.36
+	 *
+	 * @return array
+	 */
+	public function getLogoData() : array {
+		$logoData = ResourceLoaderSkinModule::getAvailableLogos( $this->skin->getConfig() );
+		// check if the logo supports variants
+		$variantsLogos = $logoData['variants'] ?? null;
+		if ( $variantsLogos ) {
+			$preferred = $this->skin->getOutput()->getTitle()
+				->getPageViewLanguage()->getCode();
+			$variantOverrides = $variantsLogos[$preferred] ?? null;
+			// Overrides the logo
+			if ( $variantOverrides ) {
+				foreach ( $variantOverrides as $key => $val ) {
+					$logoData[$key] = $val;
+				}
+			}
+		}
+		return $logoData;
+	}
 
-        // Render portals
-        foreach ( $portals as $name => $content ) {
-            if ( $content === false ) {
-                continue;
-            }
+	/**
+	 * Render the navigation drawer
+	 * Based on buildSidebar()
+	 *
+	 * @return array
+	 * @throws Exception
+	 */
+	public function buildDrawer() {
+		$portals = $this->skin->buildSidebar();
+		$props = [];
+		$languages = null;
 
-            // Numeric strings gets an integer when set as key, cast back - T73639
-            $name = (string)$name;
+		// Render portals
+		foreach ( $portals as $name => $content ) {
+			if ( $content === false ) {
+				continue;
+			}
 
-            switch ( $name ) {
-                case 'SEARCH':
-                case 'TOOLBOX':
-                    break;
-                case 'LANGUAGES':
-                    $languages = $this->skin->getLanguages();
-                    $portal = $this->skin->getMenuData( 'lang', $content );
-                    // The language portal will be added provided either
-                    // languages exist or there is a value in html-after-portal
-                    // for example to show the add language wikidata link (T252800)
-                    if ( count( $content ) || $portal['html-after-portal'] ) {
-                        $languages = $portal;
-                    }
-                    break;
-                default:
-                    // Historically some portals have been defined using HTML rather than arrays.
-                    // Let's move away from that to a uniform definition.
-                    if ( !is_array( $content ) ) {
-                        $html = $content;
-                        $content = [];
-                        wfDeprecated(
-                            "`content` field in portal $name must be array."
-                            . "Previously it could be a string but this is no longer supported.",
-                            '1.35.0'
-                        );
-                    } else {
-                        $html = false;
-                    }
-                    $portal = $this->skin->getMenuData( $name, $content );
-                    if ( $html ) {
-                        $portal['html-items'] .= $html;
-                    }
-                    $props[] = $portal;
-                    break;
-            }
-        }
+			// Numeric strings gets an integer when set as key, cast back - T73639
+			$name = (string)$name;
 
-        $firstPortal = $props[0] ?? null;
+			switch ( $name ) {
+				case 'SEARCH':
+				case 'TOOLBOX':
+					break;
+				case 'LANGUAGES':
+					$languages = $this->skin->getLanguages();
+					$portal = $this->skin->getMenuData( 'lang', $content );
+					// The language portal will be added provided either
+					// languages exist or there is a value in html-after-portal
+					// for example to show the add language wikidata link (T252800)
+					if ( count( $content ) || $portal['html-after-portal'] ) {
+						$languages = $portal;
+					}
+					break;
+				default:
+					// Historically some portals have been defined using HTML rather than arrays.
+					// Let's move away from that to a uniform definition.
+					if ( !is_array( $content ) ) {
+						$html = $content;
+						$content = [];
+						wfDeprecated(
+							"`content` field in portal $name must be array."
+							. "Previously it could be a string but this is no longer supported.",
+							'1.35.0'
+						);
+					} else {
+						$html = false;
+					}
+					$portal = $this->skin->getMenuData( $name, $content );
+					if ( $html ) {
+						$portal['html-items'] .= $html;
+					}
+					$props[] = $portal;
+					break;
+			}
+		}
 
-        if ( $firstPortal ) {
-            $firstPortal[ 'class' ] .= ' portal-first';
-            // Hide label for first portal
-            $firstPortal[ 'label-class' ] .= 'screen-reader-text';
+		$firstPortal = $props[0] ?? null;
 
-            if ( isset( $firstPortal['html-items'] ) ) {
-                $this->addToolboxLinksToDrawer( $firstPortal['html-items'] );
-            }
-        }
+		if ( $firstPortal ) {
+			$firstPortal[ 'class' ] .= ' portal-first';
+			// Hide label for first portal
+			$firstPortal[ 'label-class' ] .= 'screen-reader-text';
 
-        return [
-            'msg-citizen-drawer-toggle' => $this->skin->msg( 'citizen-drawer-toggle' )->text(),
-            'data-portals-first' => $firstPortal,
-            'array-portals-rest' => array_slice( $props, 1 ),
-            'data-portals-languages' => $languages,
-        ];
-    }
+			if ( isset( $firstPortal['html-items'] ) ) {
+				$this->addToolboxLinksToDrawer( $firstPortal['html-items'] );
+			}
+		}
 
-    /**
-     * Add a link to special pages and the upload form to the first portal in the drawer
-     *
-     * @param string &$htmlItems
-     *
-     * @return void
-     */
-    private function addToolboxLinksToDrawer( &$htmlItems ) {
-        // First add a link to special pages
-        $htmlItems .= $this->skin->makeListItem( 'specialpages', [
-            'href' => Skin::makeSpecialUrl( 'specialpages' ),
-            'id' => 't-specialpages'
-        ] );
+		return [
+			'msg-citizen-drawer-toggle' => $this->skin->msg( 'citizen-drawer-toggle' )->text(),
+			'data-portals-first' => $firstPortal,
+			'array-portals-rest' => array_slice( $props, 1 ),
+			'data-portals-languages' => $languages,
+		];
+	}
 
-        // Then add a link to the upload form
-        $htmlItems .= $this->skin->makeListItem( 'upload', [
-            'href' => Skin::makeSpecialUrl( 'upload' ),
-            'id' => 't-upload'
-        ] );
-    }
+	/**
+	 * Add a link to special pages and the upload form to the first portal in the drawer
+	 *
+	 * @param string &$htmlItems
+	 *
+	 * @return void
+	 */
+	private function addToolboxLinksToDrawer( &$htmlItems ) {
+		// First add a link to special pages
+		$htmlItems .= $this->skin->makeListItem( 'specialpages', [
+			'href' => Skin::makeSpecialUrl( 'specialpages' ),
+			'id' => 't-specialpages'
+		] );
+
+		// Then add a link to the upload form
+		$htmlItems .= $this->skin->makeListItem( 'upload', [
+			'href' => Skin::makeSpecialUrl( 'upload' ),
+			'id' => 't-upload'
+		] );
+	}
 }

@@ -21,7 +21,7 @@
  * @ingroup Skins
  */
 
-declare(strict_types=1);
+declare( strict_types=1 );
 
 namespace Citizen\Partials;
 
@@ -32,67 +32,66 @@ use OutputPage;
 /**
  * Theme switcher partial of Skin Citizen
  */
-class Theme
-{
-    use GetConfigTrait;
+class Theme {
 
-    /**
-     * @var OutputPage
-     */
-    private $out;
-    
-    public function __construct(OutputPage $out)
-    {
-        $this->out = $out;
-    }
+	use GetConfigTrait;
 
-    /**
-     * Sets the corresponding theme class on the <html> element
-     * If the theme is set to auto, the theme switcher script will be added
-     *
-     * @param array &$options
-     */
-    public function setSkinTheme( array &$options ) {
-        // Set theme to site theme
-        $theme = $this->getConfigValue( 'CitizenThemeDefault' ) ?? 'auto';
+	/**
+	 * @var OutputPage
+	 */
+	private $out;
 
-        // Set theme to user theme if registered
-        if ( $this->out->getUser()->isRegistered() ) {
-            $theme = MediaWikiServices::getInstance()->getUserOptionsLookup()->getOption(
-                $this->out->getUser(),
-                'CitizenThemeUser',
-                'auto'
-            );
-        }
+	public function __construct( OutputPage $out ) {
+		$this->out = $out;
+	}
 
-        $cookieTheme = $this->out->getRequest()->getCookie( 'skin-citizen-theme', null, 'auto' );
-        if ( $cookieTheme !== 'auto' ) {
-            $theme = $cookieTheme;
-        }
+	/**
+	 * Sets the corresponding theme class on the <html> element
+	 * If the theme is set to auto, the theme switcher script will be added
+	 *
+	 * @param array &$options
+	 */
+	public function setSkinTheme( array &$options ) {
+		// Set theme to site theme
+		$theme = $this->getConfigValue( 'CitizenThemeDefault' ) ?? 'auto';
 
-        // Add HTML class based on theme set
-        $this->out->addHtmlClasses( 'skin-citizen-' . $theme );
-        if ( $this->out->getRequest()->getCookie( 'skin-citizen-theme-override' ) === null ) {
-            // Only set the theme cookie if the theme wasn't overridden by the user through the button
-            $this->out->getRequest()->response()->setCookie( 'skin-citizen-theme', $theme, 0, [
-                'httpOnly' => false,
-            ] );
-        }
+		// Set theme to user theme if registered
+		if ( $this->out->getUser()->isRegistered() ) {
+			$theme = MediaWikiServices::getInstance()->getUserOptionsLookup()->getOption(
+				$this->out->getUser(),
+				'CitizenThemeUser',
+				'auto'
+			);
+		}
 
-        // Script content at 'skins.citizen.scripts.theme/inline.js
-        $this->out->getOutput()->addHeadItem( 'theme-switcher', '<script>window.switchTheme=(()=>{try{const t=document.cookie.match(/skin-citizen-theme=(dark|light|auto)/),e=null!==t?t.pop():null;null!==e&&(document.documentElement.classList.remove(...["auto","dark","light"].map(t=>"skin-citizen-"+t)),document.documentElement.classList.add("skin-citizen-"+e))}catch(t){}}),window.switchTheme();</script>' );
+		$cookieTheme = $this->out->getRequest()->getCookie( 'skin-citizen-theme', null, 'auto' );
+		if ( $cookieTheme !== 'auto' ) {
+			$theme = $cookieTheme;
+		}
 
-        // Add styles and scripts module
-        if ( $theme === 'auto' ) {
-            $options['scripts'] = array_merge(
-                $options['scripts'],
-                [ 'skins.citizen.scripts.theme' ]
-            );
-        }
+		// Add HTML class based on theme set
+		$this->out->addHtmlClasses( 'skin-citizen-' . $theme );
+		if ( $this->out->getRequest()->getCookie( 'skin-citizen-theme-override' ) === null ) {
+			// Only set the theme cookie if the theme wasn't overridden by the user through the button
+			$this->out->getRequest()->response()->setCookie( 'skin-citizen-theme', $theme, 0, [
+				'httpOnly' => false,
+			] );
+		}
 
-        $options['styles'] = array_merge(
-            $options['styles'],
-            [ 'skins.citizen.styles.theme' ]
-        );
-    }
+		// Script content at 'skins.citizen.scripts.theme/inline.js
+		$this->out->getOutput()->addHeadItem( 'theme-switcher', '<script>window.switchTheme=(()=>{try{const t=document.cookie.match(/skin-citizen-theme=(dark|light|auto)/),e=null!==t?t.pop():null;null!==e&&(document.documentElement.classList.remove(...["auto","dark","light"].map(t=>"skin-citizen-"+t)),document.documentElement.classList.add("skin-citizen-"+e))}catch(t){}}),window.switchTheme();</script>' );
+
+		// Add styles and scripts module
+		if ( $theme === 'auto' ) {
+			$options['scripts'] = array_merge(
+				$options['scripts'],
+				[ 'skins.citizen.scripts.theme' ]
+			);
+		}
+
+		$options['styles'] = array_merge(
+			$options['styles'],
+			[ 'skins.citizen.styles.theme' ]
+		);
+	}
 }
