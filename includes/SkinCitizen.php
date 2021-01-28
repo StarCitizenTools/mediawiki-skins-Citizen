@@ -416,13 +416,13 @@ class SkinCitizen extends SkinMustache {
 	private function addToolboxLinksToDrawer( &$htmlItems ) {
 		// First add a link to special pages
 		$htmlItems .= $this->makeListItem( 'specialpages', [
-			'href' => self::makeSpecialUrl( 'specialpages' ),
+			'href' => self::makeSpecialUrl( 'Specialpages' ),
 			'id' => 't-specialpages'
 		] );
 
 		// Then add a link to the upload form
 		$htmlItems .= $this->makeListItem( 'upload', [
-			'href' => self::makeSpecialUrl( 'upload' ),
+			'href' => self::makeSpecialUrl( 'Upload' ),
 			'id' => 't-upload'
 		] );
 	}
