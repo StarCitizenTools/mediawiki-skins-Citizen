@@ -153,13 +153,13 @@ final class Drawer extends Partial {
 	private function addToolboxLinksToDrawer( &$htmlItems ) {
 		// First add a link to special pages
 		$htmlItems .= $this->skin->makeListItem( 'specialpages', [
-			'href' => Skin::makeSpecialUrl( 'specialpages' ),
+			'href' => Skin::makeSpecialUrl( 'Specialpages' ),
 			'id' => 't-specialpages'
 		] );
 
 		// Then add a link to the upload form
 		$htmlItems .= $this->skin->makeListItem( 'upload', [
-			'href' => Skin::makeSpecialUrl( 'upload' ),
+			'href' => Skin::makeSpecialUrl( 'Upload' ),
 			'id' => 't-upload'
 		] );
 	}
