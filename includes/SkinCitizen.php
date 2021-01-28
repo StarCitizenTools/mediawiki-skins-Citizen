@@ -23,10 +23,12 @@
 
 use Citizen\GetConfigTrait;
 use Citizen\Partials\Drawer;
+use Citizen\Partials\Footer;
 use Citizen\Partials\Header;
 use Citizen\Partials\Metadata;
+use Citizen\Partials\PageLinks;
+use Citizen\Partials\PageTools;
 use Citizen\Partials\Theme;
-use MediaWiki\MediaWikiServices;
 
 /**
  * Skin subclass for Citizen
@@ -51,8 +53,8 @@ class SkinCitizen extends SkinMustache {
 		$skin = $this;
 		$out = $skin->getOutput();
 
-		$metadata = new Metadata( $out );
-		$skinTheme = new Theme( $out );
+		$metadata = new Metadata( $this );
+		$skinTheme = new Theme( $this );
 
 		$metadata->addMetadata();
 
@@ -105,8 +107,11 @@ class SkinCitizen extends SkinMustache {
 		$out = $this->getOutput();
 		$title = $out->getTitle();
 
-		$drawer = new Drawer( $this );
 		$header = new Header( $this );
+		$drawer = new Drawer( $this );
+		$footer = new Footer( $this );
+		$links = new PageLinks( $this );
+		$tools = new PageTools( $this );
 
 		// Naming conventions for Mustache parameters.
 		//
@@ -143,7 +148,7 @@ class SkinCitizen extends SkinMustache {
 				'data-search-box' => $header->buildSearchProps(),
 			],
 
-			'data-pagetools' => $this->buildPageTools(),
+			'data-pagetools' => $tools->buildPageTools(),
 
 			'html-newtalk' => $newTalksHtml ? '<div class="usermessage">' . $newTalksHtml . '</div>' : '',
 			'page-langcode' => $title->getPageViewLanguage()->getHtmlCode(),
@@ -154,11 +159,11 @@ class SkinCitizen extends SkinMustache {
 
 			'msg-tagline' => $this->msg( 'tagline' )->text(),
 
-			'data-pagelinks' => $this->buildPageLinks(),
+			'data-pagelinks' => $links->buildPageLinks(),
 
 			'html-categories' => $this->getCategories(),
 
-			'data-footer' => $this->getFooterData(),
+			'data-footer' => $footer->getFooterData(),
 		];
 	}
 
@@ -167,8 +172,35 @@ class SkinCitizen extends SkinMustache {
 	 *
 	 * @return array
 	 */
-	public function buildPersonalUrls() {
+	final public function buildPersonalUrls() {
 		return parent::buildPersonalUrls();
+	}
+
+	/**
+	 * Change access to public, as it is used in partials
+	 *
+	 * @return array
+	 */
+	final public function getFooterLinks() {
+		return parent::getFooterLinks();
+	}
+
+	/**
+	 * Change access to public, as it is used in partials
+	 *
+	 * @return array
+	 */
+	final public function getFooterIcons() {
+		return parent::getFooterIcons();
+	}
+
+	/**
+	 * Change access to public, as it is used in partials
+	 *
+	 * @return array
+	 */
+	final public function buildContentNavigationUrls() {
+		return parent::buildContentNavigationUrls();
 	}
 
 	/**
@@ -215,7 +247,7 @@ class SkinCitizen extends SkinMustache {
 	/**
 	 * @inheritDoc
 	 *
-	 * Manually disable links to upload and speacial pages
+	 * Manually disable links to upload and special pages
 	 * as they are moved from the toolbox to the drawer
 	 *
 	 * @return array
@@ -227,190 +259,5 @@ class SkinCitizen extends SkinMustache {
 		$urls['specialpages'] = false;
 
 		return $urls;
-	}
-
-	/**
-	 * Render page-related tools
-	 * Possible visibility conditions:
-	 * * true: always visible (bool)
-	 * * false: never visible (bool)
-	 * * 'login': only visible if logged in (string)
-	 * * 'permission-*': only visible if user has permission
-	 *   e.g. permission-edit = only visible if user can edit pages
-	 *
-	 * @return array html
-	 */
-	protected function buildPageTools(): array {
-		$skin = $this;
-		$condition = $this->getConfigValue( 'CitizenShowPageTools' );
-		$contentNavigation = parent::buildContentNavigationUrls();
-		$portals = parent::buildSidebar();
-		$props = [];
-
-		// Login-based condition, return true if condition is met
-		if ( $condition === 'login' ) {
-			$condition = $skin->getUser()->isLoggedIn();
-		}
-
-		// Permission-based condition, return true if condition is met
-		if ( is_string( $condition ) && strpos( $condition, 'permission' ) === 0 ) {
-			$permission = substr( $condition, 11 );
-			try {
-				$condition = MediaWikiServices::getInstance()->getPermissionManager()->userCan(
-					$permission, $skin->getUser(), $skin->getTitle() );
-			} catch ( Exception $e ) {
-				$condition = false;
-			}
-		}
-
-		if ( $condition === true ) {
-
-			$viewshtml = $this->getMenuData( 'views', $contentNavigation[ 'views' ] ?? [] );
-			$actionshtml = $this->getMenuData( 'actions', $contentNavigation[ 'actions' ] ?? [] );
-			$toolboxhtml = $this->getMenuData( 'tb',  $portals['TOOLBOX'] ?? [] );
-
-			if ( $viewshtml ) {
-				$viewshtml[ 'label-class' ] .= 'screen-reader-text';
-			}
-
-			if ( $actionshtml ) {
-				$actionshtml[ 'label-class' ] .= 'screen-reader-text';
-			}
-
-			$props = [
-				'data-page-views' => $viewshtml,
-				'data-page-actions' => $actionshtml,
-				'data-page-toolbox' => $toolboxhtml,
-			];
-		}
-
-		return $props;
-	}
-
-	/**
-	 * Get rows that make up the footer
-	 * @return array for use in Mustache template describing the footer elements.
-	 */
-	private function getFooterData() : array {
-		$skin = $this;
-		$footerLinks = $this->getFooterLinks();
-		$lastMod = null;
-		$footerRows = [];
-		$footerIconRows = [];
-
-		// Get last modified message
-		if ( $footerLinks['info']['lastmod'] && isset( $footerLinks['info']['lastmod'] ) ) {
-			$lastMod = $footerLinks['info']['lastmod'];
-		}
-
-		foreach ( $footerLinks as $category => $links ) {
-			$items = [];
-			$rowId = "footer-$category";
-
-			// Unset footer-info
-			if ( $category !== 'info' ) {
-				foreach ( $links as $key => $link ) {
-					// Link may be null. If so don't include it.
-					if ( $link ) {
-						$items[] = [
-							'id' => "$rowId-$key",
-							'html' => $link,
-						];
-					}
-				}
-
-				$footerRows[] = [
-					'id' => $rowId,
-					'className' => null,
-					'array-items' => $items
-				];
-			}
-		}
-
-		// Append footer-info after links
-		if ( isset( $footerLinks['info'] ) ) {
-			$items = [];
-			$rowId = "footer-info";
-
-			foreach ( $footerLinks['info'] as $key => $link ) {
-				// Don't include lastmod and null link
-				if ( $key !== 'lastmod' && $link ) {
-					$items[] = [
-						'id' => "$rowId-$key",
-						'html' => $link,
-					];
-				}
-			}
-
-			$footerRows[] = [
-				'id' => $rowId,
-				'className' => null,
-				'array-items' => $items
-			];
-		}
-
-		// If footer icons are enabled append to the end of the rows
-		$footerIcons = $this->getFooterIcons();
-		if ( count( $footerIcons ) > 0 ) {
-			$items = [];
-			foreach ( $footerIcons as $blockName => $blockIcons ) {
-				$html = '';
-				foreach ( $blockIcons as $icon ) {
-					// Only output icons which have an image.
-					// For historic reasons this mimics the `icononly` option
-					// for BaseTemplate::getFooterIcons.
-					if ( is_string( $icon ) || isset( $icon['src'] ) ) {
-						$html .= $skin->makeFooterIcon( $icon );
-					}
-				}
-				// For historic reasons this mimics the `icononly` option
-				// for BaseTemplate::getFooterIcons. Empty rows should not be output.
-				if ( $html ) {
-					$items[] = [
-						'id' => 'footer-' . htmlspecialchars( $blockName ) . 'ico',
-						'html' => $html,
-					];
-				}
-			}
-
-			$footerIconRows[] = [
-				'id' => 'footer-icons',
-				'className' => 'noprint',
-				'array-items' => $items,
-			];
-		}
-
-		return [
-			'html-lastmodified' => $lastMod,
-			'array-footer-rows' => $footerRows,
-			'array-footer-icons' => $footerIconRows,
-			'msg-citizen-footer-desc' => $skin->msg( 'citizen-footer-desc' )->text(),
-			'msg-citizen-footer-tagline' => $skin->msg( 'citizen-footer-tagline' )->text(),
-		];
-	}
-
-	/**
-	 * Render page-related links at the bottom
-	 *
-	 * @return array html
-	 */
-	private function buildPageLinks() : array {
-		$contentNavigation = $this->buildContentNavigationUrls();
-
-		$namespaceshtml = $this->getMenuData( 'namespaces', $contentNavigation[ 'namespaces' ] ?? [] );
-		$variantshtml = $this->getMenuData( 'variants', $contentNavigation[ 'variants' ] ?? [] );
-
-		if ( $namespaceshtml ) {
-			$namespaceshtml[ 'label-class' ] .= 'screen-reader-text';
-		}
-
-		if ( $variantshtml ) {
-			$variantshtml[ 'label-class' ] .= 'screen-reader-text';
-		}
-
-		return [
-			'data-namespaces' => $namespaceshtml,
-			'data-variants' => $variantshtml,
-		];
 	}
 }
