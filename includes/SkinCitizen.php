@@ -172,7 +172,7 @@ class SkinCitizen extends SkinMustache {
 	 *
 	 * @return array
 	 */
-	final public function buildPersonalUrls() {
+	final public function buildPersonalUrlsPublic() {
 		return parent::buildPersonalUrls();
 	}
 
@@ -181,7 +181,7 @@ class SkinCitizen extends SkinMustache {
 	 *
 	 * @return array
 	 */
-	final public function getFooterLinks() {
+	final public function getFooterLinksPublic() {
 		return parent::getFooterLinks();
 	}
 
@@ -190,7 +190,7 @@ class SkinCitizen extends SkinMustache {
 	 *
 	 * @return array
 	 */
-	final public function getFooterIcons() {
+	final public function getFooterIconsPublic() {
 		return parent::getFooterIcons();
 	}
 
@@ -199,7 +199,7 @@ class SkinCitizen extends SkinMustache {
 	 *
 	 * @return array
 	 */
-	final public function buildContentNavigationUrls() {
+	final public function buildContentNavigationUrlsPublic() {
 		return parent::buildContentNavigationUrls();
 	}
 

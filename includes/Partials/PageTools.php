@@ -25,6 +25,7 @@ declare( strict_types=1 );
 
 namespace Citizen\Partials;
 
+use Exception;
 use MediaWiki\MediaWikiServices;
 
 final class PageTools extends Partial {
@@ -42,7 +43,7 @@ final class PageTools extends Partial {
 	 */
 	public function buildPageTools(): array {
 		$condition = $this->getConfigValue( 'CitizenShowPageTools' );
-		$contentNavigation = $this->skin->buildContentNavigationUrls();
+		$contentNavigation = $this->skin->buildContentNavigationUrlsPublic();
 		$portals = $this->skin->buildSidebar();
 		$props = [];
 
@@ -57,7 +58,7 @@ final class PageTools extends Partial {
 			try {
 				$condition = MediaWikiServices::getInstance()->getPermissionManager()->userCan(
 					$permission, $this->skin->getUser(), $this->skin->getTitle() );
-			} catch ( \Exception $e ) {
+			} catch ( Exception $e ) {
 				$condition = false;
 			}
 		}

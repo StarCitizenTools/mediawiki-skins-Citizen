@@ -35,7 +35,7 @@ final class Footer extends Partial {
 	 * @return array for use in Mustache template describing the footer elements.
 	 */
 	public function getFooterData(): array {
-		$footerLinks = $this->skin->getFooterLinks();
+		$footerLinks = $this->skin->getFooterLinksPublic();
 		$lastMod = null;
 
 		// Get last modified message
@@ -119,7 +119,7 @@ final class Footer extends Partial {
 	 */
 	private function getFooterIcons() {
 		// If footer icons are enabled append to the end of the rows
-		$footerIcons = $this->skin->getFooterIcons();
+		$footerIcons = $this->skin->getFooterIconsPublic();
 		if ( empty( $footerIcons ) ) {
 			return [];
 		}
