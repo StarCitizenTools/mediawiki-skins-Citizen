@@ -21,9 +21,17 @@ function uncheckOnClickOutside( element, button, checkbox ) {
 			document.removeEventListener( 'click', listener );
 		}
 	};
+
 	checkbox.addEventListener( 'click', function () {
 		if ( this.checked ) {
 			document.addEventListener( 'click', listener );
+		}
+	} );
+
+	document.addEventListener( 'keydown', function ( event ) {
+		if ( event.key === 'Escape' && checkbox.checked === true ) {
+			checkbox.checked = false;
+			document.removeEventListener( 'click', listener );
 		}
 	} );
 }
@@ -39,6 +47,7 @@ function init() {
 		personalMenuButton = document.getElementById( PERSONAL_MENU_BUTTON_ID ),
 		personalMenuCheckbox = document.getElementById( PERSONAL_MENU_CHECKBOX_ID );
 	uncheckOnClickOutside( drawer, drawerButton, drawerCheckbox );
+	uncheckOnClickOutside( null, drawerButton, drawerCheckbox );
 	uncheckOnClickOutside( personalMenu, personalMenuButton, personalMenuCheckbox );
 }
 
