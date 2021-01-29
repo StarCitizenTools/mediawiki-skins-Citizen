@@ -104,14 +104,15 @@
 	}
 
 	&-menu {
+		display: flex;
 		overflow: auto;
-		flex-grow: 1;
-		padding: @margin-side / 2 0;
+		max-width: var( --width-layout );
+		flex-wrap: wrap;
+		justify-content: center;
 		font-size: @ui-menu-text;
 		overscroll-behavior: contain;
 
 		h3 {
-			margin-top: 10px;
 			font-size: 16px;
 		}
 
@@ -148,10 +149,9 @@
 			}
 		}
 
-		ul {
-			display: grid;
-			max-width: var( --width-layout );
-			grid-template-columns: repeat( 2, 1fr );
+		.mw-portal {
+			width: 240px;
+			margin-top: 20px;
 		}
 	}
 }
@@ -180,27 +180,8 @@
 	}
 }
 
-@media ( min-width: @width-breakpoint-tablet ) {
-	#mw-drawer-menu ul {
-		grid-template-columns: repeat( 3, 1fr );
-	}
-}
-
-@media ( min-width: @width-breakpoint-desktop ) {
-	#mw-drawer-menu ul {
-		grid-template-columns: repeat( 4, 1fr );
-	}
-}
-
 @media ( min-width: @width-breakpoint-desktop-wide ) {
-	#mw-drawer-menu ul {
-		max-width: none;
-		grid-template-columns: repeat( 5, 1fr );
-	}
-}
-
-@media ( min-width: @width-breakpoint-desktop-wider ) {
-	#mw-drawer-menu ul {
-		grid-template-columns: repeat( 6, 1fr );
+	#mw-drawer-menu {
+		max-width: 1300px; // 240px * 5
 	}
 }
