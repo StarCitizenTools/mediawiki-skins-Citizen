@@ -603,6 +603,12 @@
 			"description": "Enable or disable image lazyloading",
 			"descriptionmsg": "citizen-config-enablelazyload",
 			"public": true
+		},
+		"PortalAttach": {
+			"value": "first",
+			"description": "Label of the portal to attach links to upload and special pages to",
+			"descriptionmsg": "citizen-config-portalattach",
+			"public": true
 		}
 	},
 	"manifest_version": 2
