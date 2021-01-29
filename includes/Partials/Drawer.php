@@ -126,18 +126,25 @@ final class Drawer extends Partial {
 			}
 		}
 
-		$firstPortal = $props[0] ?? null;
+		$portalLabel = $this->getConfigValue( 'CitizenPortalAttach' ) ?? 'first';
 
-		if ( $firstPortal ) {
-			if ( isset( $firstPortal['html-items'] ) ) {
-				$this->addToolboxLinksToDrawer( $firstPortal['html-items'] );
+		$firstPortal = array_shift( $props );
+
+		if ( $portalLabel === 'first' && $firstPortal !== null && isset( $firstPortal['html-items'] ) ) {
+			$this->addToolboxLinksToDrawer( $firstPortal['html-items'] );
+		} else {
+			for ( $i = 0, $portalCount = count( $props ); $i < $portalCount; $i++ ) {
+				if ( isset( $props[$i]['label'] ) && $props[$i]['label'] === $portalLabel ) {
+					$this->addToolboxLinksToDrawer( $props[$i]['html-items'] );
+					break;
+				}
 			}
 		}
 
 		return [
 			'msg-citizen-drawer-toggle' => $this->skin->msg( 'citizen-drawer-toggle' )->text(),
 			'data-portals-first' => $firstPortal,
-			'array-portals-rest' => array_slice( $props, 1 ),
+			'array-portals-rest' => $props,
 			'data-portals-languages' => $languages,
 		];
 	}
