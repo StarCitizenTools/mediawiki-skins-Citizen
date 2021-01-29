@@ -129,10 +129,6 @@ final class Drawer extends Partial {
 		$firstPortal = $props[0] ?? null;
 
 		if ( $firstPortal ) {
-			$firstPortal[ 'class' ] .= ' portal-first';
-			// Hide label for first portal
-			$firstPortal[ 'label-class' ] .= 'screen-reader-text';
-
 			if ( isset( $firstPortal['html-items'] ) ) {
 				$this->addToolboxLinksToDrawer( $firstPortal['html-items'] );
 			}
