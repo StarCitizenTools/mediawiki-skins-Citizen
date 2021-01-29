@@ -2,19 +2,18 @@
 	position: fixed;
 	z-index: 4;
 	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 	display: flex;
-	width: @drawer-width;
-	max-width: 100vw; // in case if someone has super small screen
-	height: 100%;
 	flex-direction: column;
-	background-color: var( --background-color-dp-16 );
-	border-radius: 0 @border-radius-large @border-radius-large 0;
-	transform: translate3d( -110%, 0, 0 ); // shadow bleeding with 100%
+	align-items: center;
+	background-color: var( --background-color-overlay );
+	transform: translate3d( 0, -100%, 0 );
 	transform-origin: 0 0;
 	transition: @transition-transform;
 	user-select: none;
 	will-change: transform; // help with performance
-	.boxshadow(3);
 
 	&-checkbox {
 		&:checked {
@@ -146,6 +145,12 @@
 				}
 			}
 		}
+
+		ul {
+			display: grid;
+			max-width: var( --width-layout );
+			grid-template-columns: repeat( 2, 1fr );
+		}
 	}
 }
 
@@ -170,5 +175,30 @@
 .skin-citizen-dark {
 	#mw-drawer-menu a:after {
 		filter: invert( 1 );
+	}
+}
+
+@media ( min-width: @width-breakpoint-tablet ) {
+	#mw-drawer-menu ul {
+		grid-template-columns: repeat( 3, 1fr );
+	}
+}
+
+@media ( min-width: @width-breakpoint-desktop ) {
+	#mw-drawer-menu ul {
+		grid-template-columns: repeat( 4, 1fr );
+	}
+}
+
+@media ( min-width: @width-breakpoint-desktop-wide ) {
+	#mw-drawer-menu ul {
+		max-width: none;
+		grid-template-columns: repeat( 5, 1fr );
+	}
+}
+
+@media ( min-width: @width-breakpoint-desktop-wider ) {
+	#mw-drawer-menu ul {
+		grid-template-columns: repeat( 6, 1fr );
 	}
 }

@@ -7,82 +7,94 @@
 @import '../../../resources/mixins.less';
 
 .mwe-popups {
-	border: 0;
-	border-radius: 0;
+	background-color: var( --background-color-dp-08 );
 	.boxshadow(4);
-}
 
-.skin-citizen-dark {
-	.mwe-popups {
-		background: @dark-bg-50;
+	.mwe-popups-container {
+		color: var( --color-base );
+	}
 
-		&.mwe-popups-image-tri:after {
-			border-color: @dark-bg-50;
+	.mwe-popups-extract {
+		color: var( --color-base );
+	}
+
+	/* Stylelint rule broken for vendor prefixes: https://github.com/stylelint/stylelint/issues/1939 */
+	/* stylelint-disable function-linear-gradient-no-nonstandard-direction */
+	&[ dir='ltr' ]:after {
+		/* @noflip */
+		background-image: linear-gradient( to right, transparent, var( --background-color-dp-08 ) 50% );
+	}
+
+	&[ dir='rtl' ]:after {
+		/* @noflip */
+		background-image: linear-gradient( to left, transparent, var( --background-color-dp-08 ) 50% );
+	}
+	/* stylelint-enable function-linear-gradient-no-nonstandard-direction */
+
+	/* Triangles/Pokeys */
+	&.mwe-popups-no-image-tri {
+		&:after {
+			border-bottom-color: var( --background-color-dp-08 );
 		}
 
-		.mwe-popups-container,
-		.mwe-popups-extract {
-			color: @dark-text-90;
+		&:before {
+			border-bottom-color: var( --border-color-base--lighter );
+		}
+	}
+
+	&.mwe-popups-image-tri {
+		&:before {
+			border-bottom-color: var( --border-color-base--lighter );
 		}
 
-		.mwe-popups-extract[ dir='ltr' ]:after {
-			background-image: linear-gradient( to right, rgba( 255, 255, 255, 0 ), @dark-bg-50 50% );
+		&:after {
+			border-bottom-color: var( --background-color-dp-08 );
 		}
 
-		&.mwe-popups-no-image-tri {
+		&.flipped_x {
 			&:before {
-				border-bottom-color: @dark-bg-50;
+				border-bottom-color: var( --border-color-base--lighter );
 			}
 
 			&:after {
-				border-bottom-color: @dark-bg-50;
-			}
-
-			&.flipped_x {
-				&:before {
-					border-bottom-color: @dark-bg-50;
-				}
-
-				&:after {
-					border-bottom-color: @dark-bg-50;
-				}
+				border-bottom-color: var( --background-color-dp-08 );
 			}
 		}
+	}
 
-		&.flipped_x.mwe-popups-is-tall {
-			&:before {
-				border-bottom-color: @dark-bg-50;
-			}
+	&.flipped_x.mwe-popups-is-tall {
+		&:before {
+			border-bottom-color: var( --border-color-base--lighter );
+		}
+	}
+
+	&.flipped_x_y {
+		&:before {
+			border-top-color: var( --border-color-base--lighter );
 		}
 
-		&.flipped_x_y {
-			&:before {
-				border-top-color: @dark-bg-50;
-			}
+		&:after {
+			border-top-color: var( --background-color-dp-08 );
+		}
 
+		&.mwe-popups-is-tall {
 			&:after {
-				border-top-color: @dark-bg-50;
+				border-top-color: var( --background-color-dp-08 );
 			}
 
-			&.mwe-popups-is-tall {
-				&:before {
-					border-top-color: @dark-bg-50;
-				}
-
-				&:after {
-					border-top-color: @dark-bg-50;
-				}
+			&:before {
+				border-top-color: var( --border-color-base--lighter );
 			}
 		}
+	}
 
-		&.flipped_y {
-			&:before {
-				border-top-color: @dark-bg-50;
-			}
+	&.flipped_y {
+		&:after {
+			border-top-color: var( --background-color-dp-08 );
+		}
 
-			&:after {
-				border-top-color: @dark-bg-50;
-			}
+		&:before {
+			border-top-color: var( --border-color-base--lighter );
 		}
 	}
 }
