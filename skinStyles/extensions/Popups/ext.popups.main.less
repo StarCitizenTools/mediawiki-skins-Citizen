@@ -16,23 +16,23 @@
 
 	.mwe-popups-extract {
 		color: var( --color-base );
+
+		/* Stylelint rule broken for vendor prefixes: https://github.com/stylelint/stylelint/issues/1939 */
+		/* stylelint-disable function-linear-gradient-no-nonstandard-direction */
+		&[ dir='ltr' ]:after {
+			/* @noflip */
+			background-image: linear-gradient( to right, transparent, var( --background-color-dp-08 ) 50% );
+		}
+
+		&[ dir='rtl' ]:after {
+			/* @noflip */
+			background-image: linear-gradient( to left, transparent, var( --background-color-dp-08 ) 50% );
+		}
+		/* stylelint-enable function-linear-gradient-no-nonstandard-direction */
 	}
 
-	/* Stylelint rule broken for vendor prefixes: https://github.com/stylelint/stylelint/issues/1939 */
-	/* stylelint-disable function-linear-gradient-no-nonstandard-direction */
-	&[ dir='ltr' ]:after {
-		/* @noflip */
-		background-image: linear-gradient( to right, transparent, var( --background-color-dp-08 ) 50% );
-	}
-
-	&[ dir='rtl' ]:after {
-		/* @noflip */
-		background-image: linear-gradient( to left, transparent, var( --background-color-dp-08 ) 50% );
-	}
-	/* stylelint-enable function-linear-gradient-no-nonstandard-direction */
-
-	/* Triangles/Pokeys */
-	&.mwe-popups-no-image-tri {
+	/* Triangles/Pointers */
+	&.mwe-popups-no-image-pointer {
 		&:after {
 			border-bottom-color: var( --background-color-dp-08 );
 		}
@@ -42,7 +42,7 @@
 		}
 	}
 
-	&.mwe-popups-image-tri {
+	&.mwe-popups-image-pointer {
 		&:before {
 			border-bottom-color: var( --border-color-base--lighter );
 		}
