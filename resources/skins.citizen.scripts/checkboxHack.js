@@ -40,6 +40,18 @@ function init() {
 		personalMenuCheckbox = document.getElementById( PERSONAL_MENU_CHECKBOX_ID );
 	uncheckOnClickOutside( drawer, drawerButton, drawerCheckbox );
 	uncheckOnClickOutside( personalMenu, personalMenuButton, personalMenuCheckbox );
+
+	drawer.addEventListener( 'click', function ( event ) {
+		if ( typeof event.target !== 'undefined' && event.target.id === DRAWER_ID ) {
+			drawerCheckbox.checked = false;
+		}
+	} );
+
+	document.addEventListener( 'keydown', function ( event ) {
+		if ( event.key === 'Escape' && drawerCheckbox.checked === true ) {
+			drawerCheckbox.checked = false;
+		}
+	} );
 }
 
 module.exports = {
