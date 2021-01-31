@@ -128,17 +128,18 @@
 		position: absolute;
 		z-index: 21; // override to be on top of the form
 		right: 0; // align checkbox with icon
-		width: var( --width-button-corner );
+		width: ~'calc( var( --width-button-corner ) - 10px )';
 		height: var( --height-header );
 
 		&-icon {
 			position: relative;
 			z-index: 20; // stay on top of search form
 			display: flex;
-			width: var( --width-button-corner );
+			width: var( --width-button-base );
 			height: var( --height-header );
 			align-items: center;
 			justify-content: center;
+			margin-right: 10px;
 			transition: @transition-transform-quick, @transition-height-quick, @transition-opacity-quick, @transition-border-color-quick;
 
 			&-1 {
