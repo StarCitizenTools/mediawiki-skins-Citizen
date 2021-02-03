@@ -23,6 +23,7 @@
 		{{>Logo}}
 	</section>
 	<section id="mw-drawer-menu">
+	    {{#data-drawer-subsearch}}<div style="display: flex; width: 100%;"><input type="text" id="drawer-search" style="margin: 0 auto;" /></div>{{/data-drawer-subsearch}}
 		{{#data-portals-first}}{{>Menu}}{{/data-portals-first}}
 		{{#array-portals-rest}}{{>Menu}}{{/array-portals-rest}}
 		{{#data-portals-languages}}{{>Menu}}{{/data-portals-languages}}
