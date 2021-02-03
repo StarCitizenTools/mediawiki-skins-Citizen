@@ -1,6 +1,6 @@
 {
 	"name": "Citizen",
-	"version": "1.3.1",
+	"version": "1.3.2",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
@@ -182,6 +182,11 @@
 		"skins.citizen.scripts.toc": {
 			"scripts": [
 				"resources/skins.citizen.scripts.toc/skins.citizen.scripts.toc.js"
+			]
+		},
+		"skins.citizen.scripts.drawer": {
+			"scripts": [
+				"resources/skins.citizen.scripts.drawer/drawerSubSearch.js"
 			]
 		},
 		"skins.citizen.icons": {
@@ -608,6 +613,12 @@
 			"value": "first",
 			"description": "Label of the portal to attach links to upload and special pages to",
 			"descriptionmsg": "citizen-config-portalattach",
+			"public": true
+		},
+		"EnableDrawerSubSearch": {
+			"value": false,
+			"description": "Enables to search the drawer for menu entries",
+			"descriptionmsg": "citizen-config-enabledrawersubsearch",
 			"public": true
 		}
 	},

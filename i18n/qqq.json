@@ -14,6 +14,7 @@
 	"citizen-personalmenu-toggle": "Tooltip of personal menu toggle",
 	"citizen-search-toggle": "Tooltip of search box toggle",
 	"citizen-theme-toggle": "Tooltip of theme color toggle",
+	"citizen-drawer-search": "Placeholder and title text for search input on main menu",
 	"citizen-footer-desc": "Edit this text on MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Edit this text on MediaWiki:Citizen-footer-tagline",
 	"citizen-search-fulltext": "Fulltext search suggestion",

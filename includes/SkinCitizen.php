@@ -84,6 +84,14 @@ class SkinCitizen extends SkinMustache {
 			);
 		}
 
+		// Load Citizen Drawer SubSearch module if enabled
+		if ( $this->getConfigValue( 'CitizenEnableDrawerSubSearch' ) === true ) {
+			$options['scripts'] = array_merge(
+				$options['scripts'],
+				[ 'skins.citizen.scripts.drawer' ]
+			);
+		}
+
 		// Load table of content script if ToC presents
 		if ( $out->isTOCEnabled() ) {
 			// Add class to body that notifies the page has TOC
