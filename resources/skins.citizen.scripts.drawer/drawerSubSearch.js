@@ -34,6 +34,7 @@
 				if ( li.querySelector( 'a' ).innerText.toUpperCase().indexOf( searchVal.toUpperCase() ) >= 0 ) {
 					// If it's the case, at least one entry is visible
 					allHidden = false;
+					li.style.display = null;
 				} else {
 					// Else, hide it
 					li.style.display = 'none';
@@ -41,16 +42,14 @@
 			} );
 
 			// If the portal contains only hidden links, hide it
-			if ( allHidden ) {
-				portal.style.display = 'none';
-			}
+			portal.style.display = allHidden === true ? 'none' : null;
 
 			// But if the query is contained in the portal header, show the entire portal
 			if ( portal.querySelector( 'h3' ).innerText.toUpperCase().indexOf( searchVal.toUpperCase() ) >= 0 ) {
+				portal.style.display = null;
 				portal.querySelectorAll( 'ul li' ).forEach( function ( li ) {
 					li.style.display = null;
 				} );
-				portal.style.display = null;
 			}
 		} );
 	} );
