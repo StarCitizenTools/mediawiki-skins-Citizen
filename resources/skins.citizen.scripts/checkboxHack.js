@@ -57,7 +57,7 @@ function init() {
 	var drawer = document.getElementById( DRAWER_ID ),
 		drawerButton = document.getElementById( DRAWER_BUTTON_ID ),
 		drawerCheckbox = document.getElementById( DRAWER_CHECKBOX_ID ),
-		drawerSearch = document.getElementById( 'drawer-search' ),
+		drawerSearch = document.getElementById( 'mw-drawer-search-input' ),
 		personalMenu = document.getElementById( PERSONAL_MENU_ID ),
 		personalMenuButton = document.getElementById( PERSONAL_MENU_BUTTON_ID ),
 		personalMenuCheckbox = document.getElementById( PERSONAL_MENU_CHECKBOX_ID ),

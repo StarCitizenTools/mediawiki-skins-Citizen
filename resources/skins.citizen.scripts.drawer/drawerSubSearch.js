@@ -2,7 +2,7 @@
  * This enables searching for portals / portal entries in the drawer menu
  */
 ( function () {
-	document.getElementById( 'drawer-search' ).addEventListener( 'input', function ( e ) {
+	document.getElementById( 'mw-drawer-search-input' ).addEventListener( 'input', function ( e ) {
 		var searchVal;
 
 		if ( typeof e.target.value === 'undefined' ) {
