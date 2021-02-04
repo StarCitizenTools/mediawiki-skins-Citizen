@@ -9,6 +9,11 @@
 	display: flex;
 	height: var( --height-header );
 	justify-content: space-between;
+	pointer-events: none;
+
+	& > * {
+		pointer-events: auto;
+	}
 
 	&-tools {
 		display: inherit;
