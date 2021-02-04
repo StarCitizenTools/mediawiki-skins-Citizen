@@ -15,6 +15,7 @@
 	"citizen-personalmenu-toggle": "Basculer le menu personnel",
 	"citizen-search-toggle": "Basculer la recherche",
 	"citizen-theme-toggle": "Basculer la couleur du thème",
+	"citizen-drawer-search": "Menu de recherche",
 	"citizen-footer-desc": "Modifier ce texte sur MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Modifier ce texte sur MediaWiki:Citizen-footer-tagline",
 	"citizen-search-fulltext": "Rechercher les pages contenant",
