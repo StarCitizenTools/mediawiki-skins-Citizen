@@ -1,13 +1,13 @@
 {{!
 	string msg-citizen-drawer-toggle The label used by the drawer button.
 }}
-<input 
-	type="checkbox" 
-	id="mw-drawer-checkbox" 
+<input
+	type="checkbox"
+	id="mw-drawer-checkbox"
 	class="mw-checkbox-hack-checkbox">
 <label
-	id="mw-drawer-button" 
-	class="mw-checkbox-hack-button" 
+	id="mw-drawer-button"
+	class="mw-checkbox-hack-button"
 	for="mw-drawer-checkbox"
 	role="button"
 	aria-controls="mw-drawer">
@@ -20,9 +20,6 @@
 </div>
 <aside id="mw-drawer">
 	<header id="mw-drawer-header">
-		<div id="mw-drawer-logo" role="banner">
-			{{>Logo}}
-		</div>
 		{{#data-drawer-subsearch}}
 		<div id="mw-drawer-search">
 			<input

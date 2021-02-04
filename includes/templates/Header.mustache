@@ -1,9 +1,14 @@
- {{!
+{{!
 	string msg-citizen-header-menu-toggle tooltip for menu toggle
 	string msg-citizen-header-search-toggle tooltip for search toggle
 }}
 <header class="mw-header">
-	{{#data-drawer}}{{>Drawer}}{{/data-drawer}}
+	<div class="mw-header-site">
+		<div class="mw-header-logo" role="banner">
+			{{>Logo}}
+		</div>
+		{{#data-drawer}}{{>Drawer}}{{/data-drawer}}
+	</div>
 	<div class="mw-header-tools">
 		{{#data-theme-toggle}}{{>ThemeToggle}}{{/data-theme-toggle}}
 		{{#data-extratools}}{{>Menu}}{{/data-extratools}}

@@ -4,8 +4,7 @@
 	string msg-sitesubtitle the contents of the sitesubtitle message key
 }}
 {{#data-logos}}
-<a {{{html-mainpage-attributes}}} class="mw-logo">
-	{{! alt is provided for valid HTML but given aria-hidden not needed. }}
+<a {{{html-mainpage-attributes}}} class="mw-wiki-logo">
 	<img class="mw-logo-icon" src="{{!
 		Pick an icon based on this order: SVG > Icon > 1x
 		Need a better way to indent the syntax below
@@ -16,9 +15,6 @@
 				}}{{#1x}}{{.}}{{/1x}}{{!
 			}}{{/icon}}{{!
 		}}{{/svg}}"{{!
-		}}alt="" aria-hidden="true" height="50" width="50">
-	<span class="mw-logo-container">
-		{{>Wordmark}}
-	</span>
+		}}alt="{{msg-sitetitle}}" aria-hidden="true" height="50" width="50">
 </a>
 {{/data-logos}}
