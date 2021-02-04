@@ -81,6 +81,11 @@ html {
 	--padding-page: @padding-page;
 }
 
+.mw-header {
+	// Used for header gradient only
+	--background-color-dp-00--rgb: @background-color-dp-00--rgb;
+}
+
 /**
  * Dark theme
  */
@@ -129,4 +134,11 @@ html {
 	--border-color-base--darker: @dark-border-color-base--darker;
 	--border-color-input: @dark-border-color-input;
 	--border-color-input--hover: @dark-border-color-input--hover;
+}
+
+.skin-citizen-dark {
+	.mw-header {
+		// Used for header gradient only
+		--background-color-dp-00--rgb: @dark-background-color-dp-00--rgb;
+	}
 }
