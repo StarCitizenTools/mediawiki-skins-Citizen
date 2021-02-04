@@ -9,6 +9,11 @@
 	display: flex;
 	height: var( --height-header );
 	justify-content: space-between;
+	pointer-events: none;
+
+	& > * {
+		pointer-events: auto;
+	}
 
 	&-tools {
 		display: inherit;
@@ -28,7 +33,21 @@
 		position: absolute;
 		right: 0;
 		left: 0;
-		box-shadow: 0 0 30px var( --height-header ) var( --background-color-dp-00 );
+		height: ~'calc( var( --height-header ) * 1.5 )';
+		/*
+		 * ease(x) := 1 - pow(1 - x, 2);
+		 */
+		background-image: linear-gradient(to bottom,
+			~"rgba(var(--background-color-dp-00-rgb),1)" 0%,
+			~"rgba(var(--background-color-dp-00-rgb),0.988)" 11.11%,
+			~"rgba(var(--background-color-dp-00-rgb),0.951)" 22.22%,
+			~"rgba(var(--background-color-dp-00-rgb),0.889)" 33.33%,
+			~"rgba(var(--background-color-dp-00-rgb),0.802)" 44.44%,
+			~"rgba(var(--background-color-dp-00-rgb),0.691)" 55.56%,
+			~"rgba(var(--background-color-dp-00-rgb),0.556)" 66.67%,
+			~"rgba(var(--background-color-dp-00-rgb),0.395)" 77.78%,
+			~"rgba(var(--background-color-dp-00-rgb),0.210)" 88.89%,
+			~"rgba(var(--background-color-dp-00-rgb),0)" 100%);
 		content: '';
 	}
 }
