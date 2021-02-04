@@ -10,7 +10,6 @@
  */
 :root {
 	/* Background Colors */
-	--background-color-dp-00-rgb: red(@background-color-dp-00), green(@background-color-dp-00), blue(@background-color-dp-00);
 	--background-color-dp-00: @background-color-dp-00;
 	--background-color-dp-01: @background-color-dp-01;
 	--background-color-dp-02: @background-color-dp-02;
@@ -82,12 +81,16 @@ html {
 	--padding-page: @padding-page;
 }
 
+.mw-header {
+	// Used for header gradient only
+	--background-color-dp-00--rgb: @background-color-dp-00--rgb;
+}
+
 /**
  * Dark theme
  */
 :root.skin-citizen-dark {
 	/* Background Colors */
-	--background-color-dp-00-rgb: red(@dark-background-color-dp-00), green(@dark-background-color-dp-00), blue(@dark-background-color-dp-00);
 	--background-color-dp-00: @dark-background-color-dp-00;
 	--background-color-dp-01: @dark-background-color-dp-01;
 	--background-color-dp-02: @dark-background-color-dp-02;
@@ -131,4 +134,11 @@ html {
 	--border-color-base--darker: @dark-border-color-base--darker;
 	--border-color-input: @dark-border-color-input;
 	--border-color-input--hover: @dark-border-color-input--hover;
+}
+
+.skin-citizen-dark {
+	.mw-header {
+		// Used for header gradient only
+		--background-color-dp-00--rgb: @dark-background-color-dp-00--rgb;
+	}
 }
