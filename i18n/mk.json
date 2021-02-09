@@ -1,7 +1,6 @@
 {
 	"@metadata": {
 		"authors": [
-			"Abijeet Patro",
 			"Bjankuloski06"
 		]
 	},
@@ -13,6 +12,7 @@
 	"citizen-personalmenu-toggle": "Дај/скриј лично мени",
 	"citizen-search-toggle": "Дај/скриј пребарување",
 	"citizen-theme-toggle": "Смени боја на изгледот",
+	"citizen-drawer-search": "Мени за пребарување",
 	"citizen-footer-desc": "Уредете го овој текст на MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Уредете го овој текст на MediaWiki:Citizen-footer-tagline",
 	"citizen-search-fulltext": "Пребарај страници што содржат",

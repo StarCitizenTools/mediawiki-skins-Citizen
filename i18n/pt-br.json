@@ -1,8 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Abijeet Patro",
 			"Eduardo Addad de Oliveira",
+			"Eduardoaddad",
 			"Rafaelff"
 		]
 	},
@@ -14,6 +14,7 @@
 	"citizen-personalmenu-toggle": "Alternar menu pessoal",
 	"citizen-search-toggle": "Ativa a pesquisa",
 	"citizen-theme-toggle": "Alternar a cor do tema",
+	"citizen-drawer-search": "Menu de pesquisa",
 	"citizen-footer-desc": "Edite este texto em MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Edite este texto em MediaWiki:Citizen-footer-tagline",
 	"citizen-search-fulltext": "Páginas de pesquisa que contêm",
