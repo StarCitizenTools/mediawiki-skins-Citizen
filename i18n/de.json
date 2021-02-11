@@ -1,11 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
+			"Wolfdietmann",
 			"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
 		]
 	},
 	"skinname-citizen": "Citizen",
 	"citizen-skin-desc": "Ein responsive Skin entwickelt für das Star Citizen Wiki",
+	"citizen-drawer-search": "Suchmenü",
 	"citizen-footer-desc": "Bearbeiten Sie diesen Text auf MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Bearbeiten Sie diesen Text auf MediaWiki:Citizen-footer-tagline",
 	"prefs-citizen-theme-label": "Thema",
