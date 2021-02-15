@@ -3,6 +3,7 @@
 		"authors": [
 			"Agaafd",
 			"BaRaN6161 TURK",
+			"Joseph",
 			"Sadrettin"
 		]
 	},
@@ -14,6 +15,7 @@
 	"citizen-personalmenu-toggle": "Kişisel menüyü aç / kapat",
 	"citizen-search-toggle": "Aramayı değiştir",
 	"citizen-theme-toggle": "Tema rengi aç/kapa",
+	"citizen-drawer-search": "Arama menüsü",
 	"citizen-footer-desc": "Bu metni MediaWiki:Citizen-footer-desc üzerinde düzenle",
 	"citizen-footer-tagline": "Bu metni MediaWiki:Citizen-footer-tagline üzerinde düzenle",
 	"citizen-search-fulltext": "İçeren sayfaları ara",
