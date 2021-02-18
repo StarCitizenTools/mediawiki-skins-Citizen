@@ -430,7 +430,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			suggestionLink = mw.html.element( 'a', {
 				class: 'suggestion-link',
 				id: suggestionLinkID,
-				href: articleurl + encodeURIComponent( page.title.replace( / /gi, '_' ) )
+				href: articleurl + (new mw.Title( page.title, page.ns ?? 0 ).getUrl()).substr(1),
 			}, new mw.html.Raw( suggestionThumbnail + suggestionText ) );
 
 			string += suggestionLink;
