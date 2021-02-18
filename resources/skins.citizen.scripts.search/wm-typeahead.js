@@ -87,7 +87,6 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 		appendEl = document.getElementById( appendTo ),
 		searchEl = document.getElementById( searchInput ),
 		server = mw.config.get( 'wgServer' ),
-		articleurl = server + mw.config.get( 'wgArticlePath' ).replace( '$1', '' ),
 		searchurl = server + mw.config.get( 'wgScriptPath' ) + '/index.php?title=Special%3ASearch&search=',
 		thumbnailSize = Math.round( getDevicePixelRatio() * 80 ),
 		descriptionSource = mw.config.get( 'wgCitizenSearchDescriptionSource' ),
@@ -430,7 +429,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			suggestionLink = mw.html.element( 'a', {
 				class: 'suggestion-link',
 				id: suggestionLinkID,
-				href: articleurl + encodeURIComponent( page.title.replace( / /gi, '_' ) )
+				href: server + (new mw.Title( page.title, page.ns ?? 0 ).getUrl()),
 			}, new mw.html.Raw( suggestionThumbnail + suggestionText ) );
 
 			string += suggestionLink;
