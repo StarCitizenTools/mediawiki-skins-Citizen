@@ -132,6 +132,7 @@
 		overflow: auto;
 		max-width: var( --width-layout );
 		flex-wrap: wrap;
+		justify-content: center;
 		font-size: @ui-menu-text;
 		overscroll-behavior: contain;
 
@@ -208,6 +209,13 @@
 .skin-citizen-dark {
 	#mw-drawer-menu a:after {
 		filter: invert( 1 );
+	}
+}
+
+// Portal width (240px) * 2 + Magic (4px)
+@media ( min-width: 484px ) {
+	#mw-drawer-menu {
+		justify-content: left; // Portals won't get center when there is more than one col
 	}
 }
 
