@@ -421,9 +421,8 @@
 
 			"+ext.Tabber": "skinStyles/extensions/Tabber/ext.Tabber.less",
 
-			"+ext.uploadWizard.uploadCampaign.display": "skinStyles/extensions/UploadWizard/ext.uploadWizard.uploadCampaign.display.less",
-			"+ext.uploadWizard.uploadCampaign.list": "skinStyles/extensions/UploadWizard/ext.uploadWizard.uploadCampaign.list.less",
 			"+ext.uploadWizard": "skinStyles/extensions/UploadWizard/ext.uploadWizard.less",
+			"+ext.uploadWizard.page.styles": "skinStyles/extensions/UploadWizard/uploadWizard.noWizard.less",
 
 			"+ext.visualEditor.desktopArticleTarget.init": "skinStyles/extensions/VisualEditor/ext.visualEditor.less",
 
