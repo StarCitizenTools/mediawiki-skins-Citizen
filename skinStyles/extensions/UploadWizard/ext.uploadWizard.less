@@ -1,136 +1,88 @@
 /*
  * Citizen - Upload Wizard
  * https://starcitizen.tools
-*/
+ */
 
 @import '../../../resources/variables.less';
+@import '../../../resources/mixins.less';
+/*
+ * resources/uploadWizard.css
+ */
+#upload-wizard {
+	min-width: auto;
+	max-width: none; // handled by .mw-body-content
+}
 
-.skin-citizen-dark {
-	/**
-	resources/jquery.arrowSteps/jquery.arrowSteps.css
-	 */
-	.arrowSteps {
-		border: 1px solid @dark-bg-30;
-	}
+#mwe-upwiz-tutorial img {
+	max-width: 100%; // don't exceed container
+	height: auto;
+}
 
-	.arrowSteps li {
-		background-color: @dark-bg-20;
-		color: @dark-text-70;
-	}
+#mwe-upwiz-files {
+	margin-right: 0;
+	margin-left: 0;
+}
 
-	#mwe-upwiz-steps li.head {
-		background-color: @accent-10;
-		color: @accent-90;
-	}
+.filled + .filled {
+	border-top-color: var( --border-color-base );
+}
 
-	.arrowSteps li.arrow:after {
-		border-left-color: @dark-bg-20;
-	}
+.mwe-upwiz-file:hover .mwe-upwiz-visible-file {
+	background: var( --background-color-primary--hover ) !important;
+}
 
-	.arrowSteps li.arrow:before {
-		border-left-color: @dark-bg-0;
-	}
+.mwe-upwiz-file.odd .mwe-upwiz-visible-file {
+	background: var( --background-color-framed );
+}
 
-	#mwe-upwiz-steps li.head:after {
-		border-left-color: @accent-10;
-	}
+#mwe-upwiz-deeds-thumbnails {
+	background-color: var( --background-color-framed );
+}
 
-	/**
-	resources/uw.CopyMetadataWidget.less
-	 */
-	.mwe-upwiz-copyMetadataWidget {
-		border-top: 1px solid @dark-bg-30;
-		border-bottom: 1px solid @dark-bg-30;
-	}
+.mwe-upwiz-thumbnail-link canvas,
+.mwe-upwiz-thumbnail-link img {
+	.boxshadow(2);
+}
 
-	/**
-	resources/uploadWizard.css
-	 */
-	#mwe-upwiz-steps {
-		background-color: @dark-bg-0;
-	}
+.mwe-upwiz-singleLanguageInputWidget {
+	border-color: var( --border-color-base );
+	background-color: var( --background-color-framed );
+}
 
-	.mwe-upwiz-file.odd .mwe-upwiz-visible-file {
-		background: @dark-bg-10;
-	}
+.mwe-upwiz-copyMetadataWidget {
+	border-color: var( --border-color-base );
+}
 
-	.mwe-upwiz-file:hover .mwe-upwiz-visible-file {
-		background: @dark-bg-30 !important;
-	}
+#mwe-upwiz-stepdiv-details .mwe-upwiz-data {
+	width: auto;
+	max-width: 100%;
+}
 
-	.mwe-upwiz-file-status {
-		color: @dark-text-70;
-	}
+/*
+ * resources/jquery.arrowSteps/jquery.arrowSteps.css
+ */
+.arrowSteps {
+	border-color: var( --border-color-base );
+}
 
-	.mwe-upwiz-patent-rights .oo-ui-panelLayout .oo-ui-panelLayout:not( :last-child ) {
-		box-shadow: 0 1em 1px -1em @dark-bg-30;
-	}
+.arrowSteps li {
+	background-color: var( --background-color-framed );
+	color: var( --color-base--subtle );
+}
 
-	.mwe-upwiz-patent-rights-filelist {
-		box-shadow: 0 0 1px 0 @dark-bg-30;
-	}
+#mwe-upwiz-steps li.head {
+	background-color: var( --background-color-primary--hover );
+	color: var( --color-primary );
+}
 
-	.mwe-upwiz-patent-weapon-policy {
-		border: 1px solid @dark-bg-30;
-		background-color: @dark-bg-20;
-	}
+.arrowSteps li.arrow:after {
+	border-left-color: var( --background-color-framed );
+}
 
-	.mwe-upwiz-license-metadata {
-		border: 1px solid @dark-bg-30;
-		background-color: @dark-bg-20;
-	}
+.arrowSteps li.arrow:before {
+	border-left-color: var( --background-color-dp-00 );
+}
 
-	#mwe-upwiz-flickr-disclaimer {
-		background-color: @accent-10;
-	}
-
-	.filled + .filled {
-		border-top: 1px solid @dark-bg-30;
-	}
-
-	.mwe-upwiz-status-error {
-		color: @red-50;
-	}
-
-	.mwe-upwiz-thumbnail {
-		background-color: @dark-bg-0;
-	}
-
-	#mwe-upwiz-deeds-thumbnails {
-		background-color: @dark-bg-10;
-	}
-
-	.mwe-upwiz-thumbnail-link canvas,
-	.mwe-upwiz-thumbnail-link img {
-		box-shadow: 0 0 5px @dark-bg-50;
-	}
-
-	.mwe-readonly {
-		background-color: @dark-bg-0;
-	}
-
-	.mwe-upwiz-deed-license-group-subhead {
-		color: @dark-text-70;
-	}
-
-	.mwe-upwiz-objref-pick-image input:disabled + label {
-		color: @dark-text-70;
-	}
-
-	/**
-  resources/uw.FieldLayout.less
-   */
-	.mwe-upwiz-fieldLayout {
-		.mwe-upwiz-fieldLayout-indicator {
-			color: @dark-text-70;
-		}
-	}
-
-	/**
-  resources/details/uw.SingleLanguageInputWidget.less
-   */
-	.mwe-upwiz-singleLanguageInputWidget {
-		border: 1px solid @dark-bg-20;
-		background-color: @dark-bg-10;
-	}
+#mwe-upwiz-steps li.head:after {
+	border-left-color: var( --background-color-primary--hover );
 }
