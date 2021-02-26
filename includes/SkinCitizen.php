@@ -159,13 +159,7 @@ class SkinCitizen extends SkinMustache {
 			'html-newtalk' => $newTalksHtml ? '<div class="usermessage">' . $newTalksHtml . '</div>' : '',
 			'page-langcode' => $title->getPageViewLanguage()->getHtmlCode(),
 
-			// Remember that the string '0' is a valid title.
-			// From OutputPage::getPageTitle, via ::setPageTitle().
-			'html-title' => $out->getPageTitle(),
-
 			'msg-tagline' => $this->msg( 'tagline' )->text(),
-
-			'html-categories' => $this->getCategories(),
 
 			'data-footer' => $footer->getFooterData(),
 		];
