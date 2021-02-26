@@ -67,6 +67,8 @@ final class PageTools extends Partial {
 
 			$viewshtml = $this->skin->getMenuData( 'views', $contentNavigation[ 'views' ] ?? [] );
 			$actionshtml = $this->skin->getMenuData( 'actions', $contentNavigation[ 'actions' ] ?? [] );
+			$namespaceshtml = $this->skin->getMenuData( 'namespaces', $contentNavigation[ 'namespaces' ] ?? [] );
+			$variantshtml = $this->skin->getMenuData( 'variants', $contentNavigation[ 'variants' ] ?? [] );
 			$toolboxhtml = $this->skin->getMenuData( 'tb',  $portals['TOOLBOX'] ?? [] );
 
 			if ( $viewshtml ) {
@@ -80,6 +82,8 @@ final class PageTools extends Partial {
 			$props = [
 				'data-page-views' => $viewshtml,
 				'data-page-actions' => $actionshtml,
+				'data-namespaces' => $namespaceshtml,
+				'data-variants' => $variantshtml,
 				'data-page-toolbox' => $toolboxhtml,
 			];
 		}
