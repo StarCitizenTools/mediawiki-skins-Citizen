@@ -26,7 +26,6 @@ use Citizen\Partials\Drawer;
 use Citizen\Partials\Footer;
 use Citizen\Partials\Header;
 use Citizen\Partials\Metadata;
-use Citizen\Partials\PageLinks;
 use Citizen\Partials\PageTools;
 use Citizen\Partials\Theme;
 
@@ -118,7 +117,6 @@ class SkinCitizen extends SkinMustache {
 		$header = new Header( $this );
 		$drawer = new Drawer( $this );
 		$footer = new Footer( $this );
-		$links = new PageLinks( $this );
 		$tools = new PageTools( $this );
 
 		// Naming conventions for Mustache parameters.
@@ -166,8 +164,6 @@ class SkinCitizen extends SkinMustache {
 			'html-title' => $out->getPageTitle(),
 
 			'msg-tagline' => $this->msg( 'tagline' )->text(),
-
-			'data-pagelinks' => $links->buildPageLinks(),
 
 			'html-categories' => $this->getCategories(),
 
