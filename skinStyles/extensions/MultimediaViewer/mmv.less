@@ -6,95 +6,122 @@
 @import '../../../resources/variables.less';
 @import '../../../resources/mixins.less';
 
-.mw-mmv-post-image {
-	background-color: var( --background-color-dp-04 );
-	color: var( --color-base--emphasized );
-}
-
-.mw-mmv-image-metadata {
-	border-color: var( --border-color-base );
-	background-color: var( --background-color-framed );
-	color: var( --color-base );
-}
-
-.mw-mmv-credit,
-.mw-mmv-image-links li {
-	color: var( --color-base--subtle );
-}
-
-.mw-mmv-stripe-button.mw-mmv-description-page-button {
-	margin: 11px var( --padding-page );
-	font-size: @ui-menu-text;
-}
-
-.mw-mmv-title-para .mw-mmv-ttf-ellipsis {
-	background-color: var( --background-color-dp-04 );
-	box-shadow: none;
-}
-
-.mw-mmv-ttf-container .mw-mmv-ttf-ellipsis:before {
-	background-image: linear-gradient( to right, rgba( 255, 255, 255, 0 ) 0%, var( --background-color-dp01 ) 100% ) !important;
-}
-
-.mw-mmv-dialog {
-	background-color: var( --background-color-dp-08 );
-
-	.mw-mmv-dialog-down-arrow {
-		background-color: var( --background-color-dp-08 );
+.skin-citizen {
+	.mw-mmv-post-image {
+		background-color: var( --background-color-dp-04 );
+		color: var( --color-base--emphasized );
 	}
-}
 
-.mw-mmv-reuse-dialog .mw-mmv-reuse-tabs {
-	border-color: var( --border-color-base );
-}
+	.mw-mmv-image-metadata {
+		border-color: var( --border-color-base );
+		background-color: var( --background-color-framed );
+		color: var( --color-base );
+	}
 
-.mw-mmv-options-dialog-header {
-	color: var( --color-base--emphasized );
-}
+	.mw-mmv-info-box {
+		border-color: var( --border-color-base );
+		background-color: var( --background-color-dp-02 );
+	}
 
-.mw-mmv-options-text-header {
-	color: var( --color-base );
-}
+	.mw-mmv-label {
+		background-color: var( --background-color-dp-02 );
+		color: var( --color-base );
+	}
 
-.mw-mmv-options-text-body {
-	color: var( --color-base--subtle );
-}
-
-.mw-mmv-download-dialog .mw-mmv-dialog-down-arrow {
-	background-color: var( --background-color-framed );
-}
-
-.mw-mmv-download-pane {
-	.mw-mmv-download-area .mw-mmv-download-preview-link {
+	.mw-mmv-credit,
+	.mw-mmv-image-links li {
 		color: var( --color-base--subtle );
 	}
 
-	.mw-mmv-download-attribution {
-		background-color: var( --background-color-framed );
-		color: var( --color-base );
+	.mw-mmv-stripe-button.mw-mmv-description-page-button {
+		margin: 11px var( --padding-page );
+		font-size: @ui-menu-text;
+	}
 
-		&:hover {
-			background-color: var( --background-color-framed--hover );
-			color: var( --color-base--emphasized );
+	.mw-mmv-permission-box {
+		h3 {
+			color: var( --color-base );
 		}
 
-		&-attribution-cta-invite {
+		.mw-mmv-permission-text {
+			.mw-mmv-permission-text-fader {
+				background-image: linear-gradient( to bottom, rgba( 255, 255, 255, 0 ) 0%, var( --background-color-dp-02 ) 100% );
+			}
+		}
+	}
+
+	.mw-mmv-title-para .mw-mmv-ttf-ellipsis {
+		background-color: var( --background-color-dp-04 );
+		box-shadow: none;
+	}
+
+	.mw-mmv-ttf-container .mw-mmv-ttf-ellipsis:before {
+		background-image: linear-gradient( to right, rgba( 255, 255, 255, 0 ) 0%, var( --background-color-dp01 ) 100% );
+	}
+
+	.mw-mmv-dialog {
+		background-color: var( --background-color-dp-08 );
+		.boxshadow(3);
+
+		.mw-mmv-dialog-down-arrow {
+			background-color: var( --background-color-dp-08 );
+		}
+	}
+
+	.mw-mmv-reuse-dialog .mw-mmv-reuse-tabs {
+		border-color: var( --border-color-base );
+	}
+
+	.mw-mmv-options-dialog-header {
+		color: var( --color-base--emphasized );
+	}
+
+	.mw-mmv-options-text-header {
+		color: var( --color-base );
+	}
+
+	.mw-mmv-options-text-body {
+		color: var( --color-base--subtle );
+	}
+
+	.mw-mmv-download-dialog .mw-mmv-dialog-down-arrow {
+		background-color: var( --background-color-framed );
+	}
+
+	.mw-mmv-download-pane {
+		.mw-mmv-download-area .mw-mmv-download-preview-link {
 			color: var( --color-base--subtle );
+		}
+
+		.mw-mmv-download-attribution {
+			background-color: var( --background-color-framed );
+			color: var( --color-base );
+
+			&:hover {
+				background-color: var( --background-color-framed--hover );
+				color: var( --color-base--emphasized );
+			}
+
+			&-attribution-cta-invite {
+				color: var( --color-base--subtle );
+			}
 		}
 	}
 }
 
 @media only screen and ( max-width: @width-breakpoint-tablet ) {
-	.mw-mmv-image-metadata-links-column {
-		width: auto; // Fix mobile bouncing
-		float: none;
-	}
-
-	.mw-mmv-untruncated {
-		.mw-mmv-image-metadata-desc-column,
+	.skin-citizen {
 		.mw-mmv-image-metadata-links-column {
-			width: auto;
-			max-width: none;
+			width: auto; // Fix mobile bouncing
+			float: none;
+		}
+
+		.mw-mmv-untruncated {
+			.mw-mmv-image-metadata-desc-column,
+			.mw-mmv-image-metadata-links-column {
+				width: auto;
+				max-width: none;
+			}
 		}
 	}
 }
