@@ -7,10 +7,9 @@
 
 		> a {
 			display: block;
-			color: @color-content-caption;
-			font-size: @content-caption-size;
-			letter-spacing: 1px;
-			text-transform: uppercase;
+			color: var( --color-base--subtle );
+			font-size: @ui-menu-text;
+			letter-spacing: 0.75px;
 		}
 
 		> ul {
@@ -54,5 +53,9 @@
 				}
 			}
 		}
+	}
+
+	.mw-hidden-cats-hidden {
+		display: none;
 	}
 }

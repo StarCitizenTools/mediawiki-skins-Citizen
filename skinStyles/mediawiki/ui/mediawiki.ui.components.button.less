@@ -5,68 +5,82 @@
 
 @import '../../../resources/variables.less';
 
-.skin-citizen-dark {
-	.mw-ui-button {
-		border-color: @dark-bg-50;
-		background-color: @dark-bg-10;
-		color: @dark-text-90;
+.mw-ui-button {
+	background-color: var( --background-color-framed );
+	color: var( --color-base );
 
-		&:visited {
-			color: @dark-text-90;
-		}
+	&.mw-ui-quiet,
+	&.mw-ui-quiet.mw-ui-progressive,
+	&.mw-ui-quiet.mw-ui-destructive {
+		color: var( --color-base );
 
 		&:hover {
-			border-color: @dark-bg-50;
-			background-color: @dark-bg-0;
-			color: @dark-text-80;
+			background-color: var( --background-color-quiet--hover );
+			color: var( --color-base--emphasized );
+		}
+
+		&:active {
+			background-color: var( --background-color-quiet--active );
+			color: var( --color-base--subtle );
 		}
 
 		&:focus {
-			background-color: @dark-bg-0;
-			color: @dark-text-90;
+			color: var( --color-base );
 		}
 
-		&:active,
-		&.is-on {
-			border-color: @dark-bg-60;
-			background-color: @dark-bg-30;
-			color: @dark-text-100;
+		&:disabled,
+		&:disabled:hover,
+		&:disabled:active {
+			color: var( --color-base--subtle );
+		}
+	}
+
+	&.mw-ui-progressive {
+		background-color: var( --color-primary );
+
+		&:hover {
+			background-color: var( --color-primary--hover );
 		}
 
-		&:disabled {
-			border-color: @dark-bg-30 !important;
-			background-color: @dark-bg-30 !important;
-			color: @dark-text-100 !important;
-
-			&:hover,
-			&:active {
-				border-color: @dark-bg-20;
-				background-color: @dark-bg-20;
-				color: @dark-text-90;
-			}
+		&:active {
+			background-color: var( --color-primary--active );
 		}
 
-		&.mw-ui-quiet,
-		&.mw-ui-quiet.mw-ui-progressive,
-		&.mw-ui-quiet.mw-ui-destructive {
-			color: @dark-text-90;
+		&:focus {
+			background-color: var( --color-primary );
+		}
+
+		&.mw-ui-quiet {
+			color: var( --color-primary );
 
 			&:hover {
-				color: @dark-text-80;
+				color: var( --color-primary--hover );
 			}
 
 			&:active {
-				color: @dark-text-100;
+				color: var( --color-primary--active );
 			}
 
 			&:focus {
-				color: @dark-text-90;
+				color: var( --color-primary );
+			}
+		}
+	}
+
+	&.mw-ui-destructive {
+		&.mw-ui-quiet {
+			color: var( --color-destructive );
+
+			&:hover {
+				color: var( --color-destructive--hover );
 			}
 
-			&:disabled,
-			&:disabled:hover,
-			&:disabled:active {
-				color: @dark-text-70;
+			&:active {
+				color: var( --color-destructive--active );
+			}
+
+			&:focus {
+				color: var( --color-destructive );
 			}
 		}
 	}
