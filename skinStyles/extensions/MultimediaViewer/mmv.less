@@ -6,20 +6,85 @@
 @import '../../../resources/variables.less';
 @import '../../../resources/mixins.less';
 
-.mw-mmv-image-metadata {
-	border-color: @base-80;
+.mw-mmv-post-image {
+	background-color: var( --background-color-dp-01 );
+	color: var( --color-base--emphasized );
 }
 
-.mw-mmv-stripe-button.mw-mmv-description-page-button,
-.mw-mmv-stripe-button.mw-mmv-description-page-button:active,
-.mw-mmv-stripe-button.mw-mmv-description-page-button:visited {
-	padding: 18px 16px;
-	margin: 0;
-	border-radius: 0;
+.mw-mmv-image-metadata {
+	border-color: var( --border-color-base );
+	background-color: var( --background-color-dp-00 );
+	color: var( --color-base );
+}
+
+.mw-mmv-credit,
+.mw-mmv-image-links li {
+	color: var( --color-base--subtle );
+}
+
+.mw-mmv-stripe-button.mw-mmv-description-page-button {
+	margin: 11px var( --padding-page );
 	font-size: @ui-menu-text;
 }
 
-@media only screen and ( max-width: 560px ) {
+.mw-mmv-title-para .mw-mmv-ttf-ellipsis {
+	background-color: var( --background-color-dp-01 );
+	box-shadow: none;
+}
+
+.mw-mmv-ttf-container .mw-mmv-ttf-ellipsis:before {
+	background-image: linear-gradient( to right, rgba( 255, 255, 255, 0 ) 0%, var( --background-color-dp01 ) 100% ) !important;
+}
+
+.mw-mmv-dialog {
+	background-color: var( --background-color-dp-08 );
+
+	.mw-mmv-dialog-down-arrow {
+		background-color: var( --background-color-dp-08 );
+	}
+}
+
+.mw-mmv-reuse-dialog .mw-mmv-reuse-tabs {
+	border-color: var( --border-color-base );
+}
+
+.mw-mmv-options-dialog-header {
+	color: var( --color-base--emphasized );
+}
+
+.mw-mmv-options-text-header {
+	color: var( --color-base );
+}
+
+.mw-mmv-options-text-body {
+	color: var( --color-base--subtle );
+}
+
+.mw-mmv-download-dialog .mw-mmv-dialog-down-arrow {
+	background-color: var( --background-color-framed );
+}
+
+.mw-mmv-download-pane {
+	.mw-mmv-download-area .mw-mmv-download-preview-link {
+		color: var( --color-base--subtle );
+	}
+
+	.mw-mmv-download-attribution {
+		background-color: var( --background-color-framed );
+		color: var( --color-base );
+
+		&:hover {
+			background-color: var( --background-color-framed--hover );
+			color: var( --color-base--emphasized );
+		}
+
+		&-attribution-cta-invite {
+			color: var( --color-base--subtle );
+		}
+	}
+}
+
+@media only screen and ( max-width: @width-breakpoint-tablet ) {
 	.mw-mmv-image-metadata-links-column {
 		width: auto; // Fix mobile bouncing
 		float: none;
@@ -31,25 +96,5 @@
 			width: auto;
 			max-width: none;
 		}
-	}
-}
-
-.skin-citizen-dark {
-	.mw-mmv-post-image {
-		background-color: @dark-bg-0;
-		color: @dark-text-100;
-	}
-
-	.mw-mmv-image-metadata {
-		border-color: @dark-bg-20;
-		background-color: @dark-bg-10;
-	}
-
-	.mw-mmv-credit {
-		color: @dark-text-90;
-	}
-
-	.mw-mmv-image-links li {
-		color: @dark-text-80;
 	}
 }
