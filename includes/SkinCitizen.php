@@ -22,6 +22,7 @@
  */
 
 use Citizen\GetConfigTrait;
+use Citizen\Partials\BodyContent;
 use Citizen\Partials\Drawer;
 use Citizen\Partials\Footer;
 use Citizen\Partials\Header;
@@ -51,6 +52,7 @@ class SkinCitizen extends SkinMustache {
 	public function __construct( $options = [] ) {
 		$skin = $this;
 		$out = $skin->getOutput();
+		$title = $out->getTitle();
 
 		$metadata = new Metadata( $this );
 		$skinTheme = new Theme( $this );
@@ -59,6 +61,35 @@ class SkinCitizen extends SkinMustache {
 
 		// Theme handler
 		$skinTheme->setSkinTheme( $options );
+
+		// Only load in content pages
+		if ( $title->isContentPage() ) {
+			// Load Citizen collapsible sections modules if enabled
+			if ( $this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true ) {
+				$options['scripts'] = array_merge(
+					$options['scripts'],
+					[ 'skins.citizen.scripts.collapsiblesections' ]
+				);
+				$options['styles'] = array_merge(
+					$options['styles'],
+					[
+						'skins.citizen.styles.collapsiblesections',
+						'skins.citizen.icons.collapsiblesections'
+					]
+				);
+			}
+
+			// Load table of content script if ToC presents
+			if ( $out->isTOCEnabled() ) {
+				// Add class to body that notifies the page has TOC
+				$out->addBodyClasses( 'skin-citizen-has-toc' );
+				// Disabled style condition loading due to pop in
+				$options['scripts'] = array_merge(
+					$options['scripts'],
+					[ 'skins.citizen.scripts.toc' ]
+				);
+			}
+		}
 
 		// Load Citizen search suggestion styles if enabled
 		if ( $this->getConfigValue( 'CitizenEnableSearch' ) === true ) {
@@ -91,17 +122,6 @@ class SkinCitizen extends SkinMustache {
 			);
 		}
 
-		// Load table of content script if ToC presents
-		if ( $out->isTOCEnabled() ) {
-			// Add class to body that notifies the page has TOC
-			$out->addBodyClasses( 'skin-citizen-has-toc' );
-			// Disabled style condition loading due to pop in
-			$options['scripts'] = array_merge(
-				$options['scripts'],
-				[ 'skins.citizen.scripts.toc' ]
-			);
-		}
-
 		$options['templateDirectory'] = __DIR__ . '/templates';
 		parent::__construct( $options );
 	}
@@ -116,6 +136,7 @@ class SkinCitizen extends SkinMustache {
 
 		$header = new Header( $this );
 		$drawer = new Drawer( $this );
+		$bodycontent = new BodyContent( $this );
 		$footer = new Footer( $this );
 		$tools = new PageTools( $this );
 
@@ -161,6 +182,8 @@ class SkinCitizen extends SkinMustache {
 
 			'msg-tagline' => $this->msg( 'tagline' )->text(),
 
+			'html-body-content-new' => $bodycontent->buildBodyContent( $out ),
+
 			'data-footer' => $footer->getFooterData(),
 		];
 	}
@@ -199,6 +222,17 @@ class SkinCitizen extends SkinMustache {
 	 */
 	final public function buildContentNavigationUrlsPublic() {
 		return parent::buildContentNavigationUrls();
+	}
+
+	/**
+	 * Change access to public, as it is used in partials
+	 *
+	 * @param $title
+	 * @param $html
+	 * @return array
+	 */
+	final public function wrapHTMLPublic( $title, $html ) {
+		return parent::wrapHTML( $title, $html );
 	}
 
 	/**

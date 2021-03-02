@@ -139,6 +139,15 @@
 			"features": [],
 			"styles": [ "resources/skins.citizen.styles.toc/skins.citizen.styles.toc.less" ]
 		},
+		"skins.citizen.styles.collapsiblesections": {
+			"class": "ResourceLoaderSkinModule",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"features": [],
+			"styles": [ "resources/skins.citizen.styles.collapsiblesections/skins.citizen.styles.collapsiblesections.less" ]
+		},
 		"skins.citizen.scripts": {
 			"packageFiles": [
 				"resources/skins.citizen.scripts/skin.js",
@@ -187,6 +196,11 @@
 		"skins.citizen.scripts.drawer": {
 			"scripts": [
 				"resources/skins.citizen.scripts.drawer/drawerSubSearch.js"
+			]
+		},
+		"skins.citizen.scripts.collapsiblesections": {
+			"scripts": [
+				"resources/skins.citizen.scripts.collapsiblesections/collapsibleSections.js"
 			]
 		},
 		"skins.citizen.icons": {
@@ -305,6 +319,14 @@
 			"images": {
 				"light": "resources/skins.citizen.icons/shared/moon.svg",
 				"dark": "resources/skins.citizen.icons/shared/bright.svg"
+			}
+		},
+		"skins.citizen.icons.collapsiblesections": {
+			"class": "ResourceLoaderImageModule",
+			"selector": ".section-toggle",
+			"useDataURI": false,
+			"images": {
+				"collapse": "resources/skins.citizen.icons/shared/collapse.svg"
 			}
 		}
 	},
@@ -618,6 +640,12 @@
 			"value": false,
 			"description": "Enables to search the drawer for menu entries",
 			"descriptionmsg": "citizen-config-enabledrawersubsearch",
+			"public": true
+		},
+		"EnableCollapsibleSections": {
+			"value": true,
+			"description": "Enables or disable collapsible sections on content pages",
+			"descriptionmsg": "citizen-config-enablecollapsiblesections",
 			"public": true
 		}
 	},
