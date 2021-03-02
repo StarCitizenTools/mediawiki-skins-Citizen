@@ -144,11 +144,18 @@ figcaption,
 
 // External links
 .mw-parser-output {
-	.external {
+	a.external {
 		padding-right: 13px;
 		background-image: url( images/external-link-ltr-icon.svg );
 		background-position: center right;
 		background-repeat: no-repeat;
+	}
+}
+
+.plainlinks {
+	a.external {
+		padding: 0 !important;
+		background: none !important;
 	}
 }
 
