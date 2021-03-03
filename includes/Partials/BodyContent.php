@@ -28,7 +28,10 @@ namespace Citizen\Partials;
 use DOMDocument;
 use DOMElement;
 use DOMXpath;
+use Exception;
 use Html;
+use OutputPage;
+use ValueError;
 
 final class BodyContent extends Partial {
 
@@ -51,18 +54,26 @@ final class BodyContent extends Partial {
 	/**
 	 * Rebuild the body content
 	 *
-	 * @param string $out OutputPage
+	 * @param OutputPage $out OutputPage
 	 * @return string html
 	 */
 	public function buildBodyContent( $out ) {
-		$printSource = Html::rawElement( 'div', [ 'class' => 'printfooter' ], $this->skin->printSource() );
-		$htmlBodyContent = $bodyContent = $out->getHTML() . "\n" . $printSource;
+		$htmlBodyContent = sprintf(
+			"%s\n%s",
+			$out->getHTML(),
+			Html::rawElement( 'div', [ 'class' => 'printfooter' ], $this->skin->printSource() )
+		);
+
 		$title = $out->getTitle();
+
+		// Return the page if title is null
+		if ( $title === null ) {
+			return $htmlBodyContent;
+		}
 
 		// Check if it is not the main page
 		if ( !$title->isMainPage() ) {
-			$doc = new DOMDocument;
-			$doc->loadHTML( $bodyContent );
+			$doc = $this->parseXhtml( $htmlBodyContent );
 
 			// Make top level sections
 			$this->makeSections( $doc, $this->getTopHeadings( $doc ) );
@@ -72,15 +83,13 @@ final class BodyContent extends Partial {
 			$htmlBodyContent = $doc->saveHTML();
 		}
 
-		$newBodyContent = $this->skin->wrapHTMLPublic( $title, $htmlBodyContent );
-
-		return $newBodyContent;
+		return $this->skin->wrapHTMLPublic( $title, $htmlBodyContent );
 	}
 
 	/**
 	 * Actually splits splits the body of the document into sections
 	 *
-	 * @param DOMElement $doc representing the HTML of the current article. In the HTML the sections
+	 * @param DOMDocument $doc representing the HTML of the current article. In the HTML the sections
 	 *  should not be wrapped.
 	 * @param DOMElement[] $headings The headings returned by
 	 * @return DOMDocument
@@ -90,16 +99,17 @@ final class BodyContent extends Partial {
 		$containers = $xpath->query( 'body/div[@class="mw-parser-output"][1]' );
 
 		// Return if no parser output is found
-		if ( !$containers->length ) {
-			return;
+		if ( !$containers->length || $containers->item( 0 ) === null ) {
+			return $doc;
 		}
 
 		$container = $containers->item( 0 );
+
 		$containerChild = $container->firstChild;
 		$firstHeading = reset( $headings );
-		$firstHeadingName = $firstHeading ? $firstHeading->nodeName : false;
+		$firstHeadingName = $firstHeading->nodeName ?? false;
 		$sectionNumber = 0;
-		$sectionBody = $this->createSectionBodyElement( $doc, $sectionNumber, false );
+		$sectionBody = $this->createSectionBodyElement( $doc, $sectionNumber );
 
 		while ( $containerChild ) {
 			$node = $containerChild;
@@ -118,7 +128,7 @@ final class BodyContent extends Partial {
 				// Insert the previous section body and reset it for the new section
 				$container->insertBefore( $sectionBody, $node );
 
-				$sectionNumber += 1;
+				++$sectionNumber;
 				$sectionBody = $this->createSectionBodyElement( $doc, $sectionNumber );
 				continue;
 			}
@@ -240,5 +250,61 @@ final class BodyContent extends Partial {
 		}
 
 		return $subheadings;
+	}
+
+	/**
+	 * Parses a html string into a DOMDocument
+	 *
+	 * @param string $htmlContent
+	 * @param string $charset
+	 *
+	 * @return DOMDocument
+	 */
+	private function parseXhtml( string $htmlContent, string $charset = 'UTF-8' ): DOMDocument {
+		$htmlContent = $this->convertToHtmlEntities( $htmlContent, $charset );
+
+		$internalErrors = libxml_use_internal_errors( true );
+		$disableEntities = libxml_disable_entity_loader( true );
+
+		$dom = new DOMDocument( '1.0', $charset );
+		$dom->validateOnParse = true;
+
+		if ( trim( $htmlContent ) !== '' ) {
+		    // @phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+			@$dom->loadHTML( $htmlContent );
+		}
+
+		libxml_use_internal_errors( $internalErrors );
+		libxml_disable_entity_loader( $disableEntities );
+
+		return $dom;
+	}
+
+	/**
+	 * Converts charset to HTML-entities to ensure valid parsing.
+	 *
+	 * @param string $htmlContent
+	 * @param string $charset
+	 * @return string
+	 */
+	private function convertToHtmlEntities( string $htmlContent, string $charset = 'UTF-8' ): string {
+		set_error_handler( static function () {
+			// Null
+		} );
+
+		try {
+			return mb_convert_encoding( $htmlContent, 'HTML-ENTITIES', $charset );
+		} catch ( Exception | ValueError $e ) {
+			try {
+				$htmlContent = iconv( $charset, 'UTF-8', $htmlContent );
+				$htmlContent = mb_convert_encoding( $htmlContent, 'HTML-ENTITIES', 'UTF-8' );
+			} catch ( Exception | ValueError $e ) {
+				//
+			}
+
+			return $htmlContent;
+		} finally {
+			restore_error_handler();
+		}
 	}
 }

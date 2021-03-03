@@ -1,6 +1,6 @@
 {
 	"name": "Citizen",
-	"version": "1.4.0",
+	"version": "1.4.1",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
@@ -200,7 +200,7 @@
 		},
 		"skins.citizen.scripts.sections": {
 			"scripts": [
-				"resources/skins.citizen.scripts.sections/Sections.js"
+				"resources/skins.citizen.scripts.sections/sections.js"
 			]
 		},
 		"skins.citizen.icons": {

@@ -24,7 +24,8 @@
 		"source": "https://github.com/StarCitizenTools/mediawiki-skins-Citizen"
 	},
 	"require": {
-		"composer/installers": ">1.0.12"
+		"composer/installers": ">1.0.12",
+		"ext-libxml": "*"
 	},
 	"require-dev": {
 		"mediawiki/mediawiki-codesniffer": "34.0.0",
