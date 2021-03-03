@@ -7,7 +7,7 @@ Live demo can be seen at the [Star Citizen Wiki](https://starcitizen.tools), mor
 
 ## Notable features
 * **Fully responsive skin**: Responsive and able to adapt to different screen sizes. 📱💻🖥️
-* **Collapsible sections**: Collapse and expand article sections ***Tracking require JS.*** 📖📕
+* **Collapsible sections**: Collapse and expand article sections ***Require JS.*** 📖📕
 * **Persistent ToC**: Access ToC anywhere in the article. ***Tracking require JS.*** 🔍📖
 * **Rich search suggestions**: More helpful search suggestions with images and descriptions. ***Require JS.*** 🔍👀
 * **Lazyload images**: Improve load time of your wiki and avoid unnecessary image downloads. ***Require JS.*** 🚀
