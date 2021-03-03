@@ -72,7 +72,7 @@ final class BodyContent extends Partial {
 		}
 
 		// Check if it is not the main page
-		if ( !$title->isMainPage() ) {
+		if ( !$title->isMainPage() && $title->isContentPage() ) {
 			$doc = $this->parseXhtml( $htmlBodyContent );
 
 			// Make top level sections
@@ -80,7 +80,7 @@ final class BodyContent extends Partial {
 			// Mark subheadings
 			$this->markSubHeadings( $this->getSubHeadings( $doc ) );
 
-			$htmlBodyContent = $doc->saveHTML();
+			$htmlBodyContent = html_entity_decode( $doc->saveHTML(), ENT_QUOTES, 'UTF-8' );
 		}
 
 		return $this->skin->wrapHTMLPublic( $title, $htmlBodyContent );
