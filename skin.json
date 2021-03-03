@@ -139,14 +139,14 @@
 			"features": [],
 			"styles": [ "resources/skins.citizen.styles.toc/skins.citizen.styles.toc.less" ]
 		},
-		"skins.citizen.styles.collapsiblesections": {
+		"skins.citizen.styles.sections": {
 			"class": "ResourceLoaderSkinModule",
 			"targets": [
 				"desktop",
 				"mobile"
 			],
 			"features": [],
-			"styles": [ "resources/skins.citizen.styles.collapsiblesections/skins.citizen.styles.collapsiblesections.less" ]
+			"styles": [ "resources/skins.citizen.styles.sections/skins.citizen.styles.sections.less" ]
 		},
 		"skins.citizen.scripts": {
 			"packageFiles": [
@@ -198,9 +198,9 @@
 				"resources/skins.citizen.scripts.drawer/drawerSubSearch.js"
 			]
 		},
-		"skins.citizen.scripts.collapsiblesections": {
+		"skins.citizen.scripts.sections": {
 			"scripts": [
-				"resources/skins.citizen.scripts.collapsiblesections/collapsibleSections.js"
+				"resources/skins.citizen.scripts.sections/Sections.js"
 			]
 		},
 		"skins.citizen.icons": {
@@ -321,7 +321,7 @@
 				"dark": "resources/skins.citizen.icons/shared/bright.svg"
 			}
 		},
-		"skins.citizen.icons.collapsiblesections": {
+		"skins.citizen.icons.sections": {
 			"class": "ResourceLoaderImageModule",
 			"selector": ".section-toggle",
 			"useDataURI": false,

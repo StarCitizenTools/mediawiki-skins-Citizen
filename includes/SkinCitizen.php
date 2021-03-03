@@ -68,13 +68,13 @@ class SkinCitizen extends SkinMustache {
 			if ( $this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true ) {
 				$options['scripts'] = array_merge(
 					$options['scripts'],
-					[ 'skins.citizen.scripts.collapsiblesections' ]
+					[ 'skins.citizen.scripts.sections' ]
 				);
 				$options['styles'] = array_merge(
 					$options['styles'],
 					[
-						'skins.citizen.styles.collapsiblesections',
-						'skins.citizen.icons.collapsiblesections'
+						'skins.citizen.styles.sections',
+						'skins.citizen.icons.sections'
 					]
 				);
 			}
@@ -182,7 +182,7 @@ class SkinCitizen extends SkinMustache {
 
 			'msg-tagline' => $this->msg( 'tagline' )->text(),
 
-			'html-body-content-new' => $bodycontent->buildBodyContent( $out ),
+			'html-body-content--formatted' => $bodycontent->buildBodyContent( $out ),
 
 			'data-footer' => $footer->getFooterData(),
 		];
