@@ -105,9 +105,6 @@ final class BodyContent extends Partial {
 
 		$container = $containers->item( 0 );
 
-		// This is just here to shuptup warnings
-		assert( $container !== null );
-
 		$containerChild = $container->firstChild;
 		$firstHeading = reset( $headings );
 		$firstHeadingName = $firstHeading->nodeName ?? false;
@@ -272,7 +269,8 @@ final class BodyContent extends Partial {
 		$dom = new DOMDocument( '1.0', $charset );
 		$dom->validateOnParse = true;
 
-		if ( '' !== trim( $htmlContent ) ) {
+		if ( trim( $htmlContent ) !== '' ) {
+		    // @phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 			@$dom->loadHTML( $htmlContent );
 		}
 
