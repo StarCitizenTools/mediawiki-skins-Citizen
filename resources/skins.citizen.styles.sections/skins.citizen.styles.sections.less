@@ -1,0 +1,64 @@
+@import '../variables.less';
+
+.section {
+	&-toggle {
+		width: 18px;
+		height: 18px;
+		padding: 5px;
+		margin-right: 10px;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: 18px;
+		cursor: pointer;
+		opacity: var( --opacity-icon-base );
+		transition: @transition-opacity-quick, @transition-transform-quick;
+
+		&:hover {
+			opacity: var( --opacity-icon-base--hover );
+		}
+
+		&:active {
+			opacity: var( --opacity-icon-base--active );
+		}
+
+		&--collapsed {
+			transform: rotate3d( 1, 0, 0, 180deg );
+
+			~ .mw-headline {
+				color: var( --color-base );
+			}
+		}
+	}
+
+	&-heading {
+		.mw-headline {
+			transition: @transition-color-quick;
+		}
+	}
+
+	// Fix button alignment
+	&-heading,
+	&-subheading {
+		display: flex;
+		align-items: center;
+	}
+
+	&-collapsible {
+		&--collapsed {
+			display: none;
+		}
+	}
+}
+
+.skin-citizen-dark {
+	.section-toggle {
+		filter: invert( 1 );
+	}
+}
+
+// Hide toggle when client is noscript
+.client-nojs {
+	.section-toggle {
+		display: none;
+	}
+}
