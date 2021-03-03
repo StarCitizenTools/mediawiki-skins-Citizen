@@ -227,8 +227,8 @@ class SkinCitizen extends SkinMustache {
 	/**
 	 * Change access to public, as it is used in partials
 	 *
-	 * @param $title
-	 * @param $html
+	 * @param Title $title
+	 * @param string $html body text
 	 * @return array
 	 */
 	final public function wrapHTMLPublic( $title, $html ) {

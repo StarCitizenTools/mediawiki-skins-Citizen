@@ -50,6 +50,12 @@ final class BodyContent extends Partial {
 	 */
 	private $topHeadingTags = [ "h1", "h2", "h3", "h4", "h5", "h6 "];
 
+	/**
+	 * Rebuild the body content
+	 *
+	 * @param string $out OutputPage
+	 * @return string html 
+	 */
 	public function buildBodyContent( $out ) {
 		$printSource = Html::rawElement( 'div', [ 'class' => 'printfooter' ], $this->skin->printSource() );
 		$htmlBodyContent = $bodyContent = $out->getHTML() . "\n" . $printSource;
@@ -68,18 +74,18 @@ final class BodyContent extends Partial {
 			$htmlBodyContent = $doc->saveHTML();
 		}
 
-		$newbodyContent = $this->skin->wrapHTMLPublic( $title, $htmlBodyContent );
+		$newBodyContent = $this->skin->wrapHTMLPublic( $title, $htmlBodyContent );
 
-		return $newbodyContent;
+		return $newBodyContent;
 	}
 
 	/**
 	 * Actually splits splits the body of the document into sections
 	 *
-	 * @param DOMElement $body representing the HTML of the current article. In the HTML the sections
+	 * @param DOMElement $doc representing the HTML of the current article. In the HTML the sections
 	 *  should not be wrapped.
 	 * @param DOMElement[] $headings The headings returned by
-	 * @see MobileFormatter::getHeadings
+	 * @return DOMDocument
 	 */
 	private function makeSections( DOMDocument $doc, array $headings ) {
 		$xpath = new DOMXpath( $doc );
@@ -136,7 +142,6 @@ final class BodyContent extends Partial {
 	 * @param DOMDocument $doc
 	 * @param DOMElement $heading
 	 * @param int $sectionNumber
-	 * @param bool $isCollapsible
 	 */
 	private function prepareHeading( DOMDocument $doc, DOMElement $heading, $sectionNumber ) {
 		$className = $heading->hasAttribute( 'class' ) ? $heading->getAttribute( 'class' ) . ' ' : '';
@@ -154,7 +159,6 @@ final class BodyContent extends Partial {
 	 *
 	 * @param DOMDocument $doc
 	 * @param int $sectionNumber
-	 * @param bool $isCollapsible
 	 *
 	 * @return DOMElement
 	 */
@@ -168,10 +172,7 @@ final class BodyContent extends Partial {
 	/**
 	 * Gets top headings in the document.
 	 *
-	 * Note well that the rank order is defined by the
-	 * <code>MobileFormatter#topHeadingTags</code> property.
-	 *
-	 * @param DOMElement $doc
+	 * @param DOMDocument $doc
 	 * @return array An array first is the highest rank headings
 	 */
 	private function getTopHeadings( DOMDocument $doc ): array {
@@ -199,9 +200,6 @@ final class BodyContent extends Partial {
 	 * the <code>section-subheading</code> class to each of them, if it 
 	 * hasn't already been added.
 	 *
-	 * FIXME: <code>in-block</code> isn't semantic in that it isn't
-	 * obviously connected to being editable.
-	 *
 	 * @param DOMElement[] $headings Heading elements
 	 */
 	protected function markSubHeadings( array $headings ) {
@@ -219,7 +217,7 @@ final class BodyContent extends Partial {
 	/**
 	 * Gets all subheadings in the document in rank order.
 	 *
-	 * @param DOMElement $body
+	 * @param DOMDocument $doc
 	 * @return DOMElement[]
 	 */
 	private function getSubHeadings( DOMDocument $doc ): array {
