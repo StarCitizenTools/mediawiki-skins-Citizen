@@ -23,6 +23,16 @@
 
 		&--collapsed {
 			transform: rotate3d( 1, 0, 0, 180deg );
+
+			~ .mw-headline {
+				color: var( --color-base );
+			}
+		}
+	}
+
+	&-heading {
+		.mw-headline {
+			transition: @transition-color-quick;
 		}
 	}
 
