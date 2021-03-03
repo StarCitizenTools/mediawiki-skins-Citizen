@@ -28,9 +28,7 @@ namespace Citizen\Partials;
 use DOMDocument;
 use DOMElement;
 use DOMXpath;
-use Exception;
 use Html;
-use Skin;
 
 final class BodyContent extends Partial {
 
@@ -48,13 +46,13 @@ final class BodyContent extends Partial {
 	 * List of tags that could be considered as section headers.
 	 * @var array
 	 */
-	private $topHeadingTags = [ "h1", "h2", "h3", "h4", "h5", "h6 "];
+	private $topHeadingTags = [ "h1", "h2", "h3", "h4", "h5", "h6 " ];
 
 	/**
 	 * Rebuild the body content
 	 *
 	 * @param string $out OutputPage
-	 * @return string html 
+	 * @return string html
 	 */
 	public function buildBodyContent( $out ) {
 		$printSource = Html::rawElement( 'div', [ 'class' => 'printfooter' ], $this->skin->printSource() );
@@ -196,8 +194,8 @@ final class BodyContent extends Partial {
 	}
 
 	/**
-	 * Marks the subheadings for the approiate styles by adding 
-	 * the <code>section-subheading</code> class to each of them, if it 
+	 * Marks the subheadings for the approiate styles by adding
+	 * the <code>section-subheading</code> class to each of them, if it
 	 * hasn't already been added.
 	 *
 	 * @param DOMElement[] $headings Heading elements
