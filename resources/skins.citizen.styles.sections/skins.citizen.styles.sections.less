@@ -1,51 +1,67 @@
 @import '../variables.less';
 
-.section {
-	&-toggle {
-		width: 18px;
-		height: 18px;
-		padding: 5px;
-		margin-right: 10px;
-		background-position: center;
-		background-repeat: no-repeat;
-		background-size: 18px;
-		cursor: pointer;
-		opacity: var( --opacity-icon-base );
-		transition: @transition-opacity-quick, @transition-transform-quick;
+.client-js {
+	.section {
+		&-heading {
+			cursor: pointer;
+			// So that double clicking won't highlight everything
+			user-select: none;
 
-		&:hover {
-			opacity: var( --opacity-icon-base--hover );
-		}
+			&--collapsed {
+				.section-toggle {
+					transform: rotate3d( 1, 0, 0, 180deg );
+				}
 
-		&:active {
-			opacity: var( --opacity-icon-base--active );
-		}
+				.mw-headline {
+					opacity: var( --opacity-icon-base );
+				}
+			}
 
-		&--collapsed {
-			transform: rotate3d( 1, 0, 0, 180deg );
+			.mw-headline {
+				transition: @transition-opacity-quick;
 
-			~ .mw-headline {
-				color: var( --color-base );
+				&:hover {
+					opacity: var( --opacity-icon-base--hover );
+				}
+
+				&:active {
+					opacity: var( --opacity-icon-base--active );
+				}
 			}
 		}
-	}
 
-	&-heading {
-		.mw-headline {
-			transition: @transition-color-quick;
+		&-toggle {
+			width: 18px;
+			height: 18px;
+			padding: 5px;
+			margin-right: 10px;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: 18px;
+			cursor: pointer;
+			opacity: var( --opacity-icon-base );
+			transition: @transition-opacity-quick, @transition-transform-quick;
+
+			&:hover {
+				opacity: var( --opacity-icon-base--hover );
+			}
+
+			&:active {
+				opacity: var( --opacity-icon-base--active );
+			}
 		}
-	}
 
-	// Fix button alignment
-	&-heading,
-	&-subheading {
-		display: flex;
-		align-items: center;
-	}
+		// Fix button alignment
+		&-heading,
+		&-subheading {
+			display: flex;
+			align-items: center;
+		}
 
-	&-collapsible {
-		&--collapsed {
-			display: none;
+		&-collapsible {
+			&--collapsed {
+				display: none;
+			}
 		}
 	}
 }
@@ -58,7 +74,9 @@
 
 // Hide toggle when client is noscript
 .client-nojs {
-	.section-toggle {
-		display: none;
+	.section {
+		&-toggle {
+			display: none;
+		}
 	}
 }

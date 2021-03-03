@@ -1,18 +1,18 @@
-function bindClick( collToggle, collSection, i, j ) {
+function bindClick( collHeading, collSection, i, j ) {
 	return function () {
 		j = i + 1;
-		this.classList.toggle( 'section-toggle--collapsed' );
+		this.classList.toggle( 'section-heading--collapsed' );
 		collSection[ j ].classList.toggle( 'section-collapsible--collapsed' );
 	};
 }
 
 function main() {
-	var collSection = document.getElementsByClassName( 'section-collapsible' ),
-		collToggle = document.getElementsByClassName( 'section-toggle' ),
+	var collHeading = document.getElementsByClassName( 'section-heading' ),
+		collSection = document.getElementsByClassName( 'section-collapsible' ),
 		i, j;
 
-	for ( i = 0; i < collToggle.length; i++ ) {
-		collToggle[ i ].addEventListener( 'click', bindClick( collToggle, collSection, i, j ) );
+	for ( i = 0; i < collHeading.length; i++ ) {
+		collHeading[ i ].addEventListener( 'click', bindClick( collHeading, collSection, i, j ) );
 	}
 }
 
