@@ -229,7 +229,7 @@ class SkinCitizen extends SkinMustache {
 	 *
 	 * @param Title $title
 	 * @param string $html body text
-	 * @return array
+	 * @return string
 	 */
 	final public function wrapHTMLPublic( $title, $html ) {
 		return parent::wrapHTML( $title, $html );
