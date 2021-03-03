@@ -79,3 +79,23 @@
 		}
 	}
 }
+
+// Fix hover state on touch devices
+@media ( hover: none ) {
+	.client-js .section {
+		&-heading .mw-headline,
+		&-toggle {
+			&:hover,
+			&:active {
+				opacity: 1;
+			}
+		}
+
+		&-heading--collapsed .mw-headline {
+			&:hover,
+			&:active {
+				opacity: var( --opacity-icon-base );
+			}
+		}
+	}
+}
