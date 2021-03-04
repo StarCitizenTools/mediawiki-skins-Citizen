@@ -1,0 +1,37 @@
+.mw-header-sitelogo {
+	position: relative;
+	display: inherit;
+	overflow: auto;
+	flex-grow: 1;
+	align-items: center;
+	margin-right: 10px;
+
+	.mw-wiki-title {
+		font-size: @ui-menu-text;
+		font-weight: 500;
+		transition: @transition-opacity-quick;
+
+		&:hover {
+			opacity: var( --opacity-icon-base--hover );
+		}
+
+		&:active {
+			opacity: var( --opacity-icon-base--active );
+		}
+
+		.mw-logo-wordmark {
+			white-space: nowrap;
+		}
+
+		img.mw-logo-wordmark {
+			width: auto;
+			height: 14px;
+		}
+	}
+}
+
+.skin-citizen-dark {
+	img.mw-logo-wordmark {
+		filter: invert( 1 ) hue-rotate( 180deg );
+	}
+}
