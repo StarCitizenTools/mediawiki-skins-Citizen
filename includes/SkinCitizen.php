@@ -64,7 +64,7 @@ class SkinCitizen extends SkinMustache {
 		$skinTheme->setSkinTheme( $options );
 
 		// Only load in content pages
-		if ( $title->isContentPage() ) {
+		if ( $title !== null && $title->isContentPage() ) {
 			// Load Citizen collapsible sections modules if enabled
 			if ( $this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true ) {
 				$options['scripts'] = array_merge(
