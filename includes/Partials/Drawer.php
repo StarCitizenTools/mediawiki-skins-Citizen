@@ -28,7 +28,6 @@ namespace Citizen\Partials;
 use Exception;
 use ExtensionRegistry;
 use MWException;
-use ResourceLoaderSkinModule;
 use Skin;
 use SpecialPage;
 
@@ -41,33 +40,6 @@ use SpecialPage;
  *   + Upload Link
  */
 final class Drawer extends Partial {
-	/**
-	 * Get and pick the correct logo based on types and variants
-	 * Based on getLogoData() in MW 1.36
-	 *
-	 * @return array
-	 */
-	public function getLogoData() : array {
-		$logoData = ResourceLoaderSkinModule::getAvailableLogos( $this->skin->getConfig() );
-
-		// check if the logo supports variants
-		$variantsLogos = $logoData['variants'] ?? null;
-
-		if ( $variantsLogos ) {
-			$preferred = $this->skin->getOutput()->getTitle()
-				->getPageViewLanguage()->getCode();
-			$variantOverrides = $variantsLogos[$preferred] ?? null;
-			// Overrides the logo
-			if ( $variantOverrides ) {
-				foreach ( $variantOverrides as $key => $val ) {
-					$logoData[$key] = $val;
-				}
-			}
-		}
-
-		return $logoData;
-	}
-
 	/**
 	 * Render the navigation drawer
 	 * Based on buildSidebar()

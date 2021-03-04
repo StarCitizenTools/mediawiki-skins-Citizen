@@ -26,6 +26,7 @@ use Citizen\Partials\BodyContent;
 use Citizen\Partials\Drawer;
 use Citizen\Partials\Footer;
 use Citizen\Partials\Header;
+use Citizen\Partials\Logos;
 use Citizen\Partials\Metadata;
 use Citizen\Partials\PageTools;
 use Citizen\Partials\Theme;
@@ -135,6 +136,7 @@ class SkinCitizen extends SkinMustache {
 		$title = $out->getTitle();
 
 		$header = new Header( $this );
+		$logos = new Logos( $this );
 		$drawer = new Drawer( $this );
 		$bodycontent = new BodyContent( $this );
 		$footer = new Footer( $this );
@@ -165,7 +167,7 @@ class SkinCitizen extends SkinMustache {
 					'href' => Skin::makeMainPageUrl(),
 				]
 			),
-			'data-logos' => $drawer->getLogoData(),
+			'data-logos' => $logos->getLogoData(),
 
 			'data-header' => [
 				'data-drawer' => $drawer->buildDrawer(),
