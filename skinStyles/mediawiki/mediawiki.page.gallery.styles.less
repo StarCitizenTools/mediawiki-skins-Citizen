@@ -6,59 +6,82 @@
 @import '../../resources/variables.less';
 @import '../../resources/mixins.less';
 
-ul.gallery {
-	position: relative;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	padding: 0;
-	margin: @content-margin-top @negative-margin @content-margin-top * 2 !important;
-}
+@gallery-clutter: 2px;
 
-li.gallerybox {
-	display: block;
-	margin: 2px;
-}
-
-li.gallerybox div.thumb {
-	margin: 0;
-}
-
-li.gallerybox,
-li.gallerybox > div {
-	width: fit-content !important;
-	height: auto !important;
-}
-
-li.gallerybox,
-li.gallerybox div,
-li.gallerybox a.image,
-li.gallerybox a.image img {
-	transition: @transition-width, @transition-height;
-}
-
-div.gallerytext {
-	display: none;
-}
-
-@media only screen and ( max-width: @screen2 ) {
+.skin-citizen {
 	ul.gallery {
-		overflow: hidden; // Hack to avoid viewpoint move
-		margin: @content-margin-top 0 @content-margin-top * 2 !important;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		padding: 0;
+		margin: @content-margin-top -@gallery-clutter;
 	}
 
-	li.gallerybox,
-	li.gallerybox div,
-	li.gallerybox a.image,
-	li.gallerybox a.image img {
-		width: 100vw !important;
-		height: auto !important;
-		transition: none; // Performance tweaks
-	}
-}
+	ul.mw-gallery {
+		&-packed,
+		&-packed-hover,
+		&-packed-overlay {
+			text-align: left;
 
-@media only screen and ( max-width: @screen1 ) {
-	ul.gallery {
-		margin: @content-margin-top -@margin-side @content-margin-top * 2 !important;
+			div.thumb img {
+				width: 100% !important; // fill empty space
+				height: auto;
+			}
+
+			li.gallerybox {
+				flex-grow: 1;
+				margin: @gallery-clutter;
+
+				div.gallerytextwrapper {
+					right: 0;
+					width: auto !important; // fill empty space
+					margin: 0;
+					background: var( --background-color-overlay--lighter );
+				}
+			}
+		}
+
+		&-traditional,
+		&-nolines {
+			margin-right: -@gallery-clutter * 2;
+			margin-left: -@gallery-clutter * 2;
+
+			li.gallerybox {
+				margin: @gallery-clutter * 2;
+			}
+		}
+	}
+
+	li.gallerybox {
+		display: block;
+
+		> div {
+			width: 100% !important; // fill empty space
+			height: auto;
+		}
+
+		div.thumb {
+			overflow: hidden; // for border radius
+			width: 100% !important; // fill empty space
+			height: auto;
+			border-color: var( --border-color-base );
+			margin: 0;
+			background-color: var( --background-color-framed );
+			border-radius: @border-radius-small;
+		}
+	}
+
+	div.gallerytext {
+		padding: @content-margin-top / 2 0;
+		color: var( --color-base-subtle );
+		font-size: @content-caption-size;
+
+		p {
+			margin-top: 0;
+		}
+
+		a.image {
+			display: inline;
+		}
 	}
 }
