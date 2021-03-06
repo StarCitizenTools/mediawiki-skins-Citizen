@@ -53,9 +53,8 @@
 #p-personal {
 	position: fixed;
 	top: var( --height-header );
-	right: 0;
-	left: 0;
-	min-width: 250px;
+	right: var( --padding-page );
+	left: var( --padding-page );
 	margin: 0;
 
 	ul {
@@ -184,5 +183,6 @@
 	#p-personal {
 		position: absolute;
 		left: unset;
+		min-width: 250px;
 	}
 }
