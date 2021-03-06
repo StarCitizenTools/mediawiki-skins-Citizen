@@ -6,13 +6,9 @@
 @import '../../../resources/variables.less';
 
 .mw-references-wrap {
-	margin: @content-margin-top 0 0 0;
-	color: @base-30;
+	margin-top: @content-margin-top;
+	color: var( --color-base );
 	font-size: @content-small-text-size;
-}
-
-.mw-references-columns {
-	margin: @content-margin-top @negative-margin 0 @negative-margin;
 }
 
 .mw-body-content {
@@ -29,15 +25,18 @@ span.reference {
 	font-size: 80%;
 }
 
-@media ( max-width: @screen2 ) {
-	.mw-references-columns {
-		margin: @content-margin-top 0 0 0;
+.skin-citizen {
+	ol.references li:target,
+	sup.reference:target {
+		background-color: var( --background-color-primary--hover );
 	}
 }
 
 .skin-citizen-dark {
 	ol.references li:target,
 	sup.reference:target {
-		background-color: @accent-10;
+		a {
+			color: var( --color-base--emphasized );
+		}
 	}
 }
