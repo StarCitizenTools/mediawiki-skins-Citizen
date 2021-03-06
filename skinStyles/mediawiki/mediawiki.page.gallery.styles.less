@@ -47,14 +47,14 @@
 			div.thumb {
 				/* Gallary text background */
 				&:after {
-					content: "";
-				    display: block;
 					position: absolute;
-				    bottom: 0;
-				    left: 0;
-				    right: 0;
-				    height: 60%;
-				    border-radius: 0 0 @border-radius-small @border-radius-small;
+					right: 0;
+					bottom: 0;
+					left: 0;
+					display: block;
+					height: 60%;
+					border-radius: 0 0 @border-radius-small @border-radius-small;
+					content: '';
 				}
 			}
 
@@ -70,7 +70,7 @@
 		&-packed-hover li.gallerybox:hover,
 		&-packed-overlay li.gallerybox {
 			div.thumb:after {
-				background: linear-gradient(to top, #000, transparent);
+				background: linear-gradient( to top, #000, transparent );
 			}
 
 			div.gallerytextwrapper:hover {
