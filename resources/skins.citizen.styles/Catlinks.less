@@ -21,13 +21,13 @@
 
 			li {
 				display: block;
+				overflow: hidden;
 				padding: 0;
 				border: 0;
-				margin: 0 @margin-side / 2 @margin-side / 2 0;
 				border: 1px solid var( --border-color-base--lighter );
+				margin: 0 @margin-side / 2 @margin-side / 2 0;
 				background-color: var( --background-color-framed );
 				border-radius: 100px;
-				overflow: hidden;
 				.boxshadow(1);
 
 				&:first-of-type {
@@ -39,7 +39,7 @@
 					padding: 7px 15px;
 					color: var( --color-base--subtle ) !important; // Override
 					transition: @transition-background-quick;
-					
+
 					&:hover {
 						background-color: var( --color-primary--hover );
 						color: @base-100 !important;
