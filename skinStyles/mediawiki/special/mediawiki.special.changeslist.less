@@ -8,7 +8,6 @@
 /*!
  * Styling for Special:Watchlist and Special:RecentChanges
  */
-
 #siteSub {
 	display: none !important;
 }
@@ -42,14 +41,6 @@
 }
 
 .mw-changeslist {
-	h4 {
-		padding: @margin-side / 2 0 !important;
-		border-bottom: 1px solid var( --border-color-base );
-		color: var( --color-base--subtle ) !important;
-		font-family: @fonts !important;
-		font-size: @content-caption-size !important;
-	}
-
 	.comment {
 		color: var( --color-base--subtle );
 	}
@@ -65,5 +56,17 @@
 		.mw-tag-marker {
 			color: var( --color-base--subtle );
 		}
+	}
+}
+
+// Need additional parent to override
+.mw-body-content {
+	.mw-changeslist h4 {
+		padding: @margin-side / 2 0;
+		border-bottom: 1px solid var( --border-color-base );
+		color: var( --color-base--subtle );
+		font-size: @content-caption-size;
+		font-weight: normal;
+		letter-spacing: 0.75px;
 	}
 }
