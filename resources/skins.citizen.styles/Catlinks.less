@@ -24,30 +24,28 @@
 				padding: 0;
 				border: 0;
 				margin: 0 @margin-side / 2 @margin-side / 2 0;
+				border: 1px solid var( --border-color-base--lighter );
+				background-color: var( --background-color-framed );
+				border-radius: 100px;
+				overflow: hidden;
+				.boxshadow(1);
 
 				&:first-of-type {
 					margin-left: 0;
 				}
 
 				a {
-					display: block;
-					padding: @margin-side / 4 @margin-side / 2;
-					border: 1px solid var( --border-color-base--lighter );
-					background-color: var( --background-color-framed );
+					display: inline-block;
+					padding: 7px 15px;
 					color: var( --color-base--subtle ) !important; // Override
-					transition: @transition-background-quick, @transition-color-quick, @transition-border-quick, @transition-transform-quick, @transition-box-shadow-quick;
-					.boxshadow(1);
-
+					transition: @transition-background-quick;
+					
 					&:hover {
-						border-color: var( --color-primary--hover );
 						background-color: var( --color-primary--hover );
 						color: @base-100 !important;
-						transform: translateY( -2px );
-						.boxshadow(2);
 					}
 
 					&.new:hover {
-						border-color: var( --color-destructive--hover );
 						background-color: var( --color-destructive--hover );
 					}
 				}
