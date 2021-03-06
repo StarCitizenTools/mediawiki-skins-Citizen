@@ -5,24 +5,37 @@
 
 @import '../../resources/variables.less';
 
-.skin-citizen-dark {
-	.diff-context {
-		border-color: @dark-bg-20;
-		background: @dark-bg-10;
-		color: @dark-text-90;
+.diff {
+	&-lineno {
+		font-size: @ui-menu-text;
+		font-weight: normal;
+		letter-spacing: 0.75px;
 	}
 
-	/* TODO */
-	.diff-addedline .diffchange {
-		background: #d8ecff;
+	&-context {
+		border-color: var( --border-color-base--lighter );
+		background: var( --background-color-framed );
+		color: var( --color-base--subtle );
 	}
 
-	.diff-deletedline .diffchange {
-		background: #feeec8;
+	&-addedline {
+		border-color: var( --color-success );
+
+		.diffchange {
+			background: var( --background-color-success );
+		}
 	}
 
-	.mw-diff-movedpara-left:after,
-	.mw-diff-movedpara-right:after {
-		color: @dark-text-90;
+	&-deletedline {
+		border-color: var( --color-destructive );
+
+		.diffchange {
+			background: var( --background-color-destructive );
+		}
 	}
+}
+
+.mw-diff-movedpara-left:after,
+.mw-diff-movedpara-right:after {
+	color: var( --color-base--subtle );
 }
