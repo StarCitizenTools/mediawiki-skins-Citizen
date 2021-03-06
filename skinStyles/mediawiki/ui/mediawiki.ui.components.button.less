@@ -6,8 +6,46 @@
 @import '../../../resources/variables.less';
 
 .mw-ui-button {
+	border-color: var( --border-color-base );
 	background-color: var( --background-color-framed );
 	color: var( --color-base );
+
+	&:visited {
+		color: var( --color-base );
+	}
+
+	&:hover {
+		border-color: var( --border-color-base );
+		background-color: var( --background-color-framed--hover );
+		color: var( --color-base--emphasized );
+	}
+
+	&:focus {
+		border-color: var( --color-primary );
+		background-color: var( --background-color-framed );
+		box-shadow: inset 0 0 0 1px var( --color-primary );
+		color: var( --color-base );
+	}
+
+	&:active,
+	&.is-on {
+		border-color: var( --background-color-framed--active );
+		background-color: var( --background-color-framed--active );
+		color: var( --color-base--subtle );
+	}
+
+	&:disabled {
+		border-color: var( --background-color-framed--active );
+		background-color: var( --background-color-framed--active );
+		color: var( --color-base--subtle );
+
+		&:hover,
+		&:active {
+			border-color: var( --background-color-framed--active );
+			background-color: var( --background-color-framed--active );
+			color: var( --color-base--subtle );
+		}
+	}
 
 	&.mw-ui-quiet,
 	&.mw-ui-quiet.mw-ui-progressive,
