@@ -481,7 +481,7 @@
 			"+oojs-ui-widgets": "skinStyles/oojs/oojs-ui-widgets.less",
 			"+oojs-ui-windows": "skinStyles/oojs/oojs-ui-windows.less",
 
-			"+jquery.ui.core.styles": "skinStyles/jquery.ui/smoothness/jquery.ui.theme.less",
+			"+jquery.ui": "skinStyles/jquery.ui/smoothness/jquery.ui.theme.less",
 
 			"+mmv": "skinStyles/extensions/MultimediaViewer/mmv.less"
 		}
