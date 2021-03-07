@@ -1,11 +1,43 @@
+@import '../../../resources/variables.less';
 
-.mw-dismissable-notice {
-	position: relative;
+.skin-citizen {
+	.mw-dismissable-notice {
+		&-close {
+			font-size: 0; // hide brackets
 
-	&-close {
-		position: absolute;
-		top: 0;
-		right: 0;
-		float: unset;
+			> a {
+				display: block;
+				width: 24px;
+				height: 24px;
+
+				&:before {
+					display: block;
+					color: var( --color-base );
+					content: '\00d7'; // close icon
+					font-size: 24px;
+					line-height: 1;
+					text-align: center;
+					transition: @transition-color-quick;
+				}
+
+				&:hover {
+					&:before {
+						color: var( --color-base--emphasized );
+					}
+				}
+
+				&:active {
+					&:before {
+						color: var( --color-base--subtle );
+					}
+				}
+			}
+		}
+
+		&-body {
+			// Default has top and bottom margin
+			// So bottom margin is added to respect it
+			margin: 0 0 @content-margin-top 0;
+		}
 	}
 }
