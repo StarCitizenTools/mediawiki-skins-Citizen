@@ -6,7 +6,8 @@
 .section-toggle,
 .mw-editsection,
 .catlinks,
-.mw-footer nav {
+#footer-places,
+#footer-bottom {
 	display: none;
 }
 
@@ -31,11 +32,21 @@ a {
 }
 
 .mw-footer {
-	padding-top: 20px;
-	border-top: 1px solid;
-	margin-top: 20px;
 	color: @color-base30;
 	font-size: 14px;
+}
+
+#footer-content {
+	padding-top: 10px;
+	border-top: 1px solid;
+	margin-top: 20px;
+}
+
+#footer-info {
+	ul {
+		padding: 0;
+		list-style: none;
+	}
 }
 
 // Table of contents
