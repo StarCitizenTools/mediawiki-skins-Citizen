@@ -1,9 +1,20 @@
 .catlinks {
-	padding-top: 2.4rem;
+	margin-top: @content-margin-top;
 	line-height: 1.2;
 
 	.mw-normal-catlinks {
 		font-size: 0; // Hide colon
+	}
+
+	.mw-hidden-catlinks {
+		color: var( --color-base--subtle );
+		font-size: @ui-menu-text;
+		letter-spacing: 0.75px;
+	}
+
+	.mw-normal-catlinks,
+	.mw-hidden-catlinks {
+		margin-top: @content-margin-top;
 
 		> a {
 			display: block;
@@ -17,7 +28,9 @@
 			flex-wrap: wrap;
 			padding-top: @content-margin-top;
 			margin: 0;
-			font-size: @content-caption-size; // Reset font
+			/* Reset font */
+			font-size: @content-caption-size;
+			letter-spacing: 0;
 
 			li {
 				display: block;
