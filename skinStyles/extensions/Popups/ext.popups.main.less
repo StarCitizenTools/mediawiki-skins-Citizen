@@ -97,4 +97,18 @@
 			border-top-color: var( --border-color-base--lighter );
 		}
 	}
+
+	/* referencePreview.less */
+	&.mwe-popups-type-reference {
+		.mwe-popups-extract {
+			.mwe-popups-fade {
+				background-image: linear-gradient( transparent, var( --background-color-dp-08 ) );
+			}
+
+			/* T266859 */
+			.mw-parser-output {
+				overflow-wrap: break-word;
+			}
+		}
+	}
 }
