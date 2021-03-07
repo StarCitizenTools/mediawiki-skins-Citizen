@@ -1,178 +1,92 @@
-
-/*
- * Hide some extra stuff from print view
- * (some of the navigation is already hidden automatically, but not all)
-*/
+// Hide elements that are not needed in print
 .mw-header,
+#siteNotice,
 .mw-indicators,
-.toctoggle,
-.mw-side,
-.noprint,
-#catlinks,
-#p-namespaces,
-#p-variants,
-#footer-bottom,
-#toc,
-.hatnote,
-.mbox,
-.mw-sidebar-sitename,
-.tabbernav,
-.embedvideo {
-	display: none !important;
+.page-actions,
+.section-toggle,
+.mw-editsection,
+.catlinks,
+.mw-footer nav {
+	display: none;
 }
 
-* {
-	box-shadow: none !important;
+a {
+	color: #000;
 }
 
-html,
-body {
-	color: @base-20;
-	font-family: @fonts;
-}
-
-p,
-ul,
-ol {
-	margin: 0.8rem 0 0 0;
-}
-
-.mw-body {
-	color: @base-20;
-}
-
-.mw-body .firstHeading {
-	overflow: inherit;
-	padding-top: 1.2rem;
+.firstHeading {
 	margin: 0;
-	color: @base-10;
-	line-height: 1.2;
-}
-
-.mw-body h1,
-.mw-body-content h1 {
-	font-size: @content-h1-size;
-}
-
-.mw-body-content {
-	font-size: @content-body-size;
-	line-height: @content-line-height;
-
-	#contentSub,
-	#contentSub2 {
-		color: @base-30;
-		font-size: @content-caption-size;
-	}
-
-	p {
-		line-height: inherit;
-		overflow-wrap: break-word;
-	}
-
-	h2 {
-		font-size: @content-h2-size;
-	}
-
-	h3 {
-		font-size: @content-h3-size;
-	}
-
-	h4 {
-		font-size: @content-h4-size;
-	}
-
-	h5 {
-		font-size: @content-h5-size;
-	}
-
-	h6 {
-		font-size: @content-h6-size;
-	}
-
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		padding: 0;
-		margin: 0;
-		color: @color-content-header;
-	}
-
-	h1,
-	h2 {
-		margin-top: @content-margin-top * 3;
-	}
-
-	h3,
-	h4,
-	h5,
-	h6,
-	p + p {
-		margin-top: @content-margin-top * 2;
-	}
-
-	/* stylelint-disable no-descending-specificity */
-	h1 + h2,
-	h2 + h3,
-	h3 + h4,
-	h4 + h5,
-	h5 + h6,
-	p,
-	table {
-		margin-top: @content-margin-top;
-	}
-	/* stylelint-enable */
-
-	ul {
-		padding: 0;
-		margin: @content-margin-top 0 0 @content-margin-top * 2;
-
-		ul {
-			margin: 0 0 0 @content-margin-top * 2;
-		}
-	}
 }
 
 #siteSub {
-	display: block;
-	margin: 0.4rem 0 1.6rem;
-	color: #72777d;
-	font-size: 0.8125rem;
+	color: @color-base30;
+}
+
+.mw-body-header {
+	margin-bottom: @content-margin-top;
+}
+
+.printfooter {
+	font-size: 14px;
 }
 
 .mw-footer {
-	padding-top: 1rem;
-	border-top: 1px solid @base-30;
+	padding-top: 20px;
+	border-top: 1px solid;
+	margin-top: 20px;
+	color: @color-base30;
+	font-size: 14px;
+}
 
-	ul {
-		padding: 0;
-		list-style-type: none;
+// Table of contents
+.toc {
+	display: table;
+	padding: 10px;
+	border: 1px solid;
+	margin-top: @content-margin-top;
+	font-size: 14px;
+
+	&title {
+		padding-bottom: 10px;
+		border-bottom: 1px solid;
 	}
 }
 
-.last-modified-bar {
-	padding-bottom: 1rem;
-	font-size: @content-caption-size;
+#mw-toc-heading {
+	margin: 0;
+	font-size: 1rem;
 }
 
-.mw-wiki-title {
-	color: @base-30;
-	font-size: 1.2rem;
-	letter-spacing: 2px;
-	text-transform: uppercase;
+.thumb {
+	margin-top: @content-margin-top;
+	margin-bottom: @content-margin-top;
 }
 
-.gallery {
-	margin: 0 !important;
+// Float styles
+div.tleft,
+div.floatleft,
+table.floatleft {
+	margin-right: 1.4rem;
+	clear: left;
+	float: left;
 }
 
-.infobox {
-	border: 1px solid @base-30 !important;
-	background: @base-100 !important;
+div.tright,
+div.floatright,
+table.floatright {
+	margin-left: 1.4rem;
+	clear: right;
+	float: right;
 }
 
-.tabbertab {
-	display: block !important;
+// Gallery
+.skin-citizen {
+	ul.mw-gallery-packed {
+		&-hover,
+		&-overlay {
+			div.thumb:after {
+				display: none;
+			}
+		}
+	}
 }
