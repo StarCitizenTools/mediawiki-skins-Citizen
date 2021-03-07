@@ -4,109 +4,139 @@
 */
 
 @import '../../../resources/variables.less';
+@import '../../../resources/mixins.less';
+
+/*!
+ * jQuery UI CSS Framework 1.9.2
+ */
+
+/* Component containers
+----------------------------------*/
+.ui {
+	&-dialog {
+		.boxshadow(4);
+
+		&.ui-widget-content {
+			background: var( --background-color-dp-24 );
+		}
+	}
+
+	&-widget {
+		font-family: @fonts;
+
+		input,
+		select,
+		textarea,
+		button {
+			font-family: @fonts;
+		}
+
+		&-content {
+			border-color: var( --border-color-base );
+			background: var( --background-color-framed );
+			color: var( --color-base );
+		}
+
+		&-header {
+			border-color: var( --border-color-base );
+			background: var( --background-color-framed--hover );
+			color: var( --color-base );
+		}
+	}
+}
+
+/* Interaction states
+----------------------------------*/
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default {
+	border-color: var( --border-color-base );
+	background-color: var( --background-color-framed );
+	color: var( --color-base );
+}
+
+.ui-state-default a,
+.ui-state-default a:link,
+.ui-state-default a:visited {
+	color: var( --color-base );
+}
+
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus {
+	border-color: var( --border-color-base );
+	background-color: var( --background-color-framed--hover );
+	color: var( --color-base--emphasized );
+}
+
+.ui-state-hover a,
+.ui-state-hover a:hover,
+.ui-state-hover a:link,
+.ui-state-hover a:visited {
+	color: var( --color-base--emphasized );
+}
+
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active {
+	border-color: var( --background-color-framed--active );
+	background-color: var( --background-color-framed--active );
+	color: var( --color-base--subtle );
+}
+
+.ui-state-active a,
+.ui-state-active a:link,
+.ui-state-active a:visited {
+	color: var( --color-base--subtle );
+}
+
+/* Interaction Cues
+----------------------------------*/
+.ui-state-highlight,
+.ui-widget-content .ui-state-highlight,
+.ui-widget-header .ui-state-highlight {
+	border-color: var( --border-color-base );
+	background: var( --background-color-primary--hover );
+	color: var( --color-primary );
+}
+
+.ui-state-highlight a,
+.ui-widget-content .ui-state-highlight a,
+.ui-widget-header .ui-state-highlight a {
+	color: var( --color-primary );
+}
+
+.ui-state-error,
+.ui-widget-content .ui-state-error,
+.ui-widget-header .ui-state-error {
+	border-color: var( --border-color-base );
+	background: var( --background-color-destructive );
+	color: var( --color-destructive );
+}
+
+.ui-state-error a,
+.ui-widget-content .ui-state-error a,
+.ui-widget-header .ui-state-error a {
+	color: var( --color-destructive );
+}
+
+.ui-state-error-text,
+.ui-widget-content .ui-state-error-text,
+.ui-widget-header .ui-state-error-text {
+	color: var( --color-destructive );
+}
+
+/* Overlays */
+.ui-widget-overlay {
+	background: var( --background-color-overlay--lighter );
+	opacity: 1;
+}
 
 .skin-citizen-dark {
-	.ui-widget-content {
-		border: 1px solid @dark-bg-50;
-		background: @dark-bg-0 none;
-		color: @dark-text-90;
-	}
-
-	.ui-widget-header {
-		border: 1px solid @dark-bg-50;
-		background: @dark-bg-30 none;
-		color: @dark-text-90;
-	}
-
-	.ui-state-default,
-	.ui-widget-content .ui-state-default,
-	.ui-widget-header .ui-state-default {
-		border: 1px solid @dark-bg-30;
-		background: @dark-bg-20 none;
-		color: @dark-text-80;
-	}
-
-	.ui-state-default a,
-	.ui-state-default a:link,
-	.ui-state-default a:visited {
-		color: @dark-text-80;
-	}
-
-	.ui-state-hover,
-	.ui-widget-content .ui-state-hover,
-	.ui-widget-header .ui-state-hover,
-	.ui-state-focus,
-	.ui-widget-content .ui-state-focus,
-	.ui-widget-header .ui-state-focus {
-		border: 1px solid @dark-bg-50;
-		background: @dark-bg-20 none;
-		color: @dark-text-90;
-	}
-
-	.ui-state-hover a,
-	.ui-state-hover a:hover,
-	.ui-state-hover a:link,
-	.ui-state-hover a:visited {
-		color: @dark-text-90;
-	}
-
-	.ui-state-active,
-	.ui-widget-content .ui-state-active,
-	.ui-widget-header .ui-state-active {
-		border: 1px solid @dark-bg-50;
-		background: @dark-bg-0 none;
-		color: @dark-text-90;
-	}
-
-	.ui-state-active a,
-	.ui-state-active a:link,
-	.ui-state-active a:visited {
-		color: @dark-text-90;
-	}
-
-	.ui-state-highlight,
-	.ui-widget-content .ui-state-highlight,
-	.ui-widget-header .ui-state-highlight {
-		border: 1px solid @accent-10;
-		background: @dark-bg-10 none;
-		color: @dark-text-90;
-	}
-
-	.ui-state-highlight a,
-	.ui-widget-content .ui-state-highlight a,
-	.ui-widget-header .ui-state-highlight a {
-		color: @dark-text-90;
-	}
-
-	.ui-state-error,
-	.ui-widget-content .ui-state-error,
-	.ui-widget-header .ui-state-error {
-		border: 1px solid @red-50;
-		background: @red-90 none;
-		color: @red-50;
-	}
-
-	.ui-state-error a,
-	.ui-widget-content .ui-state-error a,
-	.ui-widget-header .ui-state-error a {
-		color: @red-50;
-	}
-
-	.ui-state-error-text,
-	.ui-widget-content .ui-state-error-text,
-	.ui-widget-header .ui-state-error-text {
-		color: @red-50;
-	}
-
-	.ui-widget-overlay {
-		background: @dark-bg-50 none;
-	}
-
-	.ui-widget-shadow {
-		background: @dark-bg-50 none;
-	}
-
 	.ui-widget-header .ui-icon {
-		filter: invert( 1 ) hue-rotate( 180deg );
+		filter: invert(1) hue-rotate(180deg);
 	}
 }

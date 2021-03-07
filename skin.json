@@ -415,6 +415,8 @@
 
 			"+ext.srf.listwidget": "skinStyles/extensions/SemanticResultFormats/listwidget/ext.srf.listwidget.less",
 
+			"+ext.MWOAuth.styles": "skinStyles/extensions/OAuth/ext.MWOAuth.styles.less",
+
 			"+ext.srf.pagewidget.carousel": "skinStyles/extensions/SemanticResultFormats/pagewidget/ext.srf.pagewidget.carousel.less",
 
 			"+ext.srf.slideshow": "skinStyles/extensions/SemanticResultFormats/slideshow/ext.srf.slideshow.less",
