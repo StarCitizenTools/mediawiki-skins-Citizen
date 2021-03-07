@@ -1,0 +1,60 @@
+/*
+ * Citizen - OAuth styles
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+#mw-mwoauth-authorize {
+	/* Override inline styles */
+	&-dialog {
+		border-color: var( --border-color-base ) !important;
+		background-color: var( --background-color-dp-24 ) !important;
+	}
+
+	&--form {
+		color: var( --color-base );
+	}
+}
+
+/* ext.MWOAuth.BasicStyles.css */
+/*
+.mw-mwoauthconsumerregistration-body,
+.mw-mwoauthmanageconsumers-body {
+	background-color: #f0f0f0;
+}
+
+.mw-mwoauthmanageconsumers-proposed,
+.mw-mwoauthmanagemygrants-proposed,
+.mw-mwoauthconsumerregistration-proposed {
+	background-color: #b7b8e1;
+}
+
+.mw-mwoauthmanageconsumers-rejected,
+.mw-mwoauthmanagemygrants-rejected,
+.mw-mwoauthconsumerregistration-rejected {
+	background-color: #e1b7ba;
+}
+
+.mw-mwoauthmanageconsumers-expired,
+.mw-mwoauthmanagemygrants-expired,
+.mw-mwoauthconsumerregistration-expired {
+	background-color: #e1cdb7;
+}
+
+.mw-mwoauthmanageconsumers-approved,
+.mw-mwoauthmanagemygrants-approved,
+.mw-mwoauthconsumerregistration-approved {
+	background-color: #bae1b7;
+}
+
+.mw-mwoauthmanageconsumers-disabled,
+.mw-mwoauthmanagemygrants-disabled,
+.mw-mwoauthconsumerregistration-disabled {
+	background-color: #ceb7e1;
+}
+*/
+
+.mw-mwoautherror-details {
+	color: var( --color-base--subtle );
+}
