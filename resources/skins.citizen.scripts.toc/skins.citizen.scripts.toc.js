@@ -35,10 +35,16 @@ function SmoothScroll() {
  * @constructor
  */
 function ScrollSpy() {
-	var sections = document.querySelectorAll( '.mw-headline' );
+	var sections = document.querySelectorAll( '.mw-headline' ),
+		mwbody = document.querySelector( '.mw-body' ),
+		mwbodyStyle = window.getComputedStyle( mwbody ),
+		scrollOffset = parseInt( mwbodyStyle.marginTop, 10 ) + 1;
+
 	window.addEventListener( 'scroll', function () {
 		var scrollPos = document.documentElement.scrollTop || document.body.scrollTop,
 			section, id, node, active;
+
+		scrollPos += scrollOffset;
 
 		for ( section in sections ) {
 			if (
