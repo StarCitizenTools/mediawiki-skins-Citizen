@@ -13,6 +13,7 @@
 	"citizen-personalmenu-toggle": "切換個人選單",
 	"citizen-search-toggle": "切換搜尋",
 	"citizen-theme-toggle": "切換主題",
+	"citizen-drawer-search": "搜尋選單",
 	"citizen-footer-desc": "在 MediaWiki:Citizen-footer-desc 編輯此文字",
 	"citizen-footer-tagline": "在 MediaWiki:Citizen-footer-tagline 編輯此文字",
 	"citizen-search-fulltext": "搜尋包含",
