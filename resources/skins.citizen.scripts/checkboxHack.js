@@ -61,6 +61,9 @@ function init() {
 		personalMenu = document.getElementById( PERSONAL_MENU_ID ),
 		personalMenuButton = document.getElementById( PERSONAL_MENU_BUTTON_ID ),
 		personalMenuCheckbox = document.getElementById( PERSONAL_MENU_CHECKBOX_ID ),
+		toc = document.getElementById( 'toc' ),
+		tocButton,
+		tocCheckbox,
 		clickableDrawerElements = [];
 
 	drawer.querySelectorAll( '#mw-drawer-menu .mw-portal' ).forEach( function ( portal ) {
@@ -77,6 +80,17 @@ function init() {
 
 	uncheckOnClickOutside( clickableDrawerElements, drawerButton, drawerCheckbox );
 	uncheckOnClickOutside( personalMenu, personalMenuButton, personalMenuCheckbox );
+
+	/* 
+	 * This should be in ToC script
+	 * And the media query needs to be synced with the less variable
+	 */
+	if ( toc && window.matchMedia( 'screen and (max-width: 1300px)' ) ) { 
+		tocButton = document.querySelector( 'toctogglelabel' ),
+		tocCheckbox = document.getElementById( 'toctogglecheckbox' );
+
+		uncheckOnClickOutside( toc, tocButton, tocCheckbox );
+	}
 }
 
 module.exports = {
