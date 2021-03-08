@@ -30,7 +30,36 @@
 	.ve-ui {
 		&-toolbar {
 			> .oo-ui-toolbar-bar {
+				display: flex;
+				border-color: var( --border-color-base--darker );
 				background-color: var( --background-color-dp-00 );
+
+				.oo-ui-toolbar-bar {
+					border: 0;
+					background-color: transparent;
+				}
+
+				> .oo-ui-toolbar-actions {
+					order: 9999; // Set to the right
+					border-left: 1px solid var( --border-color-base );
+				}
+
+				> .oo-ui-toolbar-tools {
+					flex-grow: 1;
+					overflow-x: auto;
+					overflow-y: hidden;
+				}
+
+				.oo-ui-toolbar-tools {
+					display: inline-block;
+					white-space: nowrap;
+				}
+
+				/* Fix inline height */
+				.oo-ui-popupToolGroup-tools.oo-ui-popupToolGroup-active-tools {
+					overflow: auto !important;
+					height: auto !important;
+				}
 			}
 
 			&-floating {
@@ -157,22 +186,8 @@
 
 			.ve-ui-toolbar-group {
 				// Hide some dropdown tools in smaller screen
-				// format - Paragraph
-				// link - Link
-				// strcture - List bullet
-				// insert - Insert
-				// specialCharacter - Special character
 				// help - Help
-				// notices - Notices
-				// pageMenu - Menu
-				&-format,
-				&-link,
-				&-structure,
-				&-insert,
-				&-specialCharacter,
-				&-help,
-				&-notices,
-				&-pageMenu {
+				&-help {
 					display: none;
 				}
 			}
