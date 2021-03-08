@@ -36,9 +36,13 @@
 	}
 }
 
-a.image > img {
+a.image {
 	max-width: 100%;
-	height: auto;
+
+	 > img {
+		max-width: 100%;
+		height: auto;
+	}
 }
 
 @media ( min-width: @width-breakpoint-tablet ) {
