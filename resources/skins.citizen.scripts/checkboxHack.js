@@ -86,7 +86,7 @@ function init() {
 	 * And the media query needs to be synced with the less variable
 	 */
 	if ( toc && window.matchMedia( 'screen and (max-width: 1300px)' ) ) { 
-		tocButton = document.querySelector( 'toctogglelabel' ),
+		tocButton = document.querySelector( 'toctogglelabel' );
 		tocCheckbox = document.getElementById( 'toctogglecheckbox' );
 
 		uncheckOnClickOutside( toc, tocButton, tocCheckbox );
