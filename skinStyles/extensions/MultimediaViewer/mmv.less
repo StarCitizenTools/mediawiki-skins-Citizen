@@ -130,6 +130,14 @@
 		&-prev-image {
 			left: 0;
 		}
+
+		/* Increase click area */
+		&-next-image,
+		&-prev-image {
+			z-index: 1002; // avoid covering other buttons
+			top: 20vh !important; // override inline style
+			height: 200px;
+		}
 	}
 }
 
