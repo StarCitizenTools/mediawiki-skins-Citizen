@@ -81,11 +81,11 @@ function init() {
 	uncheckOnClickOutside( clickableDrawerElements, drawerButton, drawerCheckbox );
 	uncheckOnClickOutside( personalMenu, personalMenuButton, personalMenuCheckbox );
 
-	/* 
+	/*
 	 * This should be in ToC script
 	 * And the media query needs to be synced with the less variable
 	 */
-	if ( toc && window.matchMedia( 'screen and (max-width: 1300px)' ) ) { 
+	if ( toc && window.matchMedia( 'screen and (max-width: 1300px)' ) ) {
 		tocButton = document.querySelector( 'toctogglelabel' );
 		tocCheckbox = document.getElementById( 'toctogglecheckbox' );
 
