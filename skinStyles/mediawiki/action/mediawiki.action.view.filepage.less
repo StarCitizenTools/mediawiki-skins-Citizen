@@ -10,7 +10,7 @@
 	display: flex;
 	overflow: auto;
 	padding: 0;
-	border-color: @base-80;
+	border-color: var( --border-color-base );
 	margin: 0;
 	transition: @transition-margin, @transition-padding;
 	white-space: nowrap;
@@ -25,16 +25,18 @@
 			transition: @transition-background-quick;
 
 			&:hover {
-				background-color: @base-80;
+				background-color: var( --background-color-quiet--hover );
+			}
+
+			&:active {
+				background-color: var( --background-color-quiet--active );
 			}
 		}
 	}
 }
 
 .fullImageLink {
-	max-width: @footer-width - 10px; // 1280px - image size 4
-	margin: 0 @negative-margin;
-	background-color: @base-90;
+	background-color: var( --background-color-framed );
 
 	> a {
 		display: block;
@@ -51,7 +53,7 @@
 
 	.mw-filepage-resolutioninfo {
 		padding: @margin-side / 2 @margin-side;
-		border: 1px solid @base-80;
+		border: 1px solid var( --border-color-base );
 		text-align: center;
 		transition: @transition-margin, @transition-padding;
 	}
@@ -59,9 +61,9 @@
 
 .fullMedia {
 	padding: @margin-side / 2 @margin-side;
-	border: 1px solid @base-80;
+	border: 1px solid var( --border-color-base );
 	border-top: 0;
-	background-color: @base-90;
+	background-color: var( --background-color-framed );
 	font-size: smaller;
 	text-align: center;
 	transition: @transition-margin;
@@ -116,60 +118,10 @@
 	}
 }
 
-@media only screen and ( max-width: @screen2 ) {
-	.fullImageLink {
-		/* stylelint-disable unit-no-unknown */
-		margin: 0~'calc((100vw - @{page-width}) / -2)';
-		/* stylelint-enable */
-
-		.mw-filepage-resolutioninfo,
-		.fullMedia {
-			margin: 0;
-		}
-	}
-}
-
-@media only screen and ( max-width: @screen1 ) {
-	#filetoc,
-	.fullImageLink,
-	.fullMedia {
-		margin: 0 -@margin-side;
-	}
-
-	#filetoc {
-		padding: 0 @margin-side;
-	}
-}
-
-.skin-citizen-dark {
-	#filetoc,
-	.fullMedia {
-		border-color: @dark-bg-20;
-		background-color: @dark-bg-10;
-	}
-
-	.fullImageLink {
-		background-color: @dark-bg-10;
-
-		.mw-filepage-resolutioninfo {
-			border-color: @dark-bg-20;
-		}
-	}
-
-	#filetoc li a:hover {
-		background-color: @dark-bg-40;
-	}
-
-	.mw_metadata td,
-	.mw_metadata th {
-		border: 1px solid @dark-bg-50;
-	}
-
-	.mw_metadata th {
-		background-color: @dark-bg-10;
-	}
-
-	.mw_metadata td {
-		background-color: @dark-bg-20;
+.mw_metadata {
+	td,
+	th {
+		border: 1px solid var( --border-color-base );
+		background-color: var( --background-color-framed );
 	}
 }

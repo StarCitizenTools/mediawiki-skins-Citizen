@@ -63,9 +63,14 @@ a.image {
 	}
 }
 
-/* Wider page width for special pages */
+/* Wider page width for certain namespaces */
 @media ( min-width: @width-breakpoint-desktop-wide ) {
-	.ns--1 {
-		--width-layout: @width-breakpoint-desktop-wide - @padding-page * 2;
+	// 1 - Special, 6 - File, 14 - Category
+	.ns {
+		&--1,
+		&-6,
+		&-14 {
+			--width-layout: @width-breakpoint-desktop-wide - @padding-page * 2;
+		}
 	}
 }
