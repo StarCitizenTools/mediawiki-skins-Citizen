@@ -39,7 +39,7 @@ Name | Description | Values | Default
 `$wgCitizenShowPageTools` | The condition of page tools visibility | `true` - always visible; `login` - visible to logged-in users; `permission` - visible to users with the right permissions | `true`
 `$wgCitizenEnableDrawerSubSearch` | Enables the drawer search box for menu entries | `true` - enable; `false` - disable | `false`
 `$wgCitizenPortalAttach` | Label of the portal to attach links to upload and special pages to | string | `first`
-`$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#11151d`
+`$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#131a21`
 
 ### Search suggestions
 Name | Description | Values | Default
@@ -82,8 +82,8 @@ Name | Description | Values | Default
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
 `$wgCitizenEnableManifest` | Enable or disable [web app manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest) | `true` - enable; `false` - disable | `true`
-`$wgCitizenManifestThemeColor` | [Theme color](https://developer.mozilla.org/en-US/docs/Web/Manifest/theme_color) of the web app manifest | Hex color code | `#11151d`
-`$wgCitizenManifestBackgroundColor` | [Background color](https://developer.mozilla.org/en-US/docs/Web/Manifest/background_color) of the web app manifest | Hex color code | `#fff`
+`$wgCitizenManifestThemeColor` | [Theme color](https://developer.mozilla.org/en-US/docs/Web/Manifest/theme_color) of the web app manifest | Hex color code | `#131a21`
+`$wgCitizenManifestBackgroundColor` | [Background color](https://developer.mozilla.org/en-US/docs/Web/Manifest/background_color) of the web app manifest | Hex color code | `#131a21`
 
 ### Miscellaneous
 Name | Description | Values | Default
