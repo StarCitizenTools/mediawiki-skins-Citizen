@@ -16,20 +16,6 @@
 }
 
 #mw-content-text {
-	> .mw-parser-output {
-		/*
-		 * Interal link styles
-		 * Only apply to internal links in article
-		*/
-		a[ href^='/' ]:not( .image ):not( .external ) {
-			.link-content-text( var(--color-primary--hover) );
-
-			&.new {
-				background-image: linear-gradient( to right, var( --color-destructive--hover ) 0, var( --color-destructive--hover ) 100% );
-			}
-		}
-	}
-
 	.mw-parser-output {
 		& > h1,
 		& > h2,
