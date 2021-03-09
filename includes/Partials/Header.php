@@ -51,6 +51,7 @@ final class Header extends Partial {
 		$personalTools = $this->skin->getPersonalToolsForMakeListItem(
 			$this->skin->buildPersonalUrlsPublic()
 		);
+		$user = $this->skin->getUser();
 
 		// Move the Echo badges and ULS out of default list
 		if ( isset( $personalTools['notifications-alert'] ) ) {
@@ -63,8 +64,8 @@ final class Header extends Partial {
 			unset( $personalTools['uls'] );
 		}
 
-		if ( $this->skin->getUser()->isLoggedIn() ) {
-			$personalTools = $this->addUserGroupsToMenu( $personalTools );
+		if ( $user->isLoggedIn() ) {
+			$personalTools = $this->addUserInfoToMenu( $personalTools, $user );
 		}
 
 		$personalMenu = $this->skin->getMenuData( 'personal', $personalTools );
@@ -143,19 +144,24 @@ final class Header extends Partial {
 	}
 
 	/**
-	 * This adds all explicit user groups as links to the personal menu
+	 * Adds user info to the personal menu
+	 * Adds all explicit user groups as links to the personal menu
 	 * Links are added right below the user page link
 	 * Wrapped in an <li> element with id 'pt-usergroups'
 	 *
 	 * @param array $originalUrls The original personal tools urls
+	 * @param User $user
 	 *
 	 * @return array
 	 */
-	private function addUserGroupsToMenu( $originalUrls ) {
+	private function addUserInfoToMenu( $originalUrls, $user ) {
 		$personalTools = [];
 
 		// This does not return implicit groups
-		$groups = MediaWikiServices::getInstance()->getUserGroupManager()->getUserGroups( $this->skin->getUser() );
+		$groups = MediaWikiServices::getInstance()->getUserGroupManager()->getUserGroups( $user );
+
+		// Return user edits
+		$edits = MediaWikiServices::getInstance()->getUserEditTracker()->getUserEditCount( $user );
 
 		// If the user has only implicit groups return early
 		if ( empty( $groups ) ) {
@@ -187,9 +193,15 @@ final class Header extends Partial {
 			'links' => $groupLinks
 		];
 
+		$userContris = [
+			'text' => $this->skin->msg( 'usereditcount' )->numParams( sprintf( '%s', number_format( $edits, 0 ) ) ),
+			'id' => 'pt-usercontris'
+		];
+
 		// The following defines the order of links added
 		$personalTools['userpage'] = $userPage;
 		$personalTools['usergroups'] = $userGroups;
+		$personalTools['usercontris'] = $userContris;
 
 		foreach ( $originalUrls as $key => $url ) {
 			$personalTools[$key] = $url;

@@ -128,46 +128,54 @@
 		}
 	}
 
-	#pt-userpage {
-		padding: 16px 12px 0 12px;
+	#pt-user {
+		&page {
+			padding: 16px 12px 0 12px;
 
-		a {
-			justify-content: flex-start;
-			padding: 4px 8px;
-			color: var( --color-base--emphasized ) !important;
-			font-size: 16px;
-			font-weight: 600;
-			word-break: break-word;
-		}
-	}
-
-	#pt-usergroups {
-		display: flex;
-		flex-wrap: wrap;
-		padding: 0 16px 10px 16px;
-		border-bottom: 1px solid var( --border-color-base );
-
-		a {
-			padding: 2px 4px;
-			color: var( --color-base--subtle );
-		}
-	}
-
-	#pt-userpage,
-	#pt-usergroups {
-		line-height: 1;
-
-		a {
-			display: block;
-			transition: @transition-color-quick;
-
-			&:hover {
-				color: var( --color-primary--hover ) !important;
+			a {
+				justify-content: flex-start;
+				padding: 4px 8px;
+				color: var( --color-base--emphasized ) !important;
+				font-size: 16px;
+				font-weight: 600;
+				word-break: break-word;
 			}
+		}
 
-			&:active {
-				color: var( --color-primary--active ) !important;
+		&groups {
+			display: flex;
+			flex-wrap: wrap;
+			padding: 0 16px;
+			margin-bottom: 8px;
+
+			a {
+				padding: 2px 4px;
+				color: var( --color-base--subtle );
 			}
+		}
+
+		&page,
+		&groups {
+			line-height: 1;
+
+			a {
+				display: block;
+				transition: @transition-color-quick;
+
+				&:hover {
+					color: var( --color-primary--hover ) !important;
+				}
+
+				&:active {
+					color: var( --color-primary--active ) !important;
+				}
+			}
+		}
+
+		&contris {
+			padding: 0 20px 10px 20px;
+			border-bottom: 1px solid var( --border-color-base );
+			font-weight: 450;
 		}
 	}
 }
