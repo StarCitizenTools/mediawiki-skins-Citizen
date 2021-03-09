@@ -4,14 +4,14 @@ html {
 
 html,
 body {
-	font-family: @fonts;
+	font-family: var( --font-family-base );
 	// font-smoothing: antialiased;
 	// -webkit-font-smoothing: antialiased; /* Chrome, Safari */
 	// -moz-osx-font-smoothing: grayscale; /* Firefox */
 }
 
 input {
-	font-family: @fonts; // Override browser's default
+	font-family: var( --font-family-base ); // Override browser's default
 }
 
 pre,
@@ -20,7 +20,7 @@ tt,
 kbd,
 samp,
 .mw-code {
-	font-family: @fonts-monospace;
+	font-family: var( --font-family-monospace );
 	font-size: @content-monospace-size;
 }
 
@@ -37,12 +37,12 @@ legend {
 }
 
 blockquote {
-	font-family: @fonts-serif;
+	font-family: var( --font-family-serif );
 	font-size: @content-quote-primary-size;
 	font-style: italic;
 
 	cite {
-		font-family: @fonts;
+		font-family: var( --font-family-base );
 		font-size: @content-quote-secondary-size;
 		font-style: normal;
 	}
