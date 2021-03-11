@@ -67,7 +67,7 @@ final class Theme extends Partial {
 
 		// Script content at 'skins.citizen.scripts.theme/inline.js
         // @phpcs:ignore Generic.Files.LineLength.TooLong
-		$this->out->getOutput()->addHeadItem( 'theme-switcher', '<script>window.switchTheme=()=>{var e=t=>["auto","dark","light"].map(e=>t+e);const t=document.getElementById("theme-toggle");try{const c=document.cookie.match(/skin-citizen-theme=(dark|light|auto)/);var n=null!==c?c.pop():null;null!==n&&(document.documentElement.classList.remove(...e("skin-citizen-")),document.documentElement.classList.add("skin-citizen-"+n),t.classList.remove(...e("theme-toggle")),t.classList.add("theme-toggle-"+n))}catch(e){}},window.switchTheme();</script>' );
+		$this->out->getOutput()->addInlineScript( 'window.switchTheme=()=>{var e=t=>["auto","dark","light"].map(e=>t+e);const t=document.getElementById("theme-toggle");try{const c=document.cookie.match(/skin-citizen-theme=(dark|light|auto)/);var n=null!==c?c.pop():null;null!==n&&(document.documentElement.classList.remove(...e("skin-citizen-")),document.documentElement.classList.add("skin-citizen-"+n),t.classList.remove(...e("theme-toggle")),t.classList.add("theme-toggle-"+n))}catch(e){}},window.switchTheme();' );
 
 		// Add styles and scripts module
 		if ( $theme === 'auto' ) {
