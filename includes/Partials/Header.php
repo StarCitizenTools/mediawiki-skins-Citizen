@@ -163,35 +163,33 @@ final class Header extends Partial {
 		// Return user edits
 		$edits = MediaWikiServices::getInstance()->getUserEditTracker()->getUserEditCount( $user );
 
-		// If the user has only implicit groups return early
-		if ( empty( $groups ) ) {
-			return $originalUrls;
-		}
+		// Add user group
+		if ( !empty( $groups ) ) {
+			$userPage = array_shift( $originalUrls );
+			$groupLinks = [];
+			$msgName = 'group-%s';
 
-		$userPage = array_shift( $originalUrls );
-		$groupLinks = [];
-		$msgName = 'group-%s';
+			foreach ( $groups as $group ) {
+				$groupPage = Title::newFromText(
+					$this->skin->msg( sprintf( $msgName, $group ) )->text(),
+					NS_PROJECT
+				);
 
-		foreach ( $groups as $group ) {
-			$groupPage = Title::newFromText(
-				$this->skin->msg( sprintf( $msgName, $group ) )->text(),
-				NS_PROJECT
-			);
+				$groupLinks[$group] = [
+					'msg' => sprintf( $msgName, $group ),
+					// Nullpointer should not happen
+					'href' => $groupPage->getLinkURL(),
+					'tooltiponly' => true,
+					'id' => sprintf( $msgName, $group ),
+					// 'exists' => $groupPage->exists() - This will add an additional DB call
+				];
+			}
 
-			$groupLinks[$group] = [
-				'msg' => sprintf( $msgName, $group ),
-				// Nullpointer should not happen
-				'href' => $groupPage->getLinkURL(),
-				'tooltiponly' => true,
-				'id' => sprintf( $msgName, $group ),
-				// 'exists' => $groupPage->exists() - This will add an additional DB call
+			$userGroups = [
+				'id' => 'pt-usergroups',
+				'links' => $groupLinks
 			];
 		}
-
-		$userGroups = [
-			'id' => 'pt-usergroups',
-			'links' => $groupLinks
-		];
 
 		$userContris = [
 			'text' => $this->skin->msg( 'usereditcount' )->numParams( sprintf( '%s', number_format( $edits, 0 ) ) ),
@@ -200,7 +198,9 @@ final class Header extends Partial {
 
 		// The following defines the order of links added
 		$personalTools['userpage'] = $userPage;
-		$personalTools['usergroups'] = $userGroups;
+		if( isset( $userGroups ) ) {
+			$personalTools['usergroups'] = $userGroups;
+		}
 		$personalTools['usercontris'] = $userContris;
 
 		foreach ( $originalUrls as $key => $url ) {
