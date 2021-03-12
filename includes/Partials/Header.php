@@ -53,15 +53,12 @@ final class Header extends Partial {
 		);
 		$user = $this->skin->getUser();
 
-		// Move the Echo badges and ULS out of default list
+		// Move the Echo badges out of default list
 		if ( isset( $personalTools['notifications-alert'] ) ) {
 			unset( $personalTools['notifications-alert'] );
 		}
 		if ( isset( $personalTools['notifications-notice'] ) ) {
 			unset( $personalTools['notifications-notice'] );
-		}
-		if ( isset( $personalTools['uls'] ) ) {
-			unset( $personalTools['uls'] );
 		}
 
 		if ( $user->isLoggedIn() ) {
@@ -79,7 +76,7 @@ final class Header extends Partial {
 	}
 
 	/**
-	 * Echo notification badges and ULS button
+	 * Echo notification badges button
 	 *
 	 * @return array
 	 */
@@ -88,16 +85,13 @@ final class Header extends Partial {
 			$this->skin->buildPersonalUrlsPublic()
 		);
 
-		// Create the Echo badges and ULS
+		// Create the Echo badges
 		$extraTools = [];
 		if ( isset( $personalTools['notifications-alert'] ) ) {
 			$extraTools['notifications-alert'] = $personalTools['notifications-alert'];
 		}
 		if ( isset( $personalTools['notifications-notice'] ) ) {
 			$extraTools['notifications-notice'] = $personalTools['notifications-notice'];
-		}
-		if ( isset( $personalTools['uls'] ) ) {
-			$extraTools['uls'] = $personalTools['uls'];
 		}
 
 		$html = $this->skin->getMenuData( 'personal-extra', $extraTools );
