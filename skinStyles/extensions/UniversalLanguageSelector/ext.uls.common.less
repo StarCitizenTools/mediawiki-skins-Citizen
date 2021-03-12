@@ -6,31 +6,73 @@
 @import '../../../resources/variables.less';
 @import '../../../resources/mixins.less';
 
-// Need important to override
-.uls-menu {
-	border: 0 !important;
-	border-radius: 0;
-	.boxshadow(5)!important;
-}
+.skin-citizen {
+	.uls {
+		&-menu {
+			border-color: var( --border-color-base );
+			background-color: var( --background-color-dp-04 );
+			.boxshadow(5);
+		}
 
-.uls-search {
-	position: relative;
-	z-index: 1;
-	border: 0;
-	transition: @transition-box-shadow;
-	.boxshadow(2);
+		&-search {
+			position: relative;
+			border-color: var( --border-color-base );
+			background-color: var( --background-color-dp-08 );
+			transition: @transition-background-quick, @transition-box-shadow-quick;
+			.boxshadow(2);
 
-	&:focus-within {
-		.boxshadow(3);
+			&:focus-within {
+				background-color: var( --background-color-dp-12 );
+				.boxshadow(3);
+			}
+		}
+
+		&-filtersuggestion {
+			background: transparent;
+			color: var( --color-base--subtle );
+		}
+
+		&-languagefilter {
+			color: var( --color-base );
+		}
+
+		// Gotta fix this for mobile
+		&-narrow {
+			left: 0 !important;
+			width: 100% !important;
+		}
+
+		&-lcd {
+			background-color: var( --background-color-dp-04 );
+
+			&-region-title {
+				color: var( --color-base );
+			}
+		}
+
+		&-language-block {
+			> ul > li:hover {
+				background-color: var( --background-color-primary--hover );
+			}
+		}
+	}
+
+	#uls-settings-block {
+		border-color: var( --border-color-base );
+		background-color: var( --background-color-dp-04 );
 	}
 }
 
-// Gotta fix this for mobile
-.uls-narrow {
-	left: 0 !important;
-	width: 100% !important;
-}
+.skin-citizen-dark {
+	.uls {
+		&-search {
+			&-label {
+				filter: invert( 1 );
+			}
+		}
+	}
 
-#uls-settings-block {
-	border-color: @base-80 !important;
+	#uls-settings-block {
+		filter: invert( 1 );
+	}
 }
