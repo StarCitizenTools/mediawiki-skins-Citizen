@@ -4,29 +4,46 @@
 */
 
 @import '../../../resources/variables.less';
+@import '../../../resources/mixins.less';
 
-// Styles for ULS icon
-#pt-uls a.uls-trigger,
-#pt-uls a.uls-trigger:before {
-	display: block;
-	width: var( --width-button-base );
-	height: var( --height-header );
-	padding: 0 !important;
-	background-position: center;
-	background-size: @icon-box-size;
-	color: transparent; // Hide text
-	opacity: 0.6; // Replicate color of other icons
-	transition: @transition-opacity-quick;
+.skin-citizen {
+	// Styles for ULS icon
+	#pt-uls a.uls-trigger {
+		flex-direction: row-reverse;
+		padding-top: 10px !important; // override
 
-	&:hover,
-	&:focus,
-	&:active {
-		opacity: 0.8;
+		&:before {
+			.resource-loader-list-icon;
+			display: block;
+			padding: 0;
+			margin-left: @icon-padding;
+			background-size: contain;
+			opacity: var( --opacity-icon-base );
+			transition: @transition-opacity-quick;
+		}
+
+		&:hover {
+			&:before {
+				opacity: var( --opacity-icon-base--hover );
+			}
+		}
+
+		&:active {
+			&:before {
+				opacity: var( --opacity-icon-base--active );
+			}
+		}
+
+		&:after {
+			content: none !important;
+		}
 	}
 }
 
 .skin-citizen-dark {
 	#pt-uls a.uls-trigger {
-		filter: invert( 1 );
+		&:before {
+			filter: invert( 1 );
+		}
 	}
 }

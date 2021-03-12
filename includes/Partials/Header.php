@@ -53,15 +53,12 @@ final class Header extends Partial {
 		);
 		$user = $this->skin->getUser();
 
-		// Move the Echo badges and ULS out of default list
+		// Move the Echo badges out of default list
 		if ( isset( $personalTools['notifications-alert'] ) ) {
 			unset( $personalTools['notifications-alert'] );
 		}
 		if ( isset( $personalTools['notifications-notice'] ) ) {
 			unset( $personalTools['notifications-notice'] );
-		}
-		if ( isset( $personalTools['uls'] ) ) {
-			unset( $personalTools['uls'] );
 		}
 
 		if ( $user->isLoggedIn() ) {
@@ -79,7 +76,7 @@ final class Header extends Partial {
 	}
 
 	/**
-	 * Echo notification badges and ULS button
+	 * Echo notification badges button
 	 *
 	 * @return array
 	 */
@@ -88,16 +85,13 @@ final class Header extends Partial {
 			$this->skin->buildPersonalUrlsPublic()
 		);
 
-		// Create the Echo badges and ULS
+		// Create the Echo badges
 		$extraTools = [];
 		if ( isset( $personalTools['notifications-alert'] ) ) {
 			$extraTools['notifications-alert'] = $personalTools['notifications-alert'];
 		}
 		if ( isset( $personalTools['notifications-notice'] ) ) {
 			$extraTools['notifications-notice'] = $personalTools['notifications-notice'];
-		}
-		if ( isset( $personalTools['uls'] ) ) {
-			$extraTools['uls'] = $personalTools['uls'];
 		}
 
 		$html = $this->skin->getMenuData( 'personal-extra', $extraTools );
@@ -163,35 +157,33 @@ final class Header extends Partial {
 		// Return user edits
 		$edits = MediaWikiServices::getInstance()->getUserEditTracker()->getUserEditCount( $user );
 
-		// If the user has only implicit groups return early
-		if ( empty( $groups ) ) {
-			return $originalUrls;
-		}
+		// Add user group
+		if ( !empty( $groups ) ) {
+			$userPage = array_shift( $originalUrls );
+			$groupLinks = [];
+			$msgName = 'group-%s';
 
-		$userPage = array_shift( $originalUrls );
-		$groupLinks = [];
-		$msgName = 'group-%s';
+			foreach ( $groups as $group ) {
+				$groupPage = Title::newFromText(
+					$this->skin->msg( sprintf( $msgName, $group ) )->text(),
+					NS_PROJECT
+				);
 
-		foreach ( $groups as $group ) {
-			$groupPage = Title::newFromText(
-				$this->skin->msg( sprintf( $msgName, $group ) )->text(),
-				NS_PROJECT
-			);
+				$groupLinks[$group] = [
+					'msg' => sprintf( $msgName, $group ),
+					// Nullpointer should not happen
+					'href' => $groupPage->getLinkURL(),
+					'tooltiponly' => true,
+					'id' => sprintf( $msgName, $group ),
+					// 'exists' => $groupPage->exists() - This will add an additional DB call
+				];
+			}
 
-			$groupLinks[$group] = [
-				'msg' => sprintf( $msgName, $group ),
-				// Nullpointer should not happen
-				'href' => $groupPage->getLinkURL(),
-				'tooltiponly' => true,
-				'id' => sprintf( $msgName, $group ),
-				// 'exists' => $groupPage->exists() - This will add an additional DB call
+			$userGroups = [
+				'id' => 'pt-usergroups',
+				'links' => $groupLinks
 			];
 		}
-
-		$userGroups = [
-			'id' => 'pt-usergroups',
-			'links' => $groupLinks
-		];
 
 		$userContris = [
 			'text' => $this->skin->msg( 'usereditcount' )->numParams( sprintf( '%s', number_format( $edits, 0 ) ) ),
@@ -200,7 +192,9 @@ final class Header extends Partial {
 
 		// The following defines the order of links added
 		$personalTools['userpage'] = $userPage;
-		$personalTools['usergroups'] = $userGroups;
+		if ( isset( $userGroups ) ) {
+			$personalTools['usergroups'] = $userGroups;
+		}
 		$personalTools['usercontris'] = $userContris;
 
 		foreach ( $originalUrls as $key => $url ) {
