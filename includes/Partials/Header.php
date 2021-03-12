@@ -198,7 +198,7 @@ final class Header extends Partial {
 
 		// The following defines the order of links added
 		$personalTools['userpage'] = $userPage;
-		if( isset( $userGroups ) ) {
+		if ( isset( $userGroups ) ) {
 			$personalTools['usergroups'] = $userGroups;
 		}
 		$personalTools['usercontris'] = $userContris;
