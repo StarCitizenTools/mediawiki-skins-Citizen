@@ -44,20 +44,7 @@ class ResourceLoaderHooks implements ResourceLoaderGetConfigVarsHook {
 	 * @param Config $config
 	 */
 	public function onResourceLoaderGetConfigVars( array &$vars, $skin, Config $config ): void {
-		try {
-			$vars['wgCitizenSearchDescriptionSource'] = self::getSkinConfig( 'CitizenSearchDescriptionSource' );
-		} catch ( ConfigException $e ) {
-			// Should not happen
-			$vars['wgCitizenSearchDescriptionSource'] = 'textextracts';
-		}
-
-		try {
-			$vars['wgCitizenMaxSearchResults'] = self::getSkinConfig( 'CitizenMaxSearchResults' );
-		} catch ( ConfigException $e ) {
-			// Should not happen
-			$vars['wgCitizenMaxSearchResults'] = 6;
-		}
-
+		// Check if search suggestion is enabled
 		try {
 			$vars['wgCitizenEnableSearch'] = self::getSkinConfig( 'CitizenEnableSearch' );
 		} catch ( ConfigException $e ) {
@@ -65,8 +52,33 @@ class ResourceLoaderHooks implements ResourceLoaderGetConfigVarsHook {
 			$vars['wgCitizenEnableSearch'] = true;
 		}
 
-		// Core config so skip try catch
-		$vars['wgSearchSuggestCacheExpiry'] = self::getSkinConfig( 'SearchSuggestCacheExpiry' );
+		// Only check for search config if search is enabled
+		// Since the module won't be loaded if it is not enabled
+		if ( $vars['wgCitizenEnableSearch'] === true ) {
+			try {
+				$vars['wgCitizenSearchUseREST'] = self::getSkinConfig( 'CitizenSearchUseREST' );
+			} catch ( ConfigException $e ) {
+				// Should not happen
+				$vars['wgCitizenSearchUseREST'] = false;
+			}
+
+			try {
+				$vars['wgCitizenSearchDescriptionSource'] = self::getSkinConfig( 'CitizenSearchDescriptionSource' );
+			} catch ( ConfigException $e ) {
+				// Should not happen
+				$vars['wgCitizenSearchDescriptionSource'] = 'textextracts';
+			}
+
+			try {
+				$vars['wgCitizenMaxSearchResults'] = self::getSkinConfig( 'CitizenMaxSearchResults' );
+			} catch ( ConfigException $e ) {
+				// Should not happen
+				$vars['wgCitizenMaxSearchResults'] = 6;
+			}
+
+			// Core config so skip try catch
+			$vars['wgSearchSuggestCacheExpiry'] = self::getSkinConfig( 'SearchSuggestCacheExpiry' );
+		}
 	}
 
 	/**

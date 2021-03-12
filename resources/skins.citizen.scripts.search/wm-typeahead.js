@@ -87,8 +87,10 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 		appendEl = document.getElementById( appendTo ),
 		searchEl = document.getElementById( searchInput ),
 		server = mw.config.get( 'wgServer' ),
-		searchurl = server + mw.config.get( 'wgScriptPath' ) + '/index.php?title=Special%3ASearch&search=',
+		scriptPath = mw.config.get( 'wgScriptPath' ),
+		searchurl = server + scriptPath + '/index.php?title=Special%3ASearch&search=',
 		thumbnailSize = Math.round( getDevicePixelRatio() * 80 ),
+		useREST = mw.config.get( 'wgCitizenSearchUseREST' ),
 		descriptionSource = mw.config.get( 'wgCitizenSearchDescriptionSource' ),
 		maxSearchResults = mw.config.get( 'wgCitizenMaxSearchResults' ),
 		cacheExpiry = mw.config.get( 'wgSearchSuggestCacheExpiry' ),
@@ -258,52 +260,64 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 
 		callbackIndex = window.callbackStack.addCallback( window.portalOpensearchCallback );
 
-		// TODO: Not sure if static cache expiry is a good idea
-		// A value based on the size of the wiki and the
-		// length of the search string might be a better idea
-		searchQuery = {
-			action: 'query',
-			smaxage: cacheExpiry,
-			maxage: cacheExpiry,
-			generator: 'prefixsearch',
-			prop: 'pageprops|pageimages',
-			redirects: '',
-			ppprop: 'displaytitle',
-			piprop: 'thumbnail',
-			pithumbsize: thumbnailSize,
-			pilimit: maxSearchResults,
-			gpssearch: string,
-			gpsnamespace: 0,
-			gpslimit: maxSearchResults
-		};
-
-		switch ( descriptionSource ) {
-			case 'wikidata':
-				searchQuery.prop += '|description';
-				break;
-			case 'textextracts':
-				searchQuery.prop += '|extracts';
-				searchQuery.exchars = '60';
-				searchQuery.exintro = '1';
-				searchQuery.exlimit = maxSearchResults;
-				searchQuery.explaintext = '1';
-				break;
-			case 'pagedescription':
-				searchQuery.prop += '|pageprops';
-				searchQuery.ppprop = 'description';
-				break;
-		}
-
 		// Add loading animation when suggestion is loading
 		appendEl.classList.add( 'search-form__loading' );
 
-		api.get( searchQuery )
-			.done( ( data ) => {
-				clearTypeAheadElements();
-				// Clean up loading animation after result ls loaded
-				appendEl.classList.remove( 'search-form__loading' );
-				window.callbackStack.queue[ callbackIndex ]( data, string );
-			} );
+		// Check if use REST API
+		if ( useREST ) {
+			fetch(`${scriptPath}/rest.php/v1/search/title?q=${searchString}&limit=${maxSearchResults}`)
+				.then(async function (response) {
+					var data = await response.json();
+					clearTypeAheadElements();
+					// Clean up loading animation after result ls loaded
+					appendEl.classList.remove( 'search-form__loading' );
+					window.callbackStack.queue[ callbackIndex ]( data, string );
+				} );
+		} else {
+			// TODO: Not sure if static cache expiry is a good idea
+			// A value based on the size of the wiki and the
+			// length of the search string might be a better idea
+			searchQuery = {
+				action: 'query',
+				smaxage: cacheExpiry,
+				maxage: cacheExpiry,
+				generator: 'prefixsearch',
+				prop: 'pageprops|pageimages',
+				redirects: '',
+				ppprop: 'displaytitle',
+				piprop: 'thumbnail',
+				pithumbsize: thumbnailSize,
+				pilimit: maxSearchResults,
+				gpssearch: string,
+				gpsnamespace: 0,
+				gpslimit: maxSearchResults
+			};
+
+			switch ( descriptionSource ) {
+				case 'wikidata':
+					searchQuery.prop += '|description';
+					break;
+				case 'textextracts':
+					searchQuery.prop += '|extracts';
+					searchQuery.exchars = '60';
+					searchQuery.exintro = '1';
+					searchQuery.exlimit = maxSearchResults;
+					searchQuery.explaintext = '1';
+					break;
+				case 'pagedescription':
+					searchQuery.prop += '|pageprops';
+					searchQuery.ppprop = 'description';
+					break;
+			}
+
+			api.get( searchQuery )
+				.done( ( data ) => {
+					clearTypeAheadElements();
+					// Clean up loading animation after result ls loaded
+					appendEl.classList.remove( 'search-form__loading' );
+					window.callbackStack.queue[ callbackIndex ]( data, string );
+				} );
+		}
 	} // END loadQueryScript
 
 	/**
@@ -372,43 +386,53 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 
 			page = suggestions[ i ];
 
-			switch ( descriptionSource ) {
-				case 'wikidata':
-					pageDescription = page.description || '';
-					break;
-				case 'textextracts':
-					pageDescription = page.extract || '';
-					break;
-				case 'pagedescription':
-					pageDescription = page.pageprops.description.substring(0, 60) + '...' || '';
-					break;
-			}
-
 			// Ensure that the value from the previous iteration isn't used
 			sanitizedThumbURL = false;
-
-			if ( page.thumbnail && page.thumbnail.source ) {
-				sanitizedThumbURL = page.thumbnail.source.replace( /"/g, '%22' );
-				sanitizedThumbURL = sanitizedThumbURL.replace( /'/g, '%27' );
-			}
-
-			// Ensure that the value from the previous iteration isn't used
 			descriptionText = '';
 
-			// Check if description exists
-			if ( pageDescription ) {
-				// If the description is an array, use the first item
-				if ( typeof pageDescription === 'object' && pageDescription[ 0 ] ) {
-					descriptionText = pageDescription[ 0 ].toString();
-				} else {
-					// Otherwise, use the description as is.
-					descriptionText = pageDescription.toString();
+			if ( useREST ) {
+				descriptionText = page.description;
+
+				if ( page.thumbnail && page.thumbnail.url ) {
+					sanitizedThumbURL = page.thumbnail.url.replace( /"/g, '%22' );
+				}
+			} else {
+
+				switch ( descriptionSource ) {
+					case 'wikidata':
+						pageDescription = page.description || '';
+						break;
+					case 'textextracts':
+						pageDescription = page.extract || '';
+						break;
+					case 'pagedescription':
+						pageDescription = page.pageprops.description.substring(0, 60) + '...' || '';
+						break;
+				}
+
+				// Check if description exists
+				if ( pageDescription ) {
+					// If the description is an array, use the first item
+					if ( typeof pageDescription === 'object' && pageDescription[ 0 ] ) {
+						descriptionText = pageDescription[ 0 ].toString();
+					} else {
+						// Otherwise, use the description as is.
+						descriptionText = pageDescription.toString();
+					}
+
+					// Filter out no text from TextExtracts
+					if ( descriptionText === '...' ) {
+						descriptionText = '';
+					}
+				}
+
+				if ( page.thumbnail && page.thumbnail.source ) {
+					sanitizedThumbURL = page.thumbnail.source.replace( /"/g, '%22' );
 				}
 			}
 
-			// Filter out no text from TextExtracts
-			if ( descriptionText === '...' ) {
-				descriptionText = '';
+			if ( sanitizedThumbURL ) {
+				sanitizedThumbURL = sanitizedThumbURL.replace( /'/g, '%27' );
 			}
 
 			// Add ID if first or last suggestion
@@ -420,6 +444,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 				suggestionLinkID = '';
 			}
 
+			// TODO: Convert to Mustache
 			suggestionDescription = mw.html.element( 'p', { class: 'suggestion-description' }, descriptionText );
 
 			suggestionTitle = mw.html.element( 'h3', { class: 'suggestion-title' }, new mw.html.Raw( highlightTitle( page.title, searchString ) ) );
@@ -500,14 +525,19 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			listEl;
 
 		return function ( xhrResults, queryString ) {
+			// console.log(xhrResults);
 			window.callbackStack.deletePrevCallbacks( callbackIndex );
 
 			if ( document.activeElement !== searchEl ) {
 				return;
 			}
 
-			suggestions = ( xhrResults.query && xhrResults.query.pages ) ?
-				xhrResults.query.pages : [];
+			if ( useREST ) {
+				suggestions = xhrResults.pages;
+			} else {
+				suggestions = ( xhrResults.query && xhrResults.query.pages ) ?
+					xhrResults.query.pages : [];
+			}
 
 			if ( suggestions.length === 0 ) {
 				typeAheadEl.innerHTML = '<div class="suggestions-dropdown">' +
@@ -521,6 +551,9 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 					result = suggestions[ item ];
 					orderedResults[ result.index - 1 ] = result;
 				}
+			}
+			if ( useREST ) {
+				orderedResults = suggestions;
 			}
 
 			templateDOMString = generateTemplateString( orderedResults );
