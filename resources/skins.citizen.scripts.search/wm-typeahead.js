@@ -91,6 +91,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 		thumbnailSize = Math.round( getDevicePixelRatio() * 80 ),
 		descriptionSource = mw.config.get( 'wgCitizenSearchDescriptionSource' ),
 		maxSearchResults = mw.config.get( 'wgCitizenMaxSearchResults' ),
+		cacheExpiry = mw.config.get( 'wgSearchSuggestCacheExpiry' ),
 		searchString,
 		typeAheadItems,
 		activeItem,
@@ -257,9 +258,13 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 
 		callbackIndex = window.callbackStack.addCallback( window.portalOpensearchCallback );
 
-		// Removed description prop
-		// TODO: Use text extract or PCS for description
+		// TODO: Not sure if static cache expiry is a good idea
+		// A value based on the size of the wiki and the
+		// length of the search string might be a better idea
 		searchQuery = {
+			action: 'query',
+			smaxage: cacheExpiry,
+			maxage: cacheExpiry,
 			generator: 'prefixsearch',
 			prop: 'pageprops|pageimages',
 			redirects: '',

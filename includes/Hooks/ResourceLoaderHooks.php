@@ -64,6 +64,9 @@ class ResourceLoaderHooks implements ResourceLoaderGetConfigVarsHook {
 			// Should not happen
 			$vars['wgCitizenEnableSearch'] = true;
 		}
+
+		// Core config so skip try catch
+		$vars['wgSearchSuggestCacheExpiry'] = self::getSkinConfig( 'SearchSuggestCacheExpiry' );
 	}
 
 	/**
