@@ -44,7 +44,6 @@ class ResourceLoaderHooks implements ResourceLoaderGetConfigVarsHook {
 	 * @param Config $config
 	 */
 	public function onResourceLoaderGetConfigVars( array &$vars, $skin, Config $config ): void {
-
 		// Check if search suggestion is enabled
 		try {
 			$vars['wgCitizenEnableSearch'] = self::getSkinConfig( 'CitizenEnableSearch' );
