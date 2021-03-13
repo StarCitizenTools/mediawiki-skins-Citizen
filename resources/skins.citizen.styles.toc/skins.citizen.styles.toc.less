@@ -169,13 +169,12 @@
 				max-width: @width-toc;
 				padding: 10px var( --padding-page ) 0 var( --padding-page );
 				margin-top: var( --height-header );
-				transition: @transition-transform;
 			}
 
 			> ul {
 				display: block !important; // So that animation is visible
-				min-width: 200px; // To prevent heading overflow
-				max-width: none;
+				min-width: ~'calc( @{width-toc} - var( --padding-page ) * 2 )'; // To prevent heading overflow
+				max-width: ~'calc( 100vh - var( --padding-page ) * 2 )';
 				height: 100%;
 				max-height: ~'calc( 100vh - var( --height-header ) - 24px - 0.6rem - 20px )';
 				padding: ~'calc( var( --height-header ) + 24px + 0.6rem ) var( --padding-page ) 20px var( --padding-page )';
@@ -183,8 +182,16 @@
 				background: var( --background-color-dp-08 );
 				border-radius: 0 @border-radius-large @border-radius-large 0;
 				pointer-events: auto;
-				transition: @transition-transform;
 				.boxshadow(3);
+			}
+		}
+
+		.citizen-animations-ready {
+			.toc {
+				&title h2,
+				> ul {
+					transition: @transition-transform-quick;
+				}
 			}
 		}
 

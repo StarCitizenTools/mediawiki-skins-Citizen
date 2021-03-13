@@ -2,7 +2,6 @@
  * Framework
 */
 html {
-	scroll-behavior: smooth; // not supported by IE, Edge, Safari, and Opera, use JQuery as fallback
 	scroll-padding-top: ~'calc(var(--height-header) + 20px)'; // fixed header offset, supported by major browsers
 }
 
@@ -248,6 +247,17 @@ figcaption,
 div.patrollink {
 	font-size: 75%;
 	text-align: right;
+}
+
+video {
+	max-width: 100%; // Prevent overflow
+}
+
+.citizen-animations-ready {
+	html {
+		// So that the delay scroll animation won't happen on load
+		scroll-behavior: smooth; // not supported by IE, Edge, Safari, and Opera, use JQuery as fallback
+	}
 }
 
 .skin-citizen-dark {
