@@ -47,8 +47,8 @@ final class Footer extends Partial {
 			'html-lastmodified' => $lastMod,
 			'array-footer-rows' => $this->getFooterRows( $footerLinks ),
 			'array-footer-icons' => $this->getFooterIcons(),
-			'msg-citizen-footer-desc' => $this->skin->msg( 'citizen-footer-desc' )->text(),
-			'msg-citizen-footer-tagline' => $this->skin->msg( 'citizen-footer-tagline' )->text(),
+			'msg-citizen-footer-desc' => $this->skin->msg( 'citizen-footer-desc' )->parse(),
+			'msg-citizen-footer-tagline' => $this->skin->msg( 'citizen-footer-tagline' )->parse(),
 		];
 	}
 
