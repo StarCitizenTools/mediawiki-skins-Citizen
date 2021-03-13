@@ -38,6 +38,20 @@
 						"skins.citizen.icons.footer",
 						"skins.citizen.icons.badges",
 						"skins.citizen.icons.theme"
+					],
+					"messages": [
+						"citizen-drawer-toggle",
+						"citizen-drawer-search",
+						"citizen-personalmenu-toggle",
+						"citizen-search-toggle",
+						"citizen-theme-toggle",
+						"citizen-footer-desc",
+						"citizen-footer-tagline",
+						"citizen-search-fulltext",
+						"prefs-citizen-theme-label",
+						"prefs-citizen-theme-option-auto",
+						"prefs-citizen-theme-option-light",
+						"prefs-citizen-theme-option-dark"
 					]
 				}
 			]
