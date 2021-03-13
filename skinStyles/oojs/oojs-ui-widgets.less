@@ -183,12 +183,12 @@
 }
 
 .oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget.oo-ui-optionWidget-selected {
-	background-color: var( --background-color-framed--hover );
+	background-color: var( --background-color-dp-00 );
 	color: var( --color-base );
 }
 
 .oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget.oo-ui-optionWidget-selected .oo-ui-labelElement-label {
-	border-bottom-color: var( --background-color-framed--hover );
+	border-bottom-color: var( --background-color-dp-00 );
 }
 
 .oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget.oo-ui-widget-enabled:hover {
@@ -338,4 +338,10 @@
 
 .oo-ui-searchWidget-query {
 	border-bottom: 1px solid var( --border-color-base--lighter );
+}
+
+@media ( max-width: @width-breakpoint-tablet ) {
+	.oo-ui-tabSelectWidget {
+		white-space: nowrap; // scrollable tab
+	}
 }
