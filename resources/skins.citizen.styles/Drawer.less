@@ -11,7 +11,6 @@
 	background-color: var( --background-color-overlay );
 	transform: translate3d( 0, -100%, 0 );
 	transform-origin: 0 0;
-	transition: @transition-transform-quick;
 	user-select: none;
 	will-change: transform; // help with performance
 
@@ -216,6 +215,12 @@
 		// Hide search when client has no JS
 		// Since the function does not work without script
 		display: none;
+	}
+}
+
+.citizen-animations-ready {
+	#mw-drawer {
+		transition: @transition-transform-quick;
 	}
 }
 
