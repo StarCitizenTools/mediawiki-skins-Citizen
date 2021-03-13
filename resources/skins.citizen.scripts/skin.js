@@ -36,6 +36,7 @@ function enableCssAnimations( document ) {
 }
 
 /**
+ * @param {Window} window
  * @return {void}
  */
 function main( window ) {
