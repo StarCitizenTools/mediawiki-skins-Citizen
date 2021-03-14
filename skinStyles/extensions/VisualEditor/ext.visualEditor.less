@@ -70,7 +70,12 @@
 		&-surface {
 			.ve-ce-documentNode {
 				padding: 0 !important;
-				font-size: 1rem; // override ooui widget size
+			}
+			
+			&-visual {
+				.ve-ce-documentNode {
+					font-size: 1rem; // So that same font size as the actual page
+				}		
 			}
 
 			&-placeholder {
