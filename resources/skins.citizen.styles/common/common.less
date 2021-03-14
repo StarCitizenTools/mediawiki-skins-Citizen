@@ -253,11 +253,9 @@ video {
 	max-width: 100%; // Prevent overflow
 }
 
-.citizen-animations-ready {
-	html {
-		// So that the delay scroll animation won't happen on load
-		scroll-behavior: smooth; // not supported by IE, Edge, Safari, and Opera, use JQuery as fallback
-	}
+html.citizen-animations-ready {
+	// So that the delay scroll animation won't happen on load
+	scroll-behavior: smooth; // not supported by IE, Edge, Safari, and Opera, use JQuery as fallback
 }
 
 .skin-citizen-dark {
