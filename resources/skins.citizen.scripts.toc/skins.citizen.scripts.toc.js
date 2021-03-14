@@ -30,6 +30,23 @@ function SmoothScroll() {
 }
 
 /**
+ * Throttle scroll event
+ *
+ * @param {Function} fn - function
+ * @param {number} wait - wait time in ms
+ * @return {Function}
+ */
+function throttle( fn, wait ) {
+	var time = Date.now();
+	return function () {
+		if ( ( time + wait - Date.now() ) < 0 ) {
+			fn();
+			time = Date.now();
+		}
+	};
+}
+
+/**
  * Add active HTML class to items in table of content based on user viewport.
  *
  * @constructor
@@ -40,9 +57,9 @@ function ScrollSpy() {
 		mwbodyStyle = window.getComputedStyle( mwbody ),
 		scrollOffset = parseInt( mwbodyStyle.marginTop, 10 ) + 1;
 
-	window.addEventListener( 'scroll', function () {
+	window.addEventListener( 'scroll', throttle( function () {
 		var scrollPos = document.documentElement.scrollTop || document.body.scrollTop,
-			section, id, node, active;
+			section, id, id2, toclink, node, active;
 
 		scrollPos += scrollOffset;
 
@@ -51,8 +68,13 @@ function ScrollSpy() {
 				Object.prototype.hasOwnProperty.call( sections, section ) &&
 				sections[ section ].offsetTop <= scrollPos
 			) {
-				id = mw.util.escapeIdForAttribute( sections[ section ].id );
-				node = document.querySelector( "a[href='#" + id + "']" ).parentNode;
+				id = sections[ section ].id;
+				// Try the ID of the span before
+				if ( sections[ section ].previousSibling !== null ) {
+					id2 = sections[ section ].previousSibling.id || '';
+				}
+				toclink = document.querySelector( "a[href='#" + id + "']" ) || document.querySelector( "a[href='#" + id2 + "']" );
+				node = toclink.parentNode;
 				active = document.querySelector( '.active' );
 				if ( active !== null ) {
 					active.classList.remove( 'active' );
@@ -62,7 +84,7 @@ function ScrollSpy() {
 				}
 			}
 		}
-	} );
+	}, 10 ) );
 }
 
 /**
