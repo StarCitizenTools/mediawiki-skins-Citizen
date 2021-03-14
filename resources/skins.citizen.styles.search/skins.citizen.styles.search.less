@@ -16,6 +16,7 @@
 	display: flex; // Needed to show margin
 	width: @search-bar-width;
 	max-width: calc( ~'100vw -'@icon-box-size + @icon-padding * 2 + @margin-side );
+	max-height: ~'calc( 100vh - var( --height-header ) + 10px )';
 	flex-direction: column;
 	padding-top: 4px;
 	background: var( --background-color-dp-08 );
