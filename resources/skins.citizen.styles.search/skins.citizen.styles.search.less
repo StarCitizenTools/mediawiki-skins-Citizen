@@ -14,6 +14,7 @@
 
 .suggestions-dropdown {
 	display: flex; // Needed to show margin
+	overflow: auto;
 	width: @search-bar-width;
 	max-width: calc( ~'100vw -'@icon-box-size + @icon-padding * 2 + @margin-side );
 	max-height: ~'calc( 100vh - var( --height-header ) + 10px )';
