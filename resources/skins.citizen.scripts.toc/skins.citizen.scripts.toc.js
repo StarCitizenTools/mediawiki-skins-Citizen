@@ -84,7 +84,7 @@ function ScrollSpy() {
 				}
 			}
 		}
-	}, 10 ) );
+	}, 10 ), { passive: true } );
 }
 
 /**
