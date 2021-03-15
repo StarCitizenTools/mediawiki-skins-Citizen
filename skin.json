@@ -187,8 +187,7 @@
 				"resources/skins.citizen.scripts.search/typeahead-init.js"
 			],
 			"dependencies": [
-				"mediawiki.api",
-				"oojs-ui-core.styles"
+				"mediawiki.api"
 			],
 			"messages": [
 				"citizen-search-fulltext"
