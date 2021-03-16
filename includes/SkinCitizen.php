@@ -29,6 +29,7 @@ use Citizen\Partials\Header;
 use Citizen\Partials\Logos;
 use Citizen\Partials\Metadata;
 use Citizen\Partials\PageTools;
+use Citizen\Partials\Tagline;
 use Citizen\Partials\Theme;
 
 /**
@@ -138,6 +139,7 @@ class SkinCitizen extends SkinMustache {
 		$header = new Header( $this );
 		$logos = new Logos( $this );
 		$drawer = new Drawer( $this );
+		$tagline = new Tagline( $this );
 		$bodycontent = new BodyContent( $this );
 		$footer = new Footer( $this );
 		$tools = new PageTools( $this );
@@ -182,7 +184,7 @@ class SkinCitizen extends SkinMustache {
 			'html-newtalk' => $newTalksHtml ? '<div class="usermessage">' . $newTalksHtml . '</div>' : '',
 			'page-langcode' => $title->getPageViewLanguage()->getHtmlCode(),
 
-			'msg-tagline' => $this->msg( 'tagline' )->text(),
+			'msg-tagline' => $tagline->getTagline( $out ),
 
 			'html-body-content--formatted' => $bodycontent->buildBodyContent( $out ),
 

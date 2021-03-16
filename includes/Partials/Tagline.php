@@ -33,6 +33,7 @@ final class Tagline extends Partial {
 	/**
 	 * Get tagline message
 	 *
+	 * @param OutputPage $out OutputPage
 	 * @return string
 	 */
 	public function getTagline( $out ) {
