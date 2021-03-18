@@ -90,13 +90,11 @@ html {
 	--height-header: @height-header;
 	--width-layout: @width-layout;
 
-	/* Paddings */
-	--padding-page: @padding-page;
-}
+	/* Margin */
+	--margin-layout: ~'calc( ( 100vw - var( --width-layout ) ) / 2 )';
 
-.mw-header {
-	// Used for header gradient only
-	--background-color-dp-00--rgb: @background-color-dp-00--rgb;
+	/* Padding */
+	--padding-page: @padding-page;
 }
 
 /**
