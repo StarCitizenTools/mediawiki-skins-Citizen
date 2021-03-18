@@ -56,6 +56,13 @@
 	--color-warning: @color-warning;
 	--color-success: @color-success;
 
+	--color-link: @color-link;
+	--color-link--hover: @color-link--hover;
+	--color-link--active: @color-link--active;
+	--color-link-new: @color-link-new;
+	--color-link-new--hover: @color-link-new--hover;
+	--color-link-new--active: @color-link-new--active;
+
 	/* Opacity */
 	--opacity-base--disabled: @opacity-base--disabled;
 	--opacity-icon-base: @opacity-icon-base;
@@ -83,13 +90,11 @@ html {
 	--height-header: @height-header;
 	--width-layout: @width-layout;
 
-	/* Paddings */
-	--padding-page: @padding-page;
-}
+	/* Margin */
+	--margin-layout: ~'calc( ( 100vw - var( --width-layout ) ) / 2 )';
 
-.mw-header {
-	// Used for header gradient only
-	--background-color-dp-00--rgb: @background-color-dp-00--rgb;
+	/* Padding */
+	--padding-page: @padding-page;
 }
 
 /**
@@ -131,6 +136,13 @@ html {
 	--color-base: @dark-color-base;
 	--color-base--emphasized: @dark-color-base--emphasized;
 	--color-base--subtle: @dark-color-base--subtle;
+
+	--color-link: @dark-color-link;
+	--color-link--hover: @dark-color-link--hover;
+	--color-link--active: @dark-color-link--active;
+	--color-link-new: @dark-color-link-new;
+	--color-link-new--hover: @dark-color-link-new--hover;
+	--color-link-new--active: @dark-color-link-new--active;
 
 	/* Opacity */
 	--opacity-icon-base--active: @dark-opacity-icon-base--active;

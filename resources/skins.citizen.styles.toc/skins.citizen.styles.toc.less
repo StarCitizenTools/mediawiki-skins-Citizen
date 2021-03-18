@@ -2,11 +2,16 @@
 @import '../mixins.less';
 
 @media screen {
+	html {
+		// Make ToC width accessible as CSS var
+		--width-toc: @width-toc;
+	}
+
 	.toc {
 		position: fixed;
 		top: var( --height-header );
 		left: 0;
-		max-width: @width-toc - @padding-page * 2;
+		max-width: ~'calc( var( --width-toc ) - '@padding-page * 2 ~')';
 		padding: @padding-page;
 		color: var( --color-base--subtle );
 		font-size: @ui-menu-text;
@@ -89,7 +94,7 @@
 			z-index: 2;
 			display: block;
 			overflow: visible auto;
-			max-height: ~'calc( 100vh - '@header-height * 2 + @margin-side * 4 ~' )';
+			max-height: ~'calc( 100vh - var( --height-header ) * 2 )';
 			margin: @content-margin-top * 0.75 0 0 0 !important;
 			font-weight: 450;
 			overscroll-behavior: contain;
@@ -158,7 +163,7 @@
 				&checkbox:not( :checked ) {
 					~ .toctitle h2,
 					~ ul {
-						transform: translateX( -@width-toc - @margin-side );
+						transform: translateX( -120% );
 					}
 				}
 			}
@@ -166,17 +171,17 @@
 			&title h2 {
 				position: absolute;
 				z-index: 3;
-				max-width: @width-toc;
+				max-width: var( --width-toc );
 				padding: 10px var( --padding-page ) 0 var( --padding-page );
 				margin-top: var( --height-header );
 			}
 
 			> ul {
 				display: block !important; // So that animation is visible
-				min-width: ~'calc( @{width-toc} - var( --padding-page ) * 2 )'; // To prevent heading overflow
+				min-width: ~'calc( var( --width-toc ) - var( --padding-page ) * 2 )'; // To prevent heading overflow
 				max-width: ~'calc( 100vh - var( --padding-page ) * 2 )';
 				height: 100%;
-				max-height: ~'calc( 100vh - var( --height-header ) - 24px - 0.6rem - 20px )';
+				max-height: ~'calc( 100vh - var( --height-header ) )';
 				padding: ~'calc( var( --height-header ) + 24px + 0.6rem ) var( --padding-page ) 20px var( --padding-page )';
 				margin: 0 !important;
 				background: var( --background-color-dp-08 );
@@ -206,12 +211,12 @@
 		}
 	}
 
-	@media ( min-width: @width-breakpoint-desktop-wide ) and ( max-width: @width-breakpoint-desktop-wider ) {
+	@media ( min-width: @width-breakpoint-desktop-wide ) {
 		.skin-citizen-has-toc {
 			.mw-body-header,
 			.mw-body-content {
-				margin-right: 0;
-				margin-left: @width-toc - @padding-page;
+				margin-right: ~'max( var( --margin-layout ), 0 )';
+				margin-left: ~'max( var( --margin-layout ), var( --width-toc ) )';
 			}
 		}
 	}

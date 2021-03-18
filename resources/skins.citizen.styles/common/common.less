@@ -126,7 +126,7 @@ td {
 }
 
 a {
-	color: var( --color-primary );
+	color: var( --color-link );
 	text-decoration: none !important;
 
 	&:not( [ href ] ) {
@@ -135,22 +135,22 @@ a {
 	}
 
 	&:hover {
-		color: var( --color-primary--hover );
+		color: var( --color-link--hover );
 	}
 
 	&:active {
-		color: var( --color-primary--active );
+		color: var( --color-link--active );
 	}
 
 	&.new {
-		color: var( --color-destructive ) !important; // Override visited
+		color: var( --color-link-new ) !important; // Override visited
 
 		&:hover {
-			color: var( --color-destructive--hover ) !important;
+			color: var( --color-link-new--hover ) !important;
 		}
 
 		&:active {
-			color: var( --color-destructive--active ) !important;
+			color: var( --color-link-new--active ) !important;
 		}
 	}
 
