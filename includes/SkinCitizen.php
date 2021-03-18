@@ -126,9 +126,9 @@ class SkinCitizen extends SkinMustache {
 
 		// Load Citizen debug module if debug is enabled
 		if (
-			$this->getConfigValue( 'ShowDebug' ) === true 
-			|| $this->getConfigValue( 'ShowExceptionDetails' ) === true 
-		) {
+			$this->getConfigValue( 'ShowDebug' ) === true
+			|| $this->getConfigValue( 'ShowExceptionDetails' ) === true
+ ) {
 			$options['styles'] = array_merge(
 				$options['styles'],
 				[ 'skins.citizen.styles.debug' ]
