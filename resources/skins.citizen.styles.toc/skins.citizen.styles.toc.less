@@ -89,7 +89,7 @@
 			z-index: 2;
 			display: block;
 			overflow: visible auto;
-			max-height: ~'calc( 100vh - '@header-height * 2 + @margin-side * 4 ~' )';
+			max-height: ~'calc( 100vh - var( --height-header ) * 2 )';
 			margin: @content-margin-top * 0.75 0 0 0 !important;
 			font-weight: 450;
 			overscroll-behavior: contain;
@@ -176,7 +176,7 @@
 				min-width: ~'calc( @{width-toc} - var( --padding-page ) * 2 )'; // To prevent heading overflow
 				max-width: ~'calc( 100vh - var( --padding-page ) * 2 )';
 				height: 100%;
-				max-height: ~'calc( 100vh - var( --height-header ) - 24px - 0.6rem - 20px )';
+				max-height: ~'calc( 100vh - var( --height-header ) )';
 				padding: ~'calc( var( --height-header ) + 24px + 0.6rem ) var( --padding-page ) 20px var( --padding-page )';
 				margin: 0 !important;
 				background: var( --background-color-dp-08 );
