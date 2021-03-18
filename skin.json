@@ -109,14 +109,14 @@
 			"features": [],
 			"styles": [ "resources/skins.citizen.styles/skin.less" ]
 		},
-		"skins.citizen.styles.theme": {
+		"skins.citizen.styles.debug": {
 			"class": "ResourceLoaderSkinModule",
 			"targets": [
 				"desktop",
 				"mobile"
 			],
 			"features": [],
-			"styles": [ "resources/skins.citizen.styles.theme/skins.citizen.styles.theme.less" ]
+			"styles": [ "resources/skins.citizen.styles.debug/skins.citizen.styles.debug.less" ]
 		},
 		"skins.citizen.styles.fonts": {
 			"class": "ResourceLoaderSkinModule",
@@ -145,15 +145,6 @@
 			"features": [],
 			"styles": [ "resources/skins.citizen.styles.search/skins.citizen.styles.search.less" ]
 		},
-		"skins.citizen.styles.toc": {
-			"class": "ResourceLoaderSkinModule",
-			"targets": [
-				"desktop",
-				"mobile"
-			],
-			"features": [],
-			"styles": [ "resources/skins.citizen.styles.toc/skins.citizen.styles.toc.less" ]
-		},
 		"skins.citizen.styles.sections": {
 			"class": "ResourceLoaderSkinModule",
 			"targets": [
@@ -162,6 +153,24 @@
 			],
 			"features": [],
 			"styles": [ "resources/skins.citizen.styles.sections/skins.citizen.styles.sections.less" ]
+		},
+		"skins.citizen.styles.theme": {
+			"class": "ResourceLoaderSkinModule",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"features": [],
+			"styles": [ "resources/skins.citizen.styles.theme/skins.citizen.styles.theme.less" ]
+		},
+		"skins.citizen.styles.toc": {
+			"class": "ResourceLoaderSkinModule",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"features": [],
+			"styles": [ "resources/skins.citizen.styles.toc/skins.citizen.styles.toc.less" ]
 		},
 		"skins.citizen.scripts": {
 			"packageFiles": [

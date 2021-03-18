@@ -1,0 +1,30 @@
+@import '../variables.less';
+@import '../mixins.less';
+
+.skin-citizen {
+	.xdebug {
+		&-error {
+			position: relative;
+			z-index: 99999; // Higher than header and ToC
+			border-color: var( --border-color-base );
+			margin: 0 var( --padding-page );
+			.boxshadow(3);
+
+			&:before {
+				display: table-caption;
+				padding: 20px;
+				background-color: var( --color-destructive );
+				border-radius: @border-radius-large @border-radius-large 0 0;
+				color: #fff;
+				content: 'You may have fucked up.'; // Need i18n
+				font-size: 2rem;
+				font-weight: bold;
+				letter-spacing: 0.75px;
+			}
+
+			th {
+				padding: 5px 10px;
+			}
+		}
+	}
+}
