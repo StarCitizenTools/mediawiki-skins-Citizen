@@ -68,18 +68,10 @@
 		}
 
 		&-surface {
-			.ve-ce-documentNode {
-				padding: 0 !important;
-			}
-
 			&-visual {
 				.ve-ce-documentNode {
 					font-size: 1rem; // So that same font size as the actual page
 				}
-			}
-
-			&-placeholder {
-				padding: 0 !important;
 			}
 		}
 
@@ -88,13 +80,6 @@
 
 			&-global {
 				z-index: 100;
-			}
-
-			&-surface {
-				&-placeholder,
-				.ve-ce-documentNode {
-					padding: 0;
-				}
 			}
 		}
 
@@ -162,7 +147,6 @@
 	}
 
 	.CodeMirror {
-		padding: 0 !important;
 		line-height: @content-line-height !important; // Lining up syntax highlighter
 
 		&-code * {
