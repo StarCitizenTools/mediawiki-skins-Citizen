@@ -150,9 +150,11 @@
 		}
 	}
 
+	// Should be in CodeMirror skin styles instead
 	.CodeMirror {
-		line-height: @content-line-height !important; // Lining up syntax highlighter
+		padding: 0 !important;
 
+		&-code,
 		&-code * {
 			line-height: @content-line-height !important; // Lining up syntax highlighter
 		}
