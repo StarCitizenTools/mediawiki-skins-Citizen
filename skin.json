@@ -368,6 +368,9 @@
 
 			"+ext.cite.styles": "skinStyles/extensions/Cite/ext.cite.styles.less",
 
+			"+ext.CodeMirror.lib": "skinStyles/extensions/CodeMirror/ext.CodeMirror.lib.less",
+			"+ext.CodeMirror.visualEditor.init": "skinStyles/extensions/CodeMirror/ext.CodeMirror.visualEditor.init.less",
+
 			"+ext.dismissableSiteNotice.styles": "skinStyles/extensions/DismissableSiteNotice/ext.dismissableSiteNotice.less",
 
 			"+ext.echo.styles.badge": "skinStyles/extensions/Echo/ext.echo.styles.badge.less",

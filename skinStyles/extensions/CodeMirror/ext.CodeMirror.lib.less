@@ -1,0 +1,26 @@
+/*
+ * Citizen - CodeMirror styles
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+.skin-citizen {
+	.CodeMirror {
+		color: var( --color-base );
+
+		/* Gutter */
+		&-gutters {
+			border-color: var( --border-color-base );
+			background-color: var( --background-color-framed );
+		}
+
+		&-linenumber {
+			color: var( --color-base--subtle );
+		}
+
+		&-guttermarker-subtle {
+			color: var( --color-base--subtle );
+		}
+	}
+}
