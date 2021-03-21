@@ -32,10 +32,15 @@
 				margin: 0 12px 0 0;
 				background: 0 !important; // To override hover styles
 				color: var( --color-base--subtle );
-				font-weight: 450;
+				font-weight: 500;
 
 				&:hover {
 					border: 0;
+					color: var( --color-base ) !important;
+				}
+
+				&:active {
+					color: var( --color-base--subtle ) !important;
 				}
 			}
 		}
@@ -47,11 +52,7 @@
 	}
 }
 
-.mw-body-content #mw-content-text .mw-parser-output .tabber .tabbernav a:hover {
-	color: var( --color-base ) !important; // Override sigh
-}
-
-@media ( max-width: @screen2 ) {
+@media ( max-width: @width-breakpoint-tablet ) {
 	.tabber {
 		ul.tabbernav {
 			flex-wrap: nowrap;
