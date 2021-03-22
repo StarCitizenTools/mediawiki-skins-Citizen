@@ -701,7 +701,7 @@
 		},
 		"EnableDrawerSiteStats": {
 			"value": true,
-			"description": "Enables to site statistics in drawer menu",
+			"description": "Enables the site statistics in drawer menu",
 			"descriptionmsg": "citizen-config-enabledrawersitestats",
 			"public": true
 		}
