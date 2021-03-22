@@ -7,26 +7,26 @@
 @import '../../../resources/mixins.less';
 
 .mw-cookiewarning-container {
-	overflow: hidden;
-	max-width: var( --width-breakpoint-desktop-wide );
+	width: auto;
 	justify-content: space-between;
 	padding: 0 var( --padding-page );
-	margin: 0 auto;
+	border: 1px solid var( --border-color-base );
+	margin: 10px;
 	background-color: #343a40; // dark base 70
-	border-radius: @border-radius-large @border-radius-large 0 0;
+	border-radius: @border-radius-large;
 	font-size: @content-monospace-size;
-	font-weight: normal;
 	line-height: 1.4;
-	opacity: 1;
 	.boxshadow(5);
 
 	.mw-cookiewarning-text {
 		padding: 20px 0;
+		margin-bottom: 0; // Override media styles
+		font-size: inherit;
+		font-weight: 500;
 	}
 
 	form {
 		display: flex;
-		align-items: center;
 		padding: 10px 0;
 	}
 }

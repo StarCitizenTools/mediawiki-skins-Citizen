@@ -154,6 +154,15 @@
 			"features": [],
 			"styles": [ "resources/skins.citizen.styles.sections/skins.citizen.styles.sections.less" ]
 		},
+		"skins.citizen.styles.sitestats": {
+			"class": "ResourceLoaderSkinModule",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"features": [],
+			"styles": [ "resources/skins.citizen.styles.sitestats/skins.citizen.styles.sitestats.less" ]
+		},
 		"skins.citizen.styles.theme": {
 			"class": "ResourceLoaderSkinModule",
 			"targets": [
@@ -688,6 +697,12 @@
 			"value": true,
 			"description": "Enables or disable collapsible sections on content pages",
 			"descriptionmsg": "citizen-config-enablecollapsiblesections",
+			"public": true
+		},
+		"EnableDrawerSiteStats": {
+			"value": true,
+			"description": "Enables the site statistics in drawer menu",
+			"descriptionmsg": "citizen-config-enabledrawersitestats",
 			"public": true
 		}
 	},
