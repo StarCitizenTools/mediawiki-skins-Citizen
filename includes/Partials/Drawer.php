@@ -28,7 +28,6 @@ namespace Citizen\Partials;
 use Exception;
 use ExtensionRegistry;
 use MWException;
-use SiteStats;
 use Skin;
 use SpecialPage;
 
