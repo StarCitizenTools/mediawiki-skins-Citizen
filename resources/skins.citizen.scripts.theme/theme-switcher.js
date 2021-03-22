@@ -11,7 +11,7 @@
 
 	setCookieChangeTheme = function ( themeName ) {
 		try {
-			window.mw.cookie.set( 'skin-citizen-theme', themeName );
+			window.mw.cookie.set( 'skin-citizen-theme', themeName, { sameSite: 'Strict' } );
 		} catch ( e ) {
 		}
 
