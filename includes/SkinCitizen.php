@@ -116,6 +116,14 @@ class SkinCitizen extends SkinMustache {
 			);
 		}
 
+		// Load Citizen Drawer SiteStats module if enabled
+		if ( $this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) === true ) {
+			$options['styles'] = array_merge(
+				$options['styles'],
+				[ 'skins.citizen.styles.sitestats' ]
+			);
+		}
+
 		// Load Citizen Drawer SubSearch module if enabled
 		if ( $this->getConfigValue( 'CitizenEnableDrawerSubSearch' ) === true ) {
 			$options['scripts'] = array_merge(

@@ -28,6 +28,7 @@ namespace Citizen\Partials;
 use Exception;
 use ExtensionRegistry;
 use MWException;
+use SiteStats;
 use Skin;
 use SpecialPage;
 
@@ -119,14 +120,41 @@ final class Drawer extends Partial {
 			'data-portals-first' => $firstPortal,
 			'array-portals-rest' => $props,
 			'data-portals-languages' => $languages,
+			'data-drawer-sitestats' => $this->getSiteStats(),
 			'data-drawer-subsearch' => false,
 		];
 
+		// Drawer subsearch
 		if ( $this->getConfigValue( 'CitizenEnableDrawerSubSearch' ) ) {
 			$portals['data-drawer-subsearch'] = true;
 		}
 
 		return $portals;
+	}
+
+	/**
+	 * Get messages used for site stats in the drawer
+	 *
+	 * @return array for use in Mustache template.
+	 */
+	private function getSiteStats() {
+		$props = [];
+
+		if ( $this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) ) {
+			$stats = [ 'articles', 'images', 'users', 'edits' ];
+			$items = [];
+
+			foreach ( $stats as &$stat ) {
+				$items[] = [
+					'id' => $stat,
+					'value' => call_user_func( 'SiteStats::' . $stat ),
+					'label' => $this->skin->msg( "citizen-sitestats-$stat-label" )->text(),
+				];
+			}
+		}
+
+		$props['array-drawer-sitestats-item'] = $items;
+		return $props;
 	}
 
 	/**

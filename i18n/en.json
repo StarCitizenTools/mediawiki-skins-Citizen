@@ -16,6 +16,11 @@
 	"citizen-search-toggle": "Toggle search",
 	"citizen-theme-toggle": "Toggle theme color",
 
+	"citizen-sitestats-articles-label": "articles",
+	"citizen-sitestats-images-label": "files",
+	"citizen-sitestats-users-label": "users",
+	"citizen-sitestats-edits-label": "edits",
+
 	"citizen-drawer-search": "Search menu",
 
 	"citizen-footer-desc": "Edit this text on MediaWiki:Citizen-footer-desc",
