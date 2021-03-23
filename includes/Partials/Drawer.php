@@ -146,7 +146,7 @@ final class Drawer extends Partial {
 			foreach ( $stats as &$stat ) {
 				$items[] = [
 					'id' => $stat,
-					'value' => call_user_func( 'SiteStats::' . $stat ),
+					'value' => number_format( call_user_func( 'SiteStats::' . $stat ) ),
 					'label' => $this->skin->msg( "citizen-sitestats-$stat-label" )->text(),
 				];
 			}
