@@ -49,7 +49,7 @@ final class PageTools extends Partial {
 
 		// Login-based condition, return true if condition is met
 		if ( $condition === 'login' ) {
-			$condition = $this->skin->getUser()->isLoggedIn();
+			$condition = $this->skin->getUser()->isRegistered();
 		}
 
 		// Permission-based condition, return true if condition is met
