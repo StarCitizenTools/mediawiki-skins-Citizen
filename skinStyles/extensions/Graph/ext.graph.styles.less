@@ -16,6 +16,13 @@
 		min-width: auto !important;
 		max-width: 100%;
 	}
+
+	/* dark mode */
+	&-dark {
+		.mw-graph canvas {
+			filter: invert( 1 ) hue-rotate( 180deg );
+		}
+	}
 }
 
 .client-js {
