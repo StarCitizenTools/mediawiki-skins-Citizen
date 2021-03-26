@@ -72,7 +72,9 @@ final class BodyContent extends Partial {
 		}
 
 		// Check if it is not the main page
-		if ( !$title->isMainPage() && $title->isContentPage() ) {
+		if ( $this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true &&
+			!$title->isMainPage() &&
+			$title->isContentPage() ) {
 			$doc = $this->parseXhtml( $htmlBodyContent );
 
 			// Make top level sections
