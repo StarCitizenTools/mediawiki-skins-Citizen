@@ -1,0 +1,85 @@
+/*
+ * Citizen - Graph
+ * https://starcitizen.tools
+*/
+
+@import '../../../resources/variables.less';
+
+.skin-citizen {
+	.vega {
+		background: var( --background-color-dp-00 );
+	}
+
+	/* responsive layout */
+	.mw-graph {
+		overflow: auto;
+		min-width: auto !important;
+		max-width: 100%;
+	}
+
+	/* dark mode */
+	&-dark {
+		.mw-graph canvas {
+			filter: invert( 1 ) hue-rotate( 180deg );
+		}
+	}
+}
+
+.client-js {
+	.mw-graph-interactable {
+		&:hover {
+			.mw-graph-layover {
+				background-color: var( --background-color-overlay--lighter );
+			}
+
+			.mw-graph-switch {
+				&.mw-graph-loading {
+					background-color: var( --background-color-dp-00 );
+				}
+
+				&:hover {
+					background-color: var( --background-color-dp-00 );
+				}
+			}
+		}
+	}
+
+	.mw-graph-hover-title {
+		background-color: var( --background-color-dp-00 );
+	}
+
+	/* common button style */
+	.mw-graph-switch {
+		border-color: var( --border-color-base );
+		background-color: var( --background-color-overlay--lighter );
+		color: var( --color-base );
+
+		&:hover {
+			border-color: var( --color-primary );
+			background-color: var( --background-color-dp-00 );
+			color: var( --color-primary );
+		}
+
+		&:active {
+			border-color: var( --color-primary--active );
+			background-color: var( --background-color-dp-00 );
+			color: var( --color-primary );
+		}
+
+		&:focus {
+			border-color: var( --color-primary );
+			box-shadow: inset 0 0 0 1px var( --background-color-dp-00 );
+		}
+
+		/* Loading button style */
+		&.mw-graph-loading {
+			border-color: var( --color-primary--active );
+			background-color: var( --background-color-dp-00 );
+			color: var( --color-base--subtle );
+
+			&:hover {
+				border-color: var( --color-primary );
+			}
+		}
+	}
+}
