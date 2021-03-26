@@ -30,7 +30,6 @@
 	.ve-ui {
 		&-toolbar {
 			> .oo-ui-toolbar-bar {
-				display: flex;
 				border-color: var( --border-color-base--darker );
 				background-color: var( --background-color-dp-00 );
 
@@ -158,6 +157,10 @@
 		.mw-header {
 			background-color: transparent; // Because header is taller than toolbar
 		}
+	}
+
+	.ve-ui-toolbar > .oo-ui-toolbar-bar {
+		display: flex;
 	}
 
 	.ve-init-mw-desktopArticleTarget {
