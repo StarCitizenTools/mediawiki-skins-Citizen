@@ -1,10 +1,30 @@
+/*
+* From Sanitize.css
+* 1. Remove animations when motion is reduced (opinionated).
+* 2. Remove fixed background attachments when motion is reduced (opinionated).
+* 3. Remove timed scrolling behaviors when motion is reduced (opinionated).
+* 4. Remove transitions when motion is reduced (opinionated).
+*/
+
 @media ( prefers-reduced-motion: reduce ) {
 	/* stylelint-disable time-min-milliseconds, declaration-no-important */
 	*,
-	*:before,
-	*:after {
-		animation-duration: 0.001s !important;
-		transition-duration: 0.001s !important;
+	:before,
+	:after {
+		animation-delay: -1ms !important;
+		/* 1 */
+		animation-duration: 1ms !important;
+		/* 1 */
+		animation-iteration-count: 1 !important;
+		/* 1 */
+		background-attachment: initial !important;
+		/* 2 */
+		scroll-behavior: auto !important;
+		/* 3 */
+		transition-delay: 0s !important;
+		/* 4 */
+		transition-duration: 0s !important;
+		/* 4 */
 	}
 	/* stylelint-enable time-min-milliseconds, declaration-no-important */
 }
