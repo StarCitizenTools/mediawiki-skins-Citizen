@@ -3,6 +3,7 @@
 		"authors": [
 			"Eduardo Addad de Oliveira",
 			"Eduardoaddad",
+			"Mariagarbin",
 			"Rafaelff"
 		]
 	},
@@ -14,6 +15,10 @@
 	"citizen-personalmenu-toggle": "Alternar menu pessoal",
 	"citizen-search-toggle": "Ativa a pesquisa",
 	"citizen-theme-toggle": "Alternar a cor do tema",
+	"citizen-sitestats-articles-label": "artigos",
+	"citizen-sitestats-images-label": "arquivos",
+	"citizen-sitestats-users-label": "usuários",
+	"citizen-sitestats-edits-label": "edições",
 	"citizen-drawer-search": "Menu de pesquisa",
 	"citizen-footer-desc": "Edite este texto em MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Edite este texto em MediaWiki:Citizen-footer-tagline",

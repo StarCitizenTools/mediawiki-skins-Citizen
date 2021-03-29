@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"R4356th",
+			"আফতাবুজ্জামান"
+		]
+	},
+	"skinname-citizen": "সিটিজেন",
+	"citizen.js": "/* এখানের সকল জাভাস্ক্রিপ্ট সিটিজেন আবরণের ব্যবহারকারীদের জন্য লোড হবে */",
+	"citizen-sitestats-articles-label": "নিবন্ধসমূহ",
+	"citizen-sitestats-images-label": "ফাইলসমূহ",
+	"citizen-sitestats-users-label": "ব্যবহারকারীগণ",
+	"citizen-sitestats-edits-label": "সম্পাদনাসমূহ"
+}

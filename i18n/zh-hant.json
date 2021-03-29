@@ -2,17 +2,22 @@
 	"@metadata": {
 		"authors": [
 			"Alistair3149",
-			"Kly"
+			"Kly",
+			"Lakejason0"
 		]
 	},
 	"skinname-citizen": "Citizen",
 	"citizen-skin-desc": "為星際公民百科而開發的響應式佈景主題",
 	"citizen.css": "/* 此 CSS 會用於使用 Citizen 佈景主題的使用者 */",
 	"citizen.js": "/* 此 Javascript 會用於使用 Citizen 佈景主題的使用者 */",
-	"citizen-drawer-toggle": "切換菜單",
+	"citizen-drawer-toggle": "切換選單",
 	"citizen-personalmenu-toggle": "切換個人選單",
 	"citizen-search-toggle": "切換搜尋",
 	"citizen-theme-toggle": "切換主題",
+	"citizen-sitestats-articles-label": "篇條目",
+	"citizen-sitestats-images-label": "個檔案",
+	"citizen-sitestats-users-label": "位使用者",
+	"citizen-sitestats-edits-label": "次編輯",
 	"citizen-drawer-search": "搜尋選單",
 	"citizen-footer-desc": "在 MediaWiki:Citizen-footer-desc 編輯此文字",
 	"citizen-footer-tagline": "在 MediaWiki:Citizen-footer-tagline 編輯此文字",

@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Alistair3149",
+			"Lakejason0",
 			"Yfdyh000"
 		]
 	},
@@ -10,8 +11,14 @@
 	"citizen.css": "/* 这里的任何CSS将为使用Citizen皮肤的用户加载 */",
 	"citizen.js": "/* 这里的任何JavaScript将为使用Citizen皮肤的用户加载 */",
 	"citizen-drawer-toggle": "切换菜单",
+	"citizen-personalmenu-toggle": "切换个人菜单",
 	"citizen-search-toggle": "切换搜索",
 	"citizen-theme-toggle": "切换主题颜色",
+	"citizen-sitestats-articles-label": "篇文章",
+	"citizen-sitestats-images-label": "个文件",
+	"citizen-sitestats-users-label": "名用户",
+	"citizen-sitestats-edits-label": "次编辑",
+	"citizen-drawer-search": "搜索菜单",
 	"citizen-footer-desc": "在 MediaWiki:Citizen-footer-desc 编辑此文本",
 	"citizen-footer-tagline": "在 MediaWiki:Citizen-footer-tagline 编辑此文本",
 	"citizen-search-fulltext": "搜索包含",
