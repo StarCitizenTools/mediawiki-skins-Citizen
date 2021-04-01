@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Robby"
+		]
+	},
+	"skinname-citizen": "Citizen",
+	"citizen-sitestats-articles-label": "Artikelen",
+	"citizen-sitestats-images-label": "Fichieren",
+	"citizen-sitestats-users-label": "Benotzer",
+	"citizen-sitestats-edits-label": "Ännerungen",
+	"prefs-citizen-theme-option-light": "Hell",
+	"prefs-citizen-theme-option-dark": "Däischter"
+}
