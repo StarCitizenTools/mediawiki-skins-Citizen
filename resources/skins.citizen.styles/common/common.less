@@ -253,11 +253,6 @@ video {
 	max-width: 100%; // Prevent overflow
 }
 
-html.citizen-animations-ready {
-	// So that the delay scroll animation won't happen on load
-	scroll-behavior: smooth; // not supported by IE, Edge, Safari, and Opera, use JQuery as fallback
-}
-
 .skin-citizen-dark {
 	.mw-editsection > a:before {
 		filter: invert( 1 );
@@ -271,5 +266,12 @@ html.citizen-animations-ready {
 @media ( min-width: @width-breakpoint-tablet ) {
 	table {
 		display: table;
+	}
+
+	// Delay scroll animation won't happen on load
+	// Use it only for larger viewport as it is very costly
+	// on mobile devices
+	html.citizen-animations-ready {
+		scroll-behavior: smooth;
 	}
 }
