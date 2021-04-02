@@ -9,3 +9,4 @@ resources/skins.citizen.scripts.search/typeahead-init.js
 resources/skins.citizen.scripts.search/underscore.partial.js
 resources/skins.citizen.scripts.search/wm-typeahead.js
 resources/skins.citizen.scripts.theme/inline.js
+resources/skins.citizen.scripts.toc/skins.citizen.scripts.toc.js
