@@ -1,8 +1,15 @@
-// Font-face stylesheet
+/*
+ * Fonts used:
+ *
+ * Name: Roboto VF
+ * Version: v3.004
+ * Link: https://github.com/TypeNetwork/Roboto
+*/
 
-// Directory of hosted font
+/* Font directory */
 @font-directory: 'fonts/';
 
+/* Latin (Basic Latin + Latin-1 Supplement ) */
 @font-face {
 	font-display: swap;
 	font-family: 'Roboto';
@@ -10,7 +17,8 @@
 	/* stylelint-disable font-weight-notation */
 	font-weight: 100 900;
 	/* stylelint-enable font-weight-notation */
-	src: url( '@{font-directory}RobotoVF.woff2' ) format( 'woff2-variations' );
+	src: url( '@{font-directory}RobotoVF-latin.woff2' ) format( 'woff2-variations' );
+	unicode-range: U+0000-00FF;
 }
 
 @font-face {
@@ -20,5 +28,152 @@
 	/* stylelint-disable font-weight-notation */
 	font-weight: 100 900;
 	/* stylelint-enable font-weight-notation */
-	src: url( '@{font-directory}Roboto-ItalicVF.woff2' ) format( 'woff2-variations' );
+	src: url( '@{font-directory}Roboto-ItalicVF-latin.woff2' ) format( 'woff2-variations' );
+	unicode-range: U+0000-00FF;
+}
+
+/* Latin Extended A */
+@font-face {
+	font-display: swap;
+	font-family: 'Roboto';
+	font-style: normal;
+	/* stylelint-disable font-weight-notation */
+	font-weight: 100 900;
+	/* stylelint-enable font-weight-notation */
+	src: url( '@{font-directory}RobotoVF-latinexta.woff2' ) format( 'woff2-variations' );
+	unicode-range: U+0100-017F;
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Roboto';
+	font-style: italic;
+	/* stylelint-disable font-weight-notation */
+	font-weight: 100 900;
+	/* stylelint-enable font-weight-notation */
+	src: url( '@{font-directory}Roboto-ItalicVF-latinexta.woff2' ) format( 'woff2-variations' );
+	unicode-range: U+0100-017F;
+}
+
+/* Latin Extended B */
+@font-face {
+	font-display: swap;
+	font-family: 'Roboto';
+	font-style: normal;
+	/* stylelint-disable font-weight-notation */
+	font-weight: 100 900;
+	/* stylelint-enable font-weight-notation */
+	src: url( '@{font-directory}RobotoVF-latinextb.woff2' ) format( 'woff2-variations' );
+	unicode-range: U+0180-024F, U+0259;
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Roboto';
+	font-style: italic;
+	/* stylelint-disable font-weight-notation */
+	font-weight: 100 900;
+	/* stylelint-enable font-weight-notation */
+	src: url( '@{font-directory}Roboto-ItalicVF-latinextb.woff2' ) format( 'woff2-variations' );
+	unicode-range: U+0180-024F, U+0259;
+}
+
+/* Greek and Coptic */
+@font-face {
+	font-display: swap;
+	font-family: 'Roboto';
+	font-style: normal;
+	/* stylelint-disable font-weight-notation */
+	font-weight: 100 900;
+	/* stylelint-enable font-weight-notation */
+	src: url( '@{font-directory}RobotoVF-greek.woff2' ) format( 'woff2-variations' );
+	unicode-range: U+0370-03FF, U+1F4D;
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Roboto';
+	font-style: italic;
+	/* stylelint-disable font-weight-notation */
+	font-weight: 100 900;
+	/* stylelint-enable font-weight-notation */
+	src: url( '@{font-directory}Roboto-ItalicVF-greek.woff2' ) format( 'woff2-variations' );
+	unicode-range: U+0370-03FF, U+1F4D;
+}
+
+/* Cyrillic (Cyrillic + Cyrillic Supplement) */
+@font-face {
+	font-display: swap;
+	font-family: 'Roboto';
+	font-style: normal;
+	/* stylelint-disable font-weight-notation */
+	font-weight: 100 900;
+	/* stylelint-enable font-weight-notation */
+	src: url( '@{font-directory}RobotoVF-cyrillic.woff2' ) format( 'woff2-variations' );
+	unicode-range: U+0400-052F;
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Roboto';
+	font-style: italic;
+	/* stylelint-disable font-weight-notation */
+	font-weight: 100 900;
+	/* stylelint-enable font-weight-notation */
+	src: url( '@{font-directory}Roboto-ItalicVF-cyrillic.woff2' ) format( 'woff2-variations' );
+	unicode-range: U+0400-052F;
+}
+
+/* Latin Extended Additional */
+@font-face {
+	font-display: swap;
+	font-family: 'Roboto';
+	font-style: normal;
+	/* stylelint-disable font-weight-notation */
+	font-weight: 100 900;
+	/* stylelint-enable font-weight-notation */
+	src: url( '@{font-directory}RobotoVF-latinextadd.woff2' ) format( 'woff2-variations' );
+	unicode-range: U+1E00-1EFF;
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Roboto';
+	font-style: italic;
+	/* stylelint-disable font-weight-notation */
+	font-weight: 100 900;
+	/* stylelint-enable font-weight-notation */
+	src: url( '@{font-directory}Roboto-ItalicVF-latinextadd.woff2' ) format( 'woff2-variations' );
+	unicode-range: U+1E00-1EFF;
+}
+
+/* Special characters
+ * - Spacing Modifier Letters
+ * - General punctuation
+ * - Superscripts and Subscripts
+ * - Currency Symbols
+ * - Letterlike Symbols
+ * - Number Forms
+ * - Mathematical Operators
+*/
+@font-face {
+	font-display: swap;
+	font-family: 'Roboto';
+	font-style: normal;
+	/* stylelint-disable font-weight-notation */
+	font-weight: 100 900;
+	/* stylelint-enable font-weight-notation */
+	src: url( '@{font-directory}RobotoVF-spec.woff2' ) format( 'woff2-variations' );
+	unicode-range: U+02B0-02FF, U+2000-22F;
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Roboto';
+	font-style: italic;
+	/* stylelint-disable font-weight-notation */
+	font-weight: 100 900;
+	/* stylelint-enable font-weight-notation */
+	src: url( '@{font-directory}Roboto-ItalicVF-spec.woff2' ) format( 'woff2-variations' );
+	unicode-range: U+02B0-02FF, U+2000-22F;
 }
