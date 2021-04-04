@@ -28,10 +28,9 @@ namespace Citizen\Partials;
 use DOMDocument;
 use DOMElement;
 use DOMXpath;
-use Exception;
 use Html;
+use HtmlFormatter\HtmlFormatter;
 use OutputPage;
-use ValueError;
 
 final class BodyContent extends Partial {
 
@@ -58,11 +57,11 @@ final class BodyContent extends Partial {
 	 * @return string html
 	 */
 	public function buildBodyContent( $out ) {
-		$htmlBodyContent = sprintf(
+		$htmlBodyContent = new HtmlFormatter( sprintf(
 			"%s\n%s",
 			$out->getHTML(),
 			Html::rawElement( 'div', [ 'class' => 'printfooter' ], $this->skin->printSource() )
-		);
+		) );
 
 		$title = $out->getTitle();
 
@@ -75,17 +74,17 @@ final class BodyContent extends Partial {
 		if ( $this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true &&
 			!$title->isMainPage() &&
 			$title->isContentPage() ) {
-			$doc = $this->parseXhtml( $htmlBodyContent );
+			$doc = $htmlBodyContent->getDoc();
 
 			// Make top level sections
 			$this->makeSections( $doc, $this->getTopHeadings( $doc ) );
 			// Mark subheadings
 			$this->markSubHeadings( $this->getSubHeadings( $doc ) );
-
-			$htmlBodyContent = html_entity_decode( $doc->saveHTML(), ENT_QUOTES, 'UTF-8' );
 		}
 
-		return $this->skin->wrapHTMLPublic( $title, $htmlBodyContent );
+		$htmlBodyContent->filterContent();
+
+		return $this->skin->wrapHTMLPublic( $title, $htmlBodyContent->getText() );
 	}
 
 	/**
@@ -176,6 +175,7 @@ final class BodyContent extends Partial {
 		$sectionBody = $doc->createElement( 'section' );
 		$sectionBody->setAttribute( 'class', self::STYLE_COLLAPSIBLE_SECTION_CLASS );
 		$sectionBody->setAttribute( 'id', 'section-collapsible-' . $sectionNumber );
+
 		return $sectionBody;
 	}
 
@@ -252,61 +252,5 @@ final class BodyContent extends Partial {
 		}
 
 		return $subheadings;
-	}
-
-	/**
-	 * Parses a html string into a DOMDocument
-	 *
-	 * @param string $htmlContent
-	 * @param string $charset
-	 *
-	 * @return DOMDocument
-	 */
-	private function parseXhtml( string $htmlContent, string $charset = 'UTF-8' ): DOMDocument {
-		$htmlContent = $this->convertToHtmlEntities( $htmlContent, $charset );
-
-		$internalErrors = libxml_use_internal_errors( true );
-		$disableEntities = libxml_disable_entity_loader( true );
-
-		$dom = new DOMDocument( '1.0', $charset );
-		$dom->validateOnParse = true;
-
-		if ( trim( $htmlContent ) !== '' ) {
-		    // @phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
-			@$dom->loadHTML( $htmlContent );
-		}
-
-		libxml_use_internal_errors( $internalErrors );
-		libxml_disable_entity_loader( $disableEntities );
-
-		return $dom;
-	}
-
-	/**
-	 * Converts charset to HTML-entities to ensure valid parsing.
-	 *
-	 * @param string $htmlContent
-	 * @param string $charset
-	 * @return string
-	 */
-	private function convertToHtmlEntities( string $htmlContent, string $charset = 'UTF-8' ): string {
-		set_error_handler( static function () {
-			// Null
-		} );
-
-		try {
-			return mb_convert_encoding( $htmlContent, 'HTML-ENTITIES', $charset );
-		} catch ( Exception | ValueError $e ) {
-			try {
-				$htmlContent = iconv( $charset, 'UTF-8', $htmlContent );
-				$htmlContent = mb_convert_encoding( $htmlContent, 'HTML-ENTITIES', 'UTF-8' );
-			} catch ( Exception | ValueError $e ) {
-				//
-			}
-
-			return $htmlContent;
-		} finally {
-			restore_error_handler();
-		}
 	}
 }
