@@ -11,7 +11,7 @@
 
 	setStorageChangeTheme = function ( themeName ) {
 		try {
-			window.localStorage.setItem( 'skin-citizen-theme', themeName )
+			window.localStorage.setItem( 'skin-citizen-theme', themeName );
 		} catch ( e ) {
 		}
 
