@@ -51,19 +51,8 @@ final class Theme extends Partial {
 			);
 		}
 
-		$cookieTheme = $this->out->getRequest()->getCookie( 'skin-citizen-theme', null, 'auto' );
-		if ( $cookieTheme !== 'auto' ) {
-			$theme = $cookieTheme;
-		}
-
 		// Add HTML class based on theme set
 		$this->out->addHtmlClasses( 'skin-citizen-' . $theme );
-		if ( $this->out->getRequest()->getCookie( 'skin-citizen-theme-override' ) === null ) {
-			// Only set the theme cookie if the theme wasn't overridden by the user through the button
-			$this->out->getRequest()->response()->setCookie( 'skin-citizen-theme', $theme, 0, [
-				'httpOnly' => false,
-			] );
-		}
 
 		// Add styles and scripts module
 		if ( $theme === 'auto' ) {

@@ -17,8 +17,7 @@ window.switchTheme = () => {
 	const themeToggle = document.getElementById('theme-toggle');
 
 	try {
-		const cookieTheme = document.cookie.match(/skin-citizen-theme=(dark|light|auto)/);
-		const theme = cookieTheme !== null ? cookieTheme.pop() : null;
+		const theme = window.localStorage.getItem('skin-citizen-theme');
 
 		if (theme !== null) {
 			// First remove all theme classes
