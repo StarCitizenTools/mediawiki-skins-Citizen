@@ -25,13 +25,16 @@ declare( strict_types=1 );
 
 namespace Citizen\Hooks;
 
+use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;
+use OutputPage;
 use ResourceLoaderContext;
+use Skin;
 
 /**
  * Hooks to run relating the skin
  */
-class SkinHooks implements SkinPageReadyConfigHook {
+class SkinHooks implements SkinPageReadyConfigHook, BeforePageDisplayHook {
 
 	/**
 	 * SkinPageReadyConfig hook handler
@@ -51,5 +54,25 @@ class SkinHooks implements SkinPageReadyConfigHook {
 
 		// Tell the `mediawiki.page.ready` module not to wire up search.
 		$config['search'] = false;
+	}
+
+	/**
+	 * Adds the inline theme switcher script to the page
+	 *
+	 * @param OutputPage $out
+	 * @param Skin $skin
+	 */
+	public function onBeforePageDisplay( $out, $skin ): void {
+		$nonce = $out->getCSP()->getNonce();
+
+		// Script content at 'skins.citizen.scripts.theme/inline.js
+		// @phpcs:ignore Generic.Files.LineLength.TooLong
+		$script = sprintf(
+			'<script%s>%s</script>',
+			$nonce !== false ? sprintf( ' nonce="%s"', $nonce ) : '',
+			'window.switchTheme=()=>{var e=t=>["auto","dark","light"].map(e=>t+e);const t=document.getElementById("theme-toggle");try{const c=document.cookie.match(/skin-citizen-theme=(dark|light|auto)/);var n=null!==c?c.pop():null;null!==n&&(document.documentElement.classList.remove(...e("skin-citizen-")),document.documentElement.classList.add("skin-citizen-"+n),t.classList.remove(...e("theme-toggle")),t.classList.add("theme-toggle-"+n))}catch(e){}},window.switchTheme();'
+		);
+
+		$out->addHeadItem( 'skin.citizen.inline', $script );
 	}
 }
