@@ -1,9 +1,9 @@
 function init() {
-	var theme = window.mw.cookie.get( 'skin-citizen-theme' );
+	var theme = window.localStorage.getItem( 'skin-citizen-theme' );
 	var toggleBtn = document.getElementById( 'theme-toggle' );
 
 	toggleBtn.addEventListener( 'click', function ( clickEvent ) {
-		theme = window.mw.cookie.get( 'skin-citizen-theme' );
+		theme = window.localStorage.getItem( 'skin-citizen-theme' );
 
 		try {
 			theme = theme === 'dark' ? 'light' : 'dark';
@@ -14,7 +14,7 @@ function init() {
 			clickEvent.target.classList.add( 'theme-toggle-' + theme );
 
 			try {
-				window.mw.cookie.set( 'skin-citizen-theme', theme );
+				window.localStorage.setItem( 'skin-citizen-theme', theme );
 				window.mw.cookie.set( 'skin-citizen-theme-override', '1' );
 			} catch ( e ) {
 			}
