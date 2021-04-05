@@ -95,6 +95,7 @@
 	"Hooks": {
 		"ResourceLoaderGetConfigVars": "ResourceLoaderHooks",
 		"SkinPageReadyConfig": "SkinHooks",
+		"BeforePageDisplay": "SkinHooks",
 		"ThumbnailBeforeProduceHTML": "ThumbnailHooks",
 		"GetPreferences": "PreferenceHooks",
 		"PreferencesFormPreSave": "PreferenceHooks"
