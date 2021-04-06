@@ -34,6 +34,7 @@
 	}
 
 	if ( theme !== 'auto' ) {
+		setStorageChangeTheme( theme );
 		return;
 	}
 
