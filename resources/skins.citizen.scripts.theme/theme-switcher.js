@@ -22,6 +22,12 @@
 		return;
 	}
 
+	try {
+		if ( window.mw.cookie.get( 'skin-citizen-theme-override' ) === '1' ) {
+			return;
+		}
+	} catch ( e ) {}
+
 	theme = window.mw.config.get( 'wgCitizenThemeDefault' );
 	if ( theme === null ) {
 		theme = 'auto';
@@ -34,14 +40,9 @@
 	}
 
 	if ( theme !== 'auto' ) {
+		setStorageChangeTheme( theme );
 		return;
 	}
-
-	try {
-		if ( window.mw.cookie.get( 'skin-citizen-theme-override' ) === '1' ) {
-			return;
-		}
-	} catch ( e ) {}
 
 	prefersColorSchemeDarkQuery = window.matchMedia( '(prefers-color-scheme: dark)' );
 	theme = 'light';
