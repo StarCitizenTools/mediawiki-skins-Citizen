@@ -55,14 +55,7 @@ final class Theme extends Partial {
 		$this->out->addHtmlClasses( 'skin-citizen-' . $theme );
 
 		// Add styles and scripts module
-		$options['scripts'] = array_merge(
-			$options['scripts'],
-			[ 'skins.citizen.scripts.theme' ]
-		);
-
-		$options['styles'] = array_merge(
-			$options['styles'],
-			[ 'skins.citizen.styles.theme' ]
-		);
+		$options['scripts'][] = 'skins.citizen.scripts.theme';
+		$options['styles'][] = 'skins.citizen.styles.theme';
 	}
 }
