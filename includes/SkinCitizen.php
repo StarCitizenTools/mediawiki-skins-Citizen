@@ -292,7 +292,7 @@ class SkinCitizen extends SkinMustache {
 		if (
 			$this->getConfigValue( 'ShowDebug' ) === true
 			|| $this->getConfigValue( 'ShowExceptionDetails' ) === true
- 		) {
+		) {
 			$options['styles'][] = 'skins.citizen.styles.debug';
 		}
 	}
