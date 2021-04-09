@@ -143,7 +143,7 @@ class SkinCitizen extends SkinMustache {
 			);
 		}
 
-		$options['templateDirectory'] = dirname(__DIR__, 1) . '/templates';
+		$options['templateDirectory'] = dirname( __DIR__, 1 ) . '/templates';
 		parent::__construct( $options );
 	}
 
