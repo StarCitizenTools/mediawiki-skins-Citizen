@@ -52,98 +52,10 @@ class SkinCitizen extends SkinMustache {
 	 * @inheritDoc
 	 */
 	public function __construct( $options = [] ) {
-		$skin = $this;
-		$out = $skin->getOutput();
-		$title = $out->getTitle();
+		// Add skin-specific features
+		$this->buildSkinFeatures( $options );
 
-		$metadata = new Metadata( $this );
-		$skinTheme = new Theme( $this );
-
-		$metadata->addMetadata();
-
-		// Theme handler
-		$skinTheme->setSkinTheme( $options );
-
-		// Only load in content pages
-		if ( $title !== null && $title->isContentPage() ) {
-			// Load Citizen collapsible sections modules if enabled
-			if ( $this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true ) {
-				$options['scripts'] = array_merge(
-					$options['scripts'],
-					[ 'skins.citizen.scripts.sections' ]
-				);
-				$options['styles'] = array_merge(
-					$options['styles'],
-					[
-						'skins.citizen.styles.sections',
-						'skins.citizen.icons.sections'
-					]
-				);
-			}
-
-			// Load table of content script if ToC presents
-			if ( $out->isTOCEnabled() ) {
-				// Add class to body that notifies the page has TOC
-				$out->addBodyClasses( 'skin-citizen-has-toc' );
-				// Disabled style condition loading due to pop in
-				$options['scripts'] = array_merge(
-					$options['scripts'],
-					[ 'skins.citizen.scripts.toc' ]
-				);
-			}
-		}
-
-		// Load Citizen search suggestion styles if enabled
-		if ( $this->getConfigValue( 'CitizenEnableSearch' ) === true ) {
-			$options['styles'] = array_merge(
-				$options['styles'],
-				[
-					'skins.citizen.styles.search',
-					'skins.citizen.icons.search'
-				]
-			);
-		}
-
-		// Load Citizen image lazyload modules if enabled
-		if ( $this->getConfigValue( 'CitizenEnableLazyload' ) === true ) {
-			$options['scripts'] = array_merge(
-				$options['scripts'],
-				[ 'skins.citizen.scripts.lazyload' ]
-			);
-			$options['styles'] = array_merge(
-				$options['styles'],
-				[ 'skins.citizen.styles.lazyload' ]
-			);
-		}
-
-		// Load Citizen Drawer SiteStats module if enabled
-		if ( $this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) === true ) {
-			$options['styles'] = array_merge(
-				$options['styles'],
-				[ 'skins.citizen.styles.sitestats' ]
-			);
-		}
-
-		// Load Citizen Drawer SubSearch module if enabled
-		if ( $this->getConfigValue( 'CitizenEnableDrawerSubSearch' ) === true ) {
-			$options['scripts'] = array_merge(
-				$options['scripts'],
-				[ 'skins.citizen.scripts.drawer' ]
-			);
-		}
-
-		// Load Citizen debug module if debug is enabled
-		if (
-			$this->getConfigValue( 'ShowDebug' ) === true
-			|| $this->getConfigValue( 'ShowExceptionDetails' ) === true
- ) {
-			$options['styles'] = array_merge(
-				$options['styles'],
-				[ 'skins.citizen.styles.debug' ]
-			);
-		}
-
-		$options['templateDirectory'] = __DIR__ . '/templates';
+		$options['templateDirectory'] = dirname( __DIR__, 1 ) . '/templates';
 		parent::__construct( $options );
 	}
 
@@ -314,5 +226,74 @@ class SkinCitizen extends SkinMustache {
 		$urls['specialpages'] = false;
 
 		return $urls;
+	}
+
+	/**
+	 * Set up optional skin features
+	 *
+	 * @param array &$options
+	 */
+	private function buildSkinFeatures( array &$options ) {
+		$out = $this->getOutput();
+		$title = $out->getTitle();
+
+		$metadata = new Metadata( $this );
+		$skinTheme = new Theme( $this );
+
+		// Add metadata
+		$metadata->addMetadata();
+
+		// Add theme handler
+		$skinTheme->setSkinTheme( $options );
+
+		// Collapsible sections
+		// Load in content pages
+		if ( $title !== null && $title->isContentPage() ) {
+			// Load Citizen collapsible sections modules if enabled
+			if ( $this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true ) {
+				$options['scripts'][] = 'skins.citizen.scripts.sections';
+				$options['styles'][] = 'skins.citizen.styles.sections';
+				$options['styles'][] = 'skins.citizen.icons.sections';
+			}
+
+			// Table of content highlight
+			// Load if ToC presents
+			if ( $out->isTOCEnabled() ) {
+				// Add class to body that notifies the page has TOC
+				$out->addBodyClasses( 'skin-citizen-has-toc' );
+				// Disabled style condition loading due to pop in
+				$options['scripts'][] = 'skins.citizen.scripts.toc';
+			}
+		}
+
+		// Search suggestion
+		if ( $this->getConfigValue( 'CitizenEnableSearch' ) === true ) {
+			$options['styles'][] = 'skins.citizen.styles.search';
+			$options['styles'][] = 'skins.citizen.icons.search';
+		}
+
+		// Image lazyload
+		if ( $this->getConfigValue( 'CitizenEnableLazyload' ) === true ) {
+			$options['scripts'][] = 'skins.citizen.scripts.lazyload';
+			$options['styles'][] = 'skins.citizen.styles.lazyload';
+		}
+
+		// Drawer sitestats
+		if ( $this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) === true ) {
+			$options['styles'][] = 'skins.citizen.styles.sitestats';
+		}
+
+		// Drawer subsearch
+		if ( $this->getConfigValue( 'CitizenEnableDrawerSubSearch' ) === true ) {
+			$options['scripts'][] = 'skins.citizen.scripts.drawer';
+		}
+
+		// Debug styles
+		if (
+			$this->getConfigValue( 'ShowDebug' ) === true
+			|| $this->getConfigValue( 'ShowExceptionDetails' ) === true
+		) {
+			$options['styles'][] = 'skins.citizen.styles.debug';
+		}
 	}
 }

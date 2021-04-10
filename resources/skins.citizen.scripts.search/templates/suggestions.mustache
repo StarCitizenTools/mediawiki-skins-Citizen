@@ -1,0 +1,31 @@
+{{!
+	@typedef object props
+	@prop string id of list item element
+	@prop string thumb-url of list item
+	@prop string title of list item
+	@prop string description of list item
+	
+	props[] array-suggestion-links iterable list of search suggestion item
+	string html-fulltext-url
+	string msg-citizen-search-fulltext
+	string html-searchstring
+}}
+
+<div class="suggestions-dropdown">
+	{{#array-suggestion-links}}
+	<a class="suggestion-link"{{#id}} id="{{.}}"{{/id}} href="{{{url}}}">
+		<div class="suggestion-thumbnail"{{#thumb-url}} style="background-image:url({{.}}){{/thumb-url}}"></div>
+		<div class="suggestion-text">
+			<h3 class="suggestion-title">{{{title}}}</h3>
+			<p class="suggestion-description">{{{description}}}</p>
+		</div>
+	</a>
+	{{/array-suggestion-links}}
+	<a id="suggestion-special" href="{{{html-fulltext-url}}}">
+		<div id="suggestion-special-icon"></div>
+		<div id="suggestion-special-text">
+			{{{msg-citizen-search-fulltext}}}
+			<em class="suggestion-highlight">{{{html-searchstring}}}</em>
+		</div>
+	</a>
+</div>

@@ -200,6 +200,9 @@
 			]
 		},
 		"skins.citizen.scripts.search": {
+			"templates": [
+				"resources/skins.citizen.scripts.search/templates/suggestions.mustache"
+			],
 			"scripts": [
 				"resources/skins.citizen.scripts.search/underscore.partial.js",
 				"resources/skins.citizen.scripts.search/wm-typeahead.js",
