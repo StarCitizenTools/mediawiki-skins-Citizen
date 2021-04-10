@@ -224,23 +224,6 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	}
 
 	/**
-	 * Card displayed if no results could be found
-	 * @param {string} searchString - The search string.
-	 * @return {string}
-	 */
-	function getSuggestionSpecial( searchString ) {
-		const msg = mw.message( 'citizen-search-fulltext' ).text(),
-			href = searchurl + searchString + '&fulltext=1';
-
-		return '<a id="suggestion-special" href="' + href + '">' +
-			'<div id="suggestion-special-icon"></div>' +
-			'<div id="suggestion-special-text">' + msg +
-				'&nbsp;<em class="suggestion-highlight">' + decodeURI( searchString ) +
-			'</em></div>' +
-		'</div>';
-	}
-
-	/**
 	 * Inserts script element containing the Search API results into document head.
 	 * The script itself calls the 'portalOpensearchCallback' callback function,
 	 *
@@ -350,34 +333,19 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 	} // END highlightTitle
 
 	/**
-	 * Generates a template string based on an array of search suggestions.
+	 * Get indiviual suggestion items
 	 *
 	 * @param {Array} suggestions - An array of search suggestion results.
-	 * @return {string} A string representing the search suggestions DOM
+	 * @return {Array} props - An array of formatted search suggestion results for Mustache
 	 */
-	function generateTemplateString( suggestions ) {
-		let string = '<div class="suggestions-dropdown">',
-			suggestionLink,
-			suggestionThumbnail,
-			suggestionText,
-			suggestionTitle,
-			suggestionDescription,
-			suggestionSpecial,
+	function getSuggestionProps( suggestions ) {
+		let props = [],
+			i,
 			page,
-			sanitizedThumbURL = false,
-			descriptionText = '',
-			pageDescription = '',
 			suggestionLinkID,
-			i;
-
-		suggestionSpecial = getSuggestionSpecial( searchString );
-
-		if ( suggestions.length === 0 ) {
-			string += suggestionSpecial;
-			string += '</div>';
-
-			return string;
-		}
+			suggestionDescription,
+			sanitizedThumbURL,
+			pageDescription;
 
 		for ( i = 0; i < suggestions.length; i++ ) {
 			if ( !suggestions[ i ] ) {
@@ -387,11 +355,21 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			page = suggestions[ i ];
 
 			// Ensure that the value from the previous iteration isn't used
+			suggestionDescription = '';
 			sanitizedThumbURL = false;
-			descriptionText = '';
+			pageDescription = '';
+
+			// Add ID if first or last suggestion
+			if ( i === 0 ) {
+				suggestionLinkID = 'suggestion-link-first';
+			} else if ( i === suggestions.length - 1 ) {
+				suggestionLinkID = 'suggestion-link-last';
+			} else {
+				suggestionLinkID = '';
+			}
 
 			if ( useREST ) {
-				descriptionText = page.description;
+				suggestionDescription = page.description;
 
 				if ( page.thumbnail && page.thumbnail.url ) {
 					sanitizedThumbURL = page.thumbnail.url.replace( /"/g, '%22' );
@@ -414,15 +392,15 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 				if ( pageDescription ) {
 					// If the description is an array, use the first item
 					if ( typeof pageDescription === 'object' && pageDescription[ 0 ] ) {
-						descriptionText = pageDescription[ 0 ].toString();
+						suggestionDescription = pageDescription[ 0 ].toString();
 					} else {
 						// Otherwise, use the description as is.
-						descriptionText = pageDescription.toString();
+						suggestionDescription = pageDescription.toString();
 					}
 
 					// Filter out no text from TextExtracts
-					if ( descriptionText === '...' ) {
-						descriptionText = '';
+					if ( suggestionDescription === '...' ) {
+						suggestionDescription = '';
 					}
 				}
 
@@ -435,42 +413,51 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 				sanitizedThumbURL = sanitizedThumbURL.replace( /'/g, '%27' );
 			}
 
-			// Add ID if first or last suggestion
-			if ( i === 0 ) {
-				suggestionLinkID = 'suggestion-link-first';
-			} else if ( i === suggestions.length - 1 ) {
-				suggestionLinkID = 'suggestion-link-last';
-			} else {
-				suggestionLinkID = '';
-			}
-
-			// TODO: Convert to Mustache
-			suggestionDescription = mw.html.element( 'p', { class: 'suggestion-description' }, descriptionText );
-
-			suggestionTitle = mw.html.element( 'h3', { class: 'suggestion-title' }, new mw.html.Raw( highlightTitle( page.title, searchString ) ) );
-
-			suggestionText = mw.html.element( 'div', { class: 'suggestion-text' }, new mw.html.Raw( suggestionTitle + suggestionDescription ) );
-
-			suggestionThumbnail = mw.html.element( 'div', {
-				class: 'suggestion-thumbnail',
-				style: ( sanitizedThumbURL ) ? 'background-image:url(' + sanitizedThumbURL + ')' : false
-			}, '' );
-
-			suggestionLink = mw.html.element( 'a', {
-				class: 'suggestion-link',
-				id: suggestionLinkID,
-				href: server + (new mw.Title( page.title, page.ns ?? 0 ).getUrl()),
-			}, new mw.html.Raw( suggestionThumbnail + suggestionText ) );
-
-			string += suggestionLink;
+			props[ i ] = {
+				'id': suggestionLinkID,
+				'url': server + ( new mw.Title( page.title, page.ns ?? 0 ).getUrl() ),
+				'thumb-url': sanitizedThumbURL,
+				'title': highlightTitle( page.title, searchString ),
+				'description': suggestionDescription
+			};
 		}
 
-		string += suggestionSpecial;
+		return props;
+	}
 
-		string += '</div>';
+	/**
+	 * Generates the HTML template based on an array of search suggestions.
+	 * TODO: Maybe ES6 export is faster?
+	 *
+	 * @param {Array} suggestions - An array of search suggestion results.
+	 * @return {String} HTML of the search suggestion results.
+	 */
+	function generateSuggestionsHTML( suggestions ) {
+		let template,
+			data,
+			html;
 
-		return string;
-	} // END generateTemplateString
+		// Initalize Mustache template
+		template = mw.template.get( 
+			'skins.citizen.scripts.search', 
+			'resources/skins.citizen.scripts.search/templates/suggestions.mustache'
+		);
+
+		data = {
+			'html-fulltext-url': searchurl + searchString + '&fulltext=1',
+			'msg-citizen-search-fulltext': mw.message( 'citizen-search-fulltext' ).text(),
+			'html-searchstring': decodeURI( searchString ),
+			'array-suggestion-links': []
+		};
+
+		if ( suggestions.length > 0 ) {
+			data['array-suggestion-links'] = getSuggestionProps( suggestions );
+		}
+
+		html = template.render( data )[1].outerHTML;
+
+		return html;
+	} // END generateTemplate
 
 	/**
 	 * - Removes 'active' class from a collection of elements.
@@ -521,7 +508,6 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			suggestions,
 			item,
 			result,
-			templateDOMString,
 			listEl;
 
 		return function ( xhrResults, queryString ) {
@@ -540,30 +526,28 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			}
 
 			if ( suggestions.length === 0 ) {
-				typeAheadEl.innerHTML = '<div class="suggestions-dropdown">' +
-				getSuggestionSpecial( queryString ) +
-				'</div>';
+				typeAheadEl.innerHTML = generateSuggestionsHTML( [] );
 				return;
 			}
 
-			for ( item in suggestions ) {
-				if ( Object.prototype.hasOwnProperty.call( suggestions, item ) ) {
-					result = suggestions[ item ];
-					orderedResults[ result.index - 1 ] = result;
+			if ( useREST ) {
+				// Already ordered
+				orderedResults = suggestions;
+			} else {
+				for ( item in suggestions ) {
+					if ( Object.prototype.hasOwnProperty.call( suggestions, item ) ) {
+						result = suggestions[ item ];
+						orderedResults[ result.index - 1 ] = result;
+					}
 				}
 			}
-			if ( useREST ) {
-				orderedResults = suggestions;
-			}
-
-			templateDOMString = generateTemplateString( orderedResults );
 
 			ssActiveIndex.setMax( orderedResults.length );
 			ssActiveIndex.clear();
 
-			typeAheadEl.innerHTML = templateDOMString;
+			typeAheadEl.innerHTML = generateSuggestionsHTML( orderedResults );
 
-			typeAheadItems = typeAheadEl.childNodes[ 0 ].childNodes;
+			typeAheadItems = typeAheadEl.childNodes[ 0 ].children;
 
 			// Attaching hover events
 			for ( i = 0; i < typeAheadItems.length; i++ ) {
@@ -592,7 +576,7 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 		}
 
 		if ( keycode === 40 || keycode === 38 ) {
-			suggestionItems = typeAheadEl.firstChild.childNodes;
+			suggestionItems = typeAheadEl.firstChild.children;
 
 			if ( keycode === 40 ) {
 				searchSuggestionIndex = ssActiveIndex.increment( 1 );
