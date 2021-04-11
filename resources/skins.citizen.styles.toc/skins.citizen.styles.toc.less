@@ -104,9 +104,8 @@
 	@media ( max-width: @width-breakpoint-desktop-wide ) {
 		.toc {
 			z-index: 11; // Higher than header
-			height: 100%;
 			padding: 0;
-			margin-top: ~'calc( var( --height-header ) * -1 )';
+			margin: 0 var( --padding-page );
 			pointer-events: none;
 
 			&:before,
@@ -171,21 +170,18 @@
 			&title h2 {
 				position: absolute;
 				z-index: 3;
+				width: ~'calc( 100% - var( --padding-page ) * 2 )';
 				max-width: var( --width-toc );
-				padding: 10px var( --padding-page ) 0 var( --padding-page );
-				margin-top: var( --height-header );
+				padding: 20px var( --padding-page ) 0 var( --padding-page );
 			}
 
 			> ul {
 				display: block !important; // So that animation is visible
-				min-width: ~'calc( var( --width-toc ) - var( --padding-page ) * 2 )'; // To prevent heading overflow
-				max-width: ~'calc( 100vh - var( --padding-page ) * 2 )';
-				height: 100%;
-				max-height: ~'calc( 100vh - var( --height-header ) )';
-				padding: ~'calc( var( --height-header ) + 24px + 0.6rem ) var( --padding-page ) 20px var( --padding-page )';
+				max-height: ~'calc( 100vh - var( --height-header ) * 3 )';
+				padding: 45px var( --padding-page ) 20px var( --padding-page ); // hardcoded for now
 				margin: 0 !important;
 				background: var( --background-color-dp-08 );
-				border-radius: 0 @border-radius-large @border-radius-large 0;
+				border-radius: @border-radius-large;
 				pointer-events: auto;
 				.boxshadow(3);
 			}
@@ -207,6 +203,17 @@
 						filter: invert( 1 );
 					}
 				}
+			}
+		}
+	}
+
+	@media ( max-width: @width-breakpoint-tablet ) {
+		.toc {
+			right: 0;
+			max-width: unset;
+
+			> ul {
+				max-height: 60vh;
 			}
 		}
 	}
