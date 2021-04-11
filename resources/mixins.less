@@ -71,7 +71,6 @@
 	display: flex;
 	color: var( --color-base ) !important;
 	font-weight: 450;
-	transition: @transition-background-quick, @transition-color-quick;
 }
 
 .menu-item-link-hover() {
@@ -109,22 +108,6 @@
 
 .button-red-active() {
 	background-color: var( --color-destructive--active );
-}
-
-// Link styles
-.link-content-text(@color) {
-	background-image: linear-gradient( to right, @color 0, @color 100% );
-	background-repeat: no-repeat;
-	background-size: 0 100%;
-	transition: @transition-background-quick, @transition-color-quick;
-
-	/* stylelint-disable declaration-property-value-disallowed-list */
-	&:hover {
-		background-size: 100% 100% !important;
-		color: #fff !important;
-		outline: none;
-	}
-	/* stylelint-enable */
 }
 
 // Gradient overflow
