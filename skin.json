@@ -505,6 +505,7 @@
 			"+mediawiki.action.view.filepage": "skinStyles/mediawiki/action/mediawiki.action.view.filepage.less",
 
 			"mediawiki.skinning.content.parsoid": [],
+			"mediawiki.skinning.interface": [],
 
 			"+mediawiki.special": "skinStyles/mediawiki/special/mediawiki.special.less",
 			"+mediawiki.special.apisandbox": "skinStyles/mediawiki/special/mediawiki.special.apisandbox.less",
