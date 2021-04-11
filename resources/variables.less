@@ -71,7 +71,7 @@
 
 @color-accent-30--darken: #26437f;
 
-/* Background Colors */
+/* Background colors */
 @background-color-dp-00:			@color-base100;
 @background-color-dp-00--rgb:		red(@background-color-dp-00), green(@background-color-dp-00), blue(@background-color-dp-00);
 @background-color-dp-01:			@color-base100;
@@ -106,7 +106,7 @@
 @background-color-warning:			@color-yellow90;
 @background-color-success:			@color-green90;
 
-/* Foreground Colors */
+/* Foreground colors */
 @color-base:				@color-base20;
 @color-base--emphasized:	@color-base10;
 @color-base--subtle:		@color-base30;
@@ -135,7 +135,7 @@
 @opacity-icon-base--hover:	0.6;
 @opacity-icon-base--active:	0.8;
 
-/* == Box Model properties == */
+/* == Box model properties == */
 /* `--*size` variables are used for `*width` & `*height` properties. */
 @size-icon:		20px;
 @height-header:	56px;
@@ -146,13 +146,72 @@
 @padding-page:	20px;
 
 /* Border */
-/* Border Colors */
+/* Border colors */
 @border-color-base:				rgba( 0, 0, 0, 0.05 );
 @border-color-base--lighter:	rgba( 0, 0, 0, 0.02 );
 @border-color-base--darker:		rgba( 0, 0, 0, 0.08 );
 // To blend better with OOUI styles
 @border-color-input:			@border-color-base;
 @border-color-input--hover:		rgba( 0, 0, 0, 0.4 );
+
+/* Border radius */
+@border-radius-small: 4px;
+@border-radius-medium: @border-radius-small * 2;
+@border-radius-large: @border-radius-small * 3;
+
+/* Transitions */
+@transition-color: color 500ms ease;
+@transition-color-quick: color 200ms ease;
+@transition-transform: transform 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
+@transition-transform-quick: transform 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
+@transition-width: width 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
+@transition-width-quick: width 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
+@transition-height: height 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
+@transition-height-quick: height 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
+@transition-margin: margin 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
+@transition-margin-quick: margin 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
+@transition-padding: padding 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
+@transition-padding-quick: padding 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
+@transition-background: background 500ms ease;
+@transition-background-quick: background 200ms ease;
+@transition-opacity: opacity 500ms ease;
+@transition-opacity-quick: opacity 200ms ease;
+@transition-border: border 500ms ease;
+@transition-border-quick: border 200ms ease;
+@transition-box-shadow: box-shadow 500ms ease;
+@transition-box-shadow-quick: box-shadow 200ms ease;
+@transition-border-color: border-color 500ms ease;
+@transition-border-color-quick: border-color 200ms ease;
+@transition-filter: filter 500ms ease;
+@transition-filter-quick: filter 200ms ease;
+
+/* Fonts */
+/**
+ * Citizen font stack for sans-serif fonts
+ *
+ * `Roboto` – Default font
+ * system-ui - System UI font stack
+ * `-apple-system` - Firefox fallback for System UI font stack
+ */
+@fonts: 'Roboto', system-ui, -apple-system, sans-serif;
+/**
+ * Citizen serif font stack
+ *
+ * `Georgia` – Windows, Mac
+ * `serif` – (Generic) web font fallback
+ */
+@fonts-serif: Georgia, serif;
+/**
+ * System font stack for monospace fonts
+ *
+ * `SFMono-Regular` - macOS 10.12+
+ * `Menlo` – macOS 10.6+
+ * `Roboto Mono` - Android 4.0+
+ * `Consolas` – Windows Vista & newer
+ * `Liberation Mono` – Fedora, Ubuntu, … OFL licensed
+ * `'Courier New', monospace` – (Generic) web font fallback
+ */
+@fonts-monospace: 'SFMono-Regular', 'Menlo', 'Roboto Mono', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
 
 /**
  * Dark theme color palette
@@ -171,7 +230,7 @@
 @dark-color-base80: #363c42;	// 15% white overlay
 @dark-color-base90: #393f45;	// 16% white overlay
 
-/* Background Colors */
+/* Background colors */
 @dark-background-color-dp-00:			@dark-color-base0;
 @dark-background-color-dp-00--rgb:		red(@dark-background-color-dp-00), green(@dark-background-color-dp-00), blue(@dark-background-color-dp-00);
 @dark-background-color-dp-01:			@dark-color-base10;
@@ -207,7 +266,7 @@
 @dark-background-color-warning:		@color-yellow30;
 @dark-background-color-success:		@color-green30;
 
-/* Foreground Colors */
+/* Foreground colors */
 @dark-color-base:				rgba( 255, 255, 255, 0.6 );
 @dark-color-base--emphasized:	rgba( 255, 255, 255, 0.87 );
 @dark-color-base--subtle:		rgba( 255, 255, 255, 0.38 );
@@ -224,44 +283,64 @@
 // @dark-opacity-icon-base--hover:		0.6;
 @dark-opacity-icon-base--active:	0.2;
 
-/* Border Colors */
+/* Border colors */
 @dark-border-color-base:			rgba( 255, 255, 255, 0.05 );
 @dark-border-color-base--lighter:	rgba( 255, 255, 255, 0.02 );
 @dark-border-color-base--darker:	rgba( 255, 255, 255, 0.08 );
 @dark-border-color-input:			@dark-border-color-base;
 @dark-border-color-input--hover:	rgba( 255, 255, 255, 0.5 );
 
-/* Technical debt below */
 /*
  * Framework
 */
 @html-font-size: 100%;
 @margin-side: 20px;
-@page-width: 860px;
 @footer-width: 1290px;
 @icon-size: 18px;
 @icon-box-size: @icon-size + @icon-margin * 2;
 @icon-margin: 3px;
 @icon-padding: 15px;
-@header-height: 56px;
-@sidebar-sitename-height: 69px;
-@drawer-width: 300px;
 @padding-menu-item: 10px 15px;
 @padding-menu-item-big: 10px 20px;
-@negative-margin: (@footer-width - @page-width) / -2;
 
 @search-bar-width: 500px;
 @search-bar-height: 42px;
 @search-loader-progress-bar-height: 2px;
 
-@border-radius-small: 4px;
-@border-radius-medium: @border-radius-small * 2;
-@border-radius-large: @border-radius-small * 3;
+/*
+ * Text hierarchy
+*/
+// Scaling for content text
+@content-scaling: 0.625;
+@toc-scaling: 0.75;
+
+// Wikimedia scale - https://design.wikimedia.org/style-guide/visual-style_typography.html
+@content-h1-size: 3.2rem * @content-scaling;
+@content-h2-size: 2.4rem * @content-scaling;
+@content-h3-size: 2rem * @content-scaling;
+@content-h4-size: 1.8rem * @content-scaling;
+@content-h5-size: 1.6rem * @content-scaling;
+@content-h6-size: 1.6rem * @content-scaling;
+@content-body-size: 1.6rem * @content-scaling;
+@content-lead-paragraph-size: 1.8rem * @content-scaling;
+@content-quote-primary-size: 2rem * @content-scaling;
+@content-quote-secondary-size: 1.4rem * @content-scaling;
+@content-caption-size: 1.3rem * @content-scaling;
+@content-small-text-size: 1.3rem * @content-scaling;
+@content-monospace-size: 1.4rem * @content-scaling;
+@content-line-height: 1.6;
+@content-margin-top: 0.8rem;
+
+@ui-menu-text: 14px;
+@ui-menu-text-big: 15px;
+@ui-menu-header: 16px;
+
+@footer-line-height: 1.4;
 
 /*
- * Colors
+ * Legacy colors
+ * TODO: Replace all of them with the new variables
 */
-
 // Wikimedia colors
 @base-0: #000;
 @base-10: #202122;
@@ -289,24 +368,6 @@
 @yellow-50: #fc3;
 @yellow-90: #fef6e7;
 
-@menu-background: @base-100;
-@opacity-icon: 0.3;
-@opacity-icon-active: 0.5;
-@color-item-text: @base-30;
-@color-item-text-hover: @base-20;
-@color-item-text-active: @accent-50;
-@color-item-header: @base-10;
-@menu-item-link-hover: @base-80;
-@menu-item-link-active: @accent-90;
-
-@color-content-text: @base-20;
-@color-content-header: @base-10;
-@color-content-caption: @base-30;
-
-// Citizen colors
-@header-background-color-light: @base-100;
-@header-background-color-dark: @dark-bg-0;
-
 @color-footer-background-40: #0f1418;
 @color-footer-background-50: #131a21;
 @color-footer-background-60: #1a252d;
@@ -328,93 +389,3 @@
 @dark-text-80: #a0a1a5;
 @dark-text-70: #86888c;
 @dark-text-60: #6c6e73;
-
-/*
- * Transitions
-*/
-@transition-color: color 500ms ease;
-@transition-color-quick: color 200ms ease;
-@transition-transform: transform 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-transform-quick: transform 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-width: width 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-width-quick: width 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-height: height 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-height-quick: height 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-margin: margin 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-margin-quick: margin 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-padding: padding 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-padding-quick: padding 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-background: background 500ms ease;
-@transition-background-quick: background 200ms ease;
-@transition-opacity: opacity 500ms ease;
-@transition-opacity-quick: opacity 200ms ease;
-@transition-border: border 500ms ease;
-@transition-border-quick: border 200ms ease;
-@transition-box-shadow: box-shadow 500ms ease;
-@transition-box-shadow-quick: box-shadow 200ms ease;
-@transition-border-color: border-color 500ms ease;
-@transition-border-color-quick: border-color 200ms ease;
-@transition-filter: filter 500ms ease;
-@transition-filter-quick: filter 200ms ease;
-
-/*
- * Fonts
-*/
-
-/**
- * Citizen font stack for sans-serif fonts
- *
- * `Roboto` – Default font
- * system-ui - System UI font stack
- * `-apple-system` - Firefox fallback for System UI font stack
- */
-@fonts: 'Roboto', system-ui, -apple-system, sans-serif;
-/**
- * Citizen serif font stack
- *
- * `Georgia` – Windows, Mac
- * `serif` – (Generic) web font fallback
- */
-@fonts-serif: Georgia, serif;
-/**
- * System font stack for monospace fonts
- *
- * `SFMono-Regular` - macOS 10.12+
- * `Menlo` – macOS 10.6+
- * `Roboto Mono` - Android 4.0+
- * `Consolas` – Windows Vista & newer
- * `Liberation Mono` – Fedora, Ubuntu, … OFL licensed
- * `'Courier New', monospace` – (Generic) web font fallback
- */
-@fonts-monospace: 'SFMono-Regular', 'Menlo', 'Roboto Mono', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
-
-/*
- * Text hierarchy
-*/
-
-// Scaling for content text
-@content-scaling: 0.625;
-@toc-scaling: 0.75;
-
-// Wikimedia scale - https://design.wikimedia.org/style-guide/visual-style_typography.html
-@content-h1-size: 3.2rem * @content-scaling;
-@content-h2-size: 2.4rem * @content-scaling;
-@content-h3-size: 2rem * @content-scaling;
-@content-h4-size: 1.8rem * @content-scaling;
-@content-h5-size: 1.6rem * @content-scaling;
-@content-h6-size: 1.6rem * @content-scaling;
-@content-body-size: 1.6rem * @content-scaling;
-@content-lead-paragraph-size: 1.8rem * @content-scaling;
-@content-quote-primary-size: 2rem * @content-scaling;
-@content-quote-secondary-size: 1.4rem * @content-scaling;
-@content-caption-size: 1.3rem * @content-scaling;
-@content-small-text-size: 1.3rem * @content-scaling;
-@content-monospace-size: 1.4rem * @content-scaling;
-@content-line-height: 1.6;
-@content-margin-top: 0.8rem;
-
-@ui-menu-text: 14px;
-@ui-menu-text-big: 15px;
-@ui-menu-header: 16px;
-
-@footer-line-height: 1.4;
