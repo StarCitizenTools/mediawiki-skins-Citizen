@@ -3,12 +3,12 @@ var searchToggle = document.getElementById( 'search-checkbox' ),
 	pageReady = require( ( 'mediawiki.page.ready' ) );
 
 /**
- * Focus in search box when search toggle checkbox is checked.
+ * Focus and unfocus in search box when search toggle checkbox is toggled.
  *
  * @constructor
  */
 function searchInputFocus() {
-	if ( searchToggle.checked !== false ) {
+	if ( searchToggle.checked === true ) {
 		searchInput.focus();
 	}
 }
@@ -25,15 +25,31 @@ function searchToggleCheck() {
 }
 
 /**
+ * Uncheck search toggle checkbox when search box is not in focus.
+ *
+ * @constructor
+ */
+function searchToggleUnCheck() {
+	if ( searchToggle.checked === true ) {
+		searchToggle.checked = false;
+	}
+}
+
+/**
  * Toggle search bar with slash
  *
  * @constructor
  */
-function slashToggle() {
-	if ( event.key === '/' && searchToggle.checked === false ) {
-		searchToggle.checked = true;
-		searchInput.focus();
-		searchInput.value = '';
+function keyboardEvents() {
+	if ( searchToggle.checked === false ) {
+		if ( event.key === '/' && !event.target.matches( 'input' ) ) {
+			searchInput.focus();
+			searchInput.value = '';
+		}
+	} else {
+		if ( event.key === 'Escape' ) {
+			searchInput.blur();
+		}
 	}
 }
 
@@ -43,7 +59,8 @@ function slashToggle() {
 function init() {
 	searchToggle.addEventListener( 'click', searchInputFocus );
 	searchInput.addEventListener( 'focus', searchToggleCheck );
-	document.addEventListener( 'keyup', slashToggle );
+	searchInput.addEventListener( 'blur', searchToggleUnCheck );
+	document.addEventListener( 'keyup', keyboardEvents );
 	pageReady.loadSearchModule(
 		// Decide between new Citizen implementation or core
 		mw.config.get( 'wgCitizenEnableSearch' ) ?
