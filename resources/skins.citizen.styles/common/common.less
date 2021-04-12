@@ -188,6 +188,7 @@ a {
 	padding: 0 var( --padding-page );
 	margin-top: ~'calc(var( --height-header ) + 20px)';
 	direction: ltr;
+	overflow-x: hidden; // avoid breaking layout in smaller screen sizes
 }
 
 .mw-body-content {
@@ -264,6 +265,11 @@ video {
 }
 
 @media ( min-width: @width-breakpoint-tablet ) {
+	.mw-body,
+	.parsoid-body {
+		overflow-x: auto;
+	}
+
 	table {
 		display: table;
 	}
