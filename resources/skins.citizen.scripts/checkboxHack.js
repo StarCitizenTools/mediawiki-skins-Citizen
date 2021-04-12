@@ -61,6 +61,9 @@ function init() {
 		personalMenu = document.getElementById( PERSONAL_MENU_ID ),
 		personalMenuButton = document.getElementById( PERSONAL_MENU_BUTTON_ID ),
 		personalMenuCheckbox = document.getElementById( PERSONAL_MENU_CHECKBOX_ID ),
+		search = document.getElementById( 'searchform' ),
+		searchButton = document.getElementById( 'search-toggle' ),
+		searchCheckbox = document.getElementById( 'search-checkbox' ),
 		toc = document.getElementById( 'toc' ),
 		tocButton,
 		tocCheckbox,
@@ -80,6 +83,7 @@ function init() {
 
 	uncheckOnClickOutside( clickableDrawerElements, drawerButton, drawerCheckbox );
 	uncheckOnClickOutside( personalMenu, personalMenuButton, personalMenuCheckbox );
+	uncheckOnClickOutside( search, searchButton, searchCheckbox );
 
 	/*
 	 * This should be in ToC script

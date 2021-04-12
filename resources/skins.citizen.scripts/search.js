@@ -25,11 +25,25 @@ function searchToggleCheck() {
 }
 
 /**
+ * Toggle search bar with slash
+ *
+ * @constructor
+ */
+function slashToggle() {
+	if ( event.key === '/' && searchToggle.checked === false ) {
+		searchToggle.checked = true;
+		searchInput.focus();
+		searchInput.value = '';
+	}
+}
+
+/**
  * @return {void}
  */
 function init() {
 	searchToggle.addEventListener( 'click', searchInputFocus );
 	searchInput.addEventListener( 'focus', searchToggleCheck );
+	document.addEventListener( 'keyup', slashToggle );
 	pageReady.loadSearchModule(
 		// Decide between new Citizen implementation or core
 		mw.config.get( 'wgCitizenEnableSearch' ) ?

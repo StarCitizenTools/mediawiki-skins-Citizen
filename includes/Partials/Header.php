@@ -25,7 +25,6 @@ declare( strict_types=1 );
 
 namespace Citizen\Partials;
 
-use Linker;
 use MediaWiki\MediaWikiServices;
 use MWException;
 use Skin;
@@ -110,11 +109,10 @@ final class Header extends Partial {
 	 */
 	public function buildSearchProps() : array {
 		$toggleMsg = $this->skin->msg( 'citizen-search-toggle' )->text();
-		$accessKey = Linker::accesskey( 'search' );
 
 		return [
 			'msg-citizen-search-toggle' => $toggleMsg,
-			'msg-citizen-search-toggle-shortcut' => $toggleMsg . ' [alt-shift-' . $accessKey . ']',
+			'msg-citizen-search-toggle-shortcut' => $toggleMsg . ' [/]',
 			'form-action' => $this->getConfigValue( 'Script' ),
 			'html-input' => $this->skin->makeSearchInput( [ 'id' => 'searchInput' ] ),
 			'msg-search' => $this->skin->msg( 'search' ),
