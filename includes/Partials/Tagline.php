@@ -40,12 +40,64 @@ final class Tagline extends Partial {
 		$title = $out->getTitle();
 		$shortdesc = $out->getProperty( 'shortdesc' );
 
-		// Use short description if there is any
-		// from Extension:ShortDescription
-		if ( $shortdesc ) {
-			$tagline = $shortdesc;
-		} else {
-			$tagline = $this->skin->msg( 'tagline' )->text();
+		if ( $title ) {
+			// Use short description if there is any
+			// from Extension:ShortDescription
+			if ( $shortdesc ) {
+				$tagline = $shortdesc;
+			} else {
+				switch ( $title->getNamespace() ) {
+					// Default MW namespaces
+					// Special
+					// Don't show tagline for special pages
+					case -1:
+						$tagline = '';
+						break;
+					// Talk pages
+					case 1:
+					case 3:
+					case 5:
+					case 7:
+					case 9:
+					case 11:
+					case 13:
+					case 15:
+						$tagline = $this->skin->msg( 'citizen-tagline-ns-talk' )->text();
+						break;
+					/*
+					// User pages
+					case 2:
+						$tagline = $this->buildUserTagline( $title );
+						break;
+					*/
+					// Project pages
+					case 4:
+						$tagline = $this->skin->msg( 'citizen-tagline-ns-project' )->text();
+						break;
+					// File pages
+					case 6:
+						$tagline = $this->skin->msg( 'citizen-tagline-ns-file' )->text();
+						break;
+					// MediaWiki namespace
+					case 8:
+						$tagline = $this->skin->msg( 'citizen-tagline-ns-mediawiki' )->text();
+						break;
+					// Template page
+					case 10:
+						$tagline = $this->skin->msg( 'citizen-tagline-ns-template' )->text();
+						break;
+					// Help page
+					case 12:
+						$tagline = $this->skin->msg( 'citizen-tagline-ns-help' )->text();
+						break;
+					// Category page
+					case 14:
+						$tagline = $this->skin->msg( 'citizen-tagline-ns-category' )->text();
+						break;
+					default:
+						$tagline = $this->skin->msg( 'tagline' )->text();
+				}
+			}
 		}
 
 		return $tagline;

@@ -28,6 +28,14 @@
 
 	"citizen-search-fulltext": "Search pages containing",
 
+	"citizen-tagline-ns-talk": "Discussion page of {{SUBJECTPAGENAME}}",
+	"citizen-tagline-ns-project": "Information about {{SITENAME}}",
+	"citizen-tagline-ns-file": "File on {{SITENAME}}",
+	"citizen-tagline-ns-mediawiki": "MediaWiki interface page",
+	"citizen-tagline-ns-template": "Template page",
+	"citizen-tagline-ns-help": "Help page",
+	"citizen-tagline-ns-category": "Category page",
+
 	"prefs-citizen-theme-label": "Theme",
 	"prefs-citizen-theme-option-auto": "Auto",
 	"prefs-citizen-theme-option-light": "Light",
