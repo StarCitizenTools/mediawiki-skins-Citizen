@@ -1,11 +1,34 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kareyac"
+			"Kareyac",
+			"Rail"
 		]
 	},
+	"citizen-skin-desc": "Responsywna skórka stworzona dla Star Citizen Wiki",
+	"citizen.css": "/* Umieszczony tutaj kod CSS zostanie załadowany przez użytkowników korzystających ze skórki Citizen */",
+	"citizen.js": "/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Citizen */",
+	"citizen-drawer-toggle": "Przełącz menu",
+	"citizen-personalmenu-toggle": "Przełącz menu użytkownika",
+	"citizen-search-toggle": "Przełącz wyszukiwanie",
+	"citizen-theme-toggle": "Zmień motyw",
+	"citizen-sitestats-articles-label": "artykułów",
+	"citizen-sitestats-images-label": "plików",
+	"citizen-sitestats-users-label": "użytkowników",
+	"citizen-sitestats-edits-label": "edycji",
+	"citizen-drawer-search": "Szukaj w menu",
+	"citizen-footer-desc": "Zmień ten tekst na MediaWiki:Citizen-footer-desc",
+	"citizen-footer-tagline": "Zmień ten tekst na MediaWiki:Citizen-footer-tagline",
+	"citizen-search-fulltext": "Szukaj stron zawierających tekst",
+	"citizen-tagline-ns-talk": "Strona dyskusji o „{{SUBJECTPAGENAME}}”",
+	"citizen-tagline-ns-project": "Strona projektu {{SITENAME}}",
+	"citizen-tagline-ns-file": "Strona pliku",
+	"citizen-tagline-ns-mediawiki": "Strona MediaWiki",
+	"citizen-tagline-ns-template": "Szablon",
+	"citizen-tagline-ns-help": "Strona pomocy",
+	"citizen-tagline-ns-category": "Kategoria",
 	"prefs-citizen-theme-label": "Motyw",
-	"prefs-citizen-theme-option-auto": "Automatycznie",
-	"prefs-citizen-theme-option-light": "Jasna",
-	"prefs-citizen-theme-option-dark": "Ciemna"
+	"prefs-citizen-theme-option-auto": "Automatyczny",
+	"prefs-citizen-theme-option-light": "Jasny",
+	"prefs-citizen-theme-option-dark": "Ciemny"
 }
