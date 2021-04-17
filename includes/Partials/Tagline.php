@@ -25,7 +25,6 @@ declare( strict_types=1 );
 
 namespace Citizen\Partials;
 
-use MWTimestamp;
 use User;
 use Wikimedia\IPUtils;
 
@@ -87,16 +86,18 @@ final class Tagline extends Partial {
 	/**
 	 * Return user tagline message
 	 * 
-	 * @param $title
+	 * @param Title $title
 	 * @return string
 	 */
 	private function buildUserTagline( $title ) {
 		$user = $this->buildPageUserObject( $title );
 		if ( $user ) {
 			$editCount = $user->getEditCount();
-			//TODO: Figure out a waw to get registration duration, like Langauge::getHumanTimestamp()
+			//TODO: Figure out a waw to get registration duration,
+			//	like Langauge::getHumanTimestamp()
 			//$registration = $user->getRegistration();
-			$msgEditCount = $this->skin->msg( 'usereditcount' )->numParams( sprintf( '%s', number_format( $editCount, 0 ) ) );
+			$msgEditCount = $this->skin->msg( 'usereditcount' )
+				->numParams( sprintf( '%s', number_format( $editCount, 0 ) ) );
 			return $msgEditCount;
 		}
 		return null;
@@ -105,7 +106,7 @@ final class Tagline extends Partial {
 	/**
 	 * Return new User object based on username or IP address.
 	 * Based on MinervaNeue
-	 * @param $title
+	 * @param Title $title
 	 * @return User|null
 	 */
 	private function buildPageUserObject( $title ) {
