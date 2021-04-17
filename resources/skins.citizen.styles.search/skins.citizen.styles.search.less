@@ -108,8 +108,13 @@
 			padding: 5px 0; // make it looks more center aligned
 			font-family: var( --font-family-base );
 			font-size: @content-caption-size;
-			font-weight: bold;
+			font-weight: 450;
 			text-overflow: ellipsis; // handle overflow
+
+			.suggestion-highlight {
+				color: var( --color-base--emphasized );
+				font-weight: bold;
+			}
 		}
 
 		&:hover {

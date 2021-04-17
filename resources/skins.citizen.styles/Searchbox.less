@@ -7,12 +7,8 @@
 		&:checked {
 			~ #searchform {
 				z-index: 10;
-				opacity: 1;
 				pointer-events: auto; // clickable
-
-				#searchInput {
-					width: @search-bar-width;
-				}
+				transform: none;
 			}
 
 			~ #search-toggle-icon {
@@ -85,9 +81,9 @@
 		display: flex;
 		margin: 7px 0 8px; // 1px h3 screen reader
 		border-radius: @border-radius-small;
-		opacity: 0;
 		pointer-events: none; // not clickable
-		transition: @transition-opacity-quick;
+		transform: translateX( 120% );
+		transition: @transition-transform-quick;
 		.boxshadow(4);
 
 		&-icon {
@@ -208,7 +204,7 @@
 
 	&Input {
 		z-index: 100;
-		width: 0;
+		width: @search-bar-width;
 		max-width: calc( ~'100vw -'@margin-side );
 		height: @search-bar-height;
 		padding: 8px @icon-box-size + @icon-padding + @search-bar-height + @margin-side / 2 8px @search-bar-height;
@@ -218,7 +214,7 @@
 		appearance: none;
 		background: var( --background-color-dp-03 );
 		border-radius: @border-radius-small;
-		transition: @transition-width-quick, @transition-background-quick, @transition-box-shadow-quick;
+		transition: @transition-background-quick, @transition-box-shadow-quick;
 
 		&:focus {
 			background-color: var( --background-color-dp-08 );
@@ -307,20 +303,20 @@
 
 @media ( max-width: @search-bar-width ) {
 	#search {
-		&form:before {
-			position: fixed;
-			top: 0;
-			right: 0;
-			bottom: 0;
-			left: 0;
-			display: block;
-			background: var( --background-color-dp-03 );
-			content: '';
-			opacity: 0.9;
-		}
+		&form {
+			transition: none; // no transition on mobile
 
-		&Input {
-			transition: none; // Width transition does not play well on mobile
+			&:before {
+				position: fixed;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				display: block;
+				background: var( --background-color-dp-03 );
+				content: '';
+				opacity: 0.9;
+			}
 		}
 	}
 }
