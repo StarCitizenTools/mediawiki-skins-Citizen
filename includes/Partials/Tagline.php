@@ -25,8 +25,6 @@ declare( strict_types=1 );
 
 namespace Citizen\Partials;
 
-use MWException;
-
 /**
  * Tagline partial of Skin Citizen
  */
@@ -62,15 +60,15 @@ final class Tagline extends Partial {
 						if ( $title->isSpecialPage() ) {
 							$tagline = '';
 						// Use generic talk page message if talk page
-						} else if ( $title->isTalkPage() ) {
+						} elseif ( $title->isTalkPage() ) {
 							$tagline = $this->skin->msg( 'citizen-tagline-ns-talk' )->text();
 						// Fallback to site tagline
 						} else {
-							$tagline =$this->skin->msg( 'tagline' )->text();
+							$tagline = $this->skin->msg( 'tagline' )->text();
 						}
 					}
 				} else {
-					$tagline =$this->skin->msg( 'tagline' )->text();
+					$tagline = $this->skin->msg( 'tagline' )->text();
 				}
 			}
 		}
