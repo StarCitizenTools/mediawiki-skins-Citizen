@@ -12,7 +12,6 @@
 	transform: translate3d( 0, -100%, 0 );
 	transform-origin: 0 0;
 	user-select: none;
-	will-change: transform; // help with performance
 
 	&-checkbox {
 		&:checked {
@@ -41,7 +40,6 @@
 			// Show drawer
 			~ #mw-drawer {
 				transform: none;
-				will-change: unset;
 			}
 		}
 	}
