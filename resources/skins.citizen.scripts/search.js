@@ -22,7 +22,10 @@ function searchInputFocus() {
  */
 function keyboardEvents() {
 	if ( searchToggle.checked === false ) {
-		if ( event.key === '/' && !event.target.matches( 'input' ) ) {
+		if ( event.key === '/'
+			&& !event.target.matches( 'input' )
+			&& !event.target.matches( 'textarea' )
+		) {
 			searchToggle.checked = true;
 			searchInput.focus();
 			searchInput.value = '';
