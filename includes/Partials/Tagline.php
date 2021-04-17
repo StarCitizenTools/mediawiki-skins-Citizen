@@ -25,6 +25,10 @@ declare( strict_types=1 );
 
 namespace Citizen\Partials;
 
+use MWTimestamp;
+use User;
+use Wikimedia\IPUtils;
+
 /**
  * Tagline partial of Skin Citizen
  */
@@ -56,14 +60,18 @@ final class Tagline extends Partial {
 					if ( !$msg->isDisabled() ) {
 						$tagline = $msg->text();
 					} else {
-						// No tagline if special page
 						if ( $title->isSpecialPage() ) {
+							// No tagline if special page
 							$tagline = '';
-						// Use generic talk page message if talk page
 						} elseif ( $title->isTalkPage() ) {
+							// Use generic talk page message if talk page
 							$tagline = $this->skin->msg( 'citizen-tagline-ns-talk' )->text();
-						// Fallback to site tagline
+						
+						} elseif ( $title->inNamespace( NS_USER ) && !$title->isSubpage() ) {
+							// Build user tagline if it is a top-level user page
+							$tagline = $this->buildUserTagline( $title );
 						} else {
+							// Fallback to site tagline
 							$tagline = $this->skin->msg( 'tagline' )->text();
 						}
 					}
@@ -74,5 +82,44 @@ final class Tagline extends Partial {
 		}
 
 		return $tagline;
+	}
+
+	/**
+	 * Return user tagline message
+	 * 
+	 * @param $title
+	 * @return string
+	 */
+	private function buildUserTagline( $title ) {
+		$user = $this->buildPageUserObject( $title );
+		if ( $user ) {
+			$editCount = $user->getEditCount();
+			//TODO: Figure out a waw to get registration duration, like Langauge::getHumanTimestamp()
+			//$registration = $user->getRegistration();
+			$msgEditCount = $this->skin->msg( 'usereditcount' )->numParams( sprintf( '%s', number_format( $editCount, 0 ) ) );
+			return $msgEditCount;
+		}
+		return null;
+	}
+
+	/**
+	 * Return new User object based on username or IP address.
+	 * Based on MinervaNeue
+	 * @param $title
+	 * @return User|null
+	 */
+	private function buildPageUserObject( $title ) {
+		$titleText = $title->getText();
+
+		if ( IPUtils::isIPAddress( $titleText ) ) {
+			return User::newFromAnyId( null, $titleText, null );
+		}
+
+		$pageUserId = User::idFromName( $titleText );
+		if ( $pageUserId ) {
+			return User::newFromId( $pageUserId );
+		}
+
+		return null;
 	}
 }
