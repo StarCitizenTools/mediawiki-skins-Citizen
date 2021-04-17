@@ -65,7 +65,7 @@ final class Tagline extends Partial {
 						} elseif ( $title->isTalkPage() ) {
 							// Use generic talk page message if talk page
 							$tagline = $this->skin->msg( 'citizen-tagline-ns-talk' )->text();
-						
+
 						} elseif ( $title->inNamespace( NS_USER ) && !$title->isSubpage() ) {
 							// Build user tagline if it is a top-level user page
 							$tagline = $this->buildUserTagline( $title );
@@ -85,7 +85,7 @@ final class Tagline extends Partial {
 
 	/**
 	 * Return user tagline message
-	 * 
+	 *
 	 * @param Title $title
 	 * @return string
 	 */
@@ -93,7 +93,7 @@ final class Tagline extends Partial {
 		$user = $this->buildPageUserObject( $title );
 		if ( $user ) {
 			$editCount = $user->getEditCount();
-			//TODO: Figure out a waw to get registration duration,
+			// TODO: Figure out a waw to get registration duration,
 			//	like Langauge::getHumanTimestamp()
 			//$registration = $user->getRegistration();
 			$msgEditCount = $this->skin->msg( 'usereditcount' )
