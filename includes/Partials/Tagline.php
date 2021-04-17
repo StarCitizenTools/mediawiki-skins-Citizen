@@ -25,6 +25,8 @@ declare( strict_types=1 );
 
 namespace Citizen\Partials;
 
+use MWException;
+
 /**
  * Tagline partial of Skin Citizen
  */
@@ -39,6 +41,7 @@ final class Tagline extends Partial {
 	public function getTagline( $out ) {
 		$title = $out->getTitle();
 		$shortdesc = $out->getProperty( 'shortdesc' );
+		$tagline = '';
 
 		if ( $title ) {
 			// Use short description if there is any
@@ -46,56 +49,28 @@ final class Tagline extends Partial {
 			if ( $shortdesc ) {
 				$tagline = $shortdesc;
 			} else {
-				switch ( $title->getNamespace() ) {
-					// Default MW namespaces
-					// Special
-					// Don't show tagline for special pages
-					case -1:
-						$tagline = '';
-						break;
-					// Talk pages
-					case 1:
-					case 3:
-					case 5:
-					case 7:
-					case 9:
-					case 11:
-					case 13:
-					case 15:
-						$tagline = $this->skin->msg( 'citizen-tagline-ns-talk' )->text();
-						break;
-					/*
-					// User pages
-					case 2:
-						$tagline = $this->buildUserTagline( $title );
-						break;
-					*/
-					// Project pages
-					case 4:
-						$tagline = $this->skin->msg( 'citizen-tagline-ns-project' )->text();
-						break;
-					// File pages
-					case 6:
-						$tagline = $this->skin->msg( 'citizen-tagline-ns-file' )->text();
-						break;
-					// MediaWiki namespace
-					case 8:
-						$tagline = $this->skin->msg( 'citizen-tagline-ns-mediawiki' )->text();
-						break;
-					// Template page
-					case 10:
-						$tagline = $this->skin->msg( 'citizen-tagline-ns-template' )->text();
-						break;
-					// Help page
-					case 12:
-						$tagline = $this->skin->msg( 'citizen-tagline-ns-help' )->text();
-						break;
-					// Category page
-					case 14:
-						$tagline = $this->skin->msg( 'citizen-tagline-ns-category' )->text();
-						break;
-					default:
-						$tagline = $this->skin->msg( 'tagline' )->text();
+				$namespaceText = $title->getNsText();
+				// Check if namespaceText exists
+				// Return null if main namespace or not defined
+				if ( $namespaceText ) {
+					$msg = $this->skin->msg( 'citizen-tagline-ns-' . strtolower( $namespaceText ) );
+					// Use custom message if exists
+					if ( !$msg->isDisabled() ) {
+						$tagline = $msg->text();
+					} else {
+						// No tagline if special page
+						if ( $title->isSpecialPage() ) {
+							$tagline = '';
+						// Use generic talk page message if talk page
+						} else if ( $title->isTalkPage() ) {
+							$tagline = $this->skin->msg( 'citizen-tagline-ns-talk' )->text();
+						// Fallback to site tagline
+						} else {
+							$tagline =$this->skin->msg( 'tagline' )->text();
+						}
+					}
+				} else {
+					$tagline =$this->skin->msg( 'tagline' )->text();
 				}
 			}
 		}
