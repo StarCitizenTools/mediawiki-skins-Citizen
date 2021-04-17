@@ -303,20 +303,20 @@
 
 @media ( max-width: @search-bar-width ) {
 	#search {
-		&form:before {
-			position: fixed;
-			top: 0;
-			right: 0;
-			bottom: 0;
-			left: 0;
-			display: block;
-			background: var( --background-color-dp-03 );
-			content: '';
-			opacity: 0.9;
-		}
+		&form {
+			transition: none; // no transition on mobile
 
-		&Input {
-			transition: none; // Width transition does not play well on mobile
+			&:before {
+				position: fixed;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				display: block;
+				background: var( --background-color-dp-03 );
+				content: '';
+				opacity: 0.9;
+			}
 		}
 	}
 }
