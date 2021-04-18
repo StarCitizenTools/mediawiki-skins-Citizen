@@ -3,5 +3,5 @@
 	<title>
 		block
 	</title>
-	<path d="M10 1a9 9 0 109 9 9 9 0 00-9-9zm5 10H5V9h10z"/>
+	<path d="M10 1a9 9 0 1 0 9 9 9 9 0 0 0-9-9zm5 10H5V9h10z"/>
 </svg>
