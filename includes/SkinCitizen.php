@@ -255,15 +255,15 @@ class SkinCitizen extends SkinMustache {
 				$options['styles'][] = 'skins.citizen.styles.sections';
 				$options['styles'][] = 'skins.citizen.icons.sections';
 			}
+		}
 
-			// Table of content highlight
-			// Load if ToC presents
-			if ( $out->isTOCEnabled() ) {
-				// Add class to body that notifies the page has TOC
-				$out->addBodyClasses( 'skin-citizen-has-toc' );
-				// Disabled style condition loading due to pop in
-				$options['scripts'][] = 'skins.citizen.scripts.toc';
-			}
+		// Table of content highlight
+		// Load if ToC presents
+		if ( $out->isTOCEnabled() ) {
+			// Add class to body that notifies the page has TOC
+			$out->addBodyClasses( 'skin-citizen-has-toc' );
+			// Disabled style condition loading due to pop in
+			$options['scripts'][] = 'skins.citizen.scripts.toc';
 		}
 
 		// Search suggestion
