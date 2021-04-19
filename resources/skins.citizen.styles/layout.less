@@ -1,5 +1,12 @@
 @width-breakpoint-desktop-wider: @width-breakpoint-desktop + @width-toc * 2;
 
+.mw-body,
+.parsoid-body {
+	min-height: 80vh; // avoid footer being in the middle of the page
+	padding: 0 var( --padding-page );
+	margin-top: var( --height-header );
+}
+
 .mw-body-header,
 .mw-body-content {
 	max-width: var( --width-layout );
@@ -10,6 +17,7 @@
 .mw-body-header {
 	display: flex;
 	flex-wrap: wrap;
+	margin-top: @content-margin-top;
 	margin-bottom: @content-margin-top;
 }
 
