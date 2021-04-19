@@ -64,6 +64,9 @@ final class Metadata extends Partial {
 
 		// Feature policy
 		$this->addFeaturePolicy();
+
+		// Permissions policy
+		$this->addPermissionsPolicy();
 	}
 
 	/**
@@ -198,6 +201,19 @@ final class Metadata extends Partial {
 
 			$this->out->getRequest()->response()->header( sprintf( 'Feature-Policy: %s',
 				$featurePolicy ) );
+		}
+	}
+
+	/**
+	 * Adds the Permissions policy header to the response if enabled in 'CitizenPermissionsPolicyDirective'
+	 */
+	private function addPermissionsPolicy() {
+		if ( $this->getConfigValue( 'CitizenEnablePermissionsPolicy' ) === true ) {
+
+			$permissionsPolicy = $this->getConfigValue( 'CitizenPermissionsPolicyDirective' ) ?? '';
+
+			$this->out->getRequest()->response()->header( sprintf( 'Permissions-Policy: %s',
+				$permissionsPolicy ) );
 		}
 	}
 }

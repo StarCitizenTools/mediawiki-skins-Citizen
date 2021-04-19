@@ -79,6 +79,7 @@ Name | Description | Values | Default
 `$wgCitizenEnableStrictReferrerPolicy` | Enable or disable `strict-origin-when-cross-origin` [referrer policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) header, should be used in conjunction with [`$wgReferrerPolicy`](https://www.mediawiki.org/wiki/Manual:$wgReferrerPolicy) as that only outputs the meta tags | `true` - enable; `false` - disable | `false`
 `$wgCitizenEnableFeaturePolicy` | Enable or disable [Feature Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy) | `true` - enable; `false` - disable | `false`
 `$wgCitizenFeaturePolicyDirective` | The string of your Feature Policy directive | See the [Feature Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy) page | 
+`$wgCitizenPermissionsPolicyDirective` | The string of your Permissions Policy directive | | 
 
 ### Webapp manifest
 Name | Description | Values | Default

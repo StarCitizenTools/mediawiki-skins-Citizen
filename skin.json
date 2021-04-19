@@ -634,6 +634,12 @@
 			"descriptionmsg": "citizen-config-featurepolicydirective",
 			"public": true
 		},
+		"PermissionsPolicyDirective": {
+			"value": "",
+			"description": "The string of your Permissions Policy directive",
+			"descriptionmsg": "citizen-config-permissionspolicydirective",
+			"public": true
+		},
 		"EnableManifest": {
 			"value": true,
 			"description": "Enable or disable web app manifest",
