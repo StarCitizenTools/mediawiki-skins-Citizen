@@ -634,6 +634,12 @@
 			"descriptionmsg": "citizen-config-featurepolicydirective",
 			"public": true
 		},
+		"EnablePermissionsPolicy": {
+			"value": false,
+			"description": "Enable or disable Permissions Policy",
+			"descriptionmsg": "citizen-config-enablepermissionspolicy",
+			"public": true
+		},
 		"PermissionsPolicyDirective": {
 			"value": "",
 			"description": "The string of your Permissions Policy directive",
