@@ -8,7 +8,7 @@
 		"lint:styles": "stylelint \"**/*.{less,css}\"",
 		"lint:i18n": "banana-checker --requireLowerCase=0 i18n/",
 		"doc": "jsdoc -c jsdoc.json",
-		"svgmin": "svgo --config=.svgo.config.js -q -r -f resources/"
+		"minify-svg": "svgo --config=.svgo.config.js -q -r -f resources/"
 	},
 	"devDependencies": {
 		"eslint-config-wikimedia": "0.20.0",
@@ -17,9 +17,6 @@
 		"jsdoc-wmf-theme": "0.0.3",
 		"stylelint-config-idiomatic-order": "8.1.0",
 		"stylelint-config-wikimedia": "0.10.3",
-		"svgo": "2.2.2"
-	},
-	"jshintConfig": {
-		"esversion": 6
+		"svgo": "2.3.0"
 	}
 }
