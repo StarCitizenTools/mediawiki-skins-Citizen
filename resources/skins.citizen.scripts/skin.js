@@ -91,7 +91,7 @@ function main( window ) {
 
 	enableCssAnimations( window.document );
 	theme.init( window );
-	search.init( window.document );
+	search.init( window );
 	initCheckboxHack( window );
 }
 
