@@ -217,11 +217,7 @@
 		},
 		"skins.citizen.scripts.theme": {
 			"scripts": [
-				"resources/skins.citizen.scripts.theme/theme-switcher.js"
-			],
-			"dependencies": [
-				"mediawiki.api",
-				"mediawiki.cookie"
+				"resources/skins.citizen.scripts.theme/themeSwitcher.js"
 			]
 		},
 		"skins.citizen.scripts.toc": {
