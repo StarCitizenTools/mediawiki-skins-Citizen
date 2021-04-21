@@ -1,13 +1,13 @@
 /*
- * Citizen - Lazyload JS
- * https://starcitizen.tools
- *
  * Lazyloading images with Native API or IntersectionObserver
+ * TODO: Remove the features since it is depreciated by $wgNativeImageLazyLoading in 1.35
  */
 
-var observer;
-
-function main() {
+/**
+ * @param {document} document
+ * @return {void}
+ */
+function main( document ) {
 	// Native API
 	if ( 'loading' in HTMLImageElement.prototype ) {
 		document.querySelectorAll( 'img.lazy' ).forEach( function ( img ) {
@@ -24,12 +24,12 @@ function main() {
 	} else {
 		// IntersectionObserver API
 		if ( typeof IntersectionObserver !== 'undefined' && 'forEach' in NodeList.prototype ) {
-			observer = new IntersectionObserver( function ( changes ) {
+			const observer = new IntersectionObserver( ( changes ) => {
 				if ( 'connection' in navigator && navigator.connection.saveData === true ) {
 					return;
 				}
 
-				changes.forEach( function ( change ) {
+				changes.forEach( ( change ) => {
 					if ( change.isIntersecting ) {
 						change.target.setAttribute( 'src', change.target.getAttribute( 'data-src' ) );
 						change.target.removeAttribute( 'data-src' );
@@ -51,4 +51,4 @@ function main() {
 	}
 }
 
-main();
+main( document );
