@@ -1,5 +1,5 @@
 /**
- * @param {document} document
+ * @param {Document} document
  * @return {void}
  */
 function initCollapsibleSections( document ) {

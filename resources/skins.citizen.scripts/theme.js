@@ -1,8 +1,8 @@
 /**
- * @param {window} window
+ * @param {Document} document
  * @return {void}
  */
-function setThemeToggle( window ) {
+function setThemeToggle( document ) {
 	let theme = localStorage.getItem( 'skin-citizen-theme' );
 	const toggleButton = document.getElementById( 'theme-toggle' ),
 		toggleClass = ( element ) => {
@@ -33,7 +33,7 @@ function setThemeToggle( window ) {
 }
 
 /**
- * @param {window} window
+ * @param {Window} window
  * @return {void}
  */
 function initThemeSettings( window ) {
@@ -59,11 +59,11 @@ function initThemeSettings( window ) {
 	setLocalStorage( theme );
 
 	// Only set up theme toggle after localStorage is set
-	setThemeToggle( window );
+	setThemeToggle( window.document );
 }
 
 /**
- * @param {window} window
+ * @param {Window} window
  * @return {void}
  */
 function initTheme( window ) {
@@ -71,7 +71,7 @@ function initTheme( window ) {
 		if ( window.localStorage.getItem( 'skin-citizen-theme' ) === null ) {
 			initThemeSettings( window );
 		} else {
-			setThemeToggle();
+			setThemeToggle( window.document );
 		}
 	}
 }

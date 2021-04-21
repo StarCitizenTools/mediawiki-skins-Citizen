@@ -42,7 +42,7 @@ function enableCssAnimations( document ) {
 function main( window ) {
 	enableCssAnimations( window.document );
 	theme.init( window );
-	search.init();
+	search.init( window.document );
 	checkboxHack.init();
 }
 
