@@ -8,8 +8,6 @@ function intersectionHandler() {
 		toc = document.getElementById( 'toc' ),
 		marginTop = '-' + window.getComputedStyle( document.documentElement ).getPropertyValue( 'scroll-padding-top' );
 
-	console.log( marginTop );
-
 	for ( let i = 0; i < headlines.length; i++ ) {
 		/* eslint-disable compat/compat */
 		const observer = new IntersectionObserver( ( entry ) => {
