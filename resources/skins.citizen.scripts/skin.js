@@ -1,4 +1,4 @@
-var theme = require( './theme.js' ),
+const theme = require( './theme.js' ),
 	search = require( './search.js' ),
 	checkboxHack = require( './checkboxHack.js' );
 

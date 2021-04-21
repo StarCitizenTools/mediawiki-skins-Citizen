@@ -3,16 +3,23 @@
  * @return {void}
  */
 function setThemeToggle( window ) {
-	document.getElementById( 'theme-toggle' ).addEventListener( 'click', ( event ) => {
-		let theme = localStorage.getItem( 'skin-citizen-theme' );
+	let theme = localStorage.getItem( 'skin-citizen-theme' );
+	const toggleButton = document.getElementById( 'theme-toggle' ),
+		toggleClass = ( element ) => {
+			element.classList.remove( 'theme-toggle-light', 'theme-toggle-dark', 'theme-toggle-auto' );
+			// * theme-toggle-light
+			// * theme-toggle-dark
+			element.classList.add( 'theme-toggle-' + theme );
+		};
 
+	// Initalize button state
+	toggleClass( toggleButton );
+
+	toggleButton.addEventListener( 'click', function ( event ) {
 		// Don't judge, it works -___-"
 		theme = ( theme === 'dark' ) ? 'light' : 'dark';
 
-		event.target.classList.remove( 'theme-toggle-light', 'theme-toggle-dark', 'theme-toggle-auto' );
-		// * theme-toggle-light
-		// * theme-toggle-dark
-		event.target.classList.add( 'theme-toggle-' + theme );
+		toggleClass( event.target );
 
 		try {
 			localStorage.setItem( 'skin-citizen-theme', theme );
