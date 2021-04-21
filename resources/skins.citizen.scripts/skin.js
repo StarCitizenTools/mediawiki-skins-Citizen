@@ -1,7 +1,3 @@
-const theme = require( './theme.js' ),
-	search = require( './search.js' ),
-	checkboxHack = require( './checkboxHack.js' );
-
 /**
  * Based on Vector
  * Wait for first paint before calling this function. That's its whole purpose.
@@ -40,10 +36,14 @@ function enableCssAnimations( document ) {
  * @return {void}
  */
 function main( window ) {
+	const theme = require( './theme.js' ),
+		search = require( './search.js' ),
+		checkboxHack = require( './checkboxHack.js' );
+
 	enableCssAnimations( window.document );
 	theme.init( window );
 	search.init( window.document );
-	checkboxHack.init();
+	checkboxHack.init( window.document );
 }
 
 main( window );

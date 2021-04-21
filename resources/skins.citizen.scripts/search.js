@@ -1,49 +1,61 @@
-var searchToggle = document.getElementById( 'search-checkbox' ),
-	searchInput = document.getElementById( 'searchInput' ),
-	pageReady = require( ( 'mediawiki.page.ready' ) );
-
 /**
- * Focus and unfocus in search box when search toggle checkbox is toggled.
+ * Focus and unfocus element when checkbox is toggled.
+ * TODO: This should be a helper function in checkboxHack
  *
- * @constructor
+ * @param {HTMLElement} checkbox
+ * @param {HTMLElement} target
+ * @return {void}
  */
-function searchInputFocus() {
-	if ( searchToggle.checked === true ) {
-		searchInput.focus();
+function checkboxHackFocusHandler( checkbox, target ) {
+	if ( checkbox.checked === true ) {
+		target.focus();
 	} else {
-		searchInput.blur();
+		target.blur();
 	}
 }
 
 /**
- * Toggle search bar with slash
+ * Handle keyup events
+ * TODO: This should be a helper function in checkboxHack
  *
- * @constructor
+ * @param {Event} event
+ * @param {HTMLElement} checkbox
+ * @param {HTMLElement} target
+ * @return {void}
  */
-function keyboardEvents() {
-	if ( searchToggle.checked === false ) {
+function checkboxHackOnKeyUp( event, checkbox, target ) {
+	if ( checkbox.checked === false ) {
 		if ( event.key === '/' &&
 			!event.target.matches( 'input' ) &&
 			!event.target.matches( 'textarea' )
 		) {
-			searchToggle.checked = true;
-			searchInput.focus();
-			searchInput.value = '';
+			checkbox.checked = true;
+			target.focus();
+			target.value = '';
 		}
 	} else {
 		if ( event.key === 'Escape' ) {
-			searchToggle.checked = false;
-			searchInput.blur();
+			checkbox.checked = false;
+			target.blur();
 		}
 	}
 }
 
 /**
+ * @param {Document} document
  * @return {void}
  */
-function init() {
-	searchToggle.addEventListener( 'change', searchInputFocus );
-	document.addEventListener( 'keyup', keyboardEvents );
+function initSearch( document ) {
+	const toggle = document.getElementById( 'search-checkbox' ),
+		input = document.getElementById( 'searchInput' ),
+		pageReady = require( ( 'mediawiki.page.ready' ) );
+
+	toggle.addEventListener( 'change', function () {
+		checkboxHackFocusHandler( this, input );
+	} );
+	document.addEventListener( 'keyup', ( event ) => {
+		checkboxHackOnKeyUp( event, toggle, input );
+	} );
 	pageReady.loadSearchModule(
 		// Decide between new Citizen implementation or core
 		mw.config.get( 'wgCitizenEnableSearch' ) ?
@@ -52,5 +64,5 @@ function init() {
 }
 
 module.exports = {
-	init: init
+	init: initSearch
 };

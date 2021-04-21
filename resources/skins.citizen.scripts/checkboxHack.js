@@ -1,10 +1,3 @@
-var DRAWER_ID = 'mw-drawer',
-	DRAWER_BUTTON_ID = 'mw-drawer-button',
-	DRAWER_CHECKBOX_ID = 'mw-drawer-checkbox',
-	PERSONAL_MENU_ID = 'p-personal',
-	PERSONAL_MENU_BUTTON_ID = 'personalmenu-button',
-	PERSONAL_MENU_CHECKBOX_ID = 'personalmenu-checkbox';
-
 /**
  * Uncheck CSS hack checkbox when clicked outside
  *
@@ -13,29 +6,29 @@ var DRAWER_ID = 'mw-drawer',
  * @param {HTMLElement} checkbox
  */
 function uncheckOnClickOutside( clickableElement, button, checkbox ) {
-	var listener = function ( e ) {
-		var hideCond = e.target !== clickableElement;
+	const listener = ( event ) => {
+		let hideCond = event.target !== clickableElement;
 
 		if ( Array.isArray( clickableElement ) ) {
-			hideCond = clickableElement.indexOf( e.target ) === -1;
+			hideCond = clickableElement.indexOf( event.target ) === -1;
 		}
 
-		if ( e.target !== checkbox && hideCond ) {
-			if ( e.target !== button ) {
+		if ( event.target !== checkbox && hideCond ) {
+			if ( event.target !== button ) {
 				checkbox.checked = false;
 			}
 			document.removeEventListener( 'click', listener );
 		}
 	};
 
-	var keyboardListener = function ( event ) {
+	const keyboardListener = ( event ) => {
 		if ( event.key === 'Escape' && checkbox.checked === true ) {
 			checkbox.checked = false;
 			document.removeEventListener( 'click', listener );
 		}
 	};
 
-	var checkboxFn = function () {
+	const checkboxFn = () => {
 		if ( checkbox.checked ) {
 			document.addEventListener( 'click', listener );
 		} else {
@@ -51,48 +44,68 @@ function uncheckOnClickOutside( clickableElement, button, checkbox ) {
 }
 
 /**
+ * TODO: This can use some refactoring
+ * TODO: Merge search handlers to this
+ *
+ * @param {Document} document
  * @return {void}
  */
-function init() {
-	var drawer = document.getElementById( DRAWER_ID ),
-		drawerButton = document.getElementById( DRAWER_BUTTON_ID ),
-		drawerCheckbox = document.getElementById( DRAWER_CHECKBOX_ID ),
-		drawerSearch = document.getElementById( 'mw-drawer-search-input' ),
-		personalMenu = document.getElementById( PERSONAL_MENU_ID ),
-		personalMenuButton = document.getElementById( PERSONAL_MENU_BUTTON_ID ),
-		personalMenuCheckbox = document.getElementById( PERSONAL_MENU_CHECKBOX_ID ),
-		toc = document.getElementById( 'toc' ),
-		tocButton,
-		tocCheckbox,
-		clickableDrawerElements = [];
+function initCheckboxHack( document ) {
+	const drawer = {
+			button: document.getElementById( 'mw-drawer-button' ),
+			checkbox: document.getElementById( 'mw-drawer-checkbox' )
+		},
+		personalMenu = {
+			button: document.getElementById( 'personalmenu-button' ),
+			checkbox: document.getElementById( 'personalmenu-checkbox' ),
+			element: document.getElementById( 'p-personal' )
+		},
+		checkboxHackTargets = [ personalMenu ];
 
-	drawer.querySelectorAll( '#mw-drawer-menu .mw-portal' ).forEach( function ( portal ) {
-		clickableDrawerElements.push( portal );
-	} );
+	// So that clicking drawer portal header and input won't close the menu
+	// Maybe there is cleaner way to do this?
+	const getDrawerElements = () => {
+		const portals = document.getElementById( 'mw-drawer' ).querySelectorAll( '#mw-drawer-menu .mw-portal' ),
+			searchInput = document.getElementById( 'mw-drawer-search-input' ),
+			clickableElements = [];
 
-	drawer.querySelectorAll( '#mw-drawer-menu .mw-portal h3' ).forEach( function ( portalHeading ) {
-		clickableDrawerElements.push( portalHeading );
-	} );
+		portals.forEach( ( portal ) => {
+			clickableElements.push( portal, portal.firstElementChild );
+		} );
 
-	if ( drawerSearch !== null ) {
-		clickableDrawerElements.push( drawerSearch );
+		if ( searchInput !== null ) {
+			clickableElements.push( searchInput );
+		}
+
+		return clickableElements;
+	};
+
+	const getTOC = () => {
+		const tocContainer = document.getElementById( 'toc' );
+
+		return {
+			button: tocContainer.querySelector( '.toctogglelabel' ),
+			checkbox: document.getElementById( 'toctogglecheckbox' ),
+			element: tocContainer.querySelector( 'ul' )
+		};
+	};
+
+	drawer.element = getDrawerElements();
+	checkboxHackTargets.push( drawer );
+
+	// This should be in ToC script
+	// And the media query needs to be synced with the less variable
+	// Also this does not monitor screen size changes
+	if ( document.body.classList.contains( 'skin-citizen-has-toc' ) &&
+		window.matchMedia( 'screen and (max-width: 1300px)' ) ) {
+		checkboxHackTargets.push( getTOC() );
 	}
 
-	uncheckOnClickOutside( clickableDrawerElements, drawerButton, drawerCheckbox );
-	uncheckOnClickOutside( personalMenu, personalMenuButton, personalMenuCheckbox );
-
-	/*
-	 * This should be in ToC script
-	 * And the media query needs to be synced with the less variable
-	 */
-	if ( toc && window.matchMedia( 'screen and (max-width: 1300px)' ) ) {
-		tocButton = document.querySelector( 'toctogglelabel' );
-		tocCheckbox = document.getElementById( 'toctogglecheckbox' );
-
-		uncheckOnClickOutside( toc, tocButton, tocCheckbox );
-	}
+	checkboxHackTargets.forEach( ( target ) => {
+		uncheckOnClickOutside( target.element, target.button, target.checkbox );
+	} );
 }
 
 module.exports = {
-	init: init
+	init: initCheckboxHack
 };
