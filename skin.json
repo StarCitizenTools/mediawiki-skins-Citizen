@@ -236,7 +236,7 @@
 		},
 		"skins.citizen.scripts.sections": {
 			"scripts": [
-				"resources/skins.citizen.scripts.sections/sections.js"
+				"resources/skins.citizen.scripts.sections/skins.citizen.scripts.sections.js"
 			]
 		},
 		"skins.citizen.icons": {
