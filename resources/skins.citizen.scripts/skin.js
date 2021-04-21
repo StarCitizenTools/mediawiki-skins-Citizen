@@ -32,18 +32,67 @@ function enableCssAnimations( document ) {
 }
 
 /**
+ * Initialize checkboxHacks
+ * TODO: Maybe ToC should init checkboxHack in its own RL module?
+ *
+ * @param {Window} window
+ * @return {void}
+ */
+function initCheckboxHack( window ) {
+	const checkboxHack = require( './checkboxHack.js' ),
+		drawer = {
+			button: document.getElementById( 'mw-drawer-button' ),
+			checkbox: document.getElementById( 'mw-drawer-checkbox' ),
+			target: document.getElementById( 'mw-drawer' )
+		},
+		personalMenu = {
+			button: document.getElementById( 'personalmenu-button' ),
+			checkbox: document.getElementById( 'personalmenu-checkbox' ),
+			target: document.getElementById( 'p-personal' )
+		},
+		checkboxObjs = [ drawer, personalMenu ];
+
+	// This should be in ToC script
+	// And the media query needs to be synced with the less variable
+	// Also this does not monitor screen size changes
+	if ( document.body.classList.contains( 'skin-citizen-has-toc' ) &&
+		window.matchMedia( 'screen and (max-width: 1300px)' ) ) {
+		const tocContainer = document.getElementById( 'toc' ),
+			toc = {
+				button: tocContainer.querySelector( '.toctogglelabel' ),
+				checkbox: document.getElementById( 'toctogglecheckbox' ),
+				target: tocContainer.querySelector( 'ul' )
+			};
+
+		checkboxObjs.push( toc );
+	}
+
+	checkboxObjs.forEach( ( checkboxObj ) => {
+		if ( checkboxObj.checkbox instanceof HTMLInputElement && checkboxObj.button ) {
+			checkboxHack.bindToggleOnClick( checkboxObj.checkbox, checkboxObj.button );
+			checkboxHack.bindUpdateAriaExpandedOnInput( checkboxObj.checkbox, checkboxObj.button );
+			checkboxHack.updateAriaExpanded( checkboxObj.checkbox, checkboxObj.button );
+			checkboxHack.bindToggleOnSpaceEnter( checkboxObj.checkbox, checkboxObj.button );
+			checkboxHack.bindDismissOnClickOutside(
+				window, checkboxObj.checkbox, checkboxObj.button, checkboxObj.target
+			);
+			checkboxHack.bindDismissOnEscape( window, checkboxObj.checkbox );
+		}
+	} );
+}
+
+/**
  * @param {Window} window
  * @return {void}
  */
 function main( window ) {
 	const theme = require( './theme.js' ),
-		search = require( './search.js' ),
-		checkboxHack = require( './checkboxHack.js' );
+		search = require( './search.js' );
 
 	enableCssAnimations( window.document );
 	theme.init( window );
 	search.init( window.document );
-	checkboxHack.init( window.document );
+	initCheckboxHack( window );
 }
 
 main( window );
