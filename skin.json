@@ -231,7 +231,7 @@
 		},
 		"skins.citizen.scripts.drawer": {
 			"scripts": [
-				"resources/skins.citizen.scripts.drawer/drawerSubSearch.js"
+				"resources/skins.citizen.scripts.drawer/skins.citizen.scripts.drawer.js"
 			]
 		},
 		"skins.citizen.scripts.sections": {
