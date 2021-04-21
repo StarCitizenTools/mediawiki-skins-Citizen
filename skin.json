@@ -185,13 +185,12 @@
 		"skins.citizen.scripts": {
 			"packageFiles": [
 				"resources/skins.citizen.scripts/skin.js",
-				"resources/skins.citizen.scripts/themeToggle.js",
+				"resources/skins.citizen.scripts/theme.js",
 				"resources/skins.citizen.scripts/search.js",
 				"resources/skins.citizen.scripts/checkboxHack.js"
 			],
 			"dependencies": [
-				"mediawiki.page.ready",
-				"mediawiki.cookie"
+				"mediawiki.page.ready"
 			]
 		},
 		"skins.citizen.scripts.lazyload": {
@@ -213,11 +212,6 @@
 			],
 			"messages": [
 				"citizen-search-fulltext"
-			]
-		},
-		"skins.citizen.scripts.theme": {
-			"scripts": [
-				"resources/skins.citizen.scripts.theme/themeSwitcher.js"
 			]
 		},
 		"skins.citizen.scripts.toc": {

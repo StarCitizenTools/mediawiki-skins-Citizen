@@ -1,4 +1,4 @@
-var themeToggle = require( './themeToggle.js' ),
+var theme = require( './theme.js' ),
 	search = require( './search.js' ),
 	checkboxHack = require( './checkboxHack.js' );
 
@@ -41,7 +41,7 @@ function enableCssAnimations( document ) {
  */
 function main( window ) {
 	enableCssAnimations( window.document );
-	themeToggle.init();
+	theme.init( window );
 	search.init();
 	checkboxHack.init();
 }
