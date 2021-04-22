@@ -1,4 +1,29 @@
 /**
+ * Based on Vector
+ * Loads the search module via `mw.loader.using` on the element's
+ * focus event. Or, if the element is already focused, loads the
+ * search module immediately.
+ * After the search module is loaded, executes a function to remove
+ * the loading indicator.
+ *
+ * @param {HTMLElement} element search input.
+ * @param {string} moduleName resourceLoader module to load.
+ * @param {function(): void} afterLoadFn function to execute after search module loads.
+ */
+function loadSearchModule( element, moduleName, afterLoadFn ) {
+	const requestSearchModule = () => {
+		mw.loader.using( moduleName, afterLoadFn );
+		element.removeEventListener( 'focus', requestSearchModule );
+	};
+
+	if ( document.activeElement === element ) {
+		requestSearchModule();
+	} else {
+		element.addEventListener( 'focus', requestSearchModule );
+	}
+}
+
+/**
  * Manually focus on the input field if checkbox is checked
  *
  * @param {HTMLInputElement} checkbox
@@ -38,13 +63,13 @@ function bindExpandOnSlash( window, checkbox, input ) {
 
 /**
  * @param {Window} window
+ * @param {HTMLInputElement} input
  * @return {void}
  */
-function initCheckboxHack( window ) {
+function initCheckboxHack( window, input ) {
 	const checkboxHack = require( './checkboxHack.js' ),
 		button = document.getElementById( 'search-toggle' ),
 		checkbox = document.getElementById( 'search-checkbox' ),
-		input = document.getElementById( 'searchInput' ),
 		target = document.getElementById( 'searchform' );
 
 	if ( checkbox instanceof HTMLInputElement && button ) {
@@ -70,14 +95,15 @@ function initCheckboxHack( window ) {
  * @return {void}
  */
 function initSearch( window ) {
-	const pageReady = require( ( 'mediawiki.page.ready' ) );
+	const searchInput = document.getElementById( 'searchInput' );
 
-	initCheckboxHack( window );
-	pageReady.loadSearchModule(
-		// Decide between new Citizen implementation or core
-		mw.config.get( 'wgCitizenEnableSearch' ) ?
-			'skins.citizen.scripts.search' : 'mediawiki.searchSuggest'
-	);
+	initCheckboxHack( window, searchInput );
+
+	if ( mw.config.get( 'wgCitizenEnableSearch' ) ) {
+		loadSearchModule( searchInput, 'skins.citizen.scripts.search', () => {} );
+	} else {
+		loadSearchModule( searchInput, 'mediawiki.searchSuggest', () => {} );
+	}
 }
 
 module.exports = {

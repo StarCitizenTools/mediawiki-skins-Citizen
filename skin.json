@@ -188,9 +188,6 @@
 				"resources/skins.citizen.scripts/theme.js",
 				"resources/skins.citizen.scripts/search.js",
 				"resources/skins.citizen.scripts/checkboxHack.js"
-			],
-			"dependencies": [
-				"mediawiki.page.ready"
 			]
 		},
 		"skins.citizen.scripts.lazyload": {
