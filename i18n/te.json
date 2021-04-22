@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Veeven"
+		]
+	},
+	"citizen-sitestats-articles-label": "వ్యాసాలు",
+	"citizen-sitestats-users-label": "వాడుకరులు",
+	"citizen-sitestats-edits-label": "మార్పులు",
+	"citizen-tagline-ns-project": "{{SITENAME}} గురించిన సమాచారం",
+	"citizen-tagline-ns-template": "మూస పేజీ",
+	"citizen-tagline-ns-help": "సహాయం పేజీ",
+	"citizen-tagline-ns-category": "వర్గం పేజీ"
+}
