@@ -243,17 +243,12 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 
 		callbackIndex = window.callbackStack.addCallback( window.portalOpensearchCallback );
 
-		// Add loading animation when suggestion is loading
-		appendEl.classList.add( 'search-form__loading' );
-
 		// Check if use REST API
 		if ( useREST ) {
 			fetch(`${scriptPath}/rest.php/v1/search/title?q=${searchString}&limit=${maxSearchResults}`)
 				.then(async function (response) {
 					var data = await response.json();
 					clearTypeAheadElements();
-					// Clean up loading animation after result ls loaded
-					appendEl.classList.remove( 'search-form__loading' );
 					window.callbackStack.queue[ callbackIndex ]( data, string );
 				} );
 		} else {
@@ -296,8 +291,6 @@ window.WMTypeAhead = function ( appendTo, searchInput ) {
 			api.get( searchQuery )
 				.done( ( data ) => {
 					clearTypeAheadElements();
-					// Clean up loading animation after result ls loaded
-					appendEl.classList.remove( 'search-form__loading' );
 					window.callbackStack.queue[ callbackIndex ]( data, string );
 				} );
 		}

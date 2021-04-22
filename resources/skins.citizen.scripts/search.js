@@ -1,5 +1,10 @@
+/* Some of the functions are based on Vector */
+/* ESLint does not like having class names as const */
+/* eslint-disable mediawiki/class-doc */
+const SEARCH_INPUT_ID = 'searchInput',
+	SEARCH_LOADING_CLASS = 'search-form__loading';
+
 /**
- * Based on Vector
  * Loads the search module via `mw.loader.using` on the element's
  * focus event. Or, if the element is already focused, loads the
  * search module immediately.
@@ -20,6 +25,59 @@ function loadSearchModule( element, moduleName, afterLoadFn ) {
 		requestSearchModule();
 	} else {
 		element.addEventListener( 'focus', requestSearchModule );
+	}
+}
+
+/**
+ * Event callback that shows or hides the loading indicator based on the event type.
+ * The loading indicator states are:
+ * 1. Show on input event (while user is typing)
+ * 2. Hide on focusout event (when user removes focus from the input )
+ * 3. Show when input is focused, if it contains a query. (in case user re-focuses on input)
+ *
+ * @param {Event} event
+ */
+function renderSearchLoadingIndicator( event ) {
+	const form = /** @type {HTMLElement} */ ( event.currentTarget ),
+		input = /** @type {HTMLInputElement} */ ( event.target );
+
+	if (
+		!( event.currentTarget instanceof HTMLElement ) ||
+		!( event.target instanceof HTMLInputElement ) ||
+		!( input.id === SEARCH_INPUT_ID ) ) {
+		return;
+	}
+
+	if ( event.type === 'input' ) {
+		form.classList.add( SEARCH_LOADING_CLASS );
+
+	} else if ( event.type === 'focusout' ) {
+		form.classList.remove( SEARCH_LOADING_CLASS );
+
+	} else if ( event.type === 'focusin' && input.value.trim() ) {
+		form.classList.add( SEARCH_LOADING_CLASS );
+	}
+}
+
+/**
+ * Attaches or detaches the event listeners responsible for activating
+ * the loading indicator.
+ *
+ * @param {HTMLElement} element
+ * @param {boolean} attach
+ * @param {function(Event): void} eventCallback
+ */
+function setLoadingIndicatorListeners( element, attach, eventCallback ) {
+
+	/** @type { "addEventListener" | "removeEventListener" } */
+	const addOrRemoveListener = ( attach ? 'addEventListener' : 'removeEventListener' );
+
+	[ 'input', 'focusin', 'focusout' ].forEach( function ( eventType ) {
+		element[ addOrRemoveListener ]( eventType, eventCallback );
+	} );
+
+	if ( !attach ) {
+		element.classList.remove( SEARCH_LOADING_CLASS );
 	}
 }
 
@@ -64,13 +122,13 @@ function bindExpandOnSlash( window, checkbox, input ) {
 /**
  * @param {Window} window
  * @param {HTMLInputElement} input
+ * @param {HTMLElement} target
  * @return {void}
  */
-function initCheckboxHack( window, input ) {
+function initCheckboxHack( window, input, target ) {
 	const checkboxHack = require( './checkboxHack.js' ),
 		button = document.getElementById( 'search-toggle' ),
-		checkbox = document.getElementById( 'search-checkbox' ),
-		target = document.getElementById( 'searchform' );
+		checkbox = document.getElementById( 'search-checkbox' );
 
 	if ( checkbox instanceof HTMLInputElement && button ) {
 		checkboxHack.bindToggleOnClick( checkbox, button );
@@ -95,12 +153,16 @@ function initCheckboxHack( window, input ) {
  * @return {void}
  */
 function initSearch( window ) {
-	const searchInput = document.getElementById( 'searchInput' );
+	const searchForm = document.getElementById( 'searchform' ),
+		searchInput = document.getElementById( SEARCH_INPUT_ID );
 
-	initCheckboxHack( window, searchInput );
+	initCheckboxHack( window, searchInput, searchForm );
 
 	if ( mw.config.get( 'wgCitizenEnableSearch' ) ) {
-		loadSearchModule( searchInput, 'skins.citizen.scripts.search', () => {} );
+		setLoadingIndicatorListeners( searchForm, true, renderSearchLoadingIndicator );
+		loadSearchModule( searchInput, 'skins.citizen.scripts.search', () => {
+			setLoadingIndicatorListeners( searchForm, false, renderSearchLoadingIndicator );
+		} );
 	} else {
 		loadSearchModule( searchInput, 'mediawiki.searchSuggest', () => {} );
 	}
