@@ -185,13 +185,9 @@
 		"skins.citizen.scripts": {
 			"packageFiles": [
 				"resources/skins.citizen.scripts/skin.js",
-				"resources/skins.citizen.scripts/themeToggle.js",
+				"resources/skins.citizen.scripts/theme.js",
 				"resources/skins.citizen.scripts/search.js",
 				"resources/skins.citizen.scripts/checkboxHack.js"
-			],
-			"dependencies": [
-				"mediawiki.page.ready",
-				"mediawiki.cookie"
 			]
 		},
 		"skins.citizen.scripts.lazyload": {
@@ -215,15 +211,6 @@
 				"citizen-search-fulltext"
 			]
 		},
-		"skins.citizen.scripts.theme": {
-			"scripts": [
-				"resources/skins.citizen.scripts.theme/theme-switcher.js"
-			],
-			"dependencies": [
-				"mediawiki.api",
-				"mediawiki.cookie"
-			]
-		},
 		"skins.citizen.scripts.toc": {
 			"scripts": [
 				"resources/skins.citizen.scripts.toc/skins.citizen.scripts.toc.js"
@@ -231,12 +218,12 @@
 		},
 		"skins.citizen.scripts.drawer": {
 			"scripts": [
-				"resources/skins.citizen.scripts.drawer/drawerSubSearch.js"
+				"resources/skins.citizen.scripts.drawer/skins.citizen.scripts.drawer.js"
 			]
 		},
 		"skins.citizen.scripts.sections": {
 			"scripts": [
-				"resources/skins.citizen.scripts.sections/sections.js"
+				"resources/skins.citizen.scripts.sections/skins.citizen.scripts.sections.js"
 			]
 		},
 		"skins.citizen.icons": {

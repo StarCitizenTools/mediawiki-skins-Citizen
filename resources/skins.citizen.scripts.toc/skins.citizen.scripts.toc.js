@@ -1,53 +1,51 @@
-/*
- * Citizen - ToC JS
- * https://starcitizen.tools
- */
-
 /**
- * Add active HTML class to items in table of content based on user viewport.
+ * Toggle active HTML class to items in table of content based on user viewport.
  *
- * @constructor
+ * @return {void}
  */
 function intersectionHandler() {
-	var sections = document.querySelectorAll( '.mw-headline' ),
-		htmlStyles = window.getComputedStyle( document.documentElement ),
-		scrollPaddingTop = htmlStyles.getPropertyValue( 'scroll-padding-top' ),
-		// Align with scroll offset set in CSS
-		marginTop = "-" + scrollPaddingTop,
-		id, id2, toclink, node, active;
+	const headlines = document.querySelectorAll( '.mw-headline' ),
+		toc = document.getElementById( 'toc' ),
+		marginTop = '-' + window.getComputedStyle( document.documentElement ).getPropertyValue( 'scroll-padding-top' );
 
-	for (let i = 0; i < sections.length; i++) {
+	for ( let i = 0; i < headlines.length; i++ ) {
+		/* eslint-disable compat/compat */
 		const observer = new IntersectionObserver( ( entry ) => {
+		/* eslint-enable compat/compat */
 			if ( entry[ 0 ].isIntersecting ) {
-				id = sections[i].id;
-				// Try the ID of the span before
-				if ( sections[i].previousSibling !== null ) {
-					id2 = sections[i].previousSibling.id || '';
+				const headlineId = headlines[ i ].id,
+					// Get the decoded ID from the span before
+					decodedId = ( headlines[ i ].previousSibling !== null ) ?
+						headlines[ i ].previousSibling.id : '',
+					links = toc.querySelector( "a[href='#" + headlineId + "']" ) ||
+						toc.querySelector( "a[href='#" + decodedId + "']" ),
+					targetLink = links.parentNode,
+					activeLink = toc.querySelector( '.active' );
+
+				if ( activeLink !== null ) {
+					activeLink.classList.remove( 'active' );
 				}
-				toclink = document.querySelector( "a[href='#" + id + "']" ) || document.querySelector( "a[href='#" + id2 + "']" );
-				node = toclink.parentNode;
-				active = document.querySelector( '.active' );
-				if ( active !== null ) {
-					active.classList.remove( 'active' );
-				}
-				if ( node !== null ) {
-					node.classList.add( 'active' );
+				if ( targetLink !== null ) {
+					targetLink.classList.add( 'active' );
 				}
 			}
 		}, {
 			// Will break in viewport with short height
 			// But calculating bottom margin on the fly is too costly
-			rootMargin: marginTop + " 0px -85% 0px"
+			rootMargin: marginTop + ' 0px -85% 0px'
 		} );
-		observer.observe( sections[i] );
+		observer.observe( headlines[ i ] );
 	}
 }
 
-function main() {
+/**
+ * @return {void}
+ */
+function initTOC() {
 	// Check for has-toc class since it is loaded way before #toc is present
 	if ( document.body.classList.contains( 'skin-citizen-has-toc' ) ) {
 		intersectionHandler();
 	}
 }
 
-main();
+initTOC();
