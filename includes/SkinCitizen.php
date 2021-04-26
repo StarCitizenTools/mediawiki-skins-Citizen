@@ -108,6 +108,7 @@ class SkinCitizen extends SkinMustache {
 				'data-personal-menu' => $header->buildPersonalMenu(),
 				'data-theme-toggle' => $header->buildThemeToggleProps(),
 				'data-search-box' => $header->buildSearchProps(),
+				'msg-citizen-jumptotop' => $this->msg( 'citizen-jumptotop' )->text(),
 			],
 
 			'data-pagetools' => $tools->buildPageTools(),
