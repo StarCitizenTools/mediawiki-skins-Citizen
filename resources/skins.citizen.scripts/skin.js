@@ -82,6 +82,27 @@ function initCheckboxHack( window ) {
 }
 
 /**
+ * Add a class to indicate that page title is outside of viewport
+ *
+ * @param {Document} document
+ * @return {void}
+ */
+function onTitleHidden( document ) {
+	const title = document.getElementById( 'firstHeading' );
+
+	if ( title ) {
+		const observer = new IntersectionObserver( ( entries ) => {
+			if ( !entries[ 0 ].isIntersecting ) {
+				document.body.classList.add( 'skin-citizen--titlehidden' );
+			} else {
+				document.body.classList.remove( 'skin-citizen--titlehidden' );
+			}
+		} );
+		observer.observe( title );
+	}
+}
+
+/**
  * @param {Window} window
  * @return {void}
  */
@@ -93,6 +114,7 @@ function main( window ) {
 	theme.init( window );
 	search.init( window );
 	initCheckboxHack( window );
+	onTitleHidden( window.document );
 }
 
 main( window );

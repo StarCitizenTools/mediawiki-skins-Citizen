@@ -4,7 +4,10 @@
 }}
 <header class="mw-header">
 	{{#data-drawer}}{{>Drawer}}{{/data-drawer}}
-	<div class="mw-header-siteinfo"><a class="mw-wiki-title" {{{html-mainpage-attributes}}}>{{>Wordmark}}</a></div>
+	<div id="mw-header-siteinfo">
+		<a id="header-sitetitle" class="mw-wiki-title" {{{html-mainpage-attributes}}}>{{>Wordmark}}</a>
+		<a id="header-pagetitle" href="#top" title="{{msg-citizen-jumptotop}}">{{{html-title}}}</a>
+	</div>
 	<div class="mw-header-tools">
 		{{#data-theme-toggle}}{{>ThemeToggle}}{{/data-theme-toggle}}
 		{{#data-extratools}}{{>Menu}}{{/data-extratools}}

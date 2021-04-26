@@ -1,4 +1,4 @@
-.mw-header-siteinfo {
+#mw-header-siteinfo {
 	position: relative;
 	display: inherit;
 	overflow: hidden;
@@ -6,7 +6,7 @@
 	align-items: center;
 	margin-right: 10px;
 
-	.mw-wiki-title {
+	a {
 		transition: @transition-opacity-quick;
 
 		&:hover {
@@ -16,7 +16,11 @@
 		&:active {
 			opacity: var( --opacity-icon-base--active );
 		}
+	}
+}
 
+#header {
+	&-sitetitle {
 		.mw-logo-wordmark {
 			color: var( --color-base--emphasized );
 			font-size: 16px;
@@ -26,6 +30,34 @@
 		img.mw-logo-wordmark {
 			width: auto;
 			height: 14px;
+		}
+	}
+
+	&-pagetitle {
+		overflow: hidden;
+		color: var( --color-base--emphasized );
+		font-weight: 500;
+		opacity: 0;
+		pointer-events: none;
+		text-overflow: ellipsis;
+		visibility: hidden;
+		white-space: nowrap;
+	}
+}
+
+.skin-citizen--titlehidden {
+	#header {
+		&-sitetitle {
+			position: absolute;
+			opacity: 0;
+			pointer-events: none;
+			visibility: hidden;
+		}
+
+		&-pagetitle {
+			opacity: 1;
+			pointer-events: auto;
+			visibility: visible;
 		}
 	}
 }
