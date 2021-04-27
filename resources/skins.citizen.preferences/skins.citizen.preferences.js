@@ -116,15 +116,13 @@ function togglePanel( event ) {
 		form = document.getElementById( 'citizen-pref-form' ),
 		resetButton = document.getElementById( 'citizen-pref-resetbutton' );
 
-	if ( panel.style.display === 'none' ) {
-		panel.style.display = '';
-
+	if ( !panel.classList.contains( 'citizen-pref-panel--active' ) ) {
+		panel.classList.add( 'citizen-pref-panel--active' );
 		event.currentTarget.setAttribute( 'aria-expanded', true );
 		form.addEventListener( 'input', setPref );
 		resetButton.addEventListener( 'click', resetPref );
 	} else {
-		panel.style.display = 'none';
-
+		panel.classList.remove( 'citizen-pref-panel--active' );
 		event.currentTarget.setAttribute( 'aria-expanded', false );
 		form.removeEventListener( 'input', setPref );
 		resetButton.removeEventListener( 'click', resetPref );
