@@ -37,7 +37,6 @@ use Title;
  * - Personal Menu
  * - Extra Tools
  * - Search
- * - Theme Toggle
  */
 final class Header extends Partial {
 
@@ -119,19 +118,6 @@ final class Header extends Partial {
 			'page-title' => SpecialPage::getTitleFor( 'Search' )->getPrefixedDBkey(),
 			'html-random-href' => Skin::makeSpecialUrl( 'Randompage' ),
 			'msg-random' => $this->skin->msg( 'Randompage' )->text(),
-		];
-	}
-
-	/**
-	 * Render the theme toggle
-	 *
-	 * @return array
-	 */
-	public function buildThemeToggleProps() : array {
-		$toggleMsg = $this->skin->msg( 'citizen-theme-toggle' )->text();
-
-		return [
-			'msg-citizen-theme-toggle-shortcut' => $toggleMsg,
 		];
 	}
 

@@ -7,7 +7,11 @@
 	margin-right: 10px;
 
 	a {
+		color: var( --color-base--emphasized );
+		font-size: 16px;
+		text-overflow: ellipsis;
 		transition: @transition-opacity-quick;
+		white-space: nowrap;
 
 		&:hover {
 			opacity: var( --opacity-icon-base--hover );
@@ -21,12 +25,6 @@
 
 #header {
 	&-sitetitle {
-		.mw-logo-wordmark {
-			color: var( --color-base--emphasized );
-			font-size: 16px;
-			white-space: nowrap;
-		}
-
 		img.mw-logo-wordmark {
 			width: auto;
 			height: 14px;
@@ -39,9 +37,7 @@
 		font-weight: 500;
 		opacity: 0;
 		pointer-events: none;
-		text-overflow: ellipsis;
 		visibility: hidden;
-		white-space: nowrap;
 	}
 }
 

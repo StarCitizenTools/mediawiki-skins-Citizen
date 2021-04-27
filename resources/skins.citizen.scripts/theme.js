@@ -1,38 +1,4 @@
 /**
- * @param {Document} document
- * @return {void}
- */
-function setThemeToggle( document ) {
-	let theme = localStorage.getItem( 'skin-citizen-theme' );
-	const toggleButton = document.getElementById( 'theme-toggle' ),
-		toggleClass = ( element ) => {
-			element.classList.remove( 'theme-toggle-light', 'theme-toggle-dark', 'theme-toggle-auto' );
-			// * theme-toggle-light
-			// * theme-toggle-dark
-			element.classList.add( 'theme-toggle-' + theme );
-		};
-
-	// Initalize button state
-	toggleClass( toggleButton );
-
-	toggleButton.addEventListener( 'click', function ( event ) {
-		// Don't judge, it works -___-"
-		theme = ( theme === 'dark' ) ? 'light' : 'dark';
-
-		toggleClass( event.target );
-
-		try {
-			localStorage.setItem( 'skin-citizen-theme', theme );
-		} catch ( e ) {}
-
-		// Global function defined in the inline script
-		/* eslint-disable no-undef */
-		switchTheme();
-		/* eslint-enable no-undef */
-	} );
-}
-
-/**
  * @param {Window} window
  * @return {void}
  */
@@ -57,9 +23,6 @@ function initThemeSettings( window ) {
 	}
 
 	setLocalStorage( theme );
-
-	// Only set up theme toggle after localStorage is set
-	setThemeToggle( window.document );
 }
 
 /**
@@ -70,8 +33,6 @@ function initTheme( window ) {
 	if ( typeof window.mw !== 'undefined' ) {
 		if ( window.localStorage.getItem( 'skin-citizen-theme' ) === null ) {
 			initThemeSettings( window );
-		} else {
-			setThemeToggle( window.document );
 		}
 	}
 }

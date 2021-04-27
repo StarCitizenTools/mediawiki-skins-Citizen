@@ -41,5 +41,9 @@
 	"prefs-citizen-theme-label": "Theme",
 	"prefs-citizen-theme-option-auto": "Auto",
 	"prefs-citizen-theme-option-light": "Light",
-	"prefs-citizen-theme-option-dark":  "Dark"
+	"prefs-citizen-theme-option-dark":  "Dark",
+
+	"prefs-citizen-fontsize-label": "Font size",
+	"prefs-citizen-pagewidth-label": "Page width",
+	"prefs-citizen-resetbutton-label": "Reset to default"
 }

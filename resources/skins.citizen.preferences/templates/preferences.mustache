@@ -1,0 +1,41 @@
+{{!
+	string msg-preferences
+	string msg-theme-label
+	string msg-theme-option-light
+	string msg-prefs-citizen-theme-option-dark
+	string msg-prefs-citizen-fontsize-label
+	string msg-prefs-citizen-pagewidth-label
+	string msg-prefs-citizen-resetbutton-label
+}}
+
+<aside id="citizen-pref-panel">
+	<header id="citizen-pref-header">
+		<h3>{{msg-preferences}}</h3>
+	</header>
+	<form id="citizen-pref-form">
+		<fieldset class="citizen-pref-item" id ="citizen-pref-theme">
+			<label for="citizen-pref-theme" class="citizen-pref-item__label">{{msg-prefs-citizen-theme-label}}</label>
+			<fieldset>
+				<input id="citizen-pref-theme__input__light" name="citizen-pref-theme" type="radio" value="light">
+				<label for="citizen-pref-theme__input__light"id="citizen-pref-theme-option-light" class="citizen-pref-theme-option">{{msg-prefs-citizen-theme-option-light}}</label>
+				<input id="citizen-pref-theme__input__dark" name="citizen-pref-theme" type="radio" value="dark">
+				<label for="citizen-pref-theme__input__dark" id="citizen-pref-theme-option-dark" class="citizen-pref-theme-option">{{msg-prefs-citizen-theme-option-dark}}</label>
+			</fieldset>
+		</fieldset>
+		<fieldset class="citizen-pref-item" id="citizen-pref-fontsize">
+			<label for="citizen-pref-fontsize" class="citizen-pref-item__label">
+				<span class="citizen-pref-item__label__title">{{msg-prefs-citizen-fontsize-label}}</span>
+				<span class="citizen-pref-item__label__value" id="citizen-pref-fontsize__value"></span>
+			</label>
+			<input id="citizen-pref-fontsize__input" name="citizen-pref-fontsize" type="range" max="10">
+		</fieldset>
+		<fieldset class="citizen-pref-item" id="citizen-pref-pagewidth">
+			<label for="citizen-pref-pagewidth" class="citizen-pref-item__label">
+				<span class="citizen-pref-item__label__title">{{msg-prefs-citizen-pagewidth-label}}</span>
+				<span class="citizen-pref-item__label__value" id="citizen-pref-pagewidth__value"></span>
+			</label>
+			<input id="citizen-pref-pagewidth__input" name="citizen-pref-pagewidth" type="range" max="10">
+		</fieldset>
+	</form>
+	<button id="citizen-pref-resetbutton">{{msg-prefs-citizen-resetbutton-label}}</button>
+</aside>
