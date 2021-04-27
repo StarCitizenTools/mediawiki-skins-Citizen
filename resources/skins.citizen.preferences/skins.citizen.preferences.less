@@ -115,6 +115,19 @@
 }
 
 .citizen-pref {
+	&-panel {
+		opacity: 0;
+		pointer-events: none;
+		transition: @transition-opacity-quick;
+		visibility: hidden;
+
+		&--active {
+			opacity: 1;
+			pointer-events: auto;
+			visibility: visible;
+		}
+	}
+
 	&-item {
 		display: flex;
 		flex-wrap: wrap;
@@ -139,6 +152,7 @@
 			cursor: pointer;
 			font-weight: 500;
 			text-align: center;
+			.boxshadow( 1 );
 
 			&:hover {
 				border-color: var( --color-primary--hover );
