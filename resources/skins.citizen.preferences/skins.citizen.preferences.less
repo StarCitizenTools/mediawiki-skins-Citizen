@@ -1,0 +1,170 @@
+@import '../variables.less';
+@import '../mixins.less';
+
+#citizen-pref {
+	&-toggle {
+		width: var( --width-button-base );
+		height: var( --height-header );
+		padding: 0;
+		border: 0;
+		appearance: none;
+		background-color: transparent;
+		background-position: center;
+		background-repeat: no-repeat;
+		cursor: pointer;
+		opacity: var( --opacity-icon-base );
+		transition: @transition-opacity-quick, @transition-transform-quick;
+
+		&:hover {
+			opacity: var( --opacity-icon-base--hover );
+			transform: rotate3d( 0, 0, 1, 90deg );
+		}
+
+		&:active {
+			opacity: var( --opacity-icon-base--active );
+		}
+	}
+
+	&-header {
+		padding: 20px var( --padding-page ) 0;
+
+		h3 {
+			margin: 0;
+			font-size: @ui-menu-header;
+		}
+	}
+
+	// TODO: unify the dropdown menu style somewhere
+	&-panel {
+		position: absolute;
+		top: var( --height-header );
+		right: var( --padding-page );
+		left: var( --padding-page );
+		border: 1px solid var( --border-color-base--lighter );
+		background: var( --background-color-dp-08 );
+		border-radius: @border-radius-medium;
+		.boxshadow(4);
+
+		fieldset {
+			padding: 10px var( --padding-page );
+			border: 0;
+			margin: 0;
+			appearance: none;
+			font-size: @ui-menu-text;
+		}
+
+		input {
+			width: 100%;
+		}
+	}
+
+	&-theme {
+		&-option {
+			&-light {
+				background: @background-color-dp-00;
+				color: @color-base;
+			}
+
+			&-dark {
+				background: @dark-background-color-dp-00;
+				color: @dark-color-base;
+			}
+		}
+
+		fieldset {
+			display: flex;
+			width: 100%;
+			padding: 0;
+			margin: 0 -4px;
+		}
+
+		// Let label be the radio button
+		input {
+			display: none;
+
+			&:checked {
+				+ label {
+					border-color: var( --color-primary );
+				}
+			}
+		}
+	}
+
+	&-resetbutton {
+		width: 100%;
+		padding: 10px 20px;
+		border: 0;
+		margin-top: 10px;
+		appearance: none;
+		background: var( --color-destructive );
+		border-radius: 0 0 @border-radius-medium @border-radius-medium;
+		color: #fff;
+		cursor: pointer;
+		font-family: inherit;
+		font-size: @ui-menu-text;
+		font-weight: 450;
+
+		&:hover {
+			background: var( --color-destructive--hover );
+		}
+
+		&:active {
+			background: var( --color-destructive--active );
+		}
+	}
+}
+
+.citizen-pref {
+	&-item {
+		display: flex;
+		flex-wrap: wrap;
+
+		&__label {
+			display: flex;
+			width: 100%;
+			justify-content: space-between;
+			padding: 4px 0;
+			color: var( --color-base--subtle );
+			letter-spacing: 0.75px;
+		}
+	}
+
+	&-theme {
+		&-option {
+			flex-grow: 1;
+			padding: 10px 20px;
+			border: 2px solid var( --border-color-base );
+			margin: 4px;
+			border-radius: @border-radius-medium;
+			cursor: pointer;
+			font-weight: 500;
+			text-align: center;
+
+			&:hover {
+				border-color: var( --color-primary--hover );
+			}
+
+			&:active {
+				border-color: var( --color-primary--active );
+			}
+		}
+	}
+}
+
+.skin-citizen-dark {
+	#citizen-pref-toggle {
+		filter: invert( 1 ) hue-rotate( 180deg );
+	}
+}
+
+@media ( min-width: @width-breakpoint-tablet ) {
+	#citizen-pref {
+		position: relative;
+
+		&-panel {
+			right: 0;
+			left: unset;
+			min-width: 250px;
+		}
+	}
+}

@@ -115,6 +115,8 @@ function main( window ) {
 	search.init( window );
 	initCheckboxHack( window );
 	onTitleHidden( window.document );
+
+	mw.loader.load( 'skins.citizen.preferences' );
 }
 
 main( window );

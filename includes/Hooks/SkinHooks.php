@@ -70,7 +70,7 @@ class SkinHooks implements SkinPageReadyConfigHook, BeforePageDisplayHook {
 		$script = sprintf(
 			'<script%s>%s</script>',
 			$nonce !== false ? sprintf( ' nonce="%s"', $nonce ) : '',
-			'window.switchTheme=()=>{var e=t=>["auto","dark","light"].map(e=>t+e);const t=document.getElementById("theme-toggle");try{var i=window.localStorage.getItem("skin-citizen-theme");null!==i&&(document.documentElement.classList.remove(...e("skin-citizen-")),document.documentElement.classList.add("skin-citizen-"+i),t.classList.remove(...e("theme-toggle")),t.classList.add("theme-toggle-"+i))}catch(e){}},window.switchTheme();'
+			'window.applyPref=()=>{var e;try{const t=document.documentElement,i=window.localStorage.getItem("skin-citizen-theme"),n=window.localStorage.getItem("skin-citizen-fontsize"),l=window.localStorage.getItem("skin-citizen-pagewidth");null!==i&&(t.classList.remove(...(e="skin-citizen-",["auto","dark","light"].map(t=>e+t))),t.classList.add("skin-citizen-"+i)),null!==n&&t.style.setProperty("font-size",n),null!==l&&t.style.setProperty("--width-layout",l)}catch(t){}},window.applyPref();'
 		);
 
 		$out->addHeadItem( 'skin.citizen.inline', $script );

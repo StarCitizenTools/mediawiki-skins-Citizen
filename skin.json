@@ -26,7 +26,6 @@
 					],
 					"styles": [
 						"skins.citizen.styles",
-						"skins.citizen.styles.theme",
 						"skins.citizen.styles.fonts",
 						"skins.citizen.styles.toc",
 						"skins.citizen.icons",
@@ -36,8 +35,7 @@
 						"skins.citizen.icons.t",
 						"skins.citizen.icons.pt",
 						"skins.citizen.icons.footer",
-						"skins.citizen.icons.badges",
-						"skins.citizen.icons.theme"
+						"skins.citizen.icons.badges"
 					],
 					"messages": [
 						"citizen-drawer-toggle",
@@ -165,15 +163,6 @@
 			"features": [],
 			"styles": [ "resources/skins.citizen.styles.sitestats/skins.citizen.styles.sitestats.less" ]
 		},
-		"skins.citizen.styles.theme": {
-			"class": "ResourceLoaderSkinModule",
-			"targets": [
-				"desktop",
-				"mobile"
-			],
-			"features": [],
-			"styles": [ "resources/skins.citizen.styles.theme/skins.citizen.styles.theme.less" ]
-		},
 		"skins.citizen.styles.toc": {
 			"class": "ResourceLoaderSkinModule",
 			"targets": [
@@ -225,6 +214,26 @@
 		"skins.citizen.scripts.sections": {
 			"scripts": [
 				"resources/skins.citizen.scripts.sections/skins.citizen.scripts.sections.js"
+			]
+		},
+		"skins.citizen.preferences": {
+			"templates": [
+				"resources/skins.citizen.preferences/templates/preferences.mustache"
+			],
+			"styles": [
+				"resources/skins.citizen.preferences/skins.citizen.preferences.less"
+			],
+			"packageFiles": [
+				"resources/skins.citizen.preferences/skins.citizen.preferences.js"
+			],
+			"messages": [
+				"preferences",
+				"prefs-citizen-theme-label",
+				"prefs-citizen-theme-option-light",
+				"prefs-citizen-theme-option-dark",
+				"prefs-citizen-fontsize-label",
+				"prefs-citizen-pagewidth-label",
+				"prefs-citizen-resetbutton-label"
 			]
 		},
 		"skins.citizen.icons": {
@@ -336,21 +345,20 @@
 				"#suggestion-special-icon": "resources/skins.citizen.icons.search/searchfulltext.svg"
 			}
 		},
-		"skins.citizen.icons.theme": {
-			"class": "ResourceLoaderImageModule",
-			"selector": ".theme-toggle-{name}",
-			"useDataURI": false,
-			"images": {
-				"light": "resources/skins.citizen.icons/shared/moon.svg",
-				"dark": "resources/skins.citizen.icons/shared/bright.svg"
-			}
-		},
 		"skins.citizen.icons.sections": {
 			"class": "ResourceLoaderImageModule",
 			"selector": ".section-toggle",
 			"useDataURI": false,
 			"images": {
 				"collapse": "resources/skins.citizen.icons/shared/collapse.svg"
+			}
+		},
+		"skins.citizen.icons.preferences": {
+			"class": "ResourceLoaderImageModule",
+			"selector": "#citizen-pref-{name}",
+			"useDataURI": false,
+			"images": {
+				"toggle": "resources/skins.citizen.icons/shared/settings.svg"
 			}
 		}
 	},
