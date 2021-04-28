@@ -5,7 +5,49 @@
  */
 
 /**
- * Convert localstorage preferences into input values and return the object
+ * Set the value of the input element
+ *
+ * @param {string} key
+ * @param {string} value
+ */
+function setInputValue( key, value ) {
+	const element = document.getElementById( 'citizen-pref-' + key + '__input' );
+
+	if ( element ) {
+		element.value = value;
+	}
+}
+
+/**
+ * Set the text of the indicator element
+ *
+ * @param {string} key
+ * @param {string} value
+ */
+function setIndicator( key, value ) {
+	const element = document.getElementById( 'citizen-pref-' + key + '__value' );
+
+	if ( element ) {
+		element.innerText = value;
+	}
+}
+
+/**
+ * Format the pref for use with the form input
+ *
+ * @param {Object} pref
+ * @return {Object}
+ */
+function convertPref( pref ) {
+	return {
+		theme: pref.theme,
+		fontsize: Number( pref.fontsize.slice( 0, -1 ) ) / 10 - 5,
+		pagewidth: Number( pref.pagewidth.slice( 0, -2 ) ) / 120 - 6
+	};
+}
+
+/**
+ * Retrieve localstorage or default preferences
  *
  * @return {Object} pref
  */
@@ -13,19 +55,10 @@ function getPref() {
 	const htmlStyle = window.getComputedStyle( document.documentElement ),
 		pref = {};
 
-	// It is already set somewhere else
+	// It is already set in theme.js in skins.citizen.scripts
 	pref.theme = localStorage.getItem( 'skin-citizen-theme' );
-
-	// e.g. remove the unit from 100%, then divide 10 and minus 5, equal to 5
-	pref.fontsize = Number(
-		( localStorage.getItem( 'skin-citizen-fontsize' ) ?? htmlStyle.getPropertyValue( 'font-size' ) )
-			.slice( 0, -1 )
-	) / 10 - 5;
-
-	// e.g. remove the unit from 960px, then divide 120 and minus 6, equal to 3
-	pref.pagewidth = Number(
-		( localStorage.getItem( 'skin-citizen-pagewidth' ) ?? htmlStyle.getPropertyValue( '--width-layout' ) ).slice( 0, -2 )
-	) / 120 - 6;
+	pref.fontsize = localStorage.getItem( 'skin-citizen-fontsize' ) ?? htmlStyle.getPropertyValue( 'font-size' );
+	pref.pagewidth = localStorage.getItem( 'skin-citizen-pagewidth' ) ?? htmlStyle.getPropertyValue( '--width-layout' );
 
 	return pref;
 }
@@ -39,7 +72,7 @@ function getPref() {
 function setPref( event ) {
 	// eslint-disable-next-line compat/compat
 	const formData = Object.fromEntries( new FormData( event.currentTarget ) ),
-		currentPref = getPref(),
+		currentPref = convertPref( getPref() ),
 		newPref = {
 			theme: formData[ 'citizen-pref-theme' ],
 			fontsize: Number( formData[ 'citizen-pref-fontsize' ] ),
@@ -50,14 +83,11 @@ function setPref( event ) {
 		localStorage.setItem( 'skin-citizen-theme', newPref.theme );
 
 	} else if ( currentPref.fontsize !== newPref.fontsize ) {
-		const formattedFontSize = ( newPref.fontsize + 5 ) * 10 + '%',
-			indicatorElement = document.getElementById( 'citizen-pref-fontsize__value' );
+		const formattedFontSize = ( newPref.fontsize + 5 ) * 10 + '%';
 
-		indicatorElement.innerText = formattedFontSize;
 		localStorage.setItem( 'skin-citizen-fontsize', formattedFontSize );
+		setIndicator( 'fontsize', formattedFontSize );
 	} else if ( currentPref.pagewidth !== newPref.pagewidth ) {
-		const indicatorElement = document.getElementById( 'citizen-pref-pagewidth__value' );
-
 		let formattedPageWidth;
 
 		// Max setting would be full browser width
@@ -66,9 +96,8 @@ function setPref( event ) {
 		} else {
 			formattedPageWidth = ( newPref.pagewidth + 6 ) * 120 + 'px';
 		}
-
-		indicatorElement.innerText = formattedPageWidth;
 		localStorage.setItem( 'skin-citizen-pagewidth', formattedPageWidth );
+		setIndicator( 'pagewidth', formattedPageWidth );
 	}
 
 	applyPref();
@@ -81,26 +110,31 @@ function setPref( event ) {
  */
 function resetPref() {
 	// Do not reset theme as its default value is defined somewhere else
-	const inlineStyles = {
-		fontsize: 'font-size',
-		pagewidth: '--width-layout'
-	};
+	const keys = [ 'fontsize', 'pagewidth' ],
+		keyPrefix = 'skin-citizen-';
 
 	// Remove inline style
 	document.documentElement.removeAttribute( 'style' );
 
-	// Retrieve default value and set it to localStorage
-	const htmlStyle = window.getComputedStyle( document.documentElement );
+	// Remove localStorage
+	keys.forEach( ( key ) => {
+		const keyName = keyPrefix + key;
 
-	// eslint-disable-next-line compat/compat
-	for ( const [ key, prop ] of Object.entries( inlineStyles ) ) {
-		const keyName = 'skin-citizen-' + key,
-			propValue = htmlStyle.getPropertyValue( prop );
+		if ( localStorage.getItem( keyName ) ) {
+			localStorage.removeItem( keyName );
+		}
+	} );
 
-		localStorage.setItem( keyName, propValue );
-		document.getElementById( 'citizen-pref-' + key + '__value' ).innerText = propValue;
-		document.getElementById( 'citizen-pref-' + key + '__input' ).value = getPref()[ key ];
-	}
+	const pref = getPref(),
+		prefValue = convertPref( pref );
+
+	keys.forEach( ( key ) => {
+		const keyName = keyPrefix + key;
+
+		localStorage.setItem( keyName, pref[ key ] );
+		setIndicator( key, pref[ key ] );
+		setInputValue( key, prefValue[ key ] );
+	} );
 
 	applyPref();
 }
@@ -170,7 +204,9 @@ function initPanel( event ) {
 			'resources/skins.citizen.preferences/templates/preferences.mustache'
 		),
 		data = getMessages(),
-		currentPref = getPref();
+		pref = getPref(),
+		prefValue = convertPref( pref ),
+		keys = [ 'fontsize', 'pagewidth' ];
 
 	// To Mustache is to jQuery sigh
 	// TODO: Use ES6 template literals when RL does not screw up multiline
@@ -179,9 +215,11 @@ function initPanel( event ) {
 	event.currentTarget.parentNode.insertBefore( panel, event.currentTarget.nextSibling );
 
 	// Set up initial state
-	document.getElementById( 'citizen-pref-theme__input__' + currentPref.theme ).checked = true;
-	document.getElementById( 'citizen-pref-fontsize__input' ).value = currentPref.fontsize;
-	document.getElementById( 'citizen-pref-pagewidth__input' ).value = currentPref.pagewidth;
+	document.getElementById( 'citizen-pref-theme__input__' + prefValue.theme ).checked = true;
+	keys.forEach( ( key ) => {
+		setIndicator( key, pref[ key ] );
+		setInputValue( key, prefValue[ key ] );
+	} );
 
 	togglePanel( event );
 	event.currentTarget.addEventListener( 'click', togglePanel );
