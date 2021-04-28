@@ -188,27 +188,64 @@ function initPanel( event ) {
 }
 
 /**
+ * Test if storage is avaliable
+ * Taken from https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
+ *
+ * @param {string} type
+ * @return {boolean|Error}
+ */
+function storageAvailable( type ) {
+	let storage;
+
+	try {
+		storage = window[ type ];
+		const x = '__storage_test__';
+		storage.setItem( x, x );
+		storage.removeItem( x );
+		return true;
+	} catch ( /** @type {Error} */ e ) {
+		return e instanceof DOMException && (
+			// everything except Firefox
+			e.code === 22 ||
+			// Firefox
+			e.code === 1014 ||
+			// test name field too, because code might not be present
+			// everything except Firefox
+			e.name === 'QuotaExceededError' ||
+			// Firefox
+			e.name === 'NS_ERROR_DOM_QUOTA_REACHED' ) &&
+			// acknowledge QuotaExceededError only if there's something already stored
+			( storage && storage.length !== 0 );
+	}
+}
+
+/**
  * Set up the container and toggle
  *
  * @param {Window} window
  * @return {void}
  */
 function initPref( window ) {
-	if ( typeof window.mw !== 'undefined' ) {
-		const headerTools = document.getElementById( 'mw-header-tools' ),
-			container = document.createElement( 'div' ),
-			button = document.createElement( 'button' );
+	if ( storageAvailable( 'localStorage' ) ) {
+		if ( typeof window.mw !== 'undefined' ) {
+			const headerTools = document.getElementById( 'mw-header-tools' ),
+				container = document.createElement( 'div' ),
+				button = document.createElement( 'button' );
 
-		mw.loader.load( 'skins.citizen.icons.preferences' );
+			mw.loader.load( 'skins.citizen.icons.preferences' );
 
-		container.id = 'citizen-pref';
-		button.id = 'citizen-pref-toggle';
-		button.setAttribute( 'aria-controls', 'citizen-pref-panel' );
-		button.setAttribute( 'aria-expanded', false );
-		container.prepend( button );
-		headerTools.prepend( container );
+			container.id = 'citizen-pref';
+			button.id = 'citizen-pref-toggle';
+			button.setAttribute( 'aria-controls', 'citizen-pref-panel' );
+			button.setAttribute( 'aria-expanded', false );
+			container.prepend( button );
+			headerTools.prepend( container );
 
-		button.addEventListener( 'click', initPanel, { once: true } );
+			button.addEventListener( 'click', initPanel, { once: true } );
+		}
+	} else {
+		// eslint-disable-next-line no-console
+		console.log( 'Preference module is disabled due to localStoarge being not avaliable.' );
 	}
 }
 
