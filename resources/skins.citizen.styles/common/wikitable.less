@@ -3,10 +3,11 @@ table.wikitable {
 	background-color: transparent; // Override core MW  styles
 	border-collapse: collapse;
 	color: var( --color-base ); // Override core MW  styles
+	text-align: left; // So that it can be overrided from table element
 
 	caption {
 		margin-top: @content-margin-top;
-		font-weight: 700;
+		font-weight: 600;
 		text-align: left;
 	}
 
@@ -17,8 +18,7 @@ table.wikitable {
 			background-color: transparent;
 			color: var( --color-base--subtle );
 			font-size: @content-caption-size;
-			font-weight: 600;
-			text-align: left;
+			font-weight: 500;
 		}
 
 		td {
