@@ -1,19 +1,20 @@
 # Citizen
-![](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/workflows/MediaWiki%20CI/badge.svg)
+![](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/workflows/MediaWiki%20CI/badge.svg)[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)[![MediaWiki: >=1.35.0](https://img.shields.io/badge/MediaWiki-%3E%3D1.35.0-%2336c)](https://www.mediawiki.org)
 
 Citizen is a responsive skin for [MediaWiki](https://www.mediawiki.org) built by the [Star Citizen Wiki](https://starcitizen.tools) team. Although it is specifically built for the Star Citizen Wiki, the skin should be able to run on any Mediawiki installation that is **1.35 or higher**. Due to resource constraints, we might not be able to provide full support for setups that are vastly different than us, but please feel free to submit patches or bug report!
 
-Live demo can be seen at the [Star Citizen Wiki](https://starcitizen.tools), more avaliable [here](https://wikiapiary.com/wiki/Skin:Citizen).
+Live demo can be seen at the [Star Citizen Wiki](https://star-citizen.wiki), more avaliable [here](https://wikiapiary.com/wiki/Skin:Citizen).
 
 ## Notable features
-* **Fully responsive skin**: Responsive and able to adapt to different screen sizes. 📱💻🖥️
-* **Collapsible sections**: Collapse and expand article sections ***Require JS.*** 📖📕
-* **Persistent ToC**: Access ToC anywhere in the article. ***Tracking require JS.*** 🔍📖
-* **Rich search suggestions**: More helpful search suggestions with images and descriptions. ***Require JS.*** 🔍👀
-* **Lazyload images**: Improve load time of your wiki and avoid unnecessary image downloads. ***Require JS.*** 🚀
-* **Light/dark mode support**: Switch between light and dark mode. ☀️🌙
-* **Webapp manifest**: Give a more app-like experience when user add your wiki to their home screen. 📱
-* **HTTP security response headers**: Enhance the security of your wiki from HTTP response headers. 🔒🔑
+- **Fully responsive skin**: Responsive and able to adapt to different screen sizes. 📱💻🖥️
+- **Light/dark mode support**: Switch between light and dark mode. ☀️🌙
+- **Adjustable font size and page width**: Read the article the way you wanted 👀📃
+- **Collapsible sections**: Collapse and expand article sections ***Require JS.*** 📖📕
+- **Persistent ToC**: Access ToC anywhere in the article. ***Tracking require JS.*** 🔍📖
+- **Rich search suggestions**: More helpful search suggestions with images and descriptions. ***Require JS.*** 🔍👀
+- **Lazyload images**: Improve load time of your wiki and avoid unnecessary image downloads. ***Require JS.*** 🚀
+- **Webapp manifest**: Give a more app-like experience when user add your wiki to their home screen. 📱
+- **HTTP security response headers**: Enhance the security of your wiki from HTTP response headers. 🔒🔑
 
 ## Installation
 1. [Download](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/archive/master.zip) place the file(s) in a directory called `Citizen` in your `skins/` folder.
