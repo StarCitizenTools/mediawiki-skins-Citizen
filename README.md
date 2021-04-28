@@ -7,12 +7,12 @@ Live demo can be seen at the [Star Citizen Wiki](https://star-citizen.wiki), mor
 
 ## Notable features
 - **Fully responsive skin**: Responsive and able to adapt to different screen sizes. 📱💻🖥️
-- **Light/dark mode support**: Switch between light and dark mode. ☀️🌙
-- **Adjustable font size and page width**: Read the article the way you wanted 👀📃
-- **Collapsible sections**: Collapse and expand article sections ***Require JS.*** 📖📕
-- **Persistent ToC**: Access ToC anywhere in the article. ***Tracking require JS.*** 🔍📖
-- **Rich search suggestions**: More helpful search suggestions with images and descriptions. ***Require JS.*** 🔍👀
-- **Lazyload images**: Improve load time of your wiki and avoid unnecessary image downloads. ***Require JS.*** 🚀
+- **Light/dark mode support**: Switch between light and dark mode. ***Require JS***. ☀️🌙
+- **Adjustable font size and page width**: Read the article the way you wanted. ***Require JS*** 👀📃
+- **Collapsible sections**: Collapse and expand article sections. ***Require JS*** 📖📕
+- **Persistent ToC**: Access ToC anywhere in the article. ***Tracking require JS*** 🔍📖
+- **Rich search suggestions**: More helpful search suggestions with images and descriptions. ***Require JS*** 🔍👀
+- **Lazyload images**: Improve load time of your wiki and avoid unnecessary image downloads. ***Require JS*** 🚀
 - **Webapp manifest**: Give a more app-like experience when user add your wiki to their home screen. 📱
 - **HTTP security response headers**: Enhance the security of your wiki from HTTP response headers. 🔒🔑
 
