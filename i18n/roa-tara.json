@@ -19,6 +19,7 @@
 	"citizen-drawer-search": "Menù de recerche",
 	"citizen-footer-desc": "Cange stu teste sus a MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Cange stu teste sus a MediaWiki:Citizen-footer-desc",
+	"citizen-jumptotop": "Tuèrne sus",
 	"citizen-search-fulltext": "Cirche le pàggene ca tènene",
 	"citizen-tagline-ns-talk": "Pàgene de le 'ngazzaminde de {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "'Mbormaizune sus a {{SITENAME}}",
@@ -30,5 +31,8 @@
 	"prefs-citizen-theme-label": "Teme",
 	"prefs-citizen-theme-option-auto": "Auto",
 	"prefs-citizen-theme-option-light": "Chiare",
-	"prefs-citizen-theme-option-dark": "Scure"
+	"prefs-citizen-theme-option-dark": "Scure",
+	"prefs-citizen-fontsize-label": "Dimenzione d'u carattere",
+	"prefs-citizen-pagewidth-label": "Larghezze d'a pàgene",
+	"prefs-citizen-resetbutton-label": "Azzere a le predefinite"
 }

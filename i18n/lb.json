@@ -9,7 +9,11 @@
 	"citizen-sitestats-images-label": "Fichieren",
 	"citizen-sitestats-users-label": "Benotzer",
 	"citizen-sitestats-edits-label": "Ännerungen",
+	"citizen-jumptotop": "Zréck no uewen",
 	"citizen-tagline-ns-help": "Hëllef-Säit",
 	"prefs-citizen-theme-option-light": "Hell",
-	"prefs-citizen-theme-option-dark": "Däischter"
+	"prefs-citizen-theme-option-dark": "Däischter",
+	"prefs-citizen-fontsize-label": "Schrëftgréisst",
+	"prefs-citizen-pagewidth-label": "Breet vun der Säit",
+	"prefs-citizen-resetbutton-label": "Op de Standard zrécksetzen"
 }

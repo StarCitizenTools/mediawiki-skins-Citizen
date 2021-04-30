@@ -22,9 +22,13 @@
 	"citizen-drawer-search": "Menu de pesquisa",
 	"citizen-footer-desc": "Edite este texto em MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Edite este texto em MediaWiki:Citizen-footer-tagline",
+	"citizen-jumptotop": "Voltar ao topo",
 	"citizen-search-fulltext": "Páginas de pesquisa que contêm",
 	"prefs-citizen-theme-label": "Tema",
 	"prefs-citizen-theme-option-auto": "Automático",
 	"prefs-citizen-theme-option-light": "Claro",
-	"prefs-citizen-theme-option-dark": "Escuro"
+	"prefs-citizen-theme-option-dark": "Escuro",
+	"prefs-citizen-fontsize-label": "Tamanho da fonte",
+	"prefs-citizen-pagewidth-label": "Largura da página",
+	"prefs-citizen-resetbutton-label": "Restaurar ao padrão"
 }

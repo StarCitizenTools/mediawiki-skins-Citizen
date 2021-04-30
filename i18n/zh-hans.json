@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Alistair3149",
+			"Grace03",
 			"Lakejason0",
 			"Yfdyh000"
 		]
@@ -21,9 +22,12 @@
 	"citizen-drawer-search": "搜索菜单",
 	"citizen-footer-desc": "在 MediaWiki:Citizen-footer-desc 编辑此文本",
 	"citizen-footer-tagline": "在 MediaWiki:Citizen-footer-tagline 编辑此文本",
+	"citizen-jumptotop": "回到顶部",
 	"citizen-search-fulltext": "搜索包含",
 	"prefs-citizen-theme-label": "主题",
 	"prefs-citizen-theme-option-auto": "自动",
 	"prefs-citizen-theme-option-light": "日间",
-	"prefs-citizen-theme-option-dark": "夜间"
+	"prefs-citizen-theme-option-dark": "夜间",
+	"prefs-citizen-fontsize-label": "字体大小",
+	"prefs-citizen-resetbutton-label": "重置到默认"
 }

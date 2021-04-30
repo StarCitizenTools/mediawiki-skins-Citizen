@@ -10,6 +10,7 @@
 	"citizen-sitestats-images-label": "file",
 	"citizen-sitestats-users-label": "utenti",
 	"citizen-sitestats-edits-label": "modifiche",
+	"citizen-jumptotop": "Torna all'inizio",
 	"citizen-tagline-ns-talk": "Pagina di discussione su {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Informazioni su {{SITENAME}}",
 	"citizen-tagline-ns-file": "File su {{SITENAME}}",
@@ -20,5 +21,7 @@
 	"prefs-citizen-theme-label": "Tema",
 	"prefs-citizen-theme-option-auto": "Automatico",
 	"prefs-citizen-theme-option-light": "Chiaro",
-	"prefs-citizen-theme-option-dark": "Scuro"
+	"prefs-citizen-theme-option-dark": "Scuro",
+	"prefs-citizen-fontsize-label": "Dimensione carattere",
+	"prefs-citizen-pagewidth-label": "Larghezza pagina"
 }

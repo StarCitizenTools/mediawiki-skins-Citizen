@@ -19,6 +19,7 @@
 	"citizen-drawer-search": "Szukaj w menu",
 	"citizen-footer-desc": "Zmień ten tekst na MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Zmień ten tekst na MediaWiki:Citizen-footer-tagline",
+	"citizen-jumptotop": "Powrót do góry",
 	"citizen-search-fulltext": "Szukaj stron zawierających tekst",
 	"citizen-tagline-ns-talk": "Strona dyskusji o „{{SUBJECTPAGENAME}}”",
 	"citizen-tagline-ns-project": "Strona projektu {{SITENAME}}",

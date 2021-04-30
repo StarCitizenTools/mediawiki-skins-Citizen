@@ -21,6 +21,7 @@
 	"citizen-drawer-search": "Menu de recherche",
 	"citizen-footer-desc": "Modifier ce texte sur MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Modifier ce texte sur MediaWiki:Citizen-footer-tagline",
+	"citizen-jumptotop": "Retour au début",
 	"citizen-search-fulltext": "Rechercher les pages contenant",
 	"citizen-tagline-ns-talk": "Page de discussion de {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Informations sur {{SITENAME}}",
@@ -32,5 +33,8 @@
 	"prefs-citizen-theme-label": "Thème",
 	"prefs-citizen-theme-option-auto": "Automatique",
 	"prefs-citizen-theme-option-light": "Clair",
-	"prefs-citizen-theme-option-dark": "Sombre"
+	"prefs-citizen-theme-option-dark": "Sombre",
+	"prefs-citizen-fontsize-label": "Taille de police",
+	"prefs-citizen-pagewidth-label": "Largeur de la page",
+	"prefs-citizen-resetbutton-label": "Réinitialiser aux valeurs par défaut"
 }

@@ -11,8 +11,12 @@
 	"citizen-sitestats-users-label": "사용자",
 	"citizen-sitestats-edits-label": "편집",
 	"citizen-drawer-search": "검색 메뉴",
+	"citizen-jumptotop": "맨 위로 돌아가기",
 	"prefs-citizen-theme-label": "테마",
 	"prefs-citizen-theme-option-auto": "자동",
 	"prefs-citizen-theme-option-light": "밝음",
-	"prefs-citizen-theme-option-dark": "어두움"
+	"prefs-citizen-theme-option-dark": "어두움",
+	"prefs-citizen-fontsize-label": "글자 크기",
+	"prefs-citizen-pagewidth-label": "페이지 너비",
+	"prefs-citizen-resetbutton-label": "기본값으로 재설정"
 }

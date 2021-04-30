@@ -19,6 +19,7 @@
 	"citizen-drawer-search": "Мени за пребарување",
 	"citizen-footer-desc": "Уредете го овој текст на MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Уредете го овој текст на MediaWiki:Citizen-footer-tagline",
+	"citizen-jumptotop": "Најгоре",
 	"citizen-search-fulltext": "Пребарај страници што содржат",
 	"citizen-tagline-ns-talk": "Разговорна страница на {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Информации за {{SITENAME}}",
@@ -30,5 +31,8 @@
 	"prefs-citizen-theme-label": "Изглед",
 	"prefs-citizen-theme-option-auto": "Авто",
 	"prefs-citizen-theme-option-light": "Светол",
-	"prefs-citizen-theme-option-dark": "Темен"
+	"prefs-citizen-theme-option-dark": "Темен",
+	"prefs-citizen-fontsize-label": "Големина на фонтот",
+	"prefs-citizen-pagewidth-label": "Ширина на страницата",
+	"prefs-citizen-resetbutton-label": "Врати по основно"
 }
