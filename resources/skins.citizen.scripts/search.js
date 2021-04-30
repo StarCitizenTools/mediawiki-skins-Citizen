@@ -109,7 +109,8 @@ function bindExpandOnSlash( window, checkbox, input ) {
 		// Only handle SPACE and ENTER.
 		if ( event.key === '/' &&
 			!event.target.matches( 'input' ) &&
-			!event.target.matches( 'textarea' )
+			!event.target.matches( 'textarea' ) &&
+			!document.documentElement.classList.contains( 've-active' )
 		) {
 			checkbox.checked = true;
 			focusOnChecked( checkbox, input );
