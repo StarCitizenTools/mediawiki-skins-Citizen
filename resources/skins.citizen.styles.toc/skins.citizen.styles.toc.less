@@ -11,11 +11,11 @@
 		position: fixed;
 		top: var( --height-header );
 		left: 0;
+		width: 100%;
 		max-width: ~'calc( var( --width-toc ) - '@padding-page * 2 ~')';
 		padding: @padding-page;
 		color: var( --color-base--subtle );
 		font-size: @ui-menu-text;
-		width: 100%;
 
 		&::-webkit-scrollbar {
 			width: 0; // Hide bar on toc
@@ -91,8 +91,8 @@
 			display: block;
 			overflow: visible auto;
 			max-height: ~'calc( 100vh - var( --height-header ) * 2 )';
-			margin: @content-margin-top * 0.75 0 0 0 !important;
 			padding-right: 10px;
+			margin: @content-margin-top * 0.75 0 0 0 !important;
 			font-weight: 450;
 			overscroll-behavior: contain;
 		}
@@ -181,7 +181,6 @@
 				margin: 45px 0 0 0 !important;
 				background: var( --background-color-dp-04 );
 				border-radius: 0 0 @border-radius-large @border-radius-large;
-				pointer-events: auto;
 
 				/**
 				 * Ideally we'd have this shadow on the .toc container, but the
@@ -204,11 +203,8 @@
 				 */
 				// .boxshadow(3);
 				// => box-shadow: 0 10px 20px rgba( 0, 0, 0, 0.0475 ), 0 6px 6px rgba( 0, 0, 0, 0.0575 );
-				box-shadow:
-					0 10px 20px rgba( 0, 0, 0, 0.0475 ),
-					0 6px 6px rgba( 0, 0, 0, 0.0575 ),
-					0 (10px - 45px) 20px rgba( 0, 0, 0, 0.0475 ),
-					0 (6px - 45px) 6px rgba( 0, 0, 0, 0.0575 );
+				box-shadow: 0 10px 20px rgba( 0, 0, 0, 0.0475 ), 0 6px 6px rgba( 0, 0, 0, 0.0575 ), 0 (10px - 45px) 20px rgba( 0, 0, 0, 0.0475 ), 0 (6px - 45px) 6px rgba( 0, 0, 0, 0.0575 );
+				pointer-events: auto;
 			}
 		}
 
