@@ -15,6 +15,7 @@
 		padding: @padding-page;
 		color: var( --color-base--subtle );
 		font-size: @ui-menu-text;
+		width: 100%;
 
 		&::-webkit-scrollbar {
 			width: 0; // Hide bar on toc
@@ -59,11 +60,6 @@
 			> a {
 				color: inherit !important;
 			}
-
-			a,
-			li {
-				color: var( --color-base );
-			}
 		}
 
 		a {
@@ -96,6 +92,7 @@
 			overflow: visible auto;
 			max-height: ~'calc( 100vh - var( --height-header ) * 2 )';
 			margin: @content-margin-top * 0.75 0 0 0 !important;
+			padding-right: 10px;
 			font-weight: 450;
 			overscroll-behavior: contain;
 		}
@@ -171,7 +168,6 @@
 				position: absolute;
 				z-index: 3;
 				width: ~'calc( 100% - var( --padding-page ) * 2 )';
-				max-width: var( --width-toc );
 				padding: 20px var( --padding-page ) 10px var( --padding-page );
 				background: var( --background-color-dp-04 );
 				border-radius: @border-radius-large @border-radius-large 0 0;
@@ -180,13 +176,39 @@
 			> ul {
 				display: block !important; // So that animation is visible
 				max-height: ~'calc( 100vh - var( --height-header ) * 3 )';
-				padding: 45px var( --padding-page ) 20px var( --padding-page ); // hardcoded for now
+				padding: 0 var( --padding-page ) 20px var( --padding-page ); // hardcoded for now
 				border: 1px solid var( --border-color-base--lighter );
-				margin: 0 !important;
+				margin: 45px 0 0 0 !important;
 				background: var( --background-color-dp-04 );
-				border-radius: @border-radius-large;
+				border-radius: 0 0 @border-radius-large @border-radius-large;
 				pointer-events: auto;
-				.boxshadow(3);
+
+				/**
+				 * Ideally we'd have this shadow on the .toc container, but the
+				 * container can't move with the checkbox.
+				 *
+				 * Assigning the regular box shadow here won't work because then the
+				 * .toctitle won't have any shadow and look weird. Giving .toctitle a
+				 * shadow causes it to go over the `> ul` which is no good.  So we need to
+				 * have a duplicate shadow here shifted up to reach the .toctitle. One
+				 * would think the shadows overlapping would look funny on the sides, but
+				 * it actually looks fine. (The trick *is* visible if you look very closely
+				 * for it, though.)
+				 *
+				 * Previous approach used padding-top equal to the height of the
+				 * .toctitle, with the .toctitle being absolutely positioned. But this
+				 * causes the `> ul` y-scrollbar to look funky in two ways: it clearly
+				 * pokes out from .toctitle's border-top-right-radius; and when it's
+				 * scrolled down slightly, it still appears on the scrollbar as if it's at
+				 * the top, exposing the hack.
+				 */
+				// .boxshadow(3);
+				// => box-shadow: 0 10px 20px rgba( 0, 0, 0, 0.0475 ), 0 6px 6px rgba( 0, 0, 0, 0.0575 );
+				box-shadow:
+					0 10px 20px rgba( 0, 0, 0, 0.0475 ),
+					0 6px 6px rgba( 0, 0, 0, 0.0575 ),
+					0 (10px - 45px) 20px rgba( 0, 0, 0, 0.0475 ),
+					0 (6px - 45px) 6px rgba( 0, 0, 0, 0.0575 );
 			}
 		}
 
@@ -213,11 +235,16 @@
 	@media ( max-width: @width-breakpoint-tablet ) {
 		.toc {
 			right: 0;
-			max-width: unset;
 
 			> ul {
 				max-height: 60vh;
 			}
+		}
+	}
+
+	@media ( max-width: @width-breakpoint-mobile ) {
+		.toc {
+			max-width: ~'calc(100vw - var( --padding-page ) * 2)';
 		}
 	}
 
