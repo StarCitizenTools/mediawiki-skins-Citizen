@@ -22,6 +22,7 @@
 	"citizen-drawer-search": "Arama menüsü",
 	"citizen-footer-desc": "Bu metni MediaWiki:Citizen-footer-desc üzerinde düzenle",
 	"citizen-footer-tagline": "Bu metni MediaWiki:Citizen-footer-tagline üzerinde düzenle",
+	"citizen-jumptotop": "Başa dön",
 	"citizen-search-fulltext": "İçeren sayfaları ara",
 	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}} tartışma sayfası",
 	"citizen-tagline-ns-project": "{{SITENAME}} hakkında bilgi",
@@ -33,5 +34,8 @@
 	"prefs-citizen-theme-label": "Tema",
 	"prefs-citizen-theme-option-auto": "Otomatik",
 	"prefs-citizen-theme-option-light": "Açık",
-	"prefs-citizen-theme-option-dark": "Koyu"
+	"prefs-citizen-theme-option-dark": "Koyu",
+	"prefs-citizen-fontsize-label": "Yazı tipi boyutu",
+	"prefs-citizen-pagewidth-label": "Sayfa genişliği",
+	"prefs-citizen-resetbutton-label": "Varsayılana sıfırla"
 }

@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Georg101",
+			"Want"
+		]
+	},
+	"citizen-sitestats-articles-label": "články",
+	"citizen-sitestats-images-label": "Soubory",
+	"citizen-sitestats-users-label": "uživatelé",
+	"citizen-sitestats-edits-label": "Úpravy",
+	"citizen-jumptotop": "Zpět nahoru",
+	"citizen-tagline-ns-project": "Informace o {{SITENAME}}",
+	"citizen-tagline-ns-template": "Stránka šablony",
+	"citizen-tagline-ns-help": "Nápověda",
+	"citizen-tagline-ns-category": "Stránka kategorie",
+	"prefs-citizen-fontsize-label": "Velikost písma",
+	"prefs-citizen-pagewidth-label": "Šířka stránky"
+}
