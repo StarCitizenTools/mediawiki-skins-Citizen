@@ -257,6 +257,19 @@ video {
 
 	.mw-indicator {
 		filter: invert( 1 ) hue-rotate( 180deg );
+
+		// Have to hardcode the color since the filter breaks the color
+		a {
+			color: @color-link;
+
+			&:hover {
+				color: @color-link--hover;
+			}
+
+			&:active {
+				color: @color-link--active;
+			}
+		}
 	}
 }
 
