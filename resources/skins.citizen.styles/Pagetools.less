@@ -12,6 +12,7 @@
 		padding: 8px;
 		cursor: pointer;
 		transition: @transition-opacity-quick;
+		border-radius: @border-radius-medium;
 
 		&-menu {
 			position: absolute;
@@ -71,13 +72,11 @@
 				opacity: 1;
 				pointer-events: auto;
 			}
-
-			&:before {
-				opacity: var( --opacity-icon-base--hover );
-			}
 		}
 
 		&:active {
+			background: var( --background-color-quiet--active ) !important;
+
 			&:before {
 				opacity: var( --opacity-icon-base--active );
 			}
@@ -211,6 +210,16 @@
 			&:after {
 				margin-right: 8px;
 			}
+		}
+	}
+}
+
+@media ( hover: hover ) {
+	.page-actions-more:hover {
+		background: var( --background-color-quiet--hover );
+
+		&:before {
+			opacity: var( --opacity-icon-base--hover );
 		}
 	}
 }
