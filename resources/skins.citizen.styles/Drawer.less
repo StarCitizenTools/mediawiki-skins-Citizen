@@ -47,8 +47,9 @@
 	&-button {
 		position: absolute;
 		z-index: 8;
-		width: var( --width-button-corner );
-		height: var( --height-header );
+		margin-right: var( --margin-header-item--corner );
+		// Need to align with page padding
+		margin-left: var( --margin-header-item--corner );
 
 		&-icon {
 			display: flex;
@@ -57,8 +58,10 @@
 			height: var( --size-icon );
 			flex-direction: column;
 			flex-shrink: 0;
-			margin: ~'calc( ( var( --height-header ) - var( --size-icon ) ) / 2 ) var( --padding-page )';
-			place-content: center;
+			align-items: center;
+			justify-content: center;
+			// Don't use padding as margin is needed to hide overflow
+			margin: ~'calc( var( --padding-header-icon ) + var( --margin-header-item ) )' var( --padding-page );
 
 			&-1 {
 				transform-origin: 0 0;

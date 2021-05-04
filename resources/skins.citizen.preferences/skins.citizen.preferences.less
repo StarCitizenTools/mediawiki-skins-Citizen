@@ -3,9 +3,8 @@
 
 #citizen-pref {
 	&-toggle {
-		width: var( --width-button-base );
-		height: var( --height-header );
-		padding: 0;
+		width: var( --size-icon );
+		height: var( --size-icon );
 		border: 0;
 		appearance: none;
 		background-color: transparent;
@@ -15,13 +14,8 @@
 		opacity: var( --opacity-icon-base );
 		transition: @transition-opacity-quick, @transition-transform-quick;
 
-		&:hover {
-			opacity: var( --opacity-icon-base--hover );
-			transform: rotate3d( 0, 0, 1, 90deg );
-		}
-
 		&:active {
-			opacity: var( --opacity-icon-base--active );
+			opacity: var( --opacity-icon-base--active ) !important;
 		}
 	}
 
@@ -182,5 +176,12 @@
 			left: unset;
 			min-width: 250px;
 		}
+	}
+}
+
+@media ( hover: hover ) {
+	#citizen-pref:hover #citizen-pref-toggle {
+		opacity: var( --opacity-icon-base--hover );
+		transform: rotate3d( 0, 0, 1, 90deg );
 	}
 }

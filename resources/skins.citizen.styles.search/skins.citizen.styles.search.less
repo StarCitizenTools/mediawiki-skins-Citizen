@@ -15,7 +15,7 @@
 .suggestions-dropdown {
 	display: flex; // Needed to show margin
 	overflow: auto;
-	width: @search-bar-width;
+	width: var( --width-search-bar );
 	max-width: calc( ~'100vw -'@icon-box-size + @icon-padding * 2 + @margin-side );
 	max-height: ~'calc( 100vh - var( --height-header ) + 10px )';
 	flex-direction: column;
@@ -128,14 +128,6 @@ a.suggestion-link:hover {
 	text-decoration: none;
 }
 
-// RTL tweaks
-.rtl {
-	#searchform {
-		right: unset;
-		left: @icon-box-size + @margin-side + @icon-padding;
-	}
-}
-
 /**
  * Loading indicator for search widget
  * Based on Vector
@@ -149,6 +141,7 @@ a.suggestion-link:hover {
  *
  **/
 #searchform.search-form__loading:after {
+	--height-search-bar__progress-bar: @height-search-bar__progress-bar;
 	position: absolute;
 	z-index: 999;
 	top: 100%;
@@ -157,13 +150,13 @@ a.suggestion-link:hover {
 	overflow: hidden;
 	width: 100%;
 	// Hide text in case it extends beyond the input.
-	height: @search-loader-progress-bar-height;
+	height: var( --height-search-bar__progress-bar );
 	// Ensure it doesn't extend beyond the input.
 	box-sizing: border-box;
 	// Overlay the form
-	margin-top: -@search-loader-progress-bar-height;
+	margin-top: -100%;
 	// Animates the progress-bar.
-	animation: search-loader-progress-bar
+	animation: search-bar__progress-bar
 		/* duration */ 1200ms
 		/* timing function */ linear
 		/* delay */ 1000ms
@@ -172,7 +165,7 @@ a.suggestion-link:hover {
 	// Add a progress-bar to the loading indicator,
 	// but only show it animating after 1 second of loading.
 	background: /*image*/ linear-gradient( 90deg, var( --color-primary ) 0%, var( --color-primary ) 100% )
-		/* position / size*/ -10% 0 ~'/' 0 @search-loader-progress-bar-height
+		/* position / size*/ -10% 0 ~'/' 0 var( --height-search-bar__progress-bar )
 		/* repeat */ no-repeat,transparent;
 	// Align style with the form
 	border-radius: 0 0 @border-radius-large @border-radius-large;
@@ -182,29 +175,29 @@ a.suggestion-link:hover {
 	white-space: nowrap;
 }
 
-@keyframes search-loader-progress-bar {
+@keyframes search-bar__progress-bar {
 	0% {
 		background-position: -10% 0;
-		background-size: 0 @search-loader-progress-bar-height;
+		background-size: 0 var( --height-search-bar__progress-bar );
 	}
 
 	30% {
 		background-position: -10% 0;
-		background-size: 30% @search-loader-progress-bar-height;
+		background-size: 30% var( --height-search-bar__progress-bar );
 	}
 
 	70% {
 		background-position: 110% 0;
-		background-size: 30% @search-loader-progress-bar-height;
+		background-size: 30% var( --height-search-bar__progress-bar );
 	}
 
 	100% {
 		background-position: 110% 0;
-		background-size: 0 @search-loader-progress-bar-height;
+		background-size: 0 var( --height-search-bar__progress-bar );
 	}
 }
 
-@media only screen and ( max-width: @search-bar-width ) {
+@media only screen and ( max-width: @width-search-bar ) {
 	.suggestions-dropdown {
 		position: fixed;
 		left: 0;
