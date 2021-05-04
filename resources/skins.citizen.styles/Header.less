@@ -1,4 +1,7 @@
 .mw-header {
+	--margin-header-item: @margin-header-item;
+	--margin-header-item--corner: ~'calc( var( --padding-page ) / 2 )';
+	--padding-header-icon: ~'calc( ( var( --height-header ) - var( --size-icon ) - var( --margin-header-item ) * 2 ) / 2 )';
 	--width-button-base: ~'calc(var(--size-icon) + var(--padding-page))';
 	--width-button-corner: ~'calc(var(--size-icon) + var(--padding-page) * 2)';
 	position: fixed;
@@ -32,6 +35,20 @@
 		box-shadow: 0 0 ~'calc( var( --height-header ) - 15px )' var( --height-header ) var( --background-color-overlay );
 		content: '';
 	}
+
+	&-button {
+		width: var( --size-icon );
+		height: var( --size-icon );
+		padding: var( --padding-header-icon );
+		margin-top: var( --margin-header-item );
+		margin-bottom: var( --margin-header-item );
+		border-radius: @border-radius-small;
+
+		&:active {
+			// Override hover style
+			background-color: var( --background-color-quiet--active ) !important;
+		}
+	}
 }
 
 #mw-header-tools {
@@ -44,5 +61,11 @@
 		display: flex;
 		height: var( --height-header );
 		align-items: center;
+	}
+}
+
+@media ( hover: hover ) {
+	.mw-header-button:hover {
+		background-color: var( --background-color-quiet--hover );
 	}
 }

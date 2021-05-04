@@ -97,7 +97,7 @@
 @background-color-icon--hover:		rgba( 0, 0, 0, 0.6 );
 @background-color-icon--active:		rgba( 0, 0, 0, 0.8 );
 @background-color-quiet: 			transparent;
-@background-color-quiet--hover:		rgba( 0, 0, 0, 0.03 );
+@background-color-quiet--hover:		rgba( 0, 0, 0, 0.07 );
 @background-color-quiet--active:	rgba( 0, 0, 0, 0.05 );
 
 @background-color-primary--hover:	@color-accent90;
@@ -138,6 +138,7 @@
 /* == Box model properties == */
 /* `--*size` variables are used for `*width` & `*height` properties. */
 @size-icon:		20px;
+// Not in the header section it is also used outside of header
 @height-header:	56px;
 @width-layout:	@width-breakpoint-desktop - 2 * @padding-page;
 @width-toc: @width-breakpoint-desktop-wide - @width-breakpoint-desktop;
@@ -256,8 +257,8 @@
 @dark-background-color-icon--hover:		rgba( 255, 255, 255, 0.6 );
 @dark-background-color-icon--active:	rgba( 255, 255, 255, 0.2 );
 // @dark-background-color-quiet: 			transparent;
-@dark-background-color-quiet--hover:	rgba( 255, 255, 255, 0.05 );
-@dark-background-color-quiet--active:	rgba( 255, 255, 255, 0.03 );
+@dark-background-color-quiet--hover:	rgba( 255, 255, 255, 0.07 );
+@dark-background-color-quiet--active:	rgba( 255, 255, 255, 0.05 );
 
 @dark-background-color-primary--hover:	@color-accent30;
 @dark-background-color-primary--active:	@color-accent-30--darken;
@@ -303,6 +304,10 @@
 @padding-menu-item: 10px 15px;
 @padding-menu-item-big: 10px 20px;
 
+/* Heade */
+@margin-header-item: 8px;
+
+/* Search bar */
 @width-search-bar: 500px;
 @height-search-bar: 42px;
 @height-search-bar__progress-bar: 2px;

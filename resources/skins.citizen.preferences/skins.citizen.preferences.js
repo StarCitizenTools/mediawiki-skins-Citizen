@@ -273,6 +273,7 @@ function initPref( window ) {
 			mw.loader.load( 'skins.citizen.icons.preferences' );
 
 			container.id = 'citizen-pref';
+			container.classList.add( 'mw-header-button' );
 			button.id = 'citizen-pref-toggle';
 			button.setAttribute( 'aria-controls', 'citizen-pref-panel' );
 			button.setAttribute( 'aria-expanded', false );
