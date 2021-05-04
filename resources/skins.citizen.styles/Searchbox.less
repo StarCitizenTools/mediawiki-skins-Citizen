@@ -140,7 +140,7 @@
 
 			&-1 {
 				top: 7px;
-				left: 12px;
+				left: 14px;
 				height: 8px;
 				transform: rotate( -45deg );
 			}
@@ -150,7 +150,7 @@
 				height: 10px;
 				/* Use background-color variable because it is a part of the logo */
 				border: solid 2px var( --background-color-icon );
-				margin-top: -4px;
+				margin-top: -2px;
 				margin-left: -2px;
 				border-radius: 100%;
 				transform: rotate( -45deg );
@@ -158,7 +158,7 @@
 
 			&-3 {
 				top: 0;
-				left: -7px;
+				left: -6px;
 				height: 14px;
 				opacity: 0;
 				transform: rotate( -135deg );
@@ -166,7 +166,7 @@
 
 			&-1,
 			&-3 {
-				width: 2px;
+				width: 3px;
 				background-color: var( --background-color-icon );
 			}
 		}
@@ -234,7 +234,8 @@
 
 // RTL styles
 .rtl {
-	&-checkbox {
+	#search {
+		&-checkbox {
 			&:checked {
 				~ #search-toggle-icon {
 					#search-toggle-icon {
@@ -254,7 +255,6 @@
 				}
 			}
 		}
-	#search {
 		&form {
 			/* @noflip */
 			right: unset !important;
@@ -266,14 +266,22 @@
 			&-icon {
 				&-1 {
 					transform: rotate( 45deg );
+					left: 14px;
 				}
 
 				&-2 {
 					transform: rotate( 45deg );
+					margin-top: -2px;
 				}
 
 				&-3 {
 					transform: rotate( 135deg );
+					left: -6px;
+				}
+
+				&-1,
+				&-3 {
+					width: 3px;
 				}
 			}
 
