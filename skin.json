@@ -255,7 +255,7 @@
 		},
 		"skins.citizen.icons.ca": {
 			"class": "ResourceLoaderImageModule",
-			"selector": "#ca-{name} > *:after",
+			"selector": "#ca-{name} > a:after",
 			"defaultColor": "#000",
 			"images": {
 				"view": "resources/skins.citizen.icons/shared/article.svg",
@@ -269,6 +269,7 @@
 				"unprotect": "resources/skins.citizen.icons/shared/unLock.svg",
 				"watch": "resources/skins.citizen.icons/shared/eye.svg",
 				"unwatch": "resources/skins.citizen.icons/shared/eyeClosed.svg",
+				"addsection": "resources/skins.citizen.icons/shared/add.svg",
 				"talk": "resources/skins.citizen.icons/shared/discussion.svg",
 				"nstab-main": "resources/skins.citizen.icons/shared/article.svg",
 				"translate": "resources/skins.citizen.icons/shared/language.svg"
@@ -285,7 +286,7 @@
 		},
 		"skins.citizen.icons.n": {
 			"class": "ResourceLoaderImageModule",
-			"selector": "#n-{name} > *:after",
+			"selector": "#n-{name} > a:after",
 			"defaultColor": "#000",
 			"images": {
 				"mainpage-description": "resources/skins.citizen.icons/shared/home.svg",
@@ -296,7 +297,7 @@
 		},
 		"skins.citizen.icons.t": {
 			"class": "ResourceLoaderImageModule",
-			"selector": "#t-{name} > *:after",
+			"selector": "#t-{name} > a:after",
 			"defaultColor": "#000",
 			"images": {
 				"whatlinkshere": "resources/skins.citizen.icons/shared/whatlinkshere.svg",
@@ -314,7 +315,7 @@
 		},
 		"skins.citizen.icons.pt": {
 			"class": "ResourceLoaderImageModule",
-			"selector": "#pt-{name} > *:after",
+			"selector": "#pt-{name} > a:after",
 			"defaultColor": "#000",
 			"images": {
 				"mytalk": "resources/skins.citizen.icons/shared/userTalk.svg",
