@@ -21,6 +21,7 @@
 	"citizen-drawer-search": "Placeholder and title text for search input on main menu",
 	"citizen-footer-desc": "Edit this text on MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Edit this text on MediaWiki:Citizen-footer-tagline",
+	"citizen-action-addsection": "Used in the Citizen skin. See for example {{canonicalurl:Talk:Main_Page|useskin=vector}}\n{{Identical|Add topic}}. Same as vector-action-addsection in Vector skin.",
 	"citizen-jumptotop": "Label for link to jump to top of page",
 	"citizen-search-fulltext": "Fulltext search suggestion",
 	"citizen-tagline-ns-talk": "Tagline for pages in talk namespace",
@@ -37,4 +38,5 @@
 	"prefs-citizen-fontsize-label": "Label for the font size settings",
 	"prefs-citizen-pagewidth-label": "Label for the page width settings",
 	"prefs-citizen-resetbutton-label": "Label for the reset button that restore default settings"
+
 }
