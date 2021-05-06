@@ -231,6 +231,16 @@
 	}
 }
 
+// RTL
+.rtl {
+	#mw-drawer-button:hover {
+		~ #mw-drawer-button-icon {
+			#mw-drawer-button-icon-1 {
+				transform: translate3d( 50%, 0, 0 );
+			}
+		}
+	}
+}
 // Portal width (240px) * 2 + Magic (4px)
 @media ( min-width: 484px ) {
 	#mw-drawer-menu {
