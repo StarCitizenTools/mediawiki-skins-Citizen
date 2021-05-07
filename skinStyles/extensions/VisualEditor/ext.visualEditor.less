@@ -227,4 +227,19 @@
 			}
 		}
 	}
+	// change save button icon from " > " to " < " for RTL language
+	.rtl {
+		.ve-init-mw-desktopArticleTarget-toolbar {
+			.ve-ui-toolbar-saveButton {
+
+				&:before {
+					transform: rotate( 45deg );
+				}
+
+				&:after {
+					transform: rotate( -45deg );
+				}
+			}
+		}
+	}
 }
