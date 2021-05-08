@@ -1,0 +1,41 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eshagh",
+			"Jeeputer",
+			"Reza koulivand"
+		]
+	},
+	"skinname-citizen": "Citizen",
+	"citizen-skin-desc": "یک پوسته واکنشگرا که برای ویکی بازی شهروند ستاره توسعه داده شده است",
+	"citizen.css": "/* همه کدهای سی‌اس‌اس که در این بخش قرار بگیرد برای کاربرانی که از پوستهٔ شهروند استفاده کنند بارگزاری می‌شود */",
+	"citizen.js": "/ * همه کدهای جاوااسکریپتی که در اینجا قرار می‌گیرند برای کاربران پوستهٔ مدرن بارگیری می‌شود * /",
+	"citizen-drawer-toggle": "تغییر منو",
+	"citizen-personalmenu-toggle": "تغییر منوی شخصی",
+	"citizen-search-toggle": "تغییر جست‌وجو",
+	"citizen-theme-toggle": "تغییر رنگ پوسته",
+	"citizen-sitestats-articles-label": "مقالات",
+	"citizen-sitestats-images-label": "پرونده‌ها",
+	"citizen-sitestats-users-label": "کاربران",
+	"citizen-sitestats-edits-label": "ویرایش‌ها",
+	"citizen-drawer-search": "منوی جستجو",
+	"citizen-footer-desc": "این متن را در مدیاویکی:Citizen-footer-desc ویرایش کنید",
+	"citizen-footer-tagline": "این متن را در مدیاویکی:Citizen-footer-tagline ویرایش کنید",
+	"citizen-action-addsection": "افزودن مبحث",
+	"citizen-jumptotop": "برگشت به بالا",
+	"citizen-search-fulltext": "جستجو برای صفحه‌های دربردارندهٔ",
+	"citizen-tagline-ns-talk": "صفحهٔ بحث برای {{SUBJECTPAGENAME}}",
+	"citizen-tagline-ns-project": "اطلاعات درباره {{SITENAME}}",
+	"citizen-tagline-ns-file": "پرونده در {{SITENAME}}",
+	"citizen-tagline-ns-mediawiki": "صفحهٔ رابط مدیاویکی",
+	"citizen-tagline-ns-template": "صفحهٔ الگو",
+	"citizen-tagline-ns-help": "صفحهٔ راهنما",
+	"citizen-tagline-ns-category": "صفحهٔ رده",
+	"prefs-citizen-theme-label": "پوسته",
+	"prefs-citizen-theme-option-auto": "خودکار",
+	"prefs-citizen-theme-option-light": "روشن",
+	"prefs-citizen-theme-option-dark": "تاریک",
+	"prefs-citizen-fontsize-label": "اندازهٔ قلم",
+	"prefs-citizen-pagewidth-label": "عرض صفحه",
+	"prefs-citizen-resetbutton-label": "بازنشانی به پیش‌گزیده"
+}

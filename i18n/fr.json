@@ -21,6 +21,7 @@
 	"citizen-drawer-search": "Menu de recherche",
 	"citizen-footer-desc": "Modifier ce texte sur MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Modifier ce texte sur MediaWiki:Citizen-footer-tagline",
+	"citizen-action-addsection": "Ajouter un sujet",
 	"citizen-jumptotop": "Retour au début",
 	"citizen-search-fulltext": "Rechercher les pages contenant",
 	"citizen-tagline-ns-talk": "Page de discussion de {{SUBJECTPAGENAME}}",
