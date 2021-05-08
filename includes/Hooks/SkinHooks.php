@@ -63,6 +63,11 @@ class SkinHooks implements SkinPageReadyConfigHook, BeforePageDisplayHook {
 	 * @param Skin $skin
 	 */
 	public function onBeforePageDisplay( $out, $skin ): void {
+		// It's better to exit before any additional check
+		if ( $skin->getSkinName() !== 'citizen' ) {
+			return;
+		}
+
 		$nonce = $out->getCSP()->getNonce();
 
 		// Script content at 'skins.citizen.scripts.theme/inline.js
