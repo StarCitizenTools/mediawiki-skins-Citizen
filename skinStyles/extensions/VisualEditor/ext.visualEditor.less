@@ -217,12 +217,22 @@
 					display: block;
 					width: 2px;
 					height: 11px;
-					background: #fff;
+					background: var( --color-base--subtle );
 					content: '';
 				}
 
 				.oo-ui-tool-title {
 					display: none !important;
+				}
+			}
+
+			// Active state
+			.oo-ui-widget-enabled {
+				.ve-ui-toolbar-saveButton {
+					&:before,
+					&:after {
+						background: var( --color-base--emphasized );
+					}
 				}
 			}
 		}
