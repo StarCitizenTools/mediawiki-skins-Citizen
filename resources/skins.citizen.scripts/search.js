@@ -97,6 +97,24 @@ function focusOnChecked( checkbox, input ) {
 }
 
 /**
+ * Check if the element is a HTML form element or content editable
+ *
+ * @param {HTMLElement} element
+ * @return {boolean}
+ */
+function isFormField( element ) {
+    if ( !( element instanceof HTMLElement ) ) {
+        return false;
+    }
+    const name = element.nodeName.toLowerCase();
+    const type = ( element.getAttribute( 'type') || '' ).toLowerCase();
+    return ( name === 'select' ||
+        name === 'textarea' ||
+        ( name === 'input' && type !== 'submit' && type !== 'reset' && type !== 'checkbox' && type !== 'radio' ) ||
+        element.isContentEditable );
+}
+
+/**
  * Manually check the checkbox state when the button is SLASH is pressed.
  *
  * @param {Window} window
@@ -107,11 +125,7 @@ function focusOnChecked( checkbox, input ) {
 function bindExpandOnSlash( window, checkbox, input ) {
 	const onExpandOnSlash = ( /** @type {KeyboardEvent} */ event ) => {
 		// Only handle SPACE and ENTER.
-		if ( event.key === '/' &&
-			!event.target.matches( 'input' ) &&
-			!event.target.matches( 'textarea' ) &&
-			!document.documentElement.classList.contains( 've-active' )
-		) {
+		if ( event.key === '/' && !isFormField( event.target ) ) {
 			checkbox.checked = true;
 			focusOnChecked( checkbox, input );
 		}
