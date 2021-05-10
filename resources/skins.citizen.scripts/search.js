@@ -103,12 +103,12 @@ function focusOnChecked( checkbox, input ) {
  * @return {boolean}
  */
 function isFormField( element ) {
-    if ( !( element instanceof HTMLElement ) ) {
-        return false;
-    }
-    const name = element.nodeName.toLowerCase();
-    const type = ( element.getAttribute( 'type') || '' ).toLowerCase();
-    return ( name === 'select' ||
+	if ( !( element instanceof HTMLElement ) ) {
+		return false;
+	}
+	const name = element.nodeName.toLowerCase();
+	const type = ( element.getAttribute( 'type' ) || '' ).toLowerCase();
+	return ( name === 'select' ||
         name === 'textarea' ||
         ( name === 'input' && type !== 'submit' && type !== 'reset' && type !== 'checkbox' && type !== 'radio' ) ||
         element.isContentEditable );
