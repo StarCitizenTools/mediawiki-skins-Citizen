@@ -140,26 +140,61 @@ function resetPref() {
 }
 
 /**
- * Add/remove toggle class and form input eventlistener
+ * Dismiss the prefernce panel when clicked outside
  *
  * @param {Event} event
+ */
+function dismissOnClickOutside( event ) {
+	const pref = document.getElementById( 'citizen-pref' );
+
+	if ( event.target instanceof Node && !pref.contains( event.target ) ) {
+		const panel = document.getElementById( 'citizen-pref-panel' );
+
+		if ( panel.classList.contains( 'citizen-pref-panel--active' ) ) {
+			// eslint-disable-next-line no-use-before-define
+			togglePanel();
+		}
+	}
+}
+
+/**
+ * Dismiss the prefernce panel when ESCAPE is pressed
+ *
+ * @param {Event} event
+ */
+function dismissOnEscape( event ) {
+	if ( event.key !== 'Escape' ) {
+		return;
+	}
+	// eslint-disable-next-line no-use-before-define
+	togglePanel();
+}
+
+/**
+ * Add/remove toggle class and form input eventlistener
+ *
  * @return {void}
  */
-function togglePanel( event ) {
-	const panel = document.getElementById( 'citizen-pref-panel' ),
+function togglePanel() {
+	const toggle = document.getElementById( 'citizen-pref-toggle' ),
+		panel = document.getElementById( 'citizen-pref-panel' ),
 		form = document.getElementById( 'citizen-pref-form' ),
 		resetButton = document.getElementById( 'citizen-pref-resetbutton' );
 
 	if ( !panel.classList.contains( 'citizen-pref-panel--active' ) ) {
 		panel.classList.add( 'citizen-pref-panel--active' );
-		event.currentTarget.setAttribute( 'aria-expanded', true );
+		toggle.setAttribute( 'aria-expanded', true );
 		form.addEventListener( 'input', setPref );
 		resetButton.addEventListener( 'click', resetPref );
+		window.addEventListener( 'click', dismissOnClickOutside );
+		window.addEventListener( 'keydown', dismissOnEscape );
 	} else {
 		panel.classList.remove( 'citizen-pref-panel--active' );
-		event.currentTarget.setAttribute( 'aria-expanded', false );
+		toggle.setAttribute( 'aria-expanded', false );
 		form.removeEventListener( 'input', setPref );
 		resetButton.removeEventListener( 'click', resetPref );
+		window.addEventListener( 'click', dismissOnClickOutside );
+		window.removeEventListener( 'keydown', dismissOnEscape );
 	}
 }
 
@@ -221,7 +256,7 @@ function initPanel( event ) {
 		setInputValue( key, prefValue[ key ] );
 	} );
 
-	togglePanel( event );
+	togglePanel();
 	event.currentTarget.addEventListener( 'click', togglePanel );
 }
 
