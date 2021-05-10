@@ -3,7 +3,8 @@
 		"authors": [
 			"Alistair3149",
 			"Kly",
-			"Lakejason0"
+			"Lakejason0",
+			"Neetp7k9"
 		]
 	},
 	"skinname-citizen": "Citizen",
@@ -21,6 +22,7 @@
 	"citizen-drawer-search": "搜尋選單",
 	"citizen-footer-desc": "在 MediaWiki:Citizen-footer-desc 編輯此文字",
 	"citizen-footer-tagline": "在 MediaWiki:Citizen-footer-tagline 編輯此文字",
+	"citizen-action-addsection": "新增主題",
 	"citizen-search-fulltext": "搜尋包含",
 	"prefs-citizen-theme-label": "主題",
 	"prefs-citizen-theme-option-auto": "自動",
