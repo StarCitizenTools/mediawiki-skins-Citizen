@@ -9,6 +9,10 @@
 #pt-notifications {
 	&-alert,
 	&-notice {
+		position: relative;
+		margin: var( --margin-header-item ) 0;
+		border-radius: @border-radius-small;
+
 		.mw-echo-notifications-badge {
 			top: 0;
 			width: var( --width-button-base );
@@ -38,6 +42,10 @@
 				opacity: var( --opacity-base--disabled );
 			}
 		}
+
+		&:active {
+			background-color: var( --background-color-quiet--active ) !important;
+		}
 	}
 
 	// Rotate bell
@@ -58,6 +66,17 @@
 		&-notice {
 			.mw-echo-notifications-badge {
 				filter: invert( 1 ) hue-rotate( 180deg );
+			}
+		}
+	}
+}
+
+@media screen and ( hover: hover ) {
+	#pt-notifications {
+		&-alert,
+		&-notice {
+			&:hover {
+				background-color: var( --background-color-quiet--hover );
 			}
 		}
 	}
