@@ -247,7 +247,7 @@
 						"rtl": "resources/skins.citizen.icons/toc-rtl.svg"
 					}
 				},
-				"#personalmenu-button:before": "resources/skins.citizen.icons/shared/userAvatar.svg",
+				"#personalmenu-button:after": "resources/skins.citizen.icons/shared/userAvatar.svg",
 				"#searchform-icon": "resources/skins.citizen.icons/shared/search.svg",
 				"#searchform-random": "resources/skins.citizen.icons/shared/random.svg",
 				".page-actions-more:before": "resources/skins.citizen.icons/more.svg"
@@ -356,7 +356,7 @@
 		},
 		"skins.citizen.icons.preferences": {
 			"class": "ResourceLoaderImageModule",
-			"selector": "#citizen-pref-{name}",
+			"selector": "#citizen-pref-{name}:after",
 			"useDataURI": false,
 			"images": {
 				"toggle": "resources/skins.citizen.icons/shared/settings.svg"

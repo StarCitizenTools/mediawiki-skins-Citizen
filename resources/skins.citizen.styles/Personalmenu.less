@@ -15,9 +15,11 @@
 				visibility: visible;
 
 				&-button {
-					opacity: var( --opacity-icon-base--hover );
+					&:after {
+						opacity: var( --opacity-icon-base--hover );
+					}
 
-					&:active {
+					&:active:after {
 						opacity: var( --opacity-icon-base--active );
 					}
 				}
@@ -26,25 +28,26 @@
 	}
 
 	&-button {
+		position: relative;
 		font-size: 0; // Hide label text
-		opacity: var( --opacity-icon-base );
-		transition: @transition-opacity-quick;
 
-		&:hover {
-			opacity: var( --opacity-icon-base--hover );
-		}
-
-		&:active {
-			opacity: var( --opacity-icon-base--active );
-		}
-
-		&:before {
+		&:after {
 			display: block;
 			width: inherit;
 			height: inherit;
 			background-position: center;
 			background-repeat: no-repeat;
 			content: '';
+			opacity: var( --opacity-icon-base );
+			transition: @transition-opacity-quick;
+		}
+
+		&:hover:after {
+			opacity: var( --opacity-icon-base--hover );
+		}
+
+		&:active:after {
+			opacity: var( --opacity-icon-base--active );
 		}
 	}
 }
@@ -180,7 +183,7 @@
 }
 
 .skin-citizen-dark {
-	#personalmenu-button:before,
+	#personalmenu-button:after,
 	#p-personal a:after {
 		filter: invert( 1 );
 	}
