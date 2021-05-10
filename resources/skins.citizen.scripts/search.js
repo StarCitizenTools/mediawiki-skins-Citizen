@@ -126,12 +126,14 @@ function bindExpandOnSlash( window, checkbox, input ) {
 	const onExpandOnSlash = ( /** @type {KeyboardEvent} */ event ) => {
 		// Only handle SPACE and ENTER.
 		if ( event.key === '/' && !isFormField( event.target ) ) {
+			// Since Firefox quickfind interfere with this
+			event.preventDefault();
 			checkbox.checked = true;
 			focusOnChecked( checkbox, input );
 		}
 	};
 
-	window.addEventListener( 'keyup', onExpandOnSlash, true );
+	window.addEventListener( 'keydown', onExpandOnSlash, true );
 }
 
 /**
