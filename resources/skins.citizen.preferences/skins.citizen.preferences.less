@@ -3,19 +3,23 @@
 
 #citizen-pref {
 	&-toggle {
-		position: absolute;
-		width: var( --size-icon );
-		height: var( --size-icon );
+		box-sizing: content-box;
 		border: 0;
 		appearance: none;
-		background-color: transparent;
-		background-position: center;
-		background-repeat: no-repeat;
 		cursor: pointer;
-		opacity: var( --opacity-icon-base );
-		transition: @transition-opacity-quick, @transition-transform-quick;
 
-		&:active {
+		&:after {
+			display: block;
+			width: inherit;
+			height: inherit;
+			background-position: center;
+			background-repeat: no-repeat;
+			content: '';
+			opacity: var( --opacity-icon-base );
+			transition: @transition-opacity-quick, @transition-transform-quick;
+		}
+
+		&:active:after {
 			opacity: var( --opacity-icon-base--active ) !important;
 		}
 	}
@@ -163,7 +167,7 @@
 }
 
 .skin-citizen-dark {
-	#citizen-pref-toggle {
+	#citizen-pref-toggle:after {
 		filter: invert( 1 ) hue-rotate( 180deg );
 	}
 }
@@ -181,7 +185,7 @@
 }
 
 @media ( hover: hover ) {
-	#citizen-pref:hover #citizen-pref-toggle {
+	#citizen-pref:hover #citizen-pref-toggle:hover:after {
 		opacity: var( --opacity-icon-base--hover );
 		transform: rotate3d( 0, 0, 1, 90deg );
 	}
