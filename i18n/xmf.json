@@ -4,8 +4,12 @@
 			"Narazeni"
 		]
 	},
+	"citizen-action-addsection": "თემაშ მიშაძინა",
+	"citizen-jumptotop": "ჟილე დორთა",
 	"prefs-citizen-theme-label": "ფონი",
 	"prefs-citizen-theme-option-auto": "ავტო",
 	"prefs-citizen-theme-option-light": "მორჩე",
-	"prefs-citizen-theme-option-dark": "რუმე"
+	"prefs-citizen-theme-option-dark": "რუმე",
+	"prefs-citizen-fontsize-label": "შრიფტიშ ზჷმა",
+	"prefs-citizen-pagewidth-label": "ხასჷლაშ სიგანა"
 }
