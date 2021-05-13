@@ -51,18 +51,26 @@ final class BodyContent extends Partial {
 	private $topHeadingTags = [ "h1", "h2", "h3", "h4", "h5", "h6 " ];
 
 	/**
+	 * Helper function to decide if the page should be collapsible
+	 *
+	 * @param Title $title
+	 * @return string
+	 */
+	private function isCollapsiblePage( $title ) {
+		return $this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true &&
+			!$title->isMainPage() &&
+			$title->isContentPage();
+	}
+
+	/**
 	 * Rebuild the body content
 	 *
 	 * @param OutputPage $out OutputPage
 	 * @return string html
 	 */
 	public function buildBodyContent( $out ) {
-		$htmlBodyContent = new HtmlFormatter( sprintf(
-			"%s\n%s",
-			$out->getHTML(),
-			Html::rawElement( 'div', [ 'class' => 'printfooter' ], $this->skin->printSource() )
-		) );
-
+		$printSource = Html::rawElement( 'div', [ 'class' => 'printfooter' ], $this->skin->printSource() );
+		$htmlBodyContent = $out->getHTML() . "\n" . $printSource;
 		$title = $out->getTitle();
 
 		// Return the page if title is null
@@ -70,21 +78,20 @@ final class BodyContent extends Partial {
 			return $htmlBodyContent;
 		}
 
-		// Check if it is not the main page
-		if ( $this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true &&
-			!$title->isMainPage() &&
-			$title->isContentPage() ) {
-			$doc = $htmlBodyContent->getDoc();
-
+		// Make section and sanitize the output
+		if ( $this->isCollapsiblePage( $title ) ) {
+			$formatter = new HtmlFormatter( $htmlBodyContent );
+			$doc = $formatter->getDoc();
 			// Make top level sections
 			$this->makeSections( $doc, $this->getTopHeadings( $doc ) );
 			// Mark subheadings
 			$this->markSubHeadings( $this->getSubHeadings( $doc ) );
+
+			$formatter->filterContent();
+			$htmlBodyContent = $formatter->getText();
 		}
 
-		$htmlBodyContent->filterContent();
-
-		return $this->skin->wrapHTMLPublic( $title, $htmlBodyContent->getText() );
+		return $this->skin->wrapHTMLPublic( $title, $htmlBodyContent );
 	}
 
 	/**
