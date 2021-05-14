@@ -185,22 +185,6 @@
 				"resources/skins.citizen.scripts.lazyload/skins.citizen.scripts.lazyload.js"
 			]
 		},
-		"skins.citizen.scripts.search": {
-			"templates": [
-				"resources/skins.citizen.scripts.search/templates/suggestions.mustache"
-			],
-			"scripts": [
-				"resources/skins.citizen.scripts.search/underscore.partial.js",
-				"resources/skins.citizen.scripts.search/wm-typeahead.js",
-				"resources/skins.citizen.scripts.search/typeahead-init.js"
-			],
-			"dependencies": [
-				"mediawiki.api"
-			],
-			"messages": [
-				"citizen-search-fulltext"
-			]
-		},
 		"skins.citizen.scripts.toc": {
 			"scripts": [
 				"resources/skins.citizen.scripts.toc/skins.citizen.scripts.toc.js"
@@ -214,6 +198,18 @@
 		"skins.citizen.scripts.sections": {
 			"scripts": [
 				"resources/skins.citizen.scripts.sections/skins.citizen.scripts.sections.js"
+			]
+		},
+		"skins.citizen.search": {
+			"templates": [
+				"resources/skins.citizen.search/templates/typeahead.mustache"
+			],
+			"styles": [
+				"resources/skins.citizen.search/skins.citizen.search.less"
+			],
+			"packageFiles": [
+				"resources/skins.citizen.search/skins.citizen.search.js",
+				"resources/skins.citizen.search/typeahead.js"
 			]
 		},
 		"skins.citizen.preferences": {
@@ -335,15 +331,6 @@
 			"selector": ".last-modified-bar-icon",
 			"images": {
 				"lastmod": "resources/skins.citizen.icons.footer/history_white.svg"
-			}
-		},
-		"skins.citizen.icons.search": {
-			"class": "ResourceLoaderImageModule",
-			"selector": "{name}",
-			"useDataURI": false,
-			"images": {
-				".suggestion-thumbnail": "resources/skins.citizen.icons.search/noimage.svg",
-				"#suggestion-special-icon": "resources/skins.citizen.icons.search/searchfulltext.svg"
 			}
 		},
 		"skins.citizen.icons.sections": {

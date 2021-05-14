@@ -177,7 +177,7 @@ function initSearch( window ) {
 
 	if ( mw.config.get( 'wgCitizenEnableSearch' ) ) {
 		setLoadingIndicatorListeners( searchForm, true, renderSearchLoadingIndicator );
-		loadSearchModule( searchInput, 'skins.citizen.scripts.search', () => {
+		loadSearchModule( searchInput, 'skins.citizen.search', () => {
 			setLoadingIndicatorListeners( searchForm, false, renderSearchLoadingIndicator );
 		} );
 	} else {

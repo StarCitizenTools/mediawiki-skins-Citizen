@@ -266,12 +266,6 @@ class SkinCitizen extends SkinMustache {
 			$options['scripts'][] = 'skins.citizen.scripts.toc';
 		}
 
-		// Search suggestion
-		if ( $this->getConfigValue( 'CitizenEnableSearch' ) === true ) {
-			$options['styles'][] = 'skins.citizen.styles.search';
-			$options['styles'][] = 'skins.citizen.icons.search';
-		}
-
 		// Image lazyload
 		if ( $this->getConfigValue( 'CitizenEnableLazyload' ) === true ) {
 			$options['scripts'][] = 'skins.citizen.scripts.lazyload';
