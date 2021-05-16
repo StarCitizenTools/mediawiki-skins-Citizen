@@ -29,6 +29,11 @@
 			}
 		}
 
+		&__text {
+			overflow: hidden;
+			white-space: nowrap;
+		}
+
 		&__title {
 			color: var( --color-base--emphasized );
 			font-weight: 700;
@@ -43,12 +48,19 @@
 			color: var( --color-base--subtle );
 			font-size: @content-caption-size;
 		}
+
+		&__title,
+		&__description {
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
 	}
 
 	&-footer {
-		padding-top: 12px;
-		padding-bottom: 12px;
+		padding-top: @border-radius-large;
+		padding-bottom: @border-radius-large;
 		border-top: 1px solid var( --border-color-base );
+		border-radius: 0 0 @border-radius-large @border-radius-large;
 		font-size: @content-monospace-size;
 		font-weight: 450;
 
@@ -72,7 +84,8 @@
 	}
 
 	picture {
-		width: 70px;
+		width: 100%;
+		max-width: 70px;
 		margin-right: 12px;
 
 		img,
