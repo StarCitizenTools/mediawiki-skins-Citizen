@@ -19,16 +19,12 @@
 
 		&__thumbnail {
 			overflow: hidden;
-			width: 70px;
 			height: 60px;
-			margin-right: 12px;
 			background-color: var( --background-color-framed );
 			border-radius: @border-radius-small;
 
 			img,
 			source {
-				width: inherit;
-				height: inherit;
 				object-fit: cover;
 			}
 		}
@@ -54,6 +50,11 @@
 		padding-bottom: 12px;
 		border-top: 1px solid var( --border-color-base );
 		font-size: @content-monospace-size;
+		font-weight: 450;
+
+		&__icon {
+			height: var( --size-icon );
+		}
 	}
 
 	&-option {
@@ -68,6 +69,17 @@
 		padding-right: 12px;
 		padding-left: 12px;
 		color: var( --color-base );
+	}
+
+	picture {
+		width: 70px;
+		margin-right: 12px;
+
+		img,
+		source {
+			width: inherit;
+			height: inherit;
+		}
 	}
 
 	&--expanded {

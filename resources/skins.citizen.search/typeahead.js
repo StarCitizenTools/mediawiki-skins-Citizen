@@ -317,7 +317,7 @@ function initTypeahead( searchForm, searchInput ) {
 	// Since searchInput is focused before the event listener is set up
 	onFocus();
 	searchInput.addEventListener( 'focus', onFocus );
-	searchInput.addEventListener( 'blur', onBlur );
+	//searchInput.addEventListener( 'blur', onBlur );
 
 	// Run once in case there is searchQuery before eventlistener is attached
 	if ( searchInput.value.length > 0 ) {
