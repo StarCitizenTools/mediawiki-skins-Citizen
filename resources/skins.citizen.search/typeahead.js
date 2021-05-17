@@ -189,10 +189,10 @@ function getSuggestions( searchQuery, searchInput ) {
 
 	// Abort fetch if the input is detected
 	// So that fetch request won't be queued up
-	// searchInput.addEventListener( 'input', gateway.abortFetch, { once: true } );
+	searchInput.addEventListener( 'input', gateway.abortFetch, { once: true } );
 
 	getResults.then( ( results ) => {
-		// searchInput.removeEventListener( 'input', gateway.abortFetch );
+		searchInput.removeEventListener( 'input', gateway.abortFetch );
 		clearSuggestions( searchInput );
 		searchInput.parentNode.classList.remove( 'search-form__loading' );
 
@@ -204,6 +204,8 @@ function getSuggestions( searchQuery, searchInput ) {
 	} ).catch( ( error ) => {
 		searchInput.parentNode.classList.remove( 'search-form__loading' );
 
+		// User can trigger the abort when the fetch event is pending
+		// There is no need for an error
 		if ( error.name !== 'AbortError' ) {
 			const message = 'Uh oh, a wild error appears! ' + error;
 			throw new Error( message );
