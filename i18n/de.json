@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"FF-11",
 			"Gebu",
 			"Wolfdietmann",
 			"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
@@ -15,8 +16,12 @@
 	"citizen-drawer-search": "Suchmenü",
 	"citizen-footer-desc": "Bearbeiten Sie diesen Text auf MediaWiki:Citizen-footer-desc",
 	"citizen-footer-tagline": "Bearbeiten Sie diesen Text auf MediaWiki:Citizen-footer-tagline",
+	"citizen-action-addsection": "Thema hinzufügen",
+	"citizen-jumptotop": "Zurück nach oben",
 	"prefs-citizen-theme-label": "Thema",
 	"prefs-citizen-theme-option-auto": "Automatisch",
 	"prefs-citizen-theme-option-light": "Hell",
-	"prefs-citizen-theme-option-dark": "Dunkel"
+	"prefs-citizen-theme-option-dark": "Dunkel",
+	"prefs-citizen-fontsize-label": "Schriftgröße",
+	"prefs-citizen-pagewidth-label": "Seitenbreite"
 }
