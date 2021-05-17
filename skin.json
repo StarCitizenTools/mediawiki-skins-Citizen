@@ -78,15 +78,11 @@
 		},
 		"SkinHooks": {
 			"class": "Citizen\\Hooks\\SkinHooks"
-		},
-		"ThumbnailHooks": {
-			"class": "Citizen\\Hooks\\ThumbnailHooks"
 		}
 	},
 	"Hooks": {
 		"SkinPageReadyConfig": "SkinHooks",
 		"BeforePageDisplay": "SkinHooks",
-		"ThumbnailBeforeProduceHTML": "ThumbnailHooks",
 		"GetPreferences": "PreferenceHooks",
 		"PreferencesFormPreSave": "PreferenceHooks"
 	},
@@ -117,15 +113,6 @@
 			],
 			"features": [],
 			"styles": [ "resources/skins.citizen.styles.fonts/skins.citizen.styles.fonts.less" ]
-		},
-		"skins.citizen.styles.lazyload": {
-			"class": "ResourceLoaderSkinModule",
-			"targets": [
-				"desktop",
-				"mobile"
-			],
-			"features": [],
-			"styles": [ "resources/skins.citizen.styles.lazyload/skins.citizen.styles.lazyload.less" ]
 		},
 		"skins.citizen.styles.sections": {
 			"class": "ResourceLoaderSkinModule",
@@ -164,11 +151,6 @@
 				"resources/skins.citizen.scripts/theme.js",
 				"resources/skins.citizen.scripts/search.js",
 				"resources/skins.citizen.scripts/checkboxHack.js"
-			]
-		},
-		"skins.citizen.scripts.lazyload": {
-			"scripts": [
-				"resources/skins.citizen.scripts.lazyload/skins.citizen.scripts.lazyload.js"
 			]
 		},
 		"skins.citizen.scripts.toc": {
@@ -673,12 +655,6 @@
 			"value": true,
 			"description": "Page tools visibility condition",
 			"descriptionmsg": "citizen-config-showpagetools",
-			"public": true
-		},
-		"EnableLazyload": {
-			"value": false,
-			"description": "Enable or disable image lazyloading",
-			"descriptionmsg": "citizen-config-enablelazyload",
 			"public": true
 		},
 		"PortalAttach": {

@@ -266,12 +266,6 @@ class SkinCitizen extends SkinMustache {
 			$options['scripts'][] = 'skins.citizen.scripts.toc';
 		}
 
-		// Image lazyload
-		if ( $this->getConfigValue( 'CitizenEnableLazyload' ) === true ) {
-			$options['scripts'][] = 'skins.citizen.scripts.lazyload';
-			$options['styles'][] = 'skins.citizen.styles.lazyload';
-		}
-
 		// Drawer sitestats
 		if ( $this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) === true ) {
 			$options['styles'][] = 'skins.citizen.styles.sitestats';

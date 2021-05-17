@@ -12,7 +12,6 @@ Live demo can be seen at the [Star Citizen Wiki](https://star-citizen.wiki), mor
 - **Collapsible sections**: Collapse and expand article sections. ***Require JS*** 📖📕
 - **Persistent ToC**: Access ToC anywhere in the article. ***Tracking require JS*** 🔍📖
 - **Rich search suggestions**: More helpful search suggestions with images and descriptions. ***Require JS*** 🔍👀
-- **Lazyload images**: Improve load time of your wiki and avoid unnecessary image downloads. ***Require JS*** 🚀
 - **Webapp manifest**: Give a more app-like experience when user add your wiki to their home screen. 📱
 - **HTTP security response headers**: Enhance the security of your wiki from HTTP response headers. 🔒🔑
 
@@ -30,7 +29,6 @@ The config flags allow more customization on the specific features in the skin.
 
 Note that:
 * By default, all security-related features are turned off to ensure maximum compatibility.
-* If you have a lot of users that do not use javascript, it is recommended to turn off lazyloading of images as it requires javascript to display images properly.
 
 ### Appearance
 Name | Description | Values | Default
@@ -50,11 +48,6 @@ Name | Description | Values | Default
 `$wgCitizenSearchGateway` | Which gateway to use for fetching search suggestion |`mwActionApi`; `mwRestApi` | `mwActionApi`
 `$wgCitizenSearchDescriptionSource` | Source of description text on search suggestions (only takes effect if `$wgCitizenSearchGateway` is `mwActionApi`) | `wikidata` - Use description provided by [WikibaseLib](Extension:WikibaseLib) or [ShortDescription](https://www.mediawiki.org/wiki/Extension:ShortDescription); `textextracts` - Use description provided by [TextExtracts](https://www.mediawiki.org/wiki/Extension:TextExtracts); `pagedescription` - Use description provided by [Description2](https://www.mediawiki.org/wiki/Extension:Description2) or any other extension that sets the `description` page property | `textextracts`
 `$wgCitizenMaxSearchResults` | Max number of search suggestions | Integer > 0 | `6`
-
-### Image lazyload
-Name | Description | Values | Default
-:--- | :--- | :--- | :---
-`$wgCitizenEnableLazyload` | Enable or disable image lazyloading | `true` - enable; `false` - disable | `false`
 
 ### Security-related
 #### Content Security Policy (CSP)
