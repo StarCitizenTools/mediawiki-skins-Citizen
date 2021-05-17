@@ -75,10 +75,6 @@
 					height: auto !important;
 				}
 			}
-
-			&-floating {
-				z-index: 4;
-			}
 		}
 
 		&-surface {
@@ -179,9 +175,15 @@
 		}
 	}
 
-	.ve-ui-toolbar > .oo-ui-toolbar-bar {
-		display: flex;
-		flex-wrap: wrap;
+	.ve-ui-toolbar {
+		> .oo-ui-toolbar-bar {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		&-floating {
+			z-index: 4;
+		}
 	}
 
 	.ve-init-mw-desktopArticleTarget {
