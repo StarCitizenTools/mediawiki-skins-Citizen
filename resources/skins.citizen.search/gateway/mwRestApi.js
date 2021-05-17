@@ -1,3 +1,5 @@
+const config = require( '../config.json' );
+
 /**
  * Build URL used for fetch request
  *
@@ -5,10 +7,8 @@
  * @return {string} url
  */
 function getUrl( input ) {
-	const wgScriptPath = mw.config.get( 'wgScriptPath' ),
-		endpoint = wgScriptPath + '/rest.php/v1/search/title?q=',
-		maxResults = mw.config.get( 'wgCitizenMaxSearchResults' ),
-		query = '&limit=' + maxResults;
+	const endpoint = config.wgScriptPath + '/rest.php/v1/search/title?q=',
+		query = '&limit=' + config.wgCitizenMaxSearchResults;
 
 	return endpoint + input + query;
 }

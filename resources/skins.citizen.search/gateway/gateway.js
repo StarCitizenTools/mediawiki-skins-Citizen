@@ -8,13 +8,15 @@
  * @global
  */
 
+const gatewayConfig = require( '../config.json' ).wgCitizenSearchGateway;
+
 /**
  * Setup the gateway based on wiki configuration
  *
  * @return {module}
  */
 function getGateway() {
-	switch ( mw.config.get( 'wgCitizenSearchGateway' ) ) {
+	switch ( gatewayConfig ) {
 		case 'mwActionApi':
 			return require( './mwActionApi.js' );
 		case 'mwRestApi':

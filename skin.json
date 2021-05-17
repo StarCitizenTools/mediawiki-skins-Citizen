@@ -76,9 +76,6 @@
 		"PreferenceHooks": {
 			"class": "Citizen\\Hooks\\PreferenceHooks"
 		},
-		"ResourceLoaderHooks": {
-			"class": "Citizen\\Hooks\\ResourceLoaderHooks"
-		},
 		"SkinHooks": {
 			"class": "Citizen\\Hooks\\SkinHooks"
 		},
@@ -87,7 +84,6 @@
 		}
 	},
 	"Hooks": {
-		"ResourceLoaderGetConfigVars": "ResourceLoaderHooks",
 		"SkinPageReadyConfig": "SkinHooks",
 		"BeforePageDisplay": "SkinHooks",
 		"ThumbnailBeforeProduceHTML": "ThumbnailHooks",
@@ -161,6 +157,10 @@
 		"skins.citizen.scripts": {
 			"packageFiles": [
 				"resources/skins.citizen.scripts/skin.js",
+				{
+					"name": "resources/skins.citizen.scripts/config.json",
+					"callback": "Citizen\\Hooks\\ResourceLoaderHooks::getCitizenResourceLoaderConfig"
+				},
 				"resources/skins.citizen.scripts/theme.js",
 				"resources/skins.citizen.scripts/search.js",
 				"resources/skins.citizen.scripts/checkboxHack.js"
@@ -195,6 +195,10 @@
 			],
 			"packageFiles": [
 				"resources/skins.citizen.search/main.js",
+				{
+					"name": "resources/skins.citizen.search/config.json",
+					"callback": "Citizen\\Hooks\\ResourceLoaderHooks::getCitizenSearchResourceLoaderConfig"
+				},
 				"resources/skins.citizen.search/typeahead.js",
 				"resources/skins.citizen.search/gateway/gateway.js",
 				"resources/skins.citizen.search/gateway/mwActionApi.js",

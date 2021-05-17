@@ -1,10 +1,8 @@
-// Should the whole thing be a class?
-const wgScriptPath = mw.config.get( 'wgScriptPath' ),
-	maxResults = mw.config.get( 'wgCitizenMaxSearchResults' );
+const config = require( './config.json' );
 
 const activeIndex = {
 	index: -1,
-	max: maxResults + 1,
+	max: config.wgCitizenMaxSearchResults + 1,
 	setMax: function ( x ) {
 		this.max = x + 1;
 	},
@@ -141,7 +139,7 @@ function getSuggestions( searchQuery, searchInput ) {
 		const prefix = 'citizen-typeahead-suggestion',
 			template = document.getElementById( prefix + '-template' ),
 			fragment = document.createDocumentFragment(),
-			suggestionLinkPrefix = wgScriptPath + '/index.php?title=Special:Search&search=',
+			suggestionLinkPrefix = config.wgScriptPath + '/index.php?title=Special:Search&search=',
 			sanitizedSearchQuery = mw.html.escape( mw.util.escapeRegExp( searchQuery ) ),
 			regex = new RegExp( sanitizedSearchQuery, 'i' );
 
@@ -228,7 +226,7 @@ function updateTypeahead( searchInput, messages ) {
 	const searchQuery = searchInput.value,
 		footer = document.getElementById( 'searchform-suggestions-footer' ),
 		footerText = footer.querySelector( '.citizen-typeahead-footer__text' ),
-		fullTextUrl = wgScriptPath + '/index.php?title=Special:Search&fulltext=1&search=';
+		fullTextUrl = config.wgScriptPath + '/index.php?title=Special:Search&fulltext=1&search=';
 
 	if ( searchQuery.length > 0 ) {
 		const footerQuery = mw.html.escape( searchQuery );
@@ -285,7 +283,7 @@ function initTypeahead( searchForm, searchInput ) {
 	// Since searchInput is focused before the event listener is set up
 	onFocus();
 	searchInput.addEventListener( 'focus', onFocus );
-	// searchInput.addEventListener( 'blur', onBlur );
+	searchInput.addEventListener( 'blur', onBlur );
 
 	// Run once in case there is searchQuery before eventlistener is attached
 	if ( searchInput.value.length > 0 ) {

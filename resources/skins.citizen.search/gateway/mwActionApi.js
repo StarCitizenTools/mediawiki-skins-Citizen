@@ -1,4 +1,5 @@
-const descriptionSource = mw.config.get( 'wgCitizenSearchDescriptionSource' );
+const config = require( '../config.json' ),
+	descriptionSource = config.wgCitizenSearchDescriptionSource;
 
 /**
  * Build URL used for fetch request
@@ -7,10 +8,9 @@ const descriptionSource = mw.config.get( 'wgCitizenSearchDescriptionSource' );
  * @return {string} url
  */
 function getUrl( input ) {
-	const wgScriptPath = mw.config.get( 'wgScriptPath' ),
-		endpoint = wgScriptPath + '/api.php?format=json',
-		maxSearchResults = mw.config.get( 'wgCitizenMaxSearchResults' ),
-		cacheExpiry = mw.config.get( 'wgSearchSuggestCacheExpiry' ),
+	const endpoint = config.wgScriptPath + '/api.php?format=json',
+		cacheExpiry = config.wgSearchSuggestCacheExpiry,
+		maxResults = config.wgCitizenMaxSearchResults,
 		query = {
 			action: 'query',
 			smaxage: cacheExpiry,
@@ -21,10 +21,10 @@ function getUrl( input ) {
 			ppprop: 'displaytitle',
 			piprop: 'thumbnail',
 			pithumbsize: 200,
-			pilimit: maxSearchResults,
+			pilimit: maxResults,
 			gpssearch: input,
 			gpsnamespace: 0,
-			gpslimit: maxSearchResults
+			gpslimit: maxResults
 		};
 
 	switch ( descriptionSource ) {
@@ -35,7 +35,7 @@ function getUrl( input ) {
 			query.prop += '|extracts';
 			query.exchars = '60';
 			query.exintro = '1';
-			query.exlimit = maxSearchResults;
+			query.exlimit = maxResults;
 			query.explaintext = '1';
 			break;
 		case 'pagedescription':
