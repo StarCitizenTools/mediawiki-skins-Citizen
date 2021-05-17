@@ -170,14 +170,15 @@ function initCheckboxHack( window, input, target ) {
  * @return {void}
  */
 function initSearch( window ) {
-	const searchForm = document.getElementById( 'searchform' ),
+	const searchConfig = require( './config.json' ).wgCitizenEnableSearch,
+		searchForm = document.getElementById( 'searchform' ),
 		searchInput = document.getElementById( SEARCH_INPUT_ID );
 
 	initCheckboxHack( window, searchInput, searchForm );
 
-	if ( mw.config.get( 'wgCitizenEnableSearch' ) ) {
+	if ( searchConfig ) {
 		setLoadingIndicatorListeners( searchForm, true, renderSearchLoadingIndicator );
-		loadSearchModule( searchInput, 'skins.citizen.scripts.search', () => {
+		loadSearchModule( searchInput, 'skins.citizen.search', () => {
 			setLoadingIndicatorListeners( searchForm, false, renderSearchLoadingIndicator );
 		} );
 	} else {

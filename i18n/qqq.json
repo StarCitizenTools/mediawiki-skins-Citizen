@@ -24,6 +24,7 @@
 	"citizen-action-addsection": "Used in the Citizen skin. See for example {{canonicalurl:Talk:Main_Page|useskin=vector}}\n{{Identical|Add topic}}. Same as vector-action-addsection in Vector skin.",
 	"citizen-jumptotop": "Label for link to jump to top of page",
 	"citizen-search-fulltext": "Fulltext search suggestion",
+	"citizen-search-fulltext-empty": "Helper text in the search suggestion when there are no search query",
 	"citizen-tagline-ns-talk": "Tagline for pages in talk namespace",
 	"citizen-tagline-ns-project": "Tagline for pages in project namespace",
 	"citizen-tagline-ns-file": "Tagline for pages in file namespace",

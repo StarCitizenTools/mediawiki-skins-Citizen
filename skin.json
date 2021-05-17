@@ -45,12 +45,7 @@
 						"citizen-theme-toggle",
 						"citizen-footer-desc",
 						"citizen-footer-tagline",
-						"citizen-jumptotop",
-						"citizen-search-fulltext",
-						"prefs-citizen-theme-label",
-						"prefs-citizen-theme-option-auto",
-						"prefs-citizen-theme-option-light",
-						"prefs-citizen-theme-option-dark"
+						"citizen-jumptotop"
 					]
 				}
 			]
@@ -81,21 +76,13 @@
 		"PreferenceHooks": {
 			"class": "Citizen\\Hooks\\PreferenceHooks"
 		},
-		"ResourceLoaderHooks": {
-			"class": "Citizen\\Hooks\\ResourceLoaderHooks"
-		},
 		"SkinHooks": {
 			"class": "Citizen\\Hooks\\SkinHooks"
-		},
-		"ThumbnailHooks": {
-			"class": "Citizen\\Hooks\\ThumbnailHooks"
 		}
 	},
 	"Hooks": {
-		"ResourceLoaderGetConfigVars": "ResourceLoaderHooks",
 		"SkinPageReadyConfig": "SkinHooks",
 		"BeforePageDisplay": "SkinHooks",
-		"ThumbnailBeforeProduceHTML": "ThumbnailHooks",
 		"GetPreferences": "PreferenceHooks",
 		"PreferencesFormPreSave": "PreferenceHooks"
 	},
@@ -127,24 +114,6 @@
 			"features": [],
 			"styles": [ "resources/skins.citizen.styles.fonts/skins.citizen.styles.fonts.less" ]
 		},
-		"skins.citizen.styles.lazyload": {
-			"class": "ResourceLoaderSkinModule",
-			"targets": [
-				"desktop",
-				"mobile"
-			],
-			"features": [],
-			"styles": [ "resources/skins.citizen.styles.lazyload/skins.citizen.styles.lazyload.less" ]
-		},
-		"skins.citizen.styles.search": {
-			"class": "ResourceLoaderSkinModule",
-			"targets": [
-				"desktop",
-				"mobile"
-			],
-			"features": [],
-			"styles": [ "resources/skins.citizen.styles.search/skins.citizen.styles.search.less" ]
-		},
 		"skins.citizen.styles.sections": {
 			"class": "ResourceLoaderSkinModule",
 			"targets": [
@@ -175,30 +144,13 @@
 		"skins.citizen.scripts": {
 			"packageFiles": [
 				"resources/skins.citizen.scripts/skin.js",
+				{
+					"name": "resources/skins.citizen.scripts/config.json",
+					"callback": "Citizen\\Hooks\\ResourceLoaderHooks::getCitizenResourceLoaderConfig"
+				},
 				"resources/skins.citizen.scripts/theme.js",
 				"resources/skins.citizen.scripts/search.js",
 				"resources/skins.citizen.scripts/checkboxHack.js"
-			]
-		},
-		"skins.citizen.scripts.lazyload": {
-			"scripts": [
-				"resources/skins.citizen.scripts.lazyload/skins.citizen.scripts.lazyload.js"
-			]
-		},
-		"skins.citizen.scripts.search": {
-			"templates": [
-				"resources/skins.citizen.scripts.search/templates/suggestions.mustache"
-			],
-			"scripts": [
-				"resources/skins.citizen.scripts.search/underscore.partial.js",
-				"resources/skins.citizen.scripts.search/wm-typeahead.js",
-				"resources/skins.citizen.scripts.search/typeahead-init.js"
-			],
-			"dependencies": [
-				"mediawiki.api"
-			],
-			"messages": [
-				"citizen-search-fulltext"
 			]
 		},
 		"skins.citizen.scripts.toc": {
@@ -214,6 +166,29 @@
 		"skins.citizen.scripts.sections": {
 			"scripts": [
 				"resources/skins.citizen.scripts.sections/skins.citizen.scripts.sections.js"
+			]
+		},
+		"skins.citizen.search": {
+			"templates": [
+				"resources/skins.citizen.search/templates/typeahead.mustache"
+			],
+			"styles": [
+				"resources/skins.citizen.search/skins.citizen.search.less"
+			],
+			"packageFiles": [
+				"resources/skins.citizen.search/main.js",
+				{
+					"name": "resources/skins.citizen.search/config.json",
+					"callback": "Citizen\\Hooks\\ResourceLoaderHooks::getCitizenSearchResourceLoaderConfig"
+				},
+				"resources/skins.citizen.search/typeahead.js",
+				"resources/skins.citizen.search/gateway/gateway.js",
+				"resources/skins.citizen.search/gateway/mwActionApi.js",
+				"resources/skins.citizen.search/gateway/mwRestApi.js"
+			],
+			"messages": [
+				"citizen-search-fulltext",
+				"citizen-search-fulltext-empty"
 			]
 		},
 		"skins.citizen.preferences": {
@@ -335,15 +310,6 @@
 			"selector": ".last-modified-bar-icon",
 			"images": {
 				"lastmod": "resources/skins.citizen.icons.footer/history_white.svg"
-			}
-		},
-		"skins.citizen.icons.search": {
-			"class": "ResourceLoaderImageModule",
-			"selector": "{name}",
-			"useDataURI": false,
-			"images": {
-				".suggestion-thumbnail": "resources/skins.citizen.icons.search/noimage.svg",
-				"#suggestion-special-icon": "resources/skins.citizen.icons.search/searchfulltext.svg"
 			}
 		},
 		"skins.citizen.icons.sections": {
@@ -667,10 +633,10 @@
 			"descriptionmsg": "citizen-config-enablesearch",
 			"public": true
 		},
-		"SearchUseREST": {
-			"value": false,
-			"description": "Use REST API search endpoint instead of Action API",
-			"descriptionmsg": "citizen-config-searchuserest",
+		"SearchGateway": {
+			"value": "mwActionApi",
+			"description": "Which gateway to use for fetching search suggestion. Avaliable options: [mwActionApi|mwRestApi]",
+			"descriptionmsg": "citizen-config-searchgateway",
 			"public": true
 		},
 		"SearchDescriptionSource": {
@@ -689,12 +655,6 @@
 			"value": true,
 			"description": "Page tools visibility condition",
 			"descriptionmsg": "citizen-config-showpagetools",
-			"public": true
-		},
-		"EnableLazyload": {
-			"value": false,
-			"description": "Enable or disable image lazyloading",
-			"descriptionmsg": "citizen-config-enablelazyload",
 			"public": true
 		},
 		"PortalAttach": {
