@@ -27,7 +27,7 @@ const activeIndex = {
 	}
 };
 
-let typeahead;
+let typeahead, searchInput;
 
 /*
  * @param {HTMLElement} element
@@ -46,6 +46,7 @@ function toggleActive( element ) {
 				element.classList.remove( activeClass );
 			} else {
 				element.classList.add( activeClass );
+				searchInput.setAttribute( 'aria-activedescendant', element.id );
 				activeIndex.setIndex( i );
 			}
 		}
@@ -101,10 +102,9 @@ function bindMouseHoverEvent( element ) {
 /**
  * Remove all existing suggestions from typeahead
  *
- * @param {HTMLElement} searchInput
  * @return {void}
  */
-function clearSuggestions( searchInput ) {
+function clearSuggestions() {
 	const typeaheadItems = typeahead.children,
 		nonSuggestionCount = 2;
 
@@ -124,6 +124,7 @@ function clearSuggestions( searchInput ) {
 
 	// Remove loading animation
 	searchInput.parentNode.classList.remove( 'search-form__loading' );
+	searchInput.setAttribute( 'aria-activedescendant', '' );
 	activeIndex.clear();
 }
 
@@ -131,10 +132,9 @@ function clearSuggestions( searchInput ) {
  * Fetch suggestions from API and render the suggetions in HTML
  *
  * @param {string} searchQuery
- * @param {HTMLElement} searchInput
  * @return {void}
  */
-function getSuggestions( searchQuery, searchInput ) {
+function getSuggestions( searchQuery ) {
 	const renderSuggestions = ( results ) => {
 		const prefix = 'citizen-typeahead-suggestion',
 			template = document.getElementById( prefix + '-template' ),
@@ -197,7 +197,7 @@ function getSuggestions( searchQuery, searchInput ) {
 
 	getResults.then( ( results ) => {
 		searchInput.removeEventListener( 'input', abortFetch );
-		clearSuggestions( searchInput );
+		clearSuggestions();
 		if ( results !== null ) {
 			renderSuggestions( results );
 			attachMouseListener();
@@ -218,11 +218,10 @@ function getSuggestions( searchQuery, searchInput ) {
 /**
  * Update the typeahead element
  *
- * @param {HTMLElement} searchInput
  * @param {Object} messages
  * @return {void}
  */
-function updateTypeahead( searchInput, messages ) {
+function updateTypeahead( messages ) {
 	const searchQuery = searchInput.value,
 		footer = document.getElementById( 'searchform-suggestions-footer' ),
 		footerText = footer.querySelector( '.citizen-typeahead-footer__text' ),
@@ -234,20 +233,20 @@ function updateTypeahead( searchInput, messages ) {
 		footerText.innerHTML = messages.fulltext + ' <strong>' + footerQuery + '</strong>';
 		footerQuery.textContent = searchQuery;
 		footer.setAttribute( 'href', fullTextUrl + searchQuery );
-		getSuggestions( searchQuery, searchInput );
+		getSuggestions( searchQuery );
 	} else {
 		footerText.textContent = messages.empty;
 		footer.setAttribute( 'href', fullTextUrl );
-		clearSuggestions( searchInput );
+		clearSuggestions();
 	}
 }
 
 /**
  * @param {HTMLElement} searchForm
- * @param {HTMLInputElement} searchInput
+ * @param {HTMLInputElement} input
  * @return {void}
  */
-function initTypeahead( searchForm, searchInput ) {
+function initTypeahead( searchForm, input ) {
 	const expandedClass = 'citizen-typeahead--expanded',
 		messages = {
 			empty: mw.message( 'citizen-search-fulltext-empty' ).text(),
@@ -261,24 +260,32 @@ function initTypeahead( searchForm, searchInput ) {
 			'msg-citizen-search-fulltext': messages.empty
 		};
 
-	typeahead = template.render( data ).get()[ 1 ];
-
-	searchForm.append( typeahead );
-
-	const footer = document.getElementById( 'searchform-suggestions-footer' );
-	bindMouseHoverEvent( footer );
-
 	const onFocus = function () {
+		searchForm.setAttribute( 'aria-expanded', 'true' );
 		/* eslint-disable-next-line mediawiki/class-doc */
 		typeahead.classList.add( expandedClass );
 		searchInput.addEventListener( 'keydown', keyboardEvents );
 	};
 
 	const onBlur = function () {
+		searchForm.setAttribute( 'aria-expanded', 'false' );
+		searchInput.setAttribute( 'aria-activedescendant', '' );
 		/* eslint-disable-next-line mediawiki/class-doc */
 		typeahead.classList.remove( expandedClass );
 		searchInput.removeEventListener( 'keydown', keyboardEvents );
 	};
+
+	// Make them accessible outside of the function
+	typeahead = template.render( data ).get()[ 1 ];
+	searchInput = input;
+
+	searchForm.append( typeahead );
+	searchForm.setAttribute( 'aria-owns', 'searchform-suggestions' );
+	searchInput.setAttribute( 'aria-autocomplete', 'list' );
+	searchInput.setAttribute( 'aria-controls', 'searchform-suggestions' );
+
+	const footer = document.getElementById( 'searchform-suggestions-footer' );
+	bindMouseHoverEvent( footer );
 
 	// Since searchInput is focused before the event listener is set up
 	onFocus();
@@ -287,11 +294,11 @@ function initTypeahead( searchForm, searchInput ) {
 
 	// Run once in case there is searchQuery before eventlistener is attached
 	if ( searchInput.value.length > 0 ) {
-		updateTypeahead( searchInput, messages );
+		updateTypeahead( messages );
 	}
 
 	searchInput.addEventListener( 'input', () => {
-		mw.util.debounce( 100, updateTypeahead( searchInput, messages ) );
+		mw.util.debounce( 100, updateTypeahead( messages ) );
 	} );
 
 }
