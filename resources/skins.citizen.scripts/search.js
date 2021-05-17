@@ -170,7 +170,7 @@ function initCheckboxHack( window, input, target ) {
  * @return {void}
  */
 function initSearch( window ) {
-	const searchConfig = require( './config.json' ).wgCitizenEnableSearch;
+	const searchConfig = require( './config.json' ).wgCitizenEnableSearch,
 		searchForm = document.getElementById( 'searchform' ),
 		searchInput = document.getElementById( SEARCH_INPUT_ID );
 
