@@ -200,7 +200,10 @@
 			],
 			"packageFiles": [
 				"resources/skins.citizen.search/skins.citizen.search.js",
-				"resources/skins.citizen.search/typeahead.js"
+				"resources/skins.citizen.search/typeahead.js",
+				"resources/skins.citizen.search/gateway/gateway.js",
+				"resources/skins.citizen.search/gateway/mwActionApi.js",
+				"resources/skins.citizen.search/gateway/mwRestApi.js"
 			]
 		},
 		"skins.citizen.preferences": {
@@ -645,10 +648,10 @@
 			"descriptionmsg": "citizen-config-enablesearch",
 			"public": true
 		},
-		"SearchUseREST": {
-			"value": false,
-			"description": "Use REST API search endpoint instead of Action API",
-			"descriptionmsg": "citizen-config-searchuserest",
+		"SearchGateway": {
+			"value": "mwActionApi",
+			"description": "Which gateway to use for fetching search suggestion. Avaliable options: [mwActionApi|mwRestApi]",
+			"descriptionmsg": "citizen-config-searchgateway",
 			"public": true
 		},
 		"SearchDescriptionSource": {

@@ -56,10 +56,10 @@ class ResourceLoaderHooks implements ResourceLoaderGetConfigVarsHook {
 		// Since the module won't be loaded if it is not enabled
 		if ( $vars['wgCitizenEnableSearch'] === true ) {
 			try {
-				$vars['wgCitizenSearchUseREST'] = self::getSkinConfig( 'CitizenSearchUseREST' );
+				$vars['wgCitizenSearchGateway'] = self::getSkinConfig( 'CitizenSearchGateway' );
 			} catch ( ConfigException $e ) {
 				// Should not happen
-				$vars['wgCitizenSearchUseREST'] = false;
+				$vars['wgCitizenSearchGateway'] = false;
 			}
 
 			try {

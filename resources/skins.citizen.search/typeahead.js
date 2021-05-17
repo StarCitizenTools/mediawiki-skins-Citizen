@@ -1,6 +1,5 @@
 // Should the whole thing be a class?
 const wgScriptPath = mw.config.get( 'wgScriptPath' ),
-	useREST = mw.config.get( 'wgCitizenSearchUseREST' ),
 	maxResults = mw.config.get( 'wgCitizenMaxSearchResults' );
 
 const activeIndex = {
@@ -138,27 +137,6 @@ function clearSuggestions( searchInput ) {
  * @return {void}
  */
 function getSuggestions( searchQuery, searchInput ) {
-	let apiUrl;
-
-	// Build the results object used for render
-	const buildResults = ( data ) => {
-		const results = [];
-
-		// Maybe there is a cleaner way?
-		for ( let i = 0; i < data.length; i++ ) {
-			results[ i ] = {
-				id: data[ i ].id,
-				title: data[ i ].title,
-				description: data[ i ].description
-			};
-			// Thumbnail can be null if PageImages can't find one
-			if ( data[ i ].thumbnail !== null ) {
-				results[ i ].thumbnail = data[ i ].thumbnail.url;
-			}
-		}
-		return results;
-	};
-
 	const renderSuggestions = ( results ) => {
 		const prefix = 'citizen-typeahead-suggestion',
 			template = document.getElementById( prefix + '-template' ),
@@ -206,44 +184,31 @@ function getSuggestions( searchQuery, searchInput ) {
 	// Add loading animation
 	searchInput.parentNode.classList.add( 'search-form__loading' );
 
-	if ( useREST ) {
-		apiUrl = wgScriptPath + '/rest.php/v1/search/title?q=' + searchQuery + '&limit=' + maxResults;
-	} else {
-		// Action API fallback
-	}
-
-	// Maybe the whole API request should be in another ES6 module?
-	// mw.rest is not avaliable in 1.35
-	// And RL breaks template literals in 1.35
-	/* eslint-disable-next-line compat/compat */
-	const controller = new AbortController(),
-		signal = controller.signal,
-		abortFetch = () => {
-			controller.abort();
-		};
+	const gateway = require( './gateway/gateway.js' );
+	const getResults = gateway.getResults( searchQuery );
 
 	// Abort fetch if the input is detected
 	// So that fetch request won't be queued up
-	searchInput.addEventListener( 'input', abortFetch, { once: true } );
+	// searchInput.addEventListener( 'input', gateway.abortFetch, { once: true } );
 
-	/* eslint-disable-next-line compat/compat */
-	fetch( apiUrl, { signal } )
-		.then( async function ( response ) {
-			const data = await response.json();
+	getResults.then( ( results ) => {
+		// searchInput.removeEventListener( 'input', gateway.abortFetch );
+		clearSuggestions( searchInput );
+		searchInput.parentNode.classList.remove( 'search-form__loading' );
 
-			searchInput.removeEventListener( 'input', abortFetch );
-			clearSuggestions( searchInput );
+		if ( results !== null ) {
+			renderSuggestions( results );
+			activeIndex.setMax( results.length );
+			attachMouseListener();
+		}
+	} ).catch( ( error ) => {
+		searchInput.parentNode.classList.remove( 'search-form__loading' );
 
-			if ( data !== null ) {
-				const results = buildResults( data.pages );
-
-				renderSuggestions( results );
-				activeIndex.setMax( results.length );
-				attachMouseListener();
-			}
-		} ).catch( () => {
-			// Do nothing, maybe it should?
-		} );
+		if ( error.name !== 'AbortError' ) {
+			const message = 'Uh oh, a wild error appears! ' + error;
+			throw new Error( message );
+		}
+	} );
 }
 
 /**
@@ -317,7 +282,7 @@ function initTypeahead( searchForm, searchInput ) {
 	// Since searchInput is focused before the event listener is set up
 	onFocus();
 	searchInput.addEventListener( 'focus', onFocus );
-	//searchInput.addEventListener( 'blur', onBlur );
+	// searchInput.addEventListener( 'blur', onBlur );
 
 	// Run once in case there is searchQuery before eventlistener is attached
 	if ( searchInput.value.length > 0 ) {
