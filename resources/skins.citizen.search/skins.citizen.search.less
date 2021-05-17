@@ -7,6 +7,7 @@
 	top: 100%;
 	display: none;
 	width: 100%;
+	box-sizing: border-box;
 	border: 1px solid var( --border-color-base--lighter );
 	margin: 0;
 	background: var( --background-color-dp-08 );
@@ -97,5 +98,16 @@
 
 	&--expanded {
 		display: block;
+	}
+
+	// Use to hide rounded corner from searchbox
+	&:before {
+		position: absolute;
+		width: var( --width-search-bar );
+		height: @border-radius-small;
+		margin-top: -@border-radius-small;
+		margin-left: -1px;
+		background: var( --background-color-dp-08 );
+		content: '';
 	}
 }

@@ -184,26 +184,30 @@ function getSuggestions( searchQuery, searchInput ) {
 	// Add loading animation
 	searchInput.parentNode.classList.add( 'search-form__loading' );
 
-	const gateway = require( './gateway/gateway.js' );
-	const getResults = gateway.getResults( searchQuery );
+	/* eslint-disable-next-line compat/compat */
+	const controller = new AbortController(),
+		abortFetch = () => {
+			controller.abort();
+		};
+
+	const gateway = require( './gateway/gateway.js' ),
+		getResults = gateway.getResults( searchQuery, controller );
 
 	// Abort fetch if the input is detected
 	// So that fetch request won't be queued up
-	searchInput.addEventListener( 'input', gateway.abortFetch, { once: true } );
+	searchInput.addEventListener( 'input', abortFetch, { once: true } );
 
 	getResults.then( ( results ) => {
-		searchInput.removeEventListener( 'input', gateway.abortFetch );
+		searchInput.removeEventListener( 'input', abortFetch );
 		clearSuggestions( searchInput );
-		searchInput.parentNode.classList.remove( 'search-form__loading' );
-
 		if ( results !== null ) {
 			renderSuggestions( results );
-			activeIndex.setMax( results.length );
 			attachMouseListener();
 		}
+		activeIndex.setMax( results.length );
 	} ).catch( ( error ) => {
+		searchInput.removeEventListener( 'input', abortFetch );
 		searchInput.parentNode.classList.remove( 'search-form__loading' );
-
 		// User can trigger the abort when the fetch event is pending
 		// There is no need for an error
 		if ( error.name !== 'AbortError' ) {
@@ -217,25 +221,25 @@ function getSuggestions( searchQuery, searchInput ) {
  * Update the typeahead element
  *
  * @param {HTMLElement} searchInput
+ * @param {Object} messages
  * @return {void}
  */
-function updateTypeahead( searchInput ) {
-	const searchQuery = searchInput.value;
-
-	const updateFooter = () => {
-		const footer = document.getElementById( 'searchform-suggestions-footer' ),
-			footerQuery = footer.querySelector( 'strong' ),
-			fullTextUrl = wgScriptPath + '/index.php?title=Special:Search&fulltext=1&search=' + searchQuery;
-
-		footerQuery.textContent = searchQuery;
-		footer.setAttribute( 'href', fullTextUrl );
-	};
-
-	updateFooter();
+function updateTypeahead( searchInput, messages ) {
+	const searchQuery = searchInput.value,
+		footer = document.getElementById( 'searchform-suggestions-footer' ),
+		footerText = footer.querySelector( '.citizen-typeahead-footer__text' ),
+		fullTextUrl = wgScriptPath + '/index.php?title=Special:Search&fulltext=1&search=';
 
 	if ( searchQuery.length > 0 ) {
+		const footerQuery = mw.html.escape( searchQuery );
+
+		footerText.innerHTML = messages.fulltext + ' <strong>' + footerQuery + '</strong>';
+		footerQuery.textContent = searchQuery;
+		footer.setAttribute( 'href', fullTextUrl + searchQuery );
 		getSuggestions( searchQuery, searchInput );
 	} else {
+		footerText.textContent = messages.empty;
+		footer.setAttribute( 'href', fullTextUrl );
 		clearSuggestions( searchInput );
 	}
 }
@@ -247,22 +251,19 @@ function updateTypeahead( searchInput ) {
  */
 function initTypeahead( searchForm, searchInput ) {
 	const expandedClass = 'citizen-typeahead--expanded',
+		messages = {
+			empty: mw.message( 'citizen-search-fulltext-empty' ).text(),
+			fulltext: mw.message( 'citizen-search-fulltext' ).text()
+		},
 		template = mw.template.get(
 			'skins.citizen.search',
 			'resources/skins.citizen.search/templates/typeahead.mustache'
-		);
-
-	const debounce = function ( func, timeout ) {
-		let timer;
-		return ( ...args ) => {
-			clearTimeout( timer );
-			timer = setTimeout( () => {
-				func.apply( this, args );
-			}, timeout );
+		),
+		data = {
+			'msg-citizen-search-fulltext': messages.empty
 		};
-	};
 
-	typeahead = template.render().get()[ 1 ];
+	typeahead = template.render( data ).get()[ 1 ];
 
 	searchForm.append( typeahead );
 
@@ -288,11 +289,11 @@ function initTypeahead( searchForm, searchInput ) {
 
 	// Run once in case there is searchQuery before eventlistener is attached
 	if ( searchInput.value.length > 0 ) {
-		updateTypeahead( searchInput );
+		updateTypeahead( searchInput, messages );
 	}
 
 	searchInput.addEventListener( 'input', () => {
-		debounce( updateTypeahead( searchInput ), 100 );
+		mw.util.debounce( 100, updateTypeahead( searchInput, messages ) );
 	} );
 
 }

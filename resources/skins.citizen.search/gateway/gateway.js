@@ -8,10 +8,6 @@
  * @global
  */
 
-/* eslint-disable-next-line compat/compat */
-const controller = new AbortController(),
-	signal = controller.signal;
-
 /**
  * Setup the gateway based on wiki configuration
  *
@@ -32,10 +28,13 @@ function getGateway() {
  * Fetch suggestion from gateway and return the results object
  *
  * @param {string} searchQuery
+ * @param {AbortController} controller
  * @return {Object} Results
  */
-async function getResults( searchQuery ) {
+async function getResults( searchQuery, controller ) {
 	const gateway = getGateway();
+
+	const signal = controller.signal;
 
 	/* eslint-disable-next-line compat/compat */
 	const response = await fetch( gateway.getUrl( searchQuery ), { signal } );
@@ -49,16 +48,6 @@ async function getResults( searchQuery ) {
 	return gateway.convertDataToResults( data );
 }
 
-/**
- * Abort ongoing fetch request
- *
- * @return {void}
- */
-function abortFetch() {
-	controller.abort();
-}
-
 module.exports = {
-	getResults: getResults,
-	abortFetch: abortFetch
+	getResults: getResults
 };

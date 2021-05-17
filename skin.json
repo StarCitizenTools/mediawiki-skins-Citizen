@@ -45,12 +45,7 @@
 						"citizen-theme-toggle",
 						"citizen-footer-desc",
 						"citizen-footer-tagline",
-						"citizen-jumptotop",
-						"citizen-search-fulltext",
-						"prefs-citizen-theme-label",
-						"prefs-citizen-theme-option-auto",
-						"prefs-citizen-theme-option-light",
-						"prefs-citizen-theme-option-dark"
+						"citizen-jumptotop"
 					]
 				}
 			]
@@ -199,11 +194,15 @@
 				"resources/skins.citizen.search/skins.citizen.search.less"
 			],
 			"packageFiles": [
-				"resources/skins.citizen.search/skins.citizen.search.js",
+				"resources/skins.citizen.search/main.js",
 				"resources/skins.citizen.search/typeahead.js",
 				"resources/skins.citizen.search/gateway/gateway.js",
 				"resources/skins.citizen.search/gateway/mwActionApi.js",
 				"resources/skins.citizen.search/gateway/mwRestApi.js"
+			],
+			"messages": [
+				"citizen-search-fulltext",
+				"citizen-search-fulltext-empty"
 			]
 		},
 		"skins.citizen.preferences": {

@@ -31,6 +31,7 @@
 	"citizen-jumptotop": "Back to top",
 
 	"citizen-search-fulltext": "Search pages containing",
+	"citizen-search-fulltext-empty": "Type to start searching",
 
 	"citizen-tagline-ns-talk": "Discussion page of {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Information about {{SITENAME}}",
