@@ -26,69 +26,44 @@ declare( strict_types=1 );
 namespace Citizen\Hooks;
 
 use Config;
-use ConfigException;
-use MediaWiki\MediaWikiServices;
-use MediaWiki\ResourceLoader\Hook\ResourceLoaderGetConfigVarsHook;
-use Skin;
+use ResourceLoaderContext;
 
 /**
  * Hooks to run relating to the resource loader
  */
-class ResourceLoaderHooks implements ResourceLoaderGetConfigVarsHook {
+class ResourceLoaderHooks {
 
 	/**
-	 * ResourceLoaderGetConfigVars hook handler for setting a config variable
-	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/ResourceLoaderGetConfigVars
-	 * @param array &$vars
-	 * @param Skin $skin
+	 * Passes config variables to skins.citizen.scripts ResourceLoader module.
+	 * @param ResourceLoaderContext $context
 	 * @param Config $config
+	 * @return array
 	 */
-	public function onResourceLoaderGetConfigVars( array &$vars, $skin, Config $config ): void {
-		// Check if search suggestion is enabled
-		try {
-			$vars['wgCitizenEnableSearch'] = self::getSkinConfig( 'CitizenEnableSearch' );
-		} catch ( ConfigException $e ) {
-			// Should not happen
-			$vars['wgCitizenEnableSearch'] = true;
-		}
-
-		// Only check for search config if search is enabled
-		// Since the module won't be loaded if it is not enabled
-		if ( $vars['wgCitizenEnableSearch'] === true ) {
-			try {
-				$vars['wgCitizenSearchUseREST'] = self::getSkinConfig( 'CitizenSearchUseREST' );
-			} catch ( ConfigException $e ) {
-				// Should not happen
-				$vars['wgCitizenSearchUseREST'] = false;
-			}
-
-			try {
-				$vars['wgCitizenSearchDescriptionSource'] = self::getSkinConfig( 'CitizenSearchDescriptionSource' );
-			} catch ( ConfigException $e ) {
-				// Should not happen
-				$vars['wgCitizenSearchDescriptionSource'] = 'textextracts';
-			}
-
-			try {
-				$vars['wgCitizenMaxSearchResults'] = self::getSkinConfig( 'CitizenMaxSearchResults' );
-			} catch ( ConfigException $e ) {
-				// Should not happen
-				$vars['wgCitizenMaxSearchResults'] = 6;
-			}
-
-			// Core config so skip try catch
-			$vars['wgSearchSuggestCacheExpiry'] = self::getSkinConfig( 'SearchSuggestCacheExpiry' );
-		}
+	public static function getCitizenResourceLoaderConfig(
+		ResourceLoaderContext $context,
+		Config $config
+	) {
+		return [
+			'wgCitizenEnableSearch' => $config->get( 'CitizenEnableSearch' ),
+		];
 	}
 
 	/**
-	 * Get a skin configuration variable.
-	 *
-	 * @param string $name Name of configuration option.
-	 * @return mixed Value configured.
-	 * @throws ConfigException
+	 * Passes config variables to skins.citizen.search ResourceLoader module.
+	 * @param ResourceLoaderContext $context
+	 * @param Config $config
+	 * @return array
 	 */
-	private static function getSkinConfig( $name ) {
-		return MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'Citizen' )->get( $name );
+	public static function getCitizenSearchResourceLoaderConfig(
+		ResourceLoaderContext $context,
+		Config $config
+	) {
+		return [
+			'wgCitizenSearchGateway' => $config->get( 'CitizenSearchGateway' ),
+			'wgCitizenSearchDescriptionSource' => $config->get( 'CitizenSearchDescriptionSource' ),
+			'wgCitizenMaxSearchResults' => $config->get( 'CitizenMaxSearchResults' ),
+			'wgScriptPath' => $config->get( 'ScriptPath' ),
+			'wgSearchSuggestCacheExpiry' => $config->get( 'SearchSuggestCacheExpiry' ),
+		];
 	}
 }

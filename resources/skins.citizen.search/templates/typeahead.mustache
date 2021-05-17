@@ -1,0 +1,27 @@
+{{!
+	string msg-citizen-search-fulltext The label on the fulltext search in the typeahead.
+}}
+
+<ol id="searchform-suggestions" class="citizen-typeahead" role="listbox">
+	<li role="option">
+		<a href="" id="searchform-suggestions-footer" class="citizen-typeahead-footer">
+			<picture class="citizen-typeahead-footer__icon">
+				<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMCAyMCI+DQoJPHBhdGggZmlsbD0iIzM2YyIgZD0iTTcuNSAxM2MzLjA0IDAgNS41LTIuNDYgNS41LTUuNVMxMC41NCAyIDcuNSAyIDIgNC40NiAyIDcuNSA0LjQ2IDEzIDcuNSAxM3ptNC41NS40NkE3LjQzMiA3LjQzMiAwIDAgMSA3LjUgMTVDMy4zNiAxNSAwIDExLjY0IDAgNy41UzMuMzYgMCA3LjUgMEMxMS42NCAwIDE1IDMuMzYgMTUgNy41YzAgMS43MS0uNTcgMy4yOS0xLjU0IDQuNTVsNi40OSA2LjQ5LTEuNDEgMS40MS02LjQ5LTYuNDl6Ii8+DQoJPHBhdGggZmlsbD0iIzM2YyIgZD0iTTQgNWg3djFINHptMCAyaDd2MUg0em0wIDJoNS40NDR2MUg0eiIvPg0KPC9zdmc+DQo="/>
+			</picture>
+			<div class="citizen-typeahead-footer__text">{{{msg-citizen-search-fulltext}}}</div>
+		</a>
+	</li>
+	<template id="citizen-typeahead-suggestion-template">
+		<li role="option">
+			<a href="" class="citizen-typeahead-suggestion">
+				<picture class="citizen-typeahead-suggestion__thumbnail">
+					<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNTYgNTYiPg0KCTxwYXRoIGZpbGw9IiNlYWVjZjAiIGQ9Ik0wIDBoNTZ2NTZIMCIvPg0KCTxwYXRoIGZpbGw9IiM3Mjc3N2QiIGQ9Ik0zNi40IDEzLjVIMTcuOHYyNC45YzAgMS40LjkgMi4zIDIuMyAyLjNoMTguN3YtMjVjLjEtMS40LTEtMi4yLTIuNC0yLjJ6TTMwLjIgMTdoNS4xdjYuNGgtNS4xVjE3em0tOC44IDBoNnYxLjhoLTZWMTd6bTAgNC42aDZ2MS44aC02di0xLjh6bTAgMTUuNXYtMS44aDEzLjh2MS44SDIxLjR6bTEzLjgtNC41SDIxLjR2LTEuOGgxMy44djEuOHptMC00LjdIMjEuNHYtMS44aDEzLjh2MS44eiIvPg0KPC9zdmc+DQo="/>
+				</picture>
+				<div class="citizen-typeahead-suggestion__text">
+					<div class="citizen-typeahead-suggestion__title"></div>
+					<div class="citizen-typeahead-suggestion__description"></div>
+				</div>
+			</a>
+		</li>
+	</template>
+</ol>
