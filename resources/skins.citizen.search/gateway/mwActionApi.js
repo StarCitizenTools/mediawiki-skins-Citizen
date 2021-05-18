@@ -80,6 +80,10 @@ function convertDataToResults( data ) {
 
 	const results = [];
 
+	if (typeof data?.query?.pages === 'undefined') {
+		return [];
+	}
+
 	/* eslint-disable-next-line compat/compat, es/no-object-values */
 	data = Object.values( data.query.pages );
 
