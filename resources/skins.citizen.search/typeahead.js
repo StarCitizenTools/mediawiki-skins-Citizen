@@ -265,14 +265,20 @@ function initTypeahead( searchForm, input ) {
 		/* eslint-disable-next-line mediawiki/class-doc */
 		typeahead.classList.add( expandedClass );
 		searchInput.addEventListener( 'keydown', keyboardEvents );
+		window.addEventListener( 'click', dismissOnClickOutside );
 	};
 
-	const onBlur = function () {
-		searchForm.setAttribute( 'aria-expanded', 'false' );
-		searchInput.setAttribute( 'aria-activedescendant', '' );
-		/* eslint-disable-next-line mediawiki/class-doc */
-		typeahead.classList.remove( expandedClass );
-		searchInput.removeEventListener( 'keydown', keyboardEvents );
+	// Since this is also used in other scripts,
+	// maybe make this into a library?
+	const dismissOnClickOutside = function ( event ) {
+		if ( event.target instanceof Node && !searchForm.contains( event.target ) ) {
+			searchForm.setAttribute( 'aria-expanded', 'false' );
+			searchInput.setAttribute( 'aria-activedescendant', '' );
+			/* eslint-disable-next-line mediawiki/class-doc */
+			typeahead.classList.remove( expandedClass );
+			searchInput.removeEventListener( 'keydown', keyboardEvents );
+			window.removeEventListener( 'click', dismissOnClickOutside );
+		}
 	};
 
 	// Make them accessible outside of the function
@@ -290,7 +296,6 @@ function initTypeahead( searchForm, input ) {
 	// Since searchInput is focused before the event listener is set up
 	onFocus();
 	searchInput.addEventListener( 'focus', onFocus );
-	searchInput.addEventListener( 'blur', onBlur );
 
 	// Run once in case there is searchQuery before eventlistener is attached
 	if ( searchInput.value.length > 0 ) {
