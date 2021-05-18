@@ -80,7 +80,7 @@ function convertDataToResults( data ) {
 
 	const results = [];
 
-	if (typeof data?.query?.pages === 'undefined') {
+	if ( typeof data?.query?.pages === 'undefined' ) {
 		return [];
 	}
 
