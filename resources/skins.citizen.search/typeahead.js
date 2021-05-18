@@ -268,16 +268,16 @@ function initTypeahead( searchForm, input ) {
 			'msg-citizen-search-fulltext': messages.empty
 		};
 
-	// Since this is also used in other scripts,
-	// maybe make this into a library?
-	const dismissOnClickOutside = function ( event ) {
-		if ( event.target instanceof Node && !searchForm.contains( event.target ) ) {
+	const onBlur = function ( event ) {
+		const clickInside = typeahead.contains( event.relatedTarget );
+
+		if ( !clickInside ) {
 			searchForm.setAttribute( 'aria-expanded', 'false' );
 			searchInput.setAttribute( 'aria-activedescendant', '' );
 			/* eslint-disable-next-line mediawiki/class-doc */
 			typeahead.classList.remove( expandedClass );
 			searchInput.removeEventListener( 'keydown', keyboardEvents );
-			window.removeEventListener( 'click', dismissOnClickOutside );
+			searchInput.removeEventListener( 'blur', onBlur );
 		}
 	};
 
@@ -286,7 +286,7 @@ function initTypeahead( searchForm, input ) {
 		/* eslint-disable-next-line mediawiki/class-doc */
 		typeahead.classList.add( expandedClass );
 		searchInput.addEventListener( 'keydown', keyboardEvents );
-		window.addEventListener( 'click', dismissOnClickOutside );
+		searchInput.addEventListener( 'blur', onBlur );
 	};
 
 	// Make them accessible outside of the function
