@@ -193,7 +193,7 @@ function togglePanel() {
 		toggle.setAttribute( 'aria-expanded', false );
 		form.removeEventListener( 'input', setPref );
 		resetButton.removeEventListener( 'click', resetPref );
-		window.addEventListener( 'click', dismissOnClickOutside );
+		window.removeEventListener( 'click', dismissOnClickOutside );
 		window.removeEventListener( 'keydown', dismissOnEscape );
 	}
 }
