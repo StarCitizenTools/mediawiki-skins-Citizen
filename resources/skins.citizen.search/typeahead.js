@@ -119,7 +119,15 @@ function clearSuggestions() {
 			fragment.append( item );
 		} );
 
-		typeahead.replaceChildren( fragment );
+		// TODO: Just use replaceChildren when browser support is >90%
+		if ( typeof typeahead.replaceChildren !== 'undefined' ) {
+			typeahead.replaceChildren( fragment );
+		} else {
+			while ( typeahead.hasChildNodes() ) {
+				typeahead.removeChild( typeahead.lastChild );
+			}
+			typeahead.appendChild( fragment );
+		}
 	}
 
 	// Remove loading animation
@@ -260,14 +268,6 @@ function initTypeahead( searchForm, input ) {
 			'msg-citizen-search-fulltext': messages.empty
 		};
 
-	const onFocus = function () {
-		searchForm.setAttribute( 'aria-expanded', 'true' );
-		/* eslint-disable-next-line mediawiki/class-doc */
-		typeahead.classList.add( expandedClass );
-		searchInput.addEventListener( 'keydown', keyboardEvents );
-		window.addEventListener( 'click', dismissOnClickOutside );
-	};
-
 	// Since this is also used in other scripts,
 	// maybe make this into a library?
 	const dismissOnClickOutside = function ( event ) {
@@ -279,6 +279,14 @@ function initTypeahead( searchForm, input ) {
 			searchInput.removeEventListener( 'keydown', keyboardEvents );
 			window.removeEventListener( 'click', dismissOnClickOutside );
 		}
+	};
+
+	const onFocus = function () {
+		searchForm.setAttribute( 'aria-expanded', 'true' );
+		/* eslint-disable-next-line mediawiki/class-doc */
+		typeahead.classList.add( expandedClass );
+		searchInput.addEventListener( 'keydown', keyboardEvents );
+		window.addEventListener( 'click', dismissOnClickOutside );
 	};
 
 	// Make them accessible outside of the function
