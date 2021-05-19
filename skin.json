@@ -467,6 +467,8 @@
 			"+mediawiki.action.history.styles": "skinStyles/mediawiki/action/mediawiki.action.history.styles.less",
 			"+mediawiki.action.view.filepage": "skinStyles/mediawiki/action/mediawiki.action.view.filepage.less",
 
+			"+mediawiki.notification": "skinStyles/mediawiki/mediawiki.notification.less",
+
 			"mediawiki.skinning.content.parsoid": [],
 			"mediawiki.skinning.interface": [],
 

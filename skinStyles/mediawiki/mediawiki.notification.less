@@ -1,0 +1,28 @@
+@import '../../resources/variables.less';
+@import '../../resources/mixins.less';
+
+.mw-notification {
+	border-color: var( --border-color-base );
+	background-color: var( --background-color-dp-04 );
+	border-radius: @border-radius-medium;
+	color: var( --color-base );
+	font-size: @content-monospace-size;
+	.boxshadow(3);
+
+	&.mw-notification-type {
+		&-warn {
+			background-color: var( --background-color-warning );
+			color: var( --color-base );
+		}
+
+		&-error {
+			background-color: var( --background-color-destructive );
+			color: var( --color-base );
+		}
+
+		&-success {
+			background-color: var( --background-color-success );
+			color: var( --color-base );
+		}
+	}
+}
