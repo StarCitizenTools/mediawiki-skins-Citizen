@@ -25,7 +25,19 @@
 		overflow: visible;
 	}
 
+	// Reset VE disabled style to allow page action buttons to work
+	.mw-body-header {
+		opacity: 1;
+		pointer-events: auto;
+		user-select: auto;
+	}
+
+	.page-heading {
+		opacity: 0.5;
+	}
+
 	// Since ToC does not appear in VE
+	.mw-body-header,
 	.mw-body-content {
 		margin-right: auto !important;
 		margin-left: auto !important;
