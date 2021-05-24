@@ -1,13 +1,40 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kareyac"
+			"Kareyac",
+			"WerySkok"
 		]
 	},
+	"citizen-skin-desc": "Адаптивная тема оформления, разработанная для Star Citizen Wiki",
+	"citizen.css": "/* Размещённый здесь CSS-код будет загружаться для пользователей, использующих тему оформления Citizen */",
+	"citizen.js": "/* Размещённый здесь код JavaScript будет загружаться для пользователей, использующих тему оформления Citizen */",
+	"citizen-drawer-toggle": "Открыть меню",
+	"citizen-personalmenu-toggle": "Открыть персональное меню",
+	"citizen-search-toggle": "Открыть поиск",
+	"citizen-theme-toggle": "Сменить цвет темы",
+	"citizen-sitestats-articles-label": "статей",
+	"citizen-sitestats-images-label": "файлов",
+	"citizen-sitestats-users-label": "пользователей",
+	"citizen-sitestats-edits-label": "правок",
+	"citizen-drawer-search": "Меню поиска",
+	"citizen-footer-desc": "Отредактируйте этот текст на MediaWiki:Citizen-footer-desc",
+	"citizen-footer-tagline": "Отредактируйте этот текст на MediaWiki:Citizen-footer-tagline",
 	"citizen-action-addsection": "Добавить тему",
+	"citizen-jumptotop": "Вернуться наверх",
+	"citizen-search-fulltext": "Поиск страниц, содержащих",
+	"citizen-search-fulltext-empty": "Введите текст",
+	"citizen-tagline-ns-talk": "Обсуждение страницы {{SUBJECTPAGENAME}}",
+	"citizen-tagline-ns-project": "Информация о {{SITENAME}}",
+	"citizen-tagline-ns-file": "Файл на {{SITENAME}}",
+	"citizen-tagline-ns-mediawiki": "Страница интерфейса MediaWiki",
+	"citizen-tagline-ns-template": "Страница шаблона",
+	"citizen-tagline-ns-help": "Страница справки",
+	"citizen-tagline-ns-category": "Страница категории",
 	"prefs-citizen-theme-label": "Тема оформления",
 	"prefs-citizen-theme-option-auto": "Авто",
 	"prefs-citizen-theme-option-light": "Светлая",
 	"prefs-citizen-theme-option-dark": "Тёмная",
-	"prefs-citizen-fontsize-label": "Размер шрифта"
+	"prefs-citizen-fontsize-label": "Размер шрифта",
+	"prefs-citizen-pagewidth-label": "Ширина страницы",
+	"prefs-citizen-resetbutton-label": "Сброс"
 }

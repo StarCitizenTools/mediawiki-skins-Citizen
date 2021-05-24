@@ -1,0 +1,38 @@
+{
+	"@metadata": {
+		"authors": [
+			"Alistair3149",
+			"Matttest"
+		]
+	},
+	"citizen-skin-desc": "為星際公民而開發嘅響應式佈景主題",
+	"citizen-drawer-toggle": "切換選單",
+	"citizen-personalmenu-toggle": "切換個人選單",
+	"citizen-search-toggle": "切換搜尋",
+	"citizen-theme-toggle": "切換主題顏色",
+	"citizen-sitestats-articles-label": "篇文章",
+	"citizen-sitestats-images-label": "個檔案",
+	"citizen-sitestats-users-label": "位用戶",
+	"citizen-sitestats-edits-label": "次修改",
+	"citizen-drawer-search": "喺選單喥搵",
+	"citizen-footer-desc": "喺MediaWiki:Citizen-footer-desc喥改",
+	"citizen-footer-tagline": "喺MediaWiki:Citizen-footer-tagline喥改",
+	"citizen-action-addsection": "加主題",
+	"citizen-jumptotop": "返到上面",
+	"citizen-search-fulltext": "喺每頁入面喥搵",
+	"citizen-search-fulltext-empty": "打字開始搵",
+	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}}嘅討論頁",
+	"citizen-tagline-ns-project": "關於{{SITENAME}}嘅資料",
+	"citizen-tagline-ns-file": "喺{{SITENAME}}嘅檔案",
+	"citizen-tagline-ns-mediawiki": "MediaWiki嘅介面頁",
+	"citizen-tagline-ns-template": "模組頁",
+	"citizen-tagline-ns-help": "幫手頁",
+	"citizen-tagline-ns-category": "分類頁",
+	"prefs-citizen-theme-label": "主題",
+	"prefs-citizen-theme-option-auto": "自動",
+	"prefs-citizen-theme-option-light": "日光",
+	"prefs-citizen-theme-option-dark": "黑夜",
+	"prefs-citizen-fontsize-label": "字體大細",
+	"prefs-citizen-pagewidth-label": "頁面闊度",
+	"prefs-citizen-resetbutton-label": "還原預設"
+}

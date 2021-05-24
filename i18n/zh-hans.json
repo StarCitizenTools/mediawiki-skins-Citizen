@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Alistair3149",
+			"Gaoyu",
 			"Grace03",
 			"Lakejason0",
 			"Yfdyh000"
@@ -22,12 +23,22 @@
 	"citizen-drawer-search": "搜索菜单",
 	"citizen-footer-desc": "在 MediaWiki:Citizen-footer-desc 编辑此文本",
 	"citizen-footer-tagline": "在 MediaWiki:Citizen-footer-tagline 编辑此文本",
+	"citizen-action-addsection": "添加话题",
 	"citizen-jumptotop": "回到顶部",
 	"citizen-search-fulltext": "搜索包含",
+	"citizen-search-fulltext-empty": "输入开始搜索",
+	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}}的讨论页",
+	"citizen-tagline-ns-project": "关于{{SITENAME}}",
+	"citizen-tagline-ns-file": "{{SITENAME}}上的文件",
+	"citizen-tagline-ns-mediawiki": "MediaWiki系统消息页面",
+	"citizen-tagline-ns-template": "模板页面",
+	"citizen-tagline-ns-help": "帮助页面",
+	"citizen-tagline-ns-category": "分类页面",
 	"prefs-citizen-theme-label": "主题",
 	"prefs-citizen-theme-option-auto": "自动",
 	"prefs-citizen-theme-option-light": "日间",
 	"prefs-citizen-theme-option-dark": "夜间",
 	"prefs-citizen-fontsize-label": "字体大小",
+	"prefs-citizen-pagewidth-label": "页面宽度",
 	"prefs-citizen-resetbutton-label": "重置到默认"
 }

@@ -18,6 +18,7 @@
 	"citizen-footer-tagline": "Bearbeiten Sie diesen Text auf MediaWiki:Citizen-footer-tagline",
 	"citizen-action-addsection": "Thema hinzufügen",
 	"citizen-jumptotop": "Zurück nach oben",
+	"citizen-search-fulltext-empty": "Tippe, um zu suchen zu beginnen",
 	"prefs-citizen-theme-label": "Thema",
 	"prefs-citizen-theme-option-auto": "Automatisch",
 	"prefs-citizen-theme-option-light": "Hell",

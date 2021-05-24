@@ -4,6 +4,7 @@
 			"Agaafd",
 			"BaRaN6161 TURK",
 			"Joseph",
+			"Melissadilara",
 			"Sadrettin"
 		]
 	},
@@ -22,6 +23,7 @@
 	"citizen-drawer-search": "Arama menüsü",
 	"citizen-footer-desc": "Bu metni MediaWiki:Citizen-footer-desc üzerinde düzenle",
 	"citizen-footer-tagline": "Bu metni MediaWiki:Citizen-footer-tagline üzerinde düzenle",
+	"citizen-action-addsection": "Konu ekle",
 	"citizen-jumptotop": "Başa dön",
 	"citizen-search-fulltext": "İçeren sayfaları ara",
 	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}} tartışma sayfası",

@@ -21,6 +21,7 @@
 	"citizen-footer-tagline": "Zmień ten tekst na MediaWiki:Citizen-footer-tagline",
 	"citizen-jumptotop": "Powrót do góry",
 	"citizen-search-fulltext": "Szukaj stron zawierających tekst",
+	"citizen-search-fulltext-empty": "Zacznij pisać, aby wyszukiwać",
 	"citizen-tagline-ns-talk": "Strona dyskusji o „{{SUBJECTPAGENAME}}”",
 	"citizen-tagline-ns-project": "Strona projektu {{SITENAME}}",
 	"citizen-tagline-ns-file": "Strona pliku",
