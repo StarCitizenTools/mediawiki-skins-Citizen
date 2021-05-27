@@ -1,0 +1,45 @@
+figure,
+.thumb {
+	margin: @content-margin-top 0;
+
+	.thumbinner {
+		max-width: 100%;
+		margin: 0 auto;
+
+		a {
+			transition: @transition-box-shadow-quick;
+
+			&.image {
+				overflow: hidden;
+				max-width: inherit;
+				margin-right: 2px; // Counter the 2px space added by core
+				border-radius: var( --border-radius--small );
+			}
+
+			&:hover:not( .lazy ):not( .new ) {
+				.boxshadow(2);
+
+				img {
+					transform: scale( 1.1 );
+				}
+			}
+
+			&:before {
+				content: none;
+			}
+
+			&.new {
+				display: block;
+				padding: @margin-side / 2;
+				background-color: var( --background-color-framed );
+				transition: @transition-background-quick, @transition-color-quick;
+			}
+		}
+	}
+}
+
+figcaption,
+.thumbcaption {
+	margin: @content-margin-top / 2 0;
+	color: var( --color-base--subtle );
+}
