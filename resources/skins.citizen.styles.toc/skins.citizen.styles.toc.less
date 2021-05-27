@@ -128,7 +128,7 @@
 					border-top: 1px solid var( --border-color-base );
 					border-left: 1px solid var( --border-color-base );
 					background-color: var( --background-color-dp-06 );
-					border-radius: @border-radius-large 0 0 0;
+					border-radius: var( --border-radius--large ) 0 0 0;
 					pointer-events: auto;
 					.boxshadow(4);
 
@@ -170,7 +170,7 @@
 				width: ~'calc( 100% - var( --padding-page ) * 2 )';
 				padding: 20px var( --padding-page ) 10px var( --padding-page );
 				background: var( --background-color-dp-04 );
-				border-radius: @border-radius-large @border-radius-large 0 0;
+				border-radius: var( --border-radius--large ) var( --border-radius--large ) 0 0;
 			}
 
 			> ul {
@@ -180,7 +180,7 @@
 				border: 1px solid var( --border-color-base--lighter );
 				margin: 45px 0 0 0 !important;
 				background: var( --background-color-dp-04 );
-				border-radius: 0 0 @border-radius-large @border-radius-large;
+				border-radius: 0 0 var( --border-radius--large ) var( --border-radius--large );
 
 				/**
 				 * Ideally we'd have this shadow on the .toc container, but the

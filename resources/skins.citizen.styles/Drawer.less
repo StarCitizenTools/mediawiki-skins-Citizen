@@ -127,7 +127,7 @@
 			width: 200px;
 			padding: 8px;
 			background: var( --background-color-dp-03 );
-			border-radius: @border-radius-small;
+			border-radius: var( --border-radius--small );
 			text-align: center;
 			transition: @transition-background-quick;
 			.boxshadow(1);
@@ -158,7 +158,7 @@
 			align-items: center;
 			justify-content: space-between;
 			padding: @padding-menu-item-big;
-			border-radius: @border-radius-small;
+			border-radius: var( --border-radius--small );
 
 			&:after {
 				.resource-loader-list-icon;
@@ -203,7 +203,7 @@
 				height: 2px;
 				margin: 1.5px 0;
 				background-color: var( --background-color-icon );
-				border-radius: @border-radius-large;
+				border-radius: var( --border-radius--large );
 				transform-origin: 4px 0;
 				transition: @transition-transform-quick, @transition-background-quick, @transition-opacity-quick;
 			}

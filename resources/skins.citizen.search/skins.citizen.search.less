@@ -13,7 +13,7 @@
 	border: 1px solid var( --border-color-base--lighter );
 	margin: 0;
 	background: var( --background-color-dp-08 );
-	border-radius: 0 0 @border-radius-large @border-radius-large;
+	border-radius: 0 0 var( --border-radius--large ) var( --border-radius--large );
 	.boxshadow(4);
 
 	&-suggestion {
@@ -24,7 +24,7 @@
 			overflow: hidden;
 			height: 60px;
 			background-color: var( --background-color-framed );
-			border-radius: @border-radius-small;
+			border-radius: var( --border-radius--small );
 
 			img,
 			source {
@@ -60,10 +60,10 @@
 	}
 
 	&-footer {
-		padding-top: @border-radius-large;
-		padding-bottom: @border-radius-large;
+		padding-top: var( --border-radius--large );
+		padding-bottom: var( --border-radius--large );
 		border-top: 1px solid var( --border-color-base );
-		border-radius: 0 0 @border-radius-large @border-radius-large;
+		border-radius: 0 0 var( --border-radius--large ) var( --border-radius--large );
 		font-size: @content-monospace-size;
 		font-weight: 450;
 
@@ -112,8 +112,8 @@
 	&:before {
 		position: absolute;
 		width: var( --width-search-bar );
-		height: @border-radius-small;
-		margin-top: -@border-radius-small;
+		height: var( --border-radius--small );
+		margin-top: ~'calc( var( --border-radius-small ) * -1 )';
 		margin-left: -1px;
 		background: var( --background-color-dp-08 );
 		content: '';
