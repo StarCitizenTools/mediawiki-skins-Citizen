@@ -5,6 +5,7 @@
 			"BaRaN6161 TURK",
 			"Joseph",
 			"Melissadilara",
+			"Mim.saitkilic",
 			"Sadrettin"
 		]
 	},
@@ -26,6 +27,7 @@
 	"citizen-action-addsection": "Konu ekle",
 	"citizen-jumptotop": "Başa dön",
 	"citizen-search-fulltext": "İçeren sayfaları ara",
+	"citizen-search-fulltext-empty": "Aramaya başlamak için yazın",
 	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}} tartışma sayfası",
 	"citizen-tagline-ns-project": "{{SITENAME}} hakkında bilgi",
 	"citizen-tagline-ns-file": "{{SITENAME}} sitesindeki dosya",

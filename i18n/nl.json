@@ -1,0 +1,28 @@
+{
+	"@metadata": {
+		"authors": [
+			"Mainframe98"
+		]
+	},
+	"citizen.css": "/* CSS die hier wordt geplaatst heeft alleen invloed op het uiterlijk Citizen */",
+	"citizen.js": "/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die het uiterlijk Citizen gebruiken */",
+	"citizen-sitestats-articles-label": "artikelen",
+	"citizen-sitestats-images-label": "bestanden",
+	"citizen-sitestats-users-label": "gebruikers",
+	"citizen-sitestats-edits-label": "bewerkingen",
+	"citizen-footer-desc": "Bewerk deze tekst op MediaWiki:Citizen-footer-desc",
+	"citizen-footer-tagline": "Bewerk deze tekst op MediaWiki:Citizen-footer-tagline",
+	"citizen-action-addsection": "Onderwerp toevoegen",
+	"citizen-jumptotop": "Terug naar boven",
+	"citizen-search-fulltext-empty": "Type om te beginnen met zoeken",
+	"citizen-tagline-ns-talk": "Overlegpagina van {{SUBJECTPAGENAME}}",
+	"citizen-tagline-ns-project": "Informatie over {{SITENAME}}",
+	"citizen-tagline-ns-file": "Bestand op {{SITENAME}}",
+	"citizen-tagline-ns-template": "Sjabloonpagina",
+	"citizen-tagline-ns-help": "Hulppagina",
+	"citizen-tagline-ns-category": "Categoriepagina",
+	"prefs-citizen-theme-label": "Thema",
+	"prefs-citizen-theme-option-auto": "Automatisch",
+	"prefs-citizen-fontsize-label": "Lettergrootte",
+	"prefs-citizen-pagewidth-label": "Paginabreedte"
+}
