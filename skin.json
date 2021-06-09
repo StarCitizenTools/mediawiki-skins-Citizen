@@ -27,7 +27,6 @@
 					"styles": [
 						"skins.citizen.styles",
 						"skins.citizen.styles.fonts",
-						"skins.citizen.styles.toc",
 						"skins.citizen.icons",
 						"skins.citizen.icons.ca",
 						"skins.citizen.icons.es",
@@ -93,7 +92,13 @@
 				"desktop",
 				"mobile"
 			],
-			"features": [],
+			"features": {
+				"content-parser-output": false,
+				"content-body": false,
+				"logo": false,
+				"legacy": false,
+				"toc": false
+			},
 			"styles": [ "resources/skins.citizen.styles/skin.less" ]
 		},
 		"skins.citizen.styles.debug": {
@@ -102,7 +107,13 @@
 				"desktop",
 				"mobile"
 			],
-			"features": [],
+			"features": {
+				"content-parser-output": false,
+				"content-body": false,
+				"logo": false,
+				"legacy": false,
+				"toc": false
+			},
 			"styles": [ "resources/skins.citizen.styles.debug/skins.citizen.styles.debug.less" ]
 		},
 		"skins.citizen.styles.fonts": {
@@ -111,7 +122,13 @@
 				"desktop",
 				"mobile"
 			],
-			"features": [],
+			"features": {
+				"content-parser-output": false,
+				"content-body": false,
+				"logo": false,
+				"legacy": false,
+				"toc": false
+			},
 			"styles": [ "resources/skins.citizen.styles.fonts/skins.citizen.styles.fonts.less" ]
 		},
 		"skins.citizen.styles.sections": {
@@ -120,7 +137,13 @@
 				"desktop",
 				"mobile"
 			],
-			"features": [],
+			"features": {
+				"content-parser-output": false,
+				"content-body": false,
+				"logo": false,
+				"legacy": false,
+				"toc": false
+			},
 			"styles": [ "resources/skins.citizen.styles.sections/skins.citizen.styles.sections.less" ]
 		},
 		"skins.citizen.styles.sitestats": {
@@ -129,7 +152,13 @@
 				"desktop",
 				"mobile"
 			],
-			"features": [],
+			"features": {
+				"content-parser-output": false,
+				"content-body": false,
+				"logo": false,
+				"legacy": false,
+				"toc": false
+			},
 			"styles": [ "resources/skins.citizen.styles.sitestats/skins.citizen.styles.sitestats.less" ]
 		},
 		"skins.citizen.styles.toc": {
@@ -138,7 +167,13 @@
 				"desktop",
 				"mobile"
 			],
-			"features": [],
+			"features": {
+				"content-parser-output": false,
+				"content-body": false,
+				"logo": false,
+				"legacy": false,
+				"toc": false
+			},
 			"styles": [ "resources/skins.citizen.styles.toc/skins.citizen.styles.toc.less" ]
 		},
 		"skins.citizen.scripts": {
