@@ -1,7 +1,8 @@
 {{!
 	string msg-preferences
 	string msg-theme-label
-	string msg-theme-option-light
+	string msg-prefs-citizen-theme-option-auto
+	string msg-prefs-citizen-theme-option-light
 	string msg-prefs-citizen-theme-option-dark
 	string msg-prefs-citizen-fontsize-label
 	string msg-prefs-citizen-pagewidth-label
@@ -16,8 +17,10 @@
 		<fieldset class="citizen-pref-item" id ="citizen-pref-theme">
 			<label for="citizen-pref-theme" class="citizen-pref-item__label">{{msg-prefs-citizen-theme-label}}</label>
 			<fieldset>
+				<input id="citizen-pref-theme__input__auto" name="citizen-pref-theme" type="radio" value="auto">
+				<label for="citizen-pref-theme__input__auto" id="citizen-pref-theme-option-auto" class="citizen-pref-theme-option">{{msg-prefs-citizen-theme-option-auto}}</label>
 				<input id="citizen-pref-theme__input__light" name="citizen-pref-theme" type="radio" value="light">
-				<label for="citizen-pref-theme__input__light"id="citizen-pref-theme-option-light" class="citizen-pref-theme-option">{{msg-prefs-citizen-theme-option-light}}</label>
+				<label for="citizen-pref-theme__input__light" id="citizen-pref-theme-option-light" class="citizen-pref-theme-option">{{msg-prefs-citizen-theme-option-light}}</label>
 				<input id="citizen-pref-theme__input__dark" name="citizen-pref-theme" type="radio" value="dark">
 				<label for="citizen-pref-theme__input__dark" id="citizen-pref-theme-option-dark" class="citizen-pref-theme-option">{{msg-prefs-citizen-theme-option-dark}}</label>
 			</fieldset>
