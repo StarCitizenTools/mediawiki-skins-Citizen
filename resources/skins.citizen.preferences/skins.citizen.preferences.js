@@ -207,6 +207,7 @@ function getMessages() {
 	const keys = [
 			'preferences',
 			'prefs-citizen-theme-label',
+			'prefs-citizen-theme-option-auto',
 			'prefs-citizen-theme-option-light',
 			'prefs-citizen-theme-option-dark',
 			'prefs-citizen-fontsize-label',

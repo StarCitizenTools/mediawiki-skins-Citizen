@@ -13,16 +13,27 @@ function initThemeSettings( window ) {
 	let theme = ( userTheme !== null ) ? userTheme : 'auto';
 
 	if ( theme === 'auto' ) {
-		const prefersDark = window.matchMedia( '(prefers-color-scheme: dark)' );
+		const prefersDark = window.matchMedia( '(prefers-color-scheme: dark)' ),
+			applyTheme = () => {
+				window.applyPref();
+				// So that theme is applied but localStorage keeps the auto config
+				setLocalStorage( 'auto' );
+			};
+
 		theme = prefersDark.matches ? 'dark' : 'light';
 
 		// Monitor prefers-color-scheme changes
 		prefersDark.addEventListener( 'change', ( event ) => {
 			setLocalStorage( event.matches ? 'dark' : 'light' );
+			applyTheme();
 		} );
-	}
 
-	setLocalStorage( theme );
+		setLocalStorage( theme );
+		applyTheme();
+	} else {
+		setLocalStorage( theme );
+		window.applyPref();
+	}
 }
 
 /**
@@ -31,7 +42,8 @@ function initThemeSettings( window ) {
  */
 function initTheme( window ) {
 	if ( typeof window.mw !== 'undefined' ) {
-		if ( window.localStorage.getItem( 'skin-citizen-theme' ) === null ) {
+		const theme = window.localStorage.getItem( 'skin-citizen-theme' );
+		if ( theme === null || theme === 'auto' ) {
 			initThemeSettings( window );
 		}
 	}

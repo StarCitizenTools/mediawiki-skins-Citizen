@@ -59,7 +59,7 @@ final class Header extends Partial {
 			unset( $personalTools['notifications-notice'] );
 		}
 
-		if ( $user->isLoggedIn() ) {
+		if ( $user->isRegistered() ) {
 			$personalTools = $this->addUserInfoToMenu( $personalTools, $user );
 		}
 
