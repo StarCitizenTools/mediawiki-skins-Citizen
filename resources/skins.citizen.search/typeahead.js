@@ -1,4 +1,5 @@
-const config = require( './config.json' );
+const config = require( './config.json' ),
+	SEARCH_LOADING_CLASS = 'citizen-loading';
 
 const activeIndex = {
 	index: -1,
@@ -131,7 +132,8 @@ function clearSuggestions() {
 	}
 
 	// Remove loading animation
-	searchInput.parentNode.classList.remove( 'search-form__loading' );
+	/* eslint-disable-next-line mediawiki/class-doc */
+	searchInput.parentNode.classList.remove( SEARCH_LOADING_CLASS );
 	searchInput.setAttribute( 'aria-activedescendant', '' );
 	activeIndex.clear();
 }
@@ -188,7 +190,8 @@ function getSuggestions( searchQuery ) {
 	};
 
 	// Add loading animation
-	searchInput.parentNode.classList.add( 'search-form__loading' );
+	/* eslint-disable-next-line mediawiki/class-doc */
+	searchInput.parentNode.classList.add( SEARCH_LOADING_CLASS );
 
 	/* eslint-disable-next-line compat/compat */
 	const controller = new AbortController(),
@@ -213,7 +216,8 @@ function getSuggestions( searchQuery ) {
 		activeIndex.setMax( results.length );
 	} ).catch( ( error ) => {
 		searchInput.removeEventListener( 'input', abortFetch );
-		searchInput.parentNode.classList.remove( 'search-form__loading' );
+		/* eslint-disable-next-line mediawiki/class-doc */
+		searchInput.parentNode.classList.remove( SEARCH_LOADING_CLASS );
 		// User can trigger the abort when the fetch event is pending
 		// There is no need for an error
 		if ( error.name !== 'AbortError' ) {

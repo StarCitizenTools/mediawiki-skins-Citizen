@@ -2,7 +2,7 @@
 /* ESLint does not like having class names as const */
 /* eslint-disable mediawiki/class-doc */
 const SEARCH_INPUT_ID = 'searchInput',
-	SEARCH_LOADING_CLASS = 'search-form__loading';
+	SEARCH_LOADING_CLASS = 'citizen-loading';
 
 /**
  * Loads the search module via `mw.loader.using` on the element's

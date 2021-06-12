@@ -116,6 +116,10 @@ function main( window ) {
 	initCheckboxHack( window );
 	onTitleHidden( window.document );
 
+	window.addEventListener( 'beforeunload', () => {
+		document.documentElement.classList.add( 'citizen-loading' );
+	}, false );
+
 	mw.loader.load( 'skins.citizen.preferences' );
 }
 
