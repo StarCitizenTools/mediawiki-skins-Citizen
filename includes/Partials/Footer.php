@@ -73,7 +73,7 @@ final class Footer extends Partial {
 		}
 
 		$footerIcons = $this->skin->getFooterIconsPublic();
-  
+
 		if ( count( $footerIcons ) > 0 ) {
 			$icons = [];
 			foreach ( $footerIcons as $blockName => $blockIcons ) {
