@@ -8,6 +8,7 @@
 		"selector-max-id": null,
 		"no-descending-specificity": null,
 		"declaration-no-important": null,
-		"unit-disallowed-list": null
+		"unit-disallowed-list": null,
+		"declaration-property-unit-disallowed-list": null
 	}
 }
