@@ -16,7 +16,7 @@
 		"jsdoc": "3.6.7",
 		"jsdoc-wmf-theme": "0.0.3",
 		"stylelint-config-idiomatic-order": "8.1.0",
-		"stylelint-config-wikimedia": "0.10.3",
+		"stylelint-config-wikimedia": "0.11.1",
 		"svgo": "2.3.0"
 	}
 }
