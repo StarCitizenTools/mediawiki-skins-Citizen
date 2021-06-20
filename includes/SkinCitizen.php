@@ -119,7 +119,7 @@ class SkinCitizen extends SkinMustache {
 
 			'html-body-content--formatted' => $bodycontent->buildBodyContent( $out ),
 
-			'data-footer' => $footer->getFooterData(),
+			'data-citizen-footer' => $footer->getFooterData(),
 		];
 	}
 

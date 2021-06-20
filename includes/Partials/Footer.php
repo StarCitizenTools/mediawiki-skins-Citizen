@@ -35,43 +35,28 @@ final class Footer extends Partial {
 	 * @return array for use in Mustache template describing the footer elements.
 	 */
 	public function getFooterData(): array {
+		$data = [];
 		$footerLinks = $this->skin->getFooterLinksPublic();
-		$lastMod = null;
+		$msg = [ 'desc', 'tagline' ];
 
 		// Get last modified message
 		if ( $footerLinks['info']['lastmod'] && isset( $footerLinks['info']['lastmod'] ) ) {
-			$lastMod = $footerLinks['info']['lastmod'];
+			$data['html-lastmodified'] = $footerLinks['info']['lastmod'];
+			unset( $footerLinks['info']['lastmod'] );
 		}
 
-		return [
-			'html-lastmodified' => $lastMod,
-			'array-footer-rows' => $this->getFooterRows( $footerLinks ),
-			'array-footer-icons' => $this->getFooterIcons(),
-			'msg-citizen-footer-desc' => $this->skin->msg( 'citizen-footer-desc' )->parse(),
-			'msg-citizen-footer-tagline' => $this->skin->msg( 'citizen-footer-tagline' )->parse(),
-		];
-	}
+		// Get messages
+		foreach ( $msg as $key ) {
+			$data["msg-citizen-footer-$key"] = $this->skin->msg( "citizen-footer-$key" )->parse();
+		}
 
-	/**
-	 * The footer rows
-	 *
-	 * @param array $footerLinks
-	 * @return array
-	 */
-	private function getFooterRows( array $footerLinks ) {
-		$footerRows = [];
-
+		// Based on SkinMustache
+		// Backported because of 1.35 support
 		foreach ( $footerLinks as $category => $links ) {
 			$items = [];
 			$rowId = "footer-$category";
 
-			// Unset footer-info
-			if ( $category === 'info' ) {
-				continue;
-			}
-
 			foreach ( $links as $key => $link ) {
-				// Link may be null. If so don't include it.
 				if ( $link ) {
 					$items[] = [
 						'id' => "$rowId-$key",
@@ -80,77 +65,40 @@ final class Footer extends Partial {
 				}
 			}
 
-			$footerRows[] = [
+			$data['data-citizen-' . $category] = [
 				'id' => $rowId,
 				'className' => null,
 				'array-items' => $items
 			];
 		}
 
-		// Append footer-info after links
-		if ( isset( $footerLinks['info'] ) ) {
-			$items = [];
-			$rowId = "footer-info";
-
-			foreach ( $footerLinks['info'] as $key => $link ) {
-				// Don't include lastmod and null link
-				if ( $key !== 'lastmod' && $link ) {
-					$items[] = [
-						'id' => "$rowId-$key",
-						'html' => $link,
+		$footerIcons = $this->skin->getFooterIconsPublic();
+  
+		if ( count( $footerIcons ) > 0 ) {
+			$icons = [];
+			foreach ( $footerIcons as $blockName => $blockIcons ) {
+				$html = '';
+				foreach ( $blockIcons as $key => $icon ) {
+					$html .= $this->skin->makeFooterIcon( $icon );
+				}
+				if ( $html ) {
+					$block = htmlspecialchars( $blockName );
+					$icons[] = [
+						'id' => 'footer-' . $block . 'ico',
+						'html' => $html,
 					];
 				}
 			}
 
-			$footerRows[] = [
-				'id' => $rowId,
-				'className' => null,
-				'array-items' => $items
-			];
-		}
-
-		return $footerRows;
-	}
-
-	/**
-	 * Footer Icons
-	 *
-	 * @return array|array[]
-	 */
-	private function getFooterIcons() {
-		// If footer icons are enabled append to the end of the rows
-		$footerIcons = $this->skin->getFooterIconsPublic();
-		if ( empty( $footerIcons ) ) {
-			return [];
-		}
-
-		$items = [];
-		foreach ( $footerIcons as $blockName => $blockIcons ) {
-			$html = '';
-			foreach ( $blockIcons as $icon ) {
-				// Only output icons which have an image.
-				// For historic reasons this mimics the `icononly` option
-				// for BaseTemplate::getFooterIcons.
-				if ( is_string( $icon ) || isset( $icon['src'] ) ) {
-					$html .= $this->skin->makeFooterIcon( $icon );
-				}
-			}
-			// For historic reasons this mimics the `icononly` option
-			// for BaseTemplate::getFooterIcons. Empty rows should not be output.
-			if ( $html ) {
-				$items[] = [
-					'id' => 'footer-' . htmlspecialchars( $blockName ) . 'ico',
-					'html' => $html,
+			if ( count( $icons ) > 0 ) {
+				$data['data-citizen-icons'] = [
+					'id' => 'footer-icons',
+					'className' => 'noprint',
+					'array-items' => $icons,
 				];
 			}
 		}
 
-		return [
-			[
-				'id' => 'footer-icons',
-				'className' => 'noprint',
-				'array-items' => $items,
-			]
-		];
+		return $data;
 	}
 }

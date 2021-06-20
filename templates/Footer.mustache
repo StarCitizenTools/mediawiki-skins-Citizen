@@ -28,28 +28,13 @@
 	<div id="footer-content">
 		<h2 id="footer-sitetitle" class="mw-wiki-title">{{>Wordmark}}</h2>
 		<p id="footer-desc">{{{msg-citizen-footer-desc}}}</p>
-		{{#array-footer-rows}}
-		<nav id="{{id}}" {{#className}}class="{{.}}"{{/className}}>
-			<ul>
-				{{#array-items}}
-				<li id="{{id}}">{{{html}}}</li>
-				{{/array-items}}
-			</ul>
-		</nav>
-		{{/array-footer-rows}}
+		{{#data-citizen-places}}{{>Footer__row}}{{/data-citizen-places}}
+		{{#data-citizen-info}}{{>Footer__row}}{{/data-citizen-info}}
 	</div>
 	<div id="footer-bottom">
 		<div id="footer-bottom-content">
 			<div id="footer-tagline">{{{msg-citizen-footer-tagline}}}</div>
-			{{#array-footer-icons}}
-			<nav id="{{id}}" {{#className}}class="{{.}}"{{/className}}>
-				<ul>
-					{{#array-items}}
-					<li id="{{id}}">{{{html}}}</li>
-					{{/array-items}}
-				</ul>
-			</nav>
-			{{/array-footer-icons}}
+			{{#data-citizen-icons}}{{>Footer__row}}{{/data-citizen-icons}}
 		</div>
 	</div>
 </footer>
