@@ -28,6 +28,7 @@
 	"citizen-search-fulltext-empty": "Tipo para começar a pesquisar",
 	"citizen-tagline-ns-talk": "Página de discussão de {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-file": "Arquivo em {{SITENAME}}",
+	"citizen-tagline-ns-mediawiki": "Página de Interface do MediaWiki",
 	"citizen-tagline-ns-template": "Página da predefinição",
 	"citizen-tagline-ns-help": "Página de ajuda",
 	"citizen-tagline-ns-category": "Página da categoria",
