@@ -84,8 +84,7 @@
 	h3,
 	h4,
 	h5,
-	h6,
-	p + p {
+	h6 {
 		margin-top: @content-margin-top * 2;
 	}
 
@@ -94,9 +93,13 @@
 	h3 + h4,
 	h4 + h5,
 	h5 + h6,
-	p,
 	table {
 		margin-top: @content-margin-top;
+	}
+
+	p {
+		margin-top: @content-margin-top;
+		margin-bottom: @content-margin-top;
 	}
 
 	ul {
