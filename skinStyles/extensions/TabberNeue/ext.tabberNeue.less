@@ -19,6 +19,15 @@
 			color: var( --color-primary );
 		}
 	}
+
+	&__header {
+		&__prev,
+		&__next {
+			&:after {
+				opacity: var( --opacity-icon-base );
+			}
+		}
+	}
 }
 
 @media ( hover: hover ) {
@@ -40,10 +49,18 @@
 			&__next {
 				&:hover {
 					background-color: var( --background-color-quiet--hover );
+
+					&:after {
+						opacity: var( --opacity-icon-base--hover );
+					}
 				}
 
 				&:active {
 					background-color: var( --background-color-quiet--active );
+
+					&:after {
+						opacity: var( --opacity-icon-base--active );
+					}
 				}
 			}
 		}
