@@ -1,0 +1,62 @@
+.tabber {
+	margin-top: 0.2rem;
+
+	&__tabs {
+		box-shadow: inset 0 -1px 0 0 var( --border-color-base--darker );
+	}
+
+	&__tab {
+		color: var( --color-base--subtle );
+		font-weight: 500;
+
+		&:visited {
+			color: var( --color-base--subtle );
+		}
+
+		&--active,
+		&--active:visited {
+			box-shadow: inset 0 -2px 0 0 var( --color-primary );
+			color: var( --color-primary );
+		}
+	}
+}
+
+@media ( hover: hover ) {
+	.tabber {
+		&__tab {
+			&:hover {
+				box-shadow: inset 0 -2px 0 0 var( --color-primary--hover );
+				color: var( --color-primary--hover );
+			}
+
+			&:active {
+				box-shadow: inset 0 -2px 0 0 var( --color-primary--active );
+				color: var( --color-primary--active );
+			}
+		}
+
+		&__header {
+			&__prev,
+			&__next {
+				&:hover {
+					background-color: var( --background-color-quiet--hover );
+				}
+
+				&:active {
+					background-color: var( --background-color-quiet--active );
+				}
+			}
+		}
+	}
+}
+
+.skin-citizen-dark {
+	.tabber__header {
+		&__prev,
+		&__next {
+			&:after {
+				filter: invert( 1 );
+			}
+		}
+	}
+}
