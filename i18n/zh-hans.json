@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Alistair3149",
+			"Dianliang233",
 			"Gaoyu",
 			"Grace03",
 			"Lakejason0",
@@ -21,12 +22,12 @@
 	"citizen-sitestats-users-label": "名用户",
 	"citizen-sitestats-edits-label": "次编辑",
 	"citizen-drawer-search": "搜索菜单",
-	"citizen-footer-desc": "在 MediaWiki:Citizen-footer-desc 编辑此文本",
-	"citizen-footer-tagline": "在 MediaWiki:Citizen-footer-tagline 编辑此文本",
+	"citizen-footer-desc": "在MediaWiki:Citizen-footer-desc编辑此文本",
+	"citizen-footer-tagline": "在MediaWiki:Citizen-footer-tagline编辑此文本",
 	"citizen-action-addsection": "添加话题",
 	"citizen-jumptotop": "回到顶部",
 	"citizen-search-fulltext": "搜索包含",
-	"citizen-search-fulltext-empty": "输入开始搜索",
+	"citizen-search-fulltext-empty": "键入以开始搜索",
 	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}}的讨论页",
 	"citizen-tagline-ns-project": "关于{{SITENAME}}",
 	"citizen-tagline-ns-file": "{{SITENAME}}上的文件",
