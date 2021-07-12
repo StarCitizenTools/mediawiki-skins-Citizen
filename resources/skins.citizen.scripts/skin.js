@@ -57,14 +57,15 @@ function initCheckboxHack( window ) {
 	// Also this does not monitor screen size changes
 	if ( document.body.classList.contains( 'skin-citizen-has-toc' ) &&
 		window.matchMedia( 'screen and (max-width: 1300px)' ) ) {
-		const tocContainer = document.getElementById( 'toc' ),
-			toc = {
+		const tocContainer = document.getElementById( 'toc' );
+		if ( tocContainer ) {
+			const toc = {
 				button: tocContainer.querySelector( '.toctogglelabel' ),
 				checkbox: document.getElementById( 'toctogglecheckbox' ),
 				target: tocContainer.querySelector( 'ul' )
 			};
-
-		checkboxObjs.push( toc );
+			checkboxObjs.push( toc );
+		}
 	}
 
 	checkboxObjs.forEach( ( checkboxObj ) => {
