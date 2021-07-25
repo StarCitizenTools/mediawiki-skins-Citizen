@@ -208,14 +208,12 @@
 		max-width: ~'calc( 100vw - var( --padding-page ) )';
 		height: var( --height-search-bar );
 		padding: 8px ~'calc( var( --height-search-bar ) * 2 )' 8px var( --height-search-bar );
-		border: 1px solid var( --border-color-base--lighter );
 		appearance: none;
-		background: var( --background-color-dp-03 );
 		border-radius: var( --border-radius--small );
 		transition: @transition-background-quick, @transition-box-shadow-quick;
+		.citizen-card( @border-radius: false );
 
 		&:focus {
-			background-color: var( --background-color-dp-08 );
 			outline: 0;
 			.boxshadow(5);
 		}
@@ -266,9 +264,8 @@
 				bottom: 0;
 				left: 0;
 				display: block;
-				background: var( --background-color-dp-03 );
+				background: rgba( 0, 0, 0, 0.7 );
 				content: '';
-				opacity: 0.9;
 			}
 		}
 	}

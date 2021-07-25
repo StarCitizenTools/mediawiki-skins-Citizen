@@ -122,6 +122,10 @@ function main( window ) {
 	}, false );
 
 	mw.loader.load( 'skins.citizen.preferences' );
+
+	// Soft depreciation message for CSS var
+	// TODO: Remove when hard depreciated
+	mw.log.warn( 'CITIZEN: --background-color-dp-XX is depreciated; use --color-surface-X instead.' );
 }
 
 main( window );

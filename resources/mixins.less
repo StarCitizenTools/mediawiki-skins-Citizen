@@ -3,6 +3,16 @@
  * https://starcitizen.tools
 */
 
+.citizen-card( @border-radius: true ) {
+	border: 1px solid var( --border-color-base );
+	background-color: var( --color-surface-1 );
+	box-shadow: 0 14px 28px rgba( 0, 0, 0, 0.0625 ), 0 10px 10px rgba( 0, 0, 0, 0.055 );
+
+	& when ( @border-radius ) {
+		border-radius: var( --border-radius--medium );
+	}
+}
+
 // To hide objects, but keep them accessible for screen-readers
 .hidden() {
 	position: absolute;
@@ -57,14 +67,6 @@
 	background-repeat: no-repeat;
 	background-size: contain;
 	content: '';
-}
-
-// Material-like menu
-.menu-container() {
-	display: block;
-	padding: 8px 0;
-	background-color: var( --background-color-dp-08 );
-	border-radius: var( --border-radius--medium );
 }
 
 .menu-item-link() {

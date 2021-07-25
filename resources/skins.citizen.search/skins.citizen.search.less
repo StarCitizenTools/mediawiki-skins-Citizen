@@ -10,11 +10,9 @@
 	width: 100%;
 	max-height: ~'calc( 100vh - var( --height-header ) )';
 	box-sizing: border-box;
-	border: 1px solid var( --border-color-base--lighter );
 	margin: 0;
-	background: var( --background-color-dp-08 );
 	border-radius: 0 0 var( --border-radius--large ) var( --border-radius--large );
-	.boxshadow(4);
+	.citizen-card( @border-radius: false );
 
 	&-suggestion {
 		padding-top: 6px;
@@ -115,7 +113,7 @@
 		height: var( --border-radius--small );
 		margin-top: ~'calc( var( --border-radius--small ) * -1 )';
 		margin-left: -1px;
-		background: var( --background-color-dp-08 );
+		background: var( --color-surface-1 );
 		content: '';
 	}
 }
