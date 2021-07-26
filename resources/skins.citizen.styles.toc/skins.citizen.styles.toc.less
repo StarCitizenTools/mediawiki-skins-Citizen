@@ -122,18 +122,18 @@
 					right: 0;
 					bottom: 0;
 					display: block;
-					width: 39px;
-					height: 56px;
-					padding: 0 @margin-side / 2;
+					width: 48px;
+					height: 48px;
 					border-top: 1px solid var( --border-color-base );
 					border-left: 1px solid var( --border-color-base );
-					background-color: var( --background-color-dp-06 );
-					border-radius: var( --border-radius--large ) 0 0 0;
+					background-color: var( --color-surface-2 );
+					border-top-left-radius: var( --border-radius--large );
+					cursor: pointer;
 					pointer-events: auto;
 					.boxshadow(4);
 
 					&:hover {
-						background-color: var( --background-color-dp-12 );
+						background-color: var( --color-surface-3 );
 						.boxshadow(5);
 
 						&:before {
@@ -142,7 +142,7 @@
 					}
 
 					&:active {
-						background-color: var( --background-color-dp-02 );
+						background-color: var( --color-surface-1 );
 
 						&:before {
 							opacity: var( --opacity-icon-base--active );
@@ -225,6 +225,14 @@
 					}
 				}
 			}
+		}
+	}
+
+	// Special toggle styles on pointer devices since scrollbar is visible
+	@media ( max-width: @width-breakpoint-desktop-wide ) and ( hover: hover ) {
+		.toctogglelabel {
+			border-right: 1px solid var( --border-color-base );
+			border-top-right-radius: var( --border-radius--large );
 		}
 	}
 
