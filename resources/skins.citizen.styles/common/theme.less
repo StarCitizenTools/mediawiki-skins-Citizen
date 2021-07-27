@@ -4,11 +4,21 @@
  * Base theme
  */
 :root {
+	--color-primary__h: @color-primary__h;
+	--color-primary__s: @color-primary__s;
+	--color-primary__l: @color-primary__l;
+
 	--color-surface-0: @color-surface-0;
 	--color-surface-1: @color-surface-1;
 	--color-surface-2: @color-surface-2;
 	--color-surface-3: @color-surface-3;
 	--color-surface-4: @color-surface-4;
+
+	--color-primary: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), var( --color-primary__l ) )';
+	--color-primary--hover: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), calc( var( --color-primary__l ) * 1.2 ) )';
+	--color-primary--active: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), calc( var( --color-primary__l ) * 0.8 ) )';
+	--background-color-primary--hover: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), 95% )';
+	--background-color-primary--active: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), 90% )';
 
 	--color-surface-2--hover: @color-surface-2--hover;
 	--color-surface-2--active: @color-surface-2--active;
@@ -23,6 +33,9 @@
 	--color-surface-2: @color-surface-2-dark;
 	--color-surface-3: @color-surface-3-dark;
 	--color-surface-4: @color-surface-4-dark;
+
+	--background-color-primary--hover: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), 15% )';
+	--background-color-primary--active: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), 20% )';
 
 	--color-surface-2--hover: @color-surface-2-dark--hover;
 	--color-surface-2--active: @color-surface-2-dark--active;
