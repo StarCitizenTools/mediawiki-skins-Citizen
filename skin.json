@@ -528,10 +528,10 @@
 			"+mediawiki.rcfilters.filters.base.styles": "skinStyles/mediawiki/mediawiki.rcfilters.filters.base.styles.less",
 			"+mediawiki.widgets.DateInputWidget.styles": "skinStyles/mediawiki/mediawiki.widgets.DateInputWidget.styles.less",
 
-			"+oojs-ui-core.styles": "skinStyles/oojs/oojs-ui-core.less",
-			"+oojs-ui-toolbars": "skinStyles/oojs/oojs-ui-toolbars.less",
-			"+oojs-ui-widgets": "skinStyles/oojs/oojs-ui-widgets.less",
-			"+oojs-ui-windows": "skinStyles/oojs/oojs-ui-windows.less",
+			"+oojs-ui-core.styles": "skinStyles/ooui/oojs-ui-core.less",
+			"+oojs-ui-toolbars": "skinStyles/ooui/oojs-ui-toolbars.less",
+			"+oojs-ui-widgets": "skinStyles/ooui/oojs-ui-widgets.less",
+			"+oojs-ui-windows": "skinStyles/ooui/oojs-ui-windows.less",
 
 			"+jquery.ui": "skinStyles/jquery.ui/smoothness/jquery.ui.theme.less",
 

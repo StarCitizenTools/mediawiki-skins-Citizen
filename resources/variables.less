@@ -34,18 +34,28 @@
 
 /* == Colors == */
 /* Base theme */
-@color-surface-0: #fff;
-@color-surface-1: #fff;
-@color-surface-2: #f8f9fa;
-@color-surface-3: #eaecf0;
-@color-surface-4: #c8ccd1;
+@diff-hoverstate: 2;
+
+@color-surface-0: ~'hsl( 0, 0%, 100% )';
+@color-surface-1: ~'hsl( 0, 0%, 100% )';
+@color-surface-2: ~'hsl( 210, 17%, 98% )';
+@color-surface-3: ~'hsl( 220, 17%, 93% )';
+@color-surface-4: ~'hsl( 213, 9%, 80% )';
+
+@color-surface-2--hover: ~'hsl( 210, 17%, 'unit( 98 + @diff-hoverstate, % )~' )';
+@color-surface-2--active: ~'hsl( 210, 17%, 'unit( 98 - @diff-hoverstate, % )~' )';
 
 /* Dark theme */
-@color-surface-0-dark: #131a21;
-@color-surface-1-dark: #242a31;
-@color-surface-2-dark: #282f35;
-@color-surface-3-dark: #30363c;
-@color-surface-4-dark: #363c42;
+@diff-hoverstate-dark: 4;
+
+@color-surface-0-dark: ~'hsl( 210, 27%, 10% )';
+@color-surface-1-dark: ~'hsl( 212, 15%, 17% )';
+@color-surface-2-dark: ~'hsl( 208, 14%, 18% )';
+@color-surface-3-dark: ~'hsl( 210, 11%, 21% )';
+@color-surface-4-dark: ~'hsl( 210, 10%, 24% )';
+
+@color-surface-2-dark--hover: ~'hsl( 208, 14%, 'unit( 18 + @diff-hoverstate-dark, % )~' )';
+@color-surface-2-dark--active: ~'hsl( 208, 14%, 'unit( 18 - @diff-hoverstate-dark, % )~' )';
 
 /**
  * Based WikimediaUI (`wmui`) color palette

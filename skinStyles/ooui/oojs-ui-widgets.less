@@ -1,0 +1,350 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for OOUI
+ * Module: oojs-ui-widgets
+ * Version: v0.39.3 (Core REL1_35 086b4f1)
+ *
+ * Date: 2021-07-26
+*/
+
+/**
+ * OOUI has some layout issues when the font size is not
+ * same as what is being used in Vector. This is a dirty
+ * hack to ensure that the UI is displayed correctly.
+ */
+.oo-ui-widget {
+	font-size: 0.875rem;
+}
+
+.oo-ui-bookletLayout-outlinePanel > .oo-ui-outlineControlsWidget {
+	border-top: 1px solid var( --border-color-base );
+}
+
+.oo-ui-bookletLayout > .oo-ui-menuLayout-menu {
+	border-right: 1px solid var( --border-color-base );
+}
+
+.oo-ui-buttonSelectWidget .oo-ui-buttonOptionWidget.oo-ui-widget-disabled + .oo-ui-widget-disabled > .oo-ui-buttonElement-button {
+	border-left-color: var( --color-surface-2--hover );
+}
+
+.oo-ui-buttonSelectWidget.oo-ui-widget-enabled:focus .oo-ui-buttonOptionWidget.oo-ui-optionWidget-selected .oo-ui-buttonElement-button {
+	border-color: var( --color-primary );
+	box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px #fff;
+}
+
+.oo-ui-toggleButtonWidget.oo-ui-widget-enabled.oo-ui-buttonElement-frameless.oo-ui-toggleWidget-on .oo-ui-buttonElement-button {
+	color: var( --color-base--emphasized );
+}
+
+.oo-ui-toggleButtonWidget.oo-ui-widget-enabled.oo-ui-buttonElement-frameless.oo-ui-toggleWidget-on .oo-ui-buttonElement-button > .oo-ui-iconElement-icon:not( .oo-ui-image-invert ) {
+	opacity: var( --opacity-icon-base--active );
+}
+
+.oo-ui-toggleSwitchWidget {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled .oo-ui-toggleSwitchWidget-grip {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:hover {
+	border-color: var( --color-primary--hover );
+	background-color: var( --color-surface-2--hover );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:hover .oo-ui-toggleSwitchWidget-grip {
+	border-color: var( --color-primary--hover );
+	background-color: var( --color-surface-2--hover );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:active,
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:active:hover,
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:active:focus {
+	border-color: var( --color-primary--active );
+	background-color: var( --color-surface-2--active );
+	box-shadow: inset 0 0 0 1px var( --color-primary--active );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:active .oo-ui-toggleSwitchWidget-grip,
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:active:hover .oo-ui-toggleSwitchWidget-grip,
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:active:focus .oo-ui-toggleSwitchWidget-grip {
+	border-color: var( --color-surface-2--hover );
+	background-color: var( --color-surface-2--hover );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:focus {
+	border-color: var( --color-primary );
+	box-shadow: inset 0 0 0 1px var( --color-primary );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:focus .oo-ui-toggleSwitchWidget-grip {
+	border-color: var( --color-primary );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled.oo-ui-toggleWidget-on {
+	border-color: var( --color-primary );
+	background-color: var( --color-primary );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled.oo-ui-toggleWidget-on .oo-ui-toggleSwitchWidget-grip {
+	border-color: var( --color-surface-2--hover );
+	background-color: var( --color-surface-2--hover );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled.oo-ui-toggleWidget-on:hover {
+	border-color: var( --color-primary--hover );
+	background-color: var( --color-primary--hover );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled.oo-ui-toggleWidget-on:active,
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled.oo-ui-toggleWidget-on:active:hover {
+	border-color: var( --color-primary--active );
+	background-color: var( --color-primary--active );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled.oo-ui-toggleWidget-on:focus {
+	border-color: var( --color-primary );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled.oo-ui-toggleWidget-on:focus:before {
+	border-color: var( --color-surface-2--hover );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-disabled {
+	border-color: var( --color-surface-4 );
+	background-color: var( --color-surface-4 );
+	outline: 0;
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-disabled.oo-ui-toggleWidget-off .oo-ui-toggleSwitchWidget-grip {
+	border-color: var( --color-surface-2--hover );
+	box-shadow: inset 0 0 0 1px var( --color-surface-2--hover );
+}
+
+.oo-ui-toggleSwitchWidget.oo-ui-widget-disabled.oo-ui-toggleWidget-on .oo-ui-toggleSwitchWidget-grip {
+	background-color: var( --color-surface-2--hover );
+}
+
+.oo-ui-selectFileWidget-dropTarget {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-1 );
+}
+
+.oo-ui-selectFileWidget.oo-ui-widget-enabled.oo-ui-selectFileWidget-dropTarget {
+	background-color: var( --color-surface-1 );
+}
+
+.oo-ui-selectFileWidget.oo-ui-widget-enabled.oo-ui-selectFileWidget-dropTarget:hover {
+	border-color: var( --border-color-base );
+}
+
+.oo-ui-selectFileWidget.oo-ui-widget-enabled.oo-ui-selectFileWidget-canDrop.oo-ui-selectFileWidget-dropTarget,
+.oo-ui-selectFileWidget.oo-ui-widget-enabled.oo-ui-selectFileWidget-canDrop .oo-ui-selectFileInputWidget-info > .oo-ui-inputWidget-input {
+	background-color: var( --background-color-primary--hover );
+	color: var( --color-primary );
+}
+
+.oo-ui-selectFileWidget.oo-ui-widget-disabled.oo-ui-selectFileWidget-dropTarget,
+.oo-ui-selectFileWidget.oo-ui-selectFileInputWidget-empty.oo-ui-widget-disabled.oo-ui-selectFileWidget-dropTarget {
+	border-color: var( --color-surface-4 );
+	background-color: var( --color-surface-3 );
+}
+
+.oo-ui-outlineSelectWidget:focus {
+	box-shadow: inset 0 0 0 2px var( --color-primary );
+}
+
+.oo-ui-outlineOptionWidget.oo-ui-optionWidget-highlighted {
+	background-color: var( --color-surface-2--hover );
+	color: var( --color-base--emphasized );
+}
+
+.oo-ui-outlineOptionWidget.oo-ui-optionWidget-selected {
+	background-color: var( --background-color-primary--hover );
+	color: var( --color-primary );
+}
+
+.oo-ui-outlineOptionWidget.oo-ui-optionWidget-pressed {
+	background-color: var( --background-color-primary--active );
+	color: var( --color-primary );
+}
+
+.oo-ui-outlineControlsWidget {
+	background-color: var( --color-surface-1 );
+}
+
+.oo-ui-tabSelectWidget-framed {
+	background-color: var( --color-surface-2 );
+}
+
+.oo-ui-tabSelectWidget-frameless {
+	box-shadow: inset 0 -1px 0 0 var( --border-color-base );
+}
+
+.oo-ui-tabOptionWidget {
+	color: var( --color-base );
+}
+
+.oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget.oo-ui-optionWidget-selected {
+	background-color: var( --color-surface-0 );
+	color: var( --color-base--emphasized );
+}
+
+.oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget.oo-ui-optionWidget-selected .oo-ui-labelElement-label {
+	border-bottom-color: var( --color-surface-0 );
+}
+
+.oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget.oo-ui-widget-enabled:hover {
+	background-color: var( --background-color-quiet--hover );
+	color: var( --color-base--emphasized );
+}
+
+.oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget.oo-ui-widget-enabled:active {
+	background-color: var( --background-color-quiet--active );
+	color: var( --color-base--emphasized );
+}
+
+.oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget.oo-ui-widget-enabled.oo-ui-optionWidget-selected:hover {
+	background-color: var( --color-surface-0 );
+}
+
+.oo-ui-tabSelectWidget-framed.oo-ui-widget-enabled:focus .oo-ui-tabOptionWidget.oo-ui-optionWidget-selected .oo-ui-labelElement-label {
+	border-bottom-color: var( --color-primary );
+}
+
+.oo-ui-tabSelectWidget-frameless .oo-ui-tabOptionWidget {
+	box-shadow: inset 0 0 0 0 var( --color-primary );
+}
+
+.oo-ui-tabSelectWidget-frameless .oo-ui-tabOptionWidget.oo-ui-optionWidget-selected {
+	box-shadow: inset 0 -2px 0 0 var( --color-primary );
+	color: var( --color-primary );
+}
+
+.oo-ui-tabSelectWidget-frameless .oo-ui-tabOptionWidget.oo-ui-widget-enabled:hover {
+	box-shadow: inset 0 -2px 0 0 var( --color-primary--hover );
+	color: var( --color-primary--hover );
+}
+
+.oo-ui-tabSelectWidget-frameless .oo-ui-tabOptionWidget.oo-ui-widget-enabled:active {
+	box-shadow: inset 0 -2px 0 0 var( --color-primary--active );
+	color: var( --color-primary--active );
+}
+
+.oo-ui-tabSelectWidget-frameless.oo-ui-widget-enabled:focus .oo-ui-tabOptionWidget.oo-ui-optionWidget-selected {
+	border-radius: 2px;
+	box-shadow: inset 0 0 0 2px var( --color-primary );
+}
+
+.oo-ui-tagMultiselectWidget-handle {
+	border-color: var( --border-color-base );
+}
+
+.oo-ui-tagMultiselectWidget-handle > .oo-ui-tagMultiselectWidget-content > input {
+	color: var( --color-base--emphasized );
+}
+
+.oo-ui-tagMultiselectWidget-handle > .oo-ui-tagMultiselectWidget-content > input::placeholder {
+	color: var( --color-base--subtle );
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled {
+	background-color: var( --color-surface-1 );
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-inlined:hover .oo-ui-tagMultiselectWidget-handle {
+	border-color: var( --color-base--subtle );
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-inlined.oo-ui-tagMultiselectWidget-focus .oo-ui-tagMultiselectWidget-handle {
+	border-color: var( --color-primary );
+	box-shadow: inset 0 0 0 1px var( --color-primary );
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-inlined.oo-ui-flaggedElement-invalid .oo-ui-tagMultiselectWidget-handle,
+.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-inlined.oo-ui-flaggedElement-invalid:hover .oo-ui-tagMultiselectWidget-handle {
+	border-color: var( --color-destructive );
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined {
+	background-color: var( --color-surface-2 );
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined .oo-ui-tagItemWidget.oo-ui-widget-enabled {
+	background-color: var( --color-surface-2--hover );
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined.oo-ui-flaggedElement-invalid .oo-ui-inputWidget-input {
+	border-color: var( --color-destructive );
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-flaggedElement-invalid .oo-ui-inputWidget-input {
+	color: var( --color-destructive );
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-widget-disabled .oo-ui-tagMultiselectWidget-handle {
+	border-color: var( --color-surface-4 );
+	background-color: var( --color-surface-3 );
+	color: var( --color-base--subtle );
+	text-shadow: none;
+}
+
+.oo-ui-tagItemWidget {
+	border-color: var( --border-color-base );
+}
+
+.oo-ui-tagItemWidget.oo-ui-widget-enabled {
+	color: var( --color-base );
+}
+
+.oo-ui-tagItemWidget.oo-ui-widget-enabled:hover {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2--hover );
+	color: var( --color-base );
+}
+
+.oo-ui-tagItemWidget.oo-ui-widget-enabled:focus {
+	border-color: var( --color-primary );
+	box-shadow: inset 0 0 0 1px var( --color-primary );
+}
+
+.oo-ui-tagItemWidget.oo-ui-widget-enabled:not( .oo-ui-tagItemWidget-fixed ) {
+	background-color: var( --color-surface-2 );
+}
+
+.oo-ui-tagItemWidget.oo-ui-widget-enabled.oo-ui-flaggedElement-invalid {
+	border-color: var( --color-destructive );
+}
+
+.oo-ui-tagItemWidget.oo-ui-widget-enabled.oo-ui-flaggedElement-invalid:hover {
+	border-color: var( --color-destructive );
+}
+
+.oo-ui-tagItemWidget.oo-ui-widget-enabled.oo-ui-flaggedElement-invalid:focus {
+	border-color: var( --color-destructive );
+	box-shadow: inset 0 0 0 1px var( --color-destructive );
+}
+
+.oo-ui-tagItemWidget.oo-ui-widget-enabled .oo-ui-buttonElement-button:hover {
+	background-color: var( --color-surface-2--hover );
+}
+
+.oo-ui-tagItemWidget.oo-ui-widget-enabled .oo-ui-buttonElement-button:active {
+	background-color: var( --color-surface-2--active );
+}
+
+.oo-ui-tagItemWidget.oo-ui-widget-disabled {
+	border-color: var( --color-surface-4 );
+	background-color: var( --color-surface-3 );
+	color: var( --color-base--subtle );
+	text-shadow: none;
+}
+
+.oo-ui-searchWidget-query {
+	border-bottom: 1px solid var( --border-color-base );
+}

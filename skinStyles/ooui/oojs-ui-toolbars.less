@@ -1,0 +1,428 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for OOUI
+ * Module: oojs-ui-toolbars
+ * Version: v0.39.3 (Core REL1_35 086b4f1)
+ *
+ * Date: 2021-07-26
+*/
+
+/**
+ * OOUI has some layout issues when the font size is not
+ * same as what is being used in Vector. This is a dirty
+ * hack to ensure that the UI is displayed correctly.
+ */
+.oo-ui-toolbar {
+	font-size: 0.875rem;
+}
+
+.oo-ui-tool.oo-ui-widget-enabled .oo-ui-tool-link:focus {
+	box-shadow: inset 0 0 0 1px var( --color-primary );
+	outline: 1px solid var( --color-primary );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled .oo-ui-iconElement-icon {
+	opacity: var( --opacity-icon-base );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled:hover .oo-ui-iconElement-icon {
+	opacity: var( --opacity-icon-base--hover );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled[ class*='oo-ui-flaggedElement' ] .oo-ui-iconElement-icon {
+	opacity: var( --opacity-icon-base--hover );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled > .oo-ui-tool-link:hover {
+	background-color: var( --background-color-quiet--hover );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled > .oo-ui-tool-link:active,
+.oo-ui-tool.oo-ui-widget-enabled > .oo-ui-tool-link:active:focus,
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-tool-active > .oo-ui-tool-link,
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-popupToolGroup-active > .oo-ui-tool-link {
+	background-color: var( --background-color-primary--hover );
+	color: var( --color-primary );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled > .oo-ui-tool-link:focus {
+	box-shadow: inset 0 0 0 1px var( --color-primary );
+	outline: 1px solid var( --color-primary );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-progressive > .oo-ui-tool-link {
+	color: var( --color-primary );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-progressive > .oo-ui-tool-link:hover {
+	background-color: var( --background-color-quiet--hover );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-progressive > .oo-ui-tool-link:active,
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-progressive > .oo-ui-tool-link:active:focus,
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-progressive.oo-ui-tool-active > .oo-ui-tool-link,
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-progressive.oo-ui-popupToolGroup-active > .oo-ui-tool-link {
+	background-color: var( --background-color-primary--hover );
+	color: var( --color-primary );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-progressive > .oo-ui-tool-link:focus {
+	box-shadow: inset 0 0 0 1px var( --color-primary );
+	outline: 1px solid var( --color-primary );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-destructive > .oo-ui-tool-link {
+	color: var( --color-destructive );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-destructive > .oo-ui-tool-link:hover {
+	background-color: var( --background-color-quiet--hover );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-destructive > .oo-ui-tool-link:active,
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-destructive > .oo-ui-tool-link:active:focus,
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-destructive.oo-ui-tool-active > .oo-ui-tool-link,
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-destructive.oo-ui-popupToolGroup-active > .oo-ui-tool-link {
+	background-color: var( --color-surface-1 );
+	color: var( --color-destructive );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-destructive > .oo-ui-tool-link:focus {
+	box-shadow: inset 0 0 0 1px var( --color-destructive );
+	outline: 1px solid var( --color-destructive );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-tool-link {
+	background-color: var( --color-primary );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-tool-link:hover {
+	background-color: var( --color-primary--hover );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-tool-link:active,
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-tool-link:active:focus,
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive.oo-ui-tool-active > .oo-ui-tool-link {
+	background-color: var( --color-primary--active );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-tool-link:focus {
+	box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px #fff;
+	outline: 1px solid var( --color-primary );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive.oo-ui-widget-disabled > .oo-ui-tool-link,
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive.oo-ui-widget-disabled > .oo-ui-tool-link:active,
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive.oo-ui-widget-disabled > .oo-ui-tool-link:active:focus {
+	background-color: var( --color-surface-4 );
+	color: var( --color-base--subtle );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive > .oo-ui-tool-link {
+	background-color: var( --color-destructive );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive > .oo-ui-tool-link:hover {
+	background-color: var( --color-destructive--hover );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive > .oo-ui-tool-link:active,
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive > .oo-ui-tool-link:active:focus,
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive.oo-ui-tool-active > .oo-ui-tool-link {
+	background-color: var( --color-destructive--active );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive > .oo-ui-tool-link:focus {
+	box-shadow: inset 0 0 0 1px var( --color-destructive ), inset 0 0 0 2px #fff;
+	outline: 1px solid var( --color-destructive );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive.oo-ui-widget-disabled > .oo-ui-tool-link,
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive.oo-ui-widget-disabled > .oo-ui-tool-link:active,
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive.oo-ui-widget-disabled > .oo-ui-tool-link:active:focus {
+	background-color: var( --color-surface-4 );
+	color: var( --color-base--subtle );
+}
+
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary > .oo-ui-tool-link > .oo-ui-iconElement-icon,
+.oo-ui-tool.oo-ui-widget-enabled.oo-ui-flaggedElement-primary > .oo-ui-tool-link > .oo-ui-indicatorElement-indicator {
+	opacity: var( --opacity-icon-base--active );
+}
+
+.oo-ui-toolGroup.oo-ui-widget-disabled:not( .oo-ui-flaggedElement-primary ) .oo-ui-indicatorElement-indicator,
+.oo-ui-toolGroup.oo-ui-widget-disabled:not( .oo-ui-flaggedElement-primary ) .oo-ui-iconElement-icon {
+	opacity: var( --opacity-base--disabled ) !important;
+}
+
+.oo-ui-barToolGroup-tools.oo-ui-toolGroup-enabled-tools .oo-ui-tool.oo-ui-widget-disabled .oo-ui-iconElement-icon,
+.oo-ui-barToolGroup-tools.oo-ui-toolGroup-disabled-tools .oo-ui-tool .oo-ui-iconElement-icon {
+	opacity: var( --opacity-base--disabled );
+}
+
+.oo-ui-barToolGroup-tools.oo-ui-toolGroup-enabled-tools .oo-ui-tool.oo-ui-widget-disabled.oo-ui-flaggedElement-primary > .oo-ui-tool-link,
+.oo-ui-barToolGroup-tools.oo-ui-toolGroup-disabled-tools .oo-ui-tool.oo-ui-flaggedElement-primary > .oo-ui-tool-link {
+	border-color: var( --color-surface-4 );
+	background-color: var( --color-surface-4 );
+}
+
+.oo-ui-barToolGroup-tools.oo-ui-toolGroup-enabled-tools .oo-ui-tool.oo-ui-widget-disabled.oo-ui-flaggedElement-primary > .oo-ui-tool-link .oo-ui-tool-title,
+.oo-ui-barToolGroup-tools.oo-ui-toolGroup-disabled-tools .oo-ui-tool.oo-ui-flaggedElement-primary > .oo-ui-tool-link .oo-ui-tool-title {
+	color: var( --color-base--subtle );
+}
+
+.oo-ui-barToolGroup-tools.oo-ui-toolGroup-enabled-tools .oo-ui-tool.oo-ui-widget-disabled.oo-ui-flaggedElement-primary.oo-ui-tool-active > .oo-ui-tool-link,
+.oo-ui-barToolGroup-tools.oo-ui-toolGroup-disabled-tools .oo-ui-tool.oo-ui-flaggedElement-primary.oo-ui-tool-active > .oo-ui-tool-link {
+	background-color: var( --background-color-quiet--hover );
+}
+
+.oo-ui-barToolGroup-tools.oo-ui-toolGroup-enabled-tools .oo-ui-tool.oo-ui-widget-disabled.oo-ui-flaggedElement-primary .oo-ui-iconElement-icon,
+.oo-ui-barToolGroup-tools.oo-ui-toolGroup-disabled-tools .oo-ui-tool.oo-ui-flaggedElement-primary .oo-ui-iconElement-icon {
+	opacity: var( --opacity-icon-base--active );
+}
+
+.oo-ui-barToolGroup-tools.oo-ui-toolGroup-enabled-tools .oo-ui-tool.oo-ui-widget-disabled > .oo-ui-tool-link .oo-ui-tool-title,
+.oo-ui-barToolGroup-tools.oo-ui-toolGroup-disabled-tools .oo-ui-tool > .oo-ui-tool-link .oo-ui-tool-title {
+	color: var( --color-base--subtle );
+}
+
+.oo-ui-popupToolGroup:not( .oo-ui-labelElement ):not( .oo-ui-iconElement ) .oo-ui-indicatorElement-indicator {
+	opacity: var( --opacity-icon-base--active );
+}
+
+.oo-ui-popupToolGroup-header {
+	color: var( --color-base--subtle );
+}
+
+.oo-ui-popupToolGroup-tools {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-1 );
+}
+
+.oo-ui-popupToolGroup-tools .oo-ui-tool-link .oo-ui-tool-accel {
+	color: var( --color-base--subtle );
+}
+
+.oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle:hover {
+	background-color: var( --background-color-quiet--hover );
+}
+
+.oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle:active {
+	background-color: var( --background-color-quiet--active );
+}
+
+.oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle .oo-ui-iconElement-icon,
+.oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle .oo-ui-indicatorElement-indicator {
+	opacity: var( --opacity-icon-base );
+}
+
+.oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle:hover .oo-ui-iconElement-icon,
+.oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle:hover .oo-ui-indicatorElement-indicator {
+	opacity: var( --opacity-icon-base--hover );
+}
+
+.oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle:active .oo-ui-iconElement-icon,
+.oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle:active .oo-ui-indicatorElement-indicator {
+	opacity: var( --opacity-icon-base--active );
+}
+
+.oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle:focus {
+	box-shadow: inset 0 0 0 1px var( --color-primary );
+	outline: 1px solid var( --color-primary );
+}
+
+.oo-ui-popupToolGroup.oo-ui-widget-enabled[ class*='oo-ui-flaggedElement' ] > .oo-ui-popupToolGroup-handle .oo-ui-iconElement-icon,
+.oo-ui-popupToolGroup.oo-ui-widget-enabled[ class*='oo-ui-flaggedElement' ] > .oo-ui-popupToolGroup-handle:hover .oo-ui-iconElement-icon {
+	opacity: var( --opacity-icon-base--hover );
+}
+
+.oo-ui-toolbar-actions .oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle:hover {
+	border-right-color: var( --background-color-quiet--hover );
+}
+
+.oo-ui-toolbar-actions .oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle:active {
+	border-right-color: var( --background-color-quiet--active );
+}
+
+.oo-ui-toolbar-actions .oo-ui-popupToolGroup.oo-ui-widget-enabled > .oo-ui-popupToolGroup-handle:focus {
+	border-right-color: var( --color-primary );
+}
+
+.oo-ui-popupToolGroup.oo-ui-popupToolGroup-active > .oo-ui-popupToolGroup-handle {
+	background-color: var( --background-color-primary--hover );
+	color: var( --color-primary );
+}
+
+.oo-ui-popupToolGroup.oo-ui-popupToolGroup-active > .oo-ui-popupToolGroup-handle:hover {
+	background-color: var( --background-color-primary--hover );
+	color: var( --color-primary );
+}
+
+.oo-ui-popupToolGroup-tools .oo-ui-tool-active.oo-ui-widget-enabled .oo-ui-tool-link .oo-ui-tool-title {
+	color: var( --color-primary );
+}
+
+.oo-ui-popupToolGroup-tools .oo-ui-tool.oo-ui-widget-enabled .oo-ui-tool-link:focus {
+	box-shadow: inset 0 0 0 2px var( --color-primary );
+	outline: 0;
+}
+
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-progressive > .oo-ui-popupToolGroup-handle {
+	color: var( --color-primary );
+}
+
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-progressive > .oo-ui-popupToolGroup-handle:hover {
+	background-color: var( --color-surface-2--hover );
+}
+
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-progressive > .oo-ui-popupToolGroup-handle:active,
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-progressive > .oo-ui-popupToolGroup-handle:active:focus,
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-progressive.oo-ui-tool-active > .oo-ui-popupToolGroup-handle,
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-progressive.oo-ui-popupToolGroup-active > .oo-ui-popupToolGroup-handle {
+	background-color: var( --background-color-primary--hover );
+	color: var( --color-primary--active );
+}
+
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-progressive > .oo-ui-popupToolGroup-handle:focus {
+	box-shadow: inset 0 0 0 1px var( --color-primary );
+	outline: 1px solid var( --color-primary );
+}
+
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-destructive > .oo-ui-popupToolGroup-handle {
+	color: var( --color-destructive );
+}
+
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-destructive > .oo-ui-popupToolGroup-handle:hover {
+	background-color: var( --background-color-quiet--hover );
+}
+
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-destructive > .oo-ui-popupToolGroup-handle:active,
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-destructive > .oo-ui-popupToolGroup-handle:active:focus,
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-destructive.oo-ui-tool-active > .oo-ui-popupToolGroup-handle,
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-destructive.oo-ui-popupToolGroup-active > .oo-ui-popupToolGroup-handle {
+	background-color: var( --background-color-quiet--active );
+	color: var( --color-destructive--active );
+}
+
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-destructive > .oo-ui-popupToolGroup-handle:focus {
+	box-shadow: inset 0 0 0 1px var( --color-destructive );
+	outline: 1px solid var( --color-destructive );
+}
+
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-popupToolGroup-handle {
+	background-color: var( --color-primary );
+}
+
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-popupToolGroup-handle:hover {
+	background-color: var( --color-primary--hover );
+}
+
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-popupToolGroup-handle:active,
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-popupToolGroup-handle:active:focus,
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive.oo-ui-tool-active > .oo-ui-popupToolGroup-handle {
+	background-color: var( --color-primary--active );
+}
+
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-popupToolGroup-handle:focus {
+	box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px #fff;
+	outline: 1px solid var( --color-primary );
+}
+
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive.oo-ui-widget-disabled > .oo-ui-popupToolGroup-handle,
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive.oo-ui-widget-disabled > .oo-ui-popupToolGroup-handle:active,
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive.oo-ui-widget-disabled > .oo-ui-popupToolGroup-handle:active:focus {
+	background-color: var( --color-surface-4 );
+	color: var( --color-base--subtle );
+}
+
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive > .oo-ui-popupToolGroup-handle {
+	background-color: var( --color-destructive );
+}
+
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive > .oo-ui-popupToolGroup-handle:hover {
+	background-color: var( --color-destructive--hover );
+}
+
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive > .oo-ui-popupToolGroup-handle:active,
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive > .oo-ui-popupToolGroup-handle:active:focus,
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive.oo-ui-tool-active > .oo-ui-popupToolGroup-handle {
+	background-color: var( --color-destructive--active );
+}
+
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive > .oo-ui-popupToolGroup-handle:focus {
+	box-shadow: inset 0 0 0 1px var( --color-destructive ), inset 0 0 0 2px #fff;
+	outline: 1px solid var( --color-destructive );
+}
+
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive.oo-ui-widget-disabled > .oo-ui-popupToolGroup-handle,
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive.oo-ui-widget-disabled > .oo-ui-popupToolGroup-handle:active,
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive.oo-ui-widget-disabled > .oo-ui-popupToolGroup-handle:active:focus {
+	background-color: var( --color-surface-4 );
+	color: var( --color-base--subtle );
+}
+
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary > .oo-ui-popupToolGroup-handle > .oo-ui-iconElement-icon,
+.oo-ui-popupToolGroup.oo-ui-flaggedElement-primary > .oo-ui-popupToolGroup-handle > .oo-ui-indicatorElement-indicator {
+	opacity: var( --opacity-icon-base--active );
+}
+
+.oo-ui-listToolGroup-tools .oo-ui-tool.oo-ui-widget-enabled:hover {
+	background-color: var( --background-color-quiet--hover );
+	color: var( --color-base--emphasized );
+}
+
+.oo-ui-listToolGroup-tools .oo-ui-tool-active.oo-ui-widget-enabled {
+	background-color: var( --background-color-primary--hover );
+}
+
+.oo-ui-listToolGroup-tools .oo-ui-tool-active.oo-ui-widget-enabled:hover {
+	background-color: var( --background-color-primary--hover );
+}
+
+.oo-ui-listToolGroup-tools .oo-ui-tool-active.oo-ui-widget-enabled .oo-ui-tool-link .oo-ui-tool-title {
+	color: var( --color-primary );
+}
+
+.oo-ui-listToolGroup.oo-ui-widget-disabled,
+.oo-ui-listToolGroup-tools .oo-ui-tool.oo-ui-widget-disabled .oo-ui-tool-title {
+	color: var( --color-base--subtle );
+}
+
+.oo-ui-menuToolGroup {
+	border-right: 1px solid var( --border-color-base );
+	border-left: 1px solid var( --border-color-base );
+}
+
+.oo-ui-menuToolGroup-tools .oo-ui-tool.oo-ui-widget-enabled:hover {
+	background-color: var( --background-color-primary--hover );
+}
+
+.oo-ui-menuToolGroup-tools .oo-ui-tool.oo-ui-tool-active {
+	background-color: var( --background-color-primary--hover );
+}
+
+.oo-ui-menuToolGroup.oo-ui-widget-disabled,
+.oo-ui-menuToolGroup-tools .oo-ui-tool.oo-ui-widget-disabled .oo-ui-tool-title {
+	color: var( --color-base--subtle );
+}
+
+.oo-ui-toolbar-bar {
+	background-color: var( --color-surface-1 );
+	color: var( --color-base );
+}
+
+.oo-ui-toolbar-position-top > .oo-ui-toolbar-bar {
+	border-bottom: 1px solid var( --border-color-base );
+}
+
+.oo-ui-toolbar-position-bottom > .oo-ui-toolbar-bar {
+	border-top: 1px solid var( --border-color-base );
+}
+
+.oo-ui-toolbar-narrow.oo-ui-toolbar-position-top .oo-ui-toolbar-bar:after {
+	border-bottom: 1px solid var( --border-color-base );
+}
+
+.oo-ui-toolbar-narrow.oo-ui-toolbar-position-bottom .oo-ui-toolbar-bar:after {
+	border-top: 1px solid var( --border-color-base );
+}
