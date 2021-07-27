@@ -1,23 +1,63 @@
 /*
- * Citizen - Checkbox
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for MediaWiki UI
+ * Module: mediawiki.ui.checkbox
+ * Version: Core REL1_35 086b4f1
+ *
+ * Date: 2021-07-27
 */
 
-@import '../../../resources/variables.less';
+.mw-ui-checkbox:not( #noop ) {
+	[ type='checkbox' ] {
+		& + label:before {
+			border-color: var( --border-color-base );
+			background-color: var( --color-surface-1 );
+		}
 
-.skin-citizen-dark {
-	.mw-ui-checkbox:not( #noop ) {
-		[ type='checkbox' ] {
-			& + label:before {
-				border: 1px solid @dark-bg-60;
-				background-color: @dark-bg-0;
+		&:enabled {
+			&:focus + label:before {
+				border-color: var( --color-primary );
 			}
 
-			// disabled checkboxes have a gray background
-			&:disabled + label:before {
-				border-color: @dark-bg-30;
-				background-color: @dark-bg-30;
+			&:hover + label:before {
+				border-color: var( --color-primary--hover );
 			}
+
+			&:active + label:before {
+				border-color: var( --color-primary--active );
+				background-color: var( --color-primary--active );
+				box-shadow: inset 0 0 0 1px var( --color-primary--active );
+			}
+
+			&:checked {
+				& + label:before {
+					border-color: var( --color-primary );
+					background-color: var( --color-primary );
+				}
+
+				&:focus + label:before {
+					border-color: var( --color-primary );
+					background-color: var( --color-primary );
+					box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px #fff;
+				}
+
+				&:hover + label:before {
+					border-color: var( --color-primary--hover );
+					// FIXME: Replace with WikimediaUI Base vars when available.
+					background-color: var( --color-primary--hover );
+				}
+
+				&:active + label:before {
+					border-color: var( --color-primary--active );
+					background-color: var( --color-primary--active );
+				}
+			}
+		}
+
+		&:disabled + label:before {
+			border-color: var( --color-surface-4 );
+			background-color: var( --color-surface-4 );
 		}
 	}
 }
