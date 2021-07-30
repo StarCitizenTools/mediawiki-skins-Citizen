@@ -92,14 +92,16 @@ figcaption,
 	font-weight: normal;
 }
 
-.mw-body {
-	& h1,
-	&-content h1 {
+.citizen-body {
+	font-size: @content-body-size;
+	line-height: @content-line-height;
+
+	h1 {
 		font-size: @content-h1-size;
 	}
 
-	&-content h1,
-	&-content h2 {
+	h1,
+	h2 {
 		font-weight: bold;
 		line-height: 1.2;
 	}
@@ -108,36 +110,31 @@ figcaption,
 		line-height: 1.2;
 	}
 
-	&-content {
-		font-size: @content-body-size;
-		line-height: @content-line-height;
+	h2 {
+		font-size: @content-h2-size;
+	}
 
-		h2 {
-			font-size: @content-h2-size;
-		}
+	h3 {
+		font-size: @content-h3-size;
+	}
 
-		h3 {
-			font-size: @content-h3-size;
-		}
+	h4 {
+		font-size: @content-h4-size;
+	}
 
-		h4 {
-			font-size: @content-h4-size;
-		}
+	h5 {
+		font-size: @content-h5-size;
+	}
 
-		h5 {
-			font-size: @content-h5-size;
-		}
+	h6 {
+		font-size: @content-h6-size;
+	}
 
-		h6 {
-			font-size: @content-h6-size;
-		}
-
-		h3,
-		h4,
-		h5,
-		h6 {
-			font-weight: bold;
-		}
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-weight: bold;
 	}
 }
 
