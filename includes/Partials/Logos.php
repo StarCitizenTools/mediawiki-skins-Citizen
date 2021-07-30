@@ -42,7 +42,7 @@ final class Logos extends Partial {
 	 *
 	 * @return array
 	 */
-	public function getLogoData() : array {
+	public function getLogoData(): array {
 		$logoData = ResourceLoaderSkinModule::getAvailableLogos( $this->skin->getConfig() );
 
 		// check if the logo supports variants

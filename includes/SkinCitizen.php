@@ -63,7 +63,7 @@ class SkinCitizen extends SkinMustache {
 	 * @return array Returns an array of data used by Citizen skin.
 	 * @throws MWException
 	 */
-	public function getTemplateData() : array {
+	public function getTemplateData(): array {
 		$out = $this->getOutput();
 		$title = $out->getTitle();
 
@@ -182,7 +182,7 @@ class SkinCitizen extends SkinMustache {
 		string $label,
 		array $urls = [],
 		array $options = []
-	) : array {
+	): array {
 		$skin = $this->getSkin();
 
 		// For some menu items, there is no language key corresponding with its menu key.

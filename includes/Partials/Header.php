@@ -106,7 +106,7 @@ final class Header extends Partial {
 	 * @return array
 	 * @throws MWException
 	 */
-	public function buildSearchProps() : array {
+	public function buildSearchProps(): array {
 		$toggleMsg = $this->skin->msg( 'citizen-search-toggle' )->text();
 
 		return [
