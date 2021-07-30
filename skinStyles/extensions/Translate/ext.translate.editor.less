@@ -1,17 +1,240 @@
 /*
- * Citizen - Translate Styles
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:Translate
+ * Module: ext.translate.editor
+ * Version: MLEB 2021.07
+ *
+ * Date: 2021-07-29
 */
 
-@import '../../../resources/variables.less';
-@import '../../../resources/mixins.less';
-
+/* ext.translate.editor */
 .tux-message-editor {
-	border: 0;
-	.boxshadow(2);
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-1 );
+}
 
-	.editcolumn {
-		overflow: auto;
-		padding: @margin-side 40px @margin-side @margin-side;
+.tux-message-editor .editcolumn {
+	border-right-color: var( --border-color-base );
+	background-color: var( --color-surface-1 );
+}
+
+.tux-message-editor textarea {
+	border-color: var( --border-color-base );
+}
+
+.tux-editor-editsummary-block input {
+	border-color: var( --border-color-base );
+}
+
+.tux-editor-editsummary-block input:disabled {
+	background-color: var( --color-surface-3 );
+}
+
+.grid .tux-message-editor .messagekey {
+	color: var( --color-base );
+}
+
+.tux-message-editor .messagekey .caret {
+	border-top-color: var( --color-base );
+}
+
+.tux-message-editor .shortcutinfo {
+	color: var( --color-base--subtle );
+}
+
+.grid .tux-message-editor .infocolumn-block {
+	background: var( --color-surface-2 );
+}
+
+.tux-message-editor__caret:before,
+.tux-message-editor__caret:after {
+	border-right-color: var( --border-color-base );
+}
+
+.tux-message-editor__caret:after {
+	border-right-color: var( --color-surface-2 );
+}
+
+.infocolumn-block .infocolumn .message-desc.long {
+	border-bottom-color: var( --border-color-base );
+}
+
+.message-desc-control .read-more {
+	color: var( --color-primary );
+}
+
+.tm-suggestion,
+.in-other-language {
+	border-color: var( --border-color-base );
+	border-left-color: var( --color-primary );
+	background-color: var( --color-surface-2 );
+}
+
+.in-other-language .language {
+	color: var( --color-base--subtle );
+}
+
+.tux-notice {
+	background-color: var( --background-color-warning );
+}
+
+.tux-highlight {
+	background-color: var( --color-surface-4 );
+}
+
+.editarea .tux-more-notices {
+	background-color: var( --background-color-warning );
+}
+
+.tux-notice-message.error,
+.tux-notice-message.translation-saving {
+	background-color: var( --background-color-destructive );
+	color: var( --color-destructive );
+}
+
+.tux-notice-message .show-diff-link {
+	color: var( --color-primary );
+}
+
+.editarea .tux-more-notices:before {
+	border-right-color: var( --background-color-warning );
+	border-bottom-color: var( --background-color-warning );
+}
+
+.editarea .tux-more-notices.tux-has-errors {
+	background-color: var( --background-color-destructive );
+}
+
+.editarea .tux-more-notices.tux-has-errors:before {
+	border-right-color: var( --background-color-destructive );
+	border-bottom-color: var( --background-color-destructive );
+}
+
+.tux-editor-request-right {
+	color: var( --color-base--subtle );
+}
+
+// Added custom hover states and cursor
+.tux-editor-insert-buttons button {
+	border-color: var( --border-color-base );
+	background: var( --color-surface-2 );
+	color: var( --color-base--emphasized );
+	cursor: pointer;
+
+	&:hover {
+		background: var( --color-surface-2--hover );
 	}
+
+	&:active {
+		background: var( --color-surface-2--active );
+	}
+}
+
+.tux-editor-insert-buttons .tux-editor-paste-original-button {
+	background: var( --color-surface-2 ) left center no-repeat;
+}
+
+.infocolumn .loading {
+	color: var( --color-base--subtle );
+}
+
+.tux-message-tools-menu li a {
+	color: var( --color-base--subtle );
+}
+
+.tux-message-tools-menu li a:hover {
+	background-color: var( --background-color-quiet--hover );
+	color: var( --color-base );
+	cursor: pointer;
+}
+
+.tux-message-tools-menu li.selected {
+	color: var( --color-base );
+}
+
+.shortcut-popup {
+	border-color: var( --color-base );
+	background-color: var( --color-surface-1 );
+}
+
+/* ext.translate.pagemode.css */
+.ext-translate-container .tux-messagelist .tux-message-pagemode {
+	background: var( --color-surface-2 );
+}
+
+.ext-translate-container .tux-messagelist .tux-message-pagemode .tux-message-item-compact {
+	border-right-color: var( --border-color-base );
+	border-bottom-color: var( --color-surface-2 );
+	border-left-color: var( --border-color-base );
+	background: var( --color-surface-1 );
+}
+
+.ext-translate-container .tux-messagelist .tux-message-pagemode .tux-message-item-compact:hover {
+	background: var( --color-surface-2--hover );
+}
+
+.ext-translate-container .tux-messagelist .tux-message-pagemode:first-child .tux-message-item-compact {
+	border-top-color: var( --border-color-base );
+}
+
+.ext-translate-container .tux-messagelist .tux-message-pagemode:last-child .tux-message-item-compact {
+	border-bottom-color: var( --border-color-base );
+}
+
+.tux-messagelist .tux-message-pagemode .tux-pagemode-source {
+	color: var( --color-base--subtle );
+}
+
+.tux-messagelist .tux-message-pagemode .tux-pagemode-translation {
+	color: var( --color-base );
+}
+
+/* ext.translate.proofread */
+.ext-translate-container .tux-messagelist .tux-message-proofread {
+	background: var( --color-surface-2 );
+}
+
+.ext-translate-container .tux-messagelist .tux-message-proofread .tux-message-item-compact {
+	border-right-color: var( --border-color-base );
+	border-bottom-color: var( --color-surface-2 );
+	border-left-color: var( --border-color-base );
+	background: var( --color-surface-1 );
+}
+
+.ext-translate-container .tux-messagelist .tux-message-proofread .tux-message-item-compact:hover {
+	background: var( --color-surface-2--hover );
+}
+
+.ext-translate-container .tux-messagelist .tux-message-proofread:first-child .tux-message-item-compact {
+	border-top-color: var( --border-color-base );
+}
+
+.ext-translate-container .tux-messagelist .tux-message-proofread:last-child .tux-message-item-compact {
+	border-bottom-color: var( --border-color-base );
+}
+
+.tux-messagelist .tux-message-proofread .tux-proofread-source {
+	color: var( --color-base--subtle );
+}
+
+.tux-messagelist .tux-message-proofread .tux-proofread-translation {
+	color: var( --color-base );
+}
+
+.ext-translate-container .tux-messagelist .tux-message-proofread.own-translation,
+.ext-translate-container .tux-messagelist .tux-message-proofread.own-translation:hover {
+	background: var( --color-surface-2--hover );
+}
+
+.translated-by-self {
+	color: var( --color-base--subtle );
+}
+
+.tux-proofread-edit-label {
+	color: var( --color-base--subtle );
+}
+
+.tux-proofread-count {
+	color: var( --color-base--subtle );
 }

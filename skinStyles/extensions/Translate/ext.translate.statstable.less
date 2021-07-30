@@ -1,0 +1,32 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:Translate
+ * Module: ext.translate.statstable
+ * Version: MLEB 2021.07
+ *
+ * Date: 2021-07-29
+*/
+
+.statstable {
+	> * > tr {
+		&.tux-statstable-even > td {
+			background-color: var( --color-surface-2 );
+		}
+
+		> th {
+			border-color: var( --border-color-base );
+			background-color: var( --color-surface-3 );
+		}
+
+		> td {
+			border-right-color: var( --border-color-base );
+			border-left-color: var( --border-color-base );
+			background-color: var( --color-surface-1 );
+		}
+
+		> td:nth-child( 6 )[ data-sort-value='0.00000' ] {
+			color: var( --color-base--subtle );
+		}
+	}
+}

@@ -1,19 +1,36 @@
 /*
- * Citizen - Translate Styles
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:Translate
+ * Module: ext.translate.special.translate
+ * Version: MLEB 2021.07
+ *
+ * Date: 2021-07-29
 */
 
-@import '../../../resources/variables.less';
-@import '../../../resources/mixins.less';
-
-.firstHeading,
-#siteSub,
-#p-actions,
-#mw-bottombar {
-	display: none !important;
+.tux-workflow-status {
+	border-color: var( --border-color-base );
+	background: var( --color-surface-3 );
+	color: var( --color-base );
 }
 
-.tux-messagetable-header {
-	border: 0;
-	box-shadow: none;
+.tux-workflow-status:hover {
+	border-color: var( --border-color-base--darker );
+}
+
+.tux-workflow-status-triangle:after {
+	border-top-color: var( --color-base--subtle );
+}
+
+.tux-workflow-status-selector li {
+	color: var( --color-base--subtle );
+}
+
+.tux-workflow-status-selector li.changeable:hover {
+	background-color: var( --background-color-quiet--hover );
+	color: var( --color-base );
+}
+
+.tux-workflow-status-selector li.selected {
+	color: var( --color-base );
 }

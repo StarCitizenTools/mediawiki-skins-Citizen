@@ -1,160 +1,86 @@
 /*
- * Citizen - Translate Styles
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:Translate
+ * Module: ext.translate.messagetable
+ * Version: MLEB 2021.07
+ *
+ * Date: 2021-07-29
 */
 
-@import '../../../resources/variables.less';
-@import '../../../resources/mixins.less';
+.tux-messagelist {
+	background-color: var( --color-surface-2 );
+	color: var( --color-base );
+}
 
-#page-tools {
-	z-index: 0;
-	margin-top: 0;
+.tux-message-item {
+	border-bottom-color: var( --border-color-base );
+	background: var( --color-surface-0 ); // So that it is the same color as page base
+}
 
-	#p-views {
-		ul {
-			flex-direction: column;
+.tux-message-item.translated,
+.tux-message-item.translated:hover,
+.tux-message-item.proofread,
+.tux-message-item.proofread:hover {
+	background-color: var( --color-surface-3 );
+}
 
-			li > a {
-				width: auto;
-				height: auto;
-				padding: @margin-side / 4 @margin-side / 2 @margin-side / 4 0;
-				opacity: 1;
+.tux-message-item:hover {
+	background-color: var( --color-surface-2--hover );
+}
 
-				&:hover {
-					color: @color-primary--active;
-					opacity: 1;
-				}
+.tux-info {
+	background-color: var( --color-surface-3 );
+}
 
-				&:after {
-					content: none;
-				}
+.tux-list-translation {
+	color: var( --color-base--subtle );
+}
 
-				> span {
-					position: relative !important;
-					width: auto;
-					height: auto;
-					margin: 0;
-					clip: unset;
-				}
-			}
-		}
+.tux-messagetable-loader {
+	background: var( --color-surface-2 );
+	box-shadow: none;
+	color: var( --color-base--subtle );
+}
+
+.tux-action-bar {
+	background-color: var( --color-surface-1 );
+	color: var( --color-base );
+}
+
+@media screen and ( min-height: 500px ) {
+	.tux-action-bar.floating {
+		border-top-color: var( --border-color-base );
 	}
 }
 
-.tux-messagelist,
-.tux-action-bar,
-.tux-messagetable-header.floating {
-	margin: 0 @negative-margin !important;
+.tux-action-bar button {
+	border-color: var( --border-color-base );
+	background: var( --color-surface-2 );
 }
 
-.tux-action-bar.floating,
-.tux-messagetable-header.floating {
-	.boxshadow(3);
+.tux-action-bar button:hover {
+	background: var( --color-surface-2--hover );
 }
 
-.tux-messagelist,
-.tux-action-bar,
-.tux-messagetable-header {
-	transition: @transition-margin, @transition-width;
+.tux-action-bar button:active,
+.tux-action-bar button.down {
+	background: var( --color-primary );
 }
 
-.tux-messagelist,
-.tux-action-bar:not( .floating ) {
-	width: auto !important;
+.tux-action-bar button.disabled,
+.tux-action-bar button.disabled:hover {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-4 );
+	color: var( --color-base--subtle );
 }
 
-.tux-messagetable-header {
-	display: flex;
-	align-items: center;
-	padding: 0; // Reserve spaces for tabs
-
-	&.floating {
-		> div:first-of-type {
-			padding: 0 20px 10px;
-		}
-	}
+.tux-message-filter-result {
+	border-bottom-color: var( --border-color-base );
+	background: var( --background-color-warning );
+	color: var( --color-base );
 }
 
-.tux-message-selector {
-	li {
-		&.selected {
-			border: 0;
-		}
-
-		a {
-			display: block;
-			padding: @margin-side / 2 @margin-side;
-			color: @base-50;
-			transition: @transition-color-quick;
-
-			&:hover {
-				color: @accent-50;
-			}
-
-			&:first-of-type {
-				padding-left: 0;
-			}
-		}
-	}
-
-	.more {
-		padding: @margin-side / 2 @margin-side !important;
-
-		> ul {
-			top: 0;
-			left: 0;
-			width: auto;
-			padding: 8px 0;
-			border: 0;
-			margin: 0;
-			.boxshadow(5);
-
-			li {
-				padding: 0;
-				font-size: @ui-menu-text-big;
-				white-space: nowrap;
-
-				a {
-					padding: 10px 15px !important;
-					margin: 0;
-				}
-
-				input {
-					margin: @margin-side / 2 @margin-side / 4 @margin-side @margin-side;
-				}
-
-				label {
-					padding-right: @margin-side;
-				}
-			}
-		}
-	}
-}
-
-@media only screen and ( max-width: @width-breakpoint-desktop-wide ) {
-	#page-tools {
-		max-width: @page-width;
-		margin: 0 auto @margin-side * 2;
-		float: none;
-
-		#p-views {
-			ul {
-				flex-direction: row;
-			}
-		}
-	}
-
-	.tux-messagelist,
-	.tux-action-bar,
-	.tux-messagetable-header.floating {
-		margin: 0 ~'calc((100vw - @{page-width}) / -2)' !important;
-	}
-}
-
-@media only screen and ( max-width: @width-breakpoint-desktop ) {
-	.tux-messagelist,
-	.tux-action-bar,
-	.tux-messagetable-header.floating {
-		margin: 0 -@margin-side !important; // fill margin
-	}
+.tux-empty-list-guide {
+	color: var( --color-base--subtle );
 }

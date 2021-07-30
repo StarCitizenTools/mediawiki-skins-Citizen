@@ -1,96 +1,18 @@
 /*
- * Citizen - Translate Styles
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:Translate
+ * Module: ext.translate.tag.languages
+ * Version: MLEB 2021.07
+ *
+ * Date: 2021-07-29
 */
 
-@import '../../../resources/variables.less';
-@import '../../../resources/mixins.less';
-
 .mw-pt-languages {
-	display: block;
-	width: auto;
-	padding: @margin-side 0;
-	border: 0;
-	margin: 0;
-	background: 0;
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
 }
 
 .mw-pt-languages-label {
-	display: block;
-	width: auto;
-	padding: 0;
-	border: 0;
-	background: 0;
-	color: @base-30;
-	font-size: 0.8125rem;
-	font-weight: normal;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-}
-
-.mw-pt-languages-list {
-	display: flex;
-	width: auto;
-	flex-wrap: wrap;
-	padding: @content-margin-top 0 0 0;
-	visibility: hidden; // Hide dots
-
-	> * {
-		visibility: visible;
-	}
-}
-
-.mw-pt-languages-selected,
-.mw-pt-languages-ui {
-	font-weight: normal;
-	.boxshadow(2) !important;
-
-	&:hover {
-		transform: none !important;
-	}
-}
-
-.mw-pt-progress {
-	display: block;
-	padding: @margin-side / 4 @margin-side / 2;
-	border: 1px solid @base-90;
-	margin: 0 0 @margin-side / 2 0;
-	background: @base-90;
-	color: @base-30;
-	font-size: @content-caption-size;
-	transition: @transition-transform-quick, @transition-box-shadow-quick;
-	.boxshadow(1);
-
-	&:hover {
-		.boxshadow(2);
-		transform: translateY( -2px );
-	}
-}
-
-.mw-pt-progress--stub {
-	background: @base-90;
-}
-
-.mw-pt-progress--low {
-	border-color: @red-50;
-	background: @red-50;
-	color: @base-100 !important; // bypass visited styles
-}
-
-.mw-pt-progress--med {
-	border-color: @yellow-50;
-	background: @yellow-50;
-	color: @base-100 !important; // bypass visited styles
-}
-
-.mw-pt-progress--high {
-	border-color: @green-50;
-	background: @green-50;
-	color: @base-100 !important; // bypass visited styles
-}
-
-.mw-pt-progress--complete {
-	border-color: @green-30;
-	background: @green-30;
-	color: @base-100 !important; // bypass visited styles
+	background-color: var( --color-surface-3 );
 }

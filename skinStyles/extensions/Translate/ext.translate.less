@@ -1,35 +1,17 @@
 /*
- * Citizen - Translate Styles
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:Translate
+ * Module: ext.translate
+ * Version: MLEB 2021.07
+ *
+ * Date: 2021-07-29
 */
 
-@import '../../../resources/variables.less';
+.mw-translate-fuzzy {
+	background-color: var( --background-color-destructive );
+}
 
 .mw-pt-translate-header {
-	position: absolute;
-	width: 90px;
-	padding-top: @margin-side / 2;
-	border-top: 1px solid currentColor;
-	margin: 8px 0 0 ~'calc(-@{page-width} / 2 + 310px)';
-	margin-top: 8px;
-	color: #a2a9b1;
-	opacity: 1;
-	text-align: left;
-	transition: @transition-opacity;
-
-	.mw-translate-fuzzy {
-		display: none;
-	}
-}
-
-.mw-translate-fuzzy {
-	display: inline-block;
-}
-
-@media only screen and ( max-width: @width-breakpoint-desktop-wide ) {
-	.mw-pt-translate-header {
-		z-index: -1; // Not interactable
-		opacity: 0;
-		pointer-events: none; // Not interactable
-	}
+	border-bottom-color: var( --border-color-base );
 }
