@@ -6,12 +6,15 @@
 	bottom: 0;
 	left: 0;
 	display: flex;
+	overflow: auto;
 	flex-direction: column;
 	align-items: center;
-	background-color: var( --background-color-overlay );
-	transform: translate3d( 0, -100%, 0 );
+	margin: var( --margin-header-item ) var( --margin-header-item--corner );
+	overscroll-behavior: contain;
+	transform: translate3d( 0, -110%, 0 );
 	transform-origin: 0 0;
 	user-select: none;
+	.citizen-card();
 
 	&-checkbox {
 		&:checked {
@@ -101,11 +104,9 @@
 
 	&-header {
 		display: flex;
-		width: 100%;
 		flex-direction: column;
 		align-items: center;
-		padding: var( --height-header ) var( --padding-page ) 20px var( --padding-page );
-		border-bottom: 1px solid var( --border-color-base );
+		padding: ~'calc( var( --padding-page ) + 10px )' var( --padding-page ) 20px var( --padding-page );
 	}
 
 	&-logo {
@@ -140,17 +141,13 @@
 	}
 
 	&-menu {
-		display: flex;
-		overflow: auto;
-		max-width: var( --width-layout );
-		flex-wrap: wrap;
-		justify-content: center;
+		display: grid;
+		max-width: ~'calc( 100vw - var( --padding-page ) * 4 )';
+		padding: ~'calc( var(--padding-page) / 2 ) calc( var(--padding-page) / 2 ) var( --padding-page ) calc( var(--padding-page) / 2 )';
+		border-top: 1px solid var( --border-color-base );
 		font-size: @ui-menu-text;
-		overscroll-behavior: contain;
-
-		h3 {
-			font-size: 16px;
-		}
+		gap: ~'calc( var(--padding-page) / 4 )';
+		grid-template-columns: repeat( auto-fit, 240px );
 
 		a {
 			.menu-item-link;
@@ -183,11 +180,6 @@
 					opacity: var( --opacity-icon-base--active );
 				}
 			}
-		}
-
-		.mw-portal {
-			width: 240px;
-			margin-top: 20px;
 		}
 	}
 }
@@ -240,15 +232,17 @@
 		}
 	}
 }
-// Portal width (240px) * 2 + Magic (4px)
-@media ( min-width: 484px ) {
-	#mw-drawer-menu {
-		justify-content: left; // Portals won't get center when there is more than one col
+
+@media ( min-width: @width-breakpoint-tablet ) {
+	#mw-drawer {
+		right: unset;
+		bottom: unset;
+		max-height: ~'calc(100vh - var(--margin-header-item) * 2 )';
 	}
 }
 
 @media ( min-width: @width-breakpoint-desktop-wide ) {
 	#mw-drawer-menu {
-		max-width: 1200px; // 240px * 5
+		max-width: 1200px;
 	}
 }
