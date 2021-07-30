@@ -1,78 +1,29 @@
 /*
- * Citizen - ULS Styles
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:UniversalLanguageSelector
+ * Module: ext.uls.common
+ * Version: MLEB 2021.07
+ *
+ * Date: 2021-07-29
 */
 
-@import '../../../resources/variables.less';
-@import '../../../resources/mixins.less';
+@import 'ext.uls.mixins.less';
 
-.skin-citizen {
-	.uls {
-		&-menu {
-			border-color: var( --border-color-base );
-			background-color: var( --background-color-dp-04 );
-			.boxshadow(5);
-		}
-
-		&-search {
-			position: relative;
-			border-color: var( --border-color-base );
-			background-color: var( --background-color-dp-08 );
-			transition: @transition-background-quick, @transition-box-shadow-quick;
-			.boxshadow(2);
-
-			&:focus-within {
-				background-color: var( --background-color-dp-12 );
-				.boxshadow(3);
-			}
-		}
-
-		&-filtersuggestion {
-			background: transparent;
-			color: var( --color-base--subtle );
-		}
-
-		&-languagefilter {
-			color: var( --color-base );
-		}
-
-		// Gotta fix this for mobile
-		&-narrow {
-			left: 0 !important;
-			width: 100% !important;
-		}
-
-		&-lcd {
-			background-color: var( --background-color-dp-04 );
-
-			&-region-title {
-				color: var( --color-base );
-			}
-		}
-
-		&-language-block {
-			> ul > li:hover {
-				background-color: var( --background-color-primary--hover );
-			}
-		}
-	}
-
-	#uls-settings-block {
-		border-color: var( --border-color-base );
-		background-color: var( --background-color-dp-04 );
-	}
+.uls-menu.callout {
+	.caret();
 }
 
-.skin-citizen-dark {
-	.uls {
-		&-search {
-			&-label {
-				filter: invert( 1 );
-			}
-		}
+.uls-icon-back {
+	border-right-color: var( --border-color-base );
+}
+
+.uls-menu .uls-no-results-view {
+	.uls-no-found-more {
+		background-color: var( --color-surface-1 );
 	}
 
-	#uls-settings-block {
-		filter: invert( 1 );
+	h3 {
+		color: var( --color-base--subtle );
 	}
 }

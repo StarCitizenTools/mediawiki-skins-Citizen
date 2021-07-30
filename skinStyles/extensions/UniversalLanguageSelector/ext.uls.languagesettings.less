@@ -1,0 +1,81 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:UniversalLanguageSelector
+ * Module: ext.uls.languagesettings
+ * Version: MLEB 2021.07
+ *
+ * Date: 2021-07-29
+*/
+
+.languagesettings-menu {
+	h1 {
+		color: var( --color-base--emphasized );
+	}
+
+	.menu-section {
+		color: var( --color-base );
+
+		&.active {
+			border-left-color: var( --color-primary );
+			background-color: var( --color-surface-1 );
+			color: var( --color-base--emphasized );
+		}
+
+		&:hover {
+			background-color: var( --color-surface-1 );
+		}
+
+		&:focus {
+			border-color: var( --color-primary );
+		}
+
+		.settings-text {
+			color: var( --color-base--subtle );
+		}
+
+		&:hover .settings-text {
+			color: var( --color-base );
+		}
+	}
+}
+
+#languagesettings-settings-panel {
+	background: var( --color-surface-1 );
+	color: var( --color-base );
+}
+
+#languagesettings-settings-panel h3 {
+	color: var( --color-base );
+}
+
+#languagesettings-settings-panel h4 {
+	color: var( --color-base );
+}
+
+.language-settings-dialog {
+	background: var( --color-surface-2 );
+}
+
+.uls-language-settings-close-block {
+	background: var( --color-surface-1 );
+}
+
+.language-settings-buttons {
+	border-top-color: var( --border-color-base );
+}
+
+.uls-ui-languages p,
+.checkbox {
+	color: var( --color-base--subtle );
+}
+
+/* mediawiki.ui does not have a pressed state style. */
+#languagesettings-panels .mw-ui-pressed {
+	border-color: var( --color-primary--active );
+	background-color: var( --color-primary--active );
+}
+
+.checkbox strong {
+	color: var( --color-base );
+}

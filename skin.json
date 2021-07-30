@@ -497,7 +497,12 @@
 			"+ext.translate.tag.languages": "skinStyles/extensions/Translate/ext.translate.tag.languages.less",
 
 			"+ext.uls.common": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.common.less",
-			"+ext.uls.pt": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.pt.less",
+			"+ext.uls.compactlinks": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.compactlinks.less",
+			"+ext.uls.displaysettings": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.displaysettings.less",
+			"+ext.uls.interface": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.interface.less",
+			"+ext.uls.interlanguage": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.interlanguage.less",
+			"+ext.uls.languagesettings": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.languagesettings.less",
+			"+ext.uls.setlang": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.setlang.less",
 
 			"ext.CookieWarning.styles": "skinStyles/extensions/CookieWarning/ext.CookieWarning.styles.less",
 
