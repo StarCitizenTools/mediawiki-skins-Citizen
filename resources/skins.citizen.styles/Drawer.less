@@ -104,9 +104,12 @@
 
 	&-header {
 		display: flex;
+		width: 100%;
+		box-sizing: border-box;
 		flex-direction: column;
 		align-items: center;
-		padding: ~'calc( var( --padding-page ) + 10px )' var( --padding-page ) 20px var( --padding-page );
+		padding: ~'calc( var( --padding-page ) + 10px )' var( --padding-page ) 15px var( --padding-page );
+		border-bottom: 1px solid var( --border-color-base );
 	}
 
 	&-logo {
@@ -144,7 +147,6 @@
 		display: grid;
 		max-width: ~'calc( 100vw - var( --padding-page ) * 4 )';
 		padding: ~'calc( var(--padding-page) / 2 ) calc( var(--padding-page) / 2 ) var( --padding-page ) calc( var(--padding-page) / 2 )';
-		border-top: 1px solid var( --border-color-base );
 		font-size: @ui-menu-text;
 		gap: ~'calc( var(--padding-page) / 4 )';
 		grid-template-columns: repeat( auto-fit, 240px );

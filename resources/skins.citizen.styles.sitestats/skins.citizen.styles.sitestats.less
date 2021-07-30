@@ -1,8 +1,8 @@
 @import '../variables.less';
 
 #mw-drawer-sitestats {
-	display: none;
-	margin-top: 10px;
+	display: flex;
+	margin-top: 0.4rem;
 	font-size: @ui-menu-text;
 }
 
@@ -25,8 +25,8 @@
 	}
 }
 
-@media only screen and ( min-width: @width-breakpoint-tablet ) {
-	#mw-drawer-sitestats {
-		display: flex;
+@media only screen and ( max-width: @width-breakpoint-tablet ) {
+	.sitestats-item:not( #sitestats-articles ) {
+		display: none;
 	}
 }
