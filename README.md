@@ -89,7 +89,29 @@ Name | Description | Values | Default
 `$wgCitizenEnablePreconnect` | Enable or disable [preconnect to required origin](https://web.dev/uses-rel-preconnect/) | `true` - enable; `false` - disable | `false`
 `$wgCitizenPreconnectURL` | The URL for preconnect to required origin | URL | 
 `$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#11151d`
-    
+
+## SkinStyles
+Citizen includes numerous skinStyles that applies custom styling to extensions and core libraries. Please feel free to submit PRs if you want to add support for more extensions! Unless the extension has never supported the current minimum required MediaWiki version of the skin, the skinStyles are based on the latest version of the said MW release branch (e.g. `REL1_35` for MediaWiki 1.35 .
+
+- **Grade A - Revamped UI** - Major adjustments to UI, plus Grade B. 
+- **Grade B - Minor UI tweaks** - Colors are converted into CSS variables, little to none style adjustments.
+- **Grade C - Legacy** - Dark mode colors are hardcored as LESS variables. These should be updated to Grade B support.
+
+### Core
+Name | Grade | Version | Last updated
+:--- | :--- | :--- | :---
+'''MediaWiki UI''' | B | 1.35.3 | 2021-07-27
+'''OOUI''' | B | 0.39.3 `086b4f1` | 2021-07-26
+
+### Extensions
+Name | Grade | Version | Last updated
+:--- | :--- | :--- | :---
+[Babel](https://www.mediawiki.org/wiki/Extension:Babel) | B | MLEB 2021.07 | 2021-07-29
+[CleanChanges](https://www.mediawiki.org/wiki/Extension:CleanChanges) | B | MLEB 2021.07 | 2021-07-29
+[TabberNeue](https://www.mediawiki.org/wiki/Extension:TabberNeue) | A | 1.0.1 `0dc1b34` | 2021-06-21
+[Translate](https://www.mediawiki.org/wiki/Extension:Translate) | B | MLEB 2021.07 | 2021-07-29
+[UniversalLanguageSelector](https://www.mediawiki.org/wiki/Extension:UniversalLanguageSelector) | B | MLEB 2021.07 | 2021-07-29
+
 ## Requirements
 * [MediaWiki](https://www.mediawiki.org) 1.35.2 or later
 * For the legacy versions, check the other release branches.
