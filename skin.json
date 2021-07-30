@@ -376,6 +376,8 @@
 
 			"+ext.ApprovedRevs": "skinStyles/extensions/ApprovedRevs/ext.ApprovedRevs.less",
 
+			"+ext.babel": "skinStyles/extensions/Babel/ext.babel.less",
+
 			"+ext.categoryTree.css": "skinStyles/extensions/CategoryTree/ext.categoryTree.css.less",
 
 			"+ext.cite.styles": "skinStyles/extensions/Cite/ext.cite.styles.less",
