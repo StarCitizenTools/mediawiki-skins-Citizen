@@ -1,0 +1,35 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Special:ListFiles
+ * Module: mediawiki.pager.tablePager
+ * Version: REL1_36
+ *
+ * Date: 2021-07-30
+ *
+ * Note: All styles are supplied as mw-datatable is from legacy.less in REL1_35,
+ * which is not loaded by Citizen. The style is included in the above module since REL1_36.
+*/
+
+.mw-datatable {
+    border: 1px solid var( --border-color-base );
+    border-collapse: collapse;
+
+    td,
+    th {
+        border: 1px solid var( --border-color-base );
+        padding: 0.2em 0.4em;
+    }
+
+    th {
+        background-color: var( --color-surface-2 );
+    }
+
+    td {
+        background-color: var( --color-surface-1 );
+    }
+
+    tr:hover td {
+        background-color: var( --color-surface-2 );
+    }
+}

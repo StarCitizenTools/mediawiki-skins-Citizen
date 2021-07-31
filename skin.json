@@ -525,6 +525,8 @@
 
 			"+mediawiki.notification": "skinStyles/mediawiki/mediawiki.notification.less",
 
+			"+mediawiki.pager.tablePager": "skinStyles/mediawiki/mediawiki.pager.tablePager.less",
+
 			"mediawiki.skinning.content.parsoid": [],
 			"mediawiki.skinning.interface": [],
 
