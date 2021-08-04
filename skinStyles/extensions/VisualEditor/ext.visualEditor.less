@@ -1,14 +1,18 @@
 /*
- * Citizen - Visual Editor Styles
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:VisualEditor
+ * Module: ext.visualEditor.desktopArticleTarget.init
+ * Version: REL1_35 cc3466a
+ *
+ * Date: 2021-08-04
+ * Note: VE has many modules so they are combined in one file for now
 */
-
-@import '../../../resources/variables.less';
 
 .ve-activated {
 	.mw-header {
 		z-index: 3; // Move lower to accompany VE
-		background-color: var( --background-color-dp-00 );
+		background-color: var( --color-surface-0 );
 
 		&:before {
 			box-shadow: none;
@@ -53,7 +57,7 @@
 		&-toolbar {
 			> .oo-ui-toolbar-bar {
 				border-color: var( --border-color-base--darker );
-				background-color: var( --background-color-dp-00 );
+				background-color: var( --color-surface-0 );
 
 				.oo-ui-toolbar-bar {
 					border: 0;
@@ -116,7 +120,7 @@
 
 			&-options {
 				border-color: var( --border-color-base );
-				background-color: var( --background-color-framed );
+				background-color: var( --color-surface-2 );
 			}
 
 			&--editSummary-count {
@@ -125,6 +129,20 @@
 
 			&-license {
 				color: var( --color-base--subtle );
+			}
+
+			// Preview and review change panels
+			&-savePanel {
+				~ .oo-ui-panelLayout {
+					background-color: var( --color-surface-0 );
+				}
+			}
+
+			// Give preview content a max width
+			.mw-parser-output {
+				max-width: var( --width-layout );
+				margin-right: auto;
+				margin-left: auto;
 			}
 		}
 
