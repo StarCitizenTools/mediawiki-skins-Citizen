@@ -13,7 +13,6 @@ Live demo can be seen at the [Star Citizen Wiki](https://star-citizen.wiki), mor
 - **Persistent ToC**: Access ToC anywhere in the article. ***Tracking require JS*** 🔍📖
 - **Rich search suggestions**: More helpful search suggestions with images and descriptions. ***Require JS*** 🔍👀
 - **Webapp manifest**: Give a more app-like experience when user add your wiki to their home screen. 📱
-- **HTTP security response headers**: Enhance the security of your wiki from HTTP response headers. 🔒🔑
 
 ## SkinStyles
 Citizen includes numerous skinStyles that applies custom styling to extensions and core libraries. Please feel free to submit PRs if you want to add support for more extensions! Unless the extension has never supported the current minimum required MediaWiki version of the skin, the skinStyles are based on the latest version of the said MW release branch (e.g. `REL1_35` for MediaWiki 1.35).
@@ -76,9 +75,6 @@ wfLoadSkin( 'Citizen' );
 **The skin works out of the box without any configurations.** 
 The config flags allow more customization on the specific features in the skin. 
 
-Note that:
-* By default, all security-related features are turned off to ensure maximum compatibility.
-
 ### Appearance
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
@@ -97,33 +93,6 @@ Name | Description | Values | Default
 `$wgCitizenSearchGateway` | Which gateway to use for fetching search suggestion |`mwActionApi`; `mwRestApi` | `mwActionApi`
 `$wgCitizenSearchDescriptionSource` | Source of description text on search suggestions (only takes effect if `$wgCitizenSearchGateway` is `mwActionApi`) | `wikidata` - Use description provided by [WikibaseLib](Extension:WikibaseLib) or [ShortDescription](https://www.mediawiki.org/wiki/Extension:ShortDescription); `textextracts` - Use description provided by [TextExtracts](https://www.mediawiki.org/wiki/Extension:TextExtracts); `pagedescription` - Use description provided by [Description2](https://www.mediawiki.org/wiki/Extension:Description2) or any other extension that sets the `description` page property | `textextracts`
 `$wgCitizenMaxSearchResults` | Max number of search suggestions | Integer > 0 | `6`
-
-### Security-related
-#### Content Security Policy (CSP)
-Name | Description | Values | Default
-:--- | :--- | :--- | :---
-`$wgCitizenEnableCSP` | Enable or disable [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy), as an alternative to [`$wgCSPHeader`](https://www.mediawiki.org/wiki/Manual:$wgCSPHeader) in Mediawiki 1.32+ | `true` - enable; `false` - disable | `false`
-`$wgCitizenEnableCSPReportMode` | Enable or disable [CSP report only mode](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only), overrides `$wgCitizenEnableCSP` | `true` - enable; `false` - disable | `false`
-`$wgCitizenCSPDirective` | The string of yourr CSP directive | See the [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) page | 
-
-#### HTTP Strict Transport Security (HSTS)
-Name | Description | Values | Default
-:--- | :--- | :--- | :---
-`$wgCitizenEnableHSTS` | Enable or disable [HTTP Strict Transport Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security) | `true` - enable; `false` - disable | `false`
-`$wgCitizenHSTSMaxAge` | Time in second that the browser should remember that a site is only to be accessed using HTTPS | Integer > 0 | `300`
-`$wgCitizenHSTSIncludeSubdomains` | Apply HSTS to all of the site's subdomains | `true` - enable; `false` - disable | `false`
-`$wgCitizenHSTSPreload` | Enable or disable [HSTS preload](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security#Preloading_Strict_Transport_Security) | `true` - enable; `false` - disable | `false`
-
-#### Other security headers
-Name | Description | Values | Default
-:--- | :--- | :--- | :---
-`$wgCitizenEnableDenyXFrameOptions` | Enable or disable the deny [X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) header | `true` - enable; `false` - disable | `false`
-`$wgCitizenEnableXXSSProtection` | Enable or disable the [X-XSS-Protection header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection) | `true` - enable; `false` - disable | `false`
-`$wgCitizenEnableStrictReferrerPolicy` | Enable or disable `strict-origin-when-cross-origin` [referrer policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) header, should be used in conjunction with [`$wgReferrerPolicy`](https://www.mediawiki.org/wiki/Manual:$wgReferrerPolicy) as that only outputs the meta tags | `true` - enable; `false` - disable | `false`
-`$wgCitizenEnableFeaturePolicy` | Enable or disable [Feature Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy) | `true` - enable; `false` - disable | `false`
-`$wgCitizenFeaturePolicyDirective` | The string of your Feature Policy directive | See the [Feature Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy) page | 
-`$wgCitizenEnablePermissionsPolicy` | Enable or disable Permissions Policy | `true` - enable; `false` - disable | `false`
-`$wgCitizenPermissionsPolicyDirective` | The string of your Permissions Policy directive | | 
 
 ### Webapp manifest
 Name | Description | Values | Default
