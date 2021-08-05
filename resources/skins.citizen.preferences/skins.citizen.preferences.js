@@ -42,7 +42,8 @@ function convertPref( pref ) {
 	return {
 		theme: pref.theme,
 		fontsize: Number( pref.fontsize.slice( 0, -1 ) ) / 10 - 5,
-		pagewidth: Number( pref.pagewidth.slice( 0, -2 ) ) / 120 - 6
+		pagewidth: Number( pref.pagewidth.slice( 0, -2 ) ) / 120 - 6,
+		lineheight: ( pref.lineheight - 1 ) * 10
 	};
 }
 
@@ -59,6 +60,7 @@ function getPref() {
 	pref.theme = localStorage.getItem( 'skin-citizen-theme' );
 	pref.fontsize = localStorage.getItem( 'skin-citizen-fontsize' ) ?? htmlStyle.getPropertyValue( 'font-size' );
 	pref.pagewidth = localStorage.getItem( 'skin-citizen-pagewidth' ) ?? htmlStyle.getPropertyValue( '--width-layout' );
+	pref.lineheight = localStorage.getItem( 'skin-citizen-lineheight' ) ?? htmlStyle.getPropertyValue( '--line-height' );
 
 	return pref;
 }
@@ -76,7 +78,8 @@ function setPref( event ) {
 		newPref = {
 			theme: formData[ 'citizen-pref-theme' ],
 			fontsize: Number( formData[ 'citizen-pref-fontsize' ] ),
-			pagewidth: Number( formData[ 'citizen-pref-pagewidth' ] )
+			pagewidth: Number( formData[ 'citizen-pref-pagewidth' ] ),
+			lineheight: Number( formData[ 'citizen-pref-lineheight' ] )
 		};
 
 	if ( currentPref.theme !== newPref.theme ) {
@@ -98,6 +101,11 @@ function setPref( event ) {
 		}
 		localStorage.setItem( 'skin-citizen-pagewidth', formattedPageWidth );
 		setIndicator( 'pagewidth', formattedPageWidth );
+	} else if ( currentPref.lineheight !== newPref.lineheight ) {
+		const formattedLineHeight = newPref.lineheight / 10 + 1;
+
+		localStorage.setItem( 'skin-citizen-lineheight', formattedLineHeight );
+		setIndicator( 'lineheight', formattedLineHeight );
 	}
 
 	applyPref();
@@ -110,7 +118,7 @@ function setPref( event ) {
  */
 function resetPref() {
 	// Do not reset theme as its default value is defined somewhere else
-	const keys = [ 'fontsize', 'pagewidth' ],
+	const keys = [ 'fontsize', 'pagewidth', 'lineheight' ],
 		keyPrefix = 'skin-citizen-';
 
 	// Remove inline style
@@ -212,6 +220,7 @@ function getMessages() {
 			'prefs-citizen-theme-option-dark',
 			'prefs-citizen-fontsize-label',
 			'prefs-citizen-pagewidth-label',
+			'prefs-citizen-lineheight-label',
 			'prefs-citizen-resetbutton-label'
 		],
 		data = {};
@@ -242,7 +251,7 @@ function initPanel( event ) {
 		data = getMessages(),
 		pref = getPref(),
 		prefValue = convertPref( pref ),
-		keys = [ 'fontsize', 'pagewidth' ];
+		keys = [ 'fontsize', 'pagewidth', 'lineheight' ];
 
 	// To Mustache is to jQuery sigh
 	// TODO: Use ES6 template literals when RL does not screw up multiline

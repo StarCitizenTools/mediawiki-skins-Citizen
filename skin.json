@@ -244,6 +244,7 @@
 				"prefs-citizen-theme-option-dark",
 				"prefs-citizen-fontsize-label",
 				"prefs-citizen-pagewidth-label",
+				"prefs-citizen-lineheight-label",
 				"prefs-citizen-resetbutton-label"
 			]
 		},

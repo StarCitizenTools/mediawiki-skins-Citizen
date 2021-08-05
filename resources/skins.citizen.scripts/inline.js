@@ -18,7 +18,8 @@ window.applyPref = () => {
 		const htmlElement = document.documentElement,
 			theme = window.localStorage.getItem( 'skin-citizen-theme' ),
 			fontsize = window.localStorage.getItem( 'skin-citizen-fontsize' ),
-			pagewidth = window.localStorage.getItem( 'skin-citizen-pagewidth' );
+			pagewidth = window.localStorage.getItem( 'skin-citizen-pagewidth' ),
+			lineheight = window.localStorage.getItem( 'skin-citizen-lineheight' );
 		if ( theme !== null ) {
 			// First remove all theme classes
 			htmlElement.classList.remove(...classNames('skin-citizen-' ) );
@@ -30,6 +31,9 @@ window.applyPref = () => {
 		}
 		if( pagewidth !== null ) {
 			htmlElement.style.setProperty( '--width-layout', pagewidth );
+		}
+		if( lineheight !== null ) {
+			htmlElement.style.setProperty( '--line-height', lineheight );
 		}
 	} catch ( e ) {
 	}

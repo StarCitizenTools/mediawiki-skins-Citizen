@@ -38,5 +38,6 @@
 	"prefs-citizen-theme-option-dark": "Label for the dark theme option",
 	"prefs-citizen-fontsize-label": "Label for the font size settings",
 	"prefs-citizen-pagewidth-label": "Label for the page width settings",
+	"prefs-citizen-lineheight-label": "Label for the line height settings",
 	"prefs-citizen-resetbutton-label": "Label for the reset button that restore default settings"
 }

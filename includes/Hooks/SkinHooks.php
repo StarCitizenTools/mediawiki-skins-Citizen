@@ -75,7 +75,7 @@ class SkinHooks implements SkinPageReadyConfigHook, BeforePageDisplayHook {
 		$script = sprintf(
 			'<script%s>%s</script>',
 			$nonce !== false ? sprintf( ' nonce="%s"', $nonce ) : '',
-			'window.applyPref=()=>{var e;try{const t=document.documentElement,i=window.localStorage.getItem("skin-citizen-theme"),n=window.localStorage.getItem("skin-citizen-fontsize"),l=window.localStorage.getItem("skin-citizen-pagewidth");null!==i&&(t.classList.remove(...(e="skin-citizen-",["auto","dark","light"].map(t=>e+t))),t.classList.add("skin-citizen-"+i)),null!==n&&t.style.setProperty("font-size",n),null!==l&&t.style.setProperty("--width-layout",l)}catch(t){}},window.applyPref();'
+			'window.applyPref=()=>{var e;try{const t=document.documentElement,i=window.localStorage.getItem("skin-citizen-theme"),n=window.localStorage.getItem("skin-citizen-fontsize"),l=window.localStorage.getItem("skin-citizen-pagewidth"),o=window.localStorage.getItem("skin-citizen-lineheight");null!==i&&(t.classList.remove(...(e="skin-citizen-",["auto","dark","light"].map(t=>e+t))),t.classList.add("skin-citizen-"+i)),null!==n&&t.style.setProperty("font-size",n),null!==l&&t.style.setProperty("--width-layout",l),null!==o&&t.style.setProperty("--line-height",o)}catch(t){}},window.applyPref();'
 		);
 
 		$out->addHeadItem( 'skin.citizen.inline', $script );

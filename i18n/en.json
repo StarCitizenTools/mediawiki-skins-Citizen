@@ -48,5 +48,6 @@
 
 	"prefs-citizen-fontsize-label": "Font size",
 	"prefs-citizen-pagewidth-label": "Page width",
+	"prefs-citizen-lineheight-label": "Line height",
 	"prefs-citizen-resetbutton-label": "Reset to default"
 }
