@@ -3,6 +3,7 @@
 		"authors": [
 			"Alistair3149",
 			"Kly",
+			"LNDDYL",
 			"Lakejason0",
 			"Neetp7k9",
 			"Winston Sung"
@@ -32,7 +33,7 @@
 	"citizen-tagline-ns-file": "{{SITENAME}}上的檔案",
 	"citizen-tagline-ns-mediawiki": "MediaWiki介面頁面",
 	"citizen-tagline-ns-template": "模板頁面",
-	"citizen-tagline-ns-help": "幫助頁面",
+	"citizen-tagline-ns-help": "說明頁面",
 	"citizen-tagline-ns-category": "分類頁面",
 	"prefs-citizen-theme-label": "主題",
 	"prefs-citizen-theme-option-auto": "自動",

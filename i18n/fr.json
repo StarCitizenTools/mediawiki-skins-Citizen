@@ -20,8 +20,8 @@
 	"citizen-sitestats-users-label": "utilisateurs",
 	"citizen-sitestats-edits-label": "modifications",
 	"citizen-drawer-search": "Menu de recherche",
-	"citizen-footer-desc": "Modifier ce texte sur [[MediaWiki:Citizen-footer-desc/fr]]",
-	"citizen-footer-tagline": "Modifier ce texte sur [[MediaWiki:Citizen-footer-tagline/fr]]",
+	"citizen-footer-desc": "Modifier ce texte sur [[MediaWiki:Citizen-footer-desc]]",
+	"citizen-footer-tagline": "Modifier ce texte sur [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Ajouter un sujet",
 	"citizen-jumptotop": "Retour au début",
 	"citizen-search-fulltext": "Rechercher les pages contenant",
@@ -39,5 +39,6 @@
 	"prefs-citizen-theme-option-dark": "Sombre",
 	"prefs-citizen-fontsize-label": "Taille de police",
 	"prefs-citizen-pagewidth-label": "Largeur de la page",
+	"prefs-citizen-lineheight-label": "Hauteur de ligne",
 	"prefs-citizen-resetbutton-label": "Réinitialiser aux valeurs par défaut"
 }

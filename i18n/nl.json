@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Mainframe98"
+			"Mainframe98",
+			"McDutchie"
 		]
 	},
 	"citizen.css": "/* CSS die hier wordt geplaatst heeft alleen invloed op het uiterlijk Citizen */",
@@ -10,8 +11,8 @@
 	"citizen-sitestats-images-label": "bestanden",
 	"citizen-sitestats-users-label": "gebruikers",
 	"citizen-sitestats-edits-label": "bewerkingen",
-	"citizen-footer-desc": "Bewerk deze tekst op [[MediaWiki:Citizen-footer-desc/nl]]",
-	"citizen-footer-tagline": "Bewerk deze tekst op [[MediaWiki:Citizen-footer-tagline/nl]]",
+	"citizen-footer-desc": "Bewerk deze tekst op [[MediaWiki:Citizen-footer-desc]]",
+	"citizen-footer-tagline": "Bewerk deze tekst op [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Onderwerp toevoegen",
 	"citizen-jumptotop": "Terug naar boven",
 	"citizen-search-fulltext-empty": "Type om te beginnen met zoeken",

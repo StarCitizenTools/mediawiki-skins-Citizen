@@ -20,7 +20,7 @@
 	"citizen-sitestats-edits-label": "ویرایش‌ها",
 	"citizen-drawer-search": "منوی جستجو",
 	"citizen-footer-desc": "این متن را در مدیاویکی:Citizen-footer-desc ویرایش کنید",
-	"citizen-footer-tagline": "این متن را در مدیاویکی:Citizen-footer-tagline ویرایش کنید",
+	"citizen-footer-tagline": "این متن را در [[MediaWiki:Citizen-footer-tagline/fa]] ویرایش کنید",
 	"citizen-action-addsection": "افزودن مبحث",
 	"citizen-jumptotop": "برگشت به بالا",
 	"citizen-search-fulltext": "جستجو برای صفحه‌های دربردارندهٔ",
@@ -37,5 +37,6 @@
 	"prefs-citizen-theme-option-dark": "تاریک",
 	"prefs-citizen-fontsize-label": "اندازهٔ قلم",
 	"prefs-citizen-pagewidth-label": "عرض صفحه",
+	"prefs-citizen-lineheight-label": "ارتفاع سطر",
 	"prefs-citizen-resetbutton-label": "بازنشانی به پیش‌گزیده"
 }

@@ -41,5 +41,6 @@
 	"prefs-citizen-theme-option-dark": "夜间",
 	"prefs-citizen-fontsize-label": "字体大小",
 	"prefs-citizen-pagewidth-label": "页面宽度",
+	"prefs-citizen-lineheight-label": "行高",
 	"prefs-citizen-resetbutton-label": "重置到默认"
 }

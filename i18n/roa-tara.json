@@ -17,8 +17,8 @@
 	"citizen-sitestats-users-label": "utinde",
 	"citizen-sitestats-edits-label": "cangiaminde",
 	"citizen-drawer-search": "Menù de recerche",
-	"citizen-footer-desc": "Cange stu teste sus a [[MediaWiki:Citizen-footer-desc/roa-tara]]",
-	"citizen-footer-tagline": "Cange stu teste sus a [[MediaWiki:Citizen-footer-desc/roa-tara]]",
+	"citizen-footer-desc": "Cange stu teste sus a [[MediaWiki:Citizen-footer-desc]]",
+	"citizen-footer-tagline": "Cange stu teste sus a [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Aggiunge 'n'argomende",
 	"citizen-jumptotop": "Tuèrne sus",
 	"citizen-search-fulltext": "Cirche le pàggene ca tènene",
@@ -36,5 +36,6 @@
 	"prefs-citizen-theme-option-dark": "Scure",
 	"prefs-citizen-fontsize-label": "Dimenzione d'u carattere",
 	"prefs-citizen-pagewidth-label": "Larghezze d'a pàgene",
+	"prefs-citizen-lineheight-label": "Iertezze d'a linèe",
 	"prefs-citizen-resetbutton-label": "Azzere a le predefinite"
 }
