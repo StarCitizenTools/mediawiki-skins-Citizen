@@ -1,213 +1,257 @@
 /*
- * Citizen - Wiki Editor
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:WikiEditor
+ * Module: ext.wikiEditor
+ * Version: REL1_35 e18315e
+ *
+ * Date: 2021-08-11
 */
 
-@import '../../../resources/variables.less';
-
-.skin-citizen-dark {
-	/**
-	jquery.wikiEditor.less
-	 */
-	.wikiEditor-ui {
-		.wikiEditor-ui-view {
-			border: 1px solid @dark-bg-30;
-		}
-
-		.wikiEditor-ui-top {
-			border-bottom: 1px solid @dark-bg-30;
-		}
-
-		.wikiEditor-ui-right {
-			background: @dark-bg-10;
-		}
+/* jquery.wikiEditor.less */
+.wikiEditor-ui {
+	.wikiEditor-ui-view {
+		border-color: var( --border-color-base );
 	}
 
-	.wikiEditor-ui-controls {
-		background-color: @dark-bg-0;
+	.wikiEditor-ui-top {
+		border-color: var( --border-color-base );
 	}
 
-	.wikiEditor-ui-tabs {
-		border-top: 1px solid @dark-bg-30;
-		border-left: 1px solid @dark-bg-30;
-		background-color: @dark-bg-0;
+	.wikiEditor-ui-right {
+		background: var( --color-surface-2 );
+	}
+}
 
-		div {
-			border-right: 1px solid @dark-bg-30;
-			border-bottom: 1px solid @dark-bg-30;
-			background-color: @dark-bg-10;
+.wikiEditor-ui-controls {
+	background-color: var( --color-surface-1 );
+}
+
+.wikiEditor-ui-tabs {
+	border-top-color: var( --border-color-base );
+	border-left-color: var( --border-color-base );
+	background-color: var( --color-surface-1 );
+
+	div {
+		border-right-color: var( --border-color-base );
+		border-bottom-color: var( --border-color-base );
+		background-color: var( --color-surface-2 );
+
+		a {
+			color: var( --color-link );
+		}
+
+		&.current {
+			border-bottom-color: var( --color-surface-1 );
+			background-color: var( --color-surface-1 );
 
 			a {
-				color: @color-primary;
+				color: var( --color-base );
+			}
+		}
+	}
+}
+
+.wikiEditor-ui-buttons {
+	border-top-color: var( --color-surface-1 );
+	background-color: var( --color-surface-1 );
+}
+
+.wikiEditor-ui-loading {
+	border-color: var( --border-color-base );
+	background: var( --color-surface-2 );
+}
+
+/* jquery.wikiEditor.toolbar.less */
+.wikiEditor-ui-toolbar {
+	.sections {
+		.section {
+			border-top-color: var( --border-color-base );
+		}
+	}
+
+	.tabs {
+		span.tab {
+			a {
+				color: var( --color-link );
 			}
 
-			&.current {
-				border-bottom: 1px solid @dark-bg-0;
-				background-color: @dark-bg-0;
+			a:visited {
+				color: var( --color-link );
+			}
 
-				a {
-					color: @dark-text-90;
-				}
+			a.current,
+			a.current:visited {
+				color: var( --color-base );
 			}
 		}
 	}
 
-	.wikiEditor-ui-buttons {
-		border-top: 1px solid @dark-bg-0;
-		background-color: @dark-bg-0;
-	}
+	.group {
+		border-right-color: var( --border-color-base );
 
-	.wikiEditor-ui-loading {
-		border: 1px solid @dark-bg-30;
-		background: @dark-bg-10;
-	}
-
-	/**
-	jquery.wikiEditor.toolbar.less
-	 */
-	.wikiEditor-ui-toolbar {
-		background-color: @dark-bg-20;
-		background-image: linear-gradient( to bottom, @dark-bg-10, @dark-bg-20 );
-
-		.sections {
-			.section {
-				border-top: 1px solid @dark-bg-30;
-				background-color: @dark-bg-20;
-			}
+		.label {
+			color: var( --color-base--subtle );
 		}
 
-		.tabs {
-			span.tab {
-				a,
-				a:visited {
-					color: @color-primary;
-				}
-
-				a.current,
-				a.current:visited {
-					color: @dark-text-90;
-				}
-			}
-		}
-
-		.group {
-			border-right: 1px solid @dark-bg-30;
+		.tool-select {
+			border-color: var( --border-color-base );
+			background-color: var( --color-surface-1 );
 
 			.label {
-				color: @dark-text-70;
+				color: var( --color-base );
 			}
 
-			.tool-select {
-				border: 1px solid @dark-bg-30;
-				background-color: @dark-bg-0;
+			.options {
+				border-color: var( --border-color-base );
+				background-color: var( --color-surface-1 );
 
-				.label {
-					color: @dark-text-90;
-				}
-
-				.menu {
-					.options {
-						border: 1px solid @dark-bg-30;
-						background-color: @dark-bg-0;
-					}
-				}
-
-				.options {
-					.option {
-						color: @dark-text-100;
-
-						&:hover {
-							background-color: @dark-bg-20;
-						}
-					}
-				}
-			}
-		}
-
-		.group-search {
-			border-left: 1px solid @dark-bg-30;
-		}
-
-		.booklet {
-			.index {
-				div {
-					color: @color-primary;
-				}
-
-				.current {
-					background-color: @dark-bg-20;
-					color: @dark-text-90;
-				}
-			}
-
-			.pages {
-				background-color: @dark-bg-10;
-			}
-		}
-
-		.page-table {
-			th {
-				color: @dark-text-80;
-			}
-
-			td {
-				border-top: 1px solid @dark-bg-20;
-				color: @dark-text-100;
-			}
-		}
-
-		.page-characters {
-			div {
-				span {
-					border: 1px solid @dark-bg-30;
-					color: @dark-text-100;
+				.option {
+					color: var( --color-base--emphasized );
 
 					&:hover {
-						background-color: @dark-bg-0;
+						background-color: var( --background-color-primary--hover );
 					}
 				}
 			}
 		}
 	}
 
-	.tool.oo-ui-buttonElement-frameless.oo-ui-iconElement {
-		&:hover {
-			background-color: @dark-bg-20;
-			outline: 1px solid @dark-bg-30;
-		}
+	.group-search {
+		border-left-color: var( --border-color-base );
 	}
 
-	.tool-button.tool-active,
-	.tool.tool-active.oo-ui-buttonElement-frameless.oo-ui-iconElement {
-		background-color: @dark-bg-20;
-		box-shadow: inset 0 -10px 10px rgba( 0, 0, 0, 0.4 );
-		outline: 1px solid @dark-bg-30;
-	}
-
-	.ui-widget {
-		table {
-			td.wikieditor-toolbar-table-preview-wrapper {
-				background: @dark-bg-20;
-			}
-
-			.wikieditor-toolbar-table-preview-frame {
-				background: @dark-bg-0;
+	.booklet {
+		> .index {
+			.wikiEditor-character-highlighted {
+				background-color: var( --background-color-primary--active );
+				color: var( --color-base--emphasized );
 			}
 		}
 	}
 
-	/**
-	jquery.wikiEditor.dialogs.config.less
-	 */
-	.wikiEditor-toolbar-dialog {
-		.ui-dialog-buttonpane {
-			border-top: 1px solid @dark-bg-30 !important;
+	.page-table {
+		th {
+			color: var( --color-base--subtle );
+		}
+
+		td {
+			border-top-color: var( --border-color-base );
+			color: var( --color-base--emphasized );
 		}
 	}
 
-	.wikiEditor-template-dialog-fields {
-		.wikiEditor-template-dialog-field-wrapper {
-			border-bottom: 1px dashed @dark-bg-30;
+	.page-characters {
+		div {
+			span {
+				border-color: var( --border-color-base );
+				color: var( --color-base );
+
+				&:hover {
+					border-color: var( --border-color-base );
+					background-color: var( --background-color-quiet--hover );
+				}
+
+				&:active {
+					background-color: var( --background-color-quiet--active );
+				}
+			}
+
+			.wikiEditor-character-highlighted {
+				background-color: var( --background-color-primary--hover );
+				color: var( --color-base--emphasized );
+			}
 		}
+	}
+}
+
+.ui-widget {
+	table {
+		td.wikieditor-toolbar-table-preview-wrapper {
+			background: var( --color-surface-2 );
+		}
+
+		.wikieditor-toolbar-table-preview-frame {
+			background: var( --color-surface-0 );
+		}
+	}
+}
+
+/* jquery.wikiEditor.dialogs.config.less */
+.wikiEditor-template-dialog-fields {
+	.wikiEditor-template-dialog-field-wrapper {
+		border-bottom-color: var( --border-color-base );
+	}
+}
+
+/* jquery.wikiEditor.toolbar-wikimedia.less */
+/* stylelint-disable no-duplicate-selectors */
+.wikiEditor-ui-toolbar {
+	background-color: var( --color-surface-2 );
+	box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.03 ), 0 1px 2px rgba( 0, 0, 0, 0.06 ); // boxshadow 1
+
+	/* Groups */
+	.group {
+		border-color: var( --border-color-base );
+
+		.tool-select {
+			.menu .options {
+				box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.03 ), 0 1px 2px rgba( 0, 0, 0, 0.06 ); // boxshadow 1
+
+				.option {
+					&:hover {
+						background-color: var( --background-color-quiet--hover );
+					}
+
+					&:active {
+						background-color: var( --background-color-quiet--active );
+					}
+				}
+			}
+		}
+	}
+
+	.booklet {
+		> .index {
+			> :hover {
+				background-color: var( --background-color-quiet--hover );
+			}
+
+			> :active {
+				background-color: var( --background-color-quiet--active );
+			}
+
+			> .current {
+				background-color: var( --background-color-primary--hover );
+				color: var( --color-primary );
+			}
+		}
+	}
+}
+
+.tool-button,
+.tool.oo-ui-buttonElement-frameless.oo-ui-iconElement > .oo-ui-buttonElement-button {
+	&:hover {
+		background-color: var( --background-color-quiet--hover );
+
+		> .oo-ui-iconElement-icon {
+			opacity: var( --opacity-icon-base--hover );
+		}
+	}
+
+	&.tool-active {
+		background-color: var( --background-color-primary--hover );
+	}
+}
+
+.tool.oo-ui-buttonElement-frameless.oo-ui-iconElement > .oo-ui-buttonElement-button > .oo-ui-iconElement-icon {
+	opacity: var( --opacity-icon-base );
+}
+/* stylelint-enable no-duplicate-selectors */
+
+// Dark mode icons
+.skin-citizen-dark {
+	.wikiEditor-ui-toolbar .tabs span.tab a:before {
+		filter: invert( 1 ) hue-rotate( 180deg );
 	}
 }

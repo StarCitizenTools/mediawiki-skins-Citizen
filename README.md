@@ -59,7 +59,7 @@ Name | Grade | Version | Last updated
 [UniversalLanguageSelector](https://www.mediawiki.org/wiki/Extension:UniversalLanguageSelector) | B | MLEB 2021.07 | 2021-07-29
 [UploadWizard](https://www.mediawiki.org/wiki/Extension:UploadWizard) | C | N/A | N/A
 [VisualEditor](https://www.mediawiki.org/wiki/Extension:VisualEditor) | A | REL1_35 `cc3466a` | 2021-08-04
-[WikiEditor](https://www.mediawiki.org/wiki/Extension:WikiEditor) | E | N/A | N/A
+[WikiEditor](https://www.mediawiki.org/wiki/Extension:WikiEditor) | B | REL1_35 `e18315e` | 2021-08-11
 
 Some of the field are tagged as N/A because the information was not tracked before.
 
