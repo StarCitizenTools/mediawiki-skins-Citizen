@@ -5,6 +5,7 @@
 
 .skin-citizen {
 	.CodeMirror {
+		background-color: var( --background-color-dp-01 );
 		color: var( --color-base );
 
 		/* Gutter */
@@ -20,5 +21,120 @@
 		&-guttermarker-subtle {
 			color: var( --color-base--subtle );
 		}
+
+		/* Highlighting */
+		--codemirror-yellow: #ffd700;
+		--codemirror-light-blue: #adf;
+		--codemirror-blue: #08f;
+		--codemirror-green: #290;
+		--codemirror-orange: #f50;
+		--codemirror-red: #c51313;
+		--codemirror-purple: #9800e5;
+		--codemirror-pink: #e0e;
+		--codemirror-gray: #84a0a0;
+
+		& .cm-comment {
+			color: var( --codemirror-yellow );
+		}
+
+		& .cm-mw-comment {
+			color: var( --codemirror-gray );
+		}
+
+		& .cm-variable-2 {
+			color: var( --codemirror-light-blue );
+		}
+
+		& .cm-mw-matching {
+			background-color: var( --codemirror-yellow );
+		}
+
+		& .cm-mw-skipformatting {
+			background-color: var( --codemirror-light-blue );
+		}
+
+		& .cm-keyword,
+
+		& .cm-mw-template,
+		& .cm-mw-template-argument-name,
+		& .cm-mw-template-bracket,
+		& .cm-mw-template-delimiter,
+		& .cm-mw-template-name {
+			color: var( --codemirror-purple );
+		}
+
+		& .cm-string,
+
+		& .cm-mw-templatevariable,
+		& .cm-mw-templatevariable-bracket,
+		& .cm-mw-templatevariable-delimiter,
+		& .cm-mw-templatevariable-name {
+			color: var( --codemirror-orange );
+		}
+
+		& .cm-mw-parserfunction-bracket,
+		& .cm-mw-parserfunction-delimiter,
+		& .cm-mw-parserfunction-name {
+			color: var( --codemirror-red );
+		}
+
+		& .cm-number,
+		& .cm-mw-mnemonic,
+
+		& .cm-mw-exttag-attribute,
+		& .cm-mw-exttag-bracket,
+		& .cm-mw-exttag-name,
+		& .cm-mw-htmltag-attribute,
+		& .cm-mw-htmltag-bracket,
+		& .cm-mw-htmltag-name {
+			color: var( --codemirror-green );
+		}
+
+		& .cm-mw-list,
+		& .cm-def,
+		& .cm-mw-apostrophes-bold,
+		& .cm-mw-apostrophes-italic,
+		& .cm-mw-section-header,
+		& .cm-mw-indenting,
+
+		& .cm-mw-link,
+		& .cm-mw-link-pagename,
+		& .cm-mw-link-tosection,
+		& .cm-mw-extlink,
+		& .cm-mw-extlink-bracket,
+		& .cm-mw-extlink-protocol,
+		& .cm-mw-free-extlink,
+		& .cm-mw-free-extlink-protocol,
+		& .cm-mw-link-bracket,
+		& .cm-mw-link-delimiter {
+			color: var( --codemirror-blue );
+		}
+
+		& .cm-mw-doubleUnderscore,
+		& .cm-mw-hr,
+		& .cm-mw-signature {
+			background-color: var( --background-color-dp-12 );
+			color: var( --codemirror-blue );
+		}
+
+		& .cm-atom,
+
+		& .cm-mw-table-bracket,
+		& .cm-mw-table-definition,
+		& .cm-mw-table-delimiter {
+			color: var( --codemirror-pink );
+		}
 	}
+}
+
+.skin-citizen-dark .CodeMirror {
+	--codemirror-yellow: #bda000;
+	--codemirror-light-blue: #adf;
+	--codemirror-blue: #08f;
+	--codemirror-green: #4fbb30;
+	--codemirror-orange: #f50;
+	--codemirror-red: #b71212;
+	--codemirror-purple: #c34aff;
+	--codemirror-pink: #e0e;
+	--codemirror-gray: #84a0a0;
 }
