@@ -1,85 +1,99 @@
 /*
- * Citizen - Echo Styles
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:Echo
+ * Module: ext.echo.styles.badge
+ * Version: REL1_35 347c30e
+ *
+ * Date: 2021-08-11
 */
 
-@import '../../../resources/variables.less';
+.mw-echo-notifications-badge {
+	#pt-notifications-alert &,
+	#pt-notifications-notice & {
+		width: var( --size-icon );
+		height: var( --size-icon );
+		box-sizing: content-box;
+		padding: var( --padding-header-icon );
+		margin: 0;
+		background-position: center;
+		background-repeat: no-repeat;
+		opacity: var( --opacity-icon-base );
 
-// Styles for echo badges
-#pt-notifications {
-	&-alert,
-	&-notice {
-		position: relative;
-		margin: var( --margin-header-item ) 0;
-		border-radius: var( --border-radius--small );
-
-		.mw-echo-notifications-badge {
-			top: 0;
-			width: var( --size-icon );
-			height: var( --size-icon );
-			box-sizing: content-box;
-			padding: var( --padding-header-icon );
-			margin: 0;
-			background-position: center;
-			background-repeat: no-repeat;
-			opacity: var( --opacity-icon-base );
-			transition: @transition-opacity-quick, @transition-transform-quick;
-
-			&:hover {
-				opacity: var( --opacity-icon-base--hover ) !important; // override all styles
-			}
-
-			&:active {
-				opacity: var( --opacity-icon-base--active ) !important;
-			}
-
-			// Badge tweaks
-			&:after {
-				background-color: var( --color-destructive );
-				border-radius: 100px;
-				font-size: 10px;
-			}
-
-			&.mw-echo-notifications-badge-all-read {
-				opacity: var( --opacity-base--disabled );
-			}
+		&:hover {
+			opacity: var( --opacity-icon-base--hover );
 		}
 
 		&:active {
-			background-color: var( --background-color-quiet--active ) !important;
+			opacity: var( --opacity-icon-base--active );
 		}
-	}
 
-	// Rotate bell
-	&-alert {
-		.mw-echo-notifications-badge {
-			&:hover,
-			&:focus,
-			&:active {
-				transform: rotateZ( 20deg );
+		&:focus {
+			box-shadow: 0 0 0 1px #fff, 0 0 0 3px var( --color-primary );
+			opacity: var( --opacity-icon-base--active );
+
+			&:after {
+				border-color: var( --color-primary );
 			}
 		}
-	}
-}
 
-.skin-citizen-dark {
-	#pt-notifications {
-		&-alert,
-		&-notice {
-			.mw-echo-notifications-badge {
-				filter: invert( 1 ) hue-rotate( 180deg );
-			}
+		&:after {
+			top: 0;
+			border-color: var( --color-surface-0 );
+			background-color: var( --color-base--subtle );
+			border-radius: 100%;
 		}
-	}
-}
 
-@media screen and ( hover: hover ) {
-	#pt-notifications {
-		&-alert,
-		&-notice {
+		&-dimmed {
+			opacity: var( --opacity-icon-base--disabled );
+		}
+
+		&.mw-echo-notifications-badge-all-read {
+			opacity: var( --opacity-icon-base );
+
 			&:hover {
-				background-color: var( --background-color-quiet--hover );
+				opacity: var( --opacity-icon-base--hover );
 			}
+
+			&:active {
+				opacity: var( --opacity-icon-base--active );
+			}
+		}
+	}
+
+	&.oo-ui-flaggedElement-unseen,
+	&.mw-echo-unseen-notifications {
+		#pt-notifications-alert &:after {
+			background-color: var( --color-destructive );
+		}
+
+		#pt-notifications-notice &:after {
+			background-color: var( --color-destructive );
+		}
+	}
+}
+
+// Add quiet background hover states
+#pt-notifications-alert,
+#pt-notifications-notice {
+	z-index: 1; // fix background clipping
+	border-radius: var( --border-radius--small );
+
+	&:hover {
+		background-color: var( --background-color-quiet--hover );
+	}
+
+	&:active {
+		background-color: var( --background-color-quiet--active );
+	}
+}
+
+// Dark mode icon
+.skin-citizen-dark {
+	#pt-notifications-alert,
+	#pt-notifications-notice {
+		.mw-echo-notifications-badge {
+			filter: invert( 1 ) hue-rotate( 180deg );
 		}
 	}
 }

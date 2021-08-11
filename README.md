@@ -42,7 +42,7 @@ Name | Grade | Version | Last updated
 [CodeMirror](https://www.mediawiki.org/wiki/Extension:CodeMirror) | D | N/A | N/A
 [CookieWarning](https://www.mediawiki.org/wiki/Extension:CookieWarning) | A | N/A | N/A
 [DismissableSiteNotice](https://www.mediawiki.org/wiki/Extension:DismissableSiteNotice) | A | N/A | N/A
-[Echo](https://www.mediawiki.org/wiki/Extension:Echo) | E | N/A | N/A
+[Echo](https://www.mediawiki.org/wiki/Extension:Echo) | A | REL1_35 `347c30e` | 2021-08-11
 [Flow (StructuredDiscussions)](https://www.mediawiki.org/wiki/Extension:StructuredDiscussions) | E | N/A | N/A
 [Graph](https://www.mediawiki.org/wiki/Extension:Graph) | D | N/A | N/A
 [Lingo](https://www.mediawiki.org/wiki/Extension:Lingo) | E | N/A | N/A

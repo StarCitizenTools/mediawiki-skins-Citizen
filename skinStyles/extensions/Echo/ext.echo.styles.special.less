@@ -1,0 +1,48 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:Echo
+ * Module: ext.echo.styles.special
+ * Version: REL1_35 347c30e
+ *
+ * Date: 2021-08-11
+*/
+
+.mw-echo-date-section {
+	border-bottom-color: var( --border-color-base );
+	color: var( --color-base--subtle );
+}
+
+.mw-echo-special-navbar-bottom {
+	border-top-color: var( --border-color-base );
+}
+
+.mw-echo-special-notifications {
+	.mw-echo-notification {
+		background-color: var( --color-surface-2 );
+
+		&:hover {
+			background-color: var( --color-surface-2--hover );
+		}
+
+		&:active {
+			background-color: var( --color-surface-2--active );
+		}
+
+		&-unread {
+			color: var( --color-base );
+
+			.mw-echo-markAsReadButton {
+				opacity: var( --opacity-icon-base );
+
+				&:hover {
+					opacity: var( --opacity-icon-base--hover );
+				}
+
+				&:active {
+					opacity: var( --opacity-icon-base--active );
+				}
+			}
+		}
+	}
+}

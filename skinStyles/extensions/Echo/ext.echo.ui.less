@@ -1,202 +1,129 @@
 /*
- * Citizen - Echo Styles
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:Echo
+ * Module: ext.echo.ui
+ * Version: REL1_35 347c30e
+ *
+ * Date: 2021-08-11
 */
 
-@import '../../../resources/variables.less';
-@import '../../../resources/mixins.less';
+/* mw.echo.ui.mobile.less */
+@media all and ( max-width: 720px ) {
+	.mw-echo-ui-overlay {
+		.mw-echo-ui-notificationBadgeButtonPopupWidget-popup {
+			right: var( --padding-page );
+			left: var( --padding-page ) !important;
+		}
+	}
+}
 
+/* mw.echo.ui.overlay.less */
 .mw-echo-ui-overlay {
+	position: fixed; // Header is fixed
 	z-index: 100; // Higher than header
 }
 
-.mw-echo-ui-notificationBadgeButtonPopupWidget-popup > .oo-ui-popupWidget-popup > .oo-ui-popupWidget-head {
-	position: relative;
-	z-index: 2;
-	border: 0 !important;
-	.boxshadow(2);
-}
-
-.mw-echo-ui-notificationBadgeButtonPopupWidget-popup > .oo-ui-popupWidget-popup > .oo-ui-popupWidget-footer {
-	border-color: @base-80 !important;
-}
-
+/* mw.echo.ui.NotificationItemWidget.less */
 .mw-echo-ui-notificationItemWidget {
-	max-width: 100vw;
-}
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-3 );
 
-// 500px or below will break the message box, +40px margin
-@media only screen and ( max-width: 540px ) {
-	.mw-echo-ui-notificationBadgeButtonPopupWidget-popup {
-		left: 0 !important;
-
-		> .oo-ui-popupWidget-popup {
-			width: auto !important;
-
-			> .oo-ui-popupWidget-body {
-				width: auto !important;
-			}
-		}
-
-		> .oo-ui-popupWidget-anchor {
-			display: none;
-		}
-	}
-}
-
-.skin-citizen-dark {
-	/**
-  mw.echo.ui.CrossWikiUnreadFilterWidget.less
-   */
-	.mw-echo-ui-crossWikiNotificationItemWidget,
-	.mw-echo-ui-bundleNotificationItemWidget {
-		&-separator {
-			border-bottom: 1px solid @dark-bg-20;
-		}
-
-		&-group {
-			background-color: @dark-bg-10;
-		}
-
-		.mw-echo-ui-subGroupListWidget-header {
-			&-row-title {
-				color: @dark-text-80;
-			}
-		}
+	&:hover {
+		background-color: var( --color-surface-2--hover );
 	}
 
-	/**
-  mw.echo.ui.CrossWikiNotificationItemWidget.less
-   */
-	.mw-echo-ui-crossWikiUnreadFilterWidget {
-		border: 1px solid @dark-bg-30 !important;
-
-		&-subtitle {
-			color: @dark-text-70;
-		}
+	&:active {
+		background-color: var( --color-surface-2--active );
 	}
 
-	/**
-	mw.echo.ui.CrossWikiNotificationItemWidget.less
-	 */
-	.mw-echo-ui-datedSubGroupListWidget {
-		.mw-body-content &-title {
-			&-secondary {
-				color: @dark-text-70;
-			}
-		}
-
-		/**
-	mw.echo.ui.FooterNoticeWidget.less
-	 */
-		.mw-echo-ui-footerNoticeWidget {
-			border-bottom: 1px solid @dark-bg-30;
-		}
+	&:last-child {
+		border-bottom-color: var( --border-color-base );
 	}
 
-	/**
-  mw.echo.ui.MenuItemWidget.less
-   */
-	.mw-echo-ui-menuItemWidget {
-		> .oo-ui-labelElement-label {
-			color: @dark-text-90;
-		}
-
-		&-dynamic-action {
-			&:hover {
-				background-color: @dark-bg-0;
-			}
-
-			.mw-echo-ui-menuItemWidget-description {
-				color: @dark-text-80;
-			}
-		}
-
-		.mw-echo-ui-actionMenuPopupWidget-menu:hover {
-			background-color: @dark-bg-20;
-		}
-	}
-
-	/**
-	mw.echo.ui.NotificationBadgeWidget.less
-	 */
-	.mw-echo-ui-notificationBadgeButtonPopupWidget {
-		&-popup {
-			> .oo-ui-popupWidget-popup {
-				> .oo-ui-popupWidget-head {
-					border-color: @dark-bg-30;
-				}
-
-				> .oo-ui-popupWidget-footer {
-					border-color: @dark-bg-30 !important;
-
-					.mw-echo-ui-notificationBadgeButtonPopupWidget-footer-buttons {
-						.oo-ui-buttonElement {
-							&:last-child {
-								border-color: @dark-bg-30 !important;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	mw.echo.ui.NotificationItemWidget.less
-	 */
-	.mw-echo-ui-notificationItemWidget {
-		border-color: @dark-bg-30;
-		background-color: @dark-bg-20;
+	&-unread {
+		background-color: var( --color-surface-1 );
 
 		&:hover {
-			background-color: @dark-bg-30;
+			background-color: var( --color-surface-2--hover );
 		}
+	}
 
-		&:last-child {
-			border-color: @dark-bg-30;
+	&-notify {
+		&-description {
+			color: var( --color-base--subtle );
 		}
+	}
 
-		&-unread {
-			background-color: @dark-bg-0;
+	&-icon {
+		img {
+			width: 24px; // It looks nicer
+		}
+	}
 
-			&:hover {
-				background-color: @dark-bg-10;
+	&-content {
+		&-message {
+			&-header {
+				color: var( --color-base--emphasized );
+			}
+
+			&-body {
+				color: var( --color-base--subtle );
 			}
 		}
 
-		&-notify {
-			&-description {
-				color: @dark-text-80;
-			}
+		&-table {
+			display: block;
 		}
 
-		&-content {
-			&-message {
-				&-header {
-					color: @dark-text-100;
+		&-actions {
+			display: flex; // Table row does not align things properly
+			align-items: center;
+
+			& > &-buttons.oo-ui-buttonSelectWidget {
+				display: block;
+				margin-right: 0;
+			}
+
+			.mw-echo-ui-menuItemWidget-prioritized {
+				border-radius: var( --border-radius-small );
+
+				&:hover {
+					background-color: var( --background-color-quiet--hover );
 				}
 
-				&-body {
-					color: @dark-text-70;
+				&:active {
+					background-color: var( --background-color-quiet--active );
 				}
 			}
 
-			&-actions {
-				&-timestamp {
-					color: @dark-text-100;
+			&-menu {
+				opacity: var( --opacity-icon-base );
+
+				&:hover {
+					opacity: var( --opacity-icon-base--hover );
 				}
+
+				&:active {
+					opacity: var( --opacity-icon-base--active );
+				}
+			}
+
+			&-timestamp {
+				display: block;
+				color: var( --color-base--subtle );
+				opacity: 1;
 			}
 		}
+	}
 
-		&-bundled {
-			.mw-echo-ui-notificationItemWidget-content {
-				.mw-echo-ui-notificationItemWidget {
-					&-content-message {
-						&-header {
-							em {
-								color: @dark-text-70;
-							}
+	&-bundled {
+		.mw-echo-ui-notificationItemWidget-content {
+			.mw-echo-ui-notificationItemWidget {
+				&-content-message {
+					&-header {
+						em {
+							color: var( --color-base--subtle );
 						}
 					}
 				}
@@ -204,124 +131,151 @@
 		}
 	}
 
-	@-webkit-keyframes unseen-fadeout-to-unread {
-		from {
-			background-color: @dark-bg-30;
-		}
+	&-initiallyUnseen {
+		-webkit-animation-name: unseen-fadeout-to-read;
+		animation-name: unseen-fadeout-to-read;
 
-		to {
-			background-color: @dark-bg-0;
+		&.mw-echo-ui-notificationItemWidget-unread {
+			-webkit-animation-name: unseen-fadeout-to-unread;
+			animation-name: unseen-fadeout-to-unread;
+		}
+	}
+}
+
+@-webkit-keyframes unseen-fadeout-to-unread {
+	from {
+		background-color: var( --color-surface-2 );
+	}
+
+	to {
+		background-color: var( --color-surface-1 );
+	}
+}
+
+@keyframes unseen-fadeout-to-unread {
+	from {
+		background-color: var( --color-surface-2 );
+	}
+
+	to {
+		background-color: var( --color-surface-1 );
+	}
+}
+
+@-webkit-keyframes unseen-fadeout-to-read {
+	from {
+		background-color: var( --color-surface-2 );
+	}
+
+	to {
+		background-color: var( --color-surface-3 );
+	}
+}
+
+@keyframes unseen-fadeout-to-read {
+	from {
+		background-color: var( --color-surface-2 );
+	}
+
+	to {
+		background-color: var( --color-surface-3 );
+	}
+}
+
+/* mw.echo.ui.ToggleReadCircleButtonWidget.less */
+.mw-echo-ui-toggleReadCircleButtonWidget {
+	&-circle {
+		background-color: var( --color-primary );
+
+		&-unread {
+			border-color: var( --border-color-base );
+			background-color: var( --color-surface-2 );
 		}
 	}
 
-	@keyframes unseen-fadeout-to-unread {
-		from {
-			background-color: @dark-bg-30;
-		}
+	&:hover .mw-echo-ui-toggleReadCircleButtonWidget-circle {
+		background-color: var( --color-primary--hover );
 
-		to {
-			background-color: @dark-bg-0;
+		&-unread {
+			background-color: var( --color-surface-2--hover );
 		}
 	}
 
-	@-webkit-keyframes unseen-fadeout-to-read {
-		from {
-			background-color: @dark-bg-30;
+	&:active .mw-echo-ui-toggleReadCircleButtonWidget-circle {
+		background-color: var( --color-primary--active );
+
+		&-unread {
+			background-color: var( --color-surface-2--active );
+		}
+	}
+}
+
+
+/* mw.echo.ui.CrossWikiNotificationItemWidget.less */
+.mw-echo-ui-crossWikiNotificationItemWidget,
+.mw-echo-ui-bundleNotificationItemWidget {
+	&-separator {
+		border-bottom-color: var( --border-color-base );
+	}
+
+	&-group {
+		background-color: var( --color-surface-2 );
+	}
+
+	.mw-echo-ui-subGroupListWidget-header {
+		&-row-title {
+			color: var( --color-base--subtle );
+		}
+	}
+}
+
+/* mw.echo.ui.NotificationsListWidget.less */
+.mw-echo-ui-notificationsListWidget {
+	> a,
+	&:hover > a {
+		color: var( --color-base--subtle );
+	}
+
+	&:not( :hover ) a,
+	#p-personal &:not( :hover ) a.new {
+		color: var( --color-base--subtle );
+	}
+}
+
+/* mw.echo.ui.PlaceholderItemWidget.less */
+.mw-echo-ui-placeholderItemWidget {
+	background-color: var( --color-surface-1 );
+}
+
+/* mw.echo.ui.MenuItemWidget.less */
+.mw-echo-ui-menuItemWidget {
+	> .oo-ui-labelElement-label {
+		color: var( --color-base );
+	}
+
+	&-prioritized {
+		opacity: var( --opacity-icon-base );
+
+		&:hover {
+			opacity: var( --opacity-icon-base--hover );
 		}
 
-		to {
-			background-color: @dark-bg-20;
+		&:active {
+			opacity: var( --opacity-icon-base--active );
 		}
 	}
 
-	@keyframes unseen-fadeout-to-read {
-		from {
-			background-color: @dark-bg-30;
+	&-dynamic-action {
+		&:hover {
+			background-color: var( --color-surface-1 );
 		}
 
-		to {
-			background-color: @dark-bg-20;
-		}
-	}
-
-	/**
-	mw.echo.ui.NotificationsInboxWidget.less
-	 */
-	.mw-echo-ui-notificationsInboxWidget {
-		&-toolbarWrapper {
-			background: @dark-bg-0 !important;
+		.mw-echo-ui-menuItemWidget-description {
+			color: var( --color-base--subtle );
 		}
 	}
 
-	/**
-	mw.echo.ui.NotificationsListWidget.less
-	 */
-	.mw-echo-ui-notificationsListWidget {
-		> a,
-		&:hover > a {
-			color: @dark-text-80;
-		}
-
-		&:not( :hover ) a,
-		#p-personal &:not( :hover ) a.new {
-			color: @dark-text-80;
-		}
-	}
-
-	/**
-	mw.echo.ui.PageNotificationsOptionWidget.less
-	 */
-	.mw-echo-ui-pageNotificationsOptionWidget {
-		&.oo-ui-optionWidget {
-			&-selected {
-				background-color: @dark-bg-30 !important;
-			}
-
-			&-highlighted {
-				background-color: @dark-bg-10 !important;
-				color: @dark-text-100 !important;
-			}
-		}
-
-		&-label-count {
-			background-color: @dark-bg-20;
-			color: @dark-text-80;
-		}
-	}
-
-	/**
-	mw.echo.ui.PlaceholderItemWidget.less
-	 */
-	.mw-echo-ui-placeholderItemWidget {
-		background-color: @dark-bg-20;
-	}
-
-	/**
-	mw.echo.ui.ToggleReadCircleButtonWidget.less
-	 */
-	.mw-echo-ui-toggleReadCircleButtonWidget {
-		&-circle {
-			&-unread {
-				border-color: @dark-bg-60;
-				background-color: @dark-bg-20;
-			}
-		}
-
-		&:hover .mw-echo-ui-toggleReadCircleButtonWidget-circle {
-			&-unread {
-				background-color: @dark-bg-30;
-			}
-		}
-	}
-
-	/**
-	Icons
-	 */
-	.mw-echo-ui-notificationsInboxWidget,
-	.mw-echo-ui-overlay {
-		.oo-ui-indicatorElement-indicator,
-		.oo-ui-iconElement-icon {
-			filter: invert( 1 ) hue-rotate( 180deg );
-		}
+	.mw-echo-ui-actionMenuPopupWidget-menu:hover {
+		background-color: var( --color-surface-2--hover );
 	}
 }

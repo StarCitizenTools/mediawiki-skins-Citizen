@@ -1,0 +1,57 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:Echo
+ * Module: ext.echo.special
+ * Version: REL1_35 347c30e
+ *
+ * Date: 2021-08-11
+*/
+
+/* mw.echo.ui.DatedSubGroupListWidget.less */
+.mw-echo-ui-datedSubGroupListWidget {
+	.mw-body-content &-title {
+		&-secondary {
+			color: var( --color-base--subtle );
+		}
+	}
+}
+
+/* mw.echo.ui.PageNotificationsOptionWidget.less */
+.mw-echo-ui-pageNotificationsOptionWidget {
+	&.oo-ui-optionWidget {
+		&-highlighted {
+			background-color: var( --color-surface-3 );
+			color: var( --color-base--emphasized );
+		}
+
+		&-selected {
+			background-color: var( --background-color-primary );
+			color: var( --color-primary );
+		}
+
+		&-selected&-highlighted,
+		&-pressed&-highlighted {
+			background-color: var( --background-color-primary--hover );
+			color: var( --color-primary--hover );
+		}
+	}
+
+	&-label-count {
+		background-color: var( --color-surface-3 );
+		color: var( --color-base--subtle );
+
+		.oo-ui-optionWidget-selected & {
+			color: var( --color-primary );
+		}
+	}
+}
+
+/* mw.echo.ui.CrossWikiUnreadFilterWidget.less */
+.mw-echo-ui-crossWikiUnreadFilterWidget {
+	border-color: var( --border-color-base );
+
+	&-subtitle {
+		color: var( --color-base--subtle );
+	}
+}
