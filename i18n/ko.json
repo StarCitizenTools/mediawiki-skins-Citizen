@@ -20,5 +20,6 @@
 	"prefs-citizen-theme-option-dark": "어두움",
 	"prefs-citizen-fontsize-label": "글자 크기",
 	"prefs-citizen-pagewidth-label": "페이지 너비",
+	"prefs-citizen-lineheight-label": "줄 높이",
 	"prefs-citizen-resetbutton-label": "기본값으로 재설정"
 }

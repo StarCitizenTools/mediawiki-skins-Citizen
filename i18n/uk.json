@@ -1,11 +1,42 @@
 {
 	"@metadata": {
 		"authors": [
+			"DDPAT",
 			"Ата"
 		]
 	},
 	"skinname-citizen": "Громадянин",
 	"citizen-skin-desc": "Гнучка тема оформлення, розроблена для вікі Star Citizen",
 	"citizen.css": "/* Увесь розміщений тут CSS буде завантажений для всіх користувачів теми оформлення «Громадянин» */",
-	"citizen.js": "/* Увесь розміщений тут код JavaScript буде завантажений для всіх користувачів теми оформлення «Громадянин» */"
+	"citizen.js": "/* Увесь розміщений тут код JavaScript буде завантажений для всіх користувачів теми оформлення «Громадянин» */",
+	"citizen-drawer-toggle": "Переключити меню",
+	"citizen-personalmenu-toggle": "Переключити особисте меню",
+	"citizen-search-toggle": "Переключити пошук",
+	"citizen-theme-toggle": "Переключити колір теми",
+	"citizen-sitestats-articles-label": "статей",
+	"citizen-sitestats-images-label": "файли",
+	"citizen-sitestats-users-label": "користувачі",
+	"citizen-sitestats-edits-label": "редагування",
+	"citizen-drawer-search": "Меню пошуку",
+	"citizen-footer-desc": "Редагувати цей текст на [[MediaWiki:Citizen-footer-desc]]",
+	"citizen-footer-tagline": "Редагувати цей текст на [[MediaWiki:Citizen-footer-tagline]]",
+	"citizen-action-addsection": "Додати тему",
+	"citizen-jumptotop": "Повернутись угору",
+	"citizen-search-fulltext": "Пошук сторінок, що містять",
+	"citizen-search-fulltext-empty": "Введіть, щоб почати пошук",
+	"citizen-tagline-ns-talk": "Сторінка обговорення {{SUBJECTPAGENAME}}",
+	"citizen-tagline-ns-project": "Інформація про {{SITENAME}}",
+	"citizen-tagline-ns-file": "Файл на {{SITENAME}}",
+	"citizen-tagline-ns-mediawiki": "Сторінка інтерфейсу MediaWiki",
+	"citizen-tagline-ns-template": "Сторінка шаблону",
+	"citizen-tagline-ns-help": "Сторінка довідки",
+	"citizen-tagline-ns-category": "Сторінка категорії",
+	"prefs-citizen-theme-label": "Тема",
+	"prefs-citizen-theme-option-auto": "Автоматично",
+	"prefs-citizen-theme-option-light": "Світла",
+	"prefs-citizen-theme-option-dark": "Темна",
+	"prefs-citizen-fontsize-label": "Розмір шрифту",
+	"prefs-citizen-pagewidth-label": "Ширина сторінки",
+	"prefs-citizen-lineheight-label": "Висота лінії",
+	"prefs-citizen-resetbutton-label": "Скинути за замовчуванням"
 }
