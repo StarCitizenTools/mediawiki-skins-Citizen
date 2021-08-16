@@ -17,8 +17,8 @@
 	"citizen-sitestats-users-label": "корисници",
 	"citizen-sitestats-edits-label": "уредувања",
 	"citizen-drawer-search": "Мени за пребарување",
-	"citizen-footer-desc": "Уредете го овој текст на [[MediaWiki:Citizen-footer-desc/mk]]",
-	"citizen-footer-tagline": "Уредете го овој текст на [[MediaWiki:Citizen-footer-tagline/mk]]",
+	"citizen-footer-desc": "Уредете го овој текст на [[MediaWiki:Citizen-footer-desc]]",
+	"citizen-footer-tagline": "Уредете го овој текст на [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Додај тема",
 	"citizen-jumptotop": "Најгоре",
 	"citizen-search-fulltext": "Пребарај страници што содржат",
@@ -36,5 +36,6 @@
 	"prefs-citizen-theme-option-dark": "Темен",
 	"prefs-citizen-fontsize-label": "Големина на фонтот",
 	"prefs-citizen-pagewidth-label": "Ширина на страницата",
+	"prefs-citizen-lineheight-label": "Висина на редот",
 	"prefs-citizen-resetbutton-label": "Врати по основно"
 }

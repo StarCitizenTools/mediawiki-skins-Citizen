@@ -37,5 +37,6 @@
 	"prefs-citizen-theme-option-dark": "Тёмная",
 	"prefs-citizen-fontsize-label": "Размер шрифта",
 	"prefs-citizen-pagewidth-label": "Ширина страницы",
+	"prefs-citizen-lineheight-label": "Высота строки",
 	"prefs-citizen-resetbutton-label": "Сброс"
 }

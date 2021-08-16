@@ -4,6 +4,7 @@
 			"FF-11",
 			"Gebu",
 			"Wolfdietmann",
+			"Zabe",
 			"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
 		]
 	},
@@ -19,6 +20,7 @@
 	"citizen-action-addsection": "Thema hinzufügen",
 	"citizen-jumptotop": "Zurück nach oben",
 	"citizen-search-fulltext-empty": "Tippe, um zu suchen zu beginnen",
+	"citizen-tagline-ns-help": "Hilfeseite",
 	"prefs-citizen-theme-label": "Thema",
 	"prefs-citizen-theme-option-auto": "Automatisch",
 	"prefs-citizen-theme-option-light": "Hell",
