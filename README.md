@@ -46,6 +46,7 @@ Name | Grade | Version | Last updated
 [Flow (StructuredDiscussions)](https://www.mediawiki.org/wiki/Extension:StructuredDiscussions) | E | N/A | N/A
 [Graph](https://www.mediawiki.org/wiki/Extension:Graph) | D | N/A | N/A
 [Lingo](https://www.mediawiki.org/wiki/Extension:Lingo) | E | N/A | N/A
+[MsUpload](https://www.mediawiki.org/wiki/Extension:MsUpload) | A | REL1_35 `32eb420` | 2021-08-25
 [MultimediaViewer](https://www.mediawiki.org/wiki/Extension:MultimediaViewer) | C | N/A | N/A
 [OAuth](https://www.mediawiki.org/wiki/Extension:OAuth) | D | N/A | N/A
 [Popups](https://www.mediawiki.org/wiki/Extension:Popups) | D | N/A | N/A
