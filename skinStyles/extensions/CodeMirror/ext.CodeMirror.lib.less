@@ -1,140 +1,231 @@
 /*
- * Citizen - CodeMirror styles
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:CodeMirror
+ * Module: ext.CodeMirror.lib
+ * Version: REL1_35 a326407
+ *
+ * Date: 2021-08-25
 */
 
-.skin-citizen {
-	.CodeMirror {
-		background-color: var( --background-color-dp-01 );
+.CodeMirror {
+	/*
+	 * Based on Material Theme Lighter
+	 * https://material-theme.site
+	 *
+	 * NOTE: Maybe this should be made into shared styles so
+	 * that SyntaxHighlight can use it.
+	*/
+	--color-codemirror-red: #e53935;
+	--color-codemirror-orange: #f76d47;
+	--color-codemirror-yellow: #e2931d;
+	--color-codemirror-green: #91b859;
+	--color-codemirror-cyan: #39adb5;
+	--color-codemirror-blue: #6182b8;
+	--color-codemirror-paleblue: #8796b0;
+	--color-codemirror-purple: #9c3eda;
+	--color-codemirror-brown: #916b53;
+	--color-codemirror-pink: #ff5370;
+	--color-codemirror-violet: #945eb8;
+	--color-codemirror-grey: #90a4ae;
+	background-color: var( --color-surface-1 );
+	color: var( --color-base );
+
+	&-scrollbar,
+	&-gutter {
+		&-filler {
+			background-color: var( --color-surface-1 );
+		}
+	}
+	/* Gutter */
+	&-gutters {
+		border-color: var( --border-color-base );
+		background-color: var( --color-surface-2 );
+	}
+
+	&-linenumber {
+		color: var( --color-base--subtle );
+	}
+
+	&-guttermarker {
 		color: var( --color-base );
 
-		/* Gutter */
-		&-gutters {
-			border-color: var( --border-color-base );
-			background-color: var( --background-color-framed );
-		}
-
-		&-linenumber {
+		&-subtle {
 			color: var( --color-base--subtle );
 		}
+	}
 
-		&-guttermarker-subtle {
-			color: var( --color-base--subtle );
+	&-cursor {
+		border-left-color: var( --color-base--emphasized );
+	}
+
+	div.CodeMirror-secondarycursor {
+		border-left-color: var( --color-base );
+	}
+
+	&-ruler {
+		border-left-color: var( --border-color-base );
+	}
+}
+
+// Default theme
+.cm {
+	&-s-default {
+		.cm {
+			&-header {
+				color: var( --color-codemirror-blue );
+			}
+
+			&-quote {
+				color: var( --color-codemirror-green );
+			}
+
+			&-keyword {
+				color: var( --color-codemirror-purple );
+			}
+
+			&-atom {
+				color: var( --color-codemirror-pink );
+			}
+
+			&-number {
+				color: var( --color-codemirror-orange );
+			}
+
+			&-def {
+				color: var( --color-codemirror-blue );
+			}
+
+			&-variable {
+				color: var( --color-codemirror-red );
+			}
+
+			&-variable-2 {
+				color: var( --color-base );
+			}
+
+			&-variable-3,
+			&-type {
+				color: var( --color-codemirror-yellow );
+			}
+
+			&-comment {
+				color: var( --color-codemirror-gray );
+			}
+
+			&-string {
+				color: var( --color-codemirror-green );
+			}
+
+			&-string-2 {
+				color: var( --color-codemirror-red );
+			}
+
+			&-meta {
+				color: var( --color-codemirror-yellow );
+			}
+
+			&-qualifier {
+				color: var( --color-codemirror-yellow );
+			}
+
+			&-builtin {
+				color: var( --color-codemirror-yellow );
+			}
+
+			&-bracket {
+				color: var( --color-codemirror-grey );
+			}
+
+			&-tag {
+				color: var( --color-codemirror-pink );
+			}
+
+			&-attribute {
+				color: var( --color-codemirror-purple );
+			}
+
+			&-hr {
+				color: var( --color-codemirror-blue );
+			}
+
+			&-link {
+				color: var( --color-codemirror-blue );
+			}
+
+			&-error {
+				color: var( --color-destructive );
+			}
+
+			&-property {
+				color: var( --color-codemirror-purple );
+			}
+
+			&-operator {
+				color: var( --color-codemirror-cyan );
+			}
+
+			&-punctuation {
+				color: var( --color-codemirror-cyan );
+			}
 		}
 
-		/* Highlighting */
-		--codemirror-yellow: #ffd700;
-		--codemirror-light-blue: #adf;
-		--codemirror-blue: #08f;
-		--codemirror-green: #290;
-		--codemirror-orange: #f50;
-		--codemirror-red: #c51313;
-		--codemirror-purple: #9800e5;
-		--codemirror-pink: #e0e;
-		--codemirror-gray: #84a0a0;
-
-		& .cm-comment {
-			color: var( --codemirror-yellow );
+		&-negative {
+			color: var( --color-destructive );
 		}
 
-		& .cm-mw-comment {
-			color: var( --codemirror-gray );
+		&-positive {
+			color: var( --color-success );
 		}
 
-		& .cm-variable-2 {
-			color: var( --codemirror-light-blue );
+		&-invalidchar {
+			color: var( --color-destructive );
+		}
+	}
+
+	&-composing {
+		border-bottom-color: var( --border-color-base );
+	}
+
+	&-selected {
+		background: var( --background-color-primary--hover );
+	}
+
+	&-focused .CodeMirror-selected {
+		background: var( --background-color-primary--active );
+	}
+
+	&-line {
+		&::selection,
+		> span::selection,
+		> span > span::selection {
+			background: var( --background-color-primary--active );
+		}
+	}
+}
+
+div.CodeMirror {
+	span.CodeMirror {
+		&-matchingbracket {
+			color: var( --color-success );
 		}
 
-		& .cm-mw-matching {
-			background-color: var( --codemirror-yellow );
-		}
-
-		& .cm-mw-skipformatting {
-			background-color: var( --codemirror-light-blue );
-		}
-
-		& .cm-keyword,
-
-		& .cm-mw-template,
-		& .cm-mw-template-argument-name,
-		& .cm-mw-template-bracket,
-		& .cm-mw-template-delimiter,
-		& .cm-mw-template-name {
-			color: var( --codemirror-purple );
-		}
-
-		& .cm-string,
-
-		& .cm-mw-templatevariable,
-		& .cm-mw-templatevariable-bracket,
-		& .cm-mw-templatevariable-delimiter,
-		& .cm-mw-templatevariable-name {
-			color: var( --codemirror-orange );
-		}
-
-		& .cm-mw-parserfunction-bracket,
-		& .cm-mw-parserfunction-delimiter,
-		& .cm-mw-parserfunction-name {
-			color: var( --codemirror-red );
-		}
-
-		& .cm-number,
-		& .cm-mw-mnemonic,
-
-		& .cm-mw-exttag-attribute,
-		& .cm-mw-exttag-bracket,
-		& .cm-mw-exttag-name,
-		& .cm-mw-htmltag-attribute,
-		& .cm-mw-htmltag-bracket,
-		& .cm-mw-htmltag-name {
-			color: var( --codemirror-green );
-		}
-
-		& .cm-mw-list,
-		& .cm-def,
-		& .cm-mw-apostrophes-bold,
-		& .cm-mw-apostrophes-italic,
-		& .cm-mw-section-header,
-		& .cm-mw-indenting,
-
-		& .cm-mw-link,
-		& .cm-mw-link-pagename,
-		& .cm-mw-link-tosection,
-		& .cm-mw-extlink,
-		& .cm-mw-extlink-bracket,
-		& .cm-mw-extlink-protocol,
-		& .cm-mw-free-extlink,
-		& .cm-mw-free-extlink-protocol,
-		& .cm-mw-link-bracket,
-		& .cm-mw-link-delimiter {
-			color: var( --codemirror-blue );
-		}
-
-		& .cm-mw-doubleUnderscore,
-		& .cm-mw-hr,
-		& .cm-mw-signature {
-			background-color: var( --background-color-dp-12 );
-			color: var( --codemirror-blue );
-		}
-
-		& .cm-atom,
-
-		& .cm-mw-table-bracket,
-		& .cm-mw-table-definition,
-		& .cm-mw-table-delimiter {
-			color: var( --codemirror-pink );
+		&-nonmatchingbracket {
+			color: var( --color-destructive );
 		}
 	}
 }
 
 .skin-citizen-dark .CodeMirror {
-	--codemirror-yellow: #bda000;
-	--codemirror-light-blue: #adf;
-	--codemirror-blue: #08f;
-	--codemirror-green: #4fbb30;
-	--codemirror-orange: #f50;
-	--codemirror-red: #b71212;
-	--codemirror-purple: #c34aff;
-	--codemirror-pink: #e0e;
-	--codemirror-gray: #84a0a0;
+	--color-codemirror-red: #f07178;
+	--color-codemirror-orange: #f78c6c;
+	--color-codemirror-yellow: #ffcb6b;
+	--color-codemirror-green: #c3e88d;
+	--color-codemirror-cyan: #89ddff;
+	--color-codemirror-blue: #82aaff;
+	--color-codemirror-paleblue: #b2ccd6;
+	--color-codemirror-purple: #c792ea;
+	--color-codemirror-brown: #916b53;
+	--color-codemirror-pink: #ff9cac;
+	--color-codemirror-violet: #bb80b3;
 }
