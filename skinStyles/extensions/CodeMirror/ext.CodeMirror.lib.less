@@ -37,13 +37,14 @@
 			background-color: var( --color-surface-1 );
 		}
 	}
-	/* Gutter */
+
 	&-gutters {
-		border-color: var( --border-color-base );
-		background-color: var( --color-surface-2 );
+		border-color: transparent;
+		background-color: var( --color-surface-1 );
 	}
 
 	&-linenumber {
+		padding: 0 16px; // Give more space since there is no border and background
 		color: var( --color-base--subtle );
 	}
 
