@@ -39,7 +39,7 @@ Name | Grade | Version | Last updated
 [CategoryTree](https://www.mediawiki.org/wiki/Extension:CategoryTree) | B | N/A | N/A
 [Cite](https://www.mediawiki.org/wiki/Extension:Cite) | A | N/A | N/A
 [CleanChanges](https://www.mediawiki.org/wiki/Extension:CleanChanges) | B | MLEB 2021.07 | 2021-07-29
-[CodeMirror](https://www.mediawiki.org/wiki/Extension:CodeMirror) | D | N/A | N/A
+[CodeMirror](https://www.mediawiki.org/wiki/Extension:CodeMirror) | A | REL1_35 `a326407` | 2021-08-25
 [CookieWarning](https://www.mediawiki.org/wiki/Extension:CookieWarning) | A | N/A | N/A
 [DismissableSiteNotice](https://www.mediawiki.org/wiki/Extension:DismissableSiteNotice) | A | N/A | N/A
 [Echo](https://www.mediawiki.org/wiki/Extension:Echo) | A | REL1_35 `347c30e` | 2021-08-11

@@ -1,0 +1,185 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:CodeMirror
+ * Module: ext.CodeMirror.mode.mediawiki
+ * Version: REL1_35 a326407
+ *
+ * Date: 2021-08-25
+*/
+
+.cm-mw {
+	&-matching {
+		background-color: var( --color-codemirror-yellow );
+	}
+
+	&-skipformatting {
+		background-color: var( --color-codemirror-cyan );
+	}
+
+	&-list {
+		color: var( --color-codemirror-cyan );
+	}
+
+	&-doubleUnderscore,
+	&-signature,
+	&-hr {
+		background-color: transparent;
+		color: var( --color-codemirror-purple );
+	}
+
+	&-indenting {
+		color: var( --color-codemirror-cyan );
+	}
+
+	&-mnemonic {
+		color: var( --color-codemirror-green );
+	}
+
+	&-comment {
+		color: var( --color-codemirror-grey );
+	}
+
+	&-apostrophes-bold,
+	&-apostrophes-italic {
+		color: var( --color-codemirror-cyan );
+	}
+
+	&-section {
+		&-1,
+		&-2,
+		&-3,
+		&-4,
+		&-5,
+		&-6 {
+			span:not( .cm-mw-section-header ) {
+				color: var( --color-base--emphasized );
+			}
+		}
+	}
+
+	&-section-header {
+		color: var( --color-codemirror-cyan );
+	}
+
+	&-template,
+	&-templatevariable,
+	&-parserfunction {
+		color: var( --color-base--emphasized );
+
+		&-name {
+			color: var( --color-codemirror-blue );
+			font-weight: normal;
+		}
+
+		&-delimiter {
+			color: var( --color-codemirror-cyan );
+			font-weight: normal;
+		}
+
+		&-bracket {
+			color: var( --color-codemirror-purple );
+			font-weight: normal;
+		}
+	}
+
+	&-template {
+		&-name-mnemonic {
+			color: var( --color-codemirror-blue );
+			font-weight: normal;
+		}
+
+		&-argument-name {
+			color: var( --color-codemirror-red );
+			font-weight: normal;
+		}
+	}
+
+	&-exttag,
+	&-htmltag {
+		&-name {
+			color: var( --color-codemirror-red );
+			font-weight: normal;
+		}
+
+		&-bracket {
+			color: var( --color-codemirror-cyan );
+		}
+
+		&-attribute {
+			color: var( --color-codemirror-yellow );
+		}
+	}
+
+	&-link {
+		color: var( --color-primary );
+
+		&-pagename {
+			color: var( --color-primary );
+		}
+
+		&-tosection {
+			color: var( --color-primary--hover );
+		}
+
+		&-text {
+			color: var( --color-codemirror-green );
+		}
+
+		&-bracket {
+			color: var( --color-primary );
+		}
+
+		&-delimiter {
+			color: var( --color-codemirror-cyan );
+		}
+
+		&-ground {
+			background-color: var( --background-color-primary--hover );
+		}
+	}
+
+	&-extlink,
+	&-free-extlink {
+		color: var( --color-primary );
+
+		&-protocol {
+			color: var( --color-codemirror-orange );
+			font-weight: normal;
+		}
+
+		&-text {
+			color: var( --color-codemirror-green );
+		}
+
+		&-bracket {
+			color: var( --color-primary );
+			font-weight: normal;
+		}
+
+		&-ground {
+			background-color: var( --background-color-primary--hover );
+		}
+	}
+
+	&-table {
+		&-bracket {
+			color: var( --color-codemirror-pink );
+			font-weight: normal;
+		}
+
+		&-delimiter {
+			color: var( --color-codemirror-cyan );
+			font-weight: normal;
+		}
+
+		&-definition {
+			color: var( --color-codemirror-yellow );
+		}
+
+		&-caption {
+			color: var( --color-base--emphasized );
+			font-weight: normal;
+		}
+	}
+}
