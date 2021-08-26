@@ -28,13 +28,27 @@
 .mw-footer {
 	position: relative;
 	z-index: 8; // High enough so it covers the floating UI
-	margin-top: @margin-side * 2;
+	margin-top: var( --padding-page );
 	background: @color-footer-background-50;
 	clear: both;
 	color: @color-footer-text;
 	direction: ltr;
 	font-size: @ui-menu-text;
 	line-height: @footer-line-height;
+
+	// Footer spacer
+	&:before {
+		position: absolute;
+		top: ~'calc( var( --padding-page ) * -2 )';
+		right: 0;
+		left: 0;
+		display: block;
+		height: ~'calc( var( --padding-page ) * 2 )';
+		background: var( --color-surface-0 );
+		content: '';
+		-webkit-mask-image: linear-gradient( 0deg, #000, transparent );
+		mask-image: linear-gradient( 0deg, #000, transparent );
+	}
 
 	a,
 	a.external {
