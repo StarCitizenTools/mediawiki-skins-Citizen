@@ -286,6 +286,25 @@
 	.il {
 		color: var( --color-syntax-orange );
 	}
+
+	/* pygments.wrapper.less */
+	// MW REL1_36+
+	&-lines pre,
+	.content &-lines pre {
+		.mw-content-ltr&,
+		.mw-content-rtl& {
+			box-shadow: none; // Remove background
+		}
+	}
+
+	.linenos {
+		color: var( --color-base--subtle );
+	}
+
+	a:hover .linenos,
+	.hll a .linenos {
+		color: var( --color-base--emphasized );
+	}
 }
 
 .skin-citizen-dark .mw-highlight {
