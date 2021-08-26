@@ -30,10 +30,14 @@
 
 	&:before {
 		position: absolute;
+		top: 0;
 		right: 0;
+		bottom: ~'calc( var( --height-header ) / -2 )';
 		left: 0;
-		box-shadow: 0 0 ~'calc( var( --height-header ) - 15px )' var( --height-header ) var( --color-surface-0 );
+		background: var( --color-surface-0 );
 		content: '';
+		mask-image: linear-gradient( 180deg, #000, transparent );
+		-webkit-mask-image: linear-gradient( 180deg, #000, transparent );
 	}
 
 	&-button {
