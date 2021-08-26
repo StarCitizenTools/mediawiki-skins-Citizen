@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Beta16"
+			"Beta16",
+			"Stefano"
 		]
 	},
 	"citizen.css": "/* Il codice CSS inserito qui viene caricato dagli utenti che usano il tema Citizen */",
@@ -10,6 +11,8 @@
 	"citizen-sitestats-images-label": "file",
 	"citizen-sitestats-users-label": "utenti",
 	"citizen-sitestats-edits-label": "modifiche",
+	"citizen-footer-desc": "Modifica questo testo in [[MediaWiki:Citizen-footer-tagline]]",
+	"citizen-footer-tagline": "Modifica questo testo in [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Aggiungi argomento",
 	"citizen-jumptotop": "Torna all'inizio",
 	"citizen-tagline-ns-talk": "Pagina di discussione su {{SUBJECTPAGENAME}}",
@@ -24,5 +27,6 @@
 	"prefs-citizen-theme-option-light": "Chiaro",
 	"prefs-citizen-theme-option-dark": "Scuro",
 	"prefs-citizen-fontsize-label": "Dimensione carattere",
-	"prefs-citizen-pagewidth-label": "Larghezza pagina"
+	"prefs-citizen-pagewidth-label": "Larghezza pagina",
+	"prefs-citizen-lineheight-label": "Altezza linea"
 }
