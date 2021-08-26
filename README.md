@@ -32,7 +32,7 @@ OOUI | B | 0.39.3 `086b4f1` | 2021-07-26
 ### Extensions
 Name | Grade | Version | Last updated
 :--- | :--- | :--- | :---
-[AdvancedSearch](https://www.mediawiki.org/wiki/Extension:AdvancedSearch) | E | N/A | N/A
+[AdvancedSearch](https://www.mediawiki.org/wiki/Extension:AdvancedSearch) | B | REL1_35 `fae6250` | 2021-08-26
 [ApprovedRevs](https://www.mediawiki.org/wiki/Extension:Approved_Revs) | B | N/A | N/A
 [Babel](https://www.mediawiki.org/wiki/Extension:Babel) | B | MLEB 2021.07 | 2021-07-29
 [Capiunto](https://www.mediawiki.org/wiki/Extension:Capiunto) | B | REL1_35 `30049a7` | 2021-08-26

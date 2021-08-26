@@ -1,56 +1,59 @@
 /*
- * Citizen - Advanced Search Styles
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:AdvancedSearch
+ * Module: ext.advancedSearch.styles
+ * Version: REL1_35 fae6250
+ *
+ * Date: 2021-08-26
 */
 
-@import '../../../resources/variables.less';
+.mw-advancedSearch-fieldContainer {
+	border-color: var( --border-color-base );
+	background: transparent;
 
-.skin-citizen-dark {
-	.mw-advancedSearch-fieldContainer {
-		border: solid 1px @dark-bg-30;
-		background: linear-gradient( rgba( 0, 0, 0, 0.1 ), @dark-bg-0 0.5em );
-
-		fieldset {
-			border-top: solid 1px @dark-bg-30;
-		}
-
-		.oo-ui-labelElement > .oo-ui-fieldsetLayout-header > .oo-ui-labelElement-label {
-			background: @dark-bg-0;
-			color: @dark-text-80;
-		}
+	fieldset {
+		border-color: var( --border-color-base );
 	}
 
-	.mw-advancedSearch-expandablePane-button {
-		&.oo-ui-widget-enabled.oo-ui-buttonWidget {
-			&.oo-ui-buttonElement-pressed > .oo-ui-buttonElement-button {
-				background-color: @dark-bg-10;
-			}
+	.oo-ui-labelElement > .oo-ui-fieldsetLayout-header > .oo-ui-labelElement-label {
+		background: var( --color-surface-0 ); // the parent containers are transparent
+		color: var( --color-base--subtle );
+	}
+}
 
-			> .oo-ui-buttonElement-button:hover {
-				background-color: @dark-bg-10;
-				color: @dark-text-90;
+.mw-advancedSearch-expandablePane-button {
+	&.oo-ui-widget-enabled.oo-ui-buttonWidget {
+		&.oo-ui-buttonElement-pressed > .oo-ui-buttonElement-button {
+			background-color: var( --color-surface-2 );
+		}
+
+		> .oo-ui-buttonElement-button {
+			&:hover {
+				background-color: var( --color-surface-2--hover );
+				color: var( --color-base );
 			}
 		}
 	}
+}
 
-	.mw-advancedSearch-namespace-selection {
-		border: solid 1px @dark-bg-50;
-		background: @dark-bg-10;
-	}
+.mw-advancedSearch-namespace-selection {
+	border-color: var( --border-color-base );
+	background: var( --color-surface-2 );
+}
 
-	.mw-advancedSearch-namespace-border {
-		border-top: 4px solid @dark-bg-30;
-		border-bottom: 1px solid @dark-bg-30;
-	}
+.mw-advancedSearch-namespace-border {
+	border-color: var( --border-color-base );
+}
 
-	.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined .oo-ui-tagItemWidget.oo-ui-widget-enabled {
-		&.selected {
-			border-color: @accent-50;
-			background-color: @accent-10;
-		}
+// that's how nested the background-color property of a tagWidget is
+.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined .oo-ui-tagItemWidget.oo-ui-widget-enabled {
+	&.selected {
+		border-color: var( --color-primary );
+		background-color: var( --color-surface-3 );
 	}
+}
 
-	.oo-ui-popupWidget-popup .mw-advancedSearch-tooltip-head {
-		color: @dark-text-70;
-	}
+.oo-ui-popupWidget-popup .mw-advancedSearch-tooltip-head {
+	color: var( --color-base--subtle );
 }

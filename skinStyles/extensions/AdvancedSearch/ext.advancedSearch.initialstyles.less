@@ -1,16 +1,19 @@
 /*
- * Citizen - Advanced Search Initial Styles
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:AdvancedSearch
+ * Module: ext.advancedSearch.initialstyles
+ * Version: REL1_35 fae6250
+ *
+ * Date: 2021-08-26
 */
 
-@import '../../../resources/variables.less';
-
-.client-js.skin-citizen-dark {
+.client-js {
 	.mw-search-spinner {
 		&:before,
 		&:after,
 		& .mw-search-spinner-bounce {
-			background-color: @dark-text-70;
+			background-color: var( --color-base--subtle );
 		}
 	}
 }
