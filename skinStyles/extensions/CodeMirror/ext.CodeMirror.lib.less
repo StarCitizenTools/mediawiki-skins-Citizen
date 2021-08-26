@@ -8,26 +8,22 @@
  * Date: 2021-08-25
 */
 
+@import '../../../resources/variables.less';
+
 .CodeMirror {
-	/*
-	 * Based on Material Theme Lighter
-	 * https://material-theme.site
-	 *
-	 * NOTE: Maybe this should be made into shared styles so
-	 * that SyntaxHighlight can use it.
-	*/
-	--color-codemirror-red: #e53935;
-	--color-codemirror-orange: #f76d47;
-	--color-codemirror-yellow: #e2931d;
-	--color-codemirror-green: #91b859;
-	--color-codemirror-cyan: #39adb5;
-	--color-codemirror-blue: #6182b8;
-	--color-codemirror-paleblue: #8796b0;
-	--color-codemirror-purple: #9c3eda;
-	--color-codemirror-brown: #916b53;
-	--color-codemirror-pink: #ff5370;
-	--color-codemirror-violet: #945eb8;
-	--color-codemirror-grey: #90a4ae;
+	// FIXME: This should be shared between other extensions
+	--color-syntax-red: @color-syntax-red;
+	--color-syntax-orange: @color-syntax-orange;
+	--color-syntax-yellow: @color-syntax-yellow;
+	--color-syntax-green: @color-syntax-green;
+	--color-syntax-cyan: @color-syntax-cyan;
+	--color-syntax-blue: @color-syntax-blue;
+	--color-syntax-paleblue: @color-syntax-paleblue;
+	--color-syntax-purple: @color-syntax-purple;
+	--color-syntax-brown: @color-syntax-brown;
+	--color-syntax-pink: @color-syntax-pink;
+	--color-syntax-violet: @color-syntax-violet;
+	--color-syntax-grey: @color-syntax-grey;
 	background-color: var( --color-surface-1 );
 	color: var( --color-base );
 
@@ -74,31 +70,31 @@
 	&-s-default {
 		.cm {
 			&-header {
-				color: var( --color-codemirror-blue );
+				color: var( --color-syntax-blue );
 			}
 
 			&-quote {
-				color: var( --color-codemirror-green );
+				color: var( --color-syntax-green );
 			}
 
 			&-keyword {
-				color: var( --color-codemirror-purple );
+				color: var( --color-syntax-purple );
 			}
 
 			&-atom {
-				color: var( --color-codemirror-pink );
+				color: var( --color-syntax-pink );
 			}
 
 			&-number {
-				color: var( --color-codemirror-orange );
+				color: var( --color-syntax-orange );
 			}
 
 			&-def {
-				color: var( --color-codemirror-blue );
+				color: var( --color-syntax-blue );
 			}
 
 			&-variable {
-				color: var( --color-codemirror-red );
+				color: var( --color-syntax-red );
 			}
 
 			&-variable-2 {
@@ -107,51 +103,51 @@
 
 			&-variable-3,
 			&-type {
-				color: var( --color-codemirror-yellow );
+				color: var( --color-syntax-yellow );
 			}
 
 			&-comment {
-				color: var( --color-codemirror-gray );
+				color: var( --color-syntax-gray );
 			}
 
 			&-string {
-				color: var( --color-codemirror-green );
+				color: var( --color-syntax-green );
 			}
 
 			&-string-2 {
-				color: var( --color-codemirror-red );
+				color: var( --color-syntax-red );
 			}
 
 			&-meta {
-				color: var( --color-codemirror-yellow );
+				color: var( --color-syntax-yellow );
 			}
 
 			&-qualifier {
-				color: var( --color-codemirror-yellow );
+				color: var( --color-syntax-yellow );
 			}
 
 			&-builtin {
-				color: var( --color-codemirror-yellow );
+				color: var( --color-syntax-yellow );
 			}
 
 			&-bracket {
-				color: var( --color-codemirror-grey );
+				color: var( --color-syntax-grey );
 			}
 
 			&-tag {
-				color: var( --color-codemirror-pink );
+				color: var( --color-syntax-pink );
 			}
 
 			&-attribute {
-				color: var( --color-codemirror-purple );
+				color: var( --color-syntax-purple );
 			}
 
 			&-hr {
-				color: var( --color-codemirror-blue );
+				color: var( --color-syntax-blue );
 			}
 
 			&-link {
-				color: var( --color-codemirror-blue );
+				color: var( --color-syntax-blue );
 			}
 
 			&-error {
@@ -159,15 +155,15 @@
 			}
 
 			&-property {
-				color: var( --color-codemirror-purple );
+				color: var( --color-syntax-purple );
 			}
 
 			&-operator {
-				color: var( --color-codemirror-cyan );
+				color: var( --color-syntax-cyan );
 			}
 
 			&-punctuation {
-				color: var( --color-codemirror-cyan );
+				color: var( --color-syntax-cyan );
 			}
 		}
 
@@ -218,15 +214,16 @@ div.CodeMirror {
 }
 
 .skin-citizen-dark .CodeMirror {
-	--color-codemirror-red: #f07178;
-	--color-codemirror-orange: #f78c6c;
-	--color-codemirror-yellow: #ffcb6b;
-	--color-codemirror-green: #c3e88d;
-	--color-codemirror-cyan: #89ddff;
-	--color-codemirror-blue: #82aaff;
-	--color-codemirror-paleblue: #b2ccd6;
-	--color-codemirror-purple: #c792ea;
-	--color-codemirror-brown: #916b53;
-	--color-codemirror-pink: #ff9cac;
-	--color-codemirror-violet: #bb80b3;
+	// FIXME: This should be shared between other extensions
+	--color-syntax-red: @color-syntax-red-dark;
+	--color-syntax-orange: @color-syntax-orange-dark;
+	--color-syntax-yellow: @color-syntax-yellow-dark;
+	--color-syntax-green: @color-syntax-green-dark;
+	--color-syntax-cyan: @color-syntax-cyan-dark;
+	--color-syntax-blue: @color-syntax-blue-dark;
+	--color-syntax-paleblue: @color-syntax-paleblue-dark;
+	--color-syntax-purple: @color-syntax-purple-dark;
+	--color-syntax-brown: @color-syntax-brown-dark;
+	--color-syntax-pink: @color-syntax-pink-dark;
+	--color-syntax-violet: @color-syntax-violet-dark;
 }
