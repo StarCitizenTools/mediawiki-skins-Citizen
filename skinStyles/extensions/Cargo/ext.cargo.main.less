@@ -1,0 +1,72 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:Cargo
+ * Module: ext.cargo.main
+ * Version: REL1_35 df13273
+ *
+ * Date: 2021-08-31
+*/
+
+span.cargoFieldName {
+	color: var( --color-base--subtle );
+}
+
+table.cargoTable.noMerge tr:nth-child( odd ) {
+	background: transparent;
+}
+
+table.cargoTable.noMerge tr:nth-child( even ) {
+	background: var( --background-color-quiet--hover );
+}
+
+table.cargoTable.mergeSimilarCells td.odd {
+	background: transparent;
+}
+
+table.cargoTable.mergeSimilarCells td.even {
+	background: var( --background-color-quiet--hover );
+}
+
+table.cargoTable td {
+	border-color: var( --border-color-base );
+}
+
+div.cargoReplacementTableInfo {
+	border-color: var( --border-color-base );
+	background: var( --color-surface-3 );
+}
+
+.addButton {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+}
+
+.deleteButton {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+}
+
+div.specialCargoQuery-extraPane {
+	border-color: var( --border-color-base );
+	background: linear-gradient( transparent, var( --color-surface-2 ) 0.5em );
+}
+
+.ui-state-focus {
+	background: var( --color-primary--active ) !important;
+}
+
+.ui-menu .ui-menu-item a {
+	color: var( --color-base--emphasized );
+}
+
+table.cargo-tablelist.mw-datatable tr.cargo-tablelist-replacement-row:hover td,
+.cargo-tablelist-replacement-row > td {
+	background-color: var( --background-color-quiet--hover );
+}
+
+.skin-citizen-dark {
+	.cargoQueryTooltipIcon {
+		filter: invert( 1 ) hue-rotate( 180deg );
+	}
+}
