@@ -49,7 +49,7 @@ Name | Grade | Version | Last updated
 [Lingo](https://www.mediawiki.org/wiki/Extension:Lingo) | E | N/A | N/A
 [MsUpload](https://www.mediawiki.org/wiki/Extension:MsUpload) | A | REL1_35 `32eb420` | 2021-08-25
 [MultimediaViewer](https://www.mediawiki.org/wiki/Extension:MultimediaViewer) | C | N/A | N/A
-[OAuth](https://www.mediawiki.org/wiki/Extension:OAuth) | D | N/A | N/A
+[OAuth](https://www.mediawiki.org/wiki/Extension:OAuth) | B | REL1_35 `451ed95` | 2021-08-31
 [Popups](https://www.mediawiki.org/wiki/Extension:Popups) | B | REL1_35 `dccd607` | 2021-08-31
 [RelatedArticles](https://www.mediawiki.org/wiki/Extension:RelatedArticles) | A | REL1_35 `0f27333` | 2021-08-31
 [Semantic MediaWiki](https://www.mediawiki.org/wiki/Extension:Semantic_MediaWiki) | E | N/A | N/A

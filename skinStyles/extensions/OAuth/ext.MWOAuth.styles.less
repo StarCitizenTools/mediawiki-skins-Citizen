@@ -1,60 +1,54 @@
 /*
- * Citizen - OAuth styles
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:OAuth
+ * Module: ext.MWOAuth.styles
+ * Version: REL1_35 451ed95
+ *
+ * Date: 2021-08-31
 */
 
-@import '../../../resources/variables.less';
-
-#mw-mwoauth-authorize {
-	/* Override inline styles */
-	&-dialog {
-		border: 1px solid transparent !important;
-		background-color: var( --background-color-dp-24 ) !important;
-	}
-
-	&-form {
-		color: var( --color-base );
-	}
-}
-
 /* ext.MWOAuth.BasicStyles.css */
-/*
 .mw-mwoauthconsumerregistration-body,
 .mw-mwoauthmanageconsumers-body {
-	background-color: #f0f0f0;
+	background-color: var( --color-surface-2 );
 }
 
 .mw-mwoauthmanageconsumers-proposed,
 .mw-mwoauthmanagemygrants-proposed,
 .mw-mwoauthconsumerregistration-proposed {
-	background-color: #b7b8e1;
+	background-color: var( --background-color-primary--hover );
 }
 
 .mw-mwoauthmanageconsumers-rejected,
 .mw-mwoauthmanagemygrants-rejected,
 .mw-mwoauthconsumerregistration-rejected {
-	background-color: #e1b7ba;
+	background-color: var( --background-color-destructive );
 }
 
 .mw-mwoauthmanageconsumers-expired,
 .mw-mwoauthmanagemygrants-expired,
 .mw-mwoauthconsumerregistration-expired {
-	background-color: #e1cdb7;
+	background-color: var( --background-color-warning );
 }
 
 .mw-mwoauthmanageconsumers-approved,
 .mw-mwoauthmanagemygrants-approved,
 .mw-mwoauthconsumerregistration-approved {
-	background-color: #bae1b7;
+	background-color: var( --background-color-success );
 }
 
 .mw-mwoauthmanageconsumers-disabled,
 .mw-mwoauthmanagemygrants-disabled,
 .mw-mwoauthconsumerregistration-disabled {
-	background-color: #ceb7e1;
+	background-color: var( --color-surface-3 );
 }
-*/
 
 .mw-mwoautherror-details {
 	color: var( --color-base--subtle );
+}
+
+/* ext.MWOAuth.AuthorizeForm.css */
+#mw-mwoauth-authorize-form {
+	color: var( --color-base );
 }
