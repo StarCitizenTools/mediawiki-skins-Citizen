@@ -1,57 +1,80 @@
 /*
- * Citizen - Related Articles Styles
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:RelatedArticles
+ * Module: ext.relatedArticles.cards
+ * Version: REL1_35 0f27333
+ *
+ * Date: 2021-08-31
 */
 
 @import '../../../resources/variables.less';
 @import '../../../resources/mixins.less';
 
 .ext-related-articles-card-list {
-	overflow: visible; // Show shadow
-	padding-top: @content-margin-top; // Give room for shadows and translate
-	margin-top: 0;
-
 	h3 {
 		a {
 			color: var( --color-base--emphasized );
 		}
 
 		&:after {
-			background: linear-gradient( to right, rgba( 255, 255, 255, 0 ), var( --background-color-dp-04 ) 50% );
+			background-image: linear-gradient( to right, transparent, var( --color-surface-1 ) 50% );
 		}
 	}
 
 	.ext-related-articles-card {
-		border-color: var( --border-color-base ) !important;
-		background-color: var( --background-color-dp-04 );
-		transition: @transition-transform-quick;
+		border-color: var( --border-color-base );
+		background-color: var( --color-surface-1 );
 		.boxshadow(1);
 
-		&:hover {
-			.boxshadow(3);
-			transform: translateY( -2px );
+		&:first-child {
+			border-radius: var( --border-radius--medium ) var( --border-radius--medium ) 0 0;
 		}
 
-		> a:hover {
+		&:last-child {
+			border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
+		}
+	}
+
+	.ext-related-articles-card > a {
+		&:hover {
+			.boxshadow(2);
+		}
+
+		&:active {
 			box-shadow: none;
 		}
 	}
 
-	.ext-related-articles-card-thumb {
-		background-color: var( --background-color-framed );
-	}
-
 	.ext-related-articles-card-extract {
 		color: var( --color-base--subtle );
+		font-size: @content-caption-size;
+	}
+
+	.ext-related-articles-card-thumb {
+		background-color: var( --color-surface-2 );
+		border-radius: var( --border-radius--medium ) 0 0 var( --border-radius--medium );
 	}
 }
 
-.ext-related-articles-card-extract:after {
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	width: 10%;
-	height: 1em;
-	background: linear-gradient( to right, rgba( 255, 255, 255, 0 ), var( --background-color-dp-04 ) 50% );
-	content: '';
+// 720px - @width-breakpoint-tablet
+@media all and ( min-width: 720px ) {
+	.ext-related-articles-card-list {
+		border-top: 0;
+
+		.ext-related-articles-card {
+			border-color: var( --border-color-base );
+
+			// Individual border-radius when cards side by side (not stacked)
+			&,
+			&:first-child,
+			&:last-child {
+				border-radius: var( --border-radius--medium );
+			}
+
+			& + .ext-related-articles-card {
+				border-color: var( --border-color-base );
+			}
+		}
+	}
 }

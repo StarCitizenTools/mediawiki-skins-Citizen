@@ -50,7 +50,7 @@ Name | Grade | Version | Last updated
 [MultimediaViewer](https://www.mediawiki.org/wiki/Extension:MultimediaViewer) | C | N/A | N/A
 [OAuth](https://www.mediawiki.org/wiki/Extension:OAuth) | D | N/A | N/A
 [Popups](https://www.mediawiki.org/wiki/Extension:Popups) | D | N/A | N/A
-[RelatedArticles](https://www.mediawiki.org/wiki/Extension:RelatedArticles) | D | N/A | N/A
+[RelatedArticles](https://www.mediawiki.org/wiki/Extension:RelatedArticles) | A | REL1_35 `0f27333` | 2021-08-31
 [Semantic MediaWiki](https://www.mediawiki.org/wiki/Extension:Semantic_MediaWiki) | E | N/A | N/A
 [Semantic Result Formats](https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats) | E | N/A | N/A
 [SyntaxHighlight](https://www.mediawiki.org/wiki/Extension:SyntaxHighlight) | A | REL1_35 `05598b3` | 2021-08-26
