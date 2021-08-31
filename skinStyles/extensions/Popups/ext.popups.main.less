@@ -1,17 +1,26 @@
 /*
- * Citizen - Popups Styles
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:Popups
+ * Module: ext.popups.main
+ * Version: REL1_35 dccd607
+ *
+ * Date: 2021-08-31
 */
 
-@import '../../../resources/variables.less';
 @import '../../../resources/mixins.less';
 
 .mwe-popups {
-	background-color: var( --background-color-dp-08 );
-	.boxshadow(4);
+	background-color: var( --color-surface-1 );
+	.boxshadow(3);
 
 	.mwe-popups-container {
 		color: var( --color-base );
+
+		// Neutral color so dark SVG is visible
+		svg {
+			background-color: #eaecf0;
+		}
 	}
 
 	.mwe-popups-extract {
@@ -21,12 +30,12 @@
 		/* stylelint-disable function-linear-gradient-no-nonstandard-direction */
 		&[ dir='ltr' ]:after {
 			/* @noflip */
-			background-image: linear-gradient( to right, transparent, var( --background-color-dp-08 ) 50% );
+			background-image: linear-gradient( to right, transparent, var( --color-surface-1 ) 50% );
 		}
 
 		&[ dir='rtl' ]:after {
 			/* @noflip */
-			background-image: linear-gradient( to left, transparent, var( --background-color-dp-08 ) 50% );
+			background-image: linear-gradient( to left, transparent, var( --color-surface-1 ) 50% );
 		}
 		/* stylelint-enable function-linear-gradient-no-nonstandard-direction */
 	}
@@ -34,67 +43,67 @@
 	/* Triangles/Pointers */
 	&.mwe-popups-no-image-pointer {
 		&:after {
-			border-bottom-color: var( --background-color-dp-08 );
+			border-bottom-color: var( --color-surface-1 );
 		}
 
 		&:before {
-			border-bottom-color: var( --border-color-base--lighter );
+			border-bottom-color: var( --border-color-base );
 		}
 	}
 
 	&.mwe-popups-image-pointer {
 		&:before {
-			border-bottom-color: var( --border-color-base--lighter );
+			border-bottom-color: var( --border-color-base );
 		}
 
 		&:after {
-			border-bottom-color: var( --background-color-dp-08 );
+			border-bottom-color: var( --color-surface-1 );
 		}
 
 		&.flipped-x {
 			&:before {
-				border-bottom-color: var( --border-color-base--lighter );
+				border-bottom-color: var( --border-color-base );
 			}
 
 			&:after {
-				border-bottom-color: var( --background-color-dp-08 );
+				border-bottom-color: var( --color-surface-1 );
 			}
 		}
 	}
 
 	&.flipped-x.mwe-popups-is-tall {
 		&:before {
-			border-bottom-color: var( --border-color-base--lighter );
+			border-bottom-color: var( --border-color-base );
 		}
 	}
 
 	&.flipped-x-y {
 		&:before {
-			border-top-color: var( --border-color-base--lighter );
+			border-top-color: var( --border-color-base );
 		}
 
 		&:after {
-			border-top-color: var( --background-color-dp-08 );
+			border-top-color: var( --color-surface-1 );
 		}
 
 		&.mwe-popups-is-tall {
 			&:after {
-				border-top-color: var( --background-color-dp-08 );
+				border-top-color: var( --color-surface-1 );
 			}
 
 			&:before {
-				border-top-color: var( --border-color-base--lighter );
+				border-top-color: var( --border-color-base );
 			}
 		}
 	}
 
 	&.flipped-y {
 		&:after {
-			border-top-color: var( --background-color-dp-08 );
+			border-top-color: var( --color-surface-1 );
 		}
 
 		&:before {
-			border-top-color: var( --border-color-base--lighter );
+			border-top-color: var( --border-color-base );
 		}
 	}
 
@@ -102,7 +111,7 @@
 	&.mwe-popups-type-reference {
 		.mwe-popups-extract {
 			.mwe-popups-fade {
-				background-image: linear-gradient( transparent, var( --background-color-dp-08 ) );
+				background-image: linear-gradient( transparent, var( --color-surface-1 ) );
 			}
 
 			/* T266859 */
