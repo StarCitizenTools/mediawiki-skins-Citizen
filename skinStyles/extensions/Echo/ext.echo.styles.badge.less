@@ -95,6 +95,11 @@
 	#pt-notifications-notice {
 		.mw-echo-notifications-badge {
 			filter: invert( 1 ) hue-rotate( 180deg );
+
+			// Re-invert indicator color
+			&:after {
+				filter: invert( 1 ) hue-rotate( 180deg );
+			}
 		}
 	}
 }
