@@ -11,8 +11,42 @@
 @import '../../../resources/mixins.less';
 
 .mwe-popups {
+	overflow: hidden;
 	background-color: var( --color-surface-1 );
+	border-radius: var( --border-radius--medium );
 	.boxshadow(3);
+
+	&:hover {
+		background-color: var( --color-surface-2 );
+
+		.mwe-popups-extract {
+			&[ dir='ltr' ]:after {
+				/* @noflip */
+				background-image: linear-gradient( to right, transparent, var( --color-surface-2 ) 50% );
+			}
+
+			&[ dir='rtl' ]:after {
+				/* @noflip */
+				background-image: linear-gradient( to left, transparent, var( --color-surface-2 ) 50% );
+			}
+		}
+	}
+
+	&:active {
+		background-color: var( --color-surface-2--active );
+
+		.mwe-popups-extract {
+			&[ dir='ltr' ]:after {
+				/* @noflip */
+				background-image: linear-gradient( to right, transparent, var( --color-surface-2--active ) 50% );
+			}
+
+			&[ dir='rtl' ]:after {
+				/* @noflip */
+				background-image: linear-gradient( to left, transparent, var( --color-surface-2--active ) 50% );
+			}
+		}
+	}
 
 	.mwe-popups-container {
 		color: var( --color-base );
@@ -26,8 +60,6 @@
 	.mwe-popups-extract {
 		color: var( --color-base );
 
-		/* Stylelint rule broken for vendor prefixes: https://github.com/stylelint/stylelint/issues/1939 */
-		/* stylelint-disable function-linear-gradient-no-nonstandard-direction */
 		&[ dir='ltr' ]:after {
 			/* @noflip */
 			background-image: linear-gradient( to right, transparent, var( --color-surface-1 ) 50% );
@@ -37,10 +69,13 @@
 			/* @noflip */
 			background-image: linear-gradient( to left, transparent, var( --color-surface-1 ) 50% );
 		}
-		/* stylelint-enable function-linear-gradient-no-nonstandard-direction */
 	}
 
-	/* Triangles/Pointers */
+	/* Triangles/Pointers
+	 * The pointers are hidden to implement round corners and image background
+	 * So these styles are not needed.
+	 */
+	/*
 	&.mwe-popups-no-image-pointer {
 		&:after {
 			border-bottom-color: var( --color-surface-1 );
@@ -106,6 +141,7 @@
 			border-top-color: var( --border-color-base );
 		}
 	}
+	*/
 
 	/* referencePreview.less */
 	&.mwe-popups-type-reference {
@@ -117,6 +153,17 @@
 			/* T266859 */
 			.mw-parser-output {
 				overflow-wrap: break-word;
+			}
+		}
+	}
+
+	// speed up fade animation 2x
+	&-fade {
+		&-in,
+		&-out {
+			&-up,
+			&-down {
+				animation-duration: 0.125s;
 			}
 		}
 	}
