@@ -5,13 +5,14 @@
  * Module: ext.popups.main
  * Version: REL1_35 dccd607
  *
- * Date: 2021-08-31
+ * Date: 2021-09-02
 */
 
 @import '../../../resources/mixins.less';
 
 .mwe-popups {
 	overflow: hidden;
+	border: 1px solid var( --border-color-base ); // original box shadow also serve as a border
 	background-color: var( --color-surface-1 );
 	border-radius: var( --border-radius--medium );
 	.boxshadow(3);
@@ -71,11 +72,7 @@
 		}
 	}
 
-	/* Triangles/Pointers
-	 * The pointers are hidden to implement round corners and image background
-	 * So these styles are not needed.
-	 */
-	/*
+	/* Triangles/Pointers */
 	&.mwe-popups-no-image-pointer {
 		&:after {
 			border-bottom-color: var( --color-surface-1 );
@@ -141,7 +138,6 @@
 			border-top-color: var( --border-color-base );
 		}
 	}
-	*/
 
 	/* referencePreview.less */
 	&.mwe-popups-type-reference {
