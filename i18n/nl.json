@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Mainframe98",
-			"McDutchie"
+			"McDutchie",
+			"Romaine"
 		]
 	},
 	"citizen.css": "/* CSS die hier wordt geplaatst heeft alleen invloed op het uiterlijk Citizen */",
@@ -24,6 +25,9 @@
 	"citizen-tagline-ns-category": "Categoriepagina",
 	"prefs-citizen-theme-label": "Thema",
 	"prefs-citizen-theme-option-auto": "Automatisch",
+	"prefs-citizen-theme-option-light": "Licht",
+	"prefs-citizen-theme-option-dark": "Donker",
 	"prefs-citizen-fontsize-label": "Lettergrootte",
-	"prefs-citizen-pagewidth-label": "Paginabreedte"
+	"prefs-citizen-pagewidth-label": "Paginabreedte",
+	"prefs-citizen-lineheight-label": "Lijnhoogte"
 }
