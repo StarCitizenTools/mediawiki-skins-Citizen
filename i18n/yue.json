@@ -2,10 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"Alistair3149",
-			"Matttest"
+			"Matttest",
+			"Winston Sung"
 		]
 	},
-	"citizen-skin-desc": "為星際公民而開發嘅響應式佈景主題",
+	"citizen-skin-desc": "為星際公民而開發嘅響應式外觀",
 	"citizen-drawer-toggle": "切換選單",
 	"citizen-personalmenu-toggle": "切換個人選單",
 	"citizen-search-toggle": "切換搜尋",
