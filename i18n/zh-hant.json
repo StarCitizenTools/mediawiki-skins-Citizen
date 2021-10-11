@@ -6,7 +6,8 @@
 			"LNDDYL",
 			"Lakejason0",
 			"Neetp7k9",
-			"Winston Sung"
+			"Winston Sung",
+			"列维劳德"
 		]
 	},
 	"skinname-citizen": "Citizen",
@@ -22,8 +23,8 @@
 	"citizen-sitestats-users-label": "位使用者",
 	"citizen-sitestats-edits-label": "次編輯",
 	"citizen-drawer-search": "搜尋選單",
-	"citizen-footer-desc": "在 [[MediaWiki:Citizen-footer-desc]] 編輯此文字",
-	"citizen-footer-tagline": "在 [[MediaWiki:Citizen-footer-tagline]] 編輯此文字",
+	"citizen-footer-desc": "在 [[MediaWiki:Citizen-footer-desc/zh-hant]] 編輯此文字",
+	"citizen-footer-tagline": "在 [[MediaWiki:Citizen-footer-tagline/zh-hant]] 編輯此文字",
 	"citizen-action-addsection": "新增話題",
 	"citizen-jumptotop": "返回頂端",
 	"citizen-search-fulltext": "搜尋包含",
