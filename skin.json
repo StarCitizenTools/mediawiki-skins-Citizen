@@ -569,7 +569,9 @@
 
 			"+jquery.ui": "skinStyles/jquery.ui/smoothness/jquery.ui.theme.less",
 
-			"+mmv": "skinStyles/extensions/MultimediaViewer/mmv.less"
+			"+mmv": "skinStyles/extensions/MultimediaViewer/mmv.less",
+
+			"+ext.WSSearchFront.module": "skinStyles/extensions/WSSearchFront/ext.WSSearchFront.less"
 		}
 	},
 	"config_prefix": "wgCitizen",
