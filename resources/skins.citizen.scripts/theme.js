@@ -4,9 +4,9 @@
  */
 function initThemeSettings( window ) {
 	const userTheme = window.mw.user.options.get( 'CitizenThemeUser' ),
-		setLocalStorage = ( theme ) => {
+		setLocalStorage = ( themeName ) => {
 			try {
-				localStorage.setItem( 'skin-citizen-theme', theme );
+				localStorage.setItem( 'skin-citizen-theme', themeName );
 			} catch ( e ) {}
 		};
 
