@@ -571,7 +571,7 @@
 
 			"+mmv": "skinStyles/extensions/MultimediaViewer/mmv.less",
 
-			"+ext.WSSearchFront.module": "skinStyles/extensions/WSSearchFront/ext.WSSearchFront.less"
+			"+ext.WSSearchFront.module": "skinStyles/extensions/WSSearchFront/ext.WSSearchFront.module.less"
 		}
 	},
 	"config_prefix": "wgCitizen",
