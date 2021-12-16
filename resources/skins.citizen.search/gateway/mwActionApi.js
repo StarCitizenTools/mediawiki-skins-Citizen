@@ -74,7 +74,7 @@ function convertDataToResults( data ) {
 			case 'textextracts':
 				return item.extract || '';
 			case 'pagedescription':
-				return item.pageprops.description.substring( 0, 60 ) + '...' || '';
+				return item.pageprops.description.slice( 0, 60 ) + '...' || '';
 		}
 	};
 
