@@ -11,7 +11,7 @@
 		"minify-svg": "svgo --config=.svgo.config.js -q -r -f resources/"
 	},
 	"devDependencies": {
-		"eslint-config-wikimedia": "0.21.0",
+		"eslint-config-wikimedia": "0.22.0",
 		"grunt-banana-checker": "0.9.0",
 		"jsdoc": "3.6.9",
 		"jsdoc-wmf-theme": "0.0.3",
