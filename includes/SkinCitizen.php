@@ -39,6 +39,11 @@ use Citizen\Partials\Theme;
 class SkinCitizen extends SkinMustache {
 	use GetConfigTrait;
 
+	/**
+	 * @var array|null
+	 */
+	private $contentNavigationUrls;
+
 	/** @var array of alternate message keys for menu labels */
 	private const MENU_LABEL_KEYS = [
 		'tb' => 'toolbox',
@@ -151,12 +156,34 @@ class SkinCitizen extends SkinMustache {
 	}
 
 	/**
+	 * @inheritDoc
+	 */
+	protected function runOnSkinTemplateNavigationHooks( $skin, &$contentNavigationUrls ) {
+		parent::runOnSkinTemplateNavigationHooks( $skin, $contentNavigationUrls );
+		// There are some SkinTemplate modifications that occur after the execution of this hook
+		// to add rel attributes and ID attributes.
+		// The only one Minerva needs is this one so we manually add it.
+		foreach( array_keys( $contentNavigationUrls['namespaces'] ) as $id ) {
+			if ( in_array( $id,[ 'user_talk', 'talk' ] ) ) {
+					$contentNavigationUrls['namespaces'][ $id ]['rel'] = 'discussion';
+			}
+		}
+		$this->contentNavigationUrls = $contentNavigationUrls;
+	}
+
+	/**
 	 * Change access to public, as it is used in partials
 	 *
 	 * @return array
 	 */
 	final public function buildContentNavigationUrlsPublic() {
-		return parent::buildContentNavigationUrls();
+		if ( !method_exists( parent::class, 'runOnSkinTemplateNavigationHooks' ) ) {
+			// Support for MediaWiki versions < 1.37
+			return parent::buildContentNavigationUrls();
+		} else {
+			// Works with mediawiki version >= 1.37
+			return $this->contentNavigationUrls;
+		}
 	}
 
 	/**
