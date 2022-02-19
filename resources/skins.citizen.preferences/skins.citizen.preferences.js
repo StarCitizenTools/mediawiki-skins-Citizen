@@ -159,7 +159,7 @@ function dismissOnClickOutside( event ) {
 		const panel = document.getElementById( 'citizen-pref-panel' );
 
 		if ( panel.classList.contains( 'citizen-pref-panel--active' ) ) {
-			// eslint-disable-next-line no-use-before-define
+
 			togglePanel();
 		}
 	}
@@ -174,7 +174,7 @@ function dismissOnEscape( event ) {
 	if ( event.key !== 'Escape' ) {
 		return;
 	}
-	// eslint-disable-next-line no-use-before-define
+
 	togglePanel();
 }
 
