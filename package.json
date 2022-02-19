@@ -13,7 +13,7 @@
 	"devDependencies": {
 		"eslint-config-wikimedia": "0.21.0",
 		"grunt-banana-checker": "0.9.0",
-		"jsdoc": "3.6.9",
+		"jsdoc": "3.6.10",
 		"jsdoc-wmf-theme": "0.0.3",
 		"stylelint-config-idiomatic-order": "8.1.0",
 		"stylelint-config-wikimedia": "0.11.1",
