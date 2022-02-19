@@ -17,7 +17,7 @@ Live demo can be seen at the [Star Citizen Wiki](https://star-citizen.wiki), mor
 ## SkinStyles
 Citizen includes numerous skinStyles that applies custom styling to extensions and core libraries. Please feel free to submit PRs if you want to add support for more extensions! Unless the extension has never supported the current minimum required MediaWiki version of the skin, the skinStyles are based on the latest version of the said MW release branch (e.g. `REL1_35` for MediaWiki 1.35).
 
-- **Grade A - Overhaul** - Major adjustments to UI, plus Grade B. 
+- **Grade A - Overhaul** - Major adjustments to UI, plus Grade B.
 - **Grade B - Dynamic** - Colors are converted into CSS variables, little to none style adjustments.
 - **Grade C - Legacy overhaul**  Major adjustments to UI but using legacy CSS variables.
 - **Grade D - Legacy dynamic** - Color are converted into CSS variables but in old standards (`background-color-dp-XX`). These should be updated to at least Grade B support.
@@ -54,6 +54,7 @@ Name | Grade | Version | Last updated
 [RelatedArticles](https://www.mediawiki.org/wiki/Extension:RelatedArticles) | A | REL1_35 `0f27333` | 2021-08-31
 [Semantic MediaWiki](https://www.mediawiki.org/wiki/Extension:Semantic_MediaWiki) | E | N/A | N/A
 [Semantic Result Formats](https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats) | E | N/A | N/A
+[SimpleTooltip](https://www.mediawiki.org/wiki/Extension:SimpleTooltip) | B | N/A | 2022-02-19
 [SyntaxHighlight](https://www.mediawiki.org/wiki/Extension:SyntaxHighlight) | A | REL1_35 `05598b3` | 2021-08-26
 [Tabber](https://www.mediawiki.org/wiki/Extension:Tabber) | A | N/A | N/A
 [TabberNeue](https://www.mediawiki.org/wiki/Extension:TabberNeue) | A | 1.0.1 `0dc1b34` | 2021-06-21
@@ -77,8 +78,8 @@ wfLoadSkin( 'Citizen' );
 3. **✔️Done** - Navigate to Special:Version on your wiki to verify that the skin is successfully installed.
 
 ## Configurations
-**The skin works out of the box without any configurations.** 
-The config flags allow more customization on the specific features in the skin. 
+**The skin works out of the box without any configurations.**
+The config flags allow more customization on the specific features in the skin.
 
 ### Appearance
 Name | Description | Values | Default
@@ -110,7 +111,7 @@ Name | Description | Values | Default
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
 `$wgCitizenEnablePreconnect` | Enable or disable [preconnect to required origin](https://web.dev/uses-rel-preconnect/) | `true` - enable; `false` - disable | `false`
-`$wgCitizenPreconnectURL` | The URL for preconnect to required origin | URL | 
+`$wgCitizenPreconnectURL` | The URL for preconnect to required origin | URL |
 `$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#11151d`
 
 ## Requirements
