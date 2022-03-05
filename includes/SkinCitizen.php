@@ -163,8 +163,8 @@ class SkinCitizen extends SkinMustache {
 		// There are some SkinTemplate modifications that occur after the execution of this hook
 		// to add rel attributes and ID attributes.
 		// The only one Minerva needs is this one so we manually add it.
-		foreach( array_keys( $contentNavigationUrls['namespaces'] ) as $id ) {
-			if ( in_array( $id,[ 'user_talk', 'talk' ] ) ) {
+		foreach ( array_keys( $contentNavigationUrls['namespaces'] ) as $id ) {
+			if ( in_array( $id, [ 'user_talk', 'talk' ] ) ) {
 					$contentNavigationUrls['namespaces'][ $id ]['rel'] = 'discussion';
 			}
 		}
