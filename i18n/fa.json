@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Beginneruser",
 			"Eshagh",
 			"Jeeputer",
 			"Reza koulivand"
@@ -21,7 +22,7 @@
 	"citizen-drawer-search": "منوی جستجو",
 	"citizen-footer-desc": "این متن را در مدیاویکی:Citizen-footer-desc ویرایش کنید",
 	"citizen-footer-tagline": "این متن را در [[MediaWiki:Citizen-footer-tagline/fa]] ویرایش کنید",
-	"citizen-action-addsection": "افزودن مبحث",
+	"citizen-action-addsection": "افزودن بحث",
 	"citizen-jumptotop": "برگشت به بالا",
 	"citizen-search-fulltext": "جستجو برای صفحه‌های دربردارندهٔ",
 	"citizen-tagline-ns-talk": "صفحهٔ بحث برای {{SUBJECTPAGENAME}}",
