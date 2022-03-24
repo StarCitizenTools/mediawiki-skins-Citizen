@@ -12,7 +12,7 @@
 	"license-name": "GPL-3.0-or-later",
 	"type": "skin",
 	"requires": {
-		"MediaWiki": ">= 1.35.2"
+		"MediaWiki": ">= 1.39"
 	},
 	"ValidSkinNames": {
 		"citizen": {
@@ -96,7 +96,6 @@
 				"content-parser-output": false,
 				"content-body": false,
 				"logo": false,
-				"legacy": false,
 				"toc": false
 			},
 			"styles": [ "resources/skins.citizen.styles/skin.less" ]
@@ -111,7 +110,6 @@
 				"content-parser-output": false,
 				"content-body": false,
 				"logo": false,
-				"legacy": false,
 				"toc": false
 			},
 			"styles": [ "resources/skins.citizen.styles.debug/skins.citizen.styles.debug.less" ]
@@ -126,7 +124,6 @@
 				"content-parser-output": false,
 				"content-body": false,
 				"logo": false,
-				"legacy": false,
 				"toc": false
 			},
 			"styles": [ "resources/skins.citizen.styles.fonts/skins.citizen.styles.fonts.less" ]
@@ -141,7 +138,6 @@
 				"content-parser-output": false,
 				"content-body": false,
 				"logo": false,
-				"legacy": false,
 				"toc": false
 			},
 			"styles": [ "resources/skins.citizen.styles.sections/skins.citizen.styles.sections.less" ]
@@ -156,7 +152,6 @@
 				"content-parser-output": false,
 				"content-body": false,
 				"logo": false,
-				"legacy": false,
 				"toc": false
 			},
 			"styles": [ "resources/skins.citizen.styles.sitestats/skins.citizen.styles.sitestats.less" ]
@@ -171,7 +166,6 @@
 				"content-parser-output": false,
 				"content-body": false,
 				"logo": false,
-				"legacy": false,
 				"toc": false
 			},
 			"styles": [ "resources/skins.citizen.styles.toc/skins.citizen.styles.toc.less" ]
