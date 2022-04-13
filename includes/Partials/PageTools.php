@@ -83,7 +83,7 @@ final class PageTools extends Partial {
 
 			if ( $viewshtml ) {
 				$viewshtml[ 'label-class' ] ??= '';
-				$viewshtml[ 'label-class' ] = $viewshtml[ 'label-class' ] . 'screen-reader-text';
+				$viewshtml[ 'label-class' ] .= 'screen-reader-text';
 			}
 
 			if ( $actionshtml ) {
