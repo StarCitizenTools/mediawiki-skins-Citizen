@@ -27,6 +27,7 @@ namespace Citizen\Partials;
 
 use Exception;
 use MediaWiki\MediaWikiServices;
+use SkinTemplate;
 
 final class PageTools extends Partial {
 
@@ -39,9 +40,10 @@ final class PageTools extends Partial {
 	 * * 'permission-*': only visible if user has permission
 	 *   e.g. permission-edit = only visible if user can edit pages
 	 *
+	 * @param array $parentData
 	 * @return array html
 	 */
-	public function buildPageTools(): array {
+	public function buildPageTools( $parentData ): array {
 		$condition = $this->getConfigValue( 'CitizenShowPageTools' );
 		$contentNavigation = $this->skin->buildContentNavigationUrlsPublic();
 		$portals = $this->skin->buildSidebar();
@@ -65,17 +67,28 @@ final class PageTools extends Partial {
 
 		if ( $condition === true ) {
 
-			$viewshtml = $this->skin->getMenuData( 'views', $contentNavigation[ 'views' ] ?? [] );
-			$actionshtml = $this->skin->getMenuData( 'actions', $contentNavigation[ 'actions' ] ?? [] );
-			$namespaceshtml = $this->skin->getMenuData( 'namespaces', $contentNavigation[ 'namespaces' ] ?? [] );
-			$variantshtml = $this->skin->getMenuData( 'variants', $contentNavigation[ 'variants' ] ?? [] );
-			$toolboxhtml = $this->skin->getMenuData( 'tb',  $portals['TOOLBOX'] ?? [] );
+
+			if ( !method_exists( SkinTemplate::class, 'runOnSkinTemplateNavigationHooks' ) ) {
+				$viewshtml = $this->skin->getMenuData( 'views', $contentNavigation[ 'views' ] ?? [] );
+				$actionshtml = $this->skin->getMenuData( 'actions', $contentNavigation[ 'actions' ] ?? [] );
+				$namespaceshtml = $this->skin->getMenuData( 'namespaces', $contentNavigation[ 'namespaces' ] ?? [] );
+				$variantshtml = $this->skin->getMenuData( 'variants', $contentNavigation[ 'variants' ] ?? [] );
+				$toolboxhtml = $this->skin->getMenuData( 'tb',  $portals['TOOLBOX'] ?? [] );
+			} else {
+				$viewshtml = $parentData['data-portlets']['data-views'];
+				$actionshtml = $parentData['data-portlets']['data-actions'];
+				$namespaceshtml = $parentData['data-portlets']['data-namespaces'];
+				$variantshtml = $parentData['data-portlets']['data-variants'];
+				$toolboxhtml = $parentData['data-portlets-sidebar']['array-portlets-rest'];
+			}
 
 			if ( $viewshtml ) {
-				$viewshtml[ 'label-class' ] .= 'screen-reader-text';
+				$viewshtml[ 'label-class' ] ??= '';
+				$viewshtml[ 'label-class' ] = $viewshtml[ 'label-class' ] . 'screen-reader-text';
 			}
 
 			if ( $actionshtml ) {
+				$actionshtml[ 'label-class' ] ??= '';
 				$actionshtml[ 'label-class' ] .= 'screen-reader-text';
 			}
 
