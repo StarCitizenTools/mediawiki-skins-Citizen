@@ -78,7 +78,10 @@ final class PageTools extends Partial {
 				$actionshtml = $parentData['data-portlets']['data-actions'];
 				$namespaceshtml = $parentData['data-portlets']['data-namespaces'];
 				$variantshtml = $parentData['data-portlets']['data-variants'];
-				$toolboxhtml = $parentData['data-portlets-sidebar']['array-portlets-rest'];
+				// The last item of the sidebar is the toolbox
+				$sidebar = [ $parentData['data-portlets-sidebar']['data-portlets-first'],
+					...$parentData['data-portlets-sidebar']['array-portlets-rest'] ];
+				$toolboxhtml = $sidebar[count( $sidebar ) - 1];
 			}
 
 			if ( $viewshtml ) {
