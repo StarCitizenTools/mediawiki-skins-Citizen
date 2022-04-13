@@ -67,7 +67,6 @@ final class PageTools extends Partial {
 
 		if ( $condition === true ) {
 
-
 			if ( !method_exists( SkinTemplate::class, 'runOnSkinTemplateNavigationHooks' ) ) {
 				$viewshtml = $this->skin->getMenuData( 'views', $contentNavigation[ 'views' ] ?? [] );
 				$actionshtml = $this->skin->getMenuData( 'actions', $contentNavigation[ 'actions' ] ?? [] );
