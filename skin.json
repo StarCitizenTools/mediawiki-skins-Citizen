@@ -523,6 +523,8 @@
 
 			"+ext.popups.main": "skinStyles/extensions/Popups/ext.popups.main.less",
 
+			"+ext.PortableInfobox.styles": "skinStyles/extensions/PortableInfobox/ext.PortableInfobox.styles.less",
+
 			"+ext.Tabber": "skinStyles/extensions/Tabber/ext.Tabber.less",
 			"+ext.tabberNeue": "skinStyles/extensions/TabberNeue/ext.tabberNeue.less",
 
