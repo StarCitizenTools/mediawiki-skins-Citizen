@@ -71,6 +71,7 @@ class SkinCitizen extends SkinMustache {
 	public function getTemplateData(): array {
 		$out = $this->getOutput();
 		$title = $out->getTitle();
+		$parentData = parent::getTemplateData();
 
 		$header = new Header( $this );
 		$logos = new Logos( $this );
@@ -98,7 +99,7 @@ class SkinCitizen extends SkinMustache {
 		// Conditionally used values must use null to indicate absence (not false or '').
 		$newTalksHtml = $this->getNewtalks() ?: null;
 
-		return parent::getTemplateData() + [
+		return $parentData + [
 			'msg-sitetitle' => $this->msg( 'sitetitle' )->text(),
 			'html-mainpage-attributes' => Xml::expandAttributes(
 				Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) + [
@@ -115,7 +116,7 @@ class SkinCitizen extends SkinMustache {
 				'msg-citizen-jumptotop' => $this->msg( 'citizen-jumptotop' )->text() . ' [home]',
 			],
 
-			'data-pagetools' => $tools->buildPageTools(),
+			'data-pagetools' => $tools->buildPageTools( $parentData ),
 
 			'html-newtalk' => $newTalksHtml ? '<div class="usermessage">' . $newTalksHtml . '</div>' : '',
 			'page-langcode' => $title->getPageViewLanguage()->getHtmlCode(),
