@@ -51,7 +51,7 @@ Name | Grade | Version | Last updated
 [MultimediaViewer](https://www.mediawiki.org/wiki/Extension:MultimediaViewer) | C | N/A | N/A
 [OAuth](https://www.mediawiki.org/wiki/Extension:OAuth) | B | REL1_35 `451ed95` | 2021-08-31
 [Popups](https://www.mediawiki.org/wiki/Extension:Popups) | A | REL1_35 `dccd607` | 2021-09-02
-[PortableInfobox](https://www.mediawiki.org/wiki/Extension:PortableInfobox) | B | 0.6 `16a77dc` | 2022-04-14
+[PortableInfobox](https://www.mediawiki.org/wiki/Extension:PortableInfobox) | A | 0.6 `16a77dc` | 2022-04-15
 [RelatedArticles](https://www.mediawiki.org/wiki/Extension:RelatedArticles) | A | REL1_35 `0f27333` | 2021-08-31
 [Semantic MediaWiki](https://www.mediawiki.org/wiki/Extension:Semantic_MediaWiki) | E | N/A | N/A
 [Semantic Result Formats](https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats) | E | N/A | N/A

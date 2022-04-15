@@ -5,46 +5,148 @@
  * Module: ext.PortableInfobox.styles
  * Version: 0.6 16a77dc
  *
- * Date: 2022-04-14
+ * Date: 2022-04-15
 */
 
+@import '../../../resources/variables.less';
+@import '../../../resources/mixins.less';
+
 :root {
-	--pi-background: var( --color-surface-2 );
-	--pi-border-color: var( --border-color-base--darker );
-	--pi-secondary-background: var( --color-surface-3 );
+	--pi-background: var( --background-color-framed );
+	--pi-border-color: var( --border-color-base );
+	--pi-secondary-background: transparent;
+	--pi-width: 400px;
+	--pi-item-spacing: 15px 10px 0;
 }
 
-.portable-infobox .pi-horizontal-group {
-	margin-top: 0;
+/* Reset */
+.pi-smart-data-label:not( :first-child ),
+.pi-smart-data-value:not( :first-child ) {
+	border-left: none;
 }
 
-.portable-infobox .pi-section-navigation,
-.portable-infobox .pi-media-collection-tabs {
-	padding-bottom: 0;
-	background-color: var( --color-surface-3 );
+.portable-infobox {
+	/* In case if tooltips go out of boundary */
+	overflow: visible;
+	/* @noflip */
+	margin-left: 1.4rem;
+	border-radius: var( --border-radius--medium );
+	font-size: 0.875rem;
+	.boxshadow( 2 );
+
+	.citizen-body & p {
+		margin: 0;
+	}
 }
 
-.pi-section-navigation .pi-section-tab.pi-section-active,
-.pi-section-navigation .pi-section-tab.current,
-.pi-media-collection .pi-tab-link.current {
-	border-color: var( --color-primary );
-	border-bottom-width: 0;
-	background: var( --color-surface-2 );
-}
+.portable-infobox .pi {
+	&-image {
+		overflow: hidden;
+		border-radius: var( --border-radius--medium ) var( --border-radius--medium ) 0 0;
 
-.pi-section-navigation .pi-section-tab,
-.pi-media-collection .pi-tab-link {
-	border-width: 2px;
-	margin: 0 4px;
-	background: var( --color-surface-2 );
-	border-top-left-radius: var( --border-radius--medium );
-	border-top-right-radius: var( --border-radius--medium );
+		.image {
+			img {
+				display: block;
+				width: 100%;
+				background: var( --background-color-quiet--hover );
 
-	&:hover {
-		border-color: var( --color-primary--hover );
+				/* Neutral background for all transprent SVG */
+				&[ src$='.svg' ] {
+					background: #eaecf0;
+				}
+			}
+
+			&:hover img {
+				transform: scale( 1.1 );
+			}
+		}
 	}
 
-	&:active {
-		border-color: var( --color-primary--active );
+	&-title {
+		padding: 0 20px;
+		margin-top: 20px;
+		margin-bottom: 5px;
+		color: var( --color-base--emphasized );
+		font-size: 1.4rem;
+		line-height: 1.4;
 	}
+
+	&-header {
+		margin-left: 10px;
+		color: var( --color-base--emphasized );
+		font-size: 1rem;
+	}
+
+	&-group {
+		padding-bottom: 15px;
+		border-bottom: 1px solid var( --pi-border-color );
+	}
+
+	&-horizontal-group {
+		margin-top: 15px;
+	}
+
+	&-smart-group {
+		border-bottom: none;
+		text-align: left;
+	}
+
+	&-panel {
+		padding-bottom: 15px;
+		margin-top: 15px;
+	}
+
+	&-group,
+	&-panel {
+		.pi-item {
+			border-bottom: 0;
+		}
+	}
+
+	&-data-label {
+		padding: 0 10px;
+		margin: 10px 10px 0;
+		color: var( --color-base--subtle );
+		font-size: 0.8125rem;
+		font-weight: normal;
+		letter-spacing: 0.75px;
+	}
+
+	&-data-value {
+		padding: 0 10px;
+		padding-top: 0;
+		margin: 0 10px;
+		font-weight: bold;
+	}
+
+	/* Infobox tabber */
+	&-panel-scroll-wrapper {
+		margin: 0 10px;
+	}
+
+	&-section-navigation,
+	&-media-collection-tabs {
+		justify-content: flex-start;
+		box-shadow: inset 0 -1px 0 0 var( --border-color-base--darker );
+	}
+
+	&-section-navigation .pi-section-tab,
+	&-media-collection .pi-tab-link {
+		padding: 5px 12px;
+		margin: 0;
+		color: var( --color-base--subtle );
+		font-weight: 500;
+
+		&.pi-section-active,
+		&.current {
+			box-shadow: inset 0 -2px 0 0 var( --color-primary );
+			color: var( --color-primary );
+		}
+
+		&:hover {
+			box-shadow: inset 0 -2px 0 0 var( --color-primary--hover );
+			color: var( --color-primary--hover );
+		}
+	}
+
 }
