@@ -47,7 +47,8 @@ final class Footer extends Partial {
 
 		// Get messages
 		foreach ( $msg as $key ) {
-			$data["msg-citizen-footer-$key"] = $this->skin->msg( "citizen-footer-$key" )->parse();
+			$data["msg-citizen-footer-$key"] = $this->skin->msg( "citizen-footer-$key" )
+				->inContentLanguage()->parse();
 		}
 
 		// Based on SkinMustache
