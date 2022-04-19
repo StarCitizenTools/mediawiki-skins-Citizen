@@ -75,7 +75,7 @@ class SkinHooks implements SkinPageReadyConfigHook, BeforePageDisplayHook {
 		$script = sprintf(
 			'<script%s>%s</script>',
 			$nonce !== false ? sprintf( ' nonce="%s"', $nonce ) : '',
-			'window.applyPref=()=>{var e;try{const t=document.documentElement,i=window.localStorage.getItem("skin-citizen-theme"),n=window.localStorage.getItem("skin-citizen-fontsize"),l=window.localStorage.getItem("skin-citizen-pagewidth"),o=window.localStorage.getItem("skin-citizen-lineheight");null!==i&&(t.classList.remove(...(e="skin-citizen-",["auto","dark","light"].map(t=>e+t))),t.classList.add("skin-citizen-"+i)),null!==n&&t.style.setProperty("font-size",n),null!==l&&t.style.setProperty("--width-layout",l),null!==o&&t.style.setProperty("--line-height",o)}catch(t){}},window.applyPref();'
+			'window.applyPref=()=>{var t;try{const e=document.documentElement,i=window.localStorage.getItem("skin-citizen-theme"),n=window.localStorage.getItem("skin-citizen-fontsize"),o=window.localStorage.getItem("skin-citizen-pagewidth"),l=window.localStorage.getItem("skin-citizen-lineheight");null!==i&&(e.classList.remove(...(t="skin-citizen-",["auto","dark","light"].map(e=>t+e))),e.classList.add("skin-citizen-"+i)),null!==n&&e.style.setProperty("font-size",n),null!==o&&e.style.setProperty("--width-layout",o),null!==l&&e.style.setProperty("--line-height",l)}catch(e){}},(()=>{var e;"auto"===window.localStorage.getItem("skin-citizen-theme")?(e=window.matchMedia("(prefers-color-scheme: dark)")?"dark":"light",window.localStorage.setItem("skin-citizen-theme",e),window.applyPref(),window.localStorage.setItem("skin-citizen-theme","auto")):window.applyPref()})();'
 		);
 
 		$out->addHeadItem( 'skin.citizen.inline', $script );

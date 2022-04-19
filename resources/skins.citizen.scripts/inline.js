@@ -40,5 +40,15 @@ window.applyPref = () => {
 }
 
 (() => {
-	window.applyPref()
+	// Set up auto theme based on prefers-color-scheme
+	if ( window.localStorage.getItem( 'skin-citizen-theme' ) === 'auto' ) {
+		const autoTheme = window.matchMedia( '(prefers-color-scheme: dark)' ) ? 'dark' : 'light';
+		// Set to the right theme temporarily
+		window.localStorage.setItem( 'skin-citizen-theme', autoTheme );
+		window.applyPref();
+		// Reset back to auto
+		window.localStorage.setItem( 'skin-citizen-theme', 'auto' );
+	} else {
+		window.applyPref();
+	}
 })();

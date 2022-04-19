@@ -17,16 +17,11 @@ function initThemeSettings( window ) {
 			setLocalStorage( 'auto' );
 		};
 
-	const theme = prefersDark.matches ? 'dark' : 'light';
-
 	// Monitor prefers-color-scheme changes
 	prefersDark.addEventListener( 'change', ( event ) => {
 		setLocalStorage( event.matches ? 'dark' : 'light' );
 		applyTheme();
 	} );
-
-	setLocalStorage( theme );
-	applyTheme();
 }
 
 /**
