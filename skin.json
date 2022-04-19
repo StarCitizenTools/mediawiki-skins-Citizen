@@ -70,18 +70,13 @@
 		}
 	},
 	"HookHandlers": {
-		"PreferenceHooks": {
-			"class": "Citizen\\Hooks\\PreferenceHooks"
-		},
 		"SkinHooks": {
 			"class": "Citizen\\Hooks\\SkinHooks"
 		}
 	},
 	"Hooks": {
 		"SkinPageReadyConfig": "SkinHooks",
-		"BeforePageDisplay": "SkinHooks",
-		"GetPreferences": "PreferenceHooks",
-		"PreferencesFormPreSave": "PreferenceHooks"
+		"BeforePageDisplay": "SkinHooks"
 	},
 	"ResourceModules": {
 		"skins.citizen.styles": {

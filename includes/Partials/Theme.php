@@ -42,15 +42,6 @@ final class Theme extends Partial {
 		// Set theme to site theme
 		$theme = $this->getConfigValue( 'CitizenThemeDefault' ) ?? 'auto';
 
-		// Set theme to user theme if registered
-		if ( $this->out->getUser()->isRegistered() ) {
-			$theme = MediaWikiServices::getInstance()->getUserOptionsLookup()->getOption(
-				$this->out->getUser(),
-				'CitizenThemeUser',
-				'auto'
-			);
-		}
-
 		// Add HTML class based on theme set
 		$this->out->addHtmlClasses( 'skin-citizen-' . $theme );
 	}

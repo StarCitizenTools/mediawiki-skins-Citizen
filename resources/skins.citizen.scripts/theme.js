@@ -3,37 +3,30 @@
  * @return {void}
  */
 function initThemeSettings( window ) {
-	const userTheme = window.mw.user.options.get( 'CitizenThemeUser' ),
-		setLocalStorage = ( themeName ) => {
-			try {
+	const setLocalStorage = ( themeName ) => {
+		try {
+			// eslint-disable-next-line indent
 				localStorage.setItem( 'skin-citizen-theme', themeName );
-			} catch ( e ) {}
+		} catch ( e ) {}
+	};
+
+	const prefersDark = window.matchMedia( '(prefers-color-scheme: dark)' ),
+		applyTheme = () => {
+			window.applyPref();
+			// So that theme is applied but localStorage keeps the auto config
+			setLocalStorage( 'auto' );
 		};
 
-	let theme = ( userTheme !== null ) ? userTheme : 'auto';
+	const theme = prefersDark.matches ? 'dark' : 'light';
 
-	if ( theme === 'auto' ) {
-		const prefersDark = window.matchMedia( '(prefers-color-scheme: dark)' ),
-			applyTheme = () => {
-				window.applyPref();
-				// So that theme is applied but localStorage keeps the auto config
-				setLocalStorage( 'auto' );
-			};
-
-		theme = prefersDark.matches ? 'dark' : 'light';
-
-		// Monitor prefers-color-scheme changes
-		prefersDark.addEventListener( 'change', ( event ) => {
-			setLocalStorage( event.matches ? 'dark' : 'light' );
-			applyTheme();
-		} );
-
-		setLocalStorage( theme );
+	// Monitor prefers-color-scheme changes
+	prefersDark.addEventListener( 'change', ( event ) => {
+		setLocalStorage( event.matches ? 'dark' : 'light' );
 		applyTheme();
-	} else {
-		setLocalStorage( theme );
-		window.applyPref();
-	}
+	} );
+
+	setLocalStorage( theme );
+	applyTheme();
 }
 
 /**
