@@ -25,8 +25,6 @@ declare( strict_types=1 );
 
 namespace Citizen\Partials;
 
-use MediaWiki\MediaWikiServices;
-
 /**
  * Theme switcher partial of Skin Citizen
  */
