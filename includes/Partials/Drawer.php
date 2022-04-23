@@ -142,9 +142,9 @@ final class Drawer extends Partial {
 		if ( $this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) ) {
 			$stats = [ 'articles', 'images', 'users', 'edits' ];
 			$items = [];
-			$fmt = new \NumberFormatter('en_US', \NumberFormatter::PADDING_POSITION);
-			$fmt->setAttribute(\NumberFormatter::ROUNDING_MODE, \NumberFormatter::ROUND_DOWN);
-			$fmt->setAttribute(\NumberFormatter::MAX_FRACTION_DIGITS, 1);
+			$fmt = new \NumberFormatter( 'en_US', \NumberFormatter::PADDING_POSITION );
+			$fmt->setAttribute( \NumberFormatter::ROUNDING_MODE, \NumberFormatter::ROUND_DOWN );
+			$fmt->setAttribute( \NumberFormatter::MAX_FRACTION_DIGITS, 1 );
 
 			foreach ( $stats as &$stat ) {
 				$items[] = [
