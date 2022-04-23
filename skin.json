@@ -34,7 +34,8 @@
 						"skins.citizen.icons.t",
 						"skins.citizen.icons.pt",
 						"skins.citizen.icons.footer",
-						"skins.citizen.icons.badges"
+						"skins.citizen.icons.badges",
+						"skins.citizen.icons.sitestats"
 					],
 					"messages": [
 						"citizen-drawer-toggle",
@@ -348,6 +349,22 @@
 			"useDataURI": false,
 			"images": {
 				"collapse": "resources/skins.citizen.icons/shared/collapse.svg"
+			}
+		},
+		"skins.citizen.icons.sitestats": {
+			"class": "ResourceLoaderImageModule",
+			"selector": "#sitestats-{name}:before",
+			"useDataURI": false,
+			"images": {
+				"articles": "resources/skins.citizen.icons/shared/article.svg",
+				"images": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/folderPlaceholder-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/folderPlaceholder-rtl.svg"
+					}
+				},
+				"users": "resources/skins.citizen.icons/shared/userAvatar.svg",
+				"edits": "resources/skins.citizen.icons/shared/edit.svg"
 			}
 		},
 		"skins.citizen.icons.preferences": {

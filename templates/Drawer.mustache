@@ -1,5 +1,6 @@
 {{!
 	string msg-citizen-drawer-toggle The label used by the drawer button.
+	string msg-sitesubtitle the contents of the sitesubtitle message key
 }}
 <input 
 	type="checkbox" 
@@ -24,16 +25,19 @@
 		<div id="mw-drawer-logo" role="banner">
 			{{>Logo}}
 		</div>
-		{{>SiteStats}}
-		{{#data-drawer-subsearch}}
-		<div id="mw-drawer-search">
-			<input
-				type="search"
-				title="{{msg-citizen-drawer-search}}"
-				placeholder="{{msg-citizen-drawer-search}}"
-				id="mw-drawer-search-input" />
+		<div id="mw-drawer-siteinfo">
+			{{>SiteStats}}
+			<div class="mw-logo-wordmark">{{msg-sitetitle}}</div>
+			{{#data-drawer-subsearch}}
+			<div id="mw-drawer-search">
+				<input
+					type="search"
+					title="{{msg-citizen-drawer-search}}"
+					placeholder="{{msg-citizen-drawer-search}}"
+					id="mw-drawer-search-input" />
+			</div>
+			{{/data-drawer-subsearch}}
 		</div>
-		{{/data-drawer-subsearch}}
 	</header>
 	<section id="mw-drawer-menu">
 		{{#data-portals-first}}{{>Menu}}{{/data-portals-first}}

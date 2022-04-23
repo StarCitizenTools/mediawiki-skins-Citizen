@@ -2,31 +2,26 @@
 
 #mw-drawer-sitestats {
 	display: flex;
-	margin-top: 0.4rem;
 	font-size: @ui-menu-text;
 }
 
-.sitestats {
-	&-item {
-		display: flex;
-		align-items: center;
-		margin: 0 10px;
+.sitestats-item {
+	display: flex;
+	align-items: center;
+	margin-right: 15px;
 
-		&-value {
-			color: var( --color-base--emphasized );
-			font-weight: 600;
-		}
-
-		&-label {
-			margin-left: 6px;
-			color: var( --color-base--subtle );
-			letter-spacing: 0.75px;
-		}
+	&:before {
+		width: 14px;
+		height: 14px;
+		margin-right: 7px;
+		background-size: contain;
+		content: '';
+		opacity: var( --opacity-icon-base );
 	}
 }
 
-@media only screen and ( max-width: @width-breakpoint-tablet ) {
-	.sitestats-item:not( #sitestats-articles ) {
-		display: none;
+.skin-citizen-dark {
+	.sitestats-item:before {
+		filter: invert( 1 );
 	}
 }
