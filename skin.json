@@ -264,7 +264,12 @@
 			"selector": "#ca-{name} > a:after",
 			"defaultColor": "#000",
 			"images": {
-				"view": "resources/skins.citizen.icons/shared/article.svg",
+				"view": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/article-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/article-rtl.svg"
+					}
+				},
 				"viewsource": "resources/skins.citizen.icons/shared/eye.svg",
 				"ve-edit": "resources/skins.citizen.icons/shared/ve-edit.svg",
 				"edit": "resources/skins.citizen.icons/shared/edit.svg",
@@ -276,8 +281,18 @@
 				"watch": "resources/skins.citizen.icons/shared/eye.svg",
 				"unwatch": "resources/skins.citizen.icons/shared/eyeClosed.svg",
 				"addsection": "resources/skins.citizen.icons/shared/add.svg",
-				"talk": "resources/skins.citizen.icons/shared/discussion.svg",
-				"nstab-main": "resources/skins.citizen.icons/shared/article.svg",
+				"talk": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/speechBubbles-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/speechBubbles-rtl.svg"
+					}
+				},
+				"nstab-main": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/article-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/article-rtl.svg"
+					}
+				},
 				"translate": "resources/skins.citizen.icons/shared/language.svg"
 			}
 		},
@@ -296,9 +311,19 @@
 			"defaultColor": "#000",
 			"images": {
 				"mainpage-description": "resources/skins.citizen.icons/shared/home.svg",
-				"recentchanges": "resources/skins.citizen.icons/shared/history.svg",
+				"recentchanges": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/recentChanges-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/recentChanges-rtl.svg"
+					}
+				},
 				"randompage": "resources/skins.citizen.icons/shared/random.svg",
-				"help": "resources/skins.citizen.icons/shared/help.svg"
+				"help": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/help-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/help-rtl.svg"
+					}
+				}
 			}
 		},
 		"skins.citizen.icons.t": {
@@ -306,14 +331,39 @@
 			"selector": "#t-{name} > a:after",
 			"defaultColor": "#000",
 			"images": {
-				"whatlinkshere": "resources/skins.citizen.icons/shared/whatlinkshere.svg",
-				"recentchangeslinked": "resources/skins.citizen.icons/shared/history.svg",
-				"contributions": "resources/skins.citizen.icons/shared/contributions.svg",
-				"log": "resources/skins.citizen.icons/shared/journal.svg",
+				"whatlinkshere": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/articleRedirect-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/articleRedirect-rtl.svg"
+					}
+				},
+				"recentchangeslinked": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/recentChanges-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/recentChanges-rtl.svg"
+					}
+				},
+				"contributions": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/userContributions-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/userContributions-rtl.svg"
+					}
+				},
+				"log": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/journal-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/journal-rtl.svg"
+					}
+				},
 				"blockip": "resources/skins.citizen.icons/shared/block.svg",
-				"userrights": "resources/skins.citizen.icons/shared/users.svg",
+				"userrights": "resources/skins.citizen.icons/shared/userGroup.svg",
 				"upload": "resources/skins.citizen.icons/shared/upload.svg",
-				"specialpages": "resources/skins.citizen.icons/shared/specialpages.svg",
+				"specialpages": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/specialPages-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/specialPages-rtl.svg"
+					}
+				},
 				"print": "resources/skins.citizen.icons/shared/download.svg",
 				"permalink": "resources/skins.citizen.icons/shared/link.svg",
 				"info": "resources/skins.citizen.icons/shared/info.svg"
@@ -324,16 +374,46 @@
 			"selector": "#pt-{name} > a:after",
 			"defaultColor": "#000",
 			"images": {
-				"mytalk": "resources/skins.citizen.icons/shared/userTalk.svg",
+				"mytalk": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/userTalk-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/userTalk-rtl.svg"
+					}
+				},
 				"preferences": "resources/skins.citizen.icons/shared/settings.svg",
 				"betafeatures": "resources/skins.citizen.icons/shared/beta.svg",
 				"watchlist": "resources/skins.citizen.icons/shared/watchlist.svg",
-				"mycontris": "resources/skins.citizen.icons/shared/contributions.svg",
-				"logout": "resources/skins.citizen.icons/shared/logOut.svg",
+				"mycontris": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/userContributions-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/userContributions-rtl.svg"
+					}
+				},
+				"logout": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/logOut-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/logOut-rtl.svg"
+					}
+				},
 				"createaccount": "resources/skins.citizen.icons/shared/userAvatar.svg",
-				"login": "resources/skins.citizen.icons/shared/logOut.svg",
-				"anontalk": "resources/skins.citizen.icons/shared/userTalk.svg",
-				"anoncontribs": "resources/skins.citizen.icons/shared/contributions.svg"
+				"login": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/logIn-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/logIn-rtl.svg"
+					}
+				},
+				"anontalk": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/userTalk-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/userTalk-rtl.svg"
+					}
+				},
+				"anoncontribs": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/userContributions-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/userContributions-rtl.svg"
+					}
+				}
 			}
 		},
 		"skins.citizen.icons.footer": {
@@ -356,7 +436,12 @@
 			"selector": "#sitestats-{name}:before",
 			"useDataURI": false,
 			"images": {
-				"articles": "resources/skins.citizen.icons/shared/article.svg",
+				"articles": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/article-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/article-rtl.svg"
+					}
+				},
 				"images": {
 					"file": {
 						"ltr": "resources/skins.citizen.icons/shared/folderPlaceholder-ltr.svg",

@@ -3,6 +3,6 @@
 	<title>
 		folder placeholder
 	</title>
-	<path d="M8 2H2a2 2 0 00-2 2v2h12z"/>
+	<path d="M8 2H2a2 2 0 0 0-2 2v2h12z"/>
 	<rect width="20" height="14" y="4" rx="2"/>
 </svg>
