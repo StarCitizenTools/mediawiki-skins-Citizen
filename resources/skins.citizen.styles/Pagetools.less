@@ -84,6 +84,57 @@
 		}
 	}
 
+	> .mw-portlet {
+		ul {
+			display: flex;
+		}
+
+		li > a {
+			display: flex;
+			align-items: center;
+			padding: 8px 12px;
+			margin-right: 4px;
+			border-radius: var( --border-radius--medium );
+			color: var( --color-base );
+			font-size: 0;
+			transition: @transition-background-quick, @transition-color-quick;
+
+			&:after {
+				width: var( --size-icon );
+				height: var( --size-icon );
+				order: -1; // Move icon before the text
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: var( --size-icon );
+				content: '';
+				opacity: var( --opacity-icon-base );
+				transition: @transition-opacity-quick;
+			}
+
+			&:hover {
+				background-color: var( --background-color-quiet--hover );
+				color: var( --color-base--emphasized );
+
+				&:after {
+					opacity: var( --opacity-icon-base--hover );
+				}
+			}
+
+			&:active {
+				background-color: var( --background-color-quiet--active );
+				color: var( --color-base--subtle );
+
+				&:after {
+					opacity: var( --opacity-icon-base--active );
+				}
+			}
+
+			span {
+				.mixin-screen-reader-text;
+			}
+		}
+	}
+
 	ul {
 		margin: 0;
 		list-style: none;
@@ -95,55 +146,6 @@
 }
 
 #p-views {
-	ul {
-		display: flex;
-	}
-
-	li > a {
-		display: flex;
-		align-items: center;
-		padding: 8px 12px;
-		margin-right: 4px;
-		border-radius: var( --border-radius--medium );
-		color: var( --color-base );
-		font-size: 0;
-		transition: @transition-background-quick, @transition-color-quick;
-
-		&:after {
-			width: var( --size-icon );
-			height: var( --size-icon );
-			order: -1; // Move icon before the text
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: var( --size-icon );
-			content: '';
-			opacity: var( --opacity-icon-base );
-			transition: @transition-opacity-quick;
-		}
-
-		&:hover {
-			background-color: var( --background-color-quiet--hover );
-			color: var( --color-base--emphasized );
-
-			&:after {
-				opacity: var( --opacity-icon-base--hover );
-			}
-		}
-
-		&:active {
-			background-color: var( --background-color-quiet--active );
-			color: var( --color-base--subtle );
-
-			&:after {
-				opacity: var( --opacity-icon-base--active );
-			}
-		}
-
-		span {
-			.mixin-screen-reader-text;
-		}
-	}
-
 	// VE styles shouldn't be core but it is just a few lines :/
 	#ca-ve-edit {
 		order: 98; // Before source edit
@@ -197,19 +199,21 @@
 }
 
 @media ( min-width: @width-breakpoint-tablet ) {
-	.page-actions-more-menu {
-		position: relative;
-		right: unset;
-		left: -172px;
-		width: 200px;
-	}
+	.page-actions {
+		&-more-menu {
+			position: relative;
+			right: unset;
+			left: -172px;
+			width: 200px;
+		}
 
-	#p-views {
-		li > a {
-			font-size: @ui-menu-text;
+		> .mw-portlet {
+			li > a {
+				font-size: @ui-menu-text;
 
-			&:after {
-				margin-right: 8px;
+				&:after {
+					margin-right: 8px;
+				}
 			}
 		}
 	}

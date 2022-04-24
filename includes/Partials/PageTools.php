@@ -94,6 +94,11 @@ final class PageTools extends Partial {
 				$actionshtml[ 'label-class' ] .= 'screen-reader-text';
 			}
 
+			if ( $namespaceshtml ) {
+				$namespaceshtml[ 'label-class' ] ??= '';
+				$namespaceshtml[ 'label-class' ] .= 'screen-reader-text';
+			}
+
 			$props = [
 				'data-page-views' => $viewshtml,
 				'data-page-actions' => $actionshtml,
