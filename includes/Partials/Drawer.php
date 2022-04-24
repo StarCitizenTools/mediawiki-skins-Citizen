@@ -162,9 +162,9 @@ final class Drawer extends Partial {
 	/**
 	 * Get and format sitestat value
 	 * TODO: Formatting should be based on user locale
-	 * 
+	 *
 	 * @param string $key
-	 * 
+	 *
 	 * @return int
 	 */
 	private function getSiteStat( $key ) {
