@@ -4,9 +4,6 @@
  * https://starcitizen.tools
 */
 
-@import '../../resources/mixins.less';
-@import '../../resources/variables.less';
-
 .skin-citizen {
 	.mw-rcfilters-ui {
 		&-filter {
@@ -34,7 +31,7 @@
 					&-header {
 						border-color: var( --border-color-base--darker );
 						background-color: var( --background-color-dp-16 );
-						.boxshadow(2);
+						box-shadow: var( --box-shadow-card );
 					}
 
 					&-title {
@@ -44,7 +41,7 @@
 
 				&SectionOptionWidget {
 					background-color: var( --background-color-framed );
-					.boxshadow(1);
+					box-shadow: var( --box-shadow-card );
 
 					&-header-title.oo-ui-labelElement-label {
 						color: var( --color-base--subtle );

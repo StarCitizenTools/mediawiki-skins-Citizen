@@ -4,7 +4,6 @@
 */
 
 @import '../../../resources/variables.less';
-@import '../../../resources/mixins.less';
 
 .mw-cookiewarning-container {
 	right: 0;
@@ -16,9 +15,9 @@
 	margin: 10px;
 	background-color: #343a40; // dark base 70
 	border-radius: var( --border-radius--large );
+	box-shadow: var( --box-shadow-dialog );
 	font-size: @content-monospace-size;
 	line-height: 1.4;
-	.boxshadow(5);
 
 	.mw-cookiewarning-text {
 		padding: 20px 0;

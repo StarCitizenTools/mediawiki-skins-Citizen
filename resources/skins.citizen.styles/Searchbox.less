@@ -79,10 +79,10 @@
 		display: flex;
 		margin: var( --margin-header-item ) 0; // 1px h3 screen reader
 		border-radius: var( --border-radius--small );
+		box-shadow: var( --box-shadow-dialog );
 		pointer-events: none; // not clickable
 		transform: translateX( 120% );
 		transition: @transition-transform-quick;
-		.boxshadow(4);
 
 		&-icon {
 			position: absolute;
@@ -210,12 +210,14 @@
 		padding: 8px ~'calc( var( --height-search-bar ) * 2 )' 8px var( --height-search-bar );
 		appearance: none;
 		border-radius: var( --border-radius--small );
-		transition: @transition-background-quick, @transition-box-shadow-quick;
+		transition: @transition-background-quick;
 		.citizen-card( @border-radius: false );
 
 		&:focus {
 			outline: 0;
-			.boxshadow(5);
+			// The search suggestion pop-up indicates for focus state
+			// border-color: var( --color-primary );
+			// box-shadow: inset 0 0 0 1px var( --color-primary );
 		}
 	}
 }

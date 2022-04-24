@@ -9,7 +9,6 @@
 */
 
 @import '../../../resources/variables.less';
-@import '../../../resources/mixins.less';
 
 .ext-related-articles-card-list {
 	h3 {
@@ -25,7 +24,7 @@
 	.ext-related-articles-card {
 		border-color: var( --border-color-base );
 		background-color: var( --color-surface-1 );
-		.boxshadow(1);
+		box-shadow: var( --box-shadow-card );
 
 		&:first-child {
 			border-radius: var( --border-radius--medium ) var( --border-radius--medium ) 0 0;
@@ -38,7 +37,7 @@
 
 	.ext-related-articles-card > a {
 		&:hover {
-			.boxshadow(2);
+			box-shadow: var( --box-shadow-dialog );
 		}
 
 		&:active {

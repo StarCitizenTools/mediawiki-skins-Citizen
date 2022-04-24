@@ -1,5 +1,4 @@
 @import '../variables.less';
-@import '../mixins.less';
 
 .skin-citizen {
 	.xdebug {
@@ -8,7 +7,7 @@
 			z-index: 99999; // Higher than header and ToC
 			border-color: var( --border-color-base );
 			margin: 0 var( --padding-page );
-			.boxshadow(3);
+			box-shadow: var( --box-shadow-card );
 
 			&:before {
 				display: table-caption;

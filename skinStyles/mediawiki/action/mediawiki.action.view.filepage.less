@@ -4,7 +4,6 @@
 */
 
 @import '../../../resources/variables.less';
-@import '../../../resources/mixins.less';
 
 #filetoc {
 	display: flex;
@@ -48,7 +47,7 @@
 			max-width: 100%;
 			height: auto;
 			margin: 0 auto;
-			.boxshadow(1);
+			box-shadow: var( --box-shadow-card );
 		}
 	}
 

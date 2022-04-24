@@ -134,13 +134,12 @@
 					border-left: 1px solid var( --border-color-base );
 					background-color: var( --color-surface-2 );
 					border-top-left-radius: var( --border-radius--large );
+					box-shadow: var( --box-shadow-dialog );
 					cursor: pointer;
 					pointer-events: auto;
-					.boxshadow(4);
 
 					&:hover {
 						background-color: var( --color-surface-3 );
-						.boxshadow(5);
 
 						&:before {
 							opacity: var( --opacity-icon-base--hover );
@@ -187,29 +186,7 @@
 				margin: 45px 0 0 0 !important;
 				background: var( --color-surface-1 );
 				border-radius: 0 0 var( --border-radius--large ) var( --border-radius--large );
-
-				/**
-				 * Ideally we'd have this shadow on the .toc container, but the
-				 * container can't move with the checkbox.
-				 *
-				 * Assigning the regular box shadow here won't work because then the
-				 * .toctitle won't have any shadow and look weird. Giving .toctitle a
-				 * shadow causes it to go over the `> ul` which is no good.  So we need to
-				 * have a duplicate shadow here shifted up to reach the .toctitle. One
-				 * would think the shadows overlapping would look funny on the sides, but
-				 * it actually looks fine. (The trick *is* visible if you look very closely
-				 * for it, though.)
-				 *
-				 * Previous approach used padding-top equal to the height of the
-				 * .toctitle, with the .toctitle being absolutely positioned. But this
-				 * causes the `> ul` y-scrollbar to look funky in two ways: it clearly
-				 * pokes out from .toctitle's border-top-right-radius; and when it's
-				 * scrolled down slightly, it still appears on the scrollbar as if it's at
-				 * the top, exposing the hack.
-				 */
-				// .boxshadow(3);
-				// => box-shadow: 0 10px 20px rgba( 0, 0, 0, 0.0475 ), 0 6px 6px rgba( 0, 0, 0, 0.0575 );
-				box-shadow: 0 10px 20px rgba( 0, 0, 0, 0.0475 ), 0 6px 6px rgba( 0, 0, 0, 0.0575 ), 0 (10px - 45px) 20px rgba( 0, 0, 0, 0.0475 ), 0 (6px - 45px) 6px rgba( 0, 0, 0, 0.0575 );
+				box-shadow: var( --box-shadow-dialog );
 				pointer-events: auto;
 			}
 		}

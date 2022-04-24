@@ -1,13 +1,12 @@
 @import '../../resources/variables.less';
-@import '../../resources/mixins.less';
 
 .mw-notification {
 	border-color: var( --border-color-base );
 	background-color: var( --background-color-dp-04 );
 	border-radius: var( --border-radius--medium );
+	box-shadow: var( --box-shadow-dialog );
 	color: var( --color-base );
 	font-size: @content-monospace-size;
-	.boxshadow(3);
 
 	&.mw-notification-type {
 		&-warn {

@@ -4,7 +4,6 @@
 */
 
 @import '../../../resources/variables.less';
-@import '../../../resources/mixins.less';
 
 .skin-citizen {
 	.mw-mmv {
@@ -74,7 +73,7 @@
 
 		&-dialog {
 			background-color: var( --background-color-dp-08 );
-			.boxshadow(3);
+			box-shadow: var( --box-shadow-dialog );
 
 			.mw-mmv-dialog-down-arrow {
 				background-color: var( --background-color-dp-08 );
