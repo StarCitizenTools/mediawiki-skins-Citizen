@@ -93,12 +93,14 @@ final class Tagline extends Partial {
 		$user = $this->buildPageUserObject( $title );
 		if ( $user ) {
 			$editCount = $user->getEditCount();
-			// TODO: Figure out a waw to get registration duration,
-			//	like Langauge::getHumanTimestamp()
-			//$registration = $user->getRegistration();
-			$msgEditCount = $this->skin->msg( 'usereditcount' )
-				->numParams( sprintf( '%s', number_format( $editCount, 0 ) ) );
-			return $msgEditCount;
+			if ( $editCount ) {
+				// TODO: Figure out a waw to get registration duration,
+				//	like Langauge::getHumanTimestamp()
+				//$registration = $user->getRegistration();
+				$msgEditCount = $this->skin->msg( 'usereditcount' )
+					->numParams( sprintf( '%s', number_format( $editCount, 0 ) ) );
+				return $msgEditCount;
+			}
 		}
 		return null;
 	}
