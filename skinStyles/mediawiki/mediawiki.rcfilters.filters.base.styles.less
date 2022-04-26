@@ -30,8 +30,7 @@
 				&HeaderWidget {
 					&-header {
 						border-color: var( --border-color-base--darker );
-						background-color: var( --background-color-dp-16 );
-						box-shadow: var( --box-shadow-card );
+						background-color: var( --color-surface-2 );
 					}
 
 					&-title {
@@ -41,7 +40,6 @@
 
 				&SectionOptionWidget {
 					background-color: var( --background-color-framed );
-					box-shadow: var( --box-shadow-card );
 
 					&-header-title.oo-ui-labelElement-label {
 						color: var( --color-base--subtle );
@@ -50,11 +48,6 @@
 
 				&OptionWidget.oo-ui-flaggedElement-muted:not( .oo-ui-optionWidget-selected ) {
 					background-color: var( --background-color-framed );
-				}
-
-				&SelectWidget-footer {
-					border-top: 1px solid var( --border-color-base--darker );
-					background-color: var( --background-color-dp-16 );
 				}
 			}
 		}
@@ -94,6 +87,11 @@
 
 		&-datePopupWidget {
 			border-color: var( --border-color-base );
+		}
+
+		&-menuSelectWidget-footer {
+			border-top: 1px solid var( --border-color-base--darker );
+			background-color: var( --color-surface-2 );
 		}
 	}
 
