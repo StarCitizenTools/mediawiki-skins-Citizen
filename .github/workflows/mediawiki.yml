@@ -51,10 +51,15 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@users.noreply.github.com"
-        git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-        git add .
-        git commit -am "ci: lint code to MediaWiki standards" -m "Check commit and GitHub actions for more details" || echo "No changes to commit"
-        git pull --rebase
-        git push
+        if ! git diff --exit-code --quiet; then
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git checkout -b ${GITHUB_HEAD_REF}
+          git add .
+          git commit -am "ci: lint code to MediaWiki standards" -m "Check commit and GitHub actions for more details"
+          git pull origin ${GITHUB_HEAD_REF} --rebase
+          git push --set-upstream origin ${GITHUB_HEAD_REF}
+        else
+          echo "No changes to commit"
+        fi
