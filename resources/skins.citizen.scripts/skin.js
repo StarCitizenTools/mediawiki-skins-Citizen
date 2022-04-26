@@ -69,7 +69,11 @@ function initCheckboxHack( window ) {
 	}
 
 	checkboxObjs.forEach( ( checkboxObj ) => {
-		if ( checkboxObj.checkbox instanceof HTMLInputElement && checkboxObj.button ) {
+		if (
+			checkboxObj.checkbox instanceof HTMLInputElement &&
+			checkboxObj.button &&
+			checkboxObj.target
+		) {
 			checkboxHack.bindToggleOnClick( checkboxObj.checkbox, checkboxObj.button );
 			checkboxHack.bindUpdateAriaExpandedOnInput( checkboxObj.checkbox, checkboxObj.button );
 			checkboxHack.updateAriaExpanded( checkboxObj.checkbox, checkboxObj.button );
