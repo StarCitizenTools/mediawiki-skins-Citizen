@@ -10,7 +10,8 @@
 		"doc": "jsdoc -c jsdoc.json",
 		"minify-svg": "svgo --config=.svgo.config.js -q -r -f resources/",
 		"test": "npm run lint",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"release": "standard-version"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^16.2.3",
@@ -20,6 +21,7 @@
 		"husky": "^7.0.4",
 		"jsdoc": "3.6.10",
 		"jsdoc-wmf-theme": "0.0.5",
+		"standard-version": "^9.3.2",
 		"stylelint-config-idiomatic-order": "8.1.0",
 		"stylelint-config-wikimedia": "0.12.2",
 		"svgo": "2.8.0"
