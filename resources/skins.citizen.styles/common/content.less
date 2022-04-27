@@ -15,54 +15,7 @@
 	color: var( --color-base--subtle );
 }
 
-#mw-content-text {
-	.mw-parser-output {
-		& > h1,
-		& > h2,
-		& > h3,
-		& > h4,
-		& > h5,
-		& > h6 {
-			display: flex;
-			align-items: center;
-		}
-
-		.mw-editsection {
-			display: flex;
-			margin-left: auto;
-
-			a {
-				.resource-loader-icon-link-small;
-				padding: @margin-side / 4;
-				background: 0 !important; // Cancel above styles
-				opacity: var( --opacity-icon-base );
-				text-indent: -9999px; // Hide text
-				transition: @transition-opacity-quick;
-
-				&:before {
-					.resource-loader-icon;
-					display: block;
-					background-size: contain;
-				}
-
-				&:hover {
-					opacity: var( --opacity-icon-base--hover );
-				}
-
-				&:active {
-					opacity: var( --opacity-icon-base--active );
-				}
-			}
-
-			> span {
-				display: none;
-			}
-		}
-	}
-}
-
-.citizen-body,
-.mw-body-content {
+.citizen-body {
 	h1,
 	h2,
 	h3,
@@ -126,6 +79,39 @@
 
 		> img {
 			transition: @transition-transform-quick;
+		}
+	}
+
+	.mw-editsection {
+		display: flex;
+		margin-left: 4px;
+		float: right; // Can't target the container so have to use to float
+
+		a {
+			.resource-loader-icon-link-small;
+			padding: @margin-side / 4;
+			background: 0 !important; // Cancel above styles
+			opacity: var( --opacity-icon-base );
+			text-indent: -9999px; // Hide text
+			transition: @transition-opacity-quick;
+
+			&:before {
+				.resource-loader-icon;
+				display: block;
+				background-size: contain;
+			}
+
+			&:hover {
+				opacity: var( --opacity-icon-base--hover );
+			}
+
+			&:active {
+				opacity: var( --opacity-icon-base--active );
+			}
+		}
+
+		> span {
+			display: none;
 		}
 	}
 }
