@@ -256,11 +256,12 @@ function initPanel( event ) {
 	// To Mustache is to jQuery sigh
 	// TODO: Use ES6 template literals when RL does not screw up multiline
 	const panel = template.render( data ).get()[ 1 ];
+
 	// Attach panel after button
 	event.currentTarget.parentNode.insertBefore( panel, event.currentTarget.nextSibling );
 
 	// Set up initial state
-	document.getElementById( 'citizen-pref-theme__input__' + prefValue.theme ).checked = true;
+	document.getElementById( 'citizen-pref-theme__input__' + ( prefValue.theme ?? 'auto' ) ).checked = true;
 	keys.forEach( ( key ) => {
 		setIndicator( key, pref[ key ] );
 		setInputValue( key, prefValue[ key ] );
