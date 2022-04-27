@@ -45,10 +45,10 @@ Name | Grade | Version | Last updated
 [DismissableSiteNotice](https://www.mediawiki.org/wiki/Extension:DismissableSiteNotice) | A | N/A | N/A
 [Echo](https://www.mediawiki.org/wiki/Extension:Echo) | A | REL1_35 `347c30e` | 2021-08-11
 [Flow (StructuredDiscussions)](https://www.mediawiki.org/wiki/Extension:StructuredDiscussions) | E | N/A | N/A
-[Graph](https://www.mediawiki.org/wiki/Extension:Graph) | D | N/A | N/A
+[Graph](https://www.mediawiki.org/wiki/Extension:Graph) | B | N/A | N/A
 [Lingo](https://www.mediawiki.org/wiki/Extension:Lingo) | E | N/A | N/A
 [MsUpload](https://www.mediawiki.org/wiki/Extension:MsUpload) | A | REL1_35 `32eb420` | 2021-08-25
-[MultimediaViewer](https://www.mediawiki.org/wiki/Extension:MultimediaViewer) | C | N/A | N/A
+[MultimediaViewer](https://www.mediawiki.org/wiki/Extension:MultimediaViewer) | A | N/A | N/A
 [OAuth](https://www.mediawiki.org/wiki/Extension:OAuth) | B | REL1_35 `451ed95` | 2021-08-31
 [Popups](https://www.mediawiki.org/wiki/Extension:Popups) | A | REL1_35 `dccd607` | 2021-09-02
 [PortableInfobox](https://www.mediawiki.org/wiki/Extension:PortableInfobox) | B | 0.6 `16a77dc` | 2022-04-14
@@ -59,10 +59,10 @@ Name | Grade | Version | Last updated
 [SyntaxHighlight](https://www.mediawiki.org/wiki/Extension:SyntaxHighlight) | A | REL1_35 `05598b3` | 2021-08-26
 [Tabber](https://www.mediawiki.org/wiki/Extension:Tabber) | A | N/A | N/A
 [TabberNeue](https://www.mediawiki.org/wiki/Extension:TabberNeue) | A | 1.3.1 `c045490` | 2022-04-19
-[TimedMediaHandler](https://www.mediawiki.org/wiki/Extension:TimedMediaHandler) | D | N/A | N/A
+[TimedMediaHandler](https://www.mediawiki.org/wiki/Extension:TimedMediaHandler) | B | N/A | N/A
 [Translate](https://www.mediawiki.org/wiki/Extension:Translate) | B | MLEB 2021.07 | 2021-07-29
 [UniversalLanguageSelector](https://www.mediawiki.org/wiki/Extension:UniversalLanguageSelector) | B | MLEB 2021.07 | 2021-07-29
-[UploadWizard](https://www.mediawiki.org/wiki/Extension:UploadWizard) | C | N/A | N/A
+[UploadWizard](https://www.mediawiki.org/wiki/Extension:UploadWizard) | A | N/A | N/A
 [VisualEditor](https://www.mediawiki.org/wiki/Extension:VisualEditor) | A | REL1_35 `cc3466a` | 2021-08-04
 [WikiEditor](https://www.mediawiki.org/wiki/Extension:WikiEditor) | B | REL1_35 `e18315e` | 2021-08-11
 [WSSearchFront](https://www.mediawiki.org/wiki/Extension:WSSearchFront) | B | 3.5.4 `c27ebcb5` | 2021-11-23
