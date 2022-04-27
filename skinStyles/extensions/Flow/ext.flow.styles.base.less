@@ -1,56 +1,49 @@
 /*
- * Citizen - Flow Styles Base
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:StructuredDiscussions
+ * Module: ext.flow.styles.base
+ * Version: REL1_35 (e3379f0)
+ *
+ * Date: 2022-04-27
 */
 
-@import '../../../resources/variables.less';
-
-.skin-citizen-dark {
-	.flow-component {
-		.flow-list {
-			li:hover {
-				background: @dark-bg-20;
-			}
+/* styles/common.less */
+.flow-component {
+	.flow-list {
+		li:hover {
+			background: var( --color-surface-3 );
 		}
 
-		.mw-ui-icon-before:before,
-		.oo-ui-indicatorElement-indicator,
-		.oo-ui-iconElement-icon {
-			filter: invert( 1 ) hue-rotate( 180deg );
-		}
-
-		.flow-menu {
-			.mw-ui-button.mw-ui-quiet {
-				color: @dark-text-90;
-			}
+		a:focus {
+			background-color: var( --color-surface-3 );
 		}
 	}
+}
 
-	.flow-revision-content {
-		background-color: @dark-bg-20;
-		color: @dark-text-70;
-	}
+/* Revision view */
+.flow-revision-content {
+	background-color: var( --color-surface-3 );
+	color: var( --color-base--subtle );
+}
 
-	.flow-no-more,
-	.flow-undo {
-		color: @dark-text-70;
-	}
+/* "No more" link */
+.flow-no-more,
+/* "Undo" moderation link */
+.flow-undo {
+	color: var( --color-base--subtle );
+}
 
-	.flow-ui-boardDescriptionWidget-editButton.oo-ui-widget.oo-ui-buttonElement .oo-ui-buttonElement-button {
-		border-color: transparent;
-	}
-
+@media all and ( min-width: 1165px ) {
 	.flow-component.flow-board-page {
 		.flow-board-header {
-			background-color: @dark-bg-10;
-			box-shadow: -2px 0 0 0 rgba( 0, 0, 0, 0.1 );
+			background-color: var( --color-surface-3 );
 		}
 	}
 
 	.flow-component.flow-board-page.flow-full-height-side-rail {
 		.flow-board-header:before {
-			background-color: @dark-bg-10;
-			box-shadow: -2px 0 0 0 rgba( 0, 0, 0, 0.1 );
+			background-color: var( --color-surface-3 );
 		}
 	}
 }

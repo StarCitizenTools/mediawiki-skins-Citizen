@@ -1,0 +1,104 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:StructuredDiscussions
+ * Module: ext.flow.board.styles
+ * Version: REL1_35 (e3379f0)
+ *
+ * Date: 2022-04-27
+*/
+
+/* styles/board/menu.less */
+div > .flow-menu {
+	&.flow-menu-hoverable:hover,
+	&.focus {
+		.flow-menu-js-drop a {
+			.caret {
+				// border-top-color: #000;
+			}
+		}
+	}
+
+	ul {
+		border-color: var( --border-color-base );
+		background: var( --color-surface-1 );
+		box-shadow: var( --box-shadow-dialog );
+
+		> section:not( :first-of-type ) > li:first-of-type,
+		li.flow-menu-section:not( :first-of-type ) {
+			border-top-color: var( --border-color-base );
+		}
+	}
+
+	.flow-menu-js-drop {
+		a {
+			color: var( --color-base--subtle );
+		}
+	}
+}
+
+/* styles/board/navigation.less */
+.flow-board-navigation {
+	.flow-board-navigation-inner {
+		border-bottom-color: var( --border-color-base );
+	}
+
+	a {
+		&:link,
+		&:visited {
+			color: var( --color-base--subtle );
+		}
+
+		&:hover,
+		&:focus,
+		&.flow-board-navigator-link-highlight {
+			color: var( --color-base--emphasized );
+		}
+	}
+
+	&.flow-board-navigation-affixed {
+		background: var( --color-surface-1 );
+	}
+}
+
+/* styles/board/moderated.less */
+// Visually mark locked topics
+.flow-topic-moderatestate-lock {
+	.flow-topic-titlebar {
+		background-color: var( --color-surface-2 );
+	}
+}
+
+// Entire moderated post element
+.flow-post-moderated .flow-author a,
+.flow-moderated-post-content {
+	color: var( --color-base--subtle );
+}
+
+/* styles/board/timestamps.less */
+a.flow-timestamp-anchor:hover {
+	color: var( --color-link--hover );
+
+	&:visited {
+		color: var( --color-link--hover );
+	}
+
+	&:active {
+		color: var( --color-link--active );
+	}
+}
+
+/* styles/board/replycount.less */
+// Reply count (only visible in compact mode)
+.flow-reply-count {
+	color: var( --color-base--subtle );
+
+	.flow-reply-count-number {
+		color: var( --color-base--subtle );
+	}
+}
+
+/* styles/board/terms-of-use.less */
+.flow-terms-of-use {
+	color: var( --color-base--subtle );
+}
