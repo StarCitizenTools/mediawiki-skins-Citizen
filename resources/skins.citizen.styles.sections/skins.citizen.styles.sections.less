@@ -1,5 +1,7 @@
 @import '../variables.less';
 
+@toggle-size: 16px;
+
 .client-js {
 	.section {
 		&-heading {
@@ -31,12 +33,12 @@
 		}
 
 		&-toggle {
-			width: 18px;
-			height: 18px;
-			margin-right: 10px;
+			width: @toggle-size;
+			height: @toggle-size;
+			margin-right: @toggle-size;
 			background-position: center;
 			background-repeat: no-repeat;
-			background-size: 18px;
+			background-size: @toggle-size;
 			cursor: pointer;
 			opacity: var( --opacity-icon-base );
 			transition: @transition-opacity-quick, @transition-transform-quick;
