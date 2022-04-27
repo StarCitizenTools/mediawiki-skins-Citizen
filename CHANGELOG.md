@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.14.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.13.0...v1.14.0) (2022-04-27)
+
+
+### Features
+
+* add skinStyles for collapsible toggles in MobileFrontend ([f0b9879](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f0b9879fbdb0f6285c27ef273e70b9fc30962c67))
+* allow scripts to run when MobileFrontend is active ([37efe85](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/37efe85bb762b1ae7da73b15a3e7216995c05eb5))
+* do not format body content if MobileFrontend is active ([#409](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/409)) ([8eaaecf](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8eaaecf9570da777c2e7a2f7362951420462f3f1))
+* show namespace (e.g. Discussion) on page tools ([37beda8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/37beda8e87559cffad4b21f4108708451c00ccee))
+* tweak collapsible toggle size ([9eeac80](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9eeac80bf5005579f736a71096627a549e88f243))
+* tweak edit button styles when both visual and source edit are present ([a61635e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a61635ea8fe2c41b4ef7cfa9eab1d22272482252))
+* use wikiText icon for source edit when VE is present ([0177a06](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0177a06a2270655efdf549b6fef490a80b3e67c8))
+
+
+### Bug Fixes
+
+* uncaught value when no theme value is saved ([d22f562](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d22f56281699c301e5c183c2fad13ef66be3f500))
+
 ## [1.13.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.10.0...v1.13.0) (2022-04-26)
 
 

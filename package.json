@@ -28,5 +28,6 @@
 		"stylelint-config-idiomatic-order": "8.1.0",
 		"stylelint-config-wikimedia": "0.12.2",
 		"svgo": "2.8.0"
-	}
+	},
+	"version": "1.14.0"
 }
