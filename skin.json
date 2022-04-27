@@ -271,8 +271,9 @@
 					}
 				},
 				"viewsource": "resources/skins.citizen.icons/shared/eye.svg",
-				"ve-edit": "resources/skins.citizen.icons/shared/ve-edit.svg",
 				"edit": "resources/skins.citizen.icons/shared/edit.svg",
+				"ve-edit + #ca-edit": "resources/skins.citizen.icons/shared/wikiText.svg",
+				"ve-edit": "resources/skins.citizen.icons/shared/edit.svg",
 				"history": "resources/skins.citizen.icons/shared/history.svg",
 				"delete": "resources/skins.citizen.icons/shared/delete.svg",
 				"move": "resources/skins.citizen.icons/shared/move.svg",
@@ -302,7 +303,7 @@
 			"defaultColor": "#000",
 			"images": {
 				"": "resources/skins.citizen.icons/shared/edit.svg",
-				".mw-editsection-visualeditor": "resources/skins.citizen.icons/shared/ve-edit.svg"
+				".mw-editsection-visualeditor + .mw-editsection-divider + a": "resources/skins.citizen.icons/shared/wikiText.svg"
 			}
 		},
 		"skins.citizen.icons.n": {
