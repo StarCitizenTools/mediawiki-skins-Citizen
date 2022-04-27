@@ -30,7 +30,9 @@ use DOMElement;
 use DOMXpath;
 use Html;
 use HtmlFormatter\HtmlFormatter;
+use MediaWiki\MediaWikiServices;
 use OutputPage;
+use Wikimedia\Services\NoSuchServiceException;
 
 final class BodyContent extends Partial {
 
@@ -51,12 +53,20 @@ final class BodyContent extends Partial {
 	private $topHeadingTags = [ "h1", "h2", "h3", "h4", "h5", "h6 " ];
 
 	/**
-	 * Helper function to decide if the page should be collapsible
+	 * Helper function to decide if the page should be formatted
 	 *
 	 * @param Title $title
 	 * @return string
 	 */
-	private function isCollapsiblePage( $title ) {
+	private function shouldFormatPage( $title ) {
+		try {
+			$mfCxt = MediaWikiServices::getInstance()->getService( 'MobileFrontend.Context' );
+			// Check if page is in mobile view and let MF do the formatting
+			return !$mfCxt->shouldDisplayMobileView();
+		} catch ( NoSuchServiceException $ex ) {
+			// MobileFrontend not installed. Don't do anything
+		}
+
 		return $this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true &&
 			!$title->isMainPage() &&
 			$title->isContentPage();
@@ -79,7 +89,7 @@ final class BodyContent extends Partial {
 		}
 
 		// Make section and sanitize the output
-		if ( $this->isCollapsiblePage( $title ) ) {
+		if ( $this->shouldFormatPage( $title ) ) {
 			$formatter = new HtmlFormatter( $htmlBodyContent );
 			$doc = $formatter->getDoc();
 			// Make top level sections
