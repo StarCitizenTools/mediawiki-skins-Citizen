@@ -19,9 +19,7 @@ Citizen includes numerous skinStyles that applies custom styling to extensions a
 
 - **Grade A - Overhaul** - Major adjustments to UI, plus Grade B.
 - **Grade B - Dynamic** - Colors are converted into CSS variables, little to none style adjustments.
-- **Grade C - Legacy overhaul**  Major adjustments to UI but using legacy CSS variables.
-- **Grade D - Legacy dynamic** - Color are converted into CSS variables but in old standards (`background-color-dp-XX`). These should be updated to at least Grade B support.
-- **Grade E - Legacy static** - Dark mode colors are hardcored as LESS variables. These should be updated to at least Grade B support.
+- **Grade E - Legacy** - Dark mode colors are hardcored as LESS variables. These should be updated to at least Grade B support.
 
 ### Core
 Name | Grade | Version | Last updated
