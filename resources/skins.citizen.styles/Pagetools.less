@@ -151,9 +151,23 @@
 		order: 98; // Before source edit
 
 		> a {
-			padding-right: 16px;
-			// Merge button with source edit
-			margin-right: -12px;
+			padding-right: 24px;
+		}
+
+		// Merge two buttons together
+		+ #ca-edit {
+			border-left: 1px solid var( --color-primary--hover );
+			margin-left: -16px;
+
+			> a {
+				padding-left: 8px;
+				border-radius: 0 var( --border-radius--medium ) var( --border-radius--medium ) 0;
+				font-size: 0; // hide edit source text
+
+				&:after {
+					margin-right: 0; // reset
+				}
+			}
 		}
 	}
 
