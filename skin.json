@@ -180,11 +180,19 @@
 				"resources/skins.citizen.scripts/theme.js",
 				"resources/skins.citizen.scripts/search.js",
 				"resources/skins.citizen.scripts/checkboxHack.js"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
 			]
 		},
 		"skins.citizen.scripts.toc": {
 			"scripts": [
 				"resources/skins.citizen.scripts.toc/skins.citizen.scripts.toc.js"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
 			]
 		},
 		"skins.citizen.scripts.drawer": {
@@ -195,6 +203,9 @@
 		"skins.citizen.scripts.sections": {
 			"scripts": [
 				"resources/skins.citizen.scripts.sections/skins.citizen.scripts.sections.js"
+			],
+			"targets": [
+				"desktop"
 			]
 		},
 		"skins.citizen.search": {
@@ -218,6 +229,10 @@
 			"messages": [
 				"citizen-search-fulltext",
 				"citizen-search-fulltext-empty"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
 			]
 		},
 		"skins.citizen.preferences": {
@@ -240,6 +255,10 @@
 				"prefs-citizen-pagewidth-label",
 				"prefs-citizen-lineheight-label",
 				"prefs-citizen-resetbutton-label"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
 			]
 		},
 		"skins.citizen.icons": {
