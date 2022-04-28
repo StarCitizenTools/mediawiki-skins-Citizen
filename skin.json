@@ -1,6 +1,6 @@
 {
 	"name": "Citizen",
-	"version": "1.14.0",
+	"version": "1.14.1",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]",
@@ -48,7 +48,6 @@
 				}
 			]
 		}
-
 	},
 	"MessagesDirs": {
 		"Citizen": [
@@ -93,7 +92,9 @@
 				"legacy": false,
 				"toc": false
 			},
-			"styles": [ "resources/skins.citizen.styles/skin.less" ]
+			"styles": [
+				"resources/skins.citizen.styles/skin.less"
+			]
 		},
 		"skins.citizen.styles.debug": {
 			"class": "ResourceLoaderSkinModule",
@@ -108,7 +109,9 @@
 				"legacy": false,
 				"toc": false
 			},
-			"styles": [ "resources/skins.citizen.styles.debug/skins.citizen.styles.debug.less" ]
+			"styles": [
+				"resources/skins.citizen.styles.debug/skins.citizen.styles.debug.less"
+			]
 		},
 		"skins.citizen.styles.fonts": {
 			"class": "ResourceLoaderSkinModule",
@@ -123,7 +126,9 @@
 				"legacy": false,
 				"toc": false
 			},
-			"styles": [ "resources/skins.citizen.styles.fonts/skins.citizen.styles.fonts.less" ]
+			"styles": [
+				"resources/skins.citizen.styles.fonts/skins.citizen.styles.fonts.less"
+			]
 		},
 		"skins.citizen.styles.sections": {
 			"class": "ResourceLoaderSkinModule",
@@ -138,7 +143,9 @@
 				"legacy": false,
 				"toc": false
 			},
-			"styles": [ "resources/skins.citizen.styles.sections/skins.citizen.styles.sections.less" ]
+			"styles": [
+				"resources/skins.citizen.styles.sections/skins.citizen.styles.sections.less"
+			]
 		},
 		"skins.citizen.styles.sitestats": {
 			"class": "ResourceLoaderSkinModule",
@@ -153,7 +160,9 @@
 				"legacy": false,
 				"toc": false
 			},
-			"styles": [ "resources/skins.citizen.styles.sitestats/skins.citizen.styles.sitestats.less" ]
+			"styles": [
+				"resources/skins.citizen.styles.sitestats/skins.citizen.styles.sitestats.less"
+			]
 		},
 		"skins.citizen.styles.toc": {
 			"class": "ResourceLoaderSkinModule",
@@ -168,7 +177,9 @@
 				"legacy": false,
 				"toc": false
 			},
-			"styles": [ "resources/skins.citizen.styles.toc/skins.citizen.styles.toc.less" ]
+			"styles": [
+				"resources/skins.citizen.styles.toc/skins.citizen.styles.toc.less"
+			]
 		},
 		"skins.citizen.scripts": {
 			"packageFiles": [
@@ -489,25 +500,16 @@
 		"citizen": {
 			"+ext.advancedSearch.initialstyles": "skinStyles/extensions/AdvancedSearch/ext.advancedSearch.initialstyles.less",
 			"+ext.advancedSearch.styles": "skinStyles/extensions/AdvancedSearch/ext.advancedSearch.styles.less",
-
 			"+ext.ApprovedRevs": "skinStyles/extensions/ApprovedRevs/ext.ApprovedRevs.less",
-
 			"+ext.babel": "skinStyles/extensions/Babel/ext.babel.less",
-
 			"+ext.cargo.main": "skinStyles/extensions/Cargo/ext.cargo.main.less",
-
 			"+ext.categoryTree.css": "skinStyles/extensions/CategoryTree/ext.categoryTree.css.less",
-
 			"+ext.cite.styles": "skinStyles/extensions/Cite/ext.cite.styles.less",
-
 			"+ext.cleanchanges.uls": "skinStyles/extensions/CleanChanges/ext.cleanchanges.uls.less",
-
 			"+ext.CodeMirror.lib": "skinStyles/extensions/CodeMirror/ext.CodeMirror.lib.less",
 			"+ext.CodeMirror.mode.mediawiki": "skinStyles/extensions/CodeMirror/ext.CodeMirror.mode.mediawiki.less",
 			"+ext.CodeMirror.visualEditor.init": "skinStyles/extensions/CodeMirror/ext.CodeMirror.visualEditor.init.less",
-
 			"+ext.dismissableSiteNotice.styles": "skinStyles/extensions/DismissableSiteNotice/ext.dismissableSiteNotice.less",
-
 			"+ext.echo.ui.desktop": "skinStyles/extensions/Echo/ext.echo.ui.desktop.less",
 			"+ext.echo.ui": "skinStyles/extensions/Echo/ext.echo.ui.less",
 			"+ext.echo.styles.badge": "skinStyles/extensions/Echo/ext.echo.styles.badge.less",
@@ -515,7 +517,6 @@
 			"+ext.echo.styles.alert": "skinStyles/extensions/Echo/ext.echo.styles.alert.less",
 			"+ext.echo.special": "skinStyles/extensions/Echo/ext.echo.special.less",
 			"+ext.echo.styles.special": "skinStyles/extensions/Echo/ext.echo.styles.special.less",
-
 			"+ext.flow.mediawiki.ui.form": "skinStyles/extensions/Flow/ext.flow.mediawiki.ui.form.less",
 			"+ext.flow.styles.base": "skinStyles/extensions/Flow/ext.flow.styles.base.less",
 			"+ext.flow.board.styles": "skinStyles/extensions/Flow/ext.flow.board.styles.less",
@@ -523,19 +524,13 @@
 			"+ext.flow.ui": "skinStyles/extensions/Flow/ext.flow.ui.less",
 			"+ext.flow": "skinStyles/extensions/Flow/ext.flow.less",
 			"+ext.flow.visualEditor": "skinStyles/extensions/Flow/ext.flow.visualEditor.less",
-
 			"+ext.graph.styles": "skinStyles/extensions/Graph/ext.graph.styles.less",
-
 			"+ext.Lingo": "skinStyles/extensions/Lingo/ext.Lingo.less",
 			"+ext.Lingo.jquery.qtip": "skinStyles/extensions/Lingo/ext.Lingo.jquery.qtip.less",
-
 			"+ext.pygments": "skinStyles/extensions/SyntaxHighlight_GeSHi/ext.pygments.less",
-
 			"+ext.MsUpload": "skinStyles/extensions/MsUpload/ext.MsUpload.less",
-
 			"+ext.relatedArticles.cards": "skinStyles/extensions/RelatedArticles/ext.relatedArticles.cards.less",
 			"+ext.relatedArticles.readMore": "skinStyles/extensions/RelatedArticles/ext.relatedArticles.readMore.less",
-
 			"+ext.libs.tippy": "skinStyles/extensions/SemanticMediaWiki/ext.libs.tippy.less",
 			"+ext.smw.ask.styles": "skinStyles/extensions/SemanticMediaWiki/ext.smw.ask.styles.less",
 			"+ext.smw.browse.styles": "skinStyles/extensions/SemanticMediaWiki/ext.smw.browse.styles.less",
@@ -555,17 +550,13 @@
 			"+smw.summarytable": "skinStyles/extensions/SemanticMediaWiki/smw.summarytable.less",
 			"+smw.tableprinter.datatables.styles": "skinStyles/extensions/SemanticMediaWiki/smw.tableprinter.datatables.styles.less",
 			"+smw.tippy": "skinStyles/extensions/SemanticMediaWiki/smw.tippy.less",
-
 			"+ext.srf.d3.chart.bubble": "skinStyles/extensions/SemanticResultFormats/d3/ext.srf.d3.chart.bubble.less",
 			"+ext.srf.d3.chart.treemap": "skinStyles/extensions/SemanticResultFormats/d3/ext.srf.d3.chart.treemap.less",
 			"+ext.srf.d3.common": "skinStyles/extensions/SemanticResultFormats/d3/ext.srf.d3.common.less",
-
 			"+ext.srf.datatables": "skinStyles/extensions/SemanticResultFormats/datatables/ext.srf.datatables.less",
 			"+ext.srf.datatables.basic": "skinStyles/extensions/SemanticResultFormats/datatables/ext.srf.datatables.basic.less",
 			"+ext.srf.datatables.bootstrap": "skinStyles/extensions/SemanticResultFormats/datatables/ext.srf.datatables.bootstrap.less",
-
 			"+ext.srf.eventcalendar": "skinStyles/extensions/SemanticResultFormats/eventcalendar/ext.srf.eventcalendar.less",
-
 			"+ext.srf.filtered.calendar-view": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.calendar-view.less",
 			"+ext.srf.filtered.distance-view": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.distance-view.less",
 			"+ext.srf.filtered": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.less",
@@ -574,45 +565,29 @@
 			"+ext.srf.filtered.slider": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.slider.less",
 			"+ext.srf.filtered.value-filter": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.value-filter.less",
 			"+ext.srf.filtered.value-filter.select": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.value-filter.select.less",
-
 			"+ext.srf.flot.core": "skinStyles/extensions/SemanticResultFormats/flot/ext.srf.flot.core.less",
-
 			"+ext.srf.formats.media": "skinStyles/extensions/SemanticResultFormats/formats/ext.srf.formats.media.less",
 			"+ext.srf.formats.tagcloud": "skinStyles/extensions/SemanticResultFormats/formats/ext.srf.formats.tagcloud.less",
-
 			"+ext.srf.gallery.carousel": "skinStyles/extensions/SemanticResultFormats/gallery/ext.srf.gallery.carousel.less",
 			"+ext.srf.gallery.overlay": "skinStyles/extensions/SemanticResultFormats/gallery/ext.srf.gallery.overlay.less",
 			"+ext.srf.gallery.slideshow": "skinStyles/extensions/SemanticResultFormats/gallery/ext.srf.gallery.slideshow.less",
-
 			"+ext.srf.jqplot.chart": "skinStyles/extensions/SemanticResultFormats/jqplot/ext.srf.jqplot.chart.less",
-
 			"+ext.jquery.blockUI": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.blockUI.less",
 			"+ext.jquery.fancybox": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.fancybox.less",
 			"+ext.jquery.fullcalendar": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.fullcalendar.less",
 			"+ext.jquery.jqgrid": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.jqgrid.less",
 			"+ext.jquery.jqplot.core": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.jqplot.core.less",
 			"+ext.jquery.multiselect.filter": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.multiselect.filter.less",
-
 			"+ext.srf.listwidget": "skinStyles/extensions/SemanticResultFormats/listwidget/ext.srf.listwidget.less",
-
 			"+ext.MWOAuth.styles": "skinStyles/extensions/OAuth/ext.MWOAuth.styles.less",
-
 			"+ext.srf.pagewidget.carousel": "skinStyles/extensions/SemanticResultFormats/pagewidget/ext.srf.pagewidget.carousel.less",
-
 			"+ext.srf.slideshow": "skinStyles/extensions/SemanticResultFormats/slideshow/ext.srf.slideshow.less",
-
 			"+ext.srf.smile.timeline.core": "skinStyles/extensions/SemanticResultFormats/timeline/ext.srf.smile.timeline.core.less",
-
 			"+ext.srf.util.grid": "skinStyles/extensions/SemanticResultFormats/util/ext.srf.util.grid.less",
-
 			"+ext.srf.styles": "skinStyles/extensions/SemanticResultFormats/ext.srf.styles.less",
-
 			"+onoi.dataTables.styles": "skinStyles/extensions/SemanticResultFormats/jquery/jquery.dataTables.less",
-
 			"+ext.SimpleTooltip": "skinStyles/extensions/SimpleTooltip/ext.SimpleTooltip.less",
-
 			"+ext.tmh.player.styles": "skinStyles/extensions/TimedMediaHandler/ext.tmh.player.styles.less",
-
 			"+ext.translate": "skinStyles/extensions/Translate/ext.translate.less",
 			"+ext.translate.dropdownmenu": "skinStyles/extensions/Translate/ext.translate.dropdownmenu.less",
 			"+ext.translate.specialpages.styles": "skinStyles/extensions/Translate/ext.translate.specialpages.styles.less",
@@ -629,7 +604,6 @@
 			"+ext.translate.statsbar": "skinStyles/extensions/Translate/ext.translate.statsbar.less",
 			"+ext.translate.statstable": "skinStyles/extensions/Translate/ext.translate.statstable.less",
 			"+ext.translate.tag.languages": "skinStyles/extensions/Translate/ext.translate.tag.languages.less",
-
 			"+ext.uls.common": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.common.less",
 			"+ext.uls.compactlinks": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.compactlinks.less",
 			"+ext.uls.displaysettings": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.displaysettings.less",
@@ -637,37 +611,23 @@
 			"+ext.uls.interlanguage": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.interlanguage.less",
 			"+ext.uls.languagesettings": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.languagesettings.less",
 			"+ext.uls.setlang": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.setlang.less",
-
 			"ext.CookieWarning.styles": "skinStyles/extensions/CookieWarning/ext.CookieWarning.styles.less",
-
 			"+ext.popups.main": "skinStyles/extensions/Popups/ext.popups.main.less",
-
 			"+ext.PortableInfobox.styles": "skinStyles/extensions/PortableInfobox/ext.PortableInfobox.styles.less",
-
 			"+ext.Tabber": "skinStyles/extensions/Tabber/ext.Tabber.less",
 			"+ext.tabberNeue": "skinStyles/extensions/TabberNeue/ext.tabberNeue.less",
-
 			"+ext.uploadWizard": "skinStyles/extensions/UploadWizard/ext.uploadWizard.less",
 			"+ext.uploadWizard.page.styles": "skinStyles/extensions/UploadWizard/uploadWizard.noWizard.less",
-
 			"+ext.visualEditor.desktopArticleTarget.init": "skinStyles/extensions/VisualEditor/ext.visualEditor.less",
-
 			"+ext.wikiEditor": "skinStyles/extensions/WikiEditor/ext.wikiEditor.less",
-
 			"+capiunto.infobox.main": "skinStyles/extensions/Capiunto/capiunto.infobox.main.less",
-
 			"mobile.init.styles": "skinStyles/extensions/MobileFrontend/mobile.init.styles.less",
-
 			"+mediawiki.action.history.styles": "skinStyles/mediawiki/action/mediawiki.action.history.styles.less",
 			"+mediawiki.action.view.filepage": "skinStyles/mediawiki/action/mediawiki.action.view.filepage.less",
-
 			"+mediawiki.notification": "skinStyles/mediawiki/mediawiki.notification.less",
-
 			"+mediawiki.pager.tablePager": "skinStyles/mediawiki/mediawiki.pager.tablePager.less",
-
 			"mediawiki.skinning.content.parsoid": [],
 			"mediawiki.skinning.interface": [],
-
 			"+mediawiki.special": "skinStyles/mediawiki/special/mediawiki.special.less",
 			"+mediawiki.special.apisandbox": "skinStyles/mediawiki/special/mediawiki.special.apisandbox.less",
 			"+mediawiki.special.changeslist.enhanced": "skinStyles/mediawiki/special/mediawiki.special.changeslist.enhanced.less",
@@ -675,27 +635,21 @@
 			"+mediawiki.special.preferences.styles.ooui": "skinStyles/mediawiki/special/mediawiki.special.preferences.styles.ooui.less",
 			"+mediawiki.special.search.styles": "skinStyles/mediawiki/special/mediawiki.special.search.styles.less",
 			"+mediawiki.special.userlogin.login.styles": "skinStyles/mediawiki/special/mediawiki.special.userlogin.login.styles.less",
-
 			"+mediawiki.ui.button": "skinStyles/mediawiki/ui/mediawiki.ui.components.button.less",
 			"+mediawiki.ui.checkbox": "skinStyles/mediawiki/ui/mediawiki.ui.components.checkbox.less",
 			"+mediawiki.ui.input": "skinStyles/mediawiki/ui/mediawiki.ui.components.input.less",
-
 			"+mediawiki.diff.styles": "skinStyles/mediawiki/mediawiki.diff.styles.less",
 			"+mediawiki.htmlform.ooui.styles": "skinStyles/mediawiki/mediawiki.htmlform.ooui.styles.less",
 			"+mediawiki.legacy.shared": "skinStyles/mediawiki/mediawiki.legacy.shared.less",
 			"+mediawiki.page.gallery.styles": "skinStyles/mediawiki/mediawiki.page.gallery.styles.less",
 			"+mediawiki.rcfilters.filters.base.styles": "skinStyles/mediawiki/mediawiki.rcfilters.filters.base.styles.less",
 			"+mediawiki.widgets.DateInputWidget.styles": "skinStyles/mediawiki/mediawiki.widgets.DateInputWidget.styles.less",
-
 			"+oojs-ui-core.styles": "skinStyles/ooui/oojs-ui-core.less",
 			"+oojs-ui-toolbars": "skinStyles/ooui/oojs-ui-toolbars.less",
 			"+oojs-ui-widgets": "skinStyles/ooui/oojs-ui-widgets.less",
 			"+oojs-ui-windows": "skinStyles/ooui/oojs-ui-windows.less",
-
 			"+jquery.ui": "skinStyles/jquery.ui/smoothness/jquery.ui.theme.less",
-
 			"+mmv": "skinStyles/extensions/MultimediaViewer/mmv.less",
-
 			"+ext.WSSearchFront.module": "skinStyles/extensions/WSSearchFront/ext.WSSearchFront.module.less"
 		}
 	},
