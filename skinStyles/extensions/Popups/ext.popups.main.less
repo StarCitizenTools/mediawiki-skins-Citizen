@@ -9,8 +9,9 @@
 */
 
 .mwe-popups {
+	// HACK: Needed to make rounded corner and placeholder bg work
+	// But you lose the pointer by doing it
 	overflow: hidden;
-	border: 1px solid var( --border-color-base ); // original box shadow also serve as a border
 	background-color: var( --color-surface-1 );
 	border-radius: var( --border-radius--medium );
 	box-shadow: var( --box-shadow-dialog );
@@ -53,6 +54,7 @@
 		// Neutral color so dark SVG is visible
 		svg {
 			background-color: #eaecf0;
+			border-radius: var( --border-radius--medium ) var( --border-radius--medium ) 0 0;
 		}
 	}
 
