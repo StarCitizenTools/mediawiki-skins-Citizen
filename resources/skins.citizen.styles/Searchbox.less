@@ -78,7 +78,7 @@
 		right: @margin-side / 2;
 		display: flex;
 		margin: var( --margin-header-item ) 0; // 1px h3 screen reader
-		border-radius: var( --border-radius--small );
+		border-radius: var( --border-radius--medium );
 		box-shadow: var( --box-shadow-dialog );
 		pointer-events: none; // not clickable
 		transform: translateX( 120% );
@@ -208,10 +208,9 @@
 		max-width: ~'calc( 100vw - var( --padding-page ) )';
 		height: var( --height-search-bar );
 		padding: 8px ~'calc( var( --height-search-bar ) * 2 )' 8px var( --height-search-bar );
+		border-color: transparent; // Cancel default border
 		appearance: none;
-		border-radius: var( --border-radius--small );
-		transition: @transition-background-quick;
-		.citizen-card( @border-radius: false );
+		border-radius: var( --border-radius--medium );
 
 		&:focus {
 			outline: 0;
