@@ -1,23 +1,34 @@
 /*
- * Citizen - Lingo
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:Lingo
+ * Module: ext.Lingo
+ * Version: REL1_35 e948775
+ *
+ * Date: 2022-04-29
 */
-
-@import '../../../resources/variables.less';
-
-.skin-citizen-dark {
+@media screen {
 	span.mw-lingo-term {
-		border-bottom: 1px dotted @accent-50;
+		border-bottom-color: var( --color-base--subtle );
 
 		&:hover {
-			background-color: rgba( 0, 0, 0, 0.1 );
+			background-color: var( --background-color-quiet--hover );
 		}
 	}
+}
 
-	.mw-lingo-tooltip {
-		border: 1px solid @dark-bg-20;
-		background-color: @dark-bg-0;
-		box-shadow: 1px 1px 3px 1px rgba( 0, 0, 0, 0.15 );
-		color: @dark-text-80;
+.mw-lingo-tooltip {
+	border: 0;
+	background-color: var( --color-surface-1 );
+	border-radius: var( --border-radius--medium );
+	box-shadow: var( --box-shadow--dialog );
+	color: var( --color-base );
+}
+
+.skin-citizen-dark {
+	.mw-lingo-definition-link {
+		& > a:before {
+			filter: invert( 1 );
+		}
 	}
 }
