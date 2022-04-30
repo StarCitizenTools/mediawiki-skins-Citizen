@@ -321,6 +321,7 @@ function initPref( window ) {
 			container.id = 'citizen-pref';
 			button.id = 'citizen-pref-toggle';
 			button.classList.add( 'mw-header-button' );
+			button.setAttribute( 'aria-label', mw.message( 'preferences' ).text() );
 			button.setAttribute( 'aria-controls', 'citizen-pref-panel' );
 			button.setAttribute( 'aria-expanded', false );
 			container.prepend( button );
