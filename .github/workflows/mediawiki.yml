@@ -42,6 +42,7 @@ jobs:
       id: changed-php
       uses: tj-actions/changed-files@v19
       with:
+        since_last_remote_commit: "true"
         files: |
           includes/**/*.php
 
@@ -49,6 +50,7 @@ jobs:
       id: changed-script
       uses: tj-actions/changed-files@v19
       with:
+        since_last_remote_commit: "true"
         files: |
           resources/**/*.js
 
@@ -56,6 +58,7 @@ jobs:
       id: changed-stylesheet
       uses: tj-actions/changed-files@v19
       with:
+        since_last_remote_commit: "true"
         files: |
           resources/**/*.css
           resources/**/*.less
@@ -66,6 +69,7 @@ jobs:
       id: changed-i18n
       uses: tj-actions/changed-files@v19
       with:
+        since_last_remote_commit: "true"
         files: |
           i18n/*.json
 
