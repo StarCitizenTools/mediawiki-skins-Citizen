@@ -1,6 +1,6 @@
 @import '../variables.less';
 
-@toggle-size: 16px;
+@indicator-size: 16px;
 
 .client-js {
 	.section {
@@ -10,7 +10,7 @@
 			user-select: none;
 
 			&--collapsed {
-				.section-toggle {
+				.section-indicator {
 					transform: rotate3d( 1, 0, 0, 180deg );
 				}
 
@@ -32,13 +32,13 @@
 			}
 		}
 
-		&-toggle {
-			width: @toggle-size;
-			height: @toggle-size;
-			margin-right: @toggle-size;
+		&-indicator {
+			width: @indicator-size;
+			height: @indicator-size;
+			margin-right: @indicator-size;
 			background-position: center;
 			background-repeat: no-repeat;
-			background-size: @toggle-size;
+			background-size: @indicator-size;
 			cursor: pointer;
 			opacity: var( --opacity-icon-base );
 			transition: @transition-opacity-quick, @transition-transform-quick;
@@ -73,15 +73,15 @@
 }
 
 .skin-citizen-dark {
-	.section-toggle {
+	.section-indicator {
 		filter: invert( 1 );
 	}
 }
 
-// Hide toggle when client is noscript
+// Hide indicator when client is noscript
 .client-nojs {
 	.section {
-		&-toggle {
+		&-indicator {
 			display: none;
 		}
 	}
@@ -91,7 +91,7 @@
 @media ( hover: none ) {
 	.client-js .section {
 		&-heading .mw-headline,
-		&-toggle {
+		&-indicator {
 			&:hover,
 			&:active {
 				opacity: 1;

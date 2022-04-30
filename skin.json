@@ -456,7 +456,7 @@
 		},
 		"skins.citizen.icons.sections": {
 			"class": "ResourceLoaderImageModule",
-			"selector": ".section-toggle",
+			"selector": ".section-indicator",
 			"useDataURI": false,
 			"images": {
 				"collapse": "resources/skins.citizen.icons/shared/collapse.svg"

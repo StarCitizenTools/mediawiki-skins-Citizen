@@ -175,8 +175,7 @@ final class BodyContent extends Partial {
 
 		// prepend indicator - this avoids a reflow by creating a placeholder for a toggling indicator
 		$indicator = $doc->createElement( 'div' );
-		$indicator->setAttribute( 'class', 'section-toggle' );
-		$indicator->setAttribute( 'role', 'button' );
+		$indicator->setAttribute( 'class', 'section-indicator' );
 		$heading->insertBefore( $indicator, $heading->firstChild );
 	}
 
