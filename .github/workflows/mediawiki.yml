@@ -10,41 +10,90 @@ on:
 
 jobs:
   test:
-    name: Test and lint
+    name: Lint
     runs-on: ubuntu-latest
     strategy:
       matrix:
         php-versions: ['7.4']
     steps:
+    - name: Cancel Previous Runs
+      uses: styfle/cancel-workflow-action@0.9.1
+      with:
+        access_token: ${{ github.token }}
+  
     - uses: actions/checkout@v3
-      
+      with:
+        fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: /home/runner/cache
+        key: ${{ runner.os }}-${{ hashFiles('**/*.lock') }}
+
     - name: Install dependencies
       run: |
         composer validate
-        npm install --save-dev
         composer install --prefer-dist --no-progress
+        npm install --save-dev
+
+    # Check for changed files 
+    - name: Check for PHP changes
+      id: changed-php
+      uses: tj-actions/changed-files@v19
+      with:
+        files: |
+          includes/**/*.php
+
+    - name: Check for script changes
+      id: changed-script
+      uses: tj-actions/changed-files@v19
+      with:
+        files: |
+          resources/**/*.js
+
+    - name: Check for stylesheet changes
+      id: changed-stylesheet
+      uses: tj-actions/changed-files@v19
+      with:
+        files: |
+          resources/**/*.css
+          resources/**/*.less
+          skinStyles/**/*.css
+          skinStyles/**/*.less
+    
+    - name: Check for i18n changes
+      id: changed-i18n
+      uses: tj-actions/changed-files@v19
+      with:
+        files: |
+          i18n/*.json
 
     # Bypass the phpcbf non-standard exit code  
-    - name: Check PHP
+    - name: Lint PHP
+      if: steps.changed-php.outputs.any_changed == 'true'
       continue-on-error: true
       run: |
         sh ./bin/phpcbf.sh
         composer fix
         composer test
 
-    - name: Check Javascript
+    - name: Lint script
+      if: steps.changed-script.outputs.any_changed == 'true'
       continue-on-error: true
       run: |
         npm run lint:fix:js
         npm run lint:js
 
-    - name: Check CSS/LESS
+    - name: Lint stylesheet
+      if: steps.changed-stylesheet.outputs.any_changed == 'true'
       continue-on-error: true
       run: |
         npm run lint:fix:styles
         npm run lint:styles
 
-    - name: Check i18n
+    - name: Lint i18n
+      if: steps.changed-i18n.outputs.any_changed == 'true'
       continue-on-error: true
       run: |
         npm run lint:i18n
