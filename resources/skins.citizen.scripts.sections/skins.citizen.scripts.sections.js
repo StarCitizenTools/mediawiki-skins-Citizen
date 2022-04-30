@@ -9,7 +9,7 @@ function initCollapsibleSections( document ) {
 
 	for ( let i = 0; i < headings.length; i++ ) {
 		const j = i + 1,
-			collapsibleID = prefix + 'collapsible' + j,
+			collapsibleID = prefix + 'collapsible-' + j,
 			headline = headings[ i ].querySelector( '.mw-headline' );
 
 		// Set up ARIA
