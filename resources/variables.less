@@ -216,30 +216,12 @@
 @border-radius--large: @border-radius--small * 3;
 
 /* Transitions */
-@transition-color: color 500ms ease;
 @transition-color-quick: color 200ms ease;
-@transition-transform: transform 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
 @transition-transform-quick: transform 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-width: width 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-width-quick: width 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-height: height 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
 @transition-height-quick: height 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-margin: margin 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-margin-quick: margin 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-padding: padding 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-padding-quick: padding 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-background: background 500ms ease;
 @transition-background-quick: background 200ms ease;
-@transition-opacity: opacity 500ms ease;
 @transition-opacity-quick: opacity 200ms ease;
-@transition-border: border 500ms ease;
-@transition-border-quick: border 200ms ease;
-@transition-box-shadow: box-shadow 500ms ease;
-@transition-box-shadow-quick: box-shadow 200ms ease;
-@transition-border-color: border-color 500ms ease;
 @transition-border-color-quick: border-color 200ms ease;
-@transition-filter: filter 500ms ease;
-@transition-filter-quick: filter 200ms ease;
 
 /* Box shadow */
 // Based on https://web.dev/building-a-color-scheme/#rad-shadow
@@ -352,13 +334,6 @@
 @padding-menu-item-big: 10px 20px;
 @height-progress-bar: 2px;
 
-/* Heade */
-@margin-header-item: 8px;
-
-/* Search bar */
-@width-search-bar: 500px;
-@height-search-bar: 42px;
-
 /*
  * Text hierarchy
 */
@@ -383,25 +358,15 @@
 @content-margin-top: 0.8rem;
 
 @ui-menu-text: 14px;
-@ui-menu-text-big: 15px;
 @ui-menu-header: 16px;
-
-@footer-line-height: 1.4;
 
 /*
  * Legacy colors
- * TODO: Replace all of them with the new variables
+ *
+ * They are used by the SMW skinstyles and a few MW UI stuff.
+ * Those styles should be updated to the new standard.
+ * After that we can remove all theses LESS variables.
 */
-// Wikimedia colors
-@base-0: #000;
-@base-10: #202122;
-@base-20: #54595d;
-@base-30: #72777d;
-@base-50: #a2a9b1;
-@base-70: #c8ccd1;
-@base-80: #eaecf0;
-@base-90: #f8f9fa;
-@base-100: #fff;
 
 @accent-10: #2a4b8d;
 @accent-50: #36c;
@@ -424,7 +389,7 @@
 @color-footer-background-60: #1a252d;
 @color-footer-text: #979c9f;
 @color-footer-link: #cfdee8;
-@color-footer-link-active: @base-80;
+@color-footer-link-active: #eaecf0;
 
 // Dark mode colors
 @dark-bg-0: #11151d;

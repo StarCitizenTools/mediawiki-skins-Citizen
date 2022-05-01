@@ -1,3 +1,5 @@
+@width-search-bar: 500px;
+
 #search {
 	&-checkbox {
 		&:checked {
@@ -24,7 +26,7 @@
 				}
 
 				&:hover {
-					border-color: @base-0;
+					border-color: #000;
 
 					#search-toggle-icon-3 {
 						opacity: 0;
@@ -71,7 +73,7 @@
 
 	&form {
 		--width-search-bar: @width-search-bar;
-		--height-search-bar: @height-search-bar;
+		--height-search-bar: 42px;
 		position: absolute;
 		z-index: -1; // not interactable
 		top: 0;
