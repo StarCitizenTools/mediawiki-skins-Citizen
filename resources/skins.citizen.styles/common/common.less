@@ -134,7 +134,7 @@ td {
 
 a {
 	color: var( --color-link );
-	text-decoration: none !important;
+	text-decoration: none;
 
 	&:not( [ href ] ) {
 		cursor: pointer;
@@ -150,14 +150,14 @@ a {
 	}
 
 	&.new {
-		color: var( --color-link-new ) !important; // Override visited
+		color: var( --color-link-new ); // Override visited
 
 		&:hover {
-			color: var( --color-link-new--hover ) !important;
+			color: var( --color-link-new--hover );
 		}
 
 		&:active {
-			color: var( --color-link-new--active ) !important;
+			color: var( --color-link-new--active );
 		}
 	}
 
