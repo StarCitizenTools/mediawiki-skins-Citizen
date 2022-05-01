@@ -216,12 +216,16 @@
 @border-radius--large: @border-radius--small * 3;
 
 /* Transitions */
-@transition-color: color 200ms ease;
-@transition-transform: transform 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-height: height 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-background: background 200ms ease;
-@transition-opacity: opacity 200ms ease;
-@transition-border-color: border-color 200ms ease;
+@transition-timing-fast: 100ms;
+@transition-timing-slow: 250ms;
+
+@transition-color: color @transition-timing-fast ease;
+@transition-background: background @transition-timing-fast ease;
+@transition-border-color: border-color @transition-timing-fast ease;
+@transition-opacity: opacity @transition-timing-fast ease;
+
+@transition-transform: transform @transition-timing-slow cubic-bezier(0.215,0.61,0.355,1);
+@transition-height: height @transition-timing-slow cubic-bezier(0.215,0.61,0.355,1);
 
 /* Box shadow */
 // Based on https://web.dev/building-a-color-scheme/#rad-shadow
