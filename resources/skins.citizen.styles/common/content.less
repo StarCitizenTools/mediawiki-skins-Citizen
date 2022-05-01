@@ -78,7 +78,7 @@
 		overflow: hidden;
 
 		> img {
-			transition: @transition-transform-quick;
+			transition: @transition-transform;
 		}
 	}
 
@@ -93,7 +93,7 @@
 			background: 0 !important; // Cancel above styles
 			opacity: var( --opacity-icon-base );
 			text-indent: -9999px; // Hide text
-			transition: @transition-opacity-quick;
+			transition: @transition-opacity;
 
 			&:before {
 				.resource-loader-icon;

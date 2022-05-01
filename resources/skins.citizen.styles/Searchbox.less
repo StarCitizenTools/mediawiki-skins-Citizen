@@ -84,7 +84,7 @@
 		box-shadow: var( --box-shadow-dialog );
 		pointer-events: none; // not clickable
 		transform: translateX( 120% );
-		transition: @transition-transform-quick;
+		transition: @transition-transform;
 
 		&-icon {
 			position: absolute;
@@ -107,7 +107,7 @@
 			background-repeat: no-repeat;
 			background-size: 18px;
 			opacity: var( --opacity-icon-base );
-			transition: @transition-transform-quick, @transition-opacity-quick;
+			transition: @transition-transform, @transition-opacity;
 
 			&:hover {
 				opacity: var( --opacity-icon-base--hover );
@@ -136,7 +136,7 @@
 			align-items: center;
 			justify-content: center;
 			margin-right: 10px;
-			transition: @transition-transform-quick, @transition-height-quick, @transition-opacity-quick, @transition-border-color-quick;
+			transition: @transition-transform, @transition-height, @transition-opacity, @transition-border-color;
 
 			&-1 {
 				top: 6px;

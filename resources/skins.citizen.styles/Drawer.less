@@ -139,7 +139,7 @@
 			border-radius: var( --border-radius--small );
 			box-shadow: var( --box-shadow-card );
 			text-align: center;
-			transition: @transition-background-quick;
+			transition: @transition-background;
 		}
 	}
 
@@ -164,7 +164,7 @@
 				margin-left: @icon-padding;
 				background-size: contain;
 				opacity: var( --opacity-icon-base );
-				transition: @transition-opacity-quick;
+				transition: @transition-opacity;
 			}
 
 			&:hover {
@@ -198,7 +198,7 @@
 				background-color: var( --background-color-icon );
 				border-radius: var( --border-radius--large );
 				transform-origin: 4px 0;
-				transition: @transition-transform-quick, @transition-background-quick, @transition-opacity-quick;
+				transition: @transition-transform, @transition-background, @transition-opacity;
 			}
 		}
 	}
@@ -214,7 +214,7 @@
 
 .citizen-animations-ready {
 	#mw-drawer {
-		transition: @transition-transform-quick;
+		transition: @transition-transform;
 	}
 }
 

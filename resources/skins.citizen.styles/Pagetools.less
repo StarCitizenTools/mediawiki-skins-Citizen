@@ -13,7 +13,7 @@
 		padding: 8px;
 		border-radius: var( --border-radius--medium );
 		cursor: pointer;
-		transition: @transition-opacity-quick;
+		transition: @transition-opacity;
 
 		&-menu {
 			position: absolute;
@@ -27,7 +27,7 @@
 			cursor: auto; // reset cursor pointer set by parent
 			opacity: 0;
 			pointer-events: none;
-			transition: @transition-opacity-quick;
+			transition: @transition-opacity;
 			.citizen-card;
 
 			a {
@@ -99,7 +99,7 @@
 			border-radius: var( --border-radius--medium );
 			color: var( --color-base );
 			font-size: 0;
-			transition: @transition-background-quick, @transition-color-quick;
+			transition: @transition-background, @transition-color;
 
 			&:after {
 				width: var( --size-icon );
@@ -110,7 +110,7 @@
 				background-size: var( --size-icon );
 				content: '';
 				opacity: var( --opacity-icon-base );
-				transition: @transition-opacity-quick;
+				transition: @transition-opacity;
 			}
 
 			&:hover {
