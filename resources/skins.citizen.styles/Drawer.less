@@ -10,8 +10,10 @@
 	flex-direction: column;
 	align-items: center;
 	margin: var( --margin-header-item ) var( --margin-header-item--corner );
+	opacity: 0;
 	overscroll-behavior: contain;
-	transform: translate3d( -110%, -110%, 0 );
+	pointer-events: none;
+	transform: scale( 0 );
 	transform-origin: 0 0;
 	user-select: none;
 	will-change: transform;
@@ -43,7 +45,19 @@
 
 			// Show drawer
 			~ #mw-drawer {
-				transform: none;
+				opacity: 1;
+				pointer-events: auto;
+				transform: scale( 1 );
+
+				#mw-drawer {
+					&-header,
+					&-menu {
+						opacity: 1;
+						// Fade content when users open the menu
+						// And GTFO instantly when they close the menu
+						transition: @transition-opacity--transform;
+					}
+				}
 			}
 		}
 	}
@@ -101,6 +115,12 @@
 				}
 			}
 		}
+	}
+
+	// For transition purpose
+	&-header,
+	&-menu {
+		opacity: 0;
 	}
 
 	&-header {
@@ -214,7 +234,7 @@
 
 .citizen-animations-ready {
 	#mw-drawer {
-		transition: @transition-transform;
+		transition: @transition-transform, @transition-opacity--transform;
 	}
 }
 
