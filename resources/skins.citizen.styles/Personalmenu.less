@@ -1,18 +1,18 @@
 #personalmenu {
 	position: relative;
 	font-size: @ui-menu-text;
-	opacity: 0;
-	pointer-events: none;
-	transition: @transition-opacity;
 	user-select: none;
-	visibility: hidden;
 
 	&-checkbox {
 		&:checked {
 			~ #personalmenu {
-				opacity: 1;
-				pointer-events: auto;
-				visibility: visible;
+				#p-personal {
+					.citizen-card-show;
+
+					ul {
+						.citizen-card-content-show;
+					}
+				}
 
 				&-button {
 					&:after {
@@ -58,10 +58,12 @@
 	right: var( --padding-page );
 	left: var( --padding-page );
 	margin: 0;
+	overflow: hidden; // So that hover state is rounded
+	.citizen-card;
+	.citizen-card-hide( 100% 0 );
 
 	ul {
-		overflow: hidden; // So that hover state is rounded
-		.citizen-card;
+		opacity: 0;
 	}
 
 	li:not( #pt-usergroups ):not( #pt-userpage ) {
@@ -189,6 +191,12 @@
 	#personalmenu-button:after,
 	#p-personal a:after {
 		filter: invert( 1 );
+	}
+}
+
+.citizen-animations-ready {
+	#p-personal {
+		.citizen-card-transition();
 	}
 }
 
