@@ -22,13 +22,21 @@
 }
 
 // Expand animiation setup
-.citizen-card-show() {
+// When using fadeChildren, the child elements need to have
+// opacity: 0 set manually
+.citizen-card-show( @fadeChildren: true ) {
 	opacity: 1;
 	pointer-events: auto;
 	transform: none;
 	// HACK: So that visiblity won't wait 250ms to become visible
 	transition-delay: 0ms;
 	visibility: visible;
+
+	& when ( @fadeChildren ) {
+		> * {
+			.citizen-card-content-show;
+		}
+	}
 }
 
 // Fade content when users open the menu
