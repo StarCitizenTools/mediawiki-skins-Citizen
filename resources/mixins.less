@@ -12,6 +12,26 @@
 	}
 }
 
+// Collaspe animation setup
+.citizen-card-hide( @position, @axis: '' ) {
+	opacity: 0;
+	pointer-events: none;
+	transform: ~'scale@{axis}( 0 )';
+	transform-origin: @position;
+}
+
+// Expand animiation setup
+.citizen-card-show() {
+	opacity: 1;
+	pointer-events: auto;
+	transform: none;
+}
+
+// Transition animation
+.citizen-card-transition() {
+	transition: @transition-transform, @transition-opacity--transform;
+}
+
 // To hide objects, but keep them accessible for screen-readers
 .hidden() {
 	position: absolute;

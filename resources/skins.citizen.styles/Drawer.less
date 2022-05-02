@@ -10,14 +10,11 @@
 	flex-direction: column;
 	align-items: center;
 	margin: var( --margin-header-item ) var( --margin-header-item--corner );
-	opacity: 0;
 	overscroll-behavior: contain;
-	pointer-events: none;
-	transform: scale( 0 );
-	transform-origin: 0 0;
 	user-select: none;
 	will-change: transform;
 	.citizen-card();
+	.citizen-card-hide( 0 0 );
 
 	&-checkbox {
 		&:checked {
@@ -45,9 +42,7 @@
 
 			// Show drawer
 			~ #mw-drawer {
-				opacity: 1;
-				pointer-events: auto;
-				transform: scale( 1 );
+				.citizen-card-show();
 
 				#mw-drawer {
 					&-header,
@@ -234,7 +229,7 @@
 
 .citizen-animations-ready {
 	#mw-drawer {
-		transition: @transition-transform, @transition-opacity--transform;
+		.citizen-card-transition();
 	}
 }
 
