@@ -259,20 +259,23 @@
 }
 
 @media ( max-width: @width-search-bar ) {
-	#search {
-		&form {
-			transition: none; // no transition on mobile
+	#searchform {
+		&:before {
+			position: fixed;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			display: block;
+			background: rgba( 0, 0, 0, 0.7 );
+			content: '';
+		}
 
-			&:before {
-				position: fixed;
-				top: 0;
-				right: 0;
-				bottom: 0;
-				left: 0;
-				display: block;
-				background: rgba( 0, 0, 0, 0.7 );
-				content: '';
-			}
+		// Remove searchbox open animation on mobile
+		// But keep suggestion animation
+		// So user can get to search instantly
+		.citizen-animations-ready & {
+			transition: none;
 		}
 	}
 }
