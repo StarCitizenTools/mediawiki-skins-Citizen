@@ -15,20 +15,20 @@
 // Collaspe animation setup
 .citizen-card-hide( @position, @axis: '' ) {
 	opacity: 0;
-	visibility: hidden;
 	pointer-events: none;
 	transform: ~'scale@{axis}( 0 )';
 	transform-origin: @position;
+	visibility: hidden;
 }
 
 // Expand animiation setup
 .citizen-card-show() {
 	opacity: 1;
-	visibility: visible;
 	pointer-events: auto;
 	transform: none;
 	// HACK: So that visiblity won't wait 250ms to become visible
 	transition-delay: 0ms;
+	visibility: visible;
 }
 
 // Fade content when users open the menu
