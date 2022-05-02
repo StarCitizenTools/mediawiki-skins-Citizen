@@ -227,6 +227,9 @@
 @transition-transform: transform @transition-timing-slow cubic-bezier(0.215,0.61,0.355,1);
 // Only used with transform
 @transition-opacity--transform: opacity @transition-timing-slow ease;
+// Execute after every transition is done
+// Need to use with transition-delay: 0ms
+@transition-visibility--transform: visibility 0ms linear @transition-timing-slow;
 @transition-height: height @transition-timing-slow cubic-bezier(0.215,0.61,0.355,1);
 
 /* Box shadow */
