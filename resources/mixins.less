@@ -31,6 +31,13 @@
 	transition-delay: 0ms;
 }
 
+// Fade content when users open the menu
+// But GTFO instantly when they close the menu
+.citizen-card-content-show() {
+	opacity: 1;
+	transition: @transition-opacity--transform;
+}
+
 // Transition animation
 .citizen-card-transition() {
 	transition: @transition-transform, @transition-opacity--transform, @transition-visibility--transform;
