@@ -39,6 +39,16 @@
 		right: var( --padding-page );
 		left: var( --padding-page );
 		.citizen-card;
+		.citizen-card-hide( 100% 0 );
+		.citizen-card-transition();
+
+		&.citizen-pref-panel--active {
+			.citizen-card-show;
+
+			> * {
+				.citizen-card-content-show;
+			}
+		}
 
 		fieldset {
 			padding: 10px var( --padding-page );
@@ -50,6 +60,10 @@
 
 		input {
 			width: 100%;
+		}
+
+		> * {
+			opacity: 0;
 		}
 	}
 
@@ -110,19 +124,6 @@
 }
 
 .citizen-pref {
-	&-panel {
-		opacity: 0;
-		pointer-events: none;
-		transition: @transition-opacity;
-		visibility: hidden;
-
-		&--active {
-			opacity: 1;
-			pointer-events: auto;
-			visibility: visible;
-		}
-	}
-
 	&-item {
 		display: flex;
 		flex-wrap: wrap;
