@@ -25,10 +25,8 @@
 			padding-top: 5px;
 			margin-top: 5px;
 			cursor: auto; // reset cursor pointer set by parent
-			opacity: 0;
-			pointer-events: none;
-			transition: @transition-opacity;
 			.citizen-card;
+			.citizen-card-hide( 100% 0 );
 
 			a {
 				.menu-item-link;
@@ -71,8 +69,11 @@
 		&:hover {
 			.page-actions-more-menu {
 				z-index: 5;
-				opacity: 1;
-				pointer-events: auto;
+				.citizen-card-show;
+
+				> * {
+					.citizen-card-content-show;
+				}
 			}
 		}
 
@@ -211,6 +212,12 @@
 		li > a:after {
 			filter: invert( 1 );
 		}
+	}
+}
+
+.citizen-animations-ready {
+	.page-actions-more-menu {
+		.citizen-card-transition();
 	}
 }
 
