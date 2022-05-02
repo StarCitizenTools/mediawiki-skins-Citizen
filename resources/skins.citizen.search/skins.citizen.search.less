@@ -5,7 +5,6 @@
 	position: absolute;
 	z-index: 101;
 	top: 100%;
-	display: none;
 	overflow: auto;
 	width: 100%;
 	max-height: ~'calc( 100vh - var( --height-header ) )';
@@ -14,10 +13,14 @@
 	margin-top: -12px;
 	//border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
 	.citizen-card;
+	.citizen-card-hide( 50% 0, Y );
+	// Well this won't be loaded before .citizen-animation-ready anyways
+	.citizen-card-transition();
 
 	&-suggestion {
 		padding-top: 6px;
 		padding-bottom: 6px;
+		opacity: 0;
 
 		&__thumbnail {
 			overflow: hidden;
@@ -104,7 +107,14 @@
 	}
 
 	&--expanded {
-		display: block;
+		.citizen-card-show();
+
+		.citizen-typeahead-suggestion {
+			opacity: 1;
+			// Fade content when users open the menu
+			// And GTFO instantly when they close the menu
+			transition: @transition-opacity--transform;
+		}
 	}
 
 	// Use to hide rounded corner from searchbox

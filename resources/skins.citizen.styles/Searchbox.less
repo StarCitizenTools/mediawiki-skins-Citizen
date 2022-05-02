@@ -5,8 +5,7 @@
 		&:checked {
 			~ #searchform {
 				z-index: 10;
-				pointer-events: auto; // clickable
-				transform: none;
+				.citizen-card-show();
 			}
 
 			~ #search-toggle-icon {
@@ -82,9 +81,7 @@
 		margin: var( --margin-header-item ) 0; // 1px h3 screen reader
 		border-radius: var( --border-radius--medium );
 		box-shadow: var( --box-shadow-dialog );
-		pointer-events: none; // not clickable
-		transform: translateX( 120% );
-		transition: @transition-transform;
+		.citizen-card-hide( 100% 0, X );
 
 		&-icon {
 			position: absolute;
@@ -252,6 +249,12 @@
 				filter: invert( 1 );
 			}
 		}
+	}
+}
+
+.citizen-animations-ready {
+	#searchform {
+		.citizen-card-transition();
 	}
 }
 
