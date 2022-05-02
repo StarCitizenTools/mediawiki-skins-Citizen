@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.14.1...v1.15.0) (2022-05-02)
+
+
+### Features
+
+* **core:** add animation to page tools more menu ([d286afd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d286afdfb9ea6640bc32546415be7316dad27e8f))
+* **core:** add animation to personal menu ([b4959b1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b4959b1972ae931807f77dbd392178d829b1ef98))
+* **core:** add animation to preferences menu ([e6a9bd3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e6a9bd38f1bdc2d39937333f6e177bd9f952be14))
+* **core:** add ARIA support to collaspible sections ([76a84d9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/76a84d9e0004acd8f080aa6e455d4700127821a3))
+* **core:** add aria-label for preferences button ([c74f168](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c74f1685d63287b7dac86580c48db98ee8133e71))
+* **core:** remove animation from searchbox but keep suggestion on mobile ([41e0832](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/41e0832904966554c3a50da175d178d20f94be75))
+* **core:** switch searchbox transitions to scale ([60d57de](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/60d57dea85db97e367183930274cb5d83c59e9a8))
+* **core:** toggle visbility in CSS when menu is show/hidden ([e2a6a03](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e2a6a0355c134775f57fe7c88507ad2c423badf2))
+* **core:** tweak drawer open transition ([e2da010](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e2da010a906f4e98e39c188927c79e5839f1fd09))
+* **core:** tweak sitestats style ([87f6e4f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/87f6e4fa19af402738cdcaef268dd418d2f0eee8))
+* **core:** tweak transition timing and curve ([fae6062](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fae606277f0351d8798c4bfeef03fdb1e86af318))
+* **skinStyles:** tweak CookieWarning styles ([0f38149](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0f381493f18528eefed567f9b5842c0fdc04e0a6))
+* **skinStyles:** update Lingo to grade B ([7800f70](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7800f701c3cdfc79f28ae971b49ca10ec01da2a3))
+
+
+### Bug Fixes
+
+* **core:** incorrect aria-controls ID in section toggle ([ac3ebf5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ac3ebf56a27673adc8ccf971d1878c294a8261e8))
+* find toolbox explicitly ([#448](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/448)) ([2787d49](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2787d49a96c307789b2fd1b6c6b2a1a8f14b804c))
+* lower header z-index to 4 ([b69ca82](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b69ca826508ae6c8ab159a5272f2fe7480dddcbf)), closes [#447](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/447)
+
 ### [1.14.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.14.0...v1.14.1) (2022-04-28)
 
 
