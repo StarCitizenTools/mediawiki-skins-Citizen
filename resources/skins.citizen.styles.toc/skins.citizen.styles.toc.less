@@ -9,11 +9,10 @@
 
 	.toc {
 		position: fixed;
-		top: var( --height-header );
-		left: 0;
+		top: ~'calc( var( --height-header ) + 1.2rem )'; // align with .mw-body-header
+		left: var( --padding-page );
 		width: 100%;
-		max-width: ~'calc( var( --width-toc ) - '@padding-page * 2 ~')';
-		padding: @padding-page;
+		max-width: ~'calc( var( --width-toc ) - var( --padding-page ) * 2 )';
 		color: var( --color-base--subtle );
 		font-size: @ui-menu-text;
 
@@ -96,7 +95,7 @@
 			z-index: 2;
 			display: block;
 			overflow: visible auto;
-			max-height: ~'calc( 100vh - var( --height-header ) * 2 )';
+			max-height: ~'calc( 100vh - var( --height-header ) - 3rem )'; // Somehow it works
 			padding-right: 10px;
 			margin: @content-margin-top * 0.75 0 0 0 !important;
 			font-weight: 450;
@@ -133,7 +132,7 @@
 					border-top: 1px solid var( --border-color-base );
 					border-left: 1px solid var( --border-color-base );
 					background-color: var( --color-surface-2 );
-					border-top-left-radius: var( --border-radius--large );
+					border-top-left-radius: var( --border-radius--medium );
 					box-shadow: var( --box-shadow-dialog );
 					cursor: pointer;
 					pointer-events: auto;
@@ -161,6 +160,8 @@
 					}
 				}
 
+				// By default .toccheckbox is checked on page load
+				// This is needed to prevent ToC popping up on mobile
 				&checkbox:not( :checked ) {
 					~ .toctitle h2,
 					~ ul {
@@ -175,17 +176,16 @@
 				width: ~'calc( 100% - var( --padding-page ) * 2 )';
 				padding: 20px var( --padding-page ) 10px var( --padding-page );
 				background: var( --color-surface-1 );
-				border-radius: var( --border-radius--large ) var( --border-radius--large ) 0 0;
+				border-radius: var( --border-radius--medium ) var( --border-radius--medium ) 0 0;
 			}
 
 			> ul {
 				display: block !important; // So that animation is visible
 				max-height: ~'calc( 100vh - var( --height-header ) * 3 )';
 				padding: 0 var( --padding-page ) 20px var( --padding-page ); // hardcoded for now
-				border: 1px solid var( --border-color-base );
 				margin: 45px 0 0 0 !important;
 				background: var( --color-surface-1 );
-				border-radius: 0 0 var( --border-radius--large ) var( --border-radius--large );
+				border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
 				box-shadow: var( --box-shadow-dialog );
 				pointer-events: auto;
 			}
@@ -215,7 +215,7 @@
 	@media ( max-width: @width-breakpoint-desktop-wide ) and ( hover: hover ) {
 		.toctogglelabel {
 			border-right: 1px solid var( --border-color-base );
-			border-top-right-radius: var( --border-radius--large );
+			border-top-right-radius: var( --border-radius--medium );
 		}
 	}
 
