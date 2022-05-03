@@ -11,12 +11,13 @@
 .mw-echo-ui-notificationBadgeButtonPopupWidget {
 	&-popup {
 		margin-top: 8px; // align with other menus
-		box-shadow: 0 14px 28px rgba( 0, 0, 0, 0.0625 ), 0 10px 10px rgba( 0, 0, 0, 0.055 ); // boxshadow 3
+		box-shadow: var( --box-shadow-dialog );
 		filter: none; // disable filter drop shadow
 
 		> .oo-ui-popupWidget-popup {
 			> .oo-ui-popupWidget-head {
 				box-sizing: content-box; // fix overflow
+				padding-top: 8px; // align with other menus
 				border-bottom-color: var( --border-color-base );
 
 				> .oo-ui-iconWidget {
