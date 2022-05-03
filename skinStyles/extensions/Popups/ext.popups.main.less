@@ -163,4 +163,56 @@
 			}
 		}
 	}
+
+	/* settingsDialogRenderer.less */
+	&-overlay {
+		background-color: var( --background-color-overlay );
+	}
+
+	/* settingsDialog.less */
+	&-settings {
+		border: 0;
+		background: var( --color-surface-1 );
+		border-radius: var( --border-radius--medium );
+		box-shadow: var( --box-shadow-dialog );
+
+		header {
+			padding: 0;
+			border-color: var( --border-color-base );
+
+			// For some reason it looks very weird
+			h1 {
+				padding-top: 0;
+				margin-bottom: unset;
+				font-size: 1rem;
+			}
+		}
+
+		main {
+			p {
+				color: var( --color-base--subtle );
+			}
+
+			form {
+				label {
+					> span {
+						color: var( --color-base--emphasized );
+						font-size: 1rem;
+						line-height: inherit;
+					}
+				}
+			}
+		}
+	}
+}
+
+.mw-ui-icon-popups-close:before {
+	opacity: var( --opacity-icon-base );
+}
+
+/* Dark styles */
+.skin-citizen-dark {
+	.mw-ui-icon-popups-close:before {
+		filter: invert( 1 );
+	}
 }
