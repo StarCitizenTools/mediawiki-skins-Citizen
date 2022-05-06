@@ -324,6 +324,7 @@
 						"rtl": "resources/skins.citizen.icons/shared/article-rtl.svg"
 					}
 				},
+				"nstab-user": "resources/skins.citizen.icons/shared/userAvatar.svg",
 				"translate": "resources/skins.citizen.icons/shared/language.svg"
 			}
 		},
