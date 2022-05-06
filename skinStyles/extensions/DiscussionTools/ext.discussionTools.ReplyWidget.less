@@ -1,0 +1,33 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:DiscussionTools
+ * Module: ext.discussionTools.ReplyWidget
+ * Version: REL1_35 7aa0a9b
+ *
+ * Date: 2022-05-06
+*/
+
+@import '../../../resources/variables.less';
+
+.dt-ui-replyWidget {
+	&-footer {
+		color: var( --color-base--subtle );
+	}
+
+	&-preview {
+		background: var( --color-surface-2 );
+		border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
+	}
+}
+
+@media only screen and ( max-width: @width-breakpoint-tablet ) {
+	.dt-ui-replyWidget {
+		// HACK: Make the toolbar two line on mobile
+		// So that they are not overlapping
+		.ve-ui-targetToolbar > .oo-ui-toolbar-bar {
+			padding-top: 42px;
+			text-align: left;
+		}
+	}
+}

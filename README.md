@@ -40,6 +40,7 @@ Name | Grade | Version | Last updated
 [CleanChanges](https://www.mediawiki.org/wiki/Extension:CleanChanges) | B | MLEB 2021.07 | 2021-07-29
 [CodeMirror](https://www.mediawiki.org/wiki/Extension:CodeMirror) | A | REL1_35 `a326407` | 2021-08-25
 [CookieWarning](https://www.mediawiki.org/wiki/Extension:CookieWarning) | A | REL1_35 `3c2ae6a` | 2022-04-29
+[DiscussionTools](https://www.mediawiki.org/wiki/Extension:DiscussionTools) | A | REL1_35 `7aa0a9b` | 2022-05-06
 [DismissableSiteNotice](https://www.mediawiki.org/wiki/Extension:DismissableSiteNotice) | A | N/A | N/A
 [Echo](https://www.mediawiki.org/wiki/Extension:Echo) | A | REL1_35 `347c30e` | 2021-08-11
 [Flow (StructuredDiscussions)](https://www.mediawiki.org/wiki/Extension:StructuredDiscussions) | B | REL1_35 `e3379f0` | 2022-04-27
