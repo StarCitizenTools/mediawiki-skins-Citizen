@@ -24,6 +24,7 @@
 use Citizen\GetConfigTrait;
 use Citizen\Partials\BodyContent;
 use Citizen\Partials\Drawer;
+use Citizen\Partials\FirstHeading;
 use Citizen\Partials\Footer;
 use Citizen\Partials\Header;
 use Citizen\Partials\Logos;
@@ -76,6 +77,7 @@ class SkinCitizen extends SkinMustache {
 		$header = new Header( $this );
 		$logos = new Logos( $this );
 		$drawer = new Drawer( $this );
+		$firstHeading = new FirstHeading( $this );
 		$tagline = new Tagline( $this );
 		$bodycontent = new BodyContent( $this );
 		$footer = new Footer( $this );
@@ -115,6 +117,8 @@ class SkinCitizen extends SkinMustache {
 				'data-search-box' => $header->buildSearchProps(),
 				'msg-citizen-jumptotop' => $this->msg( 'citizen-jumptotop' )->text() . ' [home]',
 			],
+
+			'html-title--formatted' => $firstHeading->buildFirstHeading( $parentData[ 'html-title' ] ),
 
 			'data-pagetools' => $tools->buildPageTools( $parentData ),
 

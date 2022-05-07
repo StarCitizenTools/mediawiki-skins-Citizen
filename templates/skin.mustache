@@ -6,7 +6,7 @@
 	string page-langcode the content language of the article. Assumed to be escaped HTML.
 	string html-newtalk
 	string page-langcode the content language of the article. Assumed to be escaped HTML.
-	string html-title
+	string html-title--formatted
 	string msg-tagline
 	string html-prebodyhtml
 	string html-subtitle
@@ -29,7 +29,7 @@
 	<header class="mw-body-header">
 		<div class="page-heading">
 			<div class="firstHeading-container">
-				<h1 id="firstHeading" class="firstHeading" lang="{{page-langcode}}">{{{html-title}}}</h1>
+				<h1 id="firstHeading" class="firstHeading" lang="{{page-langcode}}">{{{html-title--formatted}}}</h1>
 				{{>Indicators}}
 			</div>
 			<div id="siteSub">{{msg-tagline}}</div>
