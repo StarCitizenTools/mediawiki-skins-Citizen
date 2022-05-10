@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.16.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.15.0...v1.16.0) (2022-05-10)
+
+
+### Features
+
+* **core:** add missing user page icon ([75cee0c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/75cee0c3f45d1f91733328c79046f1cc872cbd80))
+* **core:** style parenthesis text in FirstHeading differently ([44f9bc0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/44f9bc0a7cac65c4cd2478b5ed919cff2260b332))
+* **core:** tweak ToC styles ([b00c7dd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b00c7ddf4a8806427841b55660f40cdd4875cc48))
+* **skinStyles:** add Citizen styles to OOUI dialog ([8121ecb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8121ecb8558e8ab7dd08014805e8ec1ef926a555))
+* **skinStyles:** add dark styles to source edit summary box ([61d13a0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/61d13a0f99e8f2227f9b9a875bf25e665edffe82))
+* **skinStyles:** add missing placeholder style for VE ([9c33c3d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9c33c3dab4b091da7fe2f65be4f05236ef979035))
+* **skinStyles:** add Popups settings styles ([09d3014](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/09d301476b1a72946bb4fe9f5332b54f4006254d))
+* **skinStyles:** add skinStyles for DiscussionTools ([e5b01e8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e5b01e805ceaf0b290fe8770925c54bc5dc7e541))
+* **skinStyles:** contain overscoll in Echo ([e47c1a5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e47c1a5ac44cc5ec46376feac6c23f3efaf50178))
+* **skinStyles:** remove top margin for TabberNeue ([a47b53b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a47b53bb9079a967ba0b90db782ffaa9c7e6d424))
+* **skinStyles:** tweak Echo popup styles ([398f6da](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/398f6da83df3507c5be2c4be8d7af21d2850dfce))
+
+
+### Bug Fixes
+
+* **core:** fix overflow in search suggestions ([a3d85bb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a3d85bb8a556d40a3cd65ae294ca0bc8bd2afa67))
+* **core:** hover state should be visible on card ([f8d90e1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f8d90e1782fbbf4cae67e63558d67ed454e1f385))
+* **skinStyle:** missing dark background for Popups ([c871520](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c87152045a609446b73222ec145d2aed26b3c356))
+
 ## [1.15.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.14.1...v1.15.0) (2022-05-02)
 
 
