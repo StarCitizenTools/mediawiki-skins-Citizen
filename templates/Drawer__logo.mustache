@@ -4,7 +4,7 @@
 	string msg-sitesubtitle the contents of the sitesubtitle message key
 }}
 {{#data-logos}}
-<a {{{html-mainpage-attributes}}} class="mw-logo">
+<a {{{html-mainpage-attributes}}} class="mw-logo citizen-drawer__logo">
 	{{! alt is provided for valid HTML but given aria-hidden not needed. }}
 	<img class="mw-logo-icon" src="{{!
 		Pick an icon based on this order: Icon > SVG > 1x
@@ -16,6 +16,6 @@
 				}}{{#1x}}{{.}}{{/1x}}{{!
 			}}{{/svg}}{{!
 		}}{{/icon}}"{{!
-		}}alt="" aria-hidden="true" height="50" width="50">
+		}}alt="" aria-hidden="true" height="80" width="80">
 </a>
 {{/data-logos}}

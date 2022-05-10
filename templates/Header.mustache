@@ -1,9 +1,10 @@
  {{!
-	string msg-citizen-header-menu-toggle tooltip for menu toggle
-	string msg-citizen-header-search-toggle tooltip for search toggle
+	string msg-citizen-drawer-toggle The label used by the drawer button.
 }}
-<header class="mw-header">
+<header class="mw-header citizen-header">
+	{{>Header__checkboxhack}}
 	{{#data-drawer}}{{>Drawer}}{{/data-drawer}}
+	{{! .citizen-header__inner }}
 	<div id="mw-header-siteinfo">
 		<a id="header-sitetitle" class="mw-wiki-title" {{{html-mainpage-attributes}}}>{{>Wordmark}}</a>
 		<a id="header-pagetitle" href="#top" title="{{msg-citizen-jumptotop}}">{{{html-title}}}</a>
@@ -11,6 +12,7 @@
 	<div id="mw-header-tools">
 		{{#data-extratools}}{{>Menu}}{{/data-extratools}}
 		{{#data-personal-menu}}{{>PersonalMenu}}{{/data-personal-menu}}
-		{{#data-search-box}}{{>SearchBox}}{{/data-search-box}}
 	</div>
+	{{! .citizen-search }}
+	{{#data-search-box}}{{>SearchBox}}{{/data-search-box}}
 </header>

@@ -41,9 +41,9 @@ function enableCssAnimations( document ) {
 function initCheckboxHack( window ) {
 	const checkboxHack = require( './checkboxHack.js' ),
 		drawer = {
-			button: document.getElementById( 'mw-drawer-button' ),
-			checkbox: document.getElementById( 'mw-drawer-checkbox' ),
-			target: document.getElementById( 'mw-drawer' )
+			button: document.getElementById( 'citizen-drawer__buttonCheckbox' ),
+			checkbox: document.getElementById( 'citizen-drawer__checkbox' ),
+			target: document.getElementById( 'citizen-drawer__card' )
 		},
 		personalMenu = {
 			button: document.getElementById( 'personalmenu-button' ),

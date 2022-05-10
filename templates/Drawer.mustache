@@ -2,46 +2,21 @@
 	string msg-citizen-drawer-toggle The label used by the drawer button.
 	string msg-sitesubtitle the contents of the sitesubtitle message key
 }}
-<input 
-	type="checkbox" 
-	id="mw-drawer-checkbox" 
-	class="mw-checkbox-hack-checkbox">
-<label
-	id="mw-drawer-button" 
-	class="mw-checkbox-hack-button mw-header-button" 
-	for="mw-drawer-checkbox"
-	role="button"
-	aria-controls="mw-drawer"
-	tabindex="0">
-	{{msg-citizen-drawer-toggle}}
-</label>
-<div id="mw-drawer-button-icon">
-	<div id="mw-drawer-button-icon-1" class="mw-drawer-button-icon-div"></div>
-	<div id="mw-drawer-button-icon-2" class="mw-drawer-button-icon-div"></div>
-	<div id="mw-drawer-button-icon-3" class="mw-drawer-button-icon-div"></div>
-</div>
-<aside id="mw-drawer">
-	<header id="mw-drawer-header">
-		<div id="mw-drawer-logo" role="banner">
-			{{>Logo}}
-		</div>
-		<div id="mw-drawer-siteinfo">
-			{{>SiteStats}}
-			<div class="mw-logo-wordmark">{{msg-sitetitle}}</div>
-			{{#data-drawer-subsearch}}
-			<div id="mw-drawer-search">
-				<input
-					type="search"
-					title="{{msg-citizen-drawer-search}}"
-					placeholder="{{msg-citizen-drawer-search}}"
-					id="mw-drawer-search-input" />
+<div class="citizen-drawer citizen-header__item">
+	{{! ID needed for a11y and checkbox hack }}
+	<aside id="citizen-drawer__card" class="citizen-drawer__card">
+		<header class="citizen-drawer__header">
+			{{>Drawer__logo}}
+			<div class="citizen-drawer__siteinfo">
+				{{>Drawer__siteStats}}
+				<div class="mw-logo-wordmark">{{msg-sitetitle}}</div>
 			</div>
-			{{/data-drawer-subsearch}}
-		</div>
-	</header>
-	<section id="mw-drawer-menu">
-		{{#data-portals-first}}{{>Menu}}{{/data-portals-first}}
-		{{#array-portals-rest}}{{>Menu}}{{/array-portals-rest}}
-		{{#data-portals-languages}}{{>Menu}}{{/data-portals-languages}}
-	</section>
-</aside>
+		</header>
+		<section class="citizen-drawer__menu">
+			{{#data-portals-first}}{{>Menu}}{{/data-portals-first}}
+			{{#array-portals-rest}}{{>Menu}}{{/array-portals-rest}}
+			{{#data-portals-languages}}{{>Menu}}{{/data-portals-languages}}
+		</section>
+	</aside>
+	{{>Drawer__button}}
+</div>

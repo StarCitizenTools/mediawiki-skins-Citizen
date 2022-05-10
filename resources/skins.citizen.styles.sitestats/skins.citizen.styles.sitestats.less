@@ -1,34 +1,34 @@
 @import '../variables.less';
 
-#mw-drawer-sitestats {
+.citizen-siteStats {
 	display: flex;
-	font-size: @ui-menu-text;
-}
+	font-size: 0.875rem; // TODO: Put this in variable
+	gap: 0.875rem;
 
-.sitestats-item {
-	display: flex;
-	align-items: center;
-	margin-right: 15px;
+	&__item {
+		display: flex;
+		align-items: center;
+		gap: 0.4375rem;
 
-	&:before {
-		width: 14px;
-		height: 14px;
-		margin-right: 7px;
-		background-size: contain;
-		content: '';
-		opacity: var( --opacity-icon-base );
+		&:before {
+			width: 0.875rem;
+			height: 0.875rem;
+			background-size: contain;
+			content: '';
+			opacity: var( --opacity-icon-base );
+		}
 	}
 }
 
 .skin-citizen-dark {
-	.sitestats-item:before {
+	.citizen-siteStats__item:before {
 		filter: invert( 1 );
 	}
 }
 
 /* Can't display all in one line so let's hide file */
 @media ( max-width: 480px ) {
-	#sitestats-images {
+	#citizen-siteStats__item--images {
 		display: none;
 	}
 }

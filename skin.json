@@ -39,7 +39,6 @@
 					],
 					"messages": [
 						"citizen-drawer-toggle",
-						"citizen-drawer-search",
 						"citizen-personalmenu-toggle",
 						"citizen-search-toggle",
 						"citizen-theme-toggle",
@@ -465,7 +464,7 @@
 		},
 		"skins.citizen.icons.sitestats": {
 			"class": "ResourceLoaderImageModule",
-			"selector": "#sitestats-{name}:before",
+			"selector": "#citizen-siteStats__item--{name}:before",
 			"useDataURI": false,
 			"images": {
 				"articles": {
@@ -734,12 +733,6 @@
 			"value": "first",
 			"description": "Label of the portal to attach links to upload and special pages to",
 			"descriptionmsg": "citizen-config-portalattach",
-			"public": true
-		},
-		"EnableDrawerSubSearch": {
-			"value": false,
-			"description": "Enables to search the drawer for menu entries",
-			"descriptionmsg": "citizen-config-enabledrawersubsearch",
 			"public": true
 		},
 		"EnableCollapsibleSections": {

@@ -115,18 +115,11 @@ final class Drawer extends Partial {
 
 		$portals = [
 			'msg-citizen-drawer-toggle' => $this->skin->msg( 'citizen-drawer-toggle' )->text(),
-			'msg-citizen-drawer-search' => $this->skin->msg( 'citizen-drawer-search' )->text(),
 			'data-portals-first' => $firstPortal,
 			'array-portals-rest' => $props,
 			'data-portals-languages' => $languages,
 			'data-drawer-sitestats' => $this->getSiteStats(),
-			'data-drawer-subsearch' => false,
 		];
-
-		// Drawer subsearch
-		if ( $this->getConfigValue( 'CitizenEnableDrawerSubSearch' ) ) {
-			$portals['data-drawer-subsearch'] = true;
-		}
 
 		return $portals;
 	}

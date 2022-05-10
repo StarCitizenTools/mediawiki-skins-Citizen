@@ -1,9 +1,14 @@
-.mw-header {
+.citizen-header {
 	--margin-header-item: 8px;
 	--margin-header-item--corner: ~'calc( var( --padding-page ) / 2 )';
 	--padding-header-icon: ~'calc( ( var( --height-header ) - var( --size-icon ) - var( --margin-header-item ) * 2 ) / 2 )';
 	--width-button-base: ~'calc(var(--size-icon) + var(--padding-page))';
 	--width-button-corner: ~'calc(var(--size-icon) + var(--padding-page) * 2)';
+
+	--size-button--header: ~'calc( var( --height-header ) - 1rem )';
+	--size-icon--header: 1.25rem;
+	--margin-header: 0.5rem;
+	--padding-header: ~'calc( var( --padding-page ) / 2 )';
 	position: fixed;
 	z-index: 4;
 	top: 0;
@@ -12,21 +17,7 @@
 	display: flex;
 	height: var( --height-header );
 	justify-content: space-between;
-	pointer-events: none;
-
-	& > * {
-		pointer-events: auto;
-	}
-
-	ul {
-		list-style: none;
-	}
-
-	ul,
-	li {
-		display: block;
-		margin: 0;
-	}
+	padding: 0 var( --padding-header );
 
 	&:before {
 		position: absolute;
@@ -38,6 +29,54 @@
 		content: '';
 		-webkit-mask-image: linear-gradient( 180deg, #000, transparent );
 		mask-image: linear-gradient( 180deg, #000, transparent );
+		pointer-events: none;
+	}
+
+	&__item {
+		display: flex;
+		align-items: center;
+	}
+
+	&__button {
+		display: grid;
+		width: var( --size-button--header );
+		height: var( --size-button--header );
+		border-radius: var( --border-radius--small );
+		place-items: center;
+
+		// Used in checkbox hack
+		&Checkbox {
+			position: absolute;
+			display: block;
+			width: inherit;
+			height: inherit;
+		}
+
+		&Icon {
+			overflow: hidden; // Sometimes CSS animation can clip
+			width: var( --size-icon--header );
+			height: var( --size-icon--header );
+		}
+
+		&:hover {
+			background-color: var( --background-color-quiet--hover );
+		}
+
+		&:active {
+			background-color: var( --background-color-quiet--active );
+		}
+	}
+}
+
+.mw-header {
+	ul {
+		list-style: none;
+	}
+
+	ul,
+	li {
+		display: block;
+		margin: 0;
 	}
 
 	&-button {

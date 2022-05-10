@@ -4,14 +4,27 @@ a.feedlink {
 }
 
 // CSS checkbox hack
+// TODO: See what MW core offer and maybe we can take it off
 .mw-checkbox-hack {
 	&-checkbox {
 		display: none;
 	}
 
 	&-button {
-		overflow: hidden;
-		text-indent: -999px;
+		cursor: pointer;
+
+		> span {
+			position: absolute !important;
+			//.mixin-screen-reader-text;
+			display: block;
+			overflow: hidden;
+			width: 1px;
+			height: 1px;
+			padding: 0;
+			border: 0;
+			margin: -1px;
+			clip: rect( 1px, 1px, 1px, 1px );
+		}
 	}
 }
 

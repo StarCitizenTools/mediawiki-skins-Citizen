@@ -89,7 +89,6 @@ Name | Description | Values | Default
 `$wgCitizenEnableCollapsibleSections` | Enables or disable collapsible sections on content pages | `true` - enable; `false` - disable | `true`
 `$wgCitizenShowPageTools` | The condition of page tools visibility | `true` - always visible; `login` - visible to logged-in users; `permission` - visible to users with the right permissions | `true`
 `$wgCitizenEnableDrawerSiteStats` | Enables the site statistics in drawer menu | `true` - enable; `false` - disable | `true`
-`$wgCitizenEnableDrawerSubSearch` | Enables the drawer search box for menu entries | `true` - enable; `false` - disable | `false`
 `$wgCitizenPortalAttach` | Label of the portal to attach links to upload and special pages to | string | `first`
 `$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#131a21`
 
