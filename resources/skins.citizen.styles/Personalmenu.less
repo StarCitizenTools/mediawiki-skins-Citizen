@@ -1,96 +1,24 @@
 .citizen-personalMenu {
+	position: relative; // anchor card
 
-}
-
-// Checkbox hack
-#citizen-personalMenu__checkbox:checked {
-	~ .citizen-personalMenu__card {
-		#p-personal {
-			// Child element is a container
-			.citizen-card-show( false );
-
-			ul {
-				.citizen-card-content-show;
-			}
-		}
-	}
-}
-
-#personalmenu {
-	position: relative;
-	font-size: @ui-menu-text;
-	user-select: none;
-
-	&-checkbox {
-		&:checked {
-			~ #personalmenu {
-				#p-personal {
-					// Child element is a container
-					.citizen-card-show( false );
-
-					ul {
-						.citizen-card-content-show;
-					}
-				}
-
-				&-button {
-					&:after {
-						opacity: var( --opacity-icon-base--hover );
-					}
-
-					&:active:after {
-						opacity: var( --opacity-icon-base--active );
-					}
-				}
-			}
-		}
+	&__card {
+		position: absolute;
+		top: 100%;
+		right: 0;
+		overflow: hidden; // rounded corner
+		min-width: var( --size-dialog-min--header );
+		font-size: 0.875rem;
+		.citizen-card;
+		.citizen-card-hide( 100% 0 );
 	}
 
-	&-button {
-		position: relative;
-		font-size: 0; // Hide label text
-
-		&:after {
-			display: block;
-			width: inherit;
-			height: inherit;
-			background-position: center;
-			background-repeat: no-repeat;
-			content: '';
-			opacity: var( --opacity-icon-base );
-			transition: @transition-opacity;
-		}
-
-		&:hover:after {
-			opacity: var( --opacity-icon-base--hover );
-		}
-
-		&:active:after {
-			opacity: var( --opacity-icon-base--active );
-		}
-	}
-}
-
-#p-personal {
-	position: fixed;
-	top: var( --height-header );
-	right: var( --padding-page );
-	left: var( --padding-page );
-	overflow: hidden; // So that hover state is rounded
-	margin: 0;
-	.citizen-card;
-	.citizen-card-hide( 100% 0 );
-
-	ul {
-		opacity: 0;
-	}
-
+	// TODO: This mess needs refactor
 	li:not( #pt-usergroups ):not( #pt-userpage ) {
 		a {
 			.menu-item-link;
 			align-items: center;
 			justify-content: space-between;
-			padding: 10px 20px;
+			padding: 0.625rem 1.25rem;
 
 			&:after {
 				.resource-loader-list-icon;
@@ -151,13 +79,13 @@
 	#pt {
 		&-user {
 			&page {
-				padding: 16px 12px 0 12px;
+				padding: 1rem 0.75rem 0 0.75rem;
 
 				a {
 					justify-content: flex-start;
-					padding: 4px 8px;
+					padding: 0.25rem 0.5rem;
 					color: var( --color-base--emphasized ) !important;
-					font-size: 16px;
+					font-size: 1rem;
 					font-weight: 600;
 					word-break: break-word;
 				}
@@ -166,11 +94,11 @@
 			&groups {
 				display: flex;
 				flex-wrap: wrap;
-				padding: 0 16px;
-				margin-bottom: 8px;
+				padding: 0 1rem;
+				margin-bottom: 0.5rem;
 
 				a {
-					padding: 2px 4px;
+					padding: 0.125rem 0.25rem;
 					color: var( --color-base--subtle );
 				}
 			}
@@ -194,9 +122,9 @@
 			}
 
 			&contris {
-				padding: 0 20px 10px 20px;
+				padding: 0 1.25rem 0.625rem 1.25rem;
 				border-bottom: 1px solid var( --border-color-base );
-				font-weight: 450;
+				font-weight: 500;
 			}
 		}
 
@@ -206,24 +134,26 @@
 	}
 }
 
-.skin-citizen-dark {
-	#personalmenu-button:after,
-	#p-personal a:after {
-		filter: invert( 1 );
+// Checkbox hack
+#citizen-personalMenu__checkbox:checked {
+	~ .citizen-personalMenu__card {
+		.citizen-card-show();
 	}
 }
 
 .citizen-animations-ready {
-	#p-personal {
+	.citizen-personalMenu__card {
 		.citizen-card-transition();
 	}
 }
 
-@media ( min-width: @width-breakpoint-tablet ) {
-	#p-personal {
-		position: absolute;
-		right: 0;
-		left: unset;
-		min-width: 250px;
+@media ( max-width: @width-breakpoint-tablet ) {
+	.citizen-personalMenu {
+		&__card {
+			position: fixed;
+			top: var( --height-header );
+			right: var( --padding-page );
+			left: var( --padding-page );
+		}
 	}
 }

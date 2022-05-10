@@ -6,6 +6,8 @@
 	--size-icon--header: 1.25rem;
 	--margin-header: 0.5rem;
 	--padding-header: ~'calc( var( --padding-page ) / 2 )';
+	--size-dialog-min--header: 16rem;
+
 	position: fixed;
 	z-index: 4;
 	top: 0;
@@ -59,10 +61,10 @@
 
 		// Background image icons
 		&--icon:after {
-			content: '';
 			width: var( --size-icon--header );
 			height: var( --size-icon--header );
 			background-size: var( --size-icon--header );
+			content: '';
 		}
 
 		&Icon,
@@ -95,16 +97,22 @@
 		min-width: 0;
 		flex-grow: 1;
 		justify-content: space-between;
+
+		.mw-checkbox-hack-checkbox:checked {
+			~ .citizen-header__button {
+				background-color: var( --background-color-primary--active );
+			}
+		}
 	}
 
 	&__start,
 	&__end {
 		display: flex;
-		align-items: center;
 	}
 
 	&__start {
 		min-width: 0;
+		align-items: center;
 	}
 
 	&__title {
@@ -137,6 +145,12 @@
 			display: none;
 		}
 	}
+
+	// Reset
+	ul {
+		margin: 0;
+		list-style: none;
+	}
 }
 
 .skin-citizen--titlehidden {
@@ -163,16 +177,6 @@
 }
 
 .mw-header {
-	ul {
-		list-style: none;
-	}
-
-	ul,
-	li {
-		display: block;
-		margin: 0;
-	}
-
 	&-button {
 		width: var( --size-icon );
 		height: var( --size-icon );

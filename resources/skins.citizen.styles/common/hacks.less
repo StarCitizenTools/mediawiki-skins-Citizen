@@ -14,31 +14,13 @@ a.feedlink {
 		cursor: pointer;
 
 		> span {
-			position: absolute !important;
-			//.mixin-screen-reader-text;
-			display: block;
-			overflow: hidden;
-			width: 1px;
-			height: 1px;
-			padding: 0;
-			border: 0;
-			margin: -1px;
-			clip: rect( 1px, 1px, 1px, 1px );
+			.mixin-screen-reader-text;
 		}
 	}
 }
 
 .screen-reader-text {
-	position: absolute !important;
-	//.mixin-screen-reader-text;
-	display: block !important;
-	overflow: hidden !important;
-	width: 1px !important;
-	height: 1px !important;
-	padding: 0 !important;
-	border: 0 !important;
-	margin: -1px !important;
-	clip: rect( 1px, 1px, 1px, 1px ) !important;
+	.mixin-screen-reader-text;
 }
 
 .mw-empty-elt {
