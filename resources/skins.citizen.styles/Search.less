@@ -1,0 +1,153 @@
+@width-search-bar: 480px;
+
+.citizen-search {
+	--width-search-bar: @width-search-bar;
+	--height-search-bar: ~'calc( var( --height-header ) - var( --margin-header ) * 2 )';
+	z-index: 103; // +1 higher than citizen-drawer
+
+	&__card {
+		position: absolute;
+		top: 0;
+		right: 0;
+		display: flex;
+		width: var( --width-search-bar );
+		max-width: ~'calc(100vw - var( --padding-page ) )';
+		height: var( --height-search-bar );
+		padding-right: var( --size-button--header ); // reserve space for close button
+		margin: var( --margin-header ) var( --padding-header );
+		gap: 0.25rem;
+		.citizen-card();
+		.citizen-card-hide( 100% 0, X );
+
+		/**
+		 * Loading indicator for searchbox
+		 * See common/progressbar.less
+		 **/
+		&.citizen-loading:after {
+			position: absolute;
+			top: 100%;
+		}
+	}
+
+	&__icon,
+	&__random {
+		width: var( --height-search-bar );
+		height: var( --height-search-bar ); // Do we need this?
+
+		&:after {
+			display: block;
+			width: inherit;
+			height: inherit;
+			background-position: center;
+			background-repeat: no-repeat;
+			content: '';
+			opacity: var( --opacity-icon-base );
+			transition: @transition-transform, @transition-opacity;
+		}
+	}
+
+	&__icon {
+		&:after {
+			background-size: 0.875rem; // Smaller because it is an indicator
+		}
+	}
+
+	&__random {
+		border-radius: var( --border-radius--small );
+
+		&:after {
+			background-size: 1.125rem; // Align with close button
+		}
+
+		&:hover {
+			background-color: var( --background-color-quiet--hover );
+
+			&:after {
+				opacity: var( --opacity-icon-base--hover );
+				transform: rotate( 30deg );
+			}
+		}
+
+		&:active {
+			background-color: var( --background-color-quiet--active );
+
+			&:after {
+				opacity: var( --opacity-icon-base--active );
+			}
+		}
+	}
+
+	&:focus-within {
+		.citizen-search__icon {
+			opacity: var( --opacity-icon-base--hover );
+		}
+	}
+
+	#searchInput {
+		flex-grow: 1;
+		padding: 0;
+		border: 0; // Cancel default border
+		appearance: none;
+		background: transparent; // Cancel default background
+		font-size: 0.8125rem;
+
+		&:focus {
+			outline: 0;
+			// The search suggestion pop-up indicates for focus state
+			// border-color: var( --color-primary );
+			// box-shadow: inset 0 0 0 1px var( --color-primary );
+		}
+	}
+}
+
+// Checkbox hack
+#citizen-search__checkbox:checked {
+	~ .citizen-search #searchform {
+		.citizen-card-show( false );
+	}
+}
+
+.skin-citizen-dark {
+	.citizen-search {
+		&__icon,
+		&__random {
+			&:after {
+				filter: invert( 1 ); // I am lazy
+			}
+		}
+	}
+}
+
+.citizen-animations-ready {
+	.citizen-search__card {
+		.citizen-card-transition();
+	}
+}
+
+// MAGIC
+// TODO: Don't hardcode this
+@media ( max-width: ( @width-search-bar + 60px ) ) {
+	.citizen-search__card {
+		left: 0;
+		width: auto;
+
+		&:before {
+			position: fixed;
+			z-index: -1; // Behind form
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			display: block;
+			background: rgba( 0, 0, 0, 0.7 );
+			content: '';
+		}
+
+		// Remove searchbox open animation on mobile
+		// But keep suggestion animation
+		// So user can get to search instantly
+		.citizen-animations-ready & {
+			transition: none;
+		}
+	}
+}

@@ -2,7 +2,7 @@
 	string msg-citizen-drawer-toggle The label used by the drawer button.
 }}
 <header class="mw-header citizen-header">
-	{{>Header__checkboxhack}}
+	{{>Header__checkboxHack}}
 	{{#data-drawer}}{{>Drawer}}{{/data-drawer}}
 	{{! .citizen-header__inner }}
 	<div id="mw-header-siteinfo">
@@ -13,6 +13,5 @@
 		{{#data-extratools}}{{>Menu}}{{/data-extratools}}
 		{{#data-personal-menu}}{{>PersonalMenu}}{{/data-personal-menu}}
 	</div>
-	{{! .citizen-search }}
-	{{#data-search-box}}{{>SearchBox}}{{/data-search-box}}
+	{{#data-search-box}}{{>Search}}{{/data-search-box}}
 </header>

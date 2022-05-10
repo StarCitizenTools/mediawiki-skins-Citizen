@@ -283,8 +283,8 @@
 					}
 				},
 				"#personalmenu-button:after": "resources/skins.citizen.icons/shared/userAvatar.svg",
-				"#searchform-icon": "resources/skins.citizen.icons/shared/search.svg",
-				"#searchform-random": "resources/skins.citizen.icons/shared/random.svg",
+				".citizen-search__icon:after": "resources/skins.citizen.icons/shared/search.svg",
+				".citizen-search__random:after": "resources/skins.citizen.icons/shared/random.svg",
 				".page-actions-more:before": "resources/skins.citizen.icons/more.svg"
 			}
 		},

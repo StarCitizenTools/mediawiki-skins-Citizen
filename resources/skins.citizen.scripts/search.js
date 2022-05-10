@@ -144,8 +144,8 @@ function bindExpandOnSlash( window, checkbox, input ) {
  */
 function initCheckboxHack( window, input, target ) {
 	const checkboxHack = require( './checkboxHack.js' ),
-		button = document.getElementById( 'search-toggle' ),
-		checkbox = document.getElementById( 'search-checkbox' );
+		button = document.getElementById( 'citizen-search__buttonCheckbox' ),
+		checkbox = document.getElementById( 'citizen-search__checkbox' );
 
 	if ( checkbox instanceof HTMLInputElement && button ) {
 		checkboxHack.bindToggleOnClick( checkbox, button );
