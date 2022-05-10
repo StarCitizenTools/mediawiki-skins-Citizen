@@ -7,6 +7,10 @@
 	string msg-random tooltip message for random page button
 }}
 <div class="citizen-search citizen-header__item">
+	<input
+		type="checkbox" 
+		id="citizen-search__checkbox" 
+		class="mw-checkbox-hack-checkbox">
 	<form action="{{form-action}}" role="search" id="searchform" class="citizen-search__card" autocomplete="off">
 		<input type="hidden" name="title" value="{{page-title}}">
 		<label class="screen-reader-text" for="searchInput">{{msg-search}}</label>

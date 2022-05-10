@@ -91,29 +91,27 @@
 // Checkbox hack
 #citizen-search__checkbox:checked {
 	// Transform the magnifying glass button into a crossmark
-	~ .citizen-search {
-		.citizen-search__button {
-			&Icon {
-				> div {
-					&:first-child {
-						height: 1rem;
-						transform: translate3d( -0.3125rem, -0.3125rem, 0 ) rotate( 135deg );
-					}
+	~ .citizen-search__button {
+		> .citizen-search__buttonIcon {
+			> div {
+				&:first-child {
+					height: 1rem;
+					transform: translate3d( -0.3125rem, -0.3125rem, 0 ) rotate( 135deg );
+				}
 
-					&:nth-child( 2 ) {
-						border-color: transparent;
-					}
+				&:nth-child( 2 ) {
+					border-color: transparent;
+				}
 
-					&:last-child {
-						opacity: 1;
-					}
+				&:last-child {
+					opacity: 1;
 				}
 			}
+		}
 
-			&:hover {
-				> .citizen-search__buttonIcon {
-					transform: scale( 0.8 );
-				}
+		&:hover {
+			> .citizen-search__buttonIcon {
+				transform: scale( 0.8 );
 			}
 		}
 	}
