@@ -1,28 +1,22 @@
 @import '../variables.less';
 @import '../mixins.less';
 
-#citizen-pref {
-	&-toggle {
+.citizen-pref {
+	&__button {
 		box-sizing: content-box;
+		padding: 0;
 		border: 0;
 		appearance: none;
+		background: transparent;
+		cursor: pointer;
 
-		&:after {
-			display: block;
-			width: inherit;
-			height: inherit;
-			background-position: center;
-			background-repeat: no-repeat;
-			content: '';
-			opacity: var( --opacity-icon-base );
-			transition: @transition-opacity, @transition-transform;
-		}
-
-		&:active:after {
-			opacity: var( --opacity-icon-base--active ) !important;
+		&[ aria-expanded='true' ] {
+			background-color: var( --background-color-primary--active );
 		}
 	}
+}
 
+#citizen-pref {
 	&-header {
 		padding: 20px var( --padding-page ) 0;
 
@@ -157,12 +151,6 @@
 	}
 }
 
-.skin-citizen-dark {
-	#citizen-pref-toggle:after {
-		filter: invert( 1 ) hue-rotate( 180deg );
-	}
-}
-
 @media ( min-width: @width-breakpoint-tablet ) {
 	#citizen-pref {
 		position: relative;
@@ -176,8 +164,7 @@
 }
 
 @media ( hover: hover ) {
-	#citizen-pref:hover #citizen-pref-toggle:hover:after {
-		opacity: var( --opacity-icon-base--hover );
+	.citizen-pref:hover .citizen-pref__button:after {
 		transform: rotate3d( 0, 0, 1, 90deg );
 	}
 }

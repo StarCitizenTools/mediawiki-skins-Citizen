@@ -319,8 +319,9 @@ function initPref( window ) {
 			mw.loader.load( 'skins.citizen.icons.preferences' );
 
 			container.id = 'citizen-pref';
+			container.classList.add( 'citizen-pref', 'citizen-header__item' );
 			button.id = 'citizen-pref-toggle';
-			button.classList.add( 'mw-header-button' );
+			button.classList.add( 'citizen-pref__button', 'citizen-header__button', 'citizen-header__button--icon' );
 			button.setAttribute( 'aria-label', mw.message( 'preferences' ).text() );
 			button.setAttribute( 'aria-controls', 'citizen-pref-panel' );
 			button.setAttribute( 'aria-expanded', false );
