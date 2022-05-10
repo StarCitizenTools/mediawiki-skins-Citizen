@@ -312,7 +312,7 @@ function storageAvailable( type ) {
 function initPref( window ) {
 	if ( storageAvailable( 'localStorage' ) ) {
 		if ( typeof window.mw !== 'undefined' ) {
-			const headerTools = document.getElementById( 'mw-header-tools' ),
+			const headerTools = document.querySelector( '.citizen-header__end' ),
 				container = document.createElement( 'div' ),
 				button = document.createElement( 'button' );
 

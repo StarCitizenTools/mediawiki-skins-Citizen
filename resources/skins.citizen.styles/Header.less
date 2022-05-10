@@ -1,9 +1,6 @@
 .citizen-header {
 	--margin-header-item: 8px;
-	--margin-header-item--corner: ~'calc( var( --padding-page ) / 2 )';
 	--padding-header-icon: ~'calc( ( var( --height-header ) - var( --size-icon ) - var( --margin-header-item ) * 2 ) / 2 )';
-	--width-button-base: ~'calc(var(--size-icon) + var(--padding-page))';
-	--width-button-corner: ~'calc(var(--size-icon) + var(--padding-page) * 2)';
 
 	--size-button--header: ~'calc( var( --height-header ) - 1rem )';
 	--size-icon--header: 1.25rem;
@@ -21,6 +18,7 @@
 
 	&:before {
 		position: absolute;
+		z-index: -1;
 		top: 0;
 		right: 0;
 		bottom: ~'calc( var( --height-header ) / -2 )';
@@ -66,6 +64,68 @@
 			background-color: var( --background-color-quiet--active );
 		}
 	}
+
+	&__inner {
+		display: flex;
+		min-width: 0;
+		flex-grow: 1;
+		justify-content: space-between;
+	}
+
+	&__start,
+	&__end {
+		display: flex;
+		align-items: center;
+	}
+
+	&__start {
+		min-width: 0;
+	}
+
+	&__title {
+		display: flex;
+		min-width: 0;
+		height: var( --size-button--header );
+		align-items: center;
+		padding: 0 0.5rem;
+		border-radius: var( --border-radius--small );
+		color: var( --color-base--emphasized );
+		font-weight: 500;
+		white-space: nowrap;
+
+		> div {
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		&:hover {
+			background-color: var( --background-color-quiet--hover );
+			color: var( --color-base--emphasized );
+		}
+
+		&:active {
+			background-color: var( --background-color-quiet--active );
+			color: var( --color-base--emphasized );
+		}
+
+		&--page {
+			display: none;
+		}
+	}
+}
+
+.skin-citizen--titlehidden {
+	.citizen-header {
+		&__title {
+			&--site {
+				display: none;
+			}
+
+			&--page {
+				display: grid;
+			}
+		}
+	}
 }
 
 .mw-header {
@@ -94,10 +154,6 @@
 			background-color: var( --background-color-quiet--active ) !important;
 		}
 	}
-}
-
-#mw-header-tools {
-	display: inherit;
 }
 
 // User icon bar
