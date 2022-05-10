@@ -5,8 +5,6 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		opacity: var( --opacity-icon-base );
-		transition: @transition-transform, @transition-background, @transition-opacity;
 
 		> div {
 			position: relative;
@@ -49,20 +47,12 @@
 
 	&:hover {
 		> .citizen-search__buttonIcon {
-			opacity: var( --opacity-icon-base--hover );
-
 			> div {
 				&:first-child {
 					height: 0.375rem;
 					transform: translate3d( 0.125rem, 0.125rem, 0 ) rotate( -45deg );
 				}
 			}
-		}
-	}
-
-	&:active {
-		> .citizen-search__buttonIcon {
-			opacity: var( --opacity-icon-base--active );
 		}
 	}
 }
@@ -79,12 +69,6 @@
 				margin-left: -0.25rem;
 			}
 		}
-	}
-}
-
-.skin-citizen-dark {
-	.citizen-search__buttonIcon {
-		filter: invert( 1 ); // I am lazy
 	}
 }
 

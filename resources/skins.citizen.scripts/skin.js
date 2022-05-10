@@ -46,9 +46,9 @@ function initCheckboxHack( window ) {
 			target: document.getElementById( 'citizen-drawer__card' )
 		},
 		personalMenu = {
-			button: document.getElementById( 'personalmenu-button' ),
-			checkbox: document.getElementById( 'personalmenu-checkbox' ),
-			target: document.getElementById( 'p-personal' )
+			button: document.getElementById( 'citizen-personalMenu__buttonCheckbox' ),
+			checkbox: document.getElementById( 'citizen-personalMenu__checkbox' ),
+			target: document.getElementById( 'citizen-personalMenu__card' )
 		},
 		checkboxObjs = [ drawer, personalMenu ];
 

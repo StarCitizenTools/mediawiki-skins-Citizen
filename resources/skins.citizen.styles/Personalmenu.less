@@ -1,3 +1,21 @@
+.citizen-personalMenu {
+
+}
+
+// Checkbox hack
+#citizen-personalMenu__checkbox:checked {
+	~ .citizen-personalMenu__card {
+		#p-personal {
+			// Child element is a container
+			.citizen-card-show( false );
+
+			ul {
+				.citizen-card-content-show;
+			}
+		}
+	}
+}
+
 #personalmenu {
 	position: relative;
 	font-size: @ui-menu-text;

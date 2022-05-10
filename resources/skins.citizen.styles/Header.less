@@ -50,18 +50,43 @@
 			height: inherit;
 		}
 
+		// Pure CSS icons
 		&Icon {
 			overflow: hidden; // Sometimes CSS animation can clip
 			width: var( --size-icon--header );
 			height: var( --size-icon--header );
 		}
 
+		// Background image icons
+		&--icon:after {
+			content: '';
+			width: var( --size-icon--header );
+			height: var( --size-icon--header );
+			background-size: var( --size-icon--header );
+		}
+
+		&Icon,
+		&--icon:after {
+			opacity: var( --opacity-icon-base );
+			transition: @transition-transform, @transition-opacity;
+		}
+
 		&:hover {
 			background-color: var( --background-color-quiet--hover );
+
+			.citizen-header__buttonIcon,
+			&.citizen-header__button--icon:after {
+				opacity: var( --opacity-icon-base--hover );
+			}
 		}
 
 		&:active {
 			background-color: var( --background-color-quiet--active );
+
+			.citizen-header__buttonIcon,
+			&.citizen-header__button--icon:after {
+				opacity: var( --opacity-icon-base--active );
+			}
 		}
 	}
 
@@ -124,6 +149,15 @@
 			&--page {
 				display: grid;
 			}
+		}
+	}
+}
+
+.skin-citizen-dark {
+	.citizen-header__button {
+		&Icon,
+		&--icon:after {
+			filter: invert( 1 );
 		}
 	}
 }

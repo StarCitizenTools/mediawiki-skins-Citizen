@@ -4,14 +4,13 @@
 	&Icon {
 		display: grid;
 		place-content: center;
-		transition: @transition-transform, @transition-background, @transition-opacity;
 
 		> div {
 			display: block;
 			width: 1.125rem;
 			height: 0.125rem;
 			margin: 0.09375rem 0;
-			background-color: var( --background-color-icon );
+			background-color: #000;
 			border-radius: var( --border-radius--large );
 			transform-origin: 0.25rem 0;
 			transition: inherit;
@@ -29,19 +28,9 @@
 	&:hover {
 		> .citizen-drawer__buttonIcon {
 			> div {
-				background-color: var( --background-color-icon--hover );
-
 				&:first-child {
 					transform: translate3d( -50%, 0, 0 );
 				}
-			}
-		}
-	}
-
-	&:active {
-		> .citizen-drawer__buttonIcon {
-			> div {
-				background-color: var( --background-color-icon--active );
 			}
 		}
 	}
