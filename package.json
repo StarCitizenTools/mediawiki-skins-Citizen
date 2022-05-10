@@ -21,7 +21,7 @@
 		"@commitlint/config-conventional": "^16.2.4",
 		"eslint-config-wikimedia": "0.22.1",
 		"grunt-banana-checker": "0.9.0",
-		"husky": "^8.0.0",
+		"husky": "^8.0.1",
 		"jsdoc": "3.6.10",
 		"jsdoc-wmf-theme": "0.0.5",
 		"standard-version": "^9.3.2",
