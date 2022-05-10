@@ -7,7 +7,6 @@
 	--margin-header: 0.5rem;
 	--padding-header: ~'calc( var( --padding-page ) / 2 )';
 	--size-dialog-min--header: 16rem;
-
 	position: fixed;
 	z-index: 4;
 	top: 0;
@@ -63,7 +62,8 @@
 		&--icon:after {
 			width: var( --size-icon--header );
 			height: var( --size-icon--header );
-			background-size: var( --size-icon--header );
+			background-position: center;
+			background-repeat: no-repeat;
 			content: '';
 		}
 
@@ -176,24 +176,6 @@
 	}
 }
 
-.mw-header {
-	&-button {
-		width: var( --size-icon );
-		height: var( --size-icon );
-		padding: var( --padding-header-icon );
-		margin-top: var( --margin-header-item );
-		margin-bottom: var( --margin-header-item );
-		background-color: transparent;
-		border-radius: var( --border-radius--small );
-		cursor: pointer;
-
-		&:active {
-			// Override hover style
-			background-color: var( --background-color-quiet--active ) !important;
-		}
-	}
-}
-
 // User icon bar
 #p-personal-extra {
 	ul {
@@ -203,8 +185,26 @@
 	}
 }
 
-@media ( hover: hover ) {
-	.mw-header-button:hover {
-		background-color: var( --background-color-quiet--hover );
+// Reset hover styles if it is a touch device
+// This is dumb but hover:hover overrides active states
+@media ( hover: none ) {
+	.citizen-header {
+		&__button {
+			&:hover {
+				background-color: none;
+
+				.citizen-header__buttonIcon,
+				&.citizen-header__button--icon:after {
+					opacity: var( --opacity-icon-base );
+				}
+			}
+		}
+
+		&__title {
+			&:hover {
+				background-color: none;
+				color: var( --color-base );
+			}
+		}
 	}
 }
