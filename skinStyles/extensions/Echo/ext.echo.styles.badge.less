@@ -12,13 +12,14 @@
 	#pt-notifications-alert &,
 	#pt-notifications-notice & {
 		top: 0;
-		width: var( --size-icon );
-		height: var( --size-icon );
+		width: var( --size-button--header );
+		height: var( --size-button--header );
 		box-sizing: content-box;
-		padding: var( --padding-header-icon );
 		margin: 0;
 		background-position: center;
 		background-repeat: no-repeat;
+		background-size: var( --size-icon--header );
+		border-radius: var( --border-radius--small );
 		opacity: var( --opacity-icon-base );
 
 		&:hover {
