@@ -20,7 +20,7 @@
  * @file
  */
 
-namespace Citizen;
+namespace Citizen\Api;
 
 use ApiBase;
 use ApiFormatJson;

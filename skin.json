@@ -54,8 +54,7 @@
 		]
 	},
 	"AutoloadClasses": {
-		"SkinCitizen": "includes/SkinCitizen.php",
-		"Citizen\\ApiWebappManifest": "includes/api/ApiWebappManifest.php"
+		"SkinCitizen": "includes/SkinCitizen.php"
 	},
 	"AutoloadNamespaces": {
 		"Citizen\\": "includes/"
@@ -65,7 +64,7 @@
 	},
 	"APIModules": {
 		"webapp-manifest": {
-			"class": "Citizen\\ApiWebappManifest"
+			"class": "Citizen\\Api\\ApiWebappManifest"
 		}
 	},
 	"HookHandlers": {
