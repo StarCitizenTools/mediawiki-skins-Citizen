@@ -14,15 +14,65 @@
 			background-color: var( --background-color-primary--active );
 		}
 	}
+
+	&-item {
+		display: grid;
+		gap: 0.25rem;
+
+		&__label {
+			display: flex;
+			width: 100%;
+			justify-content: space-between;
+		}
+
+		&__title {
+			color: var( --color-base--subtle );
+			letter-spacing: 0.75px;
+		}
+
+		&__value {
+			color: var( --color-base--emphasized );
+			font-weight: 500;
+		}
+	}
+
+	&-theme {
+		&-option {
+			flex-grow: 1;
+			padding: 0.5rem 1rem;
+			border: 2px solid var( --border-color-base );
+			border-radius: var( --border-radius--medium );
+			cursor: pointer;
+			font-weight: 500;
+			text-align: center;
+			white-space: nowrap;
+
+			&:hover {
+				border-color: var( --color-primary--hover );
+				box-shadow: var( --box-shadow-card );
+			}
+
+			&:active {
+				border-color: var( --color-primary--active );
+			}
+		}
+	}
+
+	// We only show min and max value
+	&__tickmarks {
+		display: flex;
+		justify-content: space-between;
+		color: var( --color-base--subtle );
+	}
 }
 
 #citizen-pref {
 	&-header {
-		padding: 20px var( --padding-page ) 0;
+		padding: 1.25rem 1.25rem 0;
 
 		h3 {
 			margin: 0;
-			font-size: @ui-menu-header;
+			font-size: 1rem;
 		}
 	}
 
@@ -30,8 +80,8 @@
 	&-panel {
 		position: absolute;
 		top: var( --height-header );
-		right: var( --padding-page );
-		left: var( --padding-page );
+		right: 1.25rem;
+		left: 1.25rem;
 		.citizen-card;
 		.citizen-card-hide( 100% 0 );
 		.citizen-card-transition();
@@ -41,20 +91,22 @@
 		}
 
 		fieldset {
-			padding: 10px var( --padding-page );
+			padding: 0 1.25rem;
 			border: 0;
 			margin: 0;
 			appearance: none;
-			font-size: @ui-menu-text;
-		}
-
-		input {
-			width: 100%;
+			font-size: 0.875rem;
 		}
 
 		> * {
 			opacity: 0;
 		}
+	}
+
+	&-form {
+		display: grid;
+		margin: 1rem 0;
+		gap: 1.25rem;
 	}
 
 	&-theme {
@@ -74,7 +126,8 @@
 			display: flex;
 			width: 100%;
 			padding: 0;
-			margin: 0 -4px;
+			margin-top: 0.25rem;
+			gap: 0.5rem;
 		}
 
 		// Let label be the radio button
@@ -91,17 +144,16 @@
 
 	&-resetbutton {
 		width: 100%;
-		padding: 10px 20px;
+		padding: 0.625rem 1.25rem;
 		border: 0;
-		margin-top: 10px;
 		appearance: none;
 		background: var( --color-destructive );
 		border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
 		color: #fff;
 		cursor: pointer;
 		font-family: inherit;
-		font-size: @ui-menu-text;
-		font-weight: 450;
+		font-size: 0.875rem;
+		font-weight: 500;
 
 		&:hover {
 			background: var( --color-destructive--hover );
@@ -113,44 +165,6 @@
 	}
 }
 
-.citizen-pref {
-	&-item {
-		display: flex;
-		flex-wrap: wrap;
-
-		&__label {
-			display: flex;
-			width: 100%;
-			justify-content: space-between;
-			padding: 4px 0;
-			color: var( --color-base--subtle );
-			letter-spacing: 0.75px;
-		}
-	}
-
-	&-theme {
-		&-option {
-			flex-grow: 1;
-			padding: 10px 20px;
-			border: 2px solid var( --border-color-base );
-			margin: 4px;
-			border-radius: var( --border-radius--medium );
-			cursor: pointer;
-			font-weight: 500;
-			text-align: center;
-
-			&:hover {
-				border-color: var( --color-primary--hover );
-				box-shadow: var( --box-shadow-card );
-			}
-
-			&:active {
-				border-color: var( --color-primary--active );
-			}
-		}
-	}
-}
-
 @media ( min-width: @width-breakpoint-tablet ) {
 	#citizen-pref {
 		position: relative;
@@ -158,7 +172,7 @@
 		&-panel {
 			right: 0;
 			left: unset;
-			min-width: 250px;
+			min-width: 20rem;
 		}
 	}
 }
