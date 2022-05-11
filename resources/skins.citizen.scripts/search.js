@@ -155,14 +155,14 @@ function initCheckboxHack( window, input, target ) {
 		checkboxHack.bindDismissOnClickOutside( window, checkbox, button, target );
 		checkboxHack.bindDismissOnFocusLoss( window, checkbox, button, target );
 		checkboxHack.bindDismissOnEscape( window, checkbox );
+
+		bindExpandOnSlash( window, checkbox, input );
+
+		// Focus when toggled
+		checkbox.addEventListener( 'input', () => {
+			focusOnChecked( checkbox, input );
+		} );
 	}
-
-	bindExpandOnSlash( window, checkbox, input );
-
-	// Focus when toggled
-	checkbox.addEventListener( 'input', () => {
-		focusOnChecked( checkbox, input );
-	} );
 }
 
 /**
