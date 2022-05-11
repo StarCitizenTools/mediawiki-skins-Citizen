@@ -363,6 +363,7 @@ function initPref( window ) {
 			button.id = CLASS + '-toggle';
 			// eslint-disable-next-line mediawiki/class-doc
 			button.classList.add( CLASS + '__button', 'citizen-header__button', 'citizen-header__button--icon' );
+			button.setAttribute( 'title', mw.message( 'preferences' ).text() );
 			button.setAttribute( 'aria-label', mw.message( 'preferences' ).text() );
 			button.setAttribute( 'aria-controls', CLASS + '-panel' );
 			button.setAttribute( 'aria-expanded', false );
