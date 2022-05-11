@@ -1,0 +1,48 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:Wikibase
+ * Module: jquery.wikibase.toolbar.styles
+ * Version: REL1_35 7bb503b
+ *
+ * Date: 2022-05-11
+*/
+
+/* jquery.wikibase.toolbarbutton.css */
+.wikibase-toolbarbutton-disabled a:link,
+.wikibase-toolbarbutton-disabled a:hover,
+.wikibase-toolbarbutton-disabled a:active,
+.wikibase-toolbarbutton-disabled a:visited {
+	color: var( --color-base--subtle );
+}
+
+.wikibase-toolbarbutton.ui-state-disabled.oo-ui-buttonElement > .oo-ui-buttonElement-button > .oo-ui-iconElement-icon {
+	opacity: var( --opacity-icon-base );
+}
+
+.wikibase-toolbar-button .wb-icon {
+	opacity: var( --opacity-icon-base );
+}
+
+.wikibase-toolbar-button a:hover .wb-icon {
+	opacity: var( --opacity-icon-base--hover );
+}
+
+.wikibase-toolbar-button.ui-state-disabled a:hover .wb-icon {
+	opacity: var( --opacity-base--disabled );
+}
+
+.skin-citizen-dark {
+	// Toolbar icons
+	.wikibase-toolbar-button {
+		&-edit,
+		&-save,
+		&-remove,
+		&-cancel,
+		&-add {
+			.wb-icon {
+				filter: invert( 1 ), hue-rotate( 180deg );
+			}
+		}
+	}
+}
