@@ -623,7 +623,6 @@
 			"+jquery.wikibase.linkitem": "skinStyles/extensions/Wikibase/jquery.wikibase.linkitem.less",
 			"+jquery.wikibase.entityselector": "skinStyles/extensions/Wikibase/jquery.wikibase.entityselector.less",
 			"+jquery.wikibase.toolbar.styles": "skinStyles/extensions/Wikibase/jquery.wikibase.toolbar.styles.less",
-			"+jquery.wikibase.linkitem": "skinStyles/extensions/Wikibase/jquery.wikibase.linkitem.less",
 			"+wikibase.common": "skinStyles/extensions/Wikibase/wikibase.common.less",
 			"+wikibase.mobile": "skinStyles/extensions/Wikibase/wikibase.mobile.less",
 			"+wikibase.view.ControllerViewFactory": "skinStyles/extensions/Wikibase/wikibase.view.ControllerViewFactory.less",
