@@ -1,16 +1,16 @@
 .page-actions {
 	display: flex;
-	margin-left: -12px; // To align with page padding
-	font-size: @ui-menu-text;
+	margin-left: -0.75rem; // To align with page padding
+	font-size: 0.875rem;
 	font-weight: 450;
-	gap: 4px;
+	gap: 0.25rem;
 
 	&-more {
 		display: block;
 		width: var( --size-icon );
 		height: var( --size-icon );
 		box-sizing: content-box;
-		padding: 8px;
+		padding: 0.5rem;
 		border-radius: var( --border-radius--medium );
 		cursor: pointer;
 		transition: @transition-opacity;
@@ -22,8 +22,8 @@
 			left: var( --padding-page );
 			overflow: auto;
 			max-height: 60vh;
-			padding-top: 5px;
-			margin-top: 5px;
+			padding-top: 0.3125rem;
+			margin-top: 0.3125rem;
 			cursor: auto; // reset cursor pointer set by parent
 			.citizen-card;
 			.citizen-card-hide( 100% 0 );
@@ -31,7 +31,7 @@
 			a {
 				.menu-item-link;
 				justify-content: space-between;
-				padding: 10px var( --padding-page );
+				padding: 0.625rem 1.25rem;
 
 				&:after {
 					.resource-loader-list-icon;
@@ -86,13 +86,13 @@
 	> .mw-portlet {
 		ul {
 			display: flex;
-			gap: 4px;
+			gap: 0.25rem;
 		}
 
 		li > a {
 			display: flex;
 			align-items: center;
-			padding: 8px 12px;
+			padding: 0.5rem 0.75rem;
 			border-radius: var( --border-radius--medium );
 			color: var( --color-base );
 			font-size: 0;
@@ -150,16 +150,16 @@
 		order: 98; // Before source edit
 
 		> a {
-			padding-right: 24px;
+			padding-right: 1.5rem;
 		}
 
 		// Merge two buttons together
 		+ #ca-edit {
 			border-left: 1px solid var( --color-primary--hover );
-			margin-left: -16px;
+			margin-left: -1rem;
 
 			> a {
-				padding-left: 8px;
+				padding-left: 0.5rem;
 				border-radius: 0 var( --border-radius--medium ) var( --border-radius--medium ) 0;
 				font-size: 0; // hide edit source text
 
@@ -219,22 +219,22 @@
 
 @media ( min-width: @width-breakpoint-tablet ) {
 	.page-actions {
+		position: relative;
 		margin-right: 0;
 
 		&-more-menu {
-			position: relative;
-			right: unset;
-			left: -172px;
-			width: 200px;
+			right: 0;
+			left: unset;
+			min-width: 12rem;
 		}
 
 		> .mw-portal,
 		> .mw-portlet {
 			li > a {
-				font-size: @ui-menu-text;
+				font-size: 0.875rem;
 
 				&:after {
-					margin-right: 8px;
+					margin-right: 0.5rem;
 				}
 			}
 		}
