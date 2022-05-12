@@ -12,7 +12,7 @@
 	margin-top: -0.75rem;
 	//border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
 	.citizen-card;
-	.citizen-card-hide( 50% 0, Y );
+	.citizen-card-hide( 50% 0, Y, false );
 	// Well this won't be loaded before .citizen-animation-ready anyways
 	.citizen-card-transition();
 
@@ -107,9 +107,5 @@
 
 	&--expanded {
 		.citizen-card-show( false );
-
-		.citizen-typeahead-suggestion {
-			.citizen-card-content-show;
-		}
 	}
 }
