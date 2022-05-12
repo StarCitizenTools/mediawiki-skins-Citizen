@@ -265,6 +265,6 @@ module.exports = {
 	bindToggleOnEnter: bindToggleOnEnter,
 	bindDismissOnClickOutside: bindDismissOnClickOutside,
 	bindDismissOnFocusLoss: bindDismissOnFocusLoss,
-    bindDismissOnEscape: bindDismissOnEscape,
+	bindDismissOnEscape: bindDismissOnEscape,
 	bind: bind
 };
