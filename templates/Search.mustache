@@ -10,8 +10,11 @@
 	<input
 		type="checkbox" 
 		id="citizen-search__checkbox" 
-		class="mw-checkbox-hack-checkbox">
-	<form action="{{form-action}}" role="search" id="searchform" class="citizen-search__card" autocomplete="off">
+		class="mw-checkbox-hack-checkbox"
+		role="button"
+		aria-labelledby="citizen-search__buttonCheckbox"
+		aria-haspopup="true">
+	<form action="{{form-action}}" role="search" id="searchform" class="citizen-search__card mw-checkbox-hack-target" autocomplete="off">
 		<input type="hidden" name="title" value="{{page-title}}">
 		<label class="screen-reader-text" for="searchInput">{{msg-search}}</label>
 		<div class="citizen-search__icon"></div>

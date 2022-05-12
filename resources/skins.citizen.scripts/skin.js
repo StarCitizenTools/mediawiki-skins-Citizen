@@ -75,9 +75,9 @@ function initCheckboxHack( window ) {
 			checkboxObj.target
 		) {
 			checkboxHack.bindToggleOnClick( checkboxObj.checkbox, checkboxObj.button );
-			checkboxHack.bindUpdateAriaExpandedOnInput( checkboxObj.checkbox, checkboxObj.button );
-			checkboxHack.updateAriaExpanded( checkboxObj.checkbox, checkboxObj.button );
-			checkboxHack.bindToggleOnSpaceEnter( checkboxObj.checkbox, checkboxObj.button );
+			checkboxHack.bindUpdateAriaExpandedOnInput( checkboxObj.checkbox );
+			checkboxHack.updateAriaExpanded( checkboxObj.checkbox );
+			checkboxHack.bindToggleOnEnter( checkboxObj.checkbox );
 			checkboxHack.bindDismissOnClickOutside(
 				window, checkboxObj.checkbox, checkboxObj.button, checkboxObj.target
 			);

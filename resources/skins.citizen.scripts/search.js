@@ -149,9 +149,9 @@ function initCheckboxHack( window, input, target ) {
 
 	if ( checkbox instanceof HTMLInputElement && button ) {
 		checkboxHack.bindToggleOnClick( checkbox, button );
-		checkboxHack.bindUpdateAriaExpandedOnInput( checkbox, button );
-		checkboxHack.updateAriaExpanded( checkbox, button );
-		checkboxHack.bindToggleOnSpaceEnter( checkbox, button );
+		checkboxHack.bindUpdateAriaExpandedOnInput( checkbox );
+		checkboxHack.updateAriaExpanded( checkbox );
+		checkboxHack.bindToggleOnEnter( checkbox );
 		checkboxHack.bindDismissOnClickOutside( window, checkbox, button, target );
 		checkboxHack.bindDismissOnFocusLoss( window, checkbox, button, target );
 		checkboxHack.bindDismissOnEscape( window, checkbox );
