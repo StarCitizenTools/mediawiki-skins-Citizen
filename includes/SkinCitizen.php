@@ -307,7 +307,6 @@ class SkinCitizen extends SkinMustache {
 		}
 
 		// Table of content highlight
-		$options['scripts'][] = 'skins.citizen.scripts.toc';
 		$options['styles'][] = 'skins.citizen.styles.toc';
 
 		// Drawer sitestats

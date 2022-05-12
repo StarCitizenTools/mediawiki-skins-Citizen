@@ -195,15 +195,6 @@
 				"mobile"
 			]
 		},
-		"skins.citizen.scripts.toc": {
-			"scripts": [
-				"resources/skins.citizen.scripts.toc/skins.citizen.scripts.toc.js"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
-			]
-		},
 		"skins.citizen.scripts.drawer": {
 			"scripts": [
 				"resources/skins.citizen.scripts.drawer/skins.citizen.scripts.drawer.js"

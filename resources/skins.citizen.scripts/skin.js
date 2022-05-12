@@ -113,7 +113,8 @@ function onTitleHidden( document ) {
  */
 function main( window ) {
 	const theme = require( './theme.js' ),
-		search = require( './search.js' );
+		search = require( './search.js' ),
+		toc = require( './tableOfContents.js' );
 
 	enableCssAnimations( window.document );
 	theme.init( window );
@@ -124,6 +125,15 @@ function main( window ) {
 	window.addEventListener( 'beforeunload', () => {
 		document.documentElement.classList.add( 'citizen-loading' );
 	}, false );
+
+	// TODO: This need some serious refactoring
+	// * Have a function to define checkbox targets then pass it to init
+	// * initCheckboxHack needs should take such objects as parameter
+	// * We shouldn't get the toc element multitple times
+	// * Need to consolidate scroll and intersection handlers
+	if ( document.getElementById( 'toc' ) ) {
+		toc.init();
+	}
 
 	mw.loader.load( 'skins.citizen.preferences' );
 }

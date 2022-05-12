@@ -48,4 +48,6 @@ function initTOC() {
 	}
 }
 
-initTOC();
+module.exports = {
+	init: initTOC
+};
