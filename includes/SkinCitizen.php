@@ -102,6 +102,7 @@ class SkinCitizen extends SkinMustache {
 		$newTalksHtml = $this->getNewtalks() ?: null;
 
 		return $parentData + [
+			'toc-enabled' => $out->isTOCEnabled(),
 			'msg-sitetitle' => $this->msg( 'sitetitle' )->text(),
 			'html-mainpage-attributes' => Xml::expandAttributes(
 				Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) + [
@@ -306,13 +307,8 @@ class SkinCitizen extends SkinMustache {
 		}
 
 		// Table of content highlight
-		// Load if ToC presents
-		if ( $out->isTOCEnabled() ) {
-			// Add class to body that notifies the page has TOC
-			$out->addBodyClasses( 'skin-citizen-has-toc' );
-			$options['scripts'][] = 'skins.citizen.scripts.toc';
-			$options['styles'][] = 'skins.citizen.styles.toc';
-		}
+		$options['scripts'][] = 'skins.citizen.scripts.toc';
+		$options['styles'][] = 'skins.citizen.styles.toc';
 
 		// Drawer sitestats
 		if ( $this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) === true ) {

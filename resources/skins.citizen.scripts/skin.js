@@ -55,7 +55,7 @@ function initCheckboxHack( window ) {
 	// This should be in ToC script
 	// And the media query needs to be synced with the less variable
 	// Also this does not monitor screen size changes
-	if ( document.body.classList.contains( 'skin-citizen-has-toc' ) &&
+	if ( document.querySelector( '.citizen-toc-enabled' ) &&
 		window.matchMedia( 'screen and (max-width: 1300px)' ) ) {
 		const tocContainer = document.getElementById( 'toc' );
 		if ( tocContainer ) {

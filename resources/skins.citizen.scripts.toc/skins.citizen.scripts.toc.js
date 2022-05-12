@@ -43,7 +43,7 @@ function intersectionHandler() {
  */
 function initTOC() {
 	// Check for has-toc class since it is loaded way before #toc is present
-	if ( document.body.classList.contains( 'skin-citizen-has-toc' ) ) {
+	if ( document.querySelector( '.citizen-toc-enabled' ) ) {
 		intersectionHandler();
 	}
 }

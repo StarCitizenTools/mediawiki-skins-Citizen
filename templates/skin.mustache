@@ -23,7 +23,7 @@
 }}
 
 {{#data-header}}{{>Header}}{{/data-header}}
-<main class="mw-body" id="content">
+<main class="mw-body {{#toc-enabled}}citizen-toc-enabled{{/toc-enabled}}" id="content">
 	<div id="siteNotice">{{{html-site-notice}}}</div>
 	{{{html-newtalk}}}
 	<header class="mw-body-header">
