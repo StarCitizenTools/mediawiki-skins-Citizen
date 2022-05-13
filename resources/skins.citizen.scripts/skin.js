@@ -47,7 +47,7 @@ function bind() {
  * Based on Vector
  */
 function bindCloseOnUnload() {
-	addEventListener( 'beforeunload', function () {
+	addEventListener( 'beforeunload', () => {
 		const checkboxes = document.querySelectorAll( CHECKBOX_HACK_CHECKBOX_SELECTOR + ':checked' );
 
 		checkboxes.forEach( ( checkbox ) => {
