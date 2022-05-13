@@ -276,7 +276,6 @@ function initTypeahead( searchForm, input ) {
 		const clickInside = typeahead.contains( event.relatedTarget );
 
 		if ( !clickInside ) {
-			searchForm.setAttribute( 'aria-expanded', 'false' );
 			searchInput.setAttribute( 'aria-activedescendant', '' );
 			/* eslint-disable-next-line mediawiki/class-doc */
 			typeahead.classList.remove( expandedClass );
@@ -288,7 +287,6 @@ function initTypeahead( searchForm, input ) {
 	const onFocus = function () {
 		// Refresh the typeahead since the query will be emptied when blurred
 		updateTypeahead( messages );
-		searchForm.setAttribute( 'aria-expanded', 'true' );
 		/* eslint-disable-next-line mediawiki/class-doc */
 		typeahead.classList.add( expandedClass );
 		searchInput.addEventListener( 'keydown', keyboardEvents );

@@ -1,28 +1,13 @@
+const
+	checkboxHack = require( './checkboxHack.js' ),
+	CHECKBOX_HACK_CONTAINER_SELECTOR = '.mw-checkbox-hack-container',
+	CHECKBOX_HACK_CHECKBOX_SELECTOR = '.mw-checkbox-hack-checkbox',
+	CHECKBOX_HACK_BUTTON_SELECTOR = '.mw-checkbox-hack-button',
+	CHECKBOX_HACK_TARGET_SELECTOR = '.mw-checkbox-hack-target';
+
 /**
- * Based on Vector
- * Wait for first paint before calling this function. That's its whole purpose.
- *
- * Some CSS animations and transitions are "disabled" by default as a workaround to this old Chrome
- * bug, https://bugs.chromium.org/p/chromium/issues/detail?id=332189, which otherwise causes them to
- * render in their terminal state on page load. By adding the `vector-animations-ready` class to the
- * `html` root element **after** first paint, the animation selectors suddenly match causing the
- * animations to become "enabled" when they will work properly. A similar pattern is used in Minerva
+ * Wait for first paint before calling this function.
  * (see T234570#5779890, T246419).
- *
- * Example usage in Less:
- *
- * ```less
- * .foo {
- *     color: #f00;
- *     .transform( translateX( -100% ) );
- * }
- *
- * // This transition will be disabled initially for JavaScript users. It will never be enabled for
- * // no-JS users.
- * .citizen-animations-ready .foo {
- *     .transition( transform 100ms ease-out; );
- * }
- * ```
  *
  * @param {Document} document
  * @return {void}
@@ -32,57 +17,42 @@ function enableCssAnimations( document ) {
 }
 
 /**
- * Initialize checkboxHacks
- * TODO: Maybe ToC should init checkboxHack in its own RL module?
+ * Add the ability for users to toggle dropdown menus using the enter key (as
+ * well as space) using core's checkboxHack.
  *
- * @param {Window} window
- * @return {void}
+ * Based on Vector
  */
-function initCheckboxHack( window ) {
-	const checkboxHack = require( './checkboxHack.js' ),
-		drawer = {
-			button: document.getElementById( 'citizen-drawer__buttonCheckbox' ),
-			checkbox: document.getElementById( 'citizen-drawer__checkbox' ),
-			target: document.getElementById( 'citizen-drawer__card' )
-		},
-		personalMenu = {
-			button: document.getElementById( 'citizen-personalMenu__buttonCheckbox' ),
-			checkbox: document.getElementById( 'citizen-personalMenu__checkbox' ),
-			target: document.getElementById( 'citizen-personalMenu__card' )
-		},
-		checkboxObjs = [ drawer, personalMenu ];
+function bind() {
+	// Search for all dropdown containers using the CHECKBOX_HACK_CONTAINER_SELECTOR.
+	const containers = document.querySelectorAll( CHECKBOX_HACK_CONTAINER_SELECTOR );
 
-	// This should be in ToC script
-	// And the media query needs to be synced with the less variable
-	// Also this does not monitor screen size changes
-	if ( document.querySelector( '.citizen-toc-enabled' ) &&
-		window.matchMedia( 'screen and (max-width: 1300px)' ) ) {
-		const tocContainer = document.getElementById( 'toc' );
-		if ( tocContainer ) {
-			const toc = {
-				button: tocContainer.querySelector( '.toctogglelabel' ),
-				checkbox: document.getElementById( 'toctogglecheckbox' ),
-				target: tocContainer.querySelector( 'ul' )
-			};
-			checkboxObjs.push( toc );
-		}
-	}
+	containers.forEach( ( container ) => {
+		const
+			checkbox = container.querySelector( CHECKBOX_HACK_CHECKBOX_SELECTOR ),
+			button = container.querySelector( CHECKBOX_HACK_BUTTON_SELECTOR ),
+			target = container.querySelector( CHECKBOX_HACK_TARGET_SELECTOR );
 
-	checkboxObjs.forEach( ( checkboxObj ) => {
-		if (
-			checkboxObj.checkbox instanceof HTMLInputElement &&
-			checkboxObj.button &&
-			checkboxObj.target
-		) {
-			checkboxHack.bindToggleOnClick( checkboxObj.checkbox, checkboxObj.button );
-			checkboxHack.bindUpdateAriaExpandedOnInput( checkboxObj.checkbox );
-			checkboxHack.updateAriaExpanded( checkboxObj.checkbox );
-			checkboxHack.bindToggleOnEnter( checkboxObj.checkbox );
-			checkboxHack.bindDismissOnClickOutside(
-				window, checkboxObj.checkbox, checkboxObj.button, checkboxObj.target
-			);
-			checkboxHack.bindDismissOnEscape( window, checkboxObj.checkbox );
+		if ( !( checkbox && button && target ) ) {
+			return;
 		}
+
+		checkboxHack.bind( window, checkbox, button, target );
+	} );
+}
+
+/**
+ * T295085: Close all dropdown menus when page is unloaded to prevent them from
+ * being open when navigating back to a page.
+ *
+ * Based on Vector
+ */
+function bindCloseOnUnload() {
+	addEventListener( 'beforeunload', function () {
+		const checkboxes = document.querySelectorAll( CHECKBOX_HACK_CHECKBOX_SELECTOR + ':checked' );
+
+		checkboxes.forEach( ( checkbox ) => {
+			/** @type {HTMLInputElement} */ ( checkbox ).checked = false;
+		} );
 	} );
 }
 
@@ -114,25 +84,32 @@ function onTitleHidden( document ) {
 function main( window ) {
 	const theme = require( './theme.js' ),
 		search = require( './search.js' ),
-		toc = require( './tableOfContents.js' );
+		tocContainer = document.getElementById( 'toc' );
 
 	enableCssAnimations( window.document );
 	theme.init( window );
 	search.init( window );
-	initCheckboxHack( window );
 	onTitleHidden( window.document );
 
 	window.addEventListener( 'beforeunload', () => {
 		document.documentElement.classList.add( 'citizen-loading' );
 	}, false );
 
-	// TODO: This need some serious refactoring
-	// * Have a function to define checkbox targets then pass it to init
-	// * initCheckboxHack needs should take such objects as parameter
-	// * We shouldn't get the toc element multitple times
-	// * Need to consolidate scroll and intersection handlers
-	if ( document.getElementById( 'toc' ) ) {
+	bind();
+	bindCloseOnUnload();
+
+	// Handle ToC
+	// TODO: There must be a cleaner way to do this
+	if ( tocContainer ) {
+		const toc = require( './tableOfContents.js' );
 		toc.init();
+
+		checkboxHack.bind(
+			window,
+			document.getElementById( 'toctogglecheckbox' ),
+			tocContainer.querySelector( '.toctogglelabel' ),
+			tocContainer.querySelector( 'ul' )
+		);
 	}
 
 	mw.loader.load( 'skins.citizen.preferences' );
