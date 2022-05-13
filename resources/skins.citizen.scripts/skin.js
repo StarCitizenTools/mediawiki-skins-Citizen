@@ -70,10 +70,10 @@ function onTitleHidden( document ) {
 
 		const observer = scrollObserver.initScrollObserver(
 			() => {
-				document.body.classList.add( 'skin-citizen--titlehidden' );
+				document.body.classList.add( 'citizen-title--hidden' );
 			},
 			() => {
-				document.body.classList.remove( 'skin-citizen--titlehidden' );
+				document.body.classList.remove( 'citizen-title--hidden' );
 			}
 		);
 		observer.observe( title );
