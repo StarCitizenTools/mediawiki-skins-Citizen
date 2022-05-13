@@ -66,13 +66,16 @@ function onTitleHidden( document ) {
 	const title = document.getElementById( 'firstHeading' );
 
 	if ( title ) {
-		const observer = new IntersectionObserver( ( entries ) => {
-			if ( !entries[ 0 ].isIntersecting ) {
+		const scrollObserver = require( './scrollObserver.js' );
+
+		const observer = scrollObserver.initScrollObserver(
+			() => {
 				document.body.classList.add( 'skin-citizen--titlehidden' );
-			} else {
+			},
+			() => {
 				document.body.classList.remove( 'skin-citizen--titlehidden' );
 			}
-		} );
+		);
 		observer.observe( title );
 	}
 }
@@ -82,9 +85,11 @@ function onTitleHidden( document ) {
  * @return {void}
  */
 function main( window ) {
-	const theme = require( './theme.js' ),
-		search = require( './search.js' ),
-		tocContainer = document.getElementById( 'toc' );
+	const
+		theme = require( './theme.js' ),
+		search = require( './search.js' );
+
+	const tocContainer = document.getElementById( 'toc' );
 
 	enableCssAnimations( window.document );
 	theme.init( window );
@@ -102,7 +107,7 @@ function main( window ) {
 	// TODO: There must be a cleaner way to do this
 	if ( tocContainer ) {
 		const toc = require( './tableOfContents.js' );
-		toc.init();
+		toc.init( tocContainer );
 
 		checkboxHack.bind(
 			window,

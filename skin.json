@@ -187,6 +187,7 @@
 					"callback": "Citizen\\Hooks\\ResourceLoaderHooks::getCitizenResourceLoaderConfig"
 				},
 				"resources/skins.citizen.scripts/checkboxHack.js",
+				"resources/skins.citizen.scripts/scrollObserver.js",
 				"resources/skins.citizen.scripts/search.js",
 				"resources/skins.citizen.scripts/tableOfContents.js",
 				"resources/skins.citizen.scripts/theme.js"
