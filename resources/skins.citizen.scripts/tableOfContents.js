@@ -3,7 +3,7 @@
  *
  * @return {void}
  */
-function intersectionHandler() {
+function initToC() {
 	const headlines = document.querySelectorAll( '.mw-headline' ),
 		toc = document.getElementById( 'toc' ),
 		marginTop = '-' + window.getComputedStyle( document.documentElement ).getPropertyValue( 'scroll-padding-top' );
@@ -38,16 +38,6 @@ function intersectionHandler() {
 	}
 }
 
-/**
- * @return {void}
- */
-function initTOC() {
-	// Check for has-toc class since it is loaded way before #toc is present
-	if ( document.querySelector( '.citizen-toc-enabled' ) ) {
-		intersectionHandler();
-	}
-}
-
 module.exports = {
-	init: initTOC
+	init: initToC
 };
