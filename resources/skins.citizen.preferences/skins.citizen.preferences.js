@@ -226,7 +226,7 @@ function togglePanel() {
 		resetButton = document.getElementById( CLASS + '-resetbutton' );
 
 	if ( !panel.classList.contains( CLASS_PANEL_ACTIVE ) ) {
-		// eslint-disable-next-line mediawiki/class-doc
+
 		panel.classList.add( CLASS_PANEL_ACTIVE );
 		toggle.setAttribute( 'aria-expanded', true );
 		form.addEventListener( 'input', setPref );
@@ -234,7 +234,7 @@ function togglePanel() {
 		window.addEventListener( 'click', dismissOnClickOutside );
 		window.addEventListener( 'keydown', dismissOnEscape );
 	} else {
-		// eslint-disable-next-line mediawiki/class-doc
+
 		panel.classList.remove( CLASS_PANEL_ACTIVE );
 		toggle.setAttribute( 'aria-expanded', false );
 		form.removeEventListener( 'input', setPref );
@@ -358,10 +358,10 @@ function initPref( window ) {
 
 			// citizen-pref
 			container.id = CLASS;
-			// eslint-disable-next-line mediawiki/class-doc
+
 			container.classList.add( CLASS, 'citizen-header__item' );
 			button.id = CLASS + '-toggle';
-			// eslint-disable-next-line mediawiki/class-doc
+
 			button.classList.add( CLASS + '__button', 'citizen-header__button', 'citizen-header__button--icon' );
 			button.setAttribute( 'title', mw.message( 'preferences' ).text() );
 			button.setAttribute( 'aria-label', mw.message( 'preferences' ).text() );

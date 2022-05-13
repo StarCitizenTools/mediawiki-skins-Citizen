@@ -1,6 +1,6 @@
 /* Some of the functions are based on Vector */
 /* ESLint does not like having class names as const */
-/* eslint-disable mediawiki/class-doc */
+
 const SEARCH_INPUT_ID = 'searchInput',
 	SEARCH_LOADING_CLASS = 'citizen-loading';
 

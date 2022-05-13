@@ -47,7 +47,7 @@ window.applyPref = () => {
 			// * skin-citizen-light
 			// * skin-citizen-dark
 			htmlElement.classList.remove( ...classNames( prefix ) );
-			/* eslint-disable-next-line mediawiki/class-doc */
+
 			htmlElement.classList.add( prefix + theme );
 		}
 

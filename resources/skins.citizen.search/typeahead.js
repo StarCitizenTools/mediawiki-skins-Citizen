@@ -38,7 +38,6 @@ function toggleActive( element ) {
 	const typeaheadItems = typeahead.querySelectorAll( 'li > a' ),
 		activeClass = 'citizen-typeahead-option--active';
 
-	/* eslint-disable mediawiki/class-doc */
 	for ( let i = 0; i < typeaheadItems.length; i++ ) {
 		if ( element !== typeaheadItems[ i ] ) {
 			typeaheadItems[ i ].classList.remove( activeClass );
@@ -132,7 +131,7 @@ function clearSuggestions() {
 	}
 
 	// Remove loading animation
-	/* eslint-disable-next-line mediawiki/class-doc */
+
 	searchInput.parentNode.classList.remove( SEARCH_LOADING_CLASS );
 	searchInput.setAttribute( 'aria-activedescendant', '' );
 	activeIndex.clear();
@@ -190,7 +189,7 @@ function getSuggestions( searchQuery ) {
 	};
 
 	// Add loading animation
-	/* eslint-disable-next-line mediawiki/class-doc */
+
 	searchInput.parentNode.classList.add( SEARCH_LOADING_CLASS );
 
 	/* eslint-disable-next-line compat/compat */
@@ -216,7 +215,7 @@ function getSuggestions( searchQuery ) {
 		activeIndex.setMax( results.length );
 	} ).catch( ( error ) => {
 		searchInput.removeEventListener( 'input', abortFetch );
-		/* eslint-disable-next-line mediawiki/class-doc */
+
 		searchInput.parentNode.classList.remove( SEARCH_LOADING_CLASS );
 		// User can trigger the abort when the fetch event is pending
 		// There is no need for an error
@@ -277,7 +276,7 @@ function initTypeahead( searchForm, input ) {
 
 		if ( !clickInside ) {
 			searchInput.setAttribute( 'aria-activedescendant', '' );
-			/* eslint-disable-next-line mediawiki/class-doc */
+
 			typeahead.classList.remove( expandedClass );
 			searchInput.removeEventListener( 'keydown', keyboardEvents );
 			searchInput.removeEventListener( 'blur', onBlur );
@@ -287,7 +286,7 @@ function initTypeahead( searchForm, input ) {
 	const onFocus = function () {
 		// Refresh the typeahead since the query will be emptied when blurred
 		updateTypeahead( messages );
-		/* eslint-disable-next-line mediawiki/class-doc */
+
 		typeahead.classList.add( expandedClass );
 		searchInput.addEventListener( 'keydown', keyboardEvents );
 		searchInput.addEventListener( 'blur', onBlur );

@@ -21,10 +21,10 @@ function initCollapsibleSections( document ) {
 		// TODO: Need a keyboard handler
 		headings[ i ].addEventListener( 'click', function () {
 			// .section-heading--collapsed
-			// eslint-disable-next-line mediawiki/class-doc
+
 			this.classList.toggle( prefix + 'heading--collapsed' );
 			// .section-collapsible--collapsed
-			// eslint-disable-next-line mediawiki/class-doc
+
 			sections[ j ].classList.toggle( prefix + 'collapsible--collapsed' );
 			headline.setAttribute( 'aria-expanded', headline.getAttribute( 'aria-expanded' ) === 'true' ? 'false' : 'true' );
 		} );
