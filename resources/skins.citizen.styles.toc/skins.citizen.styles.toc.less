@@ -120,20 +120,16 @@
 				}
 
 				&label {
+					--label-position: ~'calc( var( --width-toc ) - 20px )';
 					position: fixed;
-					z-index: 7;
-					right: 0;
-					bottom: 0;
-					display: block;
-					width: 48px;
-					height: 48px;
-					border-top: 1px solid var( --border-color-base );
-					border-left: 1px solid var( --border-color-base );
-					background-color: var( --color-surface-2 );
-					border-top-left-radius: var( --border-radius--medium );
-					box-shadow: var( --box-shadow-dialog );
+					z-index: 2;
+					left: var( --label-position );
+					width: 40px;
+					height: 40px;
+					border-radius: 0 var( --border-radius--medium ) var( --border-radius--medium ) 0;
 					cursor: pointer;
 					pointer-events: auto;
+					.citizen-card( false );
 
 					&:hover {
 						background-color: var( --color-surface-3 );
@@ -161,6 +157,10 @@
 				// By default .toccheckbox is checked on page load
 				// This is needed to prevent ToC popping up on mobile
 				&checkbox:not( :checked ) {
+					~ .toctitle .toctogglelabel {
+						transform: translateX( ~'calc( var( --label-position ) * -1 )' );
+					}
+
 					~ .toctitle h2,
 					~ ul {
 						transform: translateX( -120% );
@@ -174,7 +174,7 @@
 				width: ~'calc( 100% - var( --padding-page ) * 2 )';
 				padding: 20px var( --padding-page ) 10px var( --padding-page );
 				background: var( --color-surface-1 );
-				border-radius: var( --border-radius--medium ) var( --border-radius--medium ) 0 0;
+				border-radius: var( --border-radius--medium ) 0 0 0;
 			}
 
 			> ul {
@@ -182,18 +182,38 @@
 				max-height: ~'calc( 100vh - var( --height-header ) * 3 )';
 				padding: 0 var( --padding-page ) 20px var( --padding-page ); // hardcoded for now
 				margin: 45px 0 0 0 !important;
-				background: var( --color-surface-1 );
 				border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
-				box-shadow: var( --box-shadow-dialog );
 				pointer-events: auto;
+				.citizen-card( false );
+			}
+
+			&togglelabel,
+			&title h2,
+			> ul {
+				opacity: 0;
+				transition: @transition-opacity;
+				visibility: hidden;
+			}
+		}
+
+		// Show toc button when title is hidden
+		.citizen-title--hidden {
+			.toc {
+				&togglelabel,
+				&title h2,
+				> ul {
+					opacity: 1;
+					visibility: visible;
+				}
 			}
 		}
 
 		.citizen-animations-ready {
 			.toc {
+				&togglelabel,
 				&title h2,
 				> ul {
-					transition: @transition-transform;
+					transition: @transition-transform, @transition-opacity;
 				}
 			}
 		}
@@ -206,14 +226,6 @@
 					}
 				}
 			}
-		}
-	}
-
-	// Special toggle styles on pointer devices since scrollbar is visible
-	@media ( max-width: @width-breakpoint-desktop-wide ) and ( hover: hover ) {
-		.toctogglelabel {
-			border-right: 1px solid var( --border-color-base );
-			border-top-right-radius: var( --border-radius--medium );
 		}
 	}
 
