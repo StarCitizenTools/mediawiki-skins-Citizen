@@ -519,6 +519,7 @@
 			"+ext.flow": "skinStyles/extensions/Flow/ext.flow.less",
 			"+ext.flow.visualEditor": "skinStyles/extensions/Flow/ext.flow.visualEditor.less",
 			"+ext.graph.styles": "skinStyles/extensions/Graph/ext.graph.styles.less",
+			"+ext.interwiki.specialpage": "skinStyles/extensions/Interwiki/ext.interwiki.specialpage.less",
 			"+ext.Lingo": "skinStyles/extensions/Lingo/ext.Lingo.less",
 			"+ext.pygments": "skinStyles/extensions/SyntaxHighlight_GeSHi/ext.pygments.less",
 			"+ext.MsUpload": "skinStyles/extensions/MsUpload/ext.MsUpload.less",
