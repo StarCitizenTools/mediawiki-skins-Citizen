@@ -16,7 +16,7 @@
 		display: grid;
 		width: var( --size-button--page );
 		height: var( --size-button--page );
-		border-radius: var( --border-radius--small );
+		border-radius: var( --border-radius--medium );
 		place-items: center;
 
 		&--icon:after {
@@ -33,7 +33,7 @@
 		&:hover {
 			background-color: var( --background-color-quiet--hover );
 
-			.page-actions__button--icon:after {
+			&:after {
 				opacity: var( --opacity-icon-base--hover );
 			}
 		}
@@ -41,89 +41,39 @@
 		&:active {
 			background-color: var( --background-color-quiet--active );
 
-			.page-actions__button--icon:after {
+			&:after {
 				opacity: var( --opacity-icon-base--active );
 			}
 		}
 	}
 
-	&-more {
-		display: block;
-		width: var( --size-icon );
-		height: var( --size-icon );
-		box-sizing: content-box;
-		padding: 0.5rem;
-		border-radius: var( --border-radius--medium );
-		cursor: pointer;
-		transition: @transition-opacity;
+	&__card {
+		position: absolute;
+		right: 0;
+		overflow: auto;
+		min-width: 200px;
+		max-height: 60vh;
+		padding: 0.5rem 0;
+		margin-top: ~'calc( var( --size-button--page ) + 0.5rem )';
+		font-size: 0.875rem;
+		.citizen-card;
+		.citizen-card-hide( 100% 0 );
 
-		&-menu {
-			position: absolute;
-			z-index: -1;
-			right: var( --padding-page );
-			left: var( --padding-page );
-			overflow: auto;
-			max-height: 60vh;
-			padding-top: 0.3125rem;
-			margin-top: 0.3125rem;
-			cursor: auto; // reset cursor pointer set by parent
-			.citizen-card;
-			.citizen-card-hide( 100% 0 );
+		a {
+			padding: 0.625rem 1.25rem;
+			.menu-item-link;
 
-			a {
-				.menu-item-link;
-				justify-content: space-between;
-				padding: 0.625rem 1.25rem;
-
-				&:after {
-					.resource-loader-list-icon;
-					margin-left: @icon-padding;
-					opacity: var( --opacity-icon-base );
-				}
-
-				&:hover {
-					.menu-item-link-hover;
-
-					&:after {
-						opacity: var( --opacity-icon-base--hover );
-					}
-				}
-
-				&:active {
-					.menu-item-link-active;
-
-					&:after {
-						opacity: var( --opacity-icon-base--active );
-					}
-				}
+			&:hover {
+				.menu-item-link-hover;
 			}
-		}
 
-		&:before {
-			display: block;
-			width: var( --size-icon );
-			height: var( --size-icon );
-			background-size: var( --size-icon );
-			content: '';
-			opacity: var( --opacity-icon-base );
-		}
-
-		&:hover {
-			.page-actions-more-menu {
-				z-index: 5;
-				.citizen-card-show;
-			}
-		}
-
-		&:active {
-			background: var( --background-color-quiet--active ) !important;
-
-			&:before {
-				opacity: var( --opacity-icon-base--active );
+			&:active {
+				.menu-item-link-active;
 			}
 		}
 	}
 
+	// Visible page tools styles
 	> .mw-portal,
 	> .mw-portlet {
 		ul {
@@ -191,6 +141,33 @@
 	}
 }
 
+// Handle icons
+.page-actions-more {
+	a {
+		&:after {
+			.resource-loader-list-icon;
+			opacity: var( --opacity-icon-base );
+		}
+
+		&:hover {
+			&:after {
+				opacity: var( --opacity-icon-base--hover );
+			}
+		}
+
+		&:active {
+			&:after {
+				opacity: var( --opacity-icon-base--active );
+			}
+		}
+	}
+}
+
+.page-actions-more,
+.citizen-languages {
+	position: relative;
+}
+
 #p-views {
 	// VE styles shouldn't be core but it is just a few lines :/
 	#ca-ve-edit {
@@ -246,8 +223,7 @@
 
 .skin-citizen-dark {
 	.page-actions {
-		&__button--icon:after,
-		&-more:before {
+		&__button--icon:after {
 			filter: invert( 1 );
 		}
 
@@ -257,8 +233,18 @@
 	}
 }
 
+// Checkbox hack
+#page-actions-more,
+#citizen-languages {
+	&__checkbox:checked {
+		~ .page-actions__card {
+			.citizen-card-show();
+		}
+	}
+}
+
 .citizen-animations-ready {
-	.page-actions-more-menu {
+	.page-actions__card {
 		.citizen-card-transition();
 	}
 }
@@ -267,12 +253,6 @@
 	.page-actions {
 		position: relative;
 		margin-right: 0;
-
-		&-more-menu {
-			right: 0;
-			left: unset;
-			min-width: 12rem;
-		}
 
 		> .mw-portal,
 		> .mw-portlet {
@@ -287,12 +267,31 @@
 	}
 }
 
-@media ( hover: hover ) {
-	.page-actions-more:hover {
-		background: var( --background-color-quiet--hover );
+@media ( max-width: @width-breakpoint-tablet ) {
+	.page-actions {
+		&__item {
+			position: unset;
+		}
 
-		&:before {
-			opacity: var( --opacity-icon-base--hover );
+		&__card {
+			right: 0;
+			left: 0;
+		}
+	}
+}
+
+// Reset hover styles if it is a touch device
+// This is dumb but hover:hover overrides active states
+@media ( hover: none ) {
+	.page-actions {
+		&__button {
+			&:hover {
+				background-color: none;
+
+				&:after {
+					opacity: var( --opacity-icon-base );
+				}
+			}
 		}
 	}
 }
