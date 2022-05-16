@@ -36,7 +36,7 @@ final class PageTools extends Partial {
 	/**
 	 * Render page-related tools
 	 * TODO: Break this down and clean up when 1.39
-	 * 
+	 *
 	 * Possible visibility conditions:
 	 * * true: always visible (bool)
 	 * * false: never visible (bool)
@@ -86,7 +86,7 @@ final class PageTools extends Partial {
 				// data-languages can be undefined index
 				$languageshtml = $parentData['data-portlets']['data-languages'] ?? [];
 				// For some reason core does not set this
-				if( empty( $languageshtml ) ) {
+				if ( empty( $languageshtml ) ) {
 					$languageshtml['is-empty'] = true;
 				}
 				// Finds the toolbox in the sidebar.
@@ -136,12 +136,12 @@ final class PageTools extends Partial {
 	}
 
 	/**
-	* Calls getLanguages with caching.
-	*
-	* Based on Vector
-	*
-	* @return array
-	*/
+	 * Calls getLanguages with caching.
+	 *
+	 * Based on Vector
+	 *
+	 * @return array
+	 */
 	private function getLanguagesCached(): array {
 		$skin = $this->skin;
 
