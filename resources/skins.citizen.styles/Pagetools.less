@@ -141,6 +141,26 @@
 	}
 }
 
+// Language counter badge
+// TODO: Maybe this should be in a mixin
+#citizen-languages__buttonCheckbox {
+	position: relative; // So that the badge doesn't take a stroll to the far left
+
+	&:before {
+		position: absolute;
+		z-index: 2;
+		top: 0;
+		left: 55%;
+		display: block;
+		padding: 0.1em 0.4em;
+		background: var( --color-primary );
+		border-radius: 100px;
+		color: #fff;
+		content: attr( data-counter-text );
+		font-size: 0.65rem;
+	}
+}
+
 // Handle icons
 .page-actions-more {
 	a {

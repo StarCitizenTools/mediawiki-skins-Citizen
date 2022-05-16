@@ -129,6 +129,7 @@ final class PageTools extends Partial {
 				'data-languages' => $languageshtml,
 				'data-variants' => $variantshtml,
 				'data-page-toolbox' => $toolboxhtml,
+				'html-language-count' => $this->getLanguagesCount(),
 			];
 		}
 
@@ -192,5 +193,16 @@ final class PageTools extends Partial {
 		}
 
 		return true;
+	}
+
+
+	/**
+	 * Count languages avaliable
+	 * TODO: Consider having an option to count for variants?
+	 *
+	 * @return int
+	 */
+	private function getLanguagesCount(): int {
+		return count( $this->getLanguagesCached() );
 	}
 }
