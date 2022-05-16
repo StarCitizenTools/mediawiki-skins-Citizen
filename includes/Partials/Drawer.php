@@ -50,7 +50,6 @@ final class Drawer extends Partial {
 	public function getDrawerTemplateData() {
 		$drawer = [];
 		$drawerData = $this->skin->buildSidebar();
-		$languages = null;
 
 		// Render portals
 		foreach ( $drawerData as $name => $items ) {
@@ -64,14 +63,6 @@ final class Drawer extends Partial {
 					case 'TOOLBOX':
 						break;
 					case 'LANGUAGES':
-						$languages = $this->skin->getLanguages();
-						$portal = $this->skin->getPortletData( 'lang', $items );
-						// The language portal will be added provided either
-						// languages exist or there is a value in html-after-portal
-						// for example to show the add language wikidata link (T252800)
-						if ( count( $items ) || $portal['html-after-portal'] ) {
-							$languages = $portal;
-						}
 						break;
 					default:
 						$drawer[] = $this->skin->getPortletData( $name, $items );
@@ -99,7 +90,6 @@ final class Drawer extends Partial {
 			'msg-citizen-drawer-toggle' => $this->skin->msg( 'citizen-drawer-toggle' )->text(),
 			'data-portals-first' => $firstPortal,
 			'array-portals-rest' => $drawer,
-			'data-portals-languages' => $languages,
 			'data-drawer-sitestats' => $this->getSiteStats(),
 		];
 

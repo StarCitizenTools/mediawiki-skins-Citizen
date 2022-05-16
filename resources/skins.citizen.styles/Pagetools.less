@@ -1,9 +1,51 @@
 .page-actions {
+	--size-button--page: 2.25rem;
 	display: flex;
 	margin-left: -0.75rem; // To align with page padding
 	font-size: 0.875rem;
 	font-weight: 450;
 	gap: 0.25rem;
+
+	// TODO: Merge this with header__item
+	&__item {
+		display: flex;
+	}
+
+	// TODO: Merge this with header__button
+	&__button {
+		display: grid;
+		width: var( --size-button--page );
+		height: var( --size-button--page );
+		border-radius: var( --border-radius--small );
+		place-items: center;
+
+		&--icon:after {
+			width: var( --size-icon );
+			height: var( --size-icon );
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: contain;
+			content: '';
+			opacity: var( --opacity-icon-base );
+			transition: @transition-opacity;
+		}
+
+		&:hover {
+			background-color: var( --background-color-quiet--hover );
+
+			.page-actions__button--icon:after {
+				opacity: var( --opacity-icon-base--hover );
+			}
+		}
+
+		&:active {
+			background-color: var( --background-color-quiet--active );
+
+			.page-actions__button--icon:after {
+				opacity: var( --opacity-icon-base--active );
+			}
+		}
+	}
 
 	&-more {
 		display: block;
@@ -142,6 +184,11 @@
 	li {
 		margin: 0;
 	}
+
+	// TODO: Merge this with header styles
+	.mw-checkbox-hack-checkbox:checked ~ .page-actions__button {
+		background-color: var( --background-color-primary--active );
+	}
 }
 
 #p-views {
@@ -199,10 +246,9 @@
 
 .skin-citizen-dark {
 	.page-actions {
-		&-more {
-			&:before {
-				filter: invert( 1 );
-			}
+		&__button--icon:after,
+		&-more:before {
+			filter: invert( 1 );
 		}
 
 		li > a:after {

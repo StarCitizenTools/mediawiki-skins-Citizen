@@ -1,0 +1,25 @@
+{{!
+	object data-page-languages
+	object data-page-variants
+}}
+<div class="citizen-languages page-actions__item mw-checkbox-hack-container">
+	<input 
+		type="checkbox" 
+		id="citizen-languages__checkbox" 
+		class="mw-checkbox-hack-checkbox"
+		role="button"
+		aria-labelledby="citizen-languages__buttonCheckbox"
+		aria-haspopup="true">
+	<aside id="citizen-languages__card" class="citizen-languages__card mw-checkbox-hack-target">
+		{{#data-languages}}{{>Menu}}{{/data-languages}}
+		{{#data-variants}}{{>Menu}}{{/data-variants}}
+	</aside>
+	<label
+		id="citizen-languages__buttonCheckbox" 
+		class="mw-checkbox-hack-button page-actions__button page-actions__button--icon" 
+		for="citizen-languages__checkbox"
+		title="{{msg-citizen-languages-toggle}}"
+		aria-hidden="true">
+		<span>{{msg-citizen-languages-toggle}}</span>
+	</label>
+</div>

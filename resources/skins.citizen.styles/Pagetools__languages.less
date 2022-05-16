@@ -1,0 +1,54 @@
+.citizen-languages {
+	position: relative; // anchor card
+
+	// TODO: Merge with more menu
+	&__card {
+		position: absolute;
+		right: 0;
+		overflow: auto;
+		min-width: 200px;
+		max-height: 60vh;
+		padding: 0.5rem 0;
+		margin-top: ~'calc( var( --size-button--page ) + 0.5rem )';
+		font-size: 0.875rem;
+		.citizen-card;
+		.citizen-card-hide( 100% 0 );
+
+		a {
+			padding: 0.625rem 1.25rem;
+			.menu-item-link;
+
+			&:hover {
+				.menu-item-link-hover;
+			}
+
+			&:active {
+				.menu-item-link-active;
+			}
+		}
+	}
+}
+
+// Checkbox hack
+#citizen-languages__checkbox:checked {
+	~ .citizen-languages__card {
+		.citizen-card-show();
+	}
+}
+
+.citizen-animations-ready {
+	.citizen-languages__card {
+		.citizen-card-transition();
+	}
+}
+
+@media ( max-width: @width-breakpoint-tablet ) {
+	.citizen-languages {
+		position: unset;
+
+		&__card {
+			right: var( --padding-page );
+			left: var( --padding-page );
+		}
+	}
+}
