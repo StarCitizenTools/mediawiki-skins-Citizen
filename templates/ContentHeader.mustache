@@ -1,0 +1,16 @@
+{{!
+	string page-langcode the content language of the article. Assumed to be escaped HTML.
+	string page-langcode the content language of the article. Assumed to be escaped HTML.
+	string html-title--formatted
+	string msg-tagline
+}}
+<header class="mw-body-header">
+	<div class="page-heading">
+		<div class="firstHeading-container">
+			<h1 id="firstHeading" class="firstHeading" lang="{{page-langcode}}">{{{html-title--formatted}}}</h1>
+			{{>Indicators}}
+		</div>
+		<div id="siteSub">{{msg-tagline}}</div>
+	</div>
+	{{>PageTools}}
+</header>
