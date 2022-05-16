@@ -24,7 +24,7 @@
 		"husky": "^8.0.1",
 		"jsdoc": "3.6.10",
 		"jsdoc-wmf-theme": "0.0.5",
-		"standard-version": "^9.3.2",
+		"standard-version": "^9.5.0",
 		"stylelint-config-idiomatic-order": "8.1.0",
 		"stylelint-config-wikimedia": "0.13.0",
 		"svgo": "2.8.0"
