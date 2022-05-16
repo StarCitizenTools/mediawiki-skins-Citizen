@@ -198,7 +198,7 @@ class SkinCitizen extends SkinMustache {
 
 	/**
 	 * Polyfill for 1.35 from SkinTemplate
-	 * 
+	 *
 	 * @since 1.36
 	 * @stable for overriding
 	 * @param string $name of the portal e.g. p-personal the name is personal.
@@ -257,7 +257,7 @@ class SkinCitizen extends SkinMustache {
 
 	/**
 	 * Polyfill for 1.35 from SkinTemplate
-	 * 
+	 *
 	 * @since 1.36
 	 * @param string $name of the portal e.g. p-personal the name is personal.
 	 * @return string that is human readable corresponding to the menu
