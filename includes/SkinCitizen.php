@@ -45,13 +45,6 @@ class SkinCitizen extends SkinMustache {
 	 */
 	private $contentNavigationUrls;
 
-	/** @var array of alternate message keys for menu labels */
-	private const MENU_LABEL_KEYS = [
-		'tb' => 'toolbox',
-		'personal' => 'personaltools',
-		'lang' => 'otherlanguages',
-	];
-
 	/**
 	 * Overrides template, styles and scripts module
 	 *
@@ -112,7 +105,7 @@ class SkinCitizen extends SkinMustache {
 			'data-logos' => $logos->getLogoData(),
 
 			'data-header' => [
-				'data-drawer' => $drawer->buildDrawer(),
+				'data-drawer' => $drawer->getDrawerTemplateData(),
 				'data-extratools' => $header->getExtraTools(),
 				'data-personal-menu' => $header->buildPersonalMenu(),
 				'data-search-box' => $header->buildSearchProps(),
@@ -204,44 +197,84 @@ class SkinCitizen extends SkinMustache {
 	}
 
 	/**
-	 * @param string $label to be used to derive the id and human readable label of the menu
-	 *  If the key has an entry in the constant MENU_LABEL_KEYS then that message will be used for the
-	 *  human readable text instead.
-	 * @param array $urls to convert to list items stored as string in html-items key
-	 * @param array $options (optional) to be passed to makeListItem
-	 * @return array
+	 * Polyfill for 1.35 from SkinTemplate
+	 * 
+	 * @since 1.36
+	 * @stable for overriding
+	 * @param string $name of the portal e.g. p-personal the name is personal.
+	 * @param array $items that are accepted input to Skin::makeListItem
+	 * @return array data that can be passed to a Mustache template that
+	 *   represents a single menu.
 	 */
-	public function getMenuData(
-		string $label,
-		array $urls = [],
-		array $options = []
-	): array {
-		$skin = $this->getSkin();
-
-		// For some menu items, there is no language key corresponding with its menu key.
-		// These inconsitencies are captured in MENU_LABEL_KEYS
-		$msgObj = $skin->msg( self::MENU_LABEL_KEYS[ $label ] ?? $label );
-		$props = [
-			'id' => "p-$label",
-			'label-class' => null,
-			'label-id' => "p-{$label}-label",
-			// If no message exists fallback to plain text (T252727)
-			'label' => $msgObj->exists() ? $msgObj->text() : $label,
-			'html-items' => '',
-			'html-tooltip' => Linker::tooltip( 'p-' . $label ),
-		];
-
-		foreach ( $urls as $key => $item ) {
-			$props['html-items'] .= $this->makeListItem( $key, $item, $options );
+	public function getPortletData( $name, array $items ) {
+		// Monobook and Vector historically render this portal as an element with ID p-cactions
+		// This inconsistency is regretful from a code point of view
+		// However this ensures compatibility with gadgets.
+		// In future we should port p-#cactions to #p-actions and drop this rename.
+		if ( $name === 'actions' ) {
+			$name = 'cactions';
 		}
 
-		$props['html-after-portal'] = $this->getAfterPortlet( $label );
+		// user-menu is the new personal tools, without the notifications.
+		// A lot of user code and gadgets relies on it being named personal.
+		// This allows it to function as a drop-in replacement.
+		if ( $name === 'user-menu' ) {
+			$name = 'personal';
+		}
 
-		// Mark the portal as empty if it has no content
-		$class = ( empty( $urls ) && !$props['html-after-portal'] )
-			? ' mw-portal-empty' : '';
-		$props['class'] = $class;
-		return $props;
+		$legacyClasses = '';
+		if ( $name === 'category-normal' ) {
+			// retain historic category IDs and classes
+			$id = 'mw-normal-catlinks';
+			$legacyClasses .= ' mw-normal-catlinks';
+		} elseif ( $name === 'category-hidden' ) {
+			// retain historic category IDs and classes
+			$id = 'mw-hidden-catlinks';
+			$legacyClasses .= ' mw-hidden-catlinks mw-hidden-cats-hidden';
+		} else {
+			$id = Sanitizer::escapeIdForAttribute( "p-$name" );
+		}
+
+		$data = [
+			'id' => $id,
+			'class' => 'mw-portlet ' . Sanitizer::escapeClass( "mw-portlet-$name" ) . $legacyClasses,
+			'html-tooltip' => Linker::tooltip( $id ),
+			'html-items' => '',
+			// Will be populated by SkinAfterPortlet hook.
+			'html-after-portal' => '',
+			'html-before-portal' => '',
+		];
+
+		foreach ( $items as $key => $item ) {
+			$data['html-items'] .= $this->makeListItem( $key, $item );
+		}
+
+		$data['label'] = $this->getPortletLabel( $name );
+		$data['is-empty'] = count( $items ) === 0 && $content === '';
+		$data['class'] .= $data['is-empty'] ? ' emptyPortlet' : '';
+		return $data;
+	}
+
+	/**
+	 * Polyfill for 1.35 from SkinTemplate
+	 * 
+	 * @since 1.36
+	 * @param string $name of the portal e.g. p-personal the name is personal.
+	 * @return string that is human readable corresponding to the menu
+	 */
+	public function getPortletLabel( $name ) {
+		// For historic reasons for some menu items,
+		// there is no language key corresponding with its menu key.
+		$mappings = [
+			'tb' => 'toolbox',
+			'personal' => 'personaltools',
+			'lang' => 'otherlanguages',
+		];
+
+		$msgObj = $this->msg( $mappings[ $name ] ?? $name );
+		// If no message exists fallback to plain text (T252727)
+		$labelText = $msgObj->exists() ? $msgObj->text() : $name;
+		return $labelText;
 	}
 
 	/**

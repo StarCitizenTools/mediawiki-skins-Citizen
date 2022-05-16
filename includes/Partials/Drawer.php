@@ -42,86 +42,68 @@ use SpecialPage;
 final class Drawer extends Partial {
 	/**
 	 * Render the navigation drawer
-	 * Based on buildSidebar()
+	 * Based on getPortletsTemplateData in SkinTemplate
 	 *
 	 * @return array
 	 * @throws Exception
 	 */
-	public function buildDrawer() {
-		$portals = $this->skin->buildSidebar();
-		$props = [];
+	public function getDrawerTemplateData() {
+		$drawer = [];
+		$drawerData = $this->skin->buildSidebar();
 		$languages = null;
 
 		// Render portals
-		foreach ( $portals as $name => $content ) {
-			if ( $content === false ) {
-				continue;
-			}
-
-			// Numeric strings gets an integer when set as key, cast back - T73639
-			$name = (string)$name;
-
-			switch ( $name ) {
-				case 'SEARCH':
-				case 'TOOLBOX':
-					break;
-				case 'LANGUAGES':
-					$languages = $this->skin->getLanguages();
-					$portal = $this->skin->getMenuData( 'lang', $content );
-					// The language portal will be added provided either
-					// languages exist or there is a value in html-after-portal
-					// for example to show the add language wikidata link (T252800)
-					if ( count( $content ) || $portal['html-after-portal'] ) {
-						$languages = $portal;
-					}
-					break;
-				default:
-					// Historically some portals have been defined using HTML rather than arrays.
-					// Let's move away from that to a uniform definition.
-					if ( !is_array( $content ) ) {
-						$html = $content;
-						$content = [];
-						wfDeprecated(
-							"`content` field in portal $name must be array."
-							. "Previously it could be a string but this is no longer supported.",
-							'1.35.0'
-						);
-					} else {
-						$html = false;
-					}
-					$portal = $this->skin->getMenuData( $name, $content );
-					if ( $html ) {
-						$portal['html-items'] .= $html;
-					}
-					$props[] = $portal;
-					break;
+		foreach ( $drawerData as $name => $items ) {
+			if ( is_array( $items ) ) {
+				// Numeric strings gets an integer when set as key, cast back - T73639
+				$name = (string)$name;
+				switch ( $name ) {
+					// ignore search
+					case 'SEARCH':
+					// we build in PageTools instead
+					case 'TOOLBOX':
+						break;
+					case 'LANGUAGES':
+						$languages = $this->skin->getLanguages();
+						$portal = $this->skin->getPortletData( 'lang', $items );
+						// The language portal will be added provided either
+						// languages exist or there is a value in html-after-portal
+						// for example to show the add language wikidata link (T252800)
+						if ( count( $items ) || $portal['html-after-portal'] ) {
+							$languages = $portal;
+						}
+						break;
+					default:
+						$drawer[] = $this->skin->getPortletData( $name, $items );
+						break;
+				}
 			}
 		}
 
 		$portalLabel = $this->getConfigValue( 'CitizenPortalAttach' ) ?? 'first';
 
-		$firstPortal = array_shift( $props );
+		$firstPortal = array_shift( $drawer );
 
 		if ( $portalLabel === 'first' && $firstPortal !== null && isset( $firstPortal['html-items'] ) ) {
 			$this->addToolboxLinksToDrawer( $firstPortal['html-items'] );
 		} else {
-			for ( $i = 0, $portalCount = count( $props ); $i < $portalCount; $i++ ) {
-				if ( isset( $props[$i]['label'] ) && $props[$i]['label'] === $portalLabel ) {
-					$this->addToolboxLinksToDrawer( $props[$i]['html-items'] );
+			for ( $i = 0, $portalCount = count( $drawer ); $i < $portalCount; $i++ ) {
+				if ( isset( $drawer[$i]['label'] ) && $drawer[$i]['label'] === $portalLabel ) {
+					$this->addToolboxLinksToDrawer( $drawer[$i]['html-items'] );
 					break;
 				}
 			}
 		}
 
-		$portals = [
+		$drawerData = [
 			'msg-citizen-drawer-toggle' => $this->skin->msg( 'citizen-drawer-toggle' )->text(),
 			'data-portals-first' => $firstPortal,
-			'array-portals-rest' => $props,
+			'array-portals-rest' => $drawer,
 			'data-portals-languages' => $languages,
 			'data-drawer-sitestats' => $this->getSiteStats(),
 		];
 
-		return $portals;
+		return $drawerData;
 	}
 
 	/**

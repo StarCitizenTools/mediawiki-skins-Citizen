@@ -68,11 +68,11 @@ final class PageTools extends Partial {
 		if ( $condition === true ) {
 
 			if ( !method_exists( SkinTemplate::class, 'runOnSkinTemplateNavigationHooks' ) ) {
-				$viewshtml = $this->skin->getMenuData( 'views', $contentNavigation[ 'views' ] ?? [] );
-				$actionshtml = $this->skin->getMenuData( 'actions', $contentNavigation[ 'actions' ] ?? [] );
-				$namespaceshtml = $this->skin->getMenuData( 'namespaces', $contentNavigation[ 'namespaces' ] ?? [] );
-				$variantshtml = $this->skin->getMenuData( 'variants', $contentNavigation[ 'variants' ] ?? [] );
-				$toolboxhtml = $this->skin->getMenuData( 'tb',  $portals['TOOLBOX'] ?? [] );
+				$viewshtml = $this->skin->getPortletData( 'views', $contentNavigation[ 'views' ] ?? [] );
+				$actionshtml = $this->skin->getPortletData( 'actions', $contentNavigation[ 'actions' ] ?? [] );
+				$namespaceshtml = $this->skin->getPortletData( 'namespaces', $contentNavigation[ 'namespaces' ] ?? [] );
+				$variantshtml = $this->skin->getPortletData( 'variants', $contentNavigation[ 'variants' ] ?? [] );
+				$toolboxhtml = $this->skin->getPortletData( 'tb',  $portals['TOOLBOX'] ?? [] );
 			} else {
 				$viewshtml = $parentData['data-portlets']['data-views'];
 				$actionshtml = $parentData['data-portlets']['data-actions'];

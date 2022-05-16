@@ -63,9 +63,9 @@ final class Header extends Partial {
 			$personalTools = $this->addUserInfoToMenu( $personalTools, $user );
 		}
 
-		$personalMenu = $this->skin->getMenuData( 'personal', $personalTools );
+		$personalMenu = $this->skin->getPortletData( 'personal', $personalTools );
 		// Hide label for personal tools
-		$personalMenu[ 'label-class' ] .= 'screen-reader-text';
+		$personalMenu[ 'label-class' ] = 'screen-reader-text';
 
 		return [
 			'msg-citizen-personalmenu-toggle' => $this->skin->msg( 'citizen-personalmenu-toggle' )->text(),
@@ -92,10 +92,10 @@ final class Header extends Partial {
 			$extraTools['notifications-notice'] = $personalTools['notifications-notice'];
 		}
 
-		$html = $this->skin->getMenuData( 'personal-extra', $extraTools );
+		$html = $this->skin->getPortletData( 'personal-extra', $extraTools );
 
 		// Hide label for extra tools
-		$html[ 'label-class' ] .= 'screen-reader-text';
+		$html[ 'label-class' ] = 'screen-reader-text';
 
 		return $html;
 	}
