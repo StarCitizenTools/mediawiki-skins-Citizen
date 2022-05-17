@@ -3,20 +3,25 @@
  *
  * SkinStyles for Extension:UniversalLanguageSelector
  * Module: ext.uls.displaysettings
- * Version: MLEB 2021.07
+ * Version: MLEB 2021.12
  *
- * Date: 2021-07-29
+ * Date: 2022-05-17
 */
 
 /* ext.uls.inputsettings.less */
 .uls-ime-menu-settings-item {
 	border-top-color: var( --border-color-base );
 	background-color: var( --color-surface-2 );
+	border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
 	color: var( --color-base );
 }
 
-.uls-ime-more-settings-link {
-	border-left-color: var( --border-color-base );
+.skin-citizen-dark .uls-ime-disable-link {
+	filter: invert( 1 ) hue-rotate( 180deg );
+}
+
+.skin-citizen-dark .uls-ime-more-settings-link {
+	filter: invert( 1 ) hue-rotate( 180deg );
 }
 
 .uls-ime-menu-settings-item > a:hover {
@@ -41,8 +46,12 @@
 	color: var( --color-primary );
 }
 
+.skin-citizen-dark .ime-checked .ime-perime-help {
+	filter: invert( 1 ) hue-rotate( 180deg );
+}
+
 /* ext.uls.displaysettings.less */
-.uls-sub-panel {
+.ext-uls-sub-panel {
 	border-top-color: var( --border-color-base );
 }
 

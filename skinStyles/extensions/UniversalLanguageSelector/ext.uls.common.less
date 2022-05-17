@@ -3,19 +3,47 @@
  *
  * SkinStyles for Extension:UniversalLanguageSelector
  * Module: ext.uls.common
- * Version: MLEB 2021.07
+ * Version: MLEB 2021.12
  *
- * Date: 2021-07-29
+ * Date: 2022-05-17
 */
 
 @import 'ext.uls.mixins.less';
+
+.uls-menu {
+	border-radius: var( --border-radius--medium );
+}
+
+.uls-search,
+.uls-language-settings-close-block {
+	border-top-left-radius: var( --border-radius--medium );
+	border-top-right-radius: var( --border-radius--medium );
+}
+
+.uls-language-list {
+	border-bottom-left-radius: var( --border-radius--medium );
+	border-bottom-right-radius: var( --border-radius--medium );
+}
 
 .uls-menu.callout {
 	.caret();
 }
 
 .uls-icon-back {
-	border-right-color: var( --border-color-base );
+	border-right: 0; // filter invert does not like it
+	opacity: var( --opacity-icon-base );
+
+	&:hover {
+		opacity: var( --opacity-icon-base--hover );
+	}
+
+	&:active {
+		opacity: var( --opacity-icon-base--active );
+	}
+}
+
+.skin-citizen-dark .uls-icon-back {
+	filter: invert( 1 ) hue-rotate( 180deg );
 }
 
 .uls-menu .uls-no-results-view {

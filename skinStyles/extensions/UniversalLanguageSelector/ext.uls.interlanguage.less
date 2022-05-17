@@ -3,13 +3,17 @@
  *
  * SkinStyles for Extension:UniversalLanguageSelector
  * Module: ext.uls.interlanguage
- * Version: MLEB 2021.07
+ * Version: MLEB 2021.12
  *
- * Date: 2021-07-29
+ * Date: 2022-05-17
 */
 
 #p-lang .uls-settings-trigger {
 	&:focus {
-		outline: 1px solid var( --color-primary );
+		outline-color: var( --color-primary );
 	}
+}
+
+.skin-citizen-dark #p-lang .uls-settings-trigger {
+	filter: invert( 1 ) hue-rotate( 180deg );
 }

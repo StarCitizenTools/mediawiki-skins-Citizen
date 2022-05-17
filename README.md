@@ -61,7 +61,7 @@ Name | Grade | Version | Last updated
 [TabberNeue](https://www.mediawiki.org/wiki/Extension:TabberNeue) | A | 1.3.1 `c045490` | 2022-04-19
 [TimedMediaHandler](https://www.mediawiki.org/wiki/Extension:TimedMediaHandler) | B | N/A | N/A
 [Translate](https://www.mediawiki.org/wiki/Extension:Translate) | B | MLEB 2021.07 | 2021-07-29
-[UniversalLanguageSelector](https://www.mediawiki.org/wiki/Extension:UniversalLanguageSelector) | B | MLEB 2021.07 | 2021-07-29
+[UniversalLanguageSelector](https://www.mediawiki.org/wiki/Extension:UniversalLanguageSelector) | B | MLEB 2021.12 | 2022-05-17
 [UploadWizard](https://www.mediawiki.org/wiki/Extension:UploadWizard) | A | N/A | N/A
 [VisualEditor](https://www.mediawiki.org/wiki/Extension:VisualEditor) | A | REL1_35 `cc3466a` | 2021-08-04
 [Wikibase](https://www.mediawiki.org/wiki/Extension:Wikibase) | B | REL1_35 `7bb503b` | 2022-05-11

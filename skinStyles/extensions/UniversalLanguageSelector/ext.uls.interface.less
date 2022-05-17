@@ -3,9 +3,9 @@
  *
  * SkinStyles for Extension:UniversalLanguageSelector
  * Module: ext.uls.interface
- * Version: MLEB 2021.07
+ * Version: MLEB 2021.12
  *
- * Date: 2021-07-29
+ * Date: 2022-05-17
 */
 
 #uls-settings-block {
@@ -17,6 +17,17 @@
 
 		&:hover {
 			color: var( --color-base );
+		}
+	}
+}
+
+.skin-citizen-dark {
+	#uls-settings-block {
+		> button {
+			&.display-settings-block,
+			&.input-settings-block {
+				filter: invert( 1 ) hue-rotate( 180deg );
+			}
 		}
 	}
 }

@@ -607,6 +607,8 @@
 			"+ext.uls.interlanguage": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.interlanguage.less",
 			"+ext.uls.languagesettings": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.languagesettings.less",
 			"+ext.uls.setlang": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.setlang.less",
+			"+jquery.ime": "skinStyles/extensions/UniversalLanguageSelector/jquery.ime.less",
+			"+jquery.uls": "skinStyles/extensions/UniversalLanguageSelector/jquery.uls.less",
 			"+ext.CookieWarning.styles": "skinStyles/extensions/CookieWarning/ext.CookieWarning.styles.less",
 			"+ext.popups.main": "skinStyles/extensions/Popups/ext.popups.main.less",
 			"+ext.PortableInfobox.styles": "skinStyles/extensions/PortableInfobox/ext.PortableInfobox.styles.less",
