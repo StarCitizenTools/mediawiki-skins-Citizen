@@ -26,6 +26,7 @@ declare( strict_types=1 );
 namespace Citizen\Partials;
 
 use Exception;
+use ExtensionRegistry;
 use MediaWiki\MediaWikiServices;
 use SkinTemplate;
 
@@ -126,6 +127,7 @@ final class PageTools extends Partial {
 				'data-page-actions' => $actionshtml,
 				'data-namespaces' => $namespaceshtml,
 				'has-languages' => $this->shouldShowLanguages( $languageshtml, $variantshtml ),
+				'is-uls-ready' => $this->shouldShowULS( $variantshtml ),
 				'data-languages' => $languageshtml,
 				'data-variants' => $variantshtml,
 				'data-page-toolbox' => $toolboxhtml,
@@ -186,13 +188,30 @@ final class PageTools extends Partial {
 		if ( !$this->canHaveLanguages() ) {
 			return false;
 		}
-
 		// If both language and variant menu contains nothing
 		if ( $languageshtml['is-empty'] && $variantshtml['is-empty'] ) {
 			return false;
 		}
-
 		return true;
+	}
+
+	/**
+	 * Check if UniversalLanguageSelector can be used to replace the language menu
+	 *
+	 * @param array $variantshtml
+	 * @return bool
+	 */
+	private function shouldShowULS( $variantshtml ): bool {
+		// ULS does not support variants
+		if ( !$variantshtml['is-empty'] ) {
+			return false;
+		}
+		// ext.uls.interface only attaches to mw-interlanguage-selector >1.36
+		if ( version_compare( MW_VERSION, '1.36', '<' ) ) {
+			return false;
+		}
+
+		return ExtensionRegistry::getInstance()->isLoaded( 'UniversalLanguageSelector' );
 	}
 
 	/**

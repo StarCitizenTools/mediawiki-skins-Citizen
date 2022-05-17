@@ -1,12 +1,13 @@
 {{!
 	object data-page-languages
 	object data-page-variants
+	bool is-uls-ready
 }}
 <div class="citizen-languages page-actions__item mw-checkbox-hack-container">
 	<input 
 		type="checkbox" 
 		id="citizen-languages__checkbox" 
-		class="mw-checkbox-hack-checkbox"
+		class="mw-checkbox-hack-checkbox {{#is-uls-ready}}mw-interlanguage-selector{{/is-uls-ready}}"
 		role="button"
 		aria-labelledby="citizen-languages__buttonCheckbox"
 		aria-haspopup="true">
