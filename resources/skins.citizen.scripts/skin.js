@@ -107,7 +107,7 @@ function main( window ) {
 	// TODO: There must be a cleaner way to do this
 	if ( tocContainer ) {
 		const toc = require( './tableOfContents.js' );
-		toc.init( tocContainer );
+		toc.init();
 
 		checkboxHack.bind(
 			window,
