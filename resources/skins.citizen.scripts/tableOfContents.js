@@ -41,15 +41,23 @@ function changeActiveSection( id ) {
  * @return {void}
  */
 function initToC() {
-	const
-		header = document.querySelector( '.citizen-header' ),
-		bodyContent = document.getElementById( 'bodyContent' );
+	const bodyContent = document.getElementById( 'bodyContent' );
+
+	// We use scroll-padding-top to handle scrolling with fixed header
+	// It is better to respect that so it is consistent
+	const getTopMargin = () => {
+		return Number(
+			window.getComputedStyle( document.documentElement )
+				.getPropertyValue( 'scroll-padding-top' )
+				.slice( 0, -2 )
+		) + 20;
+	};
 
 	const initSectionObserver = require( './sectionObserver.js' ).init;
 
 	const sectionObserver = initSectionObserver( {
 		elements: bodyContent.querySelectorAll( '.mw-headline' ),
-		topMargin: header.getBoundingClientRect().height,
+		topMargin: getTopMargin(),
 		onIntersection: ( section ) => { changeActiveSection( section.id ); }
 	} );
 
