@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.17.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.16.1...v1.17.0) (2022-05-17)
+
+
+### Features
+
+* **core:** add language count badge ([9926140](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9926140281436647e780f38ef4e198e03d39d1fa))
+* **core:** add language menu to page tools ([442f241](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/442f241641067eb3b99dea1e03f4f4cee5ad9341))
+* **core:** change ToC toggle behavior and position ([03d853c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/03d853c50ef68ea4cbb4ed4de4dd7a63834cead0))
+* **core:** tweak and clean up ToC card styles ([7bfc9f8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7bfc9f88d7875d83222dfb5b023e66c1c1eca95d))
+* **core:** use checkboxHack for page actions more menu ([c6e9bc4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c6e9bc44a9449de2c0fa6ff5b0dde14ca9557de5))
+* **core:** use ULS for interwiki language menu if possible ([73c61e9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/73c61e9b373339d150741181d753565db62f7f34))
+* **skinStyles:** add responsive layout for ULS ([e7b88d3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e7b88d32a833aa940508f67380425d5efbc7d980))
+* **skinStyles:** add skinStyles for Interwiki ([6c6883b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6c6883bb11ef759fcf9ebd7aeb17a656915774a9))
+* **skinStyles:** update ULS styles ([95e48b1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/95e48b13d55ccde12db54dcf8735d3e5eb5da28e))
+
+
+### Bug Fixes
+
+* **core:** add missing SkinAfterPorlet hook ([d030c22](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d030c22810dd05a6de55a16e34a87274d3f1aa5f))
+* **core:** mw-list-item does not exist in older MW ([7cdd049](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7cdd049ea998018fbc5276c16750c485e9592683))
+
 ### [1.16.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.16.0...v1.16.1) (2022-05-13)
 
 
