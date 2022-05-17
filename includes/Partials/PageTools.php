@@ -206,10 +206,6 @@ final class PageTools extends Partial {
 		if ( !$variantshtml['is-empty'] ) {
 			return false;
 		}
-		// ext.uls.interface only attaches to mw-interlanguage-selector >1.36
-		if ( version_compare( MW_VERSION, '1.36', '<' ) ) {
-			return false;
-		}
 
 		return ExtensionRegistry::getInstance()->isLoaded( 'UniversalLanguageSelector' );
 	}
