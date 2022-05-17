@@ -260,7 +260,7 @@ class SkinCitizen extends SkinMustache {
 				],
 			$content
 			);
-		}
+			}
 
 		foreach ( $items as $key => $item ) {
 			$data['html-items'] .= $this->makeListItem( $key, $item );
