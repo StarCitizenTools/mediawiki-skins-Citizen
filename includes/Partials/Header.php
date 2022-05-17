@@ -52,6 +52,7 @@ final class Header extends Partial {
 		$user = $this->skin->getUser();
 
 		// Move the Echo badges out of default list
+		// TODO: Remove notifications since MW 1.36 from buildPersonalUrls
 		if ( isset( $personalTools['notifications-alert'] ) ) {
 			unset( $personalTools['notifications-alert'] );
 		}
@@ -59,11 +60,13 @@ final class Header extends Partial {
 			unset( $personalTools['notifications-notice'] );
 		}
 
+		// TODO: Decorate personal menu for anon users in the future
 		if ( $user->isRegistered() ) {
-			$personalTools = $this->addUserInfoToMenu( $personalTools, $user );
+			$personalTools = $this->decoratePersonalMenu( $personalTools, $user );
 		}
 
 		$personalMenu = $this->skin->getPortletData( 'personal', $personalTools );
+
 		// Hide label for personal tools
 		$personalMenu[ 'label-class' ] = 'screen-reader-text';
 
@@ -78,21 +81,21 @@ final class Header extends Partial {
 	 *
 	 * @return array
 	 */
-	public function getExtratools(): array {
+	public function getNotifications(): array {
 		$personalTools = $this->skin->getPersonalToolsForMakeListItem(
 			$this->skin->buildPersonalUrlsPublic()
 		);
 
 		// Create the Echo badges
-		$extraTools = [];
+		$notifications = [];
 		if ( isset( $personalTools['notifications-alert'] ) ) {
-			$extraTools['notifications-alert'] = $personalTools['notifications-alert'];
+			$notifications['notifications-alert'] = $personalTools['notifications-alert'];
 		}
 		if ( isset( $personalTools['notifications-notice'] ) ) {
-			$extraTools['notifications-notice'] = $personalTools['notifications-notice'];
+			$notifications['notifications-notice'] = $personalTools['notifications-notice'];
 		}
 
-		$html = $this->skin->getPortletData( 'personal-extra', $extraTools );
+		$html = $this->skin->getPortletData( 'notifications', $notifications );
 
 		// Hide label for extra tools
 		$html[ 'label-class' ] = 'screen-reader-text';
@@ -122,71 +125,84 @@ final class Header extends Partial {
 	}
 
 	/**
-	 * Adds user info to the personal menu
-	 * Adds all explicit user groups as links to the personal menu
-	 * Links are added right below the user page link
-	 * Wrapped in an <li> element with id 'pt-usergroups'
+	 * Decorate the personal menu
 	 *
-	 * @param array $originalUrls The original personal tools urls
+	 * @param array $personalTools The original personal tools urls
 	 * @param User $user
 	 *
 	 * @return array
 	 */
-	private function addUserInfoToMenu( $originalUrls, $user ) {
-		$personalTools = [];
+	private function decoratePersonalMenu( $personalTools, $user ): array {
+		$personalMenu = [
+			'userpage' => $personalTools['userpage'] ?? null,
+			'usergroups' => $this->getUserGroupsData( $personalTools, $user ),
+			'usercontris' => $this->getUserContributionsData( $user ),
+		];
 
+		return array_merge( $personalMenu, $personalTools );
+	}
+
+	/**
+	 * Build and return user groups data 
+	 *
+	 * @param array $personalTools The original personal tools urls
+	 * @param User $user
+	 *
+	 * @return array
+	 */
+	private function getUserGroupsData( $personalTools, $user ): array {
 		// This does not return implicit groups
 		$groups = MediaWikiServices::getInstance()->getUserGroupManager()->getUserGroups( $user );
 
-		// Return user edits
-		$edits = MediaWikiServices::getInstance()->getUserEditTracker()->getUserEditCount( $user );
+		if ( empty( $groups ) ) {
+			return null;
+		}
 
 		// Add user group
-		if ( !empty( $groups ) ) {
-			$userPage = array_shift( $originalUrls );
-			$groupLinks = [];
-			$msgName = 'group-%s';
+		$groupLinks = [];
+		$msgName = 'group-%s';
 
-			foreach ( $groups as $group ) {
-				$groupPage = Title::newFromText(
-					$this->skin->msg( sprintf( $msgName, $group ) )->text(),
-					NS_PROJECT
-				);
+		foreach ( $groups as $group ) {
+			$groupPage = Title::newFromText(
+				$this->skin->msg( sprintf( $msgName, $group ) )->text(),
+				NS_PROJECT
+			);
 
-				$groupLinks[$group] = [
-					'msg' => sprintf( $msgName, $group ),
-					// Nullpointer should not happen
-					'href' => $groupPage->getLinkURL(),
-					'tooltiponly' => true,
-					'id' => sprintf( $msgName, $group ),
-					// 'exists' => $groupPage->exists() - This will add an additional DB call
-				];
-			}
-
-			$userGroups = [
-				'id' => 'pt-usergroups',
-				'links' => $groupLinks
+			$groupLinks[$group] = [
+				'msg' => sprintf( $msgName, $group ),
+				// Nullpointer should not happen
+				'href' => $groupPage->getLinkURL(),
+				'tooltiponly' => true,
+				'id' => sprintf( $msgName, $group ),
+				// 'exists' => $groupPage->exists() - This will add an additional DB call
 			];
 		}
 
-		$userContris = [
-			'text' => $this->skin->msg( 'usereditcount' )->numParams( sprintf( '%s', number_format( $edits, 0 ) ) ),
+		return [
+			'id' => 'pt-usergroups',
+			'links' => $groupLinks
+		];
+	}
+
+	/**
+	 * Build and return user contributions data
+	 *
+	 * @param User $user
+	 *
+	 * @return array
+	 */
+	private function getUserContributionsData( $user ): array {
+		// Return user edits
+		$edits = MediaWikiServices::getInstance()->getUserEditTracker()->getUserEditCount( $user );
+
+		if ( empty( $edits ) ) {
+			return null;
+		}
+
+		return [
+			'text' => $this->skin->msg( 'usereditcount' )
+				->numParams( sprintf( '%s', number_format( $edits, 0 ) ) ),
 			'id' => 'pt-usercontris'
 		];
-
-		// The following defines the order of links added
-		if ( isset( $userPage ) ) {
-			$personalTools['userpage'] = $userPage;
-		}
-		if ( isset( $userGroups ) ) {
-			$personalTools['usergroups'] = $userGroups;
-		}
-		$personalTools['usercontris'] = $userContris;
-
-		foreach ( $originalUrls as $key => $url ) {
-			$personalTools[$key] = $url;
-		}
-
-		return $personalTools;
 	}
 }
