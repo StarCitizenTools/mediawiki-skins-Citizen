@@ -244,6 +244,23 @@ class SkinCitizen extends SkinMustache {
 			'html-after-portal' => '',
 			'html-before-portal' => '',
 		];
+		// Run the SkinAfterPortlet
+		// hook and if content is added appends it to the html-after-portal
+		// for output.
+		// Currently in production this supports the wikibase 'edit' link.
+		$content = $this->getAfterPortlet( $name );
+			if ( $content !== '' ) {
+				$data['html-after-portal'] = Html::rawElement(
+				'div',
+				[
+					'class' => [
+						'after-portlet',
+						Sanitizer::escapeClass( "after-portlet-$name" ),
+					],
+				],
+			$content
+			);
+		}
 
 		foreach ( $items as $key => $item ) {
 			$data['html-items'] .= $this->makeListItem( $key, $item );
