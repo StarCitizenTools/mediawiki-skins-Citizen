@@ -143,7 +143,7 @@ final class Header extends Partial {
 	}
 
 	/**
-	 * Build and return user groups data 
+	 * Build and return user groups data
 	 *
 	 * @param array $personalTools The original personal tools urls
 	 * @param User $user
