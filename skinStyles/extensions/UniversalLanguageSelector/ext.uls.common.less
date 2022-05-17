@@ -8,6 +8,7 @@
  * Date: 2022-05-17
 */
 
+@import '../../../resources/variables.less';
 @import 'ext.uls.mixins.less';
 
 .uls-menu {
@@ -53,5 +54,16 @@
 
 	h3 {
 		color: var( --color-base--subtle );
+	}
+}
+
+// Responsive
+@media ( max-width: @width-breakpoint-tablet ) {
+	.uls-menu {
+		top: var( --height-header ) !important;
+		right: var( --padding-page ) !important;
+		left: var( --padding-page ) !important;
+		overflow: auto;
+		max-height: 60vh;
 	}
 }
