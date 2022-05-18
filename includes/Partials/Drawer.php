@@ -50,36 +50,44 @@ final class Drawer extends Partial {
 	public function getDrawerTemplateData() {
 		$drawer = [];
 		$drawerData = $this->skin->buildSidebar();
+		$index = 0;
 
-		// Render portals
+		// Render portlets
 		foreach ( $drawerData as $name => $items ) {
 			if ( is_array( $items ) ) {
 				// Numeric strings gets an integer when set as key, cast back - T73639
 				$name = (string)$name;
 				switch ( $name ) {
-					// ignore search
+					// Ignore search
+					// Handled by Header
 					case 'SEARCH':
-					// we build in PageTools instead
+						break;
+					// Ignore toolbox
+					// Handled by PageTools
 					case 'TOOLBOX':
 						break;
+					// Ignore language
+					// Handled by PageTools
 					case 'LANGUAGES':
 						break;
 					default:
 						$drawer[] = $this->skin->getPortletData( $name, $items );
+						$drawer[$index]['has-label'] = true;
+						$index++;
 						break;
 				}
 			}
 		}
 
-		$portalLabel = $this->getConfigValue( 'CitizenPortalAttach' ) ?? 'first';
+		$portletLabel = $this->getConfigValue( 'CitizenPortalAttach' ) ?? 'first';
 
-		$firstPortal = array_shift( $drawer );
+		$firstPortlet = array_shift( $drawer );
 
-		if ( $portalLabel === 'first' && $firstPortal !== null && isset( $firstPortal['html-items'] ) ) {
-			$this->addToolboxLinksToDrawer( $firstPortal['html-items'] );
+		if ( $portletLabel === 'first' && $firstPortlet !== null && isset( $firstPortlet['html-items'] ) ) {
+			$this->addToolboxLinksToDrawer( $firstPortlet['html-items'] );
 		} else {
-			for ( $i = 0, $portalCount = count( $drawer ); $i < $portalCount; $i++ ) {
-				if ( isset( $drawer[$i]['label'] ) && $drawer[$i]['label'] === $portalLabel ) {
+			for ( $i = 0, $portletCount = count( $drawer ); $i < $portletCount; $i++ ) {
+				if ( isset( $drawer[$i]['label'] ) && $drawer[$i]['label'] === $portletLabel ) {
 					$this->addToolboxLinksToDrawer( $drawer[$i]['html-items'] );
 					break;
 				}
@@ -88,8 +96,8 @@ final class Drawer extends Partial {
 
 		$drawerData = [
 			'msg-citizen-drawer-toggle' => $this->skin->msg( 'citizen-drawer-toggle' )->text(),
-			'data-portals-first' => $firstPortal,
-			'array-portals-rest' => $drawer,
+			'data-portlets-first' => $firstPortlet,
+			'array-portlets-rest' => $drawer,
 			'data-drawer-sitestats' => $this->getSiteStats(),
 		];
 
@@ -149,7 +157,7 @@ final class Drawer extends Partial {
 	}
 
 	/**
-	 * Add a link to special pages and the upload form to the first portal in the drawer
+	 * Add a link to special pages and the upload form to the first portlet in the drawer
 	 *
 	 * @param string &$htmlItems
 	 *

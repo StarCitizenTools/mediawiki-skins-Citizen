@@ -1,9 +1,16 @@
 {{!
 
 }}
-<nav id="{{id}}"{{#class}} class="{{.}}"{{/class}} {{{html-tooltip}}}
-	 {{{html-userlangattributes}}}>
-	<h3 id="{{label-id}}"{{#label-class}} class="{{.}}"{{/label-class}}>{{label}}</h3>
+<nav id="{{id}}"{{#class}} class="{{.}}"{{/class}} {{{html-tooltip}}} {{{html-userlangattributes}}}>
+	{{#has-label}}
+	<label
+		id="{{id}}-label"
+		{{#aria-label}} aria-label="{{.}}"{{/aria-label}}
+		class="citizen-menu__heading{{#heading-class}} {{.}}{{/heading-class}}">
+		<span class="citizen-menu__heading-label">{{label}}</span>
+	</label>
+	{{/has-label}}
+	{{{html-before-portal}}}
 	<ul>{{{html-items}}}</ul>
 	{{{html-after-portal}}}
 </nav>

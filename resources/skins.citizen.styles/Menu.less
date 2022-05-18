@@ -1,13 +1,18 @@
-.mw-portlet {
-	h3 {
-		padding: 0.625rem 1.25rem;
-		margin: 0;
-		color: var( --color-base--subtle );
-		font-size: inherit;
-		font-weight: normal;
-		letter-spacing: 0.75px;
+.citizen-menu {
+	&__heading {
+		&-label {
+			display: block;
+			padding: 0.625rem 1.25rem;
+			margin: 0;
+			color: var( --color-base--subtle );
+			font-size: inherit;
+			font-weight: normal;
+			letter-spacing: 0.75px;
+		}
 	}
+}
 
+.mw-portlet {
 	// Hide selected item
 	.selected {
 		.mixin-screen-reader-text;

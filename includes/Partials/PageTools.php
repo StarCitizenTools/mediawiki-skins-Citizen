@@ -108,19 +108,14 @@ final class PageTools extends Partial {
 				}
 			}
 
-			if ( $viewshtml ) {
-				$viewshtml[ 'label-class' ] ??= '';
-				$viewshtml[ 'label-class' ] .= 'screen-reader-text';
+			// Toggle label for toolbox
+			if ( $toolboxhtml ) {
+				$toolboxhtml['has-label'] = true;
 			}
 
-			if ( $actionshtml ) {
-				$actionshtml[ 'label-class' ] ??= '';
-				$actionshtml[ 'label-class' ] .= 'screen-reader-text';
-			}
-
-			if ( $namespaceshtml ) {
-				$namespaceshtml[ 'label-class' ] ??= '';
-				$namespaceshtml[ 'label-class' ] .= 'screen-reader-text';
+			// Toggle label for variants
+			if ( $variantshtml ) {
+				$variantshtml['has-label'] = true;
 			}
 
 			$props = [
