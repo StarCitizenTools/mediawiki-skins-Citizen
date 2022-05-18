@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.17.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.1...v1.17.2) (2022-05-18)
+
+
+### Features
+
+* **core:** remove tabindex from checkbox label button ([08ddb60](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/08ddb60bb624a2a42fbb0f2932e107793db4f08b))
+* **core:** update menu to be more inlined with MW core ([1df223a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1df223abfad46bd08bfdb903276bf19d1b25b586))
+
+
+### Bug Fixes
+
+* **core:** call to undefined method `RequestContext::getAction()` ([d4c7131](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d4c7131c9f92980848893837de24ca2337f8e61a)), closes [#459](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/459)
+* **core:** decoratePersonalMenu should only return array ([176adba](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/176adba1fb42a2e7572ff64d95f004d165b69d49))
+* **core:** don't use `getActionName` < MW 1.38 ([bbf7fa8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bbf7fa8b343dc52b2001d72bc393d295507a7615)), closes [#459](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/459)
+* **core:** header function can return null ([#459](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/459)) ([2ec20ba](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2ec20bae5da3ebcc243abaa67bf008e6bc93b4de))
+
 ### [1.17.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.0...v1.17.1) (2022-05-18)
 
 
