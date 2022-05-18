@@ -25,7 +25,6 @@ declare( strict_types=1 );
 
 namespace Citizen\Partials;
 
-use ContextSource;
 use Exception;
 use ExtensionRegistry;
 use MediaWiki\MediaWikiServices;
