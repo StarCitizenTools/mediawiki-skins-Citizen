@@ -140,10 +140,20 @@ figcaption,
 // External links
 .mw-parser-output {
 	a.external {
-		padding-right: 13px;
-		background-image: url( images/external-link-ltr-icon.svg );
-		background-position: center right;
-		background-repeat: no-repeat;
+		&:after {
+			display: inline-block;
+			width: 0.75em;
+			height: 0.75em;
+			margin-left: 0.25em;
+			background-color: currentcolor;
+			content: '';
+			/* @embed */
+			-webkit-mask: url( images/linkExternal-ltr.svg ) no-repeat 50% 50%;
+			/* @embed */
+			mask: url( images/linkExternal-ltr.svg ) no-repeat 50% 50%;
+			-webkit-mask-size: contain;
+			mask-size: contain;
+		}
 	}
 }
 
