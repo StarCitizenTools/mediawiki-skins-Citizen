@@ -130,9 +130,9 @@ final class Header extends Partial {
 	 * @param array $personalTools The original personal tools urls
 	 * @param User $user
 	 *
-	 * @return array
+	 * @return array|null
 	 */
-	private function decoratePersonalMenu( $personalTools, $user ): array {
+	private function decoratePersonalMenu( $personalTools, $user ): ?array {
 		$personalMenu = [
 			'userpage' => $personalTools['userpage'] ?? null,
 			'usergroups' => $this->getUserGroupsData( $personalTools, $user ),
@@ -148,9 +148,9 @@ final class Header extends Partial {
 	 * @param array $personalTools The original personal tools urls
 	 * @param User $user
 	 *
-	 * @return array
+	 * @return array|null
 	 */
-	private function getUserGroupsData( $personalTools, $user ): array {
+	private function getUserGroupsData( $personalTools, $user ): ?array {
 		// This does not return implicit groups
 		$groups = MediaWikiServices::getInstance()->getUserGroupManager()->getUserGroups( $user );
 
@@ -189,9 +189,9 @@ final class Header extends Partial {
 	 *
 	 * @param User $user
 	 *
-	 * @return array
+	 * @return array|null
 	 */
-	private function getUserContributionsData( $user ): array {
+	private function getUserContributionsData( $user ): ?array {
 		// Return user edits
 		$edits = MediaWikiServices::getInstance()->getUserEditTracker()->getUserEditCount( $user );
 
