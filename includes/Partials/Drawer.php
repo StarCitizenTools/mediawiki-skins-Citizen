@@ -94,7 +94,7 @@ final class Drawer extends Partial {
 
 	/**
 	 * Add site-wide tools to portlet
-	 * 
+	 *
 	 * TODO: Remove this hack when Desktop Improvements separate page and site tools
 	 * FIXME: There are no error handling if the ID does not match any existing portlet
 	 *
@@ -189,7 +189,7 @@ final class Drawer extends Partial {
 
 	/**
 	 * Get and format sitestat value
-	 * 
+	 *
 	 * TODO: Formatting should be based on user locale
 	 *
 	 * @param string $key

@@ -301,7 +301,7 @@ class SkinCitizen extends SkinMustache {
 	 * They are re-added in the drawer
 	 *
 	 * TODO: Remove this hack when Desktop Improvements separate page and site tools
-	 * 
+	 *
 	 * @return array
 	 */
 	protected function buildNavUrls() {
