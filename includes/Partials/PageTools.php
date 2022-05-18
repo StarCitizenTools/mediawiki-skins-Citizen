@@ -25,9 +25,11 @@ declare( strict_types=1 );
 
 namespace Citizen\Partials;
 
+use ContextSource;
 use Exception;
 use ExtensionRegistry;
 use MediaWiki\MediaWikiServices;
+use Skin;
 use SkinTemplate;
 
 final class PageTools extends Partial {
@@ -166,9 +168,18 @@ final class PageTools extends Partial {
 	private function canHaveLanguages(): bool {
 		$skin = $this->skin;
 
-		if ( $skin->getContext()->getActionName() !== 'view' ) {
-			return false;
+		if ( method_exists( Skin::class, 'getActionName' ) ) {
+			// >= MW 1.38
+			if ( $skin->getContext()->getActionName() !== 'view' ) {
+				return false;
+			}
+		} else {
+			// < MW 1.38
+			if ( $skin->getContext()->getAction() !== 'view' ) {
+				return false;
+			}
 		}
+
 		$title = $skin->getTitle();
 		// Defensive programming - if a special page has added languages explicitly, best to show it.
 		if ( $title && $title->isSpecialPage() && empty( $this->getLanguagesCached() ) ) {
