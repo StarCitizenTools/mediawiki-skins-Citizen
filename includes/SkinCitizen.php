@@ -297,9 +297,11 @@ class SkinCitizen extends SkinMustache {
 	/**
 	 * @inheritDoc
 	 *
-	 * Manually disable links to upload and special pages
-	 * as they are moved from the toolbox to the drawer
+	 * Manually disable some site-wide tools in TOOLBOX
+	 * They are re-added in the drawer
 	 *
+	 * TODO: Remove this hack when Desktop Improvements separate page and site tools
+	 * 
 	 * @return array
 	 */
 	protected function buildNavUrls() {

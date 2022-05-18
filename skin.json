@@ -735,7 +735,7 @@
 			"public": true
 		},
 		"PortalAttach": {
-			"value": "first",
+			"value": "",
 			"description": "Label of the portal to attach links to upload and special pages to",
 			"descriptionmsg": "citizen-config-portalattach",
 			"public": true

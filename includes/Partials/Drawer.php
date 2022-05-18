@@ -50,7 +50,7 @@ final class Drawer extends Partial {
 	public function getDrawerTemplateData() {
 		$drawer = [];
 		$drawerData = $this->skin->buildSidebar();
-		$index = 0;
+		$portletCount = 0;
 
 		// Render portlets
 		foreach ( $drawerData as $name => $items ) {
@@ -72,36 +72,89 @@ final class Drawer extends Partial {
 						break;
 					default:
 						$drawer[] = $this->skin->getPortletData( $name, $items );
-						$drawer[$index]['has-label'] = true;
-						$index++;
+						// All portlets within the drawer should have a label
+						// to ensure it is layout nicely
+						$drawer[$portletCount]['has-label'] = true;
+						$portletCount++;
 						break;
 				}
 			}
 		}
 
-		$portletLabel = $this->getConfigValue( 'CitizenPortalAttach' ) ?? 'first';
-
-		$firstPortlet = array_shift( $drawer );
-
-		if ( $portletLabel === 'first' && $firstPortlet !== null && isset( $firstPortlet['html-items'] ) ) {
-			$this->addToolboxLinksToDrawer( $firstPortlet['html-items'] );
-		} else {
-			for ( $i = 0, $portletCount = count( $drawer ); $i < $portletCount; $i++ ) {
-				if ( isset( $drawer[$i]['label'] ) && $drawer[$i]['label'] === $portletLabel ) {
-					$this->addToolboxLinksToDrawer( $drawer[$i]['html-items'] );
-					break;
-				}
-			}
-		}
+		$drawer = $this->addSiteTools( $drawer, $portletCount );
 
 		$drawerData = [
 			'msg-citizen-drawer-toggle' => $this->skin->msg( 'citizen-drawer-toggle' )->text(),
-			'data-portlets-first' => $firstPortlet,
-			'array-portlets-rest' => $drawer,
-			'data-drawer-sitestats' => $this->getSiteStats(),
+			'array-portlets' => $drawer,
+			'data-drawer-sitestats' => $this->getSiteStatsData(),
 		];
 
 		return $drawerData;
+	}
+
+	/**
+	 * Add site-wide tools to portlet
+	 * 
+	 * TODO: Remove this hack when Desktop Improvements separate page and site tools
+	 * FIXME: There are no error handling if the ID does not match any existing portlet
+	 *
+	 * @param array $drawer
+	 * @param int $portletCount
+	 * @return array
+	 */
+	private function addSiteTools( $drawer, $portletCount ): array {
+		$id = $this->getConfigValue( 'CitizenPortalAttach' );
+		$html = $this->getSiteToolsHTML();
+
+		// Attach to first portlet if empty
+		if ( empty( $id ) ) {
+			$drawer[0]['html-items'] .= $html;
+			return $drawer;
+		}
+
+		// Find the portlet with the right ID, then add to it
+		for ( $i = 0; $i < $portletCount; $i++ ) {
+			if ( isset( $drawer[$i]['id'] ) && $drawer[$i]['id'] === $id ) {
+				$drawer[$i]['html-items'] .= $html;
+				break;
+			}
+		}
+
+		return $drawer;
+	}
+
+	/**
+	 * Build site-wide tools HTML
+	 * We removed some site-wide tools from TOOLBOX, now add it back
+	 *
+	 * TODO: Remove this hack when Desktop Improvements separate page and site tools
+	 *
+	 * @return string RawHTML
+	 * @throws MWException
+	 */
+	private function getSiteToolsHTML(): string {
+		$html = '';
+
+		// Special pages
+		$html .= $this->skin->makeListItem( 'specialpages', [
+			'href' => Skin::makeSpecialUrl( 'Specialpages' ),
+			'id' => 't-specialpages'
+		] );
+
+		// Upload file
+		if ( ExtensionRegistry::getInstance()->isLoaded( 'Upload Wizard' ) ) {
+			// Link to Upload Wizard if present
+			$uploadHref = SpecialPage::getTitleFor( 'UploadWizard' )->getLocalURL();
+		} else {
+			// Link to old upload form
+			$uploadHref = Skin::makeSpecialUrl( 'Upload' );
+		}
+		$html .= $this->skin->makeListItem( 'upload', [
+			'href' => $uploadHref,
+			'id' => 't-upload'
+		] );
+
+		return $html;
 	}
 
 	/**
@@ -109,12 +162,14 @@ final class Drawer extends Partial {
 	 *
 	 * @return array for use in Mustache template.
 	 */
-	private function getSiteStats() {
+	private function getSiteStatsData(): array {
 		$props = [];
 
 		if ( $this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) ) {
 			$stats = [ 'articles', 'images', 'users', 'edits' ];
 			$items = [];
+
+			// Get NumberFormatter here so that we don't have to call it for every stat
 			$fmt = new \NumberFormatter( 'en_US', \NumberFormatter::PADDING_POSITION );
 			$fmt->setAttribute( \NumberFormatter::ROUNDING_MODE, \NumberFormatter::ROUND_DOWN );
 			$fmt->setAttribute( \NumberFormatter::MAX_FRACTION_DIGITS, 1 );
@@ -122,7 +177,7 @@ final class Drawer extends Partial {
 			foreach ( $stats as &$stat ) {
 				$items[] = [
 					'id' => $stat,
-					'value' => $this->getSiteStat( $stat ),
+					'value' => $this->getSiteStatValue( $stat, $fmt ),
 					'label' => $this->skin->msg( "citizen-sitestats-$stat-label" )->text(),
 				];
 			}
@@ -134,53 +189,22 @@ final class Drawer extends Partial {
 
 	/**
 	 * Get and format sitestat value
+	 * 
 	 * TODO: Formatting should be based on user locale
 	 *
 	 * @param string $key
-	 *
-	 * @return int
+	 * @param class NumberFormatter
+	 * @return string
 	 */
-	private function getSiteStat( $key ) {
-		$value = call_user_func( 'SiteStats::' . $key );
+	private function getSiteStatValue( $key, $fmt ): string {
+		$value = call_user_func( 'SiteStats::' . $key ) ?? '';
 
 		if ( $value >= 10000 ) {
-			$fmt = new \NumberFormatter( 'en_US', \NumberFormatter::PADDING_POSITION );
-			$fmt->setAttribute( \NumberFormatter::ROUNDING_MODE, \NumberFormatter::ROUND_DOWN );
-			$fmt->setAttribute( \NumberFormatter::MAX_FRACTION_DIGITS, 1 );
-
 			$value = $fmt->format( $value );
 		} else {
 			$value = number_format( $value );
 		}
 
 		return $value;
-	}
-
-	/**
-	 * Add a link to special pages and the upload form to the first portlet in the drawer
-	 *
-	 * @param string &$htmlItems
-	 *
-	 * @return void
-	 * @throws MWException
-	 */
-	private function addToolboxLinksToDrawer( &$htmlItems ) {
-		// First add a link to special pages
-		$htmlItems .= $this->skin->makeListItem( 'specialpages', [
-			'href' => Skin::makeSpecialUrl( 'Specialpages' ),
-			'id' => 't-specialpages'
-		] );
-
-		$uploadHref = Skin::makeSpecialUrl( 'Upload' );
-
-		if ( ExtensionRegistry::getInstance()->isLoaded( 'Upload Wizard' ) ) {
-			$uploadHref = SpecialPage::getTitleFor( 'UploadWizard' )->getLocalURL();
-		}
-
-		// Then add a link to the upload form
-		$htmlItems .= $this->skin->makeListItem( 'upload', [
-			'href' => $uploadHref,
-			'id' => 't-upload'
-		] );
 	}
 }
