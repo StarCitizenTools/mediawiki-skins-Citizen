@@ -25,6 +25,7 @@ declare( strict_types=1 );
 
 namespace Citizen\Partials;
 
+use Action;
 use Exception;
 use ExtensionRegistry;
 use MediaWiki\MediaWikiServices;
@@ -169,7 +170,7 @@ final class PageTools extends Partial {
 			}
 		} else {
 			// < MW 1.38
-			if ( $skin->getContext()->getAction() !== 'view' ) {
+			if ( Action::getActionName( $skin->getContext() ) !== 'view' ) {
 				return false;
 			}
 		}
