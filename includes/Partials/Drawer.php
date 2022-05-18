@@ -193,7 +193,7 @@ final class Drawer extends Partial {
 	 * TODO: Formatting should be based on user locale
 	 *
 	 * @param string $key
-	 * @param class NumberFormatter
+	 * @param NumberFormatter $fmt
 	 * @return string
 	 */
 	private function getSiteStatValue( $key, $fmt ): string {
