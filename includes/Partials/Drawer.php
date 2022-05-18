@@ -103,7 +103,7 @@ final class Drawer extends Partial {
 	 * @return array
 	 */
 	private function addSiteTools( $drawer, $portletCount ): array {
-		$id = $this->getConfigValue( 'CitizenPortalAttach' );
+		$id = $this->getConfigValue( 'CitizenSiteToolsPortlet' );
 		$html = $this->getSiteToolsHTML();
 
 		// Attach to first portlet if empty

@@ -734,10 +734,10 @@
 			"descriptionmsg": "citizen-config-showpagetools",
 			"public": true
 		},
-		"PortalAttach": {
+		"SiteToolsPortlet": {
 			"value": "",
-			"description": "Label of the portal to attach links to upload and special pages to",
-			"descriptionmsg": "citizen-config-portalattach",
+			"description": "ID of the portlet to attach the site tools",
+			"descriptionmsg": "citizen-config-sitetoolsportlet",
 			"public": true
 		},
 		"EnableCollapsibleSections": {
