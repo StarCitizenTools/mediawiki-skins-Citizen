@@ -130,9 +130,9 @@ final class Header extends Partial {
 	 * @param array $personalTools The original personal tools urls
 	 * @param User $user
 	 *
-	 * @return array|null
+	 * @return array
 	 */
-	private function decoratePersonalMenu( $personalTools, $user ): ?array {
+	private function decoratePersonalMenu( $personalTools, $user ): array {
 		$personalMenu = [
 			'userpage' => $personalTools['userpage'] ?? null,
 			'usergroups' => $this->getUserGroupsData( $personalTools, $user ),
