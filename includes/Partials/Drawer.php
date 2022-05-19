@@ -168,11 +168,15 @@ final class Drawer extends Partial {
 		if ( $this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) ) {
 			$stats = [ 'articles', 'images', 'users', 'edits' ];
 			$items = [];
+			$fmt = null;
 
-			// Get NumberFormatter here so that we don't have to call it for every stat
-			$fmt = new \NumberFormatter( 'en_US', \NumberFormatter::PADDING_POSITION );
-			$fmt->setAttribute( \NumberFormatter::ROUNDING_MODE, \NumberFormatter::ROUND_DOWN );
-			$fmt->setAttribute( \NumberFormatter::MAX_FRACTION_DIGITS, 1 );
+			// Get NumberFormatter here so that we don't have to call it for every stats
+			if ( class_exists( \NumberFormatter::class ) ) {
+				$locale = $this->skin->getLanguage()->getHtmlCode() ?? 'en_US';
+				$fmt = new \NumberFormatter( $locale, \NumberFormatter::PADDING_POSITION );
+				$fmt->setAttribute( \NumberFormatter::ROUNDING_MODE, \NumberFormatter::ROUND_DOWN );
+				$fmt->setAttribute( \NumberFormatter::MAX_FRACTION_DIGITS, 1 );
+			}
 
 			foreach ( $stats as &$stat ) {
 				$items[] = [
@@ -190,21 +194,17 @@ final class Drawer extends Partial {
 	/**
 	 * Get and format sitestat value
 	 *
-	 * TODO: Formatting should be based on user locale
-	 *
 	 * @param string $key
-	 * @param NumberFormatter $fmt
+	 * @param NumberFormatter|null $fmt
 	 * @return string
 	 */
 	private function getSiteStatValue( $key, $fmt ): string {
 		$value = call_user_func( 'SiteStats::' . $key ) ?? '';
 
-		if ( $value >= 10000 ) {
-			$value = $fmt->format( $value );
+		if ( $fmt ) {
+			return $fmt->format( $value );
 		} else {
-			$value = number_format( $value );
+			return  number_format( $value );
 		}
-
-		return $value;
 	}
 }
