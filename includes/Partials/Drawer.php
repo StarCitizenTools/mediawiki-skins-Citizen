@@ -204,7 +204,7 @@ final class Drawer extends Partial {
 		if ( $fmt ) {
 			return $fmt->format( $value );
 		} else {
-			return  number_format( $value );
+			return number_format( $value );
 		}
 	}
 }
