@@ -1,9 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
+			"Chaduvari",
 			"Veeven"
 		]
 	},
+	"citizen-languages-toggle": "మరిన్ని భాషలు",
+	"citizen-actions-more-toggle": "మరిన్ని చర్యలు",
 	"citizen-sitestats-articles-label": "వ్యాసాలు",
 	"citizen-sitestats-users-label": "వాడుకరులు",
 	"citizen-sitestats-edits-label": "మార్పులు",

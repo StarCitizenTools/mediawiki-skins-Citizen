@@ -11,7 +11,6 @@
 	"citizen.js": "/* All JavaScript här kommer laddas in för användare av utseendet Citizen */",
 	"citizen-drawer-toggle": "Visa/dölj menyn",
 	"citizen-search-toggle": "Visa/dölj sök",
-	"citizen-theme-toggle": "Växla temafärg",
 	"citizen-sitestats-articles-label": "artiklar",
 	"citizen-sitestats-images-label": "filer",
 	"citizen-sitestats-users-label": "användare",
