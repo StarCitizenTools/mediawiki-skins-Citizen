@@ -38,12 +38,21 @@
 		}
 
 		&__title {
+			display: flex;
+			align-items: center;
 			color: var( --color-base--emphasized );
 			font-weight: 700;
+			gap: 0.25rem;
+		}
 
-			&__highlight {
-				color: var( --color-base--subtle );
-			}
+		&__highlight {
+			color: var( --color-base--subtle );
+			font-weight: 500;
+		}
+
+		&__redirect {
+			color: var( --color-base );
+			font-size: 0.8125rem;
 		}
 
 		&__description {

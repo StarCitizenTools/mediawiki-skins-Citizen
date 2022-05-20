@@ -231,7 +231,8 @@
 			],
 			"messages": [
 				"citizen-search-fulltext",
-				"citizen-search-fulltext-empty"
+				"citizen-search-fulltext-empty",
+				"search-redirect"
 			],
 			"targets": [
 				"desktop",

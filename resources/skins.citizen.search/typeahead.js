@@ -145,18 +145,24 @@ function clearSuggestions() {
  */
 function getSuggestions( searchQuery ) {
 	const renderSuggestions = ( results ) => {
-		const prefix = 'citizen-typeahead-suggestion',
+		const
+			prefix = 'citizen-typeahead-suggestion',
 			template = document.getElementById( prefix + '-template' ),
 			fragment = document.createDocumentFragment(),
 			suggestionLinkPrefix = config.wgScriptPath + '/index.php?title=Special:Search&search=',
 			sanitizedSearchQuery = mw.html.escape( mw.util.escapeRegExp( searchQuery ) ),
 			regex = new RegExp( sanitizedSearchQuery, 'i' );
 
+		const highlightTitle = ( text ) => {
+			return text.replace( regex, '<span class="' + prefix + '__highlight">$&</span>' );
+		};
+
 		// Maybe there is a cleaner way?
 		// Maybe there is a faster way compared to multiple querySelector?
 		// Should I just use regular for loop for faster performance?
 		results.forEach( ( result ) => {
-			const suggestion = template.content.cloneNode( true ),
+			const
+				suggestion = template.content.cloneNode( true ),
 				suggestionLink = suggestion.querySelector( '.' + prefix ),
 				suggestionThumbnail = suggestion.querySelector( '.' + prefix + '__thumbnail img' ),
 				suggestionTitle = suggestion.querySelector( '.' + prefix + '__title' ),
@@ -170,8 +176,18 @@ function getSuggestions( searchQuery ) {
 				suggestionThumbnail.setAttribute( 'src', result.thumbnail );
 			}
 
-			// Highlight title
-			suggestionTitle.innerHTML = result.title.replace( regex, '<span class="' + prefix + '__title__highlight">$&</span>' );
+			// Result is a redirect
+			// Show the redirect title and highlight it
+			if ( result.matchedTitle ) {
+				suggestionTitle.innerHTML = result.title +
+					'<span class="' + prefix + '__redirect">' +
+					mw.message( 'search-redirect', highlightTitle( result.matchedTitle ) ).plain() +
+					'</span>';
+			} else {
+				// Highlight title
+				suggestionTitle.innerHTML = highlightTitle( result.title );
+			}
+
 			suggestionDescription.textContent = result.description;
 
 			fragment.append( suggestion );
