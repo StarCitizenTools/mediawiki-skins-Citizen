@@ -7,78 +7,102 @@
  * Mangle using https://jscompress.com/
  */
 window.applyPref = () => {
-	const prefix = 'skin-citizen-';
-	const cssProps = {
-		fontsize: 'font-size',
-		pagewidth: '--width-layout',
-		lineheight: '--line-height'
+	const
+		prefix = 'skin-citizen-',
+		themeKey = prefix + 'theme';
+
+	const getStorage = ( key ) => {
+		return window.localStorage.getItem( key );
 	};
 
-	// Generates an array of prefix-(auto|dark|light) strings
-	const classNames = () => {
-		return [ 'auto', 'dark', 'light' ].map( ( themeType ) => {
-			return prefix + themeType;
-		} );
-	};
+	const targetTheme = getStorage( themeKey );
 
-	const injectStyles = ( css ) => {
-		const styleId = 'citizen-style';
-		let style = document.getElementById( styleId );
+	const apply = () => {
+		const cssProps = {
+			fontsize: 'font-size',
+			pagewidth: '--width-layout',
+			lineheight: '--line-height'
+		};
 
-		if ( style === null ) {
-			style = document.createElement( 'style' );
-			style.setAttribute( 'id', styleId );
-			document.head.appendChild( style );
-		}
-		style.textContent = `:root{${css}}`;
-	};
+		// Generates an array of prefix-(auto|dark|light) strings
+		const classNames = () => {
+			return [ 'auto', 'dark', 'light' ].map( ( themeType ) => {
+				return prefix + themeType;
+			} );
+		};
 
-	try {
-		const theme = window.localStorage.getItem( prefix + 'theme' );
+		const injectStyles = ( css ) => {
+			const styleId = 'citizen-style';
+			let style = document.getElementById( styleId );
 
-		let cssDeclaration = '';
-
-		// Apply pref by changing class
-		if ( theme !== null ) {
-			const htmlElement = document.documentElement;
-			// Remove all theme classes then add the right one
-			// The following classes are used here:
-			// * skin-citizen-auto
-			// * skin-citizen-light
-			// * skin-citizen-dark
-			htmlElement.classList.remove( ...classNames( prefix ) );
-
-			htmlElement.classList.add( prefix + theme );
-		}
-
-		// Apply pref by adding CSS to root
-		/* eslint-disable-next-line compat/compat */
-		for ( const [ key, property ] of Object.entries( cssProps ) ) {
-			const value = window.localStorage.getItem( prefix + key );
-
-			if ( value !== null ) {
-				cssDeclaration += `${property}:${value};`;
+			if ( style === null ) {
+				style = document.createElement( 'style' );
+				style.setAttribute( 'id', styleId );
+				document.head.appendChild( style );
 			}
-		}
+			style.textContent = `:root{${css}}`;
+		};
 
-		if ( cssDeclaration ) {
-			injectStyles( cssDeclaration );
+		try {
+			const theme = getStorage( themeKey );
+
+			let cssDeclaration = '';
+
+			// Apply pref by changing class
+			if ( theme !== null ) {
+				const htmlElement = document.documentElement;
+				// Remove all theme classes then add the right one
+				// The following classes are used here:
+				// * skin-citizen-auto
+				// * skin-citizen-light
+				// * skin-citizen-dark
+				htmlElement.classList.remove( ...classNames( prefix ) );
+
+				htmlElement.classList.add( prefix + theme );
+			}
+
+			// Apply pref by adding CSS to root
+			/* eslint-disable-next-line compat/compat */
+			for ( const [ key, property ] of Object.entries( cssProps ) ) {
+				const value = getStorage( prefix + key );
+
+				if ( value !== null ) {
+					cssDeclaration += `${property}:${value};`;
+				}
+			}
+
+			if ( cssDeclaration ) {
+				injectStyles( cssDeclaration );
+			}
+		} catch ( e ) {
 		}
-	} catch ( e ) {
+	};
+
+	// Set up auto theme based on prefers-color-scheme
+	if ( targetTheme === 'auto' || targetTheme === null ) {
+		const prefersDark = window.matchMedia( '(prefers-color-scheme: dark)' );
+		const autoTheme = prefersDark.matches ? 'dark' : 'light';
+
+		const setStorage = ( key, value ) => {
+			return window.localStorage.setItem( key, value );
+		};
+
+		// Set to the right theme temporarily
+		setStorage( themeKey, autoTheme );
+		apply();
+
+		// Attach listener for future changes
+		prefersDark.addEventListener( 'change', () => {
+			apply();
+		} );
+
+		// Reset back to auto
+		setStorage( themeKey, 'auto' );
+	} else {
+		apply();
 	}
 };
 
 ( () => {
-	const themeId = 'skin-citizen-theme';
-	// Set up auto theme based on prefers-color-scheme
-	if ( window.localStorage.getItem( themeId ) === 'auto' ) {
-		const autoTheme = window.matchMedia( '(prefers-color-scheme: dark)' ) ? 'dark' : 'light';
-		// Set to the right theme temporarily
-		window.localStorage.setItem( themeId, autoTheme );
-		window.applyPref();
-		// Reset back to auto
-		window.localStorage.setItem( themeId, 'auto' );
-	} else {
-		window.applyPref();
-	}
+	window.applyPref();
 } )();

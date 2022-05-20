@@ -191,8 +191,7 @@
 				"resources/skins.citizen.scripts/scrollObserver.js",
 				"resources/skins.citizen.scripts/sectionObserver.js",
 				"resources/skins.citizen.scripts/search.js",
-				"resources/skins.citizen.scripts/tableOfContents.js",
-				"resources/skins.citizen.scripts/theme.js"
+				"resources/skins.citizen.scripts/tableOfContents.js"
 			],
 			"targets": [
 				"desktop",

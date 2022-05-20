@@ -85,14 +85,11 @@ function onTitleHidden( document ) {
  * @return {void}
  */
 function main( window ) {
-	const
-		theme = require( './theme.js' ),
-		search = require( './search.js' );
+	const search = require( './search.js' );
 
 	const tocContainer = document.getElementById( 'toc' );
 
 	enableCssAnimations( window.document );
-	theme.init( window );
 	search.init( window );
 	onTitleHidden( window.document );
 
