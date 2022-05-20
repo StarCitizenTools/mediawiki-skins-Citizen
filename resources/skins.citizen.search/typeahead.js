@@ -157,6 +157,22 @@ function getSuggestions( searchQuery ) {
 			return text.replace( regex, '<span class="' + prefix + '__highlight">$&</span>' );
 		};
 
+		// Check if the redirect is useful
+		// See T303013
+		const isRedirectUseful = ( title, matchedTitle ) => {
+			// Change to lowercase then remove space and dashes
+			const cleanup = ( text ) => {
+				return text.toLowerCase().replace( /-|\s/g, '' );
+			};
+
+			title = cleanup( title );
+			matchedTitle = cleanup( matchedTitle );
+
+			// eslint thinks it is an array
+			// eslint-disable-next-line no-restricted-syntax
+			return !( title.includes( matchedTitle ) || matchedTitle.includes( title ) );
+		};
+
 		// Maybe there is a cleaner way?
 		// Maybe there is a faster way compared to multiple querySelector?
 		// Should I just use regular for loop for faster performance?
@@ -178,7 +194,7 @@ function getSuggestions( searchQuery ) {
 
 			// Result is a redirect
 			// Show the redirect title and highlight it
-			if ( result.matchedTitle ) {
+			if ( result.matchedTitle && isRedirectUseful( result.title, result.matchedTitle ) ) {
 				suggestionTitle.innerHTML = result.title +
 					'<span class="' + prefix + '__redirect">' +
 					mw.message( 'search-redirect', highlightTitle( result.matchedTitle ) ).plain() +
