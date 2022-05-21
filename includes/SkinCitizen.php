@@ -24,7 +24,6 @@
 use Citizen\GetConfigTrait;
 use Citizen\Partials\BodyContent;
 use Citizen\Partials\Drawer;
-use Citizen\Partials\FirstHeading;
 use Citizen\Partials\Footer;
 use Citizen\Partials\Header;
 use Citizen\Partials\Logos;
@@ -32,6 +31,7 @@ use Citizen\Partials\Metadata;
 use Citizen\Partials\PageTools;
 use Citizen\Partials\Tagline;
 use Citizen\Partials\Theme;
+use Citizen\Partials\Title;
 
 /**
  * Skin subclass for Citizen
@@ -70,7 +70,7 @@ class SkinCitizen extends SkinMustache {
 		$header = new Header( $this );
 		$logos = new Logos( $this );
 		$drawer = new Drawer( $this );
-		$firstHeading = new FirstHeading( $this );
+		$pageTitle = new Title( $this );
 		$tagline = new Tagline( $this );
 		$bodycontent = new BodyContent( $this );
 		$footer = new Footer( $this );
@@ -112,12 +112,11 @@ class SkinCitizen extends SkinMustache {
 				'msg-citizen-jumptotop' => $this->msg( 'citizen-jumptotop' )->text() . ' [home]',
 			],
 
-			'html-title--formatted' => $firstHeading->buildFirstHeading( $parentData[ 'html-title' ] ),
+			'html-title-heading--formatted' => $pageTitle->buildTitle( $parentData, $title ),
 
 			'data-pagetools' => $tools->buildPageTools( $parentData ),
 
 			'html-newtalk' => $newTalksHtml ? '<div class="usermessage">' . $newTalksHtml . '</div>' : '',
-			'page-langcode' => $title->getPageViewLanguage()->getHtmlCode(),
 
 			'msg-tagline' => $tagline->getTagline( $out ),
 
