@@ -25,8 +25,8 @@ declare( strict_types=1 );
 
 namespace Citizen\Partials;
 
-use MediaWiki\MediaWikiServices;
 use Html;
+use MediaWiki\MediaWikiServices;
 
 /**
  * Title partial of Skin Citizen
@@ -35,62 +35,62 @@ final class Title extends Partial {
 
 	/**
 	 * Build the HTML for html-title-heading
-     * Backported from 1.39 to 1.35
-     * TODO: Deprecate this when we move to 1.39 and T306440 is resolved
+	 * Backported from 1.39 to 1.35
+	 * TODO: Deprecate this when we move to 1.39 and T306440 is resolved
 	 *
-     * @param array $parentData
-     * @param Title $title
+	 * @param array $parentData
+	 * @param Title $title
 	 * @return string html
 	 */
 	public function buildTitle( $parentData, $title ) {
-        $blankedHeading = $parentData['is-title-blank'] ?? false; // @since 1.38
-        $htmlTitle = $parentData['html-title'];
+		$blankedHeading = $parentData['is-title-blank'] ?? false; // @since 1.38
+		$htmlTitle = $parentData['html-title'];
 
-        $data = Html::rawElement(
-             'h1',
-             [
-                 'id' => 'firstHeading',
-                 'class' => 'firstHeading mw-first-heading',
-                 'style' => $blankedHeading ? 'display: none' : null
-             ] + $this->getUserLanguageAttributes(),
-             $this->decorateTitle( $htmlTitle )
-         );
+		$data = Html::rawElement(
+			 'h1',
+			 [
+				 'id' => 'firstHeading',
+				 'class' => 'firstHeading mw-first-heading',
+				 'style' => $blankedHeading ? 'display: none' : null
+			 ] + $this->getUserLanguageAttributes(),
+			 $this->decorateTitle( $htmlTitle )
+		 );
 
-        return $data;
+		return $data;
 	}
 
-    /**
-     * Wrap text within parenthesis with a span tag
-     *
-     * @return string html
-     */
-    private function decorateTitle( $html ) {
-        $pattern = '/(\(.+\))/';
-        $replacement = '<span class="firstHeading-parenthesis">$1</span>';
-        $$html = preg_replace( $pattern, $replacement, $html );
+	/**
+	 * Wrap text within parenthesis with a span tag
+	 *
+	 * @return string html
+	 */
+	private function decorateTitle( $html ) {
+		$pattern = '/(\(.+\))/';
+		$replacement = '<span class="firstHeading-parenthesis">$1</span>';
+		$$html = preg_replace( $pattern, $replacement, $html );
 
-        return $html;
-    }
+		return $html;
+	}
 
-    /**
-     * From core because it is private
-     *
-     * @return array
-     */
-    private function getUserLanguageAttributes() {
-        $userLang = $this->skin->getLanguage();
-        $userLangCode = $userLang->getHtmlCode();
-        $userLangDir = $userLang->getDir();
-        $contLang = MediaWikiServices::getInstance()->getContentLanguage();
-        if (
-            $userLangCode !== $contLang->getHtmlCode() ||
-            $userLangDir !== $contLang->getDir()
-        ) {
-            return [
-            'lang' => $userLangCode,
-            'dir' => $userLangDir,
-            ];
-        }
-        return [];
-    }
+	/**
+	 * From core because it is private
+	 *
+	 * @return array
+	 */
+	private function getUserLanguageAttributes() {
+		$userLang = $this->skin->getLanguage();
+		$userLangCode = $userLang->getHtmlCode();
+		$userLangDir = $userLang->getDir();
+		$contLang = MediaWikiServices::getInstance()->getContentLanguage();
+		if (
+			$userLangCode !== $contLang->getHtmlCode() ||
+			$userLangDir !== $contLang->getDir()
+		) {
+			return [
+			'lang' => $userLangCode,
+			'dir' => $userLangDir,
+			];
+		}
+		return [];
+	}
 }
