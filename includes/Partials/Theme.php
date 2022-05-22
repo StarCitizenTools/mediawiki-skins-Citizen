@@ -37,7 +37,7 @@ final class Theme extends Partial {
 	 * @param array &$options
 	 */
 	public function setSkinTheme( array &$options ) {
-        $out = $this->out;
+		$out = $this->out;
 
 		// Set theme to site theme
 		$theme = $this->getConfigValue( 'CitizenThemeDefault' ) ?? 'auto';

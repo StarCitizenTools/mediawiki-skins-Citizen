@@ -29,7 +29,6 @@ use MediaWiki\MediaWikiServices;
 use MWException;
 use Skin;
 use SpecialPage;
-use Title;
 use User;
 
 /**
