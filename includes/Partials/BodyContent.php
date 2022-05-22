@@ -31,7 +31,6 @@ use DOMXpath;
 use Html;
 use HtmlFormatter\HtmlFormatter;
 use MediaWiki\MediaWikiServices;
-use OutputPage;
 use Wikimedia\Services\NoSuchServiceException;
 
 final class BodyContent extends Partial {
