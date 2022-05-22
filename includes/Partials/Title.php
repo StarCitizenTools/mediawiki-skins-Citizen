@@ -43,7 +43,8 @@ final class Title extends Partial {
 	 * @return string html
 	 */
 	public function buildTitle( $parentData, $title ) {
-		$blankedHeading = $parentData['is-title-blank'] ?? false; // @since 1.38
+		// @since 1.38
+		$blankedHeading = $parentData['is-title-blank'] ?? false;
 		$htmlTitle = $parentData['html-title'];
 
 		$data = Html::rawElement(
@@ -62,6 +63,7 @@ final class Title extends Partial {
 	/**
 	 * Wrap text within parenthesis with a span tag
 	 *
+	 * @param string $html title of the page
 	 * @return string html
 	 */
 	private function decorateTitle( $html ) {

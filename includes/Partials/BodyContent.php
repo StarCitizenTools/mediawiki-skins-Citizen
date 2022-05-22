@@ -75,7 +75,6 @@ final class BodyContent extends Partial {
 	/**
 	 * Rebuild the body content
 	 *
-	 * @param OutputPage $out OutputPage
 	 * @return string html
 	 */
 	public function buildBodyContent() {
