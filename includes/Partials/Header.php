@@ -30,6 +30,7 @@ use MWException;
 use Skin;
 use SpecialPage;
 use Title;
+use User;
 
 /**
  * Header partial of Skin Citizen
@@ -39,17 +40,17 @@ use Title;
  * - Search
  */
 final class Header extends Partial {
-
 	/**
 	 * Build Personal Tools menu
 	 *
 	 * @return array
 	 */
 	public function buildPersonalMenu(): array {
-		$personalTools = $this->skin->getPersonalToolsForMakeListItem(
-			$this->skin->buildPersonalUrlsPublic()
+		$skin = $this->skin;
+
+		$personalTools = $skin->getPersonalToolsForMakeListItem(
+			$skin->buildPersonalUrlsPublic()
 		);
-		$user = $this->skin->getUser();
 
 		// Move the Echo badges out of default list
 		// TODO: Remove notifications since MW 1.36 from buildPersonalUrls
@@ -61,14 +62,15 @@ final class Header extends Partial {
 		}
 
 		// TODO: Decorate personal menu for anon users in the future
+		$user = $this->user;
 		if ( $user->isRegistered() ) {
 			$personalTools = $this->decoratePersonalMenu( $personalTools, $user );
 		}
 
-		$personalMenu = $this->skin->getPortletData( 'personal', $personalTools );
+		$personalMenu = $skin->getPortletData( 'personal', $personalTools );
 
 		return [
-			'msg-citizen-personalmenu-toggle' => $this->skin->msg( 'citizen-personalmenu-toggle' )->text(),
+			'msg-citizen-personalmenu-toggle' => $skin->msg( 'citizen-personalmenu-toggle' )->text(),
 			'data-personal-menu-list' => $personalMenu,
 		];
 	}
@@ -79,8 +81,10 @@ final class Header extends Partial {
 	 * @return array
 	 */
 	public function getNotifications(): array {
-		$personalTools = $this->skin->getPersonalToolsForMakeListItem(
-			$this->skin->buildPersonalUrlsPublic()
+		$skin = $this->skin;
+
+		$personalTools = $skin->getPersonalToolsForMakeListItem(
+			$skin->buildPersonalUrlsPublic()
 		);
 
 		// Create the Echo badges
@@ -92,7 +96,7 @@ final class Header extends Partial {
 			$notifications['notifications-notice'] = $personalTools['notifications-notice'];
 		}
 
-		$html = $this->skin->getPortletData( 'notifications', $notifications );
+		$html = $skin->getPortletData( 'notifications', $notifications );
 
 		return $html;
 	}
@@ -104,17 +108,19 @@ final class Header extends Partial {
 	 * @throws MWException
 	 */
 	public function buildSearchProps(): array {
-		$toggleMsg = $this->skin->msg( 'citizen-search-toggle' )->text();
+		$skin = $this->skin;
+
+		$toggleMsg = $skin->msg( 'citizen-search-toggle' )->text();
 
 		return [
 			'msg-citizen-search-toggle' => $toggleMsg,
 			'msg-citizen-search-toggle-shortcut' => $toggleMsg . ' [/]',
 			'form-action' => $this->getConfigValue( 'Script' ),
-			'html-input' => $this->skin->makeSearchInput( [ 'id' => 'searchInput' ] ),
-			'msg-search' => $this->skin->msg( 'search' ),
+			'html-input' => $skin->makeSearchInput( [ 'id' => 'searchInput' ] ),
+			'msg-search' => $skin->msg( 'search' ),
 			'page-title' => SpecialPage::getTitleFor( 'Search' )->getPrefixedDBkey(),
 			'html-random-href' => Skin::makeSpecialUrl( 'Randompage' ),
-			'msg-random' => $this->skin->msg( 'Randompage' )->text(),
+			'msg-random' => $skin->msg( 'Randompage' )->text(),
 		];
 	}
 
@@ -152,13 +158,16 @@ final class Header extends Partial {
 			return null;
 		}
 
+		$skin = $this->skin;
+		$title = $this->title;
+
 		// Add user group
 		$groupLinks = [];
 		$msgName = 'group-%s';
 
 		foreach ( $groups as $group ) {
-			$groupPage = Title::newFromText(
-				$this->skin->msg( sprintf( $msgName, $group ) )->text(),
+			$groupPage = $title->newFromText(
+				$skin->msg( sprintf( $msgName, $group ) )->text(),
 				NS_PROJECT
 			);
 
@@ -193,8 +202,10 @@ final class Header extends Partial {
 			return null;
 		}
 
+		$skin = $this->skin;
+
 		return [
-			'text' => $this->skin->msg( 'usereditcount' )
+			'text' => $skin->msg( 'usereditcount' )
 				->numParams( sprintf( '%s', number_format( $edits, 0 ) ) ),
 			'id' => 'pt-usercontris'
 		];

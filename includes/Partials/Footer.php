@@ -35,8 +35,10 @@ final class Footer extends Partial {
 	 * @return array for use in Mustache template describing the footer elements.
 	 */
 	public function getFooterData(): array {
+		$skin = $this->skin;
+
 		$data = [];
-		$footerLinks = $this->skin->getFooterLinksPublic();
+		$footerLinks = $skin->getFooterLinksPublic();
 		$msg = [ 'desc', 'tagline' ];
 
 		// Get last modified message
@@ -47,7 +49,7 @@ final class Footer extends Partial {
 
 		// Get messages
 		foreach ( $msg as $key ) {
-			$data["msg-citizen-footer-$key"] = $this->skin->msg( "citizen-footer-$key" )
+			$data["msg-citizen-footer-$key"] = $skin->msg( "citizen-footer-$key" )
 				->inContentLanguage()->parse();
 		}
 
@@ -73,14 +75,14 @@ final class Footer extends Partial {
 			];
 		}
 
-		$footerIcons = $this->skin->getFooterIconsPublic();
+		$footerIcons = $skin->getFooterIconsPublic();
 
 		if ( count( $footerIcons ) > 0 ) {
 			$icons = [];
 			foreach ( $footerIcons as $blockName => $blockIcons ) {
 				$html = '';
 				foreach ( $blockIcons as $key => $icon ) {
-					$html .= $this->skin->makeFooterIcon( $icon );
+					$html .= $skin->makeFooterIcon( $icon );
 				}
 				if ( $html ) {
 					$block = htmlspecialchars( $blockName );

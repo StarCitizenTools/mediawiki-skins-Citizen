@@ -51,22 +51,26 @@ final class PageTools extends Partial {
 	 * @return array html
 	 */
 	public function buildPageTools( $parentData ): array {
+		$skin = $this->skin;
+		$user = $this->user;
+
 		$condition = $this->getConfigValue( 'CitizenShowPageTools' );
-		$contentNavigation = $this->skin->buildContentNavigationUrlsPublic();
-		$portals = $this->skin->buildSidebar();
+		$contentNavigation = $skin->buildContentNavigationUrlsPublic();
+		$portals = $skin->buildSidebar();
 		$props = [];
 
 		// Login-based condition, return true if condition is met
 		if ( $condition === 'login' ) {
-			$condition = $this->skin->getUser()->isRegistered();
+			$condition = $user->isRegistered();
 		}
 
 		// Permission-based condition, return true if condition is met
 		if ( is_string( $condition ) && strpos( $condition, 'permission' ) === 0 ) {
 			$permission = substr( $condition, 11 );
 			try {
+				$title = $this->title;
 				$condition = MediaWikiServices::getInstance()->getPermissionManager()->userCan(
-					$permission, $this->skin->getUser(), $this->skin->getTitle() );
+					$permission, $user, $title );
 			} catch ( Exception $e ) {
 				$condition = false;
 			}
@@ -75,12 +79,12 @@ final class PageTools extends Partial {
 		if ( $condition === true ) {
 
 			if ( !method_exists( SkinTemplate::class, 'runOnSkinTemplateNavigationHooks' ) ) {
-				$viewshtml = $this->skin->getPortletData( 'views', $contentNavigation[ 'views' ] ?? [] );
-				$actionshtml = $this->skin->getPortletData( 'actions', $contentNavigation[ 'actions' ] ?? [] );
-				$namespaceshtml = $this->skin->getPortletData( 'namespaces', $contentNavigation[ 'namespaces' ] ?? [] );
-				$variantshtml = $this->skin->getPortletData( 'variants', $contentNavigation[ 'variants' ] ?? [] );
-				$toolboxhtml = $this->skin->getPortletData( 'tb',  $portals['TOOLBOX'] ?? [] );
-				$languageshtml = $this->skin->getPortletData( 'lang',  $portals['LANGUAGES'] ?? [] );
+				$viewshtml = $skin->getPortletData( 'views', $contentNavigation[ 'views' ] ?? [] );
+				$actionshtml = $skin->getPortletData( 'actions', $contentNavigation[ 'actions' ] ?? [] );
+				$namespaceshtml = $skin->getPortletData( 'namespaces', $contentNavigation[ 'namespaces' ] ?? [] );
+				$variantshtml = $skin->getPortletData( 'variants', $contentNavigation[ 'variants' ] ?? [] );
+				$toolboxhtml = $skin->getPortletData( 'tb',  $portals['TOOLBOX'] ?? [] );
+				$languageshtml = $skin->getPortletData( 'lang',  $portals['LANGUAGES'] ?? [] );
 			} else {
 				$viewshtml = $parentData['data-portlets']['data-views'];
 				$actionshtml = $parentData['data-portlets']['data-actions'];
@@ -175,7 +179,7 @@ final class PageTools extends Partial {
 			}
 		}
 
-		$title = $skin->getTitle();
+		$title = $this->title;
 		// Defensive programming - if a special page has added languages explicitly, best to show it.
 		if ( $title && $title->isSpecialPage() && empty( $this->getLanguagesCached() ) ) {
 			return false;

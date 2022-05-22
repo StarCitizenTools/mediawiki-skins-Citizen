@@ -25,6 +25,7 @@ declare( strict_types=1 );
 
 namespace Citizen\Partials;
 
+use Title;
 use User;
 use Wikimedia\IPUtils;
 
@@ -36,11 +37,13 @@ final class Tagline extends Partial {
 	/**
 	 * Get tagline message
 	 *
-	 * @param OutputPage $out OutputPage
 	 * @return string
 	 */
-	public function getTagline( $out ) {
-		$title = $out->getTitle();
+	public function getTagline() {
+		$skin = $this->skin;
+		$out = $this->out;
+		$title = $this->title;
+
 		$shortdesc = $out->getProperty( 'shortdesc' );
 		$tagline = '';
 
@@ -54,7 +57,7 @@ final class Tagline extends Partial {
 				// Check if namespaceText exists
 				// Return null if main namespace or not defined
 				if ( $namespaceText ) {
-					$msg = $this->skin->msg( 'citizen-tagline-ns-' . strtolower( $namespaceText ) );
+					$msg = $skin->msg( 'citizen-tagline-ns-' . strtolower( $namespaceText ) );
 					// Use custom message if exists
 					if ( !$msg->isDisabled() ) {
 						$tagline = $msg->text();
@@ -64,18 +67,18 @@ final class Tagline extends Partial {
 							$tagline = '';
 						} elseif ( $title->isTalkPage() ) {
 							// Use generic talk page message if talk page
-							$tagline = $this->skin->msg( 'citizen-tagline-ns-talk' )->text();
+							$tagline = $skin->msg( 'citizen-tagline-ns-talk' )->text();
 
 						} elseif ( $title->inNamespace( NS_USER ) && !$title->isSubpage() ) {
 							// Build user tagline if it is a top-level user page
 							$tagline = $this->buildUserTagline( $title );
 						} else {
 							// Fallback to site tagline
-							$tagline = $this->skin->msg( 'tagline' )->text();
+							$tagline = $skin->msg( 'tagline' )->text();
 						}
 					}
 				} else {
-					$tagline = $this->skin->msg( 'tagline' )->text();
+					$tagline = $skin->msg( 'tagline' )->text();
 				}
 			}
 		}
@@ -97,7 +100,7 @@ final class Tagline extends Partial {
 				// TODO: Figure out a waw to get registration duration,
 				//	like Langauge::getHumanTimestamp()
 				//$registration = $user->getRegistration();
-				$msgEditCount = $this->skin->msg( 'usereditcount' )
+				$msgEditCount = $skin->msg( 'usereditcount' )
 					->numParams( sprintf( '%s', number_format( $editCount, 0 ) ) );
 				return $msgEditCount;
 			}
@@ -108,19 +111,21 @@ final class Tagline extends Partial {
 	/**
 	 * Return new User object based on username or IP address.
 	 * Based on MinervaNeue
+	 *
 	 * @param Title $title
 	 * @return User|null
 	 */
 	private function buildPageUserObject( $title ) {
+		$user = $this->user;
 		$titleText = $title->getText();
 
 		if ( IPUtils::isIPAddress( $titleText ) ) {
-			return User::newFromAnyId( null, $titleText, null );
+			return $user->newFromAnyId( null, $titleText, null );
 		}
 
-		$pageUserId = User::idFromName( $titleText );
+		$pageUserId = $user->idFromName( $titleText );
 		if ( $pageUserId ) {
-			return User::newFromId( $pageUserId );
+			return $user->newFromId( $pageUserId );
 		}
 
 		return null;

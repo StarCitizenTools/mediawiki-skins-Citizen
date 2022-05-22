@@ -33,12 +33,14 @@ final class Metadata extends Partial {
 	 * Adds metadata to the output page
 	 */
 	public function addMetadata() {
+		$out = $this->out;
+
 		// Responsive layout
 		// Replace with core responsive option if it is implemented in 1.36+
-		$this->out->addMeta( 'viewport', 'width=device-width, initial-scale=1.0' );
+		$out->addMeta( 'viewport', 'width=device-width, initial-scale=1.0' );
 
 		// Theme color
-		$this->out->addMeta( 'theme-color', $this->getConfigValue( 'CitizenThemeColor' ) ?? '' );
+		$out->addMeta( 'theme-color', $this->getConfigValue( 'CitizenThemeColor' ) ?? '' );
 
 		// Generate webapp manifest
 		$this->addManifest();
@@ -64,7 +66,8 @@ final class Metadata extends Partial {
 			$href = '';
 		}
 
-		$this->out->addLink( [
+		$out = $this->out;
+		$out->addLink( [
 			'rel' => 'manifest',
 			'href' => $href,
 		] );
@@ -78,7 +81,8 @@ final class Metadata extends Partial {
 			return;
 		}
 
-		$this->out->addLink( [
+		$out = $this->out;
+		$out->addLink( [
 			'rel' => 'preconnect',
 			'href' => $this->getConfigValue( 'CitizenPreconnectURL' ),
 		] );

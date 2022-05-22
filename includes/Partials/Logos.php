@@ -43,14 +43,16 @@ final class Logos extends Partial {
 	 * @return array
 	 */
 	public function getLogoData(): array {
-		$logoData = ResourceLoaderSkinModule::getAvailableLogos( $this->skin->getConfig() );
+		$skin = $this->skin;
+
+		$logoData = ResourceLoaderSkinModule::getAvailableLogos( $skin->getConfig() );
 
 		// check if the logo supports variants
 		$variantsLogos = $logoData['variants'] ?? null;
 
 		if ( $variantsLogos ) {
-			$preferred = $this->skin->getOutput()->getTitle()
-				->getPageViewLanguage()->getCode();
+			$title = $this->title;
+			$preferred = $title->getPageViewLanguage()->getCode();
 			$variantOverrides = $variantsLogos[$preferred] ?? null;
 			// Overrides the logo
 			if ( $variantOverrides ) {

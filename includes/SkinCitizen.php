@@ -118,9 +118,9 @@ class SkinCitizen extends SkinMustache {
 
 			'html-newtalk' => $newTalksHtml ? '<div class="usermessage">' . $newTalksHtml . '</div>' : '',
 
-			'msg-tagline' => $tagline->getTagline( $out ),
+			'msg-tagline' => $tagline->getTagline(),
 
-			'html-body-content--formatted' => $bodycontent->buildBodyContent( $out ),
+			'html-body-content--formatted' => $bodycontent->buildBodyContent(),
 
 			'data-citizen-footer' => $footer->getFooterData(),
 		];

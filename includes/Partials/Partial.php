@@ -28,6 +28,7 @@ namespace Citizen\Partials;
 use Citizen\GetConfigTrait;
 use OutputPage;
 use SkinCitizen;
+use Title;
 
 /**
  * The base class for all skin partials
@@ -49,11 +50,23 @@ abstract class Partial {
 	protected $out;
 
 	/**
-	 * Drawer constructor.
+	 * @var Title
+	 */
+	protected $title;
+
+	/**
+	 * @var User
+	 */
+	protected $user;
+
+	/**
+	 * Constructor
 	 * @param SkinCitizen $skin
 	 */
 	public function __construct( SkinCitizen $skin ) {
 		$this->skin = $skin;
 		$this->out = $skin->getOutput();
+		$this->title = $this->out->getTitle();
+		$this->user = $this->out->getUser();
 	}
 }

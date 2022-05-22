@@ -48,8 +48,10 @@ final class Drawer extends Partial {
 	 * @throws Exception
 	 */
 	public function getDrawerTemplateData() {
+		$skin = $this->skin;
+
 		$drawer = [];
-		$drawerData = $this->skin->buildSidebar();
+		$drawerData = $skin->buildSidebar();
 		$portletCount = 0;
 
 		// Render portlets
@@ -71,7 +73,7 @@ final class Drawer extends Partial {
 					case 'LANGUAGES':
 						break;
 					default:
-						$drawer[] = $this->skin->getPortletData( $name, $items );
+						$drawer[] = $skin->getPortletData( $name, $items );
 						// All portlets within the drawer should have a label
 						// to ensure it is layout nicely
 						$drawer[$portletCount]['has-label'] = true;
@@ -84,7 +86,7 @@ final class Drawer extends Partial {
 		$drawer = $this->addSiteTools( $drawer, $portletCount );
 
 		$drawerData = [
-			'msg-citizen-drawer-toggle' => $this->skin->msg( 'citizen-drawer-toggle' )->text(),
+			'msg-citizen-drawer-toggle' => $skin->msg( 'citizen-drawer-toggle' )->text(),
 			'array-portlets' => $drawer,
 			'data-drawer-sitestats' => $this->getSiteStatsData(),
 		];
@@ -133,10 +135,12 @@ final class Drawer extends Partial {
 	 * @throws MWException
 	 */
 	private function getSiteToolsHTML(): string {
+		$skin = $this->skin;
+
 		$html = '';
 
 		// Special pages
-		$html .= $this->skin->makeListItem( 'specialpages', [
+		$html .= $skin->makeListItem( 'specialpages', [
 			'href' => Skin::makeSpecialUrl( 'Specialpages' ),
 			'id' => 't-specialpages'
 		] );
@@ -149,7 +153,7 @@ final class Drawer extends Partial {
 			// Link to old upload form
 			$uploadHref = Skin::makeSpecialUrl( 'Upload' );
 		}
-		$html .= $this->skin->makeListItem( 'upload', [
+		$html .= $skin->makeListItem( 'upload', [
 			'href' => $uploadHref,
 			'id' => 't-upload'
 		] );
@@ -166,13 +170,14 @@ final class Drawer extends Partial {
 		$props = [];
 
 		if ( $this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) ) {
+			$skin = $this->skin;
 			$stats = [ 'articles', 'images', 'users', 'edits' ];
 			$items = [];
 			$fmt = null;
 
 			// Get NumberFormatter here so that we don't have to call it for every stats
 			if ( class_exists( \NumberFormatter::class ) ) {
-				$locale = $this->skin->getLanguage()->getHtmlCode() ?? 'en_US';
+				$locale = $skin->getLanguage()->getHtmlCode() ?? 'en_US';
 				$fmt = new \NumberFormatter( $locale, \NumberFormatter::PADDING_POSITION );
 				$fmt->setAttribute( \NumberFormatter::ROUNDING_MODE, \NumberFormatter::ROUND_DOWN );
 				$fmt->setAttribute( \NumberFormatter::MAX_FRACTION_DIGITS, 1 );
@@ -182,7 +187,7 @@ final class Drawer extends Partial {
 				$items[] = [
 					'id' => $stat,
 					'value' => $this->getSiteStatValue( $stat, $fmt ),
-					'label' => $this->skin->msg( "citizen-sitestats-$stat-label" )->text(),
+					'label' => $skin->msg( "citizen-sitestats-$stat-label" )->text(),
 				];
 			}
 		}
