@@ -51,6 +51,12 @@ final class Header extends Partial {
 			$skin->buildPersonalUrlsPublic()
 		);
 
+		$header = $this->getPersonalHeaderData( $personalTools );
+		// We need userpage for personal header
+		if ( isset( $personalTools['userpage'] ) ) {
+			unset( $personalTools['userpage'] );
+		}
+
 		// Move the Echo badges out of default list
 		// TODO: Remove notifications since MW 1.36 from buildPersonalUrls
 		if ( isset( $personalTools['notifications-alert'] ) ) {
@@ -60,13 +66,10 @@ final class Header extends Partial {
 			unset( $personalTools['notifications-notice'] );
 		}
 
-		$user = $this->user;
-		$personalTools = $this->decoratePersonalMenu( $personalTools, $user );
-		$personalMenu = $skin->getPortletData( 'personal', $personalTools );
-
 		return [
 			'msg-citizen-personalmenu-toggle' => $skin->msg( 'citizen-personalmenu-toggle' )->text(),
-			'data-personal-menu-list' => $personalMenu,
+			'data-personal-menu-header' => $header,
+			'data-personal-menu-list' => $skin->getPortletData( 'personal', $personalTools ),
 		];
 	}
 
@@ -123,18 +126,20 @@ final class Header extends Partial {
 	 * Decorate the personal menu
 	 *
 	 * @param array $personalTools The original personal tools urls
-	 * @param User $user
 	 *
 	 * @return array
 	 */
-	private function decoratePersonalMenu( $personalTools, $user ): array {
-		$personalMenu = [
+	private function getPersonalHeaderData( $personalTools ): array {
+		$skin = $this->skin;
+		$user = $this->user;
+
+		$header = [
 			'userpage' => $personalTools['userpage'] ?? null,
 			'usergroups' => $this->getUserGroupsData( $personalTools, $user ),
 			'usercontris' => $this->getUserContributionsData( $user ),
 		];
 
-		return array_merge( array_filter( $personalMenu ), $personalTools );
+		return $skin->getPortletData( 'personal-header', array_filter( $header ) );
 	}
 
 	/**
