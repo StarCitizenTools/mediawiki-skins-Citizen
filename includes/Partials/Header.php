@@ -60,12 +60,8 @@ final class Header extends Partial {
 			unset( $personalTools['notifications-notice'] );
 		}
 
-		// TODO: Decorate personal menu for anon users in the future
 		$user = $this->user;
-		if ( $user->isRegistered() ) {
-			$personalTools = $this->decoratePersonalMenu( $personalTools, $user );
-		}
-
+		$personalTools = $this->decoratePersonalMenu( $personalTools, $user );
 		$personalMenu = $skin->getPortletData( 'personal', $personalTools );
 
 		return [
@@ -138,7 +134,7 @@ final class Header extends Partial {
 			'usercontris' => $this->getUserContributionsData( $user ),
 		];
 
-		return array_merge( $personalMenu, $personalTools );
+		return array_merge( array_filter( $personalMenu ), $personalTools );
 	}
 
 	/**
