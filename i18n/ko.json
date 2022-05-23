@@ -5,6 +5,8 @@
 		]
 	},
 	"citizen-personalmenu-toggle": "개인 메뉴 토글",
+	"citizen-languages-toggle": "기타 언어",
+	"citizen-actions-more-toggle": "다른 명령",
 	"citizen-sitestats-articles-label": "문서",
 	"citizen-sitestats-images-label": "파일",
 	"citizen-sitestats-users-label": "사용자",
