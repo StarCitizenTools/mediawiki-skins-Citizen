@@ -2,7 +2,7 @@
  * Framework
 */
 html {
-	scroll-padding-top: ~'calc(var(--height-header) + 20px)'; // fixed header offset, supported by major browsers
+	scroll-padding-top: ~'calc( var( --height-header ) + 20px )'; // fixed header offset, supported by major browsers
 }
 
 html,
@@ -29,7 +29,6 @@ h6 {
 }
 
 table {
-	display: block;
 	overflow: auto;
 	max-width: 100vw;
 }
@@ -193,7 +192,6 @@ a {
 .mw-body,
 .parsoid-body {
 	direction: ltr;
-	overflow-x: hidden; // avoid breaking layout in smaller screen sizes
 }
 
 // TODO: Think of better places to put indicators;
@@ -242,16 +240,19 @@ video {
 	}
 }
 
-@media ( min-width: @width-breakpoint-tablet ) {
+@media ( max-width: @width-breakpoint-tablet ) {
 	.mw-body,
 	.parsoid-body {
-		overflow-x: auto;
+		overflow-x: hidden; // fallback if clip is not supported
+		overflow-x: clip; // avoid breaking layout in smaller screen sizes
 	}
 
 	table {
-		display: table;
+		display: block;
 	}
+}
 
+@media ( min-width: @width-breakpoint-tablet ) {
 	// Delay scroll animation won't happen on load
 	// Use it only for larger viewport as it is very costly
 	// on mobile devices
