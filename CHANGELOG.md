@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.17.3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.2...v1.17.3) (2022-05-23)
+
+
+### Features
+
+* **core:** add link to talk page next to skin listing ([23aad4d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/23aad4d389a148adf947fbbc9441b9d71b6df6ff))
+* **core:** clean up and tweak z-index usage ([be8b9a0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/be8b9a0a0d75eaca1186a03ae138d9c85e328da2)), closes [#462](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/462)
+* **core:** decorate personal menu for anon users ([eaad65f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/eaad65fc3ccaecf3dd5a6c25bc79b7255b200127))
+* **core:** do not override blockquote font size ([1b72174](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1b7217457aa606a10e14e0a39d9fcb8449e2b1b4))
+* **core:** hide redirect message in search results when not needed ([726a348](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/726a3483693ef2bd2b2f5dbc78cbfe7dbdcccb1d))
+* **core:** improve handling of number formatter for site stats ([c0cae44](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c0cae44d41e112a6d3b44c2babea05802d591f69))
+* **core:** indicate when search results are from redirects ([a5c52e4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a5c52e48b730ed0d13fa2d1be666d97f1accfb1b))
+* **core:** intergrate firstHeading changes from MW 1.39 ([1df970e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1df970eb4160a9b701ae724520ce2c9cb0427b2c))
+* **core:** rename `$wgCitizenPortalAttach` to `$wgCitizenSiteToolsPortlet` ([851356f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/851356f3d95370c36ce05b322c7b46976a608800))
+* **core:** separate header from personal menu list ([21633dc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/21633dcd3cb5aad7252575d7caca7453d916ab80))
+* **core:** use gap instead of margin for spacing in flexbox ([71999f8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/71999f8838c6f856827732a4611f6e92e3b69787))
+* **core:** use keywords for transform origin ([ea87523](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ea875234be4237179944fb113344ccbc460340ad))
+
+
+### Bug Fixes
+
+* **core:** oversized ULS language toggle under tablet viewport ([c81ba1f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c81ba1f07a699e56dee691a5b177dce510a5c71d))
+
 ### [1.17.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.1...v1.17.2) (2022-05-18)
 
 
