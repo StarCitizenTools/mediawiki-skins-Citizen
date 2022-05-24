@@ -97,6 +97,7 @@ final class Tagline extends Partial {
 		if ( $user ) {
 			$editCount = $user->getEditCount();
 			if ( $editCount ) {
+				$skin = $this->skin;
 				// TODO: Figure out a waw to get registration duration,
 				//	like Langauge::getHumanTimestamp()
 				//$registration = $user->getRegistration();
@@ -116,8 +117,8 @@ final class Tagline extends Partial {
 	 * @return User|null
 	 */
 	private function buildPageUserObject( $title ) {
-		$user = $this->user;
 		$titleText = $title->getText();
+		$user = $this->user;
 
 		if ( IPUtils::isIPAddress( $titleText ) ) {
 			return $user->newFromAnyId( null, $titleText, null );
