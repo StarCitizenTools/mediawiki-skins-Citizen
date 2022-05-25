@@ -4,7 +4,8 @@
  * TODO: Maybe combine the localStorage keys into one object
  */
 
-const CLASS = 'citizen-pref',
+const
+	CLASS = 'citizen-pref',
 	PREFIX_KEY = 'skin-citizen-';
 
 /**
@@ -36,12 +37,12 @@ function setIndicator( key, value ) {
 }
 
 /**
- * Format the pref for use with the form input
+ * Convert the pref values for use with the form input
  *
  * @param {Object} pref
  * @return {Object}
  */
-function convertPref( pref ) {
+function convertForForm( pref ) {
 	return {
 		theme: pref.theme,
 		fontsize: Number( pref.fontsize.slice( 0, -1 ) ) / 10 - 8,
@@ -56,8 +57,7 @@ function convertPref( pref ) {
  * @return {Object} pref
  */
 function getPref() {
-	const rootStyle = window.getComputedStyle( document.documentElement ),
-		pref = {};
+	const rootStyle = window.getComputedStyle( document.documentElement );
 
 	// Create an initial value for font size
 	const initFontSize = () => {
@@ -92,11 +92,12 @@ function getPref() {
 		return ( ( browserFontSize === rootFontSize ) ? '100%' : rootFontSize );
 	};
 
-	// It is already set in theme.js in skins.citizen.scripts
-	pref.theme = localStorage.getItem( PREFIX_KEY + 'theme' );
-	pref.fontsize = localStorage.getItem( PREFIX_KEY + 'fontsize' ) ?? initFontSize();
-	pref.pagewidth = localStorage.getItem( PREFIX_KEY + 'pagewidth' ) ?? rootStyle.getPropertyValue( '--width-layout' );
-	pref.lineheight = localStorage.getItem( PREFIX_KEY + 'lineheight' ) ?? rootStyle.getPropertyValue( '--line-height' );
+	const pref = {
+		theme: localStorage.getItem( PREFIX_KEY + 'theme' ),
+		fontsize: localStorage.getItem( PREFIX_KEY + 'fontsize' ) ?? initFontSize(),
+		pagewidth: localStorage.getItem( PREFIX_KEY + 'pagewidth' ) ?? rootStyle.getPropertyValue( '--width-layout' ),
+		lineheight: localStorage.getItem( PREFIX_KEY + 'lineheight' ) ?? rootStyle.getPropertyValue( '--line-height' )
+	};
 
 	return pref;
 }
@@ -108,9 +109,10 @@ function getPref() {
  * @return {void}
  */
 function setPref( event ) {
-	// eslint-disable-next-line compat/compat
-	const formData = Object.fromEntries( new FormData( event.currentTarget ) ),
-		currentPref = convertPref( getPref() ),
+	const
+		// eslint-disable-next-line compat/compat
+		formData = Object.fromEntries( new FormData( event.currentTarget ) ),
+		currentPref = convertForForm( getPref() ),
 		newPref = {
 			theme: formData[ CLASS + '-theme' ],
 			fontsize: Number( formData[ CLASS + '-fontsize' ] ),
@@ -123,12 +125,11 @@ function setPref( event ) {
 
 	} else if ( currentPref.fontsize !== newPref.fontsize ) {
 		const formattedFontSize = ( newPref.fontsize + 8 ) * 10 + '%';
-
 		localStorage.setItem( PREFIX_KEY + 'fontsize', formattedFontSize );
 		setIndicator( 'fontsize', formattedFontSize );
+
 	} else if ( currentPref.pagewidth !== newPref.pagewidth ) {
 		let formattedPageWidth;
-
 		// Max setting would be full browser width
 		if ( newPref.pagewidth === 10 ) {
 			formattedPageWidth = '100vw';
@@ -137,9 +138,9 @@ function setPref( event ) {
 		}
 		localStorage.setItem( PREFIX_KEY + 'pagewidth', formattedPageWidth );
 		setIndicator( 'pagewidth', formattedPageWidth );
+
 	} else if ( currentPref.lineheight !== newPref.lineheight ) {
 		const formattedLineHeight = newPref.lineheight / 10 + 1;
-
 		localStorage.setItem( PREFIX_KEY + 'lineheight', formattedLineHeight );
 		setIndicator( 'lineheight', formattedLineHeight );
 	}
@@ -169,7 +170,7 @@ function resetPref() {
 	} );
 
 	const pref = getPref(),
-		prefValue = convertPref( pref );
+		prefValue = convertForForm( pref );
 
 	keys.forEach( ( key ) => {
 		const keyName = PREFIX_KEY + key;
@@ -220,13 +221,13 @@ function dismissOnEscape( event ) {
 function togglePanel() {
 	// .citizen-pref-panel--active
 	const CLASS_PANEL_ACTIVE = CLASS + '-panel--active';
-	const toggle = document.getElementById( CLASS + '-toggle' ),
+	const
+		toggle = document.getElementById( CLASS + '-toggle' ),
 		panel = document.getElementById( CLASS + '-panel' ),
 		form = document.getElementById( CLASS + '-form' ),
 		resetButton = document.getElementById( CLASS + '-resetbutton' );
 
 	if ( !panel.classList.contains( CLASS_PANEL_ACTIVE ) ) {
-
 		panel.classList.add( CLASS_PANEL_ACTIVE );
 		toggle.setAttribute( 'aria-expanded', true );
 		form.addEventListener( 'input', setPref );
@@ -234,7 +235,6 @@ function togglePanel() {
 		window.addEventListener( 'click', dismissOnClickOutside );
 		window.addEventListener( 'keydown', dismissOnEscape );
 	} else {
-
 		panel.classList.remove( CLASS_PANEL_ACTIVE );
 		toggle.setAttribute( 'aria-expanded', false );
 		form.removeEventListener( 'input', setPref );
@@ -288,7 +288,7 @@ function initPanel( event ) {
 		),
 		data = getMessages(),
 		pref = getPref(),
-		prefValue = convertPref( pref ),
+		prefValue = convertForForm( pref ),
 		keys = [ 'fontsize', 'pagewidth', 'lineheight' ];
 
 	// To Mustache is to jQuery sigh
