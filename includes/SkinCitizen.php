@@ -68,9 +68,11 @@ class SkinCitizen extends SkinMustache {
 	 * @throws MWException
 	 */
 	public function getTemplateData(): array {
+		$data = [];
 		$out = $this->getOutput();
 		$title = $out->getTitle();
 		$parentData = parent::getTemplateData();
+
 
 		$header = new Header( $this );
 		$logos = new Logos( $this );
@@ -101,15 +103,19 @@ class SkinCitizen extends SkinMustache {
 
 		// Polyfill for 1.35
 		if ( version_compare( MW_VERSION, '1.36', '<' ) ) {
-			$parentData += [
+			$data += [
 				'data-logos' => $logos->getLogoData(),
 				'html-user-message' => $newTalksHtml ?
 					Html::rawElement( 'div', [ 'class' => 'usermessage' ], $newTalksHtml ) : null,
 				'link-mainpage' => $title->newMainPage()->getLocalUrl(),
 			];
+
+			foreach ( $this->options['messages'] ?? [] as $message ) {
+				$data["msg-{$message}"] = $this->msg( $message )->text();
+			}
 		}
 
-		return $parentData + [
+		$data += [
 			// Booleans
 			'toc-enabled' => $out->isTOCEnabled(),
 			// Data objects
@@ -127,6 +133,8 @@ class SkinCitizen extends SkinMustache {
 			'html-body-content--formatted' => $bodycontent->buildBodyContent(),
 			'html-tagline' => $tagline->getTagline(),
 		];
+
+		return array_merge( $parentData, $data );
 	}
 
 	/**

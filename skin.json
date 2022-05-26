@@ -39,10 +39,10 @@
 					"messages": [
 						"citizen-actions-more-toggle",
 						"citizen-drawer-toggle",
-						"citizen-jumptotop",
 						"citizen-languages-toggle",
 						"citizen-personalmenu-toggle",
-						"citizen-search-toggle",
+						"randompage",
+						"search",
 						"sitetitle"
 					]
 				}

@@ -86,7 +86,6 @@ final class Drawer extends Partial {
 		$drawer = $this->addSiteTools( $drawer, $portletCount );
 
 		$drawerData = [
-			'msg-citizen-drawer-toggle' => $skin->msg( 'citizen-drawer-toggle' )->text(),
 			'array-portlets' => $drawer,
 			'data-drawer-sitestats' => $this->getSiteStatsData(),
 		];

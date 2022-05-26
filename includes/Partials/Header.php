@@ -67,7 +67,6 @@ final class Header extends Partial {
 		}
 
 		return [
-			'msg-citizen-personalmenu-toggle' => $skin->msg( 'citizen-personalmenu-toggle' )->text(),
 			'data-personal-menu-header' => $header,
 			'data-personal-menu-list' => $skin->getPortletData( 'personal', $personalTools ),
 		];
@@ -111,14 +110,13 @@ final class Header extends Partial {
 		$toggleMsg = $skin->msg( 'citizen-search-toggle' )->text();
 
 		return [
+			// TODO: This should be called in skin.json
 			'msg-citizen-search-toggle' => $toggleMsg,
 			'msg-citizen-search-toggle-shortcut' => $toggleMsg . ' [/]',
 			'form-action' => $this->getConfigValue( 'Script' ),
 			'html-input' => $skin->makeSearchInput( [ 'id' => 'searchInput' ] ),
-			'msg-search' => $skin->msg( 'search' ),
 			'page-title' => SpecialPage::getTitleFor( 'Search' )->getPrefixedDBkey(),
 			'html-random-href' => Skin::makeSpecialUrl( 'Randompage' ),
-			'msg-random' => $skin->msg( 'Randompage' )->text(),
 		];
 	}
 
