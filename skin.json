@@ -42,7 +42,8 @@
 						"citizen-jumptotop",
 						"citizen-languages-toggle",
 						"citizen-personalmenu-toggle",
-						"citizen-search-toggle"
+						"citizen-search-toggle",
+						"sitetitle"
 					]
 				}
 			]

@@ -1,33 +1,23 @@
 {{!
 	string|null html-site-notice the contents of a banner defined in MediaWiki:Sitenotice.
 		Also used by CentralNotice to inject banners into Vector.
-	Indicator[] array-indicators wiki-defined badges such as "good article",
-		"featured article". An empty array if none are defined.
-	string html-newtalk
-	string html-title--formatted
-	string msg-tagline
-	string html-prebodyhtml
 	string html-subtitle
 	string html-undelete-link
-	string html-body-content
+	string html-user-message
+	string html-body-content--formatted
 	string html-categories
 	string html-after-content
 	object data-footer for footer template partial. see Footer.mustache for documentation.
-	string html-mainpage-attributes
-	string msg-sitetitle
-	object data-bottombar for bottom template partial. see Bottombar.mustache for documentation.
-	string html-printtail HTML to render at the end of the page contained necessary script tags for
-		ResourceLoader terminated with `</body></html>`.
 }}
 
 {{#data-header}}{{>Header}}{{/data-header}}
 <main class="mw-body {{#toc-enabled}}citizen-toc-enabled{{/toc-enabled}}" id="content">
 	<div id="siteNotice">{{{html-site-notice}}}</div>
-	{{{html-newtalk}}}
 	{{>ContentHeader}}
 	<div id="bodyContent" class="citizen-body">
 		<div id="contentSub"{{{html-user-language-attributes}}}>{{{html-subtitle}}}</div>
 		{{#html-undelete-link}}<div id="contentSub2">{{{html-undelete-link}}}</div>{{/html-undelete-link}}
+		{{{html-user-message}}}
 		{{{html-body-content--formatted}}}
 		{{{html-categories}}}
 	</div>

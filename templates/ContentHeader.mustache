@@ -1,6 +1,8 @@
 {{!
+	Indicator[] array-indicators wiki-defined badges such as "good article",
+		"featured article". An empty array if none are defined.
 	string html-title-heading--formatted
-	string msg-tagline
+	string html-tagline
 }}
 <header class="mw-body-header">
 	<div class="page-heading">
@@ -8,7 +10,7 @@
 			{{{html-title-heading--formatted}}}
 			{{>Indicators}}
 		</div>
-		<div id="siteSub">{{msg-tagline}}</div>
+		<div id="siteSub">{{html-tagline}}</div>
 	</div>
 	{{>PageTools}}
 </header>

@@ -23,6 +23,7 @@
 
 namespace MediaWiki\Skins\Citizen;
 
+use Html;
 use Linker;
 use MediaWiki\Skins\Citizen\Partials\BodyContent;
 use MediaWiki\Skins\Citizen\Partials\Drawer;
@@ -36,7 +37,6 @@ use MediaWiki\Skins\Citizen\Partials\Theme;
 use MediaWiki\Skins\Citizen\Partials\Title;
 use Sanitizer;
 use SkinMustache;
-use Xml;
 
 /**
  * Skin subclass for Citizen
@@ -99,35 +99,33 @@ class SkinCitizen extends SkinMustache {
 		// Conditionally used values must use null to indicate absence (not false or '').
 		$newTalksHtml = $this->getNewtalks() ?: null;
 
-		return $parentData + [
-			'toc-enabled' => $out->isTOCEnabled(),
-			'msg-sitetitle' => $this->msg( 'sitetitle' )->text(),
-			'html-mainpage-attributes' => Xml::expandAttributes(
-				Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) + [
-					'href' => parent::makeMainPageUrl(),
-				]
-			),
-			'data-logos' => $logos->getLogoData(),
+		// Polyfill for 1.35
+		if ( version_compare( MW_VERSION, '1.36', '<' ) ) {
+			$parentData += [
+				'data-logos' => $logos->getLogoData(),
+				'html-user-message' => $newTalksHtml ?
+					Html::rawElement( 'div', [ 'class' => 'usermessage' ], $newTalksHtml ) : null,
+				'link-mainpage' => $title->newMainPage()->getLocalUrl(),
+			];
+		}
 
+		return $parentData + [
+			// Booleans
+			'toc-enabled' => $out->isTOCEnabled(),
+			// Data objects
 			'data-header' => [
 				'data-drawer' => $drawer->getDrawerTemplateData(),
 				'data-notifications' => $header->getNotifications(),
 				'data-personal-menu' => $header->buildPersonalMenu(),
 				'data-search-box' => $header->buildSearchProps(),
-				'msg-citizen-jumptotop' => $this->msg( 'citizen-jumptotop' )->text() . ' [home]',
+				'html-citizen-jumptotop' => $this->msg( 'citizen-jumptotop' )->text() . ' [home]',
 			],
-
-			'html-title-heading--formatted' => $pageTitle->buildTitle( $parentData, $title ),
-
 			'data-pagetools' => $tools->buildPageTools( $parentData ),
-
-			'html-newtalk' => $newTalksHtml ? '<div class="usermessage">' . $newTalksHtml . '</div>' : '',
-
-			'msg-tagline' => $tagline->getTagline(),
-
-			'html-body-content--formatted' => $bodycontent->buildBodyContent(),
-
 			'data-citizen-footer' => $footer->getFooterData(),
+			// HTML strings
+			'html-title-heading--formatted' => $pageTitle->buildTitle( $parentData, $title ),
+			'html-body-content--formatted' => $bodycontent->buildBodyContent(),
+			'html-tagline' => $tagline->getTagline(),
 		];
 	}
 

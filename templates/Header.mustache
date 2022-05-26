@@ -1,13 +1,19 @@
  {{!
+ 	string link-mainpage link to the main page
 	string msg-citizen-drawer-toggle The label used by the drawer button.
-	string msg-citizen-jumptotop Jump to top title text
+	string html-citizen-jumptotop Jump to top title text
 }}
 <header class="mw-header citizen-header">
 	{{#data-drawer}}{{>Drawer}}{{/data-drawer}}
 	<div class="citizen-header__inner">
 		<div class="citizen-header__start">
-			<a class="citizen-header__title citizen-header__title--site" {{{html-mainpage-attributes}}}>{{>Wordmark}}</a>
-			<a class="citizen-header__title citizen-header__title--page" href="#top" title="{{msg-citizen-jumptotop}}"><div>{{{html-title}}}</div></a>
+			<a href="{{link-mainpage}}" class="citizen-header__title citizen-header__title--site">{{>Wordmark}}</a>
+			<a 
+				href="#top"
+				class="citizen-header__title citizen-header__title--page"
+				title="{{html-citizen-jumptotop}}">
+				<div>{{{html-title}}}</div>
+			</a>
 		</div>
 		<div class="citizen-header__end">
 			{{#data-notifications}}{{>Menu}}{{/data-notifications}}
