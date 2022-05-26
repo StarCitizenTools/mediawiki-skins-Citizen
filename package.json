@@ -17,7 +17,7 @@
 		"release:major": "standard-version --release-as major"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^17.0.0",
+		"@commitlint/cli": "^17.0.1",
 		"@commitlint/config-conventional": "^17.0.0",
 		"eslint-config-wikimedia": "0.22.1",
 		"grunt-banana-checker": "0.9.0",
