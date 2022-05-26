@@ -10,8 +10,9 @@
 			"Yfdyh000"
 		]
 	},
-	"skinname-citizen": "Citizen",
+	"skinname-citizen": "公民 （Citizen）",
 	"citizen-skin-desc": "为星际公民百科而开发的响应式皮肤",
+	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|讨论]]",
 	"citizen.css": "/* 这里的任何CSS将为使用Citizen皮肤的用户加载 */",
 	"citizen.js": "/* 这里的任何JavaScript将为使用Citizen皮肤的用户加载 */",
 	"citizen-drawer-toggle": "切换菜单",

@@ -6,19 +6,22 @@
 			"Winston Sung"
 		]
 	},
-	"skinname-citizen": "Citizen",
+	"skinname-citizen": "公民 （Citizen）",
 	"citizen-skin-desc": "為星際公民百科而開發的響應式外觀",
+	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|討論]]",
 	"citizen.css": "/* 此CSS會用於使用Citizen外觀的用戶 */",
 	"citizen.js": "/* 此Javascript會用於使用Citizen外觀的用戶 */",
 	"citizen-drawer-toggle": "切換菜單",
 	"citizen-personalmenu-toggle": "切換個人選單",
 	"citizen-search-toggle": "切換搜尋",
+	"citizen-languages-toggle": "更多語言",
+	"citizen-actions-more-toggle": "更多操作",
 	"citizen-sitestats-articles-label": "篇條目",
 	"citizen-sitestats-images-label": "個檔案",
 	"citizen-sitestats-users-label": "位用家",
 	"citizen-sitestats-edits-label": "次修改",
-	"citizen-footer-desc": "在 [[MediaWiki:Citizen-footer-desc/zh-hk]] 編輯此文字",
-	"citizen-footer-tagline": "在 [[MediaWiki:Citizen-footer-tagline/zh-hk]] 編輯此文字",
+	"citizen-footer-desc": "在 [[MediaWiki:Citizen-footer-desc]] 編輯此文字",
+	"citizen-footer-tagline": "在 [[MediaWiki:Citizen-footer-tagline]] 編輯此文字",
 	"citizen-action-addsection": "新增話題",
 	"citizen-jumptotop": "返回頂端",
 	"citizen-search-fulltext": "搜尋包含",
@@ -36,5 +39,6 @@
 	"prefs-citizen-theme-option-dark": "陰暗",
 	"prefs-citizen-fontsize-label": "字型大小",
 	"prefs-citizen-pagewidth-label": "頁面寬度",
+	"prefs-citizen-lineheight-label": "行高",
 	"prefs-citizen-resetbutton-label": "重設成預設值"
 }

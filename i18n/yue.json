@@ -6,16 +6,22 @@
 			"Winston Sung"
 		]
 	},
+	"skinname-citizen": "公民 （Citizen）",
 	"citizen-skin-desc": "為星際公民而開發嘅響應式外觀",
+	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|討論]]",
+	"citizen.css": "/* 呢度放置嘅CSS會影響所有使用Citizen外觀嘅用戶 */",
+	"citizen.js": "/* 響每一次個頁面載入時，用 Citizen 畫面嘅用戶都會載入呢度任何嘅JavaScript */",
 	"citizen-drawer-toggle": "切換選單",
 	"citizen-personalmenu-toggle": "切換個人選單",
 	"citizen-search-toggle": "切換搜尋",
+	"citizen-languages-toggle": "多啲語言",
+	"citizen-actions-more-toggle": "版嘅動作",
 	"citizen-sitestats-articles-label": "篇文章",
 	"citizen-sitestats-images-label": "個檔案",
 	"citizen-sitestats-users-label": "位用戶",
 	"citizen-sitestats-edits-label": "次修改",
-	"citizen-footer-desc": "喺[[MediaWiki:Citizen-footer-desc/yue]]喥改",
-	"citizen-footer-tagline": "喺[[MediaWiki:Citizen-footer-tagline/yue]]喥改",
+	"citizen-footer-desc": "喺[[MediaWiki:Citizen-footer-desc]]喥改",
+	"citizen-footer-tagline": "喺[[MediaWiki:Citizen-footer-tagline]]喥改",
 	"citizen-action-addsection": "加主題",
 	"citizen-jumptotop": "返到上面",
 	"citizen-search-fulltext": "喺每頁入面喥搵",
@@ -33,5 +39,6 @@
 	"prefs-citizen-theme-option-dark": "黑夜",
 	"prefs-citizen-fontsize-label": "字體大細",
 	"prefs-citizen-pagewidth-label": "頁面闊度",
+	"prefs-citizen-lineheight-label": "行高",
 	"prefs-citizen-resetbutton-label": "還原預設"
 }

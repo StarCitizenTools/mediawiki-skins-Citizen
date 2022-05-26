@@ -6,6 +6,7 @@
 	},
 	"skinname-citizen": "Граѓанин",
 	"citizen-skin-desc": "Одѕивно руво разработено од викито „Ѕвезден граѓанин“ (Star Citizen)",
+	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|Разговор]]",
 	"citizen.css": "/* Сиот тука поставен JavaScript ќе им се вчитува на корисниците што го користат рувото „Граѓанин“ */",
 	"citizen.js": "/* Сиот тука поставен JavaScript ќе им се вчитува на корисниците што го користат рувото „Граѓанин“ */",
 	"citizen-drawer-toggle": "Дај/скриј мени",

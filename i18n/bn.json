@@ -6,6 +6,7 @@
 		]
 	},
 	"skinname-citizen": "সিটিজেন",
+	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|আলোচনা]]",
 	"citizen.js": "/* এখানের সকল জাভাস্ক্রিপ্ট সিটিজেন আবরণের ব্যবহারকারীদের জন্য লোড হবে */",
 	"citizen-sitestats-articles-label": "টি নিবন্ধ",
 	"citizen-sitestats-images-label": "টি ফাইল",
