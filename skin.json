@@ -21,6 +21,7 @@
 				{
 					"name": "citizen",
 					"templateDirectory": "templates",
+					"responsive": true,
 					"scripts": [
 						"skins.citizen.scripts"
 					],
