@@ -73,7 +73,6 @@ class SkinCitizen extends SkinMustache {
 		$title = $out->getTitle();
 		$parentData = parent::getTemplateData();
 
-
 		$header = new Header( $this );
 		$logos = new Logos( $this );
 		$drawer = new Drawer( $this );
