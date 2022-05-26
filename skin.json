@@ -59,9 +59,6 @@
 	"AutoloadNamespaces": {
 		"MediaWiki\\Skins\\Citizen\\": "includes/"
 	},
-	"ConfigRegistry": {
-		"citizen": "GlobalVarConfig::newInstance"
-	},
 	"APIModules": {
 		"webapp-manifest": {
 			"class": "MediaWiki\\Skins\\Citizen\\Api\\ApiWebappManifest"
