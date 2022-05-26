@@ -58,8 +58,6 @@ class SkinCitizen extends SkinMustache {
 	public function __construct( $options = [] ) {
 		// Add skin-specific features
 		$this->buildSkinFeatures( $options );
-
-		$options['templateDirectory'] = dirname( __DIR__, 1 ) . '/templates';
 		parent::__construct( $options );
 	}
 
