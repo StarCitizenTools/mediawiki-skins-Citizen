@@ -23,11 +23,11 @@
 
 declare( strict_types=1 );
 
-namespace Citizen\Partials;
+namespace MediaWiki\Skins\Citizen\Partials;
 
-use Citizen\GetConfigTrait;
+use MediaWiki\Skins\Citizen\GetConfigTrait;
+use MediaWiki\Skins\Citizen\SkinCitizen;
 use OutputPage;
-use SkinCitizen;
 use Title;
 
 /**

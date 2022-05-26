@@ -23,7 +23,7 @@
 
 declare( strict_types=1 );
 
-namespace Citizen;
+namespace MediaWiki\Skins\Citizen;
 
 use ConfigException;
 use OutputPage;

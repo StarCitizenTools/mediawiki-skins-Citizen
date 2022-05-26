@@ -23,7 +23,7 @@
 
 declare( strict_types=1 );
 
-namespace Citizen\Partials;
+namespace MediaWiki\Skins\Citizen\Partials;
 
 use Html;
 use MediaWiki\MediaWikiServices;

@@ -23,7 +23,7 @@
 
 declare( strict_types=1 );
 
-namespace Citizen\Partials;
+namespace MediaWiki\Skins\Citizen\Partials;
 
 /**
  * Footer partial of Skin Citizen

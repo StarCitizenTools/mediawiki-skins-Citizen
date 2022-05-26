@@ -20,7 +20,7 @@
  * @file
  */
 
-namespace Citizen\Api;
+namespace MediaWiki\Skins\Citizen\Api;
 
 use ApiBase;
 use ApiFormatJson;

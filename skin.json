@@ -16,8 +16,7 @@
 	},
 	"ValidSkinNames": {
 		"citizen": {
-			"class": "SkinCitizen",
-			"@args": "See SkinCitizen::__construct for more detail.",
+			"class": "MediaWiki\\Skins\\Citizen\\SkinCitizen",
 			"args": [
 				{
 					"name": "citizen",
@@ -54,23 +53,20 @@
 			"i18n"
 		]
 	},
-	"AutoloadClasses": {
-		"SkinCitizen": "includes/SkinCitizen.php"
-	},
 	"AutoloadNamespaces": {
-		"Citizen\\": "includes/"
+		"MediaWiki\\Skins\\Citizen\\": "includes/"
 	},
 	"ConfigRegistry": {
-		"Citizen": "GlobalVarConfig::newInstance"
+		"citizen": "GlobalVarConfig::newInstance"
 	},
 	"APIModules": {
 		"webapp-manifest": {
-			"class": "Citizen\\Api\\ApiWebappManifest"
+			"class": "MediaWiki\\Skins\\Citizen\\Api\\ApiWebappManifest"
 		}
 	},
 	"HookHandlers": {
 		"SkinHooks": {
-			"class": "Citizen\\Hooks\\SkinHooks"
+			"class": "MediaWiki\\Skins\\Citizen\\Hooks\\SkinHooks"
 		}
 	},
 	"Hooks": {

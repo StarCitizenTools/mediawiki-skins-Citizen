@@ -23,7 +23,7 @@
 
 declare( strict_types=1 );
 
-namespace Citizen\Hooks;
+namespace MediaWiki\Skins\Citizen\Hooks;
 
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;

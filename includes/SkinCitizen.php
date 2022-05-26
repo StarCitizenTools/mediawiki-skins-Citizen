@@ -21,17 +21,23 @@
  * @ingroup Skins
  */
 
-use Citizen\GetConfigTrait;
-use Citizen\Partials\BodyContent;
-use Citizen\Partials\Drawer;
-use Citizen\Partials\Footer;
-use Citizen\Partials\Header;
-use Citizen\Partials\Logos;
-use Citizen\Partials\Metadata;
-use Citizen\Partials\PageTools;
-use Citizen\Partials\Tagline;
-use Citizen\Partials\Theme;
-use Citizen\Partials\Title;
+namespace MediaWiki\Skins\Citizen;
+
+use Linker;
+use MediaWiki\Skins\Citizen\GetConfigTrait;
+use MediaWiki\Skins\Citizen\Partials\BodyContent;
+use MediaWiki\Skins\Citizen\Partials\Drawer;
+use MediaWiki\Skins\Citizen\Partials\Footer;
+use MediaWiki\Skins\Citizen\Partials\Header;
+use MediaWiki\Skins\Citizen\Partials\Logos;
+use MediaWiki\Skins\Citizen\Partials\Metadata;
+use MediaWiki\Skins\Citizen\Partials\PageTools;
+use MediaWiki\Skins\Citizen\Partials\Tagline;
+use MediaWiki\Skins\Citizen\Partials\Theme;
+use MediaWiki\Skins\Citizen\Partials\Title;
+use Sanitizer;
+use SkinMustache;
+use Xml;
 
 /**
  * Skin subclass for Citizen
@@ -99,7 +105,7 @@ class SkinCitizen extends SkinMustache {
 			'msg-sitetitle' => $this->msg( 'sitetitle' )->text(),
 			'html-mainpage-attributes' => Xml::expandAttributes(
 				Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) + [
-					'href' => Skin::makeMainPageUrl(),
+					'href' => parent::makeMainPageUrl(),
 				]
 			),
 			'data-logos' => $logos->getLogoData(),
