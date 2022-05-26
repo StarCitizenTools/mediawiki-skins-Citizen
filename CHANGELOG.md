@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.17.4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.3...v1.17.4) (2022-05-26)
+
+
+### Features
+
+* **core:** only use overflow when needed for mw-body ([6f7f548](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6f7f548680a38a7096b5d00faf337ab6bf65f9b7))
+
+
+### Bug Fixes
+
+* **core:** call to member function null in user tagline ([320b28c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/320b28c6d9151bd9b6cfa6e586450ed2f74ccad7))
+* **core:** incorrect z-index for the inner header container ([7b810b2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7b810b2389c78e8f9d102d7d25e5ebbfa8a3c5e0))
+* **core:** invalid class name for RL config callback ([ba87e4d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ba87e4dcba5f4c6e34b0c54ffb6612f88031088c))
+* **skinStyles:** incorrect file path for DiscussionTools ([0a0456d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0a0456db970f4839bc33f60c587f2775b48eb848))
+
 ### [1.17.3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.2...v1.17.3) (2022-05-23)
 
 
