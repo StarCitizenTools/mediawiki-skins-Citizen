@@ -24,7 +24,6 @@
 namespace MediaWiki\Skins\Citizen;
 
 use Linker;
-use MediaWiki\Skins\Citizen\GetConfigTrait;
 use MediaWiki\Skins\Citizen\Partials\BodyContent;
 use MediaWiki\Skins\Citizen\Partials\Drawer;
 use MediaWiki\Skins\Citizen\Partials\Footer;
