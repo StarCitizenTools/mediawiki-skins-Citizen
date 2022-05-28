@@ -39,6 +39,7 @@ final class PageTools extends Partial {
 	/**
 	 * Render page-related tools
 	 * TODO: Break this down and clean up when 1.39
+	 * TODO: Use SkinTemplateNavigation::Universal instead of dirty CSS when 1.39
 	 *
 	 * Possible visibility conditions:
 	 * * true: always visible (bool)
@@ -97,14 +98,15 @@ final class PageTools extends Partial {
 					$languageshtml['is-empty'] = true;
 				}
 				// Finds the toolbox in the sidebar.
-				// The reason we do this is because we removed some site-wide tools from
-				// the toolbar in Drawer.php, now we just want the leftovers
-				$sidebar = [ $parentData['data-portlets-sidebar']['data-portlets-first'],
-					...$parentData['data-portlets-sidebar']['array-portlets-rest'] ];
+				// The reason we do this is because:
+				// 1. We removed some site-wide tools from the toolbar in Drawer.php,
+				// now we just want the leftovers
+				// 2. Toolbox is not currently avaliable as data-portlet, have to wait
+				// till Desktop Improvements
 				$toolboxhtml = [
 					'is-empty' => true,
 				];
-				foreach ( $sidebar as $portlet ) {
+				foreach ( $parentData['data-portlets-sidebar']['array-portlets-rest'] as $portlet ) {
 					if ( $portlet['id'] === 'p-tb' ) {
 						$toolboxhtml = $portlet;
 						$toolboxhtml['is-empty'] = false;
