@@ -250,7 +250,9 @@
 
 /* mw.echo.ui.MenuItemWidget.less */
 .mw-echo-ui-menuItemWidget {
-	> .oo-ui-labelElement-label {
+	// First selector is polyfill for MW 1.35
+	> .oo-ui-labelElement-label,
+	> .oo-ui-buttonElement-button > .oo-ui-labelElement-label {
 		color: var( --color-base--emphasized );
 	}
 
