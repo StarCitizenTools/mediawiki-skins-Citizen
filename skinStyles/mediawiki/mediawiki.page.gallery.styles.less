@@ -3,125 +3,37 @@
  * https://starcitizen.tools
 */
 
-@import '../../resources/variables.less';
-@import '../../resources/mixins.less';
+// Sync with caption styles
+div.gallerytext {
+	color: var( --color-base--subtle );
+	font-size: 0.8125rem;
+	font-style: italic;
 
-@gallery-clutter: 2px;
-
-.skin-citizen {
-	ul.gallery {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		padding: 0;
-		margin: @content-margin-top -@gallery-clutter;
+	p {
+		margin: 0.4rem 0; // reset default style
 	}
+}
 
-	ul.mw-gallery {
-		&-packed,
-		&-packed-hover,
-		&-packed-overlay {
-			text-align: left;
+ul.mw-gallery-packed-hover li.gallerybox:hover div.gallerytextwrapper,
+ul.mw-gallery-packed-overlay li.gallerybox div.gallerytextwrapper,
+ul.mw-gallery-packed-hover li.gallerybox.mw-gallery-focused div.gallerytextwrapper {
+	background: var( --background-color-overlay );
+}
 
-			div.thumb img {
-				width: 100% !important; // fill empty space
-				height: auto;
-			}
-
-			li.gallerybox {
-				flex-grow: 1;
-				margin: @gallery-clutter;
-
-				div.gallerytextwrapper {
-					right: 0;
-					width: auto !important; // fill empty space
-					margin: 0;
-					background: transparent;
-					transition: @transition-background;
-				}
-			}
-		}
-
-		&-packed-hover,
-		&-packed-overlay {
-			div.thumb {
-				/* Gallary text background */
-				&:after {
-					position: absolute;
-					right: 0;
-					bottom: 0;
-					left: 0;
-					display: block;
-					height: 60%;
-					border-radius: 0 0 var( --border-radius--small ) var( --border-radius--small );
-					content: '';
-				}
-			}
-
-			div.gallerytextwrapper {
-				border-radius: var( --border-radius--small );
-			}
-
-			div.gallerytext {
-				color: #a2a9b1; // color-base50
-			}
-		}
-
-		&-packed-hover li.gallerybox:hover,
-		&-packed-overlay li.gallerybox {
-			div.thumb:after {
-				background: linear-gradient( to top, #000, transparent );
-			}
-
-			div.gallerytextwrapper:hover {
-				/* Prevent overflow with long caption */
-				overflow: hidden;
-				max-height: 90%;
-				background: #000;
-			}
-		}
-
-		&-traditional,
-		&-nolines {
-			margin-right: -@gallery-clutter * 2;
-			margin-left: -@gallery-clutter * 2;
-
-			li.gallerybox {
-				margin: @gallery-clutter * 2;
-			}
+/* Slideshow */
+ul.gallery.mw-gallery-slideshow {
+	.gallerybox {
+		&.slideshow-current {
+			background: var( --color-surface-2 );
 		}
 	}
+}
 
-	li.gallerybox {
-		display: block;
-
-		> div {
-			width: 100% !important; // fill empty space
-			height: auto;
-		}
-
-		div.thumb {
-			overflow: hidden; // for border radius
-			width: 100% !important; // fill empty space
-			height: auto;
-			border-color: var( --border-color-base );
-			margin: 0;
-			background-color: var( --background-color-framed );
-			border-radius: var( --border-radius--small );
-		}
-	}
-
-	div.gallerytext {
-		padding: @content-margin-top / 2 0;
-		color: var( --color-base--subtle );
-		font-size: @content-caption-size;
-
-		p {
-			margin-top: 0;
-		}
-
-		a.image {
-			display: inline;
-		}
+@media screen {
+	li.gallerybox div.thumb {
+		overflow: hidden; // quick hack for rounded corner
+		border-color: transparent;
+		background-color: var( --color-surface-2 );
+		border-radius: var( --border-radius--small );
 	}
 }
