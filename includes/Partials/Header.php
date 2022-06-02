@@ -193,6 +193,12 @@ final class Header extends Partial {
 	 * @return array|null
 	 */
 	private function getUserContributionsData( $user ): ?array {
+		// getUserEditCount will not return edits for anon
+		// and throw exception < MW 1.37
+		if ( !$user->isRegistered() ) {
+			return null;
+		}
+
 		// Return user edits
 		$edits = MediaWikiServices::getInstance()->getUserEditTracker()->getUserEditCount( $user );
 
