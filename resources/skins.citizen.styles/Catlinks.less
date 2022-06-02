@@ -15,7 +15,7 @@
 
 	.mw-normal-catlinks,
 	.mw-hidden-catlinks {
-		margin-top: @content-margin-top;
+		padding: @content-margin-top 0;
 
 		> a {
 			display: block;
@@ -27,29 +27,21 @@
 		> ul {
 			display: flex;
 			flex-wrap: wrap;
-			padding-top: @content-margin-top;
+			padding-top: 0.5rem;
 			margin: 0;
 			/* Reset font */
 			font-size: @content-caption-size;
-			letter-spacing: 0;
+			gap: 0.375rem;
+			letter-spacing: 0; // hidden-catlink title does not have a selector
 
 			li {
 				display: block;
-				overflow: hidden;
-				padding: 0;
-				border: 0;
-				border: 1px solid var( --border-color-base );
-				margin: 0 @margin-side / 2 @margin-side / 2 0;
-				background-color: var( --background-color-framed );
-				border-radius: 100px;
-
-				&:first-of-type {
-					margin-left: 0;
-				}
 
 				a {
 					display: inline-block;
-					padding: 7px 15px;
+					padding: 0.5rem 1rem;
+					border: 1px solid var( --border-color-base--darker );
+					border-radius: 100px;
 					color: var( --color-base--subtle );
 					transition: @transition-background;
 
@@ -58,8 +50,12 @@
 						color: #fff;
 					}
 
-					&.new:hover {
-						background-color: var( --color-destructive--hover );
+					&.new {
+						border-style: dashed;
+
+						&:hover {
+							background-color: var( --color-destructive--hover );
+						}
 					}
 				}
 			}
