@@ -6,6 +6,10 @@
 @import '../../resources/variables.less';
 
 .diff {
+	&change {
+		color: var( --color-base--emphasized );
+	}
+
 	&-lineno {
 		font-size: @ui-menu-text;
 		font-weight: normal;
@@ -13,8 +17,8 @@
 	}
 
 	&-context {
-		border-color: var( --border-color-base--lighter );
-		background: var( --background-color-framed );
+		border-color: var( --border-color-base );
+		background: transparent;
 		color: var( --color-base--subtle );
 	}
 
@@ -32,6 +36,12 @@
 		.diffchange {
 			background: var( --background-color-destructive );
 		}
+	}
+
+	&-addedline,
+	&-deletedline,
+	&-context {
+		font-size: 0.8125rem; // relative font size
 	}
 }
 
