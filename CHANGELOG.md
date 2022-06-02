@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.17.5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.4...v1.17.5) (2022-06-02)
+
+
+### Features
+
+* **core:** add bottom margin to page header ([dca529b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/dca529b1648468c24270134010a28de4be1bed85))
+* **core:** tweak category links styles ([4fbe09f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4fbe09f2125fffb0bb765fb25b077daa01f6a5c7))
+* **core:** use default MW gallery styles ([cfc71c0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cfc71c05dcd9b2dde988d75e901d8e2eea33879f)), closes [#413](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/413) [#467](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/467)
+* **skinStyles:** add grade B support for RevisionSlider ([d7d512c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d7d512c6d4e157e8c14a0d629dd3fa13f9d53c01))
+* **skinStyles:** do not lazyload OOUI font size with skinStyles ([47069b6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/47069b613c113d38cebd4b7744c84511148614a1))
+* **skinStyles:** tweak page diff styles ([4645cde](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4645cdeea72073feb771c17d03218b8ec1648db3)), closes [#472](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/472)
+* **skinStyles:** tweak ULS trigger styles ([b05a2e8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b05a2e8221111c1e19ce944d186ff27896aaa54f))
+
+
+### Bug Fixes
+
+* **core:** check if user is registered before getting edit count ([756e398](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/756e398242d2c936ca7c343a310c45a7baa05e86))
+* **core:** define template path in constructor instead ([a20e0dc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a20e0dc5b2a22ea87232ddc18052f0cee54a6557))
+* **core:** source edit button should not collapse itself when VE is selected ([c6b8ba9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c6b8ba9e805a7df48be157504130edda356f3b61))
+* **core:** use z-index on popup only to avoid clipping ([2f6d383](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2f6d383d9e54786740067c3dcd4cce80b8265603))
+* **skinStyles:** add missing Echo dark styles ([982cb8c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/982cb8c7bac1c7a32da252d9547ef9de02791b16)), closes [#468](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/468)
+* **skinStyles:** move personal menu ULS button styles to the right module ([2853a05](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2853a05d8f21e5ebddc89473fee6eaafce968f28))
+* **skinStyles:** prevent diff table from overflowing the page ([9000a4e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9000a4e3263fdb6ee086693dff41c1e640989e91))
+
 ### [1.17.4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.3...v1.17.4) (2022-05-26)
 
 
