@@ -4,7 +4,7 @@
 .parsoid-body {
 	min-height: 80vh; // avoid footer being in the middle of the page
 	padding: 0 var( --padding-page );
-	margin-top: ~'calc( var( --height-header ) + 20px )';
+	margin-top: var( --height-header );
 }
 
 .mw-body-header,
@@ -16,12 +16,10 @@
 
 .mw-body-header {
 	position: relative;
-	z-index: @z-index-page-header; // So the popups inside will be higher than content
 	display: flex;
 	flex-wrap: wrap;
 	align-items: flex-start;
-	margin-top: @content-margin-top * 1.5;
-	margin-bottom: @content-margin-top;
+	padding-top: @content-margin-top;
 }
 
 .page-heading {
