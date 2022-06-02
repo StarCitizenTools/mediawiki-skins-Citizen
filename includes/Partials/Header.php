@@ -130,12 +130,15 @@ final class Header extends Partial {
 	private function getPersonalHeaderData( $personalTools ): array {
 		$skin = $this->skin;
 		$user = $this->user;
+		$header = [];
 
-		$header = [
-			'userpage' => $personalTools['userpage'] ?? null,
-			'usergroups' => $this->getUserGroupsData( $personalTools, $user ),
-			'usercontris' => $this->getUserContributionsData( $user ),
-		];
+		if ( $user->isRegistered() ) {
+			$header += [
+				'userpage' => $personalTools['userpage'] ?? null,
+				'usergroups' => $this->getUserGroupsData( $personalTools, $user ),
+				'usercontris' => $this->getUserContributionsData( $user ),
+			];
+		}
 
 		return $skin->getPortletData( 'personal-header', array_filter( $header ) );
 	}
@@ -193,12 +196,6 @@ final class Header extends Partial {
 	 * @return array|null
 	 */
 	private function getUserContributionsData( $user ): ?array {
-		// getUserEditCount will not return edits for anon
-		// and throw exception < MW 1.37
-		if ( !$user->isRegistered() ) {
-			return null;
-		}
-
 		// Return user edits
 		$edits = MediaWikiServices::getInstance()->getUserEditTracker()->getUserEditCount( $user );
 
