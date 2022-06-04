@@ -304,21 +304,23 @@ function initTypeahead( searchForm, input ) {
 		};
 
 	const onBlur = function ( event ) {
-		const clickInside = typeahead.contains( event.relatedTarget );
+		const focusIn = typeahead.contains( event.relatedTarget );
 
-		if ( !clickInside ) {
-			searchInput.setAttribute( 'aria-activedescendant', '' );
-
-			typeahead.classList.remove( expandedClass );
-			searchInput.removeEventListener( 'keydown', keyboardEvents );
-			searchInput.removeEventListener( 'blur', onBlur );
+		if ( !focusIn ) {
+			// HACK: On Safari, users are unable to click any links because the blur
+			// event dismiss the links before it is clicked. This should fix it.
+			setTimeout( () => {
+				searchInput.setAttribute( 'aria-activedescendant', '' );
+				typeahead.classList.remove( expandedClass );
+				searchInput.removeEventListener( 'keydown', keyboardEvents );
+				searchInput.removeEventListener( 'blur', onBlur );
+			}, 10 );
 		}
 	};
 
 	const onFocus = function () {
 		// Refresh the typeahead since the query will be emptied when blurred
 		updateTypeahead( messages );
-
 		typeahead.classList.add( expandedClass );
 		searchInput.addEventListener( 'keydown', keyboardEvents );
 		searchInput.addEventListener( 'blur', onBlur );
