@@ -117,4 +117,10 @@ function main( window ) {
 	mw.loader.load( 'skins.citizen.preferences' );
 }
 
-main( window );
+if ( document.readyState === 'interactive' || document.readyState === 'complete' ) {
+	main( window );
+} else {
+	document.addEventListener( 'DOMContentLoaded', function () {
+		main( window );
+	} );
+}
