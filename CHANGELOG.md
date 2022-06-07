@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.17.6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.5...v1.17.6) (2022-06-07)
+
+
+### Features
+
+* **core:** simplify page header spacing ([8ec0400](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8ec0400b1a0bab518bdd7062f14ee6aaf398b28b))
+* **skinStyles:** minor style tweak for RecentChanges ([65be4e8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/65be4e826d5ff33f7603bd49e0aa681e8a04c520))
+
+
+### Bug Fixes
+
+* **core:** add missing plainlinks styles ([0ffc78c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0ffc78ce9ee83cfc670e6e1bb7df8f339aa08651))
+* **core:** center class on thumbnails should center ([#476](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/476)) ([34c300d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/34c300d69cbd80e359b30c524e15a4f1f582eadb))
+* **core:** delay blur event for search suggestions ([9d8a631](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9d8a631f44aac6ef97d4e2f51820c533352b5a93)), closes [#404](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/404) [#410](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/410)
+* **core:** run script when DOM is ready ([eba2235](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/eba22354e5ba8cfcee2883c8cce3179191f6dc66)), closes [#475](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/475)
+
 ### [1.17.5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.4...v1.17.5) (2022-06-02)
 
 
