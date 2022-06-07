@@ -3,6 +3,7 @@ figure,
 	margin: @content-margin-top 0;
 
 	.thumbinner {
+		overflow: hidden; // needed for center to work
 		max-width: 100%;
 		margin: 0 auto;
 
@@ -15,8 +16,6 @@ figure,
 			}
 
 			&:hover:not( .lazy ):not( .new ) {
-				box-shadow: var( --box-shadow-card );
-
 				img {
 					transform: scale( 1.1 );
 				}
@@ -29,7 +28,7 @@ figure,
 			&.new {
 				display: block;
 				padding: @margin-side / 2;
-				background-color: var( --background-color-framed );
+				background-color: var( --color-surface-3 );
 				transition: @transition-background, @transition-color;
 			}
 		}
