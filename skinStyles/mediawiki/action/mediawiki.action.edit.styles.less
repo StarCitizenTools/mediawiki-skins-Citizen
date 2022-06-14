@@ -8,10 +8,24 @@
  * Date: 2022-05-02
 */
 
-.mw-editform {
-	.editOptions {
-		border-color: var( --border-color-base );
-		background-color: var( --color-surface-2 );
-		color: var( --color-base );
+// Needed the specificity
+.skin-citizen {
+	.mw-edit {
+		// Relative font size
+		&font {
+			&-monospace,
+			&-sans-serif,
+			&-serif {
+				font-size: 0.8125rem; // 13px
+			}
+		}
+
+		&form {
+			.editOptions {
+				border-color: var( --border-color-base );
+				background-color: var( --color-surface-2 );
+				color: var( --color-base );
+			}
+		}
 	}
 }
