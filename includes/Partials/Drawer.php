@@ -175,7 +175,7 @@ final class Drawer extends Partial {
 			$fmt = null;
 
 			// Get NumberFormatter here so that we don't have to call it for every stats
-			if ( class_exists( \NumberFormatter::class ) ) {
+			if ( $this->getConfigValue( 'CitizenUseNumberFormatter' ) && class_exists( \NumberFormatter::class ) ) {
 				$locale = $skin->getLanguage()->getHtmlCode() ?? 'en_US';
 				$fmt = new \NumberFormatter( $locale, \NumberFormatter::PADDING_POSITION );
 				$fmt->setAttribute( \NumberFormatter::ROUNDING_MODE, \NumberFormatter::ROUND_DOWN );
