@@ -36,6 +36,7 @@ Name | Grade | Version | Last updated
 [Capiunto](https://www.mediawiki.org/wiki/Extension:Capiunto) | B | REL1_35 `30049a7` | 2021-08-26
 [Cargo](https://www.mediawiki.org/wiki/Extension:Cargo) | B | REL1_35 `df13273` | 2021-08-31
 [CategoryTree](https://www.mediawiki.org/wiki/Extension:CategoryTree) | B | N/A | N/A
+[CentralNotice](https://www.mediawiki.org/wiki/Extension:CentralNotice) | B | REL1_35 `4aa2a8f` | 2022-06-16
 [Cite](https://www.mediawiki.org/wiki/Extension:Cite) | A | N/A | N/A
 [CleanChanges](https://www.mediawiki.org/wiki/Extension:CleanChanges) | B | MLEB 2021.07 | 2021-07-29
 [CodeMirror](https://www.mediawiki.org/wiki/Extension:CodeMirror) | A | REL1_35 `a326407` | 2021-08-25

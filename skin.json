@@ -494,6 +494,7 @@
 			"+ext.babel": "skinStyles/extensions/Babel/ext.babel.less",
 			"+ext.cargo.main": "skinStyles/extensions/Cargo/ext.cargo.main.less",
 			"+ext.categoryTree.css": "skinStyles/extensions/CategoryTree/ext.categoryTree.css.less",
+			"+ext.centralNotice.display": "skinStyles/extensions/CentralNotice/ext.centralNotice.display.less",
 			"+ext.cite.styles": "skinStyles/extensions/Cite/ext.cite.styles.less",
 			"+ext.cleanchanges.uls": "skinStyles/extensions/CleanChanges/ext.cleanchanges.uls.less",
 			"+ext.CodeMirror.lib": "skinStyles/extensions/CodeMirror/ext.CodeMirror.lib.less",
