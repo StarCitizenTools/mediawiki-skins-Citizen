@@ -27,6 +27,7 @@ function convertDataToResults( data ) {
 	for ( let i = 0; i < data.length; i++ ) {
 		results[ i ] = {
 			id: data[ i ].id,
+			key: data[ i ].key,
 			title: data[ i ].title,
 			description: data[ i ].description
 		};
