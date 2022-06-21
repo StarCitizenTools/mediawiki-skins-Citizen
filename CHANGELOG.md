@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.17.7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.6...v1.17.7) (2022-06-21)
+
+
+### Features
+
+* **core:** add config to use numberformatter without disabling sitestats ([00e1f57](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/00e1f57bad6adb3a954dc92bc8303a0311414f5e)), closes [#474](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/474)
+* **core:** tweak spacing between body header and content ([8c4166a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8c4166ae8fe0ef5372b12001ff90b7e513ec1d39))
+* **core:** use URL-safe key for search suggestions ([9fe063a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9fe063acb92058ab00393e15e47d244df9af9c52))
+* **skinStyles:** add skinStyles for ManageWiki extension ([f03697f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f03697f30950fdd9d7b6ee15d9f3c3db40318e0d))
+* **skinStyles:** make wikieditor font size adjustable ([eb0147e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/eb0147e32fb5ca4f140e1f7716b68029f3f90f85)), closes [#479](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/479)
+
+
+### Bug Fixes
+
+* **skinStyles:** add missing variables.less import ([#480](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/480)) ([496b6f9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/496b6f9403b1f98db4194a3eed4e966e315cdec5))
+* **skinStyles:** dismiss button in CentralNotice should be on top ([64f7e18](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/64f7e18837a33dad508eac4cf051e5040a163a43))
+
 ### [1.17.6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.5...v1.17.6) (2022-06-07)
 
 
