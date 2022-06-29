@@ -79,7 +79,7 @@ window.applyPref = () => {
 	};
 
 	// Set up auto theme based on prefers-color-scheme
-	if ( targetTheme === 'auto' || targetTheme === null ) {
+	if ( targetTheme === 'auto' ) {
 		const prefersDark = window.matchMedia( '(prefers-color-scheme: dark)' );
 		const autoTheme = prefersDark.matches ? 'dark' : 'light';
 

@@ -242,7 +242,11 @@
 				"resources/skins.citizen.preferences/skins.citizen.preferences.less"
 			],
 			"packageFiles": [
-				"resources/skins.citizen.preferences/skins.citizen.preferences.js"
+				"resources/skins.citizen.preferences/skins.citizen.preferences.js",
+				{
+					"name": "resources/skins.citizen.preferences/config.json",
+					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenPreferencesResourceLoaderConfig"
+				}
 			],
 			"messages": [
 				"preferences",

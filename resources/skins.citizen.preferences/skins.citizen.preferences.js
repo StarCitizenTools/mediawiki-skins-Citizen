@@ -295,11 +295,19 @@ function initPanel( event ) {
 	// TODO: Use ES6 template literals when RL does not screw up multiline
 	const panel = template.render( data ).get()[ 1 ];
 
+	// The priorities is as follow:
+	// 1. User-set theme (localStorage)
+	// 2. Site default theme (wgCitizenThemeDefault)
+	// 3. Fallback to auto
+	const currentTheme = prefValue.theme ??
+		require( './config.json' ).wgCitizenThemeDefault ??
+		'auto';
+
 	// Attach panel after button
 	event.currentTarget.parentNode.insertBefore( panel, event.currentTarget.nextSibling );
 
 	// Set up initial state
-	document.getElementById( CLASS + '-theme__input__' + ( prefValue.theme ?? 'auto' ) ).checked = true;
+	document.getElementById( CLASS + '-theme__input__' + currentTheme ).checked = true;
 	keys.forEach( ( key ) => {
 		setIndicator( key, pref[ key ] );
 		setInputValue( key, prefValue[ key ] );
