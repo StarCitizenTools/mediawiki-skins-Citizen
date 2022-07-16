@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.17.8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.7...v1.17.8) (2022-07-16)
+
+
+### Bug Fixes
+
+* **core:** config CitizenThemeDefault should set theme correctly ([e53afa5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e53afa51dc3cb8572370257168f92865d4e73df3)), closes [#418](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/418)
+
 ### [1.17.7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.6...v1.17.7) (2022-06-21)
 
 
