@@ -1,0 +1,42 @@
+{
+	"@metadata": {
+		"authors": [
+			"U.ayaao.p"
+		]
+	},
+	"skinname-citizen": "Citizen",
+	"citizen-skin-desc": "Star Citizen Wiki үшін әзірленген адаптивты скин",
+	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|Талқылау]]",
+	"citizen.css": "/* Мұндағы барлық CSS Citizen скинінің пайдаланушылары үшін жүктеледі */",
+	"citizen.js": "/* Мұндағы барлық JavaScript Citizen скинінің пайдаланушылары үшін жүктеледі */",
+	"citizen-drawer-toggle": "Мәзірді ашу",
+	"citizen-personalmenu-toggle": "Жеке мәзірді ашу",
+	"citizen-search-toggle": "Іздеуді ашу",
+	"citizen-languages-toggle": "Басқа тілдер",
+	"citizen-actions-more-toggle": "Басқа әрекеттер",
+	"citizen-sitestats-articles-label": "мақала",
+	"citizen-sitestats-images-label": "файл",
+	"citizen-sitestats-users-label": "қатысушы",
+	"citizen-sitestats-edits-label": "өңдеу",
+	"citizen-footer-desc": "Осы мәтінді [[MediaWiki:Citizen-footer-desc]] деген бетте өңдеңіз",
+	"citizen-footer-tagline": "Осы мәтінді [[MediaWiki:Citizen-footer-tagline]] деген бетте өңдеңіз",
+	"citizen-action-addsection": "Тақырып қосу",
+	"citizen-jumptotop": "Жоғары қайту",
+	"citizen-search-fulltext": "Осы сөз(дер) бар беттерді іздеу",
+	"citizen-search-fulltext-empty": "Іздеу бастау үшін теріңіз",
+	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}} дегеннің талқылау беті",
+	"citizen-tagline-ns-project": "{{SITENAME}} туралы мәлімет",
+	"citizen-tagline-ns-file": "{{SITENAME}} жобасындағы файл",
+	"citizen-tagline-ns-mediawiki": "MediaWiki интерфейс беті",
+	"citizen-tagline-ns-template": "Үлгі беті",
+	"citizen-tagline-ns-help": "Анықтама беті",
+	"citizen-tagline-ns-category": "Санат беті",
+	"prefs-citizen-theme-label": "Тақырып",
+	"prefs-citizen-theme-option-auto": "Өздігінен",
+	"prefs-citizen-theme-option-light": "Жарық",
+	"prefs-citizen-theme-option-dark": "Күңгірт",
+	"prefs-citizen-fontsize-label": "Қаріп өлшемі",
+	"prefs-citizen-pagewidth-label": "Бет ені",
+	"prefs-citizen-lineheight-label": "Жол биіктігі",
+	"prefs-citizen-resetbutton-label": "Әдепкіге қайта орнату"
+}
