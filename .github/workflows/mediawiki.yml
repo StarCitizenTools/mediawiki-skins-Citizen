@@ -34,7 +34,7 @@ jobs:
     - name: Install dependencies
       run: |
         composer validate
-        composer config --no-plugins allow-plugins.composer/installers
+        composer config --no-plugins allow-plugins.composer/installers true
         composer install --prefer-dist --no-progress
         npm install --save-dev
 
