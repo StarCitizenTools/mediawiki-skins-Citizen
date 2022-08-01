@@ -47,5 +47,10 @@
 	},
 	"extra": {
 		"installer-name": "Citizen"
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true
+		}
 	}
 }
