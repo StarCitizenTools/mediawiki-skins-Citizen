@@ -77,8 +77,7 @@ final class PageTools extends Partial {
 			}
 		}
 
-		if ( $condition === true ) {
-
+		if ( $condition == true ) {
 			if ( !method_exists( SkinTemplate::class, 'runOnSkinTemplateNavigationHooks' ) ) {
 				$viewshtml = $skin->getPortletData( 'views', $contentNavigation[ 'views' ] ?? [] );
 				$actionshtml = $skin->getPortletData( 'actions', $contentNavigation[ 'actions' ] ?? [] );
