@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Beta16",
+			"GpieroMW",
 			"Stefano"
 		]
 	},
@@ -13,7 +14,7 @@
 	"citizen-sitestats-images-label": "file",
 	"citizen-sitestats-users-label": "utenti",
 	"citizen-sitestats-edits-label": "modifiche",
-	"citizen-footer-desc": "Modifica questo testo in [[MediaWiki:Citizen-footer-tagline]]",
+	"citizen-footer-desc": "Modifica questo testo in [[MediaWiki:Citizen-footer-desc]]",
 	"citizen-footer-tagline": "Modifica questo testo in [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Aggiungi argomento",
 	"citizen-jumptotop": "Torna all'inizio",
