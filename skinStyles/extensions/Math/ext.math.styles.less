@@ -1,0 +1,41 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:Math
+ * Module: ext.math.styles
+ * Version: REL1_35 b7a7939
+ *
+ * Date: 2022-08-16
+*/
+
+@import '../../../resources/variables.less';
+
+// From https://stackoverflow.com/a/73390109/10624167
+.recolor(@color: #333) {
+    @r: red(@color) / 255;
+    @g: green(@color) / 255;
+    @b: blue(@color) / 255;
+    @a: alpha(@color);
+  
+    // grayscale fallback if SVG from data url is not supported
+    @lightness: lightness(@color);
+    filter: saturate(0%) brightness(0%) invert(@lightness) opacity(@a);
+  
+    // color filter
+    @svg-filter-id: "recolor";
+    filter: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="@{svg-filter-id}" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 @{r} 0 0 0 0 @{g} 0 0 0 0 @{b} 0 0 0 @{a} 0"/></filter></svg> #@{svg-filter-id}');
+  }
+
+.skin-citizen-light {
+    .mwe-math-fallback-image-display,
+    .mwe-math-fallback-image-inline {
+        .recolor(@color-base);
+    }
+}
+
+.skin-citizen-dark {
+    .mwe-math-fallback-image-display,
+    .mwe-math-fallback-image-inline {
+        .recolor(@dark-color-base);
+    }
+}
