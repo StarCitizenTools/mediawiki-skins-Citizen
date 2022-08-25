@@ -3,6 +3,7 @@
 		"authors": [
 			"FF-11",
 			"Gebu",
+			"ThisCarthing",
 			"Wolfdietmann",
 			"Zabe",
 			"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
@@ -10,6 +11,7 @@
 	},
 	"skinname-citizen": "Citizen",
 	"citizen-skin-desc": "Ein responsive Skin entwickelt für das Star Citizen Wiki",
+	"citizen-languages-toggle": "Weitere Sprachen",
 	"citizen-sitestats-articles-label": "Artikel",
 	"citizen-sitestats-images-label": "Dateien",
 	"citizen-sitestats-users-label": "Benutzer",
