@@ -1,0 +1,27 @@
+{
+	"@metadata": {
+		"authors": [
+			"Vlad5250"
+		]
+	},
+	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|Razgovor]]",
+	"citizen-languages-toggle": "Više jezika",
+	"citizen-actions-more-toggle": "Više mogućnosti",
+	"citizen-sitestats-articles-label": "članaka",
+	"citizen-sitestats-images-label": "datoteka",
+	"citizen-sitestats-users-label": "korisnika",
+	"citizen-sitestats-edits-label": "izmjena",
+	"citizen-action-addsection": "Dodaj temu",
+	"citizen-jumptotop": "Nazad na vrh",
+	"citizen-search-fulltext": "Traži stranice koje sadrže",
+	"citizen-tagline-ns-talk": "Stranica za razgovor {{SUBJECTPAGENAME}}",
+	"citizen-tagline-ns-project": "Informacije o {{SITENAME}}",
+	"citizen-tagline-ns-file": "Datoteke na {{SITENAME}}",
+	"citizen-tagline-ns-mediawiki": "Stranica sučelja MediaWiki",
+	"citizen-tagline-ns-template": "Stranica šablona/predloška",
+	"citizen-tagline-ns-help": "Stranica za pomoć",
+	"citizen-tagline-ns-category": "Stranica kategorije",
+	"prefs-citizen-theme-label": "Tema",
+	"prefs-citizen-theme-option-auto": "Automatski",
+	"prefs-citizen-fontsize-label": "Veličina fonta"
+}
