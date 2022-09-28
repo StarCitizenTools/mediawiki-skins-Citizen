@@ -29,5 +29,5 @@
 		"stylelint-config-wikimedia": "0.13.1",
 		"svgo": "2.8.0"
 	},
-	"version": "1.17.8"
+	"version": "1.17.9"
 }

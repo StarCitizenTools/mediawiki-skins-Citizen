@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.17.9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.8...v1.17.9) (2022-09-28)
+
+
+### Features
+
+* defer loading menu wiki logo ([#507](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/507)) ([4aa6626](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4aa6626438a8d30521c0146c73e35dcf2e08ccbd))
+* **skinStyles:** add Math skinStyles ([#502](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/502)) ([8c6cdc4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8c6cdc4c296ce5ac412206ef331a019cf00e8765))
+* use loose comparison for checking if CitizenShowPageTools is true ([#497](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/497)) ([6384d02](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6384d02b74e56cea3c765d9ba2c755f7fd16a905))
+
+
+### Bug Fixes
+
+* **ci:** add missing boolean argument ([fec969e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fec969e11ab53911ded33f438e93d0ddef2717c0))
+* **ci:** allow composer plugin in config ([a9fb8aa](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a9fb8aacca1aa994b7054016441b6c931713a498))
+* **core:** hide double MW search suggestion ([7bec9ef](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7bec9ef10b204d97160c452de4797d8e788b1663)), closes [#520](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/520)
+* do not collapse space in highlighted search title ([b15a92c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b15a92c2ff82928ac59fa34ecd73aee971f49b02)), closes [#494](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/494)
+
 ### [1.17.8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.7...v1.17.8) (2022-07-16)
 
 
