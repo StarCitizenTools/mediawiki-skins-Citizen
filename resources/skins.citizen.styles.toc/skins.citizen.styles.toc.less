@@ -9,10 +9,10 @@
 
 	.toc {
 		position: fixed;
-		top: ~'calc( var( --header-size ) + 1.2rem )'; // align with .mw-body-header
-		right: var( --padding-page );
+		top: 3rem;
+		right: var( --space-sm );
 		width: 100%;
-		max-width: ~'calc( var( --width-toc ) - var( --padding-page ) * 2 )';
+		max-width: ~'calc( var( --width-toc ) - var( --space-sm ) * 2 )';
 		color: var( --color-base--subtle );
 		font-size: 0.875rem;
 
@@ -120,7 +120,7 @@
 				}
 
 				&label {
-					--label-position: ~'calc( var( --width-toc ) - 20px )';
+					--label-position: ~'calc( var( --width-toc ) - var( --space-sm ) )';
 					position: fixed;
 					right: var( --label-position );
 					width: 2.5rem;
@@ -172,8 +172,8 @@
 			&title h2 {
 				position: absolute;
 				z-index: 3;
-				width: ~'calc( 100% - var( --padding-page ) * 2 )';
-				padding: 1rem var( --padding-page );
+				width: ~'calc( 100% - var( --space-md ) * 2 )';
+				padding: 1rem var( --space-md );
 
 				&:before {
 					position: absolute;
@@ -193,7 +193,7 @@
 			> ul {
 				display: block !important; // So that animation is visible
 				max-height: ~'calc( 100vh - var( --header-size ) * 3 )';
-				padding: 2.6rem var( --padding-page ) 1rem var( --padding-page ); // hardcoded for now
+				padding: 2.6rem var( --space-md ) 1rem var( --space-md ); // hardcoded for now
 				border-radius: 0 var( --border-radius--medium ) var( --border-radius--medium ) var( --border-radius--medium );
 				margin-top: 0;
 				pointer-events: auto;
@@ -230,7 +230,7 @@
 
 	@media ( max-width: @width-breakpoint-tablet ) {
 		.toc {
-			right: 0;
+			right: var( --space-sm );
 
 			> ul {
 				max-height: 60vh;
@@ -240,7 +240,7 @@
 
 	@media ( max-width: @width-breakpoint-mobile ) {
 		.toc {
-			max-width: ~'calc(100vw - var( --padding-page ) * 2)';
+			max-width: ~'calc(100vw - var( --space-sm ) * 2)';
 		}
 	}
 
@@ -254,7 +254,7 @@
 		}
 
 		.toc {
-			right: var( --padding-page );
+			right: var( --space-sm );
 			left: unset;
 		}
 	}
