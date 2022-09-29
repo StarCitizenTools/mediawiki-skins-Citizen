@@ -1,21 +1,12 @@
 .citizen-drawer {
 	&__card {
-		position: absolute;
-		top: 0;
-		left: 0;
-		overflow: auto;
-		max-height: ~'calc(100vh - var( --margin-header ) * 2 )';
-		margin: var( --margin-header ) var( --padding-header );
-		overscroll-behavior: contain;
-		user-select: none;
-		will-change: transform;
-		.citizen-card();
-		.citizen-card-hide( top left );
+		.citizen-header-card( left );
 	}
 
 	&__header {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		padding: var( --size-button--header ) var( --padding-page ) 0.8rem; // TODO: Replace with space token
 		border-bottom: 1px solid var( --border-color-base );
 		gap: 1.25rem;
@@ -97,20 +88,12 @@
 	}
 }
 
-@media ( max-width: @width-breakpoint-tablet ) {
-	.citizen-drawer {
-		&__card {
-			right: 0;
-		}
-
-		&__header {
-			justify-content: center;
-		}
-	}
-}
-
 @media ( min-width: @width-breakpoint-tablet ) {
 	.citizen-drawer {
+		&__card {
+			.citizen-header-card-tablet( left );
+		}
+
 		&__logo img {
 			// Bigger logo
 			height: 5rem;
@@ -120,6 +103,18 @@
 			.mw-logo-wordmark {
 				font-size: 2rem;
 			}
+		}
+	}
+}
+
+@media ( min-width: @width-breakpoint-desktop ) {
+	.citizen-drawer {
+		&__card {
+			.citizen-header-card-desktop( top );
+		}
+
+		&__header {
+			justify-content: flex-start;
 		}
 	}
 }

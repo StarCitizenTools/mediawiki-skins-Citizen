@@ -1,32 +1,20 @@
 .citizen-header {
 	--size-button--header: ~'calc( var( --height-header ) - 1rem )';
 	--size-icon--header: 1.25rem;
-	--margin-header: 0.5rem;
 	--padding-header: ~'calc( var( --padding-page ) / 2 )';
+	--maxheight-header-card: ~'calc(100vh - var( --padding-header ) * 2 )';
 	--size-dialog-min--header: 16rem;
+	--direction-header: row;
 	position: fixed;
 	z-index: @z-index-site-header;
-	top: 0;
 	right: 0;
+	bottom: 0;
 	left: 0;
 	display: flex;
-	height: var( --height-header );
-	justify-content: space-between;
-	padding: 0 var( --padding-header );
-
-	&:before {
-		position: absolute;
-		z-index: -1;
-		top: 0;
-		right: 0;
-		bottom: ~'calc( var( --height-header ) / -2 )';
-		left: 0;
-		background: var( --color-surface-0 );
-		content: '';
-		-webkit-mask-image: linear-gradient( 180deg, #000, transparent );
-		mask-image: linear-gradient( 180deg, #000, transparent );
-		pointer-events: none;
-	}
+	flex-direction: var( --direction-header );
+	padding: var( --padding-header );
+	border-top: 1px solid var( --border-color-base );
+	background-color: var( --color-surface-0 );
 
 	&__item {
 		display: flex;
@@ -94,6 +82,7 @@
 		z-index: -1; // Inner element should be behind menu and search
 		display: flex;
 		min-width: 0;
+		flex-direction: var( --direction-header );
 		flex-grow: 1;
 		justify-content: space-between;
 
@@ -107,6 +96,7 @@
 	&__start,
 	&__end {
 		display: flex;
+		flex-direction: var( --direction-header );
 	}
 
 	&__start {
@@ -114,55 +104,10 @@
 		align-items: center;
 	}
 
-	&__title {
-		display: flex;
-		min-width: 0;
-		height: var( --size-button--header );
-		align-items: center;
-		padding: 0 0.5rem;
-		border-radius: var( --border-radius--small );
-		color: var( --color-base--emphasized );
-		font-weight: 500;
-		white-space: nowrap;
-
-		> div {
-			overflow: hidden;
-			text-overflow: ellipsis;
-		}
-
-		&:hover {
-			background-color: var( --background-color-quiet--hover );
-			color: var( --color-base--emphasized );
-		}
-
-		&:active {
-			background-color: var( --background-color-quiet--active );
-			color: var( --color-base--emphasized );
-		}
-
-		&--page {
-			display: none;
-		}
-	}
-
 	// Reset
 	ul {
 		margin: 0;
 		list-style: none;
-	}
-}
-
-.citizen-title--hidden {
-	.citizen-header {
-		&__title {
-			&--site {
-				display: none;
-			}
-
-			&--page {
-				display: grid;
-			}
-		}
 	}
 }
 
@@ -198,12 +143,16 @@
 				}
 			}
 		}
+	}
+}
 
-		&__title {
-			&:hover {
-				background-color: none;
-				color: var( --color-base );
-			}
-		}
+@media ( min-width: @width-breakpoint-desktop ) {
+	.citizen-header {
+		--direction-header: column;
+		top: 0;
+		right: unset;
+		left: 0;
+		border-top: 0;
+		border-right: 1px solid var( --border-color-base );
 	}
 }
