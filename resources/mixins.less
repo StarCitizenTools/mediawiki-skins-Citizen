@@ -64,9 +64,9 @@
 	bottom: 100%;
 	left: 0;
 	overflow: auto;
-	min-width: var( --size-dialog-min--header );
-	max-height: var( --maxheight-header-card );
-	margin: var( --padding-header );
+	min-width: 16rem;
+	max-height: ~'calc( 100vh - var( --space-sm ) * 2 )';
+	margin: var( --space-sm );
 	overscroll-behavior: contain;
 	user-select: none;
 	.citizen-card();
