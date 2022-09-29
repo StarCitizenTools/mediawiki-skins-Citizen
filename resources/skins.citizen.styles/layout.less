@@ -4,7 +4,13 @@
 .parsoid-body {
 	min-height: 80vh; // avoid footer being in the middle of the page
 	padding: 0 var( --padding-page );
-	margin-top: var( --height-header );
+}
+
+.mw-body,
+.parsoid-body,
+.mw-footer {
+	// Reserve space for header
+	margin-bottom: var( --header-size );
 }
 
 .mw-body-header,
@@ -20,6 +26,7 @@
 	flex-wrap: wrap;
 	align-items: flex-start;
 	padding-top: @content-margin-top;
+	margin-top: var( --space-xl );
 	margin-bottom: @content-margin-top * 2;
 	gap: @content-margin-top;
 }
@@ -97,6 +104,16 @@ a.image {
 		clear: right;
 		/* @noflip */
 		float: right;
+	}
+}
+
+@media ( min-width: @width-breakpoint-desktop ) {
+	// Reserve space for header
+	.mw-body,
+	.parsoid-body,
+	.mw-footer {
+		margin-bottom: 0;
+		margin-left: var( --header-size );
 	}
 }
 

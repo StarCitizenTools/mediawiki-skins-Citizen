@@ -57,6 +57,46 @@
 	transition: @transition-transform, @transition-opacity--transform, @transition-visibility--transform;
 }
 
+// Header card popups
+.citizen-header-card( @position ) {
+	position: absolute;
+	right: 0;
+	bottom: 100%;
+	left: 0;
+	overflow: auto;
+	min-width: 16rem;
+	max-height: ~'calc( 100vh - var( --space-sm ) * 2 )';
+	margin: var( --space-sm );
+	overscroll-behavior: contain;
+	user-select: none;
+	.citizen-card();
+	.citizen-card-hide( bottom @position );
+}
+
+.citizen-header-card-tablet( @position ) {
+	& when ( @position = left ) {
+		right: unset;
+	}
+
+	& when ( @position = right ) {
+		left: unset;
+	}
+}
+
+.citizen-header-card-desktop( @position ) {
+	& when ( @position = top ) {
+		top: 0;
+		bottom: unset;
+	}
+
+	& when ( @position = bottom ) {
+		bottom: 0;
+	}
+	right: unset;
+	left: 100%;
+	.citizen-card-hide( @position left );
+}
+
 // To hide objects, but keep them accessible for screen-readers
 .hidden() {
 	position: absolute;

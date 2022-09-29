@@ -2,21 +2,19 @@
 
 .citizen-search {
 	--width-search-bar: @width-search-bar;
-	--height-search-bar: ~'calc( var( --height-header ) - var( --margin-header ) * 2 )';
+	--height-search-bar: var( --header-button-size );
 
 	&__card {
 		position: absolute;
-		top: 0;
-		right: 0;
+		left: 100%;
 		display: flex;
 		width: var( --width-search-bar );
 		max-width: ~'calc(100vw - var( --padding-page ) )';
 		height: var( --height-search-bar );
-		padding-right: var( --size-button--header ); // reserve space for close button
-		margin: var( --margin-header ) var( --padding-header );
+		margin: var( --space-sm );
 		gap: 0.25rem;
 		.citizen-card();
-		.citizen-card-hide( top right, X, false );
+		.citizen-card-hide( top left, X, false );
 
 		/**
 		 * Loading indicator for searchbox
@@ -123,30 +121,44 @@
 	}
 }
 
-// MAGIC
-// TODO: Don't hardcode this
-@media ( max-width: ( @width-search-bar + 60px ) ) {
+@media ( max-width: @width-breakpoint-desktop ) {
 	.citizen-search__card {
+		position: fixed;
+		top: 0;
+		right: 0;
 		left: 0;
 		width: auto;
-
-		&:before {
-			position: fixed;
-			z-index: -1; // Behind form
-			top: 0;
-			right: 0;
-			bottom: 0;
-			left: 0;
-			display: block;
-			background: rgba( 0, 0, 0, 0.7 );
-			content: '';
-		}
 
 		// Remove searchbox open animation on mobile
 		// But keep suggestion animation
 		// So user can get to search instantly
 		.citizen-animations-ready & {
 			transition: none;
+		}
+	}
+
+	#citizen-search__checkbox:checked {
+		+ .citizen-search__card {
+			z-index: 2;
+		}
+
+		// HACK: Click overlay to dismiss search bar
+		~ .citizen-search__button {
+			.citizen-search__buttonIcon {
+				display: none;
+			}
+
+			#citizen-search__buttonCheckbox {
+				position: fixed;
+				z-index: 1;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				width: auto;
+				height: auto;
+				background-color: var( --background-color-overlay );
+			}
 		}
 	}
 }

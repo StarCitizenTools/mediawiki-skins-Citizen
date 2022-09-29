@@ -77,12 +77,7 @@
 
 	// TODO: unify the dropdown menu style somewhere
 	&-panel {
-		position: absolute;
-		top: var( --height-header );
-		right: 1.25rem;
-		left: 1.25rem;
-		.citizen-card;
-		.citizen-card-hide( top right );
+		.citizen-header-card( right );
 		.citizen-card-transition();
 
 		&.citizen-pref-panel--active {
@@ -164,20 +159,20 @@
 	}
 }
 
-@media ( min-width: @width-breakpoint-tablet ) {
-	#citizen-pref {
-		position: relative;
-
-		&-panel {
-			right: 0;
-			left: unset;
-			min-width: 20rem;
-		}
-	}
-}
-
 @media ( hover: hover ) {
 	.citizen-pref:hover .citizen-pref__button:after {
 		transform: rotate3d( 0, 0, 1, 90deg );
+	}
+}
+
+@media ( min-width: @width-breakpoint-tablet ) {
+	#citizen-pref-panel {
+		.citizen-header-card-tablet( right );
+	}
+}
+
+@media ( min-width: @width-breakpoint-desktop ) {
+	#citizen-pref-panel {
+		.citizen-header-card-desktop( bottom );
 	}
 }
