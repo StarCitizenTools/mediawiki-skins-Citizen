@@ -29,8 +29,9 @@
 		overflow: visible;
 	}
 
-	// Reset VE disabled style to allow page action buttons to work
 	.mw-body-header {
+		margin-top: ~'calc( 46px - var( --space-xl ) )'; // Trim extra spacing
+		// Reset VE disabled style to allow page action buttons to work
 		opacity: 1;
 		pointer-events: auto;
 		user-select: auto;
@@ -49,6 +50,10 @@
 
 	.mw-footer {
 		z-index: 2; // Fix collision with VE elements
+	}
+
+	.toc {
+		display: none; // Hide ToC
 	}
 }
 
@@ -181,11 +186,11 @@
 		margin-right: var( --padding-page--negative );
 		margin-left: var( --padding-page--negative );
 
-		&.ve-ui-toolbar-floating > .oo-ui-toolbar-bar {
-			top: 56px; // Fixed under header
-		}
-
 		&Placeholder {
+			height: 46px; // Correspond to VE toolbar height in Citizen
+			border-bottom: 1px solid var( --border-color-base );
+			margin: 0 var( --padding-page--negative );
+
 			&-bar {
 				border: 0;
 				box-shadow: none;
@@ -197,12 +202,6 @@
 // Make toolbar more smaller screen friendly
 // Well at least I did by best
 @media ( max-width: 800px ) {
-	.ve-activated {
-		.mw-header {
-			background-color: transparent; // Because header is taller than toolbar
-		}
-	}
-
 	.ve-ui-toolbar {
 		> .oo-ui-toolbar-bar {
 			display: flex;
@@ -287,6 +286,11 @@
 			}
 		}
 	}
+}
+
+// HACK: Temp fix for mobile toolbar, will revisit when we move to 1.39+
+.ve-ui-toolbar .oo-ui-toolbar-after {
+	display: none !important;
 }
 
 .skin-citizen-dark {

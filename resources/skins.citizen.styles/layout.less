@@ -4,7 +4,6 @@
 .parsoid-body {
 	min-height: 80vh; // avoid footer being in the middle of the page
 	padding: 0 var( --padding-page );
-	margin-top: @content-margin-top * 3;
 }
 
 .mw-body,
@@ -27,6 +26,7 @@
 	flex-wrap: wrap;
 	align-items: flex-start;
 	padding-top: @content-margin-top;
+	margin-top: var( --space-xl );
 	margin-bottom: @content-margin-top * 2;
 	gap: @content-margin-top;
 }
