@@ -9,13 +9,34 @@
 */
 
 @import '../../../resources/variables.less';
+@import '../../../resources/mixins.less';
+
+.mw-echo-ui-notificationBadgeButtonPopupWidget-popup {
+	top: unset !important;
+	bottom: var( --header-size ) !important;
+	margin: var( --space-sm );
+	box-shadow: var( --box-shadow-dialog );
+}
+
+@media ( min-width: @width-breakpoint-tablet ) {
+	.mw-echo-ui-notificationBadgeButtonPopupWidget-popup {
+		// .citizen-header-card-tablet( right );
+	}
+}
+
+@media ( min-width: @width-breakpoint-desktop ) {
+	.mw-echo-ui-notificationBadgeButtonPopupWidget-popup {
+		bottom: 0 !important;
+		left: var( --header-size ) !important;
+	}
+}
 
 /* mw.echo.ui.mobile.less */
 @media all and ( max-width: 720px ) {
 	.mw-echo-ui-overlay {
 		.mw-echo-ui-notificationBadgeButtonPopupWidget-popup {
-			right: var( --padding-page );
-			left: var( --padding-page ) !important;
+			right: 0 !important;
+			left: 0 !important;
 		}
 	}
 }
@@ -24,6 +45,10 @@
 .mw-echo-ui-overlay {
 	position: fixed; // Header is fixed
 	z-index: @z-index-overlay; // Higher than header
+	// The notification button is always bottom-aligned
+	// Setting a top value will break the 0 height hack used in the original
+	top: unset;
+	bottom: 0;
 }
 
 /* mw.echo.ui.NotificationItemWidget.less */

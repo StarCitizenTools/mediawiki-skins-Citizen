@@ -9,7 +9,7 @@
 
 	.toc {
 		position: fixed;
-		top: ~'calc( var( --height-header ) + 1.2rem )'; // align with .mw-body-header
+		top: ~'calc( var( --header-size ) + 1.2rem )'; // align with .mw-body-header
 		left: var( --padding-page );
 		width: 100%;
 		max-width: ~'calc( var( --width-toc ) - var( --padding-page ) * 2 )';
@@ -96,7 +96,7 @@
 			z-index: 2;
 			display: block;
 			overflow: visible auto;
-			max-height: ~'calc( 100vh - var( --height-header ) - 3rem )'; // Somehow it works
+			max-height: ~'calc( 100vh - var( --header-size ) - 3rem )'; // Somehow it works
 			padding-right: 0.75rem;
 			margin: 0.6rem 0 0 0;
 			font-weight: 450;
@@ -191,7 +191,7 @@
 
 			> ul {
 				display: block !important; // So that animation is visible
-				max-height: ~'calc( 100vh - var( --height-header ) * 3 )';
+				max-height: ~'calc( 100vh - var( --header-size ) * 3 )';
 				padding: 2.6rem var( --padding-page ) 1rem var( --padding-page ); // hardcoded for now
 				border-radius: var( --border-radius--medium ) 0 var( --border-radius--medium ) var( --border-radius--medium );
 				margin-top: 0;

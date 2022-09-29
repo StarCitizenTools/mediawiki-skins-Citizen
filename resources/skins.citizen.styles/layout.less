@@ -7,6 +7,13 @@
 	margin-top: @content-margin-top * 3;
 }
 
+.mw-body,
+.parsoid-body,
+.mw-footer {
+	// Reserve space for header
+	margin-bottom: var( --header-size );
+}
+
 .mw-body-header,
 .citizen-body {
 	max-width: var( --width-layout );
@@ -97,6 +104,16 @@ a.image {
 		clear: right;
 		/* @noflip */
 		float: right;
+	}
+}
+
+@media ( min-width: @width-breakpoint-desktop ) {
+	// Reserve space for header
+	.mw-body,
+	.parsoid-body,
+	.mw-footer {
+		margin-bottom: 0;
+		margin-left: var( --header-size );
 	}
 }
 
