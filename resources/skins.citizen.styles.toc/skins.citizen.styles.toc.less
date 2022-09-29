@@ -10,7 +10,7 @@
 	.toc {
 		position: fixed;
 		top: ~'calc( var( --header-size ) + 1.2rem )'; // align with .mw-body-header
-		left: var( --padding-page );
+		right: var( --padding-page );
 		width: 100%;
 		max-width: ~'calc( var( --width-toc ) - var( --padding-page ) * 2 )';
 		color: var( --color-base--subtle );
@@ -122,10 +122,11 @@
 				&label {
 					--label-position: ~'calc( var( --width-toc ) - 20px )';
 					position: fixed;
-					left: var( --label-position );
+					right: var( --label-position );
 					width: 2.5rem;
 					height: 2.5rem;
-					border-radius: 0 var( --border-radius--medium ) var( --border-radius--medium ) 0;
+					border-bottom-left-radius: var( --border-radius--medium );
+					border-top-left-radius: var( --border-radius--medium );
 					cursor: pointer;
 					pointer-events: auto;
 					.citizen-card( false );
@@ -158,12 +159,12 @@
 				// This is needed to prevent ToC popping up on mobile
 				&checkbox:not( :checked ) {
 					~ .toctitle .toctogglelabel {
-						transform: translateX( ~'calc( var( --label-position ) * -1 )' );
+						transform: translateX( ~'var( --label-position )' );
 					}
 
 					~ .toctitle h2,
 					~ ul {
-						transform: translateX( -120% );
+						transform: translateX( 120% );
 					}
 				}
 			}
@@ -193,7 +194,7 @@
 				display: block !important; // So that animation is visible
 				max-height: ~'calc( 100vh - var( --header-size ) * 3 )';
 				padding: 2.6rem var( --padding-page ) 1rem var( --padding-page ); // hardcoded for now
-				border-radius: var( --border-radius--medium ) 0 var( --border-radius--medium ) var( --border-radius--medium );
+				border-radius: 0 var( --border-radius--medium ) var( --border-radius--medium ) var( --border-radius--medium );
 				margin-top: 0;
 				pointer-events: auto;
 				.citizen-card( false );
@@ -202,21 +203,7 @@
 			&togglelabel,
 			&title h2,
 			> ul {
-				opacity: 0;
 				transition: @transition-opacity;
-				visibility: hidden;
-			}
-		}
-
-		// Show toc button when title is hidden
-		.citizen-title--hidden {
-			.toc {
-				&togglelabel,
-				&title h2,
-				> ul {
-					opacity: 1;
-					visibility: visible;
-				}
 			}
 		}
 
@@ -261,9 +248,14 @@
 		.citizen-toc-enabled {
 			.mw-body-header,
 			.citizen-body {
-				margin-right: ~'max( var( --margin-layout ), 0 )';
-				margin-left: ~'max( var( --margin-layout ), var( --width-toc ) )';
+				// Reserve space for ToC
+				padding-right: var( --width-toc );
 			}
+		}
+
+		.toc {
+			right: var( --padding-page );
+			left: unset;
 		}
 	}
 }
