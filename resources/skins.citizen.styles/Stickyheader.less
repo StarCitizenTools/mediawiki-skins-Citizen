@@ -6,14 +6,27 @@
 	visibility: hidden;
 }
 
+.ve-activated,
+.action-edit {
+	// HACK: So sticky header will never trigger in edit action
+	#citizen-body-header-sticky-sentinel {
+		display: none;
+	}
+}
+
 .citizen-body-header--sticky {
 	.mw-body-header {
 		position: sticky;
 		z-index: 1;
 		top: 0;
+		align-items: center;
 		padding-bottom: var( --space-md );
 		border-bottom: 1px solid var( --border-color-base );
 		background-color: var( --color-surface-0 );
+
+		.mw-indicators {
+			display: none;
+		}
 	}
 
 	.firstHeading {
