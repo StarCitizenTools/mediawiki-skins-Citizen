@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-alpha.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.9...v2.0.0-alpha.0) (2022-09-30)
+
+
+### Features
+
+* **core:** redesign site header ([#521](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/521)) ([6de95d4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6de95d4fec06ec7da8c0249f4c18acbec71d31cb))
+
 ### [1.17.9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.8...v1.17.9) (2022-09-28)
 
 
