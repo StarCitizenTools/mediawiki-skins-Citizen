@@ -252,5 +252,17 @@
 				padding-right: var( --width-toc );
 			}
 		}
+
+		.citizen-animations-ready {
+			.toc {
+				transition: @transition-transform;
+			}
+		}
+
+		.citizen-body-header--sticky {
+			.toc {
+				transform: translateY( 3rem );
+			}
+		}
 	}
 }

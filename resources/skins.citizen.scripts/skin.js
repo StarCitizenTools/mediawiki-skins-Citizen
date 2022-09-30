@@ -63,17 +63,17 @@ function bindCloseOnUnload() {
  * @return {void}
  */
 function onTitleHidden( document ) {
-	const title = document.getElementById( 'firstHeading' );
+	const title = document.getElementById( 'citizen-body-header-sticky-sentinel' );
 
 	if ( title ) {
 		const scrollObserver = require( './scrollObserver.js' );
 
 		const observer = scrollObserver.initScrollObserver(
 			() => {
-				document.body.classList.add( 'citizen-title--hidden' );
+				document.body.classList.add( 'citizen-body-header--sticky' );
 			},
 			() => {
-				document.body.classList.remove( 'citizen-title--hidden' );
+				document.body.classList.remove( 'citizen-body-header--sticky' );
 			}
 		);
 		observer.observe( title );

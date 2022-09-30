@@ -1,0 +1,32 @@
+#citizen-body-header-sticky-sentinel {
+	position: absolute;
+	right: 0;
+	left: 0;
+	height: 3.5rem; // HACK: Estimated size of body-header
+	visibility: hidden;
+}
+
+.citizen-body-header--sticky {
+	.mw-body-header {
+		position: sticky;
+		z-index: 1;
+		top: 0;
+		padding-bottom: var( --space-md );
+		border-bottom: 1px solid var( --border-color-base );
+		background-color: var( --color-surface-0 );
+	}
+
+	.firstHeading {
+		font-size: 1.25rem;
+	}
+
+	.toc {
+		transform: translateY( 3rem );
+	}
+}
+
+@media ( max-height: 1000px ) {
+	.page-actions {
+		display: none;
+	}
+}
