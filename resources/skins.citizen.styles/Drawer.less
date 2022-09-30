@@ -1,5 +1,6 @@
 .citizen-drawer {
 	&__card {
+		padding: var( --space-sm ) 0;
 		.citizen-header-card( left );
 	}
 
@@ -7,9 +8,9 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		padding: var( --header-button-size ) var( --padding-page ) 0.8rem; // TODO: Replace with space token
+		padding: var( --space-md );
 		border-bottom: 1px solid var( --border-color-base );
-		gap: 1.25rem;
+		gap: var( --space-md );
 	}
 
 	// Keep aspect ratio
@@ -19,8 +20,11 @@
 	}
 
 	&__siteinfo {
+		display: flex;
+		flex-direction: column;
+		gap: var( --space-xs );
+
 		.mw-logo-wordmark {
-			margin-top: 0.375rem;
 			color: var( --color-base--emphasized );
 			font-size: 1.5rem;
 		}
@@ -30,9 +34,9 @@
 		display: grid;
 		max-width: 92vw;
 		justify-content: center;
-		padding: 0.625rem 0.625rem 1.25rem 0.625rem; // TODO: Replace with space token
+		padding: var( --space-sm ) var( --space-md );
 		font-size: 0.875rem; // TODO: Make this a variable
-		gap: 0.625rem; // TODO: Replace with space token
+		gap: var( --space-sm );
 		grid-template-columns: repeat( auto-fit, 15rem );
 
 		a {
