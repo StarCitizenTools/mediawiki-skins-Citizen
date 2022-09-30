@@ -49,7 +49,7 @@ module.exports = {
 	// On non-unix systems the linebreaks will be normalized to LF (unix) only at git commit,
 	// assuming `core.autocrlf` is 'true' (default) or 'input'.
 	js2svg: {
-		indent: "\t",
-		pretty: true,
+		indent: '\t',
+		pretty: true
 	}
-}
+};
