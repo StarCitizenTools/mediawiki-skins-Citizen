@@ -19,14 +19,28 @@
 	.firstHeading {
 		font-size: 1.25rem;
 	}
+}
 
-	.toc {
-		transform: translateY( 3rem );
+@media ( max-width: @width-breakpoint-tablet ), ( max-height: 800px ) {
+	.citizen-body-header--sticky {
+		#siteSub {
+			display: none;
+		}
+
+		.page-actions {
+			display: none;
+		}
 	}
 }
 
-@media ( max-height: 1000px ) {
-	.page-actions {
-		display: none;
+@media ( min-width: @width-breakpoint-desktop-wide ) {
+	.citizen-body-header--sticky {
+		.toc {
+			transform: translateY( 3rem );
+
+			@media ( max-height: 800px ) {
+				transform: translateY( 2rem ) !important; // Somehow need this idk why
+			}
+		}
 	}
 }
