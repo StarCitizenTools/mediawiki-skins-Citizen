@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-alpha.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.0.0-alpha.0...v2.0.0-alpha.1) (2022-09-30)
+
+
+### Features
+
+* **core:** ✨ add extra page padding on desktop view ([87d1918](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/87d19187707da7d31207a7134b46759fca0985b4))
+* **core:** ✨ add jump to top link to sticky header ([5be20a2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5be20a256c3d3080b697f79422c852eeeae12cd7))
+* **core:** ✨ add sticky body header ([e72d7c0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e72d7c00a3449424b427ca5a153074e13617cd6a))
+* **core:** ✨ more responsive layout for sticky header ([9b1325b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9b1325bcb8b20b1ec74756fbb55c654a269a5eb7))
+* **core:** ✨ move fluid sticky transition ([f3e4332](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f3e4332e615fdee1c00120e0868193212ca09831))
+
+
+### Bug Fixes
+
+* **core:** 🐛 mitigate ToC overlap in various max width ([0058081](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/00580810ecb52589e4e5dc0c83e65c54bf441890))
+* **core:** 🐛 sticky header should not trigger in edit mode ([639c378](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/639c3787213f62e1644a26e6e03d5a08187d50a0))
+* **core:** 🐛 wiki name wrapping in drawer ([20ed41e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/20ed41ec2c4a5155a7edc0c8c525e6a6cf543e45))
+
 ## [2.0.0-alpha.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.9...v2.0.0-alpha.0) (2022-09-30)
 
 
