@@ -90,10 +90,6 @@
 
 @media ( min-width: @width-breakpoint-tablet ) {
 	.citizen-drawer {
-		&__card {
-			.citizen-header-card-tablet( left );
-		}
-
 		&__logo img {
 			// Bigger logo
 			height: 5rem;
@@ -111,18 +107,8 @@
 
 @media ( min-width: @width-breakpoint-desktop ) {
 	.citizen-drawer {
-		&__card {
-			.citizen-header-card-desktop( top );
-		}
-
 		&__header {
 			justify-content: flex-start;
 		}
-	}
-}
-
-@media ( min-width: @width-breakpoint-desktop-wide ) {
-	.citizen-drawer__menu {
-		max-width: 1200px; // So that it doesn't span too wide
 	}
 }

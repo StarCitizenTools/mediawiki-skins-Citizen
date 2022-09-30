@@ -65,36 +65,37 @@
 	left: 0;
 	overflow: auto;
 	min-width: 16rem;
-	max-height: ~'calc( 100vh - var( --space-sm ) * 2 )';
+	max-height: var( --header-card-maxheight );
 	margin: var( --space-sm );
 	overscroll-behavior: contain;
 	user-select: none;
 	.citizen-card();
 	.citizen-card-hide( bottom @position );
-}
 
-.citizen-header-card-tablet( @position ) {
-	& when ( @position = left ) {
+	@media ( min-width: @width-breakpoint-tablet ) {
+		& when ( @position = left ) {
+			right: unset;
+		}
+
+		& when ( @position = right ) {
+			left: unset;
+		}
+	}
+
+	@media ( min-width: @width-breakpoint-desktop ) {
 		right: unset;
-	}
+		left: 100%;
+		& when ( @position = left ) {
+			top: 0;
+			bottom: unset;
+			.citizen-card-hide( top left );
+		}
 
-	& when ( @position = right ) {
-		left: unset;
+		& when ( @position = right ) {
+			bottom: 0;
+			.citizen-card-hide( bottom left );
+		}
 	}
-}
-
-.citizen-header-card-desktop( @position ) {
-	& when ( @position = top ) {
-		top: 0;
-		bottom: unset;
-	}
-
-	& when ( @position = bottom ) {
-		bottom: 0;
-	}
-	right: unset;
-	left: 100%;
-	.citizen-card-hide( @position left );
 }
 
 // To hide objects, but keep them accessible for screen-readers
