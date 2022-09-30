@@ -125,12 +125,12 @@ class SkinCitizen extends SkinMustache {
 				'data-notifications' => $header->getNotifications(),
 				'data-personal-menu' => $header->buildPersonalMenu(),
 				'data-search-box' => $header->buildSearchProps(),
-				'html-citizen-jumptotop' => $this->msg( 'citizen-jumptotop' )->text() . ' [home]',
 			],
 			'data-pagetools' => $tools->buildPageTools( $parentData ),
 			'data-citizen-footer' => $footer->getFooterData(),
 			// HTML strings
 			'html-title-heading--formatted' => $pageTitle->buildTitle( $parentData, $title ),
+			'html-citizen-jumptotop' => $this->msg( 'citizen-jumptotop' )->text() . ' [home]',
 			'html-body-content--formatted' => $bodycontent->buildBodyContent(),
 			'html-tagline' => $tagline->getTagline(),
 		];

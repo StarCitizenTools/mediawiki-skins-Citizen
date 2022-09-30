@@ -29,8 +29,30 @@
 		}
 	}
 
+	.page-heading {
+		position: relative;
+	}
+
 	.firstHeading {
 		font-size: 1.25rem;
+	}
+
+	.citizen-jumptotop {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		border-radius: var( --border-radius--small );
+		margin: ~'calc( var( --space-sm ) * -1 )';
+
+		&:hover {
+			background-color: var( --background-color-quiet--hover );
+		}
+
+		&:active {
+			background-color: var( --background-color-quiet--active );
+		}
 	}
 }
 
