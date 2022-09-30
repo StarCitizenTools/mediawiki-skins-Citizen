@@ -96,7 +96,7 @@
 			z-index: 2;
 			display: block;
 			overflow: visible auto;
-			max-height: ~'calc( 100vh - var( --header-size ) - 3rem )'; // Somehow it works
+			max-height: ~'calc( 100vh - 10rem )'; // Somehow it works
 			padding-right: 0.75rem;
 			margin: 0.6rem 0 0 0;
 			font-weight: 450;
@@ -253,9 +253,16 @@
 			}
 		}
 
-		.toc {
-			right: unset;
-			left: ~'calc( 50vw + var( --width-layout ) / 2  - var( --width-toc ) / 2 + var( --space-md ) * 3 )';
+		.citizen-animations-ready {
+			.toc {
+				transition: @transition-transform;
+			}
+		}
+
+		.citizen-body-header--sticky {
+			.toc {
+				transform: translateY( 3rem );
+			}
 		}
 	}
 }
