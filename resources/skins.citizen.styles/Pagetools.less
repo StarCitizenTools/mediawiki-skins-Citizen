@@ -307,7 +307,20 @@
 	}
 }
 
-@media ( min-width: @width-breakpoint-tablet ) {
+@media ( max-width: @width-breakpoint-tablet ) {
+	.page-actions {
+		&__item {
+			position: unset;
+		}
+
+		&__card {
+			right: 0;
+			left: 0;
+		}
+	}
+}
+
+@media ( min-width: @width-breakpoint-desktop ) {
 	.page-actions {
 		position: relative;
 		margin-right: 0;
@@ -320,19 +333,6 @@
 					margin-right: 0.5rem;
 				}
 			}
-		}
-	}
-}
-
-@media ( max-width: @width-breakpoint-tablet ) {
-	.page-actions {
-		&__item {
-			position: unset;
-		}
-
-		&__card {
-			right: 0;
-			left: 0;
 		}
 	}
 }
