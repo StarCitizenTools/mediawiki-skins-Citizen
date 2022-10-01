@@ -1,5 +1,8 @@
 .catlinks {
+	display: flex;
+	flex-direction: column;
 	clear: both;
+	gap: var( --space-lg );
 	line-height: 1.2;
 
 	.mw-normal-catlinks {
@@ -14,8 +17,6 @@
 
 	.mw-normal-catlinks,
 	.mw-hidden-catlinks {
-		padding: @content-margin-top 0;
-
 		> a {
 			display: block;
 			color: var( --color-base--subtle );
