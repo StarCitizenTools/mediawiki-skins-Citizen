@@ -279,8 +279,7 @@
 				".citizen-search__icon:after": "resources/skins.citizen.icons/shared/search.svg",
 				".citizen-search__random:after": "resources/skins.citizen.icons/shared/random.svg",
 				"#citizen-languages__buttonCheckbox:after": "resources/skins.citizen.icons/shared/language.svg",
-				"#page-actions-more__buttonCheckbox:after": "resources/skins.citizen.icons/more.svg",
-				".last-modified-bar-icon": "resources/skins.citizen.icons/shared/history.svg"
+				"#page-actions-more__buttonCheckbox:after": "resources/skins.citizen.icons/more.svg"
 			}
 		},
 		"skins.citizen.icons.ca": {

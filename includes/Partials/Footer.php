@@ -41,12 +41,6 @@ final class Footer extends Partial {
 		$footerLinks = $skin->getFooterLinksPublic();
 		$msg = [ 'desc', 'tagline' ];
 
-		// Get last modified message
-		if ( $footerLinks['info']['lastmod'] && isset( $footerLinks['info']['lastmod'] ) ) {
-			$data['html-lastmodified'] = $footerLinks['info']['lastmod'];
-			unset( $footerLinks['info']['lastmod'] );
-		}
-
 		// Get messages
 		foreach ( $msg as $key ) {
 			$data["msg-citizen-footer-$key"] = $skin->msg( "citizen-footer-$key" )
