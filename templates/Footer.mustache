@@ -16,25 +16,27 @@
 	string msg-citizen-footer-tagline
 }}
 
-<footer class="mw-footer" {{{html-user-language-attributes}}}>
-	{{#html-lastmodified}}
-	<div class="last-modified-bar">
-		<div class="last-modified-bar-content">
-			<div class="last-modified-bar-icon"></div>
-			<div class="last-modified-bar-text">{{{.}}}</div>
-		</div>
-	</div>
-	{{/html-lastmodified}}
-	<div id="footer-content">
-		<h2 id="footer-sitetitle" class="mw-wiki-title">{{>Wordmark}}</h2>
-		<p id="footer-desc">{{{msg-citizen-footer-desc}}}</p>
-		{{#data-citizen-places}}{{>Footer__row}}{{/data-citizen-places}}
-		{{#data-citizen-info}}{{>Footer__row}}{{/data-citizen-info}}
-	</div>
-	<div id="footer-bottom">
-		<div id="footer-bottom-content">
+<footer class="mw-footer citizen-footer" {{{html-user-language-attributes}}}>
+	<div class="citizen-footer__container">
+		{{#html-lastmodified}}
+		<section class="last-modified-bar">
+			<div class="last-modified-bar-content">
+				<div class="last-modified-bar-icon"></div>
+				<div class="last-modified-bar-text">{{{.}}}</div>
+			</div>
+		</section>
+		{{/html-lastmodified}}
+		<section class="citizen-footer__content">
+			<div class="citizen-footer__siteinfo">
+				<div id="footer-sitetitle" class="mw-wiki-title">{{>Wordmark}}</div>
+				<p id="footer-desc">{{{msg-citizen-footer-desc}}}</p>
+			</div>
+			{{#data-citizen-info}}{{>Footer__row}}{{/data-citizen-info}}
+			{{#data-citizen-places}}{{>Footer__row}}{{/data-citizen-places}}
+		</section>
+		<section class="citizen-footer__bottom">
 			<div id="footer-tagline">{{{msg-citizen-footer-tagline}}}</div>
 			{{#data-citizen-icons}}{{>Footer__row}}{{/data-citizen-icons}}
-		</div>
+		</section>
 	</div>
 </footer>

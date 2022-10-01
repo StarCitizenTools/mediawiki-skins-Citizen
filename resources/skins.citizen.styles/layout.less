@@ -3,14 +3,13 @@
 .mw-body,
 .parsoid-body {
 	min-height: 80vh; // avoid footer being in the middle of the page
-	padding: 0 var( --padding-page );
 }
 
 .mw-body,
 .parsoid-body,
 .mw-footer {
-	// Reserve space for header
-	margin-bottom: var( --header-size );
+	padding-right: var( --padding-page );
+	padding-left: var( --padding-page );
 }
 
 .mw-body-header,
@@ -51,35 +50,6 @@ a.image {
 	}
 }
 
-#mw-data-after-content {
-	padding-bottom: var( --padding-page );
-	background: var( --color-surface-0 );
-}
-
-.mw-footer,
-#mw-data-after-content {
-	position: relative;
-	margin-top: var( --padding-page );
-
-	// Footer spacer
-	&:before {
-		position: absolute;
-		top: ~'calc( var( --padding-page ) * -2 )';
-		right: 0;
-		left: 0;
-		display: block;
-		height: ~'calc( var( --padding-page ) * 2 )';
-		background: var( --color-surface-0 );
-		content: '';
-		-webkit-mask-image: linear-gradient( 0deg, #000, transparent );
-		mask-image: linear-gradient( 0deg, #000, transparent );
-	}
-}
-
-#mw-data-after-content + .mw-footer {
-	margin-top: 0;
-}
-
 @media ( min-width: @width-breakpoint-tablet ) {
 	div.tleft,
 	figure.mw-halign-left,
@@ -112,14 +82,10 @@ a.image {
 	.mw-body,
 	.parsoid-body,
 	.mw-footer {
-		margin-bottom: 0;
-		margin-left: var( --header-size );
-	}
-
-	.mw-body,
-	.parsoid-body {
 		padding-right: ~'calc( var( --padding-page ) * 2 )';
 		padding-left: ~'calc( var( --padding-page ) * 2 )';
+		margin-bottom: 0;
+		margin-left: var( --header-size );
 	}
 }
 
