@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-alpha.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.0.0-alpha.1...v2.0.0-alpha.2) (2022-10-01)
+
+
+### Features
+
+* **core:** ✨ collapse page tool text below desktop ([6aee9f8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6aee9f8e03c21c3230d8015da154048160211639))
+* **core:** ✨ move catlinks to body footer ([9de7a1d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9de7a1d4b2d41911b9f8f2a738c6695efa06fcf2))
+* **core:** ✨ move footer info into body footer ([aaad2bb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/aaad2bb92ae079240da9625bb121c9d8a31fc4c0))
+* **core:** ✨ move sitenotice out of mw-body ([61e8d05](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/61e8d053c450b581e4bcbca7363a8560e7759499))
+* **core:** ✨ page actions should take full width with toc ([9532aa4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9532aa4906caf9b03a2bf3d84083b6f04a5bba1c))
+* **core:** ✨ redesign site footer ([4902ae7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4902ae76ab2b88018072dfcfc71756960f94388a))
+* **core:** ✨ strict selector for category links ([6b47c86](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6b47c86c70a14172006dd9cf43415036639d86d2))
+* **core:** ✨ tweak body footer styles ([bf66c60](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bf66c60f3d5f83fa5aac8649c115748740fb3790))
+* **core:** ✨ tweak footer wiki name color ([2e8c98b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2e8c98b755ff0b42e165728e412127f64a01ecc4))
+* **core:** ✨ use space unit for drawer ([607c3f2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/607c3f22b2d83bd5589c5749c5a7993ae50566c4))
+
+
+### Bug Fixes
+
+* **core:** 🐛 incorrect color for footer site description ([bdc58fd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bdc58fdeaf2dcaf7968f849de979fef23d5ad07c))
+* **core:** 🐛 incorrect CSS variable name ([17907ea](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/17907ead6ded49c7eec8420f7878504b3d182496))
+
 ## [2.0.0-alpha.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.0.0-alpha.0...v2.0.0-alpha.1) (2022-09-30)
 
 
