@@ -13,7 +13,8 @@
 }
 
 .mw-body-header,
-.citizen-body {
+.citizen-body,
+.mw-body-footer {
 	max-width: var( --width-layout );
 	margin-right: auto;
 	margin-left: auto;
@@ -78,13 +79,13 @@ a.image {
 }
 
 @media ( min-width: @width-breakpoint-desktop ) {
-	// Reserve space for header
 	.mw-body,
 	.parsoid-body,
 	.mw-footer {
 		padding-right: ~'calc( var( --padding-page ) * 2 )';
 		padding-left: ~'calc( var( --padding-page ) * 2 )';
 		margin-bottom: 0;
+		// Reserve space for header
 		margin-left: var( --header-size );
 	}
 }
