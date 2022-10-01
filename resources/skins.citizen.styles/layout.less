@@ -7,7 +7,7 @@
 
 .mw-body,
 .parsoid-body,
-.mw-footer {
+.citizen-footer {
 	padding-right: var( --padding-page );
 	padding-left: var( --padding-page );
 }
@@ -81,10 +81,15 @@ a.image {
 @media ( min-width: @width-breakpoint-desktop ) {
 	.mw-body,
 	.parsoid-body,
-	.mw-footer {
+	.citizen-footer {
 		padding-right: ~'calc( var( --padding-page ) * 2 )';
 		padding-left: ~'calc( var( --padding-page ) * 2 )';
-		margin-bottom: 0;
+	}
+
+	#siteNotice,
+	.mw-body,
+	.parsoid-body,
+	.citizen-footer {
 		// Reserve space for header
 		margin-left: var( --header-size );
 	}
