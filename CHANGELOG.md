@@ -2,6 +2,65 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-beta.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.0.0-alpha.2...v2.0.0-beta.0) (2022-10-02)
+
+
+### Features
+
+* **core:** ✨ smaller footer wordmark size on mobile ([c551225](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c551225ec7a9be273a0d21eacba72644827836d1))
+
+
+### Bug Fixes
+
+* **skinStyles:** 🐛 incorrect VE dark mode background ([9388b92](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9388b92b2715031395e88f6872fa8c304efc0d9f)), closes [#489](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/489) [#525](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/525)
+
+## [2.0.0-alpha.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.0.0-alpha.1...v2.0.0-alpha.2) (2022-10-01)
+
+
+### Features
+
+* **core:** ✨ collapse page tool text below desktop ([6aee9f8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6aee9f8e03c21c3230d8015da154048160211639))
+* **core:** ✨ move catlinks to body footer ([9de7a1d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9de7a1d4b2d41911b9f8f2a738c6695efa06fcf2))
+* **core:** ✨ move footer info into body footer ([aaad2bb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/aaad2bb92ae079240da9625bb121c9d8a31fc4c0))
+* **core:** ✨ move sitenotice out of mw-body ([61e8d05](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/61e8d053c450b581e4bcbca7363a8560e7759499))
+* **core:** ✨ page actions should take full width with toc ([9532aa4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9532aa4906caf9b03a2bf3d84083b6f04a5bba1c))
+* **core:** ✨ redesign site footer ([4902ae7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4902ae76ab2b88018072dfcfc71756960f94388a))
+* **core:** ✨ strict selector for category links ([6b47c86](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6b47c86c70a14172006dd9cf43415036639d86d2))
+* **core:** ✨ tweak body footer styles ([bf66c60](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bf66c60f3d5f83fa5aac8649c115748740fb3790))
+* **core:** ✨ tweak footer wiki name color ([2e8c98b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2e8c98b755ff0b42e165728e412127f64a01ecc4))
+* **core:** ✨ use space unit for drawer ([607c3f2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/607c3f22b2d83bd5589c5749c5a7993ae50566c4))
+
+
+### Bug Fixes
+
+* **core:** 🐛 incorrect color for footer site description ([bdc58fd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bdc58fdeaf2dcaf7968f849de979fef23d5ad07c))
+* **core:** 🐛 incorrect CSS variable name ([17907ea](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/17907ead6ded49c7eec8420f7878504b3d182496))
+
+## [2.0.0-alpha.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.0.0-alpha.0...v2.0.0-alpha.1) (2022-09-30)
+
+
+### Features
+
+* **core:** ✨ add extra page padding on desktop view ([87d1918](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/87d19187707da7d31207a7134b46759fca0985b4))
+* **core:** ✨ add jump to top link to sticky header ([5be20a2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5be20a256c3d3080b697f79422c852eeeae12cd7))
+* **core:** ✨ add sticky body header ([e72d7c0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e72d7c00a3449424b427ca5a153074e13617cd6a))
+* **core:** ✨ more responsive layout for sticky header ([9b1325b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9b1325bcb8b20b1ec74756fbb55c654a269a5eb7))
+* **core:** ✨ move fluid sticky transition ([f3e4332](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f3e4332e615fdee1c00120e0868193212ca09831))
+
+
+### Bug Fixes
+
+* **core:** 🐛 mitigate ToC overlap in various max width ([0058081](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/00580810ecb52589e4e5dc0c83e65c54bf441890))
+* **core:** 🐛 sticky header should not trigger in edit mode ([639c378](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/639c3787213f62e1644a26e6e03d5a08187d50a0))
+* **core:** 🐛 wiki name wrapping in drawer ([20ed41e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/20ed41ec2c4a5155a7edc0c8c525e6a6cf543e45))
+
+## [2.0.0-alpha.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.9...v2.0.0-alpha.0) (2022-09-30)
+
+
+### Features
+
+* **core:** redesign site header ([#521](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/521)) ([6de95d4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6de95d4fec06ec7da8c0249f4c18acbec71d31cb))
+
 ### [1.17.9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v1.17.8...v1.17.9) (2022-09-28)
 
 

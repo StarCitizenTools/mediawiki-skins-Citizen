@@ -1,6 +1,8 @@
 .catlinks {
-	margin-top: @content-margin-top * 2;
+	display: flex;
+	flex-direction: column;
 	clear: both;
+	gap: var( --space-lg );
 	line-height: 1.2;
 
 	.mw-normal-catlinks {
@@ -15,8 +17,6 @@
 
 	.mw-normal-catlinks,
 	.mw-hidden-catlinks {
-		padding: @content-margin-top 0;
-
 		> a {
 			display: block;
 			color: var( --color-base--subtle );
@@ -34,10 +34,10 @@
 			gap: 0.375rem;
 			letter-spacing: 0; // hidden-catlink title does not have a selector
 
-			li {
+			> li {
 				display: block;
 
-				a {
+				> a {
 					display: inline-block;
 					padding: 0.5rem 1rem;
 					border: 1px solid var( --border-color-base--darker );

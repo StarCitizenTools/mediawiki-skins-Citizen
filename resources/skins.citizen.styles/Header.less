@@ -1,32 +1,19 @@
 .citizen-header {
-	--size-button--header: ~'calc( var( --height-header ) - 1rem )';
-	--size-icon--header: 1.25rem;
-	--margin-header: 0.5rem;
-	--padding-header: ~'calc( var( --padding-page ) / 2 )';
-	--size-dialog-min--header: 16rem;
+	--header-icon-size: ~'calc( var( --header-button-size ) / 2 )';
+	--header-button-size: ~'calc( var( --header-size ) - var( --space-sm ) * 2 )';
+	--header-direction: row;
+	--header-card-maxheight: ~'calc( 100vh - var( --header-size ) - var( --space-md ) )';
 	position: fixed;
 	z-index: @z-index-site-header;
-	top: 0;
 	right: 0;
+	bottom: 0;
 	left: 0;
 	display: flex;
-	height: var( --height-header );
-	justify-content: space-between;
-	padding: 0 var( --padding-header );
-
-	&:before {
-		position: absolute;
-		z-index: -1;
-		top: 0;
-		right: 0;
-		bottom: ~'calc( var( --height-header ) / -2 )';
-		left: 0;
-		background: var( --color-surface-0 );
-		content: '';
-		-webkit-mask-image: linear-gradient( 180deg, #000, transparent );
-		mask-image: linear-gradient( 180deg, #000, transparent );
-		pointer-events: none;
-	}
+	flex-direction: var( --header-direction );
+	padding: var( --space-sm );
+	border-top: 1px solid var( --border-color-base );
+	background-color: var( --color-surface-0 );
+	gap: var( --space-xs );
 
 	&__item {
 		display: flex;
@@ -35,8 +22,8 @@
 
 	&__button {
 		display: grid;
-		width: var( --size-button--header );
-		height: var( --size-button--header );
+		width: var( --header-button-size );
+		height: var( --header-button-size );
 		border-radius: var( --border-radius--small );
 		place-items: center;
 
@@ -51,14 +38,14 @@
 		// Pure CSS icons
 		&Icon {
 			overflow: hidden; // Sometimes CSS animation can clip
-			width: var( --size-icon--header );
-			height: var( --size-icon--header );
+			width: var( --header-icon-size );
+			height: var( --header-icon-size );
 		}
 
 		// Background image icons
 		&--icon:after {
-			width: var( --size-icon--header );
-			height: var( --size-icon--header );
+			width: var( --header-icon-size );
+			height: var( --header-icon-size );
 			background-position: center;
 			background-repeat: no-repeat;
 			background-size: contain;
@@ -94,8 +81,10 @@
 		z-index: -1; // Inner element should be behind menu and search
 		display: flex;
 		min-width: 0;
+		flex-direction: var( --header-direction );
 		flex-grow: 1;
 		justify-content: space-between;
+		gap: var( --space-xs );
 
 		.mw-checkbox-hack-checkbox:checked {
 			~ .citizen-header__button {
@@ -107,6 +96,8 @@
 	&__start,
 	&__end {
 		display: flex;
+		flex-direction: var( --header-direction );
+		gap: var( --space-xs );
 	}
 
 	&__start {
@@ -114,55 +105,10 @@
 		align-items: center;
 	}
 
-	&__title {
-		display: flex;
-		min-width: 0;
-		height: var( --size-button--header );
-		align-items: center;
-		padding: 0 0.5rem;
-		border-radius: var( --border-radius--small );
-		color: var( --color-base--emphasized );
-		font-weight: 500;
-		white-space: nowrap;
-
-		> div {
-			overflow: hidden;
-			text-overflow: ellipsis;
-		}
-
-		&:hover {
-			background-color: var( --background-color-quiet--hover );
-			color: var( --color-base--emphasized );
-		}
-
-		&:active {
-			background-color: var( --background-color-quiet--active );
-			color: var( --color-base--emphasized );
-		}
-
-		&--page {
-			display: none;
-		}
-	}
-
 	// Reset
 	ul {
 		margin: 0;
 		list-style: none;
-	}
-}
-
-.citizen-title--hidden {
-	.citizen-header {
-		&__title {
-			&--site {
-				display: none;
-			}
-
-			&--page {
-				display: grid;
-			}
-		}
 	}
 }
 
@@ -179,8 +125,9 @@
 #p-notifications {
 	ul {
 		display: flex;
-		height: var( --height-header );
+		flex-direction: var( --header-direction );
 		align-items: center;
+		gap: var( --space-xs );
 	}
 }
 
@@ -198,12 +145,17 @@
 				}
 			}
 		}
+	}
+}
 
-		&__title {
-			&:hover {
-				background-color: none;
-				color: var( --color-base );
-			}
-		}
+@media ( min-width: @width-breakpoint-desktop ) {
+	.citizen-header {
+		--header-direction: column;
+		--header-card-maxheight: ~'calc( 100vh - var( --space-sm ) * 2 )';
+		top: 0;
+		right: unset;
+		left: 0;
+		border-top: 0;
+		border-right: 1px solid var( --border-color-base );
 	}
 }

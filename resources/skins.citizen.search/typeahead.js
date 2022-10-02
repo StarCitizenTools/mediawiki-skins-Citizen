@@ -169,7 +169,7 @@ function getSuggestions( searchQuery ) {
 			matchedTitle = cleanup( matchedTitle );
 
 			// eslint thinks it is an array
-			// eslint-disable-next-line no-restricted-syntax
+
 			return !( title.includes( matchedTitle ) || matchedTitle.includes( title ) );
 		};
 

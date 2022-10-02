@@ -1,9 +1,11 @@
 # Citizen
-[![](https://img.shields.io/github/contributors/badges/shields.svg)](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/graphs/contributors) ![](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/workflows/MediaWiki%20CI/badge.svg) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![MediaWiki: >=1.35.0](https://img.shields.io/badge/MediaWiki-%3E%3D1.35.2-%2336c)](https://www.mediawiki.org)
+[![](https://img.shields.io/github/contributors/badges/shields.svg)](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/graphs/contributors) ![](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/workflows/MediaWiki%20CI/badge.svg) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![MediaWiki: >=1.35.2](https://img.shields.io/badge/MediaWiki-%3E%3D1.35.2-%2336c)](https://www.mediawiki.org)
 
 Citizen is a responsive skin for [MediaWiki](https://www.mediawiki.org) built by the [Star Citizen Wiki](https://starcitizen.tools) team. Although it is specifically built for the Star Citizen Wiki, the skin is designed to be flexible to run on any Mediawiki installation that is **1.35.2 or higher**. Due to resource constraints, we might not be able to provide full support for setups that are vastly different than us, but please feel free to submit patches or bug report!
 
 Live demo can be seen at the [Star Citizen Wiki](https://starcitizen.tools), more avaliable [here](https://wikiapiary.com/wiki/Skin:Citizen).
+
+If you are looking for the old design, [click here](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v1.17.9) for the the last 1.X release.
 
 ## Notable features
 - **Fully responsive skin**: Responsive and able to adapt to different screen sizes. 📱💻🖥️

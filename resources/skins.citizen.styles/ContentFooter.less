@@ -1,0 +1,29 @@
+.mw-body-footer {
+	display: flex;
+	flex-direction: column;
+	padding: var( --space-lg ) 0;
+	gap: var( --space-lg );
+}
+
+.page-info {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var( --space-lg );
+
+	&__item {
+		display: flex;
+		flex-direction: column;
+		gap: var( --space-sm );
+	}
+
+	&__label {
+		color: var( --color-base--subtle );
+		font-size: @ui-menu-text;
+		letter-spacing: 0.75px;
+	}
+
+	&__text {
+		color: var( --color-base--subtle );
+		font-size: 0.875rem;
+	}
+}

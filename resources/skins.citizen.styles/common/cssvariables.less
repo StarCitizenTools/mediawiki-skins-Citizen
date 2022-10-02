@@ -71,9 +71,18 @@
 
 html {
 	/* Size */
-	--height-header: @height-header;
+	--header-size: @header-size;
 	--width-layout: @width-layout;
+	--width-layout--extended: ~'calc( var( --width-layout ) * 1.5 )';
 	--line-height: @line-height;
+
+	/* Spacing */
+	--space-unit: @space-unit;
+	--space-xs: ~'calc( 0.25 * var( --space-unit ) )';
+	--space-sm: ~'calc( 0.5 * var( --space-unit ) )';
+	--space-md: ~'var( --space-unit )';
+	--space-lg: ~'calc( 1.5 * var( --space-unit ) )';
+	--space-xl: ~'calc( 2 * var( --space-unit ) )';
 
 	/* Margin */
 	--margin-layout: ~'calc( ( 100vw - var( --width-layout ) ) / 2 )';
