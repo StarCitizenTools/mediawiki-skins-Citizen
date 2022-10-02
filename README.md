@@ -5,6 +5,8 @@ Citizen is a responsive skin for [MediaWiki](https://www.mediawiki.org) built by
 
 Live demo can be seen at the [Star Citizen Wiki](https://starcitizen.tools), more avaliable [here](https://wikiapiary.com/wiki/Skin:Citizen).
 
+If you are looking for the old design, [click here](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v1.17.9) for the the last 1.X release.
+
 ## Notable features
 - **Fully responsive skin**: Responsive and able to adapt to different screen sizes. 📱💻🖥️
 - **Light/dark mode support**: Switch between light and dark mode. ***Require JS*** ☀️🌙
