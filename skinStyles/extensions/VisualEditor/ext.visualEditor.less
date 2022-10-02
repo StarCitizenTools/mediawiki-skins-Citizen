@@ -108,6 +108,10 @@
 
 		&-targetWidget {
 			border-color: var( --border-color-input );
+
+			&:not( .oo-ui-pendingElement-pending ) {
+				background: var( --color-surface-1 );
+			}
 		}
 
 		&-overlay {
@@ -115,6 +119,16 @@
 
 			&-global {
 				z-index: 100;
+			}
+		}
+
+		&-expandableContent {
+			&-fade {
+				background: linear-gradient( to right, rgba( 255, 255, 255, 0 ) 0, var( --color-surface-1 ) 90% );
+			}
+
+			&-toggle {
+				background-color: transparent;
 			}
 		}
 
@@ -151,8 +165,27 @@
 			}
 		}
 
-		&-mwTransclusionDialog-addParameterFieldset .ve-ui-mwParameterSearchWidget {
-			border-color: var( --border-color-base );
+		&-mwTransclusion {
+			&Dialog-addParameterFieldset .ve-ui-mwParameterSearchWidget {
+				border-color: var( --border-color-base );
+			}
+
+			&Outline {
+				&ButtonWidget {
+					&.oo-ui-buttonElement-frameless.oo-ui-widget-enabled > .oo-ui-buttonElement-button:hover {
+						background-color: var( --background-color-quiet--hover );
+						color: var( --color-base--emphasized );
+					}
+
+					&.oo-ui-optionWidget-selected .oo-ui-buttonElement-button {
+						background-color: var( --background-color-primary--active );
+					}
+				}
+
+				&TemplateWidget-sticky {
+					background-color: var( --color-surface-1 );
+				}
+			}
 		}
 
 		&--mwParameterResultWidget {
@@ -194,6 +227,12 @@
 			&-bar {
 				border: 0;
 				box-shadow: none;
+			}
+
+			&-floating {
+				.ve-init-mw-desktopArticleTarget-toolbarPlaceholder-bar {
+					background: var( --color-surface-0 );
+				}
 			}
 		}
 	}
