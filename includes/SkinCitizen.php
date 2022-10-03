@@ -45,11 +45,6 @@ class SkinCitizen extends SkinMustache {
 	use GetConfigTrait;
 
 	/**
-	 * @var array|null
-	 */
-	private $contentNavigationUrls;
-
-	/**
 	 * Overrides template, styles and scripts module
 	 *
 	 * @inheritDoc
@@ -148,31 +143,6 @@ class SkinCitizen extends SkinMustache {
 	 */
 	final public function getFooterIconsPublic() {
 		return parent::getFooterIcons();
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	protected function runOnSkinTemplateNavigationHooks( $skin, &$contentNavigationUrls ) {
-		parent::runOnSkinTemplateNavigationHooks( $skin, $contentNavigationUrls );
-		// There are some SkinTemplate modifications that occur after the execution of this hook
-		// to add rel attributes and ID attributes.
-		// The only one Minerva needs is this one so we manually add it.
-		foreach ( array_keys( $contentNavigationUrls['namespaces'] ) as $id ) {
-			if ( in_array( $id, [ 'user_talk', 'talk' ] ) ) {
-					$contentNavigationUrls['namespaces'][ $id ]['rel'] = 'discussion';
-			}
-		}
-		$this->contentNavigationUrls = $contentNavigationUrls;
-	}
-
-	/**
-	 * Change access to public, as it is used in partials
-	 *
-	 * @return array
-	 */
-	final public function buildContentNavigationUrlsPublic() {
-		return $this->contentNavigationUrls;
 	}
 
 	/**
