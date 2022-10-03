@@ -71,33 +71,6 @@ final class Footer extends Partial {
 			];
 		}
 
-		$footerIcons = $skin->getFooterIconsPublic();
-
-		if ( count( $footerIcons ) > 0 ) {
-			$icons = [];
-			foreach ( $footerIcons as $blockName => $blockIcons ) {
-				$html = '';
-				foreach ( $blockIcons as $key => $icon ) {
-					$html .= $skin->makeFooterIcon( $icon );
-				}
-				if ( $html ) {
-					$block = htmlspecialchars( $blockName );
-					$icons[] = [
-						'id' => 'footer-' . $block . 'ico',
-						'html' => $html,
-					];
-				}
-			}
-
-			if ( count( $icons ) > 0 ) {
-				$data['data-citizen-icons'] = [
-					'id' => 'footer-icons',
-					'className' => 'noprint',
-					'array-items' => $icons,
-				];
-			}
-		}
-
 		return $data;
 	}
 }

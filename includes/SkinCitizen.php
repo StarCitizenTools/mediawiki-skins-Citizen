@@ -139,15 +139,6 @@ class SkinCitizen extends SkinMustache {
 	/**
 	 * Change access to public, as it is used in partials
 	 *
-	 * @return array
-	 */
-	final public function getFooterIconsPublic() {
-		return parent::getFooterIcons();
-	}
-
-	/**
-	 * Change access to public, as it is used in partials
-	 *
 	 * @param Title $title
 	 * @param string $html body text
 	 * @return string
