@@ -100,7 +100,7 @@ class SkinCitizen extends SkinMustache {
 			'toc-enabled' => $out->isTOCEnabled(),
 			// Data objects
 			'data-header' => [
-				'data-drawer' => $drawer->getDrawerTemplateData(),
+				'data-drawer' => $drawer->decorateSidebarData( $parentData['data-portlets-sidebar'] ),
 				'data-notifications' => $header->getNotifications(),
 				'data-personal-menu' => $header->buildPersonalMenu(),
 				'data-search-box' => $header->buildSearchProps(),

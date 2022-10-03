@@ -20,7 +20,8 @@
 			</div>
 		</header>
 		<section class="citizen-drawer__menu">
-			{{#array-portlets}}{{>Menu}}{{/array-portlets}}
+			{{#data-portlets-first}}{{>Menu}}{{/data-portlets-first}}
+			{{#array-portlets-rest}}{{>Menu}}{{/array-portlets-rest}}
 		</section>
 	</aside>
 	{{>Drawer__button}}

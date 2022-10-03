@@ -41,87 +41,50 @@ use SpecialPage;
  */
 final class Drawer extends Partial {
 	/**
-	 * Render the navigation drawer
-	 * Based on getPortletsTemplateData in SkinTemplate
+	 * Decorate sidebar template data
 	 *
 	 * @return array
 	 * @throws Exception
 	 */
-	public function getDrawerTemplateData() {
-		$skin = $this->skin;
+	public function decorateSidebarData( $sidebarData ) {
+		// Enable label for first portlet
+		$sidebarData['data-portlets-first']['has-label'] = true;
 
-		$drawer = [];
-		$drawerData = $skin->buildSidebar();
-		$portletCount = 0;
+		$siteToolsId = $this->getConfigValue( 'CitizenSiteToolsPortlet' );
+		$siteToolsHtml = $this->getSiteToolsHTML();
+		$siteToolsAdded = false;
 
-		// Render portlets
-		foreach ( $drawerData as $name => $items ) {
-			if ( is_array( $items ) ) {
-				// Numeric strings gets an integer when set as key, cast back - T73639
-				$name = (string)$name;
-				switch ( $name ) {
-					// Ignore search
-					// Handled by Header
-					case 'SEARCH':
-						break;
-					// Ignore toolbox
-					// Handled by PageTools
-					case 'TOOLBOX':
-						break;
-					// Ignore language
-					// Handled by PageTools
-					case 'LANGUAGES':
-						break;
-					default:
-						$drawer[] = $skin->getPortletData( $name, $items );
-						// All portlets within the drawer should have a label
-						// to ensure it is layout nicely
-						$drawer[$portletCount]['has-label'] = true;
-						$portletCount++;
-						break;
+		// Attach site-wide tools to first portlet if empty
+		// TODO: Remove this hack when Desktop Improvements separate page and site tools
+		if ( empty( $siteToolsId ) ) {
+			$sidebarData['data-portlets-first']['html-items'] .= $siteToolsHtml;
+			$siteToolsAdded = true;
+		}
+
+		for ( $i = 0; $i < count( $sidebarData['array-portlets-rest'] ); $i++ ) {
+			// Enable label for other portlet
+			$sidebarData['array-portlets-rest'][$i]['has-label'] = true;
+
+			switch ( $sidebarData['array-portlets-rest'][$i]['id'] ) {
+				// Remove toolbox since it is handled by page tools
+				case 'p-tb': {
+					unset( $sidebarData['array-portlets-rest'][$i] );
+					break;
+				}
+
+				case $siteToolsId: {
+					// Attach site-wide tools to portlet with matching ID
+					$sidebarData['array-portlets-rest'][$i]['html-items'] .= $siteToolsHtml;
+					break;
 				}
 			}
 		}
 
-		$drawer = $this->addSiteTools( $drawer, $portletCount );
-
-		$drawerData = [
-			'array-portlets' => $drawer,
-			'data-drawer-sitestats' => $this->getSiteStatsData(),
+		$sidebarData += [
+			'data-drawer-sitestats' => $this->getSiteStatsData()
 		];
 
-		return $drawerData;
-	}
-
-	/**
-	 * Add site-wide tools to portlet
-	 *
-	 * TODO: Remove this hack when Desktop Improvements separate page and site tools
-	 * FIXME: There are no error handling if the ID does not match any existing portlet
-	 *
-	 * @param array $drawer
-	 * @param int $portletCount
-	 * @return array
-	 */
-	private function addSiteTools( $drawer, $portletCount ): array {
-		$id = $this->getConfigValue( 'CitizenSiteToolsPortlet' );
-		$html = $this->getSiteToolsHTML();
-
-		// Attach to first portlet if empty
-		if ( empty( $id ) ) {
-			$drawer[0]['html-items'] .= $html;
-			return $drawer;
-		}
-
-		// Find the portlet with the right ID, then add to it
-		for ( $i = 0; $i < $portletCount; $i++ ) {
-			if ( isset( $drawer[$i]['id'] ) && $drawer[$i]['id'] === $id ) {
-				$drawer[$i]['html-items'] .= $html;
-				break;
-			}
-		}
-
-		return $drawer;
+		return $sidebarData;
 	}
 
 	/**
