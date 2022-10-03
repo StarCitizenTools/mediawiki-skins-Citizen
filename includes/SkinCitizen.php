@@ -29,7 +29,6 @@ use MediaWiki\Skins\Citizen\Partials\BodyContent;
 use MediaWiki\Skins\Citizen\Partials\Drawer;
 use MediaWiki\Skins\Citizen\Partials\Footer;
 use MediaWiki\Skins\Citizen\Partials\Header;
-use MediaWiki\Skins\Citizen\Partials\Logos;
 use MediaWiki\Skins\Citizen\Partials\Metadata;
 use MediaWiki\Skins\Citizen\Partials\PageTools;
 use MediaWiki\Skins\Citizen\Partials\Tagline;
@@ -72,7 +71,6 @@ class SkinCitizen extends SkinMustache {
 		$parentData = parent::getTemplateData();
 
 		$header = new Header( $this );
-		$logos = new Logos( $this );
 		$drawer = new Drawer( $this );
 		$pageTitle = new Title( $this );
 		$tagline = new Tagline( $this );
@@ -96,21 +94,6 @@ class SkinCitizen extends SkinMustache {
 		//   It should be followed by the name of the hook in hyphenated lowercase.
 		//
 		// Conditionally used values must use null to indicate absence (not false or '').
-		$newTalksHtml = $this->getNewtalks() ?: null;
-
-		// Polyfill for 1.35
-		if ( version_compare( MW_VERSION, '1.36', '<' ) ) {
-			$data += [
-				'data-logos' => $logos->getLogoData(),
-				'html-user-message' => $newTalksHtml ?
-					Html::rawElement( 'div', [ 'class' => 'usermessage' ], $newTalksHtml ) : null,
-				'link-mainpage' => $title->newMainPage()->getLocalUrl(),
-			];
-
-			foreach ( $this->options['messages'] ?? [] as $message ) {
-				$data["msg-{$message}"] = $this->msg( $message )->text();
-			}
-		}
 
 		$data += [
 			// Booleans
