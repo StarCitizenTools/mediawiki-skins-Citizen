@@ -1,0 +1,50 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:PortableInfobox
+ * Module: ext.PortableInfobox.styles
+ * Version: 0.6 16a77dc
+ *
+ * Date: 2022-04-14
+*/
+
+:root {
+	--pi-background: var( --color-surface-2 );
+	--pi-border-color: var( --border-color-base--darker );
+	--pi-secondary-background: var( --color-surface-3 );
+}
+
+.portable-infobox .pi-horizontal-group {
+	margin-top: 0;
+}
+
+.portable-infobox .pi-section-navigation,
+.portable-infobox .pi-media-collection-tabs {
+	padding-bottom: 0;
+	background-color: var( --color-surface-3 );
+}
+
+.pi-section-navigation .pi-section-tab.pi-section-active,
+.pi-section-navigation .pi-section-tab.current,
+.pi-media-collection .pi-tab-link.current {
+	border-color: var( --color-primary );
+	border-bottom-width: 0;
+	background: var( --color-surface-2 );
+}
+
+.pi-section-navigation .pi-section-tab,
+.pi-media-collection .pi-tab-link {
+	border-width: 2px;
+	margin: 0 4px;
+	background: var( --color-surface-2 );
+	border-top-left-radius: var( --border-radius--medium );
+	border-top-right-radius: var( --border-radius--medium );
+
+	&:hover {
+		border-color: var( --color-primary--hover );
+	}
+
+	&:active {
+		border-color: var( --color-primary--active );
+	}
+}

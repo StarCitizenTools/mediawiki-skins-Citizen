@@ -1,0 +1,42 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:Wikibase
+ * Module: wikibase.client.init
+ * Version: REL1_35 7bb503b
+ *
+ * Date: 2022-05-11
+*/
+
+// Needed for more specificity
+// The original styles have a lot of important overrides in it
+// Better safe than sorry
+.skin-citizen {
+	.wb-langlinks-link > a {
+		&:link,
+		&:visited {
+			color: var( --color-base--subtle ) !important;
+		}
+
+		&:hover {
+			color: var( --color-primary ) !important;
+		}
+	}
+}
+
+.skin-citizen-dark {
+	// Edit button
+	.wb-langlinks-link > a {
+		&:before {
+			filter: invert( 1 )  hue-rotate( 180deg );
+		}
+
+		&:link,
+		&:visited {
+			// Re-apply greyscale value since we use filter to override the color
+			&:before {
+				filter: invert( 1 ) hue-rotate( 180deg ) grayscale( 1 );
+			}
+		}
+	}
+}

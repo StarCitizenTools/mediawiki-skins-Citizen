@@ -8,24 +8,6 @@
 /*!
  * Styling for Special:Watchlist and Special:RecentChanges
  */
-#siteSub {
-	display: none !important;
-}
-
-// Mimic siteSub
-.mw-rcfilters-enabled,
-.mw-rcfilters-disabled {
-	.mw-specialpage-summary {
-		margin: -1.4rem 0 1.6rem;
-		color: var( --color-base--subtle );
-		font-size: @content-caption-size;
-
-		p {
-			margin: 0;
-		}
-	}
-}
-
 .rcoptions {
 	padding: 0;
 	border: 0;
@@ -40,6 +22,20 @@
 	}
 }
 
+.mw-plusminus {
+	&-pos {
+		color: var( --color-success );
+	}
+
+	&-minus {
+		color: var( --color-destructive );
+	}
+
+	&-null {
+		color: var( --color-base--subtle );
+	}
+}
+
 .mw-changeslist {
 	.comment {
 		color: var( --color-base--subtle );
@@ -48,8 +44,8 @@
 	// Need additional parent to override
 	.mw-changeslist-legend {
 		border-color: var( --border-color-base );
-		background-color: var( --background-color-framed );
 		border-radius: var( --border-radius--small );
+		background-color: var( --background-color-framed );
 	}
 
 	.mw-tag-markers {
@@ -69,4 +65,8 @@
 		font-weight: normal;
 		letter-spacing: 0.75px;
 	}
+}
+
+.client-js .mw-recentchanges-toplinks:not( .mw-recentchanges-toplinks-collapsed ) {
+	border-color: var( --border-color-base );
 }

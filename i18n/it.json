@@ -2,16 +2,19 @@
 	"@metadata": {
 		"authors": [
 			"Beta16",
+			"GpieroMW",
 			"Stefano"
 		]
 	},
 	"citizen.css": "/* Il codice CSS inserito qui viene caricato dagli utenti che usano il tema Citizen */",
 	"citizen.js": "/* Il codice JavaScript inserito qui viene caricato dagli utenti che usano il tema Citizen */",
+	"citizen-languages-toggle": "Altre lingue",
+	"citizen-actions-more-toggle": "Altre azioni",
 	"citizen-sitestats-articles-label": "voci",
 	"citizen-sitestats-images-label": "file",
 	"citizen-sitestats-users-label": "utenti",
 	"citizen-sitestats-edits-label": "modifiche",
-	"citizen-footer-desc": "Modifica questo testo in [[MediaWiki:Citizen-footer-tagline]]",
+	"citizen-footer-desc": "Modifica questo testo in [[MediaWiki:Citizen-footer-desc]]",
 	"citizen-footer-tagline": "Modifica questo testo in [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Aggiungi argomento",
 	"citizen-jumptotop": "Torna all'inizio",

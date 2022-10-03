@@ -1,85 +1,127 @@
 .page-actions {
+	--size-button--page: 2.25rem;
 	display: flex;
-	margin-left: -12px; // To align with page padding
-	font-size: @ui-menu-text;
+	margin-left: -0.75rem; // To align with page padding
+	font-size: 0.875rem;
 	font-weight: 450;
+	gap: 0.25rem;
 
-	&-more {
-		display: block;
-		width: var( --size-icon );
-		height: var( --size-icon );
-		box-sizing: content-box;
-		padding: 8px;
+	// TODO: Merge this with header__item
+	&__item {
+		display: flex;
+	}
+
+	// TODO: Merge this with header__button
+	&__button {
+		display: grid;
+		width: var( --size-button--page );
+		height: var( --size-button--page );
 		border-radius: var( --border-radius--medium );
-		cursor: pointer;
-		transition: @transition-opacity-quick;
+		place-items: center;
 
-		&-menu {
-			position: absolute;
-			z-index: -1;
-			right: var( --padding-page );
-			left: var( --padding-page );
-			overflow: auto;
-			max-height: 60vh;
-			padding-top: 5px;
-			margin-top: 5px;
-			cursor: auto; // reset cursor pointer set by parent
-			opacity: 0;
-			pointer-events: none;
-			transition: @transition-opacity-quick, @transition-box-shadow-quick;
-			.citizen-card;
-
-			a {
-				.menu-item-link;
-				justify-content: space-between;
-				padding: 10px var( --padding-page );
-
-				&:after {
-					.resource-loader-list-icon;
-					margin-left: @icon-padding;
-					opacity: var( --opacity-icon-base );
-				}
-
-				&:hover {
-					.menu-item-link-hover;
-
-					&:after {
-						opacity: var( --opacity-icon-base--hover );
-					}
-				}
-
-				&:active {
-					.menu-item-link-active;
-
-					&:after {
-						opacity: var( --opacity-icon-base--active );
-					}
-				}
-			}
-		}
-
-		&:before {
-			display: block;
+		&--icon:after {
 			width: var( --size-icon );
 			height: var( --size-icon );
-			background-size: var( --size-icon );
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: contain;
 			content: '';
 			opacity: var( --opacity-icon-base );
+			transition: @transition-opacity;
 		}
 
 		&:hover {
-			.page-actions-more-menu {
-				z-index: 5;
-				opacity: 1;
-				pointer-events: auto;
+			background-color: var( --background-color-quiet--hover );
+
+			&:after {
+				opacity: var( --opacity-icon-base--hover );
 			}
 		}
 
 		&:active {
-			background: var( --background-color-quiet--active ) !important;
+			background-color: var( --background-color-quiet--active );
 
-			&:before {
+			&:after {
 				opacity: var( --opacity-icon-base--active );
+			}
+		}
+	}
+
+	&__card {
+		position: absolute;
+		z-index: @z-index-page-header; // So the popups inside will be higher than content
+		right: 0;
+		overflow: auto;
+		min-width: 200px;
+		max-height: 60vh;
+		padding: 0.5rem 0;
+		margin-top: ~'calc( var( --size-button--page ) + 0.5rem )';
+		font-size: 0.875rem;
+		.citizen-card;
+		.citizen-card-hide( top right );
+
+		a {
+			padding: 0.625rem 1.25rem;
+			.menu-item-link;
+
+			&:hover {
+				.menu-item-link-hover;
+			}
+
+			&:active {
+				.menu-item-link-active;
+			}
+		}
+	}
+
+	// Visible page tools styles
+	> .mw-portlet {
+		ul {
+			display: flex;
+			gap: 0.25rem;
+		}
+
+		li > a {
+			display: flex;
+			align-items: center;
+			padding: 0.5rem 0.75rem;
+			border-radius: var( --border-radius--medium );
+			color: var( --color-base );
+			font-size: 0;
+			transition: @transition-background, @transition-color;
+
+			&:after {
+				width: var( --size-icon );
+				height: var( --size-icon );
+				order: -1; // Move icon before the text
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: var( --size-icon );
+				content: '';
+				opacity: var( --opacity-icon-base );
+				transition: @transition-opacity;
+			}
+
+			&:hover {
+				background-color: var( --background-color-quiet--hover );
+				color: var( --color-base--emphasized );
+
+				&:after {
+					opacity: var( --opacity-icon-base--hover );
+				}
+			}
+
+			&:active {
+				background-color: var( --background-color-quiet--active );
+				color: var( --color-base--subtle );
+
+				&:after {
+					opacity: var( --opacity-icon-base--active );
+				}
+			}
+
+			span {
+				.mixin-screen-reader-text;
 			}
 		}
 	}
@@ -92,66 +134,121 @@
 	li {
 		margin: 0;
 	}
+
+	// TODO: Merge this with header styles
+	.mw-checkbox-hack-checkbox:checked ~ .page-actions__button {
+		background-color: var( --background-color-primary--active );
+	}
 }
 
-#p-views {
-	ul {
-		display: flex;
+// Language counter badge
+// TODO: Maybe this should be in a mixin
+#citizen-languages__buttonCheckbox {
+	position: relative; // So that the badge doesn't take a stroll to the far left
+
+	&:before {
+		position: absolute;
+		z-index: 2;
+		top: 0;
+		left: 55%;
+		display: block;
+		padding: 0.1em 0.4em;
+		border-radius: 100px;
+		background: var( --color-primary );
+		color: #fff;
+		content: attr( data-counter-text );
+		font-size: 0.65rem;
 	}
+}
 
-	li > a {
-		display: flex;
-		align-items: center;
-		padding: 8px 12px;
-		margin-right: 4px;
-		border-radius: var( --border-radius--medium );
-		color: var( --color-base );
-		font-size: 0;
-		transition: @transition-background-quick, @transition-color-quick;
+.citizen-languages {
+	// Special handling for ULS
+	// ULS won't be triggered by the label button
+	// so we need to overlay the checkbox on top of it
+	.mw-interlanguage-selector {
+		position: absolute;
+		z-index: 1;
+		display: block;
+		width: var( --size-button--page );
+		height: var( --size-button--page );
+		padding: 0;
+		margin: 0;
+		cursor: pointer;
+		opacity: 0;
 
+		// Hover state needs to be define because the checkbox now overlays the label
+		&:hover {
+			~ .page-actions__button {
+				background-color: var( --background-color-quiet--hover );
+
+				&:after {
+					opacity: var( --opacity-icon-base--hover );
+				}
+			}
+		}
+
+		&:active {
+			~ .page-actions__button {
+				background-color: var( --background-color-quiet--active );
+
+				&:after {
+					opacity: var( --opacity-icon-base--active );
+				}
+			}
+		}
+	}
+}
+
+// Handle icons
+.page-actions-more {
+	a {
 		&:after {
-			width: var( --size-icon );
-			height: var( --size-icon );
-			order: -1; // Move icon before the text
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: var( --size-icon );
-			content: '';
+			.resource-loader-list-icon;
 			opacity: var( --opacity-icon-base );
-			transition: @transition-opacity-quick;
 		}
 
 		&:hover {
-			background-color: var( --background-color-quiet--hover );
-			color: var( --color-base--emphasized );
-
 			&:after {
 				opacity: var( --opacity-icon-base--hover );
 			}
 		}
 
 		&:active {
-			background-color: var( --background-color-quiet--active );
-			color: var( --color-base--subtle );
-
 			&:after {
 				opacity: var( --opacity-icon-base--active );
 			}
 		}
-
-		span {
-			.mixin-screen-reader-text;
-		}
 	}
+}
 
+.page-actions-more,
+.citizen-languages {
+	position: relative;
+}
+
+#p-views {
 	// VE styles shouldn't be core but it is just a few lines :/
-	#ca-ve-edit {
+	#ca-ve-edit:not( .selected ) {
 		order: 98; // Before source edit
 
 		> a {
-			padding-right: 16px;
-			// Merge button with source edit
-			margin-right: -12px;
+			padding-right: 1.5rem;
+		}
+
+		// Merge two buttons together
+		+ #ca-edit {
+			border-left: 1px solid var( --color-primary--hover );
+			margin-left: -1rem;
+
+			> a {
+				padding-left: 0.5rem;
+				border-radius: 0 var( --border-radius--medium ) var( --border-radius--medium ) 0;
+				font-size: 0; // hide edit source text
+
+				&:after {
+					margin-right: 0; // reset
+				}
+			}
 		}
 	}
 
@@ -184,10 +281,8 @@
 
 .skin-citizen-dark {
 	.page-actions {
-		&-more {
-			&:before {
-				filter: invert( 1 );
-			}
+		&__button--icon:after {
+			filter: invert( 1 );
 		}
 
 		li > a:after {
@@ -196,31 +291,64 @@
 	}
 }
 
-@media ( min-width: @width-breakpoint-tablet ) {
-	.page-actions-more-menu {
-		position: relative;
-		right: unset;
-		left: -172px;
-		width: 200px;
+// Checkbox hack
+#page-actions-more,
+#citizen-languages {
+	&__checkbox:checked {
+		~ .page-actions__card {
+			.citizen-card-show();
+		}
 	}
+}
 
-	#p-views {
-		li > a {
-			font-size: @ui-menu-text;
+.citizen-animations-ready {
+	.page-actions__card {
+		.citizen-card-transition();
+	}
+}
 
-			&:after {
-				margin-right: 8px;
+@media ( max-width: @width-breakpoint-tablet ) {
+	.page-actions {
+		&__item {
+			position: unset;
+		}
+
+		&__card {
+			right: 0;
+			left: 0;
+		}
+	}
+}
+
+@media ( min-width: @width-breakpoint-desktop ) {
+	.page-actions {
+		position: relative;
+		margin-right: 0;
+
+		> .mw-portlet {
+			li > a {
+				font-size: 0.875rem;
+
+				&:after {
+					margin-right: 0.5rem;
+				}
 			}
 		}
 	}
 }
 
-@media ( hover: hover ) {
-	.page-actions-more:hover {
-		background: var( --background-color-quiet--hover );
+// Reset hover styles if it is a touch device
+// This is dumb but hover:hover overrides active states
+@media ( hover: none ) {
+	.page-actions {
+		&__button {
+			&:hover {
+				background-color: none;
 
-		&:before {
-			opacity: var( --opacity-icon-base--hover );
+				&:after {
+					opacity: var( --opacity-icon-base );
+				}
+			}
 		}
 	}
 }

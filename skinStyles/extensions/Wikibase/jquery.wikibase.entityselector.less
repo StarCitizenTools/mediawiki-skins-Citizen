@@ -1,0 +1,43 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:Wikibase
+ * Module: jquery.wikibase.entityselector
+ * Version: REL1_35 7bb503b
+ *
+ * Date: 2022-05-11
+*/
+
+.ui-entityselector-list li,
+.ui-entityselector-list li.ui-state-hover {
+	border-top-color: var( --border-color-base );
+}
+
+.ui-entityselector-list .ui-entityselector-notfound,
+.ui-entityselector-list .ui-entityselector-error {
+	/* Common bright red .wb-error color */
+	background-color: var( --background-color-destructive );
+}
+
+.ui-entityselector-list .ui-entityselector-notfound.ui-state-hover a,
+.ui-entityselector-list .ui-entityselector-error.ui-state-hover a {
+	color: var( --color-base );
+}
+
+.ui-entityselector-list .ui-entityselector-more {
+	background-color: var( --color-surface-2 );
+}
+
+.ui-entityselector-list .ui-entityselector-more.ui-state-hover {
+	background-color: var( --color-surface-2--hover );
+}
+
+.ui-suggester-input.ui-entityselector-input.ui-entityselector-input-recognized {
+	border-color: var( --border-color-base );
+	background-color: var( --background-color-success );
+}
+
+.ui-suggester-input.ui-entityselector-input.ui-entityselector-input-unrecognized {
+	border-color: var( --border-color-base );
+	background-color: var( --background-color-destructive );
+}

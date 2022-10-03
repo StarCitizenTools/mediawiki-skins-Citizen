@@ -3,8 +3,6 @@
  * https://starcitizen.tools
  */
 
-@import '../../../resources/variables.less';
-@import '../../../resources/mixins.less';
 /*
  * resources/uploadWizard.css
  */
@@ -41,7 +39,7 @@
 
 .mwe-upwiz-thumbnail-link canvas,
 .mwe-upwiz-thumbnail-link img {
-	.boxshadow(2);
+	box-shadow: var( --box-shadow-card );
 }
 
 .mwe-upwiz-singleLanguageInputWidget {
@@ -80,7 +78,7 @@
 }
 
 .arrowSteps li.arrow:before {
-	border-left-color: var( --background-color-dp-00 );
+	border-left-color: var( --color-surface-0 );
 }
 
 #mwe-upwiz-steps li.head:after {

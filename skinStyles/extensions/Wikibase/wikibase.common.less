@@ -1,0 +1,281 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:Wikibase
+ * Module: wikibase.common
+ * Version: REL1_35 7bb503b
+ *
+ * Date: 2022-05-11
+*/
+
+/* wikibase.less */
+h1 .wikibase-title-id {
+	color: var( --color-base--subtle );
+}
+
+.wb-entitypage .ui-state-disabled input,
+.wb-entitypage input.ui-state-disabled,
+.wb-entitypage .ui-state-disabled textarea {
+	background-color: var( --color-surface-4 );
+	color: var( --color-base--subtle );
+}
+
+.wb-entitypage .ui-state-disabled .wb-edit input:not( .ui-state-disabled ),
+.wb-entitypage .ui-state-disabled .wb-edit textarea {
+	background-color: var( --color-surface-1 );
+}
+
+.ui-closeable {
+	border-top-color: var( --border-color-base );
+	border-bottom-color: var( --border-color-base );
+	background-color: var( --color-surface-1 );
+}
+
+.ui-closeable.wb-edit {
+	background-color: var( --background-color-primary--hover );
+}
+
+.ui-closeable.wb-error {
+	background-color: var( --background-color-destructive );
+}
+
+.wikibase-entityview input {
+	border-color: var( --border-color-base );
+}
+
+.wb-empty {
+	color: var( --color-base--subtle );
+}
+
+.wb-entity-undefinedinfo {
+	color: var( --color-base--subtle );
+}
+
+.wikibase-statementgrouplistview .wikibase-statementlistview {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-1 );
+}
+
+.wikibase-statementgrouplistview :target .wikibase-statementlistview {
+	outline: 2px solid var( --color-primary );
+}
+
+.wikibase-statementgrouplistview .wikibase-statementlistview .wikibase-statementview:target {
+	outline: 2px solid var( --color-primary );
+}
+
+.wikibase-statementgrouplistview .wikibase-statementgroupview-property {
+	background: var( --color-surface-3 );
+}
+
+div .wikibase-snakview-value span.error.wb-format-error {
+	color: var( --color-destructive );
+}
+
+.wikibase-statementlistview > .wikibase-toolbar-wrapper {
+	background-color: var( --color-surface-3 );
+}
+
+.wikibase-statementgrouplistview .wikibase-statementgroupview-property.wb-edit,
+.wikibase-statementgroupview-property.wb-edit + .wikibase-statementlistview > .wikibase-toolbar-wrapper {
+	background-color: var( --background-color-primary--hover );
+}
+
+.wikibase-statementgrouplistview .wikibase-statementgroupview-property.wb-error {
+	background-color: var( --background-color-destructive );
+}
+
+.wikibase-statementgrouplistview .wikibase-statementview.wb-error,
+.wikibase-statementgrouplistview .wikibase-statementview.wb-error .wb-claim {
+	background-color: var( --background-color-destructive );
+}
+
+.wikibase-statementgrouplistview .wikibase-statementlistview.wb-new .wikibase-statementview {
+	border-color: var( --border-color-base );
+}
+
+.wikibase-snakview-unsupportedsnaktype,
+.wikibase-snakview-variation-valuesnak-unsupporteddatavalue,
+.wikibase-snakview-variation-valuesnak-datavaluetypemismatch,
+.wikibase-snakview-variation-valuesnak-nonewvaluefordeletedproperty,
+span.wikibase-snakview-variation-somevaluesnak,
+span.wikibase-snakview-variation-novaluesnak {
+	color: var( --color-base--subtle );
+}
+
+.wikibase-snakview-variation-valuesnak-datavaluetypemismatch,
+.wikibase-snakview-variation-valuesnak-nonewvaluefordeletedproperty {
+	color: var( --color-destructive );
+}
+
+.wikibase-statementview {
+	border-bottom-color: var( --border-color-base );
+}
+
+.wikibase-statementview div.thumb img,
+.wikibase-statementview div.thumb audio,
+.wikibase-statementview div.thumb video,
+.wikibase-statementview div a.mw-kartographer-map {
+	border-color: var( --border-color-base );
+}
+
+.wikibase-statementview-references-heading {
+	color: var( --color-base--subtle );
+}
+
+.wikibase-referenceview {
+	background: var( --color-surface-2 );
+}
+
+.wikibase-referenceview .wikibase-referenceview-heading {
+	background-color: var( --color-surface-3 );
+}
+
+.wikibase-referenceview.wb-edit {
+	background-color: var( --background-color-primary--hover );
+}
+
+.wikibase-referenceview.wb-edit > .wikibase-referenceview-heading {
+	background-color: var( --background-color-primary--hover );
+}
+
+.wikibase-referenceview.wb-error {
+	background-color: var( --background-color-destructive );
+}
+
+.wikibase-referenceview.wb-error > .wikibase-referenceview-heading {
+	background-color: var( --background-color-destructive );
+}
+
+.wikibase-referenceview-tabs {
+	/* Tab link style */
+	.ui-state-default > .ui-tabs-anchor {
+		color: var( --color-base );
+	}
+
+	/* Style for tabs */
+	li.ui-state-default {
+		background-color: var( --color-surface-3 );
+
+		/* Style for active tab */
+		&.ui-tabs-active.ui-state-active {
+			background-color: var( --background-color-primary--hover );
+		}
+	}
+}
+
+.wb-propertypage .wikibase-propertyview-datatype {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+}
+
+.wikibase-pageImage {
+	border-color: var( --border-color-base );
+}
+
+/* jquery.wikibase.aliasesview.css */
+.wikibase-aliasesview li {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+}
+
+/* jquery.wikibase.descriptionview.css */
+.wikibase-descriptionview .wikibase-descriptionview-input:focus {
+	background-color: var( --background-color-primary--hover );
+}
+
+/* jquery.wikibase.entitytermsview.css */
+.wikibase-entitytermsview .wikibase-entitytermsview-heading .wikibase-entitytermsview-heading-aliases ul {
+	color: var( --color-base--subtle );
+}
+
+.wikibase-entitytermsview .wikibase-toolbar-container {
+	background-color: var( --color-surface-1 );
+}
+
+/* jquery.wikibase.entitytermsforlanguagelistview.css */
+.wikibase-entitytermsforlanguagelistview {
+	border-color: var( --border-color-base );
+	background: var( --color-surface-1 );
+}
+
+.wikibase-entitytermsforlanguagelistview.wb-edit {
+	border-color: var( --color-primary );
+}
+
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-header .wikibase-entitytermsforlanguagelistview-header-row .wikibase-entitytermsforlanguagelistview-cell {
+	border-right-color: var( --color-surface-1 );
+	background-color: var( --color-surface-3 );
+}
+
+.wikibase-entitytermsforlanguagelistview.wb-edit .wikibase-entitytermsforlanguagelistview-header .wikibase-entitytermsforlanguagelistview-header-row .wikibase-entitytermsforlanguagelistview-cell {
+	background: var( --background-color-primary--hover );
+}
+
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-label input,
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-description input,
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-label textarea,
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-description textarea {
+	border-bottom-color: var( --border-color-base );
+}
+
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-label input:focus,
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-description input:focus,
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-label textarea:focus,
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-description textarea:focus {
+	border-color: var( --color-primary );
+}
+
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-aliases .ui-state-default {
+	color: var( --color-base );
+}
+
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-aliases input {
+	border-bottom-color: var( --border-color-base );
+}
+
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-aliases input:focus {
+	border-color: var( --color-primary );
+}
+
+/* jquery.wikibase.entitytermsforlanguageview.css */
+.wikibase-entitytermsforlanguageview .wb-error {
+	background-color: var( --background-color-destructive );
+}
+
+/* jquery.wikibase.labelview.css */
+.wikibase-labelview .wikibase-labelview-input:focus {
+	background-color: var( --background-color-primary--hover );
+}
+
+/* jquery.wikibase.sitelinkgroupview.css */
+.wikibase-sitelinkgroupview {
+	border-color: var( --border-color-base );
+}
+
+.wikibase-sitelinkgroupview.wb-edit {
+	border-color: var( --color-primary );
+}
+
+.wikibase-sitelinkgroupview .wikibase-sitelinkgroupview-heading-container {
+	background-color: var( --color-surface-1 );
+}
+
+.wikibase-sitelinkgroupview.wb-edit .wikibase-sitelinkgroupview-heading-container {
+	background-color: var( --background-color-primary--hover );
+}
+
+/* jquery.wikibase.sitelinklistview.css */
+.wikibase-sitelinklistview .wikibase-sitelinkview .wikibase-sitelinkview-siteid-container {
+	border-color: var( --border-color-base );
+	background: var( --color-surface-3 );
+}
+
+.wikibase-sitelinklistview .wikibase-sitelinkview .wikibase-removetoolbar-container {
+	background: var( --color-surface-1 );
+}
+
+/* jquery.wikibase.statementgroupview.css */
+.wikibase-statementgroupview .wikibase-statementgroupview-property {
+	border-color: var( --border-color-base );
+}

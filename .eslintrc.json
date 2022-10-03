@@ -16,7 +16,8 @@
 		],
 		"no-implicit-globals": "off",
 		"es/no-object-fromentries": "off",
-		"es/no-object-entries": "off"
+		"es/no-object-entries": "off",
+		"mediawiki/class-doc": "off"
 	},
 	"parserOptions": {
 		"ecmaVersion": 11

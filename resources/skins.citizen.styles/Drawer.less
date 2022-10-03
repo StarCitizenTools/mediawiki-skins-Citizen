@@ -1,170 +1,55 @@
-#mw-drawer {
-	position: fixed;
-	z-index: 4;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	display: flex;
-	overflow: auto;
-	flex-direction: column;
-	align-items: center;
-	margin: var( --margin-header-item ) var( --margin-header-item--corner );
-	overscroll-behavior: contain;
-	transform: translate3d( -110%, -110%, 0 );
-	transform-origin: 0 0;
-	user-select: none;
-	.citizen-card();
-
-	&-checkbox {
-		&:checked {
-			// Transform all the slices of the button into a crossmark
-			~ #mw-drawer-button-icon {
-				#mw-drawer-button-icon {
-					&-1 {
-						opacity: 0;
-						/* @noflip */
-						transform: rotate( 0deg ) scale( 0.2, 0.2 );
-					}
-					// Reflect line
-					&-2 {
-						/* @noflip */
-						transform: rotate( -45deg ) translate3d( -2px, 6px, 0 );
-					}
-
-					// Hide line
-					&-3 {
-						/* @noflip */
-						transform: rotate( 45deg ) translate3d( -5px, -7px, 0 );
-					}
-				}
-			}
-
-			// Show drawer
-			~ #mw-drawer {
-				transform: none;
-			}
-		}
+.citizen-drawer {
+	&__card {
+		padding: var( --space-sm ) 0;
+		.citizen-header-card( left );
 	}
 
-	&-button {
-		position: absolute;
-		z-index: 8;
-		margin-right: var( --margin-header-item--corner );
-		// Need to align with page padding
-		margin-left: var( --margin-header-item--corner );
-
-		&-icon {
-			display: flex;
-			overflow: hidden;
-			width: var( --size-icon );
-			height: var( --size-icon );
-			flex-direction: column;
-			flex-shrink: 0;
-			align-items: center;
-			justify-content: center;
-			// Don't use padding as margin is needed to hide overflow
-			margin: ~'calc( var( --padding-header-icon ) + var( --margin-header-item ) )' var( --padding-page );
-
-			&-1 {
-				transform-origin: 0 0;
-			}
-
-			&-2 {
-				transform-origin: 0 100%;
-			}
-		}
-
-		&:hover {
-			~ #mw-drawer-button-icon {
-				#mw-drawer-button-icon {
-					&-1 {
-						transform: translate3d( -50%, 0, 0 );
-					}
-				}
-
-				.mw-drawer-button-icon {
-					&-div {
-						background-color: var( --background-color-icon--hover );
-					}
-				}
-			}
-		}
-
-		&:active {
-			~ #mw-drawer-button-icon {
-				.mw-drawer-button-icon {
-					&-div {
-						background-color: var( --background-color-icon--active );
-					}
-				}
-			}
-		}
-	}
-
-	&-header {
+	&__header {
 		display: flex;
-		width: 100%;
-		box-sizing: border-box;
-		flex-direction: column;
 		align-items: center;
-		padding: ~'calc( var( --padding-page ) + 10px )' var( --padding-page ) 15px var( --padding-page );
+		justify-content: center;
+		padding: var( --space-md );
 		border-bottom: 1px solid var( --border-color-base );
+		gap: var( --space-md );
 	}
 
-	&-logo {
-		.mw-logo-icon {
-			width: auto;
-			height: 80px;
-		}
-
-		img.mw-logo-wordmark {
-			width: auto;
-			height: 16px;
-		}
+	// Keep aspect ratio
+	&__logo img {
+		width: auto;
+		height: 3rem;
 	}
 
-	&-search {
-		margin-top: 10px;
+	&__siteinfo {
+		display: flex;
+		flex-direction: column;
+		gap: var( --space-xs );
 
-		&-input {
-			width: 200px;
-			padding: 8px;
-			background: var( --color-surface-1 );
-			border-radius: var( --border-radius--small );
-			text-align: center;
-			transition: @transition-background-quick;
-			.boxshadow(1);
-
-			&:focus {
-				outline: 0;
-				.boxshadow(3);
-			}
+		.mw-logo-wordmark {
+			color: var( --color-base--emphasized );
+			font-size: 1.5rem;
 		}
 	}
 
-	&-menu {
+	&__menu {
 		display: grid;
-		max-width: ~'calc( 100vw - var( --padding-page ) * 4 )';
-		padding: ~'calc( var(--padding-page) / 2 ) calc( var(--padding-page) / 2 ) var( --padding-page ) calc( var(--padding-page) / 2 )';
-		font-size: @ui-menu-text;
-		gap: ~'calc( var(--padding-page) / 4 )';
-		grid-template-columns: repeat( auto-fit, 240px );
+		max-width: 92vw;
+		justify-content: center;
+		padding: var( --space-sm ) var( --space-md );
+		font-size: 0.875rem; // TODO: Make this a variable
+		gap: var( --space-sm );
+		grid-template-columns: repeat( auto-fit, 15rem );
 
 		a {
 			.menu-item-link;
-			align-items: center;
-			justify-content: space-between;
-			padding: @padding-menu-item-big;
+			padding: 0.625rem 1.25rem; // TODO: Make this a variable
 			border-radius: var( --border-radius--small );
 
 			&:after {
 				.resource-loader-list-icon;
 				display: block;
-				margin-left: @icon-padding;
 				background-size: contain;
 				opacity: var( --opacity-icon-base );
-				transition: @transition-opacity-quick;
+				transition: @transition-opacity;
 			}
 
 			&:hover {
@@ -186,65 +71,48 @@
 	}
 }
 
-.mw-drawer {
-	&-button {
-		&-icon {
-			&-div {
-				z-index: 5;
-				display: block;
-				width: @icon-size;
-				height: 2px;
-				margin: 1.5px 0;
-				background-color: var( --background-color-icon );
-				border-radius: var( --border-radius--large );
-				transform-origin: 4px 0;
-				transition: @transition-transform-quick, @transition-background-quick, @transition-opacity-quick;
-			}
-		}
+// Checkbox hack
+#citizen-drawer__checkbox:checked {
+	~ .citizen-drawer__card {
+		.citizen-card-show;
 	}
 }
 
-.client-nojs {
-	#mw-drawer-search {
-		// Hide search when client has no JS
-		// Since the function does not work without script
-		display: none;
-	}
-}
-
+// Wait for first paint before animating
 .citizen-animations-ready {
-	#mw-drawer {
-		transition: @transition-transform-quick;
+	.citizen-drawer__card {
+		.citizen-card-transition();
 	}
 }
 
 .skin-citizen-dark {
-	#mw-drawer-menu a:after {
+	// Icons in nav links
+	.citizen-drawer__menu a:after {
 		filter: invert( 1 );
 	}
 }
 
-// RTL
-.rtl {
-	#mw-drawer-button:hover {
-		~ #mw-drawer-button-icon {
-			#mw-drawer-button-icon-1 {
-				transform: translate3d( 50%, 0, 0 );
+@media ( min-width: @width-breakpoint-tablet ) {
+	.citizen-drawer {
+		&__logo img {
+			// Bigger logo
+			height: 5rem;
+		}
+
+		&__siteinfo {
+			.mw-logo-wordmark {
+				font-size: 2rem;
+				// Sometimes long wiki name will wrap when the menu is too small
+				white-space: nowrap;
 			}
 		}
 	}
 }
 
-@media ( min-width: @width-breakpoint-tablet ) {
-	#mw-drawer {
-		right: unset;
-		bottom: unset;
-		max-height: ~'calc(100vh - var(--margin-header-item) * 2 )';
-	}
-}
-
-@media ( min-width: @width-breakpoint-desktop-wide ) {
-	#mw-drawer-menu {
-		max-width: 1200px;
+@media ( min-width: @width-breakpoint-desktop ) {
+	.citizen-drawer {
+		&__header {
+			justify-content: flex-start;
+		}
 	}
 }

@@ -23,7 +23,7 @@
 
 declare( strict_types=1 );
 
-namespace Citizen\Partials;
+namespace MediaWiki\Skins\Citizen\Partials;
 
 /**
  * Footer partial of Skin Citizen
@@ -35,19 +35,16 @@ final class Footer extends Partial {
 	 * @return array for use in Mustache template describing the footer elements.
 	 */
 	public function getFooterData(): array {
+		$skin = $this->skin;
+
 		$data = [];
-		$footerLinks = $this->skin->getFooterLinksPublic();
+		$footerLinks = $skin->getFooterLinksPublic();
 		$msg = [ 'desc', 'tagline' ];
 
-		// Get last modified message
-		if ( $footerLinks['info']['lastmod'] && isset( $footerLinks['info']['lastmod'] ) ) {
-			$data['html-lastmodified'] = $footerLinks['info']['lastmod'];
-			unset( $footerLinks['info']['lastmod'] );
-		}
-
-		// Get messages
+		// Get site footer messages
 		foreach ( $msg as $key ) {
-			$data["msg-citizen-footer-$key"] = $this->skin->msg( "citizen-footer-$key" )->parse();
+			$data["msg-citizen-footer-$key"] = $skin->msg( "citizen-footer-$key" )
+				->inContentLanguage()->parse();
 		}
 
 		// Based on SkinMustache
@@ -61,6 +58,8 @@ final class Footer extends Partial {
 					$items[] = [
 						'id' => "$rowId-$key",
 						'html' => $link,
+						// This is not great, need to reimplemented when we move to 1.39
+						'label' => $skin->msg( "citizen-page-info-$key" )
 					];
 				}
 			}
@@ -72,14 +71,14 @@ final class Footer extends Partial {
 			];
 		}
 
-		$footerIcons = $this->skin->getFooterIconsPublic();
+		$footerIcons = $skin->getFooterIconsPublic();
 
 		if ( count( $footerIcons ) > 0 ) {
 			$icons = [];
 			foreach ( $footerIcons as $blockName => $blockIcons ) {
 				$html = '';
 				foreach ( $blockIcons as $key => $icon ) {
-					$html .= $this->skin->makeFooterIcon( $icon );
+					$html .= $skin->makeFooterIcon( $icon );
 				}
 				if ( $html ) {
 					$block = htmlspecialchars( $blockName );

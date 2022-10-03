@@ -23,13 +23,13 @@
 
 declare( strict_types=1 );
 
-namespace Citizen\Partials;
+namespace MediaWiki\Skins\Citizen\Partials;
 
 use MediaWiki\MediaWikiServices;
 use MWException;
 use Skin;
 use SpecialPage;
-use Title;
+use User;
 
 /**
  * Header partial of Skin Citizen
@@ -39,19 +39,26 @@ use Title;
  * - Search
  */
 final class Header extends Partial {
-
 	/**
 	 * Build Personal Tools menu
 	 *
 	 * @return array
 	 */
 	public function buildPersonalMenu(): array {
-		$personalTools = $this->skin->getPersonalToolsForMakeListItem(
-			$this->skin->buildPersonalUrlsPublic()
+		$skin = $this->skin;
+
+		$personalTools = $skin->getPersonalToolsForMakeListItem(
+			$skin->buildPersonalUrlsPublic()
 		);
-		$user = $this->skin->getUser();
+
+		$header = $this->getPersonalHeaderData( $personalTools );
+		// We need userpage for personal header
+		if ( isset( $personalTools['userpage'] ) ) {
+			unset( $personalTools['userpage'] );
+		}
 
 		// Move the Echo badges out of default list
+		// TODO: Remove notifications since MW 1.36 from buildPersonalUrls
 		if ( isset( $personalTools['notifications-alert'] ) ) {
 			unset( $personalTools['notifications-alert'] );
 		}
@@ -59,17 +66,9 @@ final class Header extends Partial {
 			unset( $personalTools['notifications-notice'] );
 		}
 
-		if ( $user->isRegistered() ) {
-			$personalTools = $this->addUserInfoToMenu( $personalTools, $user );
-		}
-
-		$personalMenu = $this->skin->getMenuData( 'personal', $personalTools );
-		// Hide label for personal tools
-		$personalMenu[ 'label-class' ] .= 'screen-reader-text';
-
 		return [
-			'msg-citizen-personalmenu-toggle' => $this->skin->msg( 'citizen-personalmenu-toggle' )->text(),
-			'data-personal-menu-list' => $personalMenu,
+			'data-personal-menu-header' => $header,
+			'data-personal-menu-list' => $skin->getPortletData( 'personal', $personalTools ),
 		];
 	}
 
@@ -78,24 +77,23 @@ final class Header extends Partial {
 	 *
 	 * @return array
 	 */
-	public function getExtratools(): array {
-		$personalTools = $this->skin->getPersonalToolsForMakeListItem(
-			$this->skin->buildPersonalUrlsPublic()
+	public function getNotifications(): array {
+		$skin = $this->skin;
+
+		$personalTools = $skin->getPersonalToolsForMakeListItem(
+			$skin->buildPersonalUrlsPublic()
 		);
 
 		// Create the Echo badges
-		$extraTools = [];
+		$notifications = [];
 		if ( isset( $personalTools['notifications-alert'] ) ) {
-			$extraTools['notifications-alert'] = $personalTools['notifications-alert'];
+			$notifications['notifications-alert'] = $personalTools['notifications-alert'];
 		}
 		if ( isset( $personalTools['notifications-notice'] ) ) {
-			$extraTools['notifications-notice'] = $personalTools['notifications-notice'];
+			$notifications['notifications-notice'] = $personalTools['notifications-notice'];
 		}
 
-		$html = $this->skin->getMenuData( 'personal-extra', $extraTools );
-
-		// Hide label for extra tools
-		$html[ 'label-class' ] .= 'screen-reader-text';
+		$html = $skin->getPortletData( 'notifications', $notifications );
 
 		return $html;
 	}
@@ -107,86 +105,110 @@ final class Header extends Partial {
 	 * @throws MWException
 	 */
 	public function buildSearchProps(): array {
-		$toggleMsg = $this->skin->msg( 'citizen-search-toggle' )->text();
+		$skin = $this->skin;
+
+		$toggleMsg = $skin->msg( 'citizen-search-toggle' )->text();
 
 		return [
+			// TODO: This should be called in skin.json
 			'msg-citizen-search-toggle' => $toggleMsg,
 			'msg-citizen-search-toggle-shortcut' => $toggleMsg . ' [/]',
 			'form-action' => $this->getConfigValue( 'Script' ),
-			'html-input' => $this->skin->makeSearchInput( [ 'id' => 'searchInput' ] ),
-			'msg-search' => $this->skin->msg( 'search' ),
+			'html-input' => $skin->makeSearchInput( [ 'id' => 'searchInput' ] ),
 			'page-title' => SpecialPage::getTitleFor( 'Search' )->getPrefixedDBkey(),
 			'html-random-href' => Skin::makeSpecialUrl( 'Randompage' ),
-			'msg-random' => $this->skin->msg( 'Randompage' )->text(),
 		];
 	}
 
 	/**
-	 * Adds user info to the personal menu
-	 * Adds all explicit user groups as links to the personal menu
-	 * Links are added right below the user page link
-	 * Wrapped in an <li> element with id 'pt-usergroups'
+	 * Decorate the personal menu
 	 *
-	 * @param array $originalUrls The original personal tools urls
-	 * @param User $user
+	 * @param array $personalTools The original personal tools urls
 	 *
 	 * @return array
 	 */
-	private function addUserInfoToMenu( $originalUrls, $user ) {
-		$personalTools = [];
+	private function getPersonalHeaderData( $personalTools ): array {
+		$skin = $this->skin;
+		$user = $this->user;
+		$header = [];
 
-		// This does not return implicit groups
-		$groups = MediaWikiServices::getInstance()->getUserGroupManager()->getUserGroups( $user );
-
-		// Return user edits
-		$edits = MediaWikiServices::getInstance()->getUserEditTracker()->getUserEditCount( $user );
-
-		// Add user group
-		if ( !empty( $groups ) ) {
-			$userPage = array_shift( $originalUrls );
-			$groupLinks = [];
-			$msgName = 'group-%s';
-
-			foreach ( $groups as $group ) {
-				$groupPage = Title::newFromText(
-					$this->skin->msg( sprintf( $msgName, $group ) )->text(),
-					NS_PROJECT
-				);
-
-				$groupLinks[$group] = [
-					'msg' => sprintf( $msgName, $group ),
-					// Nullpointer should not happen
-					'href' => $groupPage->getLinkURL(),
-					'tooltiponly' => true,
-					'id' => sprintf( $msgName, $group ),
-					// 'exists' => $groupPage->exists() - This will add an additional DB call
-				];
-			}
-
-			$userGroups = [
-				'id' => 'pt-usergroups',
-				'links' => $groupLinks
+		if ( $user->isRegistered() ) {
+			$header += [
+				'userpage' => $personalTools['userpage'] ?? null,
+				'usergroups' => $this->getUserGroupsData( $personalTools, $user ),
+				'usercontris' => $this->getUserContributionsData( $user ),
 			];
 		}
 
-		$userContris = [
-			'text' => $this->skin->msg( 'usereditcount' )->numParams( sprintf( '%s', number_format( $edits, 0 ) ) ),
+		return $skin->getPortletData( 'personal-header', array_filter( $header ) );
+	}
+
+	/**
+	 * Build and return user groups data
+	 *
+	 * @param array $personalTools The original personal tools urls
+	 * @param User $user
+	 *
+	 * @return array|null
+	 */
+	private function getUserGroupsData( $personalTools, $user ): ?array {
+		// This does not return implicit groups
+		$groups = MediaWikiServices::getInstance()->getUserGroupManager()->getUserGroups( $user );
+
+		if ( empty( $groups ) ) {
+			return null;
+		}
+
+		$skin = $this->skin;
+		$title = $this->title;
+
+		// Add user group
+		$groupLinks = [];
+		$msgName = 'group-%s';
+
+		foreach ( $groups as $group ) {
+			$groupPage = $title->newFromText(
+				$skin->msg( sprintf( $msgName, $group ) )->text(),
+				NS_PROJECT
+			);
+
+			$groupLinks[$group] = [
+				'msg' => sprintf( $msgName, $group ),
+				// Nullpointer should not happen
+				'href' => $groupPage->getLinkURL(),
+				'tooltiponly' => true,
+				'id' => sprintf( $msgName, $group ),
+				// 'exists' => $groupPage->exists() - This will add an additional DB call
+			];
+		}
+
+		return [
+			'id' => 'pt-usergroups',
+			'links' => $groupLinks
+		];
+	}
+
+	/**
+	 * Build and return user contributions data
+	 *
+	 * @param User $user
+	 *
+	 * @return array|null
+	 */
+	private function getUserContributionsData( $user ): ?array {
+		// Return user edits
+		$edits = MediaWikiServices::getInstance()->getUserEditTracker()->getUserEditCount( $user );
+
+		if ( empty( $edits ) ) {
+			return null;
+		}
+
+		$skin = $this->skin;
+
+		return [
+			'text' => $skin->msg( 'usereditcount' )
+				->numParams( sprintf( '%s', number_format( $edits, 0 ) ) ),
 			'id' => 'pt-usercontris'
 		];
-
-		// The following defines the order of links added
-		if ( isset( $userPage ) ) {
-			$personalTools['userpage'] = $userPage;
-		}
-		if ( isset( $userGroups ) ) {
-			$personalTools['usergroups'] = $userGroups;
-		}
-		$personalTools['usercontris'] = $userContris;
-
-		foreach ( $originalUrls as $key => $url ) {
-			$personalTools[$key] = $url;
-		}
-
-		return $personalTools;
 	}
 }

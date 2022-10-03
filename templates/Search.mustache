@@ -1,0 +1,30 @@
+{{!
+	string form-action action attribute of the search form
+	string page-title page title of the search page
+	string msg-search search text label
+	string html-input raw HTML containing the input box of the search box
+	string html-random-href URL of Special:Random
+	string msg-randompage tooltip message for random page button
+}}
+<div class="citizen-search citizen-header__item mw-checkbox-hack-container">
+	<input
+		type="checkbox" 
+		id="citizen-search__checkbox" 
+		class="mw-checkbox-hack-checkbox"
+		role="button"
+		aria-labelledby="citizen-search__buttonCheckbox"
+		aria-haspopup="true">
+	<form action="{{form-action}}" role="search" id="searchform" class="citizen-search__card mw-checkbox-hack-target" autocomplete="off">
+		<input type="hidden" name="title" value="{{page-title}}">
+		<label class="screen-reader-text" for="searchInput">{{msg-search}}</label>
+		<div class="citizen-search__icon"></div>
+		{{{html-input}}}
+		<a
+			class="citizen-search__random"
+			href="{{html-random-href}}"
+			title="{{msg-randompage}}">
+			<span class="screen-reader-text">{{msg-random}}</span>
+		</a>
+	</form>
+	{{>Search__button}}
+</div>

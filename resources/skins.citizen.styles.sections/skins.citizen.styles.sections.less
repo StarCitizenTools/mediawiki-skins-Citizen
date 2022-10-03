@@ -1,5 +1,7 @@
 @import '../variables.less';
 
+@indicator-size: 16px;
+
 .client-js {
 	.section {
 		&-heading {
@@ -8,7 +10,7 @@
 			user-select: none;
 
 			&--collapsed {
-				.section-toggle {
+				.section-indicator {
 					transform: rotate3d( 1, 0, 0, 180deg );
 				}
 
@@ -18,7 +20,7 @@
 			}
 
 			.mw-headline {
-				transition: @transition-opacity-quick;
+				transition: @transition-opacity;
 
 				&:hover {
 					opacity: var( --opacity-icon-base--hover );
@@ -30,16 +32,15 @@
 			}
 		}
 
-		&-toggle {
-			width: 18px;
-			height: 18px;
-			margin-right: 10px;
+		&-indicator {
+			width: @indicator-size;
+			height: @indicator-size;
 			background-position: center;
 			background-repeat: no-repeat;
-			background-size: 18px;
+			background-size: @indicator-size;
 			cursor: pointer;
 			opacity: var( --opacity-icon-base );
-			transition: @transition-opacity-quick, @transition-transform-quick;
+			transition: @transition-opacity, @transition-transform;
 
 			&:hover {
 				opacity: var( --opacity-icon-base--hover );
@@ -55,6 +56,12 @@
 		&-subheading {
 			display: flex;
 			align-items: center;
+			gap: 0.75rem;
+
+			// Right-align the editsection
+			.mw-headline {
+				flex-grow: 1;
+			}
 		}
 
 		&-collapsible {
@@ -66,15 +73,15 @@
 }
 
 .skin-citizen-dark {
-	.section-toggle {
+	.section-indicator {
 		filter: invert( 1 );
 	}
 }
 
-// Hide toggle when client is noscript
+// Hide indicator when client is noscript
 .client-nojs {
 	.section {
-		&-toggle {
+		&-indicator {
 			display: none;
 		}
 	}
@@ -84,7 +91,7 @@
 @media ( hover: none ) {
 	.client-js .section {
 		&-heading .mw-headline,
-		&-toggle {
+		&-indicator {
 			&:hover,
 			&:active {
 				opacity: 1;

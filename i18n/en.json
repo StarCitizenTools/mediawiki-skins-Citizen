@@ -7,32 +7,27 @@
 	},
 	"skinname-citizen": "Citizen",
 	"citizen-skin-desc": "A responsive skin developed for the Star Citizen Wiki",
-
+	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|Discussion]]",
 	"citizen.css": "/* All CSS here will be loaded for users of the Citizen skin */",
 	"citizen.js": "/* All JavaScript here will be loaded for users of the Citizen skin */",
-
 	"citizen-drawer-toggle": "Toggle menu",
 	"citizen-personalmenu-toggle": "Toggle personal menu",
 	"citizen-search-toggle": "Toggle search",
-	"citizen-theme-toggle": "Toggle theme color",
-
+	"citizen-languages-toggle": "More languages",
+	"citizen-actions-more-toggle": "More actions",
 	"citizen-sitestats-articles-label": "articles",
 	"citizen-sitestats-images-label": "files",
 	"citizen-sitestats-users-label": "users",
 	"citizen-sitestats-edits-label": "edits",
-
-	"citizen-drawer-search": "Search menu",
-
+	"citizen-page-info-copyright": "Copyright",
+	"citizen-page-info-credits": "Credits",
+	"citizen-page-info-lastmod": "Last modified",
 	"citizen-footer-desc": "Edit this text on [[MediaWiki:Citizen-footer-desc]]",
 	"citizen-footer-tagline": "Edit this text on [[MediaWiki:Citizen-footer-tagline]]",
-
 	"citizen-action-addsection": "Add topic",
-
 	"citizen-jumptotop": "Back to top",
-
 	"citizen-search-fulltext": "Search pages containing",
 	"citizen-search-fulltext-empty": "Type to start searching",
-
 	"citizen-tagline-ns-talk": "Discussion page of {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Information about {{SITENAME}}",
 	"citizen-tagline-ns-file": "File on {{SITENAME}}",
@@ -40,12 +35,10 @@
 	"citizen-tagline-ns-template": "Template page",
 	"citizen-tagline-ns-help": "Help page",
 	"citizen-tagline-ns-category": "Category page",
-
 	"prefs-citizen-theme-label": "Theme",
 	"prefs-citizen-theme-option-auto": "Auto",
 	"prefs-citizen-theme-option-light": "Light",
 	"prefs-citizen-theme-option-dark":  "Dark",
-
 	"prefs-citizen-fontsize-label": "Font size",
 	"prefs-citizen-pagewidth-label": "Page width",
 	"prefs-citizen-lineheight-label": "Line height",

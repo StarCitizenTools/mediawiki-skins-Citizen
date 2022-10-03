@@ -1,0 +1,38 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:UniversalLanguageSelector
+ * Module: ext.uls.pt
+ * Version: MLEB 2021.12
+ *
+ * Date: 2022-05-17
+*/
+
+@import '../../../resources/variables.less';
+
+// Needed to override specificity from original style
+.skin-citizen #pt-uls .uls-trigger {
+	display: flex;
+	flex-direction: row-reverse; // So that icon is after the text
+	padding: 0.625rem 1.25rem !important;
+
+	// Sync with .resource-loader-list-icon() mixin
+	&:before {
+		width: @icon-size;
+		height: @icon-size;
+		flex-shrink: 0;
+		padding: 0;
+		background-position: center;
+		background-size: contain;
+		opacity: var( --opacity-icon-base );
+	}
+
+	// Hide default icon
+	&:after {
+		content: none;
+	}
+}
+
+.skin-citizen-dark .uls-trigger:before {
+	filter: invert( 1 ) hue-rotate( 180deg );
+}

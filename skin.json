@@ -1,6 +1,6 @@
 {
 	"name": "Citizen",
-	"version": "1.10.0",
+	"version": "2.0.0-beta.0",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]",
@@ -12,15 +12,15 @@
 	"license-name": "GPL-3.0-or-later",
 	"type": "skin",
 	"requires": {
-		"MediaWiki": ">= 1.39"
+		"MediaWiki": ">= 1.39.0"
 	},
 	"ValidSkinNames": {
 		"citizen": {
-			"class": "SkinCitizen",
-			"@args": "See SkinCitizen::__construct for more detail.",
+			"class": "MediaWiki\\Skins\\Citizen\\SkinCitizen",
 			"args": [
 				{
 					"name": "citizen",
+					"responsive": true,
 					"scripts": [
 						"skins.citizen.scripts"
 					],
@@ -33,57 +33,43 @@
 						"skins.citizen.icons.n",
 						"skins.citizen.icons.t",
 						"skins.citizen.icons.pt",
-						"skins.citizen.icons.footer",
-						"skins.citizen.icons.badges"
+						"skins.citizen.icons.badges",
+						"skins.citizen.icons.sitestats"
 					],
 					"messages": [
+						"citizen-actions-more-toggle",
 						"citizen-drawer-toggle",
-						"citizen-drawer-search",
+						"citizen-languages-toggle",
 						"citizen-personalmenu-toggle",
-						"citizen-search-toggle",
-						"citizen-theme-toggle",
-						"citizen-footer-desc",
-						"citizen-footer-tagline",
-						"citizen-jumptotop"
+						"randompage",
+						"search",
+						"sitetitle"
 					]
 				}
 			]
 		}
-
 	},
 	"MessagesDirs": {
 		"Citizen": [
 			"i18n"
 		]
 	},
-	"AutoloadClasses": {
-		"SkinCitizen": "includes/SkinCitizen.php",
-		"Citizen\\ApiWebappManifest": "includes/api/ApiWebappManifest.php"
-	},
 	"AutoloadNamespaces": {
-		"Citizen\\": "includes/"
-	},
-	"ConfigRegistry": {
-		"Citizen": "GlobalVarConfig::newInstance"
+		"MediaWiki\\Skins\\Citizen\\": "includes/"
 	},
 	"APIModules": {
 		"webapp-manifest": {
-			"class": "Citizen\\ApiWebappManifest"
+			"class": "MediaWiki\\Skins\\Citizen\\Api\\ApiWebappManifest"
 		}
 	},
 	"HookHandlers": {
-		"PreferenceHooks": {
-			"class": "Citizen\\Hooks\\PreferenceHooks"
-		},
 		"SkinHooks": {
-			"class": "Citizen\\Hooks\\SkinHooks"
+			"class": "MediaWiki\\Skins\\Citizen\\Hooks\\SkinHooks"
 		}
 	},
 	"Hooks": {
 		"SkinPageReadyConfig": "SkinHooks",
-		"BeforePageDisplay": "SkinHooks",
-		"GetPreferences": "PreferenceHooks",
-		"PreferencesFormPreSave": "PreferenceHooks"
+		"BeforePageDisplay": "SkinHooks"
 	},
 	"ResourceModules": {
 		"skins.citizen.styles": {
@@ -98,7 +84,9 @@
 				"logo": false,
 				"toc": false
 			},
-			"styles": [ "resources/skins.citizen.styles/skin.less" ]
+			"styles": [
+				"resources/skins.citizen.styles/skin.less"
+			]
 		},
 		"skins.citizen.styles.debug": {
 			"class": "ResourceLoaderSkinModule",
@@ -112,7 +100,9 @@
 				"logo": false,
 				"toc": false
 			},
-			"styles": [ "resources/skins.citizen.styles.debug/skins.citizen.styles.debug.less" ]
+			"styles": [
+				"resources/skins.citizen.styles.debug/skins.citizen.styles.debug.less"
+			]
 		},
 		"skins.citizen.styles.fonts": {
 			"class": "ResourceLoaderSkinModule",
@@ -126,7 +116,9 @@
 				"logo": false,
 				"toc": false
 			},
-			"styles": [ "resources/skins.citizen.styles.fonts/skins.citizen.styles.fonts.less" ]
+			"styles": [
+				"resources/skins.citizen.styles.fonts/skins.citizen.styles.fonts.less"
+			]
 		},
 		"skins.citizen.styles.sections": {
 			"class": "ResourceLoaderSkinModule",
@@ -140,7 +132,9 @@
 				"logo": false,
 				"toc": false
 			},
-			"styles": [ "resources/skins.citizen.styles.sections/skins.citizen.styles.sections.less" ]
+			"styles": [
+				"resources/skins.citizen.styles.sections/skins.citizen.styles.sections.less"
+			]
 		},
 		"skins.citizen.styles.sitestats": {
 			"class": "ResourceLoaderSkinModule",
@@ -154,7 +148,9 @@
 				"logo": false,
 				"toc": false
 			},
-			"styles": [ "resources/skins.citizen.styles.sitestats/skins.citizen.styles.sitestats.less" ]
+			"styles": [
+				"resources/skins.citizen.styles.sitestats/skins.citizen.styles.sitestats.less"
+			]
 		},
 		"skins.citizen.styles.toc": {
 			"class": "ResourceLoaderSkinModule",
@@ -168,23 +164,26 @@
 				"logo": false,
 				"toc": false
 			},
-			"styles": [ "resources/skins.citizen.styles.toc/skins.citizen.styles.toc.less" ]
+			"styles": [
+				"resources/skins.citizen.styles.toc/skins.citizen.styles.toc.less"
+			]
 		},
 		"skins.citizen.scripts": {
 			"packageFiles": [
 				"resources/skins.citizen.scripts/skin.js",
 				{
 					"name": "resources/skins.citizen.scripts/config.json",
-					"callback": "Citizen\\Hooks\\ResourceLoaderHooks::getCitizenResourceLoaderConfig"
+					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenResourceLoaderConfig"
 				},
-				"resources/skins.citizen.scripts/theme.js",
+				"resources/skins.citizen.scripts/checkboxHack.js",
+				"resources/skins.citizen.scripts/scrollObserver.js",
+				"resources/skins.citizen.scripts/sectionObserver.js",
 				"resources/skins.citizen.scripts/search.js",
-				"resources/skins.citizen.scripts/checkboxHack.js"
-			]
-		},
-		"skins.citizen.scripts.toc": {
-			"scripts": [
-				"resources/skins.citizen.scripts.toc/skins.citizen.scripts.toc.js"
+				"resources/skins.citizen.scripts/tableOfContents.js"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
 			]
 		},
 		"skins.citizen.scripts.drawer": {
@@ -195,6 +194,9 @@
 		"skins.citizen.scripts.sections": {
 			"scripts": [
 				"resources/skins.citizen.scripts.sections/skins.citizen.scripts.sections.js"
+			],
+			"targets": [
+				"desktop"
 			]
 		},
 		"skins.citizen.search": {
@@ -208,7 +210,7 @@
 				"resources/skins.citizen.search/main.js",
 				{
 					"name": "resources/skins.citizen.search/config.json",
-					"callback": "Citizen\\Hooks\\ResourceLoaderHooks::getCitizenSearchResourceLoaderConfig"
+					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenSearchResourceLoaderConfig"
 				},
 				"resources/skins.citizen.search/typeahead.js",
 				"resources/skins.citizen.search/gateway/gateway.js",
@@ -217,7 +219,12 @@
 			],
 			"messages": [
 				"citizen-search-fulltext",
-				"citizen-search-fulltext-empty"
+				"citizen-search-fulltext-empty",
+				"search-redirect"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
 			]
 		},
 		"skins.citizen.preferences": {
@@ -228,7 +235,11 @@
 				"resources/skins.citizen.preferences/skins.citizen.preferences.less"
 			],
 			"packageFiles": [
-				"resources/skins.citizen.preferences/skins.citizen.preferences.js"
+				"resources/skins.citizen.preferences/skins.citizen.preferences.js",
+				{
+					"name": "resources/skins.citizen.preferences/config.json",
+					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenPreferencesResourceLoaderConfig"
+				}
 			],
 			"messages": [
 				"preferences",
@@ -240,6 +251,10 @@
 				"prefs-citizen-pagewidth-label",
 				"prefs-citizen-lineheight-label",
 				"prefs-citizen-resetbutton-label"
+			],
+			"targets": [
+				"desktop",
+				"mobile"
 			]
 		},
 		"skins.citizen.icons": {
@@ -253,10 +268,12 @@
 						"rtl": "resources/skins.citizen.icons/toc-rtl.svg"
 					}
 				},
-				"#personalmenu-button:after": "resources/skins.citizen.icons/shared/userAvatar.svg",
-				"#searchform-icon": "resources/skins.citizen.icons/shared/search.svg",
-				"#searchform-random": "resources/skins.citizen.icons/shared/random.svg",
-				".page-actions-more:before": "resources/skins.citizen.icons/more.svg"
+				".toctogglecheckbox:checked ~ .toctitle .toctogglelabel:before": "resources/skins.citizen.icons/shared/close.svg",
+				"#citizen-personalMenu__buttonCheckbox:after": "resources/skins.citizen.icons/shared/userAvatar.svg",
+				".citizen-search__icon:after": "resources/skins.citizen.icons/shared/search.svg",
+				".citizen-search__random:after": "resources/skins.citizen.icons/shared/random.svg",
+				"#citizen-languages__buttonCheckbox:after": "resources/skins.citizen.icons/shared/language.svg",
+				"#page-actions-more__buttonCheckbox:after": "resources/skins.citizen.icons/more.svg"
 			}
 		},
 		"skins.citizen.icons.ca": {
@@ -264,10 +281,16 @@
 			"selector": "#ca-{name} > a:after",
 			"defaultColor": "#000",
 			"images": {
-				"view": "resources/skins.citizen.icons/shared/article.svg",
+				"view": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/article-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/article-rtl.svg"
+					}
+				},
 				"viewsource": "resources/skins.citizen.icons/shared/eye.svg",
-				"ve-edit": "resources/skins.citizen.icons/shared/ve-edit.svg",
 				"edit": "resources/skins.citizen.icons/shared/edit.svg",
+				"ve-edit + #ca-edit": "resources/skins.citizen.icons/shared/wikiText.svg",
+				"ve-edit": "resources/skins.citizen.icons/shared/edit.svg",
 				"history": "resources/skins.citizen.icons/shared/history.svg",
 				"delete": "resources/skins.citizen.icons/shared/delete.svg",
 				"move": "resources/skins.citizen.icons/shared/move.svg",
@@ -276,8 +299,19 @@
 				"watch": "resources/skins.citizen.icons/shared/eye.svg",
 				"unwatch": "resources/skins.citizen.icons/shared/eyeClosed.svg",
 				"addsection": "resources/skins.citizen.icons/shared/add.svg",
-				"talk": "resources/skins.citizen.icons/shared/discussion.svg",
-				"nstab-main": "resources/skins.citizen.icons/shared/article.svg",
+				"talk": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/speechBubbles-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/speechBubbles-rtl.svg"
+					}
+				},
+				"nstab-main": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/article-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/article-rtl.svg"
+					}
+				},
+				"nstab-user": "resources/skins.citizen.icons/shared/userAvatar.svg",
 				"translate": "resources/skins.citizen.icons/shared/language.svg"
 			}
 		},
@@ -287,7 +321,7 @@
 			"defaultColor": "#000",
 			"images": {
 				"": "resources/skins.citizen.icons/shared/edit.svg",
-				".mw-editsection-visualeditor": "resources/skins.citizen.icons/shared/ve-edit.svg"
+				".mw-editsection-visualeditor + .mw-editsection-divider + a": "resources/skins.citizen.icons/shared/wikiText.svg"
 			}
 		},
 		"skins.citizen.icons.n": {
@@ -296,9 +330,19 @@
 			"defaultColor": "#000",
 			"images": {
 				"mainpage-description": "resources/skins.citizen.icons/shared/home.svg",
-				"recentchanges": "resources/skins.citizen.icons/shared/history.svg",
+				"recentchanges": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/recentChanges-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/recentChanges-rtl.svg"
+					}
+				},
 				"randompage": "resources/skins.citizen.icons/shared/random.svg",
-				"help": "resources/skins.citizen.icons/shared/help.svg"
+				"help": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/help-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/help-rtl.svg"
+					}
+				}
 			}
 		},
 		"skins.citizen.icons.t": {
@@ -306,14 +350,39 @@
 			"selector": "#t-{name} > a:after",
 			"defaultColor": "#000",
 			"images": {
-				"whatlinkshere": "resources/skins.citizen.icons/shared/whatlinkshere.svg",
-				"recentchangeslinked": "resources/skins.citizen.icons/shared/history.svg",
-				"contributions": "resources/skins.citizen.icons/shared/contributions.svg",
-				"log": "resources/skins.citizen.icons/shared/journal.svg",
+				"whatlinkshere": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/articleRedirect-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/articleRedirect-rtl.svg"
+					}
+				},
+				"recentchangeslinked": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/recentChanges-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/recentChanges-rtl.svg"
+					}
+				},
+				"contributions": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/userContributions-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/userContributions-rtl.svg"
+					}
+				},
+				"log": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/journal-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/journal-rtl.svg"
+					}
+				},
 				"blockip": "resources/skins.citizen.icons/shared/block.svg",
-				"userrights": "resources/skins.citizen.icons/shared/users.svg",
+				"userrights": "resources/skins.citizen.icons/shared/userGroup.svg",
 				"upload": "resources/skins.citizen.icons/shared/upload.svg",
-				"specialpages": "resources/skins.citizen.icons/shared/specialpages.svg",
+				"specialpages": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/specialPages-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/specialPages-rtl.svg"
+					}
+				},
 				"print": "resources/skins.citizen.icons/shared/download.svg",
 				"permalink": "resources/skins.citizen.icons/shared/link.svg",
 				"info": "resources/skins.citizen.icons/shared/info.svg"
@@ -324,31 +393,75 @@
 			"selector": "#pt-{name} > a:after",
 			"defaultColor": "#000",
 			"images": {
-				"mytalk": "resources/skins.citizen.icons/shared/userTalk.svg",
+				"mytalk": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/userTalk-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/userTalk-rtl.svg"
+					}
+				},
 				"preferences": "resources/skins.citizen.icons/shared/settings.svg",
 				"betafeatures": "resources/skins.citizen.icons/shared/beta.svg",
 				"watchlist": "resources/skins.citizen.icons/shared/watchlist.svg",
-				"mycontris": "resources/skins.citizen.icons/shared/contributions.svg",
-				"logout": "resources/skins.citizen.icons/shared/logOut.svg",
+				"mycontris": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/userContributions-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/userContributions-rtl.svg"
+					}
+				},
+				"logout": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/logOut-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/logOut-rtl.svg"
+					}
+				},
 				"createaccount": "resources/skins.citizen.icons/shared/userAvatar.svg",
-				"login": "resources/skins.citizen.icons/shared/logOut.svg",
-				"anontalk": "resources/skins.citizen.icons/shared/userTalk.svg",
-				"anoncontribs": "resources/skins.citizen.icons/shared/contributions.svg"
-			}
-		},
-		"skins.citizen.icons.footer": {
-			"class": "ResourceLoaderImageModule",
-			"selector": ".last-modified-bar-icon",
-			"images": {
-				"lastmod": "resources/skins.citizen.icons.footer/history_white.svg"
+				"login": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/logIn-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/logIn-rtl.svg"
+					}
+				},
+				"anontalk": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/userTalk-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/userTalk-rtl.svg"
+					}
+				},
+				"anoncontribs": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/userContributions-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/userContributions-rtl.svg"
+					}
+				}
 			}
 		},
 		"skins.citizen.icons.sections": {
 			"class": "ResourceLoaderImageModule",
-			"selector": ".section-toggle",
+			"selector": ".section-indicator",
 			"useDataURI": false,
 			"images": {
 				"collapse": "resources/skins.citizen.icons/shared/collapse.svg"
+			}
+		},
+		"skins.citizen.icons.sitestats": {
+			"class": "ResourceLoaderImageModule",
+			"selector": "#citizen-siteStats__item--{name}:before",
+			"useDataURI": false,
+			"images": {
+				"articles": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/article-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/article-rtl.svg"
+					}
+				},
+				"images": {
+					"file": {
+						"ltr": "resources/skins.citizen.icons/shared/folderPlaceholder-ltr.svg",
+						"rtl": "resources/skins.citizen.icons/shared/folderPlaceholder-rtl.svg"
+					}
+				},
+				"users": "resources/skins.citizen.icons/shared/userAvatar.svg",
+				"edits": "resources/skins.citizen.icons/shared/edit.svg"
 			}
 		},
 		"skins.citizen.icons.preferences": {
@@ -368,25 +481,19 @@
 		"citizen": {
 			"+ext.advancedSearch.initialstyles": "skinStyles/extensions/AdvancedSearch/ext.advancedSearch.initialstyles.less",
 			"+ext.advancedSearch.styles": "skinStyles/extensions/AdvancedSearch/ext.advancedSearch.styles.less",
-
 			"+ext.ApprovedRevs": "skinStyles/extensions/ApprovedRevs/ext.ApprovedRevs.less",
-
 			"+ext.babel": "skinStyles/extensions/Babel/ext.babel.less",
-
 			"+ext.cargo.main": "skinStyles/extensions/Cargo/ext.cargo.main.less",
-
 			"+ext.categoryTree.css": "skinStyles/extensions/CategoryTree/ext.categoryTree.css.less",
-
+			"+ext.centralNotice.display": "skinStyles/extensions/CentralNotice/ext.centralNotice.display.less",
 			"+ext.cite.styles": "skinStyles/extensions/Cite/ext.cite.styles.less",
-
 			"+ext.cleanchanges.uls": "skinStyles/extensions/CleanChanges/ext.cleanchanges.uls.less",
-
 			"+ext.CodeMirror.lib": "skinStyles/extensions/CodeMirror/ext.CodeMirror.lib.less",
 			"+ext.CodeMirror.mode.mediawiki": "skinStyles/extensions/CodeMirror/ext.CodeMirror.mode.mediawiki.less",
 			"+ext.CodeMirror.visualEditor.init": "skinStyles/extensions/CodeMirror/ext.CodeMirror.visualEditor.init.less",
-
+			"+ext.discussionTools.init": "skinStyles/extensions/DiscussionTools/ext.discussionTools.init.less",
+			"+ext.discussionTools.ReplyWidget": "skinStyles/extensions/DiscussionTools/ext.discussionTools.ReplyWidget.less",
 			"+ext.dismissableSiteNotice.styles": "skinStyles/extensions/DismissableSiteNotice/ext.dismissableSiteNotice.less",
-
 			"+ext.echo.ui.desktop": "skinStyles/extensions/Echo/ext.echo.ui.desktop.less",
 			"+ext.echo.ui": "skinStyles/extensions/Echo/ext.echo.ui.less",
 			"+ext.echo.styles.badge": "skinStyles/extensions/Echo/ext.echo.styles.badge.less",
@@ -394,23 +501,24 @@
 			"+ext.echo.styles.alert": "skinStyles/extensions/Echo/ext.echo.styles.alert.less",
 			"+ext.echo.special": "skinStyles/extensions/Echo/ext.echo.special.less",
 			"+ext.echo.styles.special": "skinStyles/extensions/Echo/ext.echo.styles.special.less",
-
-			"+ext.flow": "skinStyles/extensions/Flow/ext.flow.less",
+			"+ext.flow.mediawiki.ui.form": "skinStyles/extensions/Flow/ext.flow.mediawiki.ui.form.less",
 			"+ext.flow.styles.base": "skinStyles/extensions/Flow/ext.flow.styles.base.less",
+			"+ext.flow.board.styles": "skinStyles/extensions/Flow/ext.flow.board.styles.less",
+			"+ext.flow.board.topic.styles": "skinStyles/extensions/Flow/ext.flow.board.topic.styles.less",
 			"+ext.flow.ui": "skinStyles/extensions/Flow/ext.flow.ui.less",
-
+			"+ext.flow": "skinStyles/extensions/Flow/ext.flow.less",
+			"+ext.flow.visualEditor": "skinStyles/extensions/Flow/ext.flow.visualEditor.less",
 			"+ext.graph.styles": "skinStyles/extensions/Graph/ext.graph.styles.less",
-
+			"+ext.interwiki.specialpage": "skinStyles/extensions/Interwiki/ext.interwiki.specialpage.less",
 			"+ext.Lingo": "skinStyles/extensions/Lingo/ext.Lingo.less",
-			"+ext.Lingo.jquery.qtip": "skinStyles/extensions/Lingo/ext.Lingo.jquery.qtip.less",
-
+			"+ext.managewiki.oouiform.styles": "skinStyles/extensions/ManageWiki/ext.managewiki.oouiform.styles.less",
 			"+ext.pygments": "skinStyles/extensions/SyntaxHighlight_GeSHi/ext.pygments.less",
-
+			"+ext.math.styles": "skinStyles/extensions/Math/ext.math.styles.less",
 			"+ext.MsUpload": "skinStyles/extensions/MsUpload/ext.MsUpload.less",
-
 			"+ext.relatedArticles.cards": "skinStyles/extensions/RelatedArticles/ext.relatedArticles.cards.less",
 			"+ext.relatedArticles.readMore": "skinStyles/extensions/RelatedArticles/ext.relatedArticles.readMore.less",
-
+			"+ext.RevisionSlider.lazyCss": "skinStyles/extensions/RevisionSlider/ext.RevisionSlider.lazyCss.less",
+			"+ext.RevisionSlider.init": "skinStyles/extensions/RevisionSlider/ext.RevisionSlider.init.less",
 			"+ext.libs.tippy": "skinStyles/extensions/SemanticMediaWiki/ext.libs.tippy.less",
 			"+ext.smw.ask.styles": "skinStyles/extensions/SemanticMediaWiki/ext.smw.ask.styles.less",
 			"+ext.smw.browse.styles": "skinStyles/extensions/SemanticMediaWiki/ext.smw.browse.styles.less",
@@ -430,17 +538,13 @@
 			"+smw.summarytable": "skinStyles/extensions/SemanticMediaWiki/smw.summarytable.less",
 			"+smw.tableprinter.datatables.styles": "skinStyles/extensions/SemanticMediaWiki/smw.tableprinter.datatables.styles.less",
 			"+smw.tippy": "skinStyles/extensions/SemanticMediaWiki/smw.tippy.less",
-
 			"+ext.srf.d3.chart.bubble": "skinStyles/extensions/SemanticResultFormats/d3/ext.srf.d3.chart.bubble.less",
 			"+ext.srf.d3.chart.treemap": "skinStyles/extensions/SemanticResultFormats/d3/ext.srf.d3.chart.treemap.less",
 			"+ext.srf.d3.common": "skinStyles/extensions/SemanticResultFormats/d3/ext.srf.d3.common.less",
-
 			"+ext.srf.datatables": "skinStyles/extensions/SemanticResultFormats/datatables/ext.srf.datatables.less",
 			"+ext.srf.datatables.basic": "skinStyles/extensions/SemanticResultFormats/datatables/ext.srf.datatables.basic.less",
 			"+ext.srf.datatables.bootstrap": "skinStyles/extensions/SemanticResultFormats/datatables/ext.srf.datatables.bootstrap.less",
-
 			"+ext.srf.eventcalendar": "skinStyles/extensions/SemanticResultFormats/eventcalendar/ext.srf.eventcalendar.less",
-
 			"+ext.srf.filtered.calendar-view": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.calendar-view.less",
 			"+ext.srf.filtered.distance-view": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.distance-view.less",
 			"+ext.srf.filtered": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.less",
@@ -449,45 +553,29 @@
 			"+ext.srf.filtered.slider": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.slider.less",
 			"+ext.srf.filtered.value-filter": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.value-filter.less",
 			"+ext.srf.filtered.value-filter.select": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.value-filter.select.less",
-
 			"+ext.srf.flot.core": "skinStyles/extensions/SemanticResultFormats/flot/ext.srf.flot.core.less",
-
 			"+ext.srf.formats.media": "skinStyles/extensions/SemanticResultFormats/formats/ext.srf.formats.media.less",
 			"+ext.srf.formats.tagcloud": "skinStyles/extensions/SemanticResultFormats/formats/ext.srf.formats.tagcloud.less",
-
 			"+ext.srf.gallery.carousel": "skinStyles/extensions/SemanticResultFormats/gallery/ext.srf.gallery.carousel.less",
 			"+ext.srf.gallery.overlay": "skinStyles/extensions/SemanticResultFormats/gallery/ext.srf.gallery.overlay.less",
 			"+ext.srf.gallery.slideshow": "skinStyles/extensions/SemanticResultFormats/gallery/ext.srf.gallery.slideshow.less",
-
 			"+ext.srf.jqplot.chart": "skinStyles/extensions/SemanticResultFormats/jqplot/ext.srf.jqplot.chart.less",
-
 			"+ext.jquery.blockUI": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.blockUI.less",
 			"+ext.jquery.fancybox": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.fancybox.less",
 			"+ext.jquery.fullcalendar": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.fullcalendar.less",
 			"+ext.jquery.jqgrid": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.jqgrid.less",
 			"+ext.jquery.jqplot.core": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.jqplot.core.less",
 			"+ext.jquery.multiselect.filter": "skinStyles/extensions/SemanticResultFormats/jquery/ext.jquery.multiselect.filter.less",
-
 			"+ext.srf.listwidget": "skinStyles/extensions/SemanticResultFormats/listwidget/ext.srf.listwidget.less",
-
 			"+ext.MWOAuth.styles": "skinStyles/extensions/OAuth/ext.MWOAuth.styles.less",
-
 			"+ext.srf.pagewidget.carousel": "skinStyles/extensions/SemanticResultFormats/pagewidget/ext.srf.pagewidget.carousel.less",
-
 			"+ext.srf.slideshow": "skinStyles/extensions/SemanticResultFormats/slideshow/ext.srf.slideshow.less",
-
 			"+ext.srf.smile.timeline.core": "skinStyles/extensions/SemanticResultFormats/timeline/ext.srf.smile.timeline.core.less",
-
 			"+ext.srf.util.grid": "skinStyles/extensions/SemanticResultFormats/util/ext.srf.util.grid.less",
-
 			"+ext.srf.styles": "skinStyles/extensions/SemanticResultFormats/ext.srf.styles.less",
-
 			"+onoi.dataTables.styles": "skinStyles/extensions/SemanticResultFormats/jquery/jquery.dataTables.less",
-
 			"+ext.SimpleTooltip": "skinStyles/extensions/SimpleTooltip/ext.SimpleTooltip.less",
-
 			"+ext.tmh.player.styles": "skinStyles/extensions/TimedMediaHandler/ext.tmh.player.styles.less",
-
 			"+ext.translate": "skinStyles/extensions/Translate/ext.translate.less",
 			"+ext.translate.dropdownmenu": "skinStyles/extensions/Translate/ext.translate.dropdownmenu.less",
 			"+ext.translate.specialpages.styles": "skinStyles/extensions/Translate/ext.translate.specialpages.styles.less",
@@ -504,41 +592,41 @@
 			"+ext.translate.statsbar": "skinStyles/extensions/Translate/ext.translate.statsbar.less",
 			"+ext.translate.statstable": "skinStyles/extensions/Translate/ext.translate.statstable.less",
 			"+ext.translate.tag.languages": "skinStyles/extensions/Translate/ext.translate.tag.languages.less",
-
 			"+ext.uls.common": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.common.less",
 			"+ext.uls.compactlinks": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.compactlinks.less",
 			"+ext.uls.displaysettings": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.displaysettings.less",
 			"+ext.uls.interface": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.interface.less",
 			"+ext.uls.interlanguage": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.interlanguage.less",
 			"+ext.uls.languagesettings": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.languagesettings.less",
+			"+ext.uls.pt": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.pt.less",
 			"+ext.uls.setlang": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.setlang.less",
-
-			"ext.CookieWarning.styles": "skinStyles/extensions/CookieWarning/ext.CookieWarning.styles.less",
-
+			"+jquery.ime": "skinStyles/extensions/UniversalLanguageSelector/jquery.ime.less",
+			"+jquery.uls": "skinStyles/extensions/UniversalLanguageSelector/jquery.uls.less",
+			"+ext.CookieWarning.styles": "skinStyles/extensions/CookieWarning/ext.CookieWarning.styles.less",
 			"+ext.popups.main": "skinStyles/extensions/Popups/ext.popups.main.less",
-
+			"+ext.PortableInfobox.styles": "skinStyles/extensions/PortableInfobox/ext.PortableInfobox.styles.less",
 			"+ext.Tabber": "skinStyles/extensions/Tabber/ext.Tabber.less",
 			"+ext.tabberNeue": "skinStyles/extensions/TabberNeue/ext.tabberNeue.less",
-
 			"+ext.uploadWizard": "skinStyles/extensions/UploadWizard/ext.uploadWizard.less",
 			"+ext.uploadWizard.page.styles": "skinStyles/extensions/UploadWizard/uploadWizard.noWizard.less",
-
 			"+ext.visualEditor.desktopArticleTarget.init": "skinStyles/extensions/VisualEditor/ext.visualEditor.less",
-
+			"+wikibase.client.init": "skinStyles/extensions/Wikibase/wikibase.client.init.less",
+			"+jquery.wikibase.linkitem": "skinStyles/extensions/Wikibase/jquery.wikibase.linkitem.less",
+			"+jquery.wikibase.entityselector": "skinStyles/extensions/Wikibase/jquery.wikibase.entityselector.less",
+			"+jquery.wikibase.toolbar.styles": "skinStyles/extensions/Wikibase/jquery.wikibase.toolbar.styles.less",
+			"+wikibase.common": "skinStyles/extensions/Wikibase/wikibase.common.less",
+			"+wikibase.mobile": "skinStyles/extensions/Wikibase/wikibase.mobile.less",
+			"+wikibase.view.ControllerViewFactory": "skinStyles/extensions/Wikibase/wikibase.view.ControllerViewFactory.less",
 			"+ext.wikiEditor": "skinStyles/extensions/WikiEditor/ext.wikiEditor.less",
-
 			"+capiunto.infobox.main": "skinStyles/extensions/Capiunto/capiunto.infobox.main.less",
-
+			"mobile.init.styles": "skinStyles/extensions/MobileFrontend/mobile.init.styles.less",
+			"+mediawiki.action.edit.styles": "skinStyles/mediawiki/action/mediawiki.action.edit.styles.less",
 			"+mediawiki.action.history.styles": "skinStyles/mediawiki/action/mediawiki.action.history.styles.less",
 			"+mediawiki.action.view.filepage": "skinStyles/mediawiki/action/mediawiki.action.view.filepage.less",
-
 			"+mediawiki.notification": "skinStyles/mediawiki/mediawiki.notification.less",
-
 			"+mediawiki.pager.tablePager": "skinStyles/mediawiki/mediawiki.pager.tablePager.less",
-
 			"mediawiki.skinning.content.parsoid": [],
 			"mediawiki.skinning.interface": [],
-
 			"+mediawiki.special": "skinStyles/mediawiki/special/mediawiki.special.less",
 			"+mediawiki.special.apisandbox": "skinStyles/mediawiki/special/mediawiki.special.apisandbox.less",
 			"+mediawiki.special.changeslist.enhanced": "skinStyles/mediawiki/special/mediawiki.special.changeslist.enhanced.less",
@@ -546,27 +634,21 @@
 			"+mediawiki.special.preferences.styles.ooui": "skinStyles/mediawiki/special/mediawiki.special.preferences.styles.ooui.less",
 			"+mediawiki.special.search.styles": "skinStyles/mediawiki/special/mediawiki.special.search.styles.less",
 			"+mediawiki.special.userlogin.login.styles": "skinStyles/mediawiki/special/mediawiki.special.userlogin.login.styles.less",
-
 			"+mediawiki.ui.button": "skinStyles/mediawiki/ui/mediawiki.ui.components.button.less",
 			"+mediawiki.ui.checkbox": "skinStyles/mediawiki/ui/mediawiki.ui.components.checkbox.less",
 			"+mediawiki.ui.input": "skinStyles/mediawiki/ui/mediawiki.ui.components.input.less",
-
 			"+mediawiki.diff.styles": "skinStyles/mediawiki/mediawiki.diff.styles.less",
 			"+mediawiki.htmlform.ooui.styles": "skinStyles/mediawiki/mediawiki.htmlform.ooui.styles.less",
 			"+mediawiki.legacy.shared": "skinStyles/mediawiki/mediawiki.legacy.shared.less",
 			"+mediawiki.page.gallery.styles": "skinStyles/mediawiki/mediawiki.page.gallery.styles.less",
 			"+mediawiki.rcfilters.filters.base.styles": "skinStyles/mediawiki/mediawiki.rcfilters.filters.base.styles.less",
 			"+mediawiki.widgets.DateInputWidget.styles": "skinStyles/mediawiki/mediawiki.widgets.DateInputWidget.styles.less",
-
 			"+oojs-ui-core.styles": "skinStyles/ooui/oojs-ui-core.less",
 			"+oojs-ui-toolbars": "skinStyles/ooui/oojs-ui-toolbars.less",
 			"+oojs-ui-widgets": "skinStyles/ooui/oojs-ui-widgets.less",
 			"+oojs-ui-windows": "skinStyles/ooui/oojs-ui-windows.less",
-
 			"+jquery.ui": "skinStyles/jquery.ui/smoothness/jquery.ui.theme.less",
-
 			"+mmv": "skinStyles/extensions/MultimediaViewer/mmv.less",
-
 			"+ext.WSSearchFront.module": "skinStyles/extensions/WSSearchFront/ext.WSSearchFront.module.less"
 		}
 	},
@@ -644,16 +726,10 @@
 			"descriptionmsg": "citizen-config-showpagetools",
 			"public": true
 		},
-		"PortalAttach": {
-			"value": "first",
-			"description": "Label of the portal to attach links to upload and special pages to",
-			"descriptionmsg": "citizen-config-portalattach",
-			"public": true
-		},
-		"EnableDrawerSubSearch": {
-			"value": false,
-			"description": "Enables to search the drawer for menu entries",
-			"descriptionmsg": "citizen-config-enabledrawersubsearch",
+		"SiteToolsPortlet": {
+			"value": "",
+			"description": "ID of the portlet to attach the site tools",
+			"descriptionmsg": "citizen-config-sitetoolsportlet",
 			"public": true
 		},
 		"EnableCollapsibleSections": {
@@ -666,6 +742,12 @@
 			"value": true,
 			"description": "Enables the site statistics in drawer menu",
 			"descriptionmsg": "citizen-config-enabledrawersitestats",
+			"public": true
+		},
+		"UseNumberFormatter": {
+			"value": true,
+			"description": "Use NumberFormatter for site statistics",
+			"descriptionmsg": "citizen-config-usenumberformatter",
 			"public": true
 		}
 	},

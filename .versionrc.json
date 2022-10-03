@@ -1,0 +1,16 @@
+{
+	"bumpFiles": [
+		{
+			"filename": "skin.json",
+			"type": "json"
+		},
+		{
+			"filename": "package.json",
+			"type": "json"
+		},
+		{
+			"filename": "package-lock.json",
+			"type": "json"
+		}
+	]
+}

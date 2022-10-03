@@ -1,0 +1,162 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:Wikibase
+ * Module: wikibase.view.ControllerViewFactory
+ * Version: REL1_35 7bb503b
+ *
+ * Date: 2022-05-11
+*/
+
+/* jquery.wikibase.sitelinkview.css */
+.wikibase-sitelinkview input:focus {
+	border-color: var( --color-primary );
+	background-color: var( --background-color-primary--hover );
+}
+
+/* jquery.wikibase.sitelinklistview.css */
+.wikibase-sitelinklistview .wikibase-sitelinkview .wikibase-sitelinkview-siteid-container {
+	border-color: var( --border-color-base );
+	background: var( --color-surface-3 );
+}
+
+.wikibase-sitelinklistview .wikibase-sitelinkview .wikibase-removetoolbar-container {
+	background: var( --color-surface-1 );
+}
+
+.skin-citizen-dark {
+	.wb-badge,
+	.wb-badge-empty {
+		filter: invert( 1 ) hue-rotate( 180deg );
+	}
+
+	/* jquery.wikibase.sitelinkgroupview.mw-collapsible.css */
+	// Collapsible toggle
+	.wikibase-sitelinkgroupview {
+		> .mw-collapsible {
+			&-toggle,
+			&-toggle-expanded,
+			&-toggle-collapsed {
+				filter: invert( 1 ) hue-rotate( 180deg );
+			}
+		}
+	}
+}
+
+/* jquery.wikibase.sitelinkgroupview.css */
+.wikibase-sitelinkgroupview {
+	border-color: var( --border-color-base );
+}
+
+.wikibase-sitelinkgroupview.wb-edit {
+	border-color: var( --color-primary );
+}
+
+.wikibase-sitelinkgroupview .wikibase-sitelinkgroupview-heading-container {
+	background-color: var( --color-surface-1 );
+}
+
+.wikibase-sitelinkgroupview.wb-edit .wikibase-sitelinkgroupview-heading-container {
+	background-color: var( --background-color-primary--hover );
+}
+
+/* jquery.wikibase.labelview.css */
+.wikibase-labelview .wikibase-labelview-input:focus {
+	background-color: var( --background-color-primary--hover );
+}
+
+/* jquery.wikibase.descriptionview.css */
+.wikibase-descriptionview .wikibase-descriptionview-input:focus {
+	background-color: var( --background-color-primary--hover );
+}
+
+/* jquery.ui.tagadata.css */
+ul.tagadata li.tagadata-choice-equal {
+	border-color: var( --color-destructive );
+	color: var( --color-destructive );
+}
+
+ul.tagadata {
+	background-color: var( --color-surface-2 );
+}
+
+ul.tagadata li.tagadata-choice .tagadata-label input:focus {
+	background-color: var( --background-color-primary--hover );
+}
+
+/* jquery.wikibase.aliasesview.css */
+.wikibase-aliasesview li {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+}
+
+/* jquery.wikibase.entitytermsforlanguageview.css */
+.wikibase-entitytermsforlanguageview .wb-error {
+	background-color: var( --background-color-destructive );
+}
+
+/* jquery.wikibase.entitytermsforlanguagelistview.css */
+.wikibase-entitytermsforlanguagelistview {
+	border-color: var( --border-color-base );
+	background: var( --color-surface-1 );
+}
+
+.wikibase-entitytermsforlanguagelistview.wb-edit {
+	border-color: var( --color-primary );
+}
+
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-header .wikibase-entitytermsforlanguagelistview-header-row .wikibase-entitytermsforlanguagelistview-cell {
+	border-right-color: var( --color-surface-1 );
+	background-color: var( --color-surface-3 );
+}
+
+.wikibase-entitytermsforlanguagelistview.wb-edit .wikibase-entitytermsforlanguagelistview-header .wikibase-entitytermsforlanguagelistview-header-row .wikibase-entitytermsforlanguagelistview-cell {
+	background: var( --background-color-primary--hover );
+}
+
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-label input,
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-description input,
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-label textarea,
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-description textarea {
+	border-bottom-color: var( --border-color-base );
+}
+
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-label input:focus,
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-description input:focus,
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-label textarea:focus,
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-description textarea:focus {
+	border-color: var( --color-primary );
+}
+
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-aliases .ui-state-default {
+	color: var( --color-base );
+}
+
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-aliases input {
+	border-bottom-color: var( --border-color-base );
+}
+
+.wikibase-entitytermsforlanguagelistview .wikibase-entitytermsforlanguagelistview-listview .wikibase-entitytermsforlanguageview .wikibase-entitytermsforlanguageview-aliases input:focus {
+	border-color: var( --color-primary );
+}
+
+/* jquery.wikibase.entitytermsview.css */
+.wikibase-entitytermsview .wikibase-entitytermsview-heading .wikibase-entitytermsview-heading-aliases ul {
+	color: var( --color-base--subtle );
+}
+
+.wikibase-entitytermsview .wikibase-toolbar-container {
+	background-color: var( --color-surface-1 );
+}
+
+/* snakview.SnakTypeSelector.css */
+// snaktypeselector icon
+.skin-citizen-dark .ui-state-default .ui-icon-snaktypeselector {
+	filter: invert( 1 ) hue-rotate( 180deg );
+}
+
+/* jquery.wikibase.statementview.RankSelector.css */
+.skin-citizen-dark .wikibase-rankselector .ui-icon.ui-icon-rankselector {
+	// Rank selector icon
+	filter: invert( 1 ) hue-rotate( 180deg );
+}

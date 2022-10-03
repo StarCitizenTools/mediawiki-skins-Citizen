@@ -4,30 +4,39 @@ a.feedlink {
 }
 
 // CSS checkbox hack
+// TODO: See what MW core offer and maybe we can take it off
 .mw-checkbox-hack {
 	&-checkbox {
 		display: none;
 	}
 
 	&-button {
-		overflow: hidden;
-		text-indent: -999px;
+		cursor: pointer;
+
+		> span {
+			.mixin-screen-reader-text;
+		}
 	}
 }
 
 .screen-reader-text {
-	position: absolute !important;
-	//.mixin-screen-reader-text;
-	display: block !important;
-	overflow: hidden !important;
-	width: 1px !important;
-	height: 1px !important;
-	padding: 0 !important;
-	border: 0 !important;
-	margin: -1px !important;
-	clip: rect( 1px, 1px, 1px, 1px ) !important;
+	.mixin-screen-reader-text;
 }
 
 .mw-empty-elt {
 	display: none;
+}
+
+/**
+ * OOUI has some layout issues when the font size is not
+ * same as what is being used in Vector. This is a dirty
+ * hack to ensure that the UI is displayed correctly.
+ *
+ * This is put here because the OOUI skinstyle is lazyloaded,
+ * causing significant layout shift
+ *
+ * Revisit this when T254055 is resolved
+ */
+.oo-ui-widget {
+	font-size: 0.875rem;
 }

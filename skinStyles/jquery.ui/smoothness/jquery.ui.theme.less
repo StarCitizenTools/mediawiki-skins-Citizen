@@ -4,7 +4,6 @@
 */
 
 @import '../../../resources/variables.less';
-@import '../../../resources/mixins.less';
 
 /*!
  * jQuery UI CSS Framework 1.9.2
@@ -14,10 +13,10 @@
 ----------------------------------*/
 .ui {
 	&-dialog {
-		.boxshadow(4);
+		box-shadow: var( --box-shadow-dialog );
 
 		&.ui-widget-content {
-			background: var( --background-color-dp-24 );
+			background: var( --color-surface-1 );
 		}
 	}
 

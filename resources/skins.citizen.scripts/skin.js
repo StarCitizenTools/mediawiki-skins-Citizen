@@ -1,28 +1,13 @@
+const
+	checkboxHack = require( './checkboxHack.js' ),
+	CHECKBOX_HACK_CONTAINER_SELECTOR = '.mw-checkbox-hack-container',
+	CHECKBOX_HACK_CHECKBOX_SELECTOR = '.mw-checkbox-hack-checkbox',
+	CHECKBOX_HACK_BUTTON_SELECTOR = '.mw-checkbox-hack-button',
+	CHECKBOX_HACK_TARGET_SELECTOR = '.mw-checkbox-hack-target';
+
 /**
- * Based on Vector
- * Wait for first paint before calling this function. That's its whole purpose.
- *
- * Some CSS animations and transitions are "disabled" by default as a workaround to this old Chrome
- * bug, https://bugs.chromium.org/p/chromium/issues/detail?id=332189, which otherwise causes them to
- * render in their terminal state on page load. By adding the `vector-animations-ready` class to the
- * `html` root element **after** first paint, the animation selectors suddenly match causing the
- * animations to become "enabled" when they will work properly. A similar pattern is used in Minerva
+ * Wait for first paint before calling this function.
  * (see T234570#5779890, T246419).
- *
- * Example usage in Less:
- *
- * ```less
- * .foo {
- *     color: #f00;
- *     .transform( translateX( -100% ) );
- * }
- *
- * // This transition will be disabled initially for JavaScript users. It will never be enabled for
- * // no-JS users.
- * .citizen-animations-ready .foo {
- *     .transition( transform 100ms ease-out; );
- * }
- * ```
  *
  * @param {Document} document
  * @return {void}
@@ -32,53 +17,42 @@ function enableCssAnimations( document ) {
 }
 
 /**
- * Initialize checkboxHacks
- * TODO: Maybe ToC should init checkboxHack in its own RL module?
+ * Add the ability for users to toggle dropdown menus using the enter key (as
+ * well as space) using core's checkboxHack.
  *
- * @param {Window} window
- * @return {void}
+ * Based on Vector
  */
-function initCheckboxHack( window ) {
-	const checkboxHack = require( './checkboxHack.js' ),
-		drawer = {
-			button: document.getElementById( 'mw-drawer-button' ),
-			checkbox: document.getElementById( 'mw-drawer-checkbox' ),
-			target: document.getElementById( 'mw-drawer' )
-		},
-		personalMenu = {
-			button: document.getElementById( 'personalmenu-button' ),
-			checkbox: document.getElementById( 'personalmenu-checkbox' ),
-			target: document.getElementById( 'p-personal' )
-		},
-		checkboxObjs = [ drawer, personalMenu ];
+function bind() {
+	// Search for all dropdown containers using the CHECKBOX_HACK_CONTAINER_SELECTOR.
+	const containers = document.querySelectorAll( CHECKBOX_HACK_CONTAINER_SELECTOR );
 
-	// This should be in ToC script
-	// And the media query needs to be synced with the less variable
-	// Also this does not monitor screen size changes
-	if ( document.body.classList.contains( 'skin-citizen-has-toc' ) &&
-		window.matchMedia( 'screen and (max-width: 1300px)' ) ) {
-		const tocContainer = document.getElementById( 'toc' );
-		if ( tocContainer ) {
-			const toc = {
-				button: tocContainer.querySelector( '.toctogglelabel' ),
-				checkbox: document.getElementById( 'toctogglecheckbox' ),
-				target: tocContainer.querySelector( 'ul' )
-			};
-			checkboxObjs.push( toc );
-		}
-	}
+	containers.forEach( ( container ) => {
+		const
+			checkbox = container.querySelector( CHECKBOX_HACK_CHECKBOX_SELECTOR ),
+			button = container.querySelector( CHECKBOX_HACK_BUTTON_SELECTOR ),
+			target = container.querySelector( CHECKBOX_HACK_TARGET_SELECTOR );
 
-	checkboxObjs.forEach( ( checkboxObj ) => {
-		if ( checkboxObj.checkbox instanceof HTMLInputElement && checkboxObj.button ) {
-			checkboxHack.bindToggleOnClick( checkboxObj.checkbox, checkboxObj.button );
-			checkboxHack.bindUpdateAriaExpandedOnInput( checkboxObj.checkbox, checkboxObj.button );
-			checkboxHack.updateAriaExpanded( checkboxObj.checkbox, checkboxObj.button );
-			checkboxHack.bindToggleOnSpaceEnter( checkboxObj.checkbox, checkboxObj.button );
-			checkboxHack.bindDismissOnClickOutside(
-				window, checkboxObj.checkbox, checkboxObj.button, checkboxObj.target
-			);
-			checkboxHack.bindDismissOnEscape( window, checkboxObj.checkbox );
+		if ( !( checkbox && button && target ) ) {
+			return;
 		}
+
+		checkboxHack.bind( window, checkbox, button, target );
+	} );
+}
+
+/**
+ * T295085: Close all dropdown menus when page is unloaded to prevent them from
+ * being open when navigating back to a page.
+ *
+ * Based on Vector
+ */
+function bindCloseOnUnload() {
+	addEventListener( 'beforeunload', () => {
+		const checkboxes = document.querySelectorAll( CHECKBOX_HACK_CHECKBOX_SELECTOR + ':checked' );
+
+		checkboxes.forEach( ( checkbox ) => {
+			/** @type {HTMLInputElement} */ ( checkbox ).checked = false;
+		} );
 	} );
 }
 
@@ -89,16 +63,19 @@ function initCheckboxHack( window ) {
  * @return {void}
  */
 function onTitleHidden( document ) {
-	const title = document.getElementById( 'firstHeading' );
+	const title = document.getElementById( 'citizen-body-header-sticky-sentinel' );
 
 	if ( title ) {
-		const observer = new IntersectionObserver( ( entries ) => {
-			if ( !entries[ 0 ].isIntersecting ) {
-				document.body.classList.add( 'skin-citizen--titlehidden' );
-			} else {
-				document.body.classList.remove( 'skin-citizen--titlehidden' );
+		const scrollObserver = require( './scrollObserver.js' );
+
+		const observer = scrollObserver.initScrollObserver(
+			() => {
+				document.body.classList.add( 'citizen-body-header--sticky' );
+			},
+			() => {
+				document.body.classList.remove( 'citizen-body-header--sticky' );
 			}
-		} );
+		);
 		observer.observe( title );
 	}
 }
@@ -108,25 +85,42 @@ function onTitleHidden( document ) {
  * @return {void}
  */
 function main( window ) {
-	const theme = require( './theme.js' ),
-		search = require( './search.js' );
+	const search = require( './search.js' );
+
+	const tocContainer = document.getElementById( 'toc' );
 
 	enableCssAnimations( window.document );
-	theme.init( window );
 	search.init( window );
-	initCheckboxHack( window );
 	onTitleHidden( window.document );
 
 	window.addEventListener( 'beforeunload', () => {
 		document.documentElement.classList.add( 'citizen-loading' );
 	}, false );
 
-	mw.loader.load( 'skins.citizen.preferences' );
+	bind();
+	bindCloseOnUnload();
 
-	// Depreciation messages
-	// TODO: Remove when hard depreciated
-	mw.log.warn( 'CITIZEN: --background-color-dp-XX is depreciated; use --color-surface-X instead.' );
-	mw.log.warn( 'CITIZEN: Security headers will be depreciated in the next version.' );
+	// Handle ToC
+	// TODO: There must be a cleaner way to do this
+	if ( tocContainer ) {
+		const toc = require( './tableOfContents.js' );
+		toc.init();
+
+		checkboxHack.bind(
+			window,
+			document.getElementById( 'toctogglecheckbox' ),
+			tocContainer.querySelector( '.toctogglelabel' ),
+			tocContainer.querySelector( 'ul' )
+		);
+	}
+
+	mw.loader.load( 'skins.citizen.preferences' );
 }
 
-main( window );
+if ( document.readyState === 'interactive' || document.readyState === 'complete' ) {
+	main( window );
+} else {
+	document.addEventListener( 'DOMContentLoaded', function () {
+		main( window );
+	} );
+}

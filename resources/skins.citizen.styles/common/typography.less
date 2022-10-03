@@ -38,12 +38,11 @@ legend {
 
 blockquote {
 	font-family: var( --font-family-serif );
-	font-size: @content-quote-primary-size;
 	font-style: italic;
 
 	cite {
 		font-family: var( --font-family-base );
-		font-size: @content-quote-secondary-size;
+		font-size: @content-caption-size;
 		font-style: normal;
 	}
 }
@@ -78,7 +77,6 @@ figcaption,
 
 .mw-logo-wordmark {
 	font-weight: 500;
-	letter-spacing: 1px;
 }
 
 .thumbinner {
@@ -90,6 +88,10 @@ figcaption,
 .error {
 	font-size: unset;
 	font-weight: normal;
+}
+
+.firstHeading-parenthesis {
+	font-size: @content-h3-size;
 }
 
 .citizen-body,
@@ -137,17 +139,24 @@ figcaption,
 // External links
 .mw-parser-output {
 	a.external {
-		padding-right: 13px;
-		background-image: url( images/external-link-ltr-icon.svg );
-		background-position: center right;
-		background-repeat: no-repeat;
+		&:after {
+			display: inline-block;
+			width: 0.75em;
+			height: 0.75em;
+			margin-left: 0.25em;
+			background-color: currentcolor;
+			content: '';
+			/* @embed */
+			-webkit-mask: url( images/linkExternal-ltr.svg ) no-repeat 50% 50%;
+			/* @embed */
+			mask: url( images/linkExternal-ltr.svg ) no-repeat 50% 50%;
+			-webkit-mask-size: contain;
+			mask-size: contain;
+		}
 	}
-}
 
-.plainlinks {
-	a.external {
-		padding: 0 !important;
-		background: none !important;
+	.plainlinks a.external:after {
+		content: none;
 	}
 }
 

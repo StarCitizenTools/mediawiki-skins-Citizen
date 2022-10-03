@@ -1,19 +1,24 @@
 {{!
-	string msg-citizen-drawer-toggle The label used by the drawer button.
+	string msg-citizen-personalmenu-toggle The label used by the personal menu button.
 }}
-<input 
-	type="checkbox" 
-	id="personalmenu-checkbox" 
-	class="mw-checkbox-hack-checkbox">
-<label
-	id="personalmenu-button" 
-	class="mw-checkbox-hack-button mw-header-button" 
-	for="personalmenu-checkbox"
-	role="button"
-	title="{{msg-citizen-personalmenu-toggle}}"
-	aria-controls="personalmenu">
-	{{msg-citizen-personalmenu-toggle}}
-</label>
-<nav id="personalmenu">
-	{{#data-personal-menu-list}}{{>Menu}}{{/data-personal-menu-list}}
-</nav>
+<div class="citizen-personalMenu citizen-header__item mw-checkbox-hack-container">
+	<input 
+		type="checkbox" 
+		id="citizen-personalMenu__checkbox" 
+		class="mw-checkbox-hack-checkbox"
+		role="button"
+		aria-labelledby="citizen-personalMenu__buttonCheckbox"
+		aria-haspopup="true">
+	<aside id="citizen-personalMenu__card" class="citizen-personalMenu__card mw-checkbox-hack-target">
+		{{#data-personal-menu-header}}{{>Menu}}{{/data-personal-menu-header}}
+		{{#data-personal-menu-list}}{{>Menu}}{{/data-personal-menu-list}}
+	</aside>
+	<label
+		id="citizen-personalMenu__buttonCheckbox" 
+		class="mw-checkbox-hack-button citizen-header__button citizen-header__button--icon" 
+		for="citizen-personalMenu__checkbox"
+		title="{{msg-citizen-personalmenu-toggle}}"
+		aria-hidden="true">
+		<span>{{msg-citizen-personalmenu-toggle}}</span>
+	</label>
+</div>

@@ -1,56 +1,83 @@
 /*
- * Citizen - Flow UI
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:StructuredDiscussions
+ * Module: ext.flow.ui
+ * Version: REL1_35 (e3379f0)
+ *
+ * Date: 2022-04-27
 */
 
-@import '../../../resources/variables.less';
+/* styles/flow/widgets/mw.flow.ui.NavigationWidget.less */
+.flow-ui-navigationWidget {
+	border-bottom-color: var( --border-color-base );
 
-.skin-citizen-dark {
-	/**
- 	mw.flow.ui.NavigationWidget.less
-   */
-	.flow-ui-navigationWidget {
-		border-bottom: 1px solid @dark-bg-30;
+	&-affixed {
+		background: var( --color-surface-1 );
+	}
+}
 
-		&-affixed {
-			background: @dark-bg-0;
+/* styles/flow/widgets/mw.flow.ui.TopicMenuSelectWidget.less */
+.flow-ui-topicMenuSelectWidget {
+	&-locked,
+	&-locked:hover {
+		color: var( --color-base--subtle );
+	}
+
+	// Override border-color and margin-top from OOUI MenuSelectWidget
+	border-color: var( --bordder-color-base );
+
+	&::-webkit-scrollbar-thumb {
+		border-color: var( --color-surface-1 );
+	}
+
+	&::-webkit-scrollbar-track {
+		background-color: var( --color-surface-1 );
+	}
+}
+
+/* styles/flow/widgets/editor/mw.flow.ui.AnonWarningWidget.less */
+.flow-ui-anonWarningWidget {
+	&-active {
+		background: var( --color-primary );
+	}
+}
+
+/* styles/flow/widgets/editor/mw.flow.ui.CanNotEditWidget.less */
+.flow-ui-canNotEditWidget {
+	&-active {
+		background: var( --background-color-warning );
+		color: var( --color-base );
+
+		a {
+			color: var( --color-base--emphasized );
+		}
+	}
+}
+
+/* styles/flow/widgets/editor/mw.flow.ui.EditorControlsWidget.less */
+.flow-ui-editorControlsWidget {
+	&-termsLabel {
+		color: var( --color-base--subtle );
+	}
+}
+
+/* styles/flow/widgets/editor/mw.flow.ui.EditorWidget.less */
+.flow-ui-editorWidget {
+	> .flow-ui-editorWidget-editor {
+		&:not( .oo-ui-pendingElement-pending ) {
+			background-color: var( --color-surface-1 );
 		}
 	}
 
-	/**
- 	mw.flow.ui.EditorWidget.less
-   */
-	.flow-ui-editorWidget > .flow-ui-editorWidget-editor,
-	.flow-ui-editorWidget > .flow-ui-editorWidget-editor:not( .oo-ui-pendingElement-pending ) {
-		border-color: @dark-bg-30;
-		background-color: @dark-bg-10;
+	&-wikitextHelpLabel {
+		color: var( --color-base--subtle );
 	}
+}
 
-	/**
- 	mw.flow.ui.TopicMenuSelectWidget.less
-   */
-	.flow-ui-topicMenuSelectWidget {
-		&-locked,
-		&-locked:hover {
-			color: @dark-text-70;
-		}
-		border-color: @dark-bg-30;
-
-		&::-webkit-scrollbar-thumb {
-			border: 2px solid @dark-bg-0;
-		}
-
-		&::-webkit-scrollbar-track {
-			background-color: @dark-bg-0;
-		}
-	}
-
-	/**
-	mw.flow.ui.TopicTitleWidget.less
-	 */
-	.flow-ui-topicTitleWidget {
-		&-termsLabel {
-			color: @dark-text-80;
-		}
+/* styles/flow/widgets/mw.flow.ui.TopicTitleWidget.less */
+.flow-ui-topicTitleWidget {
+	&-termsLabel {
+		color: var( --color-base--subtle );
 	}
 }

@@ -3,27 +3,36 @@
 .mw-body,
 .parsoid-body {
 	min-height: 80vh; // avoid footer being in the middle of the page
-	padding: 0 var( --padding-page );
-	margin-top: var( --height-header );
+}
+
+.mw-body,
+.parsoid-body,
+.citizen-footer {
+	padding-right: var( --padding-page );
+	padding-left: var( --padding-page );
 }
 
 .mw-body-header,
-.citizen-body {
+.citizen-body,
+.mw-body-footer {
 	max-width: var( --width-layout );
 	margin-right: auto;
 	margin-left: auto;
 }
 
 .mw-body-header {
+	position: relative;
 	display: flex;
 	flex-wrap: wrap;
-	margin-top: @content-margin-top * 1.5;
-	margin-bottom: @content-margin-top;
+	align-items: flex-start;
+	padding-top: var( --space-md );
+	margin-top: var( --space-xl );
+	margin-bottom: @content-margin-top * 2;
+	gap: var( --space-lg );
 }
 
 .page-heading {
 	flex-grow: 1;
-	margin-bottom: @content-margin-top;
 }
 
 .firstHeading-container {
@@ -40,35 +49,6 @@ a.image {
 		max-width: inherit;
 		height: auto;
 	}
-}
-
-#mw-data-after-content {
-	padding-bottom: var( --padding-page );
-	background: var( --color-surface-0 );
-}
-
-.mw-footer,
-#mw-data-after-content {
-	position: relative;
-	margin-top: var( --padding-page );
-
-	// Footer spacer
-	&:before {
-		position: absolute;
-		top: ~'calc( var( --padding-page ) * -2 )';
-		right: 0;
-		left: 0;
-		display: block;
-		height: ~'calc( var( --padding-page ) * 2 )';
-		background: var( --color-surface-0 );
-		content: '';
-		-webkit-mask-image: linear-gradient( 0deg, #000, transparent );
-		mask-image: linear-gradient( 0deg, #000, transparent );
-	}
-}
-
-#mw-data-after-content + .mw-footer {
-	margin-top: 0;
 }
 
 @media ( min-width: @width-breakpoint-tablet ) {
@@ -98,6 +78,23 @@ a.image {
 	}
 }
 
+@media ( min-width: @width-breakpoint-desktop ) {
+	.mw-body,
+	.parsoid-body,
+	.citizen-footer {
+		padding-right: ~'calc( var( --padding-page ) * 2 )';
+		padding-left: ~'calc( var( --padding-page ) * 2 )';
+	}
+
+	#siteNotice,
+	.mw-body,
+	.parsoid-body,
+	.citizen-footer {
+		// Reserve space for header
+		margin-left: var( --header-size );
+	}
+}
+
 /* Wider page width for certain namespaces */
 @media ( min-width: @width-breakpoint-desktop-wide ) {
 	// 1 - Special, 6 - File, 14 - Category
@@ -105,7 +102,7 @@ a.image {
 		&--1,
 		&-6,
 		&-14 {
-			--width-layout: @width-breakpoint-desktop-wide - @padding-page * 2;
+			--width-layout: var( --width-layout--extended );
 		}
 	}
 }

@@ -1,67 +1,117 @@
 @import '../variables.less';
 @import '../mixins.less';
 
-#citizen-pref {
-	&-toggle {
+.citizen-pref {
+	&__button {
 		box-sizing: content-box;
+		padding: 0;
 		border: 0;
 		appearance: none;
+		background: transparent;
+		cursor: pointer;
 
-		&:after {
-			display: block;
-			width: inherit;
-			height: inherit;
-			background-position: center;
-			background-repeat: no-repeat;
-			content: '';
-			opacity: var( --opacity-icon-base );
-			transition: @transition-opacity-quick, @transition-transform-quick;
-		}
-
-		&:active:after {
-			opacity: var( --opacity-icon-base--active ) !important;
+		&[ aria-expanded='true' ] {
+			background-color: var( --background-color-primary--active );
 		}
 	}
 
-	&-header {
-		padding: 20px var( --padding-page ) 0;
+	&-item {
+		display: grid;
+		gap: 0.25rem;
 
-		h3 {
-			margin: 0;
-			font-size: @ui-menu-header;
-		}
-	}
-
-	// TODO: unify the dropdown menu style somewhere
-	&-panel {
-		position: absolute;
-		top: var( --height-header );
-		right: var( --padding-page );
-		left: var( --padding-page );
-		.citizen-card;
-
-		fieldset {
-			padding: 10px var( --padding-page );
-			border: 0;
-			margin: 0;
-			appearance: none;
-			font-size: @ui-menu-text;
-		}
-
-		input {
+		&__label {
+			display: flex;
 			width: 100%;
+			justify-content: space-between;
+		}
+
+		&__title {
+			color: var( --color-base--subtle );
+			letter-spacing: 0.75px;
+		}
+
+		&__value {
+			color: var( --color-base--emphasized );
+			font-weight: 500;
 		}
 	}
 
 	&-theme {
 		&-option {
+			flex-grow: 1;
+			padding: 0.5rem 1rem;
+			border: 2px solid var( --border-color-base );
+			border-radius: var( --border-radius--medium );
+			cursor: pointer;
+			font-weight: 500;
+			text-align: center;
+			white-space: nowrap;
+
+			&:hover {
+				border-color: var( --color-primary--hover );
+				box-shadow: var( --box-shadow-card );
+			}
+
+			&:active {
+				border-color: var( --color-primary--active );
+			}
+		}
+	}
+
+	// We only show min and max value
+	&__tickmarks {
+		display: flex;
+		justify-content: space-between;
+		color: var( --color-base--subtle );
+		font-size: 0.8125rem;
+	}
+}
+
+#citizen-pref {
+	&-header {
+		padding: 1.25rem 1.25rem 0;
+		color: var( --color-base--emphasized );
+		font-size: 1rem;
+		font-weight: 600;
+	}
+
+	// TODO: unify the dropdown menu style somewhere
+	&-panel {
+		.citizen-header-card( right );
+		.citizen-card-transition();
+
+		&.citizen-pref-panel--active {
+			.citizen-card-show;
+		}
+
+		fieldset {
+			padding: 0 1.25rem;
+			border: 0;
+			margin: 0;
+			appearance: none;
+			font-size: 0.875rem;
+		}
+
+		> * {
+			opacity: 0;
+		}
+	}
+
+	&-form {
+		display: grid;
+		margin: 1rem 0;
+		gap: 1.25rem;
+	}
+
+	&-theme {
+		&-option {
 			&-light {
-				background: @background-color-dp-00;
+				background: @color-surface-0;
 				color: @color-base;
 			}
 
 			&-dark {
-				background: @dark-background-color-dp-00;
+				background: @color-surface-0-dark;
 				color: @dark-color-base;
 			}
 		}
@@ -70,7 +120,8 @@
 			display: flex;
 			width: 100%;
 			padding: 0;
-			margin: 0 -4px;
+			margin-top: 0.25rem;
+			gap: 0.5rem;
 		}
 
 		// Let label be the radio button
@@ -87,17 +138,16 @@
 
 	&-resetbutton {
 		width: 100%;
-		padding: 10px 20px;
+		padding: 0.625rem 1.25rem;
 		border: 0;
-		margin-top: 10px;
+		border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
 		appearance: none;
 		background: var( --color-destructive );
-		border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
 		color: #fff;
 		cursor: pointer;
 		font-family: inherit;
-		font-size: @ui-menu-text;
-		font-weight: 450;
+		font-size: 0.875rem;
+		font-weight: 500;
 
 		&:hover {
 			background: var( --color-destructive--hover );
@@ -109,80 +159,8 @@
 	}
 }
 
-.citizen-pref {
-	&-panel {
-		opacity: 0;
-		pointer-events: none;
-		transition: @transition-opacity-quick;
-		visibility: hidden;
-
-		&--active {
-			opacity: 1;
-			pointer-events: auto;
-			visibility: visible;
-		}
-	}
-
-	&-item {
-		display: flex;
-		flex-wrap: wrap;
-
-		&__label {
-			display: flex;
-			width: 100%;
-			justify-content: space-between;
-			padding: 4px 0;
-			color: var( --color-base--subtle );
-			letter-spacing: 0.75px;
-		}
-	}
-
-	&-theme {
-		&-option {
-			flex-grow: 1;
-			padding: 10px 20px;
-			border: 2px solid var( --border-color-base );
-			margin: 4px;
-			border-radius: var( --border-radius--medium );
-			cursor: pointer;
-			font-weight: 500;
-			text-align: center;
-			.boxshadow( 2 );
-
-			&:hover {
-				border-color: var( --color-primary--hover );
-				.boxshadow( 3 );
-			}
-
-			&:active {
-				border-color: var( --color-primary--active );
-				.boxshadow( 1 );
-			}
-		}
-	}
-}
-
-.skin-citizen-dark {
-	#citizen-pref-toggle:after {
-		filter: invert( 1 ) hue-rotate( 180deg );
-	}
-}
-
-@media ( min-width: @width-breakpoint-tablet ) {
-	#citizen-pref {
-		position: relative;
-
-		&-panel {
-			right: 0;
-			left: unset;
-			min-width: 250px;
-		}
-	}
-}
-
 @media ( hover: hover ) {
-	#citizen-pref:hover #citizen-pref-toggle:hover:after {
-		opacity: var( --opacity-icon-base--hover );
+	.citizen-pref:hover .citizen-pref__button:after {
 		transform: rotate3d( 0, 0, 1, 90deg );
 	}
 }

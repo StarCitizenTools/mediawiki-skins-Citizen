@@ -1,6 +1,6 @@
 /* Some of the functions are based on Vector */
 /* ESLint does not like having class names as const */
-/* eslint-disable mediawiki/class-doc */
+
 const SEARCH_INPUT_ID = 'searchInput',
 	SEARCH_LOADING_CLASS = 'citizen-loading';
 
@@ -138,24 +138,13 @@ function bindExpandOnSlash( window, checkbox, input ) {
 
 /**
  * @param {Window} window
- * @param {HTMLInputElement} input
- * @param {HTMLElement} target
  * @return {void}
  */
-function initCheckboxHack( window, input, target ) {
-	const checkboxHack = require( './checkboxHack.js' ),
-		button = document.getElementById( 'search-toggle' ),
-		checkbox = document.getElementById( 'search-checkbox' );
-
-	if ( checkbox instanceof HTMLInputElement && button ) {
-		checkboxHack.bindToggleOnClick( checkbox, button );
-		checkboxHack.bindUpdateAriaExpandedOnInput( checkbox, button );
-		checkboxHack.updateAriaExpanded( checkbox, button );
-		checkboxHack.bindToggleOnSpaceEnter( checkbox, button );
-		checkboxHack.bindDismissOnClickOutside( window, checkbox, button, target );
-		checkboxHack.bindDismissOnFocusLoss( window, checkbox, button, target );
-		checkboxHack.bindDismissOnEscape( window, checkbox );
-	}
+function initSearch( window ) {
+	const searchConfig = require( './config.json' ).wgCitizenEnableSearch,
+		checkbox = document.getElementById( 'citizen-search__checkbox' ),
+		form = document.getElementById( 'searchform' ),
+		input = document.getElementById( SEARCH_INPUT_ID );
 
 	bindExpandOnSlash( window, checkbox, input );
 
@@ -163,26 +152,14 @@ function initCheckboxHack( window, input, target ) {
 	checkbox.addEventListener( 'input', () => {
 		focusOnChecked( checkbox, input );
 	} );
-}
-
-/**
- * @param {Window} window
- * @return {void}
- */
-function initSearch( window ) {
-	const searchConfig = require( './config.json' ).wgCitizenEnableSearch,
-		searchForm = document.getElementById( 'searchform' ),
-		searchInput = document.getElementById( SEARCH_INPUT_ID );
-
-	initCheckboxHack( window, searchInput, searchForm );
 
 	if ( searchConfig ) {
-		setLoadingIndicatorListeners( searchForm, true, renderSearchLoadingIndicator );
-		loadSearchModule( searchInput, 'skins.citizen.search', () => {
-			setLoadingIndicatorListeners( searchForm, false, renderSearchLoadingIndicator );
+		setLoadingIndicatorListeners( form, true, renderSearchLoadingIndicator );
+		loadSearchModule( input, 'skins.citizen.search', () => {
+			setLoadingIndicatorListeners( form, false, renderSearchLoadingIndicator );
 		} );
 	} else {
-		loadSearchModule( searchInput, 'mediawiki.searchSuggest', () => {} );
+		loadSearchModule( input, 'mediawiki.searchSuggest', () => {} );
 	}
 }
 

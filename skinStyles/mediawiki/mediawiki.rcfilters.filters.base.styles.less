@@ -4,9 +4,6 @@
  * https://starcitizen.tools
 */
 
-@import '../../resources/mixins.less';
-@import '../../resources/variables.less';
-
 .skin-citizen {
 	.mw-rcfilters-ui {
 		&-filter {
@@ -33,8 +30,7 @@
 				&HeaderWidget {
 					&-header {
 						border-color: var( --border-color-base--darker );
-						background-color: var( --background-color-dp-16 );
-						.boxshadow(2);
+						background-color: var( --color-surface-2 );
 					}
 
 					&-title {
@@ -44,7 +40,6 @@
 
 				&SectionOptionWidget {
 					background-color: var( --background-color-framed );
-					.boxshadow(1);
 
 					&-header-title.oo-ui-labelElement-label {
 						color: var( --color-base--subtle );
@@ -53,11 +48,6 @@
 
 				&OptionWidget.oo-ui-flaggedElement-muted:not( .oo-ui-optionWidget-selected ) {
 					background-color: var( --background-color-framed );
-				}
-
-				&SelectWidget-footer {
-					border-top: 1px solid var( --border-color-base--darker );
-					background-color: var( --background-color-dp-16 );
 				}
 			}
 		}
@@ -97,6 +87,11 @@
 
 		&-datePopupWidget {
 			border-color: var( --border-color-base );
+		}
+
+		&-menuSelectWidget-footer {
+			border-top: 1px solid var( --border-color-base--darker );
+			background-color: var( --color-surface-2 );
 		}
 	}
 

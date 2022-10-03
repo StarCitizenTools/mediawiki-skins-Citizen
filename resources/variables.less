@@ -32,6 +32,9 @@
 /* Extra wide desktop breakpoint */
 @width-breakpoint-desktop-extrawide: 2000px;
 
+/* == Spacing == */
+@space-unit: 1rem;
+
 /* == Colors == */
 /* Base theme */
 @diff-hoverstate: 2;
@@ -137,19 +140,6 @@
 
 @color-accent-30--darken: #26437f;
 
-/* Background colors */
-@background-color-dp-00:			@color-base100;
-@background-color-dp-00--rgb:		red(@background-color-dp-00), green(@background-color-dp-00), blue(@background-color-dp-00);
-@background-color-dp-01:			@color-base100;
-@background-color-dp-02:			@color-base100;
-@background-color-dp-03:			@color-base100;
-@background-color-dp-04:			@color-base100;
-@background-color-dp-06:			@color-base100;
-@background-color-dp-08:			@color-base100;
-@background-color-dp-12:			@color-base100;
-@background-color-dp-16:			@color-base100;
-@background-color-dp-24:			@color-base100;
-
 @background-color-overlay:			rgba( 255, 255, 255, 0.95 ); //base100 95% opacity
 @background-color-overlay--lighter:	rgba( 255, 255, 255, 0.6 );
 
@@ -201,17 +191,22 @@
 @opacity-icon-base--hover:	0.8;
 @opacity-icon-base--active:	1;
 
+/* Z-Index */
+// @z-index-base: 0; - WMUI
+@z-index-page-header: 11;
+@z-index-site-header: 91;
+@z-index-overlay: 101; // WMUI
+
 /* == Box model properties == */
 /* `--*size` variables are used for `*width` & `*height` properties. */
-@size-icon:		20px;
+@size-icon:		1.25rem;
 // Not in the header section it is also used outside of header
-@height-header:	56px;
+@header-size:	3.5rem;
 @width-layout:	@width-breakpoint-desktop - 2 * @padding-page;
 @width-toc: @width-breakpoint-desktop-wide - @width-breakpoint-desktop;
 
 /* Paddings */
 @padding-page:	20px;
-
 @line-height: 1.6;
 
 /* Border */
@@ -229,30 +224,26 @@
 @border-radius--large: @border-radius--small * 3;
 
 /* Transitions */
-@transition-color: color 500ms ease;
-@transition-color-quick: color 200ms ease;
-@transition-transform: transform 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-transform-quick: transform 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-width: width 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-width-quick: width 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-height: height 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-height-quick: height 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-margin: margin 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-margin-quick: margin 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-padding: padding 500ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-padding-quick: padding 200ms cubic-bezier(0.77, 0.2, 0.05, 1);
-@transition-background: background 500ms ease;
-@transition-background-quick: background 200ms ease;
-@transition-opacity: opacity 500ms ease;
-@transition-opacity-quick: opacity 200ms ease;
-@transition-border: border 500ms ease;
-@transition-border-quick: border 200ms ease;
-@transition-box-shadow: box-shadow 500ms ease;
-@transition-box-shadow-quick: box-shadow 200ms ease;
-@transition-border-color: border-color 500ms ease;
-@transition-border-color-quick: border-color 200ms ease;
-@transition-filter: filter 500ms ease;
-@transition-filter-quick: filter 200ms ease;
+@transition-timing-fast: 100ms;
+@transition-timing-slow: 250ms;
+
+@transition-color: color @transition-timing-fast ease;
+@transition-background: background @transition-timing-fast ease;
+@transition-border-color: border-color @transition-timing-fast ease;
+@transition-opacity: opacity @transition-timing-fast ease;
+
+@transition-transform: transform @transition-timing-slow cubic-bezier(0.215,0.61,0.355,1);
+// Only used with transform
+@transition-opacity--transform: opacity @transition-timing-slow ease;
+// Execute after every transition is done
+// Need to use with transition-delay: 0ms
+@transition-visibility--transform: visibility 0ms linear @transition-timing-slow;
+@transition-height: height @transition-timing-slow cubic-bezier(0.215,0.61,0.355,1);
+
+/* Box shadow */
+// Based on https://web.dev/building-a-color-scheme/#rad-shadow
+@box-shadow-card: 0 2.8px 2.2px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .03))', 0 6.7px 5.3px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .01))', 0 12.5px 10px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .02))', 0 22.3px 17.9px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .02))', 0 41.8px 33.4px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .03))', 0 100px 80px -4px ~'hsl(var(--surface-shadow) / var(--shadow-strength))';
+@box-shadow-dialog: 0 2.8px 2.2px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .03))', 0 6.7px 5.3px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .01))', 0 12.5px 10px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .02))', 0 22.3px 17.9px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .02))', 0 41.8px 33.4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .03))', 0 100px 80px ~'hsl(var(--surface-shadow) / var(--shadow-strength))';
 
 /* Fonts */
 /**
@@ -298,19 +289,6 @@
 @dark-color-base70: #343a40;	// 14% white overlay
 @dark-color-base80: #363c42;	// 15% white overlay
 @dark-color-base90: #393f45;	// 16% white overlay
-
-/* Background colors */
-@dark-background-color-dp-00:			@dark-color-base0;
-@dark-background-color-dp-00--rgb:		red(@dark-background-color-dp-00), green(@dark-background-color-dp-00), blue(@dark-background-color-dp-00);
-@dark-background-color-dp-01:			@dark-color-base10;
-@dark-background-color-dp-02:			@dark-color-base20;
-@dark-background-color-dp-03:			@dark-color-base30;
-@dark-background-color-dp-04:			@dark-color-base40;
-@dark-background-color-dp-06:			@dark-color-base50;
-@dark-background-color-dp-08:			@dark-color-base60;
-@dark-background-color-dp-12:			@dark-color-base70;
-@dark-background-color-dp-16:			@dark-color-base80;
-@dark-background-color-dp-24:			@dark-color-base90;
 
 @dark-background-color-overlay:				rgba( 19, 26, 33, 0.95 );
 @dark-background-color-overlay--lighter:	rgba( 19, 26, 33, 0.6 );
@@ -364,21 +342,13 @@
 */
 @html-font-size: 100%;
 @margin-side: 20px;
-@footer-width: 1290px;
-@icon-size: 18px;
+@icon-size: 1.125rem; // 18px, TODO: Replace this var
 @icon-box-size: @icon-size + @icon-margin * 2;
 @icon-margin: 3px;
 @icon-padding: 15px;
 @padding-menu-item: 10px 15px;
 @padding-menu-item-big: 10px 20px;
 @height-progress-bar: 2px;
-
-/* Heade */
-@margin-header-item: 8px;
-
-/* Search bar */
-@width-search-bar: 500px;
-@height-search-bar: 42px;
 
 /*
  * Text hierarchy
@@ -396,33 +366,21 @@
 @content-h6-size: 1.6rem * @content-scaling;
 @content-body-size: 1.6rem * @content-scaling;
 @content-lead-paragraph-size: 1.8rem * @content-scaling;
-@content-quote-primary-size: 2rem * @content-scaling;
-@content-quote-secondary-size: 1.4rem * @content-scaling;
 @content-caption-size: 1.3rem * @content-scaling;
 @content-small-text-size: 1.3rem * @content-scaling;
 @content-monospace-size: 1.4rem * @content-scaling;
 @content-margin-top: 0.8rem;
 
 @ui-menu-text: 14px;
-@ui-menu-text-big: 15px;
 @ui-menu-header: 16px;
-
-@footer-line-height: 1.4;
 
 /*
  * Legacy colors
- * TODO: Replace all of them with the new variables
+ *
+ * They are used by the SMW skinstyles and a few MW UI stuff.
+ * Those styles should be updated to the new standard.
+ * After that we can remove all theses LESS variables.
 */
-// Wikimedia colors
-@base-0: #000;
-@base-10: #202122;
-@base-20: #54595d;
-@base-30: #72777d;
-@base-50: #a2a9b1;
-@base-70: #c8ccd1;
-@base-80: #eaecf0;
-@base-90: #f8f9fa;
-@base-100: #fff;
 
 @accent-10: #2a4b8d;
 @accent-50: #36c;
@@ -445,7 +403,7 @@
 @color-footer-background-60: #1a252d;
 @color-footer-text: #979c9f;
 @color-footer-link: #cfdee8;
-@color-footer-link-active: @base-80;
+@color-footer-link-active: #eaecf0;
 
 // Dark mode colors
 @dark-bg-0: #11151d;

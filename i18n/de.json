@@ -3,6 +3,7 @@
 		"authors": [
 			"FF-11",
 			"Gebu",
+			"ThisCarthing",
 			"Wolfdietmann",
 			"Zabe",
 			"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
@@ -10,11 +11,11 @@
 	},
 	"skinname-citizen": "Citizen",
 	"citizen-skin-desc": "Ein responsive Skin entwickelt für das Star Citizen Wiki",
+	"citizen-languages-toggle": "Weitere Sprachen",
 	"citizen-sitestats-articles-label": "Artikel",
 	"citizen-sitestats-images-label": "Dateien",
 	"citizen-sitestats-users-label": "Benutzer",
 	"citizen-sitestats-edits-label": "Bearbeitungen",
-	"citizen-drawer-search": "Suchmenü",
 	"citizen-footer-desc": "Bearbeiten Sie diesen Text auf [[MediaWiki:Citizen-footer-desc/de]]",
 	"citizen-footer-tagline": "Bearbeiten Sie diesen Text auf [[MediaWiki:Citizen-footer-tagline/de]]",
 	"citizen-action-addsection": "Thema hinzufügen",

@@ -59,7 +59,7 @@ function getUrl( input ) {
  * @return {Object} Results
  */
 function convertDataToResults( data ) {
-	const getTitle = ( item ) => {
+	const getDisplayTitle = ( item ) => {
 		if ( item.pageprops && item.pageprops.displaytitle ) {
 			return item.pageprops.displaytitle;
 		} else {
@@ -95,7 +95,8 @@ function convertDataToResults( data ) {
 	for ( let i = 0; i < data.length; i++ ) {
 		results[ i ] = {
 			id: data[ i ].pageid,
-			title: getTitle( data[ i ] ),
+			key: data[ i ].title,
+			title: getDisplayTitle( data[ i ] ),
 			description: getDescription( data[ i ] )
 		};
 		if ( data[ i ].thumbnail && data[ i ].thumbnail.source ) {

@@ -1,77 +1,161 @@
-.mw-header {
-	--margin-header-item: @margin-header-item;
-	--margin-header-item--corner: ~'calc( var( --padding-page ) / 2 )';
-	--padding-header-icon: ~'calc( ( var( --height-header ) - var( --size-icon ) - var( --margin-header-item ) * 2 ) / 2 )';
-	--width-button-base: ~'calc(var(--size-icon) + var(--padding-page))';
-	--width-button-corner: ~'calc(var(--size-icon) + var(--padding-page) * 2)';
+.citizen-header {
+	--header-icon-size: ~'calc( var( --header-button-size ) / 2 )';
+	--header-button-size: ~'calc( var( --header-size ) - var( --space-sm ) * 2 )';
+	--header-direction: row;
+	--header-card-maxheight: ~'calc( 100vh - var( --header-size ) - var( --space-md ) )';
 	position: fixed;
-	z-index: 10;
-	top: 0;
+	z-index: @z-index-site-header;
 	right: 0;
+	bottom: 0;
 	left: 0;
 	display: flex;
-	height: var( --height-header );
-	justify-content: space-between;
-	pointer-events: none;
+	flex-direction: var( --header-direction );
+	padding: var( --space-sm );
+	border-top: 1px solid var( --border-color-base );
+	background-color: var( --color-surface-0 );
+	gap: var( --space-xs );
 
-	& > * {
-		pointer-events: auto;
+	&__item {
+		display: flex;
+		align-items: center;
 	}
 
-	ul {
-		list-style: none;
-	}
-
-	ul,
-	li {
-		display: block;
-		margin: 0;
-	}
-
-	&:before {
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: ~'calc( var( --height-header ) / -2 )';
-		left: 0;
-		background: var( --color-surface-0 );
-		content: '';
-		-webkit-mask-image: linear-gradient( 180deg, #000, transparent );
-		mask-image: linear-gradient( 180deg, #000, transparent );
-	}
-
-	&-button {
-		width: var( --size-icon );
-		height: var( --size-icon );
-		padding: var( --padding-header-icon );
-		margin-top: var( --margin-header-item );
-		margin-bottom: var( --margin-header-item );
-		background-color: transparent;
+	&__button {
+		display: grid;
+		width: var( --header-button-size );
+		height: var( --header-button-size );
 		border-radius: var( --border-radius--small );
-		cursor: pointer;
+		place-items: center;
+
+		// Used in checkbox hack
+		&Checkbox {
+			position: absolute;
+			display: block;
+			width: inherit;
+			height: inherit;
+		}
+
+		// Pure CSS icons
+		&Icon {
+			overflow: hidden; // Sometimes CSS animation can clip
+			width: var( --header-icon-size );
+			height: var( --header-icon-size );
+		}
+
+		// Background image icons
+		&--icon:after {
+			width: var( --header-icon-size );
+			height: var( --header-icon-size );
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: contain;
+			content: '';
+		}
+
+		&Icon,
+		&--icon:after {
+			opacity: var( --opacity-icon-base );
+			transition: @transition-transform, @transition-opacity;
+		}
+
+		&:hover {
+			background-color: var( --background-color-quiet--hover );
+
+			.citizen-header__buttonIcon,
+			&.citizen-header__button--icon:after {
+				opacity: var( --opacity-icon-base--hover );
+			}
+		}
 
 		&:active {
-			// Override hover style
-			background-color: var( --background-color-quiet--active ) !important;
+			background-color: var( --background-color-quiet--active );
+
+			.citizen-header__buttonIcon,
+			&.citizen-header__button--icon:after {
+				opacity: var( --opacity-icon-base--active );
+			}
+		}
+	}
+
+	&__inner {
+		z-index: -1; // Inner element should be behind menu and search
+		display: flex;
+		min-width: 0;
+		flex-direction: var( --header-direction );
+		flex-grow: 1;
+		justify-content: space-between;
+		gap: var( --space-xs );
+
+		.mw-checkbox-hack-checkbox:checked {
+			~ .citizen-header__button {
+				background-color: var( --background-color-primary--active );
+			}
+		}
+	}
+
+	&__start,
+	&__end {
+		display: flex;
+		flex-direction: var( --header-direction );
+		gap: var( --space-xs );
+	}
+
+	&__start {
+		min-width: 0;
+		align-items: center;
+	}
+
+	// Reset
+	ul {
+		margin: 0;
+		list-style: none;
+	}
+}
+
+.skin-citizen-dark {
+	.citizen-header__button {
+		&Icon,
+		&--icon:after {
+			filter: invert( 1 );
 		}
 	}
 }
 
-#mw-header-tools {
-	display: inherit;
-}
-
-// User icon bar
-#p-personal-extra {
+// Notifications
+#p-notifications {
 	ul {
 		display: flex;
-		height: var( --height-header );
+		flex-direction: var( --header-direction );
 		align-items: center;
+		gap: var( --space-xs );
 	}
 }
 
-@media ( hover: hover ) {
-	.mw-header-button:hover {
-		background-color: var( --background-color-quiet--hover );
+// Reset hover styles if it is a touch device
+// This is dumb but hover:hover overrides active states
+@media ( hover: none ) {
+	.citizen-header {
+		&__button {
+			&:hover {
+				background-color: none;
+
+				.citizen-header__buttonIcon,
+				&.citizen-header__button--icon:after {
+					opacity: var( --opacity-icon-base );
+				}
+			}
+		}
+	}
+}
+
+@media ( min-width: @width-breakpoint-desktop ) {
+	.citizen-header {
+		--header-direction: column;
+		--header-card-maxheight: ~'calc( 100vh - var( --space-sm ) * 2 )';
+		top: 0;
+		right: unset;
+		left: 0;
+		border-top: 0;
+		border-right: 1px solid var( --border-color-base );
 	}
 }

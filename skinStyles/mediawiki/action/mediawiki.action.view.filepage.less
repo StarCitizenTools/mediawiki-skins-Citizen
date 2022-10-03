@@ -4,7 +4,6 @@
 */
 
 @import '../../../resources/variables.less';
-@import '../../../resources/mixins.less';
 
 #filetoc {
 	display: flex;
@@ -13,7 +12,6 @@
 	border-color: var( --border-color-base );
 	margin: 0;
 	background-color: var( --background-color-framed );
-	transition: @transition-margin, @transition-padding;
 	white-space: nowrap;
 
 	li {
@@ -23,7 +21,7 @@
 		a {
 			display: block;
 			padding: @margin-side / 2 @margin-side;
-			transition: @transition-background-quick;
+			transition: @transition-background;
 
 			&:hover {
 				background-color: var( --background-color-quiet--hover );
@@ -48,7 +46,7 @@
 			max-width: 100%;
 			height: auto;
 			margin: 0 auto;
-			.boxshadow(1);
+			box-shadow: var( --box-shadow-card );
 		}
 	}
 
@@ -56,7 +54,6 @@
 		padding: @margin-side / 2 @margin-side;
 		border: 1px solid var( --border-color-base );
 		text-align: center;
-		transition: @transition-margin, @transition-padding;
 	}
 }
 
@@ -67,7 +64,6 @@
 	background-color: var( --background-color-framed );
 	font-size: smaller;
 	text-align: center;
-	transition: @transition-margin;
 
 	.mw-mmv-filepage-buttons {
 		display: flex;

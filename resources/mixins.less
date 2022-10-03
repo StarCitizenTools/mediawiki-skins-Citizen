@@ -4,12 +4,97 @@
 */
 
 .citizen-card( @border-radius: true ) {
-	border: 1px solid var( --border-color-base );
 	background-color: var( --color-surface-1 );
-	box-shadow: 0 14px 28px rgba( 0, 0, 0, 0.0625 ), 0 10px 10px rgba( 0, 0, 0, 0.055 );
+	box-shadow: var( --box-shadow-dialog );
 
 	& when ( @border-radius ) {
 		border-radius: var( --border-radius--medium );
+	}
+}
+
+// Collaspe animation setup
+.citizen-card-hide( @position, @axis: '', @fadeChildren: true ) {
+	opacity: 0;
+	pointer-events: none;
+	transform: ~'scale@{axis}( 0 )';
+	transform-origin: @position;
+	visibility: hidden;
+
+	& when ( @fadeChildren ) {
+		> * {
+			opacity: 0;
+		}
+	}
+}
+
+// Expand animiation setup
+// When using fadeChildren, the child elements need to have
+// opacity: 0 set manually
+.citizen-card-show( @fadeChildren: true ) {
+	opacity: 1;
+	pointer-events: auto;
+	transform: none;
+	// HACK: So that visiblity won't wait 250ms to become visible
+	transition-delay: 0ms;
+	visibility: visible;
+
+	& when ( @fadeChildren ) {
+		> * {
+			.citizen-card-content-show;
+		}
+	}
+}
+
+// Fade content when users open the menu
+// But GTFO instantly when they close the menu
+.citizen-card-content-show() {
+	opacity: 1;
+	transition: @transition-opacity--transform;
+}
+
+// Transition animation
+.citizen-card-transition() {
+	transition: @transition-transform, @transition-opacity--transform, @transition-visibility--transform;
+}
+
+// Header card popups
+.citizen-header-card( @position ) {
+	position: absolute;
+	right: 0;
+	bottom: 100%;
+	left: 0;
+	overflow: auto;
+	min-width: 16rem;
+	max-height: var( --header-card-maxheight );
+	margin: var( --space-sm );
+	overscroll-behavior: contain;
+	user-select: none;
+	.citizen-card();
+	.citizen-card-hide( bottom @position );
+
+	@media ( min-width: @width-breakpoint-tablet ) {
+		& when ( @position = left ) {
+			right: unset;
+		}
+
+		& when ( @position = right ) {
+			left: unset;
+		}
+	}
+
+	@media ( min-width: @width-breakpoint-desktop ) {
+		right: unset;
+		left: 100%;
+		& when ( @position = left ) {
+			top: 0;
+			bottom: unset;
+			.citizen-card-hide( top left );
+		}
+
+		& when ( @position = right ) {
+			bottom: 0;
+			.citizen-card-hide( bottom left );
+		}
 	}
 }
 
@@ -71,8 +156,11 @@
 
 .menu-item-link() {
 	display: flex;
+	align-items: center;
+	justify-content: space-between;
 	color: var( --color-base ) !important;
 	font-weight: 450;
+	gap: 0.5rem;
 }
 
 .menu-item-link-hover() {
@@ -87,7 +175,7 @@
 .button-blue() {
 	background-color: var( --color-primary );
 	color: #fff !important;
-	transition: @transition-background-quick, @transition-color-quick;
+	transition: @transition-background, @transition-color;
 }
 
 .button-blue-hover() {
@@ -101,7 +189,7 @@
 .button-red() {
 	background-color: var( --color-destructive );
 	color: #fff !important;
-	transition: @transition-background-quick, @transition-color-quick;
+	transition: @transition-background, @transition-color;
 }
 
 .button-red-hover() {
@@ -120,26 +208,6 @@
 	height: @margin-side * 2;
 	background: @position;
 	content: '';
-}
-
-// Box-shadow
-// https://codepen.io/sdthornton/pen/wBZdXq
-.boxshadow(@level: 1) {
-	& when (@level = 1) {
-		box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.03 ), 0 1px 2px rgba( 0, 0, 0, 0.06 ); // Cards
-	}
-	& when (@level = 2) {
-		box-shadow: 0 3px 6px rgba( 0, 0, 0, 0.04 ), 0 3px 6px rgba( 0, 0, 0, 0.0575 );
-	}
-	& when (@level = 3) {
-		box-shadow: 0 10px 20px rgba( 0, 0, 0, 0.0475 ), 0 6px 6px rgba( 0, 0, 0, 0.0575 ); // Drawer
-	}
-	& when (@level = 4) {
-		box-shadow: 0 14px 28px rgba( 0, 0, 0, 0.0625 ), 0 10px 10px rgba( 0, 0, 0, 0.055 ); // FAB, floating elements
-	}
-	& when (@level = 5) {
-		box-shadow: 0 19px 38px rgba( 0, 0, 0, 0.075 ), 0 15px 12px rgba( 0, 0, 0, 0.055 ); // Dialogs
-	}
 }
 
 // Borrowed from Mediawiki core 1.35

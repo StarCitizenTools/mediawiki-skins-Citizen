@@ -1,48 +1,52 @@
-.last-modified-bar {
-	background: @color-footer-background-60;
-
-	&-content {
-		display: flex;
-		max-width: @footer-width;
-		align-items: center;
-		padding: 12px var( --padding-page );
-		margin: 0 auto;
-	}
-
-	&-icon {
-		width: 20px;
-		height: 20px;
-		margin-right: @icon-padding;
-		background-position: center;
-		background-repeat: no-repeat;
-		opacity: var( --opacity-icon-base );
-	}
-
-	&-text {
-		a {
-			margin-right: 5px;
-		}
-	}
-}
-
-.mw-footer {
-	background: @color-footer-background-50;
+.citizen-footer {
+	padding-top: var( --space-xl );
+	padding-bottom: var( --space-xl );
+	margin-top: var( --space-xl );
+	// Reserve space for header
+	margin-bottom: var( --header-size );
+	background-color: var( --color-surface-2 );
 	clear: both;
-	color: @color-footer-text;
+	color: var( --color-base--subtle );
 	direction: ltr;
-	font-size: @ui-menu-text;
-	line-height: @footer-line-height;
+	font-size: 0.875rem;
 
-	a,
-	a.external {
-		color: @color-footer-link;
+	&__container {
+		max-width: var( --width-layout--extended );
+		margin-right: auto;
+		margin-left: auto;
+	}
 
-		&:hover,
-		&:active,
-		&:focus {
-			color: @color-footer-link-active;
-			text-decoration: none;
+	&__content,
+	&__bottom {
+		display: flex;
+		flex-wrap: wrap;
+		padding: var( --space-md ) 0;
+		gap: var( --space-md );
+	}
+
+	&__bottom {
+		align-items: center;
+		justify-content: space-between;
+		border-top: 1px solid var( --border-color-base );
+		margin-right: auto;
+		margin-left: auto;
+	}
+
+	&__siteinfo {
+		display: flex;
+		max-width: 90ch;
+		flex-direction: column;
+		gap: var( --space-sm );
+
+		p {
+			margin: 0;
+			line-height: var( --line-height );
 		}
+	}
+
+	a {
+		color: var( --color-base--emphasized );
+		font-weight: 500;
 	}
 
 	ul {
@@ -57,63 +61,34 @@
 }
 
 #footer {
-	&-content {
-		display: flex;
-		max-width: @footer-width;
-		flex-direction: column;
-		padding: 0 var( --padding-page );
-		margin: 0 auto;
-	}
-
-	&-bottom {
-		margin-top: @margin-side * 1.5;
-		background-color: @color-footer-background-40;
-
-		&-content {
-			display: flex;
-			max-width: @footer-width;
-			flex-wrap: wrap;
-			align-items: center;
-			justify-content: space-between;
-			padding: @margin-side / 2 var( --padding-page );
-			margin: 0 auto;
-		}
-	}
-
 	&-sitetitle {
-		margin: @margin-side * 2.5 0 @margin-side / 2 0;
-		color: @base-90;
-		font-size: 20px;
+		color: var( --color-base--emphasized );
+		font-size: 1.25rem;
 
 		img.mw-logo-wordmark {
 			width: auto;
-			height: 20px;
+			height: 54px;
 			filter: invert( 1 ) hue-rotate( 180deg );
 		}
 	}
 
-	&-desc {
-		margin: @margin-side / 2 0;
-	}
-
 	&-places {
-		display: flex;
-		flex-wrap: wrap;
-		margin: 0 -@margin-side !important;
-
-		li a {
-			display: block;
-			padding: @margin-side / 2 var( --padding-page );
+		ul {
+			flex-direction: column;
 		}
-	}
 
-	&-info {
-		margin-top: @margin-side / 2;
-		font-size: 12px;
-		opacity: 0.5;
+		a {
+			display: block;
+			padding: var( --space-sm ) var( --space-md );
+			border-radius: var( --border-radius--small );
 
-		li {
-			margin: @margin-side / 2 0;
+			&:hover {
+				background-color: var( --background-color-quiet--hover );
+			}
+
+			&:active {
+				background-color: var( --background-color-quiet--active );
+			}
 		}
 	}
 
@@ -123,7 +98,10 @@
 
 	&-icons {
 		display: flex;
-		margin: 0 -@margin-side / 2;
+
+		ul {
+			gap: var( --space-sm );
+		}
 
 		li {
 			display: flex; // Horizontally aligned with there are two icons in the same li
@@ -132,7 +110,16 @@
 		a {
 			display: flex;
 			align-items: center;
-			padding: 15px 10px;
 		}
+	}
+}
+
+@media ( min-width: @width-breakpoint-desktop ) {
+	.citizen-footer {
+		margin-bottom: 0;
+	}
+
+	#footer-sitetitle {
+		font-size: 2rem;
 	}
 }

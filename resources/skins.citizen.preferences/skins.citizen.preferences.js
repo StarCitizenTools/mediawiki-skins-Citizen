@@ -4,6 +4,10 @@
  * TODO: Maybe combine the localStorage keys into one object
  */
 
+const
+	CLASS = 'citizen-pref',
+	PREFIX_KEY = 'skin-citizen-';
+
 /**
  * Set the value of the input element
  *
@@ -11,7 +15,7 @@
  * @param {string} value
  */
 function setInputValue( key, value ) {
-	const element = document.getElementById( 'citizen-pref-' + key + '__input' );
+	const element = document.getElementById( CLASS + '-' + key + '__input' );
 
 	if ( element ) {
 		element.value = value;
@@ -25,7 +29,7 @@ function setInputValue( key, value ) {
  * @param {string} value
  */
 function setIndicator( key, value ) {
-	const element = document.getElementById( 'citizen-pref-' + key + '__value' );
+	const element = document.getElementById( CLASS + '-' + key + '__value' );
 
 	if ( element ) {
 		element.innerText = value;
@@ -33,15 +37,15 @@ function setIndicator( key, value ) {
 }
 
 /**
- * Format the pref for use with the form input
+ * Convert the pref values for use with the form input
  *
  * @param {Object} pref
  * @return {Object}
  */
-function convertPref( pref ) {
+function convertForForm( pref ) {
 	return {
 		theme: pref.theme,
-		fontsize: Number( pref.fontsize.slice( 0, -1 ) ) / 10 - 5,
+		fontsize: Number( pref.fontsize.slice( 0, -1 ) ) / 10 - 8,
 		pagewidth: Number( pref.pagewidth.slice( 0, -2 ) ) / 120 - 6,
 		lineheight: ( pref.lineheight - 1 ) * 10
 	};
@@ -53,14 +57,47 @@ function convertPref( pref ) {
  * @return {Object} pref
  */
 function getPref() {
-	const htmlStyle = window.getComputedStyle( document.documentElement ),
-		pref = {};
+	const rootStyle = window.getComputedStyle( document.documentElement );
 
-	// It is already set in theme.js in skins.citizen.scripts
-	pref.theme = localStorage.getItem( 'skin-citizen-theme' );
-	pref.fontsize = localStorage.getItem( 'skin-citizen-fontsize' ) ?? htmlStyle.getPropertyValue( 'font-size' );
-	pref.pagewidth = localStorage.getItem( 'skin-citizen-pagewidth' ) ?? htmlStyle.getPropertyValue( '--width-layout' );
-	pref.lineheight = localStorage.getItem( 'skin-citizen-lineheight' ) ?? htmlStyle.getPropertyValue( '--line-height' );
+	// Create an initial value for font size
+	const initFontSize = () => {
+		// Get browser default font size
+		const getDefaultFontSize = () => {
+			const element = document.createElement( 'div' );
+			element.style.width = '1rem';
+			element.style.display = 'none';
+			document.body.append( element );
+
+			const widthMatch = window
+				.getComputedStyle( element )
+				.getPropertyValue( 'width' )
+				.match( /\d+/ );
+
+			element.remove();
+
+			if ( !widthMatch || widthMatch.length < 1 ) {
+				return null;
+			}
+
+			const result = Number( widthMatch[ 0 ] );
+			return !isNaN( result ) ? result : null;
+		};
+
+		const browserFontSize = getDefaultFontSize() + 'px',
+			rootFontSize = rootStyle.getPropertyValue( 'font-size' );
+
+		// If browser font size is same as HTML font size, return 100%
+		// Some wiki might have custom font size defined in root/HTML,
+		// in that case return the defined value
+		return ( ( browserFontSize === rootFontSize ) ? '100%' : rootFontSize );
+	};
+
+	const pref = {
+		theme: localStorage.getItem( PREFIX_KEY + 'theme' ),
+		fontsize: localStorage.getItem( PREFIX_KEY + 'fontsize' ) ?? initFontSize(),
+		pagewidth: localStorage.getItem( PREFIX_KEY + 'pagewidth' ) ?? rootStyle.getPropertyValue( '--width-layout' ),
+		lineheight: localStorage.getItem( PREFIX_KEY + 'lineheight' ) ?? rootStyle.getPropertyValue( '--line-height' )
+	};
 
 	return pref;
 }
@@ -72,39 +109,39 @@ function getPref() {
  * @return {void}
  */
 function setPref( event ) {
-	// eslint-disable-next-line compat/compat
-	const formData = Object.fromEntries( new FormData( event.currentTarget ) ),
-		currentPref = convertPref( getPref() ),
+	const
+		// eslint-disable-next-line compat/compat
+		formData = Object.fromEntries( new FormData( event.currentTarget ) ),
+		currentPref = convertForForm( getPref() ),
 		newPref = {
-			theme: formData[ 'citizen-pref-theme' ],
-			fontsize: Number( formData[ 'citizen-pref-fontsize' ] ),
-			pagewidth: Number( formData[ 'citizen-pref-pagewidth' ] ),
-			lineheight: Number( formData[ 'citizen-pref-lineheight' ] )
+			theme: formData[ CLASS + '-theme' ],
+			fontsize: Number( formData[ CLASS + '-fontsize' ] ),
+			pagewidth: Number( formData[ CLASS + '-pagewidth' ] ),
+			lineheight: Number( formData[ CLASS + '-lineheight' ] )
 		};
 
 	if ( currentPref.theme !== newPref.theme ) {
-		localStorage.setItem( 'skin-citizen-theme', newPref.theme );
+		localStorage.setItem( PREFIX_KEY + 'theme', newPref.theme );
 
 	} else if ( currentPref.fontsize !== newPref.fontsize ) {
-		const formattedFontSize = ( newPref.fontsize + 5 ) * 10 + '%';
-
-		localStorage.setItem( 'skin-citizen-fontsize', formattedFontSize );
+		const formattedFontSize = ( newPref.fontsize + 8 ) * 10 + '%';
+		localStorage.setItem( PREFIX_KEY + 'fontsize', formattedFontSize );
 		setIndicator( 'fontsize', formattedFontSize );
+
 	} else if ( currentPref.pagewidth !== newPref.pagewidth ) {
 		let formattedPageWidth;
-
 		// Max setting would be full browser width
 		if ( newPref.pagewidth === 10 ) {
 			formattedPageWidth = '100vw';
 		} else {
 			formattedPageWidth = ( newPref.pagewidth + 6 ) * 120 + 'px';
 		}
-		localStorage.setItem( 'skin-citizen-pagewidth', formattedPageWidth );
+		localStorage.setItem( PREFIX_KEY + 'pagewidth', formattedPageWidth );
 		setIndicator( 'pagewidth', formattedPageWidth );
+
 	} else if ( currentPref.lineheight !== newPref.lineheight ) {
 		const formattedLineHeight = newPref.lineheight / 10 + 1;
-
-		localStorage.setItem( 'skin-citizen-lineheight', formattedLineHeight );
+		localStorage.setItem( PREFIX_KEY + 'lineheight', formattedLineHeight );
 		setIndicator( 'lineheight', formattedLineHeight );
 	}
 
@@ -118,15 +155,14 @@ function setPref( event ) {
  */
 function resetPref() {
 	// Do not reset theme as its default value is defined somewhere else
-	const keys = [ 'fontsize', 'pagewidth', 'lineheight' ],
-		keyPrefix = 'skin-citizen-';
+	const keys = [ 'fontsize', 'pagewidth', 'lineheight' ];
 
-	// Remove inline style
-	document.documentElement.removeAttribute( 'style' );
+	// Remove style
+	document.getElementById( 'citizen-style' )?.remove();
 
 	// Remove localStorage
 	keys.forEach( ( key ) => {
-		const keyName = keyPrefix + key;
+		const keyName = PREFIX_KEY + key;
 
 		if ( localStorage.getItem( keyName ) ) {
 			localStorage.removeItem( keyName );
@@ -134,10 +170,10 @@ function resetPref() {
 	} );
 
 	const pref = getPref(),
-		prefValue = convertPref( pref );
+		prefValue = convertForForm( pref );
 
 	keys.forEach( ( key ) => {
-		const keyName = keyPrefix + key;
+		const keyName = PREFIX_KEY + key;
 
 		localStorage.setItem( keyName, pref[ key ] );
 		setIndicator( key, pref[ key ] );
@@ -153,13 +189,12 @@ function resetPref() {
  * @param {Event} event
  */
 function dismissOnClickOutside( event ) {
-	const pref = document.getElementById( 'citizen-pref' );
+	const pref = document.getElementById( CLASS );
 
 	if ( event.target instanceof Node && !pref.contains( event.target ) ) {
-		const panel = document.getElementById( 'citizen-pref-panel' );
+		const panel = document.getElementById( CLASS + '-panel' );
 
-		if ( panel.classList.contains( 'citizen-pref-panel--active' ) ) {
-
+		if ( panel.classList.contains( CLASS + '-panel--active' ) ) {
 			togglePanel();
 		}
 	}
@@ -184,20 +219,23 @@ function dismissOnEscape( event ) {
  * @return {void}
  */
 function togglePanel() {
-	const toggle = document.getElementById( 'citizen-pref-toggle' ),
-		panel = document.getElementById( 'citizen-pref-panel' ),
-		form = document.getElementById( 'citizen-pref-form' ),
-		resetButton = document.getElementById( 'citizen-pref-resetbutton' );
+	// .citizen-pref-panel--active
+	const CLASS_PANEL_ACTIVE = CLASS + '-panel--active';
+	const
+		toggle = document.getElementById( CLASS + '-toggle' ),
+		panel = document.getElementById( CLASS + '-panel' ),
+		form = document.getElementById( CLASS + '-form' ),
+		resetButton = document.getElementById( CLASS + '-resetbutton' );
 
-	if ( !panel.classList.contains( 'citizen-pref-panel--active' ) ) {
-		panel.classList.add( 'citizen-pref-panel--active' );
+	if ( !panel.classList.contains( CLASS_PANEL_ACTIVE ) ) {
+		panel.classList.add( CLASS_PANEL_ACTIVE );
 		toggle.setAttribute( 'aria-expanded', true );
 		form.addEventListener( 'input', setPref );
 		resetButton.addEventListener( 'click', resetPref );
 		window.addEventListener( 'click', dismissOnClickOutside );
 		window.addEventListener( 'keydown', dismissOnEscape );
 	} else {
-		panel.classList.remove( 'citizen-pref-panel--active' );
+		panel.classList.remove( CLASS_PANEL_ACTIVE );
 		toggle.setAttribute( 'aria-expanded', false );
 		form.removeEventListener( 'input', setPref );
 		resetButton.removeEventListener( 'click', resetPref );
@@ -250,17 +288,26 @@ function initPanel( event ) {
 		),
 		data = getMessages(),
 		pref = getPref(),
-		prefValue = convertPref( pref ),
+		prefValue = convertForForm( pref ),
 		keys = [ 'fontsize', 'pagewidth', 'lineheight' ];
 
 	// To Mustache is to jQuery sigh
 	// TODO: Use ES6 template literals when RL does not screw up multiline
 	const panel = template.render( data ).get()[ 1 ];
+
+	// The priorities is as follow:
+	// 1. User-set theme (localStorage)
+	// 2. Site default theme (wgCitizenThemeDefault)
+	// 3. Fallback to auto
+	const currentTheme = prefValue.theme ??
+		require( './config.json' ).wgCitizenThemeDefault ??
+		'auto';
+
 	// Attach panel after button
 	event.currentTarget.parentNode.insertBefore( panel, event.currentTarget.nextSibling );
 
 	// Set up initial state
-	document.getElementById( 'citizen-pref-theme__input__' + prefValue.theme ).checked = true;
+	document.getElementById( CLASS + '-theme__input__' + currentTheme ).checked = true;
 	keys.forEach( ( key ) => {
 		setIndicator( key, pref[ key ] );
 		setInputValue( key, prefValue[ key ] );
@@ -311,16 +358,22 @@ function storageAvailable( type ) {
 function initPref( window ) {
 	if ( storageAvailable( 'localStorage' ) ) {
 		if ( typeof window.mw !== 'undefined' ) {
-			const headerTools = document.getElementById( 'mw-header-tools' ),
+			const headerTools = document.querySelector( '.citizen-header__end' ),
 				container = document.createElement( 'div' ),
 				button = document.createElement( 'button' );
 
 			mw.loader.load( 'skins.citizen.icons.preferences' );
 
-			container.id = 'citizen-pref';
-			button.id = 'citizen-pref-toggle';
-			button.classList.add( 'mw-header-button' );
-			button.setAttribute( 'aria-controls', 'citizen-pref-panel' );
+			// citizen-pref
+			container.id = CLASS;
+
+			container.classList.add( CLASS, 'citizen-header__item' );
+			button.id = CLASS + '-toggle';
+
+			button.classList.add( CLASS + '__button', 'citizen-header__button', 'citizen-header__button--icon' );
+			button.setAttribute( 'title', mw.message( 'preferences' ).text() );
+			button.setAttribute( 'aria-label', mw.message( 'preferences' ).text() );
+			button.setAttribute( 'aria-controls', CLASS + '-panel' );
 			button.setAttribute( 'aria-expanded', false );
 			container.prepend( button );
 			headerTools.prepend( container );

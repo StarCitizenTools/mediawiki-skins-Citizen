@@ -1,0 +1,19 @@
+{{!
+	Indicator[] array-indicators wiki-defined badges such as "good article",
+		"featured article". An empty array if none are defined.
+	string html-title-heading--formatted
+	string html-tagline
+	string html-citizen-jumptotop Jump to top title text
+}}
+<header class="mw-body-header">
+	<div class="page-heading">
+		<div class="firstHeading-container">
+			{{{html-title-heading--formatted}}}
+			{{>Indicators}}
+		</div>
+		<div id="siteSub">{{html-tagline}}</div>
+		<a href="#top" class="citizen-jumptotop" title="{{html-citizen-jumptotop}}"></a>
+	</div>
+	{{>PageTools}}
+</header>
+<div id="citizen-body-header-sticky-sentinel"></div>

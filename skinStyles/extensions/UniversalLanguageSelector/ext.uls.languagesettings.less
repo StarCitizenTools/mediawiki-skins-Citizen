@@ -3,11 +3,12 @@
  *
  * SkinStyles for Extension:UniversalLanguageSelector
  * Module: ext.uls.languagesettings
- * Version: MLEB 2021.07
+ * Version: MLEB 2021.12
  *
- * Date: 2021-07-29
+ * Date: 2022-05-17
 */
 
+/* stylelint-disable selector-max-id */
 .languagesettings-menu {
 	h1 {
 		color: var( --color-base--emphasized );
@@ -36,6 +37,15 @@
 
 		&:hover .settings-text {
 			color: var( --color-base );
+		}
+	}
+}
+
+.skin-citizen-dark .languagesettings-menu {
+	.menu-section {
+		&.display-settings-block,
+		&.input-settings-block {
+			filter: invert( 1 ) hue-rotate( 180deg );
 		}
 	}
 }
@@ -70,7 +80,6 @@
 	color: var( --color-base--subtle );
 }
 
-/* mediawiki.ui does not have a pressed state style. */
 #languagesettings-panels .mw-ui-pressed {
 	border-color: var( --color-primary--active );
 	background-color: var( --color-primary--active );
@@ -78,4 +87,8 @@
 
 .checkbox strong {
 	color: var( --color-base );
+}
+
+.skin-citizen-dark .uls-icon-close {
+	filter: invert( 1 ) hue-rotate( 180deg );
 }

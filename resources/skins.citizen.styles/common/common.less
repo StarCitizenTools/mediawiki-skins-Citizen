@@ -2,7 +2,7 @@
  * Framework
 */
 html {
-	scroll-padding-top: ~'calc(var(--height-header) + 20px)'; // fixed header offset, supported by major browsers
+	scroll-padding-top: var( --space-md );
 }
 
 html,
@@ -10,6 +10,7 @@ body {
 	min-height: 100%;
 	padding: 0;
 	margin: 0;
+	accent-color: var( --color-primary );
 	background: var( --color-surface-0 );
 	color: var( --color-base );
 }
@@ -28,7 +29,6 @@ h6 {
 }
 
 table {
-	display: block;
 	overflow: auto;
 	max-width: 100vw;
 }
@@ -54,7 +54,7 @@ pre,
 code,
 .mw-code {
 	border: 1px solid var( --border-color-base );
-	background-color: var( --background-color-framed );
+	background-color: var( --color-surface-2 );
 }
 
 code {
@@ -64,6 +64,7 @@ code {
 pre,
 .mw-code {
 	padding: 1rem;
+	border-radius: var( --border-radius--large );
 	/* Wrap lines in overflow. T2260, T103780 */
 	white-space: pre-wrap;
 	word-break: break-word;
@@ -133,7 +134,7 @@ td {
 
 a {
 	color: var( --color-link );
-	text-decoration: none !important;
+	text-decoration: none;
 
 	&:not( [ href ] ) {
 		cursor: pointer;
@@ -149,14 +150,14 @@ a {
 	}
 
 	&.new {
-		color: var( --color-link-new ) !important; // Override visited
+		color: var( --color-link-new ); // Override visited
 
 		&:hover {
-			color: var( --color-link-new--hover ) !important;
+			color: var( --color-link-new--hover );
 		}
 
 		&:active {
-			color: var( --color-link-new--active ) !important;
+			color: var( --color-link-new--active );
 		}
 	}
 
@@ -191,7 +192,6 @@ a {
 .mw-body,
 .parsoid-body {
 	direction: ltr;
-	overflow-x: hidden; // avoid breaking layout in smaller screen sizes
 }
 
 // TODO: Think of better places to put indicators;
@@ -240,16 +240,19 @@ video {
 	}
 }
 
-@media ( min-width: @width-breakpoint-tablet ) {
+@media ( max-width: @width-breakpoint-tablet ) {
 	.mw-body,
 	.parsoid-body {
-		overflow-x: auto;
+		overflow-x: hidden; // fallback if clip is not supported
+		overflow-x: clip; // avoid breaking layout in smaller screen sizes
 	}
 
 	table {
-		display: table;
+		display: block;
 	}
+}
 
+@media ( min-width: @width-breakpoint-tablet ) {
 	// Delay scroll animation won't happen on load
 	// Use it only for larger viewport as it is very costly
 	// on mobile devices

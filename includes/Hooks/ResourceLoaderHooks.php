@@ -23,7 +23,7 @@
 
 declare( strict_types=1 );
 
-namespace Citizen\Hooks;
+namespace MediaWiki\Skins\Citizen\Hooks;
 
 use Config;
 use ResourceLoaderContext;
@@ -45,6 +45,21 @@ class ResourceLoaderHooks {
 	) {
 		return [
 			'wgCitizenEnableSearch' => $config->get( 'CitizenEnableSearch' ),
+		];
+	}
+
+	/**
+	 * Passes config variables to skins.citizen.preferences ResourceLoader module.
+	 * @param ResourceLoaderContext $context
+	 * @param Config $config
+	 * @return array
+	 */
+	public static function getCitizenPreferencesResourceLoaderConfig(
+		ResourceLoaderContext $context,
+		Config $config
+	) {
+		return [
+			'wgCitizenThemeDefault' => $config->get( 'CitizenThemeDefault' ),
 		];
 	}
 

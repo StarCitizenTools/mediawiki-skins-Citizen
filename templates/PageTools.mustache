@@ -1,18 +1,35 @@
 {{!
 	object data-page-views
+	object data-page-namespaces
 	object data-page-actions
+	bool has-languages
 	object data-page-toolbox
 }}
 {{#data-pagetools}}
 	<div class="page-actions">
 		{{#data-page-views}}{{>Menu}}{{/data-page-views}}
-		<div class="page-actions-more">
-			<nav class="page-actions-more-menu">
+		{{#data-namespaces}}{{>Menu}}{{/data-namespaces}}
+		{{#has-languages}}{{>PageTools__languages}}{{/has-languages}}
+		<div class="page-actions-more page-actions__item mw-checkbox-hack-container">
+			<input 
+				type="checkbox" 
+				id="page-actions-more__checkbox" 
+				class="mw-checkbox-hack-checkbox"
+				role="button"
+				aria-labelledby="page-actions-more__buttonCheckbox"
+				aria-haspopup="true">
+			<aside id="page-actions-more__card" class="page-actions__card mw-checkbox-hack-target">
 				{{#data-page-actions}}{{>Menu}}{{/data-page-actions}}
-				{{#data-namespaces}}{{>Menu}}{{/data-namespaces}}
-				{{#data-variants}}{{>Menu}}{{/data-variants}}
 				{{#data-page-toolbox}}{{>Menu}}{{/data-page-toolbox}}
-			</nav>
+			</aside>
+			<label
+				id="page-actions-more__buttonCheckbox" 
+				class="mw-checkbox-hack-button page-actions__button page-actions__button--icon" 
+				for="page-actions-more__checkbox"
+				title="{{msg-citizen-actions-more-toggle}}"
+				aria-hidden="true">
+				<span>{{msg-citizen-actions-more-toggle}}</span>
+			</label>
 		</div>
 	</div>
 {{/data-pagetools}}

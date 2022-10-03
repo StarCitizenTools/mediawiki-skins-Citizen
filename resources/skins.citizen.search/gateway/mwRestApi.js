@@ -27,9 +27,16 @@ function convertDataToResults( data ) {
 	for ( let i = 0; i < data.length; i++ ) {
 		results[ i ] = {
 			id: data[ i ].id,
+			key: data[ i ].key,
 			title: data[ i ].title,
 			description: data[ i ].description
 		};
+		// Redirect title
+		// Since 1.38
+		if ( data[ i ].matched_title ) {
+			results[ i ].matchedTitle = data[ i ].matched_title;
+		}
+
 		if ( data[ i ].thumbnail && data[ i ].thumbnail.url ) {
 			results[ i ].thumbnail = data[ i ].thumbnail.url;
 		}

@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Joquliina",
+			"MITO",
 			"Moj",
 			"Nike"
 		]
@@ -9,11 +10,11 @@
 	"skinname-citizen": "Citizen",
 	"citizen-skin-desc": "Star Citizen Wikiä varten kehitetty responsiivinen ulkoasu",
 	"citizen.js": "/* Tämän sivun JavaScript-koodi liitetään Citizen-ulkoasuun */",
+	"citizen-actions-more-toggle": "Lisää toimintoja",
 	"citizen-sitestats-articles-label": "artikkelit",
 	"citizen-sitestats-images-label": "tiedostot",
 	"citizen-sitestats-users-label": "käyttäjät",
 	"citizen-sitestats-edits-label": "muokkaukset",
-	"citizen-drawer-search": "Hae valikosta",
 	"citizen-action-addsection": "Lisää aihe",
 	"citizen-jumptotop": "Takaisin sivun alkuun",
 	"citizen-search-fulltext": "Etsi sivuja joissa on",

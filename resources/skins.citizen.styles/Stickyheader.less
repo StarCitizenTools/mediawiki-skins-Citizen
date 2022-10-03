@@ -1,0 +1,87 @@
+#citizen-body-header-sticky-sentinel {
+	position: absolute;
+	right: 0;
+	left: 0;
+	height: 1px;
+	visibility: hidden;
+}
+
+.ve-activated,
+.action-edit {
+	// HACK: So sticky header will never trigger in edit action
+	#citizen-body-header-sticky-sentinel {
+		display: none;
+	}
+}
+
+.citizen-body-header--sticky {
+	.mw-body-header {
+		position: sticky;
+		z-index: 1;
+		top: 0;
+		align-items: center;
+		padding-bottom: var( --space-md );
+		border-bottom: 1px solid var( --border-color-base );
+		background-color: var( --color-surface-0 );
+
+		.mw-indicators {
+			display: none;
+		}
+	}
+
+	.page-heading {
+		position: relative;
+	}
+
+	.firstHeading {
+		font-size: 1.25rem;
+	}
+
+	.citizen-jumptotop {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		border-radius: var( --border-radius--small );
+		margin: ~'calc( var( --space-sm ) * -1 )';
+
+		&:hover {
+			background-color: var( --background-color-quiet--hover );
+		}
+
+		&:active {
+			background-color: var( --background-color-quiet--active );
+		}
+	}
+}
+
+@media ( max-width: @width-breakpoint-tablet ), ( max-height: 800px ) {
+	.citizen-body-header--sticky {
+		#siteSub {
+			display: none;
+		}
+
+		.page-actions {
+			display: none;
+		}
+	}
+}
+
+@media ( min-width: @width-breakpoint-desktop-wide ) {
+	.citizen-body-header--sticky {
+		.citizen-toc-enabled {
+			.page-actions {
+				transform: translateX( var( --width-toc ) );
+			}
+		}
+
+		.toc {
+			transform: translateY( 3rem );
+
+			@media ( max-height: 800px ) {
+				transform: translateY( 2rem ) !important; // Somehow need this idk why
+			}
+		}
+	}
+}

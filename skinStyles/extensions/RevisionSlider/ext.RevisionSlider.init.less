@@ -1,0 +1,37 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:RevisionSlider
+ * Module: ext.RevisionSlider.init
+ * Version: REL1_35 4c4e368
+ *
+ * Date: 2022-06-02
+*/
+
+.mw-revslider-revision {
+	border-color: var( --color-surface-3 );
+	background-color: var( --color-surface-3 );
+}
+
+.mw-revslider-revision-new,
+.mw-revslider-revision-old,
+.mw-revslider-revision-intermediate {
+	.mw-revslider-revision {
+		border-color: var( --color-surface-0 );
+	}
+}
+
+.mw-revslider-revision-border-box {
+	border-left-color: var( --color-surface-0 );
+}
+
+.mw-revslider-revision-wrapper {
+	&:hover,
+	&-hovered {
+		background-color: var( --background-color-quiet--hover );
+	}
+
+	&:active {
+		background-color: var( --background-color-quiet--active );
+	}
+}

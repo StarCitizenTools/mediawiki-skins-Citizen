@@ -23,7 +23,7 @@
 
 declare( strict_types=1 );
 
-namespace Citizen\Partials;
+namespace MediaWiki\Skins\Citizen\Partials;
 
 use Exception;
 use ExtensionRegistry;
@@ -42,93 +42,122 @@ use SpecialPage;
 final class Drawer extends Partial {
 	/**
 	 * Render the navigation drawer
-	 * Based on buildSidebar()
+	 * Based on getPortletsTemplateData in SkinTemplate
 	 *
 	 * @return array
 	 * @throws Exception
 	 */
-	public function buildDrawer() {
-		$portals = $this->skin->buildSidebar();
-		$props = [];
-		$languages = null;
+	public function getDrawerTemplateData() {
+		$skin = $this->skin;
 
-		// Render portals
-		foreach ( $portals as $name => $content ) {
-			if ( $content === false ) {
-				continue;
-			}
+		$drawer = [];
+		$drawerData = $skin->buildSidebar();
+		$portletCount = 0;
 
-			// Numeric strings gets an integer when set as key, cast back - T73639
-			$name = (string)$name;
-
-			switch ( $name ) {
-				case 'SEARCH':
-				case 'TOOLBOX':
-					break;
-				case 'LANGUAGES':
-					$languages = $this->skin->getLanguages();
-					$portal = $this->skin->getMenuData( 'lang', $content );
-					// The language portal will be added provided either
-					// languages exist or there is a value in html-after-portal
-					// for example to show the add language wikidata link (T252800)
-					if ( count( $content ) || $portal['html-after-portal'] ) {
-						$languages = $portal;
-					}
-					break;
-				default:
-					// Historically some portals have been defined using HTML rather than arrays.
-					// Let's move away from that to a uniform definition.
-					if ( !is_array( $content ) ) {
-						$html = $content;
-						$content = [];
-						wfDeprecated(
-							"`content` field in portal $name must be array."
-							. "Previously it could be a string but this is no longer supported.",
-							'1.35.0'
-						);
-					} else {
-						$html = false;
-					}
-					$portal = $this->skin->getMenuData( $name, $content );
-					if ( $html ) {
-						$portal['html-items'] .= $html;
-					}
-					$props[] = $portal;
-					break;
-			}
-		}
-
-		$portalLabel = $this->getConfigValue( 'CitizenPortalAttach' ) ?? 'first';
-
-		$firstPortal = array_shift( $props );
-
-		if ( $portalLabel === 'first' && $firstPortal !== null && isset( $firstPortal['html-items'] ) ) {
-			$this->addToolboxLinksToDrawer( $firstPortal['html-items'] );
-		} else {
-			for ( $i = 0, $portalCount = count( $props ); $i < $portalCount; $i++ ) {
-				if ( isset( $props[$i]['label'] ) && $props[$i]['label'] === $portalLabel ) {
-					$this->addToolboxLinksToDrawer( $props[$i]['html-items'] );
-					break;
+		// Render portlets
+		foreach ( $drawerData as $name => $items ) {
+			if ( is_array( $items ) ) {
+				// Numeric strings gets an integer when set as key, cast back - T73639
+				$name = (string)$name;
+				switch ( $name ) {
+					// Ignore search
+					// Handled by Header
+					case 'SEARCH':
+						break;
+					// Ignore toolbox
+					// Handled by PageTools
+					case 'TOOLBOX':
+						break;
+					// Ignore language
+					// Handled by PageTools
+					case 'LANGUAGES':
+						break;
+					default:
+						$drawer[] = $skin->getPortletData( $name, $items );
+						// All portlets within the drawer should have a label
+						// to ensure it is layout nicely
+						$drawer[$portletCount]['has-label'] = true;
+						$portletCount++;
+						break;
 				}
 			}
 		}
 
-		$portals = [
-			'msg-citizen-drawer-toggle' => $this->skin->msg( 'citizen-drawer-toggle' )->text(),
-			'msg-citizen-drawer-search' => $this->skin->msg( 'citizen-drawer-search' )->text(),
-			'data-portals-first' => $firstPortal,
-			'array-portals-rest' => $props,
-			'data-portals-languages' => $languages,
-			'data-drawer-sitestats' => $this->getSiteStats(),
-			'data-drawer-subsearch' => false,
+		$drawer = $this->addSiteTools( $drawer, $portletCount );
+
+		$drawerData = [
+			'array-portlets' => $drawer,
+			'data-drawer-sitestats' => $this->getSiteStatsData(),
 		];
 
-		// Drawer subsearch
-		if ( $this->getConfigValue( 'CitizenEnableDrawerSubSearch' ) ) {
-			$portals['data-drawer-subsearch'] = true;
+		return $drawerData;
+	}
+
+	/**
+	 * Add site-wide tools to portlet
+	 *
+	 * TODO: Remove this hack when Desktop Improvements separate page and site tools
+	 * FIXME: There are no error handling if the ID does not match any existing portlet
+	 *
+	 * @param array $drawer
+	 * @param int $portletCount
+	 * @return array
+	 */
+	private function addSiteTools( $drawer, $portletCount ): array {
+		$id = $this->getConfigValue( 'CitizenSiteToolsPortlet' );
+		$html = $this->getSiteToolsHTML();
+
+		// Attach to first portlet if empty
+		if ( empty( $id ) ) {
+			$drawer[0]['html-items'] .= $html;
+			return $drawer;
 		}
 
-		return $portals;
+		// Find the portlet with the right ID, then add to it
+		for ( $i = 0; $i < $portletCount; $i++ ) {
+			if ( isset( $drawer[$i]['id'] ) && $drawer[$i]['id'] === $id ) {
+				$drawer[$i]['html-items'] .= $html;
+				break;
+			}
+		}
+
+		return $drawer;
+	}
+
+	/**
+	 * Build site-wide tools HTML
+	 * We removed some site-wide tools from TOOLBOX, now add it back
+	 *
+	 * TODO: Remove this hack when Desktop Improvements separate page and site tools
+	 *
+	 * @return string RawHTML
+	 * @throws MWException
+	 */
+	private function getSiteToolsHTML(): string {
+		$skin = $this->skin;
+
+		$html = '';
+
+		// Special pages
+		$html .= $skin->makeListItem( 'specialpages', [
+			'href' => Skin::makeSpecialUrl( 'Specialpages' ),
+			'id' => 't-specialpages'
+		] );
+
+		// Upload file
+		if ( ExtensionRegistry::getInstance()->isLoaded( 'Upload Wizard' ) ) {
+			// Link to Upload Wizard if present
+			$uploadHref = SpecialPage::getTitleFor( 'UploadWizard' )->getLocalURL();
+		} else {
+			// Link to old upload form
+			$uploadHref = Skin::makeSpecialUrl( 'Upload' );
+		}
+		$html .= $skin->makeListItem( 'upload', [
+			'href' => $uploadHref,
+			'id' => 't-upload'
+		] );
+
+		return $html;
 	}
 
 	/**
@@ -136,18 +165,28 @@ final class Drawer extends Partial {
 	 *
 	 * @return array for use in Mustache template.
 	 */
-	private function getSiteStats() {
+	private function getSiteStatsData(): array {
 		$props = [];
 
 		if ( $this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) ) {
+			$skin = $this->skin;
 			$stats = [ 'articles', 'images', 'users', 'edits' ];
 			$items = [];
+			$fmt = null;
+
+			// Get NumberFormatter here so that we don't have to call it for every stats
+			if ( $this->getConfigValue( 'CitizenUseNumberFormatter' ) && class_exists( \NumberFormatter::class ) ) {
+				$locale = $skin->getLanguage()->getHtmlCode() ?? 'en_US';
+				$fmt = new \NumberFormatter( $locale, \NumberFormatter::PADDING_POSITION );
+				$fmt->setAttribute( \NumberFormatter::ROUNDING_MODE, \NumberFormatter::ROUND_DOWN );
+				$fmt->setAttribute( \NumberFormatter::MAX_FRACTION_DIGITS, 1 );
+			}
 
 			foreach ( $stats as &$stat ) {
 				$items[] = [
 					'id' => $stat,
-					'value' => number_format( call_user_func( 'SiteStats::' . $stat ) ),
-					'label' => $this->skin->msg( "citizen-sitestats-$stat-label" )->text(),
+					'value' => $this->getSiteStatValue( $stat, $fmt ),
+					'label' => $skin->msg( "citizen-sitestats-$stat-label" )->text(),
 				];
 			}
 		}
@@ -157,30 +196,19 @@ final class Drawer extends Partial {
 	}
 
 	/**
-	 * Add a link to special pages and the upload form to the first portal in the drawer
+	 * Get and format sitestat value
 	 *
-	 * @param string &$htmlItems
-	 *
-	 * @return void
-	 * @throws MWException
+	 * @param string $key
+	 * @param NumberFormatter|null $fmt
+	 * @return string
 	 */
-	private function addToolboxLinksToDrawer( &$htmlItems ) {
-		// First add a link to special pages
-		$htmlItems .= $this->skin->makeListItem( 'specialpages', [
-			'href' => Skin::makeSpecialUrl( 'Specialpages' ),
-			'id' => 't-specialpages'
-		] );
+	private function getSiteStatValue( $key, $fmt ): string {
+		$value = call_user_func( 'SiteStats::' . $key ) ?? '';
 
-		$uploadHref = Skin::makeSpecialUrl( 'Upload' );
-
-		if ( ExtensionRegistry::getInstance()->isLoaded( 'Upload Wizard' ) ) {
-			$uploadHref = SpecialPage::getTitleFor( 'UploadWizard' )->getLocalURL();
+		if ( $fmt ) {
+			return $fmt->format( $value );
+		} else {
+			return number_format( $value );
 		}
-
-		// Then add a link to the upload form
-		$htmlItems .= $this->skin->makeListItem( 'upload', [
-			'href' => $uploadHref,
-			'id' => 't-upload'
-		] );
 	}
 }

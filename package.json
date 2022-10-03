@@ -8,15 +8,27 @@
 		"lint:styles": "stylelint \"**/*.{less,css}\"",
 		"lint:i18n": "banana-checker --requireLowerCase=0 i18n/",
 		"doc": "jsdoc -c jsdoc.json",
-		"minify-svg": "svgo --config=.svgo.config.js -q -r -f resources/"
+		"minify-svg": "svgo --config=.svgo.config.js -q -r -f resources/",
+		"test": "npm run lint",
+		"prepare": "husky install",
+		"release": "standard-version",
+		"release:minor": "standard-version --release-as minor",
+		"release:patch": "standard-version --release-as patch",
+		"release:major": "standard-version --release-as major"
 	},
 	"devDependencies": {
-		"eslint-config-wikimedia": "0.22.1",
-		"grunt-banana-checker": "0.9.0",
-		"jsdoc": "3.6.10",
+		"@commitlint/cli": "^17.1.2",
+		"@commitlint/config-conventional": "^17.1.0",
+		"devmoji": "^2.3.0",
+		"eslint-config-wikimedia": "0.23.0",
+		"grunt-banana-checker": "0.10.0",
+		"husky": "^8.0.1",
+		"jsdoc": "3.6.11",
 		"jsdoc-wmf-theme": "0.0.5",
-		"stylelint-config-idiomatic-order": "8.1.0",
-		"stylelint-config-wikimedia": "0.12.2",
+		"standard-version": "^9.5.0",
+		"stylelint-config-idiomatic-order": "9.0.0",
+		"stylelint-config-wikimedia": "0.13.1",
 		"svgo": "2.8.0"
-	}
+	},
+	"version": "2.0.0-beta.0"
 }

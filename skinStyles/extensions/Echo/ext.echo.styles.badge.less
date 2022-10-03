@@ -12,13 +12,14 @@
 	#pt-notifications-alert &,
 	#pt-notifications-notice & {
 		top: 0;
-		width: var( --size-icon );
-		height: var( --size-icon );
+		width: var( --header-button-size );
+		height: var( --header-button-size );
 		box-sizing: content-box;
-		padding: var( --padding-header-icon );
+		border-radius: var( --border-radius--small );
 		margin: 0;
 		background-position: center;
 		background-repeat: no-repeat;
+		background-size: var( --header-icon-size );
 		opacity: var( --opacity-icon-base );
 
 		&:hover {
@@ -41,8 +42,8 @@
 		&:after {
 			top: 0;
 			border-color: var( --color-destructive );
-			background-color: var( --color-destructive );
 			border-radius: 100px;
+			background-color: var( --color-destructive );
 			font-size: 0.65rem;
 		}
 
