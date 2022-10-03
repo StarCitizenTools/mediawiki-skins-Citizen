@@ -71,13 +71,13 @@ final class PageTools extends Partial {
 
 	/**
 	 * Extract article tools from sidebar and return the data
-	 * 
+	 *
 	 * The reason we do this is because:
 	 * 1. We removed some site-wide tools from the toolbar in Drawer.php,
 	 * 	  now we just want the leftovers
 	 * 2. Toolbox is not currently avaliable as data-portlet, have to wait
 	 *    till Desktop Improvements
-	 * 
+	 *
 	 * @param array sidebarData
 	 * @return bool
 	 */
@@ -107,7 +107,7 @@ final class PageTools extends Partial {
 	 * * 'login': only visible if logged in (string)
 	 * * 'permission-*': only visible if user has permission
 	 *   e.g. permission-edit = only visible if user can edit pages
-	 * 
+	 *
 	 * @return bool
 	 */
 	private function shouldShowPageTools(): bool {
@@ -159,7 +159,7 @@ final class PageTools extends Partial {
 		if ( $this->languages === null ) {
 			$this->languages = $this->skin->getLanguages();
 		}
-	
+
 		return count( $this->languages );
 	}
 }
