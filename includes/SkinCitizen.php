@@ -183,13 +183,7 @@ class SkinCitizen extends SkinMustache {
 	 * @return array
 	 */
 	final public function buildContentNavigationUrlsPublic() {
-		if ( !method_exists( parent::class, 'runOnSkinTemplateNavigationHooks' ) ) {
-			// Support for MediaWiki versions < 1.37
-			return parent::buildContentNavigationUrls();
-		} else {
-			// Works with mediawiki version >= 1.37
-			return $this->contentNavigationUrls;
-		}
+		return $this->contentNavigationUrls;
 	}
 
 	/**
