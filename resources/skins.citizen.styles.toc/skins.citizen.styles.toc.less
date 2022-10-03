@@ -110,7 +110,7 @@
 
 	@media ( max-width: @width-breakpoint-desktop-wide ) {
 		.toc {
-			z-index: 3; // Lower than header
+			z-index: @z-index-page-header + 1;
 			pointer-events: none;
 
 			&toggle {
