@@ -73,32 +73,6 @@ final class Header extends Partial {
 	}
 
 	/**
-	 * Echo notification badges button
-	 *
-	 * @return array
-	 */
-	public function getNotifications(): array {
-		$skin = $this->skin;
-
-		$personalTools = $skin->getPersonalToolsForMakeListItem(
-			$skin->buildPersonalUrlsPublic()
-		);
-
-		// Create the Echo badges
-		$notifications = [];
-		if ( isset( $personalTools['notifications-alert'] ) ) {
-			$notifications['notifications-alert'] = $personalTools['notifications-alert'];
-		}
-		if ( isset( $personalTools['notifications-notice'] ) ) {
-			$notifications['notifications-notice'] = $personalTools['notifications-notice'];
-		}
-
-		$html = $skin->getPortletData( 'notifications', $notifications );
-
-		return $html;
-	}
-
-	/**
 	 * Render the search box
 	 *
 	 * @return array
