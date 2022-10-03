@@ -78,39 +78,30 @@ final class PageTools extends Partial {
 		}
 
 		if ( $condition == true ) {
-			if ( !method_exists( SkinTemplate::class, 'runOnSkinTemplateNavigationHooks' ) ) {
-				$viewshtml = $skin->getPortletData( 'views', $contentNavigation[ 'views' ] ?? [] );
-				$actionshtml = $skin->getPortletData( 'actions', $contentNavigation[ 'actions' ] ?? [] );
-				$namespaceshtml = $skin->getPortletData( 'namespaces', $contentNavigation[ 'namespaces' ] ?? [] );
-				$variantshtml = $skin->getPortletData( 'variants', $contentNavigation[ 'variants' ] ?? [] );
-				$toolboxhtml = $skin->getPortletData( 'tb',  $portals['TOOLBOX'] ?? [] );
-				$languageshtml = $skin->getPortletData( 'lang',  $portals['LANGUAGES'] ?? [] );
-			} else {
-				$viewshtml = $parentData['data-portlets']['data-views'];
-				$actionshtml = $parentData['data-portlets']['data-actions'];
-				$namespaceshtml = $parentData['data-portlets']['data-namespaces'];
-				$variantshtml = $parentData['data-portlets']['data-variants'];
-				// data-languages can be undefined index
-				$languageshtml = $parentData['data-portlets']['data-languages'] ?? [];
-				// For some reason core does not set this
-				if ( empty( $languageshtml ) ) {
-					$languageshtml['is-empty'] = true;
-				}
-				// Finds the toolbox in the sidebar.
-				// The reason we do this is because:
-				// 1. We removed some site-wide tools from the toolbar in Drawer.php,
-				// now we just want the leftovers
-				// 2. Toolbox is not currently avaliable as data-portlet, have to wait
-				// till Desktop Improvements
-				$toolboxhtml = [
-					'is-empty' => true,
-				];
-				foreach ( $parentData['data-portlets-sidebar']['array-portlets-rest'] as $portlet ) {
-					if ( $portlet['id'] === 'p-tb' ) {
-						$toolboxhtml = $portlet;
-						$toolboxhtml['is-empty'] = false;
-						break;
-					}
+			$viewshtml = $parentData['data-portlets']['data-views'];
+			$actionshtml = $parentData['data-portlets']['data-actions'];
+			$namespaceshtml = $parentData['data-portlets']['data-namespaces'];
+			$variantshtml = $parentData['data-portlets']['data-variants'];
+			// data-languages can be undefined index
+			$languageshtml = $parentData['data-portlets']['data-languages'] ?? [];
+			// For some reason core does not set this
+			if ( empty( $languageshtml ) ) {
+				$languageshtml['is-empty'] = true;
+			}
+			// Finds the toolbox in the sidebar.
+			// The reason we do this is because:
+			// 1. We removed some site-wide tools from the toolbar in Drawer.php,
+			// now we just want the leftovers
+			// 2. Toolbox is not currently avaliable as data-portlet, have to wait
+			// till Desktop Improvements
+			$toolboxhtml = [
+				'is-empty' => true,
+			];
+			foreach ( $parentData['data-portlets-sidebar']['array-portlets-rest'] as $portlet ) {
+				if ( $portlet['id'] === 'p-tb' ) {
+					$toolboxhtml = $portlet;
+					$toolboxhtml['is-empty'] = false;
+					break;
 				}
 			}
 
