@@ -25,12 +25,9 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Partials;
 
-use Action;
 use Exception;
 use ExtensionRegistry;
 use MediaWiki\MediaWikiServices;
-use Skin;
-use SkinTemplate;
 
 final class PageTools extends Partial {
 	/** @var null|array for caching purposes */
