@@ -159,16 +159,8 @@ final class PageTools extends Partial {
 	private function canHaveLanguages(): bool {
 		$skin = $this->skin;
 
-		if ( method_exists( Skin::class, 'getActionName' ) ) {
-			// >= MW 1.38
-			if ( $skin->getContext()->getActionName() !== 'view' ) {
-				return false;
-			}
-		} else {
-			// < MW 1.38
-			if ( Action::getActionName( $skin->getContext() ) !== 'view' ) {
-				return false;
-			}
+		if ( $skin->getContext()->getActionName() !== 'view' ) {
+			return false;
 		}
 
 		$title = $this->title;
