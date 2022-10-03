@@ -298,22 +298,6 @@ class SkinCitizen extends SkinMustache {
 	}
 
 	/**
-	 * Returns the javascript entry modules to load. Only modules that need to
-	 * be overriden or added conditionally should be placed here.
-	 * @return array
-	 */
-	public function getDefaultModules() {
-		$modules = parent::getDefaultModules();
-
-		$modules['content'] = array_diff( $modules['content'], [
-			// Citizen provides its own implementation. Loading this will break display.
-			'mediawiki.toc'
-		] );
-
-		return $modules;
-	}
-
-	/**
 	 * Set up optional skin features
 	 *
 	 * @param array &$options
