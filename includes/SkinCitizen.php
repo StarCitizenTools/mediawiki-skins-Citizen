@@ -58,10 +58,6 @@ class SkinCitizen extends SkinMustache {
 	public function __construct( $options = [] ) {
 		// Add skin-specific features
 		$this->buildSkinFeatures( $options );
-		// Can't use templateDirectory inside skin.json
-		// Relative path does not work well with 1.35
-		// TODO: Replace with templateDirectory when 1.39
-		$options['templateDirectory'] = dirname( __DIR__, 1 ) . '/templates';
 		parent::__construct( $options );
 	}
 
