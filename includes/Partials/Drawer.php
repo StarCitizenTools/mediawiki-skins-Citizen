@@ -50,15 +50,15 @@ final class Drawer extends Partial {
 		// Enable label for first portlet
 		$sidebarData['data-portlets-first']['has-label'] = true;
 
-		$siteToolsId = $this->getConfigValue( 'CitizenSiteToolsPortlet' );
-		$siteToolsHtml = $this->getSiteToolsHTML();
-		$siteToolsAdded = false;
+		$globalToolsId = $this->getConfigValue( 'CitizenSiteToolsPortlet' );
+		$globalToolsHtml = $this->getGlobalToolsHTML();
+		$globalToolsAdded = false;
 
-		// Attach site-wide tools to first portlet if empty
-		// TODO: Remove this hack when Desktop Improvements separate page and site tools
-		if ( empty( $siteToolsId ) ) {
-			$sidebarData['data-portlets-first']['html-items'] .= $siteToolsHtml;
-			$siteToolsAdded = true;
+		// Attach global tools to first portlet if empty
+		// TODO: Remove this hack when Desktop Improvements separate article and global tools
+		if ( empty( $globalToolsId ) ) {
+			$sidebarData['data-portlets-first']['html-items'] .= $globalToolsHtml;
+			$globalToolsAdded = true;
 		}
 
 		for ( $i = 0; $i < count( $sidebarData['array-portlets-rest'] ); $i++ ) {
@@ -72,9 +72,9 @@ final class Drawer extends Partial {
 					break;
 				}
 
-				case $siteToolsId: {
-					// Attach site-wide tools to portlet with matching ID
-					$sidebarData['array-portlets-rest'][$i]['html-items'] .= $siteToolsHtml;
+				case $globalToolsId: {
+					// Attach global tools to portlet with matching ID
+					$sidebarData['array-portlets-rest'][$i]['html-items'] .= $globalToolsHtml;
 					break;
 				}
 			}
@@ -88,15 +88,15 @@ final class Drawer extends Partial {
 	}
 
 	/**
-	 * Build site-wide tools HTML
-	 * We removed some site-wide tools from TOOLBOX, now add it back
+	 * Build global tools HTML
+	 * We removed some global tools from TOOLBOX, now add it back
 	 *
-	 * TODO: Remove this hack when Desktop Improvements separate page and site tools
+	 * TODO: Remove this hack when Desktop Improvements separate article and global tools
 	 *
 	 * @return string RawHTML
 	 * @throws MWException
 	 */
-	private function getSiteToolsHTML(): string {
+	private function getGlobalToolsHTML(): string {
 		$skin = $this->skin;
 
 		$html = '';
