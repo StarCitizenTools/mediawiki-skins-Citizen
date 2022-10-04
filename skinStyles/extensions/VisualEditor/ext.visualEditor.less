@@ -10,15 +10,6 @@
 */
 
 .ve-activated {
-	.mw-header {
-		z-index: 3; // Move lower to accompany VE
-		background-color: var( --color-surface-0 );
-
-		&:before {
-			box-shadow: none;
-		}
-	}
-
 	#page-tools {
 		z-index: 1; // Fix collision
 		opacity: 1;
@@ -30,6 +21,7 @@
 	}
 
 	.mw-body-header {
+		z-index: 0; // Reset z-index so toolbar won't clip
 		margin-top: ~'calc( 46px - var( --space-xl ) )'; // Trim extra spacing
 		// Reset VE disabled style to allow page action buttons to work
 		opacity: 1;
@@ -39,17 +31,6 @@
 
 	.page-heading {
 		opacity: 0.5;
-	}
-
-	// Since ToC does not appear in VE
-	.mw-body-header,
-	.citizen-body {
-		margin-right: auto !important;
-		margin-left: auto !important;
-	}
-
-	.mw-footer {
-		z-index: 2; // Fix collision with VE elements
 	}
 
 	.toc {
