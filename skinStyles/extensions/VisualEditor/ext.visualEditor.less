@@ -57,149 +57,163 @@
 	}
 }
 
+// Extra selector because I am lazy to break it down to proper RL stylesheets
+// TODO: Break down into RL stylesheets when my sins catch up to me
 .skin-citizen {
-	.ve-ui {
-		&-toolbar {
-			> .oo-ui-toolbar-bar {
-				border-color: var( --border-color-base--darker );
-				background-color: var( --color-surface-0 );
+	.ve {
+		&-ce {
+			&-branchNode {
+				&-blockSlug,
+				&-newSlug {
+					background-color: transparent;
+					outline-color: var( --border-color-base );
+				}
+			}
+		}
 
-				.oo-ui-toolbar-bar {
-					border: 0;
+		&-ui {
+			&-toolbar {
+				> .oo-ui-toolbar-bar {
+					border-color: var( --border-color-base--darker );
+					background-color: var( --color-surface-0 );
+
+					.oo-ui-toolbar-bar {
+						border: 0;
+						background-color: transparent;
+					}
+
+					> .oo-ui-toolbar-tools {
+						flex-basis: 50%;
+						flex-grow: 1;
+						overflow-x: auto;
+						overflow-y: hidden;
+					}
+
+					> .oo-ui-toolbar-actions {
+						order: 5; // Second order
+						border-left: 1px solid var( --border-color-base );
+					}
+
+					> .oo-ui-windowManager {
+						order: 10; // Third order
+					}
+
+					.oo-ui-toolbar-tools {
+						display: inline-block;
+						white-space: nowrap;
+					}
+
+					/* Fix inline height */
+					.oo-ui-popupToolGroup-tools.oo-ui-popupToolGroup-active-tools {
+						overflow: auto !important;
+						height: auto !important;
+					}
+				}
+			}
+
+			&-surface {
+				&-visual {
+					.ve-ce-documentNode {
+						font-size: 1rem; // So that same font size as the actual page
+					}
+				}
+			}
+
+			&-targetWidget {
+				border-color: var( --border-color-input );
+
+				&:not( .oo-ui-pendingElement-pending ) {
+					background: var( --color-surface-1 );
+				}
+			}
+
+			&-overlay {
+				font-family: var( --font-family-base );
+
+				&-global {
+					z-index: 100;
+				}
+			}
+
+			&-expandableContent {
+				&-fade {
+					background: linear-gradient( to right, rgba( 255, 255, 255, 0 ) 0, var( --color-surface-1 ) 90% );
+				}
+
+				&-toggle {
+					background-color: transparent;
+				}
+			}
+
+			&-mwSaveDialog {
+				&-summary {
 					background-color: transparent;
 				}
 
-				> .oo-ui-toolbar-tools {
-					flex-basis: 50%;
-					flex-grow: 1;
-					overflow-x: auto;
-					overflow-y: hidden;
+				&-options {
+					border-color: var( --border-color-base );
+					background-color: var( --color-surface-2 );
 				}
 
-				> .oo-ui-toolbar-actions {
-					order: 5; // Second order
-					border-left: 1px solid var( --border-color-base );
+				&--editSummary-count {
+					border-color: var( --border-color-base );
 				}
 
-				> .oo-ui-windowManager {
-					order: 10; // Third order
+				&-license {
+					color: var( --color-base--subtle );
 				}
 
-				.oo-ui-toolbar-tools {
-					display: inline-block;
-					white-space: nowrap;
-				}
-
-				/* Fix inline height */
-				.oo-ui-popupToolGroup-tools.oo-ui-popupToolGroup-active-tools {
-					overflow: auto !important;
-					height: auto !important;
-				}
-			}
-		}
-
-		&-surface {
-			&-visual {
-				.ve-ce-documentNode {
-					font-size: 1rem; // So that same font size as the actual page
-				}
-			}
-		}
-
-		&-targetWidget {
-			border-color: var( --border-color-input );
-
-			&:not( .oo-ui-pendingElement-pending ) {
-				background: var( --color-surface-1 );
-			}
-		}
-
-		&-overlay {
-			font-family: var( --font-family-base );
-
-			&-global {
-				z-index: 100;
-			}
-		}
-
-		&-expandableContent {
-			&-fade {
-				background: linear-gradient( to right, rgba( 255, 255, 255, 0 ) 0, var( --color-surface-1 ) 90% );
-			}
-
-			&-toggle {
-				background-color: transparent;
-			}
-		}
-
-		&-mwSaveDialog {
-			&-summary {
-				background-color: transparent;
-			}
-
-			&-options {
-				border-color: var( --border-color-base );
-				background-color: var( --color-surface-2 );
-			}
-
-			&--editSummary-count {
-				border-color: var( --border-color-base );
-			}
-
-			&-license {
-				color: var( --color-base--subtle );
-			}
-
-			// Preview and review change panels
-			&-savePanel {
-				~ .oo-ui-panelLayout {
-					background-color: var( --color-surface-0 );
-				}
-			}
-
-			// Give preview content a max width
-			.mw-parser-output {
-				max-width: var( --width-layout );
-				margin-right: auto;
-				margin-left: auto;
-			}
-		}
-
-		&-mwTransclusion {
-			&Dialog-addParameterFieldset .ve-ui-mwParameterSearchWidget {
-				border-color: var( --border-color-base );
-			}
-
-			&Outline {
-				&ButtonWidget {
-					&.oo-ui-buttonElement-frameless.oo-ui-widget-enabled > .oo-ui-buttonElement-button:hover {
-						background-color: var( --background-color-quiet--hover );
-						color: var( --color-base--emphasized );
-					}
-
-					&.oo-ui-optionWidget-selected .oo-ui-buttonElement-button {
-						background-color: var( --background-color-primary--active );
+				// Preview and review change panels
+				&-savePanel {
+					~ .oo-ui-panelLayout {
+						background-color: var( --color-surface-0 );
 					}
 				}
 
-				&TemplateWidget-sticky {
-					background-color: var( --color-surface-1 );
+				// Give preview content a max width
+				.mw-parser-output {
+					max-width: var( --width-layout );
+					margin-right: auto;
+					margin-left: auto;
 				}
 			}
-		}
 
-		&--mwParameterResultWidget {
-			&.oo-ui-optionWidget-highlighted {
-				background-color: var( --background-color-primary--hover );
+			&-mwTransclusion {
+				&Dialog-addParameterFieldset .ve-ui-mwParameterSearchWidget {
+					border-color: var( --border-color-base );
+				}
+
+				&Outline {
+					&ButtonWidget {
+						&.oo-ui-buttonElement-frameless.oo-ui-widget-enabled > .oo-ui-buttonElement-button:hover {
+							background-color: var( --background-color-quiet--hover );
+							color: var( --color-base--emphasized );
+						}
+
+						&.oo-ui-optionWidget-selected .oo-ui-buttonElement-button {
+							background-color: var( --background-color-primary--active );
+						}
+					}
+
+					&TemplateWidget-sticky {
+						background-color: var( --color-surface-1 );
+					}
+				}
 			}
 
-			&-description {
+			&--mwParameterResultWidget {
+				&.oo-ui-optionWidget-highlighted {
+					background-color: var( --background-color-primary--hover );
+				}
+
+				&-description {
+					color: var( --color-base--subtle );
+				}
+			}
+
+			&-mwTemplatePage-description {
 				color: var( --color-base--subtle );
 			}
-		}
-
-		&-mwTemplatePage-description {
-			color: var( --color-base--subtle );
 		}
 	}
 
