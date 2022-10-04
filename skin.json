@@ -751,10 +751,10 @@
 			"descriptionmsg": "citizen-config-showpagetools",
 			"public": true
 		},
-		"SiteToolsPortlet": {
+		"GlobalToolsPortlet": {
 			"value": "",
-			"description": "ID of the portlet to attach the site tools",
-			"descriptionmsg": "citizen-config-sitetoolsportlet",
+			"description": "ID of the portlet to attach the global tools",
+			"descriptionmsg": "citizen-config-globaltoolsportlet",
 			"public": true
 		},
 		"EnableCollapsibleSections": {

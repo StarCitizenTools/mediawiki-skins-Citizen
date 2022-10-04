@@ -50,7 +50,7 @@ final class Drawer extends Partial {
 		// Enable label for first portlet
 		$sidebarData['data-portlets-first']['has-label'] = true;
 
-		$globalToolsId = $this->getConfigValue( 'CitizenSiteToolsPortlet' );
+		$globalToolsId = $this->getConfigValue( 'CitizenGlobalToolsPortlet' );
 		$globalToolsHtml = $this->getGlobalToolsHTML();
 		$globalToolsAdded = false;
 
