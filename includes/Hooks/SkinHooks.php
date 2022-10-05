@@ -26,8 +26,8 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Hooks;
 
 use MediaWiki\Hook\BeforePageDisplayHook;
-use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;
 use MediaWiki\Hook\SkinTemplateNavigation__UniversalHook;
+use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;
 use OutputPage;
 use Skin;
 
@@ -87,7 +87,7 @@ class SkinHooks implements
 
 	/**
 	 * Modify navigation links
-	 * 
+	 *
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SkinTemplateNavigation::Universal
 	 * @param SkinTemplate $sktemplate
 	 * @param array &$links
