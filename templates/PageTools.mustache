@@ -1,6 +1,6 @@
 {{!
 	object data-page-views
-	object data-page-namespaces
+	object data-page-associated-pages
 	object data-page-actions
 	bool has-languages
 	object data-page-toolbox
@@ -9,7 +9,7 @@
 	{{#has-languages}}{{>PageTools__languages}}{{/has-languages}}
 	{{#pagetools-visible}}
 		{{#data-portlets.data-views}}{{>Menu}}{{/data-portlets.data-views}}
-		{{#data-portlets.data-namespaces}}{{>Menu}}{{/data-portlets.data-namespaces}}
+		{{#data-portlets.data-associated-pages}}{{>Menu}}{{/data-portlets.data-associated-pages}}
 	{{/pagetools-visible}}
 	{{#pagetools-overflow}}
 	<div class="page-actions-more page-actions__item mw-checkbox-hack-container">
