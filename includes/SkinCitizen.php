@@ -23,8 +23,6 @@
 
 namespace MediaWiki\Skins\Citizen;
 
-use Html;
-use Linker;
 use MediaWiki\Skins\Citizen\Partials\BodyContent;
 use MediaWiki\Skins\Citizen\Partials\Drawer;
 use MediaWiki\Skins\Citizen\Partials\Footer;
@@ -34,7 +32,6 @@ use MediaWiki\Skins\Citizen\Partials\PageTools;
 use MediaWiki\Skins\Citizen\Partials\Tagline;
 use MediaWiki\Skins\Citizen\Partials\Theme;
 use MediaWiki\Skins\Citizen\Partials\Title;
-use Sanitizer;
 use SkinMustache;
 
 /**
