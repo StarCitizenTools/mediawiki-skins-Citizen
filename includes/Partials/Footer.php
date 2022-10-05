@@ -31,39 +31,18 @@ namespace MediaWiki\Skins\Citizen\Partials;
 final class Footer extends Partial {
 
 	/**
-	 * Get rows that make up the footer
+	 * Decorate footer template data
+	 * 
+	 * @param array $footerData original data-footer
 	 * @return array for use in Mustache template describing the footer elements.
 	 */
-	public function getFooterData(): array {
-		$skin = $this->skin;
-
-		$data = [];
-		$footerLinks = $skin->getFooterLinksPublic();
-
-		// Based on SkinMustache
-		// Backported because of 1.35 support
-		foreach ( $footerLinks as $category => $links ) {
-			$items = [];
-			$rowId = "footer-$category";
-
-			foreach ( $links as $key => $link ) {
-				if ( $link ) {
-					$items[] = [
-						'id' => "$rowId-$key",
-						'html' => $link,
-						// This is not great, need to reimplemented when we move to 1.39
-						'label' => $skin->msg( "citizen-page-info-$key" )
-					];
-				}
-			}
-
-			$data['data-citizen-' . $category] = [
-				'id' => $rowId,
-				'className' => null,
-				'array-items' => $items
-			];
+	public function decorateFooterData( $footerData ): array {
+		// Add label to footer-info to use in ContentFooter
+		foreach ( $footerData['data-info']['array-items'] as &$item ) {
+			$msgKey = 'citizen-page-info-' . $item['name'];
+			$item['label'] = $this->skin->msg( $msgKey )->text();
 		}
 
-		return $data;
+		return $footerData;
 	}
 }

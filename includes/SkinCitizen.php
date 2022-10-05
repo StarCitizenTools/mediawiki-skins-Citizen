@@ -99,7 +99,7 @@ class SkinCitizen extends SkinMustache {
 				'data-personal-menu' => $header->buildPersonalMenu(),
 				'data-search-box' => $header->buildSearchProps(),
 			],
-			'data-citizen-footer' => $footer->getFooterData(),
+			'data-footer' => $footer->decorateFooterData( $parentData['data-footer'] ),
 			// HTML strings
 			'html-title-heading--formatted' => $pageTitle->buildTitle( $parentData, $title ),
 			'html-citizen-jumptotop' => $this->msg( 'citizen-jumptotop' )->text() . ' [home]',
@@ -129,15 +129,6 @@ class SkinCitizen extends SkinMustache {
 	 */
 	final public function buildPersonalUrlsPublic() {
 		return parent::buildPersonalUrls();
-	}
-
-	/**
-	 * Change access to public, as it is used in partials
-	 *
-	 * @return array
-	 */
-	final public function getFooterLinksPublic() {
-		return parent::getFooterLinks();
 	}
 
 	/**
