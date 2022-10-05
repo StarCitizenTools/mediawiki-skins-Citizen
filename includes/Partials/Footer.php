@@ -39,13 +39,6 @@ final class Footer extends Partial {
 
 		$data = [];
 		$footerLinks = $skin->getFooterLinksPublic();
-		$msg = [ 'desc', 'tagline' ];
-
-		// Get site footer messages
-		foreach ( $msg as $key ) {
-			$data["msg-citizen-footer-$key"] = $skin->msg( "citizen-footer-$key" )
-				->inContentLanguage()->parse();
-		}
 
 		// Based on SkinMustache
 		// Backported because of 1.35 support

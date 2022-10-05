@@ -105,6 +105,10 @@ class SkinCitizen extends SkinMustache {
 			'html-citizen-jumptotop' => $this->msg( 'citizen-jumptotop' )->text() . ' [home]',
 			'html-body-content--formatted' => $bodycontent->buildBodyContent(),
 			'html-tagline' => $tagline->getTagline(),
+			// Messages
+			// Needed to be parsed here as it should be wikitext
+			'msg-citizen-footer-desc' => $this->msg( "citizen-footer-desc" )->inContentLanguage()->parse(),
+			'msg-citizen-footer-tagline' => $this->msg( "citizen-footer-tagline" )->inContentLanguage()->parse(),
 		];
 
 		$data += $tools->getPageToolsData( $parentData );
