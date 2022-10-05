@@ -1,7 +1,12 @@
-.citizen-personalMenu {
+.citizen-userMenu {
 	&__card {
 		font-size: 0.875rem;
 		.citizen-header-card( right );
+	}
+
+	&__header {
+		padding: var( --space-md ) 0;
+		border-bottom: 1px solid var( --border-color-base );
 	}
 }
 
@@ -21,7 +26,7 @@
 				.menu-item-link;
 				align-items: center;
 				justify-content: space-between;
-				// TODO: Need to revisit this spacing
+				// TODO: Need to revisit this spacing, maybe set a min-height instead?
 				padding: 0.625rem var( --space-md );
 
 				&:after {
@@ -53,11 +58,6 @@
 	}
 }
 
-.citizen-userMenu__header {
-	padding: var( --space-md ) 0;
-	border-bottom: 1px solid var( --border-color-base );
-}
-
 #p-user-info {
 	> ul > li {
 		margin-right: var( --space-md );
@@ -67,7 +67,7 @@
 
 #pt {
 	&-anonuserpage span,
-	&userpage-2 a {
+	&-userpage-2 a {
 		padding: var( --space-xs ) 0;
 		color: var( --color-base--emphasized );
 		font-size: 1rem;
@@ -140,14 +140,14 @@
 }
 
 // Checkbox hack
-#citizen-personalMenu__checkbox:checked {
-	~ .citizen-personalMenu__card {
+#citizen-userMenu__checkbox:checked {
+	~ .citizen-userMenu__card {
 		.citizen-card-show();
 	}
 }
 
 .citizen-animations-ready {
-	.citizen-personalMenu__card {
+	.citizen-userMenu__card {
 		.citizen-card-transition();
 	}
 }

@@ -12,7 +12,7 @@
 	"citizen.css": "/* 呢度放置嘅CSS會影響所有使用Citizen外觀嘅用戶 */",
 	"citizen.js": "/* 響每一次個頁面載入時，用 Citizen 畫面嘅用戶都會載入呢度任何嘅JavaScript */",
 	"citizen-drawer-toggle": "切換選單",
-	"citizen-personalmenu-toggle": "切換個人選單",
+	"citizen-usermenu-toggle": "切換個人選單",
 	"citizen-search-toggle": "切換搜尋",
 	"citizen-languages-toggle": "多啲語言",
 	"citizen-actions-more-toggle": "版嘅動作",

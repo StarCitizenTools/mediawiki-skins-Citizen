@@ -14,7 +14,7 @@
 	"citizen.css": "/* 此CSS會用於使用Citizen外觀的用戶 */",
 	"citizen.js": "/* 此Javascript會用於使用Citizen外觀的用戶 */",
 	"citizen-drawer-toggle": "切換菜單",
-	"citizen-personalmenu-toggle": "切換個人選單",
+	"citizen-usermenu-toggle": "切換個人選單",
 	"citizen-search-toggle": "切換搜尋",
 	"citizen-languages-toggle": "更多語言",
 	"citizen-actions-more-toggle": "更多操作",

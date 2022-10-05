@@ -18,7 +18,7 @@
 	"citizen.css": "/* Buradaki tüm CSS'ler Citizen görünüm  kullanıcıları için yüklenecek */",
 	"citizen.js": "/* Buradaki tüm JavaScript Citizen  görünümü kullanıcıları için yüklenecek */",
 	"citizen-drawer-toggle": "Menüyü değiştir",
-	"citizen-personalmenu-toggle": "Kişisel menüyü aç / kapat",
+	"citizen-usermenu-toggle": "Kişisel menüyü aç / kapat",
 	"citizen-search-toggle": "Aramayı değiştir",
 	"citizen-sitestats-articles-label": "maddeler",
 	"citizen-sitestats-images-label": "dosyalar",

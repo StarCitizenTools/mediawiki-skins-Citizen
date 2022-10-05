@@ -40,7 +40,7 @@
 						"citizen-actions-more-toggle",
 						"citizen-drawer-toggle",
 						"citizen-languages-toggle",
-						"citizen-personalmenu-toggle",
+						"citizen-usermenu-toggle",
 						"citizen-search-toggle",
 						"randompage",
 						"search",
@@ -297,7 +297,7 @@
 					}
 				},
 				".toctogglecheckbox:checked ~ .toctitle .toctogglelabel:before": "resources/skins.citizen.icons/shared/close.svg",
-				"#citizen-personalMenu__buttonCheckbox:after": "resources/skins.citizen.icons/shared/userAvatar.svg",
+				"#citizen-userMenu__buttonCheckbox:after": "resources/skins.citizen.icons/shared/userAvatar.svg",
 				".citizen-search__icon:after": "resources/skins.citizen.icons/shared/search.svg",
 				".citizen-search__random:after": "resources/skins.citizen.icons/shared/random.svg",
 				"#citizen-languages__buttonCheckbox:after": "resources/skins.citizen.icons/shared/language.svg",

@@ -10,7 +10,7 @@
 	"citizen.css": "/* Сиот тука поставен JavaScript ќе им се вчитува на корисниците што го користат рувото „Граѓанин“ */",
 	"citizen.js": "/* Сиот тука поставен JavaScript ќе им се вчитува на корисниците што го користат рувото „Граѓанин“ */",
 	"citizen-drawer-toggle": "Дај/скриј мени",
-	"citizen-personalmenu-toggle": "Дај/скриј лично мени",
+	"citizen-usermenu-toggle": "Дај/скриј лично мени",
 	"citizen-search-toggle": "Дај/скриј пребарување",
 	"citizen-languages-toggle": "Повеќе јазици",
 	"citizen-actions-more-toggle": "Повеќе дејства",

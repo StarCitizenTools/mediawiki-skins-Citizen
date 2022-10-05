@@ -32,7 +32,7 @@ use User;
 /**
  * Header partial of Skin Citizen
  * Generates the following partials:
- * - Personal Menu
+ * - User Menu
  * - Search
  */
 final class Header extends Partial {

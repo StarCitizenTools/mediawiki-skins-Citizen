@@ -17,7 +17,7 @@
 	"citizen.css": "/* 这里的任何CSS将为使用Citizen皮肤的用户加载 */",
 	"citizen.js": "/* 这里的任何JavaScript将为使用Citizen皮肤的用户加载 */",
 	"citizen-drawer-toggle": "切换菜单",
-	"citizen-personalmenu-toggle": "切换个人菜单",
+	"citizen-usermenu-toggle": "切换个人菜单",
 	"citizen-search-toggle": "切换搜索",
 	"citizen-languages-toggle": "更多语言",
 	"citizen-actions-more-toggle": "更多操作",

@@ -11,7 +11,7 @@
 	"citizen.css": "/* Увесь розміщений тут CSS буде завантажений для всіх користувачів теми оформлення «Громадянин» */",
 	"citizen.js": "/* Увесь розміщений тут код JavaScript буде завантажений для всіх користувачів теми оформлення «Громадянин» */",
 	"citizen-drawer-toggle": "Переключити меню",
-	"citizen-personalmenu-toggle": "Переключити особисте меню",
+	"citizen-usermenu-toggle": "Переключити особисте меню",
 	"citizen-search-toggle": "Переключити пошук",
 	"citizen-sitestats-articles-label": "статей",
 	"citizen-sitestats-images-label": "файли",

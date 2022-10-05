@@ -12,7 +12,7 @@
 	"citizen.css": "/* Todo o CSS aqui será carregado para usuários do tema Citizen */",
 	"citizen.js": "/* Todo o JavaScript aqui será carregado para os usuários do tema Citizen */",
 	"citizen-drawer-toggle": "Ativa o menu",
-	"citizen-personalmenu-toggle": "Alternar menu pessoal",
+	"citizen-usermenu-toggle": "Alternar menu pessoal",
 	"citizen-search-toggle": "Ativa a pesquisa",
 	"citizen-sitestats-articles-label": "artigos",
 	"citizen-sitestats-images-label": "arquivos",

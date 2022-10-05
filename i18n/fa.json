@@ -12,7 +12,7 @@
 	"citizen.css": "/* همه کدهای سی‌اس‌اس که در این بخش قرار بگیرد برای کاربرانی که از پوستهٔ شهروند استفاده کنند بارگزاری می‌شود */",
 	"citizen.js": "/ * همه کدهای جاوااسکریپتی که در اینجا قرار می‌گیرند برای کاربران پوستهٔ مدرن بارگیری می‌شود * /",
 	"citizen-drawer-toggle": "تغییر منو",
-	"citizen-personalmenu-toggle": "تغییر منوی شخصی",
+	"citizen-usermenu-toggle": "تغییر منوی شخصی",
 	"citizen-search-toggle": "تغییر جست‌وجو",
 	"citizen-sitestats-articles-label": "مقالات",
 	"citizen-sitestats-images-label": "پرونده‌ها",

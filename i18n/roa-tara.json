@@ -9,7 +9,7 @@
 	"citizen.css": "/* Tutte le CSS aqquà avène carecate pe le utinde ca ausane 'a masckere Citizen */",
 	"citizen.js": "/* Tutte le JavaScript aqquà avène carecate pe le utinde ca ausane 'a masckere Citizen */",
 	"citizen-drawer-toggle": "Live/mitte 'u menù",
-	"citizen-personalmenu-toggle": "Live/mitte 'u menù personale",
+	"citizen-usermenu-toggle": "Live/mitte 'u menù personale",
 	"citizen-search-toggle": "Live/mitte 'a recerche",
 	"citizen-sitestats-articles-label": "vôsce",
 	"citizen-sitestats-images-label": "fail",

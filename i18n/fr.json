@@ -13,7 +13,7 @@
 	"citizen.css": "/* La totalité du CSS placé ici s’appliquera aux utilisateurs de l’habillage Citizen. */",
 	"citizen.js": "/* Tout code JavaScript placé ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Citizen. */",
 	"citizen-drawer-toggle": "Basculer le menu",
-	"citizen-personalmenu-toggle": "Basculer le menu personnel",
+	"citizen-usermenu-toggle": "Basculer le menu personnel",
 	"citizen-search-toggle": "Basculer la recherche",
 	"citizen-languages-toggle": "Autres langues",
 	"citizen-actions-more-toggle": "Autres actions",
