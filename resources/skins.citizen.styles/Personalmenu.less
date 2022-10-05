@@ -65,17 +65,16 @@
 }
 
 #pt {
-	&-user {
-		&page-2 {
-			a {
-				padding: var( --space-xs ) 0;
-				color: var( --color-base--emphasized );
-				font-size: 1rem;
-				font-weight: 600;
-				word-break: break-word;
-			}
-		}
+	&-anonuserpage span,
+	&userpage-2 a {
+		padding: var( --space-xs ) 0;
+		color: var( --color-base--emphasized );
+		font-size: 1rem;
+		font-weight: 600;
+		word-break: break-word;
+	}
 
+	&-user {
 		&groups {
 			ul {
 				display: flex;
