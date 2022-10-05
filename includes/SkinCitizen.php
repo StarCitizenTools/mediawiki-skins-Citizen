@@ -96,7 +96,6 @@ class SkinCitizen extends SkinMustache {
 			// Data objects
 			'data-header' => [
 				'data-personal-menu' => $header->buildPersonalMenu(),
-				'data-search-box' => $header->buildSearchProps(),
 			],
 			'data-sitestats' => $drawer->getSiteStatsData(),
 			// HTML strings
@@ -109,6 +108,7 @@ class SkinCitizen extends SkinMustache {
 			'msg-citizen-footer-desc' => $this->msg( "citizen-footer-desc" )->inContentLanguage()->parse(),
 			'msg-citizen-footer-tagline' => $this->msg( "citizen-footer-tagline" )->inContentLanguage()->parse(),
 			// Decorate data provided by core
+			'data-search-box' => $header->decorateSearchBoxData( $parentData['data-search-box'] ),
 			'data-portlets-sidebar' => $drawer->decorateSidebarData( $parentData['data-portlets-sidebar'] ),
 			'data-footer' => $footer->decorateFooterData( $parentData['data-footer'] ),
 		];

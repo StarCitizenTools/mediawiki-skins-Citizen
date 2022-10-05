@@ -73,23 +73,14 @@ final class Header extends Partial {
 	}
 
 	/**
-	 * Render the search box
+	 * Decorate search box template data
 	 *
+	 * @param array $searchBoxData original data-search-box
 	 * @return array
-	 * @throws MWException
 	 */
-	public function buildSearchProps(): array {
-		$skin = $this->skin;
-
-		$toggleMsg = $skin->msg( 'citizen-search-toggle' )->text();
-
-		return [
-			// TODO: This should be called in skin.json
-			'msg-citizen-search-toggle' => $toggleMsg,
-			'msg-citizen-search-toggle-shortcut' => $toggleMsg . ' [/]',
-			'form-action' => $this->getConfigValue( 'Script' ),
-			'html-input' => $skin->makeSearchInput( [ 'id' => 'searchInput' ] ),
-			'page-title' => SpecialPage::getTitleFor( 'Search' )->getPrefixedDBkey(),
+	public function decorateSearchBoxData( $searchBoxData ): array {
+		return $searchBoxData +=[
+			'msg-citizen-search-toggle-shortcut' => '[/]',
 			'html-random-href' => Skin::makeSpecialUrl( 'Randompage' ),
 		];
 	}
