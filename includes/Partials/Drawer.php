@@ -80,10 +80,6 @@ final class Drawer extends Partial {
 			}
 		}
 
-		$sidebarData += [
-			'data-drawer-sitestats' => $this->getSiteStatsData()
-		];
-
 		return $sidebarData;
 	}
 
@@ -128,7 +124,7 @@ final class Drawer extends Partial {
 	 *
 	 * @return array for use in Mustache template.
 	 */
-	private function getSiteStatsData(): array {
+	public function getSiteStatsData(): array {
 		$props = [];
 
 		if ( $this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) ) {

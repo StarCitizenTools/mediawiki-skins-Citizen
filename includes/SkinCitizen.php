@@ -95,11 +95,10 @@ class SkinCitizen extends SkinMustache {
 			'toc-enabled' => $out->isTOCEnabled(),
 			// Data objects
 			'data-header' => [
-				'data-drawer' => $drawer->decorateSidebarData( $parentData['data-portlets-sidebar'] ),
 				'data-personal-menu' => $header->buildPersonalMenu(),
 				'data-search-box' => $header->buildSearchProps(),
 			],
-			'data-footer' => $footer->decorateFooterData( $parentData['data-footer'] ),
+			'data-sitestats' => $drawer->getSiteStatsData(),
 			// HTML strings
 			'html-title-heading--formatted' => $pageTitle->buildTitle( $parentData, $title ),
 			'html-citizen-jumptotop' => $this->msg( 'citizen-jumptotop' )->text() . ' [home]',
@@ -109,6 +108,9 @@ class SkinCitizen extends SkinMustache {
 			// Needed to be parsed here as it should be wikitext
 			'msg-citizen-footer-desc' => $this->msg( "citizen-footer-desc" )->inContentLanguage()->parse(),
 			'msg-citizen-footer-tagline' => $this->msg( "citizen-footer-tagline" )->inContentLanguage()->parse(),
+			// Decorate data provided by core
+			'data-portlets-sidebar' => $drawer->decorateSidebarData( $parentData['data-portlets-sidebar'] ),
+			'data-footer' => $footer->decorateFooterData( $parentData['data-footer'] ),
 		];
 
 		$data += $tools->getPageToolsData( $parentData );
