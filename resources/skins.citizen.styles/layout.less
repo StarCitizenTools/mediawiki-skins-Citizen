@@ -1,5 +1,10 @@
 @width-breakpoint-desktop-wider: @width-breakpoint-desktop + @width-toc * 2;
 
+.citizen-page-container {
+	// Reserve space for header
+	margin-bottom: var( --header-size );
+}
+
 .mw-body,
 .parsoid-body {
 	min-height: 80vh; // avoid footer being in the middle of the page
@@ -87,13 +92,10 @@ a.image {
 		padding-left: ~'calc( var( --padding-page ) * 2 )';
 	}
 
-	#siteNotice,
-	.mw-body,
-	.parsoid-body,
-	.citizen-footer,
-	#mw-data-after-content {
+	.citizen-page-container {
 		// Reserve space for header
 		margin-left: var( --header-size );
+		margin-bottom: 0;
 	}
 }
 
