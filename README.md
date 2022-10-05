@@ -1,7 +1,7 @@
 # Citizen
-[![](https://img.shields.io/github/contributors/StarCitizenTools/mediawiki-skins-Citizen?style=for-the-badge)](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/graphs/contributors) ![](https://img.shields.io/github/workflow/status/StarCitizenTools/mediawiki-skins-Citizen/MediaWiki%20CI?label=MediaWiki%20CI&style=for-the-badge) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=for-the-badge&logo=appveyor)](https://www.gnu.org/licenses/gpl-3.0) [![MediaWiki: >=1.35.2](https://img.shields.io/badge/MediaWiki-%3E%3D1.35.2-%2336c?style=for-the-badge&logo=appveyor)](https://www.mediawiki.org)[![](https://img.shields.io/badge/translations-translatewiki-%23013467?style=for-the-badge&logo=appveyor)](https://translatewiki.net/w/i.php?title=Special:Translate&group=mwgithub-star-citizen)
+[![](https://img.shields.io/github/contributors/StarCitizenTools/mediawiki-skins-Citizen?style=for-the-badge)](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/graphs/contributors) ![](https://img.shields.io/github/workflow/status/StarCitizenTools/mediawiki-skins-Citizen/MediaWiki%20CI?label=MediaWiki%20CI&style=for-the-badge) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=for-the-badge&logo=appveyor)](https://www.gnu.org/licenses/gpl-3.0) [![MediaWiki: >=1.39.0](https://img.shields.io/badge/MediaWiki-%3E%3D1.39.0-%2336c?style=for-the-badge&logo=appveyor)](https://www.mediawiki.org)[![](https://img.shields.io/badge/translations-translatewiki-%23013467?style=for-the-badge&logo=appveyor)](https://translatewiki.net/w/i.php?title=Special:Translate&group=mwgithub-star-citizen)
 
-Citizen is a responsive skin for [MediaWiki](https://www.mediawiki.org) built by the [Star Citizen Wiki](https://starcitizen.tools) team. Although it is specifically built for the Star Citizen Wiki, the skin is designed to be flexible to run on any Mediawiki installation that is **1.35.2 or higher**. Due to resource constraints, we might not be able to provide full support for setups that are vastly different than us, but please feel free to submit patches or bug report!
+Citizen is a responsive skin for [MediaWiki](https://www.mediawiki.org) built by the [Star Citizen Wiki](https://starcitizen.tools) team. Although it is specifically built for the Star Citizen Wiki, the skin is designed to be flexible to run on any Mediawiki installation that is **1.39.0 or higher**. Due to resource constraints, we might not be able to provide full support for setups that are vastly different than us, but please feel free to submit patches or bug report!
 
 Live demo can be seen at the [Star Citizen Wiki](https://starcitizen.tools), more avaliable [here](https://wikiapiary.com/wiki/Skin:Citizen).
 
@@ -126,6 +126,6 @@ Name | Description | Values | Default
 `$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#11151d`
 
 ## Requirements
-* [MediaWiki](https://www.mediawiki.org) 1.35.2 or later
+* [MediaWiki](https://www.mediawiki.org) 1.39.0 or later
 * For the legacy versions, check the other release branches.
 
