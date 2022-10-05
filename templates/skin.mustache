@@ -16,7 +16,7 @@
 	{{>ContentHeader}}
 	<div id="bodyContent" class="citizen-body" aria-labelledby="firstHeading">
 		<div id="contentSub"{{{html-user-language-attributes}}}>{{{html-subtitle}}}</div>
-		{{#html-undelete-link}}<div id="contentSub2">{{{html-undelete-link}}}</div>{{/html-undelete-link}}
+		{{#html-undelete-link}}<div id="contentSub2">{{{.}}}</div>{{/html-undelete-link}}
 		{{{html-user-message}}}
 		{{{html-body-content--formatted}}}
 	</div>
