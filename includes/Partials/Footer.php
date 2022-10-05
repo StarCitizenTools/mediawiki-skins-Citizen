@@ -32,7 +32,7 @@ final class Footer extends Partial {
 
 	/**
 	 * Decorate footer template data
-	 * 
+	 *
 	 * @param array $footerData original data-footer
 	 * @return array for use in Mustache template describing the footer elements.
 	 */
