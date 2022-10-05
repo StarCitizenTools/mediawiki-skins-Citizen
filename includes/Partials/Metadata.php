@@ -35,12 +35,6 @@ final class Metadata extends Partial {
 	public function addMetadata() {
 		$out = $this->out;
 
-		// Responsive layout
-		// Polyfill for MW 1.35
-		if ( version_compare( MW_VERSION, '1.36', '<' ) ) {
-			$out->addMeta( 'viewport', 'width=device-width, initial-scale=1.0' );
-		}
-
 		// Theme color
 		$out->addMeta( 'theme-color', $this->getConfigValue( 'CitizenThemeColor' ) ?? '' );
 
