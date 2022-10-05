@@ -26,9 +26,7 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Partials;
 
 use MediaWiki\MediaWikiServices;
-use MWException;
 use Skin;
-use SpecialPage;
 use User;
 
 /**
@@ -79,7 +77,7 @@ final class Header extends Partial {
 	 * @return array
 	 */
 	public function decorateSearchBoxData( $searchBoxData ): array {
-		return $searchBoxData +=[
+		return $searchBoxData += [
 			'msg-citizen-search-toggle-shortcut' => '[/]',
 			'html-random-href' => Skin::makeSpecialUrl( 'Randompage' ),
 		];
