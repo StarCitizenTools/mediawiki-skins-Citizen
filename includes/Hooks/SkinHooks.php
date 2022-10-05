@@ -27,35 +27,18 @@ namespace MediaWiki\Skins\Citizen\Hooks;
 
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;
+use MediaWiki\Hook\SkinTemplateNavigation__UniversalHook;
 use OutputPage;
-use ResourceLoaderContext;
 use Skin;
 
 /**
  * Hooks to run relating the skin
  */
-class SkinHooks implements SkinPageReadyConfigHook, BeforePageDisplayHook {
-
-	/**
-	 * SkinPageReadyConfig hook handler
-	 *
-	 * Replace searchModule provided by skin.
-	 *
-	 * @since 1.35
-	 * @param ResourceLoaderContext $context
-	 * @param mixed[] &$config Associative array of configurable options
-	 * @return void This hook must not abort, it must return no value
-	 */
-	public function onSkinPageReadyConfig( ResourceLoaderContext $context, array &$config ): void {
-		// It's better to exit before any additional check
-		if ( $context->getSkin() !== 'citizen' ) {
-			return;
-		}
-
-		// Tell the `mediawiki.page.ready` module not to wire up search.
-		$config['search'] = false;
-	}
-
+class SkinHooks implements
+	BeforePageDisplayHook,
+	SkinPageReadyConfigHook,
+	SkinTemplateNavigation__UniversalHook
+{
 	/**
 	 * Adds the inline theme switcher script to the page
 	 *
@@ -80,5 +63,39 @@ class SkinHooks implements SkinPageReadyConfigHook, BeforePageDisplayHook {
 		// phpcs:enable Generic.Files.LineLength.TooLong
 
 		$out->addHeadItem( 'skin.citizen.inline', $script );
+	}
+
+	/**
+	 * SkinPageReadyConfig hook handler
+	 *
+	 * Replace searchModule provided by skin.
+	 *
+	 * @since 1.35
+	 * @param ResourceLoaderContext $context
+	 * @param mixed[] &$config Associative array of configurable options
+	 * @return void This hook must not abort, it must return no value
+	 */
+	public function onSkinPageReadyConfig( $context, array &$config ): void {
+		// It's better to exit before any additional check
+		if ( $context->getSkin() !== 'citizen' ) {
+			return;
+		}
+
+		// Tell the `mediawiki.page.ready` module not to wire up search.
+		$config['search'] = false;
+	}
+
+	/**
+	 * Modify navigation links
+	 * 
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SkinTemplateNavigation::Universal
+	 * @param SkinTemplate $sktemplate
+	 * @param array &$links
+	 */
+	public function onSkinTemplateNavigation__Universal( $sktemplate, &$links ): void {
+		// Remove userpage from user menu since it is used in user menu info
+		if ( $links['user-menu']['userpage'] ) {
+			unset( $links['user-menu']['userpage'] );
+		}
 	}
 }

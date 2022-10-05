@@ -50,23 +50,9 @@ final class Header extends Partial {
 		);
 
 		$header = $this->getPersonalHeaderData( $personalTools );
-		// We need userpage for personal header
-		if ( isset( $personalTools['userpage'] ) ) {
-			unset( $personalTools['userpage'] );
-		}
-
-		// Move the Echo badges out of default list
-		// TODO: Remove notifications since MW 1.36 from buildPersonalUrls
-		if ( isset( $personalTools['notifications-alert'] ) ) {
-			unset( $personalTools['notifications-alert'] );
-		}
-		if ( isset( $personalTools['notifications-notice'] ) ) {
-			unset( $personalTools['notifications-notice'] );
-		}
 
 		return [
 			'data-personal-menu-header' => $header,
-			'data-personal-menu-list' => $skin->getPortletData( 'personal', $personalTools ),
 		];
 	}
 
