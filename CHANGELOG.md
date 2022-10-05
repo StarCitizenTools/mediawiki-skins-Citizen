@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-beta.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.0.0-beta.0...v2.0.0-beta.1) (2022-10-05)
+
+
+### Features
+
+* **core:** ✨ remove broken recent change styles ([757cd6a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/757cd6ad171a3ea374dfb944720b2ea1ebafa5bb))
+* **core:** ✨ use 100vh instead of 100% for min-height ([ac2559e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ac2559ed8b8cba7d1046c4769336b797801564f5))
+* **skinStyles:** ✨ add missing VE styles ([4a7489e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4a7489e19f894f8c4a7904445080c18932d3445a))
+
+
+### Bug Fixes
+
+* **core:** 🐛 incorrect max height for header card ([0633db4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0633db4d7ba69cf057931dd49168f4ca48f282cb))
+* **core:** 🐛 missing z-index for mw-body-header ([92c64be](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/92c64be48b9fda655289f2a6ea382b3d0c2073fc))
+* **core:** 🐛 mw-data-content should reserve space for header ([979138d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/979138d251e411f7aa4521fcd7a1b6d58b162ae6))
+* **core:** 🐛 ToC card should be above page header ([db05e6d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/db05e6d3cf8bc7ffe1ae706e48b7b42829b25b24))
+* **skinStyles:** 🐛 fix Echo overflow in small screens ([5e962b7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5e962b785bd6c7c5b4a962a45f042afc562326f9))
+* **skinStyles:** 🐛 incorrect VE new paragraph button color ([a59aeff](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a59aeff4a368f4034108c094f80bb0a2eb02aa98))
+* **skinStyles:** 🐛 various clipping in VisualEditor ([d2dca07](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d2dca076184206cec24ba780b46e93c5cd4bb3e5))
+
 ## [2.0.0-beta.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.0.0-alpha.2...v2.0.0-beta.0) (2022-10-02)
 
 
