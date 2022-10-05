@@ -94,8 +94,12 @@ class SkinHooks implements
 	 */
 	public function onSkinTemplateNavigation__Universal( $sktemplate, &$links ): void {
 		// Remove userpage from user menu since it is used in user menu info
-		if ( $links['user-menu']['userpage'] ) {
+		if ( isset( $links['user-menu']['userpage'] ) ) {
 			unset( $links['user-menu']['userpage'] );
+		}
+
+		if ( isset( $links['user-menu']['anonuserpage'] ) ) {
+			unset( $links['user-menu']['anonuserpage'] );
 		}
 	}
 }

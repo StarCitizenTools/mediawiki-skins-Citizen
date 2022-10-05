@@ -10,7 +10,9 @@
 		aria-labelledby="citizen-personalMenu__buttonCheckbox"
 		aria-haspopup="true">
 	<aside id="citizen-personalMenu__card" class="citizen-personalMenu__card mw-checkbox-hack-target">
-		{{#data-personal-menu-header}}{{>Menu}}{{/data-personal-menu-header}}
+		{{#data-user-info}}
+			<div class="citizen-userMenu__header">{{>Menu}}</div>
+		{{/data-user-info}}
 		{{#data-portlets.data-user-menu}}{{>Menu}}{{/data-portlets.data-user-menu}}
 	</aside>
 	<label

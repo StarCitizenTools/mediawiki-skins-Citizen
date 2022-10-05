@@ -33,29 +33,9 @@ use User;
  * Header partial of Skin Citizen
  * Generates the following partials:
  * - Personal Menu
- * - Extra Tools
  * - Search
  */
 final class Header extends Partial {
-	/**
-	 * Build Personal Tools menu
-	 *
-	 * @return array
-	 */
-	public function buildPersonalMenu(): array {
-		$skin = $this->skin;
-
-		$personalTools = $skin->getPersonalToolsForMakeListItem(
-			$skin->buildPersonalUrlsPublic()
-		);
-
-		$header = $this->getPersonalHeaderData( $personalTools );
-
-		return [
-			'data-personal-menu-header' => $header,
-		];
-	}
-
 	/**
 	 * Decorate search box template data
 	 *
@@ -70,94 +50,107 @@ final class Header extends Partial {
 	}
 
 	/**
-	 * Decorate the personal menu
+	 * Get the user info template data for user menu
 	 *
-	 * @param array $personalTools The original personal tools urls
-	 *
+	 * @param $userPageData data-portlets.data-user-page
 	 * @return array
 	 */
-	private function getPersonalHeaderData( $personalTools ): array {
-		$skin = $this->skin;
-		$user = $this->user;
-		$header = [];
+	public function getUserInfoData( $userPageData ): array {
+		$isRegistered = $this->user->isRegistered();
 
-		if ( $user->isRegistered() ) {
-			$header += [
-				'userpage' => $personalTools['userpage'] ?? null,
-				'usergroups' => $this->getUserGroupsData( $personalTools, $user ),
-				'usercontris' => $this->getUserContributionsData( $user ),
-			];
+		$html = $this->getUserPageHTML( $isRegistered, $userPageData );
+
+		if ( $isRegistered ) {
+			$html .= $this->getUserGroupsHTML();
+			$html .= $this->getUserContributionsHTML();
 		}
 
-		return $skin->getPortletData( 'personal-header', array_filter( $header ) );
+		return [
+			'id' => 'p-user-info',
+			'html-items' => $html,
+		];
 	}
 
 	/**
-	 * Build and return user groups data
+	 * Get the user page HTML
 	 *
-	 * @param array $personalTools The original personal tools urls
-	 * @param User $user
-	 *
-	 * @return array|null
+	 * @param bool $isRegistered
+	 * @param array $userPageData data-portlets.data-user-page
+	 * @return string
 	 */
-	private function getUserGroupsData( $personalTools, $user ): ?array {
+	private function getUserPageHTML( $isRegistered, $userPageData ): ?string {
+		if ( $isRegistered ) {
+			$html = $userPageData['html-items'];
+		} else {
+			// There must be a cleaner way to do this
+			$msg = $this->skin->msg( 'notloggedin' )->text();
+			$tooltip = $this->skin->msg( 'tooltip-pt-anonuserpage' )->text();
+			$html = <<<HTML
+				<li id="pt-anonuserpage" class="mw-list-item">
+					<span title="$tooltip">$msg</span>
+				</li>
+			HTML;
+		}
+
+		return $html;
+	}
+
+	/**
+	 * Get the user groups HTML
+	 *
+	 * @return string|null
+	 */
+	private function getUserGroupsHTML(): ?string {
 		// This does not return implicit groups
-		$groups = MediaWikiServices::getInstance()->getUserGroupManager()->getUserGroups( $user );
+		$groups = MediaWikiServices::getInstance()->getUserGroupManager()->getUserGroups( $this->user );
 
 		if ( empty( $groups ) ) {
 			return null;
 		}
 
-		$skin = $this->skin;
-		$title = $this->title;
-
-		// Add user group
-		$groupLinks = [];
+		$html = '';
 		$msgName = 'group-%s';
 
+		// There must be a cleaner way
 		foreach ( $groups as $group ) {
-			$groupPage = $title->newFromText(
-				$skin->msg( sprintf( $msgName, $group ) )->text(),
-				NS_PROJECT
-			);
-
-			$groupLinks[$group] = [
-				'msg' => sprintf( $msgName, $group ),
-				// Nullpointer should not happen
-				'href' => $groupPage->getLinkURL(),
-				'tooltiponly' => true,
-				'id' => sprintf( $msgName, $group ),
-				// 'exists' => $groupPage->exists() - This will add an additional DB call
-			];
+			$id = sprintf( $msgName, $group );
+			$msg = $this->skin->msg( $id )->text();
+			// Nullpointer should not happen
+			$href = $this->title->newFromText(
+					$this->skin->msg( sprintf( $msgName, $group ) )->text(),
+					NS_PROJECT
+				)->getLinkURL();
+			$html .= <<< HTML
+				<li>
+					<a href="$href" id="$id">$msg</a>
+				</li>
+			HTML;
 		}
 
-		return [
-			'id' => 'pt-usergroups',
-			'links' => $groupLinks
-		];
+		$html = sprintf( '<li id="pt-usergroups"><ul>%s</ul></li>', $html );
+
+		return $html;
 	}
 
 	/**
-	 * Build and return user contributions data
+	 * Get the user contributions HTML
 	 *
-	 * @param User $user
-	 *
-	 * @return array|null
+	 * @return string|null
 	 */
-	private function getUserContributionsData( $user ): ?array {
+	private function getUserContributionsHTML(): ?string {
 		// Return user edits
-		$edits = MediaWikiServices::getInstance()->getUserEditTracker()->getUserEditCount( $user );
+		$edits = MediaWikiServices::getInstance()->getUserEditTracker()->getUserEditCount( $this->user );
 
 		if ( empty( $edits ) ) {
 			return null;
 		}
 
-		$skin = $this->skin;
+		$editsText = $this->skin->msg( 'usereditcount' )
+			->numParams( sprintf( '%s', number_format( $edits, 0 ) ) );
 
-		return [
-			'text' => $skin->msg( 'usereditcount' )
-				->numParams( sprintf( '%s', number_format( $edits, 0 ) ) ),
-			'id' => 'pt-usercontris'
-		];
+		// There must be a cleaner way
+		$html = '<li id="pt-usercontris">' . $editsText . '</li>';
+
+		return $html;
 	}
 }
