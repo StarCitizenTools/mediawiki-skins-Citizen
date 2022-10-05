@@ -51,6 +51,8 @@ final class Header extends Partial {
 
 	/**
 	 * Get the user info template data for user menu
+	 * 
+	 * TODO: Consider dropping Menu.mustache since the DOM doesn't make much sense
 	 *
 	 * @param $userPageData data-portlets.data-user-page
 	 * @return array
