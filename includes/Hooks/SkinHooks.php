@@ -102,7 +102,7 @@ class SkinHooks implements
 			unset( $links['user-menu']['tmpuserpage'] );
 			// Remove links as they are added to the bottom of user menu later
 			// unset( $links['user-menu']['logout'] );
-		} else if ( $isRegistered ) {
+		} elseif ( $isRegistered ) {
 			// Remove user page link from user menu and recreate it in user info
 			unset( $links['user-menu']['userpage'] );
 		} else {
