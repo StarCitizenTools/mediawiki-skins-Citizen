@@ -93,15 +93,20 @@ class SkinHooks implements
 	 * @param array &$links
 	 */
 	public function onSkinTemplateNavigation__Universal( $sktemplate, &$links ): void {
-		$isRegistered = $sktemplate->getUser()->isRegistered();
+		$user = $sktemplate->getUser();
+		$isRegistered = $user->isRegistered();
+		$isTemp = $user->isTemp();
 
-		if ( $isRegistered ) {
-			// Remove user page link from user menu and recreate it in user info
-			unset( $links['user-menu']['userpage'] );
+		if ( $isTemp ) {
+			// Remove temporary user page text from user menu and recreate it in user info
+			unset( $links['user-menu']['tmpuserpage'] );
 			// Remove links as they are added to the bottom of user menu later
 			// unset( $links['user-menu']['logout'] );
+		} else if ( $isRegistered ) {
+			// Remove user page link from user menu and recreate it in user info
+			unset( $links['user-menu']['userpage'] );
 		} else {
-			// Remove anonuserpage from user menu and recreate it in user info
+			// Remove anon user page text from user menu and recreate it in user info
 			unset( $links['user-menu']['anonuserpage'] );
 			// Remove links as they are added to the bottom of user menu later
 			// unset( $links['user-menu']['createaccount'] );
