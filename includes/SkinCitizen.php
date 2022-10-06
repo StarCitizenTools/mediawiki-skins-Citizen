@@ -165,6 +165,9 @@ class SkinCitizen extends SkinMustache {
 		// Add theme handler
 		$skinTheme->setSkinTheme( $options );
 
+		// Disable default ToC since it is handled by Citizen
+		$options['toc'] = false;
+
 		// Collapsible sections
 		// Load in content pages
 		if ( $title !== null && $title->isContentPage() ) {
@@ -175,9 +178,6 @@ class SkinCitizen extends SkinMustache {
 				$options['styles'][] = 'skins.citizen.icons.sections';
 			}
 		}
-
-		// Table of content highlight
-		$options['styles'][] = 'skins.citizen.styles.toc';
 
 		// CJK fonts
 		if ( $this->getConfigValue( 'CitizenEnableCJKFonts' ) === true ) {

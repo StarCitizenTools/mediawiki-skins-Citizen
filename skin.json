@@ -44,7 +44,8 @@
 						"citizen-search-toggle",
 						"randompage",
 						"search",
-						"sitetitle"
+						"sitetitle",
+						"toc"
 					]
 				}
 			]
@@ -169,22 +170,6 @@
 			},
 			"styles": [
 				"resources/skins.citizen.styles.sitestats/skins.citizen.styles.sitestats.less"
-			]
-		},
-		"skins.citizen.styles.toc": {
-			"class": "ResourceLoaderSkinModule",
-			"targets": [
-				"desktop",
-				"mobile"
-			],
-			"features": {
-				"content-parser-output": false,
-				"content-body": false,
-				"logo": false,
-				"toc": false
-			},
-			"styles": [
-				"resources/skins.citizen.styles.toc/skins.citizen.styles.toc.less"
 			]
 		},
 		"skins.citizen.scripts": {

@@ -1,0 +1,10 @@
+{{#data-toc}}
+<nav id="mw-panel-toc" class="citizen-toc" role="navigation" aria-labelledby="mw-panel-toc-label">
+	<div id="mw-panel-toc-label" class="citizen-toc__header">{{msg-toc}}</div>
+	<ul class="citizen-toc__contents" id="mw-panel-toc-list">
+		{{#array-sections}}
+		{{>TableOfContents__line}}
+		{{/array-sections}}
+	</ul>
+</nav>
+{{/data-toc}}
