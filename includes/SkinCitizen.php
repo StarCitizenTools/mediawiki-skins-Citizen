@@ -58,8 +58,7 @@ class SkinCitizen extends SkinMustache {
 	 */
 	public function getTemplateData(): array {
 		$data = [];
-		$out = $this->getOutput();
-		$title = $out->getTitle();
+		$title = $this->getOutput()->getTitle();
 		$parentData = parent::getTemplateData();
 
 		$header = new Header( $this );
@@ -89,7 +88,7 @@ class SkinCitizen extends SkinMustache {
 
 		$data += [
 			// Booleans
-			'toc-enabled' => $out->isTOCEnabled(),
+			'toc-enabled' => !empty( $parentData['data-toc'] ),
 			// Data objects
 			'data-sitestats' => $drawer->getSiteStatsData(),
 			'data-user-info' => $header->getUserInfoData( $parentData['data-portlets']['data-user-page'] ),
@@ -155,8 +154,7 @@ class SkinCitizen extends SkinMustache {
 	 * @param array &$options
 	 */
 	private function buildSkinFeatures( array &$options ) {
-		$out = $this->getOutput();
-		$title = $out->getTitle();
+		$title = $this->getOutput()->getTitle();
 
 		$metadata = new Metadata( $this );
 		$skinTheme = new Theme( $this );
