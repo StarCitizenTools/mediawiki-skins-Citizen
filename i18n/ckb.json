@@ -1,0 +1,39 @@
+{
+	"@metadata": {
+		"authors": [
+			"Alistair3149"
+		]
+	},
+	"skinname-citizen": "هاوڵاتی",
+	"citizen-skin-desc": "ڕووکارێکی وەڵامدەرەوە پەرەی پێدراوە بۆ ویکی شارستانی ئەستێرە",
+	"citizen-drawer-toggle": "داخستن و کردنەوەی پێڕست",
+	"citizen-personalmenu-toggle": "داخستن و کردنەوەی پێڕستی کەسی",
+	"citizen-search-toggle": "داخستن و کردنەوەی گەڕان",
+	"citizen-languages-toggle": "زمانی زیاتر",
+	"citizen-actions-more-toggle": "کرداری زیاتر",
+	"citizen-sitestats-articles-label": "وتارەکان",
+	"citizen-sitestats-images-label": "پەڕگەکان",
+	"citizen-sitestats-users-label": "بەکارهێنەران",
+	"citizen-sitestats-edits-label": "دەستکاریکردنەکان",
+	"citizen-footer-desc": "دەستکاری ئەم دەقە لەسەر [[MediaWiki:Citizen-footer-desc]]",
+	"citizen-footer-tagline": "دەستکاری ئەم دەقە لەسەر [[MediaWiki:Citizen-footer-tagline]]",
+	"citizen-action-addsection": "بابەت دابنێ",
+	"citizen-jumptotop": "گەڕانەوە بۆ سەرەوە",
+	"citizen-search-fulltext": "گەڕان لە ناوەڕۆکی لاپەڕەکان",
+	"citizen-search-fulltext-empty": "بنوسە بۆ گەڕان",
+	"citizen-tagline-ns-talk": "لاپەڕەی گفتوگۆی {{SUBJECTPAGENAME}}",
+	"citizen-tagline-ns-project": "زانیاری لەبارەی {{SITENAME}}",
+	"citizen-tagline-ns-file": "پەڕگە لەسەر {{SITENAME}}",
+	"citizen-tagline-ns-mediawiki": "پەڕەی ڕووکاری میدیاویکی",
+	"citizen-tagline-ns-template": "لاپەڕەی ڕووکار",
+	"citizen-tagline-ns-help": "لاپەڕەی یارمەتی",
+	"citizen-tagline-ns-category": "لاپەڕەی هاوپۆل",
+	"prefs-citizen-theme-label": "ڕووکار",
+	"prefs-citizen-theme-option-auto": "خۆگەڕ",
+	"prefs-citizen-theme-option-light": "ڕووناک",
+	"prefs-citizen-theme-option-dark": "تاریک",
+	"prefs-citizen-fontsize-label": "قەبارەی جۆرەپیت",
+	"prefs-citizen-pagewidth-label": "پانی پەڕە",
+	"prefs-citizen-lineheight-label": "بەرزی هێڵ",
+	"prefs-citizen-resetbutton-label": "ڕێکخستنەوە بۆ بنەڕەت"
+}

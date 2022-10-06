@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Georg101",
+			"Kareyac",
 			"Want"
 		]
 	},
@@ -9,6 +10,7 @@
 	"citizen-sitestats-images-label": "Soubory",
 	"citizen-sitestats-users-label": "uživatelé",
 	"citizen-sitestats-edits-label": "Úpravy",
+	"citizen-page-info-copyright": "Autorská práva",
 	"citizen-jumptotop": "Zpět nahoru",
 	"citizen-tagline-ns-project": "Informace o {{SITENAME}}",
 	"citizen-tagline-ns-template": "Stránka šablony",
