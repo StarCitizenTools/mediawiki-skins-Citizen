@@ -14,6 +14,7 @@
 <div class="citizen-page-container">
 	<div id="siteNotice">{{{html-site-notice}}}</div>
 	<main class="mw-body {{#toc-enabled}}citizen-toc-enabled{{/toc-enabled}}" id="content">
+		<div class="citizen-body-container">
 		{{>ContentHeader}}
 		<div id="bodyContent" class="citizen-body" aria-labelledby="firstHeading">
 			<div id="contentSub"{{{html-user-language-attributes}}}>{{{html-subtitle}}}</div>
@@ -23,6 +24,7 @@
 		</div>
 		{{#toc-enabled}}{{>TableOfContents}}{{/toc-enabled}}
 		{{>ContentFooter}}
+		</div>
 	</main>
 	{{{html-after-content}}}
 	{{#data-footer}}{{>Footer}}{{/data-footer}}

@@ -26,9 +26,6 @@
 /* Wider desktop breakpoint */
 @width-breakpoint-desktop-wide: 1300px;
 
-/* Width when content center on pages with ToC */
-@width-breakpoint-desktop-wider: @width-breakpoint-desktop + @width-toc * 2;
-
 /* Extra wide desktop breakpoint */
 @width-breakpoint-desktop-extrawide: 2000px;
 
@@ -203,7 +200,8 @@
 // Not in the header section it is also used outside of header
 @header-size:	3.5rem;
 @width-layout:	@width-breakpoint-desktop - 2 * @padding-page;
-@width-toc: @width-breakpoint-desktop-wide - @width-breakpoint-desktop;
+// TODO: Revise this number, fixed value isn't great but we need it for b
+@width-toc: 240px;
 
 /* Paddings */
 @padding-page:	20px;
