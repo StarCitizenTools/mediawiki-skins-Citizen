@@ -3,11 +3,13 @@
 		"authors": [
 			"Kareyac",
 			"Okras",
+			"Toghrul Rahimli",
 			"UniCollab",
 			"WerySkok"
 		]
 	},
 	"citizen-skin-desc": "Адаптивная тема оформления, разработанная для Star Citizen Wiki",
+	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|Обсуждение]]",
 	"citizen.css": "/* Размещённый здесь CSS-код будет загружаться для пользователей, использующих тему оформления Citizen */",
 	"citizen.js": "/* Размещённый здесь код JavaScript будет загружаться для пользователей, использующих тему оформления Citizen */",
 	"citizen-drawer-toggle": "Открыть меню",
