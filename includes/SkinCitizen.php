@@ -53,8 +53,7 @@ class SkinCitizen extends SkinMustache {
 	}
 
 	/**
-	 * @return array Returns an array of data used by Citizen skin.
-	 * @throws MWException
+	 * @inheritDoc
 	 */
 	public function getTemplateData(): array {
 		$data = [];

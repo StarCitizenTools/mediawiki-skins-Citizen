@@ -1,5 +1,57 @@
+.citizen-toc {
+	--toc-space: ~'calc( var( --space-sm ) * 1.5 )';
+	font-size: 0.875rem;
+
+	&__list {
+		margin-top: 0;
+		margin-left: var( --space-sm );
+	}
+
+	&__contents,
+	&__list {
+		border-left: 1px solid var( --border-color-base );
+		list-style: none;
+	}
+
+	&__link {
+		display: flex;
+		padding-top: var( --space-sm );
+		padding-bottom: var( --space-sm );
+		color: var( --color-base );
+		font-weight: 500;
+	}
+
+	&__indicator {
+		width: 3px;
+		flex-shrink: 0;
+		margin-right: var( --space-sm );
+		margin-left: -2px;
+	}
+
+	&__numb {
+		display: none;
+	}
+
+	&__listItem {
+		&--active {
+			> .citizen-toc__link {
+				color: var( --color-primary );
+
+				.citizen-toc__indicator {
+					background-color: var( --color-primary );
+				}
+			}
+		}
+	}
+}
+
 @media ( min-width: @width-breakpoint-desktop ) {
 	.citizen-toc {
 		grid-area: toc;
+
+		&__card {
+			position: sticky;
+			top: ~'calc( var( --header-size ) + var( --space-md ) )';
+		}
 	}
 }
