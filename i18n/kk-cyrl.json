@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Batyrbek.kz",
 			"U.ayaao.p"
 		]
 	},
@@ -18,9 +19,9 @@
 	"citizen-sitestats-images-label": "файл",
 	"citizen-sitestats-users-label": "қатысушы",
 	"citizen-sitestats-edits-label": "өңдеу",
-	"citizen-page-info-copyright": "Авторлық құқық қорғалған",
+	"citizen-page-info-copyright": "Авторлық құқықтары қорғалған",
 	"citizen-page-info-credits": "Авторлары",
-	"citizen-page-info-lastmod": "Соңғы өзгерілген кезі",
+	"citizen-page-info-lastmod": "Соңғы өзгертілген кезі",
 	"citizen-footer-desc": "Осы мәтінді [[MediaWiki:Citizen-footer-desc]] деген бетте өңдеңіз",
 	"citizen-footer-tagline": "Осы мәтінді [[MediaWiki:Citizen-footer-tagline]] деген бетте өңдеңіз",
 	"citizen-action-addsection": "Тақырып қосу",
