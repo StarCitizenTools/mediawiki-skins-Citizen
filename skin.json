@@ -39,6 +39,7 @@
 					"messages": [
 						"citizen-actions-more-toggle",
 						"citizen-drawer-toggle",
+						"citizen-jumptotop",
 						"citizen-languages-toggle",
 						"citizen-usermenu-toggle",
 						"citizen-search-toggle",

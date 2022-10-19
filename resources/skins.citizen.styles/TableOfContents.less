@@ -41,6 +41,13 @@
 		color: var( --color-base );
 		font-weight: 500;
 
+		&.citizen-toc__top {
+			height: 0;
+			opacity: 0;
+			transition: @transition-opacity, @transition-height;
+			visibility: hidden;
+		}
+
 		&:hover {
 			background-color: var( --background-color-quiet--hover );
 		}
@@ -72,6 +79,15 @@
 				}
 			}
 		}
+	}
+}
+
+// Sticky header styles
+.citizen-body-header--sticky {
+	.citizen-toc__top.citizen-toc__link {
+		height: 1.05rem; // ( 1rem text + 1rem padding ) * line height / 2
+		opacity: 1;
+		visibility: visible;
 	}
 }
 
