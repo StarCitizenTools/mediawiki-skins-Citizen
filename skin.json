@@ -276,6 +276,7 @@
 			"selector": "{name}",
 			"defaultColor": "#000",
 			"images": {
+				".citizen-toc__top:before": "resources/skins.citizen.icons/backToTop.svg",
 				".toctogglelabel:before": {
 					"file": {
 						"ltr": "resources/skins.citizen.icons/toc-ltr.svg",
