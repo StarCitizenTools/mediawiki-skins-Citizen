@@ -1,6 +1,13 @@
 {{#data-toc}}
 <div class="citizen-toc">
-	<nav id="mw-panel-toc" class="citizen-toc__card" role="navigation" aria-labelledby="mw-panel-toc-label">
+	<input 
+		type="checkbox" 
+		id="citizen-toc__checkbox" 
+		class="mw-checkbox-hack-checkbox"
+		role="button"
+		aria-labelledby="citizen-toc__buttonCheckbox"
+		aria-haspopup="true">
+	<nav id="mw-panel-toc" class="citizen-toc__card mw-checkbox-hack-target" role="navigation" aria-labelledby="mw-panel-toc-label">
 		<a class="citizen-toc__top citizen-toc__link" title="{{html-citizen-jumptotop}}" href="#top">
 			<div class="citizen-toc__text">{{msg-citizen-jumptotop}}</div>
 		</a>
@@ -11,5 +18,13 @@
 			{{/array-sections}}
 		</ul>
 	</nav>
+	<label
+		id="citizen-toc__buttonCheckbox" 
+		class="mw-checkbox-hack-button" 
+		for="citizen-toc__checkbox"
+		title="{{msg-toc}}"
+		aria-hidden="true">
+		<span id="mw-panel-toc-label">{{msg-toc}}</span>
+	</label>
 </div>
 {{/data-toc}}
