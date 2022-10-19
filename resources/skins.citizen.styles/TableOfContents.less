@@ -1,29 +1,55 @@
 .citizen-toc {
-	--toc-space: ~'calc( var( --space-sm ) * 1.5 )';
 	font-size: 0.875rem;
+	line-height: 1.2;
 
-	&__list {
-		margin-top: 0;
-		margin-left: var( --space-sm );
+	&__card {
+		display: flex;
+		flex-direction: column;
+		gap: var( --space-sm );
+	}
+
+	&__header {
+		color: var( --color-base--subtle );
+		letter-spacing: 0.75px;
 	}
 
 	&__contents,
 	&__list {
 		border-left: 1px solid var( --border-color-base );
+		margin-top: 0;
 		list-style: none;
+
+		.citizen-toc__link {
+			border-bottom-left-radius: 0;
+			border-top-left-radius: 0;
+		}
+	}
+
+	&__list {
+		margin-left: var( --space-sm );
 	}
 
 	&__link {
 		display: flex;
 		padding-top: var( --space-sm );
 		padding-bottom: var( --space-sm );
+		border-radius: var( --border-radius--small );
 		color: var( --color-base );
 		font-weight: 500;
+
+		&:hover {
+			background-color: var( --background-color-quiet--hover );
+		}
+
+		&:active {
+			background-color: var( --background-color-quiet--active );
+		}
 	}
 
 	&__indicator {
 		width: 3px;
 		flex-shrink: 0;
+		border-radius: 1000px;
 		margin-right: var( --space-sm );
 		margin-left: -2px;
 	}
@@ -50,8 +76,24 @@
 		grid-area: toc;
 
 		&__card {
+			--toc-margin-top: 0;
 			position: sticky;
-			top: ~'calc( var( --header-size ) + var( --space-md ) )';
+			top: var( --toc-margin-top );
+			max-height: ~'calc( 100vh - var( --toc-margin-top ) )';
+			overflow-y: auto;
+			overscroll-behavior: contain;
+		}
+	}
+
+	// Sticky header styles
+	.citizen-body-header--sticky {
+		.citizen-toc__card {
+			--toc-margin-top: ~'calc( var( --header-size ) + var( --space-xl ) )';
+
+			// Sticky header is shorter without buttons
+			@media ( max-height: 800px ) {
+				--toc-margin-top: ~'calc( var( --header-size ) + var( --space-md ) )';
+			}
 		}
 	}
 }
