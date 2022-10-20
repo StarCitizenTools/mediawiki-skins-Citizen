@@ -149,10 +149,6 @@
 			~ .citizen-toc__card {
 				.citizen-card-show( false );
 			}
-
-			~ #citizen-toc__buttonCheckbox {
-				box-shadow: none;
-			}
 		}
 
 		&__buttonCheckbox {
@@ -165,6 +161,9 @@
 			margin: var( --space-sm );
 			background-color: var( --color-surface-1 );
 			box-shadow: var( --box-shadow-dialog );
+			transform: none;
+			transform-origin: bottom right;
+			transition: @transition-transform;
 
 			&:after {
 				display: block;
@@ -184,6 +183,26 @@
 
 			&:active {
 				background-color: var( --color-surface-1 );
+			}
+		}
+	}
+
+	// Hide dismiss button when JS is enabled
+	// Since clicking outside will dismiss ToC already
+	.client-js {
+		#citizen-toc {
+			&__checkbox:checked {
+				// Fake seamless transition
+				~ #citizen-toc__buttonCheckbox {
+					background-color: transparent;
+					box-shadow: none;
+					pointer-events: none;
+					transform: scale( 1.2 );
+
+					&:after {
+						display: none;
+					}
+				}
 			}
 		}
 	}
