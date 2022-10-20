@@ -94,6 +94,21 @@
 	border-color: var( --border-color-base );
 }
 
+.searchdidyoumean {
+	font-size: 1rem;
+}
+
+.mw-search-createlink,
+.mw-search-exists {
+	max-width: 20rem;
+	padding: var( --space-md );
+	border-radius: var( --border-radius--small );
+	margin-top: 0 !important;
+	background: var( --color-surface-2 );
+	float: right;
+	font-size: 0.875rem;
+}
+
 .mw-search-results {
 	li {
 		a {
@@ -108,18 +123,6 @@
 		color: var( --color-base--subtle );
 		font-size: 0.8125rem;
 	}
-}
-
-.mw-search-createlink,
-.mw-search-exists {
-	padding: var( --space-md );
-	border-radius: var( --border-radius--small );
-	background: var( --color-surface-2 );
-	font-size: 0.875rem;
-}
-
-.searchdidyoumean {
-	font-size: 1rem;
 }
 
 // Somehow got overridden
@@ -151,5 +154,11 @@
 	#mw-searchoptions {
 		overflow: auto;
 		max-height: 20vh;
+	}
+
+	.mw-search-createlink,
+	.mw-search-exists {
+		max-width: none;
+		float: none;
 	}
 }
