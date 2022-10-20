@@ -8,4 +8,150 @@
  * Date: 2022-10-20
 */
 
+// Disable sticky header since it collides with anchor and adds no value
+#citizen-body-header-sticky-sentinel {
+	display: none;
+}
+
 /* smw/special/ext.smw.special.ask.css */
+div#ask legend {
+	// Needed to hide fake box shadow line from focus state
+	background-color: var( --color-surface-0 );
+}
+
+.smw-ask-toplinks {
+	border-radius: var( --border-radius--small );
+	background-color: var( --color-surface-2 );
+	font-family: inherit;
+	font-size: 0.875rem;
+	line-height: inherit;
+}
+
+.smw-ask-toplinks-edit {
+	border-right-color: var( --color-surface-0 );
+}
+
+.smw-ask-condition fieldset,
+.smw-ask-printhead fieldset {
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--small );
+
+	// Add focus state
+	&:focus-within {
+		border-color: var( --color-primary );
+		box-shadow: 0 0 0 1px var( --color-primary );
+
+		legend {
+			color: var( --color-primary );
+		}
+	}
+}
+
+.smw-ask-query .smw-table-row .smw-table-cell {
+	border-color: var( --border-color-base );
+}
+
+.smw-ask-query textarea {
+	// Override default textarea bg
+	background-color: transparent;
+}
+
+.smw-ask-options-row-odd {
+	background: transparent;
+}
+
+.smw-ask-options-row-even {
+	background: transparent;
+}
+
+.smw-ask-button {
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--small );
+	color: var( --color-base );
+	font-size: 0.875rem;
+}
+
+.smw-ask-button-submit input {
+	padding: var( --space-md );
+	border-color: var( --color-primary );
+	border-radius: var( --border-radius--medium );
+	background-color: var( --color-primary );
+	color: #fff;
+	font-size: 0.875rem;
+	font-weight: 500;
+
+	&:hover {
+		border-color: var( --color-primary--hover );
+		background-color: var( --color-primary--hover );
+	}
+
+	&:active {
+		border-color: var( --color-primary--active );
+		background-color: var( --color-primary--active );
+	}
+}
+
+.smw-ask-button-right {
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--small );
+	color: var( --color-base );
+}
+
+.smw-ask-button:hover {
+	background-color: var( --color-surface-2 );
+}
+
+.smw-ask-button input {
+	color: var( --color-surface-1 ) !important;
+}
+
+.smw-ask-button-lgrey {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+
+	&:hover {
+		border-color: var( --border-color-base );
+		background-color: var( --color-surface-2--hover );
+	}
+
+	// Added active state
+	&:active {
+		background-color: var( --color-surface-2--active );
+	}
+}
+
+.smw-ask-button a,
+.smw-ask-button a:hover,
+.smw-ask-button a:focus,
+.smw-ask-button a:active,
+.smw-ask-button a:visited {
+	color: var( --color-base );
+}
+
+.smw-ask-search fieldset,
+.smw-ask-format fieldset,
+.smw-ask-options fieldset {
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--small );
+}
+
+.strike > span:before,
+.strike > span:after {
+	background: var( --border-color-base );
+}
+
+.smw-ask-sort-input input,
+.smw-propertysubject-input {
+	border-color: var( --border-color-base );
+}
+
+#options-toggle:not( :checked ) + #options-list .options-parameter-list:after {
+	background-image: linear-gradient( to bottom, rgba( 255, 255, 255, 0 ), var( --color-surface-0 ) 90% );
+}
+
+.slowfade textarea::placeholder {
+	color: var( --color-base--subtle ); }
+
+.export-links li {
+	border-left-color: var( --color-base--subtle );
+}
