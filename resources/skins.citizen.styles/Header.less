@@ -2,9 +2,6 @@
 	--header-icon-size: ~'calc( var( --header-button-size ) / 2 )';
 	--header-button-size: ~'calc( var( --header-size ) - var( --space-sm ) * 2 )';
 	--header-direction: row;
-	// Browser UI can be unpredicatable
-	// And this leaves some empty space for dismissing the dialog
-	--header-card-maxheight: 70vh;
 	position: fixed;
 	z-index: @z-index-site-header;
 	right: 0;
@@ -153,7 +150,6 @@
 @media ( min-width: @width-breakpoint-desktop ) {
 	.citizen-header {
 		--header-direction: column;
-		--header-card-maxheight: ~'calc( 100vh - var( --space-sm ) * 2 )';
 		top: 0;
 		right: unset;
 		left: 0;

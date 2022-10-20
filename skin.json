@@ -277,13 +277,13 @@
 			"defaultColor": "#000",
 			"images": {
 				".citizen-toc__top:before": "resources/skins.citizen.icons/backToTop.svg",
-				".toctogglelabel:before": {
+				"#citizen-toc__buttonCheckbox:after": {
 					"file": {
 						"ltr": "resources/skins.citizen.icons/toc-ltr.svg",
 						"rtl": "resources/skins.citizen.icons/toc-rtl.svg"
 					}
 				},
-				".toctogglecheckbox:checked ~ .toctitle .toctogglelabel:before": "resources/skins.citizen.icons/shared/close.svg",
+				"#citizen-toc__checkbox:checked ~ #citizen-toc__buttonCheckbox:after": "resources/skins.citizen.icons/shared/close.svg",
 				"#citizen-userMenu__buttonCheckbox:after": "resources/skins.citizen.icons/shared/userAvatar.svg",
 				".citizen-search__icon:after": "resources/skins.citizen.icons/shared/search.svg",
 				".citizen-search__random:after": "resources/skins.citizen.icons/shared/random.svg",

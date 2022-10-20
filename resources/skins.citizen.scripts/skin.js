@@ -119,24 +119,6 @@ function main( window ) {
 	bind();
 	bindCloseOnUnload();
 
-	// Handle ToC
-	// TODO: There must be a cleaner way to do this
-	const tocContainer = document.getElementById( 'mw-panel-toc' );
-
-	if ( tocContainer ) {
-		const toc = require( './tableOfContents.js' );
-		toc.init();
-
-		/*
-		checkboxHack.bind(
-			window,
-			document.getElementById( 'toctogglecheckbox' ),
-			tocContainer.querySelector( '.toctogglelabel' ),
-			tocContainer.querySelector( 'ul' )
-		);
-		*/
-	}
-
 	mw.loader.load( 'skins.citizen.preferences' );
 
 	// Set up loading indicator

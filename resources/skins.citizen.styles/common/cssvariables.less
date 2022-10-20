@@ -72,6 +72,7 @@
 html {
 	/* Size */
 	--header-size: @header-size;
+	--header-card-maxheight: 70vh;
 	--width-layout: @width-layout;
 	--width-layout--extended: ~'calc( var( --width-layout ) * 1.5 )';
 	--width-toc: @width-toc;
@@ -131,4 +132,10 @@ html {
 	--border-color-base--darker: @dark-border-color-base--darker;
 	--border-color-input: @dark-border-color-input;
 	--border-color-input--hover: @dark-border-color-input--hover;
+}
+
+@media ( min-width: @width-breakpoint-desktop ) {
+	html {
+		--header-card-maxheight: ~'calc( 100vh - var( --space-sm ) * 2 )';
+	}
 }
