@@ -150,8 +150,22 @@ div#ask legend {
 }
 
 .slowfade textarea::placeholder {
-	color: var( --color-base--subtle ); }
+	color: var( --color-base--subtle );
+}
 
 .export-links li {
 	border-left-color: var( --color-base--subtle );
+}
+
+// Make delete button destructive
+.smw-ask-sort-delete-action {
+	color: var( --color-destructive );
+
+	&:hover {
+		color: var( --color-destructive--hover );
+	}
+
+	&:active {
+		color: var( --color-destructive--active );
+	}
 }
