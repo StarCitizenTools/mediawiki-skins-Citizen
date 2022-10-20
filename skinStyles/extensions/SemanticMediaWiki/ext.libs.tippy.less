@@ -9,5 +9,104 @@
 */
 
 /* libs/tippy/tippy.css */
+/* ^ This gets overriden by the styles below anyways */
+
 /* libs/tippy/light-border.css */
-/* libs/tippy/light.css /*
+.tippy-tooltip.light-border-theme {
+	border: 0;
+	border-radius: var( --border-radius--small );
+	background-color: var( --color-surface-1 );
+	box-shadow: var( --box-shadow-dialog );
+	color: var( --color-base );
+}
+
+.tippy-tooltip.light-border-theme .tippy-backdrop {
+	background-color: var( --color-surface-1 );
+}
+
+.tippy-tooltip.light-border-theme .tippy-roundarrow {
+	fill: var( --color-surface-1 );
+}
+
+.tippy-tooltip.light-border-theme .tippy-roundarrow:after {
+	fill: transparent;
+}
+
+.tippy-tooltip.light-border-theme[ x-placement^='top' ] .tippy-arrow {
+	border-top-color: var( --color-surface-1 );
+}
+
+.tippy-tooltip.light-border-theme[ x-placement^='top' ] .tippy-arrow:after {
+	border-top-color: var( --color-surface-1 );
+}
+
+.tippy-tooltip.light-border-theme[ x-placement^='top' ] .tippy-arrow:before {
+	border-top-color: var( --color-surface-1 );
+}
+
+.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow {
+	border-bottom-color: var( --color-surface-1 );
+}
+
+.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow:after {
+	border-bottom-color: var( --color-surface-1 );
+}
+
+.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow:before {
+	border-bottom-color: var( --color-surface-1 );
+}
+
+.tippy-tooltip.light-border-theme[ x-placement^='left' ] .tippy-arrow {
+	border-left-color: var( --color-surface-1 );
+}
+
+.tippy-tooltip.light-border-theme[ x-placement^='left' ] .tippy-arrow:after {
+	border-left-color: var( --color-surface-1 );
+}
+
+.tippy-tooltip.light-border-theme[ x-placement^='left' ] .tippy-arrow:before {
+	border-left-color: var( --color-surface-1 );
+}
+
+.tippy-tooltip.light-border-theme[ x-placement^='right' ] .tippy-arrow {
+	border-right-color: var( --color-surface-1 );
+}
+
+.tippy-tooltip.light-border-theme[ x-placement^='right' ] .tippy-arrow:after {
+	border-right-color: var( --color-surface-1 );
+}
+
+.tippy-tooltip.light-border-theme[ x-placement^='right' ] .tippy-arrow:before {
+	border-right-color: var( --color-surface-1 );
+}
+
+/* libs/tippy/light.css */
+.tippy-tooltip.light-theme {
+	background-color: var( --color-surface-1 );
+	box-shadow: var( --box-shadow-dialog );
+	color: var( --color-base );
+}
+
+.tippy-tooltip.light-theme[ x-placement^='top' ] .tippy-arrow {
+	border-top-color: var( --color-surface-1 );
+}
+
+.tippy-tooltip.light-theme[ x-placement^='bottom' ] .tippy-arrow {
+	border-bottom-color: var( --color-surface-1 );
+}
+
+.tippy-tooltip.light-theme[ x-placement^='left' ] .tippy-arrow {
+	border-left-color: var( --color-surface-1 );
+}
+
+.tippy-tooltip.light-theme[ x-placement^='right' ] .tippy-arrow {
+	border-right-color: var( --color-surface-1 );
+}
+
+.tippy-tooltip.light-theme .tippy-backdrop {
+	background-color: var( --color-surface-1 );
+}
+
+.tippy-tooltip.light-theme .tippy-roundarrow {
+	fill: var( --color-surface-1 );
+}

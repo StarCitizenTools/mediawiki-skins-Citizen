@@ -9,3 +9,61 @@
 */
 
 /* smw/util/smw.tippy.css */
+.tippy-header {
+	border-bottom-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+	border-top-left-radius: var( --border-radius--small );
+	border-top-right-radius: var( --border-radius--small );
+}
+
+.tippy-bottom {
+	border-top-color: var( --border-color-base );
+	background-color: var( --color-surface-1 );
+	border-bottom-left-radius: var( --border-radius--small );
+	border-bottom-right-radius: var( --border-radius--small );
+}
+
+.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow,
+.tippy-tooltip.light-theme[ x-placement^='bottom' ] .tippy-arrow,
+.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow:after,
+.tippy-tooltip.light-theme[ x-placement^='bottom' ] .tippy-arrow:after {
+	border-bottom-color: var( --color-surface-2 );
+}
+
+.tippy-tooltip.light-border-theme.square-border-transparent-arrow[ x-placement^='bottom' ] .tippy-arrow,
+.tippy-tooltip.light-border-theme.square-border-light[ x-placement^='bottom' ] .tippy-arrow,
+.tippy-tooltip.light-theme.square-border-transparent-arrow[ x-placement^='bottom' ] .tippy-arrow,
+.tippy-tooltip.light-theme.square-border-light[ x-placement^='bottom' ] .tippy-arrow,
+.tippy-tooltip.light-border-theme.square-border-transparent-arrow[ x-placement^='bottom' ] .tippy-arrow:after,
+.tippy-tooltip.light-border-theme.square-border-light[ x-placement^='bottom' ] .tippy-arrow:after,
+.tippy-tooltip.light-theme.square-border-transparent-arrow[ x-placement^='bottom' ] .tippy-arrow:after,
+.tippy-tooltip.light-theme.square-border-light[ x-placement^='bottom' ] .tippy-arrow:after {
+	border-bottom-color: var( --color-surface-1 );
+}
+
+.square-border-light .tippy-header {
+	background-color: var( --color-surface-1 );
+}
+
+.tippy-cancel {
+	color: var( --background-color-icon );
+	opacity: 1;
+	text-shadow: none;
+}
+
+.tippy-cancel:hover {
+	color: var( --background-color-icon--hover );
+	opacity: 1;
+}
+
+.tippy-cancel:active {
+	color: var( --background-color-icon--active );
+}
+
+.tippy-warning-circle {
+	background-color: var( --color-warning );
+}
+
+.tippy-error-circle {
+	background-color: var( --color-destructive );
+}
