@@ -8,4 +8,55 @@
  * Date: 2022-10-20
 */
 
+@import '../../../resources/variables.less';
+
 /* smw/util/ext.smw.modal.css */
+.smw-modal {
+	z-index: @z-index-overlay;
+	background-color: var( --background-color-overlay--lighter );
+}
+
+.smw-modal-title {
+	margin-left: 0;
+	color: var( --color-base--emphasized );
+	font-size: 1.25rem;
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+/* smw-modal Content */
+.smw-modal-content {
+	padding: var( --space-lg );
+	border: 0;
+	border-radius: var( --border-radius--medium );
+	background-color: var( --color-surface-1 );
+	box-shadow: var( --box-shadow-dialog );
+}
+
+.smw-modal-close:hover,
+.smw-modal-close:focus {
+	color: var( --background-color-icon--hover );
+}
+
+.smw-modal-close:active {
+	color: var( --background-color-icon--active );
+}
+
+.smw-modal-header {
+	padding: 0;
+	border-bottom: 0;
+	margin: 0;
+	background-color: transparent;
+	font-weight: normal;
+}
+
+.smw-modal-header h2 {
+	border-bottom: 0;
+	color: var( --color-base--emphasized );
+	font-size: 1.25rem;
+}
+
+.smw-modal-footer {
+	background-color: transparent;
+	color: var( --color-base--subtle );
+}
