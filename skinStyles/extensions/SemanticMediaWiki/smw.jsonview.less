@@ -1,22 +1,85 @@
 /*
- * Citizen - SMW Json View
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:SemanticMediaWiki
+ * Module: smw.jsonview
+ * Version: 4.0.2 (0fcdfce)
+ *
+ * Date: 2022-10-20
 */
 
-@import '../../../resources/variables.less';
+// Disable sticky header since it collides with anchor and adds no value
+#citizen-body-header-sticky-sentinel {
+	display: none;
+}
 
-.skin-citizen-dark {
-	.smw-jsonview-button {
-		background-color: #337ab7;
-		color: @dark-text-100;
-	}
+/* smw/smw.jsonview.css */
+.smw-jsonview-button-group-left {
+	height: 40px;
+}
 
-	.smw-jsonview-button:first-child {
-		border-right: 1px solid @dark-bg-0;
-	}
+.smw-jsonview-button-group-left input {
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--small );
+}
 
-	.smw-jsonview-button:hover {
-		background-color: #008cba;
-		color: @dark-text-100;
-	}
+.smw-jsonview-button {
+	height: 40px;
+	background-color: var( --color-primary );
+	transition-duration: 0ms;
+}
+
+.smw-jsonview-button:first-child {
+	border-radius: var( --border-radius--small ) 0 0 var( --border-radius--small );
+	border-right-color: var( --border-color-base );
+}
+
+.smw-jsonview-button:last-child {
+	border-radius: 0 var( --border-radius--small ) var( --border-radius--small ) 0;
+}
+
+.smw-jsonview-button:hover {
+	background-color: var( --color-primary--hover );
+}
+
+// Added active state
+.smw-jsonview-button:active {
+	background-color: var( --color-primary--active );
+}
+
+.jsonview ul {
+	border-left-color: var( --border-color-base );
+}
+
+.smw-jsonview-menu {
+	height: 40px;
+	padding: var( --space-sm ) 0;
+	border: 0;
+	border-bottom: 1px solid var( --border-color-base );
+	background-color: var( --color-surface-0 );
+}
+
+.smw-jsonview-menu + pre {
+	background-color: var( --color-surface-2 );
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.smw-jsonview-menu .smw-jsonview-button {
+	border-radius: var( --border-radius--small );
+	background-color: transparent;
+	color: var( --color-base );
+}
+
+.smw-jsonview-menu .smw-jsonview-button:hover {
+	background-color: var( --background-color-quiet--hover );
+}
+
+// Added active state
+.smw-jsonview-menu .smw-jsonview-button:active {
+	background-color: var( --background-color-quiet--active );
+}
+
+.smw-jsonview-menu .smw-jsonview-button:first-child {
+	border-right: 0;
 }

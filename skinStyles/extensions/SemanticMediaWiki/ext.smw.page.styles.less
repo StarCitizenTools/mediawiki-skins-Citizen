@@ -1,124 +1,168 @@
 /*
- * Citizen - SMW Special Ask
- * https://starcitizen.tools
- * TODO CHECK 'smw/ext.smw.table.css'
+ * Citizen
+ *
+ * SkinStyles for Extension:SemanticMediaWiki
+ * Module: ext.smw.page.styles
+ * Version: 4.0.2 (0fcdfce)
+ *
+ * Date: 2022-10-20
 */
 
-@import '../../../resources/variables.less';
+// Disable sticky header since it collides with anchor and adds no value
+#citizen-body-header-sticky-sentinel {
+	display: none;
+}
 
-.skin-citizen-dark {
-	.smw-property-page-content-line {
-		border-bottom: 1px solid @dark-bg-20;
-	}
+/* smw/ext.smw.page.css */
+/* Property page */
+.smw-property-page-content-line {
+	border-bottom-color: var( --border-color-base );
+}
 
-	.smw-property-page-results .value-row:hover {
-		background-color: @dark-bg-10;
-	}
+.smw-property-page-results .header-row {
+	position: sticky;
+	top: 0;
+	background-color: var( --color-surface-0 );
+}
 
-	.smw-property-page-results .header-row > .header-title {
-		border-bottom: 1px solid @dark-bg-20;
-	}
+.smw-property-page-results .value-row:hover {
+	background-color: var( --background-color-quiet--hover );
+}
 
-	.smw-ui-pagination .page-link {
-		border: 1px solid @dark-bg-20;
-		background-color: @dark-bg-0;
-		color: @color-primary;
-	}
+.smw-property-page-results .header-row > .header-title {
+	border-bottom-color: var( --border-color-base );
+}
 
-	.smw-ui-pagination .page-link:hover {
-		border-color: @dark-bg-30;
-		background-color: @dark-bg-20;
-		color: #0056b3;
-	}
+.smw-ui-pagination .page-link {
+	border-color: var( --border-color-base );
+	background-color: transparent;
+	color: var( --color-primary );
+}
 
-	.smw-ui-pagination .page-link.link-disabled {
-		border-color: @dark-bg-20;
-		background-color: @dark-bg-0;
-		color: @dark-text-70;
-	}
+.smw-ui-pagination .page-link:first-child {
+	border-bottom-left-radius: var( --border-radius--small );
+	border-top-left-radius: var( --border-radius--small );
+}
 
-	.smw-ui-pagination .page-link.link-active {
-		border-color: @accent-50;
-		background-color: @accent-50;
-		color: @dark-text-100;
-	}
+.smw-ui-pagination .page-link:last-child {
+	border-bottom-right-radius: var( --border-radius--small );
+	border-top-right-radius: var( --border-radius--small );
+}
 
-	.smw-property-page-results .header-title {
-		border-bottom: 1px solid @dark-bg-20;
-		background-color: @dark-bg-0;
-		color: @dark-text-80;
-	}
+.smw-ui-pagination .page-link:hover {
+	border-color: var( --border-color-base );
+	background-color: var( --background-color-quiet--hover );
+	color: var( --color-primary );
+}
 
-	.list-pager-value-filter input {
-		border: 1px solid @dark-bg-20;
-		background-color: @dark-bg-0;
-		color: @dark-text-90;
-	}
+// Added active state
+.smw-ui-pagination .page-link:active {
+	background-color: var( --background-color-quiet--active );
+}
 
-	.smw-ui-input-filter {
-		border: 1px solid @dark-bg-20;
-		background-color: @dark-bg-0;
-		color: @accent-10;
-	}
+.smw-ui-pagination .page-link.link-disabled {
+	border-color: var( --border-color-base );
+	background-color: transparent;
+	color: var( --color-base--subtle );
+}
 
-	.smw-ui-input-filter input {
-		border: 0 solid @dark-bg-20 !important;
-		border-left: 1px solid @dark-bg-20 !important;
-		color: @dark-text-80 !important;
-	}
+.smw-ui-pagination .page-link.link-active {
+	border-color: var( --color-primary );
+	background-color: var( --color-primary );
+	color: #fff;
+}
 
-	.smw-property-page-results.legacy .header-title {
-		border-bottom: 0 solid @dark-bg-20;
-	}
+.smw-property-page-results .header-title {
+	padding: var( --space-sm ) 0;
+	border-bottom-color: var( --border-color-base );
+	background-color: transparent;
+	color: var( --color-base--emphasized );
+	font-size: 1.25rem;
+}
 
-	.usage-count,
-	.item-count {
-		background-color: rgba( 27, 31, 35, 0.04 );
-		color: @dark-text-70;
-	}
+.list-pager-value-filter input {
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--small );
+	background-color: var( --color-surface-1 );
+	color: var( --color-base );
+}
 
-	#tab-smw-property-value:checked + label.nav-label .usage-count,
-	#tab-smw-concept-list:checked + label.nav-label .usage-count,
-	#tab-smw-property-subp:checked + label.nav-label .item-count,
-	#tab-smw-property-errp:checked + label.nav-label .item-count,
-	#tab-smw-property-redi:checked + label.nav-label .item-count,
-	#tab-smw-type-list:checked + label.nav-label .item-count,
-	#tab-smw-property-spec:checked + label.nav-label .item-count {
-		background-color: rgba( 27, 31, 35, 0.08 );
-		color: #444d56;
-	}
+.smw-ui-input-filter {
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--small );
+	background-color: var( --color-surface-1 );
+	color: var( --color-primary );
+}
 
-	#tab-smw-property-value:checked + label.nav-label .usage-count.moderate,
-	#tab-smw-concept-list:checked + label.nav-label .usage-count.moderate {
-		background-color: rgba( 43, 157, 239, 0.18 );
-		color: #444d56;
-	}
+.smw-ui-input-filter input {
+	border-left-color: var( --border-color-base ) !important;
+	color: var( --color-base ) !important;
+}
 
-	#tab-smw-property-value:checked + label.nav-label .usage-count.high,
-	#tab-smw-concept-list:checked + label.nav-label .usage-count.high {
-		background-color: rgba( 186, 0, 0, 0.16 );
-		color: #444d56;
-	}
+.smw-ui-input-filter-tooltip {
+	border-left-color: var( --border-color-base );
+}
 
-	.smw-property input.nav-tab:checked + label.nav-label.smw-tab-warning,
-	.smw-concept input.nav-tab:checked + label.nav-label.smw-tab-warning,
-	.smw-types input.nav-tab:checked + label.nav-label.smw-tab-warning {
-		border-top: 2px solid @red-50;
-	}
+.smw-property-page-results.legacy .header-title {
+	border-bottom-color: var( --border-color-base );
+}
 
-	.smw-property input.nav-tab:checked + label.nav-label.smw-tab-spec,
-	.smw-concept input.nav-tab:checked + label.nav-label.smw-tab-spec {
-		border-top: 2px solid @yellow-50;
-	}
+.usage-count,
+.item-count {
+	border-radius: var( --border-radius--small );
+	background-color: var( --color-surface-3 );
+	color: var( --color-base );
+}
 
-	.smw-property input.nav-tab:checked + label#tab-label-smw-property-constraint.nav-label {
-		border-top: 2px solid @accent-50;
-	}
+#tab-smw-property-value:checked + label.nav-label .usage-count,
+#tab-smw-concept-list:checked + label.nav-label .usage-count,
+#tab-smw-property-subp:checked + label.nav-label .item-count,
+#tab-smw-property-errp:checked + label.nav-label .item-count,
+#tab-smw-property-redi:checked + label.nav-label .item-count,
+#tab-smw-type-list:checked + label.nav-label .item-count,
+#tab-smw-property-spec:checked + label.nav-label .item-count {
+	background-color: var( --color-surface-3 );
+	color: var( --color-base );
+}
 
-	@media screen and ( max-width: 800px ) {
-		.smw-property-page-results .header-title:first-child,
-		.smw-property-page-results .header-row > .header-title:first-child {
-			border-bottom: 1px solid @dark-bg-20;
-		}
+#tab-smw-property-value:checked + label.nav-label .usage-count.moderate,
+#tab-smw-concept-list:checked + label.nav-label .usage-count.moderate {
+	background-color: var( --background-color-primary--hover );
+	color: var( --color-primary );
+}
+
+#tab-smw-property-value:checked + label.nav-label .usage-count.high,
+#tab-smw-concept-list:checked + label.nav-label .usage-count.high {
+	background-color: var( --background-color-destructive );
+	color: var( --color-destructive );
+}
+
+/**
+ * Tabs
+ */
+.smw-property input.nav-tab:checked + label.nav-label.smw-tab-warning,
+.smw-concept input.nav-tab:checked + label.nav-label.smw-tab-warning,
+.smw-types input.nav-tab:checked + label.nav-label.smw-tab-warning {
+	border-top: 0;
+	border-bottom: 2px solid var( --color-destructive );
+}
+
+.smw-property input.nav-tab:checked + label.nav-label.smw-tab-spec,
+.smw-concept input.nav-tab:checked + label.nav-label.smw-tab-spec {
+	border-top: 0;
+	border-bottom: 2px solid var( --color-warning );
+}
+
+.smw-property input.nav-tab:checked + label#tab-label-smw-property-constraint.nav-label {
+	border-bottom: 2px solid var( --color-primary );
+}
+
+/**
+ * Responsive settings (@see ext.smw.table)
+ */
+@media screen and ( max-width: 800px ) {
+	.smw-property-page-results .header-title:first-child,
+	.smw-property-page-results .header-row > .header-title:first-child {
+		border-bottom-color: var( --border-color-base );
 	}
 }

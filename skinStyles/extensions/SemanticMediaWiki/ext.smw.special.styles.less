@@ -1,19 +1,25 @@
 /*
- * Citizen - SMW Special Preferences
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:SemanticMediaWiki
+ * Module: ext.smw.special.styles
+ * Version: 4.0.2 (0fcdfce)
+ *
+ * Date: 2022-10-20
 */
 
-@import '../../../resources/variables.less';
+/* smw/special/smw.special.preferences.cs */
+/**
+ * Special:Preferences
+ */
+fieldset#mw-prefsection-smw-general-options,
+fieldset#mw-prefsection-smw-extended-search-options,
+fieldset#mw-prefsection-smw-ask-options,
+fieldset#mw-prefsection-smw-srf {
+	border-color: var( --color-primary );
+	border-top-color: var( --border-color-base );
+}
 
-.skin-citizen-dark {
-	fieldset#mw-prefsection-smw-general-options,
-	fieldset#mw-prefsection-smw-ask-options,
-	fieldset#mw-prefsection-smw-srf {
-		border: 0 solid @accent-10;
-		border-top: 1px solid @dark-bg-20;
-	}
-
-	#mw-prefsection-smw .oo-ui-fieldsetLayout-header .oo-ui-labelElement-label {
-		color: @dark-text-70;
-	}
+#mw-prefsection-smw .oo-ui-fieldsetLayout-header .oo-ui-labelElement-label {
+	color: var( --color-base--subtle );
 }

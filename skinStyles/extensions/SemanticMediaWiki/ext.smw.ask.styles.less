@@ -1,150 +1,177 @@
 /*
- * Citizen - SMW Special Ask
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:SemanticMediaWiki
+ * Module: ext.smw.ask.styles
+ * Version: 4.0.2 (0fcdfce)
+ *
+ * Date: 2022-10-20
 */
 
-@import '../../../resources/variables.less';
+// Disable sticky header since it collides with anchor and adds no value
+#citizen-body-header-sticky-sentinel {
+	display: none;
+}
 
-.skin-citizen-dark {
-	.smw-ask-toplinks {
-		background-color: @dark-bg-10;
+/* smw/special/ext.smw.special.ask.css */
+div#ask legend {
+	// Needed to hide fake box shadow line from focus state
+	background-color: var( --color-surface-0 );
+}
+
+.smw-ask-toplinks {
+	border-radius: var( --border-radius--small );
+	background-color: var( --color-surface-2 );
+	font-family: inherit;
+	font-size: 0.875rem;
+	line-height: inherit;
+}
+
+.smw-ask-toplinks-edit {
+	border-right-color: var( --color-surface-0 );
+}
+
+.smw-ask-condition fieldset,
+.smw-ask-printhead fieldset {
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--small );
+
+	// Add focus state
+	&:focus-within {
+		border-color: var( --color-primary );
+		box-shadow: inset 0 0 0 1px var( --color-primary );
+
+		legend {
+			color: var( --color-primary );
+		}
+	}
+}
+
+.smw-ask-query .smw-table-row .smw-table-cell {
+	border-color: var( --border-color-base );
+}
+
+.smw-ask-query textarea {
+	// Override default textarea bg
+	background-color: transparent;
+}
+
+.smw-ask-options-row-odd {
+	background: transparent;
+}
+
+.smw-ask-options-row-even {
+	background: transparent;
+}
+
+.smw-ask-button {
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--small );
+	color: var( --color-base );
+	font-size: 0.875rem;
+}
+
+.smw-ask-button-submit input {
+	padding: var( --space-md );
+	border-color: var( --color-primary );
+	border-radius: var( --border-radius--medium );
+	background-color: var( --color-primary );
+	color: #fff;
+	font-size: 0.875rem;
+	font-weight: 500;
+
+	&:hover {
+		border-color: var( --color-primary--hover );
+		background-color: var( --color-primary--hover );
 	}
 
-	.smw-ask-toplinks-edit {
-		border-right: 3px solid @dark-bg-0;
+	&:active {
+		border-color: var( --color-primary--active );
+		background-color: var( --color-primary--active );
+	}
+}
+
+.smw-ask-button-right {
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--small );
+	color: var( --color-base );
+}
+
+.smw-ask-button:hover {
+	background-color: var( --color-surface-2 );
+}
+
+.smw-ask-button input {
+	color: var( --color-surface-1 ) !important;
+}
+
+.smw-ask-button-lgrey {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+
+	&:hover {
+		border-color: var( --border-color-base );
+		background-color: var( --color-surface-2--hover );
 	}
 
-	.smw-ask-condition fieldset,
-	.smw-ask-printhead fieldset {
-		border: 1px solid @dark-bg-50;
+	// Added active state
+	&:active {
+		background-color: var( --color-surface-2--active );
+	}
+}
+
+.smw-ask-button a,
+.smw-ask-button a:hover,
+.smw-ask-button a:focus,
+.smw-ask-button a:active,
+.smw-ask-button a:visited {
+	color: var( --color-base );
+}
+
+.smw-ask-search fieldset,
+.smw-ask-format fieldset,
+.smw-ask-options fieldset {
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--small );
+}
+
+.strike > span:before,
+.strike > span:after {
+	background: var( --border-color-base );
+}
+
+.smw-ask-sort-input input,
+.smw-propertysubject-input {
+	border-color: var( --border-color-base );
+}
+
+#options-toggle:not( :checked ) + #options-list .options-parameter-list:after {
+	background-image: linear-gradient( to bottom, rgba( 255, 255, 255, 0 ), var( --color-surface-0 ) 90% );
+}
+
+.slowfade textarea::placeholder {
+	color: var( --color-base--subtle );
+}
+
+.export-links li {
+	border-left-color: var( --color-base--subtle );
+}
+
+// Make delete button destructive
+.smw-ask-sort-delete-action {
+	color: var( --color-destructive );
+
+	&:hover {
+		color: var( --color-destructive--hover );
 	}
 
-	.smw-ask-query .smw-table-row .smw-table-cell {
-		border: 1px solid @dark-bg-50;
+	&:active {
+		color: var( --color-destructive--active );
 	}
+}
 
-	.smw-ask-options-row-odd {
-		background: @dark-bg-20;
-	}
-
-	.smw-ask-options-row-even {
-		background: @dark-bg-0;
-	}
-
-	.smw-ask-button {
-		border: 1px solid @dark-bg-20;
-		color: @dark-text-80;
-	}
-
-	.smw-ask-button-submit input {
-		border: 1px solid @dark-bg-10;
-		background-color: @dark-bg-20;
-		color: @dark-text-70;
-	}
-
-	.smw-ask-button-submit input:hover {
-		border-color: @dark-bg-20;
-		background-color: @dark-bg-30;
-	}
-
-	.smw-ask-button-right {
-		border: 1px solid @dark-bg-20;
-		color: @dark-text-80;
-	}
-
-	.smw-ask-button:hover {
-		background-color: @dark-bg-10;
-	}
-
-	.smw-ask-button input {
-		color: @dark-text-100 !important;
-	}
-
-	.smw-ask-button-lblue {
-		border-color: #46b8da;
-		background-color: #5bc0de;
-		color: @dark-text-100;
-	}
-
-	.smw-ask-button-lblue:hover {
-		border-color: #269abc;
-		background-color: #31b0d5;
-	}
-
-	.smw-ask-button-dblue {
-		border-color: #2e6da4;
-		background-color: #337ab7;
-		color: @dark-text-100;
-	}
-
-	.smw-ask-button-dblue:hover {
-		border-color: #204d74;
-		background-color: #286090;
-	}
-
-	.smw-ask-button-lgrey {
-		border-color: @dark-bg-30;
-		background-color: @dark-bg-20;
-	}
-
-	.smw-ask-button-lgrey:hover {
-		border-color: @dark-bg-30;
-		background-color: @dark-bg-30;
-	}
-
-	.smw-ask-button a,
-	.smw-ask-button a:hover,
-	.smw-ask-button a:focus,
-	.smw-ask-button a:active,
-	.smw-ask-button a:visited {
-		color: @dark-text-80;
-	}
-
-	.smw-ask-button-lblue a,
-	.smw-ask-button-lblue a:hover,
-	.smw-ask-button-lblue a:focus,
-	.smw-ask-button-lblue a:active,
-	.smw-ask-button-lblue a:visited {
-		color: @dark-text-100;
-	}
-
-	.smw-ask-button-dblue a,
-	.smw-ask-button-dblue a:hover,
-	.smw-ask-button-dblue a:focus,
-	.smw-ask-button-dblue a:active,
-	.smw-ask-button-dblue a:visited {
-		color: @dark-text-100;
-	}
-
-	.smw-ask-search fieldset,
-	.smw-ask-format fieldset,
-	.smw-ask-options fieldset {
-		border: 1px solid @dark-bg-50;
-	}
-
-	.strike > span:before,
-	.strike > span:after {
-		background: @dark-bg-50;
-	}
-
-	.smw-ask-sort-input input,
-	.smw-propertysubject-input {
-		border: 1px solid @dark-bg-50;
-	}
-
-	#options-toggle:not( :checked ) + #options-list .options-parameter-list:after {
-		background-image: linear-gradient( to bottom, rgba( 0, 0, 0, 0 ), @dark-bg-0 90% );
-	}
-
-	.slowfade textarea::placeholder {
-		color: @dark-text-60;
-	}
-
-	.export-links li {
-		border-left: 1px solid @dark-bg-50;
-	}
-
-	.smw-tabs input.nav-tab:checked + label.nav-label.result-cache {
-		border-top: 2px solid @yellow-50;
-	}
+// Options parameter description text
+.smw-ask-parameter-description {
+	color: var( --color-base--subtle );
+	font-size: 0.8125rem;
 }

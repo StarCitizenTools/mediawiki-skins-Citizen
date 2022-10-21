@@ -1,84 +1,80 @@
 /*
- * Citizen - SMW Special Ask
- * https://starcitizen.tools
- * TODO CHECK 'smw/ext.smw.table.css'
+ * Citizen
+ *
+ * SkinStyles for Extension:SemanticMediaWiki
+ * Module: smw.content.schema
+ * Version: 4.0.2 (0fcdfce)
+ *
+ * Date: 2022-10-20
 */
 
-@import '../../../resources/variables.less';
+/* smw/content/smw.schema.css */
+.content-highlight {
+	border-color: var( --border-color-base );
+}
 
-.skin-citizen-dark {
-	.content-highlight {
-		border-top: 1px solid @dark-bg-20;
-		border-right: 1px solid @dark-bg-20;
-		border-bottom: 1px solid @dark-bg-20;
-		border-left: 1px solid @dark-bg-20;
-	}
+.content-no-highlight-o {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+}
 
-	.content-no-highlight-o {
-		border-top: 1px solid @dark-bg-20;
-		border-right: 1px solid @dark-bg-20;
-		border-bottom: 1px solid @dark-bg-20;
-		border-left: 1px solid @dark-bg-20;
-		background-color: @dark-bg-10;
-	}
+.unknown-type .content-highlight {
+	border-top-color: var( --border-color-base );
+}
 
-	.unknown-type .content-highlight {
-		border-top: 1px solid @dark-bg-20;
-	}
+.schema-tags {
+	border-right-color: var( --border-color-base );
+	border-bottom-color: var( --border-color-base );
+	border-left-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+}
 
-	.schema-tags {
-		border-right: 1px solid @dark-bg-20;
-		border-bottom: 1px solid @dark-bg-20;
-		border-left: 1px solid @dark-bg-20;
-		background-color: @dark-bg-10;
-	}
+.schema-tags:first-child {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+}
 
-	.schema-tags:first-child {
-		border: 1px solid @dark-bg-20;
-		background-color: @dark-bg-10;
-	}
+.schema-tags li {
+	border-left-color: var( --border-color-base );
+}
 
-	.schema-tags li {
-		border-left: 1px solid @dark-bg-50;
-	}
+.smw-schema-description {
+	color: var( --color-base--subtle );
+}
 
-	.smw-schema-description {
-		color: @dark-text-70;
-	}
+.schema-error {
+	color: var( --color-destructive );
+}
 
-	.schema-error {
-		color: @red-50;
-	}
+h3.smw-title {
+	border-bottom-color: var( --color-base--subtle );
+	color: var( --color-base--emphasized );
+}
 
-	h3.smw-title {
-		background: @dark-bg-10;
-		color: @dark-text-100;
-	}
+/**
+ * Tabs
+ */
+.smw-schema #tab-schema-usage:checked + label.nav-label .item-count {
+	background-color: var( --color-surface-3 );
+	color: var( --color-base );
+}
 
-	.smw-schema #tab-schema-usage:checked + label.nav-label .item-count {
-		background-color: rgba( 27, 31, 35, 0.08 );
-		color: @dark-text-80;
-	}
+.smw-schema section {
+	border-top-color: var( --border-color-base );
+	border-right-color: var( --border-color-base );
+	border-left-color: var( --border-color-base );
+}
 
-	.smw-schema section {
-		border-top: 1px solid @dark-bg-20;
-		border-right: 0 solid @dark-bg-20;
-		border-left: 0 solid @dark-bg-20;
-	}
+.smw-schema input.nav-tab:checked + label.nav-label {
+	border: 0;
+	border-bottom: 2px solid var( --color-primary );
+}
 
-	.smw-schema input.nav-tab:checked + label.nav-label {
-		border: 1px solid @dark-bg-20;
-		border-top: 2px solid #337ab7;
-		border-bottom: 1px solid @dark-bg-0;
-	}
+.smw-schema input.nav-tab:checked + label.nav-label.error-label {
+	border-bottom: 2px solid var( --color-destructive );
+}
 
-	.smw-schema input.nav-tab:checked + label.nav-label.error-label {
-		border-top: 2px solid @red-50;
-	}
-
-	.schema-summary .smw-table-cell,
-	.smw-table-head {
-		border: 1px solid @dark-bg-50;
-		border-bottom: 1px solid @dark-bg-20;
-	}
+.schema-summary .smw-table-cell,
+.smw-table-head {
+	border-color: var( --border-color-base );
 }

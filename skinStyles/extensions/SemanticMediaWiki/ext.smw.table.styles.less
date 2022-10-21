@@ -1,37 +1,31 @@
 /*
- * Citizen - SMW Table Styles
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:SemanticMediaWiki
+ * Module: ext.smw.table.styles
+ * Version: 4.0.2 (0fcdfce)
+ *
+ * Date: 2022-10-20
 */
 
-@import '../../../resources/variables.less';
-
-.content table.broadtable,
-.smw-ask-result table.broadtable {
-	display: table;
+/* smw/ext.smw.table.css */
+.smw-table-header {
+	background-color: var( --color-surface-2 );
 }
 
-.skin-citizen-dark {
-	.smw-table-header {
-		background-color: @dark-bg-20;
-	}
+.smw-table-cell,
+.smw-table-head {
+	border-color: var( --border-color-base );
+}
 
-	.smw-table-cell,
-	.smw-table-head {
-		border: 1px solid @dark-bg-50;
-	}
+.smw-table-footer {
+	background-color: var( --color-surface-2 );
+}
 
-	.smw-table-footer {
-		background-color: @dark-bg-20;
-	}
+.smw-table-sort-asc:after {
+	color: var( --background-color-icon );
+}
 
-	/**
-	Should probably be -50
-	*/
-	.smw-table-sort-asc:after {
-		color: @dark-text-60;
-	}
-
-	.smw-table-sort-desc:after {
-		color: @dark-text-60;
-	}
+.smw-table-sort-desc:after {
+	color: var( --background-color-icon );
 }

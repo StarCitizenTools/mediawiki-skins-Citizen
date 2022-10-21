@@ -1,42 +1,69 @@
 /*
- * Citizen - SMW Tippy Tooltips
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:SemanticMediaWiki
+ * Module: smw.tippy
+ * Version: 4.0.2 (0fcdfce)
+ *
+ * Date: 2022-10-20
 */
 
-@import '../../../resources/variables.less';
+/* smw/util/smw.tippy.css */
+.tippy-header {
+	border-bottom-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+	border-top-left-radius: var( --border-radius--small );
+	border-top-right-radius: var( --border-radius--small );
+}
 
-.skin-citizen-dark {
-	.tippy-header {
-		border-bottom: 1px solid @dark-bg-20;
-		background-color: @dark-bg-10;
-	}
+.tippy-bottom {
+	border-top-color: var( --border-color-base );
+	background-color: var( --color-surface-1 );
+	border-bottom-left-radius: var( --border-radius--small );
+	border-bottom-right-radius: var( --border-radius--small );
+}
 
-	.tippy-bottom {
-		border-top: 1px solid @dark-bg-20;
-		background-color: @dark-bg-0;
-	}
+.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow,
+.tippy-tooltip.light-theme[ x-placement^='bottom' ] .tippy-arrow,
+.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow:after,
+.tippy-tooltip.light-theme[ x-placement^='bottom' ] .tippy-arrow:after {
+	border-bottom-color: var( --color-surface-2 );
+}
 
-	.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow,
-	.tippy-tooltip.light-theme[ x-placement^='bottom' ] .tippy-arrow,
-	.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow:after,
-	.tippy-tooltip.light-theme[ x-placement^='bottom' ] .tippy-arrow:after {
-		border-bottom-color: @dark-bg-10;
-	}
+.tippy-tooltip.light-border-theme.square-border-transparent-arrow[ x-placement^='bottom' ] .tippy-arrow,
+.tippy-tooltip.light-border-theme.square-border-light[ x-placement^='bottom' ] .tippy-arrow,
+.tippy-tooltip.light-theme.square-border-transparent-arrow[ x-placement^='bottom' ] .tippy-arrow,
+.tippy-tooltip.light-theme.square-border-light[ x-placement^='bottom' ] .tippy-arrow,
+.tippy-tooltip.light-border-theme.square-border-transparent-arrow[ x-placement^='bottom' ] .tippy-arrow:after,
+.tippy-tooltip.light-border-theme.square-border-light[ x-placement^='bottom' ] .tippy-arrow:after,
+.tippy-tooltip.light-theme.square-border-transparent-arrow[ x-placement^='bottom' ] .tippy-arrow:after,
+.tippy-tooltip.light-theme.square-border-light[ x-placement^='bottom' ] .tippy-arrow:after {
+	border-bottom-color: var( --color-surface-1 );
+}
 
-	.tippy-cancel {
-		color: @dark-text-100;
-		text-shadow: 0 1px 0 @dark-bg-0;
-	}
+.square-border-light .tippy-header {
+	background-color: var( --color-surface-1 );
+}
 
-	.tippy-cancel:hover {
-		color: @dark-text-100;
-	}
+.tippy-cancel {
+	color: var( --background-color-icon );
+	opacity: 1;
+	text-shadow: none;
+}
 
-	.tippy-warning-circle {
-		background-color: @yellow-50;
-	}
+.tippy-cancel:hover {
+	color: var( --background-color-icon--hover );
+	opacity: 1;
+}
 
-	.tippy-error-circle {
-		background-color: @red-50;
-	}
+.tippy-cancel:active {
+	color: var( --background-color-icon--active );
+}
+
+.tippy-warning-circle {
+	background-color: var( --color-warning );
+}
+
+.tippy-error-circle {
+	background-color: var( --color-destructive );
 }

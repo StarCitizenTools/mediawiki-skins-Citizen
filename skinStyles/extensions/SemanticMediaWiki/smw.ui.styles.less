@@ -1,0 +1,289 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:SemanticMediaWiki
+ * Module: smw.ui.styles
+ * Version: 4.0.2 (0fcdfce)
+ *
+ * Date: 2022-10-20
+*/
+
+/* jquery/jquery.selectmenu.css */
+/* Sub menus */
+.sm_sub_header:hover {
+	color: var( --color-base--emphasized ) !important;
+}
+
+.sm_sub_header button {
+	color: var( --color-base--emphasized );
+}
+
+/**
+ * Container
+ */
+.sm_container {
+	border: 0;
+	background-color: var( --color-surface-1 );
+	box-shadow: var( --box-shadow-dialog );
+}
+
+.sm_header > h3 {
+	margin: var( --space-md );
+	color: var( --color-base--emphasized );
+	font-family: inherit;
+}
+
+.sm_header button {
+	top: 12px;
+	color: var( --background-color-icon );
+}
+
+.sm_header button:hover {
+	color: var( --background-color-icon--hover );
+}
+
+.sm_header button.sm_close_button {
+	right: var( --space-md );
+}
+
+.sm_input {
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--small );
+	background-color: var( --color-surface-1 );
+}
+
+.sm_input:focus {
+	border-color: var( --color-primary );
+	box-shadow: inset 0 0 0 1px var( --color-primary );
+}
+
+/**
+ * "Get all" button
+ */
+div.sm_clear_btn {
+	color: var( --color-base--subtle );
+	font-family: inherit;
+}
+
+div.sm_clear_btn:hover {
+	color: var( --color-base );
+}
+
+/**
+ * Results
+ */
+.sm_result_area {
+	background-color: transparent;
+}
+
+.sm_result_area.sm_list_mode {
+	border-top-color: var( --border-color-base );
+}
+
+.sm_result_tabs {
+	border-bottom-color: var( --border-color-base );
+}
+
+.sm_result_tabs ul li a {
+	border-radius: var( --border-radius--small ) var( --border-radius--small ) 0 0;
+	color: var( --color-base );
+	font-family: inherit;
+}
+
+.sm_result_tabs ul li a.active {
+	border-color: var( --border-color-base );
+	border-bottom-color: transparent;
+	background-color: transparent;
+	color: var( --color-base--emphasized );
+}
+
+/* menu arrow */
+.sm_arrow_bottom > .sm_arrow {
+	border-bottom-color: var( --color-surface-1 );
+}
+
+.sm_arrow_bottom > .sm_arrow:after {
+	border-bottom-color: var( --color-surface-1 );
+}
+
+.sm_arrow_bottom > .sm_arrow.sm_have_title:after {
+	border-bottom-color: var( --color-surface-1 );
+}
+
+.sm_arrow_top > .sm_arrow {
+	border-top-color: var( --color-surface-1 );
+}
+
+.sm_arrow_top > .sm_arrow:after {
+	border-top-color: var( --color-surface-1 );
+}
+/* menu arrow */
+
+.sm_results {
+	background-color: var( --color-surface-1 );
+}
+
+/* regular menu item style */
+.sm_regular .sm_results > li:hover {
+	background-color: var( --color-primary--hover );
+}
+
+.sm_regular .sm_results > li.sm_disabled,
+.sm_regular .sm_results > li.sm_disabled:hover,
+.sm_regular .sm_results > li.sm_disabled a {
+	background-color: var( --color-surface-1 );
+	color: var( --color-base--subtle );
+}
+
+.sm_regular .sm_results > li.sm_header,
+.sm_regular .sm_results > li.sm_header:hover,
+.sm_regular .sm_results > li.sm_header a {
+	background-color: transparent;
+	color: var( --color-base--emphasized );
+}
+
+/* regular menu item style */
+.sm_results > li {
+	color: var( --color-base );
+	font-family: inherit;
+}
+
+.sm_results > li > a {
+	color: var( --color-base );
+}
+
+.sm_results > li.sm_divider {
+	border-bottom-color: var( --border-color-base );
+}
+
+ul.sm_results > li.sm_over {
+	background-color: var( --color-primary--hover ) !important;
+}
+
+.sm_control_box {
+	border-top-color: var( --border-color-base );
+	background-color: var( --color-surface-1 );
+}
+
+.sm_control_box button {
+	background-color: var( --color-surface-2 );
+	color: var( --background-color-icon );
+}
+
+.sm_control_box button:hover {
+	background-color: var( --color-surface-2--hover );
+	color: var( --background-color-icon--hover );
+}
+
+div.sm_container_combo {
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--small );
+}
+
+div.sm_container_combo.sm_disabled,
+div.sm_container_combo.sm_disabled ul.sm_element_box,
+div.sm_container_combo.sm_disabled .sm_input {
+	background-color: var( --color-surface-2 );
+}
+
+div.sm_container_combo.sm_container_open {
+	border-color: var( --color-primary );
+	box-shadow: inset 0 1px 1px rgba( 0, 0, 0, 0.075 ), 0 0 8px var( --color-primary );
+}
+
+input.sm_combo_input[ readonly ],
+input.sm_combo_input[ disabled ] {
+	background-color: var( --color-surface-2 );
+}
+
+ul.sm_element_box li.selected_tag {
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--small );
+	background-color: var( --color-surface-2 );
+	box-shadow: 0 0 2px var( --color-surface-1 ) inset, 0 1px 0 rgba( 0, 0, 0, 0.05 );
+}
+
+ul.sm_element_box li.selected_tag span.tag_close {
+	font-family: inherit;
+}
+
+.sm_input_off {
+	background: var( --color-surface-2 );
+	color: var( --color-base );
+}
+
+/**
+ * Navi
+ */
+.sm_navi {
+	border-bottom-color: var( --color-primary );
+	background: var( --color-surface-2 );
+}
+
+.sm_navi > p > a:link,
+.sm_navi > p > a:visited,
+.sm_navi > p > a:hover,
+.sm_navi > p > a:active {
+	color: var( --color-primary );
+}
+
+.sm_navi > p {
+	color: var( --color-base );
+}
+
+.sm_navi > p > a > .current {
+	color: var( --color-primary--active );
+}
+
+.sm_navi > p > .page_end {
+	color: var( --color-base--subtle );
+}
+
+.sm_container > .sm_select_ng {
+	background: var( --color-warning );
+}
+
+div.sm_result_area div.pagination > ul > li > a {
+	background-color: transparent;
+	color: var( --color-base );
+}
+
+div.sm_result_area div.pagination > ul > li > a:hover {
+	background-color: var( --background-color-quiet--hover );
+	color: var( --color-base--emphasized );
+}
+
+div.sm_result_area div.pagination > ul > li.disabled > a {
+	color: var( --color-base--subtle );
+}
+
+div.sm_result_area div.pagination > ul > li.disabled > a:hover {
+	background-color: transparent;
+	color: var( --color-base--subtle );
+}
+
+div.sm_result_area div.pagination > ul > li.pageInfoBox > a {
+	color: var( --color-base--subtle );
+}
+
+div.sm_result_area div.pagination > ul > li.pageInfoBox > a:hover {
+	color: var( --color-base );
+}
+
+/* smw/smw.selectmenu.css */
+.smw-selectmenu-button {
+	color: var( --color-base );
+}
+
+.smw-selectmenu-label {
+	color: var( --color-base--subtle );
+}
+
+.sm_result_area,
+.sm_results {
+	border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
+}
+
+ul.sm_results > li.sm_over:last-child {
+	border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
+}

@@ -1,70 +1,87 @@
 /*
- * Citizen - SMW Vertical Tabs
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:SemanticMediaWiki
+ * Module: ext.smw.vtabs.styles
+ * Version: 4.0.2 (0fcdfce)
+ *
+ * Date: 2022-10-20
 */
 
-@import '../../../resources/variables.less';
+/* smw/util/ext.smw.vertical.tabs.css */
+/* Style the buttons inside the tab */
+div.smw-vtab-nav button {
+	background-color: transparent;
+	color: var( --color-primary );
+}
 
-.skin-citizen-dark {
-	div.smw-vtab-nav button {
-		background-color: @dark-bg-0;
-		color: @color-primary;
-	}
+div.smw-vtab-nav button a {
+	color: var( --color-primary );
+}
 
-	div.smw-vtab-nav button a {
-		color: @color-primary;
-	}
+div.smw-vtab-nav.nav-right button {
+	border-left-color: var( --border-color-base );
+}
 
-	div.smw-vtab-nav.nav-right button {
-		border-left: 1px solid @dark-bg-20;
-	}
+div.smw-vtab-nav.nav-left button {
+	border-right-color: var( --border-color-base );
+}
 
-	div.smw-vtab-nav.nav-left button {
-		border-right: 1px solid @dark-bg-20;
-	}
+/* Change background color of buttons on hover */
+div.smw-vtab-nav button:hover {
+	border-color: var( --border-color-base );
+	border-radius: 0 var( --border-radius--small ) var( --border-radius--small ) 0;
+	background-color: var( --background-color-quiet--hover );
+}
 
-	div.smw-vtab-nav button:hover {
-		border-color: @dark-bg-30;
-		background-color: @dark-bg-20;
-	}
+div.smw-vtab-nav.nav-right button:hover {
+	border-color: var( --border-color-base );
+	border-left-color: var( --border-color-base );
+}
 
-	div.smw-vtab-nav.nav-right button:hover {
-		border-left: 1px solid @dark-bg-20;
-	}
+div.smw-vtab-nav.nav-left button:hover {
+	border-color: var( --border-color-base );
+	border-right-color: var( --border-color-base );
+}
 
-	div.smw-vtab-nav.nav-left button:hover {
-		border-right: 1px solid @dark-bg-20;
-	}
+/* Create an active/current "tab button" class */
+div.smw-vtab-nav button.active {
+	border: var( --border-color-base );
+	background-color: transparent;
+	color: var( --color-base--emphasized );
+}
 
-	div.smw-vtab-nav button.active {
-		border: 1px solid @dark-bg-20;
-		background-color: @dark-bg-0;
-		color: @dark-text-100;
-	}
+div.smw-vtab-nav.nav-right button.active {
+	border-radius: 0 var( --border-radius--small ) var( --border-radius--small ) 0;
+}
 
-	div.smw-vtab-nav button.active a {
-		color: @dark-text-100;
-	}
+div.smw-vtab-nav.nav-left button.active {
+	border-radius: var( --border-radius--small ) 0 0 var( --border-radius--small );
+}
 
-	div.smw-vtab-nav.nav-right button.active,
-	div.smw-vtab-nav.nav-right button.active a {
-		border-color: @dark-bg-20;
-	}
+div.smw-vtab-nav button.active a {
+	color: var( --color-base--emphasized );
+}
 
-	div.smw-vtab-nav.nav-left button.active,
-	div.smw-vtab-nav.nav-left button.active a {
-		border-color: @dark-bg-20;
-	}
+div.smw-vtab-nav.nav-right button.active,
+div.smw-vtab-nav.nav-right button.active a {
+	border-color: var( --border-color-base );
+}
 
-	.smw-vtab-content {
-		border: 1px solid @dark-bg-30;
-	}
+div.smw-vtab-nav.nav-left button.active,
+div.smw-vtab-nav.nav-left button.active a {
+	border-color: var( --border-color-base );
+}
 
-	div.smw-vtab-nav .smw-vtab-warning a {
-		color: @yellow-50;
-	}
+/* Style the tab content */
+.smw-vtab-content {
+	border-color: var( --border-color-base );
+}
 
-	div.smw-vtab-nav .smw-vtab-warning.active a {
-		color: @yellow-30;
-	}
+div.smw-vtab-nav .smw-vtab-warning a {
+	color: var( --color-warning );
+}
+
+div.smw-vtab-nav .smw-vtab-warning.active a {
+	color: var( --color-warning--active );
 }

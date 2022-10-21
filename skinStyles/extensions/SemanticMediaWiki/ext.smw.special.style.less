@@ -1,66 +1,125 @@
 /*
- * Citizen - SMW Special Admin
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:SemanticMediaWiki
+ * Module: ext.smw.special.style
+ * Version: 4.0.2 (0fcdfce)
+ *
+ * Date: 2022-10-20
 */
 
-@import '../../../resources/variables.less';
+/* smw/special/ext.smw.special.css */
+/**
+ * Special:Admin
+ */
+.smw-admin-deprecation-notice-docu-section {
+	border-color: var( --border-color-base );
+	background-color: var( --background-color-warning );
+	color: var( --color-warning );
+}
 
-.skin-citizen-dark {
-	.smw-admin-deprecation-notice-docu-section {
-		border-color: @yellow-50;
-		background-color: @yellow-90;
-		color: @yellow-30;
-	}
+.smw-admin-deprecation-notice-section-legend {
+	color: var( --color-base--subtle );
+}
 
-	.smw-admin-deprecation fieldset {
-		border-top: 1px solid @dark-bg-50;
-	}
+.smw-admin-deprecation fieldset,
+.smw-pending-task fieldset {
+	border-top-color: var( --border-color-base );
+}
 
-	.smw-admin-hr {
-		background-color: @dark-bg-20;
-	}
+.smw-admin-deprecation fieldset.smw-admin-deprecation-notice-section-legend {
+	border-top-color: var( --border-color-base );
+}
 
-	.smw-special-filter-button {
-		border: 1px solid @dark-bg-20;
-		color: @dark-text-80;
-	}
+.smw-admin-alerts-section-legend {
+	color: var( --color-base--subtle );
+}
 
-	.smw-special-filter-button:hover {
-		background-color: @dark-bg-10;
-	}
+.smw-admin-alerts-section-legend p {
+	color: var( --color-base );
+}
 
-	.smw-special-filter-button a,
-	.smw-special-filter-button a:hover,
-	.smw-special-filter-button a:focus,
-	.smw-special-filter-button a:active,
-	.smw-special-filter-button a:visited {
-		color: @dark-text-80;
-	}
+.smw-admin-alerts fieldset {
+	border-top-color: var( --border-color-base );
+}
 
-	.smw-admin section {
-		border: 0 solid @dark-bg-50;
-	}
+.smw-admin-alerts fieldset.smw-admin-alerts-section-legend {
+	border-top-color: var( --border-color-base );
+}
 
-	.smw-admin input.nav-tab:checked + label.nav-label {
-		border: 1px solid @dark-bg-50;
-		border-top: 2px solid @yellow-50;
-		border-bottom: 1px solid @dark-bg-0;
-	}
+.smw-admin-alerts-section-legend-info {
+	color: var( --color-warning );
+}
 
-	.smw-admin input.nav-tab:checked + label.nav-label.smw-tab-warning {
-		border-top: 2px solid @red-50;
-	}
+.smw-admin-alerts-section-legend-info p {
+	color: var( --color-base );
+}
 
-	.client-nojs .smw-admin-supplementary-duplookup-content:after {
-		background-color: @dark-bg-20;
-		color: @red-50;
-	}
+.smw-admin-alerts fieldset.smw-admin-alerts-section-legend-info {
+	border-top-color: var( --color-warning );
+}
 
-	.smw-admin h3,
-	.smw-admin h4,
-	h3.smw-title,
-	h4.smw-title,
-	h3 .smw-title {
-		background: @dark-bg-10;
-	}
+.smw-admin-hr {
+	background-color: var( --color-surface-2 );
+}
+
+.smw-special-filter-button {
+	border-color: var( --border-color-base );
+	color: var( --color-base );
+}
+
+.smw-special-filter-button:hover {
+	background-color: var( --background-color-quiet--hover );
+}
+
+// Added active state
+.smw-special-filter-button:active {
+	background-color: var( --background-color-quiet--active );
+}
+
+.smw-special-filter-button a,
+.smw-special-filter-button a:hover,
+.smw-special-filter-button a:focus,
+.smw-special-filter-button a:active,
+.smw-special-filter-button a:visited {
+	color: var( --color-base );
+}
+
+/**
+ * Tabbed admin
+ */
+.smw-admin section {
+	border-color: var( --border-color-base );
+}
+
+.smw-admin input.nav-tab:checked + label.nav-label {
+	border-color: var( --border-color-base );
+	border-top-color: var( --color-warning );
+	border-bottom-color: transparent;
+}
+
+.smw-admin input.nav-tab:checked + label.nav-label.smw-tab-warning {
+	border-top-color: var( --color-destructive );
+}
+
+.smw-admin input.nav-tab:checked + label.nav-label.smw-tab-notice {
+	border-top-color: var( --color-warning );
+}
+
+.client-nojs .smw-admin-supplementary-duplookup-content:after {
+	background-color: var( --color-surface-2 );
+	color: var( --color-destructive );
+}
+
+.smw-admin h3,
+h3.smw-title,
+h4.smw-title,
+h3 .smw-title {
+	background: var( --color-surface-2 );
+}
+
+.smw-admin h3,
+h3.smw-title {
+	border-bottom-color: var( --border-color-base );
+	color: var( --color-base--emphasized );
 }

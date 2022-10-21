@@ -1,28 +1,33 @@
 /*
- * Citizen - SMW Special Ask
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:SemanticMediaWiki
+ * Module: smw.summarytable
+ * Version: 4.0.2 (0fcdfce)
+ *
+ * Date: 2022-10-20
 */
 
-@import '../../../resources/variables.less';
+/* smw/smw.summarytable.css */
+.smw-summarytable .smw-table-cell,
+.smw-table-head {
+	border-color: var( --border-color-base );
+	border-bottom-color: var( --border-color-base );
+}
 
-.skin-citizen-dark {
-	.smw-summarytable .smw-table-cell,
-	.smw-table-head {
-		border: 1px solid @dark-bg-50;
-		border-bottom: 1px solid @dark-bg-20;
+/**
+ * Responsive settings (#see smw.table.css)
+ */
+@media screen and ( max-width: 800px ) {
+	.smw-summarytable .smw-table-row .smwpropname {
+		border-bottom-color: var( --border-color-base );
 	}
 
-	@media screen and ( max-width: 800px ) {
-		.smw-summarytable .smw-table-row .smwpropname {
-			border-bottom: 0 solid @dark-bg-20;
-		}
+	.smw-summarytable-imagecolumn .smw-summarytable-image {
+		border-top-color: var( --border-color-base );
+	}
 
-		.smw-summarytable-imagecolumn .smw-summarytable-image {
-			border-top: 1px solid @dark-bg-20;
-		}
-
-		.smw-summarytable-columns .smw-summarytable-columns-2:first-child {
-			border-bottom: 1px solid @dark-bg-20;
-		}
+	.smw-summarytable-columns .smw-summarytable-columns-2:first-child {
+		border-bottom-color: var( --border-color-base );
 	}
 }

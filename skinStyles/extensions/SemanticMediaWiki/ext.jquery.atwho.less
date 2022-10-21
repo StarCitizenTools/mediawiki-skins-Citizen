@@ -1,49 +1,48 @@
 /*
- * Citizen - SMW jQuery AtWho
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:SemanticMediaWiki
+ * Module: ext.jquery.atwho
+ * Version: 4.0.2 (0fcdfce)
+ *
+ * Date: 2022-10-20
 */
 
-@import '../../../resources/variables.less';
+/* jquery/jquery.atwho.css */
+.atwho-view {
+	border: 0;
+	border-radius: var( --border-radius--small );
+	background: var( --color-surface-1 );
+	box-shadow: var( --box-shadow-dialog );
+	color: var( --color-base );
+}
 
-.skin-citizen-dark {
-	.atwho-view {
-		border: 1px solid @dark-bg-20;
-		background: @dark-bg-0;
-		box-shadow: 0 0 5px rgba( 0, 0, 0, 0.1 );
-		color: #6f8092;
-	}
+.atwho-view .atwho-header {
+	border-bottom-color: var( --border-color-base );
+	color: var( --color-base );
+}
 
-	.atwho-view .atwho-header {
-		border-bottom: solid 1px @dark-bg-20;
-		color: #6f8092;
-	}
+.atwho-view .atwho-header .small {
+	color: var( --color-base );
+}
 
-	.atwho-view .atwho-header .small {
-		color: #6f8092;
-	}
+.atwho-view .cur {
+	background: var( --color-primary );
+	color: #fff;
+}
 
-	.atwho-view .cur {
-		background: @dark-bg-20;
-		color: #6f8092;
-	}
+.atwho-view strong {
+	color: var( --color-base--emphasized );
+}
 
-	.atwho-view .cur small {
-		color: @dark-text-100;
-	}
+.atwho-view .cur strong {
+	color: #fff;
+}
 
-	.atwho-view strong {
-		color: #39f;
-	}
+.atwho-view ul li {
+	border-bottom: 0;
+}
 
-	.atwho-view .cur strong {
-		color: #39f;
-	}
-
-	.atwho-view ul li {
-		border-bottom: 1px solid @dark-bg-20;
-	}
-
-	.atwho-view small {
-		color: @dark-text-70;
-	}
+.atwho-view small {
+	color: var( --color-base--subtle );
 }

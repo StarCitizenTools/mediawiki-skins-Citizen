@@ -1,119 +1,112 @@
 /*
- * Citizen - SMW Lib Tippy
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:SemanticMediaWiki
+ * Module: ext.libs.tippy
+ * Version: 4.0.2 (0fcdfce)
+ *
+ * Date: 2022-10-20
 */
 
-@import '../../../resources/variables.less';
+/* libs/tippy/tippy.css */
+/* ^ This gets overriden by the styles below anyways */
 
-.skin-citizen-dark {
-	/**
-  	tippy.css
-    */
-	.tippy-tooltip {
-		background-color: @dark-bg-20;
-		color: @dark-text-100;
-	}
+/* libs/tippy/light-border.css */
+.tippy-tooltip.light-border-theme {
+	border: 0;
+	border-radius: var( --border-radius--small );
+	background-color: var( --color-surface-1 );
+	box-shadow: var( --box-shadow-dialog );
+	color: var( --color-base );
+}
 
-	/**
-  	light-border.css
-    */
-	.tippy-tooltip.light-border-theme {
-		border: 1px solid rgba( 0, 8, 16, 0.15 );
-		background-color: @dark-bg-0;
-		box-shadow: 0 3px 14px -0.5px rgba( 0, 8, 16, 0.08 );
-		color: @dark-text-90;
-	}
+.tippy-tooltip.light-border-theme .tippy-backdrop {
+	background-color: var( --color-surface-1 );
+}
 
-	.tippy-tooltip.light-border-theme .tippy-backdrop {
-		background-color: @dark-bg-0;
-	}
+.tippy-tooltip.light-border-theme .tippy-roundarrow {
+	fill: var( --color-surface-1 );
+}
 
-	.tippy-tooltip.light-border-theme .tippy-roundarrow {
-		fill: @dark-bg-0;
-	}
+.tippy-tooltip.light-border-theme .tippy-roundarrow:after {
+	fill: transparent;
+}
 
-	.tippy-tooltip.light-border-theme .tippy-roundarrow:after {
-		fill: rgba( 0, 8, 16, 0.15 );
-	}
+.tippy-tooltip.light-border-theme[ x-placement^='top' ] .tippy-arrow {
+	border-top-color: var( --color-surface-1 );
+}
 
-	.tippy-tooltip.light-border-theme[ x-placement^='top' ] .tippy-arrow {
-		border-top-color: @dark-bg-0;
-	}
+.tippy-tooltip.light-border-theme[ x-placement^='top' ] .tippy-arrow:after {
+	border-top-color: var( --color-surface-1 );
+}
 
-	.tippy-tooltip.light-border-theme[ x-placement^='top' ] .tippy-arrow:after {
-		border-top: 7px solid @dark-bg-0;
-	}
+.tippy-tooltip.light-border-theme[ x-placement^='top' ] .tippy-arrow:before {
+	border-top-color: var( --color-surface-1 );
+}
 
-	.tippy-tooltip.light-border-theme[ x-placement^='top' ] .tippy-arrow:before {
-		border-top: 7px solid rgba( 0, 8, 16, 0.2 );
-	}
+.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow {
+	border-bottom-color: var( --color-surface-1 );
+}
 
-	.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow {
-		border-bottom-color: @dark-bg-0;
-	}
+.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow:after {
+	border-bottom-color: var( --color-surface-1 );
+}
 
-	.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow:after {
-		border-bottom: 7px solid @dark-bg-0;
-	}
+.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow:before {
+	border-bottom-color: var( --color-surface-1 );
+}
 
-	.tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow:before {
-		border-bottom: 7px solid rgba( 0, 8, 16, 0.2 );
-	}
+.tippy-tooltip.light-border-theme[ x-placement^='left' ] .tippy-arrow {
+	border-left-color: var( --color-surface-1 );
+}
 
-	.tippy-tooltip.light-border-theme[ x-placement^='left' ] .tippy-arrow {
-		border-left-color: @dark-bg-0;
-	}
+.tippy-tooltip.light-border-theme[ x-placement^='left' ] .tippy-arrow:after {
+	border-left-color: var( --color-surface-1 );
+}
 
-	.tippy-tooltip.light-border-theme[ x-placement^='left' ] .tippy-arrow:after {
-		border-left: 7px solid @dark-bg-0;
-	}
+.tippy-tooltip.light-border-theme[ x-placement^='left' ] .tippy-arrow:before {
+	border-left-color: var( --color-surface-1 );
+}
 
-	.tippy-tooltip.light-border-theme[ x-placement^='left' ] .tippy-arrow:before {
-		border-left: 7px solid rgba( 0, 8, 16, 0.2 );
-	}
+.tippy-tooltip.light-border-theme[ x-placement^='right' ] .tippy-arrow {
+	border-right-color: var( --color-surface-1 );
+}
 
-	.tippy-tooltip.light-border-theme[ x-placement^='right' ] .tippy-arrow {
-		border-right-color: @dark-bg-0;
-	}
+.tippy-tooltip.light-border-theme[ x-placement^='right' ] .tippy-arrow:after {
+	border-right-color: var( --color-surface-1 );
+}
 
-	.tippy-tooltip.light-border-theme[ x-placement^='right' ] .tippy-arrow:after {
-		border-right: 7px solid @dark-bg-0;
-	}
+.tippy-tooltip.light-border-theme[ x-placement^='right' ] .tippy-arrow:before {
+	border-right-color: var( --color-surface-1 );
+}
 
-	.tippy-tooltip.light-border-theme[ x-placement^='right' ] .tippy-arrow:before {
-		border-right: 7px solid rgba( 0, 8, 16, 0.2 );
-	}
+/* libs/tippy/light.css */
+.tippy-tooltip.light-theme {
+	background-color: var( --color-surface-1 );
+	box-shadow: var( --box-shadow-dialog );
+	color: var( --color-base );
+}
 
-	/**
-  	light.css
-    */
-	.tippy-tooltip.light-theme {
-		background-color: @dark-bg-0;
-		box-shadow: 0 0 20px 4px rgba( 154, 161, 177, 0.15 ), 0 4px 80px -8px rgba( 36, 40, 47, 0.25 ), 0 4px 4px -2px rgba( 91, 94, 105, 0.15 );
-		color: @dark-text-90;
-	}
+.tippy-tooltip.light-theme[ x-placement^='top' ] .tippy-arrow {
+	border-top-color: var( --color-surface-1 );
+}
 
-	.tippy-tooltip.light-theme[ x-placement^='top' ] .tippy-arrow {
-		border-top: 8px solid @dark-bg-0;
-	}
+.tippy-tooltip.light-theme[ x-placement^='bottom' ] .tippy-arrow {
+	border-bottom-color: var( --color-surface-1 );
+}
 
-	.tippy-tooltip.light-theme[ x-placement^='bottom' ] .tippy-arrow {
-		border-bottom: 8px solid @dark-bg-0;
-	}
+.tippy-tooltip.light-theme[ x-placement^='left' ] .tippy-arrow {
+	border-left-color: var( --color-surface-1 );
+}
 
-	.tippy-tooltip.light-theme[ x-placement^='left' ] .tippy-arrow {
-		border-left: 8px solid @dark-bg-0;
-	}
+.tippy-tooltip.light-theme[ x-placement^='right' ] .tippy-arrow {
+	border-right-color: var( --color-surface-1 );
+}
 
-	.tippy-tooltip.light-theme[ x-placement^='right' ] .tippy-arrow {
-		border-right: 8px solid @dark-bg-0;
-	}
+.tippy-tooltip.light-theme .tippy-backdrop {
+	background-color: var( --color-surface-1 );
+}
 
-	.tippy-tooltip.light-theme .tippy-backdrop {
-		background-color: @dark-bg-0;
-	}
-
-	.tippy-tooltip.light-theme .tippy-roundarrow {
-		fill: @dark-bg-0;
-	}
+.tippy-tooltip.light-theme .tippy-roundarrow {
+	fill: var( --color-surface-1 );
 }
