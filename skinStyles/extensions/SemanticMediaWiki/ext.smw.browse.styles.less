@@ -147,14 +147,17 @@
 }
 
 .smwb-theme-light .smwb-title,
-.smwb-theme-light .smwb-center,
-.smwb-theme-light .smwb-actions,
-.smwb-theme-light .smwb-prophead {
+.smwb-theme-light .smwb-actions {
 	background-color: transparent;
 }
 
+.smwb-theme-light .smwb-prophead {
+	background-color: var( --color-surface-3 );
+}
+
+.smwb-theme-light .smwb-center,
 .smwb-theme-light .smwb-propval {
-	background-color: transparent;
+	background-color: var( --color-surface-2 );
 }
 
 /**
@@ -171,7 +174,7 @@
 .smwb-datasheet > .smwb-factbox:first-child {
 	position: sticky;
 	top: 0;
-	padding: var( --space-sm ) 0;
+	padding: var( --space-md ) 0;
 	border-bottom: 1px solid var( --border-color-base );
 	background: var( --color-surface-0 );
 }
