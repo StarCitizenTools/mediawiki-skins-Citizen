@@ -25,6 +25,7 @@ namespace MediaWiki\Skins\Citizen\Api;
 use ApiBase;
 use ApiFormatJson;
 use MediaWiki\MediaWikiServices;
+use SpecialPage;
 use Title;
 
 /**
@@ -46,14 +47,13 @@ class ApiWebappManifest extends ApiBase {
 		// Need to set it manually because the default from start_url does not include script namespace
 		// E.g. index.php URLs will be thrown out of the PWA
 		$resultObj->addValue( null, 'scope', $config->get( 'Server' ) . '/' );
-
 		$resultObj->addValue( null, 'icons', $this->getIcons( $config ) );
-
 		$resultObj->addValue( null, 'display', 'minimal-ui' );
 		$resultObj->addValue( null, 'orientation', 'portrait' );
 		$resultObj->addValue( null, 'start_url', Title::newMainPage()->getLocalURL() );
 		$resultObj->addValue( null, 'theme_color', $config->get( 'CitizenManifestThemeColor' ) );
 		$resultObj->addValue( null, 'background_color', $config->get( 'CitizenManifestBackgroundColor' ) );
+		$resultObj->addValue( null, 'shortcuts', $this->getShortcuts() );
 
 		$main = $this->getMain();
 		$main->setCacheControl( [ 's-maxage' => 86400, 'max-age' => 86400 ] );
@@ -89,6 +89,25 @@ class ApiWebappManifest extends ApiBase {
 		}
 
 		return $icons;
+	}
+
+	/**
+	 * Get shortcuts for manifest
+	 *
+	 * @return array
+	 */
+	private function getShortcuts() {
+		$shortcuts = [];
+		$specialPages = [ 'Search', 'Randompage', 'RecentChanges' ];
+
+		forEach ( $specialPages as $specialPage ) {
+			$title = SpecialPage::getSafeTitleFor( $specialPage );
+			$shortcut['name'] = $title->getBaseText();
+			$shortcut['url'] = $title->getLocalURL();
+			$shortcuts[] = $shortcut;
+		}
+
+		return $shortcuts;
 	}
 
 	/**
