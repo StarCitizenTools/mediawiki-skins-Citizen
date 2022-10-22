@@ -47,7 +47,7 @@ class ApiWebappManifest extends ApiBase {
 		// Need to set it manually because the default from start_url does not include script namespace
 		// E.g. index.php URLs will be thrown out of the PWA
 		$resultObj->addValue( null, 'scope', $config->get( 'Server' ) . '/' );
-		$resultObj->addValue( null, 'icons', $this->getIcons( $config ) );
+		$resultObj->addValue( null, 'icons', $this->getIcons( $config, $services ) );
 		$resultObj->addValue( null, 'display', 'minimal-ui' );
 		$resultObj->addValue( null, 'orientation', 'portrait' );
 		$resultObj->addValue( null, 'start_url', Title::newMainPage()->getLocalURL() );
@@ -63,10 +63,11 @@ class ApiWebappManifest extends ApiBase {
 	/**
 	 * Get icons for manifest
 	 *
+	 * @param MediaWikiServices $services
 	 * @param Config $config
 	 * @return array
 	 */
-	private function getIcons( $config ) {
+	private function getIcons( $config, $services ) {
 		$icons = [];
 
 		$appleTouchIcon = $config->get( 'AppleTouchIcon' );
