@@ -28,7 +28,7 @@ use MediaWiki\MediaWikiServices;
 use Title;
 
 /**
- * Extract and modified from MobileFrontend extension
+ * Based on the MobileFrontend extension
  * Return the webapp manifest for this wiki
  */
 class ApiWebappManifest extends ApiBase {
@@ -47,6 +47,26 @@ class ApiWebappManifest extends ApiBase {
 		// E.g. index.php URLs will be thrown out of the PWA
 		$resultObj->addValue( null, 'scope', $config->get( 'Server' ) . '/' );
 
+		$resultObj->addValue( null, 'icons', $this->getIcons( $config ) );
+
+		$resultObj->addValue( null, 'display', 'minimal-ui' );
+		$resultObj->addValue( null, 'orientation', 'portrait' );
+		$resultObj->addValue( null, 'start_url', Title::newMainPage()->getLocalURL() );
+		$resultObj->addValue( null, 'theme_color', $config->get( 'CitizenManifestThemeColor' ) );
+		$resultObj->addValue( null, 'background_color', $config->get( 'CitizenManifestBackgroundColor' ) );
+
+		$main = $this->getMain();
+		$main->setCacheControl( [ 's-maxage' => 86400, 'max-age' => 86400 ] );
+		$main->setCacheMode( 'public' );
+	}
+
+	/**
+	 * Get icons for manifest
+	 *
+	 * @param Config $config
+	 * @return array
+	 */
+	private function getIcons( $config ) {
 		$icons = [];
 
 		$appleTouchIcon = $config->get( 'AppleTouchIcon' );
@@ -68,17 +88,7 @@ class ApiWebappManifest extends ApiBase {
 			$icons[] = $icon;
 		}
 
-		$resultObj->addValue( null, 'icons', $icons );
-
-		$resultObj->addValue( null, 'display', 'minimal-ui' );
-		$resultObj->addValue( null, 'orientation', 'portrait' );
-		$resultObj->addValue( null, 'start_url', Title::newMainPage()->getLocalURL() );
-		$resultObj->addValue( null, 'theme_color', $config->get( 'CitizenManifestThemeColor' ) );
-		$resultObj->addValue( null, 'background_color', $config->get( 'CitizenManifestBackgroundColor' ) );
-
-		$main = $this->getMain();
-		$main->setCacheControl( [ 's-maxage' => 86400, 'max-age' => 86400 ] );
-		$main->setCacheMode( 'public' );
+		return $icons;
 	}
 
 	/**
