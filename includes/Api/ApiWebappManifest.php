@@ -43,6 +43,9 @@ class ApiWebappManifest extends ApiBase {
 		$resultObj->addValue( null, 'dir', $services->getContentLanguage()->getDir() );
 		$resultObj->addValue( null, 'lang', $config->get( 'LanguageCode' ) );
 		$resultObj->addValue( null, 'name', $config->get( 'Sitename' ) );
+		// Need to set it manually because the default from start_url does not include script namespace
+		// E.g. index.php URLs will be thrown out of the PWA
+		$resultObj->addValue( null, 'scope', $config->get( 'Server' ) . '/' );
 
 		$icons = [];
 
