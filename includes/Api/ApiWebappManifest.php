@@ -40,14 +40,9 @@ class ApiWebappManifest extends ApiBase {
 
 		$config = $this->getConfig();
 		$resultObj = $this->getResult();
-		$resultObj->addValue( null, 'name', $config->get( 'Sitename' ) );
-		$resultObj->addValue( null, 'orientation', 'portrait' );
 		$resultObj->addValue( null, 'dir', $services->getContentLanguage()->getDir() );
 		$resultObj->addValue( null, 'lang', $config->get( 'LanguageCode' ) );
-		$resultObj->addValue( null, 'display', 'minimal-ui' );
-		$resultObj->addValue( null, 'theme_color', $config->get( 'CitizenManifestThemeColor' ) );
-		$resultObj->addValue( null, 'background_color', $config->get( 'CitizenManifestBackgroundColor' ) );
-		$resultObj->addValue( null, 'start_url', Title::newMainPage()->getLocalURL() );
+		$resultObj->addValue( null, 'name', $config->get( 'Sitename' ) );
 
 		$icons = [];
 
@@ -71,6 +66,12 @@ class ApiWebappManifest extends ApiBase {
 		}
 
 		$resultObj->addValue( null, 'icons', $icons );
+
+		$resultObj->addValue( null, 'display', 'minimal-ui' );
+		$resultObj->addValue( null, 'orientation', 'portrait' );
+		$resultObj->addValue( null, 'start_url', Title::newMainPage()->getLocalURL() );
+		$resultObj->addValue( null, 'theme_color', $config->get( 'CitizenManifestThemeColor' ) );
+		$resultObj->addValue( null, 'background_color', $config->get( 'CitizenManifestBackgroundColor' ) );
 
 		$main = $this->getMain();
 		$main->setCacheControl( [ 's-maxage' => 86400, 'max-age' => 86400 ] );
