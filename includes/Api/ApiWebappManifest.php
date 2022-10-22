@@ -100,7 +100,7 @@ class ApiWebappManifest extends ApiBase {
 		$shortcuts = [];
 		$specialPages = [ 'Search', 'Randompage', 'RecentChanges' ];
 
-		forEach ( $specialPages as $specialPage ) {
+		foreach ( $specialPages as $specialPage ) {
 			$title = SpecialPage::getSafeTitleFor( $specialPage );
 			$shortcut['name'] = $title->getBaseText();
 			$shortcut['url'] = $title->getLocalURL();
