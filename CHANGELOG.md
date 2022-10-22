@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-beta.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2022-10-22)
+
+
+### Features
+
+* **core:** ✨ increase scroll padding ([#533](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/533)) ([911f214](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/911f21420f9d29805e15ae3adce13aca557133e9))
+* **core:** ✨ use flex layout for mw-indicators ([55f7bcf](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/55f7bcffad08ef1bd300c816be2fbe0b5fcf1455))
+* **core:** ✨ use minimal-ui instead of standalone in webapp manifest ([b51b0c2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b51b0c23326b068c848c782e53975777e6598e8c))
+* **pwa:** ✨ add helpful shortcuts to manifest ([ffb4e34](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ffb4e34443568b97bf9ec72563552dc2f4d4adf0))
+* **pwa:** ✨ define scope parameter ([5e2be1d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5e2be1d974ab752251e52e113926f3a8519e100f))
+* **smw:** revamp SMW skinStyles ([#532](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/532)) ([fa1ae98](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fa1ae98497ee231ea53d1949e581d5c01afb3025))
+* **tabberNeue:** ✨ update skinStyles ([5fbba91](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5fbba91fd96e3e5af5909efc242d76f003e4e421))
+
+
+### Bug Fixes
+
+* **core:** 🐛 incorrect max-height for header card ([24a9078](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/24a907865f138d902fc0c57dda48236b48387aa2))
+* **pwa:** 🐛 missing services variable ([72dfe31](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/72dfe31667d13fb22471f3c39f47d616748c489e))
+
 ## [2.0.0-beta.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.0.0-beta.0...v2.0.0-beta.1) (2022-10-05)
 
 
