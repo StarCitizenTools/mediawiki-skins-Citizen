@@ -121,8 +121,6 @@ Name | Description | Values | Default
 ### Miscellaneous
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
-`$wgCitizenEnablePreconnect` | Enable or disable [preconnect to required origin](https://web.dev/uses-rel-preconnect/) | `true` - enable; `false` - disable | `false`
-`$wgCitizenPreconnectURL` | The URL for preconnect to required origin | URL |
 `$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#11151d`
 
 ## Requirements

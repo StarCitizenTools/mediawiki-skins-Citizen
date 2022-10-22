@@ -679,18 +679,6 @@
 			"descriptionmsg": "citizen-config-themecolor",
 			"public": true
 		},
-		"EnablePreconnect": {
-			"value": false,
-			"description": "Enable or disable preconnect to required origin",
-			"descriptionmsg": "citizen-config-enablepreconnect",
-			"public": true
-		},
-		"PreconnectURL": {
-			"value": "",
-			"description": "The URL for preconnect to required origin",
-			"descriptionmsg": "citizen-config-preconnectorigin",
-			"public": true
-		},
 		"EnableManifest": {
 			"value": true,
 			"description": "Enable or disable web app manifest",

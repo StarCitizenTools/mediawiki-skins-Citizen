@@ -40,9 +40,6 @@ final class Metadata extends Partial {
 
 		// Generate webapp manifest
 		$this->addManifest();
-
-		// Preconnect origin
-		$this->addPreConnect();
 	}
 
 	/**
@@ -66,21 +63,6 @@ final class Metadata extends Partial {
 		$out->addLink( [
 			'rel' => 'manifest',
 			'href' => $href,
-		] );
-	}
-
-	/**
-	 * Adds a preconnect header if enabled in 'CitizenEnablePreconnect'
-	 */
-	private function addPreConnect() {
-		if ( $this->getConfigValue( 'CitizenEnablePreconnect' ) !== true ) {
-			return;
-		}
-
-		$out = $this->out;
-		$out->addLink( [
-			'rel' => 'preconnect',
-			'href' => $this->getConfigValue( 'CitizenPreconnectURL' ),
 		] );
 	}
 }
