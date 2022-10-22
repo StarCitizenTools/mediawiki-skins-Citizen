@@ -20,7 +20,7 @@
 	grid-template-areas: 'header'
 		'content'
 		'footer';
-	grid-template-columns: minmax( min-content, var( --width-layout ) );
+	grid-template-columns: minmax( auto, var( --width-layout ) );
 }
 
 .mw-body-header {
@@ -44,6 +44,7 @@
 }
 
 .citizen-body {
+	overflow-x: auto;
 	grid-area: content;
 	.mixin-clearfix();
 }
@@ -100,7 +101,7 @@ a.image {
 			grid-template-areas: 'header header'
 				'content toc'
 				'footer footer';
-			grid-template-columns: minmax( min-content, var( --width-layout ) ) var( --width-toc );
+			grid-template-columns: minmax( auto, var( --width-layout ) ) var( --width-toc );
 		}
 	}
 }

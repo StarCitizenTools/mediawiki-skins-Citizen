@@ -57,15 +57,15 @@ function bindCloseOnUnload() {
 }
 
 /**
- * Add a class to indicate that page title is outside of viewport
+ * Add a class to indicate that sticky header is active
  *
  * @param {Document} document
  * @return {void}
  */
-function onTitleHidden( document ) {
-	const title = document.getElementById( 'citizen-body-header-sticky-sentinel' );
+function initStickyHeader( document ) {
+	const sentinel = document.getElementById( 'citizen-body-header-sticky-sentinel' );
 
-	if ( title ) {
+	if ( sentinel ) {
 		const scrollObserver = require( './scrollObserver.js' );
 
 		const observer = scrollObserver.initScrollObserver(
@@ -76,7 +76,8 @@ function onTitleHidden( document ) {
 				document.body.classList.remove( 'citizen-body-header--sticky' );
 			}
 		);
-		observer.observe( title );
+
+		observer.observe( sentinel );
 	}
 }
 
@@ -113,7 +114,7 @@ function main( window ) {
 
 	enableCssAnimations( window.document );
 	search.init( window );
-	onTitleHidden( window.document );
+	initStickyHeader( window.document );
 
 	// Set up checkbox hacks
 	bind();
