@@ -56,7 +56,7 @@
 		padding-bottom: var( --space-sm );
 		border-radius: var( --border-radius--small );
 		color: var( --color-base );
-		font-weight: 500;
+		font-weight: var( --font-weight-medium );
 		gap: var( --space-sm );
 
 		&.citizen-toc__top {
@@ -129,6 +129,8 @@
 		position: fixed;
 		right: 0;
 		bottom: ~'calc( var( --header-size ) + var( --space-sm ) )';
+		// Allow click through
+		pointer-events: none;
 
 		&__card {
 			overflow: auto;
@@ -161,6 +163,7 @@
 			margin: var( --space-sm );
 			background-color: var( --color-surface-1 );
 			box-shadow: var( --box-shadow-dialog );
+			pointer-events: auto;
 			transform: none;
 			transform-origin: bottom right;
 			transition: @transition-transform;

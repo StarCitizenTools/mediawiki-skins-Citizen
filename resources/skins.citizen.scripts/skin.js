@@ -120,6 +120,13 @@ function main( window ) {
 	bind();
 	bindCloseOnUnload();
 
+	// Table of Contents
+	const tocContainer = document.getElementById( 'mw-panel-toc' );
+	if ( tocContainer ) {
+		const toc = require( './tableOfContents.js' );
+		toc.init();
+	};
+
 	mw.loader.load( 'skins.citizen.preferences' );
 
 	// Set up loading indicator

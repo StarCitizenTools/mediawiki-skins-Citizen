@@ -5,6 +5,7 @@ html {
 html,
 body {
 	font-family: var( --font-family-base );
+	font-weight: var( --font-weight-normal );
 	// font-smoothing: antialiased;
 	// -webkit-font-smoothing: antialiased; /* Chrome, Safari */
 	// -moz-osx-font-smoothing: grayscale; /* Firefox */
@@ -12,6 +13,10 @@ body {
 
 input {
 	font-family: var( --font-family-base ); // Override browser's default
+}
+
+b {
+	font-weight: var( --font-weight-semibold );
 }
 
 pre,
@@ -33,7 +38,7 @@ fieldset {
 }
 
 legend {
-	font-weight: bold;
+	font-weight: var( --font-weight-semibold );
 }
 
 blockquote {
@@ -48,7 +53,7 @@ blockquote {
 }
 
 dt {
-	font-weight: bold;
+	font-weight: var( --font-weight-semibold );
 }
 
 sub,
@@ -76,7 +81,7 @@ figcaption,
 }
 
 .mw-logo-wordmark {
-	font-weight: 500;
+	font-weight: var( --font-weight-semibold );
 }
 
 .thumbinner {
@@ -87,7 +92,7 @@ figcaption,
 
 .error {
 	font-size: unset;
-	font-weight: normal;
+	font-weight: var( --font-weight-normal );
 }
 
 .firstHeading-parenthesis {
@@ -104,7 +109,6 @@ figcaption,
 
 	h1,
 	h2 {
-		font-weight: bold;
 		line-height: 1.2;
 	}
 
@@ -126,13 +130,6 @@ figcaption,
 
 	h6 {
 		font-size: @content-h6-size;
-	}
-
-	h3,
-	h4,
-	h5,
-	h6 {
-		font-weight: bold;
 	}
 }
 

@@ -32,6 +32,38 @@
 /* == Spacing == */
 @space-unit: 1rem;
 
+/* == Fonts == */
+@font-weight-unit: 400;
+/**
+ * Citizen sans-serif font stack
+ *
+ * `Roboto` – Default font
+ * `Noto Sans CJK` - CJK font
+ * system-ui - System UI font stack
+ * `-apple-system` - Firefox fallback for System UI font stack
+ */
+@fonts: 'Roboto', 'Noto Sans CJK', system-ui, -apple-system, sans-serif;
+/**
+  * Citizen serif font stack
+  *
+  * `Noto Serif` - Not included yet
+  * `Noto Serif CJK` - Not included yet
+  * `Georgia` – Windows, Mac
+  * `serif` – (Generic) web font fallback
+  */
+@fonts-serif: 'Noto Serif', 'Noto Serif CJK', Georgia, serif;
+/**
+  * Citizen monospace font stack
+  *
+  * `SFMono-Regular` - macOS 10.12+
+  * `Menlo` – macOS 10.6+
+  * `Roboto Mono` - Android 4.0+
+  * `Consolas` – Windows Vista & newer
+  * `Liberation Mono` – Fedora, Ubuntu, … OFL licensed
+  * `'Courier New', monospace` – (Generic) web font fallback
+  */
+@fonts-monospace: 'SFMono-Regular', 'Menlo', 'Roboto Mono', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+
 /* == Colors == */
 /* Base theme */
 @diff-hoverstate: 2;
@@ -242,35 +274,6 @@
 // Based on https://web.dev/building-a-color-scheme/#rad-shadow
 @box-shadow-card: 0 2.8px 2.2px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .03))', 0 6.7px 5.3px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .01))', 0 12.5px 10px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .02))', 0 22.3px 17.9px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .02))', 0 41.8px 33.4px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .03))', 0 100px 80px -4px ~'hsl(var(--surface-shadow) / var(--shadow-strength))';
 @box-shadow-dialog: 0 2.8px 2.2px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .03))', 0 6.7px 5.3px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .01))', 0 12.5px 10px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .02))', 0 22.3px 17.9px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .02))', 0 41.8px 33.4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .03))', 0 100px 80px ~'hsl(var(--surface-shadow) / var(--shadow-strength))';
-
-/* Fonts */
-/**
- * Citizen font stack for sans-serif fonts
- *
- * `Roboto` – Default font
- * `Noto Sans CJK` - CJK font
- * system-ui - System UI font stack
- * `-apple-system` - Firefox fallback for System UI font stack
- */
-@fonts: 'Roboto', 'Noto Sans CJK', system-ui, -apple-system, sans-serif;
-/**
- * Citizen serif font stack
- *
- * `Georgia` – Windows, Mac
- * `serif` – (Generic) web font fallback
- */
-@fonts-serif: Georgia, serif;
-/**
- * System font stack for monospace fonts
- *
- * `SFMono-Regular` - macOS 10.12+
- * `Menlo` – macOS 10.6+
- * `Roboto Mono` - Android 4.0+
- * `Consolas` – Windows Vista & newer
- * `Liberation Mono` – Fedora, Ubuntu, … OFL licensed
- * `'Courier New', monospace` – (Generic) web font fallback
- */
-@fonts-monospace: 'SFMono-Regular', 'Menlo', 'Roboto Mono', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
 
 /**
  * Dark theme color palette
