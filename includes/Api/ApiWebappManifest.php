@@ -65,28 +65,53 @@ class ApiWebappManifest extends ApiBase {
 	 *
 	 * @param MediaWikiServices $services
 	 * @param Config $config
+	 * @param MediaWikiServices $services
 	 * @return array
 	 */
 	private function getIcons( $config, $services ) {
 		$icons = [];
-
-		$appleTouchIcon = $config->get( 'AppleTouchIcon' );
-		if ( $appleTouchIcon !== false ) {
-			$appleTouchIconUrl = wfExpandUrl( $appleTouchIcon, PROTO_CURRENT );
-			$request = $services->getHttpRequestFactory()->create( $appleTouchIconUrl, [], __METHOD__ );
-			$request->execute();
-			$appleTouchIconContent = $request->getContent();
-			if ( !empty( $appleTouchIconContent ) ) {
-				$appleTouchIconSize = getimagesizefromstring( $appleTouchIconContent );
-			}
-			$icon = [
-				'src' => $appleTouchIcon
+		$logos = $config->get( 'Logos' );
+	
+		// That really shouldn't happen
+		if ( $logos !== false ) {
+			$logoKeys = [
+				'1x',
+				'1.5x',
+				'2x',
+				'icon',
+				'svg'
 			];
-			if ( isset( $appleTouchIconSize ) && $appleTouchIconSize !== false ) {
-				$icon['sizes'] = $appleTouchIconSize[0] . 'x' . $appleTouchIconSize[1];
-				$icon['type'] = $appleTouchIconSize['mime'];
+
+			foreach( $logoKeys as $logoKey ) {
+				$logo = (string)$logos[$logoKey];
+
+				if ( !empty( $logo ) ) {
+					$logoUrl = wfExpandUrl( $logo, PROTO_CURRENT );
+					$request = $services->getHttpRequestFactory()->create( $logoUrl, [], __METHOD__ );
+					$request->execute();
+					$logoContent = $request->getContent();
+
+					if ( !empty( $logoContent ) ) {
+						$logoSize = getimagesizefromstring( $logoContent );
+					}
+					$icon = [
+						'src' => $logo
+					];
+	
+					if ( isset( $logoSize ) && $logoSize !== false ) {
+						$icon['sizes'] = $logoSize[0] . 'x' . $logoSize[1];
+						$icon['type'] = $logoSize['mime'];
+					}
+
+					// Set sizes to any if it is a SVG
+					if ( substr( $logo, -3 ) === 'svg' ) {
+						$icon['sizes'] = 'any';
+						$icon['type'] = 'image/svg+xml';
+					}
+
+					$icons[] = $icon;
+				}
 			}
-			$icons[] = $icon;
 		}
 
 		return $icons;
