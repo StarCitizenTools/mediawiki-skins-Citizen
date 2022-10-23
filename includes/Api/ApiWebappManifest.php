@@ -48,7 +48,7 @@ class ApiWebappManifest extends ApiBase {
 		// E.g. index.php URLs will be thrown out of the PWA
 		$resultObj->addValue( null, 'scope', $config->get( 'Server' ) . '/' );
 		$resultObj->addValue( null, 'icons', $this->getIcons( $config, $services ) );
-		$resultObj->addValue( null, 'display', 'minimal-ui' );
+		$resultObj->addValue( null, 'display', 'standalone' );
 		$resultObj->addValue( null, 'orientation', 'portrait' );
 		$resultObj->addValue( null, 'start_url', Title::newMainPage()->getLocalURL() );
 		$resultObj->addValue( null, 'theme_color', $config->get( 'CitizenManifestThemeColor' ) );
