@@ -81,27 +81,48 @@ function onTitleHidden( document ) {
 }
 
 /**
+ * Register service worker
+ *
+ * @return {void}
+ */
+function registerServiceWorker() {
+	const scriptPath = mw.config.get( 'wgScriptPath' );
+
+	// Only allow serviceWorker when the scriptPath is at root because of its scope
+	// I can't figure out how to add the Service-Worker-Allowed HTTP header to change the default scope
+	if ( scriptPath === '' ) {
+		if ( 'serviceWorker' in navigator ) {
+			const SW_MODULE_NAME = 'skins.citizen.serviceWorker',
+				version = mw.loader.moduleRegistry[ SW_MODULE_NAME ].version,
+				// HACK: Faking a RL link
+				swUrl = scriptPath +
+					'/load.php?modules=' + SW_MODULE_NAME +
+					'&only=scripts&raw=true&skin=citizen&version=' + version;
+
+			navigator.serviceWorker.register( swUrl, { scope: '/' } );
+		}
+	}
+}
+
+/**
  * @param {Window} window
  * @return {void}
  */
 function main( window ) {
 	const search = require( './search.js' );
 
-	const tocContainer = document.getElementById( 'toc' );
-
 	enableCssAnimations( window.document );
 	search.init( window );
 	onTitleHidden( window.document );
 
-	window.addEventListener( 'beforeunload', () => {
-		document.documentElement.classList.add( 'citizen-loading' );
-	}, false );
-
+	// Set up checkbox hacks
 	bind();
 	bindCloseOnUnload();
 
 	// Handle ToC
 	// TODO: There must be a cleaner way to do this
+	const tocContainer = document.getElementById( 'toc' );
+
 	if ( tocContainer ) {
 		const toc = require( './tableOfContents.js' );
 		toc.init();
@@ -115,6 +136,12 @@ function main( window ) {
 	}
 
 	mw.loader.load( 'skins.citizen.preferences' );
+
+	// Set up loading indicator
+	window.addEventListener( 'beforeunload', () => {
+		document.documentElement.classList.add( 'citizen-loading' );
+	}, false );
+	registerServiceWorker();
 }
 
 if ( document.readyState === 'interactive' || document.readyState === 'complete' ) {
