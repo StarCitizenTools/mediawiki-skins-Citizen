@@ -71,7 +71,7 @@ class ApiWebappManifest extends ApiBase {
 	private function getIcons( $config, $services ) {
 		$icons = [];
 		$logos = $config->get( 'Logos' );
-	
+
 		// That really shouldn't happen
 		if ( $logos !== false ) {
 			$logoKeys = [
@@ -82,7 +82,7 @@ class ApiWebappManifest extends ApiBase {
 				'svg'
 			];
 
-			foreach( $logoKeys as $logoKey ) {
+			foreach ( $logoKeys as $logoKey ) {
 				$logo = (string)$logos[$logoKey];
 
 				if ( !empty( $logo ) ) {
@@ -97,7 +97,7 @@ class ApiWebappManifest extends ApiBase {
 					$icon = [
 						'src' => $logo
 					];
-	
+
 					if ( isset( $logoSize ) && $logoSize !== false ) {
 						$icon['sizes'] = $logoSize[0] . 'x' . $logoSize[1];
 						$icon['type'] = $logoSize['mime'];
