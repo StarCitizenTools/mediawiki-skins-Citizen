@@ -186,7 +186,7 @@ function getSuggestions( searchQuery ) {
 
 			// Give <a> element a unique ID
 			suggestionLink.id = prefix + '-' + result.id;
-			suggestionLink.setAttribute( 'href', suggestionLinkPrefix + result.key );
+			suggestionLink.setAttribute( 'href', suggestionLinkPrefix + encodeURIComponent( result.key ) );
 
 			if ( result.thumbnail ) {
 				suggestionThumbnail.setAttribute( 'src', result.thumbnail );
