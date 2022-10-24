@@ -17,7 +17,7 @@
 	"citizen-sitestats-edits-label": "modifiche",
 	"citizen-footer-desc": "Modifica questo testo in [[MediaWiki:Citizen-footer-desc]]",
 	"citizen-footer-tagline": "Modifica questo testo in [[MediaWiki:Citizen-footer-tagline]]",
-	"citizen-action-addsection": "Aggiungi discussione",
+	"citizen-action-addsection": "Aggiungi argomento",
 	"citizen-jumptotop": "Torna all'inizio",
 	"citizen-tagline-ns-talk": "Pagina di discussione su {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Informazioni su {{SITENAME}}",
