@@ -125,7 +125,7 @@ function main( window ) {
 	if ( tocContainer ) {
 		const toc = require( './tableOfContents.js' );
 		toc.init();
-	};
+	}
 
 	mw.loader.load( 'skins.citizen.preferences' );
 
