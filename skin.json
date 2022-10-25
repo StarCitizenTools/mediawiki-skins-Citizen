@@ -496,6 +496,7 @@
 		"citizen": {
 			"+ext.advancedSearch.initialstyles": "skinStyles/extensions/AdvancedSearch/ext.advancedSearch.initialstyles.less",
 			"+ext.advancedSearch.styles": "skinStyles/extensions/AdvancedSearch/ext.advancedSearch.styles.less",
+			"+ext.ajaxpoll": "skinStyles/extensions/AJAXPoll/ext.ajaxpoll.less",
 			"+ext.ApprovedRevs": "skinStyles/extensions/ApprovedRevs/ext.ApprovedRevs.less",
 			"+ext.babel": "skinStyles/extensions/Babel/ext.babel.less",
 			"+ext.cargo.main": "skinStyles/extensions/Cargo/ext.cargo.main.less",
