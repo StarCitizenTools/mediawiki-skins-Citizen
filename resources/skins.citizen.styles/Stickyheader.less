@@ -26,6 +26,16 @@
 		.mw-indicators {
 			display: none;
 		}
+
+		// HACK: Hide overflow
+		&:before {
+			position: absolute;
+			right: ~'calc( var(--padding-page ) * -1 )';
+			left: ~'calc( var(--padding-page ) * -1 )';
+			height: 100%;
+			background-color: var( --color-surface-0 );
+			content: '';
+		}
 	}
 
 	.page-heading {
