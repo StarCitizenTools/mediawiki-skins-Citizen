@@ -107,11 +107,6 @@ figcaption,
 		font-size: @content-h1-size;
 	}
 
-	h1,
-	h2 {
-		line-height: 1.2;
-	}
-
 	h2 {
 		font-size: @content-h2-size;
 	}
@@ -130,6 +125,11 @@ figcaption,
 
 	h6 {
 		font-size: @content-h6-size;
+	}
+
+	h1,
+	h2 {
+		line-height: var( --line-height-xs );
 	}
 }
 
