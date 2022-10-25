@@ -21,6 +21,14 @@
 				{
 					"name": "citizen",
 					"responsive": true,
+					"menus": [
+						"user-menu",
+						"notifications",
+						"views",
+						"actions",
+						"variants",
+						"associated-pages"
+					],
 					"scripts": [
 						"skins.citizen.scripts"
 					],
