@@ -123,6 +123,23 @@
 				"resources/skins.citizen.styles.fonts/skins.citizen.styles.fonts.less"
 			]
 		},
+		"skins.citizen.styles.fonts.cjk": {
+			"class": "ResourceLoaderSkinModule",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"features": {
+				"content-parser-output": false,
+				"content-body": false,
+				"logo": false,
+				"legacy": false,
+				"toc": false
+			},
+			"styles": [
+				"resources/skins.citizen.styles.fonts.cjk/skins.citizen.styles.fonts.cjk.less"
+			]
+		},
 		"skins.citizen.styles.sections": {
 			"class": "ResourceLoaderSkinModule",
 			"targets": [
@@ -762,6 +779,12 @@
 			"value": true,
 			"description": "Use NumberFormatter for site statistics",
 			"descriptionmsg": "citizen-config-usenumberformatter",
+			"public": true
+		},
+		"EnableCJKFonts": {
+			"value": false,
+			"description": "Enable included Noto Sans CJK for wikis that serves CJK languages",
+			"descriptionmsg": "citizen-config-enablecjkfonts",
 			"public": true
 		}
 	},

@@ -372,6 +372,11 @@ class SkinCitizen extends SkinMustache {
 		// Table of content highlight
 		$options['styles'][] = 'skins.citizen.styles.toc';
 
+		// CJK fonts
+		if ( $this->getConfigValue( 'CitizenEnableCJKFonts' ) === true ) {
+			$options['styles'][] = 'skins.citizen.styles.fonts.cjk';
+		}
+
 		// Drawer sitestats
 		if ( $this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) === true ) {
 			$options['styles'][] = 'skins.citizen.styles.sitestats';
