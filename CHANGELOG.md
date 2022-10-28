@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-beta.3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2022-10-28)
+
+
+### Features
+
+* **AJAXPoll:** ✨ add skinStyle for AJAXPoll ([#487](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/487)) ([f1fb553](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f1fb5537c9191387726a9add84edb6b7ee9bd003))
+* **core:** ✨ reduce scroll top padding ([9b9b361](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9b9b3613c36d86e64f22401ed409146b13c5d6bd))
+* **font:** ✨ replace RobotoVF with RobotoFlex ([8e272a5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8e272a5bd49eec5bfefb12ec84729ba0ae42abc9))
+* **font:** ✨ sync cjk font weight with RobotoFlex ([dd82c57](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/dd82c571557e5935d110f6c610c7c9ccd9e65458))
+* **fonts:** ✨ add Noto Sans CJK font support ([b89873d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b89873d99cf92beca64bf4c0c4ba2c0f9161f8a2))
+* **pwa:** ✨ add basic support for service worker ([4f651b4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4f651b41cae76025dff3e1e4e708c4dc49e880c2))
+* **pwa:** ✨ use standalone mode ([bc8d1a3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bc8d1a320f619cb03c9206df0a7d571f2ec20f7d))
+* **pwa:** ✨ use wgLogos instead ([56005ae](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/56005ae627f7f706e5f1c49edce1753de5253f8c))
+* **tabberNeue:** ✨ update active tab selector ([0083d2f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0083d2fb8461b828b7803d0879a1d0583798ea26))
+
+
+### Bug Fixes
+
+* **core:** 🐛 hide sticky header overflow ([6b9fe9c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6b9fe9c2faa9cf4ae2a3c76051d8bd0dfed9ad80))
+* **core:** incorrect content header z-index ([fa3582d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fa3582dfd0fae998e66ce3bafa0668c11988045c))
+* **search:** 🐛 encode suggestion URL key ([50a0014](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/50a00143b061bc182727b838016daa59854b3d86))
+
 ## [2.0.0-beta.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2022-10-22)
 
 
