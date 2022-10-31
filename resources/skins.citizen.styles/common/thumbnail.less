@@ -9,16 +9,9 @@ figure,
 
 		a {
 			&.image {
-				overflow: hidden;
 				max-width: inherit;
 				border-radius: var( --border-radius--small );
 				margin-right: 2px; // Counter the 2px space added by core
-			}
-
-			&:hover:not( .lazy ):not( .new ) {
-				img {
-					transform: scale( 1.1 );
-				}
 			}
 
 			&:before {

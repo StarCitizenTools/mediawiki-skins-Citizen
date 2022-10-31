@@ -78,11 +78,18 @@
 	}
 
 	a.image {
-		display: block;
+		display: inline-block;
 		overflow: hidden;
+		vertical-align: top; // get rid of that weird bottom gap from inline block
 
 		> img {
 			transition: @transition-transform;
+		}
+
+		&:hover:not( .lazy ):not( .new ) {
+			> img {
+				transform: scale( 1.1 );
+			}
 		}
 	}
 
