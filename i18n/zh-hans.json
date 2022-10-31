@@ -7,6 +7,7 @@
 			"Grace03",
 			"Lakejason0",
 			"StarrySky",
+			"WrOffi",
 			"Yfdyh000"
 		]
 	},
@@ -24,6 +25,9 @@
 	"citizen-sitestats-images-label": "个文件",
 	"citizen-sitestats-users-label": "名用户",
 	"citizen-sitestats-edits-label": "次编辑",
+	"citizen-page-info-copyright": "版权",
+	"citizen-page-info-credits": "制作人员",
+	"citizen-page-info-lastmod": "最近修改",
 	"citizen-footer-desc": "在[[MediaWiki:Citizen-footer-desc]]编辑此文本",
 	"citizen-footer-tagline": "在[[MediaWiki:Citizen-footer-tagline]]编辑此文本",
 	"citizen-action-addsection": "添加话题",
@@ -39,8 +43,8 @@
 	"citizen-tagline-ns-category": "分类页面",
 	"prefs-citizen-theme-label": "主题",
 	"prefs-citizen-theme-option-auto": "自动",
-	"prefs-citizen-theme-option-light": "日间",
-	"prefs-citizen-theme-option-dark": "夜间",
+	"prefs-citizen-theme-option-light": "亮色",
+	"prefs-citizen-theme-option-dark": "暗色",
 	"prefs-citizen-fontsize-label": "字体大小",
 	"prefs-citizen-pagewidth-label": "页面宽度",
 	"prefs-citizen-lineheight-label": "行高",

@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Alistair3149",
 			"Ykhwong"
 		]
 	},
@@ -12,6 +13,8 @@
 	"citizen-sitestats-users-label": "사용자",
 	"citizen-sitestats-edits-label": "편집",
 	"citizen-page-info-copyright": "저작권",
+	"citizen-page-info-credits": "제작진",
+	"citizen-page-info-lastmod": "마지막 수정",
 	"citizen-action-addsection": "주제 추가",
 	"citizen-jumptotop": "맨 위로 돌아가기",
 	"citizen-search-fulltext-empty": "검색을 시작하려면 입력하세요",

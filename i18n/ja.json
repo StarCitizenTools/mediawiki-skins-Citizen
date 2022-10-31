@@ -1,0 +1,25 @@
+{
+	"@metadata": {
+		"authors": [
+			"Alistair3149",
+			"MathXplore",
+			"Tamaki Wakita"
+		]
+	},
+	"citizen-languages-toggle": "その他の言語",
+	"citizen-actions-more-toggle": "その他の操作",
+	"citizen-sitestats-articles-label": "記事",
+	"citizen-sitestats-images-label": "ファイル",
+	"citizen-sitestats-users-label": "ユーザー",
+	"citizen-sitestats-edits-label": "編集",
+	"citizen-page-info-copyright": "著作権",
+	"citizen-page-info-credits": "クレジット",
+	"citizen-page-info-lastmod": "最終更新",
+	"citizen-action-addsection": "話題を追加",
+	"citizen-jumptotop": "トップに戻る",
+	"prefs-citizen-theme-label": "テーマ",
+	"prefs-citizen-theme-option-light": "ライト",
+	"prefs-citizen-theme-option-dark": "ダーク",
+	"prefs-citizen-fontsize-label": "フォント サイズ",
+	"prefs-citizen-lineheight-label": "行の高さ"
+}
