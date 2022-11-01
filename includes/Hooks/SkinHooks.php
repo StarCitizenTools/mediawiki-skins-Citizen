@@ -95,19 +95,47 @@ class SkinHooks implements
 	public function onSkinTemplateNavigation__Universal( $sktemplate, &$links ): void {
 		// Be extra safe because it might be active on other skins with caching
 		if ( $sktemplate->getSkinName() === 'citizen' ) {
+			if ( isset( $links['actions'] ) ) {
+				self::updateActionsMenu( $sktemplate, $links );
+			}
+
 			if ( isset( $links['user-menu'] ) ) {
-				self::updateUserMenuItems( $sktemplate, $links );
+				self::updateUserMenu( $sktemplate, $links );
 			}
 		}
 	}
 
 	/**
-	 * Update user menu items
+	 * Update actions menu items
 	 *
 	 * @param SkinTemplate $sktemplate
 	 * @param array &$links
 	 */
-	private static function updateUserMenuItems( $sktemplate, &$links ) {
+	private static function updateActionsMenu( $sktemplate, &$links ) {
+		// Most icons are not mapped yet in the actions menu
+		$iconMap = [
+			'delete' => 'trash',
+			'move' => 'move',
+			'protect' => 'lock',
+			'unprotect' => 'unLock'
+		];
+
+		foreach( $iconMap as $key => $icon ) {
+			if ( isset( $links['actions'][$key] ) ) {
+				$links['actions'][$key]['icon'] ??= $icon;
+			}
+		}
+
+		self::addIconsToMenuItems( $links, 'actions' );
+	}
+
+	/**
+	 * Update user menu
+	 *
+	 * @param SkinTemplate $sktemplate
+	 * @param array &$links
+	 */
+	private static function updateUserMenu( $sktemplate, &$links ) {
 		$user = $sktemplate->getUser();
 		$isRegistered = $user->isRegistered();
 		$isTemp = $user->isTemp();
@@ -129,15 +157,25 @@ class SkinHooks implements
 			// unset( $links['user-menu']['login-private'] );
 		}
 
-		// TODO: The below code can be broken down to reusable parts when we work on other menus
-		// Prefix user link items with associated icon.
-		$user_menu = $links['user-menu'];
+		self::addIconsToMenuItems( $links, 'user-menu' );
+	}
+
+	/**
+	 * Add the HTML needed for icons to menu items
+	 *
+	 * @param array &$links
+	 * @param string $menu identifier
+	 */
+	private static function addIconsToMenuItems( &$links, $menu ) {
 		// Loop through each menu to check/append its link classes.
-		foreach ( $user_menu as $key => $item ) {
+		foreach ( $links[$menu] as $key => $item ) {
 			$icon = $item['icon'] ?? '';
-			// Html::makeLink will pass this through rawElement
-			// Avoid using mw-ui-icon in case its styles get loaded
-			$links['user-menu'][$key]['link-html'] = '<span class="citizen-ui-icon mw-ui-icon-' . $icon . ' mw-ui-icon-wikimedia-' . $icon . '"></span>';
+
+			if( $icon ) {
+				// Html::makeLink will pass this through rawElement
+				// Avoid using mw-ui-icon in case its styles get loaded
+				$links[$menu][$key]['link-html'] = '<span class="citizen-ui-icon mw-ui-icon-' . $icon . ' mw-ui-icon-wikimedia-' . $icon . '"></span>';
+			}
 		}
 	}
 }

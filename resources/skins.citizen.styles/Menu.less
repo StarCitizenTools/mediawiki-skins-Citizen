@@ -12,6 +12,24 @@
 	}
 }
 
+// FIXME: This should not be here
+.citizen-ui-icon {
+	// FIXME: We should avoid using this
+	width: @icon-size;
+	height: @icon-size;
+	opacity: var( --opacity-icon-base );
+
+	&:before {
+		display: block;
+		width: 100%;
+		height: 100%;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: contain;
+		content: '';
+	}
+}
+
 .mw-portlet {
 	// Hide selected item
 	.selected {
@@ -26,6 +44,10 @@
 }
 
 .skin-citizen-dark {
+	.citizen-ui-icon:before {
+		filter: invert( 1 );
+	}
+
 	.mw-portlet a:after {
 		filter: invert( 1 );
 	}

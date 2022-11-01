@@ -302,12 +302,6 @@
 				"#ca-ve-edit + #ca-edit > a:after": "resources/skins.citizen.icons/shared/wikiText.svg",
 				"#ca-ve-edit > a:after": "resources/skins.citizen.icons/shared/edit.svg",
 				"#ca-history > a:after": "resources/skins.citizen.icons/shared/history.svg",
-				"#ca-delete > a:after": "resources/skins.citizen.icons/shared/delete.svg",
-				"#ca-move > a:after": "resources/skins.citizen.icons/shared/move.svg",
-				"#ca-protect > a:after": "resources/skins.citizen.icons/shared/lock.svg",
-				"#ca-unprotect > a:after": "resources/skins.citizen.icons/shared/unLock.svg",
-				"#ca-watch > a:after": "resources/skins.citizen.icons/shared/eye.svg",
-				"#ca-unwatch > a:after": "resources/skins.citizen.icons/shared/eyeClosed.svg",
 				"#ca-addsection > a:after": "resources/skins.citizen.icons/shared/add.svg",
 				"#ca-talk > a:after": {
 					"file": {
@@ -407,7 +401,13 @@
 				"logIn",
 				"logOut",
 				"imageGallery",
-				"userGroup"
+				"userGroup",
+				"trash",
+				"move",
+				"lock",
+				"unLock",
+				"star",
+				"unStar"
 			]
 		},
 		"skins.citizen.icons.sections": {
