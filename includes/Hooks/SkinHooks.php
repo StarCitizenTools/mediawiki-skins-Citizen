@@ -120,7 +120,7 @@ class SkinHooks implements
 			'unprotect' => 'unLock'
 		];
 
-		foreach( $iconMap as $key => $icon ) {
+		foreach ( $iconMap as $key => $icon ) {
 			if ( isset( $links['actions'][$key] ) ) {
 				$links['actions'][$key]['icon'] ??= $icon;
 			}
@@ -171,7 +171,7 @@ class SkinHooks implements
 		foreach ( $links[$menu] as $key => $item ) {
 			$icon = $item['icon'] ?? '';
 
-			if( $icon ) {
+			if ( $icon ) {
 				// Html::makeLink will pass this through rawElement
 				// Avoid using mw-ui-icon in case its styles get loaded
 				$links[$menu][$key]['link-html'] = '<span class="citizen-ui-icon mw-ui-icon-' . $icon . ' mw-ui-icon-wikimedia-' . $icon . '"></span>';

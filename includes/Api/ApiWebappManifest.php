@@ -82,7 +82,7 @@ class ApiWebappManifest extends ApiBase {
 				'svg'
 			];
 
-			foreach( $logoKeys as $logoKey ) {
+			foreach ( $logoKeys as $logoKey ) {
 				$logo = (string)$logos[$logoKey];
 
 				if ( !empty( $logo ) ) {
