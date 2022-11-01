@@ -18,21 +18,10 @@
 		border-radius: var( --border-radius--medium );
 		place-items: center;
 
-		&--icon:after {
-			width: var( --size-icon );
-			height: var( --size-icon );
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: contain;
-			content: '';
-			opacity: var( --opacity-icon-base );
-			transition: @transition-opacity;
-		}
-
 		&:hover {
 			background-color: var( --background-color-quiet--hover );
 
-			&:after {
+			&:before {
 				opacity: var( --opacity-icon-base--hover );
 			}
 		}
@@ -40,7 +29,7 @@
 		&:active {
 			background-color: var( --background-color-quiet--active );
 
-			&:after {
+			&:before {
 				opacity: var( --opacity-icon-base--active );
 			}
 		}
@@ -89,23 +78,11 @@
 			font-size: 0;
 			transition: @transition-background, @transition-color;
 
-			&:after {
-				width: var( --size-icon );
-				height: var( --size-icon );
-				order: -1; // Move icon before the text
-				background-position: center;
-				background-repeat: no-repeat;
-				background-size: var( --size-icon );
-				content: '';
-				opacity: var( --opacity-icon-base );
-				transition: @transition-opacity;
-			}
-
 			&:hover {
 				background-color: var( --background-color-quiet--hover );
 				color: var( --color-base--emphasized );
 
-				&:after {
+				&:before {
 					opacity: var( --opacity-icon-base--hover );
 				}
 			}
@@ -114,7 +91,7 @@
 				background-color: var( --background-color-quiet--active );
 				color: var( --color-base--subtle );
 
-				&:after {
+				&:before {
 					opacity: var( --opacity-icon-base--active );
 				}
 			}
@@ -140,14 +117,29 @@
 	}
 }
 
+/* Non-WMUI icons */
+.page-actions__button:before,
+#citizen-languages__buttonCheckbox:before,
+.mw-portlet-views .mw-list-item > a:before,
+.mw-portlet-associated-pages .mw-list-item > a:before,
+.mw-portlet-tb .mw-list-item > a:before {
+	width: var( --size-icon );
+	height: var( --size-icon );
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: var( --size-icon );
+	content: '';
+	opacity: var( --opacity-icon-base );
+	transition: @transition-opacity;
+}
+
 // Language counter badge
 // TODO: Maybe this should be in a mixin
 #citizen-languages__buttonCheckbox {
 	position: relative; // So that the badge doesn't take a stroll to the far left
 
-	&:before {
+	&:after {
 		position: absolute;
-		z-index: 2;
 		top: 0;
 		left: 55%;
 		display: block;
@@ -180,7 +172,7 @@
 			~ .page-actions__button {
 				background-color: var( --background-color-quiet--hover );
 
-				&:after {
+				&:before {
 					opacity: var( --opacity-icon-base--hover );
 				}
 			}
@@ -190,31 +182,9 @@
 			~ .page-actions__button {
 				background-color: var( --background-color-quiet--active );
 
-				&:after {
+				&:before {
 					opacity: var( --opacity-icon-base--active );
 				}
-			}
-		}
-	}
-}
-
-// Handle icons
-.page-actions-more {
-	a {
-		&:after {
-			.resource-loader-list-icon;
-			opacity: var( --opacity-icon-base );
-		}
-
-		&:hover {
-			&:after {
-				opacity: var( --opacity-icon-base--hover );
-			}
-		}
-
-		&:active {
-			&:after {
-				opacity: var( --opacity-icon-base--active );
 			}
 		}
 	}
@@ -244,7 +214,7 @@
 				border-radius: 0 var( --border-radius--medium ) var( --border-radius--medium ) 0;
 				font-size: 0; // hide edit source text
 
-				&:after {
+				&:before {
 					margin-right: 0; // reset
 				}
 			}
@@ -261,7 +231,7 @@
 			background-color: var( --color-primary );
 			color: #fff;
 
-			&:after {
+			&:before {
 				filter: invert( 1 );
 				// white icon
 				opacity: 1;
@@ -280,11 +250,11 @@
 
 .skin-citizen-dark {
 	.page-actions {
-		&__button--icon:after {
+		&__button--icon:before {
 			filter: invert( 1 );
 		}
 
-		li > a:after {
+		li > a:before {
 			filter: invert( 1 );
 		}
 	}
@@ -328,7 +298,7 @@
 			li > a {
 				font-size: 0.875rem;
 
-				&:after {
+				&:before {
 					margin-right: 0.5rem;
 				}
 			}
@@ -344,7 +314,7 @@
 			&:hover {
 				background-color: none;
 
-				&:after {
+				&:before {
 					opacity: var( --opacity-icon-base );
 				}
 			}
