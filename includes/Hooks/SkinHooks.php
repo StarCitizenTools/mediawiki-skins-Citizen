@@ -99,6 +99,10 @@ class SkinHooks implements
 				self::updateActionsMenu( $sktemplate, $links );
 			}
 
+			if ( isset( $links['associated-pages'] ) ) {
+				self::updateAssociatedPagesMenu( $sktemplate, $links );
+			}
+
 			if ( isset( $links['user-menu'] ) ) {
 				self::updateUserMenu( $sktemplate, $links );
 			}
@@ -120,13 +124,26 @@ class SkinHooks implements
 			'unprotect' => 'unLock'
 		];
 
-		foreach ( $iconMap as $key => $icon ) {
-			if ( isset( $links['actions'][$key] ) ) {
-				$links['actions'][$key]['icon'] ??= $icon;
-			}
-		}
-
+		self::mapIconsToMenuItems( $links, 'actions', $iconMap );
 		self::addIconsToMenuItems( $links, 'actions' );
+	}
+
+	/**
+	 * Update associated pages menu items
+	 *
+	 * @param SkinTemplate $sktemplate
+	 * @param array &$links
+	 */
+	private static function updateAssociatedPagesMenu( $sktemplate, &$links ) {
+		// Most icons are not mapped yet in the associated pages menu
+		$iconMap = [
+			'talk' => 'speechBubbles',
+			'main' => 'article',
+			'user' => 'userAvatar'
+		];
+
+		self::mapIconsToMenuItems( $links, 'associated-pages', $iconMap );
+		self::addIconsToMenuItems( $links, 'associated-pages' );
 	}
 
 	/**
@@ -158,6 +175,21 @@ class SkinHooks implements
 		}
 
 		self::addIconsToMenuItems( $links, 'user-menu' );
+	}
+
+	/**
+	 * Set the icon parameter of the menu item based on the mapping
+	 *
+	 * @param array &$links
+	 * @param string $menu identifier
+	 * @param array $map icon mapping
+	 */
+	private static function mapIconsToMenuItems( &$links, $menu, $map ) {
+		foreach ( $map as $key => $icon ) {
+			if ( isset( $links[$menu][$key] ) ) {
+				$links[$menu][$key]['icon'] ??= $icon;
+			}
+		}
 	}
 
 	/**

@@ -95,10 +95,6 @@
 					opacity: var( --opacity-icon-base--active );
 				}
 			}
-
-			span {
-				.mixin-screen-reader-text;
-			}
 		}
 	}
 
@@ -117,11 +113,15 @@
 	}
 }
 
+// FIXME: This is just a temporary style for WMUI icon migration purposes
+.mw-portlet-associated-pages .mw-list-item > a {
+	gap: var( --space-xs );
+}
+
 /* Non-WMUI icons */
 .page-actions__button:before,
 #citizen-languages__buttonCheckbox:before,
 .mw-portlet-views .mw-list-item > a:before,
-.mw-portlet-associated-pages .mw-list-item > a:before,
 .mw-portlet-tb .mw-list-item > a:before {
 	width: var( --size-icon );
 	height: var( --size-icon );

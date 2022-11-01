@@ -303,19 +303,6 @@
 				"#ca-ve-edit > a:before": "resources/skins.citizen.icons/shared/edit.svg",
 				"#ca-history > a:before": "resources/skins.citizen.icons/shared/history.svg",
 				"#ca-addsection > a:before": "resources/skins.citizen.icons/shared/add.svg",
-				"#ca-talk > a:before": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/speechBubbles-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/speechBubbles-rtl.svg"
-					}
-				},
-				"#ca-nstab-main > a:before": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/article-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/article-rtl.svg"
-					}
-				},
-				"#ca-nstab-user > a:before": "resources/skins.citizen.icons/shared/userAvatar.svg",
 				"#ca-translate > a:before": "resources/skins.citizen.icons/shared/language.svg",
 				".mw-editsection > a:before": "resources/skins.citizen.icons/shared/edit.svg",
 				".mw-editsection > a.mw-editsection-visualeditor + .mw-editsection-divider + a:before": "resources/skins.citizen.icons/shared/wikiText.svg",
@@ -407,7 +394,10 @@
 				"lock",
 				"unLock",
 				"star",
-				"unStar"
+				"unStar",
+				"speechBubbles",
+				"article",
+				"userAvatar"
 			]
 		},
 		"skins.citizen.icons.sections": {
