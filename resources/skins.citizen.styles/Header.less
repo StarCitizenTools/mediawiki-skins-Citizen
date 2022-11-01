@@ -1,6 +1,6 @@
 .citizen-header {
 	--header-icon-size: ~'calc( var( --header-button-size ) / 2 )';
-	--header-button-size: ~'calc( var( --header-size ) - var( --space-sm ) * 2 )';
+	--header-button-size: ~'calc( var( --header-size ) - var(  --space-xs ) * 2 )';
 	--header-direction: row;
 	position: fixed;
 	z-index: @z-index-site-header;
@@ -9,10 +9,10 @@
 	left: 0;
 	display: flex;
 	flex-direction: var( --header-direction );
-	padding: var( --space-sm );
+	padding: var( --space-xs );
 	border-top: 1px solid var( --border-color-base );
 	background-color: var( --color-surface-0 );
-	gap: var( --space-xs );
+	gap: var( --space-xxs );
 
 	&__item {
 		display: flex;
@@ -83,7 +83,7 @@
 		flex-direction: var( --header-direction );
 		flex-grow: 1;
 		justify-content: space-between;
-		gap: var( --space-xs );
+		gap: var( --space-xxs );
 
 		.mw-checkbox-hack-checkbox:checked {
 			~ .citizen-header__button {
@@ -96,7 +96,7 @@
 	&__end {
 		display: flex;
 		flex-direction: var( --header-direction );
-		gap: var( --space-xs );
+		gap: var( --space-xxs );
 	}
 
 	&__start {
@@ -126,7 +126,7 @@
 		display: flex;
 		flex-direction: var( --header-direction );
 		align-items: center;
-		gap: var( --space-xs );
+		gap: var( --space-xxs );
 	}
 }
 
