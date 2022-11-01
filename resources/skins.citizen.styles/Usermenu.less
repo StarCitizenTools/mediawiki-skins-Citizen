@@ -25,23 +25,23 @@
 			a {
 				.menu-item-link;
 				align-items: center;
-				justify-content: space-between;
 				// TODO: Need to revisit this spacing, maybe set a min-height instead?
 				padding: 0.625rem var( --space-md );
+				
+				.citizen-ui-icon {
+					// FIXME: We should avoid using this
+					width: @icon-size;
+					height: @icon-size;
 
-				&:after {
-					.resource-loader-list-icon;
-					display: block;
-					margin-left: @icon-padding;
-					background-size: contain;
-					opacity: var( --opacity-icon-base );
-					transition: @transition-opacity;
+					&:before {
+						opacity: var( --opacity-icon-base );
+					}
 				}
 
 				&:hover {
 					.menu-item-link-hover;
 
-					&:after {
+					.citizen-ui-icon:before {
 						opacity: var( --opacity-icon-base--hover );
 					}
 				}
@@ -49,7 +49,7 @@
 				&:active {
 					.menu-item-link-active;
 
-					&:after {
+					.citizen-ui-icon:before {
 						opacity: var( --opacity-icon-base--active );
 					}
 				}

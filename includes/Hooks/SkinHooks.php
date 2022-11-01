@@ -93,6 +93,21 @@ class SkinHooks implements
 	 * @param array &$links
 	 */
 	public function onSkinTemplateNavigation__Universal( $sktemplate, &$links ): void {
+		// Be extra safe because it might be active on other skins with caching
+		if ( $sktemplate->getSkinName() === 'citizen' ) {
+			if ( isset( $links['user-menu'] ) ) {
+				self::updateUserMenuItems( $sktemplate, $links );
+			}
+		}
+	}
+
+	/**
+	 * Update user menu items
+	 *
+	 * @param SkinTemplate $sktemplate
+	 * @param array &$links
+	 */
+	private static function updateUserMenuItems( $sktemplate, &$links ) {
 		$user = $sktemplate->getUser();
 		$isRegistered = $user->isRegistered();
 		$isTemp = $user->isTemp();
@@ -112,6 +127,17 @@ class SkinHooks implements
 			// unset( $links['user-menu']['createaccount'] );
 			// unset( $links['user-menu']['login'] );
 			// unset( $links['user-menu']['login-private'] );
+		}
+
+		// TODO: The below code can be broken down to reusable parts when we work on other menus
+		// Prefix user link items with associated icon.
+		$user_menu = $links['user-menu'];
+		// Loop through each menu to check/append its link classes.
+		foreach ( $user_menu as $key => $item ) {
+			$icon = $item['icon'] ?? '';
+			// Html::makeLink will pass this through rawElement
+			// Avoid using mw-ui-icon in case its styles get loaded
+			$links['user-menu'][$key]['link-html'] = '<span class="citizen-ui-icon mw-ui-icon-' . $icon . ' mw-ui-icon-wikimedia-' . $icon . '"></span>';
 		}
 	}
 }

@@ -35,7 +35,8 @@
 					"styles": [
 						"skins.citizen.styles",
 						"skins.citizen.styles.fonts",
-						"skins.citizen.icons"
+						"skins.citizen.icons",
+						"skins.citizen.icons.wmui"
 					],
 					"messages": [
 						"citizen-actions-more-toggle",
@@ -374,46 +375,6 @@
 				"#t-print > a:after": "resources/skins.citizen.icons/shared/download.svg",
 				"#t-permalink > a:after": "resources/skins.citizen.icons/shared/link.svg",
 				"#t-info > a:after": "resources/skins.citizen.icons/shared/info.svg",
-				"#pt-mytalk > a:after": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/userTalk-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/userTalk-rtl.svg"
-					}
-				},
-				"#pt-preferences > a:after": "resources/skins.citizen.icons/shared/settings.svg",
-				"#pt-betafeatures > a:after": "resources/skins.citizen.icons/shared/beta.svg",
-				"#pt-watchlis > a:aftert": "resources/skins.citizen.icons/shared/watchlist.svg",
-				"#pt-mycontris > a:after": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/userContributions-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/userContributions-rtl.svg"
-					}
-				},
-				"#pt-logout > a:after": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/logOut-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/logOut-rtl.svg"
-					}
-				},
-				"#pt-createaccount > a:after": "resources/skins.citizen.icons/shared/userAvatar.svg",
-				"#pt-login > a:after": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/logIn-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/logIn-rtl.svg"
-					}
-				},
-				"#pt-anontalk > a:after": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/userTalk-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/userTalk-rtl.svg"
-					}
-				},
-				"#pt-anoncontribs > a:after": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/userContributions-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/userContributions-rtl.svg"
-					}
-				},
 				"#citizen-siteStats__item--articles:before": {
 					"file": {
 						"ltr": "resources/skins.citizen.icons/shared/article-ltr.svg",
@@ -429,6 +390,25 @@
 				"#citizen-siteStats__item--users:before": "resources/skins.citizen.icons/shared/userAvatar.svg",
 				"#citizen-siteStats__item--edits:before": "resources/skins.citizen.icons/shared/edit.svg"
 			}
+		},
+		"skins.citizen.icons.wmui": {
+			"selectorWithoutVariant": ".mw-ui-icon-wikimedia-{name}:before",
+			"useDataURI": false,
+			"defaultColor": "#000",
+			"class": "ResourceLoaderOOUIIconPackModule",
+			"icons": [
+				"userTalk",
+				"sandbox",
+				"settings",
+				"labFlask",
+				"watchlist",
+				"userContributions",
+				"userAdd",
+				"logIn",
+				"logOut",
+				"imageGallery",
+				"userGroup"
+			]
 		},
 		"skins.citizen.icons.sections": {
 			"class": "ResourceLoaderImageModule",
