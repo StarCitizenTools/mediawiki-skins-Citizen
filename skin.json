@@ -343,21 +343,7 @@
 				},
 				"#t-print > a:before": "resources/skins.citizen.icons/shared/download.svg",
 				"#t-permalink > a:before": "resources/skins.citizen.icons/shared/link.svg",
-				"#t-info > a:before": "resources/skins.citizen.icons/shared/info.svg",
-				"#citizen-siteStats__item--articles:before": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/article-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/article-rtl.svg"
-					}
-				},
-				"#citizen-siteStats__item--images:before": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/folderPlaceholder-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/folderPlaceholder-rtl.svg"
-					}
-				},
-				"#citizen-siteStats__item--users:before": "resources/skins.citizen.icons/shared/userAvatar.svg",
-				"#citizen-siteStats__item--edits:before": "resources/skins.citizen.icons/shared/edit.svg"
+				"#t-info > a:before": "resources/skins.citizen.icons/shared/info.svg"
 			}
 		},
 		"skins.citizen.icons.wmui": {
@@ -390,7 +376,8 @@
 				"history",
 				"edit",
 				"wikiText",
-				"speechBubbleAdd"
+				"speechBubbleAdd",
+				"image"
 			]
 		},
 		"skins.citizen.icons.sections": {

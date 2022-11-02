@@ -129,7 +129,13 @@ final class Drawer extends Partial {
 
 		if ( $this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) ) {
 			$skin = $this->skin;
-			$stats = [ 'articles', 'images', 'users', 'edits' ];
+			// Key => Icon
+			$map = [ 
+				'articles' => 'article',
+				'images' => 'image',
+				'users' => 'userAvatar',
+				'edits' => 'edit'
+			];
 			$items = [];
 			$fmt = null;
 
@@ -141,11 +147,12 @@ final class Drawer extends Partial {
 				$fmt->setAttribute( \NumberFormatter::MAX_FRACTION_DIGITS, 1 );
 			}
 
-			foreach ( $stats as &$stat ) {
+			foreach ( $map as $key => $icon ) {
 				$items[] = [
-					'id' => $stat,
-					'value' => $this->getSiteStatValue( $stat, $fmt ),
-					'label' => $skin->msg( "citizen-sitestats-$stat-label" )->text(),
+					'id' => $key,
+					'icon' => $icon,
+					'value' => $this->getSiteStatValue( $key, $fmt ),
+					'label' => $skin->msg( "citizen-sitestats-$key-label" )->text(),
 				];
 			}
 		}
