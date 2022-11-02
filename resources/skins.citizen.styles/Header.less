@@ -2,7 +2,9 @@
 	--header-icon-size: ~'calc( var( --header-button-size ) / 2 )';
 	--header-button-size: ~'calc( var( --header-size ) - var( --space-sm ) * 2 )';
 	--header-direction: row;
-	--header-card-maxheight: ~'calc( 100vh - var( --header-size ) - var( --space-xl ) )';
+	 // Browser UI can be unpredicatable
+	 // And this leaves some empty space for dismissing the dialog
+	--header-card-maxheight: 70vh;
 	position: fixed;
 	z-index: @z-index-site-header;
 	right: 0;
