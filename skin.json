@@ -291,19 +291,7 @@
 				".citizen-search__random:after": "resources/skins.citizen.icons/shared/random.svg",
 				"#citizen-languages__buttonCheckbox:before": "resources/skins.citizen.icons/shared/language.svg",
 				"#page-actions-more__buttonCheckbox:before": "resources/skins.citizen.icons/more.svg",
-				"#ca-view > a:before": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/article-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/article-rtl.svg"
-					}
-				},
-				"#ca-viewsource > a:before": "resources/skins.citizen.icons/shared/eye.svg",
-				"#ca-edit > a:before": "resources/skins.citizen.icons/shared/edit.svg",
-				"#ca-ve-edit + #ca-edit > a:before": "resources/skins.citizen.icons/shared/wikiText.svg",
 				"#ca-ve-edit > a:before": "resources/skins.citizen.icons/shared/edit.svg",
-				"#ca-history > a:before": "resources/skins.citizen.icons/shared/history.svg",
-				"#ca-addsection > a:before": "resources/skins.citizen.icons/shared/add.svg",
-				"#ca-translate > a:before": "resources/skins.citizen.icons/shared/language.svg",
 				".mw-editsection > a:before": "resources/skins.citizen.icons/shared/edit.svg",
 				".mw-editsection > a.mw-editsection-visualeditor + .mw-editsection-divider + a:before": "resources/skins.citizen.icons/shared/wikiText.svg",
 				"#n-mainpage-description > a:after": "resources/skins.citizen.icons/shared/home.svg",
@@ -397,7 +385,12 @@
 				"unStar",
 				"speechBubbles",
 				"article",
-				"userAvatar"
+				"userAvatar",
+				"editLock",
+				"history",
+				"edit",
+				"wikiText",
+				"speechBubbleAdd"
 			]
 		},
 		"skins.citizen.icons.sections": {

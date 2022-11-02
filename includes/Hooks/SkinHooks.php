@@ -106,6 +106,10 @@ class SkinHooks implements
 			if ( isset( $links['user-menu'] ) ) {
 				self::updateUserMenu( $sktemplate, $links );
 			}
+
+			if ( isset( $links['views'] ) ) {
+				self::updateViewsMenu( $sktemplate, $links );
+			}
 		}
 	}
 
@@ -175,6 +179,37 @@ class SkinHooks implements
 		}
 
 		self::addIconsToMenuItems( $links, 'user-menu' );
+	}
+
+	/**
+	 * Update views menu items
+	 *
+	 * @param SkinTemplate $sktemplate
+	 * @param array &$links
+	 */
+	private static function updateViewsMenu( $sktemplate, &$links ) {
+		// Most icons are not mapped yet in the views menu
+		$iconMap = [
+			'view' => 'article',
+			// View source button only appears when the user do not have permission
+			'viewsource' => 'editLock',
+			'history' => 'history',
+			'edit' => 'edit',
+			// Extension:VisualEditor
+			// For some reason the icon span element keeps getting removed
+			// So we are adding this the legacy way
+			// 've-edit' => 'edit',
+			// Extension:DiscussionTools
+			'addsection' => 'speechBubbleAdd'
+		];
+
+		// If a VE edit button is present, use wikiText icon for source edit
+		if ( isset( $links['views']['ve-edit'] ) ) {
+			$iconMap['edit'] = 'wikiText';
+		}
+
+		self::mapIconsToMenuItems( $links, 'views', $iconMap );
+		self::addIconsToMenuItems( $links, 'views' );
 	}
 
 	/**
