@@ -130,7 +130,7 @@ final class Drawer extends Partial {
 		if ( $this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) ) {
 			$skin = $this->skin;
 			// Key => Icon
-			$map = [ 
+			$map = [
 				'articles' => 'article',
 				'images' => 'image',
 				'users' => 'userAvatar',
