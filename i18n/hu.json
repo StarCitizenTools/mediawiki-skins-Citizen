@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Alistair3149",
 			"Hanna Tardos"
 		]
 	},
@@ -8,6 +9,9 @@
 	"citizen-sitestats-images-label": "fájlok",
 	"citizen-sitestats-users-label": "felhasználók",
 	"citizen-sitestats-edits-label": "szerkesztések",
+	"citizen-page-info-lastmod": "Utolsó módosítás",
+	"citizen-action-addsection": "Új téma nyitása",
+	"citizen-jumptotop": "Vissza a tetejére",
 	"prefs-citizen-theme-label": "Téma",
 	"prefs-citizen-theme-option-auto": "Automatikus",
 	"prefs-citizen-theme-option-light": "Világos",

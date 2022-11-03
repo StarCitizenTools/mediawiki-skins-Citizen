@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Alistair3149",
 			"Beta16",
 			"GpieroMW",
 			"Pierpao",
@@ -15,6 +16,7 @@
 	"citizen-sitestats-images-label": "file",
 	"citizen-sitestats-users-label": "utenti",
 	"citizen-sitestats-edits-label": "modifiche",
+	"citizen-page-info-lastmod": "Ultima modifica",
 	"citizen-footer-desc": "Modifica questo testo in [[MediaWiki:Citizen-footer-desc]]",
 	"citizen-footer-tagline": "Modifica questo testo in [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Aggiungi argomento",

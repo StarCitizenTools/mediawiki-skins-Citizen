@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Abijeet Patro",
+			"Alistair3149",
 			"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 			"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
 		]
@@ -16,7 +17,7 @@
 	"citizen-search-toggle": "Tooltip of search box toggle",
 	"citizen-languages-toggle": "Tooltip of languages menu toggle",
 	"citizen-actions-more-toggle": "Tooltip of more page actions menu toggle",
-	"citizen-sitestats-articles-label": "Label for the article statistics",
+	"citizen-sitestats-articles-label": "Label for the article statistics\n\n{{Identical|Article}}",
 	"citizen-sitestats-images-label": "Label for the file statistics",
 	"citizen-sitestats-users-label": "Label for the user statistics",
 	"citizen-sitestats-edits-label": "Label for the edit statistics",
