@@ -13,7 +13,8 @@ a.feedlink {
 	&-button {
 		cursor: pointer;
 
-		> span {
+		// Icons have to use span inside label elements
+		> span:not( .citizen-ui-icon ) {
 			.mixin-screen-reader-text;
 		}
 	}

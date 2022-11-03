@@ -21,7 +21,7 @@
 		&:hover {
 			background-color: var( --background-color-quiet--hover );
 
-			&:before {
+			.citizen-ui-icon:before {
 				opacity: var( --opacity-icon-base--hover );
 			}
 		}
@@ -29,7 +29,7 @@
 		&:active {
 			background-color: var( --background-color-quiet--active );
 
-			&:before {
+			.citizen-ui-icon:before {
 				opacity: var( --opacity-icon-base--active );
 			}
 		}
@@ -115,9 +115,7 @@
 
 /* Non-WMUI icons */
 // See SkinHooks.php for why VE is here
-.page-actions__button:before,
 #ca-ve-edit > a:before,
-#citizen-languages__buttonCheckbox:before,
 .mw-portlet-tb .mw-list-item > a:before {
 	width: var( --size-icon );
 	height: var( --size-icon );
@@ -168,7 +166,7 @@
 			~ .page-actions__button {
 				background-color: var( --background-color-quiet--hover );
 
-				&:before {
+				.citizen-ui-icon:before {
 					opacity: var( --opacity-icon-base--hover );
 				}
 			}
@@ -178,7 +176,7 @@
 			~ .page-actions__button {
 				background-color: var( --background-color-quiet--active );
 
-				&:before {
+				.citizen-ui-icon:before {
 					opacity: var( --opacity-icon-base--active );
 				}
 			}
@@ -247,7 +245,6 @@
 
 .skin-citizen-dark {
 	#ca-ve-edit > a,
-	.page-actions__button--icon,
 	.mw-list-item > a {
 		&:before {
 			filter: invert( 1 );
@@ -305,7 +302,7 @@
 			&:hover {
 				background-color: none;
 
-				&:before {
+				.citizen-ui-icon:before {
 					opacity: var( --opacity-icon-base );
 				}
 			}

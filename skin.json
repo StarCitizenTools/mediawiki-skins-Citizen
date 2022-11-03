@@ -286,9 +286,6 @@
 						"rtl": "resources/skins.citizen.icons/toc-rtl.svg"
 					}
 				},
-				"#citizen-userMenu__buttonCheckbox:after": "resources/skins.citizen.icons/shared/userAvatar.svg",
-				"#citizen-languages__buttonCheckbox:before": "resources/skins.citizen.icons/shared/language.svg",
-				"#page-actions-more__buttonCheckbox:before": "resources/skins.citizen.icons/more.svg",
 				"#ca-ve-edit > a:before": "resources/skins.citizen.icons/shared/edit.svg",
 				".mw-editsection > a:before": "resources/skins.citizen.icons/shared/edit.svg",
 				".mw-editsection > a.mw-editsection-visualeditor + .mw-editsection-divider + a:before": "resources/skins.citizen.icons/shared/wikiText.svg",
@@ -356,7 +353,9 @@
 				"speechBubbleAdd",
 				"image",
 				"search",
-				"die"
+				"die",
+				"textLanguage",
+				"ellipsis"
 			]
 		},
 		"skins.citizen.icons.sections": {
@@ -365,14 +364,6 @@
 			"useDataURI": false,
 			"images": {
 				"collapse": "resources/skins.citizen.icons/shared/collapse.svg"
-			}
-		},
-		"skins.citizen.icons.preferences": {
-			"class": "ResourceLoaderImageModule",
-			"selector": "#citizen-pref-{name}:after",
-			"useDataURI": false,
-			"images": {
-				"toggle": "resources/skins.citizen.icons/shared/settings.svg"
 			}
 		}
 	},
