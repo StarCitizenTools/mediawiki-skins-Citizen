@@ -292,20 +292,6 @@
 				"#ca-ve-edit > a:before": "resources/skins.citizen.icons/shared/edit.svg",
 				".mw-editsection > a:before": "resources/skins.citizen.icons/shared/edit.svg",
 				".mw-editsection > a.mw-editsection-visualeditor + .mw-editsection-divider + a:before": "resources/skins.citizen.icons/shared/wikiText.svg",
-				"#n-mainpage-description > a:after": "resources/skins.citizen.icons/shared/home.svg",
-				"#n-recentchanges > a:after": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/recentChanges-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/recentChanges-rtl.svg"
-					}
-				},
-				"#n-randompage > a:after": "resources/skins.citizen.icons/shared/random.svg",
-				"#n-help > a:after": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/help-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/help-rtl.svg"
-					}
-				},
 				"#t-whatlinkshere > a:before": {
 					"file": {
 						"ltr": "resources/skins.citizen.icons/shared/articleRedirect-ltr.svg",
@@ -332,13 +318,6 @@
 				},
 				"#t-blockip > a:before": "resources/skins.citizen.icons/shared/block.svg",
 				"#t-userrights > a:before": "resources/skins.citizen.icons/shared/userGroup.svg",
-				"#t-upload > a:before": "resources/skins.citizen.icons/shared/upload.svg",
-				"#t-specialpages > a:before": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/specialPages-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/specialPages-rtl.svg"
-					}
-				},
 				"#t-print > a:before": "resources/skins.citizen.icons/shared/download.svg",
 				"#t-permalink > a:before": "resources/skins.citizen.icons/shared/link.svg",
 				"#t-info > a:before": "resources/skins.citizen.icons/shared/info.svg"

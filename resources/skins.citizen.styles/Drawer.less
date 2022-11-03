@@ -41,31 +41,15 @@
 
 		a {
 			.menu-item-link;
-			padding: 0.625rem 1.25rem; // TODO: Make this a variable
+			padding: 0.625rem var( --space-md ); // TODO: Make this a variable
 			border-radius: var( --border-radius--small );
-
-			&:after {
-				.resource-loader-list-icon;
-				display: block;
-				background-size: contain;
-				opacity: var( --opacity-icon-base );
-				transition: @transition-opacity;
-			}
 
 			&:hover {
 				.menu-item-link-hover;
-
-				&:after {
-					opacity: var( --opacity-icon-base--hover );
-				}
 			}
 
 			&:active {
 				.menu-item-link-active;
-
-				&:after {
-					opacity: var( --opacity-icon-base--active );
-				}
 			}
 		}
 	}
@@ -82,13 +66,6 @@
 .citizen-animations-ready {
 	.citizen-drawer__card {
 		.citizen-card-transition();
-	}
-}
-
-.skin-citizen-dark {
-	// Icons in nav links
-	.citizen-drawer__menu a:after {
-		filter: invert( 1 );
 	}
 }
 
