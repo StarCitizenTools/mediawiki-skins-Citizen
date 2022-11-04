@@ -157,26 +157,22 @@
 			position: absolute;
 			right: 0;
 			bottom: 0;
+			display: grid;
 			width: 2.5rem;
 			height: 2.5rem;
 			border-radius: var( --border-radius--medium );
 			margin: var( --space-xs );
 			background-color: var( --color-surface-1 );
 			box-shadow: var( --box-shadow-dialog );
+			place-content: center;
 			pointer-events: auto;
 			transform: none;
 			transform-origin: bottom right;
 			transition: @transition-transform;
 
-			&:after {
-				display: block;
-				width: inherit;
-				height: inherit;
-				background-position: center;
-				background-repeat: no-repeat;
-				background-size: 1rem;
-				content: '';
-				opacity: var( --opacity-icon-base );
+			.citizen-ui-icon {
+				width: 1rem;
+				height: 1rem;
 			}
 
 			// The hover state colors are not great but it will do for now
@@ -202,7 +198,7 @@
 					pointer-events: none;
 					transform: scale( 1.2 );
 
-					&:after {
+					.citizen-ui-icon {
 						display: none;
 					}
 				}
@@ -214,12 +210,6 @@
 	.citizen-animations-ready {
 		.citizen-toc__card {
 			.citizen-card-transition();
-		}
-	}
-
-	.skin-citizen-dark {
-		#citizen-toc__buttonCheckbox:after {
-			filter: invert( 1 );
 		}
 	}
 }
@@ -236,6 +226,11 @@
 			overflow-y: auto;
 			overscroll-behavior: contain;
 		}
+	}
+
+	// Hide button in desktop viewport
+	#citizen-toc__buttonCheckbox {
+		display: none;
 	}
 
 	// Sticky header styles

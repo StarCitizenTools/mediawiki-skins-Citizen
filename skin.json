@@ -280,12 +280,6 @@
 			"defaultColor": "#000",
 			"images": {
 				".citizen-toc__top:before": "resources/skins.citizen.icons/backToTop.svg",
-				"#citizen-toc__buttonCheckbox:after": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/toc-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/toc-rtl.svg"
-					}
-				},
 				"#ca-ve-edit > a:before": "resources/skins.citizen.icons/shared/edit.svg",
 				".mw-editsection > a:before": "resources/skins.citizen.icons/shared/edit.svg",
 				".mw-editsection > a.mw-editsection-visualeditor + .mw-editsection-divider + a:before": "resources/skins.citizen.icons/shared/wikiText.svg",
@@ -355,7 +349,8 @@
 				"search",
 				"die",
 				"textLanguage",
-				"ellipsis"
+				"ellipsis",
+				"listBullet"
 			]
 		},
 		"skins.citizen.icons.sections": {
