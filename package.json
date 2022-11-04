@@ -23,7 +23,7 @@
 		"eslint-config-wikimedia": "0.23.0",
 		"grunt-banana-checker": "0.10.0",
 		"husky": "^8.0.1",
-		"jsdoc": "3.6.11",
+		"jsdoc": "4.0.0",
 		"jsdoc-wmf-theme": "0.0.5",
 		"standard-version": "^9.5.0",
 		"stylelint-config-idiomatic-order": "9.0.0",
