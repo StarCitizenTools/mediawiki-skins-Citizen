@@ -113,20 +113,6 @@
 	}
 }
 
-/* Non-WMUI icons */
-// See SkinHooks.php for why VE is here
-#ca-ve-edit > a:before,
-.mw-portlet-tb .mw-list-item > a:before {
-	width: var( --size-icon );
-	height: var( --size-icon );
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: var( --size-icon );
-	content: '';
-	opacity: var( --opacity-icon-base );
-	transition: @transition-opacity;
-}
-
 // Language counter badge
 // TODO: Maybe this should be in a mixin
 #citizen-languages__buttonCheckbox {
@@ -222,6 +208,19 @@
 	> a {
 		border-bottom-right-radius: 0;
 		border-top-right-radius: 0;
+
+		/* Non-WMUI icons */
+		// See SkinHooks.php for why VE is here
+		&:before {
+			width: var( --size-icon );
+			height: var( --size-icon );
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: var( --size-icon );
+			content: '';
+			opacity: var( --opacity-icon-base );
+			transition: @transition-opacity;
+		}
 	}
 
 	// Merge two buttons together
@@ -244,11 +243,8 @@
 }
 
 .skin-citizen-dark {
-	#ca-ve-edit > a,
-	.mw-list-item > a {
-		&:before {
-			filter: invert( 1 );
-		}
+	#ca-ve-edit > a:before {
+		filter: invert( 1 );
 	}
 }
 

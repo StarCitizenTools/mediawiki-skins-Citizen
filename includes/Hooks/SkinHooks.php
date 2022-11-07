@@ -26,16 +26,18 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Hooks;
 
 use MediaWiki\Hook\BeforePageDisplayHook;
+use MediaWiki\Hook\SidebarBeforeOutputHook;
+use MediaWiki\Hook\SkinBuildSidebarHook;
 use MediaWiki\Hook\SkinTemplateNavigation__UniversalHook;
 use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;
-use OutputPage;
-use Skin;
 
 /**
  * Hooks to run relating the skin
  */
 class SkinHooks implements
 	BeforePageDisplayHook,
+	SidebarBeforeOutputHook,
+	SkinBuildSidebarHook,
 	SkinPageReadyConfigHook,
 	SkinTemplateNavigation__UniversalHook
 {
@@ -63,6 +65,41 @@ class SkinHooks implements
 		// phpcs:enable Generic.Files.LineLength.TooLong
 
 		$out->addHeadItem( 'skin.citizen.inline', $script );
+	}
+
+	/**
+	 * Modify toolbox links
+	 * For some reason onSkinBuildSidebar was not able to get toolbox
+	 * So we need to use this hook instead 
+	 *
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SidebarBeforeOutput
+	 * @param Skin $skin
+	 * @param array &$sidebar
+	 */
+	public function onSidebarBeforeOutput( $skin, &$sidebar ): void {
+		// Be extra safe because it might be active on other skins with caching
+		if ( $skin->getSkinName() === 'citizen' && $sidebar ) {
+			if ( isset( $sidebar['TOOLBOX'] ) ) {
+				self::updateToolboxMenu( $sidebar );
+			}
+		}
+	}
+
+	/**
+	 * Modify sidebar links
+	 * This is cached compared to onSidebarBeforeOutput
+	 *
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SkinBuildSidebar
+	 * @param Skin $skin
+	 * @param array &$bar
+	 */
+	public function onSkinBuildSidebar( $skin, &$bar ): void {
+		// Be extra safe because it might be active on other skins with caching
+		if ( $skin->getSkinName() === 'citizen' && $bar ) {
+			foreach ( $bar as $key => $item ) {
+				self::addIconsToMenuItems( $bar, $key );
+			}
+		}
 	}
 
 	/**
@@ -148,6 +185,29 @@ class SkinHooks implements
 
 		self::mapIconsToMenuItems( $links, 'associated-pages', $iconMap );
 		self::addIconsToMenuItems( $links, 'associated-pages' );
+	}
+
+	/**
+	 * Update toolbox menu items
+	 *
+	 * @param array &$links
+	 */
+	private static function updateToolboxMenu( &$links ) {
+		// Most icons are not mapped yet in the toolbox menu
+		$iconMap = [
+			'whatlinkshere' => 'articleRedirect',
+			'recentchangeslinked' => 'recentChanges',
+			'print' => 'printer',
+			'permalink' => 'link',
+			'info' => 'infoFilled',
+			'contributions' => 'userContributions',
+			'log' => 'history',
+			'blockip' => 'block', 
+			'userrights' => 'userGroup'
+		];
+
+		self::mapIconsToMenuItems( $links, 'TOOLBOX', $iconMap );
+		self::addIconsToMenuItems( $links, 'TOOLBOX' );
 	}
 
 	/**

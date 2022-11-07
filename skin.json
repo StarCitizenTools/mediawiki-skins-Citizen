@@ -74,6 +74,8 @@
 	},
 	"Hooks": {
 		"BeforePageDisplay": "SkinHooks",
+		"SidebarBeforeOutput": "SkinHooks",
+		"SkinBuildSidebar": "SkinHooks",
 		"SkinPageReadyConfig": "SkinHooks",
 		"SkinTemplateNavigation::Universal": "SkinHooks"
 	},
@@ -282,36 +284,7 @@
 				".citizen-toc__top:before": "resources/skins.citizen.icons/backToTop.svg",
 				"#ca-ve-edit > a:before": "resources/skins.citizen.icons/shared/edit.svg",
 				".mw-editsection > a:before": "resources/skins.citizen.icons/shared/edit.svg",
-				".mw-editsection > a.mw-editsection-visualeditor + .mw-editsection-divider + a:before": "resources/skins.citizen.icons/shared/wikiText.svg",
-				"#t-whatlinkshere > a:before": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/articleRedirect-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/articleRedirect-rtl.svg"
-					}
-				},
-				"#t-recentchangeslinked > a:before": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/recentChanges-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/recentChanges-rtl.svg"
-					}
-				},
-				"#t-contributions > a:before": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/userContributions-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/userContributions-rtl.svg"
-					}
-				},
-				"#t-log > a:before": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/journal-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/journal-rtl.svg"
-					}
-				},
-				"#t-blockip > a:before": "resources/skins.citizen.icons/shared/block.svg",
-				"#t-userrights > a:before": "resources/skins.citizen.icons/shared/userGroup.svg",
-				"#t-print > a:before": "resources/skins.citizen.icons/shared/download.svg",
-				"#t-permalink > a:before": "resources/skins.citizen.icons/shared/link.svg",
-				"#t-info > a:before": "resources/skins.citizen.icons/shared/info.svg"
+				".mw-editsection > a.mw-editsection-visualeditor + .mw-editsection-divider + a:before": "resources/skins.citizen.icons/shared/wikiText.svg"
 			}
 		},
 		"skins.citizen.icons.wmui": {
@@ -350,7 +323,14 @@
 				"die",
 				"textLanguage",
 				"ellipsis",
-				"listBullet"
+				"listBullet",
+				"home",
+				"recentChanges",
+				"articleRedirect",
+				"printer",
+				"link",
+				"infoFilled",
+				"block"
 			]
 		},
 		"skins.citizen.icons.sections": {
