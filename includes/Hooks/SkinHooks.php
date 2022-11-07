@@ -70,7 +70,7 @@ class SkinHooks implements
 	/**
 	 * Modify toolbox links
 	 * For some reason onSkinBuildSidebar was not able to get toolbox
-	 * So we need to use this hook instead 
+	 * So we need to use this hook instead
 	 *
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SidebarBeforeOutput
 	 * @param Skin $skin
@@ -202,7 +202,7 @@ class SkinHooks implements
 			'info' => 'infoFilled',
 			'contributions' => 'userContributions',
 			'log' => 'history',
-			'blockip' => 'block', 
+			'blockip' => 'block',
 			'userrights' => 'userGroup'
 		];
 
