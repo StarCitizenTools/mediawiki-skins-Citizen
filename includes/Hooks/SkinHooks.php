@@ -137,7 +137,6 @@ class SkinHooks implements
 			}
 
 			if ( isset( $links['associated-pages'] ) ) {
-				var_dump( $links['associated-pages'] );
 				self::updateAssociatedPagesMenu( $sktemplate, $links );
 			}
 
