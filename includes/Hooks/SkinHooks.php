@@ -137,6 +137,7 @@ class SkinHooks implements
 			}
 
 			if ( isset( $links['associated-pages'] ) ) {
+				var_dump( $links['associated-pages'] );
 				self::updateAssociatedPagesMenu( $sktemplate, $links );
 			}
 
@@ -180,7 +181,8 @@ class SkinHooks implements
 		$iconMap = [
 			'talk' => 'speechBubbles',
 			'main' => 'article',
-			'user' => 'userAvatar'
+			'user' => 'userAvatar',
+			'user_talk' => 'userTalk'
 		];
 
 		self::mapIconsToMenuItems( $links, 'associated-pages', $iconMap );
