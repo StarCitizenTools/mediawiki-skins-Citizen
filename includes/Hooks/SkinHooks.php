@@ -188,6 +188,8 @@ class SkinHooks implements
 
 	/**
 	 * Update toolbox menu items
+	 * This is not guaranteed to run after extensions hook
+	 * FIXME: Revisit when T287622 is resolved
 	 *
 	 * @param array &$links
 	 */
@@ -203,6 +205,8 @@ class SkinHooks implements
 			'log' => 'history',
 			'blockip' => 'block',
 			'userrights' => 'userGroup'
+			// Extension:CiteThisPage
+			// 'cite' => 'reference'
 		];
 
 		self::mapIconsToMenuItems( $links, 'TOOLBOX', $iconMap );
