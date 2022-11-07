@@ -133,11 +133,11 @@ class SkinHooks implements
 		// Be extra safe because it might be active on other skins with caching
 		if ( $sktemplate->getSkinName() === 'citizen' ) {
 			if ( isset( $links['actions'] ) ) {
-				self::updateActionsMenu( $sktemplate, $links );
+				self::updateActionsMenu( $links );
 			}
 
 			if ( isset( $links['associated-pages'] ) ) {
-				self::updateAssociatedPagesMenu( $sktemplate, $links );
+				self::updateAssociatedPagesMenu( $links );
 			}
 
 			if ( isset( $links['user-menu'] ) ) {
@@ -145,7 +145,7 @@ class SkinHooks implements
 			}
 
 			if ( isset( $links['views'] ) ) {
-				self::updateViewsMenu( $sktemplate, $links );
+				self::updateViewsMenu( $links );
 			}
 		}
 	}
@@ -153,10 +153,9 @@ class SkinHooks implements
 	/**
 	 * Update actions menu items
 	 *
-	 * @param SkinTemplate $sktemplate
 	 * @param array &$links
 	 */
-	private static function updateActionsMenu( $sktemplate, &$links ) {
+	private static function updateActionsMenu( &$links ) {
 		// Most icons are not mapped yet in the actions menu
 		$iconMap = [
 			'delete' => 'trash',
@@ -172,10 +171,9 @@ class SkinHooks implements
 	/**
 	 * Update associated pages menu items
 	 *
-	 * @param SkinTemplate $sktemplate
 	 * @param array &$links
 	 */
-	private static function updateAssociatedPagesMenu( $sktemplate, &$links ) {
+	private static function updateAssociatedPagesMenu( &$links ) {
 		// Most icons are not mapped yet in the associated pages menu
 		$iconMap = [
 			'talk' => 'speechBubbles',
@@ -245,10 +243,9 @@ class SkinHooks implements
 	/**
 	 * Update views menu items
 	 *
-	 * @param SkinTemplate $sktemplate
 	 * @param array &$links
 	 */
-	private static function updateViewsMenu( $sktemplate, &$links ) {
+	private static function updateViewsMenu( &$links ) {
 		// Most icons are not mapped yet in the views menu
 		$iconMap = [
 			'view' => 'article',
