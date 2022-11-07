@@ -202,14 +202,10 @@
 }
 
 // VE styles shouldn't be core but it is just a few lines :/
-#ca-ve-edit:not( .selected ) {
+#ca-ve-edit {
 	order: 98; // Before source edit
 
 	> a {
-		border-bottom-right-radius: 0;
-		border-top-right-radius: 0;
-
-		/* Non-WMUI icons */
 		// See SkinHooks.php for why VE is here
 		&:before {
 			width: var( --size-icon );
@@ -218,13 +214,25 @@
 			background-repeat: no-repeat;
 			background-size: var( --size-icon );
 			content: '';
-			opacity: var( --opacity-icon-base );
 			transition: @transition-opacity;
 		}
 	}
+}
 
-	// Merge two buttons together
-	+ #ca-edit {
+#ca-edit {
+	order: 99; // Align to last
+}
+
+// Merge two buttons together
+.citizen-ve-edit-merged {
+	&#ca-ve-edit {
+		> a {
+			border-bottom-right-radius: 0;
+			border-top-right-radius: 0;
+		}
+	}
+
+	&#ca-edit {
 		border-left: 1px solid var( --color-primary--hover );
 		margin-left: ~'calc( var( --space-xxs ) * -1 )';
 
@@ -236,10 +244,6 @@
 			gap: 0;
 		}
 	}
-}
-
-#ca-edit {
-	order: 99; // Align to last
 }
 
 .skin-citizen-dark {

@@ -261,8 +261,12 @@ class SkinHooks implements
 			'addsection' => 'speechBubbleAdd'
 		];
 
-		// If a VE edit button is present, use wikiText icon for source edit
-		if ( isset( $links['views']['ve-edit'] ) ) {
+		// If both visual edit and source edit buttons are present
+		if ( isset( $links['views']['ve-edit'] ) && isset( $links['views']['edit'] ) ) {
+			// Add a class so that we can make a merged button through CSS
+			$links['views']['ve-edit']['class'] = 'citizen-ve-edit-merged';
+			$links['views']['edit']['class'] = 'citizen-ve-edit-merged';
+			// Use wikiText icon instead of edit icon for source edit
 			$iconMap['edit'] = 'wikiText';
 		}
 

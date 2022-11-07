@@ -16,6 +16,12 @@
 		pointer-events: auto;
 	}
 
+	// Hide edit buttons since it is handled by the editing mode dropdown in the toolbar
+	#ca-ve-edit,
+	#ca-edit {
+		display: none;
+	}
+
 	.mw-body-header {
 		z-index: 0; // Reset z-index so toolbar won't clip
 		// Reset VE disabled style to allow page action buttons to work
@@ -28,7 +34,7 @@
 		opacity: 0.5;
 	}
 
-	.toc {
+	.citizen-toc {
 		display: none; // Hide ToC
 	}
 }
