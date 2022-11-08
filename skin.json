@@ -296,6 +296,7 @@
 				"article",
 				"articleRedirect",
 				"block",
+				"collapse",
 				"die",
 				"edit",
 				"editLock",
@@ -332,14 +333,6 @@
 				"watchlist",
 				"wikiText"
 			]
-		},
-		"skins.citizen.icons.sections": {
-			"class": "ResourceLoaderImageModule",
-			"selector": ".section-indicator",
-			"useDataURI": false,
-			"images": {
-				"collapse": "resources/skins.citizen.icons/shared/collapse.svg"
-			}
 		}
 	},
 	"ResourceFileModulePaths": {

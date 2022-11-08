@@ -175,8 +175,8 @@ final class BodyContent extends Partial {
 		$heading->setAttribute( 'class', $className . 'section-heading' );
 
 		// prepend indicator - this avoids a reflow by creating a placeholder for a toggling indicator
-		$indicator = $doc->createElement( 'div' );
-		$indicator->setAttribute( 'class', 'section-indicator' );
+		$indicator = $doc->createElement( 'span' );
+		$indicator->setAttribute( 'class', 'section-indicator citizen-ui-icon mw-ui-icon-wikimedia-collapse' );
 		$heading->insertBefore( $indicator, $heading->firstChild );
 	}
 

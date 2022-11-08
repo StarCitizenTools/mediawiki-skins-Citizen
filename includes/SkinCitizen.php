@@ -174,7 +174,6 @@ class SkinCitizen extends SkinMustache {
 			if ( $this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true ) {
 				$options['scripts'][] = 'skins.citizen.scripts.sections';
 				$options['styles'][] = 'skins.citizen.styles.sections';
-				$options['styles'][] = 'skins.citizen.icons.sections';
 			}
 		}
 

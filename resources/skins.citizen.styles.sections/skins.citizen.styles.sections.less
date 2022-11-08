@@ -1,7 +1,5 @@
 @import '../variables.less';
 
-@indicator-size: 16px;
-
 .client-js {
 	.section {
 		&-heading {
@@ -33,23 +31,11 @@
 		}
 
 		&-indicator {
-			width: @indicator-size;
-			height: @indicator-size;
+			width: 1rem;
+			height: 1rem;
 			margin-right: var( --space-md );
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: @indicator-size;
 			cursor: pointer;
-			opacity: var( --opacity-icon-base );
-			transition: @transition-opacity, @transition-transform;
-
-			&:hover {
-				opacity: var( --opacity-icon-base--hover );
-			}
-
-			&:active {
-				opacity: var( --opacity-icon-base--active );
-			}
+			transition: @transition-transform;
 		}
 
 		// Fix button alignment
@@ -69,12 +55,6 @@
 				display: none;
 			}
 		}
-	}
-}
-
-.skin-citizen-dark {
-	.section-indicator {
-		filter: invert( 1 );
 	}
 }
 
