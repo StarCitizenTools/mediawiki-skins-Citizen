@@ -20,7 +20,6 @@
 		top: 0;
 		padding-bottom: var( --space-md );
 		border-bottom: 1px solid var( --border-color-base );
-		background-color: var( --color-surface-0 );
 
 		.mw-indicators {
 			display: none;
@@ -32,7 +31,8 @@
 			right: ~'calc( var(--padding-page ) * -1 )';
 			left: ~'calc( var(--padding-page ) * -1 )';
 			height: 100%;
-			background-color: var( --color-surface-0 );
+			backdrop-filter: saturate( 50% ) blur( 16px );
+			background-color: var( --background-color-overlay );
 			content: '';
 		}
 	}
@@ -42,7 +42,7 @@
 	}
 
 	.firstHeading {
-		font-size: 1.25rem;
+		font-size: var( --font-size-h3 );
 		transition: font-size @transition-timing-fast ease;
 	}
 
