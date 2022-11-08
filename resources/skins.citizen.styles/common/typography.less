@@ -95,8 +95,12 @@ figcaption,
 	font-weight: var( --font-weight-normal );
 }
 
-.firstHeading-parenthesis {
-	font-size: @content-h3-size;
+.firstHeading {
+	font-size: var( --font-size-h1 );
+
+	&-parenthesis {
+		font-size: var( --font-size-h3 );
+	}
 }
 
 .citizen-body,
@@ -104,31 +108,35 @@ figcaption,
 	line-height: var( --line-height );
 
 	h1 {
-		font-size: @content-h1-size;
+		font-size: var( --font-size-h1 );
 	}
 
 	h2 {
-		font-size: @content-h2-size;
+		font-size: var( --font-size-h2 );
 	}
 
 	h3 {
-		font-size: @content-h3-size;
+		font-size: var( --font-size-h3 );
 	}
 
 	h4 {
-		font-size: @content-h4-size;
+		font-size: var( --font-size-h4 );
 	}
 
 	h5 {
-		font-size: @content-h5-size;
+		font-size: var( --font-size-h5 );
 	}
 
 	h6 {
-		font-size: @content-h6-size;
+		font-size: var( --font-size-h6 );
 	}
 
 	h1,
-	h2 {
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
 		line-height: var( --line-height-xs );
 	}
 }
