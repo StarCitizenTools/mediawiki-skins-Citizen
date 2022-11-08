@@ -143,25 +143,31 @@ figcaption,
 
 // External links
 .mw-parser-output {
-	a.external {
-		&:after {
-			display: inline-block;
-			width: 0.75em;
-			height: 0.75em;
-			margin-left: 0.25em;
-			background-color: currentcolor;
-			content: '';
-			/* @embed */
-			-webkit-mask: url( images/linkExternal-ltr.svg ) no-repeat 50% 50%;
-			/* @embed */
-			mask: url( images/linkExternal-ltr.svg ) no-repeat 50% 50%;
-			-webkit-mask-size: contain;
-			mask-size: contain;
-		}
+	a.external:after {
+		display: inline-block;
+		width: 0.75em;
+		height: 0.75em;
+		margin-left: 0.25em;
+		background-color: currentcolor;
+		content: '';
+		/* @embed */
+		-webkit-mask: url( images/linkExternal.svg ) no-repeat 50% 50%;
+		/* @embed */
+		mask: url( images/linkExternal.svg ) no-repeat 50% 50%;
+		-webkit-mask-size: contain;
+		mask-size: contain;
 	}
 
 	.plainlinks a.external:after {
 		content: none;
+	}
+}
+
+.mw-content-rtl {
+	.mw-parser-output {
+		a.external:after {
+			transform: scaleX( -1 );
+		}
 	}
 }
 
