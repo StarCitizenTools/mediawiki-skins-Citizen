@@ -8,6 +8,8 @@
  * Date: 2022-10-28
 */
 
+@import '../../../resources/variables.less';
+
 // Custom sticky header handling
 #citizen-body-header-sticky-sentinel {
 	display: none;
@@ -15,6 +17,7 @@
 
 #filetoc {
 	position: sticky;
+	z-index: @z-index-page-header;
 	top: 0;
 	display: flex;
 	padding: 0;
@@ -92,6 +95,12 @@
 		// Large image can overflow
 		max-width: 100%;
 		height: auto;
+		transition: @transition-transform;
+	}
+
+	// Add affordance for full res image
+	> a:hover > img {
+		transform: scale( 1.1 );
 	}
 }
 
