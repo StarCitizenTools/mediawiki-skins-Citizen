@@ -95,6 +95,7 @@
 		// Large image can overflow
 		max-width: 100%;
 		height: auto;
+		background-color: var( --color-surface-2 );
 		transition: @transition-transform;
 	}
 
@@ -110,6 +111,12 @@
 		border-radius: var( --border-radius--medium );
 		box-shadow: var( --box-shadow-card );
 	}
+}
+
+.filehistory a img,
+#file img:hover {
+	// Because this gets overriden by a default style
+	background-color: var( --color-surface-2 );
 }
 
 .fileInfo {
