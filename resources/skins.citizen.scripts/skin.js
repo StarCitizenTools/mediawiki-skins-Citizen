@@ -21,6 +21,8 @@ function enableCssAnimations( document ) {
  * well as space) using core's checkboxHack.
  *
  * Based on Vector
+ *
+ * @return {void}
  */
 function bind() {
 	// Search for all dropdown containers using the CHECKBOX_HACK_CONTAINER_SELECTOR.
@@ -41,18 +43,15 @@ function bind() {
 }
 
 /**
- * T295085: Close all dropdown menus when page is unloaded to prevent them from
- * being open when navigating back to a page.
+ * Close all menus through unchecking all checkbox hacks
  *
- * Based on Vector
+ * @return {void}
  */
-function bindCloseOnUnload() {
-	addEventListener( 'beforeunload', () => {
-		const checkboxes = document.querySelectorAll( CHECKBOX_HACK_CHECKBOX_SELECTOR + ':checked' );
+function uncheckCheckboxHacks() {
+	const checkboxes = document.querySelectorAll( CHECKBOX_HACK_CHECKBOX_SELECTOR + ':checked' );
 
-		checkboxes.forEach( ( checkbox ) => {
-			/** @type {HTMLInputElement} */ ( checkbox ).checked = false;
-		} );
+	checkboxes.forEach( ( checkbox ) => {
+		/** @type {HTMLInputElement} */ ( checkbox ).checked = false;
 	} );
 }
 
@@ -121,7 +120,6 @@ function main( window ) {
 
 	// Set up checkbox hacks
 	bind();
-	bindCloseOnUnload();
 
 	// Table of Contents
 	const tocContainer = document.getElementById( 'mw-panel-toc' );
@@ -131,12 +129,15 @@ function main( window ) {
 	}
 
 	mw.loader.load( 'skins.citizen.preferences' );
+	registerServiceWorker();
 
-	// Set up loading indicator
 	window.addEventListener( 'beforeunload', () => {
+		// T295085: Close all dropdown menus when page is unloaded to prevent them
+		// from being open when navigating back to a page.
+		uncheckCheckboxHacks();
+		// Set up loading indicator
 		document.documentElement.classList.add( 'citizen-loading' );
 	}, false );
-	registerServiceWorker();
 }
 
 if ( document.readyState === 'interactive' || document.readyState === 'complete' ) {
