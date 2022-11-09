@@ -65,7 +65,9 @@ function bindCloseOnUnload() {
 function initStickyHeader( document ) {
 	const sentinel = document.getElementById( 'citizen-body-header-sticky-sentinel' );
 
-	if ( sentinel ) {
+	// In some pages we use display:none to disable the sticky header
+	// Do not start observer if it is set to display:none
+	if ( sentinel && getComputedStyle( sentinel ).getPropertyValue( 'display' ) !== 'none' ) {
 		const scrollObserver = require( './scrollObserver.js' );
 
 		const observer = scrollObserver.initScrollObserver(
