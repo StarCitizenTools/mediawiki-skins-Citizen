@@ -92,7 +92,8 @@ function registerServiceWorker() {
 	const scriptPath = mw.config.get( 'wgScriptPath' );
 
 	// Only allow serviceWorker when the scriptPath is at root because of its scope
-	// I can't figure out how to add the Service-Worker-Allowed HTTP header to change the default scope
+	// I can't figure out how to add the Service-Worker-Allowed HTTP header
+	// to change the default scope
 	if ( scriptPath === '' ) {
 		if ( 'serviceWorker' in navigator ) {
 			const SW_MODULE_NAME = 'skins.citizen.serviceWorker',

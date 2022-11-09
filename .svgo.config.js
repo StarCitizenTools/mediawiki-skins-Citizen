@@ -4,7 +4,7 @@
  * Recommended options from:
  * https://www.mediawiki.org/wiki/Manual:Coding_conventions/SVG#Exemplified_safe_configuration
  */
- module.exports = {
+module.exports = {
 	plugins: [
 		{
 			// Set of built-in plugins enabled by default.
