@@ -191,6 +191,9 @@
 				"resources/skins.citizen.scripts/search.js",
 				"resources/skins.citizen.scripts/tableOfContents.js"
 			],
+			"dependencies": [
+				"mediawiki.util"
+			],
 			"targets": [
 				"desktop",
 				"mobile"

@@ -145,3 +145,14 @@
 		border-right: 1px solid var( --border-color-base );
 	}
 }
+
+/* Hide header when scroll down on smaller screen sizes */
+@media ( max-width: @width-breakpoint-tablet ) {
+	.citizen-header {
+		transition: @transition-transform;
+	}
+
+	.citizen-scroll--down .citizen-header {
+		transform: translateY( 100% );
+	}
+}

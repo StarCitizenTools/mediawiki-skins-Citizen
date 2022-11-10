@@ -62,14 +62,27 @@ function uncheckCheckboxHacks() {
  * @return {void}
  */
 function initStickyHeader( document ) {
+	const scrollObserver = require( './scrollObserver.js' );
+
+	// Detect scroll direction and add the right class
+	scrollObserver.initDirectionObserver(
+		() => {
+			document.body.classList.remove( 'citizen-scroll--up' );
+			document.body.classList.add( 'citizen-scroll--down' );
+		},
+		() => {
+			document.body.classList.remove( 'citizen-scroll--down' );
+			document.body.classList.add( 'citizen-scroll--up' );
+		},
+		100
+	);
+
 	const sentinel = document.getElementById( 'citizen-body-header-sticky-sentinel' );
 
 	// In some pages we use display:none to disable the sticky header
 	// Do not start observer if it is set to display:none
 	if ( sentinel && getComputedStyle( sentinel ).getPropertyValue( 'display' ) !== 'none' ) {
-		const scrollObserver = require( './scrollObserver.js' );
-
-		const observer = scrollObserver.initScrollObserver(
+		const observer = scrollObserver.initIntersectionObserver(
 			() => {
 				document.body.classList.add( 'citizen-body-header--sticky' );
 			},
