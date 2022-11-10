@@ -124,6 +124,17 @@
 	}
 }
 
+// Move down when site header is hidden
+@media ( max-width: ( @width-breakpoint-tablet ) ) {
+	.citizen-toc {
+		transition: @transition-transform;
+	}
+
+	.citizen-scroll--down .citizen-toc {
+		transform: translateY( var( --header-size ) );
+	}
+}
+
 @media ( max-width: ( @width-breakpoint-desktop - 1px ) ) {
 	.citizen-toc {
 		position: fixed;
