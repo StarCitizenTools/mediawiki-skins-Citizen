@@ -1,27 +1,30 @@
 # Citizen
 [![](https://img.shields.io/github/contributors/StarCitizenTools/mediawiki-skins-Citizen?style=for-the-badge)](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/graphs/contributors) ![](https://img.shields.io/github/workflow/status/StarCitizenTools/mediawiki-skins-Citizen/MediaWiki%20CI?label=MediaWiki%20CI&style=for-the-badge) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=for-the-badge&logo=appveyor)](https://www.gnu.org/licenses/gpl-3.0) [![MediaWiki: >=1.39.0](https://img.shields.io/badge/MediaWiki-%3E%3D1.39.0-%2336c?style=for-the-badge&logo=appveyor)](https://www.mediawiki.org)[![](https://img.shields.io/badge/translations-translatewiki-%23013467?style=for-the-badge&logo=appveyor)](https://translatewiki.net/w/i.php?title=Special:Translate&group=mwgithub-star-citizen)
 
-Citizen is a responsive skin for [MediaWiki](https://www.mediawiki.org) built by the [Star Citizen Wiki](https://starcitizen.tools) team. Although it is specifically built for the Star Citizen Wiki, the skin is designed to be flexible to run on any Mediawiki installation that is **1.39.0 or higher**. Due to resource constraints, we might not be able to provide full support for setups that are vastly different than us, but please feel free to submit patches or bug report!
+Citizen is a beautiful, usable, responsive [MediaWiki](https://www.mediawiki.org) skin that makes [extensions](https://www.mediawiki.org/wiki/Manual:Extensions) part of the cohesive experience. It was initially created for the [Star Citizen Wiki](https://starcitizen.tools) but is flexible to run on various MediaWiki configurations.
 
-Live demo can be seen at the [Star Citizen Wiki](https://starcitizen.tools), more avaliable [here](https://wikiapiary.com/wiki/Skin:Citizen).
+Live demo: [English](https://starcitizen.tools), [German](https://star-citizen.wiki), [Chinese](https://sctoolszh.miraheze.org)
 
-If you are looking for the old design, [click here](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v1.17.9) for the the last 1.X release.
+For the old design, [click here](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v1.17.9) for the last release.
 
 ## Notable features
-- **Fully responsive skin**: Responsive and able to adapt to different screen sizes. 📱💻🖥️
-- **Light/dark mode support**: Switch between light and dark mode. ***Require JS*** ☀️🌙
-- **Adjustable font size and page width**: Read the article the way you wanted. ***Require JS*** 👀📃
-- **Collapsible sections**: Collapse and expand article sections. ***Require JS*** 📖📕
-- **Persistent ToC**: Access ToC anywhere in the article. ***Tracking require JS*** 🔍📖
-- **Rich search suggestions**: More helpful search suggestions with images and descriptions. ***Require JS*** 🔍👀
-- **Webapp manifest**: Give a more app-like experience when user add your wiki to their home screen. 📱
+- **Responsive layout**: Responsive and able to adapt to different screen sizes. 📱💻🖥️
+- **Light/dark mode**: Switch between light and dark mode. ☀️🌙
+- **Cohesive extension styles**: Supported extensions blend with the rest of the UI. 🤝🔗
+- **Reading preferences**: Adjust page width, font size, and line height. 👀📃
+- **Collapsible sections**: Collapse and expand article sections. 📖📕
+- **Persistent ToC**: Access ToC anywhere in the article. 🔍📖
+- **Rich search suggestions**: More helpful search suggestions with images and descriptions. 🔍👀
+- **Progressive Web App**: Give a more app-like experience when user add your wiki to their home screen. 📱
 
-## SkinStyles
-Citizen includes numerous skinStyles that applies custom styling to extensions and core libraries. Please feel free to submit PRs if you want to add support for more extensions! Unless the extension has never supported the current minimum required MediaWiki version of the skin, the skinStyles are based on the latest version of the said MW release branch (e.g. `REL1_35` for MediaWiki 1.35).
+## Extension styles
+Citizen overrides some extension styles through skinStyles that applies custom styling to extensions and core libraries.
 
 - **Grade A - Overhaul** - Major adjustments to UI, plus Grade B.
 - **Grade B - Dynamic** - Colors are converted into CSS variables, little to none style adjustments.
 - **Grade E - Legacy** - Dark mode colors are hardcored as LESS variables. These should be updated to at least Grade B support.
+
+Please feel free to submit PRs if you want to add support for more extensions!
 
 ### Core
 Name | Grade | Version | Last updated
