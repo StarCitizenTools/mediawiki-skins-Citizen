@@ -149,30 +149,14 @@ a {
 		color: var( --color-link--active );
 	}
 
-	&.new {
-		color: var( --color-link-new ); // Override visited
-
+	&.new,
+	&.new:visited {
 		&:hover {
 			color: var( --color-link-new--hover );
 		}
 
 		&:active {
 			color: var( --color-link-new--active );
-		}
-	}
-
-	&.mw-selflink {
-		color: inherit;
-		font-weight: var( --font-weight-semibold );
-		text-decoration: inherit;
-
-		&:hover {
-			cursor: inherit;
-			text-decoration: inherit;
-		}
-
-		&:active {
-			color: inherit;
 		}
 	}
 }

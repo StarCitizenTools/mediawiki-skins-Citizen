@@ -54,6 +54,9 @@
 			]
 		}
 	},
+	"SkinLessImportPaths": {
+		"citizen": "resources/mediawiki.less"
+	},
 	"MessagesDirs": {
 		"Citizen": [
 			"i18n"
@@ -88,6 +91,7 @@
 			],
 			"features": {
 				"accessibility": true,
+				"content-links": true,
 				"toc": false
 			},
 			"styles": [
