@@ -90,6 +90,7 @@
 				"mobile"
 			],
 			"features": {
+				"normalize": true,
 				"accessibility": true,
 				"content-links": true,
 				"toc": false
