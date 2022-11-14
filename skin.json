@@ -88,9 +88,6 @@
 			],
 			"features": {
 				"accessibility": true,
-				"content-parser-output": false,
-				"content-body": false,
-				"logo": false,
 				"toc": false
 			},
 			"styles": [
@@ -104,9 +101,7 @@
 				"mobile"
 			],
 			"features": {
-				"content-parser-output": false,
 				"content-body": false,
-				"logo": false,
 				"toc": false
 			},
 			"styles": [
@@ -120,9 +115,7 @@
 				"mobile"
 			],
 			"features": {
-				"content-parser-output": false,
 				"content-body": false,
-				"logo": false,
 				"toc": false
 			},
 			"styles": [
@@ -136,10 +129,7 @@
 				"mobile"
 			],
 			"features": {
-				"content-parser-output": false,
 				"content-body": false,
-				"logo": false,
-				"legacy": false,
 				"toc": false
 			},
 			"styles": [
@@ -153,9 +143,7 @@
 				"mobile"
 			],
 			"features": {
-				"content-parser-output": false,
 				"content-body": false,
-				"logo": false,
 				"toc": false
 			},
 			"styles": [
@@ -169,9 +157,7 @@
 				"mobile"
 			],
 			"features": {
-				"content-parser-output": false,
 				"content-body": false,
-				"logo": false,
 				"toc": false
 			},
 			"styles": [
