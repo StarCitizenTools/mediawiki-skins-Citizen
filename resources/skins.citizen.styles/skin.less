@@ -13,7 +13,6 @@
 	@import 'common/thumbnail.less';
 	@import 'common/scrollbar.less';
 	@import 'common/hacks.less';
-	@import 'common/wikitable.less';
 	@import 'common/progressbar.less';
 
 	// Components
@@ -31,10 +30,13 @@
 	@import 'StickyHeader.less';
 
 	// Mediawiki.skinning
-	// This get loaded anyways
+	// This get loaded regardless so we don't have to use skinStyles to target them
+	// It is organized to be same as core because naming is hard :'(
+	// @see https://github.com/wikimedia/mediawiki/commits/master/resources/src/mediawiki.skinning
 	@import 'skinning/content.body.less';
 	@import 'skinning/content.links.less';
 	@import 'skinning/content.externallinks.less';
+	@import 'skinning/content.tables.less';
 	@import 'skinning/elements.less';
 	@import 'skinning/i18n-all-lists-margins.less';
 	@import 'skinning/interface-edit-section-links.less';
