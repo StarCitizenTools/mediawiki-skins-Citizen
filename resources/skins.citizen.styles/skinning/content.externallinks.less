@@ -8,30 +8,51 @@
 */
 
 .mw-parser-output {
-	a.external:after {
-		display: inline-block;
-		width: 0.75em;
-		height: 0.75em;
-		margin-left: 0.25em;
-		background-color: currentcolor;
-		content: '';
-		/* @embed */
-		-webkit-mask: url( images/linkExternal.svg ) no-repeat 50% 50%;
-		/* @embed */
-		mask: url( images/linkExternal.svg ) no-repeat 50% 50%;
-		-webkit-mask-size: contain;
-		mask-size: contain;
+	a {
+		&.extiw,
+		&.external {
+			&:after {
+				display: inline-block;
+				width: 0.75em;
+				height: 0.75em;
+				margin-left: 0.25em;
+				background-color: currentcolor;
+				content: '';
+				/* @embed */
+				-webkit-mask: url( images/linkExternal.svg ) no-repeat 50% 50%;
+				/* @embed */
+				mask: url( images/linkExternal.svg ) no-repeat 50% 50%;
+				-webkit-mask-size: contain;
+				mask-size: contain;
+			}
+
+			// Somehow this get overriden
+			&:hover,
+			&:visited:hover {
+				color: var( --color-link--hover );
+			}
+		}
 	}
 
-	.plainlinks a.external:after {
-		content: none;
+	.plainlinks a {
+		&.extiw,
+		&.external {
+			&:after {
+				content: none;
+			}
+		}
 	}
 }
 
 .mw-content-rtl {
 	.mw-parser-output {
-		a.external:after {
-			transform: scaleX( -1 );
+		a {
+			&.extiw,
+			&.external {
+				&:after {
+					transform: scaleX( -1 );
+				}
+			}
 		}
 	}
 }
