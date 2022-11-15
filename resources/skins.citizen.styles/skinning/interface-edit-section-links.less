@@ -1,0 +1,68 @@
+/*
+ * Citizen
+ *
+ * Module: mediawiki.skinning.interface-edit-section-links
+ * Version: REL1_39
+ *
+ * Date: 2022-11-15
+*/
+
+.mw-editsection {
+	display: flex;
+	align-items: center;
+	margin-left: var( --space-sm );
+	float: right; // Can't target the container so have to use to float
+	user-select: none;
+
+	// Hide dividers since we are making links into icons
+	&-bracket,
+	&-divider {
+		display: none;
+	}
+
+	a {
+		.resource-loader-icon-link-small;
+		padding: var( --space-xxs );
+		opacity: var( --opacity-icon-base );
+		text-indent: -9999px; // Hide text
+		transition: @transition-opacity;
+
+		&:before {
+			.resource-loader-icon;
+			display: block;
+			background-size: contain;
+		}
+
+		&:hover {
+			opacity: var( --opacity-icon-base--hover );
+		}
+
+		&:active {
+			opacity: var( --opacity-icon-base--active );
+		}
+	}
+}
+
+/* Correct directionality when page dir is different from site/user dir */
+.mw-content-ltr .mw-editsection,
+.mw-content-rtl .mw-content-ltr .mw-editsection {
+	/* @noflip */
+	margin-right: 0;
+	/* @noflip */
+	margin-left: var( --space-sm );
+}
+
+.mw-content-rtl .mw-editsection,
+.mw-content-ltr .mw-content-rtl .mw-editsection {
+	/* @noflip */
+	margin-right: var( --space-sm );
+	/* @noflip */
+	margin-left: 0;
+}
+
+.skin-citizen-dark {
+	// Flip icon for dark mode
+	.mw-editsection > a:before {
+		filter: invert( 1 );
+	}
+}

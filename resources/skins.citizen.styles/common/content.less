@@ -76,40 +76,6 @@
 			}
 		}
 	}
-
-	.mw-editsection {
-		display: flex;
-		align-items: center;
-		margin-left: 0.25rem;
-		float: right; // Can't target the container so have to use to float
-
-		a {
-			.resource-loader-icon-link-small;
-			padding: 0.25rem;
-			background: 0 !important; // Cancel above styles
-			opacity: var( --opacity-icon-base );
-			text-indent: -9999px; // Hide text
-			transition: @transition-opacity;
-
-			&:before {
-				.resource-loader-icon;
-				display: block;
-				background-size: contain;
-			}
-
-			&:hover {
-				opacity: var( --opacity-icon-base--hover );
-			}
-
-			&:active {
-				opacity: var( --opacity-icon-base--active );
-			}
-		}
-
-		> span {
-			display: none;
-		}
-	}
 }
 
 .center {
