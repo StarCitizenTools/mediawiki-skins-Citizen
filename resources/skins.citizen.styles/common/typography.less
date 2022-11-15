@@ -19,26 +19,8 @@ b {
 	font-weight: var( --font-weight-semibold );
 }
 
-pre,
-code,
-tt,
-kbd,
-samp,
-.mw-code {
-	font-family: var( --font-family-monospace );
-	font-size: @content-monospace-size;
-}
-
 cite {
 	font-style: inherit;
-}
-
-fieldset {
-	font-size: @content-monospace-size;
-}
-
-legend {
-	font-weight: var( --font-weight-semibold );
 }
 
 blockquote {
@@ -50,10 +32,6 @@ blockquote {
 		font-size: @content-caption-size;
 		font-style: normal;
 	}
-}
-
-dt {
-	font-weight: var( --font-weight-semibold );
 }
 
 sub,
@@ -82,8 +60,6 @@ figcaption,
 }
 
 .firstHeading {
-	font-size: var( --font-size-h1 );
-
 	&-parenthesis {
 		font-size: var( --font-size-h3 );
 	}
@@ -92,39 +68,6 @@ figcaption,
 .citizen-body,
 .mw-body-content {
 	line-height: var( --line-height );
-
-	h1 {
-		font-size: var( --font-size-h1 );
-	}
-
-	h2 {
-		font-size: var( --font-size-h2 );
-	}
-
-	h3 {
-		font-size: var( --font-size-h3 );
-	}
-
-	h4 {
-		font-size: var( --font-size-h4 );
-	}
-
-	h5 {
-		font-size: var( --font-size-h5 );
-	}
-
-	h6 {
-		font-size: var( --font-size-h6 );
-	}
-
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		line-height: var( --line-height-xs );
-	}
 }
 
 @media ( max-width: @width-breakpoint-tablet ) {

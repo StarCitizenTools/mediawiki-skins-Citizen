@@ -20,67 +20,12 @@ body {
 	outline-color: var( --color-primary );
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	color: var( --color-base--emphasized );
-	font-weight: var( --font-weight-semibold );
-}
-
-table {
-	overflow: auto;
-	max-width: 100vw;
-}
-
-hr {
-	border: 0;
-	border-top: 1px solid var( --border-color-base--darker );
-}
-
-p,
-dl {
-	margin: @content-margin-top 0 0 0;
-}
-
-pre,
-code,
-.mw-code {
-	border: 1px solid var( --border-color-base );
-	background-color: var( --color-surface-2 );
-}
-
-code {
-	padding: 1px 4px;
-}
-
-pre,
-.mw-code {
-	overflow: auto;
-	padding: 1rem;
-	border-radius: var( --border-radius--large );
-}
-
 input,
 select,
 textarea {
 	border: 1px solid var( --border-color-base );
 	background-color: var( --color-surface-1 );
 	color: inherit;
-}
-
-fieldset {
-	padding: @content-margin-top / 2 20px;
-	border: 1px solid var( --border-color-base );
-	margin: @content-margin-top 0;
-}
-
-legend {
-	padding: 4px;
-	margin: 0;
-	color: var( --color-base--subtle );
 }
 
 textarea {
@@ -106,46 +51,12 @@ sub {
 	line-height: 1;
 }
 
-dd {
-	margin-bottom: 0.1rem;
-	margin-left: @content-margin-top * 2;
-}
-
 td {
 	> p,
 	> ul,
 	> ol {
 		&:first-child {
 			margin-top: 0; // Remove margin for the first element in td
-		}
-	}
-}
-
-a {
-	color: var( --color-link );
-	text-decoration: none;
-
-	&:not( [ href ] ) {
-		cursor: pointer;
-		/* Always cursor:pointer even without href */
-	}
-
-	&:hover {
-		color: var( --color-link--hover );
-	}
-
-	&:active {
-		color: var( --color-link--active );
-	}
-
-	&.new,
-	&.new:visited {
-		&:hover {
-			color: var( --color-link-new--hover );
-		}
-
-		&:active {
-			color: var( --color-link-new--active );
 		}
 	}
 }
@@ -183,10 +94,6 @@ video {
 
 .skin-citizen-dark {
 	color-scheme: dark;
-
-	.mw-editsection > a:before {
-		filter: invert( 1 );
-	}
 
 	.mw-indicator {
 		filter: invert( 1 ) hue-rotate( 180deg );
