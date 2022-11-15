@@ -176,9 +176,11 @@ class SkinHooks implements
 	private static function updateAssociatedPagesMenu( &$links ) {
 		// Most icons are not mapped yet in the associated pages menu
 		$iconMap = [
-			'talk' => 'speechBubbles',
 			'main' => 'article',
 			'user' => 'userAvatar',
+			'talk' => 'speechBubbles',
+			'category_talk' => 'speechBubbles',
+			'image_talk' => 'speechBubbles',
 			'user_talk' => 'userTalk'
 		];
 
@@ -257,6 +259,7 @@ class SkinHooks implements
 			'viewsource' => 'editLock',
 			'history' => 'history',
 			'edit' => 'edit',
+			'view-foreign' => 'linkExternal',
 			// Extension:VisualEditor
 			// For some reason the icon span element keeps getting removed
 			// So we are adding this the legacy way
