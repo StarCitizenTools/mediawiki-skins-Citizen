@@ -1,0 +1,51 @@
+/*
+ * Citizen
+ *
+ * Module: mediawiki.skinning.i18n-all-lists-margins
+ * Version: REL1_39
+ *
+ * Date: 2022-11-14
+*/
+
+/* Correct directionality when page dir is different from site/user dir */
+.mw-content-ltr ul,
+.mw-content-rtl .mw-content-ltr ul {
+	padding: 0;
+	/* @noflip */
+	margin: var( --space-md ) 0 var( --space-md ) var( --space-lg );
+}
+
+.mw-content-rtl ul,
+.mw-content-ltr .mw-content-rtl ul {
+	padding: 0;
+	/* @noflip */
+	margin: var( --space-md ) var( --space-lg ) var( --space-md ) 0;
+}
+
+.mw-content-ltr ol,
+.mw-content-rtl .mw-content-ltr ol {
+	padding: 0;
+	/* @noflip */
+	margin: var( --space-md ) 0 var( --space-md ) var( --space-lg );
+}
+
+.mw-content-rtl ol,
+.mw-content-ltr .mw-content-rtl ol {
+	padding: 0;
+	/* @noflip */
+	margin: var( --space-md ) var( --space-lg ) var( --space-md ) 0;
+}
+
+/* @noflip */
+.mw-content-ltr dd,
+.mw-content-rtl .mw-content-ltr dd {
+	margin-right: 0;
+	margin-left: var( --space-lg );
+}
+
+/* @noflip */
+.mw-content-rtl dd,
+.mw-content-ltr .mw-content-rtl dd {
+	margin-right: var( --space-lg );
+	margin-left: 0;
+}

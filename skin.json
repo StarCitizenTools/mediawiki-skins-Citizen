@@ -93,6 +93,8 @@
 				"normalize": true,
 				"content-links": true,
 				"content-links-external": false,
+				"i18n-ordered-lists": true,
+				"i18n-headings": true,
 				"toc": false
 			},
 			"styles": [
