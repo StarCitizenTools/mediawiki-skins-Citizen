@@ -1,0 +1,40 @@
+/*
+ * Citizen
+ *
+ * Module: mediawiki.skinning.interface-message-box
+ * Version: REL1_39
+ *
+ * Date: 2022-11-15
+*/
+
+.mw-message-box {
+	overflow: hidden;
+	padding: var( --space-sm ) var( --space-md );
+	background-color: var( --color-surface-2 );
+	color: var( --color-base--emphasized );
+	/* Standard property is `overflow-wrap` */
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+
+	/* Ensure box inner spacing is not all over the place no matter what element is only child. */
+	> :only-child {
+		margin: 0;
+	}
+
+	// Formerly provided by mw-warning-with-logexcerpt, now available for all messageboxes.
+	.mw-logevent-loglines li {
+		font-size: 90%;
+	}
+
+	&-error {
+		background-color: var( --background-color-destructive );
+	}
+
+	&-warning {
+		background-color: var( --background-color-warning );
+	}
+
+	&-success {
+		background-color: var( --background-color-success );
+	}
+}
