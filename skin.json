@@ -289,8 +289,7 @@
 			"defaultColor": "#000",
 			"images": {
 				".citizen-toc__top:before": "resources/skins.citizen.icons/backToTop.svg",
-				"#ca-ve-edit > a:before": "resources/skins.citizen.icons/wmui/edit.svg",
-				".mw-editsection-visualeditor:before": "resources/skins.citizen.icons/wmui/edit.svg"
+				"#ca-ve-edit > a:before": "resources/skins.citizen.icons/wmui/edit.svg"
 			}
 		},
 		"skins.citizen.icons.wmui": {

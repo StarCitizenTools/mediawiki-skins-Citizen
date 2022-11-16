@@ -20,26 +20,31 @@
 		display: none;
 	}
 
+	// Fallback text button if extensions register those
 	a {
-		.resource-loader-icon-link-small;
 		padding: var( --space-xxs );
-		opacity: var( --opacity-icon-base );
-		text-indent: -9999px; // Hide text
-		transition: @transition-opacity;
+		font-size: 0.875rem;
+	}
+}
 
-		&:before {
-			.resource-loader-icon;
-			display: block;
-			background-size: contain;
-		}
+.citizen-editsection-icon {
+	.resource-loader-icon-link-small;
+	opacity: var( --opacity-icon-base );
+	text-indent: -9999px; // Hide text
+	transition: @transition-opacity;
 
-		&:hover {
-			opacity: var( --opacity-icon-base--hover );
-		}
+	&:before {
+		.resource-loader-icon;
+		display: block;
+		background-size: contain;
+	}
 
-		&:active {
-			opacity: var( --opacity-icon-base--active );
-		}
+	&:hover {
+		opacity: var( --opacity-icon-base--hover );
+	}
+
+	&:active {
+		opacity: var( --opacity-icon-base--active );
 	}
 }
 

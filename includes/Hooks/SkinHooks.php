@@ -118,19 +118,31 @@ class SkinHooks implements
 	public function onSkinEditSectionLinks( $skin, $title, $section, $sectionTitle, &$result, $lang ) {
 		// Be extra safe because it might be active on other skins with caching
 		if ( $skin->getSkinName() === 'citizen' && $result ) {
-			/*
-			 * FIXME: For some reason if you modify the VE button, it duplicates one automatically
-			 * Bug: T323186
-			 *
-			 * if ( isset( $result['veeditsection'] ) ) {
-			 * 	$result['veeditsection']['attribs']['class'] = 'mw-ui-icon-wikimedia-edit';
-			 * }
-			*/
-
 			// Add icon to edit section link
 			// If VE button is present, use wikiText icon
-			if ( isset( $result['editsection'] ) ) {
-				$result['editsection']['attribs']['class'] = $result['veeditsection'] ? 'mw-ui-icon-wikimedia-wikiText' : 'mw-ui-icon-wikimedia-edit';
+			if ( isset( $result['veeditsection'] ) ) {
+				self::appendClassToItem(
+					$result['veeditsection']['attribs']['class'],
+					[
+						'citizen-editsection-icon',
+						'mw-ui-icon-wikimedia-edit'
+					]
+				);
+				self::appendClassToItem(
+					$result['editsection']['attribs']['class'],
+					[
+						'citizen-editsection-icon',
+						'mw-ui-icon-wikimedia-wikiText'
+					]
+				);
+			} else if ( isset( $result['editsection'] ) ) {
+				self::appendClassToItem(
+					$result['editsection']['attribs']['class'],
+					[
+						'citizen-editsection-icon',
+						'mw-ui-icon-wikimedia-edit'
+					]
+				);
 			}
 		}
 	}
@@ -346,6 +358,34 @@ class SkinHooks implements
 				// Avoid using mw-ui-icon in case its styles get loaded
 				$links[$menu][$key]['link-html'] = '<span class="citizen-ui-icon mw-ui-icon-wikimedia-' . $icon . '"></span>';
 			}
+		}
+	}
+
+	/**
+	 * Adds class to a property
+	 * Based on Vector
+	 *
+	 * @param array &$item to update
+	 * @param array|string $classes to add to the item
+	 */
+	private static function appendClassToItem( &$item, $classes ) {
+		$existingClasses = $item;
+
+		if ( is_array( $existingClasses ) ) {
+			// Treat as array
+			$newArrayClasses = is_array( $classes ) ? $classes : [ trim( $classes ) ];
+			$item = array_merge( $existingClasses, $newArrayClasses );
+		} elseif ( is_string( $existingClasses ) ) {
+			// Treat as string
+			$newStrClasses = is_string( $classes ) ? trim( $classes ) : implode( ' ', $classes );
+			$item .= ' ' . $newStrClasses;
+		} else {
+			// Treat as whatever $classes is
+			$item = $classes;
+		}
+
+		if ( is_string( $item ) ) {
+			$item = trim( $item );
 		}
 	}
 }
