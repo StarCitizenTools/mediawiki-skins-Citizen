@@ -113,7 +113,7 @@ class SkinHooks implements
 	 * @param string $section
 	 * @param string $sectionTitle
 	 * @param array &$result
-	 * @param Language &$lang
+	 * @param Language $lang
 	 */
 	public function onSkinEditSectionLinks( $skin, $title, $section, $sectionTitle, &$result, $lang ) {
 		/*
