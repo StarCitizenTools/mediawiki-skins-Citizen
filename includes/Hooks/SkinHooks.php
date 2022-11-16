@@ -317,8 +317,8 @@ class SkinHooks implements
 		// If both visual edit and source edit buttons are present
 		if ( isset( $links['views']['ve-edit'] ) && isset( $links['views']['edit'] ) ) {
 			// Add a class so that we can make a merged button through CSS
-			$links['views']['ve-edit']['class'] = 'citizen-ve-edit-merged';
-			$links['views']['edit']['class'] = 'citizen-ve-edit-merged';
+			self::appendClassToItem( $links['views']['ve-edit']['class'], [ 'citizen-ve-edit-merged' ] );
+			self::appendClassToItem( $links['views']['edit']['class'], [ 'citizen-ve-edit-merged' ] );
 			// Use wikiText icon instead of edit icon for source edit
 			$iconMap['edit'] = 'wikiText';
 		}
