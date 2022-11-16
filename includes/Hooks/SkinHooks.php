@@ -135,7 +135,7 @@ class SkinHooks implements
 						'mw-ui-icon-wikimedia-wikiText'
 					]
 				);
-			} else if ( isset( $result['editsection'] ) ) {
+			} elseif ( isset( $result['editsection'] ) ) {
 				self::appendClassToItem(
 					$result['editsection']['attribs']['class'],
 					[
