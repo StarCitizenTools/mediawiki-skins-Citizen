@@ -28,6 +28,7 @@ namespace MediaWiki\Skins\Citizen\Hooks;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\SidebarBeforeOutputHook;
 use MediaWiki\Hook\SkinBuildSidebarHook;
+use MediaWiki\Hook\SkinEditSectionLinksHook;
 use MediaWiki\Hook\SkinTemplateNavigation__UniversalHook;
 use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;
 
@@ -38,6 +39,7 @@ class SkinHooks implements
 	BeforePageDisplayHook,
 	SidebarBeforeOutputHook,
 	SkinBuildSidebarHook,
+	SkinEditSectionLinksHook,
 	SkinPageReadyConfigHook,
 	SkinTemplateNavigation__UniversalHook
 {
@@ -99,6 +101,33 @@ class SkinHooks implements
 			foreach ( $bar as $key => $item ) {
 				self::addIconsToMenuItems( $bar, $key );
 			}
+		}
+	}
+
+	/**
+	 * Modify editsection links
+	 *
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SkinEditSectionLinks
+	 * @param Skin $skin
+	 * @param Title $title
+	 * @param string $section
+	 * @param string $sectionTitle
+	 * @param array &$result
+	 * @param Language &$lang
+	 */
+	public function onSkinEditSectionLinks( $skin, $title, $section, $sectionTitle, &$result, $lang ) {
+		/*
+		 * FIXME: For some reason if you modify the VE button, it duplicates one automatically
+		 *
+		 * if ( $result['veeditsection'] ) {
+		 * 	$result['veeditsection']['attribs']['class'] = 'mw-ui-icon-wikimedia-edit';
+		 * }
+		 */
+
+		// Add icon to edit section link
+		// If VE button is present, use wikiText icon
+		if ( $result['editsection'] ) {
+			$result['editsection']['attribs']['class'] = $result['veeditsection'] ? 'mw-ui-icon-wikimedia-wikiText' : 'mw-ui-icon-wikimedia-edit';
 		}
 	}
 
@@ -310,7 +339,7 @@ class SkinHooks implements
 			if ( $icon ) {
 				// Html::makeLink will pass this through rawElement
 				// Avoid using mw-ui-icon in case its styles get loaded
-				$links[$menu][$key]['link-html'] = '<span class="citizen-ui-icon mw-ui-icon-' . $icon . ' mw-ui-icon-wikimedia-' . $icon . '"></span>';
+				$links[$menu][$key]['link-html'] = '<span class="citizen-ui-icon mw-ui-icon-wikimedia-' . $icon . '"></span>';
 			}
 		}
 	}

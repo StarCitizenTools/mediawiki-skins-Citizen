@@ -79,6 +79,7 @@
 		"BeforePageDisplay": "SkinHooks",
 		"SidebarBeforeOutput": "SkinHooks",
 		"SkinBuildSidebar": "SkinHooks",
+		"SkinEditSectionLinks": "SkinHooks",
 		"SkinPageReadyConfig": "SkinHooks",
 		"SkinTemplateNavigation::Universal": "SkinHooks"
 	},
@@ -289,8 +290,7 @@
 			"images": {
 				".citizen-toc__top:before": "resources/skins.citizen.icons/backToTop.svg",
 				"#ca-ve-edit > a:before": "resources/skins.citizen.icons/wmui/edit.svg",
-				".mw-editsection > a:before": "resources/skins.citizen.icons/wmui/edit.svg",
-				".mw-editsection > a.mw-editsection-visualeditor + .mw-editsection-divider + a:before": "resources/skins.citizen.icons/wmui/wikiText.svg"
+				".mw-editsection-visualeditor:before": "resources/skins.citizen.icons/wmui/edit.svg"
 			}
 		},
 		"skins.citizen.icons.wmui": {
