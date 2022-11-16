@@ -9,8 +9,8 @@
 	.mw-widget-dateInputWidget {
 		&-handle {
 			border-color: @dark-bg-50;
-			background-color: @dark-bg-0;
-			color: @dark-text-100;
+			background-color: var( --color-surface-0 );
+			color: var( --color-base--emphasized );
 		}
 
 		&.oo-ui-widget-enabled {
@@ -22,15 +22,15 @@
 		}
 
 		&-calendar {
-			background-color: @dark-bg-0 !important;
+			background-color: var( --color-surface-0 ) !important;
 		}
 
 		&.oo-ui-widget-disabled {
 			.mw-widget-dateInputWidget-handle {
 				border-color: @dark-bg-30 !important;
 				background-color: @dark-bg-20 !important;
-				color: @dark-text-70 !important;
-				text-shadow: 0 1px 1px @dark-bg-0 !important;
+				color: var( --color-base--subtle ) !important;
+				text-shadow: 0 1px 1px var( --color-surface-0 ) !important;
 			}
 		}
 	}
@@ -41,13 +41,13 @@ TODO move into separate file?
  */
 	.mw-widgets-datetime-calendarWidget {
 		border-color: @dark-bg-50 !important;
-		background-color: @dark-bg-0 !important;
+		background-color: var( --color-surface-0 ) !important;
 
 		&-grid {
 			.mw-widgets-datetime-calendarWidget-cell {
 				&.mw-widgets-datetime-calendarWidget-extra .oo-ui-buttonElement-button {
 					.oo-ui-labelElement-label {
-						color: @dark-text-70 !important;
+						color: var( --color-base--subtle ) !important;
 					}
 				}
 			}
@@ -62,18 +62,18 @@ mw.widgets.CalendarWidget.less
 		border: 1px solid @dark-bg-50 !important;
 
 		&-day {
-			color: @dark-text-90 !important;
+			color: var( --color-base ) !important;
 		}
 
 		&-day-heading {
-			color: @dark-text-80 !important;
+			color: var( --color-base ) !important;
 		}
 
 		&-day-additional {
-			color: @dark-text-60 !important;
+			color: var( --color-base--subtle ) !important;
 
 			&:hover {
-				color: @dark-text-90 !important;
+				color: var( --color-base ) !important;
 			}
 		}
 	}

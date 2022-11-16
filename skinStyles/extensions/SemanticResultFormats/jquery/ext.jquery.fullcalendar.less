@@ -15,15 +15,15 @@
 
 .skin-citizen-dark {
 	.fc-highlight {
-		background: @green-90;
+		background: var( --background-color-success );
 	}
 
 	.fc-bgevent {
-		background: @green-50;
+		background: var( --color-success );
 	}
 
 	.fc-nonbusiness {
-		background: @accent-90;
+		background: var( --background-color-primary--hover );
 	}
 
 	.fc-state-default {
@@ -31,7 +31,7 @@
 		background-color: @dark-bg-10;
 		background-image: none;
 		box-shadow: inset 0 1px 0 rgba( 0, 0, 0, 0.2 ), 0 1px 2px rgba( 0, 0, 0, 0.05 );
-		color: @dark-text-80;
+		color: var( --color-base );
 		text-shadow: 0 1px 1px rgba( 0, 0, 0, 0.75 );
 	}
 
@@ -40,11 +40,11 @@
 	.fc-state-active,
 	.fc-state-disabled {
 		background-color: @dark-bg-20;
-		color: @dark-text-80;
+		color: var( --color-base );
 	}
 
 	.fc-state-hover {
-		color: @dark-text-80;
+		color: var( --color-base );
 	}
 
 	.fc-state-down,
@@ -58,21 +58,21 @@
 	}
 
 	.fc-event {
-		border: 1px solid @accent-50;
+		border: 1px solid var( --color-primary );
 	}
 
 	.fc-event,
 	.fc-event-dot {
-		background-color: @accent-50;
+		background-color: var( --color-primary );
 	}
 
 	.fc-event,
 	.fc-event:hover {
-		color: @dark-text-100;
+		color: var( --color-base--emphasized );
 	}
 
 	.fc-event .fc-bg {
-		background: @dark-bg-0;
+		background: var( --color-surface-0 );
 	}
 
 	.fc-event.fc-selected {
@@ -84,15 +84,15 @@
 	}
 
 	.fc-h-event.fc-selected .fc-resizer {
-		background: @dark-bg-0;
+		background: var( --color-surface-0 );
 	}
 
 	.fc-day-grid-event.fc-selected:after {
-		background: @dark-bg-0;
+		background: var( --color-surface-0 );
 	}
 
 	.fc-now-indicator {
-		border: 0 solid @red-50;
+		border: 0 solid var( --color-destructive );
 	}
 
 	.fc-unthemed th,
@@ -109,7 +109,7 @@
 	}
 
 	.fc-unthemed .fc-popover {
-		background-color: @dark-bg-0;
+		background-color: var( --color-surface-0 );
 	}
 
 	.fc-unthemed .fc-divider,
@@ -119,7 +119,7 @@
 	}
 
 	.fc-unthemed .fc-popover .fc-header .fc-close {
-		color: @dark-text-70;
+		color: var( --color-base--subtle );
 	}
 
 	.fc-unthemed td.fc-today {
@@ -135,20 +135,20 @@
 	}
 
 	.ui-widget .fc-event {
-		color: @dark-text-100;
+		color: var( --color-base--emphasized );
 	}
 
 	.fc-bootstrap4 a.fc-event:not( [ href ] ):not( [ tabindex ] ) {
-		color: @dark-text-100;
+		color: var( --color-base--emphasized );
 	}
 
 	.fc-basic-view .fc-day-top .fc-week-number {
 		background-color: @dark-bg-20;
-		color: @dark-text-70;
+		color: var( --color-base--subtle );
 	}
 
 	.fc-time-grid-event.fc-selected .fc-resizer {
-		background: @dark-bg-0;
+		background: var( --color-surface-0 );
 	}
 
 	.fc-unthemed .fc-list-empty {
