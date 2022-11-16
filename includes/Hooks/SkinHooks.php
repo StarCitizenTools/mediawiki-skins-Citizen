@@ -116,19 +116,22 @@ class SkinHooks implements
 	 * @param Language $lang
 	 */
 	public function onSkinEditSectionLinks( $skin, $title, $section, $sectionTitle, &$result, $lang ) {
-		/*
-		 * FIXME: For some reason if you modify the VE button, it duplicates one automatically
-		 * Bug: T323186
-		 *
-		 * if ( $result['veeditsection'] ) {
-		 * 	$result['veeditsection']['attribs']['class'] = 'mw-ui-icon-wikimedia-edit';
-		 * }
-		 */
+		// Be extra safe because it might be active on other skins with caching
+		if ( $skin->getSkinName() === 'citizen' && $result ) {
+			/*
+			 * FIXME: For some reason if you modify the VE button, it duplicates one automatically
+			 * Bug: T323186
+			 *
+			 * if ( isset( $result['veeditsection'] ) ) {
+			 * 	$result['veeditsection']['attribs']['class'] = 'mw-ui-icon-wikimedia-edit';
+			 * }
+			*/
 
-		// Add icon to edit section link
-		// If VE button is present, use wikiText icon
-		if ( $result['editsection'] ) {
-			$result['editsection']['attribs']['class'] = $result['veeditsection'] ? 'mw-ui-icon-wikimedia-wikiText' : 'mw-ui-icon-wikimedia-edit';
+			// Add icon to edit section link
+			// If VE button is present, use wikiText icon
+			if ( isset( $result['editsection'] ) ) {
+				$result['editsection']['attribs']['class'] = $result['veeditsection'] ? 'mw-ui-icon-wikimedia-wikiText' : 'mw-ui-icon-wikimedia-edit';
+			}
 		}
 	}
 
