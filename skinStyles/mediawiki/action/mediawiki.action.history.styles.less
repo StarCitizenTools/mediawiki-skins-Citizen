@@ -6,7 +6,7 @@
 @import '../../../resources/variables.less';
 
 #mw-history-compare {
-	margin: @content-margin-top 0;
+	margin: var( --space-md ) 0;
 }
 
 .mw-history-compareselectedversions {
@@ -14,8 +14,8 @@
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: space-between;
-	margin: @content-margin-top 0;
-	font-size: @ui-menu-text;
+	margin: var( --space-md ) 0;
+	font-size: 0.875rem;
 }
 
 #pagehistory {
@@ -25,7 +25,7 @@
 	li {
 		padding: 10px 0;
 		border-bottom: 1px solid var( --border-color-base );
-		font-size: @content-monospace-size;
+		font-size: 0.875rem;
 		transition: background 0.2s ease;
 
 		&.selected {

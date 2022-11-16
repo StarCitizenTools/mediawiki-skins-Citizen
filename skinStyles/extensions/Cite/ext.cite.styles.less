@@ -6,17 +6,17 @@
 @import '../../../resources/variables.less';
 
 .mw-references-wrap {
-	margin-top: @content-margin-top;
+	margin-top: var( --space-md );
 	color: var( --color-base );
-	font-size: @content-small-text-size;
+	font-size: 0.8125rem;
 }
 
 .mw-body-content {
 	.references {
-		margin: 0 @content-margin-top * 2;
+		margin: 0 var( --space-xl );
 
 		li {
-			margin-bottom: @content-margin-top / 4;
+			margin-bottom: var( --space-xxs );
 		}
 	}
 }

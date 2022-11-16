@@ -33,12 +33,12 @@ textarea {
 }
 
 blockquote {
-	margin: @content-margin-top var( --padding-page );
+	margin: var( --space-md ) var( --padding-page );
 	color: var( --color-base--subtle );
 
 	cite {
 		display: block;
-		margin-top: @content-margin-top * @content-scaling;
+		margin-top: var( --space-sm );
 
 		&:before {
 			content: '— ';
@@ -80,7 +80,7 @@ td {
 	padding-left: 10px;
 	border-left: 1px solid var( --border-color-base );
 	margin-left: 10px;
-	font-size: @ui-menu-text;
+	font-size: 0.875rem;
 }
 
 div.patrollink {
