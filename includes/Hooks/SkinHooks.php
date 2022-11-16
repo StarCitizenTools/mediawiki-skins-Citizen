@@ -118,6 +118,7 @@ class SkinHooks implements
 	public function onSkinEditSectionLinks( $skin, $title, $section, $sectionTitle, &$result, $lang ) {
 		/*
 		 * FIXME: For some reason if you modify the VE button, it duplicates one automatically
+		 * Bug: T323186
 		 *
 		 * if ( $result['veeditsection'] ) {
 		 * 	$result['veeditsection']['attribs']['class'] = 'mw-ui-icon-wikimedia-edit';
@@ -292,6 +293,7 @@ class SkinHooks implements
 			// Extension:VisualEditor
 			// For some reason the icon span element keeps getting removed
 			// So we are adding this the legacy way
+			// Bug: T323188
 			// 've-edit' => 'edit',
 			// Extension:DiscussionTools
 			'addsection' => 'speechBubbleAdd'
