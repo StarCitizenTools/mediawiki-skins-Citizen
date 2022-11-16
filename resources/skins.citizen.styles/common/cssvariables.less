@@ -158,10 +158,15 @@ html {
 		--font-size-h3: 1.25rem;
 		--font-size-h4: 1.125rem;
 	}
+
+	html {
+		--padding-page: @padding-page * 1.5;
+	}
 }
 
 @media ( min-width: @width-breakpoint-desktop ) {
 	html {
+		--padding-page: @padding-page * 2;
 		--header-card-maxheight: ~'calc( 100vh - var( --space-sm ) * 2 )';
 	}
 }
