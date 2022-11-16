@@ -138,11 +138,11 @@
 @media ( max-width: ( @width-breakpoint-desktop - 1px ) ) {
 	.citizen-toc {
 		position: fixed;
+		z-index: @z-index-page-header;
 		right: 0;
 		bottom: ~'calc( var( --header-size ) + var(  --space-xs ) )';
 		// Allow click through
 		pointer-events: none;
-		z-index: @z-index-page-header;
 
 		&__card {
 			overflow: auto;
