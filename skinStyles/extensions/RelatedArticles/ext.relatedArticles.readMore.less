@@ -28,7 +28,7 @@
 }
 
 .ext-related-articles-card-list {
-	gap: var( --space-sm );
+	gap: var( --space-xs );
 
 	h3 {
 		font-weight: var( --font-weight-semibold );
@@ -74,6 +74,8 @@
 
 @media all and ( min-width: @width-breakpoint-tablet ) {
 	.ext-related-articles-card-list {
+		gap: var( --space-sm );
+
 		.ext-related-articles-card {
 			// Magic
 			width: ~'calc( 100% / 3 - var( --space-xs ) )';
