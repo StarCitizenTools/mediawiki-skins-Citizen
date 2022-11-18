@@ -12,7 +12,7 @@ div.floatleft,
 table.floatleft,
 div.floatright,
 table.floatright {
-	margin: 0 0 var( --space-md ) 0;
+	margin: 0;
 }
 
 /* @noflip */
@@ -22,10 +22,11 @@ div.tright {
 }
 
 .thumbcaption {
-	margin-top: var( --space-xs );
-	margin-right: var( --border-radius--small );
 	// Sync with rounded corner
-	margin-left: var( --border-radius--small );
+	padding-right: var( --border-radius--small );
+	// Sync with rounded corner
+	padding-left: var( --border-radius--small );
+	margin-top: var( --space-xs );
 	color: var( --color-base--subtle );
 	letter-spacing: 0.025em;
 	text-align: center;
