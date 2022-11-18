@@ -83,7 +83,7 @@ If you are interested in adding skinstyles, please check out [this page on the w
 
 ## Installation
 1. [Download](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/archive/main.zip) place the file(s) in a directory called `Citizen` in your `skins/` folder.
-2. Add the following code at the bottom of your LocalSettings.php:
+2. Add the following code at the bottom of your LocalSettings.php and **after all other extensions**:
 ```php
 wfLoadSkin( 'Citizen' );
 ```
