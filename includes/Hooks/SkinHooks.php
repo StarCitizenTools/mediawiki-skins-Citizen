@@ -206,7 +206,10 @@ class SkinHooks implements
 			'delete' => 'trash',
 			'move' => 'move',
 			'protect' => 'lock',
-			'unprotect' => 'unLock'
+			'unprotect' => 'unLock',
+			// Extension:Purge
+			// Extension:SemanticMediaWiki
+			'purge' => 'reload'
 		];
 
 		self::mapIconsToMenuItems( $links, 'actions', $iconMap );
@@ -236,6 +239,8 @@ class SkinHooks implements
 	/**
 	 * Update toolbox menu items
 	 * This is not guaranteed to run after extensions hook
+	 *
+	 * WORKAROUND: Load the skin after all extensions
 	 * FIXME: Revisit when T287622 is resolved
 	 *
 	 * @param array &$links
@@ -251,9 +256,13 @@ class SkinHooks implements
 			'contributions' => 'userContributions',
 			'log' => 'history',
 			'blockip' => 'block',
-			'userrights' => 'userGroup'
+			'userrights' => 'userGroup',
 			// Extension:CiteThisPage
-			// 'cite' => 'reference'
+			'citethispage' => 'reference',
+			// Extension:Cargo
+			'cargo-pagevalues' => 'database',
+			// Extension:SemanticMediaWiki
+			'smwbrowselink' => 'database'
 		];
 
 		self::mapIconsToMenuItems( $links, 'TOOLBOX', $iconMap );
