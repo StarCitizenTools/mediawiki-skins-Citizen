@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-beta.4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2022-11-21)
+
+
+### Features
+
+* **core:** ✨ scroll instead of wrap pre block ([029361b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/029361b066b47f72240c2ae5c45fb76405ce27f5))
+* **core:** ✨ use fixed height for header card ([db9065f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/db9065f88e10a55ee0c17c01b30bdd284e07df33))
+
+
+### Bug Fixes
+
+* **core:** 🐛 keep inline style for a.image ([88be5ba](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/88be5ba08b64955f1785b0cf288226a31da858b5))
+* **search:** hide default MW search suggestion ([af85fb4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/af85fb4b40f37674744dacb3cf31f2e5389de7b1))
+
 ## [2.0.0-beta.3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2022-10-28)
 
 
