@@ -3,15 +3,11 @@
  * https://starcitizen.tools
 */
 
-@import '../../../../resources/variables.less';
+.srf-d3-chart-bubble circle {
+	fill: var( --color-primary );
+	stroke: var( --color-primary );
+}
 
-.skin-citizen-dark {
-	.srf-d3-chart-bubble circle {
-		fill: @accent-50;
-		stroke: @accent-50;
-	}
-
-	.srf-d3-chart-bubble .leaf circle {
-		fill: @yellow-30;
-	}
+.srf-d3-chart-bubble .leaf circle {
+	fill: var( --color-warning );
 }

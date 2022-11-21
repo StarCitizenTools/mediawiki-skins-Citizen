@@ -1,0 +1,72 @@
+/*
+ * Citizen
+ *
+ * Module: mediawiki.skinning.content.thumbnails-common
+ * Version: REL1_39
+ *
+ * Date: 2022-11-18
+*/
+
+/* @noflip */
+div.floatleft,
+table.floatleft,
+div.floatright,
+table.floatright {
+	margin: 0;
+}
+
+/* @noflip */
+div.tleft,
+div.tright {
+	margin: var( --space-xs ) 0 var( --space-md ) 0;
+}
+
+.thumbcaption {
+	// Sync with rounded corner
+	padding-right: var( --border-radius--small );
+	// Sync with rounded corner
+	padding-left: var( --border-radius--small );
+	margin-top: var( --space-xs );
+	color: var( --color-base--subtle );
+	letter-spacing: 0.025em;
+	text-align: center;
+}
+
+div.thumbinner {
+	/* new block formatting context,
+	 * to clear background from floating content */
+	overflow: hidden;
+	// Avoid overflow
+	max-width: 100%;
+	margin-right: auto;
+	// Center thumbnail without float
+	margin-left: auto;
+	// We use the same font size for both caption and inner
+	font-size: 0.8125rem;
+	text-align: center;
+}
+
+// Do not float content in mobile view
+@media ( min-width: @width-breakpoint-tablet ) {
+	/* @noflip */
+	div.tright,
+	div.floatright,
+	table.floatright {
+		margin-left: var( --space-lg );
+		clear: right;
+		float: right;
+	}
+
+	/* @noflip */
+	div.tleft,
+	div.floatleft,
+	table.floatleft {
+		margin-right: var( --space-lg );
+		clear: left;
+		float: left;
+	}
+
+	.thumbcaption {
+		text-align: start;
+	}
+}

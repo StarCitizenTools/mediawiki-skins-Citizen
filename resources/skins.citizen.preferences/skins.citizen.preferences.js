@@ -360,9 +360,8 @@ function initPref( window ) {
 		if ( typeof window.mw !== 'undefined' ) {
 			const headerTools = document.querySelector( '.citizen-header__end' ),
 				container = document.createElement( 'div' ),
-				button = document.createElement( 'button' );
-
-			mw.loader.load( 'skins.citizen.icons.preferences' );
+				button = document.createElement( 'button' ),
+				icon = document.createElement( 'span' );
 
 			// citizen-pref
 			container.id = CLASS;
@@ -370,11 +369,13 @@ function initPref( window ) {
 			container.classList.add( CLASS, 'citizen-header__item' );
 			button.id = CLASS + '-toggle';
 
-			button.classList.add( CLASS + '__button', 'citizen-header__button', 'citizen-header__button--icon' );
+			button.classList.add( CLASS + '__button', 'citizen-header__button' );
 			button.setAttribute( 'title', mw.message( 'preferences' ).text() );
 			button.setAttribute( 'aria-label', mw.message( 'preferences' ).text() );
 			button.setAttribute( 'aria-controls', CLASS + '-panel' );
 			button.setAttribute( 'aria-expanded', false );
+			icon.classList.add( 'citizen-ui-icon', 'mw-ui-icon-wikimedia-settings' );
+			button.prepend( icon );
 			container.prepend( button );
 			headerTools.prepend( container );
 

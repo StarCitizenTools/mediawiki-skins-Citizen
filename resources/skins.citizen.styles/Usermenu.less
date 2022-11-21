@@ -1,0 +1,145 @@
+.citizen-userMenu {
+	&__card {
+		font-size: 0.875rem;
+		.citizen-header-card( right );
+	}
+
+	&__header {
+		padding: var( --space-md ) 0;
+		border-bottom: 1px solid var( --border-color-base );
+	}
+}
+
+.mw-portlet {
+	&-personal-header {
+		padding: 0.75rem 0 0.5rem;
+		border-bottom: 1px solid var( --border-color-base );
+
+		li {
+			margin: 0 0.75rem;
+		}
+	}
+
+	&-personal {
+		li {
+			a {
+				.menu-item-link;
+				align-items: center;
+				// TODO: Need to revisit this spacing, maybe set a min-height instead?
+				padding: 0.625rem var( --space-md );
+
+				&:hover {
+					.menu-item-link-hover;
+
+					.citizen-ui-icon:before {
+						opacity: var( --opacity-icon-base--hover );
+					}
+				}
+
+				&:active {
+					.menu-item-link-active;
+
+					.citizen-ui-icon:before {
+						opacity: var( --opacity-icon-base--active );
+					}
+				}
+			}
+		}
+	}
+}
+
+#p-user-info {
+	> ul > li {
+		margin-right: var( --space-md );
+		margin-left: var( --space-md );
+	}
+}
+
+#pt {
+	&-anonuserpage span,
+	&-tmpuserpage-2,
+	&-userpage-2 a {
+		padding: var( --space-xxs ) 0;
+		color: var( --color-base--emphasized );
+		font-size: 1rem;
+		font-weight: var( --font-weight-semibold );
+		word-break: break-word;
+	}
+
+	&-user {
+		&groups {
+			margin-bottom: var( --space-xs );
+
+			ul {
+				display: flex;
+				flex-wrap: wrap;
+				gap: var( --space-xxs );
+			}
+
+			a {
+				color: var( --color-base--subtle );
+			}
+		}
+
+		&page-2,
+		&groups {
+			a {
+				display: block;
+				transition: @transition-color;
+
+				&:hover {
+					color: var( --color-primary--hover );
+				}
+
+				&:active {
+					color: var( --color-primary--active );
+				}
+			}
+		}
+
+		&contris {
+			font-weight: var( --font-weight-medium );
+		}
+	}
+}
+
+#pt-login {
+	a {
+		.button-blue;
+
+		&:hover {
+			.button-blue-hover;
+		}
+
+		&:active {
+			.button-blue-active;
+		}
+	}
+}
+
+#pt-logout {
+	a {
+		.button-red;
+
+		&:hover {
+			.button-red-hover;
+		}
+
+		&:active {
+			.button-red-active;
+		}
+	}
+}
+
+// Checkbox hack
+#citizen-userMenu__checkbox:checked {
+	~ .citizen-userMenu__card {
+		.citizen-card-show();
+	}
+}
+
+.citizen-animations-ready {
+	.citizen-userMenu__card {
+		.citizen-card-transition();
+	}
+}

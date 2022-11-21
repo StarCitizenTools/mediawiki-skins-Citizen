@@ -1,10 +1,7 @@
 .citizen-header {
 	--header-icon-size: ~'calc( var( --header-button-size ) / 2 )';
-	--header-button-size: ~'calc( var( --header-size ) - var( --space-sm ) * 2 )';
+	--header-button-size: ~'calc( var( --header-size ) - var(  --space-xs ) * 2 )';
 	--header-direction: row;
-	// Browser UI can be unpredicatable
-	// And this leaves some empty space for dismissing the dialog
-	--header-card-maxheight: 70vh;
 	position: fixed;
 	z-index: @z-index-site-header;
 	right: 0;
@@ -12,10 +9,10 @@
 	left: 0;
 	display: flex;
 	flex-direction: var( --header-direction );
-	padding: var( --space-sm );
+	padding: var( --space-xs );
 	border-top: 1px solid var( --border-color-base );
 	background-color: var( --color-surface-0 );
-	gap: var( --space-xs );
+	gap: var( --space-xxs );
 
 	&__item {
 		display: flex;
@@ -44,18 +41,8 @@
 			height: var( --header-icon-size );
 		}
 
-		// Background image icons
-		&--icon:after {
-			width: var( --header-icon-size );
-			height: var( --header-icon-size );
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: contain;
-			content: '';
-		}
-
 		&Icon,
-		&--icon:after {
+		.citizen-ui-icon:before {
 			opacity: var( --opacity-icon-base );
 			transition: @transition-transform, @transition-opacity;
 		}
@@ -63,8 +50,8 @@
 		&:hover {
 			background-color: var( --background-color-quiet--hover );
 
-			.citizen-header__buttonIcon,
-			&.citizen-header__button--icon:after {
+			.citizen-ui-icon:before,
+			.citizen-header__buttonIcon {
 				opacity: var( --opacity-icon-base--hover );
 			}
 		}
@@ -72,8 +59,8 @@
 		&:active {
 			background-color: var( --background-color-quiet--active );
 
-			.citizen-header__buttonIcon,
-			&.citizen-header__button--icon:after {
+			.citizen-ui-icon:before,
+			.citizen-header__buttonIcon {
 				opacity: var( --opacity-icon-base--active );
 			}
 		}
@@ -86,7 +73,7 @@
 		flex-direction: var( --header-direction );
 		flex-grow: 1;
 		justify-content: space-between;
-		gap: var( --space-xs );
+		gap: var( --space-xxs );
 
 		.mw-checkbox-hack-checkbox:checked {
 			~ .citizen-header__button {
@@ -99,7 +86,7 @@
 	&__end {
 		display: flex;
 		flex-direction: var( --header-direction );
-		gap: var( --space-xs );
+		gap: var( --space-xxs );
 	}
 
 	&__start {
@@ -116,8 +103,7 @@
 
 .skin-citizen-dark {
 	.citizen-header__button {
-		&Icon,
-		&--icon:after {
+		&Icon {
 			filter: invert( 1 );
 		}
 	}
@@ -129,7 +115,7 @@
 		display: flex;
 		flex-direction: var( --header-direction );
 		align-items: center;
-		gap: var( --space-xs );
+		gap: var( --space-xxs );
 	}
 }
 
@@ -141,8 +127,7 @@
 			&:hover {
 				background-color: none;
 
-				.citizen-header__buttonIcon,
-				&.citizen-header__button--icon:after {
+				.citizen-header__buttonIcon {
 					opacity: var( --opacity-icon-base );
 				}
 			}
@@ -153,11 +138,21 @@
 @media ( min-width: @width-breakpoint-desktop ) {
 	.citizen-header {
 		--header-direction: column;
-		--header-card-maxheight: ~'calc( 100vh - var( --space-sm ) * 2 )';
 		top: 0;
 		right: unset;
 		left: 0;
 		border-top: 0;
 		border-right: 1px solid var( --border-color-base );
+	}
+}
+
+/* Hide header when scroll down on smaller screen sizes */
+@media ( max-width: @width-breakpoint-tablet ) {
+	.citizen-header {
+		transition: @transition-transform;
+	}
+
+	.citizen-scroll--down .citizen-header {
+		transform: translateY( 100% );
 	}
 }

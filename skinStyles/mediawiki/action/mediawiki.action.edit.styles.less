@@ -3,29 +3,45 @@
  *
  * SkinStyles for MediaWiki core
  * Module: mediawiki.action.edit.styles.less
- * Version: REL1_35 fce3c51
+ * Version: REL1_39 3baf9e1
  *
- * Date: 2022-05-02
+ * Date: 2022-11-08
 */
 
 // Needed the specificity
 .skin-citizen {
-	.mw-edit {
-		// Relative font size
-		&font {
-			&-monospace,
-			&-sans-serif,
-			&-serif {
-				font-size: 0.8125rem; // 13px
+	.mw-editform {
+		#wpTextbox1 {
+			padding: 0;
+			padding-bottom: var( --space-lg );
+			border: 0;
+			background-color: transparent;
+
+			&:focus {
+				outline: 0;
 			}
 		}
 
-		&form {
-			.editOptions {
-				border-color: var( --border-color-base );
-				background-color: var( --color-surface-2 );
-				color: var( --color-base );
-			}
+		.editOptions {
+			padding: var( --space-lg );
+			border: 0;
+			border-radius: var( --border-radius--large );
+			background-color: var( --color-surface-2 );
+			color: var( --color-base );
+			font-size: 0.875rem;
+		}
+
+		#editpage-copywarn {
+			margin-top: var( --space-sm );
+			margin-bottom: var( --space-sm );
+			color: var( --color-base--subtle );
+			font-size: 0.8125rem;
+			line-height: var( --line-height-sm );
 		}
 	}
+}
+
+// Disable sticky header
+#citizen-body-header-sticky-sentinel {
+	display: none;
 }

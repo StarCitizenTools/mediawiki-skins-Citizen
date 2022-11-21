@@ -86,7 +86,7 @@ class ApiWebappManifest extends ApiBase {
 				$logo = (string)$logos[$logoKey];
 
 				if ( !empty( $logo ) ) {
-					$logoUrl = wfExpandUrl( $logo, PROTO_CURRENT );
+					$logoUrl = $services->getUrlUtils()->expand( $logo, PROTO_CURRENT );
 					$request = $services->getHttpRequestFactory()->create( $logoUrl, [], __METHOD__ );
 					$request->execute();
 					$logoContent = $request->getContent();

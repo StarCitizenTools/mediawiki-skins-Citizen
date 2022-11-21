@@ -17,12 +17,13 @@
 	<form action="{{form-action}}" role="search" id="searchform" class="citizen-search__card mw-checkbox-hack-target" autocomplete="off">
 		<input type="hidden" name="title" value="{{page-title}}">
 		<label class="screen-reader-text" for="searchInput">{{msg-search}}</label>
-		<div class="citizen-search__icon"></div>
+		<span class="citizen-ui-icon mw-ui-icon-wikimedia-search"></span>
 		{{{html-input}}}
 		<a
 			class="citizen-search__random"
 			href="{{html-random-href}}"
 			title="{{msg-randompage}}">
+			<span class="citizen-ui-icon mw-ui-icon-wikimedia-die"></span>
 			<span class="screen-reader-text">{{msg-random}}</span>
 		</a>
 	</form>

@@ -1,0 +1,259 @@
+.citizen-toc {
+	font-size: 0.875rem;
+	line-height: var( --line-height-xs );
+
+	&__card {
+		display: flex;
+		flex-direction: column;
+		gap: var( --space-xs );
+	}
+
+	&__top {
+		&:before {
+			width: 0.875rem;
+			height: 0.875rem;
+			content: '';
+			opacity: var( --opacity-icon-base );
+		}
+
+		&:hover:before {
+			opacity: var( --opacity-icon-base--hover );
+		}
+
+		&:active:before {
+			opacity: var( --opacity-icon-base--hover );
+		}
+	}
+
+	&__header {
+		color: var( --color-base--subtle );
+		letter-spacing: 0.05em;
+	}
+
+	&__contents {
+		margin-left: 1px;
+	}
+
+	&__contents,
+	&__list {
+		border-left: 1px solid var( --border-color-base );
+		margin: 0;
+		list-style: none;
+
+		.citizen-toc__link {
+			border-bottom-left-radius: 0;
+			border-top-left-radius: 0;
+		}
+	}
+
+	&__list {
+		margin-left: var( --space-xs );
+	}
+
+	&__link {
+		display: flex;
+		padding-top: var( --space-xs );
+		padding-bottom: var( --space-xs );
+		border-radius: var( --border-radius--small );
+		color: var( --color-base );
+		font-weight: var( --font-weight-medium );
+		gap: var( --space-xs );
+
+		&.citizen-toc__top {
+			height: 0;
+			padding-top: 0;
+			padding-bottom: 0;
+			opacity: 0;
+			transition: @transition-opacity, @transition-height, padding @transition-timing-slow ease;
+			visibility: hidden;
+		}
+
+		&:hover {
+			background-color: var( --background-color-quiet--hover );
+		}
+
+		&:active {
+			background-color: var( --background-color-quiet--active );
+		}
+	}
+
+	&__indicator {
+		width: 3px;
+		flex-shrink: 0;
+		border-radius: var( --border-radius--pill );
+		margin-left: -2px;
+	}
+
+	&__text {
+		display: flex;
+		gap: var( --space-xs );
+	}
+
+	&__numb {
+		display: none;
+		color: var( --color-base--subtle );
+	}
+
+	&__listItem {
+		&--active {
+			> .citizen-toc__link {
+				color: var( --color-primary );
+
+				.citizen-toc__indicator {
+					background-color: var( --color-primary );
+				}
+			}
+		}
+	}
+}
+
+// Sticky header styles
+.citizen-body-header--sticky {
+	.citizen-toc__top.citizen-toc__link {
+		height: 1.05rem; // ( 1rem text + 1rem padding ) * line height / 2
+		padding-top: var( --space-xs );
+		padding-bottom: var( --space-xs );
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+.skin-citizen-dark {
+	.citizen-toc__top:before {
+		filter: invert( 1 );
+	}
+}
+
+// Move down when site header is hidden
+@media ( max-width: ( @width-breakpoint-tablet ) ) {
+	.citizen-toc {
+		transition: @transition-transform;
+	}
+
+	.citizen-scroll--down .citizen-toc {
+		transform: translateY( var( --header-size ) );
+	}
+}
+
+@media ( max-width: ( @width-breakpoint-desktop - 1px ) ) {
+	.citizen-toc {
+		position: fixed;
+		z-index: @z-index-page-header;
+		right: 0;
+		bottom: ~'calc( var( --header-size ) + var(  --space-xs ) )';
+		// Allow click through
+		pointer-events: none;
+
+		&__card {
+			overflow: auto;
+			// This is not bulletproof since it will get covered by page header
+			// in extremely short height. but it should be good for now
+			max-height: ~'calc( var( --header-card-maxheight ) - 8rem )';
+			padding: var( --space-md );
+			margin: var( --space-xs );
+			overscroll-behavior: contain;
+			user-select: none;
+			.citizen-card;
+			.citizen-card-hide( bottom right, '', false );
+		}
+	}
+
+	#citizen-toc {
+		&__checkbox:checked {
+			~ .citizen-toc__card {
+				.citizen-card-show( false );
+			}
+		}
+
+		&__buttonCheckbox {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			display: grid;
+			width: 2.5rem;
+			height: 2.5rem;
+			border-radius: var( --border-radius--medium );
+			margin: var( --space-xs );
+			background-color: var( --color-surface-1 );
+			box-shadow: var( --box-shadow-dialog );
+			place-content: center;
+			pointer-events: auto;
+			transform: none;
+			transform-origin: bottom right;
+			transition: @transition-transform;
+
+			.citizen-ui-icon {
+				width: 1rem;
+				height: 1rem;
+			}
+
+			// The hover state colors are not great but it will do for now
+			&:hover {
+				background-color: var( --color-surface-3 );
+			}
+
+			&:active {
+				background-color: var( --color-surface-1 );
+			}
+		}
+	}
+
+	// Hide dismiss button when JS is enabled
+	// Since clicking outside will dismiss ToC already
+	.client-js {
+		#citizen-toc {
+			&__checkbox:checked {
+				// Fake seamless transition
+				~ #citizen-toc__buttonCheckbox {
+					background-color: transparent;
+					box-shadow: none;
+					pointer-events: none;
+					transform: scale( 1.2 );
+
+					.citizen-ui-icon {
+						display: none;
+					}
+				}
+			}
+		}
+	}
+
+	// Wait for first paint before animating
+	.citizen-animations-ready {
+		.citizen-toc__card {
+			.citizen-card-transition();
+		}
+	}
+}
+
+@media ( min-width: @width-breakpoint-desktop ) {
+	.citizen-toc {
+		grid-area: toc;
+
+		&__card {
+			--toc-margin-top: var( --space-xs );
+			position: sticky;
+			top: var( --toc-margin-top );
+			max-height: ~'calc( 100vh - var( --toc-margin-top ) )';
+			overflow-y: auto;
+			overscroll-behavior: contain;
+		}
+	}
+
+	// Hide button in desktop viewport
+	#citizen-toc__buttonCheckbox {
+		display: none;
+	}
+
+	// Sticky header styles
+	.citizen-body-header--sticky {
+		.citizen-toc__card {
+			--toc-margin-top: ~'calc( var( --header-size ) + var(  --space-xxl  ) )';
+
+			// Sticky header is shorter without buttons
+			@media ( max-height: 800px ) {
+				--toc-margin-top: ~'calc( var( --header-size ) + var( --space-md ) )';
+			}
+		}
+	}
+}

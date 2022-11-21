@@ -1,0 +1,162 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for MediaWiki core
+ * Module: mediawiki.debug
+ * Version: REL1_39 3baf9e1
+ *
+ * Date: 2022-11-16
+*/
+
+@import '../../../resources/variables.less';
+
+/* $wgDebugToolbar = true; */
+#jquery-foot-hovzer {
+	// @see https://caniuse.com/mdn-css_properties_width_stretch
+	width: -webkit-fill-available;
+	width: -moz-available;
+	margin-bottom: var( --header-size );
+
+	@media ( min-width: @width-breakpoint-desktop ) {
+		margin-bottom: 0;
+		// So that it is not hidden by header
+		margin-left: ~'calc( var( --header-size ) + 1px )'; // compensate border
+	}
+}
+
+.mw-debug {
+	border-top-color: var( --border-color-base );
+	background-color: var( --color-surface-0 );
+
+	table {
+		tr {
+			background-color: var( --color-surface-1 );
+
+			&:nth-child( even ) {
+				background-color: var( --color-surface-2 );
+			}
+		}
+
+		td,
+		th {
+			// padding: 4px 10px;
+		}
+
+		td {
+			border-bottom-color: var( --border-color-base );
+
+			span.stats {
+				color: var( --color-base--subtle );
+			}
+		}
+	}
+}
+
+.mw-debug-bits {
+	display: flex;
+	border-bottom: 0;
+	overflow-x: auto;
+	white-space: nowrap;
+}
+
+.mw-debug-bit {
+	padding: var( --space-sm );
+}
+
+#mw-debug-mwversion {
+	flex-grow: 1;
+}
+
+.mw-debug-panelink {
+	border-color: transparent !important;
+	background-color: transparent;
+
+	&:hover {
+		background-color: var( --background-color-quiet--hover );
+	}
+
+	&:active {
+		background-color: var( --background-color-quiet--active );
+	}
+
+	&.current {
+		background-color: transparent;
+		box-shadow: inset 0 -2px 0 0 var( --color-primary );
+	}
+}
+
+a.mw-debug-panelabel,
+a.mw-debug-panelabel:visited {
+	color: var( --color-base--emphasized );
+}
+
+.mw-debug-pane {
+	background-color: var( --color-surface-2 );
+}
+
+#mw-debug-pane-request {
+	tr,
+	th,
+	td,
+	table {
+		border-color: var( --border-color-base );
+	}
+
+	th {
+		background-color: transparent;
+		font-weight: var( --font-weight-semibold );
+	}
+
+	td {
+		background-color: var( --background-color-success );
+		color: var( --color-base--emphasized );
+	}
+}
+
+.mw-debug-backtrace {
+	background-color: var( --color-surface-3 );
+
+	span {
+		color: var( --color-base--emphasized );
+		font-weight: var( --font-weight-semibold );
+	}
+
+	li {
+		color: var( --color-base );
+	}
+}
+
+.mw-debug-console-log {
+	background-color: var( --background-color-primary--hover );
+}
+
+.mw-debug-console-warn {
+	background-color: var( --background-color-warning );
+}
+
+.mw-debug-console-deprecated {
+	background-color: var( --background-color-destructive );
+}
+
+/* $wgShowDebug = true; */
+#mw-html-debug-log {
+	padding: 0 var( --padding-page );
+
+	// Label text
+	> strong {
+		color: var( --color-base--subtle );
+		font-size: 0.875rem;
+		letter-spacing: 0.05em;
+	}
+
+	@media ( min-width: @width-breakpoint-desktop ) {
+		// So that it is not hidden by header
+		margin-left: var( --header-size );
+	}
+}
+
+#mw-debug-html {
+	padding-left: var( --space-lg ); // So that it is not clipped
+	margin-left: 0;
+	overflow-x: auto;
+}

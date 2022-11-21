@@ -15,13 +15,16 @@
 		<header class="citizen-drawer__header">
 			{{>Drawer__logo}}
 			<div class="citizen-drawer__siteinfo">
-				{{>Drawer__siteStats}}
+				{{#data-sitestats}}{{>Drawer__siteStats}}{{/data-sitestats}}
 				<div class="mw-logo-wordmark">{{msg-sitetitle}}</div>
 			</div>
 		</header>
+		{{#data-portlets-sidebar}}
 		<section class="citizen-drawer__menu">
-			{{#array-portlets}}{{>Menu}}{{/array-portlets}}
+			{{#data-portlets-first}}{{>Menu}}{{/data-portlets-first}}
+			{{#array-portlets-rest}}{{>Menu}}{{/array-portlets-rest}}
 		</section>
+		{{/data-portlets-sidebar}}
 	</aside>
 	{{>Drawer__button}}
 </div>

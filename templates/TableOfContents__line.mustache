@@ -1,0 +1,18 @@
+<li id="toc-{{anchor}}"
+	class="citizen-toc__listItem citizen-toc-level--{{toclevel}}">
+	<a class="citizen-toc__link" href="#{{linkAnchor}}{{^linkAnchor}}{{anchor}}{{/linkAnchor}}">
+		<div class="citizen-toc__indicator"></div>
+		<div class="citizen-toc__text">
+			<span class="citizen-toc__numb">{{number}}</span>
+			{{{line}}}
+		</div>
+	</a>
+	{{#html-summary}}
+	{{{.}}}
+	{{/html-summary}}
+	<ul id="toc-{{anchor}}-sublist" class="citizen-toc__list">
+		{{#array-sections}}
+		{{>TableOfContents__line}}
+		{{/array-sections}}
+	</ul>
+</li>

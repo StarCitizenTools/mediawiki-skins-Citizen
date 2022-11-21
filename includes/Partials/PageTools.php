@@ -25,21 +25,81 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Partials;
 
-use Action;
 use Exception;
 use ExtensionRegistry;
 use MediaWiki\MediaWikiServices;
-use Skin;
-use SkinTemplate;
 
 final class PageTools extends Partial {
 	/** @var null|array for caching purposes */
 	private $languages;
 
 	/**
-	 * Render page-related tools
+	 * Get page-related tools template data
 	 * TODO: Break this down and clean up when 1.39
 	 * TODO: Use SkinTemplateNavigation::Universal instead of dirty CSS when 1.39
+	 *
+	 * @param array $parentData
+	 * @return array html
+	 */
+	public function getPageToolsData( $parentData ): array {
+		$data = [
+			'data-article-tools' => $this->getArticleToolsData( $parentData['data-portlets-sidebar'] ),
+			'pagetools-visible' => $this->shouldShowPageTools(),
+		];
+
+		// There are edge cases where the menu is completely empty
+		if ( $data['data-article-tools']['is-empty'] === false ) {
+			$data['pagetools-overflow'] = true;
+		}
+
+		// NOTE: There must be a better way to handle this
+		// Can be undefined index
+		$languagesData = $parentData['data-portlets']['data-languages'] ?? [ 'is-empty' => true ];
+		$variantsData = $parentData['data-portlets']['data-variants'] ?? [ 'is-empty' => true ];
+		$hasLanguages = ( !$languagesData['is-empty'] || !$variantsData['is-empty'] );
+
+		if ( $hasLanguages ) {
+			$data += [
+				'has-languages' => $hasLanguages,
+				'is-uls-ready' => $this->shouldShowULS( $variantsData ),
+				'html-language-count' => $this->getLanguagesCount(),
+			];
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Extract article tools from sidebar and return the data
+	 *
+	 * The reason we do this is because:
+	 * 1. We removed some site-wide tools from the toolbar in Drawer.php,
+	 * 	  now we just want the leftovers
+	 * 2. Toolbox is not currently avaliable as data-portlet, have to wait
+	 *    till Desktop Improvements
+	 *
+	 * @param array sidebarData
+	 * @return bool
+	 */
+	private function getArticleToolsData( $sidebarData ) {
+		$data = [
+			'is-empty' => true,
+		];
+
+		foreach ( $sidebarData['array-portlets-rest'] as $portlet ) {
+			if ( $portlet['id'] === 'p-tb' ) {
+				$data = $portlet;
+				$data['has-label'] = true;
+				$data['is-empty'] = false;
+				break;
+			}
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Check if views and actions should show
 	 *
 	 * Possible visibility conditions:
 	 * * true: always visible (bool)
@@ -48,17 +108,11 @@ final class PageTools extends Partial {
 	 * * 'permission-*': only visible if user has permission
 	 *   e.g. permission-edit = only visible if user can edit pages
 	 *
-	 * @param array $parentData
-	 * @return array html
+	 * @return bool
 	 */
-	public function buildPageTools( $parentData ): array {
-		$skin = $this->skin;
-		$user = $this->user;
-
+	private function shouldShowPageTools(): bool {
 		$condition = $this->getConfigValue( 'CitizenShowPageTools' );
-		$contentNavigation = $skin->buildContentNavigationUrlsPublic();
-		$portals = $skin->buildSidebar();
-		$props = [];
+		$user = $this->user;
 
 		// Login-based condition, return true if condition is met
 		if ( $condition === 'login' ) {
@@ -77,144 +131,18 @@ final class PageTools extends Partial {
 			}
 		}
 
-		if ( $condition == true ) {
-			if ( !method_exists( SkinTemplate::class, 'runOnSkinTemplateNavigationHooks' ) ) {
-				$viewshtml = $skin->getPortletData( 'views', $contentNavigation[ 'views' ] ?? [] );
-				$actionshtml = $skin->getPortletData( 'actions', $contentNavigation[ 'actions' ] ?? [] );
-				$namespaceshtml = $skin->getPortletData( 'namespaces', $contentNavigation[ 'namespaces' ] ?? [] );
-				$variantshtml = $skin->getPortletData( 'variants', $contentNavigation[ 'variants' ] ?? [] );
-				$toolboxhtml = $skin->getPortletData( 'tb',  $portals['TOOLBOX'] ?? [] );
-				$languageshtml = $skin->getPortletData( 'lang',  $portals['LANGUAGES'] ?? [] );
-			} else {
-				$viewshtml = $parentData['data-portlets']['data-views'];
-				$actionshtml = $parentData['data-portlets']['data-actions'];
-				$namespaceshtml = $parentData['data-portlets']['data-namespaces'];
-				$variantshtml = $parentData['data-portlets']['data-variants'];
-				// data-languages can be undefined index
-				$languageshtml = $parentData['data-portlets']['data-languages'] ?? [];
-				// For some reason core does not set this
-				if ( empty( $languageshtml ) ) {
-					$languageshtml['is-empty'] = true;
-				}
-				// Finds the toolbox in the sidebar.
-				// The reason we do this is because:
-				// 1. We removed some site-wide tools from the toolbar in Drawer.php,
-				// now we just want the leftovers
-				// 2. Toolbox is not currently avaliable as data-portlet, have to wait
-				// till Desktop Improvements
-				$toolboxhtml = [
-					'is-empty' => true,
-				];
-				foreach ( $parentData['data-portlets-sidebar']['array-portlets-rest'] as $portlet ) {
-					if ( $portlet['id'] === 'p-tb' ) {
-						$toolboxhtml = $portlet;
-						$toolboxhtml['is-empty'] = false;
-						break;
-					}
-				}
-			}
-
-			// Toggle label for toolbox
-			if ( $toolboxhtml ) {
-				$toolboxhtml['has-label'] = true;
-			}
-
-			// Toggle label for variants
-			if ( $variantshtml ) {
-				$variantshtml['has-label'] = true;
-			}
-
-			$props = [
-				'data-page-views' => $viewshtml,
-				'data-page-actions' => $actionshtml,
-				'data-namespaces' => $namespaceshtml,
-				'has-languages' => $this->shouldShowLanguages( $languageshtml, $variantshtml ),
-				'is-uls-ready' => $this->shouldShowULS( $variantshtml ),
-				'data-languages' => $languageshtml,
-				'data-variants' => $variantshtml,
-				'data-page-toolbox' => $toolboxhtml,
-				'html-language-count' => $this->getLanguagesCount(),
-			];
-		}
-
-		return $props;
-	}
-
-	/**
-	 * Calls getLanguages with caching.
-	 *
-	 * Based on Vector
-	 *
-	 * @return array
-	 */
-	private function getLanguagesCached(): array {
-		$skin = $this->skin;
-
-		if ( $this->languages === null ) {
-			$this->languages = $skin->getLanguages();
-		}
-		return $this->languages;
-	}
-
-	/**
-	 * This should be upstreamed to the Skin class in core once the logic is finalized.
-	 * Returns false if the page is a special page without any languages, or if an action
-	 * other than view is being used.
-	 *
-	 * Based on Vector
-	 *
-	 * @return bool
-	 */
-	private function canHaveLanguages(): bool {
-		$skin = $this->skin;
-
-		if ( method_exists( Skin::class, 'getActionName' ) ) {
-			// >= MW 1.38
-			if ( $skin->getContext()->getActionName() !== 'view' ) {
-				return false;
-			}
-		} else {
-			// < MW 1.38
-			if ( Action::getActionName( $skin->getContext() ) !== 'view' ) {
-				return false;
-			}
-		}
-
-		$title = $this->title;
-		// Defensive programming - if a special page has added languages explicitly, best to show it.
-		if ( $title && $title->isSpecialPage() && empty( $this->getLanguagesCached() ) ) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Show or hide the language button
-	 *
-	 * @param array $languageshtml
-	 * @param array $variantshtml
-	 * @return bool
-	 */
-	private function shouldShowLanguages( $languageshtml, $variantshtml ): bool {
-		if ( !$this->canHaveLanguages() ) {
-			return false;
-		}
-		// If both language and variant menu contains nothing
-		if ( $languageshtml['is-empty'] && $variantshtml['is-empty'] ) {
-			return false;
-		}
-		return true;
+		return $condition;
 	}
 
 	/**
 	 * Check if UniversalLanguageSelector can be used to replace the language menu
 	 *
-	 * @param array $variantshtml
+	 * @param array $variantsData
 	 * @return bool
 	 */
-	private function shouldShowULS( $variantshtml ): bool {
+	private function shouldShowULS( $variantsData ): bool {
 		// ULS does not support variants
-		if ( !$variantshtml['is-empty'] ) {
+		if ( !$variantsData['is-empty'] ) {
 			return false;
 		}
 
@@ -228,6 +156,10 @@ final class PageTools extends Partial {
 	 * @return int
 	 */
 	private function getLanguagesCount(): int {
-		return count( $this->getLanguagesCached() );
+		if ( $this->languages === null ) {
+			$this->languages = $this->skin->getLanguages();
+		}
+
+		return count( $this->languages );
 	}
 }

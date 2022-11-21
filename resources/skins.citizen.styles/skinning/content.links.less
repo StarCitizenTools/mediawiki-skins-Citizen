@@ -1,0 +1,29 @@
+/*
+ * Citizen
+ *
+ * Module: mediawiki.skinning.content.links
+ * Version: REL1_39
+ *
+ * Date: 2022-11-14
+*/
+
+// Be more specific to replace default style
+.skin-citizen {
+	a.mw-selflink {
+		font-weight: var( --font-weight-semibold );
+	}
+}
+
+// Hover states addition for new links
+a {
+	&.new,
+	&.new:visited {
+		&:hover {
+			color: var( --color-link-new--hover );
+		}
+
+		&:active {
+			color: var( --color-link-new--active );
+		}
+	}
+}

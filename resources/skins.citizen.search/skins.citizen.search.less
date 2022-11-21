@@ -9,6 +9,7 @@
 	max-height: var( --header-card-maxheight );
 	box-sizing: border-box;
 	padding-top: 0.75rem;
+	margin: 0; // Reset <ol> styles
 	margin-top: -0.75rem;
 	//border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
 	.citizen-card;
@@ -39,12 +40,12 @@
 
 		&__title {
 			color: var( --color-base--emphasized );
-			font-weight: 700;
+			font-weight: var( --font-weight-semibold );
 		}
 
 		&__highlight {
 			color: var( --color-base--subtle );
-			font-weight: 500;
+			font-weight: var( --font-weight-medium );
 		}
 
 		&__redirect {
@@ -56,7 +57,7 @@
 		&__description {
 			margin-top: 0.1rem;
 			color: var( --color-base--subtle );
-			font-size: @content-caption-size;
+			font-size: 0.8125rem;
 		}
 
 		&__title,
@@ -72,7 +73,7 @@
 		border-radius: 0 0 var( --border-radius--large ) var( --border-radius--large );
 		border-top: 1px solid var( --border-color-base );
 		font-size: 0.8125rem;
-		font-weight: 450;
+		font-weight: var( --font-weight-medium );
 
 		&__icon {
 			height: var( --size-icon );

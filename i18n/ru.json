@@ -13,7 +13,7 @@
 	"citizen.css": "/* Размещённый здесь CSS-код будет загружаться для пользователей, использующих тему оформления Citizen */",
 	"citizen.js": "/* Размещённый здесь код JavaScript будет загружаться для пользователей, использующих тему оформления Citizen */",
 	"citizen-drawer-toggle": "Открыть меню",
-	"citizen-personalmenu-toggle": "Открыть персональное меню",
+	"citizen-usermenu-toggle": "Открыть персональное меню",
 	"citizen-search-toggle": "Открыть поиск",
 	"citizen-sitestats-articles-label": "статей",
 	"citizen-sitestats-images-label": "файлов",

@@ -21,6 +21,8 @@ function enableCssAnimations( document ) {
  * well as space) using core's checkboxHack.
  *
  * Based on Vector
+ *
+ * @return {void}
  */
 function bind() {
 	// Search for all dropdown containers using the CHECKBOX_HACK_CONTAINER_SELECTOR.
@@ -41,34 +43,46 @@ function bind() {
 }
 
 /**
- * T295085: Close all dropdown menus when page is unloaded to prevent them from
- * being open when navigating back to a page.
+ * Close all menus through unchecking all checkbox hacks
  *
- * Based on Vector
+ * @return {void}
  */
-function bindCloseOnUnload() {
-	addEventListener( 'beforeunload', () => {
-		const checkboxes = document.querySelectorAll( CHECKBOX_HACK_CHECKBOX_SELECTOR + ':checked' );
+function uncheckCheckboxHacks() {
+	const checkboxes = document.querySelectorAll( CHECKBOX_HACK_CHECKBOX_SELECTOR + ':checked' );
 
-		checkboxes.forEach( ( checkbox ) => {
-			/** @type {HTMLInputElement} */ ( checkbox ).checked = false;
-		} );
+	checkboxes.forEach( ( checkbox ) => {
+		/** @type {HTMLInputElement} */ ( checkbox ).checked = false;
 	} );
 }
 
 /**
- * Add a class to indicate that page title is outside of viewport
+ * Add a class to indicate that sticky header is active
  *
  * @param {Document} document
  * @return {void}
  */
-function onTitleHidden( document ) {
-	const title = document.getElementById( 'citizen-body-header-sticky-sentinel' );
+function initStickyHeader( document ) {
+	const scrollObserver = require( './scrollObserver.js' );
 
-	if ( title ) {
-		const scrollObserver = require( './scrollObserver.js' );
+	// Detect scroll direction and add the right class
+	scrollObserver.initDirectionObserver(
+		() => {
+			document.body.classList.remove( 'citizen-scroll--up' );
+			document.body.classList.add( 'citizen-scroll--down' );
+		},
+		() => {
+			document.body.classList.remove( 'citizen-scroll--down' );
+			document.body.classList.add( 'citizen-scroll--up' );
+		},
+		100
+	);
 
-		const observer = scrollObserver.initScrollObserver(
+	const sentinel = document.getElementById( 'citizen-body-header-sticky-sentinel' );
+
+	// In some pages we use display:none to disable the sticky header
+	// Do not start observer if it is set to display:none
+	if ( sentinel && getComputedStyle( sentinel ).getPropertyValue( 'display' ) !== 'none' ) {
+		const observer = scrollObserver.initIntersectionObserver(
 			() => {
 				document.body.classList.add( 'citizen-body-header--sticky' );
 			},
@@ -76,7 +90,8 @@ function onTitleHidden( document ) {
 				document.body.classList.remove( 'citizen-body-header--sticky' );
 			}
 		);
-		observer.observe( title );
+
+		observer.observe( sentinel );
 	}
 }
 
@@ -89,7 +104,8 @@ function registerServiceWorker() {
 	const scriptPath = mw.config.get( 'wgScriptPath' );
 
 	// Only allow serviceWorker when the scriptPath is at root because of its scope
-	// I can't figure out how to add the Service-Worker-Allowed HTTP header to change the default scope
+	// I can't figure out how to add the Service-Worker-Allowed HTTP header
+	// to change the default scope
 	if ( scriptPath === '' ) {
 		if ( 'serviceWorker' in navigator ) {
 			const SW_MODULE_NAME = 'skins.citizen.serviceWorker',
@@ -113,35 +129,28 @@ function main( window ) {
 
 	enableCssAnimations( window.document );
 	search.init( window );
-	onTitleHidden( window.document );
+	initStickyHeader( window.document );
 
 	// Set up checkbox hacks
 	bind();
-	bindCloseOnUnload();
 
-	// Handle ToC
-	// TODO: There must be a cleaner way to do this
-	const tocContainer = document.getElementById( 'toc' );
-
+	// Table of Contents
+	const tocContainer = document.getElementById( 'mw-panel-toc' );
 	if ( tocContainer ) {
 		const toc = require( './tableOfContents.js' );
 		toc.init();
-
-		checkboxHack.bind(
-			window,
-			document.getElementById( 'toctogglecheckbox' ),
-			tocContainer.querySelector( '.toctogglelabel' ),
-			tocContainer.querySelector( 'ul' )
-		);
 	}
 
 	mw.loader.load( 'skins.citizen.preferences' );
+	registerServiceWorker();
 
-	// Set up loading indicator
 	window.addEventListener( 'beforeunload', () => {
+		// T295085: Close all dropdown menus when page is unloaded to prevent them
+		// from being open when navigating back to a page.
+		uncheckCheckboxHacks();
+		// Set up loading indicator
 		document.documentElement.classList.add( 'citizen-loading' );
 	}, false );
-	registerServiceWorker();
 }
 
 if ( document.readyState === 'interactive' || document.readyState === 'complete' ) {

@@ -4,12 +4,12 @@
 }}
 <header class="mw-header citizen-header">
 	{{#data-search-box}}{{>Search}}{{/data-search-box}}
-	{{#data-drawer}}{{>Drawer}}{{/data-drawer}}
+	{{>Drawer}}
 	<div class="citizen-header__inner">
 		<div class="citizen-header__start"></div>
 		<div class="citizen-header__end">
-			{{#data-notifications}}{{>Menu}}{{/data-notifications}}
-			{{#data-personal-menu}}{{>PersonalMenu}}{{/data-personal-menu}}
+			{{#data-portlets.data-notifications}}{{>Menu}}{{/data-portlets.data-notifications}}
+			{{>UserMenu}}
 		</div>
 	</div>
 </header>

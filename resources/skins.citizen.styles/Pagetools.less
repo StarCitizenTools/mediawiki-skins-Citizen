@@ -1,9 +1,8 @@
 .page-actions {
 	--size-button--page: 2.25rem;
 	display: flex;
-	margin-left: -0.75rem; // To align with page padding
 	font-size: 0.875rem;
-	font-weight: 450;
+	font-weight: var( --font-weight-medium );
 	gap: 0.25rem;
 
 	// TODO: Merge this with header__item
@@ -19,21 +18,10 @@
 		border-radius: var( --border-radius--medium );
 		place-items: center;
 
-		&--icon:after {
-			width: var( --size-icon );
-			height: var( --size-icon );
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: contain;
-			content: '';
-			opacity: var( --opacity-icon-base );
-			transition: @transition-opacity;
-		}
-
 		&:hover {
 			background-color: var( --background-color-quiet--hover );
 
-			&:after {
+			.citizen-ui-icon:before {
 				opacity: var( --opacity-icon-base--hover );
 			}
 		}
@@ -41,7 +29,7 @@
 		&:active {
 			background-color: var( --background-color-quiet--active );
 
-			&:after {
+			.citizen-ui-icon:before {
 				opacity: var( --opacity-icon-base--active );
 			}
 		}
@@ -61,7 +49,7 @@
 		.citizen-card-hide( top right );
 
 		a {
-			padding: 0.625rem 1.25rem;
+			padding: 0.625rem var( --space-md );
 			.menu-item-link;
 
 			&:hover {
@@ -78,35 +66,23 @@
 	> .mw-portlet {
 		ul {
 			display: flex;
-			gap: 0.25rem;
+			gap: var( --space-xxs );
 		}
 
 		li > a {
 			display: flex;
 			align-items: center;
-			padding: 0.5rem 0.75rem;
+			padding: var( --space-xs ) var( --space-sm );
 			border-radius: var( --border-radius--medium );
 			color: var( --color-base );
 			font-size: 0;
 			transition: @transition-background, @transition-color;
 
-			&:after {
-				width: var( --size-icon );
-				height: var( --size-icon );
-				order: -1; // Move icon before the text
-				background-position: center;
-				background-repeat: no-repeat;
-				background-size: var( --size-icon );
-				content: '';
-				opacity: var( --opacity-icon-base );
-				transition: @transition-opacity;
-			}
-
 			&:hover {
 				background-color: var( --background-color-quiet--hover );
 				color: var( --color-base--emphasized );
 
-				&:after {
+				&:before {
 					opacity: var( --opacity-icon-base--hover );
 				}
 			}
@@ -115,13 +91,9 @@
 				background-color: var( --background-color-quiet--active );
 				color: var( --color-base--subtle );
 
-				&:after {
+				&:before {
 					opacity: var( --opacity-icon-base--active );
 				}
-			}
-
-			span {
-				.mixin-screen-reader-text;
 			}
 		}
 	}
@@ -146,14 +118,13 @@
 #citizen-languages__buttonCheckbox {
 	position: relative; // So that the badge doesn't take a stroll to the far left
 
-	&:before {
+	&:after {
 		position: absolute;
-		z-index: 2;
 		top: 0;
 		left: 55%;
 		display: block;
 		padding: 0.1em 0.4em;
-		border-radius: 100px;
+		border-radius: var( --border-radius--pill );
 		background: var( --color-primary );
 		color: #fff;
 		content: attr( data-counter-text );
@@ -181,7 +152,7 @@
 			~ .page-actions__button {
 				background-color: var( --background-color-quiet--hover );
 
-				&:after {
+				.citizen-ui-icon:before {
 					opacity: var( --opacity-icon-base--hover );
 				}
 			}
@@ -191,31 +162,9 @@
 			~ .page-actions__button {
 				background-color: var( --background-color-quiet--active );
 
-				&:after {
+				.citizen-ui-icon:before {
 					opacity: var( --opacity-icon-base--active );
 				}
-			}
-		}
-	}
-}
-
-// Handle icons
-.page-actions-more {
-	a {
-		&:after {
-			.resource-loader-list-icon;
-			opacity: var( --opacity-icon-base );
-		}
-
-		&:hover {
-			&:after {
-				opacity: var( --opacity-icon-base--hover );
-			}
-		}
-
-		&:active {
-			&:after {
-				opacity: var( --opacity-icon-base--active );
 			}
 		}
 	}
@@ -226,68 +175,80 @@
 	position: relative;
 }
 
-#p-views {
-	// VE styles shouldn't be core but it is just a few lines :/
-	#ca-ve-edit:not( .selected ) {
-		order: 98; // Before source edit
+// Edit button
+#ca-edit,
+#ca-ve-edit {
+	> a {
+		background-color: var( --color-primary );
+		color: #fff;
 
-		> a {
-			padding-right: 1.5rem;
+		&:hover {
+			background-color: var( --color-primary--hover );
 		}
 
-		// Merge two buttons together
-		+ #ca-edit {
-			border-left: 1px solid var( --color-primary--hover );
-			margin-left: -1rem;
-
-			> a {
-				padding-left: 0.5rem;
-				border-radius: 0 var( --border-radius--medium ) var( --border-radius--medium ) 0;
-				font-size: 0; // hide edit source text
-
-				&:after {
-					margin-right: 0; // reset
-				}
-			}
+		&:active {
+			background-color: var( --color-primary--active );
 		}
 	}
 
-	#ca-edit {
-		order: 99; // Align to last
+	> a,
+	.citizen-ui-icon {
+		&:before {
+			filter: invert( 1 );
+			// white icon
+			opacity: 1;
+		}
+	}
+}
+
+// VE styles shouldn't be core but it is just a few lines :/
+#ca-ve-edit {
+	order: 98; // Before source edit
+
+	> a {
+		// See SkinHooks.php for why VE is here
+		&:before {
+			width: var( --size-icon );
+			height: var( --size-icon );
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: var( --size-icon );
+			content: '';
+			transition: @transition-opacity;
+		}
+	}
+}
+
+#ca-edit {
+	order: 99; // Align to last
+}
+
+// Merge two buttons together
+.citizen-ve-edit-merged {
+	&#ca-ve-edit {
+		> a {
+			border-bottom-right-radius: 0;
+			border-top-right-radius: 0;
+		}
 	}
 
-	#ca-edit,
-	#ca-ve-edit {
+	&#ca-edit {
+		border-left: 1px solid var( --color-primary--hover );
+		margin-left: ~'calc( var( --space-xxs ) * -1 )';
+
 		> a {
-			background-color: var( --color-primary );
-			color: #fff;
-
-			&:after {
-				filter: invert( 1 );
-				// white icon
-				opacity: 1;
-			}
-
-			&:hover {
-				background-color: var( --color-primary--hover );
-			}
-
-			&:active {
-				background-color: var( --color-primary--active );
-			}
+			padding-left: var( --space-xs );
+			border-bottom-left-radius: 0;
+			border-top-left-radius: 0;
+			font-size: 0; // hide edit source text
+			gap: 0;
 		}
 	}
 }
 
 .skin-citizen-dark {
-	.page-actions {
-		&__button--icon:after {
-			filter: invert( 1 );
-		}
-
-		li > a:after {
-			filter: invert( 1 );
-		}
+	#ca-ve-edit > a:before {
+		filter: invert( 1 );
 	}
 }
 
@@ -323,15 +284,11 @@
 @media ( min-width: @width-breakpoint-desktop ) {
 	.page-actions {
 		position: relative;
-		margin-right: 0;
 
 		> .mw-portlet {
 			li > a {
 				font-size: 0.875rem;
-
-				&:after {
-					margin-right: 0.5rem;
-				}
+				gap: var( --space-xs );
 			}
 		}
 	}
@@ -345,7 +302,7 @@
 			&:hover {
 				background-color: none;
 
-				&:after {
+				.citizen-ui-icon:before {
 					opacity: var( --opacity-icon-base );
 				}
 			}

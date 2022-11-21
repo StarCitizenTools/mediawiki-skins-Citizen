@@ -1,0 +1,27 @@
+{{!
+	string msg-citizen-usermenu-toggle The label used by the user menu button.
+}}
+<div class="citizen-userMenu citizen-header__item mw-checkbox-hack-container">
+	<input 
+		type="checkbox" 
+		id="citizen-userMenu__checkbox" 
+		class="mw-checkbox-hack-checkbox"
+		role="button"
+		aria-labelledby="citizen-userMenu__buttonCheckbox"
+		aria-haspopup="true">
+	<aside id="citizen-userMenu__card" class="citizen-userMenu__card mw-checkbox-hack-target">
+		{{#data-user-info}}
+			<div class="citizen-userMenu__header">{{>Menu}}</div>
+		{{/data-user-info}}
+		{{#data-portlets.data-user-menu}}{{>Menu}}{{/data-portlets.data-user-menu}}
+	</aside>
+	<label
+		id="citizen-userMenu__buttonCheckbox" 
+		class="mw-checkbox-hack-button citizen-header__button" 
+		for="citizen-userMenu__checkbox"
+		title="{{msg-citizen-usermenu-toggle}}"
+		aria-hidden="true">
+		<span class="citizen-ui-icon mw-ui-icon-wikimedia-userAvatar"></span>
+		<span>{{msg-citizen-usermenu-toggle}}</span>
+	</label>
+</div>

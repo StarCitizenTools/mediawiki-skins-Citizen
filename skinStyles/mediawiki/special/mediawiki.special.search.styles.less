@@ -1,46 +1,164 @@
 /*
- * Citizen - Search Page Styles
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Special:Search
+ * Module: mediawiki.special.search.styles
+ * Version: 1.39.0
+ *
+ * Date: 2022-10-20
 */
 
 @import '../../../resources/variables.less';
 
-/* Special:Search */
-.search-types {
-	ul {
-		margin: 0 !important; // Cancel out ul margin from common
+// Disable default sticky header
+#citizen-body-header-sticky-sentinel {
+	display: none;
+}
+
+// Sticky header
+.mw-search-form-wrapper {
+	position: sticky;
+	top: 0;
+	padding-top: var( --space-md );
+	border-bottom: 1px solid var( --border-color-base );
+	margin-top: ~'calc( var( --space-md ) * -1 )'; // counteract padding
+	background-color: var( --color-surface-0 );
+
+	// Wrapper has a border bottom already
+	.mw-search-profile-tabs:last-child {
+		border-bottom: 0;
 	}
 }
 
-.skin-citizen-dark {
-	.mw-search-profile-tabs {
-		border: 1px solid @dark-bg-30;
-		background-color: @dark-bg-10;
+#mw-search-top-table {
+	display: flex;
+	justify-content: space-between;
+	gap: var( --space-xl );
+
+	// Fix weird space between input field and button
+	.oo-ui-actionFieldLayout .oo-ui-textInputWidget {
+		max-width: none;
+	}
+}
+
+.mw-search-profile-tabs {
+	border-color: transparent;
+	border-bottom: 1px solid var( --border-color-base );
+	margin-top: var( --space-xxs );
+	background-color: transparent;
+	font-size: 0.875rem;
+}
+
+.search-types {
+	a {
+		border-bottom: 2px solid transparent;
+		color: var( --color-base--subtle );
+		font-weight: var( --font-weight-medium );
+
+		&:hover {
+			border-color: var( --color-primary--hover );
+			color: var( -color-primary--hover );
+		}
 	}
 
-	.search-types .current a {
-		color: @dark-text-90;
+	.current a {
+		border-color: var( --color-primary );
+		color: var( --color-primary );
+	}
+}
+
+.results-info {
+	color: var( --color-base--subtle );
+	font-size: 0.8125rem;
+	white-space: nowrap;
+}
+
+#mw-searchoptions {
+	border-color: transparent;
+	border-radius: 0;
+	background-color: var( --color-surface-1 );
+
+	h4 {
+		color: var( --color-base--subtle );
+		font-size: 0.875rem;
+		font-weight: var( --font-weight-normal );
+		letter-spacing: 0.05em;
 	}
 
+	.divider {
+		border-color: var( --border-color-base );
+	}
+}
+
+#mw-search-interwiki {
+	border-color: var( --border-color-base );
+}
+
+.searchdidyoumean {
+	font-size: 1rem;
+}
+
+.mw-search-createlink,
+.mw-search-exists {
+	max-width: 20rem;
+	padding: var( --space-md );
+	border-radius: var( --border-radius--small );
+	margin-top: 0 !important;
+	background: var( --color-surface-2 );
+	float: right;
+	font-size: 0.875rem;
+}
+
+.mw-search-results {
+	li {
+		a {
+			font-size: 1rem;
+		}
+	}
+}
+
+.mw-search-result {
+	&-data {
+		margin-top: var( --space-xxs );
+		color: var( --color-base--subtle );
+		font-size: 0.8125rem;
+	}
+}
+
+// Somehow got overridden
+.citizen-body {
+	.search-types {
+		ul {
+			margin: 0;
+		}
+	}
+
+	.searchresults {
+		h2 {
+			margin-bottom: var( --space-md );
+			font-size: 1rem;
+		}
+	}
+
+	.mw-search-results {
+		margin: 0;
+	}
+}
+
+@media ( max-width: @width-breakpoint-tablet ) {
 	.results-info {
-		color: @dark-text-80;
+		display: none;
 	}
 
+	// Not great but works for now
 	#mw-searchoptions {
-		border: 1px solid @dark-bg-30;
-		background-color: @dark-bg-10;
+		overflow: auto;
+		max-height: 20vh;
 	}
 
-	#mw-searchoptions .divider {
-		border-bottom: 1px solid @dark-bg-20;
-	}
-
-	#mw-search-interwiki {
-		border: 1px solid @dark-bg-50;
-	}
-
-	.mw-search-interwiki-project {
-		border-top: 1px solid @dark-bg-30;
-		background-color: @dark-bg-20;
+	.mw-search-createlink,
+	.mw-search-exists {
+		max-width: none;
+		float: none;
 	}
 }

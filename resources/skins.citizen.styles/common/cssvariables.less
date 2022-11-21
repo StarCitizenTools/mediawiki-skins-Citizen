@@ -62,34 +62,52 @@
 	--border-radius--small: @border-radius--small;
 	--border-radius--medium: @border-radius--medium;
 	--border-radius--large: @border-radius--large;
+	--border-radius--pill: @border-radius--pill;
 
 	/* Fonts */
 	--font-family-base: @fonts;
 	--font-family-serif: @fonts-serif;
 	--font-family-monospace: @fonts-monospace;
+
+	--font-size-h1: 1.75rem;
+	--font-size-h2: 1.375rem;
+	--font-size-h3: 1.125rem;
+	--font-size-h4: 1rem;
+	--font-size-h5: 1rem;
+	--font-size-h6: 1rem;
+
+	--font-weight-normal: 400;
+	--font-weight-medium: 500;
+	--font-weight-semibold: 600;
+	--font-weight-bold: 700;
 }
 
 html {
 	/* Size */
 	--header-size: @header-size;
+	--header-card-maxheight: 70vh;
 	--width-layout: @width-layout;
 	--width-layout--extended: ~'calc( var( --width-layout ) * 1.5 )';
-	--line-height: @line-height;
+	--width-toc: @width-toc;
+	--line-height: @line-height-md;
+	--line-height-xs: @line-height-xs;
+	--line-height-sm: @line-height-sm;
 
 	/* Spacing */
 	--space-unit: @space-unit;
-	--space-xs: ~'calc( 0.25 * var( --space-unit ) )';
-	--space-sm: ~'calc( 0.5 * var( --space-unit ) )';
+	--space-xxs: ~'calc( 0.25 * var( --space-unit ) )';
+	--space-xs: ~'calc( 0.5 * var( --space-unit ) )';
+	--space-sm: ~'calc( 0.75 * var( --space-unit ) )';
 	--space-md: ~'var( --space-unit )';
-	--space-lg: ~'calc( 1.5 * var( --space-unit ) )';
-	--space-xl: ~'calc( 2 * var( --space-unit ) )';
+	--space-lg: ~'calc( 1.25 * var( --space-unit ) )';
+	--space-xl: ~'calc( 1.5 * var( --space-unit ) )';
+	--space-xxl: ~'calc( 2 * var( --space-unit ) )';
 
 	/* Margin */
 	--margin-layout: ~'calc( ( 100vw - var( --width-layout ) ) / 2 )';
 
 	/* Padding */
 	--padding-page: @padding-page;
-	--padding-page--negative: ~'calc( var( --padding-page) * -1 )';
 }
 
 /**
@@ -131,4 +149,24 @@ html {
 	--border-color-base--darker: @dark-border-color-base--darker;
 	--border-color-input: @dark-border-color-input;
 	--border-color-input--hover: @dark-border-color-input--hover;
+}
+
+@media ( min-width: @width-breakpoint-tablet ) {
+	:root {
+		--font-size-h1: 2rem;
+		--font-size-h2: 1.5rem;
+		--font-size-h3: 1.25rem;
+		--font-size-h4: 1.125rem;
+	}
+
+	html {
+		--padding-page: @padding-page * 1.5;
+	}
+}
+
+@media ( min-width: @width-breakpoint-desktop ) {
+	html {
+		--padding-page: @padding-page * 2;
+		--header-card-maxheight: ~'calc( 100vh - var( --space-sm ) * 2 )';
+	}
 }

@@ -1,0 +1,43 @@
+/*
+ * Citizen
+ *
+ * Module: mediawiki.skinning.content.thumbnails-screen
+ * Version: REL1_39
+ *
+ * Date: 2022-11-18
+*/
+
+.thumbinner {
+	> a {
+		display: block;
+		border-radius: var( --border-radius--small );
+
+		&.image {
+			max-width: inherit;
+			margin-right: 1px;
+			// Counter the weird hardcoded 2px width added by core
+			margin-left: 1px;
+		}
+
+		&:before {
+			content: none;
+		}
+
+		// Broken file styles
+		&.new {
+			padding: var( --space-sm );
+			border: 1px dashed var( --border-color-base--darker );
+			transition: @transition-background, @transition-color;
+
+			&:hover {
+				background-color: var( --color-destructive--hover );
+				color: #fff;
+			}
+
+			&:active {
+				background-color: var( --color-destructive--active );
+				color: #fff;
+			}
+		}
+	}
+}

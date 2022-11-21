@@ -27,12 +27,12 @@
 
 		&__title {
 			color: var( --color-base--subtle );
-			letter-spacing: 0.75px;
+			letter-spacing: 0.05em;
 		}
 
 		&__value {
 			color: var( --color-base--emphasized );
-			font-weight: 500;
+			font-weight: var( --font-weight-medium );
 		}
 	}
 
@@ -43,7 +43,7 @@
 			border: 2px solid var( --border-color-base );
 			border-radius: var( --border-radius--medium );
 			cursor: pointer;
-			font-weight: 500;
+			font-weight: var( --font-weight-medium );
 			text-align: center;
 			white-space: nowrap;
 
@@ -72,7 +72,7 @@
 		padding: 1.25rem 1.25rem 0;
 		color: var( --color-base--emphasized );
 		font-size: 1rem;
-		font-weight: 600;
+		font-weight: var( --font-weight-semibold );
 	}
 
 	// TODO: unify the dropdown menu style somewhere
@@ -147,7 +147,7 @@
 		cursor: pointer;
 		font-family: inherit;
 		font-size: 0.875rem;
-		font-weight: 500;
+		font-weight: var( --font-weight-medium );
 
 		&:hover {
 			background: var( --color-destructive--hover );
@@ -160,7 +160,7 @@
 }
 
 @media ( hover: hover ) {
-	.citizen-pref:hover .citizen-pref__button:after {
+	.citizen-pref:hover .citizen-pref__button .citizen-ui-icon:before {
 		transform: rotate3d( 0, 0, 1, 90deg );
 	}
 }

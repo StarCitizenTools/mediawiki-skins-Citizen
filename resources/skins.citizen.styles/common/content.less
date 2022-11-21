@@ -8,75 +8,18 @@
 	color: var( --color-base--subtle );
 }
 
-#siteSub {
-	display: block;
-	margin-top: 0.2rem;
-}
+.mw-page-title {
+	&-namespace {
+		color: var( --color-base );
+	}
 
-#siteSub,
-#contentSub,
-#contentSub2 {
-	color: var( --color-base--subtle );
+	&-separator {
+		margin-right: var( --space-xxs );
+		color: var( --color-base--subtle );
+	}
 }
 
 .citizen-body {
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		padding: 0;
-		margin: 0;
-	}
-
-	h1,
-	h2 {
-		margin-top: @content-margin-top * 3;
-	}
-
-	h3,
-	h4,
-	h5,
-	h6 {
-		margin-top: @content-margin-top * 2;
-	}
-
-	h1 + h2,
-	h2 + h3,
-	h3 + h4,
-	h4 + h5,
-	h5 + h6,
-	table {
-		margin-top: @content-margin-top;
-	}
-
-	p {
-		margin-top: @content-margin-top;
-		margin-bottom: @content-margin-top;
-		overflow-wrap: break-word;
-	}
-
-	ul {
-		margin: @content-margin-top 0 0 @content-margin-top * 2;
-
-		ul {
-			margin: 0 0 0 @content-margin-top * 2;
-		}
-	}
-
-	ol {
-		margin: @content-margin-top 0 0 @content-margin-top * 3;
-
-		ol {
-			margin: 0 0 0 @content-margin-top * 3;
-		}
-	}
-
-	img {
-		vertical-align: middle;
-	}
-
 	a.image {
 		display: inline-block;
 		overflow: hidden;
@@ -86,50 +29,13 @@
 			transition: @transition-transform;
 		}
 
+		// Add affordance to replace magnify icon
 		&:hover:not( .lazy ):not( .new ) {
 			> img {
 				transform: scale( 1.1 );
 			}
 		}
 	}
-
-	.mw-editsection {
-		display: flex;
-		margin-left: 0.25rem;
-		float: right; // Can't target the container so have to use to float
-
-		a {
-			.resource-loader-icon-link-small;
-			padding: 0.25rem;
-			background: 0 !important; // Cancel above styles
-			opacity: var( --opacity-icon-base );
-			text-indent: -9999px; // Hide text
-			transition: @transition-opacity;
-
-			&:before {
-				.resource-loader-icon;
-				display: block;
-				background-size: contain;
-			}
-
-			&:hover {
-				opacity: var( --opacity-icon-base--hover );
-			}
-
-			&:active {
-				opacity: var( --opacity-icon-base--active );
-			}
-		}
-
-		> span {
-			display: none;
-		}
-	}
-}
-
-.center {
-	width: 100%;
-	text-align: center;
 }
 
 .plainlist ol,

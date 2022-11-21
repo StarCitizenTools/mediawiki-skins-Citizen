@@ -16,9 +16,14 @@
 		pointer-events: auto;
 	}
 
+	// Hide edit buttons since it is handled by the editing mode dropdown in the toolbar
+	#ca-ve-edit,
+	#ca-edit {
+		display: none;
+	}
+
 	.mw-body-header {
 		z-index: 0; // Reset z-index so toolbar won't clip
-		margin-top: ~'calc( 46px - var( --space-xl ) )'; // Trim extra spacing
 		// Reset VE disabled style to allow page action buttons to work
 		opacity: 1;
 		pointer-events: auto;
@@ -29,7 +34,7 @@
 		opacity: 0.5;
 	}
 
-	.toc {
+	.citizen-toc {
 		display: none; // Hide ToC
 	}
 }
@@ -216,13 +221,10 @@
 	&-mw {
 		&-desktopArticleTarget {
 			&-toolbar {
-				margin-right: var( --padding-page--negative );
-				margin-left: var( --padding-page--negative );
-
 				&Placeholder {
 					height: 46px; // Correspond to VE toolbar height in Citizen
 					border-bottom: 1px solid var( --border-color-base );
-					margin: 0 var( --padding-page--negative );
+					margin: 0;
 
 					&-bar {
 						border: 0;

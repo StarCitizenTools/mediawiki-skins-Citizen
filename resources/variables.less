@@ -26,14 +26,45 @@
 /* Wider desktop breakpoint */
 @width-breakpoint-desktop-wide: 1300px;
 
-/* Width when content center on pages with ToC */
-@width-breakpoint-desktop-wider: @width-breakpoint-desktop + @width-toc * 2;
-
 /* Extra wide desktop breakpoint */
 @width-breakpoint-desktop-extrawide: 2000px;
 
 /* == Spacing == */
 @space-unit: 1rem;
+@line-height-xs: 1.25;
+@line-height-sm: 1.375;
+@line-height-md: 1.6;
+
+/* == Fonts == */
+/**
+ * Citizen sans-serif font stack
+ *
+ * `Roboto` – Default font
+ * `Noto Sans CJK` - CJK font
+ * system-ui - System UI font stack
+ * `-apple-system` - Firefox fallback for System UI font stack
+ */
+@fonts: 'Roboto', 'Noto Sans CJK', system-ui, -apple-system, sans-serif;
+/**
+  * Citizen serif font stack
+  *
+  * `Noto Serif` - Not included yet
+  * `Noto Serif CJK` - Not included yet
+  * `Georgia` – Windows, Mac
+  * `serif` – (Generic) web font fallback
+  */
+@fonts-serif: 'Noto Serif', 'Noto Serif CJK', Georgia, serif;
+/**
+  * Citizen monospace font stack
+  *
+  * `SFMono-Regular` - macOS 10.12+
+  * `Menlo` – macOS 10.6+
+  * `Roboto Mono` - Android 4.0+
+  * `Consolas` – Windows Vista & newer
+  * `Liberation Mono` – Fedora, Ubuntu, … OFL licensed
+  * `'Courier New', monospace` – (Generic) web font fallback
+  */
+@fonts-monospace: 'SFMono-Regular', 'Menlo', 'Roboto Mono', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
 
 /* == Colors == */
 /* Base theme */
@@ -203,11 +234,11 @@
 // Not in the header section it is also used outside of header
 @header-size:	3.5rem;
 @width-layout:	@width-breakpoint-desktop - 2 * @padding-page;
-@width-toc: @width-breakpoint-desktop-wide - @width-breakpoint-desktop;
+// TODO: Revise this number, fixed value isn't great but we need it for b
+@width-toc: 240px;
 
 /* Paddings */
-@padding-page:	20px;
-@line-height: 1.6;
+@padding-page:	16px;
 
 /* Border */
 /* Border colors */
@@ -222,6 +253,8 @@
 @border-radius--small: 4px;
 @border-radius--medium: @border-radius--small * 2;
 @border-radius--large: @border-radius--small * 3;
+@border-radius--pill: 9999px;
+@border-radius--circle: 100%;
 
 /* Transitions */
 @transition-timing-fast: 100ms;
@@ -238,41 +271,12 @@
 // Execute after every transition is done
 // Need to use with transition-delay: 0ms
 @transition-visibility--transform: visibility 0ms linear @transition-timing-slow;
-@transition-height: height @transition-timing-slow cubic-bezier(0.215,0.61,0.355,1);
+@transition-height: height @transition-timing-slow ease;
 
 /* Box shadow */
 // Based on https://web.dev/building-a-color-scheme/#rad-shadow
 @box-shadow-card: 0 2.8px 2.2px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .03))', 0 6.7px 5.3px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .01))', 0 12.5px 10px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .02))', 0 22.3px 17.9px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .02))', 0 41.8px 33.4px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .03))', 0 100px 80px -4px ~'hsl(var(--surface-shadow) / var(--shadow-strength))';
 @box-shadow-dialog: 0 2.8px 2.2px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .03))', 0 6.7px 5.3px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .01))', 0 12.5px 10px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .02))', 0 22.3px 17.9px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .02))', 0 41.8px 33.4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .03))', 0 100px 80px ~'hsl(var(--surface-shadow) / var(--shadow-strength))';
-
-/* Fonts */
-/**
- * Citizen font stack for sans-serif fonts
- *
- * `Roboto` – Default font
- * `Noto Sans CJK` - CJK font
- * system-ui - System UI font stack
- * `-apple-system` - Firefox fallback for System UI font stack
- */
-@fonts: 'Roboto', 'Noto Sans CJK', system-ui, -apple-system, sans-serif;
-/**
- * Citizen serif font stack
- *
- * `Georgia` – Windows, Mac
- * `serif` – (Generic) web font fallback
- */
-@fonts-serif: Georgia, serif;
-/**
- * System font stack for monospace fonts
- *
- * `SFMono-Regular` - macOS 10.12+
- * `Menlo` – macOS 10.6+
- * `Roboto Mono` - Android 4.0+
- * `Consolas` – Windows Vista & newer
- * `Liberation Mono` – Fedora, Ubuntu, … OFL licensed
- * `'Courier New', monospace` – (Generic) web font fallback
- */
-@fonts-monospace: 'SFMono-Regular', 'Menlo', 'Roboto Mono', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
 
 /**
  * Dark theme color palette
@@ -342,38 +346,9 @@
  * Framework
 */
 @html-font-size: 100%;
-@margin-side: 20px;
 @icon-size: 1.125rem; // 18px, TODO: Replace this var
 @icon-box-size: @icon-size + @icon-margin * 2;
 @icon-margin: 3px;
-@icon-padding: 15px;
-@padding-menu-item: 10px 15px;
-@padding-menu-item-big: 10px 20px;
-@height-progress-bar: 2px;
-
-/*
- * Text hierarchy
-*/
-// Scaling for content text
-@content-scaling: 0.625;
-@toc-scaling: 0.75;
-
-// Wikimedia scale - https://design.wikimedia.org/style-guide/visual-style_typography.html
-@content-h1-size: 3.2rem * @content-scaling;
-@content-h2-size: 2.4rem * @content-scaling;
-@content-h3-size: 2rem * @content-scaling;
-@content-h4-size: 1.8rem * @content-scaling;
-@content-h5-size: 1.6rem * @content-scaling;
-@content-h6-size: 1.6rem * @content-scaling;
-@content-body-size: 1.6rem * @content-scaling;
-@content-lead-paragraph-size: 1.8rem * @content-scaling;
-@content-caption-size: 1.3rem * @content-scaling;
-@content-small-text-size: 1.3rem * @content-scaling;
-@content-monospace-size: 1.4rem * @content-scaling;
-@content-margin-top: 0.8rem;
-
-@ui-menu-text: 14px;
-@ui-menu-header: 16px;
 
 /*
  * Legacy colors
@@ -383,40 +358,10 @@
  * After that we can remove all theses LESS variables.
 */
 
-@accent-10: #2a4b8d;
-@accent-50: #36c;
-@accent-90: #eaf3ff;
-
-@red-30: #b32424;
-@red-50: #d33;
-@red-90: #fee7e6;
-
-@green-30: #14866d;
-@green-50: #00af89;
-@green-90: #d5fdf4;
-
-@yellow-30: #ac6600;
-@yellow-50: #fc3;
-@yellow-90: #fef6e7;
-
-@color-footer-background-40: #0f1418;
-@color-footer-background-50: #131a21;
-@color-footer-background-60: #1a252d;
-@color-footer-text: #979c9f;
-@color-footer-link: #cfdee8;
-@color-footer-link-active: #eaecf0;
-
 // Dark mode colors
-@dark-bg-0: #11151d;
 @dark-bg-10: #1d2129;
 @dark-bg-20: #22262d;
 @dark-bg-30: #24272f;
 @dark-bg-40: #2b2f36;
 @dark-bg-50: #33363d;
 @dark-bg-60: #34383f;
-
-@dark-text-100: #e0e1e2;
-@dark-text-90: #c1c2c5;
-@dark-text-80: #a0a1a5;
-@dark-text-70: #86888c;
-@dark-text-60: #6c6e73;

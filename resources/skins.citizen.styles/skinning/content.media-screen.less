@@ -1,0 +1,54 @@
+/*
+ * Citizen
+ *
+ * Module: mediawiki.skinning.content.media-screen
+ * Version: REL1_39
+ *
+ * Date: 2022-11-18
+*/
+figure[ typeof~='mw:File' ],
+figure[ typeof~='mw:File/Frameless' ],
+figure[ typeof~='mw:File/Thumb' ],
+figure[ typeof~='mw:File/Frame' ] {
+	> a:first-child {
+		display: inline-block;
+		overflow: hidden;
+
+		> img {
+			transition: @transition-transform;
+		}
+
+		// Add affordance to replace magnify icon
+		&:hover:not( .lazy ):not( .new ) {
+			> img {
+				transform: scale( 1.1 );
+			}
+		}
+	}
+}
+
+figure[ typeof~='mw:File/Thumb' ],
+figure[ typeof~='mw:File/Frame' ] {
+	> a:first-child,
+	> span:first-child {
+		display: block;
+		border-radius: var( --border-radius--small );
+
+		// Broken file styles
+		&.new {
+			padding: var( --space-sm );
+			border: 1px dashed var( --border-color-base--darker );
+			transition: @transition-background, @transition-color;
+
+			&:hover {
+				background-color: var( --color-destructive--hover );
+				color: #fff;
+			}
+
+			&:active {
+				background-color: var( --color-destructive--active );
+				color: #fff;
+			}
+		}
+	}
+}

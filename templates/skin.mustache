@@ -10,17 +10,22 @@
 	object data-footer for footer template partial. see Footer.mustache for documentation.
 }}
 
-{{#data-header}}{{>Header}}{{/data-header}}
-<div id="siteNotice">{{{html-site-notice}}}</div>
-<main class="mw-body {{#toc-enabled}}citizen-toc-enabled{{/toc-enabled}}" id="content">
-	{{>ContentHeader}}
-	<div id="bodyContent" class="citizen-body">
-		<div id="contentSub"{{{html-user-language-attributes}}}>{{{html-subtitle}}}</div>
-		{{#html-undelete-link}}<div id="contentSub2">{{{html-undelete-link}}}</div>{{/html-undelete-link}}
-		{{{html-user-message}}}
-		{{{html-body-content--formatted}}}
-	</div>
-	{{>ContentFooter}}
-</main>
-{{{html-after-content}}}
-{{#data-citizen-footer}}{{>Footer}}{{/data-citizen-footer}}
+{{>Header}}
+<div class="citizen-page-container">
+	<div id="siteNotice">{{{html-site-notice}}}</div>
+	<main class="mw-body {{#toc-enabled}}citizen-toc-enabled{{/toc-enabled}}" id="content">
+		<div class="citizen-body-container">
+		{{>ContentHeader}}
+		<div id="bodyContent" class="citizen-body" aria-labelledby="firstHeading">
+			<div id="contentSub"{{{html-user-language-attributes}}}>{{{html-subtitle}}}</div>
+			{{#html-undelete-link}}<div id="contentSub2">{{{.}}}</div>{{/html-undelete-link}}
+			{{{html-user-message}}}
+			{{{html-body-content--formatted}}}
+		</div>
+		{{#toc-enabled}}{{>TableOfContents}}{{/toc-enabled}}
+		{{>ContentFooter}}
+		</div>
+	</main>
+	{{{html-after-content}}}
+	{{#data-footer}}{{>Footer}}{{/data-footer}}
+</div>

@@ -1,35 +1,34 @@
-@width-breakpoint-desktop-wider: @width-breakpoint-desktop + @width-toc * 2;
+.citizen-page-container {
+	// Reserve space for header
+	margin-bottom: var( --header-size );
+}
 
 .mw-body,
 .parsoid-body {
 	min-height: 80vh; // avoid footer being in the middle of the page
 }
 
-.mw-body,
-.parsoid-body,
-.citizen-footer {
-	padding-right: var( --padding-page );
-	padding-left: var( --padding-page );
-}
-
-.mw-body-header,
-.citizen-body,
-.mw-body-footer {
-	max-width: var( --width-layout );
-	margin-right: auto;
-	margin-left: auto;
+.citizen-body-container {
+	display: grid;
+	justify-content: center;
+	padding: var( --space-xl ) var( --padding-page );
+	gap: var( --space-md ) var( --space-xl );
+	grid-template-areas: 'header'
+		'content'
+		'footer';
+	// Using auto as min value will cause overflow
+	grid-template-columns: minmax( 0, var( --width-layout ) );
 }
 
 .mw-body-header {
-	position: relative;
+	position: sticky;
 	z-index: @z-index-page-header;
 	display: flex;
 	flex-wrap: wrap;
-	align-items: flex-start;
+	align-items: center;
 	padding-top: var( --space-md );
-	margin-top: var( --space-xl );
-	margin-bottom: @content-margin-top * 2;
-	gap: var( --space-lg );
+	gap: var( --space-xl );
+	grid-area: header;
 }
 
 .page-heading {
@@ -42,7 +41,7 @@
 }
 
 .citizen-body {
-	.mixin-clearfix();
+	grid-area: content;
 }
 
 a.image {
@@ -52,48 +51,21 @@ a.image {
 	}
 }
 
-@media ( min-width: @width-breakpoint-tablet ) {
-	div.tleft,
-	figure.mw-halign-left,
-	div.floatleft,
-	table.floatleft {
-		/* @noflip */
-		margin-right: 1.4rem;
-		/* @noflip */
-		clear: left;
-		/* @noflip */
-		float: left;
-	}
-
-	div.tright,
-	figure.mw-halign-right,
-	figure.mw-default-size,
-	div.floatright,
-	table.floatright {
-		/* @noflip */
-		margin-left: 1.4rem;
-		/* @noflip */
-		clear: right;
-		/* @noflip */
-		float: right;
-	}
-}
-
 @media ( min-width: @width-breakpoint-desktop ) {
-	.mw-body,
-	.parsoid-body,
-	.citizen-footer {
-		padding-right: ~'calc( var( --padding-page ) * 2 )';
-		padding-left: ~'calc( var( --padding-page ) * 2 )';
-	}
-
-	#siteNotice,
-	.mw-body,
-	.parsoid-body,
-	.citizen-footer,
-	#mw-data-after-content {
+	.citizen-page-container {
+		margin-bottom: 0;
 		// Reserve space for header
 		margin-left: var( --header-size );
+	}
+
+	.citizen-toc-enabled {
+		.citizen-body-container {
+			display: grid;
+			grid-template-areas: 'header header'
+				'content toc'
+				'footer footer';
+			grid-template-columns: minmax( auto, var( --width-layout ) ) var( --width-toc );
+		}
 	}
 }
 

@@ -5,6 +5,7 @@ html {
 html,
 body {
 	font-family: var( --font-family-base );
+	font-weight: var( --font-weight-normal );
 	// font-smoothing: antialiased;
 	// -webkit-font-smoothing: antialiased; /* Chrome, Safari */
 	// -moz-osx-font-smoothing: grayscale; /* Firefox */
@@ -14,26 +15,13 @@ input {
 	font-family: var( --font-family-base ); // Override browser's default
 }
 
-pre,
-code,
-tt,
-kbd,
-samp,
-.mw-code {
-	font-family: var( --font-family-monospace );
-	font-size: @content-monospace-size;
+b,
+strong {
+	font-weight: var( --font-weight-semibold );
 }
 
 cite {
 	font-style: inherit;
-}
-
-fieldset {
-	font-size: @content-monospace-size;
-}
-
-legend {
-	font-weight: bold;
 }
 
 blockquote {
@@ -42,13 +30,9 @@ blockquote {
 
 	cite {
 		font-family: var( --font-family-base );
-		font-size: @content-caption-size;
+		font-size: 0.8125rem;
 		font-style: normal;
 	}
-}
-
-dt {
-	font-weight: bold;
 }
 
 sub,
@@ -56,115 +40,17 @@ sup {
 	font-size: 80%;
 }
 
-figcaption,
-.thumbcaption {
-	font-size: @content-caption-size;
-	font-style: italic;
-
-	i {
-		font-style: normal;
-	}
-}
-
-#contentSub,
-#contentSub2 {
-	font-size: @content-caption-size;
-}
-
-#siteSub {
-	font-size: @content-caption-size;
-}
-
 .mw-logo-wordmark {
-	font-weight: 500;
+	font-weight: var( --font-weight-semibold );
 }
 
-.thumbinner {
-	.new {
-		font-size: @content-caption-size;
+.firstHeading {
+	&-parenthesis {
+		font-size: var( --font-size-h3 );
 	}
-}
-
-.error {
-	font-size: unset;
-	font-weight: normal;
-}
-
-.firstHeading-parenthesis {
-	font-size: @content-h3-size;
 }
 
 .citizen-body,
 .mw-body-content {
 	line-height: var( --line-height );
-
-	h1 {
-		font-size: @content-h1-size;
-	}
-
-	h1,
-	h2 {
-		font-weight: bold;
-		line-height: 1.2;
-	}
-
-	h2 {
-		font-size: @content-h2-size;
-	}
-
-	h3 {
-		font-size: @content-h3-size;
-	}
-
-	h4 {
-		font-size: @content-h4-size;
-	}
-
-	h5 {
-		font-size: @content-h5-size;
-	}
-
-	h6 {
-		font-size: @content-h6-size;
-	}
-
-	h3,
-	h4,
-	h5,
-	h6 {
-		font-weight: bold;
-	}
-}
-
-// External links
-.mw-parser-output {
-	a.external {
-		&:after {
-			display: inline-block;
-			width: 0.75em;
-			height: 0.75em;
-			margin-left: 0.25em;
-			background-color: currentcolor;
-			content: '';
-			/* @embed */
-			-webkit-mask: url( images/linkExternal-ltr.svg ) no-repeat 50% 50%;
-			/* @embed */
-			mask: url( images/linkExternal-ltr.svg ) no-repeat 50% 50%;
-			-webkit-mask-size: contain;
-			mask-size: contain;
-		}
-	}
-
-	.plainlinks a.external:after {
-		content: none;
-	}
-}
-
-@media ( max-width: @width-breakpoint-tablet ) {
-	#mw-content-text {
-		figcaption,
-		.thumbcaption {
-			text-align: center;
-		}
-	}
 }

@@ -3,26 +3,17 @@
 .citizen-siteStats {
 	display: flex;
 	font-size: 0.875rem; // TODO: Put this in variable
-	gap: 0.875rem;
+	gap: var( --space-md );
 
 	&__item {
 		display: flex;
 		align-items: center;
-		gap: 0.4375rem;
-
-		&:before {
-			width: 0.875rem;
-			height: 0.875rem;
-			background-size: contain;
-			content: '';
-			opacity: var( --opacity-icon-base );
-		}
+		gap: var( --space-xs );
 	}
-}
 
-.skin-citizen-dark {
-	.citizen-siteStats__item:before {
-		filter: invert( 1 );
+	.citizen-ui-icon {
+		width: 0.875rem;
+		height: 0.875rem;
 	}
 }
 

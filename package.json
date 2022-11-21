@@ -8,7 +8,7 @@
 		"lint:styles": "stylelint \"**/*.{less,css}\"",
 		"lint:i18n": "banana-checker --requireLowerCase=0 i18n/",
 		"doc": "jsdoc -c jsdoc.json",
-		"minify-svg": "svgo --config=.svgo.config.js -q -r -f resources/",
+		"minify-svg": "svgo --config=.svgo.config.js --quiet --recursive --folder resources/",
 		"test": "npm run lint",
 		"prepare": "husky install",
 		"release": "standard-version",

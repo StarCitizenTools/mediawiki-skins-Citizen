@@ -1,0 +1,72 @@
+/*
+ * Citizen
+ *
+ * Module: mediawiki.skinning.interface.category
+ * Version: REL1_39
+ *
+ * Date: 2022-11-15
+*/
+
+.catlinks {
+	display: flex;
+	flex-wrap: wrap;
+	clear: both;
+	gap: var( --space-xl );
+
+	ul {
+		display: flex;
+		flex-wrap: wrap;
+		margin: var( --space-xs ) 0 0 0;
+		/* Reset font */
+		font-size: 0.8125rem;
+		gap: var( --space-xs );
+		letter-spacing: 0; // hidden-catlink title does not have a selector
+	}
+
+	li {
+		display: block;
+
+		// Be more specific because gadgets like hotcat can attach links in category
+		> a {
+			display: block;
+			padding: var( --space-xs ) var( --space-md );
+			border: 1px solid var( --border-color-base--darker );
+			border-radius: var( --border-radius--pill );
+			color: var( --color-base--subtle );
+			transition: @transition-background;
+
+			&:hover {
+				background-color: var( --color-primary--hover );
+				color: #fff;
+			}
+
+			// Make new categories distinct
+			&.new {
+				border-style: dashed;
+
+				&:hover {
+					background-color: var( --color-destructive--hover );
+				}
+			}
+		}
+	}
+}
+
+// HACK: Hide colon
+.mw-normal-catlinks {
+	font-size: 0;
+}
+
+// Category label
+.mw-normal-catlinks > a,
+.mw-hidden-catlinks {
+	display: block;
+	color: var( --color-base--subtle );
+	font-size: 0.875rem;
+	letter-spacing: 0.05em;
+}
+
+.mw-hidden-cats-hidden,
+.catlinks-allhidden {
+	display: none;
+}

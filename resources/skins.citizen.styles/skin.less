@@ -10,27 +10,45 @@
 	@import 'layout.less';
 	@import 'common/common.less';
 	@import 'common/content.less';
-	@import 'common/thumbnail.less';
 	@import 'common/scrollbar.less';
 	@import 'common/hacks.less';
-	@import 'common/wikitable.less';
-	@import 'common/reducemotion.less';
 	@import 'common/progressbar.less';
 
 	// Components
 	@import 'Header.less';
 	@import 'Drawer.less';
 	@import 'Drawer__button.less';
-	@import 'Siteinfo.less';
-	@import 'Personalmenu.less';
+	@import 'Usermenu.less';
 	@import 'Search.less';
 	@import 'Search__button.less';
 	@import 'Pagetools.less';
 	@import 'Menu.less';
-	@import 'Catlinks.less';
 	@import 'ContentFooter.less';
 	@import 'Footer.less';
-	@import 'Stickyheader.less';
+	@import 'TableOfContents.less';
+	@import 'StickyHeader.less';
+
+	// Mediawiki.skinning
+	// This get loaded regardless so we don't have to use skinStyles to target them
+	// It is organized to be same as core because naming is hard :'(
+	// @see https://github.com/wikimedia/mediawiki/commits/master/resources/src/mediawiki.skinning
+	@import 'skinning/content.body.less';
+	@import 'skinning/content.links.less';
+	@import 'skinning/content.externallinks.less';
+	@import 'skinning/content.tables.less';
+	// FIXME: This should not be under screen, fix this when we work on print styles
+	@import 'skinning/content.media-common.less';
+	@import 'skinning/content.media-screen.less';
+	// FIXME: This should not be under screen, fix this when we work on print styles
+	@import 'skinning/content.thumbnails-common.less';
+	@import 'skinning/content.thumbnails-screen.less';
+	@import 'skinning/elements.less';
+	@import 'skinning/i18n-all-lists-margins.less';
+	@import 'skinning/interface-edit-section-links.less';
+	@import 'skinning/interface-message-box.less';
+	@import 'skinning/interface-site-notice.less';
+	@import 'skinning/interface-subtitle.less';
+	@import 'skinning/interface.category.less';
 }
 
 @media print {

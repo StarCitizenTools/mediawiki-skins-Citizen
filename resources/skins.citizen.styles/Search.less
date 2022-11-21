@@ -11,10 +11,19 @@
 		width: var( --width-search-bar );
 		max-width: ~'calc(100vw - var( --padding-page ) )';
 		height: var( --height-search-bar );
-		margin: var( --space-sm );
+		margin: var( --space-xs );
 		gap: 0.25rem;
 		.citizen-card();
 		.citizen-card-hide( top left, X, false );
+
+		.citizen-ui-icon {
+			width: var( --height-search-bar );
+			height: var( --height-search-bar );
+
+			&:before {
+				background-size: 1rem;
+			}
+		}
 
 		/**
 		 * Loading indicator for searchbox
@@ -26,40 +35,17 @@
 		}
 	}
 
-	&__icon,
-	&__random {
-		width: var( --height-search-bar );
-		height: var( --height-search-bar ); // Do we need this?
-
-		&:after {
-			display: block;
-			width: inherit;
-			height: inherit;
-			background-position: center;
-			background-repeat: no-repeat;
-			content: '';
-			opacity: var( --opacity-icon-base );
-			transition: @transition-transform, @transition-opacity;
-		}
-	}
-
-	&__icon {
-		&:after {
-			background-size: 0.875rem; // Smaller because it is an indicator
-		}
-	}
-
 	&__random {
 		border-radius: var( --border-radius--small );
 
-		&:after {
-			background-size: 1.125rem; // Align with close button
+		.citizen-ui-icon:before {
+			transition: @transition-transform;
 		}
 
 		&:hover {
 			background-color: var( --background-color-quiet--hover );
 
-			&:after {
+			.citizen-ui-icon:before {
 				opacity: var( --opacity-icon-base--hover );
 				transform: rotate( 30deg );
 			}
@@ -68,15 +54,9 @@
 		&:active {
 			background-color: var( --background-color-quiet--active );
 
-			&:after {
+			.citizen-ui-icon:before {
 				opacity: var( --opacity-icon-base--active );
 			}
-		}
-	}
-
-	&:focus-within {
-		.citizen-search__icon:after {
-			opacity: var( --opacity-icon-base--hover );
 		}
 	}
 
@@ -101,17 +81,6 @@
 #citizen-search__checkbox:checked {
 	~ .citizen-search__card {
 		.citizen-card-show( false );
-	}
-}
-
-.skin-citizen-dark {
-	.citizen-search {
-		&__icon,
-		&__random {
-			&:after {
-				filter: invert( 1 ); // I am lazy
-			}
-		}
 	}
 }
 

@@ -35,20 +35,11 @@ final class Metadata extends Partial {
 	public function addMetadata() {
 		$out = $this->out;
 
-		// Responsive layout
-		// Polyfill for MW 1.35
-		if ( version_compare( MW_VERSION, '1.36', '<' ) ) {
-			$out->addMeta( 'viewport', 'width=device-width, initial-scale=1.0' );
-		}
-
 		// Theme color
 		$out->addMeta( 'theme-color', $this->getConfigValue( 'CitizenThemeColor' ) ?? '' );
 
 		// Generate webapp manifest
 		$this->addManifest();
-
-		// Preconnect origin
-		$this->addPreConnect();
 	}
 
 	/**
@@ -72,21 +63,6 @@ final class Metadata extends Partial {
 		$out->addLink( [
 			'rel' => 'manifest',
 			'href' => $href,
-		] );
-	}
-
-	/**
-	 * Adds a preconnect header if enabled in 'CitizenEnablePreconnect'
-	 */
-	private function addPreConnect() {
-		if ( $this->getConfigValue( 'CitizenEnablePreconnect' ) !== true ) {
-			return;
-		}
-
-		$out = $this->out;
-		$out->addLink( [
-			'rel' => 'preconnect',
-			'href' => $this->getConfigValue( 'CitizenPreconnectURL' ),
 		] );
 	}
 }

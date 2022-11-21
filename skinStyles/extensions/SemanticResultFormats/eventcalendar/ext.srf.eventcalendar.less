@@ -8,32 +8,32 @@
 .skin-citizen-dark {
 	.srf-ui-legendList,
 	.srf-ui-legendList-sel {
-		color: @dark-text-90;
+		color: var( --color-base );
 	}
 
 	.srf-ui-legendList.basic {
 		border: 1px solid @dark-bg-20;
-		background-color: @dark-bg-0;
+		background-color: var( --color-surface-0 );
 	}
 
 	.srf-ui-legendList.top.basic {
-		background-image: linear-gradient( to top, @dark-bg-0, @dark-bg-10 );
+		background-image: linear-gradient( to top, var( --color-surface-0 ), @dark-bg-10 );
 	}
 
 	.srf-ui-legendList.bottom.basic {
-		background-image: linear-gradient( to bottom, @dark-bg-0, @dark-bg-10 );
+		background-image: linear-gradient( to bottom, var( --color-surface-0 ), @dark-bg-10 );
 	}
 
 	.srf-ui-legend-square {
-		background: @dark-bg-0;
+		background: var( --color-surface-0 );
 	}
 
 	.srf-ui-square {
-		border: 3px solid @accent-50;
+		border: 3px solid var( --color-primary );
 	}
 
 	.srf-ui-circle {
-		background: @red-50;
+		background: var( --color-destructive );
 	}
 
 	.srf-calendarpane fieldset {
@@ -41,20 +41,20 @@
 	}
 
 	.srf-calendarpane .section-header {
-		color: @dark-text-100;
+		color: var( --color-base--emphasized );
 	}
 
 	.srf-calendarpane .ui-sortable-placeholder {
-		border: 1px dotted @dark-bg-0;
+		border: 1px dotted var( --color-surface-0 );
 	}
 
 	.srf-calendarpane .reset-link {
-		background-color: @dark-bg-0;
-		color: @accent-50;
+		background-color: var( --color-surface-0 );
+		color: var( --color-primary );
 	}
 
 	.srf-calendarpane .mini-calendar {
-		background-color: @dark-bg-0;
+		background-color: var( --color-surface-0 );
 	}
 
 	.srf-calendarpane .mini-calendar .options input {
@@ -76,10 +76,10 @@
 	}
 
 	.srf-calendarpane .legend fieldset {
-		background-color: @dark-bg-0;
+		background-color: var( --color-surface-0 );
 	}
 
 	.srf-calendarpane .parameters fieldset {
-		background-color: @dark-bg-0;
+		background-color: var( --color-surface-0 );
 	}
 }

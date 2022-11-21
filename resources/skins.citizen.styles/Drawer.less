@@ -1,6 +1,6 @@
 .citizen-drawer {
 	&__card {
-		padding: var( --space-sm ) 0;
+		padding: var( --space-xs ) 0;
 		.citizen-header-card( left );
 	}
 
@@ -22,7 +22,7 @@
 	&__siteinfo {
 		display: flex;
 		flex-direction: column;
-		gap: var( --space-xs );
+		gap: var( --space-xxs );
 
 		.mw-logo-wordmark {
 			color: var( --color-base--emphasized );
@@ -31,41 +31,26 @@
 	}
 
 	&__menu {
+		--size-icon: 1rem;
 		display: grid;
 		max-width: 92vw;
 		justify-content: center;
-		padding: var( --space-sm ) var( --space-md );
+		padding: var( --space-xs ) var( --space-md );
 		font-size: 0.875rem; // TODO: Make this a variable
-		gap: var( --space-sm );
+		gap: var( --space-xs );
 		grid-template-columns: repeat( auto-fit, 15rem );
 
 		a {
 			.menu-item-link;
-			padding: 0.625rem 1.25rem; // TODO: Make this a variable
+			padding: 0.625rem var( --space-md ); // TODO: Make this a variable
 			border-radius: var( --border-radius--small );
-
-			&:after {
-				.resource-loader-list-icon;
-				display: block;
-				background-size: contain;
-				opacity: var( --opacity-icon-base );
-				transition: @transition-opacity;
-			}
 
 			&:hover {
 				.menu-item-link-hover;
-
-				&:after {
-					opacity: var( --opacity-icon-base--hover );
-				}
 			}
 
 			&:active {
 				.menu-item-link-active;
-
-				&:after {
-					opacity: var( --opacity-icon-base--active );
-				}
 			}
 		}
 	}
@@ -82,13 +67,6 @@
 .citizen-animations-ready {
 	.citizen-drawer__card {
 		.citizen-card-transition();
-	}
-}
-
-.skin-citizen-dark {
-	// Icons in nav links
-	.citizen-drawer__menu a:after {
-		filter: invert( 1 );
 	}
 }
 

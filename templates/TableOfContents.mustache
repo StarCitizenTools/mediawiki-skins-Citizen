@@ -1,0 +1,31 @@
+{{#data-toc}}
+<div class="citizen-toc mw-checkbox-hack-container">
+	<input 
+		type="checkbox" 
+		id="citizen-toc__checkbox" 
+		class="mw-checkbox-hack-checkbox"
+		role="button"
+		aria-labelledby="citizen-toc__buttonCheckbox"
+		aria-haspopup="true">
+	<nav id="mw-panel-toc" class="citizen-toc__card mw-checkbox-hack-target" role="navigation" aria-labelledby="mw-panel-toc-label">
+		<a class="citizen-toc__top citizen-toc__link" title="{{html-citizen-jumptotop}}" href="#top">
+			<div class="citizen-toc__text">{{msg-citizen-jumptotop}}</div>
+		</a>
+		<div id="mw-panel-toc-label" class="citizen-toc__header">{{msg-toc}}</div>
+		<ul class="citizen-toc__contents" id="mw-panel-toc-list">
+			{{#array-sections}}
+			{{>TableOfContents__line}}
+			{{/array-sections}}
+		</ul>
+	</nav>
+	<label
+		id="citizen-toc__buttonCheckbox" 
+		class="mw-checkbox-hack-button" 
+		for="citizen-toc__checkbox"
+		title="{{msg-toc}}"
+		aria-hidden="true">
+		<span class="citizen-ui-icon mw-ui-icon-wikimedia-listBullet"></span>
+		<span id="mw-panel-toc-label">{{msg-toc}}</span>
+	</label>
+</div>
+{{/data-toc}}

@@ -1,0 +1,116 @@
+/*
+ * Citizen
+ *
+ * Module: mediawiki.skinning.content.media-common
+ * Version: REL1_39
+ *
+ * Date: 2022-11-18
+*/
+
+/**
+ * Block media items
+ */
+figure[ typeof~='mw:File' ],
+figure[ typeof~='mw:File/Frameless' ],
+figure[ typeof~='mw:File/Thumb' ],
+figure[ typeof~='mw:File/Frame' ] {
+	&.mw-halign-none {
+		clear: none;
+		float: none;
+	}
+
+	&.mw-halign-center {
+		margin-right: auto;
+		margin-left: auto;
+	}
+}
+
+figure[ typeof~='mw:File' ],
+figure[ typeof~='mw:File/Frameless' ] {
+	/* Hide the caption for frameless and plain floated images */
+	> figcaption {
+		display: none;
+	}
+}
+
+figure[ typeof~='mw:File/Thumb' ],
+figure[ typeof~='mw:File/Frame' ] {
+	display: table;
+	margin: var( --space-xs ) auto var( --space-md ) auto;
+	font-size: 0.8125rem;
+	text-align: center;
+
+	> a:first-child,
+	> span:first-child {
+		/**
+		 * Broken media get a span instead.
+		 */
+		> span.mw-broken-media {
+			display: inline-block;
+			/* This is hardcoded in Linker::makeThumbLink2 for broken media */
+			width: 180px;
+		}
+	}
+
+	> figcaption {
+		display: table-caption;
+		// Sync with rounded corner
+		padding-right: var( --border-radius--small );
+		// Sync with rounded corner
+		padding-left: var( --border-radius--small );
+		margin-top: var( --space-xs );
+		caption-side: bottom;
+		color: var( --color-base--subtle );
+		letter-spacing: 0.025em;
+	}
+}
+
+// Do not float content in mobile view
+@media ( min-width: @width-breakpoint-tablet ) {
+	figure[ typeof~='mw:File/Thumb' ],
+	figure[ typeof~='mw:File/Frame' ] {
+		text-align: start;
+
+		// When float is not explicitly set
+		.mw-content-ltr & {
+			/* @noflip */
+			margin-left: var( --space-lg );
+			/* @noflip */
+			clear: right;
+			/* @noflip */
+			float: right;
+		}
+
+		.mw-content-rtl & {
+			/* @noflip */
+			margin-right: var( --space-lg );
+			/* @noflip */
+			clear: left;
+			/* @noflip */
+			float: left;
+		}
+	}
+
+	figure[ typeof~='mw:File' ],
+	figure[ typeof~='mw:File/Frameless' ],
+	figure[ typeof~='mw:File/Thumb' ],
+	figure[ typeof~='mw:File/Frame' ] {
+		&.mw-halign-right {
+			/* @noflip */
+			margin-left: var( --space-lg );
+			/* @noflip */
+			clear: right;
+			/* @noflip */
+			float: right;
+		}
+
+		&.mw-halign-left {
+			/* @noflip */
+			margin-right: var( --space-lg );
+			/* @noflip */
+			clear: left;
+			/* @noflip */
+			float: left;
+		}
+	}
+}

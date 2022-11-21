@@ -1,0 +1,58 @@
+/*
+ * Citizen
+ *
+ * Module: mediawiki.skinning.content.externallinks
+ * Version: REL1_39
+ *
+ * Date: 2022-11-14
+*/
+
+.mw-parser-output {
+	a {
+		&.extiw,
+		&.external {
+			&:after {
+				display: inline-block;
+				width: 0.75em;
+				height: 0.75em;
+				margin-left: 0.125em;
+				background-color: currentcolor;
+				content: '';
+				/* @embed */
+				-webkit-mask: url( images/linkExternal.svg ) no-repeat 50% 50%;
+				/* @embed */
+				mask: url( images/linkExternal.svg ) no-repeat 50% 50%;
+				-webkit-mask-size: contain;
+				mask-size: contain;
+			}
+
+			// Somehow this get overriden from content.links
+			&:hover,
+			&:visited:hover {
+				color: var( --color-link--hover );
+			}
+		}
+	}
+
+	.plainlinks a {
+		&.extiw,
+		&.external {
+			&:after {
+				content: none;
+			}
+		}
+	}
+}
+
+.mw-content-rtl {
+	.mw-parser-output {
+		a {
+			&.extiw,
+			&.external {
+				&:after {
+					transform: scaleX( -1 );
+				}
+			}
+		}
+	}
+}

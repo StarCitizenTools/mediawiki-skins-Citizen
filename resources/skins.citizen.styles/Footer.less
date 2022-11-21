@@ -1,7 +1,6 @@
 .citizen-footer {
-	padding-top: var( --space-xl );
-	padding-bottom: var( --space-xl );
-	margin-top: var( --space-xl );
+	padding: var( --space-xxl ) var( --padding-page );
+	margin-top: var( --space-xxl );
 	// Reserve space for header
 	margin-bottom: var( --header-size );
 	background-color: var( --color-surface-2 );
@@ -36,7 +35,7 @@
 		display: flex;
 		max-width: 90ch;
 		flex-direction: column;
-		gap: var( --space-sm );
+		gap: var( --space-xs );
 
 		p {
 			margin: 0;
@@ -46,7 +45,7 @@
 
 	a {
 		color: var( --color-base--emphasized );
-		font-weight: 500;
+		font-weight: var( --font-weight-medium );
 	}
 
 	ul {
@@ -79,7 +78,7 @@
 
 		a {
 			display: block;
-			padding: var( --space-sm ) var( --space-md );
+			padding: var( --space-xs ) var( --space-md );
 			border-radius: var( --border-radius--small );
 
 			&:hover {
@@ -93,14 +92,14 @@
 	}
 
 	&-tagline {
-		padding: @margin-side / 2 0;
+		padding: var( --space-xs ) 0;
 	}
 
 	&-icons {
 		display: flex;
 
 		ul {
-			gap: var( --space-sm );
+			gap: var( --space-xs );
 		}
 
 		li {

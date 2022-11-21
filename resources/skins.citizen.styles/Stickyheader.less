@@ -18,10 +18,8 @@
 	.mw-body-header {
 		position: sticky;
 		top: 0;
-		align-items: center;
 		padding-bottom: var( --space-md );
 		border-bottom: 1px solid var( --border-color-base );
-		background-color: var( --color-surface-0 );
 
 		.mw-indicators {
 			display: none;
@@ -33,7 +31,8 @@
 			right: ~'calc( var(--padding-page ) * -1 )';
 			left: ~'calc( var(--padding-page ) * -1 )';
 			height: 100%;
-			background-color: var( --color-surface-0 );
+			backdrop-filter: saturate( 50% ) blur( 16px );
+			background-color: var( --background-color-overlay );
 			content: '';
 		}
 	}
@@ -43,7 +42,8 @@
 	}
 
 	.firstHeading {
-		font-size: 1.25rem;
+		font-size: var( --font-size-h3 );
+		transition: font-size @transition-timing-fast ease;
 	}
 
 	.citizen-jumptotop {
@@ -53,7 +53,7 @@
 		bottom: 0;
 		left: 0;
 		border-radius: var( --border-radius--small );
-		margin: ~'calc( var( --space-sm ) * -1 )';
+		margin: ~'calc( var(  --space-xs ) * -1 )';
 
 		&:hover {
 			background-color: var( --background-color-quiet--hover );
@@ -65,6 +65,22 @@
 	}
 }
 
+// Hide sticky header on scroll down on smaller screens
+@media ( max-width: @width-breakpoint-tablet ) {
+	.citizen-body-header--sticky {
+		.mw-body-header {
+			transition: @transition-transform;
+		}
+
+		&.citizen-scroll--down {
+			.mw-body-header {
+				transform: translateY( -100% );
+			}
+		}
+	}
+}
+
+// Make sticky header more compact if there are less screen estate
 @media ( max-width: @width-breakpoint-tablet ), ( max-height: 800px ) {
 	.citizen-body-header--sticky {
 		#siteSub {
@@ -73,24 +89,6 @@
 
 		.page-actions {
 			display: none;
-		}
-	}
-}
-
-@media ( min-width: @width-breakpoint-desktop-wide ) {
-	.citizen-body-header--sticky {
-		.citizen-toc-enabled {
-			.page-actions {
-				transform: translateX( var( --width-toc ) );
-			}
-		}
-
-		.toc {
-			transform: translateY( 3rem );
-
-			@media ( max-height: 800px ) {
-				transform: translateY( 2rem ) !important; // Somehow need this idk why
-			}
 		}
 	}
 }

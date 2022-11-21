@@ -12,16 +12,17 @@
 		aria-labelledby="citizen-languages__buttonCheckbox"
 		aria-haspopup="true">
 	<aside id="citizen-languages__card" class="page-actions__card mw-checkbox-hack-target">
-		{{#data-languages}}{{>Menu}}{{/data-languages}}
-		{{#data-variants}}{{>Menu}}{{/data-variants}}
+		{{#data-portlets.data-languages}}{{>Menu}}{{/data-portlets.data-languages}}
+		{{#data-portlets.data-variants}}{{>Menu}}{{/data-portlets.data-variants}}
 	</aside>
 	<label
 		id="citizen-languages__buttonCheckbox" 
-		class="mw-checkbox-hack-button page-actions__button page-actions__button--icon" 
+		class="mw-checkbox-hack-button page-actions__button" 
 		for="citizen-languages__checkbox"
 		title="{{msg-citizen-languages-toggle}}"
 		aria-hidden="true"
 		data-counter-text="{{html-language-count}}">
+		<span class="citizen-ui-icon mw-ui-icon-wikimedia-textLanguage"></span>
 		<span>{{msg-citizen-languages-toggle}}</span>
 	</label>
 </div>

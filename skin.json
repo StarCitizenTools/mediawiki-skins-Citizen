@@ -12,7 +12,7 @@
 	"license-name": "GPL-3.0-or-later",
 	"type": "skin",
 	"requires": {
-		"MediaWiki": ">= 1.35.2"
+		"MediaWiki": ">= 1.39.0"
 	},
 	"ValidSkinNames": {
 		"citizen": {
@@ -21,6 +21,14 @@
 				{
 					"name": "citizen",
 					"responsive": true,
+					"menus": [
+						"user-menu",
+						"notifications",
+						"views",
+						"actions",
+						"variants",
+						"associated-pages"
+					],
 					"scripts": [
 						"skins.citizen.scripts"
 					],
@@ -28,26 +36,26 @@
 						"skins.citizen.styles",
 						"skins.citizen.styles.fonts",
 						"skins.citizen.icons",
-						"skins.citizen.icons.ca",
-						"skins.citizen.icons.es",
-						"skins.citizen.icons.n",
-						"skins.citizen.icons.t",
-						"skins.citizen.icons.pt",
-						"skins.citizen.icons.badges",
-						"skins.citizen.icons.sitestats"
+						"skins.citizen.icons.wmui"
 					],
 					"messages": [
 						"citizen-actions-more-toggle",
 						"citizen-drawer-toggle",
+						"citizen-jumptotop",
 						"citizen-languages-toggle",
-						"citizen-personalmenu-toggle",
+						"citizen-usermenu-toggle",
+						"citizen-search-toggle",
 						"randompage",
 						"search",
-						"sitetitle"
+						"sitetitle",
+						"toc"
 					]
 				}
 			]
 		}
+	},
+	"SkinLessImportPaths": {
+		"citizen": "resources/mediawiki.less"
 	},
 	"MessagesDirs": {
 		"Citizen": [
@@ -68,8 +76,12 @@
 		}
 	},
 	"Hooks": {
+		"BeforePageDisplay": "SkinHooks",
+		"SidebarBeforeOutput": "SkinHooks",
+		"SkinBuildSidebar": "SkinHooks",
+		"SkinEditSectionLinks": "SkinHooks",
 		"SkinPageReadyConfig": "SkinHooks",
-		"BeforePageDisplay": "SkinHooks"
+		"SkinTemplateNavigation::Universal": "SkinHooks"
 	},
 	"ResourceModules": {
 		"skins.citizen.styles": {
@@ -79,31 +91,15 @@
 				"mobile"
 			],
 			"features": {
-				"content-parser-output": false,
-				"content-body": false,
-				"logo": false,
-				"legacy": false,
+				"normalize": true,
+				"content-links": true,
+				"content-links-external": false,
+				"i18n-ordered-lists": true,
+				"i18n-headings": true,
 				"toc": false
 			},
 			"styles": [
 				"resources/skins.citizen.styles/skin.less"
-			]
-		},
-		"skins.citizen.styles.debug": {
-			"class": "ResourceLoaderSkinModule",
-			"targets": [
-				"desktop",
-				"mobile"
-			],
-			"features": {
-				"content-parser-output": false,
-				"content-body": false,
-				"logo": false,
-				"legacy": false,
-				"toc": false
-			},
-			"styles": [
-				"resources/skins.citizen.styles.debug/skins.citizen.styles.debug.less"
 			]
 		},
 		"skins.citizen.styles.fonts": {
@@ -113,10 +109,9 @@
 				"mobile"
 			],
 			"features": {
-				"content-parser-output": false,
+				"accessibility": false,
 				"content-body": false,
-				"logo": false,
-				"legacy": false,
+				"interface-core": false,
 				"toc": false
 			},
 			"styles": [
@@ -130,10 +125,9 @@
 				"mobile"
 			],
 			"features": {
-				"content-parser-output": false,
+				"accessibility": false,
 				"content-body": false,
-				"logo": false,
-				"legacy": false,
+				"interface-core": false,
 				"toc": false
 			},
 			"styles": [
@@ -147,10 +141,9 @@
 				"mobile"
 			],
 			"features": {
-				"content-parser-output": false,
+				"accessibility": false,
 				"content-body": false,
-				"logo": false,
-				"legacy": false,
+				"interface-core": false,
 				"toc": false
 			},
 			"styles": [
@@ -164,31 +157,13 @@
 				"mobile"
 			],
 			"features": {
-				"content-parser-output": false,
+				"accessibility": false,
 				"content-body": false,
-				"logo": false,
-				"legacy": false,
+				"interface-core": false,
 				"toc": false
 			},
 			"styles": [
 				"resources/skins.citizen.styles.sitestats/skins.citizen.styles.sitestats.less"
-			]
-		},
-		"skins.citizen.styles.toc": {
-			"class": "ResourceLoaderSkinModule",
-			"targets": [
-				"desktop",
-				"mobile"
-			],
-			"features": {
-				"content-parser-output": false,
-				"content-body": false,
-				"logo": false,
-				"legacy": false,
-				"toc": false
-			},
-			"styles": [
-				"resources/skins.citizen.styles.toc/skins.citizen.styles.toc.less"
 			]
 		},
 		"skins.citizen.scripts": {
@@ -203,6 +178,9 @@
 				"resources/skins.citizen.scripts/sectionObserver.js",
 				"resources/skins.citizen.scripts/search.js",
 				"resources/skins.citizen.scripts/tableOfContents.js"
+			],
+			"dependencies": [
+				"mediawiki.util"
 			],
 			"targets": [
 				"desktop",
@@ -294,215 +272,60 @@
 			"selector": "{name}",
 			"defaultColor": "#000",
 			"images": {
-				".toctogglelabel:before": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/toc-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/toc-rtl.svg"
-					}
-				},
-				".toctogglecheckbox:checked ~ .toctitle .toctogglelabel:before": "resources/skins.citizen.icons/shared/close.svg",
-				"#citizen-personalMenu__buttonCheckbox:after": "resources/skins.citizen.icons/shared/userAvatar.svg",
-				".citizen-search__icon:after": "resources/skins.citizen.icons/shared/search.svg",
-				".citizen-search__random:after": "resources/skins.citizen.icons/shared/random.svg",
-				"#citizen-languages__buttonCheckbox:after": "resources/skins.citizen.icons/shared/language.svg",
-				"#page-actions-more__buttonCheckbox:after": "resources/skins.citizen.icons/more.svg"
+				".citizen-toc__top:before": "resources/skins.citizen.icons/backToTop.svg",
+				"#ca-ve-edit > a:before": "resources/skins.citizen.icons/wmui/edit.svg"
 			}
 		},
-		"skins.citizen.icons.ca": {
-			"class": "ResourceLoaderImageModule",
-			"selector": "#ca-{name} > a:after",
-			"defaultColor": "#000",
-			"images": {
-				"view": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/article-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/article-rtl.svg"
-					}
-				},
-				"viewsource": "resources/skins.citizen.icons/shared/eye.svg",
-				"edit": "resources/skins.citizen.icons/shared/edit.svg",
-				"ve-edit + #ca-edit": "resources/skins.citizen.icons/shared/wikiText.svg",
-				"ve-edit": "resources/skins.citizen.icons/shared/edit.svg",
-				"history": "resources/skins.citizen.icons/shared/history.svg",
-				"delete": "resources/skins.citizen.icons/shared/delete.svg",
-				"move": "resources/skins.citizen.icons/shared/move.svg",
-				"protect": "resources/skins.citizen.icons/shared/lock.svg",
-				"unprotect": "resources/skins.citizen.icons/shared/unLock.svg",
-				"watch": "resources/skins.citizen.icons/shared/eye.svg",
-				"unwatch": "resources/skins.citizen.icons/shared/eyeClosed.svg",
-				"addsection": "resources/skins.citizen.icons/shared/add.svg",
-				"talk": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/speechBubbles-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/speechBubbles-rtl.svg"
-					}
-				},
-				"nstab-main": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/article-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/article-rtl.svg"
-					}
-				},
-				"nstab-user": "resources/skins.citizen.icons/shared/userAvatar.svg",
-				"translate": "resources/skins.citizen.icons/shared/language.svg"
-			}
-		},
-		"skins.citizen.icons.es": {
-			"class": "ResourceLoaderImageModule",
-			"selector": ".mw-editsection > a{name}:before",
-			"defaultColor": "#000",
-			"images": {
-				"": "resources/skins.citizen.icons/shared/edit.svg",
-				".mw-editsection-visualeditor + .mw-editsection-divider + a": "resources/skins.citizen.icons/shared/wikiText.svg"
-			}
-		},
-		"skins.citizen.icons.n": {
-			"class": "ResourceLoaderImageModule",
-			"selector": "#n-{name} > a:after",
-			"defaultColor": "#000",
-			"images": {
-				"mainpage-description": "resources/skins.citizen.icons/shared/home.svg",
-				"recentchanges": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/recentChanges-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/recentChanges-rtl.svg"
-					}
-				},
-				"randompage": "resources/skins.citizen.icons/shared/random.svg",
-				"help": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/help-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/help-rtl.svg"
-					}
-				}
-			}
-		},
-		"skins.citizen.icons.t": {
-			"class": "ResourceLoaderImageModule",
-			"selector": "#t-{name} > a:after",
-			"defaultColor": "#000",
-			"images": {
-				"whatlinkshere": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/articleRedirect-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/articleRedirect-rtl.svg"
-					}
-				},
-				"recentchangeslinked": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/recentChanges-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/recentChanges-rtl.svg"
-					}
-				},
-				"contributions": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/userContributions-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/userContributions-rtl.svg"
-					}
-				},
-				"log": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/journal-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/journal-rtl.svg"
-					}
-				},
-				"blockip": "resources/skins.citizen.icons/shared/block.svg",
-				"userrights": "resources/skins.citizen.icons/shared/userGroup.svg",
-				"upload": "resources/skins.citizen.icons/shared/upload.svg",
-				"specialpages": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/specialPages-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/specialPages-rtl.svg"
-					}
-				},
-				"print": "resources/skins.citizen.icons/shared/download.svg",
-				"permalink": "resources/skins.citizen.icons/shared/link.svg",
-				"info": "resources/skins.citizen.icons/shared/info.svg"
-			}
-		},
-		"skins.citizen.icons.pt": {
-			"class": "ResourceLoaderImageModule",
-			"selector": "#pt-{name} > a:after",
-			"defaultColor": "#000",
-			"images": {
-				"mytalk": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/userTalk-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/userTalk-rtl.svg"
-					}
-				},
-				"preferences": "resources/skins.citizen.icons/shared/settings.svg",
-				"betafeatures": "resources/skins.citizen.icons/shared/beta.svg",
-				"watchlist": "resources/skins.citizen.icons/shared/watchlist.svg",
-				"mycontris": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/userContributions-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/userContributions-rtl.svg"
-					}
-				},
-				"logout": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/logOut-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/logOut-rtl.svg"
-					}
-				},
-				"createaccount": "resources/skins.citizen.icons/shared/userAvatar.svg",
-				"login": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/logIn-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/logIn-rtl.svg"
-					}
-				},
-				"anontalk": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/userTalk-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/userTalk-rtl.svg"
-					}
-				},
-				"anoncontribs": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/userContributions-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/userContributions-rtl.svg"
-					}
-				}
-			}
-		},
-		"skins.citizen.icons.sections": {
-			"class": "ResourceLoaderImageModule",
-			"selector": ".section-indicator",
+		"skins.citizen.icons.wmui": {
+			"selectorWithoutVariant": ".mw-ui-icon-wikimedia-{name}:before",
 			"useDataURI": false,
-			"images": {
-				"collapse": "resources/skins.citizen.icons/shared/collapse.svg"
-			}
-		},
-		"skins.citizen.icons.sitestats": {
-			"class": "ResourceLoaderImageModule",
-			"selector": "#citizen-siteStats__item--{name}:before",
-			"useDataURI": false,
-			"images": {
-				"articles": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/article-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/article-rtl.svg"
-					}
-				},
-				"images": {
-					"file": {
-						"ltr": "resources/skins.citizen.icons/shared/folderPlaceholder-ltr.svg",
-						"rtl": "resources/skins.citizen.icons/shared/folderPlaceholder-rtl.svg"
-					}
-				},
-				"users": "resources/skins.citizen.icons/shared/userAvatar.svg",
-				"edits": "resources/skins.citizen.icons/shared/edit.svg"
-			}
-		},
-		"skins.citizen.icons.preferences": {
-			"class": "ResourceLoaderImageModule",
-			"selector": "#citizen-pref-{name}:after",
-			"useDataURI": false,
-			"images": {
-				"toggle": "resources/skins.citizen.icons/shared/settings.svg"
-			}
+			"defaultColor": "#000",
+			"class": "ResourceLoaderOOUIIconPackModule",
+			"icons": [
+				"article",
+				"articleRedirect",
+				"block",
+				"collapse",
+				"database",
+				"die",
+				"edit",
+				"editLock",
+				"ellipsis",
+				"history",
+				"home",
+				"image",
+				"imageGallery",
+				"infoFilled",
+				"labFlask",
+				"link",
+				"linkExternal",
+				"listBullet",
+				"lock",
+				"logIn",
+				"logOut",
+				"move",
+				"printer",
+				"recentChanges",
+				"reference",
+				"reload",
+				"sandbox",
+				"search",
+				"settings",
+				"speechBubbleAdd",
+				"speechBubbles",
+				"star",
+				"textLanguage",
+				"trash",
+				"unLock",
+				"unStar",
+				"userAdd",
+				"userAvatar",
+				"userContributions",
+				"userGroup",
+				"userTalk",
+				"watchlist",
+				"wikiText"
+			]
 		}
 	},
 	"ResourceFileModulePaths": {
@@ -548,7 +371,7 @@
 			"+ext.pygments": "skinStyles/extensions/SyntaxHighlight_GeSHi/ext.pygments.less",
 			"+ext.math.styles": "skinStyles/extensions/Math/ext.math.styles.less",
 			"+ext.MsUpload": "skinStyles/extensions/MsUpload/ext.MsUpload.less",
-			"+ext.relatedArticles.cards": "skinStyles/extensions/RelatedArticles/ext.relatedArticles.cards.less",
+			"+ext.relatedArticles.styles": "skinStyles/extensions/RelatedArticles/ext.relatedArticles.styles.less",
 			"+ext.relatedArticles.readMore": "skinStyles/extensions/RelatedArticles/ext.relatedArticles.readMore.less",
 			"+ext.RevisionSlider.lazyCss": "skinStyles/extensions/RevisionSlider/ext.RevisionSlider.lazyCss.less",
 			"+ext.RevisionSlider.init": "skinStyles/extensions/RevisionSlider/ext.RevisionSlider.init.less",
@@ -649,11 +472,13 @@
 			"+wikibase.mobile": "skinStyles/extensions/Wikibase/wikibase.mobile.less",
 			"+wikibase.view.ControllerViewFactory": "skinStyles/extensions/Wikibase/wikibase.view.ControllerViewFactory.less",
 			"+ext.wikiEditor": "skinStyles/extensions/WikiEditor/ext.wikiEditor.less",
+			"+ext.wikiEditor.realtimepreview": "skinStyles/extensions/WikiEditor/ext.wikiEditor.realtimepreview.less",
 			"+capiunto.infobox.main": "skinStyles/extensions/Capiunto/capiunto.infobox.main.less",
 			"mobile.init.styles": "skinStyles/extensions/MobileFrontend/mobile.init.styles.less",
 			"+mediawiki.action.edit.styles": "skinStyles/mediawiki/action/mediawiki.action.edit.styles.less",
 			"+mediawiki.action.history.styles": "skinStyles/mediawiki/action/mediawiki.action.history.styles.less",
 			"+mediawiki.action.view.filepage": "skinStyles/mediawiki/action/mediawiki.action.view.filepage.less",
+			"+mediawiki.debug": "skinStyles/mediawiki/debug/mediawiki.debug.less",
 			"+mediawiki.notification": "skinStyles/mediawiki/mediawiki.notification.less",
 			"+mediawiki.pager.tablePager": "skinStyles/mediawiki/mediawiki.pager.tablePager.less",
 			"mediawiki.skinning.content.parsoid": [],
@@ -695,18 +520,6 @@
 			"value": "#131a21",
 			"description": "The theme color defined in the meta tag",
 			"descriptionmsg": "citizen-config-themecolor",
-			"public": true
-		},
-		"EnablePreconnect": {
-			"value": false,
-			"description": "Enable or disable preconnect to required origin",
-			"descriptionmsg": "citizen-config-enablepreconnect",
-			"public": true
-		},
-		"PreconnectURL": {
-			"value": "",
-			"description": "The URL for preconnect to required origin",
-			"descriptionmsg": "citizen-config-preconnectorigin",
 			"public": true
 		},
 		"EnableManifest": {
@@ -757,10 +570,10 @@
 			"descriptionmsg": "citizen-config-showpagetools",
 			"public": true
 		},
-		"SiteToolsPortlet": {
+		"GlobalToolsPortlet": {
 			"value": "",
-			"description": "ID of the portlet to attach the site tools",
-			"descriptionmsg": "citizen-config-sitetoolsportlet",
+			"description": "ID of the portlet to attach the global tools",
+			"descriptionmsg": "citizen-config-globaltoolsportlet",
 			"public": true
 		},
 		"EnableCollapsibleSections": {

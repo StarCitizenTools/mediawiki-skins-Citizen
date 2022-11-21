@@ -1,27 +1,30 @@
 # Citizen
-[![](https://img.shields.io/github/contributors/StarCitizenTools/mediawiki-skins-Citizen?style=for-the-badge)](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/graphs/contributors) ![](https://img.shields.io/github/workflow/status/StarCitizenTools/mediawiki-skins-Citizen/MediaWiki%20CI?label=MediaWiki%20CI&style=for-the-badge) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=for-the-badge&logo=appveyor)](https://www.gnu.org/licenses/gpl-3.0) [![MediaWiki: >=1.35.2](https://img.shields.io/badge/MediaWiki-%3E%3D1.35.2-%2336c?style=for-the-badge&logo=appveyor)](https://www.mediawiki.org)[![](https://img.shields.io/badge/translations-translatewiki-%23013467?style=for-the-badge&logo=appveyor)](https://translatewiki.net/w/i.php?title=Special:Translate&group=mwgithub-star-citizen)
+[![](https://img.shields.io/github/contributors/StarCitizenTools/mediawiki-skins-Citizen?style=flat-square&logo=github)](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/graphs/contributors) ![](https://img.shields.io/github/workflow/status/StarCitizenTools/mediawiki-skins-Citizen/MediaWiki%20CI?label=MediaWiki%20CI&style=flat-square&logo=GithubActions) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat-square&logo=GNU)](https://www.gnu.org/licenses/gpl-3.0) [![MediaWiki: >=1.39.0](https://img.shields.io/badge/MediaWiki-%3E%3D1.39.0-%2336c?style=flat-square&logo=Wikipedia)](https://www.mediawiki.org) [![](https://img.shields.io/badge/translations-translatewiki-%23013467?style=flat-square&logo=GoogleTranslate)](https://translatewiki.net/w/i.php?title=Special:Translate&group=mwgithub-star-citizen)
 
-Citizen is a responsive skin for [MediaWiki](https://www.mediawiki.org) built by the [Star Citizen Wiki](https://starcitizen.tools) team. Although it is specifically built for the Star Citizen Wiki, the skin is designed to be flexible to run on any Mediawiki installation that is **1.35.2 or higher**. Due to resource constraints, we might not be able to provide full support for setups that are vastly different than us, but please feel free to submit patches or bug report!
+Citizen is a beautiful, usable, responsive [MediaWiki](https://www.mediawiki.org) skin that makes [extensions](https://www.mediawiki.org/wiki/Manual:Extensions) part of the cohesive experience. It was initially created for the [Star Citizen Wiki](https://starcitizen.tools) but is flexible to run on various MediaWiki configurations.
 
-Live demo can be seen at the [Star Citizen Wiki](https://starcitizen.tools), more avaliable [here](https://wikiapiary.com/wiki/Skin:Citizen).
+Live demo: [English](https://starcitizen.tools), [German](https://star-citizen.wiki), [Chinese](https://sctoolszh.miraheze.org)
 
-If you are looking for the old design, [click here](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v1.17.9) for the the last 1.X release.
+For the old design, [click here](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v1.17.9) for the last release.
 
 ## Notable features
-- **Fully responsive skin**: Responsive and able to adapt to different screen sizes. 📱💻🖥️
-- **Light/dark mode support**: Switch between light and dark mode. ***Require JS*** ☀️🌙
-- **Adjustable font size and page width**: Read the article the way you wanted. ***Require JS*** 👀📃
-- **Collapsible sections**: Collapse and expand article sections. ***Require JS*** 📖📕
-- **Persistent ToC**: Access ToC anywhere in the article. ***Tracking require JS*** 🔍📖
-- **Rich search suggestions**: More helpful search suggestions with images and descriptions. ***Require JS*** 🔍👀
-- **Webapp manifest**: Give a more app-like experience when user add your wiki to their home screen. 📱
+- **Responsive layout**: Responsive and able to adapt to different screen sizes. 📱💻🖥️
+- **Light/dark mode**: Switch between light and dark mode. ☀️🌙
+- **Cohesive extension styles**: Supported extensions blend with the rest of the UI. 🤝🔗
+- **Reading preferences**: Adjust page width, font size, and line height. 👀📃
+- **Collapsible sections**: Collapse and expand article sections. 📖📕
+- **Persistent ToC**: Access ToC anywhere in the article. 🔍📖
+- **Rich search suggestions**: More helpful search suggestions with images and descriptions. 🔍👀
+- **Progressive Web App**: Give a more app-like experience when user add your wiki to their home screen. 📱
 
-## SkinStyles
-Citizen includes numerous skinStyles that applies custom styling to extensions and core libraries. Please feel free to submit PRs if you want to add support for more extensions! Unless the extension has never supported the current minimum required MediaWiki version of the skin, the skinStyles are based on the latest version of the said MW release branch (e.g. `REL1_35` for MediaWiki 1.35).
+## Extension styles
+Citizen overrides some extension styles through skinStyles that applies custom styling to extensions and core libraries.
 
 - **Grade A - Overhaul** - Major adjustments to UI, plus Grade B.
 - **Grade B - Dynamic** - Colors are converted into CSS variables, little to none style adjustments.
 - **Grade E - Legacy** - Dark mode colors are hardcored as LESS variables. These should be updated to at least Grade B support.
+
+Please feel free to submit PRs if you want to add support for more extensions!
 
 ### Core
 Name | Grade | Version | Last updated
@@ -58,7 +61,7 @@ Name | Grade | Version | Last updated
 [OAuth](https://www.mediawiki.org/wiki/Extension:OAuth) | B | REL1_35 `451ed95` | 2021-08-31
 [Popups](https://www.mediawiki.org/wiki/Extension:Popups) | A | REL1_35 `dccd607` | 2021-09-02
 [PortableInfobox](https://www.mediawiki.org/wiki/Extension:PortableInfobox) | B | 0.6 `16a77dc` | 2022-04-14
-[RelatedArticles](https://www.mediawiki.org/wiki/Extension:RelatedArticles) | A | REL1_35 `0f27333` | 2021-08-31
+[RelatedArticles](https://www.mediawiki.org/wiki/Extension:RelatedArticles) | A | REL1_39 `f513e5c` | 2022-11-16
 [RevisionSlider](https://www.mediawiki.org/wiki/Extension:RevisionSlider) | B | REL1_35 `4c4e368` | 2022-06-02
 [Semantic MediaWiki](https://www.mediawiki.org/wiki/Extension:Semantic_MediaWiki) | A | 4.0.2 `0fcdfce` | 2022-10-21
 [Semantic Result Formats](https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats) | E | N/A | N/A
@@ -72,7 +75,7 @@ Name | Grade | Version | Last updated
 [UploadWizard](https://www.mediawiki.org/wiki/Extension:UploadWizard) | A | N/A | N/A
 [VisualEditor](https://www.mediawiki.org/wiki/Extension:VisualEditor) | A | REL1_35 `cc3466a` | 2021-08-04
 [Wikibase](https://www.mediawiki.org/wiki/Extension:Wikibase) | B | REL1_35 `7bb503b` | 2022-05-11
-[WikiEditor](https://www.mediawiki.org/wiki/Extension:WikiEditor) | B | REL1_35 `e18315e` | 2021-08-11
+[WikiEditor](https://www.mediawiki.org/wiki/Extension:WikiEditor) | A | REL1_39 `02e1c70` | 2022-11-08
 [WSSearchFront](https://www.mediawiki.org/wiki/Extension:WSSearchFront) | B | 3.5.4 `c27ebcb5` | 2021-11-23
 
 Some of the field are tagged as N/A because the information was not tracked before.
@@ -80,7 +83,7 @@ If you are interested in adding skinstyles, please check out [this page on the w
 
 ## Installation
 1. [Download](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/archive/main.zip) place the file(s) in a directory called `Citizen` in your `skins/` folder.
-2. Add the following code at the bottom of your LocalSettings.php:
+2. Add the following code at the bottom of your LocalSettings.php and **after all other extensions**:
 ```php
 wfLoadSkin( 'Citizen' );
 ```
@@ -97,7 +100,7 @@ Name | Description | Values | Default
 `$wgCitizenThemeDefault` | The default theme of the skin | `auto` - switch between light and dark according to OS/browser settings; `light`; `dark` | `auto`
 `$wgCitizenEnableCollapsibleSections` | Enables or disable collapsible sections on content pages | `true` - enable; `false` - disable | `true`
 `$wgCitizenShowPageTools` | The condition of page tools visibility | `true` - always visible; `login` - visible to logged-in users; `permission` - visible to users with the right permissions | `true`
-`$wgCitizenSiteToolsPortlet` | ID of the portlet to attach the site tools | string |
+`$wgCitizenGlobalToolsPortlet` | ID of the portlet to attach the global tools | string |
 `$wgCitizenEnableDrawerSiteStats` | Enables the site statistics in drawer menu | `true` - enable; `false` - disable | `true`
 `$wgCitizenUseNumberFormatter` | Use NumberFormatter for site statistics, which allows formatting number in a localized way | `true` - enable; `false` - disable | `true`
 `$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#131a21`
@@ -121,11 +124,9 @@ Name | Description | Values | Default
 ### Miscellaneous
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
-`$wgCitizenEnablePreconnect` | Enable or disable [preconnect to required origin](https://web.dev/uses-rel-preconnect/) | `true` - enable; `false` - disable | `false`
-`$wgCitizenPreconnectURL` | The URL for preconnect to required origin | URL |
 `$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#11151d`
 
 ## Requirements
-* [MediaWiki](https://www.mediawiki.org) 1.35.2 or later
+* [MediaWiki](https://www.mediawiki.org) 1.39.0 or later
 * For the legacy versions, check the other release branches.
 

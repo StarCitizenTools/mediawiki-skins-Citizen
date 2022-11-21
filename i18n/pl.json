@@ -9,7 +9,7 @@
 	"citizen.css": "/* Umieszczony tutaj kod CSS zostanie załadowany przez użytkowników korzystających ze skórki Citizen */",
 	"citizen.js": "/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Citizen */",
 	"citizen-drawer-toggle": "Przełącz menu",
-	"citizen-personalmenu-toggle": "Przełącz menu użytkownika",
+	"citizen-usermenu-toggle": "Przełącz menu użytkownika",
 	"citizen-search-toggle": "Przełącz wyszukiwanie",
 	"citizen-sitestats-articles-label": "artykułów",
 	"citizen-sitestats-images-label": "plików",
