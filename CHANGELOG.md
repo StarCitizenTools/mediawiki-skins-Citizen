@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.0.0...v2.0.1) (2022-11-22)
+
+
+### Features
+
+* **core:** ✨ reduce space between page header and tools ([ead296c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ead296c46d56b4e9221cb15e317f703183cf022b))
+
+
+### Bug Fixes
+
+* **core:** 🐛 missing page tool background styles ([53cfa87](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/53cfa8714e3787acdaee3bd92a387bee67439e11))
+* **core:** incorrect letter case in file name ([71a7945](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/71a7945a7113fe08ddfe31b299aa6a57ac740e88))
+
 ## [2.0.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.0.0-beta.4...v2.0.0) (2022-11-21)
 
 
