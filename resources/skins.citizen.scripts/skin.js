@@ -74,7 +74,7 @@ function initStickyHeader( document ) {
 			document.body.classList.remove( 'citizen-scroll--down' );
 			document.body.classList.add( 'citizen-scroll--up' );
 		},
-		100
+		10
 	);
 
 	const sentinel = document.getElementById( 'citizen-body-header-sticky-sentinel' );
