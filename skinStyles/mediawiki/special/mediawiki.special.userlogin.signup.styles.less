@@ -1,0 +1,106 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for MediaWiki
+ * Module: mediawiki.special.userlogin.signup.styles
+ * Version: REL1_39
+ *
+ * Date: 2022-11-23
+*/
+
+@import '../../resources/variables.less';
+
+.mw-ui-container {
+	display: flex;
+	// Show benefits first
+	flex-direction: column-reverse;
+
+	// No need for float clear since we are using flex
+	&:after {
+		content: none;
+	}
+}
+
+.mw-createacct-benefits {
+	&-container {
+		padding-bottom: var( --space-lg );
+		border-bottom: 1px solid var( --border-color-base );
+
+		h2 {
+			margin: 0;
+			font-size: 1rem;
+			font-weight: var( --font-weight-semibold );
+		}
+	}
+
+	&-list {
+		display: flex;
+		flex-wrap: wrap;
+		margin-top: var( --space-lg );
+		gap: var( --space-lg );
+
+		.mw-number-text {
+			min-height: auto;
+			padding-left: 3rem;
+			margin: 0;
+			background-size: 2.5rem;
+			color: var( --color-base--subtle );
+			font-size: 0.8125rem;
+			line-height: var( --line-height-xs );
+			text-align: start;
+
+			h3 {
+				color: var( --color-base--emphasized );
+				font-family: var( --font-family-base );
+				font-size: 1.125rem;
+				font-weight: var( --font-weight-semibold );
+				line-height: 1;
+				text-align: start;
+			}
+
+			p {
+				margin: var( --space-xxs ) 0 0 0;
+			}
+		}
+	}
+}
+
+.mw-ui-container #userloginForm {
+	margin-right: 0;
+}
+
+@media ( min-width: @width-breakpoint-tablet ) {
+	.mw-ui-container {
+		flex-direction: row;
+	}
+
+	.mw-createacct-benefits {
+		&-container {
+			padding-top: var( --space-md );
+			padding-bottom: 0;
+			padding-left: var( --space-xl );
+			border-bottom: 0;
+			border-left: 1px solid var( --border-color-base );
+			margin-left: var( --space-xl );
+
+			h2 {
+				max-width: 20rem;
+				font-size: var( --font-size-h1 );
+			}
+		}
+
+		&-list {
+			flex-direction: column;
+			margin-top: var( --space-xxl );
+
+			.mw-number-text {
+				padding-left: 5rem;
+				background-size: 4rem;
+
+				h3 {
+					font-size: var( --font-size-h1 );
+				}
+			}
+		}
+	}
+}

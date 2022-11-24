@@ -1,0 +1,21 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for MediaWiki
+ * Module: mediawiki.ui
+ * Version: REL1_39
+ *
+ * Date: 2022-11-23
+*/
+
+/* form.less */
+.mw-ui-vform-field,
+.mw-ui-vform .htmlform-tip {
+	margin: 0 0 var( --space-md );
+}
+
+// Tip message after input field should have reduced spacing
+// See Special:CreateAccount
+.mw-ui-vform-field + .htmlform-tip {
+	margin-top: ~'calc( var( --space-xs ) * -1 )';
+}
