@@ -15,7 +15,7 @@
 	"citizen.css": "/* Das folgende CSS wird für Benutzer des Citizen-Skins geladen */",
 	"citizen.js": "/* Das folgende JavaScript wird für Benutzer des Citizen-Skins geladen */",
 	"citizen-drawer-toggle": "Menü umschalten",
-	"citizen-personalmenu-toggle": "Persönliches Menü umschalten",
+	"citizen-usermenu-toggle": "Persönliches Menü umschalten",
 	"citizen-search-toggle": "Suche umschalten",
 	"citizen-languages-toggle": "Weitere Sprachen",
 	"citizen-actions-more-toggle": "Weitere Aktionen",

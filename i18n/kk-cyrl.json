@@ -12,7 +12,7 @@
 	"citizen.js": "/* Мұндағы барлық JavaScript Citizen мұқабасы бар қатысушыларға жүктеледі */",
 	"citizen-drawer-toggle": "Мәзірді ашу",
 	"citizen-usermenu-toggle": "Жеке мәзірді ашу",
-	"citizen-search-toggle": "Іздеуді ашу",
+	"citizen-search-toggle": "Іздеу",
 	"citizen-languages-toggle": "Басқа тілдер",
 	"citizen-actions-more-toggle": "Басқа әрекеттер",
 	"citizen-sitestats-articles-label": "мақала",
