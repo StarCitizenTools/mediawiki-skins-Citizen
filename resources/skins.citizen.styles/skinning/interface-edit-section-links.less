@@ -23,7 +23,16 @@
 	// Fallback text button if extensions register those
 	a {
 		padding: var( --space-xxs );
+		border-radius: var( --border-radius--small );
 		font-size: 0.875rem;
+
+		&:hover {
+			background-color: var( --background-color-quiet--hover );
+		}
+
+		&:active {
+			background-color: var( --background-color-quiet--hover );
+		}
 	}
 }
 
