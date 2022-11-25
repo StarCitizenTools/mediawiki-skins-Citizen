@@ -12,12 +12,18 @@
 					transform: rotate3d( 1, 0, 0, 180deg );
 				}
 
-				.mw-headline {
+				.mw-headline,
+				/* T13555 */
+				.mw-heading h1,
+				.mw-heading h2 {
 					opacity: var( --opacity-icon-base );
 				}
 			}
 
-			.mw-headline {
+			.mw-headline,
+			/* T13555 */
+			.mw-heading h1,
+			.mw-heading h2 {
 				transition: @transition-opacity;
 
 				&:hover {

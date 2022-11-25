@@ -56,7 +56,8 @@ function initToC() {
 	const initSectionObserver = require( './sectionObserver.js' ).init;
 
 	const sectionObserver = initSectionObserver( {
-		elements: bodyContent.querySelectorAll( '.mw-headline' ),
+		/* T13555 */
+		elements: bodyContent.querySelectorAll( '.mw-headline' ) ?? bodyContent.querySelectorAll( '.mw-heading' ),
 		topMargin: getTopMargin(),
 		onIntersection: ( section ) => { changeActiveSection( section.id ); }
 	} );
