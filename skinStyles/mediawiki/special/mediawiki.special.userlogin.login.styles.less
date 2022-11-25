@@ -7,6 +7,43 @@
  *
  * Date: 2022-11-23
 */
+#userloginForm {
+	> .mw-htmlform > div {
+		// Allow to reorder the form through CSS
+		display: flex;
+		flex-direction: column;
+	}
+
+	// Username field
+	.loginText {
+		order: -3;
+	}
+
+	// Password field
+	.loginPassword {
+		order: -2;
+	}
+
+	// Forgot password field
+	// HACK: Move to the bottom of the password field
+	.mw-userlogin-help + .mw-form-related-link-container {
+		order: -1;
+		margin-top: ~'calc( var(--space-sm) * -1 )';
+		font-size: 0.875rem;
+		text-align: end;
+	}
+
+	.mw-userlogin-rememberme {
+		font-size: 0.875rem;
+	}
+}
+
+#mw-createaccount-cta {
+	width: auto; // should align to the rest of the form
+	border-top: 1px solid var( --border-color-base );
+	margin-top: var( --space-md );
+	color: var( --color-base--emphasized );
+}
 
 #mw-createaccount-join {
 	background-color: var( --color-surface-2 );
