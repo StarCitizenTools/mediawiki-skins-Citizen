@@ -98,6 +98,29 @@
 	}
 }
 
+.citizen-sticky-header( @topOffset: 0, @bottomBorder: true ) {
+	position: sticky;
+	z-index: @z-index-page-header;
+	top: @topOffset;
+
+	& when ( @bottomBorder ) {
+		border-bottom: 1px solid var( --border-color-base );
+	}
+
+	// HACK: Hide overflow
+	// This has an issue if parent has overflow set
+	&:before {
+		position: absolute;
+		z-index: -1;
+		right: ~'calc( var(--padding-page ) * -1 )';
+		left: ~'calc( var(--padding-page ) * -1 )';
+		height: 100%;
+		backdrop-filter: saturate( 50% ) blur( 16px );
+		background-color: var( --background-color-overlay );
+		content: '';
+	}
+}
+
 // To hide objects, but keep them accessible for screen-readers
 .hidden() {
 	position: absolute;

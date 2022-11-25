@@ -16,24 +16,11 @@
 
 .citizen-body-header--sticky {
 	.mw-body-header {
-		position: sticky;
-		top: 0;
 		padding-bottom: var( --space-md );
-		border-bottom: 1px solid var( --border-color-base );
+		.citizen-sticky-header;
 
 		.mw-indicators {
 			display: none;
-		}
-
-		// HACK: Hide overflow
-		&:before {
-			position: absolute;
-			right: ~'calc( var(--padding-page ) * -1 )';
-			left: ~'calc( var(--padding-page ) * -1 )';
-			height: 100%;
-			backdrop-filter: saturate( 50% ) blur( 16px );
-			background-color: var( --background-color-overlay );
-			content: '';
 		}
 	}
 

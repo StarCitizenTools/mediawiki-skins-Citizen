@@ -8,6 +8,9 @@
  * Date: 2022-10-20
 */
 
+@import '../../../resources/mixins.less';
+@import '../../../resources/variables.less';
+
 // Disable sticky header since it collides with anchor and adds no value
 #citizen-body-header-sticky-sentinel {
 	display: none;
@@ -172,9 +175,8 @@
 
 // Sticky header
 .smwb-datasheet > .smwb-factbox:first-child {
-	position: sticky;
-	top: 0;
 	padding: var( --space-md ) 0;
 	border-bottom: 1px solid var( --border-color-base );
-	background: var( --color-surface-0 );
+	background: transparent;
+	.citizen-sticky-header;
 }

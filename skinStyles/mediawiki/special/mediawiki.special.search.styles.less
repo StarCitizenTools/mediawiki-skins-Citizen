@@ -8,6 +8,7 @@
  * Date: 2022-10-20
 */
 
+@import '../../../resources/mixins.less';
 @import '../../../resources/variables.less';
 
 // Disable default sticky header
@@ -17,12 +18,10 @@
 
 // Sticky header
 .mw-search-form-wrapper {
-	position: sticky;
-	top: 0;
 	padding-top: var( --space-md );
-	border-bottom: 1px solid var( --border-color-base );
 	margin-top: ~'calc( var( --space-md ) * -1 )'; // counteract padding
-	background-color: var( --color-surface-0 );
+	background-color: transparent;
+	.citizen-sticky-header;
 
 	// Wrapper has a border bottom already
 	.mw-search-profile-tabs:last-child {

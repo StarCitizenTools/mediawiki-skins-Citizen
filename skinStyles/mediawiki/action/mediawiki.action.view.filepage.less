@@ -8,6 +8,7 @@
  * Date: 2022-10-28
 */
 
+@import '../../../resources/mixins.less';
 @import '../../../resources/variables.less';
 
 // Custom sticky header handling
@@ -16,16 +17,14 @@
 }
 
 #filetoc {
-	position: sticky;
-	z-index: @z-index-page-header;
-	top: 0;
 	display: flex;
 	padding: 0;
 	border: 0;
-	border-bottom: 1px solid var( --border-color-base );
 	margin: 0;
-	background-color: var( --color-surface-0 );
+	background-color: transparent; // sticky header will handle background
 	font-weight: var( --font-weight-medium );
+	white-space: nowrap;
+	.citizen-sticky-header;
 
 	li {
 		padding-right: 0;

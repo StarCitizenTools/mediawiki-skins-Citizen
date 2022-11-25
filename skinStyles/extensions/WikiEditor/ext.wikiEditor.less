@@ -8,6 +8,8 @@
  * Date: 2022-11-08
 */
 
+@import '../../../resources/mixins.less';
+
 /* jquery.wikiEditor.less */
 .wikiEditor-ui {
 	.wikiEditor-ui-view {
@@ -16,10 +18,7 @@
 
 	// Make into sticky header
 	.wikiEditor-ui-top {
-		position: sticky;
-		z-index: 1;
-		top: 0;
-		border-bottom-color: var( --border-color-base );
+		.citizen-sticky-header;
 	}
 
 	.wikiEditor-ui-right {

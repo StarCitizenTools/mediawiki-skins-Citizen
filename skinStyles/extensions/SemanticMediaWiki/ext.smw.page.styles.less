@@ -8,6 +8,8 @@
  * Date: 2022-10-20
 */
 
+@import '../../../resources/mixins.less';
+
 // Disable sticky header since it collides with anchor and adds no value
 #citizen-body-header-sticky-sentinel {
 	display: none;
@@ -20,9 +22,8 @@
 }
 
 .smw-property-page-results .header-row {
-	position: sticky;
-	top: 0;
-	background-color: var( --color-surface-0 );
+	background-color: transparent;
+	.citizen-sticky-header( 0, false );
 }
 
 .smw-property-page-results .value-row:hover {
