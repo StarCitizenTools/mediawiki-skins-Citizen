@@ -31,6 +31,7 @@ use DOMXpath;
 use Html;
 use HtmlFormatter\HtmlFormatter;
 use MediaWiki\MediaWikiServices;
+use Wikimedia\Parsoid\Utils\DOMCompat;
 use Wikimedia\Services\NoSuchServiceException;
 
 final class BodyContent extends Partial {
@@ -206,7 +207,7 @@ final class BodyContent extends Partial {
 		$headings = [];
 
 		foreach ( $this->topHeadingTags as $tagName ) {
-			$allTags = $doc->getElementsByTagName( $tagName );
+			$allTags = DOMCompat::querySelectorAll( $doc, $tagName );
 
 			foreach ( $allTags as $el ) {
 				if ( $el->parentNode->getAttribute( 'class' ) !== 'toctitle' ) {
@@ -251,7 +252,7 @@ final class BodyContent extends Partial {
 		$found = false;
 		$subheadings = [];
 		foreach ( $this->topHeadingTags as $tagName ) {
-			$allTags = $doc->getElementsByTagName( $tagName );
+			$allTags = DOMCompat::querySelectorAll( $doc, $tagName );
 			$elements = [];
 			foreach ( $allTags as $el ) {
 				if ( $el->parentNode->getAttribute( 'class' ) !== 'toctitle' ) {
