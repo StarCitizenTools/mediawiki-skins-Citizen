@@ -27,6 +27,7 @@ namespace MediaWiki\Skins\Citizen\Partials;
 
 use DOMDocument;
 use DOMElement;
+use DOMNode;
 use DOMXpath;
 use Html;
 use HtmlFormatter\HtmlFormatter;
@@ -107,14 +108,36 @@ final class BodyContent extends Partial {
 	}
 
 	/**
+	 * @param DOMNode|null $node
+	 * @return string|false Heading tag name if the node is a heading
+	 */
+	private function getHeadingName( $node ) {
+		if ( !( $node instanceof DOMElement ) ) {
+			return false;
+		}
+		// We accept both kinds of nodes that can be returned by getTopHeadings():
+		// a `<h1>` to `<h6>` node, or a `<div class="mw-heading">` node wrapping it.
+		// In the future `<div class="mw-heading">` will be required (T13555).
+		if ( DOMCompat::getClassList( $node )->contains( 'mw-heading' ) ) {
+			$node = DOMCompat::querySelector( $node, implode( ',', $this->topHeadingTags ) );
+			if ( !( $node instanceof DOMElement ) ) {
+				return false;
+			}
+		}
+		return $node->tagName;
+	}
+
+	/**
 	 * Actually splits splits the body of the document into sections
 	 *
 	 * @param DOMDocument $doc representing the HTML of the current article. In the HTML the sections
 	 *  should not be wrapped.
-	 * @param DOMElement[] $headings The headings returned by
+	 * @param DOMElement[] $headingWrappers The headings (or wrappers) returned by getTopHeadings():
+	 *  `<h1>` to `<h6>` nodes, or `<div class="mw-heading">` nodes wrapping them.
+	 *  In the future `<div class="mw-heading">` will be required (T13555).
 	 * @return DOMDocument
 	 */
-	private function makeSections( DOMDocument $doc, array $headings ) {
+	private function makeSections( DOMDocument $doc, array $headingWrappers ) {
 		$xpath = new DOMXpath( $doc );
 		$containers = $xpath->query( 'body/div[@class="mw-parser-output"][1]' );
 
@@ -126,8 +149,8 @@ final class BodyContent extends Partial {
 		$container = $containers->item( 0 );
 
 		$containerChild = $container->firstChild;
-		$firstHeading = reset( $headings );
-		$firstHeadingName = $firstHeading->nodeName ?? false;
+		$firstHeading = reset( $headingWrappers );
+		$firstHeadingName = $this->getHeadingName( $firstHeading );
 		$sectionNumber = 0;
 		$sectionBody = $this->createSectionBodyElement( $doc, $sectionNumber );
 
@@ -137,10 +160,7 @@ final class BodyContent extends Partial {
 
 			// If we've found a top level heading, insert the previous section if
 			// necessary and clear the container div.
-			// Note well the use of DOMNode#nodeName here. Only DOMElement defines
-			// DOMElement#tagName.  So, if there's trailing text - represented by
-			// DOMText - then accessing #tagName will trigger an error.
-			if ( $node->nodeName === $firstHeadingName ) {
+			if ( $firstHeadingName && $this->getHeadingName( $node ) === $firstHeadingName ) {
 				// The heading we are transforming is always 1 section ahead of the
 				// section we are currently processing
 				/** @phan-suppress-next-line PhanTypeMismatchArgument DOMNode vs. DOMElement */
@@ -210,7 +230,17 @@ final class BodyContent extends Partial {
 			$allTags = DOMCompat::querySelectorAll( $doc, $tagName );
 
 			foreach ( $allTags as $el ) {
-				if ( $el->parentNode->getAttribute( 'class' ) !== 'toctitle' ) {
+				$parent = $el->parentNode;
+				if ( !( $parent instanceof DOMElement ) ) {
+					continue;
+				}
+				// Use the `<div class="mw-heading">` wrapper if it is present. When they are required
+				// (T13555), the querySelectorAll() above can use the class and this can be removed.
+				if ( DOMCompat::getClassList( $parent )->contains( 'mw-heading' ) ) {
+					$el = $parent;
+				}
+				// This check can be removed too when we require the wrappers.
+				if ( $parent->getAttribute( 'class' ) !== 'toctitle' ) {
 					$headings[] = $el;
 				}
 			}
