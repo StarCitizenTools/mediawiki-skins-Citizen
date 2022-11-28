@@ -3,6 +3,7 @@
 		"authors": [
 			"FF-11",
 			"Gebu",
+			"Justman10000",
 			"ThisCarthing",
 			"Wolfdietmann",
 			"Z0mbiel0ne",
@@ -11,7 +12,7 @@
 		]
 	},
 	"skinname-citizen": "Citizen",
-	"citizen-skin-desc": "Ein responsive Skin entwickelt für das Star Citizen Wiki",
+	"citizen-skin-desc": "Ein wunderschöner, benutzerfreundlicher, reaktionsfähiger MediaWiki-Skin, der Erweiterungen zu einem Teil des kohärenten Erlebnisses macht. Ursprünglich wurde es für das [https://starcitizen.tools/ Star Citizen Wiki] erstellt.",
 	"citizen.css": "/* Das folgende CSS wird für Benutzer des Citizen-Skins geladen */",
 	"citizen.js": "/* Das folgende JavaScript wird für Benutzer des Citizen-Skins geladen */",
 	"citizen-drawer-toggle": "Menü umschalten",
