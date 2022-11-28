@@ -382,11 +382,6 @@ class SkinCitizen extends SkinMustache {
 			$options['styles'][] = 'skins.citizen.styles.sitestats';
 		}
 
-		// Drawer subsearch
-		if ( $this->getConfigValue( 'CitizenEnableDrawerSubSearch' ) === true ) {
-			$options['scripts'][] = 'skins.citizen.scripts.drawer';
-		}
-
 		// Debug styles
 		if (
 			$this->getConfigValue( 'ShowDebug' ) === true
