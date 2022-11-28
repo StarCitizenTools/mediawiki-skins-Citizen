@@ -187,11 +187,6 @@
 				"mobile"
 			]
 		},
-		"skins.citizen.scripts.drawer": {
-			"scripts": [
-				"resources/skins.citizen.scripts.drawer/skins.citizen.scripts.drawer.js"
-			]
-		},
 		"skins.citizen.scripts.sections": {
 			"scripts": [
 				"resources/skins.citizen.scripts.sections/skins.citizen.scripts.sections.js"
