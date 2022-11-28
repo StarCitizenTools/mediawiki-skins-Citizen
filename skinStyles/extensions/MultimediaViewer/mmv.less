@@ -613,6 +613,31 @@
 		box-shadow: none; // We already have top border
 		color: var( --color-base );
 	}
+
+	// Add scroll up affordance
+	// On touch device, when user drag/swipe the indicator, it will cause the
+	// page to scroll up and show the card below.
+	@media ( hover: none ) {
+		&:before {
+			position: absolute;
+			top: var( --space-xs );
+			right: 0;
+			left: 0;
+			width: 80px;
+			height: 4px;
+			border-radius: var( --border-radius--pill );
+			margin: 0 auto;
+			background-color: ~'rgba( 255, 255, 255, var( --opacity-icon-base ) )';
+			content: '';
+		}
+
+		&.mw-mmv-untruncated {
+			// Since background color is dependent on theme now
+			&:before {
+				background-color: var( --background-color-quiet--hover );
+			}
+		}
+	}
 }
 
 .mw-mmv-above-fold {
@@ -620,19 +645,4 @@
 	height: auto; // avoid layout shift when scroll up
 	padding-bottom: 0; // let metadata handle the padding
 	gap: var( --space-xs );
-}
-
-// Add scroll up affordance
-.mw-mmv-post-image:before {
-	position: absolute;
-	top: -12px;
-	right: 0;
-	left: 0;
-	width: 100px;
-	height: 4px;
-	border-radius: var( --border-radius--pill );
-	margin: 0 auto;
-	background-color: #fff;
-	content: '';
-	opacity: var( --opacity-icon-base );
 }
