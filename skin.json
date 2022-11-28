@@ -370,6 +370,9 @@
 			"+ext.managewiki.oouiform.styles": "skinStyles/extensions/ManageWiki/ext.managewiki.oouiform.styles.less",
 			"+ext.pygments": "skinStyles/extensions/SyntaxHighlight_GeSHi/ext.pygments.less",
 			"+ext.math.styles": "skinStyles/extensions/Math/ext.math.styles.less",
+			"+mmv": "skinStyles/extensions/MultimediaViewer/mmv.less",
+			"+mmv.ui.download.pane": "skinStyles/extensions/MultimediaViewer/mmv.ui.download.pane.less",
+			"+mmv.ui.reuse.shareembed": "skinStyles/extensions/MultimediaViewer/mmv.ui.reuse.shareembed.less",
 			"+ext.MsUpload": "skinStyles/extensions/MsUpload/ext.MsUpload.less",
 			"+ext.relatedArticles.styles": "skinStyles/extensions/RelatedArticles/ext.relatedArticles.styles.less",
 			"+ext.relatedArticles.readMore": "skinStyles/extensions/RelatedArticles/ext.relatedArticles.readMore.less",
@@ -508,7 +511,6 @@
 			"+oojs-ui-widgets": "skinStyles/ooui/oojs-ui-widgets.less",
 			"+oojs-ui-windows": "skinStyles/ooui/oojs-ui-windows.less",
 			"+jquery.ui": "skinStyles/jquery.ui/smoothness/jquery.ui.theme.less",
-			"+mmv": "skinStyles/extensions/MultimediaViewer/mmv.less",
 			"+ext.WSSearchFront.module": "skinStyles/extensions/WSSearchFront/ext.WSSearchFront.module.less"
 		}
 	},

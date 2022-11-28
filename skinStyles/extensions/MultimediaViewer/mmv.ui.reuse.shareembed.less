@@ -1,0 +1,28 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:MultimediaViewer
+ * Module: mmv.ui.reuse.shareembed
+ * Version: REL1_39 (1b97775)
+ *
+ * Date: 2022-11-26
+*/
+
+/* mmv.ui.reuse.embed.less */
+.mw-mmv-reuse-dialog .mw-mmv-embed-pane {
+	padding: var( --space-md );
+}
+
+.mw-mmv-embed-dimensions {
+	color: var( --color-base--subtle );
+	font-size: 0.8125rem;
+
+	.oo-ui-optionWidget-selected & {
+		color: var( --color-primary );
+	}
+}
+
+.mw-mmv-reuse-dialog .oo-ui-fieldLayout-header {
+	// For some reason there is a bunch of empty OOUI header
+	display: none !important;
+}

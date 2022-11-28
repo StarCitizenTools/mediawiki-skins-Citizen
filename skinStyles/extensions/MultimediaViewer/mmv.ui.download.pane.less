@@ -1,0 +1,113 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:MultimediaViewer
+ * Module: mmv.ui.download.pane
+ * Version: REL1_39 (1b97775)
+ *
+ * Date: 2022-11-26
+*/
+
+.mw-mmv-download-pane {
+	height: auto;
+	padding: 0;
+
+	// Let's make better use of space
+	.mw-mmv-download-area {
+		display: flex;
+		width: auto;
+		padding: var( --space-md );
+
+		.mw-mmv-download-go-button {
+			border-bottom-right-radius: 0;
+			border-top-right-radius: 0;
+		}
+
+		/* Selection size arrow element */
+		.mw-mmv-download-select-menu {
+			border-left-color: var( --border-color-base );
+
+			&:hover {
+				border-bottom: 0;
+			}
+		}
+
+		.mw-mmv-download-image-size {
+			font-size: 0.8125rem;
+		}
+
+		.mw-mmv-download-preview-link {
+			display: flex;
+			align-items: center;
+			margin: 0;
+			color: var( --color-base--subtle );
+			font-weight: var( --font-weight-semibold );
+
+			// Add hover state
+			&:hover {
+				color: var( --color-primary--hover );
+			}
+
+			&:active {
+				color: var( --color-primary--active );
+			}
+		}
+
+		/* Pulldown size menu */
+		.mw-mmv-download-size {
+			margin-right: var( --space-md );
+
+			.oo-ui-labelElement-label {
+				margin-left: 0; // There is no icon
+			}
+		}
+	}
+
+	.mw-mmv-download-attribution {
+		padding: var( --space-md );
+		border-top: 1px solid var( --border-color-base );
+		margin: 0;
+		background-color: var( --color-surface-2 );
+		border-bottom-left-radius: var( --border-radius--medium );
+		border-bottom-right-radius: var( --border-radius--medium );
+		color: var( --color-base--emphasized );
+
+		&:hover {
+			background-color: var( --color-surface-2--hover );
+			color: var( --color-base--emphasized );
+		}
+
+		&:active {
+			background-color: var( --color-surface-2--active );
+		}
+
+		&-how {
+			padding: 0;
+
+			.mw-mmv-download-attribution-close-button {
+				top: var( --space-xxs );
+				margin: 0;
+				background-size: contain;
+			}
+		}
+
+		&-how-header,
+		&-cta-header {
+			font-size: 1rem;
+			font-weight: var( --font-weight-semibold );
+		}
+
+		&-cta-invite {
+			color: var( --color-primary );
+			font-size: 0.8125rem;
+		}
+
+		&-cta {
+			background-size: contain;
+		}
+	}
+}
+
+.mw-mmv-reuse-dialog.mw-mmv-reuse-download-active .mw-mmv-reuse-down-arrow {
+	background-color: var( --color-surface-2 );
+}

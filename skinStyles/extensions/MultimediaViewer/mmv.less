@@ -1,180 +1,638 @@
 /*
- * Citizen - MultimediaViewer Styles
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Extension:MultimediaViewer
+ * Module: mmv
+ * Version: REL1_39 (1b97775)
+ *
+ * Date: 2022-11-26
 */
 
 @import '../../../resources/variables.less';
 
-.skin-citizen {
-	.mw-mmv {
-		&-progress {
-			top: 0;
-			height: 2px;
-			background-color: transparent;
+// FIXME: Use relative units
+@mmv-width-toolbar: 52px;
+@mmv-height-abovethefold: 86px;
+@mmv-button-size: 40px;
 
-			&-percent {
-				height: inherit;
+/* mmv.ui.dialog.less */
+.mw-mmv-dialog {
+	right: @mmv-width-toolbar;
+	border-radius: var( --border-radius--medium );
+	margin: var( --space-xs );
+	background-color: var( --color-surface-1 );
+	box-shadow: var( --box-shadow-dialog );
+
+	// The dialog will always show above the metadata in mobile view
+	@media ( max-width: @width-breakpoint-tablet ) {
+		top: unset !important;
+		right: 0 !important;
+		bottom: @mmv-height-abovethefold !important;
+		left: 0 !important;
+		width: auto;
+	}
+
+	// Make arrow slightly smaller
+	.mw-mmv-dialog-down-arrow {
+		right: @mmv-width-toolbar;
+		width: 16px;
+		height: 16px;
+		background-color: var( --color-surface-1 );
+
+		// Hide arrow since the dialog is no longer relative
+		@media ( max-width: @width-breakpoint-tablet ) {
+			display: none;
+		}
+	}
+
+	.mw-mmv-dialog-warning {
+		background-color: var( --color-warning );
+	}
+}
+
+/* mmv.ui.reuse.dialog.less */
+.mw-mmv-reuse-dialog {
+	bottom: @mmv-height-abovethefold;
+
+	.mw-mmv-reuse-tabs {
+		border-radius: var( --border-radius--medium ) var( --border-radius--medium ) 0 0; // Sync with dialog
+		border-bottom-color: var( --border-color-base );
+
+		.oo-ui-optionWidget {
+			padding: var( --space-xs ) var( --space-sm );
+			font-size: 1rem;
+			font-weight: var( --font-weight-semibold );
+
+			&.oo-ui-optionWidget-highlighted {
+				border-bottom: 0; // border will cause reflow
+				box-shadow: inset 0 -2px 0 0 var( --color-primary--hover );
+			}
+
+			&.oo-ui-optionWidget-selected,
+			&.oo-ui-optionWidget-highlighted.oo-ui-optionWidget-selected {
+				border-bottom: 0; // border will cause reflow
+				box-shadow: inset 0 -2px 0 0 var( --color-primary );
+			}
+
+			&:first-child {
+				border-radius: var( --border-radius--medium ) 0 0 0;
 			}
 		}
+	}
 
-		&-post-image {
-			overflow: hidden;
-			border-radius: var( --border-radius--large ) var( --border-radius--large ) 0 0;
-			background-color: var( --color-surface-1 );
+	.mw-mmv-reuse-pane {
+		padding: var( --space-md );
+	}
+
+	.mw-mmv-dialog-down-arrow {
+		bottom: @mmv-height-abovethefold + @mmv-button-size / 2;
+	}
+
+	.mw-mmv-dialog-warning {
+		padding: var( --space-md ) var( --space-xl );
+	}
+}
+
+/* mmv.ui.download.dialog.less */
+.mw-mmv-download-dialog {
+	bottom: @mmv-height-abovethefold;
+
+	.mw-mmv-download-size .oo-ui-optionWidget {
+		padding: var( --space-sm ) var( --space-md );
+		font-size: 1rem;
+	}
+
+	.mw-mmv-dialog-down-arrow {
+		bottom: @mmv-height-abovethefold + @mmv-button-size + @mmv-button-size / 2;
+		background-color: var( --color-surface-1 );
+	}
+
+	.mw-mmv-dialog-warning {
+		padding: var( --space-md ) var( --space-xl );
+	}
+}
+
+/* mmv.ui.viewingOptions.less */
+.mw-mmv-options-dialog {
+	top: 0;
+	padding: var( --space-md );
+
+	&.mw-mmv-enable-confirmation-shown {
+		background-color: var( --background-color-success );
+		box-shadow: var( --box-shadow-dialog );
+
+		// Hide arrow since those are notifications
+		.mw-mmv-dialog-down-arrow {
+			display: none;
+		}
+	}
+
+	&.mw-mmv-disable-confirmation-shown {
+		background-color: var( --color-surface-1 );
+
+		// Hide arrow since those are notifications
+		.mw-mmv-dialog-down-arrow {
+			display: none;
+		}
+	}
+
+	.mw-mmv-dialog-down-arrow {
+		top: @mmv-button-size + @mmv-button-size + @mmv-button-size / 2;
+	}
+
+	.mw-mmv-disable-confirmation {
+		.mw-mmv-options-dialog-header {
 			color: var( --color-base--emphasized );
 		}
 
-		&-image-metadata {
-			border-color: var( --border-color-base );
-			background-color: var( --color-surface-2 );
-			color: var( --color-base );
-		}
-
-		&-info-box {
-			border-color: var( --border-color-base );
-			background-color: var( --color-surface-3 );
-		}
-
-		&--label {
-			background-color: var( --color-surface-3 );
-			color: var( --color-base );
-		}
-
-		&-credit,
-		&-image-links li {
+		.mw-mmv-options-text-header {
 			color: var( --color-base--subtle );
 		}
+	}
 
-		&-stripe-button.mw-mmv-description-page-button {
-			margin: 11px var( --space-md );
-			font-size: 0.875rem;
-		}
-
-		&-permission-box {
-			h3 {
-				color: var( --color-base );
-			}
-
-			.mw-mmv-permission-text {
-				.mw-mmv-permission-text-fader {
-					background-image: linear-gradient( to bottom, rgba( 255, 255, 255, 0 ) 0%, var( --color-surface-1 ) 100% );
-				}
-			}
-		}
-
-		&-title-para .mw-mmv-ttf-ellipsis {
-			background-color: var( --color-surface-1 );
-			box-shadow: none;
-		}
-
-		&-ttf-container .mw-mmv-ttf-ellipsis:before {
-			background-image: linear-gradient( to right, rgba( 255, 255, 255, 0 ) 0%, var( --color-surface-1 ) 100% );
-		}
-
-		&-dialog {
-			background-color: var( --color-surface-1 );
-			box-shadow: var( --box-shadow-dialog );
-
-			.mw-mmv-dialog-down-arrow {
-				background-color: var( --color-surface-1 );
-			}
-		}
-
-		&-reuse-dialog .mw-mmv-reuse-tabs {
-			border-color: var( --border-color-base );
-		}
-
-		&-options-dialog-header {
+	.mw-mmv-enable-confirmation {
+		.mw-mmv-options-dialog-header {
 			color: var( --color-base--emphasized );
 		}
 
-		&-options-text-header {
-			color: var( --color-base );
-		}
-
-		&-options-text-body {
+		.mw-mmv-options-text-header {
 			color: var( --color-base--subtle );
-		}
-
-		&-download-dialog .mw-mmv-dialog-down-arrow {
-			background-color: var( --background-color-framed );
-		}
-
-		&-download-pane {
-			.mw-mmv-download {
-				&-area .mw-mmv-download-preview-link {
-					color: var( --color-base--subtle );
-				}
-
-				&-attribution {
-					background-color: var( --background-color-framed );
-					color: var( --color-base );
-
-					&:hover {
-						background-color: var( --background-color-framed--hover );
-						color: var( --color-base--emphasized );
-					}
-
-					&-attribution-cta-invite {
-						color: var( --color-base--subtle );
-					}
-				}
-			}
-		}
-
-		&-download-button,
-		&-reuse-button,
-		&-options-button,
-		&-close,
-		&-fullscreen,
-		&-next-image,
-		&-prev-image {
-			background-position: center;
-			background-size: 20px; // smaller icon
-		}
-
-		/* So that tapping the border won't open the file */
-		&-next-image {
-			right: 0;
-		}
-
-		&-prev-image {
-			left: 0;
-		}
-
-		/* Increase click area */
-		&-next-image,
-		&-prev-image {
-			z-index: 1002; // avoid covering other buttons
-			top: 20vh !important; // override inline style
-			height: 50vh;
 		}
 	}
 }
 
-@media only screen and ( max-width: @width-breakpoint-tablet ) {
-	.skin-citizen {
-		.mw-mmv {
-			&-image {
-				/* So that the image is not clickable on mobile */
-				img {
-					cursor: auto;
-					pointer-events: none;
-				}
+.mw-mmv-options-submit {
+	margin-top: var( --space-md );
+}
 
-				&-metadata-links-column {
-					width: auto; // Fix mobile bouncing
-					float: none;
-				}
-			}
+// Just use flex layout
+.mw-mmv-options-subcontainer {
+	display: flex;
+	margin-top: var( --space-md );
+	gap: var( --space-sm );
+}
 
-			&-untruncated {
-				.mw-mmv-image-metadata-desc-column,
-				.mw-mmv-image-metadata-links-column {
-					width: auto;
-					max-width: none;
-				}
+.mw-mmv-options-subcontainer .mw-mmv-options-text {
+	margin-left: 0;
+}
+
+.mw-mmv-options-dialog-header {
+	margin: 0 0 var( --space-xs ) 0;
+	color: var( --color-base--emphasized );
+	font-size: 1rem;
+	font-weight: var( --font-weight-semibold );
+}
+
+.mw-mmv-options-text-header {
+	color: var( --color-base );
+	font-size: 0.875rem;
+}
+
+.mw-mmv-options-text-body {
+	margin-top: var( --space-xs );
+	color: var( --color-base--subtle );
+	font-size: 0.8125rem;
+}
+
+.mw-mmv-options-enable-alert {
+	position: unset;
+	padding: var( --space-sm ) var( --space-md );
+	margin: ~'calc( var(--space-md ) * -1)';
+	margin-bottom: var( --space-md );
+	background-color: var( --color-warning );
+	border-top-left-radius: var( --border-radius--medium );
+	border-top-right-radius: var( --border-radius--medium );
+	font-weight: var( --font-weight-semibold );
+}
+
+/* mmv.ui.canvas.less */
+.mw-mmv-image img {
+	@media ( max-width: @width-breakpoint-tablet ) {
+		// It is frustrating to misclick the image on mobile
+		// So that the image is not clickable on mobile
+		cursor: auto;
+		pointer-events: none;
+	}
+}
+
+/* mmv.ui.canvasButtons.less */
+// Align icon with the rest of the skin
+.mw-mmv-download-button,
+.mw-mmv-reuse-button,
+.mw-mmv-options-button,
+.mw-mmv-close,
+.mw-mmv-fullscreen,
+.mw-mmv-next-image,
+.mw-mmv-prev-image {
+	padding: 0;
+	border-radius: var( --border-radius--small );
+	background-size: var( --size-icon );
+	opacity: var( --opacity-icon-base );
+
+	&.mw-mmv-dialog-open,
+	&:hover {
+		background-color: var( --background-color-quiet--hover );
+		opacity: var( --opacity-icon-base--hover );
+	}
+
+	&:active {
+		background-color: var( --background-color-quiet--active );
+		opacity: var( --opacity-icon-base--active );
+	}
+}
+
+.mw-mmv-download-button,
+.mw-mmv-reuse-button,
+.mw-mmv-options-button,
+.mw-mmv-close,
+.mw-mmv-fullscreen {
+	right: 8px !important;
+	width: @mmv-button-size !important;
+	height: @mmv-button-size !important;
+	margin-top: 0;
+}
+
+.mw-mmv-close {
+	top: 8px;
+}
+
+.mw-mmv-fullscreen {
+	top: 8px + @mmv-button-size;
+}
+
+.mw-mmv-options-button {
+	top: 8px + @mmv-button-size * 2;
+}
+
+.mw-mmv-reuse-button {
+	bottom: @mmv-height-abovethefold + 8px; // close to space-xs
+}
+
+.mw-mmv-download-button {
+	bottom: @mmv-button-size + @mmv-height-abovethefold + 8px;
+}
+
+.mw-mmv-prev-image {
+	left: 8px;
+	background-position: left 8px center;
+
+	&:hover {
+		// Changing margin is expensive and we don't want to move the hover background
+		margin-left: 0;
+		background-position: left 4px center;
+	}
+}
+
+.mw-mmv-next-image {
+	right: 8px;
+	background-position: right 8px center;
+
+	&:hover {
+		// Changing margin is expensive and we don't want to move the hover background
+		margin-right: 0;
+		background-position: right 4px center;
+	}
+}
+
+// Make it much bigger so it is easier to click
+.mw-mmv-prev-image,
+.mw-mmv-next-image {
+	z-index: 1002; // avoid covering other buttons
+	top: 20vh !important;
+	height: 50vh;
+	transition: @transition-background;
+}
+
+/* mmv.ui.permission.less */
+.mw-mmv-permission-box {
+	width: auto; // We use grid to align metadata so no need to hardcode
+	margin: var( --space-md ) 0 0 0;
+	background-color: var( --color-surface-2 ) !important; // Somehow there is an inline style overriding it
+
+	&.empty {
+		display: none;
+	}
+
+	h3 {
+		margin: 0;
+		color: var( --color-base--subtle );
+		font-size: 0.8125rem;
+		font-weight: var( --font-weight-normal );
+		letter-spacing: 0.05em;
+	}
+
+	// Make button bigger and aligned
+	.mw-mmv-permission-close {
+		top: var( --space-xs );
+		right: var( --space-xs );
+		width: 2rem;
+		height: 2rem;
+		padding: var( --space-xs );
+		border: 0;
+		border-radius: var( --border-radius--small );
+		background-color: transparent;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: 14px;
+
+		// Add hover state
+		&:hover {
+			background-color: var( --background-color-quiet--hover );
+		}
+
+		&:active {
+			background-color: var( --background-color-quiet--active );
+		}
+	}
+
+	.mw-mmv-permission-text {
+		.mw-mmv-permission-text-fader {
+			top: 2.7em;
+			background-image: linear-gradient( to bottom, rgba( 255, 255, 255, 0 ) 0%, var( --color-surface-1 ) 100% );
+
+			a {
+				padding-top: 2px;
+				background-color: var( --color-surface-1 );
 			}
 		}
 	}
+
+	.mw-mmv-permission-text,
+	.mw-mmv-permission-html {
+		margin: var( --space-xxs ) 0 0 0;
+		color: var( --color-base );
+		font-size: 0.8125rem;
+		line-height: var( --line-height-sm );
+	}
+
+	.mw-mmv-permission-html {
+		padding: 0;
+	}
+
+	&.full-size {
+		.mw-mmv-permission-html {
+			border-top: 0;
+		}
+	}
+}
+
+/* mmv.ui.progressBar.less */
+// Sync with citizen progress bar
+.mw-mmv-progress {
+	top: -2px;
+	height: 2px;
+	background-color: transparent;
+}
+
+.mw-mmv-progress-percent {
+	height: 2px;
+	background: linear-gradient( -45deg, transparent 33%, rgba( 0, 0, 0, 0.1 ) 33%, rgba( 0, 0, 0, 0.1 ) 66%, transparent 66% ), var( --color-primary );
+	border-bottom-right-radius: var( --border-radius--large );
+	border-top-right-radius: var( --border-radius--large );
+	filter: drop-shadow( 0 0 16px var( --color-primary ) );
+}
+
+/* mmv.ui.stripeButtons.less */
+.mw-mmv-stripe-button {
+	font-size: 0.875rem;
+
+	// Icon only button for smaller screen size
+	@media ( max-width: @width-breakpoint-tablet ) {
+		text-indent: -9999px;
+
+		&:before {
+			margin-right: 0 !important;
+		}
+	}
+
+	&.mw-mmv-description-page-button,
+	&.mw-mmv-description-page-button:active,
+	&.mw-mmv-description-page-button:visited {
+		display: flex;
+		min-width: auto;
+		max-width: none;
+		align-items: center;
+		justify-content: center;
+		padding: 0 var( --space-sm );
+		margin: var( --space-md );
+		float: none;
+		font-size: 0.875rem;
+		white-space: nowrap;
+	}
+}
+
+/* mmv.ui.truncatableTextField.less */
+// TODO: Revisit later
+
+/* mmv.ui.metadataPanel.less */
+.mw-mmv-info-box {
+	padding: var( --space-md );
+	border: 0;
+	border-radius: var( --border-radius--medium );
+	background-color: var( --color-surface-2 );
+}
+
+.mw-mmv-title-para {
+	overflow: hidden;
+	// Changing height and line-height like the origina causes reflow
+	height: auto;
+	flex-grow: 1;
+	order: -1; // Reorder because we use flex in container
+	padding: 0;
+	margin: var( --space-xl ) var( --space-md ) var( --space-md ) var( --space-md );
+	line-height: var( --line-height-sm );
+	// Enforce single line
+	white-space: nowrap;
+
+	// Reset when expanded
+	.mw-mmv-untruncated & {
+		white-space: normal;
+	}
+
+	&.mw-mmv-title-smaller {
+		padding: 0;
+		margin: var( --space-md );
+	}
+
+	// Enforce consistent sizing
+	&.mw-mmv-ttf-normal,
+	&.mw-mmv-title-small,
+	&.mw-mmv-title-smaller {
+		font-size: 1rem;
+
+		@media ( max-width: @width-breakpoint-tablet ) {
+			font-size: 0.875rem;
+		}
+	}
+
+	.mw-mmv-ttf-ellipsis {
+		// Never need to use it anyways
+		display: none !important;
+	}
+}
+
+.mw-mmv-credit {
+	height: auto !important;
+	padding: 0;
+	margin: 0;
+	color: var( --color-base--subtle );
+	font-size: 0.875rem;
+
+	@media ( max-width: @width-breakpoint-tablet ) {
+		font-size: 0.8125rem;
+	}
+
+	.mw-mmv-ttf-ellipsis {
+		// Never need to use it anyways
+		display: none !important;
+	}
+}
+
+.mw-mmv-source-author {
+	line-height: var( --line-height-xs );
+}
+
+.mw-mmv-title {
+	.mw-mmv-untruncated & {
+		color: var( --color-base--emphasized );
+	}
+}
+
+.mw-mmv-image-metadata {
+	// Use grid instead
+	display: grid;
+	width: auto;
+	padding: 0 var( --space-md ) var( --space-md ) var( --space-md );
+	border-top: 0;
+	margin-top: -4px;
+	// Sync with title
+	background-color: #000;
+	gap: var( --space-xs );
+	grid-template-areas: 'desc links'
+		'about about';
+	grid-template-columns: 2fr 1fr;
+	transition: @transition-background;
+
+	.mw-mmv-untruncated & {
+		background-color: transparent;
+		gap: var( --space-lg );
+
+		@media ( max-width: @width-breakpoint-tablet ) {
+			grid-template-areas: 'desc desc'
+				'links links'
+				'about about';
+		}
+	}
+
+	// Reset hardcoded styles for grid
+	&-column {
+		width: auto !important;
+		max-width: none !important;
+		float: none !important;
+	}
+
+	&-desc-column {
+		grid-area: desc;
+	}
+
+	&-links-column {
+		grid-area: links;
+	}
+}
+
+.mw-mmv-image-desc {
+	padding: 0;
+	color: inherit;
+	font-size: 0.875rem;
+}
+
+.mw-mmv-image-links {
+	margin: 0;
+
+	li {
+		font-size: 0.875rem;
+
+		@media ( max-width: @width-breakpoint-tablet ) {
+			font-size: 0.8125rem;
+		}
+
+		+ li {
+			margin-top: var( --space-xs );
+		}
+
+		// Reset hardcoded styles
+		.metadata-panel-is-closed &.mw-mmv-license-li {
+			height: auto;
+			line-height: var( --line-height-xs );
+		}
+	}
+}
+
+.mw-mmv-image-desc-div {
+	margin-bottom: 0;
+}
+
+.mw-mmv-about-links {
+	padding: 0;
+	font-size: 0.875rem;
+	grid-area: about;
+}
+
+.mw-mmv-label {
+	background-color: var( --color-surface-3 );
+	color: var( --color-base );
+	font-size: 0.8125rem;
+
+	&:hover {
+		background-color: var( --color-surface-2--hover );
+	}
+
+	&:active {
+		background-color: var( --color-surface-2--active );
+	}
+}
+
+/* mmv.ui.metadataPanelScroller.less */
+
+/* mmv.lightboxinterface.less */
+.mw-mmv-image-wrapper {
+	bottom: @mmv-height-abovethefold;
+}
+
+// Only apply background color when scroll up
+.mw-mmv-post-image {
+	min-height: @mmv-height-abovethefold;
+	background-color: transparent;
+	border-top-left-radius: var( --border-radius--large );
+	border-top-right-radius: var( --border-radius--large );
+	color: #fff;
+	transition: @transition-background, @transition-color;
+
+	&.mw-mmv-untruncated {
+		background-color: var( --color-surface-1 );
+		box-shadow: none; // We already have top border
+		color: var( --color-base );
+	}
+}
+
+.mw-mmv-above-fold {
+	display: flex; // let's use flex instead of float
+	height: auto; // avoid layout shift when scroll up
+	padding-bottom: 0; // let metadata handle the padding
+	gap: var( --space-xs );
+}
+
+// Add scroll up affordance
+.mw-mmv-post-image:before {
+	position: absolute;
+	top: -12px;
+	right: 0;
+	left: 0;
+	width: 100px;
+	height: 4px;
+	border-radius: var( --border-radius--pill );
+	margin: 0 auto;
+	background-color: #fff;
+	content: '';
+	opacity: var( --opacity-icon-base );
 }
