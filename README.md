@@ -10,7 +10,7 @@ For the old design, [click here](https://github.com/StarCitizenTools/mediawiki-s
 ## Notable features
 - **Responsive layout**: Responsive and able to adapt to different screen sizes. 📱💻🖥️
 - **Light/dark mode**: Switch between light and dark mode. ☀️🌙
-- **Cohesive extension styles**: Supported extensions blend with the rest of the UI. 🤝🔗
+- **Improved extension UI**: Adjust supported extensions to be more usable and cohesive. 🤝🔗
 - **Reading preferences**: Adjust page width, font size, and line height. 👀📃
 - **Collapsible sections**: Collapse and expand article sections. 📖📕
 - **Persistent ToC**: Access ToC anywhere in the article. 🔍📖
