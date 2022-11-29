@@ -8,6 +8,8 @@
  * Date: 2022-11-28
 */
 
+@import '../../../resources/variables.less';
+
 /* popup.less */
 .mwe-popups {
 	// See FIXME below
@@ -204,4 +206,48 @@
 /* settingsDialogRenderer.less */
 .mwe-popups-overlay {
 	background-color: var( --background-color-overlay );
+}
+
+// Responsive support
+@media ( max-width: @width-breakpoint-tablet ) {
+	.mwe-popups {
+		position: fixed;
+		top: auto !important;
+		right: 0 !important;
+		bottom: 0 !important;
+		left: 0 !important;
+		overflow: hidden; // Hide pointer and also rounded corners
+		width: auto !important;
+		border-radius: var( --border-radius--medium ) var( --border-radius--medium ) 0 0;
+
+		// Top aligned cards
+		&.flipped-x-y,
+		&.flipped-y {
+			top: 0 !important;
+			bottom: auto !important;
+			border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
+		}
+
+		.mwe-popups-container {
+			margin-bottom: 0 !important; // cancel negative margin as we have no pointers
+
+			// Hide footer
+			footer {
+				display: none;
+			}
+		}
+
+		// Vertical card
+		&.mwe-popups-is-not-tall {
+			.mwe-popups-thumbnail {
+				width: 100%;
+			}
+
+			.mwe-popups-extract {
+				min-height: auto;
+				max-height: 58px;
+				margin-bottom: var( --space-xl );
+			}
+		}
+	}
 }
