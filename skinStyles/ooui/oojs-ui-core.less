@@ -676,8 +676,8 @@
 
 // Invert icon for dark mode
 .skin-citizen-dark {
-	.oo-ui-iconElement-icon,
-	.oo-ui-indicatorElement-indicator {
+	.oo-ui-iconElement-icon:not( .oo-ui-image-invert ),
+	.oo-ui-indicatorElement-indicator:not( .oo-ui-image-invert ) {
 		filter: invert( 1 ) hue-rotate( 180deg );
 	}
 }
