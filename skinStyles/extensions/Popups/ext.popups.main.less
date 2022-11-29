@@ -3,59 +3,34 @@
  *
  * SkinStyles for Extension:Popups
  * Module: ext.popups.main
- * Version: REL1_35 dccd607
+ * Version: REL1_39 a40ebc1
  *
- * Date: 2021-09-02
+ * Date: 2022-11-28
 */
 
+/* popup.less */
 .mwe-popups {
-	// HACK: Needed to make rounded corner and placeholder bg work
-	// But you lose the pointer by doing it
-	overflow: hidden;
-	border-radius: var( --border-radius--medium );
-	background-color: var( --color-surface-1 );
+	// See FIXME below
+	// border-radius: var( --border-radius--medium );
+	background: var( --color-surface-1 );
 	box-shadow: var( --box-shadow-dialog );
 
-	&:hover {
-		background-color: var( --color-surface-2 );
-
-		.mwe-popups-extract {
-			&[ dir='ltr' ]:after {
-				/* @noflip */
-				background-image: linear-gradient( to right, transparent, var( --color-surface-2 ) 50% );
-			}
-
-			&[ dir='rtl' ]:after {
-				/* @noflip */
-				background-image: linear-gradient( to left, transparent, var( --color-surface-2 ) 50% );
-			}
-		}
-	}
-
-	&:active {
-		background-color: var( --color-surface-2--active );
-
-		.mwe-popups-extract {
-			&[ dir='ltr' ]:after {
-				/* @noflip */
-				background-image: linear-gradient( to right, transparent, var( --color-surface-2--active ) 50% );
-			}
-
-			&[ dir='rtl' ]:after {
-				/* @noflip */
-				background-image: linear-gradient( to left, transparent, var( --color-surface-2--active ) 50% );
-			}
-		}
-	}
-
 	.mwe-popups-container {
-		background-color: var( --color-surface-1 ); // MW 1.37+
 		color: var( --color-base );
+	}
 
-		// Neutral color so dark SVG is visible
-		svg {
-			border-radius: var( --border-radius--medium ) var( --border-radius--medium ) 0 0;
-			background-color: #eaecf0;
+	.mwe-popups-settings-icon {
+		border-radius: var( --border-radius--small );
+		opacity: var( --opacity-icon-base );
+
+		&:hover {
+			background-color: var( --background-color-quiet--hover );
+			opacity: var( --opacity-icon-base--hover );
+		}
+
+		&:active {
+			background-color: var( --background-color-quiet--active );
+			opacity: var( --opacity-icon-base--active );
 		}
 	}
 
@@ -71,29 +46,20 @@
 			/* @noflip */
 			background-image: linear-gradient( to left, transparent, var( --color-surface-1 ) 50% );
 		}
-	}
 
-	/* Triangles/Pointers */
-	&.mwe-popups-no-image-pointer {
-		&:after {
-			border-bottom-color: var( --color-surface-1 );
+		blockquote:after {
+			/* @noflip */
+			background-image: linear-gradient( to bottom, transparent, var( --color-surface-1 ) 75% );
 		}
 
-		&:before {
-			border-bottom-color: var( --border-color-base );
-		}
-	}
-
-	&.mwe-popups-image-pointer {
-		&:before {
-			border-bottom-color: var( --border-color-base );
+		&.mwe-popups-type-generic,
+		&.mwe-popups-type-disambiguation {
+			.mwe-popups-read-link {
+				font-weight: var( --font-weight-semibold );
+			}
 		}
 
-		&:after {
-			border-bottom-color: var( --color-surface-1 );
-		}
-
-		&.flipped-x {
+		&.mwe-popups-no-image-pointer {
 			&:before {
 				border-bottom-color: var( --border-color-base );
 			}
@@ -102,42 +68,67 @@
 				border-bottom-color: var( --color-surface-1 );
 			}
 		}
-	}
 
-	&.flipped-x.mwe-popups-is-tall {
-		&:before {
-			border-bottom-color: var( --border-color-base );
+		&.mwe-popups-image-pointer {
+			&:before {
+				border-bottom-color: var( --border-color-base );
+			}
+
+			&:after {
+				border-bottom-color: var( --color-surface-1 );
+			}
+
+			&.flipped-x {
+				&:before {
+					border-bottom-color: var( --border-color-base );
+				}
+
+				&:after {
+					border-bottom-color: var( --color-surface-1 );
+				}
+			}
 		}
-	}
 
-	&.flipped-x-y {
-		&:before {
-			border-top-color: var( --border-color-base );
+		&.flipped-x.mwe-popups-is-tall {
+			&:before {
+				border-bottom-color: var( --border-color-base );
+			}
 		}
 
-		&:after {
-			border-top-color: var( --color-surface-1 );
-		}
+		&.flipped-x-y {
+			&:before {
+				border-top-color: var( --border-color-base );
+			}
 
-		&.mwe-popups-is-tall {
 			&:after {
 				border-top-color: var( --color-surface-1 );
 			}
 
+			&.mwe-popups-is-tall {
+				&:before {
+					border-top-color: var( --border-color-base );
+				}
+
+				&:after {
+					border-top-color: var( --color-surface-1 );
+				}
+			}
+		}
+
+		&.flipped-y {
 			&:before {
 				border-top-color: var( --border-color-base );
+			}
+
+			&:after {
+				border-top-color: var( --color-surface-1 );
 			}
 		}
 	}
 
-	&.flipped-y {
-		&:after {
-			border-top-color: var( --color-surface-1 );
-		}
-
-		&:before {
-			border-top-color: var( --border-color-base );
-		}
+	/* preview.less */
+	.mwe-popups-title {
+		font-weight: var( --font-weight-semibold );
 	}
 
 	/* referencePreview.less */
@@ -146,74 +137,71 @@
 			.mwe-popups-fade {
 				background-image: linear-gradient( transparent, var( --color-surface-1 ) );
 			}
+		}
 
-			/* T266859 */
-			.mw-parser-output {
-				overflow-wrap: break-word;
-			}
+		.mwe-collapsible-placeholder {
+			font-weight: var( --font-weight-semibold );
+		}
+	}
+}
+
+@supports ( clip-path: polygon( 1px 1px ) ) {
+	.mwe-popups {
+		.mwe-popups-container {
+			background: var( --color-surface-1 );
+			// FIXME: Come up with a clip path that works with increased border radius
+			// Popups is using polygon to clip the card
+			// So the thumbnail corner would look weird if we adjust the border radius
+			// --pseudo-radius: var( --border-radius--medium );
+		}
+	}
+}
+
+/* settingsDialog.less */
+#mwe-popups-settings {
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--medium );
+	background: var( --color-surface-1 );
+	box-shadow: var( --box-shadow-dialog );
+
+	header {
+		border-bottom-color: var( --border-color-base );
+
+		h1 {
+			font-family: var( --font-family-base );
+			font-weight: var( --font-weight-semibold );
 		}
 	}
 
-	// speed up fade animation 2x
-	&-fade {
-		&-in,
-		&-out {
-			&-up,
-			&-down {
-				animation-duration: 0.125s;
-			}
+	.mwe-ui-icon-popups-close {
+		opacity: var( --opacity-icon-base );
+
+		&:hover {
+			opacity: var( --opacity-icon-base--hover );
+		}
+
+		&:active {
+			opacity: var( --opacity-icon-base--active );
 		}
 	}
 
-	/* settingsDialogRenderer.less */
-	&-overlay {
-		background-color: var( --background-color-overlay );
-	}
-
-	/* settingsDialog.less */
-	&-settings {
-		border: 0;
-		border-radius: var( --border-radius--medium );
-		background: var( --color-surface-1 );
-		box-shadow: var( --box-shadow-dialog );
-
-		header {
-			padding: 0;
-			border-color: var( --border-color-base );
-
-			// For some reason it looks very weird
-			h1 {
-				padding-top: 0;
-				margin-bottom: unset;
-				font-size: 1rem;
-			}
+	main#mwe-popups-settings-form {
+		p {
+			color: var( --color-base--subtle );
 		}
 
-		main {
-			p {
-				color: var( --color-base--subtle );
-			}
-
-			form {
-				label {
-					> span {
-						color: var( --color-base--emphasized );
-						font-size: 1rem;
-						line-height: inherit;
-					}
+		form {
+			label {
+				> span {
+					color: var( --color-base--emphasized );
+					font-weight: var( --font-weight-semibold );
 				}
 			}
 		}
 	}
 }
 
-.mw-ui-icon-popups-close:before {
-	opacity: var( --opacity-icon-base );
-}
-
-/* Dark styles */
-.skin-citizen-dark {
-	.mw-ui-icon-popups-close:before {
-		filter: invert( 1 );
-	}
+/* settingsDialogRenderer.less */
+.mwe-popups-overlay {
+	background-color: var( --background-color-overlay );
 }
