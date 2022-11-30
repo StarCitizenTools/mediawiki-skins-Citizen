@@ -1,27 +1,31 @@
 /*
  * Citizen
  *
- * SkinStyles for MediaWiki UI
+ * SkinStyles for MediaWiki
  * Module: mediawiki.ui.checkbox
- * Version: Core REL1_35 086b4f1
+ * Version: REL1_39
  *
- * Date: 2021-07-27
+ * Date: 2022-11-30
 */
 
-.mw-ui-checkbox:not( #noop ) {
+.mw-ui-checkbox {
 	[ type='checkbox' ] {
 		& + label:before {
 			border-color: var( --border-color-base );
-			background-color: var( --color-surface-1 );
+			border-radius: var( --border-radius--small );
+			// Show background when hovered
+			background-color: transparent;
 		}
 
 		&:enabled {
 			&:focus + label:before {
 				border-color: var( --color-primary );
+				box-shadow: inset 0 0 0 1px var( --color-primary );
 			}
 
 			&:hover + label:before {
 				border-color: var( --color-primary--hover );
+				background-color: var( --color-surface-0 );
 			}
 
 			&:active + label:before {
@@ -44,7 +48,6 @@
 
 				&:hover + label:before {
 					border-color: var( --color-primary--hover );
-					// FIXME: Replace with WikimediaUI Base vars when available.
 					background-color: var( --color-primary--hover );
 				}
 

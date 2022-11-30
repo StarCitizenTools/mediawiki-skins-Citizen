@@ -1,0 +1,44 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for MediaWiki
+ * Module: mediawiki.ui.icon
+ * Version: REL1_39
+ *
+ * Date: 2022-11-30
+*/
+
+@import '../../resources/variables.less';
+
+.mw-ui-icon-element {
+	border-radius: var( --border-radius--small );
+
+	&:active {
+		background-color: var( --background-color-quiet--active );
+	}
+}
+
+@media ( hover: hover ) {
+	.mw-ui-icon-element:not( .disabled ):hover {
+		background-color: var( --background-color-quiet--hover );
+	}
+}
+
+@media all and ( min-width: @width-breakpoint-desktop ) {
+	.mw-ui-icon-with-label-desktop {
+		color: var( --color-base--subtle ) !important;
+
+		&:hover,
+		&:focus,
+		&:active,
+		&:visited {
+			color: var( --color-base--subtle );
+		}
+	}
+}
+
+.skin-citizen-dark {
+	.mw-ui-icon:before {
+		filter: invert( 1 ) hue-rotate( 180deg );
+	}
+}
