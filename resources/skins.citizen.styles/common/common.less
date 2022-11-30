@@ -25,7 +25,7 @@ select,
 textarea {
 	border: 1px solid var( --border-color-base );
 	background-color: var( --color-surface-1 );
-	color: inherit;
+	color: var( --color-base--emphasized );
 }
 
 textarea {
@@ -90,6 +90,10 @@ td {
 
 video {
 	max-width: 100%; // Prevent overflow
+}
+
+:focus-visible {
+	outline: 1px solid var( --color-primary );
 }
 
 .skin-citizen-dark {
