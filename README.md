@@ -29,8 +29,8 @@ Please feel free to submit PRs if you want to add support for more extensions!
 ### Core
 Name | Grade | Version | Last updated
 :--- | :--- | :--- | :---
-MediaWiki UI | B | 1.35.3 | 2021-07-27
-OOUI | B | 0.39.3 `086b4f1` | 2021-07-26
+MediaWiki UI | A | 1.39.0 | 2022-11-30
+OOUI | A | 0.44.3 | 2022-11-30
 
 ### Extensions
 Name | Grade | Version | Last updated

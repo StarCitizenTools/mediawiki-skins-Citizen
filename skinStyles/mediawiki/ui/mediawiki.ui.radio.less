@@ -12,7 +12,7 @@
 	[ type='radio' ] {
 		& + label {
 			&:before {
-				border-color: var( --border-color-base );
+				border-color: var( --border-color-base--darker );
 				// Show background when hovered
 				background-color: transparent;
 			}
@@ -32,6 +32,7 @@
 			&:checked {
 				& + label:before {
 					border-color: var( --color-primary );
+					background-color: #fff;
 				}
 
 				&:hover + label:before {

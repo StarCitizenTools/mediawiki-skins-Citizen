@@ -3,21 +3,35 @@
  *
  * SkinStyles for OOUI
  * Module: oojs-ui-widgets
- * Version: v0.39.3 (Core REL1_35 086b4f1)
+ * Version: v0.44.3
  *
- * Date: 2021-07-26
+ * Date: 2022-11-30
 */
 
 .oo-ui-bookletLayout-outlinePanel > .oo-ui-outlineControlsWidget {
-	border-top: 1px solid var( --border-color-base );
+	border-top-color: var( --border-color-base );
 }
 
 .oo-ui-bookletLayout > .oo-ui-menuLayout-menu {
-	border-right: 1px solid var( --border-color-base );
+	border-right-color: var( --border-color-base );
+}
+
+.oo-ui-buttonSelectWidget {
+	border-radius: var( --border-radius--small );
+}
+
+.oo-ui-buttonSelectWidget .oo-ui-buttonOptionWidget:first-child .oo-ui-buttonElement-button {
+	border-bottom-left-radius: var( --border-radius--small );
+	border-top-left-radius: var( --border-radius--small );
+}
+
+.oo-ui-buttonSelectWidget .oo-ui-buttonOptionWidget:last-child .oo-ui-buttonElement-button {
+	border-bottom-right-radius: var( --border-radius--small );
+	border-top-right-radius: var( --border-radius--small );
 }
 
 .oo-ui-buttonSelectWidget .oo-ui-buttonOptionWidget.oo-ui-widget-disabled + .oo-ui-widget-disabled > .oo-ui-buttonElement-button {
-	border-left-color: var( --color-surface-2--hover );
+	border-left-color: var( --border-color-base );
 }
 
 .oo-ui-buttonSelectWidget.oo-ui-widget-enabled:focus .oo-ui-buttonOptionWidget.oo-ui-optionWidget-selected .oo-ui-buttonElement-button {
@@ -26,46 +40,38 @@
 }
 
 .oo-ui-toggleButtonWidget.oo-ui-widget-enabled.oo-ui-buttonElement-frameless.oo-ui-toggleWidget-on .oo-ui-buttonElement-button {
+	background-color: var( --background-color-primary--active );
 	color: var( --color-base--emphasized );
 }
 
-.oo-ui-toggleButtonWidget.oo-ui-widget-enabled.oo-ui-buttonElement-frameless.oo-ui-toggleWidget-on .oo-ui-buttonElement-button > .oo-ui-iconElement-icon:not( .oo-ui-image-invert ) {
-	opacity: var( --opacity-icon-base--active );
-}
-
 .oo-ui-toggleSwitchWidget {
-	border-color: var( --border-color-base );
-	background-color: var( --color-surface-2 );
+	border-color: var( --border-color-base--darker );
+	// Show background when hovered
+	background-color: transparent;
 }
 
 .oo-ui-toggleSwitchWidget.oo-ui-widget-enabled .oo-ui-toggleSwitchWidget-grip {
-	border-color: var( --border-color-base );
-	background-color: var( --color-surface-2 );
+	border-color: var( --border-color-base--darker );
+	// Show background when hovered
+	background-color: transparent;
 }
 
 .oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:hover {
 	border-color: var( --color-primary--hover );
-	background-color: var( --color-surface-2--hover );
+	background-color: var( --color-surface-0 );
 }
 
 .oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:hover .oo-ui-toggleSwitchWidget-grip {
 	border-color: var( --color-primary--hover );
-	background-color: var( --color-surface-2--hover );
+	background-color: var( --color-surface-0 );
 }
 
 .oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:active,
 .oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:active:hover,
 .oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:active:focus {
 	border-color: var( --color-primary--active );
-	background-color: var( --color-surface-2--active );
+	background-color: var( --color-primary--active );
 	box-shadow: inset 0 0 0 1px var( --color-primary--active );
-}
-
-.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:active .oo-ui-toggleSwitchWidget-grip,
-.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:active:hover .oo-ui-toggleSwitchWidget-grip,
-.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:active:focus .oo-ui-toggleSwitchWidget-grip {
-	border-color: var( --color-surface-2--hover );
-	background-color: var( --color-surface-2--hover );
 }
 
 .oo-ui-toggleSwitchWidget.oo-ui-widget-enabled:focus {
@@ -80,11 +86,6 @@
 .oo-ui-toggleSwitchWidget.oo-ui-widget-enabled.oo-ui-toggleWidget-on {
 	border-color: var( --color-primary );
 	background-color: var( --color-primary );
-}
-
-.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled.oo-ui-toggleWidget-on .oo-ui-toggleSwitchWidget-grip {
-	border-color: var( --color-surface-2--hover );
-	background-color: var( --color-surface-2--hover );
 }
 
 .oo-ui-toggleSwitchWidget.oo-ui-widget-enabled.oo-ui-toggleWidget-on:hover {
@@ -102,48 +103,41 @@
 	border-color: var( --color-primary );
 }
 
-.oo-ui-toggleSwitchWidget.oo-ui-widget-enabled.oo-ui-toggleWidget-on:focus:before {
-	border-color: var( --color-surface-2--hover );
-}
-
 .oo-ui-toggleSwitchWidget.oo-ui-widget-disabled {
 	border-color: var( --color-surface-4 );
 	background-color: var( --color-surface-4 );
-	outline: 0;
 }
 
 .oo-ui-toggleSwitchWidget.oo-ui-widget-disabled.oo-ui-toggleWidget-off .oo-ui-toggleSwitchWidget-grip {
-	border-color: var( --color-surface-2--hover );
-	box-shadow: inset 0 0 0 1px var( --color-surface-2--hover );
-}
-
-.oo-ui-toggleSwitchWidget.oo-ui-widget-disabled.oo-ui-toggleWidget-on .oo-ui-toggleSwitchWidget-grip {
-	background-color: var( --color-surface-2--hover );
+	border-color: var( --color-base--subtle );
+	box-shadow: inset 0 0 0 1px var( --color-base--subtle );
 }
 
 .oo-ui-selectFileWidget-dropTarget {
 	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--small );
 	background-color: var( --color-surface-1 );
 }
 
 .oo-ui-selectFileWidget.oo-ui-widget-enabled.oo-ui-selectFileWidget-dropTarget {
-	background-color: var( --color-surface-1 );
+	background-color: transparent;
 }
 
 .oo-ui-selectFileWidget.oo-ui-widget-enabled.oo-ui-selectFileWidget-dropTarget:hover {
-	border-color: var( --border-color-base );
+	border-color: var( --color-primary--hover );
+	background-color: var( --color-surface-1 );
 }
 
 .oo-ui-selectFileWidget.oo-ui-widget-enabled.oo-ui-selectFileWidget-canDrop.oo-ui-selectFileWidget-dropTarget,
 .oo-ui-selectFileWidget.oo-ui-widget-enabled.oo-ui-selectFileWidget-canDrop .oo-ui-selectFileInputWidget-info > .oo-ui-inputWidget-input {
 	background-color: var( --background-color-primary--hover );
-	color: var( --color-primary );
+	color: var( --color-primary--active );
 }
 
 .oo-ui-selectFileWidget.oo-ui-widget-disabled.oo-ui-selectFileWidget-dropTarget,
 .oo-ui-selectFileWidget.oo-ui-selectFileInputWidget-empty.oo-ui-widget-disabled.oo-ui-selectFileWidget-dropTarget {
 	border-color: var( --color-surface-4 );
-	background-color: var( --color-surface-3 );
+	background-color: var( --color-surface-4 );
 }
 
 .oo-ui-outlineSelectWidget:focus {
@@ -179,6 +173,12 @@
 
 .oo-ui-tabOptionWidget {
 	color: var( --color-base );
+	font-weight: var( --font-weight-semibold );
+}
+
+.oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget {
+	border-top-left-radius: var( --border-radius--small );
+	border-top-right-radius: var( --border-radius--small );
 }
 
 .oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget.oo-ui-optionWidget-selected {
@@ -228,12 +228,13 @@
 }
 
 .oo-ui-tabSelectWidget-frameless.oo-ui-widget-enabled:focus .oo-ui-tabOptionWidget.oo-ui-optionWidget-selected {
-	border-radius: 2px;
+	border-radius: var( --border-radius--small );
 	box-shadow: inset 0 0 0 2px var( --color-primary );
 }
 
 .oo-ui-tagMultiselectWidget-handle {
 	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--small );
 }
 
 .oo-ui-tagMultiselectWidget-handle > .oo-ui-tagMultiselectWidget-content > input {

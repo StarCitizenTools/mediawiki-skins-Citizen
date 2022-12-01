@@ -9,7 +9,7 @@
 */
 
 .mw-ui-button {
-	border-color: var( --border-color-base );
+	border-color: var( --color-surface-2 );
 	background-color: var( --color-surface-2 );
 	color: var( --color-base--emphasized );
 	font-weight: var( --font-weight-semibold );
@@ -34,9 +34,9 @@
 
 		&:active,
 		&.is-on {
-			border-color: var( --border-color-base );
+			border-color: var( --color-surface-2--active );
 			background-color: var( --color-surface-2--active );
-			color: var( --color-base--emphasized );
+			color: var( --color-base--subtle );
 		}
 	}
 
@@ -69,7 +69,7 @@
 		&:active {
 			border-color: transparent;
 			background-color: var( --background-color-quiet--active );
-			color: var( --color-base--emphasized );
+			color: var( --color-base--subtle );
 		}
 
 		&:disabled,
@@ -87,6 +87,7 @@
 			&:hover {
 				border-color: var( --color-primary--hover );
 				background-color: var( --color-primary--hover );
+				color: #fff;
 			}
 
 			&:focus {
@@ -97,6 +98,7 @@
 			&.is-on {
 				border-color: var( --color-primary--active );
 				background-color: var( --color-primary--active );
+				color: #fff;
 			}
 		}
 
@@ -138,6 +140,7 @@
 			&:hover {
 				border-color: var( --color-destructive--hover );
 				background-color: var( --color-destructive--hover );
+				color: #fff;
 			}
 
 			&:focus {
@@ -148,6 +151,7 @@
 			&.is-on {
 				border-color: var( --color-destructive--active );
 				background-color: var( --color-destructive--active );
+				color: #fff;
 			}
 		}
 
