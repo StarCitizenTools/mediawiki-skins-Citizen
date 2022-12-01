@@ -3,7 +3,7 @@
  * https://starcitizen.tools
 */
 
-@import '../../../resources/variables.less';
+@import '../../../resources/mixins.less';
 
 /*!
  * Styling for Special:Watchlist and Special:RecentChanges
@@ -53,20 +53,30 @@
 			color: var( --color-base--subtle );
 		}
 	}
-}
 
-// Need additional parent to override
-.citizen-body {
-	.mw-changeslist h4 {
+	h4 {
 		padding: var( --space-sm ) 0;
 		border-bottom: 1px solid var( --border-color-base );
+		margin-bottom: 0;
 		color: var( --color-base--subtle );
 		font-size: 0.8125rem;
 		font-weight: var( --font-weight-normal );
 		letter-spacing: 0.05em;
+		.citizen-sticky-header( 0, false );
+	}
+
+	&-line {
+		+ .mw-changeslist-line {
+			border-top: 1px solid var( --border-color-base ); // Add separator
+		}
 	}
 }
 
 .client-js .mw-recentchanges-toplinks:not( .mw-recentchanges-toplinks-collapsed ) {
 	border-color: var( --border-color-base );
+}
+
+// Disable sticky header
+#citizen-body-header-sticky-sentinel {
+	display: none;
 }

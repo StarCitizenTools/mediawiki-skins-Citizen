@@ -3,6 +3,8 @@
  * https://starcitizen.tools
 */
 
+@import 'variables.less';
+
 .citizen-card( @border-radius: true ) {
 	background-color: var( --color-surface-1 );
 	box-shadow: var( --box-shadow-dialog );
@@ -112,6 +114,7 @@
 	&:before {
 		position: absolute;
 		z-index: -1;
+		top: @topOffset;
 		right: ~'calc( var(--padding-page ) * -1 )';
 		left: ~'calc( var(--padding-page ) * -1 )';
 		height: 100%;
