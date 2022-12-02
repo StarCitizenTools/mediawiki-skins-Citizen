@@ -225,12 +225,17 @@ class SkinHooks implements
 		// Most icons are not mapped yet in the associated pages menu
 		$iconMap = [
 			'main' => 'article',
-			'user' => 'userAvatar',
-			'talk' => 'speechBubbles',
-			'category_talk' => 'speechBubbles',
-			'image_talk' => 'speechBubbles',
-			'user_talk' => 'userTalk'
+			'user' => 'userAvatar'
 		];
+
+		// Special handling for talk pages
+		// Since talk keys have namespace as prefix
+		foreach ( $links['associated-pages'] as $key => $item ) {
+			// I wish I can use str_ends_with but need to wait for PHP 7.X to be dropped
+			if ( substr( $key, -4 ) === 'talk' ) {
+				$links['associated-pages'][$key]['icon'] = 'speechBubbles';
+			}
+		}
 
 		self::mapIconsToMenuItems( $links, 'associated-pages', $iconMap );
 		self::addIconsToMenuItems( $links, 'associated-pages' );
