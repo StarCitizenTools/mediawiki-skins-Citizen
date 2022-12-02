@@ -43,8 +43,8 @@ function renderSearchLoadingIndicator( event ) {
 
 	if (
 		!( event.currentTarget instanceof HTMLElement ) ||
-		!( event.target instanceof HTMLInputElement ) ||
-		!( input.id === SEARCH_INPUT_ID ) ) {
+		!( event.target instanceof HTMLInputElement ) 
+	) {
 		return;
 	}
 
@@ -98,6 +98,7 @@ function focusOnChecked( checkbox, input ) {
 
 /**
  * Check if the element is a HTML form element or content editable
+ * This is to prevent trigger search box when user is typing on a textfield, input, etc.
  *
  * @param {HTMLElement} element
  * @return {boolean}
@@ -141,26 +142,42 @@ function bindExpandOnSlash( window, checkbox, input ) {
  * @return {void}
  */
 function initSearch( window ) {
-	const searchConfig = require( './config.json' ).wgCitizenEnableSearch,
-		checkbox = document.getElementById( 'citizen-search__checkbox' ),
-		form = document.getElementById( 'searchform' ),
-		input = document.getElementById( SEARCH_INPUT_ID );
+	const 
+		searchConfig = require( './config.json' ).wgCitizenEnableSearch,
+		searchBoxes = document.querySelectorAll( '.citizen-search-box' );
 
-	bindExpandOnSlash( window, checkbox, input );
-
-	// Focus when toggled
-	checkbox.addEventListener( 'input', () => {
-		focusOnChecked( checkbox, input );
-	} );
-
-	if ( searchConfig ) {
-		setLoadingIndicatorListeners( form, true, renderSearchLoadingIndicator );
-		loadSearchModule( input, 'skins.citizen.search', () => {
-			setLoadingIndicatorListeners( form, false, renderSearchLoadingIndicator );
-		} );
-	} else {
-		loadSearchModule( input, 'mediawiki.searchSuggest', () => {} );
+	if ( !searchBoxes.length ) {
+		return;
 	}
+
+	searchBoxes.forEach( ( searchBox ) => {
+		const 
+			input = searchBox.querySelector( 'input[name="search"]' ),
+			isPrimarySearch = input && input.getAttribute( 'id' ) === 'searchInput';
+
+		if ( !input ) {
+			return;
+		}
+
+		// Set up primary search box interactions
+		if ( isPrimarySearch ) {
+			const checkbox = document.getElementById( 'citizen-search__checkbox' );
+			bindExpandOnSlash( window, checkbox, input );
+			// Focus when toggled
+			checkbox.addEventListener( 'input', () => {
+				focusOnChecked( checkbox, input );
+			} );
+		}
+
+		if ( searchConfig ) {
+			setLoadingIndicatorListeners( searchBox, true, renderSearchLoadingIndicator );
+			loadSearchModule( input, 'skins.citizen.search', () => {
+				setLoadingIndicatorListeners( searchBox, false, renderSearchLoadingIndicator );
+			} );
+		} else {
+			loadSearchModule( input, 'mediawiki.searchSuggest', () => {} );
+		}
+	} );
 }
 
 module.exports = {

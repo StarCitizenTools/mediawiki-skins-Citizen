@@ -14,11 +14,13 @@
 		role="button"
 		aria-labelledby="citizen-search__buttonCheckbox"
 		aria-haspopup="true">
-	<form action="{{form-action}}" role="search" id="searchform" class="citizen-search__card mw-checkbox-hack-target" autocomplete="off">
-		<input type="hidden" name="title" value="{{page-title}}">
-		<label class="screen-reader-text" for="searchInput">{{msg-search}}</label>
-		<span class="citizen-ui-icon mw-ui-icon-wikimedia-search"></span>
-		{{{html-input}}}
+	<div role="search" class="citizen-search-box citizen-search__card mw-checkbox-hack-target">
+		<span class="citizen-search__icon citizen-ui-icon mw-ui-icon-wikimedia-search"></span>
+		<form action="{{form-action}}" id="searchform" autocomplete="off">
+			<input type="hidden" name="title" value="{{page-title}}">
+			<label class="screen-reader-text" for="searchInput">{{msg-search}}</label>
+			{{{html-input}}}
+		</form>
 		<a
 			class="citizen-search__random"
 			href="{{html-random-href}}"
@@ -26,6 +28,6 @@
 			<span class="citizen-ui-icon mw-ui-icon-wikimedia-die"></span>
 			<span class="screen-reader-text">{{msg-random}}</span>
 		</a>
-	</form>
+	</div>
 	{{>Search__button}}
 </div>

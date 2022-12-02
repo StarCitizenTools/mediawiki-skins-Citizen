@@ -35,7 +35,19 @@
 		}
 	}
 
+	&__icon,
 	&__random {
+		// So that searchInput has the full width,
+		// and search suggestions will match that width
+		position: absolute;
+	}
+
+	&__icon {
+		left: 0;
+	}
+
+	&__random {
+		right: 0;
 		border-radius: var( --border-radius--small );
 
 		.citizen-ui-icon:before {
@@ -60,9 +72,14 @@
 		}
 	}
 
-	#searchInput {
+	#searchform {
 		flex-grow: 1;
-		padding: 0;
+	}
+
+	#searchInput {
+		width: 100%;
+		height: 100%;
+		padding: 0 var( --height-search-bar );
 		border: 0; // Cancel default border
 		appearance: none;
 		background: transparent; // Cancel default background
