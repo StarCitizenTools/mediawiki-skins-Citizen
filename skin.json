@@ -545,10 +545,10 @@
 			"descriptionmsg": "citizen-config-manifestbackgroundcolor",
 			"public": true
 		},
-		"EnableSearch": {
-			"value": true,
-			"description": "Enable or disable rich search suggestions",
-			"descriptionmsg": "citizen-config-enablesearch",
+		"SearchModule": {
+			"value": "skins.citizen.search",
+			"description": "Which module to use for search suggestion. Avaliable options: [citizen|mw]",
+			"descriptionmsg": "citizen-config-searchmodule",
 			"public": true
 		},
 		"SearchGateway": {

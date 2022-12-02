@@ -142,8 +142,8 @@ function bindExpandOnSlash( window, checkbox, input ) {
  * @return {void}
  */
 function initSearch( window ) {
-	const
-		searchConfig = require( './config.json' ).wgCitizenEnableSearch,
+	const 
+		searchModule = require( './config.json' ).wgCitizenSearchModule,
 		searchBoxes = document.querySelectorAll( '.citizen-search-box' );
 
 	if ( !searchBoxes.length ) {
@@ -169,14 +169,10 @@ function initSearch( window ) {
 			} );
 		}
 
-		if ( searchConfig ) {
-			setLoadingIndicatorListeners( searchBox, true, renderSearchLoadingIndicator );
-			loadSearchModule( input, 'skins.citizen.search', () => {
-				setLoadingIndicatorListeners( searchBox, false, renderSearchLoadingIndicator );
-			} );
-		} else {
-			loadSearchModule( input, 'mediawiki.searchSuggest', () => {} );
-		}
+		setLoadingIndicatorListeners( searchBox, true, renderSearchLoadingIndicator );
+		loadSearchModule( input, searchModule, () => {
+			setLoadingIndicatorListeners( searchBox, false, renderSearchLoadingIndicator );
+		} );
 	} );
 }
 
