@@ -43,7 +43,7 @@ function renderSearchLoadingIndicator( event ) {
 
 	if (
 		!( event.currentTarget instanceof HTMLElement ) ||
-		!( event.target instanceof HTMLInputElement ) 
+		!( event.target instanceof HTMLInputElement )
 	) {
 		return;
 	}
@@ -142,7 +142,7 @@ function bindExpandOnSlash( window, checkbox, input ) {
  * @return {void}
  */
 function initSearch( window ) {
-	const 
+	const
 		searchConfig = require( './config.json' ).wgCitizenEnableSearch,
 		searchBoxes = document.querySelectorAll( '.citizen-search-box' );
 
@@ -151,7 +151,7 @@ function initSearch( window ) {
 	}
 
 	searchBoxes.forEach( ( searchBox ) => {
-		const 
+		const
 			input = searchBox.querySelector( 'input[name="search"]' ),
 			isPrimarySearch = input && input.getAttribute( 'id' ) === 'searchInput';
 
