@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.0.1...v2.1.0) (2022-12-02)
+
+
+### Features
+
+* **codex:** ✨ add grade A support for Codex ([dd7270b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/dd7270bcd4a65f3375653b7e99e5b6f3a19b199d))
+* **core:** ✨ add create account page styles ([fcf2f43](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fcf2f436cdce880e8b6f5a490e9c2879e2e6f4f6))
+* **core:** ✨ add hover states to editsection links ([3fb66b3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3fb66b38b256bf6fb9db29ec1208c9782b558c9d))
+* **core:** ✨ add htmlform styles ([51c931e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/51c931eed2bd5859c5794a2d6064cd1dcef06e72))
+* **core:** ✨ allow collapsible sections with DiscussionTools wrappers on headings ([ad714dc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ad714dcfedf56a515d3151797479dbf619ea33fe))
+* **core:** ✨ only apply letter spacing to text field labels ([f041b2c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f041b2cbead85ce4d503fda3c01ab0761230cb0f))
+* **core:** ✨ redo MediaWiki UI styles ([ce9e9de](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ce9e9de25bbb88ec85ecd7a1ad23bc1f984fe3a3))
+* **core:** ✨ reduce scroll up header delay ([f70d410](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f70d4107795002c18a68472d1090bd4231c2c1d4))
+* **core:** ✨ right align language badge ([bfcd43c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bfcd43ce1198249cd53f3cc50e577975de7b80f2))
+* **core:** ✨ tweak content footer styles ([baab7e1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/baab7e17a8eb7ca58fa77816ad0b7fb12a94cc08))
+* **core:** ✨ tweak gallery styles ([a863949](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a8639493251b04226b9ad7a33640944b48b173ed))
+* **core:** ✨ tweak page actions styles ([069f442](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/069f442d576d408fbe65fc2b9b7bdcc381ae66d7))
+* **core:** ✨ tweak RC and Watchlist styles ([faf294e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/faf294e899169b0c057b2b0fa18e399c34d0b63f))
+* **core:** ✨ tweak signup, login page styles ([97b8ece](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/97b8ece48f8286d5f349d011d913055044f90345))
+* **core:** ✨ unify sticky header styles ([467cf85](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/467cf85be47744efeff8e51ef0ff3d63843f86bc))
+* **core:** add underglow to progress indicator ([bf9a485](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bf9a4850f6e20f53c047000e4f6fc38169da2df4))
+* **MultimediaViewer:** ✨ revamp mmv styles ([7b6743e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7b6743e4b61faea1b29efeb84b392eecf64e0faf))
+* **MultimediaViewer:** ✨ tweak scroll indicator behavior ([28368f3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/28368f3dfa0aa9fd13f16a5839fe1a6570930fca))
+* **ooui:** ✨ do not flip OOUI icons that are marked ([93f5f3f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/93f5f3fc067a32a30709e9c72d78d2ad3cd33096))
+* **ooui:** ✨ redo OOUI styles ([ca7dd9f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ca7dd9fe86642a321d9984d089b7963a082cb7f4))
+* **Popups:** ✨ add responsive support for Popups ([1238799](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1238799a821cc8259201277847fbe42576461c94))
+* **Popups:** ✨ update Popups styles ([dcd7a7b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/dcd7a7bf21703bc0a4e7995afa1c69fad46a80b9))
+* **typography:** ✨ add bottom margin to headings ([be71399](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/be7139968e938a20a9c073c872e62c401e5afecf))
+* **typography:** ✨ add label styles ([5e14891](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5e14891088fd8f4b00bd27bb99e8e20cc3d065a8))
+* **typography:** ✨ do not change GRAD axis ([027e298](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/027e298e1e81466a44a9d27e326541281c4fe0bf))
+
+
+### Bug Fixes
+
+* **core:** 🐛 clean up leftover drawer script references ([#554](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/554)) ([e261abf](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e261abf8b5239db167f7336a49c370bbb4708291))
+* **core:** 🐛 content should not collaspe margin ([41dd999](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/41dd999f5a606fe34c249cbdc2f62738bc5d3193))
+* **core:** 🐛 incorrect height for page action button ([b182872](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b182872ea7882ad6045cfd84e5b107ab6a0de3d4))
+* **core:** 🐛 input focus state should use hover background color ([f64f1a2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f64f1a2d5edf7ac857c19c155c0fc365bf344006))
+
 ### [2.0.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.0.0...v2.0.1) (2022-11-22)
 
 
