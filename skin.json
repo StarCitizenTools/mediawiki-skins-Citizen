@@ -547,13 +547,13 @@
 		},
 		"SearchModule": {
 			"value": "skins.citizen.search",
-			"description": "Which module to use for search suggestion. Avaliable options: [citizen|mw]",
+			"description": "Which module to use for search suggestion. Avaliable options: [skins.citizen.search|mediawiki.searchSuggest|custom]",
 			"descriptionmsg": "citizen-config-searchmodule",
 			"public": true
 		},
 		"SearchGateway": {
 			"value": "mwActionApi",
-			"description": "Which gateway to use for fetching search suggestion. Avaliable options: [mwActionApi|mwRestApi]",
+			"description": "Which gateway to use for fetching search suggestion. Avaliable options: [mwActionApi|mwRestApi|custom]",
 			"descriptionmsg": "citizen-config-searchgateway",
 			"public": true
 		},

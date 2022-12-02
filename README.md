@@ -110,8 +110,8 @@ Name | Description | Values | Default
 ### Search suggestions
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
-`$wgCitizenSearchModule` | Which ResourceLoader module to use for search suggestion (e.g. `mediawiki.searchSuggest`). | string | `skins.citizen.search`
-`$wgCitizenSearchGateway` | Which gateway to use for fetching search suggestion |`mwActionApi`; `mwRestApi` | `mwActionApi`
+`$wgCitizenSearchModule` | Which ResourceLoader module to use for search suggestion | `skins.citizen.search`; `mediawiki.searchSuggest`; string | `skins.citizen.search`
+`$wgCitizenSearchGateway` | Which gateway to use for fetching search suggestion |`mwActionApi`; `mwRestApi`; string | `mwActionApi`
 `$wgCitizenSearchDescriptionSource` | Source of description text on search suggestions (only takes effect if `$wgCitizenSearchGateway` is `mwActionApi`) | `wikidata` - Use description provided by [WikibaseLib](Extension:WikibaseLib) or [ShortDescription](https://www.mediawiki.org/wiki/Extension:ShortDescription); `textextracts` - Use description provided by [TextExtracts](https://www.mediawiki.org/wiki/Extension:TextExtracts); `pagedescription` - Use description provided by [Description2](https://www.mediawiki.org/wiki/Extension:Description2) or any other extension that sets the `description` page property | `textextracts`
 `$wgCitizenMaxSearchResults` | Max number of search suggestions | Integer > 0 | `6`
 
