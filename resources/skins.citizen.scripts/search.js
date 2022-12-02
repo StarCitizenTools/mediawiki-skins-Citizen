@@ -142,7 +142,7 @@ function bindExpandOnSlash( window, checkbox, input ) {
  * @return {void}
  */
 function initSearch( window ) {
-	const 
+	const
 		searchModule = require( './config.json' ).wgCitizenSearchModule,
 		searchBoxes = document.querySelectorAll( '.citizen-search-box' );
 
