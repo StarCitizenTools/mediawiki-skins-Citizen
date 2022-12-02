@@ -30,6 +30,7 @@ Please feel free to submit PRs if you want to add support for more extensions!
 Name | Grade | Version | Last updated
 :--- | :--- | :--- | :---
 MediaWiki UI | A | 1.39.0 | 2022-11-30
+Codex | A | 0.1.1| 2022-12-01
 OOUI | A | 0.44.3 | 2022-11-30
 
 ### Extensions

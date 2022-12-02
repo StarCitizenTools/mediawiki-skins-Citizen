@@ -1,0 +1,864 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Codex
+ * Module: @wikimedia/codex
+ * Version: v0.1.1
+ *
+ * Date: 2022-12-01
+*/
+
+.cdx-icon {
+	color: var( --color-base );
+}
+
+.cdx-button {
+	border-radius: var( --border-radius--small );
+	font-weight: var( --font-weight-medium );
+}
+
+.cdx-button:enabled {
+	color: var( --color-base--emphasized );
+}
+
+.cdx-button:enabled:focus:not( :active ) {
+	border-color: var( --color-primary );
+	box-shadow: inset 0 0 0 1px var( --color-primary );
+}
+
+.cdx-button--framed:enabled {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+}
+
+.cdx-button--framed:enabled:hover {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2--hover );
+	color: var( --color-base--emphasized );
+}
+
+.cdx-button--framed:enabled:active {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2--active );
+	color: var( --color-base--subtle );
+}
+
+.cdx-button--framed:disabled {
+	border-color: var( --color-surface-4 );
+	background-color: var( --color-surface-4 );
+	color: var( --color-base--subtle );
+}
+
+.cdx-button--type-primary.cdx-button--action-progressive:enabled {
+	border-color: var( --color-primary );
+	background-color: var( --color-primary );
+}
+
+.cdx-button--type-primary.cdx-button--action-progressive:enabled:hover {
+	border-color: var( --color-primary--hover );
+	background-color: var( --color-primary--hover );
+}
+
+.cdx-button--type-primary.cdx-button--action-progressive:enabled:active {
+	border-color: var( --color-primary--active );
+	background-color: var( --color-primary--active );
+}
+
+.cdx-button--type-primary.cdx-button--action-progressive:enabled:focus:not( :active ) {
+	border-color: var( --color-primary );
+	box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px #fff;
+}
+
+.cdx-button--type-primary.cdx-button--action-destructive:enabled {
+	border-color: var( --color-destructive );
+	background-color: var( --color-destructive );
+}
+
+.cdx-button--type-primary.cdx-button--action-destructive:enabled:hover {
+	border-color: var( --color-destructive--hover );
+	background-color: var( --color-destructive--hover );
+}
+
+.cdx-button--type-primary.cdx-button--action-destructive:enabled:active {
+	border-color: var( --color-destructive--active );
+	background-color: var( --color-destructive--active );
+}
+
+.cdx-button--type-primary.cdx-button--action-destructive:enabled:focus:not( :active ) {
+	border-color: var( --color-destructive );
+	box-shadow: inset 0 0 0 1px var( --color-destructive ), inset 0 0 0 2px #fff;
+}
+
+.cdx-button--type-normal.cdx-button--action-progressive:enabled {
+	color: var( --color-primary );
+}
+
+.cdx-button--type-normal.cdx-button--action-progressive:enabled:hover {
+	border-color: var( --color-primary--hover );
+	color: var( --color-primary--hover );
+}
+
+.cdx-button--type-normal.cdx-button--action-progressive:enabled:active {
+	border-color: var( --color-primary--active );
+	background-color: var( --color-surface-2--active ); // Use normal style for now
+	color: var( --color-primary--active );
+}
+
+.cdx-button--type-normal.cdx-button--action-destructive:enabled {
+	color: var( --color-destructive );
+}
+
+.cdx-button--type-normal.cdx-button--action-destructive:enabled:hover {
+	border-color: var( --color-destructive--hover );
+	color: var( --color-destructive--hover );
+}
+
+.cdx-button--type-normal.cdx-button--action-destructive:enabled:active {
+	border-color: var( --color-destructive--active );
+	background-color: var( --color-surface-2--active ); // Use normal style for now
+	color: var( --color-destructive--active );
+}
+
+.cdx-button--type-normal.cdx-button--action-destructive:enabled:focus:not( :active ) {
+	border-color: var( --color-destructive );
+	box-shadow: inset 0 0 0 1px var( --color-destructive );
+}
+
+.cdx-button--type-quiet:enabled:hover {
+	background-color: var( --background-color-quiet--hover );
+}
+
+.cdx-button--type-quiet:enabled:active {
+	border-color: var( --background-color-quiet--active );
+	background-color: var( --background-color-quiet--active );
+	color: var( --color-base--subtle );
+}
+
+.cdx-button--type-quiet.cdx-button--action-progressive:enabled {
+	color: var( --color-primary );
+}
+
+.cdx-button--type-quiet.cdx-button--action-progressive:enabled:hover {
+	background-color: var( --background-color-primary--hover );
+	color: var( --color-primary--hover );
+}
+
+.cdx-button--type-quiet.cdx-button--action-progressive:enabled:active {
+	border-color: var( --color-primary--active );
+	background-color: var( --color-primary--active );
+}
+
+.cdx-button--type-quiet.cdx-button--action-destructive:enabled {
+	color: var( --color-destructive );
+}
+
+.cdx-button--type-quiet.cdx-button--action-destructive:enabled:hover {
+	background-color: var( --background-color-destructive );
+	color: var( --color-destructive--hover );
+}
+
+.cdx-button--type-quiet.cdx-button--action-destructive:enabled:active {
+	border-color: var( --color-destructive--active );
+	background-color: var( --color-destructive--active );
+}
+
+.cdx-button--type-quiet.cdx-button--action-destructive:enabled:focus:not( :active ) {
+	border-color: var( --color-destructive );
+	box-shadow: inset 0 0 0 1px var( --color-destructive );
+}
+
+.cdx-button--type-quiet:disabled {
+	color: var( --color-base--subtle );
+}
+
+.cdx-button-group {
+	border-radius: var( --border-radius--small );
+}
+
+.cdx-button-group .cdx-button:disabled {
+	box-shadow: 0 -1px var( --color-base--subtle ), -1px 0 var( --color-base--subtle );
+}
+
+.cdx-thumbnail__placeholder,
+.cdx-thumbnail__image {
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--small );
+}
+
+.cdx-thumbnail__placeholder {
+	background-color: var( --color-surface-2 );
+}
+
+.cdx-thumbnail__placeholder__icon {
+	color: var( --color-base--subtle );
+}
+
+.cdx-card {
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--medium );
+	background-color: var( --color-surface-1 );
+}
+
+.cdx-card--is-link:hover {
+	border-color: var( --color-primary--hover );
+}
+
+.cdx-card--is-link:focus {
+	border-color: var( --color-primary );
+	box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px #fff;
+}
+
+.cdx-card__text {
+	line-height: var( --line-height-sm );
+}
+
+.cdx-card__text__title {
+	color: var( --color-base--emphasized );
+	font-weight: var( --font-weight-semibold );
+	line-height: var( --line-height-xs );
+}
+
+// Splitting description and supporting text into two colors
+.cdx-card__text__description,
+.cdx-card__text__description .cdx-icon {
+	color: var( --color-base );
+}
+
+.cdx-card__text__supporting-text,
+.cdx-card__text__supporting-text .cdx-icon {
+	color: var( --color-base--subtle );
+}
+
+.cdx-checkbox__icon {
+	border-color: var( --border-color-base--darker );
+	border-radius: var( --border-radius--small );
+	// Show background when hovered
+	background-color: transparent;
+}
+
+.cdx-checkbox__input:enabled:hover + .cdx-checkbox__icon {
+	border-color: var( --color-primary--hover );
+	background-color: var( --color-surface-0 );
+}
+
+.cdx-checkbox__input:enabled:active + .cdx-checkbox__icon {
+	border-color: var( --color-primary--active );
+	background-color: var( --color-primary--active );
+}
+
+.cdx-checkbox__input:enabled:focus:not( :active ) + .cdx-checkbox__icon {
+	border-color: var( --color-primary );
+	background-color: var( --color-surface-0 );
+	box-shadow: inset 0 0 0 1px var( --color-primary );
+}
+
+.cdx-checkbox__input:enabled:checked + .cdx-checkbox__icon,
+.cdx-checkbox__input:enabled:indeterminate + .cdx-checkbox__icon {
+	border-color: var( --color-primary );
+	background-color: var( --color-primary );
+}
+
+.cdx-checkbox__input:enabled:checked:hover + .cdx-checkbox__icon,
+.cdx-checkbox__input:enabled:indeterminate:hover + .cdx-checkbox__icon {
+	border-color: var( --color-primary--hover );
+	background-color: var( --color-primary--hover );
+}
+
+.cdx-checkbox__input:enabled:checked:active + .cdx-checkbox__icon,
+.cdx-checkbox__input:enabled:indeterminate:active + .cdx-checkbox__icon {
+	border-color: var( --color-primary--active );
+	background-color: var( --color-primary--active );
+}
+
+.cdx-checkbox__input:enabled:checked:focus:not( :active ):not( :hover ) + .cdx-checkbox__icon,
+.cdx-checkbox__input:enabled:indeterminate:focus:not( :active ):not( :hover ) + .cdx-checkbox__icon {
+	border-color: var( --color-primary );
+	background-color: var( --color-primary );
+}
+
+.cdx-checkbox__input:enabled:checked:focus:not( :active ) + .cdx-checkbox__icon,
+.cdx-checkbox__input:enabled:indeterminate:focus:not( :active ) + .cdx-checkbox__icon {
+	box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px #fff;
+}
+
+.cdx-checkbox__input:disabled + .cdx-checkbox__icon {
+	border-color: var( --color-surface-4 );
+	background-color: var( --color-surface-4 );
+}
+
+.cdx-checkbox__input:disabled ~ .cdx-checkbox__label-content {
+	color: var( --color-base--subtle );
+}
+
+.cdx-search-result-title {
+	font-weight: var( --font-weight-semibold );
+}
+
+.cdx-menu-item {
+	line-height: var( --line-height );
+}
+
+.cdx-menu-item__content {
+	line-height: var( --line-height-sm );
+}
+
+.cdx-menu-item--bold-label .cdx-menu-item__text__label {
+	font-weight: var( --font-weight-semibold );
+}
+
+.cdx-menu-item--enabled,
+.cdx-menu-item--enabled .cdx-menu-item__content {
+	color: var( --color-base--emphasized );
+}
+
+.cdx-menu-item--enabled .cdx-menu-item__text__description {
+	color: var( --color-base--subtle );
+}
+
+.cdx-menu-item--enabled:hover,
+.cdx-menu-item--enabled.cdx-menu-item--highlighted {
+	background-color: var( --background-color-quiet--hover );
+}
+
+.cdx-menu-item--enabled.cdx-menu-item--active,
+.cdx-menu-item--enabled.cdx-menu-item--active:hover {
+	background-color: var( --background-color-primary--hover );
+	color: var( --color-primary );
+}
+
+.cdx-menu-item--enabled.cdx-menu-item--active .cdx-menu-item__content,
+.cdx-menu-item--enabled.cdx-menu-item--active:hover .cdx-menu-item__content,
+.cdx-menu-item--enabled.cdx-menu-item--active .cdx-menu-item__text__description,
+.cdx-menu-item--enabled.cdx-menu-item--active:hover .cdx-menu-item__text__description {
+	color: var( --color-primary );
+}
+
+.cdx-menu-item--enabled.cdx-menu-item--selected,
+.cdx-menu-item--enabled.cdx-menu-item--selected:hover {
+	background-color: var( --background-color-primary--hover );
+}
+
+.cdx-menu-item--enabled.cdx-menu-item--selected:hover,
+.cdx-menu-item--enabled.cdx-menu-item--selected.cdx-menu-item--highlighted,
+.cdx-menu-item--enabled.cdx-menu-item--selected:hover .cdx-menu-item__content,
+.cdx-menu-item--enabled.cdx-menu-item--selected.cdx-menu-item--highlighted .cdx-menu-item__content,
+.cdx-menu-item--enabled.cdx-menu-item--selected:hover .cdx-menu-item__text__description,
+.cdx-menu-item--enabled.cdx-menu-item--selected.cdx-menu-item--highlighted .cdx-menu-item__text__description {
+	color: var( --color-primary );
+}
+
+.cdx-menu-item--disabled {
+	color: var( --color-base--subtle );
+}
+
+.cdx-menu-item--disabled .cdx-menu-item__text__description {
+	color: var( --color-base--subtle );
+}
+
+.cdx-progress-bar__bar {
+	background-color: var( --color-primary );
+	// Fancy shadow
+	// TODO: Need to figure out a way to deal with the overflow issue
+	filter: drop-shadow( 0 0 16px var( --color-primary ) );
+}
+
+.cdx-progress-bar--block {
+	border-color: var( --color-primary );
+	background-color: var( --color-surface-1 );
+}
+
+.cdx-menu {
+	border-color: var( --border-color-base--darker );
+	border-radius: 0 0 var( --border-radius--small ) var( --border-radius--small );
+	background-color: var( --color-surface-1 );
+	// box-shadow: var( --box-shadow-dialog );
+}
+
+.cdx-text-input__input:enabled {
+	border-color: var( --border-color-base--darker );
+	// Show background when hovered
+	background-color: transparent;
+	color: var( --color-base--emphasized );
+}
+
+.cdx-text-input__input:enabled ~ .cdx-text-input__icon {
+	color: var( --color-base--subtle );
+}
+
+.cdx-text-input__input:enabled:focus ~ .cdx-text-input__icon,
+.cdx-text-input__input:enabled.cdx-text-input__input--has-value ~ .cdx-text-input__icon {
+	color: var( --color-base );
+}
+
+.cdx-text-input__input:enabled:hover {
+	border-color: var( --color-primary--hover );
+	background-color: var( --color-surface-0 );
+}
+
+.cdx-text-input__input:enabled:focus {
+	border-color: var( --color-primary );
+	background-color: var( --color-surface-0 );
+	box-shadow: inset 0 0 0 1px var( --color-primary );
+}
+
+.cdx-text-input__input:disabled {
+	border-color: var( --color-surface-4 );
+	background-color: var( --color-surface-4 );
+	color: var( --color-base--subtle );
+	-webkit-text-fill-color: var( --color-base--subtle );
+}
+
+.cdx-text-input__input:disabled ~ .cdx-text-input__icon {
+	color: var( --color-base--subtle );
+}
+
+/* stylelint-disable-next-line selector-pseudo-element-no-unknown */
+.cdxinput__input::input-placeholder {
+	color: var( --color-base--subtle );
+}
+
+.cdx-text-input__input::placeholder {
+	color: var( --color-base--subtle );
+}
+
+.cdx-lookup--pending .cdx-text-input__input {
+	background-color: var( --color-surface-2 );
+	background-image: linear-gradient( 135deg, var( --color-surface-1 ) 25%, rgba( 255, 255, 255, 0 ) 25%, rgba( 255, 255, 255, 0 ) 50%, var( --color-surface-1 ) 50%, var( --color-surface-1 ) 75%, rgba( 255, 255, 255, 0 ) 75%, rgba( 255, 255, 255, 0 ) );
+}
+
+.cdx-message {
+	color: var( --color-base );
+}
+
+.cdx-message--warning .cdx-message__icon {
+	color: var( --color-warning );
+}
+
+.cdx-message--error .cdx-message__icon {
+	color: var( --color-destructive );
+}
+
+.cdx-message--success .cdx-message__icon {
+	color: var( --color-success );
+}
+
+.cdx-message--inline {
+	font-weight: var( --font-weight-semibold );
+}
+
+.cdx-message--inline.cdx-message--error {
+	color: var( --color-destructive );
+}
+
+.cdx-message--inline.cdx-message--success {
+	color: var( --color-success );
+}
+
+.cdx-message--block.cdx-message--notice {
+	border-color: var( --color-surface-2 );
+	background-color: var( --color-surface-2 );
+}
+
+.cdx-message--block.cdx-message--error {
+	border-color: var( --background-color-destructive );
+	background-color: var( --background-color-destructive );
+}
+
+.cdx-message--block.cdx-message--warning {
+	border-color: var( --background-color-warning );
+	background-color: var( --background-color-warning );
+}
+
+.cdx-message--block.cdx-message--success {
+	border-color: var( --background-color-success );
+	background-color: var( --background-color-success );
+}
+
+.cdx-radio__icon {
+	border-color: var( --border-color-base--darker );
+	// Show background when hovered
+	background-color: transparent;
+}
+
+.cdx-radio__input:enabled:hover + .cdx-radio__icon {
+	border-color: var( --color-primary--hover );
+	background-color: #fff;
+}
+
+.cdx-radio__input:enabled:active + .cdx-radio__icon {
+	border-color: var( --color-primary--active );
+	background-color: var( --color-primary--active );
+}
+
+.cdx-radio__input:enabled:checked + .cdx-radio__icon {
+	border-color: var( --color-primary );
+	background-color: #fff;
+}
+
+.cdx-radio__input:enabled:checked:hover + .cdx-radio__icon {
+	border-color: var( --color-primary--hover );
+}
+
+.cdx-radio__input:enabled:checked:active + .cdx-radio__icon {
+	border-color: var( --color-primary--active );
+}
+
+.cdx-radio__input:enabled:checked:active + .cdx-radio__icon:before {
+	border-color: var( --color-primary--active );
+}
+
+.cdx-radio__input:disabled ~ .cdx-radio__label-content {
+	color: var( --color-base--subtle );
+}
+
+.cdx-radio__input:disabled + .cdx-radio__icon {
+	border-color: var( --color-surface-4 );
+	background-color: var( --color-surface-4 );
+}
+
+/* Styles are already handled by other components */
+.cdx-search-input--has-end-button {
+	border-color: transparent;
+	border-radius: var( --border-radius--small );
+	background-color: transparent;
+}
+
+.cdx-select__handle {
+	border-radius: var( --border-radius--small );
+}
+
+.cdx-select__indicator {
+	color: var( --color-base );
+}
+
+.cdx-select--enabled .cdx-select__handle {
+	border-color: var( --border-color-base--darker );
+	// Show background when hovered
+	background-color: transparent;
+	color: var( --color-base--emphasized );
+}
+
+.cdx-select--enabled .cdx-select__handle:hover {
+	border-color: var( --color-primary--hover );
+	background-color: var( --color-surface-1 );
+	color: var( --color-base--emphasized );
+}
+
+.cdx-select--enabled .cdx-select__handle:hover .cdx-select__indicator {
+	color: var( --color-base );
+}
+
+.cdx-select--enabled .cdx-select__handle:focus {
+	border-color: var( --color-primary );
+	background-color: var( --color-surface-1 );
+	box-shadow: inset 0 0 0 1px var( --color-primary );
+}
+
+.cdx-select--enabled .cdx-select__handle:active {
+	border-color: var( --border-color-base--darker );
+	background-color: var( --color-surface-1 );
+	color: var( --color-base--subtle );
+}
+
+.cdx-select--enabled.cdx-select--expanded .cdx-select__handle {
+	background-color: var( --color-surface-1 );
+}
+
+.cdx-select--enabled.cdx-select--expanded .cdx-select__handle .cdx-select__indicator {
+	color: var( --color-base );
+}
+
+.cdx-select--disabled .cdx-select__handle {
+	border-color: var( --color-surface-4 );
+	background-color: var( --color-surface-4 );
+	color: var( --color-base--subtle );
+}
+
+.cdx-select--disabled .cdx-select__indicator,
+.cdx-select--disabled .cdx-select__start-icon {
+	color: var( --color-base--subtle );
+}
+
+.cdx-tabs > .cdx-tabs__header:focus .cdx-tabs__list__item--enabled.cdx-tabs__list__item--selected [ role='tab' ] {
+	box-shadow: inset 0 0 0 2px var( --color-primary );
+}
+
+.cdx-tabs__list__item [ role='tab' ] {
+	border-top-left-radius: var( --border-radius--small );
+	border-top-right-radius: var( --border-radius--small );
+	font-weight: var( --font-weight-medium );
+}
+
+.cdx-tabs__list__item [ role='tab' ]:focus {
+	border-top-left-radius: var( --border-radius--small );
+	border-top-right-radius: var( --border-radius--small );
+}
+
+.cdx-tabs--framed > .cdx-tabs__header {
+	background-color: var( --color-surface-2 );
+}
+
+.cdx-tabs--framed > .cdx-tabs__header .cdx-tabs__prev-scroller:after {
+	background-image: linear-gradient( to right, var( --color-surface-2 ) 0, rgba( 255, 255, 255, 0 ) 100% );
+}
+
+.cdx-tabs--framed > .cdx-tabs__header .cdx-tabs__next-scroller:before {
+	background-image: linear-gradient( to left, var( --color-surface-2 ) 0, rgba( 255, 255, 255, 0 ) 100% );
+}
+
+.cdx-tabs--framed > .cdx-tabs__header .cdx-tabs__list__item--enabled [ role='tab' ]:link,
+.cdx-tabs--framed > .cdx-tabs__header .cdx-tabs__list__item--enabled [ role='tab' ]:visited {
+	color: var( --color-base--emphasized );
+}
+
+.cdx-tabs--framed > .cdx-tabs__header .cdx-tabs__list__item--enabled [ role='tab' ]:hover {
+	background-color: var( --background-color-quiet--hover );
+	color: var( --color-base--emphasized );
+}
+
+.cdx-tabs--framed > .cdx-tabs__header .cdx-tabs__list__item--enabled [ role='tab' ]:active {
+	background-color: var( --background-color-quiet--active );
+	color: var( --color-base--emphasized );
+}
+
+.cdx-tabs--framed > .cdx-tabs__header .cdx-tabs__list__item--enabled.cdx-tabs__list__item--selected [ role='tab' ],
+.cdx-tabs--framed > .cdx-tabs__header .cdx-tabs__list__item--enabled.cdx-tabs__list__item--selected [ role='tab' ]:hover {
+	background-color: var( --color-surface-0 );
+}
+
+.cdx-tabs--framed > .cdx-tabs__header .cdx-tabs__list__item--disabled [ role='tab' ] {
+	background-color: var( --color-surface-4 );
+	color: var( --color-base--subtle );
+}
+
+.cdx-tabs--quiet > .cdx-tabs__header {
+	border-bottom-color: var( --border-color-base );
+	background-color: var( --color-surface-0 );
+	// Shouldn't quiet tabs be transparent?
+	// background-color: transparent;
+}
+
+.cdx-tabs--quiet > .cdx-tabs__header .cdx-tabs__prev-scroller:after {
+	background-image: linear-gradient( to right, var( --color-surface-0 ) 0, rgba( 255, 255, 255, 0 ) 100% );
+}
+
+.cdx-tabs--quiet > .cdx-tabs__header .cdx-tabs__next-scroller:before {
+	background-image: linear-gradient( to left, var( --color-surface-0 ) 0, rgba( 255, 255, 255, 0 ) 100% );
+}
+
+.cdx-tabs--quiet > .cdx-tabs__header .cdx-tabs__list__item--enabled [ role='tab' ] {
+	color: var( --color-base );
+}
+
+.cdx-tabs--quiet > .cdx-tabs__header .cdx-tabs__list__item--enabled [ role='tab' ]:hover {
+	box-shadow: inset 0 -2px var( --color-primary--hover );
+	color: var( --color-primary--hover );
+}
+
+.cdx-tabs--quiet > .cdx-tabs__header .cdx-tabs__list__item--enabled [ role='tab' ]:active {
+	box-shadow: inset 0 -2px var( --color-primary--active );
+	color: var( --color-primary--active );
+}
+
+.cdx-tabs--quiet > .cdx-tabs__header .cdx-tabs__list__item--enabled.cdx-tabs__list__item--selected [ role='tab' ] {
+	box-shadow: inset 0 -2px var( --color-primary );
+	color: var( --color-primary );
+}
+
+.cdx-tabs--quiet > .cdx-tabs__header .cdx-tabs__list__item--disabled [ role='tab' ] {
+	color: var( --color-base--subtle );
+}
+
+.cdx-toggle-button {
+	border-radius: var( --border-radius--small );
+	font-weight: var( --font-weight-medium );
+}
+
+.cdx-toggle-button:enabled:focus {
+	border-color: var( --color-primary );
+	box-shadow: inset 0 0 0 1px var( --color-primary );
+}
+
+.cdx-toggle-button:enabled:active {
+	border-color: var( --border-color-base );
+	color: var( --color-base--emphasized );
+}
+
+.cdx-toggle-button--framed:enabled {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+}
+
+.cdx-toggle-button--framed:enabled:hover {
+	background-color: var( --color-surface-2--hover );
+	color: var( --color-base--emphasized );
+}
+
+.cdx-toggle-button--framed:enabled:active {
+	background-color: var( --color-surface-2--active );
+	color: var( --color-base--subtle );
+}
+
+.cdx-toggle-button--framed:disabled {
+	border-color: var( --color-surface-4 );
+	background-color: var( --color-surface-4 );
+	color: var( --color-base--subtle );
+}
+
+.cdx-toggle-button--framed.cdx-toggle-button--toggled-on:enabled {
+	border-color: var( --color-primary--active );
+	background-color: var( --color-primary--active );
+}
+
+.cdx-toggle-button--framed.cdx-toggle-button--toggled-on:enabled:hover {
+	border-color: var( --color-primary--hover );
+	background-color: var( --color-primary--hover );
+}
+
+.cdx-toggle-button--framed.cdx-toggle-button--toggled-on:enabled:focus {
+	border-color: var( --color-primary );
+	box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px #fff;
+}
+
+.cdx-toggle-button--framed.cdx-toggle-button--toggled-on:enabled:active {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2--active );
+	color: var( --color-base--emphasized );
+}
+
+.cdx-toggle-button--quiet:enabled.cdx-toggle-button--toggled-on {
+	background-color: var( --background-color-quiet--active );
+}
+
+.cdx-toggle-button--quiet:enabled:hover {
+	background-color: var( --background-color-quiet--hover );
+}
+
+.cdx-toggle-button--quiet:enabled:focus {
+	background-color: var( --background-color-quiet--hover );
+}
+
+.cdx-toggle-button--quiet:enabled:active {
+	background-color: var( --background-color-quiet--active );
+}
+
+.cdx-toggle-button--quiet:disabled {
+	color: var( --color-base--subtle );
+}
+
+.cdx-toggle-button-group {
+	border-radius: var( --border-radius--small );
+}
+
+.cdx-toggle-button-group .cdx-toggle-button:disabled {
+	box-shadow: 0 -1px var( --border-color-base ), -1px 0 var( --border-color-base );
+}
+
+.cdx-toggle-button-group .cdx-toggle-button--toggled-on:enabled {
+	box-shadow: 0 -1px var( --border-color-base ), -1px 0 var( --border-color-base );
+}
+
+.cdx-toggle-switch__switch {
+	border-color: var( --border-color-base--darker );
+	// Show background when hovered
+	background-color: transparent;
+}
+
+.cdx-toggle-switch__switch__grip {
+	border-color: var( --border-color-base--darker );
+}
+
+.cdx-toggle-switch__input:enabled ~ .cdx-toggle-switch__switch .cdx-toggle-switch__switch__grip {
+	background-color: transparent;
+}
+
+.cdx-toggle-switch__input:enabled:hover ~ .cdx-toggle-switch__switch {
+	border-color: var( --color-primary--hover );
+	background-color: var( --color-surface-0 );
+}
+
+.cdx-toggle-switch__input:enabled:hover ~ .cdx-toggle-switch__switch .cdx-toggle-switch__switch__grip {
+	border-color: var( --color-primary--hover );
+}
+
+.cdx-toggle-switch__input:enabled:active ~ .cdx-toggle-switch__switch {
+	border-color: var( --color-primary--active );
+	background-color: var( --color-primary--active );
+}
+
+.cdx-toggle-switch__input:enabled:active ~ .cdx-toggle-switch__switch:before {
+	border-color: var( --color-primary--active );
+}
+
+.cdx-toggle-switch__input:enabled:focus:not( :active ) ~ .cdx-toggle-switch__switch {
+	border-color: var( --color-primary );
+	box-shadow: inset 0 0 0 1px var( --color-primary );
+}
+
+.cdx-toggle-switch__input:enabled:focus:not( :active ) ~ .cdx-toggle-switch__switch .cdx-toggle-switch__switch__grip {
+	border-color: var( --color-primary );
+}
+
+.cdx-toggle-switch__input:enabled:checked ~ .cdx-toggle-switch__switch {
+	border-color: var( --color-primary );
+	background-color: var( --color-primary );
+}
+
+.cdx-toggle-switch__input:enabled:checked:hover ~ .cdx-toggle-switch__switch {
+	border-color: var( --color-primary--hover );
+	background-color: var( --color-primary--hover );
+}
+
+.cdx-toggle-switch__input:enabled:checked:active ~ .cdx-toggle-switch__switch {
+	border-color: var( --color-primary--active );
+	background-color: var( --color-primary--active );
+	box-shadow: inset 0 0 0 1px var( --color-primary--active );
+}
+
+.cdx-toggle-switch__input:enabled:checked:active ~ .cdx-toggle-switch__switch:before {
+	border-color: var( --color-primary--active );
+}
+
+.cdx-toggle-switch__input:enabled:checked:focus:not( :active ) ~ .cdx-toggle-switch__switch {
+	border-color: var( --color-primary );
+}
+
+.cdx-toggle-switch__input:disabled ~ .cdx-toggle-switch__label {
+	color: var( --color-base--subtle );
+}
+
+.cdx-toggle-switch__input:disabled ~ .cdx-toggle-switch__switch {
+	border-color: var( --color-surface-4 );
+	background-color: var( --color-surface-4 );
+}
+
+.cdx-toggle-switch__input:disabled ~ .cdx-toggle-switch__switch .cdx-toggle-switch__switch__grip {
+	border-color: var( --color-base--subtle );
+	box-shadow: inset 0 0 0 1px var( --color-base--subtle );
+}
+
+.cdx-toggle-switch__input:disabled:checked ~ .cdx-toggle-switch__switch .cdx-toggle-switch__switch__grip {
+	background-color: var( --color-base--subtle );
+}
+
+.cdx-typeahead-search__menu-message,
+.cdx-typeahead-search__search-footer {
+	color: var( --color-base );
+}
+
+.cdx-typeahead-search__search-footer {
+	border-top-color: var( --border-color-base );
+}
+
+.cdx-typeahead-search__search-footer:visited {
+	color: var( --color-base );
+}
+
+.cdx-typeahead-search__search-footer__icon {
+	color: var( --color-base--subtle );
+}
+
+.cdx-typeahead-search__search-footer__active .cdx-typeahead-search__search-footer__icon,
+.cdx-typeahead-search__search-footer__active .cdx-typeahead-search__search-footer__text {
+	color: var( --color-primary );
+}
