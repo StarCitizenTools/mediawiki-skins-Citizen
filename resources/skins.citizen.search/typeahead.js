@@ -200,7 +200,7 @@ function getSuggestions( searchQuery ) {
 			}
 
 			return html;
-		}
+		};
 
 		results.forEach( ( result ) => {
 			const suggestion = getMenuItem( {
