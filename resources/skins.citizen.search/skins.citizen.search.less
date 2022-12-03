@@ -33,10 +33,17 @@
 
 		&__text {
 			overflow: hidden;
+			flex-grow: 1;
 			white-space: nowrap;
 		}
 
+		&__header {
+			display: flex;
+			justify-content: space-between;
+		}
+
 		&__title {
+			flex-shrink: 0;
 			color: var( --color-base--emphasized );
 			font-weight: var( --font-weight-semibold );
 		}
@@ -46,10 +53,23 @@
 			font-weight: var( --font-weight-medium );
 		}
 
-		&__redirect {
-			margin-left: 0.25rem;
+		&__label {
+			display: flex;
+			margin-left: var( --space-xs );
 			color: var( --color-base );
 			font-size: 0.8125rem;
+			gap: var( --space-xxs );
+
+			.citizen-ui-icon {
+				width: 0.8125rem;
+				height: 0.8125rem;
+				margin-right: var( --space-xxs );
+			}
+		}
+
+		&__labelItem {
+			display: flex;
+			align-items: center;
 		}
 
 		&__description {

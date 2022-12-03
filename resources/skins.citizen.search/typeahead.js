@@ -157,18 +157,6 @@ function getSuggestions( searchQuery ) {
 			return text.replace( regex, '<span class="' + PREFIX + '__highlight">$&</span>' );
 		};
 
-		// Check if the redirect is useful
-		// See T303013
-		const isRedirectUseful = ( title, matchedTitle ) => {
-			// Change to lowercase then remove space and dashes
-			const cleanup = ( text ) => {
-				return text.toLowerCase().replace( /-|\s/g, '' );
-			};
-			title = cleanup( title );
-			matchedTitle = cleanup( matchedTitle );
-			return !( title.includes( matchedTitle ) || matchedTitle.includes( title ) );
-		};
-
 		const getSuggestionTitle = ( title, matchedTitle ) => {
 			let html;
 			// Result is a redirect
@@ -185,14 +173,45 @@ function getSuggestions( searchQuery ) {
 			return html;
 		};
 
+		const getRedirectLabel = ( title, matchedTitle ) => {
+			// Check if the redirect is useful
+			// See T303013
+			const isRedirectUseful = ( title, matchedTitle ) => {
+				// Change to lowercase then remove space and dashes
+				const cleanup = ( text ) => {
+					return text.toLowerCase().replace( /-|\s/g, '' );
+				};
+				title = cleanup( title );
+				matchedTitle = cleanup( matchedTitle );
+				return !( title.includes( matchedTitle ) || matchedTitle.includes( title ) );
+			};
+
+			let html = '';
+
+			// Result is a redirect
+			// Show the redirect title and highlight it
+			if ( matchedTitle && isRedirectUseful( title, matchedTitle ) ) {
+				html = '<div class="' + PREFIX + '__labelItem" title="' + mw.message( 'search-redirect', matchedTitle ).plain() + '">' +
+					/* Article redirect icon */
+					'<span class="citizen-ui-icon mw-ui-icon-wikimedia-articleRedirect"></span>' +
+					/* Since we are matching that redirect title, it should be highlighted */
+					highlightTitle( matchedTitle ) +
+					'</div>';
+			}
+
+			return html;
+		}
+
 		results.forEach( ( result ) => {
 			const suggestion = getMenuItem( {
 				link: suggestionLinkPrefix + encodeURIComponent( result.key ),
 				/* FIXME: Null check should happen at gateway */
 				thumbnail: result.thumbnail ?? '',
-				title: getSuggestionTitle( result.title, result.matchedTitle ),
+				title: highlightTitle( result.title ),
+				label: getRedirectLabel( result.title, result.matchedTitle ),
 				description: result.description
 			} );
+
 			fragment.append( suggestion );
 		} );
 		typeahead.prepend( fragment );
@@ -262,6 +281,7 @@ function getMenuItem( data ) {
 		link = item.querySelector( '.' + PREFIX ),
 		thumbnail = item.querySelector( '.' + PREFIX + '__thumbnail img' ),
 		title = item.querySelector( '.' + PREFIX + '__title' ),
+		label = item.querySelector( '.' + PREFIX + '__label' ),
 		description = item.querySelector( '.' + PREFIX + '__description' );
 
 	if ( data.link ) {
@@ -271,6 +291,8 @@ function getMenuItem( data ) {
 		thumbnail.setAttribute( 'src', data.thumbnail );
 	}
 	title.innerHTML = data.title ?? '';
+	label.innerHTML = data.label ?? '';
+	// Description only contains text
 	description.textContent = data.description ?? '';
 
 	return item;
