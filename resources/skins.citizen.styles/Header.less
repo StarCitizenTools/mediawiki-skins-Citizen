@@ -66,6 +66,12 @@
 		}
 	}
 
+	&__logo {
+		padding: 0 var( --space-xs ) 0 0;
+		border-right: 1px solid var( --border-color-base );
+		margin: 0 var( --space-xxs );
+	}
+
 	&__inner {
 		z-index: -1; // Inner element should be behind menu and search
 		display: flex;
@@ -143,6 +149,13 @@
 		left: 0;
 		border-top: 0;
 		border-right: 1px solid var( --border-color-base );
+
+		&__logo {
+			padding: 0 0 var( --space-xs ) 0;
+			border-right: 0;
+			border-bottom: 1px solid var( --border-color-base );
+			margin: var( --space-xxs ) 0;
+		}
 	}
 }
 
