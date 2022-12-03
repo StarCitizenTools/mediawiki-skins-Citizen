@@ -5,16 +5,18 @@
 	--height-search-bar: var( --header-button-size );
 
 	&__card {
-		position: absolute;
-		left: 100%;
+		position: fixed;
+		top: 0;
+		right: 0;
+		left: 0;
 		display: flex;
 		width: var( --width-search-bar );
 		max-width: ~'calc(100vw - var( --padding-page ) )';
 		height: var( --height-search-bar );
-		margin: var( --space-xs );
+		margin: var( --space-md ) auto;
 		gap: 0.25rem;
 		.citizen-card();
-		.citizen-card-hide( top left, X, false );
+		.citizen-card-hide( top center, '', false );
 
 		.citizen-ui-icon {
 			width: var( --height-search-bar );
@@ -109,11 +111,8 @@
 
 @media ( max-width: @width-breakpoint-desktop ) {
 	.citizen-search__card {
-		position: fixed;
-		top: 0;
-		right: 0;
-		left: 0;
 		width: auto;
+		margin: var( --space-xs );
 
 		// Remove searchbox open animation on mobile
 		// But keep suggestion animation

@@ -131,7 +131,6 @@ function clearSuggestions() {
 	}
 
 	// Remove loading animation
-
 	searchInput.parentNode.classList.remove( SEARCH_LOADING_CLASS );
 	searchInput.setAttribute( 'aria-activedescendant', '' );
 	activeIndex.clear();
@@ -167,8 +166,6 @@ function getSuggestions( searchQuery ) {
 
 			title = cleanup( title );
 			matchedTitle = cleanup( matchedTitle );
-
-			// eslint thinks it is an array
 
 			return !( title.includes( matchedTitle ) || matchedTitle.includes( title ) );
 		};
@@ -221,7 +218,6 @@ function getSuggestions( searchQuery ) {
 	};
 
 	// Add loading animation
-
 	searchInput.parentNode.classList.add( SEARCH_LOADING_CLASS );
 
 	/* eslint-disable-next-line compat/compat */
@@ -290,7 +286,8 @@ function updateTypeahead( messages ) {
  * @return {void}
  */
 function initTypeahead( searchForm, input ) {
-	const expandedClass = 'citizen-typeahead--expanded',
+	const 
+		expandedClass = 'citizen-typeahead--expanded',
 		messages = {
 			empty: mw.message( 'citizen-search-fulltext-empty' ).text(),
 			fulltext: mw.message( 'citizen-search-fulltext' ).text()
@@ -303,7 +300,7 @@ function initTypeahead( searchForm, input ) {
 			'msg-citizen-search-fulltext': messages.empty
 		};
 
-	const onBlur = function ( event ) {
+	const onBlur = ( event ) => {
 		const focusIn = typeahead.contains( event.relatedTarget );
 
 		if ( !focusIn ) {
@@ -318,7 +315,7 @@ function initTypeahead( searchForm, input ) {
 		}
 	};
 
-	const onFocus = function () {
+	const onFocus = () => {
 		// Refresh the typeahead since the query will be emptied when blurred
 		updateTypeahead( messages );
 		typeahead.classList.add( expandedClass );
