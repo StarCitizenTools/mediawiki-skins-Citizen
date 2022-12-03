@@ -286,7 +286,7 @@ function updateTypeahead( messages ) {
  * @return {void}
  */
 function initTypeahead( searchForm, input ) {
-	const 
+	const
 		expandedClass = 'citizen-typeahead--expanded',
 		messages = {
 			empty: mw.message( 'citizen-search-fulltext-empty' ).text(),
