@@ -1,4 +1,6 @@
-const config = require( './config.json' ),
+const
+	config = require( './config.json' ),
+	PREFIX = 'citizen-typeahead-suggestion',
 	SEARCH_LOADING_CLASS = 'citizen-loading';
 
 const activeIndex = {
@@ -145,15 +147,14 @@ function clearSuggestions() {
 function getSuggestions( searchQuery ) {
 	const renderSuggestions = ( results ) => {
 		const
-			prefix = 'citizen-typeahead-suggestion',
-			template = document.getElementById( prefix + '-template' ),
 			fragment = document.createDocumentFragment(),
-			suggestionLinkPrefix = config.wgScriptPath + '/index.php?title=Special:Search&search=',
-			sanitizedSearchQuery = mw.html.escape( mw.util.escapeRegExp( searchQuery ) ),
-			regex = new RegExp( sanitizedSearchQuery, 'i' );
+			suggestionLinkPrefix = config.wgScriptPath + '/index.php?title=Special:Search&search=';
 
 		const highlightTitle = ( text ) => {
-			return text.replace( regex, '<span class="' + prefix + '__highlight">$&</span>' );
+			const
+				sanitizedSearchQuery = mw.html.escape( mw.util.escapeRegExp( searchQuery ) ),
+				regex = new RegExp( sanitizedSearchQuery, 'i' );
+			return text.replace( regex, '<span class="' + PREFIX + '__highlight">$&</span>' );
 		};
 
 		// Check if the redirect is useful
@@ -163,49 +164,37 @@ function getSuggestions( searchQuery ) {
 			const cleanup = ( text ) => {
 				return text.toLowerCase().replace( /-|\s/g, '' );
 			};
-
 			title = cleanup( title );
 			matchedTitle = cleanup( matchedTitle );
-
 			return !( title.includes( matchedTitle ) || matchedTitle.includes( title ) );
 		};
 
-		// Maybe there is a cleaner way?
-		// Maybe there is a faster way compared to multiple querySelector?
-		// Should I just use regular for loop for faster performance?
-		results.forEach( ( result ) => {
-			const
-				suggestion = template.content.cloneNode( true ),
-				suggestionLink = suggestion.querySelector( '.' + prefix ),
-				suggestionThumbnail = suggestion.querySelector( '.' + prefix + '__thumbnail img' ),
-				suggestionTitle = suggestion.querySelector( '.' + prefix + '__title' ),
-				suggestionDescription = suggestion.querySelector( '.' + prefix + '__description' );
-
-			// Give <a> element a unique ID
-			suggestionLink.id = prefix + '-' + result.id;
-			suggestionLink.setAttribute( 'href', suggestionLinkPrefix + encodeURIComponent( result.key ) );
-
-			if ( result.thumbnail ) {
-				suggestionThumbnail.setAttribute( 'src', result.thumbnail );
-			}
-
+		const getSuggestionTitle = ( title, matchedTitle ) => {
+			let html;
 			// Result is a redirect
 			// Show the redirect title and highlight it
-			if ( result.matchedTitle && isRedirectUseful( result.title, result.matchedTitle ) ) {
-				suggestionTitle.innerHTML = result.title +
-					'<span class="' + prefix + '__redirect">' +
-					mw.message( 'search-redirect', highlightTitle( result.matchedTitle ) ).plain() +
+			if ( matchedTitle && isRedirectUseful( title, matchedTitle ) ) {
+				html = title +
+					'<span class="' + PREFIX + '__redirect">' +
+					mw.message( 'search-redirect', highlightTitle( matchedTitle ) ).plain() +
 					'</span>';
 			} else {
 				// Highlight title
-				suggestionTitle.innerHTML = highlightTitle( result.title );
+				html = highlightTitle( title );
 			}
+			return html;
+		};
 
-			suggestionDescription.textContent = result.description;
-
+		results.forEach( ( result ) => {
+			const suggestion = getMenuItem( {
+				link: suggestionLinkPrefix + encodeURIComponent( result.key ),
+				/* FIXME: Null check should happen at gateway */
+				thumbnail: result.thumbnail ?? '',
+				title: getSuggestionTitle( result.title, result.matchedTitle ),
+				description: result.description
+			} );
 			fragment.append( suggestion );
 		} );
-
 		typeahead.prepend( fragment );
 	};
 
@@ -252,6 +241,39 @@ function getSuggestions( searchQuery ) {
 			throw new Error( message );
 		}
 	} );
+}
+
+/**
+ * Generate menu item HTML using the existing template
+ *
+ * @param {Object} data
+ * @return {HTMLElement|void}
+ */
+function getMenuItem( data ) {
+	const template = document.getElementById( PREFIX + '-template' );
+
+	// Shouldn't happen but just to be safe
+	if ( !( template instanceof HTMLTemplateElement ) ) {
+		return;
+	}
+
+	const
+		item = template.content.cloneNode( true ),
+		link = item.querySelector( '.' + PREFIX ),
+		thumbnail = item.querySelector( '.' + PREFIX + '__thumbnail img' ),
+		title = item.querySelector( '.' + PREFIX + '__title' ),
+		description = item.querySelector( '.' + PREFIX + '__description' );
+
+	if ( data.link ) {
+		link.setAttribute( 'href', data.link );
+	}
+	if ( data.thumbnail ) {
+		thumbnail.setAttribute( 'src', data.thumbnail );
+	}
+	title.innerHTML = data.title ?? '';
+	description.textContent = data.description ?? '';
+
+	return item;
 }
 
 /**

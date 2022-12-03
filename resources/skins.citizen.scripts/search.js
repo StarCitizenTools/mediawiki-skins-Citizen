@@ -1,8 +1,7 @@
 /* Some of the functions are based on Vector */
 /* ESLint does not like having class names as const */
 
-const SEARCH_INPUT_ID = 'searchInput',
-	SEARCH_LOADING_CLASS = 'citizen-loading';
+const SEARCH_LOADING_CLASS = 'citizen-loading';
 
 /**
  * Loads the search module via `mw.loader.using` on the element's
