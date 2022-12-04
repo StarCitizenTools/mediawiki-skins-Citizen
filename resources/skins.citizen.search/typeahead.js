@@ -1,6 +1,6 @@
 const
 	config = require( './config.json' ),
-	PREFIX = 'citizen-typeahead-suggestion',
+	PREFIX = 'citizen-typeahead',
 	SEARCH_LOADING_CLASS = 'citizen-loading';
 
 const activeIndex = {
@@ -37,8 +37,8 @@ let typeahead, searchInput;
  * @return {void}
  */
 function toggleActive( element ) {
-	const typeaheadItems = typeahead.querySelectorAll( 'li > a' ),
-		activeClass = 'citizen-typeahead-option--active';
+	const typeaheadItems = typeahead.querySelectorAll( '.' + PREFIX + '__item' ),
+		activeClass = PREFIX + '__item--active';
 
 	for ( let i = 0; i < typeaheadItems.length; i++ ) {
 		if ( element !== typeaheadItems[ i ] ) {
@@ -68,7 +68,7 @@ function keyboardEvents( event ) {
 	}
 
 	// Is children slower?
-	const typeaheadItems = typeahead.querySelectorAll( 'li > a' );
+	const typeaheadItems = typeahead.querySelectorAll( '.' + PREFIX + '__item' );
 
 	if ( event.key === 'ArrowDown' || event.key === 'ArrowUp' ) {
 		if ( event.key === 'ArrowDown' ) {
@@ -84,6 +84,18 @@ function keyboardEvents( event ) {
 		event.preventDefault();
 		typeaheadItems[ activeIndex.index ].click();
 	}
+}
+
+/*
+ * Attach mouse eventlistener to all typeahead items
+ *
+ * @return {void}
+ */
+function attachMouseListener() {
+	const items = typeahead.querySelectorAll( '.' + PREFIX + '__item' );
+	items.forEach( ( item ) => {
+		bindMouseHoverEvent( item );
+	} );
 }
 
 /*
@@ -157,26 +169,10 @@ function getSuggestions( searchQuery ) {
 			return text.replace( regex, '<span class="' + PREFIX + '__highlight">$&</span>' );
 		};
 
-		const getSuggestionTitle = ( title, matchedTitle ) => {
-			let html;
-			// Result is a redirect
-			// Show the redirect title and highlight it
-			if ( matchedTitle && isRedirectUseful( title, matchedTitle ) ) {
-				html = title +
-					'<span class="' + PREFIX + '__redirect">' +
-					mw.message( 'search-redirect', highlightTitle( matchedTitle ) ).plain() +
-					'</span>';
-			} else {
-				// Highlight title
-				html = highlightTitle( title );
-			}
-			return html;
-		};
-
 		const getRedirectLabel = ( title, matchedTitle ) => {
 			// Check if the redirect is useful
 			// See T303013
-			const isRedirectUseful = ( title, matchedTitle ) => {
+			const isRedirectUseful = () => {
 				// Change to lowercase then remove space and dashes
 				const cleanup = ( text ) => {
 					return text.toLowerCase().replace( /-|\s/g, '' );
@@ -190,7 +186,7 @@ function getSuggestions( searchQuery ) {
 
 			// Result is a redirect
 			// Show the redirect title and highlight it
-			if ( matchedTitle && isRedirectUseful( title, matchedTitle ) ) {
+			if ( matchedTitle && isRedirectUseful() ) {
 				html = '<div class="' + PREFIX + '__labelItem" title="' + mw.message( 'search-redirect', matchedTitle ).plain() + '">' +
 					/* Article redirect icon */
 					'<span class="citizen-ui-icon mw-ui-icon-wikimedia-articleRedirect"></span>' +
@@ -215,14 +211,6 @@ function getSuggestions( searchQuery ) {
 			fragment.append( suggestion );
 		} );
 		typeahead.prepend( fragment );
-	};
-
-	// Attach mouseenter events to newly created suggestions
-	const attachMouseListener = () => {
-		const suggestions = typeahead.querySelectorAll( '.citizen-typeahead-suggestion' );
-		suggestions.forEach( ( suggestion ) => {
-			bindMouseHoverEvent( suggestion );
-		} );
 	};
 
 	// Add loading animation
@@ -278,7 +266,7 @@ function getMenuItem( data ) {
 
 	const
 		item = template.content.cloneNode( true ),
-		link = item.querySelector( '.' + PREFIX ),
+		link = item.querySelector( '.' + PREFIX + '__content' ),
 		thumbnail = item.querySelector( '.' + PREFIX + '__thumbnail img' ),
 		title = item.querySelector( '.' + PREFIX + '__title' ),
 		label = item.querySelector( '.' + PREFIX + '__label' ),
@@ -376,8 +364,8 @@ function initTypeahead( searchForm, input ) {
 	searchInput.setAttribute( 'aria-autocomplete', 'list' );
 	searchInput.setAttribute( 'aria-controls', 'searchform-suggestions' );
 
-	const footer = document.getElementById( 'searchform-suggestions-footer' );
-	bindMouseHoverEvent( footer );
+	// Attach mouse listener to inital typeahead items
+	attachMouseListener();
 
 	// Since searchInput is focused before the event listener is set up
 	onFocus();

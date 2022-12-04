@@ -15,74 +15,82 @@
 	// Well this won't be loaded before .citizen-animation-ready anyways
 	.citizen-card-transition();
 
-	&-suggestion {
-		padding-top: 0.375rem;
-		padding-bottom: 0.375rem;
-
-		&__thumbnail {
-			overflow: hidden;
-			height: 60px;
-			border-radius: var( --border-radius--medium );
-			background-color: #eaecf0;
-
-			img,
-			source {
-				object-fit: cover;
-			}
+	&__item {
+		&--active {
+			background-color: var( --background-color-primary--hover );
 		}
+	}
 
-		&__text {
-			overflow: hidden;
-			flex-grow: 1;
-			white-space: nowrap;
+	&__content {
+		display: flex;
+		align-items: center;
+		padding: 0.375rem 0.75rem;
+		color: var( --color-base );
+	}
+
+	&__thumbnail {
+		overflow: hidden;
+		height: 60px;
+		border-radius: var( --border-radius--medium );
+		background-color: #eaecf0;
+
+		img,
+		source {
+			object-fit: cover;
 		}
+	}
 
-		&__header {
-			display: flex;
-			justify-content: space-between;
+	&__text {
+		overflow: hidden;
+		flex-grow: 1;
+		white-space: nowrap;
+	}
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&__title {
+		flex-shrink: 0;
+		color: var( --color-base--emphasized );
+		font-weight: var( --font-weight-semibold );
+	}
+
+	&__highlight {
+		color: var( --color-base--subtle );
+		font-weight: var( --font-weight-medium );
+	}
+
+	&__label {
+		display: flex;
+		margin-left: var( --space-xs );
+		color: var( --color-base );
+		font-size: 0.8125rem;
+		gap: var( --space-xxs );
+
+		.citizen-ui-icon {
+			width: 0.8125rem;
+			height: 0.8125rem;
+			margin-right: var( --space-xxs );
 		}
+	}
 
-		&__title {
-			flex-shrink: 0;
-			color: var( --color-base--emphasized );
-			font-weight: var( --font-weight-semibold );
-		}
+	&__labelItem {
+		display: flex;
+		align-items: center;
+	}
 
-		&__highlight {
-			color: var( --color-base--subtle );
-			font-weight: var( --font-weight-medium );
-		}
+	&__description {
+		margin-top: 0.1rem;
+		color: var( --color-base--subtle );
+		font-size: 0.8125rem;
+	}
 
-		&__label {
-			display: flex;
-			margin-left: var( --space-xs );
-			color: var( --color-base );
-			font-size: 0.8125rem;
-			gap: var( --space-xxs );
-
-			.citizen-ui-icon {
-				width: 0.8125rem;
-				height: 0.8125rem;
-				margin-right: var( --space-xxs );
-			}
-		}
-
-		&__labelItem {
-			display: flex;
-			align-items: center;
-		}
-
-		&__description {
-			margin-top: 0.1rem;
-			color: var( --color-base--subtle );
-			font-size: 0.8125rem;
-		}
-
-		&__title,
-		&__description {
-			overflow: hidden;
-			text-overflow: ellipsis;
-		}
+	&__title,
+	&__description {
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	&-footer {
@@ -102,20 +110,6 @@
 				color: var( --color-base--emphasized );
 			}
 		}
-	}
-
-	&-option {
-		&--active {
-			background-color: var( --background-color-primary--hover );
-		}
-	}
-
-	a {
-		display: flex;
-		align-items: center;
-		padding-right: 0.75rem;
-		padding-left: 0.75rem;
-		color: var( --color-base );
 	}
 
 	picture {
