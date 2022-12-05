@@ -80,9 +80,12 @@ function keyboardEvents( event ) {
 		toggleActive( typeaheadItems[ activeIndex.index ] );
 
 	}
-	if ( event.key === 'Enter' && typeaheadItems[ activeIndex.index ] ) {
-		event.preventDefault();
-		typeaheadItems[ activeIndex.index ].click();
+
+	// We assume the first child is link element, maybe it should be more strict?
+	const link = typeaheadItems[ activeIndex.index ].firstChild;
+
+	if ( event.key === 'Enter' && link instanceof HTMLLinkElement ) {
+		link.click();
 	}
 }
 
