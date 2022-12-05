@@ -11,7 +11,7 @@
 		]
 	},
 	"skinname-citizen": "公民 （Citizen）",
-	"citizen-skin-desc": "為星際公民百科而開發的響應式外觀",
+	"citizen-skin-desc": "一個漂亮的、可用的、響應的 MediaWiki 外觀，使擴展成為內聚體驗的一部分。最初是為 [https://starcitizen.tools/ 星際公民百科] 開發的。",
 	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|討論]]",
 	"citizen.css": "/* 此CSS會用於使用Citizen外觀的使用者 */",
 	"citizen.js": "/* 此Javascript會用於使用Citizen外觀的使用者 */",
