@@ -106,6 +106,13 @@
 		}
 	}
 
+	&__keyboard {
+		display: none;
+		padding: 0 8px;
+		border-radius: var( --border-radius--small );
+		background-color: var( --color-surface-1 );
+	}
+
 	&--expanded {
 		.citizen-card-show( false );
 	}
@@ -130,6 +137,17 @@
 		&__description {
 			strong {
 				color: var( --color-base--emphasized );
+			}
+		}
+	}
+}
+
+// HACK: This is as close as we can to detect whether there is a keyboard in CSS
+@media ( hover: hover ) and ( pointer: fine ) {
+	.citizen-typeahead {
+		&__item--active {
+			.citizen-typeahead__keyboard {
+				display: block;
 			}
 		}
 	}
