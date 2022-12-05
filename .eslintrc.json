@@ -4,22 +4,27 @@
 		"wikimedia/client-es6",
 		"wikimedia/mediawiki"
 	],
+	"env": {
+		"browser": true
+	},
 	"globals": {
-		"require": "readonly",
-		"module": "readonly"
+		"exports": true
 	},
 	"rules": {
-		"one-var": "off",
-		"//": [
-			"off",
-			"ResourceLoader's `packageFiles` do not require wrapping but the `module` option is only available in ES6+."
-		],
-		"no-implicit-globals": "off",
-		"es/no-object-fromentries": "off",
-		"es/no-object-entries": "off",
+		"no-implicit-globals": "warn",
+		"es-x/no-async-functions": "warn",
+		"es-x/no-object-fromentries": "warn",
+		"es-x/no-object-entries": "warn",
+		"es-x/no-object-values": "warn",
+		"es-x/no-array-prototype-includes": "warn",
+		"es-x/no-optional-chaining": "warn",
+		"es-x/no-nullish-coalescing-operators": "warn",
+		"es-x/no-symbol-prototype-description": "warn",
+		"compat/compat": "warn",
 		"mediawiki/class-doc": "off"
 	},
 	"parserOptions": {
-		"ecmaVersion": 11
+		"ecmaVersion": 11,
+		"sourceType": "module"
 	}
 }
