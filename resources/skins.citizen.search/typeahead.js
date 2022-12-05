@@ -198,6 +198,7 @@ function getSuggestions( searchQuery ) {
 			return html;
 		};
 
+		// FIXME: Assign ID to each item
 		results.forEach( ( result ) => {
 			const suggestion = getMenuItem( {
 				link: suggestionLinkPrefix + encodeURIComponent( result.key ),
@@ -294,13 +295,12 @@ function getMenuItem( data ) {
  */
 function updateTypeahead( messages ) {
 	const searchQuery = searchInput.value,
-		footer = document.getElementById( 'searchform-suggestions-footer' ),
-		footerText = footer.querySelector( '.citizen-typeahead-footer__text' ),
+		footer = document.getElementById( PREFIX + '-footer' ),
+		footerText = footer.querySelector( '.' + PREFIX + '__description' ),
 		fullTextUrl = config.wgScriptPath + '/index.php?title=Special:Search&fulltext=1&search=';
 
 	if ( searchQuery.length > 0 ) {
 		const footerQuery = mw.html.escape( searchQuery );
-
 		footerText.innerHTML = messages.fulltext + ' <strong>' + footerQuery + '</strong>';
 		footerQuery.textContent = searchQuery;
 		footer.setAttribute( 'href', fullTextUrl + searchQuery );
