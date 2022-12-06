@@ -15,9 +15,40 @@
 	// Well this won't be loaded before .citizen-animation-ready anyways
 	.citizen-card-transition();
 
+	&__placeholder {
+		.citizen-typeahead {
+			&__content {
+				flex-direction: column;
+				padding: var( --space-xl ) 0;
+				text-align: center;
+			}
+
+			&__thumbnail {
+				margin-bottom: var( --space-sm );
+
+				img,
+				source {
+					object-fit: contain;
+				}
+			}
+		}
+	}
+
 	&__item {
 		&--active {
 			background-color: var( --background-color-primary--hover );
+		}
+
+		.citizen-typeahead {
+			&__thumbnail {
+				margin-right: var( --space-sm );
+				background-color: #eaecf0;
+
+				img,
+				source {
+					object-fit: cover;
+				}
+			}
 		}
 	}
 
@@ -31,13 +62,15 @@
 
 	&__thumbnail {
 		overflow: hidden;
+		width: 100%;
+		max-width: 70px;
 		height: 60px;
 		border-radius: var( --border-radius--medium );
-		background-color: #eaecf0;
 
 		img,
 		source {
-			object-fit: cover;
+			width: inherit;
+			height: inherit;
 		}
 	}
 
@@ -94,16 +127,9 @@
 		text-overflow: ellipsis;
 	}
 
-	picture {
-		width: 100%;
-		max-width: 70px;
-		margin-right: 0.75rem;
-
-		img,
-		source {
-			width: inherit;
-			height: inherit;
-		}
+	&__actions {
+		position: absolute;
+		right: var( --space-sm );
 	}
 
 	&__keyboard {
@@ -116,9 +142,23 @@
 	&--expanded {
 		.citizen-card-show( false );
 	}
+
+	&--hasQuery {
+		.citizen-typeahead {
+			&__placeholder {
+				display: none;
+			}
+		}
+
+		#citizen-typeahead-fulltext {
+			display: block;
+		}
+	}
 }
 
-#citizen-typeahead-footer {
+#citizen-typeahead-fulltext {
+	display: none;
+
 	.citizen-typeahead {
 		&__content {
 			padding: var( --space-md ) 0;
@@ -126,8 +166,9 @@
 		}
 
 		&__thumbnail {
+			width: 70px; // Sync with thumbnail
 			height: var( --size-icon );
-			background: transparent;
+			background-color: transparent;
 
 			img {
 				object-fit: contain;

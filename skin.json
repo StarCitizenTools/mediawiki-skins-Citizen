@@ -216,7 +216,8 @@
 			"messages": [
 				"citizen-search-fulltext",
 				"citizen-search-fulltext-empty",
-				"search-redirect"
+				"search-redirect",
+				"searchsuggest-search"
 			],
 			"targets": [
 				"desktop",
@@ -279,6 +280,7 @@
 			"icons": [
 				"article",
 				"articleRedirect",
+				"articleSearch",
 				"block",
 				"collapse",
 				"database",

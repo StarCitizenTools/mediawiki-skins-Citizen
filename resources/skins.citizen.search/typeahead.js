@@ -124,7 +124,7 @@ function bindMouseHoverEvent( element ) {
  */
 function clearSuggestions() {
 	const typeaheadItems = typeahead.children,
-		nonSuggestionCount = 2;
+		nonSuggestionCount = 3;
 
 	if ( typeaheadItems.length > nonSuggestionCount ) {
 		// Splice would be cleaner but it is slower (?)
@@ -210,7 +210,8 @@ function getSuggestions( searchQuery ) {
 				thumbnail: result.thumbnail ?? '',
 				title: highlightTitle( result.title ),
 				label: getRedirectLabel( result.title, result.matchedTitle ),
-				description: result.description
+				// Just to be safe, not sure if the default API is HTML escaped
+				description: mw.html.escape( result.description )
 			} );
 
 			fragment.append( suggestion );
@@ -270,25 +271,33 @@ function getMenuItem( data ) {
 	}
 
 	const
-		item = template.content.cloneNode( true ),
-		link = item.querySelector( '.' + PREFIX + '__content' ),
-		thumbnail = item.querySelector( '.' + PREFIX + '__thumbnail img' ),
-		title = item.querySelector( '.' + PREFIX + '__title' ),
-		label = item.querySelector( '.' + PREFIX + '__label' ),
-		description = item.querySelector( '.' + PREFIX + '__description' );
+		fragment = template.content.cloneNode( true ),
+		item = fragment.querySelector( '.' + PREFIX + '__item' ),
+		title = fragment.querySelector( '.' + PREFIX + '__title' ),
+		label = fragment.querySelector( '.' + PREFIX + '__label' ),
+		description = fragment.querySelector( '.' + PREFIX + '__description' );
 
+	if ( data.id ) {
+		item.setAttribute( 'id', data.id );
+	}
 	if ( data.link ) {
+		const link = fragment.querySelector( '.' + PREFIX + '__content' );
 		link.setAttribute( 'href', data.link );
 	}
+	if ( data.icon ) {
+		// FIXME: This is temporary, we need to replace picture elements with background-image because of a11y concern
+		const thumbnailContainer = fragment.querySelector( '.' + PREFIX + '__thumbnail' );
+		thumbnailContainer.classList.add( 'citizen-ui-icon', 'mw-ui-icon-wikimedia-' + data.icon );
+	}
 	if ( data.thumbnail ) {
+		const thumbnail = fragment.querySelector( '.' + PREFIX + '__thumbnail img' );
 		thumbnail.setAttribute( 'src', data.thumbnail );
 	}
 	title.innerHTML = data.title ?? '';
 	label.innerHTML = data.label ?? '';
-	// Description only contains text
-	description.textContent = data.description ?? '';
+	description.innerHTML = data.description ?? '';
 
-	return item;
+	return fragment;
 }
 
 /**
@@ -298,21 +307,40 @@ function getMenuItem( data ) {
  * @return {void}
  */
 function updateTypeahead( messages ) {
-	const searchQuery = searchInput.value,
-		footer = document.getElementById( PREFIX + '-footer' ),
-		footerLink = footer.querySelector( '.' + PREFIX + '__content' ),
-		footerText = footer.querySelector( '.' + PREFIX + '__description' ),
-		fullTextUrl = config.wgScriptPath + '/index.php?title=Special:Search&fulltext=1&search=';
+	const
+		searchQuery = searchInput.value,
+		queryClass = PREFIX + '--hasQuery';
+
+	const updateFullTextSearchItem = () => {
+		const
+			// Should this be handled differently since it is escaped a few times?
+			query = mw.html.escape( searchQuery ),
+			fulltextId = PREFIX + '-fulltext',
+			fulltextEl = document.getElementById( fulltextId ),
+			fulltextText = messages.fulltext + ' <strong>' + query + '</strong>';
+
+		const item = getMenuItem( {
+			icon: 'articleSearch',
+			id: fulltextId,
+			link: config.wgScriptPath + '/index.php?title=Special:Search&fulltext=1&search=' + query,
+			description: fulltextText
+		} );
+
+		// Update existing element instead of creating a new one
+		if ( fulltextEl ) {
+			const description = fulltextEl.querySelector( '.' + PREFIX + '__description' );
+			description.innerHTML = fulltextText;
+		} else {
+			typeahead.prepend( item );
+		}
+	};
 
 	if ( searchQuery.length > 0 ) {
-		const footerQuery = mw.html.escape( searchQuery );
-		footerText.innerHTML = messages.fulltext + ' <strong>' + footerQuery + '</strong>';
-		footerQuery.textContent = searchQuery;
-		footerLink.setAttribute( 'href', fullTextUrl + searchQuery );
+		typeahead.classList.add( queryClass );
+		updateFullTextSearchItem();
 		getSuggestions( searchQuery );
 	} else {
-		footerText.textContent = messages.empty;
-		footerLink.setAttribute( 'href', fullTextUrl );
+		typeahead.classList.remove( queryClass );
 		clearSuggestions();
 	}
 }
@@ -326,7 +354,6 @@ function initTypeahead( searchForm, input ) {
 	const
 		expandedClass = 'citizen-typeahead--expanded',
 		messages = {
-			empty: mw.message( 'citizen-search-fulltext-empty' ).text(),
 			fulltext: mw.message( 'citizen-search-fulltext' ).text()
 		},
 		template = mw.template.get(
@@ -334,7 +361,8 @@ function initTypeahead( searchForm, input ) {
 			'resources/skins.citizen.search/templates/typeahead.mustache'
 		),
 		data = {
-			'msg-citizen-search-fulltext': messages.empty
+			'msg-searchsuggest-search': mw.message( 'searchsuggest-search' ).text(),
+			'msg-citizen-search-fulltext-empty': mw.message( 'citizen-search-fulltext-empty' ).text()
 		};
 
 	const onBlur = ( event ) => {
