@@ -52,11 +52,13 @@
 .citizen-card-content-show() {
 	opacity: 1;
 	transition: @transition-opacity--transform;
+	will-change: opacity;
 }
 
 // Transition animation
 .citizen-card-transition() {
 	transition: @transition-transform, @transition-opacity--transform, @transition-visibility--transform;
+	will-change: transform, opacity, opacity;
 }
 
 // Header card popups
