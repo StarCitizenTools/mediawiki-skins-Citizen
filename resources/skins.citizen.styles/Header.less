@@ -24,6 +24,7 @@
 		width: var( --header-button-size );
 		height: var( --header-button-size );
 		border-radius: var( --border-radius--small );
+		contain: strict;
 		place-items: center;
 
 		// Used in checkbox hack
@@ -32,6 +33,7 @@
 			display: block;
 			width: inherit;
 			height: inherit;
+			contain: strict;
 		}
 
 		// Pure CSS icons
@@ -39,6 +41,7 @@
 			overflow: hidden; // Sometimes CSS animation can clip
 			width: var( --header-icon-size );
 			height: var( --header-icon-size );
+			contain: strict;
 		}
 
 		&Icon,
