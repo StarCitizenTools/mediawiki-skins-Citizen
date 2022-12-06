@@ -49,6 +49,17 @@
 					object-fit: cover;
 				}
 			}
+
+			&__text {
+				white-space: nowrap;
+			}
+		}
+	}
+
+	&__placeholder,
+	&__item {
+		&--hidden {
+			display: none;
 		}
 	}
 
@@ -77,7 +88,6 @@
 	&__text {
 		overflow: hidden;
 		flex-grow: 1;
-		white-space: nowrap;
 	}
 
 	&__header {
@@ -142,23 +152,9 @@
 	&--expanded {
 		.citizen-card-show( false );
 	}
-
-	&--hasQuery {
-		.citizen-typeahead {
-			&__placeholder {
-				display: none;
-			}
-		}
-
-		#citizen-typeahead-fulltext {
-			display: block;
-		}
-	}
 }
 
 #citizen-typeahead-fulltext {
-	display: none;
-
 	.citizen-typeahead {
 		&__content {
 			padding: var( --space-md ) 0;

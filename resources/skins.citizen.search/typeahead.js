@@ -37,17 +37,17 @@ let typeahead, searchInput;
  * @return {void}
  */
 function toggleActive( element ) {
-	const typeaheadItems = typeahead.querySelectorAll( '.' + PREFIX + '__item' ),
-		activeClass = PREFIX + '__item--active';
+	const ACTIVE_CLASS = PREFIX + '__item--active';
+	const typeaheadItems = typeahead.querySelectorAll( '.' + PREFIX + '__item' );
 
 	for ( let i = 0; i < typeaheadItems.length; i++ ) {
 		if ( element !== typeaheadItems[ i ] ) {
-			typeaheadItems[ i ].classList.remove( activeClass );
+			typeaheadItems[ i ].classList.remove( ACTIVE_CLASS );
 		} else {
-			if ( element.classList.contains( activeClass ) ) {
-				element.classList.remove( activeClass );
+			if ( element.classList.contains( ACTIVE_CLASS ) ) {
+				element.classList.remove( ACTIVE_CLASS );
 			} else {
-				element.classList.add( activeClass );
+				element.classList.add( ACTIVE_CLASS );
 				searchInput.setAttribute( 'aria-activedescendant', element.id );
 				activeIndex.setIndex( i );
 			}
@@ -158,66 +158,79 @@ function clearSuggestions() {
  * Fetch suggestions from API and render the suggetions in HTML
  *
  * @param {string} searchQuery
+ * @param {string} htmlSafeSearchQuery
+ * @param {HTMLElement} placeholder
  * @return {void}
  */
-function getSuggestions( searchQuery ) {
+function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 	const renderSuggestions = ( results ) => {
-		const
-			fragment = document.createDocumentFragment(),
-			suggestionLinkPrefix = config.wgScriptPath + '/index.php?title=Special:Search&search=';
-
-		const highlightTitle = ( text ) => {
+		if ( results.length > 0 ) {
 			const
-				sanitizedSearchQuery = mw.html.escape( mw.util.escapeRegExp( searchQuery ) ),
-				regex = new RegExp( sanitizedSearchQuery, 'i' );
-			return text.replace( regex, '<span class="' + PREFIX + '__highlight">$&</span>' );
-		};
+				fragment = document.createDocumentFragment(),
+				suggestionLinkPrefix = config.wgScriptPath + '/index.php?title=Special:Search&search=';
 
-		const getRedirectLabel = ( title, matchedTitle ) => {
-			// Check if the redirect is useful
-			// See T303013
-			const isRedirectUseful = () => {
-				// Change to lowercase then remove space and dashes
-				const cleanup = ( text ) => {
-					return text.toLowerCase().replace( /-|\s/g, '' );
-				};
-				title = cleanup( title );
-				matchedTitle = cleanup( matchedTitle );
-				return !( title.includes( matchedTitle ) || matchedTitle.includes( title ) );
+			const highlightTitle = ( text ) => {
+				const regex = new RegExp( mw.util.escapeRegExp( htmlSafeSearchQuery ), 'i' );
+				return text.replace( regex, '<span class="' + PREFIX + '__highlight">$&</span>' );
 			};
 
-			let html = '';
+			const getRedirectLabel = ( title, matchedTitle ) => {
+				// Check if the redirect is useful
+				// See T303013
+				const isRedirectUseful = () => {
+					// Change to lowercase then remove space and dashes
+					const cleanup = ( text ) => {
+						return text.toLowerCase().replace( /-|\s/g, '' );
+					};
+					title = cleanup( title );
+					matchedTitle = cleanup( matchedTitle );
+					return !( title.includes( matchedTitle ) || matchedTitle.includes( title ) );
+				};
 
-			// Result is a redirect
-			// Show the redirect title and highlight it
-			if ( matchedTitle && isRedirectUseful() ) {
-				html = '<div class="' + PREFIX + '__labelItem" title="' + mw.message( 'search-redirect', matchedTitle ).plain() + '">' +
-					/* Article redirect icon */
-					'<span class="citizen-ui-icon mw-ui-icon-wikimedia-articleRedirect"></span>' +
-					/* Since we are matching that redirect title, it should be highlighted */
-					highlightTitle( matchedTitle ) +
-					'</div>';
-			}
+				let html = '';
 
-			return html;
-		};
+				// Result is a redirect
+				// Show the redirect title and highlight it
+				if ( matchedTitle && isRedirectUseful() ) {
+					html = '<div class="' + PREFIX + '__labelItem" title="' + mw.message( 'search-redirect', matchedTitle ).plain() + '">' +
+						/* Article redirect icon */
+						'<span class="citizen-ui-icon mw-ui-icon-wikimedia-articleRedirect"></span>' +
+						/* Since we are matching that redirect title, it should be highlighted */
+						highlightTitle( matchedTitle ) +
+						'</div>';
+				}
 
-		// FIXME: Assign ID to each item
-		results.forEach( ( result, index ) => {
-			const suggestion = getMenuItem( {
-				id: PREFIX + '-suggestion-' + index,
-				link: suggestionLinkPrefix + encodeURIComponent( result.key ),
-				/* FIXME: Null check should happen at gateway */
-				thumbnail: result.thumbnail ?? '',
-				title: highlightTitle( result.title ),
-				label: getRedirectLabel( result.title, result.matchedTitle ),
-				// Just to be safe, not sure if the default API is HTML escaped
-				description: mw.html.escape( result.description )
+				return html;
+			};
+
+			// Create suggestion items
+			results.forEach( ( result, index ) => {
+				const suggestion = getMenuItem( {
+					id: PREFIX + '-suggestion-' + index,
+					link: suggestionLinkPrefix + encodeURIComponent( result.key ),
+					/* FIXME: Null check should happen at gateway */
+					thumbnail: result.thumbnail ?? '',
+					title: highlightTitle( result.title ),
+					label: getRedirectLabel( result.title, result.matchedTitle ),
+					// Just to be safe, not sure if the default API is HTML escaped
+					description: mw.html.escape( result.description )
+				} );
+				fragment.append( suggestion );
 			} );
-
-			fragment.append( suggestion );
-		} );
-		typeahead.prepend( fragment );
+			// Hide placeholder
+			placeholder.classList.add( PREFIX + '__placeholder--hidden' );
+			typeahead.prepend( fragment );
+		} else {
+			// Update placeholder with no result content
+			updateMenuItem(
+				placeholder,
+				{
+					class: PREFIX + '__placeholder ' + PREFIX + '__placeholder--noResult',
+					title: mw.message( 'citizen-search-noresults-title', htmlSafeSearchQuery ).text(),
+					description: mw.message( 'citizen-search-noresults-desc' ).text()
+				}
+			);
+		}
 	};
 
 	// Add loading animation
@@ -246,7 +259,6 @@ function getSuggestions( searchQuery ) {
 		activeIndex.setMax( results.length );
 	} ).catch( ( error ) => {
 		searchInput.removeEventListener( 'input', abortFetch );
-
 		searchInput.parentNode.classList.remove( SEARCH_LOADING_CLASS );
 		// User can trigger the abort when the fetch event is pending
 		// There is no need for an error
@@ -255,6 +267,50 @@ function getSuggestions( searchQuery ) {
 			throw new Error( message );
 		}
 	} );
+}
+
+/**
+ * Update menu item element
+ *
+ * @param {HTMLElement} item
+ * @param {Object} data
+ * @return {void}
+ */
+function updateMenuItem( item, data ) {
+	if ( data.id ) {
+		item.setAttribute( 'id', data.id );
+	}
+	if ( data.class ) {
+		// So that it can overwrite the original class
+		// We use that in placeholder
+		item.setAttribute( 'class', data.class );
+	}
+	if ( data.link ) {
+		const link = item.querySelector( '.' + PREFIX + '__content' );
+		link.setAttribute( 'href', data.link );
+	}
+	if ( data.icon ) {
+		// FIXME: This is temporary, we need to replace picture elements with
+		// background-image because of a11y concern
+		const thumbnailContainer = item.querySelector( '.' + PREFIX + '__thumbnail' );
+		thumbnailContainer.classList.add( 'citizen-ui-icon', 'mw-ui-icon-wikimedia-' + data.icon );
+	}
+	if ( data.thumbnail ) {
+		const thumbnail = item.querySelector( '.' + PREFIX + '__thumbnail img' );
+		thumbnail.setAttribute( 'src', data.thumbnail );
+	}
+	if ( data.title ) {
+		const title = item.querySelector( '.' + PREFIX + '__title' );
+		title.innerHTML = data.title;
+	}
+	if ( data.label ) {
+		const label = item.querySelector( '.' + PREFIX + '__label' );
+		label.innerHTML = data.label;
+	}
+	if ( data.description ) {
+		const description = item.querySelector( '.' + PREFIX + '__description' );
+		description.innerHTML = data.description;
+	}
 }
 
 /**
@@ -273,31 +329,8 @@ function getMenuItem( data ) {
 
 	const
 		fragment = template.content.cloneNode( true ),
-		item = fragment.querySelector( '.' + PREFIX + '__item' ),
-		title = fragment.querySelector( '.' + PREFIX + '__title' ),
-		label = fragment.querySelector( '.' + PREFIX + '__label' ),
-		description = fragment.querySelector( '.' + PREFIX + '__description' );
-
-	if ( data.id ) {
-		item.setAttribute( 'id', data.id );
-	}
-	if ( data.link ) {
-		const link = fragment.querySelector( '.' + PREFIX + '__content' );
-		link.setAttribute( 'href', data.link );
-	}
-	if ( data.icon ) {
-		// FIXME: This is temporary, we need to replace picture elements with background-image because of a11y concern
-		const thumbnailContainer = fragment.querySelector( '.' + PREFIX + '__thumbnail' );
-		thumbnailContainer.classList.add( 'citizen-ui-icon', 'mw-ui-icon-wikimedia-' + data.icon );
-	}
-	if ( data.thumbnail ) {
-		const thumbnail = fragment.querySelector( '.' + PREFIX + '__thumbnail img' );
-		thumbnail.setAttribute( 'src', data.thumbnail );
-	}
-	title.innerHTML = data.title ?? '';
-	label.innerHTML = data.label ?? '';
-	description.innerHTML = data.description ?? '';
-
+		item = fragment.querySelector( '.' + PREFIX + '__item' );
+	updateMenuItem( item, data );
 	return fragment;
 }
 
@@ -310,39 +343,56 @@ function getMenuItem( data ) {
 function updateTypeahead( messages ) {
 	const
 		searchQuery = searchInput.value,
-		queryClass = PREFIX + '--hasQuery';
+		htmlSafeSearchQuery = mw.html.escape( searchQuery ),
+		hasQuery = searchQuery.length > 0,
+		placeholder = typeahead.querySelector( '.' + PREFIX + '__placeholder' );
 
 	const updateFullTextSearchItem = () => {
 		const
-			// Should this be handled differently since it is escaped a few times?
-			query = mw.html.escape( searchQuery ),
-			fulltextId = PREFIX + '-fulltext',
-			fulltextEl = document.getElementById( fulltextId ),
-			fulltextText = messages.fulltext + ' <strong>' + query + '</strong>';
+			FULLTEXT_ID = PREFIX + '-fulltext',
+			HIDDEN_CLASS = PREFIX + '__item--hidden';
+
+		const
+			fulltextEl = document.getElementById( FULLTEXT_ID ),
+			highlightedQuery = '<strong>' + htmlSafeSearchQuery + '</strong>',
+			fulltextText = mw.message( 'citizen-search-fulltext', highlightedQuery );
 
 		const item = getMenuItem( {
 			icon: 'articleSearch',
-			id: fulltextId,
-			link: config.wgScriptPath + '/index.php?title=Special:Search&fulltext=1&search=' + query,
+			id: FULLTEXT_ID,
+			link: config.wgScriptPath + '/index.php?title=Special:Search&fulltext=1&search=' + htmlSafeSearchQuery,
 			description: fulltextText
 		} );
 
 		// Update existing element instead of creating a new one
 		if ( fulltextEl ) {
-			const description = fulltextEl.querySelector( '.' + PREFIX + '__description' );
-			description.innerHTML = fulltextText;
+			updateMenuItem( fulltextEl, { description: fulltextText } );
+			// FIXME: There is probably a more efficient way
+			if ( hasQuery ) {
+				fulltextEl.classList.remove( HIDDEN_CLASS );
+			} else {
+				fulltextEl.classList.add( HIDDEN_CLASS );
+			}
 		} else {
-			typeahead.prepend( item );
+			typeahead.append( item );
 		}
 	};
 
-	if ( searchQuery.length > 0 ) {
-		typeahead.classList.add( queryClass );
-		updateFullTextSearchItem();
-		getSuggestions( searchQuery );
+	updateFullTextSearchItem();
+
+	if ( hasQuery ) {
+		getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder );
 	} else {
-		typeahead.classList.remove( queryClass );
 		clearSuggestions();
+		// Update placeholder with no query content
+		updateMenuItem(
+			placeholder,
+			{
+				class: PREFIX + '__placeholder ' + PREFIX + '__placeholder--noQuery',
+				title: messages.searchsuggestSearch,
+				description: messages.fulltextEmpty
+			}
+		);
 	}
 }
 
@@ -352,18 +402,20 @@ function updateTypeahead( messages ) {
  * @return {void}
  */
 function initTypeahead( searchForm, input ) {
+	const EXPANDED_CLASS = 'citizen-typeahead--expanded';
+
 	const
-		expandedClass = 'citizen-typeahead--expanded',
 		messages = {
-			fulltext: mw.message( 'citizen-search-fulltext' ).text()
+			fulltextEmpty: mw.message( 'citizen-search-fulltext-empty' ).text(),
+			searchsuggestSearch: mw.message( 'searchsuggest-search' ).text()
 		},
 		template = mw.template.get(
 			'skins.citizen.search',
 			'resources/skins.citizen.search/templates/typeahead.mustache'
 		),
 		data = {
-			'msg-searchsuggest-search': mw.message( 'searchsuggest-search' ).text(),
-			'msg-citizen-search-fulltext-empty': mw.message( 'citizen-search-fulltext-empty' ).text()
+			'msg-citizen-search-fulltext-empty': messages.fulltextEmpty,
+			'msg-searchsuggest-search': messages.searchsuggestSearch
 		};
 
 	const onBlur = ( event ) => {
@@ -374,7 +426,7 @@ function initTypeahead( searchForm, input ) {
 			// event dismiss the links before it is clicked. This should fix it.
 			setTimeout( () => {
 				searchInput.setAttribute( 'aria-activedescendant', '' );
-				typeahead.classList.remove( expandedClass );
+				typeahead.classList.remove( EXPANDED_CLASS );
 				searchInput.removeEventListener( 'keydown', keyboardEvents );
 				searchInput.removeEventListener( 'blur', onBlur );
 			}, 10 );
@@ -384,7 +436,7 @@ function initTypeahead( searchForm, input ) {
 	const onFocus = () => {
 		// Refresh the typeahead since the query will be emptied when blurred
 		updateTypeahead( messages );
-		typeahead.classList.add( expandedClass );
+		typeahead.classList.add( EXPANDED_CLASS );
 		searchInput.addEventListener( 'keydown', keyboardEvents );
 		searchInput.addEventListener( 'blur', onBlur );
 	};

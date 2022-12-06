@@ -216,6 +216,8 @@
 			"messages": [
 				"citizen-search-fulltext",
 				"citizen-search-fulltext-empty",
+				"citizen-search-noresults-title",
+				"citizen-search-noresults-desc",
 				"search-redirect",
 				"searchsuggest-search"
 			],
