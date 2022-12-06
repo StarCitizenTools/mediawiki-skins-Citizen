@@ -81,12 +81,12 @@ function keyboardEvents( event ) {
 
 	}
 
-	// We assume the first child is link element, maybe it should be more strict?
-	const link = typeaheadItems[ activeIndex.index ].firstChild;
-
-	if ( event.key === 'Enter' && link instanceof HTMLLinkElement ) {
-		event.preventDefault();
-		link.click();
+	if ( typeaheadItems[ activeIndex.index ] ) {
+		const link = typeaheadItems[ activeIndex.index ].querySelector( '.' + PREFIX + '__content' );
+		if ( event.key === 'Enter' && link instanceof HTMLAnchorElement ) {
+			event.preventDefault();
+			link.click();
+		}
 	}
 }
 
