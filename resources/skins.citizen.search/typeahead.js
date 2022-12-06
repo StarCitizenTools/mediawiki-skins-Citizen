@@ -203,8 +203,9 @@ function getSuggestions( searchQuery ) {
 		};
 
 		// FIXME: Assign ID to each item
-		results.forEach( ( result ) => {
+		results.forEach( ( result, index ) => {
 			const suggestion = getMenuItem( {
+				id: PREFIX + '-suggestion-' + index,
 				link: suggestionLinkPrefix + encodeURIComponent( result.key ),
 				/* FIXME: Null check should happen at gateway */
 				thumbnail: result.thumbnail ?? '',
