@@ -300,6 +300,7 @@ function getMenuItem( data ) {
 function updateTypeahead( messages ) {
 	const searchQuery = searchInput.value,
 		footer = document.getElementById( PREFIX + '-footer' ),
+		footerLink = footer.querySelector( '.' + PREFIX + '__content' ),
 		footerText = footer.querySelector( '.' + PREFIX + '__description' ),
 		fullTextUrl = config.wgScriptPath + '/index.php?title=Special:Search&fulltext=1&search=';
 
@@ -307,11 +308,11 @@ function updateTypeahead( messages ) {
 		const footerQuery = mw.html.escape( searchQuery );
 		footerText.innerHTML = messages.fulltext + ' <strong>' + footerQuery + '</strong>';
 		footerQuery.textContent = searchQuery;
-		footer.setAttribute( 'href', fullTextUrl + searchQuery );
+		footerLink.setAttribute( 'href', fullTextUrl + searchQuery );
 		getSuggestions( searchQuery );
 	} else {
 		footerText.textContent = messages.empty;
-		footer.setAttribute( 'href', fullTextUrl );
+		footerLink.setAttribute( 'href', fullTextUrl );
 		clearSuggestions();
 	}
 }
