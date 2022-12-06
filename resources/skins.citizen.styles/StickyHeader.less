@@ -1,9 +1,10 @@
 #citizen-body-header-sticky-sentinel {
-	position: absolute;
 	right: 0;
 	left: 0;
 	height: 1px;
 	visibility: hidden;
+	grid-area: content; // align right above content
+    contain: strict;
 }
 
 .ve-activated,
@@ -30,7 +31,6 @@
 
 	.firstHeading {
 		font-size: var( --font-size-h3 );
-		transition: font-size @transition-timing-fast ease;
 	}
 
 	.citizen-jumptotop {
