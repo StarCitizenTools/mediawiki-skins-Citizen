@@ -281,8 +281,10 @@
 			"class": "ResourceLoaderOOUIIconPackModule",
 			"icons": [
 				"article",
+				"articleNotFound",
 				"articleRedirect",
 				"articleSearch",
+				"articlesSearch",
 				"block",
 				"collapse",
 				"database",

@@ -229,6 +229,7 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 			updateMenuItem(
 				placeholder,
 				{
+					icon: 'articleNotFound',
 					class: PREFIX + '__placeholder ' + PREFIX + '__placeholder--noResult',
 					title: mw.message( 'citizen-search-noresults-title', htmlSafeSearchQuery ).text(),
 					description: mw.message( 'citizen-search-noresults-desc' ).text()
@@ -298,7 +299,8 @@ function updateMenuItem( item, data ) {
 		if ( data.thumbnail ) {
 			thumbnail.style.backgroundImage = 'url(' + data.thumbnail + ')';
 		} else {
-			thumbnail.classList.add( 'citizen-ui-icon', 'mw-ui-icon-wikimedia-' + data.icon );
+			// FIXME: There is probably a cleaner way
+			thumbnail.setAttribute( 'class', PREFIX + '__thumbnail citizen-ui-icon mw-ui-icon-wikimedia-' + data.icon );
 		}
 	}
 	if ( data.title ) {
@@ -390,6 +392,7 @@ function updateTypeahead( messages ) {
 		updateMenuItem(
 			placeholder,
 			{
+				icon: 'articlesSearch',
 				class: PREFIX + '__placeholder ' + PREFIX + '__placeholder--noQuery',
 				title: messages.searchsuggestSearch,
 				description: messages.fulltextEmpty
