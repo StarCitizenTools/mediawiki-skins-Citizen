@@ -25,11 +25,6 @@
 
 			&__thumbnail {
 				margin-bottom: var( --space-sm );
-
-				img,
-				source {
-					object-fit: contain;
-				}
 			}
 		}
 	}
@@ -43,10 +38,16 @@
 			&__thumbnail {
 				margin-right: var( --space-sm );
 				background-color: #eaecf0;
+				background-size: cover;
 
-				img,
-				source {
-					object-fit: cover;
+				&.citizen-ui-icon {
+					width: 70px;
+					height: 60px;
+					background-color: var( --color-surface-3 );
+
+					&:before {
+						background-size: 20px;
+					}
 				}
 			}
 
@@ -78,10 +79,8 @@
 		height: 60px;
 		border-radius: var( --border-radius--medium );
 
-		img,
-		source {
-			width: inherit;
-			height: inherit;
+		&.citizen-ui-icon:before {
+			background-size: contain;
 		}
 	}
 
@@ -162,13 +161,8 @@
 		}
 
 		&__thumbnail {
-			width: 70px; // Sync with thumbnail
 			height: var( --size-icon );
 			background-color: transparent;
-
-			img {
-				object-fit: contain;
-			}
 		}
 
 		&__description {

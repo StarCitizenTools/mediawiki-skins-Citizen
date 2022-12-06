@@ -205,17 +205,21 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 
 			// Create suggestion items
 			results.forEach( ( result, index ) => {
-				const suggestion = getMenuItem( {
+				const data = {
 					id: PREFIX + '-suggestion-' + index,
 					link: suggestionLinkPrefix + encodeURIComponent( result.key ),
-					/* FIXME: Null check should happen at gateway */
-					thumbnail: result.thumbnail ?? '',
 					title: highlightTitle( result.title ),
 					label: getRedirectLabel( result.title, result.matchedTitle ),
 					// Just to be safe, not sure if the default API is HTML escaped
 					description: mw.html.escape( result.description )
-				} );
-				fragment.append( suggestion );
+				};
+				if ( result.thumbnail ) {
+					data.thumbnail = result.thumbnail;
+				} else {
+					// Thumbnail placeholder icon
+					data.icon = 'image';
+				}
+				fragment.append( getMenuItem( data ) );
 			} );
 			// Hide placeholder
 			placeholder.classList.add( PREFIX + '__placeholder--hidden' );
@@ -289,15 +293,13 @@ function updateMenuItem( item, data ) {
 		const link = item.querySelector( '.' + PREFIX + '__content' );
 		link.setAttribute( 'href', data.link );
 	}
-	if ( data.icon ) {
-		// FIXME: This is temporary, we need to replace picture elements with
-		// background-image because of a11y concern
-		const thumbnailContainer = item.querySelector( '.' + PREFIX + '__thumbnail' );
-		thumbnailContainer.classList.add( 'citizen-ui-icon', 'mw-ui-icon-wikimedia-' + data.icon );
-	}
-	if ( data.thumbnail ) {
-		const thumbnail = item.querySelector( '.' + PREFIX + '__thumbnail img' );
-		thumbnail.setAttribute( 'src', data.thumbnail );
+	if ( data.icon || data.thumbnail ) {
+		const thumbnail = item.querySelector( '.' + PREFIX + '__thumbnail' );
+		if ( data.thumbnail ) {
+			thumbnail.style.backgroundImage = 'url(' + data.thumbnail + ')';
+		} else {
+			thumbnail.classList.add( 'citizen-ui-icon', 'mw-ui-icon-wikimedia-' + data.icon );
+		}
 	}
 	if ( data.title ) {
 		const title = item.querySelector( '.' + PREFIX + '__title' );
