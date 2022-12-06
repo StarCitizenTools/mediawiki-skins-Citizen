@@ -85,6 +85,7 @@ function keyboardEvents( event ) {
 	const link = typeaheadItems[ activeIndex.index ].firstChild;
 
 	if ( event.key === 'Enter' && link instanceof HTMLLinkElement ) {
+		event.preventDefault();
 		link.click();
 	}
 }
