@@ -182,9 +182,11 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 					const cleanup = ( text ) => {
 						return text.toLowerCase().replace( /-|\s/g, '' );
 					};
-					title = cleanup( title );
-					matchedTitle = cleanup( matchedTitle );
-					return !( title.includes( matchedTitle ) || matchedTitle.includes( title ) );
+					const
+						cleanTitle = cleanup( title ),
+						cleanMatchedTitle = cleanup( matchedTitle );
+
+					return !( cleanTitle.includes( cleanMatchedTitle ) || cleanMatchedTitle.includes( cleanTitle ) );
 				};
 
 				let html = '';
@@ -209,10 +211,12 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 					id: PREFIX + '-suggestion-' + index,
 					link: suggestionLinkPrefix + encodeURIComponent( result.key ),
 					title: highlightTitle( result.title ),
-					label: getRedirectLabel( result.title, result.matchedTitle ),
 					// Just to be safe, not sure if the default API is HTML escaped
-					description: mw.html.escape( result.description )
+					description: result.description
 				};
+				if ( result.matchedTitle ) {
+					data.label = getRedirectLabel( result.title, result.matchedTitle );
+				}
 				if ( result.thumbnail ) {
 					data.thumbnail = result.thumbnail;
 				} else {
@@ -241,13 +245,14 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 	// Add loading animation
 	searchInput.parentNode.classList.add( SEARCH_LOADING_CLASS );
 
-	/* eslint-disable-next-line compat/compat */
-	const controller = new AbortController(),
+	const
+		controller = new AbortController(),
 		abortFetch = () => {
 			controller.abort();
 		};
 
-	const gateway = require( './gateway/gateway.js' ),
+	const
+		gateway = require( './gateway/gateway.js' ),
 		getResults = gateway.getResults( searchQuery, controller );
 
 	// Abort fetch if the input is detected
