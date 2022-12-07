@@ -1,109 +1,29 @@
 /*
- * Citizen - Recent Changes Styles
- * TODO Split into separate files
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Special:RecentChanges filters
+ * Module: mediawiki.rcfilters.filters.base.styles
+ * Version: 1.39.0
+ *
+ * Date: 2022-12-07
 */
 
-@import '../../../resources/variables.less';
-
-.skin-citizen {
-	.mw-rcfilters-ui {
-		&-filter {
-			&TagMultiselectWidget {
-				&.oo-ui-widget-enabled {
-					.oo-ui-tagMultiselectWidget-handle {
-						border-color: var( --border-color-base );
-						background-color: var( --background-color-framed );
-					}
-				}
-
-				&-views-select-widget {
-					&.oo-ui-widget {
-						border-color: var( --border-color-base );
-					}
-				}
-
-				&-wrapper-content-title {
-					color: var( --color-base );
-				}
-			}
-
-			&Menu {
-				&HeaderWidget {
-					&-header {
-						border-color: var( --border-color-base--darker );
-						background-color: var( --color-surface-2 );
-					}
-
-					&-title {
-						color: var( --color-base );
-					}
-				}
-
-				&SectionOptionWidget {
-					background-color: var( --background-color-framed );
-
-					&-header-title.oo-ui-labelElement-label {
-						color: var( --color-base--subtle );
-					}
-				}
-
-				&OptionWidget.oo-ui-flaggedElement-muted:not( .oo-ui-optionWidget-selected ) {
-					background-color: var( --background-color-framed );
-				}
-			}
-		}
-
-		&-itemMenuOptionWidget {
-			&-label {
-				&-title {
-					color: var( --color-base--emphasized );
-				}
-
-				&-desc {
-					color: var( --color-base--subtle );
-				}
-			}
-
-			&:hover {
-				background-color: var( --background-color-quiet--hover );
-			}
-
-			&.oo-ui-optionWidget-selected {
-				background-color: var( --background-color-primary--hover );
-			}
-
-			&:not( :last-child ):not( .mw-rcfilters-ui-itemMenuOptionWidget-identifier-talk ) {
-				border-color: var( --border-color-base );
-			}
-		}
-
-		&-viewSwitchWidget label.oo-ui-labelWidget {
-			color: var( --color-base--subtle );
-		}
-
-		&-changesListWrapperWidget .mw-changeslist-legend {
-			z-index: @z-index-page-header + 1; // so that it won't be covered by sticky header
+.client-js {
+	.mw-recentchanges-toplinks {
+		&:not( .mw-recentchanges-toplinks-collapsed ) {
 			border-color: var( --border-color-base );
-			background-color: var( --color-surface-2 );
-		}
-
-		&-datePopupWidget {
-			border-color: var( --border-color-base );
-		}
-
-		&-menuSelectWidget-footer {
-			border-top: 1px solid var( --border-color-base--darker );
-			background-color: var( --color-surface-2 );
-		}
-
-		&-watchlistTopSectionWidget-separator {
-			border-top: 1px solid var( --border-color-base );
 		}
 	}
 
-	// Override input field style because it feels out of place
-	.oo-ui-textInputWidget .oo-ui-inputWidget-input {
-		border-color: var( --border-color-base );
+	.mw-rcfilters-spinner {
+		& .mw-rcfilters-spinner-bounce,
+		&:before,
+		&:after {
+			background-color: var( --color-primary );
+		}
 	}
+}
+
+.mw-rcfilters-staticfilters-selected {
+	font-weight: var( --font-weight-semibold );
 }

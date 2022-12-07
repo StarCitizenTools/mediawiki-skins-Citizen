@@ -1,0 +1,377 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Special:RecentChanges filters
+ * Module: mediawiki.rcfilters.filters.ui
+ * Version: 1.39.0
+ *
+ * Date: 2022-12-07
+*/
+
+@import '../../resources/variables.less';
+
+/* mw.rcfilters.ui.FilterTagMultiselectWidget.less */
+.mw-rcfilters-ui-filterTagMultiselectWidget {
+	&.oo-ui-widget-enabled {
+		// Needed extra specificity
+		&.oo-ui-tagMultiselectWidget.oo-ui-tagMultiselectWidget-outlined {
+			border-radius: var( --border-radius--small );
+			background-color: var( --color-surface-1 );
+		}
+
+		.oo-ui-tagMultiselectWidget-handle {
+			border-color: transparent;
+			border-radius: var( --border-radius--small ) var( --border-radius--small ) 0 0;
+			border-bottom: 1px solid var( --border-color-base ); // Add divider
+			background-color: var( --color-surface-2 );
+		}
+	}
+
+	.mw-rcfilters-collapsed & {
+		border-bottom-color: transparent;
+
+		.mw-rcfilters-ui-filterTagMultiselectWidget-wrapper-hideshow {
+			border-left-color: transparent;
+		}
+	}
+
+	.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled &-emphasize.oo-ui-tagMultiselectWidget-handle {
+		background-color: var( --background-color-primary--hover );
+	}
+
+	.oo-ui-tagMultiselectWidget-input input {
+		border-top-color: transparent; // Avoid double border with oo-ui-tagMultiselectWidget-handle
+		background-color: var( --color-surface-0 );
+	}
+
+	&-wrapper {
+		&-content {
+			&-title {
+				// Citizen label style
+				color: var( --color-base--subtle );
+				font-size: 0.8125rem;
+				font-weight: var( --font-weight-normal );
+				letter-spacing: 0.05em;
+			}
+
+			&-savedQueryTitle {
+				color: var( --color-base--emphasized );
+				font-weight: var( --font-weight-semibold );
+			}
+		}
+	}
+
+	&-views {
+		&-select {
+			&-widget.oo-ui-widget {
+				border-color: transparent;
+				border-radius: 0 0 var( --border-radius--small ) 0;
+				border-left-width: 0;
+			}
+		}
+	}
+
+	&-emptyFilters {
+		color: var( --color-base--subtle );
+		vertical-align: sub; // fix incorrect top alignment
+	}
+}
+
+/* mw.rcfilters.ui.ItemMenuOptionWidget.less */
+.mw-rcfilters-ui-itemMenuOptionWidget {
+	&:not( :last-child ):not( .mw-rcfilters-ui-itemMenuOptionWidget-identifier-talk ) {
+		border-bottom: 0;
+	}
+
+	&-view-namespaces {
+		border-top-color: var( --border-color-base );
+	}
+
+	&:hover {
+		background-color: var( --background-color-quiet--hover );
+	}
+
+	&.oo-ui-optionWidget-selected {
+		background-color: var( --background-color-primary--hover );
+	}
+
+	&-label {
+		&-title {
+			color: var( --color-base--emphasized );
+			font-weight: var( --font-weight-semibold );
+		}
+
+		&-desc {
+			color: var( --color-base--subtle );
+		}
+	}
+
+	&-excludeLabel {
+		color: var( --color-base--subtle );
+	}
+
+	// Add margin between item and next header
+	+ .mw-rcfilters-ui-filterMenuSectionOptionWidget {
+		margin-top: var( --space-md );
+	}
+}
+
+/* mw.rcfilters.ui.FilterMenuOptionWidget.less */
+.mw-rcfilters-ui-filterMenuOptionWidget {
+	&.oo-ui-flaggedElement-muted {
+		&:not( .oo-ui-optionWidget-selected ) {
+			background-color: var( --color-surface-2 );
+		}
+
+		.mw-rcfilters-ui-itemMenuOptionWidget-label-title,
+		.mw-rcfilters-ui-itemMenuOptionWidget-label-desc {
+			color: var( --color-base--subtle );
+		}
+
+		&.oo-ui-optionWidget-highlighted {
+			background-color: var( --background-color-quiet--hover );
+			color: var( --color-base );
+		}
+	}
+}
+
+/* mw.rcfilters.ui.FilterMenuSectionOptionWidget.less */
+// Make it sticky
+.mw-rcfilters-ui-filterMenuSectionOptionWidget {
+	position: sticky;
+	z-index: 1; // Needed for sticky header
+	top: 0;
+	padding-top: var( --space-xs );
+	padding-bottom: var( --space-xs );
+	border-bottom: 1px solid var( --border-color-base );
+	background-color: var( --color-surface-1 ); // Sync with background
+
+	&-header-title.oo-ui-labelElement-label {
+		// Citizen label style
+		color: var( --color-base--subtle );
+		font-size: 0.8125rem;
+		font-weight: var( --font-weight-normal );
+		letter-spacing: 0.05em;
+	}
+
+	&-whatsThisButton {
+		&-popup-content {
+			&-header {
+				font-weight: var( --font-weight-semibold );
+			}
+		}
+	}
+
+	&-active .mw-rcfilters-ui-filterMenuSectionOptionWidget-header-title {
+		font-weight: var( --font-weight-semibold );
+	}
+}
+
+/* mw.rcfilters.ui.TagItemWidget.less */
+.mw-rcfilters-ui-tagItemWidget {
+	// Background and color of the capsule widget need a bit
+	// more specificity to override OOUI internals
+	&.oo-ui-flaggedElement-muted.oo-ui-tagItemWidget.oo-ui-widget-enabled {
+		border-color: var( --color-surface-4 );
+		background-color: var( --color-surface-4 );
+
+		.oo-ui-labelElement-label {
+			color: var( --color-base--subtle );
+		}
+	}
+
+	&.oo-ui-flaggedElement-invalid.oo-ui-tagItemWidget.oo-ui-widget-enabled {
+		.oo-ui-labelElement-label {
+			color: var( --color-destructive );
+			// color: var( --color-destructive--active );
+		}
+	}
+
+	.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined &-selected.oo-ui-tagItemWidget.oo-ui-widget-enabled {
+		border-color: var( --color-primary );
+		background-color: var( --color-primary );
+		color: #fff;
+	}
+
+	&-popup-content {
+		color: var( --color-base );
+	}
+}
+
+/* mw.rcfilters.ui.FilterMenuHeaderWidget.less */
+.mw-rcfilters-ui-filterMenuHeaderWidget {
+	&-title {
+		// Left padding ~12px, sync with other padding
+		// Handle top padding in header instead so everything is aligned
+		padding: 0 0 0 0.75em;
+		color: var( --color-base--emphasized );
+		font-size: 1rem;
+		font-weight: var( --font-weight-semibold );
+	}
+
+	&-header {
+		padding-top: 0.75em;
+		border-bottom-color: transparent; // Sticky header have divider already
+		background-color: transparent;
+	}
+}
+
+/* mw.rcfilters.ui.MenuSelectWidget.less */
+.mw-rcfilters-ui-menuSelectWidget {
+	&-noresults {
+		color: var( --color-base--subtle );
+	}
+
+	&-footer {
+		border-top-color: var( --border-color-base );
+		margin-top: var( --space-md );
+		background-color: transparent;
+	}
+}
+
+/* mw.rcfilters.ui.ViewSwitchWidget.less */
+.mw-rcfilters-ui-viewSwitchWidget {
+	label.oo-ui-labelWidget {
+		// Citizen label styles
+		color: var( --color-base--subtle );
+		font-size: 0.8125rem;
+		font-weight: var( --font-weight-normal );
+		letter-spacing: 0.05em;
+	}
+
+	&-buttons {
+		margin-top: 0.75em; // Sync with header spacing above
+	}
+}
+
+/* mw.rcfilters.ui.ValuePickerWidget.less */
+.mw-rcfilters-ui-valuePickerWidget {
+	&-title {
+		// Citizen label styles
+		color: var( --color-base--subtle );
+		font-size: 0.8125rem;
+		font-weight: var( --font-weight-normal );
+		letter-spacing: 0.05em;
+	}
+}
+
+/* mw.rcfilters.ui.DatePopupWidget.less */
+.mw-rcfilters-ui-datePopupWidget {
+	border-top-color: var( --border-color-base );
+
+	&-title {
+		color: var( --color-base--emphasized );
+		font-weight: var( --font-weight-semibold );
+	}
+
+	.mw-rcfilters-ui-valuePickerWidget-title {
+		color: var( --color-base--subtle );
+	}
+}
+
+/* mw.rcfilters.ui.ChangesListWrapperWidget.less */
+@keyframes fadeBlueCitizen {
+	60% {
+		border-top-color: var( --color-primary );
+	}
+
+	100% {
+		border-top-color: var( --color-surface-4 );
+	}
+}
+
+.mw-rcfilters-ui-changesListWrapperWidget {
+	&-previousChangesIndicator {
+		border-top-color: var( --color-surface-4 );
+		animation: 1s ease fadeBlueCitizen;
+	}
+
+	&-results {
+		&-noresult,
+		&-conflict {
+			font-weight: var( --font-weight-semibold );
+		}
+	}
+
+	&-enhanced-grey td:not( :nth-child( -n+2 ) ) {
+		background-color: var( --color-surface-3 );
+	}
+
+	.mw-changeslist-legend {
+		z-index: @z-index-page-header + 1; // so that it won't be covered by sticky header
+		border-color: var( --border-color-base );
+		background-color: var( --color-surface-1 );
+	}
+}
+
+/* mw.rcfilters.ui.HighlightColorPickerWidget.less */
+.mw-rcfilters-ui-highlightColorPickerWidget {
+	&-label {
+		margin-top: 0.75em;
+		margin-bottom: 0.25em;
+		color: var( --color-base--emphasized );
+		font-size: 0.875rem;
+		font-weight: var( --font-weight-semibold );
+	}
+}
+
+/* mw.rcfilters.ui.SavedLinksListWidget.less */
+.mw-rcfilters-ui-savedLinksListWidget {
+	&-placeholder {
+		&-title {
+			font-weight: var( --font-weight-semibold );
+		}
+
+		&.oo-ui-optionWidget .oo-ui-labelElement-label {
+			color: var( --color-base--subtle );
+		}
+	}
+}
+
+/* mw.rcfilters.ui.SavedLinksListItemWidget.less */
+.mw-rcfilters-ui-savedLinksListItemWidget {
+	&:hover {
+		background-color: var( --background-color-quiet--hover );
+		color: var( --color-base );
+	}
+
+	&-label {
+		color: var( --color-primary );
+	}
+}
+
+/* mw.rcfilters.ui.SaveFiltersPopupButtonWidget.less */
+.mw-rcfilters-ui-saveFiltersPopupButtonWidget {
+	&-popup {
+		> .oo-ui-popupWidget-popup > .oo-ui-popupWidget-head {
+			> .oo-ui-labelElement-label {
+				font-weight: var( --font-weight-medium );
+			}
+		}
+	}
+}
+
+/* mw.rcfilters.ui.LiveUpdateButtonWidget.less */
+.mw-rcfilters-ui-liveUpdateButtonWidget {
+	&.oo-ui-toggleWidget-on {
+		&:after {
+			background: var( --background-color-primary--active );
+		}
+	}
+}
+
+/* mw.rcfilters.ui.RclToOrFromWidget.less */
+.mw-rcfilters-ui-rclToOrFromWidget {
+	&.oo-ui-dropdownWidget.oo-ui-widget-enabled {
+		.oo-ui-dropdownWidget-handle {
+			font-weight: var( --font-weight-medium );
+		}
+	}
+}
+
+/* mw.rcfilters.ui.WatchlistTopSectionWidget.less */
+.mw-rcfilters-ui-watchlistTopSectionWidget {
+	&-separator {
+		border-top: 1px solid var( --border-color-base );
+	}
+}

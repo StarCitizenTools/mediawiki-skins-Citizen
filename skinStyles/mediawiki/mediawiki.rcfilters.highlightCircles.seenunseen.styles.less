@@ -1,0 +1,26 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Special:RecentChanges filters
+ * Module: mediawiki.rcfilters.highlightCircles.seenunseen.styles
+ * Version: 1.39.0
+ *
+ * Date: 2022-12-07
+*/
+
+// The color logic is too much work to re-style, just leave it as it is
+div.mw-rcfilters-ui-highlights {
+	&-color {
+		&-none {
+			.mw-changeslist-watchedseen & {
+				.mw-rcfilters-ui-changesListWrapperWidget.mw-rcfilters-ui-changesListWrapperWidget-highlighted & {
+					border-color: var( --border-color-base );
+				}
+
+				.mw-rcfilters-ui-changesListWrapperWidget:not( .mw-rcfilters-ui-changesListWrapperWidget-highlighted ) & {
+					border-color: var( --border-color-base );
+				}
+			}
+		}
+	}
+}

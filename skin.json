@@ -510,6 +510,8 @@
 			"+mediawiki.legacy.shared": "skinStyles/mediawiki/mediawiki.legacy.shared.less",
 			"+mediawiki.page.gallery.styles": "skinStyles/mediawiki/mediawiki.page.gallery.styles.less",
 			"+mediawiki.rcfilters.filters.base.styles": "skinStyles/mediawiki/mediawiki.rcfilters.filters.base.styles.less",
+			"+mediawiki.rcfilters.highlightCircles.seenunseen.styles": "skinStyles/mediawiki/mediawiki.rcfilters.highlightCircles.seenunseen.styles.less",
+			"+mediawiki.rcfilters.filters.ui": "skinStyles/mediawiki/mediawiki.rcfilters.filters.ui.less",
 			"+mediawiki.widgets.DateInputWidget.styles": "skinStyles/mediawiki/mediawiki.widgets.DateInputWidget.styles.less",
 			"+oojs-ui-core.styles": "skinStyles/ooui/oojs-ui-core.less",
 			"+oojs-ui-toolbars": "skinStyles/ooui/oojs-ui-toolbars.less",
