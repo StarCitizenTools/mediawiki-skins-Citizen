@@ -1,27 +1,17 @@
 /*
- * Citizen - Recent Changes Styles
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for Special:RecentChanges and Watchlist
+ * Module: mediawiki.special.changeslist
+ * Version: 1.39.0
+ *
+ * Date: 2022-10-20
 */
 
+@import '../../../resources/variables.less';
 @import '../../../resources/mixins.less';
 
-/*!
- * Styling for Special:Watchlist and Special:RecentChanges
- */
-.rcoptions {
-	padding: 0;
-	border: 0;
-	margin: var( --space-xl ) 0;
-
-	legend {
-		width: 100%;
-		padding: var( --space-xs ) 0;
-		border-bottom: 1px solid var( --border-color-base );
-		margin-bottom: var( --space-xs );
-		font-size: 0.8125rem;
-	}
-}
-
+/* default.less */
 .mw-plusminus {
 	&-pos {
 		color: var( --color-success );
@@ -43,9 +33,10 @@
 
 	// Need additional parent to override
 	.mw-changeslist-legend {
+		z-index: @z-index-page-header + 1; // so that it won't be covered by sticky header
 		border-color: var( --border-color-base );
 		border-radius: var( --border-radius--small );
-		background-color: var( --background-color-framed );
+		background-color: var( --color-surface-1 );
 	}
 
 	.mw-tag-markers {
@@ -69,6 +60,20 @@
 		+ .mw-changeslist-line {
 			border-top: 1px solid var( --border-color-base ); // Add separator
 		}
+	}
+}
+
+.rcoptions {
+	padding: 0;
+	border: 0;
+	margin: var( --space-xl ) 0;
+
+	legend {
+		width: 100%;
+		padding: var( --space-xs ) 0;
+		border-bottom: 1px solid var( --border-color-base );
+		margin-bottom: var( --space-xs );
+		font-size: 0.8125rem;
 	}
 }
 

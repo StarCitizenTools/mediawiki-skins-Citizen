@@ -4,6 +4,8 @@
  * https://starcitizen.tools
 */
 
+@import '../../../resources/variables.less';
+
 .skin-citizen {
 	.mw-rcfilters-ui {
 		&-filter {
@@ -81,8 +83,9 @@
 		}
 
 		&-changesListWrapperWidget .mw-changeslist-legend {
+			z-index: @z-index-page-header + 1; // so that it won't be covered by sticky header
 			border-color: var( --border-color-base );
-			background-color: var( --background-color-framed );
+			background-color: var( --color-surface-2 );
 		}
 
 		&-datePopupWidget {
