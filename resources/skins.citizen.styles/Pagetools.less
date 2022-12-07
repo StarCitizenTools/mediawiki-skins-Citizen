@@ -42,7 +42,6 @@
 		top: 100%;
 		right: ~'calc( var( --space-xs ) * -1 )'; // counteract margin
 		overflow: auto;
-		min-width: 200px;
 		max-height: 60vh;
 		padding: 0.5rem 0;
 		margin: var( --space-xs );
@@ -275,10 +274,6 @@
 		&__item {
 			position: unset;
 		}
-
-		&__card {
-			left: 0;
-		}
 	}
 }
 
@@ -289,6 +284,11 @@
 				font-size: 0.875rem;
 				gap: var( --space-xs );
 			}
+		}
+
+		&__card {
+			// Expand the width on narrow screens might overflow the page
+			min-width: 200px;
 		}
 	}
 }
