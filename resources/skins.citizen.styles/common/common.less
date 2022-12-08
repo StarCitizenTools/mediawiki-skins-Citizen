@@ -116,6 +116,15 @@ video {
 	}
 }
 
+@media ( hover: none ) {
+	a,
+	button,
+	label {
+		// Remove the 300ms delay in click event (T118509)
+		touch-action: manipulation;
+	}
+}
+
 @media ( max-width: @width-breakpoint-tablet ) {
 	.mw-body,
 	.parsoid-body {
