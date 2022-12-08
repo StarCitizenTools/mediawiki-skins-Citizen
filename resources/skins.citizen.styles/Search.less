@@ -129,6 +129,9 @@
 
 		// HACK: Click overlay to dismiss search bar
 		~ .citizen-search__button {
+			// Reset containment so that the overlay is visible
+			contain: initial;
+
 			.citizen-search__buttonIcon {
 				display: none;
 			}
