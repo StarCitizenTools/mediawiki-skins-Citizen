@@ -2,6 +2,50 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.1.0...v2.2.0) (2022-12-08)
+
+
+### Features
+
+* **core:** ✨ add active states to header buttons ([2a8129e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2a8129ec936c643b722a0aac980e4ce83c0dd125))
+* **core:** ✨ add icon to all talk page buttons ([323acda](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/323acda0b1a668aa45394707ea59ccb6d4279534))
+* **core:** ✨ add rounded corner to mw-message-box ([f3ee780](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f3ee780f8c8d8f916e6c1adb39eb3f65a35535a7))
+* **core:** ✨ add rounded corner to mw-ui-button ([c172966](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c172966ce4f6488b747c280f634ce80011cfe413))
+* **core:** ✨ add site logo to header ([7bfec28](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7bfec28ef2c6c8d166730e9defad39a056bc7b82))
+* **core:** ✨ allow multiple search components on the same page ([1939850](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/193985036980d4f1c001930c7763af76ed3f95bc))
+* **core:** ✨ allow the use of custom search suggestion module ([391266c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/391266c0a710a86dabc7c0ddb7d2f8d3540af551))
+* **core:** ✨ center align searchbox ([3d0ff75](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3d0ff75249d17dbca23347f9cda06d473412dadc))
+* **core:** ✨ do not hardcode footer wordmark size ([22e1324](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/22e1324a80efd75d954dd5e0e074b25e5d1b8dc3))
+* **core:** ✨ reduce the click event delay on touch devices ([3d1ca8b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3d1ca8b2ad62b479032c1e83bf0826f9f6da9162))
+* **core:** ✨ update MW datatable styles ([75ab097](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/75ab097ba104081629ca865bd96aa8725df5adb4))
+* **core:** ✨ update RecentChanges filter styles ([594b0ab](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/594b0abc736d000f3a7e0f7f11fec323450c79f9))
+* **MultimediaViewer:** ✨ smaller scroll indicator for MMV ([9bc8d7a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9bc8d7a44c883f77e3883ff29571538ef4ff65bd))
+* **search:** ✨ add empty state to typeahead ([9bf737f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9bf737f72016669cdfeff1e6206e8e345423d937))
+* **search:** ✨ add no result state to typeahead ([284b0d8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/284b0d8952fd44806ca6d534ab1eb3edaad0ec59))
+* **search:** ✨ clean up redirect text implementation ([4293021](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4293021d5c0ebf27294e8ee8cf397c8189f114eb))
+* **search:** ✨ merge footer into item element ([c9b03aa](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c9b03aa7fed3240468405d154ba3fc0123bdce04))
+* **search:** ✨ show enter key tip when item is active ([3488e29](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3488e29960925b43d7655f7faf53375b3ddd46e9))
+* **search:** ✨ use background-image instead for typeahead thumbnails ([fd0978b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fd0978b73d1bb27bd24acf84bc28a191f7c7cf6a))
+* **search:** ✨ use WMUI icon for placeholder ([34804e8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/34804e82581cda0c58f00de2e3fa77f7f1f09815))
+
+
+### Bug Fixes
+
+* **core:** 🐛 changelist legends should not be covered by header ([a3d88aa](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a3d88aa7a1e771e9885feabedbb647967334ddd5))
+* **core:** 🐛 message box should be at the top of login form ([31c7779](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/31c7779b82395d104eca61f4bbd8af541cbe8fc2))
+* **core:** 🐛 page tool menu should not overflow right ([#555](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/555)) ([71d89bc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/71d89bc935bae8b94534cba477cffa84ac999a4e))
+* **core:** 🐛 remove border as it collides with MMV button ([9d78879](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9d788790951f22b00c66de8eed2ca3ca651e1c82))
+* **core:** 🐛 sticky header flickering ([a1b2f7f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a1b2f7f184bf745baf359759ee2319ffa6fe156a))
+* **search:** 🐛 do not shrink thumbnail ([cc3e1d4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cc3e1d41d44fee5a44b03c24e18959f98c6cb2c0))
+* **search:** 🐛 enter key should click the link in suggestion ([c5e5ff4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c5e5ff40a6a58faa28ac77d57d5ab156ce921c32))
+* **search:** 🐛 enter key should click the selected item ([7805b89](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7805b890ff3e28cf09ab00fbde51b3b64659a472))
+* **search:** 🐛 enter key should not throw any error ([e6ca664](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e6ca664cc43d96399b0d653a8837e76641dacd50))
+* **search:** 🐛 null error when rest api is used ([f81e5b6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f81e5b6f1aa7b354e70e69d46b49733ca553b2e0))
+* **search:** 🐛 overlay should be visible on mobile ([9d7c307](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9d7c3070e50ada9a79bc5e6841576ddcc879956b))
+* **search:** 🐛 restore ID attribute for suggestion items ([a1aeff2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a1aeff2e523b9911adf6e2801055dd172ec92c4d))
+* **search:** 🐛 typeahead thumbnails should be center-aligned ([96ec8e4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/96ec8e4248cc435ff0fbb82f212ea08f66078327))
+* **search:** 🐛 update selector for fulltexturl ([501286a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/501286a15d0faeab1a08f7180a39fcff699d1392))
+
 ## [2.1.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.0.1...v2.1.0) (2022-12-02)
 
 
