@@ -141,6 +141,12 @@ function main( window ) {
 		toc.init();
 	}
 
+	// Collapsible sections
+	if ( document.body.classList.contains( 'citizen-sections-enabled' ) ) {
+		const sections = require( './sections.js' );
+		sections.init();
+	}
+
 	mw.loader.load( 'skins.citizen.preferences' );
 	registerServiceWorker();
 

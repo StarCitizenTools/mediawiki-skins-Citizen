@@ -170,21 +170,16 @@ class SkinCitizen extends SkinMustache {
 		// Collapsible sections
 		// Load in content pages
 		if ( $title !== null && $title->isContentPage() ) {
-			// Load Citizen collapsible sections modules if enabled
+			// Since we merged the sections module into core styles and scripts to reduce RL modules
+			// The style is now activated through the class below
 			if ( $this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true ) {
-				$options['scripts'][] = 'skins.citizen.scripts.sections';
-				$options['styles'][] = 'skins.citizen.styles.sections';
+				$options['bodyClasses'][] = 'citizen-sections-enabled';
 			}
 		}
 
 		// CJK fonts
 		if ( $this->getConfigValue( 'CitizenEnableCJKFonts' ) === true ) {
 			$options['styles'][] = 'skins.citizen.styles.fonts.cjk';
-		}
-
-		// Drawer sitestats
-		if ( $this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) === true ) {
-			$options['styles'][] = 'skins.citizen.styles.sitestats';
 		}
 	}
 }

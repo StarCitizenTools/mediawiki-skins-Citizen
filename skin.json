@@ -34,7 +34,6 @@
 					],
 					"styles": [
 						"skins.citizen.styles",
-						"skins.citizen.styles.fonts",
 						"skins.citizen.icons",
 						"skins.citizen.icons.wmui"
 					],
@@ -102,22 +101,6 @@
 				"resources/skins.citizen.styles/skin.less"
 			]
 		},
-		"skins.citizen.styles.fonts": {
-			"class": "ResourceLoaderSkinModule",
-			"targets": [
-				"desktop",
-				"mobile"
-			],
-			"features": {
-				"accessibility": false,
-				"content-body": false,
-				"interface-core": false,
-				"toc": false
-			},
-			"styles": [
-				"resources/skins.citizen.styles.fonts/skins.citizen.styles.fonts.less"
-			]
-		},
 		"skins.citizen.styles.fonts.cjk": {
 			"class": "ResourceLoaderSkinModule",
 			"targets": [
@@ -131,39 +114,7 @@
 				"toc": false
 			},
 			"styles": [
-				"resources/skins.citizen.styles.fonts.cjk/skins.citizen.styles.fonts.cjk.less"
-			]
-		},
-		"skins.citizen.styles.sections": {
-			"class": "ResourceLoaderSkinModule",
-			"targets": [
-				"desktop",
-				"mobile"
-			],
-			"features": {
-				"accessibility": false,
-				"content-body": false,
-				"interface-core": false,
-				"toc": false
-			},
-			"styles": [
-				"resources/skins.citizen.styles.sections/skins.citizen.styles.sections.less"
-			]
-		},
-		"skins.citizen.styles.sitestats": {
-			"class": "ResourceLoaderSkinModule",
-			"targets": [
-				"desktop",
-				"mobile"
-			],
-			"features": {
-				"accessibility": false,
-				"content-body": false,
-				"interface-core": false,
-				"toc": false
-			},
-			"styles": [
-				"resources/skins.citizen.styles.sitestats/skins.citizen.styles.sitestats.less"
+				"resources/skins.citizen.styles.fonts.cjk/index.less"
 			]
 		},
 		"skins.citizen.scripts": {
@@ -177,6 +128,7 @@
 				"resources/skins.citizen.scripts/scrollObserver.js",
 				"resources/skins.citizen.scripts/sectionObserver.js",
 				"resources/skins.citizen.scripts/search.js",
+				"resources/skins.citizen.scripts/sections.js",
 				"resources/skins.citizen.scripts/tableOfContents.js"
 			],
 			"dependencies": [
@@ -185,14 +137,6 @@
 			"targets": [
 				"desktop",
 				"mobile"
-			]
-		},
-		"skins.citizen.scripts.sections": {
-			"scripts": [
-				"resources/skins.citizen.scripts.sections/skins.citizen.scripts.sections.js"
-			],
-			"targets": [
-				"desktop"
 			]
 		},
 		"skins.citizen.search": {

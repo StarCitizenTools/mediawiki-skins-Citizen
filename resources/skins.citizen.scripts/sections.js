@@ -1,8 +1,7 @@
 /**
- * @param {Document} document
  * @return {void}
  */
-function initCollapsibleSections( document ) {
+function initCollapsibleSections() {
 	const prefix = 'section-',
 		headings = document.querySelectorAll( '.' + prefix + 'heading' ),
 		sections = document.querySelectorAll( '.' + prefix + 'collapsible' );
@@ -32,4 +31,6 @@ function initCollapsibleSections( document ) {
 	}
 }
 
-initCollapsibleSections( document );
+module.exports = {
+	init: initCollapsibleSections
+};
