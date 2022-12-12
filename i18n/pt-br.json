@@ -3,17 +3,21 @@
 		"authors": [
 			"Eduardo Addad de Oliveira",
 			"Eduardoaddad",
+			"Fúlvio",
 			"Mariagarbin",
 			"Rafaelff"
 		]
 	},
 	"skinname-citizen": "Citizen",
-	"citizen-skin-desc": "Uma aparência responsiva desenvolvida para o Star Citizen Wiki",
+	"citizen-skin-desc": "Uma aparência MediaWiki bonita, utilizável e responsiva que torna as extensões parte da experiência coesa. Inicialmente criado para o [https://starcitizen.tools/ Star Citizen Wiki].",
+	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|Discussão]]",
 	"citizen.css": "/* Todo o CSS aqui será carregado para usuários do tema Citizen */",
 	"citizen.js": "/* Todo o JavaScript aqui será carregado para os usuários do tema Citizen */",
 	"citizen-drawer-toggle": "Ativa o menu",
 	"citizen-usermenu-toggle": "Alternar menu pessoal",
 	"citizen-search-toggle": "Ativa a pesquisa",
+	"citizen-languages-toggle": "Mais idiomas",
+	"citizen-actions-more-toggle": "Mais ações",
 	"citizen-sitestats-articles-label": "artigos",
 	"citizen-sitestats-images-label": "arquivos",
 	"citizen-sitestats-users-label": "usuários",
@@ -25,9 +29,12 @@
 	"citizen-footer-tagline": "Edite este texto em [[MediaWiki:Citizen-footer-tagline/pt-br]]",
 	"citizen-action-addsection": "Adicionar tópico",
 	"citizen-jumptotop": "Voltar ao topo",
-	"citizen-search-fulltext": "Páginas de pesquisa que contêm",
+	"citizen-search-fulltext": "Pesquisar por páginas que contenham",
 	"citizen-search-fulltext-empty": "Tipo para começar a pesquisar",
+	"citizen-search-noresults-title": "Uh oh! Nenhum resultado para $1",
+	"citizen-search-noresults-desc": "Talvez tente as opções abaixo?",
 	"citizen-tagline-ns-talk": "Página de discussão de {{SUBJECTPAGENAME}}",
+	"citizen-tagline-ns-project": "Informações sobre {{SITENAME}}",
 	"citizen-tagline-ns-file": "Arquivo em {{SITENAME}}",
 	"citizen-tagline-ns-mediawiki": "Página de Interface do MediaWiki",
 	"citizen-tagline-ns-template": "Página da predefinição",
@@ -39,5 +46,6 @@
 	"prefs-citizen-theme-option-dark": "Escuro",
 	"prefs-citizen-fontsize-label": "Tamanho da fonte",
 	"prefs-citizen-pagewidth-label": "Largura da página",
+	"prefs-citizen-lineheight-label": "Altura da linha",
 	"prefs-citizen-resetbutton-label": "Restaurar ao padrão"
 }

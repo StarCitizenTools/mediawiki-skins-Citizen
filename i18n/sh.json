@@ -15,7 +15,7 @@
 	"citizen-page-info-lastmod": "Posljednja promjena",
 	"citizen-action-addsection": "Dodaj temu",
 	"citizen-jumptotop": "Nazad na vrh",
-	"citizen-search-fulltext": "Traži stranice koje sadrže",
+	"citizen-search-fulltext": "Traži stranice koje sadrže $1",
 	"citizen-tagline-ns-talk": "Stranica za razgovor {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Informacije o {{SITENAME}}",
 	"citizen-tagline-ns-file": "Datoteke na {{SITENAME}}",
