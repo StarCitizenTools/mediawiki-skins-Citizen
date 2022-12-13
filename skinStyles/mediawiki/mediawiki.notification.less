@@ -1,12 +1,23 @@
-@import '../../resources/variables.less';
+/*
+ * Citizen
+ *
+ * SkinStyles for MediaWiki notifications
+ * Module: mediawiki.notification
+ * Version: 1.39.0
+ *
+ * Date: 2022-12-13
+*/
+
+.mw-notification-area {
+	padding: var( --space-xs );
+}
 
 .mw-notification {
-	border-color: var( --border-color-base );
+	border-color: transparent;
 	border-radius: var( --border-radius--medium );
 	background-color: var( --color-surface-1 );
 	box-shadow: var( --box-shadow-dialog );
 	color: var( --color-base );
-	font-size: 0.875rem;
 
 	&.mw-notification-type {
 		&-warn {
