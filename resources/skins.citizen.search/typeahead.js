@@ -377,9 +377,9 @@ function updateTypeahead( messages ) {
 		// Update existing element instead of creating a new one
 		if ( fulltextEl ) {
 			// FIXME: Probably more efficient to just replace the query than the whole messaage?
-			updateMenuItem( 
+			updateMenuItem(
 				fulltextEl,
-				{ 
+				{
 					link: fulltextLink,
 					description: fulltextText
 				}
