@@ -1,0 +1,1002 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:MediaSearch
+ * Module: mediasearch.styles
+ * Version: REL1_39 (e0aa7bb)
+ *
+ * Date: 2022-12-09
+*/
+
+@import '../../../resources/variables.less';
+
+// Disable sticky header
+#citizen-body-header-sticky-sentinel {
+	display: none;
+}
+
+// Be extra safe
+// MediaSearch uses indicators for associated pages
+// So let's tweak the styles to make it look that way
+.mw-special-MediaSearch {
+	.firstHeading-container {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.mw-indicators {
+		padding-left: 0;
+		border-left: 0;
+		margin-top: var( --space-xs );
+		margin-left: 0;
+	}
+}
+
+// Missing from the original stylesheet
+.searchmatch {
+	color: var( --color-base--emphasized );
+	font-weight: var( --font-weight-semibold );
+}
+
+/* AutocompleteSearchInput.less */
+.sd-input {
+	&__icon {
+		opacity: var( --opacity-icon-base );
+	}
+
+	&__indicator {
+		color: var( --color-base-subtle );
+	}
+
+	&__input {
+		border-color: var( --border-color-base--darker );
+		border-radius: var( --border-radius--small );
+		background-color: transparent;
+		color: var( --color-base--emphasized );
+
+		&::placeholder {
+			color: var( --color-base-subtle );
+		}
+
+		&:hover {
+			border-color: var( --color-primary--hover );
+			background-color: var( --color-surface-0 );
+		}
+
+		&:focus {
+			border-color: var( --color-primary );
+			background-color: var( --color-surface-0 );
+			box-shadow: inset 0 0 0 1px var( --color-primary );
+		}
+	}
+
+	&--pending .sd-input__input {
+		background-color: var( --color-surface-2 );
+		background-image: linear-gradient( 135deg, var( --color-surface-1 ) 25%, rgba( 255, 255, 255, 0 ) 25%, rgba( 255, 255, 255, 0 ) 50%, var( --color-surface-1 ) 50%, var( --color-surface-1 ) 75%, rgba( 255, 255, 255, 0 ) 75%, rgba( 255, 255, 255, 0 ) );
+	}
+}
+
+/* Button.less */
+.sd-button {
+	border-radius: var( --border-radius--small );
+	color: var( --color-base--emphasized );
+	font-family: var( --font-family-base );
+	font-weight: var( --font-weight-semibold );
+
+	&:hover {
+		background-color: var( --background-color-quiet--hover );
+		color: var( --color-base--emphasized );
+	}
+
+	&:focus {
+		border-color: var( --color-primary );
+		box-shadow: inset 0 0 0 1px var( --color-primary );
+	}
+
+	&--framed {
+		border-color: var( --border-color-base );
+		background-color: var( --color-surface-2 );
+
+		&:hover {
+			background-color: var( --color-surface-2--hover );
+			color: var( --color-base--emphasized );
+		}
+
+		// Add active state
+		&:active {
+			background-color: var( --color-surface-2--active );
+			color: var( --color-base--subtle );
+		}
+	}
+
+	&--progressive {
+		color: var( --color-primary );
+
+		&:hover {
+			color: var( --color-primary--hover );
+		}
+
+		// Add active state
+		&:active {
+			color: var( --color-primary--active );
+		}
+
+		&.sd-button--framed {
+			color: #fff;
+
+			&:hover {
+				border-color: var( --color-primary--hover );
+			}
+
+			// Add active state
+			&:active {
+				color: var( --color-primary--active );
+			}
+		}
+	}
+
+	&--destructive {
+		color: var( --color-destructive );
+
+		&:hover {
+			color: var( --color-destructive--hover );
+		}
+
+		// Add active state
+		&:active {
+			color: var( --color-destructive--active );
+		}
+
+		&:focus {
+			border-color: var( --color-destructive );
+			box-shadow: inset 0 0 0 1px var( --color-destructive );
+		}
+
+		&.sd-button--framed {
+			color: #fff;
+
+			&:hover {
+				border-color: var( --color-destructive--hover );
+			}
+
+			// Add active state
+			&:active {
+				color: var( --color-destructive--active );
+			}
+
+			&:focus {
+				box-shadow: inset 0 0 0 1px var( --color-destructive );
+			}
+		}
+	}
+
+	&--primary {
+		&.sd-button--framed {
+			border-color: var( --color-primary );
+			background-color: var( --color-primary );
+
+			&:hover {
+				border-color: var( --color-primary--hover );
+				background-color: var( --color-primary--hover );
+			}
+
+			// Add active state
+			&:active {
+				border-color: var( --color-primary--active );
+				background-color: var( --color-primary--active );
+			}
+
+			&:focus {
+				border-color: var( --color-primary );
+				box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px #fff;
+			}
+
+			&.sd-button--destructive {
+				border-color: var( --color-destructive );
+				background-color: var( --color-destructive );
+
+				&:hover {
+					border-color: var( --color-destructive--hover );
+					background-color: var( --color-destructive--hover );
+				}
+
+				// Add active state
+				&:active {
+					border-color: var( --color-destructive--active );
+					background-color: var( --color-destructive--active );
+				}
+
+				&:focus {
+					border-color: var( --color-destructive );
+					box-shadow: inset 0 0 0 1px var( --color-destructive ), inset 0 0 0 2px #fff;
+				}
+			}
+		}
+	}
+
+	&:disabled {
+		color: var( --color-base--subtle );
+
+		&:hover,
+		&:focus {
+			background-color: transparent;
+		}
+
+		&.sd-button--framed {
+			border-color: var( --color-surface-4 );
+			background-color: var( --color-surface-4 );
+			color: var( --color-base--subtle );
+
+			&:hover,
+			&:focus {
+				border-color: var( --color-surface-4 );
+				background-color: var( --color-surface-4 );
+			}
+		}
+
+		&:not( .sd-button--framed ) .sd-icon {
+			opacity: var( --opacity-base--disabled );
+		}
+	}
+}
+
+/* Checkbox.less */
+.sd-checkbox {
+	&__icon {
+		border-color: var( --border-color-base--darker );
+		border-radius: var( --border-radius--small );
+		// Show background when hovered
+		background-color: transparent;
+	}
+
+	&__input {
+		&:focus + .sd-checkbox__icon {
+			border-color: var( --color-primary );
+			background-color: var( --color-surface-0 );
+			box-shadow: inset 0 0 0 1px var( --color-primary );
+		}
+
+		&:hover + .sd-checkbox__icon {
+			border-color: var( --color-primary--hover );
+			background-color: var( --color-surface-0 );
+		}
+
+		&:active + .sd-checkbox__icon {
+			border-color: var( --color-primary--active );
+			background-color: var( --color-primary--active );
+			box-shadow: none;
+		}
+
+		// Set up check icon.
+		&:checked + .sd-checkbox__icon {
+			border-color: var( --color-primary );
+			background-color: var( --color-primary );
+		}
+
+		&:disabled {
+			& + .sd-checkbox__icon {
+				border-color: var( --color-surface-4 );
+				background-color: var( --color-surface-4 );
+			}
+
+			& ~ .sd-checkbox__label-text {
+				color: var( --color-base--subtle );
+			}
+		}
+
+		&:checked:enabled:focus + .sd-checkbox__icon {
+			border-color: var( --color-primary );
+			background-color: var( --color-primary );
+			box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px #fff;
+		}
+
+		&:checked:enabled:hover + .sd-checkbox__icon {
+			border-color: var( --color-primary--hover );
+			background-color: var( --color-primary--hover );
+		}
+
+		&:checked:enabled:active + .sd-checkbox__icon {
+			border-color: var( --color-primary--active );
+			background-color: var( --color-primary--active );
+			box-shadow: none;
+		}
+	}
+}
+
+/* CopyTextLayout.less */
+.sd-copy-text-layout {
+	&__text {
+		border-right-color: var( --border-color-base );
+	}
+}
+
+/* Dialog.less */
+.sd-dialog {
+	// Align with Citizen and Codex
+	z-index: @z-index-overlay;
+
+	&__overlay {
+		background-color: var( --background-color-overlay );
+	}
+
+	&__shell {
+		border-color: transparent;
+		border-radius: var( --border-radius--medium );
+		background-color: var( --color-surface-1 );
+		box-shadow: var( --box-shadow-dialog );
+	}
+
+	&__header {
+		border-bottom-color: var( --border-color-base );
+
+		.sd-dialog__header-title {
+			color: var( --color-base--emphasized );
+			font-weight: var( --font-weight-semibold );
+		}
+	}
+
+	&__footer:not( :empty ) {
+		border-top-color: var( --border-color-base );
+	}
+}
+
+/* Message.less */
+.sd-message {
+	color: var( --color-base--emphasized );
+	font-weight: var( --font-weight-semibold );
+
+	&--error {
+		color: var( --color-destructive );
+	}
+
+	&--success {
+		color: var( --color-success );
+	}
+
+	// Sync with message box styles
+	&--block {
+		border-radius: var( --border-radius--small );
+		color: var( --color-base--emphasized );
+		font-weight: var( --font-weight-normal );
+
+		&.sd-message--notice {
+			border-color: var( --color-surface-2 );
+			background-color: var( --color-surface-2 );
+		}
+
+		&.sd-message--error {
+			border-color: var( --background-color-destructive );
+			background-color: var( --background-color-destructive );
+		}
+
+		&.sd-message--warning {
+			border-color: var( --background-color-warning );
+			background-color: var( --background-color-warning );
+		}
+
+		&.sd-message--success {
+			border-color: var( --background-color-success );
+			background-color: var( --background-color-success );
+		}
+	}
+
+	// Cancel out default Citizen margin
+	&__content p {
+		margin: 0;
+	}
+}
+
+/* Radio.less */
+.sd-radio {
+	&__icon {
+		border-color: var( --border-color-base--darker );
+		// Show background when hovered
+		background-color: transparent;
+	}
+
+	&__input {
+		&:hover + .sd-radio__icon {
+			border-color: var( --color-primary--hover );
+			background-color: var( --color-surface-0 );
+		}
+
+		&:active + .sd-radio__icon {
+			border-color: var( --color-primary--active );
+			background-color: var( --color-primary--active );
+		}
+
+		&:checked + .sd-radio__icon {
+			border-color: var( --color-primary );
+			background-color: #fff;
+		}
+
+		&:disabled {
+			& + .sd-radio__icon {
+				border-color: var( --color-surface-4 );
+				background-color: var( --color-surface-4 );
+			}
+
+			& ~ .sd-radio__label-text {
+				color: var( --color-base--subtle );
+			}
+
+			&:checked + .sd-radio__icon {
+				background-color: #fff;
+			}
+		}
+
+		&:checked:enabled {
+			&:focus + .sd-radio__icon {
+				&:before {
+					border-color: var( --color-primary--active );
+				}
+			}
+
+			&:hover + .sd-radio__icon {
+				border-color: var( --color-primary--hover );
+			}
+
+			&:active + .sd-radio__icon {
+				border-color: var( --color-primary--active );
+				box-shadow: none;
+
+				&:before {
+					border-color: var( --color-primary--active );
+				}
+			}
+		}
+	}
+}
+
+/* Select.less */
+.sd-select {
+	&__handle {
+		color: var( --color-base );
+	}
+
+	&__content {
+		border-color: var( --border-color-base--darker );
+		// Show background when hovered
+		background-color: transparent;
+		color: var( --color-base--emphasized );
+		font-family: var( --font-family-base ); // Browser overrides button font
+
+		&:hover {
+			border-color: var( --color-primary--hover );
+			background-color: var( --color-surface-1 );
+			color: var( --color-base--emphasized );
+
+			.sd-select__handle {
+				color: var( --color-base );
+			}
+		}
+
+		&:focus {
+			border-color: var( --color-primary );
+			background-color: var( --color-surface-1 );
+			box-shadow: inset 0 0 0 1px var( --color-primary );
+		}
+
+		&:active {
+			border-color: var( --border-color-base--darker );
+			color: var( --color-base--subtle );
+		}
+	}
+
+	&--open {
+		.sd-select__content {
+			background-color: var( --color-surface-1 );
+		}
+
+		.sd-select__handle {
+			color: var( --color-base );
+		}
+	}
+
+	&--disabled {
+		.sd-select__content {
+			border-color: var( --color-surface-4 );
+			background-color: var( --color-surface-4 );
+			color: var( --color-base--subtle );
+
+			&:hover {
+				.sd-select__handle {
+					color: var( --color-base--subtle );
+				}
+			}
+
+			&:focus {
+				border-color: var( --color-surface-4 );
+			}
+		}
+
+		.sd-select__handle {
+			color: var( --color-base--subtle );
+		}
+	}
+}
+
+/* SelectMenu.less */
+.sd-select-menu {
+	border-color: var( --border-color-base--darker );
+	border-radius: 0 0 var( --border-radius--small ) var( --border-radius--small );
+	background-color: var( --color-surface-1 );
+	// box-shadow: var( --box-shadow-dialog );
+
+	&__list-item {
+		color: var( --color-base--emphasized );
+
+		&--active {
+			background-color: var( --background-color-quiet--hover );
+			color: var( --color-base--emphasized );
+		}
+
+		&--selected {
+			background-color: var( --background-color-primary--hover );
+		}
+
+		&--active.sd-select-menu__list-item--selected {
+			color: var( --color-primary );
+		}
+	}
+}
+
+/* Tabs.less */
+.sd-tabs {
+	&__header {
+		// Use border instead of box-shadow to align with Citizen and Codex
+		border-bottom: 1px solid var( --border-color-base );
+		box-shadow: none;
+
+		&--gradient {
+			&:after {
+				// TODO: Should really make this into a LESS variable or mixin since it is useful
+				background-image: linear-gradient( to right, rgba( 255, 255, 255, 0 ) 85%, var( --color-surface-0 ) 100% );
+			}
+		}
+	}
+
+	&__tabs-list {
+		// Should show a scroll bar on pointer device so user can scroll the tabs
+		@media ( hover: hover ) {
+			scrollbar-width: thin;
+
+			&::-webkit-scrollbar {
+				display: block;
+				-webkit-appearance: initial;
+			}
+		}
+
+		&__item {
+			color: var( --color-base--emphasized );
+			font-weight: var( --font-weight-medium );
+
+			&--current {
+				box-shadow: inset 0 -2px var( --color-primary );
+				color: var( --color-primary );
+			}
+
+			&:hover {
+				box-shadow: inset 0 -2px var( --color-primary--hover );
+				color: var( --color-primary--hover );
+			}
+
+			&:active {
+				box-shadow: inset 0 -2px var( --color-primary--active );
+				color: var( --color-primary--active );
+			}
+
+			&--disabled {
+				color: var( --color-base--subtle );
+
+				&--current,
+				&:hover,
+				&:active {
+					color: var( --color-base--subtle );
+				}
+			}
+		}
+
+		&:focus {
+			.sd-tabs__tabs-list__item--current {
+				border-radius: var( --border-radius--small );
+				box-shadow: inset 0 0 0 2px var( --color-primary );
+			}
+		}
+	}
+}
+
+/* ImageResult.less */
+// Sync with Citizen image styles
+.sdms-image-result {
+	overflow: hidden; // needed for transition and rounded corners
+	// Keep original light background so that transparent images are more legible
+	// background-color: var( --color-surface-2 );
+	border-radius: var( --border-radius--small );
+
+	&:hover,
+	&:focus {
+		box-shadow: none; // disable default style
+
+		img {
+			transform: scale( 1.1 );
+		}
+	}
+
+	&:focus {
+		outline: solid 2px var( --color-primary );
+		outline-offset: 0;
+	}
+
+	img {
+		transition: @transition-transform;
+	}
+}
+
+/* VideoResult.less */
+.sdms-video-result {
+	overflow: hidden; // Hide transition overflow
+	border-color: transparent;
+	border-radius: var( --border-radius--small );
+	color: var( --color-primary );
+
+	&__title {
+		color: var( --color-base--emphasized );
+		transition: none;
+	}
+
+	&__body {
+		z-index: 1;
+		padding: var( --space-sm ) 0 0 0;
+		// HACK: Hide thumbnail overflow
+		background-color: var( --color-surface-0 );
+	}
+
+	&__meta {
+		margin-top: var( --space-xxs );
+		font-size: 0.875rem;
+	}
+
+	&:hover &__title {
+		color: var( --color-base--emphasized );
+	}
+
+	&:hover,
+	&:focus {
+		box-shadow: none;
+
+		.sdms-video-result__thumbnail {
+			transform: scale( 1.1 );
+		}
+	}
+
+	&:focus {
+		outline: solid 2px var( --color-primary );
+		outline-offset: 0;
+	}
+
+	&__thumbnail {
+		border-radius: var( --border-radius--small );
+		transition: @transition-transform;
+	}
+
+	&__duration {
+		padding: var( --space-xxs ) var( --space-xs );
+		border-radius: var( --border-radius--small );
+		background-color: var( --color-surface-2 );
+		color: var( --color-base );
+		font-weight: var( --font-weight-medium );
+	}
+
+	&__mime {
+		color: var( --color-base--subtle );
+	}
+}
+
+/* AudioResult.less */
+.sdms-audio-result {
+	padding: var( --space-md ) 0;
+	border-bottom: 0;
+	font-size: 0.875rem;
+
+	&__title + &__meta {
+		margin-top: var( --space-xxs );
+	}
+
+	&__meta {
+		font-size: 0.875rem;
+	}
+
+	p {
+		margin: 0;
+	}
+
+	&__duration {
+		padding: var( --space-xxs ) var( --space-xs );
+		border-radius: var( --border-radius--small );
+		background-color: var( --color-surface-2 );
+		color: var( --color-base );
+		font-weight: var( --font-weight-medium );
+	}
+
+	&__mime {
+		color: var( --color-base--subtle );
+	}
+}
+
+/* PageResult.less */
+.sdms-page-result {
+	padding: var( --space-md ) 0;
+	border-bottom: 0;
+	font-size: 0.875rem;
+
+	p {
+		color: var( --color-base--subtle );
+		font-size: 0.875rem;
+	}
+
+	// Sync with duration styles
+	&__namespace {
+		padding: var( --space-xxs ) var( --space-xs );
+		border-radius: var( --border-radius--small );
+		background-color: var( --color-surface-2 );
+		color: var( --color-base );
+		font-size: 0.875rem;
+		font-weight: var( --font-weight-medium );
+	}
+}
+
+/* OtherResult.less */
+.sdms-other-result {
+	&__meta {
+		color: var( --color-base--subtle );
+	}
+
+	&__extension {
+		font-weight: var( --font-weight-semibold );
+	}
+}
+
+/* SearchResults.less */
+.sdms-search-results {
+	&__details {
+		&--expanded {
+			top: var( --space-md );
+			height: ~'calc( 100vh - var( --space-md ) * 2 )';
+			border-radius: var( --border-radius--large );
+			background-color: var( --color-surface-2 );
+
+			// Responsive handling
+			@media screen and ( max-width: @width-breakpoint-tablet ) {
+				position: fixed;
+				top: unset;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				max-height: 40vh;
+				padding-bottom: var( --header-size ); // So that header won't hide the bottom
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+		}
+	}
+
+	&__details-dialog {
+		background-color: var( --color-surface-1 );
+	}
+
+	.sdms-search-result--highlighted {
+		&.sdms-image-result,
+		&.sdms-video-result {
+			border-color: var( --color-primary );
+		}
+	}
+
+	&__list-wrapper--collapsed {
+		// Responsive handling
+		@media screen and ( max-width: @width-breakpoint-tablet ) {
+			// Since the quickview card is a modal, we don't need the right margin anymore
+			margin-right: 0;
+		}
+	}
+}
+
+/* QuickView.less */
+.sdms-quick-view {
+	font-size: 0.875rem;
+
+	&__body {
+		.sd-icon {
+			color: var( --color-base--subtle );
+		}
+	}
+
+	&__cta {
+		border-color: var( --border-color-base );
+		border-radius: var( --border-radius--small );
+		background-color: var( --color-surface-2 );
+		color: var( --color-primary );
+		font-weight: var( --font-weight-medium );
+
+		&:hover {
+			border-color: var( --color-primary--hover );
+			background-color: var( --color-surface-2--hover );
+			color: var( --color-primary--hover );
+		}
+
+		&:active {
+			border-color: var( --color-primary--active );
+			background-color: var( --color-surface-2--active );
+			color: var( --color-primary--active );
+		}
+
+		&:focus {
+			border-color: var( --color-primary );
+			box-shadow: inset 0 0 0 1px var( --color-primary );
+		}
+	}
+
+	&__button {
+		background-color: var( --color-surface-1 );
+
+		.sd-icon {
+			color: var( --color-base );
+		}
+
+		&:hover,
+		&:focus {
+			.sd-icon {
+				color: var( --color-base--emphasized );
+			}
+		}
+
+		&:focus {
+			border-color: var( --color-primary );
+		}
+	}
+}
+
+/* Spinner.less */
+.sdms-spinner {
+	& .sdms-spinner-bounce,
+	&:before,
+	&:after {
+		background-color: var( --color-base--subtle );
+	}
+}
+
+/* EmptyState.less */
+.sdms-empty-state {
+	font-size: var( --font-size-h3 );
+}
+
+/* NoResults.less */
+.sdms-no-results {
+	font-size: var( --font-size-h3 );
+	font-weight: var( --font-weight-semibold );
+}
+
+/* EndOfResults.less */
+.sdms-end-of-results {
+	color: var( --color-base--emphasized );
+	font-size: var( --font-size-h6 );
+	font-weight: var( --font-weight-semibold );
+}
+
+/* SearchFilters.less */
+.sdms-search-filters {
+	// Should show a scroll bar on pointer device so user can scroll the tabs
+	@media screen and ( hover: hover ) {
+		scrollbar-width: thin;
+
+		&::-webkit-scrollbar {
+			display: block;
+			-webkit-appearance: initial;
+		}
+	}
+
+	.sd-select {
+		&__content {
+			border-radius: var( --border-radius--small );
+			color: var( --color-base--emphasized );
+
+			@media screen and ( min-width: @width-breakpoint-tablet ) {
+				font-size: 0.875rem;
+			}
+
+			&:hover {
+				border-color: transparent;
+				background-color: var( --background-color-quiet--hover );
+			}
+
+			&:focus {
+				border-color: var( --color-primary );
+				box-shadow: inset 0 0 0 1px var( --color-primary );
+			}
+
+			&:active {
+				border-color: var( --border-color-base--darker );
+				background-color: var( --color-surface-1 );
+			}
+		}
+
+		&.sdms-search-filter--selected {
+			.sd-select__content {
+				color: var( --color-primary );
+				font-weight: var( --font-weight-semibold );
+
+				.sd-select__handle {
+					color: var( --color-primary );
+				}
+			}
+		}
+	}
+
+	&__namespace {
+		border-radius: var( --border-radius--small );
+
+		@media screen and ( min-width: @width-breakpoint-tablet ) {
+			font-size: 0.875rem;
+		}
+
+		&--selected {
+			color: var( --color-primary );
+			font-weight: var( --font-weight-semibold );
+
+			&:hover {
+				color: var( --color-primary );
+			}
+		}
+
+		&:hover {
+			background-color: var( --background-color-quiet--hover );
+		}
+
+		&:focus {
+			border-color: var( --color-primary );
+			box-shadow: inset 0 0 0 1px var( --color-primary );
+		}
+
+		&:active {
+			border-color: var( --border-color-base--darker );
+			background-color: var( --color-surface-1 );
+		}
+	}
+
+	.sdms-search-results-count {
+		@media screen and ( min-width: @width-breakpoint-tablet ) {
+			font-size: 0.875rem;
+		}
+	}
+
+	&__clear {
+		&--no-js {
+			@media screen and ( min-width: @width-breakpoint-tablet ) {
+				font-size: 0.875rem;
+			}
+		}
+	}
+}
+
+.sdms-search-filters-wrapper--gradient {
+	&:after {
+		// TODO: Should really make this into a LESS variable or mixin since it is useful
+		background-image: linear-gradient( to right, rgba( 255, 255, 255, 0 ) 85%, var( --color-surface-0 ) 100% );
+	}
+}
+
+/* DidYouMean.less */
+.sdms-did-you-mean a {
+	font-weight: var( --font-weight-semibold );
+}
+
+/* UserNotice.less */
+.sdms-user-notice__title {
+	font-weight: var( --font-weight-semibold );
+}
+
+/* SearchError.less */
+.sdms-error {
+	font-size: var( --font-size-h3 );
+	font-weight: var( --font-weight-semibold );
+}
