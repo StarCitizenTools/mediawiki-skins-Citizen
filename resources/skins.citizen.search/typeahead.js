@@ -363,19 +363,27 @@ function updateTypeahead( messages ) {
 
 		const
 			fulltextEl = document.getElementById( FULLTEXT_ID ),
-			highlightedQuery = '<strong>' + htmlSafeSearchQuery + '</strong>',
-			fulltextText = mw.message( 'citizen-search-fulltext', highlightedQuery );
+			query = '<span class="citizen-typeahead__query">' + htmlSafeSearchQuery + '</span>',
+			fulltextLink = config.wgScriptPath + '/index.php?title=Special:Search&fulltext=1&search=' + htmlSafeSearchQuery,
+			fulltextText = mw.message( 'citizen-search-fulltext', query );
 
 		const item = getMenuItem( {
 			icon: 'articleSearch',
 			id: FULLTEXT_ID,
-			link: config.wgScriptPath + '/index.php?title=Special:Search&fulltext=1&search=' + htmlSafeSearchQuery,
+			link: fulltextLink,
 			description: fulltextText
 		} );
 
 		// Update existing element instead of creating a new one
 		if ( fulltextEl ) {
-			updateMenuItem( fulltextEl, { description: fulltextText } );
+			// FIXME: Probably more efficient to just replace the query than the whole messaage?
+			updateMenuItem( 
+				fulltextEl,
+				{ 
+					link: fulltextLink,
+					description: fulltextText
+				}
+			);
 			// FIXME: There is probably a more efficient way
 			if ( hasQuery ) {
 				fulltextEl.classList.remove( HIDDEN_CLASS );
