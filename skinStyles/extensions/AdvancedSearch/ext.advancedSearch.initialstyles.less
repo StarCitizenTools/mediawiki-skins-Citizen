@@ -3,13 +3,21 @@
  *
  * SkinStyles for Extension:AdvancedSearch
  * Module: ext.advancedSearch.initialstyles
- * Version: REL1_35 fae6250
+ * Version: REL1_39 3a0eed7
  *
- * Date: 2021-08-26
+ * Date: 2022-12-12
 */
 
 .client-js {
+	.mw-search-form-wrapper {
+		// min-height: 122.6px;
+	}
+
 	.mw-search-spinner {
+		top: 5em;
+		// Very hacky since it might be wrong because of font size
+		left: 23em;
+
 		&:before,
 		&:after,
 		& .mw-search-spinner-bounce {

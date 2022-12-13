@@ -3,54 +3,123 @@
  *
  * SkinStyles for Extension:AdvancedSearch
  * Module: ext.advancedSearch.styles
- * Version: REL1_35 fae6250
+ * Version: REL1_39 3a0eed7
  *
- * Date: 2021-08-26
+ * Date: 2022-12-12
 */
 
+.mw-advancedSearch-container {
+	border-bottom: 1px solid var( --border-color-base );
+	margin-top: var( --space-xs );
+}
+
+// Align with Citizen label styles
+.mw-advancedSearch-searchPreview-label,
+.advancedsearch-namespacesPreview-label {
+	margin-right: var( --space-xs );
+	color: var( --color-base--subtle );
+	font-size: 0.875rem;
+	font-weight: var( --font-weight-normal );
+	letter-spacing: 0.05em;
+}
+
 .mw-advancedSearch-fieldContainer {
-	border-color: var( --border-color-base );
-	background: transparent;
+	max-width: none;
+	border: 0;
+	border-radius: var( --border-radius--small );
+	margin-top: 0;
+	background: var( --color-surface-2 );
 
 	fieldset {
-		border-color: var( --border-color-base );
+		border-top-color: var( --border-color-base );
+		margin-top: var( --space-md );
 	}
 
 	.oo-ui-labelElement > .oo-ui-fieldsetLayout-header > .oo-ui-labelElement-label {
-		background: var( --color-surface-0 ); // the parent containers are transparent
+		background: var( --color-surface-2 );
 		color: var( --color-base--subtle );
+		font-size: 0.875rem;
+		font-weight: var( --font-weight-normal );
+		letter-spacing: 0.05em;
 	}
+}
+
+.mw-advancedSearch-expandablePane-options,
+.mw-advancedSearch-expandablePane-namespaces {
+	max-width: none;
+	padding-top: 0; // padding handled through container
 }
 
 .mw-advancedSearch-expandablePane-button {
 	&.oo-ui-widget-enabled.oo-ui-buttonWidget {
-		&.oo-ui-buttonElement-pressed > .oo-ui-buttonElement-button {
-			background-color: var( --color-surface-2 );
+		> .oo-ui-buttonElement-button {
+			padding-left: 0;
+			border-color: transparent;
+			background-color: transparent;
+
+			&:hover {
+				background-color: var( --background-color-quiet--hover );
+				color: inherit;
+			}
+
+			// Added active state
+			&:active {
+				background-color: var( --background-color-quiet--active );
+			}
+
+			// HACK: Flip indicator when expanded
+			.oo-ui-indicator-down {
+				transition: opacity 100ms, transform 250ms ease;
+			}
+
+			&[ aria-expanded='true' ] {
+				.oo-ui-indicator-down {
+					transform: rotate3d( 1, 0, 0, 180deg );
+				}
+			}
 		}
 
-		> .oo-ui-buttonElement-button {
-			&:hover {
-				background-color: var( --color-surface-2--hover );
-				color: var( --color-base );
-			}
+		&.oo-ui-buttonElement-pressed > .oo-ui-buttonElement-button {
+			background-color: transparent;
 		}
 	}
 }
 
+.mw-advancedSearch-namespace-selection-header {
+	> .mw-advancedSearch-namespace-search-in-label {
+		font-weight: var( --font-weight-semibold );
+	}
+}
+
 .mw-advancedSearch-namespace-selection {
-	border-color: var( --border-color-base );
+	max-width: none;
+	border: 0;
+	border-radius: var( --border-radius--small );
+	margin-top: 0;
 	background: var( --color-surface-2 );
 }
 
 .mw-advancedSearch-namespace-border {
-	border-color: var( --border-color-base );
+	border-top: 1px solid var( --border-color-base );
+	border-bottom: 0;
 }
 
-// that's how nested the background-color property of a tagWidget is
+.mw-advancedSearch-namespaceFilter.oo-ui-tagMultiselectWidget {
+	max-width: none;
+}
+
+.mw-advancedSearch-namespaceFilter .oo-ui-tagMultiselectWidget-handle {
+	border-radius: 0 0 var( --border-radius--small ) var( --border-radius--small );
+}
+
+.mw-advancedSearch-namespaceFilter .oo-ui-tagMultiselectWidget-input .oo-ui-inputWidget-input {
+	background-color: var( --color-surface-0 );
+}
+
 .oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined .oo-ui-tagItemWidget.oo-ui-widget-enabled {
 	&.selected {
 		border-color: var( --color-primary );
-		background-color: var( --color-surface-3 );
+		background-color: var( --background-color-primary--hover );
 	}
 }
 
