@@ -103,13 +103,16 @@
 	}
 }
 
-.citizen-sticky-header( @topOffset: 0, @bottomBorder: true ) {
+.citizen-sticky-header( @topOffset: 0, @bottomBorder: true, @zIndex: true ) {
 	position: sticky;
-	z-index: @z-index-page-header;
 	top: @topOffset;
 
 	& when ( @bottomBorder ) {
 		border-bottom: 1px solid var( --border-color-base );
+	}
+
+	& when ( @zIndex ) {
+		z-index: @z-index-page-header;
 	}
 
 	// HACK: Hide overflow
