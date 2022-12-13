@@ -38,20 +38,33 @@
 	.oo-ui-actionFieldLayout .oo-ui-textInputWidget {
 		max-width: none;
 	}
+
+	.oo-ui-widget {
+		font-size: 1rem; // HACK: Override the 14px hack we use for OOUI
+	}
 }
 
 .mw-search-profile-tabs {
-	border-color: transparent;
+	border: 0;
 	border-bottom: 1px solid var( --border-color-base );
 	margin-top: var( --space-xxs );
 	background-color: transparent;
-	font-size: 0.875rem;
 }
 
 .search-types {
+	padding-left: 0;
+	float: none;
+
+	ul {
+		display: flex;
+		overflow-x: auto;
+		white-space: nowrap;
+	}
+
 	a {
+		padding: var( --space-xs ) var( --space-sm );
 		border-bottom: 2px solid transparent;
-		color: var( --color-base--subtle );
+		color: var( --color-base--emphasized );
 		font-weight: var( --font-weight-medium );
 
 		&:hover {
@@ -99,28 +112,56 @@
 
 .mw-search-createlink,
 .mw-search-exists {
-	max-width: 20rem;
-	padding: var( --space-md );
+	padding: var( --space-sm ) var( --space-md );
 	border-radius: var( --border-radius--small );
 	margin-top: 0 !important;
 	background: var( --color-surface-2 );
-	float: right;
-	font-size: 0.875rem;
+	color: var( --color-base--emphasized );
 }
 
 .mw-search-results {
+	max-width: 50em;
+
 	li {
+		padding: var( --space-md ) 0;
+
 		a {
-			font-size: 1rem;
+			font-size: var( --font-size-h3 );
 		}
 	}
 }
 
 .mw-search-result {
+	// padding: var( --space-md ) 0;
+	font-size: 0.875rem;
+
+	&-heading {
+		a {
+			// font-size: var( --font-size-h3 );
+			font-weight: var( --font-weight-semibold );
+		}
+	}
+
 	&-data {
-		margin-top: var( --space-xxs );
 		color: var( --color-base--subtle );
-		font-size: 0.8125rem;
+		font-size: 0.875rem;
+	}
+}
+
+.searchmatch {
+	color: var( --color-base--emphasized );
+	font-weight: var( --font-weight-semibold );
+}
+
+.searchresults {
+	h2 {
+		padding-bottom: var( --space-xs );
+		border-bottom: 1px solid var( --border-color-base );
+		margin-bottom: 0;
+		color: var( --color-base--subtle );
+		font-size: 0.875rem;
+		font-weight: var( --font-weight-normal );
+		letter-spacing: 0.05em;
 	}
 }
 
@@ -129,13 +170,6 @@
 	.search-types {
 		ul {
 			margin: 0;
-		}
-	}
-
-	.searchresults {
-		h2 {
-			margin-bottom: var( --space-md );
-			font-size: 1rem;
 		}
 	}
 
