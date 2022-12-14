@@ -40,19 +40,26 @@ a {
  * Dark theme
  */
 :root.skin-citizen-dark {
-	--color-primary__l: @color-primary__l-dark;
+	--color-primary__l: 60%;
 
-	--color-surface-0: @color-surface-0-dark;
-	--color-surface-1: @color-surface-1-dark;
-	--color-surface-2: @color-surface-2-dark;
-	--color-surface-3: @color-surface-3-dark;
-	--color-surface-4: @color-surface-4-dark;
+	--color-surface-0: ~'hsl( var( --color-primary__h ) 20% 10% )';
+	--color-surface-1: ~'hsl( var( --color-primary__h ) 25% 12% )';
+	--color-surface-2: ~'hsl( var( --color-primary__h ) 25% 15% )';
+	--color-surface-3: ~'hsl( var( --color-primary__h ) 15%  20% )';
+	--color-surface-4: ~'hsl( var( --color-primary__h ) 15% 25% )';
+
+	--color-base--emphasized: ~'hsl( var( --color-primary__h ) 15% 95% )';
+	--color-base: ~'hsl( var( --color-primary__h ) 10% 75% )';
+	--color-base--subtle: ~'hsl( var( --color-primary__h ) 25% 65% )';
 
 	--background-color-primary--hover: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), 15% )';
 	--background-color-primary--active: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), 20% )';
 
-	--color-surface-2--hover: @color-surface-2-dark--hover;
-	--color-surface-2--active: @color-surface-2-dark--active;
+	--background-color-overlay: ~'hsla( var( --color-primary__h ) 20% 10% / 95% )';
+	--background-color-overlay--lighter: ~'hsl( var( --color-primary__h ) 20% 10% / 60% )';
+
+	--color-surface-2--hover: ~'hsl( var( --color-primary__h ) 30% 19% )';
+	--color-surface-2--active: ~'hsl( var( --color-primary__h ) 30% 11% )';
 
 	--surface-shadow: var( --color-primary__h ) 50% 3%;
 	--shadow-strength: 0.8;
