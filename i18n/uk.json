@@ -22,7 +22,7 @@
 	"citizen-action-addsection": "Додати тему",
 	"citizen-jumptotop": "Повернутись угору",
 	"citizen-search-fulltext": "Пошук сторінок, що містять",
-	"citizen-search-fulltext-empty": "Введіть, щоб почати пошук",
+	"citizen-search-empty-desc": "Введіть, щоб почати пошук",
 	"citizen-tagline-ns-talk": "Сторінка обговорення {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Інформація про {{SITENAME}}",
 	"citizen-tagline-ns-file": "Файл на {{SITENAME}}",

@@ -26,7 +26,7 @@
 	"citizen-action-addsection": "Dodaj temo",
 	"citizen-jumptotop": "Nazaj na vrh",
 	"citizen-search-fulltext": "Poiščite strani, ki vsebujejo $1",
-	"citizen-search-fulltext-empty": "Vnesite za začetek iskanja",
+	"citizen-search-empty-desc": "Vnesite za začetek iskanja",
 	"citizen-search-noresults-title": "Ojoj! Ni zadetkov za $1",
 	"citizen-search-noresults-desc": "Morda poskusite s spodnjimi možnostmi?",
 	"citizen-tagline-ns-talk": "Pogovorna stran {{SUBJECTPAGENAME}}",

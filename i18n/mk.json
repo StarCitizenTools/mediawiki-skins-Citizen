@@ -26,7 +26,7 @@
 	"citizen-action-addsection": "Додај тема",
 	"citizen-jumptotop": "Најгоре",
 	"citizen-search-fulltext": "Пребарај страници што содржат $1",
-	"citizen-search-fulltext-empty": "Внесете текст за да почнете да пребарувате",
+	"citizen-search-empty-desc": "Внесете текст за да почнете да пребарувате",
 	"citizen-search-noresults-title": "За жал, не најдов ништо за $1",
 	"citizen-search-noresults-desc": "Да ги пробаме можностите подолу?",
 	"citizen-tagline-ns-talk": "Разговорна страница на {{SUBJECTPAGENAME}}",

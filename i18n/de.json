@@ -32,7 +32,7 @@
 	"citizen-action-addsection": "Thema hinzufügen",
 	"citizen-jumptotop": "Zurück nach oben",
 	"citizen-search-fulltext": "Suche nach Seiten mit",
-	"citizen-search-fulltext-empty": "Tippe, um zu suchen zu beginnen",
+	"citizen-search-empty-desc": "Tippe, um zu suchen zu beginnen",
 	"citizen-tagline-ns-talk": "Diskussionsseite von {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Informationen über {{SITENAME}}",
 	"citizen-tagline-ns-file": "Datei auf {{SITENAME}}",

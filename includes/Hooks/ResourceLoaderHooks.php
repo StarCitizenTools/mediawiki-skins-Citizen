@@ -26,6 +26,7 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Hooks;
 
 use Config;
+use ExtensionRegistry;
 use MediaWiki\ResourceLoader as RL;
 
 /**
@@ -79,6 +80,7 @@ class ResourceLoaderHooks {
 			'wgCitizenMaxSearchResults' => $config->get( 'CitizenMaxSearchResults' ),
 			'wgScriptPath' => $config->get( 'ScriptPath' ),
 			'wgSearchSuggestCacheExpiry' => $config->get( 'SearchSuggestCacheExpiry' ),
+			'isMediaSearchExtensionEnabled' => ExtensionRegistry::getInstance()->isLoaded( 'MediaSearch' ),
 		];
 	}
 }

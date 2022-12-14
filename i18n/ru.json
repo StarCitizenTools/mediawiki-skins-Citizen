@@ -27,7 +27,7 @@
 	"citizen-action-addsection": "Добавить тему",
 	"citizen-jumptotop": "Вернуться наверх",
 	"citizen-search-fulltext": "Поиск страниц, содержащих",
-	"citizen-search-fulltext-empty": "Введите текст",
+	"citizen-search-empty-desc": "Введите текст",
 	"citizen-tagline-ns-talk": "Обсуждение страницы {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Информация о {{SITENAME}}",
 	"citizen-tagline-ns-file": "Файл на {{SITENAME}}",

@@ -27,7 +27,7 @@
 	"citizen-action-addsection": "Тақырып қосу",
 	"citizen-jumptotop": "Жоғары қайту",
 	"citizen-search-fulltext": "Осы сөз(дер) бар беттерді іздеу",
-	"citizen-search-fulltext-empty": "Іздей бастау үшін теріңіз",
+	"citizen-search-empty-desc": "Іздей бастау үшін теріңіз",
 	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}} дегеннің талқылау беті",
 	"citizen-tagline-ns-project": "{{SITENAME}} туралы мәлімет",
 	"citizen-tagline-ns-file": "{{SITENAME}} жобасындағы файл",

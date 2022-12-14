@@ -20,7 +20,7 @@
 	"citizen-action-addsection": "Aggiunge 'n'argomende",
 	"citizen-jumptotop": "Tuèrne sus",
 	"citizen-search-fulltext": "Cirche le pàggene ca tènene",
-	"citizen-search-fulltext-empty": "Scrive pe accumenzà 'a recerche",
+	"citizen-search-empty-desc": "Scrive pe accumenzà 'a recerche",
 	"citizen-tagline-ns-talk": "Pàgene de le 'ngazzaminde de {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "'Mbormaizune sus a {{SITENAME}}",
 	"citizen-tagline-ns-file": "Fail sus a {{SITENAME}}",

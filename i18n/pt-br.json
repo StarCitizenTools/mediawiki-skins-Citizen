@@ -30,7 +30,7 @@
 	"citizen-action-addsection": "Adicionar tópico",
 	"citizen-jumptotop": "Voltar ao topo",
 	"citizen-search-fulltext": "Pesquisar por páginas que contenham",
-	"citizen-search-fulltext-empty": "Tipo para começar a pesquisar",
+	"citizen-search-empty-desc": "Tipo para começar a pesquisar",
 	"citizen-search-noresults-title": "Uh oh! Nenhum resultado para $1",
 	"citizen-search-noresults-desc": "Talvez tente as opções abaixo?",
 	"citizen-tagline-ns-talk": "Página de discussão de {{SUBJECTPAGENAME}}",

@@ -8,7 +8,7 @@ const activeIndex = {
 	index: -1,
 	max: config.wgCitizenMaxSearchResults + 1,
 	setMax: function ( x ) {
-		this.max = x + 1;
+		this.max = x;
 	},
 	increment: function ( i ) {
 		this.index += i;
@@ -92,18 +92,6 @@ function keyboardEvents( event ) {
 }
 
 /*
- * Attach mouse eventlistener to all typeahead items
- *
- * @return {void}
- */
-function attachMouseListener() {
-	const items = typeahead.querySelectorAll( '.' + PREFIX + '__item' );
-	items.forEach( ( item ) => {
-		bindMouseHoverEvent( item );
-	} );
-}
-
-/*
  * Bind mouseenter and mouseleave event to reproduce mouse hover event
  *
  * @param {HTMLElement} element
@@ -180,7 +168,10 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 						cleanTitle = cleanup( title ),
 						cleanMatchedTitle = cleanup( matchedTitle );
 
-					return !( cleanTitle.includes( cleanMatchedTitle ) || cleanMatchedTitle.includes( cleanTitle ) );
+					return !(
+						cleanTitle.includes( cleanMatchedTitle ) ||
+						cleanMatchedTitle.includes( cleanTitle )
+					);
 				};
 
 				let html = '';
@@ -260,9 +251,7 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 		clearSuggestions();
 		if ( results !== null ) {
 			renderSuggestions( results );
-			attachMouseListener();
 		}
-		activeIndex.setMax( results.length );
 	} ).catch( ( error ) => {
 		searchInput.removeEventListener( 'input', abortFetch );
 		searchInput.parentNode.classList.remove( SEARCH_LOADING_CLASS );
@@ -334,6 +323,7 @@ function getMenuItem( data ) {
 		fragment = template.content.cloneNode( true ),
 		item = fragment.querySelector( '.' + PREFIX + '__item' );
 	updateMenuItem( item, data );
+	bindMouseHoverEvent( item );
 	return fragment;
 }
 
@@ -396,6 +386,16 @@ function updateTypeahead( messages ) {
 		msg: 'citizen-search-fulltext'
 	} );
 
+	// MediaSearch
+	if ( config.isMediaSearchExtensionEnabled ) {
+		updateToolItem( {
+			id: 'mediasearch',
+			link: config.wgScriptPath + '/index.php?title=Special:MediaSearch&search=',
+			icon: 'imageGallery',
+			msg: 'citizen-search-mediasearch'
+		} );
+	}
+
 	if ( hasQuery ) {
 		getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder );
 	} else {
@@ -405,12 +405,14 @@ function updateTypeahead( messages ) {
 			placeholder,
 			{
 				icon: 'articlesSearch',
-				title: messages.searchsuggestSearch,
-				description: messages.fulltextEmpty
+				title: messages.emptyTitle,
+				description: messages.emptyDesc
 			}
 		);
 		placeholder.classList.remove( HIDDEN_CLASS );
 	}
+	// -1 as there is a template element
+	activeIndex.setMax( typeahead.children.length - 1 );
 }
 
 /**
@@ -423,16 +425,16 @@ function initTypeahead( searchForm, input ) {
 
 	const
 		messages = {
-			fulltextEmpty: mw.message( 'citizen-search-fulltext-empty' ).text(),
-			searchsuggestSearch: mw.message( 'searchsuggest-search' ).text()
+			emptyTitle: mw.message( 'searchsuggest-search' ).text(),
+			emptyDesc: mw.message( 'citizen-search-empty-desc' ).text()
 		},
 		template = mw.template.get(
 			'skins.citizen.search',
 			'resources/skins.citizen.search/templates/typeahead.mustache'
 		),
 		data = {
-			'msg-citizen-search-fulltext-empty': messages.fulltextEmpty,
-			'msg-searchsuggest-search': messages.searchsuggestSearch
+			'msg-searchsuggest-search': messages.emptyTitle,
+			'msg-citizen-search-empty-desc': messages.emptyDesc
 		};
 
 	const onBlur = ( event ) => {
@@ -466,9 +468,6 @@ function initTypeahead( searchForm, input ) {
 	searchForm.setAttribute( 'aria-owns', 'searchform-suggestions' );
 	searchInput.setAttribute( 'aria-autocomplete', 'list' );
 	searchInput.setAttribute( 'aria-controls', 'searchform-suggestions' );
-
-	// Attach mouse listener to inital typeahead items
-	attachMouseListener();
 
 	// Since searchInput is focused before the event listener is set up
 	onFocus();

@@ -17,7 +17,7 @@
 	"citizen-action-addsection": "আলোচনা যোগ করুন",
 	"citizen-jumptotop": "উপরে চলুন",
 	"citizen-search-fulltext": "এটি থাকা পাতাগুলিতে অনুসন্ধান করুন:",
-	"citizen-search-fulltext-empty": "অনুসন্ধান শুরু করতে কিছু লিখুন",
+	"citizen-search-empty-desc": "অনুসন্ধান শুরু করতে কিছু লিখুন",
 	"citizen-tagline-ns-mediawiki": "মিডিয়াউইকি ইন্টারফেস পাতা",
 	"citizen-tagline-ns-template": "টেমপ্লেট পাতা",
 	"citizen-tagline-ns-help": "সাহায্য পাতা",

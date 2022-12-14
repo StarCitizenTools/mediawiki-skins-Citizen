@@ -74,13 +74,23 @@
 		&--tool {
 			.citizen-typeahead {
 				&__content {
-					padding: var( --space-md ) 0;
+					padding: var( --space-sm ) 0;
 					border-top: 1px solid var( --border-color-base );
 				}
 
 				&__thumbnail {
 					height: var( --size-icon );
 					background-color: transparent;
+				}
+
+				&__description {
+					color: var( --color-base );
+				}
+			}
+
+			+ .citizen-typeahead__item--tool {
+				.citizen-typeahead__content {
+					border-top: 0;
 				}
 			}
 		}
