@@ -9,14 +9,14 @@
 */
 
 :root {
-	--tint-1: var( --background-color-framed );
-	--border-1: 1px solid var( --background-color-framed--active );
+	--tint-1: var( --color-surface-2 );
+	--border-1: 1px solid var( --color-surface-2--active );
 }
 
 .wssearch--filter-options-search,
 .wssearch--search-input {
 	border: 1px solid var( --border-color-base );
-	background-color: var( --background-color-framed );
+	background-color: var( --color-surface-2 );
 	color: var( --color-base );
 
 	&:hover {
@@ -41,7 +41,7 @@
 
 	&:focus {
 		border-color: var( --color-base );
-		box-shadow: inset 0 0 0 1px var( --base-color ), inset 0 0 0 2px var( --background-color-framed );
+		box-shadow: inset 0 0 0 1px var( --base-color ), inset 0 0 0 2px var( --color-surface-2 );
 	}
 
 	&:active {
@@ -52,12 +52,12 @@
 }
 
 .wssearch--selected-filter {
-	background-color: var( --background-color-framed );
+	background-color: var( --color-surface-2 );
 	transition: background-color 0.1s, color 0.1s, border-color 0.1s, box-shadow 0.1s;
 
 	&:hover {
 		border-color: var( --base-color-lighter );
-		background-color: var( --background-color-framed--hover );
+		background-color: var( --color-surface-2--hover );
 	}
 
 	&:after {
@@ -80,7 +80,7 @@
 		&:focus {
 			border-color: var( --color-base );
 			background-color: var( --color-base );
-			box-shadow: inset 0 0 0 1px var( --base-color ), inset 0 0 0 2px var( --background-color-framed );
+			box-shadow: inset 0 0 0 1px var( --base-color ), inset 0 0 0 2px var( --color-surface-2 );
 		}
 	}
 
@@ -119,7 +119,7 @@
 	&:active,
 	&:focus {
 		border-color: var( --color-base );
-		box-shadow: inset 0 0 0 1px var( --base-color ), inset 0 0 0 2px var( --background-color-framed );
+		box-shadow: inset 0 0 0 1px var( --base-color ), inset 0 0 0 2px var( --color-surface-2 );
 	}
 }
 
@@ -146,13 +146,13 @@
 
 .wssearch--order__option,
 .wssearch--size__option {
-	background-color: var( --background-color-framed );
+	background-color: var( --color-surface-2 );
 	color: var( --color-base--emphasized );
 }
 
 .wssearch-hit-prop-loading-bg {
-	background: linear-gradient( 135deg, var( --background-color-framed ) 25%, transparent 0, transparent 50%, var( --background-color-framed ) 0, var( --background-color-framed ) 75%, transparent 0, transparent );
-	background-color: var( --background-color-framed--active );
+	background: linear-gradient( 135deg, var( --color-surface-2 ) 25%, transparent 0, transparent 50%, var( --color-surface-2 ) 0, var( --color-surface-2 ) 75%, transparent 0, transparent );
+	background-color: var( --color-surface-2--active );
 }
 
 .wssearch--hit-pill {
@@ -222,7 +222,7 @@
 	}
 
 	.wssearch--checkbox {
-		background-color: var( --background-color-framed );
+		background-color: var( --color-surface-2 );
 		color: var( --color-base--emphasized );
 
 		&:hover {
@@ -235,11 +235,11 @@
 		}
 
 		&.wssearch--checkbox-selected:hover {
-			background-color: var( --background-color-framed );
+			background-color: var( --color-surface-2 );
 		}
 
 		&:not( :last-child ) {
-			border-bottom: 1px solid var( --background-color-framed--active );
+			border-bottom: 1px solid var( --color-surface-2--active );
 		}
 
 		&-count {
@@ -276,7 +276,7 @@
 	&:active,
 	&:focus {
 		border-color: var( --color-base );
-		box-shadow: inset 0 0 0 1px var( --base-color ), inset 0 0 0 2px var( --background-color-framed );
+		box-shadow: inset 0 0 0 1px var( --base-color ), inset 0 0 0 2px var( --color-surface-2 );
 	}
 }
 
@@ -290,7 +290,7 @@
 	}
 
 	&__header > * {
-		background-color: var( --background-color-framed--active );
+		background-color: var( --color-surface-2--active );
 	}
 }
 
