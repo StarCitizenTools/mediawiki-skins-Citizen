@@ -213,7 +213,9 @@
 @size-icon:		1.25rem;
 // Not in the header section it is also used outside of header
 @header-size:	3.5rem;
-@width-layout:	@width-breakpoint-desktop - 2 * @padding-page;
+// 67.5rem at 16px font size
+// We use px because it would be frustrating if max-width changes with font size
+@width-layout:	1080px;
 // TODO: Revise this number, fixed value isn't great but we need it for b
 @width-toc: 240px;
 
