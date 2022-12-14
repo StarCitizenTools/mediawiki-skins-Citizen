@@ -1,7 +1,8 @@
 const
 	config = require( './config.json' ),
 	PREFIX = 'citizen-typeahead',
-	SEARCH_LOADING_CLASS = 'citizen-loading';
+	SEARCH_LOADING_CLASS = 'citizen-loading',
+	HIDDEN_CLASS = PREFIX + '__item--hidden';
 
 const activeIndex = {
 	index: -1,
@@ -123,29 +124,22 @@ function bindMouseHoverEvent( element ) {
  * @return {void}
  */
 function clearSuggestions() {
-	const typeaheadItems = typeahead.children,
-		nonSuggestionCount = 3;
+	const typeaheadItems = typeahead.children;
 
-	if ( typeaheadItems.length > nonSuggestionCount ) {
-		// Splice would be cleaner but it is slower (?)
-		const fragment = new DocumentFragment(),
-			nonSuggestionItems = [ ...typeaheadItems ].slice(
-				typeaheadItems.length - nonSuggestionCount, typeaheadItems.length
-			);
+	if ( typeaheadItems.length > 0 ) {
+		// Do all the work in document fragment then replace the whole list
+		// It is more performant this way
+		const
+			fragment = new DocumentFragment(),
+			template = document.getElementById( PREFIX + '-template' );
 
-		nonSuggestionItems.forEach( ( item ) => {
-			fragment.append( item );
-		} );
-
-		// TODO: Just use replaceChildren when browser support is >90%
-		if ( typeof typeahead.replaceChildren !== 'undefined' ) {
-			typeahead.replaceChildren( fragment );
-		} else {
-			while ( typeahead.hasChildNodes() ) {
-				typeahead.removeChild( typeahead.lastChild );
+		[ ...typeaheadItems ].forEach( ( item ) => {
+			if ( !item.classList.contains( PREFIX + '__item--page' ) ) {
+				fragment.append( item );
 			}
-			typeahead.appendChild( fragment );
-		}
+		} );
+		fragment.append( template );
+		typeahead.replaceChildren( fragment );
 	}
 
 	// Remove loading animation
@@ -227,7 +221,7 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 				fragment.append( getMenuItem( data ) );
 			} );
 			// Hide placeholder
-			placeholder.classList.add( PREFIX + '__item--hidden' );
+			placeholder.classList.add( HIDDEN_CLASS );
 			typeahead.prepend( fragment );
 		} else {
 			// Update placeholder with no result content
@@ -240,7 +234,7 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 					description: mw.message( 'citizen-search-noresults-desc' ).text()
 				}
 			);
-			placeholder.classList.remove( PREFIX + '__item--hidden' );
+			placeholder.classList.remove( HIDDEN_CLASS );
 		}
 	};
 
@@ -356,46 +350,51 @@ function updateTypeahead( messages ) {
 		hasQuery = searchQuery.length > 0,
 		placeholder = typeahead.querySelector( '.' + PREFIX + '__item--placeholder' );
 
-	const updateFullTextSearchItem = () => {
+	const updateToolItem = ( data ) => {
 		const
-			FULLTEXT_ID = PREFIX + '-fulltext',
-			HIDDEN_CLASS = PREFIX + '__item--hidden';
-
-		const
-			fulltextEl = document.getElementById( FULLTEXT_ID ),
+			itemId = PREFIX + '-' + data.id,
 			query = '<span class="citizen-typeahead__query">' + htmlSafeSearchQuery + '</span>',
-			fulltextLink = config.wgScriptPath + '/index.php?title=Special:Search&fulltext=1&search=' + htmlSafeSearchQuery,
-			fulltextText = mw.message( 'citizen-search-fulltext', query );
+			itemLink = data.link + htmlSafeSearchQuery,
+			/* eslint-disable-next-line mediawiki/msg-doc */
+			itemDesc = mw.message( data.msg, query );
+
+		let item = document.getElementById( itemId );
 
 		// Update existing element instead of creating a new one
-		if ( fulltextEl ) {
+		if ( item ) {
 			// FIXME: Probably more efficient to just replace the query than the whole messaage?
 			updateMenuItem(
-				fulltextEl,
+				item,
 				{
-					link: fulltextLink,
-					description: fulltextText
+					link: itemLink,
+					description: itemDesc
 				}
 			);
 			// FIXME: There is probably a more efficient way
 			if ( hasQuery ) {
-				fulltextEl.classList.remove( HIDDEN_CLASS );
+				item.classList.remove( HIDDEN_CLASS );
 			} else {
-				fulltextEl.classList.add( HIDDEN_CLASS );
+				item.classList.add( HIDDEN_CLASS );
 			}
 		} else {
-			const item = getMenuItem( {
-				icon: 'articleSearch',
-				id: FULLTEXT_ID,
+			item = getMenuItem( {
+				icon: data.icon,
+				id: itemId,
 				type: 'tool',
-				link: fulltextLink,
-				description: fulltextText
+				link: itemLink,
+				description: itemDesc
 			} );
 			typeahead.append( item );
 		}
 	};
 
-	updateFullTextSearchItem();
+	// Fulltext search
+	updateToolItem( {
+		id: 'fulltext',
+		link: config.wgScriptPath + '/index.php?title=Special:Search&fulltext=1&search=',
+		icon: 'articleSearch',
+		msg: 'citizen-search-fulltext'
+	} );
 
 	if ( hasQuery ) {
 		getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder );
@@ -410,7 +409,7 @@ function updateTypeahead( messages ) {
 				description: messages.fulltextEmpty
 			}
 		);
-		placeholder.classList.remove( PREFIX + '__item--hidden' );
+		placeholder.classList.remove( HIDDEN_CLASS );
 	}
 }
 
