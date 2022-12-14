@@ -140,7 +140,7 @@
  * referring to them as applied further below.
  */
 
-@color-base0:    #000;    // = HSB 0°, 0%, 0%
+// @color-base0:    #000;    // = HSB 0°, 0%, 0%
 @color-base10:   #202122; // = HSB 210°, 6%, 13%
 @color-base20:   #54595d; // = HSB 207°, 10%, 36%; WCAG 2.0 level AAA 7.09:1 contrast ratio on `#fff`
 @color-base30:   #72777d; // = HSB 210°, 9%, 49%; WCAG 2.0 level AA at 4.52:1 contrast ratio on `#fff`
@@ -273,23 +273,6 @@
 // TODO: Refactor this to support filter drop-shadow
 @box-shadow-card: 0 2.8px 2.2px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .03))', 0 6.7px 5.3px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .01))', 0 12.5px 10px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .02))', 0 22.3px 17.9px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .02))', 0 41.8px 33.4px -4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .03))', 0 100px 80px -4px ~'hsl(var(--surface-shadow) / var(--shadow-strength))';
 @box-shadow-dialog: 0 2.8px 2.2px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .03))', 0 6.7px 5.3px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .01))', 0 12.5px 10px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .02))', 0 22.3px 17.9px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .02))', 0 41.8px 33.4px ~'hsl(var(--surface-shadow) / calc(var(--shadow-strength) + .03))', 0 100px 80px ~'hsl(var(--surface-shadow) / var(--shadow-strength))';
-
-/**
- * Dark theme color palette
- * Background color is used instead of shadow to show elevation
- * and hierarchy in dark theme
- * See https://material.io/design/color/dark-theme.html#properties
- */
-@dark-color-base0:	#131a21;	// Surface color
-@dark-color-base10: #1f262c; 	// 5% white overlay
-@dark-color-base20: #242a31;	// 7% white overlay
-@dark-color-base30: #262c32;	// 8% white overlay
-@dark-color-base40: #282f35;	// 9% white overlay
-@dark-color-base50: #2d3339;	// 11% white overlay
-@dark-color-base60: #30363c;	// 12% white overlay
-@dark-color-base70: #343a40;	// 14% white overlay
-@dark-color-base80: #363c42;	// 15% white overlay
-@dark-color-base90: #393f45;	// 16% white overlay
 
 @dark-background-color-overlay:				rgba( 19, 26, 33, 0.95 );
 @dark-background-color-overlay--lighter:	rgba( 19, 26, 33, 0.6 );
