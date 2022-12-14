@@ -37,11 +37,25 @@ const activeIndex = {
 	}
 };
 
-let typeahead, searchInput;
+let /** @type {HTMLElement | undefined} */ typeahead;
+let /** @type {HTMLElement | undefined} */ searchInput;
 
-/*
+/**
+ * @typedef {Object} MenuItemData
+ * @property {string} id
+ * @property {string} type
+ * @property {string} link
+ * @property {string} icon
+ * @property {string} thumbnail
+ * @property {string} title
+ * @property {string} label
+ * @property {string} description
+ */
+
+/**
+ * Sets an 'ACTIVE_CLASS' on the element
+ *
  * @param {HTMLElement} element
- * @return {void}
  */
 function toggleActive( element ) {
 	const typeaheadItems = typeahead.querySelectorAll( `.${ITEM_CLASS}` );
@@ -59,7 +73,6 @@ function toggleActive( element ) {
 			}
 		}
 	}
-	/* eslint-enable mediawiki/class-doc */
 }
 
 /**
@@ -96,11 +109,10 @@ function keyboardEvents( event ) {
 	}
 }
 
-/*
+/**
  * Bind mouseenter and mouseleave event to reproduce mouse hover event
  *
  * @param {HTMLElement} element
- * @return {void}
  */
 function bindMouseHoverEvent( element ) {
 	element.addEventListener( 'mouseenter', ( event ) => {
@@ -113,8 +125,6 @@ function bindMouseHoverEvent( element ) {
 
 /**
  * Remove all existing suggestions from typeahead
- *
- * @return {void}
  */
 function clearSuggestions() {
 	const typeaheadItems = typeahead.children;
@@ -147,7 +157,6 @@ function clearSuggestions() {
  * @param {string} searchQuery
  * @param {string} htmlSafeSearchQuery
  * @param {HTMLElement} placeholder
- * @return {void}
  */
 function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 	const renderSuggestions = ( results ) => {
@@ -155,15 +164,29 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 			const
 				fragment = document.createDocumentFragment(),
 				suggestionLinkPrefix = `${config.wgScriptPath}/index.php?title=Special:Search&search=`;
-
+			/**
+			 * Return the redirect title with search query highlight
+			 *
+			 * @param {string} text
+			 * @return {string}
+			 */
 			const highlightTitle = ( text ) => {
 				const regex = new RegExp( mw.util.escapeRegExp( htmlSafeSearchQuery ), 'i' );
 				return text.replace( regex, `<span class="${PREFIX}__highlight">$&</span>` );
 			};
-
+			/**
+			 * Return the HTML of the redirect label
+			 *
+			 * @param {string} title
+			 * @param {string} matchedTitle
+			 * @return {string}
+			 */
 			const getRedirectLabel = ( title, matchedTitle ) => {
-				// Check if the redirect is useful
-				// See T303013
+				/**
+				 * Check if the redirect is useful (T303013)
+				 *
+				 * @return {boolean}
+				 */
 				const isRedirectUseful = () => {
 					// Change to lowercase then remove space and dashes
 					const cleanup = ( text ) => {
@@ -180,7 +203,6 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 				};
 
 				let html = '';
-
 				// Result is a redirect
 				// Show the redirect title and highlight it
 				if ( matchedTitle && isRedirectUseful() ) {
@@ -271,8 +293,7 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
  * Update menu item element
  *
  * @param {HTMLElement} item
- * @param {Object} data
- * @return {void}
+ * @param {MenuItemData} data
  */
 function updateMenuItem( item, data ) {
 	if ( data.id ) {
@@ -314,7 +335,7 @@ function updateMenuItem( item, data ) {
 /**
  * Generate menu item HTML using the existing template
  *
- * @param {Object} data
+ * @param {MenuItemData} data
  * @return {HTMLElement|void}
  */
 function getMenuItem( data ) {
@@ -337,7 +358,6 @@ function getMenuItem( data ) {
  * Update the typeahead element
  *
  * @param {Object} messages
- * @return {void}
  */
 function updateTypeahead( messages ) {
 	const
@@ -346,6 +366,11 @@ function updateTypeahead( messages ) {
 		hasQuery = searchQuery.length > 0,
 		placeholder = typeahead.querySelector( `.${ITEM_CLASS}--placeholder` );
 
+	/**
+	 * Update a tool item or create it if it does not exist
+	 *
+	 * @param {Object} data
+	 */
 	const updateToolItem = ( data ) => {
 		const
 			itemId = `${PREFIX}-${data.id}`,
@@ -424,7 +449,6 @@ function updateTypeahead( messages ) {
 /**
  * @param {HTMLElement} searchForm
  * @param {HTMLInputElement} input
- * @return {void}
  */
 function initTypeahead( searchForm, input ) {
 	const EXPANDED_CLASS = 'citizen-typeahead--expanded';
