@@ -209,6 +209,7 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 			results.forEach( ( result, index ) => {
 				const data = {
 					id: PREFIX + '-suggestion-' + index,
+					type: 'page',
 					link: suggestionLinkPrefix + encodeURIComponent( result.key ),
 					title: highlightTitle( result.title ),
 					// Just to be safe, not sure if the default API is HTML escaped
@@ -226,7 +227,7 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 				fragment.append( getMenuItem( data ) );
 			} );
 			// Hide placeholder
-			placeholder.classList.add( PREFIX + '__placeholder--hidden' );
+			placeholder.classList.add( PREFIX + '__item--hidden' );
 			typeahead.prepend( fragment );
 		} else {
 			// Update placeholder with no result content
@@ -234,11 +235,12 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 				placeholder,
 				{
 					icon: 'articleNotFound',
-					class: PREFIX + '__placeholder ' + PREFIX + '__placeholder--noResult',
+					type: 'placeholder',
 					title: mw.message( 'citizen-search-noresults-title', htmlSafeSearchQuery ).text(),
 					description: mw.message( 'citizen-search-noresults-desc' ).text()
 				}
 			);
+			placeholder.classList.remove( PREFIX + '__item--hidden' );
 		}
 	};
 
@@ -290,10 +292,8 @@ function updateMenuItem( item, data ) {
 	if ( data.id ) {
 		item.setAttribute( 'id', data.id );
 	}
-	if ( data.class ) {
-		// So that it can overwrite the original class
-		// We use that in placeholder
-		item.setAttribute( 'class', data.class );
+	if ( data.type ) {
+		item.classList.add( PREFIX + '__item--' + data.type );
 	}
 	if ( data.link ) {
 		const link = item.querySelector( '.' + PREFIX + '__content' );
@@ -354,7 +354,7 @@ function updateTypeahead( messages ) {
 		searchQuery = searchInput.value,
 		htmlSafeSearchQuery = mw.html.escape( searchQuery ),
 		hasQuery = searchQuery.length > 0,
-		placeholder = typeahead.querySelector( '.' + PREFIX + '__placeholder' );
+		placeholder = typeahead.querySelector( '.' + PREFIX + '__item--placeholder' );
 
 	const updateFullTextSearchItem = () => {
 		const
@@ -366,13 +366,6 @@ function updateTypeahead( messages ) {
 			query = '<span class="citizen-typeahead__query">' + htmlSafeSearchQuery + '</span>',
 			fulltextLink = config.wgScriptPath + '/index.php?title=Special:Search&fulltext=1&search=' + htmlSafeSearchQuery,
 			fulltextText = mw.message( 'citizen-search-fulltext', query );
-
-		const item = getMenuItem( {
-			icon: 'articleSearch',
-			id: FULLTEXT_ID,
-			link: fulltextLink,
-			description: fulltextText
-		} );
 
 		// Update existing element instead of creating a new one
 		if ( fulltextEl ) {
@@ -391,6 +384,13 @@ function updateTypeahead( messages ) {
 				fulltextEl.classList.add( HIDDEN_CLASS );
 			}
 		} else {
+			const item = getMenuItem( {
+				icon: 'articleSearch',
+				id: FULLTEXT_ID,
+				type: 'tool',
+				link: fulltextLink,
+				description: fulltextText
+			} );
 			typeahead.append( item );
 		}
 	};
@@ -406,11 +406,11 @@ function updateTypeahead( messages ) {
 			placeholder,
 			{
 				icon: 'articlesSearch',
-				class: PREFIX + '__placeholder ' + PREFIX + '__placeholder--noQuery',
 				title: messages.searchsuggestSearch,
 				description: messages.fulltextEmpty
 			}
 		);
+		placeholder.classList.remove( PREFIX + '__item--hidden' );
 	}
 }
 

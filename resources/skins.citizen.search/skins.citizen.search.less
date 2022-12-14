@@ -15,40 +15,13 @@
 	// Well this won't be loaded before .citizen-animation-ready anyways
 	.citizen-card-transition();
 
-	&__placeholder {
-		.citizen-typeahead {
-			&__content {
-				flex-direction: column;
-				padding: var( --space-xl ) 0;
-				text-align: center;
-			}
-
-			&__thumbnail {
-				margin-bottom: var( --space-sm );
-			}
-		}
-	}
-
 	&__item {
-		&--active {
-			background-color: var( --background-color-primary--hover );
-		}
-
 		.citizen-typeahead {
 			&__thumbnail {
 				margin-right: var( --space-sm );
-				background-color: #eaecf0;
-				background-position: center;
-				background-size: cover;
 
 				&.citizen-ui-icon {
-					width: 70px;
-					height: 60px;
-					background-color: var( --color-surface-3 );
-
-					&:before {
-						background-size: 20px;
-					}
+					width: 100%; // reset width
 				}
 			}
 
@@ -56,12 +29,60 @@
 				white-space: nowrap;
 			}
 		}
-	}
 
-	&__placeholder,
-	&__item {
+		&--active {
+			background-color: var( --background-color-primary--hover );
+		}
+
 		&--hidden {
 			display: none;
+		}
+
+		&--placeholder {
+			.citizen-typeahead {
+				&__content {
+					flex-direction: column;
+					padding: var( --space-xl ) 0;
+					text-align: center;
+				}
+
+				&__thumbnail {
+					margin-bottom: var( --space-sm );
+				}
+			}
+		}
+
+		&--page {
+			.citizen-typeahead {
+				&__thumbnail {
+					background-color: #eaecf0;
+					background-position: center;
+					background-size: cover;
+
+					&.citizen-ui-icon {
+						height: 60px;
+						background-color: var( --color-surface-3 );
+
+						&:before {
+							background-size: 20px;
+						}
+					}
+				}
+			}
+		}
+
+		&--tool {
+			.citizen-typeahead {
+				&__content {
+					padding: var( --space-md ) 0;
+					border-top: 1px solid var( --border-color-base );
+				}
+
+				&__thumbnail {
+					height: var( --size-icon );
+					background-color: transparent;
+				}
+			}
 		}
 	}
 
@@ -157,20 +178,6 @@
 
 	&--expanded {
 		.citizen-card-show( false );
-	}
-}
-
-#citizen-typeahead-fulltext {
-	.citizen-typeahead {
-		&__content {
-			padding: var( --space-md ) 0;
-			border-top: 1px solid var( --border-color-base );
-		}
-
-		&__thumbnail {
-			height: var( --size-icon );
-			background-color: transparent;
-		}
 	}
 }
 
