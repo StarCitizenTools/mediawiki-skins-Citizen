@@ -1,8 +1,14 @@
 const
-	config = require( './config.json' ),
 	PREFIX = 'citizen-typeahead',
 	SEARCH_LOADING_CLASS = 'citizen-loading',
-	HIDDEN_CLASS = PREFIX + '__item--hidden';
+	ITEM_CLASS = `${PREFIX}__item`,
+	ACTIVE_CLASS = `${ITEM_CLASS}--active`,
+	HIDDEN_CLASS = `${ITEM_CLASS}--hidden`;
+
+/**
+ * Config object from getCitizenSearchResourceLoaderConfig()
+ */
+const config = require( './config.json' );
 
 const activeIndex = {
 	index: -1,
@@ -38,8 +44,7 @@ let typeahead, searchInput;
  * @return {void}
  */
 function toggleActive( element ) {
-	const ACTIVE_CLASS = PREFIX + '__item--active';
-	const typeaheadItems = typeahead.querySelectorAll( '.' + PREFIX + '__item' );
+	const typeaheadItems = typeahead.querySelectorAll( `.${ITEM_CLASS}` );
 
 	for ( let i = 0; i < typeaheadItems.length; i++ ) {
 		if ( element !== typeaheadItems[ i ] ) {
@@ -69,7 +74,7 @@ function keyboardEvents( event ) {
 	}
 
 	// Is children slower?
-	const typeaheadItems = typeahead.querySelectorAll( '.' + PREFIX + '__item' );
+	const typeaheadItems = typeahead.querySelectorAll( `.${ITEM_CLASS}` );
 
 	if ( event.key === 'ArrowDown' || event.key === 'ArrowUp' ) {
 		if ( event.key === 'ArrowDown' ) {
@@ -83,7 +88,7 @@ function keyboardEvents( event ) {
 	}
 
 	if ( typeaheadItems[ activeIndex.index ] ) {
-		const link = typeaheadItems[ activeIndex.index ].querySelector( '.' + PREFIX + '__content' );
+		const link = typeaheadItems[ activeIndex.index ].querySelector( `.${PREFIX}__content` );
 		if ( event.key === 'Enter' && link instanceof HTMLAnchorElement ) {
 			event.preventDefault();
 			link.click();
@@ -119,10 +124,10 @@ function clearSuggestions() {
 		// It is more performant this way
 		const
 			fragment = new DocumentFragment(),
-			template = document.getElementById( PREFIX + '-template' );
+			template = document.getElementById( `${PREFIX}-template` );
 
 		[ ...typeaheadItems ].forEach( ( item ) => {
-			if ( !item.classList.contains( PREFIX + '__item--page' ) ) {
+			if ( !item.classList.contains( `${ITEM_CLASS}--page` ) ) {
 				fragment.append( item );
 			}
 		} );
@@ -149,11 +154,11 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 		if ( results.length > 0 ) {
 			const
 				fragment = document.createDocumentFragment(),
-				suggestionLinkPrefix = config.wgScriptPath + '/index.php?title=Special:Search&search=';
+				suggestionLinkPrefix = `${config.wgScriptPath}/index.php?title=Special:Search&search=`;
 
 			const highlightTitle = ( text ) => {
 				const regex = new RegExp( mw.util.escapeRegExp( htmlSafeSearchQuery ), 'i' );
-				return text.replace( regex, '<span class="' + PREFIX + '__highlight">$&</span>' );
+				return text.replace( regex, `<span class="${PREFIX}__highlight">$&</span>` );
 			};
 
 			const getRedirectLabel = ( title, matchedTitle ) => {
@@ -179,12 +184,10 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 				// Result is a redirect
 				// Show the redirect title and highlight it
 				if ( matchedTitle && isRedirectUseful() ) {
-					html = '<div class="' + PREFIX + '__labelItem" title="' + mw.message( 'search-redirect', matchedTitle ).plain() + '">' +
-						/* Article redirect icon */
-						'<span class="citizen-ui-icon mw-ui-icon-wikimedia-articleRedirect"></span>' +
-						/* Since we are matching that redirect title, it should be highlighted */
-						'<span>' + highlightTitle( matchedTitle ) + '</span>' +
-						'</div>';
+					html = `<div class="${PREFIX}__labelItem" title="${mw.message( 'search-redirect', matchedTitle ).plain()}">
+							<span class="citizen-ui-icon mw-ui-icon-wikimedia-articleRedirect"></span>
+							<span>${highlightTitle( matchedTitle )}</span>
+						</div>`;
 				}
 
 				return html;
@@ -193,7 +196,7 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 			// Create suggestion items
 			results.forEach( ( result, index ) => {
 				const data = {
-					id: PREFIX + '-suggestion-' + index,
+					id: `${PREFIX}-suggestion-${index}`,
 					type: 'page',
 					link: suggestionLinkPrefix + encodeURIComponent( result.key ),
 					title: highlightTitle( result.title ),
@@ -258,7 +261,7 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 		// User can trigger the abort when the fetch event is pending
 		// There is no need for an error
 		if ( error.name !== 'AbortError' ) {
-			const message = 'Uh oh, a wild error appears! ' + error;
+			const message = `Uh oh, a wild error appears! ${error}`;
 			throw new Error( message );
 		}
 	} );
@@ -276,31 +279,34 @@ function updateMenuItem( item, data ) {
 		item.setAttribute( 'id', data.id );
 	}
 	if ( data.type ) {
-		item.classList.add( PREFIX + '__item--' + data.type );
+		item.classList.add( `${ITEM_CLASS}--${data.type}` );
 	}
 	if ( data.link ) {
-		const link = item.querySelector( '.' + PREFIX + '__content' );
+		const link = item.querySelector( `.${PREFIX}__content` );
 		link.setAttribute( 'href', data.link );
 	}
 	if ( data.icon || data.thumbnail ) {
-		const thumbnail = item.querySelector( '.' + PREFIX + '__thumbnail' );
+		const thumbnail = item.querySelector( `.${PREFIX}__thumbnail` );
 		if ( data.thumbnail ) {
-			thumbnail.style.backgroundImage = 'url(' + data.thumbnail + ')';
+			thumbnail.style.backgroundImage = `url('${data.thumbnail}')`;
 		} else {
-			// FIXME: There is probably a cleaner way
-			thumbnail.setAttribute( 'class', PREFIX + '__thumbnail citizen-ui-icon mw-ui-icon-wikimedia-' + data.icon );
+			thumbnail.classList.add(
+				`${PREFIX}__thumbnail`,
+				'citizen-ui-icon',
+				`mw-ui-icon-wikimedia-${data.icon}`
+			);
 		}
 	}
 	if ( data.title ) {
-		const title = item.querySelector( '.' + PREFIX + '__title' );
+		const title = item.querySelector( `.${PREFIX}__title` );
 		title.innerHTML = data.title;
 	}
 	if ( data.label ) {
-		const label = item.querySelector( '.' + PREFIX + '__label' );
+		const label = item.querySelector( `.${PREFIX}__label` );
 		label.innerHTML = data.label;
 	}
 	if ( data.description ) {
-		const description = item.querySelector( '.' + PREFIX + '__description' );
+		const description = item.querySelector( `.${PREFIX}__description` );
 		description.innerHTML = data.description;
 	}
 }
@@ -312,7 +318,7 @@ function updateMenuItem( item, data ) {
  * @return {HTMLElement|void}
  */
 function getMenuItem( data ) {
-	const template = document.getElementById( PREFIX + '-template' );
+	const template = document.getElementById( `${PREFIX}-template` );
 
 	// Shouldn't happen but just to be safe
 	if ( !( template instanceof HTMLTemplateElement ) ) {
@@ -321,7 +327,7 @@ function getMenuItem( data ) {
 
 	const
 		fragment = template.content.cloneNode( true ),
-		item = fragment.querySelector( '.' + PREFIX + '__item' );
+		item = fragment.querySelector( `.${ITEM_CLASS}` );
 	updateMenuItem( item, data );
 	bindMouseHoverEvent( item );
 	return fragment;
@@ -338,12 +344,12 @@ function updateTypeahead( messages ) {
 		searchQuery = searchInput.value,
 		htmlSafeSearchQuery = mw.html.escape( searchQuery ),
 		hasQuery = searchQuery.length > 0,
-		placeholder = typeahead.querySelector( '.' + PREFIX + '__item--placeholder' );
+		placeholder = typeahead.querySelector( `.${ITEM_CLASS}--placeholder` );
 
 	const updateToolItem = ( data ) => {
 		const
-			itemId = PREFIX + '-' + data.id,
-			query = '<span class="citizen-typeahead__query">' + htmlSafeSearchQuery + '</span>',
+			itemId = `${PREFIX}-${data.id}`,
+			query = `<span class="citizen-typeahead__query">${htmlSafeSearchQuery}</span>`,
 			itemLink = data.link + htmlSafeSearchQuery,
 			/* eslint-disable-next-line mediawiki/msg-doc */
 			itemDesc = mw.message( data.msg, query );
@@ -381,7 +387,7 @@ function updateTypeahead( messages ) {
 	// Fulltext search
 	updateToolItem( {
 		id: 'fulltext',
-		link: config.wgScriptPath + '/index.php?title=Special:Search&fulltext=1&search=',
+		link: `${config.wgScriptPath}/index.php?title=Special:Search&fulltext=1&search=`,
 		icon: 'articleSearch',
 		msg: 'citizen-search-fulltext'
 	} );
@@ -390,7 +396,7 @@ function updateTypeahead( messages ) {
 	if ( config.isMediaSearchExtensionEnabled ) {
 		updateToolItem( {
 			id: 'mediasearch',
-			link: config.wgScriptPath + '/index.php?title=Special:MediaSearch&search=',
+			link: `${config.wgScriptPath}/index.php?title=Special:MediaSearch&search=`,
 			icon: 'imageGallery',
 			msg: 'citizen-search-mediasearch'
 		} );
