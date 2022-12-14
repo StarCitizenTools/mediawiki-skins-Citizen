@@ -183,7 +183,7 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 						/* Article redirect icon */
 						'<span class="citizen-ui-icon mw-ui-icon-wikimedia-articleRedirect"></span>' +
 						/* Since we are matching that redirect title, it should be highlighted */
-						highlightTitle( matchedTitle ) +
+						'<span>' + highlightTitle( matchedTitle ) + '</span>' +
 						'</div>';
 				}
 
