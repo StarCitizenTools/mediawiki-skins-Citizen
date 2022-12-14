@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.2.0...v2.3.0) (2022-12-14)
+
+
+### Features
+
+* **AdvancedSearch:** ✨ update AdvancedSearch styles ([88fca93](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/88fca93c469f7e2918b3b68a6a0381f4a3e5e800))
+* **core:** ✨ align inconsistent search styles ([653ba19](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/653ba1913051ef11306de4fd8bda4cc56f44d37b))
+* **core:** ✨ deprecate background-color-framed and input ([37cdf91](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/37cdf912571cd8b3b4c19cc45a09b123d0b83476))
+* **core:** ✨ do not hardcode min-width for page tools menu ([0187478](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0187478d1aa69bfa2f699fb4790cadc8491c98fd))
+* **core:** ✨ do not set fieldset font size ([224c190](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/224c190a475e5079e5e0e8332442643c5e2b571f))
+* **core:** ✨ dynamic dark theme color based on primary hue ([3414d59](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3414d5964375de829c129c39d680ef3c9e6b743b))
+* **core:** ✨ tweak notification styles ([529fe22](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/529fe221de103bf68302f06cf5a3e941f2206e04))
+* **MediaSearch:** ✨ add grade A support for MediaSearch ([9b9916d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9b9916d61bea955f3208e2f1fdb728b63918c66b))
+* **search:** ✨ add MediaSearch to typeahead ([203b0b4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/203b0b42c3a388684a51f231d993788632b92ae8))
+
+
+### Bug Fixes
+
+* **AdvancedSearch:** 🐛 1px layout shift in preloader ([3517453](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/351745374155fe292dd487f0e6f3ea6dd3782765))
+* **core:** 🐛 do not make search create and exist link into a card ([80a35ea](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/80a35ea571f8d7ef864b332add827368bc9b0440))
+* **core:** 🐛 do not use CSS containment for body content ([7a59e9c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7a59e9c2d720d99a4fe0aa31b2ff83b1c56922b9))
+* **core:** 🐛 incorrect z-index in changelist title ([c4bd384](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c4bd3842358920752d8f0abf5a768846b1b2f03f))
+* **search:** 🐛 do not collapse whitespace in label text node ([c2da5c5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c2da5c5ade34d0895932a0d120908f02fadb0a28))
+* **search:** 🐛 incorrect full text search URL ([074df52](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/074df5272c2cc7739967ded992b48e5bf45da806))
+
 ## [2.2.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.1.0...v2.2.0) (2022-12-08)
 
 
