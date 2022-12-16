@@ -1,0 +1,52 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:CodeEditor
+ * Module: ext.codeEditor.ace
+ * Version: REL1_39 67c012c
+ *
+ * Date: 2022-12-15
+*/
+
+@import '../../../resources/variables.less';
+
+// FIXME: Implemement same syntax higlight color as CodeMirror and SyntaxHighlight
+.ace {
+	&-tm {
+		background-color: transparent;
+		color: var( --color-base--emphasized );
+
+		.ace {
+			&_gutter {
+				background-color: transparent;
+				color: var( --color-base--subtle );
+
+				&-active-line {
+					background-color: var( --background-color-quiet--hover );
+				}
+			}
+
+			&_marker-layer {
+				.ace {
+					&_active-line {
+						background-color: var( --background-color-quiet--hover );
+					}
+				}
+			}
+
+			&_print-margin {
+				background: var( --border-color-base );
+			}
+
+			&_cursor {
+				color: var( --color-base--emphasized );
+			}
+		}
+	}
+
+	&_gutter {
+		&-cell {
+			color: var( --color-base--subtle );
+		}
+	}
+}

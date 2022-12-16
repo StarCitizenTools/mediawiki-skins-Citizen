@@ -1,0 +1,56 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:CodeEditor
+ * Module: jquery.codeEditor
+ * Version: REL1_39 67c012c
+ *
+ * Date: 2022-12-15
+*/
+
+.wikiEditor-ui .ace_editor {
+	font-family: var( --font-family-monospace );
+}
+
+.codeEditor-status {
+	position: relative;
+	width: auto; // so it won't overflow
+	padding-top: 8px; // Make space for resize indicator
+	padding-right: var( --space-xs );
+	padding-left: var( --space-xs );
+	border-top-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+	color: var( --color-base--subtle );
+	line-height: var( --line-height-sm );
+
+	// HACK: Add resize indicator
+	&:after {
+		position: absolute;
+		top: 1px; // counter border top
+		right: 0;
+		left: 0;
+		width: 52px;
+		height: 4px;
+		border-radius: var( --border-radius--pill );
+		margin: 2px auto;
+		background: var( --color-base--subtle );
+		content: '';
+	}
+
+	&-worker,
+	&-line,
+	&-message {
+		padding: 0 var( --space-xs );
+	}
+
+	&-message {
+		border-color: var( --border-color-base );
+		color: var( --color-base--emphasized );
+	}
+}
+
+// So that it connects with CodeEditor's status bar
+.skin-citizen .mw-editform .editOptions {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}

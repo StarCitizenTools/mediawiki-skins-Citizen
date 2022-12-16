@@ -290,6 +290,8 @@
 			"+ext.centralNotice.display": "skinStyles/extensions/CentralNotice/ext.centralNotice.display.less",
 			"+ext.cite.styles": "skinStyles/extensions/Cite/ext.cite.styles.less",
 			"+ext.cleanchanges.uls": "skinStyles/extensions/CleanChanges/ext.cleanchanges.uls.less",
+			"+ext.codeEditor.ace": "skinStyles/extensions/CodeEditor/ext.codeEditor.ace.less",
+			"+jquery.codeEditor": "skinStyles/extensions/CodeEditor/jquery.codeEditor.less",
 			"+ext.CodeMirror.lib": "skinStyles/extensions/CodeMirror/ext.CodeMirror.lib.less",
 			"+ext.CodeMirror.mode.mediawiki": "skinStyles/extensions/CodeMirror/ext.CodeMirror.mode.mediawiki.less",
 			"+ext.CodeMirror.visualEditor.init": "skinStyles/extensions/CodeMirror/ext.CodeMirror.visualEditor.init.less",
