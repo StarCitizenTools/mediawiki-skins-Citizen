@@ -421,7 +421,7 @@ function updateTypeahead( messages ) {
 	if ( config.isMediaSearchExtensionEnabled ) {
 		updateToolItem( {
 			id: 'mediasearch',
-			link: `${config.wgScriptPath}/index.php?title=Special:MediaSearch&search=`,
+			link: `${config.wgScriptPath}/index.php?title=Special:MediaSearch&type=image&search=`,
 			icon: 'imageGallery',
 			msg: 'citizen-search-mediasearch'
 		} );
