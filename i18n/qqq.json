@@ -3,11 +3,12 @@
 		"authors": [
 			"Abijeet Patro",
 			"Alistair3149",
+			"Amire80",
 			"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 			"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
 		]
 	},
-	"skinname-citizen": "{{name}}",
+	"skinname-citizen": "{{name}}\n\n\"Citizen\" refers to the name of the video game [[:w:en:Star Citizen|Star Citizen]].",
 	"citizen-skin-desc": "{{desc|what=skin|name=Citizen|url=https://github.com/StarCitizenTools/mediawiki-skins-Citizen}}",
 	"citizen-prefs-talkpage": "Link to the Citizen talk page which is shown before the preview link in skin preferences. See T307113 for more information.",
 	"citizen.css": "{{optional}}",
