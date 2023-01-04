@@ -103,7 +103,6 @@ final class Drawer extends Partial {
 			'id' => 't-specialpages'
 		] );
 
-		
 		// Upload file
 		// Only add upload file link when $wgEnableUploads is true
 		if ( $this->getConfigValue( 'EnableUploads' ) === true ) {
