@@ -22,7 +22,7 @@
 		"devmoji": "^2.3.0",
 		"eslint-config-wikimedia": "0.23.0",
 		"grunt-banana-checker": "0.10.0",
-		"husky": "^8.0.2",
+		"husky": "^8.0.3",
 		"jsdoc": "4.0.0",
 		"jsdoc-wmf-theme": "0.0.5",
 		"standard-version": "^9.5.0",
