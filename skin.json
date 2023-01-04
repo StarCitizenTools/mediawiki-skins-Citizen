@@ -326,6 +326,7 @@
 			"+ext.MsUpload": "skinStyles/extensions/MsUpload/ext.MsUpload.less",
 			"+ext.relatedArticles.styles": "skinStyles/extensions/RelatedArticles/ext.relatedArticles.styles.less",
 			"+ext.relatedArticles.readMore": "skinStyles/extensions/RelatedArticles/ext.relatedArticles.readMore.less",
+			"+ext.ReplaceTextStyles": "skinStyles/extensions/ReplaceText/ext.ReplaceTextStyles.less",
 			"+ext.RevisionSlider.lazyCss": "skinStyles/extensions/RevisionSlider/ext.RevisionSlider.lazyCss.less",
 			"+ext.RevisionSlider.init": "skinStyles/extensions/RevisionSlider/ext.RevisionSlider.init.less",
 			"+ext.jquery.atwho": "skinStyles/extensions/SemanticMediaWiki/ext.jquery.atwho.less",
