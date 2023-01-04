@@ -3,9 +3,9 @@
  *
  * SkinStyles for Extension:Cargo
  * Module: ext.cargo.main
- * Version: REL1_35 df13273
+ * Version: REL1_39 b4c6314
  *
- * Date: 2021-08-31
+ * Date: 2023-01-03
 */
 
 span.cargoFieldName {
@@ -13,23 +13,52 @@ span.cargoFieldName {
 }
 
 table.cargoTable.noMerge tr:nth-child( odd ) {
-	background: transparent;
+	background: var( --color-surface-0 );
 }
 
 table.cargoTable.noMerge tr:nth-child( even ) {
-	background: var( --background-color-quiet--hover );
+	background: var( --color-surface-2 );
 }
 
 table.cargoTable.mergeSimilarCells td.odd {
-	background: transparent;
+	background: var( --color-surface-0 );
 }
 
 table.cargoTable.mergeSimilarCells td.even {
-	background: var( --background-color-quiet--hover );
+	background: var( --color-surface-2 );
+}
+
+table.cargoTable thead tr {
+	border-bottom: 1px solid var( --border-color-base );
+}
+
+table.cargoTable tr + tr {
+	border-top: 1px solid var( --border-color-base );
+}
+
+table.cargoTable th,
+table.cargoTable td {
+	/* Sync with wikitable */
+	padding: var( --space-xs ) var( --space-sm );
+}
+
+table.cargoTable th {
+	/* Sync with wikitable */
+	color: var( --color-base--subtle );
+	font-size: 0.8125rem;
+	font-weight: var( --font-weight-normal );
+	letter-spacing: 0.05em;
+	text-align: start;
 }
 
 table.cargoTable td {
-	border-color: var( --border-color-base );
+	/* Border handled by tr */
+	border: 0;
+}
+
+span.searchmatch {
+	color: var( --color-base--emphasized );
+	font-weight: var( --font-weight-semibold );
 }
 
 div.cargoReplacementTableInfo {
@@ -37,14 +66,20 @@ div.cargoReplacementTableInfo {
 	background: var( --color-surface-3 );
 }
 
-.addButton {
-	border-color: var( --border-color-base );
-	background-color: var( --color-surface-2 );
-}
-
+.addButton,
 .deleteButton {
 	border-color: var( --border-color-base );
-	background-color: var( --color-surface-2 );
+	/* BG color does not like filter */
+	background-color: transparent;
+}
+
+/* Flip icons in dark mode */
+.skin-citizen-dark {
+	.cargoQueryTooltipIcon,
+	.addButton,
+	.deleteButton {
+		filter: invert( 1 ) hue-rotate( 180deg );
+	}
 }
 
 div.specialCargoQuery-extraPane {
@@ -58,15 +93,5 @@ div.specialCargoQuery-extraPane {
 
 .ui-menu .ui-menu-item a {
 	color: var( --color-base--emphasized );
-}
-
-table.cargo-tablelist.mw-datatable tr.cargo-tablelist-replacement-row:hover td,
-.cargo-tablelist-replacement-row > td {
-	background-color: var( --background-color-quiet--hover );
-}
-
-.skin-citizen-dark {
-	.cargoQueryTooltipIcon {
-		filter: invert( 1 ) hue-rotate( 180deg );
-	}
+	font-family: var( --font-family-base );
 }
