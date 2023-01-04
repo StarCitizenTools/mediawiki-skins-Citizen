@@ -9,6 +9,13 @@
 */
 
 /* jquery.dataTables.css */
+table.dataTable {
+	/* FIXME: Better handling of responsive table */
+	display: block;
+	overflow: auto;
+	max-width: 100%;
+}
+
 table.dataTable thead th,
 table.dataTable tfoot th {
 	font-weight: var( --font-weight-semibold );
