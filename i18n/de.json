@@ -11,7 +11,6 @@
 			"[https://www.mediawiki.org/wiki/User:Octfx Octfx]"
 		]
 	},
-	"skinname-citizen": "Citizen",
 	"citizen-skin-desc": "Ein wunderschöner, benutzerfreundlicher, reaktionsfähiger MediaWiki-Skin, der Erweiterungen zu einem Teil des kohärenten Erlebnisses macht. Ursprünglich wurde es für das [https://starcitizen.tools/ Star Citizen Wiki] erstellt.",
 	"citizen.css": "/* Das folgende CSS wird für Benutzer des Citizen-Skins geladen */",
 	"citizen.js": "/* Das folgende JavaScript wird für Benutzer des Citizen-Skins geladen */",

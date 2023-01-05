@@ -8,7 +8,6 @@
 			"Rafaelff"
 		]
 	},
-	"skinname-citizen": "Citizen",
 	"citizen-skin-desc": "Uma aparência MediaWiki bonita, utilizável e responsiva que torna as extensões parte da experiência coesa. Inicialmente criado para o [https://starcitizen.tools/ Star Citizen Wiki].",
 	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|Discussão]]",
 	"citizen.css": "/* Todo o CSS aqui será carregado para usuários do tema Citizen */",

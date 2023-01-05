@@ -5,7 +5,6 @@
 			"WikiPhoenix"
 		]
 	},
-	"skinname-citizen": "Citizen",
 	"citizen-skin-desc": "Ett responsiv utseende utvecklat för Star Citizen Wiki",
 	"citizen.css": "/* All CSS här kommer laddas in för användare av utseendet Citizen */",
 	"citizen.js": "/* All JavaScript här kommer laddas in för användare av utseendet Citizen */",

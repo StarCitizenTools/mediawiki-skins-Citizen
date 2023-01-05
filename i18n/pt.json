@@ -4,7 +4,6 @@
 			"Hamilton Abreu"
 		]
 	},
-	"skinname-citizen": "Citizen",
 	"citizen-skin-desc": "Um tema agradável para o MediaWiki, com grande usabilidade e dinamismo, que torna as extensões numa parte integrante da experiência coesiva. Criado inicialmente para a [https://starcitizen.tools/ wiki Star Citizen].",
 	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|Discussão]]",
 	"citizen.css": "/* Todo o código CSS colocado aqui será carregado para os utilizadores do tema Citizen */",
