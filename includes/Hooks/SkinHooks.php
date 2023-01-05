@@ -262,10 +262,12 @@ class SkinHooks implements
 			'log' => 'history',
 			'blockip' => 'block',
 			'userrights' => 'userGroup',
-			// Extension:CiteThisPage
-			'citethispage' => 'reference',
 			// Extension:Cargo
 			'cargo-pagevalues' => 'database',
+			// Extension:CiteThisPage
+			'citethispage' => 'reference',
+			// Extension:CreateRedirect
+			'createredirect' => 'articleRedirect',
 			// Extension:SemanticMediaWiki
 			'smwbrowselink' => 'database'
 		];
