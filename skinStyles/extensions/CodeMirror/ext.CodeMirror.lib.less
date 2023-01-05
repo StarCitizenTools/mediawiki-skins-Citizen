@@ -63,6 +63,26 @@
 	&-ruler {
 		border-left-color: var( --border-color-base );
 	}
+
+	&-composing {
+		border-bottom-color: var( --border-color-base );
+	}
+
+	&-selected {
+		background: var( --background-color-primary--hover );
+	}
+
+	&-focused .CodeMirror-selected {
+		background: var( --background-color-primary--active );
+	}
+
+	&-line {
+		&::selection,
+		> span::selection,
+		> span > span::selection {
+			background: var( --background-color-primary--active );
+		}
+	}
 }
 
 // Default theme
@@ -177,26 +197,6 @@
 
 		&-invalidchar {
 			color: var( --color-destructive );
-		}
-	}
-
-	&-composing {
-		border-bottom-color: var( --border-color-base );
-	}
-
-	&-selected {
-		background: var( --background-color-primary--hover );
-	}
-
-	&-focused .CodeMirror-selected {
-		background: var( --background-color-primary--active );
-	}
-
-	&-line {
-		&::selection,
-		> span::selection,
-		> span > span::selection {
-			background: var( --background-color-primary--active );
 		}
 	}
 }
