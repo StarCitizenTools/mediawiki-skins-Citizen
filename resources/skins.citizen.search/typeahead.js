@@ -12,7 +12,7 @@ const config = require( './config.json' );
 
 const activeIndex = {
 	index: -1,
-	max: config.wgCitizenMaxSearchResults + 1,
+	max: 0,
 	setMax: function ( x ) {
 		this.max = x;
 	},
@@ -39,6 +39,7 @@ const activeIndex = {
 
 let /** @type {HTMLElement | undefined} */ typeahead;
 let /** @type {HTMLElement | undefined} */ searchInput;
+let /** @type {HTMLCollection | undefined} */ typeaheadItems;
 
 /**
  * @typedef {Object} MenuItemData
@@ -49,8 +50,16 @@ let /** @type {HTMLElement | undefined} */ searchInput;
  * @property {string} thumbnail
  * @property {string} title
  * @property {string} label
- * @property {string} description
+ * @property {string} desc
  */
+
+/**
+ * Retrieve the current list of item elements to update the active index
+ */
+function updateActiveIndex() {
+	typeaheadItems = typeahead.querySelectorAll( `.${ITEM_CLASS}` );
+	activeIndex.setMax( typeaheadItems.length );
+}
 
 /**
  * Sets an 'ACTIVE_CLASS' on the element
@@ -58,8 +67,6 @@ let /** @type {HTMLElement | undefined} */ searchInput;
  * @param {HTMLElement} element
  */
 function toggleActive( element ) {
-	const typeaheadItems = typeahead.querySelectorAll( `.${ITEM_CLASS}` );
-
 	for ( let i = 0; i < typeaheadItems.length; i++ ) {
 		if ( element !== typeaheadItems[ i ] ) {
 			typeaheadItems[ i ].classList.remove( ACTIVE_CLASS );
@@ -86,18 +93,13 @@ function keyboardEvents( event ) {
 		return; // Do nothing if the event was already processed
 	}
 
-	// Is children slower?
-	const typeaheadItems = typeahead.querySelectorAll( `.${ITEM_CLASS}` );
-
 	if ( event.key === 'ArrowDown' || event.key === 'ArrowUp' ) {
 		if ( event.key === 'ArrowDown' ) {
 			activeIndex.increment( 1 );
 		} else {
 			activeIndex.increment( -1 );
 		}
-
 		toggleActive( typeaheadItems[ activeIndex.index ] );
-
 	}
 
 	if ( typeaheadItems[ activeIndex.index ] ) {
@@ -127,16 +129,16 @@ function bindMouseHoverEvent( element ) {
  * Remove all existing suggestions from typeahead
  */
 function clearSuggestions() {
-	const typeaheadItems = typeahead.children;
+	const typeaheadChildren = typeahead.children;
 
-	if ( typeaheadItems.length > 0 ) {
+	if ( typeaheadChildren.length > 0 ) {
 		// Do all the work in document fragment then replace the whole list
 		// It is more performant this way
 		const
 			fragment = new DocumentFragment(),
 			template = document.getElementById( `${PREFIX}-template` );
 
-		[ ...typeaheadItems ].forEach( ( item ) => {
+		[ ...typeaheadChildren ].forEach( ( item ) => {
 			if ( !item.classList.contains( `${ITEM_CLASS}--page` ) ) {
 				fragment.append( item );
 			}
@@ -223,7 +225,7 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 					link: suggestionLinkPrefix + encodeURIComponent( result.key ),
 					title: highlightTitle( result.title ),
 					// Just to be safe, not sure if the default API is HTML escaped
-					description: result.description
+					desc: result.desc
 				};
 				if ( result.matchedTitle ) {
 					data.label = getRedirectLabel( result.title, result.matchedTitle );
@@ -247,7 +249,7 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 					icon: 'articleNotFound',
 					type: 'placeholder',
 					title: mw.message( 'citizen-search-noresults-title', htmlSafeSearchQuery ).text(),
-					description: mw.message( 'citizen-search-noresults-desc' ).text()
+					desc: mw.message( 'citizen-search-noresults-desc' ).text()
 				}
 			);
 			placeholder.classList.remove( HIDDEN_CLASS );
@@ -276,6 +278,7 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 		clearSuggestions();
 		if ( results !== null ) {
 			renderSuggestions( results );
+			updateActiveIndex();
 		}
 	} ).catch( ( error ) => {
 		searchInput.removeEventListener( 'input', abortFetch );
@@ -326,9 +329,9 @@ function updateMenuItem( item, data ) {
 		const label = item.querySelector( `.${PREFIX}__label` );
 		label.innerHTML = data.label;
 	}
-	if ( data.description ) {
-		const description = item.querySelector( `.${PREFIX}__description` );
-		description.innerHTML = data.description;
+	if ( data.desc ) {
+		const desc = item.querySelector( `.${PREFIX}__description` );
+		desc.innerHTML = data.desc;
 	}
 }
 
@@ -388,7 +391,7 @@ function updateTypeahead( messages ) {
 				item,
 				{
 					link: itemLink,
-					description: itemDesc
+					desc: itemDesc
 				}
 			);
 			// FIXME: There is probably a more efficient way
@@ -403,7 +406,7 @@ function updateTypeahead( messages ) {
 				id: itemId,
 				type: 'tool',
 				link: itemLink,
-				description: itemDesc
+				desc: itemDesc
 			} );
 			typeahead.append( item );
 		}
@@ -437,13 +440,12 @@ function updateTypeahead( messages ) {
 			{
 				icon: 'articlesSearch',
 				title: messages.emptyTitle,
-				description: messages.emptyDesc
+				desc: messages.emptyDesc
 			}
 		);
 		placeholder.classList.remove( HIDDEN_CLASS );
+		updateActiveIndex();
 	}
-	// -1 as there is a template element
-	activeIndex.setMax( typeahead.children.length - 1 );
 }
 
 /**
@@ -499,6 +501,8 @@ function initTypeahead( searchForm, input ) {
 	searchInput.setAttribute( 'aria-autocomplete', 'list' );
 	searchInput.setAttribute( 'aria-controls', 'searchform-suggestions' );
 
+	// Init the value in case of undef error
+	updateActiveIndex();
 	// Since searchInput is focused before the event listener is set up
 	onFocus();
 	searchInput.addEventListener( 'focus', onFocus );

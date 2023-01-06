@@ -29,7 +29,8 @@ function convertDataToResults( data ) {
 			id: data[ i ].id,
 			key: data[ i ].key,
 			title: data[ i ].title,
-			description: data[ i ].description
+			/* eslint-disable-next-line es-x/no-symbol-prototype-description */
+			desc: data[ i ].description
 		};
 		// Redirect title
 		// Since 1.38

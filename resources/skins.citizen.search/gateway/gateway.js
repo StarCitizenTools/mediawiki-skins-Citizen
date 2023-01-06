@@ -2,7 +2,7 @@
  * @typedef {Object} Results
  * @property {string} id The page ID of the page
  * @property {string} title The title of the page.
- * @property {string} description The description of the page.
+ * @property {string} desc The description of the page.
  * @property {string} thumbnail The url of the thumbnail of the page.
  *
  * @global

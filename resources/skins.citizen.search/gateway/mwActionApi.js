@@ -70,10 +70,12 @@ function convertDataToResults( data ) {
 	const getDescription = ( item ) => {
 		switch ( descriptionSource ) {
 			case 'wikidata':
+				/* eslint-disable-next-line es-x/no-symbol-prototype-description */
 				return item.description || '';
 			case 'textextracts':
 				return item.extract || '';
 			case 'pagedescription':
+				/* eslint-disable-next-line es-x/no-symbol-prototype-description */
 				return item.pageprops.description.slice( 0, 60 ) + '...' || '';
 		}
 	};
@@ -96,7 +98,7 @@ function convertDataToResults( data ) {
 			id: data[ i ].pageid,
 			key: data[ i ].title,
 			title: getDisplayTitle( data[ i ] ),
-			description: getDescription( data[ i ] )
+			desc: getDescription( data[ i ] )
 		};
 		if ( data[ i ].thumbnail && data[ i ].thumbnail.source ) {
 			results[ i ].thumbnail = data[ i ].thumbnail.source;
