@@ -479,7 +479,7 @@
 			"+oojs-ui-widgets": "skinStyles/ooui/oojs-ui-widgets.less",
 			"+oojs-ui-windows": "skinStyles/ooui/oojs-ui-windows.less",
 			"+jquery.ui": "skinStyles/jquery.ui/smoothness/jquery.ui.theme.less",
-			"+@wikimedia/codex": "skinStyles/codex/codex-styles.less"
+			"+@wikimedia/codex": "skinStyles/codex/codex.styles.less"
 		}
 	},
 	"config_prefix": "wgCitizen",
