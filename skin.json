@@ -411,6 +411,8 @@
 			"+ext.translate.statsbar": "skinStyles/extensions/Translate/ext.translate.statsbar.less",
 			"+ext.translate.statstable": "skinStyles/extensions/Translate/ext.translate.statstable.less",
 			"+ext.translate.tag.languages": "skinStyles/extensions/Translate/ext.translate.tag.languages.less",
+			"+ext.TwoColConflict.SplitJs": "skinStyles/extensions/TwoColConflict/ext.TwoColConflict.SplitJs.less",
+			"+ext.TwoColConflict.SplitCss": "skinStyles/extensions/TwoColConflict/ext.TwoColConflict.SplitCss.less",
 			"+ext.uls.common": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.common.less",
 			"+ext.uls.compactlinks": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.compactlinks.less",
 			"+ext.uls.displaysettings": "skinStyles/extensions/UniversalLanguageSelector/ext.uls.displaysettings.less",

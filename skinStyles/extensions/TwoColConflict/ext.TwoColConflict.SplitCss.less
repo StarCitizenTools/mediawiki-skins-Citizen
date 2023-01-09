@@ -1,0 +1,155 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:TwoColConflict
+ * Module: ext.TwoColConflict.SplitCss
+ * Version: REL1_39 5a2a947
+ *
+ * Date: 2023-01-09
+*/
+
+/* ext.TwoColConflict.Split.less */
+.mw-twocolconflict-special-your-version-header,
+.mw-twocolconflict-split-current-version-header,
+.mw-twocolconflict-split-your-version-header {
+	.mw-twocolconflict-revision-label {
+		padding: 0 5px;
+		font-weight: var( --font-weight-semibold );
+	}
+}
+
+.mw-twocolconflict-split-current-version-header .mw-twocolconflict-revision-label {
+	background-color: var( --background-color-warning );
+}
+
+.mw-twocolconflict-special-your-version-header .mw-twocolconflict-revision-label,
+.mw-twocolconflict-split-your-version-header .mw-twocolconflict-revision-label {
+	background-color: var( --background-color-primary--hover );
+}
+
+.mw-twocolconflict-split-row {
+	&.mw-twocolconflict-no-selection {
+		border-color: transparent;
+		background-color: var( --background-color-destructive );
+	}
+}
+
+.mw-twocolconflict-single-column,
+.mw-twocolconflict-split-column {
+	background-color: var( --color-surface-0 );
+	color: var( --color-base--emphasized );
+
+	&.mw-twocolconflict-split-add {
+		border-color: var( --background-color-primary--hover );
+	}
+
+	&.mw-twocolconflict-split-delete {
+		border-color: var( --background-color-warning );
+	}
+
+	&.mw-twocolconflict-split-copy {
+		border-color: var( --color-surface-2 );
+		background-color: var( --color-surface-2 );
+	}
+
+	ins.mw-twocolconflict-diffchange {
+		background-color: var( --background-color-primary--hover );
+	}
+
+	del.mw-twocolconflict-diffchange {
+		background-color: var( --background-color-warning );
+	}
+
+	&.mw-twocolconflict-split-unselected {
+		color: var( --color-base--subtle );
+
+		&.mw-twocolconflict-split-add {
+			border-color: var( --background-color-primary--hover );
+		}
+
+		&.mw-twocolconflict-split-delete {
+			border-color: var( --background-color-warning );
+		}
+
+		ins.mw-twocolconflict-diffchange {
+			background-color: var( --background-color-primary--hover );
+		}
+
+		del.mw-twocolconflict-diffchange {
+			background-color: var( --background-color-warning );
+		}
+	}
+
+	.mw-twocolconflict-split-collapsed {
+		.mw-twocolconflict-split-fade {
+			background-image: linear-gradient( transparent, var( --color-surface-2 ) );
+		}
+	}
+}
+
+.mw-twocolconflict-split-selector-label {
+	.mw-twocolconflict-no-selection & {
+		color: var( --color-destructive );
+	}
+}
+
+.mw-twocolconflict-split-selection {
+	.mw-twocolconflict-split-row.mw-twocolconflict-no-selection & > div {
+		.oo-ui-radioInputWidget [ type='radio' ] + span {
+			border-color: var( --color-destructive );
+		}
+	}
+
+	> div:nth-child( 1 ) {
+		.oo-ui-radioInputWidget.oo-ui-widget-enabled [ type='radio' ]:checked + span,
+		.oo-ui-radioInputWidget.oo-ui-widget-enabled [ type='radio' ]:active + span,
+		.oo-ui-radioInputWidget [ type='radio' ] + span {
+			border-color: var( --color-warning );
+			background: var( --background-color-warning );
+		}
+	}
+
+	> div:nth-child( 2 ) {
+		.oo-ui-radioInputWidget.oo-ui-widget-enabled [ type='radio' ]:checked + span,
+		.oo-ui-radioInputWidget.oo-ui-widget-enabled [ type='radio' ]:active + span,
+		.oo-ui-radioInputWidget [ type='radio' ] + span {
+			border-color: var( --color-primary );
+			background: var( --background-color-primary--hover );
+		}
+	}
+}
+
+.mw-twocolconflict-copy-notice {
+	p {
+		font-size: 0.875em;
+	}
+}
+
+/* ext.TwoColConflict.Talk.styles.less */
+.mw-twocolconflict-single-row {
+	margin: 16px 0;
+
+	&:first-of-type {
+		margin: 32px 0 16px 0;
+	}
+
+	&:last-of-type {
+		margin: 16px 0 32px 0;
+	}
+}
+
+.mw-twocolconflict-conflicting-talk-row {
+	.mw-twocolconflict-conflicting-talk-label {
+		span {
+			font-weight: var( --font-weight-semibold );
+
+			.mw-twocolconflict-split-delete {
+				background-color: var( --background-color-warning );
+			}
+
+			.mw-twocolconflict-split-add {
+				background-color: var( --background-color-primary--hover );
+			}
+		}
+	}
+}
