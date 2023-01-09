@@ -75,8 +75,13 @@ function convertDataToResults( data ) {
 			case 'textextracts':
 				return item.extract || '';
 			case 'pagedescription':
-				/* eslint-disable-next-line es-x/no-symbol-prototype-description */
-				return item.pageprops.description.slice( 0, 60 ) + '...' || '';
+				/* eslint-disable es-x/no-symbol-prototype-description */
+				if ( item.pageprops && item.pageprops.description ) {
+					return item.pageprops.description.slice( 0, 60 ) + '...';
+					/* eslint-enable es-x/no-symbol-prototype-description */
+				} else {
+					return '';
+				}
 		}
 	};
 
