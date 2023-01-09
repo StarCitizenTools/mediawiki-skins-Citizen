@@ -1,19 +1,127 @@
 /*
- * Citizen - Upload Wizard
- * https://starcitizen.tools
- */
+ * Citizen
+ *
+ * SkinStyles for Extension:UploadWizard
+ * Module: ext.uploadWizard
+ * Version: REL1_39 9cd7a02
+ *
+ * Date: 2023-01-08
+*/
 
-/*
- * resources/uploadWizard.css
- */
-#upload-wizard {
-	min-width: auto;
-	max-width: none; // handled by .mw-body-content
+@import '../../../resources/variables.less';
+@import '../../../resources/mixins.less';
+
+// Disable sticky header
+#citizen-body-header-sticky-sentinel {
+	display: none;
 }
 
-#mwe-upwiz-tutorial img {
-	max-width: 100%; // don't exceed container
-	height: auto;
+/* uw.CopyMetadataWidget.less */
+.mwe-upwiz-copyMetadataWidget {
+	border-top-color: var( --border-color-base );
+	border-bottom-color: var( --border-color-base );
+
+	@media ( max-width: @width-breakpoint-tablet ) {
+		padding-left: 0;
+	}
+}
+
+/* uw.ui.Thanks.less */
+#mwe-upwiz-stepdiv-thanks {
+	.mwe-upwiz-thanks-update-delay {
+		font-weight: var( --font-weight-semibold );
+	}
+
+	.mwe-upwiz-mv-cta-confirmation {
+		color: var( --color-success );
+	}
+}
+
+/* uw.ui.Metadata.less */
+h3.mwe-upwiz-metadata-title {
+	font-size: var( --font-size-h3 );
+}
+
+.mwe-upwiz-metadata-booklet.oo-ui-bookletLayout {
+	> .oo-ui-menuLayout-menu {
+		.mwe-upwiz-metadata-page--error {
+			border-color: transparent;
+			background-color: var( --background-color-destructive );
+		}
+	}
+
+	> .oo-ui-menuLayout-content {
+		.wbmi-statements-widget {
+			border-bottom-color: var( --border-color-base );
+		}
+	}
+}
+
+/* uploadWizard.less */
+#upload-wizard {
+	/* Remove hardcoded width */
+	min-width: auto;
+	max-width: none;
+	margin-top: 0;
+}
+
+#mwe-upwiz-steps {
+	display: flex;
+	overflow: hidden; // Hide arrow overflow
+	justify-content: space-evenly;
+	border-bottom: 1px solid var( --border-color-base );
+	background-color: transparent;
+	line-height: var( --line-height-sm );
+
+	&:before,
+	&:after {
+		content: none; // Pseudo elements do not play well with flex
+	}
+
+	li {
+		width: auto !important;
+		height: auto;
+		background-color: transparent;
+		color: var( --color-base--subtle );
+
+		div {
+			padding: var( --space-sm ) var( --space-md );
+		}
+
+		&.head {
+			background-color: transparent;
+			color: var( --color-primary );
+			font-weight: var( --font-weight-semibold );
+		}
+
+		&.arrow {
+			&:before,
+			&:after {
+				content: none;
+			}
+		}
+	}
+}
+
+#mwe-upwiz-tutorial {
+	overflow: auto;
+	/*
+	 * Allow content to overflow
+	 * We don't resize the campaign image because of map and readibility
+	*/
+	max-width: 100%;
+}
+
+.mwe-upwiz-add-files-0,
+#mwe-upwiz-files {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.mwe-upwiz-add-files-0 {
+	.mwe-upwiz-add-file {
+		font-size: 1rem;
+	}
 }
 
 #mwe-upwiz-files {
@@ -21,66 +129,237 @@
 	margin-left: 0;
 }
 
-.filled + .filled {
-	border-top-color: var( --border-color-base );
+.mwe-upwiz-file {
+	&.odd {
+		.mwe-upwiz-visible-file {
+			background-color: transparent;
+		}
+	}
+
+	&-status {
+		color: var( --color-base--subtle );
+	}
+
+	&:hover {
+		.mwe-upwiz-visible-file {
+			background-color: var( --background-color-quiet--hover ) !important;
+		}
+	}
 }
 
-.mwe-upwiz-file:hover .mwe-upwiz-visible-file {
-	background: var( --background-color-primary--hover ) !important;
+.mwe-upwiz-visible-file-filename {
+	padding: var( --space-md ) 0;
+
+	&-text {
+		color: var( --color-base--emphasized );
+		font-weight: var( --font-weight-semibold );
+	}
 }
 
-.mwe-upwiz-file.odd .mwe-upwiz-visible-file {
-	background: var( --color-surface-2 );
+.mwe-upwiz-add-file.oo-ui-selectFileInputWidget {
+	max-width: none; // Full width for file drop widget
+}
+
+.mwe-upwiz-patent-rights .oo-ui-panelLayout .oo-ui-panelLayout:not( :last-child ) {
+	box-shadow: 0 1em 1px -1em var( --border-color-base );
+}
+
+.mwe-upwiz-patent-rights-filelist {
+	box-shadow: 0 0 1px 0 var( --border-color-base );
+}
+
+.mwe-upwiz-patent-weapon-policy {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+}
+
+.mwe-upwiz-license-metadata {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+}
+
+#mwe-upwiz-flickr-disclaimer {
+	background-color: var( --color-surface-2 );
+	font-size: 0.875rem;
+}
+
+.mwe-upwiz-thumbnail {
+	background-color: var( --color-surface-0 );
+
+	&-link {
+		canvas,
+		img {
+			border-radius: var( --border-radius--small );
+			box-shadow: var( --box-shadow-card );
+		}
+	}
 }
 
 #mwe-upwiz-deeds-thumbnails {
+	padding-bottom: 1em; // Even out margin
+	border-bottom: 1px solid var( --border-color-base );
+	background: transparent;
+	overflow-x: auto;
+	white-space: nowrap;
+}
+
+.mwe-upwiz-deed {
+	border-radius: var( --border-radius--small );
+	margin: var( --space-xs ) 0;
 	background-color: var( --color-surface-2 );
+
+	&-option-title {
+		+ .mwe-upwiz-deed-form {
+			border-top: 1px solid var( --border-color-base );
+		}
+	}
+
+	&-form-internal {
+		padding: var( --space-sm ) var( --space-md );
+	}
+
+	&-license-group {
+		&-subhead {
+			color: var( --color-base--subtle );
+		}
+
+		&-body {
+			margin-top: var( --space-md );
+		}
+	}
+
+	.mwe-upwiz-deed-option-title {
+		.oo-ui-optionWidget {
+			display: block;
+			padding: var( --space-sm ) var( --space-md );
+			border-radius: var( --border-radius--small );
+
+			&.oo-ui-widget-enabled {
+				&:hover {
+					background-color: var( --background-color-quiet--hover );
+				}
+
+				&:active {
+					background-color: var( --background-color-quiet--active );
+				}
+			}
+		}
+	}
+
+	/* More obvious selected state */
+	&.selected {
+		.mwe-upwiz-deed-option-title {
+			.oo-ui-optionWidget.oo-ui-widget-enabled {
+				background-color: var( --background-color-primary--hover );
+			}
+		}
+	}
 }
 
-.mwe-upwiz-thumbnail-link canvas,
-.mwe-upwiz-thumbnail-link img {
-	box-shadow: var( --box-shadow-card );
+.mwe-upwiz-details-fieldname {
+	// Citizen label styles
+	color: var( --color-base--subtle );
+	font-size: 0.8125rem;
+	font-weight: var( --font-weight-normal );
+	letter-spacing: 0.05em;
 }
 
-.mwe-upwiz-singleLanguageInputWidget {
+.mwe-title {
+	font-family: var( --font-family-base );
+}
+
+.mwe-small-print {
+	color: var( --color-base--subtle );
+	font-size: 0.8125rem;
+}
+
+.mwe-upwiz-license-custom .oo-ui-textInputWidget textarea {
+	font-family: var( --font-family-monospace );
+}
+
+.mwe-readonly {
+	background-color: var( --color-surface-0 );
+}
+
+.ui-corner-top {
+	border-top-left-radius: var( --border-radius--small );
+	border-top-right-radius: var( --border-radius--small );
+}
+
+.ui-corner-bottom {
+	border-bottom-left-radius: var( --border-radius--small );
+	border-bottom-right-radius: var( --border-radius--small );
+}
+
+.ui-corner-all {
+	border-radius: var( --border-radius--small );
+}
+
+.filled + .filled {
 	border-color: var( --border-color-base );
-	background-color: var( --color-surface-2 );
 }
 
-.mwe-upwiz-copyMetadataWidget {
-	border-color: var( --border-color-base );
+.mwe-upwiz-objref-pick-image {
+	font-weight: var( --font-weight-semibold );
 }
 
-#mwe-upwiz-stepdiv-details .mwe-upwiz-data {
-	width: auto;
-	max-width: 100%;
-}
-
-/*
- * resources/jquery.arrowSteps/jquery.arrowSteps.css
- */
-.arrowSteps {
-	border-color: var( --border-color-base );
-}
-
-.arrowSteps li {
-	background-color: var( --color-surface-2 );
+.mwe-upwiz-objref-pick-image input:disabled + label {
 	color: var( --color-base--subtle );
 }
 
-#mwe-upwiz-steps li.head {
-	background-color: var( --background-color-primary--hover );
-	color: var( --color-primary );
+.mwe-upwiz-objref-notice-existing-image {
+	font-weight: var( --font-weight-semibold );
 }
 
-.arrowSteps li.arrow:after {
-	border-left-color: var( --color-surface-2 );
+@media ( max-width: @width-breakpoint-tablet ) {
+	#mwe-upwiz-stepdiv-details {
+		/* Single column in limited width */
+		.mwe-upwiz-data,
+		.mwe-upwiz-thumbnail-side {
+			width: auto;
+			float: none;
+		}
+	}
 }
 
-.arrowSteps li.arrow:before {
-	border-left-color: var( --color-surface-0 );
+/* uw.FieldLayout.less */
+.mwe-upwiz-fieldLayout {
+	.mwe-upwiz-fieldLayout-indicator {
+		color: var( --color-base--subtle );
+		font-size: 0.8125rem;
+	}
+
+	.mwe-upwiz-details-help {
+		font-size: 0.875rem;
+	}
 }
 
-#mwe-upwiz-steps li.head:after {
-	border-left-color: var( --background-color-primary--hover );
+/* uw.SingleLanguageInputWidget.less */
+.mwe-upwiz-singleLanguageInputWidget {
+	display: flex;
+	flex-wrap: wrap;
+	border-color: transparent;
+	border-radius: var( --border-radius--medium );
+	background-color: var( --color-surface-2 );
+	gap: var( --space-xs );
+
+	.mwe-upwiz-singleLanguageInputWidget-language {
+		margin-right: 0;
+	}
+
+	.mwe-upwiz-singleLanguageInputWidget-text {
+		padding-top: 0;
+	}
+}
+
+/* uw.MetadataContent.less */
+.mwe-upwiz-metadata-content {
+	.mwe-upwiz-metadata-content-caption {
+		font-family: var( --font-family-base );
+		font-weight: var( --font-weight-semibold );
+	}
+}
+
+.mwe-upwiz-metadata-pendingOverlay {
+	background-color: var( --background-color-overlay );
 }

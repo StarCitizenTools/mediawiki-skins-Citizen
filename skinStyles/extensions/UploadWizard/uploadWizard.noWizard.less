@@ -1,12 +1,21 @@
 /*
- * Citizen - Upload Wizard
- * https://starcitizen.tools
- */
+ * Citizen
+ *
+ * SkinStyles for Extension:UploadWizard
+ * Module: ext.uploadWizard.page.styles
+ * Version: REL1_39 9cd7a02
+ *
+ * Date: 2023-01-08
+*/
 
-/*
- * resources/uploadWizard.noWizard
- */
-.mwe-first-spinner {
-	min-width: auto;
-	max-width: none; // handled by .mw-body-content
+// Needed extra specificity
+.skin-citizen {
+	.mwe-first-spinner {
+		min-width: auto;
+		max-width: none;
+	}
+
+	.mw-spinner-container > div:after {
+		background: var( --color-primary );
+	}
 }
