@@ -125,3 +125,36 @@
 .fullMedia {
 	font-size: 0.875rem;
 }
+
+.mw_metadata {
+	margin: 0;
+	font-size: 0.8125rem;
+}
+
+.mw_metadata caption {
+	color: var( --color-base--emphasized );
+	font-weight: var( --font-weight-semibold );
+}
+
+.mw_metadata tr + tr {
+	border-top: 1px solid var( --border-color-base );
+}
+
+.mw_metadata td,
+.mw_metadata th {
+	padding: var( --space-xs );
+	border: 0;
+}
+
+// Citizen label styles
+.mw_metadata th {
+	background-color: transparent;
+	color: var( --color-base--subtle );
+	font-weight: var( --font-weight-normal );
+	letter-spacing: 0.05em;
+	text-align: start;
+}
+
+.mw_metadata td {
+	background-color: transparent;
+}
