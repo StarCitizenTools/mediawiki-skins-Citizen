@@ -126,11 +126,6 @@ Name | Description | Values | Default
 `$wgCitizenManifestThemeColor` | [Theme color](https://developer.mozilla.org/en-US/docs/Web/Manifest/theme_color) of the web app manifest | Hex color code | `#131a21`
 `$wgCitizenManifestBackgroundColor` | [Background color](https://developer.mozilla.org/en-US/docs/Web/Manifest/background_color) of the web app manifest | Hex color code | `#131a21`
 
-### Miscellaneous
-Name | Description | Values | Default
-:--- | :--- | :--- | :---
-`$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#11151d`
-
 ## Requirements
 * [MediaWiki](https://www.mediawiki.org) 1.39.0 or later
 * For the legacy versions, check the other release branches.
