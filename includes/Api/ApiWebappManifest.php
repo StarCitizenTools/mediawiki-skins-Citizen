@@ -83,34 +83,37 @@ class ApiWebappManifest extends ApiBase {
 			];
 
 			foreach ( $logoKeys as $logoKey ) {
+				// Avoid undefined index
+				if ( !isset( (string)$logos[$logoKey] ) {
+					continue;
+				}
+
 				$logo = (string)$logos[$logoKey];
 
-				if ( !empty( $logo ) ) {
-					$logoUrl = wfExpandUrl( $logo, PROTO_CURRENT );
-					$request = $services->getHttpRequestFactory()->create( $logoUrl, [], __METHOD__ );
-					$request->execute();
-					$logoContent = $request->getContent();
+				$logoUrl = wfExpandUrl( $logo, PROTO_CURRENT );
+				$request = $services->getHttpRequestFactory()->create( $logoUrl, [], __METHOD__ );
+				$request->execute();
+				$logoContent = $request->getContent();
 
-					if ( !empty( $logoContent ) ) {
-						$logoSize = getimagesizefromstring( $logoContent );
-					}
-					$icon = [
-						'src' => $logo
-					];
-
-					if ( isset( $logoSize ) && $logoSize !== false ) {
-						$icon['sizes'] = $logoSize[0] . 'x' . $logoSize[1];
-						$icon['type'] = $logoSize['mime'];
-					}
-
-					// Set sizes to any if it is a SVG
-					if ( substr( $logo, -3 ) === 'svg' ) {
-						$icon['sizes'] = 'any';
-						$icon['type'] = 'image/svg+xml';
-					}
-
-					$icons[] = $icon;
+				if ( !empty( $logoContent ) ) {
+					$logoSize = getimagesizefromstring( $logoContent );
 				}
+				$icon = [
+					'src' => $logo
+				];
+
+				if ( isset( $logoSize ) && $logoSize !== false ) {
+					$icon['sizes'] = $logoSize[0] . 'x' . $logoSize[1];
+					$icon['type'] = $logoSize['mime'];
+				}
+
+				// Set sizes to any if it is a SVG
+				if ( substr( $logo, -3 ) === 'svg' ) {
+					$icon['sizes'] = 'any';
+					$icon['type'] = 'image/svg+xml';
+				}
+
+				$icons[] = $icon;
 			}
 		}
 
