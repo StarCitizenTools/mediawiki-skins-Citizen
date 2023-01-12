@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.3.1...v2.3.2) (2023-01-12)
+
+
+### Features
+
+* **core:** ✨ add file metadata table styles ([8704cc2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8704cc2d91e40417f8f80de96a712d6aab27588e))
+* **core:** ✨ add toolbox icon for CreateRedirect ([aeed04b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/aeed04b86013e1870830f42fbae54737bbb7fa04))
+* **toc:** ✨ add bottom margin to sticky toc ([5023f2a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5023f2aa646cb1bf639bb0163f1f35dccd191d6f))
+* **TwoColConflict:** ✨ add TwoColConflict skinStyles ([ed36d72](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ed36d72482b9df327df5be6430a473373ff73701))
+* **UploadWizard:** ✨ update UploadWizard styles ([7bd30eb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7bd30ebecba8a88de902c9366bf44f75f1bf3a9b))
+
+
+### Bug Fixes
+
+* **Cargo:** restore table to default behavior ([df7346c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/df7346c937b4a4d80f7f91e42f0fb18269fe5356))
+* **codex:** 🐛 incorrect Codex file name ([b7996c5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b7996c5952a6a54eae8b3d2288317b599a60360c))
+* **core:** 🐛 incorrect layout when signupstart is present ([4c1ec61](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4c1ec61622294222357bdd8c079a195cca0ea268))
+* **search:** 🐛 incorrect keyboard navigation on typeahead items ([242413b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/242413bf4aa7d851bda2f8b4a4f66a9f60791cfc))
+* **search:** 🐛 more robust null check for description ([1e47e95](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1e47e95a8dd5d7169a0d0701257da78fed1a0758))
+
 ### [2.3.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.3.0...v2.3.1) (2023-01-05)
 
 
