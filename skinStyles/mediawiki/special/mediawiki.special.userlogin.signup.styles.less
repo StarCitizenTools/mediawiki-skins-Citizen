@@ -11,17 +11,30 @@
 @import '../../resources/variables.less';
 
 .mw-ui-container {
-	display: flex;
-	// Show benefits first
-	flex-direction: column-reverse;
+	display: grid;
+	gap: var( --space-md );
+	grid-template-areas: 'message'
+		'stats'
+		'form';
 
 	// No need for float clear since we are using flex
 	&:after {
 		content: none;
 	}
+
+	#signupstart {
+		grid-area: message;
+	}
+
+	#userloginForm {
+		margin-right: 0;
+		grid-area: form;
+	}
 }
 
 .mw-createacct-benefits {
+	grid-area: stats;
+
 	&-container {
 		padding-bottom: var( --space-lg );
 		border-bottom: 1px solid var( --border-color-base );
@@ -65,13 +78,10 @@
 	}
 }
 
-.mw-ui-container #userloginForm {
-	margin-right: 0;
-}
-
 @media ( min-width: @width-breakpoint-tablet ) {
 	.mw-ui-container {
-		flex-direction: row;
+		grid-template-areas: 'message message'
+			'form stats';
 	}
 
 	.mw-createacct-benefits {
@@ -81,7 +91,6 @@
 			padding-left: var( --space-xxl );
 			border-bottom: 0;
 			border-left: 1px solid var( --border-color-base );
-			margin-left: var( --space-xxl );
 
 			h2 {
 				max-width: 20rem;
