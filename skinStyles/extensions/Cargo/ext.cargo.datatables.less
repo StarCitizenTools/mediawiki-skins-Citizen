@@ -94,11 +94,6 @@ table.dataTable.cell-border tbody tr td:first-child {
 table.dataTable.stripe tbody tr.odd,
 table.dataTable.display tbody tr.odd {
 	background-color: var( --color-surface-2 );
-
-	&:hover {
-		// Added hover styles
-		background-color: var( --background-color-quiet--hover );
-	}
 }
 
 table.dataTable.stripe tbody tr.odd.selected,
@@ -106,6 +101,8 @@ table.dataTable.display tbody tr.odd.selected {
 	background-color: var( --background-color-quiet--hover );
 }
 
+table.dataTable.hover tbody tr:hover,
+table.dataTable.display tbody tr:hover,
 table.dataTable.hover tbody tr:hover.selected,
 table.dataTable.display tbody tr:hover.selected {
 	background-color: var( --background-color-quiet--hover );
