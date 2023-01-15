@@ -3,6 +3,19 @@
  * https://starcitizen.tools
 */
 
+ul.gallery {
+	padding: 0;
+	margin: var( --space-xxs ) 0;
+}
+
+// TODO: Remove when T327016 is fixed
+.mw-content-ltr ul.gallery,
+.mw-content-rtl .mw-content-ltr ul.gallery,
+.mw-content-rtl ul.gallery,
+.mw-content-ltr .mw-content-rtl ul.gallery {
+	margin: var( --space-xxs ) 0;
+}
+
 // Sync with caption styles
 div.gallerytext {
 	padding: 0;
