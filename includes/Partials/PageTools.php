@@ -61,7 +61,11 @@ final class PageTools extends Partial {
 		if ( $hasLanguages ) {
 			$data += [
 				'has-languages' => $hasLanguages,
-				'is-uls-ready' => $this->shouldShowULS( $variantsData ),
+				/*
+				 * FIXME: ULS does not trigger for some reason, disabling it for now
+				 * 'is-uls-ready' => $this->shouldShowULS( $variantsData ),
+				 */
+				'is-uls-ready' => false,
 				'html-language-count' => $this->getLanguagesCount(),
 			];
 		}
