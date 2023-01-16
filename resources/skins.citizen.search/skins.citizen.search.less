@@ -5,7 +5,7 @@
 	position: absolute;
 	overflow: auto;
 	width: 100%;
-	max-height: var( --header-card-maxheight );
+	max-height: ~'calc( var( --header-card-maxheight ) - var( --height-search-bar ) )';
 	box-sizing: border-box;
 	padding: 0.75rem 0 0 0;
 	margin: -0.75rem 0 0 0; // Reset <ol> styles
