@@ -394,12 +394,6 @@ function updateTypeahead( messages ) {
 					desc: itemDesc
 				}
 			);
-			// FIXME: There is probably a more efficient way
-			if ( hasQuery ) {
-				item.classList.remove( HIDDEN_CLASS );
-			} else {
-				item.classList.add( HIDDEN_CLASS );
-			}
 		} else {
 			item = getMenuItem( {
 				icon: data.icon,
@@ -417,7 +411,7 @@ function updateTypeahead( messages ) {
 		id: 'fulltext',
 		link: `${config.wgScriptPath}/index.php?title=Special:Search&fulltext=1&search=`,
 		icon: 'articleSearch',
-		msg: 'citizen-search-fulltext'
+		msg: hasQuery ? 'citizen-search-fulltext' : 'citizen-search-fulltext-empty'
 	} );
 
 	// MediaSearch
@@ -426,7 +420,7 @@ function updateTypeahead( messages ) {
 			id: 'mediasearch',
 			link: `${config.wgScriptPath}/index.php?title=Special:MediaSearch&type=image&search=`,
 			icon: 'imageGallery',
-			msg: 'citizen-search-mediasearch'
+			msg: hasQuery ? 'citizen-search-mediasearch' : 'citizen-search-mediasearch-empty'
 		} );
 	}
 
