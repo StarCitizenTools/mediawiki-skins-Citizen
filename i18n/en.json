@@ -27,7 +27,7 @@
 	"citizen-action-addsection": "Add topic",
 	"citizen-jumptotop": "Back to top",
 	"citizen-search-fulltext": "Search for pages containing $1",
-	"citizen-search-fulltext-empty": "Search text within pages",
+	"citizen-search-fulltext-empty": "Search for text within pages",
 	"citizen-search-mediasearch": "Search for media related to $1",
 	"citizen-search-mediasearch-empty": "Search for media",
 	"citizen-search-empty-desc": "Type to start searching",
