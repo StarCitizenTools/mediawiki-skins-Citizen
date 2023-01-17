@@ -58,7 +58,7 @@ class ApiWebappManifest extends ApiBase {
 		$resultObj->addValue( null, 'shortcuts', $this->getShortcuts() );
 
 		$main = $this->getMain();
-		$main->setCacheMaxAge( '604800' );
+		$main->setCacheMaxAge( 604800 );
 		$main->setCacheMode( 'public' );
 	}
 
