@@ -23,7 +23,6 @@
 namespace MediaWiki\Skins\Citizen\Api;
 
 use ApiBase;
-use MediaWiki\Skins\Citizen\Api\ApiFormatManifest;
 use MediaWiki\MediaWikiServices;
 use SpecialPage;
 use Title;
@@ -31,7 +30,7 @@ use Title;
 /**
  * Based on the MobileFrontend extension
  * Return the webapp manifest for this wiki
- * 
+ *
  * T282500
  * TODO: This should be merged to core
  */
