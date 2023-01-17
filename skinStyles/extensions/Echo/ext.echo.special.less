@@ -8,9 +8,37 @@
  * Date: 2021-08-11
 */
 
+// Disable sticky header since it collides with Echo sticky header
+#citizen-body-header-sticky-sentinel {
+	display: none;
+}
+
 /* mw.echo.ui.DatedSubGroupListWidget.less */
+.mw-echo-ui-subGroupListWidget {
+	&-header-row {
+		// More aligned
+		display: flex;
+		align-items: center;
+
+		&-markAllReadButton {
+			// Revert responsive font size tweak from Echo
+			// As it breaks alignment
+			font-size: revert !important;
+		}
+	}
+}
+
 .mw-echo-ui-datedSubGroupListWidget {
 	.mw-body-content &-title {
+		margin: 0;
+
+		&-primary {
+			// Align with Citizen label styles
+			color: var( --color-base--subtle );
+			font-size: 0.875rem;
+			letter-spacing: 0.05em;
+		}
+
 		&-secondary {
 			color: var( --color-base--subtle );
 		}
@@ -19,21 +47,63 @@
 
 /* mw.echo.ui.NotificationsInboxWidget.less */
 .mw-echo-ui-notificationsInboxWidget {
-	&-toolbarWrapper {
-		background: var( --color-surface-0 );
+	max-width: none;
+
+	&-sidebar {
+		padding-top: var( --space-sm ); // align with toolbarWrapper
+		padding-right: var( --space-lg );
 	}
+
+	&-main {
+		&-toolbar-top {
+			margin-bottom: 0 !important;
+
+			.mw-echo-ui-notificationsInboxWidget-row {
+				display: table-row !important;
+				// Fix misalign
+				text-align: left;
+			}
+		}
+
+		.mw-echo-ui-notificationItemWidget {
+			border-radius: var( --border-radius--small );
+		}
+	}
+
+	&-toolbarWrapper {
+		max-width: ~'calc( 100vw - var(--padding-page) * 2 )';
+		height: auto;
+		padding: var( --space-sm ) 0;
+		border-bottom: 1px solid var( --border-color-base );
+		// Mimic Citizen sticky header
+		margin: 0;
+		margin-bottom: var( --space-md );
+		backdrop-filter: saturate( 50% ) blur( 16px );
+		background: var( --background-color-overlay );
+		box-shadow: none;
+		overflow-x: auto;
+	}
+}
+
+.mw-echo-ui-notificationsInboxWidget-cell-placeholder,
+.mw-echo-ui-notificationsInboxWidget-main-toolbar-settings,
+.mw-echo-ui-notificationsInboxWidget-main-toolbar-pagination {
+	display: table-cell !important;
 }
 
 /* mw.echo.ui.PageNotificationsOptionWidget.less */
 .mw-echo-ui-pageNotificationsOptionWidget {
 	&.oo-ui-optionWidget {
+		padding: var( --space-xs ) var( --space-sm );
+		border-radius: var( --border-radius--small );
+
 		&-highlighted {
 			background-color: var( --color-surface-3 );
 			color: var( --color-base--emphasized );
 		}
 
 		&-selected {
-			background-color: var( --background-color-primary );
+			background-color: var( --background-color-primary--hover );
 			color: var( --color-primary );
 		}
 
@@ -56,7 +126,18 @@
 
 /* mw.echo.ui.CrossWikiUnreadFilterWidget.less */
 .mw-echo-ui-crossWikiUnreadFilterWidget {
+	// HACK: Make it sticky
+	position: sticky;
+	top: var( --space-sm );
+	padding: var( --space-md );
 	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--medium );
+
+	&-title {
+		color: var( --color-base--emphasized );
+		font-size: var( --font-size-h3 );
+		font-weight: var( --font-weight-semibold );
+	}
 
 	&-subtitle {
 		color: var( --color-base--subtle );
