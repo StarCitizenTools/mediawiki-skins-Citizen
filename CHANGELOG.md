@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.3.3...v2.3.4) (2023-01-17)
+
+
+### Bug Fixes
+
+* **pwa:** 🐛 parse error in manifest API ([d63025f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d63025f08436af5224dc570ad3491030b8842bbe))
+* **pwa:** 🐛 syntax error in manifest API ([e40d4e6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e40d4e65fac34a21ec3f7a71e2915e7d4ae469dc))
+
 ### [2.3.3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.3.2...v2.3.3) (2023-01-17)
 
 
