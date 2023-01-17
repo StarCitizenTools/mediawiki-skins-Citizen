@@ -17,7 +17,8 @@
 
 .mw-body-header {
 	position: sticky;
-	z-index: @z-index-page-header;
+	// So that the modal are above custom sticky headers
+	z-index: @z-index-page-header + 1;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
