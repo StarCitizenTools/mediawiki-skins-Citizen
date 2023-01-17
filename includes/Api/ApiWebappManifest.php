@@ -84,7 +84,7 @@ class ApiWebappManifest extends ApiBase {
 
 			foreach ( $logoKeys as $logoKey ) {
 				// Avoid undefined index
-				if ( !isset( (string)$logos[$logoKey] ) {
+				if ( !isset( $logos[$logoKey] ) {
 					continue;
 				}
 
