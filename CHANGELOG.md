@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.3.2...v2.3.3) (2023-01-17)
+
+
+### Features
+
+* **Echo:** ✨ tweak Special:Notifications styles ([5c22145](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5c221452959c891eab7cda043fd24cb9d2270699))
+* **search:** ✨ add search portals to empty state ([4b8e128](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4b8e128e4b0dbc8b6d507b7789e3f032ee8c8ee1))
+
+
+### Bug Fixes
+
+* **Cargo:** 🐛 incorrect hover style for datatable ([f11ad86](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f11ad86a07ad9cef7ae2fa73b9a99f8199adf540))
+* **core:** 🐛 disable ULS-enhanced language button for now ([e3bf581](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e3bf5813c8f97f00ce1cbe19a2684d5ce2d8d291))
+* **core:** 🐛 incorrect gallery margin and padding styles ([f40c0db](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f40c0db9bfdfa1978a90b630d6fe08b6ee38a43f))
+* **core:** 🐛 more defensive check for logo ([7c552fe](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7c552fe76313ab097c9c8b8c9378b96c505c7d8d))
+* **search:** 🐛 consistent empty messages ([dc01717](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/dc01717c98ad617ec2c53887b9b3d8f7ea7c8ec4))
+* **search:** 🐛 incorrect max height for search suggestions ([7416a7f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7416a7f6d13688e635e3031a4eb40d8f5b1a7ecf))
+* **VisualEditor:** 🐛 incorrect layout for header in preview dialog ([5589916](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5589916bfa3a72f9f9e75574938dfacee1ccca4f))
+
 ### [2.3.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.3.1...v2.3.2) (2023-01-12)
 
 
