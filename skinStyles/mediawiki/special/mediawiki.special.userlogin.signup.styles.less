@@ -11,12 +11,6 @@
 @import '../../resources/variables.less';
 
 .mw-ui-container {
-	display: grid;
-	gap: var( --space-md );
-	grid-template-areas: 'message'
-		'stats'
-		'form';
-
 	// No need for float clear since we are using flex
 	&:after {
 		content: none;
@@ -30,6 +24,14 @@
 		margin-right: 0;
 		grid-area: form;
 	}
+}
+
+.mw-body-content > .mw-ui-container {
+	display: grid;
+	gap: var( --space-md );
+	grid-template-areas: 'message'
+		'stats'
+		'form';
 }
 
 .mw-createacct-benefits {
@@ -79,7 +81,7 @@
 }
 
 @media ( min-width: @width-breakpoint-tablet ) {
-	.mw-ui-container {
+	.mw-body-content > .mw-ui-container {
 		grid-template-areas: 'message message'
 			'form stats';
 	}
