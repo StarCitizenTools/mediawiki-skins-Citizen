@@ -58,7 +58,7 @@ class ApiWebappManifest extends ApiBase {
 		$resultObj->addValue( null, 'shortcuts', $this->getShortcuts() );
 
 		$main = $this->getMain();
-		$main->setCacheControl( [ 's-maxage' => 86400, 'max-age' => 86400 ] );
+		$main->setCacheMaxAge( '604800' );
 		$main->setCacheMode( 'public' );
 	}
 
@@ -67,7 +67,6 @@ class ApiWebappManifest extends ApiBase {
 	 *
 	 * @param MediaWikiServices $services
 	 * @param Config $config
-	 * @param MediaWikiServices $services
 	 * @return array
 	 */
 	private function getIcons( $config, $services ) {
