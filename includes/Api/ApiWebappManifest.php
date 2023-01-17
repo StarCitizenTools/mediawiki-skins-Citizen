@@ -23,7 +23,7 @@
 namespace MediaWiki\Skins\Citizen\Api;
 
 use ApiBase;
-use ApiFormatJson;
+use MediaWiki\Skins\Citizen\Api\ApiFormatManifest;
 use MediaWiki\MediaWikiServices;
 use SpecialPage;
 use Title;
@@ -31,6 +31,9 @@ use Title;
 /**
  * Based on the MobileFrontend extension
  * Return the webapp manifest for this wiki
+ * 
+ * T282500
+ * TODO: This should be merged to core
  */
 class ApiWebappManifest extends ApiBase {
 	/**
@@ -144,9 +147,9 @@ class ApiWebappManifest extends ApiBase {
 	/**
 	 * Get the JSON printer
 	 *
-	 * @return ApiFormatJson
+	 * @return ApiFormatManifest
 	 */
 	public function getCustomPrinter() {
-		return new ApiFormatJson( $this->getMain(), 'json' );
+		return new ApiFormatManifest( $this->getMain(), 'json' );
 	}
 }
