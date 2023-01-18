@@ -146,9 +146,9 @@ class ApiWebappManifest extends ApiBase {
 	/**
 	 * Get the JSON printer
 	 *
-	 * @return ApiWebappManifestFormatJson 
+	 * @return ApiWebappManifestFormatJson
 	 */
 	public function getCustomPrinter() {
-		return new ApiWebappManifestFormatJson ( $this->getMain(), 'webmanifest' );
+		return new ApiWebappManifestFormatJson( $this->getMain(), 'webmanifest' );
 	}
 }
