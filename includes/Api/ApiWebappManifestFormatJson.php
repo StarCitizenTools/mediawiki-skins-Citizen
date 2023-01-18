@@ -28,7 +28,7 @@ use ApiFormatJson;
  * T282500
  * TODO: This should be merged to core
  */
-class ApiFormatWebmanifest extends ApiFormatJson {
+class ApiWebappManifestFormatJson extends ApiFormatJson {
 	/**
 	 * Return the proper content-type
 	 *

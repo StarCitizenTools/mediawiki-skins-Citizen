@@ -65,8 +65,8 @@ class ApiWebappManifest extends ApiBase {
 	/**
 	 * Get icons for manifest
 	 *
-	 * @param MediaWikiServices $services
 	 * @param Config $config
+	 * @param MediaWikiServices $services
 	 * @return array
 	 */
 	private function getIcons( $config, $services ) {
@@ -146,9 +146,9 @@ class ApiWebappManifest extends ApiBase {
 	/**
 	 * Get the JSON printer
 	 *
-	 * @return ApiFormatManifest
+	 * @return ApiWebappManifestFormatJson 
 	 */
 	public function getCustomPrinter() {
-		return new ApiFormatWebmanifest( $this->getMain(), 'webmanifest' );
+		return new ApiWebappManifestFormatJson ( $this->getMain(), 'webmanifest' );
 	}
 }
