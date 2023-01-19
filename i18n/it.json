@@ -21,6 +21,7 @@
 	"citizen-footer-tagline": "Modifica questo testo in [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Aggiungi argomento",
 	"citizen-jumptotop": "Torna all'inizio",
+	"citizen-search-mediasearch-empty": "Ricerca file multimediali",
 	"citizen-tagline-ns-talk": "Pagina di discussione su {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Informazioni su {{SITENAME}}",
 	"citizen-tagline-ns-file": "File su {{SITENAME}}",

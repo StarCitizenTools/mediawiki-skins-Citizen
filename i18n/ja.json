@@ -19,6 +19,8 @@
 	"citizen-action-addsection": "話題を追加",
 	"citizen-jumptotop": "トップに戻る",
 	"citizen-search-fulltext": "$1を含むページを検索",
+	"citizen-search-fulltext-empty": "ページ内のテキストを検索する",
+	"citizen-search-mediasearch-empty": "メディアを検索",
 	"citizen-search-noresults-title": "$1に関する結果はありません",
 	"citizen-search-noresults-desc": "以下のオプションを試す",
 	"prefs-citizen-theme-label": "テーマ",

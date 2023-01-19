@@ -19,6 +19,8 @@
 	"citizen-footer-tagline": "Bewerk deze tekst op [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Onderwerp toevoegen",
 	"citizen-jumptotop": "Terug naar boven",
+	"citizen-search-fulltext-empty": "Tekst zoeken op pagina's",
+	"citizen-search-mediasearch-empty": "Media zoeken",
 	"citizen-search-empty-desc": "Type om te beginnen met zoeken",
 	"citizen-tagline-ns-talk": "Overlegpagina van {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Informatie over {{SITENAME}}",

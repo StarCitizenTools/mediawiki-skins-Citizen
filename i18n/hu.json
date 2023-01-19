@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Alistair3149",
+			"Eukarióta",
 			"Hanna Tardos"
 		]
 	},
@@ -12,6 +13,8 @@
 	"citizen-page-info-lastmod": "Utolsó módosítás",
 	"citizen-action-addsection": "Új téma nyitása",
 	"citizen-jumptotop": "Vissza a tetejére",
+	"citizen-search-fulltext-empty": "Szöveg keresése az oldalak szövegében",
+	"citizen-search-mediasearch-empty": "Média keresése",
 	"prefs-citizen-theme-label": "Téma",
 	"prefs-citizen-theme-option-auto": "Automatikus",
 	"prefs-citizen-theme-option-light": "Világos",
