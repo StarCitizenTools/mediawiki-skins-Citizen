@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.3.4...v2.3.5) (2023-01-21)
+
+
+### Features
+
+* **core:** ✨ use Citizen monospace fonts for diff ([08cd314](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/08cd314432dc139bca09c03111db70a01ec73802))
+* **DiscussionTools:** ✨ update DT styles ([ca503c7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ca503c7f7b51cc368e68af06be0c92c6d6c9e1da))
+* **pwa:** ✨ use proper manifest type instead of json ([d73fa67](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d73fa67a3184aef1ffe8a4364484acc183662e7b))
+* **RevisionSilder:** ✨ add color to bar chart ([6ce8d2d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6ce8d2d1f4c6b5ecc8e2ff8f606ed1f279a95d8a))
+
+
+### Bug Fixes
+
+* **core:** 🐛 default to auto theme unless set ([a7406d8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a7406d8e3247b7a3a1a8a97b51d295e1beb4ad87))
+* **core:** 🐛 incorrect signup stats selector ([7a6dfc6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7a6dfc6645faa20a8b57e0bbec301a45c2f6b5c4))
+* **core:** 🐛 increase mw-body-header z-index ([aeb8e16](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/aeb8e160cfccfe6cc0686bbf909045770f9b1a90))
+* **core:** 🐛 stricter selector for sign up form container ([e4851f9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e4851f9de2bc2cd01f650cb55899de17fcf9d104))
+* **pwa:** 🐛 declare  before adding array ([68cb9b6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/68cb9b6c68cb63022f59c77604a34288ca04d751))
+* **pwa:** 🐛 incorrect var type ([e78ebd7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e78ebd716568dc1362542f2302ca433174a010d3))
+
 ### [2.3.4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.3.3...v2.3.4) (2023-01-17)
 
 
