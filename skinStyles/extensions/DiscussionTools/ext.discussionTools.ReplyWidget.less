@@ -3,31 +3,34 @@
  *
  * SkinStyles for Extension:DiscussionTools
  * Module: ext.discussionTools.ReplyWidget
- * Version: REL1_35 7aa0a9b
+ * Version: REL1_39 1aae2cc
  *
- * Date: 2022-05-06
+ * Date: 2023-01-21
 */
 
-@import '../../../resources/variables.less';
+.ext-discussiontools-ui-replyWidget {
+	&-modeTabs {
+		.ext-discussiontools-ui-modeTab.oo-ui-optionWidget-highlighted:not( :hover ) {
+			border-radius: var( --border-radius--small );
+			box-shadow: inset 0 0 0 2px var( --color-primary );
+			color: var( --color-primary );
+		}
 
-.dt-ui-replyWidget {
+		.ext-discussiontools-ui-modeTab.oo-ui-widget-disabled {
+			box-shadow: inset 0 0 0 2px var( --color-primary );
+			color: var( --color-primary );
+		}
+	}
+
 	&-footer {
 		color: var( --color-base--subtle );
 	}
 
 	&-preview {
-		border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
 		background: var( --color-surface-2 );
-	}
-}
 
-@media only screen and ( max-width: @width-breakpoint-tablet ) {
-	.dt-ui-replyWidget {
-		// HACK: Make the toolbar two line on mobile
-		// So that they are not overlapping
-		.ve-ui-targetToolbar > .oo-ui-toolbar-bar {
-			padding-top: 42px;
-			text-align: left;
+		&:before {
+			color: var( --color-base--subtle );
 		}
 	}
 }
