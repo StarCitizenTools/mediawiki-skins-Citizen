@@ -1,9 +1,7 @@
 /*
  * Citizen
+ *
  * Inline script used in includes/Hooks/SkinHooks.php
- *
- * https://starcitizen.tools
- *
  * Mangle using https://jscompress.com/
  */
 window.applyPref = () => {
@@ -15,7 +13,8 @@ window.applyPref = () => {
 		return window.localStorage.getItem( key );
 	};
 
-	const targetTheme = getStorage( themeKey );
+	// Default to auto if no key is present
+	const targetTheme = getStorage( themeKey ) ?? 'auto';
 
 	const apply = () => {
 		const cssProps = {
