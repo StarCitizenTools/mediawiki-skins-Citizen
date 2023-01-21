@@ -45,6 +45,16 @@
 	&-context {
 		font-size: 0.8125rem; // relative font size
 	}
+
+	&-editfont-monospace {
+		.diff {
+			&-addedline,
+			&-deletedline,
+			&-context {
+				font-family: var( --font-family-monospace );
+			}
+		}
+	}
 }
 
 .mw-diff-movedpara-left:after,
