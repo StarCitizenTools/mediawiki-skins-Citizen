@@ -135,7 +135,7 @@ final class PageTools extends Partial {
 			}
 		}
 
-		return $condition;
+		return (bool)$condition;
 	}
 
 	/**
