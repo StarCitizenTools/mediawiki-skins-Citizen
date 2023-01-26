@@ -7,6 +7,15 @@
 		role="button"
 		aria-labelledby="citizen-toc__buttonCheckbox"
 		aria-haspopup="true">
+	<label
+		id="citizen-toc__buttonCheckbox" 
+		class="mw-checkbox-hack-button" 
+		for="citizen-toc__checkbox"
+		title="{{msg-toc}}"
+		aria-hidden="true">
+		<span class="citizen-ui-icon mw-ui-icon-wikimedia-listBullet"></span>
+		<span id="mw-panel-toc-label">{{msg-toc}}</span>
+	</label>
 	<nav id="mw-panel-toc" class="citizen-toc__card mw-checkbox-hack-target" role="navigation" aria-labelledby="mw-panel-toc-label">
 		<a class="citizen-toc__top citizen-toc__link" title="{{html-citizen-jumptotop}}" href="#top">
 			<div class="citizen-toc__text">{{msg-citizen-jumptotop}}</div>
@@ -18,14 +27,5 @@
 			{{/array-sections}}
 		</ul>
 	</nav>
-	<label
-		id="citizen-toc__buttonCheckbox" 
-		class="mw-checkbox-hack-button" 
-		for="citizen-toc__checkbox"
-		title="{{msg-toc}}"
-		aria-hidden="true">
-		<span class="citizen-ui-icon mw-ui-icon-wikimedia-listBullet"></span>
-		<span id="mw-panel-toc-label">{{msg-toc}}</span>
-	</label>
 </div>
 {{/data-toc}}

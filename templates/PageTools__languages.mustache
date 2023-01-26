@@ -11,10 +11,6 @@
 		role="button"
 		aria-labelledby="citizen-languages__buttonCheckbox"
 		aria-haspopup="true">
-	<aside id="citizen-languages__card" class="page-actions__card mw-checkbox-hack-target">
-		{{#data-portlets.data-languages}}{{>Menu}}{{/data-portlets.data-languages}}
-		{{#data-portlets.data-variants}}{{>Menu}}{{/data-portlets.data-variants}}
-	</aside>
 	<label
 		id="citizen-languages__buttonCheckbox" 
 		class="mw-checkbox-hack-button page-actions__button" 
@@ -25,4 +21,8 @@
 		<span class="citizen-ui-icon mw-ui-icon-wikimedia-textLanguage"></span>
 		<span>{{msg-citizen-languages-toggle}}</span>
 	</label>
+	<aside id="citizen-languages__card" class="page-actions__card mw-checkbox-hack-target">
+		{{#data-portlets.data-languages}}{{>Menu}}{{/data-portlets.data-languages}}
+		{{#data-portlets.data-variants}}{{>Menu}}{{/data-portlets.data-variants}}
+	</aside>
 </div>

@@ -14,6 +14,7 @@
 		role="button"
 		aria-labelledby="citizen-search__buttonCheckbox"
 		aria-haspopup="true">
+	{{>Search__button}}
 	<div role="search" class="citizen-search-box citizen-search__card mw-checkbox-hack-target">
 		<span class="citizen-search__icon citizen-ui-icon mw-ui-icon-wikimedia-search"></span>
 		<form action="{{form-action}}" id="searchform" autocomplete="off">
@@ -29,5 +30,4 @@
 			<span class="screen-reader-text">{{msg-random}}</span>
 		</a>
 	</div>
-	{{>Search__button}}
 </div>

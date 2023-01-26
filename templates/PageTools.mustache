@@ -20,12 +20,6 @@
 			role="button"
 			aria-labelledby="page-actions-more__buttonCheckbox"
 			aria-haspopup="true">
-		<aside id="page-actions-more__card" class="page-actions__card mw-checkbox-hack-target">
-			{{#pagetools-visible}}
-				{{#data-portlets.data-actions}}{{>Menu}}{{/data-portlets.data-actions}}
-			{{/pagetools-visible}}
-			{{#data-article-tools}}{{>Menu}}{{/data-article-tools}}
-		</aside>
 		<label
 			id="page-actions-more__buttonCheckbox" 
 			class="mw-checkbox-hack-button page-actions__button page-actions__button--icon" 
@@ -35,6 +29,12 @@
 			<span class="citizen-ui-icon mw-ui-icon-wikimedia-ellipsis"></span>
 			<span>{{msg-citizen-actions-more-toggle}}</span>
 		</label>
+		<aside id="page-actions-more__card" class="page-actions__card mw-checkbox-hack-target">
+			{{#pagetools-visible}}
+				{{#data-portlets.data-actions}}{{>Menu}}{{/data-portlets.data-actions}}
+			{{/pagetools-visible}}
+			{{#data-article-tools}}{{>Menu}}{{/data-article-tools}}
+		</aside>
 	</div>
 	{{/pagetools-overflow}}
 </div>

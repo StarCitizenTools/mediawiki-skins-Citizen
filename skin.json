@@ -124,7 +124,7 @@
 					"name": "resources/skins.citizen.scripts/config.json",
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenResourceLoaderConfig"
 				},
-				"resources/skins.citizen.scripts/checkboxHack.js",
+				"resources/skins.citizen.scripts/checkbox.js",
 				"resources/skins.citizen.scripts/scrollObserver.js",
 				"resources/skins.citizen.scripts/sectionObserver.js",
 				"resources/skins.citizen.scripts/search.js",
@@ -132,7 +132,8 @@
 				"resources/skins.citizen.scripts/tableOfContents.js"
 			],
 			"dependencies": [
-				"mediawiki.util"
+				"mediawiki.util",
+				"mediawiki.page.ready"
 			],
 			"targets": [
 				"desktop",
