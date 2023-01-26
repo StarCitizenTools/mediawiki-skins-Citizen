@@ -5,7 +5,7 @@
 			"U.ayaao.p"
 		]
 	},
-	"citizen-skin-desc": "Star Citizen Wiki үшін әзірленген адаптивты скин",
+	"citizen-skin-desc": "Кеңейтімдерді біріктірілген тәжірибенің бір бөлігіне айналдыратын әдемі, қолдануға болатын, адаптивты MediaWiki скин. Бастапқыда [https://starcitizen.tools/ Star Citizen Wiki] үшін әзірленген.",
 	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|Талқылау]]",
 	"citizen.css": "/* Мұндағы барлық CSS Citizen мұқабасы бар қатысушыларға жүктеледі */",
 	"citizen.js": "/* Мұндағы барлық JavaScript Citizen мұқабасы бар қатысушыларға жүктеледі */",
@@ -25,8 +25,13 @@
 	"citizen-footer-tagline": "Осы мәтінді [[MediaWiki:Citizen-footer-tagline]] деген бетте өңдеңіз",
 	"citizen-action-addsection": "Тақырып қосу",
 	"citizen-jumptotop": "Жоғары қайту",
-	"citizen-search-fulltext": "Осы сөз(дер) бар беттерді іздеу",
+	"citizen-search-fulltext": "\"$1\" бар беттерді іздеу",
+	"citizen-search-fulltext-empty": "Бет ішіндегі мәтінді іздеу",
+	"citizen-search-mediasearch": "\"$1\" дегенге қатысты медиа іздеу",
+	"citizen-search-mediasearch-empty": "Медиа іздеу",
 	"citizen-search-empty-desc": "Іздей бастау үшін теріңіз",
+	"citizen-search-noresults-title": "Ойбай! \"$1\" дегенге еш нәтиже таппадық",
+	"citizen-search-noresults-desc": "Мына нұсқаларды қарап көрерсіз?",
 	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}} дегеннің талқылау беті",
 	"citizen-tagline-ns-project": "{{SITENAME}} туралы мәлімет",
 	"citizen-tagline-ns-file": "{{SITENAME}} жобасындағы файл",
