@@ -3,17 +3,17 @@
 	object data-page-variants
 	bool is-uls-ready
 }}
-<div class="citizen-languages page-actions__item mw-checkbox-hack-container">
+<div class="citizen-languages page-actions__item citizen-menu-checkbox-container">
 	<input 
 		type="checkbox" 
 		id="citizen-languages__checkbox" 
-		class="mw-checkbox-hack-checkbox {{#is-uls-ready}}mw-interlanguage-selector{{/is-uls-ready}}"
+		class="citizen-menu-checkbox-checkbox {{#is-uls-ready}}mw-interlanguage-selector{{/is-uls-ready}}"
 		role="button"
 		aria-labelledby="citizen-languages__buttonCheckbox"
 		aria-haspopup="true">
 	<label
 		id="citizen-languages__buttonCheckbox" 
-		class="mw-checkbox-hack-button page-actions__button" 
+		class="citizen-menu-checkbox-button page-actions__button" 
 		for="citizen-languages__checkbox"
 		title="{{msg-citizen-languages-toggle}}"
 		aria-hidden="true"
@@ -21,7 +21,7 @@
 		<span class="citizen-ui-icon mw-ui-icon-wikimedia-textLanguage"></span>
 		<span>{{msg-citizen-languages-toggle}}</span>
 	</label>
-	<aside id="citizen-languages__card" class="page-actions__card mw-checkbox-hack-target">
+	<aside id="citizen-languages__card" class="page-actions__card citizen-menu-checkbox-target">
 		{{#data-portlets.data-languages}}{{>Menu}}{{/data-portlets.data-languages}}
 		{{#data-portlets.data-variants}}{{>Menu}}{{/data-portlets.data-variants}}
 	</aside>

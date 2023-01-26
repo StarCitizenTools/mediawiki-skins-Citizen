@@ -6,16 +6,16 @@
 	string html-random-href URL of Special:Random
 	string msg-randompage tooltip message for random page button
 }}
-<div class="citizen-search citizen-header__item mw-checkbox-hack-container">
+<div class="citizen-search citizen-header__item citizen-menu-checkbox-container">
 	<input
 		type="checkbox" 
 		id="citizen-search__checkbox" 
-		class="mw-checkbox-hack-checkbox"
+		class="citizen-menu-checkbox-checkbox"
 		role="button"
 		aria-labelledby="citizen-search__buttonCheckbox"
 		aria-haspopup="true">
 	{{>Search__button}}
-	<div role="search" class="citizen-search-box citizen-search__card mw-checkbox-hack-target">
+	<div role="search" class="citizen-search-box citizen-search__card citizen-menu-checkbox-target">
 		<span class="citizen-search__icon citizen-ui-icon mw-ui-icon-wikimedia-search"></span>
 		<form action="{{form-action}}" id="searchform" autocomplete="off">
 			<input type="hidden" name="title" value="{{page-title}}">

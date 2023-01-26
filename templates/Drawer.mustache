@@ -2,17 +2,17 @@
 	string msg-citizen-drawer-toggle The label used by the drawer button.
 	string msg-sitetitle the contents of the sitesubtitle message key
 }}
-<div class="citizen-drawer citizen-header__item mw-checkbox-hack-container">
+<div class="citizen-drawer citizen-header__item citizen-menu-checkbox-container">
 	<input 
 		type="checkbox" 
 		id="citizen-drawer__checkbox" 
-		class="mw-checkbox-hack-checkbox"
+		class="citizen-menu-checkbox-checkbox"
 		role="button"
 		aria-labelledby="citizen-drawer__buttonCheckbox"
 		aria-haspopup="true">
 	{{>Drawer__button}}
 	{{! ID needed for a11y and checkbox hack }}
-	<aside id="citizen-drawer__card" class="citizen-drawer__card mw-checkbox-hack-target">
+	<aside id="citizen-drawer__card" class="citizen-drawer__card citizen-menu-checkbox-target">
 		<header class="citizen-drawer__header">
 			{{>Drawer__logo}}
 			<div class="citizen-drawer__siteinfo">

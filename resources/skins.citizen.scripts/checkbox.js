@@ -6,10 +6,10 @@
 
 const
 	checkboxHack = require( 'mediawiki.page.ready' ).checkboxHack,
-	CHECKBOX_HACK_CONTAINER_SELECTOR = '.mw-checkbox-hack-container',
-	CHECKBOX_HACK_CHECKBOX_SELECTOR = '.mw-checkbox-hack-checkbox',
-	CHECKBOX_HACK_BUTTON_SELECTOR = '.mw-checkbox-hack-button',
-	CHECKBOX_HACK_TARGET_SELECTOR = '.mw-checkbox-hack-target';
+	CHECKBOX_HACK_CONTAINER_SELECTOR = '.citizen-menu-checkbox-container',
+	CHECKBOX_HACK_CHECKBOX_SELECTOR = '.citizen-menu-checkbox-checkbox',
+	CHECKBOX_HACK_BUTTON_SELECTOR = '.citizen-menu-checkbox-button',
+	CHECKBOX_HACK_TARGET_SELECTOR = '.citizen-menu-checkbox-target';
 
 /**
  * Set the checked state and fire the 'input' event.

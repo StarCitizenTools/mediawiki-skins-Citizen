@@ -34,7 +34,7 @@
 /**
  * Invisible checkbox covering the menu button.
  */
-.mw-checkbox-hack {
+.citizen-menu-checkbox {
 	// Has to be visible to be focusable
 	&-checkbox {
 		position: absolute;
@@ -50,7 +50,7 @@
 		// HACK: Fake focus styles
 		&:focus {
 			& + .citizen-header__button,
-			& + .mw-checkbox-hack-button {
+			& + .citizen-menu-checkbox-button {
 				outline: 2px solid var( --color-primary );
 				outline-offset: 1px;
 			}
