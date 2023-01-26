@@ -31,6 +31,42 @@
 	}
 }
 
+/**
+ * Invisible checkbox covering the menu button.
+ */
+.mw-checkbox-hack {
+	// Has to be visible to be focusable
+	&-checkbox {
+		position: absolute;
+		z-index: 1;
+		top: 0;
+		left: 0;
+		width: 0;
+		height: 0;
+		padding: 0;
+		margin: 0;
+		opacity: 0;
+
+		// HACK: Fake focus styles
+		&:focus {
+			& + .citizen-header__button,
+			& + .mw-checkbox-hack-button {
+				outline: 2px solid var( --color-primary );
+				outline-offset: 1px;
+			}
+		}
+	}
+
+	&-button {
+		cursor: pointer;
+
+		// Icons have to use span inside label elements
+		> span:not( .citizen-ui-icon ) {
+			.mixin-screen-reader-text;
+		}
+	}
+}
+
 .mw-portlet {
 	// Hide selected item
 	.selected {

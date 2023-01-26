@@ -20,6 +20,12 @@ body {
 	outline-color: var( --color-primary );
 }
 
+// For some reason just overriding the outline-color is not enough
+:focus-visible {
+	outline: 2px solid var( --color-primary );
+	outline-offset: 1px;
+}
+
 input,
 select,
 textarea {
@@ -89,10 +95,6 @@ td {
 
 video {
 	max-width: 100%; // Prevent overflow
-}
-
-:focus-visible {
-	outline: 1px solid var( --color-primary );
 }
 
 .skin-citizen-dark {
