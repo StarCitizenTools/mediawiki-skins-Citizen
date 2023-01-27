@@ -19,12 +19,6 @@
 	font-size: 0.875rem;
 }
 
-// Align z-index stack with Citizen and Codex
-// T285592
-.oo-ui-windowManager-modal > .oo-ui-dialog {
-	z-index: @z-index-overlay;
-}
-
 .oo-ui-messageDialog-content > .oo-ui-window-foot {
 	outline: 1px solid var( --border-color-base );
 }
@@ -129,6 +123,9 @@
 }
 
 .oo-ui-windowManager-modal > .oo-ui-dialog {
+	// Align z-index stack with Citizen and Codex
+	// T285592
+	z-index: @z-index-overlay;
 	background-color: var( --background-color-overlay--lighter );
 }
 
