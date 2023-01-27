@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.3.5...v2.3.6) (2023-01-27)
+
+
+### Features
+
+* **core:** ✨ remove plainlist styles ([5ebd7ad](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5ebd7ad0255e05eaaa76aae9612b6b954de333ce))
+* **core:** ✨ use MW core checkboxHack instead ([ef955c2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ef955c28a0a5644a2f95c66eeb18ce0ddf1ab3bb))
+
+
+### Bug Fixes
+
+* **core:** 🐛 checkboxHack buttons should be focusable ([afcf37d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/afcf37d529513fd24acfcd992493a4fb5a0bb80f))
+* **OOUI:** 🐛 standardize OOUI window z-index ([a3ed766](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a3ed7666e227a7e03d71632ae92b71739d7ec0a8))
+* **search:** 🐛 overlay should not cover search box ([7639110](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7639110326c2f381f8f9c656b3e77a4907620e17))
+
 ### [2.3.5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.3.4...v2.3.5) (2023-01-21)
 
 
