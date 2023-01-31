@@ -25,9 +25,6 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Partials;
 
-use Html;
-use MediaWiki\MediaWikiServices;
-
 /**
  * Title partial of Skin Citizen
  */
