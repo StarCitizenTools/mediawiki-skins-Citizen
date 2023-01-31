@@ -32,67 +32,20 @@ use MediaWiki\MediaWikiServices;
  * Title partial of Skin Citizen
  */
 final class Title extends Partial {
-
-	/**
-	 * Build the HTML for html-title-heading
-	 * Backported from 1.39 to 1.35
-	 * TODO: Deprecate this when we move to 1.39 and T306440 is resolved
-	 *
-	 * @param array $parentData
-	 * @param Title $title
-	 * @return string html
-	 */
-	public function buildTitle( $parentData, $title ) {
-		// @since 1.38
-		$blankedHeading = $parentData['is-title-blank'] ?? false;
-		$htmlTitle = $parentData['html-title'];
-
-		$data = Html::rawElement(
-			 'h1',
-			 [
-				 'id' => 'firstHeading',
-				 'class' => 'firstHeading mw-first-heading',
-				 'style' => $blankedHeading ? 'display: none' : null
-			 ] + $this->getUserLanguageAttributes(),
-			 $this->decorateTitle( $htmlTitle )
-		 );
-
-		return $data;
-	}
-
 	/**
 	 * Wrap text within parenthesis with a span tag
 	 *
-	 * @param string $html title of the page
-	 * @return string html
+	 * @param string $data title of the page
+	 * @return string
 	 */
-	private function decorateTitle( $html ) {
-		$pattern = '/(\(.+\))/';
-		$replacement = '<span class="firstHeading-parenthesis">$1</span>';
-		$$html = preg_replace( $pattern, $replacement, $html );
-
-		return $html;
-	}
-
-	/**
-	 * From core because it is private
-	 *
-	 * @return array
-	 */
-	private function getUserLanguageAttributes() {
-		$userLang = $this->skin->getLanguage();
-		$userLangCode = $userLang->getHtmlCode();
-		$userLangDir = $userLang->getDir();
-		$contLang = MediaWikiServices::getInstance()->getContentLanguage();
-		if (
-			$userLangCode !== $contLang->getHtmlCode() ||
-			$userLangDir !== $contLang->getDir()
-		) {
-			return [
-			'lang' => $userLangCode,
-			'dir' => $userLangDir,
-			];
+	public function decorateTitle( $data ) {
+		// Sometimes it can be empty
+		if ( empty( $data ) ) {
+			return $data;
 		}
-		return [];
+
+		$pattern = '/(\(.+\))/';
+		$replacement = '<span class="mw-page-title-parenthesis">$1</span>';
+		return preg_replace( $pattern, $replacement, $data );
 	}
 }

@@ -92,7 +92,7 @@ class SkinCitizen extends SkinMustache {
 			'data-sitestats' => $drawer->getSiteStatsData(),
 			'data-user-info' => $header->getUserInfoData( $parentData['data-portlets']['data-user-page'] ),
 			// HTML strings
-			'html-title-heading--formatted' => $pageTitle->buildTitle( $parentData, $title ),
+			'html-title-heading--formatted' => $pageTitle->decorateTitle( $parentData['html-title-heading'] ),
 			'html-citizen-jumptotop' => $parentData['msg-citizen-jumptotop'] . ' [home]',
 			'html-body-content--formatted' => $bodycontent->buildBodyContent(),
 			'html-tagline' => $tagline->getTagline(),
