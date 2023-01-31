@@ -33,10 +33,23 @@
 
 	// Need additional parent to override
 	.mw-changeslist-legend {
-		z-index: @z-index-page-header + 1; // so that it won't be covered by sticky header
-		border-color: var( --border-color-base );
+		padding: 0.6em; // Sync with rcfilter
+		border-color: transparent;
 		border-radius: var( --border-radius--small );
-		background-color: var( --color-surface-1 );
+		background-color: var( --color-surface-2 );
+		font-size: 0.8125rem;
+
+		// Citizen label styles
+		strong {
+			color: var( --color-base--subtle );
+			font-weight: var( --font-weight-normal );
+			letter-spacing: 0.05em;
+		}
+
+		@media ( max-width: @width-breakpoint-tablet ) {
+			margin: 0;
+			float: none;
+		}
 	}
 
 	.mw-tag-markers {
@@ -53,7 +66,6 @@
 		font-size: 0.8125rem;
 		font-weight: var( --font-weight-normal );
 		letter-spacing: 0.05em;
-		.citizen-sticky-header( 0, false, false );
 	}
 
 	&-line {
@@ -81,7 +93,17 @@
 	border-color: var( --border-color-base );
 }
 
-// Disable sticky header
-#citizen-body-header-sticky-sentinel {
-	display: none;
+/*
+ * Only apply stick header style on the special pages
+ * Sometimes wiki transclude those pages and these styles will break regular pages
+ */
+.ns-special {
+	.mw-changeslist h4 {
+		.citizen-sticky-header( 0, false, false );
+	}
+
+	// Disable sticky header
+	#citizen-body-header-sticky-sentinel {
+		display: none;
+	}
 }
