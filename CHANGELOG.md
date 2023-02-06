@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.3.6...v2.4.0) (2023-02-06)
+
+
+### Features
+
+* **RelatedArticles:** ✨ tweak RA card color ([8659eab](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8659eab29608a778bc99020be5b31d09799d192d))
+* **VisualEditor:** ✨ update VisualEditor styles ([1d10b66](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1d10b669a66a5a97b32ddfe14a9c408cdf105794))
+
+
+### Bug Fixes
+
+* **core:** 🐛 incorrect sticky header rendering on changelist ([78f79e8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/78f79e8529bbd10525aec9da9590877c90e63063)), closes [#575](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/575)
+* **RelatedArtcles:** 🐛 add min-height so that RA cards will render ([5bf0147](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5bf0147499872d7676ac69223bba72dad06b2d35))
+
 ### [2.3.6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.3.5...v2.3.6) (2023-01-27)
 
 
