@@ -1,0 +1,82 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:VisualEditor
+ * Module: ext.visualEditor.mwcore
+ * Version: REL1_39 65d89c9
+ *
+ * Date: 2023-02-06
+*/
+
+/* ve.ce.MWEntityNode.css */
+.ve-ce-mwEntityNode-nbsp {
+	background-color: var( --color-base--subtle );
+}
+
+/* ve.ce.MWIncludesNode.css */
+.ve-ce-mwIncludesNode {
+	font-family: var( --font-family-monospace );
+}
+
+/* ve.ce.MWAnnotationNode.css */
+.ve-ce-mwAnnotationNode {
+	font-family: var( --font-family-monospace );
+}
+
+/* ve.ui.MWPreDialog.css */
+.ve-ui-mwPreDialog .oo-ui-textInputWidget {
+	font-family: var( --font-family-monospace );
+}
+
+/* ve.ui.MWLiveExtensionInspector.css */
+.ve-ui-mwLiveExtensionInspector-error {
+	color: var( --color-destructive );
+}
+
+/* ve.ui.MWExpandableContentElement.css */
+.ve-ui-expandableContent-toggle {
+	background-color: var( --color-surface-1 );
+}
+
+.ve-ui-expandableContent-fade {
+	background: linear-gradient( to right, rgba( 255, 255, 255, 0 ) 0, var( --color-surface-1 ) 90% );
+}
+
+/* ve.ui.MWExpandableErrorElement.css */
+.ve-ui-mwExpandableErrorElement-label {
+	color: var( --color-destructive );
+}
+
+/* ve.ui.MWPopupTool.css */
+.ve-ui-mwPopupTool .oo-ui-popupWidget-head {
+	font-weight: var( --font-weight-semibold );
+}
+
+.ve-ui-mwNoticesPopupTool-items > div:not( :first-child ),
+.ve-ui-mwHelpPopupTool-item:not( :first-child ) {
+	border-top-color: var( --border-color-base );
+}
+
+.ve-ui-mwHelpPopupTool-version-label,
+.ve-ui-mwHelpPopupTool-version-link,
+.ve-ui-mwHelpPopupTool-version-date {
+	color: var( --color-base--subtle );
+}
+
+/* ve.ui.MWAceEditorWidget.css */
+.ve-ui-mwAceEditorWidget .ace_editor {
+	border-color: var( --border-color-base );
+	font-family: var( --font-family-monospace );
+}
+
+.ve-ui-mwAceEditorWidget .ace_focus {
+	border-color: var( --color-primary );
+}
+
+.ve-ui-mwAceEditorWidget.oo-ui-widget-enabled.oo-ui-flaggedElement-invalid .ace_editor {
+	border-color: var( --color-destructive );
+}
+
+.ve-ui-mwAceEditorWidget-readOnly .ace_editor {
+	background: var( --color-surface-3 );
+}

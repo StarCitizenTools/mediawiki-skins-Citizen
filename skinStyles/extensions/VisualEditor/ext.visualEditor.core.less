@@ -1,0 +1,352 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:VisualEditor
+ * Module: ext.visualEditor.core
+ * Version: REL1_39 65d89c9
+ *
+ * Date: 2023-02-06
+*/
+
+/* ve.ce.FocusableNode.css */
+/*
+.ve-ce-focusableNode-highlight {
+	background: #6da9f7;
+	box-shadow: inset 0 0 0 1px #4c76ac;
+}
+*/
+
+.ve-ce-focusableNode-highlight-error {
+	background: var( --color-destructive );
+}
+
+.ve-ce-focusableNode-highlights-deactivated .ve-ce-focusableNode-highlight {
+	background: var( --color-base--emphasized );
+}
+
+/* ve.ce.AlienNode.css */
+/*
+.ve-ce-alienNode-highlights .ve-ce-focusableNode-highlight {
+	// background-color: #95d14f;
+	// background-image: repeating-linear-gradient( -45deg, #fff 0, #fff 5px, #95d14f 5px, #95d14f 10px );
+}
+
+.ve-ce-surface-highlights-focused .ve-ce-alienNode-highlights .ve-ce-focusableNode-highlight {
+	// background-image: repeating-linear-gradient( -45deg, #6da9f7 0, #6da9f7 5px, #95d14f 5px, #95d14f 10px );
+}
+
+.ve-ce-surface-highlights-focused .ve-ce-alienNode-highlights.ve-ce-focusableNode-highlights-deactivated .ve-ce-focusableNode-highlight {
+	// background-image: repeating-linear-gradient( -45deg, #000 0, #000 5px, #666 5px, #666 10px );
+}
+*/
+
+/* ve.ce.BranchNode.css */
+.ve-ce-branchNode-blockSlug,
+.ve-ce-branchNode-newSlug {
+	background-color: var( --background-color-quiet--hover );
+	outline: 1px dashed var( --border-color-base );
+}
+
+/* ve.ce.RootNode.css */
+/*
+.ve-ce-attachedRootNode::selection,
+.ve-ce-attachedRootNode *::selection {
+	background: rgba( 109, 169, 247, 0.5 );
+}
+*/
+
+/* ve.ce.CommentNode.css */
+.ve-ce-commentNode > .ve-ce-focusableNode-invisibleIcon.oo-ui-iconElement .oo-ui-labelElement-label {
+	font-family: var( --font-family-monospace );
+}
+
+/* ve.ce.LanguageAnnotation.css */
+.ve-ce-languageAnnotation {
+	border-bottom: 1px dashed var( --border-color-base );
+	background-color: var( --color-surface-2 );
+}
+
+/* ve.ce.LinkAnnotation.css */
+.ve-ce-linkAnnotation.ve-ce-annotation-active {
+	background-color: var( --background-color-quiet--hover );
+	box-shadow: 0 0 0 1px var( --border-color-base );
+}
+
+/* ve.ce.ResizableNode.css */
+.ve-ce-resizableNode-sizeText {
+	border: 0;
+	border-radius: var( --border-radius--small );
+	background-color: var( --color-surface-2 );
+}
+
+.ve-ce-resizableNode-sizeText span:not( :first-child ) {
+	border-left-color: var( --border-color-base );
+}
+
+/*
+.ve-ce-resizableNode-sizeText-warning {
+	background-color: #ecc;
+	border-color: #caa;
+}
+*/
+
+/* ve.ce.TableCellNode.css */
+.ve-ce-tableCellableNode {
+	border-color: var( --border-color-base );
+}
+
+/* ve.ce.TableNode.css */
+.ve-ce-tableNode-active .ve-ce-tableCaptionNode,
+.ve-ce-tableCaptionNode.ve-ce-activeNode-active {
+	border-color: var( --border-color-base );
+}
+
+.ve-ce-tableNodeOverlay-selection-box {
+	background: var( --background-color-primary--hover );
+}
+
+.ve-ce-tableNodeOverlay-selection-box-anchor {
+	border-color: var( --color-primary );
+}
+
+/*
+.ve-ce-tableNodeOverlay-deactivated .ve-ce-tableNodeOverlay-selection-box {
+	background: rgba( 0, 0, 0, 0.3 );
+}
+
+.ve-ce-tableNodeOverlay-selection-box-notEditable {
+	background-image: repeating-linear-gradient( -45deg, transparent 0, transparent 5px, #95d14f 5px, #95d14f 10px );
+}
+
+.ve-ce-tableNodeOverlay-deactivated .ve-ce-tableNodeOverlay-selection-box-anchor {
+	border: solid 1px rgba( 0, 0, 0, 0.3 );
+}
+*/
+
+/* ve.ce.Surface.css */
+.ve-ce-surface-deactivatedSelection > div {
+	background: var( --background-color-primary--hover );
+}
+
+.ve-ce-surface-deactivatedSelection-showAsDeactivated > div {
+	background: var( --color-base--emphasized );
+}
+
+.ve-ce-surface-dropMarker {
+	background: var( --color-base--subtle );
+}
+
+/*
+.ve-ce-surface-highlights-user-selection {
+	background: #faa;
+	box-shadow: inset 0 0 0 1px #a66;
+}
+
+.ve-ce-surface-highlights-user-cursor {
+	background: #a66;
+}
+
+.ve-ce-surface-highlights-user-cursor-label {
+	font-weight: bold;
+	background: #a66;
+	color: #fff;
+	text-shadow: 0 0 1px #000;
+}
+*/
+
+.ve-ce-cursorHolder-debug {
+	border-color: var( --color-destructive );
+}
+
+/* ve.ui.ToolbarDialog.css */
+.oo-ui-toolbar-position-top .ve-ui-toolbarDialog-position-above {
+	border-top-color: var( --border-color-base );
+}
+
+.oo-ui-toolbar-position-bottom .ve-ui-toolbarDialog-position-above {
+	border-bottom-color: var( --border-color-base );
+}
+
+.ve-ui-toolbarDialog-position-side {
+	border-left-color: var( --border-color-base );
+	background: var( --color-surface-1 );
+}
+
+/* ve.ui.CommandHelpDialog.css */
+.ve-ui-commandHelpDialog-shortcut > kbd,
+.ve-ui-commandHelpDialog-sequence > kbd {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+	box-shadow: none;
+	color: var( --color-base--emphasized );
+	text-shadow: none;
+}
+
+/* ve.ui.FindAndReplaceDialog.css */
+/*
+.ve-ui-findAndReplaceDialog-findResult > div {
+	background: #28bb0b;
+}
+*/
+
+/* ve.ui.SpecialCharacterDialog.css */
+.ve-ui-specialCharacterPage h3 {
+	color: var( --color-base--subtle );
+}
+
+.ve-ui-specialCharacterPage-character {
+	border-color: var( --border-color-base );
+}
+
+.ve-ui-specialCharacterPage-character:hover {
+	border-color: var( --border-color-base );
+}
+
+.ve-ui-specialCharacterPage-character-source {
+	font-family: var( --font-family-monospace );
+}
+
+/* ve.ui.ContextOptionWidget.css */
+.ve-ui-contextOptionWidget .oo-ui-labelElement-label {
+	color: var( --color-base--subtle );
+}
+
+/* ve.ui.ContextItem.css */
+.ve-ui-contextItem + .ve-ui-contextItem {
+	border-top-color: var( --border-color-base );
+}
+
+/* ve.ui.LinearContextItem.css */
+.ve-ui-mobileContext .ve-ui-linearContextItem-title {
+	font-weight: var( --font-weight-semibold );
+}
+
+.ve-ui-mobileContext .ve-ui-linearContextItem-body-action-wrapper {
+	border-top-color: var( --border-color-base );
+}
+
+.ve-ui-linearContextItem-foot:not( :empty ) {
+	border-top-color: var( --border-color-base );
+}
+
+/* ve.ui.CommentContextItem.css */
+.ve-ui-commentContextItem .ve-ui-linearContextItem-body {
+	font-family: var( --font-family-monospace );
+}
+
+/* ve.ui.LanguageContextItem.cs */
+.ve-ui-languageContextItem .ve-ui-linearContextItem-body {
+	color: var( --color-base--subtle );
+}
+
+/* ve.ui.LinkContextItem.css */
+.ve-ui-desktopContext .ve-ui-linkContextItem .ve-ui-linkContextItem-label {
+	border-top-color: var( --border-color-base );
+}
+
+.ve-ui-desktopContext .ve-ui-linkContextItem .ve-ui-linkContextItem-label .ve-ui-linkContextItem-label-preview {
+	color: var( --color-base--subtle );
+}
+
+/* ve.ui.Overlay.css */
+.ve-ui-overlay {
+	font-family: var( --font-family-base );
+}
+
+/* ve.ui.Surface.css */
+.ve-ui-surface-source-font {
+	font-family: var( --font-family-monospace );
+}
+
+/* ve.ui.Toolbar.css */
+.ve-ui-toolbar > .oo-ui-toolbar-bar {
+	// Same color as page background
+	background-color: var( --color-surface-0 );
+	// Remove default box shadow
+	box-shadow: none;
+}
+
+/* ve.ui.TableLineContext.css */
+.ve-ui-tableLineContext > .oo-ui-iconWidget.oo-ui-iconElement.oo-ui-iconElement-icon {
+	background-color: var( --background-color--hover );
+}
+
+.ve-ce-tableNodeOverlay-deactivated .ve-ui-tableLineContext > .oo-ui-iconWidget.oo-ui-iconElement.oo-ui-iconElement-icon {
+	background-color: var( --color-base--subtle );
+}
+
+/* ve.ui.DebugBar.css */
+.ve-ui-debugBar-commands-divider {
+	border-right-color: var( --border-color-base );
+}
+
+.ve-ui-debugBar-dump > table {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+}
+
+.ve-ui-debugBar-dump td {
+	background-color: var( --color-surface-1 );
+}
+
+.ve-ui-debugBar-dump th {
+	color: var( --color-base--subtle );
+	text-shadow: 0 1px 1px var( --color-surface-1 );
+}
+
+.ve-ui-debugBar-dump ol {
+	color: var( --color-base--subtle );
+}
+
+.ve-ui-debugBar-dump li .ve-ui-debugBar-dump-element,
+.ve-ui-debugBar-dump li .ve-ui-debugBar-dump-char,
+.ve-ui-debugBar-dump li .ve-ui-debugBar-dump-achar {
+	background-color: var( --color-surface-2 );
+	color: var( --color-base--emphasized );
+	text-shadow: 0 1px 1px var( --color-surface-1 );
+}
+
+/*
+.ve-ui-debugBar-dump li .ve-ui-debugBar-dump-element {
+	background-color: #def;
+}
+
+.ve-ui-debugBar-dump li .ve-ui-debugBar-dump-char {
+	background-color: #dfe;
+}
+
+.ve-ui-debugBar-dump li .ve-ui-debugBar-dump-achar {
+	background-color: #fed;
+}
+*/
+
+.ve-ui-debugBar-dump li .ve-ui-debugBar-dump-note {
+	color: var( --color-base--subtle );
+}
+
+.ve-ui-debugBar-filibuster {
+	border-color: var( --border-color-base );
+	background-color: var( --color-surface-2 );
+}
+
+.ve-ui-debugBar-transactions > ol > li {
+	border-left-color: var( --border-color-base );
+}
+
+/* ve.ui.TargetWidget */
+.ve-ui-targetWidget {
+	border-color: var( --border-color-base );
+}
+
+.ve-ui-targetWidget-focused {
+	border-color: var( --color-primary );
+	box-shadow: inset 0 0 0 1px var( --color-primary );
+}
+
+.ve-ui-targetWidget:not( .oo-ui-pendingElement-pending ) {
+	background: var( --color-surface-1 );
+}
+
+.ve-ui-targetWidget-readOnly:not( .oo-ui-pendingElement-pending ) {
+	background: var( --color-surface-2 );
+}

@@ -1,0 +1,85 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:VisualEditor
+ * Module: ext.visualEditor.mwtransclusion
+ * Version: REL1_39 65d89c9
+ *
+ * Date: 2023-02-06
+*/
+
+/* ve.ui.MWTransclusionDialog.css */
+.ve-ui-mwTemplateDialog .mw-widget-titleWidget-menu-withDescriptions .mw-widget-titleOptionWidget .oo-ui-labelElement-label {
+	font-weight: var( --font-weight-semibold );
+}
+
+/* ve.ui.MWTwoPaneTransclusionDialogLayout.less */
+.ve-ui-mwTwoPaneTransclusionDialogLayout {
+	> .oo-ui-menuLayout-menu {
+		border-right-color: var( --border-color-base );
+	}
+}
+
+/* ve.ui.MWParameterPage.css */
+.ve-ui-mwParameterPage-label {
+	font-weight: var( --font-weight-semibold );
+}
+
+.ve-ui-mwParameterPage-undocumentedLabel {
+	color: var( --color-base--subtle );
+}
+
+.ve-ui-mwParameterPage-doc-required,
+.ve-ui-mwParameterPage-doc-deprecated,
+.ve-ui-mwParameterPage-inlineDescription .ve-ui-mwParameterPage-doc-example {
+	color: var( --color-base--subtle );
+}
+
+/* ve.ui.MWTemplatePage.css */
+.ve-ui-mwTemplatePage-description {
+	color: var( --color-base--subtle );
+}
+
+/* ve.ui.MWTransclusionOutlineControlsWidget.less */
+.ve-ui-mwTransclusionOutlineControlsWidget {
+	border-top-color: var( --border-color-base );
+	background-color: var( --color-surface-1 );
+}
+
+/* ve.ui.MWTransclusionOutlineWidget.less */
+.ve-ui-mwTransclusionOutlineTemplateWidget {
+	&-sticky {
+		background-color: var( --color-surface-1 );
+	}
+
+	&-no-match {
+		color: var( --color-base--subtle );
+	}
+
+	.ve-ui-mwTransclusionOutlineParameterSelectWidget:focus {
+		box-shadow: inset 0 0 0 1px var( --color-primary );
+	}
+
+	.ve-ui-mwTransclusionOutlineParameterWidget {
+		&:active {
+			background-color: var( --background-color-primary--active );
+			color: var( --color-primary );
+		}
+
+		&.ve-ui-mwTransclusionOutlineParameterWidget-activePage,
+		&.ve-ui-mwTransclusionOutlineParameterWidget-activePage:hover,
+		&.ve-ui-mwTransclusionOutlineParameterWidget-activePage.oo-ui-optionWidget-highlighted {
+			background-color: var( --background-color-primary--hover );
+			color: var( --color-base );
+		}
+
+		&.oo-ui-optionWidget-highlighted {
+			background-color: var( --background-color-quiet--hover );
+			color: var( --color-base--emphasized );
+		}
+
+		&-hasValue {
+			font-weight: var( --font-weight-semibold );
+		}
+	}
+}
