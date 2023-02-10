@@ -117,16 +117,18 @@ final class Header extends Partial {
 		foreach ( $groups as $group ) {
 			$id = sprintf( $msgName, $group );
 			$msg = $this->skin->msg( $id )->text();
-			// Nullpointer should not happen
-			$href = $this->title->newFromText(
+			$title = $this->title->newFromText(
 					$this->skin->msg( sprintf( $msgName, $group ) )->text(),
 					NS_PROJECT
-				)->getLinkURL();
-			$html .= <<< HTML
-				<li>
-					<a href="$href" id="$id">$msg</a>
-				</li>
-			HTML;
+				);
+			if ( $title ) {
+				$href = $title->getLinkURL();
+				$html .= <<< HTML
+					<li>
+						<a href="$href" id="$id">$msg</a>
+					</li>
+				HTML;
+			}
 		}
 
 		$html = sprintf( '<li id="pt-usergroups"><ul>%s</ul></li>', $html );
