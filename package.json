@@ -17,7 +17,7 @@
 		"release:major": "standard-version --release-as major"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^17.4.2",
+		"@commitlint/cli": "^17.4.3",
 		"@commitlint/config-conventional": "^17.4.2",
 		"devmoji": "^2.3.0",
 		"eslint-config-wikimedia": "0.24.0",
