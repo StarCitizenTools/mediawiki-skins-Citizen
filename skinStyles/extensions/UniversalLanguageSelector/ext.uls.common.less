@@ -12,6 +12,8 @@
 @import 'ext.uls.mixins.less';
 
 .uls-menu {
+	// Prevent ULS scrolling the page to the bottom
+	top: var( --space-md ) !important;
 	border-radius: var( --border-radius--medium );
 }
 
@@ -60,7 +62,6 @@
 // Responsive
 @media ( max-width: @width-breakpoint-tablet ) {
 	.uls-menu {
-		top: var( --header-size ) !important;
 		right: var( --padding-page ) !important;
 		left: var( --padding-page ) !important;
 		overflow: auto;

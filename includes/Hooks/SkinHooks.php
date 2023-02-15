@@ -189,6 +189,10 @@ class SkinHooks implements
 				self::updateUserMenu( $sktemplate, $links );
 			}
 
+			if ( isset( $links['user-interface-preferences'] ) ) {
+				self::updateUserInterfacePreferencesMenu( $sktemplate, $links );
+			}
+
 			if ( isset( $links['views'] ) ) {
 				self::updateViewsMenu( $links );
 			}
@@ -308,6 +312,16 @@ class SkinHooks implements
 	}
 
 	/**
+	 * Update user interface preferences menu
+	 *
+	 * @param SkinTemplate $sktemplate
+	 * @param array &$links
+	 */
+	private static function updateUserInterfacePreferencesMenu( $sktemplate, &$links ) {
+		self::addIconsToMenuItems( $links, 'user-interface-preferences' );
+	}
+
+	/**
 	 * Update views menu items
 	 *
 	 * @param array &$links
@@ -372,7 +386,9 @@ class SkinHooks implements
 			if ( $icon ) {
 				// Html::makeLink will pass this through rawElement
 				// Avoid using mw-ui-icon in case its styles get loaded
-				$links[$menu][$key]['link-html'] = '<span class="citizen-ui-icon mw-ui-icon-wikimedia-' . $icon . '"></span>';
+				// Sometimes extension includes the "wikimedia-" part in the icon key (e.g. ULS),
+				// so we apply both classes just to be safe
+				$links[$menu][$key]['link-html'] = '<span class="citizen-ui-icon mw-ui-icon-' . $icon . ' mw-ui-icon-wikimedia-' . $icon . '"></span>';
 			}
 		}
 	}
