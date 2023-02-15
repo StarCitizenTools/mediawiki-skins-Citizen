@@ -8,6 +8,8 @@
  * Date: 2023-02-06
 */
 
+@import '../../../resources/variables.less';
+
 /* ve.ce.FocusableNode.css */
 /*
 .ve-ce-focusableNode-highlight {
@@ -251,6 +253,10 @@
 /* ve.ui.Overlay.css */
 .ve-ui-overlay {
 	font-family: var( --font-family-base );
+}
+
+.ve-ui-overlay-global {
+	z-index: @z-index-overlay;
 }
 
 /* ve.ui.Surface.css */
