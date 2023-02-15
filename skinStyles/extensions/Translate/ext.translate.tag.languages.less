@@ -3,16 +3,98 @@
  *
  * SkinStyles for Extension:Translate
  * Module: ext.translate.tag.languages
- * Version: MLEB 2021.07
+ * Version: MLEB 2023.01
  *
- * Date: 2021-07-29
+ * Date: 2023-02-17
 */
 
+@import '../../../resources/variables.less';
+
 .mw-pt-languages {
-	border-color: var( --border-color-base );
-	background-color: var( --color-surface-2 );
+	display: flex;
+	flex-direction: column;
+	// Language tag can appear anywhere in content, reserve spacing just in case
+	padding: var( --space-md ) 0;
+	border-bottom: 0;
+	background-color: transparent;
+	font-size: 0.8125rem;
+	gap: var( --space-xs );
 }
 
+// Citizen label styles
 .mw-pt-languages-label {
-	background-color: var( --color-surface-3 );
+	display: block;
+	width: auto;
+	padding: 0;
+	color: var( --color-base--subtle );
+	font-weight: var( --font-weight-normal );
+	letter-spacing: 0.05em;
+}
+
+.mw-pt-languages .mw-pt-languages-list {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 0;
+	margin: 0;
+	gap: var( --space-xs );
+}
+
+.mw-pt-languages-list li {
+	margin: 0; // Use flexbox instead
+}
+
+// Citizen pill styles
+// Stricter selector as it might affect language button in langauge menu
+.mw-pt-languages-list {
+	a.new,
+	.mw-pt-progress {
+		display: block;
+		padding: var( --space-xs ) var( --space-md );
+		border: 1px solid var( --border-color-base--darker );
+		border-radius: var( --border-radius--pill );
+		color: var( --color-base--subtle );
+		transition: @transition-background;
+
+		&:hover,
+		&:active {
+			color: #fff;
+		}
+	}
+
+	a.new {
+		border-style: dashed;
+
+		&:hover {
+			background-color: var( --color-destructive--hover );
+		}
+
+		&:active {
+			background-color: var( --color-destructive--active );
+		}
+	}
+
+	// Offset right padding for progress icon
+	// Extra specificity to override previous styles
+	.mw-pt-progress {
+		padding-right: ~'calc( var( --space-md ) + 11px )';
+		background-position: right 9px center;
+
+		&:hover {
+			background-color: var( --color-primary--hover );
+		}
+
+		&:active {
+			background-color: var( --color-primary--active );
+		}
+
+		&.mw-pt-languages-selected {
+			background-color: var( --color-primary--active );
+			color: #fff;
+			font-weight: var( --font-weight-normal );
+		}
+	}
+}
+
+.mw-pt-translate-header ~ .mw-parser-output .mw-pt-languages {
+	margin-top: 0; // reset since we don't have the bottom border
 }

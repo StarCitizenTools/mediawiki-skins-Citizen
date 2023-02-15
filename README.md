@@ -74,7 +74,7 @@ Name | Grade | Version | Last updated
 [Tabber](https://www.mediawiki.org/wiki/Extension:Tabber) | A | N/A | N/A
 [TabberNeue](https://www.mediawiki.org/wiki/Extension:TabberNeue) | A | 1.3.1 `656f396` | 2022-10-23
 [TimedMediaHandler](https://www.mediawiki.org/wiki/Extension:TimedMediaHandler) | B | N/A | N/A
-[Translate](https://www.mediawiki.org/wiki/Extension:Translate) | B | MLEB 2021.07 | 2021-07-29
+[Translate](https://www.mediawiki.org/wiki/Extension:Translate) | A | MLEB 2023.01 | 2023-02-17
 [TwoColConflict](https://www.mediawiki.org/wiki/Extension:TwoColConflict) | B | REL1_39 5a2a947 | 2023-01-09
 [UniversalLanguageSelector](https://www.mediawiki.org/wiki/Extension:UniversalLanguageSelector) | B | MLEB 2021.12 | 2022-05-17
 [UploadWizard](https://www.mediawiki.org/wiki/Extension:UploadWizard) | A | REL1_39 `9cd7a02` | 2023-01-08
