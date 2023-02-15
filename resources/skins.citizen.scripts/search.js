@@ -124,8 +124,19 @@ function isFormField( element ) {
  */
 function bindExpandOnSlash( window, checkbox, input ) {
 	const onExpandOnSlash = ( /** @type {KeyboardEvent} */ event ) => {
-		// Only handle SPACE and ENTER.
-		if ( event.key === '/' && !isFormField( event.target ) ) {
+		const isKeyPressed = () => {
+			// "/" key is standard on many sites
+			if ( event.key === '/' ) {
+				return true;
+			// "Alt" + "Shift" + "F" is the MW standard key
+			// Shift key might makes F key goes capital, so we need to make it lowercase
+			} else if ( event.altKey && event.shiftKey && event.key.toLowerCase() === 'f' ) {
+				return true;
+			} else {
+				return false;
+			}
+		};
+		if ( isKeyPressed() && !isFormField( event.target ) ) {
 			// Since Firefox quickfind interfere with this
 			event.preventDefault();
 			checkbox.checked = true;
