@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.4.0...v2.4.1) (2023-02-15)
+
+
+### Features
+
+* **core:** ✨ add support for user-interface-preferences menu ([3ec8434](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3ec84349b1149ac5f72e948f9ff71851b9e52cc2)), closes [#587](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/587) [#425](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/425)
+* **search:** ✨ support MW default search shortcut key ([e06ed54](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e06ed54c83d129be3059f184e68e22a9cbfeba5e)), closes [#582](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/582)
+* **Translate:** ✨ rework Translate header and language tag styles ([f9e872a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f9e872a52ac28181a43cc2f4a95d8a2ca7d74122))
+
+
+### Bug Fixes
+
+* **core:** 🐛 handle null exception for user group ([081a176](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/081a176edcce7c8469d79af10a159eb1e22c7a56))
+* **core:** 🐛 reset array index after removing toolbox from sidebar ([c8d5a6e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c8d5a6e5f40fbe2c451f755207b5a5f1407e8683)), closes [#580](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/580)
+* **VisualEditor:** 🐛 VE overlay should have overlay z-index ([e2d1230](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e2d1230064579e155145d06178f7c6d835c310fe)), closes [#583](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/583)
+
 ## [2.4.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.3.6...v2.4.0) (2023-02-06)
 
 
