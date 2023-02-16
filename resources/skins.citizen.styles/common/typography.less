@@ -5,10 +5,13 @@ html {
 html,
 body {
 	font-family: var( --font-family-base );
+	/*
+	 * Don't let browser faux font styles and weight
+	 * 1. We are already using VF
+	 * 2. Not all font styles apply to some languages (e.g. Italic is different in ZH)
+	 */
+	font-synthesis: none;
 	font-weight: var( --font-weight-normal );
-	// font-smoothing: antialiased;
-	// -webkit-font-smoothing: antialiased; /* Chrome, Safari */
-	// -moz-osx-font-smoothing: grayscale; /* Firefox */
 }
 
 input {
