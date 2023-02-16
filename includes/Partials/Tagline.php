@@ -25,6 +25,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Partials;
 
+use MediaWiki\MediaWikiServices;
 use Title;
 use User;
 use Wikimedia\IPUtils;
@@ -81,6 +82,15 @@ final class Tagline extends Partial {
 					$tagline = $skin->msg( 'tagline' )->text();
 				}
 			}
+		}
+
+		// Apply language variant conversion
+		if ( !empty( $tagline ) ) {
+			$services = MediaWikiServices::getInstance();
+			$langConv = $services
+					->getLanguageConverterFactory()
+					->getLanguageConverter( $services->getContentLanguage() );
+			$tagline = $langConv->convert( $tagline );
 		}
 
 		return $tagline;
