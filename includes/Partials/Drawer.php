@@ -69,8 +69,6 @@ final class Drawer extends Partial {
 				// Remove toolbox since it is handled by page tools
 				case 'p-tb': {
 					unset( $sidebarData['array-portlets-rest'][$i] );
-					// Reset index after unsetting toolbox
-					$sidebarData['array-portlets-rest'] = array_values( $sidebarData['array-portlets-rest'] );
 					break;
 				}
 
@@ -81,6 +79,9 @@ final class Drawer extends Partial {
 				}
 			}
 		}
+
+		// Reset index after unsetting toolbox
+		$sidebarData['array-portlets-rest'] = array_values( $sidebarData['array-portlets-rest'] );
 
 		return $sidebarData;
 	}
