@@ -273,7 +273,9 @@ class SkinHooks implements
 			// Extension:CreateRedirect
 			'createredirect' => 'articleRedirect',
 			// Extension:SemanticMediaWiki
-			'smwbrowselink' => 'database'
+			'smwbrowselink' => 'database',
+			// Extension:UrlShortener
+			'urlshortener' => 'link'
 		];
 
 		self::mapIconsToMenuItems( $links, 'TOOLBOX', $iconMap );
