@@ -5,13 +5,14 @@ html {
 html,
 body {
 	font-family: var( --font-family-base );
+	font-weight: var( --font-weight-normal );
 	/*
+	 * TODO: Revisit this when italic VF is better supported
 	 * Don't let browser faux font styles and weight
 	 * 1. We are already using VF
 	 * 2. Not all font styles apply to some languages (e.g. Italic is different in ZH)
 	 */
-	font-synthesis: none;
-	font-weight: var( --font-weight-normal );
+	// font-synthesis: none;
 }
 
 input {
