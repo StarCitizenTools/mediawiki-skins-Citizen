@@ -17,6 +17,12 @@
 			margin-right: 1px;
 			// Counter the weird hardcoded 2px width added by core
 			margin-left: 1px;
+
+			> img {
+				max-width: inherit;
+				// Needed to override inline styles
+				height: auto !important;
+			}
 		}
 
 		&:before {

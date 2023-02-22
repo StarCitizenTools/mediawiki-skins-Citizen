@@ -15,6 +15,9 @@ figure[ typeof~='mw:File/Frame' ] {
 		overflow: hidden;
 
 		> img {
+			max-width: 100%;
+			// Needed to override inline styles
+			height: auto !important;
 			contain: strict;
 			transition: @transition-transform;
 		}
