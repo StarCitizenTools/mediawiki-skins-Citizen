@@ -108,12 +108,6 @@ class SkinCitizen extends SkinMustache {
 
 		$data += $tools->getPageToolsData( $parentData );
 
-		// Show some portlet labels
-		// NOTE: This is only placed here temporarily
-		if ( $parentData['data-portlets']['data-variants']['is-empty'] === false ) {
-			$parentData['data-portlets']['data-variants']['has-label'] = true;
-		}
-
 		return array_merge( $parentData, $data );
 	}
 

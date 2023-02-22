@@ -93,7 +93,6 @@ final class PageTools extends Partial {
 		foreach ( $sidebarData['array-portlets-rest'] as $portlet ) {
 			if ( $portlet['id'] === 'p-tb' ) {
 				$data = $portlet;
-				$data['has-label'] = true;
 				$data['is-empty'] = false;
 				break;
 			}

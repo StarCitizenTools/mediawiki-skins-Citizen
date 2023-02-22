@@ -47,9 +47,6 @@ final class Drawer extends Partial {
 	 * @throws Exception
 	 */
 	public function decorateSidebarData( $sidebarData ) {
-		// Enable label for first portlet
-		$sidebarData['data-portlets-first']['has-label'] = true;
-
 		$globalToolsId = $this->getConfigValue( 'CitizenGlobalToolsPortlet' );
 		$globalToolsHtml = $this->getGlobalToolsHTML();
 		$globalToolsAdded = false;
@@ -62,9 +59,6 @@ final class Drawer extends Partial {
 		}
 
 		for ( $i = 0; $i < count( $sidebarData['array-portlets-rest'] ); $i++ ) {
-			// Enable label for other portlet
-			$sidebarData['array-portlets-rest'][$i]['has-label'] = true;
-
 			switch ( $sidebarData['array-portlets-rest'][$i]['id'] ) {
 				// Remove toolbox since it is handled by page tools
 				case 'p-tb': {

@@ -112,6 +112,11 @@
 	.citizen-menu-checkbox-checkbox:checked ~ .page-actions__button {
 		background-color: var( --background-color-primary--active );
 	}
+
+	// Hide menu labels
+	> .citizen-menu > .citizen-menu__heading {
+		.mixin-screen-reader-text;
+	}
 }
 
 // Language counter badge
