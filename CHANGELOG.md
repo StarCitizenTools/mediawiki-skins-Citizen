@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.4.1...v2.4.2) (2023-02-22)
+
+
+### Features
+
+* **core:** ✨ add icon for urlshortener ([b04b46d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b04b46d9570bec36f467e0c2e690cef51c8e148b))
+* **core:** ✨ convert tagline to langauage variant when appliable ([0c23e50](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0c23e50d62a5472633555a8bee7b140a5ff383a2))
+* **core:** ✨ do not synthesize font styles through browser ([9072068](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/907206854b1fcc2b7c05172776fb7c8c540aee9e))
+* **core:** ✨ update font stacks ([83f7fc5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/83f7fc5db21aa8857facb1bbb3f402fa44e22496))
+* **core:** ✨ use Citizen font stacks for edit font ([736bd9a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/736bd9adc5d38904a3ee64d31de585a045738498))
+* **core:** ✨ use same font family instead of serif for blockquote ([af41f98](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/af41f989355be6a1558dc639edfd98b699600403))
+
+
+### Bug Fixes
+
+* **core:**  🐛 incorrect thumbnail center styles ([8f49101](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8f4910153a1bc3fc69685d612e5fbd644abece41))
+* **core:** 🐛 responsive thumbnail on new media structure ([ddb425c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ddb425c4bb43aefd99e61e4dfa3681b6fc995d77))
+
 ### [2.4.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.4.0...v2.4.1) (2023-02-15)
 
 
