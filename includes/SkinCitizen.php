@@ -94,7 +94,7 @@ class SkinCitizen extends SkinMustache {
 			// HTML strings
 			'html-title-heading--formatted' => $pageTitle->decorateTitle( $parentData['html-title-heading'] ),
 			'html-citizen-jumptotop' => $parentData['msg-citizen-jumptotop'] . ' [home]',
-			'html-body-content--formatted' => $bodycontent->buildBodyContent(),
+			'html-body-content--formatted' => $bodycontent->decorateBodyContent( $parentData['html-body-content'] ),
 			'html-tagline' => $tagline->getTagline(),
 			// Messages
 			// Needed to be parsed here as it should be wikitext
@@ -109,17 +109,6 @@ class SkinCitizen extends SkinMustache {
 		$data += $tools->getPageToolsData( $parentData );
 
 		return array_merge( $parentData, $data );
-	}
-
-	/**
-	 * Change access to public, as it is used in partials
-	 *
-	 * @param Title $title
-	 * @param string $html body text
-	 * @return string
-	 */
-	final public function wrapHTMLPublic( $title, $html ) {
-		return parent::wrapHTML( $title, $html );
 	}
 
 	/**

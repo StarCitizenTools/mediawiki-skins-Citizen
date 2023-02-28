@@ -29,7 +29,6 @@ use DOMDocument;
 use DOMElement;
 use DOMNode;
 use DOMXpath;
-use Html;
 use HtmlFormatter\HtmlFormatter;
 use MediaWiki\MediaWikiServices;
 use Wikimedia\Parsoid\Utils\DOMCompat;
@@ -51,7 +50,7 @@ final class BodyContent extends Partial {
 	 * List of tags that could be considered as section headers.
 	 * @var array
 	 */
-	private $topHeadingTags = [ "h1", "h2", "h3", "h4", "h5", "h6 " ];
+	private $topHeadingTags = [ "h1", "h2", "h3", "h4", "h5", "h6" ];
 
 	/**
 	 * Helper function to decide if the page should be formatted
@@ -76,35 +75,28 @@ final class BodyContent extends Partial {
 	/**
 	 * Rebuild the body content
 	 *
+	 * @param string $bodyContent HTML of the body content from core
 	 * @return string html
 	 */
-	public function buildBodyContent() {
-		$skin = $this->skin;
-		$out = $this->out;
+	public function decorateBodyContent( $bodyContent ) {
 		$title = $this->title;
-
-		$printSource = Html::rawElement( 'div', [ 'class' => 'printfooter' ], $skin->printSource() );
-		$htmlBodyContent = $out->getHTML() . "\n" . $printSource;
 
 		// Return the page if title is null
 		if ( $title === null ) {
-			return $htmlBodyContent;
+			return $bodyContent;
 		}
 
 		// Make section and sanitize the output
 		if ( $this->shouldFormatPage( $title ) ) {
-			$formatter = new HtmlFormatter( $htmlBodyContent );
+			$formatter = new HtmlFormatter( $bodyContent );
 			$doc = $formatter->getDoc();
 			// Make top level sections
 			$this->makeSections( $doc, $this->getTopHeadings( $doc ) );
-			// Mark subheadings
-			$this->markSubHeadings( $this->getSubHeadings( $doc ) );
-
 			$formatter->filterContent();
-			$htmlBodyContent = $formatter->getText();
+			$bodyContent = $formatter->getText();
 		}
 
-		return $this->skin->wrapHTMLPublic( $title, $htmlBodyContent );
+		return $bodyContent;
 	}
 
 	/**
@@ -130,7 +122,7 @@ final class BodyContent extends Partial {
 	/**
 	 * Actually splits splits the body of the document into sections
 	 *
-	 * @param DOMDocument $doc representing the HTML of the current article. In the HTML the sections
+	 * @param DOMDocument $doc representing the HTML of the body content. In the HTML the sections
 	 *  should not be wrapped.
 	 * @param DOMElement[] $headingWrappers The headings (or wrappers) returned by getTopHeadings():
 	 *  `<h1>` to `<h6>` nodes, or `<div class="mw-heading">` nodes wrapping them.
@@ -139,7 +131,7 @@ final class BodyContent extends Partial {
 	 */
 	private function makeSections( DOMDocument $doc, array $headingWrappers ) {
 		$xpath = new DOMXpath( $doc );
-		$containers = $xpath->query( 'body/div[@class="mw-parser-output"][1]' );
+		$containers = $xpath->query( '//div[@class="mw-parser-output"][1]' );
 
 		// Return if no parser output is found
 		if ( !$containers->length || $containers->item( 0 ) === null ) {
@@ -180,6 +172,9 @@ final class BodyContent extends Partial {
 
 		// Append the last section body.
 		$container->appendChild( $sectionBody );
+
+		// Mark subheadings
+		$this->markSubHeadings( $this->getSubHeadings( $doc ) );
 
 		return $doc;
 	}
