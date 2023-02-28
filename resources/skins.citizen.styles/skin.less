@@ -2,13 +2,22 @@
 
 @import '../variables.less';
 @import '../mixins.less';
+
+// Common styles
+@import 'fonts.less';
+@import 'common/cssvariables.less';
 @import 'common/typography.less';
+@import 'skinning/elements.less';
+// FIXME: It is not great to load both Parsoid and Parsoid legacy media styles
+// Maybe there is a way to detect it without introducing a new RL module?
+@import 'skinning/content.media-common.less';
+@import 'skinning/content.thumbnails-common.less';
+@import 'skinning/i18n-all-lists-margins.less';
+@import 'skinning/interface-subtitle.less';
 
 @media screen {
 	@import 'layout.less';
-	@import 'fonts.less';
 	@import 'common/theme.less';
-	@import 'common/cssvariables.less';
 	@import 'common/common.less';
 	@import 'common/content.less';
 	@import 'common/scrollbar.less';
@@ -40,18 +49,12 @@
 	@import 'skinning/content.links.less';
 	@import 'skinning/content.externallinks.less';
 	@import 'skinning/content.tables.less';
-	// FIXME: This should not be under screen, fix this when we work on print styles
-	@import 'skinning/content.media-common.less';
+
 	@import 'skinning/content.media-screen.less';
-	// FIXME: This should not be under screen, fix this when we work on print styles
-	@import 'skinning/content.thumbnails-common.less';
 	@import 'skinning/content.thumbnails-screen.less';
-	@import 'skinning/elements.less';
-	@import 'skinning/i18n-all-lists-margins.less';
 	@import 'skinning/interface-edit-section-links.less';
 	@import 'skinning/interface-message-box.less';
 	@import 'skinning/interface-site-notice.less';
-	@import 'skinning/interface-subtitle.less';
 	@import 'skinning/interface.category.less';
 }
 
