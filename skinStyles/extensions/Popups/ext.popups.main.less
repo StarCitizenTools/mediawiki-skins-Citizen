@@ -39,17 +39,17 @@
 	.mwe-popups-extract {
 		color: var( --color-base );
 
-		&[ dir='ltr' ]:after {
+		&[ dir='ltr' ]::after {
 			/* @noflip */
 			background-image: linear-gradient( to right, transparent, var( --color-surface-1 ) 50% );
 		}
 
-		&[ dir='rtl' ]:after {
+		&[ dir='rtl' ]::after {
 			/* @noflip */
 			background-image: linear-gradient( to left, transparent, var( --color-surface-1 ) 50% );
 		}
 
-		blockquote:after {
+		blockquote::after {
 			/* @noflip */
 			background-image: linear-gradient( to bottom, transparent, var( --color-surface-1 ) 75% );
 		}
@@ -62,67 +62,67 @@
 		}
 
 		&.mwe-popups-no-image-pointer {
-			&:before {
+			&::before {
 				border-bottom-color: var( --border-color-base );
 			}
 
-			&:after {
+			&::after {
 				border-bottom-color: var( --color-surface-1 );
 			}
 		}
 
 		&.mwe-popups-image-pointer {
-			&:before {
+			&::before {
 				border-bottom-color: var( --border-color-base );
 			}
 
-			&:after {
+			&::after {
 				border-bottom-color: var( --color-surface-1 );
 			}
 
 			&.flipped-x {
-				&:before {
+				&::before {
 					border-bottom-color: var( --border-color-base );
 				}
 
-				&:after {
+				&::after {
 					border-bottom-color: var( --color-surface-1 );
 				}
 			}
 		}
 
 		&.flipped-x.mwe-popups-is-tall {
-			&:before {
+			&::before {
 				border-bottom-color: var( --border-color-base );
 			}
 		}
 
 		&.flipped-x-y {
-			&:before {
+			&::before {
 				border-top-color: var( --border-color-base );
 			}
 
-			&:after {
+			&::after {
 				border-top-color: var( --color-surface-1 );
 			}
 
 			&.mwe-popups-is-tall {
-				&:before {
+				&::before {
 					border-top-color: var( --border-color-base );
 				}
 
-				&:after {
+				&::after {
 					border-top-color: var( --color-surface-1 );
 				}
 			}
 		}
 
 		&.flipped-y {
-			&:before {
+			&::before {
 				border-top-color: var( --border-color-base );
 			}
 
-			&:after {
+			&::after {
 				border-top-color: var( --color-surface-1 );
 			}
 		}

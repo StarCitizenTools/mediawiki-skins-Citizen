@@ -10,7 +10,7 @@
 
 .mw-ui-checkbox {
 	[ type='checkbox' ] {
-		& + label:before {
+		& + label::before {
 			border-color: var( --border-color-base--darker );
 			border-radius: var( --border-radius--small );
 			// Show background when hovered
@@ -18,48 +18,48 @@
 		}
 
 		&:enabled {
-			&:focus + label:before {
+			&:focus + label::before {
 				border-color: var( --color-primary );
 				background-color: var( --color-surface-0 );
 				box-shadow: inset 0 0 0 1px var( --color-primary );
 			}
 
-			&:hover + label:before {
+			&:hover + label::before {
 				border-color: var( --color-primary--hover );
 				background-color: var( --color-surface-0 );
 			}
 
-			&:active + label:before {
+			&:active + label::before {
 				border-color: var( --color-primary--active );
 				background-color: var( --color-primary--active );
 				box-shadow: inset 0 0 0 1px var( --color-primary--active );
 			}
 
 			&:checked {
-				& + label:before {
+				& + label::before {
 					border-color: var( --color-primary );
 					background-color: var( --color-primary );
 				}
 
-				&:focus + label:before {
+				&:focus + label::before {
 					border-color: var( --color-primary );
 					background-color: var( --color-primary );
 					box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px #fff;
 				}
 
-				&:hover + label:before {
+				&:hover + label::before {
 					border-color: var( --color-primary--hover );
 					background-color: var( --color-primary--hover );
 				}
 
-				&:active + label:before {
+				&:active + label::before {
 					border-color: var( --color-primary--active );
 					background-color: var( --color-primary--active );
 				}
 			}
 		}
 
-		&:disabled + label:before {
+		&:disabled + label::before {
 			border-color: var( --color-surface-4 );
 			background-color: var( --color-surface-4 );
 		}

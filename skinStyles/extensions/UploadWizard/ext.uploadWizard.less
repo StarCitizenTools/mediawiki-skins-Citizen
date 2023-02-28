@@ -73,8 +73,8 @@ h3.mwe-upwiz-metadata-title {
 	background-color: transparent;
 	line-height: var( --line-height-sm );
 
-	&:before,
-	&:after {
+	&::before,
+	&::after {
 		content: none; // Pseudo elements do not play well with flex
 	}
 
@@ -95,8 +95,8 @@ h3.mwe-upwiz-metadata-title {
 		}
 
 		&.arrow {
-			&:before,
-			&:after {
+			&::before,
+			&::after {
 				content: none;
 			}
 		}

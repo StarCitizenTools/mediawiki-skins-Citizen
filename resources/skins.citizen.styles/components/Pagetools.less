@@ -22,7 +22,7 @@
 		&:hover {
 			background-color: var( --background-color-quiet--hover );
 
-			.citizen-ui-icon:before {
+			.citizen-ui-icon::before {
 				opacity: var( --opacity-icon-base--hover );
 			}
 		}
@@ -30,7 +30,7 @@
 		&:active {
 			background-color: var( --background-color-quiet--active );
 
-			.citizen-ui-icon:before {
+			.citizen-ui-icon::before {
 				opacity: var( --opacity-icon-base--active );
 			}
 		}
@@ -83,7 +83,7 @@
 				background-color: var( --background-color-quiet--hover );
 				color: var( --color-base--emphasized );
 
-				&:before {
+				&::before {
 					opacity: var( --opacity-icon-base--hover );
 				}
 			}
@@ -92,7 +92,7 @@
 				background-color: var( --background-color-quiet--active );
 				color: var( --color-base--subtle );
 
-				&:before {
+				&::before {
 					opacity: var( --opacity-icon-base--active );
 				}
 			}
@@ -124,7 +124,7 @@
 #citizen-languages__buttonCheckbox {
 	position: relative; // So that the badge doesn't take a stroll to the far left
 
-	&:after {
+	&::after {
 		position: absolute;
 		top: 0;
 		right: 0;
@@ -158,7 +158,7 @@
 			~ .page-actions__button {
 				background-color: var( --background-color-quiet--hover );
 
-				.citizen-ui-icon:before {
+				.citizen-ui-icon::before {
 					opacity: var( --opacity-icon-base--hover );
 				}
 			}
@@ -168,7 +168,7 @@
 			~ .page-actions__button {
 				background-color: var( --background-color-quiet--active );
 
-				.citizen-ui-icon:before {
+				.citizen-ui-icon::before {
 					opacity: var( --opacity-icon-base--active );
 				}
 			}
@@ -199,7 +199,7 @@
 
 	> a,
 	.citizen-ui-icon {
-		&:before {
+		&::before {
 			filter: invert( 1 );
 			// white icon
 			opacity: 1;
@@ -213,7 +213,7 @@
 
 	> a {
 		// See SkinHooks.php for why VE is here
-		&:before {
+		&::before {
 			width: var( --size-icon );
 			height: var( --size-icon );
 			background-position: center;
@@ -252,7 +252,7 @@
 }
 
 .skin-citizen-dark {
-	#ca-ve-edit > a:before {
+	#ca-ve-edit > a::before {
 		filter: invert( 1 );
 	}
 }
@@ -306,7 +306,7 @@
 			&:hover {
 				background-color: none;
 
-				.citizen-ui-icon:before {
+				.citizen-ui-icon::before {
 					opacity: var( --opacity-icon-base );
 				}
 			}

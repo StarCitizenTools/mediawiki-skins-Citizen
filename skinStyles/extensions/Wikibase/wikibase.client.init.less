@@ -27,14 +27,14 @@
 .skin-citizen-dark {
 	// Edit button
 	.wb-langlinks-link > a {
-		&:before {
+		&::before {
 			filter: invert( 1 )  hue-rotate( 180deg );
 		}
 
 		&:link,
 		&:visited {
 			// Re-apply greyscale value since we use filter to override the color
-			&:before {
+			&::before {
 				filter: invert( 1 ) hue-rotate( 180deg ) grayscale( 1 );
 			}
 		}

@@ -22,7 +22,7 @@
 			width: var( --height-search-bar );
 			height: var( --height-search-bar );
 
-			&:before {
+			&::before {
 				background-size: 1rem;
 			}
 		}
@@ -31,7 +31,7 @@
 		 * Loading indicator for searchbox
 		 * See common/progressbar.less
 		 **/
-		&.citizen-loading:after {
+		&.citizen-loading::after {
 			position: absolute;
 			top: 100%;
 		}
@@ -52,14 +52,14 @@
 		right: 0;
 		border-radius: var( --border-radius--small );
 
-		.citizen-ui-icon:before {
+		.citizen-ui-icon::before {
 			transition: @transition-transform;
 		}
 
 		&:hover {
 			background-color: var( --background-color-quiet--hover );
 
-			.citizen-ui-icon:before {
+			.citizen-ui-icon::before {
 				opacity: var( --opacity-icon-base--hover );
 				transform: rotate( 30deg );
 			}
@@ -68,7 +68,7 @@
 		&:active {
 			background-color: var( --background-color-quiet--active );
 
-			.citizen-ui-icon:before {
+			.citizen-ui-icon::before {
 				opacity: var( --opacity-icon-base--active );
 			}
 		}

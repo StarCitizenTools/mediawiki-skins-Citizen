@@ -10,7 +10,7 @@
 				width: 24px;
 				height: 24px;
 
-				&:before {
+				&::before {
 					display: block;
 					color: var( --color-base );
 					content: '\00d7'; // close icon
@@ -21,13 +21,13 @@
 				}
 
 				&:hover {
-					&:before {
+					&::before {
 						color: var( --color-base--emphasized );
 					}
 				}
 
 				&:active {
-					&:before {
+					&::before {
 						color: var( --color-base--subtle );
 					}
 				}

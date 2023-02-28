@@ -11,7 +11,7 @@
 .client-js .mw-ui-radio {
 	[ type='radio' ] {
 		& + label {
-			&:before {
+			&::before {
 				border-color: var( --border-color-base--darker );
 				// Show background when hovered
 				background-color: transparent;
@@ -19,33 +19,33 @@
 		}
 
 		&:enabled {
-			&:hover + label:before {
+			&:hover + label::before {
 				border-color: var( --color-primary--hover );
 				background-color: var( --color-surface-0 );
 			}
 
-			&:active + label:before {
+			&:active + label::before {
 				border-color: var( --color-primary--active );
 				background-color: var( --color-primary--active );
 			}
 
 			&:checked {
-				& + label:before {
+				& + label::before {
 					border-color: var( --color-primary );
 					background-color: #fff;
 				}
 
-				&:hover + label:before {
+				&:hover + label::before {
 					border-color: var( --color-primary--hover );
 				}
 
 				&:active {
-					& + label:before {
+					& + label::before {
 						border-color: var( --color-primary--active );
 						box-shadow: inset 0 0 0 1px var( --color-primary--active );
 					}
 
-					& + label:after {
+					& + label::after {
 						border-color: var( --color-primary--active );
 					}
 				}
@@ -53,12 +53,12 @@
 		}
 
 		&:disabled {
-			& + label:before {
+			& + label::before {
 				border-color: var( --color-surface-4 );
 				background-color: var( --color-surface-4 );
 			}
 
-			&:checked + label:before {
+			&:checked + label::before {
 				background-color: var( --color-surface-0 );
 			}
 		}

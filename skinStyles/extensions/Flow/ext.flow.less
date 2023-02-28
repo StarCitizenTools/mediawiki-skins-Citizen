@@ -41,7 +41,7 @@
 	color: var( --color-base );
 
 	.flow-ui-tooltip-triangle {
-		&:after {
+		&::after {
 			position: absolute;
 			z-index: 1;
 			width: 1em;
@@ -56,7 +56,7 @@
 	// triangle on top
 	&.flow-ui-tooltip-up {
 		.flow-ui-tooltip-triangle {
-			&:after {
+			&::after {
 				/* @noflip */
 				box-shadow: 0 0 1px 0 var( --border-color-base );
 			}
@@ -66,7 +66,7 @@
 	// triangle on bottom
 	&.flow-ui-tooltip-down {
 		.flow-ui-tooltip-triangle {
-			&:after {
+			&::after {
 				/* @noflip */
 				box-shadow: 0 -1.5px 0 1.5px var( --border-color-base ), 0 0 1px 0 var( --border-color-base );
 			}
@@ -76,7 +76,7 @@
 	// triangle at left
 	&.flow-ui-tooltip-left {
 		.flow-ui-tooltip-triangle {
-			&:after {
+			&::after {
 				/* @noflip */
 				box-shadow: 1.5px 0 0 1.5px var( --border-color-base ), 0 0 1px 0 var( --border-color-base );
 			}
@@ -86,7 +86,7 @@
 	// triangle at right
 	&.flow-ui-tooltip-right {
 		.flow-ui-tooltip-triangle {
-			&:after {
+			&::after {
 				/* @noflip */
 				box-shadow: 0 1.5px 0 1.5px var( --border-color-base ), 0 0 1px 0 var( --border-color-base );
 			}

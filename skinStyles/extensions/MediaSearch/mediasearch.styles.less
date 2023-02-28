@@ -427,7 +427,7 @@
 
 		&:checked:enabled {
 			&:focus + .sd-radio__icon {
-				&:before {
+				&::before {
 					border-color: var( --color-primary--active );
 				}
 			}
@@ -440,7 +440,7 @@
 				border-color: var( --color-primary--active );
 				box-shadow: none;
 
-				&:before {
+				&::before {
 					border-color: var( --color-primary--active );
 				}
 			}
@@ -549,7 +549,7 @@
 		box-shadow: none;
 
 		&--gradient {
-			&:after {
+			&::after {
 				// TODO: Should really make this into a LESS variable or mixin since it is useful
 				background-image: linear-gradient( to right, rgba( 255, 255, 255, 0 ) 85%, var( --color-surface-0 ) 100% );
 			}
@@ -859,8 +859,8 @@
 /* Spinner.less */
 .sdms-spinner {
 	& .sdms-spinner-bounce,
-	&:before,
-	&:after {
+	&::before,
+	&::after {
 		background-color: var( --color-base--subtle );
 	}
 }
@@ -979,7 +979,7 @@
 }
 
 .sdms-search-filters-wrapper--gradient {
-	&:after {
+	&::after {
 		// TODO: Should really make this into a LESS variable or mixin since it is useful
 		background-image: linear-gradient( to right, rgba( 255, 255, 255, 0 ) 85%, var( --color-surface-0 ) 100% );
 	}

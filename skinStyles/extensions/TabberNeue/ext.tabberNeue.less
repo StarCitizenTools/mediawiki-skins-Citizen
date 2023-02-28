@@ -32,7 +32,7 @@
 
 		&__prev,
 		&__next {
-			&:after {
+			&::after {
 				opacity: var( --opacity-icon-base );
 			}
 		}
@@ -41,8 +41,8 @@
 	&__transclusion {
 		&--loading {
 			.tabber__loading-indicator,
-			&:before,
-			&:after {
+			&::before,
+			&::after {
 				background-color: var( --color-primary );
 			}
 		}
@@ -67,7 +67,7 @@
 				&:hover {
 					background-color: var( --background-color-quiet--hover );
 
-					&:after {
+					&::after {
 						opacity: var( --opacity-icon-base--hover );
 					}
 				}
@@ -75,7 +75,7 @@
 				&:active {
 					background-color: var( --background-color-quiet--active );
 
-					&:after {
+					&::after {
 						opacity: var( --opacity-icon-base--active );
 					}
 				}
@@ -88,7 +88,7 @@
 	.tabber__header {
 		&__prev,
 		&__next {
-			&:after {
+			&::after {
 				filter: invert( 1 );
 			}
 		}

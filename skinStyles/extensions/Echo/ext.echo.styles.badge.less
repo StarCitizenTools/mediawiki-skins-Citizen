@@ -34,12 +34,12 @@
 			box-shadow: 0 0 0 1px #fff, 0 0 0 3px var( --color-primary );
 			opacity: var( --opacity-icon-base--active );
 
-			&:after {
+			&::after {
 				border-color: var( --color-primary );
 			}
 		}
 
-		&:after {
+		&::after {
 			top: 0;
 			border-color: var( --color-destructive );
 			border-radius: var( --border-radius--pill );
@@ -66,11 +66,11 @@
 
 	&.oo-ui-flaggedElement-unseen,
 	&.mw-echo-unseen-notifications {
-		#pt-notifications-alert &:after {
+		#pt-notifications-alert &::after {
 			background-color: var( --color-destructive );
 		}
 
-		#pt-notifications-notice &:after {
+		#pt-notifications-notice &::after {
 			background-color: var( --color-destructive );
 		}
 	}
@@ -99,7 +99,7 @@
 			filter: invert( 1 ) hue-rotate( 180deg );
 
 			// Re-invert indicator color
-			&:after {
+			&::after {
 				filter: invert( 1 ) hue-rotate( 180deg );
 			}
 		}

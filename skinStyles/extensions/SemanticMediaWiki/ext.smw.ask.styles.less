@@ -135,8 +135,8 @@ div#ask legend {
 	border-radius: var( --border-radius--small );
 }
 
-.strike > span:before,
-.strike > span:after {
+.strike > span::before,
+.strike > span::after {
 	background: var( --border-color-base );
 }
 
@@ -145,7 +145,7 @@ div#ask legend {
 	border-color: var( --border-color-base );
 }
 
-#options-toggle:not( :checked ) + #options-list .options-parameter-list:after {
+#options-toggle:not( :checked ) + #options-list .options-parameter-list::after {
 	background-image: linear-gradient( to bottom, rgba( 255, 255, 255, 0 ), var( --color-surface-0 ) 90% );
 }
 

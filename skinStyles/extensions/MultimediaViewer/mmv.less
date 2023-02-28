@@ -400,7 +400,7 @@
 	@media ( max-width: @width-breakpoint-tablet ) {
 		text-indent: -9999px;
 
-		&:before {
+		&::before {
 			margin-right: 0 !important;
 		}
 	}
@@ -618,7 +618,7 @@
 	// On touch device, when user drag/swipe the indicator, it will cause the
 	// page to scroll up and show the card below.
 	@media ( hover: none ) {
-		&:before {
+		&::before {
 			position: absolute;
 			top: var( --space-xs );
 			right: 0;
@@ -633,7 +633,7 @@
 
 		&.mw-mmv-untruncated {
 			// Since background color is dependent on theme now
-			&:before {
+			&::before {
 				background-color: var( --border-color-base--darker );
 			}
 		}

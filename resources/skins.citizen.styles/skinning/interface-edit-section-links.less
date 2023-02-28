@@ -42,7 +42,7 @@
 	text-indent: -9999px; // Hide text
 	transition: @transition-opacity;
 
-	&:before {
+	&::before {
 		.resource-loader-icon;
 		display: block;
 		background-size: contain;
@@ -76,7 +76,7 @@
 
 .skin-citizen-dark {
 	// Flip icon for dark mode
-	.mw-editsection > a:before {
+	.mw-editsection > a::before {
 		filter: invert( 1 );
 	}
 }
