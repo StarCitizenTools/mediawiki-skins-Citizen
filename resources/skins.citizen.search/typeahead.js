@@ -139,7 +139,7 @@ function clearSuggestions() {
 			template = document.getElementById( `${PREFIX}-template` );
 
 		[ ...typeaheadChildren ].forEach( ( item ) => {
-			if ( !item.classList.contains( `${ITEM_CLASS}--page` ) ) {
+			if ( !item.classList.contains( `${ITEM_CLASS}-page` ) ) {
 				fragment.append( item );
 			}
 		} );
@@ -222,6 +222,7 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 				const data = {
 					id: `${PREFIX}-suggestion-${index}`,
 					type: 'page',
+					size: 'md',
 					link: suggestionLinkPrefix + encodeURIComponent( result.key ),
 					title: highlightTitle( result.title ),
 					// Just to be safe, not sure if the default API is HTML escaped
@@ -248,6 +249,7 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 				{
 					icon: 'articleNotFound',
 					type: 'placeholder',
+					size: 'lg',
 					title: mw.message( 'citizen-search-noresults-title', htmlSafeSearchQuery ).text(),
 					desc: mw.message( 'citizen-search-noresults-desc' ).text()
 				}
@@ -303,7 +305,10 @@ function updateMenuItem( item, data ) {
 		item.setAttribute( 'id', data.id );
 	}
 	if ( data.type ) {
-		item.classList.add( `${ITEM_CLASS}--${data.type}` );
+		item.classList.add( `${ITEM_CLASS}-${data.type}` );
+	}
+	if ( data.size ) {
+		item.classList.add( `${ITEM_CLASS}-${data.size}` );
 	}
 	if ( data.link ) {
 		const link = item.querySelector( `.${PREFIX}__content` );
@@ -367,7 +372,7 @@ function updateTypeahead( messages ) {
 		searchQuery = searchInput.value,
 		htmlSafeSearchQuery = mw.html.escape( searchQuery ),
 		hasQuery = searchQuery.length > 0,
-		placeholder = typeahead.querySelector( `.${ITEM_CLASS}--placeholder` );
+		placeholder = typeahead.querySelector( `.${ITEM_CLASS}-placeholder` );
 
 	/**
 	 * Update a tool item or create it if it does not exist
@@ -399,6 +404,7 @@ function updateTypeahead( messages ) {
 				icon: data.icon,
 				id: itemId,
 				type: 'tool',
+				size: 'sm',
 				link: itemLink,
 				desc: itemDesc
 			} );
