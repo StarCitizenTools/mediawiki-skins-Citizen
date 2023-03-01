@@ -2,6 +2,7 @@
  * Framework
 */
 html {
+	box-sizing: border-box;
 	// Not ideal but it works
 	scroll-padding-top: 6rem;
 }
@@ -14,6 +15,13 @@ body {
 	accent-color: var( --color-primary );
 	background: var( --color-surface-0 );
 	color: var( --color-base );
+}
+
+// Apply border-box universally unless overwritten
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
 }
 
 :focus {

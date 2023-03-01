@@ -6,6 +6,7 @@
 	overflow: auto;
 	width: 100%;
 	max-height: ~'calc( var( --header-card-maxheight ) - var( --height-search-bar ) )';
+	box-sizing: content-box; // Magic to align with search input
 	margin: 0 0 0 -1px; // Reset <ol> styles, fix alignment
 	border-bottom-left-radius: var( --border-radius--medium );
 	border-bottom-right-radius: var( --border-radius--medium );

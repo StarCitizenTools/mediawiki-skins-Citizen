@@ -15,8 +15,6 @@
 		> .oo-ui-popupWidget-popup {
 			> .oo-ui-popupWidget {
 				&-head {
-					box-sizing: content-box; // fix overflow
-					padding-top: 8px; // align with other menus
 					border-bottom-color: var( --border-color-base );
 
 					> .oo-ui-iconWidget {
@@ -24,7 +22,9 @@
 					}
 
 					> .oo-ui-labelElement-label {
-						color: var( --color-base--emphasized );
+						padding-top: 0.15em; // compensate font size changes
+						font-size: 1rem;
+						font-weight: var( --font-weight-semibold );
 					}
 				}
 
