@@ -7,11 +7,11 @@
 	width: 100%;
 	max-height: ~'calc( var( --header-card-maxheight ) - var( --height-search-bar ) )';
 	box-sizing: border-box;
-	padding: 0.75rem 0 0 0;
-	margin: -0.75rem 0 0 0; // Reset <ol> styles
+	border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
+	border-top: 0; // Reset citizen-card style
+	margin: 0; // Reset <ol> styles
 	overscroll-behavior: contain;
-	//border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
-	.citizen-card;
+	.citizen-card( false );
 	.citizen-card-hide( 50% 0, Y, false );
 	// Well this won't be loaded before .citizen-animation-ready anyways
 	.citizen-card-transition();
