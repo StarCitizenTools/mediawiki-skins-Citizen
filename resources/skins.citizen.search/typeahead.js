@@ -447,7 +447,7 @@ function updateTypeahead( messages ) {
  * @param {HTMLInputElement} input
  */
 function initTypeahead( searchForm, input ) {
-	const EXPANDED_CLASS = 'citizen-typeahead--expanded';
+	const EXPANDED_CLASS = 'citizen-search__card--expanded';
 
 	const
 		messages = {
@@ -471,7 +471,7 @@ function initTypeahead( searchForm, input ) {
 			// event dismiss the links before it is clicked. This should fix it.
 			setTimeout( () => {
 				searchInput.setAttribute( 'aria-activedescendant', '' );
-				typeahead.classList.remove( EXPANDED_CLASS );
+				searchForm.parentElement.classList.remove( EXPANDED_CLASS );
 				searchInput.removeEventListener( 'keydown', keyboardEvents );
 				searchInput.removeEventListener( 'blur', onBlur );
 			}, 10 );
@@ -481,7 +481,7 @@ function initTypeahead( searchForm, input ) {
 	const onFocus = () => {
 		// Refresh the typeahead since the query will be emptied when blurred
 		updateTypeahead( messages );
-		typeahead.classList.add( EXPANDED_CLASS );
+		searchForm.parentElement.classList.add( EXPANDED_CLASS );
 		searchInput.addEventListener( 'keydown', keyboardEvents );
 		searchInput.addEventListener( 'blur', onBlur );
 	};

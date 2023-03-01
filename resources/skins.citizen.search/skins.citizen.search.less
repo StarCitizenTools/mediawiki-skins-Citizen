@@ -7,9 +7,9 @@
 	width: 100%;
 	max-height: ~'calc( var( --header-card-maxheight ) - var( --height-search-bar ) )';
 	box-sizing: border-box;
-	border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
-	border-top: 0; // Reset citizen-card style
 	margin: 0; // Reset <ol> styles
+	border-bottom-left-radius: var( --border-radius--medium );
+	border-bottom-right-radius: var( --border-radius--medium );
 	overscroll-behavior: contain;
 	.citizen-card( false );
 	.citizen-card-hide( 50% 0, Y, false );
@@ -187,8 +187,21 @@
 		background-color: var( --color-surface-1 );
 	}
 
-	&--expanded {
+	.citizen-search__card--expanded & {
 		.citizen-card-show( false );
+	}
+}
+
+// Merge searchform with typeahead
+.citizen-search__card {
+	&&--expanded {
+		border-bottom-color: transparent;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+
+		.citizen-typeahead {
+			border-top-color: transparent; // Reset citizen-card style
+		}
 	}
 }
 

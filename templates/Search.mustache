@@ -17,7 +17,7 @@
 	{{>Search__button}}
 	<div role="search" class="citizen-search-box citizen-search__card citizen-menu-checkbox-target">
 		<span class="citizen-search__icon citizen-ui-icon mw-ui-icon-wikimedia-search"></span>
-		<form action="{{form-action}}" id="searchform" autocomplete="off">
+		<form action="{{form-action}}" class="citizen-search__form" id="searchform" autocomplete="off">
 			<input type="hidden" name="title" value="{{page-title}}">
 			<label class="screen-reader-text" for="searchInput">{{msg-search}}</label>
 			{{{html-input}}}
