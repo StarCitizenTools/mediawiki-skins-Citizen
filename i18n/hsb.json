@@ -1,0 +1,26 @@
+{
+	"@metadata": {
+		"authors": [
+			"J budissin"
+		]
+	},
+	"citizen-languages-toggle": "Dalše rěče",
+	"citizen-actions-more-toggle": "Dalše akcije",
+	"citizen-sitestats-articles-label": "zapiski",
+	"citizen-sitestats-images-label": "dataje",
+	"citizen-sitestats-users-label": "wužiwarjo",
+	"citizen-sitestats-edits-label": "změny",
+	"citizen-page-info-copyright": "Awtorske prawo",
+	"citizen-action-addsection": "Temu dodać",
+	"citizen-jumptotop": "Wróćo k spočatkej",
+	"citizen-search-fulltext": "Pytać za zapiskami, kotrež wobsahuja $1",
+	"citizen-search-fulltext-empty": "Pytać za tekstom w zapiskach",
+	"citizen-search-mediasearch-empty": "Pytać za medijemi",
+	"citizen-tagline-ns-project": "Informacije wo {{SITENAME}}",
+	"prefs-citizen-theme-option-light": "Swětło",
+	"prefs-citizen-theme-option-dark": "Ćmowe",
+	"prefs-citizen-fontsize-label": "Wulkosć pisma",
+	"prefs-citizen-pagewidth-label": "Šěrokosć strony",
+	"prefs-citizen-lineheight-label": "Wysokosć linki",
+	"prefs-citizen-resetbutton-label": "Wróćo stajić"
+}
