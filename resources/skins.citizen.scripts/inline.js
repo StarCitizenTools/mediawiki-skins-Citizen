@@ -14,7 +14,7 @@ window.applyPref = () => {
 	};
 
 	// Default to auto if no key is present
-	const targetTheme = getStorage( themeKey ) ?? 'auto';
+	const targetTheme = getStorage( themeKey );
 
 	const apply = () => {
 		const cssProps = {
