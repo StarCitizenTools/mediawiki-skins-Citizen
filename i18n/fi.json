@@ -4,24 +4,34 @@
 			"Joquliina",
 			"MITO",
 			"Moj",
-			"Nike"
+			"Nike",
+			"Pyscowicz"
 		]
 	},
-	"citizen-skin-desc": "Star Citizen Wikiä varten kehitetty responsiivinen ulkoasu",
+	"citizen-skin-desc": "Kaunis, käyttökelpoinen, responsiivinen MediaWiki-teema, joka tekee laajennuksista osan yhtenäistä kokemusta. Alun perin luotu [https://starcitizen.tools/ Star Citizen Wikille].",
 	"citizen.js": "/* Tämän sivun JavaScript-koodi liitetään Citizen-ulkoasuun */",
+	"citizen-languages-toggle": "Lisää kieliä",
 	"citizen-actions-more-toggle": "Lisää toimintoja",
 	"citizen-sitestats-articles-label": "artikkelit",
 	"citizen-sitestats-images-label": "tiedostot",
 	"citizen-sitestats-users-label": "käyttäjät",
 	"citizen-sitestats-edits-label": "muokkaukset",
+	"citizen-page-info-credits": "Tekijät",
+	"citizen-page-info-lastmod": "Viimeksi muokattu",
 	"citizen-action-addsection": "Lisää aihe",
 	"citizen-jumptotop": "Takaisin sivun alkuun",
-	"citizen-search-fulltext": "Etsi sivuja joissa on",
+	"citizen-search-fulltext": "Etsi sivuja, jotka sisältävät $1",
+	"citizen-search-empty-desc": "Kirjoita aloittaaksesi haun",
+	"citizen-tagline-ns-project": "Tietoja {{GRAMMAR:inessive|{{SITENAME}}}}",
+	"citizen-tagline-ns-file": "Tiedosto {{GRAMMAR:inessive|{{SITENAME}}}}",
 	"citizen-tagline-ns-mediawiki": "MediaWiki-käyttöliittymäsivu",
 	"citizen-tagline-ns-template": "Mallinesivu",
 	"citizen-tagline-ns-help": "Ohjesivu",
 	"citizen-tagline-ns-category": "Luokkasivu",
 	"prefs-citizen-theme-label": "Teema",
 	"prefs-citizen-theme-option-light": "Vaalea",
-	"prefs-citizen-theme-option-dark": "Tumma"
+	"prefs-citizen-theme-option-dark": "Tumma",
+	"prefs-citizen-fontsize-label": "Fonttikoko",
+	"prefs-citizen-pagewidth-label": "Sivun leveys",
+	"prefs-citizen-resetbutton-label": "Palauta oletusarvo"
 }

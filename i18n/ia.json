@@ -6,6 +6,8 @@
 	},
 	"citizen-skin-desc": "Un apparentia de MediaWiki belle, usabile e responsive que face extensiones parte del experientia cohesive. Initialmente create pro le [https://starcitizen.tools/ wiki Star Citizen].",
 	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|Discussion]]",
+	"citizen.css": "/* Le codice CSS placiate essera cargate pro le usatores del apparentia Citizen */",
+	"citizen.js": "/* Le codice JavaScript placiate hic essera cargate pro le usatores del apparentia Citizen */",
 	"citizen-drawer-toggle": "Alternar menu",
 	"citizen-usermenu-toggle": "Alternar menu personal",
 	"citizen-search-toggle": "Alternar recerca",
