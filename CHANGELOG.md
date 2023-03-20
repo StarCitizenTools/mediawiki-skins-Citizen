@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.4.2...v2.4.3) (2023-03-20)
+
+
+### Features
+
+* **core:** ✨ add border to Citizen cards ([235a76c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/235a76c2bd48fdf8bdc5416e1977ea9cb5168291))
+* **core:** ✨ apply box-sizing: border-box by default ([6831312](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/68313123e9d098c18aeeb6660d19d8c2054c2846))
+* **core:** ✨ clean up print styles ([19ddd61](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/19ddd61e1925ff2bc50c5e51b86dd13196ac306f))
+* **RelatedArticles:** ✨ add border to RA cards ([2a6e65b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2a6e65b2655cfabdaac4cb76f515e2239cbcb831))
+
+
+### Bug Fixes
+
+* **CodeMirror:** use same font as edit font ([787ecc3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/787ecc3fcac99559c37fb7f6f934e03824b17c63))
+* **core:** 🐛 respect config flag for default theme ([015b1e1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/015b1e1b9a9b7ec639a222d822ac8001465f5e3d))
+* **search:** 🐛 align typeahead with input ([0b7c72c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0b7c72ca5ebc068a5a8ad4090628d105492fe039))
+
 ### [2.4.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.4.1...v2.4.2) (2023-02-22)
 
 
