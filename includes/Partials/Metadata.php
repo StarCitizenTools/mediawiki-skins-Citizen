@@ -26,6 +26,7 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Partials;
 
 use Exception;
+use MediaWiki\MediaWikiServices;
 
 final class Metadata extends Partial {
 
@@ -52,8 +53,8 @@ final class Metadata extends Partial {
 		}
 
 		try {
-			$href =
-				wfExpandUrl( wfAppendQuery( wfScript( 'api' ),
+			$href = MediaWikiServices::getInstance()->getUrlUtils()
+				->expand( wfAppendQuery( wfScript( 'api' ),
 					[ 'action' => 'webapp-manifest' ] ), PROTO_RELATIVE );
 		} catch ( Exception $e ) {
 			$href = '';
