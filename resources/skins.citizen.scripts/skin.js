@@ -78,6 +78,7 @@ function registerServiceWorker() {
  */
 function main( window ) {
 	const
+		config = require( './config.json' ),
 		search = require( './search.js' ),
 		checkbox = require( './checkbox.js' );
 
@@ -101,7 +102,11 @@ function main( window ) {
 		sections.init();
 	}
 
-	mw.loader.load( 'skins.citizen.preferences' );
+	// Preference module
+	if ( config.wgCitizenEnablePreferences === true ) {
+		mw.loader.load( 'skins.citizen.preferences' );
+	}
+
 	registerServiceWorker();
 
 	window.addEventListener( 'beforeunload', () => {

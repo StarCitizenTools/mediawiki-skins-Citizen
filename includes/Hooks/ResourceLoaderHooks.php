@@ -45,6 +45,7 @@ class ResourceLoaderHooks {
 		Config $config
 	) {
 		return [
+			'wgCitizenEnablePreferences' => $config->get( 'CitizenEnablePreferences' ),
 			'wgCitizenSearchModule' => $config->get( 'CitizenSearchModule' ),
 		];
 	}

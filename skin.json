@@ -595,6 +595,12 @@
 			"description": "Enable included Noto Sans CJK for wikis that serves CJK languages",
 			"descriptionmsg": "citizen-config-enablecjkfonts",
 			"public": true
+		},
+		"EnablePreferences": {
+			"value": true,
+			"description": "Enables or disable preferences module",
+			"descriptionmsg": "citizen-config-enablepreferences",
+			"public": true
 		}
 	},
 	"manifest_version": 2
