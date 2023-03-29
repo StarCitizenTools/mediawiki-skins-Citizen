@@ -49,124 +49,153 @@
 	color: var( --color-base--subtle );
 }
 
+/* 
+ * T312987 
+ * --type is needed for 1.39 compatibility 
+ */
+.cdx-button--type-primary.cdx-button--action-progressive:enabled,
 .cdx-button--weight-primary.cdx-button--action-progressive:enabled {
 	border-color: var( --color-primary );
 	background-color: var( --color-primary );
 }
 
+.cdx-button--type-primary.cdx-button--action-progressive:enabled:hover,
 .cdx-button--weight-primary.cdx-button--action-progressive:enabled:hover {
 	border-color: var( --color-primary--hover );
 	background-color: var( --color-primary--hover );
 }
 
+.cdx-button--type-primary.cdx-button--action-progressive:enabled:active,
 .cdx-button--weight-primary.cdx-button--action-progressive:enabled:active {
 	border-color: var( --color-primary--active );
 	background-color: var( --color-primary--active );
 }
 
+.cdx-button--type-primary.cdx-button--action-progressive:enabled:focus:not( :active ),
 .cdx-button--weight-primary.cdx-button--action-progressive:enabled:focus:not( :active ) {
 	border-color: var( --color-primary );
 	box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px #fff;
 }
 
+.cdx-button--type-primary.cdx-button--action-destructive:enabled,
 .cdx-button--weight-primary.cdx-button--action-destructive:enabled {
 	border-color: var( --color-destructive );
 	background-color: var( --color-destructive );
 }
 
+.cdx-button--type-primary.cdx-button--action-destructive:enabled:hover,
 .cdx-button--weight-primary.cdx-button--action-destructive:enabled:hover {
 	border-color: var( --color-destructive--hover );
 	background-color: var( --color-destructive--hover );
 }
 
+.cdx-button--type-primary.cdx-button--action-destructive:enabled:active,
 .cdx-button--weight-primary.cdx-button--action-destructive:enabled:active {
 	border-color: var( --color-destructive--active );
 	background-color: var( --color-destructive--active );
 }
 
+.cdx-button--type-primary.cdx-button--action-destructive:enabled:focus:not( :active ),
 .cdx-button--weight-primary.cdx-button--action-destructive:enabled:focus:not( :active ) {
 	border-color: var( --color-destructive );
 	box-shadow: inset 0 0 0 1px var( --color-destructive ), inset 0 0 0 2px #fff;
 }
 
+.cdx-button--type-normal.cdx-button--action-progressive:enabled,
 .cdx-button--weight-normal.cdx-button--action-progressive:enabled {
 	color: var( --color-primary );
 }
 
+.cdx-button--type-normal.cdx-button--action-progressive:enabled:hover,
 .cdx-button--weight-normal.cdx-button--action-progressive:enabled:hover {
 	border-color: var( --color-primary--hover );
 	color: var( --color-primary--hover );
 }
 
+.cdx-button--type-normal.cdx-button--action-progressive:enabled:active,
 .cdx-button--weight-normal.cdx-button--action-progressive:enabled:active {
 	border-color: var( --color-primary--active );
 	background-color: var( --color-surface-2--active ); // Use normal style for now
 	color: var( --color-primary--active );
 }
 
+.cdx-button--type-normal.cdx-button--action-destructive:enabled,
 .cdx-button--weight-normal.cdx-button--action-destructive:enabled {
 	color: var( --color-destructive );
 }
 
+.cdx-button--type-normal.cdx-button--action-destructive:enabled:hover,
 .cdx-button--weight-normal.cdx-button--action-destructive:enabled:hover {
 	border-color: var( --color-destructive--hover );
 	color: var( --color-destructive--hover );
 }
 
+.cdx-button--type-normal.cdx-button--action-destructive:enabled:active,
 .cdx-button--weight-normal.cdx-button--action-destructive:enabled:active {
 	border-color: var( --color-destructive--active );
 	background-color: var( --color-surface-2--active ); // Use normal style for now
 	color: var( --color-destructive--active );
 }
 
+.cdx-button--type-normal.cdx-button--action-destructive:enabled:focus:not( :active ),
 .cdx-button--weight-normal.cdx-button--action-destructive:enabled:focus:not( :active ) {
 	border-color: var( --color-destructive );
 	box-shadow: inset 0 0 0 1px var( --color-destructive );
 }
 
+.cdx-button--type-quiet:enabled:hover,
 .cdx-button--weight-quiet:enabled:hover {
 	background-color: var( --background-color-quiet--hover );
 }
 
+.cdx-button--type-quiet:enabled:active,
 .cdx-button--weight-quiet:enabled:active {
 	border-color: var( --background-color-quiet--active );
 	background-color: var( --background-color-quiet--active );
 	color: var( --color-base--subtle );
 }
 
+.cdx-button--type-quiet.cdx-button--action-progressive:enabled,
 .cdx-button--weight-quiet.cdx-button--action-progressive:enabled {
 	color: var( --color-primary );
 }
 
+.cdx-button--type-quiet.cdx-button--action-progressive:enabled:hover,
 .cdx-button--weight-quiet.cdx-button--action-progressive:enabled:hover {
 	background-color: var( --background-color-primary--hover );
 	color: var( --color-primary--hover );
 }
 
+.cdx-button--type-quiet.cdx-button--action-progressive:enabled:active,
 .cdx-button--weight-quiet.cdx-button--action-progressive:enabled:active {
 	border-color: var( --color-primary--active );
 	background-color: var( --color-primary--active );
 }
 
+.cdx-button--type-quiet.cdx-button--action-destructive:enabled,
 .cdx-button--weight-quiet.cdx-button--action-destructive:enabled {
 	color: var( --color-destructive );
 }
 
+.cdx-button--type-quiet.cdx-button--action-destructive:enabled:hover,
 .cdx-button--weight-quiet.cdx-button--action-destructive:enabled:hover {
 	background-color: var( --background-color-destructive );
 	color: var( --color-destructive--hover );
 }
 
+.cdx-button--type-quiet.cdx-button--action-destructive:enabled:active,
 .cdx-button--weight-quiet.cdx-button--action-destructive:enabled:active {
 	border-color: var( --color-destructive--active );
 	background-color: var( --color-destructive--active );
 }
 
+.cdx-button--type-quiet.cdx-button--action-destructive:enabled:focus:not( :active ),
 .cdx-button--weight-quiet.cdx-button--action-destructive:enabled:focus:not( :active ) {
 	border-color: var( --color-destructive );
 	box-shadow: inset 0 0 0 1px var( --color-destructive );
 }
 
+.cdx-button--type-quiet:disabled,
 .cdx-button--weight-quiet:disabled {
 	color: var( --color-base--subtle );
 }
