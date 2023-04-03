@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.4.3...v2.4.4) (2023-04-03)
+
+
+### Features
+
+* **core:** ✨ add config flag to disable preferences menu ([90890de](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/90890de53fe56884fdbe470784128283e7398020))
+* **search:** ✨ trigger typeahead update when character is composed ([aaa82d0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/aaa82d06efe7a9479d47ea63c8420371bff59ca4)), closes [#608](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/608)
+
+
+### Bug Fixes
+
+* **codex:** update button classes for type->weight change ([#606](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/606)) ([6b8ff22](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6b8ff223833db71ae3287eafb111e017c6e440d1))
+* **core:** 🐛 remove redundant override for image height ([b47f265](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b47f2658c72098b6b2f87d626eeaa3cb72e4f265)), closes [#605](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/605)
+* **RelatedArticles:** enforce min-height for RA to render ([daf5b3d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/daf5b3d07fc4d5a4c75d41fdf846cd9320c73a09))
+
 ### [2.4.3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.4.2...v2.4.3) (2023-03-20)
 
 
