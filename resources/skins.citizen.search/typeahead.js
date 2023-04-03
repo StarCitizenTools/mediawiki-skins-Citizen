@@ -374,61 +374,67 @@ function updateTypeahead() {
 		placeholder = typeahead.querySelector( `.${ITEM_CLASS}-placeholder` );
 
 	/**
-	 * Update a tool item or create it if it does not exist
-	 *
-	 * @param {Object} data
+	 * Get a list of tools for the typeahead footer
 	 */
-	const updateToolItem = ( data ) => {
-		const
-			itemId = `${PREFIX}-${data.id}`,
-			query = `<span class="citizen-typeahead__query">${htmlSafeSearchQuery}</span>`,
-			itemLink = data.link + htmlSafeSearchQuery,
-			/* eslint-disable-next-line mediawiki/msg-doc */
-			itemDesc = mw.message( data.msg, query );
+	const getTools = () => {
+		/**
+		 * Update a tool item or create it if it does not exist
+		 *
+		 * @param {Object} data
+		 */
+		const updateToolItem = ( data ) => {
+			const
+				itemId = `${PREFIX}-${data.id}`,
+				query = `<span class="citizen-typeahead__query">${htmlSafeSearchQuery}</span>`,
+				itemLink = data.link + htmlSafeSearchQuery,
+				/* eslint-disable-next-line mediawiki/msg-doc */
+				itemDesc = mw.message( data.msg, query );
 
-		let item = document.getElementById( itemId );
+			let item = document.getElementById( itemId );
 
-		// Update existing element instead of creating a new one
-		if ( item ) {
-			// FIXME: Probably more efficient to just replace the query than the whole messaage?
-			updateMenuItem(
-				item,
-				{
+			// Update existing element instead of creating a new one
+			if ( item ) {
+				// FIXME: Probably more efficient to just replace the query than the whole messaage?
+				updateMenuItem(
+					item,
+					{
+						link: itemLink,
+						desc: itemDesc
+					}
+				);
+			} else {
+				item = getMenuItem( {
+					icon: data.icon,
+					id: itemId,
+					type: 'tool',
+					size: 'sm',
 					link: itemLink,
 					desc: itemDesc
-				}
-			);
-		} else {
-			item = getMenuItem( {
-				icon: data.icon,
-				id: itemId,
-				type: 'tool',
-				size: 'sm',
-				link: itemLink,
-				desc: itemDesc
+				} );
+				typeahead.append( item );
+			}
+		};
+
+		// Fulltext search
+		updateToolItem( {
+			id: 'fulltext',
+			link: `${config.wgScriptPath}/index.php?title=Special:Search&fulltext=1&search=`,
+			icon: 'articleSearch',
+			msg: hasQuery ? 'citizen-search-fulltext' : 'citizen-search-fulltext-empty'
+		} );
+
+		// MediaSearch
+		if ( config.isMediaSearchExtensionEnabled ) {
+			updateToolItem( {
+				id: 'mediasearch',
+				link: `${config.wgScriptPath}/index.php?title=Special:MediaSearch&type=image&search=`,
+				icon: 'imageGallery',
+				msg: hasQuery ? 'citizen-search-mediasearch' : 'citizen-search-mediasearch-empty'
 			} );
-			typeahead.append( item );
 		}
 	};
 
-	// Fulltext search
-	updateToolItem( {
-		id: 'fulltext',
-		link: `${config.wgScriptPath}/index.php?title=Special:Search&fulltext=1&search=`,
-		icon: 'articleSearch',
-		msg: hasQuery ? 'citizen-search-fulltext' : 'citizen-search-fulltext-empty'
-	} );
-
-	// MediaSearch
-	if ( config.isMediaSearchExtensionEnabled ) {
-		updateToolItem( {
-			id: 'mediasearch',
-			link: `${config.wgScriptPath}/index.php?title=Special:MediaSearch&type=image&search=`,
-			icon: 'imageGallery',
-			msg: hasQuery ? 'citizen-search-mediasearch' : 'citizen-search-mediasearch-empty'
-		} );
-	}
-
+	getTools();
 	if ( hasQuery ) {
 		getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder );
 	} else {
@@ -507,8 +513,21 @@ function initTypeahead( searchForm, input ) {
 		updateTypeahead();
 	}
 
+	// Trigger update only when character is composed (e.g. CJK IME)
+	searchInput.composing = false;
+	searchInput.addEventListener( 'compositionstart', () => {
+		searchInput.composing = true;
+	} );
+	searchInput.addEventListener( 'compositionend', () => {
+		if ( searchInput.composing ) {
+			searchInput.composing = false;
+			searchInput.dispatchEvent( new Event( 'input' ) );
+		}
+	} );
 	searchInput.addEventListener( 'input', () => {
-		mw.util.debounce( 100, updateTypeahead() );
+		if ( searchInput.composing !== true ) {
+			mw.util.debounce( 100, updateTypeahead() );
+		}
 	} );
 
 }
