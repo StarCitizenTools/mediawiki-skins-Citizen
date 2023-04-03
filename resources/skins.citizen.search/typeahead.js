@@ -365,9 +365,8 @@ function getMenuItem( data ) {
 /**
  * Update the typeahead element
  *
- * @param {Object} messages
  */
-function updateTypeahead( messages ) {
+function updateTypeahead() {
 	const
 		searchQuery = searchInput.value,
 		htmlSafeSearchQuery = mw.html.escape( searchQuery ),
@@ -439,8 +438,8 @@ function updateTypeahead( messages ) {
 			placeholder,
 			{
 				icon: 'articlesSearch',
-				title: messages.emptyTitle,
-				desc: messages.emptyDesc
+				title: mw.message( 'searchsuggest-search' ).text(),
+				desc: mw.message( 'citizen-search-empty-desc' ).text()
 			}
 		);
 		placeholder.classList.remove( HIDDEN_CLASS );
@@ -456,17 +455,13 @@ function initTypeahead( searchForm, input ) {
 	const EXPANDED_CLASS = 'citizen-search__card--expanded';
 
 	const
-		messages = {
-			emptyTitle: mw.message( 'searchsuggest-search' ).text(),
-			emptyDesc: mw.message( 'citizen-search-empty-desc' ).text()
-		},
 		template = mw.template.get(
 			'skins.citizen.search',
 			'resources/skins.citizen.search/templates/typeahead.mustache'
 		),
 		data = {
-			'msg-searchsuggest-search': messages.emptyTitle,
-			'msg-citizen-search-empty-desc': messages.emptyDesc
+			'msg-searchsuggest-search': mw.message( 'searchsuggest-search' ).text(),
+			'msg-citizen-search-empty-desc': mw.message( 'citizen-search-empty-desc' ).text()
 		};
 
 	const onBlur = ( event ) => {
@@ -486,7 +481,7 @@ function initTypeahead( searchForm, input ) {
 
 	const onFocus = () => {
 		// Refresh the typeahead since the query will be emptied when blurred
-		updateTypeahead( messages );
+		updateTypeahead();
 		searchForm.parentElement.classList.add( EXPANDED_CLASS );
 		searchInput.addEventListener( 'keydown', keyboardEvents );
 		searchInput.addEventListener( 'blur', onBlur );
@@ -509,11 +504,11 @@ function initTypeahead( searchForm, input ) {
 
 	// Run once in case there is searchQuery before eventlistener is attached
 	if ( searchInput.value.length > 0 ) {
-		updateTypeahead( messages );
+		updateTypeahead();
 	}
 
 	searchInput.addEventListener( 'input', () => {
-		mw.util.debounce( 100, updateTypeahead( messages ) );
+		mw.util.debounce( 100, updateTypeahead() );
 	} );
 
 }
