@@ -28,10 +28,10 @@ use MediaWiki\Skins\Citizen\Partials\Drawer;
 use MediaWiki\Skins\Citizen\Partials\Footer;
 use MediaWiki\Skins\Citizen\Partials\Header;
 use MediaWiki\Skins\Citizen\Partials\Metadata;
+use MediaWiki\Skins\Citizen\Partials\PageTitle;
 use MediaWiki\Skins\Citizen\Partials\PageTools;
 use MediaWiki\Skins\Citizen\Partials\Tagline;
 use MediaWiki\Skins\Citizen\Partials\Theme;
-use MediaWiki\Skins\Citizen\Partials\Title;
 use SkinMustache;
 
 /**
@@ -62,7 +62,7 @@ class SkinCitizen extends SkinMustache {
 
 		$header = new Header( $this );
 		$drawer = new Drawer( $this );
-		$pageTitle = new Title( $this );
+		$pageTitle = new PageTitle( $this );
 		$tagline = new Tagline( $this );
 		$bodycontent = new BodyContent( $this );
 		$footer = new Footer( $this );

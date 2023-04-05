@@ -25,10 +25,13 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Partials;
 
+use MediaWiki\MediaWikiServices;
+use Title;
+
 /**
  * Title partial of Skin Citizen
  */
-final class Title extends Partial {
+final class PageTitle extends Partial {
 	/**
 	 * Wrap text within parenthesis with a span tag
 	 *
@@ -36,13 +39,22 @@ final class Title extends Partial {
 	 * @return string
 	 */
 	public function decorateTitle( $data ) {
-		// Sometimes it can be empty
-		if ( empty( $data ) ) {
-			return $data;
+		if ( $this->shouldAddParenthesis() ) {
+			$pattern = '/(\(.+\))/';
+			$replacement = '<span class="mw-page-title-parenthesis">$1</span>';
+			return preg_replace( $pattern, $replacement, $data );
 		}
+		return $data;
+	}
 
-		$pattern = '/(\(.+\))/';
-		$replacement = '<span class="mw-page-title-parenthesis">$1</span>';
-		return preg_replace( $pattern, $replacement, $data );
+	/**
+	 * Check if the current page is in the content namespace
+	 *
+	 * @return bool
+	 */
+	private function shouldAddParenthesis() : bool {
+		$ns = $this->title->getNamespace();
+		$contentNs = MediaWikiServices::getInstance()->getNamespaceInfo()->getContentNamespaces();
+		return in_array( $ns, $contentNs );
 	}
 }
