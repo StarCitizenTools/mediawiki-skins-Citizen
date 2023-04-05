@@ -26,7 +26,6 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Partials;
 
 use MediaWiki\MediaWikiServices;
-use Title;
 
 /**
  * Title partial of Skin Citizen
@@ -52,7 +51,7 @@ final class PageTitle extends Partial {
 	 *
 	 * @return bool
 	 */
-	private function shouldAddParenthesis() : bool {
+	private function shouldAddParenthesis(): bool {
 		$ns = $this->title->getNamespace();
 		$contentNs = MediaWikiServices::getInstance()->getNamespaceInfo()->getContentNamespaces();
 		return in_array( $ns, $contentNs );
