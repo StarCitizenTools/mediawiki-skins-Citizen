@@ -1,0 +1,43 @@
+{
+	"@metadata": {
+		"authors": [
+			"Nokeoo"
+		]
+	},
+	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|Diskusija]]",
+	"citizen-languages-toggle": "Daugiau kalbų",
+	"citizen-actions-more-toggle": "Daugiau veiksmų",
+	"citizen-sitestats-articles-label": "straipsniai",
+	"citizen-sitestats-images-label": "failai",
+	"citizen-sitestats-users-label": "naudotojai",
+	"citizen-sitestats-edits-label": "keitimai",
+	"citizen-page-info-copyright": "Autorinės teisės",
+	"citizen-page-info-credits": "Kreditai",
+	"citizen-page-info-lastmod": "Paskutinis pakeitimas",
+	"citizen-footer-desc": "Redaguoti šį tekstą [[MediaWiki:Citizen-footer-desc]]",
+	"citizen-footer-tagline": "Redaguoti šį tekstą [[MediaWiki:Citizen-footer-tagline]]",
+	"citizen-action-addsection": "Pridėti temą",
+	"citizen-jumptotop": "Grįžti į viršų",
+	"citizen-search-fulltext": "Ieškoti puslapių, turinčių $1",
+	"citizen-search-fulltext-empty": "Ieškoti teksto puslapiuose",
+	"citizen-search-mediasearch": "Ieškoti medijos, susijusios su $1",
+	"citizen-search-mediasearch-empty": "Ieškoti medijos",
+	"citizen-search-empty-desc": "Rašykite norėdami pradėti ieškoti",
+	"citizen-search-noresults-title": "Oi! Nėra $1 rezultatų",
+	"citizen-search-noresults-desc": "Galbūt išbandykite toliau pateiktas parinktis?",
+	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}} diskusijų puslapis",
+	"citizen-tagline-ns-project": "Informacija apie {{SITENAME}}",
+	"citizen-tagline-ns-file": "Failas {{SITENAME}}",
+	"citizen-tagline-ns-mediawiki": "MediaWiki sąsajos puslapis",
+	"citizen-tagline-ns-template": "Šablono puslapis",
+	"citizen-tagline-ns-help": "Pagalbos puslapis",
+	"citizen-tagline-ns-category": "Kategorijos puslapis",
+	"prefs-citizen-theme-label": "Tema",
+	"prefs-citizen-theme-option-auto": "Automatiškai",
+	"prefs-citizen-theme-option-light": "Šviesus",
+	"prefs-citizen-theme-option-dark": "Tamsus",
+	"prefs-citizen-fontsize-label": "Šrifto dydis",
+	"prefs-citizen-pagewidth-label": "Puslapio plotis",
+	"prefs-citizen-lineheight-label": "Eilutės aukštis",
+	"prefs-citizen-resetbutton-label": "Atstatyti į numatytuosius"
+}
