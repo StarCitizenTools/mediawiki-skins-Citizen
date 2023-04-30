@@ -1,3 +1,21 @@
 .citizen-table-wrapper {
 	overflow-x: auto;
 }
+
+// TODO: Move this out of tables styles when this is used by more stuff
+.citizen-overflow {
+	&--left {
+		-webkit-mask-image: linear-gradient( 90deg, transparent, #000 15% );
+		mask-image: linear-gradient( 90deg, transparent, #000 15% );
+	}
+
+	&--right {
+		-webkit-mask-image: linear-gradient( 90deg, #000 85%, transparent );
+		mask-image: linear-gradient( 90deg, #000 85%, transparent );
+	}
+
+	&--left&--right {
+		-webkit-mask-image: linear-gradient( 90deg, transparent, #000 15%, #000 85%, transparent );
+		mask-image: linear-gradient( 90deg, transparent, #000 15%, #000 85%, transparent );
+	}
+}
