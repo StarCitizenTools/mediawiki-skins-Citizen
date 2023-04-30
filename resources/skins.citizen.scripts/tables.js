@@ -1,6 +1,6 @@
 /**
  * Wrap table in div container to make it scrollable without breaking layout
- * 
+ *
  * @param {HTMLTableElement} table
  * @return {void}
  */
