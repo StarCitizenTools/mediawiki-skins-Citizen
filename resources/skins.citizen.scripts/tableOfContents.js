@@ -38,10 +38,13 @@ function changeActiveSection( id ) {
  * Toggle active HTML class to items in table of content based on user viewport.
  * Based on Vector
  *
+ * @param {HTMLElement} bodyContent
  * @return {void}
  */
-function initToC() {
-	const bodyContent = document.getElementById( 'bodyContent' );
+function init( bodyContent ) {
+	if ( !document.getElementById( 'mw-panel-toc' ) ) {
+		return;
+	}
 
 	// We use scroll-padding-top to handle scrolling with fixed header
 	// It is better to respect that so it is consistent
@@ -67,5 +70,5 @@ function initToC() {
 }
 
 module.exports = {
-	init: initToC
+	init: init
 };

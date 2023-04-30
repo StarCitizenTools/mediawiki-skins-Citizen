@@ -1,14 +1,21 @@
 /**
+ * Set up functionality of collapsable sections
+ *
+ * @param {HTMLElement} bodyContent
  * @return {void}
  */
-function initCollapsibleSections() {
-	const prefix = 'section-',
-		headings = document.querySelectorAll( '.' + prefix + 'heading' ),
-		sections = document.querySelectorAll( '.' + prefix + 'collapsible' );
+function init( bodyContent ) {
+	if ( !document.body.classList.contains( 'citizen-sections-enabled' ) ) {
+		return;
+	}
+
+	const
+		headings = bodyContent.querySelectorAll( '.section-heading' ),
+		sections = bodyContent.querySelectorAll( '.section-collapsible' );
 
 	for ( let i = 0; i < headings.length; i++ ) {
 		const j = i + 1,
-			collapsibleID = prefix + 'collapsible-' + j,
+			collapsibleID = `.section-collapsible-${j}`,
 			/* T13555 */
 			headline = headings[ i ].querySelector( '.mw-headline' ) ?? headings[ i ].querySelector( '.mw-heading' );
 
@@ -22,15 +29,15 @@ function initCollapsibleSections() {
 		headings[ i ].addEventListener( 'click', function () {
 			// .section-heading--collapsed
 
-			this.classList.toggle( prefix + 'heading--collapsed' );
+			this.classList.toggle( 'section-heading--collapsed' );
 			// .section-collapsible--collapsed
 
-			sections[ j ].classList.toggle( prefix + 'collapsible--collapsed' );
+			sections[ j ].classList.toggle( 'section-collapsible--collapsed' );
 			headline.setAttribute( 'aria-expanded', headline.getAttribute( 'aria-expanded' ) === 'true' ? 'false' : 'true' );
 		} );
 	}
 }
 
 module.exports = {
-	init: initCollapsibleSections
+	init: init
 };

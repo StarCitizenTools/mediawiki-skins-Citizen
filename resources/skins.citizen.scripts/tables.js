@@ -21,7 +21,6 @@ function init( bodyContent ) {
 	}
 
 	const
-		config = require( './config.json' ),
 		tables = bodyContent.querySelectorAll( 'table' );
 
 	tables.forEach( ( table ) => {

@@ -89,28 +89,22 @@ function main( window ) {
 	// Set up checkbox hacks
 	checkbox.bind();
 
-	// Table of Contents
-	const tocContainer = document.getElementById( 'mw-panel-toc' );
-	if ( tocContainer ) {
-		const toc = require( './tableOfContents.js' );
-		toc.init();
-	}
-
-	// Collapsible sections
-	if ( document.body.classList.contains( 'citizen-sections-enabled' ) ) {
-		const sections = require( './sections.js' );
-		sections.init();
-	}
-
 	mw.hook( 'wikipage.content' ).add( function ( content ) {
 		// content is a jQuery object
 		// note that this refers to .mw-body-content, not #bodyContent
 		const bodyContent = content[ 0 ];
 
-		// Table enhancements
-		const tables = require( './tables.js' );
+		const
+			sections = require( './sections.js' ),
+			tables = require( './tables.js' ),
+			toc = require( './tableOfContents.js' );
 
+		// Collapsable sections
+		sections.init( bodyContent );
+		// Table enhancements
 		tables.init( bodyContent );
+		// Table of contents
+		toc.init( bodyContent );
 	} );
 
 	// Preference module
