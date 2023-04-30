@@ -102,6 +102,17 @@ function main( window ) {
 		sections.init();
 	}
 
+	mw.hook( 'wikipage.content' ).add( function ( content ) {
+		// content is a jQuery object
+		// note that this refers to .mw-body-content, not #bodyContent
+		const bodyContent = content[ 0 ];
+
+		// Table enhancements
+		const tables = require( './tables.js' );
+
+		tables.init( bodyContent );
+	} );
+
 	// Preference module
 	if ( config.wgCitizenEnablePreferences === true ) {
 		mw.loader.load( 'skins.citizen.preferences' );

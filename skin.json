@@ -129,7 +129,8 @@
 				"resources/skins.citizen.scripts/sectionObserver.js",
 				"resources/skins.citizen.scripts/search.js",
 				"resources/skins.citizen.scripts/sections.js",
-				"resources/skins.citizen.scripts/tableOfContents.js"
+				"resources/skins.citizen.scripts/tableOfContents.js",
+				"resources/skins.citizen.scripts/tables.js"
 			],
 			"dependencies": [
 				"mediawiki.util",
