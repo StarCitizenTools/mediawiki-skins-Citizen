@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.5.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.5.0...v2.5.1) (2023-05-01)
+
+
+### Features
+
+* **core:** ✨ add HTML class to disable table wrapper ([b2eaf0a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b2eaf0a41aefbff513b0461bcab27606ff552f20))
+* **core:** ✨ check parent container for table nowrap class ([587cea1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/587cea1ee9c825cc912cbf01fba4234f243fd6da))
+* **core:** ✨ do not wrap nested tables ([3d14f9c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3d14f9cf0b63176caafb634f183cf3033b7a0af9))
+* **core:** ✨ ignore infobox class for table wrapper ([81affb8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/81affb88f19bc7be8fd5998b03b30a2f51551b46))
+* **core:** ✨ inherit float classes to table wrapper ([d1d49e6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d1d49e62d5e13dfc80874eced46f9b25b59de729))
+* **TemplateData:** ✨ add style for TemplateData button in VE ([e139df6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e139df6a24fb25b0e8e0a082d2a1f4bc3fc07f62))
+
 ## [2.5.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.4.4...v2.5.0) (2023-05-01)
 
 
