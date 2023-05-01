@@ -60,10 +60,10 @@ function setupOverflowState( element ) {
  * @return {void}
  */
 function wrapTable( table ) {
-    // Don't do anything if there is a nowrap class
-    if ( table.classList.contains( 'citizen-table-nowrap' ) ) {
-        return;
-    }
+	// Don't do anything if there is a nowrap class
+	if ( table.classList.contains( 'citizen-table-nowrap' ) ) {
+		return;
+	}
 
 	const wrapper = document.createElement( 'div' );
 	wrapper.classList.add( 'citizen-table-wrapper' );

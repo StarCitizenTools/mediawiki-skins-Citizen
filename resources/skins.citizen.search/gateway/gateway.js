@@ -38,7 +38,6 @@ async function getResults( searchQuery, controller ) {
 
 	const signal = controller.signal;
 
-	/* eslint-disable-next-line compat/compat */
 	const response = await fetch( gateway.getUrl( searchQuery ), { signal } );
 
 	if ( !response.ok ) {

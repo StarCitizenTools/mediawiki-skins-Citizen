@@ -61,7 +61,7 @@ window.applyPref = () => {
 			}
 
 			// Apply pref by adding CSS to root
-			/* eslint-disable-next-line compat/compat */
+
 			for ( const [ key, property ] of Object.entries( cssProps ) ) {
 				const value = getStorage( prefix + key );
 
