@@ -60,31 +60,31 @@ function setupOverflowState( element ) {
  * @return {void}
  */
 function wrapTable( table ) {
-    // Don't do anything if there is a nowrap class
-    if ( table.classList.contains( 'citizen-table-nowrap' ) ) {
-        return;
-    }
+	// Don't do anything if there is a nowrap class
+	if ( table.classList.contains( 'citizen-table-nowrap' ) ) {
+		return;
+	}
 
-    const wrapper = document.createElement( 'div' );
+	const wrapper = document.createElement( 'div' );
 
-    // Some classes should be inherited from the table
-    // For example, float helper classes like floatleft and floatright
-    const inheritTableClass = () => {
-        const tableClasses = [
-            'floatleft',
-            'floatright'
-        ];
+	// Some classes should be inherited from the table
+	// For example, float helper classes like floatleft and floatright
+	const inheritTableClass = () => {
+		const tableClasses = [
+			'floatleft',
+			'floatright'
+		];
 
-        tableClasses.forEach( ( tableClass ) => {
-            if ( table.classList.contains( tableClass ) ) {
-                wrapper.classList.add( tableClass );
-		table.classList.remove( tableClass );
-            }
-        } );
-    };
+		tableClasses.forEach( ( tableClass ) => {
+			if ( table.classList.contains( tableClass ) ) {
+				wrapper.classList.add( tableClass );
+				table.classList.remove( tableClass );
+			}
+		} );
+	};
 
-    wrapper.classList.add( 'citizen-table-wrapper' );
-    inheritTableClass();
+	wrapper.classList.add( 'citizen-table-wrapper' );
+	inheritTableClass();
 	table.parentNode.insertBefore( wrapper, table );
 	wrapper.appendChild( table );
 
