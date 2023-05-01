@@ -433,6 +433,7 @@
 			"+ext.PortableInfobox.styles": "skinStyles/extensions/PortableInfobox/ext.PortableInfobox.styles.less",
 			"+ext.Tabber": "skinStyles/extensions/Tabber/ext.Tabber.less",
 			"+ext.tabberNeue": "skinStyles/extensions/TabberNeue/ext.tabberNeue.less",
+			"+ext.templateDataGenerator.editTemplatePage": "skinStyles/extensions/TemplateData/ext.templateDataGenerator.editTemplatePage.less",
 			"+ext.uploadWizard": "skinStyles/extensions/UploadWizard/ext.uploadWizard.less",
 			"+ext.uploadWizard.page.styles": "skinStyles/extensions/UploadWizard/uploadWizard.noWizard.less",
 			"+ext.visualEditor.progressBarWidget": "skinStyles/extensions/VisualEditor/ext.visualEditor.progressBarWidget.less",
