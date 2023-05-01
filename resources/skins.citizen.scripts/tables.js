@@ -60,6 +60,7 @@ function setupOverflowState( element ) {
  * @return {void}
  */
 function wrapTable( table ) {
+	// TODO: Make this a config flag
 	const ignoredClasses = [
         	'citizen-table-nowrap',
         	'infobox'
@@ -75,15 +76,16 @@ function wrapTable( table ) {
 	// Some classes should be inherited from the table
 	// For example, float helper classes like floatleft and floatright
 	const inheritTableClass = () => {
-		const tableClasses = [
+		// TODO: Make this a config flag
+		const inheritedClasses = [
 			'floatleft',
 			'floatright'
 		];
 
-		tableClasses.forEach( ( tableClass ) => {
-			if ( table.classList.contains( tableClass ) ) {
-				wrapper.classList.add( tableClass );
-				table.classList.remove( tableClass );
+		inheritedClasses.forEach( ( inheritedClass ) => {
+			if ( table.classList.contains( inheritedClass ) ) {
+				wrapper.classList.add( inheritedClass );
+				table.classList.remove( inheritedClass );
 			}
 		} );
 	};
