@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.4.4...v2.5.0) (2023-05-01)
+
+
+### Features
+
+* **core:** ✨ add scroll affordance to tables ([e45af9b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e45af9bbbeffe40f195b148d7d7b78b02b34cddd))
+* **core:** ✨ make tables responsive without breaking table layout ([8c888a7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8c888a7e1f79bfce9cdf1b2e3b73ccaada2ac6ac))
+* **core:** ✨ only apply title transform to content namespaces ([fe4f4a9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fe4f4a91d2e7d28be69c8997001c44d919858a0e))
+
+
+### Bug Fixes
+
+* **core:** 🐛 avoid double spacing between notice and content ([612382f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/612382f567fa30eeef2816623bfa43829e20b8ab))
+* **RelatedArticles:** 🐛 larger min-height to trigger lazyload ([567fc81](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/567fc811ea46430826f42a1d658504bd4c89569b))
+
 ### [2.4.4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.4.3...v2.4.4) (2023-04-03)
 
 
