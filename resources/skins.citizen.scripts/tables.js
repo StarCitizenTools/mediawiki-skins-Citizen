@@ -68,7 +68,7 @@ function wrapTable( table ) {
     	const hasIgnoredClass = ( ignoreClass ) => table.classList.contains( ignoreClass );
 
     	// Return if table has one of the ignored classes
-    	if ( ignoredClasses.some( hasIgnoredClass ) ) return;
+    	if ( ignoredClasses.some( hasIgnoredClass ) ) { return; }
 
 	const wrapper = document.createElement( 'div' );
 
