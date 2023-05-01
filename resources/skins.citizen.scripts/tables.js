@@ -60,10 +60,15 @@ function setupOverflowState( element ) {
  * @return {void}
  */
 function wrapTable( table ) {
-	// Don't do anything if there is a nowrap class
-	if ( table.classList.contains( 'citizen-table-nowrap' ) ) {
-		return;
-	}
+	const ignoredClasses = [
+        	'citizen-table-nowrap',
+        	'infobox'
+    	];
+
+    	const hasIgnoredClass = ( ignoreClass ) => table.classList.contains( ignoreClass );
+
+    	// Return if table has one of the ignored classes
+    	if ( ignoredClasses.some( hasIgnoredClass ) ) return;
 
 	const wrapper = document.createElement( 'div' );
 
