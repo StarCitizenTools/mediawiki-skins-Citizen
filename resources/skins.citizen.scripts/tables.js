@@ -62,14 +62,20 @@ function setupOverflowState( element ) {
 function wrapTable( table ) {
 	// TODO: Make this a config flag
 	const ignoredClasses = [
-        	'citizen-table-nowrap',
-        	'infobox'
-    	];
+		'citizen-table-nowrap',
+		'infobox'
+	];
 
-    	const hasIgnoredClass = ( ignoreClass ) => table.classList.contains( ignoreClass );
+	// Check table and parent for ignored classes
+	const hasIgnoredClass = ( ignoreClass ) => {
+		return table.classList.contains( ignoreClass ) ||
+				table.parentNode.classList.contains( ignoreClass );
+	};
 
-    	// Return if table has one of the ignored classes
-    	if ( ignoredClasses.some( hasIgnoredClass ) ) { return; }
+	// Return if table has one of the ignored classes
+	if ( ignoredClasses.some( hasIgnoredClass ) ) {
+		return;
+	}
 
 	const wrapper = document.createElement( 'div' );
 
