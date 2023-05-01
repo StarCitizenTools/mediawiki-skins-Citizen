@@ -103,11 +103,12 @@ function wrapTable( table ) {
  * @return {void}
  */
 function init( bodyContent ) {
-	if ( !bodyContent.querySelector( 'table' ) ) {
+	// Don't touch nested tables since we only need to wrap the outer layer
+	if ( !bodyContent.querySelector( 'table:not( table table )' ) ) {
 		return;
 	}
 
-	const tables = bodyContent.querySelectorAll( 'table' );
+	const tables = bodyContent.querySelectorAll( 'table:not( table table )' );
 
 	tables.forEach( ( table ) => {
 		wrapTable( table );
