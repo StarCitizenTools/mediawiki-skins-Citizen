@@ -64,7 +64,9 @@ function wrapTable( table ) {
 	const ignoredClasses = [
 		'citizen-table-nowrap',
 		'mw-changeslist-line',
-		'infobox'
+		'infobox',
+		// dataTable from Extension:Cargo and some other has issue with the wrapper
+		'dataTable'
 	];
 
 	// Check table and parent for ignored classes
