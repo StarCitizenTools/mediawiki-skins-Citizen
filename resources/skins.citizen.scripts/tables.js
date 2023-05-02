@@ -63,6 +63,7 @@ function wrapTable( table ) {
 	// TODO: Make this a config flag
 	const ignoredClasses = [
 		'citizen-table-nowrap',
+		'mw-changeslist-line',
 		'infobox'
 	];
 
