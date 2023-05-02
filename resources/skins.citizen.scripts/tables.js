@@ -65,7 +65,9 @@ function wrapTable( table ) {
 		'citizen-table-nowrap',
 		'mw-changeslist-line',
 		'infobox',
+		// Extension:Cargo
 		// dataTable from Extension:Cargo and some other has issue with the wrapper
+		'cargoDynamicTable',
 		'dataTable'
 	];
 
