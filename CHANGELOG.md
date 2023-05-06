@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.5.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.5.1...v2.5.2) (2023-05-06)
+
+
+### Features
+
+* **core:** ✨ do not wrap changelist tables ([661fbf0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/661fbf0b8ffb07917670496949f2625bf17d8ba5))
+* **core:** ✨ ignore cargo dynamic table for table wrapper ([cd93b3d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cd93b3d679750a812d2643eaa487aab7dcc5ec5b))
+* **core:** ✨ ignore dataTable for table wrapper ([79daca4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/79daca474a472b2b171606493e9e67a0905eb805))
+* **core:** ✨ more saturated base text color ([35821b6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/35821b62ae73535c130ba5802a2dae490295e7af))
+* **core:** ✨switch page-container to flex layout ([c2922f6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c2922f6ba29b9594574b19fd9e57a3c593785321))
+
+
+### Bug Fixes
+
+* **core:** 🐛 add gap between footer icons under the same li ([801eb9a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/801eb9a13bfe72366312dd82e4a5b96477f24da2))
+* **core:** 🐛 do not resize image in table ([838a7f5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/838a7f51009d7dd216180bacaf7f96e17c9bee74))
+* **core:** 🐛 ensure loading indicator is removed when script is loaded ([09ffed6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/09ffed668d582ffbe3d1f2550ba5b0adc4e3cab1))
+
 ### [2.5.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.5.0...v2.5.1) (2023-05-01)
 
 
