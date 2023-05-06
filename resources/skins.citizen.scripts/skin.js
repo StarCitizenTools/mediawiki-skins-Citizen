@@ -82,6 +82,9 @@ function main( window ) {
 		search = require( './search.js' ),
 		checkbox = require( './checkbox.js' );
 
+	// Sometimes the loading indicator isn't removed
+	document.documentElement.classList.remove( 'citizen-loading' );
+
 	enableCssAnimations( window.document );
 	search.init( window );
 	initStickyHeader( window.document );
