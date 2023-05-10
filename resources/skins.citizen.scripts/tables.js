@@ -60,16 +60,8 @@ function setupOverflowState( element ) {
  * @return {void}
  */
 function wrapTable( table ) {
-	// TODO: Make this a config flag
-	const ignoredClasses = [
-		'citizen-table-nowrap',
-		'mw-changeslist-line',
-		'infobox',
-		// Extension:Cargo
-		// dataTable from Extension:Cargo and some other has issue with the wrapper
-		'cargoDynamicTable',
-		'dataTable'
-	];
+	// Load ignored classes from config
+	const ignoredClasses = mw.config.get('wgCitizenTableNowrapClasses');
 
 	// Check table and parent for ignored classes
 	const hasIgnoredClass = ( ignoreClass ) => {

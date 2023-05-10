@@ -31,6 +31,8 @@ use MediaWiki\Hook\SkinBuildSidebarHook;
 use MediaWiki\Hook\SkinEditSectionLinksHook;
 use MediaWiki\Hook\SkinTemplateNavigation__UniversalHook;
 use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;
+use MediaWiki\ResourceLoader\Hook\ResourceLoaderGetConfigVarsHook;
+use Config;
 
 /**
  * Hooks to run relating the skin
@@ -41,7 +43,8 @@ class SkinHooks implements
 	SkinBuildSidebarHook,
 	SkinEditSectionLinksHook,
 	SkinPageReadyConfigHook,
-	SkinTemplateNavigation__UniversalHook
+	SkinTemplateNavigation__UniversalHook,
+	ResourceLoaderGetConfigVarsHook
 {
 	/**
 	 * Adds the inline theme switcher script to the page
@@ -421,5 +424,25 @@ class SkinHooks implements
 		if ( is_string( $item ) ) {
 			$item = trim( $item );
 		}
+	}
+
+	/**
+	 * This hook is called at the end of
+	 * ResourceLoaderStartUpModule::getConfigSettings(). Use this hook to export static
+	 * configuration variables to JavaScript. Things that depend on the current page
+	 * or request state must be added through MakeGlobalVariablesScript instead.
+	 * Skin is made available for skin specific config.
+	 *
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/ResourceLoaderGetConfigVars
+	 *
+	 * @param array &$vars [ variable name => value ]
+	 * @param Skin $skin
+	 * @param Config $config since 1.34
+	 * @return bool|void True or no return value to continue or false to abort
+	 */
+	public function onResourceLoaderGetConfigVars( array &$vars, $skin, Config $config ): void {
+		// makes wgCitizenTableNowrapClasses available for use in
+		// resources/skins.citizen.scripts/tables.js:wrapTable()
+		$vars['wgCitizenTableNowrapClasses'] = $config->get( 'CitizenTableNowrapClasses' );
 	}
 }

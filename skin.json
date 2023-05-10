@@ -80,7 +80,8 @@
 		"SkinBuildSidebar": "SkinHooks",
 		"SkinEditSectionLinks": "SkinHooks",
 		"SkinPageReadyConfig": "SkinHooks",
-		"SkinTemplateNavigation::Universal": "SkinHooks"
+		"SkinTemplateNavigation::Universal": "SkinHooks",
+		"ResourceLoaderGetConfigVars": "SkinHooks"
 	},
 	"ResourceModules": {
 		"skins.citizen.styles": {
@@ -602,6 +603,18 @@
 			"value": true,
 			"description": "Enables or disable preferences module",
 			"descriptionmsg": "citizen-config-enablepreferences",
+			"public": true
+		},
+		"TableNowrapClasses": {
+			"value": [
+				"citizen-table-nowrap",
+				"mw-changeslist-line",
+				"infobox",
+				"cargoDynamicTable",
+				"dataTable"
+			],
+			"description": "Defines table css classes ignored by citizen table wrapper",
+			"descriptionmsg": "citizen-config-tablenowrapclasses",
 			"public": true
 		}
 	},
