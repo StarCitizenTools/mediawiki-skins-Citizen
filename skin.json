@@ -80,8 +80,7 @@
 		"SkinBuildSidebar": "SkinHooks",
 		"SkinEditSectionLinks": "SkinHooks",
 		"SkinPageReadyConfig": "SkinHooks",
-		"SkinTemplateNavigation::Universal": "SkinHooks",
-		"ResourceLoaderGetConfigVars": "SkinHooks"
+		"SkinTemplateNavigation::Universal": "SkinHooks"
 	},
 	"ResourceModules": {
 		"skins.citizen.styles": {

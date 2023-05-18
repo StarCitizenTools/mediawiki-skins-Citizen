@@ -47,6 +47,7 @@ class ResourceLoaderHooks {
 		return [
 			'wgCitizenEnablePreferences' => $config->get( 'CitizenEnablePreferences' ),
 			'wgCitizenSearchModule' => $config->get( 'CitizenSearchModule' ),
+			'wgCitizenTableNowrapClasses' => $config->get( 'CitizenTableNowrapClasses' ),
 		];
 	}
 

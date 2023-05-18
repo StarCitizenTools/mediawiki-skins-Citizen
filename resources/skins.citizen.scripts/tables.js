@@ -1,3 +1,5 @@
+const config = require( './config.json' );
+
 /**
  * Set up scroll affordance for an overflowed element
  * TODO: Move this out of tables when this is used by more stuff
@@ -61,7 +63,7 @@ function setupOverflowState( element ) {
  */
 function wrapTable( table ) {
 	// Load ignored classes from config
-	const ignoredClasses = mw.config.get('wgCitizenTableNowrapClasses');
+	const ignoredClasses = config.wgCitizenTableNowrapClasses;
 
 	// Check table and parent for ignored classes
 	const hasIgnoredClass = ( ignoreClass ) => {
