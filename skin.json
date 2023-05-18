@@ -157,7 +157,8 @@
 				"resources/skins.citizen.search/typeahead.js",
 				"resources/skins.citizen.search/gateway/gateway.js",
 				"resources/skins.citizen.search/gateway/mwActionApi.js",
-				"resources/skins.citizen.search/gateway/mwRestApi.js"
+				"resources/skins.citizen.search/gateway/mwRestApi.js",
+				"resources/skins.citizen.search/gateway/smwAskApi.js"
 			],
 			"messages": [
 				"citizen-search-fulltext",
@@ -560,6 +561,12 @@
 			"value": 6,
 			"description": "The max number of suggestions in search result",
 			"descriptionmsg": "citizen-config-maxsearchresults",
+			"public": true
+		},
+		"SearchSmwAskApiQueryTemplate": {
+			"value": "[[Display_title_of::~*${input}*]]|?Display_title_of=displaytitle|?Page_Image=thumbnail|?Description=desc",
+			"description": "The SMW ask query for fetching search suggestion. You can replace the SMW properties (but not the mappings).",
+			"descriptionmsg": "citizen-config-smwaskapiquerytemplate",
 			"public": true
 		},
 		"ShowPageTools": {

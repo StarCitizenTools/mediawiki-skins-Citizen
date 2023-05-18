@@ -21,6 +21,8 @@ function getGateway() {
 			return require( './mwActionApi.js' );
 		case 'mwRestApi':
 			return require( './mwRestApi.js' );
+		case 'smwAskApi':
+			return require( './smwAskApi.js' );
 		default:
 			throw new Error( 'Unknown search gateway' );
 	}
