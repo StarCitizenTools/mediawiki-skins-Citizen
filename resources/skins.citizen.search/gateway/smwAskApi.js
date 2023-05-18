@@ -10,9 +10,18 @@ function getUrl( input ) {
 	const endpoint = config.wgScriptPath + '/api.php?format=json',
 		maxResults = config.wgCitizenMaxSearchResults,
 		askQueryTemplate = config.wgCitizenSearchSmwAskApiQueryTemplate
+
+	let askQuery = '';
+
+	if ( input.includes( ':' ) ) {
+		let namespace = input.split( ':' )[0];
+		if ( namespace === 'Category' ) namespace = ':' + namespace;
+		input = input.split( ':' )[1];
+		askQuery += '[[' + namespace + ':+]]';
+	}
 	
-	let askQuery = askQueryTemplate.replaceAll('${input}', input);
-	askQuery += "|limit=" + maxResults;
+	askQuery += askQueryTemplate.replaceAll( '${input}', input );
+	askQuery += '|limit=' + maxResults;
 
 	const query = {
 		action: 'ask',
