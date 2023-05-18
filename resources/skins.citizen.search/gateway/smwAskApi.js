@@ -9,23 +9,23 @@ const config = require( '../config.json' );
 function getUrl( input ) {
 	const endpoint = config.wgScriptPath + '/api.php?format=json',
 		maxResults = config.wgCitizenMaxSearchResults,
-		askQueryTemplate = config.wgCitizenSearchSmwAskApiQueryTemplate
+		askQueryTemplate = config.wgCitizenSearchSmwAskApiQueryTemplate;
 
 	let askQuery = '';
 
 	if ( input.includes( ':' ) ) {
-		let namespace = input.split( ':' )[0];
-		if ( namespace === 'Category' ) namespace = ':' + namespace;
-		input = input.split( ':' )[1];
+		let namespace = input.split( ':' )[ 0 ];
+		if ( namespace === 'Category' ) { namespace = ':' + namespace; }
+		input = input.split( ':' )[ 1 ];
 		askQuery += '[[' + namespace + ':+]]';
 	}
-	
+
 	askQuery += askQueryTemplate.replaceAll( '${input}', input );
 	askQuery += '|limit=' + maxResults;
 
 	const query = {
 		action: 'ask',
-		query: encodeURIComponent(askQuery),
+		query: encodeURIComponent( askQuery )
 	};
 
 	let queryString = '';
@@ -46,51 +46,48 @@ function convertDataToResults( data ) {
 	const userLang = mw.config.get( 'wgUserLanguage' );
 
 	const getDisplayTitle = ( item ) => {
-		if ( item.printouts.displaytitle && item.printouts.displaytitle.length
-			&& item.printouts.displaytitle[0]['Language code'] && item.printouts.displaytitle[0]['Text'].item.length ) {
+		if ( item.printouts.displaytitle && item.printouts.displaytitle.length &&
+			item.printouts.displaytitle[ 0 ][ 'Language code' ] && item.printouts.displaytitle[ 0 ].Text.item.length ) {
 			// multi-lang string preference: user lang => English => first result
-			let textEN = "";
-			let textResult = "";
+			let textEN = '';
+			let textResult = '';
 			for ( const text of item.printouts.displaytitle ) {
-				if ( text['Language code'].item[0] === userLang ) textResult = text['Text'].item[0];
-				if ( text['Language code'].item[0] === 'en' ) textEN = text['Text'].item[0];
+				if ( text[ 'Language code' ].item[ 0 ] === userLang ) { textResult = text.Text.item[ 0 ]; }
+				if ( text[ 'Language code' ].item[ 0 ] === 'en' ) { textEN = text.Text.item[ 0 ]; }
 			}
-			if ( textResult === "" ) textResult = textEN; 
-			if ( textResult === "" ) textResult = item.printouts.displaytitle[0]['Text'].item[0];
+			if ( textResult === '' ) { textResult = textEN; }
+			if ( textResult === '' ) { textResult = item.printouts.displaytitle[ 0 ].Text.item[ 0 ]; }
 			return textResult;
 		} else if ( item.printouts.displaytitle && item.printouts.displaytitle.length ) {
-			return item.printouts.displaytitle[0];
-		} else if ( item.displaytitle && item.displaytitle !== "") {
+			return item.printouts.displaytitle[ 0 ];
+		} else if ( item.displaytitle && item.displaytitle !== '' ) {
 			return item.displaytitle;
-		}
-		else return item.fulltext;
+		} else { return item.fulltext; }
 	};
 
 	const getDescription = ( item ) => {
-		if ( item.printouts.desc && item.printouts.desc.length
-			&& item.printouts.desc[0]['Language code'] && item.printouts.desc[0]['Text'].item.length ) {
+		if ( item.printouts.desc && item.printouts.desc.length &&
+			item.printouts.desc[ 0 ][ 'Language code' ] && item.printouts.desc[ 0 ].Text.item.length ) {
 			// multi-lang string preference: user lang => English => first result
-			let textEN = "";
-			let textResult = "";
+			let textEN = '';
+			let textResult = '';
 			for ( const text of item.printouts.desc ) {
-				if ( text['Language code'].item[0] === userLang ) textResult = text['Text'].item[0];
-				if ( text['Language code'].item[0] === 'en' ) textEN = text['Text'].item[0];
+				if ( text[ 'Language code' ].item[ 0 ] === userLang ) { textResult = text.Text.item[ 0 ]; }
+				if ( text[ 'Language code' ].item[ 0 ] === 'en' ) { textEN = text.Text.item[ 0 ]; }
 			}
-			if ( textResult === "" ) textResult = textEN; 
-			if ( textResult === "" ) textResult = item.printouts.desc[0]['Text'].item[0];
+			if ( textResult === '' ) { textResult = textEN; }
+			if ( textResult === '' ) { textResult = item.printouts.desc[ 0 ].Text.item[ 0 ]; }
 			return textResult;
 		} else if ( item.printouts.desc && item.printouts.desc.length ) {
-			return item.printouts.desc[0];
-		} 
-		else return "";
+			return item.printouts.desc[ 0 ];
+		} else { return ''; }
 	};
 
 	const getThumbnail = ( item ) => {
 		if ( item.printouts.thumbnail && item.printouts.thumbnail.length ) {
-			let img_title = item.printouts.thumbnail[0].fulltext;
+			const img_title = item.printouts.thumbnail[ 0 ].fulltext;
 			return config.wgScriptPath + '/index.php?title=Special:Redirect/file/' + img_title + '&width=200&height=200';
-		} 
-		else return undefined;
+		} else { return undefined; }
 	};
 
 	const results = [];
@@ -103,7 +100,7 @@ function convertDataToResults( data ) {
 			key: data[ i ].fulltext,
 			title: getDisplayTitle( data[ i ] ),
 			desc: getDescription( data[ i ] ),
-			thumbnail: getThumbnail( data[ i] ),
+			thumbnail: getThumbnail( data[ i ] )
 		};
 	}
 
