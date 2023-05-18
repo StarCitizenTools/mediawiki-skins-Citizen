@@ -604,6 +604,18 @@
 			"description": "Enables or disable preferences module",
 			"descriptionmsg": "citizen-config-enablepreferences",
 			"public": true
+		},
+		"TableNowrapClasses": {
+			"value": [
+				"citizen-table-nowrap",
+				"mw-changeslist-line",
+				"infobox",
+				"cargoDynamicTable",
+				"dataTable"
+			],
+			"description": "Defines table css classes ignored by citizen table wrapper",
+			"descriptionmsg": "citizen-config-tablenowrapclasses",
+			"public": true
 		}
 	},
 	"manifest_version": 2
