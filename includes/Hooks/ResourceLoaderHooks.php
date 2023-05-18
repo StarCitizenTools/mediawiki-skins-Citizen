@@ -80,6 +80,7 @@ class ResourceLoaderHooks {
 			'wgCitizenSearchGateway' => $config->get( 'CitizenSearchGateway' ),
 			'wgCitizenSearchDescriptionSource' => $config->get( 'CitizenSearchDescriptionSource' ),
 			'wgCitizenMaxSearchResults' => $config->get( 'CitizenMaxSearchResults' ),
+			'wgCitizenSearchSmwAskApiQueryTemplate' => $config->get( 'CitizenSearchSmwAskApiQueryTemplate' ),
 			'wgScriptPath' => $config->get( 'ScriptPath' ),
 			'wgSearchSuggestCacheExpiry' => $config->get( 'SearchSuggestCacheExpiry' ),
 			'isMediaSearchExtensionEnabled' => ExtensionRegistry::getInstance()->isLoaded( 'MediaSearch' ),

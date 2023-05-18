@@ -118,8 +118,9 @@ Name | Description | Values | Default
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
 `$wgCitizenSearchModule` | Which ResourceLoader module to use for search suggestion | `skins.citizen.search`; `mediawiki.searchSuggest`; string | `skins.citizen.search`
-`$wgCitizenSearchGateway` | Which gateway to use for fetching search suggestion |`mwActionApi`; `mwRestApi`; string | `mwActionApi`
+`$wgCitizenSearchGateway` | Which gateway to use for fetching search suggestion |`mwActionApi`; `mwRestApi`; `smwAskApi`; string | `mwActionApi`
 `$wgCitizenSearchDescriptionSource` | Source of description text on search suggestions (only takes effect if `$wgCitizenSearchGateway` is `mwActionApi`) | `wikidata` - Use description provided by [WikibaseLib](Extension:WikibaseLib) or [ShortDescription](https://www.mediawiki.org/wiki/Extension:ShortDescription); `textextracts` - Use description provided by [TextExtracts](https://www.mediawiki.org/wiki/Extension:TextExtracts); `pagedescription` - Use description provided by [Description2](https://www.mediawiki.org/wiki/Extension:Description2) or any other extension that sets the `description` page property | `textextracts`
+`$wgCitizenSearchSmwAskApiQueryTemplate` | The SMW ask query for fetching search suggestion (only takes effect if `$wgCitizenSearchGateway` is `smwAskApi`). You can replace the SMW properties (but not the mappings). | string | `'[[Display_title_of::~*${input}*]] \|?Display_title_of=displaytitle \|?Page_Image=thumbnail \|?Description=desc'`
 `$wgCitizenMaxSearchResults` | Max number of search suggestions | Integer > 0 | `6`
 
 ### Webapp manifest
