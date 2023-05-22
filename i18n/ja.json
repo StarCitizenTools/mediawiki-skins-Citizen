@@ -3,15 +3,17 @@
 		"authors": [
 			"Alistair3149",
 			"MathXplore",
+			"Shirayuki",
 			"Tamaki Wakita",
 			"バレロン"
 		]
 	},
+	"citizen.css": "/* ここに記述したCSSは、すべてのCitizen外装利用者に読み込まれます */",
 	"citizen-languages-toggle": "その他の言語",
 	"citizen-actions-more-toggle": "その他の操作",
 	"citizen-sitestats-articles-label": "記事",
 	"citizen-sitestats-images-label": "ファイル",
-	"citizen-sitestats-users-label": "ユーザー",
+	"citizen-sitestats-users-label": "利用者",
 	"citizen-sitestats-edits-label": "編集",
 	"citizen-page-info-copyright": "著作権",
 	"citizen-page-info-credits": "クレジット",
