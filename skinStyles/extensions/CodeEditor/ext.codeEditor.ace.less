@@ -5,12 +5,9 @@
  * Module: ext.codeEditor.ace
  * Version: REL1_39 67c012c
  *
- * Date: 2022-12-15
+ * Date: 2023-05-23
 */
 
-@import '../../../resources/variables.less';
-
-// FIXME: Implemement same syntax higlight color as CodeMirror and SyntaxHighlight
 .ace {
 	&-tm {
 		background-color: transparent;
@@ -40,6 +37,136 @@
 
 			&_cursor {
 				color: var( --color-base--emphasized );
+			}
+
+			&_storage,
+			&_keyword {
+				color: var( --color-syntax-purple );
+			}
+
+			&_constant {
+				color: var( --color-syntax-orange );
+
+				&.ace {
+					&_buildin {
+						color: var( --color-syntax-orange );
+					}
+
+					&_language {
+						color: var( --color-syntax-orange );
+					}
+
+					&_library {
+						color: var( --color-syntax-orange );
+					}
+
+					&_numeric {
+						color: var( --color-syntax-orange );
+					}
+				}
+			}
+
+			&_invalid {
+				background-color: var( --background-color-quiet--hover );
+				color: var( --color-destructive );
+			}
+
+			&_support {
+				&.ace {
+					&_function {
+						color: var( --color-syntax-blue );
+					}
+
+					&_constant {
+						color: var( --color-syntax-orange );
+					}
+
+					&_type,
+					&_class {
+						color: var( --color-syntax-purple );
+					}
+				}
+			}
+
+			&_keyword {
+				&.ace {
+					&_operator {
+						color: var( --color-syntax-cyan );
+					}
+				}
+			}
+
+			&_string {
+				color: var( --color-syntax-green );
+
+				&.ace {
+					&_regex {
+						color: var( --color-syntax-red );
+					}
+				}
+			}
+
+			&_comment {
+				color: var( --color-base--subtle );
+
+				&.ace {
+					&_doc {
+						&.ace {
+							&_tag {
+								color: var( --color-base--subtle );
+							}
+						}
+					}
+				}
+			}
+
+			&_variable {
+				color: var( --color-syntax-yellow );
+			}
+
+			&_xml-pe {
+				color: var( --color-syntax-brown );
+			}
+
+			&_entity {
+				&.ace {
+					&_name {
+						&.ace {
+							&_function {
+								color: var( --color-syntax-blue );
+							}
+						}
+					}
+				}
+			}
+
+			&_heading {
+				color: var( --color-syntax-blue );
+			}
+
+			&_list {
+				color: var( --color-syntax-red );
+			}
+
+			&_meta {
+				&.ace {
+					&_tag {
+						color: var( --color-syntax-blue );
+					}
+				}
+			}
+
+			&_paren,
+			&_punctuation {
+				color: var( --color-syntax-cyan );
+			}
+
+			&_indent-guide {
+				opacity: var( --opacity-base--disabled );
+			}
+
+			&_marker-layer .ace_selection {
+				background: #063ba5; // Browser default selector color from Chrome Dark
 			}
 		}
 	}
