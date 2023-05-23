@@ -47,7 +47,7 @@ Name | Grade | Version | Last updated
 [Cite](https://www.mediawiki.org/wiki/Extension:Cite) | A | N/A | N/A
 [CleanChanges](https://www.mediawiki.org/wiki/Extension:CleanChanges) | B | MLEB 2021.07 | 2021-07-29
 [CodeEditor](https://www.mediawiki.org/wiki/Extension:CodeEditor) | A | REL1_39 `67c012c` | 2022-12-15
-[CodeMirror](https://www.mediawiki.org/wiki/Extension:CodeMirror) | A | REL1_35 `a326407` | 2021-08-25
+[CodeMirror](https://www.mediawiki.org/wiki/Extension:CodeMirror) | A | REL1_35 `a326407` | 2023-05-24
 [CookieWarning](https://www.mediawiki.org/wiki/Extension:CookieWarning) | A | REL1_35 `3c2ae6a` | 2022-04-29
 [DiscussionTools](https://www.mediawiki.org/wiki/Extension:DiscussionTools) | B | REL1_39 `1aae2cc` | 2023-01-21
 [DismissableSiteNotice](https://www.mediawiki.org/wiki/Extension:DismissableSiteNotice) | A | N/A | N/A
