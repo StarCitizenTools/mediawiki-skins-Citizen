@@ -1,5 +1,37 @@
-.skin-citizen {
-	.cs-comments {
-		font-family: var( --font-family-base );
-	}
+.cs-comments {
+	font-family: var( --font-family-base );
+	--color-cs-comment-header-collapsed: hsl( 210, 17%, 93% );
+	--color-cs-comment-header-expanded: hsl( 210, 90%, 93% );
+	--color-cs-comment-header-reply: hsl( 210, 60%, 96% );
+}
+
+.skin-citizen-dark .cs-comments {
+	--color-cs-comment-header-collapsed: hsl( 210, 17%, 7% );
+	--color-cs-comment-header-expanded: hsl( 210, 90%, 7% );
+	--color-cs-comment-header-reply: hsl( 210, 60%, 10% );
+}
+
+.cs-edit-box {
+	background-color: var( --color-surface-2 );
+	border: 1px solid var( --border-color-base );
+}
+
+.cs-comment-title {
+	color: var( --color-base--emphasized );
+}
+
+.cs-comment-details {
+	color: var( --color-base--subtle );
+}
+
+.cs-collapsed .cs-comment-header {
+	background-color: var( --color-cs-comment-header-collapsed );
+}
+
+.cs-expanded .cs-comment-header {
+	background-color: var( --color-cs-comment-header-expanded );
+}
+
+.cs-reply-comment > .cs-comment-header {
+	background-color: var( --color-cs-comment-header-reply );
 }
