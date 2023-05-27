@@ -20,6 +20,10 @@
 	bottom: var( --header-size ) !important;
 	margin: var( --space-xs );
 	box-shadow: var( --box-shadow-dialog );
+
+	.oo-ui-popupWidget-body {
+		max-height: calc( var( --header-card-maxheight ) - 2 * 3.1428571em );
+	}
 }
 
 @media ( min-width: @width-breakpoint-tablet ) {
