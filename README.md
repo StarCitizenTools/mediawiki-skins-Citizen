@@ -48,6 +48,7 @@ Name | Grade | Version | Last updated
 [CleanChanges](https://www.mediawiki.org/wiki/Extension:CleanChanges) | B | MLEB 2021.07 | 2021-07-29
 [CodeEditor](https://www.mediawiki.org/wiki/Extension:CodeEditor) | A | REL1_39 `67c012c` | 2022-12-15
 [CodeMirror](https://www.mediawiki.org/wiki/Extension:CodeMirror) | A | REL1_35 `a326407` | 2023-05-24
+[CommentStreams](https://www.mediawiki.org/wiki/Extension:CommentStreams) | B | REL1_39 `f75ff3b` | 2023-05-27
 [CookieWarning](https://www.mediawiki.org/wiki/Extension:CookieWarning) | A | REL1_35 `3c2ae6a` | 2022-04-29
 [DiscussionTools](https://www.mediawiki.org/wiki/Extension:DiscussionTools) | B | REL1_39 `1aae2cc` | 2023-01-21
 [DismissableSiteNotice](https://www.mediawiki.org/wiki/Extension:DismissableSiteNotice) | A | N/A | N/A
@@ -67,7 +68,7 @@ Name | Grade | Version | Last updated
 [RelatedArticles](https://www.mediawiki.org/wiki/Extension:RelatedArticles) | A | REL1_39 `f513e5c` | 2022-11-16
 [ReplaceText](https://www.mediawiki.org/wiki/Extension:ReplaceText) | B | REL1_39 `af4840a` | 2023-01-03
 [RevisionSlider](https://www.mediawiki.org/wiki/Extension:RevisionSlider) | B | REL1_35 `4c4e368` | 2022-06-02
-[Scribunto](https://www.mediawiki.org/wiki/Extension:Scribunto) | B | REL1_39 `1716fd6` | 2023-05-23
+[Scribunto](https://www.mediawiki.org/wiki/Extension:Scribunto) | B | REL1_39 `ebb91f2` | 2023-05-23
 [Semantic MediaWiki](https://www.mediawiki.org/wiki/Extension:Semantic_MediaWiki) | A | 4.0.2 `0fcdfce` | 2022-10-21
 [Semantic Result Formats](https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats) | E | N/A | N/A
 [SimpleTooltip](https://www.mediawiki.org/wiki/Extension:SimpleTooltip) | B | N/A | 2022-02-19
@@ -80,6 +81,7 @@ Name | Grade | Version | Last updated
 [TwoColConflict](https://www.mediawiki.org/wiki/Extension:TwoColConflict) | B | REL1_39 5a2a947 | 2023-01-09
 [UniversalLanguageSelector](https://www.mediawiki.org/wiki/Extension:UniversalLanguageSelector) | B | MLEB 2021.12 | 2022-05-17
 [UploadWizard](https://www.mediawiki.org/wiki/Extension:UploadWizard) | A | REL1_39 `9cd7a02` | 2023-01-08
+[VEForAll](https://www.mediawiki.org/wiki/Extension:VEForAll) | B | REL1_39 `0de7158` | 2023-05-27
 [VisualEditor](https://www.mediawiki.org/wiki/Extension:VisualEditor) | A | REL1_39 `65d89c9` | 2023-02-06
 [Wikibase](https://www.mediawiki.org/wiki/Extension:Wikibase) | B | REL1_35 `7bb503b` | 2022-05-11
 [WikiEditor](https://www.mediawiki.org/wiki/Extension:WikiEditor) | A | REL1_39 `02e1c70` | 2022-11-08
