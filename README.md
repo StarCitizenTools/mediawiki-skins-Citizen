@@ -29,9 +29,9 @@ Please feel free to submit PRs if you want to add support for more extensions!
 ### Core
 Name | Grade | Version | Last updated
 :--- | :--- | :--- | :---
-MediaWiki UI | A | 1.39.0 | 2022-11-30
+MediaWiki UI | A | 1.39.0 | 2023-05-29
 Codex | A | 0.1.1| 2022-12-01
-OOUI | A | 0.44.3 | 2022-11-30
+OOUI | A | 0.44.3 | 2023-05-29
 
 ### Extensions
 Name | Grade | Version | Last updated
@@ -68,7 +68,7 @@ Name | Grade | Version | Last updated
 [RelatedArticles](https://www.mediawiki.org/wiki/Extension:RelatedArticles) | A | REL1_39 `f513e5c` | 2022-11-16
 [ReplaceText](https://www.mediawiki.org/wiki/Extension:ReplaceText) | B | REL1_39 `af4840a` | 2023-01-03
 [RevisionSlider](https://www.mediawiki.org/wiki/Extension:RevisionSlider) | B | REL1_35 `4c4e368` | 2022-06-02
-[Scribunto](https://www.mediawiki.org/wiki/Extension:Scribunto) | B | REL1_39 `ebb91f2` | 2023-05-23
+[Scribunto](https://www.mediawiki.org/wiki/Extension:Scribunto) | B | REL1_39 `ebb91f2` | 2023-05-29
 [Semantic MediaWiki](https://www.mediawiki.org/wiki/Extension:Semantic_MediaWiki) | A | 4.0.2 `0fcdfce` | 2022-10-21
 [Semantic Result Formats](https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats) | E | N/A | N/A
 [SimpleTooltip](https://www.mediawiki.org/wiki/Extension:SimpleTooltip) | B | N/A | 2022-02-19
