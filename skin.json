@@ -350,7 +350,7 @@
 			"+ext.jquery.atwho": "skinStyles/extensions/SemanticMediaWiki/ext.jquery.atwho.less",
 			"+ext.libs.tippy": "skinStyles/extensions/SemanticMediaWiki/ext.libs.tippy.less",
 			"+ext.scribunto.edit": "skinStyles/extensions/Scribunto/ext.scribunto.edit.less",
-			"+ext.SmiteSpam.retriever": "skinStyles/extensions/Scribunto/ext.SmiteSpam.retriever.less",
+			"+ext.SmiteSpam.retriever": "skinStyles/extensions/SmiteSpam/ext.SmiteSpam.retriever.less",
 			"+ext.smw.ask.styles": "skinStyles/extensions/SemanticMediaWiki/ext.smw.ask.styles.less",
 			"+ext.smw.browse.styles": "skinStyles/extensions/SemanticMediaWiki/ext.smw.browse.styles.less",
 			"+ext.smw.modal.styles": "skinStyles/extensions/SemanticMediaWiki/ext.smw.modal.styles.less",
