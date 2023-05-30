@@ -52,7 +52,7 @@ Name | Grade | Version | Last updated
 [CookieWarning](https://www.mediawiki.org/wiki/Extension:CookieWarning) | A | REL1_35 `3c2ae6a` | 2022-04-29
 [DiscussionTools](https://www.mediawiki.org/wiki/Extension:DiscussionTools) | B | REL1_39 `1aae2cc` | 2023-01-21
 [DismissableSiteNotice](https://www.mediawiki.org/wiki/Extension:DismissableSiteNotice) | A | N/A | N/A
-[Echo](https://www.mediawiki.org/wiki/Extension:Echo) | A | REL1_35 `347c30e` | 2021-08-11
+[Echo](https://www.mediawiki.org/wiki/Extension:Echo) | A | REL1_35 `347c30e` | 2023-05-27
 [Flow (StructuredDiscussions)](https://www.mediawiki.org/wiki/Extension:StructuredDiscussions) | B | REL1_35 `e3379f0` | 2022-04-27
 [Graph](https://www.mediawiki.org/wiki/Extension:Graph) | B | N/A | N/A
 [Interwiki](https://www.mediawiki.org/wiki/Extension:Interwiki) | B | REL1_35 `a65a18e` | 2022-05-15
