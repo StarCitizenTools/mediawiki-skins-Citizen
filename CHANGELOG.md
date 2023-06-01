@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.6.0...v2.6.1) (2023-06-01)
+
+
+### Features
+
+* **CommentStreams:** update CommentStreams color ([#636](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/636)) ([dc17bbe](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/dc17bbe5cf6ad78115b088e0d0b404ebdf850ddb))
+* **core:** ✨ update state background color ([8a618a6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8a618a6a9d4f8cb3c7365d894344bde6033575d2)), closes [#639](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/639)
+* **core:** update state text color ([#642](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/642)) ([ba825da](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ba825daa9a6bb6a223ef7b2ce72888027c3b9799))
+* **jquery:** add jquery.spinner color ([#640](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/640)) ([866ae58](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/866ae58bd0f08365a78f2a7289e4e723b9a40f4c))
+* **SmiteSpam:** add SmiteSpam support ([#641](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/641)) ([9cf37c2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9cf37c20e36e303ccc460a2c4fef4cc379ae2923))
+* **VEForAll:** add VEForAll styles([#637](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/637)) ([1158a3c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1158a3c13c5121b24c9aa1d76ebdcea74eb7492d))
+* **WikiHiero:** add WikiHiero support ([#645](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/645)) ([151a227](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/151a2270839f079e2c12b6b670881e6b7ef3d629))
+
+
+### Bug Fixes
+
+* **core:** 🐛 wrap indicator when needed ([c0e0f28](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c0e0f281636658568809fa520c830e42cc7fe59f)), closes [#635](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/635)
+* **Echo:** fix Echo popup height ([#638](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/638)) ([bf79397](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bf7939786461088952a03861cc197dbdc0f98d0c))
+
 ## [2.6.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.5.2...v2.6.0) (2023-05-23)
 
 
