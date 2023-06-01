@@ -475,6 +475,7 @@
 			"+mediawiki.action.view.filepage": "skinStyles/mediawiki/action/mediawiki.action.view.filepage.less",
 			"+mediawiki.debug": "skinStyles/mediawiki/debug/mediawiki.debug.less",
 			"+mediawiki.editfont.styles": "skinStyles/mediawiki/mediawiki.editfont.styles.less",
+			"+mediawiki.interface.helpers.styles": "skinStyles/mediawiki/mediawiki.interface.helpers.styles.less",
 			"+mediawiki.notification": "skinStyles/mediawiki/mediawiki.notification.less",
 			"+mediawiki.pager.styles": "skinStyles/mediawiki/mediawiki.pager.styles.less",
 			"mediawiki.skinning.content.parsoid": [],

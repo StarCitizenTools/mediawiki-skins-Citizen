@@ -10,8 +10,22 @@
 // Needed the specificity
 .skin-citizen {
 	.mw-body-content {
+		.error,
+		.warning,
+		.success {
+			font-size: larger;
+		}
+		
 		.error {
-			color: var( --color-destructive );
+			color: var( --color-text-error );
+		}
+		
+		.warning {
+			color: var( --color-text-warning );
+		}
+		
+		.success {
+			color: var( --color-text-success );
 		}
 	}
 }
