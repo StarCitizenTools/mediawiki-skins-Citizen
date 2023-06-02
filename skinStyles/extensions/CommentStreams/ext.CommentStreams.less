@@ -5,45 +5,41 @@
  * Module: ext.CommentStreams
  * Version: REL1_39 f75ff3b
  *
- * Date: 2023-05-27
+ * Date: 2023-06-02
  */
 
-.cs-comments {
-	font-family: var( --font-family-base );
-	--color-cs-comment-header-collapsed: hsl( 210, 17%, 93% );
-	--color-cs-comment-header-expanded: hsl( 210, 90%, 93% );
-	--color-cs-comment-header-reply: hsl( 210, 60%, 96% );
-
-	.skin-citizen-dark & {
-		--color-cs-comment-header-collapsed: hsl( 210, 17%, 7% );
-		--color-cs-comment-header-expanded: hsl( 210, 90%, 7% );
-		--color-cs-comment-header-reply: hsl( 210, 60%, 10% );
-	}
-}
-
-.cs-edit-box {
-	border: 1px solid var( --border-color-base );
-	background-color: var( --color-surface-1 );
-}
-
-.cs-comment-title {
-	color: var( --color-base--emphasized );
-}
-
-.cs-comment-details {
-	color: var( --color-base--subtle );
-}
-
-.cs-comment-header {
-	.cs-collapsed & {
-		background-color: var( --color-cs-comment-header-collapsed );
+.cs {
+	&-comments {
+		font-family: var( --font-family-base );
 	}
 
-	.cs-expanded & {
-		background-color: var( --color-cs-comment-header-expanded );
+	&-edit-box {
+		background-color: var( --color-surface-1 );
+		border: 1px solid var( --border-color-base );
 	}
 
-	.cs-reply-comment > & {
-		background-color: var( --color-cs-comment-header-reply );
+	&-comment {
+		&-title {
+			color: var( --color-base--emphasized );
+		}
+
+		&-details {
+			color: var( --color-base--subtle );
+		}
+
+		&-header {
+			.cs-collapsed & {
+				background-color: var( --color-surface-2 );
+			}
+
+			.cs-expanded & {
+				background-color: rgba( 51, 102, 204, 0.1 );
+			}
+
+			.cs-reply-comment > & {
+				background-color: var( --color-surface-1 );
+				border-top: 1px solid var( --border-color-base );
+			}
+		}
 	}
 }
