@@ -125,7 +125,7 @@ final class Drawer extends Partial {
 	 * @return array for use in Mustache template.
 	 */
 	public function getSiteStatsData(): array {
-		if ( ! $this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) ) {
+		if ( !$this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) ) {
 			return [];
 		}
 
