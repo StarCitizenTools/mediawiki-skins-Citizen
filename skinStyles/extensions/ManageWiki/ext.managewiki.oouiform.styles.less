@@ -3,10 +3,10 @@
  *
  * SkinStyles for Extension:ManageWiki
  * Module: ext.managewiki.oouiform.styles
- * Version: master 60a2f51
+ * Version: master e626a9f
  *
- * Date: 2022-06-16
-*/
+ * Date: 2023-06-02
+ */
 
 #managewiki {
 	.managewiki-submit-formfields {
@@ -19,6 +19,15 @@
 .managewiki-tabs-wrapper.oo-ui-panelLayout-framed,
 .managewiki-tabs > .oo-ui-menuLayout-content > .oo-ui-indexLayout-stackLayout > .oo-ui-tabPanelLayout {
 	border-color: var( --border-color-base );
+}
+
+.managewiki-tabs.managewiki-tabs-searching .oo-ui-tabPanelLayout.managewiki-search-matched > fieldset > legend {
+	background: var( --color-surface-2 );
+}
+
+.managewiki-search-highlight {
+	background: var( --background-color-primary--active )!important;
+	outline-color: var( --background-color-primary--active )!important;
 }
 
 /* JavaScript disabled */
