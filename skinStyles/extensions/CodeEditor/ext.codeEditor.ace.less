@@ -28,6 +28,16 @@
 					&_active-line {
 						background-color: var( --background-color-quiet--hover );
 					}
+
+					&_selected-word {
+						border-color: var( --border-color-base );
+						background: var( --background-color-primary--hover );
+					}
+
+					&_selection {
+						background: var( --background-color-primary--active );
+						box-shadow: inset 0 0 0 2px var( --color-primary );
+					}
 				}
 			}
 
@@ -164,16 +174,76 @@
 			&_indent-guide {
 				opacity: var( --opacity-base--disabled );
 			}
-
-			&_marker-layer .ace_selection {
-				background: #063ba5; // Browser default selector color from Chrome Dark
-			}
 		}
 	}
 
 	&_gutter {
 		&-cell {
 			color: var( --color-base--subtle );
+		}
+	}
+
+	&_search {
+		border-color: var( --border-color-base );
+		background-color: var( --color-surface-2 );
+		color: var( --color-base--subtle );
+
+		&_field {
+			border-color: var( --border-color-base--darker );
+			background-color: transparent;
+			border-bottom-left-radius: var( --border-radius--small );
+			border-top-left-radius: var( --border-radius--small );
+			color: var( --color-base--emphasized );
+
+			&:hover {
+				border-color: var( --color-primary--hover );
+				background-color: var( --color-surface-0 );
+			}
+
+			&:focus {
+				border-color: var( --color-primary );
+				background-color: var( --color-surface-0 );
+				box-shadow: inset 0 0 0 1px var( --color-primary );
+			}
+		}
+
+		&btn {
+			border-color: var( --border-color-base--darker );
+			background-color: transparent;
+			color: var( --color-base--emphasized );
+			font-weight: var( --font-weight-semibold );
+
+			&:last-child {
+				border-color: var( --border-color-base--darker );
+			}
+
+			&:hover {
+				background-color: var( --background-color-quiet--hover );
+			}
+
+			&:active {
+				background-color: var( --background-color-quiet--active );
+			}
+		}
+	}
+
+	&_button {
+		border-color: transparent;
+		border-radius: var( --border-radius--small );
+		color: var( --color-base--emphasized );
+		font-weight: var( --font-weight-semibold );
+
+		&:hover {
+			background-color: var( --background-color-quiet--hover );
+		}
+
+		&:active {
+			background-color: var( --background-color-quiet--active );
+		}
+
+		&.checked {
+			border-color: transparent;
+			background-color: var( --background-color-primary--active );
 		}
 	}
 }
