@@ -249,8 +249,8 @@
 
 	&_optionsMenuEntry {
 		button {
-			background-color: var( --color-surface-3 );
 			border-color: var( --border-color-base );
+			background-color: var( --color-surface-3 );
 
 			&:hover {
 				background-color: var( --background-color-quiet--hover );
@@ -259,21 +259,21 @@
 			&:active {
 				background-color: var( --background-color-quiet--active );
 			}
-			
-			&[ace_selected_button=true] {
-				background-color: var( --color-primary );
+
+			&[ ace_selected_button='true' ] {
 				border-color: var( --color-primary );
+				background-color: var( --color-primary );
 				box-shadow: none;
 				color: white;
 
 				&:hover {
-					background-color: var( --color-primary--hover );
 					border-color: var( --color-primary--hover );
+					background-color: var( --color-primary--hover );
 				}
 
 				&:active {
-					background-color: var( --color-primary--active );
 					border-color: var( --color-primary--active );
+					background-color: var( --color-primary--active );
 				}
 			}
 		}
@@ -282,6 +282,6 @@
 
 #ace_settingsmenu {
 	background-color: var( --color-surface-0 );
-	color: var( --color-base );
 	box-shadow: var( --box-shadow-dialog );
+	color: var( --color-base );
 }
