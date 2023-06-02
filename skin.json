@@ -480,6 +480,7 @@
 			"+mediawiki.pager.styles": "skinStyles/mediawiki/mediawiki.pager.styles.less",
 			"mediawiki.skinning.content.parsoid": [],
 			"mediawiki.skinning.interface": [],
+			"+mediawiki.content.json": "skinStyles/mediawiki/mediawiki.content.json.less",
 			"+mediawiki.special": "skinStyles/mediawiki/special/mediawiki.special.less",
 			"+mediawiki.special.apisandbox": "skinStyles/mediawiki/special/mediawiki.special.apisandbox.less",
 			"+mediawiki.special.changeslist.enhanced": "skinStyles/mediawiki/special/mediawiki.special.changeslist.enhanced.less",
