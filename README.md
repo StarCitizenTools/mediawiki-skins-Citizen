@@ -58,7 +58,7 @@ Name | Grade | Version | Last updated
 [Interwiki](https://www.mediawiki.org/wiki/Extension:Interwiki) | B | REL1_35 `a65a18e` | 2022-05-15
 [Lingo](https://www.mediawiki.org/wiki/Extension:Lingo) | B | REL1_35 `e948775` | 2022-04-29
 [Math](https://www.mediawiki.org/wiki/Extension:Math) | B | REL1_35 `b7a7939` | 2022-08-16
-[ManageWiki](https://www.mediawiki.org/wiki/Extension:ManageWiki) | B | master `60a2f51` | 2022-06-16
+[ManageWiki](https://www.mediawiki.org/wiki/Extension:ManageWiki) | B | master `e626a9f` | 2023-06-02
 [MediaSearch](https://www.mediawiki.org/wiki/Extension:MediaSearch) | A | REL1_39 `e0aa7bb` | 2022-12-09
 [MsUpload](https://www.mediawiki.org/wiki/Extension:MsUpload) | A | REL1_35 `32eb420` | 2021-08-25
 [MultimediaViewer](https://www.mediawiki.org/wiki/Extension:MultimediaViewer) | A | REL1_39 `1b97775` | 2022-11-26
