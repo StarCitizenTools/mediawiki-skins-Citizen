@@ -29,12 +29,29 @@
 		font-family: var( --font-family-base );
 		font-size: 0.875rem;
 
+		/* Align with Codex styles */
 		input,
 		select,
 		textarea {
+			border-color: var( --border-color-base--darker );
+			// Show background when hovered
+			background-color: transparent;
+			color: var( --color-base--emphasized );
 			padding: var(--space-xxs) var(--space-xs);
 			/* FIXME: Replace with line-height-small when we import Codex line height */
 			line-height: var( --line-height-sm );
+
+			&:hover {
+				border-color: var( --color-primary--hover );
+				background-color: var( --color-surface-0 );
+			}
+
+			&:focus {
+				border-color: var( --color-primary );
+				background-color: var( --color-surface-0 );
+				box-shadow: inset 0 0 0 1px var( --color-primary );
+				outline: 0;
+			}
 		}
 
 		input,
@@ -52,12 +69,11 @@
 		}
 
 		&-header {
-			border-color: var( --border-color-base );
 			background: var( --color-surface-2--hover );
 			color: var(--color-base--emphasized);
 			font-weight: var( --font-weight-semibold );
 			font-size: 1rem;
-			border-width: 0 0 1px 0;
+			border: 0;
 		}
 	}
 }

@@ -296,12 +296,36 @@
 	}
 }
 
-.wikieditor-toolbar-field-wrapper > label + input {
-	margin-top: var( --space-xxs );
-}
+.wikiEditor-toolbar-dialog {
+	.ui-dialog-content {
+		padding: var( --space-md ) !important;
+	}
 
-.wikiEditor-toolbar-dialog .ui-dialog-buttonpane {
-	border-top-color: var( --border-color-base ) !important;
+	.ui-dialog-buttonpane {
+		border-top-color: var( --border-color-base ) !important;
+	}
+
+	.wikieditor-toolbar-field-wrapper {
+		/* Input field label */
+		> label {
+			color: var( --color-base--subtle );
+			font-size: 0.8125rem;
+			letter-spacing: 0.05em;
+
+			~ input,
+			~ select {
+				margin-top: var( --space-xxs );
+			}
+		}
+
+		/* Checkbox text */
+		> input + label {
+			margin-left: var( --space-xs );
+			color: var( --color-base );
+			font-size: inherit;
+			letter-spacing: inherit;
+		}
+	}
 }
 
 .skin-citizen-dark {
