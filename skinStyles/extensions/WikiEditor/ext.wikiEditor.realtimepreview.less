@@ -5,16 +5,24 @@
  * Module: ext.wikiEditor.realtimepreview
  * Version: REL1_39 02e1c70
  *
- * Date: 2022-11-08
+ * Date: 2023-06-03
 */
 
 /* RealtimePreview.less */
-.ext-WikiEditor-realtimepreview-button:hover {
-	background-color: var( --background-color-quiet--hover );
+.ext-WikiEditor-realtimepreview-button {
+	&.oo-ui-buttonElement-frameless.oo-ui-labelElement > .oo-ui-buttonElement-button {
+		padding-right: 12px;
+	}
+
+	&:hover {
+		background-color: var( --background-color-quiet--hover );
+	}
 }
 
 .ext-WikiEditor-realtimepreview-button.oo-ui-toggleWidget-on .oo-ui-labelElement-label {
+	margin-left: 6px;
 	color: var( --color-primary );
+	line-height: 2em; /* Align with VE */
 }
 
 .ext-WikiEditor-ResizingDragBar-ns {
