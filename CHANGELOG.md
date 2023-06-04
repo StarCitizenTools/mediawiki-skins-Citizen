@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.6.1...v2.6.2) (2023-06-04)
+
+
+### Features
+
+* **CodeEditor:** ✨ add find and replace styles ([2b69011](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2b69011a8fb4f74ebf3e6db22b5797ce964b061d))
+* **CodeEditor:** add ACE Editor setting panel style ([#650](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/650)) ([e651e1b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e651e1b8caa60cae1c4ca379813d35e86999d747))
+* **CommentStreams:** update CommentStreams style ([#647](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/647)) ([109b681](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/109b68172f7661696f7b1abe53fab0a4c2bf4a6e))
+* **ManageWiki:** add ManageWiki search highlight style ([#649](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/649)) ([373f081](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/373f0814f1f9117b94313265ed89ffe55937e5f0))
+* **mediawiki:** ✨ add JSON content styles ([53929ce](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/53929ce91c43cfca8cc49d550a080f13118b181e))
+* **SyntaxHighlight:** ✨ add line highlight color ([a269d35](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a269d35dac94bfe3e54703b2c80ca0de2eacdbfa))
+* **WikiEditor:** ✨ tweak dialog styles ([572bca1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/572bca1467899a621003a398b8b6d842a1fbcb38))
+* **WikiEditor:** ✨ tweak toolbar and search and replace styles ([2d425d8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2d425d827635e96405458ca23f9c1630cfcb4d9e))
+
+
+### Bug Fixes
+
+* **core:** 🐛 avoid page action menu overflow when title is too long ([5c9498a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5c9498a08b580a8223d2594497e1e01670ad0cb3)), closes [#648](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/648)
+* **core:** 🐛 undefined items variable in drawer ([403a109](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/403a109cc2d5c1395595528cf2fc525f6d38eb58))
+
 ### [2.6.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.6.0...v2.6.1) (2023-06-01)
 
 
