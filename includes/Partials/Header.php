@@ -82,7 +82,18 @@ final class Header extends Partial {
 	 */
 	private function getUserPageHTML( $isRegistered, $userPageData ): ?string {
 		if ( $isRegistered ) {
-			$html = $userPageData['html-items'];
+			if ( $this->getConfigValue( 'CitizenDisplayRealUserName' ) ) {
+				// Replace any occurrence of the user's name as html text
+				// with its real name. It would be cleaner to adapt the
+				// generation of the html-items directly
+				$html = str_replace(
+					">" . $this->user->getName() . "<",
+					">" . $this->user->getRealName(). "<",
+					$userPageData['html-items']
+				);
+			} else {
+				$html = $userPageData['html-items'];
+			}
 		} else {
 			// There must be a cleaner way to do this
 			$msg = $this->skin->msg( 'notloggedin' )->text();

@@ -117,6 +117,7 @@ Name | Description | Values | Default
 `$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#131a21`
 `$wgCitizenEnableCJKFonts` | Enable included Noto Sans CJK for wikis that serves CJK languages | `true` - enable; `false` - disable | `false`
 `$wgCitizenEnablePreferences` | Enable the preferences menu | `true` - enable; `false` - disable | `true`
+`$wgCitizenDisplayRealUserName` | Displays the user's real name in the user menu | `true` - enable; `false` - disable | `false`
 `$wgCitizenTableNowrapClasses` | Defines table css classes ignored by citizen table wrapper | List of css classes. Extend with `$wgCitizenTableNowrapClasses[] = 'my_class';` | `["citizen-table-nowrap", "mw-changeslist-line", "infobox", "cargoDynamicTable", "dataTable"]`
 
 ### Search suggestions

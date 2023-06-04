@@ -619,6 +619,12 @@
 			"descriptionmsg": "citizen-config-enablepreferences",
 			"public": true
 		},
+		"DisplayRealUserName": {
+                        "value": false,
+                        "description": "Shows the user's real name in the user menu",
+                        "descriptionmsg": "citizen-config-displayrealusername",
+                        "public": true
+		},
 		"TableNowrapClasses": {
 			"value": [
 				"citizen-table-nowrap",
