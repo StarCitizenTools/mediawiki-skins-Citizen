@@ -111,16 +111,20 @@ final class Header extends Partial {
 		}
 
 		$html = '';
-		$msgName = 'group-%s';
+		$msgName = 'group-%s-member';
 
 		// There must be a cleaner way
 		foreach ( $groups as $group ) {
 			$id = sprintf( $msgName, $group );
 			$msg = $this->skin->msg( $id )->text();
 			$title = $this->title->newFromText(
-					$this->skin->msg( sprintf( $msgName, $group ) )->text(),
+					$msg,
 					NS_PROJECT
 				);
+			if ( $msg ) {
+				// Member names are in lowercase
+				$msg = ucfirst( $msg );
+			}
 			if ( $title ) {
 				$href = $title->getLinkURL();
 				$html .= <<< HTML
