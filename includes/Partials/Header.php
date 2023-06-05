@@ -118,9 +118,13 @@ final class Header extends Partial {
 			$id = sprintf( $msgName, $group );
 			$msg = $this->skin->msg( $id )->text();
 			$title = $this->title->newFromText(
-					$this->skin->msg( sprintf( $msgName, $group ) )->text(),
+					$msg,
 					NS_PROJECT
 				);
+			if ( $msg ) {
+				// Member names are in lowercase
+				$msg = ucfirst( $msg );
+			}
 			if ( $title ) {
 				$href = $title->getLinkURL();
 				$html .= <<< HTML
