@@ -111,7 +111,7 @@ final class Header extends Partial {
 		}
 
 		$html = '';
-		$msgName = 'group-%s';
+		$msgName = 'group-%s-member';
 
 		// There must be a cleaner way
 		foreach ( $groups as $group ) {
