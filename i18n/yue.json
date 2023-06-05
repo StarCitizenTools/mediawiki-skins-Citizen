@@ -3,7 +3,8 @@
 		"authors": [
 			"Alistair3149",
 			"Matttest",
-			"Winston Sung"
+			"Winston Sung",
+			"捍粵者"
 		]
 	},
 	"skinname-citizen": "公民 （Citizen）",
@@ -17,7 +18,7 @@
 	"citizen-languages-toggle": "多啲語言",
 	"citizen-actions-more-toggle": "版嘅動作",
 	"citizen-sitestats-articles-label": "篇文章",
-	"citizen-sitestats-images-label": "個檔案",
+	"citizen-sitestats-images-label": "份檔",
 	"citizen-sitestats-users-label": "位用戶",
 	"citizen-sitestats-edits-label": "次修改",
 	"citizen-page-info-copyright": "版權",

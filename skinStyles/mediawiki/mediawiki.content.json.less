@@ -1,0 +1,40 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for JSON content
+ * Module: mediawiki.content.json
+ * Version: REL1_39
+ *
+ * Date: 2023-06-02
+ */
+
+.mw-json {
+	tr {
+		background-color: var( --color-surface-2 );
+	}
+
+	th,
+	td {
+		padding: var( --space-xs ) var( --space-md );
+		border-color: var( --border-color-base );
+		font-size: 0.875rem;
+	}
+
+	th {
+		background-color: var( --color-surface-0 );
+		letter-spacing: 0.05em;
+	}
+
+	&-value,
+	&-single-value {
+		background-color: var( --background-color-success );
+	}
+
+	&-single-value {
+		background-color: var( --color-surface-2 );
+	}
+
+	&-empty {
+		background-color: var( --color-surface-0 );
+	}
+}

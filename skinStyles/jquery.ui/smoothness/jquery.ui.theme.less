@@ -15,8 +15,13 @@
 	&-dialog {
 		box-shadow: var( --box-shadow-dialog );
 
+		.ui-dialog-titlebar {
+			padding: var( --space-md );
+		}
+
 		&.ui-widget-content {
 			background: var( --color-surface-1 );
+			border-radius: var(--border-radius--medium);
 		}
 	}
 
@@ -24,11 +29,37 @@
 		font-family: var( --font-family-base );
 		font-size: 0.875rem;
 
+		/* Align with Codex styles */
+		input,
+		select,
+		textarea {
+			border-color: var( --border-color-base--darker );
+			// Show background when hovered
+			background-color: transparent;
+			color: var( --color-base--emphasized );
+			padding: var(--space-xxs) var(--space-xs);
+			/* FIXME: Replace with line-height-small when we import Codex line height */
+			line-height: var( --line-height-sm );
+
+			&:hover {
+				border-color: var( --color-primary--hover );
+				background-color: var( --color-surface-0 );
+			}
+
+			&:focus {
+				border-color: var( --color-primary );
+				background-color: var( --color-surface-0 );
+				box-shadow: inset 0 0 0 1px var( --color-primary );
+				outline: 0;
+			}
+		}
+
 		input,
 		select,
 		textarea,
 		button {
 			font-family: var( --font-family-base );
+			border-radius: var(--border-radius--small);
 		}
 
 		&-content {
@@ -38,9 +69,11 @@
 		}
 
 		&-header {
-			border-color: var( --border-color-base );
 			background: var( --color-surface-2--hover );
-			color: var( --color-base );
+			color: var(--color-base--emphasized);
+			font-weight: var( --font-weight-semibold );
+			font-size: 1rem;
+			border: 0;
 		}
 	}
 }
@@ -51,8 +84,9 @@
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default {
 	border-color: var( --border-color-base );
-	background-color: var( --color-surface-2 );
+	background: var( --color-surface-2 );
 	color: var( --color-base );
+	font-weight: var(--font-weight-medium);
 }
 
 .ui-state-default a,
@@ -67,8 +101,8 @@
 .ui-state-focus,
 .ui-widget-content .ui-state-focus,
 .ui-widget-header .ui-state-focus {
-	border-color: var( --border-color-base );
-	background-color: var( --color-surface-2--hover );
+	border-color: transparent;
+	background: var( --color-surface-2--hover );
 	color: var( --color-base--emphasized );
 }
 
@@ -83,7 +117,7 @@
 .ui-widget-content .ui-state-active,
 .ui-widget-header .ui-state-active {
 	border-color: var( --color-surface-2--active );
-	background-color: var( --color-surface-2--active );
+	background: var( --color-surface-2--active );
 	color: var( --color-base--subtle );
 }
 

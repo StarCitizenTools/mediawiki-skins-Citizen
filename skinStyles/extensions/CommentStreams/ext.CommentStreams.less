@@ -1,5 +1,45 @@
-.skin-citizen {
-	.cs-comments {
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:CommentStreams
+ * Module: ext.CommentStreams
+ * Version: REL1_39 f75ff3b
+ *
+ * Date: 2023-06-02
+ */
+
+.cs {
+	&-comments {
 		font-family: var( --font-family-base );
+	}
+
+	&-edit-box {
+		border: 1px solid var( --border-color-base );
+		background-color: var( --color-surface-1 );
+	}
+
+	&-comment {
+		&-title {
+			color: var( --color-base--emphasized );
+		}
+
+		&-details {
+			color: var( --color-base--subtle );
+		}
+
+		&-header {
+			.cs-collapsed & {
+				background-color: var( --color-surface-2 );
+			}
+
+			.cs-expanded & {
+				background-color: rgba( 51, 102, 204, 0.1 );
+			}
+
+			.cs-reply-comment > & {
+				border-top: 1px solid var( --border-color-base );
+				background-color: var( --color-surface-1 );
+			}
+		}
 	}
 }

@@ -133,9 +133,15 @@
 }
 
 // To hide objects, but keep them accessible for screen-readers
+// From https://www.a11yproject.com/posts/how-to-hide-content
 .hidden() {
 	position: absolute;
-	top: -9999px;
+	overflow: hidden;
+	width: 1px;
+	height: 1px;
+	clip: rect( 0 0 0 0 );
+	clip-path: inset( 50% );
+	white-space: nowrap;
 }
 
 // Set content to be at the center

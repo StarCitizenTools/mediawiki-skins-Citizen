@@ -2,6 +2,68 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.6.1...v2.6.2) (2023-06-04)
+
+
+### Features
+
+* **CodeEditor:** ✨ add find and replace styles ([2b69011](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2b69011a8fb4f74ebf3e6db22b5797ce964b061d))
+* **CodeEditor:** add ACE Editor setting panel style ([#650](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/650)) ([e651e1b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e651e1b8caa60cae1c4ca379813d35e86999d747))
+* **CommentStreams:** update CommentStreams style ([#647](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/647)) ([109b681](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/109b68172f7661696f7b1abe53fab0a4c2bf4a6e))
+* **ManageWiki:** add ManageWiki search highlight style ([#649](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/649)) ([373f081](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/373f0814f1f9117b94313265ed89ffe55937e5f0))
+* **mediawiki:** ✨ add JSON content styles ([53929ce](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/53929ce91c43cfca8cc49d550a080f13118b181e))
+* **SyntaxHighlight:** ✨ add line highlight color ([a269d35](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a269d35dac94bfe3e54703b2c80ca0de2eacdbfa))
+* **WikiEditor:** ✨ tweak dialog styles ([572bca1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/572bca1467899a621003a398b8b6d842a1fbcb38))
+* **WikiEditor:** ✨ tweak toolbar and search and replace styles ([2d425d8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2d425d827635e96405458ca23f9c1630cfcb4d9e))
+
+
+### Bug Fixes
+
+* **core:** 🐛 avoid page action menu overflow when title is too long ([5c9498a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5c9498a08b580a8223d2594497e1e01670ad0cb3)), closes [#648](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/648)
+* **core:** 🐛 undefined items variable in drawer ([403a109](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/403a109cc2d5c1395595528cf2fc525f6d38eb58))
+
+### [2.6.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.6.0...v2.6.1) (2023-06-01)
+
+
+### Features
+
+* **CommentStreams:** update CommentStreams color ([#636](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/636)) ([dc17bbe](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/dc17bbe5cf6ad78115b088e0d0b404ebdf850ddb))
+* **core:** ✨ update state background color ([8a618a6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8a618a6a9d4f8cb3c7365d894344bde6033575d2)), closes [#639](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/639)
+* **core:** update state text color ([#642](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/642)) ([ba825da](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ba825daa9a6bb6a223ef7b2ce72888027c3b9799))
+* **jquery:** add jquery.spinner color ([#640](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/640)) ([866ae58](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/866ae58bd0f08365a78f2a7289e4e723b9a40f4c))
+* **SmiteSpam:** add SmiteSpam support ([#641](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/641)) ([9cf37c2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9cf37c20e36e303ccc460a2c4fef4cc379ae2923))
+* **VEForAll:** add VEForAll styles([#637](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/637)) ([1158a3c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1158a3c13c5121b24c9aa1d76ebdcea74eb7492d))
+* **WikiHiero:** add WikiHiero support ([#645](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/645)) ([151a227](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/151a2270839f079e2c12b6b670881e6b7ef3d629))
+
+
+### Bug Fixes
+
+* **core:** 🐛 wrap indicator when needed ([c0e0f28](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c0e0f281636658568809fa520c830e42cc7fe59f)), closes [#635](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/635)
+* **Echo:** fix Echo popup height ([#638](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/638)) ([bf79397](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bf7939786461088952a03861cc197dbdc0f98d0c))
+
+## [2.6.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.5.2...v2.6.0) (2023-05-23)
+
+
+### Features
+
+* **CodeEditor:** ✨ add syntax highlight color ([41312d5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/41312d509398f59d976334c5283fa06785ad0b7f))
+* **CommentStreams:** add support for CommentStreams ([#624](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/624)) ([0fb2738](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0fb2738d96af90753b85bdedeba1f9710cf814af))
+* **core:** ✨ add basic scriptless responsive table support ([6c04fee](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6c04fee280a56fe7bb836b0139e795036e2e3337))
+* **core:** add config var 'wgCitizenTableNowrapClasses' ([#621](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/621)) ([a7b99d1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a7b99d11f082c559ce12e1caa70a7fc476ce92d5))
+* **Echo:** hide #pt-talk-alert when Echo is enabled ([#626](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/626)) ([9993545](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/99935453dbd1de872f479e2c85fb45e3a361fa41))
+* **Scribunto:** ✨ tweak debug console styles ([e665814](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e6658147ea1099ce6fb2ec8d07923aefaaf1c99a))
+* **Scribunto:** add support for Scribunto debug console ([#629](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/629)) ([efd0254](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/efd02548a64ec879d84470a2457fca8eb5f89964))
+* **search:** add SMW Ask API as search backend option ([#625](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/625)) ([2e3e5fe](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2e3e5feb9b22fc9f0d061a106233e0f569c6c815))
+* **SyntaxHighlight:** ✨ unbold some highlight to match with CodeMirror ([0931793](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/09317936dd53a7ca1c49354b3b5a95cf3a199514))
+
+
+### Bug Fixes
+
+* **core:** 🐛 add missing border between thead and tbody ([5ca0f03](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5ca0f030bc9752665bc688f065470086f4bf2869))
+* **core:** 🐛 incorrect max-width value ([d35b1a8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d35b1a8eb5189e787d075428dbdf5b68c08f2d57))
+* **core:** add webkit prefix to user-select property ([#631](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/631)) ([d92fd77](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d92fd77e54cf5eb22077e3d0c04e339022cb686b))
+* **preferences:** incorrect preferences icon position on Chrome 81 ([b43da4d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b43da4d81ecc0eadc170f3fb6009ef62bbf670b7))
+
 ### [2.5.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.5.1...v2.5.2) (2023-05-06)
 
 

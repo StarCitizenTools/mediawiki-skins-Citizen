@@ -16,16 +16,16 @@
 		"release:major": "standard-version --release-as major"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^17.6.3",
-		"@commitlint/config-conventional": "^17.6.3",
+		"@commitlint/cli": "^17.6.5",
+		"@commitlint/config-conventional": "^17.6.5",
 		"devmoji": "^2.3.0",
-		"eslint-config-wikimedia": "0.25.0",
-		"grunt-banana-checker": "0.10.0",
+		"eslint-config-wikimedia": "0.25.1",
+		"grunt-banana-checker": "0.11.0",
 		"husky": "^8.0.3",
 		"standard-version": "^9.5.0",
 		"stylelint-config-idiomatic-order": "9.0.0",
-		"stylelint-config-wikimedia": "0.14.0",
+		"stylelint-config-wikimedia": "0.15.0",
 		"svgo": "3.0.2"
 	},
-	"version": "2.5.2"
+	"version": "2.6.2"
 }

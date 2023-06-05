@@ -5,26 +5,11 @@
  * Module: ext.pygments
  * Version: REL1_35 05598b3
  *
- * Date: 2021-08-26
-*/
-
-@import '../../../resources/variables.less';
+ * Date: 2023-05-22
+ */
 
 /* pygments.generated.css */
 .mw-highlight {
-	// FIXME: This should be shared between other extensions
-	--color-syntax-red: @color-syntax-red;
-	--color-syntax-orange: @color-syntax-orange;
-	--color-syntax-yellow: @color-syntax-yellow;
-	--color-syntax-green: @color-syntax-green;
-	--color-syntax-cyan: @color-syntax-cyan;
-	--color-syntax-blue: @color-syntax-blue;
-	--color-syntax-paleblue: @color-syntax-paleblue;
-	--color-syntax-purple: @color-syntax-purple;
-	--color-syntax-brown: @color-syntax-brown;
-	--color-syntax-pink: @color-syntax-pink;
-	--color-syntax-violet: @color-syntax-violet;
-	--color-syntax-grey: @color-syntax-grey;
 	background: var( --color-surface-2 );
 
 	.c {
@@ -37,6 +22,7 @@
 
 	.k {
 		color: var( --color-syntax-purple );
+		font-weight: normal; // reset bold styles
 	}
 
 	.o {
@@ -101,14 +87,17 @@
 
 	.kc {
 		color: var( --color-syntax-orange );
+		font-weight: normal; // reset bold styles
 	}
 
 	.kd {
 		color: var( --color-syntax-purple );
+		font-weight: normal; // reset bold styles
 	}
 
 	.kn {
 		color: var( --color-syntax-purple );
+		font-weight: normal; // reset bold styles
 	}
 
 	.kp {
@@ -117,6 +106,7 @@
 
 	.kr {
 		color: var( --color-syntax-purple );
+		font-weight: normal; // reset bold styles
 	}
 
 	.kt {
@@ -141,6 +131,7 @@
 
 	.nc {
 		color: var( --color-syntax-yellow );
+		font-weight: normal; // reset bold styles
 	}
 
 	.no {
@@ -233,6 +224,7 @@
 
 	.se {
 		color: var( --color-base );
+		font-weight: normal; // reset bold styles
 	}
 
 	.sh {
@@ -241,6 +233,7 @@
 
 	.si {
 		color: var( --color-base--emphasized );
+		font-weight: normal; // reset bold styles
 	}
 
 	.sx {
@@ -317,19 +310,8 @@
 	.hll a .linenos {
 		color: var( --color-base--emphasized );
 	}
-}
 
-.skin-citizen-dark .mw-highlight {
-	// FIXME: This should be shared between other extensions
-	--color-syntax-red: @color-syntax-red-dark;
-	--color-syntax-orange: @color-syntax-orange-dark;
-	--color-syntax-yellow: @color-syntax-yellow-dark;
-	--color-syntax-green: @color-syntax-green-dark;
-	--color-syntax-cyan: @color-syntax-cyan-dark;
-	--color-syntax-blue: @color-syntax-blue-dark;
-	--color-syntax-paleblue: @color-syntax-paleblue-dark;
-	--color-syntax-purple: @color-syntax-purple-dark;
-	--color-syntax-brown: @color-syntax-brown-dark;
-	--color-syntax-pink: @color-syntax-pink-dark;
-	--color-syntax-violet: @color-syntax-violet-dark;
+	.hll {
+		background-color: var( --background-color-warning );
+	}
 }

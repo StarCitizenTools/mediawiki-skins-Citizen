@@ -5,12 +5,9 @@
  * Module: ext.codeEditor.ace
  * Version: REL1_39 67c012c
  *
- * Date: 2022-12-15
-*/
+ * Date: 2023-06-03
+ */
 
-@import '../../../resources/variables.less';
-
-// FIXME: Implemement same syntax higlight color as CodeMirror and SyntaxHighlight
 .ace {
 	&-tm {
 		background-color: transparent;
@@ -31,6 +28,16 @@
 					&_active-line {
 						background-color: var( --background-color-quiet--hover );
 					}
+
+					&_selected-word {
+						border-color: var( --border-color-base );
+						background: var( --background-color-primary--hover );
+					}
+
+					&_selection {
+						background: var( --background-color-primary--active );
+						box-shadow: inset 0 0 0 2px var( --color-primary );
+					}
 				}
 			}
 
@@ -41,6 +48,132 @@
 			&_cursor {
 				color: var( --color-base--emphasized );
 			}
+
+			&_storage,
+			&_keyword {
+				color: var( --color-syntax-purple );
+			}
+
+			&_constant {
+				color: var( --color-syntax-orange );
+
+				&.ace {
+					&_buildin {
+						color: var( --color-syntax-orange );
+					}
+
+					&_language {
+						color: var( --color-syntax-orange );
+					}
+
+					&_library {
+						color: var( --color-syntax-orange );
+					}
+
+					&_numeric {
+						color: var( --color-syntax-orange );
+					}
+				}
+			}
+
+			&_invalid {
+				background-color: var( --background-color-quiet--hover );
+				color: var( --color-destructive );
+			}
+
+			&_support {
+				&.ace {
+					&_function {
+						color: var( --color-syntax-blue );
+					}
+
+					&_constant {
+						color: var( --color-syntax-orange );
+					}
+
+					&_type,
+					&_class {
+						color: var( --color-syntax-purple );
+					}
+				}
+			}
+
+			&_keyword {
+				&.ace {
+					&_operator {
+						color: var( --color-syntax-cyan );
+					}
+				}
+			}
+
+			&_string {
+				color: var( --color-syntax-green );
+
+				&.ace {
+					&_regex {
+						color: var( --color-syntax-red );
+					}
+				}
+			}
+
+			&_comment {
+				color: var( --color-base--subtle );
+
+				&.ace {
+					&_doc {
+						&.ace {
+							&_tag {
+								color: var( --color-base--subtle );
+							}
+						}
+					}
+				}
+			}
+
+			&_variable {
+				color: var( --color-syntax-yellow );
+			}
+
+			&_xml-pe {
+				color: var( --color-syntax-brown );
+			}
+
+			&_entity {
+				&.ace {
+					&_name {
+						&.ace {
+							&_function {
+								color: var( --color-syntax-blue );
+							}
+						}
+					}
+				}
+			}
+
+			&_heading {
+				color: var( --color-syntax-blue );
+			}
+
+			&_list {
+				color: var( --color-syntax-red );
+			}
+
+			&_meta {
+				&.ace {
+					&_tag {
+						color: var( --color-syntax-blue );
+					}
+				}
+			}
+
+			&_paren,
+			&_punctuation {
+				color: var( --color-syntax-cyan );
+			}
+
+			&_indent-guide {
+				opacity: var( --opacity-base--disabled );
+			}
 		}
 	}
 
@@ -49,4 +182,106 @@
 			color: var( --color-base--subtle );
 		}
 	}
+
+	&_search {
+		border-color: var( --border-color-base );
+		background-color: var( --color-surface-2 );
+		color: var( --color-base--subtle );
+
+		&_field {
+			border-color: var( --border-color-base--darker );
+			background-color: transparent;
+			border-bottom-left-radius: var( --border-radius--small );
+			border-top-left-radius: var( --border-radius--small );
+			color: var( --color-base--emphasized );
+
+			&:hover {
+				border-color: var( --color-primary--hover );
+				background-color: var( --color-surface-0 );
+			}
+
+			&:focus {
+				border-color: var( --color-primary );
+				background-color: var( --color-surface-0 );
+				box-shadow: inset 0 0 0 1px var( --color-primary );
+			}
+		}
+
+		&btn {
+			border-color: var( --border-color-base--darker );
+			background-color: transparent;
+			color: var( --color-base--emphasized );
+			font-weight: var( --font-weight-semibold );
+
+			&:last-child {
+				border-color: var( --border-color-base--darker );
+			}
+
+			&:hover {
+				background-color: var( --background-color-quiet--hover );
+			}
+
+			&:active {
+				background-color: var( --background-color-quiet--active );
+			}
+		}
+	}
+
+	&_button {
+		border-color: transparent;
+		border-radius: var( --border-radius--small );
+		color: var( --color-base--emphasized );
+		font-weight: var( --font-weight-semibold );
+
+		&:hover {
+			background-color: var( --background-color-quiet--hover );
+		}
+
+		&:active {
+			background-color: var( --background-color-quiet--active );
+		}
+
+		&.checked {
+			border-color: transparent;
+			background-color: var( --background-color-primary--active );
+		}
+	}
+
+	&_optionsMenuEntry {
+		button {
+			border-color: var( --border-color-base );
+			background-color: var( --color-surface-3 );
+
+			&:hover {
+				background-color: var( --background-color-quiet--hover );
+			}
+
+			&:active {
+				background-color: var( --background-color-quiet--active );
+			}
+
+			&[ ace_selected_button='true' ] {
+				border-color: var( --color-primary );
+				background-color: var( --color-primary );
+				box-shadow: none;
+				color: #fff;
+
+				&:hover {
+					border-color: var( --color-primary--hover );
+					background-color: var( --color-primary--hover );
+				}
+
+				&:active {
+					border-color: var( --color-primary--active );
+					background-color: var( --color-primary--active );
+				}
+			}
+		}
+	}
+}
+
+#ace_settingsmenu {
+	background-color: var( --color-surface-0 );
+	box-shadow: var( --box-shadow-dialog );
+	color: var( --color-base );
 }

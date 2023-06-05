@@ -1,0 +1,35 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:WikiHiero
+ * Module: ext.wikihiero
+ * Version: REL1_39 3a2be51
+ *
+ * Date: 2023-06-01
+ */
+
+@import '../../../resources/variables.less';
+
+.mw-hiero {
+	/* content.css */
+	.skin-citizen-dark &-table img {
+		filter: invert( 1 ) hue-rotate( 180deg );
+	}
+
+	/* special.css */
+	&-form {
+		background: var( --color-surface-0 );
+
+		@media screen and ( min-width: @width-breakpoint-tablet ) {
+			top: ~'calc( var( --line-height-xs ) * var( --font-size-h3 ) + 2 * var( --space-md ) )';
+		}
+	}
+
+	&-toc {
+		overflow-x: scroll;
+	}
+
+	&-code {
+		border-color: var( --border-color-base );
+	}
+}

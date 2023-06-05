@@ -125,40 +125,41 @@ final class Drawer extends Partial {
 	 * @return array for use in Mustache template.
 	 */
 	public function getSiteStatsData(): array {
-		$props = [];
-
-		if ( $this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) ) {
-			$skin = $this->skin;
-			// Key => Icon
-			$map = [
-				'articles' => 'article',
-				'images' => 'image',
-				'users' => 'userAvatar',
-				'edits' => 'edit'
-			];
-			$items = [];
-			$fmt = null;
-
-			// Get NumberFormatter here so that we don't have to call it for every stats
-			if ( $this->getConfigValue( 'CitizenUseNumberFormatter' ) && class_exists( \NumberFormatter::class ) ) {
-				$locale = $skin->getLanguage()->getHtmlCode() ?? 'en_US';
-				$fmt = new \NumberFormatter( $locale, \NumberFormatter::PADDING_POSITION );
-				$fmt->setAttribute( \NumberFormatter::ROUNDING_MODE, \NumberFormatter::ROUND_DOWN );
-				$fmt->setAttribute( \NumberFormatter::MAX_FRACTION_DIGITS, 1 );
-			}
-
-			foreach ( $map as $key => $icon ) {
-				$items[] = [
-					'id' => $key,
-					'icon' => $icon,
-					'value' => $this->getSiteStatValue( $key, $fmt ),
-					'label' => $skin->msg( "citizen-sitestats-$key-label" )->text(),
-				];
-			}
+		if ( !$this->getConfigValue( 'CitizenEnableDrawerSiteStats' ) ) {
+			return [];
 		}
 
-		$props['array-drawer-sitestats-item'] = $items;
-		return $props;
+		$skin = $this->skin;
+		// Key => Icon
+		$map = [
+			'articles' => 'article',
+			'images' => 'image',
+			'users' => 'userAvatar',
+			'edits' => 'edit'
+		];
+		$items = [];
+		$fmt = null;
+
+		// Get NumberFormatter here so that we don't have to call it for every stats
+		if ( $this->getConfigValue( 'CitizenUseNumberFormatter' ) && class_exists( \NumberFormatter::class ) ) {
+			$locale = $skin->getLanguage()->getHtmlCode() ?? 'en_US';
+			$fmt = new \NumberFormatter( $locale, \NumberFormatter::PADDING_POSITION );
+			$fmt->setAttribute( \NumberFormatter::ROUNDING_MODE, \NumberFormatter::ROUND_DOWN );
+			$fmt->setAttribute( \NumberFormatter::MAX_FRACTION_DIGITS, 1 );
+		}
+
+		foreach ( $map as $key => $icon ) {
+			$items[] = [
+				'id' => $key,
+				'icon' => $icon,
+				'value' => $this->getSiteStatValue( $key, $fmt ),
+				'label' => $skin->msg( "citizen-sitestats-$key-label" )->text(),
+			];
+		}
+
+		return [
+			'array-drawer-sitestats-item' => $items
+		];
 	}
 
 	/**
