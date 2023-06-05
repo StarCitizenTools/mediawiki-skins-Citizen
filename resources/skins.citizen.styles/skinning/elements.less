@@ -4,8 +4,8 @@
  * Module: mediawiki.skinning.elements
  * Version: REL1_39
  *
- * Date: 2022-11-14
-*/
+ * Date: 2023-06-05
+ */
 
 /* Links */
 // Some of the link styles are handled in content.links
@@ -160,6 +160,15 @@ pre,
 	overflow: auto;
 	padding: 1rem;
 	border-radius: var( --border-radius--large );
+}
+
+:not(kbd) kbd,
+.keystroke {
+	background: var( --color-surface-3 );
+	border: .2rem solid var( --border-color-base );
+	border-radius: .2rem;
+	box-shadow: 0 .2rem .2rem 0 ~'hsl( var( --surface-shadow ) / calc( var( --shadow-strength ) + .1 ) )';
+	padding: 0 var( --space-xxs );
 }
 
 /* Forms */
