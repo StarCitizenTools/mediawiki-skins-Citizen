@@ -115,7 +115,7 @@ final class Tagline extends Partial {
 			$editCount = $user->getEditCount();
 			$regDate = $user->getRegistration();
 			$gender = MediaWikiServices::getInstance()->getGenderCache()->getGenderOf( $user, __METHOD__ );
-			
+
 			$msgGender = sprintf(
 				'%s / %s / %s',
 				$skin->msg( 'citizen-pronouns-subjective-' . $gender )->text(),
