@@ -57,7 +57,7 @@ Name | Grade | Version | Last updated
 [Graph](https://www.mediawiki.org/wiki/Extension:Graph) | B | N/A | N/A
 [Interwiki](https://www.mediawiki.org/wiki/Extension:Interwiki) | B | REL1_35 `a65a18e` | 2022-05-15
 [Lingo](https://www.mediawiki.org/wiki/Extension:Lingo) | B | REL1_35 `e948775` | 2022-04-29
-[Math](https://www.mediawiki.org/wiki/Extension:Math) | B | REL1_35 `b7a7939` | 2022-08-16
+[Math](https://www.mediawiki.org/wiki/Extension:Math) | B | REL1_35 `b7a7939` | 2023-06-04
 [ManageWiki](https://www.mediawiki.org/wiki/Extension:ManageWiki) | B | master `e626a9f` | 2023-06-02
 [MediaSearch](https://www.mediawiki.org/wiki/Extension:MediaSearch) | A | REL1_39 `e0aa7bb` | 2022-12-09
 [MsUpload](https://www.mediawiki.org/wiki/Extension:MsUpload) | A | REL1_35 `32eb420` | 2021-08-25
@@ -86,7 +86,7 @@ Name | Grade | Version | Last updated
 [VisualEditor](https://www.mediawiki.org/wiki/Extension:VisualEditor) | A | REL1_39 `65d89c9` | 2023-02-06
 [Wikibase](https://www.mediawiki.org/wiki/Extension:Wikibase) | B | REL1_35 `7bb503b` | 2022-05-11
 [WikiEditor](https://www.mediawiki.org/wiki/Extension:WikiEditor) | A | REL1_39 `02e1c70` | 2023-06-03
-[WikiHiero](https://www.mediawiki.org/wiki/Extension:WikiHiero) | B | REL1_39 `3a2be51` | 2023-06-01
+[WikiHiero](https://www.mediawiki.org/wiki/Extension:WikiHiero) | B | REL1_39 `3a2be51` | 2023-06-04
 [WSSearchFront](https://www.mediawiki.org/wiki/Extension:WSSearchFront) | B | 3.5.4 `c27ebcb5` | 2021-11-23
 
 Some of the field are tagged as N/A because the information was not tracked before.
