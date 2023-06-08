@@ -115,12 +115,15 @@ final class Tagline extends Partial {
 			$editCount = $user->getEditCount();
 			$regDate = $user->getRegistration();
 			$gender = MediaWikiServices::getInstance()->getGenderCache()->getGenderOf( $user, __METHOD__ );
+			
+			$msgGender = sprintf(
+				'%s / %s / %s',
+				$skin->msg( 'citizen-pronouns-subjective-' . $gender )->text(),
+				$skin->msg( 'citizen-pronouns-objective-' . $gender )->text(),
+				$skin->msg( 'citizen-pronouns-possessive-' . $gender )->text()
+			);
 
-			if ( is_string( $regDate ) ) {
-				$regDateTs = wfTimestamp( TS_UNIX, $regDate );
-				$msgRegDate = $skin->msg( 'citizen-tagline-user-regdate', $skin->getLanguage()->userDate( new MWTimestamp( $regDate ), $skin->getUser() ), $user );
-				$tagline .= "<span id=\"citizen-tagline-user-regdate\" data-user-regdate=\"$regDateTs\">$msgRegDate</span>";
-			}
+			$tagline .= "<span id=\"citizen-tagline-user-gender\" data-user-gender=\"$gender\">$msgGender</span>";
 
 			if ( $editCount ) {
 				$msgEditCount = $skin->msg( 'usereditcount' )->numParams( sprintf( '%s', number_format( $editCount, 0 ) ) );
@@ -128,13 +131,10 @@ final class Tagline extends Partial {
 				$tagline .= "<span id=\"citizen-tagline-user-editcount\" data-user-editcount=\"$editCount\"><a href=\"$editCountHref\">$msgEditCount</a></span>";
 			}
 
-			if ( $gender != 'unknown' ) {
-				if ( $gender == 'male' ) {
-					$msgGender = '♂';
-				} elseif ( $gender == 'female' ) {
-					$msgGender = '♀';
-				}
-				$tagline .= "<span id=\"citizen-tagline-user-gender\" data-user-gender=\"$gender\">$msgGender</span>";
+			if ( is_string( $regDate ) ) {
+				$regDateTs = wfTimestamp( TS_UNIX, $regDate );
+				$msgRegDate = $skin->msg( 'citizen-tagline-user-regdate', $skin->getLanguage()->userDate( new MWTimestamp( $regDate ), $skin->getUser() ), $user );
+				$tagline .= "<span id=\"citizen-tagline-user-regdate\" data-user-regdate=\"$regDateTs\">$msgRegDate</span>";
 			}
 
 			$tagline .= '</div>';
