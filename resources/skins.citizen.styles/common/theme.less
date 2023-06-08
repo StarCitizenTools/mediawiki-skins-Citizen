@@ -14,6 +14,10 @@
 	--color-surface-3: @color-surface-3;
 	--color-surface-4: @color-surface-4;
 
+	--color-base: @color-base;
+	--color-base--emphasized: @color-base--emphasized;
+	--color-base--subtle: @color-base--subtle;
+
 	--color-primary: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), var( --color-primary__l ) )';
 	--color-primary--hover: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), calc( var( --color-primary__l ) * 1.2 ) )';
 	--color-primary--active: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), calc( var( --color-primary__l ) * 0.8 ) )';
@@ -51,6 +55,10 @@ a {
 	--color-surface-2: ~'hsl( var( --color-primary__h ) 25% 15% )';
 	--color-surface-3: ~'hsl( var( --color-primary__h ) 15% 20% )';
 	--color-surface-4: ~'hsl( var( --color-primary__h ) 15% 25% )';
+
+	--color-base--emphasized: ~'hsl( var( --color-primary__h ) 80% 95% )';
+	--color-base: ~'hsl( var( --color-primary__h ) 25% 80% )';
+	--color-base--subtle: ~'hsl( var( --color-primary__h ) 25% 65% )';
 
 	--background-color-primary--hover: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), 15% )';
 	--background-color-primary--active: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), 20% )';
