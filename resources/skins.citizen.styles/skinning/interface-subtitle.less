@@ -4,8 +4,8 @@
  * Module: mediawiki.skinning.interface-subtitle
  * Version: REL1_39
  *
- * Date: 2022-11-15
-*/
+ * Date: 2023-06-06
+ */
 
 #siteSub {
 	display: block;
@@ -28,6 +28,13 @@
 // Reduced spacing if both sub1 and 2 exists
 #contentSub + #contentSub2 {
 	margin-top: ~'calc( var( --space-xs ) * -1 )';
+}
+
+#citizen-tagline-user > span + span::before {
+	margin: 0 var( --space-xxs );
+	content: '·';
+	-webkit-user-select: none;
+	user-select: none;
 }
 
 span.subpages {
