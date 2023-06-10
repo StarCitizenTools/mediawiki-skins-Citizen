@@ -347,6 +347,7 @@
 			"+ext.ReplaceTextStyles": "skinStyles/extensions/ReplaceText/ext.ReplaceTextStyles.less",
 			"+ext.RevisionSlider.lazyCss": "skinStyles/extensions/RevisionSlider/ext.RevisionSlider.lazyCss.less",
 			"+ext.RevisionSlider.init": "skinStyles/extensions/RevisionSlider/ext.RevisionSlider.init.less",
+			"+ext.score.popup": "skinStyles/extensions/Score/ext.score.popup.less",
 			"+ext.scribunto.edit": "skinStyles/extensions/Scribunto/ext.scribunto.edit.less",
 			"+ext.jquery.atwho": "skinStyles/extensions/SemanticMediaWiki/ext.jquery.atwho.less",
 			"+ext.libs.tippy": "skinStyles/extensions/SemanticMediaWiki/ext.libs.tippy.less",
