@@ -26,10 +26,6 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Partials;
 
 use Exception;
-use ExtensionRegistry;
-use MWException;
-use Skin;
-use SpecialPage;
 
 /**
  * Drawer partial of Skin Citizen

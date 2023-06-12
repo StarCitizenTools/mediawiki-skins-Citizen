@@ -25,13 +25,13 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Hooks;
 
+use ExtensionRegistry;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\SidebarBeforeOutputHook;
 use MediaWiki\Hook\SkinBuildSidebarHook;
 use MediaWiki\Hook\SkinEditSectionLinksHook;
 use MediaWiki\Hook\SkinTemplateNavigation__UniversalHook;
 use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;
-use ExtensionRegistry;
 use Skin;
 use SpecialPage;
 
@@ -47,6 +47,7 @@ class SkinHooks implements
 	SkinTemplateNavigation__UniversalHook
 {
 	use \MediaWiki\Skins\Citizen\GetConfigTrait;
+
 	/**
 	 * Adds the inline theme switcher script to the page
 	 *
