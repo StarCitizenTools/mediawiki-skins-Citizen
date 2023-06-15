@@ -25,6 +25,7 @@
 	"citizen-search-mediasearch-empty": "メディアを検索",
 	"citizen-search-noresults-title": "$1に関する結果はありません",
 	"citizen-search-noresults-desc": "以下のオプションを試す",
+	"citizen-tagline-user-regdate": "$1に参加しました",
 	"prefs-citizen-theme-label": "テーマ",
 	"prefs-citizen-theme-option-light": "ライト",
 	"prefs-citizen-theme-option-dark": "ダーク",
