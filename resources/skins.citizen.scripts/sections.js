@@ -39,7 +39,7 @@ function init( bodyContent ) {
 	}
 
 	for ( let i = 0; i < editSections.length; i++ ) {
-		editSections[ i ].addEventListener( 'click', function( e ) {
+		editSections[ i ].addEventListener( 'click', function ( e ) {
 			e.stopPropagation();
 		} );
 	}
