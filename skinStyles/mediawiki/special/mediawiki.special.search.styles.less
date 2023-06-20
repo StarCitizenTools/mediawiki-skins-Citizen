@@ -5,7 +5,7 @@
  * Module: mediawiki.special.search.styles
  * Version: 1.39.0
  *
- * Date: 2022-10-20
+ * Date: 2023-06-20
 */
 
 @import '../../../resources/mixins.less';
@@ -20,11 +20,6 @@
 	display: flex;
 	justify-content: space-between;
 	gap: var( --space-xl );
-
-	// Fix weird space between input field and button
-	.oo-ui-actionFieldLayout .oo-ui-textInputWidget {
-		max-width: none;
-	}
 
 	.oo-ui-widget {
 		font-size: 1rem; // HACK: Override the 14px hack we use for OOUI
