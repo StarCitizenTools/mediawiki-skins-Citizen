@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.6.3...v2.6.4) (2023-06-20)
+
+
+### Features
+
+* **DiscussionTools:** ✨ turn subscribe button into icon ([638cca9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/638cca92cf4787d4ab001cc12d355b8db37d47ee))
+* **Lingo:** ✨ tweak Lingo tooltip styles ([1b817b8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1b817b8177887ba6fb9f32968f16ec28a7ed8af6))
+
+
+### Bug Fixes
+
+* **core:** add menu icons for "Special pages" and "Upload file" ([#664](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/664)) ([e771c72](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e771c728e16624cbf85b6fcc1c9d5d661a104075))
+* **Score:** use hue rotate to match dark mode color ([#662](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/662)) ([0acaa01](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0acaa0176f86e521e5dd7be797ae96eaba340386))
+* **SemanticMediaWiki:** 🐛 hide indicator divider when entity is loaded ([271d383](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/271d383cf67b2173e04cc4aadb66bc47b796f2f4))
+
 ### [2.6.3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.6.2...v2.6.3) (2023-06-10)
 
 
