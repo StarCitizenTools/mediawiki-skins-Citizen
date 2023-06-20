@@ -11,7 +11,8 @@ function init( bodyContent ) {
 
 	const
 		headings = bodyContent.querySelectorAll( '.section-heading' ),
-		sections = bodyContent.querySelectorAll( '.section-collapsible' );
+		sections = bodyContent.querySelectorAll( '.section-collapsible' ),
+		editSections = bodyContent.querySelectorAll( '.mw-editsection, .mw-editsection-like' );
 
 	for ( let i = 0; i < headings.length; i++ ) {
 		const j = i + 1,
@@ -37,9 +38,11 @@ function init( bodyContent ) {
 		} );
 	}
 
-	$( '.mw-editsection, .mw-editsection-like' ).click( function( e ) {
-		e.stopPropagation();
-	} )
+	for ( let i = 0; i < editSections.length; i++ ) {
+		editSections[ i ].addEventListener( 'click', function( e ) {
+			e.stopPropagation();
+		} );
+	}
 }
 
 module.exports = {
