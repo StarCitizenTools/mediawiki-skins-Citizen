@@ -36,6 +36,10 @@ function init( bodyContent ) {
 			headline.setAttribute( 'aria-expanded', headline.getAttribute( 'aria-expanded' ) === 'true' ? 'false' : 'true' );
 		} );
 	}
+
+	$( '.mw-editsection, .mw-editsection-like' ).click( function( e ) {
+		e.stopPropagation();
+	} )
 }
 
 module.exports = {
