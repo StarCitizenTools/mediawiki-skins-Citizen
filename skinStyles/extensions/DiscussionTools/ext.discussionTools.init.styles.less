@@ -5,8 +5,10 @@
  * Module: ext.discussionTools.init.styles
  * Version: REL1_39 1aae2cc
  *
- * Date: 2023-01-21
+ * Date: 2023-06-19
 */
+
+@import '../../../resources/variables.less';
 
 .ext-discussiontools-init-replylink-buttons {
 	.ext-discussiontools-init-replylink {
@@ -37,8 +39,52 @@
 }
 
 .ext-discussiontools-init-section-subscribe {
+	&.mw-editsection-like {
+		margin-top: 0;
+	}
+
 	&-bracket {
-		color: var( --color-base--subtle );
+		display: none;
+	}
+
+	// Align with .citizen-editsection-icon
+	&-link {
+		display: block;
+		width: 1.875rem;
+		height: 1.875rem;
+		border-radius: var( --border-radius--small );
+		font-size: 0.875rem;
+		opacity: var( --opacity-icon-base );
+		text-indent: -9999px; // Hide text
+		transition: @transition-opacity;
+
+		&::before {
+			position: absolute;
+			display: block;
+			width: inherit;
+			height: inherit;
+			// FIXME: Figure out a way to use OOUI icon for extension
+			background-image: url( data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KCTx0aXRsZT4KCQliZWxsCgk8L3RpdGxlPgoJPHBhdGggZD0iTTE2IDdhNS4zOCA1LjM4IDAgMDAtNC40Ni00Ljg1QzExLjYgMS40NiAxMS41MyAwIDEwIDBTOC40IDEuNDYgOC40NiAyLjE1QTUuMzggNS4zOCAwIDAwNCA3djZsLTIgMnYxaDE2di0xbC0yLTJ6bS02IDEzYTMgMyAwIDAwMy0zSDdhMyAzIDAgMDAzIDN6Ii8+Cjwvc3ZnPgo= );
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: 1.125rem;
+			content: '';
+		}
+
+		&[ data-mw-subscribed='1' ]::before {
+			// FIXME: Figure out a way to use OOUI icon for extension
+			background-image: url( data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KCTx0aXRsZT4KCQliZWxsCgk8L3RpdGxlPgoJPHBhdGggZD0iTTExLjUgMi4xOUMxNC4wOSAyLjg2IDE2IDUuMiAxNiA4djZsMiAydjFIMnYtMWwyLTJWOGMwLTIuOCAxLjkxLTUuMTQgNC41LTUuODFWMS41QzguNS42NyA5LjE3IDAgMTAgMHMxLjUuNjcgMS41IDEuNXYuNjl6TTEwIDRDNy43OSA0IDYgNS43OSA2IDh2N2g4VjhjMC0yLjIxLTEuNzktNC00LTR6TTggMThoNGMwIDEuMS0uOSAyLTIgMnMtMi0uOS0yLTJ6Ii8+Cjwvc3ZnPgo= );
+		}
+
+		&:hover {
+			background-color: var( --background-color-quiet--hover );
+			opacity: var( --opacity-icon-base--hover );
+		}
+
+		&:active {
+			background-color: var( --background-color-quiet--hover );
+			opacity: var( --opacity-icon-base--active );
+		}
 	}
 
 	&-link&-link-pending {
