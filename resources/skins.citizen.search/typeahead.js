@@ -144,7 +144,8 @@ function clearSuggestions() {
 			}
 		} );
 		fragment.append( template );
-		typeahead.replaceChildren( fragment );
+		typeahead.innerHTML = '';
+		typeahead.append( fragment );
 	}
 
 	// Remove loading animation
