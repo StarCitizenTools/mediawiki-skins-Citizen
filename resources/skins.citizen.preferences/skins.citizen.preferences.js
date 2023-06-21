@@ -94,9 +94,9 @@ function getPref() {
 
 	const pref = {
 		theme: localStorage.getItem( PREFIX_KEY + 'theme' ),
-		fontsize: localStorage.getItem( PREFIX_KEY + 'fontsize' ) || initFontSize(),
-		pagewidth: localStorage.getItem( PREFIX_KEY + 'pagewidth' ) || rootStyle.getPropertyValue( '--width-layout' ),
-		lineheight: localStorage.getItem( PREFIX_KEY + 'lineheight' ) || rootStyle.getPropertyValue( '--line-height' )
+		fontsize: localStorage.getItem( PREFIX_KEY + 'fontsize' ) ?? initFontSize(),
+		pagewidth: localStorage.getItem( PREFIX_KEY + 'pagewidth' ) ?? rootStyle.getPropertyValue( '--width-layout' ),
+		lineheight: localStorage.getItem( PREFIX_KEY + 'lineheight' ) ?? rootStyle.getPropertyValue( '--line-height' )
 	};
 
 	return pref;
@@ -300,7 +300,7 @@ function initPanel( event ) {
 	// 2. Site default theme (wgCitizenThemeDefault)
 	// 3. Fallback to auto
 	const currentTheme = prefValue.theme ??
-		require( './config.json' ).wgCitizenThemeDefault ||
+		require( './config.json' ).wgCitizenThemeDefault ??
 		'auto';
 
 	// Attach panel after button
@@ -356,10 +356,6 @@ function storageAvailable( type ) {
  * @return {void}
  */
 function initPref( window ) {
-	if ( typeof Object.fromEntries !== 'function' ) {
-		return;
-	}
-
 	if ( storageAvailable( 'localStorage' ) ) {
 		if ( typeof window.mw !== 'undefined' ) {
 			const headerTools = document.querySelector( '.citizen-header__end' ),
