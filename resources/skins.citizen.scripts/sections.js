@@ -18,7 +18,7 @@ function init( bodyContent ) {
 		const j = i + 1,
 			collapsibleID = `.section-collapsible-${j}`,
 			/* T13555 */
-			headline = headings[ i ].querySelector( '.mw-headline' ) || headings[ i ].querySelector( '.mw-heading' );
+			headline = headings[ i ].querySelector( '.mw-headline' ) ?? headings[ i ].querySelector( '.mw-heading' );
 
 		// Set up ARIA
 		headline.setAttribute( 'tabindex', 0 );
