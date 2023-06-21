@@ -7,7 +7,8 @@
 			"Lakejason0",
 			"Neetp7k9",
 			"Winston Sung",
-			"列维劳德"
+			"列维劳德",
+			"沈澄心"
 		]
 	},
 	"skinname-citizen": "公民 （Citizen）",
@@ -27,8 +28,8 @@
 	"citizen-page-info-copyright": "版權",
 	"citizen-page-info-credits": "製作群",
 	"citizen-page-info-lastmod": "最後修改",
-	"citizen-footer-desc": "在 [[MediaWiki:Citizen-footer-desc/zh-hant]] 編輯此文字",
-	"citizen-footer-tagline": "在 [[MediaWiki:Citizen-footer-tagline/zh-hant]] 編輯此文字",
+	"citizen-footer-desc": "在[[MediaWiki:Citizen-footer-desc]]編輯此文字",
+	"citizen-footer-tagline": "在[[MediaWiki:Citizen-footer-tagline]]編輯此文字",
 	"citizen-action-addsection": "新增話題",
 	"citizen-jumptotop": "返回頂端",
 	"citizen-search-fulltext": "搜尋包含「$1」的頁面：",
@@ -45,6 +46,7 @@
 	"citizen-tagline-ns-template": "模板頁面",
 	"citizen-tagline-ns-help": "說明頁面",
 	"citizen-tagline-ns-category": "分類頁面",
+	"citizen-tagline-user-regdate": "加入於$1",
 	"prefs-citizen-theme-label": "主題",
 	"prefs-citizen-theme-option-auto": "自動",
 	"prefs-citizen-theme-option-light": "明亮",

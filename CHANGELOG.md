@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.6.3...v2.6.4) (2023-06-20)
+
+
+### Features
+
+* **DiscussionTools:** ✨ turn subscribe button into icon ([638cca9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/638cca92cf4787d4ab001cc12d355b8db37d47ee))
+* **Lingo:** ✨ tweak Lingo tooltip styles ([1b817b8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1b817b8177887ba6fb9f32968f16ec28a7ed8af6))
+
+
+### Bug Fixes
+
+* **core:** add menu icons for "Special pages" and "Upload file" ([#664](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/664)) ([e771c72](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e771c728e16624cbf85b6fcc1c9d5d661a104075))
+* **Score:** use hue rotate to match dark mode color ([#662](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/662)) ([0acaa01](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0acaa0176f86e521e5dd7be797ae96eaba340386))
+* **SemanticMediaWiki:** 🐛 hide indicator divider when entity is loaded ([271d383](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/271d383cf67b2173e04cc4aadb66bc47b796f2f4))
+
+### [2.6.3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.6.2...v2.6.3) (2023-06-10)
+
+
+### Features
+
+* **core:** ✨ display real name in user menu when exists ([717d16a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/717d16af35b10dab04d434aefddbf991fc8c168c)), closes [#652](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/652)
+* **core:** ✨ use gender symbol instead of pronoun in user tagline ([c793959](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c793959416ce28fff0ddebebff6252f005b6aa52)), closes [#657](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/657)
+* **core:** expand user page tagline and allow citizen-tagline to be parsed ([#657](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/657)) ([25d25e3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/25d25e381b12172d6b3dadf83d139a9583f18fea))
+* **core:** underline content links on hover and focus ([#659](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/659)) ([90d6972](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/90d69720f69383cdbb3cb1310d4baf4ea829dba4))
+* **core:** use member names instead of group names in user menu ([#656](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/656)) ([9a0ffcc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9a0ffcc18620c0a2433f95cf9c24e12794a315c0))
+* **core:** use more a11y friendly hidden ([#654](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/654)) ([f9dad61](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f9dad612631772c03c9427f0945662c0284d4694))
+* **Score:** add Score support ([#661](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/661)) ([7134a88](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7134a88995748d3dcda6269082a74565f96004af))
+* **SemanticMediaWiki:** ✨ replace entity examiner loader with SMW logo ([0ee3153](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0ee31530ecab579e9c80787f086f8efce31012e5))
+* **WikiHiero:** add WikiHiero color ([#653](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/653)) ([e69160d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e69160de2f9a77e33bdee9a0db514af2592498b2))
+
+
+### Bug Fixes
+
+* **core:** typo in dark-color-text-error ([#658](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/658)) ([659c47b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/659c47b3c24eba8a6317e381c754f215b5206c98))
+* **SemanticMediaWiki:** 🐛 prevent entity examiner spinner rotate off axis ([5737125](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5737125f0222fa58ef8d6cf703e1ab582240b8fc))
+
 ### [2.6.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.6.1...v2.6.2) (2023-06-04)
 
 

@@ -1,7 +1,7 @@
 /*
  * Citizen - Mixins
  * https://starcitizen.tools
-*/
+ */
 
 @import 'variables.less';
 
@@ -224,4 +224,21 @@
 
 .button-red-active() {
 	background-color: var( --color-destructive--active );
+}
+
+// Transform black into given color
+// From https://stackoverflow.com/a/73390109/10624167
+.recolor( @color ) {
+	@r: red( @color ) / 255;
+	@g: green( @color ) / 255;
+	@b: blue( @color ) / 255;
+	@a: alpha( @color );
+
+	// grayscale fallback if SVG from data url is not supported
+	@lightness: lightness( @color );
+	filter: saturate( 0% ) brightness( 0% ) invert( @lightness ) opacity( @a );
+
+	// color filter
+	@svg-filter-id: "recolor";
+	filter: url( 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="@{svg-filter-id}" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 @{r} 0 0 0 0 @{g} 0 0 0 0 @{b} 0 0 0 @{a} 0"/></filter></svg> #@{svg-filter-id}' );
 }

@@ -82,7 +82,22 @@ final class Header extends Partial {
 	 */
 	private function getUserPageHTML( $isRegistered, $userPageData ): ?string {
 		if ( $isRegistered ) {
-			$html = $userPageData['html-items'];
+			$realname = $this->user->getRealName();
+			if ( !empty( $realname ) ) {
+				$username = $this->user->getName();
+				$innerHtml = <<<HTML
+					<div id="pt-userpage-realname">$realname</div>
+					<div id="pt-userpage-username">$username</div>
+				HTML;
+				// Dirty but it works
+				$html = str_replace(
+					">" . $username . "<",
+					">" . $innerHtml . "<",
+					$userPageData['html-items']
+				);
+			} else {
+				$html = $userPageData['html-items'];
+			}
 		} else {
 			// There must be a cleaner way to do this
 			$msg = $this->skin->msg( 'notloggedin' )->text();
@@ -111,16 +126,20 @@ final class Header extends Partial {
 		}
 
 		$html = '';
-		$msgName = 'group-%s';
+		$msgName = 'group-%s-member';
 
 		// There must be a cleaner way
 		foreach ( $groups as $group ) {
 			$id = sprintf( $msgName, $group );
 			$msg = $this->skin->msg( $id )->text();
 			$title = $this->title->newFromText(
-					$this->skin->msg( sprintf( $msgName, $group ) )->text(),
+					$msg,
 					NS_PROJECT
 				);
+			if ( $msg ) {
+				// Member names are in lowercase
+				$msg = ucfirst( $msg );
+			}
 			if ( $title ) {
 				$href = $title->getLinkURL();
 				$html .= <<< HTML

@@ -9,7 +9,8 @@
 			"Lantianjialiang",
 			"StarrySky",
 			"WrOffi",
-			"Yfdyh000"
+			"Yfdyh000",
+			"沈澄心"
 		]
 	},
 	"skinname-citizen": "公民 （Citizen）",
@@ -47,6 +48,7 @@
 	"citizen-tagline-ns-template": "模板页面",
 	"citizen-tagline-ns-help": "帮助页面",
 	"citizen-tagline-ns-category": "分类页面",
+	"citizen-tagline-user-regdate": "加入于$1",
 	"prefs-citizen-theme-label": "主题",
 	"prefs-citizen-theme-option-auto": "自动",
 	"prefs-citizen-theme-option-light": "亮色",

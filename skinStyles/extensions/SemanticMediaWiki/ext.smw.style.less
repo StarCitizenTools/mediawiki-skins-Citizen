@@ -539,18 +539,36 @@ a.smw-ask-action-btn-lblue:active {
 }
 
 /* smw/smw.indicators.css */
-.smw-icon-indicator-placeholder {
-	background-color: var( --color-surface-2 );
+/* Turn SMW logo into a loading spinner */
+.smw-indicator-vertical-bar-loader {
+	width: 28px;
+	height: 28px;
+	margin: 0;
+	animation: load2 1s infinite ease-in-out;
+	/* Perhaps base64 is not the best for performance */
+	background: url( data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDM3NSAzMzUiIHZpZXdCb3g9IjAgMCAzNzUgMzM1Ij48cGF0aCBkPSJNMjY2LjggMzA1SDEwOC4yTDI4LjggMTY3LjUgMTA4LjIgMzBoMTU4LjdsNzkuMyAxMzcuNUwyNjYuOCAzMDV6bS0xNTAtMTVoMTQxLjNsNzAuNy0xMjIuNUwyNTguMiA0NUgxMTYuOEw0Ni4yIDE2Ny41IDExNi44IDI5MHoiLz48Y2lyY2xlIGN4PSIxMTIuNSIgY3k9IjM3LjUiIHI9IjM3LjUiLz48Y2lyY2xlIGN4PSIyNjIuNSIgY3k9IjM3LjUiIHI9IjM3LjUiLz48Y2lyY2xlIGN4PSIzNy41IiBjeT0iMTY3LjUiIHI9IjM3LjUiLz48Y2lyY2xlIGN4PSIzMzcuNSIgY3k9IjE2Ny41IiByPSIzNy41Ii8+PGNpcmNsZSBjeD0iMTEyLjUiIGN5PSIyOTcuNSIgcj0iMzcuNSIvPjxjaXJjbGUgY3g9IjI2Mi41IiBjeT0iMjk3LjUiIHI9IjM3LjUiLz48Y2lyY2xlIGN4PSIxODcuNSIgY3k9IjE2Ny41IiByPSI3NSIvPjwvc3ZnPg== );
+	background-position: center;
+	background-repeat: no-repeat;
+	opacity: var( --opacity-icon-base );
 }
 
-.smw-indicator-vertical-bar-loader,
 .smw-indicator-vertical-bar-loader::before,
 .smw-indicator-vertical-bar-loader::after {
-	background: var( --color-surface-3 );
+	content: none;
 }
 
-.smw-indicator-vertical-bar-loader {
-	color: var( --color-surface-3 );
+@keyframes load2 {
+	from {
+		transform: rotate( 0deg );
+	}
+
+	to {
+		transform: rotate( 359deg );
+	}
+}
+
+.smw-icon-indicator-placeholder {
+	background-color: var( --color-surface-2 );
 }
 
 .smw-list-rule-title {

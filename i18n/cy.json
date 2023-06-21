@@ -1,0 +1,25 @@
+{
+	"@metadata": {
+		"authors": [
+			"Afalau"
+		]
+	},
+	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|Sgwrs]]",
+	"citizen-languages-toggle": "Mwy o ieithoedd",
+	"citizen-actions-more-toggle": "Mwy o weithredoedd",
+	"citizen-sitestats-articles-label": "erthyglau",
+	"citizen-sitestats-images-label": "ffeiliau",
+	"citizen-sitestats-users-label": "defnyddwyr",
+	"citizen-sitestats-edits-label": "golygiadau",
+	"citizen-page-info-copyright": "Hawlfraint",
+	"citizen-page-info-credits": "Cydnabyddiaeth",
+	"citizen-tagline-user-regdate": "Ymunodd $1",
+	"prefs-citizen-theme-label": "Thema",
+	"prefs-citizen-theme-option-auto": "Awtomatig",
+	"prefs-citizen-theme-option-light": "Golau",
+	"prefs-citizen-theme-option-dark": "Tywyll",
+	"prefs-citizen-fontsize-label": "Maint y ffont",
+	"prefs-citizen-pagewidth-label": "Lled y dudalen",
+	"prefs-citizen-lineheight-label": "Uchder y llinell",
+	"prefs-citizen-resetbutton-label": "Ailosod i ddiofyn"
+}

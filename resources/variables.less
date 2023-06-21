@@ -1,7 +1,7 @@
 /*
  * Citizen - LESS variables
  * https://starcitizen.tools
-*/
+ */
 
 // Import MediaWiki-supplied mixins
 @import 'mediawiki.mixins';
@@ -256,8 +256,7 @@
 @dark-background-color-primary--hover:	@color-accent30;
 @dark-background-color-primary--active:	@color-accent-30--darken;
 
-/* Foreground colors */
-@dark-color-text-error:			@color-accent50--lighten;
+@dark-color-text-error:			@color-red50--lighten;
 @dark-color-text-warning:		@color-yellow50;
 @dark-color-text-success:		@color-green50;
 
@@ -296,10 +295,18 @@
  * After that we can remove all theses LESS variables.
 */
 
-@dark-color-base: rgba( 255, 255, 255, 0.6 );
 @dark-bg-10: #1d2129;
 @dark-bg-20: #22262d;
 @dark-bg-30: #24272f;
 @dark-bg-40: #2b2f36;
 @dark-bg-50: #33363d;
 @dark-bg-60: #34383f;
+
+/*
+ * Used by Math and WikiHiero for recolor
+ * TODO: Figure out a way to do recolor with CSS variable
+ * e.g. If the primary color is changed on wiki, it won't be reflected here.
+*/
+@dark-color-base:				hsl( @color-primary__h, 25%, 80% );
+@dark-color-base--emphasized:	hsl( @color-primary__h, 80%, 95% );
+@dark-color-base--subtle:		hsl( @color-primary__h, 25%, 65% );

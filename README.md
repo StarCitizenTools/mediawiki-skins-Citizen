@@ -50,14 +50,14 @@ Name | Grade | Version | Last updated
 [CodeMirror](https://www.mediawiki.org/wiki/Extension:CodeMirror) | A | REL1_35 `a326407` | 2023-05-24
 [CommentStreams](https://www.mediawiki.org/wiki/Extension:CommentStreams) | B | REL1_39 `f75ff3b` | 2023-06-02
 [CookieWarning](https://www.mediawiki.org/wiki/Extension:CookieWarning) | A | REL1_35 `3c2ae6a` | 2022-04-29
-[DiscussionTools](https://www.mediawiki.org/wiki/Extension:DiscussionTools) | B | REL1_39 `1aae2cc` | 2023-01-21
+[DiscussionTools](https://www.mediawiki.org/wiki/Extension:DiscussionTools) | A | REL1_39 `1aae2cc` | 2023-06-19
 [DismissableSiteNotice](https://www.mediawiki.org/wiki/Extension:DismissableSiteNotice) | A | N/A | N/A
 [Echo](https://www.mediawiki.org/wiki/Extension:Echo) | A | REL1_35 `347c30e` | 2023-05-27
 [Flow (StructuredDiscussions)](https://www.mediawiki.org/wiki/Extension:StructuredDiscussions) | B | REL1_35 `e3379f0` | 2022-04-27
 [Graph](https://www.mediawiki.org/wiki/Extension:Graph) | B | N/A | N/A
 [Interwiki](https://www.mediawiki.org/wiki/Extension:Interwiki) | B | REL1_35 `a65a18e` | 2022-05-15
 [Lingo](https://www.mediawiki.org/wiki/Extension:Lingo) | B | REL1_35 `e948775` | 2022-04-29
-[Math](https://www.mediawiki.org/wiki/Extension:Math) | B | REL1_35 `b7a7939` | 2022-08-16
+[Math](https://www.mediawiki.org/wiki/Extension:Math) | B | REL1_35 `b7a7939` | 2023-06-04
 [ManageWiki](https://www.mediawiki.org/wiki/Extension:ManageWiki) | B | master `e626a9f` | 2023-06-02
 [MediaSearch](https://www.mediawiki.org/wiki/Extension:MediaSearch) | A | REL1_39 `e0aa7bb` | 2022-12-09
 [MsUpload](https://www.mediawiki.org/wiki/Extension:MsUpload) | A | REL1_35 `32eb420` | 2021-08-25
@@ -68,6 +68,7 @@ Name | Grade | Version | Last updated
 [RelatedArticles](https://www.mediawiki.org/wiki/Extension:RelatedArticles) | A | REL1_39 `f513e5c` | 2022-11-16
 [ReplaceText](https://www.mediawiki.org/wiki/Extension:ReplaceText) | B | REL1_39 `af4840a` | 2023-01-03
 [RevisionSlider](https://www.mediawiki.org/wiki/Extension:RevisionSlider) | B | REL1_35 `4c4e368` | 2022-06-02
+[Score](https://www.mediawiki.org/wiki/Extension:Score) | B | REL1_39 `0a66cef` | 2023-06-10
 [Scribunto](https://www.mediawiki.org/wiki/Extension:Scribunto) | B | REL1_39 `ebb91f2` | 2023-05-29
 [Semantic MediaWiki](https://www.mediawiki.org/wiki/Extension:Semantic_MediaWiki) | A | 4.0.2 `0fcdfce` | 2022-10-21
 [Semantic Result Formats](https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats) | E | N/A | N/A
@@ -86,7 +87,7 @@ Name | Grade | Version | Last updated
 [VisualEditor](https://www.mediawiki.org/wiki/Extension:VisualEditor) | A | REL1_39 `65d89c9` | 2023-02-06
 [Wikibase](https://www.mediawiki.org/wiki/Extension:Wikibase) | B | REL1_35 `7bb503b` | 2022-05-11
 [WikiEditor](https://www.mediawiki.org/wiki/Extension:WikiEditor) | A | REL1_39 `02e1c70` | 2023-06-03
-[WikiHiero](https://www.mediawiki.org/wiki/Extension:WikiHiero) | B | REL1_39 `3a2be51` | 2023-06-01
+[WikiHiero](https://www.mediawiki.org/wiki/Extension:WikiHiero) | B | REL1_39 `3a2be51` | 2023-06-04
 [WSSearchFront](https://www.mediawiki.org/wiki/Extension:WSSearchFront) | B | 3.5.4 `c27ebcb5` | 2021-11-23
 
 Some of the field are tagged as N/A because the information was not tracked before.

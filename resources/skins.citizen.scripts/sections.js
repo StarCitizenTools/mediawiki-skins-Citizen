@@ -11,7 +11,8 @@ function init( bodyContent ) {
 
 	const
 		headings = bodyContent.querySelectorAll( '.section-heading' ),
-		sections = bodyContent.querySelectorAll( '.section-collapsible' );
+		sections = bodyContent.querySelectorAll( '.section-collapsible' ),
+		editSections = bodyContent.querySelectorAll( '.mw-editsection, .mw-editsection-like' );
 
 	for ( let i = 0; i < headings.length; i++ ) {
 		const j = i + 1,
@@ -34,6 +35,12 @@ function init( bodyContent ) {
 
 			sections[ j ].classList.toggle( 'section-collapsible--collapsed' );
 			headline.setAttribute( 'aria-expanded', headline.getAttribute( 'aria-expanded' ) === 'true' ? 'false' : 'true' );
+		} );
+	}
+
+	for ( let i = 0; i < editSections.length; i++ ) {
+		editSections[ i ].addEventListener( 'click', function ( e ) {
+			e.stopPropagation();
 		} );
 	}
 }

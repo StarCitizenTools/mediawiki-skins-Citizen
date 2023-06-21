@@ -26,10 +26,6 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Partials;
 
 use Exception;
-use ExtensionRegistry;
-use MWException;
-use Skin;
-use SpecialPage;
 
 /**
  * Drawer partial of Skin Citizen
@@ -47,30 +43,11 @@ final class Drawer extends Partial {
 	 * @throws Exception
 	 */
 	public function decorateSidebarData( $sidebarData ) {
-		$globalToolsId = $this->getConfigValue( 'CitizenGlobalToolsPortlet' );
-		$globalToolsHtml = $this->getGlobalToolsHTML();
-		$globalToolsAdded = false;
-
-		// Attach global tools to first portlet if empty
-		// TODO: Remove this hack when Desktop Improvements separate article and global tools
-		if ( empty( $globalToolsId ) ) {
-			$sidebarData['data-portlets-first']['html-items'] .= $globalToolsHtml;
-			$globalToolsAdded = true;
-		}
-
 		for ( $i = 0; $i < count( $sidebarData['array-portlets-rest'] ); $i++ ) {
-			switch ( $sidebarData['array-portlets-rest'][$i]['id'] ) {
+			if ( $sidebarData['array-portlets-rest'][$i]['id'] === 'p-tb' ) {
 				// Remove toolbox since it is handled by page tools
-				case 'p-tb': {
-					unset( $sidebarData['array-portlets-rest'][$i] );
-					break;
-				}
-
-				case $globalToolsId: {
-					// Attach global tools to portlet with matching ID
-					$sidebarData['array-portlets-rest'][$i]['html-items'] .= $globalToolsHtml;
-					break;
-				}
+				unset( $sidebarData['array-portlets-rest'][$i] );
+				break;
 			}
 		}
 
@@ -78,45 +55,6 @@ final class Drawer extends Partial {
 		$sidebarData['array-portlets-rest'] = array_values( $sidebarData['array-portlets-rest'] );
 
 		return $sidebarData;
-	}
-
-	/**
-	 * Build global tools HTML
-	 * We removed some global tools from TOOLBOX, now add it back
-	 *
-	 * TODO: Remove this hack when Desktop Improvements separate article and global tools
-	 *
-	 * @return string RawHTML
-	 * @throws MWException
-	 */
-	private function getGlobalToolsHTML(): string {
-		$skin = $this->skin;
-
-		$html = '';
-
-		// Special pages
-		$html .= $skin->makeListItem( 'specialpages', [
-			'href' => Skin::makeSpecialUrl( 'Specialpages' ),
-			'id' => 't-specialpages'
-		] );
-
-		// Upload file
-		// Only add upload file link when $wgEnableUploads is true
-		if ( $this->getConfigValue( 'EnableUploads' ) === true ) {
-			if ( ExtensionRegistry::getInstance()->isLoaded( 'Upload Wizard' ) ) {
-				// Link to Upload Wizard if present
-				$uploadHref = SpecialPage::getTitleFor( 'UploadWizard' )->getLocalURL();
-			} else {
-				// Link to old upload form
-				$uploadHref = Skin::makeSpecialUrl( 'Upload' );
-			}
-			$html .= $skin->makeListItem( 'upload', [
-				'href' => $uploadHref,
-				'id' => 't-upload'
-			] );
-		}
-
-		return $html;
 	}
 
 	/**
