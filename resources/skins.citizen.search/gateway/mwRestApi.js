@@ -22,7 +22,7 @@ function getUrl( input ) {
 function convertDataToResults( data ) {
 	const results = [];
 
-	data = data = ( data || [] ).pages || [];;
+	data = ( data || [] ).pages || [];;
 
 	for ( let i = 0; i < data.length; i++ ) {
 		results[ i ] = {
