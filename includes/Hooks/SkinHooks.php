@@ -25,12 +25,15 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Hooks;
 
+use ExtensionRegistry;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\SidebarBeforeOutputHook;
 use MediaWiki\Hook\SkinBuildSidebarHook;
 use MediaWiki\Hook\SkinEditSectionLinksHook;
 use MediaWiki\Hook\SkinTemplateNavigation__UniversalHook;
 use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;
+use Skin;
+use SpecialPage;
 
 /**
  * Hooks to run relating the skin
@@ -43,6 +46,8 @@ class SkinHooks implements
 	SkinPageReadyConfigHook,
 	SkinTemplateNavigation__UniversalHook
 {
+	use \MediaWiki\Skins\Citizen\GetConfigTrait;
+
 	/**
 	 * Adds the inline theme switcher script to the page
 	 *
@@ -98,6 +103,33 @@ class SkinHooks implements
 	public function onSkinBuildSidebar( $skin, &$bar ): void {
 		// Be extra safe because it might be active on other skins with caching
 		if ( $skin->getSkinName() === 'citizen' && $bar ) {
+			$out = $skin->getOutput();
+			$globalToolsId = $this->getConfigValue( 'CitizenGlobalToolsPortlet', $out );
+			// remove initial p- for backward compatibility
+			$name = empty( $globalToolsId ) ? 'navigation' : preg_replace( '/^p-/', '', $globalToolsId );
+			$bar[$name]['specialpages'] = [
+				'text'  => $skin->msg( 'specialpages' ),
+				'href'  => Skin::makeSpecialUrl( 'Specialpages' ),
+				'title' => $skin->msg( 'tooltip-t-specialpages' ),
+				'icon'  => 'specialPages',
+				'id'    => 't-specialpages',
+			];
+			if ( $this->getConfigValue( 'EnableUploads', $out ) === true ) {
+				if ( ExtensionRegistry::getInstance()->isLoaded( 'Upload Wizard' ) ) {
+					// Link to Upload Wizard if present
+					$uploadHref = SpecialPage::getTitleFor( 'UploadWizard' )->getLocalURL();
+				} else {
+					// Link to old upload form
+					$uploadHref = Skin::makeSpecialUrl( 'Upload' );
+				}
+				$bar[$name]['upload'] = [
+					'text'  => $skin->msg( 'upload' ),
+					'href'  => $uploadHref,
+					'title' => $skin->msg( 'tooltip-t-upload' ),
+					'icon'  => 'upload',
+					'id'    => 't-upload',
+				];
+			}
 			foreach ( $bar as $key => $item ) {
 				self::addIconsToMenuItems( $bar, $key );
 			}

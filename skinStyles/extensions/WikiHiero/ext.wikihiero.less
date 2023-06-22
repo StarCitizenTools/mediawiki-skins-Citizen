@@ -5,15 +5,49 @@
  * Module: ext.wikihiero
  * Version: REL1_39 3a2be51
  *
- * Date: 2023-06-01
+ * Date: 2023-06-04
  */
 
-@import '../../../resources/variables.less';
+@import '../../../resources/mixins.less';
 
 .mw-hiero {
 	/* content.css */
+	.skin-citizen-light &-table img {
+		.recolor( @color-base );
+	}
+
+	.skin-citizen-light h1 &-table img,
+	.skin-citizen-light h2 &-table img,
+	.skin-citizen-light h3 &-table img,
+	.skin-citizen-light h4 &-table img,
+	.skin-citizen-light h5 &-table img,
+	.skin-citizen-light h6 &-table img,
+	.skin-citizen-light dt &-table img {
+		.recolor( @color-base--emphasized );
+	}
+
+	.skin-citizen-light blockquote &-table img,
+	.skin-citizen-light th &-table img {
+		.recolor( @color-base--subtle );
+	}
+
 	.skin-citizen-dark &-table img {
-		filter: invert( 1 ) hue-rotate( 180deg );
+		.recolor( @dark-color-base );
+	}
+
+	.skin-citizen-dark h1 &-table img,
+	.skin-citizen-dark h2 &-table img,
+	.skin-citizen-dark h3 &-table img,
+	.skin-citizen-dark h4 &-table img,
+	.skin-citizen-dark h5 &-table img,
+	.skin-citizen-dark h6 &-table img,
+	.skin-citizen-dark dt &-table img {
+		.recolor( @dark-color-base--emphasized );
+	}
+
+	.skin-citizen-dark blockquote &-table img,
+	.skin-citizen-dark th &-table img {
+		.recolor( @dark-color-base--subtle );
 	}
 
 	/* special.css */
