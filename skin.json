@@ -44,11 +44,11 @@
 						"citizen-languages-toggle",
 						"citizen-usermenu-toggle",
 						"citizen-search-toggle",
-						"mainpage-description",
 						"randompage",
 						"search",
 						"sitetitle",
-						"toc"
+						"toc",
+						"tooltip-p-logo"
 					]
 				}
 			]
