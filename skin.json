@@ -47,7 +47,8 @@
 						"randompage",
 						"search",
 						"sitetitle",
-						"toc"
+						"toc",
+						"tooltip-p-logo"
 					]
 				}
 			]
