@@ -4,12 +4,13 @@
  * Module: mediawiki.skinning.interface-message-box
  * Version: REL1_39
  *
- * Date: 2022-11-15
-*/
+ * Date: 2023-06-22
+ */
 
 .mw-message-box {
 	overflow: hidden;
 	padding: var( --space-sm ) var( --space-md );
+	border: 1px solid var( --border-color-base );
 	border-radius: var( --border-radius--small );
 	background-color: var( --color-surface-2 );
 	color: var( --color-base--emphasized );
@@ -29,19 +30,23 @@
 
 	&-error {
 		background-color: var( --background-color-destructive );
+		border-color: var( --background-color-destructive );
 	}
 
 	&-warning {
 		background-color: var( --background-color-warning );
+		border-color: var( --background-color-warning );
 	}
 
 	&-success {
 		background-color: var( --background-color-success );
+		border-color: var( --background-color-success );
 	}
 }
 
 #siteNotice {
 	.mw-message-box {
+		border: 0;
 		// Since it is edge to edge
 		border-radius: 0;
 	}
