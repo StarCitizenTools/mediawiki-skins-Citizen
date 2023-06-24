@@ -5,8 +5,8 @@
  * Module: ext.discussionTools.init.styles
  * Version: REL1_39 1aae2cc
  *
- * Date: 2023-06-19
-*/
+ * Date: 2023-06-24
+ */
 
 @import '../../../resources/variables.less';
 
@@ -69,6 +69,10 @@
 			background-repeat: no-repeat;
 			background-size: 1.125rem;
 			content: '';
+
+			.skin-citizen-dark & {
+				filter: invert(1);
+			}
 		}
 
 		&[ data-mw-subscribed='1' ]::before {
