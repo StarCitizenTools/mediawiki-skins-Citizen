@@ -45,6 +45,11 @@
 		}
 
 		&Icon,
+		.citizen-ui-icon {
+			margin: auto;
+		}
+
+		&Icon,
 		.citizen-ui-icon::before {
 			opacity: var( --opacity-icon-base );
 			transition: @transition-transform, @transition-opacity;
@@ -73,6 +78,10 @@
 		padding: 0 var( --space-xs ) 0 0;
 		border-right: 1px solid var( --border-color-base );
 		margin: 0 var( --space-xxs );
+
+		img {
+			margin: auto;
+		}
 	}
 
 	&__inner {
