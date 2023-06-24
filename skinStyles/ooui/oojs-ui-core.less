@@ -5,8 +5,10 @@
  * Module: oojs-ui-core.styles
  * Version: v0.44.3
  *
- * Date: 2023-05-29
-*/
+ * Date: 2023-06-24
+ */
+
+@import '../../resources/variables.less';
 
 .oo-ui-buttonElement > .oo-ui-buttonElement-button {
 	border-radius: var( --border-radius--small );
@@ -623,6 +625,7 @@ TODO: Need to refactor the current shadow for filter drop-shadow, see variables.
 	border-radius: 0 0 var( --border-radius--small ) var( --border-radius--small );
 	background-color: var( --color-surface-1 );
 	box-shadow: var( --box-shadow-dialog );
+	z-index: @z-index-overlay;
 }
 
 .oo-ui-menuOptionWidget.oo-ui-optionWidget-highlighted {
