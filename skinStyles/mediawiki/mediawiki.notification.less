@@ -5,8 +5,8 @@
  * Module: mediawiki.notification
  * Version: 1.39.0
  *
- * Date: 2022-12-13
-*/
+ * Date: 2023-06-23
+ */
 
 .mw-notification-area {
 	padding: var( --space-xs );
@@ -17,22 +17,22 @@
 	border-radius: var( --border-radius--medium );
 	background-color: var( --color-surface-1 );
 	box-shadow: var( --box-shadow-dialog );
-	color: var( --color-base );
+	color: var( --color-base--emphasized );
 
 	&.mw-notification-type {
 		&-warn {
-			background-color: var( --background-color-warning );
-			color: var( --color-base );
+			background: var( --background-image-warning ) var( --color-surface-0 );
+			border-color: transparent;
 		}
 
 		&-error {
-			background-color: var( --background-color-destructive );
-			color: var( --color-base );
+			background: var( --background-image-destructive ) var( --color-surface-0 );
+			border-color: transparent;
 		}
 
 		&-success {
-			background-color: var( --background-color-success );
-			color: var( --color-base );
+			background: var( --background-image-success ) var( --color-surface-0 );
+			border-color: transparent;
 		}
 	}
 }
