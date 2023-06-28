@@ -5,8 +5,8 @@
  * Module: ext.echo.special
  * Version: REL1_35 347c30e
  *
- * Date: 2021-08-11
-*/
+ * Date: 2023-06-29
+ */
 
 // Disable sticky header since it collides with Echo sticky header
 #citizen-body-header-sticky-sentinel {
@@ -127,6 +127,7 @@
 /* mw.echo.ui.CrossWikiUnreadFilterWidget.less */
 .mw-echo-ui-crossWikiUnreadFilterWidget {
 	// HACK: Make it sticky
+	position: -webkit-sticky;
 	position: sticky;
 	top: var( --space-sm );
 	padding: var( --space-md );
