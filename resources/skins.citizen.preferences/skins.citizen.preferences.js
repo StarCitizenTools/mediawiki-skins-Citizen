@@ -109,9 +109,11 @@ function getPref() {
  * @return {void}
  */
 function setPref( event ) {
+	//console.log(event.currentTarget);
+	//console.log(new FormData( event.currentTarget ));
 	const
 		// eslint-disable-next-line compat/compat
-		formData = Object.fromEntries( new FormData( event.currentTarget ) ),
+		formData = Object.fromEntries( new FormData( document.getElementById( CLASS + '-form' ) ) ),
 		currentPref = convertForForm( getPref() ),
 		newPref = {
 			theme: formData[ CLASS + '-theme' ],
@@ -227,12 +229,15 @@ function togglePanel() {
 		toggle = document.getElementById( CLASS + '-toggle' ),
 		panel = document.getElementById( CLASS + '-panel' ),
 		form = document.getElementById( CLASS + '-form' ),
+		themeOption = document.getElementById( CLASS + '-theme' ),
 		resetButton = document.getElementById( CLASS + '-resetbutton' );
 
 	if ( !panel.classList.contains( CLASS_PANEL_ACTIVE ) ) {
 		panel.classList.add( CLASS_PANEL_ACTIVE );
 		toggle.setAttribute( 'aria-expanded', true );
 		form.addEventListener( 'input', setPref );
+		// Some browser doesn't fire input events when (un)checking radio buttons
+		themeOption.addEventListener( 'click', setPref );
 		resetButton.addEventListener( 'click', resetPref );
 		window.addEventListener( 'click', dismissOnClickOutside );
 		window.addEventListener( 'keydown', dismissOnEscape );
@@ -240,6 +245,7 @@ function togglePanel() {
 		panel.classList.remove( CLASS_PANEL_ACTIVE );
 		toggle.setAttribute( 'aria-expanded', false );
 		form.removeEventListener( 'input', setPref );
+		themeOption.removeEventListener( 'click', setPref );
 		resetButton.removeEventListener( 'click', resetPref );
 		window.removeEventListener( 'click', dismissOnClickOutside );
 		window.removeEventListener( 'keydown', dismissOnEscape );
@@ -359,7 +365,14 @@ function storageAvailable( type ) {
  */
 function initPref( window ) {
 	if ( typeof Object.fromEntries !== 'function' ) {
-		return;
+		Object.defineProperty( Object, 'fromEntries', {
+    			value( iterable ) {
+				return Array.from( iterable ).reduce( ( obj, [key, val] ) => {
+					obj[key] = val;
+					return obj;
+				}, {});
+			},
+		});
 	}
 
 	if ( storageAvailable( 'localStorage' ) ) {
