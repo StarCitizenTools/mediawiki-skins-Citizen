@@ -109,8 +109,6 @@ function getPref() {
  * @return {void}
  */
 function setPref( event ) {
-	//console.log(event.currentTarget);
-	//console.log(new FormData( event.currentTarget ));
 	const
 		// eslint-disable-next-line compat/compat
 		formData = Object.fromEntries( new FormData( document.getElementById( CLASS + '-form' ) ) ),
