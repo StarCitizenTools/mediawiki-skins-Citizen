@@ -364,6 +364,8 @@ function storageAvailable( type ) {
  * @return {void}
  */
 function initPref( window ) {
+	// Object.fromEntries() polyfill https://github.com/feross/fromentries
+	// MIT. Copyright (c) Feross Aboukhadijeh.
 	if ( typeof Object.fromEntries !== 'function' ) {
 		Object.defineProperty( Object, 'fromEntries', {
     			value( iterable ) {
