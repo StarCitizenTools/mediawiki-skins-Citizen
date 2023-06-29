@@ -323,6 +323,7 @@ function initPanel( event ) {
 
 	togglePanel();
 	event.currentTarget.addEventListener( 'click', togglePanel );
+	event.currentTarget.removeEventListener( 'click', initPanel );
 }
 
 /**
