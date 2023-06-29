@@ -234,7 +234,7 @@ function togglePanel() {
 		panel.classList.add( CLASS_PANEL_ACTIVE );
 		toggle.setAttribute( 'aria-expanded', true );
 		form.addEventListener( 'input', setPref );
-		// Some browser doesn't fire input events when (un)checking radio buttons
+		// Some browser doesn't fire input events when checking radio buttons
 		themeOption.addEventListener( 'click', setPref );
 		resetButton.addEventListener( 'click', resetPref );
 		window.addEventListener( 'click', dismissOnClickOutside );
