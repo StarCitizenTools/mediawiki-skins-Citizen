@@ -111,7 +111,7 @@ function main( window ) {
 	} );
 
 	// Preference module
-	if ( config.wgCitizenEnablePreferences === true ) {
+	if ( config.wgCitizenEnablePreferences === true && typeof document.createElement( 'div' ).prepend === 'function' ) {
 		mw.loader.load( 'skins.citizen.preferences' );
 	}
 

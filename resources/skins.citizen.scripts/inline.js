@@ -91,7 +91,7 @@ window.applyPref = () => {
 		apply();
 
 		// Attach listener for future changes
-		prefersDark.addEventListener( 'change', () => {
+		prefersDark.addListener( () => {
 			apply();
 		} );
 
