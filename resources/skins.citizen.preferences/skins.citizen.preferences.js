@@ -368,12 +368,12 @@ function initPref( window ) {
 	if ( typeof Object.fromEntries !== 'function' ) {
 		Object.defineProperty( Object, 'fromEntries', {
     			value( iterable ) {
-				return Array.from( iterable ).reduce( ( obj, [key, val] ) => {
-					obj[key] = val;
+				return Array.from( iterable ).reduce( ( obj, [ key, val ] ) => {
+					obj[ key ] = val;
 					return obj;
-				}, {});
-			},
-		});
+				}, {} );
+			}
+		} );
 	}
 
 	if ( storageAvailable( 'localStorage' ) ) {
