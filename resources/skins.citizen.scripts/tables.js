@@ -38,6 +38,10 @@ function setupOverflowState( element ) {
 			}
 		};
 
+		if ( element.parentNode === null ) {
+			return;
+		}
+
 		updateState();
 
 		// Update state on element scroll

@@ -627,6 +627,7 @@
 			"value": [
 				"citizen-table-nowrap",
 				"mw-changeslist-line",
+				"mw-recentchanges-table",
 				"infobox",
 				"cargoDynamicTable",
 				"dataTable"
