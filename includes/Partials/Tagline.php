@@ -116,9 +116,9 @@ final class Tagline extends Partial {
 			$regDate = $user->getRegistration();
 			$gender = MediaWikiServices::getInstance()->getGenderCache()->getGenderOf( $user, __METHOD__ );
 
-			if ( $gender == 'male' ) {
+			if ( $gender === 'male' ) {
 				$msgGender = '♂';
-			} elseif ( $gender == 'female' ) {
+			} elseif ( $gender === 'female' ) {
 				$msgGender = '♀';
 			}
 			if ( isset( $msgGender ) ) {
