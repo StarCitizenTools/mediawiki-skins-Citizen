@@ -116,12 +116,12 @@ final class Tagline extends Partial {
 			$regDate = $user->getRegistration();
 			$gender = MediaWikiServices::getInstance()->getGenderCache()->getGenderOf( $user, __METHOD__ );
 
-			if ( $gender != 'notknown' ) {
-				if ( $gender == 'male' ) {
-					$msgGender = '♂';
-				} elseif ( $gender == 'female' ) {
-					$msgGender = '♀';
-				}
+			if ( $gender == 'male' ) {
+				$msgGender = '♂';
+			} elseif ( $gender == 'female' ) {
+				$msgGender = '♀';
+			}
+			if ( isset( $msgGender ) ) {
 				$tagline .= "<span id=\"citizen-tagline-user-gender\" data-user-gender=\"$gender\">$msgGender</span>";
 			}
 
