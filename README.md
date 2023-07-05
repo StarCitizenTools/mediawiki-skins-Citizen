@@ -29,9 +29,9 @@ Please feel free to submit PRs if you want to add support for more extensions!
 ### Core
 Name | Grade | Version | Last updated
 :--- | :--- | :--- | :---
-MediaWiki UI | A | 1.39.0 | 2023-06-29
-Codex | A | 0.1.1| 2022-12-01
-OOUI | A | 0.44.3 | 2023-05-29
+MediaWiki UI | A | 1.39.0 | 2023-07-04
+Codex | A | 0.1.1 | 2022-12-01
+OOUI | A | 0.44.3 | 2023-06-24
 
 ### Extensions
 Name | Grade | Version | Last updated
