@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.6.4...v2.6.5) (2023-07-05)
+
+
+### Features
+
+* **core:** add border to message boxes ([#672](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/672)) ([1137a37](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1137a374d856ca020cd846dc5879ddf2ec17a9c3))
+* **core:** add title to logos ([#671](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/671)) ([dfe7167](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/dfe7167e97e4c4b0f2b003dc158e015ad5e8dd1f))
+* **core:** update MediaWiki notification style ([#673](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/673)) ([32ffa7c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/32ffa7cc2353383e3ac4c64b701c91672406a8b2))
+* **DiscussionTools:** exchange icons for subscribe and unsubscribe buttons ([ec3aafc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ec3aafcfad34e67e5158a4c8e25253ce0b84c0a5))
+* **MediaWiki:** add mediawiki.filewarning skinstyle ([#682](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/682)) ([88f8cfb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/88f8cfb43551c01064b769bffeabe6c8ca158181))
+
+
+### Bug Fixes
+
+* **core:** 🐛 force section indicator and heading to the start ([f74244f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f74244ff4682b5bf380bedc5a124717d2350b364))
+* **core:** add webkit prefix for sticky to support Safari < 13 ([#679](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/679)) ([1cd993c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1cd993c664ae10872fb88f01257b5aee1b75f036))
+* **core:** header icon position in older browsers ([#670](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/670)) ([a61746b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a61746bf8e5baef89bf9b18305cc4165c516a2bb))
+* **core:** prevent propagation of click event on .mw-editsection, .mw-editsection-like ([#667](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/667)) ([07d7a73](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/07d7a730b87735d1a446f661825900119e23cbb4))
+* **core:** skin preference support for Safari on iOS < 12.2 ([#680](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/680)) ([2891d04](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2891d042ccdee621babf77fe2725a7738fab3159))
+* **DiscussionTools:** icon color in dark theme ([#675](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/675)) ([7e2dcc1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7e2dcc19bb874f8459ed5d45add44b1788e58cfb))
+* **ooui:** fix max-width of OOUI TextInputWidget ([#666](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/666)) ([914b810](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/914b81010e0043b1ce45da20aa5a5544b4e59178))
+* **OOUI:** z-index of OOUI MenuSelectWidget ([#674](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/674)) ([1f90d15](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1f90d15fbe7e08257648f50094b93d30ae22d579))
+* **Tables:** Check if `element.parentNode` is null ([#681](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/681)) ([a1139e7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a1139e7797996f124df4556dfc99265d13cae616))
+
 ### [2.6.4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.6.3...v2.6.4) (2023-06-20)
 
 
