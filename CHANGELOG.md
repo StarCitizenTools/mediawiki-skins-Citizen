@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.6.5...v2.6.6) (2023-07-05)
+
+
+### Bug Fixes
+
+* **core:** undefined $msgGender error in Tagline.php ([#684](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/684)) ([4f6e34e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4f6e34e05be5b2f8298b9cf266e9d1c9cc66bfe6))
+
 ### [2.6.5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.6.4...v2.6.5) (2023-07-05)
 
 
