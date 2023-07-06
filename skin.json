@@ -257,6 +257,7 @@
 				"lock",
 				"logIn",
 				"logOut",
+				"message",
 				"move",
 				"printer",
 				"recentChanges",

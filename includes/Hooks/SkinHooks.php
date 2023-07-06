@@ -297,6 +297,7 @@ class SkinHooks implements
 			'contributions' => 'userContributions',
 			'log' => 'history',
 			'blockip' => 'block',
+			'emailuser' => 'message',
 			'userrights' => 'userGroup',
 			// Extension:Cargo
 			'cargo-pagevalues' => 'database',
