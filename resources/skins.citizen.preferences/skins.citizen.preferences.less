@@ -63,7 +63,7 @@
 
 #citizen-pref {
 	&-header {
-		padding: 1.25rem 1.25rem 0;
+		padding: var( --space-lg ) var( --space-md ) 0;
 		color: var( --color-base--emphasized );
 		font-size: 1rem;
 		font-weight: var( --font-weight-semibold );
@@ -79,7 +79,7 @@
 		}
 
 		fieldset {
-			padding: 0 1.25rem;
+			padding: 0 var( --space-md );
 			border: 0;
 			margin: 0;
 			appearance: none;
@@ -93,8 +93,8 @@
 
 	&-form {
 		display: grid;
-		margin: 1rem 0;
-		gap: 1.25rem;
+		margin: var( --space-md ) 0;
+		gap: var( --space-md );
 	}
 
 	&-theme {
@@ -132,7 +132,7 @@
 
 	&-resetbutton {
 		width: 100%;
-		padding: 0.625rem 1.25rem;
+		padding: var( --space-sm ) var( --space-md );
 		border: 0;
 		border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
 		appearance: none;

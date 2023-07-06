@@ -8,7 +8,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		padding: var( --space-md );
+		padding: var( --space-sm )  var( --space-md ) var( --space-md );
 		border-bottom: 1px solid var( --border-color-base );
 		gap: var( --space-md );
 	}
@@ -35,14 +35,14 @@
 		display: grid;
 		max-width: 92vw;
 		justify-content: center;
-		padding: var( --space-xs ) var( --space-md );
+		padding: var( --space-xs );
 		font-size: 0.875rem; // TODO: Make this a variable
 		gap: var( --space-xs );
 		grid-template-columns: repeat( auto-fit, 15rem );
 
 		a {
 			.menu-item-link;
-			padding: 0.625rem var( --space-md ); // TODO: Make this a variable
+			padding: var( --space-xs ) var( --space-md ); // TODO: Make this a variable
 			border-radius: var( --border-radius--small );
 
 			&:hover {
