@@ -28,7 +28,7 @@
 
 .mw-changeslist {
 	.comment {
-		color: var( --color-base--subtle );
+		color: var( --color-base );
 	}
 
 	// Need additional parent to override
@@ -53,8 +53,22 @@
 	}
 
 	.mw-tag-markers {
+		margin-left: var( --space-xxs );
+
 		.mw-tag-marker {
-			color: var( --color-base--subtle );
+			padding: 2px 8px;
+			border-radius: var( --border-radius--pill );
+			background-color: var( --color-surface-2 );
+			font-size: 0.8125rem;
+
+			&::after {
+				display: none;
+			}
+		}
+
+		&::before,
+		&::after {
+			display: none;
 		}
 	}
 
@@ -69,9 +83,22 @@
 	}
 
 	&-line {
+		&-inner {
+			color: var( --color-base--subtle );
+
+			.mw-diff-bytes {
+				margin-right: var( --space-xs );
+				float: left;
+			}
+		}
+
 		+ .mw-changeslist-line {
 			border-top: 1px solid var( --border-color-base ); // Add separator
 		}
+	}
+
+	&-separator {
+		color: var( --color-base--subtle );
 	}
 }
 

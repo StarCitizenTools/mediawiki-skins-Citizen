@@ -9,23 +9,32 @@
  * Styling for Special:Watchlist and Special:RecentChanges when preference 'usenewrc'
  * a.k.a. Enhanced Recent Changes is enabled.
  */
+.mw-enhanced-rc {
+	table& {
+		padding: var( --space-sm ) 0;
+		margin: 0 !important;
+		font-size: 0.875rem;
+		transition: @transition-background;
 
-table.mw-enhanced-rc {
-	padding: var( --space-sm ) 0;
-	margin: 0 !important;
-	font-size: 0.875rem;
-	transition: @transition-background;
-
-	&:hover {
-		background-color: var( --background-color-quiet--hover );
+		&:hover {
+			background-color: var( --background-color-quiet--hover );
+		}
 	}
-}
 
-.mw-enhanced-rc-nested {
-	display: block;
-	margin-top: var( --space-xxs );
+	td& {
+		font-family: var( --font-family-monospace );
+	}
 
-	.mw-tag-markers {
-		margin: var( --space-xxs );
+	&-time {
+		font-family: var( --font-family-monospace );
+	}
+
+	&-nested {
+		display: block;
+		margin-top: var( --space-xxs );
+
+		.mw-tag-markers {
+			margin: var( --space-xxs );
+		}
 	}
 }
