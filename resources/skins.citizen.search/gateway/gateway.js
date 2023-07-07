@@ -11,11 +11,11 @@
 const gatewayConfig = require( '../config.json' ).wgCitizenSearchGateway;
 
 /**
- * Setup the gateway based on wiki configuration
+ * Setup the default gateway based on wiki configuration
  *
  * @return {module}
  */
-function getGateway() {
+function getDefaultGateway() {
 	switch ( gatewayConfig ) {
 		case 'mwActionApi':
 			return require( './mwActionApi.js' );
@@ -36,7 +36,23 @@ function getGateway() {
  * @return {Object} Results
  */
 async function getResults( searchQuery, controller ) {
-	const gateway = getGateway();
+	let gateway = getDefaultGateway();
+
+	/*
+	 * Multi-gateway search experiment
+	 * This is a rough proof of concept for allowing multiple search gateway
+	 * We are using SMW Ask as an experiment
+	 *
+	 * TODO:
+	 * - Clean up gateway into JSON data perhaps
+	 * - Implement UI support (initial states, search syntax suggestions)
+	 */
+	const smwSearchCommand = '/ask ';
+
+	if ( searchQuery.startsWith( smwSearchCommand ) ) {
+		gateway = require( './smwAskApi.js' );
+		searchQuery = searchQuery.slice( smwSearchCommand.length );
+	}
 
 	const signal = controller.signal;
 
