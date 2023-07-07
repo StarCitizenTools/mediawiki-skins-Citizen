@@ -13,14 +13,36 @@
 		line-height: var( --line-height-xs );
 
 		a {
+			display: flex;
+			align-items: center;
+			padding: var( --space-xs ) var( --space-md );
+			color: var( --color-base );
 			font-weight: var( --font-weight-medium );
-		}
-	}
+			gap: var( --space-sm );
+			transition: @transition-background, @transition-color;
 
-	a {
-		&:hover,
-		&:focus {
-			text-decoration: none;
+			&:hover {
+				background-color: var( --background-color-primary--hover );
+				color: var( --color-base--emphasized );
+
+				.citizen-ui-icon::before {
+					opacity: var( --opacity-icon-base--hover );
+				}
+			}
+
+			&:active {
+				background-color: var( --background-color-primary--active );
+				color: var( --color-base--subtle );
+
+				.citizen-ui-icon::before {
+					opacity: var( --opacity-icon-base--active );
+				}
+			}
+
+			&:hover,
+			&:focus {
+				text-decoration: none;
+			}
 		}
 	}
 }

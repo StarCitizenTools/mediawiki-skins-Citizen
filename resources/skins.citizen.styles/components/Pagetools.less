@@ -47,19 +47,6 @@
 		font-size: 0.875rem;
 		.citizen-card;
 		.citizen-card-hide( top right );
-
-		a {
-			padding: var( --space-xs ) var( --space-md );
-			.menu-item-link;
-
-			&:hover {
-				.menu-item-link-hover;
-			}
-
-			&:active {
-				.menu-item-link-active;
-			}
-		}
 	}
 
 	// Visible page tools styles
@@ -70,30 +57,17 @@
 		}
 
 		li > a {
-			display: flex;
-			align-items: center;
-			padding: var( --space-xs ) var( --space-sm );
+			padding-right: var( --space-sm );
+			padding-left: var( --space-sm );
 			border-radius: var( --border-radius--medium );
-			color: var( --color-base );
 			font-size: 0;
-			transition: @transition-background, @transition-color;
 
 			&:hover {
 				background-color: var( --background-color-quiet--hover );
-				color: var( --color-base--emphasized );
-
-				&::before {
-					opacity: var( --opacity-icon-base--hover );
-				}
 			}
 
 			&:active {
 				background-color: var( --background-color-quiet--active );
-				color: var( --color-base--subtle );
-
-				&::before {
-					opacity: var( --opacity-icon-base--active );
-				}
 			}
 		}
 	}
