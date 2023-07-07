@@ -23,7 +23,8 @@
 			/* T13555 */
 			.mw-heading h1,
 			.mw-heading h2 {
-				transition: @transition-opacity;
+				transition: var( --transition-hover );
+				transition-property: opacity;
 
 				&:hover {
 					opacity: var( --opacity-icon-base--hover );
@@ -41,7 +42,8 @@
 			order: -2;
 			margin-right: var( --space-md );
 			cursor: pointer;
-			transition: @transition-transform;
+			transition: var( --transition-hover );
+			transition-property: transform;
 		}
 
 		// Fix button alignment

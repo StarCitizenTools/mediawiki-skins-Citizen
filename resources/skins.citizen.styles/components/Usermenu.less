@@ -58,7 +58,8 @@
 		&groups {
 			a {
 				display: block;
-				transition: @transition-color;
+				transition: var( --transition-hover );
+				transition-property: color;
 
 				&:hover {
 					color: var( --color-primary--hover );

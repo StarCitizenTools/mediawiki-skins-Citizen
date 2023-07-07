@@ -19,7 +19,8 @@
 			color: var( --color-base );
 			font-weight: var( --font-weight-medium );
 			gap: var( --space-sm );
-			transition: @transition-background, @transition-color;
+			transition: var( --transition-hover );
+			transition-property: background, color, opacity;
 
 			&:hover {
 				background-color: var( --background-color-primary--hover );

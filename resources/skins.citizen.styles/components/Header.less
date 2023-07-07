@@ -26,6 +26,8 @@
 		border-radius: var( --border-radius--small );
 		contain: strict;
 		place-items: center;
+		transition: var( --transition-hover );
+		transition-property: background;
 
 		// Used in checkbox hack
 		&Checkbox {
@@ -52,7 +54,8 @@
 		&Icon,
 		.citizen-ui-icon::before {
 			opacity: var( --opacity-icon-base );
-			transition: @transition-transform, @transition-opacity;
+			transition: var( --transition-hover );
+			transition-property: transform, opacity;
 		}
 
 		&:hover {

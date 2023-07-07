@@ -33,7 +33,8 @@
 			border: 1px solid var( --border-color-base--darker );
 			border-radius: var( --border-radius--pill );
 			color: var( --color-base--subtle );
-			transition: @transition-background;
+			transition: var( --transition-hover );
+			transition-property: background, color;
 
 			&:hover {
 				background-color: var( --color-primary--hover );

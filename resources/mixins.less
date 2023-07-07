@@ -186,7 +186,8 @@
 .button-blue() {
 	background-color: var( --color-primary );
 	color: #fff !important;
-	transition: @transition-background, @transition-color;
+	transition: var( --transition-hover );
+	transition-property: background, color;
 }
 
 .button-blue-hover() {
@@ -200,7 +201,8 @@
 .button-red() {
 	background-color: var( --color-destructive );
 	color: #fff !important;
-	transition: @transition-background, @transition-color;
+	transition: var( --transition-hover );
+	transition-property: background, color;
 }
 
 .button-red-hover() {

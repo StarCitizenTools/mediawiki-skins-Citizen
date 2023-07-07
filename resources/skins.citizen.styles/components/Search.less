@@ -53,7 +53,8 @@
 		border-radius: var( --border-radius--small );
 
 		.citizen-ui-icon::before {
-			transition: @transition-transform;
+			transition: var( --transition-hover );
+			transition-property: transform;
 		}
 
 		&:hover {

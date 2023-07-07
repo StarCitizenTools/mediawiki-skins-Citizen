@@ -53,7 +53,8 @@
 
 .wssearch--selected-filter {
 	background-color: var( --color-surface-2 );
-	transition: background-color 0.1s, color 0.1s, border-color 0.1s, box-shadow 0.1s;
+	transition: var( --transition-hover );
+	transition-property: background-color, color, border-color, box-shadow;
 
 	&:hover {
 		border-color: var( --base-color-lighter );

@@ -41,7 +41,8 @@
 	height: 1.875rem;
 	opacity: var( --opacity-icon-base );
 	text-indent: -9999px; // Hide text
-	transition: @transition-opacity;
+	transition: var( --transition-hover );
+	transition-property: opacity;
 
 	&::before {
 		.resource-loader-icon;
