@@ -17,6 +17,7 @@
 		gap: 0.25rem;
 		.citizen-card();
 		.citizen-card-hide( top center, '', false );
+		.citizen-card-transition();
 
 		.citizen-ui-icon {
 			width: var( --height-search-bar );
@@ -101,12 +102,6 @@
 #citizen-search__checkbox:checked {
 	~ .citizen-search__card {
 		.citizen-card-show( false );
-	}
-}
-
-.citizen-animations-ready {
-	.citizen-search__card {
-		.citizen-card-transition();
 	}
 }
 

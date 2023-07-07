@@ -134,7 +134,8 @@
 // Move down when site header is hidden
 @media ( max-width: ( @width-breakpoint-tablet ) ) {
 	.citizen-toc {
-		transition: @transition-transform;
+		transition: var( --transition-menu );
+		transition-property: transform;
 		will-change: transform;
 	}
 
@@ -164,6 +165,7 @@
 			user-select: none;
 			.citizen-card;
 			.citizen-card-hide( bottom right, '', false );
+			.citizen-card-transition();
 		}
 	}
 
@@ -189,7 +191,8 @@
 			pointer-events: auto;
 			transform: none;
 			transform-origin: bottom right;
-			transition: @transition-transform;
+			transition: var( --transition-menu );
+			transition-property: transform;
 
 			.citizen-ui-icon {
 				width: 1rem;
@@ -224,13 +227,6 @@
 					}
 				}
 			}
-		}
-	}
-
-	// Wait for first paint before animating
-	.citizen-animations-ready {
-		.citizen-toc__card {
-			.citizen-card-transition();
 		}
 	}
 }

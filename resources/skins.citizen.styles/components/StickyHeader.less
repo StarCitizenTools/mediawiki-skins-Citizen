@@ -63,7 +63,8 @@
 @media ( max-width: @width-breakpoint-tablet ) {
 	.citizen-body-header--sticky {
 		.mw-body-header {
-			transition: @transition-transform;
+			transition: var( --transition-menu );
+			transition-property: transform;
 		}
 
 		&.citizen-scroll--down {

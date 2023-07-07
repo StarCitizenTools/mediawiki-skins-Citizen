@@ -52,14 +52,16 @@
 // But GTFO instantly when they close the menu
 .citizen-card-content-show() {
 	opacity: 1;
-	transition: @transition-opacity--transform;
+	transition: var( --transition-menu );
+	transition-property: opacity;
 	will-change: opacity;
 }
 
 // Transition animation
 .citizen-card-transition() {
-	transition: @transition-transform, @transition-opacity--transform, @transition-visibility--transform;
-	will-change: transform, opacity, opacity;
+	transition: var( --transition-menu );
+	transition-property: transform, opacity, visibility;
+	will-change: transform, opacity, visibility;
 }
 
 // Header card popups
@@ -78,6 +80,7 @@
 	user-select: none;
 	.citizen-card();
 	.citizen-card-hide( bottom @position );
+	.citizen-card-transition();
 
 	@media ( min-width: @width-breakpoint-tablet ) {
 		& when ( @position = left ) {

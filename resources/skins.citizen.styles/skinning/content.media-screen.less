@@ -18,7 +18,8 @@ figure[ typeof~='mw:File/Frame' ] {
 			max-width: 100%;
 			height: auto;
 			contain: strict;
-			transition: @transition-transform;
+			transition: var( --transition-hover );
+			transition-property: transform;
 
 			// Prevent constraining image width in tables
 			table & {

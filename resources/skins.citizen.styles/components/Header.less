@@ -182,7 +182,8 @@
 /* Hide header when scroll down on smaller screen sizes */
 @media ( max-width: @width-breakpoint-tablet ) {
 	.citizen-header {
-		transition: @transition-transform;
+		transition: var( --transition-menu );
+		transition-property: transform;
 	}
 
 	.citizen-scroll--down .citizen-header {

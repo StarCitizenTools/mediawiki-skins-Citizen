@@ -512,7 +512,8 @@
 	grid-template-areas: 'desc links'
 		'about about';
 	grid-template-columns: 2fr 1fr;
-	transition: @transition-background;
+	transition: var( --transition-menu );
+	transition-property: background;
 
 	.mw-mmv-untruncated & {
 		background-color: transparent;
@@ -607,7 +608,8 @@
 	border-top-left-radius: var( --border-radius--large );
 	border-top-right-radius: var( --border-radius--large );
 	color: #fff;
-	transition: @transition-background, @transition-color;
+	transition: var( --transition-menu );
+	transition-property: background, color;
 
 	&.mw-mmv-untruncated {
 		background-color: var( --color-surface-1 );

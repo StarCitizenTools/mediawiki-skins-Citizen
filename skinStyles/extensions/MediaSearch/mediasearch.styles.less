@@ -629,7 +629,8 @@
 	}
 
 	img {
-		transition: @transition-transform;
+		transition: var( --transition-hover );
+		transition-property: transform;
 	}
 }
 
@@ -677,7 +678,8 @@
 
 	&__thumbnail {
 		border-radius: var( --border-radius--small );
-		transition: @transition-transform;
+		transition: var( --transition-hover );
+		transition-property: transform;
 	}
 
 	&__duration {
