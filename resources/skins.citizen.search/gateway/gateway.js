@@ -8,15 +8,16 @@
  * @global
  */
 
-const gatewayConfig = require( '../config.json' ).wgCitizenSearchGateway;
+const defaultGatewayName = require( '../config.json' ).wgCitizenSearchGateway;
 
 /**
- * Setup the default gateway based on wiki configuration
+ * Setup the gateway based on the name provided
  *
+ * @param {string} gatewayName
  * @return {module}
  */
-function getDefaultGateway() {
-	switch ( gatewayConfig ) {
+function getGateway( gatewayName ) {
+	switch ( gatewayName ) {
 		case 'mwActionApi':
 			return require( './mwActionApi.js' );
 		case 'mwRestApi':
@@ -36,7 +37,7 @@ function getDefaultGateway() {
  * @return {Object} Results
  */
 async function getResults( searchQuery, controller ) {
-	let gateway = getDefaultGateway();
+	let gateway = getGateway( defaultGatewayName );
 
 	/*
 	 * Multi-gateway search experiment
@@ -46,12 +47,21 @@ async function getResults( searchQuery, controller ) {
 	 * TODO:
 	 * - Clean up gateway into JSON data perhaps
 	 * - Implement UI support (initial states, search syntax suggestions)
+	 * - Search query needs to be trimmed earlier so that query in the UI does not show the command
 	 */
-	const smwSearchCommand = '/ask ';
+	const gatewayMap = new Map( [
+		[ 'action', 'mwActionApi' ],
+		[ 'ask', 'smwAskApi' ],
+		[ 'rest', 'mwRestApi' ]
+	] );
 
-	if ( searchQuery.startsWith( smwSearchCommand ) ) {
-		gateway = require( './smwAskApi.js' );
-		searchQuery = searchQuery.slice( smwSearchCommand.length );
+	for ( const [ command, gatewayName ] of gatewayMap ) {
+		if ( searchQuery.startsWith( `/${command}` ) ) {
+			gateway = getGateway( gatewayName );
+			/* Remove command (e.g. /smw) from query */
+			searchQuery = searchQuery.slice( command.length + 1 );
+			break;
+		}
 	}
 
 	const signal = controller.signal;
