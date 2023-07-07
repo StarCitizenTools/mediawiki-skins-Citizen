@@ -105,10 +105,9 @@ function getPref() {
 /**
  * Save to localstorage if preference is changed
  *
- * @param {Event} event
  * @return {void}
  */
-function setPref( event ) {
+function setPref() {
 	const
 		// eslint-disable-next-line compat/compat
 		formData = Object.fromEntries( new FormData( document.getElementById( CLASS + '-form' ) ) ),
@@ -367,7 +366,7 @@ function initPref( window ) {
 	// MIT. Copyright (c) Feross Aboukhadijeh.
 	if ( typeof Object.fromEntries !== 'function' ) {
 		Object.defineProperty( Object, 'fromEntries', {
-    			value( iterable ) {
+			value( iterable ) {
 				return Array.from( iterable ).reduce( ( obj, [ key, val ] ) => {
 					obj[ key ] = val;
 					return obj;

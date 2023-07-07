@@ -15,11 +15,14 @@ function getUrl( input ) {
 
 	if ( input.includes( ':' ) ) {
 		let namespace = input.split( ':' )[ 0 ];
-		if ( namespace === 'Category' ) { namespace = ':' + namespace; }
+		if ( namespace === 'Category' ) {
+			namespace = ':' + namespace;
+		}
 		input = input.split( ':' )[ 1 ];
 		askQuery += '[[' + namespace + ':+]]';
 	}
 
+	/* eslint-disable-next-line es-x/no-string-prototype-replaceall */
 	askQuery += askQueryTemplate.replaceAll( '${input}', input );
 	askQuery += '|limit=' + maxResults;
 
@@ -52,11 +55,19 @@ function convertDataToResults( data ) {
 			let textEN = '';
 			let textResult = '';
 			for ( const text of item.printouts.displaytitle ) {
-				if ( text[ 'Language code' ].item[ 0 ] === userLang ) { textResult = text.Text.item[ 0 ]; }
-				if ( text[ 'Language code' ].item[ 0 ] === 'en' ) { textEN = text.Text.item[ 0 ]; }
+				if ( text[ 'Language code' ].item[ 0 ] === userLang ) {
+					textResult = text.Text.item[ 0 ];
+				}
+				if ( text[ 'Language code' ].item[ 0 ] === 'en' ) {
+					textEN = text.Text.item[ 0 ];
+				}
 			}
-			if ( textResult === '' ) { textResult = textEN; }
-			if ( textResult === '' ) { textResult = item.printouts.displaytitle[ 0 ].Text.item[ 0 ]; }
+			if ( textResult === '' ) {
+				textResult = textEN;
+			}
+			if ( textResult === '' ) {
+				textResult = item.printouts.displaytitle[ 0 ].Text.item[ 0 ];
+			}
 			return textResult;
 		} else if ( item.printouts.displaytitle && item.printouts.displaytitle.length ) {
 			return item.printouts.displaytitle[ 0 ];
@@ -72,11 +83,19 @@ function convertDataToResults( data ) {
 			let textEN = '';
 			let textResult = '';
 			for ( const text of item.printouts.desc ) {
-				if ( text[ 'Language code' ].item[ 0 ] === userLang ) { textResult = text.Text.item[ 0 ]; }
-				if ( text[ 'Language code' ].item[ 0 ] === 'en' ) { textEN = text.Text.item[ 0 ]; }
+				if ( text[ 'Language code' ].item[ 0 ] === userLang ) {
+					textResult = text.Text.item[ 0 ];
+				}
+				if ( text[ 'Language code' ].item[ 0 ] === 'en' ) {
+					textEN = text.Text.item[ 0 ];
+				}
 			}
-			if ( textResult === '' ) { textResult = textEN; }
-			if ( textResult === '' ) { textResult = item.printouts.desc[ 0 ].Text.item[ 0 ]; }
+			if ( textResult === '' ) {
+				textResult = textEN;
+			}
+			if ( textResult === '' ) {
+				textResult = item.printouts.desc[ 0 ].Text.item[ 0 ];
+			}
 			return textResult;
 		} else if ( item.printouts.desc && item.printouts.desc.length ) {
 			return item.printouts.desc[ 0 ];
@@ -85,8 +104,8 @@ function convertDataToResults( data ) {
 
 	const getThumbnail = ( item ) => {
 		if ( item.printouts.thumbnail && item.printouts.thumbnail.length ) {
-			const img_title = item.printouts.thumbnail[ 0 ].fulltext;
-			return config.wgScriptPath + '/index.php?title=Special:Redirect/file/' + img_title + '&width=200&height=200';
+			const imgTitle = item.printouts.thumbnail[ 0 ].fulltext;
+			return config.wgScriptPath + '/index.php?title=Special:Redirect/file/' + imgTitle + '&width=200&height=200';
 		} else { return undefined; }
 	};
 
