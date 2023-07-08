@@ -64,6 +64,11 @@ async function getResults( searchQuery, controller ) {
 		}
 	}
 
+	/* Abort early if there are no search query */
+	if ( searchQuery === '' ) {
+		return {};
+	}
+
 	const signal = controller.signal;
 
 	const response = await fetch( gateway.getUrl( searchQuery ), { signal } );
