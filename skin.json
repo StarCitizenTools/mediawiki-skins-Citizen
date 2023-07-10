@@ -633,7 +633,8 @@
 				"mw-recentchanges-table",
 				"infobox",
 				"cargoDynamicTable",
-				"dataTable"
+				"dataTable",
+				"mw-capiunto-infobox"
 			],
 			"description": "Defines table css classes ignored by citizen table wrapper",
 			"descriptionmsg": "citizen-config-tablenowrapclasses",
