@@ -16,18 +16,20 @@
 		aria-haspopup="true">
 	{{>Search__button}}
 	<div role="search" class="citizen-search-box citizen-search__card citizen-menu-checkbox-target">
-		<span class="citizen-search__icon citizen-ui-icon mw-ui-icon-wikimedia-search"></span>
 		<form action="{{form-action}}" class="citizen-search__form" id="searchform" autocomplete="off">
 			<input type="hidden" name="title" value="{{page-title}}">
-			<label class="screen-reader-text" for="searchInput">{{msg-search}}</label>
+			<label for="searchInput">
+				<span class="citizen-search__icon citizen-ui-icon mw-ui-icon-wikimedia-search"></span>
+				<span class="screen-reader-text">{{msg-search}}</span>
+			</label>
 			{{{html-input}}}
+			<a
+				class="citizen-search__random"
+				href="{{html-random-href}}"
+				title="{{msg-randompage}}">
+				<span class="citizen-ui-icon mw-ui-icon-wikimedia-die"></span>
+				<span class="screen-reader-text">{{msg-random}}</span>
+			</a>
 		</form>
-		<a
-			class="citizen-search__random"
-			href="{{html-random-href}}"
-			title="{{msg-randompage}}">
-			<span class="citizen-ui-icon mw-ui-icon-wikimedia-die"></span>
-			<span class="screen-reader-text">{{msg-random}}</span>
-		</a>
 	</div>
 </div>
