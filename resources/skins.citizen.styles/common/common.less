@@ -109,6 +109,10 @@ td {
 	font-size: 0.875rem;
 }
 
+.mw-indicator {
+	filter: var( --filter-invert );
+}
+
 video {
 	max-width: 100%; // Prevent overflow
 }
@@ -117,8 +121,6 @@ video {
 	color-scheme: dark;
 
 	.mw-indicator {
-		filter: invert( 1 ) hue-rotate( 180deg );
-
 		// Have to hardcode the color since the filter breaks the color
 		a {
 			color: @color-primary;

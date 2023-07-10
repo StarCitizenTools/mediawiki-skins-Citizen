@@ -13,6 +13,7 @@
 			width: 0.875rem;
 			height: 0.875rem;
 			content: '';
+			filter: var( --filter-invert );
 			opacity: var( --opacity-icon-base );
 		}
 
@@ -122,12 +123,6 @@
 		padding-bottom: var( --space-xs );
 		opacity: 1;
 		visibility: visible;
-	}
-}
-
-.skin-citizen-dark {
-	.citizen-toc__top::before {
-		filter: invert( 1 );
 	}
 }
 

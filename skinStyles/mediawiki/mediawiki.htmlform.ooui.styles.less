@@ -3,25 +3,21 @@
  * https://starcitizen.tools
 */
 
-@import '../../resources/variables.less';
-
-.skin-citizen-dark {
-	.mw-htmlform-ooui {
-		.mw-htmlform-matrix {
-			tbody tr:nth-child( even ) td {
-				background-color: @dark-bg-10;
-			}
-
-			tbody tr:hover td {
-				background-color: @dark-bg-20;
-			}
+.mw-htmlform-ooui {
+	.mw-htmlform-matrix {
+		tbody tr:nth-child( even ) td {
+			background-color: var( --color-surface-2 );
 		}
 
-		.oo-ui-fieldLayout-header {
-			.oo-ui-buttonElement-button {
-				.oo-ui-iconElement-icon {
-					filter: invert( 1 ) hue-rotate( 180deg );
-				}
+		tbody tr:hover td {
+			background-color: var( --background-color-quiet--hover );
+		}
+	}
+
+	.oo-ui-fieldLayout-header {
+		.oo-ui-buttonElement-button {
+			.oo-ui-iconElement-icon {
+				filter: var( --filter-invert );
 			}
 		}
 	}

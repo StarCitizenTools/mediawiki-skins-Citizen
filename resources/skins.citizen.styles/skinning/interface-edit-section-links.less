@@ -26,6 +26,10 @@
 		border-radius: var( --border-radius--small );
 		font-size: 0.875rem;
 
+		&::before {
+			filter: var( --filter-invert );
+		}
+
 		&:hover {
 			background-color: var( --background-color-quiet--hover );
 		}
@@ -74,11 +78,4 @@
 	margin-right: var( --space-sm );
 	/* @noflip */
 	margin-left: 0;
-}
-
-.skin-citizen-dark {
-	// Flip icon for dark mode
-	.mw-editsection > a::before {
-		filter: invert( 1 );
-	}
 }

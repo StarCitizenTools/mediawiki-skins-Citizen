@@ -44,6 +44,7 @@
 			width: var( --header-icon-size );
 			height: var( --header-icon-size );
 			contain: strict;
+			filter: var( --filter-invert );
 		}
 
 		&Icon,
@@ -124,14 +125,6 @@
 	ul {
 		margin: 0;
 		list-style: none;
-	}
-}
-
-.skin-citizen-dark {
-	.citizen-header__button {
-		&Icon {
-			filter: invert( 1 );
-		}
 	}
 }
 

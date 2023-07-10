@@ -20,6 +20,7 @@
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: var( --header-icon-size );
+		filter: var( --filter-invert );
 		opacity: var( --opacity-icon-base );
 
 		&:hover {
@@ -44,6 +45,8 @@
 			border-color: var( --color-destructive );
 			border-radius: var( --border-radius--pill );
 			background-color: var( --color-destructive );
+			// Re-invert indicator color
+			filter: var( --filter-invert );
 			font-size: 0.65rem;
 		}
 
@@ -88,20 +91,5 @@
 
 	&:active {
 		background-color: var( --background-color-quiet--active );
-	}
-}
-
-// Dark mode icon
-.skin-citizen-dark {
-	#pt-notifications-alert,
-	#pt-notifications-notice {
-		.mw-echo-notifications-badge {
-			filter: invert( 1 ) hue-rotate( 180deg );
-
-			// Re-invert indicator color
-			&::after {
-				filter: invert( 1 ) hue-rotate( 180deg );
-			}
-		}
 	}
 }

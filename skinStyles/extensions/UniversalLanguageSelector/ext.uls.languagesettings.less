@@ -37,14 +37,10 @@
 		&:hover .settings-text {
 			color: var( --color-base );
 		}
-	}
-}
 
-.skin-citizen-dark .languagesettings-menu {
-	.menu-section {
 		&.display-settings-block,
 		&.input-settings-block {
-			filter: invert( 1 ) hue-rotate( 180deg );
+			filter: var( --filter-invert );
 		}
 	}
 }
@@ -88,6 +84,6 @@
 	color: var( --color-base );
 }
 
-.skin-citizen-dark .uls-icon-close {
-	filter: invert( 1 ) hue-rotate( 180deg );
+.uls-icon-close {
+	filter: var( --filter-invert );
 }

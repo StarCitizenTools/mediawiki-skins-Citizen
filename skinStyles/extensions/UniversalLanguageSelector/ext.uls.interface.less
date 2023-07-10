@@ -18,16 +18,10 @@
 		&:hover {
 			color: var( --color-base );
 		}
-	}
-}
 
-.skin-citizen-dark {
-	#uls-settings-block {
-		> button {
-			&.display-settings-block,
-			&.input-settings-block {
-				filter: invert( 1 ) hue-rotate( 180deg );
-			}
+		&.display-settings-block,
+		&.input-settings-block {
+			filter: var( --filter-invert );
 		}
 	}
 }

@@ -79,17 +79,10 @@
 						opacity: var( --opacity-icon-base--active );
 					}
 				}
-			}
-		}
-	}
-}
 
-.skin-citizen-dark {
-	.tabber__header {
-		&__prev,
-		&__next {
-			&::after {
-				filter: invert( 1 );
+				&::after {
+					filter: var( --filter-invert );
+				}
 			}
 		}
 	}

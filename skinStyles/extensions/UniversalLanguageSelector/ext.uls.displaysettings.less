@@ -16,12 +16,10 @@
 	color: var( --color-base );
 }
 
-.skin-citizen-dark .uls-ime-disable-link {
-	filter: invert( 1 ) hue-rotate( 180deg );
-}
-
-.skin-citizen-dark .uls-ime-more-settings-link {
-	filter: invert( 1 ) hue-rotate( 180deg );
+.uls-ime-disable-link,
+.uls-ime-more-settings-link,
+.ime-checked .ime-perime-help {
+	filter: var( --filter-invert );
 }
 
 .uls-ime-menu-settings-item > a:hover {
@@ -44,10 +42,6 @@
 
 .uls-ime-notification-bubble .link {
 	color: var( --color-primary );
-}
-
-.skin-citizen-dark .ime-checked .ime-perime-help {
-	filter: invert( 1 ) hue-rotate( 180deg );
 }
 
 /* ext.uls.displaysettings.less */

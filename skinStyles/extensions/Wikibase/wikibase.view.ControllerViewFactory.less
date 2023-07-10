@@ -24,28 +24,24 @@
 	background: var( --color-surface-1 );
 }
 
-.skin-citizen-dark {
-	.wb-badge,
-	.wb-badge-empty {
-		filter: invert( 1 ) hue-rotate( 180deg );
-	}
-
-	/* jquery.wikibase.sitelinkgroupview.mw-collapsible.css */
-	// Collapsible toggle
-	.wikibase-sitelinkgroupview {
-		> .mw-collapsible {
-			&-toggle,
-			&-toggle-expanded,
-			&-toggle-collapsed {
-				filter: invert( 1 ) hue-rotate( 180deg );
-			}
-		}
-	}
+.wb-badge,
+.wb-badge-empty {
+	filter: var( --filter-invert );
 }
 
 /* jquery.wikibase.sitelinkgroupview.css */
 .wikibase-sitelinkgroupview {
 	border-color: var( --border-color-base );
+
+	/* jquery.wikibase.sitelinkgroupview.mw-collapsible.css */
+	// Collapsible toggle
+	> .mw-collapsible {
+		&-toggle,
+		&-toggle-expanded,
+		&-toggle-collapsed {
+			filter: var( --filter-invert );
+		}
+	}
 }
 
 .wikibase-sitelinkgroupview.wb-edit {
@@ -151,12 +147,12 @@ ul.tagadata li.tagadata-choice .tagadata-label input:focus {
 
 /* snakview.SnakTypeSelector.css */
 // snaktypeselector icon
-.skin-citizen-dark .ui-state-default .ui-icon-snaktypeselector {
-	filter: invert( 1 ) hue-rotate( 180deg );
+.ui-state-default .ui-icon-snaktypeselector {
+	filter: var( --filter-invert );
 }
 
 /* jquery.wikibase.statementview.RankSelector.css */
-.skin-citizen-dark .wikibase-rankselector .ui-icon.ui-icon-rankselector {
+.wikibase-rankselector .ui-icon.ui-icon-rankselector {
 	// Rank selector icon
-	filter: invert( 1 ) hue-rotate( 180deg );
+	filter: var( --filter-invert );
 }

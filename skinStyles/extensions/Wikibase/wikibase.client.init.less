@@ -13,30 +13,22 @@
 // Better safe than sorry
 .skin-citizen {
 	.wb-langlinks-link > a {
+		&::before {
+			filter: var( --filter-invert );
+		}
+
 		&:link,
 		&:visited {
 			color: var( --color-base--subtle ) !important;
+
+			&::before {
+				// Re-apply greyscale value since we use filter to override the color
+				filter: var( --filter-invert );
+			}
 		}
 
 		&:hover {
 			color: var( --color-primary ) !important;
-		}
-	}
-}
-
-.skin-citizen-dark {
-	// Edit button
-	.wb-langlinks-link > a {
-		&::before {
-			filter: invert( 1 )  hue-rotate( 180deg );
-		}
-
-		&:link,
-		&:visited {
-			// Re-apply greyscale value since we use filter to override the color
-			&::before {
-				filter: invert( 1 ) hue-rotate( 180deg ) grayscale( 1 );
-			}
 		}
 	}
 }

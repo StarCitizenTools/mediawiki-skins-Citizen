@@ -77,13 +77,10 @@ div.cargoReplacementTableInfo {
 	background-color: transparent;
 }
 
-/* Flip icons in dark mode */
-.skin-citizen-dark {
-	.cargoQueryTooltipIcon,
-	.addButton,
-	.deleteButton {
-		filter: invert( 1 ) hue-rotate( 180deg );
-	}
+.cargoQueryTooltipIcon,
+.addButton,
+.deleteButton {
+	filter: var( --filter-invert );
 }
 
 div.specialCargoQuery-extraPane {

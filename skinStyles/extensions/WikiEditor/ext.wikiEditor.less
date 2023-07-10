@@ -98,6 +98,7 @@
 
 				&::before {
 					height: 100%; /* Align with VE */
+					filter: var( --filter-invert );
 					opacity: var( --opacity-icon-base );
 				}
 
@@ -325,11 +326,5 @@
 			font-size: inherit;
 			letter-spacing: inherit;
 		}
-	}
-}
-
-.skin-citizen-dark {
-	.wikiEditor-ui-toolbar .tabs span.tab a::before {
-		filter: invert( 1 );
 	}
 }

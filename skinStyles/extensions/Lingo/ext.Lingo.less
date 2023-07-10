@@ -31,10 +31,8 @@
 	}
 }
 
-.skin-citizen-dark {
-	.mw-lingo-definition-link {
-		& > a::before {
-			filter: invert( 1 );
-		}
+.mw-lingo-definition-link {
+	& > a::before {
+		filter: var( --filter-invert );
 	}
 }

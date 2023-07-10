@@ -68,10 +68,7 @@
 			background-repeat: no-repeat;
 			background-size: 1.125rem;
 			content: '';
-
-			.skin-citizen-dark & {
-				filter: invert( 1 );
-			}
+			filter: var( --filter-invert );
 		}
 
 		&[ data-mw-subscribed='1' ]::before {

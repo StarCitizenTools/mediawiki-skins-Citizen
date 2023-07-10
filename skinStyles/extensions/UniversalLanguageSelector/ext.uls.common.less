@@ -34,6 +34,7 @@
 
 .uls-icon-back {
 	border-right: 0; // filter invert does not like it
+	filter: var( --filter-invert );
 	opacity: var( --opacity-icon-base );
 
 	&:hover {
@@ -43,10 +44,6 @@
 	&:active {
 		opacity: var( --opacity-icon-base--active );
 	}
-}
-
-.skin-citizen-dark .uls-icon-back {
-	filter: invert( 1 ) hue-rotate( 180deg );
 }
 
 .uls-menu .uls-no-results-view {

@@ -32,17 +32,15 @@
 	opacity: var( --opacity-base--disabled );
 }
 
-.skin-citizen-dark {
-	// Toolbar icons
-	.wikibase-toolbar-button {
-		&-edit,
-		&-save,
-		&-remove,
-		&-cancel,
-		&-add {
-			.wb-icon {
-				filter: invert( 1 ), hue-rotate( 180deg );
-			}
+// Toolbar icons
+.wikibase-toolbar-button {
+	&-edit,
+	&-save,
+	&-remove,
+	&-cancel,
+	&-add {
+		.wb-icon {
+			filter: var( --filter-invert );
 		}
 	}
 }
