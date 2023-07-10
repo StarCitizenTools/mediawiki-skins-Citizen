@@ -27,12 +27,14 @@
 		}
 	}
 
-	&__random {
+	&__formButton {
 		border-radius: var( --border-radius--small );
+		transition: var( --transition-hover );
+		transition-property: background;
 
 		.citizen-ui-icon::before {
 			transition: var( --transition-hover );
-			transition-property: transform;
+			transition-property: opacity;
 		}
 
 		&:hover {
@@ -40,7 +42,6 @@
 
 			.citizen-ui-icon::before {
 				opacity: var( --opacity-icon-base--hover );
-				transform: rotate( 30deg );
 			}
 		}
 
@@ -49,6 +50,24 @@
 
 			.citizen-ui-icon::before {
 				opacity: var( --opacity-icon-base--active );
+			}
+		}
+	}
+
+	&__clear {
+		.citizen-ui-icon::before {
+			background-size: 0.875rem; // Align with text size
+		}
+	}
+
+	&__random {
+		.citizen-ui-icon::before {
+			transition-property: opacity, transform;
+		}
+
+		&:hover {
+			.citizen-ui-icon::before {
+				transform: rotate( 30deg );
 			}
 		}
 	}
@@ -79,6 +98,11 @@
 			// The search suggestion pop-up indicates for focus state
 			// border-color: var( --color-primary );
 			// box-shadow: inset 0 0 0 1px var( --color-primary );
+		}
+
+		// Remove browser native clear all button in search field
+		&::-webkit-search-cancel-button {
+			-webkit-appearance: none;
 		}
 	}
 }

@@ -388,7 +388,7 @@ function initPref( window ) {
 			container.classList.add( CLASS, 'citizen-header__item' );
 			button.id = CLASS + '-toggle';
 
-			button.classList.add( CLASS + '__button', 'citizen-header__button' );
+			button.classList.add( CLASS + '__button', 'citizen-header__button', 'citizen-button' );
 			button.setAttribute( 'title', mw.message( 'preferences' ).text() );
 			button.setAttribute( 'aria-label', mw.message( 'preferences' ).text() );
 			button.setAttribute( 'aria-controls', CLASS + '-panel' );

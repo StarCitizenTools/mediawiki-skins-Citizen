@@ -148,6 +148,37 @@ function bindExpandOnSlash( window, checkbox, input ) {
 }
 
 /**
+ * Add clear button to search field when there are input value
+ *
+ * @param {HTMLInputElement} input
+ * @return {void}
+ */
+function renderSearchClearButton( input ) {
+	const
+		clearButton = document.createElement( 'button' ),
+		clearIcon = document.createElement( 'span' );
+
+	clearButton.classList.add( 'citizen-search__clear', 'citizen-search__formButton', 'citizen-button' );
+	clearIcon.classList.add( 'citizen-ui-icon', 'mw-ui-icon-wikimedia-clear' );
+	clearButton.append( clearIcon );
+
+	clearButton.addEventListener( 'click', ( event ) => {
+		event.preventDefault();
+		clearButton.remove();
+		input.value = '';
+		input.focus();
+	} );
+
+	input.addEventListener( 'input', ( event ) => {
+		if ( event.target.value === '' ) {
+			clearButton.remove();
+		} else {
+			event.target.after( clearButton );
+		}
+	} );
+}
+
+/**
  * @param {Window} window
  * @return {void}
  */
@@ -173,6 +204,7 @@ function initSearch( window ) {
 		if ( isPrimarySearch ) {
 			const checkbox = document.getElementById( 'citizen-search__checkbox' );
 			bindExpandOnSlash( window, checkbox, input );
+			renderSearchClearButton( input );
 			// Focus when toggled
 			checkbox.addEventListener( 'input', () => {
 				focusOnChecked( checkbox, input );
