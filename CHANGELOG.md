@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.7.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.6.6...v2.7.0) (2023-07-10)
+
+
+### Features
+
+* **core:** ✨ add icon for Email this user ([eecd21d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/eecd21db761b30817b32455b6228592f233cba3c))
+* **core:** ✨ increase spacing between menus in drawer ([45c970e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/45c970e70bc748d26880c3658bc665ab39bc0971))
+* **core:** ✨ update hover transition styles and implementation ([a7f9c55](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a7f9c55c88bc437c736c0e922fdfe0a789f21538))
+* **core:** ✨ update menu transition styles and implementation ([c7e4517](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c7e45177cd3eefd6cad2c0e3629e586f7d03e948))
+* **core:** ✨ use consistent spacing for menu elements ([462d1dd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/462d1dd4acf67990d9624828e58ebe0a45ef08b5))
+* **core:** ✨ use filter-invert CSS variable to flip color ([2bf2039](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2bf20397e1d7d1ba89385cac7013fc4d19a62220))
+* **core:** ✨ use medium font weight for menu links ([6b1a7d1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6b1a7d1ecef32741ea9c5f3fdf139654f4883202))
+* **MediaWiki:** ✨ tweak changelist styles ([e00f9ba](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e00f9ba418ae7cf72a4a8ce8bcc4b7890c4e15a0))
+* **MediaWiki:** ✨ tweak rcfilter other review tools styles ([99e475b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/99e475b6353d6cc8cae36f40b516530b8b92f68d))
+* **search:** ✨ add clear button to search box ([6cddf85](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6cddf8513119fefb1dd5fbfcfbcc07cfbf90c731))
+* **search:** ✨ add experimental multi gateway search ([6adc0d7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6adc0d7eabbeb1d065cebbc5a215ea40826e4d4e))
+* **search:** ✨ support all existing gateway in multi search ([608a2be](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/608a2be93217d80e1d8237a137f1e004a8d41394))
+* **TabberNeue:** ✨ update TabberNeue selector to match with the latest version ([417c151](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/417c151d0163140e976ee16e851497c87a3839af))
+
+
+### Bug Fixes
+
+* **core:** 🐛 do not underline footer places links ([2516937](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/25169379a904591981c796ef0a03870bac7e8f36))
+* **Echo:** 🐛 incorrect button hover color ([9c59d24](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9c59d246126ead1f5395658f6194f9177e545c21))
+* **mediawiki:** 🐛 do not add external link icon to external interwiki ([73ff64f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/73ff64f7dae0f7e5e1d0da8e4cac4ab659a2c2de))
+* **search:** 🐛 abort search request if there are no query ([88a5d4d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/88a5d4de9db5c177ef6baab3bc21f03e3576ddbc))
+* **search:** 🐛 undefined LESS variables ([f843f4d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f843f4d1eecdd974213d84cecbecbe05eb6a3b8d))
+
 ### [2.6.6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.6.5...v2.6.6) (2023-07-05)
 
 
