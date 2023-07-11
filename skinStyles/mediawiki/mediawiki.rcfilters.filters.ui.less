@@ -8,6 +8,8 @@
  * Date: 2023-06-29
  */
 
+@import '../../resources/variables.less';
+
 /* mw.rcfilters.ui.FilterTagMultiselectWidget.less */
 .mw-rcfilters-ui-filterTagMultiselectWidget {
 	&.oo-ui-widget-enabled {
@@ -372,4 +374,8 @@
 	&-separator {
 		border-top: 1px solid var( --border-color-base );
 	}
+}
+
+.mw-rcfilters-ui-overlay {
+	z-index: @z-index-overlay;
 }

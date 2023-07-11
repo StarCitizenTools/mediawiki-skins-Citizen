@@ -27,12 +27,27 @@
 }
 
 .mw-changeslist {
+	position: relative;
+
+	/* Timeline line */
+	&::before {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 4px;
+		width: 1px;
+		background: var( --border-color-base--darker );
+		content: '';
+	}
+
 	.comment {
 		color: var( --color-base );
 	}
 
 	// Need additional parent to override
 	.mw-changeslist-legend {
+		position: relatve;
+		z-index: 2 !important; // so it is not covered by the date header
 		padding: 0.6em; // Sync with rcfilter
 		border-color: transparent;
 		border-radius: var( --border-radius--small );
@@ -73,8 +88,8 @@
 	}
 
 	h4 {
+		z-index: 1; // Needed to cover the timeline dots
 		padding: var( --space-sm ) 0;
-		border-bottom: 1px solid var( --border-color-base );
 		margin-bottom: 0;
 		color: var( --color-base--subtle );
 		font-size: 0.8125rem;
@@ -83,11 +98,27 @@
 	}
 
 	&-line {
-		padding: var( --space-sm ) 0;
-		margin: 0 !important;
+		padding: var( --space-sm ) var( --space-xs );
+		border-radius: var( --border-radius--small );
+		margin: 0 0 0 16px !important;
 		font-size: 0.875rem;
 		transition: var( --transition-hover );
 		transition-property: background;
+
+		/* Timeline dot */
+		&:not( .mw-changeslist-line .mw-changeslist-line ) {
+			&::before {
+				position: absolute;
+				left: 0;
+				display: block;
+				width: 8px;
+				height: 8px;
+				border-radius: 100%;
+				margin-top: 7px;
+				background-color: var( --color-base--subtle );
+				content: '';
+			}
+		}
 
 		&:hover {
 			background-color: var( --background-color-quiet--hover );
@@ -95,10 +126,6 @@
 
 		&-inner {
 			color: var( --color-base--subtle );
-		}
-
-		+ .mw-changeslist-line {
-			border-top: 1px solid var( --border-color-base ); // Add separator
 		}
 	}
 
