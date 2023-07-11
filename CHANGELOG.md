@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.0...v2.7.1) (2023-07-11)
+
+
+### Bug Fixes
+
+* **Capiunto:** 🐛 ignore Capiunto infobox for table wrapper ([a944727](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a9447272dcce9a329913ae10d3b76bafd2b1237f)), closes [#686](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/686)
+* **core:** 🐛 incorrect spacing within page tools buttons ([7136c6e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7136c6e96eac6c7ee1232c8dd972583be835e0cb))
+
 ## [2.7.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.6.6...v2.7.0) (2023-07-10)
 
 
