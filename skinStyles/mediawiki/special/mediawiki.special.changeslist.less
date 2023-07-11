@@ -83,13 +83,18 @@
 	}
 
 	&-line {
+		padding: var( --space-sm ) 0;
+		margin: 0 !important;
+		font-size: 0.875rem;
+		transition: var( --transition-hover );
+		transition-property: background;
+
+		&:hover {
+			background-color: var( --background-color-quiet--hover );
+		}
+
 		&-inner {
 			color: var( --color-base--subtle );
-
-			.mw-diff-bytes {
-				margin-right: var( --space-xs );
-				float: left;
-			}
 		}
 
 		+ .mw-changeslist-line {
@@ -116,35 +121,41 @@
 	}
 }
 
-.client-js .mw-recentchanges-toplinks {
-	padding-left: 0;
-}
+.client-js {
+	.mw-changeslist ul {
+		margin: 0;
+		list-style: none;
+	}
 
-/* Skeleton lazyloader for rcfilter */
-.client-js body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
-	border-radius: var( --border-radius--small );
-	background: var( --color-surface-2 );
-}
+	.mw-recentchanges-toplinks {
+		padding-left: 0;
+	}
 
-.client-js .mw-recentchanges-toplinks:not( .mw-recentchanges-toplinks-collapsed ) {
-	padding: 0; /* Shift padding to button only */
-	border-color: var( --border-color-base );
-	border-radius: var( --border-radius--small );
-	margin-bottom: 16px; /* Same margin between rcfilter and saved filter */
-
-	/* Extend button to full width */
-	.oo-ui-buttonElement-frameless.oo-ui-labelElement:first-child {
-		display: block;
+	body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
+		border-radius: var( --border-radius--small );
 		background: var( --color-surface-2 );
-		border-top-left-radius: var( --border-radius--small );
-		border-top-right-radius: var( --border-radius--small );
+	}
 
-		.oo-ui-buttonElement-button {
+	.mw-recentchanges-toplinks:not( .mw-recentchanges-toplinks-collapsed ) {
+		padding: 0; /* Shift padding to button only */
+		border-color: var( --border-color-base );
+		border-radius: var( --border-radius--small );
+		margin-bottom: 16px; /* Same margin between rcfilter and saved filter */
+
+		/* Extend button to full width */
+		.oo-ui-buttonElement-frameless.oo-ui-labelElement:first-child {
 			display: block;
-		}
+			background: var( --color-surface-2 );
+			border-top-left-radius: var( --border-radius--small );
+			border-top-right-radius: var( --border-radius--small );
 
-		.oo-ui-indicatorElement-indicator {
-			right: 6px !important;
+			.oo-ui-buttonElement-button {
+				display: block;
+			}
+
+			.oo-ui-indicatorElement-indicator {
+				right: 6px !important;
+			}
 		}
 	}
 }
