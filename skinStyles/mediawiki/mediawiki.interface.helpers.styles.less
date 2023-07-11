@@ -5,9 +5,39 @@
  * Module: mediawiki.interface.helpers.styles
  * Version: 1.39.0
  *
- * Date: 2023-05-29
+ * Date: 2023-07-11
 */
 
 .unpatrolled {
 	color: var( --color-text-error );
+	font-weight: var( --font-weight-semibold );
+}
+
+.newpage,
+.minoredit,
+.botedit {
+	font-weight: var( --font-weight-semibold );
+}
+
+.autocomment,
+.autocomment a,
+.autocomment a:visited {
+	color: var( --color-base--subtle );
+}
+
+li span.deleted,
+span.history-deleted {
+	color: var( --color-base--subtle );
+}
+
+span.mw-history-suppressed {
+	color: var( --color-base );
+}
+
+.mw-usertoollinks-contribs-no-edits {
+	color: var( --color-link--new );
+
+	&:visited {
+		color: var( --color-link--new );
+	}
 }
