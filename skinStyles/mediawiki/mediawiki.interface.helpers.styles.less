@@ -25,6 +25,27 @@
 	color: var( --color-base--subtle );
 }
 
+/* Make tags into pills */
+.mw-tag-markers {
+	margin-left: var( --space-xxs );
+
+	.mw-tag-marker {
+		padding: 2px 8px;
+		border-radius: var( --border-radius--pill );
+		background-color: var( --color-surface-2 );
+		font-size: 0.8125rem;
+
+		&::after {
+			display: none;
+		}
+	}
+
+	&::before,
+	&::after {
+		display: none;
+	}
+}
+
 li span.deleted,
 span.history-deleted {
 	color: var( --color-base--subtle );

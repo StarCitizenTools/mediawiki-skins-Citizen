@@ -23,12 +23,6 @@
 	list-style: none;
 
 	li {
-		padding: 10px 0;
-		border-bottom: 1px solid var( --border-color-base );
-		font-size: 0.875rem;
-		transition: var( --transition-hover );
-		transition-property: background, color;
-
 		&.selected {
 			color: var( --color-base );
 			outline: 0;
@@ -40,10 +34,6 @@
 			&.after {
 				background-color: var( --background-color-primary--hover );
 			}
-		}
-
-		&:hover {
-			background-color: var( --background-color-quiet--hover );
 		}
 	}
 }

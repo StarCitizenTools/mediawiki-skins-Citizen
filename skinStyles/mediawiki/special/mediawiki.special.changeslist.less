@@ -27,19 +27,6 @@
 }
 
 .mw-changeslist {
-	position: relative;
-
-	/* Timeline line */
-	&::before {
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 4px;
-		width: 1px;
-		background: var( --border-color-base--darker );
-		content: '';
-	}
-
 	.comment {
 		color: var( --color-base );
 	}
@@ -67,26 +54,6 @@
 		}
 	}
 
-	.mw-tag-markers {
-		margin-left: var( --space-xxs );
-
-		.mw-tag-marker {
-			padding: 2px 8px;
-			border-radius: var( --border-radius--pill );
-			background-color: var( --color-surface-2 );
-			font-size: 0.8125rem;
-
-			&::after {
-				display: none;
-			}
-		}
-
-		&::before,
-		&::after {
-			display: none;
-		}
-	}
-
 	h4 {
 		z-index: 1; // Needed to cover the timeline dots
 		padding: var( --space-sm ) 0;
@@ -98,30 +65,9 @@
 	}
 
 	&-line {
-		padding: var( --space-sm ) var( --space-xs );
-		border-radius: var( --border-radius--small );
-		margin: 0 0 0 16px !important;
-		font-size: 0.875rem;
-		transition: var( --transition-hover );
-		transition-property: background;
-
-		/* Timeline dot */
-		&:not( .mw-changeslist-line .mw-changeslist-line ) {
-			&::before {
-				position: absolute;
-				left: 0;
-				display: block;
-				width: 8px;
-				height: 8px;
-				border-radius: 100%;
-				margin-top: 7px;
-				background-color: var( --color-base--subtle );
-				content: '';
-			}
-		}
-
-		&:hover {
-			background-color: var( --background-color-quiet--hover );
+		/* Disable timeline dot for nested changeline */
+		.mw-changeslist-line::before {
+			content: none;
 		}
 
 		&-inner {
@@ -149,11 +95,6 @@
 }
 
 .client-js {
-	.mw-changeslist ul {
-		margin: 0;
-		list-style: none;
-	}
-
 	.mw-recentchanges-toplinks {
 		padding-left: 0;
 	}
@@ -205,5 +146,58 @@
 	// Disable sticky header
 	#citizen-body-header-sticky-sentinel {
 		display: none;
+	}
+}
+
+/*
+ * Make changelist looks like a timeline
+ * And also sync different history lists into the same styles
+ */
+.mw-changeslist,
+.mw-contributions-list {
+	position: relative;
+	font-size: 0.875rem;
+
+	/* Timeline line */
+	&::before {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 4px;
+		width: 1px;
+		background: var( --border-color-base--darker );
+		content: '';
+	}
+}
+
+.mw-changeslist ul,
+.mw-contributions-list {
+	margin: 0 !important;
+	list-style: none;
+}
+
+.mw-changeslist-line,
+.mw-contributions-list li {
+	padding: var( --space-sm ) var( --space-xs ) !important;
+	border-radius: var( --border-radius--small );
+	margin: 0 0 0 16px !important;
+	transition: var( --transition-hover );
+	transition-property: background;
+
+	&:hover {
+		background-color: var( --background-color-quiet--hover );
+	}
+
+	/* Timeline dot */
+	&::before {
+		position: absolute;
+		left: 0;
+		display: block;
+		width: 8px;
+		height: 8px;
+		border-radius: 100%;
+		margin-top: 7px;
+		background-color: var( --color-base--subtle );
+		content: '';
 	}
 }
