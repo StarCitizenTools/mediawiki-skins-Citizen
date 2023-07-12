@@ -27,29 +27,6 @@
 }
 
 .mw-changeslist {
-	// Need additional parent to override
-	.mw-changeslist-legend {
-		position: relatve;
-		z-index: 2 !important; // so it is not covered by the date header
-		padding: 0.6em; // Sync with rcfilter
-		border-color: transparent;
-		border-radius: var( --border-radius--small );
-		background-color: var( --color-surface-2 );
-		font-size: 0.8125rem;
-
-		// Citizen label styles
-		strong {
-			color: var( --color-base--subtle );
-			font-weight: var( --font-weight-normal );
-			letter-spacing: 0.05em;
-		}
-
-		@media ( max-width: @width-breakpoint-tablet ) {
-			margin: 0;
-			float: none;
-		}
-	}
-
 	h4 {
 		z-index: 1; // Needed to cover the timeline dots
 		padding: var( --space-sm ) 0;
@@ -76,20 +53,47 @@
 	}
 }
 
-.rcoptions {
+// Need additional parent to override
+.mw-body-content .mw-changeslist-legend {
+	position: relatve;
+	z-index: 2 !important; // so it is not covered by the date header
+	padding: 0.6em; // Sync with rcfilter
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius--small );
+	background-color: var( --color-surface-2 );
+	font-size: 0.8125rem;
+
+	// Citizen label styles
+	strong {
+		color: var( --color-base--subtle );
+		font-weight: var( --font-weight-normal );
+		letter-spacing: 0.05em;
+	}
+
+	@media ( max-width: @width-breakpoint-tablet ) {
+		margin: 0;
+		float: none;
+	}
+}
+
+.cloptions {
 	padding: 0;
 	border: 0;
 	margin: 0;
 
-	legend {
-		width: 100%;
-		padding: 0;
-		margin-bottom: var( --space-xs );
-		font-size: 0.8125rem;
+	> legend {
+		display: none; // Eh it is difficult to style legend
+	}
+
+	&:not( .oo-ui-widget ) {
+		padding: var( --space-md );
+		border-radius: var( --border-radius--medium );
+		background: var( --color-surface-2 );
+		font-size: 0.875rem;
 	}
 }
 
-/* Non-JS RC interface */
+/* Skeleton screen loading */
 body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
 	padding: var( --space-md );
 	border-radius: var( --border-radius--medium );
