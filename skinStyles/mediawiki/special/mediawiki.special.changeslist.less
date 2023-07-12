@@ -27,10 +27,6 @@
 }
 
 .mw-changeslist {
-	.comment {
-		color: var( --color-base );
-	}
-
 	// Need additional parent to override
 	.mw-changeslist-legend {
 		position: relatve;
@@ -181,6 +177,7 @@
 	padding: var( --space-sm ) var( --space-xs ) !important;
 	border-radius: var( --border-radius--small );
 	margin: 0 0 0 16px !important;
+	color: var( --color-base--subtle );
 	transition: var( --transition-hover );
 	transition-property: background;
 
@@ -199,6 +196,10 @@
 		margin-top: 7px;
 		background-color: var( --color-base--subtle );
 		content: '';
+	}
+
+	.comment {
+		color: var( --color-base ); // Make comment more readable
 	}
 }
 
