@@ -410,6 +410,7 @@
 			"+ext.SimpleTooltip": "skinStyles/extensions/SimpleTooltip/ext.SimpleTooltip.less",
 			"+ext.SmiteSpam.retriever": "skinStyles/extensions/SmiteSpam/ext.SmiteSpam.retriever.less",
 			"+ext.pygments": "skinStyles/extensions/SyntaxHighlight_GeSHi/ext.pygments.less",
+			"+ext.tabs": "skinStyles/extensions/Tabs/ext.tabs.less",
 			"+ext.tmh.player.styles": "skinStyles/extensions/TimedMediaHandler/ext.tmh.player.styles.less",
 			"+ext.translate": "skinStyles/extensions/Translate/ext.translate.less",
 			"+ext.translate.dropdownmenu": "skinStyles/extensions/Translate/ext.translate.dropdownmenu.less",

@@ -1,0 +1,137 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:Tabs
+ * Module: ext.tabs
+ * Version: REL1_39 63ccef2
+ *
+ * Date: 2023-07-11
+*/
+
+.tabs-label {
+	padding: 0.5em 0.75em;
+	border: 0;
+	background-color: transparent;
+	color: var( --color-base );
+	font-weight: var( --font-weight-medium );
+
+	&:hover {
+		background-color: transparent;
+		box-shadow: inset 0 -2px var( --color-primary--hover );
+		color: var( --color-primary--hover );
+	}
+
+	&:active {
+		background-color: transparent;
+		box-shadow: inset 0 -2px var( --color-primary--active );
+		color: var( --color-primary--active );
+	}
+
+	&:focus {
+		box-shadow: inset 0 0 0 2px var( --color-primary );
+	}
+}
+
+.tabs-tabbox > .tabs-input + .tabs-input + .tabs-label {
+	margin-left: 0;
+}
+
+.tabs-tabbox > .tabs-container {
+	padding: var( --space-xs ) var( --space-sm );
+	border-color: var( --border-color-base );
+	border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
+}
+
+.tabs-tabbox > .tabs-label {
+	border-radius: 0;
+	margin: 0;
+}
+
+.tabs-plain > .tabs-label {
+	border: 0;
+	border-radius: 0;
+	margin: 0;
+}
+
+.tabs-plain > .tabs-container {
+	border-radius: 0;
+	margin-top: 0;
+}
+
+.tabs-togglebox > .tabs-container {
+	border-radius: var( --border-radius--medium );
+}
+
+.tabs-togglebox > * > .tabs-label {
+	padding: 0.5em 0.75em;
+	border-radius: var( --border-radius--medium );
+}
+
+.tabs-togglebox > * > .tabs-content {
+	padding: var( --space-xs ) var( --space-sm );
+	border-color: var( --border-color-base );
+	border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
+}
+
+.tabs-dropdown li,
+.tabs-dropdown > * > .tabs-content > a,
+.tabs-dropdown > * > .tabs-content > p > a,
+.tabs-dropdown ol > li > a {
+	border-top-color: var( --border-color-base );
+}
+
+.tabs-dropdown li ul,
+.tabs-dropdown li ol {
+	border-color: var( --border-color-base );
+}
+
+.tabs-dropdown li ul::before,
+.tabs-dropdown li ol::before {
+	color: var( --color-base--emphasized );
+}
+
+.tabs-tabbox > .tabs-input:checked + .tabs-label,
+.tabs-input-0:checked + .tabs-input-1 + .tabs-label {
+	background-color: transparent;
+	box-shadow: inset 0 -2px var( --color-primary );
+	color: var( --color-primary );
+}
+
+.tabs-togglebox > * > .tabs-input:checked + .tabs-label,
+.tabs-dropdown > * > .tabs-label:focus,
+.tabs-dropdown:hover > * > .tabs-label {
+	border-radius: var( --border-radius--medium ) var( --border-radius--medium ) 0 0;
+}
+
+.tabs-dropdown > * > .tabs-content li:hover {
+	background: var( --background-color-quiet--hover );
+}
+
+.tabs-dropdown a,
+.tabs-dropdown a:hover,
+.tabs-dropdown a:visited {
+	color: var( --color-base--emphasized );
+}
+
+.tabs-dropdown a:active {
+	color: var( --color-primary );
+}
+
+.tabs-dropdown > * > .tabs-content > a:hover,
+.tabs-dropdown > * > .tabs-content > p > a:hover,
+.tabs-dropdown ol > li > a:hover {
+	background: var( --background-color-quiet--hover );
+}
+
+.tabs-tabbox > .tabs-input.checked + .tabs-label,
+.tabs-input-0.checked + .tabs-input-1 + .tabs-label {
+	background-color: transparent;
+}
+
+.tabs-togglebox details.tabs-container:not( [ open ] ) .tabs-label {
+	border-radius: var( --border-radius--medium );
+}
+
+.tabs-togglebox details.tabs-container[ open ] .tabs-label {
+	border-radius: var( --border-radius--medium ) var( --border-radius--medium ) 0 0;
+}
