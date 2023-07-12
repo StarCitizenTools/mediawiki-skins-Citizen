@@ -79,25 +79,27 @@
 .rcoptions {
 	padding: 0;
 	border: 0;
-	margin: var( --space-xl ) 0;
+	margin: 0;
 
 	legend {
 		width: 100%;
-		padding: var( --space-xs ) 0;
-		border-bottom: 1px solid var( --border-color-base );
+		padding: 0;
 		margin-bottom: var( --space-xs );
 		font-size: 0.8125rem;
 	}
 }
 
+/* Non-JS RC interface */
+body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
+	padding: var( --space-md );
+	border-radius: var( --border-radius--medium );
+	background: var( --color-surface-2 );
+	font-size: 0.875rem;
+}
+
 .client-js {
 	.mw-recentchanges-toplinks {
 		padding-left: 0;
-	}
-
-	body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
-		border-radius: var( --border-radius--small );
-		background: var( --color-surface-2 );
 	}
 
 	.mw-recentchanges-toplinks:not( .mw-recentchanges-toplinks-collapsed ) {
