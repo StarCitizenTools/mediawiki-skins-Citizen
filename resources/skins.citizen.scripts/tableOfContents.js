@@ -46,6 +46,12 @@ function init( bodyContent ) {
 		return;
 	}
 
+	const getElements = () => {
+		/* T13555 */
+		return bodyContent.querySelectorAll( '.mw-headline' ).length > 0 ? bodyContent.querySelectorAll( '.mw-headline' ) :
+			bodyContent.querySelectorAll( '.mw-heading' );
+	};
+
 	// We use scroll-padding-top to handle scrolling with fixed header
 	// It is better to respect that so it is consistent
 	const getTopMargin = () => {
@@ -56,11 +62,19 @@ function init( bodyContent ) {
 		) + 20;
 	};
 
+	const headlines = getElements();
+
+	// Do not continue if there are no headlines
+	// TODO: Need to revamp the selector so that it works better with MW 1.40,
+	// currently MW 1.40 has ToC on non-content pages as well
+	if ( !headlines ) {
+		return;
+	}
+
 	const initSectionObserver = require( './sectionObserver.js' ).init;
 
 	const sectionObserver = initSectionObserver( {
-		/* T13555 */
-		elements: bodyContent.querySelectorAll( '.mw-headline' ).length > 0 ? bodyContent.querySelectorAll( '.mw-headline' ) : bodyContent.querySelectorAll( '.mw-heading' ),
+		elements: headlines,
 		topMargin: getTopMargin(),
 		onIntersection: ( section ) => { changeActiveSection( section.id ); }
 	} );
