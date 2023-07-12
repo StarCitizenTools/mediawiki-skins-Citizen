@@ -73,6 +73,26 @@ function registerServiceWorker() {
 }
 
 /**
+ * Initialize scripts related to wiki page content
+ *
+ * @param {HTMLElement} bodyContent
+ * @return {void}
+ */
+function initBodyContent( bodyContent ) {
+	const
+		sections = require( './sections.js' ),
+		tables = require( './tables.js' ),
+		toc = require( './tableOfContents.js' );
+
+	// Collapsable sections
+	sections.init( bodyContent );
+	// Table enhancements
+	tables.init( bodyContent );
+	// Table of contents
+	toc.init( bodyContent );
+}
+
+/**
  * @param {Window} window
  * @return {void}
  */
@@ -95,19 +115,7 @@ function main( window ) {
 	mw.hook( 'wikipage.content' ).add( function ( content ) {
 		// content is a jQuery object
 		// note that this refers to .mw-body-content, not #bodyContent
-		const bodyContent = content[ 0 ];
-
-		const
-			sections = require( './sections.js' ),
-			tables = require( './tables.js' ),
-			toc = require( './tableOfContents.js' );
-
-		// Collapsable sections
-		sections.init( bodyContent );
-		// Table enhancements
-		tables.init( bodyContent );
-		// Table of contents
-		toc.init( bodyContent );
+		initBodyContent( content[ 0 ] );
 	} );
 
 	// Preference module
