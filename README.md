@@ -40,7 +40,7 @@ Name | Grade | Version | Last updated
 [AJAXPoll](https://www.mediawiki.org/wiki/Extension:AJAXPoll) | A | REL1_39 `8429d8d` | 2022-10-25
 [ApprovedRevs](https://www.mediawiki.org/wiki/Extension:Approved_Revs) | B | N/A | N/A
 [Babel](https://www.mediawiki.org/wiki/Extension:Babel) | B | MLEB 2021.07 | 2021-07-29
-[Capiunto](https://www.mediawiki.org/wiki/Extension:Capiunto) | B | REL1_35 `30049a7` | 2021-08-26
+[Capiunto](https://www.mediawiki.org/wiki/Extension:Capiunto) | A | REL1_39 `3a6d523` | 2023-07-14
 [Cargo](https://www.mediawiki.org/wiki/Extension:Cargo) | B | REL1_39 `b4c6314` | 2023-01-03
 [CategoryTree](https://www.mediawiki.org/wiki/Extension:CategoryTree) | B | N/A | N/A
 [CentralNotice](https://www.mediawiki.org/wiki/Extension:CentralNotice) | B | REL1_35 `4aa2a8f` | 2022-06-16

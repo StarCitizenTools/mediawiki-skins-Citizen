@@ -3,13 +3,32 @@
  *
  * SkinStyles for Extension:Capiunto
  * Module: capiunto.infobox.main
- * Version: REL1_35 30049a7
+ * Version: REL1_39 3a6d523
  *
- * Date: 2021-08-26
+ * Date: 2023-07-14
 */
+
+@import '../../../resources/variables.less';
 
 .mw-capiunto-infobox {
 	border-color: var( --border-color-base );
+	margin: 0 auto var( --space-md ) auto;
 	background-color: var( --color-surface-2 );
+	clear: none;
 	color: var( --color-base );
+	float: none;
+	font-size: 0.875rem;
+
+	caption,
+	&-top {
+		font-size: 1rem;
+		font-weight: var( --font-weight-semibold );
+	}
+
+	/* Sync with floatright styles */
+	@media ( min-width: @width-breakpoint-tablet ) {
+		margin-left: var( --space-lg );
+		clear: right;
+		float: right;
+	}
 }
