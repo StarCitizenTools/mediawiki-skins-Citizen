@@ -20,7 +20,8 @@
 		}
 
 		.oo-ui-tagMultiselectWidget-handle {
-			border-color: transparent;
+			padding: 0.1em 0.75em 0.4em 0.75em; // align with filter card
+			border-color: var( --border-color-base );
 			border-radius: var( --border-radius--small ) var( --border-radius--small ) 0 0;
 			border-bottom: 1px solid var( --border-color-base ); // Add divider
 			background-color: var( --color-surface-2 );
@@ -64,8 +65,9 @@
 	&-views {
 		&-select {
 			&-widget.oo-ui-widget {
-				border-color: transparent;
+				border-color: var( --border-color-base--darker ); // align with input field on the left
 				border-radius: 0 0 var( --border-radius--small ) 0;
+				border-top-color: transparent;
 				border-left-width: 0;
 			}
 		}
