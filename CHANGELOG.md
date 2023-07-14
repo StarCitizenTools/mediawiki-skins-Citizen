@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.1...v2.7.2) (2023-07-14)
+
+
+### Features
+
+* **Capiunto:** ✨ add more cohesive infobox styles ([1ba2acb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1ba2acb92885ad3539600e660b343fba97030f03)), closes [#688](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/688)
+* **Capiunto:** ✨ add rounded corner to Capiunto infobox ([0d7fff1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0d7fff1188b2ac52f689f153cbe170fc73c15f01))
+* **core:** ✨ add overlay as affordnance to popup menus ([703fac6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/703fac62942a15b7ae74b642b3c86a1367047fc2))
+* **MediaWiki:** ✨ add border to rc filter ([4678e26](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4678e2633653a3e3eeb23d2c1a2ffb49fee652d5))
+* **MediaWiki:** ✨ add color for interface helpers ([ad31d5d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ad31d5dab7b642c2a67b6bc61597877b859b9a79))
+* **MediaWiki:** ✨ add non-enhanced changelist styles ([cf82ea8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cf82ea8b28980b231a571849b04794504427f4c9))
+* **MediaWiki:** ✨ align contribution list styles with changelist styles ([4badae5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4badae5cc54a2bb34c6a26b1ccac5aea95374b52))
+* **MediaWiki:** ✨ minor tweak to color in changelist ([727988a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/727988a213f7755e2309afb58c008a2326984241))
+* **MediaWiki:** ✨ revamp changelist styles ([67a5bb4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/67a5bb4357e08110b87bbb603bb39610fee8cd3f))
+* **MediaWiki:** ✨ tweak non-js rcfilter styles ([ad3fc27](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ad3fc272c2f926f741aa65684140030e0070a5ac))
+* **MediaWiki:** ✨ tweak pager styles on changelist pages ([5af3cdc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5af3cdc2c2b522ac37b77fc7d36ce3b156581d33))
+* **Tabs:** ✨ add support for Extension:Tabs ([42a4030](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/42a40307e444ba4b14225b23dc581b3a7d1aeedc)), closes [#687](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/687)
+
+
+### Bug Fixes
+
+* **MediaWiki:** 🐛 incorrect legacy rcoptions styles ([1619966](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1619966eb15320d3e159dffcd74d0cf9b9fc7255))
+* **MediaWiki:** missing changelist legend styles in 1.40 ([#685](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/685)) ([50ae4d9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/50ae4d9d762a212962c90b5e21c5e275ad4d4039))
+* **toc:** 🐛 init observer only when there are headlines ([aef94e3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/aef94e31cb62b5c0c3dc36b9a3e44635b49ba93c))
+
 ### [2.7.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.0...v2.7.1) (2023-07-11)
 
 
