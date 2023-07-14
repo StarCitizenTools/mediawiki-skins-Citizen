@@ -89,7 +89,6 @@
 	}
 
 	&__inner {
-		z-index: -1; // Inner element should be behind menu and search
 		display: flex;
 		min-width: 0;
 		flex-direction: var( --header-direction );
@@ -177,6 +176,33 @@
 	.citizen-header {
 		transition: var( --transition-menu );
 		transition-property: transform;
+
+		/*
+		 * Add overlay to menus as affordnance
+		 * TODO: We should use JS to add the overlay instead of abusing CSS
+		*/
+		.citizen-menu-checkbox-checkbox,
+		.citizen-button {
+			contain: initial;
+
+			&[ aria-expanded='true' ] {
+				&::before {
+					position: fixed;
+					top: 0;
+					right: 0;
+					bottom: 0;
+					left: 0;
+					width: auto;
+					height: auto;
+					background-color: var( --background-color-overlay );
+					content: '';
+				}
+
+				~ .citizen-menu-checkbox-target {
+					z-index: 1;
+				}
+			}
+		}
 	}
 
 	.citizen-scroll--down .citizen-header {

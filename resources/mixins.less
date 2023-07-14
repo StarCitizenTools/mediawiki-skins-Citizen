@@ -34,6 +34,7 @@
 // When using fadeChildren, the child elements need to have
 // opacity: 0 set manually
 .citizen-card-show( @fadeChildren: true ) {
+	z-index: @z-index-overlay;
 	opacity: 1;
 	pointer-events: auto;
 	transform: none;

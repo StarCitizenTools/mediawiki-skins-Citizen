@@ -127,32 +127,4 @@
 			transition: none;
 		}
 	}
-
-	#citizen-search__checkbox:checked {
-		+ .citizen-search__card {
-			z-index: 2;
-		}
-
-		// HACK: Click overlay to dismiss search bar
-		~ .citizen-search__button {
-			// Reset containment so that the overlay is visible
-			contain: initial;
-
-			.citizen-search__buttonIcon {
-				display: none;
-			}
-
-			#citizen-search__buttonCheckbox {
-				position: fixed;
-				z-index: 1;
-				top: 0;
-				right: 0;
-				bottom: 0;
-				left: 0;
-				width: auto;
-				height: auto;
-				background-color: var( --background-color-overlay );
-			}
-		}
-	}
 }
