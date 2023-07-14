@@ -8,9 +8,6 @@
  * Date: 2023-05-29
 */
 
-@import '../../../resources/variables.less';
-@import '../../../resources/mixins.less';
-
 /* default.less */
 .mw-plusminus {
 	&-pos {
@@ -50,29 +47,6 @@
 
 	&-separator {
 		color: var( --color-base--subtle );
-	}
-}
-
-// Need additional parent to override
-.mw-body-content .mw-changeslist-legend {
-	position: relatve;
-	z-index: 2 !important; // so it is not covered by the date header
-	padding: 0.6em; // Sync with rcfilter
-	border-color: var( --border-color-base );
-	border-radius: var( --border-radius--small );
-	background-color: var( --color-surface-2 );
-	font-size: 0.8125rem;
-
-	// Citizen label styles
-	strong {
-		color: var( --color-base--subtle );
-		font-weight: var( --font-weight-normal );
-		letter-spacing: 0.05em;
-	}
-
-	@media ( max-width: @width-breakpoint-tablet ) {
-		margin: 0;
-		float: none;
 	}
 }
 
