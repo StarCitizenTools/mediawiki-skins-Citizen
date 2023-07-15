@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.2...v2.7.3) (2023-07-15)
+
+
+### Features
+
+* **core:** ✨ tweak sitestats font size ([7ea3b94](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7ea3b94d2313ab1eacc745e44c07f23715ec1b83))
+
+
+### Bug Fixes
+
+* **core:** 🐛 fix LESS import error ([6664ceb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6664ceb87fe4278f2813fa7426d4306cae6fc0de))
+
 ### [2.7.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.1...v2.7.2) (2023-07-14)
 
 
