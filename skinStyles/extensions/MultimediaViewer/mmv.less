@@ -300,8 +300,6 @@
 	z-index: 1002; // avoid covering other buttons
 	top: 20vh !important;
 	height: 50vh;
-	transition: var( --transition-hover );
-	transition-property: background;
 }
 
 /* mmv.ui.permission.less */
@@ -512,8 +510,6 @@
 	grid-template-areas: 'desc links'
 		'about about';
 	grid-template-columns: 2fr 1fr;
-	transition: var( --transition-menu );
-	transition-property: background;
 
 	.mw-mmv-untruncated & {
 		background-color: transparent;
@@ -608,8 +604,6 @@
 	border-top-left-radius: var( --border-radius--large );
 	border-top-right-radius: var( --border-radius--large );
 	color: #fff;
-	transition: var( --transition-menu );
-	transition-property: background, color;
 
 	&.mw-mmv-untruncated {
 		background-color: var( --color-surface-1 );

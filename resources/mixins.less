@@ -61,8 +61,8 @@
 // Transition animation
 .citizen-card-transition() {
 	transition: var( --transition-menu );
-	transition-property: transform, opacity, visibility;
-	will-change: transform, opacity, visibility;
+	transition-property: transform, opacity;
+	will-change: transform, opacity;
 }
 
 // Header card popups
@@ -190,8 +190,6 @@
 .button-blue() {
 	background-color: var( --color-primary );
 	color: #fff !important;
-	transition: var( --transition-hover );
-	transition-property: background, color;
 }
 
 .button-blue-hover() {
@@ -205,8 +203,6 @@
 .button-red() {
 	background-color: var( --color-destructive );
 	color: #fff !important;
-	transition: var( --transition-hover );
-	transition-property: background, color;
 }
 
 .button-red-hover() {
