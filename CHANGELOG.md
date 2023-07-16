@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.3...v2.7.4) (2023-07-16)
+
+
+### Bug Fixes
+
+* **core:** 🐛 do not insert pseudo elements to input element ([0e42030](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0e42030d39883c1880e7594ab63f996e8b7611a3)), closes [#689](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/689)
+* **MediaWiki:** 🐛 fix various LESS import error ([2308138](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2308138ef73967b4fa63ffe0d9a213d0a22c409e))
+
 ### [2.7.3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.2...v2.7.3) (2023-07-15)
 
 
