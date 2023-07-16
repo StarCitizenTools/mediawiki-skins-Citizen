@@ -180,26 +180,25 @@
 		/*
 		 * Add overlay to menus as affordnance
 		 * TODO: We should use JS to add the overlay instead of abusing CSS
+		 * TODO: This does not work for TOC and Pref menu
 		*/
-		.citizen-menu-checkbox-checkbox,
-		.citizen-button {
+		.citizen-header__button {
 			contain: initial;
 
 			&[ aria-expanded='true' ] {
-				&::before {
-					position: fixed;
-					top: 0;
-					right: 0;
-					bottom: 0;
-					left: 0;
-					width: auto;
-					height: auto;
-					background-color: var( --background-color-overlay );
-					content: '';
-				}
-
-				~ .citizen-menu-checkbox-target {
-					z-index: 1;
+				~ .citizen-header__button {
+					&::before {
+						position: fixed;
+						z-index: 1;
+						top: 0;
+						right: 0;
+						bottom: 0;
+						left: 0;
+						width: auto;
+						height: auto;
+						background-color: var( --background-color-overlay );
+						content: '';
+					}
 				}
 			}
 		}
