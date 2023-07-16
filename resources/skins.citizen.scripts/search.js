@@ -155,10 +155,10 @@ function bindExpandOnSlash( window, checkbox, input ) {
  */
 function renderSearchClearButton( input ) {
 	const
-		clearButton = document.createElement( 'button' ),
+		clearButton = document.createElement( 'span' ),
 		clearIcon = document.createElement( 'span' );
 
-	clearButton.classList.add( 'citizen-search__clear', 'citizen-search__formButton', 'citizen-button' );
+	clearButton.classList.add( 'citizen-search__clear', 'citizen-search__formButton' );
 	clearIcon.classList.add( 'citizen-ui-icon', 'mw-ui-icon-wikimedia-clear' );
 	clearButton.append( clearIcon );
 
