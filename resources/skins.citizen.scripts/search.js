@@ -169,11 +169,11 @@ function renderSearchClearButton( input ) {
 		input.focus();
 	} );
 
-	input.addEventListener( 'input', ( event ) => {
-		if ( event.target.value === '' ) {
+	input.addEventListener( 'input', () => {
+		if ( input.value === '' ) {
 			clearButton.remove();
 		} else {
-			event.target.after( clearButton );
+			input.after( clearButton );
 		}
 	} );
 }
@@ -204,13 +204,13 @@ function initSearch( window ) {
 		if ( isPrimarySearch ) {
 			const checkbox = document.getElementById( 'citizen-search__checkbox' );
 			bindExpandOnSlash( window, checkbox, input );
-			renderSearchClearButton( input );
 			// Focus when toggled
 			checkbox.addEventListener( 'input', () => {
 				focusOnChecked( checkbox, input );
 			} );
 		}
 
+		renderSearchClearButton( input );
 		setLoadingIndicatorListeners( searchBox, true, renderSearchLoadingIndicator );
 		loadSearchModule( input, searchModule, () => {
 			setLoadingIndicatorListeners( searchBox, false, renderSearchLoadingIndicator );
