@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.4...v2.7.5) (2023-07-17)
+
+
+### Features
+
+* **core:** ✨ remove expensive CSS animation ([85f036c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/85f036c2f88750c66aeab9374cc58feb18d9d6cf))
+* **core:** ✨ sync input styles with Codex and OOUI ([a6bc1a8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a6bc1a8d4beeb0d239c9c4bca53a56bf63cd88a3))
+* **MediaWiki:** ✨ light up changelist dot on hover ([4cf9417](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4cf9417c5dd91301a7d71145f6c0d3373da6149f))
+* **SemanticMediaWiki:** ✨ add datatable styles ([8cfa260](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8cfa260997b86200a7a8455de24a957b3cd985f5))
+* **SemanticMediaWiki:** ✨ tweak SMW datatable styles ([ab70217](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ab70217b26233f57708c898f930fcca052f579b0))
+* **SemanticMediaWiki:** ✨ update datatable filter focus styles ([e7ef543](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e7ef5431a2dd58789a9763a17c8b5bfe3b49ede9))
+
+
+### Bug Fixes
+
+* **core:** 🐛 deprecate User::idFromName ([8605c6c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8605c6c6dc23de4a6f71f77bb153454147df41be))
+* **core:** 🐛 enter key should not clear search input ([739fa85](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/739fa8504cd313235d9d6e63edb3de3bd6305a2e))
+* **core:** 🐛 inconsistent search focus behavior ([1aba52b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1aba52b8707760670bfbf624d304995c9ab6b72a))
+* **core:** 🐛 missing space between logo attributes ([075875c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/075875c574abed81fcc70e6ea0eeef011a0c96ee))
+* **core:** 🐛 only apply hover style to wikitable tbody rows ([f555f3c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f555f3c8328f74399cf664decfd011a0da76245c))
+
 ### [2.7.4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.3...v2.7.4) (2023-07-16)
 
 
