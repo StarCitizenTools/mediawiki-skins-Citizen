@@ -158,9 +158,9 @@ final class Tagline extends Partial {
 			return $user->newFromAnyId( null, $titleText, null );
 		}
 
-		$pageUserId = $user->idFromName( $titleText );
-		if ( $pageUserId ) {
-			return $user->newFromId( $pageUserId );
+		$userIdentity = MediaWikiServices::getInstance()->getUserIdentityLookup()->getUserIdentityByName( $titleText );
+		if ( $userIdentity && $userIdentity->isRegistered() ) {
+			return $user->newFromId( $userIdentity->getId() );
 		}
 
 		return null;
