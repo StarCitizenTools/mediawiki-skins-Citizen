@@ -8,6 +8,8 @@
  * Date: 2023-01-03
 */
 
+/* Sync with smw.tableprinter.datatable */
+
 /* jquery.dataTables.css */
 table.dataTable {
 	overflow: auto;
@@ -39,8 +41,6 @@ table.dataTable tfoot td {
 table.dataTable thead .sorting,
 table.dataTable thead .sorting_asc,
 table.dataTable thead .sorting_desc {
-	border-radius: var( --border-radius--small );
-
 	&:hover {
 		background-color: var( --background-color-quiet--hover );
 	}
@@ -248,12 +248,6 @@ table.dataTable.no-footer {
 .dataTables_wrapper .dataTables_paginate .paginate_button:active {
 	background: var( --background-color-quiet--active );
 	box-shadow: none;
-}
-
-.dataTables_wrapper .dataTables_length,
-.dataTables_wrapper .dataTables_filter {
-	// Add some space
-	margin: var( --space-xs ) 0;
 }
 
 .dataTables_wrapper .dataTables_length,

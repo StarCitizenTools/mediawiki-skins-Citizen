@@ -369,6 +369,7 @@
 			"+smw.jsonview": "skinStyles/extensions/SemanticMediaWiki/smw.jsonview.less",
 			"+smw.special.search.styles": "skinStyles/extensions/SemanticMediaWiki/smw.special.search.styles.less",
 			"+smw.summarytable": "skinStyles/extensions/SemanticMediaWiki/smw.summarytable.less",
+			"+smw.tableprinter.datatable": "skinStyles/extensions/SemanticMediaWiki/smw.tableprinter.datatable.less",
 			"+smw.tippy": "skinStyles/extensions/SemanticMediaWiki/smw.tippy.less",
 			"+smw.ui.styles": "skinStyles/extensions/SemanticMediaWiki/smw.ui.styles.less",
 			"+ext.srf.d3.chart.bubble": "skinStyles/extensions/SemanticResultFormats/d3/ext.srf.d3.chart.bubble.less",
@@ -636,6 +637,7 @@
 				"infobox",
 				"cargoDynamicTable",
 				"dataTable",
+				"smw-datatable",
 				"mw-capiunto-infobox"
 			],
 			"description": "Defines table css classes ignored by citizen table wrapper",
