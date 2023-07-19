@@ -507,7 +507,8 @@
 	// Sync with title
 	background-color: #000;
 	gap: var( --space-xs );
-	grid-template-areas: 'desc links'
+	grid-template-areas:
+ 'desc links'
 		'about about';
 	grid-template-columns: 2fr 1fr;
 
@@ -516,7 +517,8 @@
 		gap: var( --space-lg );
 
 		@media ( max-width: @width-breakpoint-tablet ) {
-			grid-template-areas: 'desc desc'
+			grid-template-areas:
+ 'desc desc'
 				'links links'
 				'about about';
 		}

@@ -191,15 +191,15 @@
 					right: 0;
 					bottom: 0;
 					left: 0;
-					opacity: 0;
-					visibility: hidden;
-					pointer-events: none;
 					width: auto;
 					height: auto;
-					transition: var( --transition-menu );
-					transition-property: opacity;
 					background-color: var( --background-color-overlay );
 					content: '';
+					opacity: 0;
+					pointer-events: none;
+					transition: var( --transition-menu );
+					transition-property: opacity;
+					visibility: hidden;
 				}
 			}
 
@@ -207,8 +207,8 @@
 				~ .citizen-header__button {
 					&::before {
 						opacity: 1;
-						visibility: visible;
 						pointer-events: auto;
+						visibility: visible;
 					}
 				}
 			}

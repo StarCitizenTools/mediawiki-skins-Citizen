@@ -25,14 +25,16 @@
 	// Align style with the form
 	border-radius: 0 0 var( --border-radius--large ) var( --border-radius--large );
 	// Animates the progress-bar.
-	animation: progress-bar
+	animation:
+ progress-bar
 		1200ms
 		linear
 		var( --delay-progress-bar )
 		infinite
 		alternate;
 	// Add a progress-bar to the loading indicator
-	background: /*image*/ linear-gradient( 90deg, var( --color-primary ) 0%, var( --color-primary ) 100% )
+	background: /*image*/
+ linear-gradient( 90deg, var( --color-primary ) 0%, var( --color-primary ) 100% )
 		-10% 0 ~'/' 0 var( --height-progress-bar )
 		no-repeat,transparent;
 	// Placeholder text
