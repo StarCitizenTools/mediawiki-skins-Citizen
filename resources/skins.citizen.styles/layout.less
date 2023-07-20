@@ -16,7 +16,8 @@
 	padding: 0 var( --padding-page );
 	margin: var( --space-xl ) 0; // don't collide with other components (e.g. notice)
 	gap: var( --space-md ) var( --space-xl );
-	grid-template-areas: 'header'
+	grid-template-areas:
+ 'header'
 		'content'
 		'footer';
 	// Using auto as min value will cause overflow
@@ -59,7 +60,8 @@
 	.citizen-toc-enabled {
 		.citizen-body-container {
 			display: grid;
-			grid-template-areas: 'header header'
+			grid-template-areas:
+ 'header header'
 				'content toc'
 				'footer footer';
 			grid-template-columns: minmax( 0, var( --width-layout ) ) var( --width-toc );
