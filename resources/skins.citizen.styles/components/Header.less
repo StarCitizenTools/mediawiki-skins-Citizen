@@ -93,6 +93,7 @@
 		flex-grow: 1;
 		justify-content: space-between;
 		gap: var( --space-xxs );
+		overflow-x: auto;
 
 		.citizen-menu-checkbox-checkbox:checked {
 			~ .citizen-header__button {
@@ -110,6 +111,7 @@
 	&__end {
 		display: flex;
 		flex-direction: var( --header-direction );
+		flex-shrink: 0; // let _inner handle the overflow
 		gap: var( --space-xxs );
 	}
 
