@@ -4,8 +4,8 @@
  * Module: mediawiki.skinning.content.media-common
  * Version: REL1_39
  *
- * Date: 2022-11-18
-*/
+ * Date: 2023-07-23
+ */
 
 /**
  * Block media items
@@ -47,6 +47,7 @@ figure[ typeof~='mw:File/Frame' ] {
 		 */
 		> span.mw-broken-media {
 			display: inline-block;
+			overflow-wrap: break-word;
 			/* This is hardcoded in Linker::makeThumbLink2 for broken media */
 			width: 180px;
 		}
@@ -69,7 +70,9 @@ figure[ typeof~='mw:File/Frame' ] {
 @media ( min-width: @width-breakpoint-tablet ) {
 	figure[ typeof~='mw:File/Thumb' ],
 	figure[ typeof~='mw:File/Frame' ] {
-		text-align: start;
+		> figcaption {
+			text-align: start;
+		}
 
 		// When float is not explicitly set
 		.mw-content-ltr & {
