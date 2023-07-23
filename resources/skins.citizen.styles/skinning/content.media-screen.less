@@ -4,8 +4,8 @@
  * Module: mediawiki.skinning.content.media-screen
  * Version: REL1_39
  *
- * Date: 2022-11-18
-*/
+ * Date: 2023-07-23
+ */
 figure[ typeof~='mw:File' ],
 figure[ typeof~='mw:File/Frameless' ],
 figure[ typeof~='mw:File/Thumb' ],
@@ -42,20 +42,32 @@ figure[ typeof~='mw:File/Frame' ] {
 	> span:first-child {
 		display: block;
 		border-radius: var( --border-radius--small );
+	}
 
-		// Broken file styles
+	// Broken file styles
+	> a:first-child:not( .mw-file-description ) {
+		padding: var( --space-sm );
+		border: 1px solid var( --border-color-base--darker );
+
+		&:hover {
+			background-color: var( --color-primary--hover );
+			color: #fff;
+		}
+
+		&:active {
+			background-color: var( --color-primary--active );
+			color: #fff;
+		}
+
 		&.new {
-			padding: var( --space-sm );
-			border: 1px dashed var( --border-color-base--darker );
+			border-style: dashed;
 
 			&:hover {
 				background-color: var( --color-destructive--hover );
-				color: #fff;
 			}
 
 			&:active {
 				background-color: var( --color-destructive--active );
-				color: #fff;
 			}
 		}
 	}

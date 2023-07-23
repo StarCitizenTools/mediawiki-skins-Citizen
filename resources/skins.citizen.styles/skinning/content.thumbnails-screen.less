@@ -4,8 +4,8 @@
  * Module: mediawiki.skinning.content.thumbnails-screen
  * Version: REL1_39
  *
- * Date: 2022-11-18
-*/
+ * Date: 2023-07-23
+ */
 
 .thumbinner {
 	> a {
@@ -29,18 +29,30 @@
 		}
 
 		// Broken file styles
-		&.new {
+		&:not( .image ) {
 			padding: var( --space-sm );
-			border: 1px dashed var( --border-color-base--darker );
+			border: 1px solid var( --border-color-base--darker );
 
 			&:hover {
-				background-color: var( --color-destructive--hover );
+				background-color: var( --color-primary--hover );
 				color: #fff;
 			}
 
 			&:active {
-				background-color: var( --color-destructive--active );
+				background-color: var( --color-primary--active );
 				color: #fff;
+			}
+
+			&.new {
+				border-style: dashed;
+
+				&:hover {
+					background-color: var( --color-destructive--hover );
+				}
+
+				&:active {
+					background-color: var( --color-destructive--active );
+				}
 			}
 		}
 	}
