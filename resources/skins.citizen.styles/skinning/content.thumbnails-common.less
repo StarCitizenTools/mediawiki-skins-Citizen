@@ -4,8 +4,8 @@
  * Module: mediawiki.skinning.content.thumbnails-common
  * Version: REL1_39
  *
- * Date: 2022-11-18
-*/
+ * Date: 2023-07-23
+ */
 
 /* @noflip */
 div.floatleft,
@@ -44,6 +44,10 @@ div.thumbinner {
 	// We use the same font size for both caption and inner
 	font-size: 0.8125rem;
 	text-align: center;
+
+	> a {
+		overflow-wrap: break-word;
+	}
 }
 
 // Do not float content in mobile view
