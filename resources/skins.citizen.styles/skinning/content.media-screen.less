@@ -30,7 +30,8 @@ figure[ typeof~='mw:File/Frame' ] {
 
 		// Add affordance to replace magnify icon
 		&:hover:not( .lazy ):not( .new ) {
-			img {
+			img,
+			source {
 				transform: scale( 1.1 );
 			}
 		}
