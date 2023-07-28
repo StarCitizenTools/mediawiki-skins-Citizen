@@ -18,10 +18,10 @@
 	padding-top: 8px; // Make space for resize indicator
 	padding-right: var( --space-xs );
 	padding-left: var( --space-xs );
-	border-top-color: var( --border-color-base );
-	background-color: var( --color-surface-2 );
-	color: var( --color-base--subtle );
 	line-height: var( --line-height-sm );
+	color: var( --color-base--subtle );
+	background-color: var( --color-surface-2 );
+	border-top-color: var( --border-color-base );
 
 	// HACK: Add resize indicator
 	&::after {
@@ -31,10 +31,10 @@
 		left: 0;
 		width: 52px;
 		height: 4px;
-		border-radius: var( --border-radius--pill );
 		margin: 2px auto;
-		background: var( --color-base--subtle );
 		content: '';
+		background: var( --color-base--subtle );
+		border-radius: var( --border-radius--pill );
 	}
 
 	&-worker,
@@ -44,8 +44,8 @@
 	}
 
 	&-message {
-		border-color: var( --border-color-base );
 		color: var( --color-base--emphasized );
+		border-color: var( --border-color-base );
 	}
 }
 

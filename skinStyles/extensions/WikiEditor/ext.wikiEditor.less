@@ -31,22 +31,22 @@
 }
 
 .wikiEditor-ui-tabs {
+	background-color: var( --color-surface-0 );
 	border-top-color: var( --border-color-base );
 	border-left-color: var( --border-color-base );
-	background-color: var( --color-surface-0 );
 
 	div {
+		background-color: var( --color-surface-2 );
 		border-right-color: var( --border-color-base );
 		border-bottom-color: var( --border-color-base );
-		background-color: var( --color-surface-2 );
 
 		a {
 			color: var( --color-primary );
 		}
 
 		&.current {
-			border-bottom-color: var( --color-surface-0 );
 			background-color: var( --color-surface-0 );
+			border-bottom-color: var( --color-surface-0 );
 
 			a {
 				color: var( --color-base );
@@ -56,8 +56,8 @@
 }
 
 .wikiEditor-ui-buttons {
-	border-top-color: var( --border-color-base );
 	background-color: var( --color-surface-0 );
+	border-top-color: var( --border-color-base );
 }
 
 /* jquery.wikiEditor.toolbar.less */
@@ -93,8 +93,8 @@
 
 			a {
 				height: 42px; /* Align with VE */
-				color: var( --color-base--emphasized );
 				font-weight: var( --font-weight-medium );
+				color: var( --color-base--emphasized );
 
 				&::before {
 					height: 100%; /* Align with VE */
@@ -117,8 +117,8 @@
 
 			a.current,
 			a.current:visited {
-				border-bottom: 2px solid var( --color-primary );
 				color: var( --color-primary );
+				border-bottom: 2px solid var( --color-primary );
 			}
 		}
 	}
@@ -129,24 +129,24 @@
 		.label {
 			height: 38px;
 			margin-left: 16px;
-			color: var( --color-base--subtle );
 			font-size: 0.875rem;
-			letter-spacing: 0.05em;
 			line-height: 38px;
+			color: var( --color-base--subtle );
+			letter-spacing: 0.05em;
 		}
 
 		.tool-select {
 			height: 42px;
-			border-color: var( --border-color-base );
 			background-color: var( --color-surface-0 );
+			border-color: var( --border-color-base );
 
 			.label {
 				height: 42px; /* Align with VE */
-				color: var( --color-base--emphasized );
 				font-size: inherit;
 				font-weight: var( --font-weight-medium );
-				letter-spacing: inherit;
 				line-height: 42px; /* Align with VE */
+				color: var( --color-base--emphasized );
+				letter-spacing: inherit;
 
 				&:hover {
 					background-color: var( --background-color-quiet--hover );
@@ -158,8 +158,8 @@
 			}
 
 			.options {
-				border-color: var( --border-color-base );
 				background-color: var( --color-surface-0 );
+				border-color: var( --border-color-base );
 
 				.option {
 					color: var( --color-base--emphasized );
@@ -200,8 +200,8 @@
 	.booklet {
 		> .index {
 			.wikiEditor-character-highlighted {
-				background-color: var( --background-color-quiet--hover );
 				color: var( --color-base--emphasized );
+				background-color: var( --background-color-quiet--hover );
 			}
 
 			> :hover {
@@ -209,8 +209,8 @@
 			}
 
 			> .current {
-				background-color: var( --background-color-primary--hover );
 				color: var( --color-primary );
+				background-color: var( --background-color-primary--hover );
 			}
 		}
 	}
@@ -222,8 +222,8 @@
 		}
 
 		td {
-			border-top-color: var( --border-color-base );
 			color: var( --color-base--emphasized );
+			border-top-color: var( --border-color-base );
 		}
 	}
 
@@ -231,12 +231,12 @@
 	.page-characters {
 		div {
 			span {
-				border-color: var( --border-color-base );
 				color: var( --color-base );
+				border-color: var( --border-color-base );
 
 				&:hover {
-					border-color: var( --border-color-base );
 					background-color: var( --background-color-quiet--hover );
+					border-color: var( --border-color-base );
 				}
 
 				// Added active state
@@ -246,8 +246,8 @@
 			}
 
 			.wikiEditor-character-highlighted {
-				background-color: var( --background-color-primary--hover );
 				color: var( --color-primary );
+				background-color: var( --background-color-primary--hover );
 			}
 		}
 	}
@@ -309,8 +309,8 @@
 	.wikieditor-toolbar-field-wrapper {
 		/* Input field label */
 		> label {
-			color: var( --color-base--subtle );
 			font-size: 0.8125rem;
+			color: var( --color-base--subtle );
 			letter-spacing: 0.05em;
 
 			~ input,
@@ -322,8 +322,8 @@
 		/* Checkbox text */
 		> input + label {
 			margin-left: var( --space-xs );
-			color: var( --color-base );
 			font-size: inherit;
+			color: var( --color-base );
 			letter-spacing: inherit;
 		}
 	}

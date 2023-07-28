@@ -11,12 +11,12 @@
 .mw-pt-languages {
 	display: flex;
 	flex-direction: column;
+	gap: var( --space-xs );
 	// Language tag can appear anywhere in content, reserve spacing just in case
 	padding: var( --space-md ) 0;
-	border-bottom: 0;
-	background-color: transparent;
 	font-size: 0.8125rem;
-	gap: var( --space-xs );
+	background-color: transparent;
+	border-bottom: 0;
 }
 
 // Citizen label styles
@@ -24,17 +24,17 @@
 	display: block;
 	width: auto;
 	padding: 0;
-	color: var( --color-base--subtle );
 	font-weight: var( --font-weight-normal );
+	color: var( --color-base--subtle );
 	letter-spacing: 0.05em;
 }
 
 .mw-pt-languages .mw-pt-languages-list {
 	display: flex;
 	flex-wrap: wrap;
+	gap: var( --space-xs );
 	padding: 0;
 	margin: 0;
-	gap: var( --space-xs );
 }
 
 .mw-pt-languages-list li {
@@ -48,9 +48,9 @@
 	.mw-pt-progress {
 		display: block;
 		padding: var( --space-xs ) var( --space-md );
+		color: var( --color-base--subtle );
 		border: 1px solid var( --border-color-base--darker );
 		border-radius: var( --border-radius--pill );
-		color: var( --color-base--subtle );
 
 		&:hover,
 		&:active {
@@ -85,9 +85,9 @@
 		}
 
 		&.mw-pt-languages-selected {
-			background-color: var( --color-primary--active );
-			color: #fff;
 			font-weight: var( --font-weight-normal );
+			color: #fff;
+			background-color: var( --color-primary--active );
 		}
 	}
 }

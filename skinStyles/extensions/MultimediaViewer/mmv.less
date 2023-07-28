@@ -18,9 +18,9 @@
 /* mmv.ui.dialog.less */
 .mw-mmv-dialog {
 	right: @mmv-width-toolbar;
-	border-radius: var( --border-radius--medium );
 	margin: var( --space-xs );
 	background-color: var( --color-surface-1 );
+	border-radius: var( --border-radius--medium );
 	box-shadow: var( --box-shadow-dialog );
 
 	// The dialog will always show above the metadata in mobile view
@@ -55,8 +55,8 @@
 	bottom: @mmv-height-abovethefold;
 
 	.mw-mmv-reuse-tabs {
-		border-radius: var( --border-radius--medium ) var( --border-radius--medium ) 0 0; // Sync with dialog
 		border-bottom-color: var( --border-color-base );
+		border-radius: var( --border-radius--medium ) var( --border-radius--medium ) 0 0; // Sync with dialog
 
 		.oo-ui-optionWidget {
 			padding: var( --space-xs ) var( --space-sm );
@@ -168,8 +168,8 @@
 // Just use flex layout
 .mw-mmv-options-subcontainer {
 	display: flex;
-	margin-top: var( --space-md );
 	gap: var( --space-sm );
+	margin-top: var( --space-md );
 }
 
 .mw-mmv-options-subcontainer .mw-mmv-options-text {
@@ -178,20 +178,20 @@
 
 .mw-mmv-options-dialog-header {
 	margin: 0 0 var( --space-xs ) 0;
-	color: var( --color-base--emphasized );
 	font-size: 1rem;
 	font-weight: var( --font-weight-semibold );
+	color: var( --color-base--emphasized );
 }
 
 .mw-mmv-options-text-header {
-	color: var( --color-base );
 	font-size: 0.875rem;
+	color: var( --color-base );
 }
 
 .mw-mmv-options-text-body {
 	margin-top: var( --space-xs );
-	color: var( --color-base--subtle );
 	font-size: 0.8125rem;
+	color: var( --color-base--subtle );
 }
 
 .mw-mmv-options-enable-alert {
@@ -199,19 +199,19 @@
 	padding: var( --space-sm ) var( --space-md );
 	margin: ~'calc( var(--space-md ) * -1)';
 	margin-bottom: var( --space-md );
+	font-weight: var( --font-weight-semibold );
 	background-color: var( --color-warning );
 	border-top-left-radius: var( --border-radius--medium );
 	border-top-right-radius: var( --border-radius--medium );
-	font-weight: var( --font-weight-semibold );
 }
 
 /* mmv.ui.canvas.less */
 .mw-mmv-image img {
 	@media ( max-width: @width-breakpoint-tablet ) {
+		pointer-events: none;
 		// It is frustrating to misclick the image on mobile
 		// So that the image is not clickable on mobile
 		cursor: auto;
-		pointer-events: none;
 	}
 }
 
@@ -225,8 +225,8 @@
 .mw-mmv-next-image,
 .mw-mmv-prev-image {
 	padding: 0;
-	border-radius: var( --border-radius--small );
 	background-size: var( --size-icon );
+	border-radius: var( --border-radius--small );
 	opacity: var( --opacity-icon-base );
 
 	&.mw-mmv-dialog-open,
@@ -297,8 +297,8 @@
 // Make it much bigger so it is easier to click
 .mw-mmv-prev-image,
 .mw-mmv-next-image {
-	z-index: 1002; // avoid covering other buttons
 	top: 20vh !important;
+	z-index: 1002; // avoid covering other buttons
 	height: 50vh;
 }
 
@@ -314,9 +314,9 @@
 
 	h3 {
 		margin: 0;
-		color: var( --color-base--subtle );
 		font-size: 0.8125rem;
 		font-weight: var( --font-weight-normal );
+		color: var( --color-base--subtle );
 		letter-spacing: 0.05em;
 	}
 
@@ -327,12 +327,12 @@
 		width: 2rem;
 		height: 2rem;
 		padding: var( --space-xs );
+		background-color: transparent;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: 14px;
 		border: 0;
 		border-radius: var( --border-radius--small );
-		background-color: transparent;
-		background-position: center;
-		background-repeat: no-repeat;
-		background-size: 14px;
 
 		// Add hover state
 		&:hover {
@@ -359,9 +359,9 @@
 	.mw-mmv-permission-text,
 	.mw-mmv-permission-html {
 		margin: var( --space-xxs ) 0 0 0;
-		color: var( --color-base );
 		font-size: 0.8125rem;
 		line-height: var( --line-height-sm );
+		color: var( --color-base );
 	}
 
 	.mw-mmv-permission-html {
@@ -386,9 +386,9 @@
 .mw-mmv-progress-percent {
 	height: 2px;
 	background: linear-gradient( -45deg, transparent 33%, rgba( 0, 0, 0, 0.1 ) 33%, rgba( 0, 0, 0, 0.1 ) 66%, transparent 66% ), var( --color-primary );
-	border-bottom-right-radius: var( --border-radius--large );
-	border-top-right-radius: var( --border-radius--large );
 	filter: drop-shadow( 0 0 16px var( --color-primary ) );
+	border-top-right-radius: var( --border-radius--large );
+	border-bottom-right-radius: var( --border-radius--large );
 }
 
 /* mmv.ui.stripeButtons.less */
@@ -408,13 +408,13 @@
 	&.mw-mmv-description-page-button:active,
 	&.mw-mmv-description-page-button:visited {
 		display: flex;
-		min-width: auto;
-		max-width: none;
 		align-items: center;
 		justify-content: center;
+		float: none;
+		min-width: auto;
+		max-width: none;
 		padding: 0 var( --space-sm );
 		margin: var( --space-md );
-		float: none;
 		font-size: 0.875rem;
 		white-space: nowrap;
 	}
@@ -426,19 +426,19 @@
 /* mmv.ui.metadataPanel.less */
 .mw-mmv-info-box {
 	padding: var( --space-md );
+	background-color: var( --color-surface-2 );
 	border: 0;
 	border-radius: var( --border-radius--medium );
-	background-color: var( --color-surface-2 );
 }
 
 .mw-mmv-title-para {
-	overflow: hidden;
-	// Changing height and line-height like the origina causes reflow
-	height: auto;
 	flex-grow: 1;
 	order: -1; // Reorder because we use flex in container
+	// Changing height and line-height like the origina causes reflow
+	height: auto;
 	padding: 0;
 	margin: var( --space-xl ) var( --space-md ) var( --space-md ) var( --space-md );
+	overflow: hidden;
 	line-height: var( --line-height-sm );
 	// Enforce single line
 	white-space: nowrap;
@@ -474,8 +474,8 @@
 	height: auto !important;
 	padding: 0;
 	margin: 0;
-	color: var( --color-base--subtle );
 	font-size: 0.875rem;
+	color: var( --color-base--subtle );
 
 	@media ( max-width: @width-breakpoint-tablet ) {
 		font-size: 0.8125rem;
@@ -500,21 +500,21 @@
 .mw-mmv-image-metadata {
 	// Use grid instead
 	display: grid;
-	width: auto;
-	padding: 0 var( --space-md ) var( --space-md ) var( --space-md );
-	border-top: 0;
-	margin-top: -4px;
-	// Sync with title
-	background-color: #000;
-	gap: var( --space-xs );
 	grid-template-areas:
  'desc links'
 		'about about';
 	grid-template-columns: 2fr 1fr;
+	gap: var( --space-xs );
+	width: auto;
+	padding: 0 var( --space-md ) var( --space-md ) var( --space-md );
+	margin-top: -4px;
+	// Sync with title
+	background-color: #000;
+	border-top: 0;
 
 	.mw-mmv-untruncated & {
-		background-color: transparent;
 		gap: var( --space-lg );
+		background-color: transparent;
 
 		@media ( max-width: @width-breakpoint-tablet ) {
 			grid-template-areas:
@@ -526,9 +526,9 @@
 
 	// Reset hardcoded styles for grid
 	&-column {
+		float: none !important;
 		width: auto !important;
 		max-width: none !important;
-		float: none !important;
 	}
 
 	&-desc-column {
@@ -542,8 +542,8 @@
 
 .mw-mmv-image-desc {
 	padding: 0;
-	color: inherit;
 	font-size: 0.875rem;
+	color: inherit;
 }
 
 .mw-mmv-image-links {
@@ -573,15 +573,15 @@
 }
 
 .mw-mmv-about-links {
+	grid-area: about;
 	padding: 0;
 	font-size: 0.875rem;
-	grid-area: about;
 }
 
 .mw-mmv-label {
-	background-color: var( --color-surface-3 );
-	color: var( --color-base );
 	font-size: 0.8125rem;
+	color: var( --color-base );
+	background-color: var( --color-surface-3 );
 
 	&:hover {
 		background-color: var( --color-surface-2--hover );
@@ -602,15 +602,15 @@
 // Only apply background color when scroll up
 .mw-mmv-post-image {
 	min-height: @mmv-height-abovethefold;
+	color: #fff;
 	background-color: transparent;
 	border-top-left-radius: var( --border-radius--large );
 	border-top-right-radius: var( --border-radius--large );
-	color: #fff;
 
 	&.mw-mmv-untruncated {
+		color: var( --color-base );
 		background-color: var( --color-surface-1 );
 		box-shadow: none; // We already have top border
-		color: var( --color-base );
 	}
 
 	// Add scroll up affordance
@@ -624,10 +624,10 @@
 			left: 0;
 			width: 40px;
 			height: 4px;
-			border-radius: var( --border-radius--pill );
 			margin: 0 auto;
-			background-color: ~'rgba( 255, 255, 255, var( --opacity-icon-base ) )';
 			content: '';
+			background-color: ~'rgba( 255, 255, 255, var( --opacity-icon-base ) )';
+			border-radius: var( --border-radius--pill );
 		}
 
 		&.mw-mmv-untruncated {
@@ -641,7 +641,7 @@
 
 .mw-mmv-above-fold {
 	display: flex; // let's use flex instead of float
+	gap: var( --space-xs );
 	height: auto; // avoid layout shift when scroll up
 	padding-bottom: 0; // let metadata handle the padding
-	gap: var( --space-xs );
 }

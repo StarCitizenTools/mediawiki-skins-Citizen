@@ -28,19 +28,19 @@ div.tright {
 	padding-left: var( --border-radius--small );
 	margin-top: var( --space-xs );
 	color: var( --color-base--subtle );
-	letter-spacing: 0.025em;
 	text-align: center;
+	letter-spacing: 0.025em;
 }
 
 div.thumbinner {
-	/* new block formatting context,
-	 * to clear background from floating content */
-	overflow: hidden;
 	// Avoid overflow
 	max-width: 100%;
 	margin-right: auto;
 	// Center thumbnail without float
 	margin-left: auto;
+	/* new block formatting context,
+	 * to clear background from floating content */
+	overflow: hidden;
 	// We use the same font size for both caption and inner
 	font-size: 0.8125rem;
 	text-align: center;
@@ -56,18 +56,18 @@ div.thumbinner {
 	div.tright,
 	div.floatright,
 	table.floatright {
+		float: right;
 		margin-left: var( --space-lg );
 		clear: right;
-		float: right;
 	}
 
 	/* @noflip */
 	div.tleft,
 	div.floatleft,
 	table.floatleft {
+		float: left;
 		margin-right: var( --space-lg );
 		clear: left;
-		float: left;
 	}
 
 	.thumbcaption {

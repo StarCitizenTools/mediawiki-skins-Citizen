@@ -11,14 +11,14 @@
 @import '../../../resources/variables.less';
 
 .mw-capiunto-infobox {
+	float: none;
+	margin: 0 auto var( --space-md ) auto;
+	clear: none;
+	font-size: 0.875rem;
+	color: var( --color-base );
+	background-color: var( --color-surface-2 );
 	border-color: var( --border-color-base );
 	border-radius: var( --border-radius--medium );
-	margin: 0 auto var( --space-md ) auto;
-	background-color: var( --color-surface-2 );
-	clear: none;
-	color: var( --color-base );
-	float: none;
-	font-size: 0.875rem;
 
 	caption,
 	&-top {
@@ -28,8 +28,8 @@
 
 	/* Sync with floatright styles */
 	@media ( min-width: @width-breakpoint-tablet ) {
+		float: right;
 		margin-left: var( --space-lg );
 		clear: right;
-		float: right;
 	}
 }

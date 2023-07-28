@@ -33,9 +33,9 @@
 		margin: 0;
 
 		&-primary {
+			font-size: 0.875rem;
 			// Align with Citizen label styles
 			color: var( --color-base--subtle );
-			font-size: 0.875rem;
 			letter-spacing: 0.05em;
 		}
 
@@ -74,14 +74,14 @@
 		max-width: ~'calc( 100vw - var(--padding-page) * 2 )';
 		height: auto;
 		padding: var( --space-sm ) 0;
-		border-bottom: 1px solid var( --border-color-base );
 		// Mimic Citizen sticky header
 		margin: 0;
 		margin-bottom: var( --space-md );
-		backdrop-filter: saturate( 50% ) blur( 16px );
-		background: var( --background-color-overlay );
-		box-shadow: none;
 		overflow-x: auto;
+		background: var( --background-color-overlay );
+		backdrop-filter: saturate( 50% ) blur( 16px );
+		border-bottom: 1px solid var( --border-color-base );
+		box-shadow: none;
 	}
 }
 
@@ -98,25 +98,25 @@
 		border-radius: var( --border-radius--small );
 
 		&-highlighted {
-			background-color: var( --color-surface-3 );
 			color: var( --color-base--emphasized );
+			background-color: var( --color-surface-3 );
 		}
 
 		&-selected {
-			background-color: var( --background-color-primary--hover );
 			color: var( --color-primary );
+			background-color: var( --background-color-primary--hover );
 		}
 
 		&-selected&-highlighted,
 		&-pressed&-highlighted {
-			background-color: var( --background-color-primary--hover );
 			color: var( --color-primary--hover );
+			background-color: var( --background-color-primary--hover );
 		}
 	}
 
 	&-label-count {
-		background-color: var( --color-surface-3 );
 		color: var( --color-base--subtle );
+		background-color: var( --color-surface-3 );
 
 		.oo-ui-optionWidget-selected & {
 			color: var( --color-primary );
@@ -135,9 +135,9 @@
 	border-radius: var( --border-radius--medium );
 
 	&-title {
-		color: var( --color-base--emphasized );
 		font-size: var( --font-size-h3 );
 		font-weight: var( --font-weight-semibold );
+		color: var( --color-base--emphasized );
 	}
 
 	&-subtitle {

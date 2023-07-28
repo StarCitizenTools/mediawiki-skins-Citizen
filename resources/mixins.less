@@ -6,8 +6,8 @@
 @import 'variables.less';
 
 .citizen-card( @border-radius: true ) {
-	border: 1px solid var( --border-color-base );
 	background-color: var( --color-surface-1 );
+	border: 1px solid var( --border-color-base );
 	box-shadow: var( --box-shadow-dialog );
 
 	& when ( @border-radius ) {
@@ -17,11 +17,11 @@
 
 // Collaspe animation setup
 .citizen-card-hide( @position, @axis: '', @fadeChildren: true ) {
-	opacity: 0;
 	pointer-events: none;
+	visibility: hidden;
+	opacity: 0;
 	transform: ~'scale@{axis}( 0 )';
 	transform-origin: @position;
-	visibility: hidden;
 
 	& when ( @fadeChildren ) {
 		> * {
@@ -35,12 +35,12 @@
 // opacity: 0 set manually
 .citizen-card-show( @fadeChildren: true ) {
 	z-index: @z-index-overlay;
-	opacity: 1;
 	pointer-events: auto;
-	transform: none;
+	visibility: visible;
+	opacity: 1;
 	// HACK: So that visiblity won't wait 250ms to become visible
 	transition-delay: 0ms;
-	visibility: visible;
+	transform: none;
 
 	& when ( @fadeChildren ) {
 		> * {
@@ -71,14 +71,14 @@
 	right: 0;
 	bottom: 100%;
 	left: 0;
-	overflow: auto;
 	min-width: 16rem;
 	max-height: var( --header-card-maxheight );
 	margin: var( --space-xs );
-	contain: content;
+	overflow: auto;
 	overscroll-behavior: contain;
 	-webkit-user-select: none;
 	user-select: none;
+	contain: content;
 	.citizen-card();
 	.citizen-card-hide( bottom @position );
 	.citizen-card-transition();
@@ -126,14 +126,14 @@
 	// This has an issue if parent has overflow set
 	&::before {
 		position: absolute;
-		z-index: -1;
 		top: @topOffset;
 		right: ~'calc( var(--padding-page ) * -1 )';
 		left: ~'calc( var(--padding-page ) * -1 )';
+		z-index: -1;
 		height: 100%;
-		backdrop-filter: saturate( 50% ) blur( 16px );
-		background-color: var( --background-color-overlay );
 		content: '';
+		background-color: var( --background-color-overlay );
+		backdrop-filter: saturate( 50% ) blur( 16px );
 	}
 }
 
@@ -141,9 +141,9 @@
 // From https://www.a11yproject.com/posts/how-to-hide-content
 .hidden() {
 	position: absolute;
-	overflow: hidden;
 	width: 1px;
 	height: 1px;
+	overflow: hidden;
 	clip: rect( 0 0 0 0 );
 	clip-path: inset( 50% );
 	white-space: nowrap;
@@ -160,36 +160,36 @@
 	position: absolute;
 	width: inherit;
 	height: inherit;
-	background-position: center;
-	background-repeat: no-repeat;
 	content: '';
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 .resource-loader-menu-icon() {
 	position: absolute;
 	width: @icon-box-size;
 	height: @icon-box-size;
-	background-position: center;
-	background-repeat: no-repeat;
 	content: '';
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 .resource-loader-list-icon() {
 	position: relative;
-	width: @icon-size;
-	height: @icon-size;
 	flex-shrink: 0;
 	align-self: center;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: contain;
+	width: @icon-size;
+	height: @icon-size;
 	content: '';
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
 }
 
 // Button Styles
 .button-blue() {
-	background-color: var( --color-primary );
 	color: #fff !important;
+	background-color: var( --color-primary );
 }
 
 .button-blue-hover() {
@@ -201,8 +201,8 @@
 }
 
 .button-red() {
-	background-color: var( --color-destructive );
 	color: #fff !important;
+	background-color: var( --color-destructive );
 }
 
 .button-red-hover() {

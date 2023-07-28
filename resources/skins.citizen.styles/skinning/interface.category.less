@@ -10,16 +10,16 @@
 .catlinks {
 	display: flex;
 	flex-wrap: wrap;
-	clear: both;
 	gap: var( --space-xl );
+	clear: both;
 
 	ul {
 		display: flex;
 		flex-wrap: wrap;
+		gap: var( --space-xs );
 		margin: var( --space-xs ) 0 0 0;
 		/* Reset font */
 		font-size: 0.8125rem;
-		gap: var( --space-xs );
 		letter-spacing: 0; // hidden-catlink title does not have a selector
 	}
 
@@ -30,13 +30,13 @@
 		> a {
 			display: block;
 			padding: var( --space-xs ) var( --space-md );
+			color: var( --color-base--subtle );
 			border: 1px solid var( --border-color-base--darker );
 			border-radius: var( --border-radius--pill );
-			color: var( --color-base--subtle );
 
 			&:hover {
-				background-color: var( --color-primary--hover );
 				color: #fff;
+				background-color: var( --color-primary--hover );
 			}
 
 			&:hover,
@@ -65,8 +65,8 @@
 .mw-normal-catlinks > a,
 .mw-hidden-catlinks {
 	display: block;
-	color: var( --color-base--subtle );
 	font-size: 0.8125rem;
+	color: var( --color-base--subtle );
 	letter-spacing: 0.05em;
 }
 

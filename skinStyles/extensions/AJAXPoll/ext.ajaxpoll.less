@@ -12,14 +12,14 @@
 	/* Responsive to container */
 	width: auto;
 	padding: var( --space-xl );
+	background-color: transparent;
 	border-color: transparent;
 	border-radius: var( --border-radius--medium );
-	background-color: transparent;
 }
 
 .ajaxpoll .ajaxpoll-question {
-	color: var( --color-base--emphasized );
 	font-weight: var( --font-weight-semibold );
+	color: var( --color-base--emphasized );
 }
 
 .ajaxpoll .ajaxpoll-answer-name,
@@ -29,8 +29,8 @@
 }
 
 .ajaxpoll .ajaxpoll-hover-vote {
-	background: var( --color-destructive );
 	color: #fff;
+	background: var( --color-destructive );
 }
 
 .ajaxpoll .ajaxpoll-hover-revoke {
@@ -40,32 +40,32 @@
 .ajaxpoll .ajaxpoll-answer-vote {
 	position: relative;
 	display: grid;
-	overflow: hidden;
+	place-content: center;
 	height: 2rem;
+	overflow: hidden;
+	font-size: 0.8125rem;
+	background-color: var( --color-surface-3 );
 	border: 0;
 	border-top: 1px solid var( --border-color-base );
-	background-color: var( --color-surface-3 );
-	border-bottom-left-radius: var( --border-radius--medium );
 	border-bottom-right-radius: var( --border-radius--medium );
-	font-size: 0.8125rem;
-	place-content: center;
+	border-bottom-left-radius: var( --border-radius--medium );
 }
 
 .ajaxpoll .ajaxpoll-answer-vote div {
 	bottom: 0;
-	height: auto;
 	box-sizing: border-box;
+	height: auto;
+	background: var( --color-surface-2 );
 	border-right: 0;
 	border-right: 2px solid var( --border-color-base );
-	background: var( --color-surface-2 );
 }
 
 .ajaxpoll .ajaxpoll-our-vote div {
 	top: 0;
 	left: 0;
+	background-color: var( --background-color-primary--active );
 	border: 0;
 	border-right: 2px solid var( --color-primary );
-	background-color: var( --background-color-primary--active );
 }
 
 .ajaxpoll .ajaxpoll-answer-vote span {
@@ -76,11 +76,11 @@
 .ajaxpoll label {
 	display: block;
 	padding: var( --space-xs );
+	font-weight: var( --font-weight-medium );
+	cursor: pointer;
 	background-color: var( --color-surface-2 );
 	border-top-left-radius: var( --border-radius--medium );
 	border-top-right-radius: var( --border-radius--medium );
-	cursor: pointer;
-	font-weight: var( --font-weight-medium );
 
 	// Added active state
 	&:active {
@@ -93,8 +93,8 @@
 }
 
 .ajaxpoll .ajaxpoll-checkevent {
-	background: var( --color-success );
 	color: #fff;
+	background: var( --color-success );
 }
 
 .ajaxpoll .ajaxpoll-misc {
@@ -104,10 +104,10 @@
 
 .ajaxpoll .ajaxpoll-ajax {
 	padding: var( --space-xs ) var( --space-md );
-	border-radius: var( --border-radius--small );
 	margin-bottom: var( --space-md );
-	background: var( --color-surface-2 );
 	font-size: 0.8125rem;
+	background: var( --color-surface-2 );
+	border-radius: var( --border-radius--small );
 }
 
 .ajaxpoll .ajaxpoll-info {
@@ -115,11 +115,11 @@
 	flex-wrap: wrap;
 	justify-content: space-between;
 	margin-top: var( --space-md );
-	color: var( --color-base--subtle );
 	font-size: 0.8125rem;
+	color: var( --color-base--subtle );
 }
 
 .ajaxpoll .ajaxpoll-id-info {
-	color: var( --color-base--subtle );
 	float: none;
+	color: var( --color-base--subtle );
 }

@@ -12,8 +12,8 @@
 
 /* jquery.dataTables.css */
 table.dataTable {
-	overflow: auto;
 	max-width: 100%;
+	overflow: auto;
 	font-size: 0.875rem;
 }
 
@@ -25,12 +25,12 @@ table.dataTable tfoot th {
 table.dataTable thead th,
 table.dataTable thead td {
 	padding: var( --space-xs ) var( --space-sm );
-	border-bottom-color: var( --border-color-base );
-	color: var( --color-base--subtle );
 	font-size: 0.8125rem;
 	font-weight: var( --font-weight-normal );
-	letter-spacing: 0.05em;
+	color: var( --color-base--subtle );
 	text-align: start;
+	letter-spacing: 0.05em;
+	border-bottom-color: var( --border-color-base );
 }
 
 table.dataTable tfoot th,
@@ -221,16 +221,16 @@ table.dataTable.no-footer {
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button {
-	border-radius: var( --border-radius--small );
-	color: var( --color-base--emphasized ) !important;
 	font-weight: var( --font-weight-medium );
+	color: var( --color-base--emphasized ) !important;
+	border-radius: var( --border-radius--small );
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.current,
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-	border-color: transparent;
-	background: var( --background-color-primary--active );
 	color: var( --color-base--emphasized ) !important;
+	background: var( --background-color-primary--active );
+	border-color: transparent;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
@@ -240,9 +240,9 @@ table.dataTable.no-footer {
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-	border-color: transparent;
-	background: var( --background-color-quiet--hover );
 	color: var( --color-base--emphasized ) !important;
+	background: var( --background-color-quiet--hover );
+	border-color: transparent;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:active {
@@ -255,8 +255,8 @@ table.dataTable.no-footer {
 .dataTables_wrapper .dataTables_info,
 .dataTables_wrapper .dataTables_processing,
 .dataTables_wrapper .dataTables_paginate {
-	color: var( --color-base );
 	font-size: 0.875rem;
+	color: var( --color-base );
 }
 
 .dataTables_wrapper .dataTables_filter + .dataTable {

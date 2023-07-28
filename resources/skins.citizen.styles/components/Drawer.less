@@ -6,11 +6,11 @@
 
 	&__header {
 		display: flex;
+		gap: var( --space-md );
 		align-items: center;
 		justify-content: center;
 		padding: var( --space-sm )  var( --space-md ) var( --space-md );
 		border-bottom: 1px solid var( --border-color-base );
-		gap: var( --space-md );
 	}
 
 	// Keep aspect ratio
@@ -25,20 +25,20 @@
 		gap: var( --space-xxs );
 
 		.mw-logo-wordmark {
-			color: var( --color-base--emphasized );
 			font-size: 1.5rem;
+			color: var( --color-base--emphasized );
 		}
 	}
 
 	&__menu {
 		--size-icon: 1rem;
 		display: grid;
-		max-width: 92vw;
+		grid-template-columns: repeat( auto-fit, 15rem );
+		gap: var( --space-sm );
 		justify-content: center;
+		max-width: 92vw;
 		padding: var( --space-xs );
 		font-size: 0.875rem; // TODO: Make this a variable
-		gap: var( --space-sm );
-		grid-template-columns: repeat( auto-fit, 15rem );
 
 		.mw-list-item a {
 			border-radius: var( --border-radius--small );

@@ -11,8 +11,8 @@
 /* smw/util/ext.smw.vertical.tabs.css */
 /* Style the buttons inside the tab */
 div.smw-vtab-nav button {
-	background-color: transparent;
 	color: var( --color-primary );
+	background-color: transparent;
 }
 
 div.smw-vtab-nav button a {
@@ -29,9 +29,9 @@ div.smw-vtab-nav.nav-left button {
 
 /* Change background color of buttons on hover */
 div.smw-vtab-nav button:hover {
+	background-color: var( --background-color-quiet--hover );
 	border-color: var( --border-color-base );
 	border-radius: 0 var( --border-radius--small ) var( --border-radius--small ) 0;
-	background-color: var( --background-color-quiet--hover );
 }
 
 div.smw-vtab-nav.nav-right button:hover {
@@ -46,9 +46,9 @@ div.smw-vtab-nav.nav-left button:hover {
 
 /* Create an active/current "tab button" class */
 div.smw-vtab-nav button.active {
-	border: var( --border-color-base );
-	background-color: transparent;
 	color: var( --color-base--emphasized );
+	background-color: transparent;
+	border: var( --border-color-base );
 }
 
 div.smw-vtab-nav.nav-right button.active {

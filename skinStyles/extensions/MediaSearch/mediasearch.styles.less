@@ -26,16 +26,16 @@
 
 	.mw-indicators {
 		padding-left: 0;
-		border-left: 0;
 		margin-top: var( --space-xs );
 		margin-left: 0;
+		border-left: 0;
 	}
 }
 
 // Missing from the original stylesheet
 .searchmatch {
-	color: var( --color-base--emphasized );
 	font-weight: var( --font-weight-semibold );
+	color: var( --color-base--emphasized );
 }
 
 /* AutocompleteSearchInput.less */
@@ -49,23 +49,23 @@
 	}
 
 	&__input {
+		color: var( --color-base--emphasized );
+		background-color: transparent;
 		border-color: var( --border-color-base--darker );
 		border-radius: var( --border-radius--small );
-		background-color: transparent;
-		color: var( --color-base--emphasized );
 
 		&::placeholder {
 			color: var( --color-base-subtle );
 		}
 
 		&:hover {
-			border-color: var( --color-primary--hover );
 			background-color: var( --color-surface-0 );
+			border-color: var( --color-primary--hover );
 		}
 
 		&:focus {
-			border-color: var( --color-primary );
 			background-color: var( --color-surface-0 );
+			border-color: var( --color-primary );
 			box-shadow: inset 0 0 0 1px var( --color-primary );
 		}
 	}
@@ -78,14 +78,14 @@
 
 /* Button.less */
 .sd-button {
-	border-radius: var( --border-radius--small );
-	color: var( --color-base--emphasized );
 	font-family: var( --font-family-base );
 	font-weight: var( --font-weight-semibold );
+	color: var( --color-base--emphasized );
+	border-radius: var( --border-radius--small );
 
 	&:hover {
-		background-color: var( --background-color-quiet--hover );
 		color: var( --color-base--emphasized );
+		background-color: var( --background-color-quiet--hover );
 	}
 
 	&:focus {
@@ -94,18 +94,18 @@
 	}
 
 	&--framed {
-		border-color: var( --border-color-base );
 		background-color: var( --color-surface-2 );
+		border-color: var( --border-color-base );
 
 		&:hover {
-			background-color: var( --color-surface-2--hover );
 			color: var( --color-base--emphasized );
+			background-color: var( --color-surface-2--hover );
 		}
 
 		// Add active state
 		&:active {
-			background-color: var( --color-surface-2--active );
 			color: var( --color-base--subtle );
+			background-color: var( --color-surface-2--active );
 		}
 	}
 
@@ -172,18 +172,18 @@
 
 	&--primary {
 		&.sd-button--framed {
-			border-color: var( --color-primary );
 			background-color: var( --color-primary );
+			border-color: var( --color-primary );
 
 			&:hover {
-				border-color: var( --color-primary--hover );
 				background-color: var( --color-primary--hover );
+				border-color: var( --color-primary--hover );
 			}
 
 			// Add active state
 			&:active {
-				border-color: var( --color-primary--active );
 				background-color: var( --color-primary--active );
+				border-color: var( --color-primary--active );
 			}
 
 			&:focus {
@@ -192,18 +192,18 @@
 			}
 
 			&.sd-button--destructive {
-				border-color: var( --color-destructive );
 				background-color: var( --color-destructive );
+				border-color: var( --color-destructive );
 
 				&:hover {
-					border-color: var( --color-destructive--hover );
 					background-color: var( --color-destructive--hover );
+					border-color: var( --color-destructive--hover );
 				}
 
 				// Add active state
 				&:active {
-					border-color: var( --color-destructive--active );
 					background-color: var( --color-destructive--active );
+					border-color: var( --color-destructive--active );
 				}
 
 				&:focus {
@@ -223,14 +223,14 @@
 		}
 
 		&.sd-button--framed {
-			border-color: var( --color-surface-4 );
-			background-color: var( --color-surface-4 );
 			color: var( --color-base--subtle );
+			background-color: var( --color-surface-4 );
+			border-color: var( --color-surface-4 );
 
 			&:hover,
 			&:focus {
-				border-color: var( --color-surface-4 );
 				background-color: var( --color-surface-4 );
+				border-color: var( --color-surface-4 );
 			}
 		}
 
@@ -243,40 +243,40 @@
 /* Checkbox.less */
 .sd-checkbox {
 	&__icon {
-		border-color: var( --border-color-base--darker );
-		border-radius: var( --border-radius--small );
 		// Show background when hovered
 		background-color: transparent;
+		border-color: var( --border-color-base--darker );
+		border-radius: var( --border-radius--small );
 	}
 
 	&__input {
 		&:focus + .sd-checkbox__icon {
-			border-color: var( --color-primary );
 			background-color: var( --color-surface-0 );
+			border-color: var( --color-primary );
 			box-shadow: inset 0 0 0 1px var( --color-primary );
 		}
 
 		&:hover + .sd-checkbox__icon {
-			border-color: var( --color-primary--hover );
 			background-color: var( --color-surface-0 );
+			border-color: var( --color-primary--hover );
 		}
 
 		&:active + .sd-checkbox__icon {
-			border-color: var( --color-primary--active );
 			background-color: var( --color-primary--active );
+			border-color: var( --color-primary--active );
 			box-shadow: none;
 		}
 
 		// Set up check icon.
 		&:checked + .sd-checkbox__icon {
-			border-color: var( --color-primary );
 			background-color: var( --color-primary );
+			border-color: var( --color-primary );
 		}
 
 		&:disabled {
 			& + .sd-checkbox__icon {
-				border-color: var( --color-surface-4 );
 				background-color: var( --color-surface-4 );
+				border-color: var( --color-surface-4 );
 			}
 
 			& ~ .sd-checkbox__label-text {
@@ -285,19 +285,19 @@
 		}
 
 		&:checked:enabled:focus + .sd-checkbox__icon {
-			border-color: var( --color-primary );
 			background-color: var( --color-primary );
+			border-color: var( --color-primary );
 			box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px #fff;
 		}
 
 		&:checked:enabled:hover + .sd-checkbox__icon {
-			border-color: var( --color-primary--hover );
 			background-color: var( --color-primary--hover );
+			border-color: var( --color-primary--hover );
 		}
 
 		&:checked:enabled:active + .sd-checkbox__icon {
-			border-color: var( --color-primary--active );
 			background-color: var( --color-primary--active );
+			border-color: var( --color-primary--active );
 			box-shadow: none;
 		}
 	}
@@ -320,9 +320,9 @@
 	}
 
 	&__shell {
+		background-color: var( --color-surface-1 );
 		border-color: transparent;
 		border-radius: var( --border-radius--medium );
-		background-color: var( --color-surface-1 );
 		box-shadow: var( --box-shadow-dialog );
 	}
 
@@ -330,8 +330,8 @@
 		border-bottom-color: var( --border-color-base );
 
 		.sd-dialog__header-title {
-			color: var( --color-base--emphasized );
 			font-weight: var( --font-weight-semibold );
+			color: var( --color-base--emphasized );
 		}
 	}
 
@@ -342,8 +342,8 @@
 
 /* Message.less */
 .sd-message {
-	color: var( --color-base--emphasized );
 	font-weight: var( --font-weight-semibold );
+	color: var( --color-base--emphasized );
 
 	&--error {
 		color: var( --color-destructive );
@@ -355,28 +355,28 @@
 
 	// Sync with message box styles
 	&--block {
-		border-radius: var( --border-radius--small );
-		color: var( --color-base--emphasized );
 		font-weight: var( --font-weight-normal );
+		color: var( --color-base--emphasized );
+		border-radius: var( --border-radius--small );
 
 		&.sd-message--notice {
-			border-color: var( --color-surface-2 );
 			background-color: var( --color-surface-2 );
+			border-color: var( --color-surface-2 );
 		}
 
 		&.sd-message--error {
-			border-color: var( --background-color-destructive );
 			background-color: var( --background-color-destructive );
+			border-color: var( --background-color-destructive );
 		}
 
 		&.sd-message--warning {
-			border-color: var( --background-color-warning );
 			background-color: var( --background-color-warning );
+			border-color: var( --background-color-warning );
 		}
 
 		&.sd-message--success {
-			border-color: var( --background-color-success );
 			background-color: var( --background-color-success );
+			border-color: var( --background-color-success );
 		}
 	}
 
@@ -389,31 +389,31 @@
 /* Radio.less */
 .sd-radio {
 	&__icon {
-		border-color: var( --border-color-base--darker );
 		// Show background when hovered
 		background-color: transparent;
+		border-color: var( --border-color-base--darker );
 	}
 
 	&__input {
 		&:hover + .sd-radio__icon {
-			border-color: var( --color-primary--hover );
 			background-color: var( --color-surface-0 );
+			border-color: var( --color-primary--hover );
 		}
 
 		&:active + .sd-radio__icon {
-			border-color: var( --color-primary--active );
 			background-color: var( --color-primary--active );
+			border-color: var( --color-primary--active );
 		}
 
 		&:checked + .sd-radio__icon {
-			border-color: var( --color-primary );
 			background-color: #fff;
+			border-color: var( --color-primary );
 		}
 
 		&:disabled {
 			& + .sd-radio__icon {
-				border-color: var( --color-surface-4 );
 				background-color: var( --color-surface-4 );
+				border-color: var( --color-surface-4 );
 			}
 
 			& ~ .sd-radio__label-text {
@@ -455,16 +455,16 @@
 	}
 
 	&__content {
-		border-color: var( --border-color-base--darker );
+		font-family: var( --font-family-base ); // Browser overrides button font
+		color: var( --color-base--emphasized );
 		// Show background when hovered
 		background-color: transparent;
-		color: var( --color-base--emphasized );
-		font-family: var( --font-family-base ); // Browser overrides button font
+		border-color: var( --border-color-base--darker );
 
 		&:hover {
-			border-color: var( --color-primary--hover );
-			background-color: var( --color-surface-1 );
 			color: var( --color-base--emphasized );
+			background-color: var( --color-surface-1 );
+			border-color: var( --color-primary--hover );
 
 			.sd-select__handle {
 				color: var( --color-base );
@@ -472,14 +472,14 @@
 		}
 
 		&:focus {
-			border-color: var( --color-primary );
 			background-color: var( --color-surface-1 );
+			border-color: var( --color-primary );
 			box-shadow: inset 0 0 0 1px var( --color-primary );
 		}
 
 		&:active {
-			border-color: var( --border-color-base--darker );
 			color: var( --color-base--subtle );
+			border-color: var( --border-color-base--darker );
 		}
 	}
 
@@ -495,9 +495,9 @@
 
 	&--disabled {
 		.sd-select__content {
-			border-color: var( --color-surface-4 );
-			background-color: var( --color-surface-4 );
 			color: var( --color-base--subtle );
+			background-color: var( --color-surface-4 );
+			border-color: var( --color-surface-4 );
 
 			&:hover {
 				.sd-select__handle {
@@ -518,17 +518,17 @@
 
 /* SelectMenu.less */
 .sd-select-menu {
+	background-color: var( --color-surface-1 );
 	border-color: var( --border-color-base--darker );
 	border-radius: 0 0 var( --border-radius--small ) var( --border-radius--small );
-	background-color: var( --color-surface-1 );
 	// box-shadow: var( --box-shadow-dialog );
 
 	&__list-item {
 		color: var( --color-base--emphasized );
 
 		&--active {
-			background-color: var( --background-color-quiet--hover );
 			color: var( --color-base--emphasized );
+			background-color: var( --background-color-quiet--hover );
 		}
 
 		&--selected {
@@ -568,22 +568,22 @@
 		}
 
 		&__item {
-			color: var( --color-base--emphasized );
 			font-weight: var( --font-weight-medium );
+			color: var( --color-base--emphasized );
 
 			&--current {
-				box-shadow: inset 0 -2px var( --color-primary );
 				color: var( --color-primary );
+				box-shadow: inset 0 -2px var( --color-primary );
 			}
 
 			&:hover {
-				box-shadow: inset 0 -2px var( --color-primary--hover );
 				color: var( --color-primary--hover );
+				box-shadow: inset 0 -2px var( --color-primary--hover );
 			}
 
 			&:active {
-				box-shadow: inset 0 -2px var( --color-primary--active );
 				color: var( --color-primary--active );
+				box-shadow: inset 0 -2px var( --color-primary--active );
 			}
 
 			&--disabled {
@@ -637,9 +637,9 @@
 /* VideoResult.less */
 .sdms-video-result {
 	overflow: hidden; // Hide transition overflow
+	color: var( --color-primary );
 	border-color: transparent;
 	border-radius: var( --border-radius--small );
-	color: var( --color-primary );
 
 	&__title {
 		color: var( --color-base--emphasized );
@@ -684,10 +684,10 @@
 
 	&__duration {
 		padding: var( --space-xxs ) var( --space-xs );
-		border-radius: var( --border-radius--small );
-		background-color: var( --color-surface-2 );
-		color: var( --color-base );
 		font-weight: var( --font-weight-medium );
+		color: var( --color-base );
+		background-color: var( --color-surface-2 );
+		border-radius: var( --border-radius--small );
 	}
 
 	&__mime {
@@ -698,8 +698,8 @@
 /* AudioResult.less */
 .sdms-audio-result {
 	padding: var( --space-md ) 0;
-	border-bottom: 0;
 	font-size: 0.875rem;
+	border-bottom: 0;
 
 	&__title + &__meta {
 		margin-top: var( --space-xxs );
@@ -715,10 +715,10 @@
 
 	&__duration {
 		padding: var( --space-xxs ) var( --space-xs );
-		border-radius: var( --border-radius--small );
-		background-color: var( --color-surface-2 );
-		color: var( --color-base );
 		font-weight: var( --font-weight-medium );
+		color: var( --color-base );
+		background-color: var( --color-surface-2 );
+		border-radius: var( --border-radius--small );
 	}
 
 	&__mime {
@@ -729,22 +729,22 @@
 /* PageResult.less */
 .sdms-page-result {
 	padding: var( --space-md ) 0;
-	border-bottom: 0;
 	font-size: 0.875rem;
+	border-bottom: 0;
 
 	p {
-		color: var( --color-base--subtle );
 		font-size: 0.875rem;
+		color: var( --color-base--subtle );
 	}
 
 	// Sync with duration styles
 	&__namespace {
 		padding: var( --space-xxs ) var( --space-xs );
-		border-radius: var( --border-radius--small );
-		background-color: var( --color-surface-2 );
-		color: var( --color-base );
 		font-size: 0.875rem;
 		font-weight: var( --font-weight-medium );
+		color: var( --color-base );
+		background-color: var( --color-surface-2 );
+		border-radius: var( --border-radius--small );
 	}
 }
 
@@ -765,8 +765,8 @@
 		&--expanded {
 			top: var( --space-md );
 			height: ~'calc( 100vh - var( --space-md ) * 2 )';
-			border-radius: var( --border-radius--large );
 			background-color: var( --color-surface-2 );
+			border-radius: var( --border-radius--large );
 
 			// Responsive handling
 			@media screen and ( max-width: @width-breakpoint-tablet ) {
@@ -777,8 +777,8 @@
 				width: 100%;
 				max-height: 40vh;
 				padding-bottom: var( --header-size ); // So that header won't hide the bottom
-				border-bottom-left-radius: 0;
 				border-bottom-right-radius: 0;
+				border-bottom-left-radius: 0;
 			}
 		}
 	}
@@ -814,22 +814,22 @@
 	}
 
 	&__cta {
+		font-weight: var( --font-weight-medium );
+		color: var( --color-primary );
+		background-color: var( --color-surface-2 );
 		border-color: var( --border-color-base );
 		border-radius: var( --border-radius--small );
-		background-color: var( --color-surface-2 );
-		color: var( --color-primary );
-		font-weight: var( --font-weight-medium );
 
 		&:hover {
-			border-color: var( --color-primary--hover );
-			background-color: var( --color-surface-2--hover );
 			color: var( --color-primary--hover );
+			background-color: var( --color-surface-2--hover );
+			border-color: var( --color-primary--hover );
 		}
 
 		&:active {
-			border-color: var( --color-primary--active );
-			background-color: var( --color-surface-2--active );
 			color: var( --color-primary--active );
+			background-color: var( --color-surface-2--active );
+			border-color: var( --color-primary--active );
 		}
 
 		&:focus {
@@ -880,9 +880,9 @@
 
 /* EndOfResults.less */
 .sdms-end-of-results {
-	color: var( --color-base--emphasized );
 	font-size: var( --font-size-h6 );
 	font-weight: var( --font-weight-semibold );
+	color: var( --color-base--emphasized );
 }
 
 /* SearchFilters.less */
@@ -899,16 +899,16 @@
 
 	.sd-select {
 		&__content {
-			border-radius: var( --border-radius--small );
 			color: var( --color-base--emphasized );
+			border-radius: var( --border-radius--small );
 
 			@media screen and ( min-width: @width-breakpoint-tablet ) {
 				font-size: 0.875rem;
 			}
 
 			&:hover {
-				border-color: transparent;
 				background-color: var( --background-color-quiet--hover );
+				border-color: transparent;
 			}
 
 			&:focus {
@@ -917,15 +917,15 @@
 			}
 
 			&:active {
-				border-color: var( --border-color-base--darker );
 				background-color: var( --color-surface-1 );
+				border-color: var( --border-color-base--darker );
 			}
 		}
 
 		&.sdms-search-filter--selected {
 			.sd-select__content {
-				color: var( --color-primary );
 				font-weight: var( --font-weight-semibold );
+				color: var( --color-primary );
 
 				.sd-select__handle {
 					color: var( --color-primary );
@@ -942,8 +942,8 @@
 		}
 
 		&--selected {
-			color: var( --color-primary );
 			font-weight: var( --font-weight-semibold );
+			color: var( --color-primary );
 
 			&:hover {
 				color: var( --color-primary );
@@ -960,8 +960,8 @@
 		}
 
 		&:active {
-			border-color: var( --border-color-base--darker );
 			background-color: var( --color-surface-1 );
+			border-color: var( --border-color-base--darker );
 		}
 	}
 

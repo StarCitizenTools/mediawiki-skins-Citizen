@@ -4,14 +4,14 @@
 .citizen-typeahead {
 	position: absolute;
 	top: 100%;
-	overflow: auto;
+	box-sizing: content-box; // Magic to align with search input
 	width: 100%;
 	max-height: ~'calc( var( --header-card-maxheight ) - var( --height-search-bar ) )';
-	box-sizing: content-box; // Magic to align with search input
 	margin: 0 0 0 -1px; // Reset <ol> styles, fix alignment
-	border-bottom-left-radius: var( --border-radius--medium );
-	border-bottom-right-radius: var( --border-radius--medium );
+	overflow: auto;
 	overscroll-behavior: contain;
+	border-bottom-right-radius: var( --border-radius--medium );
+	border-bottom-left-radius: var( --border-radius--medium );
 	.citizen-card( false );
 	.citizen-card-hide( 50% 0, Y, false );
 	// Well this won't be loaded before .citizen-animation-ready anyways
@@ -114,11 +114,11 @@
 	}
 
 	&__thumbnail {
-		overflow: hidden;
+		flex-shrink: 0;
 		width: 100%;
 		max-width: 70px;
 		height: 60px;
-		flex-shrink: 0;
+		overflow: hidden;
 		border-radius: var( --border-radius--medium );
 
 		&.citizen-ui-icon::before {
@@ -127,8 +127,8 @@
 	}
 
 	&__text {
-		overflow: hidden;
 		flex-grow: 1;
+		overflow: hidden;
 	}
 
 	&__header {
@@ -138,26 +138,26 @@
 
 	&__title {
 		flex-shrink: 0;
-		color: var( --color-base--emphasized );
 		font-weight: var( --font-weight-semibold );
+		color: var( --color-base--emphasized );
 	}
 
 	&__highlight {
-		color: var( --color-base--subtle );
 		font-weight: var( --font-weight-medium );
+		color: var( --color-base--subtle );
 	}
 
 	&__query {
-		color: var( --color-base--emphasized );
 		font-weight: var( --font-weight-semibold );
+		color: var( --color-base--emphasized );
 	}
 
 	&__label {
 		display: flex;
-		margin-left: var( --space-xs );
-		color: var( --color-base );
-		font-size: 0.8125rem;
 		gap: var( --space-xxs );
+		margin-left: var( --space-xs );
+		font-size: 0.8125rem;
+		color: var( --color-base );
 
 		.citizen-ui-icon {
 			width: 0.8125rem;
@@ -173,8 +173,8 @@
 
 	&__description {
 		margin-top: 0.1rem;
-		color: var( --color-base--subtle );
 		font-size: 0.8125rem;
+		color: var( --color-base--subtle );
 	}
 
 	&__title,
@@ -191,8 +191,8 @@
 	&__keyboard {
 		display: none;
 		padding: 0 8px;
-		border-radius: var( --border-radius--small );
 		background-color: var( --color-surface-1 );
+		border-radius: var( --border-radius--small );
 	}
 
 	.citizen-search__card--expanded & {
@@ -204,8 +204,8 @@
 .citizen-search__card {
 	&&--expanded {
 		border-bottom-color: transparent;
-		border-bottom-left-radius: 0;
 		border-bottom-right-radius: 0;
+		border-bottom-left-radius: 0;
 
 		.citizen-typeahead {
 			border-top-color: transparent; // Reset citizen-card style

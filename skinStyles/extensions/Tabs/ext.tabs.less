@@ -10,21 +10,21 @@
 
 .tabs-label {
 	padding: 0.5em 0.75em;
-	border: 0;
-	background-color: transparent;
-	color: var( --color-base );
 	font-weight: var( --font-weight-medium );
+	color: var( --color-base );
+	background-color: transparent;
+	border: 0;
 
 	&:hover {
+		color: var( --color-primary--hover );
 		background-color: transparent;
 		box-shadow: inset 0 -2px var( --color-primary--hover );
-		color: var( --color-primary--hover );
 	}
 
 	&:active {
+		color: var( --color-primary--active );
 		background-color: transparent;
 		box-shadow: inset 0 -2px var( --color-primary--active );
-		color: var( --color-primary--active );
 	}
 
 	&:focus {
@@ -43,19 +43,19 @@
 }
 
 .tabs-tabbox > .tabs-label {
-	border-radius: 0;
 	margin: 0;
+	border-radius: 0;
 }
 
 .tabs-plain > .tabs-label {
+	margin: 0;
 	border: 0;
 	border-radius: 0;
-	margin: 0;
 }
 
 .tabs-plain > .tabs-container {
-	border-radius: 0;
 	margin-top: 0;
+	border-radius: 0;
 }
 
 .tabs-togglebox > .tabs-container {
@@ -92,9 +92,9 @@
 
 .tabs-tabbox > .tabs-input:checked + .tabs-label,
 .tabs-input-0:checked + .tabs-input-1 + .tabs-label {
+	color: var( --color-primary );
 	background-color: transparent;
 	box-shadow: inset 0 -2px var( --color-primary );
-	color: var( --color-primary );
 }
 
 .tabs-togglebox > * > .tabs-input:checked + .tabs-label,

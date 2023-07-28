@@ -1,10 +1,10 @@
 #citizen-body-header-sticky-sentinel {
 	right: 0;
 	left: 0;
-	height: 1px;
-	contain: strict;
 	grid-area: content; // align right above content
+	height: 1px;
 	visibility: hidden;
+	contain: strict;
 }
 
 .ve-activated,
@@ -40,12 +40,9 @@
 
 	.citizen-jumptotop {
 		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		border-radius: var( --border-radius--small );
+		inset: 0 0 0 0;
 		margin: ~'calc( var(  --space-xs ) * -1 )';
+		border-radius: var( --border-radius--small );
 
 		&:hover {
 			background-color: var( --background-color-quiet--hover );

@@ -10,28 +10,28 @@
 
 .mw-ui-input {
 	padding: 6px 8px;
+	line-height: var( --line-height-xs );
+	color: var( --color-base--emphasized );
+	background-color: transparent;
 	border-color: var( --border-color-base--darker );
 	border-radius: var( --border-radius--small );
-	background-color: transparent;
-	color: var( --color-base--emphasized );
-	line-height: var( --line-height-xs );
 
 	&:hover {
+		background-color: var( --color-surface-0 );
 		// Sync with checkbox and radio
 		border-color: var( --color-primary--hover );
-		background-color: var( --color-surface-0 );
 	}
 
 	&:focus {
-		border-color: var( --color-primary );
 		background-color: var( --color-surface-0 );
+		border-color: var( --color-primary );
 		box-shadow: inset 0 0 0 1px var( --color-primary );
 	}
 
 	&:disabled {
-		border-color: var( --color-surface-4 );
-		background-color: var( --color-surface-4 );
 		color: var( --color-base--subtle );
+		background-color: var( --color-surface-4 );
+		border-color: var( --color-surface-4 );
 	}
 }
 

@@ -45,9 +45,9 @@ img {
 }
 
 hr {
+	margin: var( --space-md ) 0;
 	border: 0;
 	border-top: 1px solid var( --border-color-base );
-	margin: var( --space-md ) 0;
 }
 
 /* Structural Elements */
@@ -60,9 +60,9 @@ h6 {
 	margin: 0;
 	// It seems that many wikis have the expectation that headers have a bottom margin
 	margin-bottom: 0.25em;
-	color: var( --color-base--emphasized );
 	font-weight: var( --font-weight-semibold );
 	line-height: var( --line-height-xs );
+	color: var( --color-base--emphasized );
 }
 
 h1,
@@ -125,8 +125,8 @@ ol {
 }
 
 dt {
-	color: var( --color-base--emphasized );
 	font-weight: var( --font-weight-semibold );
+	color: var( --color-base--emphasized );
 }
 
 dl {
@@ -150,9 +150,9 @@ samp,
 pre,
 code,
 .mw-code {
-	border: 1px solid var( --border-color-base );
-	background-color: var( --color-surface-2 );
 	color: var( --color-base--emphasized );
+	background-color: var( --color-surface-2 );
+	border: 1px solid var( --border-color-base );
 }
 
 code {
@@ -162,16 +162,16 @@ code {
 
 pre,
 .mw-code {
-	overflow: auto;
 	padding: 1rem;
+	overflow: auto;
 	border-radius: var( --border-radius--large );
 }
 
 /* Forms */
 fieldset {
 	padding: var( --space-xs ) var( --space-md );
-	border: 1px solid var( --border-color-base );
 	margin: var( --space-md ) 0;
+	border: 1px solid var( --border-color-base );
 }
 
 legend {

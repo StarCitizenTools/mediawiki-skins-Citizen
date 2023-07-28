@@ -1,9 +1,9 @@
 .page-actions {
 	display: flex;
+	gap: var( --space-xxs );
 	margin-left: -0.75rem; // Align to the margin
 	font-size: 0.875rem;
 	font-weight: var( --font-weight-medium );
-	gap: var( --space-xxs );
 
 	// TODO: Merge this with header__item
 	&__item {
@@ -13,10 +13,10 @@
 	// TODO: Merge this with header__button
 	&__button {
 		display: grid;
+		place-items: center;
 		width: 2.75rem; // Same width as other buttons
 		height: 2.25rem; // Same height as other buttons
 		border-radius: var( --border-radius--medium );
-		place-items: center;
 
 		&:hover {
 			background-color: var( --background-color-quiet--hover );
@@ -37,13 +37,13 @@
 
 	&__card {
 		position: absolute;
-		z-index: @z-index-page-header; // So the popups inside will be higher than content
 		top: 100%;
 		right: ~'calc( var( --space-xs ) * -1 )'; // counteract margin
-		overflow: auto;
+		z-index: @z-index-page-header; // So the popups inside will be higher than content
 		max-height: 60vh;
 		padding: 0.5rem 0;
 		margin: var( --space-xs );
+		overflow: auto;
 		font-size: 0.875rem;
 		.citizen-card;
 		.citizen-card-hide( top right );
@@ -58,11 +58,11 @@
 		}
 
 		li > a {
+			gap: 0;
 			padding-right: var( --space-sm );
 			padding-left: var( --space-sm );
-			border-radius: var( --border-radius--medium );
 			font-size: 0;
-			gap: 0;
+			border-radius: var( --border-radius--medium );
 
 			&:hover {
 				background-color: var( --background-color-quiet--hover );
@@ -105,11 +105,11 @@
 		right: 0;
 		display: block;
 		padding: 0.1em 0.4em;
-		border-radius: var( --border-radius--pill );
-		background: var( --color-primary );
+		font-size: 0.65rem;
 		color: #fff;
 		content: attr( data-counter-text );
-		font-size: 0.65rem;
+		background: var( --color-primary );
+		border-radius: var( --border-radius--pill );
 	}
 }
 
@@ -160,8 +160,8 @@
 #ca-edit,
 #ca-ve-edit {
 	> a {
-		background-color: var( --color-primary );
 		color: #fff;
+		background-color: var( --color-primary );
 
 		&:hover {
 			background-color: var( --color-primary--hover );
@@ -191,10 +191,10 @@
 		&::before {
 			width: var( --size-icon );
 			height: var( --size-icon );
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: var( --size-icon );
 			content: '';
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: var( --size-icon );
 		}
 	}
 }
@@ -207,20 +207,20 @@
 .client-js .citizen-ve-edit-merged {
 	&#ca-ve-edit {
 		> a {
-			border-bottom-right-radius: 0;
 			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
 		}
 	}
 
 	&#ca-edit {
-		border-left: 1px solid var( --color-primary--hover );
 		margin-left: ~'calc( var( --space-xxs ) * -1 )';
+		border-left: 1px solid var( --color-primary--hover );
 
 		> a {
-			border-bottom-left-radius: 0;
-			border-top-left-radius: 0;
-			font-size: 0; // hide edit source text
 			gap: 0;
+			font-size: 0; // hide edit source text
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
 		}
 	}
 }
@@ -253,8 +253,8 @@
 	.page-actions {
 		> .mw-portlet {
 			li > a {
-				font-size: 0.875rem;
 				gap: var( --space-xs );
+				font-size: 0.875rem;
 			}
 		}
 

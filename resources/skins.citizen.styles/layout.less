@@ -1,8 +1,8 @@
 .citizen-page-container {
 	display: flex; // Should fix weird margin issues
+	flex-direction: column;
 	min-height: 100vh; // Ensure footer goes to the bottom of the page
 	min-height: stretch; // for iOS, excludes safe areas
-	flex-direction: column;
 }
 
 .mw-body,
@@ -12,16 +12,16 @@
 
 .citizen-body-container {
 	display: grid;
-	justify-content: center;
-	padding: 0 var( --padding-page );
-	margin: var( --space-xl ) 0; // don't collide with other components (e.g. notice)
-	gap: var( --space-md ) var( --space-xl );
 	grid-template-areas:
  'header'
 		'content'
 		'footer';
 	// Using auto as min value will cause overflow
 	grid-template-columns: minmax( 0, var( --width-layout ) );
+	gap: var( --space-md ) var( --space-xl );
+	justify-content: center;
+	padding: 0 var( --padding-page );
+	margin: var( --space-xl ) 0; // don't collide with other components (e.g. notice)
 }
 
 .mw-body-header {
@@ -31,10 +31,10 @@
 	z-index: @z-index-page-header + 1;
 	display: flex;
 	flex-wrap: wrap;
+	grid-area: header;
+	gap: var( --space-md );
 	align-items: center;
 	padding-top: var( --space-md );
-	gap: var( --space-md );
-	grid-area: header;
 }
 
 .page-heading {

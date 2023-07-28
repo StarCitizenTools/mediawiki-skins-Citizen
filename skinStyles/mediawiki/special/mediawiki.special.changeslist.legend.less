@@ -16,15 +16,15 @@
 	position: relatve;
 	z-index: 2 !important; // so it is not covered by the date header
 	padding: var( --space-sm );
+	font-size: 0.8125rem;
+	background-color: var( --color-surface-2 );
 	border-color: var( --border-color-base );
 	border-radius: var( --border-radius--small );
-	background-color: var( --color-surface-2 );
-	font-size: 0.8125rem;
 
 	// Citizen label styles
 	strong {
-		color: var( --color-base--subtle );
 		font-weight: var( --font-weight-normal );
+		color: var( --color-base--subtle );
 		letter-spacing: 0.05em;
 	}
 
@@ -39,7 +39,7 @@
 	}
 
 	@media ( max-width: @width-breakpoint-tablet ) {
-		margin: 0;
 		float: none;
+		margin: 0;
 	}
 }

@@ -8,9 +8,9 @@
 .skin-citizen-dark {
 	.mw-widget-dateInputWidget {
 		&-handle {
-			border-color: @dark-bg-50;
-			background-color: var( --color-surface-0 );
 			color: var( --color-base--emphasized );
+			background-color: var( --color-surface-0 );
+			border-color: @dark-bg-50;
 		}
 
 		&.oo-ui-widget-enabled {
@@ -27,10 +27,10 @@
 
 		&.oo-ui-widget-disabled {
 			.mw-widget-dateInputWidget-handle {
-				border-color: @dark-bg-30 !important;
-				background-color: @dark-bg-20 !important;
 				color: var( --color-base--subtle ) !important;
 				text-shadow: 0 1px 1px var( --color-surface-0 ) !important;
+				background-color: @dark-bg-20 !important;
+				border-color: @dark-bg-30 !important;
 			}
 		}
 	}
@@ -40,8 +40,8 @@ Calendar
 TODO move into separate file?
  */
 	.mw-widgets-datetime-calendarWidget {
-		border-color: @dark-bg-50 !important;
 		background-color: var( --color-surface-0 ) !important;
+		border-color: @dark-bg-50 !important;
 
 		&-grid {
 			.mw-widgets-datetime-calendarWidget-cell {

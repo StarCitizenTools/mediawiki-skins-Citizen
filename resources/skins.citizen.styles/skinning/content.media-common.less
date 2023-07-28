@@ -15,8 +15,8 @@ figure[ typeof~='mw:File/Frameless' ],
 figure[ typeof~='mw:File/Thumb' ],
 figure[ typeof~='mw:File/Frame' ] {
 	&.mw-halign-none {
-		clear: none;
 		float: none;
+		clear: none;
 	}
 
 	&.mw-halign-center {
@@ -60,9 +60,9 @@ figure[ typeof~='mw:File/Frame' ] {
 		// Sync with rounded corner
 		padding-left: var( --border-radius--small );
 		margin-top: var( --space-xs );
-		caption-side: bottom;
 		color: var( --color-base--subtle );
 		letter-spacing: 0.025em;
+		caption-side: bottom;
 	}
 }
 
@@ -77,20 +77,20 @@ figure[ typeof~='mw:File/Frame' ] {
 		// When float is not explicitly set
 		.mw-content-ltr & {
 			/* @noflip */
+			float: right;
+			/* @noflip */
 			margin-left: var( --space-lg );
 			/* @noflip */
 			clear: right;
-			/* @noflip */
-			float: right;
 		}
 
 		.mw-content-rtl & {
 			/* @noflip */
+			float: left;
+			/* @noflip */
 			margin-right: var( --space-lg );
 			/* @noflip */
 			clear: left;
-			/* @noflip */
-			float: left;
 		}
 	}
 
@@ -100,27 +100,27 @@ figure[ typeof~='mw:File/Frame' ] {
 	figure[ typeof~='mw:File/Frame' ] {
 		&.mw-halign-right {
 			/* @noflip */
+			float: right;
+			/* @noflip */
 			margin-left: var( --space-lg );
 			/* @noflip */
 			clear: right;
-			/* @noflip */
-			float: right;
 		}
 
 		&.mw-halign-left {
 			/* @noflip */
+			float: left;
+			/* @noflip */
 			margin-right: var( --space-lg );
 			/* @noflip */
 			clear: left;
-			/* @noflip */
-			float: left;
 		}
 
 		&.mw-halign-center {
+			float: none;
 			margin-right: auto;
 			margin-left: auto;
 			clear: both;
-			float: none;
 			text-align: center;
 		}
 	}

@@ -37,13 +37,13 @@
 
 	&__contents,
 	&__list {
-		border-left: 1px solid var( --border-color-base );
 		margin: 0;
 		list-style: none;
+		border-left: 1px solid var( --border-color-base );
 
 		.citizen-toc__link {
-			border-bottom-left-radius: 0;
 			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
 		}
 	}
 
@@ -53,20 +53,20 @@
 
 	&__link {
 		display: flex;
+		gap: var( --space-xs );
 		padding-top: var( --space-xs );
 		padding-bottom: var( --space-xs );
-		border-radius: var( --border-radius--small );
-		color: var( --color-base );
 		font-weight: var( --font-weight-medium );
-		gap: var( --space-xs );
+		color: var( --color-base );
+		border-radius: var( --border-radius--small );
 
 		&.citizen-toc__top {
 			height: 0;
 			padding-top: 0;
 			padding-bottom: 0;
+			visibility: hidden;
 			opacity: 0;
 			transition-property: opacity, height, padding;
-			visibility: hidden;
 		}
 
 		&:hover {
@@ -84,10 +84,10 @@
 	}
 
 	&__indicator {
-		width: 3px;
 		flex-shrink: 0;
-		border-radius: var( --border-radius--pill );
+		width: 3px;
 		margin-left: -2px;
+		border-radius: var( --border-radius--pill );
 	}
 
 	&__text {
@@ -119,8 +119,8 @@
 		height: 2rem; // 1rem text + 1rem padding
 		padding-top: var( --space-xs );
 		padding-bottom: var( --space-xs );
-		opacity: 1;
 		visibility: visible;
+		opacity: 1;
 	}
 }
 
@@ -140,19 +140,19 @@
 @media ( max-width: ( @width-breakpoint-desktop - 1px ) ) {
 	.citizen-toc {
 		position: fixed;
-		z-index: @z-index-page-header;
 		right: 0;
 		bottom: ~'calc( var( --header-size ) + var(  --space-xs ) )';
+		z-index: @z-index-page-header;
 		// Allow click through
 		pointer-events: none;
 
 		&__card {
-			overflow: auto;
 			// This is not bulletproof since it will get covered by page header
 			// in extremely short height. but it should be good for now
 			max-height: ~'calc( var( --header-card-maxheight ) - 8rem )';
 			padding: var( --space-md );
 			margin: var( --space-xs );
+			overflow: auto;
 			overscroll-behavior: contain;
 			-webkit-user-select: none;
 			user-select: none;
@@ -174,18 +174,18 @@
 			right: 0;
 			bottom: 0;
 			display: grid;
+			place-content: center;
 			width: 2.5rem;
 			height: 2.5rem;
-			border-radius: var( --border-radius--medium );
 			margin: var( --space-xs );
-			background-color: var( --color-surface-1 );
-			box-shadow: var( --box-shadow-dialog );
-			place-content: center;
 			pointer-events: auto;
-			transform: none;
-			transform-origin: bottom right;
+			background-color: var( --color-surface-1 );
+			border-radius: var( --border-radius--medium );
+			box-shadow: var( --box-shadow-dialog );
 			transition: var( --transition-menu );
 			transition-property: transform;
+			transform: none;
+			transform-origin: bottom right;
 
 			.citizen-ui-icon {
 				width: 1rem;
@@ -210,9 +210,9 @@
 			&__checkbox:checked {
 				// Fake seamless transition
 				~ #citizen-toc__buttonCheckbox {
+					pointer-events: none;
 					background-color: transparent;
 					box-shadow: none;
-					pointer-events: none;
 					transform: scale( 1.2 );
 
 					.citizen-ui-icon {

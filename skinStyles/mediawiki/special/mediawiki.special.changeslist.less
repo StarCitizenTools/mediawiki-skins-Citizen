@@ -31,9 +31,9 @@
 		z-index: 1; // Needed to cover the timeline dots
 		padding: var( --space-sm ) 0;
 		margin-bottom: 0;
-		color: var( --color-base--subtle );
 		font-size: 0.8125rem;
 		font-weight: var( --font-weight-normal );
+		color: var( --color-base--subtle );
 		letter-spacing: 0.05em;
 	}
 
@@ -55,8 +55,8 @@
 
 .cloptions {
 	padding: 0;
-	border: 0;
 	margin: 0;
+	border: 0;
 
 	> legend {
 		display: none; // Eh it is difficult to style legend
@@ -64,18 +64,18 @@
 
 	&:not( .oo-ui-widget ) {
 		padding: var( --space-md );
-		border-radius: var( --border-radius--medium );
-		background: var( --color-surface-2 );
 		font-size: 0.875rem;
+		background: var( --color-surface-2 );
+		border-radius: var( --border-radius--medium );
 	}
 }
 
 /* Skeleton screen loading */
 body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
 	padding: var( --space-md );
-	border-radius: var( --border-radius--medium );
-	background: var( --color-surface-2 );
 	font-size: 0.875rem;
+	background: var( --color-surface-2 );
+	border-radius: var( --border-radius--medium );
 }
 
 .client-js {
@@ -85,9 +85,9 @@ body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
 
 	.mw-recentchanges-toplinks:not( .mw-recentchanges-toplinks-collapsed ) {
 		padding: 0; /* Shift padding to button only */
+		margin-bottom: 16px; /* Same margin between rcfilter and saved filter */
 		border-color: var( --border-color-base );
 		border-radius: var( --border-radius--small );
-		margin-bottom: 16px; /* Same margin between rcfilter and saved filter */
 
 		/* Extend button to full width */
 		.oo-ui-buttonElement-frameless.oo-ui-labelElement:first-child {
@@ -144,8 +144,8 @@ body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
 		bottom: 0;
 		left: 4px;
 		width: 1px;
-		background: var( --border-color-base--darker );
 		content: '';
+		background: var( --border-color-base--darker );
 	}
 }
 
@@ -158,9 +158,9 @@ body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
 .mw-changeslist-line,
 .mw-contributions-list li {
 	padding: var( --space-sm ) var( --space-xs ) !important;
-	border-radius: var( --border-radius--small );
 	margin: 0 0 0 16px !important;
 	color: var( --color-base--subtle );
+	border-radius: var( --border-radius--small );
 
 	&:hover {
 		background-color: var( --background-color-quiet--hover );
@@ -177,10 +177,10 @@ body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
 		display: block;
 		width: 8px;
 		height: 8px;
-		border-radius: 100%;
 		margin-top: 7px;
-		background-color: var( --color-base--subtle );
 		content: '';
+		background-color: var( --color-base--subtle );
+		border-radius: 100%;
 	}
 
 	.comment {

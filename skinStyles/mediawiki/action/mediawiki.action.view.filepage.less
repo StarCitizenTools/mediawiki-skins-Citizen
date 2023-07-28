@@ -19,11 +19,11 @@
 #filetoc {
 	display: flex;
 	padding: 0;
-	border: 0;
 	margin: 0;
-	background-color: transparent; // sticky header will handle background
 	font-weight: var( --font-weight-medium );
 	white-space: nowrap;
+	background-color: transparent; // sticky header will handle background
+	border: 0;
 	.citizen-sticky-header;
 
 	li {
@@ -33,9 +33,9 @@
 	a {
 		display: block;
 		padding: var( --space-xxs ) var( --space-md );
-		border-radius: var( --border-radius--small );
 		margin-top: var( --space-xs );
 		margin-bottom: var( --space-xs );
+		border-radius: var( --border-radius--small );
 
 		&:hover {
 			background-color: var( --background-color-quiet--hover );
@@ -58,28 +58,28 @@
 	.mw-thumbnail-link {
 		display: inline-block;
 		padding: var( --space-xxs ) var( --space-md );
+		margin: var( --space-xxs );
+		font-size: 0.875rem;
+		color: var( --color-base--subtle );
+		background-color: var( --color-surface-0 );
 		border: 1px solid var( --border-color-base );
 		border-radius: var( --border-radius--pill );
-		margin: var( --space-xxs );
-		background-color: var( --color-surface-0 );
-		color: var( --color-base--subtle );
-		font-size: 0.875rem;
 
 		&:hover {
-			background-color: var( --color-primary--hover );
 			color: #fff;
+			background-color: var( --color-primary--hover );
 		}
 
 		&:active {
-			background-color: var( --color-primary--active );
 			color: #fff;
+			background-color: var( --color-primary--active );
 		}
 	}
 
 	// Current preview resolution
 	> .mw-thumbnail-link {
-		background-color: var( --color-primary );
 		color: #fff;
+		background-color: var( --color-primary );
 	}
 }
 
@@ -133,8 +133,8 @@
 }
 
 .mw_metadata caption {
-	color: var( --color-base--emphasized );
 	font-weight: var( --font-weight-semibold );
+	color: var( --color-base--emphasized );
 }
 
 .mw_metadata tr + tr {
@@ -149,11 +149,11 @@
 
 // Citizen label styles
 .mw_metadata th {
-	background-color: transparent;
-	color: var( --color-base--subtle );
 	font-weight: var( --font-weight-normal );
-	letter-spacing: 0.05em;
+	color: var( --color-base--subtle );
 	text-align: start;
+	letter-spacing: 0.05em;
+	background-color: transparent;
 }
 
 .mw_metadata td {

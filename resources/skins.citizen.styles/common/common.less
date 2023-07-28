@@ -12,9 +12,9 @@ body {
 	min-height: 100vh;
 	padding: 0;
 	margin: 0;
+	color: var( --color-base );
 	accent-color: var( --color-primary );
 	background: var( --color-surface-0 );
-	color: var( --color-base );
 }
 
 // Apply border-box universally unless overwritten
@@ -37,9 +37,9 @@ body {
 input,
 select,
 textarea {
-	border: 1px solid var( --border-color-base--darker );
-	background-color: transparent;
 	color: var( --color-base--emphasized );
+	background-color: transparent;
+	border: 1px solid var( --border-color-base--darker );
 }
 
 textarea {
@@ -85,10 +85,10 @@ td {
 
 .citizen-button {
 	padding: 0;
-	border: 0;
 	appearance: none;
-	background: transparent;
 	cursor: pointer;
+	background: transparent;
+	border: 0;
 }
 
 /*
@@ -104,9 +104,9 @@ td {
 	display: flex;
 	align-items: center;
 	padding-left: 10px;
-	border-left: 1px solid var( --border-color-base );
 	margin-left: 10px;
 	font-size: 0.875rem;
+	border-left: 1px solid var( --border-color-base );
 }
 
 .mw-indicator {

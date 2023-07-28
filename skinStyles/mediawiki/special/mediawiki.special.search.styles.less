@@ -18,8 +18,8 @@
 
 #mw-search-top-table {
 	display: flex;
-	justify-content: space-between;
 	gap: var( --space-xl );
+	justify-content: space-between;
 
 	.oo-ui-widget {
 		font-size: 1rem; // HACK: Override the 14px hack we use for OOUI
@@ -27,15 +27,15 @@
 }
 
 .mw-search-profile-tabs {
-	border: 0;
-	border-bottom: 1px solid var( --border-color-base );
 	margin-top: var( --space-xxs );
 	background-color: transparent;
+	border: 0;
+	border-bottom: 1px solid var( --border-color-base );
 }
 
 .search-types {
-	padding-left: 0;
 	float: none;
+	padding-left: 0;
 
 	ul {
 		display: flex;
@@ -45,37 +45,37 @@
 
 	a {
 		padding: var( --space-xs ) var( --space-sm );
-		border-bottom: 2px solid transparent;
-		color: var( --color-base--emphasized );
 		font-weight: var( --font-weight-medium );
+		color: var( --color-base--emphasized );
+		border-bottom: 2px solid transparent;
 
 		&:hover {
-			border-color: var( --color-primary--hover );
 			color: var( -color-primary--hover );
+			border-color: var( --color-primary--hover );
 		}
 	}
 
 	.current a {
-		border-color: var( --color-primary );
 		color: var( --color-primary );
+		border-color: var( --color-primary );
 	}
 }
 
 .results-info {
-	color: var( --color-base--subtle );
 	font-size: 0.875rem;
+	color: var( --color-base--subtle );
 	white-space: nowrap;
 }
 
 #mw-searchoptions {
+	background-color: var( --color-surface-1 );
 	border-color: transparent;
 	border-radius: 0;
-	background-color: var( --color-surface-1 );
 
 	h4 {
-		color: var( --color-base--subtle );
 		font-size: 0.875rem;
 		font-weight: var( --font-weight-normal );
+		color: var( --color-base--subtle );
 		letter-spacing: 0.05em;
 	}
 
@@ -127,14 +127,14 @@
 	}
 
 	&-data {
-		color: var( --color-base--subtle );
 		font-size: 0.875rem;
+		color: var( --color-base--subtle );
 	}
 }
 
 .searchmatch {
-	color: var( --color-base--emphasized );
 	font-weight: var( --font-weight-semibold );
+	color: var( --color-base--emphasized );
 
 	a & {
 		// If searchmatch is part of the link (usually title), use link color
@@ -145,12 +145,12 @@
 .searchresults {
 	h2 {
 		padding-bottom: var( --space-xs );
-		border-bottom: 1px solid var( --border-color-base );
 		margin-bottom: 0;
-		color: var( --color-base--subtle );
 		font-size: 0.875rem;
 		font-weight: var( --font-weight-normal );
+		color: var( --color-base--subtle );
 		letter-spacing: 0.05em;
+		border-bottom: 1px solid var( --border-color-base );
 	}
 }
 
@@ -174,13 +174,13 @@
 
 	// Not great but works for now
 	#mw-searchoptions {
-		overflow: auto;
 		max-height: 20vh;
+		overflow: auto;
 	}
 
 	.mw-search-createlink,
 	.mw-search-exists {
-		max-width: none;
 		float: none;
+		max-width: none;
 	}
 }

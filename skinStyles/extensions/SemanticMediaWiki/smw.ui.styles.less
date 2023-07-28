@@ -22,15 +22,15 @@
  * Container
  */
 .sm_container {
-	border: 0;
 	background-color: var( --color-surface-1 );
+	border: 0;
 	box-shadow: var( --box-shadow-dialog );
 }
 
 .sm_header > h3 {
 	margin: var( --space-md );
-	color: var( --color-base--emphasized );
 	font-family: inherit;
+	color: var( --color-base--emphasized );
 }
 
 .sm_header button {
@@ -47,9 +47,9 @@
 }
 
 .sm_input {
+	background-color: var( --color-surface-1 );
 	border-color: var( --border-color-base );
 	border-radius: var( --border-radius--small );
-	background-color: var( --color-surface-1 );
 }
 
 .sm_input:focus {
@@ -61,8 +61,8 @@
  * "Get all" button
  */
 div.sm_clear_btn {
-	color: var( --color-base--subtle );
 	font-family: inherit;
+	color: var( --color-base--subtle );
 }
 
 div.sm_clear_btn:hover {
@@ -85,16 +85,16 @@ div.sm_clear_btn:hover {
 }
 
 .sm_result_tabs ul li a {
-	border-radius: var( --border-radius--small ) var( --border-radius--small ) 0 0;
-	color: var( --color-base );
 	font-family: inherit;
+	color: var( --color-base );
+	border-radius: var( --border-radius--small ) var( --border-radius--small ) 0 0;
 }
 
 .sm_result_tabs ul li a.active {
+	color: var( --color-base--emphasized );
+	background-color: transparent;
 	border-color: var( --border-color-base );
 	border-bottom-color: transparent;
-	background-color: transparent;
-	color: var( --color-base--emphasized );
 }
 
 /* menu arrow */
@@ -131,21 +131,21 @@ div.sm_clear_btn:hover {
 .sm_regular .sm_results > li.sm_disabled,
 .sm_regular .sm_results > li.sm_disabled:hover,
 .sm_regular .sm_results > li.sm_disabled a {
-	background-color: var( --color-surface-1 );
 	color: var( --color-base--subtle );
+	background-color: var( --color-surface-1 );
 }
 
 .sm_regular .sm_results > li.sm_header,
 .sm_regular .sm_results > li.sm_header:hover,
 .sm_regular .sm_results > li.sm_header a {
-	background-color: transparent;
 	color: var( --color-base--emphasized );
+	background-color: transparent;
 }
 
 /* regular menu item style */
 .sm_results > li {
-	color: var( --color-base );
 	font-family: inherit;
+	color: var( --color-base );
 }
 
 .sm_results > li > a {
@@ -161,18 +161,18 @@ ul.sm_results > li.sm_over {
 }
 
 .sm_control_box {
-	border-top-color: var( --border-color-base );
 	background-color: var( --color-surface-1 );
+	border-top-color: var( --border-color-base );
 }
 
 .sm_control_box button {
-	background-color: var( --color-surface-2 );
 	color: var( --background-color-icon );
+	background-color: var( --color-surface-2 );
 }
 
 .sm_control_box button:hover {
-	background-color: var( --color-surface-2--hover );
 	color: var( --background-color-icon--hover );
+	background-color: var( --color-surface-2--hover );
 }
 
 div.sm_container_combo {
@@ -197,9 +197,9 @@ input.sm_combo_input[ disabled ] {
 }
 
 ul.sm_element_box li.selected_tag {
+	background-color: var( --color-surface-2 );
 	border-color: var( --border-color-base );
 	border-radius: var( --border-radius--small );
-	background-color: var( --color-surface-2 );
 	box-shadow: 0 0 2px var( --color-surface-1 ) inset, 0 1px 0 rgba( 0, 0, 0, 0.05 );
 }
 
@@ -208,16 +208,16 @@ ul.sm_element_box li.selected_tag span.tag_close {
 }
 
 .sm_input_off {
-	background: var( --color-surface-2 );
 	color: var( --color-base );
+	background: var( --color-surface-2 );
 }
 
 /**
  * Navi
  */
 .sm_navi {
-	border-bottom-color: var( --color-primary );
 	background: var( --color-surface-2 );
+	border-bottom-color: var( --color-primary );
 }
 
 .sm_navi > p > a:link,
@@ -244,13 +244,13 @@ ul.sm_element_box li.selected_tag span.tag_close {
 }
 
 div.sm_result_area div.pagination > ul > li > a {
-	background-color: transparent;
 	color: var( --color-base );
+	background-color: transparent;
 }
 
 div.sm_result_area div.pagination > ul > li > a:hover {
-	background-color: var( --background-color-quiet--hover );
 	color: var( --color-base--emphasized );
+	background-color: var( --background-color-quiet--hover );
 }
 
 div.sm_result_area div.pagination > ul > li.disabled > a {
@@ -258,8 +258,8 @@ div.sm_result_area div.pagination > ul > li.disabled > a {
 }
 
 div.sm_result_area div.pagination > ul > li.disabled > a:hover {
-	background-color: transparent;
 	color: var( --color-base--subtle );
+	background-color: transparent;
 }
 
 div.sm_result_area div.pagination > ul > li.pageInfoBox > a {

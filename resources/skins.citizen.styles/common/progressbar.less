@@ -15,13 +15,24 @@
 	--delay-progress-bar: 500ms;
 	--height-progress-bar: 2px;
 	z-index: 999;
+	// Ensure it doesn't extend beyond the input.
+	box-sizing: border-box;
 	display: block;
-	overflow: hidden;
 	width: 100%;
 	// Hide text in case it extends beyond the input.
 	height: var( --height-progress-bar );
-	// Ensure it doesn't extend beyond the input.
-	box-sizing: border-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	// Placeholder text
+	content: 'loading';
+	// Add a progress-bar to the loading indicator
+	background: /*image*/
+		linear-gradient( 90deg, var( --color-primary ) 0%, var( --color-primary ) 100% )
+		-10% 0 ~'/' 0 var( --height-progress-bar )
+		no-repeat,transparent;
+	// Fancy shadow under progress
+	filter: drop-shadow( 0 0 16px var( --color-primary ) );
 	// Align style with the form
 	border-radius: 0 0 var( --border-radius--large ) var( --border-radius--large );
 	// Animates the progress-bar.
@@ -32,17 +43,6 @@
 		var( --delay-progress-bar )
 		infinite
 		alternate;
-	// Add a progress-bar to the loading indicator
-	background: /*image*/
-		linear-gradient( 90deg, var( --color-primary ) 0%, var( --color-primary ) 100% )
-		-10% 0 ~'/' 0 var( --height-progress-bar )
-		no-repeat,transparent;
-	// Placeholder text
-	content: 'loading';
-	// Fancy shadow under progress
-	filter: drop-shadow( 0 0 16px var( --color-primary ) );
-	text-overflow: ellipsis;
-	white-space: nowrap;
 }
 
 @keyframes progress-bar {

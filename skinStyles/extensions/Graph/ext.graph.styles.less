@@ -10,9 +10,9 @@
 
 	/* responsive layout */
 	.mw-graph {
-		overflow: auto;
 		min-width: auto !important;
 		max-width: 100%;
+		overflow: auto;
 
 		canvas {
 			filter: var( --filter-invert );
@@ -45,20 +45,20 @@
 
 	/* common button style */
 	.mw-graph-switch {
-		border-color: var( --border-color-base );
-		background-color: var( --background-color-overlay--lighter );
 		color: var( --color-base );
+		background-color: var( --background-color-overlay--lighter );
+		border-color: var( --border-color-base );
 
 		&:hover {
-			border-color: var( --color-primary );
-			background-color: var( --color-surface-0 );
 			color: var( --color-primary );
+			background-color: var( --color-surface-0 );
+			border-color: var( --color-primary );
 		}
 
 		&:active {
-			border-color: var( --color-primary--active );
-			background-color: var( --color-surface-0 );
 			color: var( --color-primary );
+			background-color: var( --color-surface-0 );
+			border-color: var( --color-primary--active );
 		}
 
 		&:focus {
@@ -68,9 +68,9 @@
 
 		/* Loading button style */
 		&.mw-graph-loading {
-			border-color: var( --color-primary--active );
-			background-color: var( --color-surface-0 );
 			color: var( --color-base--subtle );
+			background-color: var( --color-surface-0 );
+			border-color: var( --color-primary--active );
 
 			&:hover {
 				border-color: var( --color-primary );

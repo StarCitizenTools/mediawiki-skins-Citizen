@@ -21,25 +21,25 @@
 	}
 
 	#userloginForm {
-		margin-right: 0;
 		grid-area: form;
+		margin-right: 0;
 	}
 }
 
 .mw-body-content > .mw-ui-container {
 	display: grid;
-	gap: var( --space-md );
 	grid-template-areas:
  'message'
 		'stats'
 		'form';
+	gap: var( --space-md );
 }
 
 .mw-createacct-benefits {
 	&-container {
+		grid-area: stats;
 		padding-bottom: var( --space-lg );
 		border-bottom: 1px solid var( --border-color-base );
-		grid-area: stats;
 
 		h2 {
 			margin: 0;
@@ -51,25 +51,25 @@
 	&-list {
 		display: flex;
 		flex-wrap: wrap;
-		margin-top: var( --space-lg );
 		gap: var( --space-lg );
+		margin-top: var( --space-lg );
 
 		.mw-number-text {
 			min-height: auto;
 			padding-left: 3rem;
 			margin: 0;
-			background-size: 2.5rem;
-			color: var( --color-base--subtle );
 			font-size: 0.8125rem;
 			line-height: var( --line-height-xs );
+			color: var( --color-base--subtle );
 			text-align: start;
+			background-size: 2.5rem;
 
 			h3 {
-				color: var( --color-base--emphasized );
 				font-family: var( --font-family-base );
 				font-size: 1.125rem;
 				font-weight: var( --font-weight-semibold );
 				line-height: 1;
+				color: var( --color-base--emphasized );
 				text-align: start;
 			}
 

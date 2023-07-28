@@ -3,16 +3,16 @@
 	--header-button-size: ~'calc( var( --header-size ) - var(  --space-xs ) * 2 )';
 	--header-direction: row;
 	position: fixed;
-	z-index: @z-index-site-header;
 	right: 0;
 	bottom: 0;
 	left: 0;
+	z-index: @z-index-site-header;
 	display: flex;
 	flex-direction: var( --header-direction );
-	padding: var( --space-xs );
-	border-top: 1px solid var( --border-color-base );
-	background-color: var( --color-surface-0 );
 	gap: var( --space-xxs );
+	padding: var( --space-xs );
+	background-color: var( --color-surface-0 );
+	border-top: 1px solid var( --border-color-base );
 
 	&__item {
 		display: flex;
@@ -21,11 +21,11 @@
 
 	&__button {
 		display: grid;
+		place-items: center;
 		width: var( --header-button-size );
 		height: var( --header-button-size );
 		border-radius: var( --border-radius--small );
 		contain: strict;
-		place-items: center;
 
 		// Used in checkbox hack
 		&Checkbox {
@@ -38,11 +38,11 @@
 
 		// Pure CSS icons
 		&Icon {
-			overflow: hidden; // Sometimes CSS animation can clip
 			width: var( --header-icon-size );
 			height: var( --header-icon-size );
-			contain: strict;
+			overflow: hidden; // Sometimes CSS animation can clip
 			filter: var( --filter-invert );
+			contain: strict;
 		}
 
 		&Icon,
@@ -78,8 +78,8 @@
 
 	&__logo {
 		padding: 0 var( --space-xs ) 0 0;
-		border-right: 1px solid var( --border-color-base );
 		margin: 0 var( --space-xxs );
+		border-right: 1px solid var( --border-color-base );
 
 		img {
 			margin: auto;
@@ -88,11 +88,11 @@
 
 	&__inner {
 		display: flex;
-		min-width: 0;
 		flex-direction: var( --header-direction );
 		flex-grow: 1;
-		justify-content: space-between;
 		gap: var( --space-xxs );
+		justify-content: space-between;
+		min-width: 0;
 		overflow-x: auto;
 
 		.citizen-menu-checkbox-checkbox:checked {
@@ -116,8 +116,8 @@
 	}
 
 	&__start {
-		min-width: 0;
 		align-items: center;
+		min-width: 0;
 	}
 
 	// Reset
@@ -132,8 +132,8 @@
 	ul {
 		display: flex;
 		flex-direction: var( --header-direction );
-		align-items: center;
 		gap: var( --space-xxs );
+		align-items: center;
 	}
 }
 
@@ -164,9 +164,9 @@
 
 		&__logo {
 			padding: 0 0 var( --space-xs ) 0;
+			margin: var( --space-xxs ) 0;
 			border-right: 0;
 			border-bottom: 1px solid var( --border-color-base );
-			margin: var( --space-xxs ) 0;
 		}
 	}
 }
@@ -186,20 +186,17 @@
 			~ .citizen-header__button {
 				&::before {
 					position: fixed;
+					inset: 0 0 0 0;
 					z-index: 1;
-					top: 0;
-					right: 0;
-					bottom: 0;
-					left: 0;
 					width: auto;
 					height: auto;
-					background-color: var( --background-color-overlay );
-					content: '';
-					opacity: 0;
 					pointer-events: none;
+					visibility: hidden;
+					content: '';
+					background-color: var( --background-color-overlay );
+					opacity: 0;
 					transition: var( --transition-menu );
 					transition-property: opacity;
-					visibility: hidden;
 				}
 			}
 
@@ -208,9 +205,9 @@
 					contain: initial;
 
 					&::before {
-						opacity: 1;
 						pointer-events: auto;
 						visibility: visible;
+						opacity: 1;
 					}
 				}
 			}

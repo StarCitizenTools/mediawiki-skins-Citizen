@@ -14,13 +14,13 @@
 		top: 0;
 		width: var( --header-button-size );
 		height: var( --header-button-size );
-		border-radius: var( --border-radius--small );
 		margin: 0;
 		background-color: transparent; // reset mw-list-item style from Citizen
-		background-position: center;
-		background-repeat: no-repeat;
-		background-size: var( --header-icon-size );
 		filter: var( --filter-invert );
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: var( --header-icon-size );
+		border-radius: var( --border-radius--small );
 		opacity: var( --opacity-icon-base );
 
 		&:hover {
@@ -42,12 +42,12 @@
 
 		&::after {
 			top: 0;
-			border-color: var( --color-destructive );
-			border-radius: var( --border-radius--pill );
+			font-size: 0.65rem;
 			background-color: var( --color-destructive );
 			// Re-invert indicator color
 			filter: var( --filter-invert );
-			font-size: 0.65rem;
+			border-color: var( --color-destructive );
+			border-radius: var( --border-radius--pill );
 		}
 
 		&-dimmed {

@@ -12,27 +12,27 @@
 	[ type='radio' ] {
 		& + label {
 			&::before {
-				border-color: var( --border-color-base--darker );
 				// Show background when hovered
 				background-color: transparent;
+				border-color: var( --border-color-base--darker );
 			}
 		}
 
 		&:enabled {
 			&:hover + label::before {
-				border-color: var( --color-primary--hover );
 				background-color: var( --color-surface-0 );
+				border-color: var( --color-primary--hover );
 			}
 
 			&:active + label::before {
-				border-color: var( --color-primary--active );
 				background-color: var( --color-primary--active );
+				border-color: var( --color-primary--active );
 			}
 
 			&:checked {
 				& + label::before {
-					border-color: var( --color-primary );
 					background-color: #fff;
+					border-color: var( --color-primary );
 				}
 
 				&:hover + label::before {
@@ -54,8 +54,8 @@
 
 		&:disabled {
 			& + label::before {
-				border-color: var( --color-surface-4 );
 				background-color: var( --color-surface-4 );
+				border-color: var( --color-surface-4 );
 			}
 
 			&:checked + label::before {

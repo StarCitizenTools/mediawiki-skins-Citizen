@@ -15,16 +15,16 @@
 	&.oo-ui-widget-enabled {
 		// Needed extra specificity
 		&.oo-ui-tagMultiselectWidget.oo-ui-tagMultiselectWidget-outlined {
-			border-radius: var( --border-radius--small );
 			background-color: var( --color-surface-1 );
+			border-radius: var( --border-radius--small );
 		}
 
 		.oo-ui-tagMultiselectWidget-handle {
 			padding: 0.1em 0.75em 0.4em 0.75em; // align with filter card
-			border-color: var( --border-color-base );
-			border-radius: var( --border-radius--small ) var( --border-radius--small ) 0 0;
-			border-bottom: 1px solid var( --border-color-base ); // Add divider
 			background-color: var( --color-surface-2 );
+			border-color: var( --border-color-base );
+			border-bottom: 1px solid var( --border-color-base ); // Add divider
+			border-radius: var( --border-radius--small ) var( --border-radius--small ) 0 0;
 		}
 	}
 
@@ -41,23 +41,23 @@
 	}
 
 	.oo-ui-tagMultiselectWidget-input input {
-		border-top-color: transparent; // Avoid double border with oo-ui-tagMultiselectWidget-handle
 		background-color: var( --color-surface-0 );
+		border-top-color: transparent; // Avoid double border with oo-ui-tagMultiselectWidget-handle
 	}
 
 	&-wrapper {
 		&-content {
 			&-title {
-				// Citizen label styles
-				color: var( --color-base--subtle );
 				font-size: 0.8125rem;
 				font-weight: var( --font-weight-normal );
+				// Citizen label styles
+				color: var( --color-base--subtle );
 				letter-spacing: 0.05em;
 			}
 
 			&-savedQueryTitle {
-				color: var( --color-base--emphasized );
 				font-weight: var( --font-weight-semibold );
+				color: var( --color-base--emphasized );
 			}
 		}
 	}
@@ -66,9 +66,9 @@
 		&-select {
 			&-widget.oo-ui-widget {
 				border-color: var( --border-color-base--darker ); // align with input field on the left
-				border-radius: 0 0 var( --border-radius--small ) 0;
 				border-top-color: transparent;
 				border-left-width: 0;
+				border-radius: 0 0 var( --border-radius--small ) 0;
 			}
 		}
 	}
@@ -99,8 +99,8 @@
 
 	&-label {
 		&-title {
-			color: var( --color-base--emphasized );
 			font-weight: var( --font-weight-semibold );
+			color: var( --color-base--emphasized );
 		}
 
 		&-desc {
@@ -131,8 +131,8 @@
 		}
 
 		&.oo-ui-optionWidget-highlighted {
-			background-color: var( --background-color-quiet--hover );
 			color: var( --color-base );
+			background-color: var( --background-color-quiet--hover );
 		}
 	}
 }
@@ -142,18 +142,18 @@
 .mw-rcfilters-ui-filterMenuSectionOptionWidget {
 	position: -webkit-sticky;
 	position: sticky;
-	z-index: 1; // Needed for sticky header
 	top: 0;
+	z-index: 1; // Needed for sticky header
 	padding-top: var( --space-xs );
 	padding-bottom: var( --space-xs );
-	border-bottom: 1px solid var( --border-color-base );
 	background-color: var( --color-surface-1 ); // Sync with background
+	border-bottom: 1px solid var( --border-color-base );
 
 	&-header-title.oo-ui-labelElement-label {
-		// Citizen label styles
-		color: var( --color-base--subtle );
 		font-size: 0.8125rem;
 		font-weight: var( --font-weight-normal );
+		// Citizen label styles
+		color: var( --color-base--subtle );
 		letter-spacing: 0.05em;
 	}
 
@@ -175,8 +175,8 @@
 	// Background and color of the capsule widget need a bit
 	// more specificity to override OOUI internals
 	&.oo-ui-flaggedElement-muted.oo-ui-tagItemWidget.oo-ui-widget-enabled {
-		border-color: var( --color-surface-4 );
 		background-color: var( --color-surface-4 );
+		border-color: var( --color-surface-4 );
 
 		.oo-ui-labelElement-label {
 			color: var( --color-base--subtle );
@@ -191,9 +191,9 @@
 	}
 
 	.oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined &-selected.oo-ui-tagItemWidget.oo-ui-widget-enabled {
-		border-color: var( --color-primary );
-		background-color: var( --color-primary );
 		color: #fff;
+		background-color: var( --color-primary );
+		border-color: var( --color-primary );
 	}
 
 	&-popup-content {
@@ -207,15 +207,15 @@
 		// Left padding ~12px, sync with other padding
 		// Handle top padding in header instead so everything is aligned
 		padding: 0 0 0 0.75em;
-		color: var( --color-base--emphasized );
 		font-size: 1rem;
 		font-weight: var( --font-weight-semibold );
+		color: var( --color-base--emphasized );
 	}
 
 	&-header {
 		padding-top: 0.75em;
-		border-bottom-color: transparent; // Sticky header have divider already
 		background-color: transparent;
+		border-bottom-color: transparent; // Sticky header have divider already
 	}
 }
 
@@ -226,19 +226,19 @@
 	}
 
 	&-footer {
-		border-top-color: var( --border-color-base );
 		margin-top: var( --space-md );
 		background-color: transparent;
+		border-top-color: var( --border-color-base );
 	}
 }
 
 /* mw.rcfilters.ui.ViewSwitchWidget.less */
 .mw-rcfilters-ui-viewSwitchWidget {
 	label.oo-ui-labelWidget {
-		// Citizen label styles
-		color: var( --color-base--subtle );
 		font-size: 0.8125rem;
 		font-weight: var( --font-weight-normal );
+		// Citizen label styles
+		color: var( --color-base--subtle );
 		letter-spacing: 0.05em;
 	}
 
@@ -250,10 +250,10 @@
 /* mw.rcfilters.ui.ValuePickerWidget.less */
 .mw-rcfilters-ui-valuePickerWidget {
 	&-title {
-		// Citizen label styles
-		color: var( --color-base--subtle );
 		font-size: 0.8125rem;
 		font-weight: var( --font-weight-normal );
+		// Citizen label styles
+		color: var( --color-base--subtle );
 		letter-spacing: 0.05em;
 	}
 }
@@ -263,8 +263,8 @@
 	border-top-color: var( --border-color-base );
 
 	&-title {
-		color: var( --color-base--emphasized );
 		font-weight: var( --font-weight-semibold );
+		color: var( --color-base--emphasized );
 	}
 
 	.mw-rcfilters-ui-valuePickerWidget-title {
@@ -301,8 +301,8 @@
 	}
 
 	.mw-changeslist-legend {
-		border-color: var( --border-color-base );
 		background-color: var( --color-surface-2 );
+		border-color: var( --border-color-base );
 	}
 }
 
@@ -311,9 +311,9 @@
 	&-label {
 		margin-top: 0.75em;
 		margin-bottom: 0.25em;
-		color: var( --color-base--emphasized );
 		font-size: 0.875rem;
 		font-weight: var( --font-weight-semibold );
+		color: var( --color-base--emphasized );
 	}
 }
 
@@ -333,8 +333,8 @@
 /* mw.rcfilters.ui.SavedLinksListItemWidget.less */
 .mw-rcfilters-ui-savedLinksListItemWidget {
 	&:hover {
-		background-color: var( --background-color-quiet--hover );
 		color: var( --color-base );
+		background-color: var( --background-color-quiet--hover );
 	}
 
 	&-label {

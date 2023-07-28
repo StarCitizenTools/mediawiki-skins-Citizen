@@ -9,11 +9,11 @@
 */
 
 .mw-ui-button {
+	font-weight: var( --font-weight-medium );
+	color: var( --color-base--emphasized );
+	background-color: var( --color-surface-2 );
 	border-color: var( --border-color-base );
 	border-radius: var( --border-radius--small );
-	background-color: var( --color-surface-2 );
-	color: var( --color-base--emphasized );
-	font-weight: var( --font-weight-medium );
 
 	&:not( :disabled ) {
 		&:visited {
@@ -22,55 +22,55 @@
 
 		// Simplify hover style to only change background color
 		&:hover {
-			border-color: var( --border-color-base );
-			background-color: var( --color-surface-2--hover );
 			color: var( --color-base--emphasized );
+			background-color: var( --color-surface-2--hover );
+			border-color: var( --border-color-base );
 		}
 
 		&:focus {
+			color: var( --color-base--emphasized );
 			border-color: var( --color-primary );
 			box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px var( --color-surface-0 );
-			color: var( --color-base--emphasized );
 		}
 
 		&:active,
 		&.is-on {
-			border-color: var( --color-surface-2--active );
-			background-color: var( --color-surface-2--active );
 			color: var( --color-base--subtle );
+			background-color: var( --color-surface-2--active );
+			border-color: var( --color-surface-2--active );
 		}
 	}
 
 	&:disabled {
-		border-color: var( --color-surface-4 );
-		background-color: var( --color-surface-4 );
 		color: var( --color-base--subtle );
+		background-color: var( --color-surface-4 );
+		border-color: var( --color-surface-4 );
 	}
 
 	&.mw-ui-quiet,
 	&.mw-ui-quiet.mw-ui-progressive,
 	&.mw-ui-quiet.mw-ui-destructive {
-		color: var( --color-base--emphasized );
 		font-weight: var( --font-weight-medium );
+		color: var( --color-base--emphasized );
 
 		input[ type='checkbox' ]:hover + &,
 		&:hover {
-			background-color: var( --background-color-quiet--hover );
 			color: var( --color-base--emphasized );
+			background-color: var( --background-color-quiet--hover );
 		}
 
 		input[ type='checkbox' ]:focus + &,
 		&:focus {
+			color: var( --color-base--emphasized );
 			border-color: var( --color-primary );
 			box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px var( --color-surface-0 );
-			color: var( --color-base--emphasized );
 		}
 
 		input[ type='checkbox' ]:active + &,
 		&:active {
-			border-color: transparent;
-			background-color: var( --background-color-quiet--active );
 			color: var( --color-base--subtle );
+			background-color: var( --background-color-quiet--active );
+			border-color: transparent;
 		}
 
 		&:disabled,
@@ -82,13 +82,13 @@
 
 	&.mw-ui-progressive {
 		&:not( :disabled ) {
-			border-color: var( --color-primary );
 			background-color: var( --color-primary );
+			border-color: var( --color-primary );
 
 			&:hover {
-				border-color: var( --color-primary--hover );
-				background-color: var( --color-primary--hover );
 				color: #fff;
+				background-color: var( --color-primary--hover );
+				border-color: var( --color-primary--hover );
 			}
 
 			&:focus {
@@ -97,16 +97,16 @@
 
 			&:active,
 			&.is-on {
-				border-color: var( --color-primary--active );
-				background-color: var( --color-primary--active );
 				color: #fff;
+				background-color: var( --color-primary--active );
+				border-color: var( --color-primary--active );
 			}
 		}
 
 		&:disabled {
-			border-color: var( --color-surface-4 );
-			background-color: var( --color-surface-4 );
 			color: var( --color-base--subtle );
+			background-color: var( --color-surface-4 );
+			border-color: var( --color-surface-4 );
 		}
 
 		&.mw-ui-quiet {
@@ -114,34 +114,34 @@
 
 			input[ type='checkbox' ]:hover + &,
 			&:hover {
+				color: var( --color-primary--hover );
 				// Simplify quiet hover style
 				background-color: var( --background-color-quiet--hover );
-				color: var( --color-primary--hover );
 			}
 
 			input[ type='checkbox' ]:focus + &,
 			&:focus {
-				border-color: var( --color-primary );
 				color: var( --color-primary );
+				border-color: var( --color-primary );
 			}
 
 			input[ type='checkbox' ]:active + &,
 			&:active {
-				border-color: var( --color-primary--active );
 				background-color: var( --color-primary--active );
+				border-color: var( --color-primary--active );
 			}
 		}
 	}
 
 	&.mw-ui-destructive {
 		&:not( :disabled ) {
-			border-color: var( --color-destructive );
 			background-color: var( --color-destructive );
+			border-color: var( --color-destructive );
 
 			&:hover {
-				border-color: var( --color-destructive--hover );
-				background-color: var( --color-destructive--hover );
 				color: #fff;
+				background-color: var( --color-destructive--hover );
+				border-color: var( --color-destructive--hover );
 			}
 
 			&:focus {
@@ -150,16 +150,16 @@
 
 			&:active,
 			&.is-on {
-				border-color: var( --color-destructive--active );
-				background-color: var( --color-destructive--active );
 				color: #fff;
+				background-color: var( --color-destructive--active );
+				border-color: var( --color-destructive--active );
 			}
 		}
 
 		&:disabled {
-			border-color: var( --color-surface-4 );
-			background-color: var( --color-surface-4 );
 			color: var( --color-base--subtle );
+			background-color: var( --color-surface-4 );
+			border-color: var( --color-surface-4 );
 		}
 
 		&.mw-ui-quiet {
@@ -167,21 +167,21 @@
 
 			input[ type='checkbox' ]:hover + &,
 			&:hover {
+				color: var( --color-destructive--hover );
 				// Simplify quiet hover style
 				background-color: var( --background-color-quiet--hover );
-				color: var( --color-destructive--hover );
 			}
 
 			input[ type='checkbox' ]:focus + &,
 			&:focus {
-				border-color: var( --color-destructive );
 				color: var( --color-destructive );
+				border-color: var( --color-destructive );
 			}
 
 			input[ type='checkbox' ]:active + &,
 			&:active {
-				border-color: var( --color-destructive--active );
 				background-color: var( --color-destructive--active );
+				border-color: var( --color-destructive--active );
 			}
 		}
 	}
@@ -193,13 +193,13 @@
 
 	& > * {
 		&:first-child {
-			border-bottom-left-radius: var( --border-radius--small );
 			border-top-left-radius: var( --border-radius--small );
+			border-bottom-left-radius: var( --border-radius--small );
 		}
 
 		&:last-child {
-			border-bottom-right-radius: var( --border-radius--small );
 			border-top-right-radius: var( --border-radius--small );
+			border-bottom-right-radius: var( --border-radius--small );
 		}
 	}
 }
