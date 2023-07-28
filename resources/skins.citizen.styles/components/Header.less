@@ -182,9 +182,7 @@
 		 * TODO: We should use JS to add the overlay instead of abusing CSS
 		 * TODO: This does not work for TOC and Pref menu
 		*/
-		.citizen-header__button {
-			contain: initial;
-
+		.citizen-menu-checkbox-checkbox {
 			~ .citizen-header__button {
 				&::before {
 					position: fixed;
@@ -207,6 +205,8 @@
 
 			&[ aria-expanded='true' ] {
 				~ .citizen-header__button {
+					contain: initial;
+
 					&::before {
 						opacity: 1;
 						pointer-events: auto;
