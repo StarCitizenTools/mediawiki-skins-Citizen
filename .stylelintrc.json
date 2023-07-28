@@ -1,6 +1,10 @@
 {
+	"plugins": [
+		"stylelint-order"
+	],
 	"extends": [
-		"stylelint-config-wikimedia"
+		"stylelint-config-wikimedia",
+		"stylelint-config-recess-order"
 	],
 	"rules": {
 		"font-weight-notation": null,
