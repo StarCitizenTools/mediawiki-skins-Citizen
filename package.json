@@ -23,7 +23,7 @@
 		"grunt-banana-checker": "0.11.0",
 		"husky": "^8.0.3",
 		"standard-version": "^9.5.0",
-		"stylelint-config-idiomatic-order": "9.0.0",
+		"stylelint": "^15.10.2",
 		"stylelint-config-wikimedia": "0.16.0",
 		"svgo": "3.0.2"
 	},
