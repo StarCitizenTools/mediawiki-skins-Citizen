@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.5...v2.7.6) (2023-07-30)
+
+
+### Features
+
+* ✨ add support for source element in thumbnails ([4f19de3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4f19de3b621e375ec0da3868d0b95c9b9dfff517))
+* **CookieWarning:** ✨ update banner styles ([67bb0c1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/67bb0c118d598794419480892053f62e5ec3f4b9))
+* **core:** ✨ add overflow handling for citizen inner header ([fab4d27](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fab4d272738ebec01a83369c0a6a46fdc18e9fb5))
+* **core:** add overlay transition to header menus ([2f64346](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2f64346c25bd7b1a296da9f9d912ef463dc87c1d))
+* **MediaWiki:** update bad file styles for bad image list ([#697](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/697)) ([f0f0a07](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f0f0a07121cb94149af5f41cda8589bd60ad0bfd))
+* **toc:** remove background and color transition from top link ([c14889f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c14889f8c02101fa74587438c8beac10ddbf59b8))
+
+
+### Bug Fixes
+
+* **core:** 🐛 add missing hover styles for source element in thumbnails ([4e931f6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4e931f6812fecbb4627dbf32bb7f63ecab990c77))
+* **core:** 🐛 incorrect selector for menu backdrop styles ([65fe56d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/65fe56d2ac3ea9c40e43a54db5c87396cfbb37a4))
+* **MediaWiki:** break down long filenames for broken files ([#698](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/698)) ([6e44db8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6e44db80ef07f213830d5cace69a889057a32fe7))
+* **VisualEditor:** don't merge edit buttons when JS is disabled ([#696](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/696)) ([69a6350](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/69a6350de3bbb8f0a847a2fbec75aa43c4f77076))
+
 ### [2.7.5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.4...v2.7.5) (2023-07-17)
 
 
