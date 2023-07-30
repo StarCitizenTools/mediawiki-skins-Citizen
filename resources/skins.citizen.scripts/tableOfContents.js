@@ -30,8 +30,10 @@ function changeActiveSection( id ) {
 		activeSection = undefined;
 	}
 
-	activeSection = link.parentNode;
-	activeSection.classList.add( ACTIVE_SECTION_CLASS );
+	if ( link ) {
+		activeSection = link.parentNode;
+		activeSection.classList.add( ACTIVE_SECTION_CLASS );
+	}
 }
 
 /**
