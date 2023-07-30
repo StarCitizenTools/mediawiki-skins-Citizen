@@ -3,52 +3,55 @@
  *
  * SkinStyles for Extension:CookieWarning
  * Module: ext.CookieWarning.styles
- * Version: REL1_35 3c2ae6a
+ * Version: REL1_39 021d9ea
  *
- * Date: 2022-04-29
+ * Date: 2023-07-30
 */
 
 @import '../../../resources/variables.less';
 
 .mw-cookiewarning-container {
 	right: 0;
-	align-items: center;
-	justify-content: space-between;
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var( --space-sm );
 	width: auto;
 	max-width: @width-breakpoint-tablet;
-	padding: 0 var( --padding-page );
-	margin: 10px;
+	padding: var( --space-md );
+	margin: var( --space-xs );
 	font-size: 0.875rem;
 	line-height: var( --line-height-sm );
-	background-color: #343a40; // dark base 70
+	background-color: var( --color-surface-1 );
+	border: 1px solid var( --border-color-base );
 	border-radius: var( --border-radius--large );
 	box-shadow: var( --box-shadow-dialog );
 
+	@media only screen and ( min-width: @width-breakpoint-desktop ) {
+		right: unset;
+		left: var( --header-size );
+	}
+
 	.mw-cookiewarning-text {
-		padding: 20px 0;
 		margin-bottom: 0; // Override media styles
 		font-size: inherit;
 		font-weight: var( --font-weight-medium );
+		color: var( --color-base );
 	}
 
 	form {
-		display: flex;
-		padding: 15px 0;
-	}
-}
-
-@media only screen and ( max-width: @width-breakpoint-tablet ) {
-	.mw-cookiewarning-container {
-		flex-wrap: wrap;
-
-		.mw-cookiewarning-text {
-			flex-wrap: wrap;
-			padding-bottom: 0;
+		.oo-ui-layout {
+			display: grid;
+			grid-template-columns: repeat( auto-fit, minmax( 0, 1fr ) );
+			gap: var( --space-xs );
 		}
 
-		form {
-			width: 100%;
-			margin-left: -8px; // cancel out the button margin
+		.oo-ui-widget {
+			margin: 0;
+
+			.oo-ui-buttonElement-button {
+				display: block;
+				width: 100%;
+			}
 		}
 	}
 }
