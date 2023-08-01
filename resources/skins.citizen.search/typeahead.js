@@ -9,6 +9,7 @@ const
  * Config object from getCitizenSearchResourceLoaderConfig()
  */
 const config = require( './config.json' );
+const gateway = require( './gateway/gateway.js' );
 
 const activeIndex = {
 	index: -1,
@@ -262,29 +263,21 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 	// Add loading animation
 	searchInput.parentNode.classList.add( SEARCH_LOADING_CLASS );
 
-	const
-		controller = new AbortController(),
-		abortFetch = () => {
-			controller.abort();
-		};
-
-	const
-		gateway = require( './gateway/gateway.js' ),
-		getResults = gateway.getResults( searchQuery, controller );
+	const { abort, fetch } = gateway.getResults( searchQuery );
 
 	// Abort fetch if the input is detected
 	// So that fetch request won't be queued up
-	searchInput.addEventListener( 'input', abortFetch, { once: true } );
+	searchInput.addEventListener( 'input', abort, { once: true } );
 
-	getResults.then( ( results ) => {
-		searchInput.removeEventListener( 'input', abortFetch );
+	fetch?.then( ( results ) => {
+		searchInput.removeEventListener( 'input', abort );
 		clearSuggestions();
 		if ( results !== null ) {
 			renderSuggestions( results );
 			updateActiveIndex();
 		}
 	} ).catch( ( error ) => {
-		searchInput.removeEventListener( 'input', abortFetch );
+		searchInput.removeEventListener( 'input', abort );
 		searchInput.parentNode.classList.remove( SEARCH_LOADING_CLASS );
 		// User can trigger the abort when the fetch event is pending
 		// There is no need for an error

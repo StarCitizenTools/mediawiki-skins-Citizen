@@ -8,6 +8,7 @@
  * @global
  */
 
+const fetchJson = require( '../fetch.js' );
 const defaultGatewayName = require( '../config.json' ).wgCitizenSearchGateway;
 
 /**
@@ -33,10 +34,9 @@ function getGateway( gatewayName ) {
  * Fetch suggestion from gateway and return the results object
  *
  * @param {string} searchQuery
- * @param {AbortController} controller
  * @return {Object} Results
  */
-async function getResults( searchQuery, controller ) {
+function getResults( searchQuery ) {
 	let gateway = getGateway( defaultGatewayName );
 
 	/*
@@ -65,21 +65,23 @@ async function getResults( searchQuery, controller ) {
 	}
 
 	/* Abort early if there are no search query */
-	if ( searchQuery === '' ) {
+	if ( searchQuery.length === 0 ) {
 		return {};
 	}
 
-	const signal = controller.signal;
-
-	const response = await fetch( gateway.getUrl( searchQuery ), { signal } );
-
-	if ( !response.ok ) {
-		const message = 'Uh oh, a wild error appears! ' + response.status;
-		throw new Error( message );
-	}
-
-	const data = await response.json();
-	return gateway.convertDataToResults( data );
+	const result = fetchJson( gateway.getUrl( searchQuery ), {
+		headers: {
+			accept: 'application/json'
+		}
+	} );
+	const searchResponsePromise = result.fetch
+		.then( ( /** @type {RestResponse} */ res ) => {
+			return gateway.convertDataToResults( res );
+		} );
+	return {
+		abort: result.abort,
+		fetch: searchResponsePromise
+	};
 }
 
 module.exports = {
