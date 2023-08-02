@@ -27,6 +27,20 @@ const searchClient = {
 	}
 };
 
+const searchQuery = {
+	value: null,
+	valueHtml: null,
+	isValid: false,
+	setValue: function ( s ) {
+		this.value = s;
+		this.valueHtml = mw.html.escape( s );
+		this.isValid = this.checkValid( s );
+	},
+	checkValid: function ( s ) {
+		return s.length > 0;
+	}
+};
+
 const activeIndex = {
 	index: -1,
 	max: 0,
@@ -174,11 +188,9 @@ function clearSuggestions() {
 /**
  * Fetch suggestions from API and render the suggetions in HTML
  *
- * @param {string} searchQuery
- * @param {string} htmlSafeSearchQuery
  * @param {HTMLElement} placeholder
  */
-function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
+function getSuggestions( placeholder ) {
 	const renderSuggestions = ( results ) => {
 		if ( results.length > 0 ) {
 			const fragment = document.createDocumentFragment();
@@ -189,7 +201,7 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 			 * @return {string}
 			 */
 			const highlightTitle = ( text ) => {
-				const regex = new RegExp( mw.util.escapeRegExp( htmlSafeSearchQuery ), 'i' );
+				const regex = new RegExp( mw.util.escapeRegExp( searchQuery.valueHtml ), 'i' );
 				return text.replace( regex, `<span class="${PREFIX}__highlight">$&</span>` );
 			};
 			/**
@@ -265,7 +277,7 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 					icon: 'articleNotFound',
 					type: 'placeholder',
 					size: 'lg',
-					title: mw.message( 'citizen-search-noresults-title', htmlSafeSearchQuery ).text(),
+					title: mw.message( 'citizen-search-noresults-title', searchQuery.valueHtml ).text(),
 					desc: mw.message( 'citizen-search-noresults-desc' ).text()
 				}
 			);
@@ -276,7 +288,7 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 	// Add loading animation
 	searchInput.parentNode.classList.add( SEARCH_LOADING_CLASS );
 
-	const { abort, fetch } = searchClient.active.client.fetchByTitle( searchQuery );
+	const { abort, fetch } = searchClient.active.client.fetchByTitle( searchQuery.value );
 
 	// Abort fetch if the input is detected
 	// So that fetch request won't be queued up
@@ -374,11 +386,9 @@ function getMenuItem( data ) {
  *
  */
 function updateTypeahead() {
-	const
-		searchQuery = searchInput.value,
-		htmlSafeSearchQuery = mw.html.escape( searchQuery ),
-		hasQuery = searchQuery.length > 0,
-		placeholder = typeahead.querySelector( `.${ITEM_CLASS}-placeholder` );
+	searchQuery.setValue( searchInput.value );
+
+	const placeholder = typeahead.querySelector( `.${ITEM_CLASS}-placeholder` );
 
 	/**
 	 * Get a list of tools for the typeahead footer
@@ -392,8 +402,8 @@ function updateTypeahead() {
 		const updateToolItem = ( data ) => {
 			const
 				itemId = `${PREFIX}-${data.id}`,
-				query = `<span class="citizen-typeahead__query">${htmlSafeSearchQuery}</span>`,
-				itemLink = data.link + htmlSafeSearchQuery,
+				query = `<span class="citizen-typeahead__query">${searchQuery.valueHtml}</span>`,
+				itemLink = data.link + searchQuery.valueHtml,
 				/* eslint-disable-next-line mediawiki/msg-doc */
 				itemDesc = mw.message( data.msg, query );
 
@@ -427,7 +437,7 @@ function updateTypeahead() {
 			id: 'fulltext',
 			link: `${config.wgScriptPath}/index.php?title=Special:Search&fulltext=1&search=`,
 			icon: 'articleSearch',
-			msg: hasQuery ? 'citizen-search-fulltext' : 'citizen-search-fulltext-empty'
+			msg: searchQuery.isValid ? 'citizen-search-fulltext' : 'citizen-search-fulltext-empty'
 		} );
 
 		// MediaSearch
@@ -436,14 +446,14 @@ function updateTypeahead() {
 				id: 'mediasearch',
 				link: `${config.wgScriptPath}/index.php?title=Special:MediaSearch&type=image&search=`,
 				icon: 'imageGallery',
-				msg: hasQuery ? 'citizen-search-mediasearch' : 'citizen-search-mediasearch-empty'
+				msg: searchQuery.isValid ? 'citizen-search-mediasearch' : 'citizen-search-mediasearch-empty'
 			} );
 		}
 	};
 
 	getTools();
-	if ( hasQuery ) {
-		getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder );
+	if ( searchQuery.isValid ) {
+		getSuggestions( placeholder );
 	} else {
 		clearSuggestions();
 		// Update placeholder with no query content
