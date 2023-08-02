@@ -1,135 +1,171 @@
-/*
- * TODO: This is going to be refactored soon as it is using the old standard
-*/
-const config = require( '../config.json' );
+/** @module smwAskApiSearchClient */
+
+const fetchJson = require( '../fetch.js' );
+const urlGenerator = require( '../urlGenerator.js' );
 
 /**
- * Build URL used for fetch request
- *
- * @param {string} input
- * @return {string} url
+ * @typedef {Object} SearchResponse
+ * @property {string} query
+ * @property {SearchResult[]} results
  */
-function getUrl( input ) {
-	const endpoint = config.wgScriptPath + '/api.php?format=json',
-		maxResults = config.wgCitizenMaxSearchResults,
-		askQueryTemplate = config.wgCitizenSearchSmwAskApiQueryTemplate;
 
-	let askQuery = '';
+/**
+ * Helper method to get the first string value
+ * SMW return can be be empty, string, array, undefined, null
+ *
+ * @param {string} s
+ * @return {string}
+ */
+function getFirstString( s ) {
+	if ( s === null || s === undefined || s.length === 0 ) {
+		return undefined;
+	}
 
-	if ( input.includes( ':' ) ) {
-		let namespace = input.split( ':' )[ 0 ];
-		if ( namespace === 'Category' ) {
-			namespace = ':' + namespace;
+	if ( typeof s === 'string' ) {
+		return s;
+	}
+
+	if ( Array.isArray( s ) ) {
+		for ( let i = 0; i < s.length; i++ ) {
+			const result = getFirstString( s[ i ] );
+			if ( result !== undefined ) {
+				return result;
+			}
 		}
-		input = input.split( ':' )[ 1 ];
-		askQuery += '[[' + namespace + ':+]]';
 	}
 
-	/* eslint-disable-next-line es-x/no-string-prototype-replaceall */
-	askQuery += askQueryTemplate.replaceAll( '${input}', input );
-	askQuery += '|limit=' + maxResults;
-
-	const query = {
-		action: 'ask',
-		query: encodeURIComponent( askQuery )
-	};
-
-	let queryString = '';
-	for ( const property in query ) {
-		queryString += '&' + property + '=' + query[ property ];
-	}
-
-	return endpoint + queryString;
+	return undefined;
 }
 
 /**
- * Map raw response to Results object
- *
- * @param {Object} data
- * @return {Object} Results
+ * @param {MwMap} config
+ * @param {string} query
+ * @param {Object} response
+ * @param {boolean} showDescription
+ * @return {SearchResponse}
  */
-function convertDataToResults( data ) {
-	const userLang = mw.config.get( 'wgUserLanguage' );
-
-	const getDisplayTitle = ( item ) => {
-		if ( item.printouts.displaytitle && item.printouts.displaytitle.length &&
-			item.printouts.displaytitle[ 0 ][ 'Language code' ] && item.printouts.displaytitle[ 0 ].Text.item.length ) {
-			// multi-lang string preference: user lang => English => first result
-			let textEN = '';
-			let textResult = '';
-			for ( const text of item.printouts.displaytitle ) {
-				if ( text[ 'Language code' ].item[ 0 ] === userLang ) {
-					textResult = text.Text.item[ 0 ];
-				}
-				if ( text[ 'Language code' ].item[ 0 ] === 'en' ) {
-					textEN = text.Text.item[ 0 ];
-				}
-			}
-			if ( textResult === '' ) {
-				textResult = textEN;
-			}
-			if ( textResult === '' ) {
-				textResult = item.printouts.displaytitle[ 0 ].Text.item[ 0 ];
-			}
-			return textResult;
-		} else if ( item.printouts.displaytitle && item.printouts.displaytitle.length ) {
-			return item.printouts.displaytitle[ 0 ];
-		} else if ( item.displaytitle && item.displaytitle !== '' ) {
-			return item.displaytitle;
-		} else { return item.fulltext; }
+function adaptApiResponse( config, query, response, showDescription ) {
+	const urlGeneratorInstance = urlGenerator( config );
+	const getDescription = ( page ) => {
+		return getFirstString( page?.printouts?.Description ).slice( 0, 60 );
 	};
 
-	const getDescription = ( item ) => {
-		if ( item.printouts.desc && item.printouts.desc.length &&
-			item.printouts.desc[ 0 ][ 'Language code' ] && item.printouts.desc[ 0 ].Text.item.length ) {
-			// multi-lang string preference: user lang => English => first result
-			let textEN = '';
-			let textResult = '';
-			for ( const text of item.printouts.desc ) {
-				if ( text[ 'Language code' ].item[ 0 ] === userLang ) {
-					textResult = text.Text.item[ 0 ];
-				}
-				if ( text[ 'Language code' ].item[ 0 ] === 'en' ) {
-					textEN = text.Text.item[ 0 ];
-				}
-			}
-			if ( textResult === '' ) {
-				textResult = textEN;
-			}
-			if ( textResult === '' ) {
-				textResult = item.printouts.desc[ 0 ].Text.item[ 0 ];
-			}
-			return textResult;
-		} else if ( item.printouts.desc && item.printouts.desc.length ) {
-			return item.printouts.desc[ 0 ];
-		} else { return ''; }
+	return {
+		query,
+		results: response.query.results.map( ( page ) => {
+			const thumbnail = page.printouts.Page_Image;
+			return {
+				id: undefined,
+				label: getFirstString( page.displaytitle ) || page.fulltext,
+				key: page.fulltext.replace( / /g, '_' ),
+				title: page.fulltext,
+				description: showDescription ? getDescription( page ) : undefined,
+				url: urlGeneratorInstance.generateUrl( page ),
+				thumbnail: thumbnail ? {
+					url: `${config.wgScriptPath}/index.php?title=Special:Redirect/file/${thumbnail[ 0 ].fulltext}&width=200&height=200`,
+					width: 200,
+					height: 200
+				} : undefined
+			};
+		} )
 	};
-
-	const getThumbnail = ( item ) => {
-		if ( item.printouts.thumbnail && item.printouts.thumbnail.length ) {
-			const imgTitle = item.printouts.thumbnail[ 0 ].fulltext;
-			return config.wgScriptPath + '/index.php?title=Special:Redirect/file/' + imgTitle + '&width=200&height=200';
-		} else { return undefined; }
-	};
-
-	const results = [];
-
-	data = Object.values( data.query.results );
-
-	for ( let i = 0; i < data.length; i++ ) {
-		results[ i ] = {
-			id: i,
-			key: data[ i ].fulltext,
-			title: getDisplayTitle( data[ i ] ),
-			desc: getDescription( data[ i ] ),
-			thumbnail: getThumbnail( data[ i ] )
-		};
-	}
-
-	return results;
 }
 
-module.exports = {
-	getUrl: getUrl,
-	convertDataToResults: convertDataToResults
-};
+/**
+ * @typedef {Object} AbortableSearchFetch
+ * @property {Promise<SearchResponse>} fetch
+ * @property {Function} abort
+ */
+
+/**
+ * @callback fetchByTitle
+ * @param {string} query The search term.
+ * @param {number} [limit] Maximum number of results.
+ * @return {AbortableSearchFetch}
+ */
+
+/**
+ * @callback loadMore
+ * @param {string} query The search term.
+ * @param {number} offset The number of search results that were already loaded.
+ * @param {number} [limit] How many further search results to load (at most).
+ * @return {AbortableSearchFetch}
+ */
+
+/**
+ * @typedef {Object} SearchClient
+ * @property {fetchByTitle} fetchByTitle
+ * @property {loadMore} [loadMore]
+ */
+
+/**
+ * @param {MwMap} config
+ * @return {SearchClient}
+ */
+function smwAskApiSearchClient( config ) {
+	return {
+		/**
+		 * @type {fetchByTitle}
+		 */
+		fetchByTitle: ( q, limit = config.wgCitizenMaxSearchResults, showDescription = true ) => {
+			const searchApiUrl = config.wgScriptPath + '/api.php';
+
+			const getConditions = () => {
+				const separateConditions = ( s ) => {
+					return s.replace( /\]\]\s*\[\[/g, '|' );
+				};
+				const removeSquareBrackets = ( s ) => {
+					return s.replace( /\[|\]/g, '' );
+				};
+				const conditions = removeSquareBrackets( separateConditions( q ) );
+				return encodeURIComponent( conditions );
+			};
+
+			const getPrintouts = () => {
+				/*
+				 * FIXME: Figure out how to assign a label to printout statement in askargs
+				 * TODO: Should let user define what property is used for description and thumbnail
+				 *
+				 * Property list
+				 * Description - Extension:Semantic Meta Tags
+				 * Page_Image - Extension:PageImages and Extension:SemanticExtraSpecialProperties
+				 */
+				const printouts = [
+					'Description',
+					'Page_Image'
+				];
+				return encodeURIComponent( printouts.join( '|' ) );
+			};
+
+			// @see https://www.semantic-mediawiki.org/wiki/Help:API:askargs
+			/* eslint-disable camelcase */
+			const params = {
+				format: 'json',
+				formatversion: '2',
+				action: 'askargs',
+				api_version: '3',
+				conditions: getConditions(),
+				printouts: getPrintouts(),
+				parameters: `limit%3D${limit.toString()}`
+			};
+			/* eslint-enable camelcase */
+			const search = new URLSearchParams( params );
+			const url = `${searchApiUrl}?${search.toString()}`;
+			const result = fetchJson( url, {
+				headers: {
+					accept: 'application/json'
+				}
+			} );
+			const searchResponsePromise = result.fetch
+				.then( ( /** @type {SMWAskArgResponse} */ res ) => {
+					return adaptApiResponse( config, q, res, showDescription );
+				} );
+			return {
+				abort: result.abort,
+				fetch: searchResponsePromise
+			};
+		}
+	};
+}
+
+module.exports = smwAskApiSearchClient;
