@@ -1,0 +1,17 @@
+[
+	{
+		"id": "mwActionApi",
+		"name": "MediaWiki search",
+		"command": "action"
+	},
+	{
+		"id": "mwRestApi",
+		"name": "MediaWiki search",
+		"command": "rest"
+	},
+	{
+		"id": "smwAskApi",
+		"name": "Semantic search",
+		"command": "ask"
+	}
+]

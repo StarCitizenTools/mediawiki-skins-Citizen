@@ -1,3 +1,6 @@
+/*
+ * TODO: This is going to be refactored soon as it is using the old standard
+*/
 const config = require( '../config.json' );
 
 /**

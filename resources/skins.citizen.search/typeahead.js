@@ -5,11 +5,27 @@ const
 	ACTIVE_CLASS = `${ITEM_CLASS}--active`,
 	HIDDEN_CLASS = `${ITEM_CLASS}--hidden`;
 
-/**
- * Config object from getCitizenSearchResourceLoaderConfig()
- */
+// Config object from getCitizenSearchResourceLoaderConfig()
 const config = require( './config.json' );
-const gateway = require( './gateway/gateway.js' );
+
+// Search clients definition
+const searchClients = require( './searchClients/searchClients.json' );
+
+const searchClient = {
+	active: null,
+	getData: function ( id ) {
+		const data = Object.values( searchClients ).find( ( item ) => item.id === id );
+		return data;
+	},
+	setActive: function ( id ) {
+		const data = this.getData( id );
+		if ( data ) {
+			const client = require( `./searchClients/${data.id}.js` );
+			this.active = data;
+			this.active.client = client( config );
+		}
+	}
+};
 
 const activeIndex = {
 	index: -1,
@@ -165,9 +181,7 @@ function clearSuggestions() {
 function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 	const renderSuggestions = ( results ) => {
 		if ( results.length > 0 ) {
-			const
-				fragment = document.createDocumentFragment(),
-				suggestionLinkPrefix = `${config.wgScriptPath}/index.php?title=Special:Search&search=`;
+			const fragment = document.createDocumentFragment();
 			/**
 			 * Return the redirect title with search query highlight
 			 *
@@ -225,16 +239,15 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 					id: `${PREFIX}-suggestion-${index}`,
 					type: 'page',
 					size: 'md',
-					link: suggestionLinkPrefix + encodeURIComponent( result.key ),
+					link: result.url,
 					title: highlightTitle( result.title ),
-					// Just to be safe, not sure if the default API is HTML escaped
-					desc: result.desc
+					desc: result.description
 				};
-				if ( result.matchedTitle ) {
-					data.label = getRedirectLabel( result.title, result.matchedTitle );
+				if ( result.label ) {
+					data.label = getRedirectLabel( result.title, result.label );
 				}
 				if ( result.thumbnail ) {
-					data.thumbnail = result.thumbnail;
+					data.thumbnail = result.thumbnail.url;
 				} else {
 					// Thumbnail placeholder icon
 					data.icon = 'image';
@@ -263,17 +276,17 @@ function getSuggestions( searchQuery, htmlSafeSearchQuery, placeholder ) {
 	// Add loading animation
 	searchInput.parentNode.classList.add( SEARCH_LOADING_CLASS );
 
-	const { abort, fetch } = gateway.getResults( searchQuery );
+	const { abort, fetch } = searchClient.active.client.fetchByTitle( searchQuery );
 
 	// Abort fetch if the input is detected
 	// So that fetch request won't be queued up
 	searchInput.addEventListener( 'input', abort, { once: true } );
 
-	fetch?.then( ( results ) => {
+	fetch?.then( ( response ) => {
 		searchInput.removeEventListener( 'input', abort );
 		clearSuggestions();
-		if ( results !== null ) {
-			renderSuggestions( results );
+		if ( response.results !== null ) {
+			renderSuggestions( response.results );
 			updateActiveIndex();
 		}
 	} ).catch( ( error ) => {
@@ -498,6 +511,9 @@ function initTypeahead( searchForm, input ) {
 
 	// Init the value in case of undef error
 	updateActiveIndex();
+	// Set default active search client
+	searchClient.setActive( config.wgCitizenSearchGateway );
+
 	// Since searchInput is focused before the event listener is set up
 	onFocus();
 	searchInput.addEventListener( 'focus', onFocus );

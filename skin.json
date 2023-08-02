@@ -143,6 +143,7 @@
 			]
 		},
 		"skins.citizen.search": {
+			"es6": true,
 			"templates": [
 				"resources/skins.citizen.search/templates/typeahead.mustache"
 			],
@@ -157,10 +158,10 @@
 				},
 				"resources/skins.citizen.search/typeahead.js",
 				"resources/skins.citizen.search/fetch.js",
-				"resources/skins.citizen.search/gateway/gateway.js",
-				"resources/skins.citizen.search/gateway/mwActionApi.js",
-				"resources/skins.citizen.search/gateway/mwRestApi.js",
-				"resources/skins.citizen.search/gateway/smwAskApi.js"
+				"resources/skins.citizen.search/urlGenerator.js",
+				"resources/skins.citizen.search/searchClients/searchClients.json",
+				"resources/skins.citizen.search/searchClients/mwActionApi.js",
+				"resources/skins.citizen.search/searchClients/mwRestApi.js"
 			],
 			"messages": [
 				"citizen-search-fulltext",

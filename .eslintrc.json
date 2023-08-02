@@ -19,6 +19,7 @@
 		"es-x/no-array-prototype-includes": "warn",
 		"es-x/no-optional-chaining": "warn",
 		"es-x/no-nullish-coalescing-operators": "warn",
+		"es-x/no-rest-spread-properties": "warn",
 		"es-x/no-symbol-prototype-description": "warn",
 		"compat/compat": "warn",
 		"mediawiki/class-doc": "off"
