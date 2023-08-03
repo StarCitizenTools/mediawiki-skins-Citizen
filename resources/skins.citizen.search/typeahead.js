@@ -11,6 +11,86 @@ const config = require( './config.json' );
 const searchClient = require( './searchClient.js' )( config );
 const searchQuery = require( './searchQuery.js' )();
 
+const typeahead = {
+	element: null,
+	form: {
+		element: null,
+		init: function ( formEl ) {
+			this.element = formEl;
+			this.element.setAttribute( 'aria-owns', typeahead.element.id );
+			this.element.append( typeahead.element );
+		}
+	},
+	input: {
+		element: null,
+		// Trigger update only when character is composed (e.g. CJK IME)
+		isComposing: false,
+		init: function ( inputEl ) {
+			this.element = inputEl;
+			// Since searchInput is focused before the event listener is set up
+			this.onFocus();
+			this.element.setAttribute( 'aria-autocomplete', 'list' );
+			this.element.setAttribute( 'aria-controls', typeahead.element.id );
+			this.element.addEventListener( 'focus', this.onFocus );
+		},
+		onCompositionstart: function () {
+			this.isComposing = true;
+		},
+		onCompositionend: function () {
+			this.isComposing = false;
+			this.dispatchEvent( new Event( 'input' ) );
+		},
+		onFocus: function () {
+			// Refresh the typeahead since the query will be emptied when blurred
+			updateTypeahead();
+			typeahead.form.element.parentElement.classList.add( 'citizen-search__card--expanded' );
+			typeahead.input.element.addEventListener( 'keydown', keyboardEvents );
+			typeahead.input.element.addEventListener( 'input', this.onInput );
+			typeahead.input.element.addEventListener( 'compositionstart', this.onCompositionstart );
+			typeahead.input.element.addEventListener( 'compositionend', this.onCompositionend );
+			typeahead.input.element.addEventListener( 'blur', typeahead.onBlur );
+		},
+		onInput: function () {
+			if ( this.isComposing !== true ) {
+				mw.util.debounce( 100, updateTypeahead() );
+			}
+		}
+	},
+	onBlur: function ( event ) {
+		if ( !typeahead.element.contains( event.relatedTarget ) ) {
+			// HACK: On Safari, users are unable to click any links because the blur
+			// event dismiss the links before it is clicked. This should fix it.
+			setTimeout( () => {
+				typeahead.form.element.parentElement.classList.remove( 'citizen-search__card--expanded' );
+				typeahead.input.element.setAttribute( 'aria-activedescendant', '' );
+				typeahead.input.element.removeEventListener( 'keydown', keyboardEvents );
+				typeahead.input.element.removeEventListener( 'input', typeahead.input.onInput );
+				typeahead.input.element.removeEventListener( 'compositionstart', typeahead.input.onCompositionstart );
+				typeahead.input.element.removeEventListener( 'compositionend', typeahead.input.onCompositionend );
+				typeahead.input.element.removeEventListener( 'blur', this.onBlur );
+			}, 10 );
+		}
+	},
+	init: function ( formEl, inputEl ) {
+		const template = mw.template.get( 'skins.citizen.search', 'resources/skins.citizen.search/templates/typeahead.mustache' );
+		const data = {
+			'msg-searchsuggest-search': mw.message( 'searchsuggest-search' ).text(),
+			'msg-citizen-search-empty-desc': mw.message( 'citizen-search-empty-desc' ).text()
+		};
+		this.element = template.render( data ).get()[ 1 ];
+		this.form.init( formEl );
+		this.input.init( inputEl );
+
+		// Init the value in case of undef error
+		updateActiveIndex();
+
+		// Run once in case there is searchQuery before eventlistener is attached
+		if ( this.input.element.value.length > 0 ) {
+			updateTypeahead();
+		}
+	}
+};
+
 const activeIndex = {
 	index: -1,
 	max: 0,
@@ -38,8 +118,6 @@ const activeIndex = {
 	}
 };
 
-let /** @type {HTMLElement | undefined} */ typeahead;
-let /** @type {HTMLElement | undefined} */ searchInput;
 let /** @type {HTMLCollection | undefined} */ typeaheadItems;
 
 /**
@@ -58,7 +136,7 @@ let /** @type {HTMLCollection | undefined} */ typeaheadItems;
  * Retrieve the current list of item elements to update the active index
  */
 function updateActiveIndex() {
-	typeaheadItems = typeahead.querySelectorAll( `.${ITEM_CLASS}` );
+	typeaheadItems = typeahead.element.querySelectorAll( `.${ITEM_CLASS}` );
 	activeIndex.setMax( typeaheadItems.length );
 }
 
@@ -76,7 +154,7 @@ function toggleActive( element ) {
 				element.classList.remove( ACTIVE_CLASS );
 			} else {
 				element.classList.add( ACTIVE_CLASS );
-				searchInput.setAttribute( 'aria-activedescendant', element.id );
+				typeahead.input.element.setAttribute( 'aria-activedescendant', element.id );
 				activeIndex.setIndex( i );
 			}
 		}
@@ -130,7 +208,7 @@ function bindMouseHoverEvent( element ) {
  * Remove all existing suggestions from typeahead
  */
 function clearSuggestions() {
-	const typeaheadChildren = typeahead.children;
+	const typeaheadChildren = typeahead.element.children;
 
 	if ( typeaheadChildren.length > 0 ) {
 		// Do all the work in document fragment then replace the whole list
@@ -145,13 +223,13 @@ function clearSuggestions() {
 			}
 		} );
 		fragment.append( template );
-		typeahead.innerHTML = '';
-		typeahead.append( fragment );
+		typeahead.element.innerHTML = '';
+		typeahead.element.append( fragment );
 	}
 
 	// Remove loading animation
-	searchInput.parentNode.classList.remove( SEARCH_LOADING_CLASS );
-	searchInput.setAttribute( 'aria-activedescendant', '' );
+	typeahead.input.element.parentNode.classList.remove( SEARCH_LOADING_CLASS );
+	typeahead.input.element.setAttribute( 'aria-activedescendant', '' );
 	activeIndex.clear();
 }
 
@@ -238,7 +316,7 @@ function getSuggestions( placeholder ) {
 			} );
 			// Hide placeholder
 			placeholder.classList.add( HIDDEN_CLASS );
-			typeahead.prepend( fragment );
+			typeahead.element.prepend( fragment );
 		} else {
 			// Update placeholder with no result content
 			updateMenuItem(
@@ -256,24 +334,24 @@ function getSuggestions( placeholder ) {
 	};
 
 	// Add loading animation
-	searchInput.parentNode.classList.add( SEARCH_LOADING_CLASS );
+	typeahead.input.element.parentNode.classList.add( SEARCH_LOADING_CLASS );
 
 	const { abort, fetch } = searchClient.active.client.fetchByTitle( searchQuery.value );
 
 	// Abort fetch if the input is detected
 	// So that fetch request won't be queued up
-	searchInput.addEventListener( 'input', abort, { once: true } );
+	typeahead.input.element.addEventListener( 'input', abort, { once: true } );
 
 	fetch?.then( ( response ) => {
-		searchInput.removeEventListener( 'input', abort );
+		typeahead.input.element.removeEventListener( 'input', abort );
 		clearSuggestions();
 		if ( response.results !== null ) {
 			renderSuggestions( response.results );
 			updateActiveIndex();
 		}
 	} ).catch( ( error ) => {
-		searchInput.removeEventListener( 'input', abort );
-		searchInput.parentNode.classList.remove( SEARCH_LOADING_CLASS );
+		typeahead.input.element.removeEventListener( 'input', abort );
+		typeahead.input.element.parentNode.classList.remove( SEARCH_LOADING_CLASS );
 		// User can trigger the abort when the fetch event is pending
 		// There is no need for an error
 		if ( error.name !== 'AbortError' ) {
@@ -356,12 +434,12 @@ function getMenuItem( data ) {
  *
  */
 function updateTypeahead() {
-	searchQuery.setValue( searchInput.value );
+	searchQuery.setValue( typeahead.input.element.value );
 	searchClient.setActive( config.wgCitizenSearchGateway );
 
 	// Search command experiement
-	if ( searchInput.value.startsWith( '/' ) ) {
-		const command = searchInput.value.split( ' ' )[ 0 ].slice( 1 );
+	if ( typeahead.input.element.value.startsWith( '/' ) ) {
+		const command = typeahead.input.element.value.split( ' ' )[ 0 ].slice( 1 );
 		if ( command.length > 0 ) {
 			const searchClientData = searchClient.getData( 'command', command );
 			// Multi-search clients experiment
@@ -372,7 +450,7 @@ function updateTypeahead() {
 		}
 	}
 
-	const placeholder = typeahead.querySelector( `.${ITEM_CLASS}-placeholder` );
+	const placeholder = typeahead.element.querySelector( `.${ITEM_CLASS}-placeholder` );
 
 	/**
 	 * Get a list of tools for the typeahead footer
@@ -412,7 +490,7 @@ function updateTypeahead() {
 					link: itemLink,
 					desc: itemDesc
 				} );
-				typeahead.append( item );
+				typeahead.element.append( item );
 			}
 		};
 
@@ -455,83 +533,11 @@ function updateTypeahead() {
 }
 
 /**
- * @param {HTMLElement} searchForm
+ * @param {HTMLFormElement} form
  * @param {HTMLInputElement} input
  */
-function initTypeahead( searchForm, input ) {
-	const EXPANDED_CLASS = 'citizen-search__card--expanded';
-
-	const
-		template = mw.template.get(
-			'skins.citizen.search',
-			'resources/skins.citizen.search/templates/typeahead.mustache'
-		),
-		data = {
-			'msg-searchsuggest-search': mw.message( 'searchsuggest-search' ).text(),
-			'msg-citizen-search-empty-desc': mw.message( 'citizen-search-empty-desc' ).text()
-		};
-
-	const onBlur = ( event ) => {
-		const focusIn = typeahead.contains( event.relatedTarget );
-
-		if ( !focusIn ) {
-			// HACK: On Safari, users are unable to click any links because the blur
-			// event dismiss the links before it is clicked. This should fix it.
-			setTimeout( () => {
-				searchInput.setAttribute( 'aria-activedescendant', '' );
-				searchForm.parentElement.classList.remove( EXPANDED_CLASS );
-				searchInput.removeEventListener( 'keydown', keyboardEvents );
-				searchInput.removeEventListener( 'blur', onBlur );
-			}, 10 );
-		}
-	};
-
-	const onFocus = () => {
-		// Refresh the typeahead since the query will be emptied when blurred
-		updateTypeahead();
-		searchForm.parentElement.classList.add( EXPANDED_CLASS );
-		searchInput.addEventListener( 'keydown', keyboardEvents );
-		searchInput.addEventListener( 'blur', onBlur );
-	};
-
-	// Make them accessible outside of the function
-	typeahead = template.render( data ).get()[ 1 ];
-	searchInput = input;
-
-	searchForm.append( typeahead );
-	searchForm.setAttribute( 'aria-owns', 'searchform-suggestions' );
-	searchInput.setAttribute( 'aria-autocomplete', 'list' );
-	searchInput.setAttribute( 'aria-controls', 'searchform-suggestions' );
-
-	// Init the value in case of undef error
-	updateActiveIndex();
-
-	// Since searchInput is focused before the event listener is set up
-	onFocus();
-	searchInput.addEventListener( 'focus', onFocus );
-
-	// Run once in case there is searchQuery before eventlistener is attached
-	if ( searchInput.value.length > 0 ) {
-		updateTypeahead();
-	}
-
-	// Trigger update only when character is composed (e.g. CJK IME)
-	searchInput.composing = false;
-	searchInput.addEventListener( 'compositionstart', () => {
-		searchInput.composing = true;
-	} );
-	searchInput.addEventListener( 'compositionend', () => {
-		if ( searchInput.composing ) {
-			searchInput.composing = false;
-			searchInput.dispatchEvent( new Event( 'input' ) );
-		}
-	} );
-	searchInput.addEventListener( 'input', () => {
-		if ( searchInput.composing !== true ) {
-			mw.util.debounce( 100, updateTypeahead() );
-		}
-	} );
-
+function initTypeahead( form, input ) {
+	typeahead.init( form, input );
 }
 
 module.exports = {
