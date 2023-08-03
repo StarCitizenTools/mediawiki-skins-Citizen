@@ -82,9 +82,9 @@
 	--font-size-h6: 1rem;
 
 	--font-weight-normal: 400;
-	--font-weight-medium: 500;
-	--font-weight-semibold: 600;
-	--font-weight-bold: 700;
+	--font-weight-medium: ~'calc( var( --font-weight-normal ) + 100)';
+	--font-weight-semibold: ~'calc( var( --font-weight-normal ) + 200)';
+	--font-weight-bold: ~'calc( var( --font-weight-normal ) + 300)';
 
 	/* Transitions */
 	--transition-hover: @transition-hover;
@@ -176,6 +176,18 @@ html {
 	html {
 		--padding-page: @padding-page * 2;
 		--header-card-maxheight: ~'calc( 100vh - var( --space-sm ) * 2 )';
+	}
+}
+
+@media ( prefers-contrast: more ) {
+	:root {
+		--font-weight-normal: 500;
+	}
+}
+
+@media ( prefers-contrast: less ) {
+	:root {
+		--font-weight-normal: 300;
 	}
 }
 
