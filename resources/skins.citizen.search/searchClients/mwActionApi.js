@@ -60,6 +60,11 @@ function adaptApiResponse( config, query, response, showDescription ) {
 		}
 	};
 
+	// Early exit with there are no query
+	if ( !response.query ) {
+		return { query, results: {} };
+	}
+
 	response = response.query;
 
 	// Merge redirects array into pages array if avaliable
