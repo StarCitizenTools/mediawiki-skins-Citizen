@@ -12,8 +12,10 @@ const searchClient = require( './searchClient.js' )( config );
 const searchQuery = require( './searchQuery.js' )();
 
 const typeahead = {
+	/** @type {HTMLElement | undefined} */
 	element: null,
 	form: {
+		/** @type {HTMLFormElement | undefined} */
 		element: null,
 		init: function ( formEl ) {
 			this.element = formEl;
@@ -22,6 +24,7 @@ const typeahead = {
 		}
 	},
 	input: {
+		/** @type {HTMLInputElement | undefined} */
 		element: null,
 		// Trigger update only when character is composed (e.g. CJK IME)
 		isComposing: false,
@@ -533,11 +536,11 @@ function updateTypeahead() {
 }
 
 /**
- * @param {HTMLFormElement} form
- * @param {HTMLInputElement} input
+ * @param {HTMLFormElement} formEl
+ * @param {HTMLInputElement} inputEl
  */
-function initTypeahead( form, input ) {
-	typeahead.init( form, input );
+function initTypeahead( formEl, inputEl ) {
+	typeahead.init( formEl, inputEl );
 }
 
 module.exports = {
