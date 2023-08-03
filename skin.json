@@ -342,6 +342,7 @@
 			"+ext.flow.ui": "skinStyles/extensions/Flow/ext.flow.ui.less",
 			"+ext.flow": "skinStyles/extensions/Flow/ext.flow.less",
 			"+ext.flow.visualEditor": "skinStyles/extensions/Flow/ext.flow.visualEditor.less",
+			"+ext.flaggedRevs.basic": "skinStyles/extensions/FlaggedRevs/ext.flaggedRevs.basic.less",
 			"+ext.graph.styles": "skinStyles/extensions/Graph/ext.graph.styles.less",
 			"+ext.interwiki.specialpage": "skinStyles/extensions/Interwiki/ext.interwiki.specialpage.less",
 			"+ext.Lingo": "skinStyles/extensions/Lingo/ext.Lingo.less",

@@ -1,0 +1,142 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:FlaggedRevs
+ * Module: ext.flaggedRevs.basic
+ * Version: REL1_39 130a28f
+ *
+ * Date: 2023-08-03
+*/
+
+/* default.css */
+div.flaggedrevs_basic,
+div.flaggedrevs_notice {
+	font-weight: var( --font-weight-normal );
+	border-color: var( --border-color-base );
+}
+
+div.flaggedrevs_basic {
+	background-color: var( --color-surface-3 );
+}
+
+div.flaggedrevs_notice {
+	background-color: var( --color-surface-2 );
+}
+
+table.flaggedrevs_editnotice,
+table.flaggedrevs_viewnotice {
+	background-color: var( --color-surface-2 );
+	border-color: var( --border-color-base );
+}
+
+div.flaggedrevs_diffnotice,
+div.flaggedrevs_preview {
+	border-color: var( --border-color-base );
+}
+
+div.flaggedrevs_diffnotice {
+	background-color: var( --color-surface-2 );
+}
+
+div.flaggedrevs_preview {
+	color: var( --color-base--emphasized );
+	background-color: var( --color-surface-3 );
+}
+
+span.flaggedrevs_important {
+	font-weight: var( --font-weight-semibold );
+}
+
+div.flaggedrevs_notes {
+	background-color: var( --color-surface-2 );
+	border-color: var( --border-color-base );
+}
+
+div.flaggedrevs_short {
+	font-weight: var( --font-weight-normal );
+	background-color: var( --color-surface-0 );
+	border-color: var( --border-color-base );
+}
+
+div.flaggedrevs_short_details {
+	background-color: var( --color-surface-0 );
+	border-color: var( --border-color-base );
+}
+
+.fr-text {
+	font-weight: var( --font-weight-semibold );
+}
+
+a.fr-toggle-symbol {
+	font-family: var( --font-family-monospace );
+	font-weight: var( --font-weight-semibold );
+}
+
+a.fr-toggle-text {
+	font-weight: var( --font-weight-semibold );
+}
+
+span.fr-toggle-arrow {
+	filter: var( --filter-invert );
+	opacity: var( --opacity-icon-base );
+}
+
+span.flaggedrevs-icon {
+	filter: var( --filter-invert );
+	opacity: var( --opacity-icon-base );
+}
+
+.fr-diff-ratings {
+	font-weight: var( --font-weight-semibold );
+}
+
+.fr-pending-long {
+	background-color: var( --color-surface-3 );
+}
+
+.fr-pending-long2 {
+	background-color: var( --background-color-destructive );
+}
+
+.fr-pending-long3 {
+	background-color: var( --color-surface-4 );
+}
+
+.fr-unreviewed-unwatched {
+	background-color: var( --background-color-destructive );
+}
+
+.mw-fr-reviewlink {
+	font-weight: var( --font-weight-semibold );
+}
+
+/* RevisionReviewFormUI.css */
+.flaggedrevs_reviewform {
+	background-color: var( --color-surface-2 );
+}
+
+.fr-rating-controls-disabled {
+	color: var( --color-base--subtle );
+}
+
+/* shared.css */
+.flaggedrevs-color-0 {
+	background-color: var( --color-surface-2 );
+}
+
+.flaggedrevs-color-1 {
+	background-color: var( --background-color-primary--hover );
+}
+
+.flaggedrevs-pending {
+	// HACK: Oh well it works sorta
+	background: var( --background-image-warning );
+}
+
+.flaggedrevs-unreviewed {
+	background-color: var( --background-color-warning );
+}
+
+#mw-fr-stablediff {
+	background-color: var( --color-surface-0 );
+}
