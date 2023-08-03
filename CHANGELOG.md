@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.6...v2.7.7) (2023-08-03)
+
+
+### Features
+
+* **core:** ✨ adapt typography to user preferences ([0afb40f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0afb40fc869359919035a403d4e8832bb8b0e9ce))
+* **FlaggedRevs:** ✨ add styles ([dad90d3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/dad90d38f25cfa29cabc3223e18c59732a026774)), closes [#701](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/701)
+* **search:** ✨ reimplement multi search command experiment ([eec5c6f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/eec5c6fd645bfebe28130b9af172087906320f9e))
+* **search:** ✨ reimplement SMW Ask API search ([51db199](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/51db19938cdb4e9583ff755aafa13dd715cb0a13))
+
+
+### Bug Fixes
+
+* **search:** 🐛 exit early if there are no query results ([4241f85](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4241f8522db780e33b787716d248acadb9340eaa))
+* **toc:** 🐛 add null check for link ([e866edc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e866edc3a5a924ca40664a275f86fee92028ef10))
+
 ### [2.7.6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.5...v2.7.6) (2023-07-30)
 
 
