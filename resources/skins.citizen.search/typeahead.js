@@ -8,38 +8,8 @@ const
 // Config object from getCitizenSearchResourceLoaderConfig()
 const config = require( './config.json' );
 
-// Search clients definition
-const searchClients = require( './searchClients/searchClients.json' );
-
-const searchClient = {
-	active: null,
-	getData: function ( id ) {
-		const data = Object.values( searchClients ).find( ( item ) => item.id === id );
-		return data;
-	},
-	setActive: function ( id ) {
-		const data = this.getData( id );
-		if ( data ) {
-			const client = require( `./searchClients/${data.id}.js` );
-			this.active = data;
-			this.active.client = client( config );
-		}
-	}
-};
-
-const searchQuery = {
-	value: null,
-	valueHtml: null,
-	isValid: false,
-	setValue: function ( s ) {
-		this.value = s;
-		this.valueHtml = mw.html.escape( s );
-		this.isValid = this.checkValid( s );
-	},
-	checkValid: function ( s ) {
-		return s.length > 0;
-	}
-};
+const searchClient = require( './searchClient.js' )( config );
+const searchQuery = require( './searchQuery.js' )();
 
 const activeIndex = {
 	index: -1,
