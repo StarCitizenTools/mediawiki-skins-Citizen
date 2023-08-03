@@ -163,7 +163,8 @@
 				"resources/skins.citizen.search/urlGenerator.js",
 				"resources/skins.citizen.search/searchClients/searchClients.json",
 				"resources/skins.citizen.search/searchClients/mwActionApi.js",
-				"resources/skins.citizen.search/searchClients/mwRestApi.js"
+				"resources/skins.citizen.search/searchClients/mwRestApi.js",
+				"resources/skins.citizen.search/searchClients/smwAskApi.js"
 			],
 			"messages": [
 				"citizen-search-fulltext",

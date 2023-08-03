@@ -357,6 +357,20 @@ function getMenuItem( data ) {
  */
 function updateTypeahead() {
 	searchQuery.setValue( searchInput.value );
+	searchClient.setActive( config.wgCitizenSearchGateway );
+
+	// Search command experiement
+	if ( searchInput.value.startsWith( '/' ) ) {
+		const command = searchInput.value.split( ' ' )[ 0 ].slice( 1 );
+		if ( command.length > 0 ) {
+			const searchClientData = searchClient.getData( 'command', command );
+			// Multi-search clients experiment
+			if ( searchClientData ) {
+				searchClient.setActive( searchClientData.id );
+				searchQuery.removeCommand( command );
+			}
+		}
+	}
 
 	const placeholder = typeahead.querySelector( `.${ITEM_CLASS}-placeholder` );
 
@@ -491,8 +505,6 @@ function initTypeahead( searchForm, input ) {
 
 	// Init the value in case of undef error
 	updateActiveIndex();
-	// Set default active search client
-	searchClient.setActive( config.wgCitizenSearchGateway );
 
 	// Since searchInput is focused before the event listener is set up
 	onFocus();

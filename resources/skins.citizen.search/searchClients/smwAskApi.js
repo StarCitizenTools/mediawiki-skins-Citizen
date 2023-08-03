@@ -67,7 +67,7 @@ function adaptApiResponse( config, query, response, showDescription ) {
 					height: 200
 				} : undefined
 			};
-		} )
+		} ) ?? []
 	};
 }
 
