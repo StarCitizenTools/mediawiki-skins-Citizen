@@ -75,7 +75,7 @@ const typeahead = {
 		},
 		onFocus: function () {
 			// Refresh the typeahead since the query will be emptied when blurred
-			updateTypeahead();
+			typeahead.afterSeachQueryInput();
 			typeahead.form.element.parentElement.classList.add( 'citizen-search__card--expanded' );
 			typeahead.input.element.addEventListener( 'keydown', typeahead.input.onKeydown );
 			typeahead.input.element.addEventListener( 'input', typeahead.input.onInput );
@@ -84,7 +84,7 @@ const typeahead = {
 		onInput: function () {
 			typeahead.input.element.addEventListener( 'compositionstart', typeahead.input.onCompositionstart );
 			if ( typeahead.input.isComposing !== true ) {
-				mw.util.debounce( 100, updateTypeahead() );
+				mw.util.debounce( 100, typeahead.afterSeachQueryInput() );
 			}
 		},
 		onKeydown: function ( event ) {
@@ -127,6 +127,39 @@ const typeahead = {
 			}, 10 );
 		}
 	},
+	updateSearchClient: function () {
+		searchClient.setActive( config.wgCitizenSearchGateway );
+
+		// Search command experiement
+		if ( typeahead.input.element.value.startsWith( '/' ) ) {
+			const command = typeahead.input.element.value.split( ' ' )[ 0 ].slice( 1 );
+			if ( command.length > 0 ) {
+				const searchClientData = searchClient.getData( 'command', command );
+				// Multi-search clients experiment
+				if ( searchClientData ) {
+					searchClient.setActive( searchClientData.id );
+					searchQuery.removeCommand( command );
+				}
+			}
+		}
+		return Promise.resolve( `Search client updated to ${searchClient.active.id}.` );
+	},
+	updateSearchQuery: function () {
+		if ( searchQuery.value === typeahead.input.element.value ) {
+			return Promise.reject( `Search query has not changed: ${searchQuery.value}.`);
+		}
+		searchQuery.setValue( typeahead.input.element.value );
+		return Promise.resolve( `Search query updated to ${searchQuery.value}.` );
+	},
+	afterSeachQueryInput: function () {
+		typeahead.updateSearchQuery().then( async () => {
+			await typeahead.updateSearchClient();
+			updateTypeaheadItems();
+		} )
+		.catch( ( reject ) => {
+			// Don't do anything if search query has not changed.
+		} );
+	},
 	init: function ( formEl, inputEl ) {
 		const template = mw.template.get( 'skins.citizen.search', 'resources/skins.citizen.search/templates/typeahead.mustache' );
 		const data = {
@@ -142,7 +175,7 @@ const typeahead = {
 
 		// Run once in case there is searchQuery before eventlistener is attached
 		if ( this.input.element.value.length > 0 ) {
-			updateTypeahead();
+			this.afterSeachQueryInput();
 		}
 	}
 };
@@ -429,23 +462,7 @@ function getMenuItem( data ) {
  * Update the typeahead element
  *
  */
-function updateTypeahead() {
-	searchQuery.setValue( typeahead.input.element.value );
-	searchClient.setActive( config.wgCitizenSearchGateway );
-
-	// Search command experiement
-	if ( typeahead.input.element.value.startsWith( '/' ) ) {
-		const command = typeahead.input.element.value.split( ' ' )[ 0 ].slice( 1 );
-		if ( command.length > 0 ) {
-			const searchClientData = searchClient.getData( 'command', command );
-			// Multi-search clients experiment
-			if ( searchClientData ) {
-				searchClient.setActive( searchClientData.id );
-				searchQuery.removeCommand( command );
-			}
-		}
-	}
-
+function updateTypeaheadItems() {
 	const placeholder = typeahead.element.querySelector( `.${ITEM_CLASS}-placeholder` );
 
 	/**
