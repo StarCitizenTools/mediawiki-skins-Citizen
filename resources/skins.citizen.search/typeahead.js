@@ -48,9 +48,9 @@ const typeahead = {
 			updateTypeahead();
 			typeahead.form.element.parentElement.classList.add( 'citizen-search__card--expanded' );
 			typeahead.input.element.addEventListener( 'keydown', keyboardEvents );
-			typeahead.input.element.addEventListener( 'input', this.onInput );
-			typeahead.input.element.addEventListener( 'compositionstart', this.onCompositionstart );
-			typeahead.input.element.addEventListener( 'compositionend', this.onCompositionend );
+			typeahead.input.element.addEventListener( 'input', typeahead.input.onInput );
+			typeahead.input.element.addEventListener( 'compositionstart', typeahead.input.onCompositionstart );
+			typeahead.input.element.addEventListener( 'compositionend', typeahead.input.onCompositionend );
 			typeahead.input.element.addEventListener( 'blur', typeahead.onBlur );
 		},
 		onInput: function () {

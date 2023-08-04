@@ -82,7 +82,9 @@ function adaptApiResponse( config, query, response, showDescription ) {
 
 		// Sometimes there can be multiple redirect object for the same page, only take the one with lower index
 		if ( response.pages.length !== pageCount ) {
-			response.pages = response.pages.filter( ( obj ) => { return obj.hasOwnProperty( 'title' ); } );
+			response.pages = response.pages.filter( ( obj ) => {
+				return Object.prototype.hasOwnProperty.call( obj, 'title' );
+			} );
 		}
 	}
 
