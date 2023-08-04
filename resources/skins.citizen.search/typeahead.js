@@ -13,10 +13,10 @@ const searchQuery = require( './searchQuery.js' )();
 
 const typeahead = {
 	/** @type {HTMLElement | undefined} */
-	element: null,
+	element: undefined,
 	form: {
 		/** @type {HTMLFormElement | undefined} */
-		element: null,
+		element: undefined,
 		init: function ( formEl ) {
 			this.element = formEl;
 			this.element.setAttribute( 'aria-owns', typeahead.element.id );
@@ -25,7 +25,7 @@ const typeahead = {
 	},
 	input: {
 		/** @type {HTMLInputElement | undefined} */
-		element: null,
+		element: undefined,
 		// Trigger update only when character is composed (e.g. CJK IME)
 		isComposing: false,
 		init: function ( inputEl ) {
