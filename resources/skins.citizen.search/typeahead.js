@@ -11,6 +11,35 @@ const config = require( './config.json' );
 const searchClient = require( './searchClient.js' )( config );
 const searchQuery = require( './searchQuery.js' )();
 
+const activeIndex = {
+	index: -1,
+	max: 0,
+	setMax: function ( x ) {
+		this.max = x;
+	},
+	increment: function ( i ) {
+		this.index += i;
+		if ( this.index < 0 ) {
+			this.setIndex( this.max - 1 );
+		} // Index reaches top
+		if ( this.index === this.max ) {
+			this.setIndex( 0 );
+		} // Index reaches bottom
+		return this.index;
+	},
+	setIndex: function ( i ) {
+		if ( i <= this.max - 1 ) {
+			this.index = i;
+		}
+		return this.index;
+	},
+	clear: function () {
+		this.setIndex( -1 );
+	}
+};
+
+let /** @type {HTMLCollection | undefined} */ typeaheadItems;
+
 const typeahead = {
 	/** @type {HTMLElement | undefined} */
 	element: undefined,
@@ -48,7 +77,7 @@ const typeahead = {
 			// Refresh the typeahead since the query will be emptied when blurred
 			updateTypeahead();
 			typeahead.form.element.parentElement.classList.add( 'citizen-search__card--expanded' );
-			typeahead.input.element.addEventListener( 'keydown', keyboardEvents );
+			typeahead.input.element.addEventListener( 'keydown', typeahead.input.onKeydown );
 			typeahead.input.element.addEventListener( 'input', typeahead.input.onInput );
 			typeahead.input.element.addEventListener( 'blur', typeahead.onBlur );
 		},
@@ -56,6 +85,30 @@ const typeahead = {
 			typeahead.input.element.addEventListener( 'compositionstart', typeahead.input.onCompositionstart );
 			if ( typeahead.input.isComposing !== true ) {
 				mw.util.debounce( 100, updateTypeahead() );
+			}
+		},
+		onKeydown: function ( event ) {
+			if ( event.defaultPrevented ) {
+				return; // Do nothing if the event was already processed
+			}
+
+			/* Moves the active item up and down */
+			if ( event.key === 'ArrowDown' || event.key === 'ArrowUp' ) {
+				if ( event.key === 'ArrowDown' ) {
+					activeIndex.increment( 1 );
+				} else {
+					activeIndex.increment( -1 );
+				}
+				toggleActive( typeaheadItems[ activeIndex.index ] );
+			}
+
+			/* Enter to click on the active item */
+			if ( typeaheadItems[ activeIndex.index ] ) {
+				const link = typeaheadItems[ activeIndex.index ].querySelector( `.${PREFIX}__content` );
+				if ( event.key === 'Enter' && link instanceof HTMLAnchorElement ) {
+					event.preventDefault();
+					link.click();
+				}
 			}
 		}
 	},
@@ -66,7 +119,7 @@ const typeahead = {
 			setTimeout( () => {
 				typeahead.form.element.parentElement.classList.remove( 'citizen-search__card--expanded' );
 				typeahead.input.element.setAttribute( 'aria-activedescendant', '' );
-				typeahead.input.element.removeEventListener( 'keydown', keyboardEvents );
+				typeahead.input.element.removeEventListener( 'keydown', typeahead.input.onKeydown );
 				typeahead.input.element.removeEventListener( 'input', typeahead.input.onInput );
 				typeahead.input.element.removeEventListener( 'compositionstart', typeahead.input.onCompositionstart );
 				typeahead.input.element.removeEventListener( 'compositionend', typeahead.input.onCompositionend );
@@ -93,35 +146,6 @@ const typeahead = {
 		}
 	}
 };
-
-const activeIndex = {
-	index: -1,
-	max: 0,
-	setMax: function ( x ) {
-		this.max = x;
-	},
-	increment: function ( i ) {
-		this.index += i;
-		if ( this.index < 0 ) {
-			this.setIndex( this.max - 1 );
-		} // Index reaches top
-		if ( this.index === this.max ) {
-			this.setIndex( 0 );
-		} // Index reaches bottom
-		return this.index;
-	},
-	setIndex: function ( i ) {
-		if ( i <= this.max - 1 ) {
-			this.index = i;
-		}
-		return this.index;
-	},
-	clear: function () {
-		this.setIndex( -1 );
-	}
-};
-
-let /** @type {HTMLCollection | undefined} */ typeaheadItems;
 
 /**
  * @typedef {Object} MenuItemData
@@ -160,35 +184,6 @@ function toggleActive( element ) {
 				typeahead.input.element.setAttribute( 'aria-activedescendant', element.id );
 				activeIndex.setIndex( i );
 			}
-		}
-	}
-}
-
-/**
- * Keyboard events: up arrow, down arrow and enter.
- * moves the 'active' suggestion up and down.
- *
- * @param {Event} event
- */
-function keyboardEvents( event ) {
-	if ( event.defaultPrevented ) {
-		return; // Do nothing if the event was already processed
-	}
-
-	if ( event.key === 'ArrowDown' || event.key === 'ArrowUp' ) {
-		if ( event.key === 'ArrowDown' ) {
-			activeIndex.increment( 1 );
-		} else {
-			activeIndex.increment( -1 );
-		}
-		toggleActive( typeaheadItems[ activeIndex.index ] );
-	}
-
-	if ( typeaheadItems[ activeIndex.index ] ) {
-		const link = typeaheadItems[ activeIndex.index ].querySelector( `.${PREFIX}__content` );
-		if ( event.key === 'Enter' && link instanceof HTMLAnchorElement ) {
-			event.preventDefault();
-			link.click();
 		}
 	}
 }
