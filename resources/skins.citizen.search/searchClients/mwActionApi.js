@@ -88,7 +88,7 @@ function adaptApiResponse( config, query, response, showDescription ) {
 			const thumbnail = page.thumbnail;
 			return {
 				id: page.pageid,
-				label: page.from,
+				label: page.from || page.title,
 				key: page.title.replace( / /g, '_' ),
 				title: page.title,
 				description: showDescription ? getDescription( page ) : undefined,
