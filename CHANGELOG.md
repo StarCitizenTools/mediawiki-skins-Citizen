@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.7...v2.7.8) (2023-08-04)
+
+
+### Bug Fixes
+
+* **search:** 🐛 avoid double encoding conditions and printouts ([4b1a39e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4b1a39eb1cb65d64528060851a71685a38b469b1))
+* **search:** 🐛 undefined wgScript config ([69163be](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/69163bee5571561bc7806ef3722e05544d844612))
+
 ### [2.7.7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.6...v2.7.7) (2023-08-03)
 
 
