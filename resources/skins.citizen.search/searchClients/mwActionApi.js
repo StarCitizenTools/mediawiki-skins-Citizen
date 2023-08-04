@@ -70,6 +70,8 @@ function adaptApiResponse( config, query, response, showDescription ) {
 	// Merge redirects array into pages array if avaliable
 	// So the from key can be used for matched title
 	if ( response.redirects ) {
+		const pageCount = response.pages.length;
+
 		response.pages = Object.values(
 			[ ...response.redirects, ...response.pages ].reduce( ( acc, curr ) => {
 				const index = curr.index;
@@ -77,6 +79,11 @@ function adaptApiResponse( config, query, response, showDescription ) {
 				return acc;
 			}, [] )
 		);
+
+		// Sometimes there can be multiple redirect object for the same page, only take the one with lower index
+		if ( response.pages.length !== pageCount ) {
+			response.pages = response.pages.filter( ( obj ) => { return obj.hasOwnProperty( 'title' ); } );
+		}
 	}
 
 	// Sort pages by index key instead of page id

@@ -306,9 +306,7 @@ function getSuggestions( placeholder ) {
 					title: highlightTitle( result.title ),
 					desc: result.description
 				};
-				if ( result.label ) {
-					data.label = getRedirectLabel( result.title, result.label );
-				}
+				data.label = getRedirectLabel( result.title, result.label );
 				if ( result.thumbnail ) {
 					data.thumbnail = result.thumbnail.url;
 				} else {
