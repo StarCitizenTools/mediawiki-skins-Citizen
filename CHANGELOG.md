@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.10](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.9...v2.7.10) (2023-08-04)
+
+
+### Bug Fixes
+
+* **search:** 🐛 handle multiple redirect key in Action Search Client ([0dd3a82](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0dd3a82c06960cb7e1ab5da43c84e367c9031eb4))
+
 ### [2.7.9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.8...v2.7.9) (2023-08-04)
 
 
