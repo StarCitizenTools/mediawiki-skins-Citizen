@@ -9,6 +9,7 @@ const
 const config = require( './config.json' );
 
 const searchClient = require( './searchClient.js' )( config );
+const searchHistory = require( './searchHistory.js' )( config );
 const searchQuery = require( './searchQuery.js' )();
 
 const activeIndex = {
@@ -77,6 +78,7 @@ const typeahead = {
 			// Refresh the typeahead since the query will be emptied when blurred
 			typeahead.afterSeachQueryInput();
 			typeahead.form.element.parentElement.classList.add( 'citizen-search__card--expanded' );
+			typeahead.element.addEventListener( 'click', typeahead.onClick );
 			typeahead.input.element.addEventListener( 'keydown', typeahead.input.onKeydown );
 			typeahead.input.element.addEventListener( 'input', typeahead.input.onInput );
 			typeahead.input.element.addEventListener( 'blur', typeahead.onBlur );
@@ -119,12 +121,30 @@ const typeahead = {
 			setTimeout( () => {
 				typeahead.form.element.parentElement.classList.remove( 'citizen-search__card--expanded' );
 				typeahead.input.element.setAttribute( 'aria-activedescendant', '' );
+				typeahead.element.removeEventListener( 'click', typeahead.onClick );
 				typeahead.input.element.removeEventListener( 'keydown', typeahead.input.onKeydown );
 				typeahead.input.element.removeEventListener( 'input', typeahead.input.onInput );
 				typeahead.input.element.removeEventListener( 'compositionstart', typeahead.input.onCompositionstart );
 				typeahead.input.element.removeEventListener( 'compositionend', typeahead.input.onCompositionend );
 				typeahead.input.element.removeEventListener( 'blur', this.onBlur );
 			}, 10 );
+		}
+	},
+	onClick: function ( event ) {
+		// Extra safety so closest won't tranverse out of the typeahead
+		if ( typeahead.element.contains( event.target ) ) {
+			const item = event.target.closest( '.citizen-typeahead__item' );
+			if ( item instanceof HTMLElement ) {
+				let historyLabel;
+
+				// User click on a suggestion -> save the matched title > title
+				if ( item.classList.contains( 'citizen-typeahead__item-page' ) ) {
+					historyLabel = item.querySelector( '.citizen-typeahead__label' ).innerText ?? item.querySelector( '.citizen-typeahead__title' ).innerText;
+				} else {
+					historyLabel = searchQuery.value;
+				}
+				searchHistory.add( historyLabel );
+			}
 		}
 	},
 	updateSearchClient: function () {
@@ -156,7 +176,7 @@ const typeahead = {
 			await typeahead.updateSearchClient();
 			updateTypeaheadItems();
 		} )
-			.catch( ( reject ) => {
+			.catch( () => {
 			// Don't do anything if search query has not changed.
 			} );
 	},
@@ -169,6 +189,8 @@ const typeahead = {
 		this.element = template.render( data ).get()[ 1 ];
 		this.form.init( formEl );
 		this.input.init( inputEl );
+
+		searchHistory.init();
 
 		// Init the value in case of undef error
 		updateActiveIndex();

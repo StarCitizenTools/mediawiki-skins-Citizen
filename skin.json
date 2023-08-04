@@ -157,9 +157,10 @@
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenSearchResourceLoaderConfig"
 				},
 				"resources/skins.citizen.search/typeahead.js",
-				"resources/skins.citizen.search/searchClient.js",
-				"resources/skins.citizen.search/searchQuery.js",
 				"resources/skins.citizen.search/fetch.js",
+				"resources/skins.citizen.search/searchClient.js",
+				"resources/skins.citizen.search/searchHistory.js",
+				"resources/skins.citizen.search/searchQuery.js",
 				"resources/skins.citizen.search/urlGenerator.js",
 				"resources/skins.citizen.search/searchClients/searchClients.json",
 				"resources/skins.citizen.search/searchClients/mwActionApi.js",
@@ -176,6 +177,9 @@
 				"citizen-search-noresults-desc",
 				"search-redirect",
 				"searchsuggest-search"
+			],
+			"dependencies": [
+				"mediawiki.storage"
 			],
 			"targets": [
 				"desktop",
