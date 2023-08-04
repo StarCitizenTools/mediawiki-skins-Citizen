@@ -16,7 +16,7 @@ function init( bodyContent ) {
 
 	for ( let i = 0; i < headings.length; i++ ) {
 		const j = i + 1,
-			collapsibleID = `.section-collapsible-${j}`,
+			collapsibleID = `section-collapsible-${j}`,
 			/* T13555 */
 			headline = headings[ i ].querySelector( '.mw-headline' ) || headings[ i ].querySelector( '.mw-heading' );
 
