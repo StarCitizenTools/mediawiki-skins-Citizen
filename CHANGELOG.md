@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.8...v2.7.9) (2023-08-04)
+
+
+### Bug Fixes
+
+* **search:** 🐛 always set label for search clients ([6fb2b1a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6fb2b1aaf911f2b46ac3e93e0fc93026a1451b48))
+
 ### [2.7.8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.7...v2.7.8) (2023-08-04)
 
 
