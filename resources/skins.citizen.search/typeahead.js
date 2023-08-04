@@ -37,11 +37,12 @@ const typeahead = {
 			this.element.addEventListener( 'focus', this.onFocus );
 		},
 		onCompositionstart: function () {
-			this.isComposing = true;
+			typeahead.input.element.addEventListener( 'compositionend', typeahead.input.onCompositionend );
+			typeahead.input.isComposing = true;
 		},
 		onCompositionend: function () {
-			this.isComposing = false;
-			this.dispatchEvent( new Event( 'input' ) );
+			typeahead.input.isComposing = false;
+			typeahead.input.dispatchEvent( new Event( 'input' ) );
 		},
 		onFocus: function () {
 			// Refresh the typeahead since the query will be emptied when blurred
@@ -49,12 +50,11 @@ const typeahead = {
 			typeahead.form.element.parentElement.classList.add( 'citizen-search__card--expanded' );
 			typeahead.input.element.addEventListener( 'keydown', keyboardEvents );
 			typeahead.input.element.addEventListener( 'input', typeahead.input.onInput );
-			typeahead.input.element.addEventListener( 'compositionstart', typeahead.input.onCompositionstart );
-			typeahead.input.element.addEventListener( 'compositionend', typeahead.input.onCompositionend );
 			typeahead.input.element.addEventListener( 'blur', typeahead.onBlur );
 		},
 		onInput: function () {
-			if ( this.isComposing !== true ) {
+			typeahead.input.element.addEventListener( 'compositionstart', typeahead.input.onCompositionstart );
+			if ( typeahead.input.isComposing !== true ) {
 				mw.util.debounce( 100, updateTypeahead() );
 			}
 		}
