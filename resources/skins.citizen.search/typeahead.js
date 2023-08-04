@@ -146,7 +146,7 @@ const typeahead = {
 	},
 	updateSearchQuery: function () {
 		if ( searchQuery.value === typeahead.input.element.value ) {
-			return Promise.reject( `Search query has not changed: ${searchQuery.value}.`);
+			return Promise.reject( `Search query has not changed: ${searchQuery.value}.` );
 		}
 		searchQuery.setValue( typeahead.input.element.value );
 		return Promise.resolve( `Search query updated to ${searchQuery.value}.` );
@@ -156,9 +156,9 @@ const typeahead = {
 			await typeahead.updateSearchClient();
 			updateTypeaheadItems();
 		} )
-		.catch( ( reject ) => {
+			.catch( ( reject ) => {
 			// Don't do anything if search query has not changed.
-		} );
+			} );
 	},
 	init: function ( formEl, inputEl ) {
 		const template = mw.template.get( 'skins.citizen.search', 'resources/skins.citizen.search/templates/typeahead.mustache' );
