@@ -107,7 +107,8 @@ function smwAskApiSearchClient( config ) {
 		/**
 		 * @type {fetchByTitle}
 		 */
-		fetchByTitle: ( q, limit = config.wgCitizenMaxSearchResults, showDescription = true ) => {
+		// FIXME: Set showDescription to false for now, the 'Description' key in printout seems to be causing issue
+		fetchByTitle: ( q, limit = config.wgCitizenMaxSearchResults, showDescription = false ) => {
 			const searchApiUrl = config.wgScriptPath + '/api.php';
 
 			const getConditions = () => {
@@ -118,23 +119,23 @@ function smwAskApiSearchClient( config ) {
 					return s.replace( /\[|\]/g, '' );
 				};
 				const conditions = removeSquareBrackets( separateConditions( q ) );
-				return encodeURIComponent( conditions );
+				return conditions;
 			};
 
 			const getPrintouts = () => {
 				/*
 				 * FIXME: Figure out how to assign a label to printout statement in askargs
 				 * TODO: Should let user define what property is used for description and thumbnail
-				 *
-				 * Property list
-				 * Description - Extension:Semantic Meta Tags
-				 * Page_Image - Extension:PageImages and Extension:SemanticExtraSpecialProperties
 				 */
 				const printouts = [
-					'Description',
+					/* Extension:PageImages and Extension:SemanticExtraSpecialProperties */
 					'Page_Image'
 				];
-				return encodeURIComponent( printouts.join( '|' ) );
+				if ( showDescription === true ) {
+					/* Extension:Semantic Meta Tags */
+					printouts.push( 'Description' );
+				}
+				return printouts.join( '|' );
 			};
 
 			// @see https://www.semantic-mediawiki.org/wiki/Help:API:askargs
