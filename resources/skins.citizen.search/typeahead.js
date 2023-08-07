@@ -114,6 +114,28 @@ const typeahead = {
 			}
 		}
 	},
+	suggestions: {
+		/** @type {NodeList | undefined} */
+		elements: undefined,
+		set: function () {
+			this.elements = typeahead.element.querySelectorAll( '.citizen-typeahead__item-page' );
+		},
+		/* Remove all existing suggestions from typeahead */
+		clear: function () {
+			if ( !this.elements ) {
+				return;
+			}
+
+			this.elements.forEach( ( suggestion ) => {
+				suggestion.remove();
+			} );
+			this.set();
+			typeahead.input.element.setAttribute( 'aria-activedescendant', '' );
+			activeIndex.clear();
+			// Remove loading animation
+			typeahead.form.element.classList.remove( SEARCH_LOADING_CLASS );
+		}
+	},
 	onBlur: function ( event ) {
 		if ( !typeahead.element.contains( event.relatedTarget ) ) {
 			// HACK: On Safari, users are unable to click any links because the blur
@@ -258,35 +280,6 @@ function bindMouseHoverEvent( element ) {
 }
 
 /**
- * Remove all existing suggestions from typeahead
- */
-function clearSuggestions() {
-	const typeaheadChildren = typeahead.element.children;
-
-	if ( typeaheadChildren.length > 0 ) {
-		// Do all the work in document fragment then replace the whole list
-		// It is more performant this way
-		const
-			fragment = new DocumentFragment(),
-			template = document.getElementById( `${PREFIX}-template` );
-
-		[ ...typeaheadChildren ].forEach( ( item ) => {
-			if ( !item.classList.contains( `${ITEM_CLASS}-page` ) ) {
-				fragment.append( item );
-			}
-		} );
-		fragment.append( template );
-		typeahead.element.innerHTML = '';
-		typeahead.element.append( fragment );
-	}
-
-	// Remove loading animation
-	typeahead.input.element.parentNode.classList.remove( SEARCH_LOADING_CLASS );
-	typeahead.input.element.setAttribute( 'aria-activedescendant', '' );
-	activeIndex.clear();
-}
-
-/**
  * Fetch suggestions from API and render the suggetions in HTML
  *
  * @param {HTMLElement} placeholder
@@ -382,10 +375,14 @@ function getSuggestions( placeholder ) {
 			);
 			placeholder.classList.remove( HIDDEN_CLASS );
 		}
+		typeahead.suggestions.set();
+		// In case if somehow typeahead.suggestions.clear() didn't clear the loading animation
+		typeahead.form.element.classList.remove( SEARCH_LOADING_CLASS );
+		updateActiveIndex();
 	};
 
 	// Add loading animation
-	typeahead.input.element.parentNode.classList.add( SEARCH_LOADING_CLASS );
+	typeahead.form.element.classList.add( SEARCH_LOADING_CLASS );
 
 	const { abort, fetch } = searchClient.active.client.fetchByTitle( searchQuery.value );
 
@@ -395,14 +392,13 @@ function getSuggestions( placeholder ) {
 
 	fetch?.then( ( response ) => {
 		typeahead.input.element.removeEventListener( 'input', abort );
-		clearSuggestions();
+		typeahead.suggestions.clear();
 		if ( response.results !== null ) {
 			renderSuggestions( response.results );
-			updateActiveIndex();
 		}
 	} ).catch( ( error ) => {
 		typeahead.input.element.removeEventListener( 'input', abort );
-		typeahead.input.element.parentNode.classList.remove( SEARCH_LOADING_CLASS );
+		typeahead.form.element.classList.remove( SEARCH_LOADING_CLASS );
 		// User can trigger the abort when the fetch event is pending
 		// There is no need for an error
 		if ( error.name !== 'AbortError' ) {
@@ -552,7 +548,7 @@ function updateTypeaheadItems() {
 	if ( searchQuery.isValid ) {
 		getSuggestions( placeholder );
 	} else {
-		clearSuggestions();
+		typeahead.suggestions.clear();
 		// Update placeholder with no query content
 		updateMenuItem(
 			placeholder,
