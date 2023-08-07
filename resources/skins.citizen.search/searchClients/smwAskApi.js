@@ -148,7 +148,7 @@ function smwAskApiSearchClient( config ) {
 				api_version: '3',
 				conditions: getConditions(),
 				printouts: getPrintouts(),
-				parameters: `limit%3D${limit.toString()}`
+				parameters: `limit=${limit.toString()}`
 			};
 			/* eslint-enable camelcase */
 			const search = new URLSearchParams( params );
