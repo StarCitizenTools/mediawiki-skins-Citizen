@@ -53,7 +53,8 @@ function adaptApiResponse( config, query, response, showDescription ) {
 	return {
 		query,
 		results: response.query.results.map( ( page ) => {
-			const thumbnail = page.printouts.Page_Image;
+			page = Object.values( page )[ 0 ];
+			const thumbnail = page.printouts.Page_Image[ 0 ];
 			return {
 				id: undefined,
 				label: getFirstString( page.displaytitle ) || page.fulltext,
@@ -62,7 +63,7 @@ function adaptApiResponse( config, query, response, showDescription ) {
 				description: showDescription ? getDescription( page ) : undefined,
 				url: urlGeneratorInstance.generateUrl( page ),
 				thumbnail: thumbnail ? {
-					url: `${config.wgScriptPath}/index.php?title=Special:Redirect/file/${thumbnail[ 0 ].fulltext}&width=200&height=200`,
+					url: `${config.wgScriptPath}/index.php?title=Special:Redirect/file/${thumbnail.fulltext}&width=200&height=200`,
 					width: 200,
 					height: 200
 				} : undefined
