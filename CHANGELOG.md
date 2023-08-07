@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.7.11](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.10...v2.7.11) (2023-08-07)
+
+
+### Bug Fixes
+
+* **core:** 🐛 incorrect value for aria-controls ([29d0f4b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/29d0f4b1fff448563c74297a2aa4441d704417d2))
+* **core:** 🐛 remove duplicated id for toc label ([81288a7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/81288a76c88fed60ace802053d29679dca3b6b25))
+* **search:** 🐛 avoid double escape for equal sign ([b015647](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b015647cc689e422fcfdd80b94ae9c0b25e3fc0b))
+* **search:** 🐛 ensure that onFocus event are properly fired ([9921a00](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9921a00c17643304a7db4b28a9a66c505a4abe1c))
+* **search:** 🐛 incorrect SMW search result mapping ([0281037](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/028103799e1946f8f2f76e76d34889e90720a0cb))
+
 ### [2.7.10](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.9...v2.7.10) (2023-08-04)
 
 
