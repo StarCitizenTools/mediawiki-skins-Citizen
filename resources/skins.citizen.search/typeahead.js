@@ -119,19 +119,19 @@ const typeahead = {
 		 * @param {HTMLElement} item
 		 */
 		toggle: function ( item ) {
-			for ( let i = 0; i < this.elements.length; i++ ) {
-				if ( item !== this.elements[ i ] ) {
-					this.elements[ i ].classList.remove( 'citizen-typeahead__item--active' );
+			this.elements.forEach( ( element, index ) => {
+				if ( item !== element ) {
+					element.classList.remove( 'citizen-typeahead__item--active' );
 				} else {
 					if ( item.classList.contains( 'citizen-typeahead__item--active' ) ) {
 						item.classList.remove( 'citizen-typeahead__item--active' );
 					} else {
 						item.classList.add( 'citizen-typeahead__item--active' );
 						typeahead.input.element.setAttribute( 'aria-activedescendant', item.id );
-						this.setIndex( i );
+						this.setIndex( index );
 					}
 				}
-			}
+			} );
 		},
 		// So that mouse hover events are the same as keyboard hover events
 		bindMouseHoverEvent: function () {
