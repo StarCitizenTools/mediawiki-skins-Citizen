@@ -2,44 +2,15 @@ const
 	PREFIX = 'citizen-typeahead',
 	SEARCH_LOADING_CLASS = 'citizen-loading',
 	ITEM_CLASS = `${PREFIX}__item`,
-	ACTIVE_CLASS = `${ITEM_CLASS}--active`,
 	HIDDEN_CLASS = `${ITEM_CLASS}--hidden`;
 
 // Config object from getCitizenSearchResourceLoaderConfig()
 const config = require( './config.json' );
 
+const typeaheadItem = require( './typeaheadItem.js' )();
 const searchClient = require( './searchClient.js' )( config );
 const searchHistory = require( './searchHistory.js' )( config );
 const searchQuery = require( './searchQuery.js' )();
-
-const activeIndex = {
-	index: -1,
-	max: 0,
-	setMax: function ( x ) {
-		this.max = x;
-	},
-	increment: function ( i ) {
-		this.index += i;
-		if ( this.index < 0 ) {
-			this.setIndex( this.max - 1 );
-		} // Index reaches top
-		if ( this.index === this.max ) {
-			this.setIndex( 0 );
-		} // Index reaches bottom
-		return this.index;
-	},
-	setIndex: function ( i ) {
-		if ( i <= this.max - 1 ) {
-			this.index = i;
-		}
-		return this.index;
-	},
-	clear: function () {
-		this.setIndex( -1 );
-	}
-};
-
-let /** @type {HTMLCollection | undefined} */ typeaheadItems;
 
 const typeahead = {
 	/** @type {HTMLElement | undefined} */
@@ -78,6 +49,7 @@ const typeahead = {
 			// Refresh the typeahead since the query will be emptied when blurred
 			typeahead.afterSeachQueryInput();
 			typeahead.form.element.parentElement.classList.add( 'citizen-search__card--expanded' );
+			// FIXME: Should probably clean up this somehow
 			typeahead.element.addEventListener( 'click', typeahead.onClick );
 			typeahead.input.element.addEventListener( 'keydown', typeahead.input.onKeydown );
 			typeahead.input.element.addEventListener( 'input', typeahead.input.onInput );
@@ -97,21 +69,85 @@ const typeahead = {
 			/* Moves the active item up and down */
 			if ( event.key === 'ArrowDown' || event.key === 'ArrowUp' ) {
 				if ( event.key === 'ArrowDown' ) {
-					activeIndex.increment( 1 );
+					typeahead.items.increment( 1 );
 				} else {
-					activeIndex.increment( -1 );
+					typeahead.items.increment( -1 );
 				}
-				toggleActive( typeaheadItems[ activeIndex.index ] );
+				typeahead.items.toggle( typeahead.items.elements[ typeahead.items.index ] );
 			}
 
 			/* Enter to click on the active item */
-			if ( typeaheadItems[ activeIndex.index ] ) {
-				const link = typeaheadItems[ activeIndex.index ].querySelector( `.${PREFIX}__content` );
+			if ( typeahead.items.elements[ typeahead.items.index ] ) {
+				const link = typeahead.items.elements[ typeahead.items.index ].querySelector( `.${PREFIX}__content` );
 				if ( event.key === 'Enter' && link instanceof HTMLAnchorElement ) {
 					event.preventDefault();
 					link.click();
 				}
 			}
+		}
+	},
+	items: {
+		/** @type {NodeList | undefined} */
+		elements: undefined,
+		index: -1,
+		max: 0,
+		setMax: function ( x ) {
+			this.max = x;
+		},
+		increment: function ( i ) {
+			this.index += i;
+			if ( this.index < 0 ) {
+				this.setIndex( this.max - 1 );
+			} // Index reaches top
+			if ( this.index === this.max ) {
+				this.setIndex( 0 );
+			} // Index reaches bottom
+			return this.index;
+		},
+		setIndex: function ( i ) {
+			if ( i <= this.max - 1 ) {
+				this.index = i;
+			}
+			return this.index;
+		},
+		clearIndex: function () {
+			this.setIndex( -1 );
+		},
+		/**
+		 * Sets 'citizen-typeahead__item--active' class on the element
+		 *
+		 * @param {HTMLElement} item
+		 */
+		toggle: function ( item ) {
+			for ( let i = 0; i < this.elements.length; i++ ) {
+				if ( item !== this.elements[ i ] ) {
+					this.elements[ i ].classList.remove( 'citizen-typeahead__item--active' );
+				} else {
+					if ( item.classList.contains( 'citizen-typeahead__item--active' ) ) {
+						item.classList.remove( 'citizen-typeahead__item--active' );
+					} else {
+						item.classList.add( 'citizen-typeahead__item--active' );
+						typeahead.input.element.setAttribute( 'aria-activedescendant', item.id );
+						this.setIndex( i );
+					}
+				}
+			}
+		},
+		// So that mouse hover events are the same as keyboard hover events
+		bindMouseHoverEvent: function () {
+			this.elements.forEach( ( element ) => {
+				element.addEventListener( 'mouseenter', ( event ) => {
+					this.toggle( event.currentTarget );
+				} );
+				element.addEventListener( 'mouseleave', ( event ) => {
+					this.toggle( event.currentTarget );
+				} );
+			} );
+		},
+		set: function () {
+			this.elements = typeahead.element.querySelectorAll( '.citizen-typeahead__item' );
+			this.bindMouseHoverEvent();
+			this.setMax( this.elements.length );
 		}
 	},
 	suggestions: {
@@ -131,7 +167,7 @@ const typeahead = {
 			} );
 			this.set();
 			typeahead.input.element.setAttribute( 'aria-activedescendant', '' );
-			activeIndex.clear();
+			typeahead.items.clearIndex();
 			// Remove loading animation
 			typeahead.form.element.classList.remove( SEARCH_LOADING_CLASS );
 		}
@@ -215,7 +251,7 @@ const typeahead = {
 		searchHistory.init();
 
 		// Init the value in case of undef error
-		updateActiveIndex();
+		typeahead.items.set();
 
 		// Run once in case there is searchQuery before eventlistener is attached
 		if ( this.input.element.value.length > 0 ) {
@@ -223,61 +259,6 @@ const typeahead = {
 		}
 	}
 };
-
-/**
- * @typedef {Object} MenuItemData
- * @property {string} id
- * @property {string} type
- * @property {string} link
- * @property {string} icon
- * @property {string} thumbnail
- * @property {string} title
- * @property {string} label
- * @property {string} desc
- */
-
-/**
- * Retrieve the current list of item elements to update the active index
- */
-function updateActiveIndex() {
-	typeaheadItems = typeahead.element.querySelectorAll( `.${ITEM_CLASS}` );
-	activeIndex.setMax( typeaheadItems.length );
-}
-
-/**
- * Sets an 'ACTIVE_CLASS' on the element
- *
- * @param {HTMLElement} element
- */
-function toggleActive( element ) {
-	for ( let i = 0; i < typeaheadItems.length; i++ ) {
-		if ( element !== typeaheadItems[ i ] ) {
-			typeaheadItems[ i ].classList.remove( ACTIVE_CLASS );
-		} else {
-			if ( element.classList.contains( ACTIVE_CLASS ) ) {
-				element.classList.remove( ACTIVE_CLASS );
-			} else {
-				element.classList.add( ACTIVE_CLASS );
-				typeahead.input.element.setAttribute( 'aria-activedescendant', element.id );
-				activeIndex.setIndex( i );
-			}
-		}
-	}
-}
-
-/**
- * Bind mouseenter and mouseleave event to reproduce mouse hover event
- *
- * @param {HTMLElement} element
- */
-function bindMouseHoverEvent( element ) {
-	element.addEventListener( 'mouseenter', ( event ) => {
-		toggleActive( event.currentTarget );
-	} );
-	element.addEventListener( 'mouseleave', ( event ) => {
-		toggleActive( event.currentTarget );
-	} );
-}
 
 /**
  * Fetch suggestions from API and render the suggetions in HTML
@@ -356,29 +337,26 @@ function getSuggestions( placeholder ) {
 					// Thumbnail placeholder icon
 					data.icon = 'image';
 				}
-				fragment.append( getMenuItem( data ) );
+				fragment.append( typeaheadItem.get( data ) );
 			} );
 			// Hide placeholder
 			placeholder.classList.add( HIDDEN_CLASS );
 			typeahead.element.prepend( fragment );
 		} else {
 			// Update placeholder with no result content
-			updateMenuItem(
-				placeholder,
-				{
-					icon: 'articleNotFound',
-					type: 'placeholder',
-					size: 'lg',
-					title: mw.message( 'citizen-search-noresults-title', searchQuery.valueHtml ).text(),
-					desc: mw.message( 'citizen-search-noresults-desc' ).text()
-				}
-			);
+			typeaheadItem.update( placeholder, {
+				icon: 'articleNotFound',
+				type: 'placeholder',
+				size: 'lg',
+				title: mw.message( 'citizen-search-noresults-title', searchQuery.valueHtml ).text(),
+				desc: mw.message( 'citizen-search-noresults-desc' ).text()
+			} );
 			placeholder.classList.remove( HIDDEN_CLASS );
 		}
 		typeahead.suggestions.set();
 		// In case if somehow typeahead.suggestions.clear() didn't clear the loading animation
 		typeahead.form.element.classList.remove( SEARCH_LOADING_CLASS );
-		updateActiveIndex();
+		typeahead.items.set();
 	};
 
 	// Add loading animation
@@ -406,74 +384,6 @@ function getSuggestions( placeholder ) {
 			throw new Error( message );
 		}
 	} );
-}
-
-/**
- * Update menu item element
- *
- * @param {HTMLElement} item
- * @param {MenuItemData} data
- */
-function updateMenuItem( item, data ) {
-	if ( data.id ) {
-		item.setAttribute( 'id', data.id );
-	}
-	if ( data.type ) {
-		item.classList.add( `${ITEM_CLASS}-${data.type}` );
-	}
-	if ( data.size ) {
-		item.classList.add( `${ITEM_CLASS}-${data.size}` );
-	}
-	if ( data.link ) {
-		const link = item.querySelector( `.${PREFIX}__content` );
-		link.setAttribute( 'href', data.link );
-	}
-	if ( data.icon || data.thumbnail ) {
-		const thumbnail = item.querySelector( `.${PREFIX}__thumbnail` );
-		if ( data.thumbnail ) {
-			thumbnail.style.backgroundImage = `url('${data.thumbnail}')`;
-		} else {
-			thumbnail.classList.add(
-				`${PREFIX}__thumbnail`,
-				'citizen-ui-icon',
-				`mw-ui-icon-wikimedia-${data.icon}`
-			);
-		}
-	}
-	if ( data.title ) {
-		const title = item.querySelector( `.${PREFIX}__title` );
-		title.innerHTML = data.title;
-	}
-	if ( data.label ) {
-		const label = item.querySelector( `.${PREFIX}__label` );
-		label.innerHTML = data.label;
-	}
-	if ( data.desc ) {
-		const desc = item.querySelector( `.${PREFIX}__description` );
-		desc.innerHTML = data.desc;
-	}
-}
-
-/**
- * Generate menu item HTML using the existing template
- *
- * @param {MenuItemData} data
- * @return {HTMLElement|void}
- */
-function getMenuItem( data ) {
-	const template = document.getElementById( `${PREFIX}-template` );
-
-	// Shouldn't happen but just to be safe
-	if ( !( template instanceof HTMLTemplateElement ) ) {
-		return;
-	}
-
-	const
-		fragment = template.content.cloneNode( true ),
-		item = fragment.querySelector( `.${ITEM_CLASS}` );
-	updateMenuItem( item, data );
-	bindMouseHoverEvent( item );
-	return fragment;
 }
 
 /**
@@ -505,15 +415,13 @@ function updateTypeaheadItems() {
 			// Update existing element instead of creating a new one
 			if ( item ) {
 				// FIXME: Probably more efficient to just replace the query than the whole messaage?
-				updateMenuItem(
-					item,
-					{
-						link: itemLink,
-						desc: itemDesc
-					}
+				typeaheadItem.update( item, {
+					link: itemLink,
+					desc: itemDesc
+				}
 				);
 			} else {
-				item = getMenuItem( {
+				item = typeaheadItem.get( {
 					icon: data.icon,
 					id: itemId,
 					type: 'tool',
@@ -550,16 +458,14 @@ function updateTypeaheadItems() {
 	} else {
 		typeahead.suggestions.clear();
 		// Update placeholder with no query content
-		updateMenuItem(
-			placeholder,
-			{
-				icon: 'articlesSearch',
-				title: mw.message( 'searchsuggest-search' ).text(),
-				desc: mw.message( 'citizen-search-empty-desc' ).text()
-			}
+		typeaheadItem.update( placeholder, {
+			icon: 'articlesSearch',
+			title: mw.message( 'searchsuggest-search' ).text(),
+			desc: mw.message( 'citizen-search-empty-desc' ).text()
+		}
 		);
 		placeholder.classList.remove( HIDDEN_CLASS );
-		updateActiveIndex();
+		typeahead.items.set();
 	}
 }
 
