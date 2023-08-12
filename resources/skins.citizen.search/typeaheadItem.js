@@ -51,8 +51,7 @@ function typeaheadItem() {
 				item.classList.add( `citizen-typeahead__item-${data.size}` );
 			}
 			if ( data.link ) {
-				const link = item.querySelector( '.citizen-typeahead__content' );
-				link.setAttribute( 'href', data.link );
+				item.querySelector( '.citizen-typeahead__content' ).setAttribute( 'href', data.link );
 			}
 			if ( data.icon || data.thumbnail ) {
 				const thumbnail = item.querySelector( '.citizen-typeahead__thumbnail' );
@@ -67,16 +66,13 @@ function typeaheadItem() {
 				}
 			}
 			if ( data.title ) {
-				const title = item.querySelector( '.citizen-typeahead__title' );
-				title.innerHTML = data.title;
+				item.querySelector( '.citizen-typeahead__title' ).innerHTML = data.title;
 			}
 			if ( data.label ) {
-				const label = item.querySelector( '.citizen-typeahead__label' );
-				label.innerHTML = data.label;
+				item.querySelector( '.citizen-typeahead__label' ).innerHTML = data.label;
 			}
 			if ( data.desc ) {
-				const desc = item.querySelector( '.citizen-typeahead__description' );
-				desc.innerHTML = data.desc;
+				item.querySelector( '.citizen-typeahead__description' ).innerHTML = data.desc;
 			}
 		}
 	};
