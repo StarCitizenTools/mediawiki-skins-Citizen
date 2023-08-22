@@ -194,14 +194,15 @@ const typeahead = {
 			const item = event.target.closest( '.citizen-typeahead__item' );
 			if ( item instanceof HTMLElement ) {
 				let historyLabel;
-
 				// User click on a suggestion -> save the matched title > title
 				if ( item.classList.contains( 'citizen-typeahead__item-page' ) ) {
-					historyLabel = item.querySelector( '.citizen-typeahead__label' ).innerText ?? item.querySelector( '.citizen-typeahead__title' ).innerText;
+					historyLabel = item.querySelector( '.citizen-typeahead__label' ).innerText || item.querySelector( '.citizen-typeahead__title' ).innerText;
 				} else {
 					historyLabel = searchQuery.value;
 				}
-				searchHistory.add( historyLabel );
+				if ( historyLabel ) {
+					searchHistory.add( historyLabel );
+				}
 			}
 		}
 	},
