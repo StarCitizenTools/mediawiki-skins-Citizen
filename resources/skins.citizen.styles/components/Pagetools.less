@@ -40,8 +40,10 @@
 		top: 100%;
 		right: ~'calc( var( --space-xs ) * -1 )'; // counteract margin
 		z-index: @z-index-page-header; // So the popups inside will be higher than content
+		display: grid;
+		gap: var( --space-xs );
 		max-height: 60vh;
-		padding: 0.5rem 0;
+		padding: var( --space-xs ) 0;
 		margin: var( --space-xs );
 		overflow: auto;
 		font-size: 0.875rem;
