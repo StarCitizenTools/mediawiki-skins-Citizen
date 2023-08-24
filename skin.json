@@ -159,6 +159,7 @@
 				"resources/skins.citizen.search/typeahead.js",
 				"resources/skins.citizen.search/typeaheadItem.js",
 				"resources/skins.citizen.search/fetch.js",
+				"resources/skins.citizen.search/presult.js",
 				"resources/skins.citizen.search/searchClient.js",
 				"resources/skins.citizen.search/searchHistory.js",
 				"resources/skins.citizen.search/searchQuery.js",

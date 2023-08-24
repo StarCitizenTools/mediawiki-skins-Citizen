@@ -1,13 +1,12 @@
 const
 	PREFIX = 'citizen-typeahead',
-	SEARCH_LOADING_CLASS = 'citizen-loading',
-	ITEM_CLASS = `${PREFIX}__item`,
-	HIDDEN_CLASS = `${ITEM_CLASS}--hidden`;
+	SEARCH_LOADING_CLASS = 'citizen-loading';
 
 // Config object from getCitizenSearchResourceLoaderConfig()
 const config = require( './config.json' );
 
 const typeaheadItem = require( './typeaheadItem.js' )();
+const presult = require( './presult.js' )();
 const searchClient = require( './searchClient.js' )( config );
 const searchHistory = require( './searchHistory.js' )( config );
 const searchQuery = require( './searchQuery.js' )();
@@ -146,8 +145,22 @@ const typeahead = {
 		},
 		set: function () {
 			this.elements = typeahead.element.querySelectorAll( '.citizen-typeahead__item' );
-			this.bindMouseHoverEvent();
-			this.setMax( this.elements.length );
+			// If there is no placeholder element, then there are selectable items
+			if ( !typeahead.element.querySelector( '.citizen-typeahead__item-placeholder' ) ) {
+				this.bindMouseHoverEvent();
+				this.setMax( this.elements.length );
+			}
+		},
+		clear: function () {
+			if ( !this.elements ) {
+				return;
+			}
+			this.elements.forEach( ( element ) => {
+				if ( !element.classList.contains( 'citizen-typeahead__item-tool' ) ) {
+					element.remove();
+				}
+			} );
+			this.elements = undefined;
 		}
 	},
 	suggestions: {
@@ -162,9 +175,6 @@ const typeahead = {
 				return;
 			}
 
-			this.elements.forEach( ( suggestion ) => {
-				suggestion.remove();
-			} );
 			this.set();
 			typeahead.input.element.setAttribute( 'aria-activedescendant', '' );
 			typeahead.items.clearIndex();
@@ -264,12 +274,11 @@ const typeahead = {
 /**
  * Fetch suggestions from API and render the suggetions in HTML
  *
- * @param {HTMLElement} placeholder
  */
-function getSuggestions( placeholder ) {
+function getSuggestions() {
 	const renderSuggestions = ( results ) => {
+		const fragment = document.createDocumentFragment();
 		if ( results.length > 0 ) {
-			const fragment = document.createDocumentFragment();
 			/**
 			 * Return the redirect title with search query highlight
 			 *
@@ -340,20 +349,19 @@ function getSuggestions( placeholder ) {
 				}
 				fragment.append( typeaheadItem.get( data ) );
 			} );
-			// Hide placeholder
-			placeholder.classList.add( HIDDEN_CLASS );
-			typeahead.element.prepend( fragment );
 		} else {
 			// Update placeholder with no result content
-			typeaheadItem.update( placeholder, {
+			const data = {
 				icon: 'articleNotFound',
 				type: 'placeholder',
 				size: 'lg',
 				title: mw.message( 'citizen-search-noresults-title', searchQuery.valueHtml ).text(),
 				desc: mw.message( 'citizen-search-noresults-desc' ).text()
-			} );
-			placeholder.classList.remove( HIDDEN_CLASS );
+			};
+			fragment.append( typeaheadItem.get( data ) );
 		}
+		typeahead.items.clear();
+		typeahead.element.prepend( fragment );
 		typeahead.suggestions.set();
 		// In case if somehow typeahead.suggestions.clear() didn't clear the loading animation
 		typeahead.form.element.classList.remove( SEARCH_LOADING_CLASS );
@@ -392,8 +400,6 @@ function getSuggestions( placeholder ) {
  *
  */
 function updateTypeaheadItems() {
-	const placeholder = typeahead.element.querySelector( `.${ITEM_CLASS}-placeholder` );
-
 	/**
 	 * Get a list of tools for the typeahead footer
 	 */
@@ -455,17 +461,11 @@ function updateTypeaheadItems() {
 
 	getTools();
 	if ( searchQuery.isValid ) {
-		getSuggestions( placeholder );
+		getSuggestions();
+
 	} else {
-		typeahead.suggestions.clear();
-		// Update placeholder with no query content
-		typeaheadItem.update( placeholder, {
-			icon: 'articlesSearch',
-			title: mw.message( 'searchsuggest-search' ).text(),
-			desc: mw.message( 'citizen-search-empty-desc' ).text()
-		}
-		);
-		placeholder.classList.remove( HIDDEN_CLASS );
+		presult.render( typeahead.element );
+		typeahead.items.clear();
 		typeahead.items.set();
 	}
 }
