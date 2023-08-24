@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.8.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.11...v2.8.0) (2023-08-24)
+
+
+### Features
+
+* **core:** ✨ reduce space between section indicator and title ([c8ba546](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c8ba546be802913347ac0341bad892f0ebd98137))
+* **core:** ✨ tweak more menu spacing ([dc9f6f0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/dc9f6f034cf1b1270d2ed6a83c4ca2fc1730cd81))
+* **search:** ✨ add search history to initial state ([f6d3fc9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f6d3fc95e3bb59234b55b3f8c5d2a57e80658312))
+
+
+### Bug Fixes
+
+* **core:** 🐛 bump search input font size ([122819b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/122819b67e7d5f92edf547159d30643529c914a5)), closes [#513](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/513)
+* **core:** 🐛 increase search input font size to 1rem ([07aa883](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/07aa883195f26752c3bf0e1448922f151da720d0)), closes [#513](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/513)
+* **core:** 🐛 only increase search input font size for mobile ([87886b3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/87886b39a03796d6289b12fdd304b8bf1c96724f))
+* **search:** 🐛 do not add empty term to search history ([bd41516](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bd41516190a17dc4ab6bde26214944148e9dbe4f))
+
 ### [2.7.11](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.10...v2.7.11) (2023-08-07)
 
 
