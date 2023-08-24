@@ -26,6 +26,7 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Partials;
 
 use Exception;
+use NumberFormatter;
 
 /**
  * Drawer partial of Skin Citizen
@@ -79,11 +80,19 @@ final class Drawer extends Partial {
 		$fmt = null;
 
 		// Get NumberFormatter here so that we don't have to call it for every stats
-		if ( $this->getConfigValue( 'CitizenUseNumberFormatter' ) && class_exists( \NumberFormatter::class ) ) {
+		if ( $this->getConfigValue( 'CitizenUseNumberFormatter' ) && class_exists( NumberFormatter::class ) ) {
 			$locale = $skin->getLanguage()->getHtmlCode() ?? 'en_US';
-			$fmt = new \NumberFormatter( $locale, \NumberFormatter::PADDING_POSITION );
-			$fmt->setAttribute( \NumberFormatter::ROUNDING_MODE, \NumberFormatter::ROUND_DOWN );
-			$fmt->setAttribute( \NumberFormatter::MAX_FRACTION_DIGITS, 1 );
+			try {
+				$fmt = new NumberFormatter( $locale, NumberFormatter::PADDING_POSITION );
+				$fmt->setAttribute( NumberFormatter::ROUNDING_MODE, NumberFormatter::ROUND_DOWN );
+				$fmt->setAttribute( NumberFormatter::MAX_FRACTION_DIGITS, 1 );
+			} catch ( IntlException $exception ) {
+				/*
+				 * FIXME: Put a proper log or error message here?
+				 * For some unknown reason, NumberFormatter can throw an IntlException: Constructor failed
+				 * This should allow Citizen to run as usual even if such exception is encountered.
+				 */
+			}
 		}
 
 		foreach ( $map as $key => $icon ) {
