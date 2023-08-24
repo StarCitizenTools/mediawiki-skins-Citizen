@@ -56,7 +56,7 @@ function adaptApiResponse( config, query, response, showDescription ) {
 			case 'textextracts':
 				return page?.extract;
 			case 'pagedescription':
-				return page?.pageprops?.description?.slice( 0, 60 );
+				return page?.pageprops?.description?.slice( 0, 100 );
 		}
 	};
 
@@ -177,7 +177,7 @@ function mwActionApiSearchClient( config ) {
 					break;
 				case 'textextracts':
 					params.prop += '|extracts';
-					params.exchars = '60';
+					params.exchars = '100';
 					params.exintro = '1';
 					params.exlimit = limit.toString();
 					params.explaintext = '1';
