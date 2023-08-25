@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Tests\Partials;
 
@@ -11,34 +11,33 @@ use MediaWikiIntegrationTestCase;
 /**
  * @group Citizen
  */
-class FooterTest extends MediaWikiIntegrationTestCase
-{
-    /**
-     * @covers \MediaWiki\Skins\Citizen\Partials\Footer::decorateFooterData
-     * @return void
-     */
-    public function testDecorateFooterData() {
-        $partial = new Footer(new SkinCitizen());
+class FooterTest extends MediaWikiIntegrationTestCase {
+	/**
+	 * @covers \MediaWiki\Skins\Citizen\Partials\Footer::decorateFooterData
+	 * @return void
+	 */
+	public function testDecorateFooterData() {
+		$partial = new Footer( new SkinCitizen() );
 
-        $data = [
-            'data-info' => [
-                'array-items' => [
-                    ['name' => 'copyright']
-                ]
-            ]
-        ];
+		$data = [
+			'data-info' => [
+				'array-items' => [
+					[ 'name' => 'copyright' ]
+				]
+			]
+		];
 
-        $out = $partial->decorateFooterData($data);
+		$out = $partial->decorateFooterData( $data );
 
-        $this->assertArraySubmapSame([
-            'data-info' => [
-                'array-items' => [
-                    [
-                        'name' => 'copyright',
-                        'label' => wfMessage('citizen-page-info-copyright')->text()
-                    ]
-                ],
-            ]
-        ], $out);
-    }
+		$this->assertArraySubmapSame( [
+			'data-info' => [
+				'array-items' => [
+					[
+						'name' => 'copyright',
+						'label' => wfMessage( 'citizen-page-info-copyright' )->text()
+					]
+				],
+			]
+		], $out );
+	}
 }

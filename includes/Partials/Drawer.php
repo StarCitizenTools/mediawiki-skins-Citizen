@@ -25,9 +25,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Partials;
 
-use Exception;
 use IntlException;
-use MediaWiki\MediaWikiServices;
 use NumberFormatter;
 
 /**

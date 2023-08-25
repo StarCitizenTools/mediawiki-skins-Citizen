@@ -58,7 +58,7 @@ final class BodyContent extends Partial {
 	 *
 	 * @param Title $title
 	 * @return bool
-     */
+	 */
 	private function shouldFormatPage( $title ) {
 		try {
 			$mfCxt = MediaWikiServices::getInstance()->getService( 'MobileFrontend.Context' );

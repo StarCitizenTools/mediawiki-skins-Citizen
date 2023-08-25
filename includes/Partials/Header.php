@@ -27,7 +27,6 @@ namespace MediaWiki\Skins\Citizen\Partials;
 
 use MediaWiki\MediaWikiServices;
 use Skin;
-use User;
 
 /**
  * Header partial of Skin Citizen
