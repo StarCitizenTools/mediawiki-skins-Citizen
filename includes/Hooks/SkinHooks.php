@@ -26,14 +26,20 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Hooks;
 
 use ExtensionRegistry;
+use Language;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\SidebarBeforeOutputHook;
 use MediaWiki\Hook\SkinBuildSidebarHook;
 use MediaWiki\Hook\SkinEditSectionLinksHook;
 use MediaWiki\Hook\SkinTemplateNavigation__UniversalHook;
+use MediaWiki\Skins\Citizen\GetConfigTrait;
 use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;
+use OutputPage;
+use ResourceLoaderContext;
 use Skin;
+use SkinTemplate;
 use SpecialPage;
+use Title;
 
 /**
  * Hooks to run relating the skin
@@ -46,7 +52,7 @@ class SkinHooks implements
 	SkinPageReadyConfigHook,
 	SkinTemplateNavigation__UniversalHook
 {
-	use \MediaWiki\Skins\Citizen\GetConfigTrait;
+	use GetConfigTrait;
 
 	/**
 	 * Adds the inline theme switcher script to the page
@@ -102,37 +108,41 @@ class SkinHooks implements
 	 */
 	public function onSkinBuildSidebar( $skin, &$bar ): void {
 		// Be extra safe because it might be active on other skins with caching
-		if ( $skin->getSkinName() === 'citizen' && $bar ) {
-			$out = $skin->getOutput();
-			$globalToolsId = $this->getConfigValue( 'CitizenGlobalToolsPortlet', $out );
-			// remove initial p- for backward compatibility
-			$name = empty( $globalToolsId ) ? 'navigation' : preg_replace( '/^p-/', '', $globalToolsId );
-			$bar[$name]['specialpages'] = [
-				'text'  => $skin->msg( 'specialpages' ),
-				'href'  => Skin::makeSpecialUrl( 'Specialpages' ),
-				'title' => $skin->msg( 'tooltip-t-specialpages' ),
-				'icon'  => 'specialPages',
-				'id'    => 't-specialpages',
+		if ( $skin->getSkinName() !== 'citizen' || !$bar ) {
+			return;
+		}
+
+		$out = $skin->getOutput();
+		$globalToolsId = $this->getConfigValue( 'CitizenGlobalToolsPortlet', $out );
+		// remove initial p- for backward compatibility
+		$name = empty( $globalToolsId ) ? 'navigation' : preg_replace( '/^p-/', '', $globalToolsId );
+		$bar[$name]['specialpages'] = [
+			'text'  => $skin->msg( 'specialpages' ),
+			'href'  => Skin::makeSpecialUrl( 'Specialpages' ),
+			'title' => $skin->msg( 'tooltip-t-specialpages' ),
+			'icon'  => 'specialPages',
+			'id'    => 't-specialpages',
+		];
+
+		if ( $this->getConfigValue( 'EnableUploads', $out ) === true ) {
+			if ( ExtensionRegistry::getInstance()->isLoaded( 'Upload Wizard' ) ) {
+				// Link to Upload Wizard if present
+				$uploadHref = SpecialPage::getTitleFor( 'UploadWizard' )->getLocalURL();
+			} else {
+				// Link to old upload form
+				$uploadHref = Skin::makeSpecialUrl( 'Upload' );
+			}
+			$bar[$name]['upload'] = [
+				'text'  => $skin->msg( 'upload' ),
+				'href'  => $uploadHref,
+				'title' => $skin->msg( 'tooltip-t-upload' ),
+				'icon'  => 'upload',
+				'id'    => 't-upload',
 			];
-			if ( $this->getConfigValue( 'EnableUploads', $out ) === true ) {
-				if ( ExtensionRegistry::getInstance()->isLoaded( 'Upload Wizard' ) ) {
-					// Link to Upload Wizard if present
-					$uploadHref = SpecialPage::getTitleFor( 'UploadWizard' )->getLocalURL();
-				} else {
-					// Link to old upload form
-					$uploadHref = Skin::makeSpecialUrl( 'Upload' );
-				}
-				$bar[$name]['upload'] = [
-					'text'  => $skin->msg( 'upload' ),
-					'href'  => $uploadHref,
-					'title' => $skin->msg( 'tooltip-t-upload' ),
-					'icon'  => 'upload',
-					'id'    => 't-upload',
-				];
-			}
-			foreach ( $bar as $key => $item ) {
-				self::addIconsToMenuItems( $bar, $key );
-			}
+		}
+
+		foreach ( $bar as $key => $item ) {
+			self::addIconsToMenuItems( $bar, $key );
 		}
 	}
 
@@ -149,33 +159,35 @@ class SkinHooks implements
 	 */
 	public function onSkinEditSectionLinks( $skin, $title, $section, $sectionTitle, &$result, $lang ) {
 		// Be extra safe because it might be active on other skins with caching
-		if ( $skin->getSkinName() === 'citizen' && $result ) {
-			// Add icon to edit section link
-			// If VE button is present, use wikiText icon
-			if ( isset( $result['veeditsection'] ) ) {
-				self::appendClassToItem(
-					$result['veeditsection']['attribs']['class'],
-					[
-						'citizen-editsection-icon',
-						'mw-ui-icon-wikimedia-edit'
-					]
-				);
-				self::appendClassToItem(
-					$result['editsection']['attribs']['class'],
-					[
-						'citizen-editsection-icon',
-						'mw-ui-icon-wikimedia-wikiText'
-					]
-				);
-			} elseif ( isset( $result['editsection'] ) ) {
-				self::appendClassToItem(
-					$result['editsection']['attribs']['class'],
-					[
-						'citizen-editsection-icon',
-						'mw-ui-icon-wikimedia-edit'
-					]
-				);
-			}
+		if ( $skin->getSkinName() !== 'citizen' || !$result ) {
+			return;
+		}
+
+		// Add icon to edit section link
+		// If VE button is present, use wikiText icon
+		if ( isset( $result['veeditsection'] ) ) {
+			self::appendClassToItem(
+				$result['veeditsection']['attribs']['class'],
+				[
+					'citizen-editsection-icon',
+					'mw-ui-icon-wikimedia-edit'
+				]
+			);
+			self::appendClassToItem(
+				$result['editsection']['attribs']['class'],
+				[
+					'citizen-editsection-icon',
+					'mw-ui-icon-wikimedia-wikiText'
+				]
+			);
+		} elseif ( isset( $result['editsection'] ) ) {
+			self::appendClassToItem(
+				$result['editsection']['attribs']['class'],
+				[
+					'citizen-editsection-icon',
+					'mw-ui-icon-wikimedia-edit'
+				]
+			);
 		}
 	}
 
@@ -208,26 +220,28 @@ class SkinHooks implements
 	 */
 	public function onSkinTemplateNavigation__Universal( $sktemplate, &$links ): void {
 		// Be extra safe because it might be active on other skins with caching
-		if ( $sktemplate->getSkinName() === 'citizen' ) {
-			if ( isset( $links['actions'] ) ) {
-				self::updateActionsMenu( $links );
-			}
+		if ( $sktemplate->getSkinName() !== 'citizen' ) {
+			return;
+		}
 
-			if ( isset( $links['associated-pages'] ) ) {
-				self::updateAssociatedPagesMenu( $links );
-			}
+		if ( isset( $links['actions'] ) ) {
+			self::updateActionsMenu( $links );
+		}
 
-			if ( isset( $links['user-menu'] ) ) {
-				self::updateUserMenu( $sktemplate, $links );
-			}
+		if ( isset( $links['associated-pages'] ) ) {
+			self::updateAssociatedPagesMenu( $links );
+		}
 
-			if ( isset( $links['user-interface-preferences'] ) ) {
-				self::updateUserInterfacePreferencesMenu( $sktemplate, $links );
-			}
+		if ( isset( $links['user-menu'] ) ) {
+			self::updateUserMenu( $sktemplate, $links );
+		}
 
-			if ( isset( $links['views'] ) ) {
-				self::updateViewsMenu( $links );
-			}
+		if ( isset( $links['user-interface-preferences'] ) ) {
+			self::updateUserInterfacePreferencesMenu( $sktemplate, $links );
+		}
+
+		if ( isset( $links['views'] ) ) {
+			self::updateViewsMenu( $links );
 		}
 	}
 

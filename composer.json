@@ -36,7 +36,8 @@
 	},
 	"scripts": {
 		"fix": [
-			"minus-x fix ."
+			"minus-x fix .",
+			"phpcbf"
 		],
 		"test": [
 			"parallel-lint . --exclude node_modules --exclude vendor",

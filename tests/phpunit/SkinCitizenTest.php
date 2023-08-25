@@ -7,12 +7,14 @@ namespace MediaWiki\Skins\Citizen\Tests;
 use Exception;
 use MediaWiki\Skins\Citizen\SkinCitizen;
 use MediaWiki\Title\Title;
+use MediaWikiIntegrationTestCase;
 use RequestContext;
 
 /**
+ * TODO: Fully test tagline logic
  * @group Citizen
  */
-class SkinCitizenTest extends \MediaWikiIntegrationTestCase {
+class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen
 	 * @return void

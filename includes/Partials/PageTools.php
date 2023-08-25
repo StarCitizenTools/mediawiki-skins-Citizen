@@ -153,7 +153,7 @@ final class PageTools extends Partial {
 	}
 
 	/**
-	 * Count languages avaliable
+	 * Count languages available
 	 * TODO: Consider having an option to count for variants?
 	 *
 	 * @return int
