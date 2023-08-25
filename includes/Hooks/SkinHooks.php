@@ -34,12 +34,12 @@ use MediaWiki\Hook\SkinEditSectionLinksHook;
 use MediaWiki\Hook\SkinTemplateNavigation__UniversalHook;
 use MediaWiki\Skins\Citizen\GetConfigTrait;
 use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;
+use MediaWiki\Title\Title;
 use OutputPage;
 use ResourceLoaderContext;
 use Skin;
 use SkinTemplate;
 use SpecialPage;
-use Title;
 
 /**
  * Hooks to run relating the skin

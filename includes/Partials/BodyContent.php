@@ -31,7 +31,7 @@ use DOMNode;
 use DOMXpath;
 use HtmlFormatter\HtmlFormatter;
 use MediaWiki\MediaWikiServices;
-use Title;
+use MediaWiki\Title\Title;
 use Wikimedia\Parsoid\Utils\DOMCompat;
 use Wikimedia\Services\NoSuchServiceException;
 
