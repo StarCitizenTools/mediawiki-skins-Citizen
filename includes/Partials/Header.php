@@ -27,7 +27,6 @@ namespace MediaWiki\Skins\Citizen\Partials;
 
 use MediaWiki\MediaWikiServices;
 use Skin;
-use User;
 
 /**
  * Header partial of Skin Citizen
@@ -54,7 +53,7 @@ final class Header extends Partial {
 	 *
 	 * TODO: Consider dropping Menu.mustache since the DOM doesn't make much sense
 	 *
-	 * @param $userPageData data-portlets.data-user-page
+	 * @param array $userPageData data-portlets.data-user-page
 	 * @return array
 	 */
 	public function getUserInfoData( $userPageData ): array {
