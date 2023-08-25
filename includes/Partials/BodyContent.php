@@ -31,6 +31,7 @@ use DOMNode;
 use DOMXpath;
 use HtmlFormatter\HtmlFormatter;
 use MediaWiki\MediaWikiServices;
+use Title;
 use Wikimedia\Parsoid\Utils\DOMCompat;
 use Wikimedia\Services\NoSuchServiceException;
 
@@ -56,8 +57,8 @@ final class BodyContent extends Partial {
 	 * Helper function to decide if the page should be formatted
 	 *
 	 * @param Title $title
-	 * @return string
-	 */
+	 * @return bool
+     */
 	private function shouldFormatPage( $title ) {
 		try {
 			$mfCxt = MediaWikiServices::getInstance()->getService( 'MobileFrontend.Context' );

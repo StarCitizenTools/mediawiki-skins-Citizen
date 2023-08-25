@@ -26,6 +26,8 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Partials;
 
 use Exception;
+use IntlException;
+use MediaWiki\MediaWikiServices;
 use NumberFormatter;
 
 /**
@@ -41,7 +43,6 @@ final class Drawer extends Partial {
 	 * Decorate sidebar template data
 	 *
 	 * @return array
-	 * @throws Exception
 	 */
 	public function decorateSidebarData( $sidebarData ) {
 		for ( $i = 0; $i < count( $sidebarData['array-portlets-rest'] ); $i++ ) {

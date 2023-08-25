@@ -47,6 +47,10 @@ class SkinCitizen extends SkinMustache {
 	 * @inheritDoc
 	 */
 	public function __construct( $options = [] ) {
+        if (!isset($options['name'])) {
+            $options['name'] = 'Citizen';
+        }
+
 		// Add skin-specific features
 		$this->buildSkinFeatures( $options );
 		parent::__construct( $options );
@@ -57,7 +61,6 @@ class SkinCitizen extends SkinMustache {
 	 */
 	public function getTemplateData(): array {
 		$data = [];
-		$title = $this->getOutput()->getTitle();
 		$parentData = parent::getTemplateData();
 
 		$header = new Header( $this );
