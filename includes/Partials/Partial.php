@@ -28,7 +28,7 @@ namespace MediaWiki\Skins\Citizen\Partials;
 use MediaWiki\Skins\Citizen\GetConfigTrait;
 use MediaWiki\Skins\Citizen\SkinCitizen;
 use OutputPage;
-use Title;
+use MediaWiki\Title\Title;
 
 /**
  * The base class for all skin partials

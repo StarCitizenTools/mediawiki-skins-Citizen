@@ -25,7 +25,7 @@ namespace MediaWiki\Skins\Citizen\Api;
 use ApiBase;
 use MediaWiki\MediaWikiServices;
 use SpecialPage;
-use Title;
+use MediaWiki\Title\Title;
 
 /**
  * Based on the MobileFrontend extension
