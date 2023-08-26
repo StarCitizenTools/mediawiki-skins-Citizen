@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.8.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.8.0...v2.8.1) (2023-08-26)
+
+
+### Features
+
+* **core:** ✨ use quiet hover color for menu items ([96f6361](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/96f6361851d4cbb048ef86c6b99cf497c90767ec))
+* **search:** ✨ increase description extract character limit to 100 ([853e9a9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/853e9a9190330796965757655a91bbd63a80dbdb))
+* **search:** ✨ search template namespace when template syntax {{}} is used ([2f2dc33](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2f2dc3328c68ef3ba6d1ea3871c5791ba9947650))
+* **search:** ✨ use square aspect ratio for suggestion thumbnail ([042f2bf](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/042f2bfbba0e90f1eb9df98a81b66fd6570c417f))
+
+
+### Bug Fixes
+
+* **core:** 🐛 catch IntlException for NumberFormatter ([1cfe3cd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1cfe3cdfc82f038ca2605fb0dfa9c2a9a0e299e6)), closes [#474](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/474)
+* **search:** 🐛 search history URL should not force fulltext ([2c1940c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2c1940c4bb89b03b83e8b732f315e5d2fcbf6394))
+* **StructuredDiscussion:** 🐛 merge skinStyles into the same RL module ([cb5f4a0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cb5f4a065b82445aaf8bc0b01a08afb93d156207)), closes [#711](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/711)
+
 ## [2.8.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.7.11...v2.8.0) (2023-08-24)
 
 
