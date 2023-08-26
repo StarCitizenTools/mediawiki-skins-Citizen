@@ -51,7 +51,6 @@
 			.citizen-typeahead {
 				&__content {
 					padding: var( --space-sm ) 0;
-					border-top: 1px solid var( --border-color-base );
 				}
 
 				&__thumbnail {
@@ -61,12 +60,6 @@
 
 				&__description {
 					color: var( --color-base );
-				}
-			}
-
-			+ .citizen-typeahead__item-sm {
-				.citizen-typeahead__content {
-					border-top: 0;
 				}
 			}
 		}
@@ -100,6 +93,18 @@
 
 				&__thumbnail {
 					margin-bottom: var( --space-sm );
+				}
+			}
+		}
+
+		&-tool {
+			.citizen-typeahead__content {
+				border-top: 1px solid var( --border-color-base );
+			}
+
+			+ .citizen-typeahead__item-tool {
+				.citizen-typeahead__content {
+					border-top: 0;
 				}
 			}
 		}
