@@ -11,8 +11,11 @@ function searchQuery() {
 		checkValid: function ( s ) {
 			return s.length > 0;
 		},
-		removeCommand: function ( s ) {
-			this.setValue( this.value.replace( `/${s} `, '' ) );
+		replace: function ( pattern, s ) {
+			this.setValue( this.value.replace( pattern, s ) );
+		},
+		remove: function ( pattern ) {
+			this.replace( pattern, '' );
 		}
 	};
 }

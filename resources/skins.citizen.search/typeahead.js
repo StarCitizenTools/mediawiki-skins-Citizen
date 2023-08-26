@@ -227,7 +227,7 @@ const typeahead = {
 				// Multi-search clients experiment
 				if ( searchClientData ) {
 					searchClient.setActive( searchClientData.id );
-					searchQuery.removeCommand( command );
+					searchQuery.remove( `/${command} ` );
 				}
 			}
 		}
@@ -237,7 +237,15 @@ const typeahead = {
 		if ( searchQuery.value === typeahead.input.element.value ) {
 			return Promise.reject( `Search query has not changed: ${searchQuery.value}.` );
 		}
+
 		searchQuery.setValue( typeahead.input.element.value );
+
+		// Template syntax should trigger template search
+		// TODO: Perhaps this should be integrated into the searchQuery module
+		if ( searchQuery.value.startsWith( '{{' ) ) {
+			searchQuery.replace( /{{(.[^}]*)}?}?/, 'Template:$1' );
+		}
+
 		return Promise.resolve( `Search query updated to ${searchQuery.value}.` );
 	},
 	afterSeachQueryInput: function () {
