@@ -240,19 +240,34 @@ const typeahead = {
 
 		searchQuery.setValue( typeahead.input.element.value );
 
-		// Template syntax should trigger template search
-		// TODO: Perhaps this should be integrated into the searchQuery module
-		if ( searchQuery.value.startsWith( '{{' ) ) {
-			searchQuery.replace( /{{(.[^}]*)}?}?/, 'Template:$1' );
-		}
+		typeahead.updateSearchClient();
+
+		// TODO: Merge this with the search client command and put this somewhere else
+		const replaceRules = [
+			{
+				startWith: '{{',
+				pattern: /{{(.[^}]*)}?}?/,
+				replace: 'Template:$1',
+				clients: [ 'mwActionApi', 'mwRestApi' ]
+			},
+			{
+				startWith: '[[',
+				pattern: /\[\[(.[^\]]*)\]?\]?/,
+				replace: '$1',
+				clients: [ 'mwActionApi', 'mwRestApi' ]
+			}
+		];
+
+		replaceRules.forEach( ( rule ) => {
+			if ( rule.clients.includes( searchClient.active.id ) && searchQuery.value.startsWith( rule.startWith ) ) {
+				searchQuery.replace( rule.pattern, rule.replace );
+			}
+		} );
 
 		return Promise.resolve( `Search query updated to ${searchQuery.value}.` );
 	},
 	afterSeachQueryInput: function () {
-		typeahead.updateSearchQuery().then( async () => {
-			await typeahead.updateSearchClient();
-			updateTypeaheadItems();
-		} )
+		typeahead.updateSearchQuery().then( updateTypeaheadItems )
 			.catch( () => {
 			// Don't do anything if search query has not changed.
 			} );
