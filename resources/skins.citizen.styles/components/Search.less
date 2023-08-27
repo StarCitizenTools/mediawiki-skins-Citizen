@@ -92,8 +92,8 @@
 		background: transparent; // Cancel default background
 		border: 0; // Cancel default border
 
-		@media ( max-width: @width-breakpoint-tablet ) {
-			// Prevent iOS from auto zooming the input field
+		// HACK: Target mobile Safari only to prevent auto zooming the input field
+		@supports (-webkit-touch-callout: none) {
 			font-size: 1rem;
 		}
 
