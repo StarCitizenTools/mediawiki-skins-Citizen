@@ -144,18 +144,16 @@ const typeahead = {
 			} );
 		},
 		set: function () {
-			this.elements = typeahead.element.querySelectorAll( '.citizen-typeahead__item' );
-			// If there is no placeholder element, then there are selectable items
-			if ( !typeahead.element.querySelector( '.citizen-typeahead__item-placeholder' ) ) {
-				this.bindMouseHoverEvent();
-				this.setMax( this.elements.length );
-			}
+			this.elements = typeahead.element.querySelectorAll( '.citizen-typeahead__item[role="option"]' );
+			this.bindMouseHoverEvent();
+			this.setMax( this.elements.length );
 		},
 		clear: function () {
 			if ( !this.elements ) {
 				return;
 			}
 			this.elements.forEach( ( element ) => {
+				// FIXME: Should probably move tools out of the current container
 				if ( !element.classList.contains( 'citizen-typeahead__item-tool' ) ) {
 					element.remove();
 				}
@@ -384,6 +382,7 @@ function getSuggestions() {
 			fragment.append( typeaheadItem.get( data ) );
 		}
 		typeahead.items.clear();
+		typeahead.element.querySelector( '.citizen-typeahead__item-placeholder' )?.remove();
 		typeahead.element.prepend( fragment );
 		typeahead.suggestions.set();
 		// In case if somehow typeahead.suggestions.clear() didn't clear the loading animation

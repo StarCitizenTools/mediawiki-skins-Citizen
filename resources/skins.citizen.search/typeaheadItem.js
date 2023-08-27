@@ -46,6 +46,10 @@ function typeaheadItem() {
 			}
 			if ( data.type ) {
 				item.classList.add( `citizen-typeahead__item-${data.type}` );
+
+				if ( data.type !== 'placeholder' ) {
+					item.setAttribute( 'role', 'option' );
+				}
 			}
 			if ( data.size ) {
 				item.classList.add( `citizen-typeahead__item-${data.size}` );

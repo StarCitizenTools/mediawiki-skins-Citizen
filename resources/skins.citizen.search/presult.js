@@ -38,6 +38,7 @@ function presult() {
 				fragment.append( typeaheadItem.get( data ) );
 			}
 
+			typeaheadEl.querySelector( '.citizen-typeahead__item-placeholder' )?.remove();
 			typeaheadEl.prepend( fragment );
 			this.set( typeaheadEl );
 		},
