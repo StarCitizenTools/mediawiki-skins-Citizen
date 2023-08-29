@@ -158,6 +158,8 @@ function renderSearchClearButton( input ) {
 		clearButton = document.createElement( 'span' ),
 		clearIcon = document.createElement( 'span' );
 
+	let hasClearButton = false;
+
 	clearButton.classList.add( 'citizen-search__clear', 'citizen-search__formButton' );
 	clearIcon.classList.add( 'citizen-ui-icon', 'mw-ui-icon-wikimedia-clear' );
 	clearButton.append( clearIcon );
@@ -166,14 +168,19 @@ function renderSearchClearButton( input ) {
 		event.preventDefault();
 		clearButton.remove();
 		input.value = '';
-		input.focus();
+		input.dispatchEvent( new Event( 'input' ) );
+		setTimeout( () => {
+			input.focus();
+		}, 10 );
 	} );
 
 	input.addEventListener( 'input', () => {
 		if ( input.value === '' ) {
 			clearButton.remove();
-		} else {
+			hasClearButton = false;
+		} else if ( hasClearButton === false ) {
 			input.after( clearButton );
+			hasClearButton = true;
 		}
 	} );
 }
