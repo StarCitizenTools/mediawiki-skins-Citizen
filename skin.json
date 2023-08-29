@@ -157,7 +157,7 @@
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenSearchResourceLoaderConfig"
 				},
 				"resources/skins.citizen.search/typeahead.js",
-				"resources/skins.citizen.search/typeaheadItem.js",
+				"resources/skins.citizen.search/htmlHelper.js",
 				"resources/skins.citizen.search/fetch.js",
 				"resources/skins.citizen.search/presult.js",
 				"resources/skins.citizen.search/searchClient.js",

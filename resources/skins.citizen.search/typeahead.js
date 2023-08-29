@@ -5,7 +5,7 @@ const
 // Config object from getCitizenSearchResourceLoaderConfig()
 const config = require( './config.json' );
 
-const typeaheadItem = require( './typeaheadItem.js' )();
+const htmlHelper = require( './htmlHelper.js' )();
 const presult = require( './presult.js' )();
 const searchClient = require( './searchClient.js' )( config );
 const searchHistory = require( './searchHistory.js' )( config );
@@ -384,7 +384,7 @@ function getSuggestions() {
 					// Thumbnail placeholder icon
 					data.icon = 'image';
 				}
-				fragment.append( typeaheadItem.get( data ) );
+				fragment.append( htmlHelper.getItemElement( data ) );
 			} );
 		} else {
 			// Update placeholder with no result content
@@ -395,7 +395,7 @@ function getSuggestions() {
 				title: mw.message( 'citizen-search-noresults-title', searchQuery.valueHtml ).text(),
 				desc: mw.message( 'citizen-search-noresults-desc' ).text()
 			};
-			fragment.append( typeaheadItem.get( data ) );
+			fragment.append( htmlHelper.getItemElement( data ) );
 		}
 		typeahead.items.clear();
 		typeahead.element.querySelector( '.citizen-typeahead__item-placeholder' )?.remove();
@@ -460,13 +460,13 @@ function updateTypeaheadItems() {
 			// Update existing element instead of creating a new one
 			if ( item ) {
 				// FIXME: Probably more efficient to just replace the query than the whole messaage?
-				typeaheadItem.update( item, {
+				htmlHelper.updateItemElement( item, {
 					link: itemLink,
 					desc: itemDesc
 				}
 				);
 			} else {
-				item = typeaheadItem.get( {
+				item = htmlHelper.getItemElement( {
 					icon: data.icon,
 					id: itemId,
 					type: 'tool',

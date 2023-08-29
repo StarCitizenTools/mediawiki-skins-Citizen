@@ -10,7 +10,7 @@
  * @property {string} desc
  */
 
-function typeaheadItem() {
+function htmlHelper() {
 	return {
 		/**
 		 * Generate menu item HTML using the existing template
@@ -18,7 +18,7 @@ function typeaheadItem() {
 		 * @param {TypeaheadItemData} data
 		 * @return {HTMLElement|void}
 		 */
-		get: function ( data ) {
+		getItemElement: function ( data ) {
 			// TODO: Should we use template element or Mustache or just Javascript?
 			const template = document.getElementById( 'citizen-typeahead-template' );
 
@@ -31,7 +31,7 @@ function typeaheadItem() {
 				fragment = template.content.cloneNode( true ),
 				item = fragment.querySelector( '.citizen-typeahead__item' );
 
-			this.update( item, data );
+			this.updateItemElement( item, data );
 			return fragment;
 		},
 		/**
@@ -40,7 +40,7 @@ function typeaheadItem() {
 		 * @param {HTMLElement} item
 		 * @param {TypeaheadItemData} data
 		 */
-		update: function ( item, data ) {
+		updateItemElement: function ( item, data ) {
 			if ( data.id ) {
 				item.setAttribute( 'id', data.id );
 			}
@@ -82,5 +82,5 @@ function typeaheadItem() {
 	};
 }
 
-/** @module typeaheadItem */
-module.exports = typeaheadItem;
+/** @module htmlHelper */
+module.exports = htmlHelper;

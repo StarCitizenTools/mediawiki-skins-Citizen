@@ -1,5 +1,5 @@
 const config = require( './config.json' );
-const typeaheadItem = require( './typeaheadItem.js' )();
+const htmlHelper = require( './htmlHelper.js' )();
 const searchHistory = require( './searchHistory.js' )( config );
 
 function presult() {
@@ -18,7 +18,7 @@ function presult() {
 						size: 'sm',
 						desc: result
 					};
-					fragment.append( typeaheadItem.get( data ) );
+					fragment.append( htmlHelper.getItemElement( data ) );
 				} );
 			}
 			return fragment;
@@ -35,7 +35,7 @@ function presult() {
 					title: mw.message( 'searchsuggest-search' ).text(),
 					desc: mw.message( 'citizen-search-empty-desc' ).text()
 				};
-				fragment.append( typeaheadItem.get( data ) );
+				fragment.append( htmlHelper.getItemElement( data ) );
 			}
 
 			typeaheadEl.querySelector( '.citizen-typeahead__item-placeholder' )?.remove();
