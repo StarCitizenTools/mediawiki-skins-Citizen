@@ -56,7 +56,9 @@
 
 	&-item {
 		&-group {
-			border-top: 1px solid var( --border-color-base );
+			+ .citizen-typeahead-item-group {
+				border-top: 1px solid var( --border-color-base );
+			}
 
 			&-list {
 				margin: 0;
