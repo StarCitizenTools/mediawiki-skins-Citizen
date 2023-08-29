@@ -26,15 +26,29 @@ const typeahead = {
 	input: {
 		/** @type {HTMLInputElement | undefined} */
 		element: undefined,
+		displayElement: undefined,
 		// Trigger update only when character is composed (e.g. CJK IME)
 		isComposing: false,
 		init: function ( inputEl ) {
 			this.element = inputEl;
-			// Since searchInput is focused before the event listener is set up
-			this.onFocus();
+
+			const wrapper = document.createElement( 'div' );
+			wrapper.classList.add( 'citizen-typeahead-input-group' );
+			this.element.parentNode.insertBefore( wrapper, this.element );
+
+			const overlay = document.createElement( 'div' );
+			overlay.classList.add( 'citizen-typeahead-input-overlay' );
+			this.displayElement = document.createElement( 'span' );
+			this.displayElement.classList.add( 'citizen-typeahead-input-overlay-query' );
+			overlay.append( this.displayElement );
+
+			this.element.classList.add( 'citizen-typeahead-input' );
 			this.element.setAttribute( 'aria-autocomplete', 'list' );
 			this.element.setAttribute( 'aria-controls', typeahead.element.id );
+
+			wrapper.append( overlay, this.element );
 			this.element.addEventListener( 'focus', this.onFocus );
+			this.element.focus();
 		},
 		onCompositionstart: function () {
 			typeahead.input.element.addEventListener( 'compositionend', typeahead.input.onCompositionend );
@@ -55,6 +69,7 @@ const typeahead = {
 			typeahead.input.element.addEventListener( 'blur', typeahead.onBlur );
 		},
 		onInput: function () {
+			typeahead.input.displayElement.innerText = typeahead.input.element.value;
 			typeahead.input.element.addEventListener( 'compositionstart', typeahead.input.onCompositionstart );
 			if ( typeahead.input.isComposing !== true ) {
 				mw.util.debounce( 100, typeahead.afterSeachQueryInput() );
@@ -67,6 +82,7 @@ const typeahead = {
 
 			/* Moves the active item up and down */
 			if ( event.key === 'ArrowDown' || event.key === 'ArrowUp' ) {
+				event.preventDefault();
 				if ( event.key === 'ArrowDown' ) {
 					typeahead.items.increment( 1 );
 				} else {

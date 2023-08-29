@@ -24,6 +24,36 @@
 		}
 	}
 
+	&-input {
+		// Display overlay instead of the input, but keep the caret
+		color: transparent;
+		caret-color: var( --color-base--emphasized );
+
+		&-group {
+			position: relative;
+			display: flex;
+			flex-grow: 1;
+		}
+
+		&-overlay {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			display: flex;
+			align-items: center;
+			font-size: 0.875rem;
+
+			// HACK: Target mobile Safari only to prevent auto zooming the input field
+			@supports (-webkit-touch-callout: none) {
+				font-size: 1rem;
+			}
+
+			&-query {
+				color: var( --color-base--emphasized );
+			}
+		}
+	}
+
 	&__item {
 		.citizen-typeahead {
 			&__thumbnail {
