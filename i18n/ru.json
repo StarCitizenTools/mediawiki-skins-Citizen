@@ -28,9 +28,9 @@
 	"citizen-footer-tagline": "Отредактируйте этот текст на [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Добавить тему",
 	"citizen-jumptotop": "Вернуться наверх",
-	"citizen-search-fulltext": "Поиск страниц, содержащих $1",
+	
 	"citizen-search-fulltext-empty": "Поиск текста среди страниц",
-	"citizen-search-mediasearch": "Поиск медиа, связанных с $1",
+	
 	"citizen-search-mediasearch-empty": "Поиск медиафайлов",
 	"citizen-search-empty-desc": "Введите текст",
 	"citizen-search-noresults-title": "Ой! Нет результатов для $1",

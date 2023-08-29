@@ -54,14 +54,21 @@
 		}
 	}
 
+	&-item {
+		&-group {
+			border-top: 1px solid var( --border-color-base );
+
+			&-list {
+				margin: 0;
+				list-style: none;
+			}
+		}
+	}
+
 	&__item {
 		.citizen-typeahead {
 			&__thumbnail {
 				margin-right: var( --space-sm );
-
-				&.citizen-ui-icon {
-					width: 100%; // reset width
-				}
 			}
 
 			&__text {
@@ -78,6 +85,8 @@
 		}
 
 		&-sm {
+			font-size: 0.875rem;
+
 			.citizen-typeahead {
 				&__content {
 					padding: var( --space-sm ) 0;
@@ -86,10 +95,10 @@
 				&__thumbnail {
 					height: var( --size-icon );
 					background-color: transparent;
-				}
 
-				&__description {
-					color: var( --color-base );
+					&.citizen-ui-icon {
+						width: var( --size-icon );
+					}
 				}
 			}
 		}
@@ -127,14 +136,15 @@
 			}
 		}
 
-		&-tool {
-			.citizen-typeahead__content {
-				border-top: 1px solid var( --border-color-base );
-			}
+		&-md,
+		&-lg {
+			.citizen-typeahead {
+				&__title {
+					font-weight: var( --font-weight-semibold );
+				}
 
-			+ .citizen-typeahead__item-tool {
-				.citizen-typeahead__content {
-					border-top: 0;
+				&__description {
+					margin-top: 0.1rem;
 				}
 			}
 		}
@@ -173,7 +183,6 @@
 
 	&__title {
 		flex-shrink: 0;
-		font-weight: var( --font-weight-semibold );
 		color: var( --color-base--emphasized );
 	}
 
@@ -207,7 +216,6 @@
 	}
 
 	&__description {
-		margin-top: 0.1rem;
 		font-size: 0.8125rem;
 		color: var( --color-base--subtle );
 	}

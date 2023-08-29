@@ -31,7 +31,7 @@
 	"citizen-footer-tagline": "Bearbeiten Sie diesen Text auf [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Thema hinzufügen",
 	"citizen-jumptotop": "Zurück nach oben",
-	"citizen-search-fulltext": "Suche nach Artikeln, die $1 beinhalten",
+	
 	"citizen-search-empty-desc": "Tippe, um zu suchen zu beginnen",
 	"citizen-tagline-ns-talk": "Diskussionsseite von {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Informationen über {{SITENAME}}",

@@ -21,7 +21,7 @@
 	"citizen-footer-tagline": "Редагувати цей текст на [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Додати тему",
 	"citizen-jumptotop": "Повернутись угору",
-	"citizen-search-fulltext": "Пошук сторінок, що містять",
+	
 	"citizen-search-empty-desc": "Введіть, щоб почати пошук",
 	"citizen-tagline-ns-talk": "Сторінка обговорення {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Інформація про {{SITENAME}}",

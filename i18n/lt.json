@@ -18,9 +18,9 @@
 	"citizen-footer-tagline": "Redaguoti šį tekstą [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Pridėti temą",
 	"citizen-jumptotop": "Grįžti į viršų",
-	"citizen-search-fulltext": "Ieškoti puslapių, turinčių $1",
+	
 	"citizen-search-fulltext-empty": "Ieškoti teksto puslapiuose",
-	"citizen-search-mediasearch": "Ieškoti medijos, susijusios su $1",
+	
 	"citizen-search-mediasearch-empty": "Ieškoti medijos",
 	"citizen-search-empty-desc": "Rašykite norėdami pradėti ieškoti",
 	"citizen-search-noresults-title": "Oi! Nėra $1 rezultatų",

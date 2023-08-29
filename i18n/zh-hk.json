@@ -27,7 +27,7 @@
 	"citizen-footer-tagline": "在[[MediaWiki:Citizen-footer-tagline]]編輯此文字",
 	"citizen-action-addsection": "新增話題",
 	"citizen-jumptotop": "返回頂端",
-	"citizen-search-fulltext": "搜尋包含",
+	
 	"citizen-search-empty-desc": "輸入開始搜尋",
 	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}}的討論頁面",
 	"citizen-tagline-ns-project": "關於{{SITENAME}}的資訊",

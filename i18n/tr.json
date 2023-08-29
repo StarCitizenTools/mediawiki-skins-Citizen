@@ -27,7 +27,7 @@
 	"citizen-footer-tagline": "Bu metni [[MediaWiki:Citizen-footer-tagline]] üzerinde düzenleyin",
 	"citizen-action-addsection": "Konu ekle",
 	"citizen-jumptotop": "Başa dön",
-	"citizen-search-fulltext": "İçeren sayfaları ara",
+	
 	"citizen-search-empty-desc": "Aramaya başlamak için yazın",
 	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}} tartışma sayfası",
 	"citizen-tagline-ns-project": "{{SITENAME}} hakkında bilgi",

@@ -24,9 +24,9 @@
 	"citizen-footer-tagline": "Edite este texto em [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Adicionar tópico",
 	"citizen-jumptotop": "Voltar ao topo",
-	"citizen-search-fulltext": "Procurar páginas que contenham $1",
+	
 	"citizen-search-fulltext-empty": "Pesquisar texto nas páginas",
-	"citizen-search-mediasearch": "Procurar conteúdo multimédia relacionado com $1",
+	
 	"citizen-search-mediasearch-empty": "Pesquisar multimédia",
 	"citizen-search-empty-desc": "Escrever para começar a procurar",
 	"citizen-search-noresults-title": "Não há resultados para $1",

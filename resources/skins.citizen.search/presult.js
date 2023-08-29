@@ -7,20 +7,28 @@ function presult() {
 		elements: undefined,
 		addSearchHistory: function ( fragment ) {
 			const historyData = searchHistory.get();
-			if ( historyData?.length > 0 ) {
-				historyData.forEach( ( result, index ) => {
-					const data = {
-						icon: 'history',
-						id: `citizen-typeahead-history-${index}`,
-						// TODO: Add option to prepend the result to input field
-						link: `${config.wgScriptPath}/index.php?title=Special:Search&search=${result}`,
-						type: 'history',
-						size: 'sm',
-						desc: result
-					};
-					fragment.append( htmlHelper.getItemElement( data ) );
-				} );
+			if ( !historyData?.length > 0 ) {
+				return fragment;
 			}
+
+			const itemGroupData = {
+				id: 'history',
+				items: []
+			};
+
+			historyData.forEach( ( result ) => {
+				const data = {
+					icon: 'history',
+					// TODO: Add option to prepend the result to input field
+					link: `${config.wgScriptPath}/index.php?title=Special:Search&search=${result}`,
+					type: 'history',
+					size: 'sm',
+					title: result
+				};
+				itemGroupData.items.push( data );
+			} );
+
+			fragment.append( htmlHelper.getItemGroupElement( itemGroupData ) );
 			return fragment;
 		},
 		render: function ( typeaheadEl ) {
@@ -39,11 +47,16 @@ function presult() {
 			}
 
 			typeaheadEl.querySelector( '.citizen-typeahead__item-placeholder' )?.remove();
-			typeaheadEl.prepend( fragment );
+			typeaheadEl.append( fragment );
 			this.set( typeaheadEl );
 		},
 		set: function ( typeaheadEl ) {
-			this.elements = typeaheadEl.querySelectorAll( '.citizen-typeahead__item-history' );
+			// FIXME: Clean this up when we add top pages
+			this.elements = typeaheadEl.querySelectorAll( '.citizen-typeahead-item-group[data-group="history"]' );
+		},
+		clear: function ( typeaheadEl ) {
+			htmlHelper.removeItemGroup( typeaheadEl, 'history' );
+			this.elements = undefined;
 		}
 	};
 }

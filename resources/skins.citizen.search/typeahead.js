@@ -104,6 +104,7 @@ const typeahead = {
 	items: {
 		/** @type {NodeList | undefined} */
 		elements: undefined,
+		groupElements: undefined,
 		index: -1,
 		max: 0,
 		setMax: function ( x ) {
@@ -160,6 +161,7 @@ const typeahead = {
 			} );
 		},
 		set: function () {
+			this.groupElements = typeahead.element.querySelectorAll( '.citizen-typeahead-item-group' );
 			this.elements = typeahead.element.querySelectorAll( '.citizen-typeahead__item[role="option"]' );
 			this.bindMouseHoverEvent();
 			this.setMax( this.elements.length );
@@ -168,11 +170,8 @@ const typeahead = {
 			if ( !this.elements ) {
 				return;
 			}
-			this.elements.forEach( ( element ) => {
-				// FIXME: Should probably move tools out of the current container
-				if ( !element.classList.contains( 'citizen-typeahead__item-tool' ) ) {
-					element.remove();
-				}
+			this.groupElements.forEach( ( element ) => {
+				element.remove();
 			} );
 			this.elements = undefined;
 		}
@@ -368,9 +367,12 @@ function getSuggestions() {
 			};
 
 			// Create suggestion items
-			results.forEach( ( result, index ) => {
+			const itemGroupData = {
+				id: 'suggestion',
+				items: []
+			};
+			results.forEach( ( result ) => {
 				const data = {
-					id: `${PREFIX}-suggestion-${index}`,
 					type: 'page',
 					size: 'md',
 					link: result.url,
@@ -384,8 +386,9 @@ function getSuggestions() {
 					// Thumbnail placeholder icon
 					data.icon = 'image';
 				}
-				fragment.append( htmlHelper.getItemElement( data ) );
+				itemGroupData.items.push( data );
 			} );
+			fragment.append( htmlHelper.getItemGroupElement( itemGroupData ) );
 		} else {
 			// Update placeholder with no result content
 			const data = {
@@ -397,9 +400,10 @@ function getSuggestions() {
 			};
 			fragment.append( htmlHelper.getItemElement( data ) );
 		}
-		typeahead.items.clear();
+
+		htmlHelper.removeItemGroup( typeahead.element, 'suggestion' );
 		typeahead.element.querySelector( '.citizen-typeahead__item-placeholder' )?.remove();
-		typeahead.element.prepend( fragment );
+		typeahead.element.append( fragment );
 		typeahead.suggestions.set();
 		// In case if somehow typeahead.suggestions.clear() didn't clear the loading animation
 		typeahead.form.element.classList.remove( SEARCH_LOADING_CLASS );
@@ -442,68 +446,57 @@ function updateTypeaheadItems() {
 	 * Get a list of tools for the typeahead footer
 	 */
 	const getTools = () => {
-		/**
-		 * Update a tool item or create it if it does not exist
-		 *
-		 * @param {Object} data
-		 */
-		const updateToolItem = ( data ) => {
-			const
-				itemId = `${PREFIX}-${data.id}`,
-				query = `<span class="citizen-typeahead__query">${searchQuery.valueHtml}</span>`,
-				itemLink = data.link + searchQuery.valueHtml,
-				/* eslint-disable-next-line mediawiki/msg-doc */
-				itemDesc = mw.message( data.msg, query );
-
-			let item = document.getElementById( itemId );
-
-			// Update existing element instead of creating a new one
-			if ( item ) {
-				// FIXME: Probably more efficient to just replace the query than the whole messaage?
-				htmlHelper.updateItemElement( item, {
-					link: itemLink,
-					desc: itemDesc
-				}
-				);
-			} else {
-				item = htmlHelper.getItemElement( {
-					icon: data.icon,
-					id: itemId,
-					type: 'tool',
-					size: 'sm',
-					link: itemLink,
-					desc: itemDesc
-				} );
-				typeahead.element.append( item );
-			}
+		const itemGroupData = {
+			id: 'tool',
+			items: []
 		};
 
+		// TODO: Save this in a separate JSON file
 		// Fulltext search
-		updateToolItem( {
-			id: 'fulltext',
+		itemGroupData.items.push( {
+			// id: 'fulltext',
 			link: `${config.wgScriptPath}/index.php?title=Special:Search&fulltext=1&search=`,
 			icon: 'articleSearch',
-			msg: searchQuery.isValid ? 'citizen-search-fulltext' : 'citizen-search-fulltext-empty'
+			msg: 'citizen-search-fulltext-empty'
 		} );
 
 		// MediaSearch
 		if ( config.isMediaSearchExtensionEnabled ) {
-			updateToolItem( {
-				id: 'mediasearch',
+			itemGroupData.items.push( {
+				// id: 'mediasearch',
 				link: `${config.wgScriptPath}/index.php?title=Special:MediaSearch&type=image&search=`,
 				icon: 'imageGallery',
-				msg: searchQuery.isValid ? 'citizen-search-mediasearch' : 'citizen-search-mediasearch-empty'
+				msg: 'citizen-search-mediasearch-empty'
 			} );
 		}
+
+		const hasTools = !!document.querySelector( '.citizen-typeahead-item-group[data-group="tool"]' );
+		if ( !hasTools ) {
+			const toolData = {
+				type: 'tool',
+				size: 'sm'
+			};
+			itemGroupData.items = itemGroupData.items.map( ( item ) => ( { ...item, ...toolData } ) );
+			typeahead.element.append( htmlHelper.getItemGroupElement( itemGroupData ) );
+		}
+		itemGroupData.items.forEach( ( item, index ) => {
+			const toolEl = document.getElementById( `citizen-typeahead-tool-${index}` );
+			htmlHelper.updateItemElement( toolEl, {
+				link: `${item.link}${searchQuery.valueHtml}`,
+				title: searchQuery.value,
+				/* eslint-disable-next-line mediawiki/msg-doc */
+				label: mw.message( item.msg )
+			} );
+		} );
 	};
 
-	getTools();
 	if ( searchQuery.isValid ) {
+		presult.clear( typeahead.element );
+		getTools();
 		getSuggestions();
-
 	} else {
-		presult.render( typeahead.element );
 		typeahead.items.clear();
+		presult.render( typeahead.element );
 		typeahead.items.set();
 	}
 }

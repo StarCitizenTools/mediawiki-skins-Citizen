@@ -24,9 +24,9 @@
 	"citizen-footer-tagline": "Uredite to besedilo na [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Dodaj temo",
 	"citizen-jumptotop": "Nazaj na vrh",
-	"citizen-search-fulltext": "Poiščite strani, ki vsebujejo $1",
+	
 	"citizen-search-fulltext-empty": "Iskanje besedila na straneh",
-	"citizen-search-mediasearch": "Iskanje predstavnosti, povezanih z $1",
+	
 	"citizen-search-mediasearch-empty": "Iskanje predstavnosti",
 	"citizen-search-empty-desc": "Vnesite za začetek iskanja",
 	"citizen-search-noresults-title": "Ojoj! Ni zadetkov za $1",

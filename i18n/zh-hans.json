@@ -34,9 +34,9 @@
 	"citizen-footer-tagline": "在[[MediaWiki:Citizen-footer-tagline]]编辑此文本",
 	"citizen-action-addsection": "添加话题",
 	"citizen-jumptotop": "回到顶部",
-	"citizen-search-fulltext": "搜索包含“$1”的页面",
+	
 	"citizen-search-fulltext-empty": "在页面内搜索文本",
-	"citizen-search-mediasearch": "搜索与$1相关的媒体",
+	
 	"citizen-search-mediasearch-empty": "搜索媒体",
 	"citizen-search-empty-desc": "键入以开始搜索",
 	"citizen-search-noresults-title": "抱歉！没有找到“$1”的搜索结果",

@@ -1,4 +1,11 @@
 /**
+ * @typedef {Object} TypeaheadItemGroupData
+ * @property {string} id
+ * @property {string} label
+ * @property {TypeaheadItemData[]} items
+ */
+
+/**
  * @typedef {Object} TypeaheadItemData
  * @property {string} id
  * @property {string} type
@@ -12,6 +19,39 @@
 
 function htmlHelper() {
 	return {
+		/**
+		 * Return the HTML of an item group
+		 *
+		 * @param {TypeaheadItemGroupData} data
+		 * @return {HTMLElement|void}
+		 */
+		getItemGroupElement: function ( data ) {
+			const itemGroup = document.createElement( 'li' );
+			itemGroup.classList.add( 'citizen-typeahead-item-group' );
+			itemGroup.setAttribute( 'data-group', `${data.id}` );
+			itemGroup.setAttribute( 'role', 'presentation' );
+
+			if ( data.label ) {
+				const label = document.createElement( 'span' );
+				label.classList.add( 'citizen-typeahead-item-group-label' );
+				label.innerText = data.label;
+				itemGroup.append( label );
+			}
+
+			if ( data.items ) {
+				const list = document.createElement( 'ol' );
+				list.classList.add( 'citizen-typeahead-item-group-list' );
+				list.setAttribute( 'role', 'presentation' );
+				data.items.forEach( ( itemData, index ) => {
+					itemData.id = `citizen-typeahead-${data.id}-${index}`;
+					const item = this.getItemElement( itemData );
+					list.append( item );
+				} );
+				itemGroup.append( list );
+			}
+
+			return itemGroup;
+		},
 		/**
 		 * Generate menu item HTML using the existing template
 		 *
@@ -51,6 +91,7 @@ function htmlHelper() {
 					item.setAttribute( 'role', 'option' );
 				}
 			}
+
 			if ( data.size ) {
 				item.classList.add( `citizen-typeahead__item-${data.size}` );
 			}
@@ -78,6 +119,15 @@ function htmlHelper() {
 			if ( data.desc ) {
 				item.querySelector( '.citizen-typeahead__description' ).innerHTML = data.desc;
 			}
+		},
+		/**
+		 * Remove item group from the typeahead DOM
+		 *
+		 * @param {HTMLElement} typeaheadEl
+		 * @param {string} id
+		 */
+		removeItemGroup: function ( typeaheadEl, id ) {
+			typeaheadEl.querySelector( `.citizen-typeahead-item-group[data-group="${id}"]` )?.remove();
 		}
 	};
 }

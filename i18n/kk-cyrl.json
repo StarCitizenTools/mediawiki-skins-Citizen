@@ -25,9 +25,9 @@
 	"citizen-footer-tagline": "Осы мәтінді [[MediaWiki:Citizen-footer-tagline]] деген бетте өңдеңіз",
 	"citizen-action-addsection": "Тақырып қосу",
 	"citizen-jumptotop": "Жоғары қайту",
-	"citizen-search-fulltext": "\"$1\" бар беттерді іздеу",
+	
 	"citizen-search-fulltext-empty": "Бет ішіндегі мәтінді іздеу",
-	"citizen-search-mediasearch": "\"$1\" дегенге қатысты медиа іздеу",
+	
 	"citizen-search-mediasearch-empty": "Медиа іздеу",
 	"citizen-search-empty-desc": "Іздей бастау үшін теріңіз",
 	"citizen-search-noresults-title": "Ойбай! \"$1\" дегенге еш нәтиже таппадық",

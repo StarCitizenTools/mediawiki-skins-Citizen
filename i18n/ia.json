@@ -24,9 +24,9 @@
 	"citizen-footer-tagline": "Modificar iste texto sur [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Adder topico",
 	"citizen-jumptotop": "Retro al initio",
-	"citizen-search-fulltext": "Cercar paginas que contine $1",
+	
 	"citizen-search-fulltext-empty": "Cercar texto in paginas",
-	"citizen-search-mediasearch": "Cercar multimedia concernente $1",
+	
 	"citizen-search-mediasearch-empty": "Cercar multimedia",
 	"citizen-search-empty-desc": "Digita pro comenciar a cercar",
 	"citizen-search-noresults-title": "Oh oh! Necun resultato pro $1",

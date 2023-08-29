@@ -26,13 +26,13 @@
 	"citizen-footer-tagline": "Edit this text on [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Add topic",
 	"citizen-jumptotop": "Back to top",
-	"citizen-search-fulltext": "Search for pages containing $1",
+	
 	"citizen-search-fulltext-empty": "Search for text within pages",
-	"citizen-search-mediasearch": "Search for media related to $1",
+	
 	"citizen-search-mediasearch-empty": "Search for media",
 	"citizen-search-empty-desc": "Type to start searching",
 	"citizen-search-noresults-title": "Uh oh! No results for $1",
-	"citizen-search-noresults-desc": "Maybe try the options below?",
+	"citizen-search-noresults-desc": "Maybe try the options above?",
 	"citizen-tagline": "-",
 	"citizen-tagline-ns-talk": "Discussion page of {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Information about {{SITENAME}}",
