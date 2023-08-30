@@ -7,6 +7,7 @@ const config = require( './config.json' );
 
 const htmlHelper = require( './htmlHelper.js' )();
 const presult = require( './presult.js' )();
+const searchAction = require( './searchAction.js' )();
 const searchClient = require( './searchClient.js' )( config );
 const searchHistory = require( './searchHistory.js' )( config );
 const searchQuery = require( './searchQuery.js' )();
@@ -442,66 +443,9 @@ function getSuggestions() {
  *
  */
 function updateTypeaheadItems() {
-	/**
-	 * Get a list of tools for the typeahead footer
-	 */
-	const getTools = () => {
-		const itemGroupData = {
-			id: 'tool',
-			items: []
-		};
-
-		// TODO: Save this in a separate JSON file
-		// Fulltext search
-		itemGroupData.items.push( {
-			// id: 'fulltext',
-			link: `${config.wgScriptPath}/index.php?title=Special:Search&fulltext=1&search=${searchQuery.valueHtml}`,
-			icon: 'articleSearch',
-			msg: 'citizen-search-fulltext'
-		} );
-
-		// Edit/create page
-		// TODO: Check if user has right, and whether the page exists
-		itemGroupData.items.push( {
-			// id: 'editpage',
-			link: `${config.wgScriptPath}/index.php?title=${searchQuery.valueHtml}&action=edit`,
-			icon: 'edit',
-			msg: 'citizen-search-editpage'
-		} );
-
-		// MediaSearch
-		if ( config.isMediaSearchExtensionEnabled ) {
-			itemGroupData.items.push( {
-				// id: 'mediasearch',
-				link: `${config.wgScriptPath}/index.php?title=Special:MediaSearch&type=image&search=${searchQuery.valueHtml}`,
-				icon: 'imageGallery',
-				msg: 'citizen-search-mediasearch'
-			} );
-		}
-
-		const hasTools = !!document.querySelector( '.citizen-typeahead-item-group[data-group="tool"]' );
-		if ( !hasTools ) {
-			const toolData = {
-				type: 'tool',
-				size: 'sm'
-			};
-			itemGroupData.items = itemGroupData.items.map( ( item ) => ( { ...item, ...toolData } ) );
-			typeahead.element.append( htmlHelper.getItemGroupElement( itemGroupData ) );
-		}
-		itemGroupData.items.forEach( ( item, index ) => {
-			const toolEl = document.getElementById( `citizen-typeahead-tool-${index}` );
-			htmlHelper.updateItemElement( toolEl, {
-				link: item.link,
-				title: searchQuery.value,
-				/* eslint-disable-next-line mediawiki/msg-doc */
-				label: mw.message( item.msg )
-			} );
-		} );
-	};
-
 	if ( searchQuery.isValid ) {
 		presult.clear( typeahead.element );
-		getTools();
+		searchAction.render( typeahead.element, searchQuery );
 		getSuggestions();
 	} else {
 		typeahead.items.clear();

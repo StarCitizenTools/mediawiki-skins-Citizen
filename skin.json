@@ -160,6 +160,7 @@
 				"resources/skins.citizen.search/htmlHelper.js",
 				"resources/skins.citizen.search/fetch.js",
 				"resources/skins.citizen.search/presult.js",
+				"resources/skins.citizen.search/searchAction.js",
 				"resources/skins.citizen.search/searchClient.js",
 				"resources/skins.citizen.search/searchHistory.js",
 				"resources/skins.citizen.search/searchQuery.js",
