@@ -455,16 +455,25 @@ function updateTypeaheadItems() {
 		// Fulltext search
 		itemGroupData.items.push( {
 			// id: 'fulltext',
-			link: `${config.wgScriptPath}/index.php?title=Special:Search&fulltext=1&search=`,
+			link: `${config.wgScriptPath}/index.php?title=Special:Search&fulltext=1&search=${searchQuery.valueHtml}`,
 			icon: 'articleSearch',
 			msg: 'citizen-search-fulltext-empty'
+		} );
+
+		// Edit/create page
+		// TODO: Check if user has right, and whether the page exists
+		itemGroupData.items.push( {
+			// id: 'editpage',
+			link: `${config.wgScriptPath}/index.php?title=${searchQuery.valueHtml}&action=edit`,
+			icon: 'edit',
+			msg: 'citizen-search-editpage'
 		} );
 
 		// MediaSearch
 		if ( config.isMediaSearchExtensionEnabled ) {
 			itemGroupData.items.push( {
 				// id: 'mediasearch',
-				link: `${config.wgScriptPath}/index.php?title=Special:MediaSearch&type=image&search=`,
+				link: `${config.wgScriptPath}/index.php?title=Special:MediaSearch&type=image&search=${searchQuery.valueHtml}`,
 				icon: 'imageGallery',
 				msg: 'citizen-search-mediasearch-empty'
 			} );
@@ -482,7 +491,7 @@ function updateTypeaheadItems() {
 		itemGroupData.items.forEach( ( item, index ) => {
 			const toolEl = document.getElementById( `citizen-typeahead-tool-${index}` );
 			htmlHelper.updateItemElement( toolEl, {
-				link: `${item.link}${searchQuery.valueHtml}`,
+				link: item.link,
 				title: searchQuery.value,
 				/* eslint-disable-next-line mediawiki/msg-doc */
 				label: mw.message( item.msg )

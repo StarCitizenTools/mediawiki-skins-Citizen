@@ -35,6 +35,7 @@
 	"citizen-search-fulltext-empty": "Helper text for Fulltext search",
 	
 	"citizen-search-mediasearch-empty": "Helper text for MediaSearch",
+	"citizen-search-editpage": "Helper text for edit and create page suggestion",
 	"citizen-search-empty-desc": "Helper text in the search suggestion when there are no search query",
 	"citizen-search-noresults-title": "Title in the search suggestion when there are no search results",
 	"citizen-search-noresults-desc": "Description in the search suggestion when there are no search results",

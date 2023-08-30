@@ -30,6 +30,7 @@
 	"citizen-search-fulltext-empty": "Search for text within pages",
 	
 	"citizen-search-mediasearch-empty": "Search for media",
+	"citizen-search-editpage": "Edit or create page",
 	"citizen-search-empty-desc": "Type to start searching",
 	"citizen-search-noresults-title": "Uh oh! No results for $1",
 	"citizen-search-noresults-desc": "Maybe try the options above?",
