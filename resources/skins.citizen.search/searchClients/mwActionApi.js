@@ -160,15 +160,15 @@ function mwActionApiSearchClient( config ) {
 				smaxage: cacheExpiry,
 				maxage: cacheExpiry,
 				generator: 'prefixsearch',
-				prop: 'pageprops|pageimages',
-				redirects: '',
-				ppprop: 'displaytitle',
-				pilicense: 'any',
-				piprop: 'thumbnail',
-				pithumbsize: 200,
-				pilimit: limit.toString(),
 				gpssearch: q,
-				gpslimit: limit.toString()
+				gpslimit: limit.toString(),
+				redirects: '',
+				prop: 'pageprops|pageimages',
+				ppprop: 'displaytitle',
+				piprop: 'thumbnail',
+				pilicense: 'any',
+				pithumbsize: 200,
+				pilimit: limit.toString()
 			};
 			switch ( descriptionSource ) {
 				case 'wikidata':
