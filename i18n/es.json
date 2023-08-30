@@ -23,9 +23,9 @@
 	"citizen-action-addsection": "Añadir tema",
 	"citizen-jumptotop": "Volver al inicio",
 	
-	"citizen-search-fulltext-empty": "Buscar el texto en estas páginas",
+	"citizen-search-fulltext": "Buscar el texto en estas páginas",
 	
-	"citizen-search-mediasearch-empty": "Buscar multimedia",
+	"citizen-search-mediasearch": "Buscar multimedia",
 	"citizen-search-empty-desc": "Escribe para empezar a buscar",
 	"citizen-search-noresults-title": "¡Uh, oh! No hay resultados para $1",
 	"citizen-search-noresults-desc": "¿Quizá probar con las otras opciones?",

@@ -14,8 +14,8 @@
 	"citizen-action-addsection": "Temu dodać",
 	"citizen-jumptotop": "Wróćo k spočatkej",
 	
-	"citizen-search-fulltext-empty": "Pytać za tekstom w zapiskach",
-	"citizen-search-mediasearch-empty": "Pytać za medijemi",
+	"citizen-search-fulltext": "Pytać za tekstom w zapiskach",
+	"citizen-search-mediasearch": "Pytać za medijemi",
 	"citizen-tagline-ns-project": "Informacije wo {{SITENAME}}",
 	"prefs-citizen-theme-option-light": "Swětło",
 	"prefs-citizen-theme-option-dark": "Ćmowe",

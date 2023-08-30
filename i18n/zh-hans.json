@@ -35,9 +35,9 @@
 	"citizen-action-addsection": "添加话题",
 	"citizen-jumptotop": "回到顶部",
 	
-	"citizen-search-fulltext-empty": "在页面内搜索文本",
+	"citizen-search-fulltext": "在页面内搜索文本",
 	
-	"citizen-search-mediasearch-empty": "搜索媒体",
+	"citizen-search-mediasearch": "搜索媒体",
 	"citizen-search-empty-desc": "键入以开始搜索",
 	"citizen-search-noresults-title": "抱歉！没有找到“$1”的搜索结果",
 	"citizen-search-noresults-desc": "也许可以试试下面的选项？",

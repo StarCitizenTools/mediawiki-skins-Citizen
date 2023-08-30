@@ -25,9 +25,9 @@
 	"citizen-action-addsection": "Adder topico",
 	"citizen-jumptotop": "Retro al initio",
 	
-	"citizen-search-fulltext-empty": "Cercar texto in paginas",
+	"citizen-search-fulltext": "Cercar texto in paginas",
 	
-	"citizen-search-mediasearch-empty": "Cercar multimedia",
+	"citizen-search-mediasearch": "Cercar multimedia",
 	"citizen-search-empty-desc": "Digita pro comenciar a cercar",
 	"citizen-search-noresults-title": "Oh oh! Necun resultato pro $1",
 	"citizen-search-noresults-desc": "Essayar forsan le optiones hic infra?",

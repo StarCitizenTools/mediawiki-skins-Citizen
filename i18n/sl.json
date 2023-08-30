@@ -25,9 +25,9 @@
 	"citizen-action-addsection": "Dodaj temo",
 	"citizen-jumptotop": "Nazaj na vrh",
 	
-	"citizen-search-fulltext-empty": "Iskanje besedila na straneh",
+	"citizen-search-fulltext": "Iskanje besedila na straneh",
 	
-	"citizen-search-mediasearch-empty": "Iskanje predstavnosti",
+	"citizen-search-mediasearch": "Iskanje predstavnosti",
 	"citizen-search-empty-desc": "Vnesite za začetek iskanja",
 	"citizen-search-noresults-title": "Ojoj! Ni zadetkov za $1",
 	"citizen-search-noresults-desc": "Morda poskusite s spodnjimi možnostmi?",

@@ -24,9 +24,9 @@
 	"citizen-action-addsection": "הוספת נושא",
 	"citizen-jumptotop": "חזרה למעלה",
 	
-	"citizen-search-fulltext-empty": "חיפוש טקסט בתוך דפים",
+	"citizen-search-fulltext": "חיפוש טקסט בתוך דפים",
 	
-	"citizen-search-mediasearch-empty": "חיפוש מדיה",
+	"citizen-search-mediasearch": "חיפוש מדיה",
 	"citizen-search-empty-desc": "יש להקליד כדי להתחיל לחפש",
 	"citizen-search-noresults-title": "אבוי! אין תוצאות עבור $1",
 	"citizen-search-noresults-desc": "אולי אפשר לנסות את האפשרויות למטה?",

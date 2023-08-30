@@ -26,9 +26,9 @@
 	"citizen-action-addsection": "Dodaj temat",
 	"citizen-jumptotop": "Powrót do góry",
 	
-	"citizen-search-fulltext-empty": "Szukaj tekstu na stronach",
+	"citizen-search-fulltext": "Szukaj tekstu na stronach",
 	
-	"citizen-search-mediasearch-empty": "Szukaj mediów",
+	"citizen-search-mediasearch": "Szukaj mediów",
 	"citizen-search-empty-desc": "Zacznij pisać, aby wyszukiwać",
 	"citizen-search-noresults-title": "O nie! Nie ma wyników dla $1",
 	"citizen-search-noresults-desc": "Może wypróbuj poniższe opcje?",

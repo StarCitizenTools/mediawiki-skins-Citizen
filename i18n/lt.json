@@ -19,9 +19,9 @@
 	"citizen-action-addsection": "Pridėti temą",
 	"citizen-jumptotop": "Grįžti į viršų",
 	
-	"citizen-search-fulltext-empty": "Ieškoti teksto puslapiuose",
+	"citizen-search-fulltext": "Ieškoti teksto puslapiuose",
 	
-	"citizen-search-mediasearch-empty": "Ieškoti medijos",
+	"citizen-search-mediasearch": "Ieškoti medijos",
 	"citizen-search-empty-desc": "Rašykite norėdami pradėti ieškoti",
 	"citizen-search-noresults-title": "Oi! Nėra $1 rezultatų",
 	"citizen-search-noresults-desc": "Galbūt išbandykite toliau pateiktas parinktis?",

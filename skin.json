@@ -171,10 +171,8 @@
 			],
 			"messages": [
 				"citizen-search-fulltext",
-				"citizen-search-fulltext-empty",
 				"citizen-search-editpage",
 				"citizen-search-mediasearch",
-				"citizen-search-mediasearch-empty",
 				"citizen-search-empty-desc",
 				"citizen-search-noresults-title",
 				"citizen-search-noresults-desc",

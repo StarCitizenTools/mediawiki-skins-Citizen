@@ -457,7 +457,7 @@ function updateTypeaheadItems() {
 			// id: 'fulltext',
 			link: `${config.wgScriptPath}/index.php?title=Special:Search&fulltext=1&search=${searchQuery.valueHtml}`,
 			icon: 'articleSearch',
-			msg: 'citizen-search-fulltext-empty'
+			msg: 'citizen-search-fulltext'
 		} );
 
 		// Edit/create page
@@ -475,7 +475,7 @@ function updateTypeaheadItems() {
 				// id: 'mediasearch',
 				link: `${config.wgScriptPath}/index.php?title=Special:MediaSearch&type=image&search=${searchQuery.valueHtml}`,
 				icon: 'imageGallery',
-				msg: 'citizen-search-mediasearch-empty'
+				msg: 'citizen-search-mediasearch'
 			} );
 		}
 

@@ -29,9 +29,9 @@
 	"citizen-action-addsection": "Добавить тему",
 	"citizen-jumptotop": "Вернуться наверх",
 	
-	"citizen-search-fulltext-empty": "Поиск текста среди страниц",
+	"citizen-search-fulltext": "Поиск текста среди страниц",
 	
-	"citizen-search-mediasearch-empty": "Поиск медиафайлов",
+	"citizen-search-mediasearch": "Поиск медиафайлов",
 	"citizen-search-empty-desc": "Введите текст",
 	"citizen-search-noresults-title": "Ой! Нет результатов для $1",
 	"citizen-search-noresults-desc": "Может попробовать варианты ниже?",
