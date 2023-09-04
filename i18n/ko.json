@@ -24,9 +24,8 @@
 	"citizen-footer-tagline": "[[MediaWiki:Citizen-footer-tagline]]에서 이 문장을 편집할 수 있습니다.",
 	"citizen-action-addsection": "주제 추가",
 	"citizen-jumptotop": "맨 위로 돌아가기",
-	
-	
-	"citizen-search-mediasearch": "미디어 검색",
+	"citizen-search-fulltext": "$1 포함된 문서 검색",
+	"citizen-search-mediasearch": "$1 관련 미디어 검색",
 	"citizen-search-empty-desc": "검색을 시작하려면 입력하세요",
 	"citizen-search-noresults-title": "저런! $1 관련 결과가 없습니다",
 	"citizen-search-noresults-desc": "아래 옵션을 시도해 볼까요?",

@@ -19,7 +19,7 @@
 	"citizen-footer-tagline": "دەستکاری ئەم دەقە لەسەر [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "بابەت دابنێ",
 	"citizen-jumptotop": "گەڕانەوە بۆ سەرەوە",
-	
+	"citizen-search-fulltext": "گەڕان لە ناوەڕۆکی لاپەڕەکان",
 	"citizen-search-empty-desc": "بنوسە بۆ گەڕان",
 	"citizen-tagline-ns-talk": "لاپەڕەی گفتوگۆی {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "زانیاری لەبارەی {{SITENAME}}",

@@ -24,13 +24,12 @@
 	"citizen-footer-tagline": "Uredite to besedilo na [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Dodaj temo",
 	"citizen-jumptotop": "Nazaj na vrh",
-	
-	"citizen-search-fulltext": "Iskanje besedila na straneh",
-	
-	"citizen-search-mediasearch": "Iskanje predstavnosti",
+	"citizen-search-fulltext": "Poiščite strani, ki vsebujejo $1",
+	"citizen-search-mediasearch": "Iskanje predstavnosti, povezanih z $1",
+	"citizen-search-editpage": "Uredite ali ustvarite stran",
 	"citizen-search-empty-desc": "Vnesite za začetek iskanja",
 	"citizen-search-noresults-title": "Ojoj! Ni zadetkov za $1",
-	"citizen-search-noresults-desc": "Morda poskusite s spodnjimi možnostmi?",
+	"citizen-search-noresults-desc": "Morda poskusite z zgornjimi možnostmi?",
 	"citizen-tagline-ns-talk": "Pogovorna stran {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Informacije o projektu {{SITENAME}}",
 	"citizen-tagline-ns-file": "Datoteka v projektu {{SITENAME}}",

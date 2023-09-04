@@ -3,6 +3,7 @@
 		"authors": [
 			"Agaafd",
 			"BaRaN6161 TURK",
+			"JackUKElliott",
 			"Joseph",
 			"Melissadilara",
 			"Mim.saitkilic",
@@ -27,7 +28,9 @@
 	"citizen-footer-tagline": "Bu metni [[MediaWiki:Citizen-footer-tagline]] üzerinde düzenleyin",
 	"citizen-action-addsection": "Konu ekle",
 	"citizen-jumptotop": "Başa dön",
-	
+	"citizen-search-fulltext": "Sayfaların içindeki metni arayın",
+	"citizen-search-mediasearch": "Ortam ara",
+	"citizen-search-editpage": "Sayfayı düzenleyin veya oluşturun",
 	"citizen-search-empty-desc": "Aramaya başlamak için yazın",
 	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}} tartışma sayfası",
 	"citizen-tagline-ns-project": "{{SITENAME}} hakkında bilgi",
