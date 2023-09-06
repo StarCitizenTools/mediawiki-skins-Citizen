@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.8.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.8.1...v2.8.2) (2023-09-06)
+
+
+### Features
+
+* **search:** ✨ add missing border between placeholder and group ([2d54cbd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2d54cbd9307d7fc809ec6c410936313c995cc53f))
+* **search:** ✨ add suggestion to edit page ([3d31d08](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3d31d08021e71f75aa3749eeefd66cb7600785bb))
+* **search:** ✨ only add divider between groups ([9280e7c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9280e7c4a80cf001ba891c70cb9d464486cc4021))
+* **search:** ✨ only add divider between suggestions and footer ([96cf5be](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/96cf5be48c9535901afe62d710142d443fd43db7))
+* **search:** ✨ only change search input font size for mobile Safari ([cb02307](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cb02307cda0d8c4c0ce1590bfe874c7a547c2027))
+* **search:** ✨ only show edit page action if user has rights ([6f3d82d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6f3d82de046f02d7e2ff6a1268f4064ae027f165))
+* **search:** ✨ reorganize DOM structure of the typeahead ([1f0a2e5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1f0a2e5133ada37fb25eac267185fc538be1e51e))
+* **search:** ✨ strip wikitext link syntax in search ([0c0f4f4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0c0f4f4ffb892318e06f7fe000188afb9a6f0d8b))
+* **search:** ✨ various tweaks to typeahead styles ([969f4f0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/969f4f0d3d64a1db824bb3bbdaef687f8583779f))
+
+
+### Bug Fixes
+
+* **core:** 🐛 fire input event when search query is cleared ([325f22f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/325f22f0ddd767e86c77037488ffdd3427c9e3a4))
+* **search:** 🐛 incorrect thumbnail icon width ([3104280](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/31042804dfba860cc624556af0652de29551438f))
+* **search:** 🐛 make search input selectable ([e8f33bd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e8f33bdf93241f6ea0ae80d803fb0b2d3fafdc25))
+
 ### [2.8.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.8.0...v2.8.1) (2023-08-26)
 
 
