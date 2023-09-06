@@ -181,7 +181,9 @@
 				"searchsuggest-search"
 			],
 			"dependencies": [
-				"mediawiki.storage"
+				"mediawiki.storage",
+				"mediawiki.user",
+				"mediawiki.util"
 			],
 			"targets": [
 				"desktop",

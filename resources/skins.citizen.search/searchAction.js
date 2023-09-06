@@ -3,6 +3,12 @@ const htmlHelper = require( './htmlHelper.js' )();
 
 function searchAction() {
 	return {
+		userRights: undefined,
+		getUserRights: async function () {
+			// Get and cache user rights
+			this.userRights = await mw.user.getRights();
+			return this.userRights;
+		},
 		init: function ( typeaheadEl, itemGroupData ) {
 			const actionData = {
 				type: 'action',
@@ -11,7 +17,7 @@ function searchAction() {
 			itemGroupData.items = itemGroupData.items.map( ( item ) => ( { ...item, ...actionData } ) );
 			typeaheadEl.append( htmlHelper.getItemGroupElement( itemGroupData ) );
 		},
-		render: function ( typeaheadEl, searchQuery ) {
+		render: async function ( typeaheadEl, searchQuery ) {
 			const itemGroupData = {
 				id: 'action',
 				items: []
@@ -26,15 +32,6 @@ function searchAction() {
 				msg: 'citizen-search-fulltext'
 			} );
 
-			// Edit/create page
-			// TODO: Check if user has right, and whether the page exists
-			itemGroupData.items.push( {
-				// id: 'editpage',
-				link: `${config.wgScriptPath}/index.php?title=${searchQuery.valueHtml}&action=edit`,
-				icon: 'edit',
-				msg: 'citizen-search-editpage'
-			} );
-
 			// MediaSearch
 			if ( config.isMediaSearchExtensionEnabled ) {
 				itemGroupData.items.push( {
@@ -42,6 +39,24 @@ function searchAction() {
 					link: `${config.wgScriptPath}/index.php?title=Special:MediaSearch&type=image&search=${searchQuery.valueHtml}`,
 					icon: 'imageGallery',
 					msg: 'citizen-search-mediasearch'
+				} );
+			}
+
+			/*
+			For some reason title.exists() always returns null
+			const title = mw.Title.newFromUserInput( searchQuery.value );
+			console.log( title.exists() );
+			*/
+
+			const userRights = this.userRights ?? await this.getUserRights();
+			if ( userRights.includes( 'createpage', 'edit' ) ) {
+				// Edit/create page
+				// TODO: Check whether the page exists
+				itemGroupData.items.push( {
+					// id: 'editpage',
+					link: `${config.wgScriptPath}/index.php?title=${searchQuery.valueHtml}&action=edit`,
+					icon: 'edit',
+					msg: 'citizen-search-editpage'
 				} );
 			}
 
@@ -58,6 +73,9 @@ function searchAction() {
 					label: mw.message( item.msg )
 				} );
 			} );
+		},
+		clear: function ( typeaheadEl ) {
+			typeaheadEl.querySelector( '.citizen-typeahead-item-group[data-group="action"]' ).remove();
 		}
 	};
 }

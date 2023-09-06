@@ -448,6 +448,7 @@ function updateTypeaheadItems() {
 		searchAction.render( typeahead.element, searchQuery );
 		getSuggestions();
 	} else {
+		searchAction.clear( typeahead.element );
 		typeahead.items.clear();
 		presult.render( typeahead.element );
 		typeahead.items.set();
