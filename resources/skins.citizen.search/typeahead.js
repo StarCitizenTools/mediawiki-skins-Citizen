@@ -298,6 +298,7 @@ const typeahead = {
 
 		searchHistory.init();
 
+		presult.render( this.element );
 		// Init the value in case of undef error
 		typeahead.items.set();
 
