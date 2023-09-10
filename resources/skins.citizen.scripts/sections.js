@@ -10,13 +10,13 @@ function init( bodyContent ) {
 	}
 
 	const
-		headings = bodyContent.querySelectorAll( '.section-heading' ),
-		sections = bodyContent.querySelectorAll( '.section-collapsible' ),
+		headings = bodyContent.querySelectorAll( '.citizen-section-heading' ),
+		sections = bodyContent.querySelectorAll( '.citizen-section-collapsible' ),
 		editSections = bodyContent.querySelectorAll( '.mw-editsection, .mw-editsection-like' );
 
 	for ( let i = 0; i < headings.length; i++ ) {
 		const j = i + 1,
-			collapsibleID = `section-collapsible-${j}`,
+			collapsibleID = `citizen-section-collapsible-${j}`,
 			/* T13555 */
 			headline = headings[ i ].querySelector( '.mw-headline' ) || headings[ i ].querySelector( '.mw-heading' );
 
@@ -30,10 +30,10 @@ function init( bodyContent ) {
 		headings[ i ].addEventListener( 'click', function () {
 			// .section-heading--collapsed
 
-			this.classList.toggle( 'section-heading--collapsed' );
+			this.classList.toggle( 'citizen-section-heading--collapsed' );
 			// .section-collapsible--collapsed
 
-			sections[ j ].classList.toggle( 'section-collapsible--collapsed' );
+			sections[ j ].classList.toggle( 'citizen-section-collapsible--collapsed' );
 			headline.setAttribute( 'aria-expanded', headline.getAttribute( 'aria-expanded' ) === 'true' ? 'false' : 'true' );
 		} );
 	}

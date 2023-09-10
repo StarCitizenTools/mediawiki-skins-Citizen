@@ -1,5 +1,5 @@
 .citizen-sections-enabled {
-	.section {
+	.citizen-section {
 		&-heading {
 			cursor: pointer;
 			// So that double clicking won't highlight everything
@@ -7,7 +7,7 @@
 			user-select: none;
 
 			&--collapsed {
-				.section-indicator {
+				.citizen-section-indicator {
 					transform: rotate3d( 1, 0, 0, 180deg );
 				}
 
@@ -69,7 +69,7 @@
 
 // Hide indicator when client is noscript
 .client-nojs {
-	.section {
+	.citizen-section {
 		&-indicator {
 			display: none;
 		}
@@ -78,7 +78,7 @@
 
 // Fix hover state on touch devices
 @media ( hover: none ) {
-	.citizen-sections-enabled .section {
+	.citizen-sections-enabled .citizen-section {
 		&-heading .mw-headline,
 		&-indicator {
 			&:hover,

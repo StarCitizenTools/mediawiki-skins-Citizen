@@ -45,7 +45,7 @@ final class BodyContent extends Partial {
 	/**
 	 * Class name for collapsible section wrappers
 	 */
-	public const STYLE_COLLAPSIBLE_SECTION_CLASS = 'section-collapsible';
+	public const STYLE_COLLAPSIBLE_SECTION_CLASS = 'citizen-section-collapsible';
 
 	/**
 	 * List of tags that could be considered as section headers.
@@ -189,11 +189,11 @@ final class BodyContent extends Partial {
 	 */
 	private function prepareHeading( DOMDocument $doc, DOMElement $heading, $sectionNumber ) {
 		$className = $heading->hasAttribute( 'class' ) ? $heading->getAttribute( 'class' ) . ' ' : '';
-		$heading->setAttribute( 'class', $className . 'section-heading' );
+		$heading->setAttribute( 'class', $className . 'citizen-section-heading' );
 
 		// prepend indicator - this avoids a reflow by creating a placeholder for a toggling indicator
 		$indicator = $doc->createElement( 'span' );
-		$indicator->setAttribute( 'class', 'section-indicator citizen-ui-icon mw-ui-icon-wikimedia-collapse' );
+		$indicator->setAttribute( 'class', 'citizen-section-indicator citizen-ui-icon mw-ui-icon-wikimedia-collapse' );
 		$heading->insertBefore( $indicator, $heading->firstChild );
 	}
 
@@ -208,7 +208,7 @@ final class BodyContent extends Partial {
 	private function createSectionBodyElement( DOMDocument $doc, $sectionNumber ) {
 		$sectionBody = $doc->createElement( 'section' );
 		$sectionBody->setAttribute( 'class', self::STYLE_COLLAPSIBLE_SECTION_CLASS );
-		$sectionBody->setAttribute( 'id', 'section-collapsible-' . $sectionNumber );
+		$sectionBody->setAttribute( 'id', 'citizen-section-collapsible-' . $sectionNumber );
 
 		return $sectionBody;
 	}
