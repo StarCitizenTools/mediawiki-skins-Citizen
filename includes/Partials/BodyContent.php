@@ -174,9 +174,6 @@ final class BodyContent extends Partial {
 		// Append the last section body.
 		$container->appendChild( $sectionBody );
 
-		// Mark subheadings
-		$this->markSubHeadings( $this->getSubHeadings( $doc ) );
-
 		return $doc;
 	}
 
@@ -247,54 +244,5 @@ final class BodyContent extends Partial {
 		}
 
 		return $headings;
-	}
-
-	/**
-	 * Marks the subheadings for the approiate styles by adding
-	 * the <code>section-subheading</code> class to each of them, if it
-	 * hasn't already been added.
-	 *
-	 * @param DOMElement[] $headings Heading elements
-	 */
-	protected function markSubHeadings( array $headings ) {
-		foreach ( $headings as $heading ) {
-			$class = $heading->getAttribute( 'class' );
-			if ( strpos( $class, 'section-subheading' ) === false ) {
-				$heading->setAttribute(
-					'class',
-					ltrim( $class . ' section-subheading' )
-				);
-			}
-		}
-	}
-
-	/**
-	 * Gets all subheadings in the document in rank order.
-	 *
-	 * @param DOMDocument $doc
-	 * @return DOMElement[]
-	 */
-	private function getSubHeadings( DOMDocument $doc ): array {
-		$found = false;
-		$subheadings = [];
-		foreach ( $this->topHeadingTags as $tagName ) {
-			$allTags = DOMCompat::querySelectorAll( $doc, $tagName );
-			$elements = [];
-			foreach ( $allTags as $el ) {
-				if ( $el->parentNode->getAttribute( 'class' ) !== 'toctitle' ) {
-					$elements[] = $el;
-				}
-			}
-
-			if ( $elements ) {
-				if ( !$found ) {
-					$found = true;
-				} else {
-					$subheadings = array_merge( $subheadings, $elements );
-				}
-			}
-		}
-
-		return $subheadings;
 	}
 }
