@@ -234,7 +234,7 @@ final class BodyContent extends Partial {
 				// (T13555), the querySelectorAll() above can use the class and this can be removed.
 				if ( $parentClasses->contains( 'mw-heading' ) ) {
 					$el = $parent;
-				} else if ( !$parentClasses->contains( 'mw-parser-output' ) ) {
+				} elseif ( !$parentClasses->contains( 'mw-parser-output' ) ) {
 					// Only target page headings, but not other heading tags
 					// TODO: Drop this when T13555 is deployed on LTS
 					continue;
