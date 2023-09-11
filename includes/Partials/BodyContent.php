@@ -232,7 +232,7 @@ final class BodyContent extends Partial {
 
 				// Only target page headings, but not other heading tags
 				// TODO: Drop this when T13555 is deployed on LTS
-				if ( !$parentClasses->contains( 'mw-parser-output') ) {
+				if ( !$parentClasses->contains( 'mw-parser-output' ) ) {
 					continue;
 				}
 
