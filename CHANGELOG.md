@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.8.3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.8.2...v2.8.3) (2023-09-11)
+
+
+### Features
+
+* **core:** ✨ prefix citizen section classes ([2f40541](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2f40541bc43d70b73337882971308746ec07d076))
+* **PortableInfobox:** ✨ reduce paragraph margin to be similar to Vector ([7b63d86](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7b63d8637ed610a3ed726e46af9b9a9f9adfc2a3))
+* **PortableInfobox:** ✨ sync border color ([2d99879](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2d99879ce3147e87e22234ad375ad6bb66913cc5))
+
+
+### Bug Fixes
+
+* **core:** 🐛 do not wrap diff table ([f38e6bb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f38e6bb120f64c38001ccb6de07da99c8c8f1b03))
+* **core:** 🐛 stricter selector for collapsible header ([a6a9fe2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a6a9fe27e40834131a805385e269b68adb7339fc))
+* **core:** 🐛 stricter selector for collasible headers in formatter ([45a726d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/45a726d77f4ad7c3dbc82c4ff00ff3e716cb5c04))
+* **search:** 🐛 search icon clipping ([68dc715](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/68dc7151388291b7ca49fded3ed547e2b66acd40))
+* **search:** 🐛 show presult during init ([2a2d6e3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2a2d6e381fa4e27cceb7c733fc23c22dd75eb264))
+
 ### [2.8.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.8.1...v2.8.2) (2023-09-06)
 
 
