@@ -227,11 +227,21 @@ final class BodyContent extends Partial {
 				if ( !( $parent instanceof DOMElement ) ) {
 					continue;
 				}
+
+				$parentClasses = DOMCompat::getClassList( $parent );
+
+				// Only target page headings, but not other heading tags
+				// TODO: Drop this when T13555 is deployed on LTS
+				if ( !$parentClasses->contains( 'mw-parser-output') ) {
+					continue;
+				}
+
 				// Use the `<div class="mw-heading">` wrapper if it is present. When they are required
 				// (T13555), the querySelectorAll() above can use the class and this can be removed.
-				if ( DOMCompat::getClassList( $parent )->contains( 'mw-heading' ) ) {
+				if ( $parentClasses->contains( 'mw-heading' ) ) {
 					$el = $parent;
 				}
+
 				// This check can be removed too when we require the wrappers.
 				if ( $parent->getAttribute( 'class' ) !== 'toctitle' ) {
 					$headings[] = $el;
