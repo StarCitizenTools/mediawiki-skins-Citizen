@@ -638,6 +638,7 @@
 		"TableNowrapClasses": {
 			"value": [
 				"citizen-table-nowrap",
+				"diff",
 				"mw-changeslist-line",
 				"mw-recentchanges-table",
 				"infobox",
