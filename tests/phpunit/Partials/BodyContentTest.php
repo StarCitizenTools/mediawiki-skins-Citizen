@@ -78,7 +78,7 @@ class BodyContentTest extends MediaWikiIntegrationTestCase {
 HTML;
 
 		AtEase::suppressWarnings();
-		$this->assertStringContainsString( 'section-indicator', $partial->decorateBodyContent( $html ) );
+		$this->assertStringContainsString( 'citizen-section-indicator', $partial->decorateBodyContent( $html ) );
 		AtEase::restoreWarnings();
 	}
 }
