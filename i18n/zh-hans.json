@@ -10,12 +10,13 @@
 			"Lantianjialiang",
 			"StarrySky",
 			"WrOffi",
+			"Xyb",
 			"Yfdyh000",
 			"沈澄心"
 		]
 	},
 	"skinname-citizen": "公民 （Citizen）",
-	"citizen-skin-desc": "为星际公民百科而开发的响应式皮肤",
+	"citizen-skin-desc": "漂亮、可用、响应灵敏的MediaWiki皮肤，使扩展成为凝聚体验的一部分。最初是为[https://starcitizen.tools/ Star Citizen Wiki]创建的。",
 	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|讨论]]",
 	"citizen.css": "/* 这里的任何CSS将为使用Citizen皮肤的用户加载 */",
 	"citizen.js": "/* 这里的任何JavaScript将为使用Citizen皮肤的用户加载 */",
