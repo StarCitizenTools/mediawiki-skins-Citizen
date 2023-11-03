@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.8.4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.8.3...v2.8.4) (2023-11-03)
+
+
+### Bug Fixes
+
+* **core:** 🐛 check for mw-heading wrapper first before mw-parser-output ([672740a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/672740a23ad0c86589893a56f77f69792613782e))
+* **core:** 🐛 hide loading indicator when user clicks back button on browser ([201a38f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/201a38f93f7e57b605fd2de297f4bdc2d48fdc54)), closes [#718](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/718)
+* **core:** RTL flipping of the progressbar animation keyframe ([#723](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/723)) ([456b75c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/456b75c1b19b71f1008591f07d9fef065176a626))
+* **toc:** 🐛 incorrect layout when ToC title has multiple elements ([2c10335](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2c10335ae3080364d83a807fe4dd72b8a6493d50))
+
 ### [2.8.3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.8.2...v2.8.3) (2023-09-11)
 
 
