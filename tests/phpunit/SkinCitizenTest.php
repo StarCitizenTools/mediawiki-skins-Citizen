@@ -13,7 +13,6 @@ use RequestContext;
 /**
  * TODO: Fully test tagline logic
  * @group Citizen
- * @group Database
  */
 class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 	/**

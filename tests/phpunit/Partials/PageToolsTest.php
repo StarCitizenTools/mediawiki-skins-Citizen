@@ -13,6 +13,7 @@ use RequestContext;
 
 /**
  * @group Citizen
+ * @group Database
  */
 class PageToolsTest extends MediaWikiIntegrationTestCase {
 	/**

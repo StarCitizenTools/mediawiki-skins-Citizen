@@ -9,6 +9,7 @@ use MediaWiki\Skins\Citizen\SkinCitizen;
 
 /**
  * @group Citizen
+ * @group Database
  */
 class DrawerTest extends \MediaWikiIntegrationTestCase {
 	/**
