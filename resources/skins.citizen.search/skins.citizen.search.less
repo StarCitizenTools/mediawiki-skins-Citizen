@@ -58,14 +58,20 @@
 
 	&-item {
 		&-group {
-			+ .citizen-typeahead-item-group,
-			+ .citizen-typeahead__item-placeholder {
-				border-top: 1px solid var( --border-color-base );
-			}
-
 			&-list {
 				margin: 0;
 				list-style: none;
+			}
+
+			// FIXME: Use a generic attribute
+			&[ data-group='action' ] .citizen-typeahead-item-group-list {
+				display: flex;
+				gap: var( --space-xxs );
+				padding-right: var( --space-sm );
+				padding-left: var( --space-sm );
+				margin-top: var( --space-xs );
+				margin-bottom: var( --space-xs );
+				overflow-x: auto;
 			}
 		}
 	}
@@ -77,6 +83,24 @@
 
 		&--hidden {
 			display: none;
+		}
+
+		&-chip {
+			border-radius: var( --border-radius--medium );
+
+			.citizen-typeahead {
+				&__content {
+					padding: var( --space-xs ) var( --space-sm );
+					margin: 0;
+					border: 1px solid var( --border-color-base );
+					border-radius: var( --border-radius--medium );
+				}
+
+				&__thumbnail {
+					width: 1rem;
+					height: 1rem;
+				}
+			}
 		}
 
 		&-sm {

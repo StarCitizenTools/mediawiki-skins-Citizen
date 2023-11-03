@@ -12,7 +12,7 @@ function searchAction() {
 		init: function ( typeaheadEl, itemGroupData ) {
 			const actionData = {
 				type: 'action',
-				size: 'sm'
+				size: 'chip'
 			};
 			itemGroupData.items = itemGroupData.items.map( ( item ) => ( { ...item, ...actionData } ) );
 			typeaheadEl.append( htmlHelper.getItemGroupElement( itemGroupData ) );
@@ -68,7 +68,6 @@ function searchAction() {
 				const actionEl = document.getElementById( `citizen-typeahead-action-${index}` );
 				htmlHelper.updateItemElement( actionEl, {
 					link: item.link,
-					title: searchQuery.value,
 					/* eslint-disable-next-line mediawiki/msg-doc */
 					label: mw.message( item.msg )
 				} );
