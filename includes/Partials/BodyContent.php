@@ -132,7 +132,7 @@ final class BodyContent extends Partial {
 	 */
 	private function makeSections( DOMDocument $doc, array $headingWrappers ) {
 		$xpath = new DOMXpath( $doc );
-		$containers = $xpath->query( '//div[@class="mw-parser-output"][1]' );
+		$containers = $xpath->query( 'body/div[contains(concat(" ",normalize-space(@class)," ")," mw-parser-output ")][1]' );
 
 		// Return if no parser output is found
 		if ( !$containers->length || $containers->item( 0 ) === null ) {
