@@ -12,7 +12,8 @@
 			"WrOffi",
 			"Xyb",
 			"Yfdyh000",
-			"沈澄心"
+			"沈澄心",
+			"铁桶"
 		]
 	},
 	"skinname-citizen": "公民 （Citizen）",
@@ -44,7 +45,7 @@
 	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}}的讨论页",
 	"citizen-tagline-ns-project": "关于{{SITENAME}}",
 	"citizen-tagline-ns-file": "{{SITENAME}}上的文件",
-	"citizen-tagline-ns-mediawiki": "MediaWiki系统消息页面",
+	"citizen-tagline-ns-mediawiki": "MediaWiki界面页面",
 	"citizen-tagline-ns-template": "模板页面",
 	"citizen-tagline-ns-help": "帮助页面",
 	"citizen-tagline-ns-category": "分类页面",
@@ -56,5 +57,5 @@
 	"prefs-citizen-fontsize-label": "字体大小",
 	"prefs-citizen-pagewidth-label": "页面宽度",
 	"prefs-citizen-lineheight-label": "行高",
-	"prefs-citizen-resetbutton-label": "重置到默认"
+	"prefs-citizen-resetbutton-label": "重置为默认设置"
 }
