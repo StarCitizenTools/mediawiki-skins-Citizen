@@ -157,10 +157,7 @@ final class BodyContent extends Partial {
 			// If we've found a top level heading, insert the previous section if
 			// necessary and clear the container div.
 			if ( $firstHeadingName && $this->getHeadingName( $node ) === $firstHeadingName ) {
-				// The heading we are transforming is always 1 section ahead of the
-				// section we are currently processing
-				/** @phan-suppress-next-line PhanTypeMismatchArgument DOMNode vs. DOMElement */
-				$this->prepareHeading( $doc, $node, $sectionNumber + 1 );
+				$this->prepareHeading( $doc, $node );
 				// Insert the previous section body and reset it for the new section
 				$container->insertBefore( $sectionBody, $node );
 
@@ -185,9 +182,8 @@ final class BodyContent extends Partial {
 	 *
 	 * @param DOMDocument $doc
 	 * @param DOMElement $heading
-	 * @param int $sectionNumber
 	 */
-	private function prepareHeading( DOMDocument $doc, DOMElement $heading, $sectionNumber ) {
+	private function prepareHeading( DOMDocument $doc, DOMElement $heading ) {
 		$className = $heading->hasAttribute( 'class' ) ? $heading->getAttribute( 'class' ) . ' ' : '';
 		$heading->setAttribute( 'class', $className . 'citizen-section-heading' );
 
