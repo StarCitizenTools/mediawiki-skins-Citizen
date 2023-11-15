@@ -134,7 +134,7 @@ final class BodyContent extends Partial {
 		$xpath = new DOMXpath( $doc );
 		$containers = $xpath->query(
 			// Equivalent of CSS attribute `~=` to support multiple classes
-			'body/div[contains(concat(" ",normalize-space(@class)," ")," mw-parser-output ")][1]'
+			'//div[contains(concat(" ",normalize-space(@class)," ")," mw-parser-output ")][1]'
 		);
 
 		// Return if no parser output is found
