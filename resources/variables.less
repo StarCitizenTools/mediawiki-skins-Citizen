@@ -14,25 +14,15 @@
 /* Imports */
 /*
  * MediaWiki mixins
- * https://github.com/wikimedia/mediawiki/blob/master/resources/src/mediawiki.less/mediawiki.mixins.less
+ * @see https://github.com/wikimedia/mediawiki/blob/master/resources/src/mediawiki.less/mediawiki.mixins.less
  */
 @import 'mediawiki.mixins';
 /*
  * MediaWiki skin variables
- * https://github.com/wikimedia/mediawiki/blob/master/resources/src/mediawiki.less/mediawiki.skin.defaults.less
- * @see T349359
+ * mediawiki.less/mediawiki.skin.variables.less
+ * @see https://github.com/wikimedia/mediawiki/blob/master/resources/src/mediawiki.less/mediawiki.skin.defaults.less
  */
 @import 'mediawiki.skin.variables.less';
-
-/* Compatiblity */
-// @since 1.41
-@min-width-breakpoint-mobile: 320px;
-@min-width-breakpoint-tablet: 640px;
-@min-width-breakpoint-desktop: 1120px;
-@min-width-breakpoint-desktop-wide: 1680px;
-@max-width-breakpoint-mobile: @min-width-breakpoint-tablet - 1px;
-@max-width-breakpoint-tablet: @min-width-breakpoint-desktop - 1px;
-@max-width-breakpoint-desktop: @min-width-breakpoint-desktop-wide - 1px;
 
 /* == Spacing == */
 @space-unit: 1rem;

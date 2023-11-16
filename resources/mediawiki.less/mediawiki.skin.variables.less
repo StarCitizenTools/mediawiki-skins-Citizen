@@ -1,14 +1,43 @@
 /*
  * Citizen
  *
- * This file is a LESS @import match for "mediawiki.skin.variables.less"
- * Version: REL1_39
- *
- * Date: 2022-11-14
+ * Core MediaWiki skin tokens
+ * Used by supported extensions and other UI in the MW ecosystem
+ * @see https://phabricator.wikimedia.org/T349359
 */
 
 @import 'mediawiki.skin.defaults.less';
 
+/*
+ * Backported variables
+ * @see https://github.com/wikimedia/mediawiki/blob/master/resources/src/mediawiki.less/mediawiki.skin.defaults.less
+ * TODO: Remove unused variables on the next LTS release
+ */
+
+// @since 1.41
+@min-width-breakpoint-mobile: 320px;
+@min-width-breakpoint-tablet: 640px;
+@min-width-breakpoint-desktop: 1120px;
+@min-width-breakpoint-desktop-wide: 1680px;
+@max-width-breakpoint-mobile: @min-width-breakpoint-tablet - 1px;
+@max-width-breakpoint-tablet: @min-width-breakpoint-desktop - 1px;
+@max-width-breakpoint-desktop: @min-width-breakpoint-desktop-wide - 1px;
+
+/*
+ * Polyfill deprecated variables
+ * @see https://github.com/wikimedia/mediawiki/blob/REL1_39/resources/src/mediawiki.less/mediawiki.skin.defaults.less
+ * TODO: Remove unused variables on the next LTS release
+ */
+
+// deprecated since 1.41
+@width-breakpoint-mobile: @min-width-breakpoint-mobile;
+@width-breakpoint-tablet: @min-width-breakpoint-tablet;
+@width-breakpoint-desktop: @min-width-breakpoint-desktop;
+@width-breakpoint-desktop-wide: @min-width-breakpoint-desktop-wide;
+
+/*
+ * Citizen variables override
+ */
 @color-link: var( --color-link );
 @color-link--visited: var( --color-link );
 @color-link--active: var( --color-link--active );
