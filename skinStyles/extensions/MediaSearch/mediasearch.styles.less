@@ -769,7 +769,7 @@
 			border-radius: var( --border-radius--large );
 
 			// Responsive handling
-			@media screen and ( max-width: @width-breakpoint-tablet ) {
+			@media screen and ( max-width: @max-width-breakpoint-tablet ) {
 				position: fixed;
 				top: unset;
 				bottom: 0;
@@ -796,7 +796,7 @@
 
 	&__list-wrapper--collapsed {
 		// Responsive handling
-		@media screen and ( max-width: @width-breakpoint-tablet ) {
+		@media screen and ( max-width: @max-width-breakpoint-tablet ) {
 			// Since the quickview card is a modal, we don't need the right margin anymore
 			margin-right: 0;
 		}
@@ -902,7 +902,7 @@
 			color: var( --color-base--emphasized );
 			border-radius: var( --border-radius--small );
 
-			@media screen and ( min-width: @width-breakpoint-tablet ) {
+			@media screen and ( min-width: @min-width-breakpoint-tablet ) {
 				font-size: 0.875rem;
 			}
 
@@ -937,7 +937,7 @@
 	&__namespace {
 		border-radius: var( --border-radius--small );
 
-		@media screen and ( min-width: @width-breakpoint-tablet ) {
+		@media screen and ( min-width: @min-width-breakpoint-tablet ) {
 			font-size: 0.875rem;
 		}
 
@@ -966,14 +966,14 @@
 	}
 
 	.sdms-search-results-count {
-		@media screen and ( min-width: @width-breakpoint-tablet ) {
+		@media screen and ( min-width: @min-width-breakpoint-tablet ) {
 			font-size: 0.875rem;
 		}
 	}
 
 	&__clear {
 		&--no-js {
-			@media screen and ( min-width: @width-breakpoint-tablet ) {
+			@media screen and ( min-width: @min-width-breakpoint-tablet ) {
 				font-size: 0.875rem;
 			}
 		}

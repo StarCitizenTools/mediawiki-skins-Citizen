@@ -51,7 +51,7 @@
 	grid-area: content;
 }
 
-@media ( min-width: @width-breakpoint-desktop ) {
+@media ( min-width: @min-width-breakpoint-desktop ) {
 	.citizen-page-container {
 		// Reserve space for header
 		margin-left: var( --header-size );
@@ -70,7 +70,7 @@
 }
 
 /* Wider page width for certain namespaces */
-@media ( min-width: @width-breakpoint-desktop-wide ) {
+@media ( min-width: @min-width-breakpoint-desktop-wide ) {
 	// 1 - Special, 6 - File, 14 - Category
 	.ns {
 		&--1,

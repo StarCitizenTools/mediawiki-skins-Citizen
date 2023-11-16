@@ -145,7 +145,7 @@ video {
 	}
 }
 
-@media ( max-width: @width-breakpoint-tablet ) {
+@media ( max-width: @max-width-breakpoint-tablet ) {
 	.mw-body,
 	.parsoid-body {
 		overflow-x: hidden; // fallback if clip is not supported
@@ -153,7 +153,7 @@ video {
 	}
 }
 
-@media ( min-width: @width-breakpoint-tablet ) {
+@media ( min-width: @min-width-breakpoint-tablet ) {
 	// Delay scroll animation won't happen on load
 	// Use it only for larger viewport as it is very costly
 	// on mobile devices

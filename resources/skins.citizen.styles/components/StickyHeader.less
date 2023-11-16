@@ -55,7 +55,7 @@
 }
 
 // Hide sticky header on scroll down on smaller screens
-@media ( max-width: @width-breakpoint-tablet ) {
+@media ( max-width: @max-width-breakpoint-tablet ) {
 	.citizen-body-header--sticky {
 		.mw-body-header {
 			transition: var( --transition-menu );
@@ -71,7 +71,7 @@
 }
 
 // Make sticky header more compact if there are less screen estate
-@media ( max-width: @width-breakpoint-tablet ), ( max-height: 800px ) {
+@media ( max-width: @max-width-breakpoint-tablet ), ( max-height: 800px ) {
 	.citizen-body-header--sticky {
 		#siteSub {
 			display: none;

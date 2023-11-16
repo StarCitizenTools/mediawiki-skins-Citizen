@@ -1,33 +1,41 @@
 /*
- * Citizen - LESS variables
- * https://starcitizen.tools
- */
+ * Citizen
+ *
+ * All LESS variables used in the skin must be defined here
+ * Use CSS variables from cssvariables.less is preferrable
+ * Only import this stylesheet when LESS variables is nessecary
+ *
+ * Related files:
+ * - Citizen CSS variables: skins.citizen.styles/common/cssvariables.less
+ * - Override MW skin default variables: mediawiki.less/mediawiki.skin.variables.less
+ *
+*/
 
-// Import MediaWiki-supplied mixins
+
+/* Imports */
+/* 
+ * MediaWiki mixins
+ * https://github.com/wikimedia/mediawiki/blob/master/resources/src/mediawiki.less/mediawiki.mixins.less
+ */
 @import 'mediawiki.mixins';
-
-/* == Breakpoints == */
-/**
- * Minimum available screen width at which a device can be considered a mobile device
- * Many older feature phones have screens smaller than this value.
+/* 
+ * MediaWiki skin variables
+ * https://github.com/wikimedia/mediawiki/blob/master/resources/src/mediawiki.less/mediawiki.skin.defaults.less
+ * @see T349359
  */
-@width-breakpoint-mobile: 320px;
+@import 'mediawiki.skin.variables.less';
 
-/**
- * Minimum available screen width at which a device can be considered a tablet
- * The number is currently based on the device width of a Samsung Galaxy S5 mini and is low
- * enough to cover iPad (768px).
- */
-@width-breakpoint-tablet: 720px;
 
-/* Minimum available screen width at which a device can be considered a desktop. */
-@width-breakpoint-desktop: 1000px;
+/* Compatiblity */
+// @since 1.41
+@min-width-breakpoint-mobile: 320px;
+@min-width-breakpoint-tablet: 640px;
+@min-width-breakpoint-desktop: 1120px;
+@min-width-breakpoint-desktop-wide: 1680px;
+@max-width-breakpoint-mobile: @min-width-breakpoint-tablet - 1px;
+@max-width-breakpoint-tablet: @min-width-breakpoint-desktop - 1px;
+@max-width-breakpoint-desktop: @min-width-breakpoint-desktop-wide - 1px;
 
-/* Wider desktop breakpoint */
-@width-breakpoint-desktop-wide: 1300px;
-
-/* Extra wide desktop breakpoint */
-@width-breakpoint-desktop-extrawide: 2000px;
 
 /* == Spacing == */
 @space-unit: 1rem;

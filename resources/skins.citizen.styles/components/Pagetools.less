@@ -238,7 +238,7 @@
 }
 
 // To avoid more menu from overflow in narrow screen
-@media ( max-width: @width-breakpoint-tablet ) {
+@media ( max-width: @max-width-breakpoint-tablet ) {
 	.page-actions {
 		&__item {
 			position: unset;
@@ -251,7 +251,7 @@
 	}
 }
 
-@media ( min-width: @width-breakpoint-desktop ) {
+@media ( min-width: @min-width-breakpoint-desktop ) {
 	.page-actions {
 		> .mw-portlet {
 			li > a {

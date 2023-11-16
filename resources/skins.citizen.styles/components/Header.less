@@ -153,7 +153,7 @@
 	}
 }
 
-@media ( min-width: @width-breakpoint-desktop ) {
+@media ( min-width: @min-width-breakpoint-desktop ) {
 	.citizen-header {
 		--header-direction: column;
 		top: 0;
@@ -172,7 +172,7 @@
 }
 
 /* Hide header when scroll down on smaller screen sizes */
-@media ( max-width: @width-breakpoint-tablet ) {
+@media ( max-width: @max-width-breakpoint-tablet ) {
 	.citizen-header {
 		transition: var( --transition-menu );
 		transition-property: transform;

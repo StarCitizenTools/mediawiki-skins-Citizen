@@ -159,7 +159,7 @@ html {
 	--border-color-input--hover: @dark-border-color-input--hover;
 }
 
-@media ( min-width: @width-breakpoint-tablet ) {
+@media ( min-width: @min-width-breakpoint-tablet ) {
 	:root {
 		--font-size-h1: 2rem;
 		--font-size-h2: 1.5rem;
@@ -172,7 +172,7 @@ html {
 	}
 }
 
-@media ( min-width: @width-breakpoint-desktop ) {
+@media ( min-width: @min-width-breakpoint-desktop ) {
 	html {
 		--padding-page: @padding-page * 2;
 		--header-card-maxheight: ~'calc( 100vh - var( --space-sm ) * 2 )';

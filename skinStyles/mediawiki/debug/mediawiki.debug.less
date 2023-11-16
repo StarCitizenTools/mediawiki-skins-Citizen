@@ -17,7 +17,7 @@
 	width: -moz-available;
 	margin-bottom: var( --header-size );
 
-	@media ( min-width: @width-breakpoint-desktop ) {
+	@media ( min-width: @min-width-breakpoint-desktop ) {
 		margin-bottom: 0;
 		// So that it is not hidden by header
 		margin-left: ~'calc( var( --header-size ) + 1px )'; // compensate border
@@ -149,7 +149,7 @@ a.mw-debug-panelabel:visited {
 		letter-spacing: 0.05em;
 	}
 
-	@media ( min-width: @width-breakpoint-desktop ) {
+	@media ( min-width: @min-width-breakpoint-desktop ) {
 		// So that it is not hidden by header
 		margin-left: var( --header-size );
 	}

@@ -16,7 +16,7 @@
 	grid-template-columns: 1fr;
 	gap: var( --space-sm );
 	width: auto;
-	max-width: @width-breakpoint-tablet;
+	max-width: @max-width-breakpoint-tablet;
 	padding: var( --space-md );
 	margin: var( --space-xs );
 	font-size: 0.875rem;
@@ -26,7 +26,7 @@
 	border-radius: var( --border-radius--large );
 	box-shadow: var( --box-shadow-dialog );
 
-	@media only screen and ( min-width: @width-breakpoint-desktop ) {
+	@media only screen and ( min-width: @min-width-breakpoint-desktop ) {
 		right: unset;
 		left: var( --header-size );
 	}

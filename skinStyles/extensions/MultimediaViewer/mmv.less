@@ -24,7 +24,7 @@
 	box-shadow: var( --box-shadow-dialog );
 
 	// The dialog will always show above the metadata in mobile view
-	@media ( max-width: @width-breakpoint-tablet ) {
+	@media ( max-width: @max-width-breakpoint-tablet ) {
 		top: unset !important;
 		right: 0 !important;
 		bottom: @mmv-height-abovethefold !important;
@@ -40,7 +40,7 @@
 		background-color: var( --color-surface-1 );
 
 		// Hide arrow since the dialog is no longer relative
-		@media ( max-width: @width-breakpoint-tablet ) {
+		@media ( max-width: @max-width-breakpoint-tablet ) {
 			display: none;
 		}
 	}
@@ -207,7 +207,7 @@
 
 /* mmv.ui.canvas.less */
 .mw-mmv-image img {
-	@media ( max-width: @width-breakpoint-tablet ) {
+	@media ( max-width: @max-width-breakpoint-tablet ) {
 		pointer-events: none;
 		// It is frustrating to misclick the image on mobile
 		// So that the image is not clickable on mobile
@@ -396,7 +396,7 @@
 	font-size: 0.875rem;
 
 	// Icon only button for smaller screen size
-	@media ( max-width: @width-breakpoint-tablet ) {
+	@media ( max-width: @max-width-breakpoint-tablet ) {
 		text-indent: -9999px;
 
 		&::before {
@@ -459,7 +459,7 @@
 	&.mw-mmv-title-smaller {
 		font-size: 1rem;
 
-		@media ( max-width: @width-breakpoint-tablet ) {
+		@media ( max-width: @max-width-breakpoint-tablet ) {
 			font-size: 0.875rem;
 		}
 	}
@@ -477,7 +477,7 @@
 	font-size: 0.875rem;
 	color: var( --color-base--subtle );
 
-	@media ( max-width: @width-breakpoint-tablet ) {
+	@media ( max-width: @max-width-breakpoint-tablet ) {
 		font-size: 0.8125rem;
 	}
 
@@ -516,7 +516,7 @@
 		gap: var( --space-lg );
 		background-color: transparent;
 
-		@media ( max-width: @width-breakpoint-tablet ) {
+		@media ( max-width: @max-width-breakpoint-tablet ) {
 			grid-template-areas:
  'desc desc'
 				'links links'
@@ -552,7 +552,7 @@
 	li {
 		font-size: 0.875rem;
 
-		@media ( max-width: @width-breakpoint-tablet ) {
+		@media ( max-width: @max-width-breakpoint-tablet ) {
 			font-size: 0.8125rem;
 		}
 
