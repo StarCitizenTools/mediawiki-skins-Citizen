@@ -124,20 +124,7 @@
 	}
 }
 
-// Move down when site header is hidden
-@media ( max-width: ( @width-breakpoint-tablet ) ) {
-	.citizen-toc {
-		transition: var( --transition-menu );
-		transition-property: transform;
-		will-change: transform;
-	}
-
-	.citizen-scroll--down .citizen-toc {
-		transform: translateY( var( --header-size ) );
-	}
-}
-
-@media ( max-width: ( @width-breakpoint-desktop - 1px ) ) {
+@media ( max-width: ( @max-width-breakpoint-tablet ) ) {
 	.citizen-toc {
 		position: fixed;
 		right: 0;
@@ -145,6 +132,9 @@
 		z-index: @z-index-page-header;
 		// Allow click through
 		pointer-events: none;
+		transition: var( --transition-menu );
+		transition-property: transform;
+		will-change: transform;
 
 		&__card {
 			// This is not bulletproof since it will get covered by page header
@@ -159,6 +149,11 @@
 			.citizen-card;
 			.citizen-card-hide( bottom right, '', false );
 			.citizen-card-transition();
+		}
+
+		// Move down when site header is hidden
+		.citizen-scroll--down & {
+			transform: translateY( var( --header-size ) );
 		}
 	}
 
