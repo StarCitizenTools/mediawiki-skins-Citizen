@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.8.5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.8.4...v2.8.5) (2023-11-16)
+
+
+### Features
+
+* **core:** ✨ remove top margin from siteSub ([47d06bc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/47d06bc13939615fb9d27803738ce15c933aa816))
+* **core:** ✨ remove unnessecary style from siteSub ([92f0692](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/92f069208e3a41af2d921346bf963005ca9eeda1))
+* **search:** ✨ turn search actions into chips ([b0f89ba](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b0f89ba311f87f96d3ccc36b24452e372a35f463))
+
+
+### Bug Fixes
+
+* **core:** let makeSections xpath query cope with multiple classes ([#733](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/733)) ([6f5b761](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6f5b761fe7880a6fe48a1c4e0ebc92efd54bd050))
+* **ooui:** rounded button corners in save changes modal ([#736](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/736)) ([906c1fd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/906c1fd6ac584c4bad732382e3a68429ed35cdbc))
+* **search:** 🐛 chip text should not wrap ([071a58a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/071a58ab7473fa3a156efb7db63a92d7e2a3ffab))
+
 ### [2.8.4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.8.3...v2.8.4) (2023-11-03)
 
 
