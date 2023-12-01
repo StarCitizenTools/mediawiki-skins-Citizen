@@ -1,0 +1,80 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:AccountInfo
+ * Module: ext.AccountInfo.special
+ * Version: REL1_39 ()
+ *
+ * Date: 2023-11-30
+*/
+
+body {
+	font: 0.9em sans-serif;
+}
+
+h1 {
+	font-size: 2em;
+	font-weight: bold;
+	border-bottom: none;
+	margin-bottom: 0;
+}
+
+p {
+	padding: 0;
+	background: transparent;
+	border-radius: 0;
+	width: 100%;
+	margin: 0;
+}
+
+#mw-content-text p {
+	padding: 10px;
+	background: var(--color-surface-2);
+	border-radius: 3px;
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+table thead th {
+	background: var(--color-surface-2);
+	text-align: left;
+	border-bottom: 1px solid var(--color-base--subtle);
+	padding-left: 14px;
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+	text-decoration: none;
+	color: var(--color-base--emphasized);
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 0.7em;
+	cursor: help;
+}
+
+table tr td {
+	background: var(--color-surface-3);
+	font-size: 0.9em;
+	padding: 5px;
+	vertical-align: top;
+}
+
+table tr td:nth-child(2) {
+	font: 1em monospace;
+}
+
+table tr td:nth-child(4) {
+	font-family: monospace;
+}
+
+table tr.mw-accountinfo-current {
+	background: transparent;
+}
+
+table tr.mw-accountinfo-current td:first-child {
+	background: var(--color-text-success);
+	color: var(--color-base--emphasized);
+}
