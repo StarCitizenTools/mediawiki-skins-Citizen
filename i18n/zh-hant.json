@@ -34,6 +34,7 @@
 	"citizen-jumptotop": "返回頂端",
 	"citizen-search-fulltext": "搜尋包含「$1」的頁面：",
 	"citizen-search-mediasearch": "搜索與$1相關的媒體",
+	"citizen-search-editpage": "編輯或建立頁面",
 	"citizen-search-empty-desc": "輸入以開始搜尋",
 	"citizen-search-noresults-title": "呃哦！ $1沒有結果",
 	"citizen-search-noresults-desc": "也許試試上面的選項？",

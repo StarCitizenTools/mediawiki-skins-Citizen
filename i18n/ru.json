@@ -32,7 +32,7 @@
 	"citizen-search-mediasearch": "Поиск медиа, связанных с $1",
 	"citizen-search-empty-desc": "Введите текст",
 	"citizen-search-noresults-title": "Ой! Нет результатов для $1",
-	"citizen-search-noresults-desc": "Может попробовать варианты ниже?",
+	"citizen-search-noresults-desc": "Может быть попробовать варианты выше?",
 	"citizen-tagline-ns-talk": "Обсуждение страницы {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Информация о {{SITENAME}}",
 	"citizen-tagline-ns-file": "Файл на {{SITENAME}}",

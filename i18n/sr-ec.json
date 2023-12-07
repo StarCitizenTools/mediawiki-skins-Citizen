@@ -1,0 +1,38 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kizule",
+			"Milicevic01"
+		]
+	},
+	"citizen-languages-toggle": "Више језика",
+	"citizen-actions-more-toggle": "Више радњи",
+	"citizen-sitestats-articles-label": "чланци",
+	"citizen-sitestats-images-label": "датотеке",
+	"citizen-sitestats-users-label": "корисници",
+	"citizen-sitestats-edits-label": "измене",
+	"citizen-page-info-copyright": "Ауторска права",
+	"citizen-page-info-credits": "Заслуге",
+	"citizen-action-addsection": "Додај тему",
+	"citizen-jumptotop": "Назад на врх",
+	"citizen-search-fulltext": "Претражи странице које садрже $1",
+	"citizen-search-mediasearch": "Претрага медија",
+	"citizen-search-editpage": "Уредите или направите страницу",
+	"citizen-search-empty-desc": "Куцајте да започнете претраживање",
+	"citizen-search-noresults-title": "Нема резултата за $1",
+	"citizen-search-noresults-desc": "Пробајте опција изнад?",
+	"citizen-tagline-ns-project": "Информације о {{SITENAME}}",
+	"citizen-tagline-ns-file": "Датотеке на {{SITENAME}}",
+	"citizen-tagline-ns-template": "Страница шаблона",
+	"citizen-tagline-ns-help": "Странице помоћи",
+	"citizen-tagline-ns-category": "Странице категорија",
+	"citizen-tagline-user-regdate": "Придружио/ла се: $1",
+	"prefs-citizen-theme-label": "Тема",
+	"prefs-citizen-theme-option-auto": "Аутоматски",
+	"prefs-citizen-theme-option-light": "Светла",
+	"prefs-citizen-theme-option-dark": "Тамна",
+	"prefs-citizen-fontsize-label": "Величина фонта",
+	"prefs-citizen-pagewidth-label": "Ширина странице",
+	"prefs-citizen-lineheight-label": "Висина линије",
+	"prefs-citizen-resetbutton-label": "Врати на подразумевано"
+}
