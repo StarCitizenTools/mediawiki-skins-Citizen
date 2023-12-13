@@ -44,11 +44,16 @@ final class Metadata extends Partial {
 	}
 
 	/**
-	 * Adds the manifest if enabled in 'CitizenEnableManifest'.
+	 * Adds the manifest if:
+	 * * Enabled in 'CitizenEnableManifest'
+	 * * User has read access (i.e. not a private wiki)
 	 * Manifest link will be empty if wfExpandUrl throws an exception.
 	 */
 	private function addManifest() {
-		if ( $this->getConfigValue( 'CitizenEnableManifest' ) !== true ) {
+		if (
+			$this->getConfigValue( 'CitizenEnableManifest' ) !== true ||
+			$this->getConfigValue( 'GroupPermissions' )['*']['read'] !== true
+		) {
 			return;
 		}
 
