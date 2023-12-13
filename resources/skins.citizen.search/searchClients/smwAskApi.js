@@ -63,7 +63,7 @@ function adaptApiResponse( config, query, response, showDescription ) {
 				description: showDescription ? getDescription( page ) : undefined,
 				url: urlGeneratorInstance.generateUrl( page ),
 				thumbnail: thumbnail ? {
-					url: `${config.wgScriptPath}/index.php?title=Special:Redirect/file/${thumbnail.fulltext}&width=200&height=200`,
+					url: `${ config.wgScriptPath }/index.php?title=Special:Redirect/file/${ thumbnail.fulltext }&width=200&height=200`,
 					width: 200,
 					height: 200
 				} : undefined
@@ -148,11 +148,11 @@ function smwAskApiSearchClient( config ) {
 				api_version: '3',
 				conditions: getConditions(),
 				printouts: getPrintouts(),
-				parameters: `limit=${limit.toString()}`
+				parameters: `limit=${ limit.toString() }`
 			};
 			/* eslint-enable camelcase */
 			const search = new URLSearchParams( params );
-			const url = `${searchApiUrl}?${search.toString()}`;
+			const url = `${ searchApiUrl }?${ search.toString() }`;
 			const result = fetchJson( url, {
 				headers: {
 					accept: 'application/json'

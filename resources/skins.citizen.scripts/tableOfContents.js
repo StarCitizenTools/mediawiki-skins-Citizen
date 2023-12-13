@@ -78,7 +78,9 @@ function init( bodyContent ) {
 	const sectionObserver = initSectionObserver( {
 		elements: headlines,
 		topMargin: getTopMargin(),
-		onIntersection: ( section ) => { changeActiveSection( section.id ); }
+		onIntersection: ( section ) => {
+			changeActiveSection( section.id );
+		}
 	} );
 
 	// TODO: Pause section observer on ToC link click

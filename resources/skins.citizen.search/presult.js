@@ -20,7 +20,7 @@ function presult() {
 				const data = {
 					icon: 'history',
 					// TODO: Add option to prepend the result to input field
-					link: `${config.wgScriptPath}/index.php?title=Special:Search&search=${result}`,
+					link: `${ config.wgScriptPath }/index.php?title=Special:Search&search=${ result }`,
 					type: 'history',
 					size: 'sm',
 					title: result

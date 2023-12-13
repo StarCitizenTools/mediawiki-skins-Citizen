@@ -94,7 +94,7 @@ const typeahead = {
 
 			/* Enter to click on the active item */
 			if ( typeahead.items.elements[ typeahead.items.index ] ) {
-				const link = typeahead.items.elements[ typeahead.items.index ].querySelector( `.${PREFIX}__content` );
+				const link = typeahead.items.elements[ typeahead.items.index ].querySelector( `.${ PREFIX }__content` );
 				if ( event.key === 'Enter' && link instanceof HTMLAnchorElement ) {
 					event.preventDefault();
 					link.click();
@@ -241,15 +241,15 @@ const typeahead = {
 				// Multi-search clients experiment
 				if ( searchClientData ) {
 					searchClient.setActive( searchClientData.id );
-					searchQuery.remove( `/${command} ` );
+					searchQuery.remove( `/${ command } ` );
 				}
 			}
 		}
-		return Promise.resolve( `Search client updated to ${searchClient.active.id}.` );
+		return Promise.resolve( `Search client updated to ${ searchClient.active.id }.` );
 	},
 	updateSearchQuery: function () {
 		if ( searchQuery.value === typeahead.input.element.value ) {
-			return Promise.reject( `Search query has not changed: ${searchQuery.value}.` );
+			return Promise.reject( `Search query has not changed: ${ searchQuery.value }.` );
 		}
 
 		searchQuery.setValue( typeahead.input.element.value );
@@ -278,7 +278,7 @@ const typeahead = {
 			}
 		} );
 
-		return Promise.resolve( `Search query updated to ${searchQuery.value}.` );
+		return Promise.resolve( `Search query updated to ${ searchQuery.value }.` );
 	},
 	afterSeachQueryInput: function () {
 		typeahead.updateSearchQuery().then( updateTypeaheadItems )
@@ -325,7 +325,7 @@ function getSuggestions() {
 			 */
 			const highlightTitle = ( text ) => {
 				const regex = new RegExp( mw.util.escapeRegExp( searchQuery.valueHtml ), 'i' );
-				return text.replace( regex, `<span class="${PREFIX}__highlight">$&</span>` );
+				return text.replace( regex, `<span class="${ PREFIX }__highlight">$&</span>` );
 			};
 			/**
 			 * Return the HTML of the redirect label
@@ -359,9 +359,9 @@ function getSuggestions() {
 				// Result is a redirect
 				// Show the redirect title and highlight it
 				if ( matchedTitle && isRedirectUseful() ) {
-					html = `<div class="${PREFIX}__labelItem" title="${mw.message( 'search-redirect', matchedTitle ).plain()}">
+					html = `<div class="${ PREFIX }__labelItem" title="${ mw.message( 'search-redirect', matchedTitle ).plain() }">
 							<span class="citizen-ui-icon mw-ui-icon-wikimedia-articleRedirect"></span>
-							<span>${highlightTitle( matchedTitle )}</span>
+							<span>${ highlightTitle( matchedTitle ) }</span>
 						</div>`;
 				}
 
@@ -433,7 +433,7 @@ function getSuggestions() {
 		// User can trigger the abort when the fetch event is pending
 		// There is no need for an error
 		if ( error.name !== 'AbortError' ) {
-			const message = `Uh oh, a wild error appears! ${error}`;
+			const message = `Uh oh, a wild error appears! ${ error }`;
 			throw new Error( message );
 		}
 	} );

@@ -101,7 +101,7 @@ function mwRestApiSearchClient( config ) {
 			const searchApiUrl = config.wgScriptPath + '/rest.php';
 			const params = { q, limit: limit.toString() };
 			const search = new URLSearchParams( params );
-			const url = `${searchApiUrl}/v1/search/title?${search.toString()}`;
+			const url = `${ searchApiUrl }/v1/search/title?${ search.toString() }`;
 			const result = fetchJson( url, {
 				headers: {
 					accept: 'application/json'

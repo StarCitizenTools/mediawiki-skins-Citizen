@@ -188,7 +188,7 @@ function mwActionApiSearchClient( config ) {
 					break;
 			}
 			const search = new URLSearchParams( params );
-			const url = `${searchApiUrl}?${search.toString()}`;
+			const url = `${ searchApiUrl }?${ search.toString() }`;
 			const result = fetchJson( url, {
 				headers: {
 					accept: 'application/json'
