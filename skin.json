@@ -118,6 +118,22 @@
 				"resources/skins.citizen.styles.fonts.cjk/index.less"
 			]
 		},
+		"skins.citizen.styles.fonts.ar": {
+			"class": "ResourceLoaderSkinModule",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"features": {
+				"accessibility": false,
+				"content-body": false,
+				"interface-core": false,
+				"toc": false
+			},
+			"styles": [
+				"resources/skins.citizen.styles.fonts.ar/index.less"
+			]
+		},
 		"skins.citizen.scripts": {
 			"packageFiles": [
 				"resources/skins.citizen.scripts/skin.js",
@@ -627,6 +643,12 @@
 			"value": false,
 			"description": "Enable included Noto Sans CJK for wikis that serves CJK languages",
 			"descriptionmsg": "citizen-config-enablecjkfonts",
+			"public": true
+		},
+		"EnableARFonts": {
+			"value": false,
+			"description": "Enable included Noto Naskh Arabic for wikis that serve Arabic",
+			"descriptionmsg": "citizen-config-enablearfonts",
 			"public": true
 		},
 		"EnablePreferences": {
