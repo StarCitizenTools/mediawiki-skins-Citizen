@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.9.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.8.5...v2.9.0) (2023-12-14)
+
+
+### Features
+
+* **core:** ✨ clean up skin variables load order ([f1ddf32](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f1ddf3206b0a5e77cb2ff5538039b5986f63ce97))
+* **core:** ✨ make changelist item more readable ([e0f9ac1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e0f9ac1be31ecf2862f63cd00a5a4c0173d853da))
+* **core:** ✨ prefer Roboto over language fonts ([b134fbf](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b134fbfec53a30b306c5bf708a8bd85b6c9663ad))
+* **core:** ✨ replace breakpoint LESS variables with Codex tokens ([60999eb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/60999eb1d97abfb933ea5332fcb612746d6b30cb)), closes [#735](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/735)
+* **core:** ✨ use CSS variable for language-specific fonts ([eee044d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/eee044d1451a2268d876e884353a1a3612ec4666))
+
+
+### Bug Fixes
+
+* **core:** 🐛 check for read access before attaching manifest ([0da7d8f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0da7d8fe33b8433447fe768758bf56449636b46e)), closes [#747](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/747)
+* **mediawiki:** 🐛 add missing preferences styles from 1.41 ([40fffd6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/40fffd610787c6cccf3d2dc4e451590d55732807))
+* **toc:** 🐛 incorrect breakpoints for ToC ([21f7cc4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/21f7cc40015d56e53dc5ce976bc8b4052cd6aca4))
+* **VE:** 🐛 do not invert image in link preview ([109779c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/109779c84ca31285f8455c331ee573e35b41363e))
+
 ### [2.8.5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.8.4...v2.8.5) (2023-11-16)
 
 
