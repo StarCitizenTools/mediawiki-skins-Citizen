@@ -102,6 +102,24 @@
 				"resources/skins.citizen.styles/skin.less"
 			]
 		},
+		"skins.citizen.styles.fonts.alt": {
+			"class": "ResourceLoaderSkinModule",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"features": {
+				"normalize": true,
+				"content-links": true,
+				"content-links-external": false,
+				"i18n-ordered-lists": true,
+				"i18n-headings": true,
+				"toc": false
+			},
+			"styles": [
+				"resources/skins.citizen.styles.fonts.alt/index.less"
+			]
+		},
 		"skins.citizen.styles.fonts.cjk": {
 			"class": "ResourceLoaderSkinModule",
 			"targets": [
@@ -637,6 +655,12 @@
 			"value": true,
 			"description": "Use NumberFormatter for site statistics",
 			"descriptionmsg": "citizen-config-usenumberformatter",
+			"public": true
+		},
+		"UseAltFonts": {
+			"value": false,
+			"description": "Use Noto family of fonts instead of the default Roboto",
+			"descriptionmsg": "citizen-config-usealtfonts",
 			"public": true
 		},
 		"EnableCJKFonts": {

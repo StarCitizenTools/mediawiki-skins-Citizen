@@ -163,6 +163,11 @@ class SkinCitizen extends SkinMustache {
 			}
 		}
 
+		// Alt fonts
+		if ( $this->getConfigValue( 'CitizenUseAltFonts' ) === true ) {
+			$options['styles'][] = 'skins.citizen.styles.fonts.alt';
+		}
+
 		// CJK fonts
 		if ( $this->getConfigValue( 'CitizenEnableCJKFonts' ) === true ) {
 			$options['styles'][] = 'skins.citizen.styles.fonts.cjk';
