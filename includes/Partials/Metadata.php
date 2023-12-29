@@ -34,10 +34,8 @@ final class Metadata extends Partial {
 	 * Adds metadata to the output page
 	 */
 	public function addMetadata() {
-		$out = $this->out;
-
 		// Theme color
-		$out->addMeta( 'theme-color', $this->getConfigValue( 'CitizenThemeColor' ) ?? '' );
+		$this->out->addMeta( 'theme-color', $this->getConfigValue( 'CitizenThemeColor' ) ?? '' );
 
 		// Generate webapp manifest
 		$this->addManifest();
@@ -65,8 +63,7 @@ final class Metadata extends Partial {
 			$href = '';
 		}
 
-		$out = $this->out;
-		$out->addLink( [
+		$this->out->addLink( [
 			'rel' => 'manifest',
 			'href' => $href,
 		] );
