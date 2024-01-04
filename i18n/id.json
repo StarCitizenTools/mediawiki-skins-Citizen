@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"Agam Riyandana",
+			"Leapofod"
+		]
+	},
+	"citizen-sitestats-articles-label": "artikel",
+	"citizen-sitestats-images-label": "berkas",
+	"citizen-sitestats-users-label": "pengguna",
+	"citizen-sitestats-edits-label": "suntingan",
+	"citizen-page-info-copyright": "Hak Cipta",
+	"citizen-page-info-credits": "Kredit",
+	"citizen-jumptotop": "Kembali ke atas",
+	"citizen-search-fulltext": "Telusuri halaman yang berisi $1",
+	"citizen-search-mediasearch": "Telusuri media yang terkait dengan $1",
+	"citizen-search-noresults-title": "Uh oh! Tidak ada hasil untuk $1",
+	"citizen-search-noresults-desc": "Mungkin coba pilihan di atas?",
+	"citizen-tagline-ns-talk": "Halaman diskusi {{SUBJECTPAGENAME}}",
+	"citizen-tagline-ns-project": "Informasi tentang {{SITENAME}}",
+	"citizen-tagline-ns-file": "Berkas di {{SITENAME}}",
+	"citizen-tagline-ns-mediawiki": "Halaman antarmuka MediaWiki",
+	"citizen-tagline-ns-template": "Halaman templat",
+	"citizen-tagline-ns-help": "Halaman bantuan",
+	"citizen-tagline-ns-category": "Halaman kategori",
+	"citizen-tagline-user-regdate": "Bergabung pada tanggal $1",
+	"prefs-citizen-theme-label": "Tema",
+	"prefs-citizen-theme-option-auto": "Otomatis",
+	"prefs-citizen-theme-option-light": "Terang",
+	"prefs-citizen-theme-option-dark": "Gelap",
+	"prefs-citizen-fontsize-label": "Ukuran huruf",
+	"prefs-citizen-pagewidth-label": "Lebar halaman",
+	"prefs-citizen-lineheight-label": "Tinggi baris"
+}
