@@ -1,4 +1,5 @@
 {
+	"name": "Citizen",
 	"private": true,
 	"scripts": {
 		"lint": "npm -s run lint:js && npm -s run lint:styles && npm -s run lint:i18n",
