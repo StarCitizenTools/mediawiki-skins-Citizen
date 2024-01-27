@@ -39,7 +39,7 @@ window.applyPref = () => {
 				style.setAttribute( 'id', styleId );
 				document.head.appendChild( style );
 			}
-			style.textContent = `:root{${ css }}`;
+			style.textContent = `:root{${css}}`;
 		};
 
 		try {
@@ -66,7 +66,7 @@ window.applyPref = () => {
 				const value = getStorage( prefix + key );
 
 				if ( value !== null ) {
-					cssDeclaration += `${ property }:${ value };`;
+					cssDeclaration += `${property}:${value};`;
 				}
 			}
 

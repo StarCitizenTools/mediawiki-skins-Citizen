@@ -2,7 +2,7 @@ const config = require( './config.json' );
 const htmlHelper = require( './htmlHelper.js' )();
 const searchHistory = require( './searchHistory.js' )( config );
 
-function presult() {
+function searchPresults() {
 	return {
 		elements: undefined,
 		addSearchHistory: function ( fragment ) {
@@ -20,7 +20,7 @@ function presult() {
 				const data = {
 					icon: 'history',
 					// TODO: Add option to prepend the result to input field
-					link: `${ config.wgScriptPath }/index.php?title=Special:Search&search=${ result }`,
+					link: `${config.wgScriptPath}/index.php?title=Special:Search&search=${result}`,
 					type: 'history',
 					size: 'sm',
 					title: result
@@ -61,5 +61,5 @@ function presult() {
 	};
 }
 
-/** @module presult */
-module.exports = presult;
+/** @module searchPresults */
+module.exports = searchPresults;
