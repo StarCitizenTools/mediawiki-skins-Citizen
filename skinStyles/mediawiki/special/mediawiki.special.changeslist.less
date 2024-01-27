@@ -40,65 +40,17 @@
 	&-line {
 		/* Disable timeline dot for nested changeline */
 		.mw-changeslist-line::before {
-			display: none;
+			content: none;
 		}
 
 		&-inner {
-			width: 100%; // always take all avaliable width
 			color: var( --color-base--subtle );
-
-			/* New line for user */
-			& .changedby,
-			&-userLink {
-				&::before {
-					white-space: pre;
-					content: '\a';
-				}
-			}
 		}
 	}
 
 	&-separator {
 		color: var( --color-base--subtle );
-
-		&:empty {
-			display: inline-block;
-			width: var( --space-xs );
-
-			&::before {
-				display: none;
-			}
-		}
 	}
-}
-
-/* Sticky change byte */
-.mw-diff-bytes {
-	float: right;
-	margin-left: var( --space-xs );
-	background: var( --color-surface-0 );
-
-	&::before,
-	&::after {
-		display: none;
-	}
-
-	.selected &,
-	.mw-changeslist-line:hover & {
-		background: transparent;
-	}
-}
-
-.mw-diff-bytes:not( .mw-changeslist-line-inner-characterDiff .mw-diff-bytes ),
-.mw-changeslist-line-inner-characterDiff {
-	position: sticky;
-	top: 0;
-	right: 0;
-}
-
-.mw-diff-bytes ~ .mw-changeslist-separator,
-.mw-changeslist-line-inner-separatorAftercharacterDiff {
-	display: none;
 }
 
 .cloptions {
@@ -208,10 +160,7 @@ body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
 	padding: var( --space-sm ) var( --space-xs ) !important;
 	margin: 0 0 0 16px !important;
 	color: var( --color-base--subtle );
-
-	& + & {
-		border-top: 1px solid var( --border-color-base );
-	}
+	border-radius: var( --border-radius--small );
 
 	&:hover {
 		background-color: var( --background-color-quiet--hover );
