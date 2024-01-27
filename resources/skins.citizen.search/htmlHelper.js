@@ -28,7 +28,7 @@ function htmlHelper() {
 		getItemGroupElement: function ( data ) {
 			const itemGroup = document.createElement( 'li' );
 			itemGroup.classList.add( 'citizen-typeahead-item-group' );
-			itemGroup.setAttribute( 'data-group', `${data.id}` );
+			itemGroup.setAttribute( 'data-group', `${ data.id }` );
 			itemGroup.setAttribute( 'role', 'presentation' );
 
 			if ( data.label ) {
@@ -43,7 +43,7 @@ function htmlHelper() {
 				list.classList.add( 'citizen-typeahead-item-group-list' );
 				list.setAttribute( 'role', 'presentation' );
 				data.items.forEach( ( itemData, index ) => {
-					itemData.id = `citizen-typeahead-${data.id}-${index}`;
+					itemData.id = `citizen-typeahead-${ data.id }-${ index }`;
 					const item = this.getItemElement( itemData );
 					list.append( item );
 				} );
@@ -85,7 +85,7 @@ function htmlHelper() {
 				item.setAttribute( 'id', data.id );
 			}
 			if ( data.type ) {
-				item.classList.add( `citizen-typeahead__item-${data.type}` );
+				item.classList.add( `citizen-typeahead__item-${ data.type }` );
 
 				if ( data.type !== 'placeholder' ) {
 					item.setAttribute( 'role', 'option' );
@@ -93,7 +93,7 @@ function htmlHelper() {
 			}
 
 			if ( data.size ) {
-				item.classList.add( `citizen-typeahead__item-${data.size}` );
+				item.classList.add( `citizen-typeahead__item-${ data.size }` );
 			}
 			if ( data.link ) {
 				item.querySelector( '.citizen-typeahead__content' ).setAttribute( 'href', data.link );
@@ -101,12 +101,12 @@ function htmlHelper() {
 			if ( data.icon || data.thumbnail ) {
 				const thumbnail = item.querySelector( '.citizen-typeahead__thumbnail' );
 				if ( data.thumbnail ) {
-					thumbnail.style.backgroundImage = `url('${data.thumbnail}')`;
+					thumbnail.style.backgroundImage = `url('${ data.thumbnail }')`;
 				} else {
 					thumbnail.classList.add(
 						'citizen-typeahead__thumbnail',
 						'citizen-ui-icon',
-						`mw-ui-icon-wikimedia-${data.icon}`
+						`mw-ui-icon-wikimedia-${ data.icon }`
 					);
 				}
 			}
@@ -127,7 +127,7 @@ function htmlHelper() {
 		 * @param {string} id
 		 */
 		removeItemGroup: function ( typeaheadEl, id ) {
-			typeaheadEl.querySelector( `.citizen-typeahead-item-group[data-group="${id}"]` )?.remove();
+			typeaheadEl.querySelector( `.citizen-typeahead-item-group[data-group="${ id }"]` )?.remove();
 		}
 	};
 }

@@ -27,7 +27,7 @@ function searchAction() {
 			// Fulltext search
 			itemGroupData.items.push( {
 				// id: 'fulltext',
-				link: `${config.wgScriptPath}/index.php?title=Special:Search&fulltext=1&search=${searchQuery.valueHtml}`,
+				link: `${ config.wgScriptPath }/index.php?title=Special:Search&fulltext=1&search=${ searchQuery.valueHtml }`,
 				icon: 'articleSearch',
 				msg: 'citizen-search-fulltext'
 			} );
@@ -36,7 +36,7 @@ function searchAction() {
 			if ( config.isMediaSearchExtensionEnabled ) {
 				itemGroupData.items.push( {
 					// id: 'mediasearch',
-					link: `${config.wgScriptPath}/index.php?title=Special:MediaSearch&type=image&search=${searchQuery.valueHtml}`,
+					link: `${ config.wgScriptPath }/index.php?title=Special:MediaSearch&type=image&search=${ searchQuery.valueHtml }`,
 					icon: 'imageGallery',
 					msg: 'citizen-search-mediasearch'
 				} );
@@ -54,7 +54,7 @@ function searchAction() {
 				// TODO: Check whether the page exists
 				itemGroupData.items.push( {
 					// id: 'editpage',
-					link: `${config.wgScriptPath}/index.php?title=${searchQuery.valueHtml}&action=edit`,
+					link: `${ config.wgScriptPath }/index.php?title=${ searchQuery.valueHtml }&action=edit`,
 					icon: 'edit',
 					msg: 'citizen-search-editpage'
 				} );
@@ -65,7 +65,7 @@ function searchAction() {
 			}
 
 			itemGroupData.items.forEach( ( item, index ) => {
-				const actionEl = document.getElementById( `citizen-typeahead-action-${index}` );
+				const actionEl = document.getElementById( `citizen-typeahead-action-${ index }` );
 				htmlHelper.updateItemElement( actionEl, {
 					link: item.link,
 					/* eslint-disable-next-line mediawiki/msg-doc */
