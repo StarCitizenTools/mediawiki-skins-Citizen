@@ -14,6 +14,13 @@
 	"requires": {
 		"MediaWiki": ">= 1.39.4"
 	},
+	"attributes": {
+		"DarkMode": {
+			"Disabled": [
+				"citizen"
+			]
+		}
+	},
 	"ValidSkinNames": {
 		"citizen": {
 			"class": "MediaWiki\\Skins\\Citizen\\SkinCitizen",
