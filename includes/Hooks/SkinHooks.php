@@ -32,11 +32,11 @@ use MediaWiki\Hook\SidebarBeforeOutputHook;
 use MediaWiki\Hook\SkinBuildSidebarHook;
 use MediaWiki\Hook\SkinEditSectionLinksHook;
 use MediaWiki\Hook\SkinTemplateNavigation__UniversalHook;
+use MediaWiki\ResourceLoader as RL;
 use MediaWiki\Skins\Citizen\GetConfigTrait;
 use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;
 use MediaWiki\Title\Title;
 use OutputPage;
-use ResourceLoaderContext;
 use Skin;
 use SkinTemplate;
 use SpecialPage;
@@ -196,8 +196,8 @@ class SkinHooks implements
 	 *
 	 * Replace searchModule provided by skin.
 	 *
-	 * @since 1.35
-	 * @param ResourceLoaderContext $context
+	 * @since 1.36
+	 * @param RL\Context $context
 	 * @param mixed[] &$config Associative array of configurable options
 	 * @return void This hook must not abort, it must return no value
 	 */
