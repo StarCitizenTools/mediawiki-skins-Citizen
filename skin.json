@@ -92,7 +92,7 @@
 	},
 	"ResourceModules": {
 		"skins.citizen.styles": {
-			"class": "ResourceLoaderSkinModule",
+			"class": "MediaWiki\\ResourceLoader\\SkinModule",
 			"targets": [
 				"desktop",
 				"mobile"
@@ -126,7 +126,7 @@
 			]
 		},
 		"skins.citizen.styles.fonts.ar": {
-			"class": "ResourceLoaderSkinModule",
+			"class": "MediaWiki\\ResourceLoader\\ResourceLoaderSkinModule",
 			"targets": [
 				"desktop",
 				"mobile"
@@ -254,7 +254,7 @@
 			]
 		},
 		"skins.citizen.icons": {
-			"class": "ResourceLoaderImageModule",
+			"class": "MediaWiki\\ResourceLoader\\ImageModule",
 			"selector": "{name}",
 			"defaultColor": "#000",
 			"images": {
@@ -266,7 +266,7 @@
 			"selectorWithoutVariant": ".mw-ui-icon-wikimedia-{name}:before",
 			"useDataURI": false,
 			"defaultColor": "#000",
-			"class": "ResourceLoaderOOUIIconPackModule",
+			"class": "MediaWiki\\ResourceLoader\\OOUIIconPackModule",
 			"icons": [
 				"article",
 				"articleNotFound",
