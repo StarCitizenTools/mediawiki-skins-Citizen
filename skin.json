@@ -110,7 +110,7 @@
 			]
 		},
 		"skins.citizen.styles.fonts.cjk": {
-			"class": "ResourceLoaderSkinModule",
+			"class": "MediaWiki\\ResourceLoader\\SkinModule",
 			"targets": [
 				"desktop",
 				"mobile"
@@ -126,7 +126,7 @@
 			]
 		},
 		"skins.citizen.styles.fonts.ar": {
-			"class": "MediaWiki\\ResourceLoader\\ResourceLoaderSkinModule",
+			"class": "MediaWiki\\ResourceLoader\\SkinModule",
 			"targets": [
 				"desktop",
 				"mobile"
