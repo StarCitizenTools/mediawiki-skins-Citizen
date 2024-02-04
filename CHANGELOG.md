@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.9.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.9.0...v2.9.1) (2024-02-04)
+
+
+### Features
+
+* **ar:** add support for Arabic fonts through Noto Arabic ([#755](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/755)) ([e985f86](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e985f863bc00c2158fc87f45884efc13a3b92478))
+* **core:** ✨ revert new RC styles ([2a41a0b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2a41a0b1bb5ee6ba3d4745a6105e3a9f3565f29c)), closes [#764](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/764)
+* **core:** ✨ use CSS variable to define default Citizen font ([5e575f4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5e575f4c201302b34d6d8dd1704e62654b82c1de))
+* **DarkMode:** disable dark mode extension ([#777](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/777)) ([cabd2b9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cabd2b9c78c1bc33b716b8f7937362075d530186))
+
+
+### Bug Fixes
+
+* **core:** 🐛 deprecate more old ResourceLoader classes ([3a73bdc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3a73bdc64076c5fbf5caba5055aa4cf7d1b5a697))
+* **core:** 🐛 hide pseudo elements instead of deleting them (pt2) ([bdd986d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bdd986db8995babd833160e420e3121e729cbfee))
+* **core:** 🐛 typo in skin module classes ([43348d2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/43348d248e88304e5453a805d7f8a0ff8e716768))
+* **core:** deprecate old ResourceLoader class ([#784](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/784)) ([9dc952b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9dc952b91702c5998597edba48522adb18b9b885)), closes [#783](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/783)
+
 ## [2.9.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.8.5...v2.9.0) (2023-12-14)
 
 
