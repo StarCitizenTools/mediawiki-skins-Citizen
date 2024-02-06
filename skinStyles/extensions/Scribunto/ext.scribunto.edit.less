@@ -14,20 +14,26 @@
 
 	input[ type='button' ] {
 		width: 100%;
+		margin: var( --space-xs ) 0;
 		padding: var( --space-xs ) var( --space-sm );
-		font-weight: var( --font-weight-semibold );
+		font-weight: var( --font-weight-medium );
 		cursor: pointer;
-		border-top: 0;
-		border-bottom-right-radius: var( --border-radius--small );
-		border-bottom-left-radius: var( --border-radius--small );
+		border-radius: var( --border-radius--small );
+		color: #fff;
+		background-color: var( --color-destructive );
 
 		&:hover {
-			background: var( --color-surface-2--hover );
+			background: var( --color-destructive--hover );
 		}
 
 		&:active {
-			background: var( --color-surface-2--active );
+			background: var( --color-destructive--active );
 		}
+	}
+
+	> div:last-child {
+		position: sticky;
+    	bottom: 0;
 	}
 }
 
@@ -52,12 +58,16 @@
 	border-top: 1px solid var( --border-color-base );
 }
 
+#mw-scribunto-output {
+	font-family: var( --font-family-citizen-monospace );
+    font-size: 0.8125rem;
+}
+
 #mw-scribunto-input {
 	color: var( --color-base--emphasized );
 	background-color: transparent;
 	border: 1px solid var( --border-color-base );
-	border-top-left-radius: var( --border-radius--small );
-	border-top-right-radius: var( --border-radius--small );
+	border-radius: var( --border-radius--small );
 
 	&:hover {
 		border-color: var( --color-primary--hover );
