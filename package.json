@@ -10,7 +10,7 @@
 		"lint:i18n": "banana-checker --requireLowerCase=0 i18n/",
 		"minify-svg": "svgo --config=.svgo.config.js --quiet --recursive --folder resources/",
 		"test": "npm run lint",
-		"prepare": "husky install",
+		"prepare": "husky",
 		"release": "standard-version",
 		"release:minor": "standard-version --release-as minor",
 		"release:patch": "standard-version --release-as patch",
