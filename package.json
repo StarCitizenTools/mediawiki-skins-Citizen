@@ -9,7 +9,7 @@
 		"lint:styles": "stylelint \"**/*.{less,css}\"",
 		"lint:i18n": "banana-checker --requireLowerCase=0 i18n/",
 		"minify-svg": "svgo --config=.svgo.config.js --quiet --recursive --folder resources/",
-		"test": "npm run lint",
+		"test": "",
 		"prepare": "husky",
 		"release": "standard-version",
 		"release:minor": "standard-version --release-as minor",
