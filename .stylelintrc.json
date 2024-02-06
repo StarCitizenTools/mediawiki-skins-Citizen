@@ -3,7 +3,8 @@
 		"stylelint-order"
 	],
 	"extends": [
-		"stylelint-config-wikimedia",
+		"stylelint-config-wikimedia/support-modern",
+		"stylelint-config-wikimedia/mediawiki",
 		"stylelint-config-recess-order"
 	],
 	"rules": {
