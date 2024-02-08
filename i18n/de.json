@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Alistair3149",
 			"CyberOne25",
 			"FF-11",
 			"Gebu",
@@ -14,6 +15,7 @@
 		]
 	},
 	"citizen-skin-desc": "Ein wunderschöner, benutzerfreundlicher, reaktionsfähiger MediaWiki-Skin, der Erweiterungen zu einem Teil des kohärenten Erlebnisses macht. Ursprünglich wurde es für das [https://starcitizen.tools/ Star Citizen Wiki] erstellt.",
+	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|Diskussion]]",
 	"citizen.css": "/* Das folgende CSS wird für Benutzer des Citizen-Skins geladen */",
 	"citizen.js": "/* Das folgende JavaScript wird für Benutzer des Citizen-Skins geladen */",
 	"citizen-drawer-toggle": "Menü umschalten",
@@ -32,7 +34,7 @@
 	"citizen-footer-tagline": "Bearbeiten Sie diesen Text auf [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Thema hinzufügen",
 	"citizen-jumptotop": "Zurück nach oben",
-	"citizen-search-fulltext": "Suche nach Artikeln, die $1 beinhalten",
+	"citizen-search-fulltext": "Suchen Sie nach Text innerhalb von Seiten",
 	"citizen-search-mediasearch": "Nach Medien suchen",
 	"citizen-search-editpage": "Seite bearbeiten oder erstellen",
 	"citizen-search-empty-desc": "Tippe, um zu suchen zu beginnen",
@@ -45,6 +47,7 @@
 	"citizen-tagline-ns-template": "Vorlagenseite",
 	"citizen-tagline-ns-help": "Hilfeseite",
 	"citizen-tagline-ns-category": "Kategorieseite",
+	"citizen-tagline-user-regdate": "Beigetreten $1",
 	"prefs-citizen-theme-label": "Thema",
 	"prefs-citizen-theme-option-auto": "Automatisch",
 	"prefs-citizen-theme-option-light": "Hell",
