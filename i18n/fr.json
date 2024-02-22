@@ -4,11 +4,12 @@
 			"Gomoko",
 			"Nicolas.poinsu",
 			"Pamputt",
+			"Reedy",
 			"Verdy p"
 		]
 	},
 	"skinname-citizen": "Citizen",
-	"citizen-skin-desc": "Un bel habillage utilisable et dynamique pour Mediawiki qui fait intègre les extensions pour une expérience cohérente. Développé initialement pour le [https://starcitizen.tools/ Wiki Star Citizen].",
+	"citizen-skin-desc": "Un bel habillage utilisable et dynamique pour MediaWiki qui fait intègre les extensions pour une expérience cohérente. Développé initialement pour le [https://starcitizen.tools/ Wiki Star Citizen].",
 	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|Discussion]]",
 	"citizen.css": "/* La totalité du CSS placé ici s’appliquera aux utilisateurs de l’habillage Citizen. */",
 	"citizen.js": "/* Tout code JavaScript placé ici sera chargé avec les pages accédées par les utilisateurs de l’habillage Citizen. */",
