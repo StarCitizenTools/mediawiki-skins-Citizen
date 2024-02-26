@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.10.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.9.1...v2.10.0) (2024-02-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* **core:** 💥 ✨ rework font-size CSS variables
+
+### Features
+
+* **core:** ✨ override font-size-related skin variables ([3f44789](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3f44789ac6f1ea931e19a06731ddfe39d5ca6697))
+* **core:** ✨ use CSS variables for small font sizes ([c9f665e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c9f665ef7805302d17e6e792f188a94a9677705a))
+* **core:** ✨ use CSS variables for x-small font sizes ([3162e19](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3162e19a2c34828803bdc76755d32e8d9462752f))
+* **core:** 💥 ✨ rework font-size CSS variables ([a9acc08](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a9acc08e273c9e1684fd0ba6db3f862bd88f8845))
+* **gallery:** ✨ increase margin for gallery ([bba8398](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bba839819faeab0da9e99497a6a5d453611fda35))
+* **gallery:** ✨ use flexbox for packed gallery ([2972726](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/29727263c83fa58b4093d5613e8966e7bad41d96))
+* **Scribunto:** ✨ tweak debug console styles ([6947105](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/694710521736fd1c8f4f59a60aea67157bf5702e))
+* **wikitable:** ✨ add border to wikitables ([9bd23fd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9bd23fdff26e4de7037710a3f9e42d92d46b4b54))
+* **wikitable:** ✨ simplify wikitable border styles ([b6872f9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b6872f9d2a128c84330e1bb609c21fed37a48eee))
+* **wikitable:** ✨ use the same font size for th and td ([c13fd3e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c13fd3ea3eef5a14d647ea4be177588634e029c8))
+
+
+### Bug Fixes
+
+* **CodeMirror:** 🐛 rename VisualEditor RL module ([ea5c10a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ea5c10a6c344bcbb0a20fdbdaa9ab7d16d0cbd48)), closes [#781](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/781)
+* **gallery:** 🐛 misalign gallery caption ([c9f6ec6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c9f6ec6d599fcfd8dff617b0dfe9723d541c1f65))
+* **Scribunto:** 🐛 incorrect font family ([fc0f469](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fc0f4699aaca9d337ad6398963299b7299fc21cf))
+* **VisualEditor:** 🐛 add find and replace dialog background color ([3396cfd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3396cfde123764156210821d53d35b2047b52714)), closes [#794](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/794)
+
 ### [2.9.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.9.0...v2.9.1) (2024-02-04)
 
 
