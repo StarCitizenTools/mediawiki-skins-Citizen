@@ -9,6 +9,8 @@
 
 .wikitable {
 	margin: var( --space-md ) 0;
+	border: 1px solid var( --border-color-base );
+	border-radius: var( --border-radius--medium );
 	border-spacing: 0;
 	font-size: var( --font-size-small );
 
@@ -46,14 +48,6 @@
 		th,
 		td {
 			border-top: 1px solid var( --border-color-base );
-
-			&:first-of-type {
-				border-left: 1px solid var( --border-color-base );
-			}
-
-			&:last-of-type {
-				border-right: 1px solid var( --border-color-base );
-			}
 		}
 
 		&:first-of-type {
@@ -61,17 +55,11 @@
 			td {
 				border-top: 0;
 
-				&:not( :first-child ):not( :last-child ) {
-					border-top: 1px solid var( --border-color-base );
-				}
-
 				&:first-child {
-					border-top: 1px solid var( --border-color-base );
 					border-top-left-radius: var( --border-radius--medium );
 				}
 
 				&:last-child {
-					border-top: 1px solid var( --border-color-base );
 					border-top-right-radius: var( --border-radius--medium );
 				}
 			}
@@ -81,18 +69,10 @@
 			th,
 			td {
 				&:first-child {
-					border-left: 1px solid var( --border-color-base );
-					border-bottom:  1px solid var( --border-color-base );
 					border-bottom-left-radius: var( --border-radius--medium );
 				}
 
-				&:not(:first-child):not(:last-child) {
-					border-bottom: 1px solid var( --border-color-base );
-				}
-
 				&:last-child {
-					border-right: 1px solid var( --border-color-base );
-					border-bottom: 1px solid var( --border-color-base );
 					border-bottom-right-radius: var( --border-radius--medium );
 				}
 			}
