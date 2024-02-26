@@ -27,17 +27,12 @@ ul.mw-gallery-packed-hover li.gallerybox:hover div.gallerytextwrapper,
 ul.mw-gallery-packed-overlay li.gallerybox div.gallerytextwrapper,
 ul.mw-gallery-packed-hover li.gallerybox.mw-gallery-focused div.gallerytextwrapper {
 	right: 0;
-    margin: 0;
+	margin: var( --space-xs );
+	margin-right: 0; // MAGIC
+	padding: var( --space-xs );
 	width: auto !important;
 	font-weight: var( --font-weight-normal ); // should use the same weight as caption
 	background: var( --background-color-overlay );
-}
-
-.mw-gallery-packed-hover,
-.mw-gallery-packed-overlay {
-	display: flex;
-    flex-wrap: wrap;
-    gap: var( --space-md );
 }
 
 /* Slideshow */
@@ -70,7 +65,7 @@ ul.gallery.mw-gallery-slideshow {
 		background-color: var( --color-surface-2 );
 		border-color: transparent;
 		border-radius: var( --border-radius--small );
-		max-width: 100%;
-    	margin: 0;
+		max-width: ~'calc( 100% - var( --space-xs ) )';
+		margin: var( --space-xs );
 	}
 }
