@@ -1,7 +1,77 @@
 /*
- * Citizen - General special pages
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for MediaWiki
+ * Module: mediawiki.special
+ * Version: REL1_39
+ *
+ * Date: 2024-02-26
 */
+
+/* Special:Version */
+/* MediaWiki License */
+#mw-version-license + .plainlinks {
+    margin-top: var(--space-md);
+    padding: var( --space-md );
+	border: 1px solid var( --border-color-base );
+    border-radius: var( --border-radius--medium );
+    font-size: var( --font-size-small );
+    color: var( --color-base--subtle );
+
+	> p {
+		margin-top: 0;
+	}
+}
+
+/* Installed software */
+#sv-software {
+    display: block;
+    border: 0;
+	line-height: var( --line-height-sm );
+
+	tbody {
+		display: grid;
+    	grid-template-columns: repeat( auto-fit, minmax( 320px, 1fr ) );
+		gap: var( --space-xs );
+	}
+
+	tr {
+		padding: var( --space-sm ) var( --space-md );
+    	border: 1px solid var( --border-color-base );
+    	border-radius: var( --border-radius--medium );
+		display: flex;
+		flex-direction: column;
+
+		&:first-child {
+			display: none; // Hide table header
+		}
+	}
+
+	td {
+		padding: 0;
+		border-top: 0;
+
+		&:first-child {
+			font-weight: var( --font-weight-semibold );
+			font-size: var( --font-size-x-large );
+		}
+	}
+}
+
+// Highlight Citizen skin
+#mw-version-ext-skin-Citizen {
+	background: var( --color-surface-2 );
+}
+
+.mw-version-ext-vcs-timestamp,
+.mw-version-ext-vcs-version {
+	color: var( --color-base--subtle );
+}
+
+.mw-version-ext-name,
+.mw-version-library-name {
+	font-weight: var( --font-weight-semibold );
+}
 
 .skin-citizen-dark {
 	#mw-allmessagestable tbody:hover td {
