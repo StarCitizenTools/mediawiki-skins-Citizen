@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.10.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.10.0...v2.10.1) (2024-03-11)
+
+
+### Features
+
+* **core:** ✨ increase top margin of content footer ([75548a9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/75548a9bdf3f1594320e31e2da013393bb3838a6))
+* **core:** ✨ reduce menu header font size ([1106825](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/11068251c2bf043889f4efdfeb9963f9bfbbcc9c))
+* **mediawiki:** ✨ tweak styles on Special:Version ([3a62b5f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3a62b5f01d50ef022c32225b2a6eff5a41abb0c5))
+* **toc:** ✨ tweak toc header font size ([cb1f9e6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cb1f9e616a3df6b05af345c107d0c36bd78b9b4b))
+* **VisualEditor:** ✨ improve visibility of text highlight colors ([8de5b3d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8de5b3d39ee7011757a84d18e81b75e0ac2e412f))
+
+
+### Bug Fixes
+
+* **core:** 🐛 file page sticky header overlapping TOC ([9cf358f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9cf358fe9bed87bb1c49ab818b1e2c11dd93213e)), closes [#797](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/797)
+* **Echo:** 🐛 missing styles for new talk page alert ([b90dd3d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b90dd3d2c6d87282763f9495ddd984e3e5101c4d))
+
 ## [2.10.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.9.1...v2.10.0) (2024-02-26)
 
 
