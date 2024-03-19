@@ -267,7 +267,7 @@ table.dataTable tbody tr.selected > * {
 // Expand (+) button
 table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before,
 table.dataTable.dtr-inline.collapsed>tbody>tr>th.dtr-control:before {
-	background-color: var( --color-sucess );
+	background-color: var( --color-success );
 	border-color: transparent;
 }
 
@@ -313,11 +313,6 @@ div.dtsp-panesContainer div.dtsp-searchPanes div.dtsp-searchPane div.dataTables_
 	// Consistent border
 	border: 0;
     border-radius: var( --border-radius--medium );
-}
-
-div.dtsp-topRow.dtsp-bordered:hover {
-	background-color: var( --background-color-quiet--hover );
-	opacity: 1;
 }
 
 div.dtsp-columns-2 {
@@ -392,6 +387,12 @@ div.dtsp-panesContainer {
 			&:has( .dtsp-hidden ) {
 				.dtsp-topRow {
 					background-color: transparent;
+
+					&:hover {
+						opacity: 1;
+						background-color: var( --background-color-quiet--hover );
+						border-radius: var( --border-radius--medium );
+					}
 
 					.dtsp-disabledButton {
 						visibility: hidden;
