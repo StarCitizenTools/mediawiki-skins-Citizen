@@ -342,7 +342,7 @@
 			"+ext.cargo.zip": "skinStyles/extensions/Cargo/ext.cargo.zip.less",
 			"+ext.cargo.bpmn": "skinStyles/extensions/Cargo/ext.cargo.bpmn.less",
 			"+ext.cargo.timeline": "skinStyles/extensions/Cargo/ext.cargo.timeline.less",
-			"+ext.cargo.datatables": "skinStyles/extensions/Cargo/ext.cargo.datatables.less",
+			"+ext.cargo.datatables": "skinStyles/jquery/datatables.less",
 			"+ext.cargo.slick": "skinStyles/extensions/Cargo/ext.cargo.slick.less",
 			"+ext.cargo.diagram": "skinStyles/extensions/Cargo/ext.cargo.diagram.less",
 			"+ext.cargo.drilldown": "skinStyles/extensions/Cargo/ext.cargo.drilldown.less",
@@ -411,9 +411,7 @@
 			"+ext.srf.d3.chart.bubble": "skinStyles/extensions/SemanticResultFormats/d3/ext.srf.d3.chart.bubble.less",
 			"+ext.srf.d3.chart.treemap": "skinStyles/extensions/SemanticResultFormats/d3/ext.srf.d3.chart.treemap.less",
 			"+ext.srf.d3.common": "skinStyles/extensions/SemanticResultFormats/d3/ext.srf.d3.common.less",
-			"+ext.srf.datatables": "skinStyles/extensions/SemanticResultFormats/datatables/ext.srf.datatables.less",
-			"+ext.srf.datatables.basic": "skinStyles/extensions/SemanticResultFormats/datatables/ext.srf.datatables.basic.less",
-			"+ext.srf.datatables.bootstrap": "skinStyles/extensions/SemanticResultFormats/datatables/ext.srf.datatables.bootstrap.less",
+			"+ext.srf.datatables.v2.module": "skinStyles/jquery/datatables.less",
 			"+ext.srf.eventcalendar": "skinStyles/extensions/SemanticResultFormats/eventcalendar/ext.srf.eventcalendar.less",
 			"+ext.srf.filtered.calendar-view": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.calendar-view.less",
 			"+ext.srf.filtered.distance-view": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.distance-view.less",
@@ -557,7 +555,7 @@
 			"+oojs-ui-widgets": "skinStyles/ooui/oojs-ui-widgets.less",
 			"+oojs-ui-windows": "skinStyles/ooui/oojs-ui-windows.less",
 			"+jquery.spinner.styles": "skinStyles/jquery.spinner/jquery.spinner.styles.less",
-			"+jquery.ui": "skinStyles/jquery.ui/smoothness/jquery.ui.theme.less",
+			"+jquery.ui": "skinStyles/jquery/ui.less",
 			"+@wikimedia/codex": "skinStyles/codex/codex.styles.less"
 		}
 	},
