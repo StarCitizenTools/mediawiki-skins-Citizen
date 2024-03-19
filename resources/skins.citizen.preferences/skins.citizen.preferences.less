@@ -1,4 +1,3 @@
-@import '../variables.less';
 @import '../mixins.less';
 
 .citizen-pref {
@@ -93,8 +92,8 @@
 	&-theme {
 		&-option {
 			&-light {
-				color: @color-base;
-				background: @color-surface-0;
+				color: ~'hsl( var( --color-primary__h ), 30%, 20% )';
+				background: ~'hsl( var( --color-primary__h ), 25%, 94% )';
 			}
 
 			&-dark {

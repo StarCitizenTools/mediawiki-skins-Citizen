@@ -45,20 +45,9 @@
 
 /* == Colors == */
 /* Base theme */
-@diff-hoverstate: 2;
-
 @color-primary__h: 220;
 @color-primary__s: 60%;
 @color-primary__l: 50%;
-
-@color-surface-0: ~'hsl( 0, 0%, 100% )';
-@color-surface-1: ~'hsl( 0, 0%, 100% )';
-@color-surface-2: ~'hsl( 210, 17%, 98% )';
-@color-surface-3: ~'hsl( 220, 17%, 93% )';
-@color-surface-4: ~'hsl( 213, 9%, 80% )';
-
-@color-surface-2--hover: ~'hsl( 210, 17%, 'unit( 98 + @diff-hoverstate, % )~' )';
-@color-surface-2--active: ~'hsl( 210, 17%, 'unit( 98 - @diff-hoverstate, % )~' )';
 
 /*
  * Syntax highlight colors
@@ -148,6 +137,7 @@
 @background-color-primary--active:	rgba( 41, 98, 204, 0.1 );
 
 /* Foreground colors */
+/* color-base is deprecated */
 @color-base:				@color-base20;
 @color-base--emphasized:	@color-base10;
 @color-base--subtle:		@color-base30;
