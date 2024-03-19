@@ -219,6 +219,10 @@ table.dataTable.no-footer {
 	border-bottom-color: var( --border-color-base );
 }
 
+table.dataTable tbody tr.selected > * {
+	box-shadow: inset 0 0 0 9999px var( --color-primary );
+}
+
 .dataTables_wrapper .dataTables_paginate .paginate_button {
 	font-weight: var( --font-weight-medium );
 	color: var( --color-base--emphasized ) !important;
@@ -263,34 +267,214 @@ table.dataTable.no-footer {
 	border-top: 1px solid var( --border-color-base );
 }
 
-/* Search pane */
-div.dtsp-topRow.dtsp-bordered {
-	border: 1px solid var( --border-color-base );
-    border-radius: var( --border-radius--medium );
+/* Filter */
+.dataTables_wrapper {
+	.dataTables_filter {
+		margin-bottom: var( --space-sm );
 
-	&:hover {
-		border: 1px solid var( --border-color-base );
-		border-radius: var( --border-radius--medium );
-		background-color: var( --background-color-quiet--hover );
-		opacity: 1;
+		input {
+			margin-left: var( --space-xxs );
+		}
+	}
+
+	.dataTables_length select,
+	.dataTables_filter input {
+		border: 1px solid var( --border-color-base--darker );
+		padding: var( --space-xs );
+		border-radius: var( --border-radius--small );
 	}
 }
 
+/* Search pane */
+div.dtsp-topRow,
+div.dtsp-topRow.dtsp-bordered,
+div.dtsp-topRow.dtsp-bordered:hover,
+div.dtsp-panesContainer div.dtsp-searchPanes div.dtsp-searchPane div.dataTables_wrapper,
+div.dtsp-panesContainer div.dtsp-searchPanes div.dtsp-searchPane div.dataTables_wrapper:hover {
+	// Consistent border
+	border: 0;
+    border-radius: var( --border-radius--medium );
+}
+
+div.dtsp-topRow.dtsp-bordered:hover {
+	background-color: var( --background-color-quiet--hover );
+	opacity: 1;
+}
+
+div.dtsp-columns-2 {
+	// There is no need to hardcode it
+	min-width: auto;
+	max-width: none;
+}
+
 div.dtsp-panesContainer {
+	margin-bottom: var( --space-sm );
+
+	div.dtsp-titleRow {
+		margin-bottom: var( --space-xxs );
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	div.dtsp-title {
+		padding: var( --space-xs ) 0;
+		font-size: var( --font-size-x-small );
+		color: var( --color-base--subtle );
+		letter-spacing: 0.05em;
+		line-height: 1;
+		flex-grow: 1;
+		text-align: start;
+	}
+
+	div.dtsp-title,
+	button.dtsp-clearAll,
+	button.dtsp-collapseAll,
+	button.dtsp-showAll {
+		// Use flexbox instead
+		float: none;
+	}
+
+	button.dtsp-clearAll,
+	button.dtsp-collapseAll,
+	button.dtsp-showAll {
+		border: 0;
+		padding: var( --space-xs ) var( --space-sm );
+		font-weight: var( --font-weight-medium );
+		border-radius: var( --border-radius--small );
+		color: var( --color-base--emphasized );
+
+		&:hover {
+			background-color: var( --background-color-quiet--hover );
+			border-radius: var( --border-radius--small );
+		}
+
+		&:active {
+			background-color: var( --background-color-quiet--active );
+		}
+	}
+
+	button.dtsp-disabledButton {
+		background-color: transparent !important;
+		color: var( --color-base--subtle );
+		display: none;
+	}
+
 	div.dtsp-searchPanes {
+		gap: var( --space-xs );
+
 		div.dtsp-searchPane {
-			div.dataTables_wrapper {
-				border: 1px solid var( --border-color-base );
-				border-radius: var( --border-radius--medium );
-			
-				&:hover {
-					border: 1px solid var( --border-color-base );
+			margin-top: 0 !important;
+			border: 1px solid var( --border-color-base );
+			border-radius: var( --border-radius--medium );
+			height: fit-content;
+			font-size: var( --font-size-small );
+
+			// Hidden pane
+			&:has( .dtsp-hidden ) {
+				.dtsp-topRow {
+					background-color: transparent;
+
+					.dtsp-disabledButton {
+						visibility: hidden;
+					}
 				}
+			}
+
+			div.dtsp-topRow {
+				min-height: auto;
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+				background-color: var( --color-surface-2 );
+
+				div.dtsp-searchCont input.dtsp-search {
+					padding-left: var( --space-sm );
+					border-radius: var( --border-radius--small );
+				}
+			}
+
+			input.dtsp-paneInputButton {
+				&::placeholder {
+					color: var( --color-base--subtle );
+				}
+			}
+
+			button.dtsp-paneButton {
+				opacity: var( --opacity-icon-base );
+				filter: var( --filter-invert );
+
+				&:hover {
+					opacity: var( --opacity-icon-base--hover );
+				}
+
+				&:active {
+					opacity: var( --opacity-icon-base--active );
+				}
+			}
+
+			input.dtsp-paneInputButton,
+			button.dtsp-paneButton {
+				margin: 0;
+				width: 36px;
+				height: 40px;
+				border-radius: var( --border-radius--small );
+
+				&:hover {
+					background-color: var( --background-color-quiet--hover );
+				}
+			}
+
+			button.dtsp-searchIcon {
+				background-size: 14px;
+			}
+
+			// Text buttons
+			button.clearButton {
+				font-size: 28px;
+			}
+
+			button.dtsp-collapseButton span.dtsp-caret {
+				font-size: 24px;
+			}
+
+			button.clearButton,
+			button.dtsp-collapseButton span.dtsp-caret {
+				// Force to be black to work with filter
+				color: #000;
+    			vertical-align: middle;
+    			font-weight: var( --font-weight-medium );
+			}
+
+			button.dtsp-collapseButton span.dtsp-caret {
+				top: 4px;
+			}
+
+			button.dtsp-disabledButton {
+				opacity: var( --opacity-base--disabled ) !important;
 			}
 		}
 	}
 
 	div.dataTables_wrapper div.dataTables_scrollBody {
 		background: transparent !important;
+
+		table {
+			tr>th,
+			tr>td {
+				padding: var( --space-xs ) var( --space-sm );
+			}
+		}
+
+		td.dtsp-nameColumn {
+			&:hover {
+				background-color: var( --background-color-quiet--hover );
+			}
+		}
+
+		div.dtsp-nameCont span.dtsp-pill {
+			background: var( --color-surface-2 );
+			border: 1px solid var( --border-color-base );
+			color: var( --color-base );
+			font-size: var( --font-size-x-small );
+		}
 	}
-} 
+}
