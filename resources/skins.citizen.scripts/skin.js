@@ -130,11 +130,9 @@ function main( window ) {
 		document.documentElement.classList.add( 'citizen-loading' );
 	}, false );
 
-	// Remove loading indicator when user clicks back button
-	window.addEventListener( 'pageshow', () => {
-		if ( performance.getEntriesByType( 'navigation' )[ 0 ].type === 'back_forward' ) {
-			document.documentElement.classList.remove( 'citizen-loading' );
-		}
+	// Remove loading indicator once the page is unloaded/hidden
+	window.addEventListener( 'pagehide', () => {
+		document.documentElement.classList.remove( 'citizen-loading' );
 	} );
 }
 
