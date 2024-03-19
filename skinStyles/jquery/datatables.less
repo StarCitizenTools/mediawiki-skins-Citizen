@@ -12,8 +12,10 @@
 table.dataTable {
 	display: table;
 	max-width: 100%;
-	overflow: auto;
+	overflow: hidden; // let datatables handle responsiveness
 	font-size: var( --font-size-small );
+	border: 1px solid var( --border-color-base );
+    border-radius: var( --border-radius--medium );
 }
 
 table.dataTable thead th,
@@ -262,9 +264,21 @@ table.dataTable tbody tr.selected > * {
 	color: var( --color-base );
 }
 
-.dataTables_wrapper .dataTables_filter + .dataTable {
-	// Add top border as divider if there are filter on top
-	border-top: 1px solid var( --border-color-base );
+// Expand (+) button
+table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before,
+table.dataTable.dtr-inline.collapsed>tbody>tr>th.dtr-control:before {
+	background-color: var( --color-sucess );
+	border-color: transparent;
+}
+
+// Collapse (-) button
+table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td.dtr-control:before,
+table.dataTable.dtr-inline.collapsed>tbody>tr.parent>th.dtr-control:before {
+	background-color: var( --color-destructive );
+}
+
+table.dataTable > tbody > tr.child ul.dtr-details > li {
+	border-bottom-color: var( --border-color-base );
 }
 
 /* Filter */
@@ -286,6 +300,11 @@ table.dataTable tbody tr.selected > * {
 }
 
 /* Search pane */
+div.dts div.dataTables_scrollBody table {
+	background: transparent;
+	border: 0;
+}
+
 div.dtsp-topRow,
 div.dtsp-topRow.dtsp-bordered,
 div.dtsp-topRow.dtsp-bordered:hover,
