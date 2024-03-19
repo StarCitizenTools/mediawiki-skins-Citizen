@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.11.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.10.1...v2.11.0) (2024-03-19)
+
+
+### Features
+
+* **core:** ✨ implement new light theme ([54ca25f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/54ca25fa277878f8f778ea4b9454d68422b762dd))
+* **datatables:** ✨ add basic styles for search pane ([b7df8c9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b7df8c9e61b8f0485d2508223e404bb278c46c85))
+* **datatables:** ✨ rework search pane and filter styles ([84abe5a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/84abe5a71ccf329a1aea74cbf1fd7afe1cbe975c))
+* **datatables:** ✨ sync styles with wikitable ([a85ecb5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a85ecb524e9729a0c652f085959e338d9c628a29))
+
+
+### Bug Fixes
+
+* **core:** 🐛 remove loading indicator when page is unloaded ([21ce85a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/21ce85a3208a0a290b3350a5e0a2f665c93d4a17)), closes [#811](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/811)
+
 ### [2.10.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.10.0...v2.10.1) (2024-03-11)
 
 
