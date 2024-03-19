@@ -10,6 +10,7 @@
 
 /* jquery.dataTables.css */
 table.dataTable {
+	display: table;
 	max-width: 100%;
 	overflow: auto;
 	font-size: var( --font-size-small );
@@ -261,3 +262,35 @@ table.dataTable.no-footer {
 	// Add top border as divider if there are filter on top
 	border-top: 1px solid var( --border-color-base );
 }
+
+/* Search pane */
+div.dtsp-topRow.dtsp-bordered {
+	border: 1px solid var( --border-color-base );
+    border-radius: var( --border-radius--medium );
+
+	&:hover {
+		border: 1px solid var( --border-color-base );
+		border-radius: var( --border-radius--medium );
+		background-color: var( --background-color-quiet--hover );
+		opacity: 1;
+	}
+}
+
+div.dtsp-panesContainer {
+	div.dtsp-searchPanes {
+		div.dtsp-searchPane {
+			div.dataTables_wrapper {
+				border: 1px solid var( --border-color-base );
+				border-radius: var( --border-radius--medium );
+			
+				&:hover {
+					border: 1px solid var( --border-color-base );
+				}
+			}
+		}
+	}
+
+	div.dataTables_wrapper div.dataTables_scrollBody {
+		background: transparent !important;
+	}
+} 
