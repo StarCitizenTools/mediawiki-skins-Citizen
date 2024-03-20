@@ -299,12 +299,21 @@ table.dataTable > tbody > tr.child ul.dtr-details > li {
 	}
 }
 
-/* Search pane */
+/* Scroller */
+div.dts div.dataTables_scrollBody {
+	background: transparent;
+}
+
 div.dts div.dataTables_scrollBody table {
 	background: transparent;
 	border: 0;
 }
 
+.dataTables_wrapper.no-footer .dataTables_scrollBody {
+	border-bottom-color: var( --border-color-base );
+}
+
+/* Search pane */
 div.dtsp-topRow,
 div.dtsp-topRow.dtsp-bordered,
 div.dtsp-topRow.dtsp-bordered:hover,
