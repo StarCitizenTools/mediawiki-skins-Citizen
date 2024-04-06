@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.11.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.11.0...v2.11.1) (2024-04-06)
+
+
+### Features
+
+* **core:** ✨ backport valign styles for images from 1.40+ ([fdc22e4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fdc22e4ce5aa419cc22a65a9c14fdd17cd11a57a))
+* **datatables:** ✨ completely hide disabled button for search pane ([e72c460](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e72c4603918472f533c4ee9aa44c5ae33d9b0e55))
+* **datatale:** ✨ add scroller styles ([3fcd46d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3fcd46dfc203f1dae9a0bb8c7342b0125cb1c6b6))
+
+
+### Bug Fixes
+
+* **core:** 🐛 select dropdown menu background ([7fda126](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7fda12693de0ddcbe36853ff1e29f0a017979522))
+* **dataTable:** 🐛 do not wrap dataTables_wrapper ([a395e8d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a395e8dd8175a211e57e19610a3b816befd7145e))
+* **datatables:** 🐛 minor style fixes ([4e236b3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4e236b393d2083b4ebb9e5b2d515e7ae14ddb634))
+
 ## [2.11.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.10.1...v2.11.0) (2024-03-19)
 
 
