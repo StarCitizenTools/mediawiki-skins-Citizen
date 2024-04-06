@@ -673,6 +673,7 @@
 				"infobox",
 				"cargoDynamicTable",
 				"dataTable",
+				"dataTables_wrapper",
 				"smw-datatable",
 				"mw-capiunto-infobox"
 			],
