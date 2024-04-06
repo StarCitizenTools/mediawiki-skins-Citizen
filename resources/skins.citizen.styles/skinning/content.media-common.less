@@ -66,6 +66,42 @@ figure[ typeof~='mw:File/Frame' ] {
 	}
 }
 
+/**
+ * Inline media items
+ * img is needed for 1.39 compat, change to .mw-file-element later
+ */
+.mw-valign-middle img {
+	vertical-align: middle;
+}
+
+.mw-valign-baseline img {
+	vertical-align: baseline;
+}
+
+.mw-valign-sub img {
+	vertical-align: sub;
+}
+
+.mw-valign-super img {
+	vertical-align: super;
+}
+
+.mw-valign-top img {
+	vertical-align: top;
+}
+
+.mw-valign-text-top img {
+	vertical-align: text-top;
+}
+
+.mw-valign-bottom img {
+	vertical-align: bottom;
+}
+
+.mw-valign-text-bottom img {
+	vertical-align: text-bottom;
+}
+
 // Do not float content in mobile view
 @media ( min-width: @min-width-breakpoint-tablet ) {
 	figure[ typeof~='mw:File/Thumb' ],
