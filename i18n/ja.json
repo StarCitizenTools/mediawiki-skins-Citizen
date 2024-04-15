@@ -6,10 +6,12 @@
 			"MathXplore",
 			"Shirayuki",
 			"Tamaki Wakita",
+			"Waki285",
 			"バレロン"
 		]
 	},
 	"citizen-skin-desc": "美しく、便利で、レスポンシブなMediaWikiスキン。当初は[https://starcitizen.tools/ Star Citizen Wiki]のために作成された。",
+	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|議論]]",
 	"citizen.css": "/* ここに記述したCSSは、すべてのCitizen外装利用者に読み込まれます */",
 	"citizen-drawer-toggle": "メニューを切り替える",
 	"citizen-usermenu-toggle": "個人設定を切り替える",
@@ -32,7 +34,7 @@
 	"citizen-search-editpage": "編集またはページを作成",
 	"citizen-search-empty-desc": "入力して検索する",
 	"citizen-search-noresults-title": "$1に関する結果はありません",
-	"citizen-search-noresults-desc": "以下のオプションを試す",
+	"citizen-search-noresults-desc": "上記のオプションを試す",
 	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}}の議論ページ",
 	"citizen-tagline-ns-project": "{{SITENAME}}に関する情報",
 	"citizen-tagline-ns-file": "{{SITENAME}}のファイル",
