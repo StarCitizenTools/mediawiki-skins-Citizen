@@ -12,21 +12,21 @@
 
 .mw-echo-alert {
 	position: fixed;
-	z-index: @z-index-overlay;
-	left: 0;
 	right: 0;
 	bottom: 0;
+	left: 0;
+	z-index: @z-index-overlay;
 	width: auto;
 	max-width: @max-width-breakpoint-tablet;
-	margin: var( --space-xs );
 	padding: 0;
+	margin: var( --space-xs );
+	font-size: var( --font-size-small );
+	line-height: var( --line-height-sm );
+	color: var( --color-base );
+	background-color: var( --color-surface-1 );
 	border: 1px solid var( --border-color-base );
 	border-radius: var( --border-radius--large );
 	box-shadow: var( --box-shadow-dialog );
-	font-size: var( --font-size-small );
-	line-height: var( --line-height-sm );
-	background-color: var( --color-surface-1 );
-	color: var( --color-base );
 
 	@media only screen and ( min-width: @min-width-breakpoint-desktop ) {
 		right: unset;
