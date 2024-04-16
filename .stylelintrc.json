@@ -9,6 +9,7 @@
 	],
 	"rules": {
 		"font-weight-notation": null,
+		"selector-class-pattern": null,
 		"selector-max-id": null,
 		"no-descending-specificity": null,
 		"declaration-no-important": null,
