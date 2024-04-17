@@ -5,13 +5,45 @@
  * Module: ext.PortableInfobox.styles
  * Version: 0.6 16a77dc
  *
- * Date: 2022-04-14
+ * Date: 2024-04-17
 */
 
 :root {
 	--pi-background: var( --color-surface-2 );
 	--pi-border-color: var( --border-color-base );
 	--pi-secondary-background: var( --color-surface-3 );
+	--pi-margin: var( --space-md );
+}
+
+.pi-caption {
+	// Align with Citizen caption styles
+	color: var( --color-base--subtle );
+    font-size: var( --font-size-x-small );
+    font-style: normal;
+    letter-spacing: 0.025em;
+}
+
+
+.portable-infobox {
+	font-size: var( --font-size-small );
+}
+
+.portable-infobox .pi-title {
+	font-size: var( --font-size-x-large );
+	line-height: var( --line-height-sm );
+}
+
+.portable-infobox .pi-header {
+	font-size: var( --font-size-medium );
+    font-weight: var( --font-weight-semibold );
+    line-height: var( --line-height-sm );
+}
+
+.client-js .pi-collapse {
+	.pi-header:first-child {
+		// So that clicking the header won't highlight the entire section
+		user-select: none;
+	}
 }
 
 .portable-infobox p {
