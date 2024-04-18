@@ -3,6 +3,7 @@
 		"authors": [
 			"Alistair3149",
 			"Gogchannel",
+			"Khsmty",
 			"MathXplore",
 			"Shirayuki",
 			"Tamaki Wakita",
@@ -29,7 +30,7 @@
 	"citizen-footer-tagline": "ここのテキストは[[MediaWiki:Citizen-footer-tagline]]を編集してください",
 	"citizen-action-addsection": "話題を追加",
 	"citizen-jumptotop": "トップに戻る",
-	"citizen-search-fulltext": "$1を含むページを検索",
+	"citizen-search-fulltext": "ページ内のテキストを検索",
 	"citizen-search-mediasearch": "メディアを検索",
 	"citizen-search-editpage": "編集またはページを作成",
 	"citizen-search-empty-desc": "入力して検索する",
@@ -47,7 +48,7 @@
 	"prefs-citizen-theme-option-auto": "自動",
 	"prefs-citizen-theme-option-light": "ライト",
 	"prefs-citizen-theme-option-dark": "ダーク",
-	"prefs-citizen-fontsize-label": "フォント サイズ",
+	"prefs-citizen-fontsize-label": "フォントサイズ",
 	"prefs-citizen-pagewidth-label": "ページ幅",
 	"prefs-citizen-lineheight-label": "行の高さ",
 	"prefs-citizen-resetbutton-label": "リセット"
