@@ -5,11 +5,11 @@
  * Module: ext.smw.browse.styles
  * Version: 4.0.2 (0fcdfce)
  *
- * Date: 2022-10-20
+ * Date: 2024-04-19
 */
 
-@import '../../../resources/mixins.less';
-@import '../../../resources/variables.less';
+//@import '../../../resources/mixins.less';
+//@import '../../../resources/variables.less';
 
 // Disable sticky header since it collides with anchor and adds no value
 #citizen-body-header-sticky-sentinel {
@@ -40,7 +40,7 @@
 }
 
 .smwb-title {
-	font-size: 1.5rem;
+	font-size: var( --font-size-x-large );
 	font-weight: var( --font-weight-semibold );
 	line-height: var( --line-height-xs );
 	background-color: transparent;
@@ -51,19 +51,20 @@
 	border-bottom: 0;
 }
 
-.smwb-propvalue {
+.smwb-propvalue,
+.smwb-ipropvalue {
 	background-color: transparent;
-}
 
-.smwb-propvalue .smwb-prophead {
-	padding: var( --space-xs ) var( --space-md );
-	font-size: 1rem;
-	font-weight: var( --font-weight-medium );
-}
+	.smwb-prophead {
+		padding: var( --space-xs ) var( --space-md );
+		font-size: var( --font-size-small );
+		font-weight: var( --font-weight-medium );
+	}
 
-.smwb-propvalue .smwb-propval {
-	padding: var( --space-xs ) var( --space-md );
-	background-color: transparent;
+	.smwb-propval {
+		padding: var( --space-xs ) var( --space-md );
+		background-color: transparent;
+	}
 }
 
 .smwb-center,
@@ -73,6 +74,10 @@
 
 .smwb-actions {
 	line-height: 3rem;
+}
+
+.smwb-action-separator {
+	border-color: var( --border-color-base );
 }
 
 .smwb-title a,
@@ -110,21 +115,6 @@
 	border-bottom: 0;
 }
 
-.smwb-ipropvalue {
-	background-color: transparent;
-}
-
-.smwb-ipropvalue .smwb-prophead {
-	padding: var( --space-xs ) var( --space-md );
-	font-size: 1rem;
-	font-weight: var( --font-weight-medium );
-}
-
-.smwb-ipropvalue .smwb-propval {
-	padding: var( --space-xs ) var( --space-md );
-	background-color: transparent;
-}
-
 .smwb-input .button-field input {
 	padding: 6px;
 }
@@ -132,10 +122,6 @@
 .smwb-input .mw-ui-input:focus {
 	border-color: var( --color-primary );
 	box-shadow: inset 0 0 0 1px var( --color-primary );
-}
-
-.smwb-action-separator {
-	border-left-color: var( --border-color-base );
 }
 
 /**
@@ -178,5 +164,10 @@
 	padding: var( --space-md ) 0;
 	background: transparent;
 	border-bottom: 1px solid var( --border-color-base );
-	.citizen-sticky-header;
+	//.citizen-sticky-header;
+}
+
+.smwb-factbox,
+.smwb-ifactbox {
+	font-size: var( --font-size-small );
 }
