@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.12.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.11.1...v2.12.0) (2024-04-19)
+
+
+### Features
+
+* **core:** ✨ increase line height for CJK text ([6b6dc5b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6b6dc5b26992995def7d928001000723dbb4286e))
+* **core:** ✨ proper em handling for CJK languages ([6dd0f09](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6dd0f09aca3621998c5efce2b6c700f5bb9c846c))
+* **core:** ✨ rename border-color variables and increase contrast ([fc47692](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fc47692421f6332032ca479774c68921d2a1f9a4))
+* **core:** ✨ tweak light theme colors ([a3e060b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a3e060b90c8e8b1d7b6375f24c51f29369a4c84c))
+* **PortableInfobox:** ✨ clean up header styles ([756c87d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/756c87dad72b04f55ea6c5b78738eb6301d623d2))
+* **SMW:** ✨ hide entity examiner indicator ([5d8ba9f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5d8ba9f7b10e12ac1b4cdef5530f9ba0cad26465))
+* **SMW:** ✨ tweak browse property font size ([7aef0c5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7aef0c5a50a68d09dfd6800dbf1df11738d00dbb))
+
+
+### Bug Fixes
+
+* **core:** 🐛 hide section indicator unless explictly enabled ([d820947](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d8209474901c90132c2ceddc7f26505d0f10427a))
+* **core:** 🐛 incorrect selector for SemanticResultFormats datatables ([84cf306](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/84cf306df1479737f0608f6f58323f4e06681fea))
+* **mediawiki:** 🐛 image clipping in packed gallery ([44e7af7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/44e7af78bd71d7f88aeb6b173e70dc7278d59113)), closes [#822](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/822)
+
 ### [2.11.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.11.0...v2.11.1) (2024-04-06)
 
 
