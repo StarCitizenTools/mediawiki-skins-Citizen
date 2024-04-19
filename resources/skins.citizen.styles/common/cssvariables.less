@@ -115,6 +115,13 @@ html {
 	--padding-page: @padding-page;
 }
 
+:lang(ja),
+:lang(ko),
+:lang(zh) {
+	/* CJK languages need increased line-height for readability */
+	--line-height: 1.75;
+}
+
 /**
  * Dark theme
  */
