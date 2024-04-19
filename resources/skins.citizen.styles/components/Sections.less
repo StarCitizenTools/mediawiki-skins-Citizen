@@ -1,3 +1,10 @@
+// Hide indicator when client is noscript
+// FIXME: On rare occasion, indicator can appear without the .citizen-sections-enabled class, not sure why
+.citizen-section-indicator,
+.client-nojs.citizen-sections-enabled .citizen-section-indicator {
+	display: none;
+}
+
 .citizen-sections-enabled {
 	.citizen-section {
 		&-heading {
@@ -36,6 +43,7 @@
 
 		&-indicator {
 			order: -2;
+			display: block;
 			width: 1rem;
 			height: 1rem;
 			margin-right: var( --space-sm );
@@ -64,15 +72,6 @@
 			&--collapsed {
 				display: none;
 			}
-		}
-	}
-}
-
-// Hide indicator when client is noscript
-.client-nojs {
-	.citizen-section {
-		&-indicator {
-			display: none;
 		}
 	}
 }
