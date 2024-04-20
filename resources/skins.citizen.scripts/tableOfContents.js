@@ -44,14 +44,22 @@ function changeActiveSection( id ) {
  * @return {void}
  */
 function init( bodyContent ) {
-	if ( !document.getElementById( 'mw-panel-toc' ) ) {
+	const tocEl = document.getElementById( 'mw-panel-toc' );
+	if ( !tocEl ) {
 		return;
 	}
 
-	const getElements = () => {
-		/* T13555 */
-		return bodyContent.querySelectorAll( '.mw-headline' ).length > 0 ? bodyContent.querySelectorAll( '.mw-headline' ) :
-			bodyContent.querySelectorAll( '.mw-heading' );
+	const getHeadlineElements = () => {
+		const getHeadlineIds = () => {
+			const headlineIds = [];
+			// Nodelist.forEach is forbidden by mediawiki/no-nodelist-unsupported-methods
+			Array.from( tocEl.querySelectorAll( '.citizen-toc__listItem' ) ).forEach( ( tocListEl ) => {
+				// Remove 'toc-' prefix from ID
+				headlineIds.push( '#' + tocListEl.id.slice( 4 ) );
+			} );
+			return headlineIds.join( ',' );
+		};
+		return bodyContent.querySelectorAll( getHeadlineIds() );
 	};
 
 	// We use scroll-padding-top to handle scrolling with fixed header
@@ -64,7 +72,7 @@ function init( bodyContent ) {
 		) + 20;
 	};
 
-	const headlines = getElements();
+	const headlines = getHeadlineElements();
 
 	// Do not continue if there are no headlines
 	// TODO: Need to revamp the selector so that it works better with MW 1.40,
