@@ -2,7 +2,6 @@
  * Citizen
  *
  * Inline script used in includes/Hooks/SkinHooks.php
- * Mangle using https://jscompress.com/
  */
 window.applyPref = () => {
 	const

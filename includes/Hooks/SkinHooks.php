@@ -26,6 +26,7 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Hooks;
 
 use ExtensionRegistry;
+use Html;
 use Language;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\SidebarBeforeOutputHook;
@@ -64,17 +65,9 @@ class SkinHooks implements
 			return;
 		}
 
-		$nonce = $out->getCSP()->getNonce();
-
-		// Script content at 'skins.citizen.scripts.theme/inline.js
-		// phpcs:disable Generic.Files.LineLength.TooLong
-		$script = sprintf(
-			'<script%s>%s</script>',
-			$nonce !== false ? sprintf( ' nonce="%s"', $nonce ) : '',
-			'window.applyPref=()=>{const a="skin-citizen-",b="skin-citizen-theme",c=a=>window.localStorage.getItem(a),d=c("skin-citizen-theme"),e=()=>{const d={fontsize:"font-size",pagewidth:"--width-layout",lineheight:"--line-height"},e=()=>["auto","dark","light"].map(b=>a+b),f=a=>{let b=document.getElementById("citizen-style");null===b&&(b=document.createElement("style"),b.setAttribute("id","citizen-style"),document.head.appendChild(b)),b.textContent=`:root{${a}}`};try{const g=c(b);let h="";if(null!==g){const b=document.documentElement;b.classList.remove(...e(a)),b.classList.add(a+g)}for(const[b,e]of Object.entries(d)){const d=c(a+b);null!==d&&(h+=`${e}:${d};`)}h&&f(h)}catch(a){}};if("auto"===d){const a=window.matchMedia("(prefers-color-scheme: dark)"),c=a.matches?"dark":"light",d=(a,b)=>window.localStorage.setItem(a,b);d(b,c),e(),a.addListener(()=>{e()}),d(b,"auto")}else e()},(()=>{window.applyPref()})();'
-		);
-		// phpcs:enable Generic.Files.LineLength.TooLong
-
+		$script = file_get_contents( MW_INSTALL_PATH . '/skins/Citizen/resources/skins.citizen.scripts/inline.js' );
+		$script = Html::inlineScript( $script );
+		$script = RL\ResourceLoader::filter( 'minify-js', $script, [ 'cache' => false ] );
 		$out->addHeadItem( 'skin.citizen.inline', $script );
 	}
 
