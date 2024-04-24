@@ -329,7 +329,7 @@ class SkinHooks implements
 
 	/**
 	 * Update user menu
-	 * 
+	 *
 	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
 	 * @param SkinTemplate $sktemplate
 	 * @param array &$links
