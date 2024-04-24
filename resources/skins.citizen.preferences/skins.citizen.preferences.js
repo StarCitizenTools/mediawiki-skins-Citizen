@@ -105,10 +105,10 @@ function getPref() {
 	};
 
 	const pref = {
-		theme: localStorage.getItem( PREFIX_KEY + 'theme' ),
-		fontsize: localStorage.getItem( PREFIX_KEY + 'fontsize' ) || initFontSize(),
-		pagewidth: localStorage.getItem( PREFIX_KEY + 'pagewidth' ) || rootStyle.getPropertyValue( '--width-layout' ),
-		lineheight: localStorage.getItem( PREFIX_KEY + 'lineheight' ) || rootStyle.getPropertyValue( '--line-height' )
+		theme: mw.storage.get( PREFIX_KEY + 'theme' ),
+		fontsize: mw.storage.get( PREFIX_KEY + 'fontsize' ) || initFontSize(),
+		pagewidth: mw.storage.get( PREFIX_KEY + 'pagewidth' ) || rootStyle.getPropertyValue( '--width-layout' ),
+		lineheight: mw.storage.get( PREFIX_KEY + 'lineheight' ) || rootStyle.getPropertyValue( '--line-height' )
 	};
 
 	return pref;
@@ -132,12 +132,12 @@ function setPref() {
 		};
 
 	if ( currentPref.theme !== newPref.theme ) {
-		localStorage.setItem( PREFIX_KEY + 'theme', newPref.theme );
+		mw.storage.set( PREFIX_KEY + 'theme', newPref.theme );
 		clientPrefs.set( 'skin-theme', CLIENTPREFS_THEME_MAP[ newPref.theme ] );
 
 	} else if ( currentPref.fontsize !== newPref.fontsize ) {
 		const formattedFontSize = ( newPref.fontsize + 8 ) * 10 + '%';
-		localStorage.setItem( PREFIX_KEY + 'fontsize', formattedFontSize );
+		mw.storage.set( PREFIX_KEY + 'fontsize', formattedFontSize );
 		setIndicator( 'fontsize', formattedFontSize );
 
 	} else if ( currentPref.pagewidth !== newPref.pagewidth ) {
@@ -148,12 +148,12 @@ function setPref() {
 		} else {
 			formattedPageWidth = ( newPref.pagewidth + 6 ) * 120 + 'px';
 		}
-		localStorage.setItem( PREFIX_KEY + 'pagewidth', formattedPageWidth );
+		mw.storage.set( PREFIX_KEY + 'pagewidth', formattedPageWidth );
 		setIndicator( 'pagewidth', formattedPageWidth );
 
 	} else if ( currentPref.lineheight !== newPref.lineheight ) {
 		const formattedLineHeight = newPref.lineheight / 10 + 1;
-		localStorage.setItem( PREFIX_KEY + 'lineheight', formattedLineHeight );
+		mw.storage.set( PREFIX_KEY + 'lineheight', formattedLineHeight );
 		setIndicator( 'lineheight', formattedLineHeight );
 	}
 
@@ -178,7 +178,7 @@ function resetPref() {
 	keys.forEach( ( key ) => {
 		const keyName = PREFIX_KEY + key;
 
-		if ( localStorage.getItem( keyName ) ) {
+		if ( mw.storage.get( keyName ) ) {
 			localStorage.removeItem( keyName );
 		}
 	} );
@@ -189,7 +189,7 @@ function resetPref() {
 	keys.forEach( ( key ) => {
 		const keyName = PREFIX_KEY + key;
 
-		localStorage.setItem( keyName, pref[ key ] );
+		mw.storage.set( keyName, pref[ key ] );
 		setIndicator( key, pref[ key ] );
 		setInputValue( key, prefValue[ key ] );
 	} );
