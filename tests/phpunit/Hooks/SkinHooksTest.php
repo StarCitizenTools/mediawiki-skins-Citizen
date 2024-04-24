@@ -266,14 +266,14 @@ class SkinHooksTest extends \MediaWikiIntegrationTestCase {
 	 * @covers \MediaWiki\Skins\Citizen\Hooks\SkinHooks
 	 * @return void
 	 */
-	public function testSkinTemplateNavigation__UniversalNameMissmatch() {
+	public function testSkinTemplateNavigationNameMissmatch() {
 		$template = $this->getMockBuilder( SkinTemplate::class )->disableOriginalConstructor()->getMock();
 		$template->expects( $this->once() )->method( 'getSkinName' )->willReturn( 'foo' );
 
 		$links = [];
 
 		$hooks = new SkinHooks();
-		$hooks->onSkinTemplateNavigation__Universal( $template, $links );
+		$hooks->onSkinTemplateNavigation( $template, $links );
 
 		$this->assertEmpty( $links );
 	}
@@ -282,7 +282,7 @@ class SkinHooksTest extends \MediaWikiIntegrationTestCase {
 	 * @covers \MediaWiki\Skins\Citizen\Hooks\SkinHooks
 	 * @return void
 	 */
-	public function testSkinTemplateNavigation__UniversalActions() {
+	public function testSkinTemplateNavigationActions() {
 		$template = $this->getMockBuilder( SkinTemplate::class )->disableOriginalConstructor()->getMock();
 		$template->expects( $this->once() )->method( 'getSkinName' )->willReturn( 'citizen' );
 
@@ -293,7 +293,7 @@ class SkinHooksTest extends \MediaWikiIntegrationTestCase {
 		];
 
 		$hooks = new SkinHooks();
-		$hooks->onSkinTemplateNavigation__Universal( $template, $links );
+		$hooks->onSkinTemplateNavigation( $template, $links );
 
 		$this->assertArraySubmapSame( [
 			'actions' => [
@@ -309,7 +309,7 @@ class SkinHooksTest extends \MediaWikiIntegrationTestCase {
 	 * @covers \MediaWiki\Skins\Citizen\Hooks\SkinHooks
 	 * @return void
 	 */
-	public function testSkinTemplateNavigation__UniversalAssociatedPagesMenu() {
+	public function testSkinTemplateNavigationAssociatedPagesMenu() {
 		$template = $this->getMockBuilder( SkinTemplate::class )->disableOriginalConstructor()->getMock();
 		$template->expects( $this->once() )->method( 'getSkinName' )->willReturn( 'citizen' );
 
@@ -320,7 +320,7 @@ class SkinHooksTest extends \MediaWikiIntegrationTestCase {
 		];
 
 		$hooks = new SkinHooks();
-		$hooks->onSkinTemplateNavigation__Universal( $template, $links );
+		$hooks->onSkinTemplateNavigation( $template, $links );
 
 		$this->assertArraySubmapSame( [
 			'associated-pages' => [
@@ -336,7 +336,7 @@ class SkinHooksTest extends \MediaWikiIntegrationTestCase {
 	 * @covers \MediaWiki\Skins\Citizen\Hooks\SkinHooks
 	 * @return void
 	 */
-	public function testSkinTemplateNavigation__UniversalUserMenuTemp() {
+	public function testSkinTemplateNavigationUserMenuTemp() {
 		$mockUser = $this->getMockBuilder( \User::class )->disableOriginalConstructor()->getMock();
 		$mockUser->expects( $this->once() )->method( 'isTemp' )->willReturn( true );
 
@@ -351,7 +351,7 @@ class SkinHooksTest extends \MediaWikiIntegrationTestCase {
 		];
 
 		$hooks = new SkinHooks();
-		$hooks->onSkinTemplateNavigation__Universal( $template, $links );
+		$hooks->onSkinTemplateNavigation( $template, $links );
 
 		$this->assertArrayNotHasKey( 'tmpuserpage', $links['user-menu'] );
 	}
@@ -360,7 +360,7 @@ class SkinHooksTest extends \MediaWikiIntegrationTestCase {
 	 * @covers \MediaWiki\Skins\Citizen\Hooks\SkinHooks
 	 * @return void
 	 */
-	public function testSkinTemplateNavigation__UniversalUserMenuAnon() {
+	public function testSkinTemplateNavigationUserMenuAnon() {
 		$template = $this->getMockBuilder( SkinTemplate::class )->disableOriginalConstructor()->getMock();
 		$template->expects( $this->once() )->method( 'getSkinName' )->willReturn( 'citizen' );
 		$template->expects( $this->once() )->method( 'getUser' )->willReturn(
@@ -374,7 +374,7 @@ class SkinHooksTest extends \MediaWikiIntegrationTestCase {
 		];
 
 		$hooks = new SkinHooks();
-		$hooks->onSkinTemplateNavigation__Universal( $template, $links );
+		$hooks->onSkinTemplateNavigation( $template, $links );
 
 		$this->assertArrayNotHasKey( 'anonuserpage', $links['user-menu'] );
 	}
@@ -383,7 +383,7 @@ class SkinHooksTest extends \MediaWikiIntegrationTestCase {
 	 * @covers \MediaWiki\Skins\Citizen\Hooks\SkinHooks
 	 * @return void
 	 */
-	public function testSkinTemplateNavigation__UniversalUserMenuRegistered() {
+	public function testSkinTemplateNavigationUserMenuRegistered() {
 		$mockUser = $this->getMockBuilder( \User::class )->disableOriginalConstructor()->getMock();
 		$mockUser->expects( $this->once() )->method( 'isRegistered' )->willReturn( true );
 
@@ -398,7 +398,7 @@ class SkinHooksTest extends \MediaWikiIntegrationTestCase {
 		];
 
 		$hooks = new SkinHooks();
-		$hooks->onSkinTemplateNavigation__Universal( $template, $links );
+		$hooks->onSkinTemplateNavigation( $template, $links );
 
 		$this->assertArrayNotHasKey( 'userpage', $links['user-menu'] );
 	}
@@ -407,7 +407,7 @@ class SkinHooksTest extends \MediaWikiIntegrationTestCase {
 	 * @covers \MediaWiki\Skins\Citizen\Hooks\SkinHooks
 	 * @return void
 	 */
-	public function testSkinTemplateNavigation__UniversalUserInterfacePreferencesMenu() {
+	public function testSkinTemplateNavigationUserInterfacePreferencesMenu() {
 		$template = $this->getMockBuilder( SkinTemplate::class )->disableOriginalConstructor()->getMock();
 		$template->expects( $this->once() )->method( 'getSkinName' )->willReturn( 'citizen' );
 
@@ -416,7 +416,7 @@ class SkinHooksTest extends \MediaWikiIntegrationTestCase {
 		];
 
 		$hooks = new SkinHooks();
-		$hooks->onSkinTemplateNavigation__Universal( $template, $links );
+		$hooks->onSkinTemplateNavigation( $template, $links );
 
 		$this->assertArrayHasKey( 'user-interface-preferences', $links );
 		$this->assertEmpty( $links['user-interface-preferences'] );
@@ -426,7 +426,7 @@ class SkinHooksTest extends \MediaWikiIntegrationTestCase {
 	 * @covers \MediaWiki\Skins\Citizen\Hooks\SkinHooks
 	 * @return void
 	 */
-	public function testSkinTemplateNavigation__UniversalViews() {
+	public function testSkinTemplateNavigationViews() {
 		$template = $this->getMockBuilder( SkinTemplate::class )->disableOriginalConstructor()->getMock();
 		$template->expects( $this->once() )->method( 'getSkinName' )->willReturn( 'citizen' );
 
@@ -437,7 +437,7 @@ class SkinHooksTest extends \MediaWikiIntegrationTestCase {
 		];
 
 		$hooks = new SkinHooks();
-		$hooks->onSkinTemplateNavigation__Universal( $template, $links );
+		$hooks->onSkinTemplateNavigation( $template, $links );
 
 		$this->assertArraySubmapSame( [
 			'views' => [
@@ -453,7 +453,7 @@ class SkinHooksTest extends \MediaWikiIntegrationTestCase {
 	 * @covers \MediaWiki\Skins\Citizen\Hooks\SkinHooks
 	 * @return void
 	 */
-	public function testSkinTemplateNavigation__UniversalViewsVEEdit() {
+	public function testSkinTemplateNavigationViewsVEEdit() {
 		$template = $this->getMockBuilder( SkinTemplate::class )->disableOriginalConstructor()->getMock();
 		$template->expects( $this->once() )->method( 'getSkinName' )->willReturn( 'citizen' );
 
@@ -469,7 +469,7 @@ class SkinHooksTest extends \MediaWikiIntegrationTestCase {
 		];
 
 		$hooks = new SkinHooks();
-		$hooks->onSkinTemplateNavigation__Universal( $template, $links );
+		$hooks->onSkinTemplateNavigation( $template, $links );
 
 		$this->assertArraySubmapSame( [
 			'views' => [
