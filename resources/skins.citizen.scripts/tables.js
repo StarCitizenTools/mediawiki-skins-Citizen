@@ -21,7 +21,7 @@ function setupOverflowState( element ) {
 				return;
 			}
 
-			const currentPosition = element.parentNode.scrollLeft;
+			const currentPosition = Math.ceil( element.parentNode.scrollLeft );
 
 			if ( currentPosition <= 0 ) {
 				// At the start
