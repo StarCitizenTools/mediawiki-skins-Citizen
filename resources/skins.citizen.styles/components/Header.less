@@ -100,11 +100,6 @@
 				background-color: var( --background-color-primary--active );
 			}
 		}
-
-		// Hide header menu labels
-		.citizen-menu__heading {
-			.mixin-screen-reader-text;
-		}
 	}
 
 	&__start,
@@ -134,6 +129,13 @@
 		flex-direction: var( --header-direction );
 		gap: var( --space-xxs );
 		align-items: center;
+	}
+}
+
+#p-personal {
+	// Hide header menu labels
+	.citizen-menu__heading {
+		.mixin-screen-reader-text;
 	}
 }
 
