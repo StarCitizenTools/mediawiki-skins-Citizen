@@ -9,6 +9,18 @@ const
 	PREFIX_KEY = 'skin-citizen-';
 
 /**
+ * Clientprefs names theme differently from Citizen, we will need to translate it
+ * TODO: Migrate to clientprefs fully on MW 1.43
+ */
+const CLIENTPREFS_THEME_MAP = {
+	auto: 'os',
+	light: 'day',
+	dark: 'night'
+};
+
+const clientPrefs = require( './clientPrefs.localStorage.js' )();
+
+/**
  * Set the value of the input element
  *
  * @param {string} key
@@ -121,6 +133,7 @@ function setPref() {
 
 	if ( currentPref.theme !== newPref.theme ) {
 		localStorage.setItem( PREFIX_KEY + 'theme', newPref.theme );
+		clientPrefs.set( 'skin-theme', CLIENTPREFS_THEME_MAP[ newPref.theme ] );
 
 	} else if ( currentPref.fontsize !== newPref.fontsize ) {
 		const formattedFontSize = ( newPref.fontsize + 8 ) * 10 + '%';

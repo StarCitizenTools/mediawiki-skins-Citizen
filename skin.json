@@ -225,7 +225,8 @@
 				{
 					"name": "resources/skins.citizen.preferences/config.json",
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenPreferencesResourceLoaderConfig"
-				}
+				},
+				"resources/skins.citizen.preferences/clientPrefs.localStorage.js"
 			],
 			"messages": [
 				"preferences",
@@ -237,6 +238,10 @@
 				"prefs-citizen-pagewidth-label",
 				"prefs-citizen-lineheight-label",
 				"prefs-citizen-resetbutton-label"
+			],
+			"dependencies": [
+				"mediawiki.storage",
+				"mediawiki.util"
 			],
 			"targets": [
 				"desktop",
