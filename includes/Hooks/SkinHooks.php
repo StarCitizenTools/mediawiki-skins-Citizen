@@ -31,7 +31,6 @@ use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\SidebarBeforeOutputHook;
 use MediaWiki\Hook\SkinBuildSidebarHook;
 use MediaWiki\Hook\SkinEditSectionLinksHook;
-use MediaWiki\Hook\SkinTemplateNavigation__UniversalHook;
 use MediaWiki\ResourceLoader as RL;
 use MediaWiki\Skins\Citizen\GetConfigTrait;
 use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;
@@ -49,8 +48,7 @@ class SkinHooks implements
 	SidebarBeforeOutputHook,
 	SkinBuildSidebarHook,
 	SkinEditSectionLinksHook,
-	SkinPageReadyConfigHook,
-	SkinTemplateNavigation__UniversalHook
+	SkinPageReadyConfigHook
 {
 	use GetConfigTrait;
 
@@ -214,11 +212,12 @@ class SkinHooks implements
 	/**
 	 * Modify navigation links
 	 *
+	 * TODO: Update to a proper hook when T287622 is resolved
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SkinTemplateNavigation::Universal
 	 * @param SkinTemplate $sktemplate
 	 * @param array &$links
 	 */
-	public function onSkinTemplateNavigation__Universal( $sktemplate, &$links ): void {
+	public static function onSkinTemplateNavigation( $sktemplate, &$links ): void {
 		// Be extra safe because it might be active on other skins with caching
 		if ( $sktemplate->getSkinName() !== 'citizen' ) {
 			return;
@@ -248,6 +247,7 @@ class SkinHooks implements
 	/**
 	 * Update actions menu items
 	 *
+	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
 	 * @param array &$links
 	 */
 	private static function updateActionsMenu( &$links ) {
@@ -269,6 +269,7 @@ class SkinHooks implements
 	/**
 	 * Update associated pages menu items
 	 *
+	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
 	 * @param array &$links
 	 */
 	private static function updateAssociatedPagesMenu( &$links ) {
@@ -293,11 +294,8 @@ class SkinHooks implements
 
 	/**
 	 * Update toolbox menu items
-	 * This is not guaranteed to run after extensions hook
 	 *
-	 * WORKAROUND: Load the skin after all extensions
-	 * FIXME: Revisit when T287622 is resolved
-	 *
+	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
 	 * @param array &$links
 	 */
 	private static function updateToolboxMenu( &$links ) {
@@ -331,7 +329,8 @@ class SkinHooks implements
 
 	/**
 	 * Update user menu
-	 *
+	 * 
+	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
 	 * @param SkinTemplate $sktemplate
 	 * @param array &$links
 	 */
@@ -363,6 +362,7 @@ class SkinHooks implements
 	/**
 	 * Update user interface preferences menu
 	 *
+	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
 	 * @param SkinTemplate $sktemplate
 	 * @param array &$links
 	 */
@@ -373,6 +373,7 @@ class SkinHooks implements
 	/**
 	 * Update views menu items
 	 *
+	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
 	 * @param array &$links
 	 */
 	private static function updateViewsMenu( &$links ) {
