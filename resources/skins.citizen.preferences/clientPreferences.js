@@ -1,4 +1,14 @@
 /**
+ * Based on @wikimedia/mediawiki.skins.clientpreferences 1.1.1
+ *
+ * @see https://github.com/wikimedia/mediawiki-skins-Vector/tree/master/resources/skins.vector.clientPreferences
+ *
+ * Modificactions
+ * - Use localStoarge instead of cookies
+ * - Add mw.message wrapper to replace message keys
+ */
+
+/**
  * @typedef {Object} ClientPreference
  * @property {string[]} options that are valid for this client preference
  * @property {string} preferenceKey for registered users.
