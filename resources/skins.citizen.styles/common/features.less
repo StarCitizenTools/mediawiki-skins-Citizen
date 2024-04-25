@@ -1,11 +1,20 @@
+.feature-pure-black() {
+	--color-surface-0: #000;
+	--color-surface-1: ~'hsl( var( --color-primary__h ), 20%, 10% )';
+	--color-surface-2: ~'hsl( var( --color-primary__h ), 25%, 12% )';
+	--color-surface-3: ~'hsl( var( --color-primary__h ), 25%, 15% )';
+	--color-surface-4: ~'hsl( var( --color-primary__h ), 15%, 20% )';
+	--shadow-strength: 0.04;
+}
+
 .citizen-feature-pure-black-clientpref-1 {
 	:root.skin-theme-clientpref-night& {
-		--color-surface-0: #000;
+		.feature-pure-black();
 	}
 
 	@media ( prefers-color-scheme: dark ) {
 		:root.skin-theme-clientpref-os& {
-			--color-surface-0: #000;
+			.feature-pure-black();
 		}
 	}
 }
