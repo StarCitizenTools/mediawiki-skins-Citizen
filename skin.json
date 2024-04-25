@@ -214,9 +214,6 @@
 			]
 		},
 		"skins.citizen.preferences": {
-			"templates": [
-				"resources/skins.citizen.preferences/templates/preferences.mustache"
-			],
 			"styles": [
 				"resources/skins.citizen.preferences/skins.citizen.preferences.less"
 			],

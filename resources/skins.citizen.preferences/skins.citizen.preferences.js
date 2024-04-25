@@ -68,28 +68,6 @@ function togglePanel() {
 }
 
 /**
- * Get MW message and return as object to be used in Mustache
- *
- * @return {Object}
- */
-function getMessages() {
-	const keys = [
-			'preferences'
-		],
-		data = {};
-
-	keys.forEach( ( key ) => {
-		const templateKey = 'msg-' + key;
-
-		// Message keys already defined above
-		// eslint-disable-next-line mediawiki/msg-doc
-		data[ templateKey ] = mw.message( key ).text();
-	} );
-
-	return data;
-}
-
-/**
  * Set up the DOM and initial input states for the panel
  * It only loads when user first clicked the toggle
  *
@@ -97,15 +75,19 @@ function getMessages() {
  * @return {void}
  */
 function initPanel( event ) {
-	const template = mw.template.get(
-			'skins.citizen.preferences',
-			'resources/skins.citizen.preferences/templates/preferences.mustache'
-		),
-		data = getMessages();
+	const panel = document.createElement( 'aside' );
+	panel.id = 'citizen-pref-panel';
+	panel.classList.add( 'citizen-pref-panel' );
 
-	// To Mustache is to jQuery sigh
-	// TODO: Use ES6 template literals when RL does not screw up multiline
-	const panel = template.render( data ).get()[ 1 ];
+	const header = document.createElement( 'header' );
+	header.id = 'citizen-pref-header';
+	header.textContent = mw.message( 'preferences' ).text();
+
+	const container = document.createElement( 'div' );
+	container.id = 'citizen-client-prefs';
+	container.classList.add( 'citizen-client-prefs' );
+
+	panel.append( header, container );
 
 	// Attach panel after button
 	event.currentTarget.parentNode.insertBefore( panel, event.currentTarget.nextSibling );
