@@ -1,4 +1,8 @@
 {
+	"citizen-feature-custom-font-size": {
+		"options": [ "small", "standard", "large" ],
+		"preferenceKey": "citizen-font-size"
+	},
 	"skin-theme": {
 		"options": [ "os", "day", "night" ],
 		"preferenceKey": "citizen-theme"
@@ -6,10 +10,6 @@
 	"citizen-feature-pure-black": {
 		"options": [ "0", "1" ],
 		"preferenceKey": "citizen-pure-black"
-	},
-	"citizen-feature-custom-font-size": {
-		"options": [ "small", "standard", "large" ],
-		"preferenceKey": "citizen-font-size"
 	},
 	"citizen-feature-custom-width": {
 		"options": [ "standard", "wide", "full" ],
