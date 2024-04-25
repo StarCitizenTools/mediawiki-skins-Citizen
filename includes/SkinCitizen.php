@@ -143,13 +143,23 @@ class SkinCitizen extends SkinMustache {
 	}
 
 	/**
+	 * Add client preferences features
+	 * Did not add the citizen-feature- prefix because there might be features from core MW or extensions
+	 *
+	 * @param string $feature
+	 * @param string $value
+	 */
+	private function addClientPrefFeature( string $feature,  string $value ) {
+		$this->getOutput()->addHtmlClasses( $feature . '-clientpref-' . $value );
+	}
+
+	/**
 	 * Set up optional skin features
 	 *
 	 * @param array &$options
 	 */
 	private function buildSkinFeatures( array &$options ) {
-		$out = $this->getOutput();
-		$title = $out->getTitle();
+		$title = $this->getOutput()->getTitle();
 
 		$metadata = new Metadata( $this );
 		$skinTheme = new Theme( $this );
@@ -164,7 +174,8 @@ class SkinCitizen extends SkinMustache {
 		$options['toc'] = false;
 
 		// Clientprefs feature handling
-		$out->addHtmlClasses( 'citizen-feature-pure-black-clientpref-0' );
+		$this->addClientPrefFeature( 'citizen-feature-pure-black', '0' );
+		$this->addClientPrefFeature( 'citizen-feature-custom-font-size', '1' );
 
 		// Collapsible sections
 		// Load in content pages

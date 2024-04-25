@@ -12,7 +12,6 @@ window.applyPref = () => {
 
 	const apply = () => {
 		const cssProps = {
-			fontsize: 'font-size',
 			pagewidth: '--width-layout',
 			lineheight: '--line-height'
 		};

@@ -46,11 +46,10 @@
 	"citizen-tagline-ns-help": "Tagline for pages in help namespace",
 	"citizen-tagline-ns-category": "Tagline for pages in category namespace",
 	"citizen-tagline-user-regdate": "Label for registration date in taglines on userpages",
-	"prefs-citizen-fontsize-label": "Label for the font size settings",
 	"prefs-citizen-pagewidth-label": "Label for the page width settings",
 	"prefs-citizen-lineheight-label": "Label for the line height settings",
 	"prefs-citizen-resetbutton-label": "Label for the reset button that restore default settings",
-	"citizen-theme-name": "Label for setting that allows you to change theme.",
+	"citizen-theme-name": "Heading label for setting that allows you to change theme.",
 	"citizen-theme-description": "Description for theme.",
 	"citizen-theme-day-label": "Label for light/day theme.",
 	"citizen-theme-night-label": "Label for dark/night theme.",
@@ -58,5 +57,9 @@
 	"citizen-theme-exclusion-notice": "Text that informs you that the page is always in light/day mode.",
 	"citizen-feature-pure-black-name": "Label for pure black mode in dark theme.",
 	"citizen-feature-pure-black-0-label": "Label for turning off pure black mode",
-	"citizen-feature-pure-black-1-label": "Label for turning on pure black mode"
+	"citizen-feature-pure-black-1-label": "Label for turning on pure black mode",
+	"citizen-feature-custom-font-size-name": "Heading label for font size",
+	"citizen-feature-custom-font-size-0-label": "Label for small font size. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-font-size-name}}).",
+	"citizen-feature-custom-font-size-1-label": "Label for standard font size. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-font-size-name}})",
+	"citizen-feature-custom-font-size-2-label": "Label for large font size. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-font-size-name}})."
 }

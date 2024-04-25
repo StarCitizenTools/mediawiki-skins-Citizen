@@ -56,7 +56,6 @@ function setIndicator( key, value ) {
  */
 function convertForForm( pref ) {
 	return {
-		fontsize: Number( pref.fontsize.slice( 0, -1 ) ) / 10 - 8,
 		pagewidth: Number( pref.pagewidth.slice( 0, -2 ) ) / 120 - 6,
 		lineheight: ( pref.lineheight - 1 ) * 10
 	};
@@ -70,41 +69,7 @@ function convertForForm( pref ) {
 function getPref() {
 	const rootStyle = window.getComputedStyle( document.documentElement );
 
-	// Create an initial value for font size
-	const initFontSize = () => {
-		// Get browser default font size
-		const getDefaultFontSize = () => {
-			const element = document.createElement( 'div' );
-			element.style.width = '1rem';
-			element.style.display = 'none';
-			document.body.append( element );
-
-			const widthMatch = window
-				.getComputedStyle( element )
-				.getPropertyValue( 'width' )
-				.match( /\d+/ );
-
-			element.remove();
-
-			if ( !widthMatch || widthMatch.length < 1 ) {
-				return null;
-			}
-
-			const result = Number( widthMatch[ 0 ] );
-			return !isNaN( result ) ? result : null;
-		};
-
-		const browserFontSize = getDefaultFontSize() + 'px',
-			rootFontSize = rootStyle.getPropertyValue( 'font-size' );
-
-		// If browser font size is same as HTML font size, return 100%
-		// Some wiki might have custom font size defined in root/HTML,
-		// in that case return the defined value
-		return ( ( browserFontSize === rootFontSize ) ? '100%' : rootFontSize );
-	};
-
 	const pref = {
-		fontsize: mw.storage.get( PREFIX_KEY + 'fontsize' ) || initFontSize(),
 		pagewidth: mw.storage.get( PREFIX_KEY + 'pagewidth' ) || rootStyle.getPropertyValue( '--width-layout' ),
 		lineheight: mw.storage.get( PREFIX_KEY + 'lineheight' ) || rootStyle.getPropertyValue( '--line-height' )
 	};
@@ -123,17 +88,11 @@ function setPref() {
 		formData = Object.fromEntries( new FormData( document.getElementById( CLASS + '-form' ) ) ),
 		currentPref = convertForForm( getPref() ),
 		newPref = {
-			fontsize: Number( formData[ CLASS + '-fontsize' ] ),
 			pagewidth: Number( formData[ CLASS + '-pagewidth' ] ),
 			lineheight: Number( formData[ CLASS + '-lineheight' ] )
 		};
 
-	if ( currentPref.fontsize !== newPref.fontsize ) {
-		const formattedFontSize = ( newPref.fontsize + 8 ) * 10 + '%';
-		mw.storage.set( PREFIX_KEY + 'fontsize', formattedFontSize );
-		setIndicator( 'fontsize', formattedFontSize );
-
-	} else if ( currentPref.pagewidth !== newPref.pagewidth ) {
+	if ( currentPref.pagewidth !== newPref.pagewidth ) {
 		let formattedPageWidth;
 		// Max setting would be full browser width
 		if ( newPref.pagewidth === 10 ) {
@@ -159,7 +118,7 @@ function setPref() {
  * @return {void}
  */
 function resetPref() {
-	const keys = [ 'fontsize', 'pagewidth', 'lineheight' ];
+	const keys = [ 'pagewidth', 'lineheight' ];
 
 	// Remove style
 	if ( document.getElementById( 'citizen-style' ) ) {
@@ -258,7 +217,6 @@ function togglePanel() {
 function getMessages() {
 	const keys = [
 			'preferences',
-			'prefs-citizen-fontsize-label',
 			'prefs-citizen-pagewidth-label',
 			'prefs-citizen-lineheight-label',
 			'prefs-citizen-resetbutton-label'
@@ -291,7 +249,7 @@ function initPanel( event ) {
 		data = getMessages(),
 		pref = getPref(),
 		prefValue = convertForForm( pref ),
-		keys = [ 'fontsize', 'pagewidth', 'lineheight' ];
+		keys = [ 'pagewidth', 'lineheight' ];
 
 	// To Mustache is to jQuery sigh
 	// TODO: Use ES6 template literals when RL does not screw up multiline

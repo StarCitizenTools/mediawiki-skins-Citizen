@@ -43,12 +43,11 @@
 	"citizen-tagline-ns-help": "Help page",
 	"citizen-tagline-ns-category": "Category page",
 	"citizen-tagline-user-regdate": "Joined $1",
-	"prefs-citizen-fontsize-label": "Font size",
 	"prefs-citizen-pagewidth-label": "Page width",
 	"prefs-citizen-lineheight-label": "Line height",
 	"prefs-citizen-resetbutton-label": "Reset to default",
 
-	"citizen-theme-name": "Theme",
+	"citizen-theme-name": "Color",
 	"citizen-theme-description": "Change the theme of the wiki",
 	"citizen-theme-day-label": "Light",
 	"citizen-theme-night-label": "Dark",
@@ -57,5 +56,10 @@
 
 	"citizen-feature-pure-black-name": "Pure black mode",
 	"citizen-feature-pure-black-0-label": "Off",
-	"citizen-feature-pure-black-1-label": "On"
+	"citizen-feature-pure-black-1-label": "On",
+
+	"citizen-feature-custom-font-size-name": "Text",
+	"citizen-feature-custom-font-size-0-label": "Small",
+	"citizen-feature-custom-font-size-1-label": "Standard",
+	"citizen-feature-custom-font-size-2-label": "Large"
 }

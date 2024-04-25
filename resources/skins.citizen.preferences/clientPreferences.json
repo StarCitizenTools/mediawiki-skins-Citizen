@@ -6,5 +6,9 @@
 	"citizen-feature-pure-black": {
 		"options": [ "0", "1" ],
 		"preferenceKey": "citizen-pure-black"
+	},
+	"citizen-feature-custom-font-size": {
+		"options": [ "0", "1", "2" ],
+		"preferenceKey": "citizen-font-size"
 	}
 }

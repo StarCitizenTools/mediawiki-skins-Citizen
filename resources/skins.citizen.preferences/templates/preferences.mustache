@@ -13,27 +13,6 @@
 	<header id="citizen-pref-header">{{msg-preferences}}</header>
 	<div class="citizen-client-prefs" id="citizen-client-prefs"></div>
 	<form id="citizen-pref-form">
-		{{! Font size }}
-		<fieldset class="citizen-pref-item" id="citizen-pref-fontsize">
-			<label for="citizen-pref-fontsize" class="citizen-pref-item__label">
-				<span class="citizen-pref-item__title">{{msg-prefs-citizen-fontsize-label}}</span>
-				<span class="citizen-pref-item__value" id="citizen-pref-fontsize__value"></span>
-			</label>
-			<input id="citizen-pref-fontsize__input" name="citizen-pref-fontsize" type="range" max="10" list="citizen-pref-fontsize__tickmarks">
-			<datalist id="citizen-pref-fontsize__tickmarks" class="citizen-pref__tickmarks">
-				<option value="0" label="80%"></option>
-				<option value="1"></option>
-				<option value="2"></option>
-				<option value="3"></option>
-				<option value="4"></option>
-				<option value="5"></option>
-				<option value="6"></option>
-				<option value="7"></option>
-				<option value="8"></option>
-				<option value="9"></option>
-				<option value="10" label="180%"></option>
-			</datalist>
-		</fieldset>
 		{{! Page width }}
 		<fieldset class="citizen-pref-item" id="citizen-pref-pagewidth">
 			<label for="citizen-pref-pagewidth" class="citizen-pref-item__label">
