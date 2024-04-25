@@ -114,8 +114,17 @@
 			display: block;
 			padding: var( --space-xs ) var( --space-md );
 			font-weight: var( --font-weight-medium );
+			cursor: pointer;
 			border: 2px solid var( --border-color-base );
 			border-radius: var( --border-radius--medium );
+
+			&:hover {
+				border-color: var( --color-primary--hover );
+			}
+
+			&:active {
+				border-color: var( --color-primary--active );
+			}
 		}
 	}
 }
