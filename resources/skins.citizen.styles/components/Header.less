@@ -108,6 +108,11 @@
 		flex-direction: var( --header-direction );
 		flex-shrink: 0; // let _inner handle the overflow
 		gap: var( --space-xxs );
+
+		// Hide top-level menu header labels
+		> .citizen-menu > .citizen-menu__heading {
+			.mixin-screen-reader-text;
+		}
 	}
 
 	&__start {
