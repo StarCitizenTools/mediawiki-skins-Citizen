@@ -105,7 +105,7 @@
 	form {
 		display: grid;
 		// This is not the best because it does not adapt to the text length but will revisit later
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat( 2, 1fr );
 		gap: var( --space-xxs );
 		text-align: center;
 	}
@@ -150,6 +150,10 @@
 }
 
 #skin-client-prefs-skin-theme {
+	form {
+		grid-template-columns: repeat( 3, 1fr );
+	}
+
 	.citizen-client-prefs-radio__label {
 		background: var( --color-surface-0 );
 
