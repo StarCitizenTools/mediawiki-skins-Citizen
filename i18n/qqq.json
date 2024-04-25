@@ -57,6 +57,6 @@
 	"citizen-theme-os-label": "Label for automatic theme (which respects any operating system setting).",
 	"citizen-theme-exclusion-notice": "Text that informs you that the page is always in light/day mode.",
 	"citizen-feature-pure-black-name": "Label for pure black mode in dark theme.",
-	"citizen-feature-pure-black-0-label": "Off",
-	"citizen-feature-pure-black-1-label": "On"
+	"citizen-feature-pure-black-0-label": "Label for turning off pure black mode",
+	"citizen-feature-pure-black-1-label": "Label for turning on pure black mode"
 }
