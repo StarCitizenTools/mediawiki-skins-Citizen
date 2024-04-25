@@ -226,7 +226,10 @@
 					"name": "resources/skins.citizen.preferences/config.json",
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenPreferencesResourceLoaderConfig"
 				},
-				"resources/skins.citizen.preferences/clientPrefs.localStorage.js"
+				"resources/skins.citizen.preferences/addPortlet.polyfill.js",
+				"resources/skins.citizen.preferences/clientPreferences.js",
+				"resources/skins.citizen.preferences/clientPreferences.json",
+				"resources/skins.citizen.preferences/clientPrefs.polyfill.js"
 			],
 			"messages": [
 				"preferences",
@@ -237,7 +240,13 @@
 				"prefs-citizen-fontsize-label",
 				"prefs-citizen-pagewidth-label",
 				"prefs-citizen-lineheight-label",
-				"prefs-citizen-resetbutton-label"
+				"prefs-citizen-resetbutton-label",
+				"skin-theme-name",
+				"skin-theme-description",
+				"skin-theme-day-label",
+				"skin-theme-night-label",
+				"skin-theme-os-label",
+				"skin-theme-exclusion-notice"
 			],
 			"dependencies": [
 				"mediawiki.storage",

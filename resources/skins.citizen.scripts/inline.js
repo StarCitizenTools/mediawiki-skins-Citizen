@@ -3,30 +3,18 @@
  *
  * Inline script used in includes/Hooks/SkinHooks.php
  */
-window.applyPref = () => {
-	const
-		prefix = 'skin-citizen-',
-		themeKey = prefix + 'theme';
+const LEGACY_PREFIX = 'skin-citizen-';
 
+window.applyPref = () => {
 	const getStorage = ( key ) => {
 		return window.localStorage.getItem( key );
 	};
-
-	// Default to auto if no key is present
-	const targetTheme = getStorage( themeKey );
 
 	const apply = () => {
 		const cssProps = {
 			fontsize: 'font-size',
 			pagewidth: '--width-layout',
 			lineheight: '--line-height'
-		};
-
-		// Generates an array of prefix-(auto|dark|light) strings
-		const classNames = () => {
-			return [ 'auto', 'dark', 'light' ].map( ( themeType ) => {
-				return prefix + themeType;
-			} );
 		};
 
 		const injectStyles = ( css ) => {
@@ -42,27 +30,10 @@ window.applyPref = () => {
 		};
 
 		try {
-			const theme = getStorage( themeKey );
-
 			let cssDeclaration = '';
-
-			// Apply pref by changing class
-			if ( theme !== null ) {
-				const htmlElement = document.documentElement;
-				// Remove all theme classes then add the right one
-				// The following classes are used here:
-				// * skin-citizen-auto
-				// * skin-citizen-light
-				// * skin-citizen-dark
-				htmlElement.classList.remove( ...classNames( prefix ) );
-
-				htmlElement.classList.add( prefix + theme );
-			}
-
 			// Apply pref by adding CSS to root
-
 			for ( const [ key, property ] of Object.entries( cssProps ) ) {
-				const value = getStorage( prefix + key );
+				const value = getStorage( LEGACY_PREFIX + key );
 
 				if ( value !== null ) {
 					cssDeclaration += `${ property }:${ value };`;
@@ -76,31 +47,50 @@ window.applyPref = () => {
 		}
 	};
 
-	// Set up auto theme based on prefers-color-scheme
-	if ( targetTheme === 'auto' ) {
-		const prefersDark = window.matchMedia( '(prefers-color-scheme: dark)' );
-		const autoTheme = prefersDark.matches ? 'dark' : 'light';
+	apply();
+};
 
-		const setStorage = ( key, value ) => {
-			return window.localStorage.setItem( key, value );
-		};
+/**
+ * Backported from MW 1.42
+ * Modified to use localStorage only
+ */
+window.clientPrefs = () => {
+	let className = document.documentElement.className;
+	const storage = localStorage.getItem( 'mwclientpreferences' );
+	if ( storage ) {
+		// TODO: Just use array for localStorage
+		storage.split( '%2C' ).forEach( function ( pref ) {
+			className = className.replace(
+				// eslint-disable-next-line security/detect-non-literal-regexp
+				new RegExp( '(^| )' + pref.replace( /-clientpref-\w+$|[^\w-]+/g, '' ) + '-clientpref-\\w+( |$)' ),
+				'$1' + pref + '$2'
+			);
 
-		// Set to the right theme temporarily
-		setStorage( themeKey, autoTheme );
-		apply();
-
-		// Attach listener for future changes
-		prefersDark.addEventListener( 'change', () => {
-			apply();
+			// Legacy support
+			if ( pref.startsWith( 'skin-theme-clientpref-' ) ) {
+				const CLIENTPREFS_THEME_MAP = {
+					os: 'auto',
+					day: 'light',
+					night: 'dark'
+				};
+				const matchedKey = CLIENTPREFS_THEME_MAP[ pref.replace( 'skin-theme-clientpref-', '' ) ];
+				if ( matchedKey ) {
+					// eslint-disable-next-line max-len, es-x/no-object-values
+					const classesToRemove = Object.values( CLIENTPREFS_THEME_MAP ).map( ( theme ) => LEGACY_PREFIX + theme );
+					className = className.replace(
+						// eslint-disable-next-line security/detect-non-literal-regexp
+						new RegExp( classesToRemove.join( '|' ), 'g' ),
+						''
+					);
+					className += ` ${ LEGACY_PREFIX }${ matchedKey }`;
+				}
+			}
 		} );
-
-		// Reset back to auto
-		setStorage( themeKey, 'auto' );
-	} else {
-		apply();
+		document.documentElement.className = className;
 	}
 };
 
 ( () => {
 	window.applyPref();
+	window.clientPrefs();
 } )();

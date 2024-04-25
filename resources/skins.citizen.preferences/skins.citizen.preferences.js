@@ -18,7 +18,7 @@ const CLIENTPREFS_THEME_MAP = {
 	dark: 'night'
 };
 
-const clientPrefs = require( './clientPrefs.localStorage.js' )();
+const clientPrefs = require( './clientPrefs.polyfill.js' )();
 
 /**
  * Set the value of the input element
@@ -56,7 +56,6 @@ function setIndicator( key, value ) {
  */
 function convertForForm( pref ) {
 	return {
-		theme: pref.theme,
 		fontsize: Number( pref.fontsize.slice( 0, -1 ) ) / 10 - 8,
 		pagewidth: Number( pref.pagewidth.slice( 0, -2 ) ) / 120 - 6,
 		lineheight: ( pref.lineheight - 1 ) * 10
@@ -105,7 +104,6 @@ function getPref() {
 	};
 
 	const pref = {
-		theme: mw.storage.get( PREFIX_KEY + 'theme' ),
 		fontsize: mw.storage.get( PREFIX_KEY + 'fontsize' ) || initFontSize(),
 		pagewidth: mw.storage.get( PREFIX_KEY + 'pagewidth' ) || rootStyle.getPropertyValue( '--width-layout' ),
 		lineheight: mw.storage.get( PREFIX_KEY + 'lineheight' ) || rootStyle.getPropertyValue( '--line-height' )
@@ -125,17 +123,12 @@ function setPref() {
 		formData = Object.fromEntries( new FormData( document.getElementById( CLASS + '-form' ) ) ),
 		currentPref = convertForForm( getPref() ),
 		newPref = {
-			theme: formData[ CLASS + '-theme' ],
 			fontsize: Number( formData[ CLASS + '-fontsize' ] ),
 			pagewidth: Number( formData[ CLASS + '-pagewidth' ] ),
 			lineheight: Number( formData[ CLASS + '-lineheight' ] )
 		};
 
-	if ( currentPref.theme !== newPref.theme ) {
-		mw.storage.set( PREFIX_KEY + 'theme', newPref.theme );
-		clientPrefs.set( 'skin-theme', CLIENTPREFS_THEME_MAP[ newPref.theme ] );
-
-	} else if ( currentPref.fontsize !== newPref.fontsize ) {
+	if ( currentPref.fontsize !== newPref.fontsize ) {
 		const formattedFontSize = ( newPref.fontsize + 8 ) * 10 + '%';
 		mw.storage.set( PREFIX_KEY + 'fontsize', formattedFontSize );
 		setIndicator( 'fontsize', formattedFontSize );
@@ -166,7 +159,6 @@ function setPref() {
  * @return {void}
  */
 function resetPref() {
-	// Do not reset theme as its default value is defined somewhere else
 	const keys = [ 'fontsize', 'pagewidth', 'lineheight' ];
 
 	// Remove style
@@ -239,15 +231,12 @@ function togglePanel() {
 		toggle = document.getElementById( CLASS + '-toggle' ),
 		panel = document.getElementById( CLASS + '-panel' ),
 		form = document.getElementById( CLASS + '-form' ),
-		themeOption = document.getElementById( CLASS + '-theme' ),
 		resetButton = document.getElementById( CLASS + '-resetbutton' );
 
 	if ( !panel.classList.contains( CLASS_PANEL_ACTIVE ) ) {
 		panel.classList.add( CLASS_PANEL_ACTIVE );
 		toggle.setAttribute( 'aria-expanded', true );
 		form.addEventListener( 'input', setPref );
-		// Some browser doesn't fire input events when checking radio buttons
-		themeOption.addEventListener( 'click', setPref );
 		resetButton.addEventListener( 'click', resetPref );
 		window.addEventListener( 'click', dismissOnClickOutside );
 		window.addEventListener( 'keydown', dismissOnEscape );
@@ -255,7 +244,6 @@ function togglePanel() {
 		panel.classList.remove( CLASS_PANEL_ACTIVE );
 		toggle.setAttribute( 'aria-expanded', false );
 		form.removeEventListener( 'input', setPref );
-		themeOption.removeEventListener( 'click', setPref );
 		resetButton.removeEventListener( 'click', resetPref );
 		window.removeEventListener( 'click', dismissOnClickOutside );
 		window.removeEventListener( 'keydown', dismissOnEscape );
@@ -270,10 +258,6 @@ function togglePanel() {
 function getMessages() {
 	const keys = [
 			'preferences',
-			'prefs-citizen-theme-label',
-			'prefs-citizen-theme-option-auto',
-			'prefs-citizen-theme-option-light',
-			'prefs-citizen-theme-option-dark',
 			'prefs-citizen-fontsize-label',
 			'prefs-citizen-pagewidth-label',
 			'prefs-citizen-lineheight-label',
@@ -313,19 +297,10 @@ function initPanel( event ) {
 	// TODO: Use ES6 template literals when RL does not screw up multiline
 	const panel = template.render( data ).get()[ 1 ];
 
-	// The priorities is as follow:
-	// 1. User-set theme (localStorage)
-	// 2. Site default theme (wgCitizenThemeDefault)
-	// 3. Fallback to auto
-	const currentTheme = prefValue.theme ||
-		require( './config.json' ).wgCitizenThemeDefault ||
-		'auto';
-
 	// Attach panel after button
 	event.currentTarget.parentNode.insertBefore( panel, event.currentTarget.nextSibling );
 
 	// Set up initial state
-	document.getElementById( CLASS + '-theme__input__' + currentTheme ).checked = true;
 	keys.forEach( ( key ) => {
 		setIndicator( key, pref[ key ] );
 		setInputValue( key, prefValue[ key ] );
@@ -334,6 +309,30 @@ function initPanel( event ) {
 	togglePanel();
 	event.currentTarget.addEventListener( 'click', togglePanel );
 	event.currentTarget.removeEventListener( 'click', initPanel );
+
+	const clientPreferenceSelector = '#citizen-client-prefs';
+	const clientPreferenceExists = document.querySelectorAll( clientPreferenceSelector ).length > 0;
+	if ( clientPreferenceExists ) {
+		const clientPreferences = require( /** @type {string} */ ( './clientPreferences.js' ) );
+		const clientPreferenceConfig = ( require( './clientPreferences.json' ) );
+
+		// Support legacy skin-citizen-* class
+		// TODO: Remove it in the future version after sufficient time
+		clientPreferenceConfig[ 'skin-theme' ].callback = () => {
+			const LEGACY_THEME_CLASSES = [
+				'skin-citizen-auto',
+				'skin-citizen-light',
+				'skin-citizen-dark'
+			];
+			const legacyThemeKey = Object.keys( CLIENTPREFS_THEME_MAP ).find( ( key ) => {
+				return CLIENTPREFS_THEME_MAP[ key ] === clientPrefs.get( 'skin-theme' );
+			} );
+			document.documentElement.classList.remove( ...LEGACY_THEME_CLASSES );
+			document.documentElement.classList.add( `skin-citizen-${ legacyThemeKey }` );
+		};
+
+		clientPreferences.render( clientPreferenceSelector, clientPreferenceConfig );
+	}
 }
 
 /**

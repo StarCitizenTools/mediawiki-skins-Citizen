@@ -1,5 +1,6 @@
 /**
- * mw.user.clientPrefs modified to only use localStorage
+ * Polyfill for mw.user.clientPrefs for < MW 1.42
+ * Modified to use localStorage for all users
  * TODO: Revisit when we move to MW 1.43 and the interface is more stable
  */
 

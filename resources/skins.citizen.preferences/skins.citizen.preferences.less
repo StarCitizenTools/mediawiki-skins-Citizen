@@ -17,31 +17,15 @@
 			width: 100%;
 		}
 
+		&__title {
+			font-size: var( --font-size-x-small );
+			color: var( --color-base--subtle );
+			letter-spacing: 0.05em;
+		}
+
 		&__value {
 			font-weight: var( --font-weight-medium );
 			color: var( --color-base--emphasized );
-		}
-	}
-
-	&-theme {
-		&-option {
-			flex-grow: 1;
-			padding: 0.5rem 1rem;
-			font-weight: var( --font-weight-medium );
-			text-align: center;
-			white-space: nowrap;
-			cursor: pointer;
-			border: 2px solid var( --border-color-base );
-			border-radius: var( --border-radius--medium );
-
-			&:hover {
-				border-color: var( --color-primary--hover );
-				box-shadow: var( --box-shadow-card );
-			}
-
-			&:active {
-				border-color: var( --color-primary--active );
-			}
 		}
 	}
 
@@ -89,39 +73,6 @@
 		margin: var( --space-md ) 0;
 	}
 
-	&-theme {
-		&-option {
-			&-light {
-				color: ~'hsl( var( --color-primary__h ), 30%, 20% )';
-				background: ~'hsl( var( --color-primary__h ), 25%, 94% )';
-			}
-
-			&-dark {
-				color: ~'hsl( var( --color-primary__h ), 10%, 75% )';
-				background: ~'hsl( var( --color-primary__h ), 20%, 10% )';
-			}
-		}
-
-		fieldset {
-			display: flex;
-			gap: 0.5rem;
-			width: 100%;
-			padding: 0;
-			margin-top: 0.25rem;
-		}
-
-		// Let label be the radio button
-		input {
-			display: none;
-
-			&:checked {
-				+ label {
-					border-color: var( --color-primary );
-				}
-			}
-		}
-	}
-
 	&-resetbutton {
 		width: 100%;
 		padding: var( --space-sm ) var( --space-md );
@@ -141,6 +92,66 @@
 
 		&:active {
 			background: var( --color-destructive--active );
+		}
+	}
+}
+
+// New clientPrefs styles
+.citizen-client-prefs {
+	&-radio {
+		&__input {
+			// Hide radio button because we use label as button
+			display: none;
+
+			&:checked {
+				~ .citizen-client-prefs-radio__label {
+					border-color: var( --color-primary );
+				}
+			}
+		}
+
+		&__label {
+			display: block;
+			padding: var( --space-xs ) var( --space-md );
+			font-weight: var( --font-weight-medium );
+			border: 2px solid var( --border-color-base );
+			border-radius: var( --border-radius--medium );
+		}
+	}
+}
+
+#citizen-client-prefs {
+	.citizen-menu {
+		&__content {
+			padding: 0 var( --space-md );
+		}
+	}
+}
+
+#skin-client-prefs-skin-theme {
+	form {
+		display: grid;
+		// This is not the best because it does not adapt to the text length but will revisit later
+		grid-template-columns: 1fr 1fr;
+		gap: var( --space-xxs );
+		text-align: center;
+	}
+
+	label {
+		background: var( --color-surface-0 );
+
+		&[ for='skin-client-pref-skin-theme-value-day' ] {
+			// color-base of day theme
+			color: ~'hsl( var( --color-primary__h ), 30%, 20% )';
+			// color-surface-0 of day theme
+			background: ~'hsl( var( --color-primary__h ), 30%, 96% )';
+		}
+
+		&[ for='skin-client-pref-skin-theme-value-night' ] {
+			// color-base of night theme
+			color: ~'hsl( var( --color-primary__h ), 25%, 80% )';
+			// color-surface-0 of night theme
+			background: ~'hsl( var( --color-primary__h ), 20%, 10% )';
 		}
 	}
 }

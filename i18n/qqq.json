@@ -46,12 +46,12 @@
 	"citizen-tagline-ns-help": "Tagline for pages in help namespace",
 	"citizen-tagline-ns-category": "Tagline for pages in category namespace",
 	"citizen-tagline-user-regdate": "Label for registration date in taglines on userpages",
-	"prefs-citizen-theme-label": "Tooltip for the theme dropdown in Special:Preferences",
-	"prefs-citizen-theme-option-auto": "Label for the auto theme option",
-	"prefs-citizen-theme-option-light": "Label for the light theme option",
-	"prefs-citizen-theme-option-dark": "Label for the dark theme option",
 	"prefs-citizen-fontsize-label": "Label for the font size settings",
 	"prefs-citizen-pagewidth-label": "Label for the page width settings",
 	"prefs-citizen-lineheight-label": "Label for the line height settings",
-	"prefs-citizen-resetbutton-label": "Label for the reset button that restore default settings"
+	"prefs-citizen-resetbutton-label": "Label for the reset button that restore default settings",
+	"skin-theme-name": "Label for setting that allows you to change theme.",
+	"skin-theme-description": "Description for theme.",
+	"skin-theme-day-label": "Label for light theme (standard mode).",
+	"skin-theme-night-label": "Label for night theme (dark mode)."
 }

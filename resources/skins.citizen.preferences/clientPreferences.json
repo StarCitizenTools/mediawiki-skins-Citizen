@@ -1,0 +1,6 @@
+{
+	"skin-theme": {
+		"options": [ "os", "day", "night" ],
+		"preferenceKey": "citizen-theme"
+	}
+}

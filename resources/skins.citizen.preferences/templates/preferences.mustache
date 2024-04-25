@@ -11,21 +11,8 @@
 
 <aside id="citizen-pref-panel" class="citizen-pref-panel">
 	<header id="citizen-pref-header">{{msg-preferences}}</header>
+	<div id="citizen-client-prefs"></div>
 	<form id="citizen-pref-form">
-		{{! Theme }}
-		<fieldset class="citizen-pref-item" id ="citizen-pref-theme">
-			<label for="citizen-pref-theme" class="citizen-pref-item__label">
-				<span class="citizen-pref-item__title">{{msg-prefs-citizen-theme-label}}</span>
-			</label>
-			<fieldset>
-				<input id="citizen-pref-theme__input__auto" name="citizen-pref-theme" type="radio" value="auto">
-				<label for="citizen-pref-theme__input__auto" id="citizen-pref-theme-option-auto" class="citizen-pref-theme-option">{{msg-prefs-citizen-theme-option-auto}}</label>
-				<input id="citizen-pref-theme__input__light" name="citizen-pref-theme" type="radio" value="light">
-				<label for="citizen-pref-theme__input__light" id="citizen-pref-theme-option-light" class="citizen-pref-theme-option">{{msg-prefs-citizen-theme-option-light}}</label>
-				<input id="citizen-pref-theme__input__dark" name="citizen-pref-theme" type="radio" value="dark">
-				<label for="citizen-pref-theme__input__dark" id="citizen-pref-theme-option-dark" class="citizen-pref-theme-option">{{msg-prefs-citizen-theme-option-dark}}</label>
-			</fieldset>
-		</fieldset>
 		{{! Font size }}
 		<fieldset class="citizen-pref-item" id="citizen-pref-fontsize">
 			<label for="citizen-pref-fontsize" class="citizen-pref-item__label">
