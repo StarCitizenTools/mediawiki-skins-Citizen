@@ -53,7 +53,7 @@ final class Theme extends Partial {
 
 		// Add HTML class based on theme set
 		if ( CLIENTPREFS_THEME_MAP[ $theme ] ) {
-			$out->addHtmlClasses( 'skin-theme-clientpref-' . $theme );
+			$out->addHtmlClasses( 'skin-theme-clientpref-' . CLIENTPREFS_THEME_MAP[ $theme ] );
 		}
 	}
 }
