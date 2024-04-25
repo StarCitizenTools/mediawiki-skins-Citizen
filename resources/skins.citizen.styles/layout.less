@@ -67,6 +67,13 @@
 			grid-template-columns: minmax( 0, var( --width-layout ) ) var( --width-toc );
 		}
 	}
+
+	.citizen-animations-ready {
+		.citizen-body-container {
+			transition: var( --transition-menu );
+			transition-property: grid;
+		}
+	}
 }
 
 /* Wider page width for certain namespaces */
