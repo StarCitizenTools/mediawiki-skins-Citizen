@@ -5,49 +5,6 @@
  */
 const LEGACY_PREFIX = 'skin-citizen-';
 
-window.applyPref = () => {
-	const getStorage = ( key ) => {
-		return window.localStorage.getItem( key );
-	};
-
-	const apply = () => {
-		const cssProps = {
-			pagewidth: '--width-layout'
-		};
-
-		const injectStyles = ( css ) => {
-			const styleId = 'citizen-style';
-			let style = document.getElementById( styleId );
-
-			if ( style === null ) {
-				style = document.createElement( 'style' );
-				style.setAttribute( 'id', styleId );
-				document.head.appendChild( style );
-			}
-			style.textContent = `:root{${ css }}`;
-		};
-
-		try {
-			let cssDeclaration = '';
-			// Apply pref by adding CSS to root
-			for ( const [ key, property ] of Object.entries( cssProps ) ) {
-				const value = getStorage( LEGACY_PREFIX + key );
-
-				if ( value !== null ) {
-					cssDeclaration += `${ property }:${ value };`;
-				}
-			}
-
-			if ( cssDeclaration ) {
-				injectStyles( cssDeclaration );
-			}
-		} catch ( e ) {
-		}
-	};
-
-	apply();
-};
-
 /**
  * Backported from MW 1.42
  * Modified to use localStorage only
@@ -89,6 +46,5 @@ window.clientPrefs = () => {
 };
 
 ( () => {
-	window.applyPref();
 	window.clientPrefs();
 } )();

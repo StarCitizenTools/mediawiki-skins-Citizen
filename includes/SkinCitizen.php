@@ -176,6 +176,7 @@ class SkinCitizen extends SkinMustache {
 		// Clientprefs feature handling
 		$this->addClientPrefFeature( 'citizen-feature-pure-black', '0' );
 		$this->addClientPrefFeature( 'citizen-feature-custom-font-size', '1' );
+		$this->addClientPrefFeature( 'citizen-feature-custom-width', '0' );
 
 		// Collapsible sections
 		// Load in content pages

@@ -233,8 +233,6 @@
 			],
 			"messages": [
 				"preferences",
-				"prefs-citizen-pagewidth-label",
-				"prefs-citizen-resetbutton-label",
 				"citizen-theme-name",
 				"citizen-theme-description",
 				"citizen-theme-day-label",
@@ -247,7 +245,11 @@
 				"citizen-feature-custom-font-size-name",
 				"citizen-feature-custom-font-size-0-label",
 				"citizen-feature-custom-font-size-1-label",
-				"citizen-feature-custom-font-size-2-label"
+				"citizen-feature-custom-font-size-2-label",
+				"citizen-feature-custom-width-name",
+				"citizen-feature-custom-width-0-label",
+				"citizen-feature-custom-width-1-label",
+				"citizen-feature-custom-width-2-label"
 			],
 			"dependencies": [
 				"mediawiki.storage",

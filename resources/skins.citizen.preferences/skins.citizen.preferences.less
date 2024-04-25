@@ -6,36 +6,6 @@
 			background-color: var( --background-color-primary--active );
 		}
 	}
-
-	&-item {
-		display: grid;
-		gap: 0.25rem;
-
-		&__label {
-			display: flex;
-			justify-content: space-between;
-			width: 100%;
-		}
-
-		&__title {
-			font-size: var( --font-size-x-small );
-			color: var( --color-base--subtle );
-			letter-spacing: 0.05em;
-		}
-
-		&__value {
-			font-weight: var( --font-weight-medium );
-			color: var( --color-base--emphasized );
-		}
-	}
-
-	// We only show min and max value
-	&__tickmarks {
-		display: flex;
-		justify-content: space-between;
-		font-size: var( --font-size-x-small );
-		color: var( --color-base--subtle );
-	}
 }
 
 #citizen-pref {
@@ -66,34 +36,6 @@
 			opacity: 0;
 		}
 	}
-
-	&-form {
-		display: grid;
-		gap: var( --space-md );
-		margin: var( --space-md ) 0;
-	}
-
-	&-resetbutton {
-		width: 100%;
-		padding: var( --space-sm ) var( --space-md );
-		font-family: inherit;
-		font-size: var( --font-size-small );
-		font-weight: var( --font-weight-medium );
-		color: #fff;
-		appearance: none;
-		cursor: pointer;
-		background: var( --color-destructive );
-		border: 0;
-		border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
-
-		&:hover {
-			background: var( --color-destructive--hover );
-		}
-
-		&:active {
-			background: var( --color-destructive--active );
-		}
-	}
 }
 
 // New clientPrefs styles
@@ -101,11 +43,12 @@
 	display: flex;
 	flex-direction: column;
 	gap: var( --space-xs );
+	padding-bottom: var( --space-lg );
 
 	form {
 		display: grid;
 		// This is not the best because it does not adapt to the text length but will revisit later
-		grid-template-columns: repeat( 2, 1fr );
+		grid-template-columns: repeat( 3, 1fr );
 		gap: var( --space-xxs );
 		text-align: center;
 	}
@@ -153,10 +96,6 @@
 }
 
 #skin-client-prefs-skin-theme {
-	form {
-		grid-template-columns: repeat( 3, 1fr );
-	}
-
 	.citizen-client-prefs-radio__label {
 		background: var( --color-surface-0 );
 
@@ -179,6 +118,10 @@
 #skin-client-prefs-citizen-feature-pure-black {
 	display: none;
 
+	form {
+		grid-template-columns: repeat( 2, 1fr );
+	}
+
 	// Display on dark theme
 	.skin-theme-clientpref-night & {
 		display: block;
@@ -196,10 +139,6 @@
 }
 
 #skin-client-prefs-citizen-feature-custom-font-size {
-	form {
-		grid-template-columns: repeat( 3, 1fr );
-	}
-
 	.citizen-client-prefs-radio__label {
 		font-size: var( --font-size-medium );
 

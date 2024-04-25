@@ -1,12 +1,4 @@
-/* global applyPref */
-
-/**
- * TODO: Maybe combine the localStorage keys into one object
- */
-
-const
-	CLASS = 'citizen-pref',
-	PREFIX_KEY = 'skin-citizen-';
+const CLASS = 'citizen-pref';
 
 /**
  * Clientprefs names theme differently from Citizen, we will need to translate it
@@ -19,127 +11,6 @@ const CLIENTPREFS_THEME_MAP = {
 };
 
 const clientPrefs = require( './clientPrefs.polyfill.js' )();
-
-/**
- * Set the value of the input element
- *
- * @param {string} key
- * @param {string} value
- */
-function setInputValue( key, value ) {
-	const element = document.getElementById( CLASS + '-' + key + '__input' );
-
-	if ( element ) {
-		element.value = value;
-	}
-}
-
-/**
- * Set the text of the indicator element
- *
- * @param {string} key
- * @param {string} value
- */
-function setIndicator( key, value ) {
-	const element = document.getElementById( CLASS + '-' + key + '__value' );
-
-	if ( element ) {
-		element.innerText = value;
-	}
-}
-
-/**
- * Convert the pref values for use with the form input
- *
- * @param {Object} pref
- * @return {Object}
- */
-function convertForForm( pref ) {
-	return {
-		pagewidth: Number( pref.pagewidth.slice( 0, -2 ) ) / 120 - 6
-	};
-}
-
-/**
- * Retrieve localstorage or default preferences
- *
- * @return {Object} pref
- */
-function getPref() {
-	const rootStyle = window.getComputedStyle( document.documentElement );
-
-	const pref = {
-		pagewidth: mw.storage.get( PREFIX_KEY + 'pagewidth' ) || rootStyle.getPropertyValue( '--width-layout' )
-	};
-
-	return pref;
-}
-
-/**
- * Save to localstorage if preference is changed
- *
- * @return {void}
- */
-function setPref() {
-	const
-		// eslint-disable-next-line compat/compat
-		formData = Object.fromEntries( new FormData( document.getElementById( CLASS + '-form' ) ) ),
-		currentPref = convertForForm( getPref() ),
-		newPref = {
-			pagewidth: Number( formData[ CLASS + '-pagewidth' ] )
-		};
-
-	if ( currentPref.pagewidth !== newPref.pagewidth ) {
-		let formattedPageWidth;
-		// Max setting would be full browser width
-		if ( newPref.pagewidth === 10 ) {
-			formattedPageWidth = '100vw';
-		} else {
-			formattedPageWidth = ( newPref.pagewidth + 6 ) * 120 + 'px';
-		}
-		mw.storage.set( PREFIX_KEY + 'pagewidth', formattedPageWidth );
-		setIndicator( 'pagewidth', formattedPageWidth );
-
-	}
-
-	applyPref();
-}
-
-/**
- * Reset preference by clearing localStorage and inline styles
- *
- * @return {void}
- */
-function resetPref() {
-	const keys = [ 'pagewidth' ];
-
-	// Remove style
-	if ( document.getElementById( 'citizen-style' ) ) {
-		document.getElementById( 'citizen-style' ).remove();
-	}
-
-	// Remove localStorage
-	keys.forEach( ( key ) => {
-		const keyName = PREFIX_KEY + key;
-
-		if ( mw.storage.get( keyName ) ) {
-			localStorage.removeItem( keyName );
-		}
-	} );
-
-	const pref = getPref(),
-		prefValue = convertForForm( pref );
-
-	keys.forEach( ( key ) => {
-		const keyName = PREFIX_KEY + key;
-
-		mw.storage.set( keyName, pref[ key ] );
-		setIndicator( key, pref[ key ] );
-		setInputValue( key, prefValue[ key ] );
-	} );
-
-	applyPref();
-}
 
 /**
  * Dismiss the prefernce panel when clicked outside
@@ -181,22 +52,16 @@ function togglePanel() {
 	const CLASS_PANEL_ACTIVE = CLASS + '-panel--active';
 	const
 		toggle = document.getElementById( CLASS + '-toggle' ),
-		panel = document.getElementById( CLASS + '-panel' ),
-		form = document.getElementById( CLASS + '-form' ),
-		resetButton = document.getElementById( CLASS + '-resetbutton' );
+		panel = document.getElementById( CLASS + '-panel' );
 
 	if ( !panel.classList.contains( CLASS_PANEL_ACTIVE ) ) {
 		panel.classList.add( CLASS_PANEL_ACTIVE );
 		toggle.setAttribute( 'aria-expanded', true );
-		form.addEventListener( 'input', setPref );
-		resetButton.addEventListener( 'click', resetPref );
 		window.addEventListener( 'click', dismissOnClickOutside );
 		window.addEventListener( 'keydown', dismissOnEscape );
 	} else {
 		panel.classList.remove( CLASS_PANEL_ACTIVE );
 		toggle.setAttribute( 'aria-expanded', false );
-		form.removeEventListener( 'input', setPref );
-		resetButton.removeEventListener( 'click', resetPref );
 		window.removeEventListener( 'click', dismissOnClickOutside );
 		window.removeEventListener( 'keydown', dismissOnEscape );
 	}
@@ -209,9 +74,7 @@ function togglePanel() {
  */
 function getMessages() {
 	const keys = [
-			'preferences',
-			'prefs-citizen-pagewidth-label',
-			'prefs-citizen-resetbutton-label'
+			'preferences'
 		],
 		data = {};
 
@@ -238,10 +101,7 @@ function initPanel( event ) {
 			'skins.citizen.preferences',
 			'resources/skins.citizen.preferences/templates/preferences.mustache'
 		),
-		data = getMessages(),
-		pref = getPref(),
-		prefValue = convertForForm( pref ),
-		keys = [ 'pagewidth' ];
+		data = getMessages();
 
 	// To Mustache is to jQuery sigh
 	// TODO: Use ES6 template literals when RL does not screw up multiline
@@ -249,12 +109,6 @@ function initPanel( event ) {
 
 	// Attach panel after button
 	event.currentTarget.parentNode.insertBefore( panel, event.currentTarget.nextSibling );
-
-	// Set up initial state
-	keys.forEach( ( key ) => {
-		setIndicator( key, pref[ key ] );
-		setInputValue( key, prefValue[ key ] );
-	} );
 
 	togglePanel();
 	event.currentTarget.addEventListener( 'click', togglePanel );

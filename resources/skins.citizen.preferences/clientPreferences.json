@@ -10,5 +10,9 @@
 	"citizen-feature-custom-font-size": {
 		"options": [ "0", "1", "2" ],
 		"preferenceKey": "citizen-font-size"
+	},
+	"citizen-feature-custom-width": {
+		"options": [ "0", "1", "2" ],
+		"preferenceKey": "citizen-width"
 	}
 }

@@ -46,8 +46,6 @@
 	"citizen-tagline-ns-help": "Tagline for pages in help namespace",
 	"citizen-tagline-ns-category": "Tagline for pages in category namespace",
 	"citizen-tagline-user-regdate": "Label for registration date in taglines on userpages",
-	"prefs-citizen-pagewidth-label": "Label for the page width settings",
-	"prefs-citizen-resetbutton-label": "Label for the reset button that restore default settings",
 	"citizen-theme-name": "Heading label for setting that allows you to change theme.",
 	"citizen-theme-description": "Description for theme.",
 	"citizen-theme-day-label": "Label for light/day theme.",
@@ -60,5 +58,9 @@
 	"citizen-feature-custom-font-size-name": "Heading label for font size",
 	"citizen-feature-custom-font-size-0-label": "Label for small font size. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-font-size-name}}).",
 	"citizen-feature-custom-font-size-1-label": "Label for standard font size. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-font-size-name}})",
-	"citizen-feature-custom-font-size-2-label": "Label for large font size. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-font-size-name}})."
+	"citizen-feature-custom-font-size-2-label": "Label for large font size. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-font-size-name}}).",
+	"citizen-feature-custom-width-name": "Heading label for page width",
+	"citizen-feature-custom-width-0-label": "Label for standard page width. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-width-name}}).",
+	"citizen-feature-custom-width-1-label": "Label for wide page width. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-width-name}}).",
+	"citizen-feature-custom-width-2-label": "Label for full page width. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-width-name}})."
 }
