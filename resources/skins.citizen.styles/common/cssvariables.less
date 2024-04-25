@@ -9,6 +9,52 @@
  * Base theme
  */
 :root {
+	--color-primary__h: @color-primary__h;
+	--color-primary__s: @color-primary__s;
+	--color-primary__l: @color-primary__l;
+
+	--color-surface-0: ~'hsl( var( --color-primary__h ), 30%, 96% )';
+	--color-surface-1: ~'hsl( var( --color-primary__h ), 40%, 94% )';
+	--color-surface-2: ~'hsl( var( --color-primary__h ), 30%, 92% )';
+	--color-surface-3: ~'hsl( var( --color-primary__h ), 20%, 90% )';
+	--color-surface-4: ~'hsl( var( --color-primary__h ), 10%, 88% )';
+
+	--color-base--emphasized: ~'hsl( var( --color-primary__h ), 85%, 5% )';
+	--color-base: ~'hsl( var( --color-primary__h ), 30%, 20% )';
+	--color-base--subtle: ~'hsl( var( --color-primary__h ), 30%, 35% )';
+
+	--background-color-overlay: ~'hsla( var( --color-primary__h ), 25%, 94%, 0.95 )';
+	--background-color-overlay--lighter: ~'hsla( var( --color-primary__h ), 25%, 94%, 0.6 )';
+
+	--color-primary: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), var( --color-primary__l ) )';
+	--color-primary--hover: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), calc( var( --color-primary__l ) * 1.2 ) )';
+	--color-primary--active: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), calc( var( --color-primary__l ) * 0.8 ) )';
+	--background-color-primary--hover: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), 95% )';
+	--background-color-primary--active: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), 90% )';
+
+	--color-surface-2--hover: ~'hsl( var( --color-primary__h ), 30%, 94% )';
+	--color-surface-2--active: ~'hsl( var( --color-primary__h ), 30%, 90% )';
+
+	--background-color-destructive: rgba( 221, 51, 51, 0.1 );
+	--background-color-success: rgba( 0, 175, 137, 0.1 );
+	--background-color-warning: rgba( 255, 204, 51, 0.1 );
+
+	--background-image-destructive: linear-gradient( var( --background-color-destructive ), var( --background-color-destructive ) );
+	--background-image-success: linear-gradient( var( --background-color-success ), var( --background-color-success ) );
+	--background-image-warning: linear-gradient( var( --background-color-warning ), var( --background-color-warning ) );
+
+	--border-color-base: rgba( 0, 0, 0, 0.08 );
+	--border-color-subtle: rgba( 0, 0, 0, 0.05 );
+	--border-color-interactive: rgba( 0, 0, 0, 0.11 );
+
+	--box-shadow-card: @box-shadow-card;
+	--box-shadow-dialog: @box-shadow-dialog;
+
+	--surface-shadow: var( --color-primary__h ), 10%, 20%;
+	--shadow-strength: 0.02;
+
+	--font-grade: 0;
+
 	--background-color-icon: @background-color-icon;
 	--background-color-icon--hover: @background-color-icon--hover;
 	--background-color-icon--active: @background-color-icon--active;
@@ -120,6 +166,12 @@ html {
 :lang( zh ) {
 	/* CJK languages need increased line-height for readability */
 	--line-height: 1.75;
+}
+
+a {
+	--color-link: ~'var( --color-primary )';
+	--color-link--hover: ~'var( --color-primary--hover )';
+	--color-link--active: ~'var( --color-primary--active )';
 }
 
 .theme-dark-old() {
