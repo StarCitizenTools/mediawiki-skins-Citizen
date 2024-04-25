@@ -241,12 +241,12 @@
 				"prefs-citizen-pagewidth-label",
 				"prefs-citizen-lineheight-label",
 				"prefs-citizen-resetbutton-label",
-				"skin-theme-name",
-				"skin-theme-description",
-				"skin-theme-day-label",
-				"skin-theme-night-label",
-				"skin-theme-os-label",
-				"skin-theme-exclusion-notice"
+				"citizen-theme-name",
+				"citizen-theme-description",
+				"citizen-theme-day-label",
+				"citizen-theme-night-label",
+				"citizen-theme-os-label",
+				"citizen-theme-exclusion-notice"
 			],
 			"dependencies": [
 				"mediawiki.storage",

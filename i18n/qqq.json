@@ -50,8 +50,10 @@
 	"prefs-citizen-pagewidth-label": "Label for the page width settings",
 	"prefs-citizen-lineheight-label": "Label for the line height settings",
 	"prefs-citizen-resetbutton-label": "Label for the reset button that restore default settings",
-	"skin-theme-name": "Label for setting that allows you to change theme.",
-	"skin-theme-description": "Description for theme.",
-	"skin-theme-day-label": "Label for light theme (standard mode).",
-	"skin-theme-night-label": "Label for night theme (dark mode)."
+	"citizen-theme-name": "Label for setting that allows you to change theme.",
+	"citizen-theme-description": "Description for theme.",
+	"citizen-theme-day-label": "Label for light/day theme.",
+	"citizen-theme-night-label": "Label for dark/night theme.",
+	"citizen-theme-os-label": "Label for automatic theme (which respects any operating system setting).",
+	"citizen-theme-exclusion-notice": "Text that informs you that the page is always in light/day mode."
 }

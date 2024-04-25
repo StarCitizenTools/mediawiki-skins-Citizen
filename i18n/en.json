@@ -48,10 +48,10 @@
 	"prefs-citizen-lineheight-label": "Line height",
 	"prefs-citizen-resetbutton-label": "Reset to default",
 
-	"skin-theme-name": "Color",
-	"skin-theme-description": "Reduces the light emitted by device screens.",
-	"skin-theme-day-label": "Day",
-	"skin-theme-night-label": "Night",
-	"skin-theme-os-label": "Automatic",
-	"skin-theme-exclusion-notice": "This page is always in day mode."
+	"citizen-theme-name": "Theme",
+	"citizen-theme-description": "Change the theme of the wiki",
+	"citizen-theme-day-label": "Light",
+	"citizen-theme-night-label": "Dark",
+	"citizen-theme-os-label": "Auto",
+	"citizen-theme-exclusion-notice": "This page is always in light mode."
 }

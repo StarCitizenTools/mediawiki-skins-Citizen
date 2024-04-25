@@ -16,6 +16,22 @@ const addPortlet = require( './addPortlet.polyfill.js' )();
 const clientPrefs = require( './clientPrefs.polyfill.js' )();
 
 /**
+ * Wrapper for mw.message to replace some message keys with citizen-specific messages
+ * * Some message keys are not merged into core upstream
+ * * Translatewiki does not allow for duplicated message keys
+ * * @see https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a741639085d70c22a9f49890542a142a223bf981#r141359264
+ *
+ * @param {string} messageKey
+ * @return {string}
+ */
+function getMessage( messageKey ) {
+	if ( messageKey.startsWith( 'skin-theme-' ) ) {
+		messageKey = messageKey.replace( 'skin-theme-', 'citizen-theme-' );
+	}
+	return mw.message( messageKey );
+}
+
+/**
  * Get the list of client preferences that are active on the page, including hidden.
  *
  * @return {string[]} of active client preferences
@@ -97,7 +113,7 @@ function makeInputElement( type, featureName, value ) {
 function makeLabelElement( featureName, value ) {
 	const label = document.createElement( 'label' );
 	// eslint-disable-next-line mediawiki/msg-doc
-	label.textContent = mw.msg( `${ featureName }-${ value }-label` );
+	label.textContent = getMessage( `${ featureName }-${ value }-label` );
 	label.setAttribute( 'for', getInputId( featureName, value ) );
 	return label;
 }
@@ -113,7 +129,7 @@ function makeLabelElement( featureName, value ) {
 function makeExclusionNotice( featureName ) {
 	const p = document.createElement( 'p' );
 	// eslint-disable-next-line mediawiki/msg-doc
-	const noticeMessage = mw.message( `${ featureName }-exclusion-notice` );
+	const noticeMessage = getMessage( `${ featureName }-exclusion-notice` );
 	p.classList.add( 'exclusion-notice', `${ featureName }-exclusion-notice` );
 	p.textContent = noticeMessage.text();
 	return p;
@@ -206,8 +222,7 @@ function createRow( className ) {
  * @return {MwMessage}
  */
 const getFeatureLabelMsg = ( featureName ) =>
-	// eslint-disable-next-line mediawiki/msg-doc
-	mw.message( `${ featureName }-name` );
+	getMessage( `${ featureName }-name` );
 
 /**
  * adds a toggle button
@@ -269,7 +284,7 @@ function makeClientPreference( parent, featureName, config ) {
 		const portlet = addPortlet( id, labelMsg.text() );
 		const labelElement = portlet.querySelector( 'label' );
 		// eslint-disable-next-line mediawiki/msg-doc
-		const descriptionMsg = mw.message( `${ featureName }-description` );
+		const descriptionMsg = getMessage( `${ featureName }-description` );
 		if ( descriptionMsg.exists() ) {
 			const desc = document.createElement( 'span' );
 			desc.classList.add( 'skin-client-pref-description' );
