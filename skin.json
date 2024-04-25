@@ -243,13 +243,13 @@
 				"citizen-feature-pure-black-0-label",
 				"citizen-feature-pure-black-1-label",
 				"citizen-feature-custom-font-size-name",
-				"citizen-feature-custom-font-size-0-label",
-				"citizen-feature-custom-font-size-1-label",
-				"citizen-feature-custom-font-size-2-label",
+				"citizen-feature-custom-font-size-small-label",
+				"citizen-feature-custom-font-size-standard-label",
+				"citizen-feature-custom-font-size-large-label",
 				"citizen-feature-custom-width-name",
-				"citizen-feature-custom-width-0-label",
-				"citizen-feature-custom-width-1-label",
-				"citizen-feature-custom-width-2-label"
+				"citizen-feature-custom-width-standard-label",
+				"citizen-feature-custom-width-wide-label",
+				"citizen-feature-custom-width-full-label"
 			],
 			"dependencies": [
 				"mediawiki.storage",

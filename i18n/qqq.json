@@ -56,11 +56,11 @@
 	"citizen-feature-pure-black-0-label": "Label for turning off pure black mode",
 	"citizen-feature-pure-black-1-label": "Label for turning on pure black mode",
 	"citizen-feature-custom-font-size-name": "Heading label for font size",
-	"citizen-feature-custom-font-size-0-label": "Label for small font size. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-font-size-name}}).",
-	"citizen-feature-custom-font-size-1-label": "Label for standard font size. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-font-size-name}})",
-	"citizen-feature-custom-font-size-2-label": "Label for large font size. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-font-size-name}}).",
+	"citizen-feature-custom-font-size-small-label": "Label for small font size. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-font-size-name}}).",
+	"citizen-feature-custom-font-size-standard-label": "Label for standard font size. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-font-size-name}})",
+	"citizen-feature-custom-font-size-large-label": "Label for large font size. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-font-size-name}}).",
 	"citizen-feature-custom-width-name": "Heading label for page width",
-	"citizen-feature-custom-width-0-label": "Label for standard page width. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-width-name}}).",
-	"citizen-feature-custom-width-1-label": "Label for wide page width. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-width-name}}).",
-	"citizen-feature-custom-width-2-label": "Label for full page width. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-width-name}})."
+	"citizen-feature-custom-width-standard-label": "Label for standard page width. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-width-name}}).",
+	"citizen-feature-custom-width-wide-label": "Label for wide page width. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-width-name}}).",
+	"citizen-feature-custom-width-full-label": "Label for full page width. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-width-name}})."
 }

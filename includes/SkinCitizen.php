@@ -149,7 +149,7 @@ class SkinCitizen extends SkinMustache {
 	 * @param string $feature
 	 * @param string $value
 	 */
-	private function addClientPrefFeature( string $feature, string $value ) {
+	private function addClientPrefFeature( string $feature, string $value = 'standard' ) {
 		$this->getOutput()->addHtmlClasses( $feature . '-clientpref-' . $value );
 	}
 
@@ -175,8 +175,8 @@ class SkinCitizen extends SkinMustache {
 
 		// Clientprefs feature handling
 		$this->addClientPrefFeature( 'citizen-feature-pure-black', '0' );
-		$this->addClientPrefFeature( 'citizen-feature-custom-font-size', '1' );
-		$this->addClientPrefFeature( 'citizen-feature-custom-width', '0' );
+		$this->addClientPrefFeature( 'citizen-feature-custom-font-size' );
+		$this->addClientPrefFeature( 'citizen-feature-custom-width' );
 
 		// Collapsible sections
 		// Load in content pages
