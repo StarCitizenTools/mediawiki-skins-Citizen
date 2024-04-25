@@ -59,7 +59,8 @@ window.clientPrefs = () => {
 	const storage = localStorage.getItem( 'mwclientpreferences' );
 	if ( storage ) {
 		// TODO: Just use array for localStorage
-		storage.split( '%2C' ).forEach( function ( pref ) {
+		storage.split( ',' ).forEach( function ( pref ) {
+			console.log( pref );
 			className = className.replace(
 				// eslint-disable-next-line security/detect-non-literal-regexp
 				new RegExp( '(^| )' + pref.replace( /-clientpref-\w+$|[^\w-]+/g, '' ) + '-clientpref-\\w+( |$)' ),
@@ -85,6 +86,7 @@ window.clientPrefs = () => {
 					className += ` ${ LEGACY_PREFIX }${ matchedKey }`;
 				}
 			}
+			console.log( className );
 		} );
 		document.documentElement.className = className;
 	}
