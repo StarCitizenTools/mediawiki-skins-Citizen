@@ -56,8 +56,7 @@ function setIndicator( key, value ) {
  */
 function convertForForm( pref ) {
 	return {
-		pagewidth: Number( pref.pagewidth.slice( 0, -2 ) ) / 120 - 6,
-		lineheight: ( pref.lineheight - 1 ) * 10
+		pagewidth: Number( pref.pagewidth.slice( 0, -2 ) ) / 120 - 6
 	};
 }
 
@@ -70,8 +69,7 @@ function getPref() {
 	const rootStyle = window.getComputedStyle( document.documentElement );
 
 	const pref = {
-		pagewidth: mw.storage.get( PREFIX_KEY + 'pagewidth' ) || rootStyle.getPropertyValue( '--width-layout' ),
-		lineheight: mw.storage.get( PREFIX_KEY + 'lineheight' ) || rootStyle.getPropertyValue( '--line-height' )
+		pagewidth: mw.storage.get( PREFIX_KEY + 'pagewidth' ) || rootStyle.getPropertyValue( '--width-layout' )
 	};
 
 	return pref;
@@ -88,8 +86,7 @@ function setPref() {
 		formData = Object.fromEntries( new FormData( document.getElementById( CLASS + '-form' ) ) ),
 		currentPref = convertForForm( getPref() ),
 		newPref = {
-			pagewidth: Number( formData[ CLASS + '-pagewidth' ] ),
-			lineheight: Number( formData[ CLASS + '-lineheight' ] )
+			pagewidth: Number( formData[ CLASS + '-pagewidth' ] )
 		};
 
 	if ( currentPref.pagewidth !== newPref.pagewidth ) {
@@ -103,10 +100,6 @@ function setPref() {
 		mw.storage.set( PREFIX_KEY + 'pagewidth', formattedPageWidth );
 		setIndicator( 'pagewidth', formattedPageWidth );
 
-	} else if ( currentPref.lineheight !== newPref.lineheight ) {
-		const formattedLineHeight = newPref.lineheight / 10 + 1;
-		mw.storage.set( PREFIX_KEY + 'lineheight', formattedLineHeight );
-		setIndicator( 'lineheight', formattedLineHeight );
 	}
 
 	applyPref();
@@ -118,7 +111,7 @@ function setPref() {
  * @return {void}
  */
 function resetPref() {
-	const keys = [ 'pagewidth', 'lineheight' ];
+	const keys = [ 'pagewidth' ];
 
 	// Remove style
 	if ( document.getElementById( 'citizen-style' ) ) {
@@ -218,7 +211,6 @@ function getMessages() {
 	const keys = [
 			'preferences',
 			'prefs-citizen-pagewidth-label',
-			'prefs-citizen-lineheight-label',
 			'prefs-citizen-resetbutton-label'
 		],
 		data = {};
@@ -249,7 +241,7 @@ function initPanel( event ) {
 		data = getMessages(),
 		pref = getPref(),
 		prefValue = convertForForm( pref ),
-		keys = [ 'pagewidth', 'lineheight' ];
+		keys = [ 'pagewidth' ];
 
 	// To Mustache is to jQuery sigh
 	// TODO: Use ES6 template literals when RL does not screw up multiline

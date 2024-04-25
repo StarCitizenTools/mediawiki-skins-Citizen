@@ -12,8 +12,7 @@ window.applyPref = () => {
 
 	const apply = () => {
 		const cssProps = {
-			pagewidth: '--width-layout',
-			lineheight: '--line-height'
+			pagewidth: '--width-layout'
 		};
 
 		const injectStyles = ( css ) => {

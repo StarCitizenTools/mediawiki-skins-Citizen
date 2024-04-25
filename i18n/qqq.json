@@ -47,7 +47,6 @@
 	"citizen-tagline-ns-category": "Tagline for pages in category namespace",
 	"citizen-tagline-user-regdate": "Label for registration date in taglines on userpages",
 	"prefs-citizen-pagewidth-label": "Label for the page width settings",
-	"prefs-citizen-lineheight-label": "Label for the line height settings",
 	"prefs-citizen-resetbutton-label": "Label for the reset button that restore default settings",
 	"citizen-theme-name": "Heading label for setting that allows you to change theme.",
 	"citizen-theme-description": "Description for theme.",
