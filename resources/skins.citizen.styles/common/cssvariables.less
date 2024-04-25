@@ -122,10 +122,7 @@ html {
 	--line-height: 1.75;
 }
 
-/**
- * Dark theme
- */
-:root.skin-citizen-dark {
+.theme-dark-old() {
 	--background-color-icon: @dark-background-color-icon;
 	--background-color-icon--hover: @dark-background-color-icon--hover;
 	--background-color-icon--active: @dark-background-color-icon--active;
@@ -154,6 +151,17 @@ html {
 
 	/* Opacity */
 	--opacity-icon-base--active: @dark-opacity-icon-base--active;
+}
+/**
+ * Dark theme
+ */
+:root.skin-theme-clientpref-night {
+	.theme-dark-old(); }
+
+@media ( prefers-color-scheme: dark ) {
+	:root.skin-theme-clientpref-os {
+		.theme-dark-old();
+	}
 }
 
 @media ( min-width: @min-width-breakpoint-tablet ) {

@@ -57,8 +57,9 @@ a {
 
 /**
  * Dark theme
+ * Dark theme needs a mixin because it is being used by the auto theme as well
  */
-:root.skin-citizen-dark {
+.theme-dark() {
 	--color-primary__l: 60%;
 
 	--color-surface-0: ~'hsl( var( --color-primary__h ), 20%, 10% )';
@@ -95,4 +96,15 @@ a {
 	// Dark theme usually have an illusion of thicker fonts
 	// So we have to tune it back
 	// font-variation-settings: 'GRAD' -90;
+
+	color-scheme: dark;
+}
+
+:root.skin-theme-clientpref-night {
+	.theme-dark(); }
+
+@media ( prefers-color-scheme: dark ) {
+	:root.skin-theme-clientpref-os {
+		.theme-dark();
+	}
 }
