@@ -112,7 +112,7 @@ function makeInputElement( type, featureName, value ) {
  */
 function makeLabelElement( featureName, value ) {
 	const label = document.createElement( 'label' );
-	// eslint-disable-next-line mediawiki/msg-doc
+
 	label.textContent = getMessage( `${ featureName }-${ value }-label` );
 	label.setAttribute( 'for', getInputId( featureName, value ) );
 	return label;
@@ -128,7 +128,7 @@ function makeLabelElement( featureName, value ) {
  */
 function makeExclusionNotice( featureName ) {
 	const p = document.createElement( 'p' );
-	// eslint-disable-next-line mediawiki/msg-doc
+
 	const noticeMessage = getMessage( `${ featureName }-exclusion-notice` );
 	p.classList.add( 'exclusion-notice', `${ featureName }-exclusion-notice` );
 	p.textContent = noticeMessage.text();
@@ -283,7 +283,7 @@ function makeClientPreference( parent, featureName, config ) {
 		const id = `skin-client-prefs-${ featureName }`;
 		const portlet = addPortlet( id, labelMsg.text() );
 		const labelElement = portlet.querySelector( 'label' );
-		// eslint-disable-next-line mediawiki/msg-doc
+
 		const descriptionMsg = getMessage( `${ featureName }-description` );
 		if ( descriptionMsg.exists() ) {
 			const desc = document.createElement( 'span' );
