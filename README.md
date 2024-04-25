@@ -106,7 +106,7 @@ wfLoadSkin( 'Citizen' );
 ## Configurations
 **The skin works out of the box without any configurations.**
 The config flags allow more customization on the specific features in the skin.
-Check out [this wiki page](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/wiki/Adapting-Citizen-styles) on how to adapt Citizen styles on your wiki.
+Check out [this wiki page](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/wiki/Using-Citizen-styles) on how to adapt Citizen styles on your wiki.
 
 ### Appearance
 Name | Description | Values | Default
