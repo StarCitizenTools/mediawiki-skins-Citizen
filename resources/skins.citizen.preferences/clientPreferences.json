@@ -2,5 +2,9 @@
 	"skin-theme": {
 		"options": [ "os", "day", "night" ],
 		"preferenceKey": "citizen-theme"
+	},
+	"citizen-feature-pure-black": {
+		"options": [ "0", "1" ],
+		"preferenceKey": "citizen-pure-black"
 	}
 }

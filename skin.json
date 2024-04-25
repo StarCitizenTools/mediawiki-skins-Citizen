@@ -246,7 +246,10 @@
 				"citizen-theme-day-label",
 				"citizen-theme-night-label",
 				"citizen-theme-os-label",
-				"citizen-theme-exclusion-notice"
+				"citizen-theme-exclusion-notice",
+				"citizen-feature-pure-black-name",
+				"citizen-feature-pure-black-0-label",
+				"citizen-feature-pure-black-1-label"
 			],
 			"dependencies": [
 				"mediawiki.storage",

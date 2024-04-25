@@ -148,7 +148,8 @@ class SkinCitizen extends SkinMustache {
 	 * @param array &$options
 	 */
 	private function buildSkinFeatures( array &$options ) {
-		$title = $this->getOutput()->getTitle();
+		$out = $this->getOutput();
+		$title = $out->getTitle();
 
 		$metadata = new Metadata( $this );
 		$skinTheme = new Theme( $this );
@@ -161,6 +162,9 @@ class SkinCitizen extends SkinMustache {
 
 		// Disable default ToC since it is handled by Citizen
 		$options['toc'] = false;
+
+		// Clientprefs feature handling
+		$out->addHtmlClasses( 'citizen-feature-pure-black-clientpref-0' );
 
 		// Collapsible sections
 		// Load in content pages
