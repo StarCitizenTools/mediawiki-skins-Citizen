@@ -1,7 +1,7 @@
 .page-actions {
 	display: flex;
 	gap: var( --space-xxs );
-	margin-left: -0.75rem; // Align to the margin
+	align-items: center;
 
 	// TODO: Merge this with header__item
 	&__item {
@@ -12,7 +12,7 @@
 	&__button {
 		display: grid;
 		place-items: center;
-		width: 2.75rem; // Same width as other buttons
+		width: 2.5rem; // Same width as other buttons
 		height: 2.25rem; // Same height as other buttons
 		border-radius: var( --border-radius--medium );
 
@@ -237,13 +237,31 @@
 // To avoid more menu from overflow in narrow screen
 @media ( max-width: @max-width-breakpoint-tablet ) {
 	.page-actions {
+		position: fixed;
+		right: 0;
+		bottom: ~'calc( var( --header-size ) + var( --space-xs ) )';
+		height: var( --toolbar-size );
+		margin: var( --space-xs );
+		background: var( --color-surface-1 );
+		border-radius: var( --border-radius--medium );
+		box-shadow: var( --box-shadow-dialog );
+
+		:not( .page-actions__card ) .mw-list-item {
+			--size-icon: 1rem;
+		}
+
+		> .mw-portlet li > a {
+			height: var( --toolbar-size );
+		}
+
 		&__item {
 			position: unset;
 		}
 
 		&__card {
-			right: 0;
-			left: 0;
+			top: unset;
+			bottom: 100%;
+			.citizen-card-hide( bottom right );
 		}
 	}
 }

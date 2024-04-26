@@ -128,8 +128,8 @@
 @media ( max-width: ( @max-width-breakpoint-tablet ) ) {
 	.citizen-toc {
 		position: fixed;
-		right: 0;
 		bottom: ~'calc( var( --header-size ) + var(  --space-xs ) )';
+		left: 0;
 		z-index: @z-index-page-header;
 		// Allow click through
 		pointer-events: none;
@@ -148,7 +148,7 @@
 			-webkit-user-select: none;
 			user-select: none;
 			.citizen-card;
-			.citizen-card-hide( bottom right, '', false );
+			.citizen-card-hide( bottom left, '', false );
 			.citizen-card-transition();
 		}
 
@@ -167,12 +167,12 @@
 
 		&__buttonCheckbox {
 			position: absolute;
-			right: 0;
 			bottom: 0;
+			left: 0;
 			display: grid;
 			place-content: center;
-			width: 2.5rem;
-			height: 2.5rem;
+			width: var( --toolbar-size );
+			height: var( --toolbar-size );
 			margin: var( --space-xs );
 			pointer-events: auto;
 			background-color: var( --color-surface-1 );
@@ -181,7 +181,7 @@
 			transition: var( --transition-menu );
 			transition-property: transform;
 			transform: none;
-			transform-origin: bottom right;
+			transform-origin: bottom left;
 
 			.citizen-ui-icon {
 				width: 1rem;

@@ -57,19 +57,31 @@
 // Hide sticky header on scroll down on smaller screens
 @media ( max-width: @max-width-breakpoint-tablet ) {
 	.citizen-body-header--sticky {
-		.mw-body-header {
+		.mw-body-header
+		.page-actions {
 			transition: var( --transition-menu );
+		}
+
+		.mw-body-header {
 			transition-property: transform;
+		}
+
+		// FIXME: Fine tune the animation, the position jump is annoying
+		.page-actions {
+			opacity: 1;
+			visibility: visible;
+			transition-property: opacity, visibility;
 		}
 
 		&.citizen-scroll--down {
 			.mw-body-header {
 				transform: translateY( -100% );
 			}
-		}
 
-		.page-actions {
-			display: none;
+			.page-actions {
+				opacity: 0;
+				visibility: hidden;
+			}
 		}
 	}
 }
