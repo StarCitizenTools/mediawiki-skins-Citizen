@@ -67,18 +67,23 @@
 				transform: translateY( -100% );
 			}
 		}
+
+		.page-actions {
+			display: none;
+		}
 	}
 }
 
 // Make sticky header more compact if there are less screen estate
-@media ( max-width: @max-width-breakpoint-tablet ), ( max-height: 800px ) {
+@media ( max-height: 800px ) {
 	.citizen-body-header--sticky {
-		#siteSub {
-			display: none;
+		.mw-body-header {
+			padding-top: var( --space-sm );
+			padding-bottom: var( --space-sm );
 		}
 
-		.page-actions {
-			display: none;
+		.firstHeading {
+			font-size: var( --font-size-medium );
 		}
 	}
 }
