@@ -55,7 +55,7 @@ function init( bodyContent ) {
 			// Nodelist.forEach is forbidden by mediawiki/no-nodelist-unsupported-methods
 			Array.from( tocEl.querySelectorAll( '.citizen-toc__listItem' ) ).forEach( ( tocListEl ) => {
 				// Remove 'toc-' prefix from ID
-				headlineIds.push( '#' + tocListEl.id.slice( 4 ) );
+				headlineIds.push( '#' + CSS.escape( tocListEl.id.slice( 4 ) ) );
 			} );
 			return headlineIds.join( ',' );
 		};
