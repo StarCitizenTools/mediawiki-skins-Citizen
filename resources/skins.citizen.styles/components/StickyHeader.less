@@ -57,8 +57,7 @@
 // Hide sticky header on scroll down on smaller screens
 @media ( max-width: @max-width-breakpoint-tablet ) {
 	.citizen-body-header--sticky {
-		.mw-body-header
-		.page-actions {
+		.mw-body-header .page-actions {
 			transition: var( --transition-menu );
 		}
 
@@ -68,8 +67,8 @@
 
 		// FIXME: Fine tune the animation, the position jump is annoying
 		.page-actions {
-			opacity: 1;
 			visibility: visible;
+			opacity: 1;
 			transition-property: opacity, visibility;
 		}
 
@@ -79,8 +78,8 @@
 			}
 
 			.page-actions {
-				opacity: 0;
 				visibility: hidden;
+				opacity: 0;
 			}
 		}
 	}
