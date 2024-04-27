@@ -272,6 +272,7 @@ class SkinHooks implements
 		// Most icons are not mapped yet in the associated pages menu
 		$iconMap = [
 			'main' => 'article',
+			'file' => 'image',
 			'user' => 'userAvatar'
 		];
 
