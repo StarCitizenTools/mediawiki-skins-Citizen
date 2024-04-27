@@ -40,48 +40,53 @@ function addDefaultPortlet( portlet ) {
 }
 
 /**
- * Polyfill for mw.util.addPortlet for < MW 1.42
+ * Polyfill for mw.util.addPortlet for < MW 1.41
+ * Creates a detached portlet Element in the skin with no elements.
  *
- * @return {Element}
+ * @param {string} id of the new portlet.
+ * @param {string} [label] of the new portlet.
+ * @param {string} [before] selector of the element preceding the new portlet. If not passed
+ *  the caller is responsible for appending the element to the DOM before using addPortletLink.
+ * @return {HTMLElement|null} will be null if it was not possible to create an portlet with
+ *  the required information e.g. the selector given in before parameter could not be resolved
+ *  to an existing element in the page.
  */
-function addPortlet() {
+function addPortlet( id, label, before ) {
 	if ( mw.util.addPortlet ) {
-		return addDefaultPortlet( mw.util.addPortlet );
+		return addDefaultPortlet( mw.util.addPortlet( id, label, before ) );
 	}
 
-	return function ( id, label, before ) {
-		const portlet = document.createElement( 'div' );
-		portlet.classList.add( 'mw-portlet', 'mw-portlet-' + id, 'emptyPortlet',
-			// Additional class is added to allow skins to track portlets added via this mechanism.
-			'mw-portlet-js'
-		);
-		portlet.id = id;
-		if ( label ) {
-			const labelNode = document.createElement( 'label' );
-			labelNode.textContent = label;
-			portlet.appendChild( labelNode );
+	const portlet = document.createElement( 'div' );
+	portlet.classList.add( 'mw-portlet', 'mw-portlet-' + id, 'emptyPortlet',
+		// Additional class is added to allow skins to track portlets added via this mechanism.
+		'mw-portlet-js'
+	);
+	portlet.id = id;
+	if ( label ) {
+		const labelNode = document.createElement( 'label' );
+		labelNode.textContent = label;
+		portlet.appendChild( labelNode );
+	}
+	const listWrapper = document.createElement( 'div' );
+	const list = document.createElement( 'ul' );
+	listWrapper.appendChild( list );
+	portlet.appendChild( listWrapper );
+	if ( before ) {
+		let referenceNode;
+		try {
+			referenceNode = document.querySelector( before );
+		} catch ( e ) {
+			// CSS selector not supported by browser.
 		}
-		const listWrapper = document.createElement( 'div' );
-		const list = document.createElement( 'ul' );
-		listWrapper.appendChild( list );
-		portlet.appendChild( listWrapper );
-		if ( before ) {
-			let referenceNode;
-			try {
-				referenceNode = document.querySelector( before );
-			} catch ( e ) {
-				// CSS selector not supported by browser.
-			}
-			if ( referenceNode ) {
-				const parentNode = referenceNode.parentNode;
-				parentNode.insertBefore( portlet, referenceNode );
-			} else {
-				return null;
-			}
+		if ( referenceNode ) {
+			const parentNode = referenceNode.parentNode;
+			parentNode.insertBefore( portlet, referenceNode );
+		} else {
+			return null;
 		}
-		mw.hook( 'util.addPortlet' ).fire( portlet, before );
-		return addDefaultPortlet( portlet );
-	};
+	}
+	mw.hook( 'util.addPortlet' ).fire( portlet, before );
+	return addDefaultPortlet( portlet );
 }
 
 /** @module addPortlet */
