@@ -62,30 +62,9 @@
 			transition-property: transform;
 		}
 
-		.page-actions {
-			visibility: visible;
-			opacity: 1;
-		}
-
-		&.citizen-scroll--up {
-			// Only apply transition on showing because of flickering issue
-			.page-actions {
-				transition: var( --transition-menu );
-				transition-delay: 250ms;
-				transition-property: opacity, visibility, transform;
-			}
-		}
-
 		&.citizen-scroll--down {
 			.mw-body-header {
 				transform: translateY( -150% );
-			}
-
-			.page-actions {
-				visibility: hidden;
-				box-shadow: none;
-				opacity: 0;
-				transform: translateY( 250% );
 			}
 		}
 	}
