@@ -311,6 +311,7 @@
 				"message",
 				"move",
 				"printer",
+				"qrCode",
 				"recentChanges",
 				"reference",
 				"reload",
