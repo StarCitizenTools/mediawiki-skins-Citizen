@@ -317,7 +317,9 @@ class SkinHooks implements
 			'smwbrowselink' => 'database',
 			// Extension:UrlShortener
 			'urlshortener' => 'link',
-			'urlshortener-qrcode' => 'qrCode'
+			'urlshortener-qrcode' => 'qrCode',
+			// Extension:Wikibase
+			'wikibase' => 'logoWikidata'
 		];
 
 		self::mapIconsToMenuItems( $links, 'TOOLBOX', $iconMap );
