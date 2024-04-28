@@ -22,7 +22,7 @@
  * @property {string} value
  */
 
-const addPortlet = require( './addPortlet.polyfill.js' )();
+const portlets = require( './addPortlet.polyfill.js' );
 const clientPrefs = require( './clientPrefs.polyfill.js' )();
 
 /**
@@ -291,7 +291,7 @@ function makeClientPreference( parent, featureName, config ) {
 		return;
 	} else {
 		const id = `skin-client-prefs-${ featureName }`;
-		const portlet = addPortlet( id, labelMsg.text() );
+		const portlet = portlets.addDefaultPortlet( portlets.addPortlet( id, labelMsg.text() ) );
 		const labelElement = portlet.querySelector( 'label' );
 
 		const descriptionMsg = getMessage( `${ featureName }-description` );
