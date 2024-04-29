@@ -5,6 +5,7 @@
 			"Nicolas.poinsu",
 			"Pamputt",
 			"Reedy",
+			"SleaY",
 			"Verdy p"
 		]
 	},
@@ -43,12 +44,12 @@
 	"citizen-tagline-ns-help": "Page d’aide",
 	"citizen-tagline-ns-category": "Page de catégorie",
 	"citizen-tagline-user-regdate": "Rejoint le $1",
-	"prefs-citizen-theme-label": "Thème",
-	"prefs-citizen-theme-option-auto": "Automatique",
-	"prefs-citizen-theme-option-light": "Clair",
-	"prefs-citizen-theme-option-dark": "Sombre",
-	"prefs-citizen-fontsize-label": "Taille de police",
-	"prefs-citizen-pagewidth-label": "Largeur de la page",
-	"prefs-citizen-lineheight-label": "Hauteur de ligne",
-	"prefs-citizen-resetbutton-label": "Réinitialiser aux valeurs par défaut"
+	"citizen-theme-name": "Couleur",
+	"citizen-theme-day-label": "Clair",
+	"citizen-theme-night-label": "Sombre",
+	"citizen-feature-pure-black-0-label": "Désactivé",
+	"citizen-feature-custom-font-size-name": "Texte",
+	"citizen-feature-custom-font-size-small-label": "Petit",
+	"citizen-feature-custom-font-size-standard-label": "Standard",
+	"citizen-feature-custom-width-name": "Largeur"
 }

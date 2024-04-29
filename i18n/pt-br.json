@@ -38,13 +38,5 @@
 	"citizen-tagline-ns-mediawiki": "Página de Interface do MediaWiki",
 	"citizen-tagline-ns-template": "Página da predefinição",
 	"citizen-tagline-ns-help": "Página de ajuda",
-	"citizen-tagline-ns-category": "Página da categoria",
-	"prefs-citizen-theme-label": "Tema",
-	"prefs-citizen-theme-option-auto": "Automático",
-	"prefs-citizen-theme-option-light": "Claro",
-	"prefs-citizen-theme-option-dark": "Escuro",
-	"prefs-citizen-fontsize-label": "Tamanho da fonte",
-	"prefs-citizen-pagewidth-label": "Largura da página",
-	"prefs-citizen-lineheight-label": "Altura da linha",
-	"prefs-citizen-resetbutton-label": "Restaurar ao padrão"
+	"citizen-tagline-ns-category": "Página da categoria"
 }

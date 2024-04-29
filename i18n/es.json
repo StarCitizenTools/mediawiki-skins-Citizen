@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Alistair3149",
+			"Eulalio",
 			"Fitoschido",
 			"Galahad",
 			"MarleneR329"
@@ -34,11 +35,21 @@
 	"citizen-tagline-ns-template": "Página de plantilla",
 	"citizen-tagline-ns-help": "Página de ayuda",
 	"citizen-tagline-ns-category": "Página de categoría",
-	"prefs-citizen-theme-label": "Tema",
-	"prefs-citizen-theme-option-auto": "Automático",
-	"prefs-citizen-theme-option-light": "Claro",
-	"prefs-citizen-theme-option-dark": "Oscuro",
-	"prefs-citizen-fontsize-label": "Tamaño del texto",
-	"prefs-citizen-pagewidth-label": "Anchura de la imagen",
-	"prefs-citizen-resetbutton-label": "Reiniciar por defecto"
+	"citizen-theme-name": "Color",
+	"citizen-theme-description": "Cambiar el tema de la wiki.",
+	"citizen-theme-day-label": "Claro",
+	"citizen-theme-night-label": "Oscuro",
+	"citizen-theme-os-label": "Automático",
+	"citizen-theme-exclusion-notice": "Esta página siempre está en modo diurno.",
+	"citizen-feature-pure-black-name": "Modo negro puro",
+	"citizen-feature-pure-black-0-label": "Apagado",
+	"citizen-feature-pure-black-1-label": "Activado",
+	"citizen-feature-custom-font-size-name": "Texto",
+	"citizen-feature-custom-font-size-small-label": "Pequeño",
+	"citizen-feature-custom-font-size-standard-label": "Estándar",
+	"citizen-feature-custom-font-size-large-label": "Grande",
+	"citizen-feature-custom-width-name": "Anchura",
+	"citizen-feature-custom-width-standard-label": "Estándar",
+	"citizen-feature-custom-width-wide-label": "Ancho",
+	"citizen-feature-custom-width-full-label": "Lleno"
 }

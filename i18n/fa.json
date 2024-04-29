@@ -29,13 +29,5 @@
 	"citizen-tagline-ns-mediawiki": "صفحهٔ رابط مدیاویکی",
 	"citizen-tagline-ns-template": "صفحهٔ الگو",
 	"citizen-tagline-ns-help": "صفحهٔ راهنما",
-	"citizen-tagline-ns-category": "صفحهٔ رده",
-	"prefs-citizen-theme-label": "پوسته",
-	"prefs-citizen-theme-option-auto": "خودکار",
-	"prefs-citizen-theme-option-light": "روشن",
-	"prefs-citizen-theme-option-dark": "تاریک",
-	"prefs-citizen-fontsize-label": "اندازهٔ قلم",
-	"prefs-citizen-pagewidth-label": "عرض صفحه",
-	"prefs-citizen-lineheight-label": "ارتفاع سطر",
-	"prefs-citizen-resetbutton-label": "بازنشانی به پیش‌گزیده"
+	"citizen-tagline-ns-category": "صفحهٔ رده"
 }

@@ -36,13 +36,5 @@
 	"citizen-tagline-ns-mediawiki": "MediaWiki интерфейс беті",
 	"citizen-tagline-ns-template": "Үлгі беті",
 	"citizen-tagline-ns-help": "Анықтама беті",
-	"citizen-tagline-ns-category": "Санат беті",
-	"prefs-citizen-theme-label": "Тақырып",
-	"prefs-citizen-theme-option-auto": "Өздігінен",
-	"prefs-citizen-theme-option-light": "Жарық",
-	"prefs-citizen-theme-option-dark": "Күңгірт",
-	"prefs-citizen-fontsize-label": "Қаріп өлшемі",
-	"prefs-citizen-pagewidth-label": "Бет ені",
-	"prefs-citizen-lineheight-label": "Жол биіктігі",
-	"prefs-citizen-resetbutton-label": "Әдепкіге қайта орнату"
+	"citizen-tagline-ns-category": "Санат беті"
 }

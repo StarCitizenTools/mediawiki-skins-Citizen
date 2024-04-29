@@ -15,13 +15,5 @@
 	"citizen-page-info-credits": "Cydnabyddiaeth",
 	"citizen-search-mediasearch": "Chwilio am gyfryngau",
 	"citizen-search-editpage": "Golygu neu greu tudalen",
-	"citizen-tagline-user-regdate": "Ymunodd $1",
-	"prefs-citizen-theme-label": "Thema",
-	"prefs-citizen-theme-option-auto": "Awtomatig",
-	"prefs-citizen-theme-option-light": "Golau",
-	"prefs-citizen-theme-option-dark": "Tywyll",
-	"prefs-citizen-fontsize-label": "Maint y ffont",
-	"prefs-citizen-pagewidth-label": "Lled y dudalen",
-	"prefs-citizen-lineheight-label": "Uchder y llinell",
-	"prefs-citizen-resetbutton-label": "Ailosod i ddiofyn"
+	"citizen-tagline-user-regdate": "Ymunodd $1"
 }

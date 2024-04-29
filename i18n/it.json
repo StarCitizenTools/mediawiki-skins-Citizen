@@ -42,13 +42,5 @@
 	"citizen-tagline-ns-template": "Modello della pagina",
 	"citizen-tagline-ns-help": "Pagina d'aiuto",
 	"citizen-tagline-ns-category": "Pagina delle categorie",
-	"citizen-tagline-user-regdate": "Iscritto $1",
-	"prefs-citizen-theme-label": "Tema",
-	"prefs-citizen-theme-option-auto": "Automatico",
-	"prefs-citizen-theme-option-light": "Chiaro",
-	"prefs-citizen-theme-option-dark": "Scuro",
-	"prefs-citizen-fontsize-label": "Dimensione carattere",
-	"prefs-citizen-pagewidth-label": "Larghezza pagina",
-	"prefs-citizen-lineheight-label": "Altezza linea",
-	"prefs-citizen-resetbutton-label": "Ripristina alle impostazioni predefinite"
+	"citizen-tagline-user-regdate": "Iscritto $1"
 }

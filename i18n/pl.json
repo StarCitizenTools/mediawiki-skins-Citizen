@@ -38,13 +38,5 @@
 	"citizen-tagline-ns-template": "Szablon",
 	"citizen-tagline-ns-help": "Strona pomocy",
 	"citizen-tagline-ns-category": "Kategoria",
-	"citizen-tagline-user-regdate": "Użytkownik dołączył $1",
-	"prefs-citizen-theme-label": "Motyw",
-	"prefs-citizen-theme-option-auto": "Domyślny",
-	"prefs-citizen-theme-option-light": "Jasny",
-	"prefs-citizen-theme-option-dark": "Ciemny",
-	"prefs-citizen-fontsize-label": "Rozmiar czcionki",
-	"prefs-citizen-pagewidth-label": "Szerokość strony",
-	"prefs-citizen-lineheight-label": "Wysokość linii",
-	"prefs-citizen-resetbutton-label": "Przywróć ustawienia domyślne"
+	"citizen-tagline-user-regdate": "Użytkownik dołączył $1"
 }

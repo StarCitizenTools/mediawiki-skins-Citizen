@@ -39,13 +39,5 @@
 	"citizen-tagline-ns-template": "Trang bản mẫu",
 	"citizen-tagline-ns-help": "Trang trợ giúp",
 	"citizen-tagline-ns-category": "Trang thể loại",
-	"citizen-tagline-user-regdate": "Đăng ký vào $1",
-	"prefs-citizen-theme-label": "Giao diện",
-	"prefs-citizen-theme-option-auto": "Tự động",
-	"prefs-citizen-theme-option-light": "Sáng",
-	"prefs-citizen-theme-option-dark": "Tối",
-	"prefs-citizen-fontsize-label": "Kích thước chữ",
-	"prefs-citizen-pagewidth-label": "Chiều rộng trang",
-	"prefs-citizen-lineheight-label": "Chiều cao dòng",
-	"prefs-citizen-resetbutton-label": "Đặt lại về mặc định"
+	"citizen-tagline-user-regdate": "Đăng ký vào $1"
 }

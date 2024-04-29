@@ -23,8 +23,5 @@
 	"citizen-tagline-ns-mediawiki": "Stranica sučelja MediaWiki",
 	"citizen-tagline-ns-template": "Stranica šablona/predloška",
 	"citizen-tagline-ns-help": "Stranica za pomoć",
-	"citizen-tagline-ns-category": "Stranica kategorije",
-	"prefs-citizen-theme-label": "Tema",
-	"prefs-citizen-theme-option-auto": "Automatski",
-	"prefs-citizen-fontsize-label": "Veličina fonta"
+	"citizen-tagline-ns-category": "Stranica kategorije"
 }

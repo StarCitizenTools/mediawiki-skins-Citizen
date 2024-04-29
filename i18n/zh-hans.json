@@ -52,12 +52,6 @@
 	"citizen-tagline-ns-help": "帮助页面",
 	"citizen-tagline-ns-category": "分类页面",
 	"citizen-tagline-user-regdate": "$1注册",
-	"prefs-citizen-theme-label": "主题",
-	"prefs-citizen-theme-option-auto": "自动",
-	"prefs-citizen-theme-option-light": "浅色",
-	"prefs-citizen-theme-option-dark": "深色",
-	"prefs-citizen-fontsize-label": "字体大小",
-	"prefs-citizen-pagewidth-label": "页面宽度",
-	"prefs-citizen-lineheight-label": "行高",
-	"prefs-citizen-resetbutton-label": "重置为默认值"
+	"citizen-theme-name": "颜色",
+	"citizen-feature-custom-font-size-name": "文本"
 }

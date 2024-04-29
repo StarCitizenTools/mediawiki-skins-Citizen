@@ -23,12 +23,5 @@
 	"citizen-tagline-ns-template": "Halaman templat",
 	"citizen-tagline-ns-help": "Halaman bantuan",
 	"citizen-tagline-ns-category": "Halaman kategori",
-	"citizen-tagline-user-regdate": "Bergabung pada tanggal $1",
-	"prefs-citizen-theme-label": "Tema",
-	"prefs-citizen-theme-option-auto": "Otomatis",
-	"prefs-citizen-theme-option-light": "Terang",
-	"prefs-citizen-theme-option-dark": "Gelap",
-	"prefs-citizen-fontsize-label": "Ukuran huruf",
-	"prefs-citizen-pagewidth-label": "Lebar halaman",
-	"prefs-citizen-lineheight-label": "Tinggi baris"
+	"citizen-tagline-user-regdate": "Bergabung pada tanggal $1"
 }

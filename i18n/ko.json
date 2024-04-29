@@ -35,13 +35,5 @@
 	"citizen-tagline-ns-mediawiki": "미디어위키 인터페이스 문서",
 	"citizen-tagline-ns-template": "틀 문서",
 	"citizen-tagline-ns-help": "도움말 문서",
-	"citizen-tagline-ns-category": "분류 문서",
-	"prefs-citizen-theme-label": "테마",
-	"prefs-citizen-theme-option-auto": "자동",
-	"prefs-citizen-theme-option-light": "밝음",
-	"prefs-citizen-theme-option-dark": "어두움",
-	"prefs-citizen-fontsize-label": "글자 크기",
-	"prefs-citizen-pagewidth-label": "페이지 너비",
-	"prefs-citizen-lineheight-label": "줄 높이",
-	"prefs-citizen-resetbutton-label": "기본값으로 재설정"
+	"citizen-tagline-ns-category": "분류 문서"
 }

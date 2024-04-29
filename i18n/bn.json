@@ -40,13 +40,5 @@
 	"citizen-tagline-ns-template": "টেমপ্লেট পাতা",
 	"citizen-tagline-ns-help": "সাহায্য পাতা",
 	"citizen-tagline-ns-category": "বিষয়শ্রেণীর পাতা",
-	"citizen-tagline-user-regdate": "যোগদান করেছেন $1",
-	"prefs-citizen-theme-label": "থিম",
-	"prefs-citizen-theme-option-auto": "স্বয়ংক্রিয়",
-	"prefs-citizen-theme-option-light": "উজ্জ্বল",
-	"prefs-citizen-theme-option-dark": "কালো",
-	"prefs-citizen-fontsize-label": "ফন্টের আকার",
-	"prefs-citizen-pagewidth-label": "পাতার প্রস্থ",
-	"prefs-citizen-lineheight-label": "লাইনের উচ্চতা",
-	"prefs-citizen-resetbutton-label": "পূর্বনির্ধারিত অবস্থায় যান"
+	"citizen-tagline-user-regdate": "যোগদান করেছেন $1"
 }

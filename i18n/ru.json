@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Dirruw'o",
 			"Kareyac",
 			"Okras",
 			"Toghrul Rahimli",
@@ -42,12 +43,21 @@
 	"citizen-tagline-ns-help": "Страница справки",
 	"citizen-tagline-ns-category": "Страница категории",
 	"citizen-tagline-user-regdate": "Присоединился $1",
-	"prefs-citizen-theme-label": "Тема",
-	"prefs-citizen-theme-option-auto": "Авто",
-	"prefs-citizen-theme-option-light": "Светлая",
-	"prefs-citizen-theme-option-dark": "Тёмная",
-	"prefs-citizen-fontsize-label": "Размер шрифта",
-	"prefs-citizen-pagewidth-label": "Ширина страницы",
-	"prefs-citizen-lineheight-label": "Высота строки",
-	"prefs-citizen-resetbutton-label": "Сброс"
+	"citizen-theme-name": "Цвет",
+	"citizen-theme-description": "Изменить тему вики",
+	"citizen-theme-day-label": "Светлость",
+	"citizen-theme-night-label": "Тёмный",
+	"citizen-theme-os-label": "Авто",
+	"citizen-theme-exclusion-notice": "Эта страница всегда находится в дневном режиме.",
+	"citizen-feature-pure-black-name": "Чисто черный режим",
+	"citizen-feature-pure-black-0-label": "Выкл",
+	"citizen-feature-pure-black-1-label": "Вкл",
+	"citizen-feature-custom-font-size-name": "Текст",
+	"citizen-feature-custom-font-size-small-label": "Маленький",
+	"citizen-feature-custom-font-size-standard-label": "Стандартный",
+	"citizen-feature-custom-font-size-large-label": "Большой",
+	"citizen-feature-custom-width-name": "Ширина",
+	"citizen-feature-custom-width-standard-label": "Стандарт",
+	"citizen-feature-custom-width-wide-label": "Скрыть",
+	"citizen-feature-custom-width-full-label": "Полный"
 }

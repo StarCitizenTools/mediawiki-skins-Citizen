@@ -38,13 +38,5 @@
 	"citizen-tagline-ns-mediawiki": "MediaWiki arayüz sayfası",
 	"citizen-tagline-ns-template": "Şablon sayfası",
 	"citizen-tagline-ns-help": "Yardım sayfası",
-	"citizen-tagline-ns-category": "Kategori sayfası",
-	"prefs-citizen-theme-label": "Tema",
-	"prefs-citizen-theme-option-auto": "Otomatik",
-	"prefs-citizen-theme-option-light": "Açık",
-	"prefs-citizen-theme-option-dark": "Koyu",
-	"prefs-citizen-fontsize-label": "Yazı tipi boyutu",
-	"prefs-citizen-pagewidth-label": "Sayfa genişliği",
-	"prefs-citizen-lineheight-label": "Satır yüksekliği",
-	"prefs-citizen-resetbutton-label": "Varsayılana sıfırla"
+	"citizen-tagline-ns-category": "Kategori sayfası"
 }
