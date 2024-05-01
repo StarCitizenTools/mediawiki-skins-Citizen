@@ -34,13 +34,14 @@ final class PageTitle extends Partial {
 	/**
 	 * Wrap text within parenthesis with a span tag
 	 *
-	 * @param string $data title of the page
+	 * @param string $data HTML of the title of the page
 	 * @return string
 	 */
 	public function decorateTitle( $data ) {
 		if ( $this->shouldAddParenthesis() ) {
-			$pattern = '/(\(.+\))/';
-			$replacement = '<span class="mw-page-title-parenthesis">$1</span>';
+			// Look for the </span> to ensure that it is the last parenthesis of the title
+			$pattern = '/\s(\(.+\))<\/span>/';
+			$replacement = ' <span class="mw-page-title-parenthesis">$1</span></span>';
 			return preg_replace( $pattern, $replacement, $data );
 		}
 		return $data;
