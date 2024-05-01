@@ -26,7 +26,11 @@ class PageTitleTest extends MediaWikiIntegrationTestCase {
 		RequestContext::getMain()->setTitle( $title );
 		$partial = new PageTitle( new SkinCitizen() );
 
-		$text = $partial->decorateTitle( 'Foo Title (paren)' );
+		$data = sprintf(
+			'<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">%s</span></h1>',
+			'Foo Title (paren)'
+		);
+		$text = $partial->decorateTitle( $data );
 
 		$this->assertStringNotContainsString( 'mw-page-title-parenthesis', $text );
 	}
@@ -42,7 +46,11 @@ class PageTitleTest extends MediaWikiIntegrationTestCase {
 		RequestContext::getMain()->setTitle( $title );
 		$partial = new PageTitle( new SkinCitizen() );
 
-		$text = $partial->decorateTitle( 'Foo Title (paren)' );
+		$data = sprintf(
+			'<h1 id="firstHeading" class="firstHeading mw-first-heading"><span class="mw-page-title-main">%s</span></h1>',
+			'Foo Title (paren)'
+		);
+		$text = $partial->decorateTitle( $data );
 
 		$this->assertStringContainsString( 'mw-page-title-parenthesis', $text );
 	}
