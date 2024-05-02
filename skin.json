@@ -28,6 +28,11 @@
 				{
 					"name": "citizen",
 					"responsive": true,
+					"link": {
+						"text-wrapper": {
+							"tag": "span"
+						}
+					},
 					"menus": [
 						"user-menu",
 						"notifications",
