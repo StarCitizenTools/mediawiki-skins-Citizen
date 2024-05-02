@@ -1,0 +1,24 @@
+{
+	"@metadata": {
+		"authors": [
+			"Adriendelucca"
+		]
+	},
+	"citizen-theme-name": "Liv",
+	"citizen-theme-description": "Cheñch tem ar wiki",
+	"citizen-theme-day-label": "Sklaer",
+	"citizen-theme-night-label": "Teñval",
+	"citizen-theme-os-label": "Emgefre",
+	"citizen-theme-exclusion-notice": "E mod sklaer e vez ar bajenn-mañ atav.",
+	"citizen-feature-pure-black-name": "Mod peurzu",
+	"citizen-feature-pure-black-0-label": "Lazhet",
+	"citizen-feature-pure-black-1-label": "Enaouet",
+	"citizen-feature-custom-font-size-name": "Testenn",
+	"citizen-feature-custom-font-size-small-label": "Bihan",
+	"citizen-feature-custom-font-size-standard-label": "Standard",
+	"citizen-feature-custom-font-size-large-label": "Bras",
+	"citizen-feature-custom-width-name": "Ledander",
+	"citizen-feature-custom-width-standard-label": "Standard",
+	"citizen-feature-custom-width-wide-label": "Ledan",
+	"citizen-feature-custom-width-full-label": "Leun"
+}
