@@ -19,6 +19,11 @@
 			"Disabled": [
 				"citizen"
 			]
+		},
+		"VisualEditor": {
+			"IconSkins": [
+				"citizen"
+			]
 		}
 	},
 	"ValidSkinNames": {
