@@ -34,6 +34,7 @@
 						}
 					},
 					"menus": [
+						"user-interface-preferences",
 						"user-menu",
 						"notifications",
 						"views",
