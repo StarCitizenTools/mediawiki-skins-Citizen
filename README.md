@@ -118,9 +118,10 @@ Name | Description | Values | Default
 `$wgCitizenEnableDrawerSiteStats` | Enables the site statistics in drawer menu | `true` - enable; `false` - disable | `true`
 `$wgCitizenUseNumberFormatter` | Use NumberFormatter for site statistics, which allows formatting number in a localized way | `true` - enable; `false` - disable | `true`
 `$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#131a21`
+`$wgCitizenEnableARFonts` | Enable included Noto Naskh Arabic for wikis that serve Arabic | `true` - enable; `false` - disable | `false`
 `$wgCitizenEnableCJKFonts` | Enable included Noto Sans CJK for wikis that serves CJK languages | `true` - enable; `false` - disable | `false`
 `$wgCitizenEnablePreferences` | Enable the preferences menu | `true` - enable; `false` - disable | `true`
-`$wgCitizenTableNowrapClasses` | Defines table css classes ignored by citizen table wrapper | List of css classes. Extend with `$wgCitizenTableNowrapClasses[] = 'my_class';` | `["citizen-table-nowrap", "mw-changeslist-line", "infobox", "cargoDynamicTable", "dataTable"]`
+`$wgCitizenTableNowrapClasses` | Defines table css classes ignored by citizen table wrapper | List of css classes. Extend with `$wgCitizenTableNowrapClasses[] = 'my_class';` | `["citizen-table-nowrap", "diff", "mw-changeslist-line", "mw-recentchanges-table", "infobox", "cargoDynamicTable", "dataTable", "srf-datatable", "smw-datatable", "mw-capiunto-infobox" ]`
 
 ### Search suggestions
 Name | Description | Values | Default
