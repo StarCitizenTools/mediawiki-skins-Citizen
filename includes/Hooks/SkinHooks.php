@@ -350,10 +350,6 @@ class SkinHooks implements
 		} else {
 			// Remove anon user page text from user menu and recreate it in user info
 			unset( $links['user-menu']['anonuserpage'] );
-			// Remove links as they are added to the bottom of user menu later
-			// unset( $links['user-menu']['createaccount'] );
-			// unset( $links['user-menu']['login'] );
-			// unset( $links['user-menu']['login-private'] );
 		}
 
 		self::addIconsToMenuItems( $links, 'user-menu' );

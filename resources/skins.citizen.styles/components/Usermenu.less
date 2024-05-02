@@ -1,6 +1,10 @@
 .citizen-userMenu {
 	&__card {
 		.citizen-header-card( right );
+
+		.citizen-menu__heading {
+			.mixin-screen-reader-text;
+		}
 	}
 
 	&__header {
@@ -81,6 +85,17 @@
 		&contris {
 			font-weight: var( --font-weight-medium );
 		}
+	}
+}
+
+#pt-createaccount,
+#pt-login,
+#pt-login-private,
+#pt-logout {
+	a {
+		margin: var( --space-xs );
+		border: 1px solid var( --border-color-base );
+		border-radius: var( --border-radius--medium );
 	}
 }
 
