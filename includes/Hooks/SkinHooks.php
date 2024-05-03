@@ -261,7 +261,9 @@ class SkinHooks implements
 			// Extension:SemanticMediaWiki
 			'purge' => 'reload',
 			// Extension:Cargo
-			'cargo-purge'  => 'reload'
+			'cargo-purge'  => 'reload',
+			// Extension:DiscussionTools
+			'dt-page-subscribe' => 'bell'
 		];
 
 		self::mapIconsToMenuItems( $links, 'actions', $iconMap );
