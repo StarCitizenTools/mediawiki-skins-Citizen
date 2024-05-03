@@ -259,7 +259,9 @@ class SkinHooks implements
 			'unprotect' => 'unLock',
 			// Extension:Purge
 			// Extension:SemanticMediaWiki
-			'purge' => 'reload'
+			'purge' => 'reload',
+			// Extension:Cargo
+			'cargo-purge'  => 'reload'
 		];
 
 		self::mapIconsToMenuItems( $links, 'actions', $iconMap );
