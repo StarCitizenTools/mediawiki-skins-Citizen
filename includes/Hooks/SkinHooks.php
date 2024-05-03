@@ -227,6 +227,10 @@ class SkinHooks implements
 			self::updateAssociatedPagesMenu( $links );
 		}
 
+		if ( isset( $links['notifications'] ) ) {
+			self::updateNotificationsMenu( $links );
+		}
+
 		if ( isset( $links['user-menu'] ) ) {
 			self::updateUserMenu( $sktemplate, $links );
 		}
@@ -325,6 +329,33 @@ class SkinHooks implements
 
 		self::mapIconsToMenuItems( $links, 'TOOLBOX', $iconMap );
 		self::addIconsToMenuItems( $links, 'TOOLBOX' );
+	}
+
+	/**
+	 * Update notifications menu
+	 *
+	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
+	 * @param array &$links
+	 */
+	private static function updateNotificationsMenu( &$links ) {
+		/**
+		 * Echo has styles that control icons rendering in places we don't want them.
+		 * Based on fixEcho() from Vector, see T343838
+		 */
+		foreach ( $links['notifications'] as &$item ) {
+			$icon = $item['icon'] ?? null;
+			if ( $icon ) {
+				$linkClass = $item['link-class'] ?? [];
+				$newLinkClass = [
+					// Allows Echo to react to clicks
+					'mw-echo-notification-badge-nojs'
+				];
+				if ( in_array( 'mw-echo-unseen-notifications', $linkClass ) ) {
+					$newLinkClass[] = 'mw-echo-unseen-notifications';
+				}
+				$item['link-class'] = $newLinkClass;
+			}
+		}
 	}
 
 	/**
