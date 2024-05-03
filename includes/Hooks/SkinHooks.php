@@ -319,7 +319,7 @@ class SkinHooks implements
 			// Extension:Cargo
 			'cargo-pagevalues' => 'database',
 			// Extension:CiteThisPage
-			'citethispage' => 'reference',
+			'citethispage' => 'quotes',
 			// Extension:CreateRedirect
 			'createredirect' => 'articleRedirect',
 			// Extension:SemanticMediaWiki
