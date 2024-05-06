@@ -381,7 +381,7 @@
 			"+ext.dismissableSiteNotice.styles": "skinStyles/extensions/DismissableSiteNotice/ext.dismissableSiteNotice.less",
 			"+ext.echo.ui.desktop": "skinStyles/extensions/Echo/ext.echo.ui.desktop.less",
 			"+ext.echo.ui": "skinStyles/extensions/Echo/ext.echo.ui.less",
-			"+ext.echo.styles.badge": "skinStyles/extensions/Echo/ext.echo.styles.badge.less",
+			"ext.echo.styles.badge": "skinStyles/extensions/Echo/ext.echo.styles.badge.less",
 			"+ext.echo.styles.notifications": "skinStyles/extensions/Echo/ext.echo.styles.notifications.less",
 			"+ext.echo.styles.alert": "skinStyles/extensions/Echo/ext.echo.styles.alert.less",
 			"+ext.echo.special": "skinStyles/extensions/Echo/ext.echo.special.less",

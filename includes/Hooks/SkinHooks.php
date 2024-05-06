@@ -341,6 +341,14 @@ class SkinHooks implements
 	 * @param array &$links
 	 */
 	private static function updateNotificationsMenu( &$links ) {
+		$iconMap = [
+			'notifications-alert' => 'bell',
+			'notifications-notice' => 'tray'
+		];
+
+		self::mapIconsToMenuItems( $links, 'notifications', $iconMap );
+		self::addIconsToMenuItems( $links, 'notifications' );
+
 		/**
 		 * Echo has styles that control icons rendering in places we don't want them.
 		 * Based on fixEcho() from Vector, see T343838
@@ -351,7 +359,8 @@ class SkinHooks implements
 				$linkClass = $item['link-class'] ?? [];
 				$newLinkClass = [
 					// Allows Echo to react to clicks
-					'mw-echo-notification-badge-nojs'
+					'mw-echo-notification-badge-nojs',
+					'citizen-header__button'
 				];
 				if ( in_array( 'mw-echo-unseen-notifications', $linkClass ) ) {
 					$newLinkClass[] = 'mw-echo-unseen-notifications';

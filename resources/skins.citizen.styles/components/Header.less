@@ -74,6 +74,11 @@
 				opacity: var( --opacity-icon-base--active );
 			}
 		}
+
+		// Disable default padding when menu item is used as header button
+		.citizen-menu .mw-list-item & {
+			padding: 0;
+		}
 	}
 
 	&__logo {
@@ -134,6 +139,13 @@
 		flex-direction: var( --header-direction );
 		gap: var( --space-xxs );
 		align-items: center;
+	}
+
+	// Echo badge styles do not load before init in 1.39
+	.mw-echo-notification-badge-nojs {
+		.citizen-ui-icon + span {
+			.mixin-screen-reader-text;
+		}
 	}
 }
 
