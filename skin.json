@@ -52,8 +52,7 @@
 					],
 					"styles": [
 						"skins.citizen.styles",
-						"skins.citizen.icons",
-						"skins.citizen.icons.wmui"
+						"skins.citizen.icons"
 					],
 					"messages": [
 						"citizen-actions-more-toggle",
@@ -278,14 +277,6 @@
 			]
 		},
 		"skins.citizen.icons": {
-			"class": "MediaWiki\\ResourceLoader\\ImageModule",
-			"selector": "{name}",
-			"defaultColor": "#000",
-			"images": {
-				".citizen-toc__top:before": "resources/skins.citizen.icons/backToTop.svg"
-			}
-		},
-		"skins.citizen.icons.wmui": {
 			"selectorWithoutVariant": ".mw-ui-icon-wikimedia-{name}:before",
 			"useDataURI": false,
 			"defaultColor": "#000",
@@ -305,6 +296,7 @@
 				"edit",
 				"editLock",
 				"ellipsis",
+				"first",
 				"help",
 				"history",
 				"home",

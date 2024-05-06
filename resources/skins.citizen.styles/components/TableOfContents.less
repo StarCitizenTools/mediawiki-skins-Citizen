@@ -1,4 +1,5 @@
 .citizen-toc {
+	--size-icon: 1rem;
 	font-size: var( --font-size-small );
 	line-height: var( --line-height-xs );
 
@@ -9,20 +10,8 @@
 	}
 
 	&__top {
-		&::before {
-			width: 0.875rem;
-			height: 0.875rem;
-			content: '';
-			filter: var( --filter-invert );
-			opacity: var( --opacity-icon-base );
-		}
-
-		&:hover::before {
-			opacity: var( --opacity-icon-base--hover );
-		}
-
-		&:active::before {
-			opacity: var( --opacity-icon-base--hover );
+		.citizen-ui-icon {
+			transform: rotate( 90deg );
 		}
 	}
 
@@ -182,11 +171,6 @@
 			transition-property: transform;
 			transform: none;
 			transform-origin: bottom left;
-
-			.citizen-ui-icon {
-				width: 1rem;
-				height: 1rem;
-			}
 
 			// The hover state colors are not great but it will do for now
 			&:hover {
