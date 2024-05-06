@@ -417,10 +417,7 @@ class SkinHooks implements
 			'edit' => 'edit',
 			'view-foreign' => 'linkExternal',
 			// Extension:VisualEditor
-			// For some reason the icon span element keeps getting removed
-			// So we are adding this the legacy way
-			// Bug: T323188
-			// 've-edit' => 'edit',
+			've-edit' => 'edit',
 			// Extension:DiscussionTools
 			'addsection' => 'speechBubbleAdd'
 		];

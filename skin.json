@@ -19,6 +19,11 @@
 			"Disabled": [
 				"citizen"
 			]
+		},
+		"VisualEditor": {
+			"IconSkins": [
+				"citizen"
+			]
 		}
 	},
 	"ValidSkinNames": {
@@ -277,8 +282,7 @@
 			"selector": "{name}",
 			"defaultColor": "#000",
 			"images": {
-				".citizen-toc__top:before": "resources/skins.citizen.icons/backToTop.svg",
-				"#ca-ve-edit > a:before": "resources/skins.citizen.icons/wmui/edit.svg"
+				".citizen-toc__top:before": "resources/skins.citizen.icons/backToTop.svg"
 			}
 		},
 		"skins.citizen.icons.wmui": {

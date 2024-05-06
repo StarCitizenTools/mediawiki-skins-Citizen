@@ -171,7 +171,6 @@
 		}
 	}
 
-	> a,
 	.citizen-ui-icon {
 		&::before {
 			filter: invert( 1 );
@@ -184,18 +183,6 @@
 // VE styles shouldn't be core but it is just a few lines :/
 #ca-ve-edit {
 	order: 98; // Before source edit
-
-	> a {
-		// See SkinHooks.php for why VE is here
-		&::before {
-			width: var( --size-icon );
-			height: var( --size-icon );
-			content: '';
-			background-repeat: no-repeat;
-			background-position: center;
-			background-size: var( --size-icon );
-		}
-	}
 }
 
 #ca-edit {
