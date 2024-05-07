@@ -363,3 +363,35 @@
 .ve-ui-targetWidget-readOnly:not( .oo-ui-pendingElement-pending ) {
 	background: var( --color-surface-2 );
 }
+
+/* Responsive handling */
+.ve-init-mw-desktopArticleTarget-toolbar {
+	> .oo-ui-toolbar-bar {
+		> .oo-ui-toolbar-tools:first-child {
+			display: inline-block;
+			max-width: ~'calc( 100% - 250px )';
+			white-space: nowrap;
+		}
+
+		> .oo-ui-toolbar-actions {
+			border-left: 1px solid var( --border-color-base );
+		}
+	}
+}
+
+.ve-ui-toolbar-saveButton {
+	@media ( max-width: @max-width-breakpoint-tablet ) {
+		min-width: 56px;
+		text-align: center;
+
+		.oo-ui-tool-title {
+			font-size: 0;
+
+			&::before {
+				font-size: 1.25rem;
+				line-height: 1;
+				content: '✓';
+			}
+		}
+	}
+}
