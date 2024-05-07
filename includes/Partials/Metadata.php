@@ -26,6 +26,7 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Partials;
 
 use Exception;
+use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
 
 final class Metadata extends Partial {
@@ -50,7 +51,7 @@ final class Metadata extends Partial {
 	private function addManifest() {
 		if (
 			$this->getConfigValue( 'CitizenEnableManifest' ) !== true ||
-			$this->getConfigValue( 'GroupPermissions' )['*']['read'] !== true
+			$this->getConfigValue( MainConfigNames::GroupPermissions )['*']['read'] !== true
 		) {
 			return;
 		}
