@@ -2,7 +2,7 @@
  * Dark theme mixin
  * Dark theme needs a mixin because it is being used by the auto theme as well
  */
-.theme-dark() {
+ .theme-dark() {
 	--color-primary__l: 60%;
 
 	--color-surface-0: ~'hsl( var( --color-primary__h ), 20%, 10% )';
@@ -21,12 +21,12 @@
 	--background-color-overlay: ~'hsla( var( --color-primary__h ), 20%, 10%, 0.95 )';
 	--background-color-overlay--lighter: ~'hsla( var( --color-primary__h ), 20%, 10%, 0.6 )';
 
-	--color-surface-2--hover: ~'hsl( var( --color-primary__h ), 30%, 19% )';
-	--color-surface-2--active: ~'hsl( var( --color-primary__h ), 30%, 11% )';
+	--color-surface-2--hover: ~'hsl( var( --color-primary__h ), 25%, 19% )';
+	--color-surface-2--active: ~'hsl( var( --color-primary__h ), 25%, 11% )';
 
-	--border-color-base: rgba( 255, 255, 255, 0.06 );
-	--border-color-subtle: rgba( 255, 255, 255, 0.03 );
-	--border-color-interactive: rgba( 255, 255, 255, 0.09 );
+	--border-color-base: rgba( 255, 255, 255, 0.05 );
+	--border-color-subtle: rgba( 255, 255, 255, 0.02 );
+	--border-color-interactive: rgba( 255, 255, 255, 0.08 );
 
 	--surface-shadow: var( --color-primary__h ), 50%, 3%;
 	--shadow-strength: 0.8;
@@ -45,10 +45,14 @@
 
 .feature-pure-black() {
 	--color-surface-0: #000;
-	--color-surface-1: ~'hsl( var( --color-primary__h ), 20%, 10% )';
-	--color-surface-2: ~'hsl( var( --color-primary__h ), 25%, 12% )';
-	--color-surface-3: ~'hsl( var( --color-primary__h ), 25%, 15% )';
-	--color-surface-4: ~'hsl( var( --color-primary__h ), 15%, 20% )';
+	--color-surface-1: ~'hsl( var( --color-primary__h ), 20%, 4% )';
+	--color-surface-2: ~'hsl( var( --color-primary__h ), 25%, 6% )';
+	--color-surface-3: ~'hsl( var( --color-primary__h ), 25%, 9% )';
+	--color-surface-4: ~'hsl( var( --color-primary__h ), 15%, 14% )';
+
+	--color-surface-2--hover: ~'hsl( var( --color-primary__h ), 25%, 10% )';
+	--color-surface-2--active: ~'hsl( var( --color-primary__h ), 25%, 2% )';
+
 	--shadow-strength: 0.04;
 }
 
