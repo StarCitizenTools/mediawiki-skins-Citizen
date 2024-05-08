@@ -77,6 +77,10 @@ final class Sidebar extends Partial {
 			'array-links' => [
 				'array-attributes' => [
 					[
+						'key' => 'id',
+						'value' => 'citizen-lastmod-relative'
+					],
+					[
 						'key' => 'href',
 						'value' => $title->getLocalURL( [ 'diff' => '' ] )
 					],

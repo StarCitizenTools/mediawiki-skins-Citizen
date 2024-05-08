@@ -100,10 +100,12 @@ function main( window ) {
 	const
 		config = require( './config.json' ),
 		search = require( './search.js' ),
+		lastModified = require( './lastModified.js' ),
 		checkbox = require( './checkbox.js' );
 
 	enableCssAnimations( window.document );
 	search.init( window );
+	lastModified.init();
 	initStickyHeader( window.document );
 
 	// Set up checkbox hacks
