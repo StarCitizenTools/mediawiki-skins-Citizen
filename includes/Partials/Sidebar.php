@@ -52,7 +52,6 @@ final class Sidebar extends Partial {
 
 	/**
 	 * Build last modified template data
-	 * TODO: Use relative time instead (#700)
 	 *
 	 * @return array|null
 	 */
