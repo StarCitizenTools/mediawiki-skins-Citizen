@@ -90,7 +90,7 @@ final class Sidebar extends Partial {
 					]
 				],
 				'icon' => 'history',
-				'text' => sprintf( '%s - %s', $d, $t )
+				'text' => $d
 			]
 		];
 
