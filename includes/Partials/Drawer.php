@@ -38,23 +38,23 @@ use NumberFormatter;
  */
 final class Drawer extends Partial {
 	/**
-	 * Decorate sidebar template data
+	 * Decorate main menu template data
 	 *
 	 * @return array
 	 */
-	public function decorateSidebarData( $sidebarData ) {
-		for ( $i = 0; $i < count( $sidebarData['array-portlets-rest'] ); $i++ ) {
-			if ( $sidebarData['array-portlets-rest'][$i]['id'] === 'p-tb' ) {
+	public function decorateMainMenuData( $mainMenuData ) {
+		for ( $i = 0; $i < count( $mainMenuData['array-portlets-rest'] ); $i++ ) {
+			if ( $mainMenuData['array-portlets-rest'][$i]['id'] === 'p-tb' ) {
 				// Remove toolbox since it is handled by page tools
-				unset( $sidebarData['array-portlets-rest'][$i] );
+				unset( $mainMenuData['array-portlets-rest'][$i] );
 				break;
 			}
 		}
 
 		// Reset index after unsetting toolbox
-		$sidebarData['array-portlets-rest'] = array_values( $sidebarData['array-portlets-rest'] );
+		$mainMenuData['array-portlets-rest'] = array_values( $mainMenuData['array-portlets-rest'] );
 
-		return $sidebarData;
+		return $mainMenuData;
 	}
 
 	/**

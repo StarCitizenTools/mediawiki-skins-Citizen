@@ -116,7 +116,7 @@ class SkinCitizen extends SkinMustache {
 			'msg-citizen-footer-tagline' => $this->msg( "citizen-footer-tagline" )->inContentLanguage()->parse(),
 			// Decorate data provided by core
 			'data-search-box' => $header->decorateSearchBoxData( $parentData['data-search-box'] ),
-			'data-portlets-sidebar' => $drawer->decorateSidebarData( $parentData['data-portlets-sidebar'] ),
+			'data-main-menu' => $drawer->decorateMainMenuData( $parentData['data-portlets-sidebar'] ),
 			'data-footer' => $footer->decorateFooterData( $parentData['data-footer'] ),
 		];
 
