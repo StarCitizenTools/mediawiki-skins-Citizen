@@ -13,34 +13,34 @@ use MediaWiki\Skins\Citizen\SkinCitizen;
  */
 class DrawerTest extends \MediaWikiIntegrationTestCase {
 	/**
-	 * @covers \MediaWiki\Skins\Citizen\Partials\Drawer::decorateSidebarData
+	 * @covers \MediaWiki\Skins\Citizen\Partials\Drawer::decorateMainMenuData
 	 * @return void
 	 */
-	public function testDecorateSidebarDataEmpty() {
+	public function testDecorateMainMenuDataEmpty() {
 		$partial = new Drawer( new SkinCitizen() );
 
-		$this->assertEmpty( $partial->decorateSidebarData( [
+		$this->assertEmpty( $partial->decorateMainMenuData( [
 			'array-portlets-rest' => [],
 		] )['array-portlets-rest'] );
 	}
 
 	/**
-	 * @covers \MediaWiki\Skins\Citizen\Partials\Drawer::decorateSidebarData
+	 * @covers \MediaWiki\Skins\Citizen\Partials\Drawer::decorateMainMenuData
 	 * @return void
 	 */
-	public function testDecorateSidebarRemovePageTools() {
+	public function testDecorateMainMenuRemovePageTools() {
 		$partial = new Drawer( new SkinCitizen() );
 
-		$sidebarData = [
+		$mainMenuData = [
 			'array-portlets-rest' => [
 				[ 'id' => 'foo' ],
 				[ 'id' => 'p-tb' ],
 			],
 		];
 
-		$this->assertNotEmpty( $partial->decorateSidebarData( $sidebarData ) );
-		$this->assertArrayHasKey( 'array-portlets-rest', $partial->decorateSidebarData( $sidebarData ) );
-		$this->assertNotContains( [ 'id' => 'pt-tb' ], $partial->decorateSidebarData( $sidebarData )['array-portlets-rest'] );
+		$this->assertNotEmpty( $partial->decorateMainMenuData( $mainMenuData ) );
+		$this->assertArrayHasKey( 'array-portlets-rest', $partial->decorateMainMenuData( $mainMenuData ) );
+		$this->assertNotContains( [ 'id' => 'pt-tb' ], $partial->decorateMainMenuData( $mainMenuData )['array-portlets-rest'] );
 	}
 
 	/**
