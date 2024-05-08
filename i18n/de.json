@@ -52,10 +52,16 @@
 	"citizen-theme-name": "Farbschema",
 	"citizen-theme-day-label": "Hell",
 	"citizen-theme-night-label": "Dunkel",
-	"citizen-theme-os-label": "Automatisch",
-	"citizen-feature-pure-black-name": "Reiner Dunkelmodus",
-	"citizen-feature-pure-black-0-label": "Aus",
-	"citizen-feature-custom-font-size-name": "Text",
-	"citizen-feature-custom-font-size-standard-label": "Standard",
-	"citizen-feature-custom-width-name": "Breite"
+        "citizen-theme-os-label": "System",
+        "citizen-feature-pure-black-name": "Reiner Dunkelmodus",
+        "citizen-feature-pure-black-0-label": "Aus",
+        "citizen-feature-pure-black-1-label": "An",
+        "citizen-feature-custom-font-size-name": "Text",
+        "citizen-feature-custom-font-size-standard-label": "Mittel",
+        "citizen-feature-custom-width-name": "Breite",
+        "citizen-feature-custom-width-standard-label": "Normal",
+        "citizen-feature-custom-width-wide-label": "Breit",
+        "citizen-feature-custom-width-full-label": "Voll",
+        "citizen-feature-custom-font-size-small-label": "Klein",
+        "citizen-feature-custom-font-size-large-label": "Groß"
 }
