@@ -25,7 +25,6 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Partials;
 
-use Language;
 use MediaWiki\Skins\Citizen\GetConfigTrait;
 use MediaWiki\Skins\Citizen\SkinCitizen;
 use MediaWiki\Title\Title;
