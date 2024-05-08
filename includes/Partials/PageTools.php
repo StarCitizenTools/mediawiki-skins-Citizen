@@ -30,6 +30,9 @@ use ExtensionRegistry;
 use MediaWiki\MediaWikiServices;
 
 final class PageTools extends Partial {
+	/** @var null|array for caching purposes */
+	private $languages;
+
 	/**
 	 * Get page-related tools template data
 	 * TODO: Break this down and clean up when 1.39
