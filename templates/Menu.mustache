@@ -8,6 +8,9 @@
 	</div>
 	{{/label}}
 	{{{html-before-portal}}}
-	<ul>{{{html-items}}}</ul>
+	<ul>
+		{{#array-list-items}}{{>MenuListItem}}{{/array-list-items}}
+		{{#html-items}}{{{.}}}{{/html-items}}
+	</ul>
 	{{{html-after-portal}}}
 </nav>
