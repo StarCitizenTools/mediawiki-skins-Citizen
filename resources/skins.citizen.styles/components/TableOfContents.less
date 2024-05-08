@@ -206,27 +206,16 @@
 
 @media ( min-width: @min-width-breakpoint-desktop ) {
 	.citizen-toc {
-		grid-area: toc;
+		--toc-margin-top: var( --space-xs );
+		position: -webkit-sticky;
+		position: sticky;
+		top: var( --toc-margin-top );
+		max-height: ~'calc( 100vh - var( --toc-margin-top ) - var( --space-md ) )';
+		overflow-y: auto;
+		overscroll-behavior: contain;
 
-		&__card {
-			--toc-margin-top: var( --space-xs );
-			position: -webkit-sticky;
-			position: sticky;
-			top: var( --toc-margin-top );
-			max-height: ~'calc( 100vh - var( --toc-margin-top ) - var( --space-md ) )';
-			overflow-y: auto;
-			overscroll-behavior: contain;
-		}
-	}
-
-	// Hide button in desktop viewport
-	#citizen-toc__buttonCheckbox {
-		display: none;
-	}
-
-	// Sticky header styles
-	.citizen-body-header--sticky {
-		.citizen-toc__card {
+		// Sticky header styles
+		.citizen-body-header--sticky & {
 			--toc-margin-top: ~'calc( var( --header-size ) + var(  --space-xxl  ) )';
 
 			// Sticky header is shorter without buttons
@@ -234,5 +223,10 @@
 				--toc-margin-top: ~'calc( var( --header-size ) + var( --space-md ) )';
 			}
 		}
+	}
+
+	// Hide button in desktop viewport
+	#citizen-toc__buttonCheckbox {
+		display: none;
 	}
 }
