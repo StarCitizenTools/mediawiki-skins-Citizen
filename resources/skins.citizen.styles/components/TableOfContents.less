@@ -3,22 +3,10 @@
 	font-size: var( --font-size-small );
 	line-height: var( --line-height-xs );
 
-	&__card {
-		display: flex;
-		flex-direction: column;
-		gap: var( --space-xs );
-	}
-
 	&__top {
 		.citizen-ui-icon {
 			transform: rotate( 90deg );
 		}
-	}
-
-	&__header {
-		font-size: var( --font-size-x-small );
-		color: var( --color-base--subtle );
-		letter-spacing: 0.05em;
 	}
 
 	&__contents {
@@ -45,6 +33,7 @@
 		display: flex;
 		gap: var( --space-xs );
 		padding-top: var( --space-xs );
+		padding-right: var( --space-xs );
 		padding-bottom: var( --space-xs );
 		font-weight: var( --font-weight-medium );
 		color: var( --color-base );
@@ -100,6 +89,10 @@
 				}
 			}
 		}
+	}
+
+	.citizen-menu__heading {
+		padding-left: 0;
 	}
 }
 
