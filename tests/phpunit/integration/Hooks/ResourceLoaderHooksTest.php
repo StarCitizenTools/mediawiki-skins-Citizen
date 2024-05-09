@@ -11,7 +11,7 @@ use MediaWikiIntegrationTestCase;
 /**
  * @group Citizen
  */
-class ResourceLoaderHooksTest extends \MediaWikiIntegrationTestCase {
+class ResourceLoaderHooksTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * @covers \MediaWiki\Skins\Citizen\Hooks\ResourceLoaderHooks
 	 * @return void

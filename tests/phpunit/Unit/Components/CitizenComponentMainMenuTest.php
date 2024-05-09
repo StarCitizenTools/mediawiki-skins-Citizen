@@ -35,7 +35,7 @@ class CitizenComponentMainMenuTest extends MediaWikiUnitTestCase {
 	/**
 	 * @covers ::getTemplateData
 	 */
-	public function testGetTemplateData( array $sidebarData, array $languageData, bool $isPinned ) {
+	public function testGetTemplateData( array $sidebarData ) {
 		// Create a new CitizenComponentMainMenu object
 		$mainMenu = new CitizenComponentMainMenu(
 			$sidebarData
