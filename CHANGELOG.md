@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.13.4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.13.3...v2.13.4) (2024-05-09)
+
+
+### Features
+
+* **core:** ✨ add last modified to sidebar ([89b5ff1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/89b5ff1b127ba805106c4bb5006dbd42c748aff3))
+* **core:** ✨ only show date in last mod sidebar ([c2c95f0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c2c95f0fdae938f18a10c89e0f6ab1f18b2aa021))
+* **core:** ✨ simplify toc styles ([0aa6172](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0aa617262e88f9139f31b52e77658d74cf192da1))
+* **core:** ✨ tweak black theme color ([226fd0a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/226fd0a60607b328f28fccea90c71376c69c1e25))
+* **core:** ✨ use relative time for sidebar last mod ([f2393a7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f2393a74b84e0f7cfb89843dc0e9ad5bc42c6eef)), closes [#700](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/700)
+* **VisualEditor:** ✨ better responsive toolbar handling ([a1e76bc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a1e76bc195e1b1992c37d204ab7c4f57b47088ea))
+
+
+### Bug Fixes
+
+* **core:** 🐛 add missing var ([049366a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/049366aaa99b99bcbc6e165462e66e48631d5630))
+* **core:** 🐛 hide sidebar lastmod on tablet ([ed54bbf](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ed54bbfc3337fd879c6fc4529ebd5d22801fd86c))
+* **ooui:** 🐛 only define border color instead of other border properties ([4d81dff](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4d81dff7fe82899e296abbde459b8fc6d11f3d23))
+
 ### [2.13.3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.13.2...v2.13.3) (2024-05-06)
 
 
