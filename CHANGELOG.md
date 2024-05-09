@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.13.5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.13.4...v2.13.5) (2024-05-09)
+
+
+### Bug Fixes
+
+* **core:** 🐛 add missing styles for user menu ([604ee85](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/604ee851d699fe82b3c086a5ebaa79343a9136b9))
+
 ### [2.13.4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.13.3...v2.13.4) (2024-05-09)
 
 
