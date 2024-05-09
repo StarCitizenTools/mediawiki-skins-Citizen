@@ -2,10 +2,11 @@
 
 declare( strict_types=1 );
 
-namespace MediaWiki\Skins\Citizen\Tests\Hooks;
+namespace MediaWiki\Skins\Citizen\Tests\Integration\Hooks;
 
 use MediaWiki\ResourceLoader\Context;
 use MediaWiki\Skins\Citizen\Hooks\ResourceLoaderHooks;
+use MediaWikiIntegrationTestCase;
 
 /**
  * @group Citizen

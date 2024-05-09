@@ -2,7 +2,7 @@
 
 declare( strict_types=1 );
 
-namespace MediaWiki\Skins\Citizen\Tests\Partials;
+namespace MediaWiki\Skins\Citizen\Tests\Integration\Partials;
 
 use MediaWiki\Skins\Citizen\Partials\PageTools;
 use MediaWiki\Skins\Citizen\SkinCitizen;

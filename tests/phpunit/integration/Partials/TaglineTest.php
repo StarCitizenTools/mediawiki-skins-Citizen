@@ -2,18 +2,19 @@
 
 declare( strict_types=1 );
 
-namespace MediaWiki\Skins\Citizen\Tests\Partials;
+namespace MediaWiki\Skins\Citizen\Tests\Integration\Partials;
 
 use MediaWiki\Skins\Citizen\Partials\Tagline;
 use MediaWiki\Skins\Citizen\SkinCitizen;
 use MediaWiki\Title\Title;
+use MediaWikiIntegrationTestCase;
 use OutputPage;
 use RequestContext;
 
 /**
  * @group Citizen
  */
-class TaglineTest extends \MediaWikiIntegrationTestCase {
+class TaglineTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * @covers \MediaWiki\Skins\Citizen\Partials\Tagline
 	 * @return void

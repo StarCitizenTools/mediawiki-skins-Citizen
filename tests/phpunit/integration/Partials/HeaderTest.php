@@ -2,15 +2,16 @@
 
 declare( strict_types=1 );
 
-namespace MediaWiki\Skins\Citizen\Tests\Partials;
+namespace MediaWiki\Skins\Citizen\Tests\Integration\Partials;
 
 use MediaWiki\Skins\Citizen\Partials\Header;
 use MediaWiki\Skins\Citizen\SkinCitizen;
+use MediaWikiIntegrationTestCase;
 
 /**
  * @group Citizen
  */
-class HeaderTest extends \MediaWikiIntegrationTestCase {
+class HeaderTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * @covers \MediaWiki\Skins\Citizen\Partials\Header::decorateSearchBoxData
 	 * @return void

@@ -2,12 +2,13 @@
 
 declare( strict_types=1 );
 
-namespace MediaWiki\Skins\Citizen\Tests\Hooks;
+namespace MediaWiki\Skins\Citizen\Tests\Integration\Hooks;
 
 use MediaWiki\Request\ContentSecurityPolicy;
 use MediaWiki\Skins\Citizen\Hooks\SkinHooks;
 use MediaWiki\Skins\Citizen\SkinCitizen;
 use MediaWiki\Title\Title;
+use MediaWikiIntegrationTestCase;
 use OutputPage;
 use RequestContext;
 use ResourceLoaderContext;
@@ -16,7 +17,7 @@ use SkinTemplate;
 /**
  * @group Citizen
  */
-class SkinHooksTest extends \MediaWikiIntegrationTestCase {
+class SkinHooksTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * @covers \MediaWiki\Skins\Citizen\Hooks\SkinHooks
 	 * @return void
