@@ -21,10 +21,7 @@ class CitizenComponentMainMenuTest extends MediaWikiUnitTestCase {
 	 */
 	public function testConstruct() {
 		// Mock the sidebar data
-		$sidebarData = [
-			'data-portlets-first' => [],
-			'array-portlets-rest' => []
-		];
+		$sidebarData = [];
 
 		// Create a new CitizenComponentMainMenu object
 		$mainMenu = new CitizenComponentMainMenu( $sidebarData );
@@ -34,7 +31,22 @@ class CitizenComponentMainMenuTest extends MediaWikiUnitTestCase {
 	}
 
 	/**
+	 * @return array[]
+	 */
+	public function provideMainMenuData(): array {
+		return [
+			[
+				'sidebarData' => [
+					'data-portlets-first' => [],
+					'array-portlets-rest' => [],
+				]
+			]
+		];
+	}
+
+	/**
 	 * @covers ::getTemplateData
+	 * @dataProvider provideMainMenuData
 	 */
 	public function testGetTemplateData( array $sidebarData ) {
 		// Create a new CitizenComponentMainMenu object
