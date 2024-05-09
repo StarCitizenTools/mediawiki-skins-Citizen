@@ -8,13 +8,14 @@
 	}
 
 	&__header {
-		padding: var( --space-md ) 0;
 		margin-bottom: var( --space-xs );
 		border-bottom: 1px solid var( --border-color-base );
 	}
 }
 
 #p-user-info {
+	padding: var( --space-md );
+
 	> ul > li {
 		margin-right: var( --space-md );
 		margin-left: var( --space-md );
@@ -40,6 +41,8 @@
 				display: flex;
 				flex-wrap: wrap;
 				gap: var( --space-xxs );
+				margin: 0;
+				list-style: none;
 			}
 
 			a {
