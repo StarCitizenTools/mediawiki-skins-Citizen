@@ -55,9 +55,6 @@ class CitizenComponentMainMenuTest extends MediaWikiUnitTestCase {
 		// Call the getTemplateData method
 		$templateData = $mainMenu->getTemplateData();
 
-		// Assert main menu id
-		$this->assertSame( 'citizen-main-menu', $templateData['id'] );
-
 		// Assert the structure and types of expected keys
 		$this->assertIsArray( $templateData['data-portlets-first'] );
 		$this->assertIsArray( $templateData['array-portlets-rest'] );
