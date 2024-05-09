@@ -11,38 +11,7 @@ use MediaWiki\Skins\Citizen\SkinCitizen;
  * @group Citizen
  * @group Database
  */
-class DrawerTest extends \MediaWikiIntegrationTestCase {
-	/**
-	 * @covers \MediaWiki\Skins\Citizen\Partials\Drawer::decorateMainMenuData
-	 * @return void
-	 */
-	public function testDecorateMainMenuDataEmpty() {
-		$partial = new Drawer( new SkinCitizen() );
-
-		$this->assertEmpty( $partial->decorateMainMenuData( [
-			'array-portlets-rest' => [],
-		] )['array-portlets-rest'] );
-	}
-
-	/**
-	 * @covers \MediaWiki\Skins\Citizen\Partials\Drawer::decorateMainMenuData
-	 * @return void
-	 */
-	public function testDecorateMainMenuRemovePageTools() {
-		$partial = new Drawer( new SkinCitizen() );
-
-		$mainMenuData = [
-			'array-portlets-rest' => [
-				[ 'id' => 'foo' ],
-				[ 'id' => 'p-tb' ],
-			],
-		];
-
-		$this->assertNotEmpty( $partial->decorateMainMenuData( $mainMenuData ) );
-		$this->assertArrayHasKey( 'array-portlets-rest', $partial->decorateMainMenuData( $mainMenuData ) );
-		$this->assertNotContains( [ 'id' => 'pt-tb' ], $partial->decorateMainMenuData( $mainMenuData )['array-portlets-rest'] );
-	}
-
+class DrawerTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * @covers \MediaWiki\Skins\Citizen\Partials\Drawer::getSiteStatsData
 	 * @return void

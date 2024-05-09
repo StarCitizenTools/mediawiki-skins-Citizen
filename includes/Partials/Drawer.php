@@ -32,31 +32,10 @@ use NumberFormatter;
  * Drawer partial of Skin Citizen
  * Generates the following partials:
  * - Logo
- * - Drawer
  *   + Special Pages Link
  *   + Upload Link
  */
 final class Drawer extends Partial {
-	/**
-	 * Decorate main menu template data
-	 *
-	 * @return array
-	 */
-	public function decorateMainMenuData( $mainMenuData ) {
-		for ( $i = 0; $i < count( $mainMenuData['array-portlets-rest'] ); $i++ ) {
-			if ( $mainMenuData['array-portlets-rest'][$i]['id'] === 'p-tb' ) {
-				// Remove toolbox since it is handled by page tools
-				unset( $mainMenuData['array-portlets-rest'][$i] );
-				break;
-			}
-		}
-
-		// Reset index after unsetting toolbox
-		$mainMenuData['array-portlets-rest'] = array_values( $mainMenuData['array-portlets-rest'] );
-
-		return $mainMenuData;
-	}
-
 	/**
 	 * Get messages used for site stats in the drawer
 	 *

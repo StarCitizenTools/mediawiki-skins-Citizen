@@ -23,6 +23,7 @@
 
 namespace MediaWiki\Skins\Citizen;
 
+use MediaWiki\Skins\Citizen\Components\CitizenComponentMainMenu;
 use MediaWiki\Skins\Citizen\Partials\BodyContent;
 use MediaWiki\Skins\Citizen\Partials\Drawer;
 use MediaWiki\Skins\Citizen\Partials\Footer;
@@ -116,12 +117,22 @@ class SkinCitizen extends SkinMustache {
 			'msg-citizen-footer-tagline' => $this->msg( "citizen-footer-tagline" )->inContentLanguage()->parse(),
 			// Decorate data provided by core
 			'data-search-box' => $header->decorateSearchBoxData( $parentData['data-search-box'] ),
-			'data-main-menu' => $drawer->decorateMainMenuData( $parentData['data-portlets-sidebar'] ),
 			'data-footer' => $footer->decorateFooterData( $parentData['data-footer'] ),
 		];
 
 		$data += $sidebar->getSidebarData( $parentData );
 		$data += $tools->getPageToolsData( $parentData );
+
+		$components = [
+			'data-main-menu' => new CitizenComponentMainMenu( $parentData['data-portlets-sidebar'] )
+		];
+
+		foreach ( $components as $key => $component ) {
+			// Array of components or null values.
+			if ( $component ) {
+				$parentData[$key] = $component->getTemplateData();
+			}
+		}
 
 		return array_merge( $parentData, $data );
 	}
