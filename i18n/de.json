@@ -6,6 +6,7 @@
 			"FF-11",
 			"Gebu",
 			"Justman10000",
+			"Ratte1313",
 			"SpaceEnergy",
 			"ThisCarthing",
 			"TomatoCake",
@@ -50,12 +51,17 @@
 	"citizen-tagline-ns-category": "Kategorieseite",
 	"citizen-tagline-user-regdate": "Beigetreten $1",
 	"citizen-theme-name": "Farbschema",
+	"citizen-theme-description": "Das Thema des Wikis ändern",
 	"citizen-theme-day-label": "Hell",
 	"citizen-theme-night-label": "Dunkel",
-	"citizen-theme-os-label": "Automatisch",
+	"citizen-theme-os-label": "System",
+	"citizen-theme-exclusion-notice": "Diese Seite ist immer im hellen Modus.",
 	"citizen-feature-pure-black-name": "Reiner Dunkelmodus",
 	"citizen-feature-pure-black-0-label": "Aus",
+	"citizen-feature-pure-black-1-label": "An",
 	"citizen-feature-custom-font-size-name": "Text",
-	"citizen-feature-custom-font-size-standard-label": "Standard",
-	"citizen-feature-custom-width-name": "Breite"
+	"citizen-feature-custom-font-size-small-label": "Klein",
+	"citizen-feature-custom-font-size-standard-label": "Mittel",
+	"citizen-feature-custom-width-name": "Breite",
+	"citizen-feature-custom-width-wide-label": "Breit"
 }

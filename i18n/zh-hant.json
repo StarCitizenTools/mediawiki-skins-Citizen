@@ -45,5 +45,21 @@
 	"citizen-tagline-ns-template": "模板頁面",
 	"citizen-tagline-ns-help": "說明頁面",
 	"citizen-tagline-ns-category": "分類頁面",
-	"citizen-tagline-user-regdate": "加入於$1"
+	"citizen-tagline-user-regdate": "加入於$1",
+	"citizen-theme-name": "色彩",
+	"citizen-theme-description": "更改 wiki 的主題",
+	"citizen-theme-day-label": "明亮",
+	"citizen-theme-night-label": "陰暗",
+	"citizen-theme-os-label": "自動",
+	"citizen-feature-pure-black-name": "純黑模式",
+	"citizen-feature-pure-black-0-label": "關閉",
+	"citizen-feature-pure-black-1-label": "開啟",
+	"citizen-feature-custom-font-size-name": "文字",
+	"citizen-feature-custom-font-size-small-label": "小",
+	"citizen-feature-custom-font-size-standard-label": "標準",
+	"citizen-feature-custom-font-size-large-label": "大",
+	"citizen-feature-custom-width-name": "寬度",
+	"citizen-feature-custom-width-standard-label": "標準",
+	"citizen-feature-custom-width-wide-label": "寬",
+	"citizen-feature-custom-width-full-label": "全屏"
 }
