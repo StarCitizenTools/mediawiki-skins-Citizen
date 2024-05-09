@@ -21,12 +21,13 @@ class CitizenComponentMainMenuTest extends MediaWikiUnitTestCase {
 	 */
 	public function testConstruct() {
 		// Mock the sidebar data
-		$sidebarData = [];
+		$sidebarData = [
+			'data-portlets-first' => [],
+			'array-portlets-rest' => []
+		];
 
 		// Create a new CitizenComponentMainMenu object
-		$mainMenu = new CitizenComponentMainMenu(
-			$sidebarData
-		);
+		$mainMenu = new CitizenComponentMainMenu( $sidebarData );
 
 		// Assert that the object is an instance of CitizenComponent
 		$this->assertInstanceOf( CitizenComponent::class, $mainMenu );
@@ -37,9 +38,7 @@ class CitizenComponentMainMenuTest extends MediaWikiUnitTestCase {
 	 */
 	public function testGetTemplateData( array $sidebarData ) {
 		// Create a new CitizenComponentMainMenu object
-		$mainMenu = new CitizenComponentMainMenu(
-			$sidebarData
-		);
+		$mainMenu = new CitizenComponentMainMenu( $sidebarData );
 
 		// Call the getTemplateData method
 		$templateData = $mainMenu->getTemplateData();
