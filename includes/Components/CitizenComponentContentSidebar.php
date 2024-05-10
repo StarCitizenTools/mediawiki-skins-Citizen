@@ -37,7 +37,7 @@ class CitizenComponentContentSidebar implements CitizenComponent {
 	 * @param Title $title
 	 * @param UserIdentity $user
 	 */
-	public function __construct( 
+	public function __construct(
 		MessageLocalizer $localizer,
 		OutputPage $out,
 		$pageLang,
