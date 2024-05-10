@@ -2,6 +2,8 @@
 	
 }}
 <div class="citizen-body-sidebar">
-	{{#data-sidebar-lastmod}}{{>Menu}}{{/data-sidebar-lastmod}}
+	{{#data-content-sidebar}}
+		{{#data-content-sidebar-lastmod}}{{>Menu}}{{/data-content-sidebar-lastmod}}
+	{{/data-content-sidebar}}
 	{{>TableOfContents}}
 </div>

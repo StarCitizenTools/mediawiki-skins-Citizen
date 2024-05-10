@@ -24,6 +24,7 @@
 namespace MediaWiki\Skins\Citizen;
 
 use MediaWiki\Skins\Citizen\Components\CitizenComponentMainMenu;
+use MediaWiki\Skins\Citizen\Components\CitizenComponentContentSidebar;
 use MediaWiki\Skins\Citizen\Partials\BodyContent;
 use MediaWiki\Skins\Citizen\Partials\Drawer;
 use MediaWiki\Skins\Citizen\Partials\Footer;
@@ -31,7 +32,6 @@ use MediaWiki\Skins\Citizen\Partials\Header;
 use MediaWiki\Skins\Citizen\Partials\Metadata;
 use MediaWiki\Skins\Citizen\Partials\PageTitle;
 use MediaWiki\Skins\Citizen\Partials\PageTools;
-use MediaWiki\Skins\Citizen\Partials\Sidebar;
 use MediaWiki\Skins\Citizen\Partials\Tagline;
 use MediaWiki\Skins\Citizen\Partials\Theme;
 use SkinMustache;
@@ -71,15 +71,19 @@ class SkinCitizen extends SkinMustache {
 	 * @inheritDoc
 	 */
 	public function getTemplateData(): array {
-		$data = [];
 		$parentData = parent::getTemplateData();
+		$data = [];
+
+		$localizer = $this->getContext();
+		$out = $this->getOutput();
+		$title = $this->getTitle();
+		$user = $this->getUser();
 
 		$header = new Header( $this );
 		$drawer = new Drawer( $this );
 		$pageTitle = new PageTitle( $this );
 		$tagline = new Tagline( $this );
 		$bodycontent = new BodyContent( $this );
-		$sidebar = new Sidebar( $this );
 		$footer = new Footer( $this );
 		$tools = new PageTools( $this );
 
@@ -120,11 +124,17 @@ class SkinCitizen extends SkinMustache {
 			'data-footer' => $footer->decorateFooterData( $parentData['data-footer'] ),
 		];
 
-		$data += $sidebar->getSidebarData( $parentData );
 		$data += $tools->getPageToolsData( $parentData );
 
 		$components = [
-			'data-main-menu' => new CitizenComponentMainMenu( $parentData['data-portlets-sidebar'] )
+			'data-main-menu' => new CitizenComponentMainMenu( $parentData['data-portlets-sidebar'] ),
+			'data-content-sidebar' => new CitizenComponentContentSidebar(
+				$localizer,
+				$out,
+				$title->getPageLanguage(),
+				$title,
+				$user
+			)
 		];
 
 		foreach ( $components as $key => $component ) {
