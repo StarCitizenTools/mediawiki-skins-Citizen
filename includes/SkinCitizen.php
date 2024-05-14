@@ -24,6 +24,7 @@
 namespace MediaWiki\Skins\Citizen;
 
 use MediaWiki\Skins\Citizen\Components\CitizenComponentMainMenu;
+use MediaWiki\Skins\Citizen\Components\CitizenComponentPageHeading;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageSidebar;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentSearchBox;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentSiteStats;
@@ -31,7 +32,6 @@ use MediaWiki\Skins\Citizen\Partials\BodyContent;
 use MediaWiki\Skins\Citizen\Partials\Footer;
 use MediaWiki\Skins\Citizen\Partials\Header;
 use MediaWiki\Skins\Citizen\Partials\Metadata;
-use MediaWiki\Skins\Citizen\Partials\PageTitle;
 use MediaWiki\Skins\Citizen\Partials\PageTools;
 use MediaWiki\Skins\Citizen\Partials\Tagline;
 use MediaWiki\Skins\Citizen\Partials\Theme;
@@ -83,7 +83,6 @@ class SkinCitizen extends SkinMustache {
 		$pageLang = $title->getPageLanguage();
 
 		$header = new Header( $this );
-		$pageTitle = new PageTitle( $this );
 		$tagline = new Tagline( $this );
 		$bodycontent = new BodyContent( $this );
 		$footer = new Footer( $this );
@@ -111,8 +110,6 @@ class SkinCitizen extends SkinMustache {
 			'toc-enabled' => !empty( $parentData['data-toc'] ),
 			// Data objects
 			'data-user-info' => $header->getUserInfoData( $parentData['data-portlets']['data-user-page'] ),
-			// HTML strings
-			'html-title-heading--formatted' => $pageTitle->decorateTitle( $parentData['html-title-heading'] ),
 			'html-citizen-jumptotop' => $parentData['msg-citizen-jumptotop'] . ' [home]',
 			'html-body-content--formatted' => $bodycontent->decorateBodyContent( $parentData['html-body-content'] ),
 			'html-tagline' => $tagline->getTagline(),
@@ -126,6 +123,10 @@ class SkinCitizen extends SkinMustache {
 		$data += $tools->getPageToolsData( $parentData );
 
 		$components = [
+			'data-page-heading' => new CitizenComponentPageHeading(
+				$title,
+				$parentData['html-title-heading']
+			),
 			'data-content-sidebar' => new CitizenComponentPageSidebar(
 				$localizer,
 				$out,
