@@ -33,7 +33,6 @@ use MediaWiki\Skins\Citizen\Partials\Footer;
 use MediaWiki\Skins\Citizen\Partials\Header;
 use MediaWiki\Skins\Citizen\Partials\Metadata;
 use MediaWiki\Skins\Citizen\Partials\PageTools;
-use MediaWiki\Skins\Citizen\Partials\Tagline;
 use MediaWiki\Skins\Citizen\Partials\Theme;
 use SkinMustache;
 use SkinTemplate;
@@ -83,7 +82,6 @@ class SkinCitizen extends SkinMustache {
 		$pageLang = $title->getPageLanguage();
 
 		$header = new Header( $this );
-		$tagline = new Tagline( $this );
 		$bodycontent = new BodyContent( $this );
 		$footer = new Footer( $this );
 		$tools = new PageTools( $this );
@@ -110,9 +108,7 @@ class SkinCitizen extends SkinMustache {
 			'toc-enabled' => !empty( $parentData['data-toc'] ),
 			// Data objects
 			'data-user-info' => $header->getUserInfoData( $parentData['data-portlets']['data-user-page'] ),
-			'html-citizen-jumptotop' => $parentData['msg-citizen-jumptotop'] . ' [home]',
 			'html-body-content--formatted' => $bodycontent->decorateBodyContent( $parentData['html-body-content'] ),
-			'html-tagline' => $tagline->getTagline(),
 			// Messages
 			// Needed to be parsed here as it should be wikitext
 			'msg-citizen-footer-desc' => $this->msg( "citizen-footer-desc" )->inContentLanguage()->parse(),
@@ -124,8 +120,11 @@ class SkinCitizen extends SkinMustache {
 
 		$components = [
 			'data-page-heading' => new CitizenComponentPageHeading(
+				$localizer,
+				$out,
 				$title,
-				$parentData['html-title-heading']
+				$parentData['html-title-heading'],
+				$user
 			),
 			'data-content-sidebar' => new CitizenComponentPageSidebar(
 				$localizer,
