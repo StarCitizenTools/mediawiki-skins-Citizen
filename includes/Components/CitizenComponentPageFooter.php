@@ -8,6 +8,7 @@ use MessageLocalizer;
 
 /**
  * CitizenComponentPageFooter component
+ * FIXME: Need unit test
  */
 class CitizenComponentPageFooter implements CitizenComponent {
 	/** @var MessageLocalizer */

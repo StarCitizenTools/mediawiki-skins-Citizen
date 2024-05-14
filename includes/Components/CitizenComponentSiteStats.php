@@ -14,6 +14,7 @@ use SiteStats;
 
 /**
  * CitizenComponentSiteStats component
+ * FIXME: Need unit test
  */
 class CitizenComponentSiteStats implements CitizenComponent {
 	/** @var Config */
