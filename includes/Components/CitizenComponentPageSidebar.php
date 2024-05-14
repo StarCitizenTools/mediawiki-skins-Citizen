@@ -117,7 +117,7 @@ class CitizenComponentPageSidebar implements CitizenComponent {
 	 */
 	public function getTemplateData(): array {
 		return [
-			'data-content-sidebar-lastmod' => $this->getLastModData()
+			'data-page-sidebar-lastmod' => $this->getLastModData()
 		];
 	}
 }
