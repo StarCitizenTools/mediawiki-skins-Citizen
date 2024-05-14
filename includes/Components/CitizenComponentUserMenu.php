@@ -22,6 +22,5 @@ class CitizenComponentUserMenu implements CitizenComponent {
 	 * @inheritDoc
 	 */
 	public function getTemplateData(): array {
-		
 	}
 }
