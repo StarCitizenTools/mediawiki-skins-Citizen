@@ -24,12 +24,12 @@
 namespace MediaWiki\Skins\Citizen;
 
 use MediaWiki\Skins\Citizen\Components\CitizenComponentMainMenu;
+use MediaWiki\Skins\Citizen\Components\CitizenComponentPageFooter;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageHeading;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageSidebar;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentSearchBox;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentSiteStats;
 use MediaWiki\Skins\Citizen\Partials\BodyContent;
-use MediaWiki\Skins\Citizen\Partials\Footer;
 use MediaWiki\Skins\Citizen\Partials\Header;
 use MediaWiki\Skins\Citizen\Partials\Metadata;
 use MediaWiki\Skins\Citizen\Partials\PageTools;
@@ -83,7 +83,6 @@ class SkinCitizen extends SkinMustache {
 
 		$header = new Header( $this );
 		$bodycontent = new BodyContent( $this );
-		$footer = new Footer( $this );
 		$tools = new PageTools( $this );
 
 		// Naming conventions for Mustache parameters.
@@ -112,13 +111,16 @@ class SkinCitizen extends SkinMustache {
 			// Messages
 			// Needed to be parsed here as it should be wikitext
 			'msg-citizen-footer-desc' => $this->msg( "citizen-footer-desc" )->inContentLanguage()->parse(),
-			'msg-citizen-footer-tagline' => $this->msg( "citizen-footer-tagline" )->inContentLanguage()->parse(),
-			'data-footer' => $footer->decorateFooterData( $parentData['data-footer'] ),
+			'msg-citizen-footer-tagline' => $this->msg( "citizen-footer-tagline" )->inContentLanguage()->parse()
 		];
 
 		$data += $tools->getPageToolsData( $parentData );
 
 		$components = [
+			'data-page-footer' => new CitizenComponentPageFooter(
+				$localizer,
+				$parentData['data-footer']['data-info']
+			),
 			'data-page-heading' => new CitizenComponentPageHeading(
 				$localizer,
 				$out,
