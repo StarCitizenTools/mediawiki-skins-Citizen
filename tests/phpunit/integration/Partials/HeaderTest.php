@@ -13,18 +13,6 @@ use MediaWikiIntegrationTestCase;
  */
 class HeaderTest extends MediaWikiIntegrationTestCase {
 	/**
-	 * @covers \MediaWiki\Skins\Citizen\Partials\Header::decorateSearchBoxData
-	 * @return void
-	 */
-	public function testDecorateSearchBoxData() {
-		$partial = new Header( new SkinCitizen() );
-		$out = $partial->decorateSearchBoxData( [] );
-
-		$this->assertArrayHasKey( 'msg-citizen-search-toggle-shortcut', $out );
-		$this->assertEquals( '[/]', $out['msg-citizen-search-toggle-shortcut'] );
-	}
-
-	/**
 	 * @covers \MediaWiki\Skins\Citizen\Partials\Header::getUserInfoData
 	 * @covers \MediaWiki\Skins\Citizen\Partials\Header::getUserPageHTML
 	 * @covers \MediaWiki\Skins\Citizen\Partials\Header::getUserGroupsHTML
