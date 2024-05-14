@@ -10,7 +10,7 @@ use Language;
 use MediaWiki\StubObject\StubUserLang;
 use MessageLocalizer;
 use NumberFormatter;
-use Sitestats;
+use SiteStats;
 
 /**
  * CitizenComponentSiteStats component
@@ -61,7 +61,7 @@ class CitizenComponentSiteStats implements CitizenComponent {
 	 * @return string
 	 */
 	private function getSiteStatValue( $key, $fmt ): string {
-		$value = call_user_func( 'SiteStats::' . $key ) ?? '';
+		$value = SiteStats::$key() ?? '';
 
 		if ( $fmt ) {
 			return $fmt->format( $value );
