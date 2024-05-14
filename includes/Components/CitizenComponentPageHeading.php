@@ -24,6 +24,9 @@ class CitizenComponentPageHeading implements CitizenComponent {
 	/** @var OutputPage */
 	private $out;
 
+	/** @var Language|StubUserLang */
+	private $pageLang;
+
 	/** @var Title */
 	private $title;
 
@@ -35,6 +38,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 
 	/**
 	 * @param MessageLocalizer $localizer
+	 * @param Language|StubUserLang $pageLang
 	 * @param Title $title
 	 * @param OutputPage $out
 	 * @param string $titleData
@@ -43,12 +47,14 @@ class CitizenComponentPageHeading implements CitizenComponent {
 	public function __construct(
 		MessageLocalizer $localizer,
 		OutputPage $out,
+		$pageLang,
 		Title $title,
 		string $titleData,
 		UserIdentity $user
 	) {
 		$this->localizer = $localizer;
 		$this->out = $out;
+		$this->pageLang = $pageLang;
 		$this->title = $title;
 		$this->titleData = $titleData;
 		$this->user = $user;
@@ -93,9 +99,10 @@ class CitizenComponentPageHeading implements CitizenComponent {
 	 * @return string|null
 	 */
 	private function buildUserTagline() {
+		$localizer = $this->localizer;
+
 		$user = $this->buildPageUserObject();
 		if ( $user ) {
-			$skin = $this->skin;
 			$tagline = '<div id="citizen-tagline-user">';
 			$editCount = $user->getEditCount();
 			$regDate = $user->getRegistration();
@@ -111,14 +118,14 @@ class CitizenComponentPageHeading implements CitizenComponent {
 			}
 
 			if ( $editCount ) {
-				$msgEditCount = $skin->msg( 'usereditcount' )->numParams( sprintf( '%s', number_format( $editCount, 0 ) ) );
+				$msgEditCount = $localizer->msg( 'usereditcount' )->numParams( sprintf( '%s', number_format( $editCount, 0 ) ) );
 				$editCountHref = SpecialPage::getTitleFor( 'Contributions', $user )->getLocalURL();
 				$tagline .= "<span id=\"citizen-tagline-user-editcount\" data-user-editcount=\"$editCount\"><a href=\"$editCountHref\">$msgEditCount</a></span>";
 			}
 
 			if ( is_string( $regDate ) ) {
 				$regDateTs = wfTimestamp( TS_UNIX, $regDate );
-				$msgRegDate = $skin->msg( 'citizen-tagline-user-regdate', $skin->getLanguage()->userDate( new MWTimestamp( $regDate ), $skin->getUser() ), $user );
+				$msgRegDate = $localizer->msg( 'citizen-tagline-user-regdate', $this->pageLang->userDate( new MWTimestamp( $regDate ), $this->user ), $user );
 				$tagline .= "<span id=\"citizen-tagline-user-regdate\" data-user-regdate=\"$regDateTs\">$msgRegDate</span>";
 			}
 
@@ -134,6 +141,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 	 * @return string
 	 */
 	private function getPageHeading(): string {
+		$titleHtml = $this->titleData;
 		if ( $this->shouldAddParenthesis() ) {
 			// Look for the </span> to ensure that it is the last parenthesis of the title
 			$pattern = '/\s(\(.+\))<\/span>/';

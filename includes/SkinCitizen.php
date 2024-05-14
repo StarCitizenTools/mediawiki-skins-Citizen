@@ -122,6 +122,7 @@ class SkinCitizen extends SkinMustache {
 			'data-page-heading' => new CitizenComponentPageHeading(
 				$localizer,
 				$out,
+				$pageLang,
 				$title,
 				$parentData['html-title-heading'],
 				$user
