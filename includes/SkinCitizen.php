@@ -23,6 +23,7 @@
 
 namespace MediaWiki\Skins\Citizen;
 
+use MediaWiki\Skins\Citizen\Components\CitizenComponentFooter;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentMainMenu;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageFooter;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageHeading;
@@ -107,16 +108,17 @@ class SkinCitizen extends SkinMustache {
 			'toc-enabled' => !empty( $parentData['data-toc'] ),
 			// Data objects
 			'data-user-info' => $header->getUserInfoData( $parentData['data-portlets']['data-user-page'] ),
-			'html-body-content--formatted' => $bodycontent->decorateBodyContent( $parentData['html-body-content'] ),
-			// Messages
-			// Needed to be parsed here as it should be wikitext
-			'msg-citizen-footer-desc' => $this->msg( "citizen-footer-desc" )->inContentLanguage()->parse(),
-			'msg-citizen-footer-tagline' => $this->msg( "citizen-footer-tagline" )->inContentLanguage()->parse()
+			'html-body-content--formatted' => $bodycontent->decorateBodyContent( $parentData['html-body-content'] )
 		];
 
 		$data += $tools->getPageToolsData( $parentData );
 
 		$components = [
+			'data-footer' => new CitizenComponentFooter(
+				$localizer,
+				$parentData['data-footer']
+			),
+			'data-main-menu' => new CitizenComponentMainMenu( $parentData['data-portlets-sidebar'] ),
 			'data-page-footer' => new CitizenComponentPageFooter(
 				$localizer,
 				$parentData['data-footer']['data-info']
@@ -136,7 +138,6 @@ class SkinCitizen extends SkinMustache {
 				$title,
 				$user
 			),
-			'data-main-menu' => new CitizenComponentMainMenu( $parentData['data-portlets-sidebar'] ),
 			'data-search-box' => new CitizenComponentSearchBox(
 				$parentData['data-search-box'],
 				$this
