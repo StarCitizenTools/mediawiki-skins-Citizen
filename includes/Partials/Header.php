@@ -36,19 +36,6 @@ use Skin;
  */
 final class Header extends Partial {
 	/**
-	 * Decorate search box template data
-	 *
-	 * @param array $searchBoxData original data-search-box
-	 * @return array
-	 */
-	public function decorateSearchBoxData( $searchBoxData ): array {
-		return $searchBoxData += [
-			'msg-citizen-search-toggle-shortcut' => '[/]',
-			'html-random-href' => Skin::makeSpecialUrl( 'Randompage' ),
-		];
-	}
-
-	/**
 	 * Get the user info template data for user menu
 	 *
 	 * TODO: Consider dropping Menu.mustache since the DOM doesn't make much sense

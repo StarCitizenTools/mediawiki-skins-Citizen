@@ -25,6 +25,7 @@ namespace MediaWiki\Skins\Citizen;
 
 use MediaWiki\Skins\Citizen\Components\CitizenComponentMainMenu;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageSidebar;
+use MediaWiki\Skins\Citizen\Components\CitizenComponentSearchBox;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentSiteStats;
 use MediaWiki\Skins\Citizen\Partials\BodyContent;
 use MediaWiki\Skins\Citizen\Partials\Footer;
@@ -119,8 +120,6 @@ class SkinCitizen extends SkinMustache {
 			// Needed to be parsed here as it should be wikitext
 			'msg-citizen-footer-desc' => $this->msg( "citizen-footer-desc" )->inContentLanguage()->parse(),
 			'msg-citizen-footer-tagline' => $this->msg( "citizen-footer-tagline" )->inContentLanguage()->parse(),
-			// Decorate data provided by core
-			'data-search-box' => $header->decorateSearchBoxData( $parentData['data-search-box'] ),
 			'data-footer' => $footer->decorateFooterData( $parentData['data-footer'] ),
 		];
 
@@ -135,6 +134,10 @@ class SkinCitizen extends SkinMustache {
 				$user
 			),
 			'data-main-menu' => new CitizenComponentMainMenu( $parentData['data-portlets-sidebar'] ),
+			'data-search-box' => new CitizenComponentSearchBox(
+				$parentData['data-search-box'],
+				$this
+			),
 			'data-site-stats' => new CitizenComponentSiteStats(
 				$config,
 				$localizer,
