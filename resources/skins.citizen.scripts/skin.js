@@ -31,17 +31,17 @@ function initStickyHeader( document ) {
 		10
 	);
 
-	const sentinel = document.getElementById( 'citizen-body-header-sticky-sentinel' );
+	const sentinel = document.getElementById( 'citizen-page-header-sticky-sentinel' );
 
 	// In some pages we use display:none to disable the sticky header
 	// Do not start observer if it is set to display:none
 	if ( sentinel && getComputedStyle( sentinel ).getPropertyValue( 'display' ) !== 'none' ) {
 		const observer = scrollObserver.initIntersectionObserver(
 			() => {
-				document.body.classList.add( 'citizen-body-header--sticky' );
+				document.body.classList.add( 'citizen-page-header--sticky' );
 			},
 			() => {
-				document.body.classList.remove( 'citizen-body-header--sticky' );
+				document.body.classList.remove( 'citizen-page-header--sticky' );
 			}
 		);
 		observer.observe( sentinel );

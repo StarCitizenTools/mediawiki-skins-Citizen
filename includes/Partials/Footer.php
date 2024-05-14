@@ -37,7 +37,7 @@ final class Footer extends Partial {
 	 * @return array for use in Mustache template describing the footer elements.
 	 */
 	public function decorateFooterData( $footerData ): array {
-		// Add label to footer-info to use in ContentFooter
+		// Add label to footer-info to use in PageFooter
 		foreach ( $footerData['data-info']['array-items'] as &$item ) {
 			$msgKey = 'citizen-page-info-' . $item['name'];
 			$item['label'] = $this->skin->msg( $msgKey )->text();

@@ -23,10 +23,10 @@
 
 namespace MediaWiki\Skins\Citizen;
 
-use MediaWiki\Skins\Citizen\Components\CitizenComponentContentSidebar;
+use MediaWiki\Skins\Citizen\Components\CitizenComponentPageSidebar;
+use MediaWiki\Skins\Citizen\Components\CitizenComponentSiteStats;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentMainMenu;
 use MediaWiki\Skins\Citizen\Partials\BodyContent;
-use MediaWiki\Skins\Citizen\Partials\Drawer;
 use MediaWiki\Skins\Citizen\Partials\Footer;
 use MediaWiki\Skins\Citizen\Partials\Header;
 use MediaWiki\Skins\Citizen\Partials\Metadata;
@@ -74,13 +74,14 @@ class SkinCitizen extends SkinMustache {
 		$parentData = parent::getTemplateData();
 		$data = [];
 
+		$config = $this->getConfig();
 		$localizer = $this->getContext();
 		$out = $this->getOutput();
 		$title = $this->getTitle();
 		$user = $this->getUser();
+		$pageLang = $title->getPageLanguage();
 
 		$header = new Header( $this );
-		$drawer = new Drawer( $this );
 		$pageTitle = new PageTitle( $this );
 		$tagline = new Tagline( $this );
 		$bodycontent = new BodyContent( $this );
@@ -108,7 +109,6 @@ class SkinCitizen extends SkinMustache {
 			// Booleans
 			'toc-enabled' => !empty( $parentData['data-toc'] ),
 			// Data objects
-			'data-sitestats' => $drawer->getSiteStatsData(),
 			'data-user-info' => $header->getUserInfoData( $parentData['data-portlets']['data-user-page'] ),
 			// HTML strings
 			'html-title-heading--formatted' => $pageTitle->decorateTitle( $parentData['html-title-heading'] ),
@@ -127,13 +127,18 @@ class SkinCitizen extends SkinMustache {
 		$data += $tools->getPageToolsData( $parentData );
 
 		$components = [
-			'data-main-menu' => new CitizenComponentMainMenu( $parentData['data-portlets-sidebar'] ),
-			'data-content-sidebar' => new CitizenComponentContentSidebar(
+			'data-content-sidebar' => new CitizenComponentPageSidebar(
 				$localizer,
 				$out,
-				$title->getPageLanguage(),
+				$pageLang,
 				$title,
 				$user
+			),
+			'data-main-menu' => new CitizenComponentMainMenu( $parentData['data-portlets-sidebar'] ),
+			'data-site-stats' => new CitizenComponentSiteStats(
+				$config,
+				$localizer,
+				$pageLang
 			)
 		];
 

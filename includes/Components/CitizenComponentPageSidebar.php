@@ -12,9 +12,10 @@ use MessageLocalizer;
 use OutputPage;
 
 /**
- * CitizenComponentContentSidebar component
+ * CitizenComponentPageSidebar component
+ * FIXME: Need unit test
  */
-class CitizenComponentContentSidebar implements CitizenComponent {
+class CitizenComponentPageSidebar implements CitizenComponent {
 	/** @var MessageLocalizer */
 	private $localizer;
 

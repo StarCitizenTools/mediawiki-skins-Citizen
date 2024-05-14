@@ -1,4 +1,4 @@
-#citizen-body-header-sticky-sentinel {
+#citizen-page-header-sticky-sentinel {
 	right: 0;
 	left: 0;
 	grid-area: content; // align right above content
@@ -10,13 +10,13 @@
 .ve-activated,
 .action-edit {
 	// HACK: So sticky header will never trigger in edit action
-	#citizen-body-header-sticky-sentinel {
+	#citizen-page-header-sticky-sentinel {
 		display: none;
 	}
 }
 
-.citizen-body-header--sticky {
-	.mw-body-header {
+.citizen-page-header--sticky {
+	.citizen-page-header {
 		flex-wrap: nowrap;
 		padding-bottom: var( --space-md );
 		white-space: nowrap;
@@ -56,14 +56,14 @@
 
 // Hide sticky header on scroll down on smaller screens
 @media ( max-width: @max-width-breakpoint-tablet ) {
-	.citizen-body-header--sticky {
-		.mw-body-header {
+	.citizen-page-header--sticky {
+		.citizen-page-header {
 			transition: var( --transition-menu );
 			transition-property: transform;
 		}
 
 		&.citizen-scroll--down {
-			.mw-body-header {
+			.citizen-page-header {
 				transform: translateY( -150% );
 			}
 		}
@@ -72,8 +72,8 @@
 
 // Make sticky header more compact if there are less screen estate
 @media ( max-height: 800px ) {
-	.citizen-body-header--sticky {
-		.mw-body-header {
+	.citizen-page-header--sticky {
+		.citizen-page-header {
 			padding-top: var( --space-sm );
 			padding-bottom: var( --space-sm );
 		}
