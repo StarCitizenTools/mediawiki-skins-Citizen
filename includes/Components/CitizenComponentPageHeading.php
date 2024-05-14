@@ -9,8 +9,8 @@ use MediaWiki\Title\Title;
 use MediaWiki\User\UserIdentity;
 use MessageLocalizer;
 use MWTimestamp;
-use SpecialPage;
 use OutputPage;
+use SpecialPage;
 use Wikimedia\IPUtils;
 
 /**

@@ -26,7 +26,6 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Partials;
 
 use MediaWiki\MediaWikiServices;
-use Skin;
 
 /**
  * Header partial of Skin Citizen

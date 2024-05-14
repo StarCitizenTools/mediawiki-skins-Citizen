@@ -17,7 +17,7 @@ class CitizenComponentSearchBox implements CitizenComponent {
 	private $skin;
 
 	/**
-	* @param array $searchBoxData
+	 * @param array $searchBoxData
 	 */
 	public function __construct(
 		array $searchBoxData,
