@@ -70,7 +70,7 @@ class CitizenComponentUserInfo implements CitizenComponent {
 		}
 
 		$label = $this->localizer->msg( 'usereditcount' )->numParams( $edits );
-		$label = str_replace( $edits, '', $label );
+		$label = str_replace( (string)$edits, '', $label );
 
 		return [
 			'count' => number_format( $edits, 0 ),
