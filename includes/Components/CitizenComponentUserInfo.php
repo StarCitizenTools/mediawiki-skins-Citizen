@@ -40,7 +40,7 @@ class CitizenComponentUserInfo implements CitizenComponent {
 	 * @param UserIdentity $user
 	 * @param array $userPageData
 	 */
-	public function __construct(
+public function __construct(
 		bool $isRegistered,
 		bool $isTemp,
 		MessageLocalizer $localizer,
@@ -48,55 +48,55 @@ class CitizenComponentUserInfo implements CitizenComponent {
 		UserIdentity $user,
 		array $userPageData
 	) {
-		$this->isRegistered = $isRegistered;
-		$this->isTemp = $isTemp;
-		$this->localizer = $localizer;
-		$this->title = $title;
-		$this->user = $user;
-		$this->userPageData = $userPageData;
-	}
+	$this->isRegistered = $isRegistered;
+	$this->isTemp = $isTemp;
+	$this->localizer = $localizer;
+	$this->title = $title;
+	$this->user = $user;
+	$this->userPageData = $userPageData;
+}
 
 	/**
 	 * Get the user edit count
 	 *
 	 * @return array|null
 	 */
-	private function getUserEditCount(): ?array {
-		// Return user edits
-		$edits = MediaWikiServices::getInstance()->getUserEditTracker()->getUserEditCount( $this->user );
+private function getUserEditCount(): ?array {
+	// Return user edits
+	$edits = MediaWikiServices::getInstance()->getUserEditTracker()->getUserEditCount( $this->user );
 
-		if ( empty( $edits ) ) {
-			return null;
-		}
-
-		$label = $this->localizer->msg( 'usereditcount' )->numParams( $edits );
-		$label = str_replace( $edits, '', $label );
-
-		return [
-			'count' => number_format( $edits, 0 ),
-			'label' => $label
-		];
+	if ( empty( $edits ) ) {
+		return null;
 	}
+
+	$label = $this->localizer->msg( 'usereditcount' )->numParams( $edits );
+	$label = str_replace( $edits, '', $label );
+
+	return [
+		'count' => number_format( $edits, 0 ),
+		'label' => $label
+	];
+}
 
 	/**
 	 * Build the template data for the user groups
 	 *
 	 * @return array|null
 	 */
-	private function getUserGroups(): ?array {
-		$groups = MediaWikiServices::getInstance()->getUserGroupManager()->getUserGroups( $this->user );
+private function getUserGroups(): ?array {
+	$groups = MediaWikiServices::getInstance()->getUserGroupManager()->getUserGroups( $this->user );
 
-		if ( empty( $groups ) ) {
-			return null;
-		}
+	if ( empty( $groups ) ) {
+		return null;
+	}
 
-		$listItems = [];
-		$msgKey = 'group-%s-member';
-		foreach ( $groups as $group ) {
-			$id = sprintf( $msgKey, $group );
-			$text = $this->localizer->msg( $id )->text();
-			try {
-				$title = $this->title->newFromTextThrow( $text, NS_PROJECT );
+	$listItems = [];
+	$msgKey = 'group-%s-member';
+	foreach ( $groups as $group ) {
+		$id = sprintf( $msgKey, $group );
+		$text = $this->localizer->msg( $id )->text();
+		try {
+			$title = $this->title->newFromTextThrow( $text, NS_PROJECT );
 			catch ( MalformedTitleException $e ) {
 				// ignore
 			}
@@ -106,8 +106,8 @@ class CitizenComponentUserInfo implements CitizenComponent {
 			}
 
 			$link = new CitizenComponentLink(
-				$title->getLinkURL(),
-				ucfirst( $text )
+			$title->getLinkURL(),
+			ucfirst( $text )
 			);
 
 			$listItem = new CitizenComponentMenuListItem( $link, 'citizen-userInfo-usergroup', $id );
@@ -116,7 +116,7 @@ class CitizenComponentUserInfo implements CitizenComponent {
 		}
 
 		return [
-			'array-list-items' => $listItems
+		'array-list-items' => $listItems
 		];
 	}
 
