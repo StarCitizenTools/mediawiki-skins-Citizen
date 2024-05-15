@@ -1,0 +1,20 @@
+<div class="citizen-userInfo">
+	<div class="citizen-userInfo-title">
+		{{#title}}<div>{{.}}</div>{{/title}}
+		{{#data-user-page}}{{>Menu}}{{/data-user-page}}
+	</div>
+	<div class="citizen-userInfo-text">
+		{{#text}}<div>{{.}}</div>{{/text}}
+		{{#data-user-groups}}
+			<ul class="citizen-userInfo-usergroups">
+					{{#array-list-items}}{{>MenuListItem}}{{/array-list-items}}
+			</ul>
+		{{/data-user-groups}}
+	</div>
+	{{#data-user-edit}}
+		<div class="citizen-userInfo-edits">
+			<div class="citizen-userInfo-edits-count">{{count}}</div>
+			<div class="citizen-userInfo-edits-label">{{label}}</div>
+		</div>
+	{{/data-user-edit}}
+</div>

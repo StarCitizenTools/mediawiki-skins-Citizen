@@ -2,7 +2,7 @@
 
 declare( strict_types=1 );
 
-namespace MediaWiki\Skins\Citizen\Tests;
+namespace MediaWiki\Skins\Citizen\Integration\Tests;
 
 use Exception;
 use MediaWiki\Skins\Citizen\SkinCitizen;

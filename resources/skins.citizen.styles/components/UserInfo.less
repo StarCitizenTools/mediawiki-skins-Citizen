@@ -1,0 +1,77 @@
+.citizen-userInfo {
+	padding: var( --space-sm ) var( --space-md ) var( --space-md );
+	margin-bottom: var( --space-xs );
+	border-bottom: 1px solid var( --border-color-base );
+
+	&-title {
+		font-weight: var( --font-weight-medium );
+	}
+
+	&-title > div,
+	#pt-userpage-2 > a,
+	#pt-tmpuserpage-2 > span {
+		padding-top: var( --space-xxs );
+		padding-bottom: var( --space-xxs );
+		font-size: var( --font-size-medium );
+		color: var( --color-base--emphasized );
+	}
+
+	#pt-userpage-2 > a > span {
+		display: flex;
+		flex-grow: 1;
+		flex-wrap: wrap;
+		gap: var( --space-xs );
+		align-items: baseline;
+	}
+
+	#pt-tmpuserpage-2 > span {
+		display: block;
+	}
+
+	#pt-userpage-username {
+		font-size: var( --font-size-small );
+		color: var( --color-base--subtle );
+	}
+
+	&-text {
+		font-size: var( --font-size-small );
+		line-height: var( --line-height-sm );
+		color: var( --color-base--subtle );
+
+		+ .citizen-userInfo-edits {
+			margin-top: var( --space-sm );
+		}
+	}
+
+	&-usergroups {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 var( --space-xs );
+		margin: 0;
+		list-style: none;
+
+		a {
+			color: var( --color-base--subtle );
+		}
+	}
+
+	&-edits {
+		&-count {
+			font-size: 1.75rem;
+			font-weight: var( --font-weight-medium );
+			color: var( --color-base--emphasized );
+		}
+
+		&-label {
+			font-size: var( --font-size-small );
+			color: var( --color-base--subtle );
+			letter-spacing: 0.05em;
+		}
+	}
+}
+
+#pt-userpage-2 > a {
+	padding-right: 0;
+	padding-left: 0;
+	border-radius: var( --border-radius--small );
+}
