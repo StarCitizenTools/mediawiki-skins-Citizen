@@ -154,6 +154,7 @@ class CitizenComponentUserInfo implements CitizenComponent {
 	 * @inheritDoc
 	 */
 	public function getTemplateData(): array {
+		$localizer = $this->localizer;
 		$data = [];
 
 		if ( $this->isRegistered ) {
@@ -161,6 +162,11 @@ class CitizenComponentUserInfo implements CitizenComponent {
 				'data-user-groups' => $this->getUserGroups(),
 				'data-user-page' => $this->getUserPage(),
 				'data-user-edit' => $this->getUserEditCount()
+			];
+		} else {
+			$data = [
+				'title' => $localizer->msg( 'notloggedin' ),
+				'text' => $localizer->msg( 'citizen-user-info-text-anon' )
 			];
 		}
 

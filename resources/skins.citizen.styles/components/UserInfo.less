@@ -1,7 +1,16 @@
 .citizen-userInfo {
-	padding: var( --space-sm ) var( --space-md );
+	padding: var( --space-sm ) var( --space-md ) var( --space-md );
 	margin-bottom: var( --space-xs );
 	border-bottom: 1px solid var( --border-color-base );
+
+	&-title {
+		font-weight: var( --font-weight-medium );
+
+		> div {
+			padding-top: var( --space-xs );
+			padding-bottom: var( --space-xs );
+		}
+	}
 
 	&-title,
 	#pt-userpage-2 > a {

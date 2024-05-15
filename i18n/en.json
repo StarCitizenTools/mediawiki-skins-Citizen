@@ -63,5 +63,7 @@
 	"citizen-feature-custom-width-name": "Width",
 	"citizen-feature-custom-width-standard-label": "Standard",
 	"citizen-feature-custom-width-wide-label": "Wide",
-	"citizen-feature-custom-width-full-label": "Full"
+	"citizen-feature-custom-width-full-label": "Full",
+
+	"citizen-user-info-text-anon": "Your IP address will be publicly visible if you make any edits."
 }
