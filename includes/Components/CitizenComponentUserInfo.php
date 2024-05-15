@@ -4,6 +4,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Components;
 
+use MalformedTitleException;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 use MediaWiki\User\UserIdentity;
@@ -94,7 +95,11 @@ class CitizenComponentUserInfo implements CitizenComponent {
 		foreach ( $groups as $group ) {
 			$id = sprintf( $msgKey, $group );
 			$text = $this->localizer->msg( $id )->text();
-			$title = $this->title->newFromText( $text, NS_PROJECT );
+			try {
+				$title = $this->title->newFromTextThrow( $text, NS_PROJECT );
+			catch ( MalformedTitleException $e ) {
+				// ignore
+			}
 
 			if ( !$text || !$title ) {
 				continue;
