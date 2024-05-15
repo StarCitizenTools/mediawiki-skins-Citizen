@@ -1,6 +1,6 @@
 <?php
 
-declare( strict_types=1 );
+declare(strict_types=1);
 
 namespace MediaWiki\Skins\Citizen\Components;
 
@@ -13,7 +13,8 @@ use MessageLocalizer;
 /**
  * CitizenComponentUserInfo component
  */
-class CitizenComponentUserInfo implements CitizenComponent {
+class CitizenComponentUserInfo implements CitizenComponent
+{
 	/** @var bool */
 	private $isRegistered;
 
@@ -40,7 +41,7 @@ class CitizenComponentUserInfo implements CitizenComponent {
 	 * @param UserIdentity $user
 	 * @param array $userPageData
 	 */
-public function __construct(
+	public function __construct(
 		bool $isRegistered,
 		bool $isTemp,
 		MessageLocalizer $localizer,
@@ -48,75 +49,77 @@ public function __construct(
 		UserIdentity $user,
 		array $userPageData
 	) {
-	$this->isRegistered = $isRegistered;
-	$this->isTemp = $isTemp;
-	$this->localizer = $localizer;
-	$this->title = $title;
-	$this->user = $user;
-	$this->userPageData = $userPageData;
-}
+		$this->isRegistered = $isRegistered;
+		$this->isTemp = $isTemp;
+		$this->localizer = $localizer;
+		$this->title = $title;
+		$this->user = $user;
+		$this->userPageData = $userPageData;
+	}
 
 	/**
 	 * Get the user edit count
 	 *
 	 * @return array|null
 	 */
-private function getUserEditCount(): ?array {
-	// Return user edits
-	$edits = MediaWikiServices::getInstance()->getUserEditTracker()->getUserEditCount( $this->user );
+	private function getUserEditCount(): ?array
+	{
+		// Return user edits
+		$edits = MediaWikiServices::getInstance()->getUserEditTracker()->getUserEditCount($this->user);
 
-	if ( empty( $edits ) ) {
-		return null;
+		if (empty($edits)) {
+			return null;
+		}
+
+		$label = $this->localizer->msg('usereditcount')->numParams($edits);
+		$label = str_replace($edits, '', $label);
+
+		return [
+			'count' => number_format($edits, 0),
+			'label' => $label
+		];
 	}
-
-	$label = $this->localizer->msg( 'usereditcount' )->numParams( $edits );
-	$label = str_replace( $edits, '', $label );
-
-	return [
-		'count' => number_format( $edits, 0 ),
-		'label' => $label
-	];
-}
 
 	/**
 	 * Build the template data for the user groups
 	 *
 	 * @return array|null
 	 */
-private function getUserGroups(): ?array {
-	$groups = MediaWikiServices::getInstance()->getUserGroupManager()->getUserGroups( $this->user );
+	private function getUserGroups(): ?array
+	{
+		$groups = MediaWikiServices::getInstance()->getUserGroupManager()->getUserGroups($this->user);
 
-	if ( empty( $groups ) ) {
-		return null;
-	}
+		if (empty($groups)) {
+			return null;
+		}
 
-	$listItems = [];
-	$msgKey = 'group-%s-member';
-	foreach ( $groups as $group ) {
-		$id = sprintf( $msgKey, $group );
-		$text = $this->localizer->msg( $id )->text();
-		try {
-			$title = $this->title->newFromTextThrow( $text, NS_PROJECT );
-			catch ( MalformedTitleException $e ) {
+		$listItems = [];
+		$msgKey = 'group-%s-member';
+		foreach ($groups as $group) {
+			$id = sprintf($msgKey, $group);
+			$text = $this->localizer->msg($id)->text();
+			try {
+				$title = $this->title->newFromTextThrow($text, NS_PROJECT);
+			} catch (MalformedTitleException $e) {
 				// ignore
 			}
 
-			if ( !$text || !$title ) {
+			if (!$text || !$title) {
 				continue;
 			}
 
 			$link = new CitizenComponentLink(
-			$title->getLinkURL(),
-			ucfirst( $text )
+				$title->getLinkURL(),
+				ucfirst($text)
 			);
 
-			$listItem = new CitizenComponentMenuListItem( $link, 'citizen-userInfo-usergroup', $id );
+			$listItem = new CitizenComponentMenuListItem($link, 'citizen-userInfo-usergroup', $id);
 
 			$listItems[] = $listItem->getTemplateData();
 		}
 
 		return [
-		'array-list-items' => $listItems
+			'array-list-items' => $listItems
 		];
 	}
 
@@ -125,13 +128,14 @@ private function getUserGroups(): ?array {
 	 *
 	 * @return array
 	 */
-	private function getUserPage(): array {
+	private function getUserPage(): array
+	{
 		$user = $this->user;
 		$userPageData = $this->userPageData;
 
 		$htmlItems = $userPageData['html-items'];
 		$realname = $user->getRealName();
-		if ( !empty( $realname ) ) {
+		if (!empty($realname)) {
 			$username = $user->getName();
 			$innerHtml = <<<HTML
 				<span id="pt-userpage-realname">$realname</span>
@@ -145,12 +149,12 @@ private function getUserGroups(): ?array {
 			);
 		}
 
-		$menu = new CitizenComponentMenu( [
+		$menu = new CitizenComponentMenu([
 			'id' => 'citizen-user-menu-userpage',
 			'class' => null,
 			'label' => null,
 			'html-items' => $htmlItems
-		] );
+		]);
 
 		return $menu->getTemplateData();
 	}
@@ -158,25 +162,26 @@ private function getUserGroups(): ?array {
 	/**
 	 * @inheritDoc
 	 */
-	public function getTemplateData(): array {
+	public function getTemplateData(): array
+	{
 		$localizer = $this->localizer;
 		$data = [];
 
-		if ( $this->isRegistered ) {
+		if ($this->isRegistered) {
 			$data = [
 				'data-user-page' => $this->getUserPage(),
 				'data-user-edit' => $this->getUserEditCount()
 			];
 
-			if ( $this->isTemp ) {
-				$data['text'] = $localizer->msg( 'citizen-user-info-text-temp' );
+			if ($this->isTemp) {
+				$data['text'] = $localizer->msg('citizen-user-info-text-temp');
 			} else {
 				$data['data-user-groups'] = $this->getUserGroups();
 			}
 		} else {
 			$data = [
-				'title' => $localizer->msg( 'notloggedin' ),
-				'text' => $localizer->msg( 'citizen-user-info-text-anon' )
+				'title' => $localizer->msg('notloggedin'),
+				'text' => $localizer->msg('citizen-user-info-text-anon')
 			];
 		}
 
