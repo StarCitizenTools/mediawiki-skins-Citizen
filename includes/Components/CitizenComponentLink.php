@@ -58,6 +58,7 @@ class CitizenComponentLink implements CitizenComponent {
 			}
 		}
 		return [
+			'href' => $this->href,
 			'icon' => $this->icon,
 			'text' => $this->text,
 			'array-attributes' => [
