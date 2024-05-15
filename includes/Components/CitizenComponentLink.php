@@ -60,7 +60,12 @@ class CitizenComponentLink implements CitizenComponent {
 		return [
 			'icon' => $this->icon,
 			'text' => $this->text,
-			'href' => $this->href,
+			'array-attributes' => [
+				[
+					'key' => 'href',
+					'value' => $this->href
+				]
+			],
 			'html-attributes' => $localizer && $accessKeyHint ? Html::expandAttributes(
 				Linker::tooltipAndAccesskeyAttribs(
 					$accessKeyHint,

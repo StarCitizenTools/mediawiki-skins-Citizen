@@ -75,8 +75,8 @@ class CitizenComponentPageSidebar implements CitizenComponent {
 
 		// FIXME: Use CitizenComponentMenuListItem
 		$items = [
-			'id' => 'lm-time',
-			'class' => 'mw-list-item',
+			'item-id' => 'lm-time',
+			'item-class' => 'mw-list-item',
 			'array-links' => [
 				'array-attributes' => [
 					[

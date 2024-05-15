@@ -30,8 +30,8 @@ use MediaWiki\Skins\Citizen\Components\CitizenComponentPageHeading;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageSidebar;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentSearchBox;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentSiteStats;
+use MediaWiki\Skins\Citizen\Components\CitizenComponentUserInfo;
 use MediaWiki\Skins\Citizen\Partials\BodyContent;
-use MediaWiki\Skins\Citizen\Partials\Header;
 use MediaWiki\Skins\Citizen\Partials\Metadata;
 use MediaWiki\Skins\Citizen\Partials\PageTools;
 use MediaWiki\Skins\Citizen\Partials\Theme;
@@ -73,7 +73,6 @@ class SkinCitizen extends SkinMustache {
 	 */
 	public function getTemplateData(): array {
 		$parentData = parent::getTemplateData();
-		$data = [];
 
 		$config = $this->getConfig();
 		$localizer = $this->getContext();
@@ -81,37 +80,11 @@ class SkinCitizen extends SkinMustache {
 		$title = $this->getTitle();
 		$user = $this->getUser();
 		$pageLang = $title->getPageLanguage();
+		$isRegistered = $user->isRegistered();
+		$isTemp = $user->isTemp();
 
-		$header = new Header( $this );
 		$bodycontent = new BodyContent( $this );
 		$tools = new PageTools( $this );
-
-		// Naming conventions for Mustache parameters.
-		//
-		// Value type (first segment):
-		// - Prefix "is" or "has" for boolean values.
-		// - Prefix "msg-" for interface message text.
-		// - Prefix "html-" for raw HTML.
-		// - Prefix "data-" for an array of template parameters that should be passed directly
-		//   to a template partial.
-		// - Prefix "array-" for lists of any values.
-		//
-		// Source of value (first or second segment)
-		// - Segment "page-" for data relating to the current page (e.g. Title, WikiPage, or OutputPage).
-		// - Segment "hook-" for any thing generated from a hook.
-		//   It should be followed by the name of the hook in hyphenated lowercase.
-		//
-		// Conditionally used values must use null to indicate absence (not false or '').
-
-		$data += [
-			// Booleans
-			'toc-enabled' => !empty( $parentData['data-toc'] ),
-			// Data objects
-			'data-user-info' => $header->getUserInfoData( $parentData['data-portlets']['data-user-page'] ),
-			'html-body-content--formatted' => $bodycontent->decorateBodyContent( $parentData['html-body-content'] )
-		];
-
-		$data += $tools->getPageToolsData( $parentData );
 
 		$components = [
 			'data-footer' => new CitizenComponentFooter(
@@ -146,6 +119,14 @@ class SkinCitizen extends SkinMustache {
 				$config,
 				$localizer,
 				$pageLang
+			),
+			'data-user-info' => new CitizenComponentUserInfo(
+				$isRegistered,
+				$isTemp,
+				$localizer,
+				$title,
+				$user,
+				$parentData['data-portlets']['data-user-page']
 			)
 		];
 
@@ -156,7 +137,11 @@ class SkinCitizen extends SkinMustache {
 			}
 		}
 
-		return array_merge( $parentData, $data );
+		return array_merge( $parentData, [
+			// Booleans
+			'toc-enabled' => !empty( $parentData['data-toc'] ),
+			'html-body-content--formatted' => $bodycontent->decorateBodyContent( $parentData['html-body-content'] )
+		], $tools->getPageToolsData( $parentData ) );
 	}
 
 	/**

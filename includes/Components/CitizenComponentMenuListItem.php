@@ -30,7 +30,8 @@ class CitizenComponentMenuListItem implements CitizenComponent {
 	 * @inheritDoc
 	 */
 	public function getTemplateData(): array {
-		return $this->link->getTemplateData() + [
+		return [
+			'array-links' => $this->link->getTemplateData(),
 			'item-class' => $this->class,
 			'item-id' => $this->id,
 		];
