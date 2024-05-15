@@ -79,7 +79,7 @@ class CitizenComponentUserInfo implements CitizenComponent {
 
 	/**
 	 * Build the template data for the user groups
-	 * 
+	 *
 	 * @return array|null
 	 */
 	private function getUserGroups(): ?array {
@@ -100,7 +100,7 @@ class CitizenComponentUserInfo implements CitizenComponent {
 				continue;
 			}
 
-			$link = new CitizenComponentLink( 
+			$link = new CitizenComponentLink(
 				$title->getLinkURL(),
 				ucfirst( $text )
 			);
@@ -117,7 +117,7 @@ class CitizenComponentUserInfo implements CitizenComponent {
 
 	/**
 	 * Build the template data for the user page menu
-	 * 
+	 *
 	 * @return array
 	 */
 	private function getUserPage(): array {
