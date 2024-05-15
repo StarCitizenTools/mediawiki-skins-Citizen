@@ -5,15 +5,17 @@
 
 	&-title {
 		font-weight: var( --font-weight-medium );
+	}
 
-		> div {
-			padding-top: var( --space-xs );
-			padding-bottom: var( --space-xs );
-		}
+	&title > div,
+	#pt-tmpuserpage-2 > span {
+		padding-top: var( --space-xs );
+		padding-bottom: var( --space-xs );
 	}
 
 	&-title,
-	#pt-userpage-2 > a {
+	#pt-userpage-2 > a,
+	#pt-tmpuserpage-2 > span {
 		font-size: var( --font-size-medium );
 		color: var( --color-base--emphasized );
 	}
@@ -26,6 +28,10 @@
 		align-items: baseline;
 	}
 
+	#pt-tmpuserpage-2 > span {
+		display: block;
+	}
+
 	#pt-userpage-username {
 		font-size: var( --font-size-small );
 		color: var( --color-base--subtle );
@@ -33,6 +39,7 @@
 
 	&-text {
 		font-size: var( --font-size-small );
+		line-height: var( --line-height-sm );
 		color: var( --color-base--subtle );
 
 		+ .citizen-userInfo-edits {
@@ -43,7 +50,7 @@
 	&-usergroups {
 		display: flex;
 		flex-wrap: wrap;
-		gap: var( --space-xxs ) var( --space-xs );
+		gap: 0 var( --space-xs );
 		margin: 0;
 		list-style: none;
 

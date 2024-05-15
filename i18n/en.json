@@ -65,5 +65,6 @@
 	"citizen-feature-custom-width-wide-label": "Wide",
 	"citizen-feature-custom-width-full-label": "Full",
 
-	"citizen-user-info-text-anon": "Your IP address will be publicly visible if you make any edits."
+	"citizen-user-info-text-anon": "Your IP address will be publicly visible if you make any edits.",
+	"citizen-user-info-text-temp": "This temporary account was created after an edit was made without an account on this browser and device."
 }

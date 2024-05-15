@@ -159,10 +159,15 @@ class CitizenComponentUserInfo implements CitizenComponent {
 
 		if ( $this->isRegistered ) {
 			$data = [
-				'data-user-groups' => $this->getUserGroups(),
 				'data-user-page' => $this->getUserPage(),
 				'data-user-edit' => $this->getUserEditCount()
 			];
+
+			if ( $this->isTemp ) {
+				$data['text'] = $localizer->msg( 'citizen-user-info-text-temp' );
+			} else {
+				$data['data-user-groups'] = $this->getUserGroups();
+			}
 		} else {
 			$data = [
 				'title' => $localizer->msg( 'notloggedin' ),
