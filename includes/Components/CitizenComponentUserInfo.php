@@ -69,7 +69,7 @@ class CitizenComponentUserInfo implements CitizenComponent {
 			return null;
 		}
 
-		$label = $this->localizer->msg( 'usereditcount' )->numParams( $edits );
+		$label = $this->localizer->msg( 'usereditcount' )->numParams( $edits )->text();
 		$label = str_replace( (string)$edits, '', $label );
 
 		return [
