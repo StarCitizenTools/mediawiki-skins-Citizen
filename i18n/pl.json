@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Faalagorn",
 			"Kareyac",
 			"Rail"
 		]
@@ -38,5 +39,22 @@
 	"citizen-tagline-ns-template": "Szablon",
 	"citizen-tagline-ns-help": "Strona pomocy",
 	"citizen-tagline-ns-category": "Kategoria",
-	"citizen-tagline-user-regdate": "Użytkownik dołączył $1"
+	"citizen-tagline-user-regdate": "Użytkownik dołączył $1",
+	"citizen-theme-name": "Kolor",
+	"citizen-theme-description": "Zmień motyw wiki",
+	"citizen-theme-day-label": "Jasny",
+	"citizen-theme-night-label": "Ciemny",
+	"citizen-theme-os-label": "Automatyczny",
+	"citizen-theme-exclusion-notice": "Ta strona zawsze jest wyświetlana w jasnym motywie.",
+	"citizen-feature-pure-black-name": "Tryb czystej czerni",
+	"citizen-feature-pure-black-0-label": "Wyłączony",
+	"citizen-feature-pure-black-1-label": "Włączony",
+	"citizen-feature-custom-font-size-name": "Tekst",
+	"citizen-feature-custom-font-size-small-label": "Mały",
+	"citizen-feature-custom-font-size-standard-label": "Standardowy",
+	"citizen-feature-custom-font-size-large-label": "Duży",
+	"citizen-feature-custom-width-name": "Szerokość",
+	"citizen-feature-custom-width-standard-label": "Standardowa",
+	"citizen-feature-custom-width-wide-label": "Szeroka",
+	"citizen-feature-custom-width-full-label": "Pełna"
 }

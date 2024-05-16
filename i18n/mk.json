@@ -55,5 +55,7 @@
 	"citizen-feature-custom-width-name": "Ширина",
 	"citizen-feature-custom-width-standard-label": "Стандардна",
 	"citizen-feature-custom-width-wide-label": "Широко",
-	"citizen-feature-custom-width-full-label": "Полно"
+	"citizen-feature-custom-width-full-label": "Полно",
+	"citizen-user-info-text-anon": "Вашата IP-адреса ќе биде јавно видлива ако правите уредувања.",
+	"citizen-user-info-text-temp": "Оваа привремена сметка е создадена откако е направено уредување без сметка на овој прелистувач и уред."
 }

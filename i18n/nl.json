@@ -3,7 +3,8 @@
 		"authors": [
 			"Mainframe98",
 			"McDutchie",
-			"Romaine"
+			"Romaine",
+			"Sjoerddebruin"
 		]
 	},
 	"citizen.css": "/* CSS die hier wordt geplaatst heeft alleen invloed op het uiterlijk Citizen */",
@@ -27,5 +28,7 @@
 	"citizen-tagline-ns-file": "Bestand op {{SITENAME}}",
 	"citizen-tagline-ns-template": "Sjabloonpagina",
 	"citizen-tagline-ns-help": "Hulppagina",
-	"citizen-tagline-ns-category": "Categoriepagina"
+	"citizen-tagline-ns-category": "Categoriepagina",
+	"citizen-theme-day-label": "Licht",
+	"citizen-theme-night-label": "Donker"
 }

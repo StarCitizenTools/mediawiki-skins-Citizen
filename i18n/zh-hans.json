@@ -53,5 +53,22 @@
 	"citizen-tagline-ns-category": "分类页面",
 	"citizen-tagline-user-regdate": "$1注册",
 	"citizen-theme-name": "颜色",
-	"citizen-feature-custom-font-size-name": "文本"
+	"citizen-theme-description": "更改wiki的主题",
+	"citizen-theme-day-label": "浅色",
+	"citizen-theme-night-label": "深色",
+	"citizen-theme-os-label": "自动",
+	"citizen-theme-exclusion-notice": "此页面始终处于浅色模式。",
+	"citizen-feature-pure-black-name": "纯黑模式",
+	"citizen-feature-pure-black-0-label": "关闭",
+	"citizen-feature-pure-black-1-label": "开启",
+	"citizen-feature-custom-font-size-name": "文字",
+	"citizen-feature-custom-font-size-small-label": "小",
+	"citizen-feature-custom-font-size-standard-label": "标准",
+	"citizen-feature-custom-font-size-large-label": "大",
+	"citizen-feature-custom-width-name": "宽度",
+	"citizen-feature-custom-width-standard-label": "标准",
+	"citizen-feature-custom-width-wide-label": "宽",
+	"citizen-feature-custom-width-full-label": "全屏",
+	"citizen-user-info-text-anon": "如果您进行任何编辑，您的IP地址会公开展示。",
+	"citizen-user-info-text-temp": "此临时账号是因您在此浏览器及设备上进行了无账号编辑而创建。"
 }

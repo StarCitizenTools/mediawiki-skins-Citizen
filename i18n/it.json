@@ -42,5 +42,7 @@
 	"citizen-tagline-ns-template": "Modello della pagina",
 	"citizen-tagline-ns-help": "Pagina d'aiuto",
 	"citizen-tagline-ns-category": "Pagina delle categorie",
-	"citizen-tagline-user-regdate": "Iscritto $1"
+	"citizen-tagline-user-regdate": "Iscritto $1",
+	"citizen-user-info-text-anon": "Il tuo indirizzo IP sarà visibile pubblicamente se effettuerai modifiche.",
+	"citizen-user-info-text-temp": "Questa utenza temporanea è stata creata dopo che è stata apportata una modifica senza un'utenza su questo browser e dispositivo."
 }
