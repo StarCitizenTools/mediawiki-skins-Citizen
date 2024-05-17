@@ -367,10 +367,15 @@
 /* Responsive handling */
 .ve-init-mw-desktopArticleTarget-toolbar {
 	> .oo-ui-toolbar-bar {
-		> .oo-ui-toolbar-tools:first-child {
-			display: inline-block;
-			max-width: ~'calc( 100% - 250px )';
-			white-space: nowrap;
+		> .oo-ui-toolbar-tools {
+			// Needed to hide overflow tools
+			background: var( --color-surface-0 );
+
+			&:first-child {
+				display: inline-block;
+				max-width: ~'calc( 100% - 250px )';
+				white-space: nowrap;
+			}
 		}
 
 		> .oo-ui-toolbar-actions {
@@ -392,6 +397,17 @@
 				line-height: 1;
 				content: '✓';
 			}
+		}
+	}
+}
+
+/* Hide less useful buttons on small viewport */
+@media ( max-width: @max-width-breakpoint-tablet ) {
+	.ve-ui-toolbar-group {
+		&-format,
+		&-style,
+		&-help {
+			display: none;
 		}
 	}
 }
