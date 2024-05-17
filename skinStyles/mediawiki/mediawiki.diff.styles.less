@@ -61,3 +61,13 @@
 .mw-diff-movedpara-right::after {
 	color: var( --color-base--subtle );
 }
+
+// HACK: Restore view button on revision page
+// There are no good way to target revision page
+.action-view #ca-view {
+	position: relative !important;
+    	clip: unset;
+    	width: auto;
+	height: auto;
+	margin: 0;
+}
