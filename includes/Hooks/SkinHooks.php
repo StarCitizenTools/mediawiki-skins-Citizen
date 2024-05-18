@@ -287,7 +287,7 @@ class SkinHooks implements
 		// Since talk keys have namespace as prefix
 		foreach ( $links['associated-pages'] as $key => $item ) {
 			// I wish I can use str_ends_with but need to wait for PHP 7.X to be dropped
-			if ( substr( $key, -4 ) === 'talk' ) {
+			if ( substr( (string)$key, -4 ) === 'talk' ) {
 				$links['associated-pages'][$key]['icon'] = 'speechBubbles';
 			}
 		}
