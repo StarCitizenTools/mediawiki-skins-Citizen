@@ -54,5 +54,7 @@
 	"citizen-feature-custom-width-name": "Latitude",
 	"citizen-feature-custom-width-standard-label": "Normal",
 	"citizen-feature-custom-width-wide-label": "Late",
-	"citizen-feature-custom-width-full-label": "Plen"
+	"citizen-feature-custom-width-full-label": "Plen",
+	"citizen-user-info-text-anon": "Tu adresse IP essera visibile publicamente si tu face modificationes.",
+	"citizen-user-info-text-temp": "Iste conto temporari ha essite create post que un modification ha essite effectuate sin conto sur iste navigator e apparato."
 }
