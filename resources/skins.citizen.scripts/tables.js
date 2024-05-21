@@ -8,120 +8,136 @@ const config = require( './config.json' );
  * @return {void}
  */
 function setupOverflowState( element ) {
-	const initState = () => {
-		const updateState = () => {
-			const
-				containerWidth = element.parentNode.offsetWidth,
-				contentWidth = element.scrollWidth;
+	if ( !element.parentNode ) {
+		mw.log.error( '[Citizen] Parent node is null or undefined. Cannot proceed with setupOverflowState.' );
+		return;
+	}
 
-			// Break if no horizontal overflow
-			if ( contentWidth <= containerWidth ) {
-				element.parentNode.classList.remove( 'citizen-overflow--left' );
-				element.parentNode.classList.remove( 'citizen-overflow--right' );
-				return;
-			}
+	const parentNode = element.parentNode;
+	let cachedContainerWidth;
+	let cachedContentWidth;
+	let cachedScrollPosition;
 
-			const currentPosition = Math.ceil( element.parentNode.scrollLeft );
+	const updateOverflowClasses = ( isLeft, isRight ) => {
+		parentNode.classList.toggle( 'citizen-overflow--left', isLeft );
+		parentNode.classList.toggle( 'citizen-overflow--right', isRight );
+	};
 
-			if ( currentPosition <= 0 ) {
-				// At the start
-				element.parentNode.classList.remove( 'citizen-overflow--left' );
-				element.parentNode.classList.add( 'citizen-overflow--right' );
-			} else if ( currentPosition + containerWidth >= contentWidth ) {
-				// At the end
-				element.parentNode.classList.remove( 'citizen-overflow--right' );
-				element.parentNode.classList.add( 'citizen-overflow--left' );
-			} else {
-				// At the middle
-				element.parentNode.classList.add( 'citizen-overflow--left' );
-				element.parentNode.classList.add( 'citizen-overflow--right' );
-			}
-		};
+	const updateState = () => {
+		const containerWidth = parentNode.offsetWidth;
+		const contentWidth = element.scrollWidth;
+		const currentPosition = Math.round( parentNode.scrollLeft );
 
-		if ( element.parentNode === null ) {
+		if ( isNaN( containerWidth ) || isNaN( contentWidth ) ) {
+			mw.log.error( '[Citizen] Invalid width values. Cannot calculate overflow state.' );
 			return;
 		}
 
-		updateState();
+		if (
+			containerWidth === cachedContainerWidth &&
+			contentWidth === cachedContentWidth &&
+			currentPosition === cachedScrollPosition
+		) {
+			return;
+		}
 
-		// Update state on element scroll
-		element.parentNode.addEventListener( 'scroll', () => {
-			window.requestAnimationFrame( updateState );
-		} );
+		cachedContainerWidth = containerWidth;
+		cachedContentWidth = contentWidth;
+		cachedScrollPosition = currentPosition;
+
+		const isAtStart = currentPosition <= 0;
+		const isAtEnd = currentPosition + containerWidth >= contentWidth;
+		updateOverflowClasses( !isAtStart, !isAtEnd );
 	};
 
-	initState();
+	updateState();
 
-	// Listen for window resize
-	if ( window.ResizeObserver ) {
-		const overflowResizeObserver = new ResizeObserver( mw.util.debounce( 250, initState ) );
+	parentNode.addEventListener( 'scroll', () => {
+		window.requestAnimationFrame( updateState );
+	} );
+
+	const debouncedUpdateState = mw.util.debounce( 250, updateState );
+	const isResizeObserverSupported = typeof ResizeObserver === 'function';
+	if ( isResizeObserverSupported ) {
+		const overflowResizeObserver = new ResizeObserver( debouncedUpdateState );
 		overflowResizeObserver.observe( element );
+	} else {
+		// Fallback mechanism or error handling for environments without ResizeObserver support
+		mw.log.warn( '[Citizen] ResizeObserver is not supported in this environment.' );
 	}
 }
 
 /**
- * Wrap table in div container to make it scrollable without breaking layout
+ * Wraps a given HTML table element in a new div container with specific classes,
+ * ensuring it does not wrap tables with certain ignored classes. It also manages
+ * class inheritance from the table to the wrapper and sets up overflow handling.
  *
- * @param {HTMLTableElement} table
+ * @param {HTMLTableElement} table - The HTML table element to be wrapped.
  * @return {void}
  */
 function wrapTable( table ) {
-	// Load ignored classes from config
-	const ignoredClasses = config.wgCitizenTableNowrapClasses;
+	try {
+		if (
+			!config.wgCitizenTableNowrapClasses ||
+			!Array.isArray( config.wgCitizenTableNowrapClasses )
+		) {
+			mw.log.error( '[Citizen] Invalid or missing $wgCitizenTableNowrapClasses. Cannot proceed with wrapping table.' );
+			return;
+		}
 
-	// Check table and parent for ignored classes
-	const hasIgnoredClass = ( ignoreClass ) => {
-		return table.classList.contains( ignoreClass ) ||
-				table.parentNode.classList.contains( ignoreClass );
-	};
+		if ( !table || !table.parentNode ) {
+			mw.log.error( '[Citizen] Table or table.parentNode is null or undefined.' );
+			return;
+		}
 
-	// Return if table has one of the ignored classes
-	if ( ignoredClasses.some( hasIgnoredClass ) ) {
-		return;
-	}
+		const ignoredClasses = config.wgCitizenTableNowrapClasses;
 
-	const wrapper = document.createElement( 'div' );
+		if ( ignoredClasses.some( ( cls ) => table.classList.contains( cls ) ) ) {
+			return;
+		}
 
-	// Some classes should be inherited from the table
-	// For example, float helper classes like floatleft and floatright
-	const inheritTableClass = () => {
-		// TODO: Make this a config flag
+		const wrapper = document.createElement( 'div' );
+		wrapper.className = 'citizen-table-wrapper';
+
 		const inheritedClasses = [
 			'floatleft',
 			'floatright'
 		];
 
-		inheritedClasses.forEach( ( inheritedClass ) => {
-			if ( table.classList.contains( inheritedClass ) ) {
-				wrapper.classList.add( inheritedClass );
-				table.classList.remove( inheritedClass );
+		const filteredClasses = inheritedClasses.filter( ( cls ) => table.classList.contains( cls ) );
+
+		filteredClasses.forEach( ( cls ) => {
+			if ( !wrapper.classList.contains( cls ) ) {
+				wrapper.classList.add( cls );
+			}
+			if ( table.classList.contains( cls ) ) {
+				table.classList.remove( cls );
 			}
 		} );
-	};
 
-	wrapper.classList.add( 'citizen-table-wrapper' );
-	inheritTableClass();
-	table.parentNode.insertBefore( wrapper, table );
-	wrapper.appendChild( table );
+		table.parentNode.insertBefore( wrapper, table );
+		wrapper.appendChild( table );
 
-	setupOverflowState( table );
+		setupOverflowState( table );
+	} catch ( error ) {
+		mw.log.error( `[Citizen] Error occurred while wrapping table: ${ error.message }` );
+	}
 }
 
 /**
- * @param {HTMLElement} bodyContent
+ * Initializes the process of wrapping tables within the given body content.
+ *
+ * @param {HTMLElement} bodyContent - The body content element containing tables to be wrapped.
  * @return {void}
  */
 function init( bodyContent ) {
-	// Don't touch nested tables since we only need to wrap the outer layer
-	if ( !bodyContent.querySelector( 'table:not( table table )' ) ) {
-		return;
-	}
-
 	const tables = bodyContent.querySelectorAll( 'table:not( table table )' );
 
-	tables.forEach( ( table ) => {
-		wrapTable( table );
-	} );
+	if ( tables.length > 0 ) {
+		Array.from( tables ).forEach( ( table ) => {
+			wrapTable( table );
+		} );
+	}
 }
 
 module.exports = {

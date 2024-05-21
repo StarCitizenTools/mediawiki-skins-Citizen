@@ -161,31 +161,35 @@ function renderSearchClearButton( input ) {
 	let hasClearButton = false;
 
 	clearButton.classList.add( 'citizen-search__clear', 'citizen-search__formButton' );
+	// TODO: Add i18n for the message below
+	// clearButton.setAttribute( 'aria-label', 'Clear search input' );
 	clearIcon.classList.add( 'citizen-ui-icon', 'mw-ui-icon-wikimedia-clear' );
 	clearButton.append( clearIcon );
 
 	clearButton.addEventListener( 'click', ( event ) => {
 		event.preventDefault();
-		clearButton.remove();
+		clearButton.classList.add( 'hidden' );
 		input.value = '';
 		input.dispatchEvent( new Event( 'input' ) );
-		setTimeout( () => {
+		requestAnimationFrame( () => {
 			input.focus();
-		}, 10 );
+		} );
 	} );
 
 	input.addEventListener( 'input', () => {
-		if ( input.value === '' ) {
-			clearButton.remove();
-			hasClearButton = false;
-		} else if ( hasClearButton === false ) {
+		const value = input.value;
+		const shouldDisplay = value !== '';
+		clearButton.classList.toggle( 'hidden', !shouldDisplay );
+		if ( shouldDisplay && !hasClearButton ) {
 			input.after( clearButton );
-			hasClearButton = true;
 		}
+		hasClearButton = shouldDisplay;
 	} );
 }
 
 /**
+ * Initializes the search functionality for the Citizen search boxes.
+ *
  * @param {Window} window
  * @return {void}
  */

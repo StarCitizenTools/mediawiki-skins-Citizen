@@ -9,39 +9,42 @@ function init( bodyContent ) {
 		return;
 	}
 
-	const
-		headings = bodyContent.querySelectorAll( '.citizen-section-heading' ),
-		sections = bodyContent.querySelectorAll( '.citizen-section-collapsible' ),
-		editSections = bodyContent.querySelectorAll( '.mw-editsection, .mw-editsection-like' );
+	const headings = bodyContent.querySelectorAll( '.citizen-section-heading' );
+	const sections = bodyContent.querySelectorAll( '.citizen-section-collapsible' );
 
-	for ( let i = 0; i < headings.length; i++ ) {
-		const j = i + 1,
-			collapsibleID = `citizen-section-collapsible-${ j }`,
-			/* T13555 */
-			headline = headings[ i ].querySelector( '.mw-headline' ) || headings[ i ].querySelector( '.mw-heading' );
+	const toggleAriaExpanded = ( headline ) => {
+		headline.toggleAttribute( 'aria-expanded' );
 
-		// Set up ARIA
+	};
+
+	const setHeadlineAttributes = ( headline, collapsibleID ) => {
 		headline.setAttribute( 'tabindex', 0 );
 		headline.setAttribute( 'role', 'button' );
 		headline.setAttribute( 'aria-controls', collapsibleID );
 		headline.setAttribute( 'aria-expanded', true );
+	};
 
-		// TODO: Need a keyboard handler
-		headings[ i ].addEventListener( 'click', function () {
-			// .section-heading--collapsed
+	const handleClick = ( i ) => {
+		const collapsibleID = `citizen-section-collapsible-${ i + 1 }`;
+		const headline = headings[ i ].querySelector( '.citizen-section-heading .mw-headline' );
 
-			this.classList.toggle( 'citizen-section-heading--collapsed' );
-			// .section-collapsible--collapsed
+		if ( headline ) {
+			setHeadlineAttributes( headline, collapsibleID );
 
-			sections[ j ].classList.toggle( 'citizen-section-collapsible--collapsed' );
-			headline.setAttribute( 'aria-expanded', headline.getAttribute( 'aria-expanded' ) === 'true' ? 'false' : 'true' );
-		} );
-	}
+			headings[ i ].addEventListener( 'click', function ( e ) {
+				this.classList.toggle( 'citizen-section-heading--collapsed' );
+				sections[ i + 1 ].classList.toggle( 'citizen-section-collapsible--collapsed' );
+				toggleAriaExpanded( headline );
 
-	for ( let i = 0; i < editSections.length; i++ ) {
-		editSections[ i ].addEventListener( 'click', function ( e ) {
-			e.stopPropagation();
-		} );
+				if ( e.target.closest( '.mw-editsection, .mw-editsection-like' ) ) {
+					e.stopPropagation();
+				}
+			} );
+		}
+	};
+
+	for ( let i = 0; i < headings.length; i++ ) {
+		handleClick( i );
 	}
 }
 

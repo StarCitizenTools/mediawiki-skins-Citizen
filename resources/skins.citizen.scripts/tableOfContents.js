@@ -3,23 +3,15 @@ const ACTIVE_SECTION_CLASS = 'citizen-toc__listItem--active';
 let /** @type {HTMLElement | undefined} */ activeSection;
 
 /**
- * @param {string} id
+ * Changes the active section in the table of contents based on the provided ID.
+ *
+ * @param {HTMLElement} toc - The Table of Content HTML element
+ * @param {string} id - The ID of the section to make active.
+ * @return {void}
  */
-function changeActiveSection( id ) {
-	const toc = document.getElementById( 'mw-panel-toc' );
-
+function changeActiveSection( toc, id ) {
 	const getLink = ( hash ) => {
-		const
-			prefix = 'a[href="#',
-			suffix = '"]';
-
-		let el = toc.querySelector( prefix + hash + suffix );
-
-		if ( el === null ) {
-			// Sometimes the href attribute is encoded
-			el = toc.querySelector( prefix + encodeURIComponent( hash ) + suffix );
-		}
-
+		const el = toc.querySelector( `a[href="#${ hash }"], a[href="#${ encodeURIComponent( hash ) }"]` );
 		return el;
 	};
 
@@ -44,30 +36,29 @@ function changeActiveSection( id ) {
  * @return {void}
  */
 function init( bodyContent ) {
-	const tocEl = document.getElementById( 'mw-panel-toc' );
-	if ( !tocEl ) {
+	const toc = document.getElementById( 'mw-panel-toc' );
+	if ( !toc ) {
 		return;
 	}
 
 	const getHeadlineElements = () => {
-		const getHeadlineIds = () => {
-			const headlineIds = [];
-			// Nodelist.forEach is forbidden by mediawiki/no-nodelist-unsupported-methods
-			Array.from( tocEl.querySelectorAll( '.citizen-toc__listItem' ) ).forEach( ( tocListEl ) => {
-				// Remove 'toc-' prefix from ID
-				headlineIds.push( '#' + CSS.escape( tocListEl.id.slice( 4 ) ) );
-			} );
-			return headlineIds.join( ',' );
-		};
-		return bodyContent.querySelectorAll( getHeadlineIds() );
+		const headlineElements = [];
+		Array.from( toc.querySelectorAll( '.citizen-toc__listItem' ) ).forEach( ( tocListEl ) => {
+			// Remove 'toc-' prefix from ID
+			const headlineElement = bodyContent.querySelector( '#' + CSS.escape( tocListEl.id.slice( 4 ) ) );
+			if ( headlineElement ) {
+				headlineElements.push( headlineElement );
+			}
+		} );
+		return headlineElements;
 	};
 
 	// We use scroll-padding-top to handle scrolling with fixed header
 	// It is better to respect that so it is consistent
 	const getTopMargin = () => {
+		const computedStyle = window.getComputedStyle( document.documentElement );
 		return Number(
-			window.getComputedStyle( document.documentElement )
-				.getPropertyValue( 'scroll-padding-top' )
+			computedStyle.getPropertyValue( 'scroll-padding-top' )
 				.slice( 0, -2 )
 		) + 20;
 	};
@@ -87,7 +78,9 @@ function init( bodyContent ) {
 		elements: headlines,
 		topMargin: getTopMargin(),
 		onIntersection: ( section ) => {
-			changeActiveSection( section.id );
+			if ( section.id && section.id.trim() !== '' ) {
+				changeActiveSection( toc, section.id );
+			}
 		}
 	} );
 
