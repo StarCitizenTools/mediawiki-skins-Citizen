@@ -1,5 +1,6 @@
 /**
- * Enhance last modified to use human readable relative time
+ * Updates the text content of a specific HTML element to display a human-readable,
+ * relative time format based on a timestamp attribute.
  *
  * @return {void}
  */
@@ -9,9 +10,7 @@ function init() {
 		return;
 	}
 
-	// There might be better method but it works :P
 	const lang = document.documentElement.getAttribute( 'lang' );
-	// eslint-disable-next-line compat/compat
 	const rtf = new Intl.RelativeTimeFormat( lang );
 
 	const DIVISIONS = [
@@ -24,8 +23,22 @@ function init() {
 		{ amount: Number.POSITIVE_INFINITY, name: 'years' }
 	];
 
+	const SECONDS_IN_MILLISECOND = 1000;
+
+	// eslint-disable-next-line jsdoc/require-returns-check
+	/**
+	 * Formats the time elapsed since a given date in a human-readable relative time format.
+	 *
+	 * @param {string} date - The timestamp to calculate relative time from.
+	 * @return {string} The formatted relative time string.
+	 */
 	const formatTimeAgo = ( date ) => {
-		let duration = date - Date.now() / 1000;
+		const timestamp = parseFloat( date );
+		if ( isNaN( timestamp ) ) {
+			mw.log.error( '[Citizen] Invalid timestamp value' );
+			return;
+		}
+		let duration = timestamp - Date.now() / SECONDS_IN_MILLISECOND;
 
 		for ( let i = 0; i < DIVISIONS.length; i++ ) {
 			const division = DIVISIONS[ i ];
