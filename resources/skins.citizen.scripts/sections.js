@@ -10,42 +10,68 @@ function init( bodyContent ) {
 	}
 
 	const headings = bodyContent.querySelectorAll( '.citizen-section-heading' );
-	const sections = bodyContent.querySelectorAll( '.citizen-section-collapsible' );
+	const sections = bodyContent.querySelectorAll( '.citizen-section' );
 
-	const toggleAriaExpanded = ( headline ) => {
-		headline.toggleAttribute( 'aria-expanded' );
+	const setHeadlineAttributes = ( heading, collapsibleID, i ) => {
+		const headline = heading.querySelector( '.mw-headline' ) ||
+				heading.querySelector( '.mw-heading' );
 
-	};
+		if ( !headline ) {
+			return;
+		}
 
-	const setHeadlineAttributes = ( headline, collapsibleID ) => {
 		headline.setAttribute( 'tabindex', 0 );
 		headline.setAttribute( 'role', 'button' );
 		headline.setAttribute( 'aria-controls', collapsibleID );
 		headline.setAttribute( 'aria-expanded', true );
+		headline.setAttribute( 'data-mw-citizen-section-heading-index', i );
 	};
 
-	const handleClick = ( i ) => {
-		const collapsibleID = `citizen-section-collapsible-${ i + 1 }`;
-		const headline = headings[ i ].querySelector( '.citizen-section-heading .mw-headline' );
-
-		if ( headline ) {
-			setHeadlineAttributes( headline, collapsibleID );
-
-			headings[ i ].addEventListener( 'click', function ( e ) {
-				this.classList.toggle( 'citizen-section-heading--collapsed' );
-				sections[ i + 1 ].classList.toggle( 'citizen-section-collapsible--collapsed' );
-				toggleAriaExpanded( headline );
-
-				if ( e.target.closest( '.mw-editsection, .mw-editsection-like' ) ) {
-					e.stopPropagation();
-				}
-			} );
+	const toggleClasses = ( i ) => {
+		if ( sections[ i + 1 ] ) {
+			headings[ i ].classList.toggle( 'citizen-section-heading--collapsed' );
+			sections[ i + 1 ].classList.toggle( 'citizen-section--collapsed' );
 		}
 	};
 
-	for ( let i = 0; i < headings.length; i++ ) {
-		handleClick( i );
+	const toggleAriaExpanded = ( el ) => {
+		const isExpanded = el.getAttribute( 'aria-expanded' ) === 'true';
+		el.setAttribute( 'aria-expanded', isExpanded ? 'false' : 'true' );
+	};
+
+	const onEditSectionClick = ( e ) => {
+		e.stopPropagation();
+	};
+
+	const handleClick = ( e ) => {
+		const target = e.target;
+		const isEditSection = target.closest( '.mw-editsection, .mw-editsection-like' );
+
+		if ( isEditSection ) {
+			onEditSectionClick( e );
+			return;
+		}
+
+		const heading = target.closest( '.citizen-section-heading' );
+
+		if ( heading ) {
+			const i = +heading.getAttribute( 'data-mw-citizen-section-heading-index' );
+			const headline = heading.querySelector( '.mw-headline' ) ||
+				heading.querySelector( '.mw-heading' );
+
+			if ( headline ) {
+				toggleClasses( i );
+				toggleAriaExpanded( headline );
+			}
+		}
+	};
+
+	const headingsLength = headings.length;
+	for ( let i = 0; i < headingsLength; i++ ) {
+		setHeadlineAttributes( headings[ i ], `citizen-section-${ i + 1 }`, i );
 	}
+
+	bodyContent.addEventListener( 'click', handleClick, false );
 }
 
 module.exports = {
