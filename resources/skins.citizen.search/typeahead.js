@@ -344,57 +344,6 @@ async function getSuggestions() {
 	const renderSuggestions = ( results ) => {
 		const fragment = document.createDocumentFragment();
 		if ( results.length > 0 ) {
-			/**
-			 * Return the redirect title with search query highlight
-			 *
-			 * @param {string} text
-			 * @return {string}
-			 */
-			const highlightTitle = ( text ) => {
-				const regex = new RegExp( mw.util.escapeRegExp( searchQuery.valueHtml ), 'i' );
-				return text.replace( regex, `<span class="${ PREFIX }__highlight">$&</span>` );
-			};
-			/**
-			 * Return the HTML of the redirect label
-			 *
-			 * @param {string} title
-			 * @param {string} matchedTitle
-			 * @return {string}
-			 */
-			const getRedirectLabel = ( title, matchedTitle ) => {
-				/**
-				 * Check if the redirect is useful (T303013)
-				 *
-				 * @return {boolean}
-				 */
-				const isRedirectUseful = () => {
-					// Change to lowercase then remove space and dashes
-					const cleanup = ( text ) => {
-						return text.toLowerCase().replace( /[-\s]/g, '' );
-					};
-					const
-						cleanTitle = cleanup( title ),
-						cleanMatchedTitle = cleanup( matchedTitle );
-
-					return !(
-						cleanTitle.includes( cleanMatchedTitle ) ||
-						cleanMatchedTitle.includes( cleanTitle )
-					);
-				};
-
-				let html = '';
-				// Result is a redirect
-				// Show the redirect title and highlight it
-				if ( matchedTitle && isRedirectUseful() ) {
-					html = `<div class="${ PREFIX }__labelItem" title="${ mw.message( 'search-redirect', matchedTitle ).plain() }">
-            							<span class="citizen-ui-icon mw-ui-icon-wikimedia-articleRedirect"></span>
-            							<span>${ highlightTitle( matchedTitle ) }</span>
-            						</div>`;
-				}
-
-				return html;
-			};
-
 			// Create suggestion items
 			const itemGroupData = {
 				id: 'suggestion',
@@ -405,10 +354,10 @@ async function getSuggestions() {
 					type: 'page',
 					size: 'md',
 					link: result.url,
-					title: highlightTitle( result.title ),
+					title: searchResults.highlightTitle( result.title, searchQuery.valueHtml ),
 					desc: result.description
 				};
-				data.label = getRedirectLabel( result.title, result.label );
+				data.label = searchResults.getRedirectLabel( result.title, result.label );
 				if ( result.thumbnail ) {
 					data.thumbnail = result.thumbnail.url;
 				} else {
