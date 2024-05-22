@@ -6,7 +6,7 @@ function searchAction() {
 		userRights: undefined,
 		getUserRights: async function () {
 			// Get and cache user rights
-			this.userRights = await mw.user.getRights();
+			this.userRights = this.userRights ?? await mw.user.getRights();
 			return this.userRights;
 		},
 		init: function ( typeaheadEl, itemGroupData ) {
@@ -23,11 +23,12 @@ function searchAction() {
 				items: []
 			};
 
+			const searchQueryEncoded = encodeURIComponent( searchQuery.valueHtml );
 			// TODO: Save this in a separate JSON file
 			// Fulltext search
 			itemGroupData.items.push( {
 				// id: 'fulltext',
-				link: `${ config.wgScriptPath }/index.php?title=Special:Search&fulltext=1&search=${ searchQuery.valueHtml }`,
+				link: `${ config.wgScriptPath }/index.php?title=Special:Search&fulltext=1&search=${ searchQueryEncoded }`,
 				icon: 'articleSearch',
 				msg: 'citizen-search-fulltext'
 			} );
@@ -36,7 +37,7 @@ function searchAction() {
 			if ( config.isMediaSearchExtensionEnabled ) {
 				itemGroupData.items.push( {
 					// id: 'mediasearch',
-					link: `${ config.wgScriptPath }/index.php?title=Special:MediaSearch&type=image&search=${ searchQuery.valueHtml }`,
+					link: `${ config.wgScriptPath }/index.php?title=Special:MediaSearch&type=image&search=${ searchQueryEncoded }`,
 					icon: 'imageGallery',
 					msg: 'citizen-search-mediasearch'
 				} );
@@ -54,7 +55,7 @@ function searchAction() {
 				// TODO: Check whether the page exists
 				itemGroupData.items.push( {
 					// id: 'editpage',
-					link: `${ config.wgScriptPath }/index.php?title=${ searchQuery.valueHtml }&action=edit`,
+					link: `${ config.wgScriptPath }/index.php?title=${ searchQueryEncoded }&action=edit`,
 					icon: 'edit',
 					msg: 'citizen-search-editpage'
 				} );

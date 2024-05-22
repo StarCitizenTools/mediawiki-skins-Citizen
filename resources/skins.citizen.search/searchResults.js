@@ -4,6 +4,9 @@ const searchAction = require( './searchAction.js' )();
 
 function searchResults() {
 	return {
+		fetch: function ( queryValue, activeSearchClient ) {
+			return activeSearchClient.fetchByTitle( queryValue );
+		},
 		render: function ( typeaheadEl, searchQuery ) {
 			searchAction.render( typeaheadEl, searchQuery );
 		},

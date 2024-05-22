@@ -1,6 +1,5 @@
-const
-	PREFIX = 'citizen-typeahead',
-	SEARCH_LOADING_CLASS = 'citizen-loading';
+const PREFIX = 'citizen-typeahead';
+const SEARCH_LOADING_CLASS = 'citizen-loading';
 
 // Config object from getCitizenSearchResourceLoaderConfig()
 const config = require( './config.json' );
@@ -18,10 +17,16 @@ const typeahead = {
 	form: {
 		/** @type {HTMLFormElement | undefined} */
 		element: undefined,
+		isLoading: false,
 		init: function ( formEl ) {
-			this.element = formEl;
-			this.element.setAttribute( 'aria-owns', typeahead.element.id );
-			this.element.append( typeahead.element );
+			const typeaheadFormElement = formEl;
+			this.element = typeaheadFormElement;
+			typeaheadFormElement.setAttribute( 'aria-owns', typeahead.element.id );
+			typeaheadFormElement.appendChild( typeahead.element );
+		},
+		setLoadingState: function ( state ) {
+			this.element.classList.toggle( SEARCH_LOADING_CLASS, state );
+			this.isLoading = state;
 		}
 	},
 	input: {
@@ -31,25 +36,36 @@ const typeahead = {
 		// Trigger update only when character is composed (e.g. CJK IME)
 		isComposing: false,
 		init: function ( inputEl ) {
-			this.element = inputEl;
+			const typeaheadInputElement = inputEl;
+			this.element = typeaheadInputElement;
 
 			const wrapper = document.createElement( 'div' );
 			wrapper.classList.add( 'citizen-typeahead-input-group' );
-			this.element.parentNode.insertBefore( wrapper, this.element );
+			typeaheadInputElement.parentNode.insertBefore( wrapper, typeaheadInputElement );
 
 			const overlay = document.createElement( 'div' );
 			overlay.classList.add( 'citizen-typeahead-input-overlay' );
 			this.displayElement = document.createElement( 'span' );
+			this.displayElement.textContent = typeaheadInputElement.value;
 			this.displayElement.classList.add( 'citizen-typeahead-input-overlay-query' );
 			overlay.append( this.displayElement );
 
-			this.element.classList.add( 'citizen-typeahead-input' );
-			this.element.setAttribute( 'aria-autocomplete', 'list' );
-			this.element.setAttribute( 'aria-controls', typeahead.element.id );
+			typeaheadInputElement.classList.add( 'citizen-typeahead-input' );
+			typeaheadInputElement.setAttribute( 'aria-autocomplete', 'list' );
+			typeaheadInputElement.setAttribute( 'aria-controls', typeahead.element.id );
 
-			wrapper.append( overlay, this.element );
-			this.element.addEventListener( 'focus', this.onFocus );
-			this.element.focus();
+			wrapper.append( overlay, typeaheadInputElement );
+			typeaheadInputElement.addEventListener( 'focus', this.onFocus );
+
+			const isVisible = typeaheadInputElement.offsetWidth > 0 ||
+				typeaheadInputElement.offsetHeight > 0;
+			const isFocusable = !typeaheadInputElement.disabled && !typeaheadInputElement.readOnly;
+
+			if ( isVisible && isFocusable ) {
+				requestAnimationFrame( () => {
+					typeaheadInputElement.focus();
+				} );
+			}
 		},
 		onCompositionstart: function () {
 			typeahead.input.element.addEventListener( 'compositionend', typeahead.input.onCompositionend );
@@ -57,23 +73,25 @@ const typeahead = {
 		},
 		onCompositionend: function () {
 			typeahead.input.isComposing = false;
-			typeahead.input.dispatchEvent( new Event( 'input' ) );
+			typeahead.input.element.dispatchEvent( new Event( 'input' ) );
 		},
 		onFocus: function () {
+			const typeaheadInputElement = typeahead.input.element;
 			// Refresh the typeahead since the query will be emptied when blurred
-			typeahead.afterSeachQueryInput();
+			typeahead.afterSearchQueryInput();
 			typeahead.form.element.parentElement.classList.add( 'citizen-search__card--expanded' );
 			// FIXME: Should probably clean up this somehow
 			typeahead.element.addEventListener( 'click', typeahead.onClick );
-			typeahead.input.element.addEventListener( 'keydown', typeahead.input.onKeydown );
-			typeahead.input.element.addEventListener( 'input', typeahead.input.onInput );
-			typeahead.input.element.addEventListener( 'blur', typeahead.onBlur );
+			typeaheadInputElement.addEventListener( 'keydown', typeahead.input.onKeydown );
+			typeaheadInputElement.addEventListener( 'input', typeahead.input.onInput );
+			typeaheadInputElement.addEventListener( 'blur', typeahead.onBlur );
+			typeaheadInputElement.addEventListener( 'compositionstart', typeahead.input.onCompositionstart );
 		},
 		onInput: function () {
-			typeahead.input.displayElement.innerText = typeahead.input.element.value;
-			typeahead.input.element.addEventListener( 'compositionstart', typeahead.input.onCompositionstart );
+			const typeaheadInputElement = typeahead.input.element;
+			typeahead.input.displayElement.textContent = typeaheadInputElement.value;
 			if ( typeahead.input.isComposing !== true ) {
-				mw.util.debounce( 100, typeahead.afterSeachQueryInput() );
+				mw.util.debounce( 100, typeahead.afterSearchQueryInput() );
 			}
 		},
 		onKeydown: function ( event ) {
@@ -162,8 +180,9 @@ const typeahead = {
 			} );
 		},
 		set: function () {
-			this.groupElements = typeahead.element.querySelectorAll( '.citizen-typeahead-item-group' );
-			this.elements = typeahead.element.querySelectorAll( '.citizen-typeahead__item[role="option"]' );
+			const typeaheadElement = typeahead.element;
+			this.groupElements = typeaheadElement.querySelectorAll( '.citizen-typeahead-item-group' );
+			this.elements = typeaheadElement.querySelectorAll( '.citizen-typeahead__item[role="option"]' );
 			this.bindMouseHoverEvent();
 			this.setMax( this.elements.length );
 		},
@@ -193,22 +212,25 @@ const typeahead = {
 			typeahead.input.element.setAttribute( 'aria-activedescendant', '' );
 			typeahead.items.clearIndex();
 			// Remove loading animation
-			typeahead.form.element.classList.remove( SEARCH_LOADING_CLASS );
+			typeahead.form.setLoadingState( false );
 		}
 	},
 	onBlur: function ( event ) {
-		if ( !typeahead.element.contains( event.relatedTarget ) ) {
+		const typeaheadElement = typeahead.element;
+		const typeaheadInputElement = typeahead.input.element;
+		if ( !typeaheadElement.contains( event.relatedTarget ) ) {
 			// HACK: On Safari, users are unable to click any links because the blur
 			// event dismiss the links before it is clicked. This should fix it.
 			setTimeout( () => {
 				typeahead.form.element.parentElement.classList.remove( 'citizen-search__card--expanded' );
-				typeahead.input.element.setAttribute( 'aria-activedescendant', '' );
-				typeahead.element.removeEventListener( 'click', typeahead.onClick );
-				typeahead.input.element.removeEventListener( 'keydown', typeahead.input.onKeydown );
-				typeahead.input.element.removeEventListener( 'input', typeahead.input.onInput );
-				typeahead.input.element.removeEventListener( 'compositionstart', typeahead.input.onCompositionstart );
-				typeahead.input.element.removeEventListener( 'compositionend', typeahead.input.onCompositionend );
-				typeahead.input.element.removeEventListener( 'blur', this.onBlur );
+				typeaheadInputElement.setAttribute( 'aria-activedescendant', '' );
+				typeaheadElement.removeEventListener( 'click', typeahead.onClick );
+				typeaheadInputElement.removeEventListener( 'keydown', typeahead.input.onKeydown );
+				// input listener need to stay on to make clear button works
+				// typeaheadInputElement.removeEventListener( 'input', typeahead.input.onInput );
+				typeaheadInputElement.removeEventListener( 'compositionstart', typeahead.input.onCompositionstart );
+				typeaheadInputElement.removeEventListener( 'compositionend', typeahead.input.onCompositionend );
+				typeaheadInputElement.removeEventListener( 'blur', this.onBlur );
 			}, 10 );
 		}
 	},
@@ -231,11 +253,12 @@ const typeahead = {
 		}
 	},
 	updateSearchClient: function () {
+		const typeaheadInputElement = typeahead.input.element;
 		searchClient.setActive( config.wgCitizenSearchGateway );
 
 		// Search command experiement
-		if ( typeahead.input.element.value.startsWith( '/' ) ) {
-			const command = typeahead.input.element.value.split( ' ' )[ 0 ].slice( 1 );
+		if ( typeaheadInputElement.value.startsWith( '/' ) ) {
+			const command = typeaheadInputElement.value.split( ' ' )[ 0 ].slice( 1 );
 			if ( command.length > 0 ) {
 				const searchClientData = searchClient.getData( 'command', command );
 				// Multi-search clients experiment
@@ -248,11 +271,12 @@ const typeahead = {
 		return Promise.resolve( `Search client updated to ${ searchClient.active.id }.` );
 	},
 	updateSearchQuery: function () {
-		if ( searchQuery.value === typeahead.input.element.value ) {
+		const typeaheadInputElement = typeahead.input.element;
+		if ( searchQuery.value === typeaheadInputElement.value ) {
 			return Promise.reject( `Search query has not changed: ${ searchQuery.value }.` );
 		}
 
-		searchQuery.setValue( typeahead.input.element.value );
+		searchQuery.setValue( typeaheadInputElement.value );
 
 		typeahead.updateSearchClient();
 
@@ -280,10 +304,10 @@ const typeahead = {
 
 		return Promise.resolve( `Search query updated to ${ searchQuery.value }.` );
 	},
-	afterSeachQueryInput: function () {
+	afterSearchQueryInput: function () {
 		typeahead.updateSearchQuery().then( updateTypeaheadItems )
 			.catch( () => {
-			// Don't do anything if search query has not changed.
+				// Don't do anything if search query has not changed.
 			} );
 	},
 	init: function ( formEl, inputEl ) {
@@ -304,7 +328,7 @@ const typeahead = {
 
 		// Run once in case there is searchQuery before eventlistener is attached
 		if ( this.input.element.value.length > 0 ) {
-			this.afterSeachQueryInput();
+			this.afterSearchQueryInput();
 		}
 	}
 };
@@ -313,7 +337,10 @@ const typeahead = {
  * Fetch suggestions from API and render the suggetions in HTML
  *
  */
-function getSuggestions() {
+// eslint-disable-next-line es-x/no-async-functions
+async function getSuggestions() {
+	const typeaheadInputElement = typeahead.input.element;
+
 	const renderSuggestions = ( results ) => {
 		const fragment = document.createDocumentFragment();
 		if ( results.length > 0 ) {
@@ -343,7 +370,7 @@ function getSuggestions() {
 				const isRedirectUseful = () => {
 					// Change to lowercase then remove space and dashes
 					const cleanup = ( text ) => {
-						return text.toLowerCase().replace( /-|\s/g, '' );
+						return text.toLowerCase().replace( /[-\s]/g, '' );
 					};
 					const
 						cleanTitle = cleanup( title ),
@@ -360,9 +387,9 @@ function getSuggestions() {
 				// Show the redirect title and highlight it
 				if ( matchedTitle && isRedirectUseful() ) {
 					html = `<div class="${ PREFIX }__labelItem" title="${ mw.message( 'search-redirect', matchedTitle ).plain() }">
-							<span class="citizen-ui-icon mw-ui-icon-wikimedia-articleRedirect"></span>
-							<span>${ highlightTitle( matchedTitle ) }</span>
-						</div>`;
+            							<span class="citizen-ui-icon mw-ui-icon-wikimedia-articleRedirect"></span>
+            							<span>${ highlightTitle( matchedTitle ) }</span>
+            						</div>`;
 				}
 
 				return html;
@@ -408,35 +435,36 @@ function getSuggestions() {
 		typeahead.element.append( fragment );
 		typeahead.suggestions.set();
 		// In case if somehow typeahead.suggestions.clear() didn't clear the loading animation
-		typeahead.form.element.classList.remove( SEARCH_LOADING_CLASS );
+		typeahead.form.setLoadingState( false );
 		typeahead.items.set();
 	};
 
 	// Add loading animation
-	typeahead.form.element.classList.add( SEARCH_LOADING_CLASS );
+	typeahead.form.setLoadingState( true );
 
-	const { abort, fetch } = searchClient.active.client.fetchByTitle( searchQuery.value );
+	const { abort, fetch } = searchResults.fetch( searchQuery.value, searchClient.active.client );
 
 	// Abort fetch if the input is detected
 	// So that fetch request won't be queued up
-	typeahead.input.element.addEventListener( 'input', abort, { once: true } );
+	typeaheadInputElement.addEventListener( 'input', abort, { once: true } );
 
-	fetch?.then( ( response ) => {
-		typeahead.input.element.removeEventListener( 'input', abort );
+	try {
+		const response = await fetch;
+		typeaheadInputElement.removeEventListener( 'input', abort );
 		typeahead.suggestions.clear();
 		if ( response.results !== null ) {
 			renderSuggestions( response.results );
 		}
-	} ).catch( ( error ) => {
-		typeahead.input.element.removeEventListener( 'input', abort );
-		typeahead.form.element.classList.remove( SEARCH_LOADING_CLASS );
+	} catch ( error ) {
+		typeaheadInputElement.removeEventListener( 'input', abort );
+		typeahead.form.setLoadingState( false );
 		// User can trigger the abort when the fetch event is pending
 		// There is no need for an error
 		if ( error.name !== 'AbortError' ) {
 			const message = `Uh oh, a wild error appears! ${ error }`;
 			throw new Error( message );
 		}
-	} );
+	}
 }
 
 /**

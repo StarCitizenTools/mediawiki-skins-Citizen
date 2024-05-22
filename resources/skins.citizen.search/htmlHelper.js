@@ -17,6 +17,11 @@
  * @property {string} desc
  */
 
+/**
+ * Return an object containing functions to handle HTML elements for a typeahead component.
+ *
+ * @return {Object} An object with functions for creating, updating, and removing HTML elements for a typeahead component.
+ */
 function htmlHelper() {
 	return {
 		/**
@@ -34,7 +39,7 @@ function htmlHelper() {
 			if ( data.label ) {
 				const label = document.createElement( 'span' );
 				label.classList.add( 'citizen-typeahead-item-group-label' );
-				label.innerText = data.label;
+				label.textContent = data.label;
 				itemGroup.append( label );
 			}
 
@@ -42,11 +47,14 @@ function htmlHelper() {
 				const list = document.createElement( 'ol' );
 				list.classList.add( 'citizen-typeahead-item-group-list' );
 				list.setAttribute( 'role', 'presentation' );
+				const fragment = document.createDocumentFragment();
 				data.items.forEach( ( itemData, index ) => {
-					itemData.id = `citizen-typeahead-${ data.id }-${ index }`;
-					const item = this.getItemElement( itemData );
-					list.append( item );
+					const modifiedId = `citizen-typeahead-${ data.id }-${ index }`;
+					const modifiedItemData = { ...itemData, id: modifiedId };
+					const item = this.getItemElement( modifiedItemData );
+					fragment.appendChild( item );
 				} );
+				list.appendChild( fragment );
 				itemGroup.append( list );
 			}
 
@@ -111,13 +119,14 @@ function htmlHelper() {
 				}
 			}
 			if ( data.title ) {
+				// Required to use innerHTML because of highlightText
 				item.querySelector( '.citizen-typeahead__title' ).innerHTML = data.title;
 			}
 			if ( data.label ) {
-				item.querySelector( '.citizen-typeahead__label' ).innerHTML = data.label;
+				item.querySelector( '.citizen-typeahead__label' ).textContent = data.label;
 			}
 			if ( data.desc ) {
-				item.querySelector( '.citizen-typeahead__description' ).innerHTML = data.desc;
+				item.querySelector( '.citizen-typeahead__description' ).textContent = data.desc;
 			}
 		},
 		/**
