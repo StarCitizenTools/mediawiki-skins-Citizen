@@ -55,11 +55,11 @@ function init( bodyContent ) {
 		const heading = target.closest( '.citizen-section-heading' );
 
 		if ( heading ) {
-			const i = +heading.getAttribute( 'data-mw-citizen-section-heading-index' );
 			const headline = heading.querySelector( '.mw-headline' ) ||
 				heading.querySelector( '.mw-heading' );
 
 			if ( headline ) {
+				const i = +headline.getAttribute( 'data-mw-citizen-section-heading-index' );
 				toggleClasses( i );
 				toggleAriaExpanded( headline );
 			}
