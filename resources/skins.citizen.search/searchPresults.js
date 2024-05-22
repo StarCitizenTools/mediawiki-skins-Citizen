@@ -52,7 +52,7 @@ function searchPresults() {
 		},
 		set: function ( typeaheadEl ) {
 			// FIXME: Clean this up when we add top pages
-			this.elements = typeaheadEl.querySelectorAll( '.citizen-typeahead-item-group[data-group="history"]' );
+			this.elements = typeaheadEl.querySelectorAll( '.citizen-typeahead-item-group[data-mw-citizen-typeahead-group="history"]' );
 		},
 		clear: function ( typeaheadEl ) {
 			htmlHelper.removeItemGroup( typeaheadEl, 'history' );

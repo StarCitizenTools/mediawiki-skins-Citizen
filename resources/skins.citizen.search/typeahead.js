@@ -85,11 +85,11 @@ const typeahead = {
 			typeaheadInputElement.addEventListener( 'keydown', typeahead.input.onKeydown );
 			typeaheadInputElement.addEventListener( 'input', typeahead.input.onInput );
 			typeaheadInputElement.addEventListener( 'blur', typeahead.onBlur );
-			typeaheadInputElement.addEventListener( 'compositionstart', typeahead.input.onCompositionstart );
 		},
 		onInput: function () {
 			const typeaheadInputElement = typeahead.input.element;
 			typeahead.input.displayElement.textContent = typeaheadInputElement.value;
+			typeaheadInputElement.addEventListener( 'compositionstart', typeahead.input.onCompositionstart );
 			if ( typeahead.input.isComposing !== true ) {
 				mw.util.debounce( 100, typeahead.afterSearchQueryInput() );
 			}
@@ -271,12 +271,12 @@ const typeahead = {
 		return Promise.resolve( `Search client updated to ${ searchClient.active.id }.` );
 	},
 	updateSearchQuery: function () {
-		const typeaheadInputElement = typeahead.input.element;
-		if ( searchQuery.value === typeaheadInputElement.value ) {
+		const currentQuery = typeahead.input.element.value;
+		if ( searchQuery.value === currentQuery ) {
 			return Promise.reject( `Search query has not changed: ${ searchQuery.value }.` );
 		}
 
-		searchQuery.setValue( typeaheadInputElement.value );
+		searchQuery.setValue( currentQuery );
 
 		typeahead.updateSearchClient();
 

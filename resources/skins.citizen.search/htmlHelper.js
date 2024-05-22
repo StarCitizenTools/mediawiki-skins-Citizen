@@ -33,7 +33,7 @@ function htmlHelper() {
 		getItemGroupElement: function ( data ) {
 			const itemGroup = document.createElement( 'li' );
 			itemGroup.classList.add( 'citizen-typeahead-item-group' );
-			itemGroup.setAttribute( 'data-group', `${ data.id }` );
+			itemGroup.setAttribute( 'data-mw-citizen-typeahead-group', `${ data.id }` );
 			itemGroup.setAttribute( 'role', 'presentation' );
 
 			if ( data.label ) {
@@ -136,7 +136,7 @@ function htmlHelper() {
 		 * @param {string} id
 		 */
 		removeItemGroup: function ( typeaheadEl, id ) {
-			typeaheadEl.querySelector( `.citizen-typeahead-item-group[data-group="${ id }"]` )?.remove();
+			typeaheadEl.querySelector( `.citizen-typeahead-item-group[data-mw-citizen-typeahead-group="${ id }"]` )?.remove();
 		}
 	};
 }

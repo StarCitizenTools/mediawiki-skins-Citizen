@@ -4,9 +4,10 @@ const htmlHelper = require( './htmlHelper.js' )();
 function searchAction() {
 	return {
 		userRights: undefined,
+		// eslint-disable-next-line es-x/no-async-functions
 		getUserRights: async function () {
 			// Get and cache user rights
-			this.userRights = this.userRights ?? await mw.user.getRights();
+			this.userRights = await mw.user.getRights();
 			return this.userRights;
 		},
 		init: function ( typeaheadEl, itemGroupData ) {
@@ -17,6 +18,7 @@ function searchAction() {
 			itemGroupData.items = itemGroupData.items.map( ( item ) => ( { ...item, ...actionData } ) );
 			typeaheadEl.append( htmlHelper.getItemGroupElement( itemGroupData ) );
 		},
+		// eslint-disable-next-line es-x/no-async-functions
 		render: async function ( typeaheadEl, searchQuery ) {
 			const itemGroupData = {
 				id: 'action',
@@ -61,7 +63,7 @@ function searchAction() {
 				} );
 			}
 
-			if ( !typeaheadEl.querySelector( '.citizen-typeahead-item-group[data-group="action"]' ) ) {
+			if ( !typeaheadEl.querySelector( '.citizen-typeahead-item-group[data-mw-citizen-typeahead-group="action"]' ) ) {
 				this.init( typeaheadEl, itemGroupData );
 			}
 
