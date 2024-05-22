@@ -400,7 +400,7 @@ async function getSuggestions() {
 				id: 'suggestion',
 				items: []
 			};
-			results.forEach( ( result ) => {
+			const items = results.map( ( result ) => {
 				const data = {
 					type: 'page',
 					size: 'md',
@@ -415,8 +415,9 @@ async function getSuggestions() {
 					// Thumbnail placeholder icon
 					data.icon = 'image';
 				}
-				itemGroupData.items.push( data );
+				return data;
 			} );
+			itemGroupData.items.push( ...items );
 			fragment.append( htmlHelper.getItemGroupElement( itemGroupData ) );
 		} else {
 			// Update placeholder with no result content
