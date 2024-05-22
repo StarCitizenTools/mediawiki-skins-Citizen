@@ -344,40 +344,10 @@ async function getSuggestions() {
 	const renderSuggestions = ( results ) => {
 		const fragment = document.createDocumentFragment();
 		if ( results.length > 0 ) {
-			// Create suggestion items
-			const itemGroupData = {
-				id: 'suggestion',
-				items: []
-			};
-			const items = results.map( ( result ) => {
-				const data = {
-					type: 'page',
-					size: 'md',
-					link: result.url,
-					title: searchResults.highlightTitle( result.title, searchQuery.valueHtml ),
-					desc: result.description
-				};
-				data.label = searchResults.getRedirectLabel( result.title, result.label );
-				if ( result.thumbnail ) {
-					data.thumbnail = result.thumbnail.url;
-				} else {
-					// Thumbnail placeholder icon
-					data.icon = 'image';
-				}
-				return data;
-			} );
-			itemGroupData.items.push( ...items );
-			fragment.append( htmlHelper.getItemGroupElement( itemGroupData ) );
+			fragment.append( searchResults.getResultsHTML( results, searchQuery.valueHtml ) );
 		} else {
 			// Update placeholder with no result content
-			const data = {
-				icon: 'articleNotFound',
-				type: 'placeholder',
-				size: 'lg',
-				title: mw.message( 'citizen-search-noresults-title', searchQuery.valueHtml ).text(),
-				desc: mw.message( 'citizen-search-noresults-desc' ).text()
-			};
-			fragment.append( htmlHelper.getItemElement( data ) );
+			fragment.append( searchResults.getPlaceholderHTML( searchQuery.valueHtml ) );
 		}
 
 		htmlHelper.removeItemGroup( typeahead.element, 'suggestion' );
@@ -394,19 +364,17 @@ async function getSuggestions() {
 
 	const { abort, fetch } = searchResults.fetch( searchQuery.value, searchClient.active.client );
 
-	// Abort fetch if the input is detected
-	// So that fetch request won't be queued up
-	typeaheadInputElement.addEventListener( 'input', abort, { once: true } );
+	const inputEventListener = () => {
+		abort();
+		typeaheadInputElement.removeEventListener( 'input', inputEventListener );
+	};
+	typeaheadInputElement.addEventListener( 'input', inputEventListener, { once: true } );
 
 	try {
 		const response = await fetch;
-		typeaheadInputElement.removeEventListener( 'input', abort );
 		typeahead.suggestions.clear();
-		if ( response.results !== null ) {
-			renderSuggestions( response.results );
-		}
+		renderSuggestions( response.results );
 	} catch ( error ) {
-		typeaheadInputElement.removeEventListener( 'input', abort );
 		typeahead.form.setLoadingState( false );
 		// User can trigger the abort when the fetch event is pending
 		// There is no need for an error
