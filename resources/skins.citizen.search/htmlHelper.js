@@ -123,7 +123,7 @@ function htmlHelper() {
 				item.querySelector( '.citizen-typeahead__title' ).innerHTML = data.title;
 			}
 			if ( data.label ) {
-				item.querySelector( '.citizen-typeahead__label' ).textContent = data.label;
+				item.querySelector( '.citizen-typeahead__label' ).innerHTML = data.label;
 			}
 			if ( data.desc ) {
 				item.querySelector( '.citizen-typeahead__description' ).textContent = data.desc;
