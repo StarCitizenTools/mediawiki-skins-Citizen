@@ -23,6 +23,18 @@
 		}
 	}
 
+	&__panel {
+		&--loading {
+			.tabber__transclusion {
+				a,
+				&::before,
+				&::after {
+					background: linear-gradient( to right, var( --color-base ) 8%, var( --color-base--subtle ) 18%, var( --color-base ) 33% );
+				}
+			}
+		}
+	}
+
 	&__indicator {
 		background: var( --color-primary );
 	}
@@ -34,16 +46,6 @@
 		&__next {
 			&::after {
 				opacity: var( --opacity-icon-base );
-			}
-		}
-	}
-
-	&__transclusion {
-		&--loading {
-			.tabber__loading-indicator,
-			&::before,
-			&::after {
-				background-color: var( --color-primary );
 			}
 		}
 	}
