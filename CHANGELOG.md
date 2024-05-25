@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.14.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.14.0...v2.14.1) (2024-05-25)
+
+
+### Miscellaneous Chores
+
+* **release-please:** 🔧 add manifest and config files ([cc4e7b1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cc4e7b1d85a41a81fe49e9dda53a747584449165))
+* **release-please:** 🔧 fix config file name ([0ed940c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0ed940c7e41f6d3fbcc09cc72331a9b5955e50d9))
+* **workflow:** 🔧 check if condition earlier ([6c996b7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6c996b7fff8b6f0913c14e8b4ad9bc5829756a25))
+* **workflow:** 🔧 only trigger PHP tests when PHP files are changed ([d6e996b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d6e996b09fef4c1e8aae61d1b6b08567690b5cbe))
+
 ## [2.14.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.13.5...v2.14.0) (2024-05-25)
 
 
