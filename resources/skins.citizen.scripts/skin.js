@@ -34,8 +34,8 @@ function initStickyHeader( document ) {
 	const addScrollDownClass = toggleScrollClass( SCROLL_UP_CLASS, SCROLL_DOWN_CLASS );
 	const addScrollUpClass = toggleScrollClass( SCROLL_DOWN_CLASS, SCROLL_UP_CLASS );
 
-	const toggleStickyClass = () => {
-		return ( state ) => {
+	const toggleStickyClass = ( state ) => {
+		return () => {
 			window.requestAnimationFrame( () => {
 				document.body.classList.toggle( STICKY_CLASS, state );
 			} );
@@ -45,8 +45,9 @@ function initStickyHeader( document ) {
 	initDirectionObserver( addScrollDownClass, addScrollUpClass, 10 );
 
 	const sentinel = document.getElementById( STICKY_SENTINEL_ID );
+	const shouldStickyHeader = sentinel && getComputedStyle( sentinel ).getPropertyValue( 'display' ) !== 'none';
 
-	if ( sentinel && getComputedStyle( sentinel ).getPropertyValue( 'display' ) !== 'none' ) {
+	if ( shouldStickyHeader ) {
 		const observer = initIntersectionObserver( toggleStickyClass( true ), toggleStickyClass( false ) );
 		observer.observe( sentinel );
 	}
