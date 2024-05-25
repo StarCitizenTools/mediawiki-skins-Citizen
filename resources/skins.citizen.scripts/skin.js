@@ -1,3 +1,8 @@
+const SCROLL_DOWN_CLASS = 'citizen-scroll--down';
+const SCROLL_UP_CLASS = 'citizen-scroll--up';
+const STICKY_SENTINEL_ID = 'citizen-page-header-sticky-sentinel';
+const STICKY_CLASS = 'citizen-page-header--sticky';
+
 /**
  * Wait for first paint before calling this function.
  * (see T234570#5779890, T246419).
@@ -10,40 +15,39 @@ function enableCssAnimations( document ) {
 }
 
 /**
- * Add a class to indicate that sticky header is active
+ * Initializes the sticky header functionality by setting up scroll observers and intersection observers.
  *
- * @param {Document} document
- * @return {void}
+ * @param {Document} document - The document object representing the webpage.
  */
 function initStickyHeader( document ) {
-	const scrollObserver = require( './scrollObserver.js' );
+	const { initDirectionObserver, initIntersectionObserver } = require( './scrollObserver.js' );
 
-	// Detect scroll direction and add the right class
-	scrollObserver.initDirectionObserver(
-		() => {
-			document.body.classList.remove( 'citizen-scroll--up' );
-			document.body.classList.add( 'citizen-scroll--down' );
-		},
-		() => {
-			document.body.classList.remove( 'citizen-scroll--down' );
-			document.body.classList.add( 'citizen-scroll--up' );
-		},
-		10
-	);
+	const toggleScrollClass = ( removeClass, addClass ) => {
+		return () => {
+			window.requestAnimationFrame( () => {
+				document.body.classList.remove( removeClass );
+				document.body.classList.add( addClass );
+			} );
+		};
+	};
 
-	const sentinel = document.getElementById( 'citizen-page-header-sticky-sentinel' );
+	const addScrollDownClass = toggleScrollClass( SCROLL_UP_CLASS, SCROLL_DOWN_CLASS );
+	const addScrollUpClass = toggleScrollClass( SCROLL_DOWN_CLASS, SCROLL_UP_CLASS );
 
-	// In some pages we use display:none to disable the sticky header
-	// Do not start observer if it is set to display:none
+	const toggleStickyClass = () => {
+		return ( state ) => {
+			window.requestAnimationFrame( () => {
+				document.body.classList.toggle( STICKY_CLASS, state );
+			} );
+		};
+	};
+
+	initDirectionObserver( addScrollDownClass, addScrollUpClass, 10 );
+
+	const sentinel = document.getElementById( STICKY_SENTINEL_ID );
+
 	if ( sentinel && getComputedStyle( sentinel ).getPropertyValue( 'display' ) !== 'none' ) {
-		const observer = scrollObserver.initIntersectionObserver(
-			() => {
-				document.body.classList.add( 'citizen-page-header--sticky' );
-			},
-			() => {
-				document.body.classList.remove( 'citizen-page-header--sticky' );
-			}
-		);
+		const observer = initIntersectionObserver( toggleStickyClass( true ), toggleStickyClass( false ) );
 		observer.observe( sentinel );
 	}
 }

@@ -1,5 +1,5 @@
 /**
- * Create an observer based vertical scroll direction
+ * Create an observer based vertical scroll direction with debouncing
  *
  * @param {Function} onScrollDown functionality for when viewport is scrolled down
  * @param {Function} onScrollUp functionality for when viewport is scrolled up
@@ -7,8 +7,6 @@
  * @return {void}
  */
 function initDirectionObserver( onScrollDown, onScrollUp, threshold ) {
-	const throttle = require( 'mediawiki.util' ).throttle;
-
 	let lastScrollTop = window.scrollY;
 
 	const onScroll = () => {
@@ -26,7 +24,8 @@ function initDirectionObserver( onScrollDown, onScrollUp, threshold ) {
 		lastScrollTop = scrollTop;
 	};
 
-	window.addEventListener( 'scroll', throttle( onScroll, 250 ) );
+	const debouncedOnScroll = mw.util.debounce( onScroll, 100 );
+	window.addEventListener( 'scroll', mw.util.throttle( debouncedOnScroll, 250 ) );
 }
 
 /**
