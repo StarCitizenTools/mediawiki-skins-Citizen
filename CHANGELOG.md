@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.14.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.13.5...v2.14.0) (2024-05-25)
+
+
+### Features
+
+* **components:** rewrite template data partials into CitizenComponent components ([#846](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/846)) ([03da361](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/03da361b9700faf9f1843018eefb38bb47e84f49))
+* **core:** ✨ tweak dark theme color to be darker ([a193d14](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a193d14de7b6728774231d8a37750a70682cc089))
+* **mediawiki:** ✨ tweak login and signup page styles ([cae19d7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cae19d7a3020c6181f74f54e5c0cf6086165a7c0))
+* **TabberNeue:** ✨ update TabberNeue RL module name ([d7f6c0c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d7f6c0c53e3b8e4dc534d9784f5409bf061594fb))
+* **VisualEditor:** ✨ hide less useful buttons when width is limited ([820d612](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/820d612eaff26caffd3745f63ce3b9359136a04a))
+
+
+### Bug Fixes
+
+* **codex:** 🐛 target new codex style RL module as well ([27eac2d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/27eac2da9572b37623e0e856c36cd5d3bc6420a7))
+* **components:** catch MalformedTitleException in titleFromText ([0006db6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0006db65a20f31c07a640fe5a0fbf2b485df392f))
+* **core:** 🐛 do not hide view button on revision page ([9969479](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/996947993859a8ddac6943904eb9693851085624)), closes [#845](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/845)
+* **core:** 🐛 incorrect label text when edit count contains separator ([c5e8c2b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c5e8c2bfc864c00f668aef78aa1aeaaef8dc240d))
+* **core:** 🐛 incorrect section selector ([685901c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/685901cce3a51c5b574a0c56f26bfd214738c4e9))
+* **core:** 🐛 incorrect try catch block ([d4d71dc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d4d71dc34a7300176f185d50a8742fcd160f5147))
+* **core:** 🐛 only pass string into str replace ([84a65a3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/84a65a303b86bfe665697b911e1d647f8d55c3ec))
+* **core:** 🐛 pass namespace key as string ([f781773](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f781773cbaba9e3ac49610e11daed8e6b084a6d9)), closes [#849](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/849)
+* **core:** 🐛 turn message into string before str_replace ([e5fef2a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e5fef2ac09cb61089dc2edf7bd5bff17d4691394))
+* **core:** Rename Usermenu.less to UserMenu.less ([c09b82c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c09b82cb07913be5e7243c5eca0869a3007bc3b6))
+* **mediawiki:** 🐛 overflow signupstart container ([b922505](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b9225057a786ac3c7b283660769c2a871adaf5a3))
+* **search:** 🐛 label can sometimes contain HTML ([b946056](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b946056c13bb3bfd8e3842bab473ab97ce82198b))
+
+
+### Miscellaneous Chores
+
+* 🔧 add release-please action ([c72a25b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c72a25b02744823615b8ba0f8713707b5db897c3))
+* 🔧 drop JSdoc as it is not being used ([b10c1a8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b10c1a8fc2141a07128c7e9a6d3db9983d12d03b))
+* 🔧 drop standard-version in favor of release-please ([488f655](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/488f65519c10511379964a256a34c26f492cd0c0))
+* 🔧 set release policy to PHP ([2b15ff8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2b15ff8d1147f0fae83d95e2369fa3d0a68d8ce1))
+* **dep-dev:** 🔧 remove svgo as it is not used ([0eb9a8a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0eb9a8a7d1dbbd6bc16080f80ec15af1d4207ea0))
+* **deps-dev:** bump grunt-banana-checker from 0.12.0 to 0.13.0 ([#847](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/847)) ([18676da](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/18676da2d495fc0da83cd2fb3abc241ea58a9718))
+* **eslint:** 🔧 use wikimedia/server for root folder eslint config ([4762102](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4762102d616bce2095d1912e735cf5594191594c))
+
 ### [2.13.5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.13.4...v2.13.5) (2024-05-09)
 
 
