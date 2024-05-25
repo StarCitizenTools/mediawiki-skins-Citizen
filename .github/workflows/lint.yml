@@ -103,13 +103,12 @@ jobs:
         npm run lint:i18n
 
     - name: Trigger PHP tests
+      if: steps.changed-php.outputs.any_changed == 'true'
       run: |
-        if [ steps.changed-php.outputs.any_changed == 'true' ]; then
-          curl -X POST -H "Authorization: token ${{ secrets.WORKFLOW_TOKEN }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/StarCitizenTools/mediawiki-skins-Citizen/actions/workflows/php-tests.yaml/dispatches \
-          -d '{"ref":"main"}'
-        fi
+        curl -X POST -H "Authorization: token ${{ secrets.WORKFLOW_TOKEN }}" \
+        -H "Accept: application/vnd.github.v3+json" \
+        https://api.github.com/repos/StarCitizenTools/mediawiki-skins-Citizen/actions/workflows/php-tests.yaml/dispatches \
+        -d '{"ref":"main"}'
 
     # Only patch code when it is a push event
     - name: Push the changes
