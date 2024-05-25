@@ -1,14 +1,11 @@
-name: PHP unit test
+name: PHP tests
 
 on:
-  push:
-    branches: [ main, develop, feature/* ]
-  pull_request:
-    branches: [ "*" ]
+  workflow_dispatch:
 
 jobs:
   test:
-    name: "PHPUnit: MW ${{ matrix.mw }}, PHP ${{ matrix.php }}"
+    name: "PHP tests: MW ${{ matrix.mw }}, PHP ${{ matrix.php }}"
     continue-on-error: ${{ matrix.experimental }}
 
     strategy:
