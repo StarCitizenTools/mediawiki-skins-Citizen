@@ -12,31 +12,34 @@ function init( bodyContent ) {
 	const headings = bodyContent.querySelectorAll( '.citizen-section-heading' );
 	const sections = bodyContent.querySelectorAll( '.citizen-section' );
 
-	const setHeadlineAttributes = ( heading, collapsibleID, i ) => {
-		const headline = heading.querySelector( '.mw-headline' ) ||
-				heading.querySelector( '.mw-heading' );
+	const setHeadlineAttributes = ( heading, collapsibleID, sectionIndex ) => {
+		const headline = heading.querySelector( '.mw-headline, .mw-heading' );
 
 		if ( !headline ) {
 			return;
 		}
 
-		headline.setAttribute( 'tabindex', 0 );
+		headline.setAttribute( 'tabindex', '0' );
 		headline.setAttribute( 'role', 'button' );
 		headline.setAttribute( 'aria-controls', collapsibleID );
-		headline.setAttribute( 'aria-expanded', true );
-		headline.setAttribute( 'data-mw-citizen-section-heading-index', i );
+		headline.setAttribute( 'aria-expanded', 'true' );
+		headline.setAttribute( 'data-mw-citizen-section-heading-index', sectionIndex );
 	};
 
-	const toggleClasses = ( i ) => {
-		if ( sections[ i + 1 ] ) {
-			headings[ i ].classList.toggle( 'citizen-section-heading--collapsed' );
-			sections[ i + 1 ].classList.toggle( 'citizen-section--collapsed' );
+	const setSectionAttributes = ( section ) => {
+		section.setAttribute( 'aria-hidden', 'false' );
+	};
+
+	const toggleClasses = ( heading, section ) => {
+		if ( section ) {
+			heading.classList.toggle( 'citizen-section-heading--collapsed' );
+			section.classList.toggle( 'citizen-section--collapsed' );
 		}
 	};
 
-	const toggleAriaExpanded = ( el ) => {
-		const isExpanded = el.getAttribute( 'aria-expanded' ) === 'true';
-		el.setAttribute( 'aria-expanded', isExpanded ? 'false' : 'true' );
+	const toggleAriaAttribute = ( el, attribute ) => {
+		const isAttributeSet = el.getAttribute( attribute ) === 'true';
+		el.setAttribute( attribute, isAttributeSet ? 'false' : 'true' );
 	};
 
 	const onEditSectionClick = ( e ) => {
@@ -52,16 +55,17 @@ function init( bodyContent ) {
 			return;
 		}
 
-		const heading = target.closest( '.citizen-section-heading' );
+		const selectedHeading = target.closest( '.citizen-section-heading' );
 
-		if ( heading ) {
-			const headline = heading.querySelector( '.mw-headline' ) ||
-				heading.querySelector( '.mw-heading' );
+		if ( selectedHeading ) {
+			const selectedHeadline = selectedHeading.querySelector( '.mw-headline, .mw-heading' );
 
-			if ( headline ) {
-				const i = +headline.getAttribute( 'data-mw-citizen-section-heading-index' );
-				toggleClasses( i );
-				toggleAriaExpanded( headline );
+			if ( selectedHeadline ) {
+				const sectionIndex = +selectedHeadline.dataset.mwCitizenSectionHeadingIndex;
+				const selectedSection = sections[ sectionIndex + 1 ];
+				toggleClasses( selectedHeading, selectedSection );
+				toggleAriaAttribute( selectedHeadline, 'aria-expanded' );
+				toggleAriaAttribute( selectedSection, 'aria-hidden' );
 			}
 		}
 	};
@@ -70,6 +74,10 @@ function init( bodyContent ) {
 	for ( let i = 0; i < headingsLength; i++ ) {
 		setHeadlineAttributes( headings[ i ], `citizen-section-${ i + 1 }`, i );
 	}
+
+	sections.forEach( ( section ) => {
+		setSectionAttributes( section );
+	} );
 
 	bodyContent.addEventListener( 'click', handleClick, false );
 }

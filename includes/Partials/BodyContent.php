@@ -204,7 +204,7 @@ final class BodyContent extends Partial {
 	private function createSectionBodyElement( DOMDocument $doc, $sectionNumber ) {
 		$sectionBody = $doc->createElement( 'section' );
 		$sectionBody->setAttribute( 'class', self::SECTION_CLASS );
-		$sectionBody->setAttribute( 'id', 'citizen-section-collapsible-' . $sectionNumber );
+		$sectionBody->setAttribute( 'id', 'citizen-section-' . $sectionNumber );
 
 		return $sectionBody;
 	}
