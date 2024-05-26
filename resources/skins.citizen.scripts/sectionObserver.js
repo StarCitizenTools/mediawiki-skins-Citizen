@@ -1,9 +1,3 @@
-/**
- * Based on Vector
- * NOTE: It is kept as an ES6 module because we are dropping ES5 soon.
- * But some parts are in ES5 because ResourceLoader is messing up ES6 in 1.35
- */
-
 /** @module SectionObserver */
 
 /**
@@ -33,9 +27,6 @@
  * `props.onIntersection` callback will be fired with the corresponding section
  * as a param.
  *
- * Because sectionObserver uses a scroll event listener (in combination with
- * IntersectionObserver), the changes are throttled to a default maximum rate of
- * 200ms so that the main thread is not excessively blocked.
  * IntersectionObserver is used to asynchronously calculate the positions of the
  * observed tags off the main thread and in a manner that does not cause
  * expensive forced synchronous layouts.
@@ -45,11 +36,7 @@
  */
 function sectionObserver( props ) {
 
-	props = Object.assign( {
-		topMargin: 0,
-		throttleMs: 200,
-		onIntersection: () => {}
-	}, props );
+	const { topMargin = 0, onIntersection = () => {} } = props;
 
 	let /** @type {boolean} */ inThrottle = false;
 	let /** @type {HTMLElement | undefined} */ current;
@@ -57,7 +44,6 @@ function sectionObserver( props ) {
 	const observer = new IntersectionObserver( ( entries ) => {
 		let /** @type {IntersectionObserverEntry | undefined} */ closestNegativeEntry;
 		let /** @type {IntersectionObserverEntry | undefined} */ closestPositiveEntry;
-		const topMargin = /** @type {number} */ ( props.topMargin );
 
 		entries.forEach( ( entry ) => {
 			const top =
@@ -90,7 +76,7 @@ function sectionObserver( props ) {
 
 		// If the intersection is new, fire the `onIntersection` callback.
 		if ( current !== closestTag ) {
-			props.onIntersection( closestTag );
+			onIntersection( closestTag );
 		}
 		current = closestTag;
 
@@ -119,10 +105,10 @@ function sectionObserver( props ) {
 		if ( !inThrottle ) {
 			inThrottle = true;
 
-			setTimeout( () => {
+			requestAnimationFrame( () => {
 				calcIntersection();
 				inThrottle = false;
-			}, props.throttleMs );
+			} );
 		}
 	}
 
