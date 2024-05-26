@@ -8,19 +8,25 @@ const config = require( './config.json' );
  * @return {void}
  */
 function setupOverflowState( element ) {
-	if ( !element.parentNode ) {
-		mw.log.error( '[Citizen] Parent node is null or undefined. Cannot proceed with setupOverflowState.' );
+	if ( !element.parentElement ) {
+		mw.log.error( '[Citizen] Parent element is null or undefined. Cannot proceed with setupOverflowState.' );
 		return;
 	}
 
-	const parentNode = element.parentNode;
-	let cachedContainerWidth;
-	let cachedContentWidth;
-	let cachedScrollPosition;
+	const parentNode = element.parentElement;
+	let cachedContainerWidth = 0;
+	let cachedContentWidth = 0;
+	let cachedScrollPosition = 0;
 
-	const updateOverflowClasses = ( isLeft, isRight ) => {
-		parentNode.classList.toggle( 'citizen-overflow--left', isLeft );
-		parentNode.classList.toggle( 'citizen-overflow--right', isRight );
+	const toggleClasses = ( classes ) => {
+		classes.forEach( ( [ condition, className ] ) => {
+			const hasClass = parentNode.classList.contains( className );
+			if ( condition && !hasClass ) {
+				parentNode.classList.add( className );
+			} else if ( !condition && hasClass ) {
+				parentNode.classList.remove( className );
+			}
+		} );
 	};
 
 	const updateState = () => {
@@ -28,7 +34,8 @@ function setupOverflowState( element ) {
 		const contentWidth = element.scrollWidth;
 		const currentPosition = Math.round( parentNode.scrollLeft );
 
-		if ( isNaN( containerWidth ) || isNaN( contentWidth ) ) {
+		const areWidthsInvalid = Number.isNaN( containerWidth ) || Number.isNaN( contentWidth );
+		if ( areWidthsInvalid ) {
 			mw.log.error( '[Citizen] Invalid width values. Cannot calculate overflow state.' );
 			return;
 		}
@@ -45,9 +52,11 @@ function setupOverflowState( element ) {
 		cachedContentWidth = contentWidth;
 		cachedScrollPosition = currentPosition;
 
-		const isAtStart = currentPosition <= 0;
-		const isAtEnd = currentPosition + containerWidth >= contentWidth;
-		updateOverflowClasses( !isAtStart, !isAtEnd );
+		const updateClasses = [
+			[ currentPosition > 0, 'citizen-overflow--left' ],
+			[ currentPosition + containerWidth < contentWidth, 'citizen-overflow--right' ]
+		];
+		toggleClasses( updateClasses );
 	};
 
 	updateState();
@@ -62,7 +71,6 @@ function setupOverflowState( element ) {
 		const overflowResizeObserver = new ResizeObserver( debouncedUpdateState );
 		overflowResizeObserver.observe( element );
 	} else {
-		// Fallback mechanism or error handling for environments without ResizeObserver support
 		mw.log.warn( '[Citizen] ResizeObserver is not supported in this environment.' );
 	}
 }
@@ -134,7 +142,7 @@ function init( bodyContent ) {
 	const tables = bodyContent.querySelectorAll( 'table:not( table table )' );
 
 	if ( tables.length > 0 ) {
-		Array.from( tables ).forEach( ( table ) => {
+		tables.forEach( ( table ) => {
 			wrapTable( table );
 		} );
 	}
