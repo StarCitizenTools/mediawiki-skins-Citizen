@@ -225,6 +225,7 @@ class OverflowElement {
  * @return {void}
  */
 function init( bodyContent ) {
+	// Do not wrap nested tables
 	const tables = bodyContent.querySelectorAll( 'table:not( table table )' );
 
 	// Wrap tables
