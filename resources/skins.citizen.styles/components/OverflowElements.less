@@ -1,3 +1,15 @@
+@overflow-affordnance-size: 2rem;
+
+.mask-gradient(@direction, @color1, @color2, @color3: null , @color4: null) {
+	-webkit-mask-image: linear-gradient( @direction, @color1, @color2 );
+	mask-image: linear-gradient( @direction, @color1, @color2 );
+
+	& when not(@color3 = null), not(@color4 = null) {
+		-webkit-mask-image: linear-gradient( @direction, @color1, @color2, @color3, @color4 );
+		mask-image: linear-gradient( @direction, @color1, @color2, @color3, @color4 );
+	}
+}
+
 // TODO: Revisit on MW 1.43 since Minerva table styles are merged upstream
 table {
 	display: block;
@@ -17,17 +29,14 @@ table {
 	}
 
 	&--left {
-		-webkit-mask-image: linear-gradient( 90deg, transparent, #000 15% );
-		mask-image: linear-gradient( 90deg, transparent, #000 15% );
+		.mask-gradient(90deg, transparent, #000 @overflow-affordnance-size);
 	}
 
 	&--right {
-		-webkit-mask-image: linear-gradient( 90deg, #000 85%, transparent );
-		mask-image: linear-gradient( 90deg, #000 85%, transparent );
+		.mask-gradient(270deg, transparent, #000 @overflow-affordnance-size);
 	}
 
 	&--left&--right {
-		-webkit-mask-image: linear-gradient( 90deg, transparent, #000 15%, #000 85%, transparent );
-		mask-image: linear-gradient( 90deg, transparent, #000 15%, #000 85%, transparent );
+		.mask-gradient(90deg, transparent, #000 @overflow-affordnance-size, #000 ~'calc( 100% - @{overflow-affordnance-size} )', transparent);
 	}
 }
