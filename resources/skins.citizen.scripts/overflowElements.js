@@ -11,7 +11,7 @@ class OverflowElement {
 		this.elementWidth = 0;
 		this.wrapperScrollLeft = 0;
 		this.wrapperWidth = 0;
-		this.onScroll = this.onScroll.bind( this );
+		this.onScroll = mw.util.throttle( this.onScroll.bind( this ), 250 );
 		this.updateState = this.updateState.bind( this );
 	}
 
@@ -36,6 +36,29 @@ class OverflowElement {
 	}
 
 	/**
+	 * Checks if the state of the overflow element has changed by comparing the current element width, wrapper scroll left,
+	 * and wrapper width with the cached values. Returns true if any of the values have changed, otherwise returns false.
+	 *
+	 * @return {boolean} - True if the state has changed, false otherwise.
+	 */
+	hasStateChanged() {
+		return (
+			this.element.scrollWidth !== this.elementWidth ||
+			Math.round( this.wrapper.scrollLeft ) !== this.wrapperScrollLeft ||
+			this.wrapper.offsetWidth !== this.wrapperWidth
+		);
+	}
+
+	/**
+	 * Checks if the element has overflowed horizontally by comparing the element width with the wrapper width.
+	 *
+	 * @return {boolean} - True if the element has overflowed, false otherwise.
+	 */
+	hasOverflowed() {
+		return this.elementWidth > this.wrapperWidth;
+	}
+
+	/**
 	 * Updates the state of the overflow element by calculating the element width, wrapper scroll left, and wrapper width.
 	 * If the width values are invalid, logs an error and returns.
 	 * Compares the current state with the previous state and updates the cache if there is a change.
@@ -48,31 +71,28 @@ class OverflowElement {
 		const wrapperScrollLeft = Math.round( this.wrapper.scrollLeft );
 		const wrapperWidth = this.wrapper.offsetWidth;
 
-		const areWidthsInvalid = Number.isNaN( wrapperWidth ) || Number.isNaN( elementWidth );
-		if ( areWidthsInvalid ) {
-			mw.log.error( '[Citizen] Invalid width values. Cannot calculate overflow state.' );
+		if ( !this.hasStateChanged() ) {
 			return;
 		}
 
-		// State. State never changes.
-		if (
-			elementWidth === this.elementWidth &&
-			wrapperScrollLeft === this.wrapperScrollLeft &&
-			wrapperWidth === this.wrapperWidth
-		) {
-			return;
-		}
-
-		// State has changed. Save it to cache.
 		this.elementWidth = elementWidth;
 		this.wrapperScrollLeft = wrapperScrollLeft;
 		this.wrapperWidth = wrapperWidth;
 
-		const updateClasses = [
-			[ this.wrapperScrollLeft > 0, 'citizen-overflow--left' ],
-			[ this.wrapperScrollLeft + this.wrapperWidth < this.elementWidth, 'citizen-overflow--right' ]
-		];
-		this.toggleClasses( updateClasses );
+		if ( !this.hasOverflowed() ) {
+			return;
+		}
+
+		const isLeftOverflowing = this.wrapperScrollLeft > 0;
+		const isRightOverflowing = this.wrapperScrollLeft + this.wrapperWidth < this.elementWidth;
+
+		window.requestAnimationFrame( () => {
+			const updateClasses = [
+				[ isLeftOverflowing, 'citizen-overflow--left' ],
+				[ isRightOverflowing, 'citizen-overflow--right' ]
+			];
+			this.toggleClasses( updateClasses );
+		} );
 	}
 
 	/**
@@ -143,7 +163,7 @@ class OverflowElement {
 	 * @return {void}
 	 */
 	onScroll() {
-		window.requestAnimationFrame( this.updateState );
+		this.updateState();
 	}
 
 	/**
