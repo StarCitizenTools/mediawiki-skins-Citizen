@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.15.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.14.1...v2.15.0) (2024-05-27)
+
+
+### Features
+
+* ✨ improve scrolling performance ([27bca0f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/27bca0fc6624908f0294f14347238967147b1fee))
+* **core:** ✨ add config to change overflow inherited classes ([974e6b2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/974e6b27508caf60116548f2342ebb49ae226e48))
+* **core:** ✨ change overflow gradient to fixed size ([c3943ca](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c3943ca7cf639f47942491bd47cc11f927ee997e))
+* **core:** ✨ rename wgCitizenTableNowrapClasses to wgCitizenOverflowNowrapClasses ([c17aeab](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c17aeab3fd7ae5afdd3f9e1d591c35696a9f1f4b))
+* **core:** ✨ wrap any elements tagged with the class citizen-overflow ([4ed68a9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4ed68a924d54a40716933a77736be84485f69c7c))
+* **TabberNeue:** ✨ add init styles ([45ee5f8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/45ee5f897c6f17df8479600319fef5181b72d4b2))
+* **TabberNeue:** ✨ update Tabber styles ([be01d5b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/be01d5bb6c920108a9cdcb186d6dc2ddfb0aa0b2))
+
+
+### Bug Fixes
+
+* **core:** 🐛 always reset overflow state ([7b32aee](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7b32aeec7d1753574472114ef8d271c5abe5f83f))
+* **core:** 🐛 escape double quotes for toc selector ([ae6d207](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ae6d207fb4d42601e78a51c8d721e00a0c2ba046))
+* **core:** 🐛 fix incorrect overflow wrapper class name ([bc356f9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bc356f915de50d7e7a6dc4a1b8fac1e392cdd614))
+* **core:** 🐛 incorrect sticky header class assignment ([af3d72a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/af3d72ad7501f5329b18bf90f6e4aaa8cd58085e))
+* **core:** 🐛 remove table border expansion before the JS is loaded ([cb1cfde](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cb1cfde785e00112843128e554e9177bece78c73))
+* **core:** 🐛 update overflow config name in skin.json ([c1582a8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c1582a8ddcf70d440cca9dfa12be76d7bf8b982a))
+
+
+### Performance Improvements
+
+* **core:** ⚡️ further improvements to scroll and section observers ([e9289b1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e9289b149a70783ed2f6596bd7d2d7563f0cf0d9))
+* **core:** ⚡️ only toggle class when the element is overflowing ([523140f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/523140f62f2ce412937f9217dd502c4aca4ce343))
+* **core:** ⚡️ remove scroll eventListener and resizeObserver on tables when not needed ([7a4d433](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7a4d43392d60a816be5b441cac74655c0dae0775))
+
 ## [2.14.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.14.0...v2.14.1) (2024-05-25)
 
 
