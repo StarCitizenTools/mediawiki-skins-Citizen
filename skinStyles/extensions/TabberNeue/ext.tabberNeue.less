@@ -3,45 +3,26 @@
  *
  * SkinStyles for Extension:TabberNeue
  * Module: ext.tabberNeue
- * Version: 2.0.0
+ * Version: 2.1.1
  *
- * Date: 2024-05-25
+ * Date: 2024-05-26
 */
 
 .tabber {
+	--tabber-color-progressive: var( --color-primary );
+	--tabber-color-progressive--hover: var( --color-primary--hover );
+	--tabber-color-progressive--active: var( --color-primary--active );
+	--tabber-color-base: var( --color-base );
+	--tabber-color-subtle: var( --color-base--subtle );
+	--tabber-background-color-button-quiet--hover: var( --background-color-quiet--hover );
+	--tabber-background-color-button-quiet--active: var( --background-color-quiet--active );
+	--tabber-border-color-base: var( --border-color-base );
+
 	&__tab {
 		font-weight: var( --font-weight-medium );
-		color: var( --color-base );
-
-		&:visited {
-			color: var( --color-base );
-		}
-
-		&[ aria-selected='true' ],
-		&[ aria-selected='true' ]:visited {
-			color: var( --color-primary );
-		}
-	}
-
-	&__panel {
-		&--loading {
-			.tabber__transclusion {
-				a,
-				&::before,
-				&::after {
-					background: linear-gradient( to right, var( --color-base ) 8%, var( --color-base--subtle ) 18%, var( --color-base ) 33% );
-				}
-			}
-		}
-	}
-
-	&__indicator {
-		background: var( --color-primary );
 	}
 
 	&__header {
-		box-shadow: inset 0 -1px 0 0 var( --border-color-interactive );
-
 		&__prev,
 		&__next {
 			&::after {
@@ -53,30 +34,16 @@
 
 @media ( hover: hover ) {
 	.tabber {
-		&__tab {
-			&:hover {
-				color: var( --color-primary--hover );
-			}
-
-			&:active {
-				color: var( --color-primary--active );
-			}
-		}
-
 		&__header {
 			&__prev,
 			&__next {
 				&:hover {
-					background-color: var( --background-color-quiet--hover );
-
 					&::after {
 						opacity: var( --opacity-icon-base--hover );
 					}
 				}
 
 				&:active {
-					background-color: var( --background-color-quiet--active );
-
 					&::after {
 						opacity: var( --opacity-icon-base--active );
 					}
