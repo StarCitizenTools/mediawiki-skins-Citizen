@@ -159,12 +159,12 @@
 				},
 				"resources/skins.citizen.scripts/checkbox.js",
 				"resources/skins.citizen.scripts/lastModified.js",
+				"resources/skins.citizen.scripts/overflowElements.js",
 				"resources/skins.citizen.scripts/scrollObserver.js",
 				"resources/skins.citizen.scripts/sectionObserver.js",
 				"resources/skins.citizen.scripts/search.js",
 				"resources/skins.citizen.scripts/sections.js",
-				"resources/skins.citizen.scripts/tableOfContents.js",
-				"resources/skins.citizen.scripts/tables.js"
+				"resources/skins.citizen.scripts/tableOfContents.js"
 			],
 			"dependencies": [
 				"mediawiki.util",

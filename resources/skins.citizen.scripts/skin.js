@@ -86,13 +86,13 @@ function registerServiceWorker() {
 function initBodyContent( bodyContent ) {
 	const
 		sections = require( './sections.js' ),
-		tables = require( './tables.js' ),
+		overflowElements = require( './overflowElements.js' ),
 		toc = require( './tableOfContents.js' );
 
 	// Collapsable sections
 	sections.init( bodyContent );
-	// Table enhancements
-	tables.init( bodyContent );
+	// Overflow element enhancements
+	overflowElements.init( bodyContent );
 	// Table of contents
 	toc.init( bodyContent );
 }
