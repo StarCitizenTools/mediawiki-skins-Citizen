@@ -42,8 +42,8 @@
 	"citizen-search-mediasearch": "搜索媒体文件",
 	"citizen-search-editpage": "编辑或创建页面",
 	"citizen-search-empty-desc": "请输入要搜索的内容",
-	"citizen-search-noresults-title": "啊哦！“$1”没有搜索结果",
-	"citizen-search-noresults-desc": "还可以试试上方选项",
+	"citizen-search-noresults-title": "不妙！没有“$1”的搜索结果",
+	"citizen-search-noresults-desc": "还可以尝试上面的选项",
 	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}}的讨论页面",
 	"citizen-tagline-ns-project": "有关{{SITENAME}}的信息",
 	"citizen-tagline-ns-file": "{{SITENAME}}上的文件",
@@ -68,7 +68,7 @@
 	"citizen-feature-custom-width-name": "宽度",
 	"citizen-feature-custom-width-standard-label": "标准",
 	"citizen-feature-custom-width-wide-label": "宽",
-	"citizen-feature-custom-width-full-label": "全屏",
+	"citizen-feature-custom-width-full-label": "全宽",
 	"citizen-user-info-text-anon": "如果您进行任何编辑，您的IP地址会公开展示。",
 	"citizen-user-info-text-temp": "此临时账号是因您在此浏览器及设备上进行了无账号编辑而创建。"
 }
