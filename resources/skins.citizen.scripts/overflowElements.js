@@ -247,13 +247,10 @@ class OverflowElement {
  * @return {void}
  */
 function init( bodyContent ) {
-	// Do not wrap nested tables
-	const tables = bodyContent.querySelectorAll( 'table:not( table table )' );
-
-	// Wrap tables
-	if ( tables.length > 0 ) {
-		tables.forEach( ( table ) => {
-			const overflowElement = new OverflowElement( table );
+	const overflowElements = bodyContent.querySelectorAll( '.citizen-overflow, table:not( table table )' );
+	if ( overflowElements.length > 0 ) {
+		overflowElements.forEach( ( el ) => {
+			const overflowElement = new OverflowElement( el );
 			overflowElement.init();
 		} );
 	}
