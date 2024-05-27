@@ -687,7 +687,7 @@
 			"descriptionmsg": "citizen-config-enablepreferences",
 			"public": true
 		},
-		"TableNowrapClasses": {
+		"OverflowNowrapClasses": {
 			"value": [
 				"citizen-table-nowrap",
 				"diff",
@@ -700,8 +700,8 @@
 				"smw-datatable",
 				"mw-capiunto-infobox"
 			],
-			"description": "Defines table css classes ignored by citizen table wrapper",
-			"descriptionmsg": "citizen-config-tablenowrapclasses",
+			"description": "Defines css classes ignored by overflow wrapper",
+			"descriptionmsg": "citizen-config-overflownowrapclasses",
 			"public": true
 		}
 	},
