@@ -47,6 +47,7 @@ class ResourceLoaderHooks {
 	) {
 		return [
 			'wgCitizenEnablePreferences' => $config->get( 'CitizenEnablePreferences' ),
+			'wgCitizenOverflowInheritedClasses' => $config->get( 'CitizenOverflowInheritedClasses' ),
 			'wgCitizenOverflowNowrapClasses' => $config->get( 'CitizenOverflowNowrapClasses' ),
 			'wgCitizenSearchModule' => $config->get( 'CitizenSearchModule' )
 		];

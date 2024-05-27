@@ -98,10 +98,10 @@ class OverflowElement {
 	/**
 	 * Filters and adds inherited classes to the wrapper element.
 	 *
-	 * @param {Array} inheritedClasses - An array of inherited classes to handle.
 	 * @return {void}
 	 */
-	handleInheritedClasses( inheritedClasses ) {
+	handleInheritedClasses() {
+		const inheritedClasses = config.wgCitizenOverflowInheritedClasses;
 		const filteredClasses = inheritedClasses.filter( ( cls ) => this.element.classList.contains( cls ) );
 
 		filteredClasses.forEach( ( cls ) => {
@@ -146,7 +146,7 @@ class OverflowElement {
 			const wrapper = document.createElement( 'div' );
 			wrapper.className = 'citizen-overflow-wrapper';
 
-			this.handleInheritedClasses( [ 'floatleft', 'floatright' ] );
+			this.handleInheritedClasses();
 
 			parentNode.insertBefore( wrapper, this.element );
 			wrapper.appendChild( this.element );

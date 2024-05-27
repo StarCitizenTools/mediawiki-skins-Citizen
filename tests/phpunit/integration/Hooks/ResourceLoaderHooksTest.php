@@ -19,6 +19,7 @@ class ResourceLoaderHooksTest extends MediaWikiIntegrationTestCase {
 	public function testCitizenResourceLoaderConfig() {
 		$this->overrideConfigValues( [
 			'CitizenEnablePreferences' => false,
+			'CitizenOverflowInheritedClasses' => false,
 			'CitizenOverflowNowrapClasses' => false,
 			'CitizenSearchModule' => false,
 		] );
@@ -33,6 +34,7 @@ class ResourceLoaderHooksTest extends MediaWikiIntegrationTestCase {
 		$this->assertArraySubmapSame( [
 			'wgCitizenEnablePreferences' => false,
 			'wgCitizenSearchModule' => false,
+			'wgCitizenOverflowInheritedClasses' => false,
 			'wgCitizenOverflowNowrapClasses' => false,
 		], $config );
 	}
@@ -44,6 +46,7 @@ class ResourceLoaderHooksTest extends MediaWikiIntegrationTestCase {
 	public function testCitizenResourceLoaderConfigAllTrue() {
 		$this->overrideConfigValues( [
 			'CitizenEnablePreferences' => true,
+			'CitizenOverflowInheritedClasses' => true,
 			'CitizenOverflowNowrapClasses' => true,
 			'CitizenSearchModule' => true,
 		] );
@@ -57,6 +60,7 @@ class ResourceLoaderHooksTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertArraySubmapSame( [
 			'wgCitizenEnablePreferences' => true,
+			'whCitizenOverflowInheritedClasses' => true,
 			'wgCitizenOverflowNowrapClasses' => true,
 			'wgCitizenSearchModule' => true,
 		], $config );

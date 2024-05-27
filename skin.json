@@ -687,6 +687,15 @@
 			"descriptionmsg": "citizen-config-enablepreferences",
 			"public": true
 		},
+		"OverflowInheritedClasses": {
+			"value": [
+				"floatleft",
+				"floatright"
+			],
+			"description": "Defines css classes inherited by overflow wrapper",
+			"descriptionmsg": "citizen-config-overflowinheritedclasses",
+			"public": true
+		},
 		"OverflowNowrapClasses": {
 			"value": [
 				"citizen-table-nowrap",
