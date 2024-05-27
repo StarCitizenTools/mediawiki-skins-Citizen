@@ -19,8 +19,8 @@ class ResourceLoaderHooksTest extends MediaWikiIntegrationTestCase {
 	public function testCitizenResourceLoaderConfig() {
 		$this->overrideConfigValues( [
 			'CitizenEnablePreferences' => false,
+			'CitizenOverflowNowrapClasses' => false,
 			'CitizenSearchModule' => false,
-			'CitizenTableNowrapClasses' => false,
 		] );
 
 		$rlCtxMock = $this->getMockBuilder( Context::class )->disableOriginalConstructor()->getMock();
@@ -33,7 +33,7 @@ class ResourceLoaderHooksTest extends MediaWikiIntegrationTestCase {
 		$this->assertArraySubmapSame( [
 			'wgCitizenEnablePreferences' => false,
 			'wgCitizenSearchModule' => false,
-			'wgCitizenTableNowrapClasses' => false,
+			'wgCitizenOverflowNowrapClasses' => false,
 		], $config );
 	}
 
@@ -44,8 +44,8 @@ class ResourceLoaderHooksTest extends MediaWikiIntegrationTestCase {
 	public function testCitizenResourceLoaderConfigAllTrue() {
 		$this->overrideConfigValues( [
 			'CitizenEnablePreferences' => true,
+			'CitizenOverflowNowrapClasses' => true,
 			'CitizenSearchModule' => true,
-			'CitizenTableNowrapClasses' => true,
 		] );
 
 		$rlCtxMock = $this->getMockBuilder( Context::class )->disableOriginalConstructor()->getMock();
@@ -57,8 +57,8 @@ class ResourceLoaderHooksTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertArraySubmapSame( [
 			'wgCitizenEnablePreferences' => true,
+			'wgCitizenOverflowNowrapClasses' => true,
 			'wgCitizenSearchModule' => true,
-			'wgCitizenTableNowrapClasses' => true,
 		], $config );
 	}
 

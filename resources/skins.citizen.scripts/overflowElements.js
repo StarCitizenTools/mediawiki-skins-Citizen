@@ -78,8 +78,8 @@ class OverflowElement {
 	/**
 	 * Wraps the element in a div container with the class 'citizen-table-wrapper'.
 	 * Checks if the element or its parent node is null or undefined, logs an error if so.
-	 * Verifies the existence of $wgCitizenTableNowrapClasses in the config and if it is an array, logs an error if not.
-	 * Skips wrapping if the element contains any of the ignored classes specified in $wgCitizenTableNowrapClasses.
+	 * Verifies the existence of $wgCitizenOverflowNowrapClasses in the config and if it is an array, logs an error if not.
+	 * Skips wrapping if the element contains any of the ignored classes specified in $wgCitizenOverflowNowrapClasses.
 	 * Creates a wrapper div element, adds the class 'citizen-table-wrapper' to it.
 	 * Filters and adds inherited classes ('floatleft', 'floatright') from the element to the wrapper.
 	 * Inserts the wrapper before the element in the DOM and appends the element to the wrapper.
@@ -95,16 +95,16 @@ class OverflowElement {
 		}
 		try {
 			if (
-				!config.wgCitizenTableNowrapClasses ||
-				!Array.isArray( config.wgCitizenTableNowrapClasses )
+				!config.wgCitizenOverflowNowrapClasses ||
+				!Array.isArray( config.wgCitizenOverflowNowrapClasses )
 			) {
-				mw.log.error( '[Citizen] Invalid or missing $wgCitizenTableNowrapClasses. Cannot proceed with wrapping table.' );
+				mw.log.error( '[Citizen] Invalid or missing $wgCitizenOverflowNowrapClasses. Cannot proceed with wrapping table.' );
 				return;
 			}
 
 			const parentNode = this.element.parentNode;
 
-			const ignoredClasses = config.wgCitizenTableNowrapClasses;
+			const ignoredClasses = config.wgCitizenOverflowNowrapClasses;
 
 			if ( ignoredClasses.some( ( cls ) => this.element.classList.contains( cls ) ) ) {
 				return;
