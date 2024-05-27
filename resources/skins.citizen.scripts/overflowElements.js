@@ -79,12 +79,15 @@ class OverflowElement {
 		this.wrapperScrollLeft = wrapperScrollLeft;
 		this.wrapperWidth = wrapperWidth;
 
-		if ( !this.hasOverflowed() ) {
-			return;
-		}
+		let isLeftOverflowing, isRightOverflowing;
 
-		const isLeftOverflowing = this.wrapperScrollLeft > 0;
-		const isRightOverflowing = this.wrapperScrollLeft + this.wrapperWidth < this.elementWidth;
+		if ( !this.hasOverflowed() ) {
+			isLeftOverflowing = false;
+			isRightOverflowing = false;
+		} else {
+			isLeftOverflowing = this.wrapperScrollLeft > 0;
+			isRightOverflowing = this.wrapperScrollLeft + this.wrapperWidth < this.elementWidth;
+		}
 
 		window.requestAnimationFrame( () => {
 			const updateClasses = [
