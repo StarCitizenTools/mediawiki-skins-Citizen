@@ -96,15 +96,32 @@ class OverflowElement {
 	}
 
 	/**
+	 * Filters and adds inherited classes to the wrapper element.
+	 *
+	 * @param {Array} inheritedClasses - An array of inherited classes to handle.
+	 * @return {void}
+	 */
+	handleInheritedClasses( inheritedClasses ) {
+		const filteredClasses = inheritedClasses.filter( ( cls ) => this.element.classList.contains( cls ) );
+
+		filteredClasses.forEach( ( cls ) => {
+			if ( !this.wrapper.classList.contains( cls ) ) {
+				this.wrapper.classList.add( cls );
+			}
+			if ( this.element.classList.contains( cls ) ) {
+				this.element.classList.remove( cls );
+			}
+		} );
+	}
+
+	/**
 	 * Wraps the element in a div container with the class 'citizen-overflow-wrapper'.
-	 * Checks if the element or its parent node is null or undefined, logs an error if so.
-	 * Verifies the existence of $wgCitizenOverflowNowrapClasses in the config and if it is an array, logs an error if not.
-	 * Skips wrapping if the element contains any of the ignored classes specified in $wgCitizenOverflowNowrapClasses.
-	 * Creates a wrapper div element, adds the class 'citizen-overflow-wrapper' to it.
-	 * Filters and adds inherited classes ('floatleft', 'floatright') from the element to the wrapper.
-	 * Inserts the wrapper before the element in the DOM and appends the element to the wrapper.
-	 * Sets the wrapper element as a property of the class instance.
-	 * Logs an error if an exception occurs during the wrapping process.
+	 * Checks if the element or its parent node is null or undefined, and logs an error if so.
+	 * Verifies the existence of the necessary configuration classes for wrapping and logs an error if missing.
+	 * Creates a new div wrapper element, adds the class 'citizen-overflow-wrapper', and appends it to the parent node before the element.
+	 * Moves the element inside the wrapper.
+	 * Handles inherited classes such as 'floatleft' and 'floatright' by adding them to the wrapper and removing them from the element.
+	 * Logs any errors that occur during the wrapping process.
 	 *
 	 * @return {void}
 	 */
@@ -114,40 +131,22 @@ class OverflowElement {
 			return;
 		}
 		try {
-			if (
-				!config.wgCitizenOverflowNowrapClasses ||
-				!Array.isArray( config.wgCitizenOverflowNowrapClasses )
-			) {
+			const nowrapClasses = config.wgCitizenOverflowNowrapClasses;
+			if ( !nowrapClasses || !Array.isArray( nowrapClasses ) ) {
 				mw.log.error( '[Citizen] Invalid or missing $wgCitizenOverflowNowrapClasses. Cannot proceed with wrapping element.' );
 				return;
 			}
 
 			const parentNode = this.element.parentNode;
 
-			const ignoredClasses = config.wgCitizenOverflowNowrapClasses;
-
-			if ( ignoredClasses.some( ( cls ) => this.element.classList.contains( cls ) ) ) {
+			if ( nowrapClasses.some( ( cls ) => this.element.classList.contains( cls ) ) ) {
 				return;
 			}
 
 			const wrapper = document.createElement( 'div' );
 			wrapper.className = 'citizen-overflow-wrapper';
 
-			const inheritedClasses = [
-				'floatleft',
-				'floatright'
-			];
-
-			const filteredClasses = inheritedClasses.filter( ( cls ) => this.element.classList.contains( cls ) );
-
-			filteredClasses.forEach( ( cls ) => {
-				if ( !wrapper.classList.contains( cls ) ) {
-					wrapper.classList.add( cls );
-				}
-				if ( this.element.classList.contains( cls ) ) {
-					this.element.classList.remove( cls );
-				}
-			} );
+			this.handleInheritedClasses( [ 'floatleft', 'floatright' ] );
 
 			parentNode.insertBefore( wrapper, this.element );
 			wrapper.appendChild( this.element );
