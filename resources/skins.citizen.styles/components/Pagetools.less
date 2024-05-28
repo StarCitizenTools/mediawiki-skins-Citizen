@@ -33,7 +33,7 @@
 		}
 	}
 
-	&__card {
+	.citizen-menu__card {
 		position: absolute;
 		top: 100%;
 		right: ~'calc( var( --space-xs ) * -1 )'; // counteract margin
@@ -206,15 +206,6 @@
 	}
 }
 
-// Checkbox hack
-#citizen-languages {
-	&__checkbox:checked {
-		~ .page-actions__card {
-			.citizen-card-show();
-		}
-	}
-}
-
 // To avoid more menu from overflow in narrow screen
 @media ( max-width: @max-width-breakpoint-tablet ) {
 	.page-actions {
@@ -240,7 +231,7 @@
 			transition-property: opacity, transform;
 		}
 
-		:not( .page-actions__card ) .mw-list-item {
+		:not( .citizen-menu__card ) .mw-list-item {
 			--size-icon: 1rem;
 		}
 
@@ -252,10 +243,9 @@
 			position: unset;
 		}
 
-		&__card {
+		.citizen-menu__card {
 			top: unset;
 			bottom: 100%;
-			.citizen-card-hide( bottom right );
 		}
 	}
 }
@@ -269,7 +259,7 @@
 			}
 		}
 
-		&__card {
+		.citizen-menu__card {
 			// Expand the width on narrow screens might overflow the page
 			white-space: nowrap;
 		}
