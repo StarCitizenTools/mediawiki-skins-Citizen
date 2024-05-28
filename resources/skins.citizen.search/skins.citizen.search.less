@@ -4,18 +4,17 @@
 .citizen-typeahead {
 	position: absolute;
 	top: 100%;
+	left: -1px; // IDK why is it off by 1px
 	box-sizing: content-box; // Magic to align with search input
 	width: 100%;
 	max-height: ~'calc( var( --header-card-maxheight ) - var( --height-search-bar ) )';
-	margin: 0 0 0 -1px; // Reset <ol> styles, fix alignment
+	margin: 0; // Reset <ol> styles
 	overflow: auto;
 	overscroll-behavior: contain;
+	border-top-color: transparent;
 	border-bottom-right-radius: var( --border-radius--medium );
 	border-bottom-left-radius: var( --border-radius--medium );
 	.citizen-card( false );
-	.citizen-card-hide( 50% 0, Y, false );
-	// Well this won't be loaded before .citizen-animation-ready anyways
-	.citizen-card-transition();
 
 	a {
 		&:hover,
@@ -271,22 +270,15 @@
 		background-color: var( --color-surface-1 );
 		border-radius: var( --border-radius--small );
 	}
-
-	.citizen-search__card--expanded & {
-		.citizen-card-show( false );
-	}
 }
 
-// Merge searchform with typeahead
-.citizen-search__card {
-	&&--expanded {
-		border-bottom-color: transparent;
-		border-bottom-right-radius: 0;
-		border-bottom-left-radius: 0;
+.citizen-search__card:has( .citizen-typeahead ) {
+	border-bottom-color: transparent;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
 
-		.citizen-typeahead {
-			border-top-color: transparent; // Reset citizen-card style
-		}
+	.citizen-typeahead {
+		border-top-color: transparent;
 	}
 }
 

@@ -12,10 +12,14 @@
 		width: var( --width-search-bar );
 		max-width: ~'calc(100vw - var( --padding-page ) )';
 		height: var( --height-search-bar );
-		margin: var( --space-md ) auto;
-		.citizen-card();
-		.citizen-card-hide( top center, '', false );
-		.citizen-card-transition();
+		transform-origin: center var( --transform-origin-offset-start );
+
+		&.citizen-menu__card {
+			margin-right: auto;
+			margin-left: auto;
+			overflow: initial;
+			contain: none;
+		}
 
 		.citizen-ui-icon {
 			width: var( --height-search-bar );
@@ -111,18 +115,10 @@
 	}
 }
 
-// Checkbox hack
-#citizen-search__checkbox:checked {
-	~ .citizen-search__card {
-		.citizen-card-show( false );
-	}
-}
-
 @media ( max-width: @max-width-breakpoint-tablet ) {
 	.citizen-search__card {
 		z-index: 1; // So that overlay does not cover card
 		width: auto;
-		margin: var( --space-xs );
 
 		// Remove searchbox open animation on mobile
 		// But keep suggestion animation

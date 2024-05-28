@@ -76,6 +76,7 @@ function createPanel() {
 	const panel = document.createElement( 'aside' );
 	panel.id = 'citizen-pref-panel';
 	panel.classList.add( 'citizen-pref-panel' );
+	panel.classList.add( 'citizen-menu__card' );
 
 	const header = document.createElement( 'header' );
 	header.id = 'citizen-pref-header';

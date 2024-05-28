@@ -71,24 +71,14 @@
 	right: 0;
 	bottom: 100%;
 	left: 0;
-	min-width: 16rem;
 	max-height: var( --header-card-maxheight );
-	margin: var( --space-xs );
-	overflow: auto;
-	overscroll-behavior: contain;
-	-webkit-user-select: none;
-	user-select: none;
-	contain: content;
-	.citizen-card();
-	.citizen-card-hide( bottom @position );
-	.citizen-card-transition();
 
 	@media ( min-width: @min-width-breakpoint-tablet ) {
-		& when ( @position = left ) {
+		& when ( @position = start ) {
 			right: unset;
 		}
 
-		& when ( @position = right ) {
+		& when ( @position = end ) {
 			left: unset;
 		}
 	}
@@ -96,15 +86,13 @@
 	@media ( min-width: @min-width-breakpoint-desktop ) {
 		right: unset;
 		left: 100%;
-		& when ( @position = left ) {
+		& when ( @position = start ) {
 			top: 0;
 			bottom: unset;
-			.citizen-card-hide( top left );
 		}
 
-		& when ( @position = right ) {
+		& when ( @position = end ) {
 			bottom: 0;
-			.citizen-card-hide( bottom left );
 		}
 	}
 }

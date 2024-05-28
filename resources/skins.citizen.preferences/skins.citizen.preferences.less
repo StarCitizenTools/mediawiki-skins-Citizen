@@ -18,10 +18,25 @@
 
 	// TODO: unify the dropdown menu style somewhere
 	&-panel {
-		.citizen-header-card( right );
+		.citizen-header-card( end );
+		transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-end );
 
+		@media ( min-width: @min-width-breakpoint-desktop ) {
+			transform-origin: var( --transform-origin-offset-start ) var( --transform-origin-offset-end );
+		}
+
+		// TODO: Somehow refactor this module to use citizen-menu__Card
 		&.citizen-pref-panel--active {
-			.citizen-card-show;
+			z-index: @z-index-overlay;
+			transition: var( --transition-menu );
+			transition-property: transform;
+			transform: none;
+
+			> * {
+				opacity: 1;
+				transition: var( --transition-menu );
+				transition-property: opacity;
+			}
 		}
 
 		fieldset {
@@ -30,10 +45,6 @@
 			font-size: var( --font-size-small );
 			appearance: none;
 			border: 0;
-		}
-
-		> * {
-			opacity: 0;
 		}
 	}
 }
