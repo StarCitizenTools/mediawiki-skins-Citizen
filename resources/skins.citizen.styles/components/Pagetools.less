@@ -228,19 +228,16 @@
 		box-shadow: var( --box-shadow-dialog );
 
 		.citizen-scroll--down & {
-			visibility: hidden;
 			box-shadow: none;
 			opacity: 0;
 			transform: translateY( 250% );
 		}
 
 		.citizen-scroll--up & {
-			// Only apply transition on showing because of flickering issue
-			visibility: visible;
 			opacity: 1;
 			transition: var( --transition-menu );
 			transition-delay: 250ms;
-			transition-property: opacity, visibility, transform;
+			transition-property: opacity, transform;
 		}
 
 		:not( .page-actions__card ) .mw-list-item {

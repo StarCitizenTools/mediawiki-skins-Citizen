@@ -204,12 +204,9 @@
 					width: auto;
 					height: auto;
 					pointer-events: none;
-					visibility: hidden;
 					content: '';
 					background-color: var( --background-color-overlay );
 					opacity: 0;
-					transition: var( --transition-menu );
-					transition-property: opacity;
 				}
 			}
 
@@ -219,8 +216,9 @@
 
 					&::before {
 						pointer-events: auto;
-						visibility: visible;
 						opacity: 1;
+						transition: var( --transition-menu );
+						transition-property: opacity;
 					}
 				}
 			}
