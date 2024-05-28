@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.15.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.15.0...v2.15.1) (2024-05-28)
+
+
+### Performance Improvements
+
+* **core:** ⚡️ consolidate citizen-menu card shared styles ([e95d3d3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e95d3d39bd52ca06b5d60073a99a17401b2c1601))
+* **core:** ⚡️ tweak menu animation timing ([f74e3d2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f74e3d2f6ab875aabf8512db726d0d8024c49a47))
+
+
+### Miscellaneous Chores
+
+* **composer:** 🔧 use starcitizentools as vendor since mediawiki is disallowed ([defc1ce](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/defc1ced312565c751d7175585b1579b13939e38))
+
 ## [2.15.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.14.1...v2.15.0) (2024-05-27)
 
 
