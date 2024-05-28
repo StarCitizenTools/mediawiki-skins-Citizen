@@ -18,7 +18,6 @@
 // Collaspe animation setup
 .citizen-card-hide( @position, @axis: '', @fadeChildren: true ) {
 	pointer-events: none;
-	visibility: hidden;
 	opacity: 0;
 	transform: ~'scale@{axis}( 0 )';
 	transform-origin: @position;
@@ -36,7 +35,6 @@
 .citizen-card-show( @fadeChildren: true ) {
 	z-index: @z-index-overlay;
 	pointer-events: auto;
-	visibility: visible;
 	opacity: 1;
 	// HACK: So that visiblity won't wait 250ms to become visible
 	transition-delay: 0ms;
