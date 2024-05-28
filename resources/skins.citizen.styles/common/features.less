@@ -5,11 +5,22 @@
 .theme-dark() {
 	--color-primary__l: 60%;
 
-	--color-surface-0: ~'hsl( var( --color-primary__h ), 20%, 8% )';
-	--color-surface-1: ~'hsl( var( --color-primary__h ), 25%, 10% )';
-	--color-surface-2: ~'hsl( var( --color-primary__h ), 25%, 13% )';
-	--color-surface-3: ~'hsl( var( --color-primary__h ), 15%, 18% )';
-	--color-surface-4: ~'hsl( var( --color-primary__h ), 15%, 23% )';
+	--color-surface-0__s: 20%;
+	--color-surface-0__l: 8%;
+
+	--color-surface-1__s: 25%;
+	--color-surface-1__l: 10%;
+
+	--color-surface-2__s: 25%;
+	--color-surface-2__l: 13%;
+
+	--color-surface-3__s: 15%;
+	--color-surface-3__l: 18%;
+
+	--color-surface-4__s: 15%;
+	--color-surface-4__l: 23%;
+
+	--delta-hover-state: 4%;
 
 	--color-base--emphasized: ~'hsl( var( --color-primary__h ), 80%, 95% )';
 	--color-base: ~'hsl( var( --color-primary__h ), 25%, 80% )';
@@ -17,12 +28,6 @@
 
 	--background-color-primary--hover: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), 15% )';
 	--background-color-primary--active: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), 20% )';
-
-	--background-color-overlay: ~'hsla( var( --color-primary__h ), 20%, 10%, 0.95 )';
-	--background-color-overlay--lighter: ~'hsla( var( --color-primary__h ), 20%, 10%, 0.6 )';
-
-	--color-surface-2--hover: ~'hsl( var( --color-primary__h ), 25%, 19% )';
-	--color-surface-2--active: ~'hsl( var( --color-primary__h ), 25%, 11% )';
 
 	--border-color-base: rgba( 255, 255, 255, 0.05 );
 	--border-color-subtle: rgba( 255, 255, 255, 0.02 );
@@ -44,14 +49,19 @@
 }
 
 .feature-pure-black() {
-	--color-surface-0: #000;
-	--color-surface-1: ~'hsl( var( --color-primary__h ), 20%, 4% )';
-	--color-surface-2: ~'hsl( var( --color-primary__h ), 25%, 6% )';
-	--color-surface-3: ~'hsl( var( --color-primary__h ), 25%, 9% )';
-	--color-surface-4: ~'hsl( var( --color-primary__h ), 15%, 14% )';
+	--color-surface-0__l: 0%;
 
-	--color-surface-2--hover: ~'hsl( var( --color-primary__h ), 25%, 10% )';
-	--color-surface-2--active: ~'hsl( var( --color-primary__h ), 25%, 2% )';
+	--color-surface-1__s: 20%;
+
+	--color-surface-1__l: 4%;
+
+	--color-surface-2__l: 6%;
+
+	--color-surface-3__l: 9%;
+
+	--color-surface-4__l: 14%;
+
+	--delta-hover-state: 6%;
 
 	--shadow-strength: 0.04;
 }

@@ -13,18 +13,35 @@
 	--color-primary__s: @color-primary__s;
 	--color-primary__l: @color-primary__l;
 
-	--color-surface-0: ~'hsl( var( --color-primary__h ), 30%, 96% )';
-	--color-surface-1: ~'hsl( var( --color-primary__h ), 40%, 94% )';
-	--color-surface-2: ~'hsl( var( --color-primary__h ), 30%, 92% )';
-	--color-surface-3: ~'hsl( var( --color-primary__h ), 20%, 90% )';
-	--color-surface-4: ~'hsl( var( --color-primary__h ), 10%, 88% )';
+	--color-surface-0__s: 30%;
+	--color-surface-0__l: 96%;
+
+	--color-surface-1__s: 40%;
+	--color-surface-1__l: 94%;
+
+	--color-surface-2__s: 30%;
+	--color-surface-2__l: 92%;
+
+	--color-surface-3__s: 20%;
+	--color-surface-3__l: 90%;
+
+	--color-surface-4__s: 10%;
+	--color-surface-4__l: 88%;
+
+	--delta-hover-state: 2%;
+
+	--color-surface-0: ~'hsl( var( --color-primary__h ), var( --color-surface-0__s ), var( --color-surface-0__l ) )';
+	--color-surface-1: ~'hsl( var( --color-primary__h ), var( --color-surface-1__s ), var( --color-surface-1__l ) )';
+	--color-surface-2: ~'hsl( var( --color-primary__h ), var( --color-surface-2__s ), var( --color-surface-2__l ) )';
+	--color-surface-3: ~'hsl( var( --color-primary__h ), var( --color-surface-3__s ), var( --color-surface-3__l ) )';
+	--color-surface-4: ~'hsl( var( --color-primary__h ), var( --color-surface-4__s ), var( --color-surface-4__l ) )';
 
 	--color-base--emphasized: ~'hsl( var( --color-primary__h ), 85%, 5% )';
 	--color-base: ~'hsl( var( --color-primary__h ), 30%, 20% )';
 	--color-base--subtle: ~'hsl( var( --color-primary__h ), 30%, 35% )';
 
-	--background-color-overlay: ~'hsla( var( --color-primary__h ), 25%, 94%, 0.95 )';
-	--background-color-overlay--lighter: ~'hsla( var( --color-primary__h ), 25%, 94%, 0.6 )';
+	--background-color-overlay: ~'hsla( var( --color-primary__h ), var( --color-surface-0__s ), var( --color-surface-0__l ), 0.95 )';
+	--background-color-overlay--lighter: ~'hsla( var( --color-primary__h ), var( --color-surface-0__s ), var( --color-surface-0__l ), 0.6 )';
 
 	--color-primary: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), var( --color-primary__l ) )';
 	--color-primary--hover: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), calc( var( --color-primary__l ) * 1.2 ) )';
@@ -32,8 +49,8 @@
 	--background-color-primary--hover: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), 95% )';
 	--background-color-primary--active: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), 90% )';
 
-	--color-surface-2--hover: ~'hsl( var( --color-primary__h ), 30%, 94% )';
-	--color-surface-2--active: ~'hsl( var( --color-primary__h ), 30%, 90% )';
+	--color-surface-2--hover: ~'hsl( var( --color-primary__h ), var( --color-surface-2__s ), calc( var( --color-surface-2__l ) + var( --delta-hover-state ) ) )';
+	--color-surface-2--active: ~'hsl( var( --color-primary__h ), var( --color-surface-2__s ), calc( var( --color-surface-2__l ) - var( --delta-hover-state ) ) )';
 
 	--background-color-destructive: rgba( 221, 51, 51, 0.1 );
 	--background-color-success: rgba( 0, 175, 137, 0.1 );
