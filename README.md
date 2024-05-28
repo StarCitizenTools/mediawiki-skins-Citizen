@@ -142,6 +142,6 @@ Name | Description | Values | Default
 `$wgCitizenManifestBackgroundColor` | [Background color](https://developer.mozilla.org/en-US/docs/Web/Manifest/background_color) of the web app manifest | Hex color code | `#131a21`
 
 ## Requirements
-* [MediaWiki](https://www.mediawiki.org) 1.39.0 or later
+* [MediaWiki](https://www.mediawiki.org) 1.39.4 or later
 * For the legacy versions, check the other release branches.
 
