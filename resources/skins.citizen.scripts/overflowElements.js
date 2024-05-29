@@ -134,18 +134,7 @@ class OverflowElement {
 			return;
 		}
 		try {
-			const nowrapClasses = config.wgCitizenOverflowNowrapClasses;
-			if ( !nowrapClasses || !Array.isArray( nowrapClasses ) ) {
-				mw.log.error( '[Citizen] Invalid or missing $wgCitizenOverflowNowrapClasses. Cannot proceed with wrapping element.' );
-				return;
-			}
-
 			const parentNode = this.element.parentNode;
-
-			if ( nowrapClasses.some( ( cls ) => this.element.classList.contains( cls ) ) ) {
-				return;
-			}
-
 			const wrapper = document.createElement( 'div' );
 			wrapper.className = 'citizen-overflow-wrapper';
 
@@ -247,13 +236,25 @@ class OverflowElement {
  * @return {void}
  */
 function init( bodyContent ) {
-	const overflowElements = bodyContent.querySelectorAll( '.citizen-overflow, table:not( table table )' );
-	if ( overflowElements.length > 0 ) {
-		overflowElements.forEach( ( el ) => {
-			const overflowElement = new OverflowElement( el );
-			overflowElement.init();
-		} );
+	const nowrapClasses = config.wgCitizenOverflowNowrapClasses;
+	if ( !nowrapClasses || !Array.isArray( nowrapClasses ) ) {
+		mw.log.error( '[Citizen] Invalid or missing $wgCitizenOverflowNowrapClasses. Cannot proceed with wrapping element.' );
+		return;
 	}
+
+	const overflowElements = bodyContent.querySelectorAll( '.citizen-overflow, table:not( table table )' );
+	if ( !overflowElements.length ) {
+		return;
+	}
+
+	overflowElements.forEach( ( el ) => {
+		if ( nowrapClasses.some( ( cls ) => el.classList.contains( cls ) ) ) {
+			return;
+		}
+
+		const overflowElement = new OverflowElement( el );
+		overflowElement.init();
+	} );
 }
 
 module.exports = {
