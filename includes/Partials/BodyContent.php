@@ -68,9 +68,15 @@ final class BodyContent extends Partial {
 			// MobileFrontend not installed. Don't do anything
 		}
 
-		return $this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true &&
+		$enableSections = (
+			$this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true &&
+			$title->canExist() &&
+			$title->getContentModel() == CONTENT_MODEL_WIKITEXT &&
 			!$title->isMainPage() &&
-			$title->isContentPage();
+			$title->isContentPage()
+		);
+
+		return $enableSections;
 	}
 
 	/**
