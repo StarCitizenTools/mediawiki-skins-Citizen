@@ -698,16 +698,7 @@
 		},
 		"OverflowNowrapClasses": {
 			"value": [
-				"citizen-table-nowrap",
-				"diff",
-				"mw-changeslist-line",
-				"mw-recentchanges-table",
-				"infobox",
-				"cargoDynamicTable",
-				"dataTable",
-				"srf-datatable",
-				"smw-datatable",
-				"mw-capiunto-infobox"
+				"citizen-table-nowrap"
 			],
 			"description": "Defines css classes ignored by overflow wrapper",
 			"descriptionmsg": "citizen-config-overflownowrapclasses",

@@ -10,20 +10,14 @@
 	}
 }
 
-// TODO: Revisit on MW 1.43 since Minerva table styles are merged upstream
-table {
-	display: block;
-	max-width: max-content; // Needed for the border
-	overflow-x: auto;
-}
-
 // Elements enhanced by overflowElements.js
 .citizen-overflow {
 	&-wrapper {
 		overflow-x: auto;
 
-		table {
+		.wikitable {
 			display: table;
+			max-width: none;
 			overflow: initial;
 		}
 	}

@@ -242,7 +242,7 @@ function init( bodyContent ) {
 		return;
 	}
 
-	const overflowElements = bodyContent.querySelectorAll( '.citizen-overflow, table:not( table table )' );
+	const overflowElements = bodyContent.querySelectorAll( '.citizen-overflow, .wikitable:not( .wikitable .wikitable )' );
 	if ( !overflowElements.length ) {
 		return;
 	}
