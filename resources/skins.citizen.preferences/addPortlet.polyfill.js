@@ -52,9 +52,12 @@ function addDefaultPortlet( portlet ) {
  *  to an existing element in the page.
  */
 function addPortlet( id, label, before ) {
+	/*
+ 	Disabled for now because it seems to break in 1.41
 	if ( mw.util.addPortlet ) {
 		return mw.util.addPortlet( id, label, before );
 	}
+ 	*/
 
 	const portlet = document.createElement( 'div' );
 	portlet.classList.add( 'mw-portlet', 'mw-portlet-' + id, 'emptyPortlet',
