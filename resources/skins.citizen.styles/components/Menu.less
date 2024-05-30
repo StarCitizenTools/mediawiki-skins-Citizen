@@ -74,8 +74,9 @@
 		}
 
 		&[ open ] {
+			z-index: @z-index-overlay;
+
 			> .citizen-menu__card {
-				z-index: @z-index-overlay;
 				transition: var( --transition-menu );
 				transition-property: transform;
 				transform: none;
@@ -93,6 +94,24 @@
 				&:hover {
 					background-color: var( --background-color-quiet--hover );
 				}
+			}
+		}
+
+		@media ( max-width: @max-width-breakpoint-tablet ) {
+			// Dismiss affordnance overlay
+			&::before {
+				z-index: -1;
+				content: '';
+				background: var( --background-color-overlay );
+				opacity: 0;
+			}
+
+			&[ open ]::before {
+				position: fixed;
+				inset: 0;
+				opacity: 1;
+				transition: var( --transition-menu );
+				transition-property: opacity;
 			}
 		}
 	}
