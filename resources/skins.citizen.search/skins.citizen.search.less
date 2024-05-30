@@ -2,6 +2,7 @@
 @import '../mixins.less';
 
 .citizen-typeahead {
+	--size-icon: 1.25rem; // reset
 	position: absolute;
 	top: 100%;
 	left: -1px; // IDK why is it off by 1px
@@ -230,6 +231,7 @@
 	}
 
 	&__label {
+		--size-icon: 0.8125rem;
 		display: flex;
 		gap: var( --space-xxs );
 		margin-left: var( --space-xs );
@@ -237,8 +239,6 @@
 		color: var( --color-base );
 
 		.citizen-ui-icon {
-			width: 0.8125rem;
-			height: 0.8125rem;
 			margin-right: var( --space-xxs );
 		}
 	}

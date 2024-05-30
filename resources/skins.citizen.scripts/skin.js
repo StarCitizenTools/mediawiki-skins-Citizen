@@ -106,7 +106,8 @@ function main( window ) {
 		config = require( './config.json' ),
 		search = require( './search.js' ),
 		lastModified = require( './lastModified.js' ),
-		checkbox = require( './checkbox.js' );
+		checkbox = require( './checkbox.js' ),
+		dropdown = require( './dropdown.js' );
 
 	enableCssAnimations( window.document );
 	search.init( window );
@@ -115,6 +116,7 @@ function main( window ) {
 
 	// Set up checkbox hacks
 	checkbox.bind();
+	dropdown.init();
 
 	mw.hook( 'wikipage.content' ).add( function ( content ) {
 		// content is a jQuery object

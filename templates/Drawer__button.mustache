@@ -1,18 +1,13 @@
  {{!
 	string msg-citizen-drawer-toggle The label used by the drawer button.
 }}
-<div class="citizen-drawer__button citizen-header__button">
-	<div class="citizen-drawer__buttonIcon citizen-header__buttonIcon">
-		<div></div>
-		<div></div>
-		<div></div>
-	</div>
-	<label
-		id="citizen-drawer__buttonCheckbox"
-		class="citizen-menu-checkbox-button citizen-header__buttonCheckbox"
-		for="citizen-drawer__checkbox"
-		title="{{msg-citizen-drawer-toggle}}"
-		aria-hidden="true">
-		<span>{{msg-citizen-drawer-toggle}}</span>
-	</label>
-</div>
+<summary
+	class="citizen-menu__dropdownButton" 
+	title="{{msg-citizen-drawer-toggle}}">
+	<span class="citizen-ui-icon">
+		<span></span>
+		<span></span>
+		<span></span>
+	</span>
+	<span>{{msg-citizen-drawer-toggle}}</span>
+</summary>

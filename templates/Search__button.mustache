@@ -2,18 +2,14 @@
 	string msg-citizen-search-toggle-shortcut shortcut key message
 	string msg-citizen-search-toggle tooltip message for search toggle
 }}
-<div class="citizen-search__button citizen-header__button">
-	<div class="citizen-search__buttonIcon citizen-header__buttonIcon">
-		<div></div>
-		<div></div>
-		<div></div>
-	</div>
-	<label
-		id="citizen-search__buttonCheckbox" 
-		class="citizen-menu-checkbox-button citizen-header__buttonCheckbox" 
-		for="citizen-search__checkbox"
-		title="{{msg-citizen-search-toggle}} {{msg-citizen-search-toggle-shortcut}}"
-		aria-hidden="true">
-		<span>{{msg-citizen-search-toggle}}</span>
-	</label>
-</div>
+<summary
+	class="citizen-menu__dropdownButton" 
+	title="{{msg-citizen-search-toggle}} {{msg-citizen-search-toggle-shortcut}}">
+	<span class="citizen-ui-icon">
+		<span></span>
+		<span></span>
+		<span></span>
+	</span>
+	<span>{{msg-citizen-search-toggle}}</span>
+</summary>
+

@@ -4,7 +4,8 @@
 	--width-search-bar: @width-search-bar;
 	--height-search-bar: 2.75rem;
 
-	&__card {
+	.citizen-menu__card {
+		--size-icon: var( --height-search-bar );
 		position: fixed;
 		top: 0;
 		right: 0;
@@ -12,19 +13,13 @@
 		width: var( --width-search-bar );
 		max-width: ~'calc(100vw - var( --padding-page ) )';
 		height: var( --height-search-bar );
+		margin-right: auto;
+		margin-left: auto;
+		overflow: initial;
 		transform-origin: center var( --transform-origin-offset-start );
-
-		&.citizen-menu__card {
-			margin-right: auto;
-			margin-left: auto;
-			overflow: initial;
-			contain: none;
-		}
+		contain: none;
 
 		.citizen-ui-icon {
-			width: var( --height-search-bar );
-			height: var( --height-search-bar );
-
 			&::before {
 				background-size: 1rem;
 			}
@@ -116,14 +111,16 @@
 }
 
 @media ( max-width: @max-width-breakpoint-tablet ) {
-	.citizen-search__card {
-		z-index: 1; // So that overlay does not cover card
-		width: auto;
+	.citizen-search {
+		.citizen-menu__card {
+			z-index: 1; // So that overlay does not cover card
+			width: auto;
+		}
 
 		// Remove searchbox open animation on mobile
 		// But keep suggestion animation
 		// So user can get to search instantly
-		.citizen-animations-ready .citizen-menu-checkbox-checkbox:checked ~ & {
+		.citizen-animations-ready & .citizen-menu__dropdown[ open ] > .citizen-menu__card {
 			transition: none;
 		}
 	}

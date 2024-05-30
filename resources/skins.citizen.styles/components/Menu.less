@@ -35,6 +35,68 @@
 		}
 	}
 
+	&__dropdown {
+		&Button {
+			cursor: pointer;
+
+			// Icons have to use span inside label elements
+			> span:not( .citizen-ui-icon ) {
+				.mixin-screen-reader-text;
+			}
+
+			&:hover {
+				background-color: var( --background-color-quiet--hover );
+
+				> .citizen-ui-icon::before {
+					opacity: var( --opacity-icon-base--hover );
+				}
+			}
+
+			&:active {
+				background-color: var( --background-color-quiet--active );
+
+				> .citizen-ui-icon::before {
+					opacity: var( --opacity-icon-base--active );
+				}
+			}
+
+			// Reset hover styles if it is a touch device
+			// This is dumb but hover:hover overrides active states
+			@media ( hover: none ) {
+				&:hover {
+					background-color: none;
+
+					.citizen-ui-icon::before {
+						opacity: var( --opacity-icon-base );
+					}
+				}
+			}
+		}
+
+		&[ open ] {
+			> .citizen-menu__card {
+				z-index: @z-index-overlay;
+				transition: var( --transition-menu );
+				transition-property: transform;
+				transform: none;
+
+				> * {
+					opacity: 1;
+					transition: var( --transition-menu );
+					transition-property: opacity;
+				}
+			}
+
+			> .citizen-menu__dropdownButton {
+				background-color: var( --background-color-quiet--active );
+
+				&:hover {
+					background-color: var( --background-color-quiet--hover );
+				}
+			}
+		}
+	}
+
 	&__heading {
 		display: block;
 		padding: var( --space-xs ) var( --space-md );

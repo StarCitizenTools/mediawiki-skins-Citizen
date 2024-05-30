@@ -81,14 +81,14 @@ function setLoadingIndicatorListeners( element, attach, eventCallback ) {
 }
 
 /**
- * Manually focus on the input field if checkbox is checked
+ * Manually focus on the input field if search toggle is clicked
  *
- * @param {HTMLInputElement} checkbox
+ * @param {HTMLDetailsElement} details
  * @param {HTMLInputElement} input
  * @return {void}
  */
-function focusOnChecked( checkbox, input ) {
-	if ( checkbox.checked ) {
+function focusOnOpened( details, input ) {
+	if ( details.open ) {
 		input.focus();
 	} else {
 		input.blur();
@@ -115,14 +115,14 @@ function isFormField( element ) {
 }
 
 /**
- * Manually check the checkbox state when the button is SLASH is pressed.
+ * Manually toggle the details state when the keyboard button is SLASH is pressed.
  *
  * @param {Window} window
- * @param {HTMLInputElement} checkbox
+ * @param {HTMLDetailsElement} details
  * @param {HTMLInputElement} input
  * @return {void}
  */
-function bindExpandOnSlash( window, checkbox, input ) {
+function bindOpenOnSlash( window, details, input ) {
 	const onExpandOnSlash = ( /** @type {KeyboardEvent} */ event ) => {
 		const isKeyPressed = () => {
 			// "/" key is standard on many sites
@@ -139,8 +139,8 @@ function bindExpandOnSlash( window, checkbox, input ) {
 		if ( isKeyPressed() && !isFormField( event.target ) ) {
 			// Since Firefox quickfind interfere with this
 			event.preventDefault();
-			checkbox.checked = true;
-			focusOnChecked( checkbox, input );
+			details.open = true;
+			focusOnOpened( details, input );
 		}
 	};
 
@@ -213,11 +213,11 @@ function initSearch( window ) {
 
 		// Set up primary search box interactions
 		if ( isPrimarySearch ) {
-			const checkbox = document.getElementById( 'citizen-search__checkbox' );
-			bindExpandOnSlash( window, checkbox, input );
+			const details = document.getElementById( 'citizen-search' );
+			bindOpenOnSlash( window, details, input );
 			// Focus when toggled
-			checkbox.addEventListener( 'input', () => {
-				focusOnChecked( checkbox, input );
+			details.addEventListener( 'toggle', () => {
+				focusOnOpened( details, input );
 			} );
 		}
 

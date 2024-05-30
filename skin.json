@@ -158,6 +158,7 @@
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenResourceLoaderConfig"
 				},
 				"resources/skins.citizen.scripts/checkbox.js",
+				"resources/skins.citizen.scripts/dropdown.js",
 				"resources/skins.citizen.scripts/lastModified.js",
 				"resources/skins.citizen.scripts/overflowElements.js",
 				"resources/skins.citizen.scripts/scrollObserver.js",
