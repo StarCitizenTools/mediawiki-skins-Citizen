@@ -2,13 +2,9 @@ name: Lint
 
 on:
   push:
-    branches:
-      - '**'
     branches-ignore:
       - 'release-please/**'
   pull_request:
-    branches:
-      - '**'
     branches-ignore:
       - 'release-please/**'
 
