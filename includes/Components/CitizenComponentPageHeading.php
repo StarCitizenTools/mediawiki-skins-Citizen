@@ -191,13 +191,13 @@ class CitizenComponentPageHeading implements CitizenComponent {
 							$tagline = $localizer->msg( 'citizen-tagline' )->parse();
 						} else {
 							// Fallback to site tagline
-							$tagline = $localizer->msg( 'tagline' )->text();
+							$tagline = $localizer->msg( 'tagline' )->parse();
 						}
 					}
 				} elseif ( !$localizer->msg( 'citizen-tagline' )->isDisabled() ) {
 					$tagline = $localizer->msg( 'citizen-tagline' )->parse();
 				} else {
-					$tagline = $localizer->msg( 'tagline' )->text();
+					$tagline = $localizer->msg( 'tagline' )->parse();
 				}
 			}
 		}
