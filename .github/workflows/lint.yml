@@ -127,3 +127,11 @@ jobs:
         else
           echo "No changes to commit"
         fi
+
+    - name: Trigger Release-please
+      if: github.ref == 'refs/heads/main'
+      run: |
+        curl -X POST -H "Authorization: token ${{ secrets.WORKFLOW_TOKEN }}" \
+        -H "Accept: application/vnd.github.v3+json" \
+        https://api.github.com/repos/StarCitizenTools/mediawiki-skins-Citizen/actions/workflows/release-please.yaml/dispatches \
+        -d '{"ref":"main"}'
