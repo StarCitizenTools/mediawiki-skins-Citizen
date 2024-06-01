@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.16.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.15.1...v2.16.0) (2024-06-01)
+
+
+### Features
+
+* **core:** ✨ add dismiss affordnance to dropdown menus ([d0691a0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d0691a06d0bddb031f1cc6af2cc418501d71d6f5))
+* **core:** ✨ destructure surface colors into hsl variables ([c40c7c7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c40c7c7b841b606f168cba60b65fd0636d024c26))
+* **core:** ✨ only handle wikitable instead of all tables ([83ab221](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/83ab2214088a68c99d6614c970d4582b22a1a3c4))
+* **core:** ✨ replace checkbox hack with details and summary ([a2d3159](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a2d3159defcf57f2c4b151880536e91f3bc7b5b7))
+
+
+### Bug Fixes
+
+* **components:** 🐛 escape the contents of MediaWiki:Tagline ([4a43280](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4a43280242f33e54643087da4a7f40970d2640c9))
+* **core:** 🐛 avoid using core mw.util.addPortlet for now ([a8daa82](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a8daa82354dec287c6a329b20c93fe1a35d2e29f))
+* **core:** 🐛 check if page content model and whether the title can exist before formatting ([06d10b9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/06d10b99ce9573c9a47a17b956029e910442207e))
+* **core:** 🐛 hide Safari details marker ([8751345](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/87513459c4eca1a1b268ac575df4ceba9ba0aae4))
+* **core:** 🐛 incorrect classes and styles for page action cards ([621adff](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/621adff9fcad7e3385c68659c61e23a11b9f560c))
+* **core:** 🐛 incorrect selector to disable search card animation on mobile ([87f15dd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/87f15ddd6df5eb9e15957fdb05ba0eac987fab1d))
+* **core:** 🐛 incorrect software alignment on Special:Version ([a6abc3c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a6abc3c993450ef1073bb9806b92e235d5e51246))
+* **core:** 🐛 revert max-width rule on installed software ([3b90a46](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3b90a46109b788f83ec7e122610e44f87fb031dd))
+* **dropdown:** 🐛 toggle should dismiss the dropdown properly ([32d10f8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/32d10f893bdcbb590d9e45167919247239cfa1fd))
+* **search:** 🐛 opening search card should not play animation on mobile ([151e51d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/151e51da2f2ff12d66da0c409cf40cdf71a7748e))
+
+
+### Performance Improvements
+
+* **core:** ⚡️ check for nowrap classes before constructing class ([2bbb1d9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2bbb1d9408f858b5418c7e598c707978814e2eaf))
+* **core:** ⚡️ do not use will-change ([d8b3cad](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d8b3cad2256b819bfa2a7aaae0c1ce6b268e8440))
+* **core:** ⚡️ do not use will-change (part 2) ([e9d7cc2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e9d7cc270ad9fa4fc243ec38a98b53c348522da1))
+
+
+### Miscellaneous Chores
+
+* **dev:** 🔧 add editconfig file ([c17e6a9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c17e6a977093b490cc66a495d1bbddbd4fb6789d))
+
 ## [2.15.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.15.0...v2.15.1) (2024-05-28)
 
 
