@@ -51,10 +51,9 @@ class Dropdown {
 	 * @param {Event} event
 	 */
 	dismissOnEscape( event ) {
-		if ( event.key !== 'Escape' ) {
-			return;
+		if ( event.key === 'Escape' ) {
+			this.dismiss();
 		}
-		this.dismiss();
 	}
 
 	/**
@@ -80,6 +79,9 @@ class Dropdown {
 		}
 	}
 
+	/**
+	 * Unbind event listeners for the dropdown menu.
+	 */
 	unbind() {
 		this.target.removeEventListener( 'click', this.dismissOnLinkClick );
 		window.removeEventListener( 'click', this.dismissOnClickOutside );
@@ -87,6 +89,9 @@ class Dropdown {
 		window.removeEventListener( 'keyup', this.dismissOnEscape );
 	}
 
+	/**
+	 * Bind event listeners for the dropdown menu.
+	 */
 	bind() {
 		this.target.addEventListener( 'click', this.dismissOnLinkClick );
 		window.addEventListener( 'click', this.dismissOnClickOutside );
@@ -106,7 +111,7 @@ class Dropdown {
 		this.details.addEventListener( 'toggle', this.onDetailsToggle );
 		// T295085: Close all dropdown menus when page is unloaded to prevent them
 		// from being open when navigating back to a page.
-		window.addEventListener( 'beforeunload', this.dismiss.bind( this ) );
+		window.addEventListener( 'beforeunload', () => this.dismiss );
 	}
 }
 
