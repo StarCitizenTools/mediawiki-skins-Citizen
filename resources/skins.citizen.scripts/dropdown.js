@@ -7,6 +7,15 @@ const
 	DROPDOWN_SUMMARY_SELECTOR = '.citizen-menu__dropdownButton',
 	DROPDOWN_TARGET_SELECTOR = '.citizen-menu__card';
 
+/**
+ * Represents a Dropdown menu with enhanced functionality.
+ * This class handles the behavior of a dropdown menu, including dismissing the menu when clicking outside,
+ * pressing the ESCAPE key, losing focus, or clicking on links.
+ * It provides methods to bind and unbind event listeners for different actions.
+ * The 'init' method initializes the dropdown menu by adding necessary event listeners.
+ *
+ * @class
+ */
 class Dropdown {
 	constructor( details, summary, target ) {
 		this.details = details;
@@ -31,8 +40,7 @@ class Dropdown {
 	 * @param {Event} event
 	 */
 	dismissOnClickOutside( event ) {
-		if ( !this.target.contains( event.target ) ) {
-			event.stopPropagation();
+		if ( !this.target.contains( event.target ) && !this.summary.contains( event.target ) ) {
 			this.dismiss();
 		}
 	}
