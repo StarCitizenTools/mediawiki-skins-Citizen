@@ -5,13 +5,14 @@
 			"Kly",
 			"LNDDYL",
 			"Lakejason0",
+			"LittlePaw365",
 			"Neetp7k9",
 			"Winston Sung",
 			"列维劳德",
 			"沈澄心"
 		]
 	},
-	"skinname-citizen": "公民 （Citizen）",
+	"skinname-citizen": "公民（Citizen）",
 	"citizen-skin-desc": "一個漂亮的、可用的、響應的 MediaWiki 外觀，使擴充功能成為內聚體驗的一部分。最初是為[https://starcitizen.tools/ 星際公民百科]開發的。",
 	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|討論]]",
 	"citizen.css": "/* 此CSS會用於使用Citizen外觀的使用者 */",

@@ -17,8 +17,8 @@
 			"铁桶"
 		]
 	},
-	"skinname-citizen": "Citizen",
-	"citizen-skin-desc": "美观实用的响应式MediaWiki皮肤，也会给扩展带来一致的体验。最初为[https://starcitizen.tools/ Star Citizen Wiki]（星际公民Wiki）而制作。",
+	"skinname-citizen": "公民",
+	"citizen-skin-desc": "美观易用的响应式MediaWiki皮肤，也会给扩展带来一致的体验。最初为[https://starcitizen.tools/ Star Citizen Wiki]（星际公民Wiki）而制作。",
 	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|讨论]]",
 	"citizen.css": "/* 这里所有CSS都会加载给Citizen皮肤的用户 */",
 	"citizen.js": "/* 这里所有JavaScript都会加载给Citizen皮肤的用户 */",
@@ -51,7 +51,7 @@
 	"citizen-tagline-ns-template": "模板页面",
 	"citizen-tagline-ns-help": "帮助页面",
 	"citizen-tagline-ns-category": "分类页面",
-	"citizen-tagline-user-regdate": "$1注册",
+	"citizen-tagline-user-regdate": "$1加入",
 	"citizen-theme-name": "颜色",
 	"citizen-theme-description": "更改wiki的主题",
 	"citizen-theme-day-label": "浅色",
@@ -69,6 +69,6 @@
 	"citizen-feature-custom-width-standard-label": "标准",
 	"citizen-feature-custom-width-wide-label": "宽",
 	"citizen-feature-custom-width-full-label": "全宽",
-	"citizen-user-info-text-anon": "如果您进行任何编辑，您的IP地址会公开展示。",
+	"citizen-user-info-text-anon": "未登录用户的IP地址会在进行任意编辑后公开展示。",
 	"citizen-user-info-text-temp": "此临时账号是因您在此浏览器及设备上进行了无账号编辑而创建。"
 }
