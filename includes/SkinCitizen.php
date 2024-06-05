@@ -65,7 +65,7 @@ class SkinCitizen extends SkinMustache {
 	 * @see T287622
 	 *
 	 * @param SkinTemplate $skin The skin template object.
-	 * @param array $content_navigation The content navigation array.
+	 * @param array &$content_navigation The content navigation array.
 	 */
 	protected function runOnSkinTemplateNavigationHooks( SkinTemplate $skin, &$content_navigation ) {
 		parent::runOnSkinTemplateNavigationHooks( $skin, $content_navigation );
