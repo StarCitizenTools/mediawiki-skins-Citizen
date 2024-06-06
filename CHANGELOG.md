@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.16.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.16.0...v2.16.1) (2024-06-06)
+
+
+### Bug Fixes
+
+* **hooks:** 🐛 add missing article page icon on talk pages ([e372c4b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e372c4b7337d7ec580bfd568c77afcca69663c02)), closes [#867](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/867)
+* **hooks:** 🐛 add missing icon for talk pages ([e9cdf04](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e9cdf04c22611d5d675b38211a65116a5cabd2e2))
+* **hooks:** 🐛 always add editsection classes as string ([ea5524f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ea5524f9e2c07ad236a12e5cc334adc705669c88)), closes [#829](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/829)
+* **hooks:** 🐛 use arrowPrevious icon for return action on talk page ([9556c44](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9556c44183293a91d5ffd1d3e536dfcaa8bd1003))
+
 ## [2.16.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.15.1...v2.16.0) (2024-06-01)
 
 
