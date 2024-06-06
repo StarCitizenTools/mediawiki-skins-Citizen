@@ -271,6 +271,7 @@ class SkinHooks implements
 		$iconMap = [
 			'main' => 'article',
 			'file' => 'image',
+			'talk' => 'speechBubbles',
 			'user' => 'userAvatar'
 		];
 
