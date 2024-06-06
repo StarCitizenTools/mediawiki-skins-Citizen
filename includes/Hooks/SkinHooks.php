@@ -284,7 +284,7 @@ class SkinHooks implements
 				// TODO: use str_starts_with when we drop PHP 7.X
 				$namespace = substr( $keyStr, 0, -5 );
 				$links['associated-pages'][$key]['icon'] = 'speechBubbles';
-				$links['associated-pages'][$namespace]['icon'] = 'article';
+				$links['associated-pages'][$namespace]['icon'] = 'arrowPrevious';
 			}
 		}
 
