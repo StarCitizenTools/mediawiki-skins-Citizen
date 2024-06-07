@@ -46,9 +46,7 @@ function getFirstString( s ) {
  */
 function adaptApiResponse( config, query, response, showDescription ) {
 	const urlGeneratorInstance = urlGenerator( config );
-	const getDescription = ( page ) => {
-		return getFirstString( page?.printouts?.Description ).slice( 0, 60 );
-	};
+	const getDescription = ( page ) => getFirstString( page?.printouts?.Description ).slice( 0, 60 );
 
 	return {
 		query,
@@ -113,12 +111,8 @@ function smwAskApiSearchClient( config ) {
 			const searchApiUrl = config.wgScriptPath + '/api.php';
 
 			const getConditions = () => {
-				const separateConditions = ( s ) => {
-					return s.replace( /\]\]\s*\[\[/g, '|' );
-				};
-				const removeSquareBrackets = ( s ) => {
-					return s.replace( /\[|\]/g, '' );
-				};
+				const separateConditions = ( s ) => s.replace( /\]\]\s*\[\[/g, '|' );
+				const removeSquareBrackets = ( s ) => s.replace( /\[|\]/g, '' );
 				const conditions = removeSquareBrackets( separateConditions( q ) );
 				return conditions;
 			};
@@ -159,9 +153,7 @@ function smwAskApiSearchClient( config ) {
 				}
 			} );
 			const searchResponsePromise = result.fetch
-				.then( ( /** @type {SMWAskArgResponse} */ res ) => {
-					return adaptApiResponse( config, q, res, showDescription );
-				} );
+				.then( ( /** @type {SMWAskArgResponse} */ res ) => adaptApiResponse( config, q, res, showDescription ) );
 			return {
 				abort: result.abort,
 				fetch: searchResponsePromise

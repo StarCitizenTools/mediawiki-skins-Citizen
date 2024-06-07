@@ -43,7 +43,7 @@ function isValidFeatureValue( value ) {
 function saveClientPrefs( feature, value ) {
 	const existingStorage = mw.storage.get( CLIENTPREF_STORAGE_NAME ) || '';
 	const data = {};
-	existingStorage.split( CLIENTPREF_DELIMITER ).forEach( function ( keyValuePair ) {
+	existingStorage.split( CLIENTPREF_DELIMITER ).forEach( ( keyValuePair ) => {
 		const m = keyValuePair.match( /^([\w-]+)-clientpref-(\w+)$/ );
 		if ( m ) {
 			data[ m[ 1 ] ] = m[ 2 ];
@@ -51,9 +51,7 @@ function saveClientPrefs( feature, value ) {
 	} );
 	data[ feature ] = value;
 
-	const newStorage = Object.keys( data ).map( function ( key ) {
-		return key + CLIENTPREF_SUFFIX + data[ key ];
-	} ).join( CLIENTPREF_DELIMITER );
+	const newStorage = Object.keys( data ).map( ( key ) => key + CLIENTPREF_SUFFIX + data[ key ] ).join( CLIENTPREF_DELIMITER );
 	mw.storage.set( CLIENTPREF_STORAGE_NAME, newStorage );
 }
 
@@ -100,7 +98,7 @@ function clientPrefs() {
 		get: function ( feature ) {
 			const featurePrefix = feature + CLIENTPREF_SUFFIX;
 			const docClass = document.documentElement.className;
-			// eslint-disable-next-line security/detect-non-literal-regexp
+
 			const featureRegEx = new RegExp(
 				'(^| )' + mw.util.escapeRegExp( featurePrefix ) + '([a-zA-Z0-9]+)( |$)'
 			);

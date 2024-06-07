@@ -132,9 +132,7 @@ function handleClientPreferences() {
 				'skin-citizen-light',
 				'skin-citizen-dark'
 			];
-			const legacyThemeKey = Object.keys( CLIENTPREFS_THEME_MAP ).find( ( key ) => {
-				return CLIENTPREFS_THEME_MAP[ key ] === clientPrefs.get( 'skin-theme' );
-			} );
+			const legacyThemeKey = Object.keys( CLIENTPREFS_THEME_MAP ).find( ( key ) => CLIENTPREFS_THEME_MAP[ key ] === clientPrefs.get( 'skin-theme' ) );
 			document.documentElement.classList.remove( ...LEGACY_THEME_CLASSES );
 			document.documentElement.classList.add( `skin-citizen-${ legacyThemeKey }` );
 		};

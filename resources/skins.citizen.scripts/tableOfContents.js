@@ -60,15 +60,11 @@ function init( bodyContent ) {
 		return;
 	}
 
-	const extractIds = () => {
-		return Array.from( toc.querySelectorAll( '.citizen-toc__listItem' ) )
-			.map( ( tocListEl ) => tocListEl.id.slice( 4 ) );
-	};
+	const extractIds = () => Array.from( toc.querySelectorAll( '.citizen-toc__listItem' ) )
+		.map( ( tocListEl ) => tocListEl.id.slice( 4 ) );
 
-	const queryElements = ( ids ) => {
-		return ids.map( ( id ) => bodyContent.querySelector( '#' + CSS.escape( id ) ) )
-			.filter( ( element ) => element !== null && element !== undefined );
-	};
+	const queryElements = ( ids ) => ids.map( ( id ) => bodyContent.querySelector( '#' + CSS.escape( id ) ) )
+		.filter( ( element ) => element !== null && element !== undefined );
 
 	const headlines = queryElements( extractIds() );
 
@@ -76,9 +72,7 @@ function init( bodyContent ) {
 	const scrollPaddingTop = computedStyle.getPropertyValue( 'scroll-padding-top' );
 	const topMargin = Number( scrollPaddingTop.slice( 0, -2 ) ) + 20;
 
-	const getTopMargin = () => {
-		return topMargin;
-	};
+	const getTopMargin = () => topMargin;
 
 	const initSectionObserver = require( './sectionObserver.js' ).init;
 

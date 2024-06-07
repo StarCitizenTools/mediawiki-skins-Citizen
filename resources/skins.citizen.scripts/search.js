@@ -71,7 +71,7 @@ function setLoadingIndicatorListeners( element, attach, eventCallback ) {
 	/** @type { "addEventListener" | "removeEventListener" } */
 	const addOrRemoveListener = ( attach ? 'addEventListener' : 'removeEventListener' );
 
-	[ 'input', 'focusin', 'focusout' ].forEach( function ( eventType ) {
+	[ 'input', 'focusin', 'focusout' ].forEach( ( eventType ) => {
 		element[ addOrRemoveListener ]( eventType, eventCallback );
 	} );
 

@@ -22,24 +22,20 @@ function enableCssAnimations( document ) {
 function initStickyHeader( document ) {
 	const { initDirectionObserver, initIntersectionObserver } = require( './scrollObserver.js' );
 
-	const toggleScrollClass = ( removeClass, addClass ) => {
-		return () => {
-			window.requestAnimationFrame( () => {
-				document.body.classList.remove( removeClass );
-				document.body.classList.add( addClass );
-			} );
-		};
+	const toggleScrollClass = ( removeClass, addClass ) => () => {
+		window.requestAnimationFrame( () => {
+			document.body.classList.remove( removeClass );
+			document.body.classList.add( addClass );
+		} );
 	};
 
 	const addScrollDownClass = toggleScrollClass( SCROLL_UP_CLASS, SCROLL_DOWN_CLASS );
 	const addScrollUpClass = toggleScrollClass( SCROLL_DOWN_CLASS, SCROLL_UP_CLASS );
 
-	const toggleStickyClass = ( state ) => {
-		return () => {
-			window.requestAnimationFrame( () => {
-				document.body.classList.toggle( STICKY_CLASS, state );
-			} );
-		};
+	const toggleStickyClass = ( state ) => () => {
+		window.requestAnimationFrame( () => {
+			document.body.classList.toggle( STICKY_CLASS, state );
+		} );
 	};
 
 	initDirectionObserver( addScrollDownClass, addScrollUpClass, 10 );
@@ -118,7 +114,7 @@ function main( window ) {
 	checkbox.bind();
 	dropdown.init();
 
-	mw.hook( 'wikipage.content' ).add( function ( content ) {
+	mw.hook( 'wikipage.content' ).add( ( content ) => {
 		// content is a jQuery object
 		// note that this refers to .mw-body-content, not #bodyContent
 		initBodyContent( content[ 0 ] );
@@ -148,7 +144,7 @@ function main( window ) {
 if ( document.readyState === 'interactive' || document.readyState === 'complete' ) {
 	main( window );
 } else {
-	document.addEventListener( 'DOMContentLoaded', function () {
+	document.addEventListener( 'DOMContentLoaded', () => {
 		main( window );
 	} );
 }

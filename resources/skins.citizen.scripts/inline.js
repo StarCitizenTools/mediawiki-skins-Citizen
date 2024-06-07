@@ -14,9 +14,9 @@ window.clientPrefs = () => {
 	const storage = localStorage.getItem( 'mwclientpreferences' );
 	if ( storage ) {
 		// TODO: Just use array for localStorage
-		storage.split( ',' ).forEach( function ( pref ) {
+		storage.split( ',' ).forEach( ( pref ) => {
 			className = className.replace(
-				// eslint-disable-next-line security/detect-non-literal-regexp
+
 				new RegExp( '(^| )' + pref.replace( /-clientpref-\w+$|[^\w-]+/g, '' ) + '-clientpref-\\w+( |$)' ),
 				'$1' + pref + '$2'
 			);
@@ -33,7 +33,7 @@ window.clientPrefs = () => {
 					// eslint-disable-next-line max-len, es-x/no-object-values
 					const classesToRemove = Object.values( CLIENTPREFS_THEME_MAP ).map( ( theme ) => LEGACY_PREFIX + theme );
 					className = className.replace(
-						// eslint-disable-next-line security/detect-non-literal-regexp
+
 						new RegExp( classesToRemove.join( '|' ), 'g' ),
 						''
 					);

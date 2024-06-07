@@ -231,8 +231,7 @@ function createRow( className ) {
  * @param {string} featureName
  * @return {MwMessage}
  */
-const getFeatureLabelMsg = ( featureName ) =>
-	getMessage( `${ featureName }-name` );
+const getFeatureLabelMsg = ( featureName ) => getMessage( `${ featureName }-name` );
 
 /**
  * adds a toggle button
