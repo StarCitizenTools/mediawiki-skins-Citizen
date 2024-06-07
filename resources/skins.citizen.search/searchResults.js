@@ -52,7 +52,7 @@ function searchResults() {
 			const generateRedirectHtml = () => {
 				const div = document.createElement( 'div' );
 				div.classList.add( 'citizen-typeahead__labelItem' );
-				div.title = getRedirectMessage( matchedTitle );
+				div.title = getRedirectMessage();
 
 				const spanIcon = document.createElement( 'span' );
 				spanIcon.classList.add( 'citizen-ui-icon', 'mw-ui-icon-wikimedia-articleRedirect' );
