@@ -125,7 +125,7 @@
 
 .oo-ui-buttonElement-framed.oo-ui-widget-enabled.oo-ui-buttonElement-active > .oo-ui-buttonElement-button:focus {
 	border-color: var( --color-primary );
-	box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px var( --color-inverted );
+	box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px var( --color-inverted-primary );
 }
 
 .oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button:active,
@@ -193,7 +193,7 @@
 
 .oo-ui-buttonElement-framed.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-buttonElement-button:focus {
 	border-color: var( --color-primary );
-	box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px var( --color-inverted );
+	box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px var( --color-inverted-primary );
 }
 
 .oo-ui-buttonElement-framed.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-progressive > .oo-ui-buttonElement-button:active,
@@ -216,7 +216,7 @@
 
 .oo-ui-buttonElement-framed.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive > .oo-ui-buttonElement-button:focus {
 	border-color: var( --color-destructive );
-	box-shadow: inset 0 0 0 1px var( --color-destructive ), inset 0 0 0 2px var( --color-inverted );
+	box-shadow: inset 0 0 0 1px var( --color-destructive ), inset 0 0 0 2px var( --color-inverted-primary );
 }
 
 .oo-ui-buttonElement-framed.oo-ui-widget-enabled.oo-ui-flaggedElement-primary.oo-ui-flaggedElement-destructive > .oo-ui-buttonElement-button:active,
@@ -436,7 +436,7 @@ TODO: Need to refactor the current shadow for filter drop-shadow, see variables.
 .oo-ui-checkboxInputWidget.oo-ui-widget-enabled [ type='checkbox' ]:indeterminate:focus + span {
 	background-color: var( --color-primary );
 	border-color: var( --color-primary );
-	box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px var( --color-inverted );
+	box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px var( --color-inverted-primary );
 }
 
 .oo-ui-checkboxInputWidget.oo-ui-widget-enabled [ type='checkbox' ]:checked:hover + span,
@@ -516,7 +516,7 @@ TODO: Need to refactor the current shadow for filter drop-shadow, see variables.
 }
 
 .oo-ui-radioInputWidget.oo-ui-widget-enabled [ type='radio' ]:checked + span {
-	background-color: var( --color-inverted );
+	background-color: var( --color-inverted-primary );
 	border-color: var( --color-primary );
 }
 
