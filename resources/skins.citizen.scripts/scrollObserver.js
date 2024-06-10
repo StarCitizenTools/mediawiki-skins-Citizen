@@ -25,8 +25,8 @@ function initDirectionObserver( onScrollDown, onScrollUp, threshold ) {
 		lastScrollTop = scrollTop;
 	};
 
-	const debouncedOnScroll = mw.util.debounce( mw.util.throttle( onScroll, 250 ), 100 );
-	window.addEventListener( 'scroll', debouncedOnScroll );
+	const throttledOnScroll = mw.util.throttle( onScroll, 250 );
+	window.addEventListener( 'scroll', throttledOnScroll );
 }
 
 /**
