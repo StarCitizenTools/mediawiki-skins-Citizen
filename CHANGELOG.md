@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.17.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.17.0...v2.17.1) (2024-06-11)
+
+
+### Bug Fixes
+
+* **overflow:** 🐛 align scroll buttons with content margin ([4b457df](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4b457dfa0880a01950442deeca40367ad57aeeb6))
+* **overflow:** 🐛 expand blocklist for nowrap as some tables contain the wikitable class ([f5e9891](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f5e9891079b1e01a236101c1540b378654b67f15))
+* **overflow:** 🐛 mark oveflow button as not accessible for screen reader ([7830faa](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7830faa8fed15c6f3566750153f9c6a5df06e80c))
+* **overflow:** 🐛 use more accurate rounding method for overflow detection ([cbf6003](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cbf60030f10ac271df933ebc2a5566a9d27ef283))
+
 ## [2.17.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.16.1...v2.17.0) (2024-06-11)
 
 
