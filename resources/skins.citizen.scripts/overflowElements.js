@@ -189,7 +189,7 @@ class OverflowElement {
 	 */
 	scrollContent( offset ) {
 		const delta = this.content.scrollWidth - this.content.offsetWidth;
-		const scrollLeft = Math.ceil( this.content.scrollLeft ) + offset;
+		const scrollLeft = Math.floor( this.content.scrollLeft ) + offset;
 
 		window.requestAnimationFrame( () => {
 			this.content.scrollLeft = Math.min( Math.max( scrollLeft, 0 ), delta );
