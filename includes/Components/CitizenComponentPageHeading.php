@@ -96,9 +96,9 @@ class CitizenComponentPageHeading implements CitizenComponent {
 	/**
 	 * Return user tagline message
 	 *
-	 * @return string|null
+	 * @return string
 	 */
-	private function buildUserTagline() {
+	private function buildUserTagline(): string {
 		$localizer = $this->localizer;
 
 		$user = $this->buildPageUserObject();
@@ -132,7 +132,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 			$tagline .= '</div>';
 			return $tagline;
 		}
-		return null;
+		return '';
 	}
 
 	/**
