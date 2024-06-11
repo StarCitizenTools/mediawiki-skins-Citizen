@@ -158,8 +158,14 @@ class OverflowElement {
 			this.content = content;
 
 			if ( this.isPointerDevice ) {
+				const elementStyles = window.getComputedStyle( this.element );
+				const topMargin = parseInt( elementStyles.marginTop );
+				const bottomMargin = parseInt( elementStyles.marginBottom );
+
 				const nav = document.createElement( 'div' );
 				nav.className = 'citizen-overflow-nav';
+				nav.style.marginTop = `${ topMargin }px`;
+				nav.style.marginBottom = `${ bottomMargin }px`;
 
 				const leftButton = document.createElement( 'button' );
 				leftButton.className =
