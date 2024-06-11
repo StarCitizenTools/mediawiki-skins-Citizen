@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.17.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.16.1...v2.17.0) (2024-06-11)
+
+
+### Features
+
+* **cssVar:** ✨ add --color-inverted-primary for text color above primary color ([86ef5ef](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/86ef5ef06d1cae1e777f221b1be50e009320cbd4))
+* **overflow:** ✨ add overflow scroll button when using a pointer device ([55d413e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/55d413eeda6359ae802e9f3df495da3333c242fc))
+
+
+### Bug Fixes
+
+* **core:** 🐛 do not debounce scroll direction script ([ababe58](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ababe581864006e7d2ed0ec586f10ce02c8918a5))
+* **core:** 🐛 incorrect opacity and color of icons in button ([8541b7e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8541b7ee8847c4e705d868e62533648480891e5d))
+* **ooui:** 🐛 define invert color for progressive buttons ([670d214](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/670d21469ebd6ea1c8ef3155d91091268db9cfd2))
+* **search:** 🐛 remove unused param from getRedirectMessage() ([d0e6842](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d0e684236eb77e3a0dbed100b251dd6a44054f72))
+* **skinning:** 🐛 incorrect margin value for floating thumbnail ([0a8c49a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0a8c49a573a2793d257a6af28aaa9813b936eb44))
+* **tagline:** 🐛 always return string from user tagline ([fe9c0f8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fe9c0f8674b043ac02797636209ffb563506bd69)), closes [#871](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/871)
+
 ## [2.16.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.16.0...v2.16.1) (2024-06-06)
 
 
