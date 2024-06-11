@@ -68,7 +68,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 	private function shouldAddParenthesis(): bool {
 		$ns = $this->title->getNamespace();
 		$contentNs = MediaWikiServices::getInstance()->getNamespaceInfo()->getContentNamespaces();
-		return in_array( $ns, $contentNs );
+		return in_array($ns, $contentNs);
 	}
 
 	/**
@@ -81,13 +81,13 @@ class CitizenComponentPageHeading implements CitizenComponent {
 		$titleText = $this->title->getText();
 		$user = $this->user;
 
-		if ( IPUtils::isIPAddress( $titleText ) ) {
-			return $user->newFromAnyId( null, $titleText, null );
+		if (IPUtils::isIPAddress($titleText)) {
+			return $user->newFromAnyId(null, $titleText, null);
 		}
 
-		$userIdentity = MediaWikiServices::getInstance()->getUserIdentityLookup()->getUserIdentityByName( $titleText );
-		if ( $userIdentity && $userIdentity->isRegistered() ) {
-			return $user->newFromId( $userIdentity->getId() );
+		$userIdentity = MediaWikiServices::getInstance()->getUserIdentityLookup()->getUserIdentityByName($titleText);
+		if ($userIdentity && $userIdentity->isRegistered()) {
+			return $user->newFromId($userIdentity->getId());
 		}
 
 		return null;
@@ -102,30 +102,30 @@ class CitizenComponentPageHeading implements CitizenComponent {
 		$localizer = $this->localizer;
 
 		$user = $this->buildPageUserObject();
-		if ( $user ) {
+		if ($user) {
 			$tagline = '<div id="citizen-tagline-user">';
 			$editCount = $user->getEditCount();
 			$regDate = $user->getRegistration();
-			$gender = MediaWikiServices::getInstance()->getGenderCache()->getGenderOf( $user, __METHOD__ );
+			$gender = MediaWikiServices::getInstance()->getGenderCache()->getGenderOf($user, __METHOD__);
 
-			if ( $gender === 'male' ) {
+			if ($gender === 'male') {
 				$msgGender = '♂';
-			} elseif ( $gender === 'female' ) {
+			} elseif ($gender === 'female') {
 				$msgGender = '♀';
 			}
-			if ( isset( $msgGender ) ) {
+			if (isset($msgGender)) {
 				$tagline .= "<span id=\"citizen-tagline-user-gender\" data-user-gender=\"$gender\">$msgGender</span>";
 			}
 
-			if ( $editCount ) {
-				$msgEditCount = $localizer->msg( 'usereditcount' )->numParams( sprintf( '%s', number_format( $editCount, 0 ) ) );
-				$editCountHref = SpecialPage::getTitleFor( 'Contributions', $user )->getLocalURL();
+			if ($editCount) {
+				$msgEditCount = $localizer->msg('usereditcount')->numParams(sprintf('%s', number_format($editCount, 0)));
+				$editCountHref = SpecialPage::getTitleFor('Contributions', $user)->getLocalURL();
 				$tagline .= "<span id=\"citizen-tagline-user-editcount\" data-user-editcount=\"$editCount\"><a href=\"$editCountHref\">$msgEditCount</a></span>";
 			}
 
-			if ( is_string( $regDate ) ) {
-				$regDateTs = wfTimestamp( TS_UNIX, $regDate );
-				$msgRegDate = $localizer->msg( 'citizen-tagline-user-regdate', $this->pageLang->userDate( new MWTimestamp( $regDate ), $this->user ), $user );
+			if (is_string($regDate)) {
+				$regDateTs = wfTimestamp(TS_UNIX, $regDate);
+				$msgRegDate = $localizer->msg('citizen-tagline-user-regdate', $this->pageLang->userDate(new MWTimestamp($regDate), $this->user), $user);
 				$tagline .= "<span id=\"citizen-tagline-user-regdate\" data-user-regdate=\"$regDateTs\">$msgRegDate</span>";
 			}
 
@@ -142,13 +142,63 @@ class CitizenComponentPageHeading implements CitizenComponent {
 	 */
 	private function getPageHeading(): string {
 		$titleHtml = $this->titleData;
-		if ( $this->shouldAddParenthesis() ) {
+		if ($this->shouldAddParenthesis()) {
 			// Look for the </span> to ensure that it is the last parenthesis of the title
 			$pattern = '/\s(\(.+\))<\/span>/';
 			$replacement = ' <span class="mw-page-title-parenthesis">$1</span></span>';
-			$titleHtml = preg_replace( $pattern, $replacement, $this->titleData );
+			$titleHtml = preg_replace($pattern, $replacement, $this->titleData);
 		}
 		return $titleHtml;
+	}
+
+	/**
+	 * Determine the tagline for the current page based on various conditions:
+	 * - If the namespace text is empty, check for specific tagline messages and return accordingly
+	 * - If a custom tagline message exists for the namespace, return it
+	 * - If the page is a special page or talk page, return specific messages
+	 * - If it is a top-level user page, build and return the user tagline
+	 * - Otherwise, fallback to the site tagline
+	 *
+	 * @return string The determined tagline for the current page
+	 */
+	private function determineTagline(): string {
+		$localizer = $this->localizer;
+		$title = $this->title;
+
+		$namespaceText = $title->getNsText();
+		// Check if namespaceText exists
+		if (empty($namespaceText)) {
+			if (!$localizer->msg('citizen-tagline')->isDisabled()) {
+				return $localizer->msg('citizen-tagline')->parse();
+			} else {
+				return $localizer->msg('tagline')->parse();
+			}
+		}
+
+		$msg = $localizer->msg('citizen-tagline-ns-' . strtolower($namespaceText));
+		// Use custom message if exists
+		if (!$msg->isDisabled()) {
+			return $msg->parse();
+		}
+
+		if ($title->isSpecialPage()) {
+			// No tagline if special page
+			return '';
+		}
+
+		if ($title->isTalkPage()) {
+			// Use generic talk page message if talk page
+			return $localizer->msg('citizen-tagline-ns-talk')->parse();
+		}
+
+		$isRootUserPage = $title->inNamespace(NS_USER) || (defined('NS_USER_WIKI') && $title->inNamespace(NS_USER_WIKI)) || (defined('NS_USER_WIKI') && $title->inNamespace(NS_USER_PROFILE)) && !$title->isSubpage();
+		if ($isRootUserPage) {
+			// Build user tagline if it is a top-level user page
+			return $this->buildUserTagline();
+		}
+
+		// Fallback to site tagline
+		return $localizer->msg('tagline')->parse();
 	}
 
 	/**
@@ -157,70 +207,42 @@ class CitizenComponentPageHeading implements CitizenComponent {
 	 * @return string
 	 */
 	private function getTagline(): string {
-		$localizer = $this->localizer;
 		$title = $this->title;
 
-		$tagline = '';
-
-		if ( $title ) {
-			// Use short description if there is any
-			// from Extension:ShortDescription
-			$shortdesc = $this->out->getProperty( 'shortdesc' );
-			if ( $shortdesc ) {
-				$tagline = $shortdesc;
-			} else {
-				$namespaceText = $title->getNsText();
-				// Check if namespaceText exists
-				// Return null if main namespace or not defined
-				if ( $namespaceText ) {
-					$msg = $localizer->msg( 'citizen-tagline-ns-' . strtolower( $namespaceText ) );
-					// Use custom message if exists
-					if ( !$msg->isDisabled() ) {
-						$tagline = $msg->parse();
-					} else {
-						if ( $title->isSpecialPage() ) {
-							// No tagline if special page
-							$tagline = '';
-						} elseif ( $title->isTalkPage() ) {
-							// Use generic talk page message if talk page
-							$tagline = $localizer->msg( 'citizen-tagline-ns-talk' )->parse();
-						} elseif ( ( $title->inNamespace( NS_USER ) || ( defined( 'NS_USER_WIKI' ) && $title->inNamespace( NS_USER_WIKI ) ) || ( defined( 'NS_USER_WIKI' ) && $title->inNamespace( NS_USER_PROFILE ) ) ) && !$title->isSubpage() ) {
-							// Build user tagline if it is a top-level user page
-							$tagline = $this->buildUserTagline( $title );
-						} elseif ( !$localizer->msg( 'citizen-tagline' )->isDisabled() ) {
-							$tagline = $localizer->msg( 'citizen-tagline' )->parse();
-						} else {
-							// Fallback to site tagline
-							$tagline = $localizer->msg( 'tagline' )->parse();
-						}
-					}
-				} elseif ( !$localizer->msg( 'citizen-tagline' )->isDisabled() ) {
-					$tagline = $localizer->msg( 'citizen-tagline' )->parse();
-				} else {
-					$tagline = $localizer->msg( 'tagline' )->parse();
-				}
-			}
-		}
-
-		// Apply language variant conversion
-		if ( !empty( $tagline ) ) {
-			$services = MediaWikiServices::getInstance();
-			$langConv = $services
-				->getLanguageConverterFactory()
-				->getLanguageConverter( $services->getContentLanguage() );
-			$tagline = $langConv->convert( $tagline );
-		}
-
-		return $tagline;
+		if (!$title) {
+			return '';
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-	public function getTemplateData(): array {
-		return [
-			'html-tagline' => $this->getTagline(),
-			'html-title-heading' => $this->getPageHeading()
-		];
+	// Use short description if there is any
+	// from Extension:ShortDescription
+	$shortdesc = $this->out->getProperty('shortdesc');
+	if ($shortdesc) {
+		$tagline = $shortdesc;
+	} else {
+		$tagline = $this->determineTagline();
 	}
+
+	if (empty($tagline)) {
+		return '';
+	}
+
+	// Apply language variant conversion
+	$services = MediaWikiServices::getInstance();
+	$langConv = $services
+		->getLanguageConverterFactory()
+		->getLanguageConverter($services->getContentLanguage());
+	$tagline = $langConv->convert($tagline);
+
+	return $tagline;
+}
+
+/**
+ * @inheritDoc
+ */
+public function getTemplateData(): array {
+	return [
+		'html-tagline' => $this->getTagline(),
+		'html-title-heading' => $this->getPageHeading()
+	];
+}
 }
