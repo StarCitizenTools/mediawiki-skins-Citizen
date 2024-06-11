@@ -161,21 +161,21 @@ class OverflowElement {
 				const elementStyles = window.getComputedStyle( this.element );
 				const topMargin = parseInt( elementStyles.marginTop );
 				const bottomMargin = parseInt( elementStyles.marginBottom );
+				const createButton = ( type ) => {
+					const button = document.createElement( 'button' );
+					button.className = `citizen-overflow-navButton citizen-overflow-navButton-${ type } citizen-ui-icon mw-ui-icon-wikimedia-collapse`;
+					button.setAttribute( 'aria-hidden', 'true' );
+					button.setAttribute( 'tabindex', '-1' );
+					return button;
+				};
 
 				const nav = document.createElement( 'div' );
 				nav.className = 'citizen-overflow-nav';
 				nav.style.marginTop = `${ topMargin }px`;
 				nav.style.marginBottom = `${ bottomMargin }px`;
 
-				const leftButton = document.createElement( 'button' );
-				leftButton.className =
-					'citizen-overflow-navButton citizen-overflow-navButton-left citizen-ui-icon mw-ui-icon-wikimedia-collapse';
-				nav.appendChild( leftButton );
-
-				const rightButton = document.createElement( 'button' );
-				rightButton.className =
-					'citizen-overflow-navButton citizen-overflow-navButton-right citizen-ui-icon mw-ui-icon-wikimedia-collapse';
-				nav.appendChild( rightButton );
+				nav.appendChild( createButton( 'left' ) );
+				nav.appendChild( createButton( 'right' ) );
 
 				wrapper.appendChild( nav );
 				this.nav = nav;
