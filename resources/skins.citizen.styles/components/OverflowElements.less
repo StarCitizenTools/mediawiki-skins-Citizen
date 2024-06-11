@@ -58,6 +58,9 @@
 	}
 
 	&-navButton {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		width: @overflow-affordnance-size;
 		height: 100%;
 		padding: 0;
@@ -66,9 +69,6 @@
 		background: transparent;
 		border: 0;
 		border-radius: var( --border-radius--small );
-		display: flex;
-		align-items: center;
-		justify-content: center;
 		.hideOverflowButton();
 
 		&::before {
