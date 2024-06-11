@@ -175,6 +175,11 @@
 .button-blue() {
 	color: var( --color-inverted-primary ) !important;
 	background-color: var( --color-primary );
+
+	.citizen-ui-icon::before {
+		filter: invert( 1 );
+		opacity: 1;
+	}
 }
 
 .button-blue-hover() {
@@ -188,6 +193,11 @@
 .button-red() {
 	color: var( --color-inverted-fixed ) !important;
 	background-color: var( --color-destructive );
+
+	.citizen-ui-icon::before {
+		filter: invert( 1 );
+		opacity: 1;
+	}
 }
 
 .button-red-hover() {
@@ -212,5 +222,5 @@
 
 	// color filter
 	@svg-filter-id: "recolor";
-	filter: url( 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="@{svg-filter-id}" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 @{r} 0 0 0 0 @{g} 0 0 0 0 @{b} 0 0 0 @{a} 0"/></filter></svg> #@{svg-filter-id}' );
+	filter: url( ';data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="@{svg-filter-id}" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 @{r} 0 0 0 0 @{g} 0 0 0 0 @{b} 0 0 0 @{a} 0"/></filter></svg> #@{svg-filter-id}' );
 }
