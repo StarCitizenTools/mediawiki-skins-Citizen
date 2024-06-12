@@ -146,17 +146,6 @@ class OverflowElement {
 			this.handleInheritedClasses();
 			fragment.appendChild( wrapper );
 
-			const content = document.createElement( 'div' );
-			content.className = 'citizen-overflow-content';
-			wrapper.appendChild( content );
-
-			const parentNode = this.element.parentNode;
-			parentNode.insertBefore( fragment, this.element );
-			content.appendChild( this.element );
-
-			this.wrapper = wrapper;
-			this.content = content;
-
 			if ( this.isPointerDevice ) {
 				const elementStyles = window.getComputedStyle( this.element );
 				const topMargin = parseInt( elementStyles.marginTop );
@@ -180,6 +169,17 @@ class OverflowElement {
 				wrapper.appendChild( nav );
 				this.nav = nav;
 			}
+
+			const content = document.createElement( 'div' );
+			content.className = 'citizen-overflow-content';
+			wrapper.appendChild( content );
+
+			const parentNode = this.element.parentNode;
+			parentNode.insertBefore( fragment, this.element );
+			content.appendChild( this.element );
+
+			this.wrapper = wrapper;
+			this.content = content;
 		} catch ( error ) {
 			mw.log.error(
 				`[Citizen] Error occurred while wrapping element: ${ error.message }`
