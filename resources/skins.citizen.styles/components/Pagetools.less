@@ -25,7 +25,10 @@
 		}
 
 		&__dropdown {
-			position: relative;
+			@media ( min-width: @min-width-breakpoint-desktop ) {
+				// Only attach dropdown menu to the button on desktop mode
+				position: relative;
+			}
 
 			&Button {
 				display: grid;
