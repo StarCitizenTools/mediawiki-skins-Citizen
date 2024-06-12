@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.17.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.17.1...v2.17.2) (2024-06-12)
+
+
+### Bug Fixes
+
+* **overflow:** 🐛 allow to click through the nav element ([dd89dab](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/dd89daba3979f6840836571f1db3831488b6eca9))
+* **pagetools:** 🐛 attach menu to the page actions bar instead of the button ([feae1e6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/feae1e6ad35465de0ee1037e4d07a855cdfaf04d))
+* **toc:** 🐛 ToC should have a higher z-index than page actions in smaller viewport ([089a329](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/089a329da91294fe5ea4f0ab8b5b4e57dad4fef6))
+
 ## [2.17.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.17.0...v2.17.1) (2024-06-11)
 
 
