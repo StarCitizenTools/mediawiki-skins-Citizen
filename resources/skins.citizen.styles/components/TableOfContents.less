@@ -102,7 +102,7 @@
 		position: fixed;
 		bottom: ~'calc( var( --header-size ) + var(  --space-xs ) )';
 		left: 0;
-		z-index: @z-index-page-header;
+		z-index: @z-index-page-header + 1; // Need to be higher than the page actions
 		// Allow click through
 		pointer-events: none;
 		transition: var( --transition-menu );
