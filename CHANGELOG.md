@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.18.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.18.0...v2.18.1) (2024-06-14)
+
+
+### Bug Fixes
+
+* **core:** 🐛 incorrect side margin for ul and ol ([d079cc9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d079cc9b29309b94543765002ef13006d73c6c78))
+* **menu:** 🐛 fix invisible user menu on desktop Safari ([00dba95](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/00dba9540b8b5036d4926419aab43ecace67f8bd))
+
 ## [2.18.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.17.2...v2.18.0) (2024-06-14)
 
 
