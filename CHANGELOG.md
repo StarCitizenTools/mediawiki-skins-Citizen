@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.18.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.17.2...v2.18.0) (2024-06-14)
+
+
+### Features
+
+* **core:** ✨ hide the text from the help indicator ([5bc18b5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5bc18b5f4ac4939dfa027216f7fec691da45164f))
+* **pageHeading:** ✨ add support for all Unicode opening and closing punctation marks ([01d14d5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/01d14d55983c4a23c348a07d5e3c88260e1c86e1)), closes [#879](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/879)
+
+
+### Bug Fixes
+
+* **menu:** 🐛 fix invisible user menu ([a7c74e3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a7c74e3f107a81bdbb426a91a87353b9991ab055))
+* **menu:** 🐛 hide Safari details marker ([c52dc49](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c52dc49d6dbac3e6489f773c4f1ad9163538e740))
+* **menu:** 🐛 incorrect Safari details marker selector ([3b3bb30](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3b3bb3030db7b26d9c883d9e9a22503b751c6d00))
+* **overflow:** 🐛 wrapper should respect float elements ([9bd18ea](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9bd18ea0541b7e19c957e75263a4d8238cf97fbe)), closes [#878](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/878)
+* **Popups:** 🐛 invert icon in dark mode ([20fd064](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/20fd0643feebdc089efd94bdad235a5fcd4e397c))
+
 ## [2.17.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.17.1...v2.17.2) (2024-06-12)
 
 
