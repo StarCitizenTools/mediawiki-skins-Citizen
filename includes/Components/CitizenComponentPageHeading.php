@@ -144,7 +144,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 		$titleHtml = $this->titleData;
 		if ( $this->shouldAddParenthesis() ) {
 			// Look for the </span> to ensure that it is the last parenthesis of the title
-			$pattern = '/\s(\(.+\))<\/span>/';
+			$pattern = '/\s(\p{Ps}.+\p{Pe})<\/span>/';
 			$replacement = ' <span class="mw-page-title-parenthesis">$1</span></span>';
 			$titleHtml = preg_replace( $pattern, $replacement, $this->titleData );
 		}
