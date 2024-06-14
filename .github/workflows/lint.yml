@@ -2,11 +2,11 @@ name: Lint
 
 on:
   push:
-    branches-ignore:
-      - 'release-please/**'
+    branches:
+      - "!**release-please--**"
   pull_request:
-    branches-ignore:
-      - 'release-please/**'
+    branches:
+      - "!**release-please--**"
 
 jobs:
   test:
