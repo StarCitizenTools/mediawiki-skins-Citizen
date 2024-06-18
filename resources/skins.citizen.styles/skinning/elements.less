@@ -113,15 +113,24 @@ p img {
 	margin: 0;
 }
 
+ol {
+	padding: 0;
+	margin: var( --space-md ) 0 var( --space-md ) var( --space-xxl );
+}
+
 ul {
 	// Will break a lot of styles if we use padding for horizontal spacing
 	padding: 0;
 	margin: var( --space-md ) 0 var( --space-md ) var( --space-xxl );
 }
 
-ol {
-	padding: 0;
-	margin: var( --space-md ) 0 var( --space-md ) var( --space-xxl );
+ol,
+ul {
+	ol,
+	ul {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
 }
 
 dt {
