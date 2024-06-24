@@ -64,7 +64,8 @@
 
 // HACK: Restore view button on revision page
 // There are no good way to target revision page
-.action-view #ca-view {
+// The :not selector is needed because Extension:DiscussionTools loads the diff styles inline
+body:not(.ns-talk) .action-view #ca-view {
 	position: relative !important;
 	width: auto;
 	height: auto;
