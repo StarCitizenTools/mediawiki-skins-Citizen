@@ -26,12 +26,7 @@
 	&__siteinfo {
 		display: flex;
 		flex-direction: column;
-		gap: var( --space-xxs );
-
-		.mw-logo-wordmark {
-			font-size: 1.5rem;
-			color: var( --color-base--emphasized );
-		}
+		gap: var( --space-xs );
 	}
 
 	&__menu {
@@ -56,14 +51,6 @@
 		&__logo img {
 			// Bigger logo
 			height: 5rem;
-		}
-
-		&__siteinfo {
-			.mw-logo-wordmark {
-				font-size: 2rem;
-				// Sometimes long wiki name will wrap when the menu is too small
-				white-space: nowrap;
-			}
 		}
 	}
 }
