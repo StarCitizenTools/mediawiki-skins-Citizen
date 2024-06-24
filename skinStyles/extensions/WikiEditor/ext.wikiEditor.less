@@ -10,6 +10,8 @@
 
 @import '../../../resources/mixins.less';
 
+@wikieditor-button-size: 42px;
+
 /* jquery.wikiEditor.less */
 .wikiEditor-ui {
 	.wikiEditor-ui-view {
@@ -73,7 +75,7 @@
 	.tabs,
 	.section-main,
 	.section-secondary {
-		min-height: 42px; /* Align with VE */
+		min-height: @wikieditor-button-size; /* Align with VE */
 	}
 
 	/* Expandable Sections */
@@ -89,10 +91,10 @@
 		margin: 0 8px;
 
 		span.tab {
-			line-height: 42px; /* Align with VE */
+			line-height: @wikieditor-button-size; /* Align with VE */
 
 			a {
-				height: 42px; /* Align with VE */
+				height: @wikieditor-button-size; /* Align with VE */
 				font-weight: var( --font-weight-medium );
 				color: var( --color-base--emphasized );
 
@@ -136,15 +138,15 @@
 		}
 
 		.tool-select {
-			height: 42px;
+			height: @wikieditor-button-size;
 			background-color: var( --color-surface-0 );
 			border-color: var( --border-color-base );
 
 			.label {
-				height: 42px; /* Align with VE */
+				height: @wikieditor-button-size; /* Align with VE */
 				font-size: inherit;
 				font-weight: var( --font-weight-medium );
-				line-height: 42px; /* Align with VE */
+				line-height: @wikieditor-button-size; /* Align with VE */
 				color: var( --color-base--emphasized );
 				letter-spacing: inherit;
 
@@ -251,11 +253,20 @@
 			}
 		}
 	}
+
+	.ve-init-mw-editSwitch .oo-ui-popupToolGroup.oo-ui-iconElement {
+		height: @wikieditor-button-size; /* Align with VE */
+
+		.oo-ui-popupToolGroup-handle {
+			padding-top: @wikieditor-button-size;
+			border-radius: var( --border-radius--small );
+		}
+	}
 }
 
 .tool.oo-ui-buttonElement-frameless.oo-ui-iconElement > .oo-ui-buttonElement-button {
-	min-width: 42px; /* Align with VE */
-	min-height: 42px; /* Align with VE */
+	min-width: @wikieditor-button-size; /* Align with VE */
+	min-height: @wikieditor-button-size; /* Align with VE */
 	border-radius: var( --border-radius--small );
 
 	> .oo-ui-iconElement-icon {
