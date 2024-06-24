@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.19.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.18.1...v2.19.0) (2024-06-24)
+
+
+### Features
+
+* **skinning:** ✨ remove top and bottom margin from nested lists ([08e63e3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/08e63e3caf8d890b7109a0275eff0f7b9976e4ac)), closes [#886](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/886)
+* **wordmark:** ✨ implement wordmark in drawer ([c47531a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c47531a28b2f815a08b6f4d4d6dada48bd2a99c7))
+
+
+### Bug Fixes
+
+* **footer:** 🐛 incorrect invert rule for footer wordmark ([e0507d4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e0507d489deb5775695110baafe2cb2d48e88456))
+* **menu:** 🐛 avoid double view button on talk page ([923dded](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/923ddedcc0fd2495f797548830b595bcdf9d0659))
+* **overflow:** 🐛 overflow content should fill parent container ([2639b0f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2639b0f70d3c12334e89aeeb2e48cb20566174c8))
+* **overflow:** 🐛 prevent overflow button from triggering form action button ([7fb35f9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7fb35f90f5b5ee533fa17157176584bd3b52e26c))
+* **pageHeading:** 🐛 capture brackets even without whitespace prefix ([3e64df8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3e64df8bee03e46c8502ac08323b27e024703886)), closes [#879](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/879)
+* **skinning:** 🐛 incorrect margin for right float thumbnails ([fae9dad](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fae9dad9b007536d208fd27482564678f38a7544))
+* **WikiEditor:** 🐛 align toolbar buttons ([84d58be](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/84d58be232f025f87a00a7e590249bdc64e39571))
+
 ## [2.18.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.18.0...v2.18.1) (2024-06-14)
 
 
