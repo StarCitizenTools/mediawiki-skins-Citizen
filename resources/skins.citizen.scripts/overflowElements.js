@@ -214,6 +214,8 @@ class OverflowElement {
 		if ( !target.classList.contains( 'citizen-overflow-navButton' ) ) {
 			return;
 		}
+		// Prevent triggering the form submit action (e.g. realtime preview in WikiEditor)
+		event.preventDefault();
 		const offset = this.wrapper.offsetWidth / 2;
 		if ( target.classList.contains( 'citizen-overflow-navButton-left' ) ) {
 			this.scrollContent( -offset );
