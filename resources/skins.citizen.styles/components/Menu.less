@@ -230,3 +230,10 @@
 		filter: var( --filter-invert );
 	}
 }
+
+@media ( max-width: @max-width-breakpoint-tablet ) {
+	/* HACK: Disable page from scolling when a dropdown menu is opened */
+	body:has( .citizen-menu__dropdown[ open ] ) {
+		overflow: hidden;
+	}
+}
