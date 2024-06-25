@@ -3,9 +3,13 @@ name: Lint
 on:
   push:
     branches:
+      - "**"
+      - "!**dependabot/**"
       - "!**release-please--**"
   pull_request:
     branches:
+      - "**"
+      - "!**dependabot/**"
       - "!**release-please--**"
 
 jobs:
