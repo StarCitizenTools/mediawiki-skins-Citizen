@@ -231,6 +231,21 @@
 	}
 }
 
+// HACK: Restore view button on revision page (#845)
+// There are no good way to target revision page
+.action-view {
+	&:has( .diff ),
+	&:has( .mw-revision ) {
+		#ca-view {
+			position: relative !important;
+			width: auto;
+			height: auto;
+			margin: 0;
+			clip: unset;
+		}
+	}
+}
+
 @media ( max-width: @max-width-breakpoint-tablet ) {
 	/* HACK: Disable page from scolling when a dropdown menu is opened */
 	body:has( .citizen-menu__dropdown[ open ] ) {
