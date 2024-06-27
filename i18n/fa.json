@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Beginneruser",
+			"Darafsh",
 			"Eshagh",
 			"Jeeputer",
 			"Reza koulivand"
@@ -29,5 +30,7 @@
 	"citizen-tagline-ns-mediawiki": "صفحهٔ رابط مدیاویکی",
 	"citizen-tagline-ns-template": "صفحهٔ الگو",
 	"citizen-tagline-ns-help": "صفحهٔ راهنما",
-	"citizen-tagline-ns-category": "صفحهٔ رده"
+	"citizen-tagline-ns-category": "صفحهٔ رده",
+	"citizen-feature-custom-font-size-standard-label": "استاندارد",
+	"citizen-feature-custom-width-standard-label": "استاندارد"
 }

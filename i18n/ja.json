@@ -60,5 +60,7 @@
 	"citizen-feature-custom-width-name": "幅",
 	"citizen-feature-custom-width-standard-label": "標準",
 	"citizen-feature-custom-width-wide-label": "広く",
-	"citizen-feature-custom-width-full-label": "全幅"
+	"citizen-feature-custom-width-full-label": "全幅",
+	"citizen-user-info-text-anon": "編集を行うと、IPアドレスが公開されます。",
+	"citizen-user-info-text-temp": "この臨時アカウントは、このブラウザとデバイスでアカウントなしで編集が行われた後に作成されました。"
 }

@@ -9,6 +9,8 @@
 	},
 	"citizen.css": "/* CSS die hier wordt geplaatst heeft alleen invloed op het uiterlijk Citizen */",
 	"citizen.js": "/* JavaScript die hier wordt geplaatst heeft alleen invloed op gebruikers die het uiterlijk Citizen gebruiken */",
+	"citizen-languages-toggle": "Meer talen",
+	"citizen-actions-more-toggle": "Meer acties",
 	"citizen-sitestats-articles-label": "artikelen",
 	"citizen-sitestats-images-label": "bestanden",
 	"citizen-sitestats-users-label": "gebruikers",
@@ -22,6 +24,7 @@
 	"citizen-jumptotop": "Terug naar boven",
 	"citizen-search-fulltext": "Tekst zoeken op pagina's",
 	"citizen-search-mediasearch": "Media zoeken",
+	"citizen-search-editpage": "Pagina bewerken of aanmaken",
 	"citizen-search-empty-desc": "Type om te beginnen met zoeken",
 	"citizen-tagline-ns-talk": "Overlegpagina van {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Informatie over {{SITENAME}}",
@@ -29,6 +32,9 @@
 	"citizen-tagline-ns-template": "Sjabloonpagina",
 	"citizen-tagline-ns-help": "Hulppagina",
 	"citizen-tagline-ns-category": "Categoriepagina",
+	"citizen-theme-name": "Kleur",
+	"citizen-theme-description": "Verander het thema van de wiki",
 	"citizen-theme-day-label": "Licht",
-	"citizen-theme-night-label": "Donker"
+	"citizen-theme-night-label": "Donker",
+	"citizen-feature-custom-font-size-name": "Tekst"
 }

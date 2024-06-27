@@ -35,6 +35,7 @@
 	"citizen-tagline-ns-template": "Página de plantilla",
 	"citizen-tagline-ns-help": "Página de ayuda",
 	"citizen-tagline-ns-category": "Página de categoría",
+	"citizen-tagline-user-regdate": "Se unió el $1",
 	"citizen-theme-name": "Color",
 	"citizen-theme-description": "Cambiar el tema de la wiki.",
 	"citizen-theme-day-label": "Claro",

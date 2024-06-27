@@ -47,9 +47,16 @@
 	"citizen-theme-name": "Couleur",
 	"citizen-theme-day-label": "Clair",
 	"citizen-theme-night-label": "Sombre",
+	"citizen-feature-pure-black-name": "Mode noir pur",
 	"citizen-feature-pure-black-0-label": "Désactivé",
 	"citizen-feature-custom-font-size-name": "Texte",
 	"citizen-feature-custom-font-size-small-label": "Petit",
 	"citizen-feature-custom-font-size-standard-label": "Standard",
-	"citizen-feature-custom-width-name": "Largeur"
+	"citizen-feature-custom-font-size-large-label": "Grande",
+	"citizen-feature-custom-width-name": "Largeur",
+	"citizen-feature-custom-width-standard-label": "Standard",
+	"citizen-feature-custom-width-wide-label": "Large",
+	"citizen-feature-custom-width-full-label": "Plein",
+	"citizen-user-info-text-anon": "Votre adresse IP sera visible au public si vous faites des modifications.",
+	"citizen-user-info-text-temp": "Ce compte temporaire a été créé après une modification sans compte sur ce navigateur et cet appareil."
 }

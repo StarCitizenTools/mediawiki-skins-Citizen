@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Alistair3149",
+			"Cookai1205",
 			"Kly",
 			"LNDDYL",
 			"Lakejason0",
@@ -15,8 +16,8 @@
 	"skinname-citizen": "公民（Citizen）",
 	"citizen-skin-desc": "一個漂亮的、可用的、響應的 MediaWiki 外觀，使擴充功能成為內聚體驗的一部分。最初是為[https://starcitizen.tools/ 星際公民百科]開發的。",
 	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|討論]]",
-	"citizen.css": "/* 此CSS會用於使用Citizen外觀的使用者 */",
-	"citizen.js": "/* 此Javascript會用於使用Citizen外觀的使用者 */",
+	"citizen.css": "/* 此處所有的 CSS 都會在使用者使用 Citizen 外觀時載入 */",
+	"citizen.js": "/* 此處所有的 JavaScript 都會在使用者使用 Citizen 外觀時載入 */",
 	"citizen-drawer-toggle": "切換選單",
 	"citizen-usermenu-toggle": "切換個人選單",
 	"citizen-search-toggle": "切換搜尋",
@@ -52,6 +53,7 @@
 	"citizen-theme-day-label": "明亮",
 	"citizen-theme-night-label": "陰暗",
 	"citizen-theme-os-label": "自動",
+	"citizen-theme-exclusion-notice": "此頁面始終使用淺色模式。",
 	"citizen-feature-pure-black-name": "純黑模式",
 	"citizen-feature-pure-black-0-label": "關閉",
 	"citizen-feature-pure-black-1-label": "開啟",
