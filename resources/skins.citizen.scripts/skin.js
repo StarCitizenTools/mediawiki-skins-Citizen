@@ -101,12 +101,14 @@ function main( window ) {
 	const
 		config = require( './config.json' ),
 		search = require( './search.js' ),
+		share = require( './share.js' ),
 		lastModified = require( './lastModified.js' ),
 		checkbox = require( './checkbox.js' ),
 		dropdown = require( './dropdown.js' );
 
 	enableCssAnimations( window.document );
 	search.init( window );
+	share.init();
 	lastModified.init();
 	initStickyHeader( window.document );
 

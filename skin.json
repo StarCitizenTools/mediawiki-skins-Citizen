@@ -165,7 +165,11 @@
 				"resources/skins.citizen.scripts/sectionObserver.js",
 				"resources/skins.citizen.scripts/search.js",
 				"resources/skins.citizen.scripts/sections.js",
+				"resources/skins.citizen.scripts/share.js",
 				"resources/skins.citizen.scripts/tableOfContents.js"
+			],
+			"messages": [
+				"citizen-share"
 			],
 			"dependencies": [
 				"mediawiki.util",
@@ -326,6 +330,7 @@
 				"sandbox",
 				"search",
 				"settings",
+				"share",
 				"specialPages",
 				"speechBubbleAdd",
 				"speechBubbles",

@@ -34,6 +34,9 @@
 	"citizen-search-empty-desc": "Type to start searching",
 	"citizen-search-noresults-title": "Uh oh! No results for $1",
 	"citizen-search-noresults-desc": "Maybe try the options above?",
+
+	"citizen-share": "Share this page",
+
 	"citizen-tagline": "-",
 	"citizen-tagline-ns-talk": "Discussion page of {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Information about {{SITENAME}}",
