@@ -19,11 +19,9 @@ function init() {
 		return;
 	}
 
-	const descriptionMeta = document.querySelector( 'meta[name="description"]' );
 	const canonicalLink = document.querySelector( 'link[rel="canonical"]' );
 	const shareData = {
 		title: document.title,
-		text: descriptionMeta ? descriptionMeta.content : '',
 		url: canonicalLink ? canonicalLink.href : window.location.href
 	};
 
