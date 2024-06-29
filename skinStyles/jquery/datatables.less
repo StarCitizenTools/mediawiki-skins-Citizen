@@ -9,13 +9,13 @@
 
 /* jquery.dataTables.css */
 table.dataTable {
+	box-sizing: border-box; /* Fix #888 */
 	display: table;
 	max-width: 100%;
 	overflow: hidden; // let datatables handle responsiveness
 	font-size: var( --font-size-small );
 	border: 1px solid var( --border-color-base );
 	border-radius: var( --border-radius--medium );
-	box-sizing: border-box; /* Fix #888 */
 }
 
 table.dataTable thead th,
