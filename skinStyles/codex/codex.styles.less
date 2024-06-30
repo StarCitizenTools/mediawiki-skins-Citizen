@@ -18,12 +18,12 @@
 }
 
 .cdx-button:enabled {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 }
 
 .cdx-button:enabled:focus:not( :active ) {
-	border-color: var( --color-primary );
-	box-shadow: inset 0 0 0 1px var( --color-primary );
+	border-color: var( --color-progressive );
+	box-shadow: inset 0 0 0 1px var( --color-progressive );
 }
 
 .cdx-button--framed:enabled {
@@ -32,19 +32,19 @@
 }
 
 .cdx-button--framed:enabled:hover {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	background-color: var( --color-surface-2--hover );
 	border-color: var( --border-color-base );
 }
 
 .cdx-button--framed:enabled:active {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 	background-color: var( --color-surface-2--active );
 	border-color: var( --border-color-base );
 }
 
 .cdx-button--framed:disabled {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 	background-color: var( --color-surface-4 );
 	border-color: var( --color-surface-4 );
 }
@@ -55,26 +55,26 @@
  */
 .cdx-button--type-primary.cdx-button--action-progressive:enabled,
 .cdx-button--weight-primary.cdx-button--action-progressive:enabled {
-	background-color: var( --color-primary );
-	border-color: var( --color-primary );
+	background-color: var( --color-progressive );
+	border-color: var( --color-progressive );
 }
 
 .cdx-button--type-primary.cdx-button--action-progressive:enabled:hover,
 .cdx-button--weight-primary.cdx-button--action-progressive:enabled:hover {
-	background-color: var( --color-primary--hover );
-	border-color: var( --color-primary--hover );
+	background-color: var( --color-progressive--hover );
+	border-color: var( --color-progressive--hover );
 }
 
 .cdx-button--type-primary.cdx-button--action-progressive:enabled:active,
 .cdx-button--weight-primary.cdx-button--action-progressive:enabled:active {
-	background-color: var( --color-primary--active );
-	border-color: var( --color-primary--active );
+	background-color: var( --color-progressive--active );
+	border-color: var( --color-progressive--active );
 }
 
 .cdx-button--type-primary.cdx-button--action-progressive:enabled:focus:not( :active ),
 .cdx-button--weight-primary.cdx-button--action-progressive:enabled:focus:not( :active ) {
-	border-color: var( --color-primary );
-	box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px var( --color-inverted-primary );
+	border-color: var( --color-progressive );
+	box-shadow: inset 0 0 0 1px var( --color-progressive ), inset 0 0 0 2px var( --color-inverted-primary );
 }
 
 .cdx-button--type-primary.cdx-button--action-destructive:enabled,
@@ -103,20 +103,20 @@
 
 .cdx-button--type-normal.cdx-button--action-progressive:enabled,
 .cdx-button--weight-normal.cdx-button--action-progressive:enabled {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 }
 
 .cdx-button--type-normal.cdx-button--action-progressive:enabled:hover,
 .cdx-button--weight-normal.cdx-button--action-progressive:enabled:hover {
-	color: var( --color-primary--hover );
-	border-color: var( --color-primary--hover );
+	color: var( --color-progressive--hover );
+	border-color: var( --color-progressive--hover );
 }
 
 .cdx-button--type-normal.cdx-button--action-progressive:enabled:active,
 .cdx-button--weight-normal.cdx-button--action-progressive:enabled:active {
-	color: var( --color-primary--active );
+	color: var( --color-progressive--active );
 	background-color: var( --color-surface-2--active ); // Use normal style for now
-	border-color: var( --color-primary--active );
+	border-color: var( --color-progressive--active );
 }
 
 .cdx-button--type-normal.cdx-button--action-destructive:enabled,
@@ -150,26 +150,26 @@
 
 .cdx-button--type-quiet:enabled:active,
 .cdx-button--weight-quiet:enabled:active {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 	background-color: var( --background-color-quiet--active );
 	border-color: var( --background-color-quiet--active );
 }
 
 .cdx-button--type-quiet.cdx-button--action-progressive:enabled,
 .cdx-button--weight-quiet.cdx-button--action-progressive:enabled {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 }
 
 .cdx-button--type-quiet.cdx-button--action-progressive:enabled:hover,
 .cdx-button--weight-quiet.cdx-button--action-progressive:enabled:hover {
-	color: var( --color-primary--hover );
+	color: var( --color-progressive--hover );
 	background-color: var( --background-color-primary--hover );
 }
 
 .cdx-button--type-quiet.cdx-button--action-progressive:enabled:active,
 .cdx-button--weight-quiet.cdx-button--action-progressive:enabled:active {
-	background-color: var( --color-primary--active );
-	border-color: var( --color-primary--active );
+	background-color: var( --color-progressive--active );
+	border-color: var( --color-progressive--active );
 }
 
 .cdx-button--type-quiet.cdx-button--action-destructive:enabled,
@@ -197,7 +197,7 @@
 
 .cdx-button--type-quiet:disabled,
 .cdx-button--weight-quiet:disabled {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .cdx-button-group {
@@ -205,7 +205,7 @@
 }
 
 .cdx-button-group .cdx-button:disabled {
-	box-shadow: 0 -1px var( --color-base--subtle ), -1px 0 var( --color-base--subtle );
+	box-shadow: 0 -1px var( --color-subtle ), -1px 0 var( --color-subtle );
 }
 
 .cdx-thumbnail__placeholder,
@@ -219,7 +219,7 @@
 }
 
 .cdx-thumbnail__placeholder__icon {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .cdx-card {
@@ -229,12 +229,12 @@
 }
 
 .cdx-card--is-link:hover {
-	border-color: var( --color-primary--hover );
+	border-color: var( --color-progressive--hover );
 }
 
 .cdx-card--is-link:focus {
-	border-color: var( --color-primary );
-	box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px var( --color-inverted-primary );
+	border-color: var( --color-progressive );
+	box-shadow: inset 0 0 0 1px var( --color-progressive ), inset 0 0 0 2px var( --color-inverted-primary );
 }
 
 .cdx-card__text {
@@ -244,7 +244,7 @@
 .cdx-card__text__title {
 	font-weight: var( --font-weight-semibold );
 	line-height: var( --line-height-xs );
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 }
 
 // Splitting description and supporting text into two colors
@@ -255,7 +255,7 @@
 
 .cdx-card__text__supporting-text,
 .cdx-card__text__supporting-text .cdx-icon {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .cdx-checkbox__icon {
@@ -267,47 +267,47 @@
 
 .cdx-checkbox__input:enabled:hover + .cdx-checkbox__icon {
 	background-color: var( --color-surface-0 );
-	border-color: var( --color-primary--hover );
+	border-color: var( --color-progressive--hover );
 }
 
 .cdx-checkbox__input:enabled:active + .cdx-checkbox__icon {
-	background-color: var( --color-primary--active );
-	border-color: var( --color-primary--active );
+	background-color: var( --color-progressive--active );
+	border-color: var( --color-progressive--active );
 }
 
 .cdx-checkbox__input:enabled:focus:not( :active ) + .cdx-checkbox__icon {
 	background-color: var( --color-surface-0 );
-	border-color: var( --color-primary );
-	box-shadow: inset 0 0 0 1px var( --color-primary );
+	border-color: var( --color-progressive );
+	box-shadow: inset 0 0 0 1px var( --color-progressive );
 }
 
 .cdx-checkbox__input:enabled:checked + .cdx-checkbox__icon,
 .cdx-checkbox__input:enabled:indeterminate + .cdx-checkbox__icon {
-	background-color: var( --color-primary );
-	border-color: var( --color-primary );
+	background-color: var( --color-progressive );
+	border-color: var( --color-progressive );
 }
 
 .cdx-checkbox__input:enabled:checked:hover + .cdx-checkbox__icon,
 .cdx-checkbox__input:enabled:indeterminate:hover + .cdx-checkbox__icon {
-	background-color: var( --color-primary--hover );
-	border-color: var( --color-primary--hover );
+	background-color: var( --color-progressive--hover );
+	border-color: var( --color-progressive--hover );
 }
 
 .cdx-checkbox__input:enabled:checked:active + .cdx-checkbox__icon,
 .cdx-checkbox__input:enabled:indeterminate:active + .cdx-checkbox__icon {
-	background-color: var( --color-primary--active );
-	border-color: var( --color-primary--active );
+	background-color: var( --color-progressive--active );
+	border-color: var( --color-progressive--active );
 }
 
 .cdx-checkbox__input:enabled:checked:focus:not( :active ):not( :hover ) + .cdx-checkbox__icon,
 .cdx-checkbox__input:enabled:indeterminate:focus:not( :active ):not( :hover ) + .cdx-checkbox__icon {
-	background-color: var( --color-primary );
-	border-color: var( --color-primary );
+	background-color: var( --color-progressive );
+	border-color: var( --color-progressive );
 }
 
 .cdx-checkbox__input:enabled:checked:focus:not( :active ) + .cdx-checkbox__icon,
 .cdx-checkbox__input:enabled:indeterminate:focus:not( :active ) + .cdx-checkbox__icon {
-	box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px var( --color-inverted-primary );
+	box-shadow: inset 0 0 0 1px var( --color-progressive ), inset 0 0 0 2px var( --color-inverted-primary );
 }
 
 .cdx-checkbox__input:disabled + .cdx-checkbox__icon {
@@ -316,7 +316,7 @@
 }
 
 .cdx-checkbox__input:disabled ~ .cdx-checkbox__label-content {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .cdx-search-result-title {
@@ -337,11 +337,11 @@
 
 .cdx-menu-item--enabled,
 .cdx-menu-item--enabled .cdx-menu-item__content {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 }
 
 .cdx-menu-item--enabled .cdx-menu-item__text__description {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .cdx-menu-item--enabled:hover,
@@ -351,7 +351,7 @@
 
 .cdx-menu-item--enabled.cdx-menu-item--active,
 .cdx-menu-item--enabled.cdx-menu-item--active:hover {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 	background-color: var( --background-color-primary--hover );
 }
 
@@ -359,7 +359,7 @@
 .cdx-menu-item--enabled.cdx-menu-item--active:hover .cdx-menu-item__content,
 .cdx-menu-item--enabled.cdx-menu-item--active .cdx-menu-item__text__description,
 .cdx-menu-item--enabled.cdx-menu-item--active:hover .cdx-menu-item__text__description {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 }
 
 .cdx-menu-item--enabled.cdx-menu-item--selected,
@@ -373,27 +373,27 @@
 .cdx-menu-item--enabled.cdx-menu-item--selected.cdx-menu-item--highlighted .cdx-menu-item__content,
 .cdx-menu-item--enabled.cdx-menu-item--selected:hover .cdx-menu-item__text__description,
 .cdx-menu-item--enabled.cdx-menu-item--selected.cdx-menu-item--highlighted .cdx-menu-item__text__description {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 }
 
 .cdx-menu-item--disabled {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .cdx-menu-item--disabled .cdx-menu-item__text__description {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .cdx-progress-bar__bar {
-	background-color: var( --color-primary );
+	background-color: var( --color-progressive );
 	// Fancy shadow
 	// TODO: Need to figure out a way to deal with the overflow issue
-	filter: drop-shadow( 0 0 16px var( --color-primary ) );
+	filter: drop-shadow( 0 0 16px var( --color-progressive ) );
 }
 
 .cdx-progress-bar--block {
 	background-color: var( --color-surface-1 );
-	border-color: var( --color-primary );
+	border-color: var( --color-progressive );
 }
 
 .cdx-menu {
@@ -404,14 +404,14 @@
 }
 
 .cdx-text-input__input:enabled {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	// Show background when hovered
 	background-color: transparent;
 	border-color: var( --border-color-interactive );
 }
 
 .cdx-text-input__input:enabled ~ .cdx-text-input__icon {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .cdx-text-input__input:enabled:focus ~ .cdx-text-input__icon,
@@ -421,33 +421,33 @@
 
 .cdx-text-input__input:enabled:hover {
 	background-color: var( --color-surface-0 );
-	border-color: var( --color-primary--hover );
+	border-color: var( --color-progressive--hover );
 }
 
 .cdx-text-input__input:enabled:focus {
 	background-color: var( --color-surface-0 );
-	border-color: var( --color-primary );
-	box-shadow: inset 0 0 0 1px var( --color-primary );
+	border-color: var( --color-progressive );
+	box-shadow: inset 0 0 0 1px var( --color-progressive );
 }
 
 .cdx-text-input__input:disabled {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 	background-color: var( --color-surface-4 );
 	border-color: var( --color-surface-4 );
-	-webkit-text-fill-color: var( --color-base--subtle );
+	-webkit-text-fill-color: var( --color-subtle );
 }
 
 .cdx-text-input__input:disabled ~ .cdx-text-input__icon {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 /* stylelint-disable-next-line selector-pseudo-element-no-unknown */
 .cdxinput__input::input-placeholder {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .cdx-text-input__input::placeholder {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .cdx-lookup--pending .cdx-text-input__input {
@@ -511,33 +511,33 @@
 
 .cdx-radio__input:enabled:hover + .cdx-radio__icon {
 	background-color: var( --color-surface-0 );
-	border-color: var( --color-primary--hover );
+	border-color: var( --color-progressive--hover );
 }
 
 .cdx-radio__input:enabled:active + .cdx-radio__icon {
-	background-color: var( --color-primary--active );
-	border-color: var( --color-primary--active );
+	background-color: var( --color-progressive--active );
+	border-color: var( --color-progressive--active );
 }
 
 .cdx-radio__input:enabled:checked + .cdx-radio__icon {
 	background-color: var( --color-inverted-primary );
-	border-color: var( --color-primary );
+	border-color: var( --color-progressive );
 }
 
 .cdx-radio__input:enabled:checked:hover + .cdx-radio__icon {
-	border-color: var( --color-primary--hover );
+	border-color: var( --color-progressive--hover );
 }
 
 .cdx-radio__input:enabled:checked:active + .cdx-radio__icon {
-	border-color: var( --color-primary--active );
+	border-color: var( --color-progressive--active );
 }
 
 .cdx-radio__input:enabled:checked:active + .cdx-radio__icon::before {
-	border-color: var( --color-primary--active );
+	border-color: var( --color-progressive--active );
 }
 
 .cdx-radio__input:disabled ~ .cdx-radio__label-content {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .cdx-radio__input:disabled + .cdx-radio__icon {
@@ -561,16 +561,16 @@
 }
 
 .cdx-select--enabled .cdx-select__handle {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	// Show background when hovered
 	background-color: transparent;
 	border-color: var( --border-color-interactive );
 }
 
 .cdx-select--enabled .cdx-select__handle:hover {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	background-color: var( --color-surface-1 );
-	border-color: var( --color-primary--hover );
+	border-color: var( --color-progressive--hover );
 }
 
 .cdx-select--enabled .cdx-select__handle:hover .cdx-select__indicator {
@@ -579,12 +579,12 @@
 
 .cdx-select--enabled .cdx-select__handle:focus {
 	background-color: var( --color-surface-1 );
-	border-color: var( --color-primary );
-	box-shadow: inset 0 0 0 1px var( --color-primary );
+	border-color: var( --color-progressive );
+	box-shadow: inset 0 0 0 1px var( --color-progressive );
 }
 
 .cdx-select--enabled .cdx-select__handle:active {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 	background-color: var( --color-surface-1 );
 	border-color: var( --border-color-interactive );
 }
@@ -598,18 +598,18 @@
 }
 
 .cdx-select--disabled .cdx-select__handle {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 	background-color: var( --color-surface-4 );
 	border-color: var( --color-surface-4 );
 }
 
 .cdx-select--disabled .cdx-select__indicator,
 .cdx-select--disabled .cdx-select__start-icon {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .cdx-tabs > .cdx-tabs__header:focus .cdx-tabs__list__item--enabled.cdx-tabs__list__item--selected [ role='tab' ] {
-	box-shadow: inset 0 0 0 2px var( --color-primary );
+	box-shadow: inset 0 0 0 2px var( --color-progressive );
 }
 
 .cdx-tabs__list__item [ role='tab' ] {
@@ -637,16 +637,16 @@
 
 .cdx-tabs--framed > .cdx-tabs__header .cdx-tabs__list__item--enabled [ role='tab' ]:link,
 .cdx-tabs--framed > .cdx-tabs__header .cdx-tabs__list__item--enabled [ role='tab' ]:visited {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 }
 
 .cdx-tabs--framed > .cdx-tabs__header .cdx-tabs__list__item--enabled [ role='tab' ]:hover {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	background-color: var( --background-color-quiet--hover );
 }
 
 .cdx-tabs--framed > .cdx-tabs__header .cdx-tabs__list__item--enabled [ role='tab' ]:active {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	background-color: var( --background-color-quiet--active );
 }
 
@@ -656,7 +656,7 @@
 }
 
 .cdx-tabs--framed > .cdx-tabs__header .cdx-tabs__list__item--disabled [ role='tab' ] {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 	background-color: var( --color-surface-4 );
 }
 
@@ -680,22 +680,22 @@
 }
 
 .cdx-tabs--quiet > .cdx-tabs__header .cdx-tabs__list__item--enabled [ role='tab' ]:hover {
-	color: var( --color-primary--hover );
-	box-shadow: inset 0 -2px var( --color-primary--hover );
+	color: var( --color-progressive--hover );
+	box-shadow: inset 0 -2px var( --color-progressive--hover );
 }
 
 .cdx-tabs--quiet > .cdx-tabs__header .cdx-tabs__list__item--enabled [ role='tab' ]:active {
-	color: var( --color-primary--active );
-	box-shadow: inset 0 -2px var( --color-primary--active );
+	color: var( --color-progressive--active );
+	box-shadow: inset 0 -2px var( --color-progressive--active );
 }
 
 .cdx-tabs--quiet > .cdx-tabs__header .cdx-tabs__list__item--enabled.cdx-tabs__list__item--selected [ role='tab' ] {
-	color: var( --color-primary );
-	box-shadow: inset 0 -2px var( --color-primary );
+	color: var( --color-progressive );
+	box-shadow: inset 0 -2px var( --color-progressive );
 }
 
 .cdx-tabs--quiet > .cdx-tabs__header .cdx-tabs__list__item--disabled [ role='tab' ] {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .cdx-toggle-button {
@@ -704,12 +704,12 @@
 }
 
 .cdx-toggle-button:enabled:focus {
-	border-color: var( --color-primary );
-	box-shadow: inset 0 0 0 1px var( --color-primary );
+	border-color: var( --color-progressive );
+	box-shadow: inset 0 0 0 1px var( --color-progressive );
 }
 
 .cdx-toggle-button:enabled:active {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	border-color: var( --border-color-base );
 }
 
@@ -719,38 +719,38 @@
 }
 
 .cdx-toggle-button--framed:enabled:hover {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	background-color: var( --color-surface-2--hover );
 }
 
 .cdx-toggle-button--framed:enabled:active {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 	background-color: var( --color-surface-2--active );
 }
 
 .cdx-toggle-button--framed:disabled {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 	background-color: var( --color-surface-4 );
 	border-color: var( --color-surface-4 );
 }
 
 .cdx-toggle-button--framed.cdx-toggle-button--toggled-on:enabled {
-	background-color: var( --color-primary--active );
-	border-color: var( --color-primary--active );
+	background-color: var( --color-progressive--active );
+	border-color: var( --color-progressive--active );
 }
 
 .cdx-toggle-button--framed.cdx-toggle-button--toggled-on:enabled:hover {
-	background-color: var( --color-primary--hover );
-	border-color: var( --color-primary--hover );
+	background-color: var( --color-progressive--hover );
+	border-color: var( --color-progressive--hover );
 }
 
 .cdx-toggle-button--framed.cdx-toggle-button--toggled-on:enabled:focus {
-	border-color: var( --color-primary );
-	box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px var( --color-inverted-primary );
+	border-color: var( --color-progressive );
+	box-shadow: inset 0 0 0 1px var( --color-progressive ), inset 0 0 0 2px var( --color-inverted-primary );
 }
 
 .cdx-toggle-button--framed.cdx-toggle-button--toggled-on:enabled:active {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	background-color: var( --color-surface-2--active );
 	border-color: var( --border-color-base );
 }
@@ -772,7 +772,7 @@
 }
 
 .cdx-toggle-button--quiet:disabled {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .cdx-toggle-button-group {
@@ -803,57 +803,57 @@
 
 .cdx-toggle-switch__input:enabled:hover ~ .cdx-toggle-switch__switch {
 	background-color: var( --color-surface-0 );
-	border-color: var( --color-primary--hover );
+	border-color: var( --color-progressive--hover );
 }
 
 .cdx-toggle-switch__input:enabled:hover ~ .cdx-toggle-switch__switch .cdx-toggle-switch__switch__grip {
-	border-color: var( --color-primary--hover );
+	border-color: var( --color-progressive--hover );
 }
 
 .cdx-toggle-switch__input:enabled:active ~ .cdx-toggle-switch__switch {
-	background-color: var( --color-primary--active );
-	border-color: var( --color-primary--active );
+	background-color: var( --color-progressive--active );
+	border-color: var( --color-progressive--active );
 }
 
 .cdx-toggle-switch__input:enabled:active ~ .cdx-toggle-switch__switch::before {
-	border-color: var( --color-primary--active );
+	border-color: var( --color-progressive--active );
 }
 
 .cdx-toggle-switch__input:enabled:focus:not( :active ) ~ .cdx-toggle-switch__switch {
-	border-color: var( --color-primary );
-	box-shadow: inset 0 0 0 1px var( --color-primary );
+	border-color: var( --color-progressive );
+	box-shadow: inset 0 0 0 1px var( --color-progressive );
 }
 
 .cdx-toggle-switch__input:enabled:focus:not( :active ) ~ .cdx-toggle-switch__switch .cdx-toggle-switch__switch__grip {
-	border-color: var( --color-primary );
+	border-color: var( --color-progressive );
 }
 
 .cdx-toggle-switch__input:enabled:checked ~ .cdx-toggle-switch__switch {
-	background-color: var( --color-primary );
-	border-color: var( --color-primary );
+	background-color: var( --color-progressive );
+	border-color: var( --color-progressive );
 }
 
 .cdx-toggle-switch__input:enabled:checked:hover ~ .cdx-toggle-switch__switch {
-	background-color: var( --color-primary--hover );
-	border-color: var( --color-primary--hover );
+	background-color: var( --color-progressive--hover );
+	border-color: var( --color-progressive--hover );
 }
 
 .cdx-toggle-switch__input:enabled:checked:active ~ .cdx-toggle-switch__switch {
-	background-color: var( --color-primary--active );
-	border-color: var( --color-primary--active );
-	box-shadow: inset 0 0 0 1px var( --color-primary--active );
+	background-color: var( --color-progressive--active );
+	border-color: var( --color-progressive--active );
+	box-shadow: inset 0 0 0 1px var( --color-progressive--active );
 }
 
 .cdx-toggle-switch__input:enabled:checked:active ~ .cdx-toggle-switch__switch::before {
-	border-color: var( --color-primary--active );
+	border-color: var( --color-progressive--active );
 }
 
 .cdx-toggle-switch__input:enabled:checked:focus:not( :active ) ~ .cdx-toggle-switch__switch {
-	border-color: var( --color-primary );
+	border-color: var( --color-progressive );
 }
 
 .cdx-toggle-switch__input:disabled ~ .cdx-toggle-switch__label {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .cdx-toggle-switch__input:disabled ~ .cdx-toggle-switch__switch {
@@ -862,12 +862,12 @@
 }
 
 .cdx-toggle-switch__input:disabled ~ .cdx-toggle-switch__switch .cdx-toggle-switch__switch__grip {
-	border-color: var( --color-base--subtle );
-	box-shadow: inset 0 0 0 1px var( --color-base--subtle );
+	border-color: var( --color-subtle );
+	box-shadow: inset 0 0 0 1px var( --color-subtle );
 }
 
 .cdx-toggle-switch__input:disabled:checked ~ .cdx-toggle-switch__switch .cdx-toggle-switch__switch__grip {
-	background-color: var( --color-base--subtle );
+	background-color: var( --color-subtle );
 }
 
 .cdx-typeahead-search__menu-message,
@@ -884,10 +884,10 @@
 }
 
 .cdx-typeahead-search__search-footer__icon {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .cdx-typeahead-search__search-footer__active .cdx-typeahead-search__search-footer__icon,
 .cdx-typeahead-search__search-footer__active .cdx-typeahead-search__search-footer__text {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 }

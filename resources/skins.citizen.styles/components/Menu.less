@@ -41,7 +41,7 @@
 				background-color: var( --background-color-quiet--active );
 
 				> .citizen-ui-icon::before {
-					opacity: var( --opacity-icon-base--active );
+					opacity: var( --opacity-icon-base--selected );
 				}
 			}
 
@@ -111,7 +111,7 @@
 		margin: 0;
 		font-size: var( --font-size-x-small );
 		font-weight: var( --font-weight-normal );
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 		letter-spacing: 0.05em;
 	}
 
@@ -134,7 +134,7 @@
 			transition-property: opacity;
 
 			&:hover {
-				color: var( --color-base--emphasized );
+				color: var( --color-emphasized );
 				background-color: var( --background-color-quiet--hover );
 
 				.citizen-ui-icon::before {
@@ -143,11 +143,11 @@
 			}
 
 			&:active {
-				color: var( --color-base--subtle );
+				color: var( --color-subtle );
 				background-color: var( --background-color-quiet--active );
 
 				.citizen-ui-icon::before {
-					opacity: var( --opacity-icon-base--active );
+					opacity: var( --opacity-icon-base--selected );
 				}
 			}
 
@@ -199,7 +199,7 @@
 		&:focus {
 			& + .citizen-header__button,
 			& + .citizen-menu-checkbox-button {
-				outline: 2px solid var( --color-primary );
+				outline: 2px solid var( --color-progressive );
 				outline-offset: 1px;
 			}
 		}

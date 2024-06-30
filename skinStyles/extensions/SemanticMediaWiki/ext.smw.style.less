@@ -24,7 +24,7 @@
 .smw-personal-jobqueue-watchlist:hover,
 .smw-personal-jobqueue-watchlist:focus,
 .smw-personal-jobqueue-watchlist:active {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 }
 
 .item-count {
@@ -145,7 +145,7 @@ hr.smw-form-horizontalrule {
 }
 
 .smw-column-header {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 }
 
 .smw-note {
@@ -158,11 +158,11 @@ hr.smw-form-horizontalrule {
 
 .smw-callout-info {
 	background: var( -background-color-primary--hover );
-	border-left-color: var( --color-primary );
+	border-left-color: var( --color-progressive );
 }
 
 .smw-callout-info .title {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 }
 
 .smw-callout-info-light {
@@ -171,7 +171,7 @@ hr.smw-form-horizontalrule {
 }
 
 .smw-callout-info-light .title {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 }
 
 .smw-callout-warning {
@@ -214,7 +214,7 @@ hr.smw-form-horizontalrule {
 }
 
 .autocomplete-suggestions strong {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 }
 
 .autocomplete-group strong {
@@ -222,7 +222,7 @@ hr.smw-form-horizontalrule {
 }
 
 .smw-breadcrumb-arrow-right {
-	border-left-color: var( --color-base--subtle );
+	border-left-color: var( --color-subtle );
 }
 
 .smw-ask-action-btn,
@@ -258,21 +258,21 @@ a.smw-ask-action-btn-lgrey:active,
 .smw-ask-action-btn-lblue,
 a.smw-ask-action-btn-lblue:visited {
 	color: var( --color-inverted-primary );
-	background-color: var( --color-primary );
-	border-color: var( --color-primary );
+	background-color: var( --color-progressive );
+	border-color: var( --color-progressive );
 }
 
 a.smw-ask-action-btn-lblue:hover {
 	color: var( --color-inverted-primary );
-	background-color: var( --color-primary--hover );
-	border-color: var( --color-primary--hover );
+	background-color: var( --color-progressive--hover );
+	border-color: var( --color-progressive--hover );
 }
 
 // Added active state
 a.smw-ask-action-btn-lblue:active {
 	color: var( --color-inverted-primary );
-	background-color: var( --color-primary--active );
-	border-color: var( --color-primary--active );
+	background-color: var( --color-progressive--active );
+	border-color: var( --color-progressive--active );
 }
 
 .smw-page-indicator {
@@ -291,7 +291,7 @@ a.smw-ask-action-btn-lblue:active {
 }
 
 .smw-page-indicator.usage-count.moderate {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 	background-color: var( --background-color-primary--hover );
 	border-color: var( --background-color-primary--hover );
 }
@@ -325,7 +325,7 @@ a.smw-ask-action-btn-lblue:active {
 .smw-dropdown > a,
 .smw-dropdown > button {
 	font-family: inherit;
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	background-color: transparent;
 	border-color: var( --border-color-base );
 }
@@ -336,7 +336,7 @@ a.smw-ask-action-btn-lblue:active {
 
 .smw-dropdown > a::before,
 .smw-dropdown > button::before {
-	border-top-color: var( --color-base--emphasized );
+	border-top-color: var( --color-emphasized );
 }
 
 .smw-dropdown .smw-dropdown-menu {
@@ -351,7 +351,7 @@ a.smw-ask-action-btn-lblue:active {
 }
 
 .smw-dropdown .smw-dropdown-menu li a {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 }
 
 .smw-dropdown .smw-dropdown-menu .divider {
@@ -375,25 +375,25 @@ a.smw-ask-action-btn-lblue:active {
 // Similar to TabberNeue
 .smw-tabs label.nav-label {
 	font-weight: var( --font-weight-medium );
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .smw-tabs label.nav-label:hover {
-	color: var( --color-primary--hover );
-	border-bottom: 2px solid var( --color-primary--hover );
+	color: var( --color-progressive--hover );
+	border-bottom: 2px solid var( --color-progressive--hover );
 }
 
 // Added active state
 .smw-tabs label.nav-label:active {
-	color: var( --color-primary--active );
-	border-bottom: 2px solid var( --color-primary--active );
+	color: var( --color-progressive--active );
+	border-bottom: 2px solid var( --color-progressive--active );
 }
 
 .smw-tabs input.nav-tab:checked + label.nav-label {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 	border-color: transparent;
 	border-top: 1px solid transparent;
-	border-bottom: 2px solid var( --color-primary );
+	border-bottom: 2px solid var( --color-progressive );
 }
 
 .smw-tabs input.nav-tab:checked + label.nav-label.cached {
@@ -412,7 +412,7 @@ a.smw-ask-action-btn-lblue:active {
 // Added active state
 .smw-tabs label.nav-label:active .smw-tab-icon,
 .smw-tabs input.nav-tab:checked + label.nav-label .smw-tab-icon {
-	opacity: var( --opacity-icon-base--active );
+	opacity: var( --opacity-icon-base--selected );
 }
 
 @media screen and ( max-width: 800px ) {
@@ -422,21 +422,21 @@ a.smw-ask-action-btn-lblue:active {
 }
 
 .smw-tabset > label {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .smw-tabset > label::after {
-	background: var( --color-base--subtle );
+	background: var( --color-subtle );
 }
 
 .smw-tabset > input:focus + label,
 .smw-tabset > input:checked + label {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 }
 
 .smw-tabset > input:focus + label::after,
 .smw-tabset > input:checked + label::after {
-	background: var( --color-primary );
+	background: var( --color-progressive );
 }
 
 .smw-tabset > input:focus + label.smw-indicator-severity-error::after,
@@ -461,7 +461,7 @@ a.smw-ask-action-btn-lblue:active {
 	margin-bottom: -2px;
 	border-color: transparent;
 	border-top: 1px solid transparent;
-	border-bottom: 2px solid var( --color-primary );
+	border-bottom: 2px solid var( --color-progressive );
 }
 
 .smw-tabset > input:checked + label.smw-indicator-severity-error {
@@ -529,13 +529,13 @@ a.smw-ask-action-btn-lblue:active {
 	background: transparent;
 	border-color: transparent;
 	border-top: 1px solid transparent;
-	border-bottom: 2px solid var( --color-primary );
+	border-bottom: 2px solid var( --color-progressive );
 }
 
 .smw-factbox input.nav-tab:checked + label#tab-label-facts-attachment.nav-label {
 	border-color: transparent;
 	border-top: 1px solid transparent;
-	border-bottom: 2px solid var( --color-primary );
+	border-bottom: 2px solid var( --color-progressive );
 }
 
 .smw-factbox .smwfact {
@@ -580,7 +580,7 @@ a.smw-ask-action-btn-lblue:active {
 }
 
 .smw-list-rule-title {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	border-bottom-color: var( --border-color-base );
 }
 
@@ -595,7 +595,7 @@ a.smw-ask-action-btn-lblue:active {
 
 .smw-indicator-accordion-tab-label {
   background: transparent;
-  color: var( --color-base--subtle );
+  color: var( --color-subtle );
   border-bottom-color: var( --color-surface-0 );
 }
 

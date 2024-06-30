@@ -3,11 +3,13 @@
 @import '../variables.less';
 @import '../mixins.less';
 
-// Common styles
+// Common
+@import 'tokens.less';
 @import 'fonts.less';
 @import 'common/cssvariables.less';
 @import 'common/typography.less';
 @import 'skinning/elements.less';
+
 // FIXME: It is not great to load both Parsoid and Parsoid legacy media styles
 // Maybe there is a way to detect it without introducing a new RL module?
 @import 'skinning/content.media-common.less';

@@ -50,7 +50,7 @@
 }
 
 .mw-scribunto-message {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .mw-scribunto-message + div {
@@ -64,19 +64,19 @@
 }
 
 #mw-scribunto-input {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	background-color: transparent;
 	border: 1px solid var( --border-color-base );
 	border-radius: var( --border-radius--small );
 
 	&:hover {
-		border-color: var( --color-primary--hover );
+		border-color: var( --color-progressive--hover );
 	}
 
 	&:focus {
-		border-color: var( --color-primary );
+		border-color: var( --color-progressive );
 		outline: 1px solid transparent;
-		box-shadow: inset 0 0 0 1px var( --color-primary );
+		box-shadow: inset 0 0 0 1px var( --color-progressive );
 	}
 }
 
@@ -84,11 +84,11 @@
 	display: block;
 	margin-top: var( --space-md );
 	font-weight: normal;
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 
 	// Fake terminal input indicator
 	&:not( #mw-scribunto-input )::before {
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 		content: '> ';
 	}
 }

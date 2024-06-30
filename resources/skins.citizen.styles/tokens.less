@@ -1,0 +1,155 @@
+/**
+ * TODO: Deprecate duplicating non-Codex CSS variables into Codex equivalent
+ */
+:root {
+	/**
+	 * Citizen Design Tokens
+	 * TODO: Refactor cssvariables.less into this and features.less
+	 */
+
+	/**
+	 * Codex Design Tokens v1.8.0
+	 * Design System for Wikimedia
+	 * See https://doc.wikimedia.org/codex/latest/design-tokens/overview.html
+	 *
+	 * @see https://github.com/wikimedia/mediawiki/blob/master/resources/lib/codex-design-tokens/theme-wikimedia-ui-root.css
+	 */
+	--color-base: ~'hsl( var( --color-primary__h ), 30%, 20% )';
+	--color-base--hover: var( --color-subtle );
+	--color-emphasized: ~'hsl( var( --color-primary__h ), 85%, 5% )';
+	--color-subtle: ~'hsl( var( --color-primary__h ), 30%, 35% )';
+	--color-placeholder: var( --color-subtle );
+	--color-disabled: var( --color-subtle );
+	--color-inverted: #fff;
+	--color-inverted-fixed: #fff;
+	--color-progressive: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), var( --color-primary__l ) )';
+	--color-progressive--hover: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), calc( var( --color-primary__l ) * 1.2 ) )';
+	--color-progressive--active: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), calc( var( --color-primary__l ) * 0.8 ) )';
+	--color-progressive--focus: var( --color-progressive );
+	--color-destructive: #d73333;
+	--color-destructive--hover: #ff4242;
+	--color-destructive--active: #b32424;
+	--color-destructive--focus: var( --color-progressive );
+	--color-visited: var( --color-link );
+	--color-destructive--visited: var( --color-destructive );
+	--color-error: var( --color-destructive );
+	--color-warning: #edab00;
+	--color-success: #14866d;
+	--color-notice: var( --color-base );
+	/*
+	--color-content-added: #096450;
+	--color-content-removed: #b32424;
+	--filter-invert-icon: 0;
+	--filter-invert-primary-button-icon: 1;
+	--box-shadow-color-base: #000;
+	*/
+	--box-shadow-color-progressive--active: var( --color-progressive--active );
+	--box-shadow-color-progressive--focus: var( --color-progressive );
+	--box-shadow-color-progressive-selected: var( --color-progressive );
+	--box-shadow-color-progressive-selected--hover: var( --color-progressive--hover );
+	--box-shadow-color-progressive-selected--active: var( --color-progressive--active );
+	--box-shadow-color-destructive--focus: var( --color-progressive );
+	/*
+	--box-shadow-color-inverted: #fff;
+	--box-shadow-color-transparent: transparent;
+	--background-color-interactive: #eaecf0;
+	--background-color-interactive-subtle: #f8f9fa;
+	--background-color-disabled: #c8ccd1;
+	--background-color-disabled-subtle: #eaecf0;
+	*/
+	--background-color-progressive: var( --color-progressive );
+	--background-color-progressive--hover: var( --color-progressive--hover );
+	--background-color-progressive--active: var( --color-progressive--active );
+	--background-color-progressive--focus: var( --color-progressive );
+	/*
+	--background-color-progressive-subtle: #eaf3ff;
+	--background-color-destructive: #d73333;
+	--background-color-destructive--hover: #ff4242;
+	--background-color-destructive--active: #b32424;
+	*/
+	--background-color-destructive--focus: var( --color-progressive );
+	/*
+	--background-color-destructive-subtle: #fee7e6;
+	--background-color-error: #d73333;
+	--background-color-error--hover: #ff4242;
+	--background-color-error--active: #b32424;
+	--background-color-error-subtle: #fee7e6;
+	--background-color-warning-subtle: #fef6e7;
+	--background-color-success-subtle: #d5fdf4;
+	--background-color-notice-subtle: #eaecf0;
+	--background-color-content-added: #afb6e9;
+	--background-color-content-removed: #fc3;
+	--background-color-backdrop-light: rgba(255, 255, 255, 0.65);
+	--background-color-backdrop-dark: rgba(0, 0, 0, 0.65);
+	--background-color-base: #fff;
+	--background-color-base-fixed: #fff;
+	--background-color-neutral: #eaecf0;
+	--background-color-neutral-subtle: #f8f9fa;
+	--background-color-transparent: transparent;
+	--background-color-inverted: #101418;
+	--background-color-button-quiet--hover: rgba(0, 24, 73, 0.027);
+	--background-color-button-quiet--active: rgba(0, 24, 73, 0.082);
+	*/
+	--background-color-input-binary--checked: var( --color-progressive );
+	/*
+	--background-color-tab-list-item-framed--hover: rgba(255, 255, 255, 0.3);
+	--background-color-tab-list-item-framed--active: rgba(255, 255, 255, 0.65);
+	*/
+	--opacity-icon-base: 0.6;
+	--opacity-icon-base--hover: 0.8;
+	--opacity-icon-base--selected: 1;
+	--opacity-icon-base--disabled: 0.3;
+	--opacity-icon-placeholder: 0.4;
+	--opacity-icon-subtle: 0.5;
+	--border-color-base: rgba( 0, 0, 0, 0.08 );
+	--border-color-interactive: rgba( 0, 0, 0, 0.11 );
+	--border-color-disabled: var( --border-color-subtle );
+	--border-color-subtle: rgba( 0, 0, 0, 0.05 );
+	/*
+	--border-color-muted: #eaecf0;
+	--border-color-inverted: #fff;
+	*/
+	--border-color-progressive: var( --color-progressive );
+	--border-color-progressive--hover: var( --color-progressive--hover );
+	--border-color-progressive--active: var( --color-progressive--active );
+	--border-color-progressive--focus: var( --color-progressive );
+	/*
+	--border-color-destructive: #d73333;
+	--border-color-destructive--hover: #ff4242;
+	--border-color-destructive--active: #b32424;
+	*/
+	--border-color-destructive--focus: var( --color-progressive );
+	/*
+	--border-color-error: #b32424;
+	--border-color-error--hover: #ff4242;
+	--border-color-warning: #a66200;
+	--border-color-success: #096450;
+	--border-color-notice: #54595d;
+	--border-color-content-added: #afb6e9;
+	--border-color-content-removed: #fc3;
+	--border-color-transparent: transparent;
+	--border-color-divider: #a2a9b1;
+	*/
+	--outline-color-progressive--focus: var( --color-progressive );
+	/*
+	--color-link-red: var(--color-destructive);
+	--color-link-red--hover: var(--color-destructive--hover);
+	--color-link-red--active: var(--color-destructive--active);
+	--color-link-red--focus: var(--color-destructive--focus);
+	--color-link-red--visited: var(--color-destructive--visited);
+	*/
+	--border-color-input--hover: var( --border-color-interactive );
+	--border-color-input-binary: var( --border-color-interactive );
+	--border-color-input-binary--hover: var( --border-color-progressive--hover );
+	--border-color-input-binary--active: var( --border-color-progressive--active );
+	--border-color-input-binary--focus: var( --border-color-progressive--focus );
+	--border-color-input-binary--checked: var( --border-color-progressive );
+
+	/* DEPRECATED TOKENS */
+	--color-base--emphasized: var( --color-emphasized );
+	--color-base--subtle: var( --color-subtle );
+	--color-primary: var( --color-progressive );
+	--color-primary--hover: var( --color-progressive--hover );
+	--color-primary--active: var( --color-progressive--active );
+	--opacity-icon-base--active: var( --opacity-icon-base--selected );
+}

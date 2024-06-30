@@ -13,7 +13,7 @@ body {
 	padding: 0;
 	margin: 0;
 	color: var( --color-base );
-	accent-color: var( --color-primary );
+	accent-color: var( --color-progressive );
 	background: var( --color-surface-0 );
 }
 
@@ -25,19 +25,19 @@ body {
 }
 
 :focus {
-	outline-color: var( --color-primary );
+	outline-color: var( --color-progressive );
 }
 
 // For some reason just overriding the outline-color is not enough
 :focus-visible {
-	outline: 2px solid var( --color-primary );
+	outline: 2px solid var( --color-progressive );
 	outline-offset: 1px;
 }
 
 input,
 select,
 textarea {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	background-color: transparent;
 	border: 1px solid var( --border-color-interactive );
 }
@@ -52,7 +52,7 @@ textarea {
 
 blockquote {
 	margin: var( --space-md );
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 
 	cite {
 		display: block;

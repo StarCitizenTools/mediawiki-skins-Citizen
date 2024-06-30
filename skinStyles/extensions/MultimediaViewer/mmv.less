@@ -65,13 +65,13 @@
 
 			&.oo-ui-optionWidget-highlighted {
 				border-bottom: 0; // border will cause reflow
-				box-shadow: inset 0 -2px 0 0 var( --color-primary--hover );
+				box-shadow: inset 0 -2px 0 0 var( --color-progressive--hover );
 			}
 
 			&.oo-ui-optionWidget-selected,
 			&.oo-ui-optionWidget-highlighted.oo-ui-optionWidget-selected {
 				border-bottom: 0; // border will cause reflow
-				box-shadow: inset 0 -2px 0 0 var( --color-primary );
+				box-shadow: inset 0 -2px 0 0 var( --color-progressive );
 			}
 
 			&:first-child {
@@ -142,21 +142,21 @@
 
 	.mw-mmv-disable-confirmation {
 		.mw-mmv-options-dialog-header {
-			color: var( --color-base--emphasized );
+			color: var( --color-emphasized );
 		}
 
 		.mw-mmv-options-text-header {
-			color: var( --color-base--subtle );
+			color: var( --color-subtle );
 		}
 	}
 
 	.mw-mmv-enable-confirmation {
 		.mw-mmv-options-dialog-header {
-			color: var( --color-base--emphasized );
+			color: var( --color-emphasized );
 		}
 
 		.mw-mmv-options-text-header {
-			color: var( --color-base--subtle );
+			color: var( --color-subtle );
 		}
 	}
 }
@@ -180,7 +180,7 @@
 	margin: 0 0 var( --space-xs ) 0;
 	font-size: 1rem;
 	font-weight: var( --font-weight-semibold );
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 }
 
 .mw-mmv-options-text-header {
@@ -191,7 +191,7 @@
 .mw-mmv-options-text-body {
 	margin-top: var( --space-xs );
 	font-size: var( --font-size-x-small );
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .mw-mmv-options-enable-alert {
@@ -237,7 +237,7 @@
 
 	&:active {
 		background-color: var( --background-color-quiet--active );
-		opacity: var( --opacity-icon-base--active );
+		opacity: var( --opacity-icon-base--selected );
 	}
 }
 
@@ -316,7 +316,7 @@
 		margin: 0;
 		font-size: var( --font-size-x-small );
 		font-weight: var( --font-weight-normal );
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 		letter-spacing: 0.05em;
 	}
 
@@ -385,8 +385,8 @@
 
 .mw-mmv-progress-percent {
 	height: 2px;
-	background: linear-gradient( -45deg, transparent 33%, rgba( 0, 0, 0, 0.1 ) 33%, rgba( 0, 0, 0, 0.1 ) 66%, transparent 66% ), var( --color-primary );
-	filter: drop-shadow( 0 0 16px var( --color-primary ) );
+	background: linear-gradient( -45deg, transparent 33%, rgba( 0, 0, 0, 0.1 ) 33%, rgba( 0, 0, 0, 0.1 ) 66%, transparent 66% ), var( --color-progressive );
+	filter: drop-shadow( 0 0 16px var( --color-progressive ) );
 	border-top-right-radius: var( --border-radius--large );
 	border-bottom-right-radius: var( --border-radius--large );
 }
@@ -475,7 +475,7 @@
 	padding: 0;
 	margin: 0;
 	font-size: var( --font-size-small );
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 
 	@media ( max-width: @max-width-breakpoint-tablet ) {
 		font-size: var( --font-size-x-small );
@@ -493,7 +493,7 @@
 
 .mw-mmv-title {
 	.mw-mmv-untruncated & {
-		color: var( --color-base--emphasized );
+		color: var( --color-emphasized );
 	}
 }
 

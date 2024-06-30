@@ -10,39 +10,39 @@
 
 .mw-ui-button {
 	font-weight: var( --font-weight-medium );
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	background-color: var( --color-surface-2 );
 	border-color: var( --border-color-base );
 	border-radius: var( --border-radius--small );
 
 	&:not( :disabled ) {
 		&:visited {
-			color: var( --color-base--emphasized );
+			color: var( --color-emphasized );
 		}
 
 		// Simplify hover style to only change background color
 		&:hover {
-			color: var( --color-base--emphasized );
+			color: var( --color-emphasized );
 			background-color: var( --color-surface-2--hover );
 			border-color: var( --border-color-base );
 		}
 
 		&:focus {
-			color: var( --color-base--emphasized );
-			border-color: var( --color-primary );
-			box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px var( --color-surface-0 );
+			color: var( --color-emphasized );
+			border-color: var( --color-progressive );
+			box-shadow: inset 0 0 0 1px var( --color-progressive ), inset 0 0 0 2px var( --color-surface-0 );
 		}
 
 		&:active,
 		&.is-on {
-			color: var( --color-base--subtle );
+			color: var( --color-subtle );
 			background-color: var( --color-surface-2--active );
 			border-color: var( --color-surface-2--active );
 		}
 	}
 
 	&:disabled {
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 		background-color: var( --color-surface-4 );
 		border-color: var( --color-surface-4 );
 	}
@@ -51,24 +51,24 @@
 	&.mw-ui-quiet.mw-ui-progressive,
 	&.mw-ui-quiet.mw-ui-destructive {
 		font-weight: var( --font-weight-medium );
-		color: var( --color-base--emphasized );
+		color: var( --color-emphasized );
 
 		input[ type='checkbox' ]:hover + &,
 		&:hover {
-			color: var( --color-base--emphasized );
+			color: var( --color-emphasized );
 			background-color: var( --background-color-quiet--hover );
 		}
 
 		input[ type='checkbox' ]:focus + &,
 		&:focus {
-			color: var( --color-base--emphasized );
-			border-color: var( --color-primary );
-			box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px var( --color-surface-0 );
+			color: var( --color-emphasized );
+			border-color: var( --color-progressive );
+			box-shadow: inset 0 0 0 1px var( --color-progressive ), inset 0 0 0 2px var( --color-surface-0 );
 		}
 
 		input[ type='checkbox' ]:active + &,
 		&:active {
-			color: var( --color-base--subtle );
+			color: var( --color-subtle );
 			background-color: var( --background-color-quiet--active );
 			border-color: transparent;
 		}
@@ -76,59 +76,59 @@
 		&:disabled,
 		&:disabled:hover,
 		&:disabled:active {
-			color: var( --color-base--subtle );
+			color: var( --color-subtle );
 		}
 	}
 
 	&.mw-ui-progressive {
 		&:not( :disabled ) {
-			background-color: var( --color-primary );
-			border-color: var( --color-primary );
+			background-color: var( --color-progressive );
+			border-color: var( --color-progressive );
 
 			&:hover {
 				color: var( --color-inverted-primary );
-				background-color: var( --color-primary--hover );
-				border-color: var( --color-primary--hover );
+				background-color: var( --color-progressive--hover );
+				border-color: var( --color-progressive--hover );
 			}
 
 			&:focus {
-				box-shadow: inset 0 0 0 1px var( --color-primary ), inset 0 0 0 2px var( --color-inverted-primary );
+				box-shadow: inset 0 0 0 1px var( --color-progressive ), inset 0 0 0 2px var( --color-inverted-primary );
 			}
 
 			&:active,
 			&.is-on {
 				color: var( --color-inverted-primary );
-				background-color: var( --color-primary--active );
-				border-color: var( --color-primary--active );
+				background-color: var( --color-progressive--active );
+				border-color: var( --color-progressive--active );
 			}
 		}
 
 		&:disabled {
-			color: var( --color-base--subtle );
+			color: var( --color-subtle );
 			background-color: var( --color-surface-4 );
 			border-color: var( --color-surface-4 );
 		}
 
 		&.mw-ui-quiet {
-			color: var( --color-primary );
+			color: var( --color-progressive );
 
 			input[ type='checkbox' ]:hover + &,
 			&:hover {
-				color: var( --color-primary--hover );
+				color: var( --color-progressive--hover );
 				// Simplify quiet hover style
 				background-color: var( --background-color-quiet--hover );
 			}
 
 			input[ type='checkbox' ]:focus + &,
 			&:focus {
-				color: var( --color-primary );
-				border-color: var( --color-primary );
+				color: var( --color-progressive );
+				border-color: var( --color-progressive );
 			}
 
 			input[ type='checkbox' ]:active + &,
 			&:active {
-				background-color: var( --color-primary--active );
-				border-color: var( --color-primary--active );
+				background-color: var( --color-progressive--active );
+				border-color: var( --color-progressive--active );
 			}
 		}
 	}
@@ -157,7 +157,7 @@
 		}
 
 		&:disabled {
-			color: var( --color-base--subtle );
+			color: var( --color-subtle );
 			background-color: var( --color-surface-4 );
 			border-color: var( --color-surface-4 );
 		}

@@ -46,24 +46,24 @@
 	a {
 		padding: var( --space-xs ) var( --space-sm );
 		font-weight: var( --font-weight-medium );
-		color: var( --color-base--emphasized );
+		color: var( --color-emphasized );
 		border-bottom: 2px solid transparent;
 
 		&:hover {
 			color: var( -color-primary--hover );
-			border-color: var( --color-primary--hover );
+			border-color: var( --color-progressive--hover );
 		}
 	}
 
 	.current a {
-		color: var( --color-primary );
-		border-color: var( --color-primary );
+		color: var( --color-progressive );
+		border-color: var( --color-progressive );
 	}
 }
 
 .results-info {
 	font-size: var( --font-size-small );
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 	white-space: nowrap;
 }
 
@@ -75,7 +75,7 @@
 	h4 {
 		font-size: var( --font-size-small );
 		font-weight: var( --font-weight-normal );
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 		letter-spacing: 0.05em;
 	}
 
@@ -100,7 +100,7 @@
 	// background: var( --color-surface-2 );
 	// border-radius: var( --border-radius--small );
 	margin-top: 0 !important;
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 }
 
 .mw-search-results {
@@ -128,13 +128,13 @@
 
 	&-data {
 		font-size: var( --font-size-small );
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 	}
 }
 
 .searchmatch {
 	font-weight: var( --font-weight-semibold );
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 
 	a & {
 		// If searchmatch is part of the link (usually title), use link color
@@ -148,7 +148,7 @@
 		margin-bottom: 0;
 		font-size: var( --font-size-small );
 		font-weight: var( --font-weight-normal );
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 		letter-spacing: 0.05em;
 		border-bottom: 1px solid var( --border-color-base );
 	}
