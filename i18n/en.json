@@ -27,9 +27,9 @@
 	"citizen-action-addsection": "Add topic",
 	"citizen-jumptotop": "Back to top",
 	
-	"citizen-search-fulltext": "Search for text within pages",
+	"citizen-search-fulltext": "Search text",
 	
-	"citizen-search-mediasearch": "Search for media",
+	"citizen-search-mediasearch": "Search media",
 	"citizen-search-editpage": "Edit or create page",
 	"citizen-search-empty-desc": "Type to start searching",
 	"citizen-search-noresults-title": "Uh oh! No results for $1",
