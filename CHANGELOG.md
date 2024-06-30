@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.20.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.19.0...v2.20.0) (2024-06-30)
+
+
+### Features
+
+* **overflow:** ✨ use CSS variable for overflow gradient size ([f0de4f4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f0de4f4c5b7329cd8764df7f762e2632d7a7bfeb))
+* **pageActions:** ✨ add share button to page actions for article pages ([327aca0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/327aca0b2ca1aa8d085313cc2d70b07980f5c367))
+* **pageActions:** ✨ use neutral color for language badge ([fce1f77](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fce1f775c4228be84530facd03c7d2d81066e0a3))
+* **search:** ✨ shorten fulltext and media search button label ([ba1f77d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ba1f77d8a304fd1a11a2c639dc3e5c9f398cbd49))
+* **share:** ✨ only share URL ([1edc40e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1edc40e70ce303f0e40cec194da26c33fabfa3d2))
+
+
+### Bug Fixes
+
+* **core:** 🐛 force selected view button to be visible on revision pages ([3d90051](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3d90051ae667a0de7da80cc7d003db920110993d))
+* **datatable:** 🐛 table should not be wider than the wrapper ([7e20daa](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7e20daa70bc6b81122efc8d4e7bac065eabb4e08)), closes [#888](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/888)
+* **menu:** 🐛 prevent page from scrolling when dropdown menu is open in small viewport ([dd53576](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/dd535769414bcd719d6a862d1477ab45bfc9e430))
+* **menu:** 🐛 show view button specifically on revision and diff pages ([eb58bd6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/eb58bd6e9991179fa282bc71501215077781195b)), closes [#845](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/845)
+* **overflow:** 🐛 remove unused mask rules ([c34868d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c34868d04edafb2b45bbb7ac60e748aa7f1ad9db))
+* **skinning:** 🐛 incorrect text alignement for mw-halign-center ([e4697c4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e4697c48f10a32ec0e0c0a50f1ab702750a6e710))
+* **wordmark:** 🐛 wordmark should resize responsively ([7133648](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7133648fe0855682ca25db1cf955d5f3018e4cca))
+
 ## [2.19.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.18.1...v2.19.0) (2024-06-24)
 
 
