@@ -1,8 +1,3 @@
-const SCROLL_DOWN_CLASS = 'citizen-scroll--down';
-const SCROLL_UP_CLASS = 'citizen-scroll--up';
-const STICKY_SENTINEL_ID = 'citizen-page-header-sticky-sentinel';
-const STICKY_CLASS = 'citizen-page-header--sticky';
-
 /**
  * Wait for first paint before calling this function.
  * (see T234570#5779890, T246419).
@@ -12,41 +7,6 @@ const STICKY_CLASS = 'citizen-page-header--sticky';
  */
 function enableCssAnimations( document ) {
 	document.documentElement.classList.add( 'citizen-animations-ready' );
-}
-
-/**
- * Initializes the sticky header functionality by setting up scroll observers and intersection observers.
- *
- * @param {Document} document - The document object representing the webpage.
- */
-function initStickyHeader( document ) {
-	const { initDirectionObserver, initIntersectionObserver } = require( './scrollObserver.js' );
-
-	const toggleScrollClass = ( removeClass, addClass ) => () => {
-		window.requestAnimationFrame( () => {
-			document.body.classList.remove( removeClass );
-			document.body.classList.add( addClass );
-		} );
-	};
-
-	const addScrollDownClass = toggleScrollClass( SCROLL_UP_CLASS, SCROLL_DOWN_CLASS );
-	const addScrollUpClass = toggleScrollClass( SCROLL_DOWN_CLASS, SCROLL_UP_CLASS );
-
-	const toggleStickyClass = ( state ) => () => {
-		window.requestAnimationFrame( () => {
-			document.body.classList.toggle( STICKY_CLASS, state );
-		} );
-	};
-
-	initDirectionObserver( addScrollDownClass, addScrollUpClass, 10 );
-
-	const sentinel = document.getElementById( STICKY_SENTINEL_ID );
-	const shouldStickyHeader = sentinel && getComputedStyle( sentinel ).getPropertyValue( 'display' ) !== 'none';
-
-	if ( shouldStickyHeader ) {
-		const observer = initIntersectionObserver( toggleStickyClass( true ), toggleStickyClass( false ) );
-		observer.observe( sentinel );
-	}
 }
 
 /**
@@ -102,6 +62,7 @@ function main( window ) {
 		config = require( './config.json' ),
 		search = require( './search.js' ),
 		share = require( './share.js' ),
+		stickyHeader = require( './stickyHeader.js' ),
 		lastModified = require( './lastModified.js' ),
 		checkbox = require( './checkbox.js' ),
 		dropdown = require( './dropdown.js' );
@@ -110,7 +71,7 @@ function main( window ) {
 	search.init( window );
 	share.init();
 	lastModified.init();
-	initStickyHeader( window.document );
+	stickyHeader.init();
 
 	// Set up checkbox hacks
 	checkbox.bind();
