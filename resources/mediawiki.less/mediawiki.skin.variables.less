@@ -22,13 +22,14 @@
  */
 
 // @since 1.41
+// These have to be wrapped in parentheses, otherwise the Less calculation breaks (T367103)
 @min-width-breakpoint-mobile: 320px;
 @min-width-breakpoint-tablet: 640px;
 @min-width-breakpoint-desktop: 1120px;
 @min-width-breakpoint-desktop-wide: 1680px;
-@max-width-breakpoint-mobile: @min-width-breakpoint-tablet - 1px;
-@max-width-breakpoint-tablet: @min-width-breakpoint-desktop - 1px;
-@max-width-breakpoint-desktop: @min-width-breakpoint-desktop-wide - 1px;
+@max-width-breakpoint-mobile: ( @min-width-breakpoint-tablet - 1px );
+@max-width-breakpoint-tablet: ( @min-width-breakpoint-desktop - 1px );
+@max-width-breakpoint-desktop: ( @min-width-breakpoint-desktop-wide - 1px );
 
 /*
  * Polyfill deprecated variables
