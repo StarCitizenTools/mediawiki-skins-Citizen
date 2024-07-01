@@ -231,14 +231,23 @@
 
 	&.mw-mmv-dialog-open,
 	&:hover {
-		background-color: var( --background-color-button-quiet--hover );
+		background-color: rgba( 255, 255, 255, 0.04 );
 		opacity: var( --opacity-icon-base--hover );
 	}
 
 	&:active {
-		background-color: var( --background-color-button-quiet--active );
+		background-color: rgba( 255, 255, 255, 0.08 );
 		opacity: var( --opacity-icon-base--selected );
 	}
+}
+
+// These icons have improper sizing in the source file
+// Let's try to fix it
+.mw-mmv-close,
+.mw-mmv-fullscreen,
+.mw-mmv-next-image,
+.mw-mmv-prev-image {
+	--size-icon: 1rem;
 }
 
 .mw-mmv-download-button,
@@ -393,13 +402,37 @@
 
 /* mmv.ui.stripeButtons.less */
 .mw-mmv-stripe-button {
+	min-height: 32px !important;
+	max-height: 32px !important;
 	font-size: var( --font-size-small );
+
+	.mw-mmv-post-image:not( .mw-mmv-untruncated ) & {
+		background-color: transparent !important;
+		border-color: rgba( 255, 255, 255, 0.1 ) !important;
+
+		&:hover {
+			background-color: rgba( 255, 255, 255, 0.04 ) !important;
+		}
+
+		&:active {
+			background-color: rgba( 255, 255, 255, 0.08 ) !important;
+		}
+	}
+
+	/* Icon alignment fixes */
+	&::before {
+		inset: unset !important;
+		width: 1rem !important;
+		height: 1rem !important;
+		margin: 0 var( --space-xs ) 0 0 !important;
+	}
 
 	// Icon only button for smaller screen size
 	@media ( max-width: @max-width-breakpoint-tablet ) {
 		text-indent: -9999px;
 
-		&::before {
+		&::before,
+		> .cdx-button__icon {
 			margin-right: 0 !important;
 		}
 	}
@@ -417,6 +450,7 @@
 		margin: var( --space-md );
 		font-size: var( --font-size-small );
 		white-space: nowrap;
+		border-radius: var( --border-radius--small );
 	}
 }
 
@@ -475,7 +509,11 @@
 	padding: 0;
 	margin: 0;
 	font-size: var( --font-size-small );
-	color: var( --color-subtle );
+	color: #ccc;
+
+	.mw-mmv-untruncated & {
+		color: var( --color-subtle );
+	}
 
 	@media ( max-width: @max-width-breakpoint-tablet ) {
 		font-size: var( --font-size-x-small );
@@ -504,16 +542,15 @@
  'desc links'
 		'about about';
 	grid-template-columns: 2fr 1fr;
-	gap: var( --space-xs );
+	gap: var( --space-lg );
 	width: auto;
-	padding: 0 var( --space-md ) var( --space-md ) var( --space-md );
+	padding: 0 var( --space-md );
 	margin-top: -4px;
 	// Sync with title
 	background-color: #000;
 	border-top: 0;
 
 	.mw-mmv-untruncated & {
-		gap: var( --space-lg );
 		background-color: transparent;
 
 		@media ( max-width: @max-width-breakpoint-tablet ) {
@@ -574,8 +611,10 @@
 
 .mw-mmv-about-links {
 	grid-area: about;
-	padding: 0;
+	width: auto;
+	padding: var( --space-md ) 0;
 	font-size: var( --font-size-small );
+	border-top: 1px solid var( --border-color-base );
 }
 
 .mw-mmv-label {
