@@ -6,6 +6,12 @@
 	 * Citizen Design Tokens
 	 * TODO: Refactor cssvariables.less into this and features.less
 	 */
+	--background-color-icon: ~'rgba( 0, 0, 0, var( --opacity-icon-base ) )';
+	--background-color-icon--hover: ~'rgba( 0, 0, 0, var( --opacity-icon-base--hover ) )';
+	--background-color-icon--active: ~'rgba( 0, 0, 0, var( --opacity-icon-base--active ) )';
+
+	--shadow-strength: 0.02;
+	--surface-shadow: var( --color-primary__h ), 10%, 20%;
 
 	/**
 	 * Codex Design Tokens v1.8.0
@@ -39,19 +45,19 @@
 	/*
 	--color-content-added: #096450;
 	--color-content-removed: #b32424;
+	*/
 	--filter-invert-icon: 0;
 	--filter-invert-primary-button-icon: 1;
-	--box-shadow-color-base: #000;
-	*/
+	--box-shadow-color-base: ~'hsla( var( --surface-shadow ), var( --shadow-strength ) )';
 	--box-shadow-color-progressive--active: var( --color-progressive--active );
 	--box-shadow-color-progressive--focus: var( --color-progressive );
 	--box-shadow-color-progressive-selected: var( --color-progressive );
 	--box-shadow-color-progressive-selected--hover: var( --color-progressive--hover );
 	--box-shadow-color-progressive-selected--active: var( --color-progressive--active );
 	--box-shadow-color-destructive--focus: var( --color-progressive );
-	/*
 	--box-shadow-color-inverted: #fff;
 	--box-shadow-color-transparent: transparent;
+	/*
 	--background-color-interactive: #eaecf0;
 	--background-color-interactive-subtle: #f8f9fa;
 	--background-color-disabled: #c8ccd1;
@@ -61,8 +67,8 @@
 	--background-color-progressive--hover: var( --color-progressive--hover );
 	--background-color-progressive--active: var( --color-progressive--active );
 	--background-color-progressive--focus: var( --color-progressive );
+	--background-color-progressive-subtle: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), 95% )';
 	/*
-	--background-color-progressive-subtle: #eaf3ff;
 	--background-color-destructive: #d73333;
 	--background-color-destructive--hover: #ff4242;
 	--background-color-destructive--active: #b32424;
@@ -79,17 +85,21 @@
 	--background-color-notice-subtle: #eaecf0;
 	--background-color-content-added: #afb6e9;
 	--background-color-content-removed: #fc3;
-	--background-color-backdrop-light: rgba(255, 255, 255, 0.65);
-	--background-color-backdrop-dark: rgba(0, 0, 0, 0.65);
+	*/
+	--background-color-backdrop-light: ~'hsla( var( --color-primary__h ), var( --color-surface-0__s ), var( --color-surface-0__l ), 0.65 )';
+	--background-color-backdrop-dark: rgba( 0, 0, 0, 0.65 );
+	/*
 	--background-color-base: #fff;
 	--background-color-base-fixed: #fff;
 	--background-color-neutral: #eaecf0;
 	--background-color-neutral-subtle: #f8f9fa;
-	--background-color-transparent: transparent;
-	--background-color-inverted: #101418;
-	--background-color-button-quiet--hover: rgba(0, 24, 73, 0.027);
-	--background-color-button-quiet--active: rgba(0, 24, 73, 0.082);
 	*/
+	--background-color-transparent: transparent;
+	/*
+	--background-color-inverted: #101418;
+	*/
+	--background-color-button-quiet--hover: rgba( 0, 0, 0, 0.07 );
+	--background-color-button-quiet--active: rgba( 0, 0, 0, 0.09 );
 	--background-color-input-binary--checked: var( --color-progressive );
 	/*
 	--background-color-tab-list-item-framed--hover: rgba(255, 255, 255, 0.3);
@@ -105,39 +115,31 @@
 	--border-color-interactive: rgba( 0, 0, 0, 0.11 );
 	--border-color-disabled: var( --border-color-subtle );
 	--border-color-subtle: rgba( 0, 0, 0, 0.05 );
-	/*
-	--border-color-muted: #eaecf0;
+	--border-color-muted: var( --border-color-subtle );
 	--border-color-inverted: #fff;
-	*/
 	--border-color-progressive: var( --color-progressive );
 	--border-color-progressive--hover: var( --color-progressive--hover );
 	--border-color-progressive--active: var( --color-progressive--active );
 	--border-color-progressive--focus: var( --color-progressive );
-	/*
-	--border-color-destructive: #d73333;
-	--border-color-destructive--hover: #ff4242;
-	--border-color-destructive--active: #b32424;
-	*/
+	--border-color-destructive: var( --color-destructive );
+	--border-color-destructive--hover: var( --color-destructive--hover );
+	--border-color-destructive--active: var( --color-destructive--active );
 	--border-color-destructive--focus: var( --color-progressive );
-	/*
-	--border-color-error: #b32424;
-	--border-color-error--hover: #ff4242;
-	--border-color-warning: #a66200;
-	--border-color-success: #096450;
-	--border-color-notice: #54595d;
-	--border-color-content-added: #afb6e9;
-	--border-color-content-removed: #fc3;
+	--border-color-error: var( --border-color-base );
+	--border-color-error--hover: var( --border-color-base );
+	--border-color-warning: var( --border-color-base );
+	--border-color-success: var( --border-color-base );
+	--border-color-notice: var( --border-color-base );
+	--border-color-content-added: var( --border-color-base );
+	--border-color-content-removed: var( --border-color-base );
 	--border-color-transparent: transparent;
-	--border-color-divider: #a2a9b1;
-	*/
+	--border-color-divider: var( --border-color-base );
 	--outline-color-progressive--focus: var( --color-progressive );
-	/*
-	--color-link-red: var(--color-destructive);
-	--color-link-red--hover: var(--color-destructive--hover);
-	--color-link-red--active: var(--color-destructive--active);
-	--color-link-red--focus: var(--color-destructive--focus);
-	--color-link-red--visited: var(--color-destructive--visited);
-	*/
+	--color-link-red: var( --color-destructive );
+	--color-link-red--hover: var( --color-destructive--hover );
+	--color-link-red--active: var( --color-destructive--active );
+	--color-link-red--focus: var( --color-destructive--focus );
+	--color-link-red--visited: var( --color-destructive--visited );
 	--border-color-input--hover: var( --border-color-interactive );
 	--border-color-input-binary: var( --border-color-interactive );
 	--border-color-input-binary--hover: var( --border-color-progressive--hover );
@@ -146,6 +148,12 @@
 	--border-color-input-binary--checked: var( --border-color-progressive );
 
 	/* DEPRECATED TOKENS */
+	--background-color-primary--hover: var( --background-color-progressive-subtle );
+	--background-color-primary--active: var( --background-color-progressive-subtle );
+	--background-color-overlay: var( --background-color-backdrop-light );
+	--background-color-overlay--lighter: var( --background-color-backdrop-light );
+	--background-color-quiet--hover: var( --background-color-button-quiet--hover );
+	--background-color-quiet--active: var( --background-color-button-quiet--active );
 	--color-base--emphasized: var( --color-emphasized );
 	--color-base--subtle: var( --color-subtle );
 	--color-primary: var( --color-progressive );

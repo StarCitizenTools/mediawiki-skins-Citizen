@@ -26,7 +26,7 @@
 
 .oo-ui-buttonElement-frameless.oo-ui-widget-enabled > .oo-ui-buttonElement-button:hover {
 	color: var( --color-emphasized );
-	background-color: var( --background-color-quiet--hover );
+	background-color: var( --background-color-button-quiet--hover );
 }
 
 .oo-ui-buttonElement-frameless.oo-ui-widget-enabled > .oo-ui-buttonElement-button:focus {
@@ -36,9 +36,9 @@
 
 .oo-ui-buttonElement-frameless.oo-ui-widget-enabled.oo-ui-buttonElement-pressed > input.oo-ui-buttonElement-button,
 .oo-ui-buttonElement-frameless.oo-ui-widget-enabled > .oo-ui-buttonElement-button:active {
-	color: var( --color-subtle );
-	background-color: var( --background-color-quiet--active );
-	border-color: var( --background-color-quiet--active );
+	color: var( --color-emphasized );
+	background-color: var( --background-color-button-quiet--active );
+	border-color: var( --background-color-button-quiet--active );
 }
 
 .oo-ui-buttonElement-frameless.oo-ui-widget-enabled.oo-ui-indicatorElement:not( .oo-ui-iconElement ):not( .oo-ui-labelElement ) > .oo-ui-buttonElement-button:focus {
@@ -472,7 +472,7 @@ TODO: Need to refactor the current shadow for filter drop-shadow, see variables.
 }
 
 .oo-ui-dropdownInputWidget.oo-ui-widget-enabled select:hover {
-	color: var( --color-base );
+	color: var( --color-emphasized );
 	border-color: var( --color-progressive--hover );
 }
 
@@ -631,18 +631,18 @@ TODO: Need to refactor the current shadow for filter drop-shadow, see variables.
 
 .oo-ui-menuOptionWidget.oo-ui-optionWidget-highlighted {
 	color: var( --color-emphasized );
-	background-color: var( --background-color-quiet--hover );
+	background-color: var( --background-color-button-quiet--hover );
 }
 
 .oo-ui-menuOptionWidget.oo-ui-optionWidget-selected {
 	color: var( --color-progressive );
-	background-color: var( --background-color-primary--hover );
+	background-color: var( --background-color-progressive-subtle );
 }
 
 .oo-ui-menuOptionWidget.oo-ui-optionWidget-selected.oo-ui-menuOptionWidget.oo-ui-optionWidget-highlighted,
 .oo-ui-menuOptionWidget.oo-ui-optionWidget-pressed.oo-ui-menuOptionWidget.oo-ui-optionWidget-highlighted {
 	color: var( --color-progressive );
-	background-color: var( --background-color-primary--active );
+	background-color: var( --background-color-progressive-subtle );
 }
 
 .oo-ui-menuOptionWidget.oo-ui-widget-enabled.oo-ui-optionWidget {

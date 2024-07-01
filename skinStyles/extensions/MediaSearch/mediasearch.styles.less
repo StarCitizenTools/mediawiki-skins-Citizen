@@ -85,7 +85,7 @@
 
 	&:hover {
 		color: var( --color-emphasized );
-		background-color: var( --background-color-quiet--hover );
+		background-color: var( --background-color-button-quiet--hover );
 	}
 
 	&:focus {
@@ -98,13 +98,13 @@
 		border-color: var( --border-color-base );
 
 		&:hover {
-			color: var( --color-emphasized );
+			color: var( --color-subtle );
 			background-color: var( --color-surface-2--hover );
 		}
 
 		// Add active state
 		&:active {
-			color: var( --color-subtle );
+			color: var( --color-emphasized );
 			background-color: var( --color-surface-2--active );
 		}
 	}
@@ -316,7 +316,7 @@
 	z-index: @z-index-overlay;
 
 	&__overlay {
-		background-color: var( --background-color-overlay );
+		background-color: var( --background-color-backdrop-light );
 	}
 
 	&__shell {
@@ -478,7 +478,7 @@
 		}
 
 		&:active {
-			color: var( --color-subtle );
+			color: var( --color-emphasized );
 			border-color: var( --border-color-interactive );
 		}
 	}
@@ -528,11 +528,11 @@
 
 		&--active {
 			color: var( --color-emphasized );
-			background-color: var( --background-color-quiet--hover );
+			background-color: var( --background-color-button-quiet--hover );
 		}
 
 		&--selected {
-			background-color: var( --background-color-primary--hover );
+			background-color: var( --background-color-progressive-subtle );
 		}
 
 		&--active.sd-select-menu__list-item--selected {
@@ -907,7 +907,7 @@
 			}
 
 			&:hover {
-				background-color: var( --background-color-quiet--hover );
+				background-color: var( --background-color-button-quiet--hover );
 				border-color: transparent;
 			}
 
@@ -951,7 +951,7 @@
 		}
 
 		&:hover {
-			background-color: var( --background-color-quiet--hover );
+			background-color: var( --background-color-button-quiet--hover );
 		}
 
 		&:focus {

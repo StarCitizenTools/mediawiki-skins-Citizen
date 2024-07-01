@@ -30,7 +30,7 @@
 			}
 
 			&:hover {
-				background-color: var( --background-color-quiet--hover );
+				background-color: var( --background-color-button-quiet--hover );
 
 				> .citizen-ui-icon::before {
 					opacity: var( --opacity-icon-base--hover );
@@ -38,7 +38,7 @@
 			}
 
 			&:active {
-				background-color: var( --background-color-quiet--active );
+				background-color: var( --background-color-button-quiet--active );
 
 				> .citizen-ui-icon::before {
 					opacity: var( --opacity-icon-base--selected );
@@ -77,10 +77,10 @@
 			}
 
 			> .citizen-menu__dropdownButton {
-				background-color: var( --background-color-quiet--active );
+				background-color: var( --background-color-button-quiet--active );
 
 				&:hover {
-					background-color: var( --background-color-quiet--hover );
+					background-color: var( --background-color-button-quiet--hover );
 				}
 			}
 		}
@@ -90,7 +90,7 @@
 			&::before {
 				z-index: -1;
 				content: '';
-				background: var( --background-color-overlay );
+				background: var( --background-color-backdrop-light );
 				opacity: 0;
 			}
 
@@ -129,13 +129,12 @@
 			align-items: center;
 			padding: var( --space-xs ) var( --space-md );
 			font-weight: var( --font-weight-medium );
-			color: var( --color-base );
+			color: var( --color-emphasized );
 			transition: var( --transition-hover );
 			transition-property: opacity;
 
 			&:hover {
-				color: var( --color-emphasized );
-				background-color: var( --background-color-quiet--hover );
+				background-color: var( --background-color-button-quiet--hover );
 
 				.citizen-ui-icon::before {
 					opacity: var( --opacity-icon-base--hover );
@@ -143,8 +142,7 @@
 			}
 
 			&:active {
-				color: var( --color-subtle );
-				background-color: var( --background-color-quiet--active );
+				background-color: var( --background-color-button-quiet--active );
 
 				.citizen-ui-icon::before {
 					opacity: var( --opacity-icon-base--selected );
