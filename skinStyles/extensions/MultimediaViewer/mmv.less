@@ -505,11 +505,11 @@
 }
 
 .mw-mmv-credit {
-	height: auto !important;
+	height: ~'calc( 1em * var( --line-height-xs ) )';
 	padding: 0;
 	margin: 0;
 	font-size: var( --font-size-small );
-	color: #ccc;
+	color: #999;
 
 	.mw-mmv-untruncated & {
 		color: var( --color-subtle );
@@ -542,7 +542,7 @@
  'desc links'
 		'about about';
 	grid-template-columns: 2fr 1fr;
-	gap: var( --space-lg );
+	gap: var(--space-md) var(--space-xl);
 	width: auto;
 	padding: 0 var( --space-md );
 	margin-top: -4px;
@@ -605,8 +605,15 @@
 	}
 }
 
+.mw-mmv-image-desc-div,
+.mw-mmv-image-links-div {
+	display: block; /* Take full width */
+}
+
 .mw-mmv-image-desc-div {
+    margin-top: var(--space-md);
 	margin-bottom: 0;
+	border-top: 1px solid var(--border-color-base);
 }
 
 .mw-mmv-about-links {
