@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.21.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.20.0...v2.21.0) (2024-07-01)
+
+
+### Features
+
+* **core:** ✨ clean up state colors ([ff0a6ed](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ff0a6ed710f547f91797ba98f8143688d4229af4))
+* **core:** ✨ convert some CSS variables into Codex equivalent ([5d3ecd9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5d3ecd9edde583f4974570058b466f6595637f51))
+* **core:** ✨ convert some CSS variables into Codex equivalent part 2 ([0fdc7c4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0fdc7c4ad72710920f5c51cb7f70d014d6b1f5fd))
+* **core:** ✨ convert some CSS variables into Codex equivalent part 3 ([7c9eadb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7c9eadb662e0b4c8c4866485f30800566470651e))
+* **core:** ✨ set new link color to color-destructive ([c21a908](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c21a908c12b15a59f66fcc6585d30ad2d9553a6a))
+* **mmv:** ✨ tweak button styles in lightbox ([17e9840](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/17e9840a77bed7ced3942b43f46d30f54f5d67c0))
+* **mmv:** ✨ tweak lightbox caption text handling ([cb683c7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cb683c79ff3931c83de96aa9636e4107ca1e85e3))
+* **pageActions:** ✨ blend language badge into the background ([0a1ac14](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0a1ac146770e3726849c95a4022463cb707e7ed8))
+* **stickyHeader:** ✨ reduce direction observer throttle ([5715a29](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5715a29dae38ed5badc0bab346b72ced13424bbf))
+
+
+### Bug Fixes
+
+* **core:** 🐛 fix max-width breakpoint calculation in LESS ([568dfc7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/568dfc7de306cab724f927482ebee80fd9d43edb))
+* **pageActions:** 🐛 language badge should use the same color as its background ([ae4131f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ae4131f51fa91fe282e6c4650a94f3d361b8b8e0))
+* **preferences:** 🐛 incorrect active button color ([66e7282](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/66e7282accf5ca96a001b8273f9c31b7c3e07efe))
+* **skinning:** 🐛 fix incorrect mw-halign-left left margin ([fbd030a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fbd030afebb72fe99da1006ac52918e241b6521e))
+
 ## [2.20.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.19.0...v2.20.0) (2024-06-30)
 
 
