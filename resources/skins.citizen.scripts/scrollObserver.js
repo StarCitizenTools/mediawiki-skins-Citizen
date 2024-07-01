@@ -25,7 +25,7 @@ function initDirectionObserver( onScrollDown, onScrollUp, threshold ) {
 		lastScrollTop = scrollTop;
 	};
 
-	const throttledOnScroll = mw.util.throttle( onScroll, 250 );
+	const throttledOnScroll = mw.util.throttle( onScroll, 100 );
 	window.addEventListener( 'scroll', throttledOnScroll );
 }
 
