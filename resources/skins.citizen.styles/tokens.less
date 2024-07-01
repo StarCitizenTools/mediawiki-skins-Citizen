@@ -9,7 +9,9 @@
 	--background-color-icon: ~'rgba( 0, 0, 0, var( --opacity-icon-base ) )';
 	--background-color-icon--hover: ~'rgba( 0, 0, 0, var( --opacity-icon-base--hover ) )';
 	--background-color-icon--active: ~'rgba( 0, 0, 0, var( --opacity-icon-base--active ) )';
-
+	// Hover and active states are calculated by a modifier of the lightness value in HSL (e.g. hover: +2%, active: -2%)
+	--delta-lightness-hover-state: 4%;
+	// Used to calculate box shadow
 	--shadow-strength: 0.02;
 	--surface-shadow: var( --color-primary__h ), 10%, 20%;
 
@@ -29,23 +31,21 @@
 	--color-inverted: #fff;
 	--color-inverted-fixed: #fff;
 	--color-progressive: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), var( --color-primary__l ) )';
-	--color-progressive--hover: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), calc( var( --color-primary__l ) * 1.2 ) )';
-	--color-progressive--active: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), calc( var( --color-primary__l ) * 0.8 ) )';
+	--color-progressive--hover: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), calc( var( --color-primary__l ) + var( --delta-lightness-hover-state ) ) )';
+	--color-progressive--active: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), calc( var( --color-primary__l ) - var( --delta-lightness-hover-state ) ) )';
 	--color-progressive--focus: var( --color-progressive );
-	--color-destructive: #d73333;
-	--color-destructive--hover: #ff4242;
-	--color-destructive--active: #b32424;
+	--color-destructive: #d60021;
+	--color-destructive--hover: #ef4444;
+	--color-destructive--active: #9c0015;
 	--color-destructive--focus: var( --color-progressive );
 	--color-visited: var( --color-link );
 	--color-destructive--visited: var( --color-destructive );
 	--color-error: var( --color-destructive );
-	--color-warning: #edab00;
-	--color-success: #14866d;
+	--color-warning: #c77f00;
+	--color-success: #009768;
 	--color-notice: var( --color-base );
-	/*
-	--color-content-added: #096450;
-	--color-content-removed: #b32424;
-	*/
+	--color-content-added: var( --color-success );
+	--color-content-removed: var( --color-destructive );
 	--filter-invert-icon: 0;
 	--filter-invert-primary-button-icon: 1;
 	--box-shadow-color-base: ~'hsla( var( --surface-shadow ), var( --shadow-strength ) )';
@@ -68,24 +68,22 @@
 	--background-color-progressive--active: var( --color-progressive--active );
 	--background-color-progressive--focus: var( --color-progressive );
 	--background-color-progressive-subtle: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), 95% )';
-	/*
-	--background-color-destructive: #d73333;
-	--background-color-destructive--hover: #ff4242;
-	--background-color-destructive--active: #b32424;
-	*/
+	--background-color-destructive: var( --color-destructive );
+	--background-color-destructive--hover: var( --color-destructive--hover );
+	--background-color-destructive--active: var( --color-destructive--active );
 	--background-color-destructive--focus: var( --color-progressive );
+	--background-color-destructive-subtle: #fee2e2;
+	--background-color-error: var( --color-destructive );
+	--background-color-error--hover: var( --color-destructive--hover );
+	--background-color-error--active: var( --color-destructive--active );
+	--background-color-error-subtle: var( --background-color-destructive-subtle );
+	--background-color-warning-subtle: #fef3c7;
+	--background-color-success-subtle: #d1fae5;
 	/*
-	--background-color-destructive-subtle: #fee7e6;
-	--background-color-error: #d73333;
-	--background-color-error--hover: #ff4242;
-	--background-color-error--active: #b32424;
-	--background-color-error-subtle: #fee7e6;
-	--background-color-warning-subtle: #fef6e7;
-	--background-color-success-subtle: #d5fdf4;
-	--background-color-notice-subtle: #eaecf0;
-	--background-color-content-added: #afb6e9;
-	--background-color-content-removed: #fc3;
+	--background-color-notice-subtle: #d1fae5;
 	*/
+	--background-color-content-added: var( --background-color-success-subtle );
+	--background-color-content-removed: var( --background-color-destructive-subtle );
 	--background-color-backdrop-light: ~'hsla( var( --color-primary__h ), var( --color-surface-0__s ), var( --color-surface-0__l ), 0.65 )';
 	--background-color-backdrop-dark: rgba( 0, 0, 0, 0.65 );
 	/*
@@ -159,5 +157,8 @@
 	--color-primary: var( --color-progressive );
 	--color-primary--hover: var( --color-progressive--hover );
 	--color-primary--active: var( --color-progressive--active );
+	--color-text-error: var( --color-destructive );
+	--color-text-warning: var( --color-base );
+	--color-text-success: var( --color-success );
 	--opacity-icon-base--active: var( --opacity-icon-base--selected );
 }

@@ -24,22 +24,20 @@
 
 	li {
 		&.selected {
-			color: var( --color-base );
-			outline: 0;
+			color: var( --color-base--emphasized );
+			outline-color: var( --border-color-base );
 
 			&.before {
-				background-color: var( --background-color-progressive-subtle );
+				background-color: var( --background-color-success-subtle );
 			}
 
 			&.after {
-				background-color: var( --background-color-progressive-subtle );
+				background-color: var( --background-color-destructive-subtle );
+			}
+
+			a {
+				color: var( --)
 			}
 		}
-	}
-}
-
-.skin-theme-clientpref-night {
-	#pagehistory li.selected a {
-		color: @color-accent90;
 	}
 }
