@@ -44,6 +44,7 @@
 	"citizen-search-empty-desc": "请输入要搜索的内容",
 	"citizen-search-noresults-title": "不妙！没有“$1”的搜索结果",
 	"citizen-search-noresults-desc": "还可以尝试上面的选项",
+	"citizen-share": "分享此页面",
 	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}}的讨论页面",
 	"citizen-tagline-ns-project": "有关{{SITENAME}}的信息",
 	"citizen-tagline-ns-file": "{{SITENAME}}上的文件",

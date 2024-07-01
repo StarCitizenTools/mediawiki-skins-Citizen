@@ -31,6 +31,7 @@
 	"citizen-search-empty-desc": "Внесете текст за да почнете да пребарувате",
 	"citizen-search-noresults-title": "За жал, не најдов ништо за $1",
 	"citizen-search-noresults-desc": "Да ги пробаме можностите погоре?",
+	"citizen-share": "Сподели ја страницава",
 	"citizen-tagline-ns-talk": "Разговорна страница на {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Информации за {{SITENAME}}",
 	"citizen-tagline-ns-file": "Податотека на {{SITENAME}}",
