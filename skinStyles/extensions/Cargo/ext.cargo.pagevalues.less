@@ -11,21 +11,21 @@
 @import '../../../resources/mixins.less';
 
 // Disable sticky header since it collides with cargo sticky header
-#citizen-body-header-sticky-sentinel {
+#citizen-page-header-sticky-sentinel {
 	display: none;
 }
 
 // Apply Citizen sticky header styles
 .cargo-pagevalues-tableinfo {
 	padding: var( --space-md ) 0;
-	font-size: 0.875rem;
-	color: var( --color-base--subtle );
+	font-size: var( --font-size-small );
+	color: var( --color-subtle );
 	background-color: transparent;
 	.citizen-sticky-header;
 
 	// Tweak size to look more like other sticky header
 	h2 {
 		margin: 0;
-		font-size: var( --font-size-h3 );
+		font-size: var( --font-size-x-large );
 	}
 }

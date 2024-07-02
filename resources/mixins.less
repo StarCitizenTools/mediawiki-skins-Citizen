@@ -18,7 +18,6 @@
 // Collaspe animation setup
 .citizen-card-hide( @position, @axis: '', @fadeChildren: true ) {
 	pointer-events: none;
-	visibility: hidden;
 	opacity: 0;
 	transform: ~'scale@{axis}( 0 )';
 	transform-origin: @position;
@@ -36,7 +35,6 @@
 .citizen-card-show( @fadeChildren: true ) {
 	z-index: @z-index-overlay;
 	pointer-events: auto;
-	visibility: visible;
 	opacity: 1;
 	// HACK: So that visiblity won't wait 250ms to become visible
 	transition-delay: 0ms;
@@ -55,14 +53,12 @@
 	opacity: 1;
 	transition: var( --transition-menu );
 	transition-property: opacity;
-	will-change: opacity;
 }
 
 // Transition animation
 .citizen-card-transition() {
 	transition: var( --transition-menu );
 	transition-property: transform, opacity;
-	will-change: transform, opacity;
 }
 
 // Header card popups
@@ -71,24 +67,14 @@
 	right: 0;
 	bottom: 100%;
 	left: 0;
-	min-width: 16rem;
 	max-height: var( --header-card-maxheight );
-	margin: var( --space-xs );
-	overflow: auto;
-	overscroll-behavior: contain;
-	-webkit-user-select: none;
-	user-select: none;
-	contain: content;
-	.citizen-card();
-	.citizen-card-hide( bottom @position );
-	.citizen-card-transition();
 
 	@media ( min-width: @min-width-breakpoint-tablet ) {
-		& when ( @position = left ) {
+		& when ( @position = start ) {
 			right: unset;
 		}
 
-		& when ( @position = right ) {
+		& when ( @position = end ) {
 			left: unset;
 		}
 	}
@@ -96,15 +82,13 @@
 	@media ( min-width: @min-width-breakpoint-desktop ) {
 		right: unset;
 		left: 100%;
-		& when ( @position = left ) {
+		& when ( @position = start ) {
 			top: 0;
 			bottom: unset;
-			.citizen-card-hide( top left );
 		}
 
-		& when ( @position = right ) {
+		& when ( @position = end ) {
 			bottom: 0;
-			.citizen-card-hide( bottom left );
 		}
 	}
 }
@@ -132,7 +116,8 @@
 		z-index: -1;
 		height: 100%;
 		content: '';
-		background-color: var( --background-color-overlay );
+		background-color: var( --color-surface-0 );
+		filter: opacity( 0.9 );
 		backdrop-filter: saturate( 50% ) blur( 16px );
 	}
 }
@@ -188,21 +173,31 @@
 
 // Button Styles
 .button-blue() {
-	color: #fff !important;
-	background-color: var( --color-primary );
+	color: var( --color-inverted-primary ) !important;
+	background-color: var( --color-progressive );
+
+	.citizen-ui-icon::before {
+		filter: var( --filter-invert-primary );
+		opacity: 1;
+	}
 }
 
 .button-blue-hover() {
-	background-color: var( --color-primary--hover );
+	background-color: var( --color-progressive--hover );
 }
 
 .button-blue-active() {
-	background-color: var( --color-primary--active );
+	background-color: var( --color-progressive--active );
 }
 
 .button-red() {
-	color: #fff !important;
+	color: var( --color-inverted-fixed ) !important;
 	background-color: var( --color-destructive );
+
+	.citizen-ui-icon::before {
+		filter: var( --filter-invert-fixed );
+		opacity: 1;
+	}
 }
 
 .button-red-hover() {
@@ -227,5 +222,5 @@
 
 	// color filter
 	@svg-filter-id: "recolor";
-	filter: url( 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="@{svg-filter-id}" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 @{r} 0 0 0 0 @{g} 0 0 0 0 @{b} 0 0 0 @{a} 0"/></filter></svg> #@{svg-filter-id}' );
+	filter: url( ';data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="@{svg-filter-id}" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 @{r} 0 0 0 0 @{g} 0 0 0 0 @{b} 0 0 0 @{a} 0"/></filter></svg> #@{svg-filter-id}' );
 }

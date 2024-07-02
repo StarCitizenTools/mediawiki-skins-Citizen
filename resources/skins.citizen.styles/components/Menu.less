@@ -1,12 +1,123 @@
 .citizen-menu {
+	font-size: var( --font-size-small );
+
+	&__card {
+		--transform-origin-offset-start: var( --space-xs );
+		--transform-origin-offset-end: ~'calc( 100% - var( --space-xs ) )';
+		margin: var( --space-xs );
+		overflow: auto;
+		overscroll-behavior: contain;
+		user-select: none;
+		background-color: var( --color-surface-1 );
+		border: 1px solid var( --border-color-base );
+		border-radius: var( --border-radius--medium );
+		box-shadow: var( --box-shadow-dialog );
+		transform: scale( 0 );
+		contain: content;
+
+		> * {
+			opacity: 0;
+		}
+	}
+
+	&__dropdown {
+		&Button {
+			cursor: pointer;
+
+			// Icons have to use span inside label elements
+			> span:not( .citizen-ui-icon ) {
+				.mixin-screen-reader-text;
+			}
+
+			&:hover {
+				background-color: var( --background-color-button-quiet--hover );
+
+				> .citizen-ui-icon::before {
+					opacity: var( --opacity-icon-base--hover );
+				}
+			}
+
+			&:active {
+				background-color: var( --background-color-button-quiet--active );
+
+				> .citizen-ui-icon::before {
+					opacity: var( --opacity-icon-base--selected );
+				}
+			}
+
+			// Reset hover styles if it is a touch device
+			// This is dumb but hover:hover overrides active states
+			@media ( hover: none ) {
+				&:hover {
+					background-color: none;
+
+					.citizen-ui-icon::before {
+						opacity: var( --opacity-icon-base );
+					}
+				}
+			}
+
+			// Remove Safari summary marker
+			&::-webkit-details-marker {
+				display: none;
+			}
+		}
+
+		&[ open ] {
+			> .citizen-menu__card {
+				transition: var( --transition-menu );
+				transition-property: transform;
+				transform: none;
+
+				> * {
+					opacity: 1;
+					transition: var( --transition-menu );
+					transition-property: opacity;
+				}
+			}
+
+			> .citizen-menu__dropdownButton {
+				background-color: var( --background-color-button-quiet--active );
+
+				&:hover {
+					background-color: var( --background-color-button-quiet--hover );
+				}
+			}
+		}
+
+		@media ( max-width: @max-width-breakpoint-tablet ) {
+			// Dismiss affordnance overlay
+			&::before {
+				z-index: -1;
+				content: '';
+				background: var( --background-color-backdrop-light );
+				opacity: 0;
+			}
+
+			&[ open ]::before {
+				position: fixed;
+				inset: 0;
+				z-index: 0; // Needed for menu to work in Safari
+				opacity: 1;
+				transition: var( --transition-menu );
+				transition-property: opacity;
+			}
+		}
+	}
+
 	&__heading {
 		display: block;
 		padding: var( --space-xs ) var( --space-md );
 		margin: 0;
-		font-size: inherit;
+		font-size: var( --font-size-x-small );
 		font-weight: var( --font-weight-normal );
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 		letter-spacing: 0.05em;
+	}
+
+	&__content-list {
+		margin: 0;
+		list-style: none;
 	}
 
 	.mw-list-item {
@@ -18,13 +129,12 @@
 			align-items: center;
 			padding: var( --space-xs ) var( --space-md );
 			font-weight: var( --font-weight-medium );
-			color: var( --color-base );
+			color: var( --color-emphasized );
 			transition: var( --transition-hover );
 			transition-property: opacity;
 
 			&:hover {
-				color: var( --color-base--emphasized );
-				background-color: var( --background-color-quiet--hover );
+				background-color: var( --background-color-button-quiet--hover );
 
 				.citizen-ui-icon::before {
 					opacity: var( --opacity-icon-base--hover );
@@ -32,11 +142,10 @@
 			}
 
 			&:active {
-				color: var( --color-base--subtle );
-				background-color: var( --background-color-quiet--active );
+				background-color: var( --background-color-button-quiet--active );
 
 				.citizen-ui-icon::before {
-					opacity: var( --opacity-icon-base--active );
+					opacity: var( --opacity-icon-base--selected );
 				}
 			}
 
@@ -88,7 +197,7 @@
 		&:focus {
 			& + .citizen-header__button,
 			& + .citizen-menu-checkbox-button {
-				outline: 2px solid var( --color-primary );
+				outline: 2px solid var( --color-progressive );
 				outline-offset: 1px;
 			}
 		}
@@ -117,5 +226,27 @@
 
 	a::after {
 		filter: var( --filter-invert );
+	}
+}
+
+// HACK: Restore view button on revision page (#845)
+// There are no good way to target revision page
+.action-view {
+	&:has( .diff ),
+	&:has( .mw-revision ) {
+		#ca-view {
+			position: relative !important;
+			width: auto;
+			height: auto;
+			margin: 0;
+			clip: unset;
+		}
+	}
+}
+
+@media ( max-width: @max-width-breakpoint-tablet ) {
+	/* HACK: Disable page from scolling when a dropdown menu is opened */
+	body:has( .citizen-menu__dropdown[ open ] ) {
+		overflow: hidden;
 	}
 }

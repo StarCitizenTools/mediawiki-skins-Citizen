@@ -1,7 +1,11 @@
 .citizen-drawer {
 	&__card {
-		padding: var( --space-xs ) 0;
-		.citizen-header-card( left );
+		.citizen-header-card( start );
+		transform-origin: var( --transform-origin-offset-start ) var( --transform-origin-offset-end );
+
+		@media ( min-width: @min-width-breakpoint-desktop ) {
+			transform-origin: var( --transform-origin-offset-start ) var( --transform-origin-offset-start );
+		}
 	}
 
 	&__header {
@@ -9,7 +13,7 @@
 		gap: var( --space-md );
 		align-items: center;
 		justify-content: center;
-		padding: var( --space-sm )  var( --space-md ) var( --space-md );
+		padding: var( --space-md );
 		border-bottom: 1px solid var( --border-color-base );
 	}
 
@@ -22,34 +26,23 @@
 	&__siteinfo {
 		display: flex;
 		flex-direction: column;
-		gap: var( --space-xxs );
-
-		.mw-logo-wordmark {
-			font-size: 1.5rem;
-			color: var( --color-base--emphasized );
-		}
+		gap: var( --space-xs );
 	}
 
 	&__menu {
 		--size-icon: 1rem;
 		display: grid;
-		grid-template-columns: repeat( auto-fit, 15rem );
+		grid-template-columns: repeat( auto-fit, minmax( 15rem, auto ) );
 		gap: var( --space-sm );
 		justify-content: center;
 		max-width: 92vw;
 		padding: var( --space-xs );
-		font-size: 0.875rem; // TODO: Make this a variable
+		margin-bottom: var( --space-xs );
+		font-size: var( --font-size-small ); // TODO: Make this a variable
 
 		.mw-list-item a {
 			border-radius: var( --border-radius--small );
 		}
-	}
-}
-
-// Checkbox hack
-#citizen-drawer__checkbox:checked {
-	~ .citizen-drawer__card {
-		.citizen-card-show;
 	}
 }
 
@@ -58,14 +51,6 @@
 		&__logo img {
 			// Bigger logo
 			height: 5rem;
-		}
-
-		&__siteinfo {
-			.mw-logo-wordmark {
-				font-size: 2rem;
-				// Sometimes long wiki name will wrap when the menu is too small
-				white-space: nowrap;
-			}
 		}
 	}
 }

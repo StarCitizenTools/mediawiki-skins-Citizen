@@ -3,11 +3,13 @@
 @import '../variables.less';
 @import '../mixins.less';
 
-// Common styles
+// Common
+@import 'tokens.less';
 @import 'fonts.less';
 @import 'common/cssvariables.less';
 @import 'common/typography.less';
 @import 'skinning/elements.less';
+
 // FIXME: It is not great to load both Parsoid and Parsoid legacy media styles
 // Maybe there is a way to detect it without introducing a new RL module?
 @import 'skinning/content.media-common.less';
@@ -17,10 +19,9 @@
 
 @media screen {
 	@import 'layout.less';
-	@import 'common/theme.less';
+	@import 'common/features.less';
 	@import 'common/common.less';
 	@import 'common/content.less';
-	@import 'common/scrollbar.less';
 	@import 'common/hacks.less';
 	@import 'common/progressbar.less';
 
@@ -28,19 +29,22 @@
 	@import 'components/Header.less';
 	@import 'components/Drawer.less';
 	@import 'components/Drawer__button.less';
-	@import 'components/Usermenu.less';
+	@import 'components/UserMenu.less';
 	@import 'components/Search.less';
 	@import 'components/Search__button.less';
 	@import 'components/Pagetools.less';
 	@import 'components/Menu.less';
-	@import 'components/ContentHeader.less';
-	@import 'components/ContentFooter.less';
+	@import 'components/PageHeader.less';
+	@import 'components/PageSidebar.less';
+	@import 'components/PageFooter.less';
 	@import 'components/Footer.less';
 	@import 'components/TableOfContents.less';
 	@import 'components/StickyHeader.less';
 	@import 'components/Sitestats.less';
 	@import 'components/Sections.less';
-	@import 'components/Tables.less';
+	@import 'components/OverflowElements.less';
+	@import 'components/UserInfo.less';
+	@import 'components/Wordmark.less';
 
 	// Mediawiki.skinning
 	// This get loaded regardless so we don't have to use skinStyles to target them

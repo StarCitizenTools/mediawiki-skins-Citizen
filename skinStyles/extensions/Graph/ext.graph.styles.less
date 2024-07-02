@@ -24,7 +24,7 @@
 	.mw-graph-interactable {
 		&:hover {
 			.mw-graph-layover {
-				background-color: var( --background-color-overlay--lighter );
+				background-color: var( --background-color-backdrop-light );
 			}
 
 			.mw-graph-switch {
@@ -46,34 +46,34 @@
 	/* common button style */
 	.mw-graph-switch {
 		color: var( --color-base );
-		background-color: var( --background-color-overlay--lighter );
+		background-color: var( --background-color-backdrop-light );
 		border-color: var( --border-color-base );
 
 		&:hover {
-			color: var( --color-primary );
+			color: var( --color-progressive );
 			background-color: var( --color-surface-0 );
-			border-color: var( --color-primary );
+			border-color: var( --color-progressive );
 		}
 
 		&:active {
-			color: var( --color-primary );
+			color: var( --color-progressive );
 			background-color: var( --color-surface-0 );
-			border-color: var( --color-primary--active );
+			border-color: var( --color-progressive--active );
 		}
 
 		&:focus {
-			border-color: var( --color-primary );
+			border-color: var( --color-progressive );
 			box-shadow: inset 0 0 0 1px var( --color-surface-0 );
 		}
 
 		/* Loading button style */
 		&.mw-graph-loading {
-			color: var( --color-base--subtle );
+			color: var( --color-subtle );
 			background-color: var( --color-surface-0 );
-			border-color: var( --color-primary--active );
+			border-color: var( --color-progressive--active );
 
 			&:hover {
-				border-color: var( --color-primary );
+				border-color: var( --color-progressive );
 			}
 		}
 	}

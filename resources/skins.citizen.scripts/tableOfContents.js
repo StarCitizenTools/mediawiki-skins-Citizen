@@ -3,27 +3,38 @@ const ACTIVE_SECTION_CLASS = 'citizen-toc__listItem--active';
 let /** @type {HTMLElement | undefined} */ activeSection;
 
 /**
- * @param {string} id
+ * Escapes double quotes in the given HTML attribute ID.
+ *
+ * @param {string} id - The HTML attribute ID to escape double quotes from.
+ * @return {string} The escaped HTML attribute ID with double quotes replaced.
  */
-function changeActiveSection( id ) {
-	const toc = document.getElementById( 'mw-panel-toc' );
+function escapeHtmlAttributeQuotes( id ) {
+	// Escapes double quotes in the given id
+	return id.replace( /"/g, '\\"' );
+}
 
-	const getLink = ( hash ) => {
-		const
-			prefix = 'a[href="#',
-			suffix = '"]';
+/**
+ * Finds a link element in the table of contents (TOC) based on the provided ID.
+ *
+ * @param {Element} toc - The table of contents element to search within.
+ * @param {string} id - The ID of the section to find the link for.
+ * @return {Element|null} The link element corresponding to the provided ID, or null if not found.
+ */
+function findLinkById( toc, id ) {
+	const sanitizedId = escapeHtmlAttributeQuotes( id );
+	const linkElement = toc.querySelector( `a[href="#${ sanitizedId }"]` );
+	return linkElement;
+}
 
-		let el = toc.querySelector( prefix + hash + suffix );
-
-		if ( el === null ) {
-			// Sometimes the href attribute is encoded
-			el = toc.querySelector( prefix + encodeURIComponent( hash ) + suffix );
-		}
-
-		return el;
-	};
-
-	const link = getLink( id );
+/**
+ * Changes the active section in the table of contents based on the provided ID.
+ *
+ * @param {HTMLElement} toc - The Table of Content HTML element
+ * @param {string} id - The ID of the section to make active.
+ * @return {void}
+ */
+function changeActiveSection( toc, id ) {
+	const link = findLinkById( toc, id );
 
 	if ( activeSection ) {
 		activeSection.classList.remove( ACTIVE_SECTION_CLASS );
@@ -44,44 +55,37 @@ function changeActiveSection( id ) {
  * @return {void}
  */
 function init( bodyContent ) {
-	if ( !document.getElementById( 'mw-panel-toc' ) ) {
+	const toc = document.getElementById( 'mw-panel-toc' );
+	if ( !toc ) {
 		return;
 	}
 
-	const getElements = () => {
-		/* T13555 */
-		return bodyContent.querySelectorAll( '.mw-headline' ).length > 0 ? bodyContent.querySelectorAll( '.mw-headline' ) :
-			bodyContent.querySelectorAll( '.mw-heading' );
-	};
+	const extractIds = () => Array.from( toc.querySelectorAll( '.citizen-toc__listItem' ) )
+		.map( ( tocListEl ) => tocListEl.id.slice( 4 ) );
 
-	// We use scroll-padding-top to handle scrolling with fixed header
-	// It is better to respect that so it is consistent
-	const getTopMargin = () => {
-		return Number(
-			window.getComputedStyle( document.documentElement )
-				.getPropertyValue( 'scroll-padding-top' )
-				.slice( 0, -2 )
-		) + 20;
-	};
+	const queryElements = ( ids ) => ids.map( ( id ) => bodyContent.querySelector( '#' + CSS.escape( id ) ) )
+		.filter( ( element ) => element !== null && element !== undefined );
 
-	const headlines = getElements();
+	const headlines = queryElements( extractIds() );
 
-	// Do not continue if there are no headlines
-	// TODO: Need to revamp the selector so that it works better with MW 1.40,
-	// currently MW 1.40 has ToC on non-content pages as well
-	if ( !headlines ) {
-		return;
-	}
+	const computedStyle = window.getComputedStyle( document.documentElement );
+	const scrollPaddingTop = computedStyle.getPropertyValue( 'scroll-padding-top' );
+	const topMargin = Number( scrollPaddingTop.slice( 0, -2 ) ) + 20;
+
+	const getTopMargin = () => topMargin;
 
 	const initSectionObserver = require( './sectionObserver.js' ).init;
 
 	const sectionObserver = initSectionObserver( {
 		elements: headlines,
 		topMargin: getTopMargin(),
-		onIntersection: ( section ) => { changeActiveSection( section.id ); }
+		onIntersection: ( section ) => {
+			if ( section.id && section.id.trim() !== '' ) {
+				changeActiveSection( toc, section.id );
+			}
+		}
 	} );
 
-	// TODO: Pause section observer on ToC link click
 	sectionObserver.resume();
 }
 

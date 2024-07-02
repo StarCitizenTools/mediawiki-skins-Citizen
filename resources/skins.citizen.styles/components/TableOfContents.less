@@ -1,43 +1,16 @@
 .citizen-toc {
-	font-size: 0.875rem;
+	font-size: var( --font-size-small );
 	line-height: var( --line-height-xs );
 
-	&__card {
-		display: flex;
-		flex-direction: column;
-		gap: var( --space-xs );
-	}
-
 	&__top {
-		&::before {
-			width: 0.875rem;
-			height: 0.875rem;
-			content: '';
-			filter: var( --filter-invert );
-			opacity: var( --opacity-icon-base );
+		.citizen-ui-icon {
+			transform: rotate( 90deg );
 		}
-
-		&:hover::before {
-			opacity: var( --opacity-icon-base--hover );
-		}
-
-		&:active::before {
-			opacity: var( --opacity-icon-base--hover );
-		}
-	}
-
-	&__header {
-		color: var( --color-base--subtle );
-		letter-spacing: 0.05em;
-	}
-
-	&__contents {
-		margin-left: 1px;
 	}
 
 	&__contents,
 	&__list {
-		margin: 0;
+		margin: 0 0 0 var( --space-xs );
 		list-style: none;
 		border-left: 1px solid var( --border-color-base );
 
@@ -47,15 +20,11 @@
 		}
 	}
 
-	&__list {
-		margin-left: var( --space-xs );
-	}
-
 	&__link {
+		position: relative;
 		display: flex;
 		gap: var( --space-xs );
-		padding-top: var( --space-xs );
-		padding-bottom: var( --space-xs );
+		padding: var( --space-xs );
 		font-weight: var( --font-weight-medium );
 		color: var( --color-base );
 		border-radius: var( --border-radius--small );
@@ -64,17 +33,16 @@
 			height: 0;
 			padding-top: 0;
 			padding-bottom: 0;
-			visibility: hidden;
 			opacity: 0;
 			transition-property: opacity, height, padding;
 		}
 
 		&:hover {
-			background-color: var( --background-color-quiet--hover );
+			background-color: var( --background-color-button-quiet--hover );
 		}
 
 		&:active {
-			background-color: var( --background-color-quiet--active );
+			background-color: var( --background-color-button-quiet--active );
 		}
 
 		&:hover,
@@ -84,8 +52,14 @@
 	}
 
 	&__indicator {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
 		flex-shrink: 0;
 		width: 3px;
+		margin-top: var( --space-xs );
+		margin-bottom: var( --space-xs );
 		margin-left: -2px;
 		border-radius: var( --border-radius--pill );
 	}
@@ -97,16 +71,16 @@
 
 	&__numb {
 		display: none;
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 	}
 
 	&__listItem {
 		&--active {
 			> .citizen-toc__link {
-				color: var( --color-primary );
+				color: var( --color-progressive );
 
 				.citizen-toc__indicator {
-					background-color: var( --color-primary );
+					background-color: var( --color-progressive );
 				}
 			}
 		}
@@ -114,12 +88,11 @@
 }
 
 // Sticky header styles
-.citizen-body-header--sticky {
+.citizen-page-header--sticky {
 	.citizen-toc__top.citizen-toc__link {
 		height: 2rem; // 1rem text + 1rem padding
 		padding-top: var( --space-xs );
 		padding-bottom: var( --space-xs );
-		visibility: visible;
 		opacity: 1;
 	}
 }
@@ -127,14 +100,13 @@
 @media ( max-width: ( @max-width-breakpoint-tablet ) ) {
 	.citizen-toc {
 		position: fixed;
-		right: 0;
 		bottom: ~'calc( var( --header-size ) + var(  --space-xs ) )';
-		z-index: @z-index-page-header;
+		left: 0;
+		z-index: @z-index-page-header + 1; // Need to be higher than the page actions
 		// Allow click through
 		pointer-events: none;
 		transition: var( --transition-menu );
 		transition-property: transform;
-		will-change: transform;
 
 		&__card {
 			// This is not bulletproof since it will get covered by page header
@@ -147,7 +119,7 @@
 			-webkit-user-select: none;
 			user-select: none;
 			.citizen-card;
-			.citizen-card-hide( bottom right, '', false );
+			.citizen-card-hide( bottom left, '', false );
 			.citizen-card-transition();
 		}
 
@@ -166,12 +138,12 @@
 
 		&__buttonCheckbox {
 			position: absolute;
-			right: 0;
 			bottom: 0;
+			left: 0;
 			display: grid;
 			place-content: center;
-			width: 2.5rem;
-			height: 2.5rem;
+			width: var( --toolbar-size );
+			height: var( --toolbar-size );
 			margin: var( --space-xs );
 			pointer-events: auto;
 			background-color: var( --color-surface-1 );
@@ -180,12 +152,7 @@
 			transition: var( --transition-menu );
 			transition-property: transform;
 			transform: none;
-			transform-origin: bottom right;
-
-			.citizen-ui-icon {
-				width: 1rem;
-				height: 1rem;
-			}
+			transform-origin: bottom left;
 
 			// The hover state colors are not great but it will do for now
 			&:hover {
@@ -221,27 +188,16 @@
 
 @media ( min-width: @min-width-breakpoint-desktop ) {
 	.citizen-toc {
-		grid-area: toc;
+		--toc-margin-top: var( --space-xs );
+		position: -webkit-sticky;
+		position: sticky;
+		top: var( --toc-margin-top );
+		max-height: ~'calc( 100vh - var( --toc-margin-top ) - var( --space-md ) )';
+		overflow-y: auto;
+		overscroll-behavior: contain;
 
-		&__card {
-			--toc-margin-top: var( --space-xs );
-			position: -webkit-sticky;
-			position: sticky;
-			top: var( --toc-margin-top );
-			max-height: ~'calc( 100vh - var( --toc-margin-top ) - var( --space-md ) )';
-			overflow-y: auto;
-			overscroll-behavior: contain;
-		}
-	}
-
-	// Hide button in desktop viewport
-	#citizen-toc__buttonCheckbox {
-		display: none;
-	}
-
-	// Sticky header styles
-	.citizen-body-header--sticky {
-		.citizen-toc__card {
+		// Sticky header styles
+		.citizen-page-header--sticky & {
 			--toc-margin-top: ~'calc( var( --header-size ) + var(  --space-xxl  ) )';
 
 			// Sticky header is shorter without buttons
@@ -249,5 +205,10 @@
 				--toc-margin-top: ~'calc( var( --header-size ) + var( --space-md ) )';
 			}
 		}
+	}
+
+	// Hide button in desktop viewport
+	#citizen-toc__buttonCheckbox {
+		display: none;
 	}
 }

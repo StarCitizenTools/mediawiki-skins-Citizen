@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Hamilton Abreu"
+			"Hamilton Abreu",
+			"Jdlrobson"
 		]
 	},
 	"citizen-skin-desc": "Um tema agradável para o MediaWiki, com grande usabilidade e dinamismo, que torna as extensões numa parte integrante da experiência coesiva. Criado inicialmente para a [https://starcitizen.tools/ wiki Star Citizen].",
@@ -26,9 +27,10 @@
 	"citizen-jumptotop": "Voltar ao topo",
 	"citizen-search-fulltext": "Procurar páginas que contenham $1",
 	"citizen-search-mediasearch": "Procurar conteúdo multimédia relacionado com $1",
+	"citizen-search-editpage": "Editar ou criar página",
 	"citizen-search-empty-desc": "Escrever para começar a procurar",
 	"citizen-search-noresults-title": "Não há resultados para $1",
-	"citizen-search-noresults-desc": "Talvez queira tentar as opções abaixo?",
+	"citizen-search-noresults-desc": "Talvez queira tentar as opções acima?",
 	"citizen-tagline-ns-talk": "Página de discussão de {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Informações sobre a wiki {{SITENAME}}",
 	"citizen-tagline-ns-file": "Ficheiro na wiki {{SITENAME}}",
@@ -36,12 +38,6 @@
 	"citizen-tagline-ns-template": "Página de predefinição",
 	"citizen-tagline-ns-help": "Página de ajuda",
 	"citizen-tagline-ns-category": "Página de categoria",
-	"prefs-citizen-theme-label": "Variante:",
-	"prefs-citizen-theme-option-auto": "Automática",
-	"prefs-citizen-theme-option-light": "Clara",
-	"prefs-citizen-theme-option-dark": "Escura",
-	"prefs-citizen-fontsize-label": "Tamanho da fonte",
-	"prefs-citizen-pagewidth-label": "Largura da página",
-	"prefs-citizen-lineheight-label": "Altura da linha",
-	"prefs-citizen-resetbutton-label": "Reiniciar para valores por omissão"
+	"citizen-tagline-user-regdate": "Registou-se a $1",
+	"citizen-theme-night-label": "Noite"
 }

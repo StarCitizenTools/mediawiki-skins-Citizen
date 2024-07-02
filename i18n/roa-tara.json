@@ -26,13 +26,5 @@
 	"citizen-tagline-ns-mediawiki": "Pàgene de inderfacce de MediaUicchi",
 	"citizen-tagline-ns-template": "Pàgene d'u template",
 	"citizen-tagline-ns-help": "Pàgene d'ajute",
-	"citizen-tagline-ns-category": "Pàgene d'a categorije",
-	"prefs-citizen-theme-label": "Teme",
-	"prefs-citizen-theme-option-auto": "Auto",
-	"prefs-citizen-theme-option-light": "Chiare",
-	"prefs-citizen-theme-option-dark": "Scure",
-	"prefs-citizen-fontsize-label": "Dimenzione d'u carattere",
-	"prefs-citizen-pagewidth-label": "Larghezze d'a pàgene",
-	"prefs-citizen-lineheight-label": "Iertezze d'a linèe",
-	"prefs-citizen-resetbutton-label": "Azzere a le predefinite"
+	"citizen-tagline-ns-category": "Pàgene d'a categorije"
 }

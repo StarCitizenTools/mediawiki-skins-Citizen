@@ -1,0 +1,58 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:TabberNeue
+ * Module: ext.tabberNeue
+ * Version: 2.1.1
+ *
+ * Date: 2024-05-26
+*/
+
+.tabber {
+	--tabber-color-progressive: var( --color-progressive );
+	--tabber-color-progressive--hover: var( --color-progressive--hover );
+	--tabber-color-progressive--active: var( --color-progressive--active );
+	--tabber-color-base: var( --color-base );
+	--tabber-color-subtle: var( --color-subtle );
+	--tabber-background-color-button-quiet--hover: var( --background-color-button-quiet--hover );
+	--tabber-background-color-button-quiet--active: var( --background-color-button-quiet--active );
+	--tabber-border-color-base: var( --border-color-base );
+
+	&__tab {
+		font-weight: var( --font-weight-medium );
+	}
+
+	&__header {
+		&__prev,
+		&__next {
+			&::after {
+				opacity: var( --opacity-icon-base );
+			}
+		}
+	}
+}
+
+@media ( hover: hover ) {
+	.tabber {
+		&__header {
+			&__prev,
+			&__next {
+				&:hover {
+					&::after {
+						opacity: var( --opacity-icon-base--hover );
+					}
+				}
+
+				&:active {
+					&::after {
+						opacity: var( --opacity-icon-base--selected );
+					}
+				}
+
+				&::after {
+					filter: var( --filter-invert );
+				}
+			}
+		}
+	}
+}

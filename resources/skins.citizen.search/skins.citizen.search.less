@@ -2,20 +2,20 @@
 @import '../mixins.less';
 
 .citizen-typeahead {
+	--size-icon: 1.25rem; // reset
 	position: absolute;
 	top: 100%;
+	left: -1px; // IDK why is it off by 1px
 	box-sizing: content-box; // Magic to align with search input
 	width: 100%;
 	max-height: ~'calc( var( --header-card-maxheight ) - var( --height-search-bar ) )';
-	margin: 0 0 0 -1px; // Reset <ol> styles, fix alignment
+	margin: 0; // Reset <ol> styles
 	overflow: auto;
 	overscroll-behavior: contain;
+	border-top-color: transparent;
 	border-bottom-right-radius: var( --border-radius--medium );
 	border-bottom-left-radius: var( --border-radius--medium );
 	.citizen-card( false );
-	.citizen-card-hide( 50% 0, Y, false );
-	// Well this won't be loaded before .citizen-animation-ready anyways
-	.citizen-card-transition();
 
 	a {
 		&:hover,
@@ -27,7 +27,7 @@
 	&-input {
 		// Display overlay instead of the input, but keep the caret
 		color: transparent;
-		caret-color: var( --color-base--emphasized );
+		caret-color: var( --color-emphasized );
 
 		&-group {
 			position: relative;
@@ -41,7 +41,7 @@
 			display: flex;
 			align-items: center;
 			overflow: hidden;
-			font-size: 0.875rem;
+			font-size: var( --font-size-small );
 			white-space: nowrap;
 			pointer-events: none;
 
@@ -51,7 +51,7 @@
 			}
 
 			&-query {
-				color: var( --color-base--emphasized );
+				color: var( --color-emphasized );
 			}
 		}
 	}
@@ -64,7 +64,7 @@
 			}
 
 			// FIXME: Use a generic attribute
-			&[ data-group='action' ] .citizen-typeahead-item-group-list {
+			&[ data-mw-citizen-typeahead-group='action' ] .citizen-typeahead-item-group-list {
 				display: flex;
 				gap: var( --space-xxs );
 				padding-right: var( --space-sm );
@@ -78,7 +78,7 @@
 
 	&__item {
 		&--active {
-			background-color: var( --background-color-quiet--hover );
+			background-color: var( --background-color-button-quiet--hover );
 		}
 
 		&--hidden {
@@ -105,7 +105,7 @@
 		}
 
 		&-sm {
-			font-size: 0.875rem;
+			font-size: var( --font-size-small );
 
 			.citizen-typeahead {
 				&__content {
@@ -217,29 +217,28 @@
 
 	&__title {
 		flex-shrink: 0;
-		color: var( --color-base--emphasized );
+		color: var( --color-emphasized );
 	}
 
 	&__highlight {
 		font-weight: var( --font-weight-medium );
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 	}
 
 	&__query {
 		font-weight: var( --font-weight-semibold );
-		color: var( --color-base--emphasized );
+		color: var( --color-emphasized );
 	}
 
 	&__label {
+		--size-icon: 0.8125rem;
 		display: flex;
 		gap: var( --space-xxs );
 		margin-left: var( --space-xs );
-		font-size: 0.8125rem;
+		font-size: var( --font-size-x-small );
 		color: var( --color-base );
 
 		.citizen-ui-icon {
-			width: 0.8125rem;
-			height: 0.8125rem;
 			margin-right: var( --space-xxs );
 		}
 	}
@@ -250,8 +249,8 @@
 	}
 
 	&__description {
-		font-size: 0.8125rem;
-		color: var( --color-base--subtle );
+		font-size: var( --font-size-x-small );
+		color: var( --color-subtle );
 	}
 
 	&__title,
@@ -271,22 +270,15 @@
 		background-color: var( --color-surface-1 );
 		border-radius: var( --border-radius--small );
 	}
-
-	.citizen-search__card--expanded & {
-		.citizen-card-show( false );
-	}
 }
 
-// Merge searchform with typeahead
-.citizen-search__card {
-	&&--expanded {
-		border-bottom-color: transparent;
-		border-bottom-right-radius: 0;
-		border-bottom-left-radius: 0;
+.citizen-search__card:has( .citizen-typeahead ) {
+	border-bottom-color: transparent;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
 
-		.citizen-typeahead {
-			border-top-color: transparent; // Reset citizen-card style
-		}
+	.citizen-typeahead {
+		border-top-color: transparent;
 	}
 }
 

@@ -7,7 +7,7 @@
 
 .mw-body,
 .parsoid-body {
-	min-height: 80vh; // avoid footer being in the middle of the page
+	min-height: 100vh; // avoid footer being in the middle of the page
 }
 
 .citizen-body-container {
@@ -24,7 +24,7 @@
 	margin: var( --space-xl ) 0; // don't collide with other components (e.g. notice)
 }
 
-.mw-body-header {
+.citizen-page-header {
 	position: -webkit-sticky;
 	position: sticky;
 	// So that the modal are above custom sticky headers
@@ -37,7 +37,7 @@
 	padding-top: var( --space-md );
 }
 
-.page-heading {
+.citizen-page-heading {
 	flex-grow: 1;
 }
 
@@ -62,9 +62,16 @@
 			display: grid;
 			grid-template-areas:
  'header header'
-				'content toc'
+				'content sidebar'
 				'footer footer';
 			grid-template-columns: minmax( 0, var( --width-layout ) ) var( --width-toc );
+		}
+	}
+
+	.citizen-animations-ready {
+		.citizen-body-container {
+			transition: var( --transition-menu );
+			transition-property: grid;
 		}
 	}
 }

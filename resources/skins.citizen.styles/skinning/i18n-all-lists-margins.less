@@ -4,36 +4,36 @@
  * Module: mediawiki.skinning.i18n-all-lists-margins
  * Version: REL1_39
  *
- * Date: 2022-11-14
+ * Date: 2024-06-18
 */
 
 /* Correct directionality when page dir is different from site/user dir */
+/* @noflip */
 .mw-content-ltr ul,
 .mw-content-rtl .mw-content-ltr ul {
-	padding: 0;
-	/* @noflip */
-	margin: var( --space-md ) 0 var( --space-md ) var( --space-lg );
+	margin-right: 0;
+	margin-left: var( --space-xxl );
 }
 
+/* @noflip */
 .mw-content-rtl ul,
 .mw-content-ltr .mw-content-rtl ul {
-	padding: 0;
-	/* @noflip */
-	margin: var( --space-md ) var( --space-lg ) var( --space-md ) 0;
+	margin-right: var( --space-xxl );
+	margin-left: 0;
 }
 
+/* @noflip */
 .mw-content-ltr ol,
 .mw-content-rtl .mw-content-ltr ol {
-	padding: 0;
-	/* @noflip */
-	margin: var( --space-md ) 0 var( --space-md ) var( --space-lg );
+	margin-right: 0;
+	margin-left: var( --space-xxl );
 }
 
+/* @noflip */
 .mw-content-rtl ol,
 .mw-content-ltr .mw-content-rtl ol {
-	padding: 0;
-	/* @noflip */
-	margin: var( --space-md ) var( --space-lg ) var( --space-md ) 0;
+	margin-right: var( --space-xxl );
+	margin-left: 0;
 }
 
 /* @noflip */

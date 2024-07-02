@@ -27,13 +27,5 @@
 	"citizen-tagline-ns-mediawiki": "پەڕەی ڕووکاری میدیاویکی",
 	"citizen-tagline-ns-template": "لاپەڕەی ڕووکار",
 	"citizen-tagline-ns-help": "لاپەڕەی یارمەتی",
-	"citizen-tagline-ns-category": "لاپەڕەی هاوپۆل",
-	"prefs-citizen-theme-label": "ڕووکار",
-	"prefs-citizen-theme-option-auto": "خۆگەڕ",
-	"prefs-citizen-theme-option-light": "ڕووناک",
-	"prefs-citizen-theme-option-dark": "تاریک",
-	"prefs-citizen-fontsize-label": "قەبارەی جۆرەپیت",
-	"prefs-citizen-pagewidth-label": "پانی پەڕە",
-	"prefs-citizen-lineheight-label": "بەرزی هێڵ",
-	"prefs-citizen-resetbutton-label": "ڕێکخستنەوە بۆ بنەڕەت"
+	"citizen-tagline-ns-category": "لاپەڕەی هاوپۆل"
 }

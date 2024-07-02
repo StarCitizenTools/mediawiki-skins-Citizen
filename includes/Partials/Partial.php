@@ -32,31 +32,22 @@ use OutputPage;
 
 /**
  * The base class for all skin partials
+ * TODO: Use SkinComponentRegistryContext
  */
 abstract class Partial {
 
 	use GetConfigTrait;
 
-	/**
-	 * @var SkinCitizen
-	 */
+	/** @var SkinCitizen */
 	protected $skin;
 
-	/**
-	 * Needed for trait
-	 *
-	 * @var OutputPage
-	 */
+	/** @var OutputPage */
 	protected $out;
 
-	/**
-	 * @var Title
-	 */
+	/** @var Title */
 	protected $title;
 
-	/**
-	 * @var User
-	 */
+	/** @var User */
 	protected $user;
 
 	/**

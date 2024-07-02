@@ -27,19 +27,19 @@
 
 	&-linenumber {
 		padding: 0 16px; // Give more space since there is no border and background
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 	}
 
 	&-guttermarker {
 		color: var( --color-base );
 
 		&-subtle {
-			color: var( --color-base--subtle );
+			color: var( --color-subtle );
 		}
 	}
 
 	&-cursor {
-		border-left-color: var( --color-base--emphasized );
+		border-left-color: var( --color-emphasized );
 	}
 
 	div.CodeMirror-secondarycursor {
@@ -55,18 +55,18 @@
 	}
 
 	&-selected {
-		background: var( --background-color-primary--hover );
+		background: var( --background-color-progressive-subtle );
 	}
 
 	&-focused .CodeMirror-selected {
-		background: var( --background-color-primary--active );
+		background: var( --background-color-progressive-subtle );
 	}
 
 	&-line {
 		&::selection,
 		> span::selection,
 		> span > span::selection {
-			background: var( --background-color-primary--active );
+			background: var( --background-color-progressive-subtle );
 		}
 	}
 }

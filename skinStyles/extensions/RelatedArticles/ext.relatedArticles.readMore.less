@@ -19,9 +19,9 @@
 	h2 {
 		padding-bottom: 0;
 		margin-top: 0;
-		font-size: 0.8125rem;
+		font-size: var( --font-size-x-small );
 		font-weight: var( --font-weight-normal );
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 		text-transform: none;
 		letter-spacing: 0.05em;
 	}
@@ -35,7 +35,7 @@
 		line-height: var( --line-height-xs );
 
 		a {
-			color: var( --color-base--emphasized );
+			color: var( --color-emphasized );
 		}
 
 		&::after {
@@ -52,19 +52,19 @@
 
 	.ext-related-articles-card > a {
 		&:hover {
-			background-color: var( --background-color-quiet--hover );
+			background-color: var( --background-color-button-quiet--hover );
 			box-shadow: var( --box-shadow-card ); // reset
 		}
 
 		&:active {
-			background-color: var( --background-color-quiet--active );
+			background-color: var( --background-color-button-quiet--active );
 		}
 	}
 
 	.ext-related-articles-card-extract {
 		margin-top: var( --space-xxs );
-		font-size: 0.8125rem;
-		color: var( --color-base--subtle );
+		font-size: var( --font-size-x-small );
+		color: var( --color-subtle );
 	}
 
 	.ext-related-articles-card-thumb {

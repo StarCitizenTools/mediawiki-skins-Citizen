@@ -11,7 +11,7 @@
 /* smw/ext.smw.css */
 .smw-placeholder {
 	font-family: inherit;
-	font-size: 0.875rem;
+	font-size: var( --font-size-small );
 	line-height: inherit;
 	background-color: var( --color-surface-2 );
 	border-radius: var( --border-radius--small );
@@ -24,7 +24,7 @@
 .smw-personal-jobqueue-watchlist:hover,
 .smw-personal-jobqueue-watchlist:focus,
 .smw-personal-jobqueue-watchlist:active {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 }
 
 .item-count {
@@ -46,7 +46,7 @@
 }
 
 .smw-debug-box {
-	background: var( --background-color-warning );
+	background: var( --background-color-warning-subtle );
 	border-color: var( --color-warning );
 }
 
@@ -69,7 +69,7 @@ div.smwtimeline {
 }
 
 .smwtable-striped tbody > tr:hover {
-	background-color: var( --background-color-quiet--hover );
+	background-color: var( --background-color-button-quiet--hover );
 }
 
 .smwtable-clean tr {
@@ -145,12 +145,12 @@ hr.smw-form-horizontalrule {
 }
 
 .smw-column-header {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 }
 
 .smw-note {
 	font-family: inherit;
-	font-size: 0.875rem;
+	font-size: var( --font-size-small );
 	line-height: inherit;
 	background-color: var( --color-surface-2 );
 	border-radius: var( --border-radius--small );
@@ -158,11 +158,11 @@ hr.smw-form-horizontalrule {
 
 .smw-callout-info {
 	background: var( -background-color-primary--hover );
-	border-left-color: var( --color-primary );
+	border-left-color: var( --color-progressive );
 }
 
 .smw-callout-info .title {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 }
 
 .smw-callout-info-light {
@@ -171,11 +171,11 @@ hr.smw-form-horizontalrule {
 }
 
 .smw-callout-info-light .title {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 }
 
 .smw-callout-warning {
-	background: var( --background-color-warning );
+	background: var( --background-color-warning-subtle );
 	border-left-color: var( --color-warning );
 }
 
@@ -184,7 +184,7 @@ hr.smw-form-horizontalrule {
 }
 
 .smw-callout-success {
-	background: var( --background-color-success );
+	background: var( --background-color-success-subtle );
 	border-left-color: var( --color-success );
 }
 
@@ -193,7 +193,7 @@ hr.smw-form-horizontalrule {
 }
 
 .smw-callout-error {
-	background: var( --background-color-destructive );
+	background: var( --background-color-destructive-subtle );
 	border-left-color: var( --color-destructive );
 }
 
@@ -210,11 +210,11 @@ hr.smw-form-horizontalrule {
 }
 
 .autocomplete-selected {
-	background: var( --background-color-primary--active );
+	background: var( --background-color-progressive-subtle );
 }
 
 .autocomplete-suggestions strong {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 }
 
 .autocomplete-group strong {
@@ -222,7 +222,7 @@ hr.smw-form-horizontalrule {
 }
 
 .smw-breadcrumb-arrow-right {
-	border-left-color: var( --color-base--subtle );
+	border-left-color: var( --color-subtle );
 }
 
 .smw-ask-action-btn,
@@ -257,22 +257,22 @@ a.smw-ask-action-btn-lgrey:active,
 
 .smw-ask-action-btn-lblue,
 a.smw-ask-action-btn-lblue:visited {
-	color: #fff;
-	background-color: var( --color-primary );
-	border-color: var( --color-primary );
+	color: var( --color-inverted-primary );
+	background-color: var( --color-progressive );
+	border-color: var( --color-progressive );
 }
 
 a.smw-ask-action-btn-lblue:hover {
-	color: #fff;
-	background-color: var( --color-primary--hover );
-	border-color: var( --color-primary--hover );
+	color: var( --color-inverted-primary );
+	background-color: var( --color-progressive--hover );
+	border-color: var( --color-progressive--hover );
 }
 
 // Added active state
 a.smw-ask-action-btn-lblue:active {
-	color: #fff;
-	background-color: var( --color-primary--active );
-	border-color: var( --color-primary--active );
+	color: var( --color-inverted-primary );
+	background-color: var( --color-progressive--active );
+	border-color: var( --color-progressive--active );
 }
 
 .smw-page-indicator {
@@ -291,15 +291,15 @@ a.smw-ask-action-btn-lblue:active {
 }
 
 .smw-page-indicator.usage-count.moderate {
-	color: var( --color-primary );
-	background-color: var( --background-color-primary--hover );
-	border-color: var( --background-color-primary--hover );
+	color: var( --color-progressive );
+	background-color: var( --background-color-progressive-subtle );
+	border-color: var( --background-color-progressive-subtle );
 }
 
 .smw-page-indicator.usage-count.high {
 	color: var( --color-destructive );
-	background-color: var( --background-color-destructive );
-	border-color: var( --background-color-destructive );
+	background-color: var( --background-color-destructive-subtle );
+	border-color: var( --background-color-destructive-subtle );
 }
 
 .mw-json .value,
@@ -309,7 +309,7 @@ a.smw-ask-action-btn-lblue:active {
 
 .ns-112.action-submit .error {
 	color: var( --color-destructive );
-	background: var( --background-color-destructive );
+	background: var( --background-color-destructive-subtle );
 	border-left-color: var( --color-destructive );
 }
 
@@ -325,7 +325,7 @@ a.smw-ask-action-btn-lblue:active {
 .smw-dropdown > a,
 .smw-dropdown > button {
 	font-family: inherit;
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	background-color: transparent;
 	border-color: var( --border-color-base );
 }
@@ -336,7 +336,7 @@ a.smw-ask-action-btn-lblue:active {
 
 .smw-dropdown > a::before,
 .smw-dropdown > button::before {
-	border-top-color: var( --color-base--emphasized );
+	border-top-color: var( --color-emphasized );
 }
 
 .smw-dropdown .smw-dropdown-menu {
@@ -347,11 +347,11 @@ a.smw-ask-action-btn-lblue:active {
 }
 
 .smw-dropdown .smw-dropdown-menu li:hover {
-	background-color: var( --background-color-quiet--hover );
+	background-color: var( --background-color-button-quiet--hover );
 }
 
 .smw-dropdown .smw-dropdown-menu li a {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 }
 
 .smw-dropdown .smw-dropdown-menu .divider {
@@ -375,25 +375,25 @@ a.smw-ask-action-btn-lblue:active {
 // Similar to TabberNeue
 .smw-tabs label.nav-label {
 	font-weight: var( --font-weight-medium );
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .smw-tabs label.nav-label:hover {
-	color: var( --color-primary--hover );
-	border-bottom: 2px solid var( --color-primary--hover );
+	color: var( --color-progressive--hover );
+	border-bottom: 2px solid var( --color-progressive--hover );
 }
 
 // Added active state
 .smw-tabs label.nav-label:active {
-	color: var( --color-primary--active );
-	border-bottom: 2px solid var( --color-primary--active );
+	color: var( --color-progressive--active );
+	border-bottom: 2px solid var( --color-progressive--active );
 }
 
 .smw-tabs input.nav-tab:checked + label.nav-label {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 	border-color: transparent;
 	border-top: 1px solid transparent;
-	border-bottom: 2px solid var( --color-primary );
+	border-bottom: 2px solid var( --color-progressive );
 }
 
 .smw-tabs input.nav-tab:checked + label.nav-label.cached {
@@ -412,31 +412,31 @@ a.smw-ask-action-btn-lblue:active {
 // Added active state
 .smw-tabs label.nav-label:active .smw-tab-icon,
 .smw-tabs input.nav-tab:checked + label.nav-label .smw-tab-icon {
-	opacity: var( --opacity-icon-base--active );
+	opacity: var( --opacity-icon-base--selected );
 }
 
 @media screen and ( max-width: 800px ) {
 	.smw-tabs input.nav-tab:checked + label.nav-label {
-		background-color: var( --background-color-primary--active );
+		background-color: var( --background-color-progressive-subtle );
 	}
 }
 
 .smw-tabset > label {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .smw-tabset > label::after {
-	background: var( --color-base--subtle );
+	background: var( --color-subtle );
 }
 
 .smw-tabset > input:focus + label,
 .smw-tabset > input:checked + label {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 }
 
 .smw-tabset > input:focus + label::after,
 .smw-tabset > input:checked + label::after {
-	background: var( --color-primary );
+	background: var( --color-progressive );
 }
 
 .smw-tabset > input:focus + label.smw-indicator-severity-error::after,
@@ -461,7 +461,7 @@ a.smw-ask-action-btn-lblue:active {
 	margin-bottom: -2px;
 	border-color: transparent;
 	border-top: 1px solid transparent;
-	border-bottom: 2px solid var( --color-primary );
+	border-bottom: 2px solid var( --color-progressive );
 }
 
 .smw-tabset > input:checked + label.smw-indicator-severity-error {
@@ -529,13 +529,13 @@ a.smw-ask-action-btn-lblue:active {
 	background: transparent;
 	border-color: transparent;
 	border-top: 1px solid transparent;
-	border-bottom: 2px solid var( --color-primary );
+	border-bottom: 2px solid var( --color-progressive );
 }
 
 .smw-factbox input.nav-tab:checked + label#tab-label-facts-attachment.nav-label {
 	border-color: transparent;
 	border-top: 1px solid transparent;
-	border-bottom: 2px solid var( --color-primary );
+	border-bottom: 2px solid var( --color-progressive );
 }
 
 .smw-factbox .smwfact {
@@ -543,22 +543,26 @@ a.smw-ask-action-btn-lblue:active {
 }
 
 /* smw/smw.indicators.css */
-/* Turn SMW logo into a loading spinner */
 .smw-indicator-vertical-bar-loader {
-	width: 28px;
-	height: 28px;
+	/* This can cause significant layout shift on pages, hide it completely. */
+	display: none;
+
+	/* Turn SMW logo into a loading spinner */
+	/*
+	width: 20px;
+	height: 20px;
 	margin: 0;
-	/* Perhaps base64 is not the best for performance */
 	background: url( data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDM3NSAzMzUiIHZpZXdCb3g9IjAgMCAzNzUgMzM1Ij48cGF0aCBkPSJNMjY2LjggMzA1SDEwOC4yTDI4LjggMTY3LjUgMTA4LjIgMzBoMTU4LjdsNzkuMyAxMzcuNUwyNjYuOCAzMDV6bS0xNTAtMTVoMTQxLjNsNzAuNy0xMjIuNUwyNTguMiA0NUgxMTYuOEw0Ni4yIDE2Ny41IDExNi44IDI5MHoiLz48Y2lyY2xlIGN4PSIxMTIuNSIgY3k9IjM3LjUiIHI9IjM3LjUiLz48Y2lyY2xlIGN4PSIyNjIuNSIgY3k9IjM3LjUiIHI9IjM3LjUiLz48Y2lyY2xlIGN4PSIzNy41IiBjeT0iMTY3LjUiIHI9IjM3LjUiLz48Y2lyY2xlIGN4PSIzMzcuNSIgY3k9IjE2Ny41IiByPSIzNy41Ii8+PGNpcmNsZSBjeD0iMTEyLjUiIGN5PSIyOTcuNSIgcj0iMzcuNSIvPjxjaXJjbGUgY3g9IjI2Mi41IiBjeT0iMjk3LjUiIHI9IjM3LjUiLz48Y2lyY2xlIGN4PSIxODcuNSIgY3k9IjE2Ny41IiByPSI3NSIvPjwvc3ZnPg== );
 	background-repeat: no-repeat;
 	background-position: center;
 	opacity: var( --opacity-icon-base );
 	animation: load2 1s infinite ease-in-out;
-}
 
-.smw-indicator-vertical-bar-loader::before,
-.smw-indicator-vertical-bar-loader::after {
-	content: none;
+	&::before,
+	&::after {
+		display: none;
+	}
+	*/
 }
 
 @keyframes load2 {
@@ -576,7 +580,7 @@ a.smw-ask-action-btn-lblue:active {
 }
 
 .smw-list-rule-title {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	border-bottom-color: var( --border-color-base );
 }
 
@@ -591,18 +595,18 @@ a.smw-ask-action-btn-lblue:active {
 
 .smw-indicator-accordion-tab-label {
   background: transparent;
-  color: var( --color-base--subtle );
+  color: var( --color-subtle );
   border-bottom-color: var( --color-surface-0 );
 }
 
 .smw-indicator-accordion-tab-label:hover {
-  background: var( --background-color-quiet--hover );
+  background: var( --background-color-button-quiet--hover );
   color: var( --color-base );
 }
 
 // Added active state
 .smw-indicator-accordion-tab-label:active {
-    background: var( --background-color-quiet--active );
+    background: var( --background-color-button-quiet--active );
     color: var( --color-base );
   }
 
@@ -628,7 +632,7 @@ a.smw-ask-action-btn-lblue:active {
 
 .smw-indicator-accordion-tab .smw-indicator-accordion-tab-label {
   border-top: 1px solid #ebebeb;
-  border-bottom: 0px solid #fff;
+  border-bottom: 0px solid var( --color-inverted-fixed );
 }
 
 .smw-indicator-accordion-tab-close:hover {
@@ -637,11 +641,11 @@ a.smw-ask-action-btn-lblue:active {
 
 input:checked + .smw-indicator-accordion-tab-label {
   background: #333;
-  color: #fff;
+  color: var( --color-inverted-fixed );
 }
 
 input:checked + .smw-indicator-accordion-tab-label::after {
-    color: #fff;
+    color: var( --color-inverted-fixed );
     width: 20px;
     margin-top: 2px;
   -webkit-transform: rotate(90deg);

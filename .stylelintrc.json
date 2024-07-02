@@ -3,11 +3,13 @@
 		"stylelint-order"
 	],
 	"extends": [
-		"stylelint-config-wikimedia",
+		"stylelint-config-wikimedia/support-modern",
+		"stylelint-config-wikimedia/mediawiki",
 		"stylelint-config-recess-order"
 	],
 	"rules": {
 		"font-weight-notation": null,
+		"selector-class-pattern": null,
 		"selector-max-id": null,
 		"no-descending-specificity": null,
 		"declaration-no-important": null,

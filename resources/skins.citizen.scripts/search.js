@@ -71,7 +71,7 @@ function setLoadingIndicatorListeners( element, attach, eventCallback ) {
 	/** @type { "addEventListener" | "removeEventListener" } */
 	const addOrRemoveListener = ( attach ? 'addEventListener' : 'removeEventListener' );
 
-	[ 'input', 'focusin', 'focusout' ].forEach( function ( eventType ) {
+	[ 'input', 'focusin', 'focusout' ].forEach( ( eventType ) => {
 		element[ addOrRemoveListener ]( eventType, eventCallback );
 	} );
 
@@ -81,14 +81,14 @@ function setLoadingIndicatorListeners( element, attach, eventCallback ) {
 }
 
 /**
- * Manually focus on the input field if checkbox is checked
+ * Manually focus on the input field if search toggle is clicked
  *
- * @param {HTMLInputElement} checkbox
+ * @param {HTMLDetailsElement} details
  * @param {HTMLInputElement} input
  * @return {void}
  */
-function focusOnChecked( checkbox, input ) {
-	if ( checkbox.checked ) {
+function focusOnOpened( details, input ) {
+	if ( details.open ) {
 		input.focus();
 	} else {
 		input.blur();
@@ -115,14 +115,14 @@ function isFormField( element ) {
 }
 
 /**
- * Manually check the checkbox state when the button is SLASH is pressed.
+ * Manually toggle the details state when the keyboard button is SLASH is pressed.
  *
  * @param {Window} window
- * @param {HTMLInputElement} checkbox
+ * @param {HTMLDetailsElement} details
  * @param {HTMLInputElement} input
  * @return {void}
  */
-function bindExpandOnSlash( window, checkbox, input ) {
+function bindOpenOnSlash( window, details, input ) {
 	const onExpandOnSlash = ( /** @type {KeyboardEvent} */ event ) => {
 		const isKeyPressed = () => {
 			// "/" key is standard on many sites
@@ -139,8 +139,8 @@ function bindExpandOnSlash( window, checkbox, input ) {
 		if ( isKeyPressed() && !isFormField( event.target ) ) {
 			// Since Firefox quickfind interfere with this
 			event.preventDefault();
-			checkbox.checked = true;
-			focusOnChecked( checkbox, input );
+			details.open = true;
+			focusOnOpened( details, input );
 		}
 	};
 
@@ -161,31 +161,35 @@ function renderSearchClearButton( input ) {
 	let hasClearButton = false;
 
 	clearButton.classList.add( 'citizen-search__clear', 'citizen-search__formButton' );
+	// TODO: Add i18n for the message below
+	// clearButton.setAttribute( 'aria-label', 'Clear search input' );
 	clearIcon.classList.add( 'citizen-ui-icon', 'mw-ui-icon-wikimedia-clear' );
 	clearButton.append( clearIcon );
 
 	clearButton.addEventListener( 'click', ( event ) => {
 		event.preventDefault();
-		clearButton.remove();
+		clearButton.classList.add( 'hidden' );
 		input.value = '';
 		input.dispatchEvent( new Event( 'input' ) );
-		setTimeout( () => {
+		requestAnimationFrame( () => {
 			input.focus();
-		}, 10 );
+		} );
 	} );
 
 	input.addEventListener( 'input', () => {
-		if ( input.value === '' ) {
-			clearButton.remove();
-			hasClearButton = false;
-		} else if ( hasClearButton === false ) {
+		const value = input.value;
+		const shouldDisplay = value !== '';
+		clearButton.classList.toggle( 'hidden', !shouldDisplay );
+		if ( shouldDisplay && !hasClearButton ) {
 			input.after( clearButton );
-			hasClearButton = true;
 		}
+		hasClearButton = shouldDisplay;
 	} );
 }
 
 /**
+ * Initializes the search functionality for the Citizen search boxes.
+ *
  * @param {Window} window
  * @return {void}
  */
@@ -209,11 +213,11 @@ function initSearch( window ) {
 
 		// Set up primary search box interactions
 		if ( isPrimarySearch ) {
-			const checkbox = document.getElementById( 'citizen-search__checkbox' );
-			bindExpandOnSlash( window, checkbox, input );
+			const details = document.getElementById( 'citizen-search' );
+			bindOpenOnSlash( window, details, input );
 			// Focus when toggled
-			checkbox.addEventListener( 'input', () => {
-				focusOnChecked( checkbox, input );
+			details.addEventListener( 'toggle', () => {
+				focusOnOpened( details, input );
 			} );
 		}
 

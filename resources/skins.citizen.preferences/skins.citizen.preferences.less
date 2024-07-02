@@ -1,57 +1,10 @@
-@import '../variables.less';
 @import '../mixins.less';
 
 .citizen-pref {
 	&__button {
 		&[ aria-expanded='true' ] {
-			background-color: var( --background-color-primary--active );
+			background-color: var( --background-color-button-quiet--active );
 		}
-	}
-
-	&-item {
-		display: grid;
-		gap: 0.25rem;
-
-		&__label {
-			display: flex;
-			justify-content: space-between;
-			width: 100%;
-		}
-
-		&__value {
-			font-weight: var( --font-weight-medium );
-			color: var( --color-base--emphasized );
-		}
-	}
-
-	&-theme {
-		&-option {
-			flex-grow: 1;
-			padding: 0.5rem 1rem;
-			font-weight: var( --font-weight-medium );
-			text-align: center;
-			white-space: nowrap;
-			cursor: pointer;
-			border: 2px solid var( --border-color-base );
-			border-radius: var( --border-radius--medium );
-
-			&:hover {
-				border-color: var( --color-primary--hover );
-				box-shadow: var( --box-shadow-card );
-			}
-
-			&:active {
-				border-color: var( --color-primary--active );
-			}
-		}
-	}
-
-	// We only show min and max value
-	&__tickmarks {
-		display: flex;
-		justify-content: space-between;
-		font-size: 0.8125rem;
-		color: var( --color-base--subtle );
 	}
 }
 
@@ -60,88 +13,152 @@
 		padding: var( --space-lg ) var( --space-md ) 0;
 		font-size: 1rem;
 		font-weight: var( --font-weight-semibold );
-		color: var( --color-base--emphasized );
+		color: var( --color-emphasized );
 	}
 
 	// TODO: unify the dropdown menu style somewhere
 	&-panel {
-		.citizen-header-card( right );
+		.citizen-header-card( end );
+		transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-end );
 
+		@media ( min-width: @min-width-breakpoint-desktop ) {
+			transform-origin: var( --transform-origin-offset-start ) var( --transform-origin-offset-end );
+		}
+
+		// TODO: Somehow refactor this module to use citizen-menu__Card
 		&.citizen-pref-panel--active {
-			.citizen-card-show;
+			z-index: @z-index-overlay;
+			transition: var( --transition-menu );
+			transition-property: transform;
+			transform: none;
+
+			> * {
+				opacity: 1;
+				transition: var( --transition-menu );
+				transition-property: opacity;
+			}
 		}
 
 		fieldset {
 			padding: 0 var( --space-md );
 			margin: 0;
-			font-size: 0.875rem;
+			font-size: var( --font-size-small );
 			appearance: none;
 			border: 0;
 		}
-
-		> * {
-			opacity: 0;
-		}
 	}
+}
 
-	&-form {
+// New clientPrefs styles
+.citizen-client-prefs {
+	display: flex;
+	flex-direction: column;
+	gap: var( --space-xs );
+	padding-bottom: var( --space-lg );
+
+	form {
 		display: grid;
-		gap: var( --space-md );
-		margin: var( --space-md ) 0;
+		// This is not the best because it does not adapt to the text length but will revisit later
+		grid-template-columns: repeat( 3, 1fr );
+		gap: var( --space-xxs );
+		text-align: center;
 	}
 
-	&-theme {
-		&-option {
-			&-light {
-				color: @color-base;
-				background: @color-surface-0;
-			}
-
-			&-dark {
-				color: ~'hsl( var( --color-primary__h ), 10%, 75% )';
-				background: ~'hsl( var( --color-primary__h ), 20%, 10% )';
-			}
-		}
-
-		fieldset {
-			display: flex;
-			gap: 0.5rem;
-			width: 100%;
-			padding: 0;
-			margin-top: 0.25rem;
-		}
-
-		// Let label be the radio button
-		input {
+	&-radio {
+		&__input {
+			// Hide radio button because we use label as button
 			display: none;
 
 			&:checked {
-				+ label {
-					border-color: var( --color-primary );
+				~ .citizen-client-prefs-radio__label {
+					border-color: var( --color-progressive );
 				}
 			}
 		}
+
+		&__label {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+			padding: var( --space-xs ) var( --space-md );
+			font-weight: var( --font-weight-medium );
+			cursor: pointer;
+			border: 2px solid var( --border-color-base );
+			border-radius: var( --border-radius--medium );
+
+			&:hover {
+				border-color: var( --color-progressive--hover );
+			}
+
+			&:active {
+				border-color: var( --color-progressive--active );
+			}
+		}
 	}
+}
 
-	&-resetbutton {
-		width: 100%;
-		padding: var( --space-sm ) var( --space-md );
-		font-family: inherit;
-		font-size: 0.875rem;
-		font-weight: var( --font-weight-medium );
-		color: #fff;
-		appearance: none;
-		cursor: pointer;
-		background: var( --color-destructive );
-		border: 0;
-		border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
+#citizen-client-prefs {
+	.citizen-menu {
+		&__content {
+			padding: 0 var( --space-md );
+		}
+	}
+}
 
-		&:hover {
-			background: var( --color-destructive--hover );
+#skin-client-prefs-skin-theme {
+	.citizen-client-prefs-radio__label {
+		background: var( --color-surface-0 );
+
+		&[ for='skin-client-pref-skin-theme-value-day' ] {
+			// color-base of day theme
+			color: ~'hsl( var( --color-primary__h ), 30%, 20% )';
+			// color-surface-0 of day theme
+			background: ~'hsl( var( --color-primary__h ), 30%, 96% )';
 		}
 
-		&:active {
-			background: var( --color-destructive--active );
+		&[ for='skin-client-pref-skin-theme-value-night' ] {
+			// color-base of night theme
+			color: ~'hsl( var( --color-primary__h ), 25%, 80% )';
+			// color-surface-0 of night theme
+			background: ~'hsl( var( --color-primary__h ), 20%, 10% )';
+		}
+	}
+}
+
+#skin-client-prefs-citizen-feature-pure-black {
+	display: none;
+
+	form {
+		grid-template-columns: repeat( 2, 1fr );
+	}
+
+	// Display on dark theme
+	.skin-theme-clientpref-night & {
+		display: block;
+	}
+
+	@media ( prefers-color-scheme: dark ) {
+		.skin-theme-clientpref-os & {
+			display: block;
+		}
+	}
+
+	.citizen-client-prefs-radio__label[ for='skin-client-pref-citizen-feature-pure-black-value-1' ] {
+		background-color: #000;
+	}
+}
+
+#skin-client-prefs-citizen-feature-custom-font-size {
+	.citizen-client-prefs-radio__label {
+		font-size: var( --font-size-medium );
+
+		&[ for='skin-client-pref-citizen-feature-custom-font-size-value-small' ] {
+			font-size: var( --font-size-small );
+		}
+
+		&[ for='skin-client-pref-citizen-feature-custom-font-size-value-large' ] {
+			font-size: var( --font-size-large );
 		}
 	}
 }

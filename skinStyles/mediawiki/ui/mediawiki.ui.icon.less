@@ -14,25 +14,25 @@
 	border-radius: var( --border-radius--small );
 
 	&:active {
-		background-color: var( --background-color-quiet--active );
+		background-color: var( --background-color-button-quiet--active );
 	}
 }
 
 @media ( hover: hover ) {
 	.mw-ui-icon-element:not( .disabled ):hover {
-		background-color: var( --background-color-quiet--hover );
+		background-color: var( --background-color-button-quiet--hover );
 	}
 }
 
 @media all and ( min-width: @min-width-breakpoint-desktop ) {
 	.mw-ui-icon-with-label-desktop {
-		color: var( --color-base--subtle ) !important;
+		color: var( --color-subtle ) !important;
 
 		&:hover,
 		&:focus,
 		&:active,
 		&:visited {
-			color: var( --color-base--subtle );
+			color: var( --color-subtle );
 		}
 	}
 }

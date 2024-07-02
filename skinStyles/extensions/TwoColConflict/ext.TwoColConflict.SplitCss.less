@@ -19,32 +19,32 @@
 }
 
 .mw-twocolconflict-split-current-version-header .mw-twocolconflict-revision-label {
-	background-color: var( --background-color-warning );
+	background-color: var( --background-color-warning-subtle );
 }
 
 .mw-twocolconflict-special-your-version-header .mw-twocolconflict-revision-label,
 .mw-twocolconflict-split-your-version-header .mw-twocolconflict-revision-label {
-	background-color: var( --background-color-primary--hover );
+	background-color: var( --background-color-progressive-subtle );
 }
 
 .mw-twocolconflict-split-row {
 	&.mw-twocolconflict-no-selection {
-		background-color: var( --background-color-destructive );
+		background-color: var( --background-color-destructive-subtle );
 		border-color: transparent;
 	}
 }
 
 .mw-twocolconflict-single-column,
 .mw-twocolconflict-split-column {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	background-color: var( --color-surface-0 );
 
 	&.mw-twocolconflict-split-add {
-		border-color: var( --background-color-primary--hover );
+		border-color: var( --background-color-progressive-subtle );
 	}
 
 	&.mw-twocolconflict-split-delete {
-		border-color: var( --background-color-warning );
+		border-color: var( --background-color-warning-subtle );
 	}
 
 	&.mw-twocolconflict-split-copy {
@@ -53,30 +53,30 @@
 	}
 
 	ins.mw-twocolconflict-diffchange {
-		background-color: var( --background-color-primary--hover );
+		background-color: var( --background-color-progressive-subtle );
 	}
 
 	del.mw-twocolconflict-diffchange {
-		background-color: var( --background-color-warning );
+		background-color: var( --background-color-warning-subtle );
 	}
 
 	&.mw-twocolconflict-split-unselected {
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 
 		&.mw-twocolconflict-split-add {
-			border-color: var( --background-color-primary--hover );
+			border-color: var( --background-color-progressive-subtle );
 		}
 
 		&.mw-twocolconflict-split-delete {
-			border-color: var( --background-color-warning );
+			border-color: var( --background-color-warning-subtle );
 		}
 
 		ins.mw-twocolconflict-diffchange {
-			background-color: var( --background-color-primary--hover );
+			background-color: var( --background-color-progressive-subtle );
 		}
 
 		del.mw-twocolconflict-diffchange {
-			background-color: var( --background-color-warning );
+			background-color: var( --background-color-warning-subtle );
 		}
 	}
 
@@ -104,7 +104,7 @@
 		.oo-ui-radioInputWidget.oo-ui-widget-enabled [ type='radio' ]:checked + span,
 		.oo-ui-radioInputWidget.oo-ui-widget-enabled [ type='radio' ]:active + span,
 		.oo-ui-radioInputWidget [ type='radio' ] + span {
-			background: var( --background-color-warning );
+			background: var( --background-color-warning-subtle );
 			border-color: var( --color-warning );
 		}
 	}
@@ -113,8 +113,8 @@
 		.oo-ui-radioInputWidget.oo-ui-widget-enabled [ type='radio' ]:checked + span,
 		.oo-ui-radioInputWidget.oo-ui-widget-enabled [ type='radio' ]:active + span,
 		.oo-ui-radioInputWidget [ type='radio' ] + span {
-			background: var( --background-color-primary--hover );
-			border-color: var( --color-primary );
+			background: var( --background-color-progressive-subtle );
+			border-color: var( --color-progressive );
 		}
 	}
 }
@@ -132,11 +132,11 @@
 			font-weight: var( --font-weight-semibold );
 
 			.mw-twocolconflict-split-delete {
-				background-color: var( --background-color-warning );
+				background-color: var( --background-color-warning-subtle );
 			}
 
 			.mw-twocolconflict-split-add {
-				background-color: var( --background-color-primary--hover );
+				background-color: var( --background-color-progressive-subtle );
 			}
 		}
 	}

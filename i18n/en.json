@@ -27,13 +27,16 @@
 	"citizen-action-addsection": "Add topic",
 	"citizen-jumptotop": "Back to top",
 	
-	"citizen-search-fulltext": "Search for text within pages",
+	"citizen-search-fulltext": "Search text",
 	
-	"citizen-search-mediasearch": "Search for media",
+	"citizen-search-mediasearch": "Search media",
 	"citizen-search-editpage": "Edit or create page",
 	"citizen-search-empty-desc": "Type to start searching",
 	"citizen-search-noresults-title": "Uh oh! No results for $1",
 	"citizen-search-noresults-desc": "Maybe try the options above?",
+
+	"citizen-share": "Share this page",
+
 	"citizen-tagline": "-",
 	"citizen-tagline-ns-talk": "Discussion page of {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Information about {{SITENAME}}",
@@ -43,12 +46,28 @@
 	"citizen-tagline-ns-help": "Help page",
 	"citizen-tagline-ns-category": "Category page",
 	"citizen-tagline-user-regdate": "Joined $1",
-	"prefs-citizen-theme-label": "Theme",
-	"prefs-citizen-theme-option-auto": "Auto",
-	"prefs-citizen-theme-option-light": "Light",
-	"prefs-citizen-theme-option-dark": "Dark",
-	"prefs-citizen-fontsize-label": "Font size",
-	"prefs-citizen-pagewidth-label": "Page width",
-	"prefs-citizen-lineheight-label": "Line height",
-	"prefs-citizen-resetbutton-label": "Reset to default"
+
+	"citizen-theme-name": "Color",
+	"citizen-theme-description": "Change the theme of the wiki",
+	"citizen-theme-day-label": "Light",
+	"citizen-theme-night-label": "Dark",
+	"citizen-theme-os-label": "Auto",
+	"citizen-theme-exclusion-notice": "This page is always in light mode.",
+
+	"citizen-feature-pure-black-name": "Pure black mode",
+	"citizen-feature-pure-black-0-label": "Off",
+	"citizen-feature-pure-black-1-label": "On",
+
+	"citizen-feature-custom-font-size-name": "Text",
+	"citizen-feature-custom-font-size-small-label": "Small",
+	"citizen-feature-custom-font-size-standard-label": "Standard",
+	"citizen-feature-custom-font-size-large-label": "Large",
+
+	"citizen-feature-custom-width-name": "Width",
+	"citizen-feature-custom-width-standard-label": "Standard",
+	"citizen-feature-custom-width-wide-label": "Wide",
+	"citizen-feature-custom-width-full-label": "Full",
+
+	"citizen-user-info-text-anon": "Your IP address will be publicly visible if you make any edits.",
+	"citizen-user-info-text-temp": "This temporary account was created after an edit was made without an account on this browser and device."
 }

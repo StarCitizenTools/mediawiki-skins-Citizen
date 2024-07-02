@@ -9,7 +9,7 @@
 */
 
 // Disable sticky header since it collides with anchor and adds no value
-#citizen-body-header-sticky-sentinel {
+#citizen-page-header-sticky-sentinel {
 	display: none;
 }
 
@@ -21,7 +21,7 @@ div#ask legend {
 
 .smw-ask-toplinks {
 	font-family: inherit;
-	font-size: 0.875rem;
+	font-size: var( --font-size-small );
 	line-height: inherit;
 	background-color: var( --color-surface-2 );
 	border-radius: var( --border-radius--small );
@@ -38,11 +38,11 @@ div#ask legend {
 
 	// Add focus state
 	&:focus-within {
-		border-color: var( --color-primary );
-		box-shadow: inset 0 0 0 1px var( --color-primary );
+		border-color: var( --color-progressive );
+		box-shadow: inset 0 0 0 1px var( --color-progressive );
 
 		legend {
-			color: var( --color-primary );
+			color: var( --color-progressive );
 		}
 	}
 }
@@ -65,7 +65,7 @@ div#ask legend {
 }
 
 .smw-ask-button {
-	font-size: 0.875rem;
+	font-size: var( --font-size-small );
 	color: var( --color-base );
 	border-color: var( --border-color-base );
 	border-radius: var( --border-radius--small );
@@ -73,21 +73,21 @@ div#ask legend {
 
 .smw-ask-button-submit input {
 	padding: var( --space-md );
-	font-size: 0.875rem;
+	font-size: var( --font-size-small );
 	font-weight: var( --font-weight-medium );
-	color: #fff;
-	background-color: var( --color-primary );
-	border-color: var( --color-primary );
+	color: var( --color-inverted-primary );
+	background-color: var( --color-progressive );
+	border-color: var( --color-progressive );
 	border-radius: var( --border-radius--medium );
 
 	&:hover {
-		background-color: var( --color-primary--hover );
-		border-color: var( --color-primary--hover );
+		background-color: var( --color-progressive--hover );
+		border-color: var( --color-progressive--hover );
 	}
 
 	&:active {
-		background-color: var( --color-primary--active );
-		border-color: var( --color-primary--active );
+		background-color: var( --color-progressive--active );
+		border-color: var( --color-progressive--active );
 	}
 }
 
@@ -150,11 +150,11 @@ div#ask legend {
 }
 
 .slowfade textarea::placeholder {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .export-links li {
-	border-left-color: var( --color-base--subtle );
+	border-left-color: var( --color-subtle );
 }
 
 // Make delete button destructive
@@ -172,6 +172,6 @@ div#ask legend {
 
 // Options parameter description text
 .smw-ask-parameter-description {
-	font-size: 0.8125rem;
-	color: var( --color-base--subtle );
+	font-size: var( --font-size-x-small );
+	color: var( --color-subtle );
 }

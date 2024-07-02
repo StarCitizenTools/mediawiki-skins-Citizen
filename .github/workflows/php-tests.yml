@@ -1,0 +1,74 @@
+name: PHP tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: "PHP tests: MW ${{ matrix.mw }}, PHP ${{ matrix.php }}"
+    continue-on-error: ${{ matrix.experimental }}
+
+    strategy:
+      matrix:
+        include:
+          - mw: 'REL1_39'
+            php: 8.1
+            experimental: false
+          - mw: 'REL1_40'
+            php: 8.1
+            experimental: true
+          - mw: 'REL1_41'
+            php: 8.1
+            experimental: true
+          #- mw: 'master'
+          #  php: 8.1
+          #  experimental: true
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: mediawiki
+
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, intl
+          tools: composer
+
+      - name: Cache MediaWiki
+        id: cache-mediawiki
+        uses: actions/cache@v4
+        with:
+          path: |
+            mediawiki
+            !mediawiki/extensions/
+            !mediawiki/vendor/
+          key: mw_${{ matrix.mw }}-php${{ matrix.php }}-v20
+
+      - name: Cache Composer cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: composer-php${{ matrix.php }}
+
+      - uses: actions/checkout@v4
+        with:
+          path: EarlyCopy
+
+      - name: Install MediaWiki
+        if: steps.cache-mediawiki.outputs.cache-hit != 'true'
+        working-directory: ~
+        run: bash EarlyCopy/.github/workflows/installWiki.sh ${{ matrix.mw }}
+
+      - uses: actions/checkout@v4
+        with:
+          path: mediawiki/skins/Citizen
+
+      - name: Composer update
+        run: composer update
+
+      - name: Run PHPUnit
+        run: composer phpunit:entrypoint -- --group Citizen

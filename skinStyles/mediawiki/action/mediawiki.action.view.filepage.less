@@ -12,7 +12,7 @@
 @import '../../../resources/variables.less';
 
 // Custom sticky header handling
-#citizen-body-header-sticky-sentinel {
+#citizen-page-header-sticky-sentinel {
 	display: none;
 }
 
@@ -26,6 +26,10 @@
 	border: 0;
 	.citizen-sticky-header;
 
+	@media ( min-width: @min-width-breakpoint-desktop ) {
+		right: ~'calc( var( --space-xl ) * -1 )'; // Fix #797
+	}
+
 	li {
 		padding-right: 0;
 	}
@@ -38,11 +42,11 @@
 		border-radius: var( --border-radius--small );
 
 		&:hover {
-			background-color: var( --background-color-quiet--hover );
+			background-color: var( --background-color-button-quiet--hover );
 		}
 
 		&:active {
-			background-color: var( --background-color-quiet--active );
+			background-color: var( --background-color-button-quiet--active );
 		}
 	}
 }
@@ -59,27 +63,27 @@
 		display: inline-block;
 		padding: var( --space-xxs ) var( --space-md );
 		margin: var( --space-xxs );
-		font-size: 0.875rem;
-		color: var( --color-base--subtle );
+		font-size: var( --font-size-small );
+		color: var( --color-subtle );
 		background-color: var( --color-surface-0 );
 		border: 1px solid var( --border-color-base );
 		border-radius: var( --border-radius--pill );
 
 		&:hover {
-			color: #fff;
-			background-color: var( --color-primary--hover );
+			color: var( --color-inverted-primary );
+			background-color: var( --color-progressive--hover );
 		}
 
 		&:active {
-			color: #fff;
-			background-color: var( --color-primary--active );
+			color: var( --color-inverted-primary );
+			background-color: var( --color-progressive--active );
 		}
 	}
 
 	// Current preview resolution
 	> .mw-thumbnail-link {
-		color: #fff;
-		background-color: var( --color-primary );
+		color: var( --color-inverted-primary );
+		background-color: var( --color-progressive );
 	}
 }
 
@@ -120,21 +124,21 @@
 }
 
 .fileInfo {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .fullMedia {
-	font-size: 0.875rem;
+	font-size: var( --font-size-small );
 }
 
 .mw_metadata {
 	margin: 0;
-	font-size: 0.8125rem;
+	font-size: var( --font-size-x-small );
 }
 
 .mw_metadata caption {
 	font-weight: var( --font-weight-semibold );
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 }
 
 .mw_metadata tr + tr {
@@ -150,7 +154,7 @@
 // Citizen label styles
 .mw_metadata th {
 	font-weight: var( --font-weight-normal );
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 	text-align: start;
 	letter-spacing: 0.05em;
 	background-color: transparent;

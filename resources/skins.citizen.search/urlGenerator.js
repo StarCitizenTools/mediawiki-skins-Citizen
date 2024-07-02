@@ -58,7 +58,7 @@ function urlGenerator( config ) {
 			const searchParams = new URLSearchParams(
 				Object.assign( {}, params, { search: suggestion } )
 			);
-			return `${articlePath}?${searchParams.toString()}`;
+			return `${ articlePath }?${ searchParams.toString() }`;
 		}
 	};
 }

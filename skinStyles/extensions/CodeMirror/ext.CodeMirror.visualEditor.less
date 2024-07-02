@@ -1,0 +1,24 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:CodeMirror
+ * Module: ext.CodeMirror.visualEditor
+ * Version: REL1_39 b4324b5
+ *
+ * Date: 2023-02-05
+*/
+
+.skin-citizen {
+	.ve-init-mw-desktopArticleTarget {
+		.CodeMirror {
+			padding: 0;
+		}
+
+		// Ensure surfaces are using identical font rules
+		.CodeMirror-code,
+		.CodeMirror-code *,
+		.ve-ui-mwWikitextSurface .ve-ce-paragraphNode {
+			line-height: var( --line-height );
+		}
+	}
+}

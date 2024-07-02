@@ -29,13 +29,5 @@
 	"citizen-tagline-ns-mediawiki": "Сторінка інтерфейсу MediaWiki",
 	"citizen-tagline-ns-template": "Сторінка шаблону",
 	"citizen-tagline-ns-help": "Сторінка довідки",
-	"citizen-tagline-ns-category": "Сторінка категорії",
-	"prefs-citizen-theme-label": "Тема",
-	"prefs-citizen-theme-option-auto": "Автоматично",
-	"prefs-citizen-theme-option-light": "Світла",
-	"prefs-citizen-theme-option-dark": "Темна",
-	"prefs-citizen-fontsize-label": "Розмір шрифту",
-	"prefs-citizen-pagewidth-label": "Ширина сторінки",
-	"prefs-citizen-lineheight-label": "Висота лінії",
-	"prefs-citizen-resetbutton-label": "Скинути за замовчуванням"
+	"citizen-tagline-ns-category": "Сторінка категорії"
 }

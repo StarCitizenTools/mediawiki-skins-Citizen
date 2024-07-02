@@ -1,0 +1,32 @@
+.citizen-page-sidebar {
+	--size-icon: 1rem;
+
+	@media ( min-width: @min-width-breakpoint-desktop ) {
+		display: flex;
+		flex-direction: column;
+		grid-area: sidebar;
+		gap: var( --space-sm );
+		padding-left: var( --space-xs );
+		margin-top: var( --space-sm ); // align with first paragraph
+		// Avoid padding clipping
+		margin-left: ~'calc( var( --space-xs ) * -1 )';
+	}
+
+	.citizen-menu__heading,
+	.citizen-menu .mw-list-item a {
+		padding-right: var( --space-xs );
+		padding-left: var( --space-xs );
+	}
+
+	.citizen-menu .mw-list-item a {
+		gap: var( --space-xs );
+		border-radius: var( --border-radius--small );
+	}
+}
+
+#citizen-sidebar-lastmod {
+	@media ( max-width: @max-width-breakpoint-tablet ) {
+		// Duplicated with footer already
+		display: none;
+	}
+}

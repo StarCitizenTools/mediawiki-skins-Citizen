@@ -12,7 +12,7 @@
 @import '../../../resources/variables.less';
 
 // Disable default sticky header
-#citizen-body-header-sticky-sentinel {
+#citizen-page-header-sticky-sentinel {
 	display: none;
 }
 
@@ -46,24 +46,24 @@
 	a {
 		padding: var( --space-xs ) var( --space-sm );
 		font-weight: var( --font-weight-medium );
-		color: var( --color-base--emphasized );
+		color: var( --color-emphasized );
 		border-bottom: 2px solid transparent;
 
 		&:hover {
 			color: var( -color-primary--hover );
-			border-color: var( --color-primary--hover );
+			border-color: var( --color-progressive--hover );
 		}
 	}
 
 	.current a {
-		color: var( --color-primary );
-		border-color: var( --color-primary );
+		color: var( --color-progressive );
+		border-color: var( --color-progressive );
 	}
 }
 
 .results-info {
-	font-size: 0.875rem;
-	color: var( --color-base--subtle );
+	font-size: var( --font-size-small );
+	color: var( --color-subtle );
 	white-space: nowrap;
 }
 
@@ -73,9 +73,9 @@
 	border-radius: 0;
 
 	h4 {
-		font-size: 0.875rem;
+		font-size: var( --font-size-small );
 		font-weight: var( --font-weight-normal );
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 		letter-spacing: 0.05em;
 	}
 
@@ -100,7 +100,7 @@
 	// background: var( --color-surface-2 );
 	// border-radius: var( --border-radius--small );
 	margin-top: 0 !important;
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 }
 
 .mw-search-results {
@@ -110,31 +110,31 @@
 		padding: var( --space-md ) 0;
 
 		a {
-			font-size: var( --font-size-h3 );
+			font-size: var( --font-size-x-large );
 		}
 	}
 }
 
 .mw-search-result {
 	// padding: var( --space-md ) 0;
-	font-size: 0.875rem;
+	font-size: var( --font-size-small );
 
 	&-heading {
 		a {
-			// font-size: var( --font-size-h3 );
+			// font-size: var( --font-size-x-large );
 			font-weight: var( --font-weight-semibold );
 		}
 	}
 
 	&-data {
-		font-size: 0.875rem;
-		color: var( --color-base--subtle );
+		font-size: var( --font-size-small );
+		color: var( --color-subtle );
 	}
 }
 
 .searchmatch {
 	font-weight: var( --font-weight-semibold );
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 
 	a & {
 		// If searchmatch is part of the link (usually title), use link color
@@ -146,9 +146,9 @@
 	h2 {
 		padding-bottom: var( --space-xs );
 		margin-bottom: 0;
-		font-size: 0.875rem;
+		font-size: var( --font-size-small );
 		font-weight: var( --font-weight-normal );
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 		letter-spacing: 0.05em;
 		border-bottom: 1px solid var( --border-color-base );
 	}

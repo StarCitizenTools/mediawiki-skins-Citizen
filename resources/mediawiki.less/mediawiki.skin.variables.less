@@ -9,19 +9,27 @@
 @import 'mediawiki.skin.defaults.less';
 
 /*
+ * Codex design tokens
+ * @see https://github.com/wikimedia/mediawiki/blob/master/resources/lib/codex-design-tokens/theme-wikimedia-ui.less
+ * TODO: Revisit on the next LTS release
+ */
+// @import 'mediawiki.skin.codex-design-tokens/theme-wikimedia-ui.less';
+
+/*
  * Backported variables
  * @see https://github.com/wikimedia/mediawiki/blob/master/resources/src/mediawiki.less/mediawiki.skin.defaults.less
  * TODO: Remove unused variables on the next LTS release
  */
 
 // @since 1.41
+// These have to be wrapped in parentheses, otherwise the Less calculation breaks (T367103)
 @min-width-breakpoint-mobile: 320px;
 @min-width-breakpoint-tablet: 640px;
 @min-width-breakpoint-desktop: 1120px;
 @min-width-breakpoint-desktop-wide: 1680px;
-@max-width-breakpoint-mobile: @min-width-breakpoint-tablet - 1px;
-@max-width-breakpoint-tablet: @min-width-breakpoint-desktop - 1px;
-@max-width-breakpoint-desktop: @min-width-breakpoint-desktop-wide - 1px;
+@max-width-breakpoint-mobile: ( @min-width-breakpoint-tablet - 1px );
+@max-width-breakpoint-tablet: ( @min-width-breakpoint-desktop - 1px );
+@max-width-breakpoint-desktop: ( @min-width-breakpoint-desktop-wide - 1px );
 
 /*
  * Polyfill deprecated variables
@@ -38,11 +46,22 @@
 /*
  * Citizen variables override
  */
+
+// @since 1.39
 @color-link: var( --color-link );
 @color-link--visited: var( --color-link );
 @color-link--active: var( --color-link--active );
-@color-link-new: var( --color-link-new );
-@color-link-new--visited: var( --color-link-new );
+@color-link-new: var( --color-link-red );
+@color-link-new--visited: var( --color-link-red );
 @color-link-external: var( --color-link );
 @color-link-external--visited: var( --color-link );
 @color-link-external--active: var( --color-link--active );
+
+// @since 1.41
+@font-size-x-small: var( --font-size-x-small );
+@font-size-small: var( --font-size-small );
+@font-size-medium: var( --font-size-medium );
+@font-size-large: var( --font-size-large );
+@font-size-x-large: var( --font-size-x-large );
+@font-size-xx-large: var( --font-size-xx-large );
+@font-size-xxx-large: var( --font-size-xxx-large );

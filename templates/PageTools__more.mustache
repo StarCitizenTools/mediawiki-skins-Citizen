@@ -1,0 +1,14 @@
+<details class="page-actions-more page-actions__item citizen-menu__dropdown">
+	<summary
+		class="citizen-menu__dropdownButton" 
+		title="{{msg-citizen-actions-more-toggle}}">
+		<span class="citizen-ui-icon mw-ui-icon-wikimedia-ellipsis"></span>
+		<span>{{msg-citizen-actions-more-toggle}}</span>
+	</summary>
+	<aside id="page-actions-more__card" class="citizen-menu__card">
+		{{#pagetools-visible}}
+				{{#data-portlets.data-actions}}{{>Menu}}{{/data-portlets.data-actions}}
+		{{/pagetools-visible}}
+		{{#data-article-tools}}{{>Menu}}{{/data-article-tools}}
+	</aside>
+</details>

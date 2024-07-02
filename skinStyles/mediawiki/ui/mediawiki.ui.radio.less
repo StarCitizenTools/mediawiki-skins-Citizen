@@ -14,39 +14,39 @@
 			&::before {
 				// Show background when hovered
 				background-color: transparent;
-				border-color: var( --border-color-base--darker );
+				border-color: var( --border-color-interactive );
 			}
 		}
 
 		&:enabled {
 			&:hover + label::before {
 				background-color: var( --color-surface-0 );
-				border-color: var( --color-primary--hover );
+				border-color: var( --color-progressive--hover );
 			}
 
 			&:active + label::before {
-				background-color: var( --color-primary--active );
-				border-color: var( --color-primary--active );
+				background-color: var( --color-progressive--active );
+				border-color: var( --color-progressive--active );
 			}
 
 			&:checked {
 				& + label::before {
-					background-color: #fff;
-					border-color: var( --color-primary );
+					background-color: var( --color-inverted-primary );
+					border-color: var( --color-progressive );
 				}
 
 				&:hover + label::before {
-					border-color: var( --color-primary--hover );
+					border-color: var( --color-progressive--hover );
 				}
 
 				&:active {
 					& + label::before {
-						border-color: var( --color-primary--active );
-						box-shadow: inset 0 0 0 1px var( --color-primary--active );
+						border-color: var( --color-progressive--active );
+						box-shadow: inset 0 0 0 1px var( --color-progressive--active );
 					}
 
 					& + label::after {
-						border-color: var( --color-primary--active );
+						border-color: var( --color-progressive--active );
 					}
 				}
 			}

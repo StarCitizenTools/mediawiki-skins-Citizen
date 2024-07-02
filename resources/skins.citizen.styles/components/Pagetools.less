@@ -1,55 +1,43 @@
 .page-actions {
 	display: flex;
 	gap: var( --space-xxs );
-	margin-left: -0.75rem; // Align to the margin
-	font-size: 0.875rem;
-	font-weight: var( --font-weight-medium );
+	align-items: center;
 
 	// TODO: Merge this with header__item
 	&__item {
 		display: flex;
 	}
 
-	// TODO: Merge this with header__button
-	&__button {
-		display: grid;
-		place-items: center;
-		width: 2.75rem; // Same width as other buttons
-		height: 2.25rem; // Same height as other buttons
-		border-radius: var( --border-radius--medium );
+	.citizen-menu {
+		&__card {
+			position: absolute;
+			right: ~'calc( var( --space-xs ) * -1 )'; // counteract margin
+			z-index: @z-index-page-header; // So the popups inside will be higher than content
+			display: grid;
+			gap: var( --space-xs );
+			max-height: 60vh;
+			padding: var( --space-xs ) 0;
+			transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-end );
 
-		&:hover {
-			background-color: var( --background-color-quiet--hover );
-
-			.citizen-ui-icon::before {
-				opacity: var( --opacity-icon-base--hover );
+			@media ( min-width: @min-width-breakpoint-desktop ) {
+				transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-start );
 			}
 		}
 
-		&:active {
-			background-color: var( --background-color-quiet--active );
+		&__dropdown {
+			@media ( min-width: @min-width-breakpoint-desktop ) {
+				// Only attach dropdown menu to the button on desktop mode
+				position: relative;
+			}
 
-			.citizen-ui-icon::before {
-				opacity: var( --opacity-icon-base--active );
+			&Button {
+				display: grid;
+				place-items: center;
+				width: 2.5rem; // Same width as other buttons
+				height: 2.25rem; // Same height as other buttons
+				border-radius: var( --border-radius--medium );
 			}
 		}
-	}
-
-	&__card {
-		position: absolute;
-		top: 100%;
-		right: ~'calc( var( --space-xs ) * -1 )'; // counteract margin
-		z-index: @z-index-page-header; // So the popups inside will be higher than content
-		display: grid;
-		gap: var( --space-xs );
-		max-height: 60vh;
-		padding: var( --space-xs ) 0;
-		margin: var( --space-xs );
-		overflow: auto;
-		font-size: 0.875rem;
-		.citizen-card;
-		.citizen-card-hide( top right );
-		.citizen-card-transition();
 	}
 
 	// Visible page tools styles
@@ -67,27 +55,17 @@
 			border-radius: var( --border-radius--medium );
 
 			&:hover {
-				background-color: var( --background-color-quiet--hover );
+				background-color: var( --background-color-button-quiet--hover );
 			}
 
 			&:active {
-				background-color: var( --background-color-quiet--active );
+				background-color: var( --background-color-button-quiet--active );
 			}
 		}
 	}
 
-	ul {
-		margin: 0;
-		list-style: none;
-	}
-
 	li {
 		margin: 0;
-	}
-
-	// TODO: Merge this with header styles
-	.citizen-menu-checkbox-checkbox:checked ~ .page-actions__button {
-		background-color: var( --background-color-primary--active );
 	}
 
 	// Hide menu labels
@@ -97,87 +75,43 @@
 }
 
 // Language counter badge
-// TODO: Maybe this should be in a mixin
-#citizen-languages__buttonCheckbox {
-	position: relative; // So that the badge doesn't take a stroll to the far left
+.citizen-page-languages {
+	> .citizen-menu__dropdownButton {
+		position: relative; // So that the badge doesn't take a stroll to the far left
 
-	&::after {
-		position: absolute;
-		top: 0;
-		right: 0;
-		display: block;
-		padding: 0.1em 0.4em;
-		font-size: 0.65rem;
-		color: #fff;
-		content: attr( data-counter-text );
-		background: var( --color-primary );
-		border-radius: var( --border-radius--pill );
-	}
-}
-
-.citizen-languages {
-	// Special handling for ULS
-	// ULS won't be triggered by the label button
-	// so we need to overlay the checkbox on top of it
-	.mw-interlanguage-selector {
-		position: absolute;
-		z-index: 1;
-		display: block;
-		width: var( --size-button--page );
-		height: var( --size-button--page );
-		padding: 0;
-		margin: 0;
-		cursor: pointer;
-		opacity: 0;
-
-		// Hover state needs to be define because the checkbox now overlays the label
-		&:hover {
-			~ .page-actions__button {
-				background-color: var( --background-color-quiet--hover );
-
-				.citizen-ui-icon::before {
-					opacity: var( --opacity-icon-base--hover );
-				}
-			}
-		}
-
-		&:active {
-			~ .page-actions__button {
-				background-color: var( --background-color-quiet--active );
-
-				.citizen-ui-icon::before {
-					opacity: var( --opacity-icon-base--active );
-				}
-			}
+		&::after {
+			position: absolute;
+			top: 0;
+			right: 0;
+			display: block;
+			padding: 0.1em 0.4em;
+			font-size: 0.65rem;
+			content: attr( data-counter-text );
+			background: var( --color-surface-0 );
+			border-radius: var( --border-radius--pill );
 		}
 	}
-}
-
-.page-actions-more,
-.citizen-languages {
-	position: relative;
 }
 
 // Edit button
 #ca-edit,
 #ca-ve-edit {
 	> a {
-		color: #fff;
-		background-color: var( --color-primary );
+		color: var( --color-inverted-primary );
+		background-color: var( --color-progressive );
 
 		&:hover {
-			background-color: var( --color-primary--hover );
+			background-color: var( --color-progressive--hover );
 		}
 
 		&:active {
-			background-color: var( --color-primary--active );
+			background-color: var( --color-progressive--active );
 		}
 	}
 
-	> a,
 	.citizen-ui-icon {
 		&::before {
-			filter: invert( 1 );
+			filter: var( --filter-invert-fixed );
 			// white icon
 			opacity: 1;
 		}
@@ -187,18 +121,6 @@
 // VE styles shouldn't be core but it is just a few lines :/
 #ca-ve-edit {
 	order: 98; // Before source edit
-
-	> a {
-		// See SkinHooks.php for why VE is here
-		&::before {
-			width: var( --size-icon );
-			height: var( --size-icon );
-			content: '';
-			background-repeat: no-repeat;
-			background-position: center;
-			background-size: var( --size-icon );
-		}
-	}
 }
 
 #ca-edit {
@@ -216,7 +138,7 @@
 
 	&#ca-edit {
 		margin-left: ~'calc( var( --space-xxs ) * -1 )';
-		border-left: 1px solid var( --color-primary--hover );
+		border-left: 1px solid var( --color-progressive--hover );
 
 		> a {
 			gap: 0;
@@ -227,27 +149,51 @@
 	}
 }
 
-// Checkbox hack
-#page-actions-more,
-#citizen-languages {
-	&__checkbox:checked {
-		~ .page-actions__card {
-			.citizen-card-show();
-		}
-	}
-}
-
 // To avoid more menu from overflow in narrow screen
 @media ( max-width: @max-width-breakpoint-tablet ) {
 	.page-actions {
+		position: fixed;
+		right: 0;
+		bottom: ~'calc( var( --header-size ) + var( --space-xs ) )';
+		height: var( --toolbar-size );
+		margin: var( --space-xs );
+		background: var( --color-surface-1 );
+		border-radius: var( --border-radius--medium );
+		box-shadow: var( --box-shadow-dialog );
+
+		.citizen-scroll--down & {
+			box-shadow: none;
+			opacity: 0;
+			transform: translateY( 250% );
+		}
+
+		.citizen-scroll--up & {
+			opacity: 1;
+			transition: var( --transition-menu );
+			transition-delay: 250ms;
+			transition-property: opacity, transform;
+		}
+
+		:not( .citizen-menu__card ) .mw-list-item {
+			--size-icon: 1rem;
+		}
+
+		> .mw-portlet li > a {
+			height: var( --toolbar-size );
+		}
+
 		&__item {
 			position: unset;
 		}
 
-		&__card {
-			right: 0;
-			left: 0;
+		.citizen-menu__card {
+			bottom: 100%;
 		}
+	}
+
+	.citizen-page-languages > .citizen-menu__dropdownButton::after {
+		// Blend with background
+		background: var( --color-surface-1 );
 	}
 }
 
@@ -256,29 +202,13 @@
 		> .mw-portlet {
 			li > a {
 				gap: var( --space-xs );
-				font-size: 0.875rem;
+				font-size: var( --font-size-small );
 			}
 		}
 
-		&__card {
+		.citizen-menu__card {
 			// Expand the width on narrow screens might overflow the page
 			white-space: nowrap;
-		}
-	}
-}
-
-// Reset hover styles if it is a touch device
-// This is dumb but hover:hover overrides active states
-@media ( hover: none ) {
-	.page-actions {
-		&__button {
-			&:hover {
-				background-color: none;
-
-				.citizen-ui-icon::before {
-					opacity: var( --opacity-icon-base );
-				}
-			}
 		}
 	}
 }

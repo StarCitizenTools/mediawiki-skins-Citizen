@@ -23,14 +23,14 @@
 }
 
 .ve-ce-focusableNode-highlights-deactivated .ve-ce-focusableNode-highlight {
-	background: var( --color-base--emphasized );
+	background: var( --color-emphasized );
 }
 
 /* ve.ce.AlienNode.css */
 /*
 .ve-ce-alienNode-highlights .ve-ce-focusableNode-highlight {
 	// background-color: #95d14f;
-	// background-image: repeating-linear-gradient( -45deg, #fff 0, #fff 5px, #95d14f 5px, #95d14f 10px );
+	// background-image: repeating-linear-gradient( -45deg, var( --color-inverted-fixed ) 0, var( --color-inverted-fixed ) 5px, #95d14f 5px, #95d14f 10px );
 }
 
 .ve-ce-surface-highlights-focused .ve-ce-alienNode-highlights .ve-ce-focusableNode-highlight {
@@ -45,7 +45,7 @@
 /* ve.ce.BranchNode.css */
 .ve-ce-branchNode-blockSlug,
 .ve-ce-branchNode-newSlug {
-	background-color: var( --background-color-quiet--hover );
+	background-color: var( --background-color-button-quiet--hover );
 	outline: 1px dashed var( --border-color-base );
 }
 
@@ -70,7 +70,7 @@
 
 /* ve.ce.LinkAnnotation.css */
 .ve-ce-linkAnnotation.ve-ce-annotation-active {
-	background-color: var( --background-color-quiet--hover );
+	background-color: var( --background-color-button-quiet--hover );
 	box-shadow: 0 0 0 1px var( --border-color-base );
 }
 
@@ -104,11 +104,11 @@
 }
 
 .ve-ce-tableNodeOverlay-selection-box {
-	background: var( --background-color-primary--hover );
+	background: var( --background-color-progressive-subtle );
 }
 
 .ve-ce-tableNodeOverlay-selection-box-anchor {
-	border-color: var( --color-primary );
+	border-color: var( --color-progressive );
 }
 
 /*
@@ -127,15 +127,15 @@
 
 /* ve.ce.Surface.css */
 .ve-ce-surface-deactivatedSelection > div {
-	background: var( --background-color-primary--hover );
+	background: var( --background-color-progressive-subtle );
 }
 
 .ve-ce-surface-deactivatedSelection-showAsDeactivated > div {
-	background: var( --color-base--emphasized );
+	background: var( --color-emphasized );
 }
 
 .ve-ce-surface-dropMarker {
-	background: var( --color-base--subtle );
+	background: var( --color-subtle );
 }
 
 /*
@@ -151,7 +151,7 @@
 .ve-ce-surface-highlights-user-cursor-label {
 	font-weight: bold;
 	background: #a66;
-	color: #fff;
+	color: var( --color-inverted-fixed );
 	text-shadow: 0 0 1px #000;
 }
 */
@@ -177,7 +177,7 @@
 /* ve.ui.CommandHelpDialog.css */
 .ve-ui-commandHelpDialog-shortcut > kbd,
 .ve-ui-commandHelpDialog-sequence > kbd {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	text-shadow: none;
 	background-color: var( --color-surface-2 );
 	border-color: var( --border-color-base );
@@ -185,15 +185,17 @@
 }
 
 /* ve.ui.FindAndReplaceDialog.css */
-/*
 .ve-ui-findAndReplaceDialog-findResult > div {
-	background: #28bb0b;
+	background: var( --color-syntax-yellow );
 }
-*/
+
+.ve-ui-findAndReplaceDialog-findResult-focused > div {
+	background: var( --color-syntax-orange );
+}
 
 /* ve.ui.SpecialCharacterDialog.css */
 .ve-ui-specialCharacterPage h3 {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .ve-ui-specialCharacterPage-character {
@@ -210,7 +212,7 @@
 
 /* ve.ui.ContextOptionWidget.css */
 .ve-ui-contextOptionWidget .oo-ui-labelElement-label {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 /* ve.ui.ContextItem.css */
@@ -238,7 +240,7 @@
 
 /* ve.ui.LanguageContextItem.cs */
 .ve-ui-languageContextItem .ve-ui-linearContextItem-body {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 /* ve.ui.LinkContextItem.css */
@@ -247,7 +249,7 @@
 }
 
 .ve-ui-desktopContext .ve-ui-linkContextItem .ve-ui-linkContextItem-label .ve-ui-linkContextItem-label-preview {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 /* ve.ui.Overlay.css */
@@ -272,13 +274,18 @@
 	box-shadow: none;
 }
 
+/* ve.ui.ToolbarDialog.css */
+.ve-ui-toolbarDialog {
+	background-color: var( --color-surface-0 );
+}
+
 /* ve.ui.TableLineContext.css */
 .ve-ui-tableLineContext > .oo-ui-iconWidget.oo-ui-iconElement.oo-ui-iconElement-icon {
 	background-color: var( --background-color--hover );
 }
 
 .ve-ce-tableNodeOverlay-deactivated .ve-ui-tableLineContext > .oo-ui-iconWidget.oo-ui-iconElement.oo-ui-iconElement-icon {
-	background-color: var( --color-base--subtle );
+	background-color: var( --color-subtle );
 }
 
 /* ve.ui.DebugBar.css */
@@ -296,18 +303,18 @@
 }
 
 .ve-ui-debugBar-dump th {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 	text-shadow: 0 1px 1px var( --color-surface-1 );
 }
 
 .ve-ui-debugBar-dump ol {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .ve-ui-debugBar-dump li .ve-ui-debugBar-dump-element,
 .ve-ui-debugBar-dump li .ve-ui-debugBar-dump-char,
 .ve-ui-debugBar-dump li .ve-ui-debugBar-dump-achar {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	text-shadow: 0 1px 1px var( --color-surface-1 );
 	background-color: var( --color-surface-2 );
 }
@@ -327,7 +334,7 @@
 */
 
 .ve-ui-debugBar-dump li .ve-ui-debugBar-dump-note {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .ve-ui-debugBar-filibuster {
@@ -345,8 +352,8 @@
 }
 
 .ve-ui-targetWidget-focused {
-	border-color: var( --color-primary );
-	box-shadow: inset 0 0 0 1px var( --color-primary );
+	border-color: var( --color-progressive );
+	box-shadow: inset 0 0 0 1px var( --color-progressive );
 }
 
 .ve-ui-targetWidget:not( .oo-ui-pendingElement-pending ) {
@@ -355,4 +362,52 @@
 
 .ve-ui-targetWidget-readOnly:not( .oo-ui-pendingElement-pending ) {
 	background: var( --color-surface-2 );
+}
+
+/* Responsive handling */
+.ve-init-mw-desktopArticleTarget-toolbar {
+	> .oo-ui-toolbar-bar {
+		> .oo-ui-toolbar-tools {
+			// Needed to hide overflow tools
+			background: var( --color-surface-0 );
+
+			&:first-child {
+				display: inline-block;
+				max-width: ~'calc( 100% - 250px )';
+				white-space: nowrap;
+			}
+		}
+
+		> .oo-ui-toolbar-actions {
+			border-left: 1px solid var( --border-color-base );
+		}
+	}
+}
+
+.ve-ui-toolbar-saveButton {
+	@media ( max-width: @max-width-breakpoint-tablet ) {
+		min-width: 56px;
+		text-align: center;
+
+		.oo-ui-tool-title {
+			font-size: 0;
+
+			&::before {
+				font-size: 1.25rem;
+				line-height: 1;
+				content: '✓';
+			}
+		}
+	}
+}
+
+/* Hide less useful buttons on small viewport */
+@media ( max-width: @max-width-breakpoint-tablet ) {
+	.ve-ui-toolbar-group {
+		&-format,
+		&-style,
+		&-help {
+			display: none;
+		}
+	}
 }

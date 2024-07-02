@@ -4,8 +4,8 @@
 	// Reserve space for header
 	margin-bottom: var( --header-size );
 	clear: both;
-	font-size: 0.875rem;
-	color: var( --color-base--subtle );
+	font-size: var( --font-size-small );
+	color: var( --color-subtle );
 	background-color: var( --color-surface-2 );
 	direction: ltr;
 
@@ -20,12 +20,12 @@
 		display: flex;
 		flex-wrap: wrap;
 		gap: var( --space-md );
+		justify-content: space-between;
 		padding: var( --space-md ) 0;
 	}
 
 	&__bottom {
 		align-items: center;
-		justify-content: space-between;
 		margin-right: auto;
 		margin-left: auto;
 		border-top: 1px solid var( --border-color-base );
@@ -45,7 +45,7 @@
 
 	a {
 		font-weight: var( --font-weight-medium );
-		color: var( --color-base--emphasized );
+		color: var( --color-emphasized );
 	}
 
 	ul {
@@ -60,16 +60,6 @@
 }
 
 #footer {
-	&-sitetitle {
-		font-size: 1.25rem;
-		color: var( --color-base--emphasized );
-
-		img.mw-logo-wordmark {
-			max-height: 54px;
-			filter: invert( 1 ) hue-rotate( 180deg );
-		}
-	}
-
 	&-places {
 		ul {
 			flex-direction: column;
@@ -81,11 +71,11 @@
 			border-radius: var( --border-radius--small );
 
 			&:hover {
-				background-color: var( --background-color-quiet--hover );
+				background-color: var( --background-color-button-quiet--hover );
 			}
 
 			&:active {
-				background-color: var( --background-color-quiet--active );
+				background-color: var( --background-color-button-quiet--active );
 			}
 
 			&:hover,

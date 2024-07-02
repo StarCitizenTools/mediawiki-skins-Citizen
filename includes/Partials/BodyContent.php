@@ -43,9 +43,9 @@ final class BodyContent extends Partial {
 	 */
 
 	/**
-	 * Class name for collapsible section wrappers
+	 * Class name for section wrappers
 	 */
-	public const STYLE_COLLAPSIBLE_SECTION_CLASS = 'citizen-section-collapsible';
+	public const SECTION_CLASS = 'citizen-section';
 
 	/**
 	 * List of tags that could be considered as section headers.
@@ -68,9 +68,15 @@ final class BodyContent extends Partial {
 			// MobileFrontend not installed. Don't do anything
 		}
 
-		return $this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true &&
+		$enableSections = (
+			$this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true &&
+			$title->canExist() &&
+			$title->getContentModel() == CONTENT_MODEL_WIKITEXT &&
 			!$title->isMainPage() &&
-			$title->isContentPage();
+			$title->isContentPage()
+		);
+
+		return $enableSections;
 	}
 
 	/**
@@ -203,8 +209,8 @@ final class BodyContent extends Partial {
 	 */
 	private function createSectionBodyElement( DOMDocument $doc, $sectionNumber ) {
 		$sectionBody = $doc->createElement( 'section' );
-		$sectionBody->setAttribute( 'class', self::STYLE_COLLAPSIBLE_SECTION_CLASS );
-		$sectionBody->setAttribute( 'id', 'citizen-section-collapsible-' . $sectionNumber );
+		$sectionBody->setAttribute( 'class', self::SECTION_CLASS );
+		$sectionBody->setAttribute( 'id', 'citizen-section-' . $sectionNumber );
 
 		return $sectionBody;
 	}

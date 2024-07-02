@@ -4,18 +4,26 @@
  * Module: mediawiki.skinning.content.tables
  * Version: REL1_39
  *
- * Date: 2022-11-14
+ * Date: 2024-02-26
 */
 
+// TODO: Revisit on MW 1.43 since Minerva table styles are merged upstream
 .wikitable {
+	display: block;
+	max-width: max-content; // Needed for the border
 	margin: var( --space-md ) 0;
-	border-collapse: collapse;
+	overflow-x: auto;
+	font-size: var( --font-size-small );
+	border-spacing: 0;
+	border: 1px solid var( --border-color-base );
+	border-radius: var( --border-radius--medium );
 
 	caption {
 		padding-right: var( --space-sm );
 		padding-left: var( --space-sm );
+		margin-bottom: var( --space-xs );
 		font-weight: var( --font-weight-semibold );
-		color: var( --color-base--emphasized );
+		color: var( --color-emphasized );
 		text-align: start;
 	}
 
@@ -24,30 +32,55 @@
 	}
 
 	tbody tr {
-		// Divider
-		+ tr {
-			border-top: 1px solid var( --border-color-base );
-		}
-
 		&:hover {
-			background-color: var( --background-color-quiet--hover );
+			background-color: var( --background-color-button-quiet--hover );
 		}
 	}
 
 	th {
-		font-size: 0.8125rem;
 		font-weight: var( --font-weight-normal );
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 		text-align: start;
 		letter-spacing: 0.05em;
-	}
-
-	td {
-		font-size: 0.875rem;
 	}
 
 	th,
 	td {
 		padding: var( --space-xs ) var( --space-sm );
+	}
+
+	tr {
+		th,
+		td {
+			border-top: 1px solid var( --border-color-base );
+		}
+
+		&:first-of-type {
+			th,
+			td {
+				border-top: 0;
+
+				&:first-child {
+					border-top-left-radius: var( --border-radius--medium );
+				}
+
+				&:last-child {
+					border-top-right-radius: var( --border-radius--medium );
+				}
+			}
+		}
+
+		&:last-of-type {
+			th,
+			td {
+				&:first-child {
+					border-bottom-left-radius: var( --border-radius--medium );
+				}
+
+				&:last-child {
+					border-bottom-right-radius: var( --border-radius--medium );
+				}
+			}
+		}
 	}
 }

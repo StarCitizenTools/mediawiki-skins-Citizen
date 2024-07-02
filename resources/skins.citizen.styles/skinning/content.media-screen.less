@@ -6,6 +6,7 @@
  *
  * Date: 2023-07-23
  */
+
 figure[ typeof~='mw:File' ],
 figure[ typeof~='mw:File/Frameless' ],
 figure[ typeof~='mw:File/Thumb' ],
@@ -49,16 +50,16 @@ figure[ typeof~='mw:File/Frame' ] {
 	// Broken file styles
 	> a:first-child:not( .mw-file-description ) {
 		padding: var( --space-sm );
-		border: 1px solid var( --border-color-base--darker );
+		border: 1px solid var( --border-color-interactive );
 
 		&:hover {
-			color: #fff;
-			background-color: var( --color-primary--hover );
+			color: var( --color-inverted-primary );
+			background-color: var( --color-progressive--hover );
 		}
 
 		&:active {
-			color: #fff;
-			background-color: var( --color-primary--active );
+			color: var( --color-inverted-primary );
+			background-color: var( --color-progressive--active );
 		}
 
 		&.new {

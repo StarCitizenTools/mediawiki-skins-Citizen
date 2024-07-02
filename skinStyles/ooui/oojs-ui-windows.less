@@ -16,7 +16,7 @@
  * hack to ensure that the UI is displayed correctly.
  */
 .oo-ui-window {
-	font-size: 0.875rem;
+	font-size: var( --font-size-small );
 }
 
 .oo-ui-messageDialog-content > .oo-ui-window-foot {
@@ -24,7 +24,7 @@
 }
 
 .oo-ui-messageDialog-title {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 }
 
 .oo-ui-messageDialog-message {
@@ -32,11 +32,11 @@
 }
 
 .oo-ui-messageDialog-actions .oo-ui-actionWidget.oo-ui-widget-enabled.oo-ui-flaggedElement-progressive .oo-ui-buttonElement-button:active {
-	background-color: var( --background-color-primary--hover );
+	background-color: var( --background-color-progressive-subtle );
 }
 
 .oo-ui-messageDialog-actions .oo-ui-actionWidget.oo-ui-widget-enabled.oo-ui-flaggedElement-destructive .oo-ui-buttonElement-button:active {
-	background-color: var( --background-color-destructive );
+	background-color: var( --background-color-destructive-subtle );
 }
 
 .oo-ui-messageDialog-actions-horizontal .oo-ui-actionWidget {
@@ -90,7 +90,7 @@
 }
 
 .oo-ui-processDialog .oo-ui-actionWidget:not( .oo-ui-flaggedElement-progressive ):not( .oo-ui-flaggedElement-destructive ) > .oo-ui-buttonElement-button:focus {
-	border-color: var( --color-primary );
+	border-color: var( --color-progressive );
 }
 
 .oo-ui-processDialog-actions-primary .oo-ui-actionWidget > .oo-ui-buttonElement-button {
@@ -103,7 +103,7 @@
 }
 
 .oo-ui-processDialog-actions-primary .oo-ui-actionWidget:not( .oo-ui-flaggedElement-progressive ):not( .oo-ui-flaggedElement-destructive ) > .oo-ui-buttonElement-button:focus {
-	border-color: var( --color-primary );
+	border-color: var( --color-progressive );
 }
 
 .oo-ui-processDialog-actions-safe .oo-ui-actionWidget > .oo-ui-buttonElement-button,
@@ -127,22 +127,22 @@
 }
 
 .oo-ui-processDialog-actions-safe .oo-ui-widget-enabled.oo-ui-iconElement:not( .oo-ui-labelElement ) > .oo-ui-buttonElement-button:focus {
-	border-color: var( --color-primary );
+	border-color: var( --color-progressive );
 }
 
 .oo-ui-processDialog-errors {
-	background-color: var( --background-color-overlay );
+	background-color: var( --background-color-backdrop-light );
 }
 
 .oo-ui-processDialog-errors-title {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 }
 
 .oo-ui-windowManager-modal > .oo-ui-dialog {
 	// Align z-index stack with Citizen and Codex
 	// T285592
 	z-index: @z-index-overlay;
-	background-color: var( --background-color-overlay--lighter );
+	background-color: var( --background-color-backdrop-light );
 }
 
 .oo-ui-windowManager-modal > .oo-ui-dialog > .oo-ui-window-frame {

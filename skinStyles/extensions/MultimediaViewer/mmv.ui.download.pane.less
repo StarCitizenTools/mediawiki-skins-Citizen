@@ -33,7 +33,7 @@
 		}
 
 		.mw-mmv-download-image-size {
-			font-size: 0.8125rem;
+			font-size: var( --font-size-x-small );
 		}
 
 		.mw-mmv-download-preview-link {
@@ -41,15 +41,15 @@
 			align-items: center;
 			margin: 0;
 			font-weight: var( --font-weight-semibold );
-			color: var( --color-base--subtle );
+			color: var( --color-subtle );
 
 			// Add hover state
 			&:hover {
-				color: var( --color-primary--hover );
+				color: var( --color-progressive--hover );
 			}
 
 			&:active {
-				color: var( --color-primary--active );
+				color: var( --color-progressive--active );
 			}
 		}
 
@@ -66,14 +66,14 @@
 	.mw-mmv-download-attribution {
 		padding: var( --space-md );
 		margin: 0;
-		color: var( --color-base--emphasized );
+		color: var( --color-emphasized );
 		background-color: var( --color-surface-2 );
 		border-top: 1px solid var( --border-color-base );
 		border-bottom-right-radius: var( --border-radius--medium );
 		border-bottom-left-radius: var( --border-radius--medium );
 
 		&:hover {
-			color: var( --color-base--emphasized );
+			color: var( --color-emphasized );
 			background-color: var( --color-surface-2--hover );
 		}
 
@@ -98,8 +98,8 @@
 		}
 
 		&-cta-invite {
-			font-size: 0.8125rem;
-			color: var( --color-primary );
+			font-size: var( --font-size-x-small );
+			color: var( --color-progressive );
 		}
 
 		&-cta {

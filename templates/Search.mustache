@@ -6,16 +6,9 @@
 	string html-random-href URL of Special:Random
 	string msg-randompage tooltip message for random page button
 }}
-<div class="citizen-search citizen-header__item citizen-menu-checkbox-container">
-	<input
-		type="checkbox" 
-		id="citizen-search__checkbox" 
-		class="citizen-menu-checkbox-checkbox"
-		role="button"
-		aria-labelledby="citizen-search__buttonCheckbox"
-		aria-haspopup="true">
+<details id="citizen-search" class="citizen-search citizen-header__item citizen-menu__dropdown">
 	{{>Search__button}}
-	<div role="search" class="citizen-search-box citizen-search__card citizen-menu-checkbox-target">
+	<div role="search" class="citizen-search-box citizen-search__card citizen-menu__card">
 		<form action="{{form-action}}" class="citizen-search__form" id="searchform" autocomplete="off">
 			<input type="hidden" name="title" value="{{page-title}}">
 			<label for="searchInput">
@@ -32,4 +25,4 @@
 			</a>
 		</form>
 	</div>
-</div>
+</details>

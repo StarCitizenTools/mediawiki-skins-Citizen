@@ -22,6 +22,7 @@ figure[ typeof~='mw:File/Frame' ] {
 	&.mw-halign-center {
 		margin-right: auto;
 		margin-left: auto;
+		text-align: center;
 	}
 }
 
@@ -37,7 +38,7 @@ figure[ typeof~='mw:File/Thumb' ],
 figure[ typeof~='mw:File/Frame' ] {
 	display: table;
 	margin: var( --space-xs ) auto var( --space-md ) auto;
-	font-size: 0.8125rem;
+	font-size: var( --font-size-x-small );
 	text-align: center;
 
 	> a:first-child,
@@ -60,10 +61,46 @@ figure[ typeof~='mw:File/Frame' ] {
 		// Sync with rounded corner
 		padding-left: var( --border-radius--small );
 		margin-top: var( --space-xs );
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 		letter-spacing: 0.025em;
 		caption-side: bottom;
 	}
+}
+
+/**
+ * Inline media items
+ * img is needed for 1.39 compat, change to .mw-file-element later
+ */
+.mw-valign-middle img {
+	vertical-align: middle;
+}
+
+.mw-valign-baseline img {
+	vertical-align: baseline;
+}
+
+.mw-valign-sub img {
+	vertical-align: sub;
+}
+
+.mw-valign-super img {
+	vertical-align: super;
+}
+
+.mw-valign-top img {
+	vertical-align: top;
+}
+
+.mw-valign-text-top img {
+	vertical-align: text-top;
+}
+
+.mw-valign-bottom img {
+	vertical-align: bottom;
+}
+
+.mw-valign-text-bottom img {
+	vertical-align: text-bottom;
 }
 
 // Do not float content in mobile view
@@ -102,6 +139,8 @@ figure[ typeof~='mw:File/Frame' ] {
 			/* @noflip */
 			float: right;
 			/* @noflip */
+			margin-right: 0;
+			/* @noflip */
 			margin-left: var( --space-lg );
 			/* @noflip */
 			clear: right;
@@ -112,6 +151,8 @@ figure[ typeof~='mw:File/Frame' ] {
 			float: left;
 			/* @noflip */
 			margin-right: var( --space-lg );
+			/* @noflip */
+			margin-left: 0;
 			/* @noflip */
 			clear: left;
 		}

@@ -12,7 +12,7 @@
 @import '../../../resources/mixins.less';
 
 // Disable sticky header
-#citizen-body-header-sticky-sentinel {
+#citizen-page-header-sticky-sentinel {
 	display: none;
 }
 
@@ -39,13 +39,13 @@
 
 /* uw.ui.Metadata.less */
 h3.mwe-upwiz-metadata-title {
-	font-size: var( --font-size-h3 );
+	font-size: var( --font-size-x-large );
 }
 
 .mwe-upwiz-metadata-booklet.oo-ui-bookletLayout {
 	> .oo-ui-menuLayout-menu {
 		.mwe-upwiz-metadata-page--error {
-			background-color: var( --background-color-destructive );
+			background-color: var( --background-color-destructive-subtle );
 			border-color: transparent;
 		}
 	}
@@ -75,13 +75,13 @@ h3.mwe-upwiz-metadata-title {
 
 	&::before,
 	&::after {
-		content: none; // Pseudo elements do not play well with flex
+		display: none; // Pseudo elements do not play well with flex
 	}
 
 	li {
 		width: auto !important;
 		height: auto;
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 		background-color: transparent;
 
 		div {
@@ -90,14 +90,14 @@ h3.mwe-upwiz-metadata-title {
 
 		&.head {
 			font-weight: var( --font-weight-semibold );
-			color: var( --color-primary );
+			color: var( --color-progressive );
 			background-color: transparent;
 		}
 
 		&.arrow {
 			&::before,
 			&::after {
-				content: none;
+				display: none;
 			}
 		}
 	}
@@ -137,12 +137,12 @@ h3.mwe-upwiz-metadata-title {
 	}
 
 	&-status {
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 	}
 
 	&:hover {
 		.mwe-upwiz-visible-file {
-			background-color: var( --background-color-quiet--hover ) !important;
+			background-color: var( --background-color-button-quiet--hover ) !important;
 		}
 	}
 }
@@ -152,7 +152,7 @@ h3.mwe-upwiz-metadata-title {
 
 	&-text {
 		font-weight: var( --font-weight-semibold );
-		color: var( --color-base--emphasized );
+		color: var( --color-emphasized );
 	}
 }
 
@@ -179,7 +179,7 @@ h3.mwe-upwiz-metadata-title {
 }
 
 #mwe-upwiz-flickr-disclaimer {
-	font-size: 0.875rem;
+	font-size: var( --font-size-small );
 	background-color: var( --color-surface-2 );
 }
 
@@ -220,7 +220,7 @@ h3.mwe-upwiz-metadata-title {
 
 	&-license-group {
 		&-subhead {
-			color: var( --color-base--subtle );
+			color: var( --color-subtle );
 		}
 
 		&-body {
@@ -236,11 +236,11 @@ h3.mwe-upwiz-metadata-title {
 
 			&.oo-ui-widget-enabled {
 				&:hover {
-					background-color: var( --background-color-quiet--hover );
+					background-color: var( --background-color-button-quiet--hover );
 				}
 
 				&:active {
-					background-color: var( --background-color-quiet--active );
+					background-color: var( --background-color-button-quiet--active );
 				}
 			}
 		}
@@ -250,17 +250,17 @@ h3.mwe-upwiz-metadata-title {
 	&.selected {
 		.mwe-upwiz-deed-option-title {
 			.oo-ui-optionWidget.oo-ui-widget-enabled {
-				background-color: var( --background-color-primary--hover );
+				background-color: var( --background-color-progressive-subtle );
 			}
 		}
 	}
 }
 
 .mwe-upwiz-details-fieldname {
-	font-size: 0.8125rem;
+	font-size: var( --font-size-x-small );
 	font-weight: var( --font-weight-normal );
 	// Citizen label styles
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 	letter-spacing: 0.05em;
 }
 
@@ -269,8 +269,8 @@ h3.mwe-upwiz-metadata-title {
 }
 
 .mwe-small-print {
-	font-size: 0.8125rem;
-	color: var( --color-base--subtle );
+	font-size: var( --font-size-x-small );
+	color: var( --color-subtle );
 }
 
 .mwe-upwiz-license-custom .oo-ui-textInputWidget textarea {
@@ -304,7 +304,7 @@ h3.mwe-upwiz-metadata-title {
 }
 
 .mwe-upwiz-objref-pick-image input:disabled + label {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }
 
 .mwe-upwiz-objref-notice-existing-image {
@@ -325,12 +325,12 @@ h3.mwe-upwiz-metadata-title {
 /* uw.FieldLayout.less */
 .mwe-upwiz-fieldLayout {
 	.mwe-upwiz-fieldLayout-indicator {
-		font-size: 0.8125rem;
-		color: var( --color-base--subtle );
+		font-size: var( --font-size-x-small );
+		color: var( --color-subtle );
 	}
 
 	.mwe-upwiz-details-help {
-		font-size: 0.875rem;
+		font-size: var( --font-size-small );
 	}
 }
 
@@ -361,5 +361,5 @@ h3.mwe-upwiz-metadata-title {
 }
 
 .mwe-upwiz-metadata-pendingOverlay {
-	background-color: var( --background-color-overlay );
+	background-color: var( --background-color-backdrop-light );
 }

@@ -9,40 +9,77 @@ function init( bodyContent ) {
 		return;
 	}
 
-	const
-		headings = bodyContent.querySelectorAll( '.citizen-section-heading' ),
-		sections = bodyContent.querySelectorAll( '.citizen-section-collapsible' ),
-		editSections = bodyContent.querySelectorAll( '.mw-editsection, .mw-editsection-like' );
+	const headings = bodyContent.querySelectorAll( '.citizen-section-heading' );
+	const sections = bodyContent.querySelectorAll( '.citizen-section' );
 
-	for ( let i = 0; i < headings.length; i++ ) {
-		const j = i + 1,
-			collapsibleID = `citizen-section-collapsible-${j}`,
-			/* T13555 */
-			headline = headings[ i ].querySelector( '.mw-headline' ) || headings[ i ].querySelector( '.mw-heading' );
+	const setHeadlineAttributes = ( heading, collapsibleID, sectionIndex ) => {
+		const headline = heading.querySelector( '.mw-headline, .mw-heading' );
 
-		// Set up ARIA
-		headline.setAttribute( 'tabindex', 0 );
+		if ( !headline ) {
+			return;
+		}
+
+		headline.setAttribute( 'tabindex', '0' );
 		headline.setAttribute( 'role', 'button' );
 		headline.setAttribute( 'aria-controls', collapsibleID );
-		headline.setAttribute( 'aria-expanded', true );
+		headline.setAttribute( 'aria-expanded', 'true' );
+		headline.setAttribute( 'data-mw-citizen-section-heading-index', sectionIndex );
+	};
 
-		// TODO: Need a keyboard handler
-		headings[ i ].addEventListener( 'click', function () {
-			// .section-heading--collapsed
+	const setSectionAttributes = ( section ) => {
+		section.setAttribute( 'aria-hidden', 'false' );
+	};
 
-			this.classList.toggle( 'citizen-section-heading--collapsed' );
-			// .section-collapsible--collapsed
+	const toggleClasses = ( heading, section ) => {
+		if ( section ) {
+			heading.classList.toggle( 'citizen-section-heading--collapsed' );
+			section.classList.toggle( 'citizen-section--collapsed' );
+		}
+	};
 
-			sections[ j ].classList.toggle( 'citizen-section-collapsible--collapsed' );
-			headline.setAttribute( 'aria-expanded', headline.getAttribute( 'aria-expanded' ) === 'true' ? 'false' : 'true' );
-		} );
+	const toggleAriaAttribute = ( el, attribute ) => {
+		const isAttributeSet = el.getAttribute( attribute ) === 'true';
+		el.setAttribute( attribute, isAttributeSet ? 'false' : 'true' );
+	};
+
+	const onEditSectionClick = ( e ) => {
+		e.stopPropagation();
+	};
+
+	const handleClick = ( e ) => {
+		const target = e.target;
+		const isEditSection = target.closest( '.mw-editsection, .mw-editsection-like' );
+
+		if ( isEditSection ) {
+			onEditSectionClick( e );
+			return;
+		}
+
+		const selectedHeading = target.closest( '.citizen-section-heading' );
+
+		if ( selectedHeading ) {
+			const selectedHeadline = selectedHeading.querySelector( '.mw-headline, .mw-heading' );
+
+			if ( selectedHeadline ) {
+				const sectionIndex = +selectedHeadline.dataset.mwCitizenSectionHeadingIndex;
+				const selectedSection = sections[ sectionIndex + 1 ];
+				toggleClasses( selectedHeading, selectedSection );
+				toggleAriaAttribute( selectedHeadline, 'aria-expanded' );
+				toggleAriaAttribute( selectedSection, 'aria-hidden' );
+			}
+		}
+	};
+
+	const headingsLength = headings.length;
+	for ( let i = 0; i < headingsLength; i++ ) {
+		setHeadlineAttributes( headings[ i ], `citizen-section-${ i + 1 }`, i );
 	}
 
-	for ( let i = 0; i < editSections.length; i++ ) {
-		editSections[ i ].addEventListener( 'click', function ( e ) {
-			e.stopPropagation();
-		} );
-	}
+	sections.forEach( ( section ) => {
+		setSectionAttributes( section );
+	} );
+
+	bodyContent.addEventListener( 'click', handleClick, false );
 }
 
 module.exports = {

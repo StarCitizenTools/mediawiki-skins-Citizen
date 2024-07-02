@@ -17,6 +17,11 @@
  * @property {string} desc
  */
 
+/**
+ * Return an object containing functions to handle HTML elements for a typeahead component.
+ *
+ * @return {Object} An object with functions for creating, updating, and removing HTML elements for a typeahead component.
+ */
 function htmlHelper() {
 	return {
 		/**
@@ -28,13 +33,13 @@ function htmlHelper() {
 		getItemGroupElement: function ( data ) {
 			const itemGroup = document.createElement( 'li' );
 			itemGroup.classList.add( 'citizen-typeahead-item-group' );
-			itemGroup.setAttribute( 'data-group', `${data.id}` );
+			itemGroup.setAttribute( 'data-mw-citizen-typeahead-group', `${ data.id }` );
 			itemGroup.setAttribute( 'role', 'presentation' );
 
 			if ( data.label ) {
 				const label = document.createElement( 'span' );
 				label.classList.add( 'citizen-typeahead-item-group-label' );
-				label.innerText = data.label;
+				label.textContent = data.label;
 				itemGroup.append( label );
 			}
 
@@ -42,11 +47,14 @@ function htmlHelper() {
 				const list = document.createElement( 'ol' );
 				list.classList.add( 'citizen-typeahead-item-group-list' );
 				list.setAttribute( 'role', 'presentation' );
+				const fragment = document.createDocumentFragment();
 				data.items.forEach( ( itemData, index ) => {
-					itemData.id = `citizen-typeahead-${data.id}-${index}`;
-					const item = this.getItemElement( itemData );
-					list.append( item );
+					const modifiedId = `citizen-typeahead-${ data.id }-${ index }`;
+					const modifiedItemData = { ...itemData, id: modifiedId };
+					const item = this.getItemElement( modifiedItemData );
+					fragment.appendChild( item );
 				} );
+				list.appendChild( fragment );
 				itemGroup.append( list );
 			}
 
@@ -85,7 +93,7 @@ function htmlHelper() {
 				item.setAttribute( 'id', data.id );
 			}
 			if ( data.type ) {
-				item.classList.add( `citizen-typeahead__item-${data.type}` );
+				item.classList.add( `citizen-typeahead__item-${ data.type }` );
 
 				if ( data.type !== 'placeholder' ) {
 					item.setAttribute( 'role', 'option' );
@@ -93,7 +101,7 @@ function htmlHelper() {
 			}
 
 			if ( data.size ) {
-				item.classList.add( `citizen-typeahead__item-${data.size}` );
+				item.classList.add( `citizen-typeahead__item-${ data.size }` );
 			}
 			if ( data.link ) {
 				item.querySelector( '.citizen-typeahead__content' ).setAttribute( 'href', data.link );
@@ -101,23 +109,24 @@ function htmlHelper() {
 			if ( data.icon || data.thumbnail ) {
 				const thumbnail = item.querySelector( '.citizen-typeahead__thumbnail' );
 				if ( data.thumbnail ) {
-					thumbnail.style.backgroundImage = `url('${data.thumbnail}')`;
+					thumbnail.style.backgroundImage = `url('${ data.thumbnail }')`;
 				} else {
 					thumbnail.classList.add(
 						'citizen-typeahead__thumbnail',
 						'citizen-ui-icon',
-						`mw-ui-icon-wikimedia-${data.icon}`
+						`mw-ui-icon-wikimedia-${ data.icon }`
 					);
 				}
 			}
 			if ( data.title ) {
+				// Required to use innerHTML because of highlightText
 				item.querySelector( '.citizen-typeahead__title' ).innerHTML = data.title;
 			}
 			if ( data.label ) {
 				item.querySelector( '.citizen-typeahead__label' ).innerHTML = data.label;
 			}
 			if ( data.desc ) {
-				item.querySelector( '.citizen-typeahead__description' ).innerHTML = data.desc;
+				item.querySelector( '.citizen-typeahead__description' ).textContent = data.desc;
 			}
 		},
 		/**
@@ -127,7 +136,7 @@ function htmlHelper() {
 		 * @param {string} id
 		 */
 		removeItemGroup: function ( typeaheadEl, id ) {
-			typeaheadEl.querySelector( `.citizen-typeahead-item-group[data-group="${id}"]` )?.remove();
+			typeaheadEl.querySelector( `.citizen-typeahead-item-group[data-mw-citizen-typeahead-group="${ id }"]` )?.remove();
 		}
 	};
 }

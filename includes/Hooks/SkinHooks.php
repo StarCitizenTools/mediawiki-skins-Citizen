@@ -26,17 +26,17 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Hooks;
 
 use ExtensionRegistry;
+use Html;
 use Language;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\SidebarBeforeOutputHook;
 use MediaWiki\Hook\SkinBuildSidebarHook;
 use MediaWiki\Hook\SkinEditSectionLinksHook;
-use MediaWiki\Hook\SkinTemplateNavigation__UniversalHook;
+use MediaWiki\ResourceLoader as RL;
 use MediaWiki\Skins\Citizen\GetConfigTrait;
 use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;
 use MediaWiki\Title\Title;
 use OutputPage;
-use ResourceLoaderContext;
 use Skin;
 use SkinTemplate;
 use SpecialPage;
@@ -49,8 +49,7 @@ class SkinHooks implements
 	SidebarBeforeOutputHook,
 	SkinBuildSidebarHook,
 	SkinEditSectionLinksHook,
-	SkinPageReadyConfigHook,
-	SkinTemplateNavigation__UniversalHook
+	SkinPageReadyConfigHook
 {
 	use GetConfigTrait;
 
@@ -66,18 +65,12 @@ class SkinHooks implements
 			return;
 		}
 
-		$nonce = $out->getCSP()->getNonce();
-
-		// Script content at 'skins.citizen.scripts.theme/inline.js
-		// phpcs:disable Generic.Files.LineLength.TooLong
-		$script = sprintf(
-			'<script%s>%s</script>',
-			$nonce !== false ? sprintf( ' nonce="%s"', $nonce ) : '',
-			'window.applyPref=()=>{const a="skin-citizen-",b="skin-citizen-theme",c=a=>window.localStorage.getItem(a),d=c("skin-citizen-theme"),e=()=>{const d={fontsize:"font-size",pagewidth:"--width-layout",lineheight:"--line-height"},e=()=>["auto","dark","light"].map(b=>a+b),f=a=>{let b=document.getElementById("citizen-style");null===b&&(b=document.createElement("style"),b.setAttribute("id","citizen-style"),document.head.appendChild(b)),b.textContent=`:root{${a}}`};try{const g=c(b);let h="";if(null!==g){const b=document.documentElement;b.classList.remove(...e(a)),b.classList.add(a+g)}for(const[b,e]of Object.entries(d)){const d=c(a+b);null!==d&&(h+=`${e}:${d};`)}h&&f(h)}catch(a){}};if("auto"===d){const a=window.matchMedia("(prefers-color-scheme: dark)"),c=a.matches?"dark":"light",d=(a,b)=>window.localStorage.setItem(a,b);d(b,c),e(),a.addListener(()=>{e()}),d(b,"auto")}else e()},(()=>{window.applyPref()})();'
-		);
-		// phpcs:enable Generic.Files.LineLength.TooLong
-
-		$out->addHeadItem( 'skin.citizen.inline', $script );
+		if ( $this->getConfigValue( 'CitizenEnablePreferences', $out ) === true ) {
+			$script = file_get_contents( MW_INSTALL_PATH . '/skins/Citizen/resources/skins.citizen.scripts/inline.js' );
+			$script = Html::inlineScript( $script );
+			$script = RL\ResourceLoader::filter( 'minify-js', $script );
+			$out->addHeadItem( 'skin.citizen.inline', $script );
+		}
 	}
 
 	/**
@@ -168,25 +161,16 @@ class SkinHooks implements
 		if ( isset( $result['veeditsection'] ) ) {
 			self::appendClassToItem(
 				$result['veeditsection']['attribs']['class'],
-				[
-					'citizen-editsection-icon',
-					'mw-ui-icon-wikimedia-edit'
-				]
+				'citizen-editsection-icon mw-ui-icon-wikimedia-edit'
 			);
 			self::appendClassToItem(
 				$result['editsection']['attribs']['class'],
-				[
-					'citizen-editsection-icon',
-					'mw-ui-icon-wikimedia-wikiText'
-				]
+				'citizen-editsection-icon mw-ui-icon-wikimedia-wikiText'
 			);
 		} elseif ( isset( $result['editsection'] ) ) {
 			self::appendClassToItem(
 				$result['editsection']['attribs']['class'],
-				[
-					'citizen-editsection-icon',
-					'mw-ui-icon-wikimedia-edit'
-				]
+				'citizen-editsection-icon mw-ui-icon-wikimedia-edit'
 			);
 		}
 	}
@@ -196,8 +180,8 @@ class SkinHooks implements
 	 *
 	 * Replace searchModule provided by skin.
 	 *
-	 * @since 1.35
-	 * @param ResourceLoaderContext $context
+	 * @since 1.36
+	 * @param RL\Context $context
 	 * @param mixed[] &$config Associative array of configurable options
 	 * @return void This hook must not abort, it must return no value
 	 */
@@ -214,11 +198,12 @@ class SkinHooks implements
 	/**
 	 * Modify navigation links
 	 *
+	 * TODO: Update to a proper hook when T287622 is resolved
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SkinTemplateNavigation::Universal
 	 * @param SkinTemplate $sktemplate
 	 * @param array &$links
 	 */
-	public function onSkinTemplateNavigation__Universal( $sktemplate, &$links ): void {
+	public static function onSkinTemplateNavigation( $sktemplate, &$links ): void {
 		// Be extra safe because it might be active on other skins with caching
 		if ( $sktemplate->getSkinName() !== 'citizen' ) {
 			return;
@@ -230,6 +215,10 @@ class SkinHooks implements
 
 		if ( isset( $links['associated-pages'] ) ) {
 			self::updateAssociatedPagesMenu( $links );
+		}
+
+		if ( isset( $links['notifications'] ) ) {
+			self::updateNotificationsMenu( $links );
 		}
 
 		if ( isset( $links['user-menu'] ) ) {
@@ -248,6 +237,7 @@ class SkinHooks implements
 	/**
 	 * Update actions menu items
 	 *
+	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
 	 * @param array &$links
 	 */
 	private static function updateActionsMenu( &$links ) {
@@ -259,7 +249,11 @@ class SkinHooks implements
 			'unprotect' => 'unLock',
 			// Extension:Purge
 			// Extension:SemanticMediaWiki
-			'purge' => 'reload'
+			'purge' => 'reload',
+			// Extension:Cargo
+			'cargo-purge'  => 'reload',
+			// Extension:DiscussionTools
+			'dt-page-subscribe' => 'bell'
 		];
 
 		self::mapIconsToMenuItems( $links, 'actions', $iconMap );
@@ -269,21 +263,29 @@ class SkinHooks implements
 	/**
 	 * Update associated pages menu items
 	 *
+	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
 	 * @param array &$links
 	 */
 	private static function updateAssociatedPagesMenu( &$links ) {
 		// Most icons are not mapped yet in the associated pages menu
 		$iconMap = [
 			'main' => 'article',
+			'file' => 'image',
+			'talk' => 'speechBubbles',
 			'user' => 'userAvatar'
 		];
 
 		// Special handling for talk pages
 		// Since talk keys have namespace as prefix
 		foreach ( $links['associated-pages'] as $key => $item ) {
-			// I wish I can use str_ends_with but need to wait for PHP 7.X to be dropped
-			if ( substr( $key, -4 ) === 'talk' ) {
+			$keyStr = (string)$key;
+			// TODO: use str_ends_with when we drop PHP 7.X
+			if ( substr( $keyStr, -5 ) === '_talk' ) {
+				// Extract the namespace key from the talk key (e.g. Project from Project_talk)
+				// TODO: use str_starts_with when we drop PHP 7.X
+				$namespace = substr( $keyStr, 0, -5 );
 				$links['associated-pages'][$key]['icon'] = 'speechBubbles';
+				$links['associated-pages'][$namespace]['icon'] = 'arrowPrevious';
 			}
 		}
 
@@ -293,11 +295,8 @@ class SkinHooks implements
 
 	/**
 	 * Update toolbox menu items
-	 * This is not guaranteed to run after extensions hook
 	 *
-	 * WORKAROUND: Load the skin after all extensions
-	 * FIXME: Revisit when T287622 is resolved
-	 *
+	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
 	 * @param array &$links
 	 */
 	private static function updateToolboxMenu( &$links ) {
@@ -316,13 +315,16 @@ class SkinHooks implements
 			// Extension:Cargo
 			'cargo-pagevalues' => 'database',
 			// Extension:CiteThisPage
-			'citethispage' => 'reference',
+			'citethispage' => 'quotes',
 			// Extension:CreateRedirect
 			'createredirect' => 'articleRedirect',
 			// Extension:SemanticMediaWiki
 			'smwbrowselink' => 'database',
 			// Extension:UrlShortener
-			'urlshortener' => 'link'
+			'urlshortener' => 'link',
+			'urlshortener-qrcode' => 'qrCode',
+			// Extension:Wikibase
+			'wikibase' => 'logoWikidata'
 		];
 
 		self::mapIconsToMenuItems( $links, 'TOOLBOX', $iconMap );
@@ -330,8 +332,45 @@ class SkinHooks implements
 	}
 
 	/**
+	 * Update notifications menu
+	 *
+	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
+	 * @param array &$links
+	 */
+	private static function updateNotificationsMenu( &$links ) {
+		$iconMap = [
+			'notifications-alert' => 'bell',
+			'notifications-notice' => 'tray'
+		];
+
+		self::mapIconsToMenuItems( $links, 'notifications', $iconMap );
+		self::addIconsToMenuItems( $links, 'notifications' );
+
+		/**
+		 * Echo has styles that control icons rendering in places we don't want them.
+		 * Based on fixEcho() from Vector, see T343838
+		 */
+		foreach ( $links['notifications'] as &$item ) {
+			$icon = $item['icon'] ?? null;
+			if ( $icon ) {
+				$linkClass = $item['link-class'] ?? [];
+				$newLinkClass = [
+					// Allows Echo to react to clicks
+					'mw-echo-notification-badge-nojs',
+					'citizen-header__button'
+				];
+				if ( in_array( 'mw-echo-unseen-notifications', $linkClass ) ) {
+					$newLinkClass[] = 'mw-echo-unseen-notifications';
+				}
+				$item['link-class'] = $newLinkClass;
+			}
+		}
+	}
+
+	/**
 	 * Update user menu
 	 *
+	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
 	 * @param SkinTemplate $sktemplate
 	 * @param array &$links
 	 */
@@ -351,10 +390,6 @@ class SkinHooks implements
 		} else {
 			// Remove anon user page text from user menu and recreate it in user info
 			unset( $links['user-menu']['anonuserpage'] );
-			// Remove links as they are added to the bottom of user menu later
-			// unset( $links['user-menu']['createaccount'] );
-			// unset( $links['user-menu']['login'] );
-			// unset( $links['user-menu']['login-private'] );
 		}
 
 		self::addIconsToMenuItems( $links, 'user-menu' );
@@ -363,6 +398,7 @@ class SkinHooks implements
 	/**
 	 * Update user interface preferences menu
 	 *
+	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
 	 * @param SkinTemplate $sktemplate
 	 * @param array &$links
 	 */
@@ -373,6 +409,7 @@ class SkinHooks implements
 	/**
 	 * Update views menu items
 	 *
+	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
 	 * @param array &$links
 	 */
 	private static function updateViewsMenu( &$links ) {
@@ -385,10 +422,7 @@ class SkinHooks implements
 			'edit' => 'edit',
 			'view-foreign' => 'linkExternal',
 			// Extension:VisualEditor
-			// For some reason the icon span element keeps getting removed
-			// So we are adding this the legacy way
-			// Bug: T323188
-			// 've-edit' => 'edit',
+			've-edit' => 'edit',
 			// Extension:DiscussionTools
 			'addsection' => 'speechBubbleAdd'
 		];
@@ -446,7 +480,7 @@ class SkinHooks implements
 	 * Adds class to a property
 	 * Based on Vector
 	 *
-	 * @param array &$item to update
+	 * @param array|string &$item to update
 	 * @param array|string $classes to add to the item
 	 */
 	private static function appendClassToItem( &$item, $classes ) {

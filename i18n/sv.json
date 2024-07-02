@@ -18,9 +18,5 @@
 	"citizen-footer-tagline": "Redigera den här texten på [[MediaWiki:Citizen-footer-tagline/sv]]",
 	"citizen-search-fulltext": "Sök efter sidor som innehåller $1",
 	"citizen-search-noresults-title": "Ånej! Inga resultat för $1",
-	"citizen-search-noresults-desc": "Kanske prova alternativen nedan?",
-	"prefs-citizen-theme-label": "Tema",
-	"prefs-citizen-theme-option-auto": "Automatisk",
-	"prefs-citizen-theme-option-light": "Ljust",
-	"prefs-citizen-theme-option-dark": "Mörkt"
+	"citizen-search-noresults-desc": "Kanske prova alternativen nedan?"
 }

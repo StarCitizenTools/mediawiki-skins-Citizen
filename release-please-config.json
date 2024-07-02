@@ -1,0 +1,13 @@
+{
+	"$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+	"release-type": "php",
+	"pull-request-title-pattern": "build: release ${version}",
+	"extra-files": [
+		"skin.json",
+		"package.json",
+		"package-lock.json"
+	],
+	"packages": {
+		".": {}
+	}
+}

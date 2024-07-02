@@ -1,0 +1,25 @@
+.mw-logo-wordmark {
+	font-size: 1.25rem;
+	font-weight: var( --font-weight-semibold );
+	line-height: 1;
+	color: var( --color-emphasized );
+
+	img& {
+		width: 100%;
+		height: 1rem;
+		margin: 0.125rem 0;
+		object-fit: contain;
+		object-position: left center;
+		filter: var( --filter-invert );
+	}
+
+	@media ( min-width: @min-width-breakpoint-tablet ) {
+		font-size: 2rem;
+		white-space: nowrap;
+
+		img& {
+			height: 1.5rem;
+			margin: 0.25rem 0;
+		}
+	}
+}

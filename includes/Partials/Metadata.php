@@ -26,6 +26,7 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Partials;
 
 use Exception;
+use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
 
 final class Metadata extends Partial {
@@ -34,21 +35,24 @@ final class Metadata extends Partial {
 	 * Adds metadata to the output page
 	 */
 	public function addMetadata() {
-		$out = $this->out;
-
 		// Theme color
-		$out->addMeta( 'theme-color', $this->getConfigValue( 'CitizenThemeColor' ) ?? '' );
+		$this->out->addMeta( 'theme-color', $this->getConfigValue( 'CitizenThemeColor' ) ?? '' );
 
 		// Generate webapp manifest
 		$this->addManifest();
 	}
 
 	/**
-	 * Adds the manifest if enabled in 'CitizenEnableManifest'.
+	 * Adds the manifest if:
+	 * * Enabled in 'CitizenEnableManifest'
+	 * * User has read access (i.e. not a private wiki)
 	 * Manifest link will be empty if wfExpandUrl throws an exception.
 	 */
 	private function addManifest() {
-		if ( $this->getConfigValue( 'CitizenEnableManifest' ) !== true ) {
+		if (
+			$this->getConfigValue( 'CitizenEnableManifest' ) !== true ||
+			$this->getConfigValue( MainConfigNames::GroupPermissions )['*']['read'] !== true
+		) {
 			return;
 		}
 
@@ -60,8 +64,7 @@ final class Metadata extends Partial {
 			$href = '';
 		}
 
-		$out = $this->out;
-		$out->addLink( [
+		$this->out->addLink( [
 			'rel' => 'manifest',
 			'href' => $href,
 		] );

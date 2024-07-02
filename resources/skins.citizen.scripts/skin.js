@@ -10,45 +10,6 @@ function enableCssAnimations( document ) {
 }
 
 /**
- * Add a class to indicate that sticky header is active
- *
- * @param {Document} document
- * @return {void}
- */
-function initStickyHeader( document ) {
-	const scrollObserver = require( './scrollObserver.js' );
-
-	// Detect scroll direction and add the right class
-	scrollObserver.initDirectionObserver(
-		() => {
-			document.body.classList.remove( 'citizen-scroll--up' );
-			document.body.classList.add( 'citizen-scroll--down' );
-		},
-		() => {
-			document.body.classList.remove( 'citizen-scroll--down' );
-			document.body.classList.add( 'citizen-scroll--up' );
-		},
-		10
-	);
-
-	const sentinel = document.getElementById( 'citizen-body-header-sticky-sentinel' );
-
-	// In some pages we use display:none to disable the sticky header
-	// Do not start observer if it is set to display:none
-	if ( sentinel && getComputedStyle( sentinel ).getPropertyValue( 'display' ) !== 'none' ) {
-		const observer = scrollObserver.initIntersectionObserver(
-			() => {
-				document.body.classList.add( 'citizen-body-header--sticky' );
-			},
-			() => {
-				document.body.classList.remove( 'citizen-body-header--sticky' );
-			}
-		);
-		observer.observe( sentinel );
-	}
-}
-
-/**
  * Register service worker
  *
  * @return {void}
@@ -81,13 +42,13 @@ function registerServiceWorker() {
 function initBodyContent( bodyContent ) {
 	const
 		sections = require( './sections.js' ),
-		tables = require( './tables.js' ),
+		overflowElements = require( './overflowElements.js' ),
 		toc = require( './tableOfContents.js' );
 
 	// Collapsable sections
 	sections.init( bodyContent );
-	// Table enhancements
-	tables.init( bodyContent );
+	// Overflow element enhancements
+	overflowElements.init( bodyContent );
 	// Table of contents
 	toc.init( bodyContent );
 }
@@ -100,16 +61,23 @@ function main( window ) {
 	const
 		config = require( './config.json' ),
 		search = require( './search.js' ),
-		checkbox = require( './checkbox.js' );
+		share = require( './share.js' ),
+		stickyHeader = require( './stickyHeader.js' ),
+		lastModified = require( './lastModified.js' ),
+		checkbox = require( './checkbox.js' ),
+		dropdown = require( './dropdown.js' );
 
 	enableCssAnimations( window.document );
 	search.init( window );
-	initStickyHeader( window.document );
+	share.init();
+	lastModified.init();
+	stickyHeader.init();
 
 	// Set up checkbox hacks
 	checkbox.bind();
+	dropdown.init();
 
-	mw.hook( 'wikipage.content' ).add( function ( content ) {
+	mw.hook( 'wikipage.content' ).add( ( content ) => {
 		// content is a jQuery object
 		// note that this refers to .mw-body-content, not #bodyContent
 		initBodyContent( content[ 0 ] );
@@ -130,18 +98,16 @@ function main( window ) {
 		document.documentElement.classList.add( 'citizen-loading' );
 	}, false );
 
-	// Remove loading indicator when user clicks back button
-	window.addEventListener( 'pageshow', () => {
-		if ( performance.getEntriesByType( 'navigation' )[ 0 ].type === 'back_forward' ) {
-			document.documentElement.classList.remove( 'citizen-loading' );
-		}
+	// Remove loading indicator once the page is unloaded/hidden
+	window.addEventListener( 'pagehide', () => {
+		document.documentElement.classList.remove( 'citizen-loading' );
 	} );
 }
 
 if ( document.readyState === 'interactive' || document.readyState === 'complete' ) {
 	main( window );
 } else {
-	document.addEventListener( 'DOMContentLoaded', function () {
+	document.addEventListener( 'DOMContentLoaded', () => {
 		main( window );
 	} );
 }

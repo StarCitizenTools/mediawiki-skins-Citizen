@@ -9,7 +9,7 @@
  */
 
 // Disable sticky header since it collides with Echo sticky header
-#citizen-body-header-sticky-sentinel {
+#citizen-page-header-sticky-sentinel {
 	display: none;
 }
 
@@ -33,14 +33,14 @@
 		margin: 0;
 
 		&-primary {
-			font-size: 0.875rem;
+			font-size: var( --font-size-small );
 			// Align with Citizen label styles
-			color: var( --color-base--subtle );
+			color: var( --color-subtle );
 			letter-spacing: 0.05em;
 		}
 
 		&-secondary {
-			color: var( --color-base--subtle );
+			color: var( --color-subtle );
 		}
 	}
 }
@@ -78,7 +78,8 @@
 		margin: 0;
 		margin-bottom: var( --space-md );
 		overflow-x: auto;
-		background: var( --background-color-overlay );
+		background-color: var( --color-surface-0 );
+		filter: opacity( 0.9 );
 		backdrop-filter: saturate( 50% ) blur( 16px );
 		border-bottom: 1px solid var( --border-color-base );
 		box-shadow: none;
@@ -98,28 +99,28 @@
 		border-radius: var( --border-radius--small );
 
 		&-highlighted {
-			color: var( --color-base--emphasized );
+			color: var( --color-emphasized );
 			background-color: var( --color-surface-3 );
 		}
 
 		&-selected {
-			color: var( --color-primary );
-			background-color: var( --background-color-primary--hover );
+			color: var( --color-progressive );
+			background-color: var( --background-color-progressive-subtle );
 		}
 
 		&-selected&-highlighted,
 		&-pressed&-highlighted {
-			color: var( --color-primary--hover );
-			background-color: var( --background-color-primary--hover );
+			color: var( --color-progressive--hover );
+			background-color: var( --background-color-progressive-subtle );
 		}
 	}
 
 	&-label-count {
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 		background-color: var( --color-surface-3 );
 
 		.oo-ui-optionWidget-selected & {
-			color: var( --color-primary );
+			color: var( --color-progressive );
 		}
 	}
 }
@@ -135,12 +136,12 @@
 	border-radius: var( --border-radius--medium );
 
 	&-title {
-		font-size: var( --font-size-h3 );
+		font-size: var( --font-size-x-large );
 		font-weight: var( --font-weight-semibold );
-		color: var( --color-base--emphasized );
+		color: var( --color-emphasized );
 	}
 
 	&-subtitle {
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 	}
 }

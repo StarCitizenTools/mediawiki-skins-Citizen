@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"BadDog",
 			"Winston Sung"
 		]
 	},
@@ -14,7 +15,7 @@
 	"citizen-page-info-copyright": "Autorska prava",
 	"citizen-page-info-credits": "Zasluge",
 	"citizen-page-info-lastmod": "Posljednja promjena",
-	"citizen-action-addsection": "Dodaj temu",
+	"citizen-action-addsection": "Započni temu",
 	"citizen-jumptotop": "Nazad na vrh",
 	"citizen-search-fulltext": "Traži stranice koje sadrže $1",
 	"citizen-tagline-ns-talk": "Stranica za razgovor {{SUBJECTPAGENAME}}",
@@ -23,8 +24,5 @@
 	"citizen-tagline-ns-mediawiki": "Stranica sučelja MediaWiki",
 	"citizen-tagline-ns-template": "Stranica šablona/predloška",
 	"citizen-tagline-ns-help": "Stranica za pomoć",
-	"citizen-tagline-ns-category": "Stranica kategorije",
-	"prefs-citizen-theme-label": "Tema",
-	"prefs-citizen-theme-option-auto": "Automatski",
-	"prefs-citizen-fontsize-label": "Veličina fonta"
+	"citizen-tagline-ns-category": "Stranica kategorije"
 }

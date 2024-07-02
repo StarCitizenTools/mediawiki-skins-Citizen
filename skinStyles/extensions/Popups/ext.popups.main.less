@@ -5,10 +5,14 @@
  * Module: ext.popups.main
  * Version: REL1_39 a40ebc1
  *
- * Date: 2022-11-28
+ * Date: 2024-06-14
 */
 
 @import '../../../resources/variables.less';
+
+.popups-icon {
+	filter: var( --filter-invert );
+}
 
 /* popup.less */
 .mwe-popups {
@@ -26,13 +30,13 @@
 		opacity: var( --opacity-icon-base );
 
 		&:hover {
-			background-color: var( --background-color-quiet--hover );
+			background-color: var( --background-color-button-quiet--hover );
 			opacity: var( --opacity-icon-base--hover );
 		}
 
 		&:active {
-			background-color: var( --background-color-quiet--active );
-			opacity: var( --opacity-icon-base--active );
+			background-color: var( --background-color-button-quiet--active );
+			opacity: var( --opacity-icon-base--selected );
 		}
 	}
 
@@ -183,20 +187,20 @@
 		}
 
 		&:active {
-			opacity: var( --opacity-icon-base--active );
+			opacity: var( --opacity-icon-base--selected );
 		}
 	}
 
 	main#mwe-popups-settings-form {
 		p {
-			color: var( --color-base--subtle );
+			color: var( --color-subtle );
 		}
 
 		form {
 			label {
 				> span {
 					font-weight: var( --font-weight-semibold );
-					color: var( --color-base--emphasized );
+					color: var( --color-emphasized );
 				}
 			}
 		}
@@ -205,7 +209,7 @@
 
 /* settingsDialogRenderer.less */
 .mwe-popups-overlay {
-	background-color: var( --background-color-overlay );
+	background-color: var( --background-color-backdrop-light );
 }
 
 // Responsive support

@@ -11,7 +11,7 @@
 @import '../../../resources/mixins.less';
 
 // Disable sticky header since it collides with anchor and adds no value
-#citizen-body-header-sticky-sentinel {
+#citizen-page-header-sticky-sentinel {
 	display: none;
 }
 
@@ -27,7 +27,7 @@
 }
 
 .smw-property-page-results .value-row:hover {
-	background-color: var( --background-color-quiet--hover );
+	background-color: var( --background-color-button-quiet--hover );
 }
 
 .smw-property-page-results .header-row > .header-title {
@@ -35,7 +35,7 @@
 }
 
 .smw-ui-pagination .page-link {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 	background-color: transparent;
 	border-color: var( --border-color-base );
 }
@@ -51,32 +51,32 @@
 }
 
 .smw-ui-pagination .page-link:hover {
-	color: var( --color-primary );
-	background-color: var( --background-color-quiet--hover );
+	color: var( --color-progressive );
+	background-color: var( --background-color-button-quiet--hover );
 	border-color: var( --border-color-base );
 }
 
 // Added active state
 .smw-ui-pagination .page-link:active {
-	background-color: var( --background-color-quiet--active );
+	background-color: var( --background-color-button-quiet--active );
 }
 
 .smw-ui-pagination .page-link.link-disabled {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 	background-color: transparent;
 	border-color: var( --border-color-base );
 }
 
 .smw-ui-pagination .page-link.link-active {
-	color: #fff;
-	background-color: var( --color-primary );
-	border-color: var( --color-primary );
+	color: var( --color-inverted-primary );
+	background-color: var( --color-progressive );
+	border-color: var( --color-progressive );
 }
 
 .smw-property-page-results .header-title {
 	padding: var( --space-xs ) 0;
 	font-size: 1.25rem;
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	background-color: transparent;
 	border-bottom-color: var( --border-color-base );
 }
@@ -89,7 +89,7 @@
 }
 
 .smw-ui-input-filter {
-	color: var( --color-primary );
+	color: var( --color-progressive );
 	background-color: var( --color-surface-1 );
 	border-color: var( --border-color-base );
 	border-radius: var( --border-radius--small );
@@ -128,14 +128,14 @@
 
 #tab-smw-property-value:checked + label.nav-label .usage-count.moderate,
 #tab-smw-concept-list:checked + label.nav-label .usage-count.moderate {
-	color: var( --color-primary );
-	background-color: var( --background-color-primary--hover );
+	color: var( --color-progressive );
+	background-color: var( --background-color-progressive-subtle );
 }
 
 #tab-smw-property-value:checked + label.nav-label .usage-count.high,
 #tab-smw-concept-list:checked + label.nav-label .usage-count.high {
 	color: var( --color-destructive );
-	background-color: var( --background-color-destructive );
+	background-color: var( --background-color-destructive-subtle );
 }
 
 /**
@@ -155,7 +155,7 @@
 }
 
 .smw-property input.nav-tab:checked + label#tab-label-smw-property-constraint.nav-label {
-	border-bottom: 2px solid var( --color-primary );
+	border-bottom: 2px solid var( --color-progressive );
 }
 
 /**

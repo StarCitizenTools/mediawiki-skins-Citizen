@@ -46,7 +46,7 @@
 			border-bottom-color: var( --border-color-base );
 
 			span.stats {
-				color: var( --color-base--subtle );
+				color: var( --color-subtle );
 			}
 		}
 	}
@@ -72,22 +72,22 @@
 	border-color: transparent !important;
 
 	&:hover {
-		background-color: var( --background-color-quiet--hover );
+		background-color: var( --background-color-button-quiet--hover );
 	}
 
 	&:active {
-		background-color: var( --background-color-quiet--active );
+		background-color: var( --background-color-button-quiet--active );
 	}
 
 	&.current {
 		background-color: transparent;
-		box-shadow: inset 0 -2px 0 0 var( --color-primary );
+		box-shadow: inset 0 -2px 0 0 var( --color-progressive );
 	}
 }
 
 a.mw-debug-panelabel,
 a.mw-debug-panelabel:visited {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 }
 
 .mw-debug-pane {
@@ -108,8 +108,8 @@ a.mw-debug-panelabel:visited {
 	}
 
 	td {
-		color: var( --color-base--emphasized );
-		background-color: var( --background-color-success );
+		color: var( --color-emphasized );
+		background-color: var( --background-color-success-subtle );
 	}
 }
 
@@ -118,7 +118,7 @@ a.mw-debug-panelabel:visited {
 
 	span {
 		font-weight: var( --font-weight-semibold );
-		color: var( --color-base--emphasized );
+		color: var( --color-emphasized );
 	}
 
 	li {
@@ -127,15 +127,15 @@ a.mw-debug-panelabel:visited {
 }
 
 .mw-debug-console-log {
-	background-color: var( --background-color-primary--hover );
+	background-color: var( --background-color-progressive-subtle );
 }
 
 .mw-debug-console-warn {
-	background-color: var( --background-color-warning );
+	background-color: var( --background-color-warning-subtle );
 }
 
 .mw-debug-console-deprecated {
-	background-color: var( --background-color-destructive );
+	background-color: var( --background-color-destructive-subtle );
 }
 
 /* $wgShowDebug = true; */
@@ -144,8 +144,8 @@ a.mw-debug-panelabel:visited {
 
 	// Label text
 	> strong {
-		font-size: 0.875rem;
-		color: var( --color-base--subtle );
+		font-size: var( --font-size-small );
+		color: var( --color-subtle );
 		letter-spacing: 0.05em;
 	}
 

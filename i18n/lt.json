@@ -29,13 +29,5 @@
 	"citizen-tagline-ns-mediawiki": "MediaWiki sąsajos puslapis",
 	"citizen-tagline-ns-template": "Šablono puslapis",
 	"citizen-tagline-ns-help": "Pagalbos puslapis",
-	"citizen-tagline-ns-category": "Kategorijos puslapis",
-	"prefs-citizen-theme-label": "Tema",
-	"prefs-citizen-theme-option-auto": "Automatiškai",
-	"prefs-citizen-theme-option-light": "Šviesus",
-	"prefs-citizen-theme-option-dark": "Tamsus",
-	"prefs-citizen-fontsize-label": "Šrifto dydis",
-	"prefs-citizen-pagewidth-label": "Puslapio plotis",
-	"prefs-citizen-lineheight-label": "Eilutės aukštis",
-	"prefs-citizen-resetbutton-label": "Atstatyti į numatytuosius"
+	"citizen-tagline-ns-category": "Kategorijos puslapis"
 }

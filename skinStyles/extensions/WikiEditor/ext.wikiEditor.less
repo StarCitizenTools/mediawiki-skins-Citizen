@@ -10,6 +10,8 @@
 
 @import '../../../resources/mixins.less';
 
+@wikieditor-button-size: 42px;
+
 /* jquery.wikiEditor.less */
 .wikiEditor-ui {
 	.wikiEditor-ui-view {
@@ -41,7 +43,7 @@
 		border-bottom-color: var( --border-color-base );
 
 		a {
-			color: var( --color-primary );
+			color: var( --color-progressive );
 		}
 
 		&.current {
@@ -73,7 +75,7 @@
 	.tabs,
 	.section-main,
 	.section-secondary {
-		min-height: 42px; /* Align with VE */
+		min-height: @wikieditor-button-size; /* Align with VE */
 	}
 
 	/* Expandable Sections */
@@ -89,12 +91,12 @@
 		margin: 0 8px;
 
 		span.tab {
-			line-height: 42px; /* Align with VE */
+			line-height: @wikieditor-button-size; /* Align with VE */
 
 			a {
-				height: 42px; /* Align with VE */
+				height: @wikieditor-button-size; /* Align with VE */
 				font-weight: var( --font-weight-medium );
-				color: var( --color-base--emphasized );
+				color: var( --color-emphasized );
 
 				&::before {
 					height: 100%; /* Align with VE */
@@ -103,22 +105,22 @@
 				}
 
 				&:hover {
-					color: var( --color-primary--hover );
+					color: var( --color-progressive--hover );
 				}
 
 				&:active {
-					color: var( --color-primary--active );
+					color: var( --color-progressive--active );
 				}
 			}
 
 			a:visited {
-				color: var( --color-base--emphasized );
+				color: var( --color-emphasized );
 			}
 
 			a.current,
 			a.current:visited {
-				color: var( --color-primary );
-				border-bottom: 2px solid var( --color-primary );
+				color: var( --color-progressive );
+				border-bottom: 2px solid var( --color-progressive );
 			}
 		}
 	}
@@ -129,32 +131,32 @@
 		.label {
 			height: 38px;
 			margin-left: 16px;
-			font-size: 0.875rem;
+			font-size: var( --font-size-small );
 			line-height: 38px;
-			color: var( --color-base--subtle );
+			color: var( --color-subtle );
 			letter-spacing: 0.05em;
 		}
 
 		.tool-select {
-			height: 42px;
+			height: @wikieditor-button-size;
 			background-color: var( --color-surface-0 );
 			border-color: var( --border-color-base );
 
 			.label {
-				height: 42px; /* Align with VE */
+				height: @wikieditor-button-size; /* Align with VE */
 				font-size: inherit;
 				font-weight: var( --font-weight-medium );
-				line-height: 42px; /* Align with VE */
-				color: var( --color-base--emphasized );
+				line-height: @wikieditor-button-size; /* Align with VE */
+				color: var( --color-emphasized );
 				letter-spacing: inherit;
 
 				&:hover {
-					background-color: var( --background-color-quiet--hover );
+					background-color: var( --background-color-button-quiet--hover );
 				}
 			}
 
 			.menu .options .option:hover {
-				background-color: var( --background-color-quiet--hover );
+				background-color: var( --background-color-button-quiet--hover );
 			}
 
 			.options {
@@ -162,29 +164,29 @@
 				border-color: var( --border-color-base );
 
 				.option {
-					color: var( --color-base--emphasized );
+					color: var( --color-emphasized );
 
 					&:hover {
-						background-color: var( --background-color-primary--hover );
+						background-color: var( --background-color-progressive-subtle );
 					}
 
 					&[ rel='heading-2' ] {
-						font-size: var( --font-size-h2 );
+						font-size: var( --font-size-xx-large );
 						font-weight: var( --font-weight-semibold );
 					}
 
 					&[ rel='heading-3' ] {
-						font-size: var( --font-size-h3 );
+						font-size: var( --font-size-x-large );
 						font-weight: var( --font-weight-semibold );
 					}
 
 					&[ rel='heading-4' ] {
-						font-size: var( --font-size-h4 );
+						font-size: var( --font-size-large );
 						font-weight: var( --font-weight-semibold );
 					}
 
 					&[ rel='heading-5' ] {
-						font-size: var( --font-size-h5 );
+						font-size: var( --font-size-medium );
 						font-weight: var( --font-weight-semibold );
 					}
 				}
@@ -200,17 +202,17 @@
 	.booklet {
 		> .index {
 			.wikiEditor-character-highlighted {
-				color: var( --color-base--emphasized );
-				background-color: var( --background-color-quiet--hover );
+				color: var( --color-emphasized );
+				background-color: var( --background-color-button-quiet--hover );
 			}
 
 			> :hover {
-				background-color: var( --background-color-quiet--hover );
+				background-color: var( --background-color-button-quiet--hover );
 			}
 
 			> .current {
-				color: var( --color-primary );
-				background-color: var( --background-color-primary--hover );
+				color: var( --color-progressive );
+				background-color: var( --background-color-progressive-subtle );
 			}
 		}
 	}
@@ -218,11 +220,11 @@
 	/* Help Pages */
 	.page-table {
 		th {
-			color: var( --color-base--subtle );
+			color: var( --color-subtle );
 		}
 
 		td {
-			color: var( --color-base--emphasized );
+			color: var( --color-emphasized );
 			border-top-color: var( --border-color-base );
 		}
 	}
@@ -235,27 +237,36 @@
 				border-color: var( --border-color-base );
 
 				&:hover {
-					background-color: var( --background-color-quiet--hover );
+					background-color: var( --background-color-button-quiet--hover );
 					border-color: var( --border-color-base );
 				}
 
 				// Added active state
 				&:active {
-					background-color: var( --background-color-quiet--active );
+					background-color: var( --background-color-button-quiet--active );
 				}
 			}
 
 			.wikiEditor-character-highlighted {
-				color: var( --color-primary );
-				background-color: var( --background-color-primary--hover );
+				color: var( --color-progressive );
+				background-color: var( --background-color-progressive-subtle );
 			}
+		}
+	}
+
+	.ve-init-mw-editSwitch .oo-ui-popupToolGroup.oo-ui-iconElement {
+		height: @wikieditor-button-size; /* Align with VE */
+
+		.oo-ui-popupToolGroup-handle {
+			padding-top: @wikieditor-button-size;
+			border-radius: var( --border-radius--small );
 		}
 	}
 }
 
 .tool.oo-ui-buttonElement-frameless.oo-ui-iconElement > .oo-ui-buttonElement-button {
-	min-width: 42px; /* Align with VE */
-	min-height: 42px; /* Align with VE */
+	min-width: @wikieditor-button-size; /* Align with VE */
+	min-height: @wikieditor-button-size; /* Align with VE */
 	border-radius: var( --border-radius--small );
 
 	> .oo-ui-iconElement-icon {
@@ -264,7 +275,7 @@
 	}
 
 	&:hover {
-		background-color: var( --background-color-quiet--hover );
+		background-color: var( --background-color-button-quiet--hover );
 
 		> .oo-ui-iconElement-icon {
 			opacity: var( --opacity-icon-base--hover );
@@ -273,15 +284,15 @@
 
 	// Added active state
 	&:active {
-		background-color: var( --background-color-quiet--active );
+		background-color: var( --background-color-button-quiet--active );
 
 		> .oo-ui-iconElement-icon {
-			opacity: var( --opacity-icon-base--active );
+			opacity: var( --opacity-icon-base--selected );
 		}
 	}
 
 	&.tool-active {
-		background-color: var( --background-color-primary--hover );
+		background-color: var( --background-color-progressive-subtle );
 	}
 }
 
@@ -309,8 +320,8 @@
 	.wikieditor-toolbar-field-wrapper {
 		/* Input field label */
 		> label {
-			font-size: 0.8125rem;
-			color: var( --color-base--subtle );
+			font-size: var( --font-size-x-small );
+			color: var( --color-subtle );
 			letter-spacing: 0.05em;
 
 			~ input,

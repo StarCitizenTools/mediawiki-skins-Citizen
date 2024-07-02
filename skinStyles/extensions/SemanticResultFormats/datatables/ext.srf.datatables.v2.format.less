@@ -1,0 +1,25 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:SemanticResultsFormats
+ * Module: ext.srf.datatables.v2.format
+ * Version: 4.2.1
+ *
+ * Date: 2024-03-19
+*/
+
+// Re-implement datatable responsiveness broken by SRF
+// FIXME: Remove when upstream is fixed
+@media screen and ( max-width: 640px ) {
+	.srf-datatable {
+		.dataTables_filter,
+		.dataTables_length {
+			float: none;
+		}
+
+		.dataTables_filter,
+		.dt-buttons {
+			margin-right: 0;
+		}
+	}
+}

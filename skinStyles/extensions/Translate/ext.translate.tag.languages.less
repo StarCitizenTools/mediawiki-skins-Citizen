@@ -14,7 +14,7 @@
 	gap: var( --space-xs );
 	// Language tag can appear anywhere in content, reserve spacing just in case
 	padding: var( --space-md ) 0;
-	font-size: 0.8125rem;
+	font-size: var( --font-size-x-small );
 	background-color: transparent;
 	border-bottom: 0;
 }
@@ -25,7 +25,7 @@
 	width: auto;
 	padding: 0;
 	font-weight: var( --font-weight-normal );
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 	letter-spacing: 0.05em;
 }
 
@@ -48,13 +48,13 @@
 	.mw-pt-progress {
 		display: block;
 		padding: var( --space-xs ) var( --space-md );
-		color: var( --color-base--subtle );
-		border: 1px solid var( --border-color-base--darker );
+		color: var( --color-subtle );
+		border: 1px solid var( --border-color-interactive );
 		border-radius: var( --border-radius--pill );
 
 		&:hover,
 		&:active {
-			color: #fff;
+			color: var( --color-inverted-fixed );
 		}
 	}
 
@@ -77,17 +77,17 @@
 		background-position: right 9px center;
 
 		&:hover {
-			background-color: var( --color-primary--hover );
+			background-color: var( --color-progressive--hover );
 		}
 
 		&:active {
-			background-color: var( --color-primary--active );
+			background-color: var( --color-progressive--active );
 		}
 
 		&.mw-pt-languages-selected {
 			font-weight: var( --font-weight-normal );
-			color: #fff;
-			background-color: var( --color-primary--active );
+			color: var( --color-inverted-primary );
+			background-color: var( --color-progressive--active );
 		}
 	}
 }

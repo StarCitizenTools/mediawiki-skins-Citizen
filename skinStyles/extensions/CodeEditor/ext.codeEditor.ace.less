@@ -10,33 +10,33 @@
 
 .ace {
 	&-tm {
-		color: var( --color-base--emphasized );
+		color: var( --color-emphasized );
 		background-color: transparent;
 
 		.ace {
 			&_gutter {
-				color: var( --color-base--subtle );
+				color: var( --color-subtle );
 				background-color: transparent;
 
 				&-active-line {
-					background-color: var( --background-color-quiet--hover );
+					background-color: var( --background-color-button-quiet--hover );
 				}
 			}
 
 			&_marker-layer {
 				.ace {
 					&_active-line {
-						background-color: var( --background-color-quiet--hover );
+						background-color: var( --background-color-button-quiet--hover );
 					}
 
 					&_selected-word {
-						background: var( --background-color-primary--hover );
+						background: var( --background-color-progressive-subtle );
 						border-color: var( --border-color-base );
 					}
 
 					&_selection {
-						background: var( --background-color-primary--active );
-						box-shadow: inset 0 0 0 2px var( --color-primary );
+						background: var( --background-color-progressive-subtle );
+						box-shadow: inset 0 0 0 2px var( --color-progressive );
 					}
 				}
 			}
@@ -46,7 +46,7 @@
 			}
 
 			&_cursor {
-				color: var( --color-base--emphasized );
+				color: var( --color-emphasized );
 			}
 
 			&_storage,
@@ -78,7 +78,7 @@
 
 			&_invalid {
 				color: var( --color-destructive );
-				background-color: var( --background-color-quiet--hover );
+				background-color: var( --background-color-button-quiet--hover );
 			}
 
 			&_support {
@@ -117,13 +117,13 @@
 			}
 
 			&_comment {
-				color: var( --color-base--subtle );
+				color: var( --color-subtle );
 
 				&.ace {
 					&_doc {
 						&.ace {
 							&_tag {
-								color: var( --color-base--subtle );
+								color: var( --color-subtle );
 							}
 						}
 					}
@@ -179,70 +179,70 @@
 
 	&_gutter {
 		&-cell {
-			color: var( --color-base--subtle );
+			color: var( --color-subtle );
 		}
 	}
 
 	&_search {
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 		background-color: var( --color-surface-2 );
 		border-color: var( --border-color-base );
 
 		&_field {
-			color: var( --color-base--emphasized );
+			color: var( --color-emphasized );
 			background-color: transparent;
-			border-color: var( --border-color-base--darker );
+			border-color: var( --border-color-interactive );
 			border-top-left-radius: var( --border-radius--small );
 			border-bottom-left-radius: var( --border-radius--small );
 
 			&:hover {
 				background-color: var( --color-surface-0 );
-				border-color: var( --color-primary--hover );
+				border-color: var( --color-progressive--hover );
 			}
 
 			&:focus {
 				background-color: var( --color-surface-0 );
-				border-color: var( --color-primary );
-				box-shadow: inset 0 0 0 1px var( --color-primary );
+				border-color: var( --color-progressive );
+				box-shadow: inset 0 0 0 1px var( --color-progressive );
 			}
 		}
 
 		&btn {
 			font-weight: var( --font-weight-semibold );
-			color: var( --color-base--emphasized );
+			color: var( --color-emphasized );
 			background-color: transparent;
-			border-color: var( --border-color-base--darker );
+			border-color: var( --border-color-interactive );
 
 			&:last-child {
-				border-color: var( --border-color-base--darker );
+				border-color: var( --border-color-interactive );
 			}
 
 			&:hover {
-				background-color: var( --background-color-quiet--hover );
+				background-color: var( --background-color-button-quiet--hover );
 			}
 
 			&:active {
-				background-color: var( --background-color-quiet--active );
+				background-color: var( --background-color-button-quiet--active );
 			}
 		}
 	}
 
 	&_button {
 		font-weight: var( --font-weight-semibold );
-		color: var( --color-base--emphasized );
+		color: var( --color-emphasized );
 		border-color: transparent;
 		border-radius: var( --border-radius--small );
 
 		&:hover {
-			background-color: var( --background-color-quiet--hover );
+			background-color: var( --background-color-button-quiet--hover );
 		}
 
 		&:active {
-			background-color: var( --background-color-quiet--active );
+			background-color: var( --background-color-button-quiet--active );
 		}
 
 		&.checked {
-			background-color: var( --background-color-primary--active );
+			background-color: var( --background-color-progressive-subtle );
 			border-color: transparent;
 		}
 	}
@@ -253,27 +253,27 @@
 			border-color: var( --border-color-base );
 
 			&:hover {
-				background-color: var( --background-color-quiet--hover );
+				background-color: var( --background-color-button-quiet--hover );
 			}
 
 			&:active {
-				background-color: var( --background-color-quiet--active );
+				background-color: var( --background-color-button-quiet--active );
 			}
 
 			&[ ace_selected_button='true' ] {
-				color: #fff;
-				background-color: var( --color-primary );
-				border-color: var( --color-primary );
+				color: var( --color-inverted-primary );
+				background-color: var( --color-progressive );
+				border-color: var( --color-progressive );
 				box-shadow: none;
 
 				&:hover {
-					background-color: var( --color-primary--hover );
-					border-color: var( --color-primary--hover );
+					background-color: var( --color-progressive--hover );
+					border-color: var( --color-progressive--hover );
 				}
 
 				&:active {
-					background-color: var( --color-primary--active );
-					border-color: var( --color-primary--active );
+					background-color: var( --color-progressive--active );
+					border-color: var( --color-progressive--active );
 				}
 			}
 		}

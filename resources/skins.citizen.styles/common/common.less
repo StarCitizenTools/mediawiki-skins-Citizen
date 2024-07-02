@@ -13,7 +13,7 @@ body {
 	padding: 0;
 	margin: 0;
 	color: var( --color-base );
-	accent-color: var( --color-primary );
+	accent-color: var( --color-progressive );
 	background: var( --color-surface-0 );
 }
 
@@ -25,21 +25,25 @@ body {
 }
 
 :focus {
-	outline-color: var( --color-primary );
+	outline-color: var( --color-progressive );
 }
 
 // For some reason just overriding the outline-color is not enough
 :focus-visible {
-	outline: 2px solid var( --color-primary );
+	outline: 2px solid var( --color-progressive );
 	outline-offset: 1px;
 }
 
 input,
 select,
 textarea {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	background-color: transparent;
-	border: 1px solid var( --border-color-base--darker );
+	border: 1px solid var( --border-color-interactive );
+}
+
+select option {
+	background-color: var( --color-surface-1 );
 }
 
 textarea {
@@ -48,7 +52,7 @@ textarea {
 
 blockquote {
 	margin: var( --space-md );
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 
 	cite {
 		display: block;
@@ -58,6 +62,10 @@ blockquote {
 			content: '— ';
 		}
 	}
+}
+
+button {
+	font-family: var( --font-family-base );
 }
 
 sup,
@@ -77,6 +85,10 @@ td {
 			margin-top: 0; // Remove margin for the first element in td
 		}
 	}
+}
+
+.hidden {
+	.hidden();
 }
 
 .nowrap {
@@ -105,7 +117,7 @@ td {
 	align-items: center;
 	padding-left: 10px;
 	margin-left: 10px;
-	font-size: 0.875rem;
+	font-size: var( --font-size-small );
 	border-left: 1px solid var( --border-color-base );
 }
 
@@ -113,13 +125,15 @@ td {
 	filter: var( --filter-invert );
 }
 
+#mw-indicator-mw-helplink a {
+	font-size: 0; /* Hide the text because the color is weird */
+}
+
 video {
 	max-width: 100%; // Prevent overflow
 }
 
-.skin-citizen-dark {
-	color-scheme: dark;
-
+.skin-theme-clientpref-night {
 	.mw-indicator {
 		// Have to hardcode the color since the filter breaks the color
 		a {
@@ -141,6 +155,7 @@ video {
 	button,
 	label {
 		// Remove the 300ms delay in click event (T118509)
+		/* stylelint-disable-next-line plugin/no-unsupported-browser-features */
 		touch-action: manipulation;
 	}
 }

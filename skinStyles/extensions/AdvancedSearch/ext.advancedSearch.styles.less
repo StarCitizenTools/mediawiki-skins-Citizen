@@ -17,9 +17,9 @@
 .mw-advancedSearch-searchPreview-label,
 .advancedsearch-namespacesPreview-label {
 	margin-right: var( --space-xs );
-	font-size: 0.875rem;
+	font-size: var( --font-size-small );
 	font-weight: var( --font-weight-normal );
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 	letter-spacing: 0.05em;
 }
 
@@ -36,9 +36,9 @@
 	}
 
 	.oo-ui-labelElement > .oo-ui-fieldsetLayout-header > .oo-ui-labelElement-label {
-		font-size: 0.875rem;
+		font-size: var( --font-size-small );
 		font-weight: var( --font-weight-normal );
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 		letter-spacing: 0.05em;
 		background: var( --color-surface-2 );
 	}
@@ -59,12 +59,12 @@
 
 			&:hover {
 				color: inherit;
-				background-color: var( --background-color-quiet--hover );
+				background-color: var( --background-color-button-quiet--hover );
 			}
 
 			// Added active state
 			&:active {
-				background-color: var( --background-color-quiet--active );
+				background-color: var( --background-color-button-quiet--active );
 			}
 
 			// HACK: Flip indicator when expanded
@@ -118,11 +118,11 @@
 
 .oo-ui-tagMultiselectWidget.oo-ui-widget-enabled.oo-ui-tagMultiselectWidget-outlined .oo-ui-tagItemWidget.oo-ui-widget-enabled {
 	&.selected {
-		background-color: var( --background-color-primary--hover );
-		border-color: var( --color-primary );
+		background-color: var( --background-color-progressive-subtle );
+		border-color: var( --color-progressive );
 	}
 }
 
 .oo-ui-popupWidget-popup .mw-advancedSearch-tooltip-head {
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }

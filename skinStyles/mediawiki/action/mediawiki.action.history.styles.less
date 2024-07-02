@@ -15,7 +15,7 @@
 	align-items: center;
 	justify-content: space-between;
 	margin: var( --space-md ) 0;
-	font-size: 0.875rem;
+	font-size: var( --font-size-small );
 }
 
 #pagehistory {
@@ -24,22 +24,20 @@
 
 	li {
 		&.selected {
-			color: var( --color-base );
-			outline: 0;
+			color: var( --color-base--emphasized );
+			outline-color: var( --border-color-base );
 
 			&.before {
-				background-color: var( --background-color-primary--active );
+				background-color: var( --background-color-success-subtle );
 			}
 
 			&.after {
-				background-color: var( --background-color-primary--hover );
+				background-color: var( --background-color-destructive-subtle );
+			}
+
+			a {
+				color: var( -- );
 			}
 		}
-	}
-}
-
-.skin-citizen-dark {
-	#pagehistory li.selected a {
-		color: @color-accent90;
 	}
 }

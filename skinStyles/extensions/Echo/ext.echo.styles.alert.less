@@ -3,12 +3,39 @@
  *
  * SkinStyles for Extension:Echo
  * Module: ext.echo.styles.alert
- * Version: REL1_35 347c30e
+ * Version: REL1_39
  *
- * Date: 2021-08-11
+ * Date: 2024-02-27
 */
 
+@import '../../../resources/variables.less';
+
 .mw-echo-alert {
-	color: var( --color-base--emphasized );
-	background-color: var( --color-warning );
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: @z-index-overlay;
+	width: auto;
+	max-width: @max-width-breakpoint-tablet;
+	padding: 0;
+	margin: var( --space-xs );
+	font-size: var( --font-size-small );
+	line-height: var( --line-height-sm );
+	color: var( --color-base );
+	background-color: var( --color-surface-1 );
+	border: 1px solid var( --border-color-base );
+	border-radius: var( --border-radius--large );
+	box-shadow: var( --box-shadow-dialog );
+
+	@media only screen and ( min-width: @min-width-breakpoint-desktop ) {
+		right: unset;
+		left: var( --header-size );
+	}
+
+	// Needed additional specificity
+	&.mw-list-item > a {
+		padding: var( --space-md );
+		border-radius: var( --border-radius--large );
+	}
 }

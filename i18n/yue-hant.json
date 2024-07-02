@@ -32,13 +32,5 @@
 	"citizen-tagline-ns-mediawiki": "MediaWiki嘅介面頁",
 	"citizen-tagline-ns-template": "模組頁",
 	"citizen-tagline-ns-help": "幫手頁",
-	"citizen-tagline-ns-category": "分類頁",
-	"prefs-citizen-theme-label": "主題",
-	"prefs-citizen-theme-option-auto": "自動",
-	"prefs-citizen-theme-option-light": "日光",
-	"prefs-citizen-theme-option-dark": "黑夜",
-	"prefs-citizen-fontsize-label": "字體大細",
-	"prefs-citizen-pagewidth-label": "頁面闊度",
-	"prefs-citizen-lineheight-label": "行高",
-	"prefs-citizen-resetbutton-label": "還原預設"
+	"citizen-tagline-ns-category": "分類頁"
 }

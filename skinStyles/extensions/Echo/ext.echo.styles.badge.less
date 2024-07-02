@@ -3,9 +3,9 @@
  *
  * SkinStyles for Extension:Echo
  * Module: ext.echo.styles.badge
- * Version: REL1_35 347c30e
+ * Version: REL1_39
  *
- * Date: 2021-08-11
+ * Date: 2024-05-06
 */
 
 .mw-echo-notifications-badge {
@@ -28,15 +28,15 @@
 		}
 
 		&:active {
-			opacity: var( --opacity-icon-base--active );
+			opacity: var( --opacity-icon-base--selected );
 		}
 
 		&:focus {
-			box-shadow: 0 0 0 1px #fff, 0 0 0 3px var( --color-primary );
-			opacity: var( --opacity-icon-base--active );
+			box-shadow: 0 0 0 1px var( --color-inverted-fixed ), 0 0 0 3px var( --color-progressive );
+			opacity: var( --opacity-icon-base--selected );
 
 			&::after {
-				border-color: var( --color-primary );
+				border-color: var( --color-progressive );
 			}
 		}
 
@@ -62,7 +62,7 @@
 			}
 
 			&:active {
-				opacity: var( --opacity-icon-base--active );
+				opacity: var( --opacity-icon-base--selected );
 			}
 		}
 	}
@@ -85,10 +85,10 @@
 	border-radius: var( --border-radius--small );
 
 	&:hover {
-		background-color: var( --background-color-quiet--hover );
+		background-color: var( --background-color-button-quiet--hover );
 	}
 
 	&:active {
-		background-color: var( --background-color-quiet--active );
+		background-color: var( --background-color-button-quiet--active );
 	}
 }

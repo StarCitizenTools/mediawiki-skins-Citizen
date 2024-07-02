@@ -1,0 +1,126 @@
+/**
+ * Dark theme mixin
+ * Dark theme needs a mixin because it is being used by the auto theme as well
+ */
+.theme-dark() {
+	--color-primary__l: 60%;
+
+	--color-surface-0__s: 20%;
+	--color-surface-0__l: 8%;
+
+	--color-surface-1__s: 25%;
+	--color-surface-1__l: 10%;
+
+	--color-surface-2__s: 25%;
+	--color-surface-2__l: 13%;
+
+	--color-surface-3__s: 15%;
+	--color-surface-3__l: 18%;
+
+	--color-surface-4__s: 15%;
+	--color-surface-4__l: 23%;
+
+	--color-emphasized: ~'hsl( var( --color-primary__h ), 80%, 95% )';
+	--color-base: ~'hsl( var( --color-primary__h ), 25%, 80% )';
+	--color-subtle: ~'hsl( var( --color-primary__h ), 25%, 65% )';
+
+	--background-color-progressive-subtle: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), 10% )';
+	--background-color-destructive-subtle: #360003;
+	--background-color-warning-subtle: #251400;
+	--background-color-success-subtle: #001f12;
+	--background-color-button-quiet--hover: rgba( 255, 255, 255, 0.04 );
+	--background-color-button-quiet--active: rgba( 255, 255, 255, 0.08 );
+	--background-color-icon: ~'rgba( 255, 255, 255, var( --opacity-icon-base ) )';
+	--background-color-icon--hover: ~'rgba( 255, 255, 255, var( --opacity-icon-base--hover ) )';
+	--background-color-icon--active: ~'rgba( 255, 255, 255, var( --opacity-icon-base--active ) )';
+
+	--border-color-base: rgba( 255, 255, 255, 0.05 );
+	--border-color-subtle: rgba( 255, 255, 255, 0.02 );
+	--border-color-interactive: rgba( 255, 255, 255, 0.08 );
+
+	--surface-shadow: var( --color-primary__h ), 50%, 3%;
+	--shadow-strength: 0.8;
+
+	--filter-invert: invert( 1 ) hue-rotate( 180deg );
+
+	--font-grade: -25;
+
+	// FIXME: Browsers seem to treat GRAD differently, disabling for now
+	// Dark theme usually have an illusion of thicker fonts
+	// So we have to tune it back
+	// font-variation-settings: 'GRAD' -90;
+
+	color-scheme: dark;
+}
+
+.feature-pure-black() {
+	--color-surface-0__l: 0%;
+
+	--color-surface-1__s: 20%;
+
+	--color-surface-1__l: 4%;
+
+	--color-surface-2__l: 6%;
+
+	--color-surface-3__l: 9%;
+
+	--color-surface-4__l: 14%;
+
+	--shadow-strength: 0.06;
+}
+
+.skin-theme-clientpref-night {
+	:root& {
+		.theme-dark();
+	}
+}
+
+.skin-theme-clientpref-os {
+	@media ( prefers-color-scheme: dark ) {
+		:root& {
+			.theme-dark();
+		}
+	}
+}
+
+.citizen-feature-pure-black-clientpref-1 {
+	:root.skin-theme-clientpref-night& {
+		.feature-pure-black();
+	}
+
+	@media ( prefers-color-scheme: dark ) {
+		:root.skin-theme-clientpref-os& {
+			.feature-pure-black();
+		}
+	}
+}
+
+.citizen-feature-custom-font-size-clientpref-small {
+	.citizen-body {
+		font-size: var( --font-size-small );
+	}
+}
+
+.citizen-feature-custom-font-size-clientpref-large {
+	.citizen-body {
+		font-size: var( --font-size-large );
+	}
+}
+
+.citizen-feature-custom-width-clientpref-standard {
+	:root& {
+		--width-layout: 1080px;
+	}
+}
+
+.citizen-feature-custom-width-clientpref-wide {
+	:root& {
+		--width-layout: 1600px;
+	}
+}
+
+.citizen-feature-custom-width-clientpref-full {
+	:root& {
+		--width-layout: 100vw;
+	}
+}

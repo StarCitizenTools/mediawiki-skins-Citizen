@@ -14,15 +14,15 @@
 /* default.less */
 .mw-plusminus {
 	&-pos {
-		color: var( --color-text-success );
+		color: var( --color-success );
 	}
 
 	&-neg {
-		color: var( --color-text-error );
+		color: var( --color-destructive );
 	}
 
 	&-null {
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 	}
 }
 
@@ -31,9 +31,9 @@
 		z-index: 1; // Needed to cover the timeline dots
 		padding: var( --space-sm ) 0;
 		margin-bottom: 0;
-		font-size: 0.8125rem;
+		font-size: var( --font-size-x-small );
 		font-weight: var( --font-weight-normal );
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 		letter-spacing: 0.05em;
 	}
 
@@ -44,12 +44,12 @@
 		}
 
 		&-inner {
-			color: var( --color-base--subtle );
+			color: var( --color-subtle );
 		}
 	}
 
 	&-separator {
-		color: var( --color-base--subtle );
+		color: var( --color-subtle );
 	}
 }
 
@@ -64,7 +64,7 @@
 
 	&:not( .oo-ui-widget ) {
 		padding: var( --space-md );
-		font-size: 0.875rem;
+		font-size: var( --font-size-small );
 		background: var( --color-surface-2 );
 		border-radius: var( --border-radius--medium );
 	}
@@ -73,7 +73,7 @@
 /* Skeleton screen loading */
 body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
 	padding: var( --space-md );
-	font-size: 0.875rem;
+	font-size: var( --font-size-small );
 	background: var( --color-surface-2 );
 	border-radius: var( --border-radius--medium );
 }
@@ -123,7 +123,7 @@ body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
 	}
 
 	// Disable sticky header
-	#citizen-body-header-sticky-sentinel {
+	#citizen-page-header-sticky-sentinel {
 		display: none;
 	}
 }
@@ -135,7 +135,7 @@ body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
 .mw-changeslist,
 .mw-contributions-list {
 	position: relative;
-	font-size: 0.875rem;
+	font-size: var( --font-size-small );
 
 	/* Timeline line */
 	&::before {
@@ -145,7 +145,7 @@ body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
 		left: 4px;
 		width: 1px;
 		content: '';
-		background: var( --border-color-base--darker );
+		background: var( --border-color-interactive );
 	}
 }
 
@@ -159,14 +159,14 @@ body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
 .mw-contributions-list li {
 	padding: var( --space-sm ) var( --space-xs ) !important;
 	margin: 0 0 0 16px !important;
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 	border-radius: var( --border-radius--small );
 
 	&:hover {
-		background-color: var( --background-color-quiet--hover );
+		background-color: var( --background-color-button-quiet--hover );
 
 		&::before {
-			background-color: var( --color-base--emphasized );
+			background-color: var( --color-emphasized );
 		}
 	}
 
@@ -179,7 +179,7 @@ body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
 		height: 8px;
 		margin-top: 7px;
 		content: '';
-		background-color: var( --color-base--subtle );
+		background-color: var( --color-subtle );
 		border-radius: 100%;
 	}
 
@@ -190,5 +190,5 @@ body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
 
 .mw-pager-navigation-bar {
 	margin: var( --space-md ) 0;
-	color: var( --color-base--subtle );
+	color: var( --color-subtle );
 }

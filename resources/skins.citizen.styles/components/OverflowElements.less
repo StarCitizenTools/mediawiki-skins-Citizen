@@ -1,0 +1,114 @@
+.mask-gradient(@direction, @color1, @color2, @color3: null, @color4: null) {
+	& when (@color3 =null),
+	(@color4 =null) {
+		-webkit-mask-image: linear-gradient( @direction, @color1, @color2 );
+		mask-image: linear-gradient( @direction, @color1, @color2 );
+	}
+
+	& when not(@color3 =null),
+	not(@color4 =null) {
+		-webkit-mask-image: linear-gradient( @direction, @color1, @color2, @color3, @color4 );
+		mask-image: linear-gradient( @direction, @color1, @color2, @color3, @color4 );
+	}
+}
+
+.hideOverflowButton() {
+	pointer-events: none;
+	visibility: hidden;
+}
+
+.showOverflowButton() {
+	z-index: 1;
+	pointer-events: auto;
+	visibility: visible;
+}
+
+// Elements enhanced by overflowElements.js
+.citizen-overflow {
+	&-wrapper {
+		position: relative;
+		display: flex; /* So that it respects float elements (#878) */
+	}
+
+	&-content {
+		width: 100%;
+		overflow-x: auto;
+
+		.wikitable {
+			display: table;
+			max-width: none;
+			overflow: initial;
+		}
+
+		.citizen-overflow--left > & {
+			.mask-gradient(90deg, transparent, #000 var( --overflow-gradient-size ));
+		}
+
+		.citizen-overflow--right > & {
+			.mask-gradient(270deg, transparent, #000 var( --overflow-gradient-size ));
+		}
+
+		.citizen-overflow--left.citizen-overflow--right > & {
+			.mask-gradient(90deg, transparent, #000 var( --overflow-gradient-size ), #000 ~'calc( 100% - var( --overflow-gradient-size ) )', transparent);
+		}
+	}
+
+	&-nav {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		justify-content: space-between;
+		pointer-events: none;
+	}
+
+	&-navButton {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2rem;
+		height: 100%;
+		padding: 0;
+		appearance: none;
+		cursor: pointer;
+		background: transparent;
+		border: 0;
+		border-radius: var( --border-radius--small );
+		.hideOverflowButton();
+
+		&::before {
+			width: 1.25rem;
+		}
+
+		&-left {
+			.citizen-overflow--left & {
+				.showOverflowButton();
+			}
+
+			&::before {
+				transform: rotate( -90deg );
+			}
+		}
+
+		&-right {
+			.citizen-overflow--right & {
+				.showOverflowButton();
+			}
+
+			&::before {
+				transform: rotate( 90deg );
+			}
+		}
+
+		&:hover {
+			background-color: var( --background-color-button-quiet--hover );
+		}
+
+		&:active {
+			background-color: var( --background-color-button-quiet--active );
+		}
+	}
+}
+
+.citizen-animations-ready .citizen-overflow-content {
+	scroll-behavior: smooth;
+}

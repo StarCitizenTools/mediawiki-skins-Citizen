@@ -2,8 +2,6 @@
 	object data-page-views
 	object data-page-associated-pages
 	object data-page-actions
-	bool has-languages
-	object data-page-toolbox
 }}
 <div class="page-actions">
 	{{#has-languages}}{{>PageTools__languages}}{{/has-languages}}
@@ -11,30 +9,5 @@
 		{{#data-portlets.data-views}}{{>Menu}}{{/data-portlets.data-views}}
 		{{#data-portlets.data-associated-pages}}{{>Menu}}{{/data-portlets.data-associated-pages}}
 	{{/pagetools-visible}}
-	{{#pagetools-overflow}}
-	<div class="page-actions-more page-actions__item citizen-menu-checkbox-container">
-		<input 
-			type="checkbox" 
-			id="page-actions-more__checkbox" 
-			class="citizen-menu-checkbox-checkbox"
-			role="button"
-			aria-labelledby="page-actions-more__buttonCheckbox"
-			aria-haspopup="true">
-		<label
-			id="page-actions-more__buttonCheckbox" 
-			class="citizen-menu-checkbox-button page-actions__button page-actions__button--icon" 
-			for="page-actions-more__checkbox"
-			title="{{msg-citizen-actions-more-toggle}}"
-			aria-hidden="true">
-			<span class="citizen-ui-icon mw-ui-icon-wikimedia-ellipsis"></span>
-			<span>{{msg-citizen-actions-more-toggle}}</span>
-		</label>
-		<aside id="page-actions-more__card" class="page-actions__card citizen-menu-checkbox-target">
-			{{#pagetools-visible}}
-				{{#data-portlets.data-actions}}{{>Menu}}{{/data-portlets.data-actions}}
-			{{/pagetools-visible}}
-			{{#data-article-tools}}{{>Menu}}{{/data-article-tools}}
-		</aside>
-	</div>
-	{{/pagetools-overflow}}
+	{{#pagetools-overflow}}{{>PageTools__more}}{{/pagetools-overflow}}
 </div>

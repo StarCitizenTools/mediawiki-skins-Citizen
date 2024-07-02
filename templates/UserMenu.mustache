@@ -1,28 +1,16 @@
 {{!
 	string msg-citizen-usermenu-toggle The label used by the user menu button.
 }}
-<div class="citizen-userMenu citizen-header__item citizen-menu-checkbox-container">
-	<input 
-		type="checkbox" 
-		id="citizen-userMenu__checkbox" 
-		class="citizen-menu-checkbox-checkbox"
-		role="button"
-		aria-labelledby="citizen-userMenu__buttonCheckbox"
-		aria-haspopup="true">
-	<label
-		id="citizen-userMenu__buttonCheckbox" 
-		class="citizen-menu-checkbox-button citizen-header__button" 
-		for="citizen-userMenu__checkbox"
-		title="{{msg-citizen-usermenu-toggle}}"
-		aria-hidden="true">
+<details class="citizen-userMenu citizen-header__item citizen-menu__dropdown">
+	<summary
+		class="citizen-menu__dropdownButton" 
+		title="{{msg-citizen-usermenu-toggle}}">
 		<span class="citizen-ui-icon mw-ui-icon-wikimedia-userAvatar"></span>
 		<span>{{msg-citizen-usermenu-toggle}}</span>
-	</label>
-	<aside id="citizen-userMenu__card" class="citizen-userMenu__card citizen-menu-checkbox-target">
-		{{#data-user-info}}
-			<div class="citizen-userMenu__header">{{>Menu}}</div>
-		{{/data-user-info}}
+	</summary>
+	<div id="citizen-userMenu__card" class="citizen-menu__card">
+		{{#data-user-info}}{{>UserInfo}}{{/data-user-info}}
 		{{#data-portlets.data-user-interface-preferences}}{{>Menu}}{{/data-portlets.data-user-interface-preferences}}
 		{{#data-portlets.data-user-menu}}{{>Menu}}{{/data-portlets.data-user-menu}}
-	</aside>
-</div>
+	</div>
+</details>
