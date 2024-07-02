@@ -13,26 +13,26 @@ body {
 }
 
 h1 {
+	margin-bottom: 0;
 	font-size: 2em;
 	font-weight: bold;
 	border-bottom: none;
-	margin-bottom: 0;
 }
 
 p {
+	width: 100%;
 	padding: 0;
+	margin: 0;
 	background: transparent;
 	border-radius: 0;
-	width: 100%;
-	margin: 0;
 }
 
 #mw-content-text p {
-	padding: 10px;
-	background: var(--color-surface-2);
-	border-radius: 3px;
 	width: 70%;
+	padding: 10px;
 	margin-bottom: 20px;
+	background: var( --color-surface-2 );
+	border-radius: 3px;
 }
 
 table {
@@ -41,32 +41,32 @@ table {
 }
 
 table thead th {
-	background: var(--color-surface-2);
-	text-align: left;
-	border-bottom: 1px solid var(--color-base--subtle);
-	padding-left: 14px;
 	padding-bottom: 5px;
+	padding-left: 14px;
 	margin-bottom: 10px;
-	text-decoration: none;
-	color: var(--color-base--emphasized);
-	text-transform: uppercase;
-	font-weight: bold;
 	font-size: 0.7em;
+	font-weight: bold;
+	color: var( --color-base--emphasized );
+	text-align: left;
+	text-decoration: none;
+	text-transform: uppercase;
 	cursor: help;
+	background: var( --color-surface-2 );
+	border-bottom: 1px solid var( --color-base--subtle );
 }
 
 table tr td {
-	background: var(--color-surface-3);
-	font-size: 0.9em;
 	padding: 5px;
+	font-size: 0.9em;
 	vertical-align: top;
+	background: var( --color-surface-3 );
 }
 
-table tr td:nth-child(2) {
+table tr td:nth-child( 2 ) {
 	font: 1em monospace;
 }
 
-table tr td:nth-child(4) {
+table tr td:nth-child( 4 ) {
 	font-family: monospace;
 }
 
@@ -75,6 +75,6 @@ table tr.mw-accountinfo-current {
 }
 
 table tr.mw-accountinfo-current td:first-child {
-	background: var(--color-text-success);
-	color: var(--color-base--emphasized);
+	color: var( --color-base--emphasized );
+	background: var( --color-text-success );
 }
