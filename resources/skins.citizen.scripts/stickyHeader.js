@@ -1,6 +1,5 @@
 const SCROLL_DOWN_CLASS = 'citizen-scroll--down';
 const SCROLL_UP_CLASS = 'citizen-scroll--up';
-const STICKY_SENTINEL_ID = 'citizen-page-header-sticky-sentinel';
 const STICKY_CLASS = 'citizen-page-header--sticky';
 const { initDirectionObserver, initIntersectionObserver } = require( './scrollObserver.js' );
 
@@ -28,11 +27,14 @@ function observeScrollDirection() {
  * @return {void}
  */
 function init() {
-	const sentinel = document.getElementById( STICKY_SENTINEL_ID );
-	const shouldStickyHeader = sentinel && getComputedStyle( sentinel ).getPropertyValue( 'display' ) !== 'none';
-
 	observeScrollDirection();
 
+	const header = document.querySelector( '.citizen-page-header' );
+	const sentinel = document.createElement( 'div' );
+	sentinel.id = 'citizen-page-header-sticky-sentinel';
+	header.insertAdjacentElement( 'afterend', sentinel );
+
+	const shouldStickyHeader = getComputedStyle( sentinel ).getPropertyValue( 'display' ) !== 'none';
 	if ( !shouldStickyHeader ) {
 		return;
 	}
