@@ -25,8 +25,6 @@
 }
 
 .citizen-page-header {
-	position: -webkit-sticky;
-	position: sticky;
 	// So that the modal are above custom sticky headers
 	z-index: @z-index-page-header + 1;
 	display: flex;
@@ -59,7 +57,6 @@
 
 	.citizen-toc-enabled {
 		.citizen-body-container {
-			display: grid;
 			grid-template-areas:
  'header header'
 				'content sidebar'
