@@ -124,20 +124,20 @@
 				position: absolute;
 				bottom: 0;
 				left: 0;
-				margin: var( --space-xs );
-				width: var( --toolbar-size );
-				height: var( --toolbar-size );
-				background-color: var( --color-surface-1 );
-				box-shadow: var( --box-shadow-dialog );
-				border-radius: var( --border-radius--medium );
 				display: grid;
 				place-content: center;
+				width: var( --toolbar-size );
+				height: var( --toolbar-size );
+				margin: var( --space-xs );
+				background-color: var( --color-surface-1 );
+				border-radius: var( --border-radius--medium );
+				box-shadow: var( --box-shadow-dialog );
 
 				// The hover state colors are not great but it will do for now
 				&:hover {
 					background: ~'linear-gradient( var( --background-color-button-quiet--hover ), var( --background-color-button-quiet--hover ) ) var( --color-surface-1 )';
 				}
-		
+
 				&:active {
 					background: ~'linear-gradient( var( --background-color-button-quiet--active ), var( --background-color-button-quiet--active ) ) var( --color-surface-1 )';
 				}
@@ -158,9 +158,9 @@
 
 		.citizen-menu__card {
 			margin: 0;
+			background: transparent;
 			border: 0;
 			box-shadow: none;
-			background: transparent;
 			transform: none;
 
 			> * {
