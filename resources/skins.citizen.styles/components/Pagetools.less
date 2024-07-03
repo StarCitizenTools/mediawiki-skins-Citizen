@@ -20,23 +20,24 @@
 			transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-end );
 
 			@media ( min-width: @min-width-breakpoint-desktop ) {
+				top: 100%;
 				transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-start );
 			}
 		}
+	}
 
-		&__dropdown {
-			@media ( min-width: @min-width-breakpoint-desktop ) {
-				// Only attach dropdown menu to the button on desktop mode
-				position: relative;
-			}
+	.citizen-dropdown {
+		@media ( min-width: @min-width-breakpoint-desktop ) {
+			// Only attach dropdown menu to the button on desktop mode
+			position: relative;
+		}
 
-			&Button {
-				display: grid;
-				place-items: center;
-				width: 2.5rem; // Same width as other buttons
-				height: 2.25rem; // Same height as other buttons
-				border-radius: var( --border-radius--medium );
-			}
+		&-summary {
+			display: grid;
+			place-items: center;
+			width: 2.5rem; // Same width as other buttons
+			height: 2.25rem; // Same height as other buttons
+			border-radius: var( --border-radius--medium );
 		}
 	}
 
@@ -76,7 +77,7 @@
 
 // Language counter badge
 .citizen-page-languages {
-	> .citizen-menu__dropdownButton {
+	> .citizen-dropdown-summary {
 		position: relative; // So that the badge doesn't take a stroll to the far left
 
 		&::after {
@@ -191,7 +192,7 @@
 		}
 	}
 
-	.citizen-page-languages > .citizen-menu__dropdownButton::after {
+	.citizen-page-languages > .citizen-dropdown-summary::after {
 		// Blend with background
 		background: var( --color-surface-1 );
 	}

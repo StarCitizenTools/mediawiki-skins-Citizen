@@ -6,12 +6,12 @@
 @import 'variables.less';
 
 .citizen-card(@border-radius: true) {
-	background-color: var(--color-surface-1);
-	border: 1px solid var(--border-color-base);
-	box-shadow: var(--box-shadow-dialog);
+	background-color: var( --color-surface-1 );
+	border: 1px solid var( --border-color-base );
+	box-shadow: var( --box-shadow-dialog );
 
 	& when (@border-radius ) {
-		border-radius: var(--border-radius--medium);
+		border-radius: var( --border-radius--medium );
 	}
 }
 
@@ -19,7 +19,7 @@
 .citizen-card-hide(@position, @axis: '', @fadeChildren: true) {
 	pointer-events: none;
 	opacity: 0;
-	transform:~'scale@{axis}( 0 )';
+	transform: ~'scale@{axis}( 0 )';
 	transform-origin: @position;
 
 	& when (@fadeChildren ) {
@@ -51,13 +51,13 @@
 // But GTFO instantly when they close the menu
 .citizen-card-content-show() {
 	opacity: 1;
-	transition: var(--transition-menu);
+	transition: var( --transition-menu );
 	transition-property: opacity;
 }
 
 // Transition animation
 .citizen-card-transition() {
-	transition: var(--transition-menu);
+	transition: var( --transition-menu );
 	transition-property: transform, opacity;
 }
 
@@ -67,9 +67,9 @@
 	right: 0;
 	bottom: 100%;
 	left: 0;
-	max-height: var(--header-card-maxheight);
+	max-height: var( --header-card-maxheight );
 
-	@media (min-width: @min-width-breakpoint-tablet ) {
+	@media ( min-width: @min-width-breakpoint-tablet ) {
 		& when (@position =start) {
 			right: unset;
 		}
@@ -79,7 +79,7 @@
 		}
 	}
 
-	@media (min-width: @min-width-breakpoint-desktop ) {
+	@media ( min-width: @min-width-breakpoint-desktop ) {
 		right: unset;
 		left: 100%;
 
@@ -100,7 +100,7 @@
 	top: @topOffset;
 
 	& when (@bottomBorder ) {
-		border-bottom: 1px solid var(--border-color-base);
+		border-bottom: 1px solid var( --border-color-base );
 	}
 
 	& when (@zIndex ) {
@@ -117,25 +117,25 @@
 		z-index: -1;
 		height: 100%;
 		content: '';
-		background-color: var(--color-surface-0);
-		filter: opacity(0.9);
-		backdrop-filter: saturate(50%) blur(16px);
+		background-color: var( --color-surface-0 );
+		filter: opacity( 0.9 );
+		backdrop-filter: saturate( 50% ) blur( 16px );
 	}
 }
 
 // To hide objects, but keep them accessible for screen-readers
 .sr-only() {
-	clip-path: inset(50%);
+	position: absolute;
+	width: 1px;
 	height: 1px;
 	overflow: hidden;
-	position: absolute;
+	clip-path: inset( 50% );
 	white-space: nowrap;
-	width: 1px;
 }
 
 // Set content to be at the center
 .content-center() {
-	max-width: var(--width-layout);
+	max-width: var( --width-layout );
 	margin-right: auto;
 	margin-left: auto;
 }
@@ -172,39 +172,39 @@
 
 // Button Styles
 .button-blue() {
-	color: var(--color-inverted-primary) !important;
-	background-color: var(--color-progressive);
+	color: var( --color-inverted-primary ) !important;
+	background-color: var( --color-progressive );
 
 	.citizen-ui-icon::before {
-		filter: var(--filter-invert-primary);
+		filter: var( --filter-invert-primary );
 		opacity: 1;
 	}
 }
 
 .button-blue-hover() {
-	background-color: var(--color-progressive--hover);
+	background-color: var( --color-progressive--hover );
 }
 
 .button-blue-active() {
-	background-color: var(--color-progressive--active);
+	background-color: var( --color-progressive--active );
 }
 
 .button-red() {
-	color: var(--color-inverted-fixed) !important;
-	background-color: var(--color-destructive);
+	color: var( --color-inverted-fixed ) !important;
+	background-color: var( --color-destructive );
 
 	.citizen-ui-icon::before {
-		filter: var(--filter-invert-fixed);
+		filter: var( --filter-invert-fixed );
 		opacity: 1;
 	}
 }
 
 .button-red-hover() {
-	background-color: var(--color-destructive--hover);
+	background-color: var( --color-destructive--hover );
 }
 
 .button-red-active() {
-	background-color: var(--color-destructive--active);
+	background-color: var( --color-destructive--active );
 }
 
 // Transform black into given color
@@ -217,9 +217,9 @@
 
 	// grayscale fallback if SVG from data url is not supported
 	@lightness: lightness(@color );
-	filter: saturate(0%) brightness(0%) invert(@lightness ) opacity(@a );
+	filter: saturate( 0% ) brightness( 0% ) invert( @lightness ) opacity( @a );
 
 	// color filter
 	@svg-filter-id: "recolor";
-	filter: url(';data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="@{svg-filter-id}" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 @{r} 0 0 0 0 @{g} 0 0 0 0 @{b} 0 0 0 @{a} 0"/></filter></svg> #@{svg-filter-id}');
+	filter: url( ';data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="@{svg-filter-id}" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 @{r} 0 0 0 0 @{g} 0 0 0 0 @{b} 0 0 0 @{a} 0"/></filter></svg> #@{svg-filter-id}' );
 }

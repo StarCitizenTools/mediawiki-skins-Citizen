@@ -1,7 +1,7 @@
 /* TODO: Use SVG animtation to replace CSS icons */
 .citizen-search {
-	.citizen-menu__dropdownButton {
-		.citizen-ui-icon {
+	.citizen-dropdown-summary {
+		> .citizen-ui-icon {
 			box-sizing: content-box; // Magic
 			display: flex;
 			align-items: center;
@@ -56,7 +56,7 @@
 		}
 
 		&:hover {
-			.citizen-ui-icon {
+			> .citizen-ui-icon {
 				> span {
 					&:not( :last-child ) {
 						opacity: var( --opacity-icon-base--hover );
@@ -71,7 +71,7 @@
 		}
 
 		&:active {
-			.citizen-ui-icon {
+			> .citizen-ui-icon {
 				> span {
 					&:not( :last-child ) {
 						opacity: var( --opacity-icon-base--selected );
@@ -81,9 +81,9 @@
 		}
 	}
 
-	&.citizen-menu__dropdown[ open ] {
-		.citizen-menu__dropdownButton {
-			.citizen-ui-icon {
+	> .citizen-dropdown-details[ open ] {
+		> .citizen-dropdown-summary {
+			> .citizen-ui-icon {
 				> span {
 					&:first-child {
 						height: 1rem;
@@ -101,7 +101,7 @@
 			}
 
 			&:hover {
-				.citizen-ui-icon {
+				> .citizen-ui-icon {
 					transform: scale( 0.85 );
 				}
 			}
@@ -111,8 +111,8 @@
 
 /* @noflip */
 .rtl {
-	.citizen-search .citizen-menu__dropdownButton:hover {
-		.citizen-ui-icon > span {
+	.citizen-search .citizen-dropdown-summary:hover {
+		> .citizen-ui-icon > span {
 			&:first-child {
 				left: 0.125rem;
 			}
