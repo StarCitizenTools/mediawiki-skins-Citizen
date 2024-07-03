@@ -166,12 +166,3 @@ video {
 		overflow-x: clip; // avoid breaking layout in smaller screen sizes
 	}
 }
-
-@media ( min-width: @min-width-breakpoint-tablet ) {
-	// Delay scroll animation won't happen on load
-	// Use it only for larger viewport as it is very costly
-	// on mobile devices
-	html.citizen-animations-ready {
-		scroll-behavior: smooth;
-	}
-}
