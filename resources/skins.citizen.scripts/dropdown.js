@@ -63,7 +63,7 @@ class Dropdown {
 	 * @param {Event} event
 	 */
 	dismissOnFocusLoss( event ) {
-		if ( !this.details.contains( event.target ) ) {
+		if ( !this.target.contains( event.target ) ) {
 			this.dismiss();
 		}
 	}

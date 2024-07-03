@@ -27,15 +27,6 @@
 		border-radius: var( --border-radius--small );
 		contain: strict;
 
-		// Used in checkbox hack
-		&Checkbox {
-			position: absolute;
-			display: block;
-			width: inherit;
-			height: inherit;
-			contain: strict;
-		}
-
 		// Pure CSS icons
 		&Icon {
 			width: var( --header-icon-size );
@@ -99,12 +90,6 @@
 		justify-content: space-between;
 		min-width: 0;
 		overflow-x: auto;
-
-		.citizen-menu-checkbox-checkbox:checked {
-			~ .citizen-header__button {
-				background-color: var( --background-color-progressive-subtle );
-			}
-		}
 	}
 
 	&__start,
@@ -193,40 +178,6 @@
 	.citizen-header {
 		transition: var( --transition-menu );
 		transition-property: transform;
-
-		/*
-		 * Add overlay to menus as affordnance
-		 * TODO: We should use JS to add the overlay instead of abusing CSS
-		 * TODO: This does not work for TOC and Pref menu
-		*/
-		.citizen-menu-checkbox-checkbox {
-			~ .citizen-header__button {
-				&::before {
-					position: fixed;
-					inset: 0 0 0 0;
-					z-index: 1;
-					width: auto;
-					height: auto;
-					pointer-events: none;
-					content: '';
-					background-color: var( --background-color-backdrop-light );
-					opacity: 0;
-				}
-			}
-
-			&[ aria-expanded='true' ] {
-				~ .citizen-header__button {
-					contain: initial;
-
-					&::before {
-						pointer-events: auto;
-						opacity: 1;
-						transition: var( --transition-menu );
-						transition-property: opacity;
-					}
-				}
-			}
-		}
 	}
 
 	.citizen-scroll--down .citizen-header {
