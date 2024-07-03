@@ -3,9 +3,9 @@
  * Based on Vector
  */
 const
-	DROPDOWN_CONTAINER_SELECTOR = '.citizen-dropdown',
+	DROPDOWN_CONTAINER_SELECTOR = '.citizen-menu__dropdown',
 	DROPDOWN_DETAILS_SELECTOR = '.citizen-dropdown-details',
-	DROPDOWN_SUMMARY_SELECTOR = '.citizen-dropdown-summary',
+	DROPDOWN_SUMMARY_SELECTOR = '.citizen-menu__dropdownButton',
 	DROPDOWN_TARGET_SELECTOR = '.citizen-menu__card';
 
 /**
@@ -124,6 +124,8 @@ function init() {
 			details = dropdown.querySelector( DROPDOWN_DETAILS_SELECTOR ),
 			summary = dropdown.querySelector( DROPDOWN_SUMMARY_SELECTOR ),
 			target = dropdown.querySelector( DROPDOWN_TARGET_SELECTOR );
+
+		console.log( 'init dropdown' );
 
 		if ( !( details && summary && target ) ) {
 			return;
