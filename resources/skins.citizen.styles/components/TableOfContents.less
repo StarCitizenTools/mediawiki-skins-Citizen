@@ -103,6 +103,7 @@
 		bottom: ~'calc( var( --header-size ) + var(  --space-xs ) )';
 		left: 0;
 		z-index: @z-index-page-header + 1; // Need to be higher than the page actions
+		pointer-events: none; // HACK: Make background clickable
 		transition: var( --transition-menu );
 		transition-property: transform;
 
@@ -120,6 +121,10 @@
 		}
 
 		.citizen-dropdown {
+			&-details[ open ] + .citizen-menu__card {
+				pointer-events: auto; // HACK: Make ToC clickable after ToC is expanded
+			}
+
 			&-summary {
 				position: absolute;
 				bottom: 0;
@@ -129,6 +134,7 @@
 				width: var( --toolbar-size );
 				height: var( --toolbar-size );
 				margin: var( --space-xs );
+				pointer-events: auto; // HACK: Make button clickable
 				background-color: var( --color-surface-1 );
 				border-radius: var( --border-radius--medium );
 				box-shadow: var( --box-shadow-dialog );
