@@ -22,7 +22,6 @@ class Dropdown {
 		this.details = details;
 		this.summary = summary;
 		this.target = target;
-		this.dismissOnClickOutside = this.dismissOnClickOutside.bind( this );
 		this.dismissOnEscape = this.dismissOnEscape.bind( this );
 		this.dismissOnFocusLoss = this.dismissOnFocusLoss.bind( this );
 		this.dismissOnLinkClick = this.dismissOnLinkClick.bind( this );
@@ -32,17 +31,6 @@ class Dropdown {
 	dismiss() {
 		if ( this.details && this.details.open ) {
 			this.details.open = false;
-		}
-	}
-
-	/**
-	 * Dismiss the target when clicking elsewhere.
-	 *
-	 * @param {Event} event
-	 */
-	dismissOnClickOutside( event ) {
-		if ( !this.target.contains( event.target ) && !this.summary.contains( event.target ) ) {
-			this.dismiss();
 		}
 	}
 
@@ -63,7 +51,7 @@ class Dropdown {
 	 * @param {Event} event
 	 */
 	dismissOnFocusLoss( event ) {
-		if ( !this.target.contains( event.target ) ) {
+		if ( !this.target.contains( event.target ) && !this.summary.contains( event.target ) ) {
 			this.dismiss();
 		}
 	}
@@ -85,7 +73,7 @@ class Dropdown {
 	 */
 	unbind() {
 		this.target.removeEventListener( 'click', this.dismissOnLinkClick );
-		window.removeEventListener( 'click', this.dismissOnClickOutside );
+		window.removeEventListener( 'click', this.dismissOnFocusLoss );
 		window.removeEventListener( 'focusin', this.dismissOnFocusLoss );
 		window.removeEventListener( 'keyup', this.dismissOnEscape );
 	}
@@ -95,7 +83,7 @@ class Dropdown {
 	 */
 	bind() {
 		this.target.addEventListener( 'click', this.dismissOnLinkClick );
-		window.addEventListener( 'click', this.dismissOnClickOutside );
+		window.addEventListener( 'click', this.dismissOnFocusLoss );
 		window.addEventListener( 'focusin', this.dismissOnFocusLoss );
 		window.addEventListener( 'keyup', this.dismissOnEscape );
 	}
