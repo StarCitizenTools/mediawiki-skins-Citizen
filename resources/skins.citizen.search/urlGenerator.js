@@ -12,9 +12,8 @@
 
 /**
  * @callback generateUrl
- * @param {SearchResult|string} searchResult
+ * @param {SearchResult|string} page
  * @param {UrlParams} [params]
- * @param {string} [articlePath]
  * @return {string}
  */
 
@@ -32,26 +31,35 @@
 function urlGenerator( config ) {
 	return {
 		/**
-		 * @param {SearchResult|string} suggestion
+		 * @param {SearchResult|string} page
 		 * @param {UrlParams} params
-		 * @param {string} articlePath
 		 * @return {string}
 		 */
 		generateUrl(
-			suggestion,
-			params = {
-				title: 'Special:Search'
-			},
-			articlePath = config.wgScript
+			page,
+			params = {}
 		) {
-			if ( typeof suggestion !== 'string' ) {
-				suggestion = suggestion.title;
+			const getPageTitle = () => {
+				let title;
+				if ( !page ) {
+					title = 'Special:Search';
+				} else if ( typeof page !== 'string' ) {
+					title = page.title;
+				} else {
+					title = page;
+				}
+				return encodeURIComponent( title );
+			};
+
+			// Use short URL if avaliable, instead of doing a bunch of 302 like mediawiki.searchSuggest does
+			const articlePath = config.wgArticlePath.replace( '$1', getPageTitle( page ) );
+
+			if ( Object.keys( params ).length === 0 ) {
+				return articlePath;
+			} else {
+				const searchParams = new URLSearchParams( params );
+				return `${ articlePath }?${ searchParams.toString() }`;
 			}
-
-			params.title = suggestion;
-
-			const searchParams = new URLSearchParams( params );
-			return `${ articlePath }?${ searchParams.toString() }`;
 		}
 	};
 }

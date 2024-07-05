@@ -22,7 +22,7 @@ function searchAction() {
 			this.userRights = await mw.user.getRights();
 			return this.userRights;
 		},
-		init: function ( typeaheadEl, itemGroupData ) {
+		init: async function ( typeaheadEl, itemGroupData ) {
 			const actionData = {
 				type: 'action',
 				size: 'chip'
