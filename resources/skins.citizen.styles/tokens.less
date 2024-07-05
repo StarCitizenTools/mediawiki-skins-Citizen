@@ -3,12 +3,60 @@
  */
 :root {
 	/**
+	 * Citizen Design Tokens
+	 * TODO: Refactor cssvariables.less into this and features.less
+	 */
+	--border-radius-medium: ~'calc( var( --border-radius-base ) * 2 )';
+	--border-radius-large: ~'calc( var( --border-radius-base ) * 3 )';
+	/* Progressive color */
+	--color-primary__h: @color-primary__h;
+	--color-primary__s: @color-primary__s;
+	--color-primary__l: @color-primary__l;
+	--color-inverted-primary: #fff;
+	/* Surface color */
+	--color-surface-0__s: 30%;
+	--color-surface-0__l: 96%;
+	--color-surface-1__s: 40%;
+	--color-surface-1__l: 94%;
+	--color-surface-2__s: 30%;
+	--color-surface-2__l: 92%;
+	--color-surface-3__s: 20%;
+	--color-surface-3__l: 90%;
+	--color-surface-4__s: 10%;
+	--color-surface-4__l: 88%;
+	--color-surface-0: ~'hsl( var( --color-primary__h ), var( --color-surface-0__s ), var( --color-surface-0__l ) )';
+	--color-surface-1: ~'hsl( var( --color-primary__h ), var( --color-surface-1__s ), var( --color-surface-1__l ) )';
+	--color-surface-2: ~'hsl( var( --color-primary__h ), var( --color-surface-2__s ), var( --color-surface-2__l ) )';
+	--color-surface-2--hover: ~'hsl( var( --color-primary__h ), var( --color-surface-2__s ), calc( var( --color-surface-2__l ) + var( --delta-lightness-hover-state ) ) )';
+	--color-surface-2--active: ~'hsl( var( --color-primary__h ), var( --color-surface-2__s ), calc( var( --color-surface-2__l ) - var( --delta-lightness-hover-state ) ) )';
+	--color-surface-3: ~'hsl( var( --color-primary__h ), var( --color-surface-3__s ), var( --color-surface-3__l ) )';
+	--color-surface-4: ~'hsl( var( --color-primary__h ), var( --color-surface-4__s ), var( --color-surface-4__l ) )';
+	--background-color-icon: ~'rgba( 0, 0, 0, var( --opacity-icon-base ) )';
+	--background-color-icon--hover: ~'rgba( 0, 0, 0, var( --opacity-icon-base--hover ) )';
+	--background-color-icon--active: ~'rgba( 0, 0, 0, var( --opacity-icon-base--active ) )';
+	/* Font */
+	// Used as base unit to caluclate font-size
+	--font-size-base: 1rem;
+	// Hover and active states are calculated by a modifier of the lightness value in HSL (e.g. hover: +2%, active: -2%)
+	--delta-lightness-hover-state: 4%;
+	// Used to calculate box shadow
+	--shadow-strength: 0.02;
+	--surface-shadow: var( --color-primary__h ), 10%, 20%;
+
+	/**
 	 * Codex Design Tokens but not included as CSS variables
 	 */
 	--border-radius-base: 4px;
 	--border-radius-sharp: 0;
 	--border-radius-pill: 9999px;
 	--border-radius-circle: 50%;
+	--font-size-x-small: ~'calc( var( --font-size-base ) * 0.75 )';
+	--font-size-small: ~'calc( var( --font-size-base ) * 0.875 )';
+	--font-size-medium: var( --font-size-base );
+	--font-size-large: ~'calc( var( --font-size-base ) * 1.125 )';
+	--font-size-x-large: ~'calc( var( --font-size-base ) * 1.25 )';
+	--font-size-xx-large: ~'calc( var( --font-size-base ) * 1.375 )';
+	--font-size-xxx-large: ~'calc( var( --font-size-base ) * 1.75 )';
 
 	/**
 	 * Codex Design Tokens v1.8.0
@@ -197,4 +245,13 @@
 	--color-text-warning: var( --color-base );
 	--color-text-success: var( --color-success );
 	--opacity-icon-base--active: var( --opacity-icon-base--selected );
+}
+
+@media ( min-width: @min-width-breakpoint-tablet ) {
+	:root {
+		--font-size-x-small: ~'calc( var( --font-size-base ) *  0.8125 )';
+		--font-size-x-large: ~'calc( var( --font-size-base ) *  1.375 )';
+		--font-size-xx-large: ~'calc( var( --font-size-base ) *  1.5 )';
+		--font-size-xxx-large: ~'calc( var( --font-size-base ) *  2 )';
+	}
 }
