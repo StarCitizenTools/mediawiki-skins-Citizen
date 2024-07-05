@@ -136,7 +136,7 @@
 						height: 60px;
 						background-color: var( --color-surface-3 );
 
-						&::before {
+						.citizen-typeahead &::before {
 							background-size: 20px;
 						}
 					}
@@ -200,7 +200,8 @@
 		height: 60px;
 		overflow: hidden;
 
-		&.citizen-ui-icon::before {
+		// Needed the specificity, we should refactor this
+		.citizen-typeahead &.citizen-ui-icon::before {
 			background-size: contain;
 		}
 	}
