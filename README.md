@@ -73,6 +73,7 @@ Name | Grade | Version | Last updated
 [RevisionSlider](https://www.mediawiki.org/wiki/Extension:RevisionSlider) | B | REL1_35 `4c4e368` | 2022-06-02
 [Score](https://www.mediawiki.org/wiki/Extension:Score) | B | REL1_39 `0a66cef` | 2023-06-10
 [Scribunto](https://www.mediawiki.org/wiki/Extension:Scribunto) | B | REL1_39 `ebb91f2` | 2023-05-29
+[SearchDigest](https://www.mediawiki.org/wiki/Extension:SearchDigest) | A | Master `ddd4665` | 2024-07-05
 [Semantic MediaWiki](https://www.mediawiki.org/wiki/Extension:Semantic_MediaWiki) | A | 4.0.2 `0fcdfce` | 2022-10-21
 [Semantic Result Formats](https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats) | E | N/A | N/A
 [SimpleTooltip](https://www.mediawiki.org/wiki/Extension:SimpleTooltip) | B | N/A | 2022-02-19
