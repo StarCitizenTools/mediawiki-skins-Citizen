@@ -52,7 +52,7 @@ function urlGenerator( config ) {
 			};
 
 			// Use short URL if avaliable, instead of doing a bunch of 302 like mediawiki.searchSuggest does
-			const articlePath = config.wgArticlePath.replace( '$1', getPageTitle( page ) );
+			const articlePath = config.wgArticlePath.replace( '$1', getPageTitle() );
 
 			if ( Object.keys( params ).length === 0 ) {
 				return articlePath;
