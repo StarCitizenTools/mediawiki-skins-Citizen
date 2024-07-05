@@ -15,7 +15,7 @@ table.dataTable {
 	overflow: hidden; // let datatables handle responsiveness
 	font-size: var( --font-size-small );
 	border: 1px solid var( --border-color-base );
-	border-radius: var( --border-radius--medium );
+	border-radius: var( --border-radius-medium );
 }
 
 table.dataTable thead th,
@@ -228,7 +228,7 @@ table.dataTable tbody tr.selected > * {
 .dataTables_wrapper .dataTables_paginate .paginate_button {
 	font-weight: var( --font-weight-medium );
 	color: var( --color-emphasized ) !important;
-	border-radius: var( --border-radius--small );
+	border-radius: var( --border-radius-base );
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.current,
@@ -295,7 +295,7 @@ table.dataTable > tbody > tr.child ul.dtr-details > li {
 	.dataTables_filter input {
 		padding: var( --space-xs );
 		border: 1px solid var( --border-color-interactive );
-		border-radius: var( --border-radius--small );
+		border-radius: var( --border-radius-base );
 	}
 }
 
@@ -321,7 +321,7 @@ div.dtsp-panesContainer div.dtsp-searchPanes div.dtsp-searchPane div.dataTables_
 div.dtsp-panesContainer div.dtsp-searchPanes div.dtsp-searchPane div.dataTables_wrapper:hover {
 	// Consistent border
 	border: 0;
-	border-radius: var( --border-radius--medium );
+	border-radius: var( --border-radius-medium );
 }
 
 div.dtsp-columns-2 {
@@ -364,11 +364,11 @@ div.dtsp-panesContainer {
 		font-weight: var( --font-weight-medium );
 		color: var( --color-emphasized );
 		border: 0;
-		border-radius: var( --border-radius--small );
+		border-radius: var( --border-radius-base );
 
 		&:hover {
 			background-color: var( --background-color-button-quiet--hover );
-			border-radius: var( --border-radius--small );
+			border-radius: var( --border-radius-base );
 		}
 
 		&:active {
@@ -390,7 +390,7 @@ div.dtsp-panesContainer {
 			margin-top: 0 !important;
 			font-size: var( --font-size-small );
 			border: 1px solid var( --border-color-base );
-			border-radius: var( --border-radius--medium );
+			border-radius: var( --border-radius-medium );
 
 			// Hidden pane
 			&:has( .dtsp-hidden ) {
@@ -399,7 +399,7 @@ div.dtsp-panesContainer {
 
 					&:hover {
 						background-color: var( --background-color-button-quiet--hover );
-						border-radius: var( --border-radius--medium );
+						border-radius: var( --border-radius-medium );
 						opacity: 1;
 					}
 
@@ -419,7 +419,7 @@ div.dtsp-panesContainer {
 
 				div.dtsp-searchCont input.dtsp-search {
 					padding-left: var( --space-sm );
-					border-radius: var( --border-radius--small );
+					border-radius: var( --border-radius-base );
 				}
 			}
 
@@ -447,7 +447,7 @@ div.dtsp-panesContainer {
 				width: 36px;
 				height: 40px;
 				margin: 0;
-				border-radius: var( --border-radius--small );
+				border-radius: var( --border-radius-base );
 
 				&:hover {
 					background-color: var( --background-color-button-quiet--hover );

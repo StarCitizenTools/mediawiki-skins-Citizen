@@ -20,7 +20,7 @@
 		background-repeat: no-repeat;
 		background-position: center;
 		background-size: var( --header-icon-size );
-		border-radius: var( --border-radius--small );
+		border-radius: var( --border-radius-base );
 		opacity: var( --opacity-icon-base );
 
 		&:hover {
@@ -47,7 +47,7 @@
 			// Re-invert indicator color
 			filter: var( --filter-invert );
 			border-color: var( --color-destructive );
-			border-radius: var( --border-radius--pill );
+			border-radius: var( --border-radius-pill );
 		}
 
 		&-dimmed {
@@ -82,7 +82,7 @@
 // Add quiet background hover states
 #pt-notifications-alert,
 #pt-notifications-notice {
-	border-radius: var( --border-radius--small );
+	border-radius: var( --border-radius-base );
 
 	&:hover {
 		background-color: var( --background-color-button-quiet--hover );

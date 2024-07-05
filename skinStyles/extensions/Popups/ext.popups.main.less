@@ -17,7 +17,7 @@
 /* popup.less */
 .mwe-popups {
 	// See FIXME below
-	// border-radius: var( --border-radius--medium );
+	// border-radius: var( --border-radius-medium );
 	background: var( --color-surface-1 );
 	box-shadow: var( --box-shadow-dialog );
 
@@ -26,7 +26,7 @@
 	}
 
 	.mwe-popups-settings-icon {
-		border-radius: var( --border-radius--small );
+		border-radius: var( --border-radius-base );
 		opacity: var( --opacity-icon-base );
 
 		&:hover {
@@ -158,7 +158,7 @@
 			// FIXME: Come up with a clip path that works with increased border radius
 			// Popups is using polygon to clip the card
 			// So the thumbnail corner would look weird if we adjust the border radius
-			// --pseudo-radius: var( --border-radius--medium );
+			// --pseudo-radius: var( --border-radius-medium );
 		}
 	}
 }
@@ -167,7 +167,7 @@
 #mwe-popups-settings {
 	background: var( --color-surface-1 );
 	border-color: var( --border-color-base );
-	border-radius: var( --border-radius--medium );
+	border-radius: var( --border-radius-medium );
 	box-shadow: var( --box-shadow-dialog );
 
 	header {
@@ -219,14 +219,14 @@
 		inset: auto 0 0 0 !important;
 		width: auto !important;
 		overflow: hidden; // Hide pointer and also rounded corners
-		border-radius: var( --border-radius--medium ) var( --border-radius--medium ) 0 0;
+		border-radius: var( --border-radius-medium ) var( --border-radius-medium ) 0 0;
 
 		// Top aligned cards
 		&.flipped-x-y,
 		&.flipped-y {
 			top: 0 !important;
 			bottom: auto !important;
-			border-radius: 0 0 var( --border-radius--medium ) var( --border-radius--medium );
+			border-radius: 0 0 var( --border-radius-medium ) var( --border-radius-medium );
 		}
 
 		.mwe-popups-container {
