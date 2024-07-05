@@ -24,7 +24,7 @@
  */
 
 /**
- * Generates URLs for suggestions like those in MediaWiki's mediawiki.searchSuggest implementation.
+ * Generates URLs for suggestions.
  *
  * @param {MwMap} config
  * @return {UrlGenerator}
@@ -46,18 +46,11 @@ function urlGenerator( config ) {
 		) {
 			if ( typeof suggestion !== 'string' ) {
 				suggestion = suggestion.title;
-			} else {
-				// Add `fulltext` query param to search within pages and for navigation
-				// to the search results page (prevents being redirected to a certain
-				// article).
-				params = Object.assign( {}, params, {
-					fulltext: '1'
-				} );
 			}
 
-			const searchParams = new URLSearchParams(
-				Object.assign( {}, params, { search: suggestion } )
-			);
+			params.title = suggestion;
+
+			const searchParams = new URLSearchParams( params );
 			return `${ articlePath }?${ searchParams.toString() }`;
 		}
 	};

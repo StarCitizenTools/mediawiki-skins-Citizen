@@ -1,8 +1,20 @@
 const config = require( './config.json' );
 const htmlHelper = require( './htmlHelper.js' )();
+const urlGenerator = require( './urlGenerator.js' );
+
+const fulltextParam = {
+	fulltext: '1'
+};
+const mediasearchParam = {
+	type: 'image'
+};
+const editpageParam = {
+	action: 'edit'
+};
 
 function searchAction() {
 	return {
+		urlGeneratorInstance: urlGenerator( config ),
 		userRights: undefined,
 		// eslint-disable-next-line es-x/no-async-functions
 		getUserRights: async function () {
@@ -25,21 +37,22 @@ function searchAction() {
 				items: []
 			};
 
-			const searchQueryEncoded = encodeURIComponent( searchQuery.valueHtml );
 			// TODO: Save this in a separate JSON file
 			// Fulltext search
+			fulltextParam.search = searchQuery.value;
 			itemGroupData.items.push( {
-				// id: 'fulltext',
-				link: `${ config.wgScriptPath }/index.php?title=Special:Search&fulltext=1&search=${ searchQueryEncoded }`,
+				id: 'fulltext',
+				link: this.urlGeneratorInstance.generateUrl( 'Special:Search', fulltextParam ),
 				icon: 'articleSearch',
 				msg: 'citizen-search-fulltext'
 			} );
 
 			// MediaSearch
 			if ( config.isMediaSearchExtensionEnabled ) {
+				mediasearchParam.search = searchQuery.value;
 				itemGroupData.items.push( {
-					// id: 'mediasearch',
-					link: `${ config.wgScriptPath }/index.php?title=Special:MediaSearch&type=image&search=${ searchQueryEncoded }`,
+					id: 'mediasearch',
+					link: this.urlGeneratorInstance.generateUrl( 'Special:MediaSearch', mediasearchParam ),
 					icon: 'imageGallery',
 					msg: 'citizen-search-mediasearch'
 				} );
@@ -51,13 +64,13 @@ function searchAction() {
 			console.log( title.exists() );
 			*/
 
-			const userRights = this.userRights ?? await this.getUserRights();
+			const userRights = this.userRights || await this.getUserRights();
 			if ( userRights.includes( 'createpage', 'edit' ) ) {
 				// Edit/create page
 				// TODO: Check whether the page exists
 				itemGroupData.items.push( {
-					// id: 'editpage',
-					link: `${ config.wgScriptPath }/index.php?title=${ searchQueryEncoded }&action=edit`,
+					id: 'editpage',
+					link: this.urlGeneratorInstance.generateUrl( searchQuery.value, editpageParam ),
 					icon: 'edit',
 					msg: 'citizen-search-editpage'
 				} );
