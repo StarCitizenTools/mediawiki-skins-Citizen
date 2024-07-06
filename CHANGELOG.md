@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.22.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.22.0...v2.22.1) (2024-07-06)
+
+
+### Bug Fixes
+
+* **Echo:** 🐛 incorrect selector for notification count ([9372c74](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9372c743072aab521740d546b3a3a1311eb47081))
+
 ## [2.22.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.21.0...v2.22.0) (2024-07-06)
 
 
