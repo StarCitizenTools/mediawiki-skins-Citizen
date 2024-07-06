@@ -52,7 +52,7 @@ class ApiWebappManifest extends ApiBase {
 		$resultObj->addValue( null, 'scope', $config->get( MainConfigNames::Server ) . '/' );
 		$resultObj->addValue( null, 'icons', $this->getIcons( $config, $services ) );
 		$resultObj->addValue( null, 'display', 'standalone' );
-		$resultObj->addValue( null, 'orientation', 'portrait' );
+		$resultObj->addValue( null, 'orientation', 'natural' );
 		$resultObj->addValue( null, 'start_url', Title::newMainPage()->getLocalURL() );
 		$resultObj->addValue( null, 'theme_color', $config->get( 'CitizenManifestThemeColor' ) );
 		$resultObj->addValue( null, 'background_color', $config->get( 'CitizenManifestBackgroundColor' ) );
