@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.22.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.21.0...v2.22.0) (2024-07-06)
+
+
+### Features
+
+* **core:** ✨ use px for border-radius ([00b2495](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/00b2495c1ab7a87e8811d28b713998b09e4397bf))
+* **core:** ✨ use text-wrap pretty for blockquote elements ([add781a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/add781a4a169c83ad240d8640f705596495dac1e))
+* **dropdown:** ✨ revamp dropdown menu handling ([516ef3a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/516ef3a1cb1d11e39f4f835e2ba50536e93a9ef7)), closes [#882](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/882)
+* **Echo:** ✨ upgrade Echo buttons for consistency ([fdc6eae](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fdc6eaee202aa2881c417a0491ae9758a46e3c2d))
+* **pref:** ✨ extend font-size adjustments to all text ([b53381e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b53381ed12c6d460735dbf0bac768db48383b270))
+* **search:** ✨ unify url generation in search typeahead ([9c77c7f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9c77c7f3f294431acaede7c1fb7cc8451710e99e)), closes [#898](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/898)
+* **search:** ✨ use Short URL in search suggestion ([c5c47ae](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c5c47aeb5f4258e4a5ddea9f2df4831862a16394))
+* **SearchDigest:** ✨ add styles for Extension:SearchDigest ([251109c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/251109c7129c13fb7908f794ea22a56e4c39bbc7))
+* **toc:** ✨ drop checkbox hack usage in ToC in favor of dropdown ([#894](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/894)) ([f2ff92e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f2ff92e1ac5e4ba20b07e2a7504a6cdf7127180d)), closes [#855](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/855)
+
+
+### Bug Fixes
+
+* **core:** 🐛 avoid sr-only text clipping during transform ([111607e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/111607ec9644c3380cd50dc39553c42d6e4947eb))
+* **core:** 🐛 fix invalid background-color properties ([23f2667](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/23f2667b24f65687059d836ea1c8054d918b06a5))
+* **core:** 🐛 remove git merge artifacts ([3392eb7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3392eb796cfcaf5dfc9a841fa99f9fd1275f2b5f))
+* **dropdown:** 🐛 merge conflicting dismiss event handlers ([317296e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/317296e7b0650afb30a596a4e08c00f8ef573603)), closes [#895](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/895)
+* **search:** 🐛 incorrect article not found icon size ([9ace83a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9ace83a9bc1c3bd0fcb113b21d1de8bd78e9c710))
+* **toc:** 🐛 elements behind collasped ToC should be interactable ([a68626f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a68626f56af0b57ba5726b0fad779326f73ccc16)), closes [#896](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/896)
+
 ## [2.21.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.20.0...v2.21.0) (2024-07-03)
 
 
