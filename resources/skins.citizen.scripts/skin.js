@@ -60,6 +60,7 @@ function initBodyContent( bodyContent ) {
 function main( window ) {
 	const
 		config = require( './config.json' ),
+		echo = require( './echo.js' ),
 		search = require( './search.js' ),
 		dropdown = require( './dropdown.js' ),
 		stickyHeader = require( './stickyHeader.js' ),
@@ -67,6 +68,7 @@ function main( window ) {
 		share = require( './share.js' );
 
 	enableCssAnimations( window.document );
+	echo();
 	search.init( window );
 	dropdown.init();
 	stickyHeader.init();
