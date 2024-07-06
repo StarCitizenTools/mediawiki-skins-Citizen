@@ -110,11 +110,12 @@
 	&:has( .diff ),
 	&:has( .mw-revision ) {
 		#ca-view {
-			position: relative !important;
+			position: relative;
 			width: auto;
 			height: auto;
-			margin: 0;
-			clip: unset;
+			clip-path: unset;
+			overflow: initial;
+			white-space: unset;
 		}
 	}
 }
