@@ -23,9 +23,14 @@
 	border-color: var( --border-color-base );
 }
 
-.searchdigest-stats-table th,
-.searchdigest-stats-table td {
-	padding: var( --space-xxs ) var( --space-sm ) !important;
+.searchdigest-stats-table thead th,
+.searchdigest-stats-table tr td:last-child {
+	padding: var( --space-xxs ) var( --space-sm );
+}
+
+.searchdigest-stats-table tr td:last-child {
+	font-family: var( --font-family-monospace );
+	text-align: end;
 }
 
 .searchdigest-stats-table thead {
