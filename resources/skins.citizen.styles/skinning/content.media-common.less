@@ -60,10 +60,13 @@ figure[ typeof~='mw:File/Frame' ] {
 		padding-right: var( --border-radius-base );
 		// Sync with rounded corner
 		padding-left: var( --border-radius-base );
-		margin-top: var( --space-xs );
 		color: var( --color-subtle );
 		letter-spacing: 0.025em;
 		caption-side: bottom;
+
+		&:not( :empty ) {
+			margin-top: var( --space-xs );
+		}
 	}
 }
 
