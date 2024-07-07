@@ -50,7 +50,7 @@ function init() {
 		}
 	};
 
-	button.addEventListener( 'click', mw.util.debounce( 100, handleShareButtonClick ) );
+	button.addEventListener( 'click', mw.util.debounce( handleShareButtonClick, 100 ) );
 }
 
 module.exports = {
