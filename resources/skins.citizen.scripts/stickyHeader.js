@@ -39,17 +39,41 @@ function init() {
 		return;
 	}
 
-	const toggleStickyClass = ( state ) => () => {
+	const placeholder = document.createElement( 'div' );
+	placeholder.id = 'citizen-page-header-sticky-placeholder';
+	header.insertAdjacentElement( 'afterend', placeholder );
+
+	let staticHeaderHeight = header.offsetHeight;
+
+	const toggleStickyHeader = ( isSticky ) => {
 		window.requestAnimationFrame( () => {
-			document.body.classList.toggle( STICKY_CLASS, state );
+			document.body.classList.toggle( STICKY_CLASS, isSticky );
+			placeholder.style.height = `${ staticHeaderHeight - header.offsetHeight }px`;
 		} );
 	};
 
 	const observer = initIntersectionObserver(
-		toggleStickyClass( true ),
-		toggleStickyClass( false )
+		() => {
+			toggleStickyHeader( true );
+		},
+		() => {
+			toggleStickyHeader( false );
+		}
 	);
 	observer.observe( sentinel );
+
+	const onResize = () => {
+		toggleStickyHeader( false );
+	};
+
+	const onResizeEnd = () => {
+		// Refresh static header height after resize
+		staticHeaderHeight = header.offsetHeight;
+		toggleStickyHeader( true );
+	};
+
+	window.addEventListener( 'resize', onResize );
+	window.addEventListener( 'resize', mw.util.debounce( onResizeEnd, 250 ) );
 }
 
 module.exports = {

@@ -13,7 +13,8 @@
 .citizen-body-container {
 	display: grid;
 	grid-template-areas:
- 'header'
+ 		'header'
+		'afterHeader'
 		'content'
 		'footer';
 	// Using auto as min value will cause overflow
@@ -59,7 +60,8 @@
 	.citizen-toc-enabled {
 		.citizen-body-container {
 			grid-template-areas:
- 'header header'
+ 				'header header'
+				'afterHeader afterHeader'
 				'content sidebar'
 				'footer footer';
 			grid-template-columns: minmax( 0, var( --width-layout ) ) var( --width-toc );
