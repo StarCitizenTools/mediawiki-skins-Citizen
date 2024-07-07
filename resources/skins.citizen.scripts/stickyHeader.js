@@ -43,12 +43,12 @@ function init() {
 	placeholder.id = 'citizen-page-header-sticky-placeholder';
 	header.insertAdjacentElement( 'afterend', placeholder );
 
-	let staticHeaderHeight = header.offsetHeight;
+	let staticHeaderHeight = header.getBoundingClientRect().height;
 
 	const toggleStickyHeader = ( isSticky ) => {
 		window.requestAnimationFrame( () => {
 			document.body.classList.toggle( STICKY_CLASS, isSticky );
-			placeholder.style.height = `${ staticHeaderHeight - header.offsetHeight }px`;
+			placeholder.style.height = `${ staticHeaderHeight - header.getBoundingClientRect().height }px`;
 		} );
 	};
 
@@ -68,7 +68,7 @@ function init() {
 
 	const onResizeEnd = () => {
 		// Refresh static header height after resize
-		staticHeaderHeight = header.offsetHeight;
+		staticHeaderHeight = header.getBoundingClientRect().height;
 		toggleStickyHeader( true );
 	};
 
