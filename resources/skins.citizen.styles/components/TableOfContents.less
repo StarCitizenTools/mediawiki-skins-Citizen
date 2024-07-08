@@ -123,10 +123,6 @@
 		}
 
 		.citizen-dropdown {
-			&-details[ open ] + .citizen-menu__card {
-				pointer-events: auto; // HACK: Make ToC clickable after ToC is expanded
-			}
-
 			&-summary {
 				position: absolute;
 				bottom: 0;
@@ -147,6 +143,16 @@
 				}
 
 				&:active {
+					background: ~'linear-gradient( var( --background-color-button-quiet--active ), var( --background-color-button-quiet--active ) ) var( --color-surface-1 )';
+				}
+			}
+
+			&-details[ open ] {
+				+ .citizen-menu__card {
+					pointer-events: auto; // HACK: Make ToC clickable after ToC is expanded
+				}
+
+				> .citizen-dropdown-summary {
 					background: ~'linear-gradient( var( --background-color-button-quiet--active ), var( --background-color-button-quiet--active ) ) var( --color-surface-1 )';
 				}
 			}
