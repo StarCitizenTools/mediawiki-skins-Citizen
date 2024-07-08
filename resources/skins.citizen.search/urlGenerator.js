@@ -58,7 +58,7 @@ function urlGenerator( config ) {
 				return articlePath;
 			} else {
 				const searchParams = new URLSearchParams( params );
-				const paramsPrefix = articlePath.includes('?') ? '&' : '?';
+				const paramsPrefix = articlePath.includes( '?' ) ? '&' : '?';
 				return articlePath + paramsPrefix + searchParams.toString();
 			}
 		}
