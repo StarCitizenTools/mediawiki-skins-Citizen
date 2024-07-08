@@ -52,28 +52,29 @@ function init() {
 		} );
 	};
 
-	const observer = initIntersectionObserver(
-		() => {
-			toggleStickyHeader( true );
-		},
-		() => {
-			toggleStickyHeader( false );
-		}
-	);
-	observer.observe( sentinel );
-
 	const onResize = () => {
 		toggleStickyHeader( false );
 	};
 
-	const onResizeEnd = () => {
+	const onResizeEnd = mw.util.debounce( () => {
 		// Refresh static header height after resize
 		staticHeaderHeight = header.getBoundingClientRect().height;
 		toggleStickyHeader( true );
-	};
+	}, 250 );
 
-	window.addEventListener( 'resize', onResize );
-	window.addEventListener( 'resize', mw.util.debounce( onResizeEnd, 250 ) );
+	const observer = initIntersectionObserver(
+		() => {
+			toggleStickyHeader( true );
+			window.addEventListener( 'resize', onResize );
+			window.addEventListener( 'resize', onResizeEnd );
+		},
+		() => {
+			toggleStickyHeader( false );
+			window.removeEventListener( 'resize', onResize );
+			window.removeEventListener( 'resize', onResizeEnd );
+		}
+	);
+	observer.observe( sentinel );
 }
 
 module.exports = {
