@@ -23,7 +23,7 @@ class Dropdown {
 		this.summary = summary;
 		this.target = target;
 		this.dismissOnEscape = this.dismissOnEscape.bind( this );
-		this.dismissOnFocusLoss = this.dismissOnFocusLoss.bind( this );
+		this.dismissIfExternalEventTarget = this.dismissIfExternalEventTarget.bind( this );
 		this.dismissOnLinkClick = this.dismissOnLinkClick.bind( this );
 		this.onDetailsToggle = this.onDetailsToggle.bind( this );
 	}
@@ -46,11 +46,11 @@ class Dropdown {
 	}
 
 	/**
-	 * If focus is given to any element outside the target, dismiss the target.
+	 * Dismiss the target when event is outside the target and summary
 	 *
 	 * @param {Event} event
 	 */
-	dismissOnFocusLoss( event ) {
+	dismissIfExternalEventTarget( event ) {
 		if ( !this.target.contains( event.target ) && !this.summary.contains( event.target ) ) {
 			this.dismiss();
 		}
@@ -73,8 +73,9 @@ class Dropdown {
 	 */
 	unbind() {
 		this.target.removeEventListener( 'click', this.dismissOnLinkClick );
-		window.removeEventListener( 'click', this.dismissOnFocusLoss );
-		window.removeEventListener( 'focusin', this.dismissOnFocusLoss );
+		window.removeEventListener( 'mousedown', this.dismissIfExternalEventTarget );
+		window.removeEventListener( 'touchstart', this.dismissIfExternalEventTarget );
+		window.removeEventListener( 'focusin', this.dismissIfExternalEventTarget );
 		window.removeEventListener( 'keyup', this.dismissOnEscape );
 	}
 
@@ -83,8 +84,9 @@ class Dropdown {
 	 */
 	bind() {
 		this.target.addEventListener( 'click', this.dismissOnLinkClick );
-		window.addEventListener( 'click', this.dismissOnFocusLoss );
-		window.addEventListener( 'focusin', this.dismissOnFocusLoss );
+		window.addEventListener( 'mousedown', this.dismissIfExternalEventTarget );
+		window.addEventListener( 'touchstart', this.dismissIfExternalEventTarget, { passive: true } );
+		window.addEventListener( 'focusin', this.dismissIfExternalEventTarget );
 		window.addEventListener( 'keyup', this.dismissOnEscape );
 	}
 
