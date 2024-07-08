@@ -47,6 +47,7 @@ Name | Grade | Version | Last updated
 [CategoryTree](https://www.mediawiki.org/wiki/Extension:CategoryTree) | B | N/A | N/A
 [CentralNotice](https://www.mediawiki.org/wiki/Extension:CentralNotice) | B | REL1_35 `4aa2a8f` | 2022-06-16
 [Cite](https://www.mediawiki.org/wiki/Extension:Cite) | A | N/A | N/A
+[CiteThisPage](https://www.mediawiki.org/wiki/Extension:CiteThisPage) | A | REL1_39 `1d21f67` | 2024-07-08
 [CleanChanges](https://www.mediawiki.org/wiki/Extension:CleanChanges) | B | MLEB 2021.07 | 2021-07-29
 [CodeEditor](https://www.mediawiki.org/wiki/Extension:CodeEditor) | A | REL1_39 `67c012c` | 2023-06-03
 [CodeMirror](https://www.mediawiki.org/wiki/Extension:CodeMirror) | A | REL1_35 `a326407` | 2023-05-24
