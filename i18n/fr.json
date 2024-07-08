@@ -47,6 +47,7 @@
 	"citizen-theme-name": "Couleur",
 	"citizen-theme-day-label": "Clair",
 	"citizen-theme-night-label": "Sombre",
+	"citizen-theme-exclusion-notice": "Cette page est toujours en mode clair.",
 	"citizen-feature-pure-black-name": "Mode noir pur",
 	"citizen-feature-pure-black-0-label": "Désactivé",
 	"citizen-feature-custom-font-size-name": "Texte",
