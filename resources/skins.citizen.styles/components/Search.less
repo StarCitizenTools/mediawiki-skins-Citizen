@@ -26,6 +26,10 @@
 		}
 	}
 
+	.citizen-dropdown-details[ open ] + .citizen-menu__card > .citizen-search__form {
+		transition: none; /* Do not animate typeahead since it looks weird */
+	}
+
 	&__formButton {
 		cursor: pointer;
 		border-radius: var( --border-radius-base );

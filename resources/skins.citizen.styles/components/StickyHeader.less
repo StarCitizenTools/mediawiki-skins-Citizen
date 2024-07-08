@@ -88,11 +88,21 @@
 		.citizen-page-header--sticky & {
 			transition: var( --transition-menu );
 			transition-property: transform;
-			transform: translateY( -150% );
+
+			.citizen-page-heading {
+				opacity: 1;
+				transition: var( --transition-menu );
+				transition-delay: var( --transition-delay-menu );
+				transition-property: opacity;
+			}
 		}
 
-		.citizen-page-header--sticky.citizen-scroll--up & {
-			transform: none;
+		.citizen-page-header--sticky.citizen-scroll--down & {
+			transform: translateY( -150% );
+
+			.citizen-page-heading {
+				opacity: 0;
+			}
 		}
 	}
 }
