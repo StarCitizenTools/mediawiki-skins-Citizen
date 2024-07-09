@@ -33,7 +33,7 @@
 // When using fadeChildren, the child elements need to have
 // opacity: 0 set manually
 .citizen-card-show(@fadeChildren: true) {
-	z-index: @z-index-overlay;
+	z-index: @z-index-dropdown;
 	pointer-events: auto;
 	opacity: 1;
 	// HACK: So that visiblity won't wait 250ms to become visible
@@ -104,7 +104,7 @@
 	}
 
 	& when (@zIndex ) {
-		z-index: @z-index-page-header;
+		z-index: @z-index-sticky;
 	}
 
 	// HACK: Hide overflow
@@ -114,7 +114,7 @@
 		top: @topOffset;
 		right: ~'calc( var(--padding-page ) * -1 )';
 		left: ~'calc( var(--padding-page ) * -1 )';
-		z-index: -1;
+		z-index: @z-index-bottom;
 		height: 100%;
 		content: '';
 		background-color: var( --color-surface-0 );

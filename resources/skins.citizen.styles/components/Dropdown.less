@@ -1,4 +1,8 @@
 .citizen-dropdown {
+	.citizen-menu__card {
+		z-index: @z-index-dropdown;
+	}
+
 	&-summary {
 		cursor: pointer;
 
@@ -57,9 +61,6 @@
 			}
 
 			> .citizen-dropdown-summary {
-				/* Make button visible above backdrop */
-				position: relative;
-				z-index: 1;
 				background-color: var( --background-color-button-quiet--active );
 
 				&:hover {
@@ -70,10 +71,9 @@
 	}
 
 	@media ( max-width: @max-width-breakpoint-tablet ) {
+		// Add dismiss affordnance backdrop
 		&-details {
-			// Dismiss affordnance overlay
 			&::before {
-				z-index: -1;
 				content: '';
 				background: var( --background-color-backdrop-light );
 				-webkit-backdrop-filter: blur( 2px );
@@ -81,13 +81,25 @@
 				opacity: 0;
 			}
 
-			&[ open ]::before {
-				position: fixed;
-				inset: 0;
-				z-index: 0; // Needed for menu to work in Safari
-				opacity: 1;
-				transition: var( --transition-menu );
-				transition-property: opacity;
+			&[ open ] {
+				&::before {
+					position: fixed;
+					inset: 0;
+					z-index: @z-index-off-canvas-backdrop;
+					opacity: 1;
+					transition: var( --transition-menu );
+					transition-property: opacity;
+				}
+
+				> .citizen-dropdown-summary {
+					position: relative;
+					// Slightly higher than the menu so it is not covered by the box shadow
+					z-index: @z-index-off-canvas + @z-index-stacking-1;
+				}
+
+				+ .citizen-menu__card {
+					z-index: @z-index-off-canvas;
+				}
 			}
 		}
 	}

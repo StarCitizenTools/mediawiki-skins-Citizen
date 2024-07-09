@@ -102,12 +102,11 @@
 		position: fixed;
 		bottom: ~'calc( var( --header-size ) + var(  --space-xs ) )';
 		left: 0;
-		z-index: @z-index-page-header + 1; // Need to be higher than the page actions
 		display: flex;
 		flex-direction: column-reverse; // HACK: Place button below ToC
 		pointer-events: none; // HACK: Make background clickable
 		transition: var( --transition-menu );
-		transition-property: transform;
+		transition-property: bottom; // Transform won't work with the backdrop
 
 		&__card {
 			// This is not bulletproof since it will get covered by page header
@@ -119,7 +118,7 @@
 
 		// Move down when site header is hidden
 		.citizen-scroll--down & {
-			transform: translateY( var( --header-size ) );
+			bottom: var( --space-xs );
 		}
 
 		.citizen-dropdown {
