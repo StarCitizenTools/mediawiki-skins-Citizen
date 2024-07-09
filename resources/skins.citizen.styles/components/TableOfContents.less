@@ -102,6 +102,7 @@
 		position: fixed;
 		bottom: ~'calc( var( --header-size ) + var(  --space-xs ) )';
 		left: 0;
+		z-index: @z-index-sticky; // Keep ToC above sticky header and page action, but below site header
 		display: flex;
 		flex-direction: column-reverse; // HACK: Place button below ToC
 		pointer-events: none; // HACK: Make background clickable
