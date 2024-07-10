@@ -161,19 +161,6 @@
 		border-radius: var( --border-radius-medium );
 		box-shadow: var( --box-shadow-dialog );
 
-		.citizen-scroll--down & {
-			box-shadow: none;
-			opacity: 0;
-			transform: translateY( 250% );
-		}
-
-		.citizen-scroll--up & {
-			opacity: 1;
-			transition: var( --transition-menu );
-			transition-delay: 250ms;
-			transition-property: opacity, transform;
-		}
-
 		:not( .citizen-menu__card ) .mw-list-item {
 			--size-icon: 1rem;
 		}

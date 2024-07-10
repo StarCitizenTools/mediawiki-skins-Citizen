@@ -54,6 +54,10 @@
 	"citizen-theme-os-label": "Auto",
 	"citizen-theme-exclusion-notice": "This page is always in light mode.",
 
+	"citizen-feature-autohide-navigation-name": "Automatically hide navigation",
+	"citizen-feature-autohide-navigation-0-label": "Off",
+	"citizen-feature-autohide-navigation-1-label": "On",
+
 	"citizen-feature-pure-black-name": "Pure black mode",
 	"citizen-feature-pure-black-0-label": "Off",
 	"citizen-feature-pure-black-1-label": "On",

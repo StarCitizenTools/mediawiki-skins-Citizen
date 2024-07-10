@@ -13,6 +13,8 @@
 	padding: var( --space-xs );
 	background-color: var( --color-surface-0 );
 	border-top: 1px solid var( --border-color-base );
+	transition: var( --transition-menu );
+	transition-property: transform;
 
 	&__item {
 		display: flex;
@@ -170,17 +172,5 @@
 			border-right: 0;
 			border-bottom: 1px solid var( --border-color-base );
 		}
-	}
-}
-
-/* Hide header when scroll down on smaller screen sizes */
-@media ( max-width: @max-width-breakpoint-tablet ) {
-	.citizen-header {
-		transition: var( --transition-menu );
-		transition-property: transform;
-	}
-
-	.citizen-scroll--down .citizen-header {
-		transform: translateY( 100% );
 	}
 }
