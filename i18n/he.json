@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Amire80",
+			"YaronSh",
 			"מקף"
 		]
 	},
@@ -44,6 +45,9 @@
 	"citizen-theme-night-label": "חשוכה",
 	"citizen-theme-os-label": "אוטומטית",
 	"citizen-theme-exclusion-notice": "הדף הזה תמיד במצב בהיר.",
+	"citizen-feature-autohide-navigation-name": "הסתרת הניווט אוטומטית",
+	"citizen-feature-autohide-navigation-0-label": "כבויה",
+	"citizen-feature-autohide-navigation-1-label": "פעילה",
 	"citizen-feature-pure-black-name": "מצב שחור טהור",
 	"citizen-feature-pure-black-0-label": "כבוי",
 	"citizen-feature-pure-black-1-label": "מופעל",
