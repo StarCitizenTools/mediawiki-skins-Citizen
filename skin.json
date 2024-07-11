@@ -389,6 +389,7 @@
 			"+ext.CodeMirror.mode.mediawiki": "skinStyles/extensions/CodeMirror/ext.CodeMirror.mode.mediawiki.less",
 			"+ext.CodeMirror.visualEditor": "skinStyles/extensions/CodeMirror/ext.CodeMirror.visualEditor.less",
 			"+ext.CommentStreams": "skinStyles/extensions/CommentStreams/ext.CommentStreams.less",
+			"+ext.datamaps.core.styles": "skinStyles/extensions/DataMaps/ext.datamaps.core.styles.less",
 			"+ext.datamaps.leaflet": "skinStyles/lib/leaflet/leaflet.less",
 			"+ext.discussionTools.init.styles": "skinStyles/extensions/DiscussionTools/ext.discussionTools.init.styles.less",
 			"+ext.discussionTools.ReplyWidget": "skinStyles/extensions/DiscussionTools/ext.discussionTools.ReplyWidget.less",
