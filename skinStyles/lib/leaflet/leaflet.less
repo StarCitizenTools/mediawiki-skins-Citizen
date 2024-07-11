@@ -19,6 +19,22 @@
 /*
  * Citizen modifications
  */
+.leaflet-top .leaflet-control {
+	margin-top: var( --space-xs );
+}
+
+.leaflet-bottom .leaflet-control {
+	margin-bottom: var( --space-xs );
+}
+
+.leaflet-left .leaflet-control {
+	margin-left: var( --space-xs );
+}
+
+.leaflet-right .leaflet-control {
+	margin-right: var( --space-xs );
+}
+
 .leaflet-container {
 	font-family: var( --font-family-base );
 	font-size: var( --font-size-x-small );
@@ -117,7 +133,10 @@
 }
 
 .leaflet-container .leaflet-control-attribution {
-	background: var( --background-color-backdrop-dark );
+	margin: 0;
+	background: var( --background-color-backdrop-light );
+	-webkit-backdrop-filter: saturate( 50% ) blur( 16px );
+	backdrop-filter: saturate( 50% ) blur( 16px );
 	border-top-left-radius: var( --border-radius-base );
 }
 
