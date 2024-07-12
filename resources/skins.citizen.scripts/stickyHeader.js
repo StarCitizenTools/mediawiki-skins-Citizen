@@ -44,11 +44,22 @@ function init() {
 	header.insertAdjacentElement( 'afterend', placeholder );
 
 	let staticHeaderHeight = header.getBoundingClientRect().height;
+	let placeholderHeight = 0;
+	let shouldRecalcHeight = true;
 
 	const toggleStickyHeader = ( isSticky ) => {
 		window.requestAnimationFrame( () => {
-			document.body.classList.toggle( STICKY_CLASS, isSticky );
-			placeholder.style.height = `${ staticHeaderHeight - header.getBoundingClientRect().height }px`;
+			if ( !shouldRecalcHeight ) {
+				// The previous height is valid, set the height first
+				placeholder.style.height = `${ placeholderHeight }px`;
+				document.body.classList.toggle( STICKY_CLASS, isSticky );
+			} else {
+				// The previous height is invalid, need to set to sticky to get the sticky height
+				document.body.classList.toggle( STICKY_CLASS, isSticky );
+				placeholderHeight = staticHeaderHeight - header.getBoundingClientRect().height;
+				placeholder.style.height = `${ placeholderHeight }px`;
+				shouldRecalcHeight = false;
+			}
 		} );
 	};
 
@@ -59,6 +70,7 @@ function init() {
 	const onResizeEnd = mw.util.debounce( () => {
 		// Refresh static header height after resize
 		staticHeaderHeight = header.getBoundingClientRect().height;
+		shouldRecalcHeight = true;
 		toggleStickyHeader( true );
 	}, 250 );
 
