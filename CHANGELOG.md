@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.24.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.23.0...v2.24.0) (2024-07-12)
+
+
+### Features
+
+* **core:** ✨ use Codex tokens for z-index ([b5180bf](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b5180bfbda805e475661b3aa61c3fa52d82b8841))
+* **DataMaps:** ✨ add DataMaps init styles ([46c139a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/46c139ac86f1c4dca862133bffbe29645488cb8f))
+* **DataMaps:** ✨ add styles for Extension:DataMaps ([5fdcfc6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5fdcfc61f67ee93bcee8150fa96dce63e773833e))
+* **leaflet:** ✨ add Leaflet styles for Leaflet map extensions ([4c51200](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4c51200ed5b620603f9e6df90a48ceb6b5b4d6e6))
+* **Leaflet:** ✨ bump Leaflet button sizes to match Codex ([a67f075](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a67f075a6a92383235f6a534cd434ce71c860b99))
+* **Leaflet:** ✨ tweak Leaflet control margin ([fb965e3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fb965e37128e7cf8d57fd237d052ec846a55a161))
+* **pref:** ✨ add clientpref to disable auto-hide navigation ([f0d1176](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f0d1176f2a4fd73a4b0003a50b07210d70136d4f)), closes [#841](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/841)
+* **stickyHeader:** ✨ reduce page title size ([f66348b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f66348bdbb1daef1934a297113dc5e9815b247ce))
+
+
+### Bug Fixes
+
+* **Changelist:** 🐛 fix incorrect legends z-index ([cae7c75](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cae7c753ac5faa572de5afa3b8acf82d7958f91f))
+* **core:** 🐛 explictly set z-index for body container ([2794a32](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2794a3269cef976c6971a82bdb9fc0459a391f28)), closes [#577](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/577)
+* **DataMaps:** 🐛 fix OOUI button width and invert icon on dark mode ([1688b92](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1688b9245676dce577b49e262b6826fee7162ffd))
+* **DataMaps:** 🐛 remove unused styles ([0540f0d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0540f0d3934d2015102d87b38b20e1f6cbc8f653))
+* **Leaflet:** 🐛 fix button alignment ([7b6520b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7b6520b9ab8f59662dddf5b81b69c9b04d05b2d2))
+* **leaflet:** 🐛 incorrect checked label selector ([1471c1b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1471c1bc23c67f9314fb1138d63589740c3cb7d2))
+* **leaflet:** 🐛 re-introduce box-shadow back to touch buttons ([51caa71](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/51caa71777a96b90e3014d6e3764feab2378c4a3))
+* **stickyHeader:** use cached value for placeholder height if possible ([c3855ff](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c3855ff8b9fdbfdd4d3e448a539ede43fa8b6e5c)), closes [#854](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/854)
+* **ToC:** 🐛 increase z-index of ToC backdrop ([c555dfe](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c555dfe1bf7b3207919d3fc75267be8a7452bbdb))
+
 ## [2.23.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.22.1...v2.23.0) (2024-07-08)
 
 
