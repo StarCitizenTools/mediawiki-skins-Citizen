@@ -8,6 +8,11 @@
  * Date: 2024-07-11
  */
 
+// Fix width definition from share Leaflet styles
+.leaflet-bar a.oo-ui-buttonElement-button {
+	width: auto;
+}
+
 /* MiniLayoutInteractive.less */
 .ext-datamaps-control-coords {
 	font-size: var( --font-size-x-small );
@@ -133,5 +138,9 @@ p.ext-datamaps-filters-after-text {
 		line-height: 1;
 		color: var( --color-subtle );
 		background: var( --color-surface-2 );
+	}
+
+	.ext-datamaps-control > button > span {
+		filter: var( --filter-invert );
 	}
 }
