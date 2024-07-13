@@ -55,12 +55,14 @@ function togglePanel() {
 	if ( !panel.classList.contains( CLASS_PANEL_ACTIVE ) ) {
 		panel.classList.add( CLASS_PANEL_ACTIVE );
 		toggle.setAttribute( 'aria-expanded', true );
-		window.addEventListener( 'click', dismissOnClickOutside );
+		window.addEventListener( 'mousedown', dismissOnClickOutside );
+		window.addEventListener( 'touchstart', dismissOnClickOutside, { passive: true } );
 		window.addEventListener( 'keydown', dismissOnEscape );
 	} else {
 		panel.classList.remove( CLASS_PANEL_ACTIVE );
 		toggle.setAttribute( 'aria-expanded', false );
-		window.removeEventListener( 'click', dismissOnClickOutside );
+		window.removeEventListener( 'mousedown', dismissOnClickOutside );
+		window.removeEventListener( 'touchstart', dismissOnClickOutside );
 		window.removeEventListener( 'keydown', dismissOnEscape );
 	}
 }

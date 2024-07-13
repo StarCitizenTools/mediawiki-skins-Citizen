@@ -3,16 +3,19 @@
 	object data-page-variants
 	bool is-uls-ready
 }}
-<details class="citizen-page-languages page-actions__item citizen-menu__dropdown">
-	<summary
-		class="citizen-menu__dropdownButton {{#is-uls-ready}}mw-interlanguage-selector{{/is-uls-ready}}" 
-		title="{{msg-citizen-languages-toggle}}"
-		data-counter-text="{{html-language-count}}">
-		<span class="citizen-ui-icon mw-ui-icon-wikimedia-language"></span>
-		<span>{{msg-citizen-languages-toggle}}</span>
-	</summary>
+<div class="citizen-page-languages page-actions__item citizen-dropdown">
+	<details class="citizen-dropdown-details">
+		<summary
+			class="citizen-dropdown-summary {{#is-uls-ready}}mw-interlanguage-selector{{/is-uls-ready}}" 
+			title="{{msg-citizen-languages-toggle}}"
+			aria-details="citizen-languages__card"
+			data-counter-text="{{html-language-count}}">
+			<span class="citizen-ui-icon mw-ui-icon-wikimedia-language"></span>
+			<span>{{msg-citizen-languages-toggle}}</span>
+		</summary>
+	</details>
 	<aside id="citizen-languages__card" class="citizen-menu__card">
 		{{#data-portlets.data-languages}}{{>Menu}}{{/data-portlets.data-languages}}
 		{{#data-portlets.data-variants}}{{>Menu}}{{/data-portlets.data-variants}}
 	</aside>
-</details>
+</div>

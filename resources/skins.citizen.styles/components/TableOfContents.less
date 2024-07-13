@@ -26,15 +26,15 @@
 		gap: var( --space-xs );
 		padding: var( --space-xs );
 		font-weight: var( --font-weight-medium );
-		color: var( --color-base );
-		border-radius: var( --border-radius--small );
+		color: var( --color-emphasized );
+		border-radius: var( --border-radius-base );
 
 		&.citizen-toc__top {
 			height: 0;
 			padding-top: 0;
 			padding-bottom: 0;
-			opacity: 0;
-			transition-property: opacity, height, padding;
+			opacity: 0 !important;
+			transition-property: opacity, height, padding !important;
 		}
 
 		&:hover {
@@ -61,7 +61,7 @@
 		margin-top: var( --space-xs );
 		margin-bottom: var( --space-xs );
 		margin-left: -2px;
-		border-radius: var( --border-radius--pill );
+		border-radius: var( --border-radius-pill );
 	}
 
 	&__text {
@@ -93,7 +93,7 @@
 		height: 2rem; // 1rem text + 1rem padding
 		padding-top: var( --space-xs );
 		padding-bottom: var( --space-xs );
-		opacity: 1;
+		opacity: 1 !important;
 	}
 }
 
@@ -102,84 +102,53 @@
 		position: fixed;
 		bottom: ~'calc( var( --header-size ) + var(  --space-xs ) )';
 		left: 0;
-		z-index: @z-index-page-header + 1; // Need to be higher than the page actions
-		// Allow click through
-		pointer-events: none;
+		z-index: @z-index-sticky; // Keep ToC above sticky header and page action, but below site header
+		display: flex;
+		flex-direction: column-reverse; // HACK: Place button below ToC
+		pointer-events: none; // HACK: Make background clickable
 		transition: var( --transition-menu );
-		transition-property: transform;
+		transition-property: bottom; // Transform won't work with the backdrop
 
 		&__card {
 			// This is not bulletproof since it will get covered by page header
 			// in extremely short height. but it should be good for now
 			max-height: ~'calc( var( --header-card-maxheight ) - 8rem )';
 			padding: var( --space-md );
-			margin: var( --space-xs );
-			overflow: auto;
-			overscroll-behavior: contain;
-			-webkit-user-select: none;
-			user-select: none;
-			.citizen-card;
-			.citizen-card-hide( bottom left, '', false );
-			.citizen-card-transition();
+			transform-origin: var( --transform-origin-offset-start ) var( --transform-origin-offset-end );
 		}
 
-		// Move down when site header is hidden
-		.citizen-scroll--down & {
-			transform: translateY( var( --header-size ) );
-		}
-	}
-
-	#citizen-toc {
-		&__checkbox:checked {
-			~ .citizen-toc__card {
-				.citizen-card-show( false );
-			}
-		}
-
-		&__buttonCheckbox {
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			display: grid;
-			place-content: center;
-			width: var( --toolbar-size );
-			height: var( --toolbar-size );
-			margin: var( --space-xs );
-			pointer-events: auto;
-			background-color: var( --color-surface-1 );
-			border-radius: var( --border-radius--medium );
-			box-shadow: var( --box-shadow-dialog );
-			transition: var( --transition-menu );
-			transition-property: transform;
-			transform: none;
-			transform-origin: bottom left;
-
-			// The hover state colors are not great but it will do for now
-			&:hover {
-				background-color: var( --color-surface-3 );
-			}
-
-			&:active {
+		.citizen-dropdown {
+			&-summary {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				display: grid;
+				place-content: center;
+				width: var( --toolbar-size );
+				height: var( --toolbar-size );
+				margin: var( --space-xs );
+				pointer-events: auto; // HACK: Make button clickable
 				background-color: var( --color-surface-1 );
+				border-radius: var( --border-radius-medium );
+				box-shadow: var( --box-shadow-dialog );
+
+				// The hover state colors are not great but it will do for now
+				&:hover {
+					background: ~'linear-gradient( var( --background-color-button-quiet--hover ), var( --background-color-button-quiet--hover ) ) var( --color-surface-1 )';
+				}
+
+				&:active {
+					background: ~'linear-gradient( var( --background-color-button-quiet--active ), var( --background-color-button-quiet--active ) ) var( --color-surface-1 )';
+				}
 			}
-		}
-	}
 
-	// Hide dismiss button when JS is enabled
-	// Since clicking outside will dismiss ToC already
-	.client-js {
-		#citizen-toc {
-			&__checkbox:checked {
-				// Fake seamless transition
-				~ #citizen-toc__buttonCheckbox {
-					pointer-events: none;
-					background-color: transparent;
-					box-shadow: none;
-					transform: scale( 1.2 );
+			&-details[ open ] {
+				+ .citizen-menu__card {
+					pointer-events: auto; // HACK: Make ToC clickable after ToC is expanded
+				}
 
-					.citizen-ui-icon {
-						display: none;
-					}
+				> .citizen-dropdown-summary {
+					background: ~'linear-gradient( var( --background-color-button-quiet--active ), var( --background-color-button-quiet--active ) ) var( --color-surface-1 )';
 				}
 			}
 		}
@@ -196,6 +165,18 @@
 		overflow-y: auto;
 		overscroll-behavior: contain;
 
+		.citizen-menu__card {
+			margin: 0;
+			background: transparent;
+			border: 0;
+			box-shadow: none;
+			transform: none;
+
+			> * {
+				opacity: 1;
+			}
+		}
+
 		// Sticky header styles
 		.citizen-page-header--sticky & {
 			--toc-margin-top: ~'calc( var( --header-size ) + var(  --space-xxl  ) )';
@@ -205,10 +186,10 @@
 				--toc-margin-top: ~'calc( var( --header-size ) + var( --space-md ) )';
 			}
 		}
-	}
 
-	// Hide button in desktop viewport
-	#citizen-toc__buttonCheckbox {
-		display: none;
+		// Hide button in desktop viewport
+		.citizen-dropdown-summary {
+			display: none;
+		}
 	}
 }

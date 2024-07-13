@@ -66,7 +66,7 @@
 		}
 
 		.mw-echo-ui-notificationItemWidget {
-			border-radius: var( --border-radius--small );
+			border-radius: var( --border-radius-base );
 		}
 	}
 
@@ -80,6 +80,7 @@
 		overflow-x: auto;
 		background-color: var( --color-surface-0 );
 		filter: opacity( 0.9 );
+		-webkit-backdrop-filter: saturate( 50% ) blur( 16px );
 		backdrop-filter: saturate( 50% ) blur( 16px );
 		border-bottom: 1px solid var( --border-color-base );
 		box-shadow: none;
@@ -96,7 +97,7 @@
 .mw-echo-ui-pageNotificationsOptionWidget {
 	&.oo-ui-optionWidget {
 		padding: var( --space-xs ) var( --space-sm );
-		border-radius: var( --border-radius--small );
+		border-radius: var( --border-radius-base );
 
 		&-highlighted {
 			color: var( --color-emphasized );
@@ -133,7 +134,7 @@
 	top: var( --space-sm );
 	padding: var( --space-md );
 	border-color: var( --border-color-base );
-	border-radius: var( --border-radius--medium );
+	border-radius: var( --border-radius-medium );
 
 	&-title {
 		font-size: var( --font-size-x-large );

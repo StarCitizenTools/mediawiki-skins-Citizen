@@ -1,22 +1,15 @@
 {{#data-toc}}
-<div class="citizen-toc citizen-menu-checkbox-container">
-	<input 
-		type="checkbox" 
-		id="citizen-toc__checkbox" 
-		class="citizen-menu-checkbox-checkbox"
-		role="button"
-		aria-labelledby="citizen-toc__buttonCheckbox"
-		aria-haspopup="true">
-	<label
-		id="citizen-toc__buttonCheckbox" 
-		class="citizen-menu-checkbox-button" 
-		for="citizen-toc__checkbox"
-		title="{{msg-toc}}"
-		aria-hidden="true">
-		<span class="citizen-ui-icon mw-ui-icon-wikimedia-listBullet"></span>
-		<span id="mw-panel-toc-label">{{msg-toc}}</span>
-	</label>
-	<nav id="mw-panel-toc" class="citizen-toc__card citizen-menu-checkbox-target" role="navigation" aria-labelledby="mw-panel-toc-label">
+<div class="citizen-toc citizen-dropdown">
+	<details class="citizen-dropdown-details">
+		<summary
+			class="citizen-dropdown-summary" 
+			title="{{msg-toc}}"
+			aria-details="mw-panel-toc">
+			<span class="citizen-ui-icon mw-ui-icon-wikimedia-listBullet"></span>
+			<span>{{msg-toc}}</span>
+		</summary>
+	</details>
+	<nav id="mw-panel-toc" class="citizen-toc__card citizen-menu__card" role="navigation" aria-labelledby="mw-panel-toc-label">
 		<a class="citizen-toc__top citizen-toc__link" title="{{html-citizen-jumptotop}}" href="#top">
 			<div class="citizen-ui-icon mw-ui-icon-first mw-ui-icon-wikimedia-first"></div>
 			<div class="citizen-toc__text">{{msg-citizen-jumptotop}}</div>

@@ -14,7 +14,7 @@
 	// Delay animation by 500ms after loading
 	--delay-progress-bar: 500ms;
 	--height-progress-bar: 2px;
-	z-index: 999;
+	z-index: @z-index-top;
 	// Ensure it doesn't extend beyond the input.
 	box-sizing: border-box;
 	display: block;
@@ -34,7 +34,7 @@
 	// Fancy shadow under progress
 	filter: drop-shadow( 0 0 16px var( --color-progressive ) );
 	// Align style with the form
-	border-radius: 0 0 var( --border-radius--large ) var( --border-radius--large );
+	border-radius: 0 0 var( --border-radius-large ) var( --border-radius-large );
 	// Animates the progress-bar.
 	animation:
  progress-bar

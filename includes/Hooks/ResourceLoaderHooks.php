@@ -82,6 +82,7 @@ class ResourceLoaderHooks {
 			'wgCitizenSearchGateway' => $config->get( 'CitizenSearchGateway' ),
 			'wgCitizenSearchDescriptionSource' => $config->get( 'CitizenSearchDescriptionSource' ),
 			'wgCitizenMaxSearchResults' => $config->get( 'CitizenMaxSearchResults' ),
+			'wgArticlePath' => $config->get( MainConfigNames::ArticlePath ),
 			'wgScript' => $config->get( MainConfigNames::Script ),
 			'wgScriptPath' => $config->get( MainConfigNames::ScriptPath ),
 			'wgSearchSuggestCacheExpiry' => $config->get( MainConfigNames::SearchSuggestCacheExpiry ),

@@ -14,27 +14,26 @@
 	display: grid;
 	grid-template-areas:
  'header'
+		'afterHeader'
 		'content'
 		'footer';
 	// Using auto as min value will cause overflow
 	grid-template-columns: minmax( 0, var( --width-layout ) );
-	gap: var( --space-md ) var( --space-xl );
+	gap: 0 var( --space-xl );
 	justify-content: center;
 	padding: 0 var( --padding-page );
 	margin: var( --space-xl ) 0; // don't collide with other components (e.g. notice)
 }
 
 .citizen-page-header {
-	position: -webkit-sticky;
-	position: sticky;
-	// So that the modal are above custom sticky headers
-	z-index: @z-index-page-header + 1;
+	z-index: @z-index-above-content;
 	display: flex;
 	flex-wrap: wrap;
 	grid-area: header;
 	gap: var( --space-md );
 	align-items: center;
 	padding-top: var( --space-md );
+	padding-bottom: var( --space-md );
 }
 
 .citizen-page-heading {
@@ -48,6 +47,7 @@
 }
 
 .citizen-body {
+	z-index: @z-index-base; // Stop body content going over sticky header
 	grid-area: content;
 }
 
@@ -59,9 +59,9 @@
 
 	.citizen-toc-enabled {
 		.citizen-body-container {
-			display: grid;
 			grid-template-areas:
  'header header'
+				'afterHeader afterHeader'
 				'content sidebar'
 				'footer footer';
 			grid-template-columns: minmax( 0, var( --width-layout ) ) var( --width-toc );

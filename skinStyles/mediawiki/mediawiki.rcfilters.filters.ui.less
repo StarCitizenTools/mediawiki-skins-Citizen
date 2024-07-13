@@ -16,7 +16,7 @@
 		// Needed extra specificity
 		&.oo-ui-tagMultiselectWidget.oo-ui-tagMultiselectWidget-outlined {
 			background-color: var( --color-surface-1 );
-			border-radius: var( --border-radius--small );
+			border-radius: var( --border-radius-base );
 		}
 
 		.oo-ui-tagMultiselectWidget-handle {
@@ -24,7 +24,7 @@
 			background-color: var( --color-surface-2 );
 			border-color: var( --border-color-base );
 			border-bottom: 1px solid var( --border-color-base ); // Add divider
-			border-radius: var( --border-radius--small ) var( --border-radius--small ) 0 0;
+			border-radius: var( --border-radius-base ) var( --border-radius-base ) 0 0;
 		}
 	}
 
@@ -68,7 +68,7 @@
 				border-color: var( --border-color-interactive ); // align with input field on the left
 				border-top-color: transparent;
 				border-left-width: 0;
-				border-radius: 0 0 var( --border-radius--small ) 0;
+				border-radius: 0 0 var( --border-radius-base ) 0;
 			}
 		}
 	}
@@ -143,7 +143,7 @@
 	position: -webkit-sticky;
 	position: sticky;
 	top: 0;
-	z-index: 1; // Needed for sticky header
+	z-index: @z-index-sticky; // Needed for sticky header
 	padding-top: var( --space-xs );
 	padding-bottom: var( --space-xs );
 	background-color: var( --color-surface-1 ); // Sync with background

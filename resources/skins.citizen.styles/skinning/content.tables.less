@@ -14,9 +14,15 @@
 	margin: var( --space-md ) 0;
 	overflow-x: auto;
 	font-size: var( --font-size-small );
-	border-spacing: 0;
-	border: 1px solid var( --border-color-base );
-	border-radius: var( --border-radius--medium );
+	border-collapse: collapse;
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius-medium );
+	box-shadow: var( --box-shadow-border );
+
+	// Avoid double border (#902)
+	&[ border='1' ] {
+		box-shadow: none;
+	}
 
 	caption {
 		padding-right: var( --space-sm );
@@ -38,10 +44,7 @@
 	}
 
 	th {
-		font-weight: var( --font-weight-normal );
-		color: var( --color-subtle );
 		text-align: start;
-		letter-spacing: 0.05em;
 	}
 
 	th,
@@ -61,11 +64,11 @@
 				border-top: 0;
 
 				&:first-child {
-					border-top-left-radius: var( --border-radius--medium );
+					border-top-left-radius: var( --border-radius-medium );
 				}
 
 				&:last-child {
-					border-top-right-radius: var( --border-radius--medium );
+					border-top-right-radius: var( --border-radius-medium );
 				}
 			}
 		}
@@ -74,11 +77,11 @@
 			th,
 			td {
 				&:first-child {
-					border-bottom-left-radius: var( --border-radius--medium );
+					border-bottom-left-radius: var( --border-radius-medium );
 				}
 
 				&:last-child {
-					border-bottom-right-radius: var( --border-radius--medium );
+					border-bottom-right-radius: var( --border-radius-medium );
 				}
 			}
 		}

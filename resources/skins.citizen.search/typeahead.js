@@ -91,7 +91,7 @@ const typeahead = {
 			typeahead.input.displayElement.textContent = typeaheadInputElement.value;
 			typeaheadInputElement.addEventListener( 'compositionstart', typeahead.input.onCompositionstart );
 			if ( typeahead.input.isComposing !== true ) {
-				mw.util.debounce( 100, typeahead.afterSearchQueryInput() );
+				mw.util.debounce( typeahead.afterSearchQueryInput(), 100 );
 			}
 		},
 		onKeydown: function ( event ) {

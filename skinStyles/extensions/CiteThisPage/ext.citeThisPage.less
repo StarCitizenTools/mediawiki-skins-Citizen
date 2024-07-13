@@ -1,0 +1,63 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:CiteThisPage
+ * Module: ext.citeThisPage
+ * Version: REL1_39 1d21f67
+ *
+ * Date: 2024-07-08
+*/
+
+.mw-specialCiteThisPage-bibliographic {
+	width: auto;
+	padding: 0;
+	margin: 0;
+	background-color: transparent;
+
+	h2 {
+		font-size: var( --font-size-large );
+	}
+
+	/* Similar to table styles */
+	ul {
+		margin-left: 0;
+		font-size: var( --font-size-small );
+		list-style: none;
+		border: 1px solid var( --border-color-base );
+		border-radius: var( --border-radius-medium );
+	}
+
+	li {
+		padding: var( --space-xs ) var( --space-sm );
+	}
+
+	li + li {
+		border-top: 1px solid var( --border-color-base );
+	}
+}
+
+.mw-specialCiteThisPage-styles {
+	width: auto;
+	padding: 0;
+	margin: 0;
+
+	h2 {
+		font-size: var( --font-size-large );
+	}
+
+	h3 {
+		font-size: var( --font-size-medium );
+	}
+
+	/* Similar to pre styles */
+	> h3 + p {
+		padding: var( --space-md );
+		font-family: var( --font-family-serif );
+		font-size: var( --font-size-small );
+		font-variant-numeric: lining-nums;
+		color: var( --color-emphasized );
+		background: var( --color-surface-2 );
+		border: 1px solid var( --border-color-base );
+		border-radius: var( --border-radius-large );
+	}
+}

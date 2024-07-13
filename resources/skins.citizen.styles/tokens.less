@@ -6,6 +6,9 @@
 	 * Citizen Design Tokens
 	 * TODO: Refactor cssvariables.less into this and features.less
 	 */
+	--border-radius-medium: ~'calc( var( --border-radius-base ) * 2 )';
+	--border-radius-large: ~'calc( var( --border-radius-base ) * 3 )';
+	/* Progressive color */
 	--color-primary__h: @color-primary__h;
 	--color-primary__s: @color-primary__s;
 	--color-primary__l: @color-primary__l;
@@ -31,11 +34,37 @@
 	--background-color-icon: ~'rgba( 0, 0, 0, var( --opacity-icon-base ) )';
 	--background-color-icon--hover: ~'rgba( 0, 0, 0, var( --opacity-icon-base--hover ) )';
 	--background-color-icon--active: ~'rgba( 0, 0, 0, var( --opacity-icon-base--active ) )';
+	/* Box shadow */
+	--box-shadow-border: var( --border-color-base ) 0 0 0 1px inset;
+	// Based on https://web.dev/building-a-color-scheme/#rad-shadow
+	// TODO: Refactor this to support filter drop-shadow
+	--box-shadow-card: 0 2.8px 2.2px -4px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .03))', 0 6.7px 5.3px -4px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .01))', 0 12.5px 10px -4px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .02))', 0 22.3px 17.9px -4px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .02))', 0 41.8px 33.4px -4px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .03))', 0 100px 80px -4px ~'hsla(var(--surface-shadow), var(--shadow-strength))';
+	--box-shadow-dialog: 0 2.8px 2.2px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .03))', 0 6.7px 5.3px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .01))', 0 12.5px 10px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .02))', 0 22.3px 17.9px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .02))', 0 41.8px 33.4px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .03))', 0 100px 80px ~'hsla(var(--surface-shadow), var(--shadow-strength))';
+	/* Font */
+	// Used as base unit to caluclate font-size
+	--font-size-base: 1rem;
+	/* Transition */
+	--transition-delay-menu: 100ms;
 	// Hover and active states are calculated by a modifier of the lightness value in HSL (e.g. hover: +2%, active: -2%)
 	--delta-lightness-hover-state: 4%;
 	// Used to calculate box shadow
 	--shadow-strength: 0.02;
 	--surface-shadow: var( --color-primary__h ), 10%, 20%;
+
+	/**
+	 * Codex Design Tokens but not included as CSS variables
+	 */
+	--border-radius-base: 4px;
+	--border-radius-sharp: 0;
+	--border-radius-pill: 9999px;
+	--border-radius-circle: 50%;
+	--font-size-x-small: ~'calc( var( --font-size-base ) * 0.75 )';
+	--font-size-small: ~'calc( var( --font-size-base ) * 0.875 )';
+	--font-size-medium: var( --font-size-base );
+	--font-size-large: ~'calc( var( --font-size-base ) * 1.125 )';
+	--font-size-x-large: ~'calc( var( --font-size-base ) * 1.25 )';
+	--font-size-xx-large: ~'calc( var( --font-size-base ) * 1.375 )';
+	--font-size-xxx-large: ~'calc( var( --font-size-base ) * 1.75 )';
 
 	/**
 	 * Codex Design Tokens v1.8.0
@@ -163,13 +192,20 @@
 	--border-color-input-binary--focus: var( --border-color-progressive--focus );
 	--border-color-input-binary--checked: var( --border-color-progressive );
 
-	/* DEPRECATED TOKENS */
+	/*
+	 * DEPRECATED TOKENS
+	 * This tokens will be hard-deprecated on next major version bump on Decemeber 2024
+	 */
 	--background-color-primary--hover: var( --background-color-progressive-subtle );
 	--background-color-primary--active: var( --background-color-progressive-subtle );
 	--background-color-overlay: var( --background-color-backdrop-light );
 	--background-color-overlay--lighter: var( --background-color-backdrop-light );
 	--background-color-quiet--hover: var( --background-color-button-quiet--hover );
 	--background-color-quiet--active: var( --background-color-button-quiet--active );
+	--border-radius--small: var( --border-radius-base );
+	--border-radius--medium: var( --border-radius-medium );
+	--border-radius--large: var( --border-radius-large );
+	--border-radius--pill: var( --border-radius-pill );
 	--color-base--emphasized: var( --color-emphasized );
 	--color-base--subtle: var( --color-subtle );
 	--color-primary: var( --color-progressive );
@@ -179,4 +215,13 @@
 	--color-text-warning: var( --color-base );
 	--color-text-success: var( --color-success );
 	--opacity-icon-base--active: var( --opacity-icon-base--selected );
+}
+
+@media ( min-width: @min-width-breakpoint-tablet ) {
+	:root {
+		--font-size-x-small: ~'calc( var( --font-size-base ) *  0.8125 )';
+		--font-size-x-large: ~'calc( var( --font-size-base ) *  1.375 )';
+		--font-size-xx-large: ~'calc( var( --font-size-base ) *  1.5 )';
+		--font-size-xxx-large: ~'calc( var( --font-size-base ) *  2 )';
+	}
 }

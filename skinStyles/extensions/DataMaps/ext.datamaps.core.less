@@ -1,0 +1,139 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:DataMaps
+ * Module: ext.datamaps.core
+ * Version: 0.17.7 9c448d3
+ *
+ * Date: 2024-07-11
+ */
+
+// Fix width definition from share Leaflet styles
+.leaflet-bar a.oo-ui-buttonElement-button {
+	width: auto;
+}
+
+/* MiniLayoutInteractive.less */
+.ext-datamaps-control-coords {
+	font-size: var( --font-size-x-small );
+}
+
+/* Legend.less */
+.ext-datamaps-control-expandable {
+	&[ aria-expanded='true' ] {
+		background: var( --color-surface-1 );
+	}
+}
+
+/* LegendFilters.less */
+.ext-datamaps-container-legend {
+	.ext-datamaps-legend-badge {
+		font-size: var( --font-size-x-small );
+		background: var( --color-subtle );
+	}
+}
+
+p.ext-datamaps-filters-after-text {
+	border-top-color: var( --border-color-base );
+}
+
+/* InteractionRejection.less */
+.leaflet-interactionWarning-pane {
+	font-size: var( --font-size-x-large );
+	background: var( --background-color-backdrop-dark );
+}
+
+/* Popups.less */
+.ext-datamaps-popup-buttons {
+	color: var( --color-emphasized );
+}
+
+.ext-datamaps-popup-header {
+	.ext-datamaps-popup-title {
+		font-size: var( --font-size-medium );
+		font-weight: var( --font-weight-semibold );
+		line-height: var( --line-height-xs );
+		color: var( --color-emphasized );
+	}
+
+	.ext-datamaps-popup-subtitle {
+		font-size: var( --font-size-small );
+		font-weight: var( --font-weight-medium );
+	}
+
+	.ext-datamaps-popup-location {
+		font-size: var( --font-size-x-small );
+	}
+
+	.ext-datamaps-popup-subtitle,
+	.ext-datamaps-popup-location {
+		line-height: var( --line-height-xs );
+		color: var( --color-subtle );
+	}
+}
+
+.ext-datamaps-popup {
+	.ext-datamaps-popup-tools {
+		li {
+			margin-bottom: 0;
+		}
+
+		a {
+			border-color: var( --border-color-interactive );
+
+			&:hover {
+				background-color: var( --background-color-button-quiet--hover );
+			}
+
+			&:active {
+				background-color: var( --background-color-button-quiet--active );
+			}
+		}
+	}
+}
+
+/* Acrylic.less */
+// Disable acrylic
+.leaflet-control,
+.ext-datamaps-control-search-results {
+	background: var( --color-surface-1 ) !important;
+	backdrop-filter: none;
+}
+
+/* Search.less */
+.leaflet-control.ext-datamaps-control-search {
+	padding: 0;
+
+	.oo-ui-textInputWidget {
+		.oo-ui-inputWidget-input {
+			// Increase search bar height
+			height: 40px;
+		}
+	}
+}
+
+/* Controls.less */
+.leaflet-control-container {
+	.ext-datamaps-control-primary {
+		background: var( --color-progressive );
+
+		> button {
+			color: var( --color-inverted-primary );
+		}
+	}
+
+	.ext-datamaps-control-coords {
+		padding: var( --space-xs );
+		font-family: var( --font-family-monospace ); // Monospace font avoids size changes and easier to scan
+		font-size: var( --font-size-x-small );
+		line-height: 1;
+		color: var( --color-subtle );
+		background: var( --color-surface-2 );
+	}
+
+	.ext-datamaps-control > button > span {
+		width: 32px;
+		height: 32px;
+		filter: var( --filter-invert );
+	}
+}

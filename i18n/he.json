@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Amire80",
+			"YaronSh",
 			"מקף"
 		]
 	},
@@ -23,12 +24,13 @@
 	"citizen-footer-tagline": "אפשר לערוך את הטקסט הזה ב־[[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "הוספת נושא",
 	"citizen-jumptotop": "חזרה למעלה",
-	"citizen-search-fulltext": "חיפוש דפים שמכילים $1",
-	"citizen-search-mediasearch": "חיפוש מדיה הקשורה למילים $1",
+	"citizen-search-fulltext": "חיפוש טקסט",
+	"citizen-search-mediasearch": "חיפוש מדיה",
 	"citizen-search-editpage": "עריכה או יצירה של דף",
 	"citizen-search-empty-desc": "יש להקליד כדי להתחיל לחפש",
 	"citizen-search-noresults-title": "אבוי! אין תוצאות עבור $1",
 	"citizen-search-noresults-desc": "אולי אפשר לנסות את האפשרויות למעלה?",
+	"citizen-share": "שיתוף הדף הזה",
 	"citizen-tagline-ns-talk": "דף השיחה של {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "מידע על אתר {{SITENAME}}",
 	"citizen-tagline-ns-file": "קובץ באתר {{SITENAME}}",
@@ -43,6 +45,9 @@
 	"citizen-theme-night-label": "חשוכה",
 	"citizen-theme-os-label": "אוטומטית",
 	"citizen-theme-exclusion-notice": "הדף הזה תמיד במצב בהיר.",
+	"citizen-feature-autohide-navigation-name": "הסתרת הניווט אוטומטית",
+	"citizen-feature-autohide-navigation-0-label": "כבויה",
+	"citizen-feature-autohide-navigation-1-label": "פעילה",
 	"citizen-feature-pure-black-name": "מצב שחור טהור",
 	"citizen-feature-pure-black-0-label": "כבוי",
 	"citizen-feature-pure-black-1-label": "מופעל",

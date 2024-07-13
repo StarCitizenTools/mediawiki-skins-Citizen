@@ -60,22 +60,20 @@ function initBodyContent( bodyContent ) {
 function main( window ) {
 	const
 		config = require( './config.json' ),
+		echo = require( './echo.js' ),
 		search = require( './search.js' ),
-		share = require( './share.js' ),
+		dropdown = require( './dropdown.js' ),
 		stickyHeader = require( './stickyHeader.js' ),
 		lastModified = require( './lastModified.js' ),
-		checkbox = require( './checkbox.js' ),
-		dropdown = require( './dropdown.js' );
+		share = require( './share.js' );
 
 	enableCssAnimations( window.document );
+	echo();
 	search.init( window );
-	share.init();
-	lastModified.init();
-	stickyHeader.init();
-
-	// Set up checkbox hacks
-	checkbox.bind();
 	dropdown.init();
+	stickyHeader.init();
+	lastModified.init();
+	share.init();
 
 	mw.hook( 'wikipage.content' ).add( ( content ) => {
 		// content is a jQuery object
@@ -91,9 +89,6 @@ function main( window ) {
 	registerServiceWorker();
 
 	window.addEventListener( 'beforeunload', () => {
-		// T295085: Close all dropdown menus when page is unloaded to prevent them
-		// from being open when navigating back to a page.
-		checkbox.uncheckCheckboxHacks();
 		// Set up loading indicator
 		document.documentElement.classList.add( 'citizen-loading' );
 	}, false );

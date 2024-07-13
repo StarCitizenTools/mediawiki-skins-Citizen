@@ -1,0 +1,36 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:DataMaps
+ * Module: ext.datamaps.core.styles
+ * Version: 0.17.7 9c448d3
+ *
+ * Date: 2024-07-11
+ */
+
+/* early.less */
+.ext-datamaps-container {
+	border-color: transparent !important; // Needed to override OOUI styles
+	box-shadow: none;
+}
+
+.ext-datamaps-container-content {
+	.ext-datamaps-container-leaflet {
+		background: var( --color-surface-3 );
+	}
+}
+
+/* Status.less */
+.ext-datamaps-container-status {
+	font-size: var( --font-size-x-large );
+
+	> :not( .oo-ui-widget ) {
+		color: var( --color-subtle );
+		background: transparent;
+	}
+
+	&[ data-severity='error' ] > :not( .oo-ui-widget ) {
+		color: var( --color-emphasized );
+		background: var( --background-color-destructive-subtle );
+	}
+}
