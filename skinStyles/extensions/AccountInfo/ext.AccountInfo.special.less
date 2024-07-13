@@ -3,78 +3,68 @@
  *
  * SkinStyles for Extension:AccountInfo
  * Module: ext.AccountInfo.special
- * Version: REL1_39 (e6637b2)
+ * Version: REL1_39 (3145de8)
  *
- * Date: 2023-11-30
+ * Date: 2024-07-13
 */
 
-body {
-	font: 0.9em sans-serif;
-}
-
-h1 {
-	margin-bottom: 0;
-	font-size: 2em;
-	font-weight: bold;
-	border-bottom: none;
-}
-
-p {
+.mw-special-AccountInfo table,
+.mw-special-AccountInfo #mw-content-text > p {
 	width: 100%;
-	padding: 0;
-	margin: 0;
+}
+
+.mw-special-AccountInfo #mw-content-text > p {
+    padding: var(--space-md);
+    margin-top: var(--space-md);
+    font-size: var(--font-size-small);
+    color: var(--color-bae);
+    border: 1px solid var(--border-color-base);
+    border-radius: var(--border-radius-medium);
+    background: var(--color-surface-2);
+}
+
+.mw-special-AccountInfo td, .mw-special-AccountInfo th {
+	padding: var(--space-xs) var(--space-sm);
+}
+
+.mw-special-AccountInfo #mw-content-text > table th {
+    color: var(--color-emphasized);
+}
+
+.mw-special-AccountInfo table thead th {
+    color: var(--color-emphasized);
+    border-bottom-color: var(--border-color-base);
+    cursor: auto;
+    text-transform: none;
+    font-size: var(--font-size-x-small);
+    white-space: nowrap;
+    font-weight: var(--font-weight-semibold);
+}
+
+.mw-special-AccountInfo table tbody tr:last-child td:first-child {
+	border-bottom-left-radius: var(--border-radius-medium);
+}
+
+.mw-special-AccountInfo table tbody tr:last-child td:last-child {
+	border-bottom-right-radius: var(--border-radius-medium);
+}
+
+.mw-special-AccountInfo #mw-content-text table {
+    display: table;
+    max-width: none;
+    overflow: initial;
+    margin: var(--space-md) 0;
+    font-size: var(--font-size-small);
+    border-collapse: collapse;
+    border-color: var(--border-color-base);
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--box-shadow-border);
+}
+.mw-special-AccountInfo tr.mw-accountinfo-current {
 	background: transparent;
-	border-radius: 0;
 }
 
-#mw-content-text p {
-	width: 70%;
-	padding: 10px;
-	margin-bottom: 20px;
-	background: var( --color-surface-2 );
-	border-radius: 3px;
-}
-
-table {
-	width: 70%;
-	border-collapse: collapse;
-}
-
-table thead th {
-	padding-bottom: 5px;
-	padding-left: 14px;
-	margin-bottom: 10px;
-	font-size: 0.7em;
-	font-weight: bold;
-	color: var( --color-base--emphasized );
-	text-align: left;
-	text-decoration: none;
-	text-transform: uppercase;
-	cursor: help;
-	background: var( --color-surface-2 );
-	border-bottom: 1px solid var( --color-base--subtle );
-}
-
-table tr td {
-	padding: 5px;
-	font-size: 0.9em;
-	vertical-align: top;
-	background: var( --color-surface-3 );
-}
-
-table tr td:nth-child( 2 ) {
-	font: 1em monospace;
-}
-
-table tr td:nth-child( 4 ) {
-	font-family: monospace;
-}
-
-table tr.mw-accountinfo-current {
-	background: transparent;
-}
-
-table tr.mw-accountinfo-current td:first-child {
+.mw-special-AccountInfo tr.mw-accountinfo-current td:first-child {
 	color: var( --color-base--emphasized );
 	background: var( --color-text-success );
 }

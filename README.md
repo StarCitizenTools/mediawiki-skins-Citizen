@@ -38,6 +38,7 @@ OOUI | A | 0.44.3 | 2023-06-24
 ### Extensions
 Name | Grade | Version | Last updated
 :--- | :--- | :--- | :---
+[AccountInfo](https://www.mediawiki.org/wiki/Extension:AccountInfo) | A | REL1_39 `3145de8` | 2024-07-13
 [AdvancedSearch](https://www.mediawiki.org/wiki/Extension:AdvancedSearch) | B | REL1_39 `3a0eed7` | 2022-12-12
 [AJAXPoll](https://www.mediawiki.org/wiki/Extension:AJAXPoll) | A | REL1_39 `8429d8d` | 2022-10-25
 [ApprovedRevs](https://www.mediawiki.org/wiki/Extension:Approved_Revs) | B | N/A | N/A
