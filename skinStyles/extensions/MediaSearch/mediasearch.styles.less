@@ -52,7 +52,7 @@
 		color: var( --color-emphasized );
 		background-color: transparent;
 		border-color: var( --border-color-interactive );
-		border-radius: var( --border-radius--small );
+		border-radius: var( --border-radius-base );
 
 		&::placeholder {
 			color: var( --color-base-subtle );
@@ -81,7 +81,7 @@
 	font-family: var( --font-family-base );
 	font-weight: var( --font-weight-semibold );
 	color: var( --color-emphasized );
-	border-radius: var( --border-radius--small );
+	border-radius: var( --border-radius-base );
 
 	&:hover {
 		color: var( --color-emphasized );
@@ -246,7 +246,7 @@
 		// Show background when hovered
 		background-color: transparent;
 		border-color: var( --border-color-interactive );
-		border-radius: var( --border-radius--small );
+		border-radius: var( --border-radius-base );
 	}
 
 	&__input {
@@ -322,7 +322,7 @@
 	&__shell {
 		background-color: var( --color-surface-1 );
 		border-color: transparent;
-		border-radius: var( --border-radius--medium );
+		border-radius: var( --border-radius-medium );
 		box-shadow: var( --box-shadow-dialog );
 	}
 
@@ -357,7 +357,7 @@
 	&--block {
 		font-weight: var( --font-weight-normal );
 		color: var( --color-emphasized );
-		border-radius: var( --border-radius--small );
+		border-radius: var( --border-radius-base );
 
 		&.sd-message--notice {
 			background-color: var( --color-surface-2 );
@@ -520,7 +520,7 @@
 .sd-select-menu {
 	background-color: var( --color-surface-1 );
 	border-color: var( --border-color-interactive );
-	border-radius: 0 0 var( --border-radius--small ) var( --border-radius--small );
+	border-radius: 0 0 var( --border-radius-base ) var( --border-radius-base );
 	// box-shadow: var( --box-shadow-dialog );
 
 	&__list-item {
@@ -599,7 +599,7 @@
 
 		&:focus {
 			.sd-tabs__tabs-list__item--current {
-				border-radius: var( --border-radius--small );
+				border-radius: var( --border-radius-base );
 				box-shadow: inset 0 0 0 2px var( --color-progressive );
 			}
 		}
@@ -612,7 +612,7 @@
 	overflow: hidden; // needed for transition and rounded corners
 	// Keep original light background so that transparent images are more legible
 	// background-color: var( --color-surface-2 );
-	border-radius: var( --border-radius--small );
+	border-radius: var( --border-radius-base );
 
 	&:hover,
 	&:focus {
@@ -639,7 +639,7 @@
 	overflow: hidden; // Hide transition overflow
 	color: var( --color-progressive );
 	border-color: transparent;
-	border-radius: var( --border-radius--small );
+	border-radius: var( --border-radius-base );
 
 	&__title {
 		color: var( --color-emphasized );
@@ -647,7 +647,7 @@
 	}
 
 	&__body {
-		z-index: 1;
+		z-index: @z-index-stacking-1;
 		padding: var( --space-sm ) 0 0 0;
 		// HACK: Hide thumbnail overflow
 		background-color: var( --color-surface-0 );
@@ -677,7 +677,7 @@
 	}
 
 	&__thumbnail {
-		border-radius: var( --border-radius--small );
+		border-radius: var( --border-radius-base );
 		transition: var( --transition-hover );
 		transition-property: transform;
 	}
@@ -687,7 +687,7 @@
 		font-weight: var( --font-weight-medium );
 		color: var( --color-base );
 		background-color: var( --color-surface-2 );
-		border-radius: var( --border-radius--small );
+		border-radius: var( --border-radius-base );
 	}
 
 	&__mime {
@@ -718,7 +718,7 @@
 		font-weight: var( --font-weight-medium );
 		color: var( --color-base );
 		background-color: var( --color-surface-2 );
-		border-radius: var( --border-radius--small );
+		border-radius: var( --border-radius-base );
 	}
 
 	&__mime {
@@ -744,7 +744,7 @@
 		font-weight: var( --font-weight-medium );
 		color: var( --color-base );
 		background-color: var( --color-surface-2 );
-		border-radius: var( --border-radius--small );
+		border-radius: var( --border-radius-base );
 	}
 }
 
@@ -766,7 +766,7 @@
 			top: var( --space-md );
 			height: ~'calc( 100vh - var( --space-md ) * 2 )';
 			background-color: var( --color-surface-2 );
-			border-radius: var( --border-radius--large );
+			border-radius: var( --border-radius-large );
 
 			// Responsive handling
 			@media screen and ( max-width: @max-width-breakpoint-tablet ) {
@@ -818,7 +818,7 @@
 		color: var( --color-progressive );
 		background-color: var( --color-surface-2 );
 		border-color: var( --border-color-base );
-		border-radius: var( --border-radius--small );
+		border-radius: var( --border-radius-base );
 
 		&:hover {
 			color: var( --color-progressive--hover );
@@ -900,7 +900,7 @@
 	.sd-select {
 		&__content {
 			color: var( --color-emphasized );
-			border-radius: var( --border-radius--small );
+			border-radius: var( --border-radius-base );
 
 			@media screen and ( min-width: @min-width-breakpoint-tablet ) {
 				font-size: var( --font-size-small );
@@ -935,7 +935,7 @@
 	}
 
 	&__namespace {
-		border-radius: var( --border-radius--small );
+		border-radius: var( --border-radius-base );
 
 		@media screen and ( min-width: @min-width-breakpoint-tablet ) {
 			font-size: var( --font-size-small );

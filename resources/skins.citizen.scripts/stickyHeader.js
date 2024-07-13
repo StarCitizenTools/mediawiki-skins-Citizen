@@ -1,6 +1,5 @@
 const SCROLL_DOWN_CLASS = 'citizen-scroll--down';
 const SCROLL_UP_CLASS = 'citizen-scroll--up';
-const STICKY_SENTINEL_ID = 'citizen-page-header-sticky-sentinel';
 const STICKY_CLASS = 'citizen-page-header--sticky';
 const { initDirectionObserver, initIntersectionObserver } = require( './scrollObserver.js' );
 
@@ -28,24 +27,64 @@ function observeScrollDirection() {
  * @return {void}
  */
 function init() {
-	const sentinel = document.getElementById( STICKY_SENTINEL_ID );
-	const shouldStickyHeader = sentinel && getComputedStyle( sentinel ).getPropertyValue( 'display' ) !== 'none';
-
 	observeScrollDirection();
 
+	const header = document.querySelector( '.citizen-page-header' );
+	const sentinel = document.createElement( 'div' );
+	sentinel.id = 'citizen-page-header-sticky-sentinel';
+	header.insertAdjacentElement( 'afterend', sentinel );
+
+	const shouldStickyHeader = getComputedStyle( sentinel ).getPropertyValue( 'display' ) !== 'none';
 	if ( !shouldStickyHeader ) {
 		return;
 	}
 
-	const toggleStickyClass = ( state ) => () => {
+	const placeholder = document.createElement( 'div' );
+	placeholder.id = 'citizen-page-header-sticky-placeholder';
+	header.insertAdjacentElement( 'afterend', placeholder );
+
+	let staticHeaderHeight = header.getBoundingClientRect().height;
+	let placeholderHeight = 0;
+	let shouldRecalcHeight = true;
+
+	const toggleStickyHeader = ( isSticky ) => {
 		window.requestAnimationFrame( () => {
-			document.body.classList.toggle( STICKY_CLASS, state );
+			if ( !shouldRecalcHeight ) {
+				// The previous height is valid, set the height first
+				placeholder.style.height = `${ placeholderHeight }px`;
+				document.body.classList.toggle( STICKY_CLASS, isSticky );
+			} else {
+				// The previous height is invalid, need to set to sticky to get the sticky height
+				document.body.classList.toggle( STICKY_CLASS, isSticky );
+				placeholderHeight = staticHeaderHeight - header.getBoundingClientRect().height;
+				placeholder.style.height = `${ placeholderHeight }px`;
+				shouldRecalcHeight = false;
+			}
 		} );
 	};
 
+	const onResize = () => {
+		toggleStickyHeader( false );
+	};
+
+	const onResizeEnd = mw.util.debounce( () => {
+		// Refresh static header height after resize
+		staticHeaderHeight = header.getBoundingClientRect().height;
+		shouldRecalcHeight = true;
+		toggleStickyHeader( true );
+	}, 250 );
+
 	const observer = initIntersectionObserver(
-		toggleStickyClass( true ),
-		toggleStickyClass( false )
+		() => {
+			toggleStickyHeader( true );
+			window.addEventListener( 'resize', onResize );
+			window.addEventListener( 'resize', onResizeEnd );
+		},
+		() => {
+			toggleStickyHeader( false );
+			window.removeEventListener( 'resize', onResize );
+			window.removeEventListener( 'resize', onResizeEnd );
+		}
 	);
 	observer.observe( sentinel );
 }

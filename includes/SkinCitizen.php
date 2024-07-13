@@ -199,6 +199,7 @@ class SkinCitizen extends SkinMustache {
 		$options['toc'] = false;
 
 		// Clientprefs feature handling
+		$this->addClientPrefFeature( 'citizen-feature-autohide-navigation', '1' );
 		$this->addClientPrefFeature( 'citizen-feature-pure-black', '0' );
 		$this->addClientPrefFeature( 'citizen-feature-custom-font-size' );
 		$this->addClientPrefFeature( 'citizen-feature-custom-width' );

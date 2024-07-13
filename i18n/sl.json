@@ -37,5 +37,8 @@
 	"citizen-tagline-ns-template": "Stran predloge",
 	"citizen-tagline-ns-help": "Stran pomoči",
 	"citizen-tagline-ns-category": "Stran kategorije",
-	"citizen-tagline-user-regdate": "Pridružitev: $1"
+	"citizen-tagline-user-regdate": "Pridružitev: $1",
+	"citizen-feature-autohide-navigation-name": "Samodejno skrij navigacijo",
+	"citizen-feature-autohide-navigation-0-label": "Izklop",
+	"citizen-feature-autohide-navigation-1-label": "Vklop"
 }

@@ -1,0 +1,113 @@
+.citizen-dropdown {
+	.citizen-menu__card {
+		z-index: @z-index-dropdown;
+	}
+
+	&-summary {
+		cursor: pointer;
+
+		// Icons have to use span inside label elements
+		> span:not( .citizen-ui-icon ) {
+			.sr-only;
+		}
+
+		&:hover {
+			background-color: var( --background-color-button-quiet--hover );
+
+			> .citizen-ui-icon::before {
+				opacity: var( --opacity-icon-base--hover );
+			}
+		}
+
+		&:active {
+			background-color: var( --background-color-button-quiet--active );
+
+			> .citizen-ui-icon::before {
+				opacity: var( --opacity-icon-base--selected );
+			}
+		}
+
+		// Remove Safari summary marker
+		&::-webkit-details-marker {
+			display: none;
+		}
+
+		// Reset hover styles if it is a touch device
+		// This is dumb but hover:hover overrides active states
+		@media ( hover: none ) {
+			&:hover {
+				background-color: transparent;
+
+				.citizen-ui-icon::before {
+					opacity: var( --opacity-icon-base );
+				}
+			}
+		}
+	}
+
+	&-details {
+		&[ open ] {
+			+ .citizen-menu__card {
+				transition: var( --transition-menu );
+				transition-property: transform;
+				transform: none;
+
+				> * {
+					opacity: 1;
+					transition: var( --transition-menu );
+					transition-delay: var( --transition-delay-menu );
+					transition-property: opacity;
+				}
+			}
+
+			> .citizen-dropdown-summary {
+				background-color: var( --background-color-button-quiet--active );
+
+				&:hover {
+					background-color: var( --background-color-button-quiet--hover );
+				}
+			}
+		}
+	}
+
+	@media ( max-width: @max-width-breakpoint-tablet ) {
+		// Add dismiss affordnance backdrop
+		&-details {
+			&::before {
+				content: '';
+				background: var( --background-color-backdrop-light );
+				-webkit-backdrop-filter: blur( 2px );
+				backdrop-filter: blur( 2px );
+				opacity: 0;
+			}
+
+			&[ open ] {
+				&::before {
+					position: fixed;
+					inset: 0;
+					z-index: @z-index-off-canvas-backdrop;
+					opacity: 1;
+					transition: var( --transition-menu );
+					transition-property: opacity;
+				}
+
+				> .citizen-dropdown-summary {
+					position: relative;
+					// Slightly higher than the menu so it is not covered by the box shadow
+					z-index: @z-index-off-canvas + @z-index-stacking-1;
+				}
+
+				+ .citizen-menu__card {
+					z-index: @z-index-off-canvas;
+				}
+			}
+		}
+	}
+}
+
+@media ( max-width: @max-width-breakpoint-tablet ) {
+	/* HACK: Disable page from scolling when a dropdown menu is opened */
+	body:has( .citizen-dropdown-details[ open ] ) {
+		overflow: hidden;
+	}
+}

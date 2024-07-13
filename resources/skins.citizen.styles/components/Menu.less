@@ -10,98 +10,13 @@
 		user-select: none;
 		background-color: var( --color-surface-1 );
 		border: 1px solid var( --border-color-base );
-		border-radius: var( --border-radius--medium );
+		border-radius: var( --border-radius-medium );
 		box-shadow: var( --box-shadow-dialog );
 		transform: scale( 0 );
 		contain: content;
 
 		> * {
 			opacity: 0;
-		}
-	}
-
-	&__dropdown {
-		&Button {
-			cursor: pointer;
-
-			// Icons have to use span inside label elements
-			> span:not( .citizen-ui-icon ) {
-				.mixin-screen-reader-text;
-			}
-
-			&:hover {
-				background-color: var( --background-color-button-quiet--hover );
-
-				> .citizen-ui-icon::before {
-					opacity: var( --opacity-icon-base--hover );
-				}
-			}
-
-			&:active {
-				background-color: var( --background-color-button-quiet--active );
-
-				> .citizen-ui-icon::before {
-					opacity: var( --opacity-icon-base--selected );
-				}
-			}
-
-			// Reset hover styles if it is a touch device
-			// This is dumb but hover:hover overrides active states
-			@media ( hover: none ) {
-				&:hover {
-					background-color: none;
-
-					.citizen-ui-icon::before {
-						opacity: var( --opacity-icon-base );
-					}
-				}
-			}
-
-			// Remove Safari summary marker
-			&::-webkit-details-marker {
-				display: none;
-			}
-		}
-
-		&[ open ] {
-			> .citizen-menu__card {
-				transition: var( --transition-menu );
-				transition-property: transform;
-				transform: none;
-
-				> * {
-					opacity: 1;
-					transition: var( --transition-menu );
-					transition-property: opacity;
-				}
-			}
-
-			> .citizen-menu__dropdownButton {
-				background-color: var( --background-color-button-quiet--active );
-
-				&:hover {
-					background-color: var( --background-color-button-quiet--hover );
-				}
-			}
-		}
-
-		@media ( max-width: @max-width-breakpoint-tablet ) {
-			// Dismiss affordnance overlay
-			&::before {
-				z-index: -1;
-				content: '';
-				background: var( --background-color-backdrop-light );
-				opacity: 0;
-			}
-
-			&[ open ]::before {
-				position: fixed;
-				inset: 0;
-				z-index: 0; // Needed for menu to work in Safari
-				opacity: 1;
-				transition: var( --transition-menu );
-				transition-property: opacity;
-			}
 		}
 	}
 
@@ -177,55 +92,15 @@
 	}
 }
 
-/**
- * Invisible checkbox covering the menu button.
- */
-.citizen-menu-checkbox {
-	// Has to be visible to be focusable
-	&-checkbox {
-		position: absolute;
-		top: 0;
-		left: 0;
-		z-index: 1;
-		width: 0;
-		height: 0;
-		padding: 0;
-		margin: 0;
-		opacity: 0;
-
-		// HACK: Fake focus styles
-		&:focus {
-			& + .citizen-header__button,
-			& + .citizen-menu-checkbox-button {
-				outline: 2px solid var( --color-progressive );
-				outline-offset: 1px;
-			}
-		}
-	}
-
-	&-button {
-		cursor: pointer;
-
-		// Icons have to use span inside label elements
-		> span:not( .citizen-ui-icon ) {
-			.mixin-screen-reader-text;
-		}
-	}
-}
-
 .mw-portlet {
 	// Hide selected item
 	.selected {
-		.mixin-screen-reader-text;
+		.sr-only;
 	}
 
 	// Hide empty menu
 	&-empty {
 		display: none !important;
-	}
-
-	a::after {
-		filter: var( --filter-invert );
 	}
 }
 
@@ -235,18 +110,12 @@
 	&:has( .diff ),
 	&:has( .mw-revision ) {
 		#ca-view {
-			position: relative !important;
+			position: relative;
 			width: auto;
 			height: auto;
-			margin: 0;
-			clip: unset;
+			overflow: initial;
+			clip-path: unset;
+			white-space: unset;
 		}
-	}
-}
-
-@media ( max-width: @max-width-breakpoint-tablet ) {
-	/* HACK: Disable page from scolling when a dropdown menu is opened */
-	body:has( .citizen-menu__dropdown[ open ] ) {
-		overflow: hidden;
 	}
 }

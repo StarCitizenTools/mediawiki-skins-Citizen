@@ -12,7 +12,7 @@
 
 .oo-ui-buttonElement > .oo-ui-buttonElement-button {
 	font-weight: var( --font-weight-medium );
-	border-radius: var( --border-radius--small );
+	border-radius: var( --border-radius-base );
 }
 
 .oo-ui-buttonElement.oo-ui-widget-enabled > .oo-ui-buttonElement-button > .oo-ui-iconElement-icon:not( .oo-ui-image-invert ),
@@ -83,7 +83,7 @@
 }
 
 .oo-ui-buttonElement-framed > .oo-ui-buttonElement-button {
-	border-radius: var( --border-radius--small );
+	border-radius: var( --border-radius-base );
 }
 
 .oo-ui-buttonElement-framed.oo-ui-widget-disabled > .oo-ui-buttonElement-button {
@@ -246,11 +246,11 @@
 .oo-ui-actionFieldLayout .oo-ui-actionFieldLayout-input > .oo-ui-widget.oo-ui-textInputWidget > .oo-ui-inputWidget-input,
 .oo-ui-actionFieldLayout .oo-ui-actionFieldLayout-input > .oo-ui-widget .oo-ui-dropdownWidget-handle,
 .oo-ui-actionFieldLayout .oo-ui-actionFieldLayout-input > .oo-ui-widget .oo-ui-tagMultiselectWidget-handle {
-	border-radius: var( --border-radius--small ) 0 0 var( --border-radius--small );
+	border-radius: var( --border-radius-base ) 0 0 var( --border-radius-base );
 }
 
 .oo-ui-actionFieldLayout .oo-ui-actionFieldLayout-button .oo-ui-buttonElement-framed > .oo-ui-buttonElement-button {
-	border-radius: 0 var( --border-radius--small ) var( --border-radius--small ) 0;
+	border-radius: 0 var( --border-radius-base ) var( --border-radius-base ) 0;
 }
 
 .oo-ui-fieldsetLayout.oo-ui-labelElement > .oo-ui-fieldsetLayout-header > .oo-ui-labelElement-label {
@@ -261,7 +261,7 @@
 
 .oo-ui-panelLayout-framed {
 	border-color: var( --border-color-base );
-	border-radius: var( --border-radius--small );
+	border-radius: var( --border-radius-base );
 }
 
 .oo-ui-optionWidget.oo-ui-widget-disabled {
@@ -289,7 +289,7 @@
 
 .oo-ui-messageWidget {
 	font-weight: var( --font-weight-semibold );
-	border-radius: var( --border-radius--medium );
+	border-radius: var( --border-radius-medium );
 }
 
 .oo-ui-messageWidget.oo-ui-messageWidget-block.oo-ui-flaggedElement-error {
@@ -329,17 +329,17 @@
 }
 
 .oo-ui-buttonGroupWidget {
-	border-radius: var( --border-radius--small );
+	border-radius: var( --border-radius-base );
 }
 
 .oo-ui-buttonGroupWidget .oo-ui-buttonElement-framed:first-child .oo-ui-buttonElement-button {
-	border-top-left-radius: var( --border-radius--small );
-	border-bottom-left-radius: var( --border-radius--small );
+	border-top-left-radius: var( --border-radius-base );
+	border-bottom-left-radius: var( --border-radius-base );
 }
 
 .oo-ui-buttonGroupWidget .oo-ui-buttonElement-framed:last-child .oo-ui-buttonElement-button {
-	border-top-right-radius: var( --border-radius--small );
-	border-bottom-right-radius: var( --border-radius--small );
+	border-top-right-radius: var( --border-radius-base );
+	border-bottom-right-radius: var( --border-radius-base );
 }
 
 .oo-ui-buttonGroupWidget .oo-ui-buttonElement-framed.oo-ui-widget-disabled + .oo-ui-widget-disabled > .oo-ui-buttonElement-button {
@@ -354,7 +354,7 @@
 .oo-ui-popupWidget-popup {
 	background-color: var( --color-surface-1 );
 	border-color: var( --border-color-base );
-	border-radius: var( --border-radius--medium );
+	border-radius: var( --border-radius-medium );
 	box-shadow: var( --box-shadow-dialog );
 }
 
@@ -455,7 +455,7 @@ TODO: Need to refactor the current shadow for filter drop-shadow, see variables.
 
 .oo-ui-dropdownInputWidget select {
 	border-color: var( --border-color-interactive );
-	border-radius: var( --border-radius--small );
+	border-radius: var( --border-radius-base );
 }
 
 .oo-ui-dropdownInputWidget.oo-ui-widget-enabled {
@@ -539,7 +539,7 @@ TODO: Need to refactor the current shadow for filter drop-shadow, see variables.
 	// Show background when hovered
 	background-color: transparent;
 	border-color: var( --border-color-interactive );
-	border-radius: var( --border-radius--small );
+	border-radius: var( --border-radius-base );
 }
 
 .oo-ui-textInputWidget .oo-ui-pendingElement-pending {
@@ -625,7 +625,7 @@ TODO: Need to refactor the current shadow for filter drop-shadow, see variables.
 	z-index: @z-index-overlay;
 	background-color: var( --color-surface-1 );
 	border-color: var( --border-color-interactive );
-	border-radius: 0 0 var( --border-radius--small ) var( --border-radius--small );
+	border-radius: 0 0 var( --border-radius-base ) var( --border-radius-base );
 	box-shadow: var( --box-shadow-dialog );
 }
 
@@ -656,7 +656,7 @@ TODO: Need to refactor the current shadow for filter drop-shadow, see variables.
 
 .oo-ui-dropdownWidget-handle {
 	border-color: var( --border-color-interactive );
-	border-radius: var( --border-radius--small );
+	border-radius: var( --border-radius-base );
 }
 
 .oo-ui-dropdownWidget.oo-ui-widget-enabled .oo-ui-dropdownWidget-handle {
@@ -710,8 +710,8 @@ TODO: Need to refactor the current shadow for filter drop-shadow, see variables.
 
 .oo-ui-comboBoxInputWidget.oo-ui-comboBoxInputWidget-empty .oo-ui-inputWidget-input,
 .oo-ui-comboBoxInputWidget-php .oo-ui-inputWidget-input {
-	border-top-right-radius: var( --border-radius--small );
-	border-bottom-right-radius: var( --border-radius--small );
+	border-top-right-radius: var( --border-radius-base );
+	border-bottom-right-radius: var( --border-radius-base );
 }
 
 .oo-ui-comboBoxInputWidget-open .oo-ui-comboBoxInputWidget-dropdownButton > .oo-ui-buttonElement-button {

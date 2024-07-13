@@ -13,16 +13,12 @@
  * @see https://github.com/wikimedia/mediawiki/blob/master/resources/lib/codex-design-tokens/theme-wikimedia-ui.less
  * TODO: Revisit on the next LTS release
  */
+
+// Use import on MW 1.43
 // @import 'mediawiki.skin.codex-design-tokens/theme-wikimedia-ui.less';
 
-/*
- * Backported variables
- * @see https://github.com/wikimedia/mediawiki/blob/master/resources/src/mediawiki.less/mediawiki.skin.defaults.less
- * TODO: Remove unused variables on the next LTS release
- */
-
-// @since 1.41
-// These have to be wrapped in parentheses, otherwise the Less calculation breaks (T367103)
+// Backported breakpoint variables
+// @since MW 1.41
 @min-width-breakpoint-mobile: 320px;
 @min-width-breakpoint-tablet: 640px;
 @min-width-breakpoint-desktop: 1120px;
@@ -31,23 +27,143 @@
 @max-width-breakpoint-tablet: ( @min-width-breakpoint-desktop - 1px );
 @max-width-breakpoint-desktop: ( @min-width-breakpoint-desktop-wide - 1px );
 
+@z-index-bottom: -100;
+@z-index-base: 0;
+@z-index-above-content: 1;
+@z-index-toolbar: 2;
+@z-index-dropdown: 50;
+@z-index-sticky: 100;
+@z-index-fixed: 200;
+@z-index-off-canvas-backdrop: 300;
+@z-index-off-canvas: 350;
+@z-index-overlay-backdrop: 400;
+@z-index-overlay: 450;
+@z-index-tooltip: 800;
+@z-index-toast-notification: 900;
+@z-index-top: 9999;
+@z-index-stacking-0: 0;
+@z-index-stacking-1: 1;
+@z-index-stacking-2: 2;
+@z-index-stacking-3: 3;
+
+// Backported CSS variables
+// @version Codex Design Tokens v1.8.0
+// @since MW 1.43
+@color-base: var( --color-base, #202122 );
+@color-base--hover: var( --color-base--hover, #404244 ); // Aimed to be replaced by `color.gray600` in future.
+@color-emphasized: var( --color-emphasized, #000 );
+@color-subtle: var( --color-subtle, #54595d );
+@color-placeholder: var( --color-placeholder, #72777d );
+@color-disabled: var( --color-disabled, #72777d );
+@color-inverted: var( --color-inverted, #fff );
+@color-inverted-fixed: var( --color-inverted-fixed, #fff ); // The same as color-inverted in light mode, but does not change in dark mode. Use this for things that should be white in both modes.
+@color-progressive: var( --color-progressive, #36c ); // 'Progressive' Color and states
+@color-progressive--hover: var( --color-progressive--hover, #447ff5 );
+@color-progressive--active: var( --color-progressive--active, #2a4b8d );
+@color-progressive--focus: var( --color-progressive--focus, #36c );
+@color-destructive: var( --color-destructive, #d73333 ); // 'Destructive' Color and states
+@color-destructive--hover: var( --color-destructive--hover, #ff4242 );
+@color-destructive--active: var( --color-destructive--active, #b32424 );
+@color-destructive--focus: var( --color-destructive--focus, #36c );
+@color-visited: var( --color-visited, #6b4ba1 ); // 'Visited' color. In combination with progressive. Used for default links.
+@color-destructive--visited: var( --color-destructive--visited, #a55858 ); // Red link 'Visited' color. Used for visited red links.
+@color-error: var( --color-error, #d73333 );
+@color-warning: var( --color-warning, #edab00 ); // Note, this is only meant for warning icon for contrast reasons.
+@color-success: var( --color-success, #14866d ); // Note, this needs to use a tone darker than Red and Yellow for contrast reasons with background White.
+@color-notice: var( --color-notice, #202122 );
+@color-content-added: var( --color-content-added, #096450 );
+@color-content-removed: var( --color-content-removed, #b32424 );
+@filter-invert-icon: var( --filter-invert-icon, 0 );
+@filter-invert-primary-button-icon: var( --filter-invert-primary-button-icon, 1 );
+@box-shadow-color-base: var( --box-shadow-color-base, #000 );
+@box-shadow-color-progressive--active: var( --box-shadow-color-progressive--active, #2a4b8d );
+@box-shadow-color-progressive--focus: var( --box-shadow-color-progressive--focus, #36c );
+@box-shadow-color-progressive-selected: var( --box-shadow-color-progressive-selected, #36c );
+@box-shadow-color-progressive-selected--hover: var( --box-shadow-color-progressive-selected--hover, #447ff5 );
+@box-shadow-color-progressive-selected--active: var( --box-shadow-color-progressive-selected--active, #2a4b8d );
+@box-shadow-color-destructive--focus: var( --box-shadow-color-destructive--focus, #36c );
+@box-shadow-color-inverted: var( --box-shadow-color-inverted, #fff );
+@box-shadow-color-transparent: var( --box-shadow-color-transparent, transparent );
+@background-color-interactive: var( --background-color-interactive, #eaecf0 );
+@background-color-interactive-subtle: var( --background-color-interactive-subtle, #f8f9fa );
+@background-color-disabled: var( --background-color-disabled, #c8ccd1 ); // Components like Buttons, Checkboxes, Radios, ProgressBars….
+@background-color-disabled-subtle: var( --background-color-disabled-subtle, #eaecf0 ); // Components like TextInputs, Selects….
+@background-color-progressive: var( --background-color-progressive, #36c );
+@background-color-progressive--hover: var( --background-color-progressive--hover, #447ff5 );
+@background-color-progressive--active: var( --background-color-progressive--active, #2a4b8d );
+@background-color-progressive--focus: var( --background-color-progressive--focus, #36c );
+@background-color-progressive-subtle: var( --background-color-progressive-subtle, #eaf3ff );
+@background-color-destructive: var( --background-color-destructive, #d73333 );
+@background-color-destructive--hover: var( --background-color-destructive--hover, #ff4242 );
+@background-color-destructive--active: var( --background-color-destructive--active, #b32424 );
+@background-color-destructive--focus: var( --background-color-destructive--focus, #36c );
+@background-color-destructive-subtle: var( --background-color-destructive-subtle, #fee7e6 );
+@background-color-error: var( --background-color-error, #d73333 );
+@background-color-error--hover: var( --background-color-error--hover, #ff4242 );
+@background-color-error--active: var( --background-color-error--active, #b32424 );
+@background-color-error-subtle: var( --background-color-error-subtle, #fee7e6 );
+@background-color-warning-subtle: var( --background-color-warning-subtle, #fef6e7 );
+@background-color-success-subtle: var( --background-color-success-subtle, #d5fdf4 );
+@background-color-notice-subtle: var( --background-color-notice-subtle, #eaecf0 );
+@background-color-content-added: var( --background-color-content-added, #afb6e9 );
+@background-color-content-removed: var( --background-color-content-removed, #fc3 );
+@background-color-backdrop-light: var( --background-color-backdrop-light, rgba( 255, 255, 255, 0.65 ) ); // Backdrop is the term used by CSS Fullscreen API and is used to dim the background when a modal Dialog is open. Also known as overlay mask.
+@background-color-backdrop-dark: var( --background-color-backdrop-dark, rgba( 0, 0, 0, 0.65 ) );
+@background-color-base: var( --background-color-base, #fff ); // Background Colors for static elements (for page layout, sections, etc.) from here on.
+@background-color-base-fixed: var( --background-color-base-fixed, #fff ); // The same as background-color-base in light mode, but does not change in dark mode. Use this for things that should be white in both modes.
+@background-color-neutral: var( --background-color-neutral, #eaecf0 );
+@background-color-neutral-subtle: var( --background-color-neutral-subtle, #f8f9fa );
+@background-color-transparent: var( --background-color-transparent, transparent );
+@background-color-inverted: var( --background-color-inverted, #101418 );
+@background-color-button-quiet--hover: var( --background-color-button-quiet--hover, rgba( 0, 24, 73, 0.027 ) );
+@background-color-button-quiet--active: var( --background-color-button-quiet--active, rgba( 0, 24, 73, 0.082 ) );
+@background-color-input-binary--checked: var( --background-color-input-binary--checked, #36c );
+@background-color-tab-list-item-framed--hover: var( --background-color-tab-list-item-framed--hover, rgba( 255, 255, 255, 0.3 ) );
+@background-color-tab-list-item-framed--active: var( --background-color-tab-list-item-framed--active, rgba( 255, 255, 255, 0.65 ) );
+@opacity-icon-base: var( --opacity-icon-base, 0.87 );
+@opacity-icon-base--hover: var( --opacity-icon-base--hover, 0.74 );
+@opacity-icon-base--selected: var( --opacity-icon-base--selected, 1 );
+@opacity-icon-base--disabled: var( --opacity-icon-base--disabled, 0.51 );
+@opacity-icon-placeholder: var( --opacity-icon-placeholder, 0.51 );
+@opacity-icon-subtle: var( --opacity-icon-subtle, 0.67 );
+@border-color-base: var( --border-color-base, #a2a9b1 );
+@border-color-interactive: var( --border-color-interactive, #72777d );
+@border-color-disabled: var( --border-color-disabled, #c8ccd1 );
+@border-color-subtle: var( --border-color-subtle, #c8ccd1 );
+@border-color-muted: var( --border-color-muted, #eaecf0 );
+@border-color-inverted: var( --border-color-inverted, #fff );
+@border-color-progressive: var( --border-color-progressive, #36c );
+@border-color-progressive--hover: var( --border-color-progressive--hover, #447ff5 );
+@border-color-progressive--active: var( --border-color-progressive--active, #2a4b8d );
+@border-color-progressive--focus: var( --border-color-progressive--focus, #36c );
+@border-color-destructive: var( --border-color-destructive, #d73333 );
+@border-color-destructive--hover: var( --border-color-destructive--hover, #ff4242 );
+@border-color-destructive--active: var( --border-color-destructive--active, #b32424 );
+@border-color-destructive--focus: var( --border-color-destructive--focus, #36c );
+@border-color-error: var( --border-color-error, #b32424 );
+@border-color-error--hover: var( --border-color-error--hover, #ff4242 );
+@border-color-warning: var( --border-color-warning, #a66200 );
+@border-color-success: var( --border-color-success, #096450 );
+@border-color-notice: var( --border-color-notice, #54595d );
+@border-color-content-added: var( --border-color-content-added, #afb6e9 );
+@border-color-content-removed: var( --border-color-content-removed, #fc3 );
+@border-color-transparent: var( --border-color-transparent, transparent );
+@border-color-divider: var( --border-color-divider, #a2a9b1 );
+@outline-color-progressive--focus: var( --outline-color-progressive--focus, #36c ); // Use in places where no more customized focus styles are provided, for example on generic `:focus`.
+
+// LESS variable override
+@font-size-x-small: var( --font-size-x-small );
+@font-size-small: var( --font-size-small );
+@font-size-medium: var( --font-size-medium );
+@font-size-large: var( --font-size-large );
+@font-size-x-large: var( --font-size-x-large );
+@font-size-xx-large: var( --font-size-xx-large );
+@font-size-xxx-large: var( --font-size-xxx-large );
+
 /*
- * Polyfill deprecated variables
- * @see https://github.com/wikimedia/mediawiki/blob/REL1_39/resources/src/mediawiki.less/mediawiki.skin.defaults.less
- * TODO: Remove unused variables on the next LTS release
+ * Skin variables that are not Codex tokens
+ * @see https://github.com/wikimedia/mediawiki/blob/master/resources/src/mediawiki.less/mediawiki.skin.defaults.less
  */
-
-// deprecated since 1.41
-@width-breakpoint-mobile: @min-width-breakpoint-mobile;
-@width-breakpoint-tablet: @min-width-breakpoint-tablet;
-@width-breakpoint-desktop: @min-width-breakpoint-desktop;
-@width-breakpoint-desktop-wide: @min-width-breakpoint-desktop-wide;
-
-/*
- * Citizen variables override
- */
-
-// @since 1.39
 @color-link: var( --color-link );
 @color-link--visited: var( --color-link );
 @color-link--active: var( --color-link--active );
@@ -56,12 +172,3 @@
 @color-link-external: var( --color-link );
 @color-link-external--visited: var( --color-link );
 @color-link-external--active: var( --color-link--active );
-
-// @since 1.41
-@font-size-x-small: var( --font-size-x-small );
-@font-size-small: var( --font-size-small );
-@font-size-medium: var( --font-size-medium );
-@font-size-large: var( --font-size-large );
-@font-size-x-large: var( --font-size-x-large );
-@font-size-xx-large: var( --font-size-xx-large );
-@font-size-xxx-large: var( --font-size-xxx-large );

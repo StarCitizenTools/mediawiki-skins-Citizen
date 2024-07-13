@@ -26,9 +26,13 @@
 		}
 	}
 
+	.citizen-dropdown-details[ open ] + .citizen-menu__card > .citizen-search__form {
+		transition: none; /* Do not animate typeahead since it looks weird */
+	}
+
 	&__formButton {
 		cursor: pointer;
-		border-radius: var( --border-radius--small );
+		border-radius: var( --border-radius-base );
 
 		.citizen-ui-icon::before {
 			transition: var( --transition-hover );
@@ -113,14 +117,13 @@
 @media ( max-width: @max-width-breakpoint-tablet ) {
 	.citizen-search {
 		.citizen-menu__card {
-			z-index: 1; // So that overlay does not cover card
 			width: auto;
 		}
 
 		// Remove searchbox open animation on mobile
 		// But keep suggestion animation
 		// So user can get to search instantly
-		&.citizen-menu__dropdown[ open ] > .citizen-menu__card {
+		> .citizen-dropdown[ open ] > .citizen-menu__card {
 			transition: none;
 		}
 	}

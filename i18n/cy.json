@@ -13,7 +13,9 @@
 	"citizen-sitestats-edits-label": "golygiadau",
 	"citizen-page-info-copyright": "Hawlfraint",
 	"citizen-page-info-credits": "Cydnabyddiaeth",
-	"citizen-search-mediasearch": "Chwilio am gyfryngau",
+	"citizen-search-fulltext": "Chwilio testun",
+	"citizen-search-mediasearch": "Chwilio cyfryngau",
 	"citizen-search-editpage": "Golygu neu greu tudalen",
+	"citizen-share": "Rhannu'r dudalen hon",
 	"citizen-tagline-user-regdate": "Ymunodd $1"
 }

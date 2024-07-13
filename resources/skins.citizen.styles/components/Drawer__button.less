@@ -1,7 +1,7 @@
 /* TODO: Use SVG animtation to replace CSS icons */
 .citizen-drawer {
-	.citizen-menu__dropdownButton {
-		.citizen-ui-icon {
+	.citizen-dropdown-summary {
+		> .citizen-ui-icon {
 			display: grid;
 			place-content: center;
 			transition: var( --transition-hover );
@@ -14,7 +14,7 @@
 				margin: 0.09375rem 0;
 				background-color: #000;
 				filter: var( --filter-invert );
-				border-radius: var( --border-radius--large );
+				border-radius: var( --border-radius-large );
 				opacity: var( --opacity-icon-base );
 				transition: inherit;
 				transform-origin: 0.25rem 0;
@@ -35,7 +35,7 @@
 		}
 
 		&:hover {
-			.citizen-ui-icon {
+			> .citizen-ui-icon {
 				> span {
 					opacity: var( --opacity-icon-base--hover );
 
@@ -47,7 +47,7 @@
 		}
 
 		&:active {
-			.citizen-ui-icon {
+			> .citizen-ui-icon {
 				> span {
 					opacity: var( --opacity-icon-base--selected );
 				}
@@ -55,9 +55,9 @@
 		}
 	}
 
-	&.citizen-menu__dropdown[ open ] {
-		.citizen-menu__dropdownButton {
-			.citizen-ui-icon {
+	> .citizen-dropdown-details[ open ] {
+		> .citizen-dropdown-summary {
+			> .citizen-ui-icon {
 				> span {
 					&:first-child {
 						opacity: 0;
@@ -79,7 +79,7 @@
 			}
 
 			&:hover {
-				.citizen-ui-icon {
+				> .citizen-ui-icon {
 					transform: scale( 0.85 );
 				}
 			}
@@ -89,8 +89,8 @@
 
 // RTL
 .rtl {
-	.citizen-drawer .citizen-menu__dropdownButton:hover {
-		.citizen-ui-icon > span:first-child {
+	.citizen-drawer .citizen-dropdown-summary:hover {
+		> .citizen-ui-icon > span:first-child {
 			transform: translate3d( 50%, 0, 0 );
 		}
 	}

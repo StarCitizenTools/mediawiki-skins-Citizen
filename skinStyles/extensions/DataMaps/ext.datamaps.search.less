@@ -1,0 +1,32 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:DataMaps
+ * Module: ext.datamaps.search
+ * Version: 0.17.7 9c448d3
+ *
+ * Date: 2024-07-11
+ */
+
+/* Results.less */
+.ext-datamaps-control-search ul.ext-datamaps-control-search-results {
+	top: 100%; // match search bar height
+	max-height: 350px;
+	background: var( --color-surface-1 );
+	border: 0;
+
+	li {
+		line-height: 32px; // Enforce clickable height
+
+		&:focus,
+		&[ data-highlighted='true' ] {
+			color: var( --color-emphasized );
+			background: var( --background-color-button-quiet--hover );
+		}
+	}
+
+	.ext-datamaps-search-badge {
+		font-size: var( --font-size-x-small );
+		background: var( --color-surface-3 );
+	}
+}

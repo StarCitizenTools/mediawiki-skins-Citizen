@@ -34,6 +34,11 @@ body {
 	outline-offset: 1px;
 }
 
+::selection {
+	color: var( --color-inverted-primary );
+	background-color: var( --color-progressive );
+}
+
 input,
 select,
 textarea {
@@ -75,6 +80,7 @@ sub {
 
 th {
 	font-weight: var( --font-weight-semibold );
+	color: var( --color-emphasized );
 }
 
 td {
@@ -87,8 +93,9 @@ td {
 	}
 }
 
-.hidden {
-	.hidden();
+.hidden,
+.sr-only {
+	.sr-only;
 }
 
 .nowrap {
@@ -155,7 +162,6 @@ video {
 	button,
 	label {
 		// Remove the 300ms delay in click event (T118509)
-		/* stylelint-disable-next-line plugin/no-unsupported-browser-features */
 		touch-action: manipulation;
 	}
 }
@@ -165,14 +171,5 @@ video {
 	.parsoid-body {
 		overflow-x: hidden; // fallback if clip is not supported
 		overflow-x: clip; // avoid breaking layout in smaller screen sizes
-	}
-}
-
-@media ( min-width: @min-width-breakpoint-tablet ) {
-	// Delay scroll animation won't happen on load
-	// Use it only for larger viewport as it is very costly
-	// on mobile devices
-	html.citizen-animations-ready {
-		scroll-behavior: smooth;
 	}
 }

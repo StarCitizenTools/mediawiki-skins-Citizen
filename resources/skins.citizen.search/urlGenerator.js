@@ -12,9 +12,8 @@
 
 /**
  * @callback generateUrl
- * @param {SearchResult|string} searchResult
+ * @param {SearchResult|string} page
  * @param {UrlParams} [params]
- * @param {string} [articlePath]
  * @return {string}
  */
 
@@ -24,7 +23,7 @@
  */
 
 /**
- * Generates URLs for suggestions like those in MediaWiki's mediawiki.searchSuggest implementation.
+ * Generates URLs for suggestions.
  *
  * @param {MwMap} config
  * @return {UrlGenerator}
@@ -32,33 +31,36 @@
 function urlGenerator( config ) {
 	return {
 		/**
-		 * @param {SearchResult|string} suggestion
+		 * @param {SearchResult|string} page
 		 * @param {UrlParams} params
-		 * @param {string} articlePath
 		 * @return {string}
 		 */
 		generateUrl(
-			suggestion,
-			params = {
-				title: 'Special:Search'
-			},
-			articlePath = config.wgScript
+			page,
+			params = {}
 		) {
-			if ( typeof suggestion !== 'string' ) {
-				suggestion = suggestion.title;
-			} else {
-				// Add `fulltext` query param to search within pages and for navigation
-				// to the search results page (prevents being redirected to a certain
-				// article).
-				params = Object.assign( {}, params, {
-					fulltext: '1'
-				} );
-			}
+			const getPageTitle = () => {
+				let title;
+				if ( !page ) {
+					title = 'Special:Search';
+				} else if ( typeof page !== 'string' ) {
+					title = page.title;
+				} else {
+					title = page;
+				}
+				return encodeURIComponent( title );
+			};
 
-			const searchParams = new URLSearchParams(
-				Object.assign( {}, params, { search: suggestion } )
-			);
-			return `${ articlePath }?${ searchParams.toString() }`;
+			// Use short URL if avaliable, instead of doing a bunch of 302 like mediawiki.searchSuggest does
+			const articlePath = config.wgArticlePath.replace( '$1', getPageTitle() );
+
+			if ( Object.keys( params ).length === 0 ) {
+				return articlePath;
+			} else {
+				const searchParams = new URLSearchParams( params );
+				const paramsPrefix = articlePath.includes( '?' ) ? '&' : '?';
+				return articlePath + paramsPrefix + searchParams.toString();
+			}
 		}
 	};
 }

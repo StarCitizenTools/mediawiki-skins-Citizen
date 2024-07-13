@@ -1,16 +1,19 @@
 {{!
 	string msg-citizen-usermenu-toggle The label used by the user menu button.
 }}
-<details class="citizen-userMenu citizen-header__item citizen-menu__dropdown">
-	<summary
-		class="citizen-menu__dropdownButton" 
-		title="{{msg-citizen-usermenu-toggle}}">
-		<span class="citizen-ui-icon mw-ui-icon-wikimedia-userAvatar"></span>
-		<span>{{msg-citizen-usermenu-toggle}}</span>
-	</summary>
+<div class="citizen-userMenu citizen-header__item citizen-dropdown">
+	<details class="citizen-dropdown-details">
+		<summary
+			class="citizen-dropdown-summary" 
+			title="{{msg-citizen-usermenu-toggle}}"
+			aria-details="citizen-userMenu__card">
+			<span class="citizen-ui-icon mw-ui-icon-wikimedia-userAvatar"></span>
+			<span>{{msg-citizen-usermenu-toggle}}</span>
+		</summary>
+	</details>
 	<div id="citizen-userMenu__card" class="citizen-menu__card">
 		{{#data-user-info}}{{>UserInfo}}{{/data-user-info}}
 		{{#data-portlets.data-user-interface-preferences}}{{>Menu}}{{/data-portlets.data-user-interface-preferences}}
 		{{#data-portlets.data-user-menu}}{{>Menu}}{{/data-portlets.data-user-menu}}
 	</div>
-</details>
+</div>

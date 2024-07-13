@@ -12,7 +12,6 @@
 		&__card {
 			position: absolute;
 			right: ~'calc( var( --space-xs ) * -1 )'; // counteract margin
-			z-index: @z-index-page-header; // So the popups inside will be higher than content
 			display: grid;
 			gap: var( --space-xs );
 			max-height: 60vh;
@@ -20,23 +19,24 @@
 			transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-end );
 
 			@media ( min-width: @min-width-breakpoint-desktop ) {
+				top: 100%;
 				transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-start );
 			}
 		}
+	}
 
-		&__dropdown {
-			@media ( min-width: @min-width-breakpoint-desktop ) {
-				// Only attach dropdown menu to the button on desktop mode
-				position: relative;
-			}
+	.citizen-dropdown {
+		@media ( min-width: @min-width-breakpoint-desktop ) {
+			// Only attach dropdown menu to the button on desktop mode
+			position: relative;
+		}
 
-			&Button {
-				display: grid;
-				place-items: center;
-				width: 2.5rem; // Same width as other buttons
-				height: 2.25rem; // Same height as other buttons
-				border-radius: var( --border-radius--medium );
-			}
+		&-summary {
+			display: grid;
+			place-items: center;
+			width: 2.5rem; // Same width as other buttons
+			height: 2.25rem; // Same height as other buttons
+			border-radius: var( --border-radius-medium );
 		}
 	}
 
@@ -52,7 +52,7 @@
 			padding-right: var( --space-sm );
 			padding-left: var( --space-sm );
 			font-size: 0;
-			border-radius: var( --border-radius--medium );
+			border-radius: var( --border-radius-medium );
 
 			&:hover {
 				background-color: var( --background-color-button-quiet--hover );
@@ -70,13 +70,13 @@
 
 	// Hide menu labels
 	> .citizen-menu > .citizen-menu__heading {
-		.mixin-screen-reader-text;
+		.sr-only;
 	}
 }
 
 // Language counter badge
 .citizen-page-languages {
-	> .citizen-menu__dropdownButton {
+	.citizen-dropdown-summary {
 		position: relative; // So that the badge doesn't take a stroll to the far left
 
 		&::after {
@@ -88,7 +88,7 @@
 			font-size: 0.65rem;
 			content: attr( data-counter-text );
 			background: var( --color-surface-0 );
-			border-radius: var( --border-radius--pill );
+			border-radius: var( --border-radius-pill );
 		}
 	}
 }
@@ -158,21 +158,8 @@
 		height: var( --toolbar-size );
 		margin: var( --space-xs );
 		background: var( --color-surface-1 );
-		border-radius: var( --border-radius--medium );
+		border-radius: var( --border-radius-medium );
 		box-shadow: var( --box-shadow-dialog );
-
-		.citizen-scroll--down & {
-			box-shadow: none;
-			opacity: 0;
-			transform: translateY( 250% );
-		}
-
-		.citizen-scroll--up & {
-			opacity: 1;
-			transition: var( --transition-menu );
-			transition-delay: 250ms;
-			transition-property: opacity, transform;
-		}
 
 		:not( .citizen-menu__card ) .mw-list-item {
 			--size-icon: 1rem;
@@ -191,7 +178,7 @@
 		}
 	}
 
-	.citizen-page-languages > .citizen-menu__dropdownButton::after {
+	.citizen-page-languages > .citizen-dropdown-summary::after {
 		// Blend with background
 		background: var( --color-surface-1 );
 	}

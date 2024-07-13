@@ -6,13 +6,15 @@
 	right: 0;
 	bottom: 0;
 	left: 0;
-	z-index: @z-index-site-header;
+	z-index: @z-index-fixed;
 	display: flex;
 	flex-direction: var( --header-direction );
 	gap: var( --space-xxs );
 	padding: var( --space-xs );
 	background-color: var( --color-surface-0 );
 	border-top: 1px solid var( --border-color-base );
+	transition: var( --transition-menu );
+	transition-property: transform;
 
 	&__item {
 		display: flex;
@@ -24,17 +26,8 @@
 		place-items: center;
 		width: var( --header-button-size );
 		height: var( --header-button-size );
-		border-radius: var( --border-radius--small );
+		border-radius: var( --border-radius-base );
 		contain: strict;
-
-		// Used in checkbox hack
-		&Checkbox {
-			position: absolute;
-			display: block;
-			width: inherit;
-			height: inherit;
-			contain: strict;
-		}
 
 		// Pure CSS icons
 		&Icon {
@@ -99,12 +92,6 @@
 		justify-content: space-between;
 		min-width: 0;
 		overflow-x: auto;
-
-		.citizen-menu-checkbox-checkbox:checked {
-			~ .citizen-header__button {
-				background-color: var( --background-color-progressive-subtle );
-			}
-		}
 	}
 
 	&__start,
@@ -116,7 +103,7 @@
 
 		// Hide top-level menu header labels
 		> .citizen-menu > .citizen-menu__heading {
-			.mixin-screen-reader-text;
+			.sr-only;
 		}
 	}
 
@@ -125,16 +112,14 @@
 		min-width: 0;
 	}
 
-	.citizen-menu {
-		&__dropdown {
-			&Button {
-				display: grid;
-				place-items: center;
-				width: var( --header-button-size );
-				height: var( --header-button-size );
-				border-radius: var( --border-radius--small );
-				contain: strict;
-			}
+	.citizen-dropdown {
+		&-summary {
+			display: grid;
+			place-items: center;
+			width: var( --header-button-size );
+			height: var( --header-button-size );
+			border-radius: var( --border-radius-base );
+			contain: strict;
 		}
 	}
 }
@@ -149,17 +134,10 @@
 	}
 
 	// Echo badge styles do not load before init in 1.39
-	.mw-echo-notification-badge-nojs {
+	.citizen-echo-notification-badge {
 		.citizen-ui-icon + span {
-			.mixin-screen-reader-text;
+			.sr-only;
 		}
-	}
-}
-
-#p-personal {
-	// Hide header menu labels
-	.citizen-menu__heading {
-		.mixin-screen-reader-text;
 	}
 }
 
@@ -169,7 +147,7 @@
 	.citizen-header {
 		&__button {
 			&:hover {
-				background-color: none;
+				background-color: transparent;
 
 				.citizen-header__buttonIcon {
 					opacity: var( --opacity-icon-base );
@@ -194,51 +172,5 @@
 			border-right: 0;
 			border-bottom: 1px solid var( --border-color-base );
 		}
-	}
-}
-
-/* Hide header when scroll down on smaller screen sizes */
-@media ( max-width: @max-width-breakpoint-tablet ) {
-	.citizen-header {
-		transition: var( --transition-menu );
-		transition-property: transform;
-
-		/*
-		 * Add overlay to menus as affordnance
-		 * TODO: We should use JS to add the overlay instead of abusing CSS
-		 * TODO: This does not work for TOC and Pref menu
-		*/
-		.citizen-menu-checkbox-checkbox {
-			~ .citizen-header__button {
-				&::before {
-					position: fixed;
-					inset: 0 0 0 0;
-					z-index: 1;
-					width: auto;
-					height: auto;
-					pointer-events: none;
-					content: '';
-					background-color: var( --background-color-backdrop-light );
-					opacity: 0;
-				}
-			}
-
-			&[ aria-expanded='true' ] {
-				~ .citizen-header__button {
-					contain: initial;
-
-					&::before {
-						pointer-events: auto;
-						opacity: 1;
-						transition: var( --transition-menu );
-						transition-property: opacity;
-					}
-				}
-			}
-		}
-	}
-
-	.citizen-scroll--down .citizen-header {
-		transform: translateY( 100% );
 	}
 }

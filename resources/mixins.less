@@ -5,25 +5,25 @@
 
 @import 'variables.less';
 
-.citizen-card( @border-radius: true ) {
+.citizen-card(@border-radius: true) {
 	background-color: var( --color-surface-1 );
 	border: 1px solid var( --border-color-base );
 	box-shadow: var( --box-shadow-dialog );
 
-	& when ( @border-radius ) {
-		border-radius: var( --border-radius--medium );
+	& when (@border-radius ) {
+		border-radius: var( --border-radius-medium );
 	}
 }
 
 // Collaspe animation setup
-.citizen-card-hide( @position, @axis: '', @fadeChildren: true ) {
+.citizen-card-hide(@position, @axis: '', @fadeChildren: true) {
 	pointer-events: none;
 	opacity: 0;
 	transform: ~'scale@{axis}( 0 )';
 	transform-origin: @position;
 
-	& when ( @fadeChildren ) {
-		> * {
+	& when (@fadeChildren ) {
+		>* {
 			opacity: 0;
 		}
 	}
@@ -32,16 +32,16 @@
 // Expand animiation setup
 // When using fadeChildren, the child elements need to have
 // opacity: 0 set manually
-.citizen-card-show( @fadeChildren: true ) {
-	z-index: @z-index-overlay;
+.citizen-card-show(@fadeChildren: true) {
+	z-index: @z-index-dropdown;
 	pointer-events: auto;
 	opacity: 1;
 	// HACK: So that visiblity won't wait 250ms to become visible
 	transition-delay: 0ms;
 	transform: none;
 
-	& when ( @fadeChildren ) {
-		> * {
+	& when (@fadeChildren ) {
+		>* {
 			.citizen-card-content-show;
 		}
 	}
@@ -62,7 +62,7 @@
 }
 
 // Header card popups
-.citizen-header-card( @position ) {
+.citizen-header-card(@position ) {
 	position: absolute;
 	right: 0;
 	bottom: 100%;
@@ -70,11 +70,11 @@
 	max-height: var( --header-card-maxheight );
 
 	@media ( min-width: @min-width-breakpoint-tablet ) {
-		& when ( @position = start ) {
+		& when (@position =start) {
 			right: unset;
 		}
 
-		& when ( @position = end ) {
+		& when (@position =end) {
 			left: unset;
 		}
 	}
@@ -82,28 +82,29 @@
 	@media ( min-width: @min-width-breakpoint-desktop ) {
 		right: unset;
 		left: 100%;
-		& when ( @position = start ) {
+
+		& when (@position =start) {
 			top: 0;
 			bottom: unset;
 		}
 
-		& when ( @position = end ) {
+		& when (@position =end) {
 			bottom: 0;
 		}
 	}
 }
 
-.citizen-sticky-header( @topOffset: 0, @bottomBorder: true, @zIndex: true ) {
+.citizen-sticky-header(@topOffset: 0, @bottomBorder: true, @zIndex: true) {
 	position: -webkit-sticky;
 	position: sticky;
 	top: @topOffset;
 
-	& when ( @bottomBorder ) {
+	& when (@bottomBorder ) {
 		border-bottom: 1px solid var( --border-color-base );
 	}
 
-	& when ( @zIndex ) {
-		z-index: @z-index-page-header;
+	& when (@zIndex ) {
+		z-index: @z-index-sticky;
 	}
 
 	// HACK: Hide overflow
@@ -113,23 +114,22 @@
 		top: @topOffset;
 		right: ~'calc( var(--padding-page ) * -1 )';
 		left: ~'calc( var(--padding-page ) * -1 )';
-		z-index: -1;
+		z-index: @z-index-bottom;
 		height: 100%;
 		content: '';
 		background-color: var( --color-surface-0 );
 		filter: opacity( 0.9 );
+		-webkit-backdrop-filter: saturate( 50% ) blur( 16px );
 		backdrop-filter: saturate( 50% ) blur( 16px );
 	}
 }
 
 // To hide objects, but keep them accessible for screen-readers
-// From https://www.a11yproject.com/posts/how-to-hide-content
-.hidden() {
+.sr-only() {
 	position: absolute;
 	width: 1px;
 	height: 1px;
 	overflow: hidden;
-	clip: rect( 0 0 0 0 );
 	clip-path: inset( 50% );
 	white-space: nowrap;
 }
@@ -210,14 +210,14 @@
 
 // Transform black into given color
 // From https://stackoverflow.com/a/73390109/10624167
-.recolor( @color ) {
-	@r: red( @color ) / 255;
-	@g: green( @color ) / 255;
-	@b: blue( @color ) / 255;
-	@a: alpha( @color );
+.recolor(@color ) {
+	@r: red(@color ) / 255;
+	@g: green(@color ) / 255;
+	@b: blue(@color ) / 255;
+	@a: alpha(@color );
 
 	// grayscale fallback if SVG from data url is not supported
-	@lightness: lightness( @color );
+	@lightness: lightness(@color );
 	filter: saturate( 0% ) brightness( 0% ) invert( @lightness ) opacity( @a );
 
 	// color filter

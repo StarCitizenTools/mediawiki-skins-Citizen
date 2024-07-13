@@ -1,0 +1,251 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Leaflet
+ * Shared by Extension:DataMaps, Extension:Kartographer, Extension:Maps, Extension:SemanticResultFormats
+ *
+ * Date: 2024-07-09
+ */
+
+/*
+ * Backported fixes
+ * @see https://github.com/Leaflet/Leaflet/blob/main/dist/leaflet.css
+ */
+.leaflet-container img.leaflet-tile {
+	/* See: https://bugs.chromium.org/p/chromium/issues/detail?id=600120 */
+	mix-blend-mode: plus-lighter;
+}
+
+/*
+ * Citizen modifications
+ */
+.leaflet-top .leaflet-control {
+	margin-top: var( --space-xs );
+}
+
+.leaflet-bottom .leaflet-control {
+	margin-bottom: var( --space-xs );
+}
+
+.leaflet-left .leaflet-control {
+	margin-left: var( --space-xs );
+}
+
+.leaflet-right .leaflet-control {
+	margin-right: var( --space-xs );
+}
+
+.leaflet-container {
+	font-family: var( --font-family-base );
+	font-size: var( --font-size-x-small );
+	line-height: var( --line-height );
+	background: var( --color-surface-3 ) !important; // Override inline styles
+	border-radius: var( --border-radius-medium );
+
+	a {
+		color: var( --color-link );
+	}
+
+	&.leaflet-active {
+		outline: 2px solid var( --color-progressive );
+	}
+}
+
+.leaflet-zoom-box {
+	border: 2px dotted var( --color-progressive );
+	// background: rgba(255,255,255,0.5);
+}
+
+.leaflet-bar {
+	// Give the bar background color and make buttons quiet
+	// We can't apply background styles directly to buttons because we need to invert the icon
+	background-color: var( --color-surface-1 );
+	border-radius: var( --border-radius-base );
+
+	a,
+	button {
+		// Increase button size to 32px to align with Codex
+		width: 32px;
+		height: 32px;
+		line-height: 32px;
+		color: var( --color-emphasized );
+		background-color: transparent;
+		border-bottom-color: var( --border-color-interactive );
+
+		&:hover {
+			color: var( --color-emphasized );
+			background-color: var( --background-color-quiet--hover );
+			border-bottom-color: var( --border-color-interactive );
+		}
+
+		&:active {
+			color: var( --color-emphasized );
+			background-color: var( --background-color-quiet--active );
+		}
+
+		&.leaflet-disabled {
+			color: var( --color-disabled );
+			background-color: var( --background-color-disabled );
+		}
+	}
+}
+
+.leaflet-control-layers {
+	background: var( --color-surface-1 );
+	border-radius: var( --border-radius-base );
+
+	/* Make layers easier to click */
+	label {
+		display: flex;
+		min-height: 32px;
+		padding: 0 var( --space-xs );
+		cursor: pointer;
+		user-select: none;
+		border-radius: var( --border-radius-base );
+
+		&:hover {
+			background: var( --background-color-quiet--hover );
+		}
+
+		&:has( input:checked ) {
+			background: var( --background-color-quiet--active );
+		}
+
+		/* Align leaflet controls */
+		>div {
+			display: flex;
+			gap: var( --space-xs );
+			align-items: center;
+		}
+	}
+}
+
+.leaflet-control-layers-expanded {
+	padding: var( --space-xs );
+	color: var( --color-base );
+	background: var( --color-surface-1 );
+}
+
+/* Already aligned with the flex rules above */
+.leaflet-control-layers-selector {
+	position: static;
+	margin-top: 0;
+}
+
+.leaflet-control-layers-separator {
+	border-top-color: var( --border-color-base );
+}
+
+.leaflet-container .leaflet-control-attribution {
+	margin: 0;
+	background: var( --background-color-backdrop-light );
+	-webkit-backdrop-filter: saturate( 50% ) blur( 16px );
+	backdrop-filter: saturate( 50% ) blur( 16px );
+	border-top-left-radius: var( --border-radius-base );
+}
+
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+	color: var( --color-subtle );
+}
+
+.leaflet-control-scale-line {
+	background: var( --background-color-backdrop-dark );
+	border-color: var( --border-color-interactive );
+}
+
+.leaflet-control-scale-line:not( :first-child ) {
+	border-top-color: var( --border-color-interactive );
+}
+
+.leaflet-control-scale-line:not( :first-child ):not( :last-child ) {
+	border-bottom-color: var( --border-color-interactive );
+}
+
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	border: 0;
+	box-shadow: 0 1px 5px rgba( 0, 0, 0, 0.65 );
+}
+
+.leaflet-popup-content {
+	padding: var( --space-md );
+	margin: 0; // Switch to use padding instead like DataMaps does
+	font-size: var( --font-size-small );
+	line-height: var( --line-height-sm );
+}
+
+.leaflet-popup-content > b {
+	font-size: var( --font-size-medium );
+	color: var( --color-emphasized );
+}
+
+.leaflet-popup-content p {
+	margin: var( --space-md ) 0;
+}
+
+.leaflet-popup-content-wrapper {
+	border-radius: var( --border-radius-medium );
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+	color: var( --color-base );
+	background: var( --color-surface-1 );
+}
+
+/* Make close button easier to click */
+.leaflet-container a.leaflet-popup-close-button {
+	display: grid;
+	place-content: center;
+	width: 24px;
+	height: 24px;
+	padding: 0;
+	color: var( --color-base );
+	border-radius: var( --border-radius-medium );
+
+	&:hover {
+		color: var( --color-emphasized );
+		background-color: var( --background-color-quiet--hover );
+	}
+}
+
+.leaflet-popup-scrolled {
+	border-top-color: var( --border-color-base );
+	border-bottom-color: var( --border-color-base );
+}
+
+.leaflet-div-icon {
+	background: var( --color-surface-1 );
+	border-color: var( --border-color-base );
+}
+
+.leaflet-tooltip {
+	position: absolute;
+	padding: var( --space-xs );
+	color: var( --color-base );
+	background-color: var( --color-surface-1 );
+	border-color: var( --color-surface-1 );
+	border-radius: var( --border-radius-base );
+}
+
+.leaflet-tooltip-top::before {
+	border-top-color: var( --color-surface-1 );
+}
+
+.leaflet-tooltip-bottom::before {
+	border-bottom-color: var( --color-surface-1 );
+}
+
+.leaflet-tooltip-left::before {
+	border-left-color: var( --color-surface-1 );
+}
+
+.leaflet-tooltip-right::before {
+	border-right-color: var( --color-surface-1 );
+}
+
+/* Invert icons for dark mode */
+.fullscreen-icon {
+	filter: var( --filter-invert );
+}

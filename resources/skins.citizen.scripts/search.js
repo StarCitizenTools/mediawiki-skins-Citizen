@@ -213,7 +213,7 @@ function initSearch( window ) {
 
 		// Set up primary search box interactions
 		if ( isPrimarySearch ) {
-			const details = document.getElementById( 'citizen-search' );
+			const details = document.getElementById( 'citizen-search-details' );
 			bindOpenOnSlash( window, details, input );
 			// Focus when toggled
 			details.addEventListener( 'toggle', () => {

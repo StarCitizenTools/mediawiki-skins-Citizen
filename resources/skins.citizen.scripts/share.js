@@ -27,7 +27,7 @@ function init() {
 
 	const fragment = document.createDocumentFragment();
 	const button = document.createElement( 'button' );
-	button.classList.add( 'citizen-share', 'citizen-button', 'citizen-menu__dropdownButton' );
+	button.classList.add( 'citizen-share', 'citizen-button', 'citizen-dropdown-summary' );
 	const icon = document.createElement( 'span' );
 	icon.classList.add( 'citizen-ui-icon', 'mw-ui-icon-wikimedia-share' );
 	const label = document.createElement( 'span' );
@@ -50,7 +50,7 @@ function init() {
 		}
 	};
 
-	button.addEventListener( 'click', mw.util.debounce( 100, handleShareButtonClick ) );
+	button.addEventListener( 'click', mw.util.debounce( handleShareButtonClick, 100 ) );
 }
 
 module.exports = {
