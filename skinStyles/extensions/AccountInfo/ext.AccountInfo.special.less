@@ -1,0 +1,72 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:AccountInfo
+ * Module: ext.AccountInfo.special
+ * Version: REL1_39 (3145de8)
+ *
+ * Date: 2024-07-13
+*/
+
+.mw-special-AccountInfo table,
+.mw-special-AccountInfo #mw-content-text > p {
+	width: 100%;
+}
+
+.mw-special-AccountInfo #mw-content-text > p {
+	padding: var( --space-md );
+	margin-top: var( --space-md );
+	font-size: var( --font-size-small );
+	color: var( --color-bae );
+	background: var( --color-surface-2 );
+	border: 1px solid var( --border-color-base );
+	border-radius: var( --border-radius-medium );
+}
+
+.mw-special-AccountInfo td,
+ .mw-special-AccountInfo th {
+	padding: var( --space-xs ) var( --space-sm );
+}
+
+.mw-special-AccountInfo #mw-content-text > table th {
+	color: var( --color-emphasized );
+}
+
+.mw-special-AccountInfo table thead th {
+	font-size: var( --font-size-x-small );
+	font-weight: var( --font-weight-semibold );
+	color: var( --color-emphasized );
+	text-transform: none;
+	white-space: nowrap;
+	cursor: auto;
+	border-bottom-color: var( --border-color-base );
+}
+
+.mw-special-AccountInfo table tbody tr:last-child td:first-child {
+	border-bottom-left-radius: var( --border-radius-medium );
+}
+
+.mw-special-AccountInfo table tbody tr:last-child td:last-child {
+	border-bottom-right-radius: var( --border-radius-medium );
+}
+
+.mw-special-AccountInfo #mw-content-text table {
+	display: table;
+	max-width: none;
+	margin: var( --space-md ) 0;
+	overflow: initial;
+	font-size: var( --font-size-small );
+	border-collapse: collapse;
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius-medium );
+	box-shadow: var( --box-shadow-border );
+}
+
+.mw-special-AccountInfo tr.mw-accountinfo-current {
+	background: transparent;
+}
+
+.mw-special-AccountInfo tr.mw-accountinfo-current td:first-child {
+	color: var( --color-base--emphasized );
+	background: var( --color-text-success );
+}
