@@ -1,16 +1,22 @@
-// Hide elements that are not needed in print
-.mw-header,
-.citizen-toc,
-#siteNotice,
-.mw-indicators,
+@page {
+	margin: 1cm;
+}
+
+:root {
+	--font-size-base: 12pt;
+}
+
+// Hide unnessecary elements for printing
+.noprint,
+.citizen-header,
+.citizen-sitenotice-container,
 .page-actions,
-.section-toggle,
-.mw-editsection,
-.citizen-page-footer,
-#mw-data-after-content,
+#citizen-page-header-sticky-sentinel,
+#citizen-page-header-sticky-placeholder,
+.citizen-page-sidebar,
 #footer-desc,
 #footer-places,
-.citizen-footer__bottom {
+.citizen-overflow-nav {
 	display: none;
 }
 
@@ -19,21 +25,51 @@ a {
 	border-bottom: 1px solid #aaa;
 }
 
-.firstHeading {
-	margin-top: var( --space-md );
-	margin-bottom: 0;
+table,
+ img,
+ svg {
+	break-inside: avoid;
 }
 
-.citizen-body {
-	line-height: var( --line-height-xs );
-}
-
-.printfooter {
-	clear: both;
-	font-size: 13px;
-	border-top: 1px solid #aaa;
+/* HACK: Move footer to the top */
+.citizen-page-container {
+	display: flex;
+	flex-direction: column;
 }
 
 .citizen-footer {
-	margin-top: var( --space-lg );
+	order: -1;
+	padding-top: var( --space-md );
+	padding-bottom: var( --space-md );
+	margin-bottom: var( --space-md );
+	border-bottom: 1px solid #aaa;
+}
+
+.citizen-footer__container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+#footer-tagline {
+	font-size: 9pt;
+}
+
+#firstHeading {
+	margin: 0;
+}
+
+.printfooter {
+	margin-top: 1em;
+	font-size: 9pt;
+	border-top: 1px solid #aaa;
+}
+
+.page-info {
+	font-size: 9pt;
+}
+
+.page-info__item {
+	display: flex;
+	justify-content: space-between;
 }
