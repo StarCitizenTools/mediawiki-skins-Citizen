@@ -23,5 +23,6 @@
 	"citizen-tagline-ns-template": "Halaman templat",
 	"citizen-tagline-ns-help": "Halaman bantuan",
 	"citizen-tagline-ns-category": "Halaman kategori",
-	"citizen-tagline-user-regdate": "Bergabung pada tanggal $1"
+	"citizen-tagline-user-regdate": "Bergabung pada tanggal $1",
+	"citizen-feature-autohide-navigation-name": "Sembunyikan navigasi secara otomatis"
 }
