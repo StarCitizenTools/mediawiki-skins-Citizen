@@ -3,14 +3,15 @@
 }
 
 :root {
-	--font-size-base: 12pt;
+	--border-color-base: #aaa !important;
+	--font-size-base: 12pt !important;
 
 	&.citizen-feature-custom-font-size-clientpref-small {
-		--font-size-base: 11pt;
+		--font-size-base: 11pt !important;
 	}
 
 	&.citizen-feature-custom-font-size-clientpref-large {
-		--font-size-base: 13pt;
+		--font-size-base: 13pt !important;
 	}
 }
 
@@ -31,7 +32,7 @@
 
 a {
 	color: #000;
-	border-bottom: 1px solid #aaa;
+	border-bottom: 1pt solid var( --border-color-base );
 }
 
 table,
@@ -51,7 +52,7 @@ svg {
 	padding-top: var( --space-md );
 	padding-bottom: var( --space-md );
 	margin-bottom: var( --space-md );
-	border-bottom: 1px solid #aaa;
+	border-bottom: 1pt solid var( --border-color-base );
 }
 
 .citizen-footer__container {
@@ -71,5 +72,17 @@ svg {
 .printfooter {
 	margin-top: 1em;
 	font-size: 9pt;
-	border-top: 1px solid #aaa;
+	border-top: 1pt solid var( --border-color-base );
+}
+
+.wikitable {
+	margin: 1em 0;
+	border-collapse: collapse;
+	border: 1pt solid var( --border-color-base );
+}
+
+.wikitable th,
+.wikitable td {
+	padding: var( --space-xs ) var( --space-sm );
+	border: 1pt solid var( --border-color-base );
 }
