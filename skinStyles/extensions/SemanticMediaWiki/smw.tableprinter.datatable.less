@@ -52,7 +52,7 @@
 .smw-datatable .dataTables_wrapper select,
 .smw-datatable .dataTables_wrapper .dataTables_filter input {
 	color: var( --color-emphasized );
-	border: 1px solid var( --border-color-base );
+	border: var( --border-width-base ) solid var( --border-color-base );
 }
 
 .smw-datatable .dataTables_wrapper .dataTables_paginate .paginate_button {
@@ -340,5 +340,5 @@ table.dataTable.no-footer {
 
 .dataTables_wrapper .dataTables_filter + .dataTable {
 	// Add top border as divider if there are filter on top
-	border-top: 1px solid var( --border-color-base );
+	border-top: var( --border-width-base ) solid var( --border-color-base );
 }

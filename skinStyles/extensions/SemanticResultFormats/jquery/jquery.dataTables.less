@@ -9,12 +9,12 @@
 .skin-theme-clientpref-night {
 	table.dataTable thead th,
 	table.dataTable thead td {
-		border-bottom: 1px solid var( --color-surface-0 );
+		border-bottom: var( --border-width-base ) solid var( --color-surface-0 );
 	}
 
 	table.dataTable tfoot th,
 	table.dataTable tfoot td {
-		border-top: 1px solid var( --color-surface-0 );
+		border-top: var( --border-width-base ) solid var( --color-surface-0 );
 	}
 
 	table.dataTable tbody tr {
@@ -29,18 +29,18 @@
 	table.dataTable.row-border tbody td,
 	table.dataTable.display tbody th,
 	table.dataTable.display tbody td {
-		border-top: 1px solid @dark-bg-20;
+		border-top: var( --border-width-base ) solid @dark-bg-20;
 	}
 
 	table.dataTable.cell-border tbody th,
 	table.dataTable.cell-border tbody td {
-		border-top: 1px solid @dark-bg-20;
-		border-right: 1px solid @dark-bg-20;
+		border-top: var( --border-width-base ) solid @dark-bg-20;
+		border-right: var( --border-width-base ) solid @dark-bg-20;
 	}
 
 	table.dataTable.cell-border tbody tr th:first-child,
 	table.dataTable.cell-border tbody tr td:first-child {
-		border-left: 1px solid @dark-bg-20;
+		border-left: var( --border-width-base ) solid @dark-bg-20;
 	}
 
 	table.dataTable.stripe tbody tr.odd,
@@ -172,7 +172,7 @@
 	}
 
 	table.dataTable.no-footer {
-		border-bottom: 1px solid var( --color-surface-0 );
+		border-bottom: var( --border-width-base ) solid var( --color-surface-0 );
 	}
 
 	.dataTables_wrapper .dataTables_paginate .paginate_button {
@@ -183,7 +183,7 @@
 	.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
 		color: var( --color-base );
 		background: var( --color-surface-0 ) linear-gradient( to bottom, var( --color-surface-0 ) 0%, @dark-bg-20 100% );
-		border: 1px solid @dark-bg-50;
+		border: var( --border-width-base ) solid @dark-bg-50;
 	}
 
 	.dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
@@ -195,7 +195,7 @@
 	.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
 		color: var( --color-emphasized );
 		background: @dark-bg-20 linear-gradient( to bottom, @dark-bg-20 0%, var( --color-surface-0 ) 100% );
-		border: 1px solid var( --color-surface-0 );
+		border: var( --border-width-base ) solid var( --color-surface-0 );
 	}
 
 	.dataTables_wrapper .dataTables_paginate .paginate_button:active {
@@ -216,6 +216,6 @@
 	}
 
 	.dataTables_wrapper.no-footer .dataTables_scrollBody {
-		border-bottom: 1px solid var( --color-surface-0 );
+		border-bottom: var( --border-width-base ) solid var( --color-surface-0 );
 	}
 }

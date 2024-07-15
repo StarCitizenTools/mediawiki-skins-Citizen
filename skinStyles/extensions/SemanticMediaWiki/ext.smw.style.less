@@ -380,25 +380,25 @@ a.smw-ask-action-btn-lblue:active {
 
 .smw-tabs label.nav-label:hover {
 	color: var( --color-progressive--hover );
-	border-bottom: 2px solid var( --color-progressive--hover );
+	border-bottom: var( --border-width-thick ) solid var( --color-progressive--hover );
 }
 
 // Added active state
 .smw-tabs label.nav-label:active {
 	color: var( --color-progressive--active );
-	border-bottom: 2px solid var( --color-progressive--active );
+	border-bottom: var( --border-width-thick ) solid var( --color-progressive--active );
 }
 
 .smw-tabs input.nav-tab:checked + label.nav-label {
 	color: var( --color-progressive );
 	border-color: transparent;
-	border-top: 1px solid transparent;
-	border-bottom: 2px solid var( --color-progressive );
+	border-top: var( --border-width-base ) solid transparent;
+	border-bottom: var( --border-width-thick ) solid var( --color-progressive );
 }
 
 .smw-tabs input.nav-tab:checked + label.nav-label.cached {
-	border-top: 1px solid transparent;
-	border-bottom: 2px solid var( --color-warning );
+	border-top: var( --border-width-base ) solid transparent;
+	border-bottom: var( --border-width-thick ) solid var( --color-warning );
 }
 
 .smw-tabs label.nav-label .smw-tab-icon {
@@ -460,20 +460,20 @@ a.smw-ask-action-btn-lblue:active {
 .smw-tabset > input:checked + label {
 	margin-bottom: -2px;
 	border-color: transparent;
-	border-top: 1px solid transparent;
-	border-bottom: 2px solid var( --color-progressive );
+	border-top: var( --border-width-base ) solid transparent;
+	border-bottom: var( --border-width-thick ) solid var( --color-progressive );
 }
 
 .smw-tabset > input:checked + label.smw-indicator-severity-error {
 	color: var( --color-destructive );
-	border-top: 1px solid transparent;
-	border-bottom: 2px solid var( --color-destructive );
+	border-top: var( --border-width-base ) solid transparent;
+	border-bottom: var( --border-width-thick ) solid var( --color-destructive );
 }
 
 .smw-tabset > input:checked + label.smw-indicator-severity-warning {
 	color: var( --color-warning );
-	border-top: 1px solid transparent;
-	border-bottom: 2px solid var( --color-warning );
+	border-top: var( --border-width-base ) solid transparent;
+	border-bottom: var( --border-width-thick ) solid var( --color-warning );
 }
 
 .tab-panel {
@@ -528,14 +528,14 @@ a.smw-ask-action-btn-lblue:active {
 .smw-factbox input.nav-tab:checked + label.nav-label {
 	background: transparent;
 	border-color: transparent;
-	border-top: 1px solid transparent;
-	border-bottom: 2px solid var( --color-progressive );
+	border-top: var( --border-width-base ) solid transparent;
+	border-bottom: var( --border-width-thick ) solid var( --color-progressive );
 }
 
 .smw-factbox input.nav-tab:checked + label#tab-label-facts-attachment.nav-label {
 	border-color: transparent;
-	border-top: 1px solid transparent;
-	border-bottom: 2px solid var( --color-progressive );
+	border-top: var( --border-width-base ) solid transparent;
+	border-bottom: var( --border-width-thick ) solid var( --color-progressive );
 }
 
 .smw-factbox .smwfact {
@@ -631,7 +631,7 @@ a.smw-ask-action-btn-lblue:active {
 }
 
 .smw-indicator-accordion-tab .smw-indicator-accordion-tab-label {
-  border-top: 1px solid #ebebeb;
+  border-top: var( --border-width-base ) solid #ebebeb;
   border-bottom: 0px solid var( --color-inverted-fixed );
 }
 

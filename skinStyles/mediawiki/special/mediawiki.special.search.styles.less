@@ -30,7 +30,7 @@
 	margin-top: var( --space-xxs );
 	background-color: transparent;
 	border: 0;
-	border-bottom: 1px solid var( --border-color-base );
+	border-bottom: var( --border-width-base ) solid var( --border-color-base );
 }
 
 .search-types {
@@ -47,7 +47,7 @@
 		padding: var( --space-xs ) var( --space-sm );
 		font-weight: var( --font-weight-medium );
 		color: var( --color-emphasized );
-		border-bottom: 2px solid transparent;
+		border-bottom: var( --border-width-thick ) solid transparent;
 
 		&:hover {
 			color: var( -color-primary--hover );
@@ -150,7 +150,7 @@
 		font-weight: var( --font-weight-normal );
 		color: var( --color-subtle );
 		letter-spacing: 0.05em;
-		border-bottom: 1px solid var( --border-color-base );
+		border-bottom: var( --border-width-base ) solid var( --border-color-base );
 	}
 }
 

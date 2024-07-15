@@ -10,14 +10,14 @@
 
 :root {
 	--tint-1: var( --color-surface-2 );
-	--border-1: 1px solid var( --color-surface-2--active );
+	--border-1: var( --border-width-base ) solid var( --color-surface-2--active );
 }
 
 .wssearch--filter-options-search,
 .wssearch--search-input {
 	color: var( --color-base );
 	background-color: var( --color-surface-2 );
-	border: 1px solid var( --border-color-base );
+	border: var( --border-width-base ) solid var( --border-color-base );
 
 	&:hover {
 		border-color: #72777d;
@@ -32,7 +32,7 @@
 .wssearch--search-button {
 	color: var( --color-base );
 	background-color: var( --base-color );
-	border: 1px solid var( --border-color-interactive );
+	border: var( --border-width-base ) solid var( --border-color-interactive );
 
 	&:hover {
 		background-color: var( --base-color-lighter );
@@ -113,7 +113,7 @@
 .wssearch--order__sortorder {
 	color: var( --color-base );
 	background-color: var( --color-surface-0 );
-	border: 1px solid #a2a9b1;
+	border: var( --border-width-base ) solid #a2a9b1;
 
 	&:active,
 	&:focus {
@@ -126,7 +126,7 @@
 .wssearch--order__select {
 	color: var( --color-base );
 	background-color: var( --color-surface-0 );
-	border: 1px solid #a2a9b1;
+	border: var( --border-width-base ) solid #a2a9b1;
 
 	&:hover {
 		border-color: #72777d;
@@ -211,7 +211,7 @@
 }
 
 .wssearch--slider-input-icon {
-	border: 2px solid #a2a9b1;
+	border: var( --border-width-thick ) solid #a2a9b1;
 }
 
 .wssearch--selected-filters__combobox {
@@ -238,7 +238,7 @@
 		}
 
 		&:not( :last-child ) {
-			border-bottom: 1px solid var( --color-surface-2--active );
+			border-bottom: var( --border-width-base ) solid var( --color-surface-2--active );
 		}
 
 		&-count {
@@ -250,7 +250,7 @@
 .wssearch--facetsearch-input {
 	color: var( --color-base );
 	background-color: var( --color-surface-0 );
-	border: 1px solid #a2a9b1;
+	border: var( --border-width-base ) solid #a2a9b1;
 
 	&:hover {
 		border-color: #72777d;
@@ -308,7 +308,7 @@
 		&__open {
 			color: var( --color-base );
 			background-color: var( --color-base );
-			border: 1px solid var( --base-color );
+			border: var( --border-width-base ) solid var( --base-color );
 		}
 	}
 }

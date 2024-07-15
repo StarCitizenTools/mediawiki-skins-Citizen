@@ -30,7 +30,7 @@ body {
 
 // For some reason just overriding the outline-color is not enough
 :focus-visible {
-	outline: 2px solid var( --color-progressive );
+	outline: var( --border-width-thick ) solid var( --color-progressive );
 	outline-offset: 1px;
 }
 
@@ -44,7 +44,7 @@ select,
 textarea {
 	color: var( --color-emphasized );
 	background-color: transparent;
-	border: 1px solid var( --border-color-interactive );
+	border: var( --border-width-base ) solid var( --border-color-interactive );
 }
 
 select option {
@@ -125,7 +125,7 @@ td {
 	padding-left: 10px;
 	margin-left: 10px;
 	font-size: var( --font-size-small );
-	border-left: 1px solid var( --border-color-base );
+	border-left: var( --border-width-base ) solid var( --border-color-base );
 }
 
 .mw-indicator {

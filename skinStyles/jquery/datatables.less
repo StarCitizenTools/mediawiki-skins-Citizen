@@ -14,7 +14,7 @@ table.dataTable {
 	max-width: 100%;
 	overflow: hidden; // let datatables handle responsiveness
 	font-size: var( --font-size-small );
-	border: 1px solid var( --border-color-base );
+	border: var( --border-width-base ) solid var( --border-color-base );
 	border-radius: var( --border-radius-medium );
 }
 
@@ -289,7 +289,7 @@ table.dataTable > tbody > tr.child ul.dtr-details > li {
 	.dataTables_length select,
 	.dataTables_filter input {
 		padding: var( --space-xs );
-		border: 1px solid var( --border-color-interactive );
+		border: var( --border-width-base ) solid var( --border-color-interactive );
 		border-radius: var( --border-radius-base );
 	}
 }
@@ -384,7 +384,7 @@ div.dtsp-panesContainer {
 			height: fit-content;
 			margin-top: 0 !important;
 			font-size: var( --font-size-small );
-			border: 1px solid var( --border-color-base );
+			border: var( --border-width-base ) solid var( --border-color-base );
 			border-radius: var( --border-radius-medium );
 
 			// Hidden pane
@@ -497,7 +497,7 @@ div.dtsp-panesContainer {
 			font-size: var( --font-size-x-small );
 			color: var( --color-base );
 			background: var( --color-surface-2 );
-			border: 1px solid var( --border-color-base );
+			border: var( --border-width-base ) solid var( --border-color-base );
 		}
 	}
 }

@@ -71,7 +71,7 @@ h3.mwe-upwiz-metadata-title {
 	overflow: hidden; // Hide arrow overflow
 	line-height: var( --line-height-sm );
 	background-color: transparent;
-	border-bottom: 1px solid var( --border-color-base );
+	border-bottom: var( --border-width-base ) solid var( --border-color-base );
 
 	&::before,
 	&::after {
@@ -200,7 +200,7 @@ h3.mwe-upwiz-metadata-title {
 	overflow-x: auto;
 	white-space: nowrap;
 	background: transparent;
-	border-bottom: 1px solid var( --border-color-base );
+	border-bottom: var( --border-width-base ) solid var( --border-color-base );
 }
 
 .mwe-upwiz-deed {
@@ -210,7 +210,7 @@ h3.mwe-upwiz-metadata-title {
 
 	&-option-title {
 		+ .mwe-upwiz-deed-form {
-			border-top: 1px solid var( --border-color-base );
+			border-top: var( --border-width-base ) solid var( --border-color-base );
 		}
 	}
 

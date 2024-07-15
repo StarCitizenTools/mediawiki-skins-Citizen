@@ -7,7 +7,7 @@
 
 .citizen-card(@border-radius: true) {
 	background-color: var( --color-surface-1 );
-	border: 1px solid var( --border-color-base );
+	border: var( --border-width-base ) solid var( --border-color-base );
 	box-shadow: var( --box-shadow-dialog );
 
 	& when (@border-radius ) {
@@ -100,7 +100,7 @@
 	top: @topOffset;
 
 	& when (@bottomBorder ) {
-		border-bottom: 1px solid var( --border-color-base );
+		border-bottom: var( --border-width-base ) solid var( --border-color-base );
 	}
 
 	& when (@zIndex ) {

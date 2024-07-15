@@ -23,7 +23,7 @@
 			padding: 0.1em 0.75em 0.4em 0.75em; // align with filter card
 			background-color: var( --color-surface-2 );
 			border-color: var( --border-color-base );
-			border-bottom: 1px solid var( --border-color-base ); // Add divider
+			border-bottom: var( --border-width-base ) solid var( --border-color-base ); // Add divider
 			border-radius: var( --border-radius-base ) var( --border-radius-base ) 0 0;
 		}
 	}
@@ -147,7 +147,7 @@
 	padding-top: var( --space-xs );
 	padding-bottom: var( --space-xs );
 	background-color: var( --color-surface-1 ); // Sync with background
-	border-bottom: 1px solid var( --border-color-base );
+	border-bottom: var( --border-width-base ) solid var( --border-color-base );
 
 	&-header-title.oo-ui-labelElement-label {
 		font-size: var( --font-size-x-small );
@@ -374,7 +374,7 @@
 /* mw.rcfilters.ui.WatchlistTopSectionWidget.less */
 .mw-rcfilters-ui-watchlistTopSectionWidget {
 	&-separator {
-		border-top: 1px solid var( --border-color-base );
+		border-top: var( --border-width-base ) solid var( --border-color-base );
 	}
 }
 

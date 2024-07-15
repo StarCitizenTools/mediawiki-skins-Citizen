@@ -55,7 +55,7 @@
 
 .mw-scribunto-message + div {
 	padding-top: var( --space-sm );
-	border-top: 1px solid var( --border-color-base );
+	border-top: var( --border-width-base ) solid var( --border-color-base );
 }
 
 #mw-scribunto-output {
@@ -66,7 +66,7 @@
 #mw-scribunto-input {
 	color: var( --color-emphasized );
 	background-color: transparent;
-	border: 1px solid var( --border-color-base );
+	border: var( --border-width-base ) solid var( --border-color-base );
 	border-radius: var( --border-radius-base );
 
 	&:hover {
@@ -75,7 +75,7 @@
 
 	&:focus {
 		border-color: var( --color-progressive );
-		outline: 1px solid transparent;
+		outline: var( --border-width-base ) solid transparent;
 		box-shadow: inset 0 0 0 1px var( --color-progressive );
 	}
 }
