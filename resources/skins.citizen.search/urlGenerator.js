@@ -25,10 +25,9 @@
 /**
  * Generates URLs for suggestions.
  *
- * @param {MwMap} config
  * @return {UrlGenerator}
  */
-function urlGenerator( config ) {
+function urlGenerator() {
 	return {
 		/**
 		 * @param {SearchResult|string} page
@@ -39,28 +38,15 @@ function urlGenerator( config ) {
 			page,
 			params = {}
 		) {
-			const getPageTitle = () => {
-				let title;
-				if ( !page ) {
-					title = 'Special:Search';
-				} else if ( typeof page !== 'string' ) {
-					title = page.title;
-				} else {
-					title = page;
-				}
-				return encodeURIComponent( title );
-			};
-
-			// Use short URL if avaliable, instead of doing a bunch of 302 like mediawiki.searchSuggest does
-			const articlePath = config.wgArticlePath.replace( '$1', getPageTitle() );
-
-			if ( Object.keys( params ).length === 0 ) {
-				return articlePath;
+			let title;
+			if ( !page ) {
+				title = 'Special:Search';
+			} else if ( typeof page !== 'string' ) {
+				title = page.title;
 			} else {
-				const searchParams = new URLSearchParams( params );
-				const paramsPrefix = articlePath.includes( '?' ) ? '&' : '?';
-				return articlePath + paramsPrefix + searchParams.toString();
+				title = page;
 			}
+			return mw.util.getUrl( title, params );
 		}
 	};
 }
