@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Gomoko",
+			"MacOS Weed",
 			"Nicolas.poinsu",
 			"Pamputt",
 			"Reedy",
@@ -30,8 +31,8 @@
 	"citizen-footer-tagline": "Modifier ce texte sur [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Ajouter un sujet",
 	"citizen-jumptotop": "Retour au début",
-	"citizen-search-fulltext": "Rechercher les pages contenant $1",
-	"citizen-search-mediasearch": "Rechercher des médias relatifs à $1",
+	"citizen-search-fulltext": "Texte de recherche",
+	"citizen-search-mediasearch": "Rechercher des médias",
 	"citizen-search-editpage": "Éditer ou créer une page",
 	"citizen-search-empty-desc": "Taper pour commencer la recherche",
 	"citizen-search-noresults-title": "Oh oh ! Aucun résultat pour $1",
