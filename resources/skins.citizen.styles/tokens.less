@@ -43,6 +43,10 @@
 	/* Font */
 	// Used as base unit to caluclate font-size
 	--font-size-base: 1rem;
+	/* Height */
+	// Used to offset sticky elements with sticky header
+	// This is overriden by inline styles in the html element when sticky header is active
+	--height-sticky-header: 0;
 	/* Transition */
 	--transition-delay-menu: 100ms;
 	// Hover and active states are calculated by a modifier of the lightness value in HSL (e.g. hover: +2%, active: -2%)
