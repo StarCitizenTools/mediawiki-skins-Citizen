@@ -94,13 +94,13 @@
 	}
 }
 
-.citizen-sticky-header(@topOffset: 0, @bottomBorder: true, @zIndex: true) {
+.citizen-sticky-header(@bottomBorder: true, @zIndex: true) {
 	position: -webkit-sticky;
 	position: sticky;
-	top: @topOffset;
+	top: var( --height-sticky-header );
 
 	& when (@bottomBorder ) {
-		border-bottom: var( --border-width-base ) solid var( --border-color-base );
+		box-shadow: 0 0 0 1px var( --border-color-base );
 	}
 
 	& when (@zIndex ) {
@@ -111,7 +111,7 @@
 	// This has an issue if parent has overflow set
 	&::before {
 		position: absolute;
-		top: @topOffset;
+		top: 0;
 		right: ~'calc( var(--padding-page ) * -1 )';
 		left: ~'calc( var(--padding-page ) * -1 )';
 		z-index: @z-index-bottom;

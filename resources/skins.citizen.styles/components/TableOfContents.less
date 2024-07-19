@@ -157,11 +157,11 @@
 
 @media ( min-width: @min-width-breakpoint-desktop ) {
 	.citizen-toc {
-		--toc-margin-top: var( --space-xs );
 		position: -webkit-sticky;
 		position: sticky;
-		top: var( --toc-margin-top );
-		max-height: ~'calc( 100vh - var( --toc-margin-top ) - var( --space-md ) )';
+		top: var( --height-sticky-header );
+		max-height: ~'calc( 100vh - var( --height-sticky-header ) )';
+		padding: var( --space-xs ) 0;
 		overflow-y: auto;
 		overscroll-behavior: contain;
 
@@ -174,16 +174,6 @@
 
 			> * {
 				opacity: 1;
-			}
-		}
-
-		// Sticky header styles
-		.citizen-page-header--sticky & {
-			--toc-margin-top: ~'calc( var( --header-size ) + var(  --space-xxl  ) )';
-
-			// Sticky header is shorter without buttons
-			@media ( max-height: 800px ) {
-				--toc-margin-top: ~'calc( var( --header-size ) + var( --space-md ) )';
 			}
 		}
 
