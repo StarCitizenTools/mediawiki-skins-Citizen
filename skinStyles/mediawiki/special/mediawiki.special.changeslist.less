@@ -137,10 +137,10 @@ body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
 		position: absolute;
 		top: 0;
 		bottom: 0;
-		left: 4px;
-		width: 1px;
+		left: ~'calc( var( --border-width-thick ) + 1px )';
+		width: var( --border-width-thick );
 		content: '';
-		background: var( --border-color-interactive );
+		background: var( --border-color-base );
 	}
 }
 

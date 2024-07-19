@@ -12,7 +12,7 @@
 	&__list {
 		margin: 0 0 0 var( --space-xs );
 		list-style: none;
-		border-left: var( --border-width-base ) solid var( --border-color-base );
+		border-left: var( --border-width-thick ) solid var( --border-color-base );
 
 		.citizen-toc__link {
 			border-top-left-radius: 0;
@@ -27,7 +27,6 @@
 		padding: var( --space-xs );
 		font-weight: var( --font-weight-medium );
 		color: var( --color-emphasized );
-		border-radius: var( --border-radius-base );
 
 		&.citizen-toc__top {
 			height: 0;
@@ -57,11 +56,10 @@
 		bottom: 0;
 		left: 0;
 		flex-shrink: 0;
-		width: 3px;
+		width: var( --border-width-thick );
 		margin-top: var( --space-xs );
 		margin-bottom: var( --space-xs );
-		margin-left: -2px;
-		border-radius: var( --border-radius-pill );
+		margin-left: ~'calc( var( --border-width-thick ) * -1 )';
 	}
 
 	&__text {
