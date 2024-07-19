@@ -46,7 +46,8 @@
 		z-index: @z-index-stacking-3;
 		flex-wrap: nowrap;
 		white-space: nowrap;
-		border-bottom: var( --border-width-base ) solid var( --border-color-base );
+		// So that it won't change the height of the header
+		box-shadow: 0 0 0 1px var( --border-color-base );
 
 		&::before {
 			opacity: 1;
