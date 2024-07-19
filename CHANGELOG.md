@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.25.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.24.0...v2.25.0) (2024-07-19)
+
+
+### Features
+
+* **AccountInfo:** add AccountInfo styles ([#749](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/749)) ([99e7f08](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/99e7f083131e6cc16b9015bf0c83d2d9167276db))
+* **core:** ✨ implement Codex border-width tokens ([1fefddd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1fefddd41a4642ea1933e939a09d9d1263c2cd93))
+* **print:** ✨ add wikitable styles and hide contentSub ([5296aef](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5296aef9def69c03bb8d9d12ab646f17ebcd9216))
+* **print:** ✨ allow font size settings affect print styles ([8641bec](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8641becb2ae7a8e4b226ab65da53b0c09f3e5807))
+* **print:** ✨ hide page footer in print styles ([1da57e5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1da57e590230a3c42300eb90f3b34f4c60f32145))
+* **print:** ✨ rework print styles ([543400d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/543400d9d5e905773429fd55a941c5e8f1b67d75))
+* **stickyHeader:** ✨ add CSS var --height-sticky-header to offset sticky elements ([c9d98e4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c9d98e477a3634d1c71408a65ae8d3666eb31a83))
+* **stickyHeader:** ✨ implement sticky header variables into other sticky styles ([a1ad423](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a1ad423f2f6ebf501d4bf23d5e6be06b72a2b018))
+
+
+### Bug Fixes
+
+* **print:** 🐛 add important declaration to hidden print elements ([aeb083e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/aeb083e74dd14b44cf535db6357abd79d5540973))
+* **print:** 🐛 only color variables require important declaration ([a9fb03f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a9fb03fc8e9d9a93b71d0b6fcf7e5a250c29ebb2))
+* **toc:** 🐛 ToC should have the same padding as other menu cards ([f3042f5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f3042f5b80f3426f59ec684511f2f952508de8c3))
+
 ## [2.24.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.23.0...v2.24.0) (2024-07-12)
 
 
