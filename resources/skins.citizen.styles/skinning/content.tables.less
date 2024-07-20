@@ -70,9 +70,14 @@
 		}
 	}
 
-	thead:has( + tbody:not( :empty ) ),
-	thead:has( + tfoot:not( :empty ) ),
-	tbody:has( + tfoot:not( :empty ) ) {
+	/* Add border separator between tr, thead, tbody, tfoot */
+	> :not( [ hidden ] ) ~ :not( [ hidden ] ),
+	> * > :not( [ hidden ] ) ~ :not( [ hidden ] ) {
+		border-top: var( --border-width-base ) solid var( --border-color-base );
+	}
+
+	/* Reset border radius between thead tbody, tbody tfoot, etc. */
+	> :has( + :not( :empty ) ) {
 		tr:last-of-type {
 			th,
 			td {
@@ -87,9 +92,7 @@
 		}
 	}
 
-	thead + tbody:not( :empty ),
-	thead + tfoot:not( :empty ),
-	tbody + tfoot:not( :empty ) {
+	> * + :not( :empty ) {
 		tr:first-of-type {
 			th,
 			td {
