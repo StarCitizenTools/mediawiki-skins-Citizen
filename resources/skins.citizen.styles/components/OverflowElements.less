@@ -28,16 +28,28 @@
 	&-wrapper {
 		position: relative;
 		display: flex; /* So that it respects float elements (#878) */
+		max-width: max-content;
+
+		&:has( .citizen-overflow-content > .wikitable ) {
+			margin-top: var( --space-md );
+			margin-bottom: var( --space-md );
+			border-radius: var( --border-radius-medium );
+			box-shadow: var( --box-shadow-border );
+		}
 	}
 
 	&-content {
 		width: 100%;
 		overflow-x: auto;
 
-		.wikitable {
+		> .wikitable {
 			display: table;
 			max-width: none;
+			/* Handle margin and box-shadow on outer wrapper */
+			margin-top: 0;
+			margin-bottom: 0;
 			overflow: initial;
+			box-shadow: none;
 		}
 
 		.citizen-overflow--left > & {
@@ -72,7 +84,7 @@
 		cursor: pointer;
 		background: transparent;
 		border: 0;
-		border-radius: var( --border-radius-base );
+		border-radius: var( --border-radius-medium );
 		.hideOverflowButton();
 
 		&::before {

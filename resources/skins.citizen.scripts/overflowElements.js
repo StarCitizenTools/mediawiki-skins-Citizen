@@ -143,13 +143,11 @@ class OverflowElement {
 
 			const wrapper = document.createElement( 'div' );
 			wrapper.className = 'citizen-overflow-wrapper';
-			this.handleInheritedClasses();
 			fragment.appendChild( wrapper );
+			this.wrapper = wrapper;
+			this.handleInheritedClasses();
 
 			if ( this.isPointerDevice ) {
-				const elementStyles = window.getComputedStyle( this.element );
-				const topMargin = parseInt( elementStyles.marginTop );
-				const bottomMargin = parseInt( elementStyles.marginBottom );
 				const createButton = ( type ) => {
 					const button = document.createElement( 'button' );
 					button.className = `citizen-overflow-navButton citizen-overflow-navButton-${ type } citizen-ui-icon mw-ui-icon-wikimedia-collapse`;
@@ -160,8 +158,6 @@ class OverflowElement {
 
 				const nav = document.createElement( 'div' );
 				nav.className = 'citizen-overflow-nav';
-				nav.style.marginTop = `${ topMargin }px`;
-				nav.style.marginBottom = `${ bottomMargin }px`;
 
 				nav.appendChild( createButton( 'left' ) );
 				nav.appendChild( createButton( 'right' ) );
@@ -178,7 +174,6 @@ class OverflowElement {
 			parentNode.insertBefore( fragment, this.element );
 			content.appendChild( this.element );
 
-			this.wrapper = wrapper;
 			this.content = content;
 		} catch ( error ) {
 			mw.log.error(

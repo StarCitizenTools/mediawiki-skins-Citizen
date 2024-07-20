@@ -19,15 +19,9 @@
 	border-radius: var( --border-radius-medium );
 	box-shadow: var( --box-shadow-border );
 
-	// Avoid double border (#902)
-	&[ border='1' ] {
-		box-shadow: none;
-	}
-
 	caption {
-		padding-right: var( --space-sm );
-		padding-left: var( --space-sm );
-		margin-bottom: var( --space-xs );
+		padding: var( --space-xs ) var( --space-sm );
+		font-size: var( --font-size-medium );
 		font-weight: var( --font-weight-semibold );
 		color: var( --color-emphasized );
 		text-align: start;
@@ -49,16 +43,9 @@
 	}
 
 	tr {
-		th,
-		td {
-			border-top: var( --border-width-base ) solid var( --border-color-base );
-		}
-
 		&:first-of-type {
 			th,
 			td {
-				border-top: 0;
-
 				&:first-child {
 					border-top-left-radius: var( --border-radius-medium );
 				}
@@ -83,9 +70,9 @@
 		}
 	}
 
-	thead:has( + tbody ),
-	thead:has( + tfoot ),
-	tbody:has( + tfoot ) {
+	thead:has( + tbody:not( :empty ) ),
+	thead:has( + tfoot:not( :empty ) ),
+	tbody:has( + tfoot:not( :empty ) ) {
 		tr:last-of-type {
 			th,
 			td {
@@ -100,14 +87,12 @@
 		}
 	}
 
-	thead + tbody,
-	thead + tfoot,
-	tbody + tfoot {
+	thead + tbody:not( :empty ),
+	thead + tfoot:not( :empty ),
+	tbody + tfoot:not( :empty ) {
 		tr:first-of-type {
 			th,
 			td {
-				border-top: var( --border-width-base ) solid var( --border-color-base );
-
 				&:first-child {
 					border-top-left-radius: var( --border-radius-sharp );
 				}
