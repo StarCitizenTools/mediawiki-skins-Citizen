@@ -47,10 +47,12 @@
 			th,
 			td {
 				&:first-child {
+					border-left-width: 0;
 					border-top-left-radius: var( --border-radius-medium );
 				}
 
 				&:last-child {
+					border-right-width: 0;
 					border-top-right-radius: var( --border-radius-medium );
 				}
 			}
@@ -60,10 +62,12 @@
 			th,
 			td {
 				&:first-child {
+					border-left-width: 0;
 					border-bottom-left-radius: var( --border-radius-medium );
 				}
 
 				&:last-child {
+					border-right-width: 0;
 					border-bottom-right-radius: var( --border-radius-medium );
 				}
 			}
@@ -104,6 +108,21 @@
 					border-top-right-radius: var( --border-radius-sharp );
 				}
 			}
+		}
+	}
+
+	&--border {
+		tr {
+			> :not( [ hidden ] ) ~ :not( [ hidden ] ) {
+				border-right: var( --border-width-base ) solid var( --border-color-base );
+				border-left: var( --border-width-base ) solid var( --border-color-base );
+			}
+		}
+	}
+
+	&--stripe {
+		tbody tr:nth-child( even ) {
+			background-color: var( --color-surface-2 );
 		}
 	}
 }
