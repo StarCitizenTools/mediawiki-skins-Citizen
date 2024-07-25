@@ -38,8 +38,9 @@
 	--box-shadow-border: var( --border-color-base ) 0 0 0 1px inset;
 	// Based on https://web.dev/building-a-color-scheme/#rad-shadow
 	// TODO: Refactor this to support filter drop-shadow
-	--box-shadow-card: 0 2.8px 2.2px -4px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .03))', 0 6.7px 5.3px -4px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .01))', 0 12.5px 10px -4px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .02))', 0 22.3px 17.9px -4px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .02))', 0 41.8px 33.4px -4px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .03))', 0 100px 80px -4px ~'hsla(var(--surface-shadow), var(--shadow-strength))';
-	--box-shadow-dialog: 0 2.8px 2.2px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .03))', 0 6.7px 5.3px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .01))', 0 12.5px 10px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .02))', 0 22.3px 17.9px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .02))', 0 41.8px 33.4px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .03))', 0 100px 80px ~'hsla(var(--surface-shadow), var(--shadow-strength))';
+	--box-shadow-drop-small: 0 ~'calc( var( --shadow-vertical-small ) * 0.028 )' 2.2px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .03))', 0 ~'calc( var( --shadow-vertical-small ) * 0.067 )' 5.3px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .01))', 0 ~'calc( var( --shadow-vertical-small ) * 0.125 )' 10px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .02))', 0 ~'calc( var( --shadow-vertical-small ) * 0.223 )' 17.9px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .02))', 0 ~'calc( var( --shadow-vertical-small ) * 0.418 )' 33.4px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .03))', 0 ~'var( --shadow-vertical-small )' 80px ~'hsla(var(--surface-shadow), var(--shadow-strength))';
+	--box-shadow-drop-medium: 0 ~'calc( var( --shadow-vertical-medium ) * 0.028 )' 2.2px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .03))', 0 ~'calc( var( --shadow-vertical-medium ) * 0.067 )' 5.3px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .01))', 0 ~'calc( var( --shadow-vertical-medium ) * 0.125 )' 10px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .02))', 0 ~'calc( var( --shadow-vertical-medium ) * 0.223 )' 17.9px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .02))', 0 ~'calc( var( --shadow-vertical-medium ) * 0.418 )' 33.4px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .03))', 0 ~'var( --shadow-vertical-medium )' 80px ~'hsla(var(--surface-shadow), var(--shadow-strength))';
+	--box-shadow-drop-xx-large: 0 ~'calc( var( --shadow-vertical-xx-large ) * 0.028 )' 2.2px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .03))', 0 ~'calc( var( --shadow-vertical-xx-large ) * 0.067 )' 5.3px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .01))', 0 ~'calc( var( --shadow-vertical-xx-large ) * 0.125 )' 10px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .02))', 0 ~'calc( var( --shadow-vertical-xx-large ) * 0.223 )' 17.9px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .02))', 0 ~'calc( var( --shadow-vertical-xx-large ) * 0.418 )' 33.4px ~'hsla(var(--surface-shadow), calc(var(--shadow-strength) + .03))', 0 ~'var( --shadow-vertical-xx-large )' 80px ~'hsla(var(--surface-shadow), var(--shadow-strength))';
 	/* Font */
 	// Used as base unit to caluclate font-size
 	--font-size-base: 1rem;
@@ -53,6 +54,9 @@
 	--delta-lightness-hover-state: 4%;
 	// Used to calculate box shadow
 	--shadow-strength: 0.02;
+	--shadow-vertical-small: 4px;
+	--shadow-vertical-medium: 16px;
+	--shadow-vertical-xx-large: 80px;
 	--surface-shadow: var( --color-primary__h ), 10%, 20%;
 
 	/**
@@ -212,6 +216,8 @@
 	--border-radius--medium: var( --border-radius-medium );
 	--border-radius--large: var( --border-radius-large );
 	--border-radius--pill: var( --border-radius-pill );
+	--box-shadow-card: var( --box-shadow-drop-medium );
+	--box-shadow-dialog: var( --box-shadow-drop-xx-large );
 	--color-base--emphasized: var( --color-emphasized );
 	--color-base--subtle: var( --color-subtle );
 	--color-primary: var( --color-progressive );
