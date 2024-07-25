@@ -3,7 +3,7 @@
  *
  * SkinStyles for UserProfileV2
  * Module: ext.userProfileV2
- * Version: main 192e7f7f
+ * Version: main e8390662
  *
  * Date: 2024-07-24
 */
@@ -19,6 +19,8 @@
 	border-radius: var(--border-radius-base);
     color: var(--color-base--emphasized);
     text-transform: capitalize;
+	color: var(--color-base--emphasized);
+	text-transform: capitalize;
 }
 
 .profile-header-statistics {
@@ -28,4 +30,8 @@
 .external-link.tooltip:hover::after {
 	border-radius: var(--border-radius--small);
 	color: var(--color-base--emphasized);
+}
+
+.profile-externalLinks {
+	filter: var(--filter-invert);
 }
