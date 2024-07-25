@@ -10,14 +10,23 @@
 
 /* smw/util/smw.tippy.css */
 .tippy-header {
-	background-color: var( --color-surface-2 );
-	border-bottom-color: var( --border-color-base );
+	padding: var( --space-xs ) var( --space-sm ) 0 var( --space-sm );
+	font-size: var( --font-size-x-small );
+	color: var( --color-subtle );
+	letter-spacing: 0.025em;
+	background-color: transparent;
+	border-bottom: 0;
 	border-top-left-radius: var( --border-radius-base );
 	border-top-right-radius: var( --border-radius-base );
 }
 
+.tippy-content-container {
+	padding: var( --space-xs ) var( --space-sm );
+	font-size: var( --font-size-small );
+}
+
 .tippy-bottom {
-	background-color: var( --color-surface-1 );
+	background-color: transparent;
 	border-top-color: var( --border-color-base );
 	border-bottom-right-radius: var( --border-radius-base );
 	border-bottom-left-radius: var( --border-radius-base );
@@ -27,7 +36,7 @@
 .tippy-tooltip.light-theme[ x-placement^='bottom' ] .tippy-arrow,
 .tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow::after,
 .tippy-tooltip.light-theme[ x-placement^='bottom' ] .tippy-arrow::after {
-	border-bottom-color: var( --color-surface-2 );
+	border-bottom-color: var( --color-surface-1 );
 }
 
 .tippy-tooltip.light-border-theme.square-border-transparent-arrow[ x-placement^='bottom' ] .tippy-arrow,
