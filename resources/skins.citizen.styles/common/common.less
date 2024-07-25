@@ -86,12 +86,18 @@ th {
 	color: var( --color-emphasized );
 }
 
+/* Remove outer margin in table cell */
+th,
 td {
 	> p,
 	> ul,
 	> ol {
 		&:first-child {
-			margin-top: 0; // Remove margin for the first element in td
+			margin-top: 0;
+		}
+
+		&:last-child {
+			margin-bottom: 0
 		}
 	}
 }
