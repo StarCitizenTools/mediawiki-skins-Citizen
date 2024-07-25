@@ -1,11 +1,10 @@
 /*
  * Citizen
  *
- * SkinStyles for Extension:SemanticMediaWiki
- * Module: ext.libs.tippy
- * Version: 4.0.2 (0fcdfce)
+ * SkinStyles for Tippy
+ * Shared by Extension:SemanticMediaWiki
  *
- * Date: 2022-10-20
+ * Date: 2024-07-24
 */
 
 /* libs/tippy/tippy.css */
@@ -15,7 +14,7 @@
 .tippy-tooltip.light-border-theme {
 	color: var( --color-base );
 	background-color: var( --color-surface-1 );
-	border: 0;
+	border-color: var( --border-color-base );
 	border-radius: var( --border-radius-base );
 	box-shadow: var( --box-shadow-dialog );
 }
@@ -41,7 +40,7 @@
 }
 
 .tippy-tooltip.light-border-theme[ x-placement^='top' ] .tippy-arrow::before {
-	border-top-color: var( --color-surface-1 );
+	border-top-color: var( --border-color-base );
 }
 
 .tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow {
@@ -53,7 +52,7 @@
 }
 
 .tippy-tooltip.light-border-theme[ x-placement^='bottom' ] .tippy-arrow::before {
-	border-bottom-color: var( --color-surface-1 );
+	border-bottom-color: var( --border-color-base );
 }
 
 .tippy-tooltip.light-border-theme[ x-placement^='left' ] .tippy-arrow {
@@ -65,7 +64,7 @@
 }
 
 .tippy-tooltip.light-border-theme[ x-placement^='left' ] .tippy-arrow::before {
-	border-left-color: var( --color-surface-1 );
+	border-left-color: var( --border-color-base );
 }
 
 .tippy-tooltip.light-border-theme[ x-placement^='right' ] .tippy-arrow {
@@ -77,7 +76,7 @@
 }
 
 .tippy-tooltip.light-border-theme[ x-placement^='right' ] .tippy-arrow::before {
-	border-right-color: var( --color-surface-1 );
+	border-right-color: var( --border-color-base );
 }
 
 /* libs/tippy/light.css */
