@@ -7,7 +7,8 @@
 			"Okras",
 			"Toghrul Rahimli",
 			"UniCollab",
-			"WerySkok"
+			"WerySkok",
+			"Yurina Tatiana"
 		]
 	},
 	"citizen-skin-desc": "Красивая, удобная и адаптивная тема оформления для MediaWiki, которая делает расширения частью единого интерфейса. Изначально разработана для [https://starcitizen.tools/ Star Citizen Wiki].",
@@ -36,6 +37,7 @@
 	"citizen-search-empty-desc": "Начните вводить текст, чтобы начать поиск",
 	"citizen-search-noresults-title": "Ой! Нет результатов для $1",
 	"citizen-search-noresults-desc": "Может, попробовать варианты выше?",
+	"citizen-share": "Поделиться этой страницей",
 	"citizen-tagline-ns-talk": "Обсуждение страницы {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Информация о {{SITENAME}}",
 	"citizen-tagline-ns-file": "Файл на {{SITENAME}}",
@@ -50,6 +52,8 @@
 	"citizen-theme-night-label": "Тёмная",
 	"citizen-theme-os-label": "Авто",
 	"citizen-theme-exclusion-notice": "Эта страница всегда отображается в светлом режиме.",
+	"citizen-feature-autohide-navigation-0-label": "Выкл.",
+	"citizen-feature-autohide-navigation-1-label": "Вкл.",
 	"citizen-feature-pure-black-name": "Радикально чёрно-белый режим",
 	"citizen-feature-pure-black-0-label": "Выкл",
 	"citizen-feature-pure-black-1-label": "Вкл",
