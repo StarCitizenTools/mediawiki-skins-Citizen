@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.26.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.25.0...v2.26.0) (2024-08-06)
+
+
+### Features
+
+* **core:** ✨ add reset styles for border-width and border-color ([2fe9443](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2fe94438ee5ac93b73588b65e262890b45bb3abc))
+* **core:** ✨ tweak changelist and toc border width ([b9cd270](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b9cd27043d73ef1dea0395c66123505c695e9f1d))
+* **core:** ✨ update box-shadow CSS variables ([c1370e9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c1370e95f04622d1f19be7cb38aa5133b6f4d763))
+* **fonts:** ✨ bump Roboto Flex to 3.200 ([4d803f8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4d803f841ddd227c097151fa434631253f1062de))
+* **OOUI:** ✨ update filter invert rules ([b922b03](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b922b035ccf9a7bea58f971ae69d55fbd2435967))
+* **SMW:** ✨ tweak Tippy styles to match with Citizen ([f1e2130](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f1e2130ed4440dfcb08c11e3b1fa2a8edc4b3d87))
+* **stickyHeader:** ✨ add transition to secondary sticky header ([1703d29](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1703d299455e5a06e0a6c1f5dc9636066b03ed6a))
+* **UserProfileV2:** ✨ add UserProfileV2 style ([#914](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/914)) ([ffbaa5b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ffbaa5b9fa2ad60e78ed57a1d4ea827f7c4383b0))
+* **wikitable:** ✨ add new wikitable utility classes for additional styling ([362dcd0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/362dcd01cc69a812ad3166b4153bc484dc701985))
+* **wikitable:** ✨ use more accurate selectors to apply border and border radius ([cc0820c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cc0820c204aac9addf1a9316fb4026bcd02abe5f))
+
+
+### Bug Fixes
+
+* **AccountInfo:** 🐛 incorrect CSS var name ([d115a5e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d115a5e5e82192f294feb18a4aa060a653ae28fa))
+* **AccountInfo:** 🐛 resetting incorrectly styled elements ([#915](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/915)) ([dad5c26](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/dad5c26e02ad2b0da6db461ff8a3c13ff7bd888a))
+* **core:** 🐛 do not use inset for box-shadow-border ([6711196](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6711196bdaa3b696145a3f2c60cd5e60c11a41ef))
+* **core:** 🐛 fix uneven margin in table cells ([9baf851](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9baf8510ce1854f6eb26dd22a67824318e6438ae))
+* **overflow:** 🐛 fix undefined wrapper ([764f759](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/764f7593c3a2d69ed7455b75dc5709794127adcd))
+* **stickyHeader:** 🐛 incorrect border box shadow ([9a0ebf4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9a0ebf444651d2a772dd8d99b554f4257ec8da77))
+* **WikiEditor:** 🐛 missing border bottom rule ([81348ff](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/81348ff27e2a904519502e95b424a52743451881))
+* **wikitable:** 🐛 incorrect border radius when both thead and tbody are present ([15ebea1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/15ebea1c800c43938f680f00bca2b9e5460d1608))
+* **wikitable:** 🐛 incorrect selector for tfoot ([08a7a51](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/08a7a5156626fd70d9b96f100643568a5d314e8c))
+
+
+### Miscellaneous Chores
+
+* **husky:** 🔧 deprecate old commands ([bd0cea7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bd0cea79e49770b9c4eea2f05fb3d343881713a6))
+
 ## [2.25.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.24.0...v2.25.0) (2024-07-19)
 
 
