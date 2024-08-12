@@ -4,6 +4,7 @@
 			"Mainframe98",
 			"McDutchie",
 			"Romaine",
+			"Siebrand",
 			"Sjoerddebruin"
 		]
 	},
@@ -16,7 +17,7 @@
 	"citizen-search-toggle": "Zoeken tonen/verbergen",
 	"citizen-languages-toggle": "Meer talen",
 	"citizen-actions-more-toggle": "Meer acties",
-	"citizen-sitestats-articles-label": "artikelen",
+	"citizen-sitestats-articles-label": "pagina's",
 	"citizen-sitestats-images-label": "bestanden",
 	"citizen-sitestats-users-label": "gebruikers",
 	"citizen-sitestats-edits-label": "bewerkingen",
