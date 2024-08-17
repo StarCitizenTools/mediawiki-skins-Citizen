@@ -75,8 +75,8 @@
 	}
 
 	/* Add border separator between tr, thead, tbody, tfoot */
-	> :not( [ hidden ] ) ~ :not( [ hidden ] ),
-	> * > :not( [ hidden ] ) ~ :not( [ hidden ] ) {
+	> :is( caption, tr, thead, tbody, tfoot ):not( [ hidden ] ) ~ :is( caption, tr, thead, tbody, tfoot ):not( [ hidden ] ),
+	> :is( thead, tbody, tfoot ) > :is( tr, thead, tbody, tfoot ):not( [ hidden ] ) ~ :is( tr, thead, tbody, tfoot ):not( [ hidden ] ) {
 		border-top: var( --border-width-base ) solid var( --border-color-base );
 	}
 
