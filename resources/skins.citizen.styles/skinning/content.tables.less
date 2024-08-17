@@ -74,14 +74,14 @@
 		}
 	}
 
-	/* Add border separator between tr, thead, tbody, tfoot */
-	> :is( caption, tr, thead, tbody, tfoot ):not( [ hidden ] ) ~ :is( caption, tr, thead, tbody, tfoot ):not( [ hidden ] ),
-	> :is( thead, tbody, tfoot ) > :is( tr, thead, tbody, tfoot ):not( [ hidden ] ) ~ :is( tr, thead, tbody, tfoot ):not( [ hidden ] ) {
+	/* Add border separator between caption, tr, thead, tbody, tfoot */
+	> :where( caption, tr, thead, tbody, tfoot ):not( [ hidden ] ) ~ :where( caption, tr, thead, tbody, tfoot ):not( [ hidden ] ),
+	> :where( thead, tbody, tfoot ) > :where( tr, thead, tbody, tfoot ):not( [ hidden ] ) ~ :where( tr, thead, tbody, tfoot ):not( [ hidden ] ) {
 		border-top: var( --border-width-base ) solid var( --border-color-base );
 	}
 
 	/* Reset border radius between thead tbody, tbody tfoot, etc. */
-	> :has( + :not( :empty ) ) {
+	> :where( thead, tbody, tfoot ):has( + :where( thead, tbody, tfoot ):not( :empty ) ) {
 		tr:last-of-type {
 			th,
 			td {
@@ -96,7 +96,7 @@
 		}
 	}
 
-	> * + :not( :empty ) {
+	> :where( thead, tbody, tfoot ) + :where( thead, tbody, tfoot ):not( :empty ) {
 		tr:first-of-type {
 			th,
 			td {
