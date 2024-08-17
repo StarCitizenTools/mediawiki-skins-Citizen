@@ -42,7 +42,11 @@ function urlGenerator() {
 			if ( !page ) {
 				title = 'Special:Search';
 			} else if ( typeof page !== 'string' ) {
+				const fragment = page.fragment;
 				title = page.title;
+				if ( fragment ) {
+					title += `#${ fragment }`;
+				}
 			} else {
 				title = page;
 			}
