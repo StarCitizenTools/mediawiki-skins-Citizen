@@ -129,7 +129,8 @@
 // Merge two buttons together
 .client-js .citizen-ve-edit-merged {
 	&#ca-ve-edit {
-		> a {
+		// Additional check to check if there are actually source edit button (#929)
+		> a:has( + #ca-edit ) {
 			border-top-right-radius: 0;
 			border-bottom-right-radius: 0;
 		}
