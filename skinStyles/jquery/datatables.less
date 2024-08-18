@@ -14,8 +14,6 @@ table.dataTable {
 	max-width: 100%;
 	overflow: hidden; // let datatables handle responsiveness
 	font-size: var( --font-size-small );
-	border: var( --border-width-base ) solid var( --border-color-base );
-	border-radius: var( --border-radius-medium );
 }
 
 table.dataTable thead th,
@@ -295,6 +293,13 @@ table.dataTable > tbody > tr.child ul.dtr-details > li {
 }
 
 /* Scroller */
+// Add rounded corner like wikitable
+.dataTables_wrapper .dataTables_scroll {
+	overflow: hidden;
+	border-radius: var( --border-radius--medium );
+	box-shadow: var( --box-shadow-border );
+}
+
 div.dts div.dataTables_scrollBody {
 	background: transparent;
 }
