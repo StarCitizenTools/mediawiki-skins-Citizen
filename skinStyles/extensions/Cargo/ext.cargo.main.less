@@ -92,3 +92,12 @@ div.specialCargoQuery-extraPane {
 	font-family: var( --font-family-base );
 	color: var( --color-emphasized );
 }
+
+// Temporary responsiveness fix until Cargo patches it (#924)
+.cargoDynamicTable.dataTable {
+	display: block;
+	max-width: max-content; // Needed for the border
+	overflow-x: auto;
+	border-radius: var( --border-radius-medium );
+	box-shadow: var( --box-shadow-border );
+}
