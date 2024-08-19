@@ -28,10 +28,6 @@ table.cargoTable.mergeSimilarCells td.even {
 	background: var( --color-surface-2 );
 }
 
-table.cargoTable {
-	font-size: var( --font-size-small );
-}
-
 table.cargoTable thead tr {
 	border-bottom: var( --border-width-base ) solid var( --border-color-base );
 }
@@ -93,11 +89,80 @@ div.specialCargoQuery-extraPane {
 	color: var( --color-emphasized );
 }
 
-// Temporary responsiveness fix until Cargo patches it (#924)
-.cargoDynamicTable.dataTable {
-	display: block;
-	max-width: max-content; // Needed for the border
-	overflow-x: auto;
-	border-radius: var( --border-radius-medium );
-	box-shadow: var( --box-shadow-border );
+// Sync with wikitable styles
+// Separate Citizen opinionated styles so it is easy to track and debug
+.skin-citizen {
+	table.cargoTable {
+		font-size: var( --font-size-small );
+		border-radius: var( --border-radius-medium );
+		box-shadow: var( --box-shadow-border );
+
+		tr {
+			&:first-of-type {
+				th,
+				td {
+					&:first-child {
+						border-top-left-radius: var( --border-radius-medium );
+					}
+
+					&:last-child {
+						border-top-right-radius: var( --border-radius-medium );
+					}
+				}
+			}
+
+			&:last-of-type {
+				th,
+				td {
+					&:first-child {
+						border-bottom-left-radius: var( --border-radius-medium );
+					}
+
+					&:last-child {
+						border-bottom-right-radius: var( --border-radius-medium );
+					}
+				}
+			}
+		}
+
+		/* Reset border radius between thead tbody, tbody tfoot, etc. */
+		> :where( thead, tbody, tfoot ):has( + :where( thead, tbody, tfoot ):not( :empty ) ) {
+			tr:last-of-type {
+				th,
+				td {
+					&:first-child {
+						border-bottom-left-radius: var( --border-radius-sharp );
+					}
+
+					&:last-child {
+						border-bottom-right-radius: var( --border-radius-sharp );
+					}
+				}
+			}
+		}
+
+		> :where( thead, tbody, tfoot ) + :where( thead, tbody, tfoot ):not( :empty ) {
+			tr:first-of-type {
+				th,
+				td {
+					&:first-child {
+						border-top-left-radius: var( --border-radius-sharp );
+					}
+
+					&:last-child {
+						border-top-right-radius: var( --border-radius-sharp );
+					}
+				}
+			}
+		}
+	}
+
+	// Temporary responsiveness fix until Cargo patches it (#924)
+	.cargoDynamicTable.dataTable {
+		display: block;
+		max-width: max-content; // Needed for the border
+		overflow-x: auto;
+		border-radius: var( --border-radius-medium );
+		box-shadow: var( --box-shadow-border );
+	}
 }
