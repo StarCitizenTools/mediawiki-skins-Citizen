@@ -3,9 +3,9 @@
  *
  * SkinStyles for Extension:TemplateData
  * Module: ext.templateDataGenerator.editTemplatePage
- * Version: REL1_39 e2c12b5
+ * Version: REL1_39 7f8c5a8
  *
- * Date: 2023-05-01
+ * Date: 2024-08-19
 */
 
 .tdg-editscreen-main {
@@ -13,4 +13,50 @@
 	margin: var( --space-sm );
 	font-size: var( --font-size-small );
 	border-bottom: var( --border-width-base ) solid var( --border-color-base );
+}
+
+.tdg-templateDataParamWidget-param {
+	&-name,
+	&-aliases,
+	&-description {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	&-name {
+		font-weight: var( --font-weight-semibold );
+	}
+
+	&-aliases {
+		font-size: var( --font-size-x-small );
+	}
+
+	&-description {
+		color: var( --color-subtle );
+	}
+
+	&-alias {
+		font-family: var( --font-family-monospace );
+		color: var( --color-emphasized );
+		background-color: var( --color-surface-2 );
+		border: var( --border-width-base ) solid var( --border-color-base );
+		border-radius: var( --border-radius-small );
+
+		&:first-child {
+			background-color: var( --color-surface-2 );
+		}
+	}
+}
+
+.tdg-templateDataParamWidget-paramList-param-description {
+	color: var( --color-subtle );
+}
+
+.tdg-languageResultWidget-otherMatch {
+	color: var( --color-subtle );
+}
+
+.tdg-languageResultWidget-highlight {
+	font-weight: var( --font-weight-semibold );
 }

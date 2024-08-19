@@ -1,0 +1,66 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:TemplateData
+ * Module: ext.templateData
+ * Version: REL1_39 7f8c5a8
+ *
+ * Date: 2024-08-19
+*/
+
+.mw-templatedata-doc-params {
+	caption {
+		p {
+			margin: 0;
+		}
+	}
+
+	.mw-templatedata-caption {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: var( --space-sm );
+		font-size: inherit;
+		background-color: var( --color-surface-2 );
+
+		// Change edit template data link into a button
+		.mw-editsection-like > a {
+			display: block;
+			padding: var( --space-xs ) var( --space-sm );
+			font-size: var( --font-size-small );
+			line-height: 1;
+			color: var( --color-emphasized );
+			text-decoration: none;
+			border: 1px solid var( --border-color-interactive );
+			border-radius: var( --border-radius--small );
+
+			&:hover {
+				background-color: var( --background-color-button-quiet--hover );
+			}
+
+			&:active {
+				background-color: var( --background-color-button-quiet--active );
+			}
+		}
+	}
+}
+
+.mw-templatedata-doc-param-alias {
+	color: var( --color-subtle );
+}
+
+.mw-templatedata-doc-muted {
+	color: var( --color-subtle );
+}
+
+.mw-templatedata-doc-param-status-required {
+	font-weight: var( --font-weight-semibold );
+}
+
+.mw-templatedata-format {
+	font-size: var( --font-size-small );
+}
+
+.mw-templateData-template-map-list-menu-panel {
+	border-right-color: var( --border-color-base );
+}
