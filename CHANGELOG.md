@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.27.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.26.0...v2.27.0) (2024-08-19)
+
+
+### Features
+
+* **Cargo:** ✨ make Cargo dynamicTable responsive ([2730769](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2730769b041c76de2459147e5b2e39aeaa466827)), closes [#924](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/924)
+* **Cargo:** ✨ update Cargo table styles to match with wikitables ([8099399](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8099399ff42243660c16598b6ea0cfbf8f18a4f1)), closes [#923](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/923)
+* **DataTables:** ✨ let scoll wrapper handles borders instead ([8f03aad](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8f03aade5110cbe5d7cd778debeb21da1d25e222))
+* **search:** ✨ append fragment to search suggestion URLs, if one is provided ([5e4e57f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5e4e57f082a33965fb2caf9c93dcefdf6e708e5b))
+* **TemplateData:** ✨ update TemplateData styles ([0b397ee](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0b397eeb6e4c016275053a938f4305ab462996c4))
+* **UploadWizard:** add basic styles for campaign ([#925](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/925)) ([118f9d4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/118f9d47c7eb6b977d1313072687343932c76076))
+
+
+### Bug Fixes
+
+* **category:** 🐛 fix incorrect hover text color for visited new category ([fd0346e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fd0346eb4fe4bb75144373e4d159e4715b772fe7)), closes [#933](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/933)
+* **DiscussionTools:** 🐛 fix incorrect font-family for headings ([e3dc77f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e3dc77f36a4d0b782465b50488bbfef44f99e899)), closes [#930](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/930)
+* **OOUI:** 🐛 add missing invert color rules for framed progressive buttons ([1461172](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/146117223862ff5f130b85c28a6adeafa3ab7826))
+* **ooui:** 🐛 remove incorrect OOUI checkbox invert rule ([8de13a1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8de13a1f85e6a292a5c812ed09196abf070c9456))
+* **pagetools:** 🐛 add additional check for source edit button ([fadd989](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fadd9893eaee020e96e7247a5ba9a1ae4eafb3ff)), closes [#929](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/929)
+* **pagetools:** 🐛 fix incorrect selector for edit buttons ([a4fdcf3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a4fdcf3572cede87c8c18c5d4eb19c3e25386a04))
+* **wikitable:** 🐛 fix missing bordered wikitable borders when rowspan is used ([14591ad](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/14591adcf2aca7f33954f96a7be13d21a52ec0c7)), closes [#932](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/932)
+* **wikitable:** 🐛 stricter selector for border separator ([7dbdf27](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7dbdf27ca7f3a7b82281a363a5878b5249f403d1))
+
 ## [2.26.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.25.0...v2.26.0) (2024-08-06)
 
 
