@@ -44,7 +44,7 @@ jobs:
     # Check for changed files 
     - name: Check for PHP changes
       id: changed-php
-      uses: tj-actions/changed-files@v44
+      uses: tj-actions/changed-files@v45
       with:
         since_last_remote_commit: "true"
         files: |
@@ -52,7 +52,7 @@ jobs:
 
     - name: Check for script changes
       id: changed-script
-      uses: tj-actions/changed-files@v44
+      uses: tj-actions/changed-files@v45
       with:
         since_last_remote_commit: "true"
         files: |
@@ -60,7 +60,7 @@ jobs:
 
     - name: Check for stylesheet changes
       id: changed-stylesheet
-      uses: tj-actions/changed-files@v44
+      uses: tj-actions/changed-files@v45
       with:
         since_last_remote_commit: "true"
         files: |
@@ -71,7 +71,7 @@ jobs:
     
     - name: Check for i18n changes
       id: changed-i18n
-      uses: tj-actions/changed-files@v44
+      uses: tj-actions/changed-files@v45
       with:
         since_last_remote_commit: "true"
         files: |
