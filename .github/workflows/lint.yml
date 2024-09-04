@@ -16,9 +16,6 @@ jobs:
   test:
     name: Lint
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        php-versions: ['8.2', '8.1', '8.0', '7.4']
     steps:
     - name: Cancel Previous Runs
       uses: styfle/cancel-workflow-action@0.12.1
