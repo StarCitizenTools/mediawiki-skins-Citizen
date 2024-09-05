@@ -405,6 +405,7 @@
 			"+ext.echo.styles.alert": "skinStyles/extensions/Echo/ext.echo.styles.alert.less",
 			"+ext.echo.special": "skinStyles/extensions/Echo/ext.echo.special.less",
 			"+ext.echo.styles.special": "skinStyles/extensions/Echo/ext.echo.styles.special.less",
+			"+ext.floatingUI": "skinStyles/extensions/FloatingUI/ext.floatingUI.less",
 			"+ext.flow.mediawiki.ui.form": "skinStyles/extensions/Flow/ext.flow.mediawiki.ui.form.less",
 			"+ext.flow.styles.base": "skinStyles/extensions/Flow/ext.flow.styles.base.less",
 			"+ext.flow.ui": "skinStyles/extensions/Flow/ext.flow.ui.less",

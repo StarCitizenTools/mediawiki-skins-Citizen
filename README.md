@@ -58,6 +58,7 @@ Name | Grade | Version | Last updated
 [DiscussionTools](https://www.mediawiki.org/wiki/Extension:DiscussionTools) | A | REL1_39 `1aae2cc` | 2023-06-19
 [DismissableSiteNotice](https://www.mediawiki.org/wiki/Extension:DismissableSiteNotice) | A | N/A | N/A
 [Echo](https://www.mediawiki.org/wiki/Extension:Echo) | A | REL1_35 `347c30e` | 2023-06-29
+[FloatingUI](https://www.mediawiki.org/wiki/Extension:FloatingUI) | A | 0.0.1 | 2024-09-04
 [Flow (StructuredDiscussions)](https://www.mediawiki.org/wiki/Extension:StructuredDiscussions) | B | REL1_35 `e3379f0` | 2022-04-27
 [FlaggedRevs](https://www.mediawiki.org/wiki/Extension:FlaggedRevs) | B | REL1_39 `130a28f` | 2023-08-03
 [Graph](https://www.mediawiki.org/wiki/Extension:Graph) | B | N/A | N/A
