@@ -1,0 +1,48 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for StructuredNavigation
+ * Module: ext.structuredNav.NavigationView.styles
+ * Version: REL1_39 55e2ec0
+ *
+ * Date: 2024-09-06
+*/
+
+/* ext.structuredNav.NavigationView.less */
+.mw-structurednav-navigation-container {
+	background-color: var(--color-surface-2);
+	border: 2px solid var(--border-color-base);
+	font-size: var(--font-size-base);
+	border-radius: var(--border-radius--small);
+}
+
+.mw-structurednav-header {
+	background: var(--color-surface-4);
+	color: var(--color-base);
+	font-size: var(--font-size-base);
+	
+	// Needs higher specificity to override default skin styles
+	// for the h2 element - Samantha Nguyen
+	.mw-structurednav-header-title {
+		font-family: var(--font-family-base);
+		font-size: var(--font-size-small);
+		font-weight: var(--font-weight-bold);
+	}
+}
+
+.mw-structurednav-group-title,
+.mw-structurednav-group-content {
+	border-top: 2px solid var(--border-color-inverted);
+}
+
+.mw-structurednav-group-title {
+	background: var(--color-surface-3);
+	color: var(--color-base);
+	font-weight: var(--font-weight-bold);
+	font-family: var(--font-family-base);
+}
+
+/* ext.structuredNav.NavigationView.separator.less */
+.mw-structurednav-group-content-item:not( :last-child ):after {
+	color: var(--color-base);
+}

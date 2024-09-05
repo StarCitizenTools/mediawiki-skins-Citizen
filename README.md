@@ -82,6 +82,7 @@ Name | Grade | Version | Last updated
 [Semantic Result Formats](https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats) | E | N/A | N/A
 [SimpleTooltip](https://www.mediawiki.org/wiki/Extension:SimpleTooltip) | B | N/A | 2022-02-19
 [SmiteSpam](https://www.mediawiki.org/wiki/Extension:SmiteSpam) | B | REL1_39 `c81b04b` | 2023-05-30
+[StructuredNavigation](https://www.mediawiki.org/wiki/Extension:StructuredNavigation) | A | REL1_39 `55e2ec0` | 2024-09-06
 [SyntaxHighlight](https://www.mediawiki.org/wiki/Extension:SyntaxHighlight) | A | REL1_35 `05598b3` | 2023-05-22
 [Tabs](https://www.mediawiki.org/wiki/Extension:Tabs) | A | REL1_39 `63ccef2` | 2023-07-11
 [Tabber](https://www.mediawiki.org/wiki/Extension:Tabber) | A | N/A | N/A
