@@ -10,40 +10,40 @@
 
 /* ext.structuredNav.NavigationView.less */
 .mw-structurednav-navigation-container {
-	background-color: var(--color-surface-2);
-	border-color: var(--border-color-subtle);
-	font-size: var(--font-size-base);
-	border-radius: var(--border-radius--small);
+	background-color: var( --color-surface-0 );
+	border-color: var( --border-color-subtle );
+	font-size: var( --font-size-small );
+	border-radius: var( --border-radius-base );
 }
 
 .mw-structurednav-header {
-	background: var(--color-surface-4);
-	color: var(--color-base);
-	font-size: var(--font-size-base);
+	background: var( --color-surface-3 );
+	color: var( --color-base );
+	font-size: var( --font-size-small );
 	
 	// Needs higher specificity to override default skin styles
 	// for the h2 element - Samantha Nguyen
 	.mw-structurednav-header-title {
-		font-family: var(--font-family-base);
-		font-size: var(--font-size-small);
-		font-weight: var(--font-weight-bold);
+		font-family: var( --font-family-base );
+		font-size: var( --font-size-medium );
+		font-weight: var( --font-weight-semibold );
 	}
 }
 
 .mw-structurednav-group-title,
 .mw-structurednav-group-content {
-	border-top: 2px solid var(--border-color-inverted);
+	border-top-color: var( --color-surface-0 );
 }
 
 .mw-structurednav-group-title {
-	background: var(--color-surface-3);
-	color: var(--color-base);
-	font-weight: var(--font-weight-bold);
-	font-family: var(--font-family-base);
-	text-align: left;
+	background: var( --color-surface-2 );
+	color: var( --color-base );
+	font-weight: var( --font-weight-semibold );
+	font-family: var( --font-family-base );
+	text-align: start ;
 }
 
 /* ext.structuredNav.NavigationView.separator.less */
 .mw-structurednav-group-content-item:not( :last-child ):after {
-	color: var(--color-base);
+	color: var( --color-base );
 }
