@@ -10,17 +10,17 @@
 
 /* ext.structuredNav.NavigationView.less */
 .mw-structurednav-navigation-container {
+	font-size: var( --font-size-small );
 	background-color: var( --color-surface-0 );
 	border-color: var( --border-color-subtle );
-	font-size: var( --font-size-small );
 	border-radius: var( --border-radius-base );
 }
 
 .mw-structurednav-header {
-	background: var( --color-surface-3 );
-	color: var( --color-base );
 	font-size: var( --font-size-small );
-	
+	color: var( --color-base );
+	background: var( --color-surface-3 );
+
 	// Needs higher specificity to override default skin styles
 	// for the h2 element - Samantha Nguyen
 	.mw-structurednav-header-title {
@@ -36,14 +36,14 @@
 }
 
 .mw-structurednav-group-title {
-	background: var( --color-surface-2 );
-	color: var( --color-base );
-	font-weight: var( --font-weight-semibold );
 	font-family: var( --font-family-base );
-	text-align: start ;
+	font-weight: var( --font-weight-semibold );
+	color: var( --color-base );
+	text-align: start;
+	background: var( --color-surface-2 );
 }
 
 /* ext.structuredNav.NavigationView.separator.less */
-.mw-structurednav-group-content-item:not( :last-child ):after {
+.mw-structurednav-group-content-item:not( :last-child )::after {
 	color: var( --color-base );
 }
