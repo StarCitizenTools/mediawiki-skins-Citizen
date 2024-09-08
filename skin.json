@@ -603,6 +603,7 @@
 			"+oojs-ui-widgets": "skinStyles/ooui/oojs-ui-widgets.less",
 			"+oojs-ui-widgets.styles": "skinStyles/ooui/oojs-ui-widgets.less",
 			"+oojs-ui-windows": "skinStyles/ooui/oojs-ui-windows.less",
+			"+jquery.jsonview": "skinStyles/jquery/jsonview.less",
 			"+jquery.spinner.styles": "skinStyles/jquery.spinner/jquery.spinner.styles.less",
 			"+jquery.ui": "skinStyles/jquery/ui.less",
 			"+@wikimedia/codex": "skinStyles/codex/codex.styles.less"
