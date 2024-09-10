@@ -85,6 +85,14 @@
 	}
 }
 
+/*
+ * T289817 `.mw-sticky-header-element` provides an API for template developers
+ * to make their templates compatible with the Citizen sticky header.
+ */
+.mw-sticky-header-element {
+	top: var( --height-sticky-header ) !important;
+}
+
 // Hide sticky header on scroll down on smaller screens
 @media ( max-width: @max-width-breakpoint-tablet ) {
 	.citizen-page-header {
