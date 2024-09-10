@@ -42,15 +42,12 @@ function registerServiceWorker() {
 function initBodyContent( bodyContent ) {
 	const
 		sections = require( './sections.js' ),
-		overflowElements = require( './overflowElements.js' ),
-		toc = require( './tableOfContents.js' );
+		overflowElements = require( './overflowElements.js' );
 
 	// Collapsable sections
 	sections.init( bodyContent );
 	// Overflow element enhancements
 	overflowElements.init( bodyContent );
-	// Table of contents
-	toc.init( bodyContent );
 }
 
 /**
@@ -63,6 +60,7 @@ function main( window ) {
 		echo = require( './echo.js' ),
 		search = require( './search.js' ),
 		dropdown = require( './dropdown.js' ),
+		setupIntersectionObservers = require( './setupIntersectionObservers.js' ),
 		stickyHeader = require( './stickyHeader.js' ),
 		lastModified = require( './lastModified.js' ),
 		share = require( './share.js' );
@@ -71,6 +69,7 @@ function main( window ) {
 	echo();
 	search.init( window );
 	dropdown.init();
+	setupIntersectionObservers.main();
 	stickyHeader.init();
 	lastModified.init();
 	share.init();

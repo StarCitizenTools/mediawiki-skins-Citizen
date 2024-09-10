@@ -1,6 +1,9 @@
 <li id="toc-{{anchor}}"
 	class="citizen-toc-list-item citizen-toc-level-{{toclevel}}">
-	<a class="citizen-toc-link" href="#{{linkAnchor}}">
+	{{! 
+		^linkAnchor anchor /linkAnchor is needed for MW 1.39 compatability
+	}}
+	<a class="citizen-toc-link" href="#{{linkAnchor}}{{^linkAnchor}}{{anchor}}{{/linkAnchor}}">
 		<div class="citizen-toc-indicator"></div>
 		<div class="citizen-toc-text">
 			<span class="citizen-toc-numb">{{number}}</span>

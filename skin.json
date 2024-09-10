@@ -157,6 +157,7 @@
 					"name": "resources/skins.citizen.scripts/config.json",
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenResourceLoaderConfig"
 				},
+				"resources/skins.citizen.scripts/deferUntilFrame.js",
 				"resources/skins.citizen.scripts/dropdown.js",
 				"resources/skins.citizen.scripts/echo.js",
 				"resources/skins.citizen.scripts/lastModified.js",
@@ -165,9 +166,26 @@
 				"resources/skins.citizen.scripts/sectionObserver.js",
 				"resources/skins.citizen.scripts/search.js",
 				"resources/skins.citizen.scripts/sections.js",
+				"resources/skins.citizen.scripts/setupIntersectionObservers.js",
 				"resources/skins.citizen.scripts/share.js",
 				"resources/skins.citizen.scripts/stickyHeader.js",
-				"resources/skins.citizen.scripts/tableOfContents.js"
+				"resources/skins.citizen.scripts/tableOfContents.js",
+				{
+					"name": "resources/skins.citizen.scripts/tableOfContentsConfig.json",
+					"config": [
+						"CitizenTableOfContentsCollapseAtCount"
+					]
+				},
+				{
+					"name": "resources/skins.citizen.scripts/templates/TableOfContents__list.mustache",
+					"file": "templates/TableOfContents__list.mustache",
+					"type": "text"
+				},
+				{
+					"name": "resources/skins.citizen.scripts/templates/TableOfContents__line.mustache",
+					"file": "templates/TableOfContents__line.mustache",
+					"type": "text"
+				}
 			],
 			"messages": [
 				"citizen-share"
@@ -733,6 +751,10 @@
 			"description": "Defines css classes ignored by overflow wrapper",
 			"descriptionmsg": "citizen-config-overflownowrapclasses",
 			"public": true
+		},
+		"TableOfContentsCollapseAtCount": {
+			"value": 28,
+			"description": "@var The minimum number of headings required to collapse all headings in the sticky table of contents by default."
 		}
 	},
 	"manifest_version": 2
