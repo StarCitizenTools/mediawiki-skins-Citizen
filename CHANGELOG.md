@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.28.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.27.0...v2.28.0) (2024-09-09)
+
+
+### Features
+
+* **FloatingUI:** ✨ add support for Extension:FloatingUI ([bb44e05](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bb44e05f976a6847b73f8c5324c800cbdae38cd4))
+* **FloatingUI:** ✨ sync styles with the latest version ([4dd8e54](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4dd8e5492e95cd5fa9cd4e1d2195b4729c057496))
+* **SemanticMediaWiki:** ✨ update jsonview styles ([6fef375](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6fef375dbef9df23a0c0252a03249483352d1d25))
+* **StructuredNavigation:** add styles for StructuredNavigation ([#943](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/943)) ([8eb6e51](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8eb6e51110e799f7d869920717a6aec3d8ca7ec5))
+* **TabberNeue:** ✨ drop CSS variable definition for TabberNeue ([12196cb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/12196cb94050575848eed8e1cb77d51fa2f5071f))
+
+
+### Bug Fixes
+
+* **SemanticMediaWiki:** 🐛 fix undefined LESS mixin ([c698990](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c6989906a3d721a5e66bf0975556917fbd9e871b))
+* **StructuredDiscussions:** 🐛 fix missing LESS import ([81a3cd1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/81a3cd1bf864227d494456a12ab6f96ed6d69f4d)), closes [#711](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/711)
+
 ## [2.27.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.26.0...v2.27.0) (2024-08-19)
 
 
