@@ -1,4 +1,5 @@
 .citizen-toc {
+	--citizen-toc-toggle-size: ~'calc( var( --font-size-small ) * var( --line-height-xs ) + var( --space-xs ) * 2 )';
 	font-size: var( --font-size-small );
 	line-height: var( --line-height-xs );
 
@@ -36,6 +37,11 @@
 			transition-property: opacity, height, padding !important;
 		}
 
+		&:has( + .citizen-toc-toggle ) {
+			/* Make space for toggle */
+			padding-right: ~'calc( var( --space-xs ) + var( --citizen-toc-toggle-size ) )';
+		}
+
 		&:hover {
 			background-color: var( --background-color-button-quiet--hover );
 		}
@@ -48,6 +54,17 @@
 		&:focus {
 			text-decoration: none;
 		}
+	}
+
+	&-toggle {
+		position: absolute;
+		top: 0;
+		right: 0;
+		display: none;
+		width: var( --citizen-toc-toggle-size );
+		height: var( --citizen-toc-toggle-size );
+		padding: 0;
+		background: transparent;
 	}
 
 	&-indicator {
@@ -73,6 +90,8 @@
 	}
 
 	&-list-item {
+		position: relative;
+
 		&--active {
 			> .citizen-toc-link {
 				color: var( --color-progressive );
@@ -82,6 +101,45 @@
 				}
 			}
 		}
+	}
+}
+
+// Collapse ToC sections by default, excluding no-js
+.client-js .citizen-toc {
+	.citizen-toc-level-1 .citizen-toc-list-item {
+		display: none;
+	}
+
+	.citizen-toc-level-1.citizen-toc-list-item--expanded .citizen-toc-list-item {
+		display: block;
+	}
+
+	.citizen-toc-toggle {
+		--size-icon: var( --font-size-small );
+		display: grid;
+		place-content: center;
+		cursor: pointer;
+		border-radius: var( --border-radius--small );
+
+		.citizen-ui-icon {
+			&::before {
+				transition: var( --transition-hover );
+				transition-property: transform;
+				transform: rotate3d( 1, 0, 0, 180deg );
+			}
+		}
+
+		&:hover {
+			background-color: var( --background-color-button-quiet--hover );
+		}
+
+		&:active {
+			background-color: var( --background-color-button-quiet--active );
+		}
+	}
+
+	.citizen-toc-level-1.citizen-toc-list-item--expanded .citizen-toc-toggle .citizen-ui-icon::before {
+		transform: none;
 	}
 }
 

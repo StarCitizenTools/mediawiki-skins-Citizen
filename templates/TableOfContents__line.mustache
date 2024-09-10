@@ -13,6 +13,12 @@
 	{{#html-summary}}
 	{{{.}}}
 	{{/html-summary}}
+	{{#is-top-level-section}}{{#is-parent-section}}
+		<button aria-controls="toc-{{anchor}}-sublist" class="citizen-toc-toggle">
+			<span class="citizen-ui-icon mw-ui-icon-wikimedia-collapse"></span>
+			<span>{{{citizen-button-label}}}</span>
+		</button>
+	{{/is-parent-section}}{{/is-top-level-section}}
 	<ul id="toc-{{anchor}}-sublist" class="citizen-toc-list">
 		{{#array-sections}}
 		{{>TableOfContents__line}}
