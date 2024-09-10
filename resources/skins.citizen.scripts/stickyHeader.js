@@ -1,7 +1,7 @@
 const SCROLL_DOWN_CLASS = 'citizen-scroll--down';
 const SCROLL_UP_CLASS = 'citizen-scroll--up';
 const STICKY_CLASS = 'citizen-page-header--sticky';
-const { initDirectionObserver, initIntersectionObserver } = require( './scrollObserver.js' );
+const { initDirectionObserver, initScrollObserver } = require( './scrollObserver.js' );
 
 /**
  * Observes the scroll direction and adds/removes corresponding classes to the body element.
@@ -84,7 +84,7 @@ function init() {
 		toggleStickyHeader( true );
 	}, 250 );
 
-	const observer = initIntersectionObserver(
+	const observer = initScrollObserver(
 		() => {
 			toggleStickyHeader( true );
 			window.addEventListener( 'resize', onResize );
