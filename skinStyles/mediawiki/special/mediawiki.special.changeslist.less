@@ -46,6 +46,21 @@
 		&-inner {
 			color: var( --color-subtle );
 		}
+
+		/* Add nested indent line */
+		> td:first-child {
+			position: relative;
+
+			&::before {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 5px;
+				width: 2px;
+				content: '';
+				background: var( --border-color-base );
+			}
+		}
 	}
 
 	&-separator {
@@ -176,7 +191,7 @@ body:not( .mw-rcfilters-ui-initialized ) .mw-rcfilters-head {
 		content: '';
 		background-color: var( --color-subtle );
 		border-radius: 100%;
-		outline: 4px solid var( --border-color-base );
+		outline: 4px solid var( --color-surface-0 );
 	}
 
 	.comment {
