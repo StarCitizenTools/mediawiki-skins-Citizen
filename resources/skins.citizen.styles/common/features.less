@@ -69,6 +69,12 @@
 	--shadow-strength: 0.06;
 }
 
+// T365102 invert class specifically for image related element
+.skin-invert-image img,
+.skin-invert {
+	filter: var( --filter-invert );
+}
+
 .skin-theme-clientpref-night {
 	:root& {
 		.theme-dark();
