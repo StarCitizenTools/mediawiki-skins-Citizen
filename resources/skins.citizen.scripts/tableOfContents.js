@@ -17,7 +17,7 @@ const SECTION_CLASS = 'citizen-toc-list-item';
 const ACTIVE_SECTION_CLASS = 'citizen-toc-list-item--active';
 const EXPANDED_SECTION_CLASS = 'citizen-toc-list-item--expanded';
 const TOP_SECTION_CLASS = 'citizen-toc-level-1';
-const ACTIVE_TOP_SECTION_CLASS = 'citizen-toc-level-1-active';
+const ACTIVE_TOP_SECTION_CLASS = 'citizen-toc-level-1--active';
 const LINK_CLASS = 'citizen-toc-link';
 const TOGGLE_CLASS = 'citizen-toc-toggle';
 const TOC_CONTENTS_ID = 'mw-panel-toc-list';
@@ -155,7 +155,7 @@ module.exports = function tableOfContents( props ) {
 		activeTopSection = /** @type {HTMLElement|undefined} */ ( selectedTocSection.closest( `.${ TOP_SECTION_CLASS }` ) );
 		if ( activeTopSection ) {
 			// T328089 Sometimes activeTopSection is null
-			activeTopSection.classList.add( ACTIVE_TOP_SECTION_CLASS );
+			activeTopSection.classList.add( ACTIVE_TOP_SECTION_CLASS, EXPANDED_SECTION_CLASS );
 		}
 		activeSubSection = selectedTocSection;
 		activeSubSection.classList.add( ACTIVE_SECTION_CLASS );
@@ -171,7 +171,7 @@ module.exports = function tableOfContents( props ) {
 			activeSubSection = undefined;
 		}
 		if ( activeTopSection ) {
-			activeTopSection.classList.remove( ACTIVE_TOP_SECTION_CLASS );
+			activeTopSection.classList.remove( ACTIVE_TOP_SECTION_CLASS, EXPANDED_SECTION_CLASS );
 			activeTopSection = undefined;
 		}
 	}
