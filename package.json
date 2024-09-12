@@ -18,7 +18,7 @@
 		"devmoji": "^2.3.0",
 		"eslint-config-wikimedia": "0.28.2",
 		"grunt-banana-checker": "0.13.0",
-		"husky": "^9.1.5",
+		"husky": "^9.1.6",
 		"stylelint": "16.9.0",
 		"stylelint-config-recess-order": "5.1.0",
 		"stylelint-config-wikimedia": "0.17.2",
