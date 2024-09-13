@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.29.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.28.0...v2.29.0) (2024-09-12)
+
+
+### Features
+
+* **core:** ✨ add indent line to changelist ([a00fe11](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a00fe11e786a55450f8eaef71f4897c94c95a27c))
+* **core:** ✨ add support for mw-sticky-header-element ([2569749](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/25697495e5cdb13c178a7c6bc64c41a11a3efc6f))
+* **core:** ✨ add support for skin-invert and skin-invert-image ([8f61265](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8f61265cec46c336cf0f75d531131684771ad38a))
+* **core:** ✨ do not hardcode scroll padding top ([8354f8e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8354f8e263c0e062ec870730efd9fc5863eb8833))
+* **core:** ✨ minor tweaks to changelist styles ([2c862b0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2c862b0cc1c6e94f8d28b3bc0b86c591368e917e))
+* **toc:** ✨ allow ToC to be collapsible ([257673a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/257673a588361f3ca78eb00f6b33230e4cbd5f36)), closes [#556](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/556)
+* **toc:** ✨ expand the current active section ([1b7025e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1b7025ef858f4e307064148137e471a1dd077b92))
+* **toc:** ✨ reduce the size of toc toggle icon ([07dd936](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/07dd936115ceed17cfd16d5993af8cbb9be9b13d))
+* **toc:** ✨ switch to ToC implementation based on Vector 2022 ([8640d4e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8640d4ef30adb0c11ad2abbef9c1ec6dd2a2044e))
+
+
+### Bug Fixes
+
+* **toc:** 🐛 exclude toggle from top section hover ([ab62d65](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ab62d65768f1bdfc1a365748c6ae5fffadca7c83))
+* **userinfo:** 🐛 use more appropiate i18n for edit label ([19441d8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/19441d8a749ffa9649b728216c57cc400a3ce617)), closes [#944](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/944)
+
 ## [2.28.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.27.0...v2.28.0) (2024-09-09)
 
 
