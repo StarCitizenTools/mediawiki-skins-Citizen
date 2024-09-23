@@ -116,15 +116,27 @@ const setupTableOfContents = ( tocElement, bodyContent, initSectionObserverFn ) 
 		sectionObserver.resume();
 		sectionObserver.setElements( elements() );
 	};
+
+	let isSticky;
+
 	mw.hook( 've.activationStart' ).add( () => {
 		sectionObserver.pause();
+		isSticky = document.body.classList.contains( 'citizen-page-header--sticky' );
+		if ( isSticky ) {
+			document.body.classList.remove( 'citizen-page-header--sticky' );
+		}
 	} );
 	mw.hook( 'wikipage.tableOfContents' ).add( ( sections ) => {
 		tableOfContents.reloadTableOfContents( sections ).then( () => {
 			updateElements();
 		} );
 	} );
-	mw.hook( 've.deactivationComplete' ).add( updateElements );
+	mw.hook( 've.deactivationComplete' ).add( () => {
+		updateElements();
+		if ( isSticky ) {
+			document.body.classList.add( 'citizen-page-header--sticky' );
+		}
+	} );
 
 	const setInitialActiveSection = () => {
 		const hash = location.hash.slice( 1 );
