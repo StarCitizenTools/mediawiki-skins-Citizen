@@ -1,0 +1,19 @@
+.citizen-keyboard-hint {
+	display: none;
+	gap: var( --space-xs );
+	font-size: var( --font-size-x-small );
+	line-height: 1;
+
+	/* Should have a keyboard */
+	@media ( hover: hover ) and ( pointer: fine ) {
+		display: flex;
+	}
+
+	&-label {
+		color: var( --color-base );
+	}
+
+	&-key {
+		color: var( --color-subtle );
+	}
+}

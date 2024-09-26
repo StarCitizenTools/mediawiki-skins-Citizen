@@ -316,7 +316,7 @@ const typeahead = {
 			'msg-citizen-search-empty-desc': mw.message( 'citizen-search-empty-desc' ).text()
 		};
 		this.element = template.render( data ).get()[ 1 ];
-		formEl.parentElement.appendChild( this.element );
+		formEl.after( this.element );
 
 		this.form.init( formEl );
 		this.input.init( inputEl );

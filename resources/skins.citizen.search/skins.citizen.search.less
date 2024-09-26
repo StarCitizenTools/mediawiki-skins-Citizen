@@ -2,7 +2,10 @@
 @import '../mixins.less';
 
 .citizen-typeahead {
-	margin: 0; // Reset <ol> styles
+	display: flex;
+	flex-direction: column;
+	gap: var( --space-xs );
+	margin: var( --space-xs ) 0;
 	list-style: none;
 	border-bottom-right-radius: var( --border-radius-medium );
 	border-bottom-left-radius: var( --border-radius-medium );
@@ -53,8 +56,6 @@
 				gap: var( --space-xxs );
 				padding-right: var( --space-sm );
 				padding-left: var( --space-sm );
-				margin-top: var( --space-xs );
-				margin-bottom: var( --space-xs );
 				overflow-x: auto;
 			}
 		}

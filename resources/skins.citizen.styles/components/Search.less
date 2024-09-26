@@ -95,6 +95,7 @@
 		z-index: @z-index-stacking-1;
 		display: flex;
 		height: 100%;
+		overflow: hidden;
 		font-size: var( --font-size-small );
 		background-color: inherit;
 
@@ -135,6 +136,26 @@
 		// Remove browser native clear all button in search field
 		&::-webkit-search-cancel-button {
 			-webkit-appearance: none;
+		}
+	}
+
+	&__footer {
+		display: flex;
+		gap: var( --space-lg );
+		align-items: center;
+		justify-content: space-between;
+		min-height: 2.5rem;
+		padding: 0 var( --space-md );
+		overflow: hidden;
+		font-size: var( --font-size-x-small );
+		white-space: nowrap;
+		border-top: 1px solid var( --border-color-base );
+
+		&-start,
+		&-end {
+			display: flex;
+			gap: var( --space-md );
+			align-items: center;
 		}
 	}
 }
