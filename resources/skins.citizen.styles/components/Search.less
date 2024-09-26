@@ -1,4 +1,5 @@
-@width-search-bar: 640px;
+@width-search-bar: 800px;
+@position-offset-y-desktop: 3.5rem; /* Sync with search button position */
 
 .citizen-search {
 	--width-search-bar: @width-search-bar;
@@ -15,21 +16,18 @@
 		left: 0;
 		width: var( --width-search-bar );
 		max-width: ~'calc(100vw - var( --padding-page ) )';
-		height: var( --height-search-bar );
+		max-height: var( --header-card-maxheight );
 		margin-right: auto;
 		margin-left: auto;
-		overflow: initial;
+		overflow-y: auto;
+		overscroll-behavior: contain;
 		transform-origin: center var( --transform-origin-offset-start );
 		contain: none;
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {
-			top: unset;
-		}
-
-		.citizen-ui-icon {
-			&::before {
-				background-size: 1rem;
-			}
+			top: @position-offset-y-desktop;
+			max-height: ~'calc( 100vh - @{position-offset-y-desktop} * 2 )';
+			overflow-y: auto;
 		}
 	}
 
@@ -39,10 +37,12 @@
 
 	&__formButton,
 	&__formIcon {
-		/* Sync with left icons (--size-icon + --space-sm * 2) and typeahead */
-		--size-icon: ~'calc( 1.25rem + var( --space-sm ) * 2 )';
+		--size-icon: 1rem;
 		display: grid;
 		place-content: center;
+		/* Sync with left icons (--size-icon + --space-sm * 2) and typeahead */
+		width: ~'calc( 1.25rem + var( --space-sm ) * 2 )';
+		height: ~'calc( 1.25rem + var( --space-sm ) * 2 )';
 	}
 
 	&__formButton {
@@ -90,9 +90,13 @@
 	}
 
 	&__form {
+		position: sticky;
+		top: 0;
+		z-index: @z-index-stacking-1;
 		display: flex;
 		height: 100%;
 		font-size: var( --font-size-small );
+		background-color: inherit;
 
 		// HACK: Target mobile Safari only to prevent auto zooming the input field
 		@supports (-webkit-touch-callout: none) {

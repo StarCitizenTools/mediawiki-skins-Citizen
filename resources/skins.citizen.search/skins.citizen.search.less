@@ -2,23 +2,10 @@
 @import '../mixins.less';
 
 .citizen-typeahead {
-	position: absolute;
-	top: 100%;
-	left: -1px; // IDK why is it off by 1px
-	box-sizing: content-box; // Magic to align with search input
-	width: 100%;
-	max-height: ~'calc( var( --header-card-maxheight ) - var( --height-search-bar ) )';
 	margin: 0; // Reset <ol> styles
-	overflow: auto;
-	overscroll-behavior: contain;
-	border-top-color: transparent;
+	list-style: none;
 	border-bottom-right-radius: var( --border-radius-medium );
 	border-bottom-left-radius: var( --border-radius-medium );
-	.citizen-card( false );
-
-	@media ( min-width: @min-width-breakpoint-desktop ) {
-		max-height: 70vh;
-	}
 
 	a {
 		&:hover,
@@ -230,24 +217,21 @@
 	}
 
 	&__label {
-		--size-icon: 0.8125rem;
 		display: flex;
 		gap: var( --space-xxs );
 		margin-left: var( --space-xs );
-		font-size: var( --font-size-x-small );
+		font-size: var( --font-size-small );
 		color: var( --color-base );
-
-		.citizen-ui-icon {
-			margin-right: var( --space-xxs );
-		}
 	}
 
 	&__labelItem {
 		display: flex;
+		gap: var( --space-xxs );
 		align-items: center;
 	}
 
-	&__description {
+	&__description,
+	&__labelItem {
 		font-size: var( --font-size-x-small );
 		color: var( --color-subtle );
 	}
@@ -268,16 +252,6 @@
 		padding: 0 8px;
 		background-color: var( --color-surface-1 );
 		border-radius: var( --border-radius-base );
-	}
-}
-
-.citizen-search__card:has( .citizen-typeahead ) {
-	border-bottom-color: transparent;
-	border-bottom-right-radius: 0;
-	border-bottom-left-radius: 0;
-
-	.citizen-typeahead {
-		border-top-color: transparent;
 	}
 }
 
