@@ -17,6 +17,7 @@
 	"citizen.js": "{{optional}}\n{{related/js}}",
 	"citizen-drawer-toggle": "Tooltip of drawer menu toggle",
 	"citizen-usermenu-toggle": "Tooltip of personal menu toggle",
+	"citizen-search-footer": "Search card footer message",
 	"citizen-search-toggle": "Tooltip of search box toggle",
 	"citizen-search-keyhint-exit": "Keyboard hint for the key to exit search",
 	"citizen-search-keyhint-open": "Keyboard hint for the key to open search",

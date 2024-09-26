@@ -76,7 +76,6 @@
 
 			.citizen-typeahead {
 				&__content {
-					padding: var( --space-xs ) var( --space-sm );
 					margin: 0;
 					border: var( --border-width-base ) solid var( --border-color-base );
 					border-radius: var( --border-radius-medium );
@@ -94,7 +93,8 @@
 
 			.citizen-typeahead {
 				&__content {
-					padding: var( --space-sm ) 0;
+					padding-top: var( --space-sm );
+					padding-bottom: var( --space-sm );
 				}
 
 				&__thumbnail {
@@ -133,7 +133,8 @@
 			.citizen-typeahead {
 				&__content {
 					flex-direction: column;
-					padding: var( --space-xl ) 0;
+					padding-top: var( --space-xl );
+					padding-bottom: var( --space-xl );
 					text-align: center;
 				}
 
@@ -174,8 +175,7 @@
 	&__content {
 		display: flex;
 		align-items: center;
-		padding: var( --space-xs ) 0;
-		margin: 0 var( --space-sm );
+		padding: var( --space-xs ) var( --space-sm );
 		color: var( --color-base );
 	}
 
