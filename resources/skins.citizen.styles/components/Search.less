@@ -4,8 +4,11 @@
 	--width-search-bar: @width-search-bar;
 	--height-search-bar: 2.75rem;
 
+	@media ( min-width: @min-width-breakpoint-desktop ) {
+		--height-search-bar: 3rem;
+	}
+
 	.citizen-menu__card {
-		--size-icon: var( --height-search-bar );
 		position: fixed;
 		top: 0;
 		right: 0;
@@ -19,6 +22,10 @@
 		transform-origin: center var( --transform-origin-offset-start );
 		contain: none;
 
+		@media ( min-width: @min-width-breakpoint-desktop ) {
+			top: unset;
+		}
+
 		.citizen-ui-icon {
 			&::before {
 				background-size: 1rem;
@@ -28,6 +35,14 @@
 
 	.citizen-dropdown-details[ open ] + .citizen-menu__card > .citizen-search__form {
 		transition: none; /* Do not animate typeahead since it looks weird */
+	}
+
+	&__formButton,
+	&__formIcon {
+		/* Sync with left icons (--size-icon + --space-sm * 2) and typeahead */
+		--size-icon: ~'calc( 1.25rem + var( --space-sm ) * 2 )';
+		display: grid;
+		place-content: center;
 	}
 
 	&__formButton {
@@ -76,6 +91,17 @@
 
 	&__form {
 		display: flex;
+		height: 100%;
+		font-size: var( --font-size-small );
+
+		// HACK: Target mobile Safari only to prevent auto zooming the input field
+		@supports (-webkit-touch-callout: none) {
+			font-size: 1rem;
+		}
+
+		@media ( min-width: @min-width-breakpoint-desktop ) {
+			font-size: var( --font-size-medium );
+		}
 
 		/**
 		 * Loading indicator for searchbox
@@ -90,15 +116,10 @@
 	#searchInput {
 		flex-grow: 1;
 		padding: 0;
-		font-size: var( --font-size-small );
+		font-size: inherit;
 		appearance: none;
 		background: transparent; // Cancel default background
 		border: 0; // Cancel default border
-
-		// HACK: Target mobile Safari only to prevent auto zooming the input field
-		@supports (-webkit-touch-callout: none) {
-			font-size: 1rem;
-		}
 
 		&:focus {
 			outline: 0;

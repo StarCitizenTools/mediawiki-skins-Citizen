@@ -2,7 +2,6 @@
 @import '../mixins.less';
 
 .citizen-typeahead {
-	--size-icon: 1.25rem; // reset
 	position: absolute;
 	top: 100%;
 	left: -1px; // IDK why is it off by 1px
@@ -16,6 +15,10 @@
 	border-bottom-right-radius: var( --border-radius-medium );
 	border-bottom-left-radius: var( --border-radius-medium );
 	.citizen-card( false );
+
+	@media ( min-width: @min-width-breakpoint-desktop ) {
+		max-height: 70vh;
+	}
 
 	a {
 		&:hover,
@@ -41,14 +44,8 @@
 			display: flex;
 			align-items: center;
 			overflow: hidden;
-			font-size: var( --font-size-small );
 			white-space: nowrap;
 			pointer-events: none;
-
-			// HACK: Target mobile Safari only to prevent auto zooming the input field
-			@supports (-webkit-touch-callout: none) {
-				font-size: 1rem;
-			}
 
 			&-query {
 				color: var( --color-emphasized );
@@ -175,6 +172,7 @@
 		&-lg {
 			.citizen-typeahead {
 				&__title {
+					font-size: var( --font-size-medium );
 					font-weight: var( --font-weight-semibold );
 				}
 
