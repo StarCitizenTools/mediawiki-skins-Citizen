@@ -112,9 +112,6 @@ wfLoadSkin( 'Citizen' );
 ```
 3. **✔️Done** - Navigate to Special:Version on your wiki to verify that the skin is successfully installed.
 
-### Recommended extensions
-
-
 ## Configurations
 **The skin works out of the box without any configurations.**
 The config flags allow more customization on the specific features in the skin.
@@ -155,3 +152,8 @@ Name | Description | Values | Default
 * [MediaWiki](https://www.mediawiki.org) 1.39.4 or later
 * For the legacy versions, check the other release branches.
 
+## Recommended extensions
+These extensions are optional. They are recommended to enable additional feature in Citizen.
+- [PageImages](https://www.mediawiki.org/wiki/Extension:PageImages) (bundled with MediaWiki) - Add image to search suggestion results
+- [TextExtracts](https://www.mediawiki.org/wiki/Extension:TextExtracts) (bundled with MediaWiki) - Add description to search suggestion results
+- [ShortDescription](https://www.mediawiki.org/wiki/Extension:ShortDescription) - Add short description to under page title and search suggestion results (needs to set `$wgCitizenSearchDescriptionSource` to `wikidata`)
