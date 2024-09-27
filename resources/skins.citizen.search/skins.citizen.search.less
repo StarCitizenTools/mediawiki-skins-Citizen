@@ -12,11 +12,11 @@
 
 	> li {
 		&:first-of-type {
-			margin-top: var( --space-xs );
+			margin-top: var( --space-xxs );
 		}
 
 		&:last-of-type {
-			margin-bottom: var( --space-xs );
+			margin-bottom: var( --space-xxs );
 		}
 	}
 
@@ -86,6 +86,7 @@
 
 			.citizen-typeahead {
 				&__content {
+					gap: var( --space-xs );
 					margin: 0;
 					border: var( --border-width-base ) solid var( --border-color-base );
 					border-radius: var( --border-radius-medium );
@@ -230,7 +231,6 @@
 	&__label {
 		display: flex;
 		gap: var( --space-xxs );
-		margin-left: var( --space-xs );
 		font-size: var( --font-size-small );
 		color: var( --color-base );
 	}
