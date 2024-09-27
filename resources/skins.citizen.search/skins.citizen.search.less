@@ -5,12 +5,15 @@
 	display: flex;
 	flex-direction: column;
 	gap: var( --space-xs );
-	margin: 0;
-	list-style: none;
 	border-bottom-right-radius: var( --border-radius-medium );
 	border-bottom-left-radius: var( --border-radius-medium );
 
-	> li {
+	ol {
+		margin: 0;
+		list-style: none;
+	}
+
+	> .citizen-typeahead-item-group {
 		&:first-of-type {
 			margin-top: var( --space-xxs );
 		}
@@ -55,11 +58,6 @@
 
 	&-item {
 		&-group {
-			&-list {
-				margin: 0;
-				list-style: none;
-			}
-
 			// FIXME: Use a generic attribute
 			&[ data-mw-citizen-typeahead-group='action' ] .citizen-typeahead-item-group-list {
 				display: flex;

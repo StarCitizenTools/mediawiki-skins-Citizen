@@ -31,7 +31,7 @@ function htmlHelper() {
 		 * @return {HTMLElement|void}
 		 */
 		getItemGroupElement: function ( data ) {
-			const itemGroup = document.createElement( 'li' );
+			const itemGroup = document.createElement( 'div' );
 			itemGroup.classList.add( 'citizen-typeahead-item-group' );
 			itemGroup.setAttribute( 'data-mw-citizen-typeahead-group', `${ data.id }` );
 			itemGroup.setAttribute( 'role', 'presentation' );

@@ -201,9 +201,6 @@
 		},
 		"skins.citizen.search": {
 			"es6": true,
-			"templates": [
-				"resources/skins.citizen.search/templates/typeahead.mustache"
-			],
 			"styles": [
 				"resources/skins.citizen.search/skins.citizen.search.less"
 			],
@@ -214,6 +211,11 @@
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenSearchResourceLoaderConfig"
 				},
 				"resources/skins.citizen.search/typeahead.js",
+				{
+					"name": "resources/skins.citizen.search/templates/TypeaheadElement.mustache",
+					"file": "resources/skins.citizen.search/templates/TypeaheadElement.mustache",
+					"type": "text"
+				},
 				"resources/skins.citizen.search/htmlHelper.js",
 				"resources/skins.citizen.search/fetch.js",
 				"resources/skins.citizen.search/searchAction.js",
@@ -240,6 +242,7 @@
 			],
 			"dependencies": [
 				"mediawiki.storage",
+				"mediawiki.template.mustache",
 				"mediawiki.user",
 				"mediawiki.util"
 			],
