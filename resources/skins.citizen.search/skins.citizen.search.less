@@ -8,7 +8,16 @@
 	border-bottom-right-radius: var( --border-radius-medium );
 	border-bottom-left-radius: var( --border-radius-medium );
 
-	ol {
+	a {
+		&:hover,
+		&:focus {
+			text-decoration: none;
+		}
+	}
+
+	/* Reset styles */
+	ol,
+	li {
 		margin: 0;
 		list-style: none;
 	}
@@ -20,13 +29,6 @@
 
 		&:last-of-type {
 			margin-bottom: var( --space-xxs );
-		}
-	}
-
-	a {
-		&:hover,
-		&:focus {
-			text-decoration: none;
 		}
 	}
 
