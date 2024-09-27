@@ -2,6 +2,7 @@
 @position-offset-y-desktop: 3.5rem; /* Sync with search button position */
 
 .citizen-search {
+	--size-icon: 1rem;
 	--width-search-bar: @width-search-bar;
 	--height-search-bar: 2.75rem;
 
@@ -37,7 +38,6 @@
 
 	&__formButton,
 	&__formIcon {
-		--size-icon: 1rem;
 		display: grid;
 		place-content: center;
 		/* Sync with left icons (--size-icon + --space-sm * 2) and typeahead */
