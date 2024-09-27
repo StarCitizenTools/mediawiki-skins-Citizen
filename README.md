@@ -112,6 +112,9 @@ wfLoadSkin( 'Citizen' );
 ```
 3. **✔️Done** - Navigate to Special:Version on your wiki to verify that the skin is successfully installed.
 
+### Recommended extensions
+
+
 ## Configurations
 **The skin works out of the box without any configurations.**
 The config flags allow more customization on the specific features in the skin.
