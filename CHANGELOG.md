@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.31.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.30.0...v2.31.0) (2024-09-28)
+
+
+### Features
+
+* **search:** ✨ hide scrollbar on chip list ([640ecf8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/640ecf824c8f1a4dd72c84d8a76b2a081a832f4f))
+* **search:** ✨ migrate most typeahead elements to Mustache ([c327dc4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c327dc4fa99bc72f67bbefe9ba40f7a3d4bf4994))
+* **search:** ✨ migrate typeahead to Mustache template part 2 ([a0296af](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a0296afaedbe1a277337a2d8f1da83cb3a79b9ab))
+
+
+### Bug Fixes
+
+* **search:** 🐛 add spacing between title and desc in typeahead item ([b448ac3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b448ac3077c26db7938427ef2ab8929e310fac9f))
+* **search:** 🐛 fix broken search history ([6cccf7c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6cccf7cddfe6e37d9c8b7e285a56e2de159cb0e3))
+* **search:** 🐛 fix namespace parameter for Action API ([723421f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/723421f6917de20f4f23ab316dd9cb066b07255a))
+* **search:** 🐛 incorrect alignment for typeahead item text ([527a767](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/527a76785ecaad421ee63772fe5b07171b977cd7))
+* **userInfo:** 🐛 escape html characters for real name ([86da3e0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/86da3e07718c8d8da6f4310386fef85599606f9b))
+
 ## [2.30.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.29.0...v2.30.0) (2024-09-27)
 
 
