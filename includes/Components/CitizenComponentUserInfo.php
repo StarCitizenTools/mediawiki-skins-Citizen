@@ -130,9 +130,9 @@ class CitizenComponentUserInfo implements CitizenComponent {
 		$userPageData = $this->userPageData;
 
 		$htmlItems = $userPageData['html-items'];
-		$realname = $user->getRealName();
+		$realname = htmlspecialchars( $user->getRealName(), ENT_QUOTES );
 		if ( !empty( $realname ) ) {
-			$username = $user->getName();
+			$username = htmlspecialchars( $user->getName(), ENT_QUOTES );
 			$innerHtml = <<<HTML
 				<span id="pt-userpage-realname">$realname</span>
 				<span id="pt-userpage-username">$username</span>
