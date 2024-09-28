@@ -13,5 +13,12 @@
 		padding-right: var( --space-md );
 		padding-left: var( --space-md );
 		overflow-x: auto;
+		-ms-overflow-style: none;  /* IE and Edge */
+		scrollbar-width: none;  /* Firefox */
+
+		// Hide scrollbar because the hover scrollbar appears every time a list is updated
+		&::-webkit-scrollbar {
+			display: none;
+		}
 	}
 }
