@@ -10,6 +10,7 @@ const searchResults = require( './searchResults.js' )();
 const searchQuery = require( './searchQuery.js' )();
 
 const templateTypeaheadElement = require( './templates/TypeaheadElement.mustache' );
+const templateTypeaheadPlaceholder = require( './templates/TypeaheadPlaceholder.mustache' );
 const templateTypeaheadList = require( './templates/TypeaheadList.mustache' );
 const templateTypeaheadListItem = require( './templates/TypeaheadListItem.mustache' );
 
@@ -298,11 +299,13 @@ const typeahead = {
 		this.mustacheCompiler = mw.template.getCompiler( 'mustache' );
 		Object.assign( compiledTemplates, {
 			TypeaheadElement: this.mustacheCompiler.compile( templateTypeaheadElement ),
+			TypeaheadPlaceholder: this.mustacheCompiler.compile( templateTypeaheadPlaceholder ),
 			TypeaheadList: this.mustacheCompiler.compile( templateTypeaheadList ),
 			TypeaheadListItem: this.mustacheCompiler.compile( templateTypeaheadListItem )
 		} );
 
 		const data = {
+			'data-placeholder': { hidden: true },
 			'array-lists': [
 				{ type: 'action', class: 'citizen-typeahead-group--chips', hidden: true, historyValue: 'query' },
 				{ type: 'history', hidden: true, keyboardNavigation: true },
@@ -310,6 +313,7 @@ const typeahead = {
 			]
 		};
 		const partials = {
+			TypeaheadPlaceholder: compiledTemplates.TypeaheadPlaceholder,
 			TypeaheadList: compiledTemplates.TypeaheadList
 		};
 		this.element = compiledTemplates.TypeaheadElement.render( data, partials ).get()[ 0 ];
@@ -322,7 +326,7 @@ const typeahead = {
 		searchHistory.init();
 		searchResults.init();
 
-		searchPresults.render( this.element, compiledTemplates );
+		searchPresults.render( compiledTemplates );
 		// Init the value in case of undef error
 		typeahead.items.set();
 
@@ -344,6 +348,8 @@ async function getSuggestions() {
 	const renderSuggestions = ( results ) => {
 		const groupEl = document.getElementById( 'citizen-typeahead-group-page' );
 		const listEl = document.getElementById( 'citizen-typeahead-list-page' );
+		const placeholderEl = document.getElementById( 'citizen-typeahead-placeholder' );
+
 		if ( results.length > 0 ) {
 			// TODO: This should be a generic method
 			listEl.outerHTML = searchResults.getResultsHTML(
@@ -352,13 +358,14 @@ async function getSuggestions() {
 				compiledTemplates
 			);
 			groupEl.hidden = false;
-			typeahead.element.querySelector( '.citizen-typeahead__item-placeholder' )?.remove();
+			placeholderEl.innerHTML = '';
+			placeholderEl.hidden = true;
 		} else {
 			// Update placeholder with no result content
 			listEl.innerHTML = '';
 			groupEl.hidden = true;
-			typeahead.element.querySelector( '.citizen-typeahead__item-placeholder' )?.remove();
-			typeahead.element.append( searchResults.getPlaceholderHTML( searchQuery.valueHtml ) );
+			placeholderEl.innerHTML = searchResults.getPlaceholderHTML( searchQuery.valueHtml, compiledTemplates );
+			placeholderEl.hidden = false;
 		}
 
 		typeahead.form.setLoadingState( false );
@@ -404,7 +411,7 @@ function updateTypeaheadItems() {
 		getSuggestions();
 	} else {
 		searchResults.clear();
-		searchPresults.render( typeahead.element, compiledTemplates );
+		searchPresults.render( compiledTemplates );
 	}
 	typeahead.items.set();
 }

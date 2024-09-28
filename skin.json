@@ -203,6 +203,7 @@
 			"es6": true,
 			"styles": [
 				"resources/skins.citizen.search/skins.citizen.search.less",
+				"resources/skins.citizen.search/components/TypeaheadPlaceholder.less",
 				"resources/skins.citizen.search/components/TypeaheadList.less",
 				"resources/skins.citizen.search/components/TypeaheadListItem.less"
 			],
@@ -219,6 +220,11 @@
 					"type": "text"
 				},
 				{
+					"name": "resources/skins.citizen.search/templates/TypeaheadPlaceholder.mustache",
+					"file": "resources/skins.citizen.search/templates/TypeaheadPlaceholder.mustache",
+					"type": "text"
+				},
+				{
 					"name": "resources/skins.citizen.search/templates/TypeaheadList.mustache",
 					"file": "resources/skins.citizen.search/templates/TypeaheadList.mustache",
 					"type": "text"
@@ -228,7 +234,6 @@
 					"file": "resources/skins.citizen.search/templates/TypeaheadListItem.mustache",
 					"type": "text"
 				},
-				"resources/skins.citizen.search/htmlHelper.js",
 				"resources/skins.citizen.search/fetch.js",
 				"resources/skins.citizen.search/searchAction.js",
 				"resources/skins.citizen.search/searchClient.js",

@@ -2,8 +2,6 @@
 @import '../mixins.less';
 
 .citizen-typeahead {
-	display: flex;
-	flex-direction: column;
 	border-bottom-right-radius: var( --border-radius-medium );
 	border-bottom-left-radius: var( --border-radius-medium );
 
@@ -40,71 +38,6 @@
 		}
 	}
 
-	&__item {
-		&--hidden {
-			display: none;
-		}
-
-		&-lg {
-			.citizen-typeahead {
-				&__content {
-					flex-direction: column;
-					padding-top: var( --space-xl );
-					padding-bottom: var( --space-xl );
-					text-align: center;
-				}
-
-				&__title {
-					font-size: var( --font-size-medium );
-					font-weight: var( --font-weight-semibold );
-				}
-
-				&__thumbnail {
-					margin-bottom: var( --space-sm );
-				}
-
-				&__description {
-					margin-top: 0.1rem;
-				}
-			}
-		}
-	}
-
-	&__content {
-		display: flex;
-		align-items: center;
-		padding: var( --space-xs ) var( --space-md );
-		color: var( --color-base );
-	}
-
-	&__thumbnail {
-		flex-shrink: 0;
-		width: 100%;
-		max-width: 60px;
-		height: 60px;
-		overflow: hidden;
-
-		// Needed the specificity, we should refactor this
-		.citizen-typeahead &.citizen-ui-icon::before {
-			background-size: contain;
-		}
-	}
-
-	&__text {
-		flex-grow: 1;
-		overflow: hidden;
-	}
-
-	&__header {
-		display: flex;
-		justify-content: space-between;
-	}
-
-	&__title {
-		flex-shrink: 0;
-		color: var( --color-emphasized );
-	}
-
 	&__highlight {
 		font-weight: var( --font-weight-medium );
 		color: var( --color-subtle );
@@ -115,29 +48,12 @@
 		color: var( --color-emphasized );
 	}
 
-	&__label {
-		display: flex;
-		gap: var( --space-xxs );
-		font-size: var( --font-size-small );
-		color: var( --color-base );
-	}
-
 	&__labelItem {
 		display: flex;
 		gap: var( --space-xxs );
 		align-items: center;
-	}
-
-	&__description,
-	&__labelItem {
 		font-size: var( --font-size-x-small );
 		color: var( --color-subtle );
-	}
-
-	&__title,
-	&__description {
-		overflow: hidden;
-		text-overflow: ellipsis;
 	}
 }
 

@@ -1,5 +1,4 @@
 // const config = require( './config.json' );
-const htmlHelper = require( './htmlHelper.js' )();
 const searchAction = require( './searchAction.js' )();
 
 /**
@@ -82,15 +81,13 @@ function searchResults() {
 			const regex = regexCache[ match ];
 			return title.replace( regex, '<span class="citizen-typeahead__highlight">$&</span>' );
 		},
-		getPlaceholderHTML: function ( queryValue ) {
+		getPlaceholderHTML: function ( queryValue, templates ) {
 			const data = {
 				icon: 'articleNotFound',
-				type: 'placeholder',
-				size: 'lg',
 				title: mw.message( 'citizen-search-noresults-title', queryValue ).text(),
-				desc: mw.message( 'citizen-search-noresults-desc' ).text()
+				description: mw.message( 'citizen-search-noresults-desc' ).text()
 			};
-			return htmlHelper.getItemElement( data );
+			return templates.TypeaheadPlaceholder.render( data ).html();
 		},
 		getResultsHTML: function ( results, queryValue, templates ) {
 			const items = [];
@@ -133,6 +130,7 @@ function searchResults() {
 		clear: function () {
 			// TODO: This should not be here
 			document.getElementById( 'citizen-typeahead-list-page' ).innerHTML = '';
+			document.getElementById( 'citizen-typeahead-group-page' ).hidden = true;
 			searchAction.clear();
 		},
 		init: function () {

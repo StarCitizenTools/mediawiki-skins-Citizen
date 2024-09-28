@@ -1,5 +1,4 @@
 const config = require( './config.json' );
-const htmlHelper = require( './htmlHelper.js' )();
 const searchHistory = require( './searchHistory.js' )( config );
 
 function searchPresults() {
@@ -27,20 +26,22 @@ function searchPresults() {
 			document.getElementById( 'citizen-typeahead-list-history' ).outerHTML = templates.TypeaheadList.render( data, partials ).html();
 			document.getElementById( 'citizen-typeahead-group-history' ).hidden = false;
 		},
-		render: function ( typeaheadEl, templates ) {
-			typeaheadEl.querySelector( '.citizen-typeahead__item-placeholder' )?.remove();
+		render: function ( templates ) {
+			const placeholderEl = document.getElementById( 'citizen-typeahead-placeholder' );
+			placeholderEl.innerHTML = '';
+			placeholderEl.hidden = true;
+
 			const historyResults = searchHistory.get();
 			if ( historyResults && historyResults.length > 0 ) {
 				this.renderHistory( historyResults, templates );
 			} else {
 				const data = {
 					icon: 'articlesSearch',
-					type: 'placeholder',
-					size: 'lg',
 					title: mw.message( 'searchsuggest-search' ).text(),
-					desc: mw.message( 'citizen-search-empty-desc' ).text()
+					description: mw.message( 'citizen-search-empty-desc' ).text()
 				};
-				typeaheadEl.append( htmlHelper.getItemElement( data ) );
+				placeholderEl.innerHTML = templates.TypeaheadPlaceholder.render( data ).html();
+				placeholderEl.hidden = false;
 			}
 		},
 		clear: function () {
