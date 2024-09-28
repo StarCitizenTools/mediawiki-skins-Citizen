@@ -181,7 +181,7 @@ const typeahead = {
 		},
 		set: function () {
 			const typeaheadElement = typeahead.element;
-			this.elements = typeaheadElement.querySelectorAll( '.citizen-typeahead-group[data-mw-typeahead-keyboard-navigation=true] .citizen-typeahead-list-item-link' );
+			this.elements = typeaheadElement.querySelectorAll( '.citizen-typeahead-group[data-mw-typeahead-keyboard-navigation] .citizen-typeahead-list-item-link' );
 			this.bindMouseHoverEvent();
 			this.setMax( this.elements.length );
 		}
@@ -208,17 +208,28 @@ const typeahead = {
 	onClick: function ( event ) {
 		// Extra safety so closest won't tranverse out of the typeahead
 		if ( typeahead.element.contains( event.target ) ) {
-			const item = event.target.closest( '.citizen-typeahead__item' );
-			if ( item instanceof HTMLElement ) {
-				let historyLabel;
-				// User click on a suggestion -> save the matched title > title
-				if ( item.classList.contains( 'citizen-typeahead__item-page' ) ) {
-					historyLabel = item.querySelector( '.citizen-typeahead__label' ).innerText || item.querySelector( '.citizen-typeahead__title' ).innerText;
+			const link = event.target.closest( '.citizen-typeahead-list-item-link' );
+			// Early exit if target is not a link
+			if ( !link ) {
+				return;
+			}
+
+			const group = event.target.closest( '.citizen-typeahead-group' );
+
+			// Save to history on click
+			const historyType = group.dataset.mwTypeaheadHistoryValue;
+			if ( historyType ) {
+				let historyText;
+				if ( historyType === 'query' ) {
+					historyText = searchQuery.value;
 				} else {
-					historyLabel = searchQuery.value;
+					const historyTextEl = link.querySelector( `.citizen-typeahead-list-item-${ historyType }` );
+					if ( historyTextEl && historyTextEl.innerText ) {
+						historyText = historyTextEl.innerText;
+					}
 				}
-				if ( historyLabel ) {
-					searchHistory.add( historyLabel );
+				if ( historyText ) {
+					searchHistory.add( historyText );
 				}
 			}
 		}
@@ -293,9 +304,9 @@ const typeahead = {
 
 		const data = {
 			'array-lists': [
-				{ type: 'action', class: 'citizen-typeahead-group--chips', hidden: true },
+				{ type: 'action', class: 'citizen-typeahead-group--chips', hidden: true, historyValue: 'query' },
 				{ type: 'history', hidden: true, keyboardNavigation: true },
-				{ type: 'page', hidden: true, keyboardNavigation: true }
+				{ type: 'page', hidden: true, keyboardNavigation: true, historyValue: 'title' }
 			]
 		};
 		const partials = {

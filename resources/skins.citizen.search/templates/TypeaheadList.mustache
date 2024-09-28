@@ -2,7 +2,8 @@
 	class="citizen-typeahead-group{{#class}} {{.}}{{/class}}"
 	id="citizen-typeahead-group-{{type}}"
 	data-mw-typeahead-type={{type}}
-	{{#keyboardNavigation}}data-mw-typeahead-keyboard-navigation=true{{/keyboardNavigation}}
+	{{#keyboardNavigation}}data-mw-typeahead-keyboard-navigation{{/keyboardNavigation}}
+	{{#historyValue}}data-mw-typeahead-history-value={{.}}{{/historyValue}}
 	{{#hidden}}hidden{{/hidden}}
 >
 	<ul 
