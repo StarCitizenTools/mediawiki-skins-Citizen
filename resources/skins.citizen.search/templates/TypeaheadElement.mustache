@@ -1,12 +1,8 @@
-{{!
-	string msg-citizen-search-fulltext The label on the fulltext search in the typeahead.
-	string msg-citizen-search-toggle Search toggle label
-}}
-
-<div id="searchform-suggestions" class="citizen-typeahead" role="listbox">
+<div id="searchform-suggestions" class="citizen-typeahead">
+	{{#array-lists}}{{>TypeaheadList}}{{/array-lists}}
 	{{! Template }}
 	<template id="citizen-typeahead-template">
-		<li class="citizen-typeahead__item">
+		<div class="citizen-typeahead__item">
 			<a href="" class="citizen-typeahead__content">
 				<div class="citizen-typeahead__thumbnail"></div>
 				<div class="citizen-typeahead__text">
@@ -16,10 +12,7 @@
 					</div>
 					<div class="citizen-typeahead__description"></div>
 				</div>
-				<div class="citizen-typeahead__actions">
-					<div class="citizen-typeahead__keyboard">↵</div>
-				</div>
 			</a>
-		</li>
+		</div>
 	</template>
 </div>

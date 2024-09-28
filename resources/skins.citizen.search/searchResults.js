@@ -92,40 +92,51 @@ function searchResults() {
 			};
 			return htmlHelper.getItemElement( data );
 		},
-		getResultsHTML: function ( results, queryValue ) {
-			const createSuggestionItem = ( result ) => {
-				const data = {
-					type: 'page',
-					size: 'md',
-					link: result.url,
+		getResultsHTML: function ( results, queryValue, templates ) {
+			const items = [];
+
+			results.forEach( ( result, index ) => {
+				const item = {
+					id: index,
+					href: result.url,
 					title: this.highlightTitle( result.title, queryValue ),
-					desc: result.description
+					description: result.description,
+					'html-end': this.getRedirectLabel( result.title, result.label ),
+					image: {}
 				};
-				data.label = this.getRedirectLabel( result.title, result.label );
-				if ( result.thumbnail ) {
-					data.thumbnail = result.thumbnail.url;
+				if ( result.thumbnail && result.thumbnail.url ) {
+					item.image.url = result.thumbnail.url;
 				} else {
-					// Thumbnail placeholder icon
-					data.icon = 'image';
+					// Show placeholder icon
+					item.image.class = 'citizen-typeahead-list-item-image--placeholder citizen-ui-icon mw-ui-icon-wikimedia-image';
 				}
-				return data;
+				items.push( item );
+			} );
+
+			const data = {
+				type: 'page',
+				'array-list-items': items
 			};
 
-			const items = results.map( ( result ) => createSuggestionItem( result ) );
-			const itemGroupData = {
-				id: 'suggestion',
-				items: items
+			const partials = {
+				TypeaheadListItem: templates.TypeaheadListItem
 			};
-			return htmlHelper.getItemGroupElement( itemGroupData );
+
+			return templates.TypeaheadList.render( data, partials ).html();
 		},
 		fetch: function ( queryValue, activeSearchClient ) {
 			return activeSearchClient.fetchByTitle( queryValue );
 		},
-		render: function ( typeaheadEl, searchQuery ) {
-			searchAction.render( typeaheadEl, searchQuery );
+		render: function ( searchQuery, templates ) {
+			searchAction.render( searchQuery, templates );
 		},
-		clear: function ( typeaheadEl ) {
-			searchAction.clear( typeaheadEl );
+		clear: function () {
+			// TODO: This should not be here
+			document.getElementById( 'citizen-typeahead-list-page' ).innerHTML = '';
+			searchAction.clear();
+		},
+		init: function () {
+			searchAction.init();
 		}
 	};
 }

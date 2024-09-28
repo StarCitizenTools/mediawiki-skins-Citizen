@@ -1,0 +1,77 @@
+.citizen-typeahead-list-item {
+	&-link {
+		display: flex;
+		gap: var( --space-sm );
+		align-items: center;
+		min-height: 44px;
+		padding: var( --space-xs ) var( --space-md );
+
+		&:hover,
+		&[ data-mw-typeahead-selected ] {
+			background-color: var( --background-color-button-quiet--hover );
+		}
+
+		&:active {
+			background-color: var( --background-color-button-quiet--active );
+		}
+	}
+
+	&-image {
+		flex-shrink: 0;
+		width: 100%;
+		max-width: 60px;
+		height: 60px;
+		overflow: hidden;
+		/* color-surface-3 but always keep it light, this is needed for transparent images */
+		background-color: ~'hsl( var( --color-primary__h ), var( --color-surface-3__s ), 90% )';
+		background-position: center;
+		background-size: cover;
+		border-radius: var( --border-radius-medium );
+
+		&--placeholder {
+			display: grid;
+			place-content: center;
+			background-color: var( --color-surface-3 );
+
+			&::before {
+				width: var( --size-icon );
+				height: var( --size-icon );
+			}
+		}
+	}
+
+	&-text {
+		flex-grow: 1;
+		overflow: hidden;
+		font-size: var( --font-size-small );
+		color: var( --color-emphasized );
+		white-space: nowrap;
+	}
+
+	&-title,
+	&-description {
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	&-title {
+		font-size: var( --font-size-medium );
+		font-weight: var( --font-weight-semibold );
+	}
+
+	&-description {
+		font-size: var( --font-size-x-small );
+		color: var( --color-subtle );
+	}
+
+	.citizen-typeahead-group--chips & {
+		&-link {
+			gap: var( --space-xs );
+			min-height: 36px;
+			padding-right: var( --space-sm );
+			padding-left: var( --space-sm );
+			border: 1px solid var( --border-color-base );
+			border-radius: var( --border-radius--medium );
+		}
+	}
+}

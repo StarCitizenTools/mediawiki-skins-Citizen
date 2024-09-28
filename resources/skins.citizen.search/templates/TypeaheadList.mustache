@@ -1,0 +1,15 @@
+<div 
+	class="citizen-typeahead-group{{#class}} {{.}}{{/class}}"
+	id="citizen-typeahead-group-{{type}}"
+	data-mw-typeahead-type={{type}}
+	{{#keyboardNavigation}}data-mw-typeahead-keyboard-navigation=true{{/keyboardNavigation}}
+	{{#hidden}}hidden{{/hidden}}
+>
+	<ul 
+		class="citizen-typeahead-list"
+		id="citizen-typeahead-list-{{type}}"
+		role="listbox"
+	>
+		{{#array-list-items}}{{>TypeaheadListItem}}{{/array-list-items}}
+	</ul>
+</div>

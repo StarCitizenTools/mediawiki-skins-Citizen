@@ -202,7 +202,9 @@
 		"skins.citizen.search": {
 			"es6": true,
 			"styles": [
-				"resources/skins.citizen.search/skins.citizen.search.less"
+				"resources/skins.citizen.search/skins.citizen.search.less",
+				"resources/skins.citizen.search/components/TypeaheadList.less",
+				"resources/skins.citizen.search/components/TypeaheadListItem.less"
 			],
 			"packageFiles": [
 				"resources/skins.citizen.search/main.js",
@@ -214,6 +216,16 @@
 				{
 					"name": "resources/skins.citizen.search/templates/TypeaheadElement.mustache",
 					"file": "resources/skins.citizen.search/templates/TypeaheadElement.mustache",
+					"type": "text"
+				},
+				{
+					"name": "resources/skins.citizen.search/templates/TypeaheadList.mustache",
+					"file": "resources/skins.citizen.search/templates/TypeaheadList.mustache",
+					"type": "text"
+				},
+				{
+					"name": "resources/skins.citizen.search/templates/TypeaheadListItem.mustache",
+					"file": "resources/skins.citizen.search/templates/TypeaheadListItem.mustache",
 					"type": "text"
 				},
 				"resources/skins.citizen.search/htmlHelper.js",

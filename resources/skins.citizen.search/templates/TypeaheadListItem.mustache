@@ -1,0 +1,22 @@
+<li class="citizen-typeahead-list-item">
+	<a
+		href="{{href}}"
+		class="citizen-typeahead-list-item-link"
+		id="citizen-typeahead-item-{{type}}-{{id}}"
+	>
+		{{#icon}}<div class="citizen-typeahead-list-item-icon citizen-ui-icon mw-ui-icon-wikimedia-{{.}}"></div>{{/icon}}
+		{{#image}}
+		<div
+			class="citizen-typeahead-list-item-image{{#image.class}} {{.}}{{/image.class}}"
+			{{#image.url}}style="background-image: url({{.}});"{{/image.url}}
+		>
+		</div>
+		{{/image}}
+		<div class="citizen-typeahead-list-item-text">
+			{{#text}}{{.}}{{/text}}
+			{{#title}}<div class="citizen-typeahead-list-item-title">{{{.}}}</div>{{/title}}
+			{{#description}}<div class="citizen-typeahead-list-item-description">{{{.}}}</div>{{/description}}
+		</div>
+		{{#html-end}}<div class="citizen-typeahead-list-item-end">{{{.}}}</div>{{/html-end}}
+	</a>
+</li>

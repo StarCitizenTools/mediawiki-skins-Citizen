@@ -1,5 +1,4 @@
 const config = require( './config.json' );
-const htmlHelper = require( './htmlHelper.js' )();
 const urlGenerator = require( './urlGenerator.js' );
 
 const fulltextParam = {
@@ -15,46 +14,30 @@ const editpageParam = {
 function searchAction() {
 	return {
 		urlGeneratorInstance: urlGenerator( config ),
+		// Assume user can't edit by default
+		userCanEdit: false,
 		userRights: undefined,
-		// eslint-disable-next-line es-x/no-async-functions
-		getUserRights: async function () {
-			// Get and cache user rights
-			this.userRights = await mw.user.getRights();
-			return this.userRights;
-		},
-		init: async function ( typeaheadEl, itemGroupData ) {
-			const actionData = {
-				type: 'action',
-				size: 'chip'
-			};
-			itemGroupData.items = itemGroupData.items.map( ( item ) => ( { ...item, ...actionData } ) );
-			typeaheadEl.append( htmlHelper.getItemGroupElement( itemGroupData ) );
-		},
-		// eslint-disable-next-line es-x/no-async-functions
-		render: async function ( typeaheadEl, searchQuery ) {
-			const itemGroupData = {
-				id: 'action',
-				items: []
-			};
+		render: function ( searchQuery, templates ) {
+			const items = [];
 
 			// TODO: Save this in a separate JSON file
 			// Fulltext search
 			fulltextParam.search = searchQuery.value;
-			itemGroupData.items.push( {
+			items.push( {
 				id: 'fulltext',
-				link: this.urlGeneratorInstance.generateUrl( 'Special:Search', fulltextParam ),
+				href: this.urlGeneratorInstance.generateUrl( 'Special:Search', fulltextParam ),
 				icon: 'articleSearch',
-				msg: 'citizen-search-fulltext'
+				text: mw.message( 'citizen-search-fulltext' )
 			} );
 
 			// MediaSearch
 			if ( config.isMediaSearchExtensionEnabled ) {
 				mediasearchParam.search = searchQuery.value;
-				itemGroupData.items.push( {
+				items.push( {
 					id: 'mediasearch',
-					link: this.urlGeneratorInstance.generateUrl( 'Special:MediaSearch', mediasearchParam ),
+					href: this.urlGeneratorInstance.generateUrl( 'Special:MediaSearch', mediasearchParam ),
 					icon: 'imageGallery',
-					msg: 'citizen-search-mediasearch'
+					text: mw.message( 'citizen-search-mediasearch' )
 				} );
 			}
 
@@ -64,33 +47,37 @@ function searchAction() {
 			console.log( title.exists() );
 			*/
 
-			const userRights = this.userRights || await this.getUserRights();
-			if ( userRights.includes( 'createpage', 'edit' ) ) {
+			if ( this.userCanEdit ) {
 				// Edit/create page
 				// TODO: Check whether the page exists
-				itemGroupData.items.push( {
+				items.push( {
 					id: 'editpage',
-					link: this.urlGeneratorInstance.generateUrl( searchQuery.value, editpageParam ),
+					href: this.urlGeneratorInstance.generateUrl( searchQuery.value, editpageParam ),
 					icon: 'edit',
-					msg: 'citizen-search-editpage'
+					text: mw.message( 'citizen-search-editpage' )
 				} );
 			}
 
-			if ( !typeaheadEl.querySelector( '.citizen-typeahead-item-group[data-mw-citizen-typeahead-group="action"]' ) ) {
-				this.init( typeaheadEl, itemGroupData );
-			}
+			const data = {
+				type: 'action',
+				'array-list-items': items
+			};
 
-			itemGroupData.items.forEach( ( item, index ) => {
-				const actionEl = document.getElementById( `citizen-typeahead-action-${ index }` );
-				htmlHelper.updateItemElement( actionEl, {
-					link: item.link,
-					/* eslint-disable-next-line mediawiki/msg-doc */
-					label: mw.message( item.msg )
-				} );
-			} );
+			const partials = {
+				TypeaheadListItem: templates.TypeaheadListItem
+			};
+
+			document.getElementById( 'citizen-typeahead-list-action' ).outerHTML = templates.TypeaheadList.render( data, partials ).html();
+			document.getElementById( 'citizen-typeahead-group-action' ).hidden = false;
 		},
-		clear: function ( typeaheadEl ) {
-			htmlHelper.removeItemGroup( typeaheadEl, 'action' );
+		clear: function () {
+			document.getElementById( 'citizen-typeahead-list-action' ).innerHTML = '';
+			document.getElementById( 'citizen-typeahead-group-action' ).hidden = true;
+		},
+		init: function () {
+			mw.user.getRights().done( ( rights ) => {
+				this.userCanEdit = rights.includes( 'createpage', 'edit' );
+			} );
 		}
 	};
 }

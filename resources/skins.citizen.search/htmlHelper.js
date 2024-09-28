@@ -1,11 +1,4 @@
 /**
- * @typedef {Object} TypeaheadItemGroupData
- * @property {string} id
- * @property {string} label
- * @property {TypeaheadItemData[]} items
- */
-
-/**
  * @typedef {Object} TypeaheadItemData
  * @property {string} id
  * @property {string} type
@@ -24,42 +17,6 @@
  */
 function htmlHelper() {
 	return {
-		/**
-		 * Return the HTML of an item group
-		 *
-		 * @param {TypeaheadItemGroupData} data
-		 * @return {HTMLElement|void}
-		 */
-		getItemGroupElement: function ( data ) {
-			const itemGroup = document.createElement( 'div' );
-			itemGroup.classList.add( 'citizen-typeahead-item-group' );
-			itemGroup.setAttribute( 'data-mw-citizen-typeahead-group', `${ data.id }` );
-			itemGroup.setAttribute( 'role', 'presentation' );
-
-			if ( data.label ) {
-				const label = document.createElement( 'span' );
-				label.classList.add( 'citizen-typeahead-item-group-label' );
-				label.textContent = data.label;
-				itemGroup.append( label );
-			}
-
-			if ( data.items ) {
-				const list = document.createElement( 'ol' );
-				list.classList.add( 'citizen-typeahead-item-group-list' );
-				list.setAttribute( 'role', 'presentation' );
-				const fragment = document.createDocumentFragment();
-				data.items.forEach( ( itemData, index ) => {
-					const modifiedId = `citizen-typeahead-${ data.id }-${ index }`;
-					const modifiedItemData = { ...itemData, id: modifiedId };
-					const item = this.getItemElement( modifiedItemData );
-					fragment.appendChild( item );
-				} );
-				list.appendChild( fragment );
-				itemGroup.append( list );
-			}
-
-			return itemGroup;
-		},
 		/**
 		 * Generate menu item HTML using the existing template
 		 *
@@ -128,15 +85,6 @@ function htmlHelper() {
 			if ( data.desc ) {
 				item.querySelector( '.citizen-typeahead__description' ).textContent = data.desc;
 			}
-		},
-		/**
-		 * Remove item group from the typeahead DOM
-		 *
-		 * @param {HTMLElement} typeaheadEl
-		 * @param {string} id
-		 */
-		removeItemGroup: function ( typeaheadEl, id ) {
-			typeaheadEl.querySelector( `.citizen-typeahead-item-group[data-mw-citizen-typeahead-group="${ id }"]` )?.remove();
 		}
 	};
 }
