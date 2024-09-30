@@ -5,6 +5,7 @@
 			"Milicevic01"
 		]
 	},
+	"citizen-search-footer": "Са {{SITENAME}}",
 	"citizen-languages-toggle": "Више језика",
 	"citizen-actions-more-toggle": "Више радњи",
 	"citizen-sitestats-articles-label": "чланци",

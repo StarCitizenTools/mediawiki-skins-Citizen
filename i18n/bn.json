@@ -13,6 +13,7 @@
 	"citizen.js": "/* এখানের সকল জাভাস্ক্রিপ্ট সিটিজেন আবরণের ব্যবহারকারীদের জন্য লোড হবে */",
 	"citizen-drawer-toggle": "মেনু খুলুন",
 	"citizen-usermenu-toggle": "ব্যক্তিগত মেনু খুলুন",
+	"citizen-search-footer": "{{SITENAME}} থেকে",
 	"citizen-search-toggle": "অনুসন্ধান খুলুন",
 	"citizen-languages-toggle": "আরও ভাষা",
 	"citizen-actions-more-toggle": "আরও কার্য",
