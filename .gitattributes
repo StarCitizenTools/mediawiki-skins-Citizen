@@ -26,7 +26,7 @@ vendor export-ignore
 
 # Release-please
 .release-please-manifest.json export-ignore
-.versionrc export-ignore
+.versionrc.json export-ignore
 release-please-config.json export-ignore
 
 # Tests
