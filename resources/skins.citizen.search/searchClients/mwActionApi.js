@@ -10,7 +10,7 @@ const searchNS = Object.entries( mw.config.get( 'wgFormattedNamespaces' ) ).map(
 		// Cast string key to number
 		return Number( nsID );
 	}
-} ).filter( ( item ) => item !== undefined );
+} ).filter( ( item ) => item !== undefined ).join( '|' );
 
 /**
  * @typedef {Object} ActionResponse
