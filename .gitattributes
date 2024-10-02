@@ -1,0 +1,39 @@
+# Git
+.gitignore export-ignore
+.gitattributes export-ignore
+
+# Styles
+.stylelintignore export-ignore
+.stylelintrc.json export-ignore
+
+# Scripts
+.eslintignore export-ignore
+.eslintrc.json export-ignore
+package.json export-ignore
+package-lock.json export-ignore
+node_modules export-ignore
+
+# Github
+README.md export-ignore
+.github export-ignore
+
+# Composer
+bin export-ignore
+.phpcs.xml export-ignore
+composer.json export-ignore
+composer.lock export-ignore
+vendor export-ignore
+
+# Release-please
+.release-please-manifest.json export-ignore
+.versionrc export-ignore
+release-please-config.json export-ignore
+
+# Tests
+tests export-ignore
+
+# Misc
+.husky export-ignore
+.commitlintrc.json export-ignore
+.djlintrc export-ignore
+.editorconfig export-ignore
