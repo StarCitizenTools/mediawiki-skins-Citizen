@@ -14,6 +14,12 @@
 	}
 
 	&-key {
+		font-weight: var( --font-weight-normal );
 		color: var( --color-subtle );
 	}
+}
+
+/* Align keyhint to the right */
+.citizen-menu .mw-list-item a > span:has( + .citizen-keyboard-hint-key ) {
+	flex-grow: 1;
 }
