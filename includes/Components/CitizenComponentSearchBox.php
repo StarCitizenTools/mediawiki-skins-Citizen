@@ -4,6 +4,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Components;
 
+use ExtensionRegistry;
 use MessageLocalizer;
 use Skin;
 
@@ -55,6 +56,19 @@ class CitizenComponentSearchBox implements CitizenComponent {
 	}
 
 	/**
+	 * Get the footer message
+	 * @return string
+	 */
+	private function getFooterMessage(): string {
+		$isCirrusSearchExtensionEnabled = ExtensionRegistry::getInstance()->isLoaded( 'CirrusSearch' );
+		$searchBackend = $isCirrusSearchExtensionEnabled ? 'cirrussearch' : 'mediawiki';
+		return $this->localizer->msg(
+			'citizen-search-poweredby',
+			$this->localizer->msg( "citizen-search-poweredby-$searchBackend" )
+		)->text();
+	}
+
+	/**
 	 * @inheritDoc
 	 */
 	public function getTemplateData(): array {
@@ -62,7 +76,7 @@ class CitizenComponentSearchBox implements CitizenComponent {
 
 		return $searchBoxData += [
 			'array-keyboard-hint' => $this->getKeyboardHintData(),
-			'msg-citizen-search-footer' => $this->localizer->msg( "citizen-search-footer" )->text(),
+			'msg-citizen-search-footer' => $this->getFooterMessage(),
 			'msg-citizen-search-toggle-shortcut' => '[/]',
 			'html-random-href' => $this->skin->makeSpecialUrl( 'Randompage' ),
 		];
