@@ -32,6 +32,7 @@
 			"args": [
 				{
 					"name": "citizen",
+					"supportsMwHeading": true,
 					"responsive": true,
 					"link": {
 						"text-wrapper": {
