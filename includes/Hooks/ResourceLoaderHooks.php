@@ -79,6 +79,7 @@ class ResourceLoaderHooks {
 		Config $config
 	) {
 		return [
+			'isAdvancedSearchExtensionEnabled' => ExtensionRegistry::getInstance()->isLoaded( 'AdvancedSearch' ),
 			'isMediaSearchExtensionEnabled' => ExtensionRegistry::getInstance()->isLoaded( 'MediaSearch' ),
 			'wgCitizenSearchGateway' => $config->get( 'CitizenSearchGateway' ),
 			'wgCitizenSearchDescriptionSource' => $config->get( 'CitizenSearchDescriptionSource' ),

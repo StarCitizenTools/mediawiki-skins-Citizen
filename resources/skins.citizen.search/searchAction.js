@@ -27,7 +27,10 @@ function searchAction() {
 				id: 'fulltext',
 				href: this.urlGeneratorInstance.generateUrl( 'Special:Search', fulltextParam ),
 				icon: 'articleSearch',
-				text: mw.message( 'citizen-search-fulltext' )
+				text: mw.message( config.isAdvancedSearchExtensionEnabled ?
+					'citizen-search-advancedsearch' :
+					'citizen-search-fulltext'
+				)
 			} );
 
 			// MediaSearch
