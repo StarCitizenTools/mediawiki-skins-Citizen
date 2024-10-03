@@ -249,6 +249,7 @@
 				"resources/skins.citizen.search/searchClients/smwAskApi.js"
 			],
 			"messages": [
+				"citizen-search-advancedsearch",
 				"citizen-search-fulltext",
 				"citizen-search-editpage",
 				"citizen-search-mediasearch",
