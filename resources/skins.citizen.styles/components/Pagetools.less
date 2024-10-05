@@ -176,6 +176,9 @@
 
 		.citizen-menu__card {
 			bottom: 100%;
+			/* Fix card width issue when the page tool bar is narrow */
+			width: max-content;
+			max-width: ~'calc( 100vw - var( --space-xs ) * 2 )';
 		}
 	}
 
