@@ -70,7 +70,7 @@ Name | Grade | Version | Last updated
 [MsUpload](https://www.mediawiki.org/wiki/Extension:MsUpload) | A | REL1_35 `32eb420` | 2021-08-25
 [MultimediaViewer](https://www.mediawiki.org/wiki/Extension:MultimediaViewer) | A | REL1_39 `1b97775` | 2022-11-26
 [OAuth](https://www.mediawiki.org/wiki/Extension:OAuth) | B | REL1_35 `451ed95` | 2021-08-31
-[Popups](https://www.mediawiki.org/wiki/Extension:Popups) | A | REL1_39 `a40ebc1` | 2022-11-28
+[Popups](https://www.mediawiki.org/wiki/Extension:Popups) | A | REL1_39 `a40ebc1` | 2024-10-05
 [PortableInfobox](https://www.mediawiki.org/wiki/Extension:PortableInfobox) | A | 0.6 `16a77dc` | 2024-04-17
 [RelatedArticles](https://www.mediawiki.org/wiki/Extension:RelatedArticles) | A | REL1_39 `f513e5c` | 2022-11-16
 [ReplaceText](https://www.mediawiki.org/wiki/Extension:ReplaceText) | B | REL1_39 `af4840a` | 2023-01-03

@@ -5,7 +5,7 @@
  * Module: ext.popups.main
  * Version: REL1_39 a40ebc1
  *
- * Date: 2024-06-14
+ * Date: 2024-10-05
 */
 
 @import '../../../resources/variables.less';
@@ -16,13 +16,30 @@
 
 /* popup.less */
 .mwe-popups {
-	// See FIXME below
-	// border-radius: var( --border-radius-medium );
 	background: var( --color-surface-1 );
+	border: 1px solid var( --border-color-base );
+	border-radius: var( --border-radius-medium );
 	box-shadow: var( --box-shadow-drop-xx-large );
+
+	&.mwe-popups-is-not-tall {
+		.mwe-popups-extract {
+			min-height: auto;
+			margin-bottom: 16px;
+		}
+	}
+
+	// Add hover state to page type cards
+	&.mwe-popups-type-page:hover {
+		background: var( --color-surface-2 );
+	}
 
 	.mwe-popups-container {
 		color: var( --color-base );
+
+		// Hide footer
+		footer {
+			display: none;
+		}
 	}
 
 	.mwe-popups-settings-icon {
@@ -154,12 +171,19 @@
 @supports ( clip-path: polygon( 1px 1px ) ) {
 	.mwe-popups {
 		.mwe-popups-container {
-			background: var( --color-surface-1 );
+			background: inherit;
 			// FIXME: Come up with a clip path that works with increased border radius
 			// Popups is using polygon to clip the card
 			// So the thumbnail corner would look weird if we adjust the border radius
 			// --pseudo-radius: var( --border-radius-medium );
 		}
+	}
+
+	// Fix inconsistent pointer height in older MW versions
+	.mwe-popups.flipped-y .mwe-popups-container,
+	.mwe-popups.flipped-x-y .mwe-popups-container {
+		padding-bottom: var( --pointer-height );
+		margin-bottom: ~'calc( var(--pointer-height) * -1 )';
 	}
 }
 
@@ -231,11 +255,6 @@
 
 		.mwe-popups-container {
 			margin-bottom: 0 !important; // cancel negative margin as we have no pointers
-
-			// Hide footer
-			footer {
-				display: none;
-			}
 		}
 
 		// Vertical card
