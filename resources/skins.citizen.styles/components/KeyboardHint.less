@@ -23,3 +23,11 @@
 .citizen-menu .mw-list-item a > span:has( + .citizen-keyboard-hint-key ) {
 	flex-grow: 1;
 }
+
+/* 
+ * Hide key hint in main menu for now
+ * It has some wrapping issue with long label text
+ */
+#p-navigation .citizen-keyboard-hint-key {
+	display: none;
+}
