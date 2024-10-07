@@ -13,7 +13,6 @@
 	"citizen.js": "/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Citizen */",
 	"citizen-drawer-toggle": "Przełącz menu",
 	"citizen-usermenu-toggle": "Przełącz menu użytkownika",
-	"citizen-search-footer": "Z {{SITENAME}}",
 	"citizen-search-toggle": "Przełącz wyszukiwanie",
 	"citizen-search-keyhint-exit": "Opuść wyszukiwanie",
 	"citizen-search-keyhint-open": "Utwórz wyszukiwanie",

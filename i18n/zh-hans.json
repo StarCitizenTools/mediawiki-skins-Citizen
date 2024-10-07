@@ -24,7 +24,6 @@
 	"citizen.js": "/* 这里所有JavaScript都会加载给Citizen皮肤的用户 */",
 	"citizen-drawer-toggle": "打开/关闭菜单",
 	"citizen-usermenu-toggle": "打开/关闭个人菜单",
-	"citizen-search-footer": "出自{{SITENAME}}",
 	"citizen-search-toggle": "打开/关闭搜索",
 	"citizen-search-keyhint-exit": "退出搜索",
 	"citizen-search-keyhint-open": "打开搜索",

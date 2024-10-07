@@ -7,6 +7,7 @@
 			"Pamputt",
 			"Reedy",
 			"SleaY",
+			"Terio legale",
 			"Verdy p"
 		]
 	},
@@ -18,6 +19,9 @@
 	"citizen-drawer-toggle": "Basculer le menu",
 	"citizen-usermenu-toggle": "Basculer le menu personnel",
 	"citizen-search-toggle": "Basculer la recherche",
+	"citizen-search-keyhint-exit": "Quitter la recherche",
+	"citizen-search-keyhint-open": "Ouvrir la recherche",
+	"citizen-search-keyhint-select": "Sélectionnez l'élément",
 	"citizen-languages-toggle": "Autres langues",
 	"citizen-actions-more-toggle": "Autres actions",
 	"citizen-sitestats-articles-label": "articles",

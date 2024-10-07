@@ -10,7 +10,6 @@
 	"citizen.js": "/* Vsa koda JavaScript tukaj se bo naložila za uporabnike preobleke Citizen */",
 	"citizen-drawer-toggle": "Preklopi meni",
 	"citizen-usermenu-toggle": "Preklop osebnega menija",
-	"citizen-search-footer": "Iz projekta {{SITENAME}}",
 	"citizen-search-toggle": "Preklop iskanja",
 	"citizen-search-keyhint-exit": "Izhod iz iskanja",
 	"citizen-search-keyhint-open": "Odprtje iskanja",
