@@ -18,7 +18,7 @@
 	"citizen-drawer-toggle": "Tooltip of drawer menu toggle",
 	"citizen-usermenu-toggle": "Tooltip of personal menu toggle",
 	"citizen-search-poweredby": "Label for the current search backend powering the search suggestion",
-	"citizen-search-poweredby-cirrussearch": "Label for ElasticSearch",
+	"citizen-search-poweredby-cirrussearch": "Label for Elasticsearch",
 	"citizen-search-poweredby-mediawiki": "Label for MediaWiki",
 	"citizen-search-toggle": "Tooltip of search box toggle",
 	"citizen-search-keyhint-exit": "Keyboard hint for the key to exit search",
