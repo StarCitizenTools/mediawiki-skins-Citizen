@@ -13,7 +13,7 @@
 	"citizen-drawer-toggle": "Toggle menu",
 	"citizen-usermenu-toggle": "Toggle personal menu",
 	"citizen-search-poweredby": "Powered by $1",
-	"citizen-search-poweredby-cirrussearch": "ElasticSearch",
+	"citizen-search-poweredby-cirrussearch": "Elasticsearch",
 	"citizen-search-poweredby-mediawiki": "MediaWiki",
 	"citizen-search-toggle": "Toggle search",
 	"citizen-search-keyhint-exit": "Exit search",

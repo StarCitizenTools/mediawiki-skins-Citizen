@@ -14,7 +14,7 @@
 	"citizen-drawer-toggle": "Bật tắt bảng chọn",
 	"citizen-usermenu-toggle": "Bật tắt bảng chọn cá nhân",
 	"citizen-search-poweredby": "Được hỗ trợ bởi $1",
-	"citizen-search-poweredby-cirrussearch": "ElasticSearch",
+	"citizen-search-poweredby-cirrussearch": "Elasticsearch",
 	"citizen-search-poweredby-mediawiki": "MediaWiki",
 	"citizen-search-toggle": "Tìm kiếm",
 	"citizen-search-keyhint-exit": "Thoát tìm kiếm",
