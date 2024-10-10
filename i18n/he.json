@@ -10,6 +10,8 @@
 	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|שיחה]]",
 	"citizen-drawer-toggle": "החלפת מצב תפריט",
 	"citizen-usermenu-toggle": "החלפת מצב תפריט אישי",
+	"citizen-search-poweredby": "מופעל על־ידי $1",
+	"citizen-search-poweredby-mediawiki": "מדיה־ויקי",
 	"citizen-search-toggle": "החלפת מצב חיפוש",
 	"citizen-search-keyhint-exit": "יציאה מהחיפוש",
 	"citizen-search-keyhint-open": "פתיחת החיפוש",
