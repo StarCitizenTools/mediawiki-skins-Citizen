@@ -118,13 +118,13 @@ html {
 
 @media ( min-width: @min-width-breakpoint-tablet ) {
 	html {
-		--padding-page: @padding-page * 1.5;
+		--padding-page: ~'calc( @{padding-page} * 1.5 )';
 	}
 }
 
 @media ( min-width: @min-width-breakpoint-desktop ) {
 	html {
-		--padding-page: @padding-page * 2;
+		--padding-page: ~'calc( @{padding-page} * 2 )';
 		--header-card-maxheight: ~'calc( 100vh - var( --space-sm ) * 2 )';
 	}
 }
