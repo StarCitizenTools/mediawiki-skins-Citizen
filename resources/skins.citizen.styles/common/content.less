@@ -17,3 +17,32 @@
 		}
 	}
 }
+
+// Heading HTML changes
+// T13555
+// TODO: Clean up heading spacing someday
+.mw-heading {
+	display: flex;
+	align-items: center;
+	margin-top: var( --space-md );
+
+	&1,
+	&2 {
+		margin-top: 3rem;
+	}
+
+	&3,
+	&4 {
+		margin-top: 2rem;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		flex-grow: 1;
+		margin: 0;
+	}
+}

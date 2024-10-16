@@ -10,32 +10,20 @@
 	--size-icon: 1.125rem;
 }
 
-.citizen-sections-enabled {
-	.citizen-section {
-		&-heading {
-			cursor: pointer;
-			// So that double clicking won't highlight everything
-			-webkit-user-select: none;
-			user-select: none;
+.citizen-section {
+	&-heading {
+		display: flex;
+		align-items: center;
 
-			&--collapsed {
-				.citizen-section-indicator {
-					transform: rotate3d( 1, 0, 0, 180deg );
-				}
+		.mw-headline {
+			flex-grow: 1;
+		}
 
-				.mw-headline,
-				.mw-heading h1,
-				.mw-heading h2 {
-					opacity: var( --opacity-icon-base );
-				}
-			}
+		:is( .mw-headline, h1, h2, h3, h4, h5, h6 ) {
+			transition: var( --transition-hover );
+			transition-property: opacity;
 
-			.mw-headline,
-			.mw-heading h1,
-			.mw-heading h2 {
-				transition: var( --transition-hover );
-				transition-property: opacity;
-
+			@media ( hover: pointer ) {
 				&:hover {
 					opacity: var( --opacity-icon-base--hover );
 				}
@@ -44,6 +32,25 @@
 					opacity: var( --opacity-icon-base--selected );
 				}
 			}
+		}
+
+		&:has( + .citizen-section[ hidden='until-found' ] ) {
+			.citizen-section-indicator {
+				transform: rotate3d( 1, 0, 0, 180deg );
+			}
+
+			:is( .mw-headline, h1, h2, h3, h4, h5, h6 ) {
+				color: var( --color-subtle );
+			}
+		}
+	}
+}
+
+.citizen-sections-enabled {
+	.citizen-section {
+		&-heading {
+			cursor: pointer;
+			user-select: none;
 		}
 
 		&-indicator {
@@ -55,46 +62,6 @@
 			cursor: pointer;
 			transition: var( --transition-hover );
 			transition-property: transform;
-		}
-
-		// Fix button alignment
-		&-heading,
-		> h3,
-		> h4,
-		> h5,
-		> h6 {
-			display: flex;
-			align-items: center;
-
-			// Right-align the editsection
-			.mw-headline {
-				flex-grow: 1;
-				order: -1;
-			}
-		}
-
-		&--collapsed {
-			display: none;
-		}
-	}
-}
-
-// Fix hover state on touch devices
-@media ( hover: none ) {
-	.citizen-sections-enabled .citizen-section {
-		&-heading .mw-headline,
-		&-indicator {
-			&:hover,
-			&:active {
-				opacity: 1;
-			}
-		}
-
-		&-heading--collapsed .mw-headline {
-			&:hover,
-			&:active {
-				opacity: var( --opacity-icon-base );
-			}
 		}
 	}
 }

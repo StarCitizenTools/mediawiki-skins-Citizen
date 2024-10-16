@@ -9,39 +9,6 @@ function init( bodyContent ) {
 		return;
 	}
 
-	const headings = bodyContent.querySelectorAll( '.citizen-section-heading' );
-	const sections = bodyContent.querySelectorAll( '.citizen-section' );
-
-	const setHeadlineAttributes = ( heading, collapsibleID, sectionIndex ) => {
-		const headline = heading.querySelector( '.mw-headline, .mw-heading' );
-
-		if ( !headline ) {
-			return;
-		}
-
-		headline.setAttribute( 'tabindex', '0' );
-		headline.setAttribute( 'role', 'button' );
-		headline.setAttribute( 'aria-controls', collapsibleID );
-		headline.setAttribute( 'aria-expanded', 'true' );
-		headline.setAttribute( 'data-mw-citizen-section-heading-index', sectionIndex );
-	};
-
-	const setSectionAttributes = ( section ) => {
-		section.setAttribute( 'aria-hidden', 'false' );
-	};
-
-	const toggleClasses = ( heading, section ) => {
-		if ( section ) {
-			heading.classList.toggle( 'citizen-section-heading--collapsed' );
-			section.classList.toggle( 'citizen-section--collapsed' );
-		}
-	};
-
-	const toggleAriaAttribute = ( el, attribute ) => {
-		const isAttributeSet = el.getAttribute( attribute ) === 'true';
-		el.setAttribute( attribute, isAttributeSet ? 'false' : 'true' );
-	};
-
 	const onEditSectionClick = ( e ) => {
 		e.stopPropagation();
 	};
@@ -55,29 +22,16 @@ function init( bodyContent ) {
 			return;
 		}
 
-		const selectedHeading = target.closest( '.citizen-section-heading' );
+		const heading = target.closest( '.citizen-section-heading' );
 
-		if ( selectedHeading ) {
-			const selectedHeadline = selectedHeading.querySelector( '.mw-headline, .mw-heading' );
+		if ( heading && heading.nextElementSibling && heading.nextElementSibling.classList.contains( 'citizen-section' ) ) {
+			const section = heading.nextElementSibling;
 
-			if ( selectedHeadline ) {
-				const sectionIndex = +selectedHeadline.dataset.mwCitizenSectionHeadingIndex;
-				const selectedSection = sections[ sectionIndex + 1 ];
-				toggleClasses( selectedHeading, selectedSection );
-				toggleAriaAttribute( selectedHeadline, 'aria-expanded' );
-				toggleAriaAttribute( selectedSection, 'aria-hidden' );
+			if ( section ) {
+				section.hidden = section.hidden === 'until-found' ? false : 'until-found';
 			}
 		}
 	};
-
-	const headingsLength = headings.length;
-	for ( let i = 0; i < headingsLength; i++ ) {
-		setHeadlineAttributes( headings[ i ], `citizen-section-${ i + 1 }`, i );
-	}
-
-	sections.forEach( ( section ) => {
-		setSectionAttributes( section );
-	} );
 
 	bodyContent.addEventListener( 'click', handleClick, false );
 }
