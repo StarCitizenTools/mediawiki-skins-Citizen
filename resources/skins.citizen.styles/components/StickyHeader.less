@@ -25,8 +25,8 @@
 	&::before {
 		position: absolute;
 		top: 0;
-		right: ~'calc( var(--padding-page ) * -1 )';
-		left: ~'calc( var(--padding-page ) * -1 )';
+		right: 0;
+		left: 0;
 		z-index: @z-index-bottom;
 		height: 100%;
 		content: '';
@@ -123,7 +123,7 @@ html {
 // Make sticky header more compact if there are less screen estate
 @media ( max-height: 800px ) {
 	.citizen-page-header--sticky {
-		.citizen-page-header {
+		.citizen-page-header-inner {
 			padding-top: var( --space-sm );
 			padding-bottom: var( --space-sm );
 		}

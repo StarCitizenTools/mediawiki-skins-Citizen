@@ -8,6 +8,8 @@
 .mw-body,
 .parsoid-body {
 	min-height: 100vh; // avoid footer being in the middle of the page
+	margin-top: var( --space-xl );
+	margin-bottom: var( --space-xl );
 }
 
 .citizen-body-container {
@@ -22,28 +24,6 @@
 	gap: 0 var( --space-xl );
 	justify-content: center;
 	padding: 0 var( --padding-page );
-	margin: var( --space-xl ) 0; // don't collide with other components (e.g. notice)
-}
-
-.citizen-page-header {
-	z-index: @z-index-above-content;
-	display: flex;
-	flex-wrap: wrap;
-	grid-area: header;
-	gap: var( --space-md );
-	align-items: center;
-	padding-top: var( --space-md );
-	padding-bottom: var( --space-md );
-}
-
-.citizen-page-heading {
-	flex-grow: 1;
-}
-
-.firstHeading-container {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
 }
 
 .citizen-body {

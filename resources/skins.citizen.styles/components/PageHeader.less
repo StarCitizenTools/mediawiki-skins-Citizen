@@ -1,3 +1,39 @@
+.citizen-page-header {
+	z-index: @z-index-above-content;
+	grid-area: header;
+	padding-right: var( --padding-page );
+	padding-left: var( --padding-page );
+
+	&-inner {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var( --space-md );
+		align-items: center;
+		/* max-width should sync with .citizen-body-container */
+		max-width: var( --width-layout );
+		padding-top: var( --space-md );
+		padding-bottom: var( --space-md );
+		margin-right: auto;
+		margin-left: auto;
+
+		@media ( min-width: @min-width-breakpoint-desktop ) {
+			.citizen-toc-enabled & {
+				max-width: ~'calc( var( --width-layout ) + var( --width-toc ) + var( --space-xl ) )';
+			}
+		}
+	}
+}
+
+.citizen-page-heading {
+	flex-grow: 1;
+}
+
+.firstHeading-container {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
 .firstHeading {
 	margin: 0;
 	word-break: break-word;
