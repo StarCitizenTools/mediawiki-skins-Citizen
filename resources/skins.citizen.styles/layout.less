@@ -8,27 +8,29 @@
 .mw-body,
 .parsoid-body {
 	min-height: 100vh; // avoid footer being in the middle of the page
-	margin-top: var( --space-xl );
-	margin-bottom: var( --space-xl );
 }
 
 .citizen-body-container {
 	display: grid;
 	grid-template-areas:
- 'header'
-		'afterHeader'
-		'content'
+ 'content'
 		'footer';
 	// Using auto as min value will cause overflow
 	grid-template-columns: minmax( 0, var( --width-layout ) );
 	gap: 0 var( --space-xl );
 	justify-content: center;
 	padding: 0 var( --padding-page );
+	// Bottom margin is added because data-after-content cannot
+	margin-bottom: var( --space-xl );
 }
 
 .citizen-body {
 	z-index: @z-index-base; // Stop body content going over sticky header
 	grid-area: content;
+}
+
+#mw-data-after-content:not( :empty ) {
+	margin-top: var( --space-xl );
 }
 
 @media ( min-width: @min-width-breakpoint-desktop ) {
@@ -40,9 +42,7 @@
 	.citizen-toc-enabled {
 		.citizen-body-container {
 			grid-template-areas:
- 'header header'
-				'afterHeader afterHeader'
-				'content sidebar'
+ 'content sidebar'
 				'footer footer';
 			grid-template-columns: minmax( 0, var( --width-layout ) ) var( --width-toc );
 		}
