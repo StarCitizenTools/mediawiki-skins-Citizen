@@ -107,9 +107,15 @@ class Dropdown {
 
 		const links = this.target.querySelectorAll( '.mw-list-item > a[accesskey]' );
 		links.forEach( ( link ) => {
+			const keyhintText = window.jQuery.fn.updateTooltipAccessKeys.getAccessKeyPrefix() + link.getAttribute( 'accesskey' );
+			if ( !keyhintText ) {
+				return;
+			}
 			const keyhint = document.createElement( 'span' );
 			keyhint.classList.add( 'citizen-keyboard-hint-key' );
-			keyhint.innerText = window.jQuery.fn.updateTooltipAccessKeys.getAccessKeyPrefix() + link.getAttribute( 'accesskey' );
+			// There isn't any shortcut using '-' as accesskey so we should be good
+			// @see https://www.mediawiki.org/wiki/Help:Keyboard_shortcuts
+			keyhint.innerText = keyhintText.replace( /-/g, ' ' );
 			link.append( keyhint );
 		} );
 	}
