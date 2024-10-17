@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.34.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.33.0...v2.34.0) (2024-10-17)
+
+
+### Features
+
+* **core:** ✨ add more saturation to text colors ([b9a92b4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b9a92b46920e000b8c398ed773086d5df14e50a7))
+* **core:** ✨ extend page header background to full width ([53742a0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/53742a0dd24e3450a4376bdb65e5304eba306e42))
+* **core:** ✨ simplify section implementation and update support for new headings ([20f484d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/20f484d9a3c2cc06af4f475ca1a16f2a548336d2))
+* **keyhint:** ✨ remove hyphens between keys ([cf1e55d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cf1e55dc5547fe51452f0846a0222ab80e652073))
+* **Keyhint:** ✨ tweak keyboard hint styles ([d2e92da](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d2e92da3c5881f96d12b4bb58d67ce42200da973))
+* **RecentChanges:** ✨ remove skeleton screen loading ([d76e8a9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d76e8a9a3f294fc19be002f1030694ad50b2ed62))
+* **stickyHeader:** ✨ collapse page tools label in sticky header ([1752552](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/17525528f5e2f87e11637e2cfa64867e3e207a84))
+
+
+### Bug Fixes
+
+* **core:** 🐛 use CSS calc instead of LESS calculation ([bd71ac7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bd71ac747b95c57b73ace3297f4a00c9ceae8301))
+* **core:** fix LESS compile error on 1.39 with multiline rules ([c90fe6c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c90fe6cea58c3f67721930d3c5d391fe9f5bfa06))
+* **pagetools:** 🐛 fix incorrect background color for language badge ([17c8caa](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/17c8caace971423e0b0af96d8e6dce9887fe11a7))
+* **tokens:** 🐛 fix LESS parsing error for box shadow in MW 1.43 ([ecdf9f2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ecdf9f2a2a932bc2ff78385d4cc26c68234695c6))
+
 ## [2.33.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.32.0...v2.33.0) (2024-10-15)
 
 
