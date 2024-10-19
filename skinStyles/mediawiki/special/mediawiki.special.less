@@ -32,14 +32,15 @@
 
 	tbody {
 		display: grid;
-		grid-template-columns: repeat( auto-fit, minmax( 320px, 1fr ) );
+		grid-template-columns: repeat( auto-fit, minmax( 160px, 1fr ) );
 		gap: var( --space-xs );
 	}
 
 	tr {
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		place-content: center;
 		padding: var( --space-sm ) var( --space-md );
+		text-align: center;
 		border: var( --border-width-base ) solid var( --border-color-base );
 		border-radius: var( --border-radius-medium );
 
@@ -53,7 +54,7 @@
 		border-top: 0;
 
 		&:first-child {
-			font-size: var( --font-size-x-large );
+			font-size: var( --font-size-large );
 			font-weight: var( --font-weight-semibold );
 		}
 	}
