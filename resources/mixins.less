@@ -15,52 +15,6 @@
 	}
 }
 
-// Collaspe animation setup
-.citizen-card-hide(@position, @axis: '', @fadeChildren: true) {
-	pointer-events: none;
-	opacity: 0;
-	transform: ~'scale@{axis}( 0 )';
-	transform-origin: @position;
-
-	& when (@fadeChildren ) {
-		>* {
-			opacity: 0;
-		}
-	}
-}
-
-// Expand animiation setup
-// When using fadeChildren, the child elements need to have
-// opacity: 0 set manually
-.citizen-card-show(@fadeChildren: true) {
-	z-index: @z-index-dropdown;
-	pointer-events: auto;
-	opacity: 1;
-	// HACK: So that visiblity won't wait 250ms to become visible
-	transition-delay: 0ms;
-	transform: none;
-
-	& when (@fadeChildren ) {
-		>* {
-			.citizen-card-content-show;
-		}
-	}
-}
-
-// Fade content when users open the menu
-// But GTFO instantly when they close the menu
-.citizen-card-content-show() {
-	opacity: 1;
-	transition: var( --transition-menu );
-	transition-property: opacity;
-}
-
-// Transition animation
-.citizen-card-transition() {
-	transition: var( --transition-menu );
-	transition-property: transform, opacity;
-}
-
 // Header card popups
 .citizen-header-card(@position ) {
 	position: absolute;
