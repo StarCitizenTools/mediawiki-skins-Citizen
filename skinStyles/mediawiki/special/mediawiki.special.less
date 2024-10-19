@@ -32,8 +32,12 @@
 
 	tbody {
 		display: grid;
-		grid-template-columns: repeat( auto-fit, minmax( 160px, 1fr ) );
+		grid-template-columns: 1fr 1fr;
 		gap: var( --space-xs );
+
+		@media ( min-width: @min-width-breakpoint-desktop ) {
+			grid-template-columns: repeat( auto-fit, minmax( 320px, 1fr ) );
+		}
 	}
 
 	tr {
