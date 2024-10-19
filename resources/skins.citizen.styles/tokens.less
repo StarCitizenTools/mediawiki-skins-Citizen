@@ -55,6 +55,10 @@
 	--height-sticky-header: 0;
 	/* Transition */
 	--transition-delay-menu: 100ms;
+	/* @see https://www.joshwcomeau.com/animation/css-transitions/#custom-curves-7 */
+	--transition-timing-function-ease: cubic-bezier( 0.44, 0.21, 0, 1 );
+	--transition-timing-function-ease-in: cubic-bezier( 0.75, 0, 1, 1 );
+	--transition-timing-function-ease-out: cubic-bezier( 0.215, 0.61, 0.355, 1 );
 	// Hover and active states are calculated by a modifier of the lightness value in HSL (e.g. hover: +2%, active: -2%)
 	--delta-lightness-hover-state: 4%;
 	// Used to calculate box shadow
@@ -241,4 +245,12 @@
 		--font-size-xx-large: ~'calc( var( --font-size-base ) *  1.5 )';
 		--font-size-xxx-large: ~'calc( var( --font-size-base ) *  2 )';
 	}
+}
+
+// TODO: Update with implementation on T376559 when it is finalized
+.citizen-animations-ready {
+	/* Only apply transition when page is ready for it */
+	--transition-menu: @transition-menu;
+	--transition-duration-base: 100ms;
+	--transition-duration-medium: 250ms;
 }

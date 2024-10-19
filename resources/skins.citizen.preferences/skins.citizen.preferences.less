@@ -28,14 +28,12 @@
 		// TODO: Somehow refactor this module to use citizen-menu__Card
 		&.citizen-pref-panel--active {
 			z-index: @z-index-dropdown;
-			transition: var( --transition-menu );
-			transition-property: transform;
+			transition-timing-function: var( --transition-timing-function-ease-out );
+			transition-duration: var( --transition-duration-medium );
 			transform: none;
 
 			> * {
 				opacity: 1;
-				transition: var( --transition-menu );
-				transition-property: opacity;
 			}
 		}
 

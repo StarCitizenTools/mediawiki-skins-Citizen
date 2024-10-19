@@ -48,11 +48,18 @@
 		}
 	}
 
-	.citizen-animations-ready {
-		.citizen-body-container {
-			transition: var( --transition-menu );
-			transition-property: grid;
-		}
+	.citizen-page-header-inner,
+	.citizen-body-container {
+		transition-timing-function: var( --transition-timing-function-ease );
+		transition-duration: var( --transition-duration-medium );
+	}
+
+	.citizen-page-header-inner {
+		transition-property: max-width;
+	}
+
+	.citizen-body-container {
+		transition-property: grid;
 	}
 }
 

@@ -159,13 +159,11 @@
 		bottom: ~'calc( var( --header-size ) + var(  --space-xs ) )';
 		left: 0;
 		z-index: @z-index-sticky; // Keep ToC above sticky header and page action, but below site header
-		display: flex;
-		flex-direction: column-reverse; // HACK: Place button below ToC
 		pointer-events: none; // HACK: Make background clickable
-		transition: var( --transition-menu );
-		transition-property: bottom; // Transform won't work with the backdrop
 
 		&-card {
+			position: absolute;
+			bottom: 100%;
 			// This is not bulletproof since it will get covered by page header
 			// in extremely short height. but it should be good for now
 			max-height: ~'calc( var( --header-card-maxheight ) - 8rem )';
@@ -175,9 +173,6 @@
 
 		.citizen-dropdown {
 			&-summary {
-				position: absolute;
-				bottom: 0;
-				left: 0;
 				display: grid;
 				place-content: center;
 				width: var( --toolbar-size );

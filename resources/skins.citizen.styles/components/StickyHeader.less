@@ -98,23 +98,6 @@ html {
 	top: var( --height-sticky-header ) !important;
 }
 
-// Hide sticky header on scroll down on smaller screens
-@media ( max-width: @max-width-breakpoint-tablet ) {
-	.citizen-page-header {
-		.citizen-page-header--sticky & {
-			transition: var( --transition-menu );
-			transition-property: transform;
-
-			.citizen-page-heading {
-				opacity: 1;
-				transition: var( --transition-menu );
-				transition-delay: var( --transition-delay-menu );
-				transition-property: opacity;
-			}
-		}
-	}
-}
-
 // Make sticky header more compact if there are less screen estate
 @media ( max-height: 800px ) {
 	.citizen-page-header--sticky {

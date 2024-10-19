@@ -130,10 +130,35 @@
 
 .citizen-feature-autohide-navigation-clientpref-1 {
 	@media ( max-width: @max-width-breakpoint-tablet ) {
+		.citizen-header {
+			transition-timing-function: var( --transition-timing-function-ease-out );
+			transition-duration: var( --transition-duration-medium );
+			transition-property: transform;
+		}
+
+		// Hide sticky header on scroll down on smaller screens
+		.citizen-page-header--sticky {
+			.citizen-page-header,
+			.citizen-page-heading {
+				transition-timing-function: var( --transition-timing-function-ease-out );
+				transition-duration: var( --transition-duration-medium );
+			}
+
+			.citizen-page-header {
+				transition-property: transform;
+			}
+
+			.citizen-page-heading {
+				transition-property: opacity;
+			}
+		}
+
 		.citizen-scroll--down {
 			--height-sticky-header: 0 !important;
 
 			.citizen-header {
+				transition-timing-function: var( --transition-timing-function-ease-in );
+				transition-duration: var( --transition-duration-base );
 				transform: translateY( 100% );
 			}
 
@@ -148,12 +173,18 @@
 			}
 
 			&.citizen-page-header--sticky {
+				.citizen-page-header,
+				.citizen-page-heading {
+					transition-timing-function: var( --transition-timing-function-ease-in );
+					transition-duration: var( --transition-duration-base );
+				}
+
 				.citizen-page-header {
 					transform: translateY( -150% );
+				}
 
-					.citizen-page-heading {
-						opacity: 0;
-					}
+				.citizen-page-heading {
+					opacity: 0;
 				}
 			}
 		}
@@ -162,9 +193,9 @@
 			// Page actions needed to have a scroll up handler to avoid clipping issue
 			.page-actions {
 				opacity: 1;
-				transition: var( --transition-menu );
-				transition-delay: 250ms;
-				transition-property: opacity, transform;
+				transition-delay: var( --transition-duration-medium );
+				transition-timing-function: var( --transition-timing-function-ease-out );
+				transition-duration: var( --transition-duration-medium );
 			}
 		}
 	}
