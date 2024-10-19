@@ -1,0 +1,38 @@
+/*
+ * Add some microinteraction to Codex icons with CSS
+ * We should look into animating the SVG directly at some point
+ */
+:is( a,
+button,
+summary ) {
+	.citizen-ui-icon {
+		transition: var( --transition-hover );
+		transition-property: transform;
+	}
+
+	@media ( hover: hover ) {
+		&:hover {
+			.citizen-ui-icon {
+				&.mw-ui-icon-wikimedia-ellipsis {
+					transform: rotate( 90deg );
+				}
+
+				&.mw-ui-icon-wikimedia-first {
+					transform: translateY( -2px ) rotate( 90deg );
+				}
+
+				&.mw-ui-icon-wikimedia-history {
+					transform: rotate( -270deg );
+				}
+
+				&.mw-ui-icon-wikimedia-share {
+					transform: translateX( 2px );
+				}
+
+				&.mw-ui-icon-wikimedia-settings {
+					transform: rotate( 90deg );
+				}
+			}
+		}
+	}
+}
