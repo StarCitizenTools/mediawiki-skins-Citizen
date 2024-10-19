@@ -7,6 +7,16 @@
  */
 function enableCssAnimations( document ) {
 	document.documentElement.classList.add( 'citizen-animations-ready' );
+
+	// Disable all CSS transition during resize
+	const onResize = () => {
+		document.documentElement.classList.remove( 'citizen-animations-ready' );
+	};
+	const onResizeEnd = mw.util.debounce( () => {
+		document.documentElement.classList.add( 'citizen-animations-ready' );
+	}, 250 );
+	window.addEventListener( 'resize', onResize );
+	window.addEventListener( 'resize', onResizeEnd );
 }
 
 /**
