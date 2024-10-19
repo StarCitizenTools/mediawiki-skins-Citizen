@@ -40,12 +40,6 @@
 	--color-link--active: ~'var( --color-progressive--active )';
 	/* Box shadow */
 	--box-shadow-border: var( --border-color-base ) 0 0 0 1px;
-	// Based on https://web.dev/building-a-color-scheme/#rad-shadow
-	// TODO: Refactor this to support filter drop-shadow
-	// TODO: LESS compiler in MW 1.39 does not support multiline, switch to that in 1.43
-	--box-shadow-drop-small: ~'0 calc( var( --shadow-vertical-small ) * 0.028 ) 2.2px hsla( var( --surface-shadow ), calc( var( --shadow-strength ) + .03 ) ), 0 calc( var( --shadow-vertical-small ) * 0.067 ) 5.3px hsla( var( --surface-shadow ), calc( var(--shadow-strength ) + .01 ) ), 0 calc( var( --shadow-vertical-small ) * 0.125 ) 10px hsla( var( --surface-shadow ), calc( var( --shadow-strength ) + .02 ) ), 0 calc( var( --shadow-vertical-small ) * 0.223 ) 17.9px hsla( var( --surface-shadow ), calc( var( --shadow-strength ) + .02 ) ), 0 calc( var( --shadow-vertical-small ) * 0.418 ) 33.4px hsla( var( --surface-shadow ), calc( var( --shadow-strength ) + .03 ) ), 0 var( --shadow-vertical-small ) 80px hsla( var( --surface-shadow ), var( --shadow-strength ) )';
-	--box-shadow-drop-medium: ~'0 calc( var( --shadow-vertical-medium ) * 0.028 ) 2.2px hsla( var( --surface-shadow ), calc( var( --shadow-strength ) + .03 ) ), 0 calc( var( --shadow-vertical-medium ) * 0.067 ) 5.3px hsla( var( --surface-shadow ), calc( var( --shadow-strength ) + .01 ) ), 0 calc( var( --shadow-vertical-medium ) * 0.125 ) 10px hsla( var( --surface-shadow ), calc( var( --shadow-strength ) + .02 ) ), 0 calc( var( --shadow-vertical-medium ) * 0.223 ) 17.9px hsla( var( --surface-shadow ), calc( var( --shadow-strength ) + .02 ) ), 0 calc( var( --shadow-vertical-medium ) * 0.418 ) 33.4px hsla( var( --surface-shadow ), calc( var( --shadow-strength ) + .03 ) ), 0 var( --shadow-vertical-medium ) 80px hsla( var( --surface-shadow ), var( --shadow-strength ) )';
-	--box-shadow-drop-xx-large: ~'0 calc( var( --shadow-vertical-xx-large ) * 0.028 ) 2.2px hsla( var( --surface-shadow ), calc( var( --shadow-strength ) + .03 ) ), 0 calc( var( --shadow-vertical-xx-large ) * 0.067 ) 5.3px hsla( var( --surface-shadow ), calc( var( --shadow-strength ) + .01 ) ), 0 calc( var( --shadow-vertical-xx-large ) * 0.125 ) 10px hsla( var( --surface-shadow ), calc( var( --shadow-strength ) + .02 ) ), 0 calc( var( --shadow-vertical-xx-large ) * 0.223 ) 17.9px hsla( var( --surface-shadow ), calc( var( --shadow-strength ) + .02 ) ), 0 calc( var( --shadow-vertical-xx-large ) * 0.418 ) 33.4px hsla( var( --surface-shadow ), calc( var( --shadow-strength ) + .03 ) ), 0 var( --shadow-vertical-xx-large ) 80px hsla( var( --surface-shadow ), var( --shadow-strength ) )';
 	/* Font */
 	// Used as base unit to caluclate font-size
 	--font-size-base: 1rem;
@@ -61,12 +55,8 @@
 	--transition-timing-function-ease-out: cubic-bezier( 0.215, 0.61, 0.355, 1 );
 	// Hover and active states are calculated by a modifier of the lightness value in HSL (e.g. hover: +2%, active: -2%)
 	--delta-lightness-hover-state: 4%;
-	// Used to calculate box shadow
-	--shadow-strength: 0.02;
-	--shadow-vertical-small: 4px;
-	--shadow-vertical-medium: 16px;
-	--shadow-vertical-xx-large: 80px;
-	--surface-shadow: var( --color-primary__h ), 10%, 20%;
+	--shadow-color: var( --color-primary__h ), 10%, 20%;
+	--shadow-opacity: 0.034;
 
 	/**
 	 * Codex Design Tokens but not included as CSS variables
@@ -77,6 +67,15 @@
 	--border-radius-sharp: 0;
 	--border-radius-pill: 9999px;
 	--border-radius-circle: 50%;
+	// TODO: Refactor this to support filter drop-shadow
+	// TODO: LESS compiler in MW 1.39 does not support multiline, switch to that in 1.43
+	// @see https://www.joshwcomeau.com/shadow-palette
+	--box-shadow-drop-small:
+ 0.3px 0.5px 0.7px var( --box-shadow-color-base ),0.4px 0.8px 1px -1.2px var( --box-shadow-color-base ),1px 2px 2.5px -2.5px var( --box-shadow-color-base );
+	--box-shadow-drop-medium:
+ 0.3px 0.5px 0.7px var( --box-shadow-color-base ),0.8px 1.6px 2px -0.8px var( --box-shadow-color-base ),2.1px 4.1px 5.2px -1.7px var( --box-shadow-color-base ),5px 10px 12.6px -2.5px var( --box-shadow-color-base );
+	--box-shadow-drop-xx-large:
+ 0.3px 0.5px 0.7px var( --box-shadow-color-base ),1.5px 2.9px 3.7px -0.4px var( --box-shadow-color-base ),2.7px 5.4px 6.8px -0.7px var( --box-shadow-color-base ),4.5px 8.9px 11.2px -1.1px var( --box-shadow-color-base ),7.1px 14.3px 18px -1.4px var( --box-shadow-color-base ),11.2px 22.3px 28.1px -1.8px var( --box-shadow-color-base ),17px 33.9px 42.7px -2.1px var( --box-shadow-color-base ),25px 50px 62.9px -2.5px var( --box-shadow-color-base );
 	--font-size-x-small: ~'calc( var( --font-size-base ) * 0.75 )';
 	--font-size-small: ~'calc( var( --font-size-base ) * 0.875 )';
 	--font-size-medium: var( --font-size-base );
@@ -118,7 +117,7 @@
 	--color-content-removed: var( --color-destructive );
 	--filter-invert-icon: 0;
 	--filter-invert-primary-button-icon: 1;
-	--box-shadow-color-base: ~'hsla( var( --surface-shadow ), var( --shadow-strength ) )';
+	--box-shadow-color-base: ~'hsla( var( --shadow-color ), var( --shadow-opacity ) )';
 	--box-shadow-color-progressive--active: var( --color-progressive--active );
 	--box-shadow-color-progressive--focus: var( --color-progressive );
 	--box-shadow-color-progressive-selected: var( --color-progressive );
