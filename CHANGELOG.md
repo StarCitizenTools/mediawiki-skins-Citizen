@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.35.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.34.0...v2.35.0) (2024-10-21)
+
+
+### Features
+
+* **core:** ✨ add animation for more icons ([457bc87](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/457bc87c52ab4c3d5151d84fe09a340b5b253195))
+* **core:** ✨ add some microinteractions to some of the icons ([dd16582](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/dd1658214212136c552453f4d05259df00851f78))
+* **core:** ✨ improve and clean up various CSS transitions ([bb9ed44](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bb9ed449f67263d2691a797508b50f6e908c4b5b))
+* **features:** ✨ make black theme color darker ([f96cd74](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f96cd7435e33a1705c9e0d44a1749be7024a8087))
+* **features:** ✨ remove saturation from black mode colors ([0259645](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0259645eb5dde29fc099d9de62520e6f912c4c1e))
+* **mediawiki:** ✨ improve responsive layout in software table ([ddeaa39](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ddeaa3928846d5bd9b1f0243fcd0667850c97e9d))
+* **mediawiki:** ✨ make Special:Version software more compact ([c458252](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c458252f913f2da209bdeabd41e377354117ba5a))
+* **overflow:** ✨ add noresize class to citizen nowrap classes ([7702361](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/77023614025777a4d85fa166827afe823f866d94))
+* **search:** ✨ use trash icon instead of clear icon for clear input text button ([fe514e9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fe514e94ce0a12f4be7c0909612f4293629acbd0))
+* **tokens:** ✨ simplify box shadow and align closer with Codex styles ([9519134](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/951913458ce5a5c0bb520dca91d2c2fa603cb0ae))
+
+
+### Bug Fixes
+
+* **core:** 🐛 escape CSS variable in HSL color ([43ed770](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/43ed770b6200ed78e8e23e2c76804b4fd9fea6b0))
+* **core:** 🐛 fix ellipsis icon rotate direction ([118bd6a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/118bd6a2be281aa160adc623ee44139fee5a07ef))
+* **mediawiki:** 🐛 add missing LESS import for mediawiki.special ([a614152](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a614152388170c92ec3ec018faa5593fda6468bd))
+* **mediawiki:** 🐛 apply body styles to overlay outside of citizen-body ([95c355d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/95c355d9b33a370fd5412f6cbbb1db1ca92b80ab))
+* **pref:** 🐛 only apply transition to transform property ([8ac332a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8ac332a8c0eb5076a53b2a292a10098cc16363c8))
+* **tokens:** 🐛 incorrect shadow opacity for dark theme ([a353b14](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a353b14dc7b3b416ce58b8a80a5bd656140357e2))
+
+
+### Performance Improvements
+
+* **core:** ⚡️ disable all CSS transition during window resize ([10d3c17](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/10d3c17f185441c5424dfbee4318648313a50417))
+
 ## [2.34.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.33.0...v2.34.0) (2024-10-17)
 
 
