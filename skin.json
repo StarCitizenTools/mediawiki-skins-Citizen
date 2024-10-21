@@ -606,6 +606,7 @@
 			"+mediawiki.editfont.styles": "skinStyles/mediawiki/mediawiki.editfont.styles.less",
 			"+mediawiki.interface.helpers.styles": "skinStyles/mediawiki/mediawiki.interface.helpers.styles.less",
 			"+mediawiki.notification": "skinStyles/mediawiki/mediawiki.notification.less",
+			"+mediawiki.page.ready": "skinStyles/mediawiki/teleportTarget.less",
 			"+mediawiki.pager.styles": "skinStyles/mediawiki/mediawiki.pager.styles.less",
 			"mediawiki.skinning.content.parsoid": [],
 			"mediawiki.skinning.interface": [],
