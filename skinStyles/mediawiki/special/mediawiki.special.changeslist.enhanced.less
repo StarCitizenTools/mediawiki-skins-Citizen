@@ -8,6 +8,23 @@
  * a.k.a. Enhanced Recent Changes is enabled.
  */
 .mw-enhanced-rc {
+	/*
+	 * Allow the change to scroll if it overflowed the container
+	 * That happends a lot with page name without whitespace in narrow viewport
+	 */
+	table& {
+		display: block;
+		overflow-x: auto;
+
+		tr.mw-enhanced-rc {
+			td.mw-enhanced-rc,
+			td.mw-enhanced-rc-nested {
+				display: block;
+				margin-top: var( --space-xxs );
+			}
+		}
+	}
+
 	td& {
 		font-family: var( --font-family-monospace );
 	}
@@ -17,9 +34,6 @@
 	}
 
 	&-nested {
-		display: block;
-		margin-top: var( --space-xxs );
-
 		.mw-tag-markers {
 			margin: var( --space-xxs );
 		}
