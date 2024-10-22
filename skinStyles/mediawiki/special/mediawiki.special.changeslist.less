@@ -125,6 +125,11 @@
  * Sometimes wiki transclude those pages and these styles will break regular pages
  */
 .ns-special {
+	/* Disable sticky header due to performance issue on long RC */
+	#citizen-page-header-sticky-sentinel {
+		display: none;
+	}
+
 	.mw-changeslist h4 {
 		.citizen-sticky-header( false, false );
 	}
