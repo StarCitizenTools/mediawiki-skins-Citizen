@@ -196,10 +196,7 @@
 			// Page actions needed to have a scroll up handler to avoid clipping issue
 			.page-actions {
 				opacity: 1;
-				transition-delay: var( --transition-duration-medium );
-				transition-timing-function: var( --transition-timing-function-ease-out );
-				transition-duration: var( --transition-duration-medium );
-				transition-property: opacity, transform;
+				transition: opacity var( --transition-duration-medium ) var( --transition-timing-function-ease-out ) var( --transition-duration-medium ), transform var( --transition-duration-medium ) var( --transition-timing-function-ease-out ) var( --transition-duration-medium );
 			}
 		}
 	}

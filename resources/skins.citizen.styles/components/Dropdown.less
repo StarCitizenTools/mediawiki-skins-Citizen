@@ -1,6 +1,7 @@
 .citizen-dropdown {
 	.citizen-menu__card {
 		z-index: @z-index-dropdown;
+		max-width: 80vw;
 		transition-timing-function: var( --transition-timing-function-ease-in );
 		transition-duration: var( --transition-duration-base );
 		transition-property: transform;
@@ -80,6 +81,10 @@
 	}
 
 	@media ( max-width: @max-width-breakpoint-tablet ) {
+		.citizen-menu__card {
+			max-width: ~'calc( 100vw - var( --space-xs ) * 2 )';
+		}
+
 		// Add dismiss affordnance backdrop
 		&-details {
 			&::before {
