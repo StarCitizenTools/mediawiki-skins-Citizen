@@ -8,11 +8,19 @@
 	 */
 	--border-radius-medium: ~'calc( var( --border-radius-base ) * 2 )';
 	--border-radius-large: ~'calc( var( --border-radius-base ) * 3 )';
-	/* Progressive color */
+	/* State color */
 	--color-primary__h: @color-primary__h;
 	--color-primary__s: @color-primary__s;
 	--color-primary__l: @color-primary__l;
 	--color-inverted-primary: #fff;
+	--color-destructive__h: 340;
+	--color-destructive__l: 40%;
+	--color-success__h: 170;
+	--color-success__l: 17%;
+	--color-warning__h: 48;
+	--color-warning__l: 40%;
+	--background-color-subtle__s: 95%;
+	--background-color-subtle__l: 95%;
 	/* Surface color */
 	--color-surface-0__s: 30%;
 	--color-surface-0__l: 96%;
@@ -100,15 +108,15 @@
 	--color-progressive--hover: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), calc( var( --color-primary__l ) + var( --delta-lightness-hover-state ) ) )';
 	--color-progressive--active: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), calc( var( --color-primary__l ) - var( --delta-lightness-hover-state ) ) )';
 	--color-progressive--focus: var( --color-progressive );
-	--color-destructive: #d60021;
-	--color-destructive--hover: #ef4444;
-	--color-destructive--active: #9c0015;
+	--color-destructive: ~'hsl( var( --color-destructive__h ), 100%, var( --color-destructive__l ) )';
+	--color-destructive--hover: ~'hsl( var( --color-destructive__h ), 100%, calc( var( --color-destructive__l ) + var( --delta-lightness-hover-state ) ) )';
+	--color-destructive--active: ~'hsl( var( --color-destructive__h ), 100%, calc( var( --color-destructive__l ) - var( --delta-lightness-hover-state ) ) )';
 	--color-destructive--focus: var( --color-progressive );
 	--color-visited: var( --color-link );
 	--color-destructive--visited: var( --color-destructive );
 	--color-error: var( --color-destructive );
-	--color-warning: #c77f00;
-	--color-success: #009768;
+	--color-warning: ~'hsl( var( --color-warning__h ), 100%, var( --color-warning__l ) )';
+	--color-success: ~'hsl( var( --color-success__h ), 100%, var( --color-success__l ) )';
 	--color-notice: var( --color-base );
 	--color-content-added: var( --color-success );
 	--color-content-removed: var( --color-destructive );
@@ -131,18 +139,18 @@
 	--background-color-progressive--hover: var( --color-progressive--hover );
 	--background-color-progressive--active: var( --color-progressive--active );
 	--background-color-progressive--focus: var( --color-progressive );
-	--background-color-progressive-subtle: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), 95% )';
+	--background-color-progressive-subtle: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), var( --background-color-subtle__l ) )';
 	--background-color-destructive: var( --color-destructive );
 	--background-color-destructive--hover: var( --color-destructive--hover );
 	--background-color-destructive--active: var( --color-destructive--active );
 	--background-color-destructive--focus: var( --color-progressive );
-	--background-color-destructive-subtle: #fee2e2;
+	--background-color-destructive-subtle: ~'hsl( var( --color-destructive__h ), var( --background-color-subtle__s ), var( --background-color-subtle__l ) )';
 	--background-color-error: var( --color-destructive );
 	--background-color-error--hover: var( --color-destructive--hover );
 	--background-color-error--active: var( --color-destructive--active );
 	--background-color-error-subtle: var( --background-color-destructive-subtle );
-	--background-color-warning-subtle: #fef3c7;
-	--background-color-success-subtle: #d1fae5;
+	--background-color-warning-subtle: ~'hsl( var( --color-warning__h ), var( --background-color-subtle__s ), var( --background-color-subtle__l ) )';
+	--background-color-success-subtle: ~'hsl( var( --color-success__h ), var( --background-color-subtle__s ), var( --background-color-subtle__l ) )';
 	--background-color-notice-subtle: var( --color-surface-2 );
 	--background-color-content-added: var( --background-color-success-subtle );
 	--background-color-content-removed: var( --background-color-destructive-subtle );
