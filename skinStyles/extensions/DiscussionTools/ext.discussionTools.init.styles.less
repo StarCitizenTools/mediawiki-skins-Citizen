@@ -144,3 +144,10 @@
 		font-weight: var( --font-weight-semibold );
 	}
 }
+
+@supports (mix-blend-mode:darken) {
+	.ext-discussiontools-init-highlight {
+		/* Move highlight layer to the background so it does not affect the foreground color */
+		z-index: -1;
+	}
+}
