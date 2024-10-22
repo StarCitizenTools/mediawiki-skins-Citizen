@@ -10,29 +10,40 @@
 
 .mw-notification-area {
 	padding: var( --space-xs );
+	font-size: var( --font-size-small );
+	line-height: var( --line-height-sm );
 }
 
 .mw-notification {
+	padding: var( --space-sm ) var( --space-md );
 	color: var( --color-emphasized );
 	background-color: var( --color-surface-1 );
-	border-color: transparent;
+	border-color: var( --border-color-base );
 	border-radius: var( --border-radius-medium );
 	box-shadow: var( --box-shadow-drop-xx-large );
+	transition-timing-function: var( --transition-timing-function-ease-in );
+	transition-duration: var( --transition-duration-base );
+	transition-property: transform, opacity;
+
+	&-visible {
+		transition-timing-function: var( --transition-timing-function-ease-out );
+		transition-duration: var( --transition-duration-medium );
+	}
 
 	&.mw-notification-type {
 		&-warn {
-			background: var( --background-color-warning-subtle ) var( --color-surface-0 );
-			border-color: transparent;
+			background-color: var( --background-color-warning-subtle );
+			border-color: inherit;
 		}
 
 		&-error {
-			background: var( --background-color-destructive-subtle ) var( --color-surface-0 );
-			border-color: transparent;
+			background-color: var( --background-color-destructive-subtle );
+			border-color: inherit;
 		}
 
 		&-success {
-			background: var( --background-color-success-subtle ) var( --color-surface-0 );
-			border-color: transparent;
+			background-color: var( --background-color-success-subtle );
+			border-color: inherit;
 		}
 	}
 }
