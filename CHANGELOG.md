@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.37.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.36.0...v2.37.0) (2024-10-23)
+
+
+### Features
+
+* **core:** ✨ backport  class from MW core ([9660faa](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9660faaa25dd713f3360cd09ebc94060465672b1))
+* **core:** ✨ move page header to the bottom on main page ([6d44586](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6d44586adc49af224a6eab049a77d408fe2debd3))
+* **header:** ✨ add microinteraction to wiki logo/home button ([06b6f6c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/06b6f6c19444db8beea2e17b47f7e5ec5a324e84))
+* **tokens:** ✨ deprecate old font-weight-semibold variables ([c88df2d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c88df2d1944414007950b1a4be018e271b329b07))
+* **tokens:** ✨ deprecate old line height variables ([90862b1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/90862b193e7ef33614becbe1edf6670b782af08b))
+
+
+### Performance Improvements
+
+* **sections:** ⚡️ re-order conditions to short circuit earlier ([01419e7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/01419e76192957fb01189fcfdd31517d59221b18))
+
 ## [2.36.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.35.0...v2.36.0) (2024-10-23)
 
 
