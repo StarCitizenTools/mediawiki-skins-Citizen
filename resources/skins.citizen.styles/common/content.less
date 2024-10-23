@@ -27,6 +27,42 @@
 }
 
 /**
+ * Main page-specific styles
+ */
+.page-Main_Page {
+	// Disable sticky header
+	#citizen-page-header-sticky-sentinel {
+		display: none;
+	}
+
+	// Move header to the bottom of the page
+	#content {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.citizen-page-header {
+		order: 9999;
+
+		&-inner {
+			justify-content: center;
+
+			@media ( min-width: @min-width-breakpoint-desktop ) {
+				border-top: var( --border-width-base ) solid var( --border-color-base );
+			}
+		}
+	}
+
+	.citizen-page-heading {
+		display: none;
+	}
+
+	.citizen-body-container {
+		margin-top: var( --space-xl );
+	}
+}
+
+/**
  * Heading HTML changes
  * @see https://phabricator.wikimedia.org/T13555
  * TODO: Clean up heading spacing someday
