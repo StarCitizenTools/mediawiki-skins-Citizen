@@ -228,13 +228,20 @@ class SkinCitizen extends SkinMustache {
 		$this->addClientPrefFeature( 'citizen-feature-custom-font-size' );
 		$this->addClientPrefFeature( 'citizen-feature-custom-width' );
 
-		// Collapsible sections
-		// Load in content pages
-		if ( $title !== null && $title->isContentPage() ) {
-			// Since we merged the sections module into core styles and scripts to reduce RL modules
-			// The style is now activated through the class below
-			if ( $this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true ) {
+		if ( $title !== null ) {
+			// Collapsible sections
+			if (
+				$this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true &&
+				$title->isContentPage()
+			) {
 				$options['bodyClasses'][] = 'citizen-sections-enabled';
+			}
+
+			// Add a HTML class to indicate the page is a main page
+			// T363281
+			// TODO: Remove this when we move to 1.43 because this is in core
+			if ( $title->isMainPage() ) {
+				$options['bodyClasses'][] = 'page-Main_Page';
 			}
 		}
 
