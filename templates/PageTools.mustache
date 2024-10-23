@@ -5,9 +5,9 @@
 }}
 <div class="page-actions">
 	{{#has-languages}}{{>PageTools__languages}}{{/has-languages}}
-	{{#pagetools-visible}}
+	{{#is-visible}}
 		{{#data-portlets.data-views}}{{>Menu}}{{/data-portlets.data-views}}
 		{{#data-portlets.data-associated-pages}}{{>Menu}}{{/data-portlets.data-associated-pages}}
-	{{/pagetools-visible}}
-	{{#pagetools-overflow}}{{>PageTools__more}}{{/pagetools-overflow}}
+	{{/is-visible}}
+	{{#has-overflow}}{{>PageTools__more}}{{/has-overflow}}
 </div>

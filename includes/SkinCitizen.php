@@ -28,12 +28,12 @@ use MediaWiki\Skins\Citizen\Components\CitizenComponentMainMenu;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageFooter;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageHeading;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageSidebar;
+use MediaWiki\Skins\Citizen\Components\CitizenComponentPageTools;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentSearchBox;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentSiteStats;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentUserInfo;
 use MediaWiki\Skins\Citizen\Partials\BodyContent;
 use MediaWiki\Skins\Citizen\Partials\Metadata;
-use MediaWiki\Skins\Citizen\Partials\PageTools;
 use MediaWiki\Skins\Citizen\Partials\Theme;
 use SkinMustache;
 use SkinTemplate;
@@ -44,6 +44,9 @@ use SkinTemplate;
  */
 class SkinCitizen extends SkinMustache {
 	use GetConfigTrait;
+
+	/** @var null|array for caching purposes */
+	private $languages;
 
 	/**
 	 * Overrides template, styles and scripts module
@@ -73,6 +76,19 @@ class SkinCitizen extends SkinMustache {
 	}
 
 	/**
+	 * Calls getLanguages with caching.
+	 * From Vector 2022
+	 *
+	 * @return array
+	 */
+	protected function getLanguagesCached(): array {
+		if ( $this->languages === null ) {
+			$this->languages = $this->getLanguages();
+		}
+		return $this->languages;
+	}
+
+	/**
 	 * @inheritDoc
 	 */
 	public function getTemplateData(): array {
@@ -88,7 +104,6 @@ class SkinCitizen extends SkinMustache {
 		$isTemp = $user->isTemp();
 
 		$bodycontent = new BodyContent( $this );
-		$tools = new PageTools( $this );
 
 		$components = [
 			'data-footer' => new CitizenComponentFooter(
@@ -114,6 +129,17 @@ class SkinCitizen extends SkinMustache {
 				$pageLang,
 				$title,
 				$user
+			),
+			'data-page-tools' => new CitizenComponentPageTools(
+				$config,
+				$localizer,
+				$title,
+				$user,
+				count( $this->getLanguagesCached() ),
+				$parentData['data-portlets-sidebar'],
+				// These portlets can be unindexed
+				$parentData['data-portlets']['data-languages'] ?? [],
+				$parentData['data-portlets']['data-variants'] ?? []
 			),
 			'data-search-box' => new CitizenComponentSearchBox(
 				$localizer,
@@ -146,7 +172,7 @@ class SkinCitizen extends SkinMustache {
 			// Booleans
 			'toc-enabled' => !empty( $parentData['data-toc'] ),
 			'html-body-content--formatted' => $bodycontent->decorateBodyContent( $parentData['html-body-content'] )
-		], $tools->getPageToolsData( $parentData ) );
+		] );
 	}
 
 	/**
