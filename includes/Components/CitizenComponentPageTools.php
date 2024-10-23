@@ -5,12 +5,11 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Components;
 
 use Config;
+use Exception;
+use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 use MediaWiki\User\UserIdentity;
 use MessageLocalizer;
-use Exception;
-use ExtensionRegistry;
-use MediaWiki\MediaWikiServices;
 
 /**
  * CitizenComponentPageTools component
