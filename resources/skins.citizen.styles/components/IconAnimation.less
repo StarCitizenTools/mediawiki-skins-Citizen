@@ -1,6 +1,6 @@
-/*
- * Add some microinteraction to Codex icons with CSS
- * We should look into animating the SVG directly at some point
+/**
+ * Microinteractions for icons
+ * TODO: Look into animating the SVG directly
  */
 :is( a,
 button,
@@ -13,36 +13,67 @@ summary ) {
 	@media ( hover: hover ) {
 		&:hover {
 			.citizen-ui-icon {
+				// Move pen to the right like drawing a line
+				// TODO: Perhaps we can add a line somehow through CSS
 				&.mw-ui-icon-wikimedia-edit {
-					transform: translateX( -2px );
+					transform: translateX( 2px );
 				}
 
+				// Spin anti-clockwise like a door handle, to open a vertical menu
 				&.mw-ui-icon-wikimedia-ellipsis {
 					transform: rotate( -90deg );
 				}
 
+				// Move up
+				&.mw-ui-icon-wikimedia-speechBubbles,
+				&.mw-ui-icon-wikimedia-userAdd {
+					transform: translateY( -2px );
+				}
+
+				// Move up to indicate going to the top
+				// rotate( 90deg ) is needed because of how the icon is set up
 				&.mw-ui-icon-wikimedia-first {
 					transform: translateY( -2px ) rotate( 90deg );
 				}
 
+				// Spin anti-clockwise and get the arrow to point backward
 				&.mw-ui-icon-wikimedia-history {
 					transform: rotate( -270deg );
 				}
 
+				// Move towards where the arrow is pointing
 				&.mw-ui-icon-wikimedia-logIn,
 				&.mw-ui-icon-wikimedia-share {
 					transform: translateX( 2px );
 				}
 
+				// Rotate the icon
 				&.mw-ui-icon-wikimedia-settings {
 					transform: rotate( 90deg );
 				}
-
-				&.mw-ui-icon-wikimedia-speechBubbles,
-				&.mw-ui-icon-wikimedia-userAdd {
-					transform: translateY( -2px );
-				}
 			}
+		}
+	}
+}
+
+.citizen-header__logo {
+	.mw-logo-icon,
+	.citizen-ui-icon {
+		transition-timing-function: var( --transition-timing-function-ease );
+		transition-duration: var( --transition-duration-base );
+		transition-property: transform, opacity;
+		transform-origin: center center;
+	}
+
+	.citizen-header__button:hover {
+		.mw-logo-icon {
+			opacity: 0;
+		}
+
+		.mw-logo-icon,
+		.citizen-ui-icon {
+			transition-duration: var( --transition-duration-medium );
+			transform: rotate( 360deg );
 		}
 	}
 }

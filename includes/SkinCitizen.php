@@ -168,6 +168,9 @@ class SkinCitizen extends SkinMustache {
 			}
 		}
 
+		// HACK: So that we can use Icon.mustache in Header__logo.mustache
+		$parentData['data-logos']['icon-home'] = 'home';
+
 		return array_merge( $parentData, [
 			// Booleans
 			'toc-enabled' => !empty( $parentData['data-toc'] ),
