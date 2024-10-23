@@ -28,6 +28,7 @@
 		padding: var( --space-xs );
 		font-weight: var( --font-weight-medium );
 		color: var( --color-emphasized );
+		border-radius: var( --border-radius-base );
 
 		&.citizen-toc-top {
 			height: 0;
@@ -89,6 +90,11 @@
 		color: var( --color-subtle );
 	}
 
+	&-summary {
+		font-size: var( --font-size-x-small );
+		color: var( --color-subtle );
+	}
+
 	&-list-item {
 		position: relative;
 
@@ -119,7 +125,7 @@
 		display: grid;
 		place-content: center;
 		cursor: pointer;
-		border-radius: var( --border-radius--small );
+		border-radius: var( --border-radius-base );
 
 		.citizen-ui-icon {
 			&::before {
@@ -223,6 +229,7 @@
 			margin: 0;
 			background: transparent;
 			border: 0;
+			border-radius: 0;
 			box-shadow: none;
 			transform: none;
 

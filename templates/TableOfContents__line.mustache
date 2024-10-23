@@ -5,14 +5,14 @@
 	}}
 	<a class="citizen-toc-link" href="#{{linkAnchor}}{{^linkAnchor}}{{anchor}}{{/linkAnchor}}">
 		<div class="citizen-toc-indicator"></div>
-		<div class="citizen-toc-text">
-			<span class="citizen-toc-numb">{{number}}</span>
-			<span class="citizen-toc-heading">{{{line}}}</span>
+		<div class="citizen-toc-content">
+			<div class="citizen-toc-text">
+				<span class="citizen-toc-numb">{{number}}</span>
+				<span class="citizen-toc-heading">{{{line}}}</span>
+			</div>
+			{{#html-summary}}<div class="citizen-toc-summary">{{.}}</span>{{/html-summary}}
 		</div>
 	</a>
-	{{#html-summary}}
-	{{{.}}}
-	{{/html-summary}}
 	{{#is-top-level-section}}{{#is-parent-section}}
 		<button aria-controls="toc-{{anchor}}-sublist" class="citizen-toc-toggle">
 			<span class="citizen-ui-icon mw-ui-icon-wikimedia-collapse"></span>
