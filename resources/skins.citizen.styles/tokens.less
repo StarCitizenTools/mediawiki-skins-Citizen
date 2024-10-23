@@ -4,7 +4,6 @@
 :root {
 	/**
 	 * Citizen Design Tokens
-	 * TODO: Refactor cssvariables.less into this and features.less
 	 */
 	--border-radius-medium: ~'calc( var( --border-radius-base ) * 2 )';
 	--border-radius-large: ~'calc( var( --border-radius-base ) * 3 )';
@@ -83,10 +82,30 @@
 	--font-grade: 0;
 	--line-height: 1.6;
 
-	/* Height */
+	/* Size */
+	/* TODO: Need to standardize the naming convention */
+	/* TODO: Perhaps move some of these into a scoped element? */
+	--size-icon: @size-icon;
+	// Height of the bottom toolbar used by page tools and ToC toggle
+	--toolbar-size: 2.5rem;
 	// Used to offset sticky elements with sticky header
 	// This is overriden by inline styles in the html element when sticky header is active
 	--height-sticky-header: 0;
+	// Width or height of citizen-header, depending on the orientation
+	--header-size: @header-size;
+	// Max-height allowed for header card, 20vh is left for closing affordnance
+	--header-card-maxheight: 80vh;
+	// Width of the gradient in citizen-overflow
+	--overflow-gradient-size: 2rem;
+	// Width of the body content
+	--width-layout: @width-layout;
+	// Width of the body content when the page should be extended (e.g. special, category pages)
+	--width-layout--extended: ~'calc( var( --width-layout ) * 1.5 )';
+	// Width of the table of contents
+	--width-toc: @width-toc;
+	// Side padding used for the page
+	// This is set in px to enforce safe area on a page
+	--padding-page: @padding-page;
 
 	/* Spacing */
 	--space-unit: @space-unit;
@@ -296,15 +315,34 @@
 	--line-height-xs: var( --line-height-xxx-small );
 	--line-height-sm: var( --line-height-xx-small );
 	--opacity-icon-base--active: var( --opacity-icon-base--selected );
-}
 
-@media ( min-width: @min-width-breakpoint-tablet ) {
-	:root {
+	@media ( min-width: @min-width-breakpoint-tablet ) {
 		--font-size-x-small: ~'calc( var( --font-size-base ) *  0.8125 )';
 		--font-size-x-large: ~'calc( var( --font-size-base ) *  1.375 )';
 		--font-size-xx-large: ~'calc( var( --font-size-base ) *  1.5 )';
 		--font-size-xxx-large: ~'calc( var( --font-size-base ) *  2 )';
+		--padding-page: ~'calc( @{padding-page} * 1.5 )';
 	}
+
+	@media ( min-width: @min-width-breakpoint-desktop ) {
+		--padding-page: ~'calc( @{padding-page} * 2 )';
+		--header-card-maxheight: ~'calc( 100vh - var( --space-sm ) * 2 )';
+	}
+
+	@media ( prefers-contrast: more ) {
+		--font-weight-normal: 500;
+	}
+
+	@media ( prefers-contrast: less ) {
+		--font-weight-normal: 300;
+	}
+}
+
+/* CJK languages need increased line-height for readability */
+:lang( ja ),
+:lang( ko ),
+:lang( zh ) {
+	--line-height: 1.75;
 }
 
 // TODO: Update with implementation on T376559 when it is finalized
