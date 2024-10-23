@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.36.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.35.0...v2.36.0) (2024-10-23)
+
+
+### Features
+
+* **Echo:** ✨ sync Echo alert styles with mw.notifications ([cabf6b4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cabf6b4e07296c0d27028ec44c561df0a1c69df6))
+* **MediaWiki:** ✨ add styles for usermessage ([b66ce9d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b66ce9dbe853bceff08add9d086f80186d350f66))
+* **MediaWiki:** ✨ update mw.notification styles ([cb5d4a7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cb5d4a79f5285d3ae86bd9b4f52f56f22e2a99fd))
+* **menu:** ✨ increase line-height of menu items ([4849c64](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4849c648dca367787f708c19d42d9d4a147ad2e0))
+* **toc:** ✨ add wrapper for TOC link to hold summary ([2157bcf](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2157bcf490216817ce7bfd588ed7eb511bb8ffa7))
+* **tokens:** ✨ lower the brightness of destructive color in dark mode ([2a53abe](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2a53abed2f44cd7647d9e0d56aad743a13bde40d))
+* **tokens:** ✨ update state colors ([db4d8a0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/db4d8a010336bfd116194d2a131751a27ce6aa3d))
+
+
+### Bug Fixes
+
+* **DiscussionTools:** 🐛 fix invisible highlighted section text ([b68cc3a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b68cc3aa2f92bb4589972c58804c26fc815816e2))
+* **Echo:** 🐛 increase specificity for the selector to apply padding properly ([5e749ed](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5e749ed13702fcf578f9c98b671152342a55b80f))
+* **menu:** 🐛 prevent dropdown menus from overflowing the viewport ([50832a7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/50832a7d5db5ae516f358abe162633edd1ca0fc6))
+* **pageActions:** 🐛 add missing transition property ([7867ad9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7867ad990c8f6680e0b70e02165c6e13b27df4d4))
+* **toc:** 🐛 incorrect closing tag for toc summary ([51c7110](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/51c7110b9241da7acb643a19c465e628b2965033))
+* **toc:** 🐛 summary should not be escaped ([00bda1f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/00bda1f2b33099da243e3fa83f89347a9ca1400c))
+
+
+### Performance Improvements
+
+* **RecentChanges:** ⚡️ disable sticky header on RC page due to performance issue ([243738a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/243738a282947a7a605952438541b8b3888c45c8))
+
 ## [2.35.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.34.0...v2.35.0) (2024-10-21)
 
 
