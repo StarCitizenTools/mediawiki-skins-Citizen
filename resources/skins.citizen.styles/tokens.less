@@ -8,6 +8,7 @@
 	 */
 	--border-radius-medium: ~'calc( var( --border-radius-base ) * 2 )';
 	--border-radius-large: ~'calc( var( --border-radius-base ) * 3 )';
+
 	/* State color */
 	--color-primary__h: @color-primary__h;
 	--color-primary__s: @color-primary__s;
@@ -21,6 +22,7 @@
 	--color-warning__l: 40%;
 	--background-color-subtle__s: 95%;
 	--background-color-subtle__l: 95%;
+
 	/* Surface color */
 	--color-surface-0__s: 30%;
 	--color-surface-0__l: 96%;
@@ -42,19 +44,30 @@
 	--background-color-icon: ~'rgba( 0, 0, 0, var( --opacity-icon-base ) )';
 	--background-color-icon--hover: ~'rgba( 0, 0, 0, var( --opacity-icon-base--hover ) )';
 	--background-color-icon--active: ~'rgba( 0, 0, 0, var( --opacity-icon-base--active ) )';
+
 	/* Link color */
 	--color-link: ~'var( --color-progressive )';
 	--color-link--hover: ~'var( --color-progressive--hover )';
 	--color-link--active: ~'var( --color-progressive--active )';
+
 	/* Box shadow */
 	--box-shadow-border: var( --border-color-base ) 0 0 0 1px;
+
 	/* Font */
 	// Used as base unit to caluclate font-size
 	--font-size-base: 1rem;
+	--font-family-citizen-base: 'Roboto';
+	--font-family-citizen-serif: 'Roboto Serif';
+	--font-family-citizen-monospace: 'Roboto Mono';
+	--font-family-language-base: '';
+	--font-family-language-serif: '';
+	--font-family-language-monospace: '';
+
 	/* Height */
 	// Used to offset sticky elements with sticky header
 	// This is overriden by inline styles in the html element when sticky header is active
 	--height-sticky-header: 0;
+
 	/* Transition */
 	--transition-delay-menu: 100ms;
 	/* @see https://www.joshwcomeau.com/animation/css-transitions/#custom-curves-7 */
@@ -81,6 +94,9 @@
 	--box-shadow-drop-small: 0.3px 0.5px 0.7px var( --box-shadow-color-base ), 0.4px 0.8px 1px -1.2px var( --box-shadow-color-base ), 1px 2px 2.5px -2.5px var( --box-shadow-color-base );
 	--box-shadow-drop-medium: 0.3px 0.5px 0.7px var( --box-shadow-color-base ), 0.8px 1.6px 2px -0.8px var( --box-shadow-color-base ), 2.1px 4.1px 5.2px -1.7px var( --box-shadow-color-base ), 5px 10px 12.6px -2.5px var( --box-shadow-color-base );
 	--box-shadow-drop-xx-large: 0.3px 0.5px 0.7px var( --box-shadow-color-base ), 1.5px 2.9px 3.7px -0.4px var( --box-shadow-color-base ), 2.7px 5.4px 6.8px -0.7px var( --box-shadow-color-base ), 4.5px 8.9px 11.2px -1.1px var( --box-shadow-color-base ), 7.1px 14.3px 18px -1.4px var( --box-shadow-color-base ), 11.2px 22.3px 28.1px -1.8px var( --box-shadow-color-base ), 17px 33.9px 42.7px -2.1px var( --box-shadow-color-base ), 25px 50px 62.9px -2.5px var( --box-shadow-color-base );
+	--font-family-base: @font-family-base;
+	--font-family-serif: @font-family-serif;
+	--font-family-monospace: @font-family-monospace;
 	--font-size-x-small: ~'calc( var( --font-size-base ) * 0.75 )';
 	--font-size-small: ~'calc( var( --font-size-base ) * 0.875 )';
 	--font-size-medium: var( --font-size-base );
@@ -88,6 +104,10 @@
 	--font-size-x-large: ~'calc( var( --font-size-base ) * 1.25 )';
 	--font-size-xx-large: ~'calc( var( --font-size-base ) * 1.375 )';
 	--font-size-xxx-large: ~'calc( var( --font-size-base ) * 1.75 )';
+	--font-weight-normal: 400;
+	--font-weight-medium: ~'calc( var( --font-weight-normal ) + 100)';
+	--font-weight-semi-bold: ~'calc( var( --font-weight-normal ) + 200)';
+	--font-weight-bold: ~'calc( var( --font-weight-normal ) + 300)';
 
 	/**
 	 * Codex Design Tokens v1.8.0
@@ -239,6 +259,7 @@
 	--color-text-error: var( --color-destructive );
 	--color-text-warning: var( --color-base );
 	--color-text-success: var( --color-success );
+	--font-weight-semibold: var( --font-weight-semi-bold );
 	--opacity-icon-base--active: var( --opacity-icon-base--selected );
 }
 
@@ -254,6 +275,7 @@
 // TODO: Update with implementation on T376559 when it is finalized
 .citizen-animations-ready {
 	/* Only apply transition when page is ready for it */
+	--transition-hover: @transition-hover;
 	--transition-menu: @transition-menu;
 	--transition-duration-base: 100ms;
 	--transition-duration-medium: 250ms;
