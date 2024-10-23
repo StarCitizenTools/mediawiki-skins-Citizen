@@ -60,23 +60,27 @@ final class BodyContent extends Partial {
 	 * @return bool
 	 */
 	private function shouldFormatPage( $title ) {
+		$shouldFormat = (
+			$this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true &&
+			$title->canExist() &&
+			!$title->isMainPage() &&
+			$title->isContentPage() &&
+			$title->getContentModel() === CONTENT_MODEL_WIKITEXT
+		);
+
+		if ( !$shouldFormat ) {
+			return false;
+		}
+
+		// Check if page is in mobile view and let MF do the formatting
 		try {
 			$mfCxt = MediaWikiServices::getInstance()->getService( 'MobileFrontend.Context' );
-			// Check if page is in mobile view and let MF do the formatting
 			return !$mfCxt->shouldDisplayMobileView();
 		} catch ( NoSuchServiceException $ex ) {
 			// MobileFrontend not installed. Don't do anything
 		}
 
-		$enableSections = (
-			$this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true &&
-			$title->canExist() &&
-			$title->getContentModel() == CONTENT_MODEL_WIKITEXT &&
-			!$title->isMainPage() &&
-			$title->isContentPage()
-		);
-
-		return $enableSections;
+		return true;
 	}
 
 	/**
