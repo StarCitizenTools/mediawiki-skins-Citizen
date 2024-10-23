@@ -222,9 +222,6 @@ class SkinCitizen extends SkinMustache {
 		// Add theme handler
 		$skinTheme->setSkinTheme( $options );
 
-		// Disable default ToC since it is handled by Citizen
-		$options['toc'] = false;
-
 		// Clientprefs feature handling
 		$this->addClientPrefFeature( 'citizen-feature-autohide-navigation', '1' );
 		$this->addClientPrefFeature( 'citizen-feature-pure-black', '0' );
