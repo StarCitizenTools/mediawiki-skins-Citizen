@@ -69,6 +69,16 @@
 	// This is overriden by inline styles in the html element when sticky header is active
 	--height-sticky-header: 0;
 
+	/* Spacing */
+	--space-unit: @space-unit;
+	--space-xxs: ~'calc( 0.25 * var( --space-unit ) )';
+	--space-xs: ~'calc( 0.5 * var( --space-unit ) )';
+	--space-sm: ~'calc( 0.75 * var( --space-unit ) )';
+	--space-md: ~'var( --space-unit )';
+	--space-lg: ~'calc( 1.25 * var( --space-unit ) )';
+	--space-xl: ~'calc( 1.5 * var( --space-unit ) )';
+	--space-xxl: ~'calc( 2 * var( --space-unit ) )';
+
 	/* Transition */
 	--transition-delay-menu: 100ms;
 	/* @see https://www.joshwcomeau.com/animation/css-transitions/#custom-curves-7 */
