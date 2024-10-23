@@ -1,3 +1,11 @@
+/**
+ * Miscellaneous styles that apply to body content
+ */
+
+/**
+ * Add affordance to thumbnails to replace magnify icon
+ * On hover, enlarge the image to inform the user that a full-size image will be shown (to MMV or file page)
+ */
 .citizen-body {
 	a.image {
 		display: inline-block;
@@ -18,9 +26,12 @@
 	}
 }
 
-// Heading HTML changes
-// T13555
-// TODO: Clean up heading spacing someday
+/**
+ * Heading HTML changes
+ * @see https://phabricator.wikimedia.org/T13555
+ * TODO: Clean up heading spacing someday
+ * TODO: This should go into one of the skinning files, revisit when we move to 1.43
+ */
 .mw-heading {
 	display: flex;
 	align-items: center;
