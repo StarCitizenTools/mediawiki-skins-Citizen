@@ -28,7 +28,7 @@ function init( bodyContent ) {
 			const section = heading.nextElementSibling;
 
 			if ( section ) {
-				section.hidden = section.hidden === 'until-found' ? false : 'until-found';
+				section.hidden = section.hidden ? false : 'until-found';
 			}
 		}
 	};
