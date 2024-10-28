@@ -1,13 +1,14 @@
 .citizen-page-container {
-	display: flex; // Should fix weird margin issues
+	/* Include margin of child elements as part of the height */
+	display: flex;
 	flex-direction: column;
-	min-height: 100vh; // Ensure footer goes to the bottom of the page
-	min-height: stretch; // for iOS, excludes safe areas
+	/* Make page container take the whole page height on short page */
+	min-height: inherit;
 }
 
 .mw-body,
 .parsoid-body {
-	min-height: 100vh; // avoid footer being in the middle of the page
+	flex-grow: 1;
 }
 
 .citizen-body-container {
