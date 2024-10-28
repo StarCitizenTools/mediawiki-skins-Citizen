@@ -2,18 +2,4 @@
 	@view-transition {
 		navigation: auto;
 	}
-
-	/* Header should always have no transition to act as an anchor point on the page */
-	.citizen-header {
-		view-transition-name: no-transition;
-	}
-
-	::view-transition-group( * ) {
-		animation-duration: 250ms;
-	}
-
-	::view-transition-old( no-transition ),
-	::view-transition-new( no-transition ) {
-		animation: none;
-	}
 }
