@@ -10,6 +10,7 @@
 .project
 cscope.files
 cscope.out
+/.vscode
 ## NetBeans
 nbproject*
 project.index
@@ -44,4 +45,4 @@ Thumbs.db
 
 # Storybook
 /.storybook/resolve-less-imports/
-/.storybook/integration.less
+/.storybook/integration.less.vscode/
