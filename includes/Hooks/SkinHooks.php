@@ -111,23 +111,22 @@ class SkinHooks implements
 		$name = empty( $globalToolsId ) ? 'navigation' : preg_replace( '/^p-/', '', $globalToolsId );
 		$bar[$name]['specialpages'] = [
 			'text'  => $skin->msg( 'specialpages' ),
-			'href'  => Skin::makeSpecialUrl( 'Specialpages' ),
+			// TODO: Replace with SkinComponentUtils on 1.43
+			'href'  => SpecialPage::getTitleFor( 'Specialpages' )->getLocalURL(),
 			'title' => $skin->msg( 'tooltip-t-specialpages' ),
 			'icon'  => 'specialPages',
 			'id'    => 't-specialpages',
 		];
 
 		if ( $this->getConfigValue( 'EnableUploads', $out ) === true ) {
-			if ( ExtensionRegistry::getInstance()->isLoaded( 'Upload Wizard' ) ) {
-				// Link to Upload Wizard if present
-				$uploadHref = SpecialPage::getTitleFor( 'UploadWizard' )->getLocalURL();
-			} else {
-				// Link to old upload form
-				$uploadHref = Skin::makeSpecialUrl( 'Upload' );
-			}
+			$isUploadWizardEnabled = ExtensionRegistry::getInstance()->isLoaded( 'Upload Wizard' );
 			$bar[$name]['upload'] = [
 				'text'  => $skin->msg( 'upload' ),
-				'href'  => $uploadHref,
+				// TODO: Replace with SkinComponentUtils on 1.43
+				'href'  => SpecialPage::getTitleFor( $isUploadWizardEnabled ?
+					'UploadWizard' :
+					'Upload'
+				)->getLocalURL(),
 				'title' => $skin->msg( 'tooltip-t-upload' ),
 				'icon'  => 'upload',
 				'id'    => 't-upload',

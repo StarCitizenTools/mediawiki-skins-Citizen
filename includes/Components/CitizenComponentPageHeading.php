@@ -119,6 +119,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 
 			if ( $editCount ) {
 				$msgEditCount = $localizer->msg( 'usereditcount' )->numParams( sprintf( '%s', number_format( $editCount, 0 ) ) );
+				// TODO: Replace with SkinComponentUtils on 1.43
 				$editCountHref = SpecialPage::getTitleFor( 'Contributions', $user )->getLocalURL();
 				$tagline .= "<span id=\"citizen-tagline-user-editcount\" data-user-editcount=\"$editCount\"><a href=\"$editCountHref\">$msgEditCount</a></span>";
 			}

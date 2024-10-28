@@ -7,6 +7,7 @@ namespace MediaWiki\Skins\Citizen\Components;
 use ExtensionRegistry;
 use MessageLocalizer;
 use Skin;
+use SpecialPage;
 
 /**
  * CitizenComponentSearchBox component
@@ -78,7 +79,8 @@ class CitizenComponentSearchBox implements CitizenComponent {
 			'array-keyboard-hint' => $this->getKeyboardHintData(),
 			'msg-citizen-search-footer' => $this->getFooterMessage(),
 			'msg-citizen-search-toggle-shortcut' => '[/]',
-			'html-random-href' => $this->skin->makeSpecialUrl( 'Randompage' ),
+			// TODO: Replace with SkinComponentUtils on 1.43
+			'html-random-href' => SpecialPage::getTitleFor( 'Randompage' )->getLocalURL(),
 		];
 	}
 }
