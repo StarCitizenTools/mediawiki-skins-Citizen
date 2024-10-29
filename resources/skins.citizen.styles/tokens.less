@@ -336,13 +336,13 @@
 	@media ( prefers-contrast: less ) {
 		--font-weight-normal: 300;
 	}
-}
 
-/* CJK languages need increased line-height for readability */
-:lang( ja ),
-:lang( ko ),
-:lang( zh ) {
-	--line-height: 1.75;
+	/* CJK languages need increased line-height for readability */
+	&:lang( ja ),
+	&:lang( ko ),
+	&:lang( zh ) {
+		--line-height: 1.75;
+	}
 }
 
 // TODO: Update with implementation on T376559 when it is finalized

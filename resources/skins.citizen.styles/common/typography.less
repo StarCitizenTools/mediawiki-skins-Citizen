@@ -46,22 +46,22 @@ sup {
 }
 
 em {
-	:lang( ja ) &,
-	:lang( ko ) &,
-	:lang( mn ) &,
-	:lang( zh ) & {
+	&:lang( ja ),
+	&:lang( ko ),
+	&:lang( mn ),
+	&:lang( zh ) {
 		/* CJK languages do not use italics for emphasis */
 		font-style: normal;
 		text-emphasis: filled;
 	}
 
-	:lang( ja ) &,
-	:lang( ko ) &,
-	:lang( mn ) & {
+	&:lang( ja ),
+	&:lang( ko ),
+	&:lang( mn ) {
 		text-emphasis-position: over right;
 	}
 
-	:lang( zh ) & {
+	&:lang( zh ) & {
 		text-emphasis-position: under right;
 	}
 }
