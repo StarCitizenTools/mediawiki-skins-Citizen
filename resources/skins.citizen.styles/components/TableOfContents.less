@@ -30,12 +30,12 @@
 		color: var( --color-emphasized );
 		border-radius: var( --border-radius-base );
 
-		&.citizen-toc-top {
+		.citizen-toc &.citizen-toc-top {
 			height: 0;
 			padding-top: 0;
 			padding-bottom: 0;
-			opacity: 0 !important;
-			transition-property: opacity, height, padding !important;
+			opacity: 0;
+			transition-property: opacity, height;
 		}
 
 		&:has( + .citizen-toc-toggle ) {
@@ -155,7 +155,7 @@
 		height: 2rem; // 1rem text + 1rem padding
 		padding-top: var( --space-xs );
 		padding-bottom: var( --space-xs );
-		opacity: 1 !important;
+		opacity: 1;
 	}
 }
 
