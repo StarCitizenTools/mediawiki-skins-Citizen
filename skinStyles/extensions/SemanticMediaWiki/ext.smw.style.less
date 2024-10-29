@@ -654,6 +654,9 @@ input:checked + .smw-indicator-accordion-tab-label::after {
 */
 
 // It is not great but it works
-*[ class^='smw-icon-' ] {
-	filter: var( --filter-invert );
+div,
+span {
+	&[ class^='smw-icon-' ] {
+		filter: var( --filter-invert );
+	}
 }
