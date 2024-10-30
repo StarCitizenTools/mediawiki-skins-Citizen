@@ -176,7 +176,7 @@ function mwActionApiSearchClient( config ) {
 				ppprop: 'displaytitle',
 				piprop: 'thumbnail',
 				pilicense: 'any',
-				pithumbsize: 200,
+				pithumbsize: 220,
 				pilimit: limit.toString()
 			};
 			switch ( descriptionSource ) {
