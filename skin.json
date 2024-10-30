@@ -332,6 +332,7 @@
 			"useDataURI": false,
 			"defaultColor": "#000",
 			"class": "MediaWiki\\ResourceLoader\\OOUIIconPackModule",
+			"variants": {},
 			"icons": [
 				"arrowPrevious",
 				"article",
