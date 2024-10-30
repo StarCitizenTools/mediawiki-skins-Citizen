@@ -6,10 +6,8 @@
 		flex-direction: column;
 		grid-area: sidebar;
 		gap: var( --space-sm );
-		padding-left: var( --space-xs );
 		margin-top: var( --space-sm ); // align with first paragraph
-		// Avoid padding clipping
-		margin-left: ~'calc( var( --space-xs ) * -1 )';
+		contain: strict;
 	}
 
 	.citizen-menu__heading,
