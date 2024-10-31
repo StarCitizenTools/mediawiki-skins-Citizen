@@ -8,10 +8,8 @@
  */
 
 /* @noflip */
-div.floatleft,
-table.floatleft,
-div.floatright,
-table.floatright {
+.floatleft,
+.floatright {
 	margin: 0;
 }
 
@@ -54,8 +52,7 @@ div.thumbinner {
 @media ( min-width: @min-width-breakpoint-tablet ) {
 	/* @noflip */
 	div.tright,
-	div.floatright,
-	table.floatright {
+	.floatright {
 		float: right;
 		margin-left: var( --space-lg );
 		clear: right;
@@ -63,8 +60,7 @@ div.thumbinner {
 
 	/* @noflip */
 	div.tleft,
-	div.floatleft,
-	table.floatleft {
+	.floatleft {
 		float: left;
 		margin-right: var( --space-lg );
 		clear: left;
