@@ -6,27 +6,30 @@
  * @param {number} threshold - The threshold for significant scroll position change.
  */
 function initDirectionObserver( onScrollDown, onScrollUp, threshold ) {
-	let lastScrollTop = window.scrollY;
+	let lastScrollTop = 0;
+	let isScrolling = false;
+	window.addEventListener( 'scroll', () => {
+		if ( !isScrolling ) {
+			window.requestAnimationFrame( () => {
+				const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
 
-	const onScroll = () => {
-		// Check if the scroll position has changed significantly
-		const scrollTop = window.scrollY;
+				if ( Math.abs( currentScrollTop - lastScrollTop ) < threshold ) {
+					isScrolling = false;
+					return;
+				}
 
-		if ( Math.abs( scrollTop - lastScrollTop ) < threshold ) {
-			return;
+				if ( currentScrollTop > lastScrollTop ) {
+					onScrollDown();
+				} else {
+					onScrollUp();
+				}
+				// For Mobile or negative scrolling
+				lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+				isScrolling = false;
+			} );
+			isScrolling = true;
 		}
-
-		// Determine scroll direction and trigger appropriate functions
-		if ( scrollTop > lastScrollTop ) {
-			onScrollDown();
-		} else {
-			onScrollUp();
-		}
-		lastScrollTop = scrollTop;
-	};
-
-	const throttledOnScroll = mw.util.throttle( onScroll, 100 );
-	window.addEventListener( 'scroll', throttledOnScroll );
+	} );
 }
 
 /**
