@@ -7,7 +7,9 @@
  */
 function initDirectionObserver( onScrollDown, onScrollUp, threshold ) {
 	let lastScrollTop = 0;
+	let lastScrollDirection = '';
 	let isScrolling = false;
+
 	window.addEventListener( 'scroll', () => {
 		if ( !isScrolling ) {
 			window.requestAnimationFrame( () => {
@@ -18,9 +20,11 @@ function initDirectionObserver( onScrollDown, onScrollUp, threshold ) {
 					return;
 				}
 
-				if ( currentScrollTop > lastScrollTop ) {
+				if ( currentScrollTop > lastScrollTop && lastScrollDirection !== 'down' ) {
+					lastScrollDirection = 'down';
 					onScrollDown();
-				} else {
+				} else if ( currentScrollTop < lastScrollTop && lastScrollDirection !== 'up' ) {
+					lastScrollDirection = 'up';
 					onScrollUp();
 				}
 				// For Mobile or negative scrolling
