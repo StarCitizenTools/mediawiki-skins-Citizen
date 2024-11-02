@@ -11,6 +11,9 @@ function enableCssAnimations( document ) {
 	// Disable all CSS transition during resize
 	const onResize = () => {
 		document.documentElement.classList.remove( 'citizen-animations-ready' );
+		mw.util.debounce( () => {
+			document.documentElement.classList.add( 'citizen-animations-ready' );
+		}, 250 );
 	};
 	const onResizeEnd = mw.util.debounce( () => {
 		document.documentElement.classList.add( 'citizen-animations-ready' );
@@ -70,7 +73,7 @@ function main( window ) {
 		echo = require( './echo.js' ),
 		search = require( './search.js' ),
 		dropdown = require( './dropdown.js' ),
-		setupIntersectionObservers = require( './setupIntersectionObservers.js' ),
+		setupObservers = require( './setupObservers.js' ),
 		stickyHeader = require( './stickyHeader.js' ),
 		lastModified = require( './lastModified.js' ),
 		share = require( './share.js' );
@@ -79,7 +82,7 @@ function main( window ) {
 	echo();
 	search.init( window );
 	dropdown.init();
-	setupIntersectionObservers.main();
+	setupObservers.main();
 	stickyHeader.init();
 	lastModified.init();
 	share.init();
