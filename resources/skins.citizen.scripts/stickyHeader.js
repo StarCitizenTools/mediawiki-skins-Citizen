@@ -34,29 +34,19 @@ function init() {
 	}
 
 	observeScrollDirection();
-	const header = document.querySelector( '.citizen-page-header' );
-	const placeholder = document.getElementById( 'citizen-page-header-sticky-placeholder' );
-	let staticHeaderHeight = header.getBoundingClientRect().height;
-	let stickyHeaderHeight = 0;
-	let placeholderHeight = 0;
 	let shouldRecalcHeight = true;
 
 	const toggleStickyHeader = ( isSticky ) => {
 		window.requestAnimationFrame( () => {
 			if ( !shouldRecalcHeight ) {
 				// The previous height is valid, set the height first
-				placeholder.style.height = isSticky ? `${ placeholderHeight }px` : '0px';
 				document.body.classList.toggle( STICKY_CLASS, isSticky );
 			} else {
 				// The previous height is invalid, need to set to sticky to get the sticky height
 				document.body.classList.toggle( STICKY_CLASS, isSticky );
 				if ( isSticky ) {
-					stickyHeaderHeight = header.getBoundingClientRect().height;
-					placeholderHeight = staticHeaderHeight - stickyHeaderHeight;
-					placeholder.style.height = `${ placeholderHeight }px`;
 					shouldRecalcHeight = false;
 				}
-				placeholder.style.height = `${ isSticky ? placeholderHeight : 0 }px`;
 			}
 		} );
 	};
@@ -67,7 +57,6 @@ function init() {
 
 	const onResizeEnd = mw.util.debounce( () => {
 		// Refresh static header height after resize
-		staticHeaderHeight = header.getBoundingClientRect().height;
 		shouldRecalcHeight = true;
 		toggleStickyHeader( true );
 	}, 250 );
