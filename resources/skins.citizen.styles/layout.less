@@ -4,6 +4,8 @@
 	flex-direction: column;
 	/* Make page container take the whole page height on short page */
 	min-height: inherit;
+	/* Reserve space for header */
+	margin-top: var( --header-size );
 }
 
 .mw-body,
@@ -35,11 +37,6 @@
 }
 
 @media ( min-width: @min-width-breakpoint-desktop ) {
-	.citizen-page-container {
-		// Reserve space for header
-		margin-top: var( --header-size );
-	}
-
 	.citizen-toc-enabled {
 		.citizen-body-container {
 			grid-template-areas:

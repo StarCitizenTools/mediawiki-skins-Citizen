@@ -58,11 +58,6 @@ function init() {
 				}
 				placeholder.style.height = `${ isSticky ? placeholderHeight : 0 }px`;
 			}
-			// Update sticky header CSS variable, used by other sticky elements
-			document.documentElement.style.setProperty(
-				'--height-sticky-header',
-				`${ isSticky ? stickyHeaderHeight : 0 }px`
-			);
 		} );
 	};
 
