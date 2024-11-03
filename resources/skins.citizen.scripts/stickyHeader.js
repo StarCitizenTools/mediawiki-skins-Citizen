@@ -27,22 +27,15 @@ function observeScrollDirection() {
  * @return {void}
  */
 function init() {
-	observeScrollDirection();
-
-	const header = document.querySelector( '.citizen-page-header' );
-	const sentinel = document.createElement( 'div' );
-	sentinel.id = 'citizen-page-header-sticky-sentinel';
-	header.insertAdjacentElement( 'afterend', sentinel );
-
+	const sentinel = document.getElementById( 'citizen-page-header-sticky-sentinel' );
 	const shouldStickyHeader = getComputedStyle( sentinel ).getPropertyValue( 'display' ) !== 'none';
 	if ( !shouldStickyHeader ) {
 		return;
 	}
 
-	const placeholder = document.createElement( 'div' );
-	placeholder.id = 'citizen-page-header-sticky-placeholder';
-	header.insertAdjacentElement( 'afterend', placeholder );
-
+	observeScrollDirection();
+	const header = document.querySelector( '.citizen-page-header' );
+	const placeholder = document.getElementById( 'citizen-page-header-sticky-placeholder' );
 	let staticHeaderHeight = header.getBoundingClientRect().height;
 	let stickyHeaderHeight = 0;
 	let placeholderHeight = 0;

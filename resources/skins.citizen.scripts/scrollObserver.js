@@ -13,7 +13,7 @@ function initDirectionObserver( onScrollDown, onScrollUp, threshold ) {
 	window.addEventListener( 'scroll', () => {
 		if ( !isScrolling ) {
 			window.requestAnimationFrame( () => {
-				const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
+				const currentScrollTop = window.scrollY;
 
 				if ( Math.abs( currentScrollTop - lastScrollTop ) < threshold ) {
 					isScrolling = false;
