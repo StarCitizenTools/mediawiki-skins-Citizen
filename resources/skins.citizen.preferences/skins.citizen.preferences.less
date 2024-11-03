@@ -20,11 +20,7 @@
 	&-panel {
 		.citizen-header-card( end );
 		transition-property: transform;
-		transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-end );
-
-		@media ( min-width: @min-width-breakpoint-desktop ) {
-			transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-start );
-		}
+		transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-start );
 
 		// TODO: Somehow refactor this module to use citizen-menu__Card
 		&.citizen-pref-panel--active {
