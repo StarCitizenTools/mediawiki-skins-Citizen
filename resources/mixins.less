@@ -35,15 +35,8 @@
 
 	@media ( min-width: @min-width-breakpoint-desktop ) {
 		left: unset;
-
-		& when (@position =start) {
-			top: var( --header-size );
-			bottom: unset;
-		}
-
-		& when (@position =end) {
-			bottom: 0;
-		}
+		top: var( --header-size );
+		bottom: unset;
 	}
 }
 
