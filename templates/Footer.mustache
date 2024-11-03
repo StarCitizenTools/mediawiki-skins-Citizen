@@ -12,21 +12,14 @@
 	footerRow[] array-footer-rows iterable list of footer rows
 	footerRow[] array-footer-icons iterable list of footer icons
 	string msg-sitetitle
-	string msg-citizen-footer-desc
-	string msg-citizen-footer-tagline
 }}
 
 <footer class="mw-footer citizen-footer" {{{html-user-language-attributes}}}>
 	<div class="citizen-footer__container">
 		<section class="citizen-footer__content">
-			<div class="citizen-footer__siteinfo">
-				<div id="footer-sitetitle" class="mw-wiki-title">{{>Wordmark}}</div>
-				<p id="footer-desc">{{{msg-citizen-footer-desc}}}</p>
-			</div>
 			{{#data-places}}{{>Footer__row}}{{/data-places}}
 		</section>
 		<section class="citizen-footer__bottom">
-			<div id="footer-tagline">{{{msg-citizen-footer-tagline}}}</div>
 			{{#data-icons}}{{>Footer__row}}{{/data-icons}}
 		</section>
 	</div>
