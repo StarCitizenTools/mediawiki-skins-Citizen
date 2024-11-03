@@ -12,7 +12,7 @@
 	.citizen-menu__card {
 		--size-icon: 1rem;
 		position: fixed;
-		top: 0;
+		top: var( --header-size );
 		right: 0;
 		left: 0;
 		width: var( --width-search-bar );
@@ -27,6 +27,7 @@
 		@media ( min-width: @min-width-breakpoint-desktop ) {
 			top: @position-offset-y-desktop;
 			max-height: ~'calc( 100vh - ( var( --space-xs ) + @{position-offset-y-desktop} ) * 2 )';
+			margin-left: var( --header-size );
 			overflow-y: auto;
 		}
 	}
