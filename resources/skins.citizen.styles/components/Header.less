@@ -1,14 +1,13 @@
 .citizen-header {
 	--header-icon-size: ~'calc( var( --header-button-size ) / 2 )';
 	--header-button-size: ~'calc( var( --header-size ) - var(  --space-xs ) * 2 )';
-	--header-direction: row;
 	position: fixed;
 	right: 0;
-	bottom: 0;
+	top: 0;
 	left: 0;
 	z-index: @z-index-fixed;
 	display: flex;
-	flex-direction: var( --header-direction );
+	flex-direction: row;
 	gap: var( --space-xxs );
 	padding: var( --space-xs );
 	background-color: var( --color-surface-0 );
@@ -93,7 +92,7 @@
 	&__inner {
 		display: flex;
 		flex-grow: 1;
-		flex-direction: var( --header-direction );
+		flex-direction: row;
 		gap: var( --space-xxs );
 		justify-content: space-between;
 		min-width: 0;
@@ -104,7 +103,7 @@
 	&__end {
 		display: flex;
 		flex-shrink: 0; // let _inner handle the overflow
-		flex-direction: var( --header-direction );
+		flex-direction: row;
 		gap: var( --space-xxs );
 
 		// Hide top-level menu header labels
@@ -134,7 +133,7 @@
 #p-notifications {
 	ul {
 		display: flex;
-		flex-direction: var( --header-direction );
+		flex-direction: row;
 		gap: var( --space-xxs );
 		align-items: center;
 	}
@@ -165,18 +164,12 @@
 
 @media ( min-width: @min-width-breakpoint-desktop ) {
 	.citizen-header {
-		--header-direction: column;
-		top: 0;
-		right: unset;
-		left: 0;
 		border-top: 0;
 		border-right: var( --border-width-base ) solid var( --border-color-base );
 
 		&__logo {
-			padding: 0 0 var( --space-xs ) 0;
-			margin: var( --space-xxs ) 0;
-			border-right: 0;
-			border-bottom: var( --border-width-base ) solid var( --border-color-base );
+			padding: 0 var( --space-xs ) 0 0;
+			margin: 0 var( --space-xxs );
 		}
 	}
 }
