@@ -18,8 +18,8 @@
 // Header card popups
 .citizen-header-card(@position ) {
 	position: absolute;
+	top: var( --header-size );
 	right: 0;
-	bottom: 100%;
 	left: 0;
 	max-height: var( --header-card-maxheight );
 
@@ -35,7 +35,6 @@
 
 	@media ( min-width: @min-width-breakpoint-desktop ) {
 		left: unset;
-		top: var( --header-size );
 		bottom: unset;
 	}
 }
