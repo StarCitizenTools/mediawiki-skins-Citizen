@@ -6,7 +6,6 @@ namespace MediaWiki\Skins\Citizen\Components;
 
 use ExtensionRegistry;
 use MessageLocalizer;
-use Skin;
 use SpecialPage;
 
 /**
