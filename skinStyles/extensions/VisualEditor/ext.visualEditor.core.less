@@ -366,6 +366,9 @@
 /* Responsive handling */
 .ve-init-mw-desktopArticleTarget-toolbar {
 	> .oo-ui-toolbar-bar {
+		position: fixed;
+		top: var( --header-size );
+
 		> .oo-ui-toolbar-tools {
 			// Needed to hide overflow tools
 			background: var( --color-surface-0 );
@@ -409,4 +412,8 @@
 			display: none;
 		}
 	}
+}
+
+.citizen-page-header {
+	z-index: @z-index-toolbar !important;
 }
