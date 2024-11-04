@@ -370,6 +370,7 @@
 		top: var( --header-size );
 		right: 0;
 		left: 0;
+		z-index: calc( @z-index-toolbar + 2 ) !important;
 
 		> .oo-ui-toolbar-tools {
 			// Needed to hide overflow tools
@@ -416,5 +417,5 @@
 }
 
 .citizen-page-header {
-	z-index: @z-index-toolbar !important;
+	z-index: calc( @z-index-toolbar + 1 ) !important;
 }
