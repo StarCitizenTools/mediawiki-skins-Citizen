@@ -44,7 +44,6 @@ class ApiWebappManifest extends ApiBase {
 	 * Constructor
 	 */
 	public function __construct() {
-		
 	}
 
 	/**
@@ -155,7 +154,7 @@ class ApiWebappManifest extends ApiBase {
 	private function getShortcuts(): array {
 		$specialPages = [ 'Search', 'Randompage', 'RecentChanges' ];
 
-		return array_map( function( $specialPage ) {
+		return array_map( static function ( $specialPage ) {
 			$title = SpecialPage::getSafeTitleFor( $specialPage );
 			return [
 				'name' => $title->getBaseText(),
