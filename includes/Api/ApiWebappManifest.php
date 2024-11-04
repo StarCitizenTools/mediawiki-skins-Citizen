@@ -121,6 +121,8 @@ class ApiWebappManifest extends ApiBase {
 	/**
 	 * Get src, sizes, and type for each icon for the manifest
 	 *
+	 * @param string $logoPath
+	 * @param string $logoContent
 	 * @return array|null
 	 */
 	private function getIconData( $logoPath, $logoContent ) {

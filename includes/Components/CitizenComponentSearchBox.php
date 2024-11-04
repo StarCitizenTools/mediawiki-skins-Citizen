@@ -67,15 +67,13 @@ class CitizenComponentSearchBox implements CitizenComponent {
 	 * @inheritDoc
 	 */
 	public function getTemplateData(): array {
-		$searchBoxData = $this->searchBoxData;
-		$randompageUrl = SpecialPage::getTitleFor( 'Randompage' )->getLocalURL();
-
-		return $searchBoxData += [
+		$searchBoxData = $this->searchBoxData + [
 			'array-keyboard-hint' => $this->getKeyboardHintData(),
 			'msg-citizen-search-footer' => $this->getFooterMessage(),
 			'msg-citizen-search-toggle-shortcut' => '[/]',
 			// TODO: Replace with SkinComponentUtils on 1.43
-			'html-random-href' => $randompageUrl,
+			'html-random-href' => SpecialPage::getTitleFor( 'Randompage' )->getLocalURL()
 		];
+		return $searchBoxData;
 	}
 }
