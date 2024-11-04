@@ -143,8 +143,7 @@ class SkinCitizen extends SkinMustache {
 			),
 			'data-search-box' => new CitizenComponentSearchBox(
 				$localizer,
-				$parentData['data-search-box'],
-				$this
+				$parentData['data-search-box']
 			),
 			'data-site-stats' => new CitizenComponentSiteStats(
 				$config,

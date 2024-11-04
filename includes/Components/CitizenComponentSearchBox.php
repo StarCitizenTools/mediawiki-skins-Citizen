@@ -19,21 +19,16 @@ class CitizenComponentSearchBox implements CitizenComponent {
 	/** @var array */
 	private $searchBoxData;
 
-	/** @var Skin */
-	private $skin;
-
 	/**
 	 * @param MessageLocalizer $localizer
 	 * @param array $searchBoxData
 	 */
 	public function __construct(
 		MessageLocalizer $localizer,
-		array $searchBoxData,
-		Skin $skin
+		array $searchBoxData
 	) {
 		$this->localizer = $localizer;
 		$this->searchBoxData = $searchBoxData;
-		$this->skin = $skin;
 	}
 
 	/**
@@ -74,13 +69,14 @@ class CitizenComponentSearchBox implements CitizenComponent {
 	 */
 	public function getTemplateData(): array {
 		$searchBoxData = $this->searchBoxData;
+		$randompageUrl = SpecialPage::getTitleFor( 'Randompage' )->getLocalURL();
 
 		return $searchBoxData += [
 			'array-keyboard-hint' => $this->getKeyboardHintData(),
 			'msg-citizen-search-footer' => $this->getFooterMessage(),
 			'msg-citizen-search-toggle-shortcut' => '[/]',
 			// TODO: Replace with SkinComponentUtils on 1.43
-			'html-random-href' => SpecialPage::getTitleFor( 'Randompage' )->getLocalURL(),
+			'html-random-href' => $randompageUrl,
 		];
 	}
 }

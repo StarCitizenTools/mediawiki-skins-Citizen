@@ -34,13 +34,7 @@ class CitizenComponentSiteStats implements CitizenComponent {
 	];
 
 	/**
-	 * @return Config
-	 */
-	private function getConfig(): Config {
-		return $this->config;
-	}
-
-	/**
+	 * @param Config $config
 	 * @param MessageLocalizer $localizer
 	 * @param Language|StubUserLang $pageLang
 	 */
@@ -75,7 +69,7 @@ class CitizenComponentSiteStats implements CitizenComponent {
 	 * @inheritDoc
 	 */
 	public function getTemplateData(): array {
-		$config = $this->getConfig();
+		$config = $this->config;
 		if ( !$config->get( 'CitizenEnableDrawerSiteStats' ) ) {
 			return [];
 		}

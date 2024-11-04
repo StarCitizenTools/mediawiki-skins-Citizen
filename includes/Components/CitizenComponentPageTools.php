@@ -43,8 +43,8 @@ class CitizenComponentPageTools implements CitizenComponent {
 	/**
 	 * @param Config $config
 	 * @param MessageLocalizer $localizer
-	 * @param UserIdentity $user
 	 * @param Title $title
+	 * @param UserIdentity $user
 	 * @param int $numLanguages
 	 * @param array $sidebarData
 	 * @param array $languagesData
@@ -137,10 +137,9 @@ class CitizenComponentPageTools implements CitizenComponent {
 	 * @inheritDoc
 	 */
 	public function getTemplateData(): array {
-		$hasLanguages = (
-			$this->languagesData && $this->languagesData[ 'is-empty'] !== true ||
-			$this->variantsData && $this->variantsData[ 'is-empty'] !== true
-		);
+		$hasLanguages =
+			( $this->languagesData && $this->languagesData[ 'is-empty' ] !== true ) ||
+			( $this->variantsData && $this->variantsData[ 'is-empty' ] !== true );
 		$articleTools = $this->getArticleToolsData();
 
 		return [

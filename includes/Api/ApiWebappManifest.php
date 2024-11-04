@@ -41,12 +41,6 @@ class ApiWebappManifest extends ApiBase {
 	private const CACHE_MAX_AGE = 604800;
 
 	/**
-	 * Constructor
-	 */
-	public function __construct() {
-	}
-
-	/**
 	 * Execute the requested Api actions.
 	 */
 	public function execute(): void {
@@ -124,6 +118,11 @@ class ApiWebappManifest extends ApiBase {
 		return $icons;
 	}
 
+	/**
+	 * Get src, sizes, and type for each icon for the manifest
+	 *
+	 * @return array|null
+	 */
 	private function getIconData( $logoPath, $logoContent ) {
 		$imageSize = getimagesizefromstring( $logoContent );
 		if ( $imageSize !== false ) {
