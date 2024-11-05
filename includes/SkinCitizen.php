@@ -172,7 +172,8 @@ class SkinCitizen extends SkinMustache {
 
 		return array_merge( $parentData, [
 			// Booleans
-			'toc-enabled' => !empty( $parentData['data-toc'] ),
+			// 'toc-enabled' => !empty( $parentData['data-toc'] ),
+			'toc-enabled' => true,
 			'html-body-content--formatted' => $bodycontent->decorateBodyContent( $parentData['html-body-content'] )
 		] );
 	}
