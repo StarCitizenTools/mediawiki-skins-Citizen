@@ -16,7 +16,7 @@
 
 	&__pageinfo {
 		display: flex;
-		flex-wrap: wrap;
+		flex-flow: column wrap;
 		font-size: var( --font-size-x-small );
 
 		&-item {
@@ -41,12 +41,11 @@
 
 		a {
 			font-weight: var( --font-weight-medium );
-			color: var( --color-emphasized );
 		}
 	}
 
 	&__content {
-		padding: var( --space-md ) 0;
+		padding: var( --space-md );
 	}
 
 	&__bottom {
@@ -70,26 +69,15 @@
 #footer {
 	&-places {
 		ul {
+			display: flex;
 			flex-direction: row;
+			gap: var( --space-xs ) var( --space-md );
 		}
 
 		a {
 			display: block;
-			padding: var( --space-xs ) var( --space-md );
+			padding: var( --space-xs ) 0;
 			border-radius: var( --border-radius-base );
-
-			&:hover {
-				background-color: var( --background-color-button-quiet--hover );
-			}
-
-			&:active {
-				background-color: var( --background-color-button-quiet--active );
-			}
-
-			&:hover,
-			&:focus {
-				text-decoration: none;
-			}
 		}
 	}
 
