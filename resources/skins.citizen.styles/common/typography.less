@@ -34,6 +34,13 @@ blockquote {
 	/* NOTE: This only works for Chromium browsers for now */
 	text-wrap: pretty;
 
+	&:lang( ja ),
+	&:lang( ko ),
+	&:lang( mn ),
+	&:lang( zh ) {
+		font-style: normal;
+	}
+
 	cite {
 		font-size: var( --font-size-x-small );
 		font-style: normal;
