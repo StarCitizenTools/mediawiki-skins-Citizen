@@ -164,43 +164,43 @@
 	}
 }
 
-// To avoid more menu from overflow in narrow screen
-@media ( max-width: @max-width-breakpoint-tablet ) {
-	.page-actions {
-		position: fixed;
-		right: 0;
-		bottom: ~'calc( var( --header-size ) + var( --space-xs ) )';
-		height: var( --toolbar-size );
-		margin: var( --space-xs );
-		background: var( --color-surface-1 );
-		border: 1px solid var( --border-color-base );
-		border-radius: var( --border-radius-medium );
-		box-shadow: var( --box-shadow-drop-xx-large );
+// // To avoid more menu from overflow in narrow screen
+// @media ( max-width: @max-width-breakpoint-tablet ) {
+// 	.page-actions {
+// 		position: fixed;
+// 		right: 0;
+// 		bottom: ~'calc( var( --header-size ) + var( --space-xs ) )';
+// 		height: var( --toolbar-size );
+// 		margin: var( --space-xs );
+// 		background: var( --color-surface-1 );
+// 		border: 1px solid var( --border-color-base );
+// 		border-radius: var( --border-radius-medium );
+// 		box-shadow: var( --box-shadow-drop-xx-large );
 
-		:not( .citizen-menu__card ) .mw-list-item {
-			--size-icon: 1rem;
-		}
+// 		:not( .citizen-menu__card ) .mw-list-item {
+// 			--size-icon: 1rem;
+// 		}
 
-		> .mw-portlet li > a {
-			height: var( --toolbar-size );
-		}
+// 		> .mw-portlet li > a {
+// 			height: var( --toolbar-size );
+// 		}
 
-		&__item {
-			position: unset;
-		}
+// 		&__item {
+// 			position: unset;
+// 		}
 
-		.citizen-menu__card {
-			bottom: 100%;
-			/* Fix card width issue when the page tool bar is narrow */
-			width: max-content;
-		}
-	}
+// 		.citizen-menu__card {
+// 			bottom: 100%;
+// 			/* Fix card width issue when the page tool bar is narrow */
+// 			width: max-content;
+// 		}
+// 	}
 
-	.citizen-page-languages .citizen-dropdown-summary::after {
-		// Blend with background
-		background: var( --color-surface-1 );
-	}
-}
+// 	.citizen-page-languages .citizen-dropdown-summary::after {
+// 		// Blend with background
+// 		background: var( --color-surface-1 );
+// 	}
+// }
 
 @media ( min-width: @min-width-breakpoint-desktop ) {
 	.page-actions {
