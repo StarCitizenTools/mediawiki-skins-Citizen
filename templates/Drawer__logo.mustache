@@ -3,7 +3,7 @@
 	string link-mainpage link to the main page
 }}
 {{#data-logos}}
-<a href="{{link-mainpage}}" class="mw-logo citizen-drawer__logo" title="{{msg-tooltip-p-logo}}">
+<a href="{{link-mainpage}}" title="{{msg-sitetitle}}" class="mw-logo citizen-drawer__logo">
 	{{! alt is provided for valid HTML but given aria-hidden not needed. }}
 	<img class="mw-logo-icon" src="{{!
 		Pick an icon based on this order: Icon > SVG > 1x
@@ -15,6 +15,7 @@
 				}}{{#1x}}{{.}}{{/1x}}{{!
 			}}{{/svg}}{{!
 		}}{{/icon}}"{{!
-		}} alt="" aria-hidden="true" height="80" width="80" loading="lazy">
+		}} alt="{{msg-sitetitle}}" aria-hidden="true" height="80" width="80" loading="lazy">
+	{{>Wordmark}}
 </a>
 {{/data-logos}}
