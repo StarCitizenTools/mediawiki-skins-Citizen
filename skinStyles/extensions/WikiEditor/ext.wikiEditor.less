@@ -65,6 +65,9 @@
 
 /* jquery.wikiEditor.toolbar.less */
 .wikiEditor-ui-toolbar {
+	border: 1px 1px 0;
+	border-radius: var( --border-radius--small ) var( --border-radius--small ) 0 0;
+	margin-top: var( --space-sm );
 	background-color: var( --color-surface-0 );
 	box-shadow: none;
 
@@ -339,4 +342,8 @@
 			letter-spacing: inherit;
 		}
 	}
+}
+
+.wikiEditor-ui-text {
+	border: 0 1px;
 }
