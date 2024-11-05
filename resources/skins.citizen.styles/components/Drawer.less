@@ -13,10 +13,17 @@
 		border-bottom: var( --border-width-base ) solid var( --border-color-base );
 	}
 
-	// Keep aspect ratio
-	&__logo img {
-		width: auto;
-		height: 3rem;
+	&__logo {
+		display: flex;
+		flex-wrap: nowrap;
+		gap: var( --space-xs );
+		align-items: center;
+
+		// Keep aspect ratio
+		img {
+			width: auto;
+			height: 3rem;
+		}
 	}
 
 	&__siteinfo {
@@ -46,15 +53,7 @@
 	.citizen-drawer {
 		&__logo img {
 			// Bigger logo
-			height: 5rem;
-		}
-	}
-}
-
-@media ( min-width: @min-width-breakpoint-desktop ) {
-	.citizen-drawer {
-		&__header {
-			justify-content: flex-start;
+			max-height: 5rem;
 		}
 	}
 }
