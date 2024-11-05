@@ -34,7 +34,7 @@
 					"name": "citizen",
 					"supportsMwHeading": true,
 					"responsive": true,
-					"toc": false,
+					"toc": true,
 					"link": {
 						"text-wrapper": {
 							"tag": "span"
