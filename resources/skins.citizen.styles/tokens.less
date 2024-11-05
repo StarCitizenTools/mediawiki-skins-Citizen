@@ -151,8 +151,9 @@
 	--font-size-medium: var( --font-size-base );
 	--font-size-large: ~'calc( var( --font-size-base ) * 1.125 )';
 	--font-size-x-large: ~'calc( var( --font-size-base ) * 1.25 )';
-	--font-size-xx-large: ~'calc( var( --font-size-base ) * 1.375 )';
+	--font-size-xx-large: ~'calc( var( --font-size-base ) * 1.5 )';
 	--font-size-xxx-large: ~'calc( var( --font-size-base ) * 1.75 )';
+	--font-size-xxxx-large: ~'calc( var( --font-size-base ) * 2 )';
 	--font-weight-normal: 400;
 	--font-weight-medium: ~'calc( var( --font-weight-normal ) + 100)';
 	--font-weight-semi-bold: ~'calc( var( --font-weight-normal ) + 200)';
@@ -318,9 +319,11 @@
 
 	@media ( min-width: @min-width-breakpoint-tablet ) {
 		--font-size-x-small: ~'calc( var( --font-size-base ) *  0.8125 )';
+		--font-size-large: ~'calc( var( --font-size-base ) * 1.25 )';
 		--font-size-x-large: ~'calc( var( --font-size-base ) *  1.375 )';
-		--font-size-xx-large: ~'calc( var( --font-size-base ) *  1.5 )';
+		--font-size-xx-large: ~'calc( var( --font-size-base ) *  1.75 )';
 		--font-size-xxx-large: ~'calc( var( --font-size-base ) *  2 )';
+		--font-size-xxxx-large: ~'calc( var( --font-size-base ) *  2.25 )';
 		--padding-page: ~'calc( @{padding-page} * 1.5 )';
 	}
 
