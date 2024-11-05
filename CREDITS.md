@@ -16,5 +16,6 @@
 ## Included assets ##
 * **[Roboto Flex font](https://github.com/googlefonts/roboto-flex)**
 * **[Noto Sans CJK font](https://github.com/googlefonts/noto-cjk)**
+* **[OOjs UI icons](https://github.com/wikimedia/oojs-ui)**
 
 A gigantic thank you to all the folks above! *Citizen* wouldn't be here today without any of you. If someone is missing, please drop us a note and let us know!

@@ -149,6 +149,21 @@
 	}
 }
 
+// Additional buttons
+#Wikiplus-Edit-TopBtn,
+#ca-redirect,
+#ca-masseditregex {
+	> a::before {
+		width: var( --size-icon );
+		height: var( --size-icon );
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: var( --size-icon );
+		content: '';
+		transition: @transition-opacity;
+	}
+}
+
 // To avoid more menu from overflow in narrow screen
 @media ( max-width: @max-width-breakpoint-tablet ) {
 	.page-actions {

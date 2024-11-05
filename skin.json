@@ -54,7 +54,8 @@
 					],
 					"styles": [
 						"skins.citizen.styles",
-						"skins.citizen.icons"
+						"skins.citizen.icons",
+						"skins.citizen.icons.customize"
 					],
 					"messages": [
 						"citizen-actions-more-toggle",
@@ -391,6 +392,20 @@
 				"watchlist",
 				"wikiText"
 			]
+		},
+		"skins.citizen.icons.customize": {
+			"class": "MediaWiki\\ResourceLoader\\ImageModule",
+			"selector": "{name}",
+			"defaultColor": "#000",
+			"images": {
+				".citizen-toc__top:before": "resources/skins.citizen.icons.customize/backToTop.svg",
+				"#ca-ve-edit > a:before": "resources/skins.citizen.icons.customize/wmui/edit.svg",
+				"#Wikiplus-Edit-TopBtn > a:before": "resources/skins.citizen.icons.customize/wikiplus.svg",
+				"a.Wikiplus-Edit-SectionBtn:before": "resources/skins.citizen.icons.customize/wikiplus.svg",
+				"#ca-redirect > a:before": "resources/skins.citizen.icons.customize/wmui/redirect-ltr.svg",
+				".mw-content-rtl #ca-redirect > a:before": "resources/skins.citizen.icons.customize/wmui/redirect-rtl.svg",
+				"#ca-masseditregex > a:before": "resources/skins.citizen.icons.customize/pencilBatch.svg"
+			}
 		}
 	},
 	"ResourceFileModulePaths": {
