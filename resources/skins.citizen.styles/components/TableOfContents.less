@@ -255,6 +255,15 @@
 	background: var( --color-surface-2 );
 	border: 1px solid var( --color-surface-4 );
 
+	@media ( max-width: @max-width-breakpoint-tablet ) {
+		max-width: 320px;
+	}
+
+	@media ( max-width: @max-width-breakpoint-mobile ) {
+		max-width: 95vw;
+		clear: both;
+	}
+
 	#mw-toc-heading {
 		margin-top: 0;
 		font-size: 1.125rem;
