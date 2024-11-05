@@ -90,6 +90,10 @@
 	&-link&-link-pending {
 		color: var( --color-subtle );
 	}
+
+	&Button {
+		order: 99999;
+	}
 }
 
 .ext-discussiontools-init-pageframe-latestcomment {
@@ -104,6 +108,7 @@
 
 .ext-discussiontools-visualenhancements-enabled {
 	.ext-discussiontools-init-section {
+		flex-wrap: wrap;
 		font-family: var( --font-family-base ) !important;
 		font-weight: var( --font-weight-semi-bold );
 		border-top-color: var( --border-color-base );
