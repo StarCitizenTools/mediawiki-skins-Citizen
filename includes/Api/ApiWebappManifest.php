@@ -23,6 +23,7 @@
 namespace MediaWiki\Skins\Citizen\Api;
 
 use ApiBase;
+use Exception;
 use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
@@ -36,11 +37,18 @@ use SpecialPage;
  * TODO: This should be merged to core
  */
 class ApiWebappManifest extends ApiBase {
+	/* 1 week */
+	private const CACHE_MAX_AGE = 604800;
+
 	/**
 	 * Execute the requested Api actions.
 	 */
-	public function execute() {
+	public function execute(): void {
 		$services = MediaWikiServices::getInstance();
+
+		$main = $this->getMain();
+		$main->setCacheMaxAge( self::CACHE_MAX_AGE );
+		$main->setCacheMode( 'public' );
 
 		$config = $this->getConfig();
 		$resultObj = $this->getResult();
@@ -57,10 +65,6 @@ class ApiWebappManifest extends ApiBase {
 		$resultObj->addValue( null, 'theme_color', $config->get( 'CitizenManifestThemeColor' ) );
 		$resultObj->addValue( null, 'background_color', $config->get( 'CitizenManifestBackgroundColor' ) );
 		$resultObj->addValue( null, 'shortcuts', $this->getShortcuts() );
-
-		$main = $this->getMain();
-		$main->setCacheMaxAge( 604800 );
-		$main->setCacheMode( 'public' );
 	}
 
 	/**
@@ -70,58 +74,77 @@ class ApiWebappManifest extends ApiBase {
 	 * @param MediaWikiServices $services
 	 * @return array
 	 */
-	private function getIcons( $config, $services ) {
+	private function getIcons( $config, $services ): array {
 		$icons = [];
 		$logos = $config->get( MainConfigNames::Logos );
 
-		// That really shouldn't happen
-		if ( $logos !== false ) {
-			$logoKeys = [
-				'1x',
-				'1.5x',
-				'2x',
-				'icon',
-				'svg'
-			];
+		if ( !$logos ) {
+			return $icons;
+		}
 
-			foreach ( $logoKeys as $logoKey ) {
-				// Avoid undefined index
-				if ( !isset( $logos[$logoKey] ) ) {
-					continue;
-				}
+		$logoKeys = [
+			'1x',
+			'1.5x',
+			'2x',
+			'icon',
+			'svg'
+		];
 
-				$logo = (string)$logos[$logoKey];
-
-				if ( !empty( $logo ) ) {
-					$logoUrl = $services->getUrlUtils()->expand( $logo, PROTO_CURRENT );
-					$request = $services->getHttpRequestFactory()->create( $logoUrl, [], __METHOD__ );
-					$request->execute();
-					$logoContent = $request->getContent();
-
-					if ( !empty( $logoContent ) ) {
-						$logoSize = getimagesizefromstring( $logoContent );
-					}
-					$icon = [
-						'src' => $logo
-					];
-
-					if ( isset( $logoSize ) && $logoSize !== false ) {
-						$icon['sizes'] = $logoSize[0] . 'x' . $logoSize[1];
-						$icon['type'] = $logoSize['mime'];
-					}
-
-					// Set sizes to any if it is a SVG
-					if ( substr( $logo, -3 ) === 'svg' ) {
-						$icon['sizes'] = 'any';
-						$icon['type'] = 'image/svg+xml';
-					}
-
-					$icons[] = $icon;
-				}
+		foreach ( $logoKeys as $logoKey ) {
+			// Avoid undefined index
+			if ( !isset( $logos[$logoKey] ) ) {
+				continue;
 			}
+
+			$logoPath = (string)$logos[$logoKey];
+
+			$logoUrl = $services->getUrlUtils()->expand( $logoPath, PROTO_CURRENT );
+			$request = $services->getHttpRequestFactory()->create( $logoUrl, [], __METHOD__ );
+			try {
+				$request->execute();
+				$logoContent = $request->getContent();
+			} catch ( Exception $e ) {
+				// Log the error or handle it appropriately
+				$logoContent = null;
+			}
+
+			$icon = $this->getIconData( $logoPath, $logoContent );
+			if ( !$icon ) {
+				continue;
+			}
+			$icons[] = $icon;
 		}
 
 		return $icons;
+	}
+
+	/**
+	 * Get src, sizes, and type for each icon for the manifest
+	 *
+	 * @param string $logoPath
+	 * @param string $logoContent
+	 * @return array|null
+	 */
+	private function getIconData( $logoPath, $logoContent ) {
+		$imageSize = getimagesizefromstring( $logoContent );
+		if ( $imageSize !== false ) {
+			return [
+				'src' => $logoPath,
+				'sizes' => $imageSize[0] . 'x' . $imageSize[1],
+				'type' => $imageSize['mime']
+			];
+		}
+
+		// getimagesizefromstring does not handle SVGs
+		if ( mime_content_type( $logoContent ) !== 'image/svg+xml' ) {
+			return null;
+		}
+
+		return [
+			'src' => $logoPath,
+			'sizes' => 'any',
+			'type' => $logoContent
+		];
 	}
 
 	/**
@@ -129,19 +152,16 @@ class ApiWebappManifest extends ApiBase {
 	 *
 	 * @return array
 	 */
-	private function getShortcuts() {
-		$shortcuts = [];
+	private function getShortcuts(): array {
 		$specialPages = [ 'Search', 'Randompage', 'RecentChanges' ];
 
-		foreach ( $specialPages as $specialPage ) {
-			$shortcut = [];
+		return array_map( static function ( $specialPage ) {
 			$title = SpecialPage::getSafeTitleFor( $specialPage );
-			$shortcut['name'] = $title->getBaseText();
-			$shortcut['url'] = $title->getLocalURL();
-			$shortcuts[] = $shortcut;
-		}
-
-		return $shortcuts;
+			return [
+				'name' => $title->getBaseText(),
+				'url' => $title->getLocalURL()
+			];
+		}, $specialPages );
 	}
 
 	/**
