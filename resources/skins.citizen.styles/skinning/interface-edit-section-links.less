@@ -40,11 +40,13 @@
 	}
 }
 
-.Wikiplus-Edit-SectionBtn,  // HACK: for Wikiplus
-.citizen-editsection-icon {
+.Wikiplus-Edit-SectionBtn,
+.citizen-editsection-icon { // HACK: for Wikiplus
+	display: inline-block;
 	width: 1.875rem;
 	height: 1.875rem;
 	text-indent: -9999px; // Hide text
+	filter: var( --filter-invert );
 	opacity: var( --opacity-icon-base );
 	transition: var( --transition-hover );
 	transition-property: opacity;
