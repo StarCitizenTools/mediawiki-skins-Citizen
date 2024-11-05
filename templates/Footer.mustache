@@ -16,6 +16,9 @@
 
 <footer class="mw-footer citizen-footer" {{{html-user-language-attributes}}}>
 	<div class="citizen-footer__container">
+		{{#data-page-footer}}
+			{{>PageFooter__item}}
+		{{/data-page-footer}}
 		<section class="citizen-footer__content">
 			{{#data-places}}{{>Footer__row}}{{/data-places}}
 		</section>

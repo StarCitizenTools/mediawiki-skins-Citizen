@@ -1,0 +1,10 @@
+<section class="page-info citizen-footer__pageinfo">
+    {{#array-items}}
+    <section id="{{id}}" class="page-info__item citizen-footer__pageinfo-item">
+    {{#label}}
+        <div class="page-info__label citizen-footer__pageinfo-label">{{label}}</div>
+    {{/label}}
+        <div class="page-info__text citizen-footer__pageinfo-text">{{{html}}}</div>
+    </section>
+    {{/array-items}}
+</section>

@@ -1,10 +1,10 @@
 .citizen-footer {
 	padding: var( --space-xxl ) var( --padding-page );
-	margin-top: var( --space-xxl );
 	clear: both;
 	font-size: var( --font-size-small );
 	color: var( --color-subtle );
 	background-color: var( --color-surface-2 );
+	border-top: var( --border-width-base ) solid var( --border-color-base );
 	direction: ltr;
 	contain: content;
 
@@ -14,6 +14,24 @@
 		margin-left: auto;
 	}
 
+	&__pageinfo {
+		display: flex;
+		flex-wrap: wrap;
+		font-size: var( --font-size-x-small );
+
+		&-item {
+			display: flex;
+			flex-direction: column;
+			gap: var( --space-xs );
+			padding: var( --space-xxs ) var( --space-md );
+		}
+
+		&-label {
+			color: var( --color-subtle );
+			letter-spacing: 0.05em;
+		}
+	}
+
 	&__content,
 	&__bottom {
 		display: flex;
@@ -21,6 +39,11 @@
 		gap: var( --space-md );
 		justify-content: space-between;
 		padding: var( --space-md ) 0;
+
+		a {
+			font-weight: var( --font-weight-medium );
+			color: var( --color-emphasized );
+		}
 	}
 
 	&__bottom {
@@ -28,11 +51,6 @@
 		margin-right: auto;
 		margin-left: auto;
 		border-top: var( --border-width-base ) solid var( --border-color-base );
-	}
-
-	a {
-		font-weight: var( --font-weight-medium );
-		color: var( --color-emphasized );
 	}
 
 	ul {
@@ -49,7 +67,7 @@
 #footer {
 	&-places {
 		ul {
-			// flex-direction: column;
+			flex-direction: row;
 		}
 
 		a {
@@ -81,7 +99,8 @@
 
 		li {
 			display: flex; // Horizontally aligned with there are two icons in the same li
-			gap: var( --space-xs ); // Sometimes there can be multiple icon under the same li
+			gap:
+ var( --space-xs ); // Sometimes there can be multiple icon under the same li
 		}
 
 		a {
