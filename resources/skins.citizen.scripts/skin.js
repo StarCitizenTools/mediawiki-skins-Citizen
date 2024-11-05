@@ -27,7 +27,7 @@ function enableCssAnimations( document ) {
  *
  * @return {void}
  */
-function registerServiceWorker() {
+/* function registerServiceWorker() {
 	const scriptPath = mw.config.get( 'wgScriptPath' );
 
 	// Only allow serviceWorker when the scriptPath is at root because of its scope
@@ -44,7 +44,7 @@ function registerServiceWorker() {
 			navigator.serviceWorker.register( swUrl, { scope: '/' } );
 		}
 	}
-}
+} */
 
 /**
  * Initialize scripts related to wiki page content
@@ -99,7 +99,7 @@ function main( window ) {
 
 	// Defer non-essential tasks
 	setTimeout( () => {
-		registerServiceWorker();
+		// registerServiceWorker();
 
 		window.addEventListener( 'beforeunload', () => {
 			// Set up loading indicator
