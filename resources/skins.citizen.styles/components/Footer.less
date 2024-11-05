@@ -38,7 +38,6 @@
 		flex-wrap: wrap;
 		gap: var( --space-md );
 		justify-content: space-between;
-		padding: var( --space-md ) 0;
 
 		a {
 			font-weight: var( --font-weight-medium );
@@ -46,11 +45,15 @@
 		}
 	}
 
+	&__content {
+		padding: var( --space-md ) 0;
+	}
+
 	&__bottom {
 		align-items: center;
+		padding: var( --space-md );
 		margin-right: auto;
 		margin-left: auto;
-		border-top: var( --border-width-base ) solid var( --border-color-base );
 	}
 
 	ul {
@@ -99,8 +102,7 @@
 
 		li {
 			display: flex; // Horizontally aligned with there are two icons in the same li
-			gap:
- var( --space-xs ); // Sometimes there can be multiple icon under the same li
+			gap: var( --space-xs ); // Sometimes there can be multiple icon under the same li
 		}
 
 		a {
