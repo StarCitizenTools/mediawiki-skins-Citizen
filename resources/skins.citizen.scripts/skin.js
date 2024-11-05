@@ -69,7 +69,7 @@ function initBodyContent( bodyContent ) {
  */
 function main( window ) {
 	const
-		config = require( './config.json' ),
+		// config = require( './config.json' ),
 		echo = require( './echo.js' ),
 		search = require( './search.js' ),
 		dropdown = require( './dropdown.js' ),
@@ -92,10 +92,12 @@ function main( window ) {
 		initBodyContent( content[ 0 ] );
 	} );
 
+	/*
 	// Preference module
 	if ( config.wgCitizenEnablePreferences === true && typeof document.createElement( 'div' ).prepend === 'function' ) {
 		mw.loader.load( 'skins.citizen.preferences' );
 	}
+	 */
 
 	// Defer non-essential tasks
 	setTimeout( () => {
