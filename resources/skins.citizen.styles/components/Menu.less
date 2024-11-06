@@ -14,10 +14,6 @@
 		box-shadow: var( --box-shadow-drop-xx-large );
 		transform: scale( 0 );
 		contain: content;
-
-		> * {
-			opacity: 0;
-		}
 	}
 
 	&__heading {
@@ -80,6 +76,7 @@
 	height: var( --size-icon );
 	min-height: var( --size-icon );
 	contain: strict;
+	content-visibility: auto;
 
 	&::before {
 		display: block;
