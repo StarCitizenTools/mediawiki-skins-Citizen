@@ -1,6 +1,7 @@
 // Adopted from Vector 2022
 const
 	scrollObserver = require( './scrollObserver.js' ),
+	resizeObserver = require( './resizeObserver.js' ),
 	initSectionObserver = require( './sectionObserver.js' ),
 	initTableOfContents = require( './tableOfContents.js' ),
 	deferUntilFrame = require( './deferUntilFrame.js' ),
@@ -185,9 +186,6 @@ const setupTableOfContents = ( tocElement, bodyContent, initSectionObserverFn ) 
 const main = () => {
 	const isIntersectionObserverSupported = 'IntersectionObserver' in window;
 
-	//
-	//  Table of contents
-	//
 	const tocElement = document.getElementById( TOC_ID );
 	const bodyContent = document.getElementById( BODY_CONTENT_ID );
 
@@ -196,19 +194,27 @@ const main = () => {
 	const tableOfContents = isToCUpdatingAllowed ?
 		setupTableOfContents( tocElement, bodyContent, initSectionObserver ) : null;
 
-	// eslint-disable-next-line no-unused-vars
-	const observer = scrollObserver.initScrollObserver(
+	const pagetitleObserver = scrollObserver.initScrollObserver(
 		() => {
-			if ( tableOfContents ) {
-				tableOfContents.updateTocToggleStyles( true );
+			// TODO: Below page header
+		},
+		() => {
+			// TODO: Above page header
+		}
+	);
+
+	const bodyObserver = resizeObserver.initResizeObserver(
+		() => {
+			// Disable all CSS transition during resize
+			if ( document.documentElement.classList.contains( 'citizen-animations-ready' ) ) {
+				document.documentElement.classList.remove( 'citizen-animations-ready' );
 			}
 		},
 		() => {
-			if ( tableOfContents ) {
-				tableOfContents.updateTocToggleStyles( false );
-			}
+			document.documentElement.classList.add( 'citizen-animations-ready' );
 		}
 	);
+	bodyObserver.observe( document.body );
 };
 
 module.exports = {
