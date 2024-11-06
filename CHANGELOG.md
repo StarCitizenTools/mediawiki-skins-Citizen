@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.38.3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.38.2...v2.38.3) (2024-11-06)
+
+
+### Bug Fixes
+
+* **toc:** 🐛 invisible toc icons on desktop ([ded49e6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ded49e61d817ade26f3734a1d55b7b2e2bf0b51f))
+
 ## [2.38.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.38.1...v2.38.2) (2024-11-06)
 
 
