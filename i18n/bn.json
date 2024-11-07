@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"R4356th",
+			"San1joy23",
 			"আফতাবুজ্জামান",
 			"খাত্তাব হাসান"
 		]
@@ -13,7 +14,12 @@
 	"citizen.js": "/* এখানের সকল জাভাস্ক্রিপ্ট সিটিজেন আবরণের ব্যবহারকারীদের জন্য লোড হবে */",
 	"citizen-drawer-toggle": "মেনু খুলুন",
 	"citizen-usermenu-toggle": "ব্যক্তিগত মেনু খুলুন",
+	"citizen-search-poweredby": "$1 দ্বারা চালিত",
+	"citizen-search-poweredby-mediawiki": "মিডিয়াউইকি",
 	"citizen-search-toggle": "অনুসন্ধান খুলুন",
+	"citizen-search-keyhint-exit": "অনুসন্ধান প্রস্থান করুন",
+	"citizen-search-keyhint-open": "অনুসন্ধান খুলুন",
+	"citizen-search-keyhint-select": "আইটেম নির্বাচন করুন",
 	"citizen-languages-toggle": "আরও ভাষা",
 	"citizen-actions-more-toggle": "আরও কার্য",
 	"citizen-sitestats-articles-label": "টি নিবন্ধ",
@@ -27,6 +33,7 @@
 	"citizen-footer-tagline": "[[MediaWiki:Citizen-footer-tagline]]-এ এই লেখা সম্পাদনা করুন",
 	"citizen-action-addsection": "আলোচনা যোগ করুন",
 	"citizen-jumptotop": "উপরে চলুন",
+	"citizen-search-advancedsearch": "উন্নত অনুসন্ধান",
 	"citizen-search-fulltext": "$1 থাকা পাতাগুলিতে অনুসন্ধান করুন",
 	"citizen-search-mediasearch": "মিডিয়ার জন্য অনুসন্ধান",
 	"citizen-search-editpage": "পৃষ্ঠা সম্পাদনা বা তৈরি করুন",
