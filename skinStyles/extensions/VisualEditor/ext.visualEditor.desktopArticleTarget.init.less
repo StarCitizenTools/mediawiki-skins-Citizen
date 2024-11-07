@@ -26,10 +26,15 @@
 	.citizen-page-header--sticky {
 		.mw-body-header {
 			position: unset;
-			margin-top: 0;
+			margin-top: var( --header-size );
 			box-shadow: none;
 
 			&::before {
+				position: relative;
+				display: none;
+			}
+
+			.citizen-jumptotop {
 				position: relative;
 				display: none;
 			}
