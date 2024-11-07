@@ -3,6 +3,7 @@ const
 	scrollObserver = require( './scrollObserver.js' ),
 	resizeObserver = require( './resizeObserver.js' ),
 	initSectionObserver = require( './sectionObserver.js' ),
+	stickyHeader = require( './stickyHeader.js' ),
 	initTableOfContents = require( './tableOfContents.js' ),
 	deferUntilFrame = require( './deferUntilFrame.js' ),
 	TOC_ID = 'citizen-toc',
@@ -16,7 +17,9 @@ const
 		.map( ( sel ) => `.mw-parser-output ${ sel }` ).join( ', ' ),
 	HEADLINE_SELECTOR = [ '.mw-headline', ...HEADING_TAGS.map( ( tag ) => `${ tag }[id]` ) ]
 		.map( ( sel ) => `.mw-parser-output ${ sel }` ).join( ', ' ),
-	TOC_SECTION_ID_PREFIX = 'toc-';
+	TOC_SECTION_ID_PREFIX = 'toc-',
+	SCROLL_DOWN_CLASS = 'citizen-scroll--down',
+	SCROLL_UP_CLASS = 'citizen-scroll--up';
 
 /**
  * @callback OnIntersection
@@ -194,7 +197,27 @@ const main = () => {
 	const tableOfContents = isToCUpdatingAllowed ?
 		setupTableOfContents( tocElement, bodyContent, initSectionObserver ) : null;
 
-	const pagetitleObserver = scrollObserver.initScrollObserver(
+	const stickyIntersection = document.getElementById( 'citizen-page-header-sticky-sentinel' );
+	const isStickyHeaderAllowed = !!stickyIntersection;
+
+	const scrollDirectionObserver = scrollObserver.initDirectionObserver(
+		() => {
+			document.body.classList.remove( SCROLL_UP_CLASS );
+			document.body.classList.add( SCROLL_DOWN_CLASS );
+		},
+		() => {
+			document.body.classList.remove( SCROLL_DOWN_CLASS );
+			document.body.classList.add( SCROLL_UP_CLASS );
+		},
+		50
+	);
+
+	if ( isStickyHeaderAllowed ) {
+		stickyHeader.init();
+		scrollDirectionObserver.resume();
+	}
+
+	const pageHeaderObserver = scrollObserver.initScrollObserver(
 		() => {
 			// TODO: Below page header
 		},
@@ -203,15 +226,20 @@ const main = () => {
 		}
 	);
 
+	pageHeaderObserver.observe( stickyIntersection );
+
 	const bodyObserver = resizeObserver.initResizeObserver(
 		() => {
-			// Disable all CSS transition during resize
+			// Disable all CSS animation during resize
 			if ( document.documentElement.classList.contains( 'citizen-animations-ready' ) ) {
 				document.documentElement.classList.remove( 'citizen-animations-ready' );
 			}
+			scrollDirectionObserver.pause();
 		},
 		() => {
+			// Enable CSS animation after resize is finished
 			document.documentElement.classList.add( 'citizen-animations-ready' );
+			scrollDirectionObserver.resume();
 		}
 	);
 	bodyObserver.observe( document.body );

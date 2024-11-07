@@ -50,14 +50,12 @@ function main( window ) {
 		search = require( './search.js' ),
 		dropdown = require( './dropdown.js' ),
 		setupObservers = require( './setupObservers.js' ),
-		stickyHeader = require( './stickyHeader.js' ),
 		lastModified = require( './lastModified.js' ),
 		share = require( './share.js' );
 
 	dropdown.init();
 	search.init( window );
 	echo();
-	stickyHeader.init();
 	lastModified.init();
 	share.init();
 
