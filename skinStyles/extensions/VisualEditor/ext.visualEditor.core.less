@@ -420,18 +420,3 @@
 	z-index: ~'calc( @{z-index-toolbar} + 1 )' !important;
 	margin-top: ~'calc( 1.5 * var( --space-xxl ) )';
 }
-
-.ve-activated {
-	.citizen-page-header--sticky {
-		.mw-body-header {
-			position: unset;
-			margin-top: 0;
-			box-shadow: none;
-
-			&::before {
-				position: relative;
-				display: none;
-			}
-		}
-	}
-}

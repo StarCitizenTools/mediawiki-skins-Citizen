@@ -19,6 +19,22 @@
 	.citizen-toc__buttonCheckbox {
 		display: none;
 	}
+
+	/*
+	 * In case the sticky header not hidden
+	*/
+	.citizen-page-header--sticky {
+		.mw-body-header {
+			position: unset;
+			margin-top: 0;
+			box-shadow: none;
+
+			&::before {
+				position: relative;
+				display: none;
+			}
+		}
+	}
 }
 
 .ve-init-mw-desktopArticleTarget-toolbarPlaceholder {
