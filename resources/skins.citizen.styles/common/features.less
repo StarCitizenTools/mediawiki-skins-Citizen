@@ -147,57 +147,55 @@
 
 .citizen-feature-autohide-navigation-clientpref-1 {
 	@media ( max-width: @max-width-breakpoint-tablet ) {
-		.citizen-header {
+		.citizen-header,
+		.citizen-page-header,
+		.citizen-page-heading,
+		.citizen-toc,
+		.page-actions {
 			transition-timing-function: var( --transition-timing-function-ease-out );
 			transition-duration: var( --transition-duration-medium );
+		}
+
+		.citizen-header {
 			transition-property: transform;
 		}
 
-		// Hide sticky header on scroll down on smaller screens
-		.citizen-sticky-header-visible {
-			.citizen-page-header,
-			.citizen-page-heading {
-				transition-timing-function: var( --transition-timing-function-ease-out );
-				transition-duration: var( --transition-duration-medium );
-			}
+		.citizen-page-header,
+		.citizen-toc,
+		.page-actions {
+			transition-property: transform, opacity;
+		}
 
-			.citizen-page-header {
-				transition-property: transform;
-			}
-
-			.citizen-page-heading {
-				transition-property: opacity;
-			}
+		.citizen-page-heading {
+			transition-property: opacity;
 		}
 
 		.citizen-scroll--down {
 			--height-sticky-header: 0 !important;
 
-			.citizen-header {
+			.citizen-header,
+			.citizen-page-header,
+			.citizen-page-heading,
+			.citizen-toc,
+			.page-actions {
 				transition-timing-function: var( --transition-timing-function-ease-in );
 				transition-duration: var( --transition-duration-base );
-				transform: translateY( 100% );
 			}
 
-			.citizen-toc {
-				bottom: var( --space-xs );
+			.citizen-header {
+				transform: translate3d( 0, 100%, 0 );
 			}
 
+			.citizen-toc,
 			.page-actions {
-				box-shadow: none;
+				pointer-events: none;
 				opacity: 0;
-				transform: translateY( 250% );
+				transform: translate3d( 0, var( --header-size ), 0 );
 			}
 
 			&.citizen-sticky-header-visible {
-				.citizen-page-header,
-				.citizen-page-heading {
-					transition-timing-function: var( --transition-timing-function-ease-in );
-					transition-duration: var( --transition-duration-base );
-				}
-
 				.citizen-page-header {
-					transform: translateY( -150% );
+					transform: translate3d( 0, -100%, 0 );
 				}
 
 				.citizen-page-heading {
@@ -207,11 +205,8 @@
 		}
 
 		.citizen-scroll--up {
-			// Page actions needed to have a scroll up handler to avoid clipping issue
 			.page-actions {
-				opacity: 1;
-				// Start transition after sticky header has finished transition
-				transition: opacity var( --transition-duration-medium ) var( --transition-timing-function-ease-out ) var( --transition-duration-medium ), transform var( --transition-duration-medium ) var( --transition-timing-function-ease-out ) var( --transition-duration-medium );
+				transition-delay: ~'calc( var( --transition-duration-medium ) + 100ms )';
 			}
 		}
 	}

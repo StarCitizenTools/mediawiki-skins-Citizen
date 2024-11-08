@@ -217,7 +217,7 @@ const main = () => {
 			document.body.classList.remove( SCROLL_DOWN_CLASS );
 			document.body.classList.add( SCROLL_UP_CLASS );
 		},
-		50
+		10
 	);
 
 	const resumeStickyHeader = () => {
