@@ -19,7 +19,8 @@ const
 		.map( ( sel ) => `.mw-parser-output ${ sel }` ).join( ', ' ),
 	TOC_SECTION_ID_PREFIX = 'toc-',
 	SCROLL_DOWN_CLASS = 'citizen-scroll--down',
-	SCROLL_UP_CLASS = 'citizen-scroll--up';
+	SCROLL_UP_CLASS = 'citizen-scroll--up',
+	PAGE_TITLE_INTERSECTION_CLASS = 'citizen-below-page-title';
 
 /**
  * @callback OnIntersection
@@ -225,7 +226,7 @@ const main = () => {
 	);
 
 	const resumeStickyHeader = () => {
-		if ( isStickyHeaderAllowed && !isSticky ) {
+		if ( isStickyHeaderAllowed && isSticky === false ) {
 			stickyHeader.show( stickyHeaderElement, stickyPlaceholder );
 			if ( document.documentElement.classList.contains( 'citizen-feature-autohide-navigation-clientpref-1' ) ) {
 				scrollDirectionObserver.resume();
@@ -235,7 +236,7 @@ const main = () => {
 	};
 
 	const pauseStickyHeader = () => {
-		if ( isSticky ) {
+		if ( isSticky === true ) {
 			stickyHeader.hide( stickyHeaderElement, stickyPlaceholder );
 			scrollDirectionObserver.pause();
 			isSticky = false;
@@ -243,8 +244,14 @@ const main = () => {
 	};
 
 	const pageHeaderObserver = scrollObserver.initScrollObserver(
-		resumeStickyHeader,
-		pauseStickyHeader
+		() => {
+			resumeStickyHeader();
+			document.body.classList.add( PAGE_TITLE_INTERSECTION_CLASS );
+		},
+		() => {
+			pauseStickyHeader();
+			document.body.classList.remove( PAGE_TITLE_INTERSECTION_CLASS );
+		}
 	);
 
 	pageHeaderObserver.observe( stickyIntersection );
@@ -265,7 +272,9 @@ const main = () => {
 			// Enable CSS animation after resize is finished
 			document.documentElement.classList.add( 'citizen-animations-ready' );
 			// Recalculate sticky header height at the end of the resize
-			resumeStickyHeader();
+			if ( document.body.classList.contains( PAGE_TITLE_INTERSECTION_CLASS ) ) {
+				resumeStickyHeader();
+			}
 		}
 	);
 	bodyObserver.observe( document.body );
