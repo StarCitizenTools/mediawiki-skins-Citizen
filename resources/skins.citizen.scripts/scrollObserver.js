@@ -7,34 +7,25 @@
  * @return {Object}
  */
 function initDirectionObserver( onScrollDown, onScrollUp, threshold = 0 ) {
-	let lastScrollTop = 0;
+	let lastScrollPosition = 0;
 	let lastScrollDirection = '';
-	let isScrolling = false;
 
-	const handleScroll = () => {
-		const currentScrollTop = window.scrollY;
+	const onScroll = () => {
+		const currentScrollPosition = window.scrollY;
+		const scrollDiff = currentScrollPosition - lastScrollPosition;
 
-		if ( Math.abs( currentScrollTop - lastScrollTop ) < threshold ) {
-			isScrolling = false;
+		if ( Math.abs( scrollDiff ) < threshold ) {
 			return;
 		}
 
-		if ( currentScrollTop > lastScrollTop && lastScrollDirection !== 'down' ) {
+		if ( scrollDiff > 0 && lastScrollDirection !== 'down' ) {
 			lastScrollDirection = 'down';
 			onScrollDown();
-		} else if ( currentScrollTop < lastScrollTop && lastScrollDirection !== 'up' ) {
+		} else if ( scrollDiff < 0 && lastScrollDirection !== 'up' ) {
 			lastScrollDirection = 'up';
 			onScrollUp();
 		}
-		lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
-		isScrolling = false;
-	};
-
-	const onScroll = () => {
-		if ( !isScrolling ) {
-			window.requestAnimationFrame( handleScroll );
-			isScrolling = true;
-		}
+		lastScrollPosition = currentScrollPosition <= 0 ? 0 : currentScrollPosition;
 	};
 
 	return {

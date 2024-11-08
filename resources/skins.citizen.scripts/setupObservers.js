@@ -210,6 +210,8 @@ const main = () => {
 		!!stickyIntersection &&
 		shouldStickyHeader;
 
+	let isSticky = false;
+
 	const scrollDirectionObserver = scrollObserver.initDirectionObserver(
 		() => {
 			document.body.classList.remove( SCROLL_UP_CLASS );
@@ -223,16 +225,20 @@ const main = () => {
 	);
 
 	const resumeStickyHeader = () => {
-		if ( isStickyHeaderAllowed ) {
+		if ( isStickyHeaderAllowed && !isSticky ) {
 			stickyHeader.show( stickyHeaderElement, stickyPlaceholder );
-			scrollDirectionObserver.resume();
+			if ( document.documentElement.classList.contains( 'citizen-feature-autohide-navigation-clientpref-1' ) ) {
+				scrollDirectionObserver.resume();
+			}
+			isSticky = true;
 		}
 	};
 
 	const pauseStickyHeader = () => {
-		if ( isStickyHeaderAllowed ) {
+		if ( isSticky ) {
 			stickyHeader.hide( stickyHeaderElement, stickyPlaceholder );
 			scrollDirectionObserver.pause();
+			isSticky = false;
 		}
 	};
 
@@ -244,20 +250,22 @@ const main = () => {
 	pageHeaderObserver.observe( stickyIntersection );
 
 	const bodyObserver = resizeObserver.initResizeObserver(
+		// onResize
+		() => {},
+		// onResizeStart
 		() => {
 			// Disable all CSS animation during resize
 			if ( document.documentElement.classList.contains( 'citizen-animations-ready' ) ) {
 				document.documentElement.classList.remove( 'citizen-animations-ready' );
 			}
+			pauseStickyHeader();
 		},
+		// onResizeEnd
 		() => {
 			// Enable CSS animation after resize is finished
 			document.documentElement.classList.add( 'citizen-animations-ready' );
 			// Recalculate sticky header height at the end of the resize
-			if ( document.documentElement.classList.contains( stickyHeader.STICKY_HEADER_VISIBLE_CLASS ) ) {
-				pauseStickyHeader();
-				resumeStickyHeader();
-			}
+			resumeStickyHeader();
 		}
 	);
 	bodyObserver.observe( document.body );
