@@ -1,7 +1,6 @@
 .citizen-page-header {
 	z-index: @z-index-above-content;
-	padding-right: var( --padding-page );
-	padding-left: var( --padding-page );
+	padding-inline: var( --padding-page );
 	margin-top: var( --space-xl );
 
 	&-inner {
@@ -11,8 +10,7 @@
 		align-items: center;
 		/* max-width should sync with .citizen-body-container */
 		max-width: var( --width-layout );
-		padding-top: var( --space-md );
-		padding-bottom: var( --space-md );
+		padding-block: var( --space-md );
 		margin-inline: auto;
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {

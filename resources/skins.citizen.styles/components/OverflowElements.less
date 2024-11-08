@@ -31,8 +31,7 @@
 		max-width: max-content;
 
 		&:has( .citizen-overflow-content > .wikitable ) {
-			margin-top: var( --space-md );
-			margin-bottom: var( --space-md );
+			margin-block: var( --space-md );
 			border-radius: var( --border-radius-medium );
 			box-shadow: var( --box-shadow-border );
 		}
@@ -46,8 +45,7 @@
 			display: table;
 			max-width: none;
 			/* Handle margin and box-shadow on outer wrapper */
-			margin-top: 0;
-			margin-bottom: 0;
+			margin-block: 0;
 			overflow: initial;
 			box-shadow: none;
 		}
