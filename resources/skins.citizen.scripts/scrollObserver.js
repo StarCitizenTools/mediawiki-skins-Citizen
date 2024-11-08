@@ -30,10 +30,10 @@ function initDirectionObserver( onScrollDown, onScrollUp, threshold = 0 ) {
 
 	return {
 		resume: () => {
-			window.addEventListener( 'scroll', onScroll );
+			window.addEventListener( 'scroll', mw.util.throttle( onScroll, 100 ) );
 		},
 		pause: () => {
-			window.removeEventListener( 'scroll', onScroll );
+			window.removeEventListener( 'scroll', mw.util.throttle( onScroll, 100 ) );
 		}
 	};
 }
