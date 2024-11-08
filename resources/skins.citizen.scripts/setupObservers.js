@@ -188,16 +188,11 @@ const setupTableOfContents = ( tocElement, bodyContent, initSectionObserverFn ) 
  * @return {void}
  */
 const main = () => {
-	const isIntersectionObserverSupported = 'IntersectionObserver' in window;
-
 	const tocElement = document.getElementById( TOC_ID );
 	const bodyContent = document.getElementById( BODY_CONTENT_ID );
 
-	const isToCUpdatingAllowed = isIntersectionObserverSupported &&
-		window.requestAnimationFrame;
 	/* eslint-disable no-unused-vars */
-	const tableOfContents = isToCUpdatingAllowed ?
-		setupTableOfContents( tocElement, bodyContent, initSectionObserver ) : null;
+	const tableOfContents = setupTableOfContents( tocElement, bodyContent, initSectionObserver );
 
 	const
 		stickyHeaderElement = document.getElementById( stickyHeader.STICKY_HEADER_ID ),
