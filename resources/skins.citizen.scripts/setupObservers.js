@@ -122,14 +122,8 @@ const setupTableOfContents = ( tocElement, bodyContent, initSectionObserverFn ) 
 		sectionObserver.setElements( elements() );
 	};
 
-	let isSticky;
-
 	mw.hook( 've.activationStart' ).add( () => {
 		sectionObserver.pause();
-		isSticky = document.body.classList.contains( stickyHeader.STICKY_HEADER_VISIBLE_CLASS );
-		if ( isSticky ) {
-			document.body.classList.remove( stickyHeader.STICKY_HEADER_VISIBLE_CLASS );
-		}
 	} );
 	mw.hook( 'wikipage.tableOfContents' ).add( ( sections ) => {
 		tableOfContents.reloadTableOfContents( sections ).then( () => {
@@ -138,9 +132,6 @@ const setupTableOfContents = ( tocElement, bodyContent, initSectionObserverFn ) 
 	} );
 	mw.hook( 've.deactivationComplete' ).add( () => {
 		updateElements();
-		if ( isSticky ) {
-			document.body.classList.add( stickyHeader.STICKY_HEADER_VISIBLE_CLASS );
-		}
 	} );
 
 	const setInitialActiveSection = () => {
@@ -206,8 +197,6 @@ const main = () => {
 		!!stickyIntersection &&
 		shouldStickyHeader;
 
-	let isSticky = false;
-
 	const scrollDirectionObserver = scrollObserver.initDirectionObserver(
 		() => {
 			document.body.classList.remove( SCROLL_UP_CLASS );
@@ -221,31 +210,33 @@ const main = () => {
 	);
 
 	const resumeStickyHeader = () => {
-		if ( isStickyHeaderAllowed && isSticky === false ) {
+		if (
+			isStickyHeaderAllowed &&
+			!document.body.classList.contains( stickyHeader.STICKY_HEADER_VISIBLE_CLASS ) &&
+			document.body.classList.contains( PAGE_TITLE_INTERSECTION_CLASS )
+		) {
 			stickyHeader.show( stickyHeaderElement, stickyPlaceholder );
 			if ( document.documentElement.classList.contains( 'citizen-feature-autohide-navigation-clientpref-1' ) ) {
 				scrollDirectionObserver.resume();
 			}
-			isSticky = true;
 		}
 	};
 
 	const pauseStickyHeader = () => {
-		if ( isSticky === true ) {
+		if ( document.body.classList.contains( stickyHeader.STICKY_HEADER_VISIBLE_CLASS ) ) {
 			stickyHeader.hide( stickyHeaderElement, stickyPlaceholder );
 			scrollDirectionObserver.pause();
-			isSticky = false;
 		}
 	};
 
 	const pageHeaderObserver = scrollObserver.initScrollObserver(
 		() => {
-			resumeStickyHeader();
 			document.body.classList.add( PAGE_TITLE_INTERSECTION_CLASS );
+			resumeStickyHeader();
 		},
 		() => {
-			pauseStickyHeader();
 			document.body.classList.remove( PAGE_TITLE_INTERSECTION_CLASS );
+			pauseStickyHeader();
 		}
 	);
 
@@ -283,6 +274,14 @@ const main = () => {
 		}
 	);
 	bodyObserver.observe( document.body );
+
+	mw.hook( 've.activationStart' ).add( () => {
+		pauseStickyHeader();
+	} );
+
+	mw.hook( 've.deactivationComplete' ).add( () => {
+		resumeStickyHeader();
+	} );
 };
 
 module.exports = {
