@@ -12,6 +12,7 @@
 	"citizen-drawer-toggle": "Дај/скриј мени",
 	"citizen-usermenu-toggle": "Дај/скриј лично мени",
 	"citizen-search-poweredby": "Овозможено од $1",
+	"citizen-search-poweredby-cirrussearch": "Elasticsearch",
 	"citizen-search-poweredby-mediawiki": "МедијаВики",
 	"citizen-search-toggle": "Дај/скриј пребарување",
 	"citizen-search-keyhint-exit": "Излези од пребарувањето",

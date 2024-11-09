@@ -464,24 +464,6 @@ module.exports = function tableOfContents( props ) {
 	}
 
 	/**
-	 * Updates button styling for the TOC toggle button when scrolled below the page title
-	 *
-	 * @param {boolean} scrollBelow
-	 */
-	function updateTocToggleStyles( scrollBelow ) {
-		const TOC_TITLEBAR_TOGGLE_ID = 'citizen-page-titlebar-toc-label';
-		const QUIET_BUTTON_CLASS = 'cdx-button--weight-quiet';
-		const tocToggle = document.getElementById( TOC_TITLEBAR_TOGGLE_ID );
-		if ( tocToggle ) {
-			if ( scrollBelow ) {
-				tocToggle.classList.remove( QUIET_BUTTON_CLASS );
-			} else {
-				tocToggle.classList.add( QUIET_BUTTON_CLASS );
-			}
-		}
-	}
-
-	/**
 	 * Reloads the table of contents from saved data
 	 *
 	 * @param {Section[]} sections
@@ -623,7 +605,6 @@ module.exports = function tableOfContents( props ) {
 	 * @property {changeActiveSection} changeActiveSection
 	 * @property {expandSection} expandSection
 	 * @property {toggleExpandSection} toggleExpandSection
-	 * @property {updateTocToggleStyles} updateTocToggleStyles
 	 * @property {unmount} unmount
 	 * @property {string} ACTIVE_SECTION_CLASS
 	 * @property {string} ACTIVE_TOP_SECTION_CLASS
@@ -636,7 +617,6 @@ module.exports = function tableOfContents( props ) {
 		expandSection,
 		changeActiveSection,
 		toggleExpandSection,
-		updateTocToggleStyles,
 		unmount,
 		ACTIVE_SECTION_CLASS,
 		ACTIVE_TOP_SECTION_CLASS,

@@ -165,6 +165,7 @@
 				"resources/skins.citizen.scripts/echo.js",
 				"resources/skins.citizen.scripts/lastModified.js",
 				"resources/skins.citizen.scripts/overflowElements.js",
+				"resources/skins.citizen.scripts/resizeObserver.js",
 				"resources/skins.citizen.scripts/scrollObserver.js",
 				"resources/skins.citizen.scripts/sectionObserver.js",
 				"resources/skins.citizen.scripts/search.js",

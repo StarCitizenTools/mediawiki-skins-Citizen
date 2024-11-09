@@ -32,8 +32,7 @@
 
 		.citizen-toc &.citizen-toc-top {
 			height: 0;
-			padding-top: 0;
-			padding-bottom: 0;
+			padding-block: 0;
 			opacity: 0;
 			transition-property: opacity, height;
 		}
@@ -75,8 +74,7 @@
 		left: 0;
 		flex-shrink: 0;
 		width: var( --border-width-thick );
-		margin-top: var( --space-xs );
-		margin-bottom: var( --space-xs );
+		margin-block: var( --space-xs );
 		margin-left: ~'calc( var( --border-width-thick ) * -1 )';
 	}
 
@@ -150,11 +148,10 @@
 }
 
 // Sticky header styles
-.citizen-page-header--sticky {
+.citizen-sticky-header-visible {
 	.citizen-toc-top.citizen-toc-link {
 		height: 2rem; // 1rem text + 1rem padding
-		padding-top: var( --space-xs );
-		padding-bottom: var( --space-xs );
+		padding-block: var( --space-xs );
 		opacity: 1;
 	}
 }

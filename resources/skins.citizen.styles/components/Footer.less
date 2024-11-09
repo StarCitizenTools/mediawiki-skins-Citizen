@@ -10,8 +10,7 @@
 
 	&__container {
 		max-width: var( --width-layout--extended );
-		margin-right: auto;
-		margin-left: auto;
+		margin-inline: auto;
 	}
 
 	&__pageinfo {
@@ -49,9 +48,25 @@
 
 	&__bottom {
 		align-items: center;
-		padding: var( --space-md );
-		margin-right: auto;
-		margin-left: auto;
+		margin-inline: auto;
+		border-top: var( --border-width-base ) solid var( --border-color-base );
+	}
+
+	&__siteinfo {
+		display: flex;
+		flex-direction: column;
+		gap: var( --space-xs );
+		max-width: 90ch;
+
+		p {
+			margin: 0;
+			line-height: var( --line-height );
+		}
+	}
+
+	a {
+		font-weight: var( --font-weight-medium );
+		color: var( --color-emphasized );
 	}
 
 	ul {

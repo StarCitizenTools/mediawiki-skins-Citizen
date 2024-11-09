@@ -35,7 +35,7 @@
 	}
 }
 
-.citizen-page-header--sticky {
+.citizen-sticky-header-visible {
 	.citizen-page-header {
 		top: var( --header-size );
 		z-index: @z-index-stacking-3;
@@ -100,10 +100,9 @@ html {
 
 // Make sticky header more compact if there are less screen estate
 @media ( max-height: 800px ) {
-	.citizen-page-header--sticky {
+	.citizen-sticky-header-visible {
 		.citizen-page-header-inner {
-			padding-top: var( --space-sm );
-			padding-bottom: var( --space-sm );
+			padding-block: var( --space-sm );
 		}
 	}
 }
