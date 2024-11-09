@@ -11,9 +11,8 @@ ul.gallery.gallery.gallery {
 
 // Sync with caption styles
 div.gallerytext {
-	padding: 0;
-	padding-right: var( --border-radius-base );
-	padding-left: var( --border-radius-base );
+	padding: 0 var( --border-radius-base );
+	margin-block: var( --space-xs );
 	font-size: var( --font-size-x-small );
 	color: var( --color-subtle );
 	letter-spacing: 0.025em;
@@ -28,9 +27,8 @@ ul.mw-gallery-packed-overlay li.gallerybox div.gallerytextwrapper,
 ul.mw-gallery-packed-hover li.gallerybox.mw-gallery-focused div.gallerytextwrapper {
 	right: 0;
 	width: auto !important;
-	padding: var( --space-xs );
-	margin: var( --space-xs );
-	margin-right: 0; // MAGIC
+	padding: 0 var( --space-xs );
+	margin: 0;
 	font-weight: var( --font-weight-normal ); // should use the same weight as caption
 	background: var( --background-color-backdrop-light );
 }
@@ -59,9 +57,11 @@ ul.gallery.mw-gallery-slideshow {
 	}
 }
 
-@media screen {
-	li.gallerybox div.thumb {
-		margin: var( --space-xxs );
+li.gallerybox {
+	div.thumb {
+		display: grid;
+		place-content: center;
+		margin: 0;
 		overflow: hidden; // quick hack for rounded corner
 		background-color: var( --color-surface-2 );
 		border-color: transparent;
