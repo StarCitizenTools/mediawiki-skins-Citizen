@@ -1,28 +1,4 @@
 /**
- * Wait for first paint before calling this function.
- * (see T234570#5779890, T246419).
- *
- * @param {Document} document
- * @return {void}
- */
-function enableCssAnimations( document ) {
-	document.documentElement.classList.add( 'citizen-animations-ready' );
-
-	// Disable all CSS transition during resize
-	const onResize = () => {
-		document.documentElement.classList.remove( 'citizen-animations-ready' );
-		mw.util.debounce( () => {
-			document.documentElement.classList.add( 'citizen-animations-ready' );
-		}, 250 );
-	};
-	const onResizeEnd = mw.util.debounce( () => {
-		document.documentElement.classList.add( 'citizen-animations-ready' );
-	}, 250 );
-	window.addEventListener( 'resize', onResize );
-	window.addEventListener( 'resize', onResizeEnd );
-}
-
-/**
  * Register service worker
  *
  * @return {void}
@@ -76,15 +52,12 @@ function main( window ) {
 		search = require( './search.js' ),
 		dropdown = require( './dropdown.js' ),
 		setupObservers = require( './setupObservers.js' ),
-		stickyHeader = require( './stickyHeader.js' ),
 		lastModified = require( './lastModified.js' ),
 		share = require( './share.js' );
 
-	setupObservers.main();
 	dropdown.init();
 	search.init( window );
 	echo();
-	stickyHeader.init();
 	lastModified.init();
 	share.init();
 
@@ -105,6 +78,7 @@ function main( window ) {
 
 	// Defer non-essential tasks
 	setTimeout( () => {
+		setupObservers.main();
 		// registerServiceWorker();
 
 		window.addEventListener( 'beforeunload', () => {
@@ -116,8 +90,6 @@ function main( window ) {
 		window.addEventListener( 'pagehide', () => {
 			document.documentElement.classList.remove( 'citizen-loading' );
 		} );
-
-		enableCssAnimations( window.document );
 	}, 0 );
 }
 

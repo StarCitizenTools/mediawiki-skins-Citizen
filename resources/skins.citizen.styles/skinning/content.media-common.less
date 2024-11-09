@@ -20,8 +20,7 @@ figure[ typeof~='mw:File/Frame' ] {
 	}
 
 	&.mw-halign-center {
-		margin-right: auto;
-		margin-left: auto;
+		margin-inline: auto;
 		text-align: center;
 	}
 }
@@ -57,9 +56,7 @@ figure[ typeof~='mw:File/Frame' ] {
 	> figcaption {
 		display: table-caption;
 		// Sync with rounded corner
-		padding-right: var( --border-radius-base );
-		// Sync with rounded corner
-		padding-left: var( --border-radius-base );
+		padding-inline: var( --border-radius-base );
 		color: var( --color-subtle );
 		letter-spacing: 0.025em;
 		caption-side: bottom;
@@ -162,8 +159,7 @@ figure[ typeof~='mw:File/Frame' ] {
 
 		&.mw-halign-center {
 			float: none;
-			margin-right: auto;
-			margin-left: auto;
+			margin-inline: auto;
 			clear: both;
 			text-align: center;
 		}

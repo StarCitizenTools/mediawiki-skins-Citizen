@@ -21,9 +21,7 @@ div.tright {
 
 .thumbcaption {
 	// Sync with rounded corner
-	padding-right: var( --border-radius-base );
-	// Sync with rounded corner
-	padding-left: var( --border-radius-base );
+	padding-inline: var( --border-radius-base );
 	margin-top: var( --space-xs );
 	color: var( --color-subtle );
 	text-align: center;
@@ -33,9 +31,7 @@ div.tright {
 div.thumbinner {
 	// Avoid overflow
 	max-width: 100%;
-	margin-right: auto;
-	// Center thumbnail without float
-	margin-left: auto;
+	margin-inline: auto;
 	/* new block formatting context,
 	 * to clear background from floating content */
 	overflow: hidden;

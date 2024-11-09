@@ -4,36 +4,38 @@
  * @param {Function} onScrollDown - Function to be called when scrolling down.
  * @param {Function} onScrollUp - Function to be called when scrolling up.
  * @param {number} threshold - The threshold for significant scroll position change.
+ * @return {Object}
  */
-function initDirectionObserver( onScrollDown, onScrollUp, threshold ) {
-	let lastScrollTop = 0;
+function initDirectionObserver( onScrollDown, onScrollUp, threshold = 0 ) {
+	let lastScrollPosition = 0;
 	let lastScrollDirection = '';
-	let isScrolling = false;
 
-	window.addEventListener( 'scroll', () => {
-		if ( !isScrolling ) {
-			window.requestAnimationFrame( () => {
-				const currentScrollTop = window.scrollY;
+	const onScroll = () => {
+		const currentScrollPosition = window.scrollY;
+		const scrollDiff = currentScrollPosition - lastScrollPosition;
 
-				if ( Math.abs( currentScrollTop - lastScrollTop ) < threshold ) {
-					isScrolling = false;
-					return;
-				}
-
-				if ( currentScrollTop > lastScrollTop && lastScrollDirection !== 'down' ) {
-					lastScrollDirection = 'down';
-					onScrollDown();
-				} else if ( currentScrollTop < lastScrollTop && lastScrollDirection !== 'up' ) {
-					lastScrollDirection = 'up';
-					onScrollUp();
-				}
-				// For Mobile or negative scrolling
-				lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
-				isScrolling = false;
-			} );
-			isScrolling = true;
+		if ( Math.abs( scrollDiff ) < threshold ) {
+			return;
 		}
-	} );
+
+		if ( scrollDiff > 0 && lastScrollDirection !== 'down' ) {
+			lastScrollDirection = 'down';
+			onScrollDown();
+		} else if ( scrollDiff < 0 && lastScrollDirection !== 'up' ) {
+			lastScrollDirection = 'up';
+			onScrollUp();
+		}
+		lastScrollPosition = currentScrollPosition <= 0 ? 0 : currentScrollPosition;
+	};
+
+	return {
+		resume: () => {
+			window.addEventListener( 'scroll', mw.util.throttle( onScroll, 100 ) );
+		},
+		pause: () => {
+			window.removeEventListener( 'scroll', mw.util.throttle( onScroll, 100 ) );
+		}
+	};
 }
 
 /**

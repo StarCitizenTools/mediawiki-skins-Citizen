@@ -45,7 +45,7 @@ img {
 }
 
 hr {
-	margin: var( --space-md ) 0;
+	margin-block: var( --space-md );
 	border: 0;
 	border-top: var( --border-width-base ) solid var( --border-color-base );
 }
@@ -57,9 +57,8 @@ h3,
 h4,
 h5,
 h6 {
-	margin: 0;
 	// It seems that many wikis have the expectation that headers have a bottom margin
-	margin-bottom: 0.25em;
+	margin-block-end: 0.25em;
 	font-weight: var( --font-weight-semi-bold );
 	line-height: var( --line-height-xxx-small );
 	color: var( --color-emphasized );
@@ -67,17 +66,17 @@ h6 {
 
 h1,
 h2 {
-	margin-top: 2em;
+	margin-block-start: 2em;
 }
 
 h3,
 h4 {
-	margin-top: 1.5em;
+	margin-block-start: 1.5em;
 }
 
 h5,
 h6 {
-	margin-top: 1.25em;
+	margin-block-start: 1.25em;
 }
 
 h1 {
@@ -105,7 +104,7 @@ h6 {
 }
 
 p {
-	margin: var( --space-md ) 0;
+	margin-block: var( --space-md );
 	overflow-wrap: break-word; // Force wrap to preserve layout
 }
 
@@ -113,23 +112,15 @@ p img {
 	margin: 0;
 }
 
-ol {
-	padding: 0;
-	margin: var( --space-md ) 0 var( --space-md ) var( --space-xxl );
-}
-
-ul {
-	// Will break a lot of styles if we use padding for horizontal spacing
-	padding: 0;
-	margin: var( --space-md ) 0 var( --space-md ) var( --space-xxl );
-}
-
 ol,
 ul {
+	padding: 0;
+	margin-block: var( --space-md );
+	margin-inline: var( --space-xxl ) 0;
+
 	ol,
 	ul {
-		margin-top: 0;
-		margin-bottom: 0;
+		margin-block: 0;
 	}
 }
 
@@ -139,11 +130,11 @@ dt {
 }
 
 dl {
-	margin: var( --space-md ) 0;
+	margin-block: var( --space-md );
 }
 
 dd {
-	margin-left: var( --space-lg );
+	margin-inline-start: var( --space-xl );
 }
 
 pre,
@@ -201,6 +192,5 @@ figure {
 }
 
 *.center * {
-	margin-right: auto;
-	margin-left: auto;
+	margin-inline: auto;
 }
