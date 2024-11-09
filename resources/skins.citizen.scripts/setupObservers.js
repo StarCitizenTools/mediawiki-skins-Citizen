@@ -251,23 +251,33 @@ const main = () => {
 
 	pageHeaderObserver.observe( stickyIntersection );
 
+	// Initialize var
+	let bodyWidth = 0;
 	const bodyObserver = resizeObserver.initResizeObserver(
 		// onResize
 		() => {},
 		// onResizeStart
-		() => {
+		( entry ) => {
+			// eslint-disable-next-line es-x/no-optional-chaining
+			bodyWidth = entry.borderBoxSize?.[ 0 ].inlineSize;
 			// Disable all CSS animation during resize
 			if ( document.documentElement.classList.contains( 'citizen-animations-ready' ) ) {
 				document.documentElement.classList.remove( 'citizen-animations-ready' );
 			}
-			pauseStickyHeader();
 		},
 		// onResizeEnd
-		() => {
+		( entry ) => {
+			// eslint-disable-next-line es-x/no-optional-chaining
+			const newBodyWidth = entry.borderBoxSize?.[ 0 ].inlineSize;
+			const shouldRecalcStickyHeader =
+				document.body.classList.contains( PAGE_TITLE_INTERSECTION_CLASS ) &&
+				typeof newBodyWidth === 'number' &&
+				bodyWidth !== newBodyWidth;
+
 			// Enable CSS animation after resize is finished
 			document.documentElement.classList.add( 'citizen-animations-ready' );
 			// Recalculate sticky header height at the end of the resize
-			if ( document.body.classList.contains( PAGE_TITLE_INTERSECTION_CLASS ) ) {
+			if ( shouldRecalcStickyHeader ) {
 				resumeStickyHeader();
 			}
 		}
