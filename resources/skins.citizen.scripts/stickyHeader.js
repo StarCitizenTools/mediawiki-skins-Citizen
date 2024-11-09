@@ -22,11 +22,11 @@ function setCSSVariable( value ) {
  * @return {void}
  */
 function show( stickyHeader, placeholder ) {
-	const staticHeight = stickyHeader.getBoundingClientRect().height;
 	// FIX: temporary workaround
-	if ( document.body.classList.contains( VE_ACTIVATED_CLASS ) ) {
+	if ( document.documentElement.classList.contains( VE_ACTIVATED_CLASS ) ) {
 		return;
 	}
+	const staticHeight = stickyHeader.getBoundingClientRect().height;
 	document.body.classList.add( STICKY_HEADER_VISIBLE_CLASS );
 	const stickyHeight = stickyHeader.getBoundingClientRect().height;
 	placeholder.style.height = `${ staticHeight - stickyHeight }px`;
