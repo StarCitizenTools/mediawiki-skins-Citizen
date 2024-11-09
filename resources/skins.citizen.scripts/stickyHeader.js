@@ -1,7 +1,8 @@
 const
 	STICKY_HEADER_ID = 'citizen-page-header',
 	STICKY_HEADER_PLACEHOLDER_ID = 'citizen-page-header-sticky-placeholder',
-	STICKY_HEADER_VISIBLE_CLASS = 'citizen-sticky-header-visible';
+	STICKY_HEADER_VISIBLE_CLASS = 'citizen-sticky-header-visible',
+	VE_ACTIVATED_CLASS = 've-activated';
 
 /**
  * Update sticky header CSS variable, used by other sticky elements
@@ -22,6 +23,10 @@ function setCSSVariable( value ) {
  */
 function show( stickyHeader, placeholder ) {
 	const staticHeight = stickyHeader.getBoundingClientRect().height;
+	// FIX: temporary workaround
+	if ( document.body.classList.contains( VE_ACTIVATED_CLASS ) ) {
+		return;
+	}
 	document.body.classList.add( STICKY_HEADER_VISIBLE_CLASS );
 	const stickyHeight = stickyHeader.getBoundingClientRect().height;
 	placeholder.style.height = `${ staticHeight - stickyHeight }px`;
