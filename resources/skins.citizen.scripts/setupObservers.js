@@ -192,10 +192,12 @@ const main = () => {
 
 	// eslint-disable-next-line es-x/no-optional-chaining
 	const shouldStickyHeader = getComputedStyle( stickyIntersection )?.getPropertyValue( 'display' ) !== 'none';
+	const veActivated = document.documentElement.classList.contains( 've-activated' );
 	const isStickyHeaderAllowed = !!stickyHeaderElement &&
 		!!stickyPlaceholder &&
 		!!stickyIntersection &&
-		shouldStickyHeader;
+		shouldStickyHeader &&
+		!veActivated;
 
 	const scrollDirectionObserver = scrollObserver.initDirectionObserver(
 		() => {
