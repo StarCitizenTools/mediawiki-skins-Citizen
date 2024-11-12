@@ -51,7 +51,11 @@
 .citizen-sticky-header(@bottomBorder: true, @zIndex: true) {
 	position: -webkit-sticky;
 	position: sticky;
-	top: var( --height-sticky-header );
+	top: 0;
+	transition-timing-function: var( --transition-timing-function-ease );
+	transition-duration: var( --transition-duration-base );
+	transition-property: transform;
+	transform: translate3d( 0, var( --height-sticky-header ), 0 );
 
 	& when (@bottomBorder ) {
 		box-shadow: 0 1px 0 0 var( --border-color-base );
