@@ -1,4 +1,23 @@
 /**
+ * @return {void}
+ */
+function deferredTasks() {
+	const setupObservers = require( './setupObservers.js' );
+	setupObservers.main();
+	registerServiceWorker();
+
+	window.addEventListener( 'beforeunload', () => {
+		// Set up loading indicator
+		document.documentElement.classList.add( 'citizen-loading' );
+	}, false );
+
+	// Remove loading indicator once the page is unloaded/hidden
+	window.addEventListener( 'pagehide', () => {
+		document.documentElement.classList.remove( 'citizen-loading' );
+	} );
+}
+
+/**
  * Register service worker
  *
  * @return {void}
@@ -49,7 +68,6 @@ function main( window ) {
 		echo = require( './echo.js' ),
 		search = require( './search.js' ),
 		dropdown = require( './dropdown.js' ),
-		setupObservers = require( './setupObservers.js' ),
 		lastModified = require( './lastModified.js' ),
 		share = require( './share.js' );
 
@@ -66,25 +84,13 @@ function main( window ) {
 	} );
 
 	// Preference module
-	if ( config.wgCitizenEnablePreferences === true && typeof document.createElement( 'div' ).prepend === 'function' ) {
+	if ( config.wgCitizenEnablePreferences === true ) {
 		mw.loader.load( 'skins.citizen.preferences' );
 	}
 
 	// Defer non-essential tasks
-	setTimeout( () => {
-		setupObservers.main();
-		registerServiceWorker();
-
-		window.addEventListener( 'beforeunload', () => {
-			// Set up loading indicator
-			document.documentElement.classList.add( 'citizen-loading' );
-		}, false );
-
-		// Remove loading indicator once the page is unloaded/hidden
-		window.addEventListener( 'pagehide', () => {
-			document.documentElement.classList.remove( 'citizen-loading' );
-		} );
-	}, 0 );
+	// eslint-disable-next-line compat/compat
+	requestIdleCallback( deferredTasks, { timeout: 3000 } );
 }
 
 if ( document.readyState === 'interactive' || document.readyState === 'complete' ) {
