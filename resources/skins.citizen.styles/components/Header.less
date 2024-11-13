@@ -147,6 +147,14 @@
 	}
 }
 
+.client-nojs {
+	// Hide preferences button completely when JS is not supported
+	// Since it won't do anything
+	.citizen-preferences {
+		display: none;
+	}
+}
+
 // Reset hover styles if it is a touch device
 // This is dumb but hover:hover overrides active states
 @media ( hover: none ) {
