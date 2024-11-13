@@ -149,6 +149,14 @@
 	}
 }
 
+.client-nojs {
+	// Hide share button completely when JS is not supported
+	// Since it won't do anything
+	.citizen-share {
+		display: none;
+	}
+}
+
 // To avoid more menu from overflow in narrow screen
 @media ( max-width: @max-width-breakpoint-tablet ) {
 	.page-actions {
