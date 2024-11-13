@@ -4,10 +4,7 @@
  * @return {void}
  */
 function init() {
-	if ( !navigator.share ) {
-		mw.log( '[Citizen] Browser/OS does not support Web Share API' );
-		return;
-	}
+	const supportsWebShareAPI = navigator.share;
 
 	if ( !mw.config.get( 'wgIsArticle' ) ) {
 		return;
@@ -20,9 +17,10 @@ function init() {
 	}
 
 	const canonicalLink = document.querySelector( 'link[rel="canonical"]' );
+	const url = canonicalLink ? canonicalLink.href : window.location.href;
 	const shareData = {
 		title: document.title,
-		url: canonicalLink ? canonicalLink.href : window.location.href
+		url: url
 	};
 
 	const fragment = document.createDocumentFragment();
@@ -42,7 +40,16 @@ function init() {
 	const handleShareButtonClick = async () => {
 		button.disabled = true; // Disable the button
 		try {
-			await navigator.share( shareData );
+			if ( supportsWebShareAPI ) {
+				await navigator.share( shareData );
+			} else {
+				// Fallback to navigator.clipboard if Share API is not supported
+				await navigator.clipboard.writeText( url );
+				mw.notify( mw.msg( 'citizen-share-copied' ), {
+					tag: 'citizen-share',
+					type: 'success'
+				} );
+			}
 		} catch ( error ) {
 			mw.log.error( `[Citizen] ${ error }` );
 		} finally {

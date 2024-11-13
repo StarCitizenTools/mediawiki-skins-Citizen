@@ -192,7 +192,8 @@
 				}
 			],
 			"messages": [
-				"citizen-share"
+				"citizen-share",
+				"citizen-share-copied"
 			],
 			"dependencies": [
 				"mediawiki.util",

@@ -43,6 +43,7 @@
 	"citizen-search-noresults-desc": "Maybe try the options above?",
 
 	"citizen-share": "Share this page",
+	"citizen-share-copied": "URL copied to clipboard!",
 
 	"citizen-tagline": "-",
 	"citizen-tagline-ns-talk": "Discussion page of {{SUBJECTPAGENAME}}",

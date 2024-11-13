@@ -46,6 +46,7 @@
 	"citizen-search-noresults-title": "Title in the search suggestion when there are no search results",
 	"citizen-search-noresults-desc": "Description in the search suggestion when there are no search results",
 	"citizen-share": "Label for button to share the current page",
+	"citizen-share-copied": "Message to notify users that the current URL is copied to the clipboard",
 	"citizen-tagline": "{{notranslate}}\n\nTagline for Citizen skin only",
 	"citizen-tagline-ns-talk": "Tagline for pages in talk namespace",
 	"citizen-tagline-ns-project": "Tagline for pages in project namespace",
