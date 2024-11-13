@@ -71,6 +71,7 @@ Name | Description | Values | Default
 `$wgCitizenEnableManifest` | Enable or disable [web app manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest) | `true` - enable; `false` - disable | `true`
 `$wgCitizenManifestThemeColor` | [Theme color](https://developer.mozilla.org/en-US/docs/Web/Manifest/theme_color) of the web app manifest | Hex color code | `#131a21`
 `$wgCitizenManifestBackgroundColor` | [Background color](https://developer.mozilla.org/en-US/docs/Web/Manifest/background_color) of the web app manifest | Hex color code | `#131a21`
+`$wgCitizenManifestIcons` | [Icons](https://developer.mozilla.org/en-US/docs/Web/Manifest/icons) of the web app manifest | [Array](https://developer.mozilla.org/en-US/docs/Web/Manifest/icons#syntax) | []
 
 ## Requirements
 * [MediaWiki](https://www.mediawiki.org) 1.39.4 or later

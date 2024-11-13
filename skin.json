@@ -685,6 +685,12 @@
 			"descriptionmsg": "citizen-config-manifestbackgroundcolor",
 			"public": true
 		},
+		"ManifestIcons": {
+			"value": [],
+			"description": "The icons defined in the web app manifest",
+			"descriptionmsg": "citizen-config-manifesticons",
+			"public": true
+		},
 		"SearchModule": {
 			"value": "skins.citizen.search",
 			"description": "Which module to use for search suggestion. Avaliable options: [skins.citizen.search|mediawiki.searchSuggest|custom]",

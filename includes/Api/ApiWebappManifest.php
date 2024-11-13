@@ -23,6 +23,7 @@
 namespace MediaWiki\Skins\Citizen\Api;
 
 use ApiBase;
+use ApiMain;
 use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
@@ -39,14 +40,37 @@ class ApiWebappManifest extends ApiBase {
 	/* 1 week */
 	private const CACHE_MAX_AGE = 604800;
 
+	/** @var ApiMain */
+	private $main;
+
+	/** @var Config */
+	private $config;
+
+	/** @var MediaWikiServices */
+	private $services;
+
+	/**
+	 * @inheritDoc
+	 */
+	public function __construct(
+		ApiMain $main,
+		$moduleName
+	) {
+		parent::__construct( $main, $moduleName );
+		$this->main = $main;
+		$this->config = $this->getConfig();
+		$this->services = MediaWikiServices::getInstance();
+	}
+
 	/**
 	 * Execute the requested Api actions.
 	 */
 	public function execute(): void {
-		$services = MediaWikiServices::getInstance();
-
-		$config = $this->getConfig();
+		$config = $this->config;
+		$services = $this->services;
 		$resultObj = $this->getResult();
+		$main = $this->main;
+
 		$resultObj->addValue( null, 'dir', $services->getContentLanguage()->getDir() );
 		$resultObj->addValue( null, 'lang', $config->get( MainConfigNames::LanguageCode ) );
 		$resultObj->addValue( null, 'name', $config->get( MainConfigNames::Sitename ) );
@@ -61,7 +85,6 @@ class ApiWebappManifest extends ApiBase {
 		$resultObj->addValue( null, 'background_color', $config->get( 'CitizenManifestBackgroundColor' ) );
 		$resultObj->addValue( null, 'shortcuts', $this->getShortcuts() );
 
-		$main = $this->getMain();
 		$main->setCacheMaxAge( self::CACHE_MAX_AGE );
 		$main->setCacheMode( 'public' );
 	}
@@ -69,13 +92,35 @@ class ApiWebappManifest extends ApiBase {
 	/**
 	 * Get icons for manifest
 	 *
-	 * @param Config $config
-	 * @param MediaWikiServices $services
 	 * @return array
 	 */
 	private function getIcons( $config, $services ): array {
+		$iconsConfig = $this->config->get( 'CitizenManifestIcons' );
+		if ( !$iconsConfig || $iconsConfig === [] ) {
+			return $this->getIconsFromLogos( $config, $services );
+		}
 		$icons = [];
-		$logos = $config->get( MainConfigNames::Logos );
+		$allowedKeys = [ 'src', 'sizes', 'type', 'purpose' ];
+		foreach ( $iconsConfig as $iconConfig ) {
+			$icon = array_intersect_key( $iconConfig, array_flip( $allowedKeys ) );
+			if ( !is_array( $icon ) || empty( $icon ) ) {
+				continue;
+			}
+			array_push( $icons, $icon );
+		}
+		return $icons;
+	}
+
+	/**
+	 * Get icons from wgLogos
+	 *
+	 * @return array
+	 */
+	private function getIconsFromLogos(): array {
+		$services = $this->services;
+
+		$icons = [];
+		$logos = $this->config->get( MainConfigNames::Logos );
 
 		if ( !$logos ) {
 			return $icons;
@@ -97,10 +142,15 @@ class ApiWebappManifest extends ApiBase {
 
 			$logoPath = (string)$logos[$logoKey];
 
-			$logoUrl = $services->getUrlUtils()->expand( $logoPath, PROTO_CURRENT ) ?? '';
-			$request = $services->getHttpRequestFactory()->create( $logoUrl, [], __METHOD__ );
-			$request->execute();
-			$logoContent = $request->getContent();
+			try {
+				$logoUrl = $services->getUrlUtils()->expand( $logoPath, PROTO_CURRENT ) ?? '';
+				$request = $services->getHttpRequestFactory()->create( $logoUrl, [], __METHOD__ );
+				$request->execute();
+				$logoContent = $request->getContent();
+			} catch ( Exception $e ) {
+				// Log the exception or handle it accordingly
+				$logoContent = '';
+			}
 
 			if ( !empty( $logoContent ) ) {
 				$logoSize = getimagesizefromstring( $logoContent );
@@ -150,6 +200,6 @@ class ApiWebappManifest extends ApiBase {
 	 * @return ApiWebappManifestFormatJson
 	 */
 	public function getCustomPrinter() {
-		return new ApiWebappManifestFormatJson( $this->getMain(), 'webmanifest' );
+		return new ApiWebappManifestFormatJson( $this->main, 'webmanifest' );
 	}
 }
