@@ -172,6 +172,11 @@ class ApiWebappManifest extends ApiBase {
 				$icon['type'] = 'image/svg+xml';
 			}
 
+			// Exit if not sizes are detected
+			if ( !$icon['sizes'] ) {
+				continue;
+			}
+
 			$icons[] = $icon;
 		}
 
