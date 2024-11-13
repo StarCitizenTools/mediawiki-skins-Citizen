@@ -674,22 +674,14 @@
 			"descriptionmsg": "citizen-config-enablemanifest",
 			"public": true
 		},
-		"ManifestThemeColor": {
-			"value": "#0d0e12",
-			"description": "The theme color defined in the web app manifest",
-			"descriptionmsg": "citizen-config-manfiestthemecolor",
-			"public": true
-		},
-		"ManifestBackgroundColor": {
-			"value": "#0d0e12",
-			"description": "The background color defined in the web app manifest",
-			"descriptionmsg": "citizen-config-manifestbackgroundcolor",
-			"public": true
-		},
-		"ManifestIcons": {
-			"value": [],
-			"description": "The icons defined in the web app manifest",
-			"descriptionmsg": "citizen-config-manifesticons",
+		"ManifestOptions": {
+			"value": {
+				"background_color": "#0d0e12",
+				"theme_color": "#0d0e12",
+				"icons": []
+			},
+			"description": "Configuration for web app manifest",
+			"descriptionmsg": "citizen-config-manifestoptions",
 			"public": true
 		},
 		"SearchModule": {

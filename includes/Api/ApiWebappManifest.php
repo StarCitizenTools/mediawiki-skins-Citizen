@@ -50,6 +50,9 @@ class ApiWebappManifest extends ApiBase {
 	/** @var MediaWikiServices */
 	private $services;
 
+	/** @var array */
+	private $options;
+
 	/**
 	 * @inheritDoc
 	 */
@@ -61,6 +64,7 @@ class ApiWebappManifest extends ApiBase {
 		$this->main = $main;
 		$this->config = $this->getConfig();
 		$this->services = MediaWikiServices::getInstance();
+		$this->options = $this->config->get( 'CitizenManifestOptions' );
 	}
 
 	/**
@@ -71,6 +75,7 @@ class ApiWebappManifest extends ApiBase {
 		$services = $this->services;
 		$resultObj = $this->getResult();
 		$main = $this->main;
+		$options = $this->options;
 
 		$resultObj->addValue( null, 'dir', $services->getContentLanguage()->getDir() );
 		$resultObj->addValue( null, 'lang', $config->get( MainConfigNames::LanguageCode ) );
@@ -78,12 +83,12 @@ class ApiWebappManifest extends ApiBase {
 		// Need to set it manually because the default from start_url does not include script namespace
 		// E.g. index.php URLs will be thrown out of the PWA
 		$resultObj->addValue( null, 'scope', $config->get( MainConfigNames::Server ) . '/' );
-		$resultObj->addValue( null, 'icons', $this->getIcons( $config, $services ) );
+		$resultObj->addValue( null, 'icons', $this->getIcons() );
 		$resultObj->addValue( null, 'display', 'standalone' );
 		$resultObj->addValue( null, 'orientation', 'natural' );
 		$resultObj->addValue( null, 'start_url', Title::newMainPage()->getLocalURL() );
-		$resultObj->addValue( null, 'theme_color', $config->get( 'CitizenManifestThemeColor' ) );
-		$resultObj->addValue( null, 'background_color', $config->get( 'CitizenManifestBackgroundColor' ) );
+		$resultObj->addValue( null, 'theme_color', $options['theme_color'] );
+		$resultObj->addValue( null, 'background_color', $options['background_color'] );
 		$resultObj->addValue( null, 'shortcuts', $this->getShortcuts() );
 
 		$main->setCacheMaxAge( self::CACHE_MAX_AGE );
@@ -95,10 +100,10 @@ class ApiWebappManifest extends ApiBase {
 	 *
 	 * @return array
 	 */
-	private function getIcons( $config, $services ): array {
-		$iconsConfig = $this->config->get( 'CitizenManifestIcons' );
+	private function getIcons(): array {
+		$iconsConfig = $this->options['icons'];
 		if ( !$iconsConfig || $iconsConfig === [] ) {
-			return $this->getIconsFromLogos( $config, $services );
+			return $this->getIconsFromLogos();
 		}
 		$icons = [];
 		$allowedKeys = [ 'src', 'sizes', 'type', 'purpose' ];

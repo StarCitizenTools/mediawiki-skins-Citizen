@@ -69,9 +69,15 @@ Name | Description | Values | Default
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
 `$wgCitizenEnableManifest` | Enable or disable [web app manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest) | `true` - enable; `false` - disable | `true`
-`$wgCitizenManifestThemeColor` | [Theme color](https://developer.mozilla.org/en-US/docs/Web/Manifest/theme_color) of the web app manifest | Hex color code | `#0d0e12`
-`$wgCitizenManifestBackgroundColor` | [Background color](https://developer.mozilla.org/en-US/docs/Web/Manifest/background_color) of the web app manifest | Hex color code | `#0d0e12`
-`$wgCitizenManifestIcons` | [Icons](https://developer.mozilla.org/en-US/docs/Web/Manifest/icons) of the web app manifest | [Array](https://developer.mozilla.org/en-US/docs/Web/Manifest/icons#syntax) | []
+`$wgCitizenManifestOptions` | Options of the web app manifest | - | See below
+
+```php
+$wgCitizenManifestOptions = [
+	'background_color' => '#0d0e12',
+	'theme_color' => "#0d0e12",
+	'icons' => [],
+];
+```
 
 ## Requirements
 * [MediaWiki](https://www.mediawiki.org) 1.39.4 or later
