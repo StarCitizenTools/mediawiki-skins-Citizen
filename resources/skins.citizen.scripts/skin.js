@@ -2,8 +2,12 @@
  * @return {void}
  */
 function deferredTasks() {
-	const setupObservers = require( './setupObservers.js' );
+	const
+		setupObservers = require( './setupObservers.js' ),
+		speculationRules = require( './speculationRules.js' );
+
 	setupObservers.main();
+	speculationRules.init();
 	registerServiceWorker();
 
 	window.addEventListener( 'beforeunload', () => {
