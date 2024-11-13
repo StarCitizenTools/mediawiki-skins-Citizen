@@ -23,7 +23,6 @@
 namespace MediaWiki\Skins\Citizen\Api;
 
 use ApiBase;
-use Exception;
 use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
