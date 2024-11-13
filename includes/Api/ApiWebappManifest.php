@@ -46,10 +46,6 @@ class ApiWebappManifest extends ApiBase {
 	public function execute(): void {
 		$services = MediaWikiServices::getInstance();
 
-		$main = $this->getMain();
-		$main->setCacheMaxAge( self::CACHE_MAX_AGE );
-		$main->setCacheMode( 'public' );
-
 		$config = $this->getConfig();
 		$resultObj = $this->getResult();
 		$resultObj->addValue( null, 'dir', $services->getContentLanguage()->getDir() );
@@ -65,6 +61,10 @@ class ApiWebappManifest extends ApiBase {
 		$resultObj->addValue( null, 'theme_color', $config->get( 'CitizenManifestThemeColor' ) );
 		$resultObj->addValue( null, 'background_color', $config->get( 'CitizenManifestBackgroundColor' ) );
 		$resultObj->addValue( null, 'shortcuts', $this->getShortcuts() );
+
+		$main = $this->getMain();
+		$main->setCacheMaxAge( self::CACHE_MAX_AGE );
+		$main->setCacheMode( 'public' );
 	}
 
 	/**
@@ -98,53 +98,34 @@ class ApiWebappManifest extends ApiBase {
 
 			$logoPath = (string)$logos[$logoKey];
 
-			$logoUrl = $services->getUrlUtils()->expand( $logoPath, PROTO_CURRENT );
+			$logoUrl = $services->getUrlUtils()->expand( $logoPath, PROTO_CURRENT ) ?? '';
 			$request = $services->getHttpRequestFactory()->create( $logoUrl, [], __METHOD__ );
-			try {
-				$request->execute();
-				$logoContent = $request->getContent();
-			} catch ( Exception $e ) {
-				// Log the error or handle it appropriately
-				$logoContent = null;
+			$request->execute();
+			$logoContent = $request->getContent();
+
+			if ( !empty( $logoContent ) ) {
+				$logoSize = getimagesizefromstring( $logoContent );
 			}
 
-			$icon = $this->getIconData( $logoPath, $logoContent );
-			if ( !$icon ) {
-				continue;
+			$icon = [
+				'src' => $logoPath
+			];
+
+			if ( isset( $logoSize ) && $logoSize !== false ) {
+				$icon['sizes'] = $logoSize[0] . 'x' . $logoSize[1];
+				$icon['type'] = $logoSize['mime'];
 			}
+
+			// Set sizes to any if it is a SVG
+			if ( substr( $logoPath, -3 ) === 'svg' ) {
+				$icon['sizes'] = 'any';
+				$icon['type'] = 'image/svg+xml';
+			}
+
 			$icons[] = $icon;
 		}
 
 		return $icons;
-	}
-
-	/**
-	 * Get src, sizes, and type for each icon for the manifest
-	 *
-	 * @param string $logoPath
-	 * @param string $logoContent
-	 * @return array|null
-	 */
-	private function getIconData( $logoPath, $logoContent ) {
-		$imageSize = getimagesizefromstring( $logoContent );
-		if ( $imageSize !== false ) {
-			return [
-				'src' => $logoPath,
-				'sizes' => $imageSize[0] . 'x' . $imageSize[1],
-				'type' => $imageSize['mime']
-			];
-		}
-
-		// getimagesizefromstring does not handle SVGs
-		if ( mime_content_type( $logoContent ) !== 'image/svg+xml' ) {
-			return null;
-		}
-
-		return [
-			'src' => $logoPath,
-			'sizes' => 'any',
-			'type' => $logoContent
-		];
 	}
 
 	/**
