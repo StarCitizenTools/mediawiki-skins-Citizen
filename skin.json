@@ -663,7 +663,7 @@
 			"public": true
 		},
 		"ThemeColor": {
-			"value": "#131a21",
+			"value": "#0d0e12",
 			"description": "The theme color defined in the meta tag",
 			"descriptionmsg": "citizen-config-themecolor",
 			"public": true
@@ -675,13 +675,13 @@
 			"public": true
 		},
 		"ManifestThemeColor": {
-			"value": "#131a21",
+			"value": "#0d0e12",
 			"description": "The theme color defined in the web app manifest",
 			"descriptionmsg": "citizen-config-manfiestthemecolor",
 			"public": true
 		},
 		"ManifestBackgroundColor": {
-			"value": "#131a21",
+			"value": "#0d0e12",
 			"description": "The background color defined in the web app manifest",
 			"descriptionmsg": "citizen-config-manifestbackgroundcolor",
 			"public": true
