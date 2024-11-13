@@ -677,6 +677,7 @@
 		"ManifestOptions": {
 			"value": {
 				"background_color": "#0d0e12",
+				"short_name": "",
 				"theme_color": "#0d0e12",
 				"icons": []
 			},

@@ -91,6 +91,10 @@ class ApiWebappManifest extends ApiBase {
 		$resultObj->addValue( null, 'background_color', $options['background_color'] );
 		$resultObj->addValue( null, 'shortcuts', $this->getShortcuts() );
 
+		if ( $options['short_name'] !== '' ) {
+			$resultObj->addValue( null, 'short_name', $options['short_name'] );
+		}
+
 		$main->setCacheMaxAge( self::CACHE_MAX_AGE );
 		$main->setCacheMode( 'public' );
 	}
