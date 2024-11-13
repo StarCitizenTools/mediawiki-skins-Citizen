@@ -74,6 +74,8 @@ Name | Description | Values | Default
 ```php
 $wgCitizenManifestOptions = [
 	'background_color' => '#0d0e12',
+	'description' => '',
+	'short_name' => '',
 	'theme_color' => "#0d0e12",
 	'icons' => [],
 ];

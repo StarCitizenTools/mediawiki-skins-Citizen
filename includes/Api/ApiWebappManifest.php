@@ -95,6 +95,10 @@ class ApiWebappManifest extends ApiBase {
 			$resultObj->addValue( null, 'short_name', $options['short_name'] );
 		}
 
+		if ( $options['description'] !== '' ) {
+			$resultObj->addValue( null, 'description', $options['description'] );
+		}
+
 		$main->setCacheMaxAge( self::CACHE_MAX_AGE );
 		$main->setCacheMode( 'public' );
 	}
