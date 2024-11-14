@@ -37,6 +37,7 @@
 	"citizen-search-empty-desc": "검색을 시작하려면 입력하세요",
 	"citizen-search-noresults-title": "어? $1 관련 결과가 없습니다.",
 	"citizen-search-noresults-desc": "위의 옵션을 시도해 볼까요?",
+	"citizen-share-copied": "URL이 클립보드에 복사되었습니다!",
 	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}}의 토론 문서",
 	"citizen-tagline-ns-project": "{{SITENAME}}에 대한 정보",
 	"citizen-tagline-ns-file": "{{SITENAME}}의 파일",

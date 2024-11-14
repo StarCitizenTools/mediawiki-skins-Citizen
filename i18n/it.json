@@ -42,6 +42,7 @@
 	"citizen-search-noresults-title": "Ops! Nessun risultato per $1",
 	"citizen-search-noresults-desc": "Forse se provi le opzioni qui sopra?",
 	"citizen-share": "Condividi questa pagina",
+	"citizen-share-copied": "URL copiato negli appunti!",
 	"citizen-tagline-ns-talk": "Pagina di discussione di {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Informazioni su {{SITENAME}}",
 	"citizen-tagline-ns-file": "File su {{SITENAME}}",
