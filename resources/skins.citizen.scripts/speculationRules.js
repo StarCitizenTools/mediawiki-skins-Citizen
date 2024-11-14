@@ -11,16 +11,22 @@ function init() {
 	) {
 		return;
 	}
-	const articlePath = mw.config.get( 'wgArticlePath' );
-	const article = articlePath.replace( /\$(1)/, '*' );
-	if ( !article ) {
+	const articlePath = mw.config.get( 'wgArticlePath' ).replace( /\$(1)/, '' );
+	const namespaces = mw.config.get( 'wgFormattedNamespaces' );
+	if ( !articlePath || !namespaces ) {
 		return;
 	}
 
 	const specRules = {
 		prerender: [ {
 			where: {
-				href_matches: article
+				and: [
+					{ href_matches: `${ articlePath }*` }, // Under article path
+					{ href_matches: `${ articlePath }${ namespaces[ -1 ] }` }, // No special namespace
+					{ not: { href_matches: '/.*.php' } }, // Not PHP file
+					{ not: { href_matches: '/*\\?*(^|&)*=*' } }, // No query strings
+					{ not: { selector_matches: '[rel~=nofollow]' } } // No nofollow link
+				]
 			},
 			eagerness: 'moderate'
 		} ]
