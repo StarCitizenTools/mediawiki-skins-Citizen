@@ -286,6 +286,20 @@ class SkinHooks implements
 				$links['associated-pages'][$key]['icon'] = 'speechBubbles';
 				$links['associated-pages'][$namespace]['icon'] = 'arrowPrevious';
 			}
+
+			// Add icons for watchlist
+			if ( substr( $item['href'], -9 ) === 'Watchlist' ) {
+				$links['associated-pages'][$key]['icon'] = 'eye';
+			}
+			if ( substr( $item['href'], -13 ) === 'EditWatchlist' ) {
+				$links['associated-pages'][$key]['icon'] = 'listBullet';
+			}
+			if ( substr( $item['href'], -17 ) === 'EditWatchlist/raw' ) {
+				$links['associated-pages'][$key]['icon'] = 'edit';
+			}
+			if ( substr( $item['href'], -19 ) === 'EditWatchlist/clear' ) {
+				$links['associated-pages'][$key]['icon'] = 'trash';
+			}
 		}
 
 		self::mapIconsToMenuItems( $links, 'associated-pages', $iconMap );
