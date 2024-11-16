@@ -1,65 +1,24 @@
 @import '../mixins.less';
 
-.citizen-pref {
-	&__button {
-		&[ aria-expanded='true' ] {
-			background-color: var( --background-color-button-quiet--active );
-		}
-	}
-}
-
-#citizen-pref {
-	&-header {
-		padding: var( --space-lg ) var( --space-md ) 0;
-		font-size: 1rem;
-		font-weight: var( --font-weight-semi-bold );
-		color: var( --color-emphasized );
-	}
-
-	// TODO: unify the dropdown menu style somewhere
-	&-panel {
-		.citizen-header-card( end );
-		transition-property: transform;
-		transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-start );
-
-		// TODO: Somehow refactor this module to use citizen-menu__Card
-		&.citizen-pref-panel--active {
-			z-index: @z-index-dropdown;
-			transition-timing-function: var( --transition-timing-function-ease-out );
-			transition-duration: var( --transition-duration-medium );
-			transform: none;
-
-			> * {
-				opacity: 1;
-			}
-		}
-
-		fieldset {
-			padding: 0 var( --space-md );
-			margin: 0;
-			font-size: var( --font-size-small );
-			appearance: none;
-			border: 0;
-		}
-	}
-}
-
-// New clientPrefs styles
-.citizen-client-prefs {
-	display: flex;
-	flex-direction: column;
-	gap: var( --space-xs );
-	padding-bottom: var( --space-lg );
-
+#citizen-preferences__card {
 	form {
 		display: grid;
 		// This is not the best because it does not adapt to the text length but will revisit later
 		grid-template-columns: repeat( 3, 1fr );
 		gap: var( --space-xxs );
-		margin: 0;
-		text-align: center;
+		padding-inline: var( --space-md );
 	}
+}
 
+.citizen-preferences-content {
+	display: flex;
+	flex-direction: column;
+	gap: var( --space-xs );
+	padding-block: var( --space-xs );
+}
+
+// New clientPrefs styles
+.citizen-client-prefs {
 	&-radio {
 		&__input {
 			// Hide radio button because we use label as button

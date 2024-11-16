@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.39.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.38.3...v2.39.0) (2024-11-13)
+
+
+### Features
+
+* **PWA:** ✨ add support for description field ([3073f52](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3073f52a61b7311a4c3de7bef09cc46be70400d4))
+* **PWA:** ✨ add support for short_name field ([79c0e45](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/79c0e453d316cd4ad993b057fc744442a1bbca76))
+* **PWA:** ✨ allow custom icons definition with wgCitizenManifestIcons ([5436cc4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5436cc46da14e57bb197139e7c5e49e847b062f0))
+* **PWA:** ✨ fallback to clipboard share if Web Share API is not supported ([5794207](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/57942075cce825bf76e7d817e4b075dfae97ffd3))
+* **PWA:** ✨ merge all PWA config into wgCitizenManifestOptions ([586cf2c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/586cf2c0027929c4280078e61d41a3ebef606dbd))
+* **PWA:** ✨ sync meta and manifest theme colors with skin default ([6690263](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6690263d7e141557605fe36fd7e904cbe1fa3d46))
+* **speculationRules:** ✨ add basic implementation of Speculation Rules API ([368ceb6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/368ceb659ac7139701f115d433f1f1046c252e66))
+
+
+### Bug Fixes
+
+* **mediawiki:** 🐛 fix incorrect gallery layout ([571e9ed](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/571e9edd7abe4abfcc7460ec2d72f7c7daaa6346))
+* **preferences:** 🐛 add missing padding to pref card ([937b3c7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/937b3c7f5eb836b2adaa6c7dd4465134ed0e00e9))
+* **PWA:** 🐛 add missing use class ([dcce74a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/dcce74a583112187b669a8e699ac63df45887079))
+* **PWA:** 🐛 don't save icon if no sizes are detected ([71aada9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/71aada9d1271427b4f53aeb6d318903b6b0c41c7))
+* **PWA:** 🐛 revert to old behavior to fix missing icons in manifest ([28970f6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/28970f6867ffcea1f2eeb4220843e4f40050a594))
+* **stickyHeader:** 🐛 do not reset stickyHeader when page title is visible ([8819757](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/881975791338a4f2e8070ffabb381b79bb2535fd))
+* **stickyHeader:** 🐛 VE should use the same methods to handle sticky header state ([98e6c2d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/98e6c2d7f1a3ea3a499907c415e3418bd1c51aed))
+* **toc:** 🐛 fix clipping toc on desktop ([b78df56](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b78df56695c4ad49e2006ac86faa84e674005aed))
+
+
+### Performance Improvements
+
+* **core:** ⚡️ defer background main scripts with requestIdleCallback ([9556478](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/955647844370d125d444f60a1cca04ebb8f77439))
+* **core:** ⚡️ move sticky header handling to observers ([30fca94](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/30fca942a75bfd0a5b3cbcd65cc2f05d895c9226))
+* **core:** ⚡️ move window.resize to resizeObserver ([241ef66](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/241ef66893cd329628c388dbafd4fc896f553403))
+* **preferences:** ⚡️ rewrite to use dropdown component ([76a39ea](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/76a39eafdf5083856e106aebc67a0a081cd2d13c))
+* **share:** ⚡️ prerender the HTML for the share button ([0c3786c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0c3786c754583d87a5f8364e39c6cec154970a83))
+* **stickyHeader:** ⚡️ improve responsiveness for sticky header ([252e98b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/252e98b085d433d78bda24608972262c2d066398))
+* **stickyHeader:** ⚡️ improve scroll performance ([a74d17e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a74d17e1303ece923dbfe8417364a0ef678987ca))
+* **stickyHeader:** ⚡️ only recalc stickyHeader height when width changes ([d4d6345](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d4d63450500382d4cda95d5a078b7caa18dc7484))
+* **stickyHeader:** ⚡️ use transition instead of position secondary sticky elements ([5975e51](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5975e51f587ed5d75a7bb100fde726a9c09fb4e1))
+
 ## [2.38.3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.38.2...v2.38.3) (2024-11-06)
 
 

@@ -153,7 +153,8 @@ class CitizenComponentPageTools implements CitizenComponent {
 			 * 'is-uls-ready' => $this->shouldShowULS( $variantsData ),
 			 */
 			'is-uls-ready' => false,
-			'int-language-count' => $this->numLanguages
+			'int-language-count' => $this->numLanguages,
+			'msg-citizen-share' => $this->localizer->msg( "citizen-share" )->text()
 		];
 	}
 }

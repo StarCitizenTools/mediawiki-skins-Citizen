@@ -50,7 +50,7 @@ Name | Description | Values | Default
 `$wgCitizenGlobalToolsPortlet` | ID of the portlet to attach the global tools | string |
 `$wgCitizenEnableDrawerSiteStats` | Enables the site statistics in drawer menu | `true` - enable; `false` - disable | `true`
 `$wgCitizenUseNumberFormatter` | Use NumberFormatter for site statistics, which allows formatting number in a localized way | `true` - enable; `false` - disable | `true`
-`$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#131a21`
+`$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#0d0e12`
 `$wgCitizenEnableARFonts` | Enable included Noto Naskh Arabic for wikis that serve Arabic | `true` - enable; `false` - disable | `false`
 `$wgCitizenEnableCJKFonts` | Enable included Noto Sans CJK for wikis that serves CJK languages | `true` - enable; `false` - disable | `false`
 `$wgCitizenEnablePreferences` | Enable the preferences menu | `true` - enable; `false` - disable | `true`
@@ -69,8 +69,17 @@ Name | Description | Values | Default
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
 `$wgCitizenEnableManifest` | Enable or disable [web app manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest) | `true` - enable; `false` - disable | `true`
-`$wgCitizenManifestThemeColor` | [Theme color](https://developer.mozilla.org/en-US/docs/Web/Manifest/theme_color) of the web app manifest | Hex color code | `#131a21`
-`$wgCitizenManifestBackgroundColor` | [Background color](https://developer.mozilla.org/en-US/docs/Web/Manifest/background_color) of the web app manifest | Hex color code | `#131a21`
+`$wgCitizenManifestOptions` | Options of the web app manifest | - | See below
+
+```php
+$wgCitizenManifestOptions = [
+	'background_color' => '#0d0e12',
+	'description' => '',
+	'short_name' => '',
+	'theme_color' => "#0d0e12",
+	'icons' => [],
+];
+```
 
 ## Requirements
 * [MediaWiki](https://www.mediawiki.org) 1.39.4 or later

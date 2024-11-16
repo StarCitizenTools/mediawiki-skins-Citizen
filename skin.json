@@ -1,6 +1,6 @@
 {
 	"name": "Citizen",
-	"version": "2.38.3",
+	"version": "2.39.0",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]",
@@ -62,6 +62,7 @@
 						"citizen-drawer-toggle",
 						"citizen-jumptotop",
 						"citizen-languages-toggle",
+						"citizen-preferences-toggle",
 						"citizen-search-toggle",
 						"citizen-usermenu-toggle",
 						"randompage",
@@ -172,6 +173,7 @@
 				"resources/skins.citizen.scripts/sections.js",
 				"resources/skins.citizen.scripts/setupObservers.js",
 				"resources/skins.citizen.scripts/share.js",
+				"resources/skins.citizen.scripts/speculationRules.js",
 				"resources/skins.citizen.scripts/stickyHeader.js",
 				"resources/skins.citizen.scripts/tableOfContents.js",
 				{
@@ -192,7 +194,8 @@
 				}
 			],
 			"messages": [
-				"citizen-share"
+				"citizen-share",
+				"citizen-share-copied"
 			],
 			"dependencies": [
 				"mediawiki.util",
@@ -620,7 +623,7 @@
 			"public": true
 		},
 		"ThemeColor": {
-			"value": "#131a21",
+			"value": "#0d0e12",
 			"description": "The theme color defined in the meta tag",
 			"descriptionmsg": "citizen-config-themecolor",
 			"public": true
@@ -631,16 +634,16 @@
 			"descriptionmsg": "citizen-config-enablemanifest",
 			"public": true
 		},
-		"ManifestThemeColor": {
-			"value": "#131a21",
-			"description": "The theme color defined in the web app manifest",
-			"descriptionmsg": "citizen-config-manfiestthemecolor",
-			"public": true
-		},
-		"ManifestBackgroundColor": {
-			"value": "#131a21",
-			"description": "The background color defined in the web app manifest",
-			"descriptionmsg": "citizen-config-manifestbackgroundcolor",
+		"ManifestOptions": {
+			"value": {
+				"background_color": "#0d0e12",
+				"description": "",
+				"short_name": "",
+				"theme_color": "#0d0e12",
+				"icons": []
+			},
+			"description": "Configuration for web app manifest",
+			"descriptionmsg": "citizen-config-manifestoptions",
 			"public": true
 		},
 		"SearchModule": {
