@@ -273,62 +273,6 @@
 				"mobile"
 			]
 		},
-		"skins.citizen.preferences": {
-			"styles": [
-				"resources/skins.citizen.preferences/skins.citizen.preferences.less"
-			],
-			"packageFiles": [
-				"resources/skins.citizen.preferences/skins.citizen.preferences.js",
-				{
-					"name": "resources/skins.citizen.preferences/config.json",
-					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenPreferencesResourceLoaderConfig"
-				},
-				"resources/skins.citizen.preferences/addPortlet.polyfill.js",
-				"resources/skins.citizen.preferences/clientPreferences.js",
-				"resources/skins.citizen.preferences/clientPreferences.json",
-				"resources/skins.citizen.preferences/clientPrefs.polyfill.js"
-			],
-			"messages": [
-				"preferences",
-				"citizen-theme-name",
-				"citizen-theme-description",
-				"citizen-theme-day-label",
-				"citizen-theme-night-label",
-				"citizen-theme-os-label",
-				"citizen-theme-exclusion-notice",
-				"citizen-feature-autohide-navigation-name",
-				"citizen-feature-autohide-navigation-0-label",
-				"citizen-feature-autohide-navigation-1-label",
-				"citizen-feature-pure-black-name",
-				"citizen-feature-pure-black-0-label",
-				"citizen-feature-pure-black-1-label",
-				"citizen-feature-custom-font-size-name",
-				"citizen-feature-custom-font-size-small-label",
-				"citizen-feature-custom-font-size-standard-label",
-				"citizen-feature-custom-font-size-large-label",
-				"citizen-feature-custom-width-name",
-				"citizen-feature-custom-width-standard-label",
-				"citizen-feature-custom-width-wide-label",
-				"citizen-feature-custom-width-full-label"
-			],
-			"dependencies": [
-				"mediawiki.storage",
-				"mediawiki.util"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
-			]
-		},
-		"skins.citizen.serviceWorker": {
-			"scripts": [
-				"resources/skins.citizen.serviceWorker/sw.js"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
-			]
-		},
 		"skins.citizen.icons": {
 			"selectorWithoutVariant": ".mw-ui-icon-wikimedia-{name}:before",
 			"useDataURI": false,
