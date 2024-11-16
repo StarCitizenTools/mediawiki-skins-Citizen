@@ -159,7 +159,7 @@ Name | Grade | Version | Last updated
 [SyntaxHighlight](https://www.mediawiki.org/wiki/Extension:SyntaxHighlight) | A | REL1_35 `05598b3` | 2023-05-22
 [Tabs](https://www.mediawiki.org/wiki/Extension:Tabs) | A | REL1_39 `63ccef2` | 2023-07-11
 [Tabber](https://www.mediawiki.org/wiki/Extension:Tabber) | A | N/A | N/A
-[TabberNeue](https://www.mediawiki.org/wiki/Extension:TabberNeue) | A | 2.5.0 | 2024-08-31
+[TabberNeue](https://www.mediawiki.org/wiki/Extension:TabberNeue) | A | 2.6.0 | 2024-11-16
 [TemplateData](https://www.mediawiki.org/wiki/Extension:TemplateData) | A | REL1_39 `7f8c5a8` | 2024-08-19
 [TimedMediaHandler](https://www.mediawiki.org/wiki/Extension:TimedMediaHandler) | B | N/A | N/A
 [Translate](https://www.mediawiki.org/wiki/Extension:Translate) | A | MLEB 2023.01 | 2023-02-17
