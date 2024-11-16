@@ -2,6 +2,7 @@
 	.citizen-menu__card {
 		z-index: @z-index-dropdown;
 		content-visibility: hidden;
+		min-width: 16rem;
 		max-width: 80vw;
 		transition-timing-function: var( --transition-timing-function-ease-in );
 		transition-duration: var( --transition-duration-base );
@@ -13,6 +14,10 @@
 			transition-timing-function: var( --transition-timing-function-ease-in );
 			transition-duration: var( --transition-duration-base );
 			transition-property: opacity;
+		}
+
+		&:empty {
+			display: none;
 		}
 
 		.citizen-ui-icon {
@@ -89,6 +94,15 @@
 					background-color: var( --background-color-button-quiet--hover );
 				}
 			}
+		}
+	}
+
+	.citizen-header__end & .citizen-menu__card {
+		.citizen-header-card( end );
+		transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-end );
+
+		@media ( min-width: @min-width-breakpoint-desktop ) {
+			transform-origin: var( --transform-origin-offset-start ) var( --transform-origin-offset-end );
 		}
 	}
 

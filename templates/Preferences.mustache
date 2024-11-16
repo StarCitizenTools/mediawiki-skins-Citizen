@@ -1,0 +1,20 @@
+{{!
+	string msg-citizen-preferences-toggle The label used by the preferences button.
+}}
+<div class="citizen-preferences citizen-header__item citizen-dropdown">
+	<details id="citizen-preferences-details" class="citizen-dropdown-details">
+		<summary
+			class="citizen-dropdown-summary" 
+			title="{{msg-citizen-preferences-toggle}}"
+			aria-details="citizen-preferences__card">
+			<span class="citizen-ui-icon mw-ui-icon-wikimedia-settings"></span>
+			<span>{{msg-citizen-preferences-toggle}}</span>
+		</summary>
+	</details>
+	<div id="citizen-preferences__card" class="citizen-menu__card">
+		<div
+			id="citizen-preferences-content"
+			class="citizen-preferences-content"
+		></div>
+	</div>
+</div>

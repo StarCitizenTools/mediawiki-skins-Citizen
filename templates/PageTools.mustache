@@ -4,6 +4,7 @@
 	object data-page-actions
 }}
 <div class="page-actions">
+	{{>Share}}
 	{{#has-languages}}{{>PageTools__languages}}{{/has-languages}}
 	{{#is-visible}}
 		{{#data-portlets.data-views}}{{>Menu}}{{/data-portlets.data-views}}
