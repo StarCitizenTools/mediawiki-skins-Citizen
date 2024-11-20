@@ -100,8 +100,7 @@ function main( window ) {
 	 */
 
 	// Defer non-essential tasks
-	// eslint-disable-next-line compat/compat
-	requestIdleCallback( deferredTasks, { timeout: 3000 } );
+	mw.requestIdleCallback( deferredTasks, { timeout: 3000 } );
 }
 
 if ( document.readyState === 'interactive' || document.readyState === 'complete' ) {

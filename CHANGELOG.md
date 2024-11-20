@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.39.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.39.1...v2.39.2) (2024-11-17)
+
+
+### Bug Fixes
+
+* **core:** 🐛 use mw.requestIdleCallback for polyfill ([daef66f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/daef66f141a1cc8d6c4ba538cd1e26c69defcd30))
+
+## [2.39.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.39.0...v2.39.1) (2024-11-16)
+
+
+### Features
+
+* **TabberNeue:** ✨ update styles for Extension:TabberNeue ([6a70ae4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6a70ae459c8202912b8372e3826ce5393e42dc0f))
+
+
+### Bug Fixes
+
+* **speculationRules:** 🐛 stricter selector to pages to prerender ([34c9ae5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/34c9ae5fd4826b7b543cc31edc15e18451b842c6))
+
+
+### Miscellaneous Chores
+
+* 🔧 release 2.39.1 ([afffbfd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/afffbfd6f549c8705ba9f4147410b989aa347751))
+
 ## [2.39.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.38.3...v2.39.0) (2024-11-13)
 
 

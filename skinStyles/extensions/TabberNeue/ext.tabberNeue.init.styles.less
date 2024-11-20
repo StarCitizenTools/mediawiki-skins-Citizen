@@ -3,17 +3,13 @@
  *
  * SkinStyles for Extension:TabberNeue
  * Module: ext.tabberNeue.init.styles
- * Version: 2.0.0
+ * Version: 2.6.0
  *
- * Date: 2024-05-25
+ * Date: 2024-11-16
 */
 
-.client-js {
-	.tabber:not( .tabber--live ) {
-		.tabber__header {
-			&::after {
-				background: linear-gradient( to right, var( --color-base ) 8%, var( --color-subtle ) 18%, var( --color-base ) 33% );
-			}
-		}
+.tabber {
+	&__tab {
+		font-weight: var( --font-weight-medium );
 	}
 }
