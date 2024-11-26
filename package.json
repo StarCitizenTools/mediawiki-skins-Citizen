@@ -12,7 +12,7 @@
 		"prepare": "husky"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^19.5.0",
+		"@commitlint/cli": "^19.6.0",
 		"@commitlint/config-conventional": "^19.5.0",
 		"@wikimedia/types-wikimedia": "0.4.4",
 		"devmoji": "^2.3.0",
