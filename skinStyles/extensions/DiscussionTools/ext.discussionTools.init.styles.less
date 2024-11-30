@@ -36,6 +36,12 @@
 	background-color: var( --background-color-progressive-subtle );
 }
 
+.ext-discussiontools-init-timestamplink,
+.ext-discussiontools-init-timestamplink:visited,
+.ext-discussiontools-init-timestamplink:active {
+	color: var( --color-subtle );
+}
+
 .ext-discussiontools-init-section-subscribe {
 	&.mw-editsection-like {
 		margin-top: 0;
@@ -118,9 +124,18 @@
 			font-weight: var( --font-weight-semi-bold );
 		}
 
+		&-subscribeButton {
+			order: 9999;
+		}
+
 		&-bar {
-			margin-top: var( --space-xxs );
+			overflow-x: auto;
 			font-size: var( --font-size-x-small );
+		}
+
+		&-metadata {
+			flex-wrap: nowrap;
+			white-space: nowrap;
 		}
 
 		&-metaitem {
