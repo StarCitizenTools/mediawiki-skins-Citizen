@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.39.3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.39.2...v2.39.3) (2024-12-03)
+
+
+### Features
+
+* **dropdown:** ✨ use symbol when possible for keyhint ([0d19f7f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0d19f7f72aa3cae710ff2bc3082ab10d7d432334))
+
+
+### Bug Fixes
+
+* **DiscussionTools:** 🐛 add wrapping hotfixes for DiscussionTools header for MW 1.42 ([d71f31d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d71f31d9b6cf10eff68b4ec368608c37fc510d44))
+* **DiscussionTools:** 🐛 fix incorrect color for timestamp ([c52c1f2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c52c1f23478da3c0b20f559214e71067b658a79c))
+* **header:** 🐛 fix misalign home button in Safari ([346b25e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/346b25e6edbe621f6ebe65cdfed5baacf2dd3fd2))
+* **mediawiki:** 🐛 do not override link color on Special:Version ([0c7a2d9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0c7a2d97729c5750c8d19836a81443bbe926c971))
+
+
+### Miscellaneous Chores
+
+* 🔧 release 2.39.3 ([d5e8076](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d5e807696da44402858cb23e11803a3d716e8924))
+
 ## [2.39.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.39.1...v2.39.2) (2024-11-17)
 
 
