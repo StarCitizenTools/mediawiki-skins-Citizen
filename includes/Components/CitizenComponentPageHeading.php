@@ -143,7 +143,6 @@ class CitizenComponentPageHeading implements CitizenComponent {
 	 */
 	private function getPageHeading(): string {
 		$titleHtml = $this->titleData;
-		var_dump( $titleHtml );
 		if ( $this->shouldAddParenthesis() ) {
 			// Look for the </span> or </h1> to ensure that it is the last parenthesis of the title
 			// </h1> occurs when the title is a displaytitle
