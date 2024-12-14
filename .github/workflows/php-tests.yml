@@ -34,7 +34,7 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: pcov
           extensions: mbstring, intl
-          tools: composer
+          tools: composer, phpunit
 
       - name: Cache MediaWiki
         id: cache-mediawiki
