@@ -37,3 +37,4 @@ tests export-ignore
 .commitlintrc.json export-ignore
 .djlintrc export-ignore
 .editorconfig export-ignore
+sonar-project.properties export-ignore
