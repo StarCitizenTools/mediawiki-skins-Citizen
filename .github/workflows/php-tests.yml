@@ -69,8 +69,3 @@ jobs:
 
       - name: Run tests with PHPUnit
         run: php tests/phpunit/phpunit.php --group Citizen --coverage-clover=coverage.xml
-
-      - name: Scan with SonarQube
-        uses: sonarsource/sonarqube-scan-action@v4
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
