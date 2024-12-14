@@ -6,6 +6,7 @@ on:
 jobs:
   test:
     name: "PHP tests: MW ${{ matrix.mw }}, PHP ${{ matrix.php }}"
+    continue-on-error: ${{ matrix.experimental }}
 
     strategy:
       matrix:
@@ -67,4 +68,4 @@ jobs:
         run: composer update
 
       - name: Run PHPUnit
-        run: composer phpunit:entrypoint -- --group Citizen
+        run: php tests/phpunit/phpunit.php --group Citizen
