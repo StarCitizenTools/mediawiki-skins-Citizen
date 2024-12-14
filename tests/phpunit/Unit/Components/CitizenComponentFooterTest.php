@@ -17,8 +17,24 @@ class CitizenComponentFooterTest extends MediaWikiUnitTestCase {
 
 	public function testGetTemplateData(): void {
 		$footerData = [
-			'foo' => 'bar',
+			'places' => [
+				'footer-places-privacy' => [
+					'text' => 'Privacy policy',
+					'href' => '/wiki/Privacy_policy'
+				],
+				'footer-places-about' => [
+					'text' => 'About',
+					'href' => '/wiki/About'
+				]
+			],
+			'icons' => [
+				'poweredby' => [
+					'src' => '/path/to/icon.png',
+					'alt' => 'Powered by MediaWiki'
+				]
+			]
 		];
+
 		$localizer = $this->createMock( MessageLocalizer::class );
 		$localizer->expects( $this->once() )
 			->method( 'msg' )
@@ -26,7 +42,10 @@ class CitizenComponentFooterTest extends MediaWikiUnitTestCase {
 				[ 'citizen-footer-desc' ],
 				[ 'citizen-footer-tagline' ]
 			)
-			->willReturn( 'msg-citizen-footer-desc' );
+			->willReturnOnConsecutiveCalls(
+				$this->returnValue( 'msg-citizen-footer-desc' ),
+				$this->returnValue( 'msg-citizen-footer-tagline' )
+			);
 
 		$component = new CitizenComponentFooter( $localizer, $footerData );
 		$templateData = $component->getTemplateData();
