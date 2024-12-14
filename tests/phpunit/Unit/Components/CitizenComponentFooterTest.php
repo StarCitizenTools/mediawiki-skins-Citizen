@@ -45,17 +45,17 @@ class CitizenComponentFooterTest extends MediaWikiUnitTestCase {
 	 */
 	public function testGetTemplateData( array $footerData ): void {
 		$localizer = $this->createMock( MessageLocalizer::class );
-		$localizer->method( 'msg' )->willReturnCallback( function ( $key, ...$params ) {
-			$msg = $this->createMock( Message::class );
-			$msg->method( '__toString' )->willReturn( $key );
-			$msg->method( 'text' )->willReturn( $key );
-			return $msg;
+		$localizer->method( 'msg' )->willReturnCallback( function ( $key ) {
+			return $this->createConfiguredMock( Message::class, [
+				// Simulated localization output.
+				'__toString' => "$key-mocked",
+			] );
 		} );
 
 		$component = new CitizenComponentFooter( $localizer, $footerData );
 		$expectedData = array_merge( $footerData, [
-			'msg-citizen-footer-desc' => 'msg-citizen-footer-desc',
-			'msg-citizen-footer-tagline' => 'msg-citizen-footer-tagline'
+			'msg-citizen-footer-desc' => 'msg-citizen-footer-desc-mocked',
+			'msg-citizen-footer-tagline' => 'msg-citizen-footer-tagline-mocked'
 		] );
 
 		$this->assertSame( $expectedData, $component->getTemplateData() );

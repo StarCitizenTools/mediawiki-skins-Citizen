@@ -113,7 +113,6 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             workflow_id: 'php-tests.yml',
-            ref: context.event_name == 'pull_request' ? context.event.number.toString() : context.sha,
             inputs: {},
           })
 
