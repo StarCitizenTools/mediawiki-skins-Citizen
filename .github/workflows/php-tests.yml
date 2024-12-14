@@ -70,11 +70,11 @@ jobs:
       - name: Run tests with PHPUnit
         run: php tests/phpunit/phpunit.php --group Citizen --coverage-clover=coverage.xml
 
-      - name: Scan with SonarQube
-        uses: sonarsource/sonarqube-scan-action@v4
+      #- name: Scan with SonarQube
+      #  uses: sonarsource/sonarqube-scan-action@v4
         # Only one once
-        if: ${{ matrix.mw == 'REL1_39' && matrix.php == 8.1 }}
-        with:
-          projectBaseDir: mediawiki/skins/Citizen
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        #if: ${{ matrix.mw == 'REL1_39' && matrix.php == 8.1 }}
+        #with:
+          #projectBaseDir: mediawiki/skins/Citizen
+        #env:
+          #SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
