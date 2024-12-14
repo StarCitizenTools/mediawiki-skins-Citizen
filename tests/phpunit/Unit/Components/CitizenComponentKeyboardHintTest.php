@@ -16,11 +16,11 @@ class CitizenComponentKeyboardHintTest extends MediaWikiUnitTestCase {
 
 	public function testGetTemplateData(): void {
 		$expected = [
-			'accesskey' => 'mock-accesskey',
 			'label' => 'Mock aria label',
+			'key' => 'mock-key'
 		];
 
-		$component = new CitizenComponentKeyboardHint( 'mock-accesskey', 'Mock aria label' );
+		$component = new CitizenComponentKeyboardHint( 'Mock aria label', 'mock-key' );
 		$templateData = $component->getTemplateData();
 
 		$this->assertSame( $expected, $templateData );
