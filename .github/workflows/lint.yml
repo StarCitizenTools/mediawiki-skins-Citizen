@@ -107,7 +107,7 @@ jobs:
       if: steps.changed-php.outputs.any_changed == 'true'
       uses: benc-uk/workflow-dispatch@v1
       with:
-        workflow: php-tests.yaml
+        workflow: php-tests.yml
 
     # Only patch code when it is a push event
     - name: Push the changes
