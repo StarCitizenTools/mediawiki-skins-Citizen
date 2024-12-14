@@ -6,6 +6,7 @@ namespace MediaWiki\Skins\Citizen\Tests\Components;
 
 use MediaWiki\Skins\Citizen\Components\CitizenComponentFooter;
 use MediaWikiUnitTestCase;
+use Message;
 use MessageLocalizer;
 
 /**
@@ -15,43 +16,48 @@ use MessageLocalizer;
  */
 class CitizenComponentFooterTest extends MediaWikiUnitTestCase {
 
-	public function testGetTemplateData(): void {
-		$footerData = [
-			'places' => [
-				'footer-places-privacy' => [
-					'text' => 'Privacy policy',
-					'href' => '/wiki/Privacy_policy'
+	public function provideFooterData(): array {
+		return [
+			'Footer data with places and icons' => [
+				'places' => [
+					'footer-places-privacy' => [
+						'text' => 'Privacy policy',
+						'href' => '/wiki/Privacy_policy'
+					],
+					'footer-places-about' => [
+						'text' => 'About',
+						'href' => '/wiki/About'
+					]
 				],
-				'footer-places-about' => [
-					'text' => 'About',
-					'href' => '/wiki/About'
-				]
-			],
-			'icons' => [
-				'poweredby' => [
-					'src' => '/path/to/icon.png',
-					'alt' => 'Powered by MediaWiki'
+				'icons' => [
+					'poweredby' => [
+						'src' => '/path/to/icon.png',
+						'alt' => 'Powered by MediaWiki'
+					]
 				]
 			]
 		];
+	}
 
+	/**
+	 * @covers ::getTemplateData
+	 * @dataProvider provideFooterData
+	 */
+	public function testGetTemplateData( array $footerData ): void {
 		$localizer = $this->createMock( MessageLocalizer::class );
-		$localizer->expects( $this->once() )
-			->method( 'msg' )
-			->withConsecutive(
-				[ 'citizen-footer-desc' ],
-				[ 'citizen-footer-tagline' ]
-			)
-			->willReturnOnConsecutiveCalls(
-				$this->returnValue( 'msg-citizen-footer-desc' ),
-				$this->returnValue( 'msg-citizen-footer-tagline' )
-			);
+		$localizer->method( 'msg' )->willReturnCallback( function ( $key, ...$params ) {
+			$msg = $this->createMock( Message::class );
+			$msg->method( '__toString' )->willReturn( $key );
+			$msg->method( 'text' )->willReturn( $key );
+			return $msg;
+		} );
 
 		$component = new CitizenComponentFooter( $localizer, $footerData );
-		$templateData = $component->getTemplateData();
+		$expectedData = array_merge( $footerData, [
+			'msg-citizen-footer-desc' => 'msg-citizen-footer-desc',
+			'msg-citizen-footer-tagline' => 'msg-citizen-footer-tagline'
+		] );
 
-		$this->assertSame( $footerData, $templateData );
-		$this->assertSame( 'msg-citizen-footer-desc', $templateData['msg-citizen-footer-desc'] );
-		$this->assertSame( 'msg-citizen-footer-desc', $templateData['msg-citizen-footer-tagline'] );
+		$this->assertSame( $expectedData, $component->getTemplateData() );
 	}
 }
