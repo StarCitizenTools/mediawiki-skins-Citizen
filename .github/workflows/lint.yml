@@ -1,4 +1,4 @@
-name: Lint
+name: 🩹 Lint code changes
 run-name: 🩹 Lint code changes
 
 on:
