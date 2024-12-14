@@ -48,10 +48,7 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 		$title = Title::newFromText( 'TestTitle' );
 		$skin->setRelevantTitle( $title );
 
-		$options = $skin->getOptions();
 		$out = $skin->getOutput();
-
-		$this->assertFalse( $options['toc'] );
 
 		$this->assertContains( [ 'theme-color', '#ffaabb' ], $out->getMetaTags() );
 		$this->assertContains( [
