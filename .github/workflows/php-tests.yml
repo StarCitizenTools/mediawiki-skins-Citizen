@@ -28,10 +28,11 @@ jobs:
         working-directory: mediawiki
 
     steps:
-      - name: Setup PHP
+      - name: Setup PHP with PCOV
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
+          coverage: pcov
           extensions: mbstring, intl
           tools: composer
 
