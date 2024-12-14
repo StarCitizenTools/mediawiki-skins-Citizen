@@ -48,7 +48,9 @@ class CitizenComponentFooterTest extends MediaWikiUnitTestCase {
 		$localizer->method( 'msg' )->willReturnCallback( function ( $key ) {
 			return $this->createConfiguredMock( Message::class, [
 				// Simulated localization output.
-				'parse' => "$key-mocked"
+				'inContentLanguage' => $this->createConfiguredMock( Message::class, [
+					'parse' => "$key-mocked"
+				] )
 			] );
 		} );
 
