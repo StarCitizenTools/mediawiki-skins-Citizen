@@ -64,8 +64,8 @@ jobs:
         with:
           path: mediawiki/skins/Citizen
 
-      - name: Composer update
-        run: composer update
+      - name: Install dependencies with Composer
+        run: composer update --no-ansi --no-interaction --no-progress
 
-      - name: Run PHPUnit
-        run: php tests/phpunit/phpunit.php --group Citizen
+      - name: Run tests with PHPUnit
+        run: php tests/phpunit/phpunit.php --group Citizen --coverage-clover=coverage.xml
