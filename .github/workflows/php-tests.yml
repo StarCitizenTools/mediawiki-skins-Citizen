@@ -74,7 +74,7 @@ jobs:
       #- name: Scan with SonarQube
       #  uses: sonarsource/sonarqube-scan-action@v4
         # Only one once
-        #if: ${{ matrix.mw == 'REL1_39' && matrix.php == 8.1 }}
+        #if: ${{ matrix.mw == 'REL1_42' && matrix.php == 8.2 }}
         #with:
           #projectBaseDir: mediawiki/skins/Citizen
         #env:
