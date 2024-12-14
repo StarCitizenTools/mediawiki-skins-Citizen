@@ -1,4 +1,5 @@
 name: Lint
+run-name: 🩹 Lint code changes
 
 on:
   push:

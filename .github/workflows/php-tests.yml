@@ -1,4 +1,5 @@
 name: PHP tests
+run-name: 🧪 Test PHP changes
 
 on:
   workflow_dispatch:

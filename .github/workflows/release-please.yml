@@ -8,6 +8,7 @@ permissions:
   pull-requests: write
 
 name: release-please
+run-name: 🔖 Write release-please PR
 
 jobs:
   release-please:
