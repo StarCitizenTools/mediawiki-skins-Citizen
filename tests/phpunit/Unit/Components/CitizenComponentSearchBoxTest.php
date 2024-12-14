@@ -26,9 +26,10 @@ class CitizenComponentSearchBoxTest extends MediaWikiUnitTestCase {
 				'text' => "$key-mocked"
 			] );
 		} );
-		// TODO: Add tests
 		// $component = new CitizenComponentSearchBox( $localizer, [] );
 		// $actualData = $component->getTemplateData();
+		// TODO: Add tests
+		$this->expectNotToPerformAssertions();
 	}
 }
 

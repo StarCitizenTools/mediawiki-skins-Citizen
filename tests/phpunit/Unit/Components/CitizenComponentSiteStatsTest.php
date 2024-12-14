@@ -21,7 +21,8 @@ class CitizenComponentSiteStatsTest extends MediaWikiUnitTestCase
 	 * @covers ::getTemplateData
 	 */
 	public function testGetTemplateData(): void {
-		// TODO: Add test
+		// TODO: Add tests
+		$this->expectNotToPerformAssertions();
 	}
 }
 
