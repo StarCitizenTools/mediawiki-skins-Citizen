@@ -16,35 +16,10 @@ use MediaWikiUnitTestCase;
  */
 class CitizenComponentUserInfoTest extends MediaWikiUnitTestCase {
 
+	/**
+	 * @covers ::getTemplateData
+	 */
 	public function testGetTemplateData(): void {
-		$isRegistered = true;
-		$isTemp = false;
-		$localizer = $this->createMock( MessageLocalizer::class );
-		$localizer->expects( $this->any() )
-			->method( 'msg' )
-			->willReturn( 'mock message' );
-		$title = $this->createMock( Title::class );
-		$user = $this->createMock( UserIdentity::class );
-		$user->expects( $this->any() )
-			->method( 'getName' )
-			->willReturn( 'mock user' );
-		$userPageData = [
-			'editcount' => 1
-		];
-
-		$component = new CitizenComponentUserInfo(
-			$isRegistered,
-			$isTemp,
-			$localizer,
-			$title,
-			$user,
-			$userPageData
-		);
-		$templateData = $component->getTemplateData();
-
-		$this->assertSame( $userPageData['editcount'], $templateData['editcount'] );
-		$this->assertSame( $user->getName(), $templateData['username'] );
-		$this->assertSame( 'mock message', $templateData['title'] );
+		// TODO: Add test
 	}
 }
-

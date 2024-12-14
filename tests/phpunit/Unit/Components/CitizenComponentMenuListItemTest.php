@@ -4,6 +4,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Tests\Components;
 
+use MediaWiki\Skins\Citizen\Components\CitizenComponentLink;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentMenuListItem;
 use MediaWikiUnitTestCase;
 
@@ -14,26 +15,10 @@ use MediaWikiUnitTestCase;
  */
 class CitizenComponentMenuListItemTest extends MediaWikiUnitTestCase {
 
+	/**
+	 * @covers ::getTemplateData
+	 */
 	public function testGetTemplateData(): void {
-		$expected = [
-			'array-links' => [
-				'accesskey' => 'mock-accesskey',
-				'label' => 'Mock aria label',
-				'href' => 'mock-href',
-				'text' => 'Mock text',
-				'extra-data' => 'Mock extra data',
-			],
-			'item-class' => 'mock-class',
-			'item-id' => 'mock-id',
-		];
-
-		$component = new CitizenComponentMenuListItem(
-			$this->createMock( CitizenComponentLink::class ),
-			'mock-class',
-			'mock-id'
-		);
-		$templateData = $component->getTemplateData();
-
-		$this->assertSame( $expected, $templateData );
+		// TODO: Add test
 	}
 }

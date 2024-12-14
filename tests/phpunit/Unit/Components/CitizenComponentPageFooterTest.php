@@ -15,6 +15,9 @@ use MessageLocalizer;
  */
 class CitizenComponentPageFooterTest extends MediaWikiUnitTestCase {
 
+    /**
+	 * @covers ::getTemplateData
+	 */
     public function testGetTemplateData(): void {
         $footerData = [
             'array-items' => [

@@ -14,6 +14,9 @@ use MediaWikiUnitTestCase;
  */
 class CitizenComponentKeyboardHintTest extends MediaWikiUnitTestCase {
 
+	/**
+	 * @covers ::getTemplateData
+	 */
 	public function testGetTemplateData(): void {
 		$expected = [
 			'label' => 'Mock aria label',
@@ -21,8 +24,6 @@ class CitizenComponentKeyboardHintTest extends MediaWikiUnitTestCase {
 		];
 
 		$component = new CitizenComponentKeyboardHint( 'Mock aria label', 'mock-key' );
-		$templateData = $component->getTemplateData();
-
-		$this->assertSame( $expected, $templateData );
+		$this->assertSame( $expected, $component->getTemplateData() );
 	}
 }

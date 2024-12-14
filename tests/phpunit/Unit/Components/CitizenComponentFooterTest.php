@@ -55,11 +55,11 @@ class CitizenComponentFooterTest extends MediaWikiUnitTestCase {
 		} );
 
 		$component = new CitizenComponentFooter( $localizer, $footerData );
-		$expectedData = array_merge( $footerData, [
+		$expected = array_merge( $footerData, [
 			'msg-citizen-footer-desc' => 'citizen-footer-desc-mocked',
 			'msg-citizen-footer-tagline' => 'citizen-footer-tagline-mocked'
 		] );
 
-		$this->assertSame( $expectedData, $component->getTemplateData() );
+		$this->assertSame( $expected, $component->getTemplateData() );
 	}
 }

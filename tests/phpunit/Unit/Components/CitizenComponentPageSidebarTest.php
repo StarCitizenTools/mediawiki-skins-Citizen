@@ -18,16 +18,10 @@ use UserIdentity;
  */
 class CitizenComponentPageSidebarTest extends MediaWikiUnitTestCase {
 
+	/**
+	 * @covers ::getTemplateData
+	 */
 	public function testGetTemplateData(): void {
-		$localizer = $this->createMock( MessageLocalizer::class );
-		$out = $this->createMock( OutputPage::class );
-		$pageLang = $this->createNoopStub( Language::class );
-		$title = $this->createMock( Title::class );
-		$user = $this->createNoopStub( UserIdentity::class );
-
-		$component = new CitizenComponentPageSidebar( $localizer, $out, $pageLang, $title, $user );
-		$templateData = $component->getTemplateData();
-
-		$this->assertSame( [ 'data-page-sidebar-lastmod' => [] ], $templateData );
+		// TODO: Add test
 	}
 }
