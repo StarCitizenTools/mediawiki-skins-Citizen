@@ -105,17 +105,9 @@ jobs:
 
     - name: Trigger PHP tests
       if: steps.changed-php.outputs.any_changed == 'true'
-      uses: actions/github-script@v7
+      uses: benc-uk/workflow-dispatch@v1
       with:
-        github-token: ${{ secrets.WORKFLOW_TOKEN }}
-        script: |
-          github.rest.actions.createWorkflowDispatch({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            workflow_id: 'php-tests.yml',
-            ref: context.ref,
-            inputs: {},
-          })
+        workflow: php-tests.yaml
 
     # Only patch code when it is a push event
     - name: Push the changes
