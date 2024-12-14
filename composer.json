@@ -44,6 +44,10 @@
 			"phpcs --config-set ignore_warnings_on_exit 1",
 			"phpcs -p -s",
 			"minus-x check ."
+		],
+		"phpunit": "php ../../tests/phpunit/phpunit.php -c phpunit.xml.dist",
+		"phpunit-test": [
+			"@phpunit"
 		]
 	},
 	"extra": {
