@@ -10,8 +10,18 @@ jobs:
     strategy:
       matrix:
         include:
-          - mw: [ 'REL1_39', 'REL1_42', 'REL1_43' ]
+          - mw: 'REL1_39'
             php: 8.1
+            experimental: false
+          - mw: 'REL1_41'
+            php: 8.1
+            experimental: false
+          - mw: 'REL1_42'
+            php: 8.2
+            experimental: false
+          - mw: 'REL1_43'
+            php: 8.2
+            experimental: false
 
     runs-on: ubuntu-latest
 
