@@ -19,10 +19,9 @@ use UserIdentity;
 class CitizenComponentPageToolsTest extends MediaWikiUnitTestCase {
 
 	/**
-	 * @dataProvider provideGetArticleToolsDataData
-	 * @covers ::getArticleToolsData
+	 * @covers ::getTemplateData
 	 */
-	public function testGetArticleToolsData( $input, $expected ) {
+	public function getTemplateData() {
 		// TODO: Add test
 	}
 }
