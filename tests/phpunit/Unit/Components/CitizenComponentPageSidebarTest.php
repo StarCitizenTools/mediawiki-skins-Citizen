@@ -4,12 +4,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Tests\Components;
 
-use MediaWiki\Skins\Citizen\Components\CitizenComponentPageSidebar;
 use MediaWikiUnitTestCase;
-use MessageLocalizer;
-use OutputPage;
-use Title;
-use UserIdentity;
 
 /**
  * @group Citizen

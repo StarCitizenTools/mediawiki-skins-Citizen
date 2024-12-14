@@ -4,7 +4,6 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Tests\Components;
 
-use MediaWiki\Skins\Citizen\Components\CitizenComponentSearchBox;
 use MediaWikiUnitTestCase;
 use Message;
 use MessageLocalizer;
@@ -32,4 +31,3 @@ class CitizenComponentSearchBoxTest extends MediaWikiUnitTestCase {
 		$this->expectNotToPerformAssertions();
 	}
 }
-

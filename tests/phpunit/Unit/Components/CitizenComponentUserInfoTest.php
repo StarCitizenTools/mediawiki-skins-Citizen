@@ -4,9 +4,6 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Tests\Components;
 
-use MediaWiki\Skins\Citizen\Components\CitizenComponentUserInfo;
-use MediaWiki\Title\Title;
-use MediaWiki\User\UserIdentity;
 use MediaWikiUnitTestCase;
 
 /**
