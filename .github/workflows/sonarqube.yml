@@ -1,4 +1,4 @@
-name: 🧪 Test PHP changes
+name: 📡 Scan with SonarQube
 
 on:
   push:
