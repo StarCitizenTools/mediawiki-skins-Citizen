@@ -106,8 +106,11 @@ jobs:
     - name: Trigger PHP tests
       if: steps.changed-php.outputs.any_changed == 'true'
       run: |
-        curl -X POST -H "Authorization: token ${{ secrets.WORKFLOW_TOKEN }}" \
-        -H "Accept: application/vnd.github.v3+json" \
+        curl -L \
+        -X POST \
+        -H "Accept: application/vnd.github+json" \
+        -H "Authorization: Bearer ${{ secrets.WORKFLOW_TOKEN }}" \
+        -H "X-GitHub-Api-Version: 2022-11-28" \
         ${{ github.api_url }}/repos/${{ github.repository }}/actions/workflows/php-tests.yaml/dispatches \
         -d '{"ref":"${{ github.ref_name }}"}'
 
