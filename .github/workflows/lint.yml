@@ -45,6 +45,7 @@ jobs:
         since_last_remote_commit: "true"
         files: |
           includes/**/*.php
+          tests/**/*.php
 
     - name: Check for script changes
       id: changed-script
