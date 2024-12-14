@@ -1,9 +1,9 @@
-name: Lint
+name: 🩹 Lint code changes
 
 on:
   push:
     branches:
-      - "**"
+      - "main"
       - "!**dependabot/**"
       - "!**release-please--**"
   pull_request:
@@ -45,6 +45,7 @@ jobs:
         since_last_remote_commit: "true"
         files: |
           includes/**/*.php
+          tests/**/*.php
 
     - name: Check for script changes
       id: changed-script
@@ -104,11 +105,9 @@ jobs:
 
     - name: Trigger PHP tests
       if: steps.changed-php.outputs.any_changed == 'true'
-      run: |
-        curl -X POST -H "Authorization: token ${{ secrets.WORKFLOW_TOKEN }}" \
-        -H "Accept: application/vnd.github.v3+json" \
-        ${{ github.api_url }}/repos/${{ github.repository }}/actions/workflows/php-tests.yaml/dispatches \
-        -d '{"ref":"${{ github.ref_name }}"}'
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+        workflow: php-tests.yml
 
     # Only patch code when it is a push event
     - name: Push the changes

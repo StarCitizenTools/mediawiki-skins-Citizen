@@ -60,7 +60,7 @@ class ResourceLoaderHooksTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertArraySubmapSame( [
 			'wgCitizenEnablePreferences' => true,
-			'whCitizenOverflowInheritedClasses' => true,
+			'wgCitizenOverflowInheritedClasses' => true,
 			'wgCitizenOverflowNowrapClasses' => true,
 			'wgCitizenSearchModule' => true,
 		], $config );

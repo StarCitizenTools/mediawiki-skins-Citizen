@@ -85,6 +85,10 @@
 	"AutoloadNamespaces": {
 		"MediaWiki\\Skins\\Citizen\\": "includes/"
 	},
+	"TestAutoloadNamespaces": {
+		"MediaWiki\\Skins\\Citizen\\": "includes/",
+		"MediaWiki\\Skins\\Citizen\\Tests\\": "tests/phpunit/"
+	},
 	"APIModules": {
 		"webapp-manifest": {
 			"class": "MediaWiki\\Skins\\Citizen\\Api\\ApiWebappManifest"
