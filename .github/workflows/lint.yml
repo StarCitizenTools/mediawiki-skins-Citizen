@@ -3,7 +3,7 @@ name: Lint
 on:
   push:
     branches:
-      - "**"
+      - "main"
       - "!**dependabot/**"
       - "!**release-please--**"
   pull_request:
@@ -113,6 +113,7 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             workflow_id: 'php-tests.yml',
+            ref: context.sha,
             inputs: {},
           })
 
