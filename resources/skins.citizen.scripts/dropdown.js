@@ -113,9 +113,11 @@ class Dropdown {
 			}
 			const keyhint = document.createElement( 'span' );
 			keyhint.classList.add( 'citizen-keyboard-hint-key' );
-			// There isn't any shortcut using '-' as accesskey so we should be good
-			// @see https://www.mediawiki.org/wiki/Help:Keyboard_shortcuts
-			keyhint.innerText = keyhintText.replace( /-/g, ' ' );
+			keyhint.innerText = keyhintText
+				.replace( /-/g, ' ' )
+				.replace( 'ctrl', '⌃' )
+				.replace( 'shift', '⇧' )
+				.replace( 'option', '⌥' );
 			link.append( keyhint );
 		} );
 	}
@@ -124,7 +126,7 @@ class Dropdown {
 		this.details.addEventListener( 'toggle', this.onDetailsToggle );
 		// T295085: Close all dropdown menus when page is unloaded to prevent them
 		// from being open when navigating back to a page.
-		window.addEventListener( 'beforeunload', () => this.dismiss );
+		window.addEventListener( 'beforeunload', this.dismiss.bind( this ) );
 		this.addKeyhint();
 	}
 }

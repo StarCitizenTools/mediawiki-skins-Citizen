@@ -1,4 +1,4 @@
-name: PHP tests
+name: 🧪 Test PHP changes
 
 on:
   workflow_dispatch:
@@ -6,12 +6,20 @@ on:
 jobs:
   test:
     name: "PHP tests: MW ${{ matrix.mw }}, PHP ${{ matrix.php }}"
+    continue-on-error: ${{ matrix.experimental }}
 
     strategy:
       matrix:
         include:
-          - mw: [ 'REL1_39', 'REL1_42', 'REL1_43' ]
+          - mw: 'REL1_39'
             php: 8.1
+            experimental: false
+          - mw: 'REL1_42'
+            php: 8.2
+            experimental: false
+          #- mw: 'REL1_43'
+          #  php: 8.2
+          #  experimental: false
 
     runs-on: ubuntu-latest
 
@@ -20,10 +28,11 @@ jobs:
         working-directory: mediawiki
 
     steps:
-      - name: Setup PHP
+      - name: Setup PHP with PCOV
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
+          coverage: pcov
           extensions: mbstring, intl
           tools: composer
 
@@ -56,8 +65,17 @@ jobs:
         with:
           path: mediawiki/skins/Citizen
 
-      - name: Composer update
-        run: composer update
+      - name: Install dependencies with Composer
+        run: composer update --no-ansi --no-interaction --no-progress
 
-      - name: Run PHPUnit
-        run: composer phpunit:entrypoint -- --group Citizen
+      - name: Run tests with PHPUnit
+        run: php tests/phpunit/phpunit.php --group Citizen --coverage-clover=coverage.xml
+
+      #- name: Scan with SonarQube
+      #  uses: sonarsource/sonarqube-scan-action@v4
+        # Only one once
+        #if: ${{ matrix.mw == 'REL1_42' && matrix.php == 8.2 }}
+        #with:
+          #projectBaseDir: mediawiki/skins/Citizen
+        #env:
+          #SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
