@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.39.5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.39.4...v2.39.5) (2024-12-19)
+
+
+### Bug Fixes
+
+* **core:** 🐛 remove outline styles for focus-visible as it is not working as intended ([f2cc4fd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f2cc4fd8763c71ca3bf5f9c82119b6f9be38ae6c))
+* **TinyMCE:** 🐛 prevent TinyMCE editor from expanding limitlessly ([a01001e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a01001e9bbdb786870403d9ec48cb12b65380990)), closes [#978](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/978)
+
 ## [2.39.4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.39.3...v2.39.4) (2024-12-14)
 
 
