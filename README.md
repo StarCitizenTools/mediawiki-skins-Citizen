@@ -162,6 +162,7 @@ Name | Grade | Version | Last updated
 [TabberNeue](https://www.mediawiki.org/wiki/Extension:TabberNeue) | A | 2.6.0 | 2024-11-16
 [TemplateData](https://www.mediawiki.org/wiki/Extension:TemplateData) | A | REL1_39 `7f8c5a8` | 2024-08-19
 [TimedMediaHandler](https://www.mediawiki.org/wiki/Extension:TimedMediaHandler) | B | N/A | N/A
+[TinyMCE](https://www.mediawiki.org/wiki/Extension:TinyMCE) | A | 1.1.2 | 2024-12-19
 [Translate](https://www.mediawiki.org/wiki/Extension:Translate) | A | MLEB 2023.01 | 2023-02-17
 [TwoColConflict](https://www.mediawiki.org/wiki/Extension:TwoColConflict) | B | REL1_39 5a2a947 | 2023-01-09
 [UniversalLanguageSelector](https://www.mediawiki.org/wiki/Extension:UniversalLanguageSelector) | B | MLEB 2021.12 | 2022-05-17

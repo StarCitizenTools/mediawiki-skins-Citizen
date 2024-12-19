@@ -576,6 +576,7 @@
 			"+ext.tabberNeue.init.styles": "skinStyles/extensions/TabberNeue/ext.tabberNeue.init.styles.less",
 			"+ext.templateData": "skinStyles/extensions/TemplateData/ext.templateData.less",
 			"+ext.templateDataGenerator.editTemplatePage": "skinStyles/extensions/TemplateData/ext.templateDataGenerator.editTemplatePage.less",
+			"+ext.tinymce": "skinStyles/extensions/TinyMCE/ext.tinymce.less",
 			"+ext.uploadWizard": "skinStyles/extensions/UploadWizard/ext.uploadWizard.less",
 			"+ext.uploadWizard.uploadCampaign.display": "skinStyles/extensions/UploadWizard/ext.uploadWizard.uploadCampaign.less",
 			"+ext.uploadWizard.page.styles": "skinStyles/extensions/UploadWizard/uploadWizard.noWizard.less",
