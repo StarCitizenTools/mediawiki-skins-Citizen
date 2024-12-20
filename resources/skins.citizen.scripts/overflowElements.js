@@ -186,6 +186,11 @@ class OverflowElement {
 		}
 	}
 
+	/**
+	 * Sync table columns width between sticky header with original table columns.
+	 *
+	 * @return {void}
+	 */
 	syncStickyHeaderColumns() {
 		const stickyCols = this.colgroup.querySelectorAll( 'col' );
 
@@ -194,6 +199,11 @@ class OverflowElement {
 		} );
 	}
 
+	/**
+	 * Creates a sticky header for a table element.
+	 *
+	 * @return {void}
+	 */
 	getStickyHeaderForTable() {
 		// If overflow content is a table, we need to create a proper table element
 		// for the sticky header, so that the styles are applied correctly
@@ -222,9 +232,20 @@ class OverflowElement {
 		return stickyHeader;
 	}
 
+	/**
+	 * Creates a sticky header for a non-table element.
+	 *
+	 * @return {void}
+	 */
+	getStickyHeader() {
+		const stickyHeader = document.createElement( 'div' );
+		stickyHeader.append( this.headerToSticky.cloneNode( true ) );
+		return stickyHeader;
+	}
+
 	setupStickyHeader() {
 		const isTable = this.element instanceof HTMLTableElement;
-		this.stickyHeader = isTable ? this.getStickyHeaderForTable() : document.createElement( 'div' );
+		this.stickyHeader = isTable ? this.getStickyHeaderForTable() : this.getStickyHeader();
 		this.stickyHeader.classList.add( 'citizen-overflow-content-sticky-header' );
 		this.stickyHeader.setAttribute( 'aria-hidden', 'true' ); // this is not useful for screen reader
 		this.content.insertBefore( this.stickyHeader, this.element );
