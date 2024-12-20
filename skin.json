@@ -194,8 +194,7 @@
 					"name": "resources/skins.citizen.scripts/templates/TableOfContents__line.mustache",
 					"file": "templates/TableOfContents__line.mustache",
 					"type": "text"
-				},
-				"resources/skins.citizen.scripts/wikitables.js"
+				}
 			],
 			"messages": [
 				"citizen-share",

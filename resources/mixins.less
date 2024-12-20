@@ -52,26 +52,12 @@
 	top: var( --height-sticky-header ) !important;
 }
 
-.citizen-sticky-header(@bottomBorder: true, @zIndex: true) {
-	position: -webkit-sticky;
-	position: sticky;
-	.sticky-header-element;
-
-	& when (@bottomBorder ) {
-		box-shadow: 0 1px 0 0 var( --border-color-base );
-	}
-
-	& when (@zIndex ) {
-		z-index: @z-index-sticky;
-	}
-
-	// HACK: Hide overflow
-	// This has an issue if parent has overflow set
+.citizen-sticky-header-background() {
 	&::before {
 		position: absolute;
 		top: 0;
-		right: ~'calc( var(--padding-page ) * -1 )';
-		left: ~'calc( var(--padding-page ) * -1 )';
+		right: 0;
+		left: 0;
 		z-index: @z-index-bottom;
 		height: 100%;
 		content: '';
@@ -79,6 +65,21 @@
 		filter: opacity( 0.9 );
 		-webkit-backdrop-filter: saturate( 50% ) blur( 16px );
 		backdrop-filter: saturate( 50% ) blur( 16px );
+	}
+}
+
+.citizen-sticky-header(@bottomBorder: true, @zIndex: true) {
+	position: -webkit-sticky;
+	position: sticky;
+	.sticky-header-element;
+	.citizen-sticky-header-background;
+
+	& when (@bottomBorder ) {
+		box-shadow: 0 1px 0 0 var( --border-color-base );
+	}
+
+	& when (@zIndex ) {
+		z-index: @z-index-sticky;
 	}
 }
 

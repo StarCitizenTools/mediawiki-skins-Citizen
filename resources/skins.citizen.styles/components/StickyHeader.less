@@ -16,19 +16,9 @@
 .citizen-page-header {
 	position: -webkit-sticky;
 	position: sticky;
+	.citizen-sticky-header-background;
 
 	&::before {
-		position: absolute;
-		top: 0;
-		right: 0;
-		left: 0;
-		z-index: @z-index-bottom;
-		height: 100%;
-		content: '';
-		background-color: var( --color-surface-0 );
-		filter: opacity( 0.9 );
-		-webkit-backdrop-filter: saturate( 50% ) blur( 16px );
-		backdrop-filter: saturate( 50% ) blur( 16px );
 		opacity: 0;
 		transition: var( --transition-hover );
 		transition-property: opacity;

@@ -55,15 +55,12 @@ function registerServiceWorker() {
 function initBodyContent( bodyContent ) {
 	const
 		sections = require( './sections.js' ),
-		overflowElements = require( './overflowElements.js' ),
-		wikitables = require( './wikitables.js' );
+		overflowElements = require( './overflowElements.js' );
 
 	// Collapsable sections
 	sections.init( bodyContent );
 	// Overflow element enhancements
 	overflowElements.init( bodyContent );
-	// Wikitables enhancements
-	wikitables.init( bodyContent );
 }
 
 /**
