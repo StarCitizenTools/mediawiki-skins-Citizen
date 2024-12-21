@@ -8,14 +8,35 @@
  * Date: 2024-12-20
 */
 
-.datatables-container > .dt-container {
+@import '../../../../resources/mixins.less';
+
+table.dataTable {
+	thead,
+	tfoot {
+		th {
+			font-weight: var( --font-weight-semi-bold );
+		}
+	}
+}
+
+.datatables-container > .dt-container,
+.dtfh-floatingparent {
 	font-size: var( --font-size-small );
+}
+
+.datatables-container > .dt-container {
 	border-radius: var( --border-radius-medium );
 }
 
 div.dtsb-searchBuilder div.dtsb-titleRow div.dtsb-title,
 div.dtsp-panesContainer div.dtsp-titleRow div.dtsp-title {
 	font-weight: var( --font-weight-semi-bold );
+}
+
+.dtfh-floatingparent-head {
+	background: transparent;
+	transform: translateY( var( --height-sticky-header ) );
+	.citizen-sticky-header-background();
 }
 
 /*
