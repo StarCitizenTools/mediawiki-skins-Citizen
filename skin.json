@@ -501,7 +501,6 @@
 			"+ext.srf.d3.chart.bubble": "skinStyles/extensions/SemanticResultFormats/d3/ext.srf.d3.chart.bubble.less",
 			"+ext.srf.d3.chart.treemap": "skinStyles/extensions/SemanticResultFormats/d3/ext.srf.d3.chart.treemap.less",
 			"+ext.srf.d3.common": "skinStyles/extensions/SemanticResultFormats/d3/ext.srf.d3.common.less",
-			"+ext.srf.datatables.v2.module": "skinStyles/jquery/datatables.less",
 			"+ext.srf.datatables.v2.format": "skinStyles/extensions/SemanticResultFormats/datatables/ext.srf.datatables.v2.format.less",
 			"+ext.srf.eventcalendar": "skinStyles/extensions/SemanticResultFormats/eventcalendar/ext.srf.eventcalendar.less",
 			"+ext.srf.filtered.calendar-view": "skinStyles/extensions/SemanticResultFormats/filtered/ext.srf.filtered.calendar-view.less",
