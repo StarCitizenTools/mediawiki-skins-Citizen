@@ -14,6 +14,7 @@ class OverflowElement {
 		this.contentWidth = 0;
 		this.onScroll = mw.util.throttle( this.onScroll.bind( this ), 250 );
 		this.updateState = this.updateState.bind( this );
+		this.headerToSticky = this.element.querySelector( '.citizen-overflow-sticky-header' );
 	}
 
 	/**
@@ -97,6 +98,9 @@ class OverflowElement {
 				[ isRightOverflowing, 'citizen-overflow--right' ]
 			];
 			this.toggleClasses( updateClasses );
+			if ( this.stickyHeader ) {
+				this.stickyHeader.style.setProperty( '--citizen-overflow-scroll-x', this.contentScrollLeft + 'px' );
+			}
 		} );
 	}
 
@@ -180,6 +184,71 @@ class OverflowElement {
 				`[Citizen] Error occurred while wrapping element: ${ error.message }`
 			);
 		}
+	}
+
+	/**
+	 * Sync table columns width between sticky header with original table columns.
+	 *
+	 * @return {void}
+	 */
+	syncStickyHeaderColumns() {
+		const stickyCols = this.colgroup.querySelectorAll( 'col' );
+
+		this.originalTh.forEach( ( col, index ) => {
+			stickyCols[ index ].style.minWidth = col.getBoundingClientRect().width + 'px';
+		} );
+	}
+
+	/**
+	 * Creates a sticky header for a table element.
+	 *
+	 * @return {void}
+	 */
+	getStickyHeaderForTable() {
+		// If overflow content is a table, we need to create a proper table element
+		// for the sticky header, so that the styles are applied correctly
+		const stickyHeader = document.createElement( 'table' );
+		const thead = document.createElement( 'thead' );
+
+		// Copy attributes from original table to sticky header
+		for ( const { name, value } of this.element.attributes ) {
+			stickyHeader.setAttribute( name, value );
+		}
+		for ( const className of this.element.classList ) {
+			stickyHeader.classList.add( className );
+		}
+
+		// Create colgroup and columns so that we can align the column widths
+		this.colgroup = document.createElement( 'colgroup' );
+		this.originalTh = this.headerToSticky.querySelectorAll( 'th' );
+		for ( let i = 0; i < this.originalTh.length; i++ ) {
+			const colEl = document.createElement( 'col' );
+			this.colgroup.append( colEl );
+		}
+		this.syncStickyHeaderColumns();
+
+		thead.append( this.headerToSticky.cloneNode( true ) );
+		stickyHeader.append( thead, this.colgroup );
+		return stickyHeader;
+	}
+
+	/**
+	 * Creates a sticky header for a non-table element.
+	 *
+	 * @return {void}
+	 */
+	getStickyHeader() {
+		const stickyHeader = document.createElement( 'div' );
+		stickyHeader.append( this.headerToSticky.cloneNode( true ) );
+		return stickyHeader;
+	}
+
+	setupStickyHeader() {
+		const isTable = this.element instanceof HTMLTableElement;
+		this.stickyHeader = isTable ? this.getStickyHeaderForTable() : this.getStickyHeader();
+		this.stickyHeader.classList.add( 'citizen-overflow-content-sticky-header' );
+		this.stickyHeader.setAttribute( 'aria-hidden', 'true' ); // this is not useful for screen reader
+		this.content.insertBefore( this.stickyHeader, this.element );
 	}
 
 	/**
@@ -302,6 +371,9 @@ class OverflowElement {
 	 */
 	init() {
 		this.wrap();
+		if ( this.headerToSticky ) {
+			this.setupStickyHeader();
+		}
 		this.setupResizeObserver();
 		this.setupIntersectionObserver();
 		this.resume();

@@ -7,13 +7,16 @@ html {
 
 html,
 body {
-	min-height: ~'calc( 100vh - env( safe-area-inset-bottom,0 ) - env( safe-area-inset-top,0 ) )';
-	min-height: 100dvh;
 	padding: 0;
 	margin: 0;
 	color: var( --color-base );
 	accent-color: var( --color-progressive );
 	background: var( --color-surface-0 );
+}
+
+body {
+	min-height: ~'calc( 100vh - env( safe-area-inset-bottom,0 ) - env( safe-area-inset-top,0 ) )';
+	min-height: 100dvh;
 }
 
 // Apply border-box universally unless overwritten
@@ -28,12 +31,6 @@ body {
 
 :focus {
 	outline-color: var( --color-progressive );
-}
-
-// For some reason just overriding the outline-color is not enough
-:focus-visible {
-	outline: var( --border-width-thick ) solid var( --color-progressive );
-	outline-offset: 1px;
 }
 
 ::placeholder {

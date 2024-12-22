@@ -3,23 +3,62 @@
  *
  * SkinStyles for Extension:SemanticResultsFormats
  * Module: ext.srf.datatables.v2.format
- * Version: 4.2.1
+ * Version: 5.0.0
  *
- * Date: 2024-03-19
+ * Date: 2024-12-20
 */
 
-// Re-implement datatable responsiveness broken by SRF
-// FIXME: Remove when upstream is fixed
-@media screen and ( max-width: 640px ) {
-	.srf-datatable {
-		.dataTables_filter,
-		.dataTables_length {
-			float: none;
-		}
+@import '../../../../resources/mixins.less';
 
-		.dataTables_filter,
-		.dt-buttons {
-			margin-right: 0;
+table.dataTable {
+	thead,
+	tfoot {
+		th {
+			font-weight: var( --font-weight-semi-bold );
 		}
 	}
 }
+
+.datatables-container > .dt-container,
+.dtfh-floatingparent {
+	font-size: var( --font-size-small );
+}
+
+.datatables-container > .dt-container {
+	border-radius: var( --border-radius-medium );
+}
+
+div.dtsb-searchBuilder div.dtsb-titleRow div.dtsb-title,
+div.dtsp-panesContainer div.dtsp-titleRow div.dtsp-title {
+	font-weight: var( --font-weight-semi-bold );
+}
+
+.dtfh-floatingparent-head {
+	background: transparent;
+	transform: translateY( var( --height-sticky-header ) );
+	.citizen-sticky-header-background();
+}
+
+/*
+Update the border-radius when upstream is fixed
+
+div.dt-container {
+	.dt-input,
+	.dt-search input,
+	div.dtsp-searchPane div.dtsp-topRow div.dtsp-searchCont input.dtsp-search {
+		border-radius: var( --border-radius-base );
+	}
+
+	div.dtsb-searchBuilder div.dtsb-group div.dtsb-criteria select.dtsb-dropDown {
+		border-top-left-radius: var( --border-radius-base );
+		border-bottom-left-radius: var( --border-radius-base );
+	}
+}
+
+div.dtsp-searchPane {
+	button.dtsp-paneButton.dtsp-collapseButton {
+		border-top-right-radius: var( --border-radius-base );
+		border-bottom-right-radius: var( --border-radius-base );
+	}
+}
+*/

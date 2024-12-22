@@ -10,98 +10,85 @@
 
 @import '../../../resources/variables.less';
 
-.popups-icon {
-	filter: var( --filter-invert );
-}
+// Needed the specificity
+.skin-citizen {
+	.popups-icon {
+		filter: var( --filter-invert );
+	}
 
-/* popup.less */
-.mwe-popups {
-	background: var( --color-surface-1 );
-	border: 1px solid var( --border-color-base );
-	border-radius: var( --border-radius-medium );
-	box-shadow: var( --box-shadow-drop-xx-large );
+	/* popup.less */
+	.mwe-popups {
+		background: var( --color-surface-1 );
+		border: 1px solid var( --border-color-base );
+		border-radius: var( --border-radius-medium );
+		box-shadow: var( --box-shadow-drop-xx-large );
 
-	&.mwe-popups-is-not-tall {
+		&.mwe-popups-is-not-tall {
+			.mwe-popups-extract {
+				min-height: auto;
+				margin-bottom: 16px;
+			}
+		}
+
+		// Add hover state to page type cards
+		&.mwe-popups-type-page:hover {
+			background: var( --color-surface-2 );
+
+			.mwe-popups-extract[ dir='ltr' ]::after {
+				background-image: linear-gradient( to right, transparent, var( --color-surface-2 ) 50% );
+			}
+		}
+
+		.mwe-popups-container {
+			color: var( --color-base );
+
+			// Hide footer
+			footer {
+				display: none;
+			}
+		}
+
+		.mwe-popups-settings-icon {
+			border-radius: var( --border-radius-base );
+			opacity: var( --opacity-icon-base );
+
+			&:hover {
+				background-color: var( --background-color-button-quiet--hover );
+				opacity: var( --opacity-icon-base--hover );
+			}
+
+			&:active {
+				background-color: var( --background-color-button-quiet--active );
+				opacity: var( --opacity-icon-base--selected );
+			}
+		}
+
 		.mwe-popups-extract {
-			min-height: auto;
-			margin-bottom: 16px;
-		}
-	}
+			color: var( --color-base );
 
-	// Add hover state to page type cards
-	&.mwe-popups-type-page:hover {
-		background: var( --color-surface-2 );
-	}
-
-	.mwe-popups-container {
-		color: var( --color-base );
-
-		// Hide footer
-		footer {
-			display: none;
-		}
-	}
-
-	.mwe-popups-settings-icon {
-		border-radius: var( --border-radius-base );
-		opacity: var( --opacity-icon-base );
-
-		&:hover {
-			background-color: var( --background-color-button-quiet--hover );
-			opacity: var( --opacity-icon-base--hover );
-		}
-
-		&:active {
-			background-color: var( --background-color-button-quiet--active );
-			opacity: var( --opacity-icon-base--selected );
-		}
-	}
-
-	.mwe-popups-extract {
-		color: var( --color-base );
-
-		&[ dir='ltr' ]::after {
-			/* @noflip */
-			background-image: linear-gradient( to right, transparent, var( --color-surface-1 ) 50% );
-		}
-
-		&[ dir='rtl' ]::after {
-			/* @noflip */
-			background-image: linear-gradient( to left, transparent, var( --color-surface-1 ) 50% );
-		}
-
-		blockquote::after {
-			/* @noflip */
-			background-image: linear-gradient( to bottom, transparent, var( --color-surface-1 ) 75% );
-		}
-
-		&.mwe-popups-type-generic,
-		&.mwe-popups-type-disambiguation {
-			.mwe-popups-read-link {
-				font-weight: var( --font-weight-semi-bold );
-			}
-		}
-
-		&.mwe-popups-no-image-pointer {
-			&::before {
-				border-bottom-color: var( --border-color-base );
+			&[ dir='ltr' ]::after {
+				/* @noflip */
+				background-image: linear-gradient( to right, transparent, var( --color-surface-1 ) 50% );
 			}
 
-			&::after {
-				border-bottom-color: var( --color-surface-1 );
-			}
-		}
-
-		&.mwe-popups-image-pointer {
-			&::before {
-				border-bottom-color: var( --border-color-base );
+			&[ dir='rtl' ]::after {
+				/* @noflip */
+				background-image: linear-gradient( to left, transparent, var( --color-surface-1 ) 50% );
 			}
 
-			&::after {
-				border-bottom-color: var( --color-surface-1 );
+			blockquote::after {
+				/* @noflip */
+				background-image: linear-gradient( to bottom, transparent, var( --color-surface-1 ) 75% );
 			}
 
-			&.flipped-x {
+			&.mwe-popups-type-generic,
+			&.mwe-popups-type-disambiguation {
+				.mwe-popups-read-link {
+					font-weight: var( --font-weight-semi-bold );
+				}
+			}
+
+			&.mwe-popups-no-image-pointer {
 				&::before {
 					border-bottom-color: var( --border-color-base );
 				}
@@ -110,24 +97,54 @@
 					border-bottom-color: var( --color-surface-1 );
 				}
 			}
-		}
 
-		&.flipped-x.mwe-popups-is-tall {
-			&::before {
-				border-bottom-color: var( --border-color-base );
+			&.mwe-popups-image-pointer {
+				&::before {
+					border-bottom-color: var( --border-color-base );
+				}
+
+				&::after {
+					border-bottom-color: var( --color-surface-1 );
+				}
+
+				&.flipped-x {
+					&::before {
+						border-bottom-color: var( --border-color-base );
+					}
+
+					&::after {
+						border-bottom-color: var( --color-surface-1 );
+					}
+				}
 			}
-		}
 
-		&.flipped-x-y {
-			&::before {
-				border-top-color: var( --border-color-base );
+			&.flipped-x.mwe-popups-is-tall {
+				&::before {
+					border-bottom-color: var( --border-color-base );
+				}
 			}
 
-			&::after {
-				border-top-color: var( --color-surface-1 );
+			&.flipped-x-y {
+				&::before {
+					border-top-color: var( --border-color-base );
+				}
+
+				&::after {
+					border-top-color: var( --color-surface-1 );
+				}
+
+				&.mwe-popups-is-tall {
+					&::before {
+						border-top-color: var( --border-color-base );
+					}
+
+					&::after {
+						border-top-color: var( --color-surface-1 );
+					}
+				}
 			}
 
-			&.mwe-popups-is-tall {
+			&.flipped-y {
 				&::before {
 					border-top-color: var( --border-color-base );
 				}
@@ -138,135 +155,125 @@
 			}
 		}
 
-		&.flipped-y {
-			&::before {
-				border-top-color: var( --border-color-base );
-			}
-
-			&::after {
-				border-top-color: var( --color-surface-1 );
-			}
-		}
-	}
-
-	/* preview.less */
-	.mwe-popups-title {
-		font-weight: var( --font-weight-semi-bold );
-	}
-
-	/* referencePreview.less */
-	&.mwe-popups-type-reference {
-		.mwe-popups-extract {
-			.mwe-popups-fade {
-				background-image: linear-gradient( transparent, var( --color-surface-1 ) );
-			}
-		}
-
-		.mwe-collapsible-placeholder {
+		/* preview.less */
+		.mwe-popups-title {
 			font-weight: var( --font-weight-semi-bold );
 		}
-	}
-}
 
-@supports ( clip-path: polygon( 1px 1px ) ) {
-	.mwe-popups {
-		.mwe-popups-container {
-			background: inherit;
-			// FIXME: Come up with a clip path that works with increased border radius
-			// Popups is using polygon to clip the card
-			// So the thumbnail corner would look weird if we adjust the border radius
-			// --pseudo-radius: var( --border-radius-medium );
+		/* referencePreview.less */
+		&.mwe-popups-type-reference {
+			.mwe-popups-extract {
+				.mwe-popups-fade {
+					background-image: linear-gradient( transparent, var( --color-surface-1 ) 50% );
+				}
+			}
+
+			.mwe-collapsible-placeholder {
+				font-weight: var( --font-weight-semi-bold );
+			}
 		}
 	}
 
-	// Fix inconsistent pointer height in older MW versions
-	.mwe-popups.flipped-y .mwe-popups-container,
-	.mwe-popups.flipped-x-y .mwe-popups-container {
-		padding-bottom: var( --pointer-height );
-		margin-bottom: ~'calc( var(--pointer-height) * -1 )';
-	}
-}
+	@supports ( clip-path: polygon( 1px 1px ) ) {
+		.mwe-popups {
+			.mwe-popups-container {
+				background: inherit;
+				// FIXME: Come up with a clip path that works with increased border radius
+				// Popups is using polygon to clip the card
+				// So the thumbnail corner would look weird if we adjust the border radius
+				// --pseudo-radius: var( --border-radius-medium );
+			}
+		}
 
-/* settingsDialog.less */
-#mwe-popups-settings {
-	background: var( --color-surface-1 );
-	border-color: var( --border-color-base );
-	border-radius: var( --border-radius-medium );
-	box-shadow: var( --box-shadow-drop-xx-large );
-
-	header {
-		border-bottom-color: var( --border-color-base );
-
-		h1 {
-			font-family: var( --font-family-base );
-			font-weight: var( --font-weight-semi-bold );
+		// Fix inconsistent pointer height in older MW versions
+		.mwe-popups.flipped-y .mwe-popups-container,
+		.mwe-popups.flipped-x-y .mwe-popups-container {
+			padding-bottom: var( --pointer-height );
+			margin-bottom: ~'calc( var(--pointer-height) * -1 )';
 		}
 	}
 
-	.mwe-ui-icon-popups-close {
-		opacity: var( --opacity-icon-base );
+	/* settingsDialog.less */
+	#mwe-popups-settings {
+		background: var( --color-surface-1 );
+		border-color: var( --border-color-base );
+		border-radius: var( --border-radius-medium );
+		box-shadow: var( --box-shadow-drop-xx-large );
 
-		&:hover {
-			opacity: var( --opacity-icon-base--hover );
+		header {
+			border-bottom-color: var( --border-color-base );
+
+			h1 {
+				font-family: var( --font-family-base );
+				font-weight: var( --font-weight-semi-bold );
+			}
 		}
 
-		&:active {
-			opacity: var( --opacity-icon-base--selected );
-		}
-	}
+		.mwe-ui-icon-popups-close {
+			opacity: var( --opacity-icon-base );
 
-	main#mwe-popups-settings-form {
-		p {
-			color: var( --color-subtle );
+			&:hover {
+				opacity: var( --opacity-icon-base--hover );
+			}
+
+			&:active {
+				opacity: var( --opacity-icon-base--selected );
+			}
 		}
 
-		form {
-			label {
-				> span {
-					font-weight: var( --font-weight-semi-bold );
-					color: var( --color-emphasized );
+		main#mwe-popups-settings-form {
+			p {
+				color: var( --color-subtle );
+			}
+
+			form {
+				label {
+					> span {
+						font-weight: var( --font-weight-semi-bold );
+						color: var( --color-emphasized );
+					}
 				}
 			}
 		}
 	}
-}
 
-/* settingsDialogRenderer.less */
-.mwe-popups-overlay {
-	background-color: var( --background-color-backdrop-light );
-}
+	/* settingsDialogRenderer.less */
+	.mwe-popups-overlay {
+		background-color: var( --background-color-backdrop-light );
+	}
 
-// Responsive support
-@media ( max-width: @max-width-breakpoint-tablet ) {
-	.mwe-popups {
-		position: fixed;
-		inset: auto 0 0 0 !important;
-		width: auto !important;
-		overflow: hidden; // Hide pointer and also rounded corners
-		border-radius: var( --border-radius-medium ) var( --border-radius-medium ) 0 0;
+	// Responsive support
+	@media ( max-width: @max-width-breakpoint-tablet ) {
+		.mwe-popups {
+			position: fixed;
+			inset: auto 0 0 0 !important;
+			width: auto !important;
+			overflow: hidden; // Hide pointer and also rounded corners
+			border-radius: var( --border-radius-medium ) var( --border-radius-medium ) 0 0;
 
-		// Top aligned cards
-		&.flipped-x-y,
-		&.flipped-y {
-			top: 0 !important;
-			bottom: auto !important;
-			border-radius: 0 0 var( --border-radius-medium ) var( --border-radius-medium );
-		}
-
-		.mwe-popups-container {
-			margin-bottom: 0 !important; // cancel negative margin as we have no pointers
-		}
-
-		// Vertical card
-		&.mwe-popups-is-not-tall {
-			.mwe-popups-thumbnail {
-				width: 100%;
+			// Top aligned cards
+			&.flipped-x-y,
+			&.flipped-y {
+				top: 0 !important;
+				bottom: auto !important;
+				border-radius: 0 0 var( --border-radius-medium ) var( --border-radius-medium );
 			}
 
-			.mwe-popups-extract {
-				min-height: auto;
-				max-height: 58px;
-				margin-bottom: var( --space-xl );
+			.mwe-popups-container {
+				margin-bottom: 0 !important; // cancel negative margin as we have no pointers
+			}
+
+			// Vertical card
+			&.mwe-popups-is-not-tall {
+				.mwe-popups-thumbnail {
+					width: 100%;
+				}
+
+				.mwe-popups-extract {
+					min-height: auto;
+					max-height: 58px;
+					margin-bottom: var( --space-xl );
+				}
 			}
 		}
 	}
