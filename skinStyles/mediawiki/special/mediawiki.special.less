@@ -32,6 +32,10 @@
 	line-height: var( --line-height-xx-small );
 	box-shadow: none;
 
+	thead {
+		display: none; // Hide table header
+	}
+
 	tbody {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
@@ -49,15 +53,11 @@
 		text-align: center;
 		border: var( --border-width-base ) solid var( --border-color-base );
 		border-radius: var( --border-radius-medium );
-
-		&:first-child {
-			display: none; // Hide table header
-		}
 	}
 
 	td {
 		padding: 0;
-		border-top: 0;
+		border: 0;
 
 		&:first-child {
 			font-size: var( --font-size-large );
