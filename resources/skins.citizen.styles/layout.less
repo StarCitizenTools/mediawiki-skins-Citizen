@@ -28,6 +28,7 @@
 .citizen-body {
 	z-index: @z-index-base; // Stop body content going over sticky header
 	grid-area: content;
+	word-wrap: break-word; // Fix overflow text (e.g. long single word text in <li>)
 }
 
 #mw-data-after-content:not( :empty ) {
