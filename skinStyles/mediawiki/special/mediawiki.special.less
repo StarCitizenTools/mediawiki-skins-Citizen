@@ -49,10 +49,6 @@
 		text-align: center;
 		border: var( --border-width-base ) solid var( --border-color-base );
 		border-radius: var( --border-radius-medium );
-
-		&:first-child {
-			display: none; // Hide table header
-		}
 	}
 
 	td {
@@ -62,6 +58,20 @@
 		&:first-child {
 			font-size: var( --font-size-large );
 			font-weight: var( --font-weight-semi-bold );
+		}
+	}
+
+	// MW 1.43+ - Remove when we drop 1.39
+	&:has( thead ) {
+		thead tr {
+			// Hide table header
+			display: none;
+		}
+	}
+
+	&:not( :has( thead ) ) {
+		tbody tr:first-child {
+			display: none;
 		}
 	}
 }
