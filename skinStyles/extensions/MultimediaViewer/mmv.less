@@ -509,7 +509,6 @@
 	padding: 0;
 	margin: 0;
 	font-size: var( --font-size-small );
-	color: #999;
 
 	.mw-mmv-untruncated & {
 		color: var( --color-subtle );
@@ -546,8 +545,6 @@
 	width: auto;
 	padding: 0 var( --space-md );
 	margin-top: -4px;
-	// Sync with title
-	background-color: #000;
 	border-top: 0;
 
 	.mw-mmv-untruncated & {
@@ -648,8 +645,7 @@
 // Only apply background color when scroll up
 .mw-mmv-post-image {
 	min-height: @mmv-height-abovethefold;
-	color: var( --color-inverted-fixed );
-	background-color: transparent;
+	background-color: var( --background-color-interactive-subtle );
 	border-top-left-radius: var( --border-radius-large );
 	border-top-right-radius: var( --border-radius-large );
 
