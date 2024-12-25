@@ -64,6 +64,20 @@
 			font-weight: var( --font-weight-semi-bold );
 		}
 	}
+
+	// MW 1.43+ - Remove when we drop 1.39
+	&:has( thead ) {
+		thead tr {
+			// Hide table header
+			display: none;
+		}
+	}
+
+	&:not( :has( thead ) ) {
+		tbody tr:first-child {
+			display: none;
+		}
+	}
 }
 
 .citizen-overflow-wrapper:has( #sv-software ) {
