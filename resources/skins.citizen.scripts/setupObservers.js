@@ -51,11 +51,11 @@ const getHeadingIntersectionHandler = ( changeActiveSection ) =>
  * which is also used for the scroll intersection threshold (T317661).
  *
  * @return {number} Value of scroll-margin-top OR 75 if falsy.
- * 75 derived from @scroll-padding-top LESS variable
+ * 140 derived from @scroll-padding-top LESS variable
  * https://gerrit.wikimedia.org/r/c/mediawiki/skins/Vector/+/894696/3/resources/common/variables.less ?
  */
 function getDocumentScrollPaddingTop() {
-	const defaultScrollPaddingTop = 75;
+	const defaultScrollPaddingTop = 140;
 	const documentStyles = getComputedStyle( document.documentElement );
 	const scrollPaddingTopString = documentStyles.getPropertyValue( 'scroll-padding-top' );
 	return ( parseInt( scrollPaddingTopString, 10 ) || defaultScrollPaddingTop );
