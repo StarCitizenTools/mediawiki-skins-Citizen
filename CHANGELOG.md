@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.40.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.40.0...v2.40.1) (2024-12-31)
+
+
+### Bug Fixes
+
+* **CodeMirror:** 🐛 fix incorrect highlight for VE CodeMirror ([8aa185c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8aa185c5addea71bb35c4b1e8db8bb6bc9f4ed88))
+
 ## [2.40.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.39.4...v2.40.0) (2024-12-30)
 
 
