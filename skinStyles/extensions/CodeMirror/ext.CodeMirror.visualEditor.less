@@ -12,6 +12,8 @@
 	.ve-init-mw-desktopArticleTarget {
 		.CodeMirror {
 			padding: 0;
+			// Ensure that CodeMirror overlay is on top of VE so the highlight works properly
+			z-index: 0;
 		}
 
 		// Ensure surfaces are using identical font rules
