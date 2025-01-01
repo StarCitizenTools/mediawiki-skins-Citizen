@@ -5,7 +5,7 @@
 
 [![](https://img.shields.io/github/contributors/StarCitizenTools/mediawiki-skins-Citizen?style=flat-square&logo=github)](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/graphs/contributors)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat-square&logo=GNU)](https://www.gnu.org/licenses/gpl-3.0)
-[![MediaWiki: >=1.39.4](https://img.shields.io/badge/MediaWiki-%3E%3D1.39.4-%2336c?style=flat-square&logo=Wikipedia)](https://www.mediawiki.org)
+[![MediaWiki: >=1.43.0](https://img.shields.io/badge/MediaWiki-%3E%3D1.43.0-%2336c?style=flat-square&logo=Wikipedia)](https://www.mediawiki.org)
 [![](https://img.shields.io/badge/translations-translatewiki-%23013467?style=flat-square&logo=GoogleTranslate)](https://translatewiki.net/w/i.php?title=Special:Translate&group=mwgithub-star-citizen)
 </p>
 </div>
@@ -14,9 +14,7 @@
 
 Citizen is a beautiful, usable, responsive [MediaWiki](https://www.mediawiki.org) skin that makes [extensions](https://www.mediawiki.org/wiki/Manual:Extensions) part of the cohesive experience. It was initially created for the [Star Citizen Wiki](https://starcitizen.tools) but is flexible to run on various MediaWiki configurations.
 
-Live demo: [English](https://starcitizen.tools), [German](https://star-citizen.wiki), [Chinese](https://sctoolszh.miraheze.org)
-
-For the old design, [click here](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v1.17.9) for the last release.
+Live demo: [English](https://starcitizen.tools), [German](https://star-citizen.wiki), [Chinese](https://citizenwiki.cn)
 
 ## Notable features
 - **Responsive layout**: Responsive and able to adapt to different screen sizes. 📱💻🖥️
@@ -82,8 +80,13 @@ $wgCitizenManifestOptions = [
 ```
 
 ## Requirements
-* [MediaWiki](https://www.mediawiki.org) 1.39.4 or later
-* For the legacy versions, check the other release branches.
+* [MediaWiki](https://www.mediawiki.org) 1.43.0 or later
+* For the legacy versions, check the other release branches:
+
+Version | MediaWiki version
+:--- | :---
+[2.40.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v2.40.2) | > 1.39.4
+[1.17.9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v1.17.9) | > 1.35.2
 
 ## Recommended extensions
 These extensions are optional. They are recommended to enable additional feature in Citizen.

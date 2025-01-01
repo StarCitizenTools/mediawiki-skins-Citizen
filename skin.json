@@ -1,6 +1,6 @@
 {
 	"name": "Citizen",
-	"version": "2.40.2",
+	"version": "3.0.0-alpha",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]",
@@ -12,7 +12,7 @@
 	"license-name": "GPL-3.0-or-later",
 	"type": "skin",
 	"requires": {
-		"MediaWiki": ">= 1.39.4"
+		"MediaWiki": ">= 1.43.0"
 	},
 	"attributes": {
 		"DarkMode": {
