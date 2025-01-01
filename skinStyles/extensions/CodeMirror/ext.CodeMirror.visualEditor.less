@@ -11,6 +11,8 @@
 .skin-citizen {
 	.ve-init-mw-desktopArticleTarget {
 		.CodeMirror {
+			// Ensure that CodeMirror overlay is on top of VE so the highlight works properly
+			z-index: 0;
 			padding: 0;
 		}
 
