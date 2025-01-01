@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.40.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.40.1...v2.40.2) (2025-01-01)
+
+
+### Bug Fixes
+
+* **overflowElements:** 🐛 fix pinned sticky header on the top of the page ([a09193c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a09193c4939097541efe292df11a02d4e0616eb4)), closes [#991](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/991)
+
 ## [2.40.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.40.0...v2.40.1) (2024-12-31)
 
 
