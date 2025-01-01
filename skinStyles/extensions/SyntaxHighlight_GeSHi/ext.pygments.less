@@ -3,315 +3,317 @@
  *
  * SkinStyles for Extension:SyntaxHighlight
  * Module: ext.pygments
- * Version: REL1_35 05598b3
+ * Version: REL1_43
  *
- * Date: 2023-05-22
+ * Date: 2025-01-01
  */
 
 /* pygments.generated.css */
-.mw-highlight {
-	background: var( --color-surface-2 );
-
-	.c {
-		color: var( --color-syntax-grey );
-	}
-
-	.err {
-		border-color: var( --background-color-destructive-subtle );
-	}
-
-	.k {
-		font-weight: normal; // reset bold styles
-		color: var( --color-syntax-purple );
-	}
-
-	.o {
-		color: var( --color-syntax-cyan );
-	}
-
-	.ch {
-		color: var( --color-syntax-grey );
-	}
-
-	.cm {
-		color: var( --color-syntax-grey );
-	}
-
-	.cp {
-		color: var( --color-syntax-brown );
-	}
-
-	.cpf {
-		color: var( --color-syntax-grey );
-	}
-
-	.c1 {
-		color: var( --color-syntax-grey );
-	}
-
-	.cs {
-		color: var( --color-syntax-grey );
-	}
-
-	.gd {
-		color: var( --color-syntax-red );
-	}
-
-	.gr {
-		color: var( --color-destructive );
-	}
-
-	.gh {
-		color: var( --color-syntax-paleblue );
-	}
-
-	.gi {
-		color: var( --color-syntax-green );
-	}
-
-	.go {
-		color: var( --color-subtle );
-	}
-
-	.gp {
-		color: var( --color-syntax-paleblue );
-	}
-
-	.gu {
-		color: var( --color-syntax-violet );
-	}
-
-	.gt {
-		color: var( --color-syntax-blue );
-	}
-
-	.kc {
-		font-weight: normal; // reset bold styles
-		color: var( --color-syntax-orange );
-	}
-
-	.kd {
-		font-weight: normal; // reset bold styles
-		color: var( --color-syntax-purple );
-	}
-
-	.kn {
-		font-weight: normal; // reset bold styles
-		color: var( --color-syntax-purple );
-	}
-
-	.kp {
-		color: var( --color-syntax-purple );
-	}
-
-	.kr {
-		font-weight: normal; // reset bold styles
-		color: var( --color-syntax-purple );
-	}
-
-	.kt {
-		color: var( --color-syntax-yellow );
-	}
-
-	.m {
-		color: var( --color-syntax-orange );
-	}
-
-	.s {
-		color: var( --color-syntax-green );
-	}
-
-	.na {
-		color: var( --color-syntax-purple );
-	}
-
-	.nb {
-		color: var( --color-syntax-blue );
-	}
-
-	.nc {
-		font-weight: normal; // reset bold styles
-		color: var( --color-syntax-yellow );
-	}
-
-	.no {
-		color: var( --color-syntax-blue );
-	}
-
-	.nd {
-		color: var( --color-syntax-purple );
-	}
-
-	.ni {
-		color: var( --color-base );
-	}
-
-	.ne {
-		color: var( --color-destructive );
-	}
-
-	.nf {
-		color: var( --color-syntax-blue );
-	}
-
-	.nl {
-		color: var( --color-syntax-green );
-	}
-
-	.nn {
-		color: var( --color-syntax-red );
-	}
-
-	.nt {
-		color: var( --color-syntax-yellow );
-	}
-
-	.nv {
-		color: var( --color-emphasized );
-	}
-
-	.ow {
-		color: var( --color-syntax-cyan );
-	}
-
-	.w {
-		color: var( --color-subtle );
-	}
-
-	.mb {
-		color: var( --color-syntax-orange );
-	}
-
-	.mf {
-		color: var( --color-syntax-orange );
-	}
-
-	.mh {
-		color: var( --color-syntax-orange );
-	}
-
-	.mi {
-		color: var( --color-syntax-orange );
-	}
-
-	.mo {
-		color: var( --color-syntax-orange );
-	}
-
-	.sa {
-		color: var( --color-syntax-green );
-	}
-
-	.sb {
-		color: var( --color-syntax-green );
-	}
-
-	.sc {
-		color: var( --color-syntax-green );
-	}
-
-	.dl {
-		color: var( --color-syntax-green );
-	}
-
-	.sd {
-		color: var( --color-syntax-green );
-	}
-
-	.s2 {
-		color: var( --color-syntax-green );
-	}
-
-	.se {
-		font-weight: normal; // reset bold styles
-		color: var( --color-base );
-	}
-
-	.sh {
-		color: var( --color-syntax-green );
-	}
-
-	.si {
-		font-weight: normal; // reset bold styles
-		color: var( --color-emphasized );
-	}
-
-	.sx {
-		color: var( --color-syntax-orange );
-	}
-
-	.sr {
-		color: var( --color-emphasized );
-	}
-
-	.s1 {
-		color: var( --color-syntax-green );
-	}
-
-	.ss {
-		color: var( --color-syntax-cyan );
-	}
-
-	.bp {
-		color: var( --color-syntax-orange );
-	}
-
-	.fm {
-		color: var( --color-syntax-blue );
-	}
-
-	.vc {
-		color: var( --color-emphasized );
-	}
-
-	.vg {
-		color: var( --color-emphasized );
-	}
-
-	.vi {
-		color: var( --color-emphasized );
-	}
-
-	.vm {
-		color: var( --color-emphasized );
-	}
-
-	.il {
-		color: var( --color-syntax-orange );
-	}
-
-	.p {
-		color: var( --color-syntax-cyan );
-	}
-
-	.n {
-		color: var( --color-emphasized );
-	}
-
-	.nx {
-		color: var( --color-emphasized );
-	}
-
-	/* pygments.wrapper.less */
-	// MW REL1_36+
-	&-lines pre,
-	.content &-lines pre {
-		.mw-content-ltr&,
-		.mw-content-rtl& {
-			box-shadow: none; // Remove background
+.skin-citizen {
+	.mw-highlight {
+		background: var( --color-surface-2 );
+
+		.c {
+			color: var( --color-syntax-grey );
 		}
-	}
 
-	.linenos {
-		color: var( --color-subtle );
-	}
+		.err {
+			border-color: var( --background-color-destructive-subtle );
+		}
 
-	a:hover .linenos,
-	.hll a .linenos {
-		color: var( --color-emphasized );
-	}
+		.k {
+			font-weight: normal; // reset bold styles
+			color: var( --color-syntax-purple );
+		}
 
-	.hll {
-		background-color: var( --background-color-warning-subtle );
+		.o {
+			color: var( --color-syntax-cyan );
+		}
+
+		.ch {
+			color: var( --color-syntax-grey );
+		}
+
+		.cm {
+			color: var( --color-syntax-grey );
+		}
+
+		.cp {
+			color: var( --color-syntax-brown );
+		}
+
+		.cpf {
+			color: var( --color-syntax-grey );
+		}
+
+		.c1 {
+			color: var( --color-syntax-grey );
+		}
+
+		.cs {
+			color: var( --color-syntax-grey );
+		}
+
+		.gd {
+			color: var( --color-syntax-red );
+		}
+
+		.gr {
+			color: var( --color-destructive );
+		}
+
+		.gh {
+			color: var( --color-syntax-paleblue );
+		}
+
+		.gi {
+			color: var( --color-syntax-green );
+		}
+
+		.go {
+			color: var( --color-subtle );
+		}
+
+		.gp {
+			color: var( --color-syntax-paleblue );
+		}
+
+		.gu {
+			color: var( --color-syntax-violet );
+		}
+
+		.gt {
+			color: var( --color-syntax-blue );
+		}
+
+		.kc {
+			font-weight: normal; // reset bold styles
+			color: var( --color-syntax-orange );
+		}
+
+		.kd {
+			font-weight: normal; // reset bold styles
+			color: var( --color-syntax-purple );
+		}
+
+		.kn {
+			font-weight: normal; // reset bold styles
+			color: var( --color-syntax-purple );
+		}
+
+		.kp {
+			color: var( --color-syntax-purple );
+		}
+
+		.kr {
+			font-weight: normal; // reset bold styles
+			color: var( --color-syntax-purple );
+		}
+
+		.kt {
+			color: var( --color-syntax-yellow );
+		}
+
+		.m {
+			color: var( --color-syntax-orange );
+		}
+
+		.s {
+			color: var( --color-syntax-green );
+		}
+
+		.na {
+			color: var( --color-syntax-purple );
+		}
+
+		.nb {
+			color: var( --color-syntax-blue );
+		}
+
+		.nc {
+			font-weight: normal; // reset bold styles
+			color: var( --color-syntax-yellow );
+		}
+
+		.no {
+			color: var( --color-syntax-blue );
+		}
+
+		.nd {
+			color: var( --color-syntax-purple );
+		}
+
+		.ni {
+			color: var( --color-base );
+		}
+
+		.ne {
+			color: var( --color-destructive );
+		}
+
+		.nf {
+			color: var( --color-syntax-blue );
+		}
+
+		.nl {
+			color: var( --color-syntax-green );
+		}
+
+		.nn {
+			color: var( --color-syntax-red );
+		}
+
+		.nt {
+			color: var( --color-syntax-yellow );
+		}
+
+		.nv {
+			color: var( --color-emphasized );
+		}
+
+		.ow {
+			color: var( --color-syntax-cyan );
+		}
+
+		.w {
+			color: var( --color-subtle );
+		}
+
+		.mb {
+			color: var( --color-syntax-orange );
+		}
+
+		.mf {
+			color: var( --color-syntax-orange );
+		}
+
+		.mh {
+			color: var( --color-syntax-orange );
+		}
+
+		.mi {
+			color: var( --color-syntax-orange );
+		}
+
+		.mo {
+			color: var( --color-syntax-orange );
+		}
+
+		.sa {
+			color: var( --color-syntax-green );
+		}
+
+		.sb {
+			color: var( --color-syntax-green );
+		}
+
+		.sc {
+			color: var( --color-syntax-green );
+		}
+
+		.dl {
+			color: var( --color-syntax-green );
+		}
+
+		.sd {
+			color: var( --color-syntax-green );
+		}
+
+		.s2 {
+			color: var( --color-syntax-green );
+		}
+
+		.se {
+			font-weight: normal; // reset bold styles
+			color: var( --color-base );
+		}
+
+		.sh {
+			color: var( --color-syntax-green );
+		}
+
+		.si {
+			font-weight: normal; // reset bold styles
+			color: var( --color-emphasized );
+		}
+
+		.sx {
+			color: var( --color-syntax-orange );
+		}
+
+		.sr {
+			color: var( --color-emphasized );
+		}
+
+		.s1 {
+			color: var( --color-syntax-green );
+		}
+
+		.ss {
+			color: var( --color-syntax-cyan );
+		}
+
+		.bp {
+			color: var( --color-syntax-orange );
+		}
+
+		.fm {
+			color: var( --color-syntax-blue );
+		}
+
+		.vc {
+			color: var( --color-emphasized );
+		}
+
+		.vg {
+			color: var( --color-emphasized );
+		}
+
+		.vi {
+			color: var( --color-emphasized );
+		}
+
+		.vm {
+			color: var( --color-emphasized );
+		}
+
+		.il {
+			color: var( --color-syntax-orange );
+		}
+
+		.p {
+			color: var( --color-syntax-cyan );
+		}
+
+		.n {
+			color: var( --color-emphasized );
+		}
+
+		.nx {
+			color: var( --color-emphasized );
+		}
+
+		/* pygments.wrapper.less */
+		// MW REL1_36+
+		&-lines pre,
+		.content &-lines pre {
+			.mw-content-ltr&,
+			.mw-content-rtl& {
+				box-shadow: none; // Remove background
+			}
+		}
+
+		.linenos {
+			color: var( --color-subtle );
+		}
+
+		a:hover .linenos,
+		.hll a .linenos {
+			color: var( --color-emphasized );
+		}
+
+		.hll {
+			background-color: var( --background-color-warning-subtle );
+		}
 	}
 }
