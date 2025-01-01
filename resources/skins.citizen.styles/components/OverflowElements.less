@@ -62,6 +62,12 @@
 			.mask-gradient(90deg, transparent, #000 var( --overflow-gradient-size ), #000 ~'calc( 100% - var( --overflow-gradient-size ) )', transparent);
 		}
 
+		&:has( .citizen-overflow-content-sticky-header ) {
+			// We need to apply mask-image to hide the fixed position sticky header (#991)
+			-webkit-mask-image: linear-gradient( 90deg, #000, #000 );
+			mask-image: linear-gradient( 90deg, #000, #000 );
+		}
+
 		&-sticky-header {
 			--citizen-overflow-scroll-x: 0; // default value to be overriden
 			position: fixed;
