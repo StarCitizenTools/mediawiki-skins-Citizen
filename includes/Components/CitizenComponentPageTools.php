@@ -154,6 +154,7 @@ class CitizenComponentPageTools implements CitizenComponent {
 			 */
 			'is-uls-ready' => false,
 			'int-language-count' => $this->numLanguages,
+			'is-sharable' => $this->title->exists() && $this->title->isContentPage(),
 			'msg-citizen-share' => $this->localizer->msg( "citizen-share" )->text()
 		];
 	}

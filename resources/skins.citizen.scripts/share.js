@@ -4,13 +4,9 @@
  * @return {void}
  */
 function init() {
-	if ( !mw.config.get( 'wgIsArticle' ) ) {
-		return;
-	}
-
 	const shareButton = document.getElementById( 'citizen-share' );
 	if ( !shareButton ) {
-		mw.log.error( '[Citizen] Unable to find share button (#shareButton not found)' );
+		// Citizen will not add the citizen-share element if the share button is undesirable
 		return;
 	}
 
