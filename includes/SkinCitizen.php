@@ -238,13 +238,6 @@ class SkinCitizen extends SkinMustache {
 			) {
 				$options['bodyClasses'][] = 'citizen-sections-enabled';
 			}
-
-			// Add a HTML class to indicate the page is a main page
-			// T363281
-			// TODO: Remove this when we move to 1.43 because this is in core
-			if ( $title->isMainPage() ) {
-				$options['bodyClasses'][] = 'page-Main_Page';
-			}
 		}
 
 		// CJK fonts
