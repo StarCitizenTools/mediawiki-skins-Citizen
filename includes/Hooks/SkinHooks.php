@@ -158,16 +158,16 @@ class SkinHooks implements
 		if ( isset( $result['veeditsection'] ) ) {
 			self::appendClassToItem(
 				$result['veeditsection']['attribs']['class'],
-				'citizen-editsection-icon mw-ui-icon-wikimedia-edit'
+				'citizen-ui-icon mw-ui-icon-wikimedia-edit'
 			);
 			self::appendClassToItem(
 				$result['editsection']['attribs']['class'],
-				'citizen-editsection-icon mw-ui-icon-wikimedia-wikiText'
+				'citizen-ui-icon mw-ui-icon-wikimedia-wikiText'
 			);
 		} elseif ( isset( $result['editsection'] ) ) {
 			self::appendClassToItem(
 				$result['editsection']['attribs']['class'],
-				'citizen-editsection-icon mw-ui-icon-wikimedia-edit'
+				'citizen-ui-icon mw-ui-icon-wikimedia-edit'
 			);
 		}
 	}
