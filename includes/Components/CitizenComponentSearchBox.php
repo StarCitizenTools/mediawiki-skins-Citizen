@@ -4,7 +4,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Components;
 
-use ExtensionRegistry;
+use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\Skin\SkinComponentUtils;
 use MessageLocalizer;
 

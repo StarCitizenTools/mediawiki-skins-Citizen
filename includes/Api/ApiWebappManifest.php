@@ -22,13 +22,13 @@
 
 namespace MediaWiki\Skins\Citizen\Api;
 
-use ApiBase;
-use ApiMain;
 use Exception;
+use MediaWiki\Api\ApiBase;
+use MediaWiki\Api\ApiMain;
 use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\SpecialPage\SpecialPage;
 use MediaWiki\Title\Title;
-use SpecialPage;
 
 /**
  * Based on the MobileFrontend extension

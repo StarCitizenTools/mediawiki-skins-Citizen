@@ -25,8 +25,8 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen;
 
-use ConfigException;
-use OutputPage;
+use MediaWiki\Config\ConfigException;
+use MediaWiki\Output\OutputPage;
 
 trait GetConfigTrait {
 

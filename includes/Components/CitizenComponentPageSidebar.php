@@ -4,12 +4,12 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Components;
 
-use Language;
+use MediaWiki\Language\Language;
+use MediaWiki\Output\OutputPage;
 use MediaWiki\StubObject\StubUserLang;
 use MediaWiki\Title\Title;
 use MediaWiki\User\UserIdentity;
 use MessageLocalizer;
-use OutputPage;
 
 /**
  * CitizenComponentPageSidebar component

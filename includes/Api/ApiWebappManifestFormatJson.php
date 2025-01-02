@@ -22,7 +22,7 @@
 
 namespace MediaWiki\Skins\Citizen\Api;
 
-use ApiFormatJson;
+use MediaWiki\Api\ApiFormatJson;
 
 /**
  * T282500

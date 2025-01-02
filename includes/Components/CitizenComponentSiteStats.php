@@ -4,13 +4,13 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Components;
 
-use Config;
 use IntlException;
-use Language;
+use MediaWiki\Config\Config;
+use MediaWiki\Language\Language;
+use MediaWiki\SiteStats\SiteStats;
 use MediaWiki\StubObject\StubUserLang;
 use MessageLocalizer;
 use NumberFormatter;
-use SiteStats;
 
 /**
  * CitizenComponentSiteStats component
