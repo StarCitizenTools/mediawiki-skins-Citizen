@@ -40,24 +40,16 @@
 			align-items: center;
 			padding: var( --space-xs ) var( --space-md );
 			font-weight: var( --font-weight-medium );
-			color: var( --color-emphasized );
+			color: var( --color-base );
 			transition: var( --transition-hover );
 			transition-property: opacity;
 
 			&:hover {
 				background-color: var( --background-color-button-quiet--hover );
-
-				.citizen-ui-icon::before {
-					opacity: var( --opacity-icon-base--hover );
-				}
 			}
 
 			&:active {
 				background-color: var( --background-color-button-quiet--active );
-
-				.citizen-ui-icon::before {
-					opacity: var( --opacity-icon-base--selected );
-				}
 			}
 
 			&:hover,
@@ -83,11 +75,11 @@
 		width: 100%;
 		height: 100%;
 		content: '';
-		filter: var( --filter-invert );
-		background-repeat: no-repeat;
-		background-position: center;
-		background-size: contain;
-		opacity: var( --opacity-icon-base );
+		background-color: currentcolor;
+		background-image: none !important; // In case if there are other OOUI icon modules
+		mask-repeat: no-repeat;
+		mask-position: center;
+		mask-size: contain;
 	}
 }
 

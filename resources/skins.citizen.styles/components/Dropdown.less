@@ -35,18 +35,10 @@
 
 		&:hover {
 			background-color: var( --background-color-button-quiet--hover );
-
-			> .citizen-ui-icon::before {
-				opacity: var( --opacity-icon-base--hover );
-			}
 		}
 
 		&:active {
 			background-color: var( --background-color-button-quiet--active );
-
-			> .citizen-ui-icon::before {
-				opacity: var( --opacity-icon-base--selected );
-			}
 		}
 
 		// Remove Safari summary marker
@@ -59,10 +51,6 @@
 		@media ( hover: none ) {
 			&:hover {
 				background-color: transparent;
-
-				.citizen-ui-icon::before {
-					opacity: var( --opacity-icon-base );
-				}
 			}
 		}
 	}

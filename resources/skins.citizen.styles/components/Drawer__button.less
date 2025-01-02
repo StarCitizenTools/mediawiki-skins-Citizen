@@ -12,10 +12,8 @@
 				width: 1.125rem;
 				height: 0.125rem;
 				margin: 0.09375rem 0;
-				background-color: #000;
-				filter: var( --filter-invert );
+				background-color: var( --color-base );
 				border-radius: var( --border-radius-large );
-				opacity: var( --opacity-icon-base );
 				transition: inherit;
 				transform-origin: 0.25rem 0;
 
@@ -37,19 +35,9 @@
 		&:hover {
 			> .citizen-ui-icon {
 				> span {
-					opacity: var( --opacity-icon-base--hover );
-
 					&:first-child {
 						transform: translate3d( -50%, 0, 0 );
 					}
-				}
-			}
-		}
-
-		&:active {
-			> .citizen-ui-icon {
-				> span {
-					opacity: var( --opacity-icon-base--selected );
 				}
 			}
 		}

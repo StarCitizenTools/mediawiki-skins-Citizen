@@ -33,6 +33,9 @@
 			height: var( --header-icon-size );
 			overflow: hidden; // Sometimes CSS animation can clip
 			filter: var( --filter-invert );
+			opacity: var( --opacity-icon-base );
+			transition: var( --transition-hover );
+			transition-property: transform, opacity;
 			contain: strict;
 		}
 
@@ -41,17 +44,9 @@
 			margin: auto;
 		}
 
-		&Icon,
-		.citizen-ui-icon::before {
-			opacity: var( --opacity-icon-base );
-			transition: var( --transition-hover );
-			transition-property: transform, opacity;
-		}
-
 		&:hover {
 			background-color: var( --background-color-button-quiet--hover );
 
-			.citizen-ui-icon::before,
 			.citizen-header__buttonIcon {
 				opacity: var( --opacity-icon-base--hover );
 			}
@@ -60,7 +55,6 @@
 		&:active {
 			background-color: var( --background-color-button-quiet--active );
 
-			.citizen-ui-icon::before,
 			.citizen-header__buttonIcon {
 				opacity: var( --opacity-icon-base--selected );
 			}

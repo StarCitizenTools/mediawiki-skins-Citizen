@@ -340,6 +340,7 @@
 			"useDataURI": false,
 			"defaultColor": "#000",
 			"class": "MediaWiki\\ResourceLoader\\OOUIIconPackModule",
+			"useMaskImage": true,
 			"variants": {},
 			"icons": [
 				"arrowPrevious",
@@ -389,6 +390,7 @@
 				"speechBubbles",
 				"star",
 				"trash",
+				"tray",
 				"unLock",
 				"unStar",
 				"upload",

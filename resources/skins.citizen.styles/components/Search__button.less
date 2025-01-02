@@ -11,9 +11,8 @@
 
 			> span {
 				position: relative;
-				filter: var( --filter-invert );
+				color: var( --color-base );
 				border-radius: var( --border-radius-base );
-				opacity: var( --opacity-icon-base );
 				transition: inherit;
 
 				&:first-child {
@@ -30,7 +29,7 @@
 					margin-top: -0.3125rem;
 					/* @noflip */
 					margin-left: -0.125rem;
-					border: 0.125rem solid #000;
+					border: 0.125rem solid currentcolor;
 					border-radius: 100%;
 					transform: rotate( -45deg );
 				}
@@ -45,7 +44,7 @@
 				&:first-child,
 				&:last-child {
 					width: 0.125rem;
-					background-color: #000;
+					background-color: currentcolor;
 				}
 			}
 
@@ -58,23 +57,9 @@
 		&:hover {
 			> .citizen-ui-icon {
 				> span {
-					&:not( :last-child ) {
-						opacity: var( --opacity-icon-base--hover );
-					}
-
 					&:first-child {
 						height: 0.375rem;
 						transform: translate3d( 0.125rem, 0.125rem, 0 ) rotate( -45deg );
-					}
-				}
-			}
-		}
-
-		&:active {
-			> .citizen-ui-icon {
-				> span {
-					&:not( :last-child ) {
-						opacity: var( --opacity-icon-base--selected );
 					}
 				}
 			}
@@ -95,7 +80,7 @@
 					}
 
 					&:last-child {
-						opacity: var( --opacity-icon-base );
+						opacity: 1;
 					}
 				}
 			}
