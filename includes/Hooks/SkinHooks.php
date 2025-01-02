@@ -26,12 +26,12 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Hooks;
 
 use ExtensionRegistry;
-use MediaWiki\Html\Html;
 use Language;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\SidebarBeforeOutputHook;
 use MediaWiki\Hook\SkinBuildSidebarHook;
 use MediaWiki\Hook\SkinEditSectionLinksHook;
+use MediaWiki\Html\Html;
 use MediaWiki\ResourceLoader as RL;
 use MediaWiki\Skin\SkinComponentUtils;
 use MediaWiki\Skins\Citizen\GetConfigTrait;
