@@ -4,13 +4,8 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Components;
 
-/**
- * TODO: Update to new classes when we move to MW 1.43
- * - MediaWiki\Html\Html
- * - MediaWiki\Linker\Linker
- */
-use Html;
-use Linker;
+use MediaWiki\Html\Html;
+use MediaWiki\Linker\Linker;
 use MessageLocalizer;
 
 /**

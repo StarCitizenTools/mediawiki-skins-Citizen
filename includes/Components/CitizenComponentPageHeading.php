@@ -5,12 +5,12 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Components;
 
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Skin\SkinComponentUtils;
 use MediaWiki\Title\Title;
 use MediaWiki\User\UserIdentity;
 use MessageLocalizer;
 use MWTimestamp;
 use OutputPage;
-use SpecialPage;
 use Wikimedia\IPUtils;
 
 /**
@@ -119,8 +119,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 
 			if ( $editCount ) {
 				$msgEditCount = $localizer->msg( 'usereditcount' )->numParams( sprintf( '%s', number_format( $editCount, 0 ) ) );
-				// TODO: Replace with SkinComponentUtils on 1.43
-				$editCountHref = SpecialPage::getTitleFor( 'Contributions', $user )->getLocalURL();
+				$editCountHref = SkinComponentUtils::makeSpecialUrlSubpage( 'Contributions', $user );
 				$tagline .= "<span id=\"citizen-tagline-user-editcount\" data-user-editcount=\"$editCount\"><a href=\"$editCountHref\">$msgEditCount</a></span>";
 			}
 
