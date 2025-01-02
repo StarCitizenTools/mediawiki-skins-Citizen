@@ -5,8 +5,8 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Components;
 
 use Exception;
-use MediaWiki\MediaWikiServices;
 use MediaWiki\Config\Config;
+use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 use MediaWiki\User\UserIdentity;
 use MessageLocalizer;

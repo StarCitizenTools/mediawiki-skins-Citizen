@@ -25,19 +25,19 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Hooks;
 
-use MediaWiki\Language\Language;
 use MediaWiki\Hook\BeforePageDisplayHook;
 use MediaWiki\Hook\SidebarBeforeOutputHook;
 use MediaWiki\Hook\SkinBuildSidebarHook;
 use MediaWiki\Hook\SkinEditSectionLinksHook;
 use MediaWiki\Html\Html;
-use MediaWiki\ResourceLoader as RL;
+use MediaWiki\Language\Language;
+use MediaWiki\Output\OutputPage;
 use MediaWiki\Registration\ExtensionRegistry;
+use MediaWiki\ResourceLoader as RL;
 use MediaWiki\Skin\SkinComponentUtils;
 use MediaWiki\Skins\Citizen\GetConfigTrait;
 use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;
 use MediaWiki\Title\Title;
-use MediaWiki\Output\OutputPage;
 use Skin;
 use SkinTemplate;
 

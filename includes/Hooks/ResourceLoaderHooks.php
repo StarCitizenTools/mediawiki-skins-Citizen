@@ -25,10 +25,10 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Hooks;
 
-use MediaWiki\MainConfigNames;
-use MediaWiki\ResourceLoader as RL;
 use MediaWiki\Config\Config;
+use MediaWiki\MainConfigNames;
 use MediaWiki\Registration\ExtensionRegistry;
+use MediaWiki\ResourceLoader as RL;
 
 /**
  * Hooks to run relating to the resource loader
