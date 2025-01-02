@@ -32,9 +32,10 @@
 			"args": [
 				{
 					"name": "citizen",
-					"supportsMwHeading": true,
 					"responsive": true,
+					"supportsMwHeading": true,
 					"toc": false,
+					"wrapSiteNotice": true,
 					"link": {
 						"text-wrapper": {
 							"tag": "span"
