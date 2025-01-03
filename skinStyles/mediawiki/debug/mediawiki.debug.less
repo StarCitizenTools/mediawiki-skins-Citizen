@@ -3,15 +3,16 @@
  *
  * SkinStyles for MediaWiki core
  * Module: mediawiki.debug
- * Version: REL1_39 3baf9e1
+ * Version: REL1_43
  *
- * Date: 2022-11-16
+ * Date: 2025-01-03
 */
 
 @import '../../../resources/variables.less';
 
 /* $wgDebugToolbar = true; */
 #jquery-foot-hovzer {
+	z-index: @z-index-toolbar;
 	// @see https://caniuse.com/mdn-css_properties_width_stretch
 	width: -webkit-fill-available;
 	width: -moz-available;
@@ -35,11 +36,6 @@
 			&:nth-child( even ) {
 				background-color: var( --color-surface-2 );
 			}
-		}
-
-		td,
-		th {
-			// padding: 4px 10px;
 		}
 
 		td {
