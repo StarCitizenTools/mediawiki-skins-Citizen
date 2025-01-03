@@ -5,18 +5,8 @@
 
 @import 'variables.less';
 
-.citizen-card(@border-radius: true) {
-	background-color: var( --color-surface-1 );
-	border: var( --border-width-base ) solid var( --border-color-base );
-	box-shadow: var( --box-shadow-drop-xx-large );
-
-	& when (@border-radius ) {
-		border-radius: var( --border-radius-medium );
-	}
-}
-
 // Header card popups
-.citizen-header-card(@position ) {
+.mixin-citizen-header-card(@position ) {
 	position: absolute;
 	right: 0;
 	bottom: 100%;
@@ -48,11 +38,11 @@
 	}
 }
 
-.sticky-header-element {
+.mixin-citizen-sticky-header-element() {
 	top: var( --height-sticky-header ) !important;
 }
 
-.citizen-sticky-header-background() {
+.mixin-citizen-sticky-header-background() {
 	&::before {
 		position: absolute;
 		top: 0;
@@ -68,11 +58,11 @@
 	}
 }
 
-.citizen-sticky-header(@bottomBorder: true, @zIndex: true) {
+.mixin-citizen-sticky-header(@bottomBorder: true, @zIndex: true) {
 	position: -webkit-sticky;
 	position: sticky;
-	.sticky-header-element;
-	.citizen-sticky-header-background;
+	.mixin-citizen-sticky-header-element;
+	.mixin-citizen-sticky-header-background;
 
 	& when (@bottomBorder ) {
 		box-shadow: 0 1px 0 0 var( --border-color-base );
@@ -84,7 +74,7 @@
 }
 
 // To hide objects, but keep them accessible for screen-readers
-.sr-only() {
+.mixin-citizen-screen-reader-only() {
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -93,37 +83,31 @@
 	white-space: nowrap;
 }
 
-// Set content to be at the center
-.content-center() {
-	max-width: var( --width-layout );
-	margin-inline: auto;
-}
-
 // Button Styles
-.button-progressive() {
+.mixin-citizen-button-progressive() {
 	color: var( --color-inverted-primary ) !important;
 	background-color: var( --color-progressive );
+
+	&:hover {
+		background-color: var( --color-progressive--hover );
+	}
+
+	&:active {
+		background-color: var( --color-progressive--active );
+	}
 }
 
-.button-progressive-hover() {
-	background-color: var( --color-progressive--hover );
-}
-
-.button-progressive-active() {
-	background-color: var( --color-progressive--active );
-}
-
-.button-destructive() {
+.mixin-citizen-button-destructive() {
 	color: var( --color-inverted-fixed ) !important;
 	background-color: var( --color-destructive );
-}
 
-.button-destructive-hover() {
-	background-color: var( --color-destructive--hover );
-}
+	&:hover {
+		background-color: var( --color-destructive--hover );
+	}
 
-.button-destructive-active() {
-	background-color: var( --color-destructive--active );
+	&:active {
+		background-color: var( --color-destructive--active );
+	}
 }
 
 // Transform black into given color

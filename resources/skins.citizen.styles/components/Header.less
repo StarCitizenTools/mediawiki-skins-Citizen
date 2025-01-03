@@ -100,7 +100,7 @@
 
 		// Hide top-level menu header labels
 		> .citizen-menu > .citizen-menu__heading {
-			.sr-only;
+			.mixin-citizen-screen-reader-only;
 		}
 	}
 
@@ -133,7 +133,7 @@
 	// Echo badge styles do not load before init in 1.39
 	.citizen-echo-notification-badge {
 		.citizen-ui-icon + span {
-			.sr-only;
+			.mixin-citizen-screen-reader-only;
 		}
 	}
 }

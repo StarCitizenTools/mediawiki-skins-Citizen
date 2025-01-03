@@ -1,7 +1,7 @@
 .citizen-userMenu {
 	.citizen-menu__card {
 		.citizen-menu__heading {
-			.sr-only;
+			.mixin-citizen-screen-reader-only;
 		}
 	}
 }
@@ -23,28 +23,12 @@
 
 #pt-login {
 	a {
-		.button-progressive;
-
-		&:hover {
-			.button-progressive-hover;
-		}
-
-		&:active {
-			.button-progressive-active;
-		}
+		.mixin-citizen-button-progressive;
 	}
 }
 
 #pt-logout {
 	a {
-		.button-destructive;
-
-		&:hover {
-			.button-destructive-hover;
-		}
-
-		&:active {
-			.button-destructive-active;
-		}
+		.mixin-citizen-button-destructive;
 	}
 }

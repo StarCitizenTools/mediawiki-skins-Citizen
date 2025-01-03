@@ -30,7 +30,7 @@
 
 		// Icons have to use span inside label elements
 		> span:not( .citizen-ui-icon ) {
-			.sr-only;
+			.mixin-citizen-screen-reader-only;
 		}
 
 		&:hover {
@@ -86,7 +86,7 @@
 	}
 
 	.citizen-header__end & .citizen-menu__card {
-		.citizen-header-card( end );
+		.mixin-citizen-header-card( end );
 		transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-end );
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {
