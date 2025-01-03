@@ -3,116 +3,50 @@
  *
  * SkinStyles for MediaWiki
  * Module: mediawiki.special.userlogin.signup.styles
- * Version: REL1_39
+ * Version: REL1_43
  *
- * Date: 2022-11-23
+ * Date: 2025-01-03
 */
 
-@import '../../resources/variables.less';
-
-.mw-ui-container {
-	// No need for float clear since we are using flex
-	&::after {
-		display: none;
-	}
-
-	#signupstart {
-		grid-area: message;
-	}
-
-	#userloginForm {
-		grid-area: form;
-		/* Fix weird margin issue */
-		padding-top: 0;
-		padding-bottom: var( --space-xs );
-		margin-right: 0;
-	}
-}
-
-.mw-body-content > .mw-ui-container {
-	display: grid;
-	grid-template-areas:
- 'message'
-		'stats'
-		'form';
-	gap: 0 var( --space-md );
-}
+@import '../../../resources/variables.less';
 
 .mw-createacct-benefits {
 	&-container {
-		grid-area: stats;
-		padding-bottom: var( --space-md );
-
-		h2 {
-			margin: 0;
-			font-size: 1rem;
-			font-weight: var( --font-weight-semi-bold );
-		}
+		background: var( --color-surface-2 );
 	}
 
-	&-list {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var( --space-lg );
-		margin-top: var( --space-lg );
-
-		.mw-number-text {
-			min-height: auto;
-			padding-left: 3rem;
-			margin: 0;
-			font-size: var( --font-size-x-small );
-			line-height: var( --line-height-xxx-small );
-			color: var( --color-subtle );
-			text-align: start;
-			background-size: 2.5rem;
-
-			h3 {
-				font-family: var( --font-family-base );
-				font-size: 1.125rem;
-				font-weight: var( --font-weight-semi-bold );
-				line-height: 1;
-				color: var( --color-emphasized );
-				text-align: start;
-			}
-
-			p {
-				margin: var( --space-xxs ) 0 0 0;
-			}
-		}
+	&-heading {
+		max-width: @size-2400;
+		padding: 0;
+		margin-block: 0 var( --space-md );
+		font-family: var( --font-family-base );
+		font-size: var( --font-size-xxx-large );
+		font-weight: var( --font-weight-semi-bold );
+		line-height: var( --line-height-xs );
+		color: var( --color-emphasized );
 	}
 }
 
-@media ( min-width: @min-width-breakpoint-tablet ) {
-	.mw-body-content > .mw-ui-container {
-		grid-template-areas:
- 'message message'
-			'form stats';
-	}
+.mw-body-content {
+	.mw-number-text {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		padding-left: calc( 80px + var( --space-xl ) ); // 80px is the background size
+		font-size: var( --font-size-medium );
+		text-align: start;
 
-	.mw-createacct-benefits {
-		&-container {
-			padding-top: var( --space-md );
-			padding-bottom: 0;
-			padding-left: var( --space-md );
-
-			h2 {
-				max-width: 20rem;
-				font-size: var( --font-size-xxx-large );
-			}
+		span {
+			font-family: var( --font-family-base );
+			font-size: var( --font-size-xxx-large );
+			font-weight: var( --font-weight-semi-bold );
+			line-height: var( --line-height-xs );
+			color: var( --color-emphasized );
+			text-align: inherit;
 		}
 
-		&-list {
-			flex-direction: column;
-			margin-top: var( --space-xxl );
-
-			.mw-number-text {
-				padding-left: 5rem;
-				background-size: 4rem;
-
-				h3 {
-					font-size: var( --font-size-xxx-large );
-				}
-			}
+		p {
+			margin: 0;
 		}
 	}
 }
