@@ -17,12 +17,6 @@
 	text-overflow: ellipsis;
 }
 
-// #contentSub can be empty
-#contentSub:not( :empty ),
-#contentSub2 {
-	margin-bottom: var( --space-md );
-}
-
 // Reduced spacing if both sub1 and 2 exists
 #contentSub + #contentSub2 {
 	margin-top: ~'calc( var( --space-xs ) * -1 )';
