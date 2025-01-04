@@ -97,86 +97,74 @@ These extensions are optional. They are recommended to enable additional feature
 
 ## Extension styles
 Citizen overrides some extension styles through skinStyles that applies custom styling to extensions and core libraries.
-
-- **Grade A - Overhaul** - Major adjustments to UI, plus Grade B.
-- **Grade B - Dynamic** - Colors are converted into CSS variables, little to none style adjustments.
-- **Grade E - Legacy** - Dark mode colors are hardcored as LESS variables. These should be updated to at least Grade B support.
-
 Please feel free to submit PRs if you want to add support for more extensions!
 
-### Core
-Name | Grade | Version | Last updated
-:--- | :--- | :--- | :---
-MediaWiki UI | A | 1.39.0 | 2023-07-04
-Codex | A | 0.1.1 | 2022-12-01
-OOUI | A | 0.44.3 | 2023-06-24
-
 ### Extensions
-Name | Grade | Version | Last updated
-:--- | :--- | :--- | :---
-[AccountInfo](https://www.mediawiki.org/wiki/Extension:AccountInfo) | A | REL1_39 `3145de8` | 2024-07-13
-[AdvancedSearch](https://www.mediawiki.org/wiki/Extension:AdvancedSearch) | B | REL1_39 `3a0eed7` | 2022-12-12
-[AJAXPoll](https://www.mediawiki.org/wiki/Extension:AJAXPoll) | A | REL1_39 `8429d8d` | 2022-10-25
-[ApprovedRevs](https://www.mediawiki.org/wiki/Extension:Approved_Revs) | B | N/A | N/A
-[Babel](https://www.mediawiki.org/wiki/Extension:Babel) | B | MLEB 2021.07 | 2021-07-29
-[Capiunto](https://www.mediawiki.org/wiki/Extension:Capiunto) | A | REL1_39 `3a6d523` | 2023-07-14
-[Cargo](https://www.mediawiki.org/wiki/Extension:Cargo) | B | REL1_39 `b4c6314` | 2023-01-03
-[CategoryTree](https://www.mediawiki.org/wiki/Extension:CategoryTree) | B | N/A | N/A
-[CentralNotice](https://www.mediawiki.org/wiki/Extension:CentralNotice) | B | REL1_35 `4aa2a8f` | 2022-06-16
-[Cite](https://www.mediawiki.org/wiki/Extension:Cite) | A | N/A | N/A
-[CiteThisPage](https://www.mediawiki.org/wiki/Extension:CiteThisPage) | A | REL1_39 `1d21f67` | 2024-07-08
-[CleanChanges](https://www.mediawiki.org/wiki/Extension:CleanChanges) | B | MLEB 2021.07 | 2021-07-29
-[CodeEditor](https://www.mediawiki.org/wiki/Extension:CodeEditor) | A | REL1_39 `67c012c` | 2023-06-03
-[CodeMirror](https://www.mediawiki.org/wiki/Extension:CodeMirror) | A | REL1_35 `a326407` | 2023-05-24
-[CommentStreams](https://www.mediawiki.org/wiki/Extension:CommentStreams) | B | REL1_39 `f75ff3b` | 2023-06-02
-[CookieWarning](https://www.mediawiki.org/wiki/Extension:CookieWarning) | A | REL1_39 `021d9ea` | 2023-07-30
-[DataMaps](https://www.mediawiki.org/wiki/Extension:DataMaps) | A | 0.17.7 `9c448d3` | 2024-07-11
-[DiscussionTools](https://www.mediawiki.org/wiki/Extension:DiscussionTools) | A | REL1_39 `1aae2cc` | 2023-06-19
-[DismissableSiteNotice](https://www.mediawiki.org/wiki/Extension:DismissableSiteNotice) | A | N/A | N/A
-[Echo](https://www.mediawiki.org/wiki/Extension:Echo) | A | REL1_35 `347c30e` | 2023-06-29
-[FloatingUI](https://www.mediawiki.org/wiki/Extension:FloatingUI) | A | 0.0.1 | 2024-09-04
-[Flow (StructuredDiscussions)](https://www.mediawiki.org/wiki/Extension:StructuredDiscussions) | B | REL1_35 `e3379f0` | 2022-04-27
-[FlaggedRevs](https://www.mediawiki.org/wiki/Extension:FlaggedRevs) | B | REL1_39 `130a28f` | 2023-08-03
-[Graph](https://www.mediawiki.org/wiki/Extension:Graph) | B | N/A | N/A
-[Interwiki](https://www.mediawiki.org/wiki/Extension:Interwiki) | B | REL1_35 `a65a18e` | 2022-05-15
-[Lingo](https://www.mediawiki.org/wiki/Extension:Lingo) | B | REL1_35 `e948775` | 2022-04-29
-[Math](https://www.mediawiki.org/wiki/Extension:Math) | B | REL1_35 `b7a7939` | 2023-06-04
-[ManageWiki](https://www.mediawiki.org/wiki/Extension:ManageWiki) | B | master `e626a9f` | 2023-06-02
-[MediaSearch](https://www.mediawiki.org/wiki/Extension:MediaSearch) | A | REL1_39 `e0aa7bb` | 2022-12-09
-[MsUpload](https://www.mediawiki.org/wiki/Extension:MsUpload) | A | REL1_35 `32eb420` | 2021-08-25
-[MultimediaViewer](https://www.mediawiki.org/wiki/Extension:MultimediaViewer) | A | REL1_39 `1b97775` | 2022-11-26
-[OAuth](https://www.mediawiki.org/wiki/Extension:OAuth) | B | REL1_35 `451ed95` | 2021-08-31
-[Popups](https://www.mediawiki.org/wiki/Extension:Popups) | A | REL1_39 `a40ebc1` | 2024-10-05
-[PortableInfobox](https://www.mediawiki.org/wiki/Extension:PortableInfobox) | A | 0.6 `16a77dc` | 2024-04-17
-[RelatedArticles](https://www.mediawiki.org/wiki/Extension:RelatedArticles) | A | REL1_39 `f513e5c` | 2022-11-16
-[ReplaceText](https://www.mediawiki.org/wiki/Extension:ReplaceText) | B | REL1_39 `af4840a` | 2023-01-03
-[RevisionSlider](https://www.mediawiki.org/wiki/Extension:RevisionSlider) | B | REL1_35 `4c4e368` | 2022-06-02
-[Score](https://www.mediawiki.org/wiki/Extension:Score) | B | REL1_39 `0a66cef` | 2023-06-10
-[Scribunto](https://www.mediawiki.org/wiki/Extension:Scribunto) | B | REL1_39 `ebb91f2` | 2023-05-29
-[SearchDigest](https://www.mediawiki.org/wiki/Extension:SearchDigest) | A | Master `ddd4665` | 2024-07-05
-[Semantic MediaWiki](https://www.mediawiki.org/wiki/Extension:Semantic_MediaWiki) | A | 4.0.2 `0fcdfce` | 2022-10-21
-[Semantic Result Formats](https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats) | E | N/A | N/A
-[SimpleTooltip](https://www.mediawiki.org/wiki/Extension:SimpleTooltip) | B | N/A | 2022-02-19
-[SmiteSpam](https://www.mediawiki.org/wiki/Extension:SmiteSpam) | B | REL1_39 `c81b04b` | 2023-05-30
-[StructuredNavigation](https://www.mediawiki.org/wiki/Extension:StructuredNavigation) | A | REL1_39 `55e2ec0` | 2024-09-06
-[SyntaxHighlight](https://www.mediawiki.org/wiki/Extension:SyntaxHighlight) | A | REL1_35 `05598b3` | 2023-05-22
-[Tabs](https://www.mediawiki.org/wiki/Extension:Tabs) | A | REL1_39 `63ccef2` | 2023-07-11
-[Tabber](https://www.mediawiki.org/wiki/Extension:Tabber) | A | N/A | N/A
-[TabberNeue](https://www.mediawiki.org/wiki/Extension:TabberNeue) | A | 2.6.0 | 2024-11-16
-[TemplateData](https://www.mediawiki.org/wiki/Extension:TemplateData) | A | REL1_39 `7f8c5a8` | 2024-08-19
-[TimedMediaHandler](https://www.mediawiki.org/wiki/Extension:TimedMediaHandler) | B | N/A | N/A
-[TinyMCE](https://www.mediawiki.org/wiki/Extension:TinyMCE) | A | 1.1.2 | 2024-12-19
-[Translate](https://www.mediawiki.org/wiki/Extension:Translate) | A | MLEB 2023.01 | 2023-02-17
-[TwoColConflict](https://www.mediawiki.org/wiki/Extension:TwoColConflict) | B | REL1_39 5a2a947 | 2023-01-09
-[UniversalLanguageSelector](https://www.mediawiki.org/wiki/Extension:UniversalLanguageSelector) | B | MLEB 2021.12 | 2022-05-17
-[UploadWizard](https://www.mediawiki.org/wiki/Extension:UploadWizard) | A | REL1_39 `9cd7a02` | 2023-01-08
-[UserProfileV2](https://gitlab.com/telepedia/extensions/userprofilev2) | A | Main `effb3b1` | 2024-07-25
-[VEForAll](https://www.mediawiki.org/wiki/Extension:VEForAll) | B | REL1_39 `0de7158` | 2023-05-27
-[VisualEditor](https://www.mediawiki.org/wiki/Extension:VisualEditor) | A | REL1_39 `65d89c9` | 2023-02-06
-[Wikibase](https://www.mediawiki.org/wiki/Extension:Wikibase) | B | REL1_35 `7bb503b` | 2022-05-11
-[WikiEditor](https://www.mediawiki.org/wiki/Extension:WikiEditor) | A | REL1_39 `02e1c70` | 2023-06-03
-[WikiHiero](https://www.mediawiki.org/wiki/Extension:WikiHiero) | B | REL1_39 `3a2be51` | 2023-06-04
-[WSSearchFront](https://www.mediawiki.org/wiki/Extension:WSSearchFront) | B | 3.5.4 `c27ebcb5` | 2021-11-23
+Name | Version
+:--- | :---
+[AccountInfo](https://www.mediawiki.org/wiki/Extension:AccountInfo) | REL1_39 `3145de8`
+[AdvancedSearch](https://www.mediawiki.org/wiki/Extension:AdvancedSearch) | REL1_39 `3a0eed7`
+[AJAXPoll](https://www.mediawiki.org/wiki/Extension:AJAXPoll) | REL1_39 `8429d8d`
+[ApprovedRevs](https://www.mediawiki.org/wiki/Extension:Approved_Revs) | N/A
+[Babel](https://www.mediawiki.org/wiki/Extension:Babel) | MLEB 2021.07
+[Capiunto](https://www.mediawiki.org/wiki/Extension:Capiunto) | REL1_39 `3a6d523`
+[Cargo](https://www.mediawiki.org/wiki/Extension:Cargo) | REL1_39 `b4c6314`
+[CategoryTree](https://www.mediawiki.org/wiki/Extension:CategoryTree) | N/A
+[CentralNotice](https://www.mediawiki.org/wiki/Extension:CentralNotice) | REL1_35 `4aa2a8f`
+[Cite](https://www.mediawiki.org/wiki/Extension:Cite) | N/A
+[CiteThisPage](https://www.mediawiki.org/wiki/Extension:CiteThisPage) | REL1_39 `1d21f67`
+[CleanChanges](https://www.mediawiki.org/wiki/Extension:CleanChanges) | MLEB 2021.07
+[CodeEditor](https://www.mediawiki.org/wiki/Extension:CodeEditor) | REL1_39 `67c012c`
+[CodeMirror](https://www.mediawiki.org/wiki/Extension:CodeMirror) | REL1_43
+[CommentStreams](https://www.mediawiki.org/wiki/Extension:CommentStreams) | REL1_39 `f75ff3b`
+[CookieWarning](https://www.mediawiki.org/wiki/Extension:CookieWarning) | REL1_39 `021d9ea`
+[DataMaps](https://www.mediawiki.org/wiki/Extension:DataMaps) | 0.17.7 `9c448d3`
+[DiscussionTools](https://www.mediawiki.org/wiki/Extension:DiscussionTools) | REL1_39 `1aae2cc`
+[DismissableSiteNotice](https://www.mediawiki.org/wiki/Extension:DismissableSiteNotice) | N/A
+[Echo](https://www.mediawiki.org/wiki/Extension:Echo) | REL1_35 `347c30e`
+[FloatingUI](https://www.mediawiki.org/wiki/Extension:FloatingUI) | 0.0.1
+[Flow (StructuredDiscussions)](https://www.mediawiki.org/wiki/Extension:StructuredDiscussions) | REL1_35 `e3379f0`
+[FlaggedRevs](https://www.mediawiki.org/wiki/Extension:FlaggedRevs) | REL1_39 `130a28f`
+[Graph](https://www.mediawiki.org/wiki/Extension:Graph) | N/A
+[Interwiki](https://www.mediawiki.org/wiki/Extension:Interwiki) | REL1_35 `a65a18e`
+[Lingo](https://www.mediawiki.org/wiki/Extension:Lingo) | REL1_35 `e948775`
+[Math](https://www.mediawiki.org/wiki/Extension:Math) | REL1_35 `b7a7939`
+[ManageWiki](https://www.mediawiki.org/wiki/Extension:ManageWiki) | master `e626a9f`
+[MediaSearch](https://www.mediawiki.org/wiki/Extension:MediaSearch) | REL1_39 `e0aa7bb`
+[MsUpload](https://www.mediawiki.org/wiki/Extension:MsUpload) | REL1_35 `32eb420`
+[MultimediaViewer](https://www.mediawiki.org/wiki/Extension:MultimediaViewer) | REL1_39 `1b97775`
+[OAuth](https://www.mediawiki.org/wiki/Extension:OAuth) | REL1_35 `451ed95`
+[Popups](https://www.mediawiki.org/wiki/Extension:Popups) | REL1_39 `a40ebc1`
+[PortableInfobox](https://www.mediawiki.org/wiki/Extension:PortableInfobox) | 0.6 `16a77dc`
+[RelatedArticles](https://www.mediawiki.org/wiki/Extension:RelatedArticles) | REL1_39 `f513e5c`
+[ReplaceText](https://www.mediawiki.org/wiki/Extension:ReplaceText) | REL1_39 `af4840a`
+[RevisionSlider](https://www.mediawiki.org/wiki/Extension:RevisionSlider) | REL1_35 `4c4e368`
+[Score](https://www.mediawiki.org/wiki/Extension:Score) | REL1_39 `0a66cef`
+[Scribunto](https://www.mediawiki.org/wiki/Extension:Scribunto) | REL1_39 `ebb91f2`
+[SearchDigest](https://www.mediawiki.org/wiki/Extension:SearchDigest) | Master `ddd4665`
+[Semantic MediaWiki](https://www.mediawiki.org/wiki/Extension:Semantic_MediaWiki) | 4.0.2 `0fcdfce`
+[Semantic Result Formats](https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats) | 5.0.0
+[SimpleTooltip](https://www.mediawiki.org/wiki/Extension:SimpleTooltip) | N/A
+[SmiteSpam](https://www.mediawiki.org/wiki/Extension:SmiteSpam) | REL1_39 `c81b04b`
+[StructuredNavigation](https://www.mediawiki.org/wiki/Extension:StructuredNavigation) | REL1_39 `55e2ec0`
+[SyntaxHighlight](https://www.mediawiki.org/wiki/Extension:SyntaxHighlight) | REL1_35 `05598b3`
+[Tabs](https://www.mediawiki.org/wiki/Extension:Tabs) | REL1_39 `63ccef2`
+[Tabber](https://www.mediawiki.org/wiki/Extension:Tabber) | N/A
+[TabberNeue](https://www.mediawiki.org/wiki/Extension:TabberNeue) | 2.6.0
+[TemplateData](https://www.mediawiki.org/wiki/Extension:TemplateData) | REL1_39 `7f8c5a8`
+[TimedMediaHandler](https://www.mediawiki.org/wiki/Extension:TimedMediaHandler) | N/A
+[TinyMCE](https://www.mediawiki.org/wiki/Extension:TinyMCE) | 1.1.2
+[Translate](https://www.mediawiki.org/wiki/Extension:Translate) | MLEB 2023.01
+[TwoColConflict](https://www.mediawiki.org/wiki/Extension:TwoColConflict) | REL1_39 5a2a947
+[UniversalLanguageSelector](https://www.mediawiki.org/wiki/Extension:UniversalLanguageSelector) | MLEB 2021.12
+[UploadWizard](https://www.mediawiki.org/wiki/Extension:UploadWizard) | REL1_39 `9cd7a02`
+[UserProfileV2](https://gitlab.com/telepedia/extensions/userprofilev2) | Main `effb3b1`
+[VEForAll](https://www.mediawiki.org/wiki/Extension:VEForAll) | REL1_39 `0de7158`
+[VisualEditor](https://www.mediawiki.org/wiki/Extension:VisualEditor) | REL1_39 `65d89c9`
+[Wikibase](https://www.mediawiki.org/wiki/Extension:Wikibase) | REL1_35 `7bb503b`
+[WikiEditor](https://www.mediawiki.org/wiki/Extension:WikiEditor) | REL1_39 `02e1c70`
+[WikiHiero](https://www.mediawiki.org/wiki/Extension:WikiHiero) | REL1_39 `3a2be51`
+[WSSearchFront](https://www.mediawiki.org/wiki/Extension:WSSearchFront) | 3.5.4 `c27ebcb5`
 
 Some of the field are tagged as N/A because the information was not tracked before.
 If you are interested in adding skinstyles, please check out [this page on the wiki](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/wiki/Adding-extension-SkinStyles)!
