@@ -441,6 +441,8 @@
 			"+ext.CodeMirror.lib": "skinStyles/extensions/CodeMirror/ext.CodeMirror.lib.less",
 			"+ext.CodeMirror.mode.mediawiki": "skinStyles/extensions/CodeMirror/ext.CodeMirror.mode.mediawiki.less",
 			"+ext.CodeMirror.v6": "skinStyles/extensions/CodeMirror/ext.CodeMirror.v6.less",
+			"+ext.CodeMirror.v6.visualEditor": "skinStyles/extensions/CodeMirror/ext.CodeMirror.v6.visualEditor.less",
+			"+ext.CodeMirror.v6.WikiEditor": "skinStyles/extensions/CodeMirror/ext.CodeMirror.v6.WikiEditor.less",
 			"+ext.CodeMirror.visualEditor": "skinStyles/extensions/CodeMirror/ext.CodeMirror.visualEditor.less",
 			"+ext.CommentStreams": "skinStyles/extensions/CommentStreams/ext.CommentStreams.less",
 			"+ext.datamaps.core": "skinStyles/extensions/DataMaps/ext.datamaps.core.less",

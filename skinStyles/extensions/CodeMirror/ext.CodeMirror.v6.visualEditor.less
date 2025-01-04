@@ -1,0 +1,27 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:CodeMirror
+ * Module: ext.CodeMirror.v6.visualEditor
+ * Version: REL1_43
+ *
+ * Date: 2025-01-03
+*/
+
+.ve-init-mw-desktopArticleTarget {
+	.cm-scroller,
+	.cm-scroller *,
+	.ext-codemirror-wrapper .ve-ce-paragraphNode {
+		// @since MW 1.44
+		// T382006: Chromium browsers have rounding issues between 1.5 and 1.5em
+		// Site styles or user styles may also affect the result unintentionally, so override it anyway
+		line-height: 1.5;
+	}
+
+	.cm-content {
+		// @since MW 1.44
+		// T381714: Disable the automatic minimum size, so it can shrink
+		// See https://www.w3.org/TR/css-flexbox-1/#min-size-auto
+		min-width: 0;
+	}
+}
