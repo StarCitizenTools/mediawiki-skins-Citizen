@@ -1,28 +1,44 @@
 /*
- * Citizen - Special Preferences
- * https://starcitizen.tools
+ * Citizen
+ *
+ * SkinStyles for MediaWiki
+ * Module: mediawiki.special.preferences.styles.ooui
+ * Version: REL1_43
+ *
+ * Date: 2025-01-03
 */
 
+@import '../../../resources/mixins.less';
 @import '../../../resources/variables.less';
 
-.mw-prefs {
-	&-tabs {
-		&-wrapper.oo-ui-panelLayout-framed,
-		> .oo-ui-menuLayout-content > .oo-ui-indexLayout-stackLayout > .oo-ui-tabPanelLayout {
-			border-color: var( --border-color-base );
-		}
-	}
+// Disable sticky header
+#citizen-page-header-sticky-sentinel {
+	display: none;
+}
 
-	&-buttons {
-		background-color: var( --color-surface-0 );
-		border-color: var( --border-color-base );
+.mw-prefs-search.oo-ui-fieldLayout {
+	width: auto;
+	padding-block: var( --space-xs );
+	margin: 0;
+	.mixin-citizen-sticky-header;
+	.mixin-citizen-sticky-header-background;
+
+	.oo-ui-textInputWidget {
+		max-width: none;
 	}
 }
 
-// @since MW 1.41
 #preferences {
 	.mw-htmlform-submit-buttons {
-		background-color: var( --color-surface-0 );
-		border-top-color: var( --border-color-base );
+		padding-inline: 0;
+		margin-inline: 0;
+
+		@media ( max-width: @max-width-breakpoint-tablet ) {
+			bottom: var( --header-size );
+		}
 	}
+}
+
+.mw-prefs-tabs-wrapper .oo-ui-tabSelectWidget-framed {
+	display: flex;
 }
