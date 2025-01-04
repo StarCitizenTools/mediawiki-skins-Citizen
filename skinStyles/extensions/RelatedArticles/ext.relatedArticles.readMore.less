@@ -3,56 +3,51 @@
  *
  * SkinStyles for Extension:RelatedArticles
  * Module: ext.relatedArticles.readMore
- * Version: REL1_39 f513e5c
+ * Version: REL1_43
  *
- * Date: 2022-11-16
+ * Date: 2025-01-04
 */
 
 @import '../../../resources/variables.less';
 
-.ra-read-more {
-	max-width: var( --width-layout--extended );
-	padding: var( --space-md ) 0 0;
-	margin-inline: auto;
+#mw-data-after-content > .read-more-container {
+	display: flex;
+	justify-content: center;
+	padding-inline: var( --padding-page );
 
-	h2 {
-		padding-bottom: 0;
-		margin-top: 0;
-		font-size: var( --font-size-x-small );
-		font-weight: var( --font-weight-normal );
-		color: var( --color-subtle );
-		text-transform: none;
-		letter-spacing: 0.05em;
+	> .read-more-container {
+		width: 100%;
+		max-width: calc( var( --width-layout ) + var( --width-toc ) + var( --space-lg ) );
+		padding: 0;
 	}
 }
 
-.ext-related-articles-card-list {
+.read-more-container-heading {
+	padding: 0;
+	margin: 0;
+	font-size: var( --font-size-x-small );
+	text-transform: none;
+	letter-spacing: 0.05em;
+}
+
+.read-more-container-card-list {
+	grid-template-columns: minmax( 0, 1fr );
 	gap: var( --space-xs );
 
-	h3 {
-		font-weight: var( --font-weight-semi-bold );
-		line-height: var( --line-height-xxx-small );
-
-		a {
-			color: var( --color-emphasized );
-		}
-
-		&::after {
-			background-image: linear-gradient( to right, rgba( 255, 255, 255, 0 ), var( --color-surface-2 ) 50% );
-		}
+	@media ( min-width: @min-width-breakpoint-tablet ) {
+		grid-template-columns: repeat( 2, minmax( 0, 1fr ) );
 	}
 
-	.ext-related-articles-card {
-		overflow: hidden; // Enforce rounded corner
-		background-color: var( --color-surface-2 );
-		border-color: var( --border-color-base ) !important;
-		border-radius: var( --border-radius-medium ) !important; // Same border-radius regardless
+	@media ( min-width: @min-width-breakpoint-desktop ) {
+		grid-template-columns: repeat( 3, minmax( 0, 1fr ) );
 	}
 
-	.ext-related-articles-card > a {
+	.cdx-card {
+		// TODO: Remove when we find a way to customize Codex
+		border-radius: var( --border-radius-medium );
+
 		&:hover {
 			background-color: var( --background-color-button-quiet--hover );
-			box-shadow: var( --box-shadow-drop-medium ); // reset
 		}
 
 		&:active {
@@ -60,26 +55,22 @@
 		}
 	}
 
-	.ext-related-articles-card-extract {
-		margin-top: var( --space-xxs );
-		font-size: var( --font-size-x-small );
-		color: var( --color-subtle );
-	}
+	.cdx-card__text {
+		overflow: hidden;
 
-	.ext-related-articles-card-thumb {
-		margin-right: var( --space-sm );
-	}
-}
+		&__title,
+		&__description {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
 
-@media all and ( min-width: @min-width-breakpoint-tablet ) {
-	.ext-related-articles-card-list {
-		gap: var( --space-sm );
+		&__title {
+			color: var( --color-emphasized );
+		}
 
-		.ext-related-articles-card {
-			// Magic
-			width: ~'calc( 100% / 3 - var( --space-xs ) )';
-			margin-right: 0;
-			margin-bottom: 0;
+		&__description {
+			font-size: var( --font-size-small );
 		}
 	}
 }

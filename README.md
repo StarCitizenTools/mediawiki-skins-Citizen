@@ -136,7 +136,7 @@ Name | Version
 [OAuth](https://www.mediawiki.org/wiki/Extension:OAuth) | REL1_35 `451ed95`
 [Popups](https://www.mediawiki.org/wiki/Extension:Popups) | REL1_39 `a40ebc1`
 [PortableInfobox](https://www.mediawiki.org/wiki/Extension:PortableInfobox) | 0.6 `16a77dc`
-[RelatedArticles](https://www.mediawiki.org/wiki/Extension:RelatedArticles) | REL1_39 `f513e5c`
+[RelatedArticles](https://www.mediawiki.org/wiki/Extension:RelatedArticles) | REL1_43
 [ReplaceText](https://www.mediawiki.org/wiki/Extension:ReplaceText) | REL1_39 `af4840a`
 [RevisionSlider](https://www.mediawiki.org/wiki/Extension:RevisionSlider) | REL1_35 `4c4e368`
 [Score](https://www.mediawiki.org/wiki/Extension:Score) | REL1_39 `0a66cef`
