@@ -50,6 +50,7 @@
 				> .oo-ui-labelElement-label {
 					flex-grow: 1;
 					margin-left: var( --space-xs );
+					font-size: var( --font-size-medium );
 					font-weight: var( --font-weight-semi-bold );
 					line-height: var( --line-height-xx-small );
 					color: var( --color-emphasized );
@@ -82,6 +83,29 @@
 	top: unset;
 	bottom: 0;
 	z-index: @z-index-overlay; // Higher than header
+
+	// Add dismiss affordnance backdrop
+	@media ( max-width: @max-width-breakpoint-tablet ) {
+		&::before {
+			content: '';
+			background: var( --background-color-backdrop-light );
+			-webkit-backdrop-filter: blur( 2px );
+			backdrop-filter: blur( 2px );
+			opacity: 0;
+			transition-timing-function: var( --transition-timing-function-ease );
+			transition-duration: var( --transition-duration-base );
+			transition-property: opacity;
+		}
+
+		&:has( > .mw-echo-ui-notificationBadgeButtonPopupWidget-popup:not( .oo-ui-element-hidden ) ) {
+			&::before {
+				position: fixed;
+				inset: 0;
+				opacity: 1;
+				transition-duration: var( --transition-duration-medium );
+			}
+		}
+	}
 }
 
 /* mw.echo.ui.PlaceholderItemWidget.less */
@@ -93,4 +117,39 @@
 	color: var( --color-subtle );
 	text-align: center;
 	background-color: transparent;
+}
+
+/* mw.echo.ui.NotificationItemWidget.less */
+.mw-echo-ui-notificationItemWidget {
+	padding: var( --space-sm ) var( --space-md );
+	background-color: transparent;
+
+	&-unread {
+		background-color: var( --color-surface-2 );
+	}
+
+	&-icon {
+		img {
+			width: 20px;
+			// Sync with icon above
+			height: 20px;
+		}
+	}
+
+	&-content {
+		padding-left: var( --space-sm );
+		margin-left: 20px;
+
+		&-actions {
+			margin-top: var( --space-xs );
+			font-size: var( --font-size-small );
+
+			&-timestamp {
+				font-size: inherit;
+				line-height: var( --line-height-sm ) !important;
+				color: var( --color-subtle );
+				opacity: 1;
+			}
+		}
+	}
 }
