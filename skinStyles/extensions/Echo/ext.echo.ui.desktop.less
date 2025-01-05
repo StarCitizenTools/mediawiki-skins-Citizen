@@ -10,48 +10,6 @@
 
 .mw-echo-ui-notificationBadgeButtonPopupWidget {
 	&-popup {
-		filter: none; // disable filter drop shadow
-
-		> .oo-ui-popupWidget-popup {
-			> .oo-ui-popupWidget {
-				&-head {
-					border-bottom-color: var( --border-color-base );
-
-					> .oo-ui-iconWidget {
-						opacity: var( --opacity-icon-base );
-					}
-
-					> .oo-ui-labelElement-label {
-						padding-top: 0.15em; // compensate font size changes
-						font-size: 1rem;
-						font-weight: var( --font-weight-semi-bold );
-					}
-				}
-
-				&-body {
-					max-width: 100% !important; // do not overflow the screen
-					overscroll-behavior: contain; // do not overscoll outside
-				}
-
-				&-footer {
-					border-top-color: var( --border-color-base );
-
-					.mw-echo-ui-notificationBadgeButtonPopupWidget-footer-buttons {
-						display: flex;
-
-						.oo-ui-buttonElement {
-							display: block;
-							width: 100%; // Buttons fill up the empty space
-
-							&:last-child {
-								border-left-color: var( --border-color-base );
-							}
-						}
-					}
-				}
-			}
-		}
-
 		> .oo-ui-popupWidget-anchor {
 			display: none; // the anchor overflow the viewport
 		}

@@ -3,9 +3,9 @@
  *
  * SkinStyles for Extension:Echo
  * Module: ext.echo.ui
- * Version: REL1_35 347c30e
+ * Version: REL1_43
  *
- * Date: 2023-05-27
+ * Date: 2025-01-04
 */
 
 @import '../../../resources/variables.less';
@@ -15,22 +15,52 @@
 	display: none;
 }
 
-.mw-echo-ui-notificationBadgeButtonPopupWidget-popup {
-	top: unset !important;
-	bottom: var( --header-size ) !important;
-	margin: var( --space-xs );
-	box-shadow: var( --box-shadow-drop-xx-large );
-
-	.oo-ui-popupWidget-body {
-		height: auto !important;
-		max-height: ~'calc( var( --header-card-maxheight ) - 2 * 3.1428571em )'; // 3.1428571em = height of .oo-ui-popupWidget-head & .oo-ui-popupWidget-footer
-	}
-}
-
-@media ( min-width: @min-width-breakpoint-desktop ) {
+.skin-citizen {
 	.mw-echo-ui-notificationBadgeButtonPopupWidget-popup {
-		bottom: 0 !important;
-		left: var( --header-size ) !important;
+		top: unset !important;
+		bottom: var( --header-size ) !important;
+		margin: var( --space-xs );
+		box-shadow: var( --box-shadow-drop-xx-large );
+
+		@media ( min-width: @min-width-breakpoint-desktop ) {
+			bottom: 0 !important;
+			left: var( --header-size ) !important;
+		}
+
+		.oo-ui-popupWidget-body {
+			height: auto !important;
+			max-height: ~'calc( var( --header-card-maxheight ) - 2 * 3.1428571em )'; // 3.1428571em = height of .oo-ui-popupWidget-head & .oo-ui-popupWidget-footer
+		}
+
+		> .oo-ui-popupWidget-popup {
+			> .oo-ui-popupWidget-head {
+				display: flex;
+				align-items: center;
+				height: auto;
+				min-height: @size-300;
+				padding-inline: var( --space-md );
+				background: var( --color-surface-1 );
+				border-bottom-color: transparent;
+
+				> .oo-ui-iconWidget {
+					float: none;
+					margin: 0;
+				}
+
+				> .oo-ui-labelElement-label {
+					flex-grow: 1;
+					margin-left: var( --space-xs );
+					font-weight: var( --font-weight-semi-bold );
+					line-height: var( --line-height-xx-small );
+					color: var( --color-emphasized );
+				}
+
+				.mw-echo-ui-notificationsWidget-markAllReadButton {
+					position: relative;
+					margin: 0;
+				}
+			}
+		}
 	}
 }
 
@@ -54,259 +84,13 @@
 	z-index: @z-index-overlay; // Higher than header
 }
 
-/* mw.echo.ui.NotificationItemWidget.less */
-.mw-echo-ui-notificationItemWidget {
-	background-color: var( --color-surface-3 );
-	border-color: var( --border-color-base );
-
-	&:hover {
-		background-color: var( --color-surface-2--hover );
-	}
-
-	&:active {
-		background-color: var( --color-surface-2--active );
-	}
-
-	&:last-child {
-		border-bottom-color: var( --border-color-base );
-	}
-
-	&-unread {
-		background-color: var( --color-surface-1 );
-
-		&:hover {
-			background-color: var( --color-surface-2--hover );
-		}
-	}
-
-	&-notify {
-		&-description {
-			color: var( --color-subtle );
-		}
-	}
-
-	&-icon {
-		img {
-			width: 24px; // It looks nicer
-		}
-	}
-
-	&-content {
-		&-message {
-			&-header {
-				color: var( --color-emphasized );
-			}
-
-			&-body {
-				color: var( --color-subtle );
-			}
-		}
-
-		&-table {
-			display: block;
-		}
-
-		&-actions {
-			display: flex; // Table row does not align things properly
-			align-items: center;
-
-			& > &-buttons.oo-ui-buttonSelectWidget {
-				display: block;
-				margin-right: 0;
-			}
-
-			.mw-echo-ui-menuItemWidget-prioritized {
-				border-radius: var( --border-radius-small );
-
-				&:hover {
-					background-color: var( --background-color-button-quiet--hover );
-				}
-
-				&:active {
-					background-color: var( --background-color-button-quiet--active );
-				}
-			}
-
-			&-menu {
-				opacity: var( --opacity-icon-base );
-
-				&:hover {
-					opacity: var( --opacity-icon-base--hover );
-				}
-
-				&:active {
-					opacity: var( --opacity-icon-base--selected );
-				}
-			}
-
-			&-timestamp {
-				display: block;
-				color: var( --color-subtle );
-				opacity: 1;
-			}
-		}
-	}
-
-	&-bundled {
-		.mw-echo-ui-notificationItemWidget-content {
-			.mw-echo-ui-notificationItemWidget {
-				&-content-message {
-					&-header {
-						em {
-							color: var( --color-subtle );
-						}
-					}
-				}
-			}
-		}
-	}
-
-	&-initiallyUnseen {
-		-webkit-animation-name: unseen-fadeout-to-read;
-		animation-name: unseen-fadeout-to-read;
-
-		&.mw-echo-ui-notificationItemWidget-unread {
-			-webkit-animation-name: unseen-fadeout-to-unread;
-			animation-name: unseen-fadeout-to-unread;
-		}
-	}
-}
-
-@-webkit-keyframes unseen-fadeout-to-unread {
-	from {
-		background-color: var( --color-surface-2 );
-	}
-
-	to {
-		background-color: var( --color-surface-1 );
-	}
-}
-
-@keyframes unseen-fadeout-to-unread {
-	from {
-		background-color: var( --color-surface-2 );
-	}
-
-	to {
-		background-color: var( --color-surface-1 );
-	}
-}
-
-@-webkit-keyframes unseen-fadeout-to-read {
-	from {
-		background-color: var( --color-surface-2 );
-	}
-
-	to {
-		background-color: var( --color-surface-3 );
-	}
-}
-
-@keyframes unseen-fadeout-to-read {
-	from {
-		background-color: var( --color-surface-2 );
-	}
-
-	to {
-		background-color: var( --color-surface-3 );
-	}
-}
-
-/* mw.echo.ui.ToggleReadCircleButtonWidget.less */
-.mw-echo-ui-toggleReadCircleButtonWidget {
-	&-circle {
-		background-color: var( --color-progressive );
-
-		&-unread {
-			background-color: var( --color-surface-2 );
-			border-color: var( --border-color-base );
-		}
-	}
-
-	&:hover .mw-echo-ui-toggleReadCircleButtonWidget-circle {
-		background-color: var( --color-progressive--hover );
-
-		&-unread {
-			background-color: var( --color-surface-2--hover );
-		}
-	}
-
-	&:active .mw-echo-ui-toggleReadCircleButtonWidget-circle {
-		background-color: var( --color-progressive--active );
-
-		&-unread {
-			background-color: var( --color-surface-2--active );
-		}
-	}
-}
-
-/* mw.echo.ui.CrossWikiNotificationItemWidget.less */
-.mw-echo-ui-crossWikiNotificationItemWidget,
-.mw-echo-ui-bundleNotificationItemWidget {
-	&-separator {
-		border-bottom-color: var( --border-color-base );
-	}
-
-	&-group {
-		background-color: var( --color-surface-2 );
-	}
-
-	.mw-echo-ui-subGroupListWidget-header {
-		&-row-title {
-			color: var( --color-subtle );
-		}
-	}
-}
-
-/* mw.echo.ui.NotificationsListWidget.less */
-.mw-echo-ui-notificationsListWidget {
-	> a,
-	&:hover > a {
-		color: var( --color-subtle );
-	}
-
-	&:not( :hover ) a,
-	#p-personal &:not( :hover ) a.new {
-		color: var( --color-subtle );
-	}
-}
-
 /* mw.echo.ui.PlaceholderItemWidget.less */
 .mw-echo-ui-placeholderItemWidget {
-	background-color: var( --color-surface-1 );
-}
-
-/* mw.echo.ui.MenuItemWidget.less */
-.mw-echo-ui-menuItemWidget {
-	// First selector is polyfill for MW 1.35
-	> .oo-ui-labelElement-label,
-	> .oo-ui-buttonElement-button > .oo-ui-labelElement-label {
-		color: var( --color-emphasized );
-	}
-
-	&-prioritized {
-		opacity: var( --opacity-icon-base );
-
-		&:hover {
-			opacity: var( --opacity-icon-base--hover );
-		}
-
-		&:active {
-			opacity: var( --opacity-icon-base--selected );
-		}
-	}
-
-	&-dynamic-action {
-		&:hover {
-			background-color: var( --color-surface-1 );
-		}
-
-		.mw-echo-ui-menuItemWidget-description {
-			color: var( --color-subtle );
-		}
-	}
-
-	.mw-echo-ui-actionMenuPopupWidget-menu:hover {
-		background-color: var( --color-surface-2--hover );
-	}
+	display: grid;
+	place-content: center;
+	min-height: @size-800;
+	padding: var( --space-sm ) var( --space-md );
+	color: var( --color-subtle );
+	text-align: center;
+	background-color: transparent;
 }
