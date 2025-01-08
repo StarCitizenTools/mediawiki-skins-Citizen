@@ -82,8 +82,10 @@
 	}
 
 	&-add-file-container {
-		display: flex;
-		align-items: center;
+		&:not( .mwe-upwiz-add-files-0 ) {
+			display: flex;
+			align-items: center;
+		}
 
 		.mwe-upwiz-add-file {
 			flex-grow: 1;
@@ -150,6 +152,13 @@
 	}
 
 	&-file {
+		&-endchoice {
+			> .oo-ui-horizontalLayout {
+				// Fix incorrect alignment for flex
+				justify-content: end;
+			}
+		}
+
 		&-license,
 		&-status {
 			margin-top: 0;
@@ -283,5 +292,10 @@
 
 	&-label-extra {
 		font-size: var( --font-size-small );
+	}
+
+	&-count {
+		font-size: var( --font-size-small );
+		color: var( --color-subtle );
 	}
 }
