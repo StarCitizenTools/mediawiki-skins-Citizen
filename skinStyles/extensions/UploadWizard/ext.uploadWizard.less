@@ -197,6 +197,7 @@
 			&-explain,
 			&-custom-multiple-intro {
 				padding-inline: var( --space-md );
+				font-size: var( --font-size-small );
 				line-height: var( --line-height-xx-small );
 				background-color: var( --background-color-notice-subtle );
 				border-color: var( --border-color-notice );
@@ -205,11 +206,19 @@
 
 			&-explain {
 				padding-top: var( --space-md );
-				font-size: var( --font-size-medium );
 				color: var( --color-emphasized );
 				border-top-width: 1px;
 				border-top-left-radius: var( --border-radius-base );
 				border-top-right-radius: var( --border-radius-base );
+
+				// No text beneath
+				&:has( + ol ) {
+					padding-bottom: var( --space-md );
+					margin-bottom: var( --space-md );
+					border-bottom-width: 1px;
+					border-bottom-right-radius: var( --border-radius-base );
+					border-bottom-left-radius: var( --border-radius-base );
+				}
 			}
 
 			&-custom-multiple-intro {
