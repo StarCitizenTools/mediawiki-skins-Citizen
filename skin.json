@@ -703,7 +703,7 @@
 			"public": true
 		},
 		"SearchGateway": {
-			"value": "mwActionApi",
+			"value": "mwRestApi",
 			"description": "Which gateway to use for fetching search suggestion. Avaliable options: [mwActionApi|mwRestApi|custom]",
 			"descriptionmsg": "citizen-config-searchgateway",
 			"public": true
@@ -715,7 +715,7 @@
 			"public": true
 		},
 		"MaxSearchResults": {
-			"value": 6,
+			"value": 10,
 			"description": "The max number of suggestions in search result",
 			"descriptionmsg": "citizen-config-maxsearchresults",
 			"public": true
