@@ -93,8 +93,14 @@
 
 	&-deeds {
 		&-thumbnails {
-			border: 1px solid var( --border-color-subtle );
-			border-radius: var( --border-radius-base );
+			&:empty {
+				margin-block: 0;
+			}
+
+			&:not( :empty ) {
+				border: 1px solid var( --border-color-subtle );
+				border-radius: var( --border-radius-base );
+			}
 		}
 
 		// Style as message box
@@ -209,10 +215,22 @@
 			&-custom-multiple-intro {
 				padding-top: var( --space-xs );
 				padding-bottom: var( --space-md );
+				margin-bottom: var( --space-md );
 				font-size: var( --font-size-small );
 				border-bottom-width: 1px;
 				border-bottom-right-radius: var( --border-radius-base );
 				border-bottom-left-radius: var( --border-radius-base );
+			}
+		}
+	}
+
+	&-deeds {
+		&-individual {
+			padding-block: var( --space-xl );
+			gap: var( --space-lg );
+
+			.mwe-upwiz-deeds-individual-thumbnail {
+				margin-right: 0;
 			}
 		}
 	}
@@ -242,11 +260,19 @@
 			}
 		}
 
+		&-option-title:first-child {
+			margin-top: 0;
+		}
+
 		&-subgroup {
 			padding: var( --space-md );
 			margin-block: var( --space-sm );
 			border: 1px solid var( --border-color-base );
 			border-radius: var( --border-radius-base );
 		}
+	}
+
+	&-label-extra {
+		font-size: var( --font-size-small );
 	}
 }
