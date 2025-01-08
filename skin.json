@@ -583,7 +583,6 @@
 			"+ext.templateDataGenerator.editTemplatePage": "skinStyles/extensions/TemplateData/ext.templateDataGenerator.editTemplatePage.less",
 			"+ext.tinymce": "skinStyles/extensions/TinyMCE/ext.tinymce.less",
 			"+ext.uploadWizard": "skinStyles/extensions/UploadWizard/ext.uploadWizard.less",
-			"+ext.uploadWizard.uploadCampaign.display": "skinStyles/extensions/UploadWizard/ext.uploadWizard.uploadCampaign.less",
 			"+ext.uploadWizard.page.styles": "skinStyles/extensions/UploadWizard/uploadWizard.noWizard.less",
 			"+ext.userProfileV2.styles": "skinStyles/extensions/UserProfileV2/ext.userProfileV2.less",
 			"+ext.veforall.main": "skinStyles/extensions/VEForAll/ext.veforall.main.less",

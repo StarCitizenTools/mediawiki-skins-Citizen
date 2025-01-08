@@ -3,9 +3,7 @@
  *
  * SkinStyles for Extension:UploadWizard
  * Module: ext.uploadWizard
- * Version: REL1_39 9cd7a02
- *
- * Date: 2023-01-08
+ * Version: REL1_43
 */
 
 @import '../../../resources/variables.less';
@@ -16,350 +14,239 @@
 	display: none;
 }
 
-/* uw.CopyMetadataWidget.less */
-.mwe-upwiz-copyMetadataWidget {
-	border-top-color: var( --border-color-base );
-	border-bottom-color: var( --border-color-base );
-
-	@media ( max-width: @max-width-breakpoint-tablet ) {
-		padding-left: 0;
-	}
-}
-
-/* uw.ui.Thanks.less */
-#mwe-upwiz-stepdiv-thanks {
-	.mwe-upwiz-thanks-update-delay {
-		font-weight: var( --font-weight-semi-bold );
-	}
-
-	.mwe-upwiz-mv-cta-confirmation {
-		color: var( --color-success );
-	}
-}
-
-/* uw.ui.Metadata.less */
-h3.mwe-upwiz-metadata-title {
-	font-size: var( --font-size-x-large );
-}
-
-.mwe-upwiz-metadata-booklet.oo-ui-bookletLayout {
-	> .oo-ui-menuLayout-menu {
-		.mwe-upwiz-metadata-page--error {
-			background-color: var( --background-color-destructive-subtle );
-			border-color: transparent;
-		}
-	}
-
-	> .oo-ui-menuLayout-content {
-		.wbmi-statements-widget {
-			border-bottom-color: var( --border-color-base );
-		}
-	}
-}
-
-/* uploadWizard.less */
-#upload-wizard {
-	/* Remove hardcoded width */
-	min-width: auto;
-	max-width: none;
-	margin-top: 0;
-}
-
-#mwe-upwiz-steps {
-	display: flex;
-	justify-content: space-evenly;
-	overflow: hidden; // Hide arrow overflow
-	line-height: var( --line-height-xx-small );
-	background-color: transparent;
-	border-bottom: var( --border-width-base ) solid var( --border-color-base );
-
-	&::before,
-	&::after {
-		display: none; // Pseudo elements do not play well with flex
-	}
-
+.arrowSteps {
 	li {
-		width: auto !important;
-		height: auto;
-		color: var( --color-subtle );
+		display: flex;
+		flex: auto;
+		justify-content: center;
+		height: auto !important;
 		background-color: transparent;
 
 		div {
-			padding: var( --space-sm ) var( --space-md );
+			inset: unset;
+			display: flex;
+			align-items: center;
+			width: auto;
+			padding-inline: 0 !important;
+			transform: none;
 		}
 
 		&.head {
-			font-weight: var( --font-weight-semi-bold );
-			color: var( --color-progressive );
 			background-color: transparent;
+
+			div {
+				box-shadow: 0 -2px 0 var( --color-progressive ) inset;
+			}
 		}
 
-		&.arrow {
-			&::before,
-			&::after {
-				display: none;
-			}
+		&::before,
+		&::after {
+			display: none;
 		}
 	}
 }
 
-#mwe-upwiz-tutorial {
-	/*
-	 * Allow content to overflow
-	 * We don't resize the campaign image because of map and readibility
-	*/
-	max-width: 100%;
-	overflow: auto;
+#mwe-upwiz {
+	&-steps {
+		justify-content: space-between;
+		height: 3rem;
+		line-height: var( --line-height-xx-small );
+		box-shadow: 0 -1px 0 var( --border-color-base ) inset;
+
+		@media ( max-width: @max-width-breakpoint-mobile ) {
+			font-size: var( --font-size-small );
+		}
+	}
+
+	&-filelist {
+		margin-top: var( --space-md );
+
+		&:empty {
+			margin-top: 0;
+		}
+	}
+
+	&-stepdiv-deeds:not( :empty ) {
+		padding-block: var( --space-md );
+	}
+
+	&-content {
+		label.oo-ui-radioOptionWidget {
+			// Extend clickable area of radio
+			display: block;
+		}
+	}
+
+	&-files {
+		max-width: none;
+	}
+
+	&-add-file-container {
+		display: flex;
+		align-items: center;
+
+		.mwe-upwiz-add-file {
+			flex-grow: 1;
+			max-width: none;
+		}
+	}
+
+	&-deeds {
+		&-thumbnails {
+			border: 1px solid var( --border-color-subtle );
+			border-radius: var( --border-radius-base );
+		}
+
+		// Style as message box
+		&-intro {
+			padding: var( --space-md );
+			margin-block: var( --space-xl ) var( --space-md );
+			font-size: var( --font-size-small );
+			line-height: var( --line-height-xx-small );
+			background-color: var( --background-color-notice-subtle );
+			border: 1px solid var( --border-color-notice );
+			border-radius: var( --border-radius-base );
+		}
+	}
 }
 
 .mwe-upwiz-add-files-0,
 #mwe-upwiz-files {
-	margin-top: 0;
-	margin-bottom: 0;
+	margin-block: var( --space-md );
 }
 
-.mwe-upwiz-add-files-0 {
-	.mwe-upwiz-add-file {
-		font-size: 1rem;
-	}
-}
-
-#mwe-upwiz-files {
-	margin-right: 0;
-	margin-left: 0;
-}
-
-.mwe-upwiz-file {
-	&.odd {
-		.mwe-upwiz-visible-file {
-			background-color: transparent;
-		}
-	}
-
-	&-status {
-		color: var( --color-subtle );
-	}
-
-	&:hover {
-		.mwe-upwiz-visible-file {
-			background-color: var( --background-color-button-quiet--hover ) !important;
-		}
-	}
-}
-
-.mwe-upwiz-visible-file-filename {
-	padding: var( --space-md ) 0;
-
-	&-text {
-		font-weight: var( --font-weight-semi-bold );
-		color: var( --color-emphasized );
-	}
-}
-
-.mwe-upwiz-add-file.oo-ui-selectFileInputWidget {
-	max-width: none; // Full width for file drop widget
-}
-
-.mwe-upwiz-patent-rights .oo-ui-panelLayout .oo-ui-panelLayout:not( :last-child ) {
-	box-shadow: 0 1em 1px -1em var( --border-color-base );
-}
-
-.mwe-upwiz-patent-rights-filelist {
-	box-shadow: 0 0 1px 0 var( --border-color-base );
-}
-
-.mwe-upwiz-patent-weapon-policy {
-	background-color: var( --color-surface-2 );
-	border-color: var( --border-color-base );
-}
-
-.mwe-upwiz-license-metadata {
-	background-color: var( --color-surface-2 );
-	border-color: var( --border-color-base );
-}
-
-#mwe-upwiz-flickr-disclaimer {
-	font-size: var( --font-size-small );
-	background-color: var( --color-surface-2 );
-}
-
-.mwe-upwiz-thumbnail {
-	background-color: var( --color-surface-0 );
-
-	&-link {
+.mwe-upwiz {
+	&-thumbnail-link {
 		canvas,
 		img {
 			border-radius: var( --border-radius-base );
-			box-shadow: var( --box-shadow-drop-medium );
-		}
-	}
-}
-
-#mwe-upwiz-deeds-thumbnails {
-	padding-bottom: 1em; // Even out margin
-	overflow-x: auto;
-	white-space: nowrap;
-	background: transparent;
-	border-bottom: var( --border-width-base ) solid var( --border-color-base );
-}
-
-.mwe-upwiz-deed {
-	margin: var( --space-xs ) 0;
-	background-color: var( --color-surface-2 );
-	border-radius: var( --border-radius-base );
-
-	&-option-title {
-		+ .mwe-upwiz-deed-form {
-			border-top: var( --border-width-base ) solid var( --border-color-base );
+			box-shadow: none;
 		}
 	}
 
-	&-form-internal {
-		padding: var( --space-sm ) var( --space-md );
+	&-add-file {
+		.mwe-upwiz-add-files-0 & {
+			display: grid;
+			gap: var( --space-xs );
+			place-content: center;
+			min-height: 40vh;
+			font-size: var( --font-size-medium );
+
+			> .oo-ui-selectFileInputWidget-selectButton {
+				margin: 0 !important;
+			}
+		}
 	}
 
-	&-license-group {
-		&-subhead {
-			color: var( --color-subtle );
-		}
+	&-visible-file-filename-text {
+		font-weight: var( --font-weight-semi-bold );
+		color: var( --color-emphasized );
+	}
 
-		&-body {
-			margin-top: var( --space-md );
+	&-file {
+		&-license,
+		&-status {
+			margin-top: 0;
 		}
 	}
 
-	.mwe-upwiz-deed-option-title {
-		.oo-ui-optionWidget {
-			display: block;
-			padding: var( --space-sm ) var( --space-md );
-			border-radius: var( --border-radius-base );
+	&-source {
+		&-multiple {
+			flex-wrap: wrap;
+			padding-bottom: 0;
+			overflow: hidden;
+			font-weight: var( --font-weight-medium );
+			text-align: center;
+			border: 1px solid var( --border-color-interactive );
+			border-radius: var( --border-radius-medium );
 
-			&.oo-ui-widget-enabled {
+			label.oo-ui-radioOptionWidget {
+				flex-grow: 1;
+				padding: var( --space-sm ) var( --space-md );
+				margin-right: 0;
+
 				&:hover {
 					background-color: var( --background-color-button-quiet--hover );
 				}
 
-				&:active {
-					background-color: var( --background-color-button-quiet--active );
+				&.oo-ui-optionWidget-selected {
+					color: var( --color-inverted-primary );
+					background-color: var( --color-progressive );
+				}
+
+				> .oo-ui-radioInputWidget {
+					display: none;
+				}
+
+				> .oo-ui-labelElement-label {
+					display: block;
+					padding-left: 0;
+					vertical-align: middle;
 				}
 			}
 		}
-	}
 
-	/* More obvious selected state */
-	&.selected {
-		.mwe-upwiz-deed-option-title {
-			.oo-ui-optionWidget.oo-ui-widget-enabled {
-				background-color: var( --background-color-progressive-subtle );
+		&-thirdparty {
+			// Fake notice box
+			&-explain,
+			&-custom-multiple-intro {
+				padding-inline: var( --space-md );
+				line-height: var( --line-height-xx-small );
+				background-color: var( --background-color-notice-subtle );
+				border-color: var( --border-color-notice );
+				border-inline-width: 1px;
+			}
+
+			&-explain {
+				padding-top: var( --space-md );
+				font-size: var( --font-size-medium );
+				color: var( --color-emphasized );
+				border-top-width: 1px;
+				border-top-left-radius: var( --border-radius-base );
+				border-top-right-radius: var( --border-radius-base );
+			}
+
+			&-custom-multiple-intro {
+				padding-top: var( --space-xs );
+				padding-bottom: var( --space-md );
+				font-size: var( --font-size-small );
+				border-bottom-width: 1px;
+				border-bottom-right-radius: var( --border-radius-base );
+				border-bottom-left-radius: var( --border-radius-base );
 			}
 		}
 	}
-}
 
-.mwe-upwiz-details-fieldname {
-	font-size: var( --font-size-x-small );
-	font-weight: var( --font-weight-normal );
-	// Citizen label styles
-	color: var( --color-subtle );
-	letter-spacing: 0.05em;
-}
+	&-deed {
+		&-forms {
+			.mwe-upwiz-deed {
+				&-ownwork,
+				&-thirdparty {
+					padding-top: var( --space-lg );
+					margin-top: var( --space-lg );
+					margin-left: 0;
+				}
+			}
+		}
 
-.mwe-title {
-	font-family: var( --font-family-base );
-}
+		&-form-internal {
+			.mwe-upwiz-label-title {
+				margin-top: 0;
+				font-size: inherit;
+				font-weight: var( --font-weight-medium );
+				color: var( --color-emphasized );
+			}
 
-.mwe-small-print {
-	font-size: var( --font-size-x-small );
-	color: var( --color-subtle );
-}
+			ol {
+				margin-block: 0;
+			}
+		}
 
-.mwe-upwiz-license-custom .oo-ui-textInputWidget textarea {
-	font-family: var( --font-family-monospace );
-}
-
-.mwe-readonly {
-	background-color: var( --color-surface-0 );
-}
-
-.ui-corner-top {
-	border-top-left-radius: var( --border-radius-base );
-	border-top-right-radius: var( --border-radius-base );
-}
-
-.ui-corner-bottom {
-	border-bottom-right-radius: var( --border-radius-base );
-	border-bottom-left-radius: var( --border-radius-base );
-}
-
-.ui-corner-all {
-	border-radius: var( --border-radius-base );
-}
-
-.filled + .filled {
-	border-color: var( --border-color-base );
-}
-
-.mwe-upwiz-objref-pick-image {
-	font-weight: var( --font-weight-semi-bold );
-}
-
-.mwe-upwiz-objref-pick-image input:disabled + label {
-	color: var( --color-subtle );
-}
-
-.mwe-upwiz-objref-notice-existing-image {
-	font-weight: var( --font-weight-semi-bold );
-}
-
-@media ( max-width: @max-width-breakpoint-tablet ) {
-	#mwe-upwiz-stepdiv-details {
-		/* Single column in limited width */
-		.mwe-upwiz-data,
-		.mwe-upwiz-thumbnail-side {
-			float: none;
-			width: auto;
+		&-subgroup {
+			padding: var( --space-md );
+			margin-block: var( --space-sm );
+			border: 1px solid var( --border-color-base );
+			border-radius: var( --border-radius-base );
 		}
 	}
-}
-
-/* uw.FieldLayout.less */
-.mwe-upwiz-fieldLayout {
-	.mwe-upwiz-fieldLayout-indicator {
-		font-size: var( --font-size-x-small );
-		color: var( --color-subtle );
-	}
-
-	.mwe-upwiz-details-help {
-		font-size: var( --font-size-small );
-	}
-}
-
-/* uw.SingleLanguageInputWidget.less */
-.mwe-upwiz-singleLanguageInputWidget {
-	display: flex;
-	flex-wrap: wrap;
-	gap: var( --space-xs );
-	background-color: var( --color-surface-2 );
-	border-color: transparent;
-	border-radius: var( --border-radius-medium );
-
-	.mwe-upwiz-singleLanguageInputWidget-language {
-		margin-right: 0;
-	}
-
-	.mwe-upwiz-singleLanguageInputWidget-text {
-		padding-top: 0;
-	}
-}
-
-/* uw.MetadataContent.less */
-.mwe-upwiz-metadata-content {
-	.mwe-upwiz-metadata-content-caption {
-		font-family: var( --font-family-base );
-		font-weight: var( --font-weight-semi-bold );
-	}
-}
-
-.mwe-upwiz-metadata-pendingOverlay {
-	background-color: var( --background-color-backdrop-light );
 }
