@@ -3,154 +3,30 @@
  *
  * SkinStyles for OOUI
  * Module: oojs-ui-windows
- * Version: v0.44.3
+ * Version: v0.51.2
  *
- * Date: 2022-11-30
+ * Date: 2025-01-08
 */
 
 @import '../../resources/variables.less';
 
-/**
- * OOUI has some layout issues when the font size is not
- * same as what is being used in Vector. This is a dirty
- * hack to ensure that the UI is displayed correctly.
- */
-.oo-ui-window {
+// For compatibility with code older than #mw-teleport-target (T350544)
+body > .oo-ui-windowManager {
 	font-size: var( --font-size-small );
+
+	> .oo-ui-dialog {
+		z-index: @z-index-overlay;
+	}
 }
 
-.oo-ui-messageDialog-content > .oo-ui-window-foot {
-	outline: var( --border-width-base ) solid var( --border-color-base );
-}
-
-.oo-ui-messageDialog-title {
-	color: var( --color-emphasized );
-}
-
-.oo-ui-messageDialog-message {
-	color: var( --color-base );
-}
-
-.oo-ui-messageDialog-actions .oo-ui-actionWidget.oo-ui-widget-enabled.oo-ui-flaggedElement-progressive .oo-ui-buttonElement-button:active {
-	background-color: var( --background-color-progressive-subtle );
-}
-
-.oo-ui-messageDialog-actions .oo-ui-actionWidget.oo-ui-widget-enabled.oo-ui-flaggedElement-destructive .oo-ui-buttonElement-button:active {
-	background-color: var( --background-color-destructive-subtle );
-}
-
-.oo-ui-messageDialog-actions-horizontal .oo-ui-actionWidget {
-	border-right-color: var( --border-color-base );
-}
-
-.oo-ui-messageDialog-actions-horizontal .oo-ui-actionWidget:first-child > .oo-ui-buttonElement-button {
-	border-radius: 0 0 0 var( --border-radius-medium );
-}
-
-.oo-ui-messageDialog-actions-horizontal .oo-ui-actionWidget:last-child > .oo-ui-buttonElement-button {
-	border-radius: 0 0 var( --border-radius-medium ) 0;
-}
-
-.oo-ui-messageDialog-actions-horizontal .oo-ui-actionWidget:only-child > .oo-ui-buttonElement-button {
-	border-radius: 0 0 var( --border-radius-medium ) var( --border-radius-medium );
-}
-
-.oo-ui-messageDialog-actions-vertical .oo-ui-actionWidget {
-	border-bottom-color: var( --border-color-base );
-}
-
-.oo-ui-messageDialog-actions-vertical .oo-ui-actionWidget:first-child > .oo-ui-buttonElement-button {
-	border-radius: 0;
-}
-
-.oo-ui-messageDialog-actions-vertical .oo-ui-actionWidget:last-child > .oo-ui-buttonElement-button {
-	border-radius: 0 0 var( --border-radius-medium ) var( --border-radius-medium );
-}
-
-.oo-ui-processDialog-content .oo-ui-window-head,
-.oo-ui-processDialog-content .oo-ui-window-foot {
-	outline: var( --border-width-base ) solid var( --border-color-base );
-}
-
-.oo-ui-window-head .oo-ui-buttonWidget .oo-ui-buttonElement-button {
-	border-radius: var( --border-radius-medium ) 0 0 0;
-}
-
-.oo-ui-window-head .oo-ui-processDialog-actions-primary .oo-ui-buttonElement-button {
-	border-radius: 0 var( --border-radius-medium ) 0 0;
-}
-
-.oo-ui-window-foot .oo-ui-buttonWidget:first-child > .oo-ui-buttonElement-button {
-	border-radius: 0 0 0 var( --border-radius-medium );
-}
-
-.oo-ui-processDialog .oo-ui-actionWidget:not( .oo-ui-flaggedElement-progressive ):not( .oo-ui-flaggedElement-destructive ) > .oo-ui-buttonElement-button:hover,
-.oo-ui-processDialog .oo-ui-actionWidget:not( .oo-ui-flaggedElement-progressive ):not( .oo-ui-flaggedElement-destructive ) > .oo-ui-buttonElement-button:active {
-	border-right-color: var( --border-color-base );
-}
-
-.oo-ui-processDialog .oo-ui-actionWidget:not( .oo-ui-flaggedElement-progressive ):not( .oo-ui-flaggedElement-destructive ) > .oo-ui-buttonElement-button:focus {
-	border-color: var( --color-progressive );
-}
-
-.oo-ui-processDialog-actions-primary .oo-ui-actionWidget > .oo-ui-buttonElement-button {
-	border-left-color: var( --border-color-base );
-}
-
-.oo-ui-processDialog-actions-primary .oo-ui-actionWidget:not( .oo-ui-flaggedElement-progressive ):not( .oo-ui-flaggedElement-destructive ) > .oo-ui-buttonElement-button:hover,
-.oo-ui-processDialog-actions-primary .oo-ui-actionWidget:not( .oo-ui-flaggedElement-progressive ):not( .oo-ui-flaggedElement-destructive ) > .oo-ui-buttonElement-button:active {
-	border-left-color: var( --border-color-base );
-}
-
-.oo-ui-processDialog-actions-primary .oo-ui-actionWidget:not( .oo-ui-flaggedElement-progressive ):not( .oo-ui-flaggedElement-destructive ) > .oo-ui-buttonElement-button:focus {
-	border-color: var( --color-progressive );
-}
-
-.oo-ui-processDialog-actions-safe .oo-ui-actionWidget > .oo-ui-buttonElement-button,
-.oo-ui-processDialog-actions-other .oo-ui-actionWidget > .oo-ui-buttonElement-button {
-	border-right-color: var( --border-color-base );
-}
-
-.oo-ui-processDialog-actions-safe .oo-ui-widget-enabled.oo-ui-iconElement:not( .oo-ui-labelElement ) > .oo-ui-buttonElement-button {
-	background-color: transparent;
-	border-right-color: transparent;
-}
-
-.oo-ui-processDialog-actions-safe .oo-ui-widget-enabled.oo-ui-iconElement:not( .oo-ui-labelElement ) > .oo-ui-buttonElement-button:hover {
-	background-color: var( --color-surface-2 );
-	border-right-color: var( --border-color-base );
-}
-
-.oo-ui-processDialog-actions-safe .oo-ui-widget-enabled.oo-ui-iconElement:not( .oo-ui-labelElement ) > .oo-ui-buttonElement-button:active {
-	background-color: var( --color-surface-2--active );
-	border-right-color: var( --color-surface-2--active );
-}
-
-.oo-ui-processDialog-actions-safe .oo-ui-widget-enabled.oo-ui-iconElement:not( .oo-ui-labelElement ) > .oo-ui-buttonElement-button:focus {
-	border-color: var( --color-progressive );
-}
-
-.oo-ui-processDialog-errors {
-	background-color: var( --background-color-backdrop-light );
-}
-
-.oo-ui-processDialog-errors-title {
-	color: var( --color-emphasized );
-}
-
-.oo-ui-windowManager-modal > .oo-ui-dialog {
-	// Align z-index stack with Citizen and Codex
-	// T285592
-	z-index: @z-index-overlay;
-	background-color: var( --background-color-backdrop-light );
+.oo-ui-processDialog-title {
+	font-weight: var( --font-weight-semi-bold );
 }
 
 .oo-ui-windowManager-modal > .oo-ui-dialog > .oo-ui-window-frame {
 	background-color: var( --color-surface-1 );
 }
 
-.oo-ui-windowManager-modal.oo-ui-windowManager-floating > .oo-ui-dialog > .oo-ui-window-frame {
-	border-color: var( --border-color-base );
-	border-radius: var( --border-radius-medium );
+.oo-ui-windowManager-modal:not( .oo-ui-windowManager-size-full ) > .oo-ui-dialog > .oo-ui-window-frame {
 	box-shadow: var( --box-shadow-drop-xx-large );
 }
