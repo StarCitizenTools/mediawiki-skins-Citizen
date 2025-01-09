@@ -12,6 +12,10 @@
 	border-radius: var( --border-radius-base );
 }
 
+.oo-ui-buttonSelectWidget .oo-ui-buttonOptionWidget .oo-ui-buttonElement-button {
+	border-radius: 0;
+}
+
 .oo-ui-buttonSelectWidget .oo-ui-buttonOptionWidget:first-child .oo-ui-buttonElement-button {
 	border-top-left-radius: var( --border-radius-base );
 	border-bottom-left-radius: var( --border-radius-base );
@@ -45,4 +49,14 @@
 
 .oo-ui-tagMultiselectWidget-handle {
 	border-radius: var( --border-radius-base );
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-tagMultiselectWidget-outlined .oo-ui-tagMultiselectWidget-handle {
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.oo-ui-tagMultiselectWidget.oo-ui-tagMultiselectWidget-outlined .oo-ui-inputWidget-input {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
 }

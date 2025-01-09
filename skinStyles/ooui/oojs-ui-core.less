@@ -61,6 +61,10 @@
 	border-radius: var( --border-radius-base );
 }
 
+.oo-ui-buttonGroupWidget .oo-ui-buttonElement-framed .oo-ui-buttonElement-button {
+	border-radius: 0;
+}
+
 .oo-ui-buttonGroupWidget .oo-ui-buttonElement-framed:first-child .oo-ui-buttonElement-button {
 	border-top-left-radius: var( --border-radius-base );
 	border-bottom-left-radius: var( --border-radius-base );
@@ -112,12 +116,37 @@
 	border-radius: var( --border-radius-base );
 }
 
+.oo-ui-comboBoxInputWidget .oo-ui-inputWidget-input {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
 .oo-ui-comboBoxInputWidget.oo-ui-comboBoxInputWidget-empty .oo-ui-inputWidget-input,
 .oo-ui-comboBoxInputWidget-php .oo-ui-inputWidget-input {
 	border-top-right-radius: var( --border-radius-base );
 	border-bottom-right-radius: var( --border-radius-base );
 }
 
+.oo-ui-comboBoxInputWidget-dropdownButton.oo-ui-indicatorElement .oo-ui-buttonElement-button,
+.oo-ui-comboBoxInputWidget-dropdownButton.oo-ui-indicatorElement .oo-ui-buttonElement-button:focus {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
 .oo-ui-selectFileInputWidget-dropTarget {
 	border-radius: var( --border-radius-base );
+}
+
+.oo-ui-numberInputWidget-buttoned .oo-ui-inputWidget-input {
+	border-radius: 0;
+}
+
+.oo-ui-numberInputWidget-minusButton > .oo-ui-buttonElement-button {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.oo-ui-numberInputWidget-plusButton > .oo-ui-buttonElement-button {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
 }
