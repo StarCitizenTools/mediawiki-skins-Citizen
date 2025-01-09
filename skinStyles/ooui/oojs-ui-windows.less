@@ -19,6 +19,40 @@ body > .oo-ui-windowManager {
 	}
 }
 
+.oo-ui-messageDialog-actions-horizontal {
+	.oo-ui-actionWidget {
+		&:first-child > .oo-ui-buttonElement-button {
+			border-radius: 0 0 0 var( --border-radius-medium );
+		}
+
+		&:last-child > .oo-ui-buttonElement-button {
+			border-radius: 0 0 var( --border-radius-medium ) 0;
+		}
+
+		&:only-child > .oo-ui-buttonElement-button {
+			border-radius: 0 0 var( --border-radius-medium ) var( --border-radius-medium );
+		}
+	}
+}
+
+.oo-ui-processDialog-navigation {
+	.oo-ui-processDialog-actions-primary {
+		.oo-ui-buttonElement-button {
+			border-top-right-radius: var( --border-radius-medium );
+		}
+	}
+
+	.oo-ui-processDialog-actions-safe {
+		.oo-ui-buttonElement-button {
+			border-top-left-radius: var( --border-radius-medium );
+		}
+	}
+}
+
+.oo-ui-messageDialog-actions-vertical .oo-ui-actionWidget:last-child > .oo-ui-buttonElement-button {
+	border-radius: 0 0 var( --border-radius-medium ) var( --border-radius-medium );
+}
+
 .oo-ui-processDialog-title {
 	font-weight: var( --font-weight-semi-bold );
 }
@@ -28,5 +62,6 @@ body > .oo-ui-windowManager {
 }
 
 .oo-ui-windowManager-modal:not( .oo-ui-windowManager-size-full ) > .oo-ui-dialog > .oo-ui-window-frame {
+	border-radius: var( --border-radius-medium );
 	box-shadow: var( --box-shadow-drop-xx-large );
 }

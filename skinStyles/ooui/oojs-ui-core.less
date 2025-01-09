@@ -36,6 +36,39 @@
 
 .oo-ui-buttonElement > .oo-ui-buttonElement-button {
 	font-weight: var( --font-weight-medium );
+	border-radius: var( --border-radius-base );
+}
+
+.oo-ui-buttonElement-framed > .oo-ui-buttonElement-button {
+	border-radius: var( --border-radius-base );
+}
+
+.oo-ui-actionFieldLayout .oo-ui-actionFieldLayout-input > .oo-ui-widget.oo-ui-textInputWidget > .oo-ui-inputWidget-input,
+.oo-ui-actionFieldLayout .oo-ui-actionFieldLayout-input > .oo-ui-widget .oo-ui-dropdownWidget-handle,
+.oo-ui-actionFieldLayout .oo-ui-actionFieldLayout-input > .oo-ui-widget .oo-ui-tagMultiselectWidget-handle {
+	border-radius: var( --border-radius-base ) 0 0 var( --border-radius-base );
+}
+
+.oo-ui-actionFieldLayout .oo-ui-actionFieldLayout-button .oo-ui-buttonElement-framed > .oo-ui-buttonElement-button {
+	border-radius: 0 var( --border-radius-base ) var( --border-radius-base ) 0;
+}
+
+.oo-ui-panelLayout-framed {
+	border-radius: var( --border-radius-base );
+}
+
+.oo-ui-buttonGroupWidget {
+	border-radius: var( --border-radius-base );
+}
+
+.oo-ui-buttonGroupWidget .oo-ui-buttonElement-framed:first-child .oo-ui-buttonElement-button {
+	border-top-left-radius: var( --border-radius-base );
+	border-bottom-left-radius: var( --border-radius-base );
+}
+
+.oo-ui-buttonGroupWidget .oo-ui-buttonElement-framed:last-child .oo-ui-buttonElement-button {
+	border-top-right-radius: var( --border-radius-base );
+	border-bottom-right-radius: var( --border-radius-base );
 }
 
 .oo-ui-labelElement .oo-ui-labelElement-label-highlight {
@@ -56,4 +89,35 @@
 
 .oo-ui-popupWidget-popup {
 	background-color: var( --color-surface-1 );
+	border-radius: var( --border-radius-base );
+}
+
+.oo-ui-checkboxInputWidget [ type='checkbox' ] + span {
+	border-radius: var( --border-radius-base );
+}
+
+.oo-ui-dropdownInputWidget select {
+	border-radius: var( --border-radius-base );
+}
+
+.oo-ui-textInputWidget .oo-ui-inputWidget-input {
+	border-radius: var( --border-radius-base );
+}
+
+.oo-ui-menuSelectWidget {
+	border-radius: var( --border-radius-base );
+}
+
+.oo-ui-dropdownWidget-handle {
+	border-radius: var( --border-radius-base );
+}
+
+.oo-ui-comboBoxInputWidget.oo-ui-comboBoxInputWidget-empty .oo-ui-inputWidget-input,
+.oo-ui-comboBoxInputWidget-php .oo-ui-inputWidget-input {
+	border-top-right-radius: var( --border-radius-base );
+	border-bottom-right-radius: var( --border-radius-base );
+}
+
+.oo-ui-selectFileInputWidget-dropTarget {
+	border-radius: var( --border-radius-base );
 }

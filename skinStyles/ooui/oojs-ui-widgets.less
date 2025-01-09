@@ -8,8 +8,27 @@
  * Date: 2025-01-08
 */
 
+.oo-ui-buttonSelectWidget {
+	border-radius: var( --border-radius-base );
+}
+
+.oo-ui-buttonSelectWidget .oo-ui-buttonOptionWidget:first-child .oo-ui-buttonElement-button {
+	border-top-left-radius: var( --border-radius-base );
+	border-bottom-left-radius: var( --border-radius-base );
+}
+
+.oo-ui-buttonSelectWidget .oo-ui-buttonOptionWidget:last-child .oo-ui-buttonElement-button {
+	border-top-right-radius: var( --border-radius-base );
+	border-bottom-right-radius: var( --border-radius-base );
+}
+
 .oo-ui-tabOptionWidget {
 	font-weight: var( --font-weight-medium );
+}
+
+.oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget {
+	border-top-left-radius: var( --border-radius-base );
+	border-top-right-radius: var( --border-radius-base );
 }
 
 .oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget.oo-ui-widget-enabled:hover {
@@ -18,4 +37,12 @@
 
 .oo-ui-tabSelectWidget-framed .oo-ui-tabOptionWidget.oo-ui-widget-enabled:active {
 	background-color: var( --background-color-button-quiet--active );
+}
+
+.oo-ui-tabSelectWidget-frameless.oo-ui-widget-enabled:focus .oo-ui-tabOptionWidget.oo-ui-optionWidget-selected {
+	border-radius: var( --border-radius-base );
+}
+
+.oo-ui-tagMultiselectWidget-handle {
+	border-radius: var( --border-radius-base );
 }
