@@ -70,6 +70,12 @@
 	&-stripe-button.mw-mmv-description-page-button {
 		margin: 0;
 
+		// Make Codex button normal size again
+		&.cdx-button.cdx-button--fake-button--enabled.cdx-button--weight-primary.cdx-button--action-progressive {
+			min-height: 32px;
+			padding-inline: 11px;
+		}
+
 		@media ( max-width: @max-width-breakpoint-mobile ) {
 			gap: 0;
 			font-size: 0;
@@ -99,7 +105,6 @@
 			flex-grow: 1;
 			flex-shrink: 0;
 			width: auto !important;
-			max-width: none !important;
 		}
 	}
 
@@ -202,6 +207,12 @@
 
 		&-image-metadata-desc-column {
 			max-width: var( --width-layout );
+		}
+
+		&-links-column {
+			@media ( max-width: @max-width-breakpoint-mobile ) {
+				max-width: auto !important;
+			}
 		}
 	}
 }
