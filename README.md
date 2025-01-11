@@ -132,7 +132,7 @@ Name | Version
 [ManageWiki](https://www.mediawiki.org/wiki/Extension:ManageWiki) | master `e626a9f`
 [MediaSearch](https://www.mediawiki.org/wiki/Extension:MediaSearch) | REL1_39 `e0aa7bb`
 [MsUpload](https://www.mediawiki.org/wiki/Extension:MsUpload) | REL1_35 `32eb420`
-[MultimediaViewer](https://www.mediawiki.org/wiki/Extension:MultimediaViewer) | REL1_39 `1b97775`
+[MultimediaViewer](https://www.mediawiki.org/wiki/Extension:MultimediaViewer) | REL1_43
 [OAuth](https://www.mediawiki.org/wiki/Extension:OAuth) | REL1_35 `451ed95`
 [Popups](https://www.mediawiki.org/wiki/Extension:Popups) | REL1_43
 [PortableInfobox](https://www.mediawiki.org/wiki/Extension:PortableInfobox) | 0.6 `16a77dc`

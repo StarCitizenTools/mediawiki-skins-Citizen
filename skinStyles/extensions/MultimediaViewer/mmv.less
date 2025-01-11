@@ -3,691 +3,197 @@
  *
  * SkinStyles for Extension:MultimediaViewer
  * Module: mmv
- * Version: REL1_39 (1b97775)
- *
- * Date: 2022-11-26
+ * Version: REL1_43
 */
 
 @import '../../../resources/variables.less';
 
-// FIXME: Use relative units
-@mmv-width-toolbar: 52px;
-@mmv-height-abovethefold: 86px;
-@mmv-button-size: 40px;
-
-/* mmv.ui.dialog.less */
-.mw-mmv-dialog {
-	right: @mmv-width-toolbar;
-	margin: var( --space-xs );
-	background-color: var( --color-surface-1 );
-	border-radius: var( --border-radius-medium );
-	box-shadow: var( --box-shadow-drop-xx-large );
-
-	// The dialog will always show above the metadata in mobile view
-	@media ( max-width: @max-width-breakpoint-tablet ) {
-		top: unset !important;
-		right: 0 !important;
-		bottom: @mmv-height-abovethefold !important;
-		left: 0 !important;
+.mw-mmv {
+	&-post-image {
+		right: 0;
+		left: 0;
 		width: auto;
-	}
-
-	// Make arrow slightly smaller
-	.mw-mmv-dialog-down-arrow {
-		right: @mmv-width-toolbar;
-		width: 16px;
-		height: 16px;
-		background-color: var( --color-surface-1 );
-
-		// Hide arrow since the dialog is no longer relative
-		@media ( max-width: @max-width-breakpoint-tablet ) {
-			display: none;
-		}
-	}
-
-	.mw-mmv-dialog-warning {
-		background-color: var( --color-warning );
-	}
-}
-
-/* mmv.ui.reuse.dialog.less */
-.mw-mmv-reuse-dialog {
-	bottom: @mmv-height-abovethefold;
-
-	.mw-mmv-reuse-tabs {
-		border-bottom-color: var( --border-color-base );
-		border-radius: var( --border-radius-medium ) var( --border-radius-medium ) 0 0; // Sync with dialog
-
-		.oo-ui-optionWidget {
-			padding: var( --space-xs ) var( --space-sm );
-			font-size: 1rem;
-			font-weight: var( --font-weight-semi-bold );
-
-			&.oo-ui-optionWidget-highlighted {
-				border-bottom: 0; // border will cause reflow
-				box-shadow: inset 0 -2px 0 0 var( --color-progressive--hover );
-			}
-
-			&.oo-ui-optionWidget-selected,
-			&.oo-ui-optionWidget-highlighted.oo-ui-optionWidget-selected {
-				border-bottom: 0; // border will cause reflow
-				box-shadow: inset 0 -2px 0 0 var( --color-progressive );
-			}
-
-			&:first-child {
-				border-radius: var( --border-radius-medium ) 0 0 0;
-			}
-		}
-	}
-
-	.mw-mmv-reuse-pane {
-		padding: var( --space-md );
-	}
-
-	.mw-mmv-dialog-down-arrow {
-		bottom: @mmv-height-abovethefold + @mmv-button-size / 2;
-	}
-
-	.mw-mmv-dialog-warning {
-		padding: var( --space-md ) var( --space-xl );
-	}
-}
-
-/* mmv.ui.download.dialog.less */
-.mw-mmv-download-dialog {
-	bottom: @mmv-height-abovethefold;
-
-	.mw-mmv-download-size .oo-ui-optionWidget {
-		padding: var( --space-sm ) var( --space-md );
-		font-size: 1rem;
-	}
-
-	.mw-mmv-dialog-down-arrow {
-		bottom: @mmv-height-abovethefold + @mmv-button-size + @mmv-button-size / 2;
-		background-color: var( --color-surface-1 );
-	}
-
-	.mw-mmv-dialog-warning {
-		padding: var( --space-md ) var( --space-xl );
-	}
-}
-
-/* mmv.ui.viewingOptions.less */
-.mw-mmv-options-dialog {
-	top: 0;
-	padding: var( --space-md );
-
-	&.mw-mmv-enable-confirmation-shown {
-		background-color: var( --background-color-success-subtle );
-		box-shadow: var( --box-shadow-drop-xx-large );
-
-		// Hide arrow since those are notifications
-		.mw-mmv-dialog-down-arrow {
-			display: none;
-		}
-	}
-
-	&.mw-mmv-disable-confirmation-shown {
-		background-color: var( --color-surface-1 );
-
-		// Hide arrow since those are notifications
-		.mw-mmv-dialog-down-arrow {
-			display: none;
-		}
-	}
-
-	.mw-mmv-dialog-down-arrow {
-		top: @mmv-button-size + @mmv-button-size + @mmv-button-size / 2;
-	}
-
-	.mw-mmv-disable-confirmation {
-		.mw-mmv-options-dialog-header {
-			color: var( --color-emphasized );
-		}
-
-		.mw-mmv-options-text-header {
-			color: var( --color-subtle );
-		}
-	}
-
-	.mw-mmv-enable-confirmation {
-		.mw-mmv-options-dialog-header {
-			color: var( --color-emphasized );
-		}
-
-		.mw-mmv-options-text-header {
-			color: var( --color-subtle );
-		}
-	}
-}
-
-.mw-mmv-options-submit {
-	margin-top: var( --space-md );
-}
-
-// Just use flex layout
-.mw-mmv-options-subcontainer {
-	display: flex;
-	gap: var( --space-sm );
-	margin-top: var( --space-md );
-}
-
-.mw-mmv-options-subcontainer .mw-mmv-options-text {
-	margin-left: 0;
-}
-
-.mw-mmv-options-dialog-header {
-	margin: 0 0 var( --space-xs ) 0;
-	font-size: 1rem;
-	font-weight: var( --font-weight-semi-bold );
-	color: var( --color-emphasized );
-}
-
-.mw-mmv-options-text-header {
-	font-size: var( --font-size-small );
-	color: var( --color-base );
-}
-
-.mw-mmv-options-text-body {
-	margin-top: var( --space-xs );
-	font-size: var( --font-size-x-small );
-	color: var( --color-subtle );
-}
-
-.mw-mmv-options-enable-alert {
-	position: unset;
-	padding: var( --space-sm ) var( --space-md );
-	margin: ~'calc( var(--space-md ) * -1)';
-	margin-bottom: var( --space-md );
-	font-weight: var( --font-weight-semi-bold );
-	background-color: var( --color-warning );
-	border-top-left-radius: var( --border-radius-medium );
-	border-top-right-radius: var( --border-radius-medium );
-}
-
-/* mmv.ui.canvas.less */
-.mw-mmv-image img {
-	@media ( max-width: @max-width-breakpoint-tablet ) {
-		pointer-events: none;
-		// It is frustrating to misclick the image on mobile
-		// So that the image is not clickable on mobile
-		cursor: auto;
-	}
-}
-
-/* mmv.ui.canvasButtons.less */
-// Align icon with the rest of the skin
-.mw-mmv-download-button,
-.mw-mmv-reuse-button,
-.mw-mmv-options-button,
-.mw-mmv-close,
-.mw-mmv-fullscreen,
-.mw-mmv-next-image,
-.mw-mmv-prev-image {
-	padding: 0;
-	background-size: var( --size-icon );
-	border-radius: var( --border-radius-base );
-	opacity: var( --opacity-icon-base );
-
-	&.mw-mmv-dialog-open,
-	&:hover {
-		background-color: rgba( 255, 255, 255, 0.04 );
-		opacity: var( --opacity-icon-base--hover );
-	}
-
-	&:active {
-		background-color: rgba( 255, 255, 255, 0.08 );
-		opacity: var( --opacity-icon-base--selected );
-	}
-}
-
-// These icons have improper sizing in the source file
-// Let's try to fix it
-.mw-mmv-close,
-.mw-mmv-fullscreen,
-.mw-mmv-next-image,
-.mw-mmv-prev-image {
-	--size-icon: 1rem;
-}
-
-.mw-mmv-download-button,
-.mw-mmv-reuse-button,
-.mw-mmv-options-button,
-.mw-mmv-close,
-.mw-mmv-fullscreen {
-	right: 8px !important;
-	width: @mmv-button-size !important;
-	height: @mmv-button-size !important;
-	margin-top: 0;
-}
-
-.mw-mmv-close {
-	top: 8px;
-}
-
-.mw-mmv-fullscreen {
-	top: 8px + @mmv-button-size;
-}
-
-.mw-mmv-options-button {
-	top: 8px + @mmv-button-size * 2;
-}
-
-.mw-mmv-reuse-button {
-	bottom: @mmv-height-abovethefold + 8px; // close to space-xs
-}
-
-.mw-mmv-download-button {
-	bottom: @mmv-button-size + @mmv-height-abovethefold + 8px;
-}
-
-.mw-mmv-prev-image {
-	left: 8px;
-	background-position: left 8px center;
-
-	&:hover {
-		// Changing margin is expensive and we don't want to move the hover background
-		margin-left: 0;
-		background-position: left 4px center;
-	}
-}
-
-.mw-mmv-next-image {
-	right: 8px;
-	background-position: right 8px center;
-
-	&:hover {
-		// Changing margin is expensive and we don't want to move the hover background
-		margin-right: 0;
-		background-position: right 4px center;
-	}
-}
-
-// Make it much bigger so it is easier to click
-.mw-mmv-prev-image,
-.mw-mmv-next-image {
-	top: 20vh !important;
-	z-index: 1002; // avoid covering other buttons
-	height: 50vh;
-}
-
-/* mmv.ui.permission.less */
-.mw-mmv-permission-box {
-	width: auto; // We use grid to align metadata so no need to hardcode
-	margin: var( --space-md ) 0 0 0;
-	background-color: var( --color-surface-2 ) !important; // Somehow there is an inline style overriding it
-
-	&.empty {
-		display: none;
-	}
-
-	h3 {
-		margin: 0;
-		font-size: var( --font-size-x-small );
-		font-weight: var( --font-weight-normal );
-		color: var( --color-subtle );
-		letter-spacing: 0.05em;
-	}
-
-	// Make button bigger and aligned
-	.mw-mmv-permission-close {
-		top: var( --space-xs );
-		right: var( --space-xs );
-		width: 2rem;
-		height: 2rem;
-		padding: var( --space-xs );
-		background-color: transparent;
-		background-repeat: no-repeat;
-		background-position: center;
-		background-size: 14px;
-		border: 0;
-		border-radius: var( --border-radius-base );
-
-		// Add hover state
-		&:hover {
-			background-color: var( --background-color-button-quiet--hover );
-		}
-
-		&:active {
-			background-color: var( --background-color-button-quiet--active );
-		}
-	}
-
-	.mw-mmv-permission-text {
-		.mw-mmv-permission-text-fader {
-			top: 2.7em;
-			background-image: linear-gradient( to bottom, rgba( 255, 255, 255, 0 ) 0%, var( --color-surface-1 ) 100% );
-
-			a {
-				padding-top: 2px;
-				background-color: var( --color-surface-1 );
-			}
-		}
-	}
-
-	.mw-mmv-permission-text,
-	.mw-mmv-permission-html {
-		margin: var( --space-xxs ) 0 0 0;
-		font-size: var( --font-size-x-small );
-		line-height: var( --line-height-xx-small );
-		color: var( --color-base );
-	}
-
-	.mw-mmv-permission-html {
-		padding: 0;
-	}
-
-	&.full-size {
-		.mw-mmv-permission-html {
-			border-top: 0;
-		}
-	}
-}
-
-/* mmv.ui.progressBar.less */
-// Sync with citizen progress bar
-.mw-mmv-progress {
-	top: -2px;
-	height: 2px;
-	background-color: transparent;
-}
-
-.mw-mmv-progress-percent {
-	height: 2px;
-	background: linear-gradient( -45deg, transparent 33%, rgba( 0, 0, 0, 0.1 ) 33%, rgba( 0, 0, 0, 0.1 ) 66%, transparent 66% ), var( --color-progressive );
-	filter: drop-shadow( 0 0 16px var( --color-progressive ) );
-	border-top-right-radius: var( --border-radius-large );
-	border-bottom-right-radius: var( --border-radius-large );
-}
-
-/* mmv.ui.stripeButtons.less */
-.mw-mmv-stripe-button {
-	min-height: 32px !important;
-	max-height: 32px !important;
-	font-size: var( --font-size-small );
-
-	.mw-mmv-post-image:not( .mw-mmv-untruncated ) & {
-		background-color: transparent !important;
-		border-color: rgba( 255, 255, 255, 0.1 ) !important;
-
-		&:hover {
-			background-color: rgba( 255, 255, 255, 0.04 ) !important;
-		}
-
-		&:active {
-			background-color: rgba( 255, 255, 255, 0.08 ) !important;
-		}
-	}
-
-	/* Icon alignment fixes */
-	&::before {
-		inset: unset !important;
-		width: 1rem !important;
-		height: 1rem !important;
-		margin: 0 var( --space-xs ) 0 0 !important;
-	}
-
-	// Icon only button for smaller screen size
-	@media ( max-width: @max-width-breakpoint-tablet ) {
-		text-indent: -9999px;
-
-		&::before,
-		> .cdx-button__icon {
-			margin-right: 0 !important;
-		}
-	}
-
-	&.mw-mmv-description-page-button,
-	&.mw-mmv-description-page-button:active,
-	&.mw-mmv-description-page-button:visited {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		float: none;
-		min-width: auto;
-		max-width: none;
-		padding: 0 var( --space-sm );
-		margin: var( --space-md );
-		font-size: var( --font-size-small );
-		white-space: nowrap;
-		border-radius: var( --border-radius-base );
-	}
-}
-
-/* mmv.ui.truncatableTextField.less */
-// TODO: Revisit later
-
-/* mmv.ui.metadataPanel.less */
-.mw-mmv-info-box {
-	padding: var( --space-md );
-	background-color: var( --color-surface-2 );
-	border: 0;
-	border-radius: var( --border-radius-medium );
-}
-
-.mw-mmv-title-para {
-	flex-grow: 1;
-	order: -1; // Reorder because we use flex in container
-	// Changing height and line-height like the origina causes reflow
-	height: auto;
-	padding: 0;
-	margin: var( --space-xl ) var( --space-md ) var( --space-md ) var( --space-md );
-	overflow: hidden;
-	line-height: var( --line-height-xx-small );
-	// Enforce single line
-	white-space: nowrap;
-
-	// Reset when expanded
-	.mw-mmv-untruncated & {
-		white-space: normal;
-	}
-
-	&.mw-mmv-title-smaller {
-		padding: 0;
-		margin: var( --space-md );
-	}
-
-	// Enforce consistent sizing
-	&.mw-mmv-ttf-normal,
-	&.mw-mmv-title-small,
-	&.mw-mmv-title-smaller {
-		font-size: 1rem;
-
-		@media ( max-width: @max-width-breakpoint-tablet ) {
-			font-size: var( --font-size-small );
-		}
-	}
-
-	.mw-mmv-ttf-ellipsis {
-		// Never need to use it anyways
-		display: none !important;
-	}
-}
-
-.mw-mmv-credit {
-	height: ~'calc( 1em * var( --line-height-xxx-small ) )';
-	padding: 0;
-	margin: 0;
-	font-size: var( --font-size-small );
-	color: #999;
-
-	.mw-mmv-untruncated & {
-		color: var( --color-subtle );
-	}
-
-	@media ( max-width: @max-width-breakpoint-tablet ) {
-		font-size: var( --font-size-x-small );
-	}
-
-	.mw-mmv-ttf-ellipsis {
-		// Never need to use it anyways
-		display: none !important;
-	}
-}
-
-.mw-mmv-source-author {
-	line-height: var( --line-height-xxx-small );
-}
-
-.mw-mmv-title {
-	.mw-mmv-untruncated & {
-		color: var( --color-emphasized );
-	}
-}
-
-.mw-mmv-image-metadata {
-	// Use grid instead
-	display: grid;
-	grid-template-areas:
- 'desc links'
-		'about about';
-	grid-template-columns: 2fr 1fr;
-	gap: var( --space-md ) var( --space-xl );
-	width: auto;
-	padding: 0 var( --space-md );
-	margin-top: -4px;
-	// Sync with title
-	background-color: #000;
-	border-top: 0;
-
-	.mw-mmv-untruncated & {
-		background-color: transparent;
-
-		@media ( max-width: @max-width-breakpoint-tablet ) {
-			grid-template-areas:
- 'desc desc'
-				'links links'
-				'about about';
-		}
-	}
-
-	// Reset hardcoded styles for grid
-	&-column {
-		float: none !important;
-		width: auto !important;
-		max-width: none !important;
-	}
-
-	&-desc-column {
-		grid-area: desc;
-	}
-
-	&-links-column {
-		grid-area: links;
-	}
-}
-
-.mw-mmv-image-desc {
-	padding: 0;
-	font-size: var( --font-size-small );
-	color: inherit;
-}
-
-.mw-mmv-image-links {
-	margin: 0;
-
-	li {
-		font-size: var( --font-size-small );
-
-		@media ( max-width: @max-width-breakpoint-tablet ) {
-			font-size: var( --font-size-x-small );
-		}
-
-		+ li {
-			margin-top: var( --space-xs );
-		}
-
-		// Reset hardcoded styles
-		.metadata-panel-is-closed &.mw-mmv-license-li {
-			height: auto;
-			line-height: var( --line-height-xxx-small );
-		}
-	}
-}
-
-.mw-mmv-image-desc-div,
-.mw-mmv-image-links-div {
-	display: block; /* Take full width */
-}
-
-.mw-mmv-image-desc-div {
-	margin-top: var( --space-md );
-	margin-bottom: 0;
-	border-top: var( --border-width-base ) solid var( --border-color-base );
-}
-
-.mw-mmv-about-links {
-	grid-area: about;
-	width: auto;
-	padding: var( --space-md ) 0;
-	font-size: var( --font-size-small );
-	border-top: var( --border-width-base ) solid var( --border-color-base );
-}
-
-.mw-mmv-label {
-	font-size: var( --font-size-x-small );
-	color: var( --color-base );
-	background-color: var( --color-surface-3 );
-
-	&:hover {
-		background-color: var( --color-surface-2--hover );
-	}
-
-	&:active {
-		background-color: var( --color-surface-2--active );
-	}
-}
-
-/* mmv.ui.metadataPanelScroller.less */
-
-/* mmv.lightboxinterface.less */
-.mw-mmv-image-wrapper {
-	bottom: @mmv-height-abovethefold;
-}
-
-// Only apply background color when scroll up
-.mw-mmv-post-image {
-	min-height: @mmv-height-abovethefold;
-	color: var( --color-inverted-fixed );
-	background-color: transparent;
-	border-top-left-radius: var( --border-radius-large );
-	border-top-right-radius: var( --border-radius-large );
-
-	&.mw-mmv-untruncated {
-		color: var( --color-base );
-		background-color: var( --color-surface-1 );
-		box-shadow: none; // We already have top border
-	}
-
-	// Add scroll up affordance
-	// On touch device, when user drag/swipe the indicator, it will cause the
-	// page to scroll up and show the card below.
-	@media ( hover: none ) {
-		&::before {
-			position: absolute;
-			top: var( --space-xs );
-			right: 0;
-			left: 0;
-			width: 40px;
-			height: 4px;
-			margin: 0 auto;
-			content: '';
-			background-color: ~'rgba( 255, 255, 255, var( --opacity-icon-base ) )';
-			border-radius: var( --border-radius-pill );
-		}
+		padding-block: var( --space-xs ) var( --space-md );
+		padding-inline: var( --space-md );
+		border-top-left-radius: var( --border-radius-medium );
+		border-top-right-radius: var( --border-radius-medium );
+		transform: ~'translateY( calc( var( --space-xs ) * -1 ) )'; // counteract top positioning
 
 		&.mw-mmv-untruncated {
-			// Since background color is dependent on theme now
-			&::before {
-				background-color: var( --border-color-interactive );
-			}
+			box-shadow: none;
+		}
+	}
+
+	&-above-fold {
+		display: flex;
+		gap: var( --space-md );
+		align-items: center;
+		height: auto;
+		padding-bottom: 0;
+	}
+
+	&-progress {
+		top: -2px;
+		right: ~'calc( var( --space-md ) * -1 )';
+		left: ~'calc( var( --space-md ) * -1 )';
+		width: auto;
+		height: 2px;
+		background-color: transparent;
+
+		&-percent {
+			height: 2px;
+			background: var( --color-progressive );
+		}
+	}
+
+	&-title-para,
+	&-title-contain {
+		padding-block: var( --space-xs );
+	}
+
+	&-title-para {
+		display: flex;
+		flex-grow: 1;
+		order: -1;
+		height: auto;
+		padding-inline: 0;
+		margin-bottom: 0 !important;
+		font-size: var( --font-size-medium ) !important;
+		line-height: var( --line-height-xx-small ) !important;
+	}
+
+	&-title {
+		font-weight: var( --font-weight-semi-bold );
+		color: var( --color-emphasized );
+	}
+
+	&-stripe-button.mw-mmv-description-page-button {
+		margin: 0;
+
+		@media ( max-width: @max-width-breakpoint-mobile ) {
+			gap: 0;
+			font-size: 0;
+		}
+	}
+
+	&-image-metadata {
+		display: flex;
+		gap: var( --space-md );
+		justify-content: space-between;
+		padding-top: 0;
+		margin-top: 0;
+		line-height: var( --line-height-medium );
+		background-color: transparent;
+		border-top: 0;
+
+		&-desc-column,
+		&-links-column {
+			width: auto;
+		}
+
+		&-desc-column {
+			flex-grow: 1;
+		}
+
+		&-links-column {
+			flex-grow: 1;
+			flex-shrink: 0;
+			width: auto !important;
+			max-width: none !important;
+		}
+	}
+
+	&-credit {
+		padding: 0;
+	}
+
+	&-source-author {
+		line-height: inherit;
+	}
+
+	&-image-links {
+		margin: 0;
+		line-height: inherit;
+		color: var( --color-subtle );
+	}
+
+	&-author::before,
+	&-image-links li::before {
+		background-color: currentcolor !important;
+	}
+
+	&-image-desc {
+		padding: 0;
+		font-size: var( --font-size-small );
+
+		&-div {
+			margin-bottom: 0;
+		}
+	}
+
+	&-permission-box {
+		margin: var( --space-md ) 0;
+	}
+
+	&-image img {
+		// It was very easy to misclick the image in touch device,
+		// let's disable it.
+		@media ( pointer: coarse ) {
+			pointer-events: none;
 		}
 	}
 }
 
-.mw-mmv-above-fold {
-	display: flex; // let's use flex instead of float
-	gap: var( --space-xs );
-	height: auto; // avoid layout shift when scroll up
-	padding-bottom: 0; // let metadata handle the padding
+.mw-mmv-post-image:not( .mw-mmv-untruncated ) {
+	color: ~'hsl( var( --color-primary__h ), 45%, 80% )'; // color-base in dark mode
+	background-color: transparent;
+
+	.mw-mmv {
+		&-title-para {
+			max-height: ~'calc( var( --font-size-medium ) * var( --line-height-xx-small ) * 2 + var( --space-xs ) * 2 )';
+		}
+
+		&-title {
+			overflow: hidden;
+			color: ~'hsl( var( --color-primary__h ), 80%, 95% )';
+		}
+
+		&-stripe-button.mw-mmv-description-page-button {
+			margin: 0;
+
+			&.cdx-button.cdx-button--fake-button--enabled.cdx-button--weight-primary.cdx-button--action-progressive {
+				background-color: transparent;
+				border-color: rgba( 255, 255, 255, 0.11 ); // border-color-interactive in dark mode
+			}
+		}
+
+		&-credit,
+		&-image-links {
+			color: ~'hsl( var( --color-primary__h ), 35%, 65% )'; // color-subtle in dark mode
+		}
+
+		&-image-links li.mw-mmv-license-li {
+			line-height: inherit;
+		}
+	}
+}
+
+.mw-mmv-untruncated {
+	.mw-mmv {
+		&-above-fold {
+			padding-bottom: var( --space-xs );
+			margin-bottom: var( --space-md );
+			border-bottom: 1px solid var( --border-color-base );
+		}
+
+		&-image-metadata {
+			@media ( max-width: @max-width-breakpoint-mobile ) {
+				flex-direction: column;
+			}
+		}
+
+		&-image-metadata-desc-column {
+			max-width: var( --width-layout );
+		}
+	}
 }

@@ -476,8 +476,6 @@
 			"+ext.math.styles": "skinStyles/extensions/Math/ext.math.styles.less",
 			"+mediasearch.styles": "skinStyles/extensions/MediaSearch/mediasearch.styles.less",
 			"+mmv": "skinStyles/extensions/MultimediaViewer/mmv.less",
-			"+mmv.ui.download.pane": "skinStyles/extensions/MultimediaViewer/mmv.ui.download.pane.less",
-			"+mmv.ui.reuse.shareembed": "skinStyles/extensions/MultimediaViewer/mmv.ui.reuse.shareembed.less",
 			"+ext.MsUpload": "skinStyles/extensions/MsUpload/ext.MsUpload.less",
 			"+ext.relatedArticles.styles": "skinStyles/extensions/RelatedArticles/ext.relatedArticles.styles.less",
 			"+ext.relatedArticles.readMore": "skinStyles/extensions/RelatedArticles/ext.relatedArticles.readMore.less",
