@@ -24,6 +24,7 @@ sftp-config.json
 /vendor
 /node_modules
 .eslintcache
+package-lock.json
 
 # Operating systems
 ## Mac OS X
