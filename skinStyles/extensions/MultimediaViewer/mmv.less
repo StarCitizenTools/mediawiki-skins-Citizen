@@ -46,7 +46,6 @@
 		}
 	}
 
-	&-title-para,
 	&-title-contain {
 		padding-block: var( --space-xs );
 	}
@@ -56,10 +55,14 @@
 		flex-grow: 1;
 		order: -1;
 		height: auto;
-		padding-inline: 0;
-		margin-bottom: 0 !important;
+		padding: var( --space-xs ) 0 !important;
+		margin: 0 !important;
 		font-size: var( --font-size-medium ) !important;
 		line-height: var( --line-height-xx-small ) !important;
+
+		.mw-mmv-ttf-ellipsis {
+			display: none !important;
+		}
 	}
 
 	&-title {
@@ -146,11 +149,43 @@
 		margin: var( --space-md ) 0;
 	}
 
-	&-image img {
-		// It was very easy to misclick the image in touch device,
-		// let's disable it.
-		@media ( pointer: coarse ) {
-			pointer-events: none;
+	&-image {
+		img {
+			// It was very easy to misclick the image in touch device,
+			// let's disable it.
+			@media ( pointer: coarse ) {
+				pointer-events: none;
+			}
+		}
+
+		&.error {
+			display: grid;
+			place-content: center;
+			background-color: inherit;
+		}
+
+		.error-box {
+			--mmv-error-icon-size: 80px;
+			position: relative;
+			inset: unset;
+			padding: ~'calc( var( --mmv-error-icon-size ) + var( --space-xxl ) )' 0 0 0;
+			margin: var( --space-md ) 4.5rem;
+			line-height: var( --line-height-xx-small );
+			word-break: break-word;
+			background-size: var( --mmv-error-icon-size );
+
+			.mw-mmv-error {
+				&-text {
+					font-size: var( --font-size-xxx-large );
+					font-weight: var( --font-weight-semi-bold );
+				}
+
+				&-description {
+					margin-top: var( --space-md );
+					font-size: var( --font-size-small );
+					color: ~'hsl( var( --color-primary__h ), 35%, 65% )';
+				}
+			}
 		}
 	}
 }
