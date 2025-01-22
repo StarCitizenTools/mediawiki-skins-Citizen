@@ -58,10 +58,10 @@
 	&-details {
 		&[ open ] {
 			+ .citizen-menu__card {
-				content-visibility: visible;
+				transform: none;
 				transition-timing-function: var( --transition-timing-function-ease-out );
 				transition-duration: var( --transition-duration-medium );
-				transform: none;
+				content-visibility: visible;
 
 				> * {
 					opacity: 1;
@@ -104,9 +104,9 @@
 			&::before {
 				content: '';
 				background: var( --background-color-backdrop-light );
+				opacity: 0;
 				-webkit-backdrop-filter: blur( 2px );
 				backdrop-filter: blur( 2px );
-				opacity: 0;
 				transition-timing-function: var( --transition-timing-function-ease );
 				transition-duration: var( --transition-duration-base );
 				transition-property: opacity;

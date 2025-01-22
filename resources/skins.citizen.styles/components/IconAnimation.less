@@ -59,10 +59,10 @@ summary ) {
 .citizen-header__logo {
 	.mw-logo-icon,
 	.citizen-ui-icon {
+		transform-origin: center center;
 		transition-timing-function: var( --transition-timing-function-ease );
 		transition-duration: var( --transition-duration-base );
 		transition-property: color, transform, opacity;
-		transform-origin: center center;
 	}
 
 	.citizen-header__button {
@@ -77,8 +77,8 @@ summary ) {
 
 			.mw-logo-icon,
 			.citizen-ui-icon {
-				transition-duration: var( --transition-duration-medium );
 				transform: rotate( 360deg );
+				transition-duration: var( --transition-duration-medium );
 			}
 		}
 	}

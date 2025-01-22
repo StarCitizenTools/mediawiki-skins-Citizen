@@ -11,10 +11,10 @@
 #contentSub,
 #contentSub2 {
 	overflow: hidden;
+	text-overflow: ellipsis;
 	font-size: var( --font-size-x-small );
 	line-height: var( --line-height-xxx-small );
 	color: var( --color-subtle );
-	text-overflow: ellipsis;
 }
 
 // Reduced spacing if both sub1 and 2 exists
@@ -24,9 +24,9 @@
 
 #citizen-tagline-user > span + span::before {
 	margin: 0 var( --space-xxs );
-	content: '·';
 	-webkit-user-select: none;
 	user-select: none;
+	content: '·';
 }
 
 span.subpages {
