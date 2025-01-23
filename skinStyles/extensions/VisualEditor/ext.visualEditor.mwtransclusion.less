@@ -3,81 +3,22 @@
  *
  * SkinStyles for Extension:VisualEditor
  * Module: ext.visualEditor.mwtransclusion
- * Version: REL1_39 65d89c9
- *
- * Date: 2023-02-06
+ * Version: REL1_43
 */
 
-/* ve.ui.MWTransclusionDialog.css */
+/* ve.ui.MWTransclusionDialog.less */
 .ve-ui-mwTemplateDialog .mw-widget-titleWidget-menu-withDescriptions .mw-widget-titleOptionWidget .oo-ui-labelElement-label {
 	font-weight: var( --font-weight-semi-bold );
 }
 
-/* ve.ui.MWTwoPaneTransclusionDialogLayout.less */
-.ve-ui-mwTwoPaneTransclusionDialogLayout {
-	> .oo-ui-menuLayout-menu {
-		border-right-color: var( --border-color-base );
-	}
-}
-
-/* ve.ui.MWParameterPage.css */
+/* ve.ui.MWParameterPage.less */
 .ve-ui-mwParameterPage-label {
 	font-weight: var( --font-weight-semi-bold );
 }
 
-.ve-ui-mwParameterPage-undocumentedLabel {
-	color: var( --color-subtle );
-}
-
-.ve-ui-mwParameterPage-doc-required,
-.ve-ui-mwParameterPage-doc-deprecated,
-.ve-ui-mwParameterPage-inlineDescription .ve-ui-mwParameterPage-doc-example {
-	color: var( --color-subtle );
-}
-
-/* ve.ui.MWTemplatePage.css */
-.ve-ui-mwTemplatePage-description {
-	color: var( --color-subtle );
-}
-
-/* ve.ui.MWTransclusionOutlineControlsWidget.less */
-.ve-ui-mwTransclusionOutlineControlsWidget {
-	background-color: var( --color-surface-1 );
-	border-top-color: var( --border-color-base );
-}
-
 /* ve.ui.MWTransclusionOutlineWidget.less */
 .ve-ui-mwTransclusionOutlineTemplateWidget {
-	&-sticky {
-		background-color: var( --color-surface-1 );
-	}
-
-	&-no-match {
-		color: var( --color-subtle );
-	}
-
-	.ve-ui-mwTransclusionOutlineParameterSelectWidget:focus {
-		box-shadow: inset 0 0 0 1px var( --color-progressive );
-	}
-
 	.ve-ui-mwTransclusionOutlineParameterWidget {
-		&:active {
-			color: var( --color-progressive );
-			background-color: var( --background-color-progressive-subtle );
-		}
-
-		&.ve-ui-mwTransclusionOutlineParameterWidget-activePage,
-		&.ve-ui-mwTransclusionOutlineParameterWidget-activePage:hover,
-		&.ve-ui-mwTransclusionOutlineParameterWidget-activePage.oo-ui-optionWidget-highlighted {
-			color: var( --color-base );
-			background-color: var( --background-color-progressive-subtle );
-		}
-
-		&.oo-ui-optionWidget-highlighted {
-			color: var( --color-emphasized );
-			background-color: var( --background-color-button-quiet--hover );
-		}
-
 		&-hasValue {
 			font-weight: var( --font-weight-semi-bold );
 		}

@@ -3,32 +3,17 @@
  *
  * SkinStyles for Extension:VisualEditor
  * Module: ext.visualEditor.mwsave
- * Version: REL1_39 65d89c9
- *
- * Date: 2023-02-06
+ * Version: REL1_43
 */
 
-.ve-ui-mwSaveDialog-summary {
-	background-color: transparent;
-}
+/* ve.ui.MWSaveDialog.less */
+.ve-ui-mwSaveDialog {
+	&-summary {
+		background-color: transparent;
+	}
 
-.ve-ui-mwSaveDialog-options {
-	background-color: var( --color-surface-2 );
-	border: var( --border-width-base ) solid var( --border-color-base );
-	border-top: 0;
-}
-
-.ve-ui-mwSaveDialog-editSummary-count {
-	color: var( --color-subtle );
-	border-left-color: var( --border-color-base );
-}
-
-.ve-ui-mwSaveDialog-license {
-	font-size: var( --font-size-x-small );
-	line-height: var( --line-height-xx-small );
-	color: var( --color-subtle );
-}
-
-.ve-ui-mwSaveDialog-no-changes {
-	color: var( --color-subtle );
+	&-license {
+		font-size: var( --font-size-x-small );
+		line-height: var( --line-height-xx-small );
+	}
 }

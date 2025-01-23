@@ -3,28 +3,17 @@
  *
  * SkinStyles for Extension:VisualEditor
  * Module: ext.visualEditor.mwlink
- * Version: REL1_39 65d89c9
- *
- * Date: 2023-02-06
+ * Version: REL1_43
 */
 
-/* ve.ui.MWInternalLinkContextItem.css */
-.ve-ui-mwInternalLinkContextItem-withImage > .oo-ui-iconElement.oo-ui-iconElement-icon {
-	background-color: var( --color-surface-3 );
-	border-color: var( --color-surface-3 );
-	// Do not invert image
-	filter: none;
+/* ve.ui.MWInternalLinkContextItem.less */
+.ve-ui-mwInternalLinkContextItem {
+	&-withDescription .ve-ui-linkContextItem-link {
+		font-weight: var( --font-weight-semi-bold );
+	}
 }
 
-.ve-ui-mwInternalLinkContextItem-description {
-	color: var( --color-subtle );
-}
-
-.ve-ui-mwInternalLinkContextItem-withDescription .ve-ui-linkContextItem-link {
-	font-weight: var( --font-weight-semi-bold );
-}
-
-/* ve.ce.MWExternalLinkAnnotation.css */
+/* ve.ce.MWExternalLinkAnnotation.less */
 .plainlinks a.ve-ce-linkAnnotation.ve-ce-annotation-active.external {
 	background-color: var( --background-color-button-quiet--hover ) !important;
 }

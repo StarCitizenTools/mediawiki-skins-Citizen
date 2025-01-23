@@ -3,12 +3,14 @@
  *
  * SkinStyles for Extension:VisualEditor
  * Module: ext.visualEditor.desktopArticleTarget.init
- * Version: REL1_39 65d89c9
- *
- * Date: 2023-02-06
+ * Version: REL1_43
 */
 
 .ve-activated {
+	#citizen-page-header-sticky-sentinel {
+		display: none;
+	}
+
 	/*
 	 * Hide various unnessecary elements when VE is active
 	 * - Edit buttons (as you can switch them in VE)
@@ -25,12 +27,6 @@
 	&-bar {
 		border-bottom-color: var( --border-color-base );
 		box-shadow: none;
-	}
-
-	&-floating {
-		.ve-init-mw-desktopArticleTarget-toolbarPlaceholder-bar {
-			background: var( --color-surface-0 );
-		}
 	}
 }
 
