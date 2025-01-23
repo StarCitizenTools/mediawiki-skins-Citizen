@@ -111,6 +111,22 @@
 	}
 }
 
+.mixin-citizen-css-theme-clientpref-all( @prop, @value ) {
+	@{prop}: @value;
+
+	@media screen {
+		html.skin-theme-clientpref-night & {
+			@{prop}: @value;
+		}
+	}
+
+	@media screen and ( prefers-color-scheme: dark ) {
+		html.skin-theme-clientpref-os & {
+			@{prop}: @value;
+		}
+	}
+}
+
 // Transform black into given color
 // From https://stackoverflow.com/a/73390109/10624167
 .recolor(@color ) {

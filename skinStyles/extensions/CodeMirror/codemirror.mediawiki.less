@@ -1,0 +1,184 @@
+/*
+ * Citizen
+ *
+ * SkinStyles for Extension:CodeMirror
+ * Module: ext.CodeMirror.mode.mediawiki, ext.CodeMirror.v6.mode.mediawiki
+ * Version: REL1_43
+*/
+
+@import '../../../resources/mixins.less';
+
+.cm-mw {
+	&-matching {
+		background-color: var( --color-syntax-yellow );
+	}
+
+	&-skipformatting {
+		background-color: var( --color-syntax-cyan );
+	}
+
+	&-doubleUnderscore,
+	&-double-underscore,
+	&-signature,
+	&-hr {
+		.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-purple ) );
+		background-color: transparent;
+	}
+
+	&-list,
+	&-indenting {
+		.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-cyan ) );
+	}
+
+	&-mnemonic,
+	&-html-entity {
+		.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-green ) );
+	}
+
+	&-comment {
+		.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-grey ) );
+	}
+
+	&-apostrophes-bold,
+	&-apostrophes-italic {
+		.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-cyan ) );
+	}
+
+	&-section {
+		&-1,
+		&-2,
+		&-3,
+		&-4,
+		&-5,
+		&-6 {
+			span:not( .cm-mw-section-header ) {
+				.mixin-citizen-css-theme-clientpref-all( color, var( --color-emphasized ) );
+			}
+		}
+	}
+
+	&-section-header {
+		.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-cyan ) );
+	}
+
+	&-template,
+	&-templatevariable,
+	&-parserfunction {
+		.mixin-citizen-css-theme-clientpref-all( color, var( --color-emphasized ) );
+
+		&-name {
+			font-weight: var( --font-weight-normal );
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-blue ) );
+		}
+
+		&-delimiter {
+			font-weight: var( --font-weight-normal );
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-cyan ) );
+		}
+
+		&-bracket {
+			font-weight: var( --font-weight-normal );
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-purple ) );
+		}
+	}
+
+	&-template {
+		&-name-mnemonic {
+			font-weight: var( --font-weight-normal );
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-blue ) );
+		}
+
+		&-argument-name {
+			font-weight: var( --font-weight-normal );
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-red ) );
+		}
+	}
+
+	&-exttag,
+	&-htmltag {
+		&-name {
+			font-weight: var( --font-weight-normal );
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-red ) );
+		}
+
+		&-bracket {
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-cyan ) );
+		}
+
+		&-attribute {
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-yellow ) );
+		}
+	}
+
+	&-link {
+		.mixin-citizen-css-theme-clientpref-all( color, var( --color-progressive ) );
+
+		&-pagename {
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-progressive ) );
+		}
+
+		&-tosection {
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-progressive--hover ) );
+		}
+
+		&-text {
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-green ) );
+		}
+
+		&-bracket {
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-progressive ) );
+		}
+
+		&-delimiter {
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-cyan ) );
+		}
+
+		&-ground {
+			background-color: var( --background-color-progressive-subtle );
+		}
+	}
+
+	&-extlink,
+	&-free-extlink {
+		.mixin-citizen-css-theme-clientpref-all( color, var( --color-progressive ) );
+
+		&-protocol {
+			font-weight: var( --font-weight-normal );
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-orange ) );
+		}
+
+		&-text {
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-green ) );
+		}
+
+		&-bracket {
+			font-weight: var( --font-weight-normal );
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-progressive ) );
+		}
+
+		&-ground {
+			background-color: var( --background-color-progressive-subtle );
+		}
+	}
+
+	&-table {
+		&-bracket {
+			font-weight: var( --font-weight-normal );
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-pink ) );
+		}
+
+		&-delimiter {
+			font-weight: var( --font-weight-normal );
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-cyan ) );
+		}
+
+		&-definition {
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-syntax-yellow ) );
+		}
+
+		&-caption {
+			font-weight: var( --font-weight-normal );
+			.mixin-citizen-css-theme-clientpref-all( color, var( --color-emphasized ) );
+		}
+	}
+}
