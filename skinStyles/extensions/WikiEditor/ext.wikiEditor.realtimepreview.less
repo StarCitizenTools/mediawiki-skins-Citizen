@@ -3,9 +3,7 @@
  *
  * SkinStyles for Extension:WikiEditor
  * Module: ext.wikiEditor.realtimepreview
- * Version: REL1_39 02e1c70
- *
- * Date: 2023-06-03
+ * Version: REL1_43
 */
 
 /* RealtimePreview.less */
@@ -22,72 +20,4 @@
 		margin-right: 8px;
 		margin-left: 6px;
 	}
-}
-
-.ext-WikiEditor-realtimepreview-button.oo-ui-toggleWidget-on .oo-ui-labelElement-label {
-	color: var( --color-progressive );
-}
-
-.ext-WikiEditor-ResizingDragBar-ns {
-	border-top-color: var( --border-color-base );
-}
-
-.ext-WikiEditor-realtimepreview-loadingbar div {
-	background-color: var( --color-progressive );
-}
-
-// Cancel out padding added in action.edit to avoid textarea overflow
-.ext-WikiEditor-realtimepreview-textbox#wpTextbox1,
-.mw-editform .ext-WikiEditor-realtimepreview-textbox#wpTextbox1 {
-	padding-bottom: 0;
-}
-
-/* ResizingDragBar.less */
-.ext-WikiEditor-ResizingDragBar {
-	background-color: var( --color-surface-2 );
-}
-
-.ext-WikiEditor-ResizingDragBar-ew {
-	background-color: var( --color-surface-2 );
-}
-
-.ext-WikiEditor-ResizingDragBar span {
-	background-color: var( --color-subtle );
-}
-
-.ext-WikiEditor-ResizingDragBar:hover span {
-	background-color: var( --color-base );
-}
-
-/* TwoPaneLayout.less */
-.ext-WikiEditor-twopanes-TwoPaneLayout {
-	.ext-WikiEditor-twopanes-pane1,
-	.ext-WikiEditor-twopanes-pane2 {
-		border-color: var( --border-color-base );
-	}
-}
-
-/* ErrorLayout.less */
-.ext-WikiEditor-realtimepreview-ErrorLayout {
-	background-color: var( --color-surface-2 );
-}
-
-/* ManualWidget.less */
-.ext-WikiEditor-ManualWidget {
-	background-color: var( --color-surface-2 );
-	border-color: var( --border-color-base );
-
-	.ext-WikiEditor-realtimepreview-manual-reload {
-		color: var( --color-progressive );
-	}
-
-	&.oo-ui-widget-disabled .ext-WikiEditor-realtimepreview-manual-reload {
-		color: var( --color-subtle );
-	}
-}
-
-// Merge dragbar with editoptions
-.skin-citizen .mw-editform .editOptions {
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
 }

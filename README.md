@@ -162,7 +162,7 @@ Name | Version
 [VEForAll](https://www.mediawiki.org/wiki/Extension:VEForAll) | REL1_39 `0de7158`
 [VisualEditor](https://www.mediawiki.org/wiki/Extension:VisualEditor) | REL1_39 `65d89c9`
 [Wikibase](https://www.mediawiki.org/wiki/Extension:Wikibase) | REL1_35 `7bb503b`
-[WikiEditor](https://www.mediawiki.org/wiki/Extension:WikiEditor) | REL1_39 `02e1c70`
+[WikiEditor](https://www.mediawiki.org/wiki/Extension:WikiEditor) | REL1_43
 [WikiHiero](https://www.mediawiki.org/wiki/Extension:WikiHiero) | REL1_39 `3a2be51`
 [WSSearchFront](https://www.mediawiki.org/wiki/Extension:WSSearchFront) | 3.5.4 `c27ebcb5`
 
