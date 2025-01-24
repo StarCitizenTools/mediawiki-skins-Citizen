@@ -383,7 +383,6 @@
 	},
 	"ResourceModuleSkinStyles": {
 		"citizen": {
-			"+codex-styles": "skinStyles/codex/codex.styles.less",
 			"+ext.AccountInfo.special": "skinStyles/extensions/AccountInfo/ext.AccountInfo.special.less",
 			"+ext.advancedSearch.initialstyles": "skinStyles/extensions/AdvancedSearch/ext.advancedSearch.initialstyles.less",
 			"+ext.advancedSearch.styles": "skinStyles/extensions/AdvancedSearch/ext.advancedSearch.styles.less",
