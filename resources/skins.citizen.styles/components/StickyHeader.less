@@ -38,6 +38,11 @@
 			opacity: 1;
 		}
 
+		.citizen-page-header-inner {
+			padding-block: var( --space-sm );
+		}
+
+		#siteSub,
 		.mw-indicators {
 			display: none;
 		}
@@ -91,10 +96,6 @@ html {
 // Make sticky header more compact if there are less screen estate
 @media ( max-height: 800px ) {
 	.citizen-sticky-header-visible {
-		.citizen-page-header-inner {
-			padding-block: var( --space-sm );
-		}
-
 		.firstHeading,
 		.mw-page-title-parenthesis {
 			font-size: var( --font-size-medium );
