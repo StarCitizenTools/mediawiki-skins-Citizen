@@ -7,7 +7,7 @@
 		]
 	},
 	"skinname-citizen": "Громадянин",
-	"citizen-skin-desc": "Гнучка тема оформлення, розроблена для вікі Star Citizen",
+	"citizen-skin-desc": "Красива, зручна, адаптивна оболонка MediaWiki, яка робить розширення частиною цілісного досвіду. Початково створена для [https://starcitizen.tools/ Star Citizen Wiki].",
 	"citizen.css": "/* Увесь розміщений тут CSS буде завантажений для всіх користувачів теми оформлення «Громадянин» */",
 	"citizen.js": "/* Увесь розміщений тут код JavaScript буде завантажений для всіх користувачів теми оформлення «Громадянин» */",
 	"citizen-drawer-toggle": "Переключити меню",
@@ -21,7 +21,7 @@
 	"citizen-footer-tagline": "Редагувати цей текст на [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Додати тему",
 	"citizen-jumptotop": "Повернутись угору",
-	"citizen-search-fulltext": "Пошук сторінок, що містять",
+	"citizen-search-fulltext": "Пошук тексту",
 	"citizen-search-empty-desc": "Введіть, щоб почати пошук",
 	"citizen-tagline-ns-talk": "Сторінка обговорення {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "Інформація про {{SITENAME}}",
