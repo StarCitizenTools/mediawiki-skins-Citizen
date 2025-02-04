@@ -1,20 +1,24 @@
 @import '../tokens-theme-dark.less';
 
 .feature-pure-black() {
-	--color-surface-0__l: 0%;
-	--color-surface-1__s: 20%;
-	--color-surface-1__l: 3%;
-	--color-surface-2__l: 5%;
-	--color-surface-3__l: 8%;
-	--color-surface-4__l: 12%;
-	--color-emphasized: ~'hsl( var( --color-progressive-hsl__h ), 0%, 95% )';
-	--color-base: ~'hsl( var( --color-progressive-hsl__h ), 0%, 85% )';
-	--color-base--hover: ~'hsl( var( --color-progressive-hsl__h ), 0%, 90% )';
-	--color-subtle: ~'hsl( var( --color-progressive-hsl__h ), 0%, 65% )';
-	--color-placeholder: ~'hsl( var( --color-progressive-hsl__h ), 0%, 60% )';
-	--border-color-base: rgba( 255, 255, 255, 0.07 );
-	--border-color-subtle: rgba( 255, 255, 255, 0.04 );
-	--border-color-interactive: rgba( 255, 255, 255, 0.1 );
+	--delta-lightness-surface-base: 12%;
+
+	--color-surface-0-oklch__l: 0%;
+	--color-surface-0-hsl__l: 0%;
+
+	--color-emphasized-oklch__c: 0;
+	--color-base-oklch__c: 0;
+	--color-subtle-oklch__c: 0;
+	--color-placeholder-oklch__c: 0;
+
+	--color-emphasized-hsl__s: 0%;
+	--color-base-hsl__s: 0%;
+	--color-subtle-hsl__s: 0%;
+	--color-placeholder-hsl__s: 0%;
+
+	--border-color-base: rgba( 255, 255, 255, 0.1 );
+	--border-color-subtle: rgba( 255, 255, 255, 0.05 );
+	--border-color-interactive: rgba( 255, 255, 255, 0.15 );
 	--shadow-opacity: 0.2;
 }
 
