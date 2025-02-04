@@ -135,11 +135,12 @@ td {
 // TODO: Think of better places to put indicators;
 .mw-indicators {
 	display: flex;
+	column-gap: var( --space-xs );
 	align-items: center;
-	padding-left: 10px;
-	margin-left: 10px;
+	padding-inline-start: var( --space-xs );
+	margin-inline-start: var( --space-xs );
 	font-size: var( --font-size-small );
-	border-left: var( --border-width-base ) solid var( --border-color-base );
+	border-inline-start: var( --border-width-base ) solid var( --border-color-base );
 }
 
 #mw-indicator-mw-helplink a {
