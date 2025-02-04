@@ -1,0 +1,229 @@
+/**
+ * Citizen tokens
+ * CSS variables that are used throughout the skin
+ */
+:root {
+	--border-radius-medium: ~'calc( var( --border-radius-base ) * 2 )';
+	--border-radius-large: ~'calc( var( --border-radius-base ) * 3 )';
+
+	/* State color */
+	--color-primary__h: @color-primary__h;
+	--color-primary__s: @color-primary__s;
+	--color-primary__l: @color-primary__l;
+	--color-inverted-primary: #fff;
+	--color-destructive__h: 340;
+	--color-destructive__l: 40%;
+	--color-success__h: 170;
+	--color-success__l: 17%;
+	--color-warning__h: 48;
+	--color-warning__l: 40%;
+	--background-color-subtle__s: 95%;
+	--background-color-subtle__l: 95%;
+
+	/* Surface color */
+	--color-surface-0__s: 30%;
+	--color-surface-0__l: 96%;
+	--color-surface-1__s: 40%;
+	--color-surface-1__l: 94%;
+	--color-surface-2__s: 40%;
+	--color-surface-2__l: 92%;
+	--color-surface-3__s: 43%;
+	--color-surface-3__l: 90%;
+	--color-surface-4__s: 46%;
+	--color-surface-4__l: 88%;
+	--color-surface-0: ~'hsl( var( --color-primary__h ), var( --color-surface-0__s ), var( --color-surface-0__l ) )';
+	--color-surface-1: ~'hsl( var( --color-primary__h ), var( --color-surface-1__s ), var( --color-surface-1__l ) )';
+	--color-surface-2: ~'hsl( var( --color-primary__h ), var( --color-surface-2__s ), var( --color-surface-2__l ) )';
+	--color-surface-2--hover: ~'hsl( var( --color-primary__h ), var( --color-surface-2__s ), calc( var( --color-surface-2__l ) + var( --delta-lightness-hover-state ) ) )';
+	--color-surface-2--active: ~'hsl( var( --color-primary__h ), var( --color-surface-2__s ), calc( var( --color-surface-2__l ) - var( --delta-lightness-hover-state ) ) )';
+	--color-surface-3: ~'hsl( var( --color-primary__h ), var( --color-surface-3__s ), var( --color-surface-3__l ) )';
+	--color-surface-4: ~'hsl( var( --color-primary__h ), var( --color-surface-4__s ), var( --color-surface-4__l ) )';
+	--background-color-icon: ~'rgba( 0, 0, 0, var( --opacity-icon-base ) )';
+	--background-color-icon--hover: ~'rgba( 0, 0, 0, var( --opacity-icon-base--hover ) )';
+	--background-color-icon--active: ~'rgba( 0, 0, 0, var( --opacity-icon-base--active ) )';
+
+	/* Link color */
+	--color-link: ~'var( --color-progressive )';
+	--color-link--hover: ~'var( --color-progressive--hover )';
+	--color-link--active: ~'var( --color-progressive--active )';
+
+	/* Syntax highlight color */
+	--color-syntax-red: @color-syntax-red;
+	--color-syntax-orange: @color-syntax-orange;
+	--color-syntax-yellow: @color-syntax-yellow;
+	--color-syntax-green: @color-syntax-green;
+	--color-syntax-cyan: @color-syntax-cyan;
+	--color-syntax-blue: @color-syntax-blue;
+	--color-syntax-paleblue: @color-syntax-paleblue;
+	--color-syntax-purple: @color-syntax-purple;
+	--color-syntax-brown: @color-syntax-brown;
+	--color-syntax-pink: @color-syntax-pink;
+	--color-syntax-violet: @color-syntax-violet;
+	--color-syntax-grey: @color-syntax-grey;
+
+	/* Box shadow */
+	--box-shadow-border: var( --border-color-base ) 0 0 0 1px;
+
+	/* Filter */
+	--filter-invert-primary: invert( 1 ) hue-rotate( 180deg );
+	--filter-invert-fixed: invert( 1 ) hue-rotate( 180deg );
+
+	/* Font */
+	// Used as base unit to caluclate font-size
+	--font-size-base: 1rem;
+	--font-family-citizen-base: 'Roboto', 'Roboto-fallback';
+	--font-family-citizen-serif: 'Roboto Serif', 'Roboto Serif-fallback';
+	--font-family-citizen-monospace: 'Roboto Mono', 'Roboto Mono-fallback';
+	--font-family-language-base: '';
+	--font-family-language-serif: '';
+	--font-family-language-monospace: '';
+	--font-grade: 0;
+	--line-height: 1.6;
+
+	/* Size */
+	/* TODO: Need to standardize the naming convention */
+	/* TODO: Perhaps move some of these into a scoped element? */
+	--size-icon: @size-icon;
+	// Height of the bottom toolbar used by page tools and ToC toggle
+	--toolbar-size: 2.5rem;
+	// Used to offset sticky elements with sticky header
+	// This is overriden by inline styles in the html element when sticky header is active
+	--height-sticky-header: 0;
+	// Width or height of citizen-header, depending on the orientation
+	--header-size: @header-size;
+	// Max-height allowed for header card, 20vh is left for closing affordnance
+	--header-card-maxheight: 80vh;
+	// Width of the gradient in citizen-overflow
+	--overflow-gradient-size: 2rem;
+	// Width of the body content
+	--width-layout: @width-layout;
+	// Width of the body content when the page should be extended (e.g. special, category pages)
+	--width-layout--extended: ~'calc( var( --width-layout ) * 1.5 )';
+	// Width of the table of contents
+	--width-toc: @width-toc;
+	// Side padding used for the page
+	// This is set in px to enforce safe area on a page
+	--padding-page: @padding-page;
+
+	/* Spacing */
+	--space-unit: @space-unit;
+	--space-xxs: ~'calc( 0.25 * var( --space-unit ) )';
+	--space-xs: ~'calc( 0.5 * var( --space-unit ) )';
+	--space-sm: ~'calc( 0.75 * var( --space-unit ) )';
+	--space-md: ~'var( --space-unit )';
+	--space-lg: ~'calc( 1.25 * var( --space-unit ) )';
+	--space-xl: ~'calc( 1.5 * var( --space-unit ) )';
+	--space-xxl: ~'calc( 2 * var( --space-unit ) )';
+
+	/* Transition */
+	--transition-delay-menu: 100ms;
+	/* @see https://www.joshwcomeau.com/animation/css-transitions/#custom-curves-7 */
+	--transition-timing-function-ease: cubic-bezier( 0.44, 0.21, 0, 1 );
+	--transition-timing-function-ease-in: cubic-bezier( 0.75, 0, 1, 1 );
+	--transition-timing-function-ease-out: cubic-bezier( 0.215, 0.61, 0.355, 1 );
+	// Hover and active states are calculated by a modifier of the lightness value in HSL (e.g. hover: +2%, active: -2%)
+	--delta-lightness-hover-state: 4%;
+	--shadow-color: var( --color-primary__h ), 10%, 20%;
+	--shadow-opacity: 0.034;
+
+	/**
+	 * Codex Design Tokens but not included as CSS variables
+	 */
+	--border-base: var( --border-width-base ) solid var( --border-color-base );
+	--border-subtle: var( --border-width-base ) solid var( --border-color-subtle );
+	--border-width-base: 1px;
+	--border-width-thick: 2px;
+	--border-radius-base: 4px;
+	--border-radius-sharp: 0;
+	--border-radius-pill: 9999px;
+	--border-radius-circle: 50%;
+	// TODO: Refactor this to support filter drop-shadow
+	// TODO: LESS compiler in MW 1.39 does not support multiline, switch to that in 1.43
+	// @see https://www.joshwcomeau.com/shadow-palette
+	--box-shadow-drop-small: 0.3px 0.5px 0.7px var( --box-shadow-color-base ), 0.4px 0.8px 1px -1.2px var( --box-shadow-color-base ), 1px 2px 2.5px -2.5px var( --box-shadow-color-base );
+	--box-shadow-drop-medium: 0.3px 0.5px 0.7px var( --box-shadow-color-base ), 0.8px 1.6px 2px -0.8px var( --box-shadow-color-base ), 2.1px 4.1px 5.2px -1.7px var( --box-shadow-color-base ), 5px 10px 12.6px -2.5px var( --box-shadow-color-base );
+	--box-shadow-drop-xx-large: 0.3px 0.5px 0.7px var( --box-shadow-color-base ), 1.5px 2.9px 3.7px -0.4px var( --box-shadow-color-base ), 2.7px 5.4px 6.8px -0.7px var( --box-shadow-color-base ), 4.5px 8.9px 11.2px -1.1px var( --box-shadow-color-base ), 7.1px 14.3px 18px -1.4px var( --box-shadow-color-base ), 11.2px 22.3px 28.1px -1.8px var( --box-shadow-color-base ), 17px 33.9px 42.7px -2.1px var( --box-shadow-color-base ), 25px 50px 62.9px -2.5px var( --box-shadow-color-base );
+	--font-family-base: @font-family-base;
+	--font-family-serif: @font-family-serif;
+	--font-family-monospace: @font-family-monospace;
+	--font-size-x-small: ~'calc( var( --font-size-base ) * 0.75 )';
+	--font-size-small: ~'calc( var( --font-size-base ) * 0.875 )';
+	--font-size-medium: var( --font-size-base );
+	--font-size-large: ~'calc( var( --font-size-base ) * 1.125 )';
+	--font-size-x-large: ~'calc( var( --font-size-base ) * 1.25 )';
+	--font-size-xx-large: ~'calc( var( --font-size-base ) * 1.375 )';
+	--font-size-xxx-large: ~'calc( var( --font-size-base ) * 1.75 )';
+	--font-weight-normal: 400;
+	--font-weight-medium: ~'calc( var( --font-weight-normal ) + 100)';
+	--font-weight-semi-bold: ~'calc( var( --font-weight-normal ) + 200)';
+	--font-weight-bold: ~'calc( var( --font-weight-normal ) + 300)';
+	--line-height-xxx-small: 1.25;
+	--line-height-xx-small: 1.375;
+	--line-height-medium: var( --line-height );
+
+	/*
+	 * DEPRECATED TOKENS
+	 * This tokens will be hard-deprecated on next major version bump on Decemeber 2024
+	 */
+	--background-color-primary--hover: var( --background-color-progressive-subtle );
+	--background-color-primary--active: var( --background-color-progressive-subtle );
+	--background-color-overlay: var( --background-color-backdrop-light );
+	--background-color-overlay--lighter: var( --background-color-backdrop-light );
+	--background-color-quiet--hover: var( --background-color-button-quiet--hover );
+	--background-color-quiet--active: var( --background-color-button-quiet--active );
+	--border-radius--small: var( --border-radius-base );
+	--border-radius--medium: var( --border-radius-medium );
+	--border-radius--large: var( --border-radius-large );
+	--border-radius--pill: var( --border-radius-pill );
+	--box-shadow-card: var( --box-shadow-drop-medium );
+	--box-shadow-dialog: var( --box-shadow-drop-xx-large );
+	--color-base--emphasized: var( --color-emphasized );
+	--color-base--subtle: var( --color-subtle );
+	--color-primary: var( --color-progressive );
+	--color-primary--hover: var( --color-progressive--hover );
+	--color-primary--active: var( --color-progressive--active );
+	--color-text-error: var( --color-destructive );
+	--color-text-warning: var( --color-base );
+	--color-text-success: var( --color-success );
+	--font-weight-semibold: var( --font-weight-semi-bold );
+	--line-height-xs: var( --line-height-xxx-small );
+	--line-height-sm: var( --line-height-xx-small );
+	--opacity-icon-base--active: var( --opacity-icon-base--selected );
+
+	@media ( min-width: @min-width-breakpoint-tablet ) {
+		--font-size-x-small: ~'calc( var( --font-size-base ) *  0.8125 )';
+		--font-size-x-large: ~'calc( var( --font-size-base ) *  1.375 )';
+		--font-size-xx-large: ~'calc( var( --font-size-base ) *  1.5 )';
+		--font-size-xxx-large: ~'calc( var( --font-size-base ) *  2 )';
+		--padding-page: ~'calc( @{padding-page} * 1.5 )';
+	}
+
+	@media ( min-width: @min-width-breakpoint-desktop ) {
+		--padding-page: ~'calc( @{padding-page} * 2 )';
+		--header-card-maxheight: ~'calc( 100vh - var( --space-sm ) * 2 )';
+	}
+
+	@media ( prefers-contrast: more ) {
+		--font-weight-normal: 500;
+	}
+
+	@media ( prefers-contrast: less ) {
+		--font-weight-normal: 300;
+	}
+
+	/* CJK languages need increased line-height for readability */
+	&:lang( ja ),
+	&:lang( ko ),
+	&:lang( zh ) {
+		--line-height: 1.75;
+	}
+}
+
+// TODO: Update with implementation on T376559 when it is finalized
+.citizen-animations-ready {
+	/* Only apply transition when page is ready for it */
+	--transition-hover: @transition-hover;
+	--transition-menu: @transition-menu;
+	--transition-duration-base: 100ms;
+	--transition-duration-medium: 250ms;
+}
