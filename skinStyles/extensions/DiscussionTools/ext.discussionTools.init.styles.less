@@ -3,167 +3,50 @@
  *
  * SkinStyles for Extension:DiscussionTools
  * Module: ext.discussionTools.init.styles
- * Version: REL1_39 1aae2cc
- *
- * Date: 2023-06-24
+ * Version: REL1_43
  */
 
-.ext-discussiontools-init-replylink-buttons {
-	.ext-discussiontools-init-replylink {
-		&-bracket {
-			color: var( --color-subtle );
-		}
-
-		&-divider {
-			color: var( --border-color-base );
-		}
-	}
-
-	.ext-discussiontools-init-replylink-open & > .ext-discussiontools-init-replylink-reply {
-		color: var( --color-subtle );
-	}
-
-	&.ext-discussiontools-init-replylink-active > .ext-discussiontools-init-replylink-reply {
-		color: var( --color-base );
-	}
-}
-
-.ext-discussiontools-init-publishedcomment {
-	background-color: var( --background-color-success-subtle );
-}
-
-.ext-discussiontools-init-targetcomment {
-	background-color: var( --background-color-progressive-subtle );
-}
-
-.ext-discussiontools-init-timestamplink,
-.ext-discussiontools-init-timestamplink:visited,
-.ext-discussiontools-init-timestamplink:active {
-	color: var( --color-subtle );
-}
-
-.ext-discussiontools-init-section-subscribe {
-	&.mw-editsection-like {
-		margin-top: 0;
-	}
-
-	&-bracket {
-		display: none;
-	}
-
-	// Align with citizen editsection icon buttons
-	&-link {
-		display: block;
-		width: 1.875rem;
-		height: 1.875rem;
-		font-size: var( --font-size-small );
-		text-indent: -9999px; // Hide text
-		border-radius: var( --border-radius-base );
-		opacity: var( --opacity-icon-base );
-		transition: var( --transition-hover );
-		transition-property: opacity;
-
-		&::before {
-			position: absolute;
-			display: block;
-			width: inherit;
-			height: inherit;
-			content: '';
-			// FIXME: Figure out a way to use OOUI icon for extension
-			background-image: url( data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KCTx0aXRsZT4KCQliZWxsCgk8L3RpdGxlPgoJPHBhdGggZD0iTTExLjUgMi4xOUMxNC4wOSAyLjg2IDE2IDUuMiAxNiA4djZsMiAydjFIMnYtMWwyLTJWOGMwLTIuOCAxLjkxLTUuMTQgNC41LTUuODFWMS41QzguNS42NyA5LjE3IDAgMTAgMHMxLjUuNjcgMS41IDEuNXYuNjl6TTEwIDRDNy43OSA0IDYgNS43OSA2IDh2N2g4VjhjMC0yLjIxLTEuNzktNC00LTR6TTggMThoNGMwIDEuMS0uOSAyLTIgMnMtMi0uOS0yLTJ6Ii8+Cjwvc3ZnPgo= );
-			background-repeat: no-repeat;
-			background-position: center;
-			background-size: 1.125rem;
-			filter: var( --filter-invert );
-		}
-
-		&[ data-mw-subscribed='1' ]::before {
-			// FIXME: Figure out a way to use OOUI icon for extension
-			background-image: url( data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KCTx0aXRsZT4KCQliZWxsCgk8L3RpdGxlPgoJPHBhdGggZD0iTTE2IDdhNS4zOCA1LjM4IDAgMDAtNC40Ni00Ljg1QzExLjYgMS40NiAxMS41MyAwIDEwIDBTOC40IDEuNDYgOC40NiAyLjE1QTUuMzggNS4zOCAwIDAwNCA3djZsLTIgMnYxaDE2di0xbC0yLTJ6bS02IDEzYTMgMyAwIDAwMy0zSDdhMyAzIDAgMDAzIDN6Ii8+Cjwvc3ZnPgo= );
-		}
-
-		&:hover {
-			background-color: var( --background-color-button-quiet--hover );
-			opacity: var( --opacity-icon-base--hover );
-		}
-
-		&:active {
-			background-color: var( --background-color-button-quiet--hover );
-			opacity: var( --opacity-icon-base--selected );
-		}
-	}
-
-	&-link&-link-pending {
-		color: var( --color-subtle );
-	}
-}
-
-.ext-discussiontools-init-pageframe-latestcomment {
-	color: var( --color-subtle );
-}
-
-.ext-discussiontools-visualenhancements_pageframe-enabled {
-	.ext-discussiontools-init-sidebar-meta {
-		color: var( --color-subtle );
-	}
-}
-
 .ext-discussiontools-visualenhancements-enabled {
+	h2.ext-discussiontools-ui-newTopic-sectionTitle {
+		font-size: var( --font-size-xx-large );
+	}
+
 	.ext-discussiontools-init-section {
+		/* Citizen use flex layout for mw-heading, so we need to adjust the float hacks used in DiscussionTools */
 		flex-wrap: wrap;
-		font-family: var( --font-family-base ) !important;
-		font-weight: var( --font-weight-semi-bold );
-		border-top-color: var( --border-color-base );
 
-		> h2 {
-			font-family: var( --font-family-base ) !important;
-			font-weight: var( --font-weight-semi-bold );
-		}
-
-		&-subscribeButton {
+		/* HACK: Needed the specificity to override DiscussionTools styles */
+		&-subscribeButton.oo-ui-buttonElement.oo-ui-buttonElement.oo-ui-buttonElement {
 			order: 9999;
+			margin-inline-start: 0 !important;
 		}
 
 		&-bar {
-			overflow-x: auto;
+			order: 10000;
+			width: 100%;
 			font-size: var( --font-size-x-small );
 		}
 
-		&-metadata {
-			flex-wrap: nowrap;
-			white-space: nowrap;
-		}
-
-		&-metaitem {
-			color: var( --color-subtle );
-
-			& + .ext-discussiontools-init-section-metaitem {
-				border-left-color: var( --border-color-base );
-			}
+		&-metaitem,
+		&.mw-heading2-metaitem {
+			margin-block: var( --space-xxs );
+			line-height: var( --line-height-xx-small );
 		}
 	}
-
-	h2.ext-discussiontools-ui-newTopic-sectionTitle .oo-ui-inputWidget-input {
-		font-family: var( --font-family-base );
-		font-weight: var( --font-weight-semi-bold );
-	}
 }
 
-.ext-discussiontools-emptystate {
-	.mw-parser-output:not( .noarticletext ) & {
-		border-top-color: var( --border-color-base );
-	}
+/* Fix hard-coded font-family in DiscussionTools */
+.ext-discussiontools-visualenhancements-enabled .ext-discussiontools-init-section.mw-heading2,
+.ext-discussiontools-visualenhancements-enabled .ext-discussiontools-init-section,
+.ext-discussiontools-visualenhancements-enabled .ext-discussiontools-init-section.mw-heading2 h2,
+.ext-discussiontools-visualenhancements-enabled .ext-discussiontools-init-section h2,
+h2.ext-discussiontools-ui-newTopic-sectionTitle .oo-ui-inputWidget-input {
+	font-family: var( --font-family-base ) !important;
+	font-weight: var( --font-weight-semi-bold ) !important;
 }
 
-.ext-discussiontools-autotopicsubpopup {
-	&-title {
-		font-weight: var( --font-weight-semi-bold );
-	}
-}
-
-@supports (mix-blend-mode:darken) {
-	.ext-discussiontools-init-highlight {
-		/* Move highlight layer to the background so it does not affect the foreground color */
-		z-index: -1;
+.ext-discussiontools-init-replylink-buttons {
+	.ext-discussiontools-init-replylink-open & > .ext-discussiontools-init-replylink-reply {
+		color: var( --color-subtle );
 	}
 }

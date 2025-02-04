@@ -423,7 +423,6 @@
 			"+ext.datamaps.leaflet": "skinStyles/lib/leaflet/leaflet.less",
 			"+ext.discussionTools.init.styles": "skinStyles/extensions/DiscussionTools/ext.discussionTools.init.styles.less",
 			"+ext.discussionTools.ReplyWidget": "skinStyles/extensions/DiscussionTools/ext.discussionTools.ReplyWidget.less",
-			"+ext.discussionTools.ReplyWidgetVisual": "skinStyles/extensions/DiscussionTools/ext.discussionTools.ReplyWidgetVisual.less",
 			"+ext.dismissableSiteNotice.styles": "skinStyles/extensions/DismissableSiteNotice/ext.dismissableSiteNotice.less",
 			"+ext.echo.ui.desktop": "skinStyles/extensions/Echo/ext.echo.ui.desktop.less",
 			"+ext.echo.ui": "skinStyles/extensions/Echo/ext.echo.ui.less",
