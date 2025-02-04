@@ -1,0 +1,77 @@
+/**
+ * Citizen tokens
+ * CSS variables for the dark theme
+ *
+ * TODO: Remove HSL fallback when OKLCH is supported in all browsers
+ * TODO: Use CSS relative color syntax when supported in all browsers
+ */
+.theme-dark() {
+	--delta-lightness-surface-base: 3%;
+
+	--color-progressive-oklch__l: 60%; // TODO: Separate background-color-progressive from color-progressive
+	--color-progressive-hsl__l: 60%;
+
+	--color-surface-0-oklch__l: 16%;
+	--color-surface-0-hsl__l: 16%;
+
+	--color-emphasized-oklch__l: 95%;
+	--color-emphasized-oklch__c: 0.03;
+	--color-base-oklch__l: 85%;
+	--color-base-oklch__c: 0.05;
+	--color-subtle-oklch__l: 70%;
+	--color-subtle-oklch__c: 0.07;
+	--color-placeholder-oklch__l: 60%;
+	--color-placeholder-oklch__c: 0.07;
+
+	--color-emphasized-hsl__s: 80%;
+	--color-emphasized-hsl__l: 95%;
+	--color-base-hsl__s: 45%;
+	--color-base-hsl__l: 85%;
+	--color-subtle-hsl__s: 35%;
+	--color-subtle-hsl__l: 70%;
+	--color-placeholder-hsl__s: 40%;
+	--color-placeholder-hsl__l: 60%;
+
+	--color-destructive__l: 50%;
+	--color-success__l: 35%;
+	--color-warning__l: 60%;
+	--background-color-subtle__s: 85%;
+	--background-color-subtle__l: 10%;
+
+	--color-syntax-red: @color-syntax-red-dark;
+	--color-syntax-orange: @color-syntax-orange-dark;
+	--color-syntax-yellow: @color-syntax-yellow-dark;
+	--color-syntax-green: @color-syntax-green-dark;
+	--color-syntax-cyan: @color-syntax-cyan-dark;
+	--color-syntax-blue: @color-syntax-blue-dark;
+	--color-syntax-paleblue: @color-syntax-paleblue-dark;
+	--color-syntax-purple: @color-syntax-purple-dark;
+	--color-syntax-brown: @color-syntax-brown-dark;
+	--color-syntax-pink: @color-syntax-pink-dark;
+	--color-syntax-violet: @color-syntax-violet-dark;
+
+	--background-color-button-quiet--hover: rgba( 255, 255, 255, 0.04 );
+	--background-color-button-quiet--active: rgba( 255, 255, 255, 0.08 );
+	--background-color-icon: ~'rgba( 255, 255, 255, var( --opacity-icon-base ) )';
+	--background-color-icon--hover: ~'rgba( 255, 255, 255, var( --opacity-icon-base--hover ) )';
+	--background-color-icon--active: ~'rgba( 255, 255, 255, var( --opacity-icon-base--active ) )';
+
+	--border-color-base: rgba( 255, 255, 255, 0.08 );
+	--border-color-subtle: rgba( 255, 255, 255, 0.05 );
+	--border-color-muted: rgba( 255, 255, 255, 0.03 );
+	--border-color-interactive: rgba( 255, 255, 255, 0.11 );
+
+	--shadow-color: var( --color-progressive-hsl__h ), 50%, 3%;
+	--shadow-opacity: 0.3;
+
+	--filter-invert: invert( 1 ) hue-rotate( 180deg );
+
+	--font-grade: -25;
+
+	// FIXME: Browsers seem to treat GRAD differently, disabling for now
+	// Dark theme usually have an illusion of thicker fonts
+	// So we have to tune it back
+	// font-variation-settings: 'GRAD' -90;
+
+	color-scheme: dark;
+}

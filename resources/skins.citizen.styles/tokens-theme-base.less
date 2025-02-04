@@ -1,0 +1,154 @@
+/**
+ * Citizen tokens
+ * CSS variables for the base theme
+ *
+ * TODO: Remove HSL fallback when OKLCH is supported in all browsers
+ * TODO: Use CSS relative color syntax when supported in all browsers
+ */
+.theme-base() {
+	// Hover and active states are calculated by a modifier of the lightness value (e.g. hover: +2%, active: -2%)
+	--delta-lightness-state-base: 4%;
+	--delta-lightness-hover-state: calc( var( --delta-lightness-state-base ) * 1 );
+	--delta-lightness-active-state: calc( var( --delta-lightness-state-base ) * -1 );
+	--delta-lightness-surface-base: -2%;
+
+	/* Progressive color */
+	--color-progressive-oklch__l: 53.25%;
+	--color-progressive-oklch__c: 0.1679;
+	--color-progressive-oklch__h: 262.29;
+
+	--color-progressive-oklch: ~'oklch( var( --color-progressive-oklch__l ) var( --color-progressive-oklch__c ) var( --color-progressive-oklch__h ) )';
+	--color-progressive-oklch--hover: ~'oklch( calc( var( --color-progressive-oklch__l ) + var( --delta-lightness-hover-state ) ) var( --color-progressive-oklch__c ) var( --color-progressive-oklch__h ) )';
+	--color-progressive-oklch--active: ~'oklch( calc( var( --color-progressive-oklch__l ) + var( --delta-lightness-active-state ) ) var( --color-progressive-oklch__c ) var( --color-progressive-oklch__h ) )';
+
+	--color-progressive-hsl__h: 220;
+	--color-progressive-hsl__s: 60%;
+	--color-progressive-hsl__l: 50%;
+
+	--color-progressive-hsl: ~'hsl( var( --color-progressive-hsl__h ), var( --color-progressive-hsl__s ), var( --color-progressive-hsl__l ) )';
+	--color-progressive-hsl--hover: ~'hsl( var( --color-progressive-hsl__h ), var( --color-progressive-hsl__s ), calc( var( --color-progressive-hsl__l ) + var( --delta-lightness-hover-state ) ) )';
+	--color-progressive-hsl--active: ~'hsl( var( --color-progressive-hsl__h ), var( --color-progressive-hsl__s ), calc( var( --color-progressive-hsl__l ) + var( --delta-lightness-active-state ) ) )';
+
+	/* Surface color */
+	--color-surface-0-oklch__l: 96%;
+	--color-surface-0-oklch__c: 0.01;
+	--color-surface-1-oklch__l: calc( var( --color-surface-0-oklch__l ) + var( --delta-lightness-surface-base ) );
+	--color-surface-1-oklch__c: 0.015;
+	--color-surface-2-oklch__l: calc( var( --color-surface-0-oklch__l ) + ( var( --delta-lightness-surface-base ) * 2 ) );
+	--color-surface-2-oklch__c: 0.02;
+	--color-surface-3-oklch__l: calc( var( --color-surface-0-oklch__l ) + ( var( --delta-lightness-surface-base ) * 3 ) );
+	--color-surface-3-oklch__c: 0.03;
+	--color-surface-4-oklch__l: calc( var( --color-surface-0-oklch__l ) + ( var( --delta-lightness-surface-base ) * 4 ) );
+	--color-surface-4-oklch__c: 0.04;
+
+	--color-surface-0-oklch: ~'oklch( var( --color-surface-0-oklch__l ) var( --color-surface-0-oklch__c ) var( --color-progressive-oklch__h ) )';
+	--color-surface-1-oklch: ~'oklch( var( --color-surface-1-oklch__l ) var( --color-surface-1-oklch__c ) var( --color-progressive-oklch__h ) )';
+	--color-surface-2-oklch: ~'oklch( var( --color-surface-2-oklch__l ) var( --color-surface-2-oklch__c ) var( --color-progressive-oklch__h ) )';
+	--color-surface-2-oklch--hover: ~'oklch( calc( var( --color-surface-2-oklch__l ) + var( --delta-lightness-hover-state ) ) var( --color-surface-2-oklch__c ) var( --color-progressive-oklch__h ) )';
+	--color-surface-2-oklch--active: ~'oklch( calc( var( --color-surface-2-oklch__l ) + var( --delta-lightness-active-state ) ) var( --color-surface-2-oklch__c ) var( --color-progressive-oklch__h ) )';
+	--color-surface-3-oklch: ~'oklch( var( --color-surface-3-oklch__l ) var( --color-surface-3-oklch__c ) var( --color-progressive-oklch__h ) )';
+	--color-surface-4-oklch: ~'oklch( var( --color-surface-4-oklch__l ) var( --color-surface-4-oklch__c ) var( --color-progressive-oklch__h ) )';
+
+	--color-surface-0-hsl__s: 30%;
+	--color-surface-0-hsl__l: 96%;
+	--color-surface-1-hsl__s: 40%;
+	--color-surface-1-hsl__l: calc( var( --color-surface-0-hsl__l ) + var( --delta-lightness-surface-base ) );
+	--color-surface-2-hsl__s: 40%;
+	--color-surface-2-hsl__l: calc( var( --color-surface-0-hsl__l ) + ( var( --delta-lightness-surface-base ) * 2 ) );
+	--color-surface-3-hsl__s: 43%;
+	--color-surface-3-hsl__l: calc( var( --color-surface-0-hsl__l ) + ( var( --delta-lightness-surface-base ) * 3 ) );
+	--color-surface-4-hsl__s: 46%;
+	--color-surface-4-hsl__l: calc( var( --color-surface-0-hsl__l ) + ( var( --delta-lightness-surface-base ) * 4 ) );
+
+	--color-surface-0-hsl: ~'hsl( var( --color-surface-0-hsl__h ), var( --color-surface-0-hsl__s ), var( --color-surface-0-hsl__l ) )';
+	--color-surface-1-hsl: ~'hsl( var( --color-surface-1-hsl__h ), var( --color-surface-1-hsl__s ), var( --color-surface-1-hsl__l ) )';
+	--color-surface-2-hsl: ~'hsl( var( --color-surface-2-hsl__h ), var( --color-surface-2-hsl__s ), var( --color-surface-2-hsl__l ) )';
+	--color-surface-2-hsl--hover: ~'hsl( var( --color-surface-2-hsl__h ), var( --color-surface-2-hsl__s ), calc( var( --color-surface-2-hsl__l ) + var( --delta-lightness-hover-state ) ) )';
+	--color-surface-2-hsl--active: ~'hsl( var( --color-surface-2-hsl__h ), var( --color-surface-2-hsl__s ), calc( var( --color-surface-2-hsl__l ) + var( --delta-lightness-active-state ) ) )';
+	--color-surface-3-hsl: ~'hsl( var( --color-surface-3-hsl__h ), var( --color-surface-3-hsl__s ), var( --color-surface-3-hsl__l ) )';
+	--color-surface-4-hsl: ~'hsl( var( --color-surface-4-hsl__h ), var( --color-surface-4-hsl__s ), var( --color-surface-4-hsl__l ) )';
+
+	--color-surface-0: ~'var( --color-surface-0-oklch, --color-surface-0-hsl )';
+	--color-surface-1: ~'var( --color-surface-1-oklch, --color-surface-1-hsl )';
+	--color-surface-2: ~'var( --color-surface-2-oklch, --color-surface-2-hsl )';
+	--color-surface-2--hover: ~'var( --color-surface-2-oklch--hover, --color-surface-2-hsl--hover )';
+	--color-surface-2--active: ~'var( --color-surface-2-oklch--active, --color-surface-2-hsl--active )';
+	--color-surface-3: ~'var( --color-surface-3-oklch, --color-surface-3-hsl )';
+	--color-surface-4: ~'var( --color-surface-4-oklch, --color-surface-4-hsl )';
+
+	/* Text color */
+	--color-emphasized-oklch__l: 5%;
+	--color-emphasized-oklch__c: 0.07;
+	--color-base-oklch__l: 20%;
+	--color-base-oklch__c: 0.09;
+	--color-subtle-oklch__l: 35%;
+	--color-subtle-oklch__c: 0.11;
+	--color-placeholder-oklch__l: 40%;
+	--color-placeholder-oklch__c: 0.11;
+
+	--color-emphasized-oklch: ~'oklch( var( --color-emphasized-oklch__l ) var( --color-emphasized-oklch__c ) var( --color-progressive-oklch__h ) )';
+	--color-base-oklch: ~'oklch( var( --color-base-oklch__l ) var( --color-base-oklch__c ) var( --color-progressive-oklch__h ) )';
+	--color-subtle-oklch: ~'oklch( var( --color-subtle-oklch__l ) var( --color-subtle-oklch__c ) var( --color-progressive-oklch__h ) )';
+	--color-placeholder-oklch: ~'oklch( var( --color-placeholder-oklch__l ) var( --color-placeholder-oklch__c ) var( --color-progressive-oklch__h ) )';
+
+	--color-emphasized-hsl__s: 85%;
+	--color-emphasized-hsl__l: 5%;
+	--color-base-hsl__s: 30%;
+	--color-base-hsl__l: 20%;
+	--color-subtle-hsl__s: 40%;
+	--color-subtle-hsl__l: 35%;
+	--color-placeholder-hsl__s: 40%;
+	--color-placeholder-hsl__l: 40%;
+
+	--color-emphasized-hsl: ~'hsl( var( --color-progressive-hsl__h ), var( --color-emphasized-hsl__s ), var( --color-emphasized-hsl__l ) )';
+	--color-base-hsl: ~'hsl( var( --color-progressive-hsl__h ), var( --color-base-hsl__s ), var( --color-base-hsl__l ) )';
+	--color-subtle-hsl: ~'hsl( var( --color-progressive-hsl__h ), var( --color-subtle-hsl__s ), var( --color-subtle-hsl__l ) )';
+	--color-placeholder-hsl: ~'hsl( var( --color-progressive-hsl__h ), var( --color-placeholder-hsl__s ), var( --color-placeholder-hsl__l ) )';
+
+	/* State color */
+	--color-inverted-primary: #fff;
+	--color-destructive__h: 340;
+	--color-destructive__l: 40%;
+	--color-success__h: 170;
+	--color-success__l: 17%;
+	--color-warning__h: 48;
+	--color-warning__l: 40%;
+	--background-color-subtle__s: 95%;
+	--background-color-subtle__l: 95%;
+
+	/* Icon color */
+	--background-color-icon: ~'rgba( 0, 0, 0, var( --opacity-icon-base ) )';
+	--background-color-icon--hover: ~'rgba( 0, 0, 0, var( --opacity-icon-base--hover ) )';
+	--background-color-icon--active: ~'rgba( 0, 0, 0, var( --opacity-icon-base--active ) )';
+
+	/* Link color */
+	--color-link: var( --color-progressive );
+	--color-link--hover: var( --color-progressive--hover );
+	--color-link--active: var( --color-progressive--active );
+
+	/* Syntax highlight color */
+	--color-syntax-red: @color-syntax-red;
+	--color-syntax-orange: @color-syntax-orange;
+	--color-syntax-yellow: @color-syntax-yellow;
+	--color-syntax-green: @color-syntax-green;
+	--color-syntax-cyan: @color-syntax-cyan;
+	--color-syntax-blue: @color-syntax-blue;
+	--color-syntax-paleblue: @color-syntax-paleblue;
+	--color-syntax-purple: @color-syntax-purple;
+	--color-syntax-brown: @color-syntax-brown;
+	--color-syntax-pink: @color-syntax-pink;
+	--color-syntax-violet: @color-syntax-violet;
+	--color-syntax-grey: @color-syntax-grey;
+
+	/* Filter */
+	--filter-invert: none;
+	--filter-invert-primary: invert( 1 ) hue-rotate( 180deg );
+
+	/* Font */
+	--font-grade: 0;
+
+	/* Shadow */
+	--shadow-color: var( --color-progressive-hsl__h ), 10%, 20%;
+	--shadow-opacity: 0.034;
+	color-scheme: light;
+}

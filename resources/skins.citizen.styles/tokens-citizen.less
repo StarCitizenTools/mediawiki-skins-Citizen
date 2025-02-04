@@ -1,71 +1,23 @@
 /**
  * Citizen tokens
  * CSS variables that are used throughout the skin
+ *
+ * TODO: Remove HSL fallback when OKLCH is supported in all browsers
+ * TODO: Use CSS relative color syntax when supported in all browsers
  */
+@import 'tokens-theme-base.less';
+
 :root {
-	--border-radius-medium: ~'calc( var( --border-radius-base ) * 2 )';
-	--border-radius-large: ~'calc( var( --border-radius-base ) * 3 )';
+	.theme-base();
 
-	/* State color */
-	--color-primary__h: @color-primary__h;
-	--color-primary__s: @color-primary__s;
-	--color-primary__l: @color-primary__l;
-	--color-inverted-primary: #fff;
-	--color-destructive__h: 340;
-	--color-destructive__l: 40%;
-	--color-success__h: 170;
-	--color-success__l: 17%;
-	--color-warning__h: 48;
-	--color-warning__l: 40%;
-	--background-color-subtle__s: 95%;
-	--background-color-subtle__l: 95%;
-
-	/* Surface color */
-	--color-surface-0__s: 30%;
-	--color-surface-0__l: 96%;
-	--color-surface-1__s: 40%;
-	--color-surface-1__l: 94%;
-	--color-surface-2__s: 40%;
-	--color-surface-2__l: 92%;
-	--color-surface-3__s: 43%;
-	--color-surface-3__l: 90%;
-	--color-surface-4__s: 46%;
-	--color-surface-4__l: 88%;
-	--color-surface-0: ~'hsl( var( --color-primary__h ), var( --color-surface-0__s ), var( --color-surface-0__l ) )';
-	--color-surface-1: ~'hsl( var( --color-primary__h ), var( --color-surface-1__s ), var( --color-surface-1__l ) )';
-	--color-surface-2: ~'hsl( var( --color-primary__h ), var( --color-surface-2__s ), var( --color-surface-2__l ) )';
-	--color-surface-2--hover: ~'hsl( var( --color-primary__h ), var( --color-surface-2__s ), calc( var( --color-surface-2__l ) + var( --delta-lightness-hover-state ) ) )';
-	--color-surface-2--active: ~'hsl( var( --color-primary__h ), var( --color-surface-2__s ), calc( var( --color-surface-2__l ) - var( --delta-lightness-hover-state ) ) )';
-	--color-surface-3: ~'hsl( var( --color-primary__h ), var( --color-surface-3__s ), var( --color-surface-3__l ) )';
-	--color-surface-4: ~'hsl( var( --color-primary__h ), var( --color-surface-4__s ), var( --color-surface-4__l ) )';
-	--background-color-icon: ~'rgba( 0, 0, 0, var( --opacity-icon-base ) )';
-	--background-color-icon--hover: ~'rgba( 0, 0, 0, var( --opacity-icon-base--hover ) )';
-	--background-color-icon--active: ~'rgba( 0, 0, 0, var( --opacity-icon-base--active ) )';
-
-	/* Link color */
-	--color-link: ~'var( --color-progressive )';
-	--color-link--hover: ~'var( --color-progressive--hover )';
-	--color-link--active: ~'var( --color-progressive--active )';
-
-	/* Syntax highlight color */
-	--color-syntax-red: @color-syntax-red;
-	--color-syntax-orange: @color-syntax-orange;
-	--color-syntax-yellow: @color-syntax-yellow;
-	--color-syntax-green: @color-syntax-green;
-	--color-syntax-cyan: @color-syntax-cyan;
-	--color-syntax-blue: @color-syntax-blue;
-	--color-syntax-paleblue: @color-syntax-paleblue;
-	--color-syntax-purple: @color-syntax-purple;
-	--color-syntax-brown: @color-syntax-brown;
-	--color-syntax-pink: @color-syntax-pink;
-	--color-syntax-violet: @color-syntax-violet;
-	--color-syntax-grey: @color-syntax-grey;
+	/* Border */
+	--border-radius-medium: calc( var( --border-radius-base ) * 2 );
+	--border-radius-large: calc( var( --border-radius-base ) * 3 );
 
 	/* Box shadow */
 	--box-shadow-border: var( --border-color-base ) 0 0 0 1px;
 
 	/* Filter */
-	--filter-invert-primary: invert( 1 ) hue-rotate( 180deg );
 	--filter-invert-fixed: invert( 1 ) hue-rotate( 180deg );
 
 	/* Font */
@@ -98,7 +50,7 @@
 	// Width of the body content
 	--width-layout: @width-layout;
 	// Width of the body content when the page should be extended (e.g. special, category pages)
-	--width-layout--extended: ~'calc( var( --width-layout ) * 1.5 )';
+	--width-layout--extended: calc( var( --width-layout ) * 1.5 );
 	// Width of the table of contents
 	--width-toc: @width-toc;
 	// Side padding used for the page
@@ -107,13 +59,13 @@
 
 	/* Spacing */
 	--space-unit: @space-unit;
-	--space-xxs: ~'calc( 0.25 * var( --space-unit ) )';
-	--space-xs: ~'calc( 0.5 * var( --space-unit ) )';
-	--space-sm: ~'calc( 0.75 * var( --space-unit ) )';
-	--space-md: ~'var( --space-unit )';
-	--space-lg: ~'calc( 1.25 * var( --space-unit ) )';
-	--space-xl: ~'calc( 1.5 * var( --space-unit ) )';
-	--space-xxl: ~'calc( 2 * var( --space-unit ) )';
+	--space-xxs: calc( 0.25 * var( --space-unit ) );
+	--space-xs: calc( 0.5 * var( --space-unit ) );
+	--space-sm: calc( 0.75 * var( --space-unit ) );
+	--space-md: var( --space-unit );
+	--space-lg: calc( 1.25 * var( --space-unit ) );
+	--space-xl: calc( 1.5 * var( --space-unit ) );
+	--space-xxl: calc( 2 * var( --space-unit ) );
 
 	/* Transition */
 	--transition-delay-menu: 100ms;
@@ -121,9 +73,7 @@
 	--transition-timing-function-ease: cubic-bezier( 0.44, 0.21, 0, 1 );
 	--transition-timing-function-ease-in: cubic-bezier( 0.75, 0, 1, 1 );
 	--transition-timing-function-ease-out: cubic-bezier( 0.215, 0.61, 0.355, 1 );
-	// Hover and active states are calculated by a modifier of the lightness value in HSL (e.g. hover: +2%, active: -2%)
-	--delta-lightness-hover-state: 4%;
-	--shadow-color: var( --color-primary__h ), 10%, 20%;
+	--shadow-color: var( --color-progressive-hsl__h ), 10%, 20%;
 	--shadow-opacity: 0.034;
 
 	/**
@@ -146,32 +96,32 @@
 	--font-family-base: @font-family-base;
 	--font-family-serif: @font-family-serif;
 	--font-family-monospace: @font-family-monospace;
-	--font-size-x-small: ~'calc( var( --font-size-base ) * 0.75 )';
-	--font-size-small: ~'calc( var( --font-size-base ) * 0.875 )';
+	--font-size-x-small: calc( var( --font-size-base ) * 0.75 );
+	--font-size-small: calc( var( --font-size-base ) * 0.875 );
 	--font-size-medium: var( --font-size-base );
-	--font-size-large: ~'calc( var( --font-size-base ) * 1.125 )';
-	--font-size-x-large: ~'calc( var( --font-size-base ) * 1.25 )';
-	--font-size-xx-large: ~'calc( var( --font-size-base ) * 1.375 )';
-	--font-size-xxx-large: ~'calc( var( --font-size-base ) * 1.75 )';
+	--font-size-large: calc( var( --font-size-base ) * 1.125 );
+	--font-size-x-large: calc( var( --font-size-base ) * 1.25 );
+	--font-size-xx-large: calc( var( --font-size-base ) * 1.375 );
+	--font-size-xxx-large: calc( var( --font-size-base ) * 1.75 );
 	--font-weight-normal: 400;
-	--font-weight-medium: ~'calc( var( --font-weight-normal ) + 100)';
-	--font-weight-semi-bold: ~'calc( var( --font-weight-normal ) + 200)';
-	--font-weight-bold: ~'calc( var( --font-weight-normal ) + 300)';
+	--font-weight-medium: calc( var( --font-weight-normal ) + 100 );
+	--font-weight-semi-bold: calc( var( --font-weight-normal ) + 200 );
+	--font-weight-bold: calc( var( --font-weight-normal ) + 300 );
 	--line-height-xxx-small: 1.25;
 	--line-height-xx-small: 1.375;
 	--line-height-medium: var( --line-height );
 
 	@media ( min-width: @min-width-breakpoint-tablet ) {
-		--font-size-x-small: ~'calc( var( --font-size-base ) *  0.8125 )';
-		--font-size-x-large: ~'calc( var( --font-size-base ) *  1.375 )';
-		--font-size-xx-large: ~'calc( var( --font-size-base ) *  1.5 )';
-		--font-size-xxx-large: ~'calc( var( --font-size-base ) *  2 )';
-		--padding-page: ~'calc( @{padding-page} * 1.5 )';
+		--font-size-x-small: calc( var( --font-size-base ) *  0.8125 );
+		--font-size-x-large: calc( var( --font-size-base ) *  1.375 );
+		--font-size-xx-large: calc( var( --font-size-base ) *  1.5 );
+		--font-size-xxx-large: calc( var( --font-size-base ) *  2 );
+		--padding-page: calc( @padding-page * 1.5 );
 	}
 
 	@media ( min-width: @min-width-breakpoint-desktop ) {
-		--padding-page: ~'calc( @{padding-page} * 2 )';
-		--header-card-maxheight: ~'calc( 100vh - var( --space-sm ) * 2 )';
+		--padding-page: calc( @padding-page * 2 );
+		--header-card-maxheight: calc( 100vh - var( --space-sm ) * 2 );
 	}
 
 	@media ( prefers-contrast: more ) {
@@ -188,6 +138,13 @@
 	&:lang( zh ) {
 		--line-height: 1.75;
 	}
+
+	/**
+	 * Deprecated tokens
+	 */
+	--color-primary__h: var( --color-progressive-hsl__h );
+	--color-primary__s: var( --color-progressive-hsl__s );
+	--color-primary__l: var( --color-progressive-hsl__l );
 }
 
 // TODO: Update with implementation on T376559 when it is finalized

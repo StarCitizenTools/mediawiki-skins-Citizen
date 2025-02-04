@@ -22,8 +22,7 @@
 		max-width: 60px;
 		height: 60px;
 		overflow: hidden;
-		/* color-surface-3 but always keep it light, this is needed for transparent images */
-		background-color: ~'hsl( var( --color-primary__h ), var( --color-surface-3__s ), 90% )';
+		background-color: var( --background-color-base-fixed );
 		background-position: center;
 		background-size: cover;
 		border-radius: var( --border-radius-medium );
@@ -73,7 +72,7 @@
 			min-height: 36px;
 			padding-inline: var( --space-sm );
 			border: 1px solid var( --border-color-base );
-			border-radius: var( --border-radius--medium );
+			border-radius: var( --border-radius-medium );
 		}
 	}
 }

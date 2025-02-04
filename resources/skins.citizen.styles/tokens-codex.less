@@ -4,22 +4,22 @@
 */
 :root {
 	/* @since Codex Design Tokens v1.14.0 (MediaWiki 1.43) */
-	--color-base: ~'hsl( var( --color-primary__h ), 30%, 20% )';
-	--color-base-fixed: ~'hsl( var( --color-primary__h ), 30%, 20% )';
-	--color-base--hover: ~'hsl( var( --color-primary__h ), 30%, 10% )';
-	--color-emphasized: ~'hsl( var( --color-primary__h ), 85%, 5% )';
-	--color-subtle: ~'hsl( var( --color-primary__h ), 40%, 35% )';
-	--color-placeholder: ~'hsl( var( --color-primary__h ), 40%, 40% )';
+	--color-base: var( --color-base-oklch, --color-base-hsl );
+	--color-base-fixed: #202122;
+	--color-base--hover: ~'hsl( var( --color-progressive-hsl__h ), 30%, 10% )';
+	--color-emphasized: var( --color-emphasized-oklch, --color-emphasized-hsl );
+	--color-subtle: var( --color-subtle-oklch, --color-subtle-hsl );
+	--color-placeholder: var( --color-placeholder-oklch, --color-placeholder-hsl );
 	--color-disabled: var( --color-placeholder );
 	--color-inverted: #fff;
 	--color-inverted-fixed: #fff;
-	--color-progressive: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), var( --color-primary__l ) )';
-	--color-progressive--hover: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), calc( var( --color-primary__l ) + var( --delta-lightness-hover-state ) ) )';
-	--color-progressive--active: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), calc( var( --color-primary__l ) - var( --delta-lightness-hover-state ) ) )';
+	--color-progressive: var( --color-progressive-oklch, --color-progressive-hsl );
+	--color-progressive--hover: var( --color-progressive-oklch--hover, --color-progressive-hsl--hover );
+	--color-progressive--active: var( --color-progressive-oklch--active, --color-progressive-hsl--active );
 	--color-progressive--focus: var( --color-progressive );
 	--color-destructive: ~'hsl( var( --color-destructive__h ), 100%, var( --color-destructive__l ) )';
 	--color-destructive--hover: ~'hsl( var( --color-destructive__h ), 100%, calc( var( --color-destructive__l ) + var( --delta-lightness-hover-state ) ) )';
-	--color-destructive--active: ~'hsl( var( --color-destructive__h ), 100%, calc( var( --color-destructive__l ) - var( --delta-lightness-hover-state ) ) )';
+	--color-destructive--active: ~'hsl( var( --color-destructive__h ), 100%, calc( var( --color-destructive__l ) + var( --delta-lightness-active-state ) ) )';
 	--color-destructive--focus: var( --color-progressive );
 	--color-visited: var( --color-link );
 	--color-destructive--visited: var( --color-destructive );
@@ -53,7 +53,7 @@
 	--background-color-progressive--hover: var( --color-progressive--hover );
 	--background-color-progressive--active: var( --color-progressive--active );
 	--background-color-progressive--focus: var( --color-progressive );
-	--background-color-progressive-subtle: ~'hsl( var( --color-primary__h ), var( --color-primary__s ), var( --background-color-subtle__l ) )';
+	--background-color-progressive-subtle: ~'hsl( var( --color-progressive-hsl__h ), var( --color-progressive-hsl__s ), var( --background-color-subtle__l ) )';
 	--background-color-destructive: var( --color-destructive );
 	--background-color-destructive--hover: var( --color-destructive--hover );
 	--background-color-destructive--active: var( --color-destructive--active );
@@ -69,7 +69,7 @@
 	--background-color-content-added: var( --background-color-success-subtle );
 	--background-color-content-removed: var( --background-color-destructive-subtle );
 	--background-color-transparent: transparent;
-	--background-color-backdrop-light: ~'hsla( var( --color-primary__h ), var( --color-surface-0__s ), var( --color-surface-0__l ), 0.65 )';
+	--background-color-backdrop-light: ~'hsla( var( --color-progressive-hsl__h ), var( --color-surface-0__s ), var( --color-surface-0__l ), 0.65 )';
 	--background-color-backdrop-dark: rgba( 0, 0, 0, 0.65 );
 	--background-color-button-quiet--hover: rgba( 0, 24, 73, 0.027 );
 	--background-color-button-quiet--active: rgba( 0, 24, 73, 0.082 );
