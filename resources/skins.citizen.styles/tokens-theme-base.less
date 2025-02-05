@@ -17,18 +17,6 @@
 	--color-progressive-oklch__c: 0.1679;
 	--color-progressive-oklch__h: 262.29;
 
-	--color-progressive-oklch: ~'oklch( var( --color-progressive-oklch__l ) var( --color-progressive-oklch__c ) var( --color-progressive-oklch__h ) )';
-	--color-progressive-oklch--hover: ~'oklch( calc( var( --color-progressive-oklch__l ) + var( --delta-lightness-hover-state ) ) var( --color-progressive-oklch__c ) var( --color-progressive-oklch__h ) )';
-	--color-progressive-oklch--active: ~'oklch( calc( var( --color-progressive-oklch__l ) + var( --delta-lightness-active-state ) ) var( --color-progressive-oklch__c ) var( --color-progressive-oklch__h ) )';
-
-	--color-progressive-hsl__h: 220;
-	--color-progressive-hsl__s: 60%;
-	--color-progressive-hsl__l: 50%;
-
-	--color-progressive-hsl: ~'hsl( var( --color-progressive-hsl__h ), var( --color-progressive-hsl__s ), var( --color-progressive-hsl__l ) )';
-	--color-progressive-hsl--hover: ~'hsl( var( --color-progressive-hsl__h ), var( --color-progressive-hsl__s ), calc( var( --color-progressive-hsl__l ) + var( --delta-lightness-hover-state ) ) )';
-	--color-progressive-hsl--active: ~'hsl( var( --color-progressive-hsl__h ), var( --color-progressive-hsl__s ), calc( var( --color-progressive-hsl__l ) + var( --delta-lightness-active-state ) ) )';
-
 	/* Surface color */
 	--color-surface-0-oklch__l: 96%;
 	--color-surface-0-oklch__c: 0.01;
@@ -41,40 +29,13 @@
 	--color-surface-4-oklch__l: calc( var( --color-surface-0-oklch__l ) + ( var( --delta-lightness-surface-base ) * 4 ) );
 	--color-surface-4-oklch__c: 0.04;
 
-	--color-surface-0-oklch: ~'oklch( var( --color-surface-0-oklch__l ) var( --color-surface-0-oklch__c ) var( --color-progressive-oklch__h ) )';
-	--color-surface-1-oklch: ~'oklch( var( --color-surface-1-oklch__l ) var( --color-surface-1-oklch__c ) var( --color-progressive-oklch__h ) )';
-	--color-surface-2-oklch: ~'oklch( var( --color-surface-2-oklch__l ) var( --color-surface-2-oklch__c ) var( --color-progressive-oklch__h ) )';
-	--color-surface-2-oklch--hover: ~'oklch( calc( var( --color-surface-2-oklch__l ) + var( --delta-lightness-hover-state ) ) var( --color-surface-2-oklch__c ) var( --color-progressive-oklch__h ) )';
-	--color-surface-2-oklch--active: ~'oklch( calc( var( --color-surface-2-oklch__l ) + var( --delta-lightness-active-state ) ) var( --color-surface-2-oklch__c ) var( --color-progressive-oklch__h ) )';
-	--color-surface-3-oklch: ~'oklch( var( --color-surface-3-oklch__l ) var( --color-surface-3-oklch__c ) var( --color-progressive-oklch__h ) )';
-	--color-surface-4-oklch: ~'oklch( var( --color-surface-4-oklch__l ) var( --color-surface-4-oklch__c ) var( --color-progressive-oklch__h ) )';
-
-	--color-surface-0-hsl__s: 30%;
-	--color-surface-0-hsl__l: 96%;
-	--color-surface-1-hsl__s: 40%;
-	--color-surface-1-hsl__l: calc( var( --color-surface-0-hsl__l ) + var( --delta-lightness-surface-base ) );
-	--color-surface-2-hsl__s: 40%;
-	--color-surface-2-hsl__l: calc( var( --color-surface-0-hsl__l ) + ( var( --delta-lightness-surface-base ) * 2 ) );
-	--color-surface-3-hsl__s: 43%;
-	--color-surface-3-hsl__l: calc( var( --color-surface-0-hsl__l ) + ( var( --delta-lightness-surface-base ) * 3 ) );
-	--color-surface-4-hsl__s: 46%;
-	--color-surface-4-hsl__l: calc( var( --color-surface-0-hsl__l ) + ( var( --delta-lightness-surface-base ) * 4 ) );
-
-	--color-surface-0-hsl: ~'hsl( var( --color-surface-0-hsl__h ), var( --color-surface-0-hsl__s ), var( --color-surface-0-hsl__l ) )';
-	--color-surface-1-hsl: ~'hsl( var( --color-surface-1-hsl__h ), var( --color-surface-1-hsl__s ), var( --color-surface-1-hsl__l ) )';
-	--color-surface-2-hsl: ~'hsl( var( --color-surface-2-hsl__h ), var( --color-surface-2-hsl__s ), var( --color-surface-2-hsl__l ) )';
-	--color-surface-2-hsl--hover: ~'hsl( var( --color-surface-2-hsl__h ), var( --color-surface-2-hsl__s ), calc( var( --color-surface-2-hsl__l ) + var( --delta-lightness-hover-state ) ) )';
-	--color-surface-2-hsl--active: ~'hsl( var( --color-surface-2-hsl__h ), var( --color-surface-2-hsl__s ), calc( var( --color-surface-2-hsl__l ) + var( --delta-lightness-active-state ) ) )';
-	--color-surface-3-hsl: ~'hsl( var( --color-surface-3-hsl__h ), var( --color-surface-3-hsl__s ), var( --color-surface-3-hsl__l ) )';
-	--color-surface-4-hsl: ~'hsl( var( --color-surface-4-hsl__h ), var( --color-surface-4-hsl__s ), var( --color-surface-4-hsl__l ) )';
-
-	--color-surface-0: ~'var( --color-surface-0-oklch, --color-surface-0-hsl )';
-	--color-surface-1: ~'var( --color-surface-1-oklch, --color-surface-1-hsl )';
-	--color-surface-2: ~'var( --color-surface-2-oklch, --color-surface-2-hsl )';
-	--color-surface-2--hover: ~'var( --color-surface-2-oklch--hover, --color-surface-2-hsl--hover )';
-	--color-surface-2--active: ~'var( --color-surface-2-oklch--active, --color-surface-2-hsl--active )';
-	--color-surface-3: ~'var( --color-surface-3-oklch, --color-surface-3-hsl )';
-	--color-surface-4: ~'var( --color-surface-4-oklch, --color-surface-4-hsl )';
+	--color-surface-0: ~'oklch( var( --color-surface-0-oklch__l ) var( --color-surface-0-oklch__c ) var( --color-progressive-oklch__h ) )';
+	--color-surface-1: ~'oklch( var( --color-surface-1-oklch__l ) var( --color-surface-1-oklch__c ) var( --color-progressive-oklch__h ) )';
+	--color-surface-2: ~'oklch( var( --color-surface-2-oklch__l ) var( --color-surface-2-oklch__c ) var( --color-progressive-oklch__h ) )';
+	--color-surface-2--hover: ~'oklch( calc( var( --color-surface-2-oklch__l ) + var( --delta-lightness-hover-state ) ) var( --color-surface-2-oklch__c ) var( --color-progressive-oklch__h ) )';
+	--color-surface-2--active: ~'oklch( calc( var( --color-surface-2-oklch__l ) + var( --delta-lightness-active-state ) ) var( --color-surface-2-oklch__c ) var( --color-progressive-oklch__h ) )';
+	--color-surface-3: ~'oklch( var( --color-surface-3-oklch__l ) var( --color-surface-3-oklch__c ) var( --color-progressive-oklch__h ) )';
+	--color-surface-4: ~'oklch( var( --color-surface-4-oklch__l ) var( --color-surface-4-oklch__c ) var( --color-progressive-oklch__h ) )';
 
 	/* Text color */
 	--color-emphasized-oklch__l: 5%;
@@ -85,25 +46,6 @@
 	--color-subtle-oklch__c: 0.11;
 	--color-placeholder-oklch__l: 40%;
 	--color-placeholder-oklch__c: 0.11;
-
-	--color-emphasized-oklch: ~'oklch( var( --color-emphasized-oklch__l ) var( --color-emphasized-oklch__c ) var( --color-progressive-oklch__h ) )';
-	--color-base-oklch: ~'oklch( var( --color-base-oklch__l ) var( --color-base-oklch__c ) var( --color-progressive-oklch__h ) )';
-	--color-subtle-oklch: ~'oklch( var( --color-subtle-oklch__l ) var( --color-subtle-oklch__c ) var( --color-progressive-oklch__h ) )';
-	--color-placeholder-oklch: ~'oklch( var( --color-placeholder-oklch__l ) var( --color-placeholder-oklch__c ) var( --color-progressive-oklch__h ) )';
-
-	--color-emphasized-hsl__s: 85%;
-	--color-emphasized-hsl__l: 5%;
-	--color-base-hsl__s: 30%;
-	--color-base-hsl__l: 20%;
-	--color-subtle-hsl__s: 40%;
-	--color-subtle-hsl__l: 35%;
-	--color-placeholder-hsl__s: 40%;
-	--color-placeholder-hsl__l: 40%;
-
-	--color-emphasized-hsl: ~'hsl( var( --color-progressive-hsl__h ), var( --color-emphasized-hsl__s ), var( --color-emphasized-hsl__l ) )';
-	--color-base-hsl: ~'hsl( var( --color-progressive-hsl__h ), var( --color-base-hsl__s ), var( --color-base-hsl__l ) )';
-	--color-subtle-hsl: ~'hsl( var( --color-progressive-hsl__h ), var( --color-subtle-hsl__s ), var( --color-subtle-hsl__l ) )';
-	--color-placeholder-hsl: ~'hsl( var( --color-progressive-hsl__h ), var( --color-placeholder-hsl__s ), var( --color-placeholder-hsl__l ) )';
 
 	/* State color */
 	--color-inverted-primary: #fff;
@@ -151,4 +93,42 @@
 	--shadow-color: var( --color-progressive-hsl__h ), 10%, 20%;
 	--shadow-opacity: 0.034;
 	color-scheme: light;
+
+	/**
+	 * Fallback for browsers that do not support OKLCH
+	 * TODO: Remove this once OKLCH is supported in all browsers
+	 */
+	--color-progressive-hsl__h: 220;
+	--color-progressive-hsl__s: 60%;
+	--color-progressive-hsl__l: 50%;
+
+	--color-surface-0-hsl__s: 30%;
+	--color-surface-0-hsl__l: 96%;
+	--color-surface-1-hsl__s: 40%;
+	--color-surface-1-hsl__l: calc( var( --color-surface-0-hsl__l ) + var( --delta-lightness-surface-base ) );
+	--color-surface-2-hsl__s: 40%;
+	--color-surface-2-hsl__l: calc( var( --color-surface-0-hsl__l ) + ( var( --delta-lightness-surface-base ) * 2 ) );
+	--color-surface-3-hsl__s: 43%;
+	--color-surface-3-hsl__l: calc( var( --color-surface-0-hsl__l ) + ( var( --delta-lightness-surface-base ) * 3 ) );
+	--color-surface-4-hsl__s: 46%;
+	--color-surface-4-hsl__l: calc( var( --color-surface-0-hsl__l ) + ( var( --delta-lightness-surface-base ) * 4 ) );
+
+	--color-emphasized-hsl__s: 85%;
+	--color-emphasized-hsl__l: 5%;
+	--color-base-hsl__s: 30%;
+	--color-base-hsl__l: 20%;
+	--color-subtle-hsl__s: 40%;
+	--color-subtle-hsl__l: 35%;
+	--color-placeholder-hsl__s: 40%;
+	--color-placeholder-hsl__l: 40%;
+
+	@supports not ( oklch( 100% 0 0 ) ) {
+		--color-surface-0: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-0-hsl__s ), var( --color-surface-0-hsl__l ) )';
+		--color-surface-1: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-1-hsl__s ), var( --color-surface-1-hsl__l ) )';
+		--color-surface-2: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-2-hsl__s ), var( --color-surface-2-hsl__l ) )';
+		--color-surface-2--hover: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-2-hsl__s ), calc( var( --color-surface-2-hsl__l ) + var( --delta-lightness-hover-state ) ) )';
+		--color-surface-2--active: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-2-hsl__s ), calc( var( --color-surface-2-hsl__l ) + var( --delta-lightness-active-state ) ) )';
+		--color-surface-3: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-3-hsl__s ), var( --color-surface-3-hsl__l ) )';
+		--color-surface-4: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-4-hsl__s ), var( --color-surface-4-hsl__l ) )';
+	}
 }
