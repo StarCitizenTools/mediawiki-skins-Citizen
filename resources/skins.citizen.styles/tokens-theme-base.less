@@ -122,7 +122,7 @@
 	--color-placeholder-hsl__s: 40%;
 	--color-placeholder-hsl__l: 40%;
 
-	@supports not ( oklch( 100% 0 0 ) ) {
+	@supports not ( color: oklch( 100% 0 0 ) ) {
 		--color-surface-0: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-0-hsl__s ), var( --color-surface-0-hsl__l ) )';
 		--color-surface-1: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-1-hsl__s ), var( --color-surface-1-hsl__l ) )';
 		--color-surface-2: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-2-hsl__s ), var( --color-surface-2-hsl__l ) )';

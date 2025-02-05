@@ -6,7 +6,7 @@
 	/* @since Codex Design Tokens v1.14.0 (MediaWiki 1.43) */
 	--color-base: ~'oklch( var( --color-base-oklch__l ) var( --color-base-oklch__c ) var( --color-progressive-oklch__h ) )';
 	--color-base-fixed: #202122;
-	--color-base--hover: ~'hsl( var( --color-progressive-hsl__h ), 30%, 10% )';
+	--color-base--hover: ~'oklch( calc( var( --color-base-oklch__l ) + var( --delta-lightness-hover-state ) ) var( --color-base-oklch__c ) var( --color-progressive-oklch__h ) )';
 	--color-emphasized: ~'oklch( var( --color-emphasized-oklch__l ) var( --color-emphasized-oklch__c ) var( --color-progressive-oklch__h ) )';
 	--color-subtle: ~'oklch( var( --color-subtle-oklch__l ) var( --color-subtle-oklch__c ) var( --color-progressive-oklch__h ) )';
 	--color-placeholder: ~'oklch( var( --color-placeholder-oklch__l ) var( --color-placeholder-oklch__c ) var( --color-progressive-oklch__h ) )';
@@ -119,10 +119,9 @@
 	--border-color-input-binary--checked: var( --border-color-progressive );
 
 	/* Fallback for browsers that do not support OKLCH */
-	@supports not ( oklch( 100% 0 0 ) ) {
+	@supports not ( color: oklch( 100% 0 0 ) ) {
 		--color-base: ~'hsl( var( --color-progressive-hsl__h ), var( --color-base-hsl__s ), var( --color-base-hsl__l ) )';
-		//--color-base-fixed: #202122;
-		//--color-base--hover: ~'hsl( var( --color-progressive-hsl__h ), 30%, 10% )';
+		--color-base--hover: ~'hsl( var( --color-progressive-hsl__h ), var( --color-base-hsl__s ), calc( var( --color-base-hsl__l ) + var( --delta-lightness-hover-state ) ) )';
 		--color-emphasized: ~'hsl( var( --color-progressive-hsl__h ), var( --color-emphasized-hsl__s ), var( --color-emphasized-hsl__l ) )';
 		--color-subtle: ~'hsl( var( --color-progressive-hsl__h ), var( --color-subtle-hsl__s ), var( --color-subtle-hsl__l ) )';
 		--color-placeholder: ~'hsl( var( --color-progressive-hsl__h ), var( --color-placeholder-hsl__s ), var( --color-placeholder-hsl__l ) )';
