@@ -61,6 +61,7 @@
 }
 
 // FIXME: This should not be here
+// TODO: Convert to use core css-icon mixin
 .citizen-ui-icon {
 	display: block;
 	width: var( --size-icon );
@@ -75,11 +76,24 @@
 		width: 100%;
 		height: 100%;
 		content: '';
-		background-color: currentcolor;
-		background-image: none !important; // In case if there are other OOUI icon modules
-		mask-repeat: no-repeat;
-		mask-position: center;
-		mask-size: contain;
+
+		// Fallback for browsers that do not support mask-image
+		@supports not ( ( -webkit-mask-image: none ) or ( mask-image: none ) ) {
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: contain;
+		}
+
+		@supports ( -webkit-mask-image: none ) or ( mask-image: none ) {
+			background-color: currentcolor;
+			background-image: none !important; // In case if there are other OOUI icon modules
+			-webkit-mask-repeat: no-repeat;
+			mask-repeat: no-repeat;
+			-webkit-mask-position: center;
+			mask-position: center;
+			-webkit-mask-size: contain;
+			mask-size: contain;
+		}
 	}
 }
 
