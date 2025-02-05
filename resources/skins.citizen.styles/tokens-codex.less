@@ -118,6 +118,34 @@
 	--border-color-input-binary--focus: var( --border-color-progressive--focus );
 	--border-color-input-binary--checked: var( --border-color-progressive );
 
+	/* @since Codex Design Tokens v1.20.1 (MediaWiki master) */
+	//--color-disabled-emphasized: #a2a9b1;
+	--color-visited--hover: var( --color-progressive--hover );
+	--color-visited--active: var( --color-progressive--active );
+	--color-destructive--visited--hover: var( --color-destructive--hover );
+	--color-destructive--visited--active: var( --color-destructive--active );
+	//--color-error--hover: #9f3526;
+	//--color-error--active: #612419;
+	//--color-icon-error: #f54739;
+	//--color-icon-warning: #ab7f2a;
+	//--color-icon-success: #099979;
+	//--color-icon-notice: #72777d;
+	//--mix-blend-mode-base: normal;
+	//--mix-blend-mode-blend: multiply;
+	//--background-color-interactive--hover: #dadde3;
+	//--background-color-interactive--active: #c8ccd1;
+	//--background-color-progressive-subtle--hover: #dce3f9;
+	//--background-color-progressive-subtle--active: #cbd6f6;
+	//--background-color-destructive-subtle--hover: #ffdad3;
+	//--background-color-destructive-subtle--active: #ffc8bd;
+	//--background-color-error-subtle--hover: #ffdad3;
+	//--background-color-error-subtle--active: #ffc8bd;
+	//--border-color-interactive--hover: #27292d;
+	//--border-color-interactive--active: #202122;
+	//--border-color-error--active: #612419;
+	--color-link-red--visited--hover: var( --color-destructive--visited--hover );
+	--color-link-red--visited--active: var( --color-destructive--visited--active );
+
 	/* Fallback for browsers that do not support OKLCH */
 	@supports not ( color: oklch( 100% 0 0 ) ) {
 		--color-base: ~'hsl( var( --color-progressive-hsl__h ), var( --color-base-hsl__s ), var( --color-base-hsl__l ) )';
