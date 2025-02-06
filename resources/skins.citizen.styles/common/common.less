@@ -147,29 +147,13 @@ td {
 	border-inline-start: var( --border-width-base ) solid var( --border-color-base );
 }
 
+// Hide the text in the help indicator
 #mw-indicator-mw-helplink a {
-	font-size: 0; /* Hide the text because the color is weird */
+	font-size: 0;
 }
 
 video {
 	max-width: 100%; // Prevent overflow
-}
-
-.skin-theme-clientpref-night {
-	.mw-indicator {
-		// Have to hardcode the color since the filter breaks the color
-		a {
-			color: @color-primary;
-
-			&:hover {
-				color: @color-primary--hover;
-			}
-
-			&:active {
-				color: @color-primary--active;
-			}
-		}
-	}
 }
 
 @media ( hover: none ) {
