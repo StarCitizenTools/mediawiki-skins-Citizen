@@ -299,16 +299,10 @@ class SkinHooks implements
 	private static function updateToolboxMenu( &$links ) {
 		// Most icons are not mapped yet in the toolbox menu
 		$iconMap = [
-			'whatlinkshere' => 'articleRedirect',
 			'recentchangeslinked' => 'recentChanges',
 			'print' => 'printer',
-			'permalink' => 'link',
-			'info' => 'infoFilled',
 			'contributions' => 'userContributions',
-			'log' => 'history',
-			'blockip' => 'block',
 			'emailuser' => 'message',
-			'userrights' => 'userGroup',
 			// Extension:Cargo
 			'cargo-pagevalues' => 'database',
 			// Extension:CiteThisPage
