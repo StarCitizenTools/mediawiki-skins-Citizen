@@ -16,6 +16,7 @@
 			"Xyb",
 			"Yfdyh000",
 			"沈澄心",
+			"胡大夫",
 			"铁桶"
 		]
 	},
@@ -26,8 +27,8 @@
 	"citizen.js": "/* 这里所有JavaScript都会加载给Citizen皮肤的用户 */",
 	"citizen-drawer-toggle": "打开/关闭菜单",
 	"citizen-usermenu-toggle": "打开/关闭个人菜单",
-	"citizen-preferences-toggle": "切换首选项菜单",
-	"citizen-search-poweredby": "由$1提供支持",
+	"citizen-preferences-toggle": "打开/关闭外观设置菜单",
+	"citizen-search-poweredby": "$1提供技术支持",
 	"citizen-search-poweredby-mediawiki": "MediaWiki",
 	"citizen-search-toggle": "打开/关闭搜索",
 	"citizen-search-keyhint-exit": "退出搜索",
