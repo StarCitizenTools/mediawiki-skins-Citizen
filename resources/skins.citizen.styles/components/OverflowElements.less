@@ -72,6 +72,7 @@
 			--citizen-overflow-scroll-x: 0; // default value to be overriden
 			position: fixed;
 			top: 0;
+			z-index: @z-index-above-content;
 			border-bottom: var( --border-width-base ) solid var( --border-color-base );
 			transform: ~'translate( calc( var( --citizen-overflow-scroll-x ) * -1 ), var( --height-sticky-header ) )';
 			.mixin-citizen-sticky-header-background;
