@@ -3,13 +3,15 @@
  *
  * SkinStyles for Extension:TemplateData
  * Module: ext.templateData
- * Version: REL1_39 7f8c5a8
- *
- * Date: 2024-08-19
+ * Version: REL1_43
 */
 
 .mw-templatedata-doc-params {
 	caption {
+		background-color: var( --color-surface-1 );
+		border-top-left-radius: var( --border-radius-medium );
+		border-top-right-radius: var( --border-radius-medium );
+
 		p {
 			margin: 0;
 		}
@@ -19,9 +21,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: var( --space-sm );
 		font-size: inherit;
-		background-color: var( --color-surface-2 );
 
 		// Change edit template data link into a button
 		.mw-editsection-like > a {
@@ -32,7 +32,7 @@
 			color: var( --color-emphasized );
 			text-decoration: none;
 			border: 1px solid var( --border-color-interactive );
-			border-radius: var( --border-radius--small );
+			border-radius: var( --border-radius-base );
 
 			&:hover {
 				background-color: var( --background-color-button-quiet--hover );
@@ -59,6 +59,7 @@
 
 .mw-templatedata-format {
 	font-size: var( --font-size-small );
+	color: var( --color-base );
 }
 
 .mw-templateData-template-map-list-menu-panel {

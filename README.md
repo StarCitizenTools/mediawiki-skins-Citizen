@@ -151,7 +151,7 @@ Name | Version
 [Tabs](https://www.mediawiki.org/wiki/Extension:Tabs) | REL1_39 `63ccef2`
 [Tabber](https://www.mediawiki.org/wiki/Extension:Tabber) | N/A
 [TabberNeue](https://www.mediawiki.org/wiki/Extension:TabberNeue) | 2.6.0
-[TemplateData](https://www.mediawiki.org/wiki/Extension:TemplateData) | REL1_39 `7f8c5a8`
+[TemplateData](https://www.mediawiki.org/wiki/Extension:TemplateData) | REL1_43
 [TimedMediaHandler](https://www.mediawiki.org/wiki/Extension:TimedMediaHandler) | N/A
 [TinyMCE](https://www.mediawiki.org/wiki/Extension:TinyMCE) | 1.1.2
 [Translate](https://www.mediawiki.org/wiki/Extension:Translate) | MLEB 2023.01
