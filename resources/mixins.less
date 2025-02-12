@@ -17,8 +17,8 @@
 	.mixin-citizen-opaque-background( @surface );
 
 	@supports ( backdrop-filter: blur( 16px ) ) or ( -webkit-backdrop-filter: blur( 16px ) ) {
-		-webkit-backdrop-filter: blur( 16px );
-		backdrop-filter: blur( 16px );
+		-webkit-backdrop-filter: var( --backdrop-filter-frosted-glass );
+		backdrop-filter: var( --backdrop-filter-frosted-glass );
 	}
 }
 
@@ -46,8 +46,8 @@
 				inset: 0;
 				content: '';
 				background: ~'linear-gradient( to bottom, var( --color-surface-@{surface} ), transparent 50% )';
-				-webkit-backdrop-filter: blur( 16px );
-				backdrop-filter: blur( 16px );
+				-webkit-backdrop-filter: var( --backdrop-filter-frosted-glass );
+				backdrop-filter: var( --backdrop-filter-frosted-glass );
 			}
 		}
 	}
@@ -112,8 +112,8 @@
 		content: '';
 		background-color: var( --color-surface-0 );
 		filter: opacity( 0.9 );
-		-webkit-backdrop-filter: saturate( 50% ) blur( 16px );
-		backdrop-filter: saturate( 50% ) blur( 16px );
+		-webkit-backdrop-filter: var( --backdrop-filter-frosted-glass );
+		backdrop-filter: var( --backdrop-filter-frosted-glass );
 	}
 }
 

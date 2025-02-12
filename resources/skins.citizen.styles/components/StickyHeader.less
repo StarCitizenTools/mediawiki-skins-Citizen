@@ -16,7 +16,6 @@
 .citizen-page-header {
 	position: -webkit-sticky;
 	position: sticky;
-	.mixin-citizen-frosted-glass( citizen-page-header-backdrop, 0 );
 }
 
 .citizen-sticky-header-visible {
@@ -27,6 +26,7 @@
 		white-space: nowrap;
 		// So that it won't change the height of the header
 		box-shadow: 0 0 0 1px var( --border-color-base );
+		.mixin-citizen-frosted-glass( citizen-page-header-backdrop, 0 );
 
 		.citizen-page-header-inner {
 			padding-block: var( --space-sm );
