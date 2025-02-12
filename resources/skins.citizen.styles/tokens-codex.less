@@ -69,8 +69,8 @@
 	--background-color-content-added: var( --background-color-success-subtle );
 	--background-color-content-removed: var( --background-color-destructive-subtle );
 	--background-color-transparent: transparent;
-	--background-color-backdrop-light: ~'oklch( var( --color-surface-0-oklch__l ) var( --color-surface-0-oklch__c ) var( --color-progressive-oklch__h ) / 0.65 )';
-	--background-color-backdrop-dark: rgba( 0, 0, 0, 0.65 );
+	--background-color-backdrop-light: ~'oklch( var( --color-surface-0-oklch__l ) var( --color-surface-0-oklch__c ) var( --color-progressive-oklch__h ) / var( --backdrop-opacity ) )';
+	--background-color-backdrop-dark: ~'rgba( 0, 0, 0, var( --backdrop-opacity ) )';
 	--background-color-button-quiet--hover: rgba( 0, 24, 73, 0.027 );
 	--background-color-button-quiet--active: rgba( 0, 24, 73, 0.082 );
 	--background-color-input-binary--checked: var( --color-progressive );
@@ -163,7 +163,7 @@
 		//--background-color-destructive-subtle: ~'hsl( var( --color-destructive__h ), var( --background-color-subtle__s ), var( --background-color-subtle__l ) )';
 		//--background-color-warning-subtle: ~'hsl( var( --color-warning__h ), var( --background-color-subtle__s ), var( --background-color-subtle__l ) )';
 		//--background-color-success-subtle: ~'hsl( var( --color-success__h ), var( --background-color-subtle__s ), var( --background-color-subtle__l ) )';
-		--background-color-backdrop-light: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-0-hsl__s ), var( --color-surface-0-hsl__l ) / 0.65)';
+		--background-color-backdrop-light: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-0-hsl__s ), var( --color-surface-0-hsl__l ) / var( --backdrop-opacity ) )';
 		//--background-color-button-quiet--hover: rgba( 0, 24, 73, 0.027 );
 		//--background-color-button-quiet--active: rgba( 0, 24, 73, 0.082 );
 		//--background-color-tab-list-item-framed--hover: rgba( 255, 255, 255, 0.3 );
