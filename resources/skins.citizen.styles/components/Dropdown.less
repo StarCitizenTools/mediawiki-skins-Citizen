@@ -9,7 +9,7 @@
 		transition-property: transform, content-visibility;
 		transition-behavior: allow-discrete;
 
-		> * {
+		.citizen-menu__card-content {
 			opacity: 0;
 			transition-timing-function: var( --transition-timing-function-ease-in );
 			transition-duration: var( --transition-duration-base );
@@ -63,7 +63,7 @@
 				transition-duration: var( --transition-duration-medium );
 				content-visibility: visible;
 
-				> * {
+				.citizen-menu__card-content {
 					opacity: 1;
 					transition-delay: var( --transition-delay-menu );
 					transition-timing-function: var( --transition-timing-function-ease-out );

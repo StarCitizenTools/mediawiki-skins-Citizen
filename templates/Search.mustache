@@ -11,21 +11,24 @@
 		{{>Search__button}}
 	</details>
 	<div role="search" id="citizen-search__card" class="citizen-search-box citizen-search__card citizen-menu__card">
-		<form action="{{form-action}}" class="citizen-search__form" id="searchform" autocomplete="off">
-			<input type="hidden" name="title" value="{{page-title}}">
-			<label class="citizen-search__formIcon" for="searchInput">
-				<span class="citizen-search__icon citizen-ui-icon mw-ui-icon-wikimedia-search"></span>
-				<span class="screen-reader-text">{{msg-search}}</span>
-			</label>
-			{{{html-input}}}
-			<a
-				class="citizen-search__random citizen-search__formButton"
-				href="{{html-random-href}}"
-				title="{{msg-randompage}}">
-				<span class="citizen-ui-icon mw-ui-icon-wikimedia-die"></span>
-				<span class="screen-reader-text">{{msg-random}}</span>
-			</a>
-		</form>
-		{{>SearchFooter}}
+		<div class="citizen-menu__card-backdrop"></div>
+		<div class="citizen-menu__card-content">
+			<form action="{{form-action}}" class="citizen-search__form" id="searchform" autocomplete="off">
+				<input type="hidden" name="title" value="{{page-title}}">
+				<label class="citizen-search__formIcon" for="searchInput">
+					<span class="citizen-search__icon citizen-ui-icon mw-ui-icon-wikimedia-search"></span>
+					<span class="screen-reader-text">{{msg-search}}</span>
+				</label>
+				{{{html-input}}}
+				<a
+					class="citizen-search__random citizen-search__formButton"
+					href="{{html-random-href}}"
+					title="{{msg-randompage}}">
+					<span class="citizen-ui-icon mw-ui-icon-wikimedia-die"></span>
+					<span class="screen-reader-text">{{msg-random}}</span>
+				</a>
+			</form>
+			{{>SearchFooter}}
+		</div>
 	</div>
 </div>

@@ -5,15 +5,19 @@
 		--transform-origin-offset-start: var( --space-xs );
 		--transform-origin-offset-end: ~'calc( 100% - var( --space-xs ) )';
 		margin: var( --space-xs );
-		overflow: auto;
-		overscroll-behavior: contain;
 		user-select: none;
-		background-color: var( --color-surface-1 );
 		border: var( --border-width-base ) solid var( --border-color-base );
 		border-radius: var( --border-radius-medium );
 		box-shadow: var( --box-shadow-drop-xx-large );
 		transform: scale( 0 );
 		contain: content;
+		.mixin-citizen-frosted-glass( citizen-menu__card-backdrop );
+
+		&-content {
+			max-height: inherit;
+			overflow: auto;
+			overscroll-behavior: contain;
+		}
 	}
 
 	&__heading {

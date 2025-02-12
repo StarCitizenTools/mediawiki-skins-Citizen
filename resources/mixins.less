@@ -5,8 +5,66 @@
 
 @import 'variables.less';
 
+.mixin-citizen-opaque-background( @surface: 1 ) {
+	background: ~'oklch( var( --color-surface-@{surface}-oklch__l ) var( --color-surface-@{surface}-oklch__c ) var( --color-progressive-oklch__h ) / 0.65 )';
+
+	@supports not ( color: oklch( 100% 0 0 ) ) {
+		background: ~'hsl( var( --color-surface-@{surface}-hsl__h ), var( --color-surface-@{surface}-hsl__s ), var( --color-surface-@{surface}-hsl__l ) / 0.65 )';
+	}
+}
+
+.mixin-citizen-frosted-glass-simple( @surface: 1 ) {
+	.mixin-citizen-opaque-background( @surface );
+
+	@supports ( backdrop-filter: blur( 16px ) ) or ( -webkit-backdrop-filter: blur( 16px ) ) {
+		-webkit-backdrop-filter: blur( 16px );
+		backdrop-filter: blur( 16px );
+	}
+}
+
+/**
+ * Frosted glass effect
+ * @see https://www.joshwcomeau.com/css/backdrop-filter
+ */
+.mixin-citizen-frosted-glass( @backdropClass, @surface: 1 ) {
+	.mixin-citizen-opaque-background( @surface );
+
+	.@{backdropClass} {
+		position: absolute;
+		inset: 0;
+		z-index: @z-index-bottom;
+		overflow: hidden;
+		pointer-events: none;
+		transition: none !important; // cancel out card content transition
+	}
+
+	@supports ( backdrop-filter: blur( 16px ) ) or ( -webkit-backdrop-filter: blur( 16px ) ) {
+		.@{backdropClass} {
+			// Backdrop
+			&::before {
+				position: absolute;
+				inset: 0;
+				content: '';
+				background: ~'linear-gradient( to bottom, var( --color-surface-@{surface} ), transparent 50% )';
+				-webkit-backdrop-filter: blur( 16px );
+				backdrop-filter: blur( 16px );
+			}
+		}
+	}
+
+	@supports ( mask-image: none ) or ( -webkit-mask-image: none ) {
+		.@{backdropClass} {
+			&::before {
+				height: 200%;
+				-webkit-mask-image: linear-gradient( to bottom, #000 0% 50%, transparent 50% 100% );
+				mask-image: linear-gradient( to bottom, #000 0% 50%, transparent 50% 100% );
+			}
+		}
+	}
+}
+
 // Header card popups
-.mixin-citizen-header-card(@position ) {
+.mixin-citizen-header-card( @position ) {
 	position: absolute;
 	right: 0;
 	bottom: 100%;

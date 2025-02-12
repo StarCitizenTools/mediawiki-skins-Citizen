@@ -10,12 +10,15 @@
 		</summary>
 	</details>
 	<nav id="mw-panel-toc" class="citizen-toc-card citizen-menu__card" role="navigation" aria-labelledby="mw-panel-toc-label">
-		<a class="citizen-toc-top citizen-toc-link" title="{{html-citizen-jumptotop}}" href="#top">
-			<div class="citizen-ui-icon mw-ui-icon-first mw-ui-icon-wikimedia-first"></div>
-			<div class="citizen-toc-text">{{msg-citizen-jumptotop}}</div>
-		</a>
-		<div class="citizen-menu__heading">{{msg-toc}}</div>
-		{{>TableOfContents__list}}
+		<div class="citizen-menu__card-backdrop"></div>
+		<div class="citizen-menu__card-content">
+			<a class="citizen-toc-top citizen-toc-link" title="{{html-citizen-jumptotop}}" href="#top">
+				<div class="citizen-ui-icon mw-ui-icon-first mw-ui-icon-wikimedia-first"></div>
+				<div class="citizen-toc-text">{{msg-citizen-jumptotop}}</div>
+			</a>
+			<div class="citizen-menu__heading">{{msg-toc}}</div>
+			{{>TableOfContents__list}}
+		</div>
 	</nav>
 </div>
 {{/data-toc}}

@@ -19,14 +19,11 @@
 		max-width: ~'calc(100vw - var( --padding-page ) )';
 		max-height: var( --header-card-maxheight );
 		margin-inline: auto;
-		overflow-y: auto;
-		overscroll-behavior: contain;
 		transform-origin: center var( --transform-origin-offset-start );
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {
 			top: @position-offset-y-desktop;
 			max-height: ~'calc( 100vh - ( var( --space-xs ) + @{position-offset-y-desktop} ) * 2 )';
-			overflow-y: auto;
 		}
 	}
 
@@ -91,7 +88,7 @@
 	&__footer {
 		position: sticky;
 		z-index: @z-index-stacking-1;
-		background-color: inherit;
+		.mixin-citizen-frosted-glass-simple;
 	}
 
 	&__form {

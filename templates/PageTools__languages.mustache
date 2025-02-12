@@ -15,7 +15,10 @@
 		</summary>
 	</details>
 	<aside id="citizen-languages__card" class="citizen-menu__card">
-		{{#data-portlets.data-languages}}{{>Menu}}{{/data-portlets.data-languages}}
-		{{#data-portlets.data-variants}}{{>Menu}}{{/data-portlets.data-variants}}
+		<div class="citizen-menu__card-backdrop"></div>
+		<div class="citizen-menu__card-content">
+			{{#data-portlets.data-languages}}{{>Menu}}{{/data-portlets.data-languages}}
+			{{#data-portlets.data-variants}}{{>Menu}}{{/data-portlets.data-variants}}
+		</div>
 	</aside>
 </div>

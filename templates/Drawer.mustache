@@ -7,15 +7,18 @@
 		{{>Drawer__button}}
 	</details>
 	<div id="citizen-drawer__card" class="citizen-drawer__card citizen-menu__card">
-		<header class="citizen-drawer__header">
-			{{>Drawer__logo}}
-			<div class="citizen-drawer__siteinfo">
-				{{#data-site-stats}}{{>SiteStats}}{{/data-site-stats}}
-				{{>Wordmark}}
-			</div>
-		</header>
-		{{#data-main-menu}}
-			{{>MainMenu}}
-		{{/data-main-menu}}
+		<div class="citizen-menu__card-backdrop"></div>
+		<div class="citizen-menu__card-content">
+			<header class="citizen-drawer__header">
+				{{>Drawer__logo}}
+				<div class="citizen-drawer__siteinfo">
+					{{#data-site-stats}}{{>SiteStats}}{{/data-site-stats}}
+					{{>Wordmark}}
+				</div>
+			</header>
+			{{#data-main-menu}}
+				{{>MainMenu}}
+			{{/data-main-menu}}
+		</div>
 	</div>
 </div>
