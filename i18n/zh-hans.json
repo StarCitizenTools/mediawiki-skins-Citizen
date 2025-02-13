@@ -28,7 +28,7 @@
 	"citizen-drawer-toggle": "打开/关闭菜单",
 	"citizen-usermenu-toggle": "打开/关闭个人菜单",
 	"citizen-preferences-toggle": "打开/关闭外观设置菜单",
-	"citizen-search-poweredby": "$1提供技术支持",
+	"citizen-search-poweredby": "搜索使用$1技术",
 	"citizen-search-poweredby-mediawiki": "MediaWiki",
 	"citizen-search-toggle": "打开/关闭搜索",
 	"citizen-search-keyhint-exit": "退出搜索",
