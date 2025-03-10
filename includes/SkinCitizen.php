@@ -120,8 +120,7 @@ class SkinCitizen extends SkinMustache {
 				$out,
 				$pageLang,
 				$title,
-				$parentData['html-title-heading'],
-				$user
+				$parentData['html-title-heading']
 			),
 			'data-page-sidebar' => new CitizenComponentPageSidebar(
 				$localizer,

@@ -5,12 +5,14 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Components;
 
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Language\Language;
+use MediaWiki\Output\OutputPage;
 use MediaWiki\Skin\SkinComponentUtils;
+use MediaWiki\StubObject\StubUserLang;
 use MediaWiki\Title\Title;
-use MediaWiki\User\UserIdentity;
+use MediaWiki\User\User;
+use MediaWiki\Utils\MWTimestamp;
 use MessageLocalizer;
-use MWTimestamp;
-use OutputPage;
 use Wikimedia\IPUtils;
 
 /**
@@ -18,76 +20,35 @@ use Wikimedia\IPUtils;
  * FIXME: Need unit test
  */
 class CitizenComponentPageHeading implements CitizenComponent {
-	/** @var MessageLocalizer */
-	private $localizer;
 
-	/** @var OutputPage */
-	private $out;
+	private MediaWikiServices $services;
 
-	/** @var Language|StubUserLang */
-	private $pageLang;
-
-	/** @var Title */
-	private $title;
-
-	/** @var string */
-	private $titleData;
-
-	/** @var UserIdentity */
-	private $user;
-
-	/**
-	 * @param MessageLocalizer $localizer
-	 * @param OutputPage $out
-	 * @param Language|StubUserLang $pageLang
-	 * @param Title $title
-	 * @param string $titleData
-	 * @param UserIdentity $user
-	 */
 	public function __construct(
-		MessageLocalizer $localizer,
-		OutputPage $out,
-		$pageLang,
-		Title $title,
-		string $titleData,
-		UserIdentity $user
+		private MessageLocalizer $localizer,
+		private OutputPage $out,
+		private Language|StubUserLang $pageLang,
+		private Title $title,
+		private string $titleData
 	) {
-		$this->localizer = $localizer;
-		$this->out = $out;
-		$this->pageLang = $pageLang;
-		$this->title = $title;
-		$this->titleData = $titleData;
-		$this->user = $user;
-	}
-
-	/**
-	 * Check if the current page is in the content namespace
-	 *
-	 * @return bool
-	 */
-	private function shouldAddParenthesis(): bool {
-		$ns = $this->title->getNamespace();
-		$contentNs = MediaWikiServices::getInstance()->getNamespaceInfo()->getContentNamespaces();
-		return in_array( $ns, $contentNs );
+		$this->services = MediaWikiServices::getInstance();
 	}
 
 	/**
 	 * Return new User object based on username or IP address.
 	 * Based on MinervaNeue
 	 *
-	 * @return UserIdentity|null
+	 * @return User|null
 	 */
-	private function buildPageUserObject() {
+	private function buildPageUserObject(): ?User {
 		$titleText = $this->title->getText();
-		$user = $this->user;
 
 		if ( IPUtils::isIPAddress( $titleText ) ) {
-			return $user->newFromAnyId( null, $titleText, null );
+			return $this->services->getUserFactory()->newFromName( $titleText );
 		}
 
-		$userIdentity = MediaWikiServices::getInstance()->getUserIdentityLookup()->getUserIdentityByName( $titleText );
+		$userIdentity = $this->services->getUserIdentityLookup()->getUserIdentityByName( $titleText );
 		if ( $userIdentity && $userIdentity->isRegistered() ) {
-			return $user->newFromId( $userIdentity->getId() );
+			return $this->services->getUserFactory()->newFromId( $userIdentity->getId() );
 		}
 
 		return null;
@@ -102,47 +63,46 @@ class CitizenComponentPageHeading implements CitizenComponent {
 		$localizer = $this->localizer;
 
 		$user = $this->buildPageUserObject();
-		if ( $user ) {
-			$tagline = '<div id="citizen-tagline-user">';
-			$editCount = $user->getEditCount();
-			$regDate = $user->getRegistration();
-			$gender = MediaWikiServices::getInstance()->getGenderCache()->getGenderOf( $user, __METHOD__ );
-
-			if ( $gender === 'male' ) {
-				$msgGender = '♂';
-			} elseif ( $gender === 'female' ) {
-				$msgGender = '♀';
-			}
-			if ( isset( $msgGender ) ) {
-				$tagline .= "<span id=\"citizen-tagline-user-gender\" data-user-gender=\"$gender\">$msgGender</span>";
-			}
-
-			if ( $editCount ) {
-				$msgEditCount = $localizer->msg( 'usereditcount' )->numParams( sprintf( '%s', number_format( $editCount, 0 ) ) );
-				$editCountHref = SkinComponentUtils::makeSpecialUrlSubpage( 'Contributions', $user );
-				$tagline .= "<span id=\"citizen-tagline-user-editcount\" data-user-editcount=\"$editCount\"><a href=\"$editCountHref\">$msgEditCount</a></span>";
-			}
-
-			if ( is_string( $regDate ) ) {
-				$regDateTs = wfTimestamp( TS_UNIX, $regDate );
-				$msgRegDate = $localizer->msg( 'citizen-tagline-user-regdate', $this->pageLang->userDate( new MWTimestamp( $regDate ), $this->user ), $user );
-				$tagline .= "<span id=\"citizen-tagline-user-regdate\" data-user-regdate=\"$regDateTs\">$msgRegDate</span>";
-			}
-
-			$tagline .= '</div>';
-			return $tagline;
+		if ( !$user ) {
+			return '';
 		}
-		return '';
+
+		$tagline = '<div id="citizen-tagline-user">';
+		$editCount = $user->getEditCount();
+		$regDate = $user->getRegistration();
+		$gender = $this->services->getGenderCache()->getGenderOf( $user, __METHOD__ );
+
+		if ( $gender === 'male' ) {
+			$msgGender = '♂';
+		} elseif ( $gender === 'female' ) {
+			$msgGender = '♀';
+		}
+		if ( isset( $msgGender ) ) {
+			$tagline .= "<span id=\"citizen-tagline-user-gender\" data-user-gender=\"$gender\">$msgGender</span>";
+		}
+
+		if ( $editCount ) {
+			$msgEditCount = $localizer->msg( 'usereditcount' )->numParams( sprintf( '%s', number_format( $editCount, 0 ) ) );
+			$editCountHref = SkinComponentUtils::makeSpecialUrlSubpage( 'Contributions', $user );
+			$tagline .= "<span id=\"citizen-tagline-user-editcount\" data-user-editcount=\"$editCount\"><a href=\"$editCountHref\">$msgEditCount</a></span>";
+		}
+
+		if ( is_string( $regDate ) ) {
+			$regDateTs = wfTimestamp( TS_UNIX, $regDate );
+			$msgRegDate = $localizer->msg( 'citizen-tagline-user-regdate', $this->pageLang->userDate( new MWTimestamp( $regDate ), $user ), $user );
+			$tagline .= "<span id=\"citizen-tagline-user-regdate\" data-user-regdate=\"$regDateTs\">$msgRegDate</span>";
+		}
+
+		$tagline .= '</div>';
+		return $tagline;
 	}
 
 	/**
 	 * Return the modified page heading HTML
-	 *
-	 * @return string
 	 */
 	private function getPageHeading(): string {
 		$titleHtml = $this->titleData;
-		if ( $this->shouldAddParenthesis() ) {
+		if ( $this->title->isContentPage() ) {
 			// Look for the </span> or </h1> to ensure that it is the last parenthesis of the title
 			// </h1> occurs when the title is a displaytitle
 			$pattern = '/\s?(\p{Ps}.+\p{Pe})<\/(span|h1)>/';
@@ -159,8 +119,6 @@ class CitizenComponentPageHeading implements CitizenComponent {
 	 * - If the page is a special page or talk page, return specific messages
 	 * - If it is a top-level user page, build and return the user tagline
 	 * - Otherwise, fallback to the site tagline
-	 *
-	 * @return string The determined tagline for the current page
 	 */
 	private function determineTagline(): string {
 		$localizer = $this->localizer;
@@ -170,16 +128,16 @@ class CitizenComponentPageHeading implements CitizenComponent {
 		// Check if namespaceText exists
 		if ( empty( $namespaceText ) ) {
 			if ( !$localizer->msg( 'citizen-tagline' )->isDisabled() ) {
-				return $localizer->msg( 'citizen-tagline' )->parse();
+				return $localizer->msg( 'citizen-tagline' )->parse() ?? '';
 			} else {
-				return $localizer->msg( 'tagline' )->parse();
+				return $localizer->msg( 'tagline' )->parse() ?? '';
 			}
 		}
 
 		$msg = $localizer->msg( 'citizen-tagline-ns-' . strtolower( $namespaceText ) );
 		// Use custom message if exists
 		if ( !$msg->isDisabled() ) {
-			return $msg->parse();
+			return $msg->parse() ?? '';
 		}
 
 		if ( $title->isSpecialPage() ) {
@@ -189,7 +147,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 
 		if ( $title->isTalkPage() ) {
 			// Use generic talk page message if talk page
-			return $localizer->msg( 'citizen-tagline-ns-talk' )->parse();
+			return $localizer->msg( 'citizen-tagline-ns-talk' )->parse() ?? '';
 		}
 
 		$isRootUserPage = (
@@ -205,7 +163,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 		}
 
 		// Fallback to site tagline
-		return $localizer->msg( 'tagline' )->parse();
+		return $localizer->msg( 'tagline' )->parse() ?? '';
 	}
 
 	/**
@@ -234,10 +192,9 @@ class CitizenComponentPageHeading implements CitizenComponent {
 		}
 
 	// Apply language variant conversion
-		$services = MediaWikiServices::getInstance();
-		$langConv = $services
+		$langConv = $this->services
 		->getLanguageConverterFactory()
-		->getLanguageConverter( $services->getContentLanguage() );
+		->getLanguageConverter( $this->services->getContentLanguage() );
 		$tagline = $langConv->convert( $tagline );
 
 		return $tagline;
