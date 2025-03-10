@@ -4,8 +4,8 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Components;
 
-use MediaWiki\MediaWikiServices;
 use MediaWiki\Language\Language;
+use MediaWiki\MediaWikiServices;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Skin\SkinComponentUtils;
 use MediaWiki\StubObject\StubUserLang;
