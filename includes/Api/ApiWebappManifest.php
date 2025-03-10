@@ -39,6 +39,7 @@ use MediaWiki\Title\Title;
  * TODO: This should be merged to core
  */
 class ApiWebappManifest extends ApiBase {
+
 	/* 1 week */
 	private const CACHE_MAX_AGE = 604800;
 

@@ -29,6 +29,7 @@ use MediaWiki\Api\ApiFormatJson;
  * TODO: This should be merged to core
  */
 class ApiWebappManifestFormatJson extends ApiFormatJson {
+
 	/**
 	 * Return the proper content-type
 	 */
