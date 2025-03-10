@@ -27,6 +27,7 @@ namespace MediaWiki\Skins\Citizen\Partials;
 
 use DOMDocument;
 use DOMElement;
+use DOMNode;
 use DOMXpath;
 use HtmlFormatter\HtmlFormatter;
 use MediaWiki\MediaWikiServices;
@@ -103,7 +104,7 @@ final class BodyContent extends Partial {
 		return $bodyContent;
 	}
 
-	private function getHeadingName( DOMElement|false $node ): string|false {
+	private function getHeadingName( DOMNode|false $node ): string|false {
 		if ( !( $node instanceof DOMElement ) ) {
 			return false;
 		}
