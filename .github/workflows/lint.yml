@@ -104,7 +104,6 @@ jobs:
         npm run lint:i18n
 
     - name: Trigger PHP tests
-      if: steps.changed-php.outputs.any_changed == 'true'
       uses: benc-uk/workflow-dispatch@v1
       with:
         workflow: php-tests.yml
