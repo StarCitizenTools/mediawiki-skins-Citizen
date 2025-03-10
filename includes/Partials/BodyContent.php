@@ -27,7 +27,6 @@ namespace MediaWiki\Skins\Citizen\Partials;
 
 use DOMDocument;
 use DOMElement;
-use DOMNode;
 use DOMXpath;
 use HtmlFormatter\HtmlFormatter;
 use MediaWiki\MediaWikiServices;
@@ -104,10 +103,7 @@ final class BodyContent extends Partial {
 		return $bodyContent;
 	}
 
-	/**
-	 * @return string|false Heading tag name if the node is a heading
-	 */
-	private function getHeadingName( ?DOMNode $node ): string|false {
+	private function getHeadingName( DOMElement|false $node ): string|false {
 		if ( !( $node instanceof DOMElement ) ) {
 			return false;
 		}
@@ -159,9 +155,7 @@ final class BodyContent extends Partial {
 			// If we've found a top level heading, insert the previous section if
 			// necessary and clear the container div.
 			if ( $firstHeadingName && $this->getHeadingName( $node ) === $firstHeadingName ) {
-				if ( $node instanceof DOMElement ) {
-					$this->prepareHeading( $doc, $node );
-				}
+				$this->prepareHeading( $doc, $node );
 				// Insert the previous section body and reset it for the new section
 				$container->insertBefore( $sectionBody, $node );
 
