@@ -41,9 +41,12 @@
 		],
 		"test": [
 			"parallel-lint . --exclude node_modules --exclude vendor",
-			"phpcs --config-set ignore_warnings_on_exit 1",
-			"phpcs -p -s",
+			"@phpcs",
 			"minus-x check ."
+		],
+		"phpcs": [
+			"phpcs --config-set ignore_warnings_on_exit 1",
+			"phpcs -sp --cache"
 		]
 	},
 	"extra": {
