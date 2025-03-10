@@ -25,6 +25,7 @@ namespace MediaWiki\Skins\Citizen\Api;
 use Exception;
 use MediaWiki\Api\ApiBase;
 use MediaWiki\Api\ApiMain;
+use MediaWiki\Config\Config;
 use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\SpecialPage\SpecialPage;
@@ -41,17 +42,13 @@ class ApiWebappManifest extends ApiBase {
 	/* 1 week */
 	private const CACHE_MAX_AGE = 604800;
 
-	/** @var ApiMain */
-	private $main;
+	private ApiMain $main;
 
-	/** @var Config */
-	private $config;
+	private Config $config;
 
-	/** @var MediaWikiServices */
-	private $services;
+	private MediaWikiServices $services;
 
-	/** @var array */
-	private $options;
+	private array $options;
 
 	/**
 	 * @inheritDoc
@@ -105,19 +102,20 @@ class ApiWebappManifest extends ApiBase {
 
 	/**
 	 * Get icons for manifest
-	 *
-	 * @return array
 	 */
 	private function getIcons(): array {
 		$iconsConfig = $this->options['icons'];
-		if ( !$iconsConfig || $iconsConfig === [] ) {
+		if ( !is_array( $iconsConfig ) || count( $iconsConfig ) === 0 ) {
 			return $this->getIconsFromLogos();
 		}
 		$icons = [];
 		$allowedKeys = [ 'src', 'sizes', 'type', 'purpose' ];
 		foreach ( $iconsConfig as $iconConfig ) {
+			if ( !is_array( $iconConfig ) ) {
+				continue;
+			}
 			$icon = array_intersect_key( $iconConfig, array_flip( $allowedKeys ) );
-			if ( !is_array( $icon ) || empty( $icon ) ) {
+			if ( count( $icon ) === 0 ) {
 				continue;
 			}
 			array_push( $icons, $icon );
@@ -127,11 +125,10 @@ class ApiWebappManifest extends ApiBase {
 
 	/**
 	 * Get icons from wgLogos
-	 *
-	 * @return array
 	 */
 	private function getIconsFromLogos(): array {
-		$services = $this->services;
+		$urlUtils = $this->services->getUrlUtils();
+		$httpRequestFactory = $this->services->getHttpRequestFactory();
 
 		$icons = [];
 		$logos = $this->config->get( MainConfigNames::Logos );
@@ -157,8 +154,8 @@ class ApiWebappManifest extends ApiBase {
 			$logoPath = (string)$logos[$logoKey];
 
 			try {
-				$logoUrl = $services->getUrlUtils()->expand( $logoPath, PROTO_CURRENT ) ?? '';
-				$request = $services->getHttpRequestFactory()->create( $logoUrl, [], __METHOD__ );
+				$logoUrl = $urlUtils->expand( $logoPath, PROTO_CURRENT ) ?? '';
+				$request = $httpRequestFactory->create( $logoUrl, [], __METHOD__ );
 				$request->execute();
 				$logoContent = $request->getContent();
 			} catch ( Exception $e ) {
@@ -166,7 +163,7 @@ class ApiWebappManifest extends ApiBase {
 				$logoContent = '';
 			}
 
-			if ( !empty( $logoContent ) ) {
+			if ( $logoContent !== '' ) {
 				$logoSize = getimagesizefromstring( $logoContent );
 			}
 
@@ -186,7 +183,7 @@ class ApiWebappManifest extends ApiBase {
 			}
 
 			// Exit if not sizes are detected
-			if ( !$icon['sizes'] ) {
+			if ( !isset( $icon['sizes'] ) ) {
 				continue;
 			}
 
@@ -198,8 +195,6 @@ class ApiWebappManifest extends ApiBase {
 
 	/**
 	 * Get shortcuts for manifest
-	 *
-	 * @return array
 	 */
 	private function getShortcuts(): array {
 		$specialPages = [ 'Search', 'Randompage', 'RecentChanges' ];
@@ -215,10 +210,8 @@ class ApiWebappManifest extends ApiBase {
 
 	/**
 	 * Get the JSON printer
-	 *
-	 * @return ApiWebappManifestFormatJson
 	 */
-	public function getCustomPrinter() {
+	public function getCustomPrinter(): ApiWebappManifestFormatJson {
 		return new ApiWebappManifestFormatJson( $this->main, 'webmanifest' );
 	}
 }

@@ -31,10 +31,8 @@ use MediaWiki\Api\ApiFormatJson;
 class ApiWebappManifestFormatJson extends ApiFormatJson {
 	/**
 	 * Return the proper content-type
-	 *
-	 * @return string
 	 */
-	public function getMimeType() {
+	public function getMimeType(): string {
 		return 'application/manifest+json';
 	}
 }
