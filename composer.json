@@ -44,6 +44,7 @@
 			"@phpcs",
 			"minus-x check ."
 		],
+		"phan": "phan -d . --long-progress-bar",
 		"phpcs": [
 			"phpcs --config-set ignore_warnings_on_exit 1",
 			"phpcs -sp --cache"
