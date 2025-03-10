@@ -18,10 +18,11 @@ class CitizenComponentUserInfo implements CitizenComponent {
 	public function __construct(
 		private bool $isRegistered,
 		private bool $isTemp,
+		private MediaWikiServices $services,
 		private MessageLocalizer $localizer,
 		private Title $title,
 		private User $user,
-		private array $userPageData
+		private array $userPageData,
 	) {
 	}
 
@@ -30,7 +31,7 @@ class CitizenComponentUserInfo implements CitizenComponent {
 	 */
 	private function getUserEditCount(): ?array {
 		// Return user edits
-		$edits = MediaWikiServices::getInstance()->getUserEditTracker()->getUserEditCount( $this->user );
+		$edits = $this->services->getUserEditTracker()->getUserEditCount( $this->user );
 
 		if ( !$edits ) {
 			return null;
@@ -49,7 +50,7 @@ class CitizenComponentUserInfo implements CitizenComponent {
 	 * Build the template data for the user groups
 	 */
 	private function getUserGroups(): ?array {
-		$groups = MediaWikiServices::getInstance()->getUserGroupManager()->getUserGroups( $this->user );
+		$groups = $this->services->getUserGroupManager()->getUserGroups( $this->user );
 
 		if ( !$groups ) {
 			return null;

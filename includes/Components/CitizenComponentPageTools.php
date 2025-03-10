@@ -6,7 +6,7 @@ namespace MediaWiki\Skins\Citizen\Components;
 
 use Exception;
 use MediaWiki\Config\Config;
-use MediaWiki\MediaWikiServices;
+use MediaWiki\Permissions\PermissionManager;
 use MediaWiki\Title\Title;
 use MediaWiki\User\User;
 use MessageLocalizer;
@@ -22,6 +22,7 @@ class CitizenComponentPageTools implements CitizenComponent {
 		private MessageLocalizer $localizer,
 		private Title $title,
 		private User $user,
+		private PermissionManager $permissionManager,
 		private int $numLanguages,
 		private array $sidebarData,
 		private array $languagesData,
@@ -77,9 +78,8 @@ class CitizenComponentPageTools implements CitizenComponent {
 		if ( is_string( $condition ) && strpos( $condition, 'permission' ) === 0 ) {
 			$permission = substr( $condition, 11 );
 			try {
-				$title = $this->title;
-				$condition = MediaWikiServices::getInstance()->getPermissionManager()->userCan(
-					$permission, $user, $title );
+				$condition = $this->permissionManager->userCan(
+					$permission, $user, $this->title );
 			} catch ( Exception $e ) {
 				$condition = false;
 			}

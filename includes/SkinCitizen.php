@@ -23,6 +23,7 @@
 
 namespace MediaWiki\Skins\Citizen;
 
+use MediaWiki\MediaWikiServices;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentFooter;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentMainMenu;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageFooter;
@@ -100,6 +101,8 @@ class SkinCitizen extends SkinMustache {
 		$title = $this->getTitle();
 		$user = $this->getUser();
 		$pageLang = $title->getPageLanguage();
+		$services = MediaWikiServices::getInstance();
+
 		$isRegistered = $user->isRegistered();
 		$isTemp = $user->isTemp();
 
@@ -116,6 +119,7 @@ class SkinCitizen extends SkinMustache {
 				$parentData['data-footer']['data-info']
 			),
 			'data-page-heading' => new CitizenComponentPageHeading(
+				$services,
 				$localizer,
 				$out,
 				$pageLang,
@@ -134,6 +138,7 @@ class SkinCitizen extends SkinMustache {
 				$localizer,
 				$title,
 				$user,
+				$services->getPermissionManager(),
 				count( $this->getLanguagesCached() ),
 				$parentData['data-portlets-sidebar'],
 				// These portlets can be unindexed
@@ -142,6 +147,7 @@ class SkinCitizen extends SkinMustache {
 			),
 			'data-search-box' => new CitizenComponentSearchBox(
 				$localizer,
+				$services->getExtensionRegistry(),
 				$parentData['data-search-box']
 			),
 			'data-site-stats' => new CitizenComponentSiteStats(
@@ -152,6 +158,7 @@ class SkinCitizen extends SkinMustache {
 			'data-user-info' => new CitizenComponentUserInfo(
 				$isRegistered,
 				$isTemp,
+				$services,
 				$localizer,
 				$title,
 				$user,

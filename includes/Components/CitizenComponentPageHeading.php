@@ -21,16 +21,14 @@ use Wikimedia\IPUtils;
  */
 class CitizenComponentPageHeading implements CitizenComponent {
 
-	private MediaWikiServices $services;
-
 	public function __construct(
+		private MediaWikiServices $services,
 		private MessageLocalizer $localizer,
 		private OutputPage $out,
 		private Language|StubUserLang $pageLang,
 		private Title $title,
 		private string $titleData
 	) {
-		$this->services = MediaWikiServices::getInstance();
 	}
 
 	/**

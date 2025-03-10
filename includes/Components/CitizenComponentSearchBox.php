@@ -15,6 +15,7 @@ class CitizenComponentSearchBox implements CitizenComponent {
 
 	public function __construct(
 		private MessageLocalizer $localizer,
+		private ExtensionRegistry $extensionRegistry,
 		private array $searchBoxData
 	) {
 	}
@@ -42,7 +43,7 @@ class CitizenComponentSearchBox implements CitizenComponent {
 	 * Get the footer message
 	 */
 	private function getFooterMessage(): string {
-		$isCirrusSearchExtensionEnabled = ExtensionRegistry::getInstance()->isLoaded( 'CirrusSearch' );
+		$isCirrusSearchExtensionEnabled = $this->extensionRegistry->isLoaded( 'CirrusSearch' );
 		$searchBackend = $isCirrusSearchExtensionEnabled ? 'cirrussearch' : 'mediawiki';
 		return $this->localizer->msg(
 			'citizen-search-poweredby',
