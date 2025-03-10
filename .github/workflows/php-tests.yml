@@ -11,15 +11,12 @@ jobs:
     strategy:
       matrix:
         include:
-          - mw: 'REL1_39'
-            php: 8.1
-            experimental: false
-          - mw: 'REL1_42'
-            php: 8.2
-            experimental: false
           - mw: 'REL1_43'
             php: 8.3
             experimental: false
+          - mw: 'master'
+            php: 8.4
+            experimental: true
 
     runs-on: ubuntu-latest
 
@@ -44,7 +41,7 @@ jobs:
             mediawiki
             !mediawiki/extensions/
             !mediawiki/vendor/
-          key: mw_${{ matrix.mw }}-php${{ matrix.php }}-v20
+          key: mw_${{ matrix.mw }}-php${{ matrix.php }}-v21
 
       - name: Cache Composer cache
         uses: actions/cache@v4
@@ -74,7 +71,7 @@ jobs:
       #- name: Scan with SonarQube
       #  uses: sonarsource/sonarqube-scan-action@v4
         # Only one once
-        #if: ${{ matrix.mw == 'REL1_42' && matrix.php == 8.2 }}
+        #if: ${{ matrix.mw == 'REL1_43' && matrix.php == 8.3 }}
         #with:
           #projectBaseDir: mediawiki/skins/Citizen
         #env:
