@@ -44,10 +44,9 @@ use SkinTemplate;
  * @ingroup Skins
  */
 class SkinCitizen extends SkinMustache {
-	use GetConfigTrait;
 
-	/** @var null|array for caching purposes */
-	private $languages;
+	/** For caching purposes */
+	private ?array $languages = null;
 
 	/**
 	 * Overrides template, styles and scripts module
@@ -79,8 +78,6 @@ class SkinCitizen extends SkinMustache {
 	/**
 	 * Calls getLanguages with caching.
 	 * From Vector 2022
-	 *
-	 * @return array
 	 */
 	protected function getLanguagesCached(): array {
 		if ( $this->languages === null ) {
@@ -190,10 +187,8 @@ class SkinCitizen extends SkinMustache {
 	 * They are re-added in the drawer
 	 *
 	 * TODO: Remove this hack when Desktop Improvements separate page and site tools
-	 *
-	 * @return array
 	 */
-	protected function buildNavUrls() {
+	protected function buildNavUrls(): array {
 		$urls = parent::buildNavUrls();
 
 		$urls['upload'] = false;
@@ -209,16 +204,15 @@ class SkinCitizen extends SkinMustache {
 	 * @param string $feature
 	 * @param string $value
 	 */
-	private function addClientPrefFeature( string $feature, string $value = 'standard' ) {
+	private function addClientPrefFeature( string $feature, string $value = 'standard' ): void {
 		$this->getOutput()->addHtmlClasses( $feature . '-clientpref-' . $value );
 	}
 
 	/**
 	 * Set up optional skin features
-	 *
-	 * @param array &$options
 	 */
-	private function buildSkinFeatures( array &$options ) {
+	private function buildSkinFeatures( array &$options ): void {
+		$config = $this->getConfig();
 		$title = $this->getOutput()->getTitle();
 
 		$metadata = new Metadata( $this );
@@ -239,7 +233,7 @@ class SkinCitizen extends SkinMustache {
 		if ( $title !== null ) {
 			// Collapsible sections
 			if (
-				$this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true &&
+				$config->get( 'CitizenEnableCollapsibleSections' ) === true &&
 				$title->isContentPage()
 			) {
 				$options['bodyClasses'][] = 'citizen-sections-enabled';
@@ -247,12 +241,12 @@ class SkinCitizen extends SkinMustache {
 		}
 
 		// CJK fonts
-		if ( $this->getConfigValue( 'CitizenEnableCJKFonts' ) === true ) {
+		if ( $config->get( 'CitizenEnableCJKFonts' ) === true ) {
 			$options['styles'][] = 'skins.citizen.styles.fonts.cjk';
 		}
 
 		// AR fonts
-		if ( $this->getConfigValue( 'CitizenEnableARFonts' ) === true ) {
+		if ( $config->get( 'CitizenEnableARFonts' ) === true ) {
 			$options['styles'][] = 'skins.citizen.styles.fonts.ar';
 		}
 	}
