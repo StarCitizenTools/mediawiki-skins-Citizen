@@ -123,25 +123,11 @@
 			]
 		},
 		"skins.citizen.styles.fonts.cjk": {
-			"class": "MediaWiki\\ResourceLoader\\SkinModule",
-			"features": {
-				"accessibility": false,
-				"content-body": false,
-				"interface-core": false,
-				"toc": false
-			},
 			"styles": [
 				"resources/skins.citizen.styles.fonts.cjk/index.less"
 			]
 		},
 		"skins.citizen.styles.fonts.ar": {
-			"class": "MediaWiki\\ResourceLoader\\SkinModule",
-			"features": {
-				"accessibility": false,
-				"content-body": false,
-				"interface-core": false,
-				"toc": false
-			},
 			"styles": [
 				"resources/skins.citizen.styles.fonts.ar/index.less"
 			]
