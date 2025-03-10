@@ -10,14 +10,8 @@ use Countable;
  * CitizenComponentMenu component
  */
 class CitizenComponentMenu implements CitizenComponent, Countable {
-	/** @var array */
-	private $data;
 
-	/**
-	 * @param array $data
-	 */
-	public function __construct( array $data ) {
-		$this->data = $data;
+	public function __construct( private array $data ) {
 	}
 
 	/**

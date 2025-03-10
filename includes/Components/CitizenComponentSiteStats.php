@@ -17,14 +17,6 @@ use NumberFormatter;
  * FIXME: Need unit test
  */
 class CitizenComponentSiteStats implements CitizenComponent {
-	/** @var Config */
-	private $config;
-
-	/** @var MessageLocalizer */
-	private $localizer;
-
-	/** @var Language|StubUserLang */
-	private $pageLang;
 
 	private const SITESTATS_ICON_MAP = [
 		'articles' => 'article',
@@ -33,36 +25,24 @@ class CitizenComponentSiteStats implements CitizenComponent {
 		'edits' => 'edit'
 	];
 
-	/**
-	 * @param Config $config
-	 * @param MessageLocalizer $localizer
-	 * @param Language|StubUserLang $pageLang
-	 */
 	public function __construct(
-		Config $config,
-		MessageLocalizer $localizer,
-		$pageLang
+		private Config $config,
+		private MessageLocalizer $localizer,
+		private Language|StubUserLang $pageLang
 	) {
-		$this->config = $config;
-		$this->localizer = $localizer;
-		$this->pageLang = $pageLang;
 	}
 
 	/**
 	 * Get and format sitestat value
-	 *
-	 * @param string $key
-	 * @param NumberFormatter|null $fmt
-	 * @return string
 	 */
-	private function getSiteStatValue( $key, $fmt ): string {
-		$value = SiteStats::$key() ?? '';
+	private function getSiteStatValue( string $key, ?NumberFormatter $fmt ): string {
+		$value = SiteStats::$key();
 
-		if ( $fmt ) {
-			return $fmt->format( $value );
-		} else {
-			return number_format( $value );
+		if ( !$value ) {
+			return '';
 		}
+
+		return $fmt ? $fmt->format( $value ) : number_format( $value );
 	}
 
 	/**

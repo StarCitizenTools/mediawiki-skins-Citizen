@@ -55,11 +55,8 @@ final class BodyContent extends Partial {
 
 	/**
 	 * Helper function to decide if the page should be formatted
-	 *
-	 * @param Title $title
-	 * @return bool
 	 */
-	private function shouldFormatPage( $title ) {
+	private function shouldFormatPage( Title $title ): bool {
 		$shouldFormat = (
 			$this->getConfigValue( 'CitizenEnableCollapsibleSections' ) === true &&
 			$title->canExist() &&
@@ -85,11 +82,8 @@ final class BodyContent extends Partial {
 
 	/**
 	 * Rebuild the body content
-	 *
-	 * @param string $bodyContent HTML of the body content from core
-	 * @return string html
 	 */
-	public function decorateBodyContent( $bodyContent ) {
+	public function decorateBodyContent( string $bodyContent ): string {
 		$title = $this->title;
 
 		// Return the page if title is null
@@ -111,10 +105,9 @@ final class BodyContent extends Partial {
 	}
 
 	/**
-	 * @param DOMNode|null $node
 	 * @return string|false Heading tag name if the node is a heading
 	 */
-	private function getHeadingName( $node ) {
+	private function getHeadingName( ?DOMNode $node ): string|false {
 		if ( !( $node instanceof DOMElement ) ) {
 			return false;
 		}
@@ -138,9 +131,8 @@ final class BodyContent extends Partial {
 	 * @param DOMElement[] $headingWrappers The headings (or wrappers) returned by getTopHeadings():
 	 *  `<h1>` to `<h6>` nodes, or `<div class="mw-heading">` nodes wrapping them.
 	 *  In the future `<div class="mw-heading">` will be required (T13555).
-	 * @return DOMDocument
 	 */
-	private function makeSections( DOMDocument $doc, array $headingWrappers ) {
+	private function makeSections( DOMDocument $doc, array $headingWrappers ): DOMDocument {
 		$xpath = new DOMXpath( $doc );
 		$containers = $xpath->query(
 			// Equivalent of CSS attribute `~=` to support multiple classes
@@ -167,7 +159,9 @@ final class BodyContent extends Partial {
 			// If we've found a top level heading, insert the previous section if
 			// necessary and clear the container div.
 			if ( $firstHeadingName && $this->getHeadingName( $node ) === $firstHeadingName ) {
-				$this->prepareHeading( $doc, $node );
+				if ( $node instanceof DOMElement ) {
+					$this->prepareHeading( $doc, $node );
+				}
 				// Insert the previous section body and reset it for the new section
 				$container->insertBefore( $sectionBody, $node );
 
@@ -189,11 +183,8 @@ final class BodyContent extends Partial {
 
 	/**
 	 * Prepare section headings, add required classes
-	 *
-	 * @param DOMDocument $doc
-	 * @param DOMElement $heading
 	 */
-	private function prepareHeading( DOMDocument $doc, DOMElement $heading ) {
+	private function prepareHeading( DOMDocument $doc, DOMElement $heading ): void {
 		$className = $heading->hasAttribute( 'class' ) ? $heading->getAttribute( 'class' ) . ' ' : '';
 		$heading->setAttribute( 'class', $className . 'citizen-section-heading' );
 
@@ -205,13 +196,8 @@ final class BodyContent extends Partial {
 
 	/**
 	 * Creates a Section body element
-	 *
-	 * @param DOMDocument $doc
-	 * @param int $sectionNumber
-	 *
-	 * @return DOMElement
 	 */
-	private function createSectionBodyElement( DOMDocument $doc, $sectionNumber ) {
+	private function createSectionBodyElement( DOMDocument $doc, int $sectionNumber ): DOMElement {
 		$sectionBody = $doc->createElement( 'section' );
 		$sectionBody->setAttribute( 'class', self::SECTION_CLASS );
 		$sectionBody->setAttribute( 'id', 'citizen-section-' . $sectionNumber );
@@ -221,9 +207,6 @@ final class BodyContent extends Partial {
 
 	/**
 	 * Gets top headings in the document.
-	 *
-	 * @param DOMDocument $doc
-	 * @return array An array first is the highest rank headings
 	 */
 	private function getTopHeadings( DOMDocument $doc ): array {
 		$headings = [];

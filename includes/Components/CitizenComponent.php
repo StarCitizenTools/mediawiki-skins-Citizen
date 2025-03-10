@@ -10,8 +10,6 @@ namespace MediaWiki\Skins\Citizen\Components;
  * @internal
  */
 interface CitizenComponent {
-	/**
-	 * @return array of Mustache compatible data
-	 */
+
 	public function getTemplateData(): array;
 }

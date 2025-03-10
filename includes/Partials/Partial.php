@@ -25,10 +25,10 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Partials;
 
+use MediaWiki\Output\OutputPage;
 use MediaWiki\Skins\Citizen\GetConfigTrait;
 use MediaWiki\Skins\Citizen\SkinCitizen;
 use MediaWiki\Title\Title;
-use OutputPage;
 
 /**
  * The base class for all skin partials

@@ -16,48 +16,21 @@ use MessageLocalizer;
  * FIXME: Need unit test
  */
 class CitizenComponentPageSidebar implements CitizenComponent {
-	/** @var MessageLocalizer */
-	private $localizer;
 
-	/** @var OutputPage */
-	private $out;
-
-	/** @var Language|StubUserLang */
-	private $pageLang;
-
-	/** @var Title */
-	private $title;
-
-	/** @var UserIdentity */
-	private $user;
-
-	/**
-	 * @param MessageLocalizer $localizer
-	 * @param OutputPage $out
-	 * @param Language|StubUserLang $pageLang
-	 * @param Title $title
-	 * @param UserIdentity $user
-	 */
 	public function __construct(
-		MessageLocalizer $localizer,
-		OutputPage $out,
-		$pageLang,
-		Title $title,
-		UserIdentity $user
+		private MessageLocalizer $localizer,
+		private OutputPage $out,
+		private Language|StubUserLang $pageLang,
+		private Title $title,
+		private UserIdentity $user
 	) {
-		$this->localizer = $localizer;
-		$this->out = $out;
-		$this->pageLang = $pageLang;
-		$this->title = $title;
-		$this->user = $user;
 	}
 
 	/**
 	 * Get the last modified data
 	 * TODO: Use core instead when update to MW 1.43
-	 * @return array
 	 */
-	private function getLastModData() {
+	private function getLastModData(): array {
 		$timestamp = $this->out->getRevisionTimestamp();
 
 		if ( !$timestamp ) {

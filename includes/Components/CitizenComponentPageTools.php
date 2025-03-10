@@ -8,7 +8,7 @@ use Exception;
 use MediaWiki\Config\Config;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
-use MediaWiki\User\UserIdentity;
+use MediaWiki\User\User;
 use MessageLocalizer;
 
 /**
@@ -16,58 +16,17 @@ use MessageLocalizer;
  * FIXME: Need unit test
  */
 class CitizenComponentPageTools implements CitizenComponent {
-	/** @var Config */
-	private $config;
 
-	/** @var MessageLocalizer */
-	private $localizer;
-
-	/** @var Title */
-	private $title;
-
-	/** @var UserIdentity */
-	private $user;
-
-	/** @var int */
-	private $numLanguages;
-
-	/** @var array */
-	private $sidebarData;
-
-	/** @var array */
-	private $languagesData;
-
-	/** @var array */
-	private $variantsData;
-
-	/**
-	 * @param Config $config
-	 * @param MessageLocalizer $localizer
-	 * @param Title $title
-	 * @param UserIdentity $user
-	 * @param int $numLanguages
-	 * @param array $sidebarData
-	 * @param array $languagesData
-	 * @param array $variantsData
-	 */
 	public function __construct(
-		Config $config,
-		MessageLocalizer $localizer,
-		Title $title,
-		UserIdentity $user,
-		int $numLanguages,
-		array $sidebarData,
-		array $languagesData,
-		array $variantsData
+		private Config $config,
+		private MessageLocalizer $localizer,
+		private Title $title,
+		private User $user,
+		private int $numLanguages,
+		private array $sidebarData,
+		private array $languagesData,
+		private array $variantsData
 	) {
-		$this->config = $config;
-		$this->localizer = $localizer;
-		$this->title = $title;
-		$this->user = $user;
-		$this->numLanguages = $numLanguages;
-		$this->sidebarData = $sidebarData;
-		$this->languagesData = $languagesData;
-		$this->variantsData = $variantsData;
 	}
 
 	/**
@@ -78,8 +37,6 @@ class CitizenComponentPageTools implements CitizenComponent {
 	 * 	  now we just want the leftovers
 	 * 2. Toolbox is not currently avaliable as data-portlet, have to wait
 	 *    till Desktop Improvements
-	 *
-	 * @return array
 	 */
 	private function getArticleToolsData(): array {
 		$data = [
@@ -106,8 +63,6 @@ class CitizenComponentPageTools implements CitizenComponent {
 	 * * 'login': only visible if logged in (string)
 	 * * 'permission-*': only visible if user has permission
 	 *   e.g. permission-edit = only visible if user can edit pages
-	 *
-	 * @return bool
 	 */
 	private function shouldShowPageTools(): bool {
 		$condition = $this->config->get( 'CitizenShowPageTools' );

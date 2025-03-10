@@ -101,15 +101,16 @@ class CitizenComponentPageHeading implements CitizenComponent {
 	 * Return the modified page heading HTML
 	 */
 	private function getPageHeading(): string {
-		$titleHtml = $this->titleData;
-		if ( $this->title->isContentPage() ) {
-			// Look for the </span> or </h1> to ensure that it is the last parenthesis of the title
-			// </h1> occurs when the title is a displaytitle
-			$pattern = '/\s?(\p{Ps}.+\p{Pe})<\/(span|h1)>/';
-			$replacement = ' <span class="mw-page-title-parenthesis">$1</span></$2>';
-			$titleHtml = preg_replace( $pattern, $replacement, $this->titleData );
+		if ( !$this->title->isContentPage() ) {
+			return $this->titleData;
 		}
-		return $titleHtml;
+
+		// Look for the </span> or </h1> to ensure that it is the last parenthesis of the title
+		// </h1> occurs when the title is a displaytitle
+		$pattern = '/\s?(\p{Ps}.+\p{Pe})<\/(span|h1)>/';
+		$replacement = ' <span class="mw-page-title-parenthesis">$1</span></$2>';
+
+		return preg_replace( $pattern, $replacement, $this->titleData );
 	}
 
 	/**
@@ -121,24 +122,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 	 * - Otherwise, fallback to the site tagline
 	 */
 	private function determineTagline(): string {
-		$localizer = $this->localizer;
 		$title = $this->title;
-
-		$namespaceText = $title->getNsText();
-		// Check if namespaceText exists
-		if ( empty( $namespaceText ) ) {
-			if ( !$localizer->msg( 'citizen-tagline' )->isDisabled() ) {
-				return $localizer->msg( 'citizen-tagline' )->parse() ?? '';
-			} else {
-				return $localizer->msg( 'tagline' )->parse() ?? '';
-			}
-		}
-
-		$msg = $localizer->msg( 'citizen-tagline-ns-' . strtolower( $namespaceText ) );
-		// Use custom message if exists
-		if ( !$msg->isDisabled() ) {
-			return $msg->parse() ?? '';
-		}
 
 		if ( $title->isSpecialPage() ) {
 			// No tagline if special page
@@ -146,40 +130,51 @@ class CitizenComponentPageHeading implements CitizenComponent {
 		}
 
 		if ( $title->isTalkPage() ) {
-			// Use generic talk page message if talk page
-			return $localizer->msg( 'citizen-tagline-ns-talk' )->parse() ?? '';
+			return $this->getCitizenTagline( 'citizen-tagline-ns-talk' );
 		}
 
-		$isRootUserPage = (
-				$title->inNamespace( NS_USER ) ||
-				( defined( 'NS_USER_WIKI' ) && $title->inNamespace( NS_USER_WIKI ) ) ||
-				( defined( 'NS_USER_WIKI' ) && $title->inNamespace( NS_USER_PROFILE ) )
-			) &&
-			!$title->isSubpage();
-
-		if ( $isRootUserPage ) {
+		if ( $this->isUserPage() ) {
 			// Build user tagline if it is a top-level user page
 			return $this->buildUserTagline();
 		}
 
-		// Fallback to site tagline
-		return $localizer->msg( 'tagline' )->parse() ?? '';
+		$nsMsgKey = 'citizen-tagline-ns-' . strtolower( $title->getNsText() );
+		if ( !$this->localizer->msg( $nsMsgKey )->isDisabled() ) {
+			return $this->localizer->msg( $nsMsgKey )->parse();
+		}
+
+		return $this->getCitizenTagline( 'citizen-tagline' );
+	}
+
+	private function isUserPage(): bool {
+		return ( $this->title->inNamespace( NS_USER ) || $this->isSocialProfilePage() ) && !$this->title->isSubpage();
+	}
+
+	private function isSocialProfilePage(): bool {
+		if ( !defined( 'NS_USER_WIKI' ) || !defined( 'NS_USER_PROFILE' ) ) {
+			return false;
+		}
+
+		// @phan-suppress-next-line PhanTypeMismatchArgument
+		if ( !$this->title->inNamespaces( [ NS_USER_WIKI, NS_USER_PROFILE ] ) ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private function getCitizenTagline( string $msgKey ): string {
+		return $this->localizer->msg( $msgKey )->isDisabled() ?
+			$this->localizer->msg( 'tagline' )->parse() :
+			$this->localizer->msg( $msgKey )->parse();
 	}
 
 	/**
 	 * Return the page tagline based on the current page
-	 *
-	 * @return string
 	 */
 	private function getTagline(): string {
-		$title = $this->title;
-
-		if ( !$title ) {
-			return '';
-		}
-
-	// Use short description if there is any
-	// from Extension:ShortDescription
+		// Use short description if there is any
+		// from Extension:ShortDescription
 		$shortdesc = $this->out->getProperty( 'shortdesc' );
 		if ( $shortdesc ) {
 			$tagline = $shortdesc;
@@ -187,15 +182,13 @@ class CitizenComponentPageHeading implements CitizenComponent {
 			$tagline = $this->determineTagline();
 		}
 
-		if ( empty( $tagline ) ) {
-			return '';
+		if ( $tagline !== '' ) {
+			// Apply language variant conversion
+			$langConv = $this->services
+				->getLanguageConverterFactory()
+				->getLanguageConverter( $this->services->getContentLanguage() );
+			$tagline = $langConv->convert( $tagline );
 		}
-
-	// Apply language variant conversion
-		$langConv = $this->services
-		->getLanguageConverterFactory()
-		->getLanguageConverter( $this->services->getContentLanguage() );
-		$tagline = $langConv->convert( $tagline );
 
 		return $tagline;
 	}

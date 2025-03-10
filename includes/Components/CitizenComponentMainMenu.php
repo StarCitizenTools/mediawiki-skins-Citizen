@@ -8,14 +8,8 @@ namespace MediaWiki\Skins\Citizen\Components;
  * CitizenComponentMainMenu component
  */
 class CitizenComponentMainMenu implements CitizenComponent {
-	/** @var array */
-	private $sidebarData;
 
-	/**
-	 * @param array $sidebarData
-	 */
-	public function __construct( array $sidebarData ) {
-		$this->sidebarData = $sidebarData;
+	public function __construct( private array $sidebarData ) {
 	}
 
 	/**

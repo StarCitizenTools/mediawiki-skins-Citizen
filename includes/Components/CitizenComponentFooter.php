@@ -11,22 +11,11 @@ use MessageLocalizer;
  * FIXME: Need unit test
  */
 class CitizenComponentFooter implements CitizenComponent {
-	/** @var MessageLocalizer */
-	private $localizer;
 
-	/** @var array */
-	private $footerData;
-
-	/**
-	 * @param MessageLocalizer $localizer
-	 * @param array $footerData
-	 */
 	public function __construct(
-		MessageLocalizer $localizer,
-		array $footerData
+		private MessageLocalizer $localizer,
+		private array $footerData
 	) {
-		$this->localizer = $localizer;
-		$this->footerData = $footerData;
 	}
 
 	/**

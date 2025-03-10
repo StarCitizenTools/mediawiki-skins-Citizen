@@ -12,29 +12,17 @@ use MessageLocalizer;
  * CitizenComponentSearchBox component
  */
 class CitizenComponentSearchBox implements CitizenComponent {
-	/** @var MessageLocalizer */
-	private $localizer;
 
-	/** @var array */
-	private $searchBoxData;
-
-	/**
-	 * @param MessageLocalizer $localizer
-	 * @param array $searchBoxData
-	 */
 	public function __construct(
-		MessageLocalizer $localizer,
-		array $searchBoxData
+		private MessageLocalizer $localizer,
+		private array $searchBoxData
 	) {
-		$this->localizer = $localizer;
-		$this->searchBoxData = $searchBoxData;
 	}
 
 	/**
 	 * Get the keyboard hint data
-	 * @return array
 	 */
-	private function getKeyboardHintData() {
+	private function getKeyboardHintData(): array {
 		$data = [];
 		// There is probably a cleaner way to handle this
 		$map = [
@@ -52,7 +40,6 @@ class CitizenComponentSearchBox implements CitizenComponent {
 
 	/**
 	 * Get the footer message
-	 * @return string
 	 */
 	private function getFooterMessage(): string {
 		$isCirrusSearchExtensionEnabled = ExtensionRegistry::getInstance()->isLoaded( 'CirrusSearch' );
