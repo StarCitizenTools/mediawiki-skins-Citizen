@@ -69,7 +69,7 @@ jobs:
         run: php tests/phpunit/phpunit.php --group Citizen --coverage-clover=coverage.xml
 
       - name: Scan with SonarQube
-        uses: sonarsource/sonarqube-scan-action@v4
+        uses: sonarsource/sonarqube-scan-action@v5
         # Only one once
         if: ${{ matrix.mw == 'REL1_43' && matrix.php == 8.3 }}
         with:
