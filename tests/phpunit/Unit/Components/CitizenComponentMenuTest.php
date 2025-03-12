@@ -4,7 +4,6 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Tests\Unit\Components;
 
-use MediaWiki\Skins\Citizen\Components\CitizenComponent;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentMenu;
 use MediaWikiUnitTestCase;
 
