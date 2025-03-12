@@ -16,6 +16,7 @@ use MessageLocalizer;
 class CitizenComponentSearchBoxTest extends MediaWikiUnitTestCase {
 
 	/**
+	 * @covers ::__construct
 	 * @covers ::getTemplateData
 	 */
 	public function testGetTemplateData(): void {

@@ -40,6 +40,7 @@ class CitizenComponentFooterTest extends MediaWikiUnitTestCase {
 	}
 
 	/**
+	 * @covers ::__construct
 	 * @covers ::getTemplateData
 	 * @dataProvider provideFooterData
 	 */

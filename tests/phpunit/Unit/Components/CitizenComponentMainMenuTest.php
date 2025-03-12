@@ -45,6 +45,7 @@ class CitizenComponentMainMenuTest extends MediaWikiUnitTestCase {
 	}
 
 	/**
+	 * @covers ::__construct
 	 * @covers ::getTemplateData
 	 * @dataProvider provideMainMenuData
 	 */

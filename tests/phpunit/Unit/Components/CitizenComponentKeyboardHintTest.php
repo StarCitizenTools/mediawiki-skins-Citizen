@@ -15,6 +15,7 @@ use MediaWikiUnitTestCase;
 class CitizenComponentKeyboardHintTest extends MediaWikiUnitTestCase {
 
 	/**
+	 * @covers ::__construct
 	 * @covers ::getTemplateData
 	 */
 	public function testGetTemplateData(): void {
