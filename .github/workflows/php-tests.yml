@@ -68,13 +68,20 @@ jobs:
       - name: Install dependencies with Composer
         run: composer update --no-ansi --no-interaction --no-progress
 
+      - name: Run tests with PHPUnit
+        if: ${{ matrix.coverage == 'none' }}
+        run: composer phpunit:entrypoint -- skins/Citizen
+
       - name: Run tests with PHPUnit with coverage
-        run: php tests/phpunit/phpunit.php --group Citizen --coverage-clover skins/Citizen/coverage/php/coverage.xml
+        if: ${{ matrix.coverage == 'xdebug' }}
+        run: |
+          composer phpunit:coverage-edit -- skins/Citizen
+          XDEBUG_MODE=coverage composer phpunit -- --testsuite skins --coverage-clover skins/Citizen/coverage/php/coverage.xml skins/Citizen/tests/phpunit --exclude-group Stub
 
       - name: Scan with SonarQube
         uses: sonarsource/sonarqube-scan-action@v5
         # Only one once
-        if: ${{ matrix.mw == 'REL1_43' && matrix.php == 8.3 }}
+        if: ${{ matrix.coverage == 'xdebug' }}
         with:
           projectBaseDir: mediawiki/skins/Citizen
         env:
