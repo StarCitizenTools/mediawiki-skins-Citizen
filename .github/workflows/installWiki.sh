@@ -11,6 +11,9 @@ mv mediawiki-$MW_BRANCH mediawiki
 
 cd mediawiki
 
+# Tarball doesn't include phpunit.xml.dist, which is needed for PHPUnit tests
+wget "https://raw.githubusercontent.com/wikimedia/mediawiki/$MW_BRANCH/phpunit.xml.dist" -nv
+
 composer install
 php maintenance/install.php --dbtype sqlite --dbuser root --dbname mw --dbpath $(pwd) --pass AdminPassword WikiName AdminUser
 
