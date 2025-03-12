@@ -65,15 +65,14 @@ jobs:
       - name: Install dependencies with Composer
         run: composer update --no-ansi --no-interaction --no-progress
 
-      - name: Run tests with PHPUnit
-        run: php tests/phpunit/phpunit.php --group Citizen --coverage-clover=skins/Citizen/coverage/php/coverage.xml
+      - name: Run tests with PHPUnit with coverage
+        run: mkdir -p skins/Citizen/coverage/php/ && php tests/phpunit/phpunit.php --group Citizen --coverage-clover=skins/Citizen/coverage/php/coverage.xml
 
       - name: Scan with SonarQube
         uses: sonarsource/sonarqube-scan-action@v5
         # Only one once
         if: ${{ matrix.mw == 'REL1_43' && matrix.php == 8.3 }}
         with:
-          args: >
-            -Dsonar.coverage.jacoco.xmlReportPaths=mediawiki/skins/Citizen/coverage/php/coverage.xml
+          projectBaseDir: mediawiki/skins/Citizen
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
