@@ -13,9 +13,11 @@ jobs:
         include:
           - mw: 'REL1_43'
             php: 8.3
+            coverage: xdebug
             experimental: false
           - mw: 'master'
             php: 8.4
+            coverage: none
             experimental: true
 
     runs-on: ubuntu-latest
@@ -25,11 +27,11 @@ jobs:
         working-directory: mediawiki
 
     steps:
-      - name: Setup PHP with PCOV
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          coverage: pcov
+          coverage: ${{ matrix.coverage }}
           extensions: mbstring, intl
           tools: composer
 
@@ -67,7 +69,7 @@ jobs:
         run: composer update --no-ansi --no-interaction --no-progress
 
       - name: Run tests with PHPUnit with coverage
-        run: composer phpunit -- --testsuite skins --coverage-clover skins/Citizen/coverage/php/coverage.xml skins/Citizen/tests/phpunit --exclude-group Stub
+        run: XDEBUG_MODE=coverage composer phpunit -- --testsuite skins --coverage-clover skins/Citizen/coverage/php/coverage.xml skins/Citizen/tests/phpunit --exclude-group Stub
 
       - name: Scan with SonarQube
         uses: sonarsource/sonarqube-scan-action@v5
