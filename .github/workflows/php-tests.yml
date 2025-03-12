@@ -69,7 +69,7 @@ jobs:
         run: composer update --no-ansi --no-interaction --no-progress
 
       - name: Run tests with PHPUnit with coverage
-        run: XDEBUG_MODE=coverage composer phpunit -- --testsuite skins --coverage-clover skins/Citizen/coverage/php/coverage.xml skins/Citizen/tests/phpunit --exclude-group Stub
+        run: php tests/phpunit/phpunit.php --group Citizen --coverage-clover skins/Citizen/coverage/php/coverage.xml
 
       - name: Scan with SonarQube
         uses: sonarsource/sonarqube-scan-action@v5
