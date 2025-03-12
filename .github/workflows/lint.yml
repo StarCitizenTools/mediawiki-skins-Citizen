@@ -4,13 +4,9 @@ on:
   push:
     branches:
       - "main"
-      - "!**dependabot/**"
-      - "!**release-please--**"
   pull_request:
     branches:
       - "**"
-      - "!**dependabot/**"
-      - "!**release-please--**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -20,6 +16,7 @@ jobs:
   test:
     name: Lint
     runs-on: ubuntu-latest
+    if: github.actor != 'release-please[bot]' && github.actor != 'dependabot[bot]'
     steps:  
     - uses: actions/checkout@v4
       with:
