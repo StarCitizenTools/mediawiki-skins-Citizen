@@ -66,7 +66,7 @@ jobs:
         run: composer update --no-ansi --no-interaction --no-progress
 
       - name: Run tests with PHPUnit with coverage
-        run: mkdir -p skins/Citizen/coverage/php/ && php tests/phpunit/phpunit.php --group Citizen --coverage-clover=skins/Citizen/coverage/php/coverage.xml
+        run: mkdir -p skins/Citizen/coverage/php/ && php tests/phpunit/phpunit.php -c skins/Citizen/ --coverage-clover coverage.xml
 
       - name: Scan with SonarQube
         uses: sonarsource/sonarqube-scan-action@v5
