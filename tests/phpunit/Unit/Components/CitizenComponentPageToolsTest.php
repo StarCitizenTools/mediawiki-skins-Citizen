@@ -16,7 +16,7 @@ class CitizenComponentPageToolsTest extends MediaWikiUnitTestCase {
 	/**
 	 * @covers ::getTemplateData
 	 */
-	public function getTemplateData() {
+	public function testGetTemplateData() {
 		// TODO: Add tests
 		$this->expectNotToPerformAssertions();
 	}
