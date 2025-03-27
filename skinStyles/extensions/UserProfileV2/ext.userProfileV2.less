@@ -3,9 +3,9 @@
  *
  * SkinStyles for UserProfileV2
  * Module: ext.userProfileV2
- * Version: main e8390662
+ * Version: main c3f308b1
  *
- * Date: 2024-07-24
+ * Date: 2025-03-27
 */
 
 /* ext.userProfileV2.less */
@@ -16,7 +16,7 @@
 }
 
 .profile-user-group {
-	color: var( --color-base--emphasized );
+	color: var( --color-emphasized );
 	/* stylelint-disable-next-line declaration-property-value-disallowed-list */
 	text-transform: capitalize;
 	border-radius: var( --border-radius-base );
@@ -27,10 +27,18 @@
 }
 
 .external-link.tooltip:hover::after {
-	color: var( --color-base--emphasized );
-	border-radius: var( --border-radius--small );
+	color: var( --color-emphasized );
+	border-radius: var( --border-radius-base );
 }
 
 .profile-externalLinks svg {
 	filter: var( --filter-invert );
+}
+
+@media screen and (max-width 532px) {
+	.profile-identitybox { flex-direction: column; }
+	ul.profile-header-statistics > li:not(:first-child):before {
+		content: unset;
+		margin: unset;
+	}
 }
