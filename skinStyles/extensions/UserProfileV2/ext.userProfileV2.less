@@ -35,10 +35,13 @@
 	filter: var( --filter-invert );
 }
 
-@media screen and (max-width 532px) {
+@media screen and (max-width: 532px) {
 	.profile-identitybox { flex-direction: column; }
+	ul.profile-header-statistics > li:first-child:after {
+		content: "\2003";
+	}
 	ul.profile-header-statistics > li:not(:first-child):before {
 		content: unset;
-		margin: unset;
+		margin-left: unset;
 	}
 }
