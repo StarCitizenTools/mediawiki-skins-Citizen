@@ -16,7 +16,7 @@ jobs:
   lint:
     name: 🩹 Lint
     runs-on: ubuntu-latest
-    if: github.actor != 'release-please[bot]' && github.actor != 'dependabot[bot]'
+    if: github.ref != 'refs/heads/release-please--branches--main' && github.ref != 'refs/heads/dependabot/**'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -121,6 +121,7 @@ jobs:
   test-php:
     name: "🧪 PHP tests: MW ${{ matrix.mw }}, PHP ${{ matrix.php }}"
     continue-on-error: ${{ matrix.experimental }}
+    if: github.ref != 'refs/heads/release-please--branches--main' && github.ref != 'refs/heads/dependabot/**'
 
     strategy:
       matrix:
