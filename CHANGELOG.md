@@ -2,6 +2,120 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.40.2...v3.0.0) (2025-03-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* **tokens:** All primary colors tokens are renamed. Please refer to tokens-theme-base.less for the new names
+* **tokens:** CSS variables that are previously deprecated are now hard-deprecated.
+* Citizen is targeting MW 1.43 now and start development on the v3 version
+
+### Features
+
+* **CodeMirror:** ✨ add initial styles for CodeMirror v6 ([87fc5ca](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/87fc5ca2e02fe6051e8cc7492437689726bd72ce))
+* **CodeMirror:** ✨ add WikiEditor and VE styles for CodeMirror v6 ([b8fa2c7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b8fa2c7ad7b2159ac28050ee3f28490f4236e877))
+* **CommentStreams:** ✨ update styles for 1.43 ([dbb1da0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/dbb1da0794d86a500180dfd739e9588115d0b371))
+* **core:** ✨ add frosted glass effect to menu cards ([c20082c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c20082ce5f8e20c048a5a389d9fd974e2439c694))
+* **core:** ✨ add top margin to mw-content-text ([7c6237e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7c6237ef9b885ec477f22c1454ca9b5e6fc4dea7))
+* **core:** ✨ adding vertical padding to text editor ([1ec112d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1ec112d727244fd1f7492a1c9f97a36cec675ea6))
+* **core:** ✨ bump dark border color contrast ([f94d0a4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f94d0a45607c5060d4b05a0ebabd10d4b4d94be9))
+* **core:** ✨ drop letter-spacing from legend ([85588ff](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/85588ffb569a7b626e40d4109db60601ef9436f9))
+* **core:** ✨ improve site notice handling ([7dac6d2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7dac6d2fbf8bf7adc6ea5e7b64ec86ee0d2c8401))
+* **core:** ✨ only apply main page-specific styles on read view ([fb8be79](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fb8be792c9bd1672272b9cb17691e19959a9e1a0))
+* **core:** ✨ set mwRestApi as the default search gateway ([ed5f11a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ed5f11a08d5855fc7b36b17ca2b7869090f1a91b))
+* **core:** ✨ update mw-indicators spacing ([cc1843e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cc1843e387bd65faebd22e0741104507bcbdad94))
+* **core:** ✨ use mask-image instead of background-image for Citizen UI icons ([bc828b3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bc828b3e1e5b49d80a7b24a33caf2313b0d4ed7c))
+* **DiscussionTools:** ✨ update DiscussionTools styles to 1.43 ([9f750be](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9f750be8429228103b284f52bf982a9732102ce0))
+* **Echo:** ✨ add backdrop when modal is opened ([6b9fc0a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6b9fc0a4ebcf00b5ab8a80f4bc0153de5fbca6ab))
+* **Echo:** ✨ improve Echo badge icon replacement logic ([86ba574](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/86ba57453bd1c0492fdbb23fce3acaa4298e8e20))
+* **Echo:** ✨ update Echo for 1.43 ([6740eac](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6740eace8ba1310f6bba7c9574dee35b67a3eee3))
+* **header:** ✨ simplify header icon color logic ([57711a9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/57711a9db6ad0ded31d449af9978cb5bfd0daaa1))
+* **mediawiki:** ✨ add border to mw-tag-marker ([3c626d9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3c626d9fdff3fc9da7ed5ffdbbcef4b40f9d52c0))
+* **mediawiki:** ✨ adjust installed software cell width ([42321c0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/42321c07025252022c480f68a0383ce1fd61c4ef))
+* **mediawiki:** ✨ allow Special:SpecialPages legends to float ([0a4d42e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0a4d42ec64d7a34fda6114dc99f9e9c58bd058c8))
+* **mediawiki:** ✨ increase input field height in signup and login pages ([898580a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/898580ae6fc534980993fbb7b9237f1fa1ba29e3))
+* **mediawiki:** ✨ rework login and signup page styles ([c10ca94](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c10ca94dd3d699ba6a2e15190bb45a7b2ccf9502))
+* **mediawiki:** ✨ start-align installed software in Special:Version ([f152da9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f152da9719ec94b7eca527b1bfa6e5a0fe42f024))
+* **mediawiki:** ✨ update styles for Special:Preferences ([597abc1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/597abc160155dff7133719fb1362932000cd1449))
+* **MultimediaViewer:** ✨ add hover state to description button ([ebe1979](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ebe19790fcd22c9f78b2abb64d65ac1337ef694a))
+* **MultimediaViewer:** ✨ add styles for error box ([6ea13ff](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6ea13ffd8a2a31edd665a380b91dc0db29b89756))
+* **MultimediaViewer:** ✨ scale down the description button ([99d926f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/99d926f8e1a41d8c7d8f18387964b948e46c9040))
+* **MultimediaViewer:** ✨ simplify title max-height calculation ([9fb16c6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9fb16c69d148a41f8825093f278e94da063a50d9))
+* **MultimediaViewer:** ✨ update styles to 1.43 ([4497ac1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4497ac1ee4a19f18213be72069789044b6b748c9))
+* **OOUI:** ✨ drop unnessecary OOUI styles for 1.43 ([7be2ec1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7be2ec19117fea7fd1003764d3418b684e9ec6be))
+* **OOUI:** ✨ standardize border-radius ([6f6d96c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6f6d96c6b963a830defdf477e9be097f03eeb2f9))
+* **Popups:** ✨ update Popups to 1.43 ([e21d75b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e21d75bfffe6f53e6914d94ff2665bf0262848e2))
+* **RelatedArticles:** ✨ update RelatedArticles styles ([bd340e7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bd340e7420191de8f1439c2a07bdca61a87e6892))
+* **share:** ✨ do not show share button if page is not a content page ([8c29416](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8c2941673800513ad7136bd164b49729094c1c21))
+* **stickyHeader:** ✨ make sticky header more compact ([8e62594](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8e6259463c02fe6f6193b0b23760ce8258016932))
+* **stickyHeader:** ✨ use fancy frosted glass for page header ([ad50e8d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ad50e8d2d539dab26735b20463f8376440aa1f3b))
+* **TemplateData:** ✨ update styles for 1.43 ([6110a5d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6110a5dddf762d7421334ce2253a36cc61c5a1ff))
+* **toc:** ✨ match ToC link color with color-base ([67852e7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/67852e73ddea9c559f856ae34133e63f3958cadd))
+* **tokens:** ✨ add backdrop-opacity CSS variable ([76727b1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/76727b16cfdaad4609cfd38712a74a592a7183ad))
+* **tokens:** ✨ add more saturation to frosted glass ([cb14c43](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cb14c4398bf6cb44f2b10912716136f7e16cf3eb))
+* **tokens:** ✨ backport Codex tokens from latest master ([6252e24](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6252e24a5cbb2b2b3dbed3d62cb0701342d3344d))
+* **tokens:** ✨ revamp colors that are related to progressive/primary colors ([a5f5a3c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a5f5a3cd621eec4fcbb140849b9197519c8be07c))
+* **tokens:** ✨ update Codex tokens to v1.14.0 ([7ef2375](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7ef23758754f84b0c89f0ec66bc9c3ff95afa63c))
+* **tokens:** 💥 ✨ drop deprecated tokens ([b82923a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b82923a9f49eef79d6f4ce72a70d6f7776f093ab))
+* **UploadWizard:** ✨ clean up spacing ([1a062a8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1a062a8f4ec235e8236ce91062562aaaa4d516b9))
+* **UploadWizard:** ✨ update UploadWizard to 1.43 ([f241493](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f241493a6d02923c5aeaf8593e40d6ddc45a9b69))
+* **VisualEditor:** ✨ update styles to 1.43 ([c91135d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c91135dcb2faa6b2c6f3ca6189969022c2a217fd))
+* **WikiEditor:** ✨ add responsive handling for advanced toolbar ([1f4045a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1f4045a0bb355bdeed4564a5c54c0c8ab7ab5092))
+* **WikiEditor:** ✨ update styles to 1.43 ([808f7b1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/808f7b1cb07e7281cabcc04a074b22b922ff1c64))
+
+
+### Bug Fixes
+
+* **CodeMirror:** 🐛 fix text selection background color for links ([#1007](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1007)) ([e66605f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e66605fb6955536300e6a625f1bf5ac88e390369))
+* **CodeMirror:** 🐛 override default dark mode color ([32e78ff](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/32e78ff279156ea8dfdeb615430211354922954e)), closes [#1001](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1001)
+* **core:** 🐛 do not invert mw-indicator ([6f33824](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6f3382486f850670eb9d0d7fd48dd72ddaeef595))
+* **core:** 🐛 drop the use of SkinModule class in font modules ([367dbde](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/367dbdeaf0f7545e9ef2d351a8b94032caf4e6ec))
+* **core:** 🐛 drop unused Codex skinStyles ([ddbe205](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ddbe20500e33ef02bde5c874a03611b3efb95fa0)), closes [#1004](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1004)
+* **core:** 🐛 fix incorrect dark border interactive color ([0019b6c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0019b6c37f8ec28e53e64764e8e1ad1717006aef))
+* **core:** 🐛 fix incorrect type declaration ([33d577f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/33d577ff395eb7717b6f103a8a2cf91faa73ec37))
+* **core:** 🐛 fix incorrect type declaration again ([37b36e8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/37b36e8ce9da1da6929dedd241e1dce2d44ea490))
+* **core:** 🐛 fix typo in sr-only class ([4d6eed9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4d6eed9ff44a2ac17fa630db1e1ff99c5795ad88))
+* **core:** 🐛 override Codex tokens even when they are same as default ([ff6f75b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ff6f75b8c194c061e1af98f562d0920a64f28748))
+* **core:** 🐛 remove bottom margin from contentSub ([633578d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/633578d9bab272f6dd340d6a751925862dd80a2a))
+* **dropdown:** 🐛 remove unnecessary content-visibility on icons ([b1f7529](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b1f75296e62760e8b899bfce3f9c599f89edc345))
+* **footer:** 🐛 force footer icon to have light background color ([e7b3550](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e7b3550ef2109dc0824b56d9fb756f67bffc3744))
+* **header:** 🐛 fix invisible home button in header ([e5f0fb2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e5f0fb2aee1f9da1da35f560ba8ff9817d9bc54d))
+* **icons:** 🐛 add fallback for browser that does not support CSS mask ([4279397](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/427939756cfd77f1b1b0472528fca039dc0e0913))
+* **icons:** 🐛 load unBlock icon ([e2fe673](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e2fe673255fbbd2bfa93f0537602a6fc547d72b0)), closes [#1011](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1011)
+* **links:** 🐛 ensure self link does not have hover state colors ([229a13c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/229a13c1da920842f1f093ecdf674816eab8025a))
+* **mediawiki:** 🐛 fix debug toolbar z-index ([e36fe02](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e36fe026470457e1a905c9a3ed8665a34ccdb72c))
+* **mediawiki:** 🐛 fix various layout issues on Special:Version ([75af101](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/75af1019a2cfdc611749338ae4d27705551873d8))
+* **menu:** 🐛 fix incorrect width overflow ([880ec7d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/880ec7daafd0bdd2c9fa5bc4919cb108c9cba695))
+* **MultimediaViewer:** 🐛 fix incorrect layout in narrow viewport ([00705cc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/00705ccc89089506c3fad31d06a20092e809adbf))
+* **MultimediaViewer:** 🐛 remove unused styles ([da990b4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/da990b4d4bf504d9513a2d3070045fa3d4804c24))
+* **OOUI:** 🐛 fix incorrect border-radius for connected elements ([250948f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/250948f535cc68fab1be3dc55fc111635041d86e))
+* **OOUI:** 🐛 fix incorrect property for tab styles ([43c5897](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/43c5897e58ac0b1ba64f8e83cdeeffc1b09b576b))
+* **OOUI:** 🐛 fix tab option selected border-bottom ([#1008](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1008)) ([b3a9623](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b3a962373546a8d742356630de2c607cb8c0e1cc))
+* **overflowElements:** 🐛 fix incorrect z-index for overflow sticky header ([bd05c25](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bd05c252c09310f92dd151de3fdac88546ed2d63))
+* **Popups:** 🐛 ensure text fade color get applied across all themes ([2bfdb67](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2bfdb671aa0e6216d210926492df85c69ae4af47))
+* **RelatedArticles:** 🐛 hide in VisualEditor ([#1009](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1009)) ([b95cb85](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b95cb8560b6bbdc2999737a9dab2a637f5761bbb))
+* **styles:** 🐛 remove unnecessary night theme indicator styles ([402e8d5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/402e8d5e299668fad38b1b4cfc77bd94b9ceb104))
+* **SyntaxHighlight:** 🐛 use Citizen colors for dark theme ([cedf9c7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cedf9c7742d38ffec6a4cbf68faca28abed110d8))
+* **tokens:** 🐛 enhance pure black mode color variables ([274e7b6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/274e7b6b453e49e14163a407b7c82ddfcbdaf336))
+* **tokens:** 🐛 fix incorrect backdrop light color ([017a387](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/017a387a57b0e9167c0bf2f1cf74053f8e0fb364))
+* **tokens:** 🐛 fix incorrect colors for pure black mode ([53fab3c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/53fab3c262bcaf99bf33297018d698136fbfcc0a))
+* **tokens:** 🐛 fix incorrect fallback color definitions ([f4e9e70](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f4e9e70d591f350d086007ffac7df1bff5b54f5a))
+* **tokens:** 🐛 fix incorrect supports tag and add color-base--hover ([2430932](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2430932432fc6515c5448d735c4d6f455affc30f))
+* **UploadWizard:** 🐛 add small fixes to layout ([443278f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/443278f781352449963f3d9aa225eeba243d2654))
+* **UploadWizard:** 🐛 fix message box styles ([4261645](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4261645e1d935faef1c4a246a8ab6debb47cb532))
+* **UserProfileV2:** 🐛 fix deprecations and add fixes for mobile ([#1023](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1023)) ([949a733](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/949a7339a1527cce6232c51a68c07e4d9a1b3cb1))
+
+
+### Miscellaneous Chores
+
+* 💥 🔧 raise minimum MW requirement to 1.43 ([b5080bd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b5080bd2ee5431ba6d930744cc013f25dd46cbb1))
+* 🔧 add coverage directory to .gitignore ([d021452](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d021452aa4b34c19c46155c18c6fc8b13ab9f046))
+* 🔧 ignore package-lock.json ([b969f10](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b969f10f8c136bbac18c1f83f3449915c2917837))
+* 🔧 remove coverage.xml file from the repository ([83edb63](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/83edb636d848ff171cd94bc536558330a0aecd28))
+* **eslint:** 🔧 update ESLint configuration to use wikimedia/client preset ([b12cd9f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b12cd9fe6a34e3c7d1cb8a5f41ed7adb89afbed4))
+* **release:** 🚀 bump version to 3.0.0-beta ([1f9c58c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1f9c58cc1d9ca67dca8c135bc5dae83555ef5210))
+
 ## [2.40.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.40.1...v2.40.2) (2025-01-01)
 
 
