@@ -3,37 +3,57 @@
  *
  * SkinStyles for Extension:CommentStreams
  * Module: ext.CommentStreams
- * Version: REL1_39 f75ff3b
- *
- * Date: 2023-06-02
+ * Version: REL1_43
+ * Date: 2025-03-28
  */
 
 .cs {
 	&-comments {
+		margin-top: var( --space-md );
 		font-family: var( --font-family-base );
+
+		div.ve-ce-branchNode {
+			border-color: var( --border-color-base );
+		}
 	}
 
-	&-edit-box {
-		background-color: var( --color-surface-1 );
-		border: var( --border-width-base ) solid var( --border-color-base );
+	&-stream {
+		margin-block: var( --space-xs );
+	}
+
+	&-reply {
+		&-comment {
+			margin-top: var( --space-md );
+		}
+
+		&-comment,
+		&-edit-box {
+			margin-left: var( --space-lg );
+		}
 	}
 
 	&-comment {
-		&-title {
-			color: var( --color-emphasized );
-		}
-
-		&-details {
-			color: var( --color-subtle );
-		}
-
 		&-header {
+			display: flex;
+			flex-wrap: wrap;
+			padding: var( --space-xs ) var( --space-sm );
+
+			&-center {
+				flex-grow: 1;
+				padding-left: 0;
+			}
+
 			.cs-collapsed & {
-				background-color: var( --color-surface-2 );
+				background-color: transparent;
 			}
 
 			.cs-expanded & {
-				background-color: rgba( 51, 102, 204, 0.1 );
+				background-color: var( --color-surface-1 );
+			}
+
+			.cs-head-comment > & {
+				background-color: var( --color-surface-1 );
+				border-top-color: var( --border-color-base );
 			}
 
 			.cs-reply-comment > & {
@@ -41,5 +61,84 @@
 				border-top: var( --border-width-base ) solid var( --border-color-base );
 			}
 		}
+
+		&-title {
+			font-size: var( --font-size-large );
+			font-weight: var( --font-weight-semibold );
+			color: var( --color-emphasized );
+		}
+
+		&-author,
+		&-details {
+			font-size: var( --font-size-small );
+		}
+
+		&-author {
+			&-anonymous {
+				color: var( --color-subtle );
+			}
+
+			a {
+				font-weight: var( --font-weight-medium );
+				color: var( --color-link );
+			}
+		}
+
+		&-details {
+			color: var( --color-subtle );
+		}
+
+		&-body {
+			margin-bottom: var( --space-xs );
+			font-size: inherit;
+		}
+	}
+
+	&-edit-box {
+		padding: var( --space-xs );
+		margin-bottom: var( --space-sm );
+		background-color: var( --color-surface-1 );
+		border: var( --border-width-base ) solid var( --border-color-base );
+	}
+
+	&-title,
+	&-body {
+		&-edit-field {
+			padding: var( --space-xs );
+			font-family: var( --font-family-base );
+			border-color: var( --border-color-base );
+			border-radius: var( --border-radius-base );
+		}
+	}
+
+	&-title-edit-field {
+		font-size: var( --font-size-large );
+	}
+
+	&-toc {
+		padding: var( --space-xs );
+		font-size: var( --font-size-small );
+		background-color: var( --color-surface-1 );
+		border-color: var( --border-color-base );
+
+		h2 {
+			font-size: var( --font-size-medium );
+			font-weight: var( --font-weight-semibold );
+		}
+	}
+}
+
+.commentstreams-history-table {
+	th {
+		padding: var( --space-xs );
+		font-weight: var( --font-weight-semibold );
+	}
+
+	td {
+		padding-inline: var( --space-xs );
+	}
+
+	tr {
+		border-color: var( --border-color-base );
 	}
 }

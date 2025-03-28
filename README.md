@@ -116,7 +116,7 @@ Name | Version
 [CleanChanges](https://www.mediawiki.org/wiki/Extension:CleanChanges) | MLEB 2021.07
 [CodeEditor](https://www.mediawiki.org/wiki/Extension:CodeEditor) | REL1_39 `67c012c`
 [CodeMirror](https://www.mediawiki.org/wiki/Extension:CodeMirror) | REL1_43
-[CommentStreams](https://www.mediawiki.org/wiki/Extension:CommentStreams) | REL1_39 `f75ff3b`
+[CommentStreams](https://www.mediawiki.org/wiki/Extension:CommentStreams) | REL1_43
 [CookieWarning](https://www.mediawiki.org/wiki/Extension:CookieWarning) | REL1_39 `021d9ea`
 [DataMaps](https://www.mediawiki.org/wiki/Extension:DataMaps) | 0.17.7 `9c448d3`
 [DiscussionTools](https://www.mediawiki.org/wiki/Extension:DiscussionTools) | REL1_39 `1aae2cc`
