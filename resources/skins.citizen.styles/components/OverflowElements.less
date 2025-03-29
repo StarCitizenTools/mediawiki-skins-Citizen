@@ -35,6 +35,10 @@
 			border-radius: var( --border-radius-medium );
 			box-shadow: var( --box-shadow-border );
 		}
+
+		&:has( .citizen-overflow-content > .wikitable--fluid ) {
+			max-width: none;
+		}
 	}
 
 	&-content {

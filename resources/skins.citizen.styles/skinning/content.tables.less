@@ -2,12 +2,11 @@
  * Citizen
  *
  * Module: mediawiki.skinning.content.tables
- * Version: REL1_39
+ * Version: REL1_43
  *
- * Date: 2024-02-26
+ * Date: 2025-03-29
 */
 
-// TODO: Revisit on MW 1.43 since Minerva table styles are merged upstream
 .wikitable {
 	display: block;
 	max-width: max-content; // Needed for the border
@@ -132,5 +131,9 @@
 		tbody tr:nth-child( even ) {
 			background-color: var( --color-surface-2 );
 		}
+	}
+
+	&--fluid {
+		width: 100%;
 	}
 }
