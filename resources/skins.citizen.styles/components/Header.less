@@ -10,7 +10,7 @@
 	display: flex;
 	flex-direction: var( --header-direction );
 	gap: var( --space-xxs );
-	padding: var( --space-xs );
+	padding: var( --space-xs ) calc( var( --space-xs ) + env( safe-area-inset-right ) ) calc( var( --space-xs ) + env( safe-area-inset-bottom ) ) calc( var( --space-xs ) + env( safe-area-inset-left ) );
 	background-color: var( --color-surface-0 );
 	border-top: var( --border-width-base ) solid var( --border-color-base );
 
