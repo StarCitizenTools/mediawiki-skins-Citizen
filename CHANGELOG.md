@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.0.0...v3.1.0) (2025-04-04)
+
+
+### Features
+
+* **core:** ✨ add padding for device safe area ([9db68fb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9db68fbaeece7009512a5d4fc5e733c5ff080e5d))
+* **core:** ✨ apply font grade to light mode instead of dark mode ([ab3853a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ab3853aa6fd304a1f5addb1543f5ec299c3e9673))
+* **core:** ✨ reduce spacing between paragraph element and other elements that have top margin ([6339841](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6339841b5fb5a3e869f00eb25f203c11d64cdea1))
+* **core:** ✨ reduce subtle background color brightness ([12ce5e4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/12ce5e4c344d2060d672d91279b9efbfe41a4280))
+* **core:** ✨ use darker surface colors ([c6ec6d8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c6ec6d804d976dbb4984c5faa48fbe67b2b2fc75))
+* **typography:** ✨ tweak label text font styles ([d753c03](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d753c038d88671e49b12c6729016931a6364e4e0))
+* **wikitable:** ✨ add wikitable--fluid utitlity class for full width tables ([ff64f43](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ff64f439c81c0beea0e80e4b5e686d531029a662))
+
+
+### Bug Fixes
+
+* **FloatingUI:** 🐛 update box-shadow variable ([fab3d98](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fab3d984fd5fd9d84bfbcd8ac20134ae6116859a))
+
 ## [3.0.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.40.2...v3.0.0) (2025-03-28)
 
 
