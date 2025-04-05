@@ -8,8 +8,10 @@
 
 @import '../../../resources/variables.less';
 
-/* Fix weird gap between save button and toolbar bottom */
 .ve-ui-toolbar > .oo-ui-toolbar-bar {
+	/* Fix z-index */
+	z-index: @z-index-sticky;
+	/* Fix weird gap between save button and toolbar bottom */
 	border-bottom: 0;
 	box-shadow: 0 1px 0 0 var( --border-color-base );
 }
