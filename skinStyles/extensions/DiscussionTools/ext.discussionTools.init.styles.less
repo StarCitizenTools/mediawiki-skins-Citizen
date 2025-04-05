@@ -45,6 +45,13 @@ h2.ext-discussiontools-ui-newTopic-sectionTitle .oo-ui-inputWidget-input {
 	font-weight: var( --font-weight-semi-bold ) !important;
 }
 
+/* Remove additional space in the title after the colon */
+.ext-discussiontools-visualenhancements_pageframe-enabled {
+	.mw-page-title-separator::after {
+		content: '' !important;
+	}
+}
+
 .ext-discussiontools-init-replylink-buttons {
 	.ext-discussiontools-init-replylink-open & > .ext-discussiontools-init-replylink-reply {
 		color: var( --color-subtle );
