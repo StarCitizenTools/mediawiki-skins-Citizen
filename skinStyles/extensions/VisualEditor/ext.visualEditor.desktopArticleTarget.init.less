@@ -23,6 +23,13 @@
 	}
 }
 
+// Fix page actions from going under the page
+.ve-init-mw-desktopArticleTarget {
+	.citizen-page-header {
+		z-index: @z-index-toolbar;
+	}
+}
+
 .ve-init-mw-desktopArticleTarget-toolbarPlaceholder {
 	&-bar {
 		border-bottom-color: var( --border-color-base );
