@@ -19,7 +19,7 @@
 		"eslint-config-wikimedia": "0.29.1",
 		"grunt-banana-checker": "0.13.0",
 		"husky": "^9.1.7",
-		"stylelint": "16.17.0",
+		"stylelint": "16.18.0",
 		"stylelint-config-recess-order": "6.0.0",
 		"stylelint-config-wikimedia": "0.18.0",
 		"stylelint-order": "^6.0.3"
