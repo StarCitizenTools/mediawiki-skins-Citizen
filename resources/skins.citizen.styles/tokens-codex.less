@@ -132,8 +132,8 @@
 	//--color-icon-notice: #72777d;
 	//--mix-blend-mode-base: normal;
 	//--mix-blend-mode-blend: multiply;
-	//--background-color-interactive--hover: #dadde3;
-	//--background-color-interactive--active: #c8ccd1;
+	--background-color-interactive--hover: var( --color-surface-2--hover );
+	--background-color-interactive--active: var( --color-surface-2--active );
 	//--background-color-progressive-subtle--hover: #dce3f9;
 	//--background-color-progressive-subtle--active: #cbd6f6;
 	//--background-color-destructive-subtle--hover: #ffdad3;
@@ -145,6 +145,9 @@
 	//--border-color-error--active: #612419;
 	--color-link-red--visited--hover: var( --color-destructive--visited--hover );
 	--color-link-red--visited--active: var( --color-destructive--visited--active );
+
+	--background-color-interactive-subtle--hover: var( --color-surface-1--hover );
+	--background-color-interactive-subtle--active: var( --color-surface-1--active );
 
 	/* Fallback for browsers that do not support OKLCH */
 	@supports not ( color: oklch( 100% 0 0 ) ) {

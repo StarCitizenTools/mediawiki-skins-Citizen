@@ -362,6 +362,38 @@
 				"watchlist",
 				"wikiText"
 			]
+		},
+		"skins.citizen.commandPalette": {
+			"class": "MediaWiki\\ResourceLoader\\CodexModule",
+			"dependencies": [
+				"vue",
+				"mediawiki.page.ready",
+				"skins.citizen.commandPalette.codex"
+			],
+			"packageFiles": [
+				"resources/skins.citizen.commandPalette/init.js",
+				"resources/skins.citizen.commandPalette/fetch.js",
+				"resources/skins.citizen.commandPalette/urlGenerator.js",
+				"resources/skins.citizen.commandPalette/components/App.vue",
+				"resources/skins.citizen.commandPalette/components/CommandPaletteList.vue",
+				"resources/skins.citizen.commandPalette/components/CommandPaletteListItem.vue",
+				{
+					"name": "resources/skins.citizen.commandPalette/icons.json",
+					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
+					"callbackParam": [
+						"cdxIconSearch"
+					]
+				}
+			]
+		},
+		"skins.citizen.commandPalette.codex": {
+			"class": "MediaWiki\\ResourceLoader\\CodexModule",
+			"codexComponents": [
+				"CdxIcon",
+				"CdxSearchResultTitle",
+				"CdxTextInput",
+				"CdxThumbnail"
+			]
 		}
 	},
 	"ResourceFileModulePaths": {
