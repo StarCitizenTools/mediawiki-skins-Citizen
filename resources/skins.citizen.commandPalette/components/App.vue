@@ -29,7 +29,11 @@
 					</div>
 				</template>
 
-				<template v-else v-for="( resultGroup, key ) in searchResults" :key="key">
+				<template
+					v-for="( resultGroup, key ) in searchResults"
+					v-else
+					:key="key"
+				>
 					<command-palette-list
 						v-if="resultGroup.items.length > 0"
 						:items="resultGroup.items"

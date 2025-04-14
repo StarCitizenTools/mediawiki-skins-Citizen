@@ -131,6 +131,8 @@
 	@supports not ( color: oklch( 100% 0 0 ) ) {
 		--color-surface-0: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-0-hsl__s ), var( --color-surface-0-hsl__l ) )';
 		--color-surface-1: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-1-hsl__s ), var( --color-surface-1-hsl__l ) )';
+		--color-surface-1--hover: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-1-hsl__s ), calc( var( --color-surface-1-hsl__l ) + var( --delta-lightness-hover-state ) ) )';
+		--color-surface-1--active: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-1-hsl__s ), calc( var( --color-surface-1-hsl__l ) + var( --delta-lightness-active-state ) ) )';
 		--color-surface-2: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-2-hsl__s ), var( --color-surface-2-hsl__l ) )';
 		--color-surface-2--hover: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-2-hsl__s ), calc( var( --color-surface-2-hsl__l ) + var( --delta-lightness-hover-state ) ) )';
 		--color-surface-2--active: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-2-hsl__s ), calc( var( --color-surface-2-hsl__l ) + var( --delta-lightness-active-state ) ) )';

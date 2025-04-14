@@ -1,3 +1,4 @@
+/* eslint-disable compat/compat */
 /*
  * Adapted from Vector
  * All credits go to the developers behind Vector
