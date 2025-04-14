@@ -4,10 +4,10 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Tests\Integration\Hooks;
 
+use MediaWiki\MainConfigNames;
 use MediaWiki\ResourceLoader\Context;
 use MediaWiki\Skins\Citizen\Hooks\ResourceLoaderHooks;
 use MediaWikiIntegrationTestCase;
-use MediaWiki\MainConfigNames;
 
 /**
  * @group Citizen
