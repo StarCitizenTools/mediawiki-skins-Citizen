@@ -1,0 +1,13 @@
+{
+	"extends": [
+		"../.eslintrc.json"
+	],
+	"rules": {
+		"max-len": "off",
+		"es-x/no-object-values": "off",
+		"es-x/no-optional-chaining": "off",
+		"es-x/no-nullish-coalescing-operators": "off",
+		"es-x/no-symbol-prototype-description": "off",
+		"es-x/no-rest-spread-properties": "off"
+	}
+}

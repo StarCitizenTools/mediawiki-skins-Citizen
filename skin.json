@@ -294,6 +294,49 @@
 				"resources/skins.citizen.serviceWorker/sw.js"
 			]
 		},
+		"skins.citizen.commandPalette": {
+			"class": "MediaWiki\\ResourceLoader\\CodexModule",
+			"dependencies": [
+				"vue",
+				"mediawiki.page.ready",
+				"skins.citizen.commandPalette.codex"
+			],
+			"packageFiles": [
+				"resources/skins.citizen.commandPalette/init.js",
+				"resources/skins.citizen.commandPalette/fetch.js",
+				"resources/skins.citizen.commandPalette/searchService.js",
+				"resources/skins.citizen.commandPalette/urlGenerator.js",
+				"resources/skins.citizen.commandPalette/searchClients/SearchClientFactory.js",
+				"resources/skins.citizen.commandPalette/searchClients/MwRestSearchClient.js",
+				"resources/skins.citizen.commandPalette/components/App.vue",
+				"resources/skins.citizen.commandPalette/components/CommandPaletteList.vue",
+				"resources/skins.citizen.commandPalette/components/CommandPaletteListItem.vue",
+				{
+					"name": "resources/skins.citizen.commandPalette/icons.json",
+					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
+					"callbackParam": [
+						"cdxIconSearch"
+					]
+				},
+				{
+					"name": "resources/skins.citizen.commandPalette/config.json",
+					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenCommandPaletteResourceLoaderConfig"
+				}
+			],
+			"messages": [
+				"searchsuggest-search",
+				"search-nonefound"
+			]
+		},
+		"skins.citizen.commandPalette.codex": {
+			"class": "MediaWiki\\ResourceLoader\\CodexModule",
+			"codexComponents": [
+				"CdxIcon",
+				"CdxSearchResultTitle",
+				"CdxTextInput",
+				"CdxThumbnail"
+			]
+		},
 		"skins.citizen.icons": {
 			"selectorWithoutVariant": ".mw-ui-icon-wikimedia-{name}:before",
 			"useDataURI": false,
@@ -742,6 +785,12 @@
 		"TableOfContentsCollapseAtCount": {
 			"value": 28,
 			"description": "@var The minimum number of headings required to collapse all headings in the sticky table of contents by default."
+		},
+		"EnableCommandPalette": {
+			"value": false,
+			"description": "[EXPERIMENTAL] Enables or disable the command palette. Command palette is in active development and may not work as expected.",
+			"descriptionmsg": "citizen-config-enablecommandpalette",
+			"public": true
 		}
 	},
 	"manifest_version": 2

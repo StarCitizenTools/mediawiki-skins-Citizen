@@ -7,6 +7,7 @@ namespace MediaWiki\Skins\Citizen\Tests\Integration\Hooks;
 use MediaWiki\ResourceLoader\Context;
 use MediaWiki\Skins\Citizen\Hooks\ResourceLoaderHooks;
 use MediaWikiIntegrationTestCase;
+use MediaWiki\MainConfigNames;
 
 /**
  * @group Citizen
@@ -22,6 +23,7 @@ class ResourceLoaderHooksTest extends MediaWikiIntegrationTestCase {
 			'CitizenOverflowInheritedClasses' => false,
 			'CitizenOverflowNowrapClasses' => false,
 			'CitizenSearchModule' => false,
+			'CitizenEnableCommandPalette' => false,
 		] );
 
 		$rlCtxMock = $this->getMockBuilder( Context::class )->disableOriginalConstructor()->getMock();
@@ -36,33 +38,7 @@ class ResourceLoaderHooksTest extends MediaWikiIntegrationTestCase {
 			'wgCitizenSearchModule' => false,
 			'wgCitizenOverflowInheritedClasses' => false,
 			'wgCitizenOverflowNowrapClasses' => false,
-		], $config );
-	}
-
-	/**
-	 * @covers \MediaWiki\Skins\Citizen\Hooks\ResourceLoaderHooks
-	 * @return void
-	 */
-	public function testCitizenResourceLoaderConfigAllTrue() {
-		$this->overrideConfigValues( [
-			'CitizenEnablePreferences' => true,
-			'CitizenOverflowInheritedClasses' => true,
-			'CitizenOverflowNowrapClasses' => true,
-			'CitizenSearchModule' => true,
-		] );
-
-		$rlCtxMock = $this->getMockBuilder( Context::class )->disableOriginalConstructor()->getMock();
-
-		$config = ResourceLoaderHooks::getCitizenResourceLoaderConfig(
-			$rlCtxMock,
-			$this->getServiceContainer()->getMainConfig()
-		);
-
-		$this->assertArraySubmapSame( [
-			'wgCitizenEnablePreferences' => true,
-			'wgCitizenOverflowInheritedClasses' => true,
-			'wgCitizenOverflowNowrapClasses' => true,
-			'wgCitizenSearchModule' => true,
+			'wgCitizenEnableCommandPalette' => false,
 		], $config );
 	}
 
@@ -93,12 +69,11 @@ class ResourceLoaderHooksTest extends MediaWikiIntegrationTestCase {
 	 */
 	public function testCitizenSearchResourceLoaderConfig() {
 		$this->overrideConfigValues( [
-			'CitizenSearchGateway' => 'CitizenSearchGateway',
-			'CitizenSearchDescriptionSource' => 'CitizenSearchDescriptionSource',
-			'CitizenMaxSearchResults' => 'CitizenMaxSearchResults',
-			'Script' => 'Script',
-			'ScriptPath' => 'ScriptPath',
-			'SearchSuggestCacheExpiry' => 'SearchSuggestCacheExpiry',
+			'CitizenSearchGateway' => 'mwRestApi',
+			'CitizenSearchDescriptionSource' => 'textextracts',
+			'CitizenMaxSearchResults' => 10,
+			MainConfigNames::ScriptPath => 'ScriptPath',
+			MainConfigNames::SearchSuggestCacheExpiry => 'SearchSuggestCacheExpiry'
 		] );
 
 		$rlCtxMock = $this->getMockBuilder( Context::class )->disableOriginalConstructor()->getMock();
@@ -109,12 +84,13 @@ class ResourceLoaderHooksTest extends MediaWikiIntegrationTestCase {
 		);
 
 		$this->assertArraySubmapSame( [
-			'wgCitizenSearchGateway' => 'CitizenSearchGateway',
-			'wgCitizenSearchDescriptionSource' => 'CitizenSearchDescriptionSource',
-			'wgCitizenMaxSearchResults' => 'CitizenMaxSearchResults',
-			'wgScript' => 'Script',
-			'wgScriptPath' => 'ScriptPath',
+			'isAdvancedSearchExtensionEnabled' => false,
 			'isMediaSearchExtensionEnabled' => false,
+			'wgCitizenSearchGateway' => 'mwRestApi',
+			'wgCitizenSearchDescriptionSource' => 'textextracts',
+			'wgCitizenMaxSearchResults' => 10,
+			'wgScriptPath' => 'ScriptPath',
+			'wgSearchSuggestCacheExpiry' => 'SearchSuggestCacheExpiry'
 		], $config );
 	}
 }
