@@ -71,7 +71,7 @@ function isFeatureExcluded( featureName ) {
 function getVisibleClientPreferences( config ) {
 	const active = getClientPreferences();
 	// Order should be based on key in config.json
-	return Object.keys( config ).filter( ( key ) => active.indexOf( key ) > -1 );
+	return Object.keys( config ).filter( ( key ) => active.includes( key ) );
 }
 
 /**

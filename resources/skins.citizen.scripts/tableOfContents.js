@@ -250,7 +250,7 @@ module.exports = function tableOfContents( props ) {
 		const topSection = /** @type {HTMLElement} */ ( tocSection.closest( `.${ TOP_SECTION_CLASS }` ) );
 		const toggle = topSection.querySelector( `.${ TOGGLE_CLASS }` );
 
-		if ( topSection && toggle && expandedSections.indexOf( topSection ) < 0 ) {
+		if ( topSection && toggle && !expandedSections.includes( topSection ) ) {
 			toggle.setAttribute( 'aria-expanded', 'true' );
 			topSection.classList.add( EXPANDED_SECTION_CLASS );
 			expandedSections.push( topSection );
@@ -300,7 +300,7 @@ module.exports = function tableOfContents( props ) {
 	function collapseSections( selectedIds ) {
 		const sectionIdsToCollapse = selectedIds || getExpandedSectionIds();
 		expandedSections = expandedSections.filter( ( section ) => {
-			const isSelected = sectionIdsToCollapse.indexOf( section.id ) > -1;
+			const isSelected = sectionIdsToCollapse.includes( section.id );
 			const toggle = isSelected ? section.getElementsByClassName( TOGGLE_CLASS ) : undefined;
 			if ( isSelected && toggle && toggle.length > 0 ) {
 				toggle[ 0 ].setAttribute( 'aria-expanded', 'false' );

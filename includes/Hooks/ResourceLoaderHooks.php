@@ -50,6 +50,7 @@ class ResourceLoaderHooks {
 			'wgCitizenOverflowInheritedClasses' => $config->get( 'CitizenOverflowInheritedClasses' ),
 			'wgCitizenOverflowNowrapClasses' => $config->get( 'CitizenOverflowNowrapClasses' ),
 			'wgCitizenSearchModule' => $config->get( 'CitizenSearchModule' ),
+			'wgCitizenEnableCommandPalette' => $config->get( 'CitizenEnableCommandPalette' ),
 		];
 	}
 
@@ -84,10 +85,21 @@ class ResourceLoaderHooks {
 			'wgCitizenSearchGateway' => $config->get( 'CitizenSearchGateway' ),
 			'wgCitizenSearchDescriptionSource' => $config->get( 'CitizenSearchDescriptionSource' ),
 			'wgCitizenMaxSearchResults' => $config->get( 'CitizenMaxSearchResults' ),
-			'wgArticlePath' => $config->get( MainConfigNames::ArticlePath ),
-			'wgScript' => $config->get( MainConfigNames::Script ),
 			'wgScriptPath' => $config->get( MainConfigNames::ScriptPath ),
 			'wgSearchSuggestCacheExpiry' => $config->get( MainConfigNames::SearchSuggestCacheExpiry )
 		];
+	}
+
+	/**
+	 * Passes config variables to skins.citizen.commandPalette ResourceLoader module.
+	 * @param RL\Context $context
+	 * @param Config $config
+	 * @return array
+	 */
+	public static function getCitizenCommandPaletteResourceLoaderConfig(
+		RL\Context $context,
+		Config $config
+	) {
+		return [];
 	}
 }

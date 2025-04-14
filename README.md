@@ -69,6 +69,11 @@ Name | Description | Values | Default
 `$wgCitizenEnableManifest` | Enable or disable [web app manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest) | `true` - enable; `false` - disable | `true`
 `$wgCitizenManifestOptions` | Options of the web app manifest | - | See below
 
+### Development
+Name | Description | Values | Default
+:--- | :--- | :--- | :---
+`$wgEnableCommandPalette` | [EXPERIMENTAL] Enables or disable the command palette. Command palette is in active development and may not work as expected. | `true` - enable; `false` - disable | `false`
+
 ```php
 $wgCitizenManifestOptions = [
 	'background_color' => '#0d0e12',

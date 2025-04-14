@@ -93,10 +93,6 @@ function main( window ) {
 		mw.loader.load( 'skins.citizen.preferences' );
 	}
 
-	// Enable command palette
-	// TODO: Replace the search module with the command palette
-	mw.loader.load( 'skins.citizen.commandPalette' );
-
 	// Defer non-essential tasks
 	mw.requestIdleCallback( deferredTasks, { timeout: 3000 } );
 }

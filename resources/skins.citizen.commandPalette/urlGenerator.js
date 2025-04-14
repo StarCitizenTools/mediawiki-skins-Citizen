@@ -31,7 +31,7 @@ function urlGenerator() {
 	return {
 		/**
 		 * @param {SearchResult|string} page
-		 * @param {UrlParams} params
+		 * @param {UrlParams} [params]
 		 * @return {string}
 		 */
 		generateUrl(

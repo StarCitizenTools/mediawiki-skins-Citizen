@@ -194,9 +194,16 @@ function renderSearchClearButton( input ) {
  * @return {void}
  */
 function initSearch( window ) {
-	const
-		searchModule = require( './config.json' ).wgCitizenSearchModule,
-		searchBoxes = document.querySelectorAll( '.citizen-search-box' );
+	const config = require( './config.json' );
+
+	if ( config.wgCitizenEnableCommandPalette ) {
+		// Short-circuit the search module initialization,
+		// as it will be replaced by the command palette
+		mw.loader.load( 'skins.citizen.commandPalette' );
+		return;
+	}
+
+	const searchBoxes = document.querySelectorAll( '.citizen-search-box' );
 
 	if ( !searchBoxes.length ) {
 		return;
@@ -223,7 +230,7 @@ function initSearch( window ) {
 
 		renderSearchClearButton( input );
 		setLoadingIndicatorListeners( searchBox, true, renderSearchLoadingIndicator );
-		loadSearchModule( input, searchModule, () => {
+		loadSearchModule( input, config.wgCitizenSearchModule, () => {
 			setLoadingIndicatorListeners( searchBox, false, renderSearchLoadingIndicator );
 		} );
 	} );

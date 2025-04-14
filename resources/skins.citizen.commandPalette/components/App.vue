@@ -10,7 +10,7 @@
 					input-type="search"
 					:start-icon="cdxIconSearch"
 					:clearable="true"
-					:placeholder="placeholder"
+					:placeholder="$i18n( 'searchsuggest-search' ).text()"
 					@keydown.down.prevent="highlightNext"
 					@keydown.up.prevent="highlightPrevious"
 					@keydown.home.prevent="highlightFirst"
@@ -23,7 +23,13 @@
 				ref="resultsContainer"
 				class="citizen-command-palette__results"
 			>
-				<template v-for="( resultGroup, key ) in searchResults" :key="key">
+				<template v-if="itemsLength === 0 && searchQuery">
+					<div class="citizen-command-palette__no-results">
+						{{ $i18n( 'search-nonefound' ).text() }}
+					</div>
+				</template>
+
+				<template v-else v-for="( resultGroup, key ) in searchResults" :key="key">
 					<command-palette-list
 						v-if="resultGroup.items.length > 0"
 						:items="resultGroup.items"
@@ -37,7 +43,7 @@
 				</template>
 			</div>
 			<div class="citizen-command-palette__footer">
-				🧪 Citizen Command Palette is in beta.
+				Command Palette is experimental and in active development.
 			</div>
 		</div>
 	</div>
@@ -45,7 +51,7 @@
 
 <script>
 const { defineComponent, ref, watch, nextTick, computed } = require( 'vue' );
-const fetchJson = require( '../fetch.js' );
+const createSearchService = require( '../searchService.js' );
 const urlGenerator = require( '../urlGenerator.js' )();
 const CommandPaletteList = require( './CommandPaletteList.vue' );
 const { CdxTextInput } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
@@ -74,10 +80,10 @@ module.exports = exports = defineComponent( {
 			}
 		} );
 		const highlightedItemIndex = ref( -1 );
-		const placeholder = ref( mw.message( 'citizen-command-palette-placeholder' ).text() );
 		const debounceTimeout = ref( null );
 		const searchInput = ref( null );
 		const resultsContainer = ref( null );
+		const searchService = ref( createSearchService( mw.config ) );
 
 		// Computed
 		const itemsLength = computed( () => Object.values( searchResults.value ).reduce( ( acc, group ) => acc + group.items.length, 0 ) );
@@ -136,47 +142,48 @@ module.exports = exports = defineComponent( {
 			highlightedItemIndex.value = index;
 		};
 
+		const getSearchUrl = () => urlGenerator.generateUrl( 'Special:Search', {
+			search: searchQuery.value
+		} );
+
 		const selectResult = ( result ) => {
-			window.location.href = result.url;
+			if ( !result || !result.url ) {
+				window.location.href = getSearchUrl();
+			} else {
+				window.location.href = result.url;
+			}
 			isOpen.value = false;
 		};
 
 		const executeCommand = () => {
 			const allItems = Object.values( searchResults.value ).reduce( ( acc, group ) => acc.concat( group.items ), [] );
-			if ( allItems.length > 0 ) {
-				selectResult( allItems[ highlightedItemIndex.value ] );
-			} else {
-				window.location.href = urlGenerator.generateUrl();
-				isOpen.value = false;
-			}
+			selectResult( allItems[ highlightedItemIndex.value ] );
 		};
 
 		// Search method
-		// TODO: Make this generic so that it can be used for other search types
 		// eslint-disable-next-line es-x/no-async-functions
 		const search = async ( query ) => {
 			highlightedItemIndex.value = -1;
 
 			if ( !query ) {
-				searchResults.value.pages.items = [];
+				searchResults.value = {
+					pages: {
+						heading: 'Pages',
+						items: [],
+						showThumbnail: true
+					}
+				};
 				return;
 			}
 
 			try {
-				// TODO: Do not hardcode rest.php path, we need to build the URL based on config
-				// TODO: Do not hardcode limit, we need to use the config
-				const { fetch } = fetchJson( `/w/rest.php/v1/search/title?q=${ encodeURIComponent( query ) }&limit=10`, {
-					headers: {
-						accept: 'application/json'
-					}
-				} );
-				const data = await fetch;
-				const items = data.pages.map( ( result ) => ( {
+				const results = await searchService.value.search( query, 10 );
+				const items = results.map( ( result ) => ( {
 					id: `citizen-command-palette-result-page-${ result.id }`,
-					label: result.title,
+					label: result.label,
 					description: result.description,
 					thumbnail: result.thumbnail,
-					url: urlGenerator.generateUrl( result.title )
+					url: result.url
 				} ) );
 				searchResults.value = {
 					pages: {
@@ -219,7 +226,6 @@ module.exports = exports = defineComponent( {
 			searchQuery,
 			searchResults,
 			highlightedItemIndex,
-			placeholder,
 			searchInput,
 			resultsContainer,
 
@@ -232,7 +238,8 @@ module.exports = exports = defineComponent( {
 			highlightLast,
 			updatehighlightedItemIndex,
 			selectResult,
-			executeCommand
+			executeCommand,
+			itemsLength
 		};
 	},
 	methods: {
@@ -272,12 +279,11 @@ module.exports = exports = defineComponent( {
 
 	&__container {
 		position: absolute;
-		top: 3.5rem;
-		left: 0;
-		right: 0;
+		top: var(--space-xs );
+		left: var( --space-xs );
+		right: var( --space-xs );
 		margin-inline: auto;
-		min-width: 16rem;
-		max-width: 80vw;
+		max-width: @size-5600;
 		font-size: var( --font-size-base );
 		background-color: var( --color-surface-1 );
 		border: var( --border-base );
@@ -285,14 +291,18 @@ module.exports = exports = defineComponent( {
 		box-shadow: var( --box-shadow-drop-xx-large );
 		line-height: var( --line-height-xx-small );
 		overflow: hidden;
+
+		@media ( min-width: @max-width-breakpoint-tablet ) {
+			top: 3rem;
+		}
 	}
 
 	&__input {
 		/* 8px from CdxTextInput */
-		margin: var( --space-sm ) calc( var( --citizen-command-palette-side-padding ) - 8px );
+		margin: var( --space-sm ) calc( var( --citizen-command-palette-side-padding ) - @spacing-50 );
 
 		.cdx-text-input__input {
-			padding-left: calc( 8px + 1.25rem + var( --space-sm ) );
+			padding-left: calc( @spacing-50 + @size-icon-medium + var( --space-sm ) );
 			padding-block: 0;
 			/* Let the container handles the states */
 			box-shadow: none !important;
@@ -313,6 +323,11 @@ module.exports = exports = defineComponent( {
 		padding: var( --space-sm ) var( --citizen-command-palette-side-padding );
 		font-size: var( --font-size-x-small );
 		color: var( --color-subtle );
+	}
+
+	&__no-results {
+		padding: var( --space-md ) var( --citizen-command-palette-side-padding );
+		text-align: center;
 	}
 }
 </style>
