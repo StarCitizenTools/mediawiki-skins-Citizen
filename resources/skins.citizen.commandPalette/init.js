@@ -15,7 +15,7 @@ function initApp() {
 	const commandPalette = app.mount( teleportTarget );
 
 	registerButton( commandPalette );
-	bindOpenOnSlash( commandPalette );
+	bindKeyboardShortcuts( commandPalette );
 }
 
 /**
@@ -42,11 +42,14 @@ function registerButton( commandPalette ) {
  * @param {Vue} commandPalette
  * @return {void}
  */
-function bindOpenOnSlash( commandPalette ) {
+function bindKeyboardShortcuts( commandPalette ) {
 	const onExpandOnSlash = ( event ) => {
 		const isKeyPressed = () => {
-			// "/" key is standard on many sites
+			// "/"
 			if ( event.key === '/' ) {
+				return true;
+			// "Ctrl" + "K" (or "Command" + "K" on Mac)
+			} else if ( ( event.ctrlKey || event.metaKey ) && event.key.toLowerCase() === 'k' ) {
 				return true;
 			// "Alt" + "Shift" + "F" is the MW standard key
 			// Shift key might makes F key goes capital, so we need to make it lowercase
