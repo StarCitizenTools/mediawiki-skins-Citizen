@@ -11,8 +11,14 @@ const
 function initApp() {
 	const teleportTarget = require( 'mediawiki.page.ready' ).teleportTarget;
 
+	// We can't mount directly to the teleportTarget or it will break OOUI overlays
+	const overlay = document.createElement( 'div' );
+	overlay.classList.add( 'citizen-command-palette-overlay' );
+	teleportTarget.appendChild( overlay );
+
 	const app = Vue.createMwApp( App, {}, config );
-	const commandPalette = app.mount( teleportTarget );
+
+	const commandPalette = app.mount( overlay );
 
 	registerButton( commandPalette );
 	bindKeyboardShortcuts( commandPalette );

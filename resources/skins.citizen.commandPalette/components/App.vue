@@ -1,55 +1,53 @@
 <template>
+	<div v-if="isOpen" class="citizen-command-palette-backdrop" @click="close"></div>
 	<div v-if="isOpen" class="citizen-command-palette">
-		<div class="citizen-command-palette__overlay" @click="close"></div>
-		<div class="citizen-command-palette__container">
-			<div class="citizen-command-palette__search">
-				<cdx-text-input
-					ref="searchInput"
-					v-model="searchQuery"
-					class="citizen-command-palette__input"
-					input-type="search"
-					:start-icon="cdxIconSearch"
-					:clearable="true"
-					:placeholder="$i18n( 'searchsuggest-search' ).text()"
-					@keydown.down.prevent="highlightNext"
-					@keydown.up.prevent="highlightPrevious"
-					@keydown.home.prevent="highlightFirst"
-					@keydown.end.prevent="highlightLast"
-					@keydown.enter.prevent="executeCommand"
-					@keydown.esc="close"
-				></cdx-text-input>
-			</div>
-			<div v-if="isPending && showPending" class="citizen-loading"></div>
-			<div
-				ref="resultsContainer"
-				class="citizen-command-palette__results"
-			>
-				<template v-if="itemsLength === 0 && searchQuery">
-					<div class="citizen-command-palette__no-results">
-						{{ $i18n( 'search-nonefound' ).text() }}
-					</div>
-				</template>
+		<div class="citizen-command-palette__search">
+			<cdx-text-input
+				ref="searchInput"
+				v-model="searchQuery"
+				class="citizen-command-palette__input"
+				input-type="search"
+				:start-icon="cdxIconSearch"
+				:clearable="true"
+				:placeholder="$i18n( 'searchsuggest-search' ).text()"
+				@keydown.down.prevent="highlightNext"
+				@keydown.up.prevent="highlightPrevious"
+				@keydown.home.prevent="highlightFirst"
+				@keydown.end.prevent="highlightLast"
+				@keydown.enter.prevent="executeCommand"
+				@keydown.esc="close"
+			></cdx-text-input>
+		</div>
+		<div v-if="isPending && showPending" class="citizen-loading"></div>
+		<div
+			ref="resultsContainer"
+			class="citizen-command-palette__results"
+		>
+			<template v-if="itemsLength === 0 && searchQuery">
+				<div class="citizen-command-palette__no-results">
+					{{ $i18n( 'search-nonefound' ).text() }}
+				</div>
+			</template>
 
-				<template
-					v-for="( resultGroup, key ) in searchResults"
-					v-else
-					:key="key"
-				>
-					<command-palette-list
-						v-if="resultGroup.items.length > 0"
-						:items="resultGroup.items"
-						:highlighted-item-index="highlightedItemIndex"
-						:show-thumbnail="resultGroup.showThumbnail"
-						:search-query="searchQuery"
-						:heading="resultGroup.heading"
-						@update:highlighted-item-index="updatehighlightedItemIndex"
-						@select="selectResult"
-					></command-palette-list>
-				</template>
-			</div>
-			<div class="citizen-command-palette__footer">
-				Command Palette is experimental and in active development.
-			</div>
+			<template
+				v-for="( resultGroup, key ) in searchResults"
+				v-else
+				:key="key"
+			>
+				<command-palette-list
+					v-if="resultGroup.items.length > 0"
+					:items="resultGroup.items"
+					:highlighted-item-index="highlightedItemIndex"
+					:show-thumbnail="resultGroup.showThumbnail"
+					:search-query="searchQuery"
+					:heading="resultGroup.heading"
+					@update:highlighted-item-index="updatehighlightedItemIndex"
+					@select="selectResult"
+				></command-palette-list>
+			</template>
+		</div>
+		<div class="citizen-command-palette__footer">
+			Command Palette is experimental and in active development.
 		</div>
 	</div>
 </template>
@@ -286,34 +284,34 @@ module.exports = exports = defineComponent( {
 
 .citizen-command-palette {
 	--citizen-command-palette-side-padding: var( --space-md );
-
 	position: fixed;
-	inset: 0;
+	top: var(--space-xs );
+	left: var( --space-xs );
+	right: var( --space-xs );
+	margin-inline: auto;
+	max-width: @size-5600;
+	font-size: var( --font-size-base );
+	background-color: var( --color-surface-1 );
+	border: var( --border-base );
+	border-radius: var( --border-radius-medium );
+	box-shadow: var( --box-shadow-drop-xx-large );
+	line-height: var( --line-height-xx-small );
+	overflow: hidden;
 
-	&__overlay {
-		position: absolute;
-		inset: 0;
-		background-color: var( --background-color-backdrop-light );
+	@media ( min-width: @max-width-breakpoint-tablet ) {
+		top: 3rem;
 	}
 
-	&__container {
+	&-overlay {
 		position: absolute;
-		top: var(--space-xs );
-		left: var( --space-xs );
-		right: var( --space-xs );
-		margin-inline: auto;
-		max-width: @size-5600;
-		font-size: var( --font-size-base );
-		background-color: var( --color-surface-1 );
-		border: var( --border-base );
-		border-radius: var( --border-radius-medium );
-		box-shadow: var( --box-shadow-drop-xx-large );
-		line-height: var( --line-height-xx-small );
-		overflow: hidden;
+		top: 0;
+		left: 0;
+	}
 
-		@media ( min-width: @max-width-breakpoint-tablet ) {
-			top: 3rem;
-		}
+	&-backdrop {
+		position: fixed;
+		inset: 0;
+		background-color: var( --background-color-backdrop-light );
 	}
 
 	&__search {
