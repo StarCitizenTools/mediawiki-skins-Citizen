@@ -1,5 +1,8 @@
 <template>
-	<div v-if="isOpen" class="citizen-command-palette-backdrop" @click="close"></div>
+	<div
+		v-if="isOpen"
+		class="citizen-command-palette-backdrop"
+		@click="close"></div>
 	<div v-if="isOpen" class="citizen-command-palette">
 		<div class="citizen-command-palette__search">
 			<cdx-text-input
