@@ -315,6 +315,7 @@
 					"name": "resources/skins.citizen.commandPalette/icons.json",
 					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
 					"callbackParam": [
+						"cdxIconArticleRedirect",
 						"cdxIconSearch"
 					]
 				},

@@ -45,6 +45,32 @@ Partially based on the MenuItem component from Codex.
 						<bdi>{{ description }}</bdi>
 					</div>
 				</div>
+				<div class="citizen-command-palette-list-item__metadata">
+					<div
+						v-for="item in metadata"
+						:key="item.label"
+						class="citizen-command-palette-list-item__metadata__item"
+					>
+						<cdx-icon
+							v-if="item.icon"
+							:icon="item.icon"
+							size="small"
+							class="citizen-command-palette-list-item__metadata__item__icon"
+						></cdx-icon>
+						<cdx-search-result-title
+							v-if="item.label && item.highlightQuery"
+							class="citizen-command-palette-list-item__metadata__item__label"
+							:title="item.label"
+							:search-query="searchQuery"
+						></cdx-search-result-title>
+						<span
+							v-else
+							class="citizen-command-palette-list-item__metadata__item__label"
+						>
+							{{ item.label }}
+						</span>
+					</div>
+				</div>
 			</a>
 		</slot>
 	</li>
@@ -102,6 +128,10 @@ module.exports = exports = defineComponent( {
 		searchQuery: {
 			type: String,
 			default: ''
+		},
+		metadata: {
+			type: Array,
+			default: () => []
 		}
 	},
 	emits: [
@@ -145,7 +175,7 @@ module.exports = exports = defineComponent( {
 	position: relative;
 
 	&__content {
-		padding: var( --space-xs ) var( --citizen-command-palette-side-padding );
+		padding: var( --space-sm ) var( --citizen-command-palette-side-padding );
 		display: flex;
 		align-items: center;
 		text-decoration: none;
@@ -175,16 +205,32 @@ module.exports = exports = defineComponent( {
 			.cdx-search-result-title {
 				/* So that text-overflow works */
 				display: inline;
-
-				&__match {
-					color: var( --color-subtle );
-				}
 			}
 		}
 
 		&__description {
 			color: var( --color-subtle );
 			font-size: var( --font-size-small );
+		}
+
+		.cdx-search-result-title {
+			color: var( --color-emphasized );
+			font-weight: var( --font-weight-semi-bold );
+
+			&__match {
+				color: var( --color-subtle );
+			}
+		}
+	}
+
+	&__metadata {
+		color: var( --color-subtle );
+		font-size: var( --font-size-small );
+
+		&__item {
+			display: flex;
+			align-items: center;
+			column-gap: var( --space-xxs );
 		}
 	}
 

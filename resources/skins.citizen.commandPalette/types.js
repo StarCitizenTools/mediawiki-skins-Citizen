@@ -5,8 +5,14 @@
  * @property {string} [description]
  * @property {SearchThumbnail} [thumbnail]
  * @property {string} url
- * @property {string} [title]
- * @property {string} [fragment]
+ * @property {SearchMetadataItem[]} [metadata]
+ */
+
+/**
+ * @typedef {Object} SearchMetadataItem
+ * @property {Icon} icon
+ * @property {string} label
+ * @property {boolean} highlightQuery
  */
 
 /**
