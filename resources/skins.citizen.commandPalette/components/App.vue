@@ -18,7 +18,10 @@
 				@keydown.esc="close"
 			></cdx-text-input>
 		</div>
-		<div v-if="isPending && showPending" class="citizen-loading"></div>
+		<div
+			v-if="isPending && showPending"
+			class="citizen-command-palette__progress-indicator citizen-loading"
+		></div>
 		<div
 			ref="resultsContainer"
 			class="citizen-command-palette__results"
@@ -290,7 +293,6 @@ module.exports = exports = defineComponent( {
 	right: var( --space-xs );
 	margin-inline: auto;
 	max-width: @size-5600;
-	font-size: var( --font-size-base );
 	background-color: var( --color-surface-1 );
 	border: var( --border-base );
 	border-radius: var( --border-radius-medium );
@@ -312,6 +314,12 @@ module.exports = exports = defineComponent( {
 		position: fixed;
 		inset: 0;
 		background-color: var( --background-color-backdrop-light );
+	}
+
+	&__progress-indicator {
+		position: absolute;
+		left: 0;
+		right: 0;
 	}
 
 	&__search {

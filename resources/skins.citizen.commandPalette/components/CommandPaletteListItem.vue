@@ -210,7 +210,6 @@ module.exports = exports = defineComponent( {
 
 		&__description {
 			color: var( --color-subtle );
-			font-size: var( --font-size-small );
 		}
 
 		.cdx-search-result-title {
@@ -225,7 +224,6 @@ module.exports = exports = defineComponent( {
 
 	&__metadata {
 		color: var( --color-subtle );
-		font-size: var( --font-size-small );
 
 		&__item {
 			display: flex;
