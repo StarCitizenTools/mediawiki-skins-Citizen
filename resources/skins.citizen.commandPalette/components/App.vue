@@ -19,6 +19,7 @@
 					@keydown.esc="close"
 				></cdx-text-input>
 			</div>
+			<div v-if="isPending && showPending" class="citizen-loading"></div>
 			<div
 				ref="resultsContainer"
 				class="citizen-command-palette__results"
@@ -75,6 +76,8 @@ module.exports = exports = defineComponent( {
 	setup() {
 		// State
 		const isOpen = ref( false );
+		const isPending = ref( false );
+		const showPending = ref( false );
 		const searchQuery = ref( '' );
 		const searchResults = ref( {
 			pages: {
@@ -180,6 +183,9 @@ module.exports = exports = defineComponent( {
 				return;
 			}
 
+			isPending.value = true;
+			showPending.value = true;
+
 			try {
 				const results = await searchService.value.search( query, 10 );
 				const items = results.map( ( result ) => ( {
@@ -200,6 +206,12 @@ module.exports = exports = defineComponent( {
 			} catch ( error ) {
 				mw.log.error( 'Error searching:', error );
 				searchResults.value.pages.items = [];
+			} finally {
+				isPending.value = false;
+				// Delay hiding the pending state to prevent flicker
+				setTimeout( () => {
+					showPending.value = false;
+				}, 300 );
 			}
 		};
 
@@ -228,6 +240,8 @@ module.exports = exports = defineComponent( {
 		return {
 			// State
 			isOpen,
+			isPending,
+			showPending,
 			searchQuery,
 			searchResults,
 			highlightedItemIndex,
