@@ -321,7 +321,7 @@ module.exports = exports = defineComponent( {
 
 	&__results {
 		border-top: var( --border-subtle );
-		max-height: 60vh;
+		max-height: calc( 100vh - 16rem );
 		overflow-y: auto;
 	}
 
