@@ -111,7 +111,7 @@ class Dropdown {
 			if ( !keyhintText ) {
 				return;
 			}
-			const keyhint = document.createElement( 'span' );
+			const keyhint = document.createElement( 'kbd' );
 			keyhint.classList.add( 'citizen-keyboard-hint-key' );
 			keyhint.innerText = keyhintText
 				.replace( /-/g, ' ' )

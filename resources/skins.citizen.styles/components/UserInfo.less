@@ -15,14 +15,16 @@
 		color: var( --color-emphasized );
 	}
 
-	#pt-userpage-2 > a > span {
-		display: flex;
-		flex-grow: 1;
-		flex-wrap: wrap;
-		gap: var( --space-xs );
-		align-items: baseline;
+	#pt-userpage-2 {
+		> a > span {
+			display: flex;
+			flex-grow: 1;
+			flex-wrap: wrap;
+			gap: var( --space-xs );
+			align-items: baseline;
+		}
 
-		&.citizen-keyboard-hint-key {
+		.citizen-keyboard-hint-key {
 			display: none;
 		}
 	}
