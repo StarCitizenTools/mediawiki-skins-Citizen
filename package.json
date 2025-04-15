@@ -14,7 +14,6 @@
 	"devDependencies": {
 		"@commitlint/cli": "^19.6.1",
 		"@commitlint/config-conventional": "^19.6.0",
-		"@wikimedia/types-wikimedia": "0.4.4",
 		"devmoji": "^2.3.0",
 		"eslint-config-wikimedia": "0.29.1",
 		"grunt-banana-checker": "0.13.0",

@@ -16,6 +16,7 @@
 
 /**
  * Load more search results
+ * TODO: Load more is not implemented yet in REST API, we need to wait for MediaWiki upstream
  *
  * @method ISearchClient#loadMore
  * @param {string} query The search term

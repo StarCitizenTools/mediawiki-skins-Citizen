@@ -6,6 +6,7 @@
 
 const fetchJson = require( '../fetch.js' );
 const urlGenerator = require( '../urlGenerator.js' );
+const { cdxIconArticleRedirect } = require( '../icons.json' );
 
 /**
  * @typedef {Object} RestResponse
@@ -58,16 +59,21 @@ class MwRestSearchClient {
 				const thumbnail = page.thumbnail;
 				return {
 					id: page.id,
-					label: page.matched_title || page.title,
-					key: page.key,
-					title: page.title,
+					label: page.title,
 					description: showDescription ? page.description : undefined,
 					url: this.urlGenerator.generateUrl( page ),
 					thumbnail: thumbnail ? {
 						url: thumbnail.url,
 						width: thumbnail.width ?? undefined,
 						height: thumbnail.height ?? undefined
-					} : undefined
+					} : undefined,
+					metadata: page.matched_title ? [
+						{
+							icon: cdxIconArticleRedirect,
+							label: page.matched_title,
+							highlightQuery: true
+						}
+					] : undefined
 				};
 			} )
 		};
@@ -100,6 +106,8 @@ class MwRestSearchClient {
 	}
 
 	/**
+	 * TODO: MediaWiki upstream does not support load more yet
+	 *
 	 * @override
 	 * @param {string} query The search term
 	 * @param {number} offset The number of search results that were already loaded

@@ -187,7 +187,8 @@ module.exports = exports = defineComponent( {
 					label: result.label,
 					description: result.description,
 					thumbnail: result.thumbnail,
-					url: result.url
+					url: result.url,
+					metadata: result.metadata
 				} ) );
 				searchResults.value = {
 					pages: {
@@ -301,10 +302,12 @@ module.exports = exports = defineComponent( {
 		}
 	}
 
-	&__input {
+	&__search {
 		/* 8px from CdxTextInput */
-		margin: var( --space-sm ) calc( var( --citizen-command-palette-side-padding ) - @spacing-50 );
+		padding: var( --space-sm ) calc( var( --citizen-command-palette-side-padding ) - @spacing-50 );
+	}
 
+	&__input {
 		.cdx-text-input__input {
 			padding-left: calc( @spacing-50 + @size-icon-medium + var( --space-sm ) );
 			padding-block: 0;
