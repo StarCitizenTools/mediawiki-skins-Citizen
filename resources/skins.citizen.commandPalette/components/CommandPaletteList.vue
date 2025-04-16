@@ -1,6 +1,12 @@
 <!-- eslint-disable max-len -->
 <template>
 	<section class="citizen-command-palette-list">
+		<div
+			v-if="heading"
+			class="citizen-command-palette-list__heading"
+		>
+			{{ heading }}
+		</div>
 		<ul
 			ref="listRef"
 			class="citizen-command-palette-list__listbox"
@@ -12,6 +18,7 @@
 				:key="item.id"
 				v-bind="getListItemBindings( item )"
 				@change="( property, value ) => onItemChange( item.id, property, value, index )"
+				@select="( result ) => $emit( 'select', result )"
 			></command-palette-list-item>
 		</ul>
 	</section>
@@ -43,9 +50,13 @@ module.exports = exports = defineComponent( {
 		searchQuery: {
 			type: String,
 			default: ''
+		},
+		heading: {
+			type: String,
+			default: ''
 		}
 	},
-	emits: [ 'update:highlightedItemIndex' ],
+	emits: [ 'update:highlightedItemIndex', 'select' ],
 	setup( props, { emit } ) {
 		const listRef = ref( null );
 		const highlightedItemId = ref( null );
@@ -91,6 +102,14 @@ module.exports = exports = defineComponent( {
 <style lang="less">
 .citizen-command-palette-list {
 	padding-block: var( --space-xs );
+
+	&__heading {
+		padding-block-start: var( --space-xs );
+		padding-block-end: var( --space-xxs );
+		padding-inline: var( --citizen-command-palette-side-padding );
+		font-size: var(--font-size-x-small);
+		font-weight: var(--font-weight-medium);
+	}
 
 	&__listbox {
 		margin: 0;

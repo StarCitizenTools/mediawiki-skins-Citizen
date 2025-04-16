@@ -297,14 +297,17 @@
 		"skins.citizen.commandPalette": {
 			"class": "MediaWiki\\ResourceLoader\\CodexModule",
 			"dependencies": [
-				"vue",
 				"mediawiki.page.ready",
-				"skins.citizen.commandPalette.codex"
+				"mediawiki.storage",
+				"mediawiki.util",
+				"skins.citizen.commandPalette.codex",
+				"vue"
 			],
 			"packageFiles": [
 				"resources/skins.citizen.commandPalette/init.js",
 				"resources/skins.citizen.commandPalette/fetch.js",
 				"resources/skins.citizen.commandPalette/searchService.js",
+				"resources/skins.citizen.commandPalette/searchHistoryService.js",
 				"resources/skins.citizen.commandPalette/urlGenerator.js",
 				"resources/skins.citizen.commandPalette/searchClients/SearchClientFactory.js",
 				"resources/skins.citizen.commandPalette/searchClients/MwRestSearchClient.js",
@@ -312,12 +315,16 @@
 				"resources/skins.citizen.commandPalette/components/CommandPaletteList.vue",
 				"resources/skins.citizen.commandPalette/components/CommandPaletteListItem.vue",
 				"resources/skins.citizen.commandPalette/components/CommandPaletteEmptyState.vue",
+				"resources/skins.citizen.commandPalette/components/CommandPalettePresults.vue",
 				{
 					"name": "resources/skins.citizen.commandPalette/icons.json",
 					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
 					"callbackParam": [
+						"cdxIconArticle",
 						"cdxIconArticleNotFound",
 						"cdxIconArticleRedirect",
+						"cdxIconArticlesSearch",
+						"cdxIconHistory",
 						"cdxIconSearch"
 					]
 				},
@@ -327,14 +334,17 @@
 				}
 			],
 			"messages": [
+				"citizen-search-empty-desc",
 				"citizen-search-noresults-title",
 				"citizen-search-noresults-desc",
 				"search-nonefound",
 				"searchsuggest-search",
+				"citizen-command-palette-recent",
 				"citizen-command-palette-keyhint-select",
 				"citizen-command-palette-keyhint-navigate",
 				"citizen-command-palette-keyhint-exit",
-				"citizen-command-palette-type-page"
+				"citizen-command-palette-type-page",
+				"citizen-command-palette-type-fulltext-search"
 			]
 		},
 		"skins.citizen.commandPalette.codex": {
