@@ -48,7 +48,6 @@
 					:highlighted-item-index="highlightedItemIndex"
 					:show-thumbnail="resultGroup.showThumbnail"
 					:search-query="searchQuery"
-					:heading="resultGroup.heading"
 					@update:highlighted-item-index="updatehighlightedItemIndex"
 					@select="selectResult"
 				></command-palette-list>
@@ -106,7 +105,6 @@ module.exports = exports = defineComponent( {
 		const searchQuery = ref( '' );
 		const searchResults = ref( {
 			pages: {
-				heading: 'Pages',
 				items: [],
 				showThumbnail: true
 			}
@@ -200,7 +198,6 @@ module.exports = exports = defineComponent( {
 			if ( !query ) {
 				searchResults.value = {
 					pages: {
-						heading: 'Pages',
 						items: [],
 						showThumbnail: true
 					}
@@ -213,6 +210,7 @@ module.exports = exports = defineComponent( {
 			try {
 				const results = await searchService.value.search( query, 10 );
 				const items = results.map( ( result ) => ( {
+					type: 'page',
 					id: `citizen-command-palette-result-page-${ result.id }`,
 					label: result.label,
 					description: result.description,
@@ -222,7 +220,6 @@ module.exports = exports = defineComponent( {
 				} ) );
 				searchResults.value = {
 					pages: {
-						heading: 'Pages',
 						items,
 						showThumbnail: true
 					}

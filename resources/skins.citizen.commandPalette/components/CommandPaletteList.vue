@@ -1,13 +1,6 @@
 <!-- eslint-disable max-len -->
 <template>
 	<section class="citizen-command-palette-list">
-		<div
-			v-if="heading"
-			class="citizen-command-palette-list__heading"
-			role="presentation"
-		>
-			{{ heading }}
-		</div>
 		<ul
 			ref="listRef"
 			class="citizen-command-palette-list__listbox"
@@ -48,10 +41,6 @@ module.exports = exports = defineComponent( {
 			default: false
 		},
 		searchQuery: {
-			type: String,
-			default: ''
-		},
-		heading: {
 			type: String,
 			default: ''
 		}
@@ -102,13 +91,6 @@ module.exports = exports = defineComponent( {
 <style lang="less">
 .citizen-command-palette-list {
 	padding-block: var( --space-xs );
-
-	&__heading {
-		padding: var( --space-xs ) var( --citizen-command-palette-side-padding );
-		font-size: var( --font-size-x-small );
-		font-weight: var( --font-weight-medium );
-		color: var( --color-subtle );
-	}
 
 	&__listbox {
 		margin: 0;

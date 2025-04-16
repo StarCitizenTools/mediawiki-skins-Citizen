@@ -333,7 +333,8 @@
 				"searchsuggest-search",
 				"citizen-command-palette-keyhint-select",
 				"citizen-command-palette-keyhint-navigate",
-				"citizen-command-palette-keyhint-exit"
+				"citizen-command-palette-keyhint-exit",
+				"citizen-command-palette-type-page"
 			]
 		},
 		"skins.citizen.commandPalette.codex": {
