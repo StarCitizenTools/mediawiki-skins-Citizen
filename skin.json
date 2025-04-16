@@ -311,10 +311,12 @@
 				"resources/skins.citizen.commandPalette/components/App.vue",
 				"resources/skins.citizen.commandPalette/components/CommandPaletteList.vue",
 				"resources/skins.citizen.commandPalette/components/CommandPaletteListItem.vue",
+				"resources/skins.citizen.commandPalette/components/CommandPaletteEmptyState.vue",
 				{
 					"name": "resources/skins.citizen.commandPalette/icons.json",
 					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
 					"callbackParam": [
+						"cdxIconArticleNotFound",
 						"cdxIconArticleRedirect",
 						"cdxIconSearch"
 					]
@@ -325,8 +327,10 @@
 				}
 			],
 			"messages": [
-				"searchsuggest-search",
-				"search-nonefound"
+				"citizen-search-noresults-title",
+				"citizen-search-noresults-desc",
+				"search-nonefound",
+				"searchsuggest-search"
 			]
 		},
 		"skins.citizen.commandPalette.codex": {

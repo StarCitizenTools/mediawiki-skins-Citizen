@@ -29,10 +29,12 @@
 			ref="resultsContainer"
 			class="citizen-command-palette__results"
 		>
-			<template v-if="itemsLength === 0 && searchQuery">
-				<div class="citizen-command-palette__no-results">
-					{{ $i18n( 'search-nonefound' ).text() }}
-				</div>
+			<template v-if="itemsLength === 0 && searchQuery && !isPending">
+				<command-palette-empty-state
+					:title="$i18n( 'citizen-search-noresults-title' ).params( [ searchQuery ] ).text()"
+					:description="$i18n( 'search-nonefound' ).text()"
+					:icon="cdxIconArticleNotFound"
+				></command-palette-empty-state>
 			</template>
 
 			<template
@@ -63,8 +65,9 @@ const { defineComponent, ref, watch, nextTick, computed } = require( 'vue' );
 const createSearchService = require( '../searchService.js' );
 const urlGenerator = require( '../urlGenerator.js' )();
 const CommandPaletteList = require( './CommandPaletteList.vue' );
+const CommandPaletteEmptyState = require( './CommandPaletteEmptyState.vue' );
 const { CdxTextInput } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
-const { cdxIconSearch } = require( '../icons.json' );
+const { cdxIconArticleNotFound, cdxIconSearch } = require( '../icons.json' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
@@ -74,7 +77,8 @@ module.exports = exports = defineComponent( {
 	},
 	components: {
 		CdxTextInput,
-		CommandPaletteList
+		CommandPaletteList,
+		CommandPaletteEmptyState
 	},
 	props: {},
 	setup() {
@@ -187,7 +191,6 @@ module.exports = exports = defineComponent( {
 				return;
 			}
 
-			isPending.value = true;
 			showPending.value = true;
 
 			try {
@@ -224,6 +227,7 @@ module.exports = exports = defineComponent( {
 			if ( debounceTimeout.value ) {
 				clearTimeout( debounceTimeout.value );
 			}
+			isPending.value = true;
 			debounceTimeout.value = setTimeout( () => {
 				search( newQuery );
 			}, 300 );
@@ -252,6 +256,8 @@ module.exports = exports = defineComponent( {
 			searchInput,
 			resultsContainer,
 
+			// Icons
+			cdxIconArticleNotFound,
 			cdxIconSearch,
 
 			// Methods
@@ -300,6 +306,7 @@ module.exports = exports = defineComponent( {
 	border: var( --border-base );
 	border-radius: var( --border-radius-medium );
 	box-shadow: var( --box-shadow-drop-xx-large );
+	font-size: var( --font-size-medium );
 	line-height: var( --line-height-xx-small );
 	overflow: hidden;
 
