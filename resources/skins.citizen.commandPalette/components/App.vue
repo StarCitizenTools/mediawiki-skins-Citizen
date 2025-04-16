@@ -55,7 +55,24 @@
 			</template>
 		</div>
 		<div class="citizen-command-palette__footer">
-			Command Palette is experimental and in active development.
+			<div class="citizen-command-palette__footer-note">
+				Thanks for trying our new Command Palette!
+				<a href="https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues">Give us feedback</a>
+			</div>
+			<div class="citizen-command-palette__footer-hints">
+				<div class="citizen-keyboard-hint">
+					<span class="citizen-keyboard-hint-label">{{ $i18n( 'citizen-command-palette-keyhint-select' ).text() }}</span>
+					<kbd class="citizen-keyboard-hint-key">↵</kbd>
+				</div>
+				<div class="citizen-keyboard-hint">
+					<span class="citizen-keyboard-hint-label">{{ $i18n( 'citizen-command-palette-keyhint-navigate' ).text() }}</span>
+					<kbd class="citizen-keyboard-hint-key">↑↓</kbd>
+				</div>
+				<div class="citizen-keyboard-hint">
+					<span class="citizen-keyboard-hint-label">{{ $i18n( 'citizen-command-palette-keyhint-exit' ).text() }}</span>
+					<kbd class="citizen-keyboard-hint-key">esc</kbd>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -359,6 +376,19 @@ module.exports = exports = defineComponent( {
 		border-top: var( --border-subtle );
 		padding: var( --space-sm ) var( --citizen-command-palette-side-padding );
 		font-size: var( --font-size-x-small );
+		color: var( --color-subtle );
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var( --space-sm );
+	}
+
+	&__footer-hints {
+		display: flex;
+		gap: var( --space-md );
+	}
+
+	&__footer-note {
 		color: var( --color-subtle );
 	}
 
