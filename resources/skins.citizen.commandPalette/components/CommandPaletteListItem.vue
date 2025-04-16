@@ -9,6 +9,7 @@ Partially based on the MenuItem component from Codex.
 		role="option"
 		class="citizen-command-palette-list-item"
 		:class="rootClasses"
+		:data-type="type"
 		@mousemove="onMouseMove"
 		@mouseleave="onMouseLeave"
 		@mousedown.prevent="onMouseDown"
@@ -70,6 +71,12 @@ Partially based on the MenuItem component from Codex.
 							{{ item.label }}
 						</span>
 					</div>
+					<div
+						v-if="type"
+						class="citizen-command-palette-list-item__metadata__item citizen-command-palette-list-item__metadata__item--type"
+					>
+						{{ typeLabel }}
+					</div>
 				</div>
 			</a>
 		</slot>
@@ -100,6 +107,10 @@ module.exports = exports = defineComponent( {
 		highlighted: {
 			type: Boolean,
 			default: false
+		},
+		type: {
+			type: String,
+			required: true
 		},
 		label: {
 			type: String,
@@ -159,11 +170,17 @@ module.exports = exports = defineComponent( {
 			'citizen-command-palette-list-item--highlighted': props.highlighted
 		} ) );
 
+		// Messages that can be used here:
+		// * citizen-command-palette-type-page
+		// eslint-disable-next-line mediawiki/msg-doc
+		const typeLabel = computed( () => mw.message( `citizen-command-palette-type-${ props.type }` ).text() );
+
 		return {
 			onMouseMove,
 			onMouseLeave,
 			onMouseDown,
-			rootClasses
+			rootClasses,
+			typeLabel
 		};
 	}
 } );
@@ -225,12 +242,20 @@ module.exports = exports = defineComponent( {
 
 	&__metadata {
 		color: var( --color-subtle );
-		font-size: var( --font-size-small );
+		font-size: var( --font-size-x-small );
+		display: flex;
+		gap: var( --space-xxs );
 
 		&__item {
 			display: flex;
 			align-items: center;
 			column-gap: var( --space-xxs );
+			// TODO: Should probably create a Citizen badge component
+			padding: var(--space-xxs) var(--space-xs);
+			background: var( --color-surface-3 );
+			border: var( --border-subtle );
+			border-radius: var( --border-radius-base );
+			line-height: var( --line-height-xxx-small );
 		}
 	}
 
