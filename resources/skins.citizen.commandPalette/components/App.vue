@@ -29,28 +29,37 @@
 			ref="resultsContainer"
 			class="citizen-command-palette__results"
 		>
-			<template v-if="itemsLength === 0 && searchQuery && !isPending">
+			<template v-if="!searchQuery">
+				<command-palette-presults
+					:recent-items="recentItems"
+					:highlighted-item-index="highlightedItemIndex"
+					:search-query="searchQuery"
+					@update:highlighted-item-index="updatehighlightedItemIndex"
+					@select="selectResult"
+				></command-palette-presults>
+			</template>
+			<template v-else-if="itemsLength === 0 && !isPending">
 				<command-palette-empty-state
 					:title="$i18n( 'citizen-search-noresults-title' ).params( [ searchQuery ] ).text()"
 					:description="$i18n( 'search-nonefound' ).text()"
 					:icon="cdxIconArticleNotFound"
 				></command-palette-empty-state>
 			</template>
-
-			<template
-				v-for="( resultGroup, key ) in searchResults"
-				v-else
-				:key="key"
-			>
-				<command-palette-list
-					v-if="resultGroup.items.length > 0"
-					:items="resultGroup.items"
-					:highlighted-item-index="highlightedItemIndex"
-					:show-thumbnail="resultGroup.showThumbnail"
-					:search-query="searchQuery"
-					@update:highlighted-item-index="updatehighlightedItemIndex"
-					@select="selectResult"
-				></command-palette-list>
+			<template v-else>
+				<template
+					v-for="( resultGroup, key ) in searchResults"
+					:key="key"
+				>
+					<command-palette-list
+						v-if="resultGroup.items.length > 0"
+						:items="resultGroup.items"
+						:highlighted-item-index="highlightedItemIndex"
+						:show-thumbnail="resultGroup.showThumbnail"
+						:search-query="searchQuery"
+						@update:highlighted-item-index="updatehighlightedItemIndex"
+						@select="selectResult"
+					></command-palette-list>
+				</template>
 			</template>
 		</div>
 		<div class="citizen-command-palette__footer">
@@ -79,11 +88,13 @@
 <script>
 const { defineComponent, ref, watch, nextTick, computed } = require( 'vue' );
 const createSearchService = require( '../searchService.js' );
+const createSearchHistoryService = require( '../searchHistoryService.js' );
 const urlGenerator = require( '../urlGenerator.js' )();
 const CommandPaletteList = require( './CommandPaletteList.vue' );
 const CommandPaletteEmptyState = require( './CommandPaletteEmptyState.vue' );
+const CommandPalettePresults = require( './CommandPalettePresults.vue' );
 const { CdxTextInput } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
-const { cdxIconArticleNotFound, cdxIconSearch } = require( '../icons.json' );
+const { cdxIconArticle, cdxIconArticleNotFound, cdxIconSearch } = require( '../icons.json' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
@@ -94,7 +105,8 @@ module.exports = exports = defineComponent( {
 	components: {
 		CdxTextInput,
 		CommandPaletteList,
-		CommandPaletteEmptyState
+		CommandPaletteEmptyState,
+		CommandPalettePresults
 	},
 	props: {},
 	setup() {
@@ -114,6 +126,18 @@ module.exports = exports = defineComponent( {
 		const searchInput = ref( null );
 		const resultsContainer = ref( null );
 		const searchService = ref( createSearchService( mw.config ) );
+		const searchHistoryService = ref( createSearchHistoryService() );
+		const recentItems = ref( {
+			pages: {
+				items: [],
+				showThumbnail: true
+			}
+		} );
+
+		// Load recent items
+		const loadRecentItems = () => {
+			recentItems.value = searchHistoryService.value.getRecentItems();
+		};
 
 		// Computed
 		const itemsLength = computed( () => Object.values( searchResults.value ).reduce( ( acc, group ) => acc + group.items.length, 0 ) );
@@ -177,10 +201,23 @@ module.exports = exports = defineComponent( {
 		} );
 
 		const selectResult = ( result ) => {
-			if ( !result || !result.url ) {
+			if ( !result ) {
 				window.location.href = getSearchUrl();
-			} else {
+				// Save the search query as a recent item when there are no results
+				searchHistoryService.value.saveSearchQuery( searchQuery.value, getSearchUrl() );
+				isOpen.value = false;
+				return;
+			}
+
+			// If we have a valid result with URL, navigate to it
+			if ( result.url ) {
 				window.location.href = result.url;
+				// Save the entire result object to recent items
+				searchHistoryService.value.saveRecentItem( result );
+			} else {
+				// If no URL, fall back to search and save the query
+				window.location.href = getSearchUrl();
+				searchHistoryService.value.saveSearchQuery( searchQuery.value, getSearchUrl() );
 			}
 			isOpen.value = false;
 		};
@@ -196,12 +233,7 @@ module.exports = exports = defineComponent( {
 			highlightedItemIndex.value = -1;
 
 			if ( !query ) {
-				searchResults.value = {
-					pages: {
-						items: [],
-						showThumbnail: true
-					}
-				};
+				loadRecentItems();
 				return;
 			}
 
@@ -215,6 +247,7 @@ module.exports = exports = defineComponent( {
 					label: result.label,
 					description: result.description,
 					thumbnail: result.thumbnail,
+					thumbnailIcon: cdxIconArticle,
 					url: result.url,
 					metadata: result.metadata
 				} ) );
@@ -266,6 +299,7 @@ module.exports = exports = defineComponent( {
 			showPending,
 			searchQuery,
 			searchResults,
+			recentItems,
 			highlightedItemIndex,
 			searchInput,
 			resultsContainer,
@@ -282,7 +316,8 @@ module.exports = exports = defineComponent( {
 			updatehighlightedItemIndex,
 			selectResult,
 			executeCommand,
-			itemsLength
+			itemsLength,
+			loadRecentItems
 		};
 	},
 	methods: {
@@ -291,6 +326,7 @@ module.exports = exports = defineComponent( {
 		 */
 		open() {
 			this.isOpen = true;
+			this.loadRecentItems();
 			this.$nextTick( () => {
 				this.$refs.searchInput?.focus();
 			} );

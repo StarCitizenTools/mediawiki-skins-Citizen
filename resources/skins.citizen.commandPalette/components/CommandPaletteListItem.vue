@@ -13,6 +13,7 @@ Partially based on the MenuItem component from Codex.
 		@mousemove="onMouseMove"
 		@mouseleave="onMouseLeave"
 		@mousedown.prevent="onMouseDown"
+		@click.prevent="onClick"
 	>
 		<slot>
 			<a
@@ -22,6 +23,7 @@ Partially based on the MenuItem component from Codex.
 				<cdx-thumbnail
 					v-if="showThumbnail"
 					:thumbnail="thumbnail"
+					:placeholder-icon="thumbnailIcon || undefined"
 					class="citizen-command-palette-list-item__thumbnail"
 				></cdx-thumbnail>
 
@@ -132,6 +134,10 @@ module.exports = exports = defineComponent( {
 			type: [ Object, null ],
 			default: null
 		},
+		thumbnailIcon: {
+			type: [ String, Object ],
+			default: ''
+		},
 		description: {
 			type: [ String, null ],
 			default: ''
@@ -146,7 +152,8 @@ module.exports = exports = defineComponent( {
 		}
 	},
 	emits: [
-		'change'
+		'change',
+		'select'
 	],
 	setup( props, { emit } ) {
 		const onMouseMove = () => {
@@ -165,6 +172,21 @@ module.exports = exports = defineComponent( {
 			}
 		};
 
+		const onClick = () => {
+			emit( 'select', {
+				id: props.id,
+				label: props.label,
+				url: props.url,
+				type: props.type,
+				icon: props.icon,
+				showThumbnail: props.showThumbnail,
+				thumbnail: props.thumbnail,
+				thumbnailIcon: props.thumbnailIcon,
+				description: props.description,
+				metadata: props.metadata
+			} );
+		};
+
 		const rootClasses = computed( () => ( {
 			'citizen-command-palette-list-item--active': props.active && props.highlighted,
 			'citizen-command-palette-list-item--highlighted': props.highlighted
@@ -179,6 +201,7 @@ module.exports = exports = defineComponent( {
 			onMouseMove,
 			onMouseLeave,
 			onMouseDown,
+			onClick,
 			rootClasses,
 			typeLabel
 		};

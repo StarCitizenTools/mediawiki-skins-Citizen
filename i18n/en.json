@@ -83,9 +83,12 @@
 	"citizen-user-info-text-anon": "Your IP address will be publicly visible if you make any edits.",
 	"citizen-user-info-text-temp": "This temporary account was created after an edit was made without an account on this browser and device.",
 
+	"citizen-command-palette-recent": "Recent",
+
 	"citizen-command-palette-keyhint-select": "Select",
 	"citizen-command-palette-keyhint-navigate": "Navigate",
 	"citizen-command-palette-keyhint-exit": "Exit",
 
-	"citizen-command-palette-type-page": "Page"
+	"citizen-command-palette-type-page": "Page",
+	"citizen-command-palette-type-fulltext-search": "Fulltext search"
 }
