@@ -330,7 +330,10 @@
 				"citizen-search-noresults-title",
 				"citizen-search-noresults-desc",
 				"search-nonefound",
-				"searchsuggest-search"
+				"searchsuggest-search",
+				"citizen-command-palette-keyhint-select",
+				"citizen-command-palette-keyhint-navigate",
+				"citizen-command-palette-keyhint-exit"
 			]
 		},
 		"skins.citizen.commandPalette.codex": {
