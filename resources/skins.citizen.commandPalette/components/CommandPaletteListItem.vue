@@ -179,7 +179,7 @@ module.exports = exports = defineComponent( {
 		display: flex;
 		align-items: center;
 		text-decoration: none;
-		column-gap: var(--space-sm);
+		column-gap: var(--space-sm );
 
 		&:hover {
 			text-decoration: none;
@@ -210,6 +210,7 @@ module.exports = exports = defineComponent( {
 
 		&__description {
 			color: var( --color-subtle );
+			font-size: var( --font-size-x-small );
 		}
 
 		.cdx-search-result-title {
@@ -224,6 +225,7 @@ module.exports = exports = defineComponent( {
 
 	&__metadata {
 		color: var( --color-subtle );
+		font-size: var( --font-size-small );
 
 		&__item {
 			display: flex;
