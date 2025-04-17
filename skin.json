@@ -102,6 +102,7 @@
 	},
 	"Hooks": {
 		"BeforePageDisplay": "SkinHooks",
+		"OutputPageAfterGetHeadLinksArray": "SkinHooks",
 		"SidebarBeforeOutput": "SkinHooks",
 		"SkinBuildSidebar": "SkinHooks",
 		"SkinEditSectionLinks": "SkinHooks",

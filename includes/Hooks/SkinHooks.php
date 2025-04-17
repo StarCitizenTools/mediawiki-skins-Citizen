@@ -31,6 +31,7 @@ use MediaWiki\Hook\SkinEditSectionLinksHook;
 use MediaWiki\Html\Html;
 use MediaWiki\Language\Language;
 use MediaWiki\Output\Hook\BeforePageDisplayHook;
+use MediaWiki\Output\Hook\OutputPageAfterGetHeadLinksArrayHook;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\ResourceLoader as RL;
@@ -46,6 +47,7 @@ use SkinTemplate;
  */
 class SkinHooks implements
 	BeforePageDisplayHook,
+	OutputPageAfterGetHeadLinksArrayHook,
 	SidebarBeforeOutputHook,
 	SkinBuildSidebarHook,
 	SkinEditSectionLinksHook,
@@ -71,6 +73,34 @@ class SkinHooks implements
 			$script = RL\ResourceLoader::filter( 'minify-js', $script );
 			$out->addHeadItem( 'skin.citizen.inline', $script );
 		}
+	}
+
+	/**
+	 * Replace the viewport meta tag with a more sane one
+	 * 
+	 * @param array &$tags
+	 * @param OutputPage $out
+	 */
+	public function onOutputPageAfterGetHeadLinksArray( &$tags, $out ): void {
+		if ( $out->getSkin()->getSkinName() !== 'citizen' ) {
+			return;
+		}
+
+		if ( !isset( $tags['meta-viewport'] ) ) {
+			return;
+		}
+
+		/**
+		 * The MW default tag was created from T258290, our changes include:
+		 * Added: viewport-fit=cover - #1036
+		 * Removed: user-scalable=yes - This is the default value
+		 * Removed: minimum-scale=0.25 - Seems like an old workaround for iOS that is no longer needed
+		 * Removed: maximum-scale=5.0 - Seems like an old workaround for iOS that is no longer needed
+		 */
+		$tags['meta-viewport'] = Html::element( 'meta', [
+			'name' => 'viewport',
+			'content' => 'width=device-width,initial-scale=1,viewport-fit=cover',
+		] );
 	}
 
 	/**
