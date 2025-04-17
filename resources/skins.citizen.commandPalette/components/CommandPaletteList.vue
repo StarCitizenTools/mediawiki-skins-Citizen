@@ -107,6 +107,7 @@ module.exports = exports = defineComponent( {
 		padding-block-start: var( --space-xs );
 		padding-block-end: var( --space-xxs );
 		padding-inline: var( --citizen-command-palette-side-padding );
+		color: var( --color-subtle );
 		font-size: var(--font-size-x-small);
 		font-weight: var(--font-weight-medium);
 	}
