@@ -159,7 +159,7 @@
 @media ( max-width: ( @max-width-breakpoint-tablet ) ) {
 	.citizen-toc {
 		position: fixed;
-		bottom: ~'calc( var( --header-size ) + var(  --space-xs ) )';
+		bottom: ~'calc( var( --header-size ) + max( env( safe-area-inset-bottom ), var( --space-xs ) ) )';
 		left: 0;
 		z-index: @z-index-sticky; // Keep ToC above sticky header and page action, but below site header
 		pointer-events: none; // HACK: Make background clickable
