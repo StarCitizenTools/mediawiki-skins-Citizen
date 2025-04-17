@@ -77,7 +77,7 @@ class SkinHooks implements
 
 	/**
 	 * Replace the viewport meta tag with a more sane one
-	 * 
+	 *
 	 * @param array &$tags
 	 * @param OutputPage $out
 	 */
