@@ -39,7 +39,7 @@ module.exports = exports = defineComponent( {
 			default: ''
 		},
 		icon: {
-			type: String,
+			type: [ String, Object ],
 			default: 'cdxIconInfo'
 		}
 	}
