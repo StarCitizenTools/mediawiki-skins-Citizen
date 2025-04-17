@@ -204,7 +204,9 @@ module.exports = exports = defineComponent( {
 			if ( !result ) {
 				window.location.href = getSearchUrl();
 				// Save the search query as a recent item when there are no results
-				searchHistoryService.value.saveSearchQuery( searchQuery.value, getSearchUrl() );
+				if ( searchQuery.value.trim() !== '' ) {
+					searchHistoryService.value.saveSearchQuery( searchQuery.value, getSearchUrl() );
+				}
 				isOpen.value = false;
 				return;
 			}
