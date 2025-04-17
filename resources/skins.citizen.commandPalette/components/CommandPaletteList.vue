@@ -104,17 +104,16 @@ module.exports = exports = defineComponent( {
 	padding-block: var( --space-xs );
 
 	&__heading {
-		padding-block-start: var( --space-xs );
-		padding-block-end: var( --space-xxs );
+		padding-block: var( --space-xs ) var( --space-xxs );
 		padding-inline: var( --citizen-command-palette-side-padding );
+		font-size: var( --font-size-x-small );
+		font-weight: var( --font-weight-medium );
 		color: var( --color-subtle );
-		font-size: var(--font-size-x-small);
-		font-weight: var(--font-weight-medium);
 	}
 
 	&__listbox {
-		margin: 0;
 		padding: 0;
+		margin: 0;
 		list-style: none;
 	}
 }

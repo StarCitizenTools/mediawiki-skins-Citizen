@@ -211,15 +211,15 @@ module.exports = exports = defineComponent( {
 
 <style lang="less">
 .citizen-command-palette-list-item {
-	list-style: none;
 	position: relative;
+	list-style: none;
 
 	&__content {
-		padding: var( --space-sm ) var( --citizen-command-palette-side-padding );
 		display: flex;
+		column-gap: var( --space-sm );
 		align-items: center;
+		padding: var( --space-sm ) var( --citizen-command-palette-side-padding );
 		text-decoration: none;
-		column-gap: var(--space-sm );
 
 		&:hover {
 			text-decoration: none;
@@ -239,8 +239,8 @@ module.exports = exports = defineComponent( {
 		}
 
 		&__label {
-			color: var( --color-emphasized );
 			font-weight: var( --font-weight-semi-bold );
+			color: var( --color-emphasized );
 
 			.cdx-search-result-title {
 				/* So that text-overflow works */
@@ -249,13 +249,13 @@ module.exports = exports = defineComponent( {
 		}
 
 		&__description {
-			color: var( --color-subtle );
 			font-size: var( --font-size-x-small );
+			color: var( --color-subtle );
 		}
 
 		.cdx-search-result-title {
-			color: var( --color-emphasized );
 			font-weight: var( --font-weight-semi-bold );
+			color: var( --color-emphasized );
 
 			&__match {
 				color: var( --color-subtle );
@@ -264,27 +264,27 @@ module.exports = exports = defineComponent( {
 	}
 
 	&__metadata {
-		color: var( --color-subtle );
-		font-size: var( --font-size-x-small );
 		display: flex;
 		gap: var( --space-xxs );
+		font-size: var( --font-size-x-small );
+		color: var( --color-subtle );
 
 		&__item {
 			display: flex;
-			align-items: center;
 			column-gap: var( --space-xxs );
+			align-items: center;
 			// TODO: Should probably create a Citizen badge component
-			padding: var(--space-xxs) var(--space-xs);
+			padding: var( --space-xxs ) var( --space-xs );
+			line-height: var( --line-height-xxx-small );
 			background: var( --color-surface-3 );
 			border: var( --border-subtle );
 			border-radius: var( --border-radius-base );
-			line-height: var( --line-height-xxx-small );
 		}
 	}
 
 	&--highlighted {
-		background-color: var( --background-color-interactive-subtle--hover );
 		cursor: pointer;
+		background-color: var( --background-color-interactive-subtle--hover );
 	}
 
 	&--active {

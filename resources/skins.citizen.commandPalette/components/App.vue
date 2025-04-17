@@ -349,18 +349,18 @@ module.exports = exports = defineComponent( {
 .citizen-command-palette {
 	--citizen-command-palette-side-padding: var( --space-md );
 	position: fixed;
-	top: var(--space-xs );
-	left: var( --space-xs );
+	top: var( --space-xs );
 	right: var( --space-xs );
-	margin-inline: auto;
+	left: var( --space-xs );
 	max-width: @size-5600;
+	margin-inline: auto;
+	overflow: hidden;
+	font-size: var( --font-size-medium );
+	line-height: var( --line-height-xx-small );
 	background-color: var( --color-surface-1 );
 	border: var( --border-base );
 	border-radius: var( --border-radius-medium );
 	box-shadow: var( --box-shadow-drop-xx-large );
-	font-size: var( --font-size-medium );
-	line-height: var( --line-height-xx-small );
-	overflow: hidden;
 
 	@media ( min-width: @max-width-breakpoint-tablet ) {
 		top: 3rem;
@@ -380,8 +380,8 @@ module.exports = exports = defineComponent( {
 
 	&__progress-indicator {
 		position: absolute;
-		left: 0;
 		right: 0;
+		left: 0;
 	}
 
 	&__search {
@@ -391,31 +391,31 @@ module.exports = exports = defineComponent( {
 
 	&__input {
 		.cdx-text-input__input {
-			padding-left: calc( @spacing-50 + @size-icon-medium + var( --space-sm ) );
 			padding-block: 0;
-			/* Let the container handles the states */
-			box-shadow: none !important;
+			padding-left: calc( @spacing-50 + @size-icon-medium + var( --space-sm ) );
+			outline: 0 !important;
 			background-color: transparent !important;
 			border: 0 !important;
-			outline: none !important;
+			/* Let the container handles the states */
+			box-shadow: none !important;
 		}
 	}
 
 	&__results {
-		border-top: var( --border-subtle );
 		max-height: calc( 100vh - 16rem );
 		overflow-y: auto;
+		border-top: var( --border-subtle );
 	}
 
 	&__footer {
-		border-top: var( --border-subtle );
+		display: flex;
+		gap: var( --space-sm );
+		align-items: center;
+		justify-content: space-between;
 		padding: var( --space-sm ) var( --citizen-command-palette-side-padding );
 		font-size: var( --font-size-x-small );
 		color: var( --color-subtle );
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: var( --space-sm );
+		border-top: var( --border-subtle );
 	}
 
 	&__footer-hints {

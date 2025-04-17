@@ -2,6 +2,7 @@
 	"plugins": [
 		"stylelint-order"
 	],
+	"reportNeedlessDisables": true,
 	"extends": [
 		"stylelint-config-wikimedia/support-modern",
 		"stylelint-config-wikimedia/mediawiki",

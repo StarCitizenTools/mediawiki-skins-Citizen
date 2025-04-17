@@ -52,11 +52,11 @@ module.exports = exports = defineComponent( {
 .citizen-command-palette-empty-state {
 	display: flex;
 	flex-direction: column;
+	gap: var( --space-xs );
 	align-items: center;
 	justify-content: center;
 	padding: var( --space-xxl ) var( --citizen-command-palette-side-padding );
 	text-align: center;
-	gap: var( --space-xs );
 
 	&__icon {
 		width: 5rem;
@@ -74,13 +74,13 @@ module.exports = exports = defineComponent( {
 	}
 
 	&__title {
-		color: var( --color-emphasized );
 		font-weight: var( --font-weight-semi-bold );
+		color: var( --color-emphasized );
 	}
 
 	&__description {
-		color: var( --color-subtle );
 		font-size: var( --font-size-small );
+		color: var( --color-subtle );
 	}
 }
 </style>
