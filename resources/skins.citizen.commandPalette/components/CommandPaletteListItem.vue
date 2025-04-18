@@ -10,6 +10,7 @@ Partially based on the MenuItem component from Codex.
 		class="citizen-command-palette-list-item"
 		:class="rootClasses"
 		:data-type="type"
+		:tabindex="0"
 		@mousemove="onMouseMove"
 		@mouseleave="onMouseLeave"
 		@mousedown.prevent="onMouseDown"
@@ -80,6 +81,24 @@ Partially based on the MenuItem component from Codex.
 						{{ typeLabel }}
 					</div>
 				</div>
+				<div v-if="actions && actions.length > 0" class="citizen-command-palette-list-item__actions">
+					<cdx-button
+						v-for="( action, index ) in actions"
+						:key="action.id"
+						class="citizen-command-palette-list-item__action"
+						:aria-label="action.label"
+						weight="quiet"
+						:tabindex="highlighted ? 0 : -1"
+						:class="{ 'citizen-command-palette-list-item__action--active': activeActionIndex === index }"
+						@click.stop.prevent="onActionClick( action )"
+					>
+						<cdx-icon
+							:icon="action.icon"
+							size="small"
+							class="citizen-command-palette-list-item__action__icon"
+						></cdx-icon>
+					</cdx-button>
+				</div>
 			</a>
 		</slot>
 	</li>
@@ -87,7 +106,7 @@ Partially based on the MenuItem component from Codex.
 
 <script>
 const { defineComponent, computed } = require( 'vue' );
-const { CdxIcon, CdxSearchResultTitle, CdxThumbnail } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
+const { CdxIcon, CdxSearchResultTitle, CdxThumbnail, CdxButton } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
@@ -95,7 +114,8 @@ module.exports = exports = defineComponent( {
 	components: {
 		CdxIcon,
 		CdxSearchResultTitle,
-		CdxThumbnail
+		CdxThumbnail,
+		CdxButton
 	},
 	props: {
 		id: {
@@ -109,6 +129,10 @@ module.exports = exports = defineComponent( {
 		highlighted: {
 			type: Boolean,
 			default: false
+		},
+		activeActionIndex: {
+			type: Number,
+			default: -1
 		},
 		type: {
 			type: String,
@@ -149,11 +173,16 @@ module.exports = exports = defineComponent( {
 		metadata: {
 			type: Array,
 			default: () => []
+		},
+		actions: {
+			type: Array,
+			default: () => []
 		}
 	},
 	emits: [
 		'change',
-		'select'
+		'select',
+		'action'
 	],
 	setup( props, { emit } ) {
 		const onMouseMove = () => {
@@ -183,7 +212,16 @@ module.exports = exports = defineComponent( {
 				thumbnail: props.thumbnail,
 				thumbnailIcon: props.thumbnailIcon,
 				description: props.description,
-				metadata: props.metadata
+				metadata: props.metadata,
+				actions: props.actions
+			} );
+		};
+
+		const onActionClick = ( action ) => {
+			emit( 'action', {
+				itemId: props.id,
+				actionId: action.id,
+				actionUrl: action.url
 			} );
 		};
 
@@ -202,6 +240,7 @@ module.exports = exports = defineComponent( {
 			onMouseLeave,
 			onMouseDown,
 			onClick,
+			onActionClick,
 			rootClasses,
 			typeLabel
 		};
@@ -282,9 +321,34 @@ module.exports = exports = defineComponent( {
 		}
 	}
 
+	&__actions {
+		position: absolute;
+		inset-inline-end: var( --citizen-command-palette-side-padding );
+		display: flex;
+		gap: var( --space-xxs );
+		padding-left: var( --space-xl );
+		background-color: inherit;
+		background-image: linear-gradient( to right, transparent 0%, transparent 30%, var( --background-color-interactive-subtle--hover ) 70% );
+		opacity: 0;
+		transition: opacity var( --transition-quick );
+	}
+
+	&__action {
+		border-radius: var( --border-radius-base );
+
+		&--active {
+			color: var( --color-emphasized );
+			background: var( --background-color-interactive-subtle--active );
+		}
+	}
+
 	&--highlighted {
 		cursor: pointer;
 		background-color: var( --background-color-interactive-subtle--hover );
+
+		.citizen-command-palette-list-item__actions {
+			opacity: 1;
+		}
 	}
 
 	&--active {

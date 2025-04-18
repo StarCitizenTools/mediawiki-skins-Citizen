@@ -56,10 +56,8 @@ function createSearchHistoryService() {
 	function getRecentItems() {
 		const recentItems = mw.storage.getObject( RECENT_ITEMS_KEY ) || [];
 		return {
-			pages: {
-				items: recentItems,
-				showThumbnail: true
-			}
+			items: recentItems,
+			showThumbnail: true
 		};
 	}
 

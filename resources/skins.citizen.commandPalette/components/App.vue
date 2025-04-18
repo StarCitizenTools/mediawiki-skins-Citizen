@@ -31,7 +31,7 @@
 		>
 			<template v-if="!searchQuery">
 				<command-palette-presults
-					:recent-items="recentItems"
+					:recent-items="currentItems"
 					:highlighted-item-index="highlightedItemIndex"
 					:search-query="searchQuery"
 					@update:highlighted-item-index="updatehighlightedItemIndex"
@@ -46,20 +46,16 @@
 				></command-palette-empty-state>
 			</template>
 			<template v-else>
-				<template
-					v-for="( resultGroup, key ) in searchResults"
-					:key="key"
-				>
-					<command-palette-list
-						v-if="resultGroup.items.length > 0"
-						:items="resultGroup.items"
-						:highlighted-item-index="highlightedItemIndex"
-						:show-thumbnail="resultGroup.showThumbnail"
-						:search-query="searchQuery"
-						@update:highlighted-item-index="updatehighlightedItemIndex"
-						@select="selectResult"
-					></command-palette-list>
-				</template>
+				<command-palette-list
+					v-if="currentItems.items.length > 0"
+					:items="currentItems.items"
+					:highlighted-item-index="highlightedItemIndex"
+					:show-thumbnail="currentItems.showThumbnail"
+					:search-query="searchQuery"
+					@update:highlighted-item-index="updatehighlightedItemIndex"
+					@select="selectResult"
+					@action="handleAction"
+				></command-palette-list>
 			</template>
 		</div>
 		<div class="citizen-command-palette__footer">
@@ -115,32 +111,24 @@ module.exports = exports = defineComponent( {
 		const isPending = ref( false );
 		const showPending = ref( false );
 		const searchQuery = ref( '' );
-		const searchResults = ref( {
-			pages: {
-				items: [],
-				showThumbnail: true
-			}
-		} );
 		const highlightedItemIndex = ref( -1 );
 		const debounceTimeout = ref( null );
 		const searchInput = ref( null );
 		const resultsContainer = ref( null );
 		const searchService = ref( createSearchService( mw.config ) );
 		const searchHistoryService = ref( createSearchHistoryService() );
-		const recentItems = ref( {
-			pages: {
-				items: [],
-				showThumbnail: true
-			}
+		const currentItems = ref( {
+			items: [],
+			showThumbnail: true
 		} );
 
 		// Load recent items
 		const loadRecentItems = () => {
-			recentItems.value = searchHistoryService.value.getRecentItems();
+			currentItems.value = searchHistoryService.value.getRecentItems();
 		};
 
 		// Computed
-		const itemsLength = computed( () => Object.values( searchResults.value ).reduce( ( acc, group ) => acc + group.items.length, 0 ) );
+		const itemsLength = computed( () => currentItems.value?.items?.length || 0 );
 
 		// Navigation methods
 		const highlightNext = () => {
@@ -225,12 +213,20 @@ module.exports = exports = defineComponent( {
 		};
 
 		const executeCommand = () => {
-			const allItems = Object.values( searchResults.value ).reduce( ( acc, group ) => acc.concat( group.items ), [] );
-			selectResult( allItems[ highlightedItemIndex.value ] );
+			if ( !currentItems.value?.items?.[ highlightedItemIndex.value ] ) {
+				return;
+			}
+			selectResult( currentItems.value.items[ highlightedItemIndex.value ] );
+		};
+
+		const handleAction = ( { actionUrl } ) => {
+			if ( actionUrl ) {
+				window.location.href = actionUrl;
+				isOpen.value = false;
+			}
 		};
 
 		// Search method
-		// eslint-disable-next-line es-x/no-async-functions
 		const search = async ( query ) => {
 			highlightedItemIndex.value = -1;
 
@@ -243,25 +239,34 @@ module.exports = exports = defineComponent( {
 
 			try {
 				const results = await searchService.value.search( query, 10 );
-				const items = results.map( ( result ) => ( {
-					type: 'page',
-					id: `citizen-command-palette-result-page-${ result.id }`,
-					label: result.label,
-					description: result.description,
-					thumbnail: result.thumbnail,
-					thumbnailIcon: cdxIconArticle,
-					url: result.url,
-					metadata: result.metadata
-				} ) );
-				searchResults.value = {
-					pages: {
-						items,
-						showThumbnail: true
+				const items = results?.map( ( result ) => {
+					if ( !result || typeof result !== 'object' ) {
+						return null;
 					}
+
+					return {
+						type: 'page',
+						id: `citizen-command-palette-result-page-${ result.id || result.title }`,
+						label: result.label || result.title,
+						description: result.description,
+						url: result.url,
+						thumbnail: result.thumbnail,
+						thumbnailIcon: cdxIconArticle,
+						metadata: result.metadata || [],
+						actions: result.actions || []
+					};
+				} ).filter( Boolean ) || [];
+
+				currentItems.value = {
+					items,
+					showThumbnail: true
 				};
 			} catch ( error ) {
 				mw.log.error( 'Error searching:', error );
-				searchResults.value.pages.items = [];
+				currentItems.value = {
+					items: [],
+					showThumbnail: true
+				};
 			} finally {
 				isPending.value = false;
 				// Delay hiding the pending state to prevent flicker
@@ -288,7 +293,7 @@ module.exports = exports = defineComponent( {
 			} );
 		} );
 
-		watch( searchResults, () => {
+		watch( currentItems, () => {
 			nextTick( () => {
 				maybeScrollIntoView();
 			} );
@@ -300,11 +305,11 @@ module.exports = exports = defineComponent( {
 			isPending,
 			showPending,
 			searchQuery,
-			searchResults,
-			recentItems,
+			currentItems,
 			highlightedItemIndex,
 			searchInput,
 			resultsContainer,
+			itemsLength,
 
 			// Icons
 			cdxIconArticleNotFound,
@@ -318,7 +323,7 @@ module.exports = exports = defineComponent( {
 			updatehighlightedItemIndex,
 			selectResult,
 			executeCommand,
-			itemsLength,
+			handleAction,
 			loadRecentItems
 		};
 	},
@@ -336,8 +341,11 @@ module.exports = exports = defineComponent( {
 		close() {
 			this.isOpen = false;
 			this.searchQuery = '';
-			this.searchResults = {};
-			this.highlightedItemIndex = 0;
+			this.currentItems = {
+				items: [],
+				showThumbnail: true
+			};
+			this.highlightedItemIndex = -1;
 		}
 	}
 } );

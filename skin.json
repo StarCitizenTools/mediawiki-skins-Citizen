@@ -325,6 +325,7 @@
 						"cdxIconArticleNotFound",
 						"cdxIconArticleRedirect",
 						"cdxIconArticlesSearch",
+						"cdxIconEdit",
 						"cdxIconHistory",
 						"cdxIconSearch"
 					]
@@ -351,6 +352,7 @@
 		"skins.citizen.commandPalette.codex": {
 			"class": "MediaWiki\\ResourceLoader\\CodexModule",
 			"codexComponents": [
+				"CdxButton",
 				"CdxIcon",
 				"CdxSearchResultTitle",
 				"CdxTextInput",

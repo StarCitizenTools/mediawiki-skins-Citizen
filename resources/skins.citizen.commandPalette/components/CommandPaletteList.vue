@@ -19,6 +19,7 @@
 				v-bind="getListItemBindings( item )"
 				@change="( property, value ) => onItemChange( item.id, property, value, index )"
 				@select="( result ) => $emit( 'select', result )"
+				@action="( action ) => $emit( 'action', action )"
 			></command-palette-list-item>
 		</ul>
 	</section>
@@ -43,6 +44,10 @@ module.exports = exports = defineComponent( {
 			type: Number,
 			default: 0
 		},
+		activeActionIndex: {
+			type: Number,
+			default: -1
+		},
 		showThumbnail: {
 			type: Boolean,
 			default: false
@@ -56,7 +61,7 @@ module.exports = exports = defineComponent( {
 			default: ''
 		}
 	},
-	emits: [ 'update:highlightedItemIndex', 'select' ],
+	emits: [ 'update:highlightedItemIndex', 'select', 'action' ],
 	setup( props, { emit } ) {
 		const listRef = ref( null );
 		const highlightedItemId = ref( null );
@@ -73,6 +78,7 @@ module.exports = exports = defineComponent( {
 			return {
 				active: listItem.id === activeItemId.value,
 				highlighted: listItem.id === highlightedItemId.value,
+				activeActionIndex: props.activeActionIndex,
 				showThumbnail: props.showThumbnail,
 				searchQuery: props.searchQuery,
 				...listItem

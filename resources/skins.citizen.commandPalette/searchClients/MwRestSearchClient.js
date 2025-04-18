@@ -6,7 +6,7 @@
 
 const fetchJson = require( '../fetch.js' );
 const urlGenerator = require( '../urlGenerator.js' );
-const { cdxIconArticleRedirect } = require( '../icons.json' );
+const { cdxIconArticleRedirect, cdxIconEdit } = require( '../icons.json' );
 
 /**
  * @typedef {Object} RestResponse
@@ -73,7 +73,15 @@ class MwRestSearchClient {
 							label: page.matched_title,
 							highlightQuery: true
 						}
-					] : undefined
+					] : undefined,
+					actions: [
+						{
+							id: 'edit',
+							label: mw.message( 'edit' ).text(),
+							icon: cdxIconEdit,
+							url: this.urlGenerator.generateUrl( page, { action: 'edit' } )
+						}
+					]
 				};
 			} )
 		};

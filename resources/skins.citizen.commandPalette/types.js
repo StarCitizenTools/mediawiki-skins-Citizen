@@ -6,6 +6,7 @@
  * @property {SearchThumbnail} [thumbnail]
  * @property {string} url
  * @property {SearchMetadataItem[]} [metadata]
+ * @property {SearchAction[]} [actions]
  */
 
 /**
@@ -13,6 +14,14 @@
  * @property {Icon} icon
  * @property {string} label
  * @property {boolean} highlightQuery
+ */
+
+/**
+ * @typedef {Object} SearchAction
+ * @property {string} id
+ * @property {string} label
+ * @property {Icon} icon
+ * @property {string} url
  */
 
 /**
