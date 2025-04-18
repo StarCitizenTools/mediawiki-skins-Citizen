@@ -13,11 +13,7 @@
 				:start-icon="cdxIconSearch"
 				:clearable="true"
 				:placeholder="$i18n( 'searchsuggest-search' ).text()"
-				@keydown.down.prevent="highlightNext"
-				@keydown.up.prevent="highlightPrevious"
-				@keydown.home.prevent="highlightFirst"
-				@keydown.end.prevent="highlightLast"
-				@keydown.enter.prevent="executeCommand"
+				@keydown="onKeydown"
 				@keydown.esc="close"
 			></cdx-text-input>
 		</div>
@@ -36,6 +32,7 @@
 					:search-query="searchQuery"
 					@update:highlighted-item-index="updatehighlightedItemIndex"
 					@select="selectResult"
+					@update:recent-items="loadRecentItems"
 				></command-palette-presults>
 			</template>
 			<template v-else-if="currentItems.length === 0 && !isPending">
@@ -152,31 +149,6 @@ module.exports = exports = defineComponent( {
 			}
 		};
 
-		// Scroll handling
-		const maybeScrollIntoView = () => {
-			if ( !resultsContainer.value ) {
-				return;
-			}
-
-			const isResultsScrollable =
-				resultsContainer.value.scrollHeight > resultsContainer.value.clientHeight;
-
-			if ( !isResultsScrollable ) {
-				return;
-			}
-
-			const highlightedElement = resultsContainer.value.querySelector( '.citizen-command-palette-list-item--highlighted' );
-			highlightedElement?.scrollIntoView( {
-				block: 'nearest',
-				behavior: 'smooth'
-			} );
-		};
-
-		// Selection handling
-		const updatehighlightedItemIndex = ( index ) => {
-			highlightedItemIndex.value = index;
-		};
-
 		const getSearchUrl = () => urlGenerator.generateUrl( 'Special:Search', {
 			search: searchQuery.value
 		} );
@@ -205,14 +177,62 @@ module.exports = exports = defineComponent( {
 			isOpen.value = false;
 		};
 
-		const executeCommand = () => {
-			if ( !currentItems.value?.[ highlightedItemIndex.value ] ) {
-				return;
+		const onKeydown = ( event ) => {
+			const keyHandlers = {
+				ArrowUp: () => {
+					highlightPrevious();
+				},
+				ArrowDown: () => {
+					highlightNext();
+				},
+				Home: () => {
+					highlightFirst();
+				},
+				End: () => {
+					highlightLast();
+				},
+				Enter: () => {
+					selectResult( currentItems.value[ highlightedItemIndex.value ] );
+				}
+			};
+
+			const handler = keyHandlers[ event.key ];
+			if ( handler ) {
+				event.preventDefault();
+				handler();
 			}
-			selectResult( currentItems.value[ highlightedItemIndex.value ] );
 		};
 
-		const handleAction = ( { actionUrl } ) => {
+		// Scroll handling
+		const maybeScrollIntoView = () => {
+			if ( !resultsContainer.value ) {
+				return;
+			}
+
+			const isResultsScrollable =
+				resultsContainer.value.scrollHeight > resultsContainer.value.clientHeight;
+
+			if ( !isResultsScrollable ) {
+				return;
+			}
+
+			const highlightedElement = resultsContainer.value.querySelector( '.citizen-command-palette-list-item--highlighted' );
+			highlightedElement?.scrollIntoView( {
+				block: 'nearest',
+				behavior: 'smooth'
+			} );
+		};
+
+		// Selection handling
+		const updatehighlightedItemIndex = ( index ) => {
+			highlightedItemIndex.value = index;
+		};
+
+		const handleAction = ( { actionUrl, onClick } ) => {
+			if ( onClick ) {
+				onClick();
+				return;
+			}
 			if ( actionUrl ) {
 				window.location.href = actionUrl;
 				isOpen.value = false;
@@ -318,13 +338,9 @@ module.exports = exports = defineComponent( {
 			cdxIconSearch,
 
 			// Methods
-			highlightNext,
-			highlightPrevious,
-			highlightFirst,
-			highlightLast,
+			onKeydown,
 			updatehighlightedItemIndex,
 			selectResult,
-			executeCommand,
 			handleAction,
 			loadRecentItems
 		};

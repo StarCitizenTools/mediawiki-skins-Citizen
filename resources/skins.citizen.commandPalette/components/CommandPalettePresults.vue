@@ -1,12 +1,13 @@
 <template>
 	<command-palette-list
-		v-if="recentItems.length > 0"
+		v-if="itemsWithActions.length > 0"
 		:heading="$i18n( 'citizen-command-palette-recent' ).text()"
-		:items="recentItems"
+		:items="itemsWithActions"
 		:highlighted-item-index="highlightedItemIndex"
 		:search-query="searchQuery"
 		@update:highlighted-item-index="$emit( 'update:highlighted-item-index', $event )"
 		@select="$emit( 'select', $event )"
+		@action="handleAction"
 	></command-palette-list>
 	<command-palette-empty-state
 		v-else
@@ -17,10 +18,11 @@
 </template>
 
 <script>
-const { defineComponent } = require( 'vue' );
+const { defineComponent, computed } = require( 'vue' );
 const CommandPaletteList = require( './CommandPaletteList.vue' );
 const CommandPaletteEmptyState = require( './CommandPaletteEmptyState.vue' );
-const { cdxIconArticlesSearch } = require( '../icons.json' );
+const { cdxIconArticlesSearch, cdxIconTrash } = require( '../icons.json' );
+const createSearchHistoryService = require( '../searchHistoryService.js' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
@@ -43,10 +45,38 @@ module.exports = exports = defineComponent( {
 			required: true
 		}
 	},
-	emits: [ 'update:highlighted-item-index', 'select' ],
-	setup() {
+	emits: [ 'update:highlighted-item-index', 'select', 'update:recent-items' ],
+	setup( props, { emit } ) {
+		const searchHistoryService = createSearchHistoryService();
+
+		// Add dismiss action to recent items
+		const itemsWithActions = computed( () => props.recentItems.map( ( item ) => ( {
+			...item,
+			actions: [
+				{
+					id: 'dismiss',
+					label: mw.msg( 'citizen-command-palette-dismiss' ),
+					icon: cdxIconTrash
+				}
+			]
+		} ) ) );
+
+		const handleAction = ( action ) => {
+			if ( action.actionId === 'dismiss' ) {
+				// Find the item to remove
+				const itemToRemove = props.recentItems.find( ( item ) => item.id === action.itemId );
+				if ( itemToRemove ) {
+					searchHistoryService.removeRecentItem( itemToRemove );
+					// Notify parent to update the list
+					emit( 'update:recent-items' );
+				}
+			}
+		};
+
 		return {
-			cdxIconArticlesSearch
+			cdxIconArticlesSearch,
+			handleAction,
+			itemsWithActions
 		};
 	}
 } );

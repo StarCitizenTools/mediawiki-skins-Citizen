@@ -58,6 +58,20 @@ function createSearchHistoryService() {
 	}
 
 	/**
+	 * Removes a specific item from recent history
+	 *
+	 * @param {Object} item - The item to remove
+	 */
+	function removeRecentItem( item ) {
+		const recentItems = mw.storage.getObject( RECENT_ITEMS_KEY ) || [];
+		const index = recentItems.findIndex( ( i ) => i.id === item.id );
+		if ( index !== -1 ) {
+			recentItems.splice( index, 1 );
+			mw.storage.setObject( RECENT_ITEMS_KEY, recentItems );
+		}
+	}
+
+	/**
 	 * Clears all search history
 	 */
 	function clearHistory() {
@@ -68,6 +82,7 @@ function createSearchHistoryService() {
 		saveRecentItem,
 		saveSearchQuery,
 		getRecentItems,
+		removeRecentItem,
 		clearHistory
 	};
 }
