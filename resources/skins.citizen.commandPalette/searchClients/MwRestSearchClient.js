@@ -41,6 +41,7 @@ class MwRestSearchClient {
 	constructor( config ) {
 		this.config = config;
 		this.urlGenerator = urlGenerator( config );
+		this.editMessage = mw.msg( 'action-edit' );
 	}
 
 	/**
@@ -77,7 +78,7 @@ class MwRestSearchClient {
 					actions: [
 						{
 							id: 'edit',
-							label: mw.message( 'edit' ).text(),
+							label: this.editMessage,
 							icon: cdxIconEdit,
 							url: this.urlGenerator.generateUrl( page, { action: 'edit' } )
 						}
