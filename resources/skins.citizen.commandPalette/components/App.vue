@@ -15,6 +15,7 @@
 				:placeholder="$i18n( 'searchsuggest-search' ).text()"
 				@keydown="onKeydown"
 				@keydown.esc="close"
+				@keydown.tab="close"
 			></cdx-text-input>
 		</div>
 		<div
