@@ -22,17 +22,10 @@ Partially based on the MenuItem component from Codex.
 				class="citizen-command-palette-list-item__content"
 			>
 				<cdx-thumbnail
-					v-if="showThumbnail"
 					:thumbnail="thumbnail"
 					:placeholder-icon="thumbnailIcon || undefined"
 					class="citizen-command-palette-list-item__thumbnail"
 				></cdx-thumbnail>
-
-				<cdx-icon
-					v-else-if="icon"
-					:icon="icon"
-					class="citizen-command-palette-list-item__icon"
-				></cdx-icon>
 
 				<div class="citizen-command-palette-list-item__text">
 					<div class="citizen-command-palette-list-item__text__label">
@@ -89,7 +82,6 @@ Partially based on the MenuItem component from Codex.
 						:aria-label="action.label"
 						weight="quiet"
 						:tabindex="highlighted ? 0 : -1"
-						:class="{ 'citizen-command-palette-list-item__action--active': activeActionIndex === index }"
 						@click.stop.prevent="onActionClick( action )"
 					>
 						<cdx-icon
@@ -130,10 +122,6 @@ module.exports = exports = defineComponent( {
 			type: Boolean,
 			default: false
 		},
-		activeActionIndex: {
-			type: Number,
-			default: -1
-		},
 		type: {
 			type: String,
 			required: true
@@ -149,10 +137,6 @@ module.exports = exports = defineComponent( {
 		icon: {
 			type: [ String, Object ],
 			default: ''
-		},
-		showThumbnail: {
-			type: Boolean,
-			default: false
 		},
 		thumbnail: {
 			type: [ Object, null ],
@@ -208,7 +192,6 @@ module.exports = exports = defineComponent( {
 				url: props.url,
 				type: props.type,
 				icon: props.icon,
-				showThumbnail: props.showThumbnail,
 				thumbnail: props.thumbnail,
 				thumbnailIcon: props.thumbnailIcon,
 				description: props.description,

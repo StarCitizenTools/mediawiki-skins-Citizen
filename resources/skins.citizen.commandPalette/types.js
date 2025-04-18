@@ -41,7 +41,6 @@
  * @typedef {Object} SearchResultsGroup
  * @property {string} heading
  * @property {SearchResult[]} items
- * @property {boolean} showThumbnail
  */
 
 /**

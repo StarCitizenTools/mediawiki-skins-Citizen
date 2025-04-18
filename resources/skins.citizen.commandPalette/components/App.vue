@@ -50,7 +50,6 @@
 					v-if="currentItems.items.length > 0"
 					:items="currentItems.items"
 					:highlighted-item-index="highlightedItemIndex"
-					:show-thumbnail="currentItems.showThumbnail"
 					:search-query="searchQuery"
 					@update:highlighted-item-index="updatehighlightedItemIndex"
 					@select="selectResult"
@@ -118,12 +117,16 @@ module.exports = exports = defineComponent( {
 		const searchService = ref( createSearchService( mw.config ) );
 		const searchHistoryService = ref( createSearchHistoryService() );
 		const currentItems = ref( {
-			items: [],
-			showThumbnail: true
+			items: []
 		} );
 
 		// Load recent items
 		const loadRecentItems = () => {
+			// Clear items first to prevent flash of incorrect content
+			currentItems.value = {
+				items: []
+			};
+			// Then load recent items
 			currentItems.value = searchHistoryService.value.getRecentItems();
 		};
 
@@ -231,6 +234,10 @@ module.exports = exports = defineComponent( {
 			highlightedItemIndex.value = -1;
 
 			if ( !query ) {
+				// Clear any pending state immediately
+				isPending.value = false;
+				showPending.value = false;
+				// Load recent items synchronously
 				loadRecentItems();
 				return;
 			}
@@ -258,14 +265,12 @@ module.exports = exports = defineComponent( {
 				} ).filter( Boolean ) || [];
 
 				currentItems.value = {
-					items,
-					showThumbnail: true
+					items
 				};
 			} catch ( error ) {
 				mw.log.error( 'Error searching:', error );
 				currentItems.value = {
-					items: [],
-					showThumbnail: true
+					items: []
 				};
 			} finally {
 				isPending.value = false;
@@ -342,8 +347,7 @@ module.exports = exports = defineComponent( {
 			this.isOpen = false;
 			this.searchQuery = '';
 			this.currentItems = {
-				items: [],
-				showThumbnail: true
+				items: []
 			};
 			this.highlightedItemIndex = -1;
 		}

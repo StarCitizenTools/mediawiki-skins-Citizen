@@ -4,7 +4,6 @@
 		:heading="$i18n( 'citizen-command-palette-recent' ).text()"
 		:items="recentItems.items"
 		:highlighted-item-index="highlightedItemIndex"
-		:show-thumbnail="recentItems.showThumbnail"
 		:search-query="searchQuery"
 		@update:highlighted-item-index="$emit( 'update:highlighted-item-index', $event )"
 		@select="$emit( 'select', $event )"
@@ -34,7 +33,7 @@ module.exports = exports = defineComponent( {
 		recentItems: {
 			type: Object,
 			required: true,
-			validator: ( value ) => value && Array.isArray( value.items ) && typeof value.showThumbnail === 'boolean'
+			validator: ( value ) => value && Array.isArray( value.items )
 		},
 		highlightedItemIndex: {
 			type: Number,

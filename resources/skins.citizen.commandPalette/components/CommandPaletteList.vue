@@ -44,14 +44,6 @@ module.exports = exports = defineComponent( {
 			type: Number,
 			default: 0
 		},
-		activeActionIndex: {
-			type: Number,
-			default: -1
-		},
-		showThumbnail: {
-			type: Boolean,
-			default: false
-		},
 		searchQuery: {
 			type: String,
 			default: ''
@@ -78,8 +70,6 @@ module.exports = exports = defineComponent( {
 			return {
 				active: listItem.id === activeItemId.value,
 				highlighted: listItem.id === highlightedItemId.value,
-				activeActionIndex: props.activeActionIndex,
-				showThumbnail: props.showThumbnail,
 				searchQuery: props.searchQuery,
 				...listItem
 			};
