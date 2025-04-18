@@ -88,6 +88,8 @@
 	"citizen-command-palette-keyhint-select": "Select",
 	"citizen-command-palette-keyhint-navigate": "Navigate",
 	"citizen-command-palette-keyhint-exit": "Exit",
+	"citizen-command-palette-keyhint-actions": "Actions",
+	"citizen-command-palette-keyhint-return": "Return",
 
 	"citizen-command-palette-type-page": "Page",
 	"citizen-command-palette-type-fulltext-search": "Fulltext search"

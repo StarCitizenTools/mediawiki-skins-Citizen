@@ -317,6 +317,11 @@
 				"resources/skins.citizen.commandPalette/components/CommandPaletteListItem.vue",
 				"resources/skins.citizen.commandPalette/components/CommandPaletteEmptyState.vue",
 				"resources/skins.citizen.commandPalette/components/CommandPalettePresults.vue",
+				"resources/skins.citizen.commandPalette/components/CommandPaletteKeyboardHints.vue",
+				"resources/skins.citizen.commandPalette/components/CommandPaletteFooter.vue",
+				"resources/skins.citizen.commandPalette/components/CommandPaletteHeader.vue",
+				"resources/skins.citizen.commandPalette/composables/useKeyboardNavigation.js",
+				"resources/skins.citizen.commandPalette/composables/useSearch.js",
 				{
 					"name": "resources/skins.citizen.commandPalette/icons.json",
 					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
@@ -344,9 +349,11 @@
 				"search-nonefound",
 				"searchsuggest-search",
 				"citizen-command-palette-recent",
+				"citizen-command-palette-keyhint-actions",
 				"citizen-command-palette-keyhint-select",
 				"citizen-command-palette-keyhint-navigate",
 				"citizen-command-palette-keyhint-exit",
+				"citizen-command-palette-keyhint-return",
 				"citizen-command-palette-type-page",
 				"citizen-command-palette-type-fulltext-search"
 			]

@@ -4,24 +4,14 @@
 		class="citizen-command-palette-backdrop"
 		@click="close"></div>
 	<div v-if="isOpen" class="citizen-command-palette">
-		<div class="citizen-command-palette__search">
-			<cdx-text-input
-				ref="searchInput"
-				v-model="searchQuery"
-				class="citizen-command-palette__input"
-				input-type="search"
-				:start-icon="cdxIconSearch"
-				:clearable="true"
-				:placeholder="$i18n( 'searchsuggest-search' ).text()"
-				@keydown="onKeydown"
-				@keydown.esc="close"
-				@keydown.tab="close"
-			></cdx-text-input>
-		</div>
-		<div
-			v-if="isPending && showPending"
-			class="citizen-command-palette__progress-indicator citizen-loading"
-		></div>
+		<command-palette-header
+			ref="searchHeader"
+			v-model="searchQuery"
+			:is-pending="isPending"
+			:show-pending="showPending"
+			@keydown="onKeydown"
+			@close="close"
+		></command-palette-header>
 		<div
 			ref="resultsContainer"
 			class="citizen-command-palette__results"
@@ -55,26 +45,10 @@
 				></command-palette-list>
 			</template>
 		</div>
-		<div class="citizen-command-palette__footer">
-			<div class="citizen-command-palette__footer-note">
-				Thanks for trying our new Command Palette!
-				<a href="https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues">Give us feedback</a>
-			</div>
-			<div class="citizen-command-palette__footer-hints">
-				<div class="citizen-keyboard-hint">
-					<span class="citizen-keyboard-hint-label">{{ $i18n( 'citizen-command-palette-keyhint-select' ).text() }}</span>
-					<kbd class="citizen-keyboard-hint-key">↵</kbd>
-				</div>
-				<div class="citizen-keyboard-hint">
-					<span class="citizen-keyboard-hint-label">{{ $i18n( 'citizen-command-palette-keyhint-navigate' ).text() }}</span>
-					<kbd class="citizen-keyboard-hint-key">↑↓</kbd>
-				</div>
-				<div class="citizen-keyboard-hint">
-					<span class="citizen-keyboard-hint-label">{{ $i18n( 'citizen-command-palette-keyhint-exit' ).text() }}</span>
-					<kbd class="citizen-keyboard-hint-key">esc</kbd>
-				</div>
-			</div>
-		</div>
+		<command-palette-footer
+			:has-highlighted-item-with-actions="hasHighlightedItemWithActions()"
+			:is-action-button-focused="isActionButtonFocused"
+		></command-palette-footer>
 	</div>
 </template>
 
@@ -86,8 +60,9 @@ const urlGenerator = require( '../urlGenerator.js' )();
 const CommandPaletteList = require( './CommandPaletteList.vue' );
 const CommandPaletteEmptyState = require( './CommandPaletteEmptyState.vue' );
 const CommandPalettePresults = require( './CommandPalettePresults.vue' );
-const { CdxTextInput } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
-const { cdxIconArticle, cdxIconArticleNotFound, cdxIconSearch } = require( '../icons.json' );
+const CommandPaletteFooter = require( './CommandPaletteFooter.vue' );
+const CommandPaletteHeader = require( './CommandPaletteHeader.vue' );
+const { cdxIconArticleNotFound } = require( '../icons.json' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
@@ -96,10 +71,11 @@ module.exports = exports = defineComponent( {
 		whitespace: 'condense'
 	},
 	components: {
-		CdxTextInput,
 		CommandPaletteList,
 		CommandPaletteEmptyState,
-		CommandPalettePresults
+		CommandPalettePresults,
+		CommandPaletteFooter,
+		CommandPaletteHeader
 	},
 	props: {},
 	setup() {
@@ -110,11 +86,13 @@ module.exports = exports = defineComponent( {
 		const searchQuery = ref( '' );
 		const highlightedItemIndex = ref( -1 );
 		const debounceTimeout = ref( null );
-		const searchInput = ref( null );
+		const searchHeader = ref( null );
 		const resultsContainer = ref( null );
 		const searchService = ref( createSearchService( mw.config ) );
 		const searchHistoryService = ref( createSearchHistoryService() );
 		const currentItems = ref( [] );
+		// Track if an action button is currently focused
+		const isActionButtonFocused = ref( false );
 
 		// Load recent items
 		const loadRecentItems = () => {
@@ -150,6 +128,75 @@ module.exports = exports = defineComponent( {
 			}
 		};
 
+		// Check if input cursor is at the end of text
+		const isCursorAtInputEnd = () => {
+			const inputEl = searchHeader.value?.$el.querySelector( 'input' );
+			return inputEl?.selectionStart === inputEl?.value.length;
+		};
+
+		// Check if there's a valid highlighted item with actions
+		const hasHighlightedItemWithActions = () => {
+			if ( currentItems.value.length === 0 || highlightedItemIndex.value < 0 ) {
+				return false;
+			}
+
+			const highlightedItem = currentItems.value[ highlightedItemIndex.value ];
+			return Boolean(
+				highlightedItem &&
+				highlightedItem.actions &&
+				highlightedItem.actions.length > 0
+			);
+		};
+
+		// Find and get the first action button of the highlighted item
+		const getFirstActionButton = () => resultsContainer.value.querySelector(
+			'.citizen-command-palette-list-item--highlighted .citizen-command-palette-list-item__action'
+		);
+
+		// Enhanced action objects - Add keyboard hint metadata to actions when building the search results
+		const enhanceActionsWithHints = ( actions ) => {
+			if ( !actions || !Array.isArray( actions ) ) {
+				return [];
+			}
+
+			return actions.map( ( action, index ) => {
+				// Clone the action to avoid modifying the original
+				const enhancedAction = { ...action };
+
+				// Add keyboard hint metadata
+				enhancedAction.keyHint = {
+					key: index === 0 ? '→' : '',
+					label: action.label || '',
+					ariaLabel: action.ariaLabel || action.label || ''
+				};
+
+				return enhancedAction;
+			} );
+		};
+
+		// Focus the action button of the highlighted item
+		const focusActionButton = () => {
+			// Check preconditions
+			if ( !isCursorAtInputEnd() || !hasHighlightedItemWithActions() ) {
+				return false;
+			}
+
+			// Find the button
+			const actionButton = getFirstActionButton();
+			if ( !actionButton ) {
+				return false;
+			}
+
+			// Move focus from input to the action button
+			const inputEl = searchHeader.value?.$el.querySelector( 'input' );
+			if ( inputEl ) {
+				inputEl.blur();
+			}
+			actionButton.focus();
+			isActionButtonFocused.value = true;
+			return true;
+		};
+
 		const getSearchUrl = () => urlGenerator.generateUrl( 'Special:Search', {
 			search: searchQuery.value
 		} );
@@ -181,25 +228,34 @@ module.exports = exports = defineComponent( {
 		const onKeydown = ( event ) => {
 			const keyHandlers = {
 				ArrowUp: () => {
+					event.preventDefault();
 					highlightPrevious();
 				},
 				ArrowDown: () => {
+					event.preventDefault();
 					highlightNext();
 				},
+				ArrowRight: () => {
+					if ( focusActionButton() ) {
+						event.preventDefault();
+					}
+				},
 				Home: () => {
+					event.preventDefault();
 					highlightFirst();
 				},
 				End: () => {
+					event.preventDefault();
 					highlightLast();
 				},
 				Enter: () => {
+					event.preventDefault();
 					selectResult( currentItems.value[ highlightedItemIndex.value ] );
 				}
 			};
 
 			const handler = keyHandlers[ event.key ];
 			if ( handler ) {
-				event.preventDefault();
 				handler();
 			}
 		};
@@ -229,12 +285,27 @@ module.exports = exports = defineComponent( {
 			highlightedItemIndex.value = index;
 		};
 
-		const handleAction = ( { actionUrl, onClick } ) => {
+		const handleAction = ( { actionUrl, onClick, itemId } ) => {
+			// Find the item associated with this action
+			const item = currentItems.value.find( ( result ) => result.id === itemId );
+
+			// Process the action
 			if ( onClick ) {
 				onClick();
+
+				// Save item to recent items when performing action with onClick
+				if ( item ) {
+					searchHistoryService.value.saveRecentItem( item );
+				}
 				return;
 			}
+
 			if ( actionUrl ) {
+				// Save item to recent items before navigating
+				if ( item ) {
+					searchHistoryService.value.saveRecentItem( item );
+				}
+
 				window.location.href = actionUrl;
 				isOpen.value = false;
 			}
@@ -263,6 +334,9 @@ module.exports = exports = defineComponent( {
 						return null;
 					}
 
+					// Enhance actions with keyboard hints
+					const enhancedActions = enhanceActionsWithHints( result.actions );
+
 					return {
 						type: 'page',
 						id: `citizen-command-palette-result-page-${ result.id || result.title }`,
@@ -270,9 +344,9 @@ module.exports = exports = defineComponent( {
 						description: result.description,
 						url: result.url,
 						thumbnail: result.thumbnail,
-						thumbnailIcon: cdxIconArticle,
+						thumbnailIcon: result.thumbnailIcon,
 						metadata: result.metadata || [],
-						actions: result.actions || []
+						actions: enhancedActions
 					};
 				} ).filter( Boolean ) || [];
 
@@ -323,6 +397,61 @@ module.exports = exports = defineComponent( {
 			} );
 		}, { deep: true } );
 
+		// Add event listener for action button keydown
+		const setupActionButtonKeyNavigation = () => {
+			// Use event delegation on the results container
+			resultsContainer.value?.addEventListener( 'keydown', ( event ) => {
+				// Check if the event target is an action button
+				if ( event.target.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
+					if ( event.key === 'ArrowLeft' ) {
+						const prevButton = event.target.previousElementSibling;
+						if ( prevButton && prevButton.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
+							// Focus previous action button if it exists
+							prevButton.focus();
+						} else {
+							// If no previous action button, return focus to the highlighted item and search input
+							event.target.blur();
+							searchHeader.value?.$el.querySelector( 'input' )?.focus();
+							isActionButtonFocused.value = false;
+						}
+						event.preventDefault();
+					} else if ( event.key === 'ArrowRight' ) {
+						const nextButton = event.target.nextElementSibling;
+						if ( nextButton && nextButton.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
+							// Focus next action button if it exists
+							nextButton.focus();
+							event.preventDefault();
+						}
+					}
+				}
+			} );
+
+			// Track focus state for keyboard hints
+			resultsContainer.value?.addEventListener( 'focusin', ( event ) => {
+				if ( event.target.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
+					isActionButtonFocused.value = true;
+				}
+			} );
+
+			resultsContainer.value?.addEventListener( 'focusout', ( event ) => {
+				if ( event.target.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
+					// Only set to false if we're not focusing another action button
+					if ( !event.relatedTarget || !event.relatedTarget.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
+						isActionButtonFocused.value = false;
+					}
+				}
+			} );
+		};
+
+		// Watch isOpen to set up event listeners when the command palette opens
+		watch( isOpen, ( newValue ) => {
+			if ( newValue ) {
+				nextTick( () => {
+					setupActionButtonKeyNavigation();
+				} );
+			}
+		} );
+
 		return {
 			// State
 			isOpen,
@@ -331,19 +460,20 @@ module.exports = exports = defineComponent( {
 			searchQuery,
 			currentItems,
 			highlightedItemIndex,
-			searchInput,
+			searchHeader,
 			resultsContainer,
+			isActionButtonFocused,
 
 			// Icons
 			cdxIconArticleNotFound,
-			cdxIconSearch,
 
 			// Methods
 			onKeydown,
 			updatehighlightedItemIndex,
 			selectResult,
 			handleAction,
-			loadRecentItems
+			loadRecentItems,
+			hasHighlightedItemWithActions
 		};
 	},
 	methods: {
@@ -354,7 +484,7 @@ module.exports = exports = defineComponent( {
 			this.isOpen = true;
 			this.loadRecentItems();
 			this.$nextTick( () => {
-				this.$refs.searchInput?.focus();
+				this.$refs.searchHeader?.focus();
 			} );
 		},
 		close() {
@@ -402,53 +532,10 @@ module.exports = exports = defineComponent( {
 		background-color: var( --background-color-backdrop-light );
 	}
 
-	&__progress-indicator {
-		position: absolute;
-		right: 0;
-		left: 0;
-	}
-
-	&__search {
-		/* 8px from CdxTextInput */
-		padding: var( --space-sm ) calc( var( --citizen-command-palette-side-padding ) - @spacing-50 );
-	}
-
-	&__input {
-		.cdx-text-input__input {
-			padding-block: 0;
-			padding-left: calc( @spacing-50 + @size-icon-medium + var( --space-sm ) );
-			outline: 0 !important;
-			background-color: transparent !important;
-			border: 0 !important;
-			/* Let the container handles the states */
-			box-shadow: none !important;
-		}
-	}
-
 	&__results {
 		max-height: calc( 100vh - 16rem );
 		overflow-y: auto;
 		border-top: var( --border-subtle );
-	}
-
-	&__footer {
-		display: flex;
-		gap: var( --space-sm );
-		align-items: center;
-		justify-content: space-between;
-		padding: var( --space-sm ) var( --citizen-command-palette-side-padding );
-		font-size: var( --font-size-x-small );
-		color: var( --color-subtle );
-		border-top: var( --border-subtle );
-	}
-
-	&__footer-hints {
-		display: flex;
-		gap: var( --space-md );
-	}
-
-	&__footer-note {
-		color: var( --color-subtle );
 	}
 
 	&__no-results {

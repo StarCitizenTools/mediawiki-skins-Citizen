@@ -76,7 +76,7 @@ Partially based on the MenuItem component from Codex.
 				</div>
 				<div v-if="actions && actions.length > 0" class="citizen-command-palette-list-item__actions">
 					<cdx-button
-						v-for="( action, index ) in actions"
+						v-for="action in actions"
 						:key="action.id"
 						class="citizen-command-palette-list-item__action"
 						:aria-label="action.label"
