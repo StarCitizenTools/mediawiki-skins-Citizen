@@ -54,10 +54,7 @@ function createSearchHistoryService() {
 	 * @return {Object} Recent items in the format expected by the command palette
 	 */
 	function getRecentItems() {
-		const recentItems = mw.storage.getObject( RECENT_ITEMS_KEY ) || [];
-		return {
-			items: recentItems
-		};
+		return mw.storage.getObject( RECENT_ITEMS_KEY ) || [];
 	}
 
 	/**

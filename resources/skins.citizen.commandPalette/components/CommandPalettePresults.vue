@@ -1,8 +1,8 @@
 <template>
 	<command-palette-list
-		v-if="recentItems.items.length > 0"
+		v-if="recentItems.length > 0"
 		:heading="$i18n( 'citizen-command-palette-recent' ).text()"
-		:items="recentItems.items"
+		:items="recentItems"
 		:highlighted-item-index="highlightedItemIndex"
 		:search-query="searchQuery"
 		@update:highlighted-item-index="$emit( 'update:highlighted-item-index', $event )"
@@ -31,9 +31,8 @@ module.exports = exports = defineComponent( {
 	},
 	props: {
 		recentItems: {
-			type: Object,
-			required: true,
-			validator: ( value ) => value && Array.isArray( value.items )
+			type: Array,
+			required: true
 		},
 		highlightedItemIndex: {
 			type: Number,

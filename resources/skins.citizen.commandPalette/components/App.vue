@@ -38,7 +38,7 @@
 					@select="selectResult"
 				></command-palette-presults>
 			</template>
-			<template v-else-if="itemsLength === 0 && !isPending">
+			<template v-else-if="currentItems.length === 0 && !isPending">
 				<command-palette-empty-state
 					:title="$i18n( 'citizen-search-noresults-title' ).params( [ searchQuery ] ).text()"
 					:description="$i18n( 'search-nonefound' ).text()"
@@ -47,8 +47,8 @@
 			</template>
 			<template v-else>
 				<command-palette-list
-					v-if="currentItems.items.length > 0"
-					:items="currentItems.items"
+					v-if="currentItems.length > 0"
+					:items="currentItems"
 					:highlighted-item-index="highlightedItemIndex"
 					:search-query="searchQuery"
 					@update:highlighted-item-index="updatehighlightedItemIndex"
@@ -81,7 +81,7 @@
 </template>
 
 <script>
-const { defineComponent, ref, watch, nextTick, computed } = require( 'vue' );
+const { defineComponent, ref, watch, nextTick } = require( 'vue' );
 const createSearchService = require( '../searchService.js' );
 const createSearchHistoryService = require( '../searchHistoryService.js' );
 const urlGenerator = require( '../urlGenerator.js' )();
@@ -116,40 +116,30 @@ module.exports = exports = defineComponent( {
 		const resultsContainer = ref( null );
 		const searchService = ref( createSearchService( mw.config ) );
 		const searchHistoryService = ref( createSearchHistoryService() );
-		const currentItems = ref( {
-			items: []
-		} );
+		const currentItems = ref( [] );
 
 		// Load recent items
 		const loadRecentItems = () => {
-			// Clear items first to prevent flash of incorrect content
-			currentItems.value = {
-				items: []
-			};
-			// Then load recent items
 			currentItems.value = searchHistoryService.value.getRecentItems();
 		};
 
-		// Computed
-		const itemsLength = computed( () => currentItems.value?.items?.length || 0 );
-
 		// Navigation methods
 		const highlightNext = () => {
-			if ( itemsLength.value === 0 ) {
+			if ( !currentItems.value.length ) {
 				return;
 			}
-			highlightedItemIndex.value = ( highlightedItemIndex.value + 1 ) % itemsLength.value;
+			highlightedItemIndex.value = ( highlightedItemIndex.value + 1 ) % currentItems.value.length;
 		};
 
 		const highlightPrevious = () => {
-			if ( itemsLength.value === 0 ) {
+			if ( !currentItems.value.length ) {
 				return;
 			}
-			highlightedItemIndex.value = ( highlightedItemIndex.value - 1 + itemsLength.value ) % itemsLength.value;
+			highlightedItemIndex.value = ( highlightedItemIndex.value - 1 + currentItems.value.length ) % currentItems.value.length;
 		};
 
 		const highlightFirst = () => {
-			if ( itemsLength.value > 0 ) {
+			if ( currentItems.value.length > 0 ) {
 				highlightedItemIndex.value = 0;
 			} else {
 				highlightedItemIndex.value = -1;
@@ -157,8 +147,8 @@ module.exports = exports = defineComponent( {
 		};
 
 		const highlightLast = () => {
-			if ( itemsLength.value > 0 ) {
-				highlightedItemIndex.value = itemsLength.value - 1;
+			if ( currentItems.value.length > 0 ) {
+				highlightedItemIndex.value = currentItems.value.length - 1;
 			}
 		};
 
@@ -216,10 +206,10 @@ module.exports = exports = defineComponent( {
 		};
 
 		const executeCommand = () => {
-			if ( !currentItems.value?.items?.[ highlightedItemIndex.value ] ) {
+			if ( !currentItems.value?.[ highlightedItemIndex.value ] ) {
 				return;
 			}
-			selectResult( currentItems.value.items[ highlightedItemIndex.value ] );
+			selectResult( currentItems.value[ highlightedItemIndex.value ] );
 		};
 
 		const handleAction = ( { actionUrl } ) => {
@@ -230,6 +220,7 @@ module.exports = exports = defineComponent( {
 		};
 
 		// Search method
+		// eslint-disable-next-line es-x/no-async-functions
 		const search = async ( query ) => {
 			highlightedItemIndex.value = -1;
 
@@ -264,14 +255,10 @@ module.exports = exports = defineComponent( {
 					};
 				} ).filter( Boolean ) || [];
 
-				currentItems.value = {
-					items
-				};
+				currentItems.value = items;
 			} catch ( error ) {
 				mw.log.error( 'Error searching:', error );
-				currentItems.value = {
-					items: []
-				};
+				currentItems.value = [];
 			} finally {
 				isPending.value = false;
 				// Delay hiding the pending state to prevent flicker
@@ -287,6 +274,17 @@ module.exports = exports = defineComponent( {
 				clearTimeout( debounceTimeout.value );
 			}
 			isPending.value = true;
+
+			if ( !newQuery ) {
+				// Clear items immediately when query is emptied
+				currentItems.value = [];
+				// Load recent items in next tick to prevent flash
+				nextTick( () => {
+					loadRecentItems();
+				} );
+				return;
+			}
+
 			debounceTimeout.value = setTimeout( () => {
 				search( newQuery );
 			}, 300 );
@@ -314,7 +312,6 @@ module.exports = exports = defineComponent( {
 			highlightedItemIndex,
 			searchInput,
 			resultsContainer,
-			itemsLength,
 
 			// Icons
 			cdxIconArticleNotFound,
@@ -346,9 +343,7 @@ module.exports = exports = defineComponent( {
 		close() {
 			this.isOpen = false;
 			this.searchQuery = '';
-			this.currentItems = {
-				items: []
-			};
+			this.currentItems = [];
 			this.highlightedItemIndex = -1;
 		}
 	}
