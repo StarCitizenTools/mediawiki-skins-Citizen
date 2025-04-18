@@ -11,16 +11,21 @@
 			"Yurina Tatiana"
 		]
 	},
+	"skinname-citizen": "Гражданин",
 	"citizen-skin-desc": "Красивая, удобная и адаптивная тема оформления для MediaWiki, которая делает расширения частью единого интерфейса. Изначально разработана для [https://starcitizen.tools/ Star Citizen Wiki].",
 	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|Обсуждение]]",
 	"citizen.css": "/* Размещённый здесь CSS-код будет загружаться для пользователей, использующих тему оформления Citizen */",
 	"citizen.js": "/* Размещённый здесь код JavaScript будет загружаться для пользователей, использующих тему оформления Citizen */",
 	"citizen-drawer-toggle": "Открыть меню",
 	"citizen-usermenu-toggle": "Открыть персональное меню",
+	"citizen-preferences-toggle": "Переключить меню настроек",
+	"citizen-search-poweredby": "Работает на $1",
+	"citizen-search-poweredby-cirrussearch": "Elasticsearch",
 	"citizen-search-poweredby-mediawiki": "MediaWiki",
 	"citizen-search-toggle": "Открыть поиск",
 	"citizen-search-keyhint-exit": "Выйти из поиска",
 	"citizen-search-keyhint-open": "Открыть поиск",
+	"citizen-search-keyhint-select": "Выбрать элемент",
 	"citizen-languages-toggle": "Ещё языки",
 	"citizen-actions-more-toggle": "Дополнительные действия",
 	"citizen-sitestats-articles-label": "статей",
@@ -57,9 +62,10 @@
 	"citizen-theme-night-label": "Тёмная",
 	"citizen-theme-os-label": "Авто",
 	"citizen-theme-exclusion-notice": "Эта страница всегда отображается в светлом режиме.",
+	"citizen-feature-autohide-navigation-name": "Автоматически скрыть навигацию",
 	"citizen-feature-autohide-navigation-0-label": "Выкл.",
 	"citizen-feature-autohide-navigation-1-label": "Вкл.",
-	"citizen-feature-pure-black-name": "Радикально чёрно-белый режим",
+	"citizen-feature-pure-black-name": "Контрастный чёрно-белый режим",
 	"citizen-feature-pure-black-0-label": "Выкл",
 	"citizen-feature-pure-black-1-label": "Вкл",
 	"citizen-feature-custom-font-size-name": "Текст",
@@ -69,5 +75,7 @@
 	"citizen-feature-custom-width-name": "Ширина",
 	"citizen-feature-custom-width-standard-label": "Стандартный",
 	"citizen-feature-custom-width-wide-label": "Широкий",
-	"citizen-feature-custom-width-full-label": "Полный"
+	"citizen-feature-custom-width-full-label": "Полный",
+	"citizen-user-info-text-anon": "Ваш IP-адрес будет виден всем, если вы внесёте какие-либо изменения.",
+	"citizen-user-info-text-temp": "Эта временная учётная запись была создана после того, как редактирование было сделано без авторизации в этом браузере и на этом устройстве."
 }

@@ -46,5 +46,10 @@
 	"citizen-feature-custom-width-name": "Breet",
 	"citizen-feature-custom-width-standard-label": "Standard",
 	"citizen-feature-custom-width-wide-label": "Breet",
-	"citizen-user-info-text-anon": "Är IP-Adress ass ëffentlech siichtbar, wann Dir Ännerunge maacht."
+	"citizen-user-info-text-anon": "Är IP-Adress ass ëffentlech siichtbar, wann Dir Ännerunge maacht.",
+	"citizen-command-palette-recent": "Rezent",
+	"citizen-command-palette-keyhint-navigate": "Navigéieren",
+	"citizen-command-palette-keyhint-exit": "Erausgoen",
+	"citizen-command-palette-type-page": "Säit",
+	"citizen-command-palette-type-fulltext-search": "Volltext-Sich"
 }

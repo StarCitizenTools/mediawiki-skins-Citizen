@@ -78,10 +78,10 @@
 	"citizen-feature-custom-width-full-label": "Label for full page width. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-width-name}}).",
 	"citizen-user-info-text-anon": "Description in the user menu when user is not logged in.",
 	"citizen-user-info-text-temp": "Description in the user menu when user is using a temporary account.",
+	"citizen-command-palette-recent": "Label for the recently searched results in the command palette",
 	"citizen-command-palette-keyhint-select": "Keyboard hint for the key to select item in the command palette",
 	"citizen-command-palette-keyhint-navigate": "Keyboard hint for the key to navigate in the command palette",
 	"citizen-command-palette-keyhint-exit": "Keyboard hint for the key to exit the command palette",
 	"citizen-command-palette-type-page": "Label for the page type of the result in the command palette",
-	"citizen-command-palette-type-fulltext-search": "Label for the fulltext search type of the result in the command palette",
-	"citizen-command-palette-recent": "Label for the recently searched results in the command palette"
+	"citizen-command-palette-type-fulltext-search": "Label for the fulltext search type of the result in the command palette"
 }

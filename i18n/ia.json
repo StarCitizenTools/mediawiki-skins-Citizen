@@ -68,5 +68,11 @@
 	"citizen-feature-custom-width-wide-label": "Late",
 	"citizen-feature-custom-width-full-label": "Plen",
 	"citizen-user-info-text-anon": "Tu adresse IP essera visibile publicamente si tu face modificationes.",
-	"citizen-user-info-text-temp": "Iste conto temporari ha essite create post que un modification ha essite effectuate sin conto sur iste navigator e apparato."
+	"citizen-user-info-text-temp": "Iste conto temporari ha essite create post que un modification ha essite effectuate sin conto sur iste navigator e apparato.",
+	"citizen-command-palette-recent": "Recente",
+	"citizen-command-palette-keyhint-select": "Seliger",
+	"citizen-command-palette-keyhint-navigate": "Navigar",
+	"citizen-command-palette-keyhint-exit": "Exir",
+	"citizen-command-palette-type-page": "Pagina",
+	"citizen-command-palette-type-fulltext-search": "Recerca in texto integral"
 }

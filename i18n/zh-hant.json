@@ -78,5 +78,6 @@
 	"citizen-feature-custom-width-wide-label": "寬",
 	"citizen-feature-custom-width-full-label": "全屏",
 	"citizen-user-info-text-anon": "若您做出任何編輯，會公開您的 IP 位址。",
-	"citizen-user-info-text-temp": "此臨時帳號是在此瀏覽器與設備上沒有帳號的情況下，做出編輯後建立的。"
+	"citizen-user-info-text-temp": "此臨時帳號是在此瀏覽器與設備上沒有帳號的情況下，做出編輯後建立的。",
+	"citizen-command-palette-type-fulltext-search": "全文搜尋"
 }

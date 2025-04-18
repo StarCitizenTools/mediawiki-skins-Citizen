@@ -7,5 +7,8 @@
 	"citizen-drawer-toggle": "मेनू टॉगल करें",
 	"citizen-search-toggle": "खोज टॉगल करें",
 	"citizen-sitestats-users-label": "सदस्य",
-	"citizen-search-fulltext": "युक्त पृष्ठों को खोजें"
+	"citizen-search-fulltext": "युक्त पृष्ठों को खोजें",
+	"citizen-command-palette-keyhint-select": "चुनें",
+	"citizen-command-palette-keyhint-exit": "निकास",
+	"citizen-command-palette-type-page": "पृष्ठ"
 }
