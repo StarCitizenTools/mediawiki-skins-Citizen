@@ -9,7 +9,7 @@ const MwRestSearchClient = require( './MwRestSearchClient.js' );
 /**
  * Registry of available search clients
  *
- * @type {Object.<string, function(MwMap): SearchClient>}
+ * @type {Object.<string, function(mw.Map): SearchClient>}
  */
 const searchClientRegistry = {
 	rest: ( config ) => new MwRestSearchClient( config )
@@ -19,7 +19,7 @@ const searchClientRegistry = {
  * Register a new search client type
  *
  * @param {string} type Unique identifier for the search client type
- * @param {function(MwMap): SearchClient} factory Function that creates the search client
+ * @param {function(mw.Map): SearchClient} factory Function that creates the search client
  * @throws {Error} If the type is already registered
  */
 function registerSearchClient( type, factory ) {
@@ -33,7 +33,7 @@ function registerSearchClient( type, factory ) {
  * Create a search client instance
  *
  * @param {string} type Type of search client to create
- * @param {MwMap} config MediaWiki configuration
+ * @param {mw.Map} config MediaWiki configuration
  * @return {SearchClient}
  * @throws {Error} If the type is not registered
  */
