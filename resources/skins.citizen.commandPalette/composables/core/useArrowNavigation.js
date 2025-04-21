@@ -154,8 +154,7 @@ module.exports = function useArrowNavigation( options ) {
 		}
 
 		// Check if we have an active/highlighted item
-		const activeItem = container.querySelector( `${ itemSelector }.active` ) ||
-			container.querySelector( `${ itemSelector }--highlighted` );
+		const activeItem = container.querySelector( `${ itemSelector }--highlighted` );
 		if ( !activeItem ) {
 			return false;
 		}
@@ -216,8 +215,7 @@ module.exports = function useArrowNavigation( options ) {
 		}
 
 		// Check if we have an active/highlighted item
-		const activeItem = container.querySelector( `${ itemSelector }.active` ) ||
-			container.querySelector( `${ itemSelector }--highlighted` );
+		const activeItem = container.querySelector( `${ itemSelector }--highlighted` );
 		if ( !activeItem ) {
 			return false;
 		}

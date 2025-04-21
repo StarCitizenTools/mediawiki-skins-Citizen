@@ -7,13 +7,13 @@ const useSearchHistory = require( './useSearchHistory.js' );
 const useSearchNavigation = require( './useSearchNavigation.js' );
 const useSearchResultTransformer = require( './useSearchResultTransformer.js' );
 
-module.exports = function useSearch( { state, enhanceActionsWithHints, services } ) {
+module.exports = function useSearch( { state, enhanceActionsWithHints, services, onClose } ) {
 	const { searchService } = services;
 
 	// Initialize specialized composables
 	const history = useSearchHistory( { services, state } );
 	const transformer = useSearchResultTransformer();
-	const navigation = useSearchNavigation( { state, history } );
+	const navigation = useSearchNavigation( { state, history, onClose } );
 
 	/**
 	 * Reset the search state

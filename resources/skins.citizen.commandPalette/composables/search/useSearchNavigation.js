@@ -3,7 +3,16 @@
  * Handles navigation and action execution for search results
  */
 
-module.exports = function useSearchNavigation( { state, history } ) {
+module.exports = function useSearchNavigation( { state, history, onClose } ) {
+	/**
+	 * Function to close the command palette
+	 */
+	const closeCommandPalette = () => {
+		if ( typeof onClose === 'function' ) {
+			onClose();
+		}
+	};
+
 	/**
 	 * Select a result and navigate to it
 	 *
@@ -11,6 +20,9 @@ module.exports = function useSearchNavigation( { state, history } ) {
 	 * @return {boolean} True if navigation occurred
 	 */
 	const selectResult = ( result ) => {
+		// Close the command palette before navigation
+		closeCommandPalette();
+
 		// Validate that we have a proper result object before proceeding
 		const isValidResult = result && typeof result === 'object';
 
@@ -30,8 +42,8 @@ module.exports = function useSearchNavigation( { state, history } ) {
 		} else {
 			// If no URL, fall back to search and save the query
 			const searchUrl = history.getSearchUrl();
-			window.location.href = searchUrl;
 			history.saveSearchQuery( state.searchQuery.value, searchUrl );
+			window.location.href = searchUrl;
 		}
 		return true;
 	};
@@ -59,20 +71,24 @@ module.exports = function useSearchNavigation( { state, history } ) {
 			return false;
 		}
 
+		const hasValidAction = actionUrl || onClick;
+		if ( !hasValidAction ) {
+			return false;
+		}
+
 		history.saveRecentItem( item );
+
+		// Close the command palette before navigation
+		closeCommandPalette();
 
 		// Process the action
 		if ( onClick ) {
 			onClick();
-			return true;
-		}
-
-		if ( actionUrl ) {
+		} else {
 			window.location.href = actionUrl;
-			return true;
 		}
 
-		return false;
+		return true;
 	};
 
 	return {
