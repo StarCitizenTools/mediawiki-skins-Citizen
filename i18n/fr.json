@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Alien333",
+			"Bananax47",
 			"EmDashUser002",
 			"Gomoko",
 			"MacOS Weed",
@@ -84,6 +85,8 @@
 	"citizen-command-palette-keyhint-select": "Sélectionner",
 	"citizen-command-palette-keyhint-navigate": "Naviguer",
 	"citizen-command-palette-keyhint-exit": "Quitter",
+	"citizen-command-palette-keyhint-actions": "Actions",
+	"citizen-command-palette-keyhint-return": "Retour",
 	"citizen-command-palette-type-page": "Page",
 	"citizen-command-palette-type-fulltext-search": "Recherche en texte intégral"
 }

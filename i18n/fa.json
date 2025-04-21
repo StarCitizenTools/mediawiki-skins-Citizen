@@ -32,5 +32,7 @@
 	"citizen-tagline-ns-help": "صفحهٔ راهنما",
 	"citizen-tagline-ns-category": "صفحهٔ رده",
 	"citizen-feature-custom-font-size-standard-label": "استاندارد",
-	"citizen-feature-custom-width-standard-label": "استاندارد"
+	"citizen-feature-custom-width-standard-label": "استاندارد",
+	"citizen-command-palette-keyhint-actions": "کنش‌ها",
+	"citizen-command-palette-keyhint-return": "بازگشت"
 }

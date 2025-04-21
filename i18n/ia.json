@@ -73,6 +73,8 @@
 	"citizen-command-palette-keyhint-select": "Seliger",
 	"citizen-command-palette-keyhint-navigate": "Navigar",
 	"citizen-command-palette-keyhint-exit": "Exir",
+	"citizen-command-palette-keyhint-actions": "Actiones",
+	"citizen-command-palette-keyhint-return": "Retornar",
 	"citizen-command-palette-type-page": "Pagina",
 	"citizen-command-palette-type-fulltext-search": "Recerca in texto integral"
 }
