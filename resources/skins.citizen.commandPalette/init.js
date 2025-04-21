@@ -16,9 +16,21 @@ function initApp() {
 	overlay.classList.add( 'citizen-command-palette-overlay' );
 	teleportTarget.appendChild( overlay );
 
+	// Create the app and mount it
 	const app = Vue.createMwApp( App, {}, config );
+	const commandPaletteComponent = app.mount( overlay );
 
-	const commandPalette = app.mount( overlay );
+	// For API compatibility, create a wrapper that has the expected methods
+	const commandPalette = {
+		open: () => {
+			// Call the component's open method directly
+			commandPaletteComponent.open();
+		},
+		close: () => {
+			// Call the component's close method directly
+			commandPaletteComponent.close();
+		}
+	};
 
 	registerButton( commandPalette );
 	bindKeyboardShortcuts( commandPalette );
@@ -28,7 +40,7 @@ function initApp() {
  * Setup the button to open the command palette
  * This is very hacky, but it works for now.
  *
- * @param {Vue} commandPalette
+ * @param {Object} commandPalette
  * @return {void}
  */
 function registerButton( commandPalette ) {
@@ -45,7 +57,7 @@ function registerButton( commandPalette ) {
 /**
  * Manually toggle the details state when the keyboard button is SLASH is pressed.
  *
- * @param {Vue} commandPalette
+ * @param {Object} commandPalette
  * @return {void}
  */
 function bindKeyboardShortcuts( commandPalette ) {
