@@ -32,7 +32,7 @@ const { cdxIconArticleRedirect, cdxIconEdit } = require( '../icons.json' );
 
 /**
  * @class
- * @implements {ISearchClient}
+ * @implements {SearchClient}
  */
 class MwRestSearchClient {
 	/**
