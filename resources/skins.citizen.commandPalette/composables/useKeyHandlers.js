@@ -35,11 +35,11 @@ module.exports = function useKeyHandlers( {
 			},
 			Enter: () => {
 				event.preventDefault();
-				
+
 				// Check if we have a valid item at the highlighted index
 				const highlightedIndex = state.highlightedItemIndex.value;
 				const items = state.currentItems.value;
-				
+
 				// Only proceed if we have items and a valid index
 				if (
 					items &&
@@ -47,12 +47,12 @@ module.exports = function useKeyHandlers( {
 					highlightedIndex >= 0 &&
 					highlightedIndex < items.length
 				) {
-					const selectedItem = items[highlightedIndex];
-					selectResult(selectedItem);
+					const selectedItem = items[ highlightedIndex ];
+					selectResult( selectedItem );
 				} else {
 					// If no valid item is highlighted, call selectResult with null
 					// which will perform a search with the current query
-					selectResult(null);
+					selectResult( null );
 				}
 			}
 		};
