@@ -21,7 +21,7 @@
 					:recent-items="currentItems"
 					:highlighted-item-index="highlightedItemIndex"
 					:search-query="searchQuery"
-					@update:highlighted-item-index="updatehighlightedItemIndex"
+					@update:highlighted-item-index="updateHighlightedItemIndex"
 					@select="selectResult"
 					@update:recent-items="loadRecentItems"
 				></command-palette-presults>
@@ -39,21 +39,21 @@
 					:items="currentItems"
 					:highlighted-item-index="highlightedItemIndex"
 					:search-query="searchQuery"
-					@update:highlighted-item-index="updatehighlightedItemIndex"
+					@update:highlighted-item-index="updateHighlightedItemIndex"
 					@select="selectResult"
 					@action="handleAction"
 				></command-palette-list>
 			</template>
 		</div>
 		<command-palette-footer
-			:has-highlighted-item-with-actions="hasHighlightedItemWithActions()"
+			:has-highlighted-item-with-actions="hasHighlightedItemWithActions"
 			:is-action-button-focused="isActionButtonFocused"
 		></command-palette-footer>
 	</div>
 </template>
 
 <script>
-const { defineComponent, ref, watch, nextTick, onUnmounted } = require( 'vue' );
+const { defineComponent, ref, watch, nextTick, onUnmounted, computed } = require( 'vue' );
 const createSearchService = require( '../searchService.js' );
 const createSearchHistoryService = require( '../searchHistoryService.js' );
 const urlGenerator = require( '../urlGenerator.js' )();
@@ -62,9 +62,35 @@ const CommandPaletteEmptyState = require( './CommandPaletteEmptyState.vue' );
 const CommandPalettePresults = require( './CommandPalettePresults.vue' );
 const CommandPaletteFooter = require( './CommandPaletteFooter.vue' );
 const CommandPaletteHeader = require( './CommandPaletteHeader.vue' );
-const useKeyboardNavigation = require( '../composables/useKeyboardNavigation.js' );
-const useSearch = require( '../composables/useSearch.js' );
+const useKeyboardNavigation = require( '../composables/navigation/useKeyboardNavigation.js' );
+const useSearch = require( '../composables/search/useSearch.js' );
 const { cdxIconArticleNotFound } = require( '../icons.json' );
+
+/**
+ * Enhance actions with keyboard hints
+ *
+ * @param {Array} actions - The actions to enhance
+ * @return {Array} - Enhanced actions with keyboard hints
+ */
+const enhanceActionsWithHints = ( actions ) => {
+	if ( !actions || !Array.isArray( actions ) ) {
+		return [];
+	}
+
+	return actions.map( ( action, index ) => {
+		// Clone the action to avoid modifying the original
+		const enhancedAction = { ...action };
+
+		// Add keyboard hint metadata
+		enhancedAction.keyHint = {
+			key: index === 0 ? '→' : '',
+			label: action.label || '',
+			ariaLabel: action.ariaLabel || action.label || ''
+		};
+
+		return enhancedAction;
+	} );
+};
 
 // @vue/component
 module.exports = exports = defineComponent( {
@@ -79,62 +105,42 @@ module.exports = exports = defineComponent( {
 		CommandPaletteFooter,
 		CommandPaletteHeader
 	},
-	props: {},
 	setup() {
-		// State
-		const isOpen = ref( false );
-		const isPending = ref( false );
-		const showPending = ref( false );
-		const searchQuery = ref( '' );
-		const highlightedItemIndex = ref( -1 );
-		const debounceTimeout = ref( null );
-		const searchHeader = ref( null );
-		const resultsContainer = ref( null );
-		const searchService = ref( createSearchService( mw.config ) );
-		const searchHistoryService = ref( createSearchHistoryService() );
-		const currentItems = ref( [] );
-		// Track if an action button is currently focused
-		const isActionButtonFocused = ref( false );
-
-		// Enhanced action objects - Add keyboard hint metadata to actions when building the search results
-		const enhanceActionsWithHints = ( actions ) => {
-			if ( !actions || !Array.isArray( actions ) ) {
-				return [];
-			}
-
-			return actions.map( ( action, index ) => {
-				// Clone the action to avoid modifying the original
-				const enhancedAction = { ...action };
-
-				// Add keyboard hint metadata
-				enhancedAction.keyHint = {
-					key: index === 0 ? '→' : '',
-					label: action.label || '',
-					ariaLabel: action.ariaLabel || action.label || ''
-				};
-
-				return enhancedAction;
-			} );
+		// State refs - group related state
+		const uiState = {
+			isOpen: ref( false ),
+			isPending: ref( false ),
+			showPending: ref( false )
 		};
 
-		// Initialize keyboard navigation
-		const state = {
-			currentItems,
-			highlightedItemIndex,
-			isActionButtonFocused,
-			isPending,
-			showPending,
-			debounceTimeout,
-			searchQuery
+		const searchState = {
+			query: ref( '' ),
+			currentItems: ref( [] ),
+			highlightedItemIndex: ref( -1 ),
+			focusState: ref( 'none' )
 		};
-		const refs = {
-			searchHeader,
-			resultsContainer
+
+		// DOM refs
+		const domRefs = {
+			searchHeader: ref( null ),
+			resultsContainer: ref( null )
 		};
+
+		// Service initialization
 		const services = {
-			searchService: searchService.value,
-			searchHistoryService: searchHistoryService.value,
+			searchService: createSearchService( mw.config ),
+			searchHistoryService: createSearchHistoryService(),
 			urlGenerator
+		};
+
+		// Combine state for composables
+		const state = {
+			currentItems: searchState.currentItems,
+			highlightedItemIndex: searchState.highlightedItemIndex,
+			focusState: searchState.focusState,
+			isPending: uiState.isPending,
+			showPending: uiState.showPending,
+			searchQuery: searchState.query
 		};
 
 		// Initialize composables
@@ -148,45 +154,48 @@ module.exports = exports = defineComponent( {
 		// Initialize keyboard navigation with the real selectResult
 		const keyboardNavigation = useKeyboardNavigation( {
 			state,
-			refs,
-			selectResult
+			refs: domRefs,
+			selectResult,
+			close: () => {
+				uiState.isOpen.value = false;
+			}
 		} );
 
-		const {
-			setupActionButtonKeyNavigation,
-			maybeScrollIntoView,
-			onKeydown,
-			hasHighlightedItemWithActions
-		} = keyboardNavigation;
+		// Computed properties
+		const hasHighlightedItemWithActions = computed( () => keyboardNavigation.hasHighlightedItemWithActions() );
 
-		// Selection handling
-		const updatehighlightedItemIndex = ( index ) => {
-			highlightedItemIndex.value = index;
+		// Backward compatibility computed property
+		const isActionButtonFocused = computed( () => state.focusState.value === keyboardNavigation.FOCUS_STATES.ACTION );
+
+		// Methods
+		const updateHighlightedItemIndex = ( index ) => {
+			searchState.highlightedItemIndex.value = index;
 		};
 
 		// Watchers
-		watch( searchQuery, createSearchQueryWatcher( nextTick ) );
+		watch( searchState.query, createSearchQueryWatcher( nextTick ) );
 
-		watch( highlightedItemIndex, () => {
+		// Watch for highlighted index changes to scroll as needed
+		watch( searchState.highlightedItemIndex, () => {
 			nextTick( () => {
-				maybeScrollIntoView();
+				keyboardNavigation.maybeScrollIntoView();
 			} );
 		} );
 
-		watch( currentItems, () => {
+		// Watch for changes to results to update scroll
+		watch( searchState.currentItems, () => {
 			nextTick( () => {
-				maybeScrollIntoView();
+				keyboardNavigation.maybeScrollIntoView();
 			} );
 		}, { deep: true } );
 
-		// Watch isOpen to set up event listeners when the command palette opens
-		watch( isOpen, ( newValue ) => {
+		// Set up and clean up keyboard navigation when component opens/closes
+		watch( uiState.isOpen, ( newValue ) => {
 			if ( newValue ) {
 				nextTick( () => {
-					setupActionButtonKeyNavigation();
+					keyboardNavigation.setup();
 				} );
 			} else {
-				// Clean up event listeners when closing
 				keyboardNavigation.cleanup();
 			}
 		} );
@@ -196,47 +205,51 @@ module.exports = exports = defineComponent( {
 			keyboardNavigation.cleanup();
 		} );
 
+		const open = () => {
+			uiState.isOpen.value = true;
+			loadRecentItems();
+			nextTick( () => {
+				domRefs.searchHeader.value?.focus();
+			} );
+		};
+
+		const close = () => {
+			uiState.isOpen.value = false;
+			searchState.query.value = '';
+			searchState.currentItems.value = [];
+			searchState.highlightedItemIndex.value = -1;
+		};
+
 		return {
-			// State
-			isOpen,
-			isPending,
-			showPending,
-			searchQuery,
-			currentItems,
-			highlightedItemIndex,
-			searchHeader,
-			resultsContainer,
-			isActionButtonFocused,
+			// UI State
+			isOpen: uiState.isOpen,
+			isPending: uiState.isPending,
+			showPending: uiState.showPending,
+
+			// Search state
+			searchQuery: searchState.query,
+			currentItems: searchState.currentItems,
+			highlightedItemIndex: searchState.highlightedItemIndex,
+
+			// DOM Refs
+			searchHeader: domRefs.searchHeader,
+			resultsContainer: domRefs.resultsContainer,
 
 			// Icons
 			cdxIconArticleNotFound,
 
 			// Methods
-			onKeydown,
-			updatehighlightedItemIndex,
+			onKeydown: keyboardNavigation.onKeydown,
+			updateHighlightedItemIndex,
 			selectResult,
 			handleAction,
 			loadRecentItems,
-			hasHighlightedItemWithActions
+			hasHighlightedItemWithActions,
+			isActionButtonFocused,
+			/** @public */
+			open,
+			close
 		};
-	},
-	methods: {
-		/**
-		 * @public
-		 */
-		open() {
-			this.isOpen = true;
-			this.loadRecentItems();
-			this.$nextTick( () => {
-				this.$refs.searchHeader?.focus();
-			} );
-		},
-		close() {
-			this.isOpen = false;
-			this.searchQuery = '';
-			this.currentItems = [];
-			this.highlightedItemIndex = -1;
-		}
 	}
 } );
 </script>
