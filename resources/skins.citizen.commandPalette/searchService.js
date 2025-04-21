@@ -9,7 +9,7 @@ const SearchClientFactory = require( './searchClients/SearchClientFactory.js' );
 /**
  * Create a search service instance
  *
- * @param {MwMap} config MediaWiki configuration
+ * @param {mw.Map} config MediaWiki configuration
  * @return {Object} Search service instance
  */
 function createSearchService( config ) {

@@ -38,7 +38,7 @@ function getFirstString( s ) {
 }
 
 /**
- * @param {MwMap} config
+ * @param {mw.Map} config
  * @param {string} query
  * @param {Object} response
  * @param {boolean} showDescription
@@ -98,7 +98,7 @@ function adaptApiResponse( config, query, response, showDescription ) {
  */
 
 /**
- * @param {MwMap} config
+ * @param {mw.Map} config
  * @return {SearchClient}
  */
 function smwAskApiSearchClient( config ) {

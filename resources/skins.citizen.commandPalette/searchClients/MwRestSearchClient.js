@@ -36,7 +36,7 @@ const { cdxIconArticleRedirect, cdxIconEdit } = require( '../icons.json' );
  */
 class MwRestSearchClient {
 	/**
-	 * @param {MwMap} config
+	 * @param {mw.Map} config
 	 */
 	constructor( config ) {
 		this.config = config;
