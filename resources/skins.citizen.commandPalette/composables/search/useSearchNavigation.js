@@ -14,6 +14,33 @@ module.exports = function useSearchNavigation( { state, history, onClose } ) {
 	};
 
 	/**
+	 * Check if a URL is safe to navigate to
+	 *
+	 * @param {string} url The URL to check
+	 * @return {boolean} True if the URL is safe
+	 */
+	const isSafeUrl = ( url ) => {
+		try {
+			const parsed = new URL( url, window.location.origin );
+			return [ 'http:', 'https:' ].includes( parsed.protocol );
+		} catch {
+			return false;
+		}
+	};
+
+	/**
+	 * Navigate to a URL
+	 *
+	 * @param {string} url The URL to navigate to
+	 */
+	const navigateToUrl = ( url ) => {
+		if ( !url || !isSafeUrl( url ) ) {
+			return;
+		}
+		window.location.href = url;
+	};
+
+	/**
 	 * Select a result and navigate to it
 	 *
 	 * @param {Object|null} result The search result to select
@@ -28,22 +55,22 @@ module.exports = function useSearchNavigation( { state, history, onClose } ) {
 
 		if ( !isValidResult ) {
 			const searchUrl = history.getSearchUrl();
-			window.location.href = searchUrl;
+			navigateToUrl( searchUrl );
 			// Save the search query as a recent item when there are no results
 			history.saveSearchQuery( state.searchQuery.value, searchUrl );
 			return true;
 		}
 
 		// If we have a valid result with URL, navigate to it
-		if ( result.url ) {
-			window.location.href = result.url;
+		if ( result.url && isSafeUrl( result.url ) ) {
+			navigateToUrl( result.url );
 			// Save the entire result object to recent items
 			history.saveRecentItem( result );
 		} else {
 			// If no URL, fall back to search and save the query
 			const searchUrl = history.getSearchUrl();
 			history.saveSearchQuery( state.searchQuery.value, searchUrl );
-			window.location.href = searchUrl;
+			navigateToUrl( searchUrl );
 		}
 		return true;
 	};
@@ -85,7 +112,7 @@ module.exports = function useSearchNavigation( { state, history, onClose } ) {
 		if ( onClick ) {
 			onClick();
 		} else {
-			window.location.href = actionUrl;
+			navigateToUrl( actionUrl );
 		}
 
 		return true;

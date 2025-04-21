@@ -19,109 +19,101 @@ module.exports = function useKeyHandlers( {
 		}
 	};
 
-	// Setup keyboard navigation based on key events
-	const onKeydown = ( event ) => {
-		// Check if an action button is focused
+	// Handler for vertical navigation (up/down)
+	const handleVerticalNavigation = ( event ) => {
+		if ( itemNavigation ) {
+			return itemNavigation.handleKeydown( event );
+		}
+		return false;
+	};
+
+	// Handler for horizontal navigation (left/right)
+	const handleHorizontalNavigation = ( event ) => {
 		const isActionButtonFocused = state.isActionButtonFocused.value;
 
-		// Declare variables at the top to avoid lexical declaration in case blocks
-		let highlightedIndex;
-		let items;
-		let handled;
+		if ( event.key === 'ArrowRight' ) {
+			if ( !isActionButtonFocused ) {
+				// Only navigate to action buttons if cursor is at the end of the input
+				if ( navigation.hasHighlightedItemWithActions() && inputUtils.isCursorAtInputEnd() ) {
+					if ( itemNavigation.navigateRight() ) {
+						event.preventDefault();
+						return true;
+					}
+				}
+			} else {
+				// Already in nested navigation, continue moving right if possible
+				if ( itemNavigation.navigateRight() ) {
+					event.preventDefault();
+					return true;
+				}
+			}
+		} else if ( event.key === 'ArrowLeft' && isActionButtonFocused ) {
+			if ( itemNavigation.navigateLeft() ) {
+				event.preventDefault();
+				return true;
+			}
+		}
+		return false;
+	};
 
-		// Handle arrow keys
+	// Handler for Enter key
+	const handleEnterKey = ( event ) => {
+		event.preventDefault();
+
+		// If an action button is focused, let it handle the event naturally
+		if ( state.isActionButtonFocused.value ) {
+			setTimeout( closeCommandPalette, 0 );
+			return true;
+		}
+
+		// Check if we have a valid item at the highlighted index
+		const highlightedIndex = state.highlightedItemIndex.value;
+		const items = state.currentItems.value;
+
+		// Only proceed if we have items and a valid index
+		if (
+			items &&
+			items.length > 0 &&
+			highlightedIndex >= 0 &&
+			highlightedIndex < items.length
+		) {
+			selectResult( items[ highlightedIndex ] );
+		} else {
+			// If no valid item is highlighted, perform a search with the current query
+			selectResult( null );
+		}
+
+		// Close the command palette after selection/search
+		setTimeout( closeCommandPalette, 0 );
+		return true;
+	};
+
+	// Setup keyboard navigation based on key events
+	const onKeydown = ( event ) => {
+		// Handle different key events
 		switch ( event.key ) {
 			case 'ArrowUp':
 			case 'ArrowDown':
-				// Use the item navigation for vertical movement
-				if ( itemNavigation ) {
-					handled = itemNavigation.handleKeydown( event );
-					if ( handled ) {
-						return;
-					}
+			case 'Home':
+			case 'End':
+				if ( handleVerticalNavigation( event ) ) {
+					return;
 				}
 				break;
 
 			case 'ArrowRight':
-				// If not in nested navigation mode, try to enter it
-				if ( !isActionButtonFocused ) {
-					// Only try to navigate to action buttons if cursor is at the end of the input
-					if ( navigation.hasHighlightedItemWithActions() && inputUtils.isCursorAtInputEnd() ) {
-						handled = itemNavigation.navigateRight();
-						if ( handled ) {
-							event.preventDefault();
-							return;
-						}
-					}
-				} else {
-					// Already in nested navigation, continue moving right if possible
-					handled = itemNavigation.navigateRight();
-					if ( handled ) {
-						event.preventDefault();
-						return;
-					}
-				}
-				break;
-
 			case 'ArrowLeft':
-				// If in nested navigation mode, try to exit or move left
-				if ( isActionButtonFocused ) {
-					handled = itemNavigation.navigateLeft();
-					if ( handled ) {
-						event.preventDefault();
-						return;
-					}
+				if ( handleHorizontalNavigation( event ) ) {
+					return;
 				}
 				break;
 
 			case 'Enter':
-				event.preventDefault();
-
-				// If an action button is focused, let it handle the event naturally
-				if ( isActionButtonFocused ) {
-					// Close the command palette after action button is clicked
-					setTimeout( closeCommandPalette, 0 );
-					return;
-				}
-
-				// Check if we have a valid item at the highlighted index
-				highlightedIndex = state.highlightedItemIndex.value;
-				items = state.currentItems.value;
-
-				// Only proceed if we have items and a valid index
-				if (
-					items &&
-					items.length > 0 &&
-					highlightedIndex >= 0 &&
-					highlightedIndex < items.length
-				) {
-					const selectedItem = items[ highlightedIndex ];
-					selectResult( selectedItem );
-					// Close the command palette after item is selected
-					setTimeout( closeCommandPalette, 0 );
-				} else {
-					// If no valid item is highlighted, call selectResult with null
-					// which will perform a search with the current query
-					selectResult( null );
-					// Close the command palette after search is performed
-					setTimeout( closeCommandPalette, 0 );
-				}
+				handleEnterKey( event );
 				break;
 
 			case 'Escape':
-				// Close the command palette when Escape is pressed
 				closeCommandPalette();
-				break;
-
-			case 'Home':
-			case 'End':
-				// Use the item navigation for these keys
-				if ( itemNavigation ) {
-					handled = itemNavigation.handleKeydown( event );
-					if ( handled ) {
-						return;
-					}
-				}
 				break;
 		}
 	};
