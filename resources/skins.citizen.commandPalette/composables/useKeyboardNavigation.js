@@ -20,6 +20,11 @@ module.exports = function useKeyboardNavigation( { state, refs, selectResult } )
 		selectResult
 	} );
 
+	// Cleanup function to remove all event listeners
+	const cleanup = () => {
+		actionNav.cleanupActionButtonKeyNavigation();
+	};
+
 	return {
 		// Navigation methods
 		highlightNext: navigation.highlightNext,
@@ -36,6 +41,10 @@ module.exports = function useKeyboardNavigation( { state, refs, selectResult } )
 		// Event handlers
 		onKeydown: keyHandlers.onKeydown,
 		setupActionButtonKeyNavigation: actionNav.setupActionButtonKeyNavigation,
+		cleanupActionButtonKeyNavigation: actionNav.cleanupActionButtonKeyNavigation,
+
+		// Cleanup
+		cleanup,
 
 		// Scroll handling
 		maybeScrollIntoView: scrollBehavior.maybeScrollIntoView
