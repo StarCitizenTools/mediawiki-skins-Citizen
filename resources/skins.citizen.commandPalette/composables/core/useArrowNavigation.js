@@ -20,61 +20,135 @@ module.exports = function useArrowNavigation( options ) {
 	} = options;
 
 	/**
-	 * Helper function to validate items and prepare for navigation
+	 * Navigate to next item in vertical navigation
 	 *
-	 * @return {Object|false} Object with items and currentIndex if valid, false otherwise
+	 * @return {boolean} Whether navigation occurred
 	 */
-	const prepareItemNavigation = () => {
+	const navigateNext = () => {
+		if ( !verticalNavigation ) {
+			return false;
+		}
+
+		// If there's a custom vertical navigation handler, use it
+		if ( onVerticalNavigation && typeof onVerticalNavigation === 'function' ) {
+			return onVerticalNavigation( 'down' );
+		}
+
 		const items = getItems();
 		if ( !items || !items.length ) {
 			return false;
 		}
-		return {
-			items,
-			currentIndex: getActiveIndex()
-		};
-	};
 
-	/**
-	 * Helper function to handle changing the active item
-	 *
-	 * @param {number} newIndex The new index to set
-	 * @param {number} currentIndex The current index for comparison
-	 * @return {boolean} Whether navigation occurred
-	 */
-	const changeActiveItem = ( newIndex, currentIndex ) => {
-		if ( newIndex !== currentIndex ) {
+		const currentIndex = getActiveIndex();
+		const nextIndex = loopNavigation ?
+			( currentIndex + 1 ) % items.length :
+			Math.min( currentIndex + 1, items.length - 1 );
+
+		if ( nextIndex !== currentIndex ) {
 			// Reset nested navigation when moving to a new item
 			if ( onFocusChange ) {
 				onFocusChange( false );
 			}
-			setActiveIndex( newIndex );
+			setActiveIndex( nextIndex );
 			return true;
 		}
 		return false;
 	};
 
 	/**
-	 * Helper function to get container and validate it exists
+	 * Navigate to previous item in vertical navigation
 	 *
-	 * @return {Element|false} The container element if it exists, false otherwise
+	 * @return {boolean} Whether navigation occurred
 	 */
-	const getValidContainer = () => {
-		const container = getContainer();
-		return container || false;
+	const navigatePrevious = () => {
+		if ( !verticalNavigation ) {
+			return false;
+		}
+
+		// If there's a custom vertical navigation handler, use it
+		if ( onVerticalNavigation && typeof onVerticalNavigation === 'function' ) {
+			return onVerticalNavigation( 'up' );
+		}
+
+		const items = getItems();
+		if ( !items || !items.length ) {
+			return false;
+		}
+
+		const currentIndex = getActiveIndex();
+		const prevIndex = loopNavigation ?
+			( currentIndex - 1 + items.length ) % items.length :
+			Math.max( currentIndex - 1, 0 );
+
+		if ( prevIndex !== currentIndex ) {
+			// Reset nested navigation when moving to a new item
+			if ( onFocusChange ) {
+				onFocusChange( false );
+			}
+			setActiveIndex( prevIndex );
+			return true;
+		}
+		return false;
 	};
 
 	/**
-	 * Helper function to prepare for horizontal navigation
+	 * Navigate to first item
 	 *
-	 * @return {Object|false} Object with elements needed for navigation if valid, false otherwise
+	 * @return {boolean} Whether navigation occurred
 	 */
-	const prepareHorizontalNavigation = () => {
+	const navigateFirst = () => {
+		const items = getItems();
+		if ( !items || !items.length ) {
+			return false;
+		}
+
+		const currentIndex = getActiveIndex();
+		if ( currentIndex !== 0 ) {
+			// Reset nested navigation when moving to a new item
+			if ( onFocusChange ) {
+				onFocusChange( false );
+			}
+			setActiveIndex( 0 );
+			return true;
+		}
+		return false;
+	};
+
+	/**
+	 * Navigate to last item
+	 *
+	 * @return {boolean} Whether navigation occurred
+	 */
+	const navigateLast = () => {
+		const items = getItems();
+		if ( !items || !items.length ) {
+			return false;
+		}
+
+		const lastIndex = items.length - 1;
+		const currentIndex = getActiveIndex();
+		if ( currentIndex !== lastIndex ) {
+			// Reset nested navigation when moving to a new item
+			if ( onFocusChange ) {
+				onFocusChange( false );
+			}
+			setActiveIndex( lastIndex );
+			return true;
+		}
+		return false;
+	};
+
+	/**
+	 * Navigate right within the current item (for nested navigation)
+	 *
+	 * @return {boolean} Whether navigation occurred
+	 */
+	const navigateRight = () => {
 		if ( !horizontalNavigation ) {
 			return false;
 		}
 
-		const container = getValidContainer();
+		const container = getContainer();
 		if ( !container ) {
 			return false;
 		}
@@ -95,113 +169,7 @@ module.exports = function useArrowNavigation( options ) {
 			return false;
 		}
 
-		return {
-			container,
-			activeItem,
-			focusableElements,
-			currentFocused: document.activeElement
-		};
-	};
-
-	/**
-	 * Navigate to next item in vertical navigation
-	 *
-	 * @return {boolean} Whether navigation occurred
-	 */
-	const navigateNext = () => {
-		if ( !verticalNavigation ) {
-			return false;
-		}
-
-		// If there's a custom vertical navigation handler, use it
-		if ( onVerticalNavigation && typeof onVerticalNavigation === 'function' ) {
-			return onVerticalNavigation( 'down' );
-		}
-
-		const prepared = prepareItemNavigation();
-		if ( !prepared ) {
-			return false;
-		}
-
-		const { items, currentIndex } = prepared;
-		const nextIndex = loopNavigation ?
-			( currentIndex + 1 ) % items.length :
-			Math.min( currentIndex + 1, items.length - 1 );
-
-		return changeActiveItem( nextIndex, currentIndex );
-	};
-
-	/**
-	 * Navigate to previous item in vertical navigation
-	 *
-	 * @return {boolean} Whether navigation occurred
-	 */
-	const navigatePrevious = () => {
-		if ( !verticalNavigation ) {
-			return false;
-		}
-
-		// If there's a custom vertical navigation handler, use it
-		if ( onVerticalNavigation && typeof onVerticalNavigation === 'function' ) {
-			return onVerticalNavigation( 'up' );
-		}
-
-		const prepared = prepareItemNavigation();
-		if ( !prepared ) {
-			return false;
-		}
-
-		const { items, currentIndex } = prepared;
-		const prevIndex = loopNavigation ?
-			( currentIndex - 1 + items.length ) % items.length :
-			Math.max( currentIndex - 1, 0 );
-
-		return changeActiveItem( prevIndex, currentIndex );
-	};
-
-	/**
-	 * Navigate to first item
-	 *
-	 * @return {boolean} Whether navigation occurred
-	 */
-	const navigateFirst = () => {
-		const prepared = prepareItemNavigation();
-		if ( !prepared ) {
-			return false;
-		}
-
-		const { currentIndex } = prepared;
-		return changeActiveItem( 0, currentIndex );
-	};
-
-	/**
-	 * Navigate to last item
-	 *
-	 * @return {boolean} Whether navigation occurred
-	 */
-	const navigateLast = () => {
-		const prepared = prepareItemNavigation();
-		if ( !prepared ) {
-			return false;
-		}
-
-		const { items, currentIndex } = prepared;
-		const lastIndex = items.length - 1;
-		return changeActiveItem( lastIndex, currentIndex );
-	};
-
-	/**
-	 * Navigate right within the current item (for nested navigation)
-	 *
-	 * @return {boolean} Whether navigation occurred
-	 */
-	const navigateRight = () => {
-		const prepared = prepareHorizontalNavigation();
-		if ( !prepared ) {
-			return false;
-		}
-
-		const { activeItem, focusableElements, currentFocused } = prepared;
+		const currentFocused = document.activeElement;
 
 		// If nothing is focused within the item yet, focus the first element
 		if ( !activeItem.contains( currentFocused ) ) {
@@ -237,12 +205,32 @@ module.exports = function useArrowNavigation( options ) {
 	 * @return {boolean} Whether navigation occurred
 	 */
 	const navigateLeft = () => {
-		const prepared = prepareHorizontalNavigation();
-		if ( !prepared ) {
+		if ( !horizontalNavigation ) {
 			return false;
 		}
 
-		const { activeItem, focusableElements, currentFocused } = prepared;
+		const container = getContainer();
+		if ( !container ) {
+			return false;
+		}
+
+		// Check if we have an active/highlighted item
+		const activeItem = container.querySelector( `${ itemSelector }--highlighted` );
+		if ( !activeItem ) {
+			return false;
+		}
+
+		// Check if the item has focusable elements (like action buttons)
+		if ( !subitemSelector ) {
+			return false;
+		}
+
+		const focusableElements = activeItem.querySelectorAll( subitemSelector );
+		if ( !focusableElements || !focusableElements.length ) {
+			return false;
+		}
+
+		const currentFocused = document.activeElement;
 
 		// If focused element is not within the item, do nothing
 		if ( !activeItem.contains( currentFocused ) ) {
@@ -313,7 +301,7 @@ module.exports = function useArrowNavigation( options ) {
 	 * Set up event listeners for navigation
 	 */
 	const setupNavigation = () => {
-		const container = getValidContainer();
+		const container = getContainer();
 		if ( !container ) {
 			return;
 		}
@@ -325,7 +313,7 @@ module.exports = function useArrowNavigation( options ) {
 	 * Clean up event listeners
 	 */
 	const cleanupNavigation = () => {
-		const container = getValidContainer();
+		const container = getContainer();
 		if ( !container ) {
 			return;
 		}
