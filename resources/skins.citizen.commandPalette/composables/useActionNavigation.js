@@ -38,64 +38,28 @@ module.exports = function useActionNavigation( { state, refs } ) {
 		return true;
 	};
 
-	// Return to search input
-	const returnToSearchInput = () => {
-		const actionButton = document.activeElement;
-		if ( actionButton && actionButton.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
-			actionButton.blur();
-		}
-
-		refs.searchHeader.value?.$el.querySelector( 'input' )?.focus();
-		state.isActionButtonFocused.value = false;
-	};
-
 	// Event handlers for action button navigation
 	const keydownHandler = ( event ) => {
 		// Check if the event target is an action button
 		if ( event.target.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
-			switch ( event.key ) {
-				case 'ArrowLeft': {
-					event.preventDefault();
-					const prevButton = event.target.previousElementSibling;
-					if ( prevButton && prevButton.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
-						// Focus previous action button if it exists
-						prevButton.focus();
-					} else {
-						// If no previous action button, return focus to the search input
-						returnToSearchInput();
-					}
-					break;
+			if ( event.key === 'ArrowLeft' ) {
+				const prevButton = event.target.previousElementSibling;
+				if ( prevButton && prevButton.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
+					// Focus previous action button if it exists
+					prevButton.focus();
+				} else {
+					// If no previous action button, return focus to the highlighted item and search input
+					event.target.blur();
+					refs.searchHeader.value?.$el.querySelector( 'input' )?.focus();
+					state.isActionButtonFocused.value = false;
 				}
-				case 'ArrowRight': {
-					const nextButton = event.target.nextElementSibling;
-					if ( nextButton && nextButton.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
-						event.preventDefault();
-						// Focus next action button if it exists
-						nextButton.focus();
-					}
-					break;
-				}
-				case 'ArrowUp': {
+				event.preventDefault();
+			} else if ( event.key === 'ArrowRight' ) {
+				const nextButton = event.target.nextElementSibling;
+				if ( nextButton && nextButton.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
+					// Focus next action button if it exists
+					nextButton.focus();
 					event.preventDefault();
-					// Navigate to previous item
-					// First return to search input
-					returnToSearchInput();
-					// Then highlight previous item
-					if ( state.currentItems.value.length > 0 ) {
-						state.highlightedItemIndex.value = ( state.highlightedItemIndex.value - 1 + state.currentItems.value.length ) % state.currentItems.value.length;
-					}
-					break;
-				}
-				case 'ArrowDown': {
-					event.preventDefault();
-					// Navigate to next item
-					// First return to search input
-					returnToSearchInput();
-					// Then highlight next item
-					if ( state.currentItems.value.length > 0 ) {
-						state.highlightedItemIndex.value = ( state.highlightedItemIndex.value + 1 ) % state.currentItems.value.length;
-					}
-					break;
 				}
 			}
 		}
