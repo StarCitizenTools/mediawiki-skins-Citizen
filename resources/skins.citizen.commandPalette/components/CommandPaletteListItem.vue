@@ -6,20 +6,24 @@ Partially based on the MenuItem component from Codex.
 <template>
 	<li
 		:id="id"
+		ref="rootRef"
 		role="option"
 		class="citizen-command-palette-list-item"
 		:class="rootClasses"
 		:data-type="type"
-		:tabindex="0"
+		:tabindex="highlighted ? 0 : -1"
 		@mousemove="onMouseMove"
 		@mouseleave="onMouseLeave"
 		@mousedown.prevent="onMouseDown"
 		@click.prevent="onClick"
+		@focus="onFocus"
+		@keydown="onKeydown"
 	>
 		<slot>
 			<a
 				:href="url"
 				class="citizen-command-palette-list-item__content"
+				:tabindex="-1"
 			>
 				<cdx-thumbnail
 					:thumbnail="thumbnail"
@@ -76,13 +80,15 @@ Partially based on the MenuItem component from Codex.
 				</div>
 				<div v-if="actions && actions.length > 0" class="citizen-command-palette-list-item__actions">
 					<cdx-button
-						v-for="action in actions"
+						v-for="( action, index ) in actions"
 						:key="action.id"
+						:ref="( el ) => setButtonRef( el, index )"
 						class="citizen-command-palette-list-item__action"
 						:aria-label="action.label"
 						weight="quiet"
-						:tabindex="highlighted ? 0 : -1"
+						:tabindex="-1"
 						@click.stop.prevent="onActionClick( action )"
+						@focus="onButtonFocus( index )"
 					>
 						<cdx-icon
 							:icon="action.icon"
@@ -97,7 +103,7 @@ Partially based on the MenuItem component from Codex.
 </template>
 
 <script>
-const { defineComponent, computed } = require( 'vue' );
+const { defineComponent, computed, ref, onBeforeUpdate, nextTick } = require( 'vue' );
 const { CdxIcon, CdxSearchResultTitle, CdxThumbnail, CdxButton } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
 
 // @vue/component
@@ -166,9 +172,25 @@ module.exports = exports = defineComponent( {
 	emits: [
 		'change',
 		'select',
-		'action'
+		'action',
+		'focus-input',
+		'navigate-list'
 	],
-	setup( props, { emit } ) {
+	setup( props, { emit, expose } ) {
+		const rootRef = ref( null );
+		const buttonRefs = ref( [] );
+		const activeButtonIndex = ref( -1 );
+
+		onBeforeUpdate( () => {
+			buttonRefs.value = [];
+		} );
+
+		const setButtonRef = ( el, index ) => {
+			if ( el ) {
+				buttonRefs.value[ index ] = el;
+			}
+		};
+
 		const onMouseMove = () => {
 			if ( !props.highlighted ) {
 				emit( 'change', 'highlighted', true );
@@ -218,6 +240,94 @@ module.exports = exports = defineComponent( {
 		// eslint-disable-next-line mediawiki/msg-doc
 		const typeLabel = computed( () => mw.message( `citizen-command-palette-type-${ props.type }` ).text() );
 
+		const focusFirstButton = () => {
+			if ( props.actions && props.actions.length > 0 && buttonRefs.value.length > 0 ) {
+				nextTick( () => {
+					const firstButton = buttonRefs.value[ 0 ];
+					if ( firstButton?.$el ) {
+						firstButton.$el.focus();
+					} else if ( typeof firstButton?.focus === 'function' ) {
+						firstButton.focus();
+					}
+				} );
+			}
+		};
+
+		const onFocus = ( event ) => {
+			if ( props.actions && props.actions.length > 0 && !rootRef.value.contains( event.relatedTarget ) ) {
+				focusFirstButton();
+			}
+		};
+
+		const onKeydown = ( e ) => {
+			const hasActions = props.actions && props.actions.length > 0;
+			if ( !hasActions || activeButtonIndex.value === -1 ) {
+				return;
+			}
+
+			let handled = false;
+			const currentButtonIndex = activeButtonIndex.value;
+			const buttons = buttonRefs.value;
+
+			switch ( e.key ) {
+				case 'ArrowLeft':
+					if ( currentButtonIndex === 0 ) {
+						emit( 'focus-input' );
+					} else {
+						const prevButton = buttons[ currentButtonIndex - 1 ];
+						if ( prevButton?.$el ) {
+							prevButton.$el.focus();
+						} else if ( typeof prevButton?.focus === 'function' ) {
+							prevButton.focus();
+						}
+					}
+					handled = true;
+					break;
+				case 'ArrowRight':
+					if ( currentButtonIndex < buttons.length - 1 ) {
+						const nextButton = buttons[ currentButtonIndex + 1 ];
+						if ( nextButton?.$el ) {
+							nextButton.$el.focus();
+						} else if ( typeof nextButton?.focus === 'function' ) {
+							nextButton.focus();
+						}
+					}
+					handled = true;
+					break;
+				case 'ArrowUp':
+				case 'ArrowDown':
+					emit( 'navigate-list', e.key === 'ArrowUp' ? 'up' : 'down' );
+					handled = true;
+					break;
+				case 'Enter':
+				case ' ':
+					{
+						const currentButton = buttons[ currentButtonIndex ];
+						if ( currentButton?.$el ) {
+							currentButton.$el.click();
+						} else if ( typeof currentButton?.click === 'function' ) {
+							currentButton.click();
+						}
+						handled = true;
+					}
+					break;
+			}
+
+			if ( handled ) {
+				e.preventDefault();
+				e.stopPropagation();
+			}
+		};
+
+		const onButtonFocus = ( index ) => {
+			activeButtonIndex.value = index;
+		};
+
+		expose( {
+			focus: () => rootRef.value?.focus(),
+			focusFirstButton
+		} );
+
 		return {
 			onMouseMove,
 			onMouseLeave,
@@ -225,7 +335,12 @@ module.exports = exports = defineComponent( {
 			onClick,
 			onActionClick,
 			rootClasses,
-			typeLabel
+			typeLabel,
+			rootRef,
+			setButtonRef,
+			onFocus,
+			onKeydown,
+			onButtonFocus
 		};
 	}
 } );

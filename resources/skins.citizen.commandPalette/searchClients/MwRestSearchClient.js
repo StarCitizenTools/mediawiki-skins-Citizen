@@ -4,8 +4,8 @@
  * @module MwRestSearchClient
  */
 
-const fetchJson = require( '../fetch.js' );
-const urlGenerator = require( '../urlGenerator.js' );
+const fetchJson = require( '../utils/fetch.js' );
+const urlGenerator = require( '../utils/urlGenerator.js' );
 const { cdxIconArticleRedirect, cdxIconEdit } = require( '../icons.json' );
 
 /**
