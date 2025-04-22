@@ -62,7 +62,7 @@ module.exports = function useSearchNavigation( { state, history, onClose } ) {
 		}
 
 		// If we have a valid result with URL, navigate to it
-		if ( result.url ) {
+		if ( result.url && isSafeUrl( result.url ) ) {
 			navigateToUrl( result.url );
 			// Save the entire result object to recent items
 			history.saveRecentItem( result );

@@ -40,7 +40,7 @@ module.exports = function useSearchHistory( { services, state } ) {
 	 * @param {Object} item The item to save to history
 	 */
 	const saveRecentItem = ( item ) => {
-		if ( item && typeof item === 'object' ) {
+		if ( item ) {
 			searchHistoryService.saveRecentItem( item );
 		}
 	};

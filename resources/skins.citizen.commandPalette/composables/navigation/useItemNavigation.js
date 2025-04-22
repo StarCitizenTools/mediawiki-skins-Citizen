@@ -33,8 +33,6 @@ module.exports = function useItemNavigation( { state } ) {
 	const highlightLast = () => {
 		if ( state.currentItems.value.length > 0 ) {
 			state.highlightedItemIndex.value = state.currentItems.value.length - 1;
-		} else {
-			state.highlightedItemIndex.value = -1;
 		}
 	};
 
@@ -45,7 +43,11 @@ module.exports = function useItemNavigation( { state } ) {
 		}
 
 		const highlightedItem = state.currentItems.value[ state.highlightedItemIndex.value ];
-		return Boolean( highlightedItem?.actions?.length > 0 );
+		return Boolean(
+			highlightedItem &&
+			highlightedItem.actions &&
+			highlightedItem.actions.length > 0
+		);
 	};
 
 	return {
