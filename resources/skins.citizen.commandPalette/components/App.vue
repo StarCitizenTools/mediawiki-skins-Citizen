@@ -53,7 +53,7 @@
 </template>
 
 <script>
-const { defineComponent, ref, watch, nextTick, onUnmounted } = require( 'vue' );
+const { defineComponent, ref, watch, nextTick } = require( 'vue' );
 const createSearchService = require( '../searchService.js' );
 const createSearchHistoryService = require( '../searchHistoryService.js' );
 const urlGenerator = require( '../urlGenerator.js' )();
@@ -183,15 +183,7 @@ module.exports = exports = defineComponent( {
 				nextTick( () => {
 					setupActionButtonKeyNavigation();
 				} );
-			} else {
-				// Clean up event listeners when closing
-				keyboardNavigation.cleanup();
 			}
-		} );
-
-		// Clean up event listeners when component is unmounted
-		onUnmounted( () => {
-			keyboardNavigation.cleanup();
 		} );
 
 		return {

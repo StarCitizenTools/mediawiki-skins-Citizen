@@ -38,78 +38,54 @@ module.exports = function useActionNavigation( { state, refs } ) {
 		return true;
 	};
 
-	// Event handlers for action button navigation
-	const keydownHandler = ( event ) => {
-		// Check if the event target is an action button
-		if ( event.target.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
-			if ( event.key === 'ArrowLeft' ) {
-				const prevButton = event.target.previousElementSibling;
-				if ( prevButton && prevButton.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
-					// Focus previous action button if it exists
-					prevButton.focus();
-				} else {
-					// If no previous action button, return focus to the highlighted item and search input
-					event.target.blur();
-					refs.searchHeader.value?.$el.querySelector( 'input' )?.focus();
-					state.isActionButtonFocused.value = false;
-				}
-				event.preventDefault();
-			} else if ( event.key === 'ArrowRight' ) {
-				const nextButton = event.target.nextElementSibling;
-				if ( nextButton && nextButton.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
-					// Focus next action button if it exists
-					nextButton.focus();
-					event.preventDefault();
-				}
-			}
-		}
-	};
-
-	const focusinHandler = ( event ) => {
-		if ( event.target.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
-			state.isActionButtonFocused.value = true;
-		}
-	};
-
-	const focusoutHandler = ( event ) => {
-		if ( event.target.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
-			// Only set to false if we're not focusing another action button
-			if ( !event.relatedTarget || !event.relatedTarget.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
-				state.isActionButtonFocused.value = false;
-			}
-		}
-	};
-
 	// Setup event listeners for action button key navigation
 	const setupActionButtonKeyNavigation = () => {
 		// Use event delegation on the results container
-		const resultsContainer = refs.resultsContainer.value;
-		if ( !resultsContainer ) {
-			return;
-		}
+		refs.resultsContainer.value?.addEventListener( 'keydown', ( event ) => {
+			// Check if the event target is an action button
+			if ( event.target.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
+				if ( event.key === 'ArrowLeft' ) {
+					const prevButton = event.target.previousElementSibling;
+					if ( prevButton && prevButton.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
+						// Focus previous action button if it exists
+						prevButton.focus();
+					} else {
+						// If no previous action button, return focus to the highlighted item and search input
+						event.target.blur();
+						refs.searchHeader.value?.$el.querySelector( 'input' )?.focus();
+						state.isActionButtonFocused.value = false;
+					}
+					event.preventDefault();
+				} else if ( event.key === 'ArrowRight' ) {
+					const nextButton = event.target.nextElementSibling;
+					if ( nextButton && nextButton.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
+						// Focus next action button if it exists
+						nextButton.focus();
+						event.preventDefault();
+					}
+				}
+			}
+		} );
 
-		// Add event listeners
-		resultsContainer.addEventListener( 'keydown', keydownHandler );
-		resultsContainer.addEventListener( 'focusin', focusinHandler );
-		resultsContainer.addEventListener( 'focusout', focusoutHandler );
-	};
+		// Track focus state for keyboard hints
+		refs.resultsContainer.value?.addEventListener( 'focusin', ( event ) => {
+			if ( event.target.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
+				state.isActionButtonFocused.value = true;
+			}
+		} );
 
-	// Clean up event listeners
-	const cleanupActionButtonKeyNavigation = () => {
-		const resultsContainer = refs.resultsContainer.value;
-		if ( !resultsContainer ) {
-			return;
-		}
-
-		// Remove event listeners
-		resultsContainer.removeEventListener( 'keydown', keydownHandler );
-		resultsContainer.removeEventListener( 'focusin', focusinHandler );
-		resultsContainer.removeEventListener( 'focusout', focusoutHandler );
+		refs.resultsContainer.value?.addEventListener( 'focusout', ( event ) => {
+			if ( event.target.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
+				// Only set to false if we're not focusing another action button
+				if ( !event.relatedTarget || !event.relatedTarget.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
+					state.isActionButtonFocused.value = false;
+				}
+			}
+		} );
 	};
 
 	return {
 		focusActionButton,
-		setupActionButtonKeyNavigation,
-		cleanupActionButtonKeyNavigation
+		setupActionButtonKeyNavigation
 	};
 };
