@@ -139,25 +139,23 @@ module.exports = exports = defineComponent( {
 
 		// Initialize composables
 		const {
+			setupActionButtonKeyNavigation,
+			maybeScrollIntoView
+		} = useKeyboardNavigation( { state, refs, selectResult: null } );
+
+		const {
 			selectResult,
 			handleAction,
 			loadRecentItems,
 			watchSearchQuery: createSearchQueryWatcher
 		} = useSearch( { state, enhanceActionsWithHints, services } );
 
-		// Initialize keyboard navigation with the real selectResult
+		// Update keyboard navigation with selectResult
 		const keyboardNavigation = useKeyboardNavigation( {
 			state,
 			refs,
 			selectResult
 		} );
-
-		const {
-			setupActionButtonKeyNavigation,
-			maybeScrollIntoView,
-			onKeydown,
-			hasHighlightedItemWithActions
-		} = keyboardNavigation;
 
 		// Selection handling
 		const updatehighlightedItemIndex = ( index ) => {
@@ -212,12 +210,12 @@ module.exports = exports = defineComponent( {
 			cdxIconArticleNotFound,
 
 			// Methods
-			onKeydown,
+			onKeydown: keyboardNavigation.onKeydown,
 			updatehighlightedItemIndex,
 			selectResult,
 			handleAction,
 			loadRecentItems,
-			hasHighlightedItemWithActions
+			hasHighlightedItemWithActions: keyboardNavigation.hasHighlightedItemWithActions
 		};
 	},
 	methods: {
