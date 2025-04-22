@@ -302,12 +302,16 @@
 				"mediawiki.storage",
 				"mediawiki.util",
 				"skins.citizen.commandPalette.codex",
-				"vue"
+				"vue",
+				"pinia"
 			],
 			"packageFiles": [
 				"resources/skins.citizen.commandPalette/init.js",
+				"resources/skins.citizen.commandPalette/composables/useListNavigation.js",
+				"resources/skins.citizen.commandPalette/composables/useActionNavigation.js",
 				"resources/skins.citizen.commandPalette/utils/fetch.js",
 				"resources/skins.citizen.commandPalette/utils/urlGenerator.js",
+				"resources/skins.citizen.commandPalette/stores/searchStore.js",
 				"resources/skins.citizen.commandPalette/services/search.js",
 				"resources/skins.citizen.commandPalette/services/searchHistory.js",
 				"resources/skins.citizen.commandPalette/searchClients/SearchClient.js",

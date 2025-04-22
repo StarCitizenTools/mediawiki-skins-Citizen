@@ -60,6 +60,7 @@ class MwRestSearchClient {
 				const thumbnail = page.thumbnail;
 				return {
 					id: page.id,
+					type: 'page',
 					label: page.title,
 					description: showDescription ? page.description : undefined,
 					url: this.urlGenerator.generateUrl( page ),

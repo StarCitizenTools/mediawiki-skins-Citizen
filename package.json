@@ -21,7 +21,9 @@
 		"stylelint": "16.18.0",
 		"stylelint-config-recess-order": "6.0.0",
 		"stylelint-config-wikimedia": "0.18.0",
-		"stylelint-order": "^7.0.0"
+		"stylelint-order": "^7.0.0",
+		"vue": "3.4.27",
+		"pinia": "2.2.6"
 	},
 	"version": "3.0.0"
 }

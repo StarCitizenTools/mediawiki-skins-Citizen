@@ -70,11 +70,9 @@ module.exports = exports = defineComponent( {
 
 		const handleAction = ( action ) => {
 			if ( action.actionId === 'dismiss' ) {
-				// Find the item to remove
-				const itemToRemove = props.recentItems.find( ( item ) => item.id === action.itemId );
+				const itemToRemove = props.recentItems.find( ( item ) => String( item.id ) === action.itemId );
 				if ( itemToRemove ) {
 					searchHistory.removeRecentItem( itemToRemove );
-					// Notify parent to update the list
 					emit( 'update:recent-items' );
 				}
 			}
