@@ -81,7 +81,6 @@ exports.useSearchStore = defineStore( 'search', {
 			}
 
 			// Reset results and set pending state immediately
-			this.results = [];
 			this.isPending = true;
 			this.showPending = false; // Don't show spinner immediately
 
@@ -93,22 +92,22 @@ exports.useSearchStore = defineStore( 'search', {
 				}
 			}, 300 );
 
-			// Debounce the actual search API call (e.g., 500ms)
+			// Debounce the actual search API call (e.g., 250ms)
+			// eslint-disable-next-line es-x/no-async-functions
 			this.debounceTimeout = setTimeout( async () => {
 				if ( this.searchQuery === query ) { // Ensure query hasn't changed again
 					try {
 						// Perform the actual search using the service
 						this.results = await searchService.search( query );
 					} catch ( error ) {
-						// Log error appropriately in a real app, maybe using mw.log
-						// console.error( 'Search failed:', error );
-						this.results = []; // Clear results on error
+						mw.log.error( '[skins.citizen.commandPalette] Search failed:', error );
+						this.results = []; // Clear results ONLY on error
 					} finally {
 						this.isPending = false;
 						this.showPending = false;
 					}
 				}
-			}, 500 );
+			}, 250 );
 		},
 
 		/**

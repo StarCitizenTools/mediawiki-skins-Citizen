@@ -63,7 +63,7 @@
 <script>
 const { useSearchStore } = require( '../stores/searchStore.js' );
 const { storeToRefs } = require( 'pinia' );
-const { defineComponent, ref, nextTick, onBeforeUpdate, computed } = require( 'vue' );
+const { defineComponent, ref, nextTick, computed } = require( 'vue' );
 const useListNavigation = require( '../composables/useListNavigation.js' );
 const CommandPaletteList = require( './CommandPaletteList.vue' );
 const CommandPaletteEmptyState = require( './CommandPaletteEmptyState.vue' );
@@ -100,7 +100,7 @@ module.exports = exports = defineComponent( {
 			if ( !searchStore.searchQuery ) {
 				return recentItems.value;
 			}
-			return searchStore.isPending ? [] : results.value;
+			return results.value;
 		} );
 
 		const { highlightedItemIndex, handleNavigationKeydown } = useListNavigation( displayedItems, itemRefs );
@@ -108,10 +108,6 @@ module.exports = exports = defineComponent( {
 		const focusInput = () => {
 			searchHeader.value?.focus();
 		};
-
-		onBeforeUpdate( () => {
-			itemRefs.value = [];
-		} );
 
 		const setItemRef = ( el, index ) => {
 			if ( el ) {
