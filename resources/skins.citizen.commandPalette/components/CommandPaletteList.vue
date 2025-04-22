@@ -16,8 +16,8 @@
 			<command-palette-list-item
 				v-for="( item, index ) in items"
 				:key="item.id"
-				v-bind="getListItemBindings( item )"
-				:ref="( el ) => setItemRef && setItemRef( el, index )"
+				v-bind="getListItemBindings( item, index )"
+				:ref="( el ) => setItemRef && setItemRef( el?.$el, index )"
 				@change="( property, value ) => onItemChange( item.id, property, value, index )"
 				@select="( result ) => $emit( 'select', result )"
 				@action="( action ) => $emit( 'action', action )"
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-const { defineComponent, ref, watch } = require( 'vue' );
+const { defineComponent, ref } = require( 'vue' );
 const CommandPaletteListItem = require( './CommandPaletteListItem.vue' );
 
 // @vue/component
@@ -45,7 +45,7 @@ module.exports = exports = defineComponent( {
 		},
 		highlightedItemIndex: {
 			type: Number,
-			default: 0
+			required: true
 		},
 		searchQuery: {
 			type: String,
@@ -64,28 +64,20 @@ module.exports = exports = defineComponent( {
 	emits: [ 'update:highlightedItemIndex', 'select', 'action', 'focus-input', 'navigate-list' ],
 	setup( props, { emit } ) {
 		const listRef = ref( null );
-		const highlightedItemId = ref( null );
 		const activeItemId = ref( null );
 
-		// Watch for changes in highlightedItemIndex and update highlightedItemId accordingly
-		watch( () => props.highlightedItemIndex, ( newIndex ) => {
-			if ( props.items[ newIndex ] ) {
-				highlightedItemId.value = props.items[ newIndex ].id;
-			}
-		} );
-
-		function getListItemBindings( listItem ) {
+		function getListItemBindings( listItem, index ) {
 			return {
+				...listItem,
 				active: listItem.id === activeItemId.value,
-				highlighted: listItem.id === highlightedItemId.value,
+				highlighted: index === props.highlightedItemIndex,
 				searchQuery: props.searchQuery,
-				...listItem
+				id: String( listItem.id )
 			};
 		}
 
 		function onItemChange( itemId, property, value, index ) {
 			if ( property === 'highlighted' ) {
-				highlightedItemId.value = value ? itemId : null;
 				if ( value ) {
 					emit( 'update:highlightedItemIndex', index );
 				}

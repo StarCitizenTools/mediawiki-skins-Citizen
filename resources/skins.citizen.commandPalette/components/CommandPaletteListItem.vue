@@ -103,8 +103,9 @@ Partially based on the MenuItem component from Codex.
 </template>
 
 <script>
-const { defineComponent, computed, ref, onBeforeUpdate, nextTick } = require( 'vue' );
+const { defineComponent, computed, ref, onBeforeUpdate } = require( 'vue' );
 const { CdxIcon, CdxSearchResultTitle, CdxThumbnail, CdxButton } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
+const useActionNavigation = require( '../composables/useActionNavigation.js' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
@@ -179,7 +180,9 @@ module.exports = exports = defineComponent( {
 	setup( props, { emit, expose } ) {
 		const rootRef = ref( null );
 		const buttonRefs = ref( [] );
-		const activeButtonIndex = ref( -1 );
+
+		const { handleActionButtonKeydown, onButtonFocus, focusFirstButton } =
+			useActionNavigation( computed( () => props.actions ), buttonRefs, emit );
 
 		onBeforeUpdate( () => {
 			buttonRefs.value = [];
@@ -226,7 +229,7 @@ module.exports = exports = defineComponent( {
 			emit( 'action', {
 				itemId: props.id,
 				actionId: action.id,
-				actionUrl: action.url
+				url: action.url
 			} );
 		};
 
@@ -240,19 +243,6 @@ module.exports = exports = defineComponent( {
 		// eslint-disable-next-line mediawiki/msg-doc
 		const typeLabel = computed( () => mw.message( `citizen-command-palette-type-${ props.type }` ).text() );
 
-		const focusFirstButton = () => {
-			if ( props.actions && props.actions.length > 0 && buttonRefs.value.length > 0 ) {
-				nextTick( () => {
-					const firstButton = buttonRefs.value[ 0 ];
-					if ( firstButton?.$el ) {
-						firstButton.$el.focus();
-					} else if ( typeof firstButton?.focus === 'function' ) {
-						firstButton.focus();
-					}
-				} );
-			}
-		};
-
 		const onFocus = ( event ) => {
 			if ( props.actions && props.actions.length > 0 && !rootRef.value.contains( event.relatedTarget ) ) {
 				focusFirstButton();
@@ -260,56 +250,16 @@ module.exports = exports = defineComponent( {
 		};
 
 		const onKeydown = ( e ) => {
-			const hasActions = props.actions && props.actions.length > 0;
-			if ( !hasActions || activeButtonIndex.value === -1 ) {
+			if ( handleActionButtonKeydown( e ) ) {
 				return;
 			}
 
 			let handled = false;
-			const currentButtonIndex = activeButtonIndex.value;
-			const buttons = buttonRefs.value;
-
 			switch ( e.key ) {
-				case 'ArrowLeft':
-					if ( currentButtonIndex === 0 ) {
-						emit( 'focus-input' );
-					} else {
-						const prevButton = buttons[ currentButtonIndex - 1 ];
-						if ( prevButton?.$el ) {
-							prevButton.$el.focus();
-						} else if ( typeof prevButton?.focus === 'function' ) {
-							prevButton.focus();
-						}
-					}
-					handled = true;
-					break;
-				case 'ArrowRight':
-					if ( currentButtonIndex < buttons.length - 1 ) {
-						const nextButton = buttons[ currentButtonIndex + 1 ];
-						if ( nextButton?.$el ) {
-							nextButton.$el.focus();
-						} else if ( typeof nextButton?.focus === 'function' ) {
-							nextButton.focus();
-						}
-					}
-					handled = true;
-					break;
-				case 'ArrowUp':
-				case 'ArrowDown':
-					emit( 'navigate-list', e.key === 'ArrowUp' ? 'up' : 'down' );
-					handled = true;
-					break;
 				case 'Enter':
 				case ' ':
-					{
-						const currentButton = buttons[ currentButtonIndex ];
-						if ( currentButton?.$el ) {
-							currentButton.$el.click();
-						} else if ( typeof currentButton?.click === 'function' ) {
-							currentButton.click();
-						}
-						handled = true;
-					}
+					onClick();
+					handled = true;
 					break;
 			}
 
@@ -317,10 +267,6 @@ module.exports = exports = defineComponent( {
 				e.preventDefault();
 				e.stopPropagation();
 			}
-		};
-
-		const onButtonFocus = ( index ) => {
-			activeButtonIndex.value = index;
 		};
 
 		expose( {
