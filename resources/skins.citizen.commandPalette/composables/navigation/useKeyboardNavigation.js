@@ -17,7 +17,7 @@ const FOCUS_STATES = {
 	ACTION: 'action' // Action button is focused
 };
 
-module.exports = function useKeyboardNavigation( { state, refs, selectResult, emit } ) {
+module.exports = function useKeyboardNavigation( { state, refs, selectResult, close } ) {
 	// Initialize the specialized composables
 	const navigation = useItemNavigation( { state } );
 	const scrollBehavior = useScrollBehavior( { refs } );
@@ -71,8 +71,8 @@ module.exports = function useKeyboardNavigation( { state, refs, selectResult, em
 		navigation,
 		selectResult,
 		itemNavigation,
-		inputUtils,
-		emit
+		close,
+		inputUtils
 	} );
 
 	return {

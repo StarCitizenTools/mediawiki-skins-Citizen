@@ -105,26 +105,10 @@ module.exports = exports = defineComponent( {
 		CommandPaletteFooter,
 		CommandPaletteHeader
 	},
-	props: {
-		opened: {
-			type: Boolean,
-			default: false
-		}
-	},
-	setup( props ) {
-		// Component is the parent, so simplify state management
-		const isOpen = ref( props.opened );
-
-		// Create a single function to update open state that all components and composables can use
-		const updateOpenState = ( value ) => {
-			isOpen.value = value;
-		};
-
-		// When props.opened changes, sync internal state
-		watch( () => props.opened, updateOpenState );
-
+	setup() {
 		// State refs - group related state
 		const uiState = {
+			isOpen: ref( false ),
 			isPending: ref( false ),
 			showPending: ref( false )
 		};
@@ -142,7 +126,7 @@ module.exports = exports = defineComponent( {
 			resultsContainer: ref( null )
 		};
 
-		// Services initialization
+		// Service initialization
 		const services = {
 			searchService: createSearchService( mw.config ),
 			searchHistoryService: createSearchHistoryService(),
@@ -165,19 +149,16 @@ module.exports = exports = defineComponent( {
 			handleAction,
 			loadRecentItems,
 			watchSearchQuery: createSearchQueryWatcher
-		} = useSearch( {
-			state,
-			enhanceActionsWithHints,
-			services,
-			onClose: () => updateOpenState( false )
-		} );
+		} = useSearch( { state, enhanceActionsWithHints, services } );
 
-		// Initialize keyboard navigation
+		// Initialize keyboard navigation with the real selectResult
 		const keyboardNavigation = useKeyboardNavigation( {
 			state,
 			refs: domRefs,
 			selectResult,
-			onClose: () => updateOpenState( false )
+			close: () => {
+				uiState.isOpen.value = false;
+			}
 		} );
 
 		// Computed properties
@@ -206,23 +187,16 @@ module.exports = exports = defineComponent( {
 			nextTick( () => {
 				keyboardNavigation.maybeScrollIntoView();
 			} );
-		} );
+		}, { deep: true } );
 
 		// Set up and clean up keyboard navigation when component opens/closes
-		watch( isOpen, ( newValue ) => {
+		watch( uiState.isOpen, ( newValue ) => {
 			if ( newValue ) {
-				// Reset state when opening
-				searchState.query.value = '';
 				nextTick( () => {
 					keyboardNavigation.setup();
-					loadRecentItems();
-					domRefs.searchHeader.value?.focus();
 				} );
 			} else {
-				// Clean up when closing
 				keyboardNavigation.cleanup();
-				searchState.currentItems.value = [];
-				searchState.highlightedItemIndex.value = -1;
 			}
 		} );
 
@@ -231,19 +205,24 @@ module.exports = exports = defineComponent( {
 			keyboardNavigation.cleanup();
 		} );
 
-		// Public method to open palette programmatically
 		const open = () => {
-			updateOpenState( true );
+			uiState.isOpen.value = true;
+			loadRecentItems();
+			nextTick( () => {
+				domRefs.searchHeader.value?.focus();
+			} );
 		};
 
-		// Public method to close palette programmatically
 		const close = () => {
-			updateOpenState( false );
+			uiState.isOpen.value = false;
+			searchState.query.value = '';
+			searchState.currentItems.value = [];
+			searchState.highlightedItemIndex.value = -1;
 		};
 
 		return {
 			// UI State
-			isOpen,
+			isOpen: uiState.isOpen,
 			isPending: uiState.isPending,
 			showPending: uiState.showPending,
 

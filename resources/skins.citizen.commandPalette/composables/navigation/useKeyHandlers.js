@@ -8,16 +8,9 @@ module.exports = function useKeyHandlers( {
 	navigation,
 	selectResult,
 	itemNavigation,
-	inputUtils,
-	onClose
+	close,
+	inputUtils
 } ) {
-
-	// Function to close the command palette
-	const closeCommandPalette = () => {
-		if ( typeof onClose === 'function' ) {
-			onClose();
-		}
-	};
 
 	// Setup keyboard navigation based on key events
 	const onKeydown = ( event ) => {
@@ -80,7 +73,7 @@ module.exports = function useKeyHandlers( {
 				// If an action button is focused, let it handle the event naturally
 				if ( isActionButtonFocused ) {
 					// Close the command palette after action button is clicked
-					setTimeout( closeCommandPalette, 0 );
+					setTimeout( close, 0 );
 					return;
 				}
 
@@ -98,19 +91,19 @@ module.exports = function useKeyHandlers( {
 					const selectedItem = items[ highlightedIndex ];
 					selectResult( selectedItem );
 					// Close the command palette after item is selected
-					setTimeout( closeCommandPalette, 0 );
+					setTimeout( close, 0 );
 				} else {
 					// If no valid item is highlighted, call selectResult with null
 					// which will perform a search with the current query
 					selectResult( null );
 					// Close the command palette after search is performed
-					setTimeout( closeCommandPalette, 0 );
+					setTimeout( close, 0 );
 				}
 				break;
 
 			case 'Escape':
 				// Close the command palette when Escape is pressed
-				closeCommandPalette();
+				close();
 				break;
 
 			case 'Home':
