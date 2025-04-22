@@ -11,6 +11,7 @@
 			:show-pending="showPending"
 			@keydown="onKeydown"
 			@close="close"
+			@focus-active-item="focusItem( highlightedItemIndex )"
 		></command-palette-header>
 		<div
 			ref="resultsContainer"
@@ -21,9 +22,12 @@
 					:recent-items="currentItems"
 					:highlighted-item-index="highlightedItemIndex"
 					:search-query="searchQuery"
+					:set-item-ref="setItemRef"
 					@update:highlighted-item-index="updatehighlightedItemIndex"
 					@select="selectResult"
 					@update:recent-items="loadRecentItems"
+					@focus-input="focusInput"
+					@navigate-list="handleListNavigation"
 				></command-palette-presults>
 			</template>
 			<template v-else-if="currentItems.length === 0 && !isPending">
@@ -39,9 +43,12 @@
 					:items="currentItems"
 					:highlighted-item-index="highlightedItemIndex"
 					:search-query="searchQuery"
+					:set-item-ref="setItemRef"
 					@update:highlighted-item-index="updatehighlightedItemIndex"
 					@select="selectResult"
 					@action="handleAction"
+					@focus-input="focusInput"
+					@navigate-list="handleListNavigation"
 				></command-palette-list>
 			</template>
 		</div>
@@ -53,10 +60,10 @@
 </template>
 
 <script>
-const { defineComponent, ref, watch, nextTick } = require( 'vue' );
-const createSearchService = require( '../searchService.js' );
-const createSearchHistoryService = require( '../searchHistoryService.js' );
-const urlGenerator = require( '../urlGenerator.js' )();
+const { defineComponent, ref, watch, nextTick, onBeforeUpdate } = require( 'vue' );
+const createSearch = require( '../services/search.js' );
+const createSearchHistory = require( '../services/searchHistory.js' );
+const urlGenerator = require( '../utils/urlGenerator.js' )();
 const CommandPaletteList = require( './CommandPaletteList.vue' );
 const CommandPaletteEmptyState = require( './CommandPaletteEmptyState.vue' );
 const CommandPalettePresults = require( './CommandPalettePresults.vue' );
@@ -88,15 +95,29 @@ module.exports = exports = defineComponent( {
 		const debounceTimeout = ref( null );
 		const searchHeader = ref( null );
 		const resultsContainer = ref( null );
-		const searchService = ref( createSearchService( mw.config ) );
-		const searchHistoryService = ref( createSearchHistoryService() );
+		const search = ref( createSearch( mw.config ) );
+		const searchHistory = ref( createSearchHistory() );
 		const currentItems = ref( [] );
 		// Track if an action button is currently focused
 		const isActionButtonFocused = ref( false );
+		// Refs for list items
+		const itemRefs = ref( [] );
+
+		// Ensure refs are cleared before each update
+		onBeforeUpdate( () => {
+			itemRefs.value = [];
+		} );
+
+		// Function passed to CommandPaletteList to collect refs
+		const setItemRef = ( el, index ) => {
+			if ( el ) {
+				itemRefs.value[ index ] = el;
+			}
+		};
 
 		// Load recent items
 		const loadRecentItems = () => {
-			currentItems.value = searchHistoryService.value.getRecentItems();
+			currentItems.value = searchHistory.value.getRecentItems();
 		};
 
 		// Navigation methods
@@ -128,12 +149,6 @@ module.exports = exports = defineComponent( {
 			}
 		};
 
-		// Check if input cursor is at the end of text
-		const isCursorAtInputEnd = () => {
-			const inputEl = searchHeader.value?.$el.querySelector( 'input' );
-			return inputEl?.selectionStart === inputEl?.value.length;
-		};
-
 		// Check if there's a valid highlighted item with actions
 		const hasHighlightedItemWithActions = () => {
 			if ( currentItems.value.length === 0 || highlightedItemIndex.value < 0 ) {
@@ -148,55 +163,6 @@ module.exports = exports = defineComponent( {
 			);
 		};
 
-		// Find and get the first action button of the highlighted item
-		const getFirstActionButton = () => resultsContainer.value.querySelector(
-			'.citizen-command-palette-list-item--highlighted .citizen-command-palette-list-item__action'
-		);
-
-		// Enhanced action objects - Add keyboard hint metadata to actions when building the search results
-		const enhanceActionsWithHints = ( actions ) => {
-			if ( !actions || !Array.isArray( actions ) ) {
-				return [];
-			}
-
-			return actions.map( ( action, index ) => {
-				// Clone the action to avoid modifying the original
-				const enhancedAction = { ...action };
-
-				// Add keyboard hint metadata
-				enhancedAction.keyHint = {
-					key: index === 0 ? '→' : '',
-					label: action.label || '',
-					ariaLabel: action.ariaLabel || action.label || ''
-				};
-
-				return enhancedAction;
-			} );
-		};
-
-		// Focus the action button of the highlighted item
-		const focusActionButton = () => {
-			// Check preconditions
-			if ( !isCursorAtInputEnd() || !hasHighlightedItemWithActions() ) {
-				return false;
-			}
-
-			// Find the button
-			const actionButton = getFirstActionButton();
-			if ( !actionButton ) {
-				return false;
-			}
-
-			// Move focus from input to the action button
-			const inputEl = searchHeader.value?.$el.querySelector( 'input' );
-			if ( inputEl ) {
-				inputEl.blur();
-			}
-			actionButton.focus();
-			isActionButtonFocused.value = true;
-			return true;
-		};
-
 		const getSearchUrl = () => urlGenerator.generateUrl( 'Special:Search', {
 			search: searchQuery.value
 		} );
@@ -206,7 +172,7 @@ module.exports = exports = defineComponent( {
 				window.location.href = getSearchUrl();
 				// Save the search query as a recent item when there are no results
 				if ( searchQuery.value.trim() !== '' ) {
-					searchHistoryService.value.saveSearchQuery( searchQuery.value, getSearchUrl() );
+					searchHistory.value.saveSearchQuery( searchQuery.value, getSearchUrl() );
 				}
 				isOpen.value = false;
 				return;
@@ -216,48 +182,58 @@ module.exports = exports = defineComponent( {
 			if ( result.url ) {
 				window.location.href = result.url;
 				// Save the entire result object to recent items
-				searchHistoryService.value.saveRecentItem( result );
+				searchHistory.value.saveRecentItem( result );
 			} else {
 				// If no URL, fall back to search and save the query
 				window.location.href = getSearchUrl();
-				searchHistoryService.value.saveSearchQuery( searchQuery.value, getSearchUrl() );
+				searchHistory.value.saveSearchQuery( searchQuery.value, getSearchUrl() );
 			}
 			isOpen.value = false;
 		};
 
+		// Scroll to highlighted item
+		const scrollToHighlightedItem = () => {
+			if ( !resultsContainer.value ) {
+				return;
+			}
+
+			const isResultsScrollable =
+				resultsContainer.value.scrollHeight > resultsContainer.value.clientHeight;
+
+			if ( !isResultsScrollable ) {
+				return;
+			}
+
+			const highlightedElement = resultsContainer.value.querySelector( '.citizen-command-palette-list-item--highlighted' );
+			highlightedElement?.scrollIntoView( {
+				block: 'nearest',
+				behavior: 'smooth'
+			} );
+		};
+
+		// This handler now only deals with list navigation received from the header
 		const onKeydown = ( event ) => {
-			const keyHandlers = {
-				ArrowUp: () => {
-					event.preventDefault();
-					highlightPrevious();
-				},
-				ArrowDown: () => {
-					event.preventDefault();
-					highlightNext();
-				},
-				ArrowRight: () => {
-					if ( focusActionButton() ) {
-						event.preventDefault();
-					}
-				},
-				Home: () => {
-					event.preventDefault();
-					highlightFirst();
-				},
-				End: () => {
-					event.preventDefault();
-					highlightLast();
-				},
-				Enter: () => {
-					event.preventDefault();
-					selectResult( currentItems.value[ highlightedItemIndex.value ] );
-				}
+			// Map keys to actions for list navigation
+			const listNavActions = {
+				ArrowUp: highlightPrevious,
+				ArrowDown: highlightNext,
+				Home: highlightFirst,
+				End: highlightLast
 			};
 
-			const handler = keyHandlers[ event.key ];
-			if ( handler ) {
-				handler();
+			if ( listNavActions[ event.key ] ) {
+				event.preventDefault(); // Prevent default browser behavior (e.g., scrolling page)
+				listNavActions[ event.key ]();
+				nextTick( scrollToHighlightedItem ); // Ensure DOM is updated before scrolling
+			} else if ( event.key === 'Enter' ) {
+				event.preventDefault();
+				const selectedItem = highlightedItemIndex.value >= 0 ?
+					currentItems.value[ highlightedItemIndex.value ] :
+					null;
+				selectResult( selectedItem );
 			}
+			// Note: ArrowRight is no longer handled here.
+			// Note: isActionButtonFocused might need re-evaluation based on new flow.
 		};
 
 		// Scroll handling
@@ -295,7 +271,7 @@ module.exports = exports = defineComponent( {
 
 				// Save item to recent items when performing action with onClick
 				if ( item ) {
-					searchHistoryService.value.saveRecentItem( item );
+					searchHistory.value.saveRecentItem( item );
 				}
 				return;
 			}
@@ -303,7 +279,7 @@ module.exports = exports = defineComponent( {
 			if ( actionUrl ) {
 				// Save item to recent items before navigating
 				if ( item ) {
-					searchHistoryService.value.saveRecentItem( item );
+					searchHistory.value.saveRecentItem( item );
 				}
 
 				window.location.href = actionUrl;
@@ -311,9 +287,30 @@ module.exports = exports = defineComponent( {
 			}
 		};
 
+		// Enhanced action objects - Add keyboard hint metadata to actions when building the search results
+		const enhanceActionsWithHints = ( actions ) => {
+			if ( !actions || !Array.isArray( actions ) ) {
+				return [];
+			}
+
+			return actions.map( ( action, index ) => {
+				// Clone the action to avoid modifying the original
+				const enhancedAction = { ...action };
+
+				// Add keyboard hint metadata
+				enhancedAction.keyHint = {
+					key: index === 0 ? '→' : '',
+					label: action.label || '',
+					ariaLabel: action.ariaLabel || action.label || ''
+				};
+
+				return enhancedAction;
+			} );
+		};
+
 		// Search method
 		// eslint-disable-next-line es-x/no-async-functions
-		const search = async ( query ) => {
+		const performSearch = async ( query ) => {
 			highlightedItemIndex.value = -1;
 
 			if ( !query ) {
@@ -328,7 +325,7 @@ module.exports = exports = defineComponent( {
 			showPending.value = true;
 
 			try {
-				const results = await searchService.value.search( query, 10 );
+				const results = await search.value.search( query, 10 );
 				const items = results?.map( ( result ) => {
 					if ( !result || typeof result !== 'object' ) {
 						return null;
@@ -381,7 +378,7 @@ module.exports = exports = defineComponent( {
 			}
 
 			debounceTimeout.value = setTimeout( () => {
-				search( newQuery );
+				performSearch( newQuery );
 			}, 300 );
 		} );
 
@@ -397,60 +394,36 @@ module.exports = exports = defineComponent( {
 			} );
 		}, { deep: true } );
 
-		// Add event listener for action button keydown
-		const setupActionButtonKeyNavigation = () => {
-			// Use event delegation on the results container
-			resultsContainer.value?.addEventListener( 'keydown', ( event ) => {
-				// Check if the event target is an action button
-				if ( event.target.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
-					if ( event.key === 'ArrowLeft' ) {
-						const prevButton = event.target.previousElementSibling;
-						if ( prevButton && prevButton.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
-							// Focus previous action button if it exists
-							prevButton.focus();
-						} else {
-							// If no previous action button, return focus to the highlighted item and search input
-							event.target.blur();
-							searchHeader.value?.$el.querySelector( 'input' )?.focus();
-							isActionButtonFocused.value = false;
-						}
-						event.preventDefault();
-					} else if ( event.key === 'ArrowRight' ) {
-						const nextButton = event.target.nextElementSibling;
-						if ( nextButton && nextButton.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
-							// Focus next action button if it exists
-							nextButton.focus();
-							event.preventDefault();
-						}
-					}
-				}
-			} );
-
-			// Track focus state for keyboard hints
-			resultsContainer.value?.addEventListener( 'focusin', ( event ) => {
-				if ( event.target.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
-					isActionButtonFocused.value = true;
-				}
-			} );
-
-			resultsContainer.value?.addEventListener( 'focusout', ( event ) => {
-				if ( event.target.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
-					// Only set to false if we're not focusing another action button
-					if ( !event.relatedTarget || !event.relatedTarget.classList.contains( 'citizen-command-palette-list-item__action' ) ) {
-						isActionButtonFocused.value = false;
-					}
-				}
-			} );
+		const focusInput = () => {
+			searchHeader.value?.focus();
 		};
 
-		// Watch isOpen to set up event listeners when the command palette opens
-		watch( isOpen, ( newValue ) => {
-			if ( newValue ) {
-				nextTick( () => {
-					setupActionButtonKeyNavigation();
-				} );
+		const focusItem = ( index ) => {
+			if ( index >= 0 && index < itemRefs.value.length ) {
+				const item = itemRefs.value[ index ];
+				if ( item && typeof item.focusFirstButton === 'function' ) {
+					item.focusFirstButton();
+					// Update parent state if needed (e.g., isActionButtonFocused)
+					// isActionButtonFocused.value = true; // Re-evaluate if needed
+				} else if ( item && typeof item.focus === 'function' ) {
+					// Fallback: focus the item itself if focusFirstButton isn't available/applicable
+					item.focus();
+				}
 			}
-		} );
+		};
+
+		// Handle navigation triggered from within a list item's action button
+		const handleListNavigation = ( direction ) => {
+			if ( direction === 'up' ) {
+				highlightPrevious();
+			} else if ( direction === 'down' ) {
+				highlightNext();
+			}
+			// Return focus to the input field after navigating
+			focusInput();
+			// Ensure the newly highlighted item is visible
+			nextTick( scrollToHighlightedItem );
+		};
 
 		return {
 			// State
@@ -473,7 +446,11 @@ module.exports = exports = defineComponent( {
 			selectResult,
 			handleAction,
 			loadRecentItems,
-			hasHighlightedItemWithActions
+			hasHighlightedItemWithActions,
+			setItemRef,
+			focusInput,
+			focusItem,
+			handleListNavigation
 		};
 	},
 	methods: {

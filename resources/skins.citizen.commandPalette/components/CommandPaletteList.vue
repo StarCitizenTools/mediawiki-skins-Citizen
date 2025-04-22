@@ -17,9 +17,12 @@
 				v-for="( item, index ) in items"
 				:key="item.id"
 				v-bind="getListItemBindings( item )"
+				:ref="( el ) => setItemRef && setItemRef( el, index )"
 				@change="( property, value ) => onItemChange( item.id, property, value, index )"
 				@select="( result ) => $emit( 'select', result )"
 				@action="( action ) => $emit( 'action', action )"
+				@focus-input="$emit( 'focus-input' )"
+				@navigate-list="( direction ) => $emit( 'navigate-list', direction )"
 			></command-palette-list-item>
 		</ul>
 	</section>
@@ -51,9 +54,14 @@ module.exports = exports = defineComponent( {
 		heading: {
 			type: String,
 			default: ''
+		},
+		setItemRef: {
+			type: Function,
+			required: false,
+			default: null
 		}
 	},
-	emits: [ 'update:highlightedItemIndex', 'select', 'action' ],
+	emits: [ 'update:highlightedItemIndex', 'select', 'action', 'focus-input', 'navigate-list' ],
 	setup( props, { emit } ) {
 		const listRef = ref( null );
 		const highlightedItemId = ref( null );

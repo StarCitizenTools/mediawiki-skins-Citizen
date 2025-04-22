@@ -4,7 +4,7 @@
  * @module searchService
  */
 
-const SearchClientFactory = require( './searchClients/SearchClientFactory.js' );
+const SearchClientFactory = require( '../searchClients/SearchClientFactory.js' );
 
 /**
  * Create a search service instance
@@ -12,7 +12,7 @@ const SearchClientFactory = require( './searchClients/SearchClientFactory.js' );
  * @param {mw.Map} config MediaWiki configuration
  * @return {Object} Search service instance
  */
-function createSearchService( config ) {
+function createSearch( config ) {
 	const searchClient = SearchClientFactory.createSearchClient( 'rest', config );
 
 	/**
@@ -66,4 +66,4 @@ function createSearchService( config ) {
 	};
 }
 
-module.exports = createSearchService;
+module.exports = createSearch;

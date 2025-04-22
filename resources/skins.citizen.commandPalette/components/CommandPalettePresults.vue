@@ -5,9 +5,12 @@
 		:items="itemsWithActions"
 		:highlighted-item-index="highlightedItemIndex"
 		:search-query="searchQuery"
+		:set-item-ref="setItemRef"
 		@update:highlighted-item-index="$emit( 'update:highlighted-item-index', $event )"
 		@select="$emit( 'select', $event )"
 		@action="handleAction"
+		@focus-input="$emit( 'focus-input' )"
+		@navigate-list="( direction ) => $emit( 'navigate-list', direction )"
 	></command-palette-list>
 	<command-palette-empty-state
 		v-else
@@ -22,7 +25,7 @@ const { defineComponent, computed } = require( 'vue' );
 const CommandPaletteList = require( './CommandPaletteList.vue' );
 const CommandPaletteEmptyState = require( './CommandPaletteEmptyState.vue' );
 const { cdxIconArticlesSearch, cdxIconTrash } = require( '../icons.json' );
-const createSearchHistoryService = require( '../searchHistoryService.js' );
+const createSearchHistory = require( '../services/searchHistory.js' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
@@ -43,11 +46,15 @@ module.exports = exports = defineComponent( {
 		searchQuery: {
 			type: String,
 			required: true
+		},
+		setItemRef: {
+			type: Function,
+			default: null
 		}
 	},
-	emits: [ 'update:highlighted-item-index', 'select', 'update:recent-items' ],
+	emits: [ 'update:highlighted-item-index', 'select', 'update:recent-items', 'focus-input', 'navigate-list' ],
 	setup( props, { emit } ) {
-		const searchHistoryService = createSearchHistoryService();
+		const searchHistory = createSearchHistory();
 
 		// Add dismiss action to recent items
 		const itemsWithActions = computed( () => props.recentItems.map( ( item ) => ( {
@@ -66,7 +73,7 @@ module.exports = exports = defineComponent( {
 				// Find the item to remove
 				const itemToRemove = props.recentItems.find( ( item ) => item.id === action.itemId );
 				if ( itemToRemove ) {
-					searchHistoryService.removeRecentItem( itemToRemove );
+					searchHistory.removeRecentItem( itemToRemove );
 					// Notify parent to update the list
 					emit( 'update:recent-items' );
 				}
