@@ -80,15 +80,15 @@ Partially based on the MenuItem component from Codex.
 				</div>
 				<div v-if="actions && actions.length > 0" class="citizen-command-palette-list-item__actions">
 					<cdx-button
-						v-for="( action, index ) in actions"
+						v-for="action in actions"
 						:key="action.id"
-						:ref="( el ) => setButtonRef( el, index )"
+						:ref="( el ) => setButtonRef( el, action.id )"
 						class="citizen-command-palette-list-item__action"
 						:aria-label="action.label"
 						weight="quiet"
 						:tabindex="-1"
 						@click.stop.prevent="onActionClick( action )"
-						@focus="onButtonFocus( index )"
+						@focus="onButtonFocus( action.id )"
 					>
 						<cdx-icon
 							:icon="action.icon"
@@ -179,18 +179,18 @@ module.exports = exports = defineComponent( {
 	],
 	setup( props, { emit, expose } ) {
 		const rootRef = ref( null );
-		const buttonRefs = ref( [] );
+		const buttonRefs = ref( {} );
 
 		const { handleActionButtonKeydown, onButtonFocus, focusFirstButton } =
 			useActionNavigation( computed( () => props.actions ), buttonRefs, emit );
 
 		onBeforeUpdate( () => {
-			buttonRefs.value = [];
+			buttonRefs.value = {};
 		} );
 
-		const setButtonRef = ( el, index ) => {
+		const setButtonRef = ( el, actionId ) => {
 			if ( el ) {
-				buttonRefs.value[ index ] = el;
+				buttonRefs.value[ actionId ] = el;
 			}
 		};
 
@@ -251,6 +251,12 @@ module.exports = exports = defineComponent( {
 
 		const onKeydown = ( e ) => {
 			if ( handleActionButtonKeydown( e ) ) {
+				return;
+			}
+
+			// Only handle item selection keys if the event target is the list item itself,
+			// not one of its descendants (like an action button).
+			if ( e.target !== rootRef.value ) {
 				return;
 			}
 

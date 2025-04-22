@@ -96,9 +96,12 @@ module.exports = exports = defineComponent( {
 		const isActionButtonFocused = ref( false );
 		const itemRefs = ref( [] );
 
-		const displayedItems = computed( () => (
-			searchStore.searchQuery ? results.value : recentItems.value
-		) );
+		const displayedItems = computed( () => {
+			if ( !searchStore.searchQuery ) {
+				return recentItems.value;
+			}
+			return searchStore.isPending ? [] : results.value;
+		} );
 
 		const { highlightedItemIndex, handleNavigationKeydown } = useListNavigation( displayedItems, itemRefs );
 
@@ -209,6 +212,7 @@ module.exports = exports = defineComponent( {
 			searchHeader,
 			resultsContainer,
 			setItemRef,
+			// eslint-disable-next-line vue/no-unused-properties
 			open,
 			close,
 			selectResult,
