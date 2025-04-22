@@ -5,7 +5,7 @@ const { ref, watch, nextTick } = require( 'vue' );
  *
  * @param {import('vue').Ref<Array>} itemsRef Reactive reference to the list of items.
  * @param {import('vue').Ref<Array<HTMLElement|null>>} itemRefs Reactive reference to the array of DOM elements for the items.
- * @return {object} { highlightedItemIndex, handleNavigationKeydown }
+ * @return {Object} { highlightedItemIndex, handleNavigationKeydown }
  */
 function usePaletteNavigation( itemsRef, itemRefs ) {
 	const highlightedItemIndex = ref( -1 );
@@ -100,4 +100,4 @@ function usePaletteNavigation( itemsRef, itemRefs ) {
 	};
 }
 
-module.exports = usePaletteNavigation; 
+module.exports = usePaletteNavigation;
