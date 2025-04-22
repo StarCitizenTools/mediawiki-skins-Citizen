@@ -15,25 +15,15 @@ module.exports = function useSearch( { state, enhanceActionsWithHints, services 
 	const transformer = useSearchResultTransformer();
 	const navigation = useSearchNavigation( { state, history } );
 
-	/**
-	 * Reset the search state
-	 */
-	const resetSearchState = () => {
-		state.isPending.value = false;
-		state.showPending.value = false;
-	};
-
-	/**
-	 * Perform search with the given query
-	 *
-	 * @param {string} query - The search query
-	 */
+	// Perform search with debouncing
 	// eslint-disable-next-line es-x/no-async-functions
 	const search = async ( query ) => {
 		state.highlightedItemIndex.value = -1;
 
 		if ( !query ) {
-			resetSearchState();
+			// Clear any pending state immediately
+			state.isPending.value = false;
+			state.showPending.value = false;
 			// Load recent items synchronously
 			history.loadRecentItems();
 			return;
@@ -57,11 +47,11 @@ module.exports = function useSearch( { state, enhanceActionsWithHints, services 
 		}
 	};
 
-	// Create debounced search function with MediaWiki's utility
-	const debouncedSearch = mw.util.debounce( search, 300 );
-
 	// Set up search query watcher
 	const watchSearchQuery = ( nextTick ) => ( newQuery ) => {
+		if ( state.debounceTimeout.value ) {
+			clearTimeout( state.debounceTimeout.value );
+		}
 		state.isPending.value = true;
 
 		if ( !newQuery ) {
@@ -70,13 +60,13 @@ module.exports = function useSearch( { state, enhanceActionsWithHints, services 
 			// Load recent items in next tick to prevent flash
 			nextTick( () => {
 				history.loadRecentItems();
-				resetSearchState();
 			} );
 			return;
 		}
 
-		// Execute the search with debouncing handled by mw.util.debounce
-		debouncedSearch( newQuery );
+		state.debounceTimeout.value = setTimeout( () => {
+			search( newQuery );
+		}, 300 );
 	};
 
 	return {
