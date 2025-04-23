@@ -24,7 +24,7 @@
 		"stylelint-order": "^7.0.0",
 		"types-mediawiki": "1.10.1",
 		"vue": "3.4.27",
-		"pinia": "2.0.16"
+		"pinia": "3.0.2"
 	},
 	"version": "3.0.0"
 }
