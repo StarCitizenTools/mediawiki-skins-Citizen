@@ -83,5 +83,7 @@
 	"citizen-command-palette-keyhint-navigate": "Keyboard hint for the key to navigate in the command palette",
 	"citizen-command-palette-keyhint-exit": "Keyboard hint for the key to exit the command palette",
 	"citizen-command-palette-type-page": "Label for the page type of the result in the command palette",
+	"citizen-command-palette-type-namespace": "Label for the namespace type of the result in the command palette",
+	"citizen-command-palette-type-command": "Label for the command type of the result in the command palette",
 	"citizen-command-palette-type-fulltext-search": "Label for the fulltext search type of the result in the command palette"
 }

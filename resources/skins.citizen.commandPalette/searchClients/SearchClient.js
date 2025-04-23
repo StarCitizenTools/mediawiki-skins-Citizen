@@ -4,6 +4,8 @@
  * @interface SearchClient
  */
 
+const { AbortableSearchFetch } = require( '../types.js' );
+
 /**
  * Search for pages by title
  *

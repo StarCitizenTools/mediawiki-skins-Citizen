@@ -4,9 +4,10 @@
  * @module MwRestSearchClient
  */
 
+const { SearchClient, SearchResponse, AbortableSearchFetch } = require( '../types.js' );
 const fetchJson = require( '../utils/fetch.js' );
 const urlGenerator = require( '../utils/urlGenerator.js' );
-const { cdxIconArticleRedirect, cdxIconEdit } = require( '../icons.json' );
+const { cdxIconArticle, cdxIconArticleRedirect, cdxIconEdit } = require( '../icons.json' );
 
 /**
  * @typedef {Object} RestResponse
@@ -35,13 +36,11 @@ const { cdxIconArticleRedirect, cdxIconEdit } = require( '../icons.json' );
  * @implements {SearchClient}
  */
 class MwRestSearchClient {
-	/**
-	 * @param {mw.Map} config
-	 */
-	constructor( config ) {
-		this.config = config;
-		this.urlGenerator = urlGenerator( config );
+
+	constructor() {
+		this.urlGenerator = urlGenerator();
 		this.editMessage = mw.msg( 'action-edit' );
+		this.searchApiUrl = mw.config.get( 'wgScriptPath' ) + '/rest.php';
 	}
 
 	/**
@@ -69,6 +68,7 @@ class MwRestSearchClient {
 						width: thumbnail.width ?? undefined,
 						height: thumbnail.height ?? undefined
 					} : undefined,
+					thumbnailIcon: cdxIconArticle,
 					metadata: page.matched_title ? [
 						{
 							icon: cdxIconArticleRedirect,
@@ -97,10 +97,9 @@ class MwRestSearchClient {
 	 * @return {AbortableSearchFetch}
 	 */
 	fetchByQuery( query, limit = 10, showDescription = true ) {
-		const searchApiUrl = this.config.get( 'wgScriptPath' ) + '/rest.php';
 		const params = { q: query, limit: limit.toString() };
 		const search = new URLSearchParams( params );
-		const url = `${ searchApiUrl }/v1/search/title?${ search.toString() }`;
+		const url = `${ this.searchApiUrl }/v1/search/title?${ search.toString() }`;
 		const result = fetchJson( url, {
 			headers: {
 				accept: 'application/json'
@@ -125,10 +124,9 @@ class MwRestSearchClient {
 	 * @return {AbortableSearchFetch}
 	 */
 	loadMore( query, offset, limit = 10 ) {
-		const searchApiUrl = this.config.get( 'wgScriptPath' ) + '/rest.php';
 		const params = { q: query, limit: limit.toString(), offset: offset.toString() };
 		const search = new URLSearchParams( params );
-		const url = `${ searchApiUrl }/v1/search/title?${ search.toString() }`;
+		const url = `${ this.searchApiUrl }/v1/search/title?${ search.toString() }`;
 		const result = fetchJson( url, {
 			headers: {
 				accept: 'application/json'

@@ -18,7 +18,8 @@
 			ref="resultsContainer"
 			class="citizen-command-palette__results"
 		>
-			<template v-if="!searchStore.searchQuery">
+			<!-- Show Recent Items (using Presults) when query is empty and not loading -->
+			<template v-if="!searchStore.searchQuery && !searchStore.isPending">
 				<command-palette-presults
 					:recent-items="displayedItems"
 					:highlighted-item-index="highlightedItemIndex"
@@ -26,21 +27,22 @@
 					:set-item-ref="setItemRef"
 					@update:highlighted-item-index="updatehighlightedItemIndex"
 					@select="selectResult"
-					@update:recent-items="searchStore.loadRecentItems()"
+					@update:recent-items="searchStore.updateQuery( '' )"
 					@focus-input="focusInput"
 					@navigate-list="handleListNavigation"
 				></command-palette-presults>
 			</template>
-			<template v-else-if="displayedItems.length === 0 && !searchStore.isPending">
+			<!-- Show Empty State when query exists, not pending, and no results -->
+			<template v-else-if="searchStore.searchQuery && !searchStore.isPending && displayedItems.length === 0">
 				<command-palette-empty-state
 					:title="$i18n( 'citizen-search-noresults-title' ).params( [ searchStore.searchQuery ] ).text()"
 					:description="$i18n( 'search-nonefound' ).text()"
 					:icon="cdxIconArticleNotFound"
 				></command-palette-empty-state>
 			</template>
-			<template v-else>
+			<!-- Show Regular List for search results or slash commands when query exists and has results, or when loading -->
+			<template v-else-if="( searchStore.searchQuery || searchStore.isPending ) && displayedItems.length > 0">
 				<command-palette-list
-					v-if="displayedItems.length > 0"
 					:items="displayedItems"
 					:highlighted-item-index="highlightedItemIndex"
 					:search-query="searchStore.searchQuery"
@@ -54,7 +56,7 @@
 			</template>
 		</div>
 		<command-palette-footer
-			:has-highlighted-item-with-actions="hasHighlightedItemWithActions()"
+			:has-highlighted-item-with-actions="hasHighlightedItemWithActions"
 			:is-action-button-focused="isActionButtonFocused"
 		></command-palette-footer>
 	</div>
@@ -63,7 +65,7 @@
 <script>
 const { useSearchStore } = require( '../stores/searchStore.js' );
 const { storeToRefs } = require( 'pinia' );
-const { defineComponent, ref, nextTick, computed } = require( 'vue' );
+const { defineComponent, ref, nextTick, computed, watch } = require( 'vue' );
 const useListNavigation = require( '../composables/useListNavigation.js' );
 const CommandPaletteList = require( './CommandPaletteList.vue' );
 const CommandPaletteEmptyState = require( './CommandPaletteEmptyState.vue' );
@@ -88,20 +90,16 @@ module.exports = exports = defineComponent( {
 	props: {},
 	setup() {
 		const searchStore = useSearchStore();
-		const { results, recentItems, searchUrl } = storeToRefs( searchStore );
+		const {
+			displayedItems,
+			searchUrl
+		} = storeToRefs( searchStore );
 
 		const isOpen = ref( false );
 		const searchHeader = ref( null );
 		const resultsContainer = ref( null );
 		const isActionButtonFocused = ref( false );
 		const itemRefs = ref( [] );
-
-		const displayedItems = computed( () => {
-			if ( !searchStore.searchQuery ) {
-				return recentItems.value;
-			}
-			return results.value;
-		} );
 
 		const { highlightedItemIndex, handleNavigationKeydown } = useListNavigation( displayedItems, itemRefs );
 
@@ -129,7 +127,7 @@ module.exports = exports = defineComponent( {
 			highlightedItemIndex.value = index;
 		};
 
-		const hasHighlightedItemWithActions = () => {
+		const hasHighlightedItemWithActions = computed( () => {
 			if ( displayedItems.value.length === 0 || highlightedItemIndex.value < 0 ) {
 				return false;
 			}
@@ -139,13 +137,35 @@ module.exports = exports = defineComponent( {
 				highlightedItem.actions &&
 				highlightedItem.actions.length > 0
 			);
-		};
+		} );
 
 		const selectResult = ( result ) => {
-			const targetUrl = result?.url || searchUrl.value;
-			window.location.href = targetUrl;
-			searchStore.saveToHistory( result );
-			close();
+			if ( !result ) {
+				if ( searchStore.searchQuery && !searchStore.searchQuery.startsWith( '/' ) ) {
+					window.location.href = searchUrl.value;
+					close();
+				}
+				return;
+			}
+
+			switch ( result.type ) {
+				case 'command':
+					searchStore.updateQuery( result.value + ' ' );
+					nextTick( focusInput );
+					break;
+				case 'namespace':
+				case 'commandSuggestion':
+					searchStore.updateQuery( result.label + ':' );
+					nextTick( focusInput );
+					break;
+				case 'search':
+				case 'recent':
+				default:
+					window.location.href = result.url;
+					searchStore.saveToHistory( result );
+					close();
+					break;
+			}
 		};
 
 		const handleAction = ( action ) => {
@@ -174,7 +194,8 @@ module.exports = exports = defineComponent( {
 					null;
 				selectResult( selectedItem );
 			} else if ( event.key === 'Tab' ) {
-				if ( hasHighlightedItemWithActions() && !event.shiftKey ) {
+				const currentHighlightedItem = hasHighlightedItemWithActions.value ? displayedItems.value[ highlightedItemIndex.value ] : null;
+				if ( currentHighlightedItem && !event.shiftKey ) {
 					const highlightedElement = itemRefs.value[ highlightedItemIndex.value ];
 					const firstActionButton = highlightedElement?.querySelector( 'button, a' );
 					if ( firstActionButton ) {
@@ -201,9 +222,21 @@ module.exports = exports = defineComponent( {
 			element?.focus();
 		};
 
+		// Watch for changes in displayed items to potentially reset selection
+		watch( displayedItems, ( newItems ) => {
+			// Reset selection to the first item if the provider indicated it
+			if ( searchStore.autoSelectFirst && newItems.length > 0 ) {
+				highlightedItemIndex.value = 0;
+			} else if ( newItems.length === 0 ) {
+				// Reset if list becomes empty
+				highlightedItemIndex.value = -1;
+			}
+		} );
+
 		return {
 			searchStore,
 			isOpen,
+			displayedItems,
 			highlightedItemIndex,
 			searchHeader,
 			resultsContainer,
@@ -217,7 +250,6 @@ module.exports = exports = defineComponent( {
 			handleListNavigation,
 			updatehighlightedItemIndex,
 			cdxIconArticleNotFound,
-			displayedItems,
 			hasHighlightedItemWithActions,
 			isActionButtonFocused,
 			focusItem,
