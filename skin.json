@@ -365,7 +365,9 @@
 				"citizen-command-palette-type-page",
 				"citizen-command-palette-type-fulltext-search",
 				"citizen-command-palette-type-namespace",
-				"citizen-command-palette-type-command"
+				"citizen-command-palette-type-command",
+				"citizen-command-palette-command-namespace-label",
+				"citizen-command-palette-command-namespace-description"
 			]
 		},
 		"skins.citizen.commandPalette.codex": {
