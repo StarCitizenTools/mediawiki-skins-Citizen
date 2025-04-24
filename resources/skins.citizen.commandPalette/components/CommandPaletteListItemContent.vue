@@ -1,8 +1,6 @@
 <template>
-	<a
-		:href="url"
+	<div
 		class="citizen-command-palette-list-item__content"
-		:tabindex="-1"
 	>
 		<cdx-thumbnail
 			:thumbnail="thumbnail"
@@ -12,7 +10,7 @@
 
 		<div class="citizen-command-palette-list-item__text">
 			<div class="citizen-command-palette-list-item__text__label">
-				<!-- Techinally you are not supposed to use CdxSearchResultTitle... -->
+				<!-- Technically you are not supposed to use CdxSearchResultTitle... -->
 				<cdx-search-result-title
 					:title="label"
 					:search-query="searchQuery"
@@ -57,7 +55,7 @@
 				{{ typeLabel }}
 			</div>
 		</div>
-	</a>
+	</div>
 </template>
 
 <script>
@@ -102,10 +100,6 @@ module.exports = exports = defineComponent( {
 			required: true
 		},
 		searchQuery: {
-			type: String,
-			default: ''
-		},
-		url: {
 			type: String,
 			default: ''
 		}

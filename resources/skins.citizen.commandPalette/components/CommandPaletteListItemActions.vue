@@ -61,7 +61,9 @@ module.exports = exports = defineComponent( {
 
 		// Reset refs before update
 		onBeforeUpdate( () => {
-			buttonRefs.value = {};
+			for ( const key in buttonRefs.value ) {
+				delete buttonRefs.value[ key ];
+			}
 		} );
 
 		const setButtonRef = ( el, actionId ) => {
