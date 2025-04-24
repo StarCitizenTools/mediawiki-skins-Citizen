@@ -1,15 +1,10 @@
-/**
- * Service for managing search history in the command palette
- */
 const { CommandPaletteItem } = require( '../types.js' );
 const { cdxIconHistory } = require( '../icons.json' );
 const RECENT_ITEMS_KEY = 'skin-citizen-command-palette-recent-items';
 const MAX_RECENT_ITEMS = 5;
 
 /**
- * Creates a search history service
- *
- * @return {Object} Search history service
+ * @return {Object} Recent items service
  */
 function createRecentItems() {
 	/**

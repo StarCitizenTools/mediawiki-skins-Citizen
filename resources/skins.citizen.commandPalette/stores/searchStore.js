@@ -1,4 +1,4 @@
-const { CommandPaletteItem, CommandPaletteActionResult } = require( '../types.js' );
+const { CommandPaletteItem, CommandPaletteActionResult, CommandPaletteProvider } = require( '../types.js' );
 const { defineStore } = require( 'pinia' );
 const createRecentItems = require( '../services/recentItems.js' );
 const urlGenerator = require( '../utils/urlGenerator.js' )();
@@ -10,6 +10,7 @@ const SearchProvider = require( '../providers/SearchProvider.js' );
 const recentItemsService = createRecentItems();
 
 // List of providers in order of priority
+/** @type {Array<CommandPaletteProvider>} */
 const providers = [
 	RecentItemsProvider,
 	SlashCommandProvider,
@@ -80,6 +81,7 @@ exports.useSearchStore = defineStore( 'search', {
 			clearTimeout( this.pendingDelayTimeout );
 			// Don't reset showPending here, let _setResults handle it or the pendingDelayTimeout
 
+			/** @type {CommandPaletteProvider|undefined} */
 			const provider = providers.find( ( p ) => p.canProvide( query ) );
 
 			if ( !provider ) {

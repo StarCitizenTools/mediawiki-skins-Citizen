@@ -1,6 +1,7 @@
-const { CommandPaletteItem } = require( '../types.js' );
+const { CommandPaletteItem, CommandPaletteProvider } = require( '../types.js' );
 const SearchClientFactory = require( '../searchClients/SearchClientFactory.js' );
 
+/** @type {CommandPaletteProvider} */
 module.exports = {
 	/** Whether the first result from this provider should be automatically selected */
 	shouldAutoSelectFirst: false,
