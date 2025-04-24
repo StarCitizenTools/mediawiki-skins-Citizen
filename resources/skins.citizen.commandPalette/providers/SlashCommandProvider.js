@@ -34,7 +34,13 @@ module.exports = {
 				label: handler.label ?? cmdName,
 				description: handler.description,
 				thumbnailIcon: cdxIconCode,
-				value: '/' + cmdName + ':'
+				value: `/${ cmdName }:`,
+				metadata: [
+					{
+						label: `/${ cmdName }`,
+						highlightQuery: true
+					}
+				]
 			} ) );
 		}
 
