@@ -19,9 +19,7 @@ function initApp() {
 
 	const app = Vue.createMwApp( App, {}, config );
 
-	// Create Pinia instance
 	const pinia = createPinia();
-	// Use Pinia with the app
 	app.use( pinia );
 
 	const commandPalette = app.mount( overlay );

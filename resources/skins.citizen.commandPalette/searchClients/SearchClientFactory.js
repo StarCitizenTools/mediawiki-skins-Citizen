@@ -4,48 +4,54 @@
  * @module SearchClientFactory
  */
 
+const { CitizenCommandPaletteSearchClient } = require( '../types.js' );
 const MwRestSearchClient = require( './MwRestSearchClient.js' );
 
 /**
- * Registry of available search clients
+ * Registry of available search client factory functions.
+ * Each factory returns a client instance.
  *
- * @type {Object.<string, function(mw.Map): SearchClient>}
+ * @type {Object.<string, function(mw.Map): CitizenCommandPaletteSearchClient>}
  */
 const searchClientRegistry = {
-	rest: ( config ) => new MwRestSearchClient( config )
+	MwRestSearchClient: () => new MwRestSearchClient()
 };
 
 /**
- * Register a new search client type
+ * Create a search client instance based on the configuration.
  *
- * @param {string} type Unique identifier for the search client type
- * @param {function(mw.Map): SearchClient} factory Function that creates the search client
- * @throws {Error} If the type is already registered
+ * @return {CitizenCommandPaletteSearchClient}
+ * @throws {Error} If the configured type is not registered or config is missing.
+ */
+function create() {
+	// We don't have any other client type yet
+	const clientType = 'MwRestSearchClient';
+
+	const factory = searchClientRegistry[ clientType ];
+	if ( !factory ) {
+		// Use mw.log.error in production? Throwing for now.
+		throw new Error( `Unknown or unregistered search client type configured: ${ clientType }` );
+	}
+
+	return factory();
+}
+
+/**
+ * Register a new search client type dynamically.
+ * Useful for extensions adding their own search clients.
+ *
+ * @param {string} type Unique identifier for the search client type.
+ * @param {function(mw.Map): CitizenCommandPaletteSearchClient} factory Function that creates the search client instance.
+ * @throws {Error} If the type is already registered.
  */
 function registerSearchClient( type, factory ) {
 	if ( searchClientRegistry[ type ] ) {
-		throw new Error( `Search client type "${ type }" is already registered` );
+		throw new Error( `Search client type "${ type }" is already registered.` );
 	}
 	searchClientRegistry[ type ] = factory;
 }
 
-/**
- * Create a search client instance
- *
- * @param {string} type Type of search client to create
- * @param {mw.Map} config MediaWiki configuration
- * @return {SearchClient}
- * @throws {Error} If the type is not registered
- */
-function createSearchClient( type, config ) {
-	const factory = searchClientRegistry[ type ];
-	if ( !factory ) {
-		throw new Error( `Unknown search client type: ${ type }` );
-	}
-	return factory( config );
-}
-
 module.exports = {
-	createSearchClient,
+	create,
 	registerSearchClient
 };

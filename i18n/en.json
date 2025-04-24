@@ -92,5 +92,10 @@
 	"citizen-command-palette-keyhint-return": "Return",
 
 	"citizen-command-palette-type-page": "Page",
-	"citizen-command-palette-type-fulltext-search": "Fulltext search"
+	"citizen-command-palette-type-fulltext-search": "Fulltext search",
+	"citizen-command-palette-type-namespace": "Namespace",
+	"citizen-command-palette-type-command": "Command",
+
+	"citizen-command-palette-command-namespace-label": "Search by Namespace",
+	"citizen-command-palette-command-namespace-description": "Type /ns: followed by a namespace name or ID"
 }

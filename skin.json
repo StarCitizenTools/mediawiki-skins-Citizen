@@ -307,16 +307,20 @@
 			],
 			"packageFiles": [
 				"resources/skins.citizen.commandPalette/init.js",
+				"resources/skins.citizen.commandPalette/types.js",
 				"resources/skins.citizen.commandPalette/composables/useListNavigation.js",
 				"resources/skins.citizen.commandPalette/composables/useActionNavigation.js",
 				"resources/skins.citizen.commandPalette/utils/fetch.js",
 				"resources/skins.citizen.commandPalette/utils/urlGenerator.js",
 				"resources/skins.citizen.commandPalette/stores/searchStore.js",
-				"resources/skins.citizen.commandPalette/services/search.js",
 				"resources/skins.citizen.commandPalette/services/searchHistory.js",
 				"resources/skins.citizen.commandPalette/searchClients/SearchClient.js",
 				"resources/skins.citizen.commandPalette/searchClients/SearchClientFactory.js",
 				"resources/skins.citizen.commandPalette/searchClients/MwRestSearchClient.js",
+				"resources/skins.citizen.commandPalette/providers/RecentItemsProvider.js",
+				"resources/skins.citizen.commandPalette/providers/SearchProvider.js",
+				"resources/skins.citizen.commandPalette/providers/SlashCommandProvider.js",
+				"resources/skins.citizen.commandPalette/commands/namespace.js",
 				"resources/skins.citizen.commandPalette/components/App.vue",
 				"resources/skins.citizen.commandPalette/components/CommandPaletteEmptyState.vue",
 				"resources/skins.citizen.commandPalette/components/CommandPaletteFooter.vue",
@@ -330,9 +334,11 @@
 					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
 					"callbackParam": [
 						"cdxIconArticle",
+						"cdxIconArticles",
 						"cdxIconArticleNotFound",
 						"cdxIconArticleRedirect",
 						"cdxIconArticlesSearch",
+						"cdxIconCode",
 						"cdxIconEdit",
 						"cdxIconHistory",
 						"cdxIconSearch",
@@ -358,7 +364,9 @@
 				"citizen-command-palette-keyhint-exit",
 				"citizen-command-palette-keyhint-return",
 				"citizen-command-palette-type-page",
-				"citizen-command-palette-type-fulltext-search"
+				"citizen-command-palette-type-fulltext-search",
+				"citizen-command-palette-type-namespace",
+				"citizen-command-palette-type-command"
 			]
 		},
 		"skins.citizen.commandPalette.codex": {

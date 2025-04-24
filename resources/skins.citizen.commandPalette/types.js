@@ -1,84 +1,82 @@
 /**
- * @typedef {Object} SearchResult
- * @property {number} id
- * @property {string} label
- * @property {string} [description]
- * @property {SearchThumbnail} [thumbnail]
- * @property {string} url
- * @property {SearchMetadataItem[]} [metadata]
- * @property {SearchAction[]} [actions]
+ * @module types
+ * Shared JSDoc type definitions for the Command Palette.
  */
 
 /**
- * @typedef {Object} SearchMetadataItem
- * @property {Icon} icon
- * @property {string} label
- * @property {boolean} highlightQuery
+ * @typedef {Object} CommandPaletteItemAction
+ * @property {string} id Action identifier (e.g., 'edit').
+ * @property {string} label Localized action label.
+ * @property {string} icon SVG icon string or object.
+ * @property {string} url URL for the action.
  */
 
 /**
- * @typedef {Object} SearchAction
- * @property {string} id
- * @property {string} label
- * @property {Icon} icon
- * @property {string} url
+ * @typedef {Object} CommandPaletteItemMetadata
+ * @property {string} [icon] Optional SVG icon string or object.
+ * @property {string} label Metadata label (e.g., matched title for redirect).
+ * @property {boolean} [highlightQuery] Whether to highlight the query in the label.
  */
 
 /**
- * @typedef {Object} SearchThumbnail
- * @property {string} url
- * @property {number} [width]
- * @property {number} [height]
+ * @typedef {Object} CommandPaletteItemThumbnail
+ * @property {string} url Thumbnail URL.
+ * @property {number} [width] Thumbnail width.
+ * @property {number} [height] Thumbnail height.
  */
 
 /**
- * @typedef {Object} SearchResponse
+ * Represents a display item in the Command Palette list.
+ * Based on the props of CommandPaletteListItem.vue.
+ *
+ * @typedef {Object} CommandPaletteItem
+ * @property {string} id Unique identifier for the item (used as :key and element id).
+ * @property {string} type Type identifier (e.g., 'page', 'command', 'namespace', 'recent-item'). Used for styling and type labels via mw.message( `citizen-command-palette-type-${type}` ).
+ * @property {string} label The primary display label (e.g., page title, command name).
+ * @property {string} [url] The primary URL to navigate to when the item is selected. May not apply to all types (e.g., commands that trigger other actions).
+ * @property {string} [description] Optional secondary description text.
+ * @property {CommandPaletteItemThumbnail} [thumbnail] Optional thumbnail object.
+ * @property {string} [thumbnailIcon] Optional placeholder icon identifier (e.g., cdxIcon...) if thumbnail URL is missing. Passed to cdx-thumbnail :placeholder-icon prop.
+ * @property {Array<CommandPaletteItemMetadata>} [metadata] Optional list of metadata badges/tags.
+ * @property {Array<CommandPaletteItemAction>} [actions] Optional list of actions available for the item.
+ * @property {string} [value] Optional value associated with the item, used for specific types like commands (e.g. the command trigger string '/ns').
+ */
+
+/**
+ * Defines the interface for a Slash Command handler.
+ * Each command handler module should export an object conforming to this type.
+ *
+ * @typedef {Object} CommandHandler
+ * @property {string} label The user-facing label for the command (used in root '/' suggestions).
+ * @property {string} description The user-facing description for the command (used in root '/' suggestions).
+ * @property {function(string): Promise<Array<Object>>} getResults Asynchronously fetches raw suggestion data based on the sub-query.
+ * @property {function(Object): CommandPaletteItem} adaptResult Synchronously transforms a single raw result object into a CommandPaletteItem.
+ */
+
+/**
+ * Describes the action the UI should take after an item selection is handled.
+ *
+ * @typedef {Object} CommandPaletteActionResult
+ * @property {'navigate'|'updateQuery'|'none'} action The type of action the UI should perform.
+ * @property {*} [payload] Optional data needed for the action (e.g., URL for 'navigate').
+ */
+
+/**
+ * @typedef {Object} CitizenCommandPaletteSearchClient
+ * @property {function(string): Promise<CommandPaletteSearchResponse>} fetchByQuery
+ * @property {function(): Promise<CommandPaletteSearchResponse>} [loadMore]
+ */
+
+/**
+ * @typedef {Object} CommandPaletteSearchResponse
  * @property {string} query
- * @property {SearchResult[]} results
+ * @property {CommandPaletteItem[]} results
  */
 
 /**
- * @typedef {Object} SearchResultsGroup
- * @property {string} heading
- * @property {SearchResult[]} items
+ * @typedef {Object} NamespaceResult
+ * @property {string} label The namespace label.
+ * @property {number} value The namespace ID.
  */
 
-/**
- * @typedef {Object} SearchResults
- * @property {Object.<string, SearchResultsGroup>} [pages]
- */
-
-/**
- * @typedef {Object} UrlParams
- * @property {string} [search]
- * @property {string} [title]
- * @property {string} [fulltext]
- */
-
-/**
- * @typedef {Object} AbortableFetch
- * @property {Promise<any>} fetch
- * @property {Function} abort
- */
-
-/**
- * @typedef {Object} SearchClient
- * @property {Function} fetchByQuery
- * @property {Function} [loadMore]
- */
-
-/**
- * @typedef {Object} SearchService
- * @property {Function} search
- */
-
-/**
- * @typedef {Object} UrlGenerator
- * @property {Function} generateUrl
- */
-
-/**
- * @typedef {Object} AbortableSearchFetch
- * @property {Promise<SearchResponse>} fetch
- * @property {Function} abort
- */
+module.exports = {/* Types are only used for JSDoc */};

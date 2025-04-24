@@ -141,6 +141,10 @@ module.exports = exports = defineComponent( {
 			type: String,
 			default: ''
 		},
+		value: {
+			type: String,
+			default: ''
+		},
 		icon: {
 			type: [ String, Object ],
 			default: ''
@@ -216,6 +220,7 @@ module.exports = exports = defineComponent( {
 				label: props.label,
 				url: props.url,
 				type: props.type,
+				value: props.value,
 				icon: props.icon,
 				thumbnail: props.thumbnail,
 				thumbnailIcon: props.thumbnailIcon,
