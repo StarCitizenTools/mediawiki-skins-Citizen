@@ -91,8 +91,7 @@ module.exports = exports = defineComponent( {
 	setup() {
 		const searchStore = useSearchStore();
 		const {
-			displayedItems,
-			searchUrl
+			displayedItems
 		} = storeToRefs( searchStore );
 
 		const isOpen = ref( false );
@@ -140,30 +139,23 @@ module.exports = exports = defineComponent( {
 		} );
 
 		const selectResult = ( result ) => {
-			if ( !result ) {
-				if ( searchStore.searchQuery && !searchStore.searchQuery.startsWith( '/' ) ) {
-					window.location.href = searchUrl.value;
-					close();
-				}
-				return;
-			}
+			const selectionAction = searchStore.handleSelection( result );
 
-			switch ( result.type ) {
-				case 'command':
-					searchStore.updateQuery( result.value + ' ' );
+			switch ( selectionAction.action ) {
+				case 'navigate':
+					if ( selectionAction.payload ) {
+						window.location.href = selectionAction.payload;
+						close(); // Close after initiating navigation
+					}
+					break;
+				case 'updateQuery':
+					// Query already updated by the store action, just focus input
 					nextTick( focusInput );
 					break;
-				case 'namespace':
-				case 'commandSuggestion':
-					searchStore.updateQuery( result.label + ':' );
-					nextTick( focusInput );
-					break;
-				case 'search':
-				case 'recent':
+				case 'none':
 				default:
-					window.location.href = result.url;
-					searchStore.saveToHistory( result );
-					close();
+					// No specific action needed from the component side
+					// Potential improvement: Maybe close if enter is pressed on empty slash command?
 					break;
 			}
 		};

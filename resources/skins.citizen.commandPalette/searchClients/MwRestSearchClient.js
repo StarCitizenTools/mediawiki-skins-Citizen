@@ -4,7 +4,7 @@
  * @module MwRestSearchClient
  */
 
-const { SearchClient, SearchResponse, AbortableSearchFetch } = require( '../types.js' );
+const { SearchClient, CommandPaletteSearchResponse, AbortableSearchFetch } = require( '../types.js' );
 const fetchJson = require( '../utils/fetch.js' );
 const urlGenerator = require( '../utils/urlGenerator.js' );
 const { cdxIconArticle, cdxIconArticleRedirect, cdxIconEdit } = require( '../icons.json' );
@@ -50,7 +50,7 @@ class MwRestSearchClient {
 	 * @param {string} query
 	 * @param {RestResponse} response
 	 * @param {boolean} showDescription
-	 * @return {SearchResponse}
+	 * @return {CommandPaletteSearchResponse}
 	 */
 	adaptApiResponse( query, response, showDescription ) {
 		return {
@@ -58,7 +58,7 @@ class MwRestSearchClient {
 			results: response.pages.map( ( page ) => {
 				const thumbnail = page.thumbnail;
 				return {
-					id: page.id,
+					id: `citizen-command-palette-item-page-${ page.id }`,
 					type: 'page',
 					label: page.title,
 					description: showDescription ? page.description : undefined,

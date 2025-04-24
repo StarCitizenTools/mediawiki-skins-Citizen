@@ -1,13 +1,8 @@
 /**
  * Command handler for retrieving namespace suggestions.
  */
-
-const { NamespaceResult } = require( '../types.js' );
-
-const { CommandPaletteItem, CommandHandler } = require( '../types.js' );
+const { CommandPaletteItem, CommandHandler, NamespaceResult } = require( '../types.js' );
 const { cdxIconArticles } = require( '../icons.json' );
-
-const namespaceClient = require( '../searchClients/NamespaceSearchClient.js' );
 
 /**
  * @param {NamespaceResult} nsResult
@@ -15,11 +10,11 @@ const namespaceClient = require( '../searchClients/NamespaceSearchClient.js' );
  */
 function adaptNamespaceResult( nsResult ) {
 	return {
-		id: nsResult.value,
+		id: `citizen-command-palette-item-namespace-${ nsResult.value }`,
 		thumbnailIcon: cdxIconArticles,
 		type: 'namespace',
 		label: nsResult.label,
-		value: nsResult.value,
+		value: `${ nsResult.label }:`,
 		metadata: [
 			{
 				label: nsResult.value
@@ -29,20 +24,51 @@ function adaptNamespaceResult( nsResult ) {
 }
 
 /**
- * Gets namespace suggestions based on the sub-query by calling the search client.
+ * Gets namespace suggestions based on the sub-query by filtering local config.
  *
  * @param {string} subQuery The part of the query after "/ns" or "/ns ", or the ID part (e.g., "1").
  * @return {Promise<Array<NamespaceResult>>} An array of raw namespace suggestion objects { label, value }.
  */
 // eslint-disable-next-line es-x/no-async-functions
 async function getNamespaceResults( subQuery ) {
-	return await namespaceClient.findNamespaces( subQuery );
+	const MAIN_NAMESPACE_ID = '0'; // Define the main namespace ID constant
+
+	// Fetch namespaces from MediaWiki configuration
+	const formattedNamespaces = mw.config.get( 'wgFormattedNamespaces' ) || {};
+	const allNamespaces = Object.entries( formattedNamespaces ).map( ( [ id, name ] ) => ( {
+		label: name,
+		value: id
+	} ) ).filter( ( ns ) => ns.value !== MAIN_NAMESPACE_ID ); // Use the constant here
+
+	const trimmedQuery = subQuery.trim();
+	const lowerQuery = trimmedQuery.toLowerCase();
+
+	// Combine results using a Map to handle duplicates based on namespace ID (value)
+	const combinedResults = new Map();
+
+	if ( !trimmedQuery ) {
+		// If the query is empty, return all namespaces
+		allNamespaces.forEach( ( ns ) => combinedResults.set( ns.value, ns ) );
+	} else {
+		// If query is not empty, filter by label and ID prefixes
+		allNamespaces.forEach( ( ns ) => {
+			// Check label prefix (case-insensitive)
+			if ( ns.label.toLowerCase().startsWith( lowerQuery ) ) {
+				combinedResults.set( ns.value, ns );
+			}
+			// Check ID prefix (case-sensitive)
+			if ( ns.value.startsWith( trimmedQuery ) ) {
+				combinedResults.set( ns.value, ns );
+			}
+		} );
+	}
+
+	return Array.from( combinedResults.values() ).map( adaptNamespaceResult );
 }
 
 /** @type {CommandHandler} */
 module.exports = {
 	label: 'Search by Namespace',
-	description: 'Type /ns followed by a namespace name or ID',
-	getResults: getNamespaceResults,
-	adaptResult: adaptNamespaceResult
+	description: 'Type /ns: followed by a namespace name or ID',
+	getResults: getNamespaceResults
 };

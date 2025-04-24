@@ -23,9 +23,6 @@ module.exports = {
 	 * @return {Array<CommandPaletteItem>} An array of recent items.
 	 */
 	getResults() {
-		// Directly return the recent items from the history service.
-		// These items should conform to CommandPaletteItem due to optional properties.
-		const rawItems = searchHistoryService.getRecentItems();
-		return Array.isArray( rawItems ) ? rawItems : [];
+		return searchHistoryService.getRecentItems();
 	}
 };

@@ -26,13 +26,13 @@ module.exports = {
 		try {
 			const { fetch } = searchClient.fetchByQuery( query );
 			const searchResponse = await fetch;
-
-			return searchResponse.results.map( ( result ) => ( {
-				...result
-			} ) );
+			return searchResponse.results ?? [];
 		} catch ( error ) {
-			mw.log.error( '[skins.citizen.commandPalette.SearchProvider] Search failed:', error );
-			return [];
+			if ( error.name === 'AbortError' ) {
+				// Search was aborted, ignore
+				return [];
+			}
+			throw error;
 		}
 	}
 };

@@ -1,4 +1,4 @@
-const { CommandPaletteItem } = require( '../types.js' );
+const { CommandPaletteItem, CommandPaletteActionResult } = require( '../types.js' );
 
 const { defineStore } = require( 'pinia' );
 const createSearchHistory = require( '../services/searchHistory.js' );
@@ -77,105 +77,75 @@ exports.useSearchStore = defineStore( 'search', {
 			this.searchQuery = query;
 
 			// Clear existing timeouts
-			if ( this.debounceTimeout ) {
-				clearTimeout( this.debounceTimeout );
-			}
-			if ( this.pendingDelayTimeout ) {
-				clearTimeout( this.pendingDelayTimeout );
-			}
-			this.showPending = false; // Hide pending indicator immediately
+			clearTimeout( this.debounceTimeout );
+			clearTimeout( this.pendingDelayTimeout );
+			// Don't reset showPending here, let _setResults handle it or the pendingDelayTimeout
 
-			// Find the appropriate provider
 			const provider = providers.find( ( p ) => p.canProvide( query ) );
 
 			if ( !provider ) {
-				this.displayedItems = []; // No provider found, clear items
-				this.autoSelectFirst = false;
-				this.isPending = false;
+				this.setResults( [], false, false );
 				return;
 			}
 
-			// Determine debounce time (e.g., longer for search, shorter/none for others)
-			const debounceMs = provider === SearchProvider ? 250 :
-				( provider === SlashCommandProvider ? 0 : 0 ); // Adjust as needed
+			// --- Synchronous handling for initial recent items ---
+			const isInitialRecent = provider === RecentItemsProvider && query === '';
+			if ( isInitialRecent ) {
+				let results = [];
+				try {
+					// RecentItemsProvider.getResults should be synchronous
+					const rawResults = provider.getResults( query );
+					results = Array.isArray( rawResults ) ? rawResults : [];
+				} catch ( error ) {
+					mw.log.error( '[skins.citizen.commandPalette] RecentItemsProvider failed on initial load:', error );
+					// results is already []
+				}
+				this.setResults( results, false, false ); // Update state via helper
+				// Important: Return early to bypass the async/debounce logic below
+				return;
+			}
+			// --- End synchronous handling ---
+
+			const isAsync = provider === SearchProvider;
+			const debounceMs = isAsync ? 250 : 0; // 0 debounce for sync providers (uses setTimeout(0))
 			const showPendingDelayMs = 300;
 
-			// Set pending state immediately if the provider might be slow
-			const isPotentiallyAsync = provider === SearchProvider; // Add other async providers here
-			if ( isPotentiallyAsync ) {
-				this.isPending = true;
-				// Delay showing the spinner
+			// Set pending state only for truly async providers
+			this.isPending = isAsync;
+
+			// Delay showing the spinner only for async providers
+			if ( isAsync ) {
 				this.pendingDelayTimeout = setTimeout( () => {
-					if ( this.isPending ) { // Only show if still pending after delay
+					// Only show if the query hasn't changed *and* we are still marked as pending
+					if ( this.isPending && this.searchQuery === query ) {
 						this.showPending = true;
 					}
 				}, showPendingDelayMs );
-			} else {
-				this.isPending = false;
 			}
 
-			// Debounce the call to the provider
+			// Debounce the provider call (or run after 0ms for sync providers)
 			// eslint-disable-next-line es-x/no-async-functions
 			this.debounceTimeout = setTimeout( async () => {
-				// Check if query is still the same after debounce
+				// Abort if the query changed during the debounce/async operation
 				if ( this.searchQuery !== query ) {
-					// Query changed during debounce, stop processing this request
-					if ( !isPotentiallyAsync ) {
-						this.isPending = false; // Ensure pending is false if we bail early
-					}
-					// Do not clear pendingDelayTimeout here, let the new updateQuery call handle it
 					return;
 				}
 
 				try {
-					// Get results from the chosen provider
 					const results = await provider.getResults( query );
-					// Check again if query changed while waiting for async results
+					// Check query *again* after await, in case it changed while fetching
 					if ( this.searchQuery === query ) {
-						// Process results: add prefix and handle undefined IDs
-						const processedResults = Array.isArray( results ) ? results.map( ( item ) => {
-							const newItem = { ...item }; // Avoid mutating original item
-
-							// Only prefix IDs if the provider is NOT RecentItemsProvider
-							if ( provider !== RecentItemsProvider ) {
-								// Use a consistent prefix and handle null/undefined IDs
-								newItem.id = item.id !== null && item.id !== undefined ?
-									`citizen-command-palette-item-${ item.id }` :
-									`citizen-command-palette-item-unknown-${ Date.now() }-${ Math.random().toString( 36 ).slice( 2 ) }`; // Fallback ID
-							} else {
-								// For RecentItemsProvider, just use the original ID
-								newItem.id = item.id;
-							}
-							// Ensure ID is a string, regardless of source
-							newItem.id = String( newItem.id );
-
-							return newItem;
-						} ) : [];
-
-						// Determine if first item should be selected based on provider type
-						// SlashCommandProvider handles all slash commands, so check only for it.
-						const shouldAutoSelect = provider === SlashCommandProvider;
-						this.displayedItems = processedResults; // Assign processed results
-						this.autoSelectFirst = shouldAutoSelect;
+						const autoSelect = provider === SlashCommandProvider;
+						this.setResults( Array.isArray( results ) ? results : [], autoSelect, false );
 					}
 				} catch ( error ) {
-					// Log error specific to provider if possible, otherwise generic
 					mw.log.error( `[skins.citizen.commandPalette] Provider failed for query "${ query }":`, error );
-					// Check again if query changed before clearing results on error
+					// Only clear results if the query is still the same one that caused the error
 					if ( this.searchQuery === query ) {
-						this.displayedItems = [];
-						this.autoSelectFirst = false;
-					}
-				} finally {
-					// Clear pending state only if the query hasn't changed again
-					if ( this.searchQuery === query ) {
-						this.isPending = false;
-						this.showPending = false;
-						if ( this.pendingDelayTimeout ) {
-							clearTimeout( this.pendingDelayTimeout );
-						}
+						this.setResults( [], false, false );
 					}
 				}
+				// No finally block needed here, as _setResults handles the pending state cleanup
 			}, debounceMs );
 		},
 
@@ -190,24 +160,84 @@ exports.useSearchStore = defineStore( 'search', {
 		},
 
 		/**
+		 * Handles the selection of a result item.
+		 * Determines the appropriate action based on the item type and returns instructions
+		 * for the UI component.
+		 *
+		 * @param {CommandPaletteItem|null} result The selected item, or null if Enter was pressed with no selection.
+		 * @return {CommandPaletteActionResult} An object describing the next UI action.
+		 */
+		handleSelection( result ) {
+			if ( !result ) {
+				// Handle Enter press with no selection (direct search)
+				if ( this.searchQuery && !this.searchQuery.startsWith( '/' ) ) {
+					this.saveToHistory( null ); // Save the query itself
+					return { action: 'navigate', payload: this.searchUrl };
+				}
+				// If no result and it's a slash command or empty, do nothing specific on Enter
+				return { action: 'none' };
+			}
+
+			switch ( result.type ) {
+				case 'command':
+				case 'namespace':
+					// Let the store handle the query update, return instruction to focus input
+					this.updateQuery( result.value );
+					return { action: 'updateQuery' };
+				case 'search':
+				case 'recent':
+				default:
+					// Save to history and return instruction to navigate
+					this.saveToHistory( result );
+					return { action: 'navigate', payload: result.url };
+			}
+		},
+
+		/**
 		 * Saves a selected result or search query to history.
 		 * Relies on items having a standard structure (e.g., url, label, description).
 		 *
-		 * @param {CommandPaletteItem} item
+		 * @param {CommandPaletteItem|null} item The item to save, or null to save the current search query.
 		 * @return {void}
 		 */
 		saveToHistory( item ) {
 			// Don't save intermediate command selections (like '/ns' itself or namespaces)
-			if ( item?.type === 'command' || item?.type === 'commandSuggestion' ) {
+			// commandSuggestion type is handled by the SlashCommandProvider itself if needed
+			if ( item?.type === 'command' || item?.type === 'namespace' ) {
 				return;
 			}
 
 			if ( item && item.url ) {
-				searchHistoryService.saveRecentItem( item );
-			} else if ( this.searchQuery.trim() !== '' && !this.searchQuery.startsWith( '/' ) ) {
+				// Save a specific item (recent, search result)
+				searchHistoryService.saveRecentItem( {
+					label: item.label,
+					description: item.description,
+					url: item.url,
+					type: item.type || 'recent' // Default to recent if type is missing
+				} );
+			} else if ( !item && this.searchQuery.trim() !== '' && !this.searchQuery.startsWith( '/' ) ) {
 				// Save the search query itself if it was a direct search (not a slash command)
+				// and item is null (indicating direct search submission)
 				searchHistoryService.saveSearchQuery( this.searchQuery, this.searchUrl );
 			}
+		},
+
+		/**
+		 * Internal helper to set result state consistently.
+		 *
+		 * @param {Array<Object>} items The items to display.
+		 * @param {boolean} autoSelect Whether to auto-select the first item.
+		 * @param {boolean} isPending Whether the store should be in a pending state.
+		 * @private
+		 */
+		setResults( items, autoSelect, isPending ) {
+			this.displayedItems = items;
+			this.autoSelectFirst = autoSelect;
+			this.isPending = isPending;
+			// Always hide spinner when setting results (or error)
+			this.showPending = false;
+			// If we are setting final results, any pending delay timeout is irrelevant
+			clearTimeout( this.pendingDelayTimeout );
 		}
 	}
 } );

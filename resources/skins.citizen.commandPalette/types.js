@@ -43,6 +43,31 @@
  */
 
 /**
+ * Defines the interface for a Slash Command handler.
+ * Each command handler module should export an object conforming to this type.
+ *
+ * @typedef {Object} CommandHandler
+ * @property {string} label The user-facing label for the command (used in root '/' suggestions).
+ * @property {string} description The user-facing description for the command (used in root '/' suggestions).
+ * @property {function(string): Promise<Array<Object>>} getResults Asynchronously fetches raw suggestion data based on the sub-query.
+ * @property {function(Object): CommandPaletteItem} adaptResult Synchronously transforms a single raw result object into a CommandPaletteItem.
+ */
+
+/**
+ * Describes the action the UI should take after an item selection is handled.
+ *
+ * @typedef {Object} CommandPaletteActionResult
+ * @property {'navigate'|'updateQuery'|'none'} action The type of action the UI should perform.
+ * @property {*} [payload] Optional data needed for the action (e.g., URL for 'navigate').
+ */
+
+/**
+ * @typedef {Object} CommandPaletteSearchResponse
+ * @property {string} query
+ * @property {CommandPaletteItem[]} results
+ */
+
+/**
  * @typedef {Object} NamespaceResult
  * @property {string} label The namespace label.
  * @property {number} value The namespace ID.
@@ -54,26 +79,9 @@
  */
 
 /**
- * @typedef {Object} SearchResponse
- * @property {string} query
- * @property {SearchResult[]} results
- */
-
-/**
  * @typedef {Object} SearchClient
  * @property {Function} fetchByQuery
  * @property {Function} [loadMore]
- */
-
-/**
- * Defines the interface for a Slash Command handler.
- * Each command handler module should export an object conforming to this type.
- *
- * @typedef {Object} CommandHandler
- * @property {string} label The user-facing label for the command (used in root '/' suggestions).
- * @property {string} description The user-facing description for the command (used in root '/' suggestions).
- * @property {function(string): Promise<Array<Object>>} getResults Asynchronously fetches raw suggestion data based on the sub-query.
- * @property {function(Object): CommandPaletteItem} adaptResult Synchronously transforms a single raw result object into a CommandPaletteItem.
  */
 
 module.exports = {};

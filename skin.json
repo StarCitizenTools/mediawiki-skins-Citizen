@@ -317,7 +317,6 @@
 				"resources/skins.citizen.commandPalette/searchClients/SearchClient.js",
 				"resources/skins.citizen.commandPalette/searchClients/SearchClientFactory.js",
 				"resources/skins.citizen.commandPalette/searchClients/MwRestSearchClient.js",
-				"resources/skins.citizen.commandPalette/searchClients/NamespaceSearchClient.js",
 				"resources/skins.citizen.commandPalette/providers/RecentItemsProvider.js",
 				"resources/skins.citizen.commandPalette/providers/SearchProvider.js",
 				"resources/skins.citizen.commandPalette/providers/SlashCommandProvider.js",
