@@ -39,22 +39,13 @@ module.exports = {
 		}
 
 		// Case 2: Specific command query (e.g., "/ns:Talk")
-		let commandName = '';
-		let subQuery = '';
 		// Remove leading '/' and find the first colon, if any
 		const commandString = query.slice( 1 ).trim();
 		const colonIndex = commandString.indexOf( ':' );
+		const hasSubquery = colonIndex !== -1;
 
-		if ( colonIndex !== -1 ) {
-			// Command with subquery (e.g., "/ns:Talk")
-			commandName = commandString.slice( 0, colonIndex ).toLowerCase();
-			subQuery = commandString.slice( colonIndex + 1 ).trim();
-		} else {
-			// Command without subquery, potentially partially typed (e.g., "/ns")
-			// or command ending with colon (e.g., "/ns:")
-			commandName = commandString.toLowerCase();
-			subQuery = '';
-		}
+		const commandName = ( hasSubquery ? commandString.slice( 0, colonIndex ) : commandString ).toLowerCase();
+		const subQuery = hasSubquery ? commandString.slice( colonIndex + 1 ).trim() : '';
 
 		if ( commandName && commandRegistry[ commandName ] ) {
 			const commandHandler = commandRegistry[ commandName ];
