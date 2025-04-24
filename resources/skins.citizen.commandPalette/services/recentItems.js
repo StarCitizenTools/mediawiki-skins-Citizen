@@ -11,7 +11,7 @@ const MAX_RECENT_ITEMS = 5;
  *
  * @return {Object} Search history service
  */
-function createSearchHistory() {
+function createRecentItems() {
 	/**
 	 * Saves an item to recent history
 	 *
@@ -88,4 +88,4 @@ function createSearchHistory() {
 	};
 }
 
-module.exports = createSearchHistory;
+module.exports = createRecentItems;

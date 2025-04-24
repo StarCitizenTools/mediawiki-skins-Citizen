@@ -25,7 +25,7 @@ const { defineComponent, computed } = require( 'vue' );
 const CommandPaletteList = require( './CommandPaletteList.vue' );
 const CommandPaletteEmptyState = require( './CommandPaletteEmptyState.vue' );
 const { cdxIconArticlesSearch, cdxIconTrash } = require( '../icons.json' );
-const createSearchHistory = require( '../services/searchHistory.js' );
+const createRecentItems = require( '../services/recentItems.js' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
@@ -54,7 +54,7 @@ module.exports = exports = defineComponent( {
 	},
 	emits: [ 'update:highlighted-item-index', 'select', 'update:recent-items', 'focus-input', 'navigate-list' ],
 	setup( props, { emit } ) {
-		const searchHistory = createSearchHistory();
+		const recentItemsService = createRecentItems();
 
 		// Add dismiss action to recent items
 		const itemsWithActions = computed( () => props.recentItems.map( ( item ) => ( {
@@ -72,7 +72,7 @@ module.exports = exports = defineComponent( {
 			if ( action.actionId === 'dismiss' ) {
 				const itemToRemove = props.recentItems.find( ( item ) => String( item.id ) === action.itemId );
 				if ( itemToRemove ) {
-					searchHistory.removeRecentItem( itemToRemove );
+					recentItemsService.removeRecentItem( itemToRemove );
 					emit( 'update:recent-items' );
 				}
 			}

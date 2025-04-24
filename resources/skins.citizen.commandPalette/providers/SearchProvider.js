@@ -2,6 +2,9 @@ const { CommandPaletteItem } = require( '../types.js' );
 const SearchClientFactory = require( '../searchClients/SearchClientFactory.js' );
 
 module.exports = {
+	/** Whether the first result from this provider should be automatically selected */
+	shouldAutoSelectFirst: false,
+
 	/**
 	 * Determines if this provider should handle the current query.
 	 *
