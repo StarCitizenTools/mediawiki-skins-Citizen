@@ -37,6 +37,9 @@ function getCommandListItems( filterPrefix ) {
 }
 
 module.exports = {
+	/** Whether the first result from this provider should be automatically selected */
+	shouldAutoSelectFirst: true,
+
 	/**
 	 * Determines if this provider should handle the current query.
 	 *

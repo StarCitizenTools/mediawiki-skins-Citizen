@@ -313,7 +313,7 @@
 				"resources/skins.citizen.commandPalette/utils/fetch.js",
 				"resources/skins.citizen.commandPalette/utils/urlGenerator.js",
 				"resources/skins.citizen.commandPalette/stores/searchStore.js",
-				"resources/skins.citizen.commandPalette/services/searchHistory.js",
+				"resources/skins.citizen.commandPalette/services/recentItems.js",
 				"resources/skins.citizen.commandPalette/searchClients/SearchClientFactory.js",
 				"resources/skins.citizen.commandPalette/searchClients/MwRestSearchClient.js",
 				"resources/skins.citizen.commandPalette/providers/RecentItemsProvider.js",

@@ -1,9 +1,12 @@
 const { CommandPaletteItem } = require( '../types.js' );
-const createSearchHistory = require( '../services/searchHistory.js' );
+const createRecentItems = require( '../services/recentItems.js' );
 
-const searchHistoryService = createSearchHistory();
+const recentItemsService = createRecentItems();
 
 module.exports = {
+	/** Whether the first result from this provider should be automatically selected */
+	shouldAutoSelectFirst: false,
+
 	/**
 	 * Determines if this provider should handle the current query.
 	 *
@@ -23,6 +26,6 @@ module.exports = {
 	 * @return {Array<CommandPaletteItem>} An array of recent items.
 	 */
 	getResults() {
-		return searchHistoryService.getRecentItems();
+		return recentItemsService.getRecentItems();
 	}
 };

@@ -1,14 +1,13 @@
 const { CommandPaletteItem, CommandPaletteActionResult } = require( '../types.js' );
-
 const { defineStore } = require( 'pinia' );
-const createSearchHistory = require( '../services/searchHistory.js' );
+const createRecentItems = require( '../services/recentItems.js' );
 const urlGenerator = require( '../utils/urlGenerator.js' )();
 
 const RecentItemsProvider = require( '../providers/RecentItemsProvider.js' );
-const SearchProvider = require( '../providers/SearchProvider.js' );
 const SlashCommandProvider = require( '../providers/SlashCommandProvider.js' );
+const SearchProvider = require( '../providers/SearchProvider.js' );
 
-const searchHistoryService = createSearchHistory();
+const recentItemsService = createRecentItems();
 
 // List of providers in order of priority
 const providers = [
@@ -135,8 +134,7 @@ exports.useSearchStore = defineStore( 'search', {
 					const results = await provider.getResults( query );
 					// Check query *again* after await, in case it changed while fetching
 					if ( this.searchQuery === query ) {
-						const autoSelect = provider === SlashCommandProvider;
-						this.setResults( Array.isArray( results ) ? results : [], autoSelect, false );
+						this.setResults( Array.isArray( results ) ? results : [], provider.shouldAutoSelectFirst, false );
 					}
 				} catch ( error ) {
 					mw.log.error( `[skins.citizen.commandPalette] Provider failed for query "${ query }":`, error );
@@ -205,11 +203,11 @@ exports.useSearchStore = defineStore( 'search', {
 			}
 
 			if ( item ) {
-				searchHistoryService.saveRecentItem( item );
+				recentItemsService.saveRecentItem( item );
 			} else if ( this.searchQuery.trim() !== '' && !this.searchQuery.startsWith( '/' ) ) {
 				// Save the search query itself if it was a direct search (not a slash command)
 				// and item is null (indicating direct search submission)
-				searchHistoryService.saveSearchQuery( this.searchQuery, this.searchUrl );
+				recentItemsService.saveSearchQuery( this.searchQuery, this.searchUrl );
 			}
 		},
 
