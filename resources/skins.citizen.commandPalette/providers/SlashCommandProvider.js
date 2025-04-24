@@ -1,4 +1,4 @@
-const { CommandPaletteItem } = require( '../types.js' );
+const { CommandPaletteItem, CommandPaletteProvider } = require( '../types.js' );
 const { cdxIconCode } = require( '../icons.json' );
 
 // Registry for slash command handlers
@@ -36,6 +36,7 @@ function getCommandListItems( filterPrefix ) {
 	} ) );
 }
 
+/** @type {CommandPaletteProvider} */
 module.exports = {
 	/** Whether the first result from this provider should be automatically selected */
 	shouldAutoSelectFirst: true,

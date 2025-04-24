@@ -79,4 +79,13 @@
  * @property {number} value The namespace ID.
  */
 
+/**
+ * Defines the interface for a provider of search results for the Command Palette.
+ *
+ * @typedef {Object} CommandPaletteProvider
+ * @property {boolean} shouldAutoSelectFirst Whether the first result from this provider should be automatically selected in the list.
+ * @property {function(string): boolean} canProvide Determines if this provider should handle the given query.
+ * @property {function(string): (Array<CommandPaletteItem>|Promise<Array<CommandPaletteItem>>)} getResults Gets the results for the given query. Can be synchronous or asynchronous.
+ */
+
 module.exports = {/* Types are only used for JSDoc */};
