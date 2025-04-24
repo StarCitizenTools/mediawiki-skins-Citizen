@@ -175,7 +175,6 @@ module.exports = exports = defineComponent( {
 			let handled = false;
 			switch ( e.key ) {
 				case 'Enter':
-				case ' ': // Allow space to select as well
 					onClick();
 					handled = true;
 					break;
