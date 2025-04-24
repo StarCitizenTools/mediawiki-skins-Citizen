@@ -17,7 +17,7 @@ function getCommandListItems( filterPrefix ) {
 	let entries = Object.entries( commandRegistry );
 
 	if ( filterPrefix ) {
-		entries = entries.filter( ( [ cmdName ] ) => cmdName.startsWith( filterPrefix ) );
+		entries = entries.filter( ( [ cmdName ] ) => cmdName.toLowerCase().startsWith( filterPrefix.toLowerCase() ) );
 	}
 
 	return entries.map( ( [ cmdName, handler ] ) => ( {
@@ -77,8 +77,13 @@ module.exports = {
 				return [];
 			}
 
-			const results = await commandHandler.getResults( subQuery );
-			return Array.isArray( results ) ? results : [];
+			try {
+				const results = await commandHandler.getResults( subQuery );
+				return Array.isArray( results ) ? results : [];
+			} catch ( err ) {
+				mw.log.error( `[SlashCommandProvider] "${ commandName }" failed:`, err );
+				return [];
+			}
 		} else {
 			// If the command name doesn't match any registered command, show the list again,
 			// filtered by the typed prefix.
