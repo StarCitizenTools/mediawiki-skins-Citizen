@@ -7,6 +7,35 @@ const commandRegistry = {
 	ns: require( '../commands/namespace.js' )
 };
 
+/**
+ * Generates the list of command items based on the commandRegistry.
+ *
+ * @param {string} [filterPrefix] Optional prefix to filter command names.
+ * @return {Array<CommandPaletteItem>}
+ */
+function getCommandListItems( filterPrefix ) {
+	let entries = Object.entries( commandRegistry );
+
+	if ( filterPrefix ) {
+		entries = entries.filter( ( [ cmdName ] ) => cmdName.startsWith( filterPrefix ) );
+	}
+
+	return entries.map( ( [ cmdName, handler ] ) => ( {
+		id: `citizen-command-palette-item-command-${ cmdName }`,
+		type: 'command',
+		label: handler.label ?? cmdName,
+		description: handler.description,
+		thumbnailIcon: cdxIconCode,
+		value: `/${ cmdName }:`,
+		metadata: [
+			{
+				label: `/${ cmdName }`,
+				highlightQuery: true
+			}
+		]
+	} ) );
+}
+
 module.exports = {
 	/**
 	 * Determines if this provider should handle the current query.
@@ -28,20 +57,7 @@ module.exports = {
 	async getResults( query ) {
 		// Case 1: Root query "/" - Show available commands
 		if ( query === '/' ) {
-			return Object.entries( commandRegistry ).map( ( [ cmdName, handler ] ) => ( {
-				id: `citizen-command-palette-item-command-${ cmdName }`,
-				type: 'command',
-				label: handler.label ?? cmdName,
-				description: handler.description,
-				thumbnailIcon: cdxIconCode,
-				value: `/${ cmdName }:`,
-				metadata: [
-					{
-						label: `/${ cmdName }`,
-						highlightQuery: true
-					}
-				]
-			} ) );
+			return getCommandListItems();
 		}
 
 		// Case 2: Specific command query (e.g., "/ns:Talk")
@@ -63,8 +79,10 @@ module.exports = {
 
 			const results = await commandHandler.getResults( subQuery );
 			return Array.isArray( results ) ? results : [];
+		} else {
+			// If the command name doesn't match any registered command, show the list again,
+			// filtered by the typed prefix.
+			return getCommandListItems( commandName );
 		}
-
-		return [];
 	}
 };
