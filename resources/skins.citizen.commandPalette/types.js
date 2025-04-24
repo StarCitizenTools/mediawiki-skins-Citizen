@@ -62,6 +62,12 @@
  */
 
 /**
+ * @typedef {Object} CitizenCommandPaletteSearchClient
+ * @property {function(string): Promise<CommandPaletteSearchResponse>} fetchByQuery
+ * @property {function(): Promise<CommandPaletteSearchResponse>} [loadMore]
+ */
+
+/**
  * @typedef {Object} CommandPaletteSearchResponse
  * @property {string} query
  * @property {CommandPaletteItem[]} results
@@ -76,12 +82,6 @@
 /**
  * Below are types for SearchProvider
  * TODO: We should use types/mediawiki package for these types
- */
-
-/**
- * @typedef {Object} SearchClient
- * @property {Function} fetchByQuery
- * @property {Function} [loadMore]
  */
 
 module.exports = {};

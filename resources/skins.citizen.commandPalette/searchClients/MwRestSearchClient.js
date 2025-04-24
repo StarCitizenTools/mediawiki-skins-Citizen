@@ -4,7 +4,7 @@
  * @module MwRestSearchClient
  */
 
-const { SearchClient, CommandPaletteSearchResponse, AbortableSearchFetch } = require( '../types.js' );
+const { CitizenCommandPaletteSearchClient, CommandPaletteSearchResponse, AbortableSearchFetch } = require( '../types.js' );
 const fetchJson = require( '../utils/fetch.js' );
 const urlGenerator = require( '../utils/urlGenerator.js' );
 const { cdxIconArticle, cdxIconArticleRedirect, cdxIconEdit } = require( '../icons.json' );
@@ -33,7 +33,7 @@ const { cdxIconArticle, cdxIconArticleRedirect, cdxIconEdit } = require( '../ico
 
 /**
  * @class
- * @implements {SearchClient}
+ * @implements {CitizenCommandPaletteSearchClient}
  */
 class MwRestSearchClient {
 

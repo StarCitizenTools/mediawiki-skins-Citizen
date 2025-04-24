@@ -145,7 +145,6 @@ exports.useSearchStore = defineStore( 'search', {
 						this.setResults( [], false, false );
 					}
 				}
-				// No finally block needed here, as _setResults handles the pending state cleanup
 			}, debounceMs );
 		},
 
@@ -184,8 +183,6 @@ exports.useSearchStore = defineStore( 'search', {
 					// Let the store handle the query update, return instruction to focus input
 					this.updateQuery( result.value );
 					return { action: 'updateQuery' };
-				case 'search':
-				case 'recent':
 				default:
 					// Save to history and return instruction to navigate
 					this.saveToHistory( result );
@@ -207,7 +204,7 @@ exports.useSearchStore = defineStore( 'search', {
 				return;
 			}
 
-			if ( item && item.url ) {
+			if ( item?.url ) {
 				// Save a specific item (recent, search result)
 				searchHistoryService.saveRecentItem( {
 					label: item.label,

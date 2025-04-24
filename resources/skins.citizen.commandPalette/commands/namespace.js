@@ -4,6 +4,8 @@
 const { CommandPaletteItem, CommandHandler, NamespaceResult } = require( '../types.js' );
 const { cdxIconArticles } = require( '../icons.json' );
 
+const MAIN_NAMESPACE_ID = '0';
+
 /**
  * @param {NamespaceResult} nsResult
  * @return {CommandPaletteItem}
@@ -30,8 +32,6 @@ function adaptNamespaceResult( nsResult ) {
  * @return {Array<NamespaceResult>} An array of raw namespace suggestion objects { label, value }.
  */
 function getNamespaceResults( subQuery ) {
-	const MAIN_NAMESPACE_ID = '0'; // Define the main namespace ID constant
-
 	// Fetch namespaces from MediaWiki configuration
 	const formattedNamespaces = mw.config.get( 'wgFormattedNamespaces' ) || {};
 	const allNamespaces = Object.entries( formattedNamespaces ).map( ( [ id, name ] ) => ( {
@@ -62,12 +62,12 @@ function getNamespaceResults( subQuery ) {
 		} );
 	}
 
-	return Array.from( combinedResults.values() ).map( adaptNamespaceResult );
+	return Array.from( combinedResults.values(), adaptNamespaceResult );
 }
 
 /** @type {CommandHandler} */
 module.exports = {
-	label: 'Search by Namespace',
-	description: 'Type /ns: followed by a namespace name or ID',
+	label: mw.msg( 'citizen-command-palette-command-namespace-label' ),
+	description: mw.msg( 'citizen-command-palette-command-namespace-description' ),
 	getResults: getNamespaceResults
 };

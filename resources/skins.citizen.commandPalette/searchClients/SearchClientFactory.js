@@ -4,14 +4,14 @@
  * @module SearchClientFactory
  */
 
-const { SearchClient } = require( '../types.js' );
+const { CitizenCommandPaletteSearchClient } = require( '../types.js' );
 const MwRestSearchClient = require( './MwRestSearchClient.js' );
 
 /**
  * Registry of available search client factory functions.
  * Each factory returns a client instance.
  *
- * @type {Object.<string, function(mw.Map): SearchClient>}
+ * @type {Object.<string, function(mw.Map): CitizenCommandPaletteSearchClient>}
  */
 const searchClientRegistry = {
 	MwRestSearchClient: () => new MwRestSearchClient()
@@ -20,7 +20,7 @@ const searchClientRegistry = {
 /**
  * Create a search client instance based on the configuration.
  *
- * @return {SearchClient}
+ * @return {CitizenCommandPaletteSearchClient}
  * @throws {Error} If the configured type is not registered or config is missing.
  */
 function create() {
@@ -41,7 +41,7 @@ function create() {
  * Useful for extensions adding their own search clients.
  *
  * @param {string} type Unique identifier for the search client type.
- * @param {function(mw.Map): SearchClient} factory Function that creates the search client instance.
+ * @param {function(mw.Map): CitizenCommandPaletteSearchClient} factory Function that creates the search client instance.
  * @throws {Error} If the type is already registered.
  */
 function registerSearchClient( type, factory ) {
