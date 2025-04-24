@@ -199,8 +199,8 @@ exports.useSearchStore = defineStore( 'search', {
 		 */
 		saveToHistory( item ) {
 			// Don't save intermediate command selections (like '/ns' itself or namespaces)
-			// commandSuggestion type is handled by the SlashCommandProvider itself if needed
-			if ( item?.type === 'command' || item?.type === 'namespace' ) {
+			const excludedTypes = [ 'command', 'namespace' ];
+			if ( item?.type && excludedTypes.includes( item.type ) ) {
 				return;
 			}
 

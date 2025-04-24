@@ -79,9 +79,4 @@
  * @property {number} value The namespace ID.
  */
 
-/**
- * Below are types for SearchProvider
- * TODO: We should use types/mediawiki package for these types
- */
-
-module.exports = {};
+module.exports = {/* Types are only used for JSDoc */};
