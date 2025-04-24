@@ -252,7 +252,6 @@ module.exports = exports = defineComponent( {
 			cdxIconArticleNotFound,
 			hasHighlightedItemWithActions,
 			isActionButtonFocused,
-			firstActionButtonOfHighlightedItem,
 			focusItem,
 			focusInput
 		};
