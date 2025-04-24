@@ -1,4 +1,3 @@
-<!-- Responsible for rendering the main display area of a list item -->
 <template>
 	<a
 		:href="url"
@@ -98,7 +97,7 @@ module.exports = exports = defineComponent( {
 			type: String,
 			required: true
 		},
-		typeLabel: { // Receive computed label from parent
+		typeLabel: {
 			type: String,
 			required: true
 		},
@@ -111,7 +110,6 @@ module.exports = exports = defineComponent( {
 			default: ''
 		}
 	}
-	// No setup needed, purely presentational based on props
 } );
 </script>
 

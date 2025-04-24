@@ -45,8 +45,6 @@ const { defineComponent, computed, ref } = require( 'vue' );
 // Import the new sub-components
 const CommandPaletteListItemContent = require( './CommandPaletteListItemContent.vue' );
 const CommandPaletteListItemActions = require( './CommandPaletteListItemActions.vue' );
-// Note: Cdx components are now only needed in sub-components, so mw.loader.require is removed here.
-// Note: useActionNavigation is now only used in CommandPaletteListItemActions.
 
 // @vue/component
 module.exports = exports = defineComponent( {
@@ -114,12 +112,12 @@ module.exports = exports = defineComponent( {
 		'change',
 		'select',
 		'action',
-		'focus-input', // Still potentially needed from actions sub-component? Check useActionNavigation emits
-		'navigate-list' // Still potentially needed from actions sub-component? Check useActionNavigation emits
+		'focus-input',
+		'navigate-list'
 	],
 	setup( props, { emit, expose } ) {
 		const rootRef = ref( null );
-		const actionsRef = ref( null ); // Ref for the actions sub-component
+		const actionsRef = ref( null );
 
 		// --- Item Interaction Logic ---
 		const onMouseMove = () => {
@@ -139,7 +137,6 @@ module.exports = exports = defineComponent( {
 		};
 
 		const onClick = () => {
-			// Emit the full item data on select
 			emit( 'select', {
 				id: props.id,
 				label: props.label,
@@ -170,10 +167,6 @@ module.exports = exports = defineComponent( {
 
 		// --- Keydown Handling ---
 		const onKeydown = ( e ) => {
-			// Keydown logic is now simplified:
-			// - Action button navigation (Arrows, Home, End, Tab) is handled *within* CommandPaletteListItemActions
-			// - We only need to handle Enter/Space on the list item itself for selection.
-
 			// Only handle keys if the event target is the list item itself
 			if ( e.target !== rootRef.value ) {
 				return;
@@ -186,8 +179,6 @@ module.exports = exports = defineComponent( {
 					onClick();
 					handled = true;
 					break;
-				// Arrow keys (Up/Down) are handled by the parent list for list navigation.
-				// Arrow keys (Left/Right), Home, End, Tab are potentially handled by the actions component if it has focus.
 			}
 
 			if ( handled ) {
@@ -209,9 +200,7 @@ module.exports = exports = defineComponent( {
 
 		// --- Expose Methods ---
 		expose( {
-			// Expose method to focus the list item itself
 			focus: () => rootRef.value?.focus(),
-			// Expose methods to focus buttons within the actions sub-component
 			focusFirstButton: () => actionsRef.value?.focusFirstButton(),
 			focusLastButton: () => actionsRef.value?.focusLastButton()
 		} );
@@ -230,7 +219,7 @@ module.exports = exports = defineComponent( {
 			onKeydown,
 			// Computed
 			rootClasses,
-			typeLabel // Pass computed typeLabel to content sub-component
+			typeLabel
 		};
 	}
 } );

@@ -1,4 +1,3 @@
-<!-- Renders and manages interactions for action buttons within a list item -->
 <template>
 	<div
 		v-if="actions && actions.length > 0"
@@ -47,15 +46,13 @@ module.exports = exports = defineComponent( {
 			type: Boolean,
 			default: false
 		},
-		// Prop to receive the parent item's ID for context in emitted events
 		itemId: {
 			type: String,
 			required: true
 		}
 	},
-	emits: [ 'action', 'focus-input', 'navigate-list' ], // Inherit necessary emits from useActionNavigation
+	emits: [ 'action', 'focus-input', 'navigate-list' ],
 	setup( props, { emit, expose } ) {
-		// eslint-disable-next-line vue/no-unused-properties -- Used internally by useActionNavigation
 		const buttonRefs = ref( {} );
 
 		// Use the composable here
