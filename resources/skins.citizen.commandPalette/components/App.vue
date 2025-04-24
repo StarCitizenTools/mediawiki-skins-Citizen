@@ -102,6 +102,14 @@ module.exports = exports = defineComponent( {
 
 		const { highlightedItemIndex, handleNavigationKeydown } = useListNavigation( displayedItems, itemRefs );
 
+		const firstActionButtonOfHighlightedItem = computed( () => {
+			if ( highlightedItemIndex.value < 0 || !itemRefs.value[ highlightedItemIndex.value ] ) {
+				return null;
+			}
+			const highlightedElement = itemRefs.value[ highlightedItemIndex.value ];
+			return highlightedElement?.querySelector( 'button, a' );
+		} );
+
 		const focusInput = () => {
 			searchHeader.value?.focus();
 		};
@@ -188,8 +196,7 @@ module.exports = exports = defineComponent( {
 			} else if ( event.key === 'Tab' ) {
 				const currentHighlightedItem = hasHighlightedItemWithActions.value ? displayedItems.value[ highlightedItemIndex.value ] : null;
 				if ( currentHighlightedItem && !event.shiftKey ) {
-					const highlightedElement = itemRefs.value[ highlightedItemIndex.value ];
-					const firstActionButton = highlightedElement?.querySelector( 'button, a' );
+					const firstActionButton = firstActionButtonOfHighlightedItem.value;
 					if ( firstActionButton ) {
 						event.preventDefault();
 						firstActionButton.focus();
@@ -222,6 +229,7 @@ module.exports = exports = defineComponent( {
 			} else if ( newItems.length === 0 ) {
 				// Reset if list becomes empty
 				highlightedItemIndex.value = -1;
+				isActionButtonFocused.value = false;
 			}
 		} );
 
@@ -244,6 +252,7 @@ module.exports = exports = defineComponent( {
 			cdxIconArticleNotFound,
 			hasHighlightedItemWithActions,
 			isActionButtonFocused,
+			firstActionButtonOfHighlightedItem,
 			focusItem,
 			focusInput
 		};
