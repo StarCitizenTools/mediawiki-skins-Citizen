@@ -27,10 +27,9 @@ function adaptNamespaceResult( nsResult ) {
  * Gets namespace suggestions based on the sub-query by filtering local config.
  *
  * @param {string} subQuery The part of the query after "/ns" or "/ns ", or the ID part (e.g., "1").
- * @return {Promise<Array<NamespaceResult>>} An array of raw namespace suggestion objects { label, value }.
+ * @return {Array<NamespaceResult>} An array of raw namespace suggestion objects { label, value }.
  */
-// eslint-disable-next-line es-x/no-async-functions
-async function getNamespaceResults( subQuery ) {
+function getNamespaceResults( subQuery ) {
 	const MAIN_NAMESPACE_ID = '0'; // Define the main namespace ID constant
 
 	// Fetch namespaces from MediaWiki configuration
