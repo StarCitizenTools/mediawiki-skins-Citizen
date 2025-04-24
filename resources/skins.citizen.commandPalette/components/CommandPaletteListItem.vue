@@ -19,102 +19,42 @@ Partially based on the MenuItem component from Codex.
 		@focus="onFocus"
 		@keydown="onKeydown"
 	>
-		<slot>
-			<a
-				:href="url"
-				class="citizen-command-palette-list-item__content"
-				:tabindex="-1"
-			>
-				<cdx-thumbnail
-					:thumbnail="thumbnail"
-					:placeholder-icon="thumbnailIcon || undefined"
-					class="citizen-command-palette-list-item__thumbnail"
-				></cdx-thumbnail>
-
-				<div class="citizen-command-palette-list-item__text">
-					<div class="citizen-command-palette-list-item__text__label">
-						<!-- Techinally you are not supposed to use CdxSearchResultTitle... -->
-						<cdx-search-result-title
-							:title="label"
-							:search-query="searchQuery"
-						></cdx-search-result-title>
-					</div>
-					<div
-						v-if="description"
-						class="citizen-command-palette-list-item__text__description"
-					>
-						<bdi>{{ description }}</bdi>
-					</div>
-				</div>
-				<div class="citizen-command-palette-list-item__metadata">
-					<div
-						v-for="item in metadata"
-						:key="item.label"
-						class="citizen-command-palette-list-item__metadata__item"
-					>
-						<cdx-icon
-							v-if="item.icon"
-							:icon="item.icon"
-							size="small"
-							class="citizen-command-palette-list-item__metadata__item__icon"
-						></cdx-icon>
-						<cdx-search-result-title
-							v-if="item.label && item.highlightQuery"
-							class="citizen-command-palette-list-item__metadata__item__label"
-							:title="item.label"
-							:search-query="searchQuery"
-						></cdx-search-result-title>
-						<span
-							v-else
-							class="citizen-command-palette-list-item__metadata__item__label"
-						>
-							{{ item.label }}
-						</span>
-					</div>
-					<div
-						v-if="type"
-						class="citizen-command-palette-list-item__metadata__item citizen-command-palette-list-item__metadata__item--type"
-					>
-						{{ typeLabel }}
-					</div>
-				</div>
-				<div v-if="actions && actions.length > 0" class="citizen-command-palette-list-item__actions">
-					<cdx-button
-						v-for="action in actions"
-						:key="action.id"
-						:ref="( el ) => setButtonRef( el, action.id )"
-						class="citizen-command-palette-list-item__action"
-						:aria-label="action.label"
-						weight="quiet"
-						:tabindex="-1"
-						@click.stop.prevent="onActionClick( action )"
-						@focus="onButtonFocus( action.id )"
-					>
-						<cdx-icon
-							:icon="action.icon"
-							size="small"
-							class="citizen-command-palette-list-item__action__icon"
-						></cdx-icon>
-					</cdx-button>
-				</div>
-			</a>
-		</slot>
+		<command-palette-list-item-content
+			:label="label"
+			:description="description"
+			:thumbnail="thumbnail"
+			:thumbnail-icon="thumbnailIcon"
+			:metadata="metadata"
+			:type="type"
+			:type-label="typeLabel"
+			:search-query="searchQuery"
+			:url="url"
+		></command-palette-list-item-content>
+		<command-palette-list-item-actions
+			ref="actionsRef"
+			:item-id="id"
+			:actions="actions"
+			:highlighted="highlighted"
+			@action="onAction"
+		></command-palette-list-item-actions>
 	</li>
 </template>
 
 <script>
-const { defineComponent, computed, ref, onBeforeUpdate } = require( 'vue' );
-const { CdxIcon, CdxSearchResultTitle, CdxThumbnail, CdxButton } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
-const useActionNavigation = require( '../composables/useActionNavigation.js' );
+const { defineComponent, computed, ref } = require( 'vue' );
+// Import the new sub-components
+const CommandPaletteListItemContent = require( './CommandPaletteListItemContent.vue' );
+const CommandPaletteListItemActions = require( './CommandPaletteListItemActions.vue' );
+// Note: Cdx components are now only needed in sub-components, so mw.loader.require is removed here.
+// Note: useActionNavigation is now only used in CommandPaletteListItemActions.
 
 // @vue/component
 module.exports = exports = defineComponent( {
 	name: 'CommandPaletteListItem',
 	components: {
-		CdxIcon,
-		CdxSearchResultTitle,
-		CdxThumbnail,
-		CdxButton
+		// Register the new sub-components
+		CommandPaletteListItemContent,
+		CommandPaletteListItemActions
 	},
 	props: {
 		id: {
@@ -143,10 +83,6 @@ module.exports = exports = defineComponent( {
 		},
 		value: {
 			type: String,
-			default: ''
-		},
-		icon: {
-			type: [ String, Object ],
 			default: ''
 		},
 		thumbnail: {
@@ -178,26 +114,14 @@ module.exports = exports = defineComponent( {
 		'change',
 		'select',
 		'action',
-		'focus-input',
-		'navigate-list'
+		'focus-input', // Still potentially needed from actions sub-component? Check useActionNavigation emits
+		'navigate-list' // Still potentially needed from actions sub-component? Check useActionNavigation emits
 	],
 	setup( props, { emit, expose } ) {
 		const rootRef = ref( null );
-		const buttonRefs = ref( {} );
+		const actionsRef = ref( null ); // Ref for the actions sub-component
 
-		const { handleActionButtonKeydown, onButtonFocus, focusFirstButton } =
-			useActionNavigation( computed( () => props.actions ), buttonRefs, emit );
-
-		onBeforeUpdate( () => {
-			buttonRefs.value = {};
-		} );
-
-		const setButtonRef = ( el, actionId ) => {
-			if ( el ) {
-				buttonRefs.value[ actionId ] = el;
-			}
-		};
-
+		// --- Item Interaction Logic ---
 		const onMouseMove = () => {
 			if ( !props.highlighted ) {
 				emit( 'change', 'highlighted', true );
@@ -215,13 +139,13 @@ module.exports = exports = defineComponent( {
 		};
 
 		const onClick = () => {
+			// Emit the full item data on select
 			emit( 'select', {
 				id: props.id,
 				label: props.label,
 				url: props.url,
 				type: props.type,
 				value: props.value,
-				icon: props.icon,
 				thumbnail: props.thumbnail,
 				thumbnailIcon: props.thumbnailIcon,
 				description: props.description,
@@ -230,14 +154,49 @@ module.exports = exports = defineComponent( {
 			} );
 		};
 
-		const onActionClick = ( action ) => {
-			emit( 'action', {
-				itemId: props.id,
-				actionId: action.id,
-				url: action.url
-			} );
+		// --- Action Handling ---
+		const onAction = ( actionPayload ) => {
+			// Simply forward the event from the actions sub-component
+			emit( 'action', actionPayload );
 		};
 
+		// --- Focus Handling ---
+		const onFocus = ( event ) => {
+			// When the list item itself receives focus, try focusing the first action button if available
+			if ( props.actions && props.actions.length > 0 && !rootRef.value.contains( event.relatedTarget ) ) {
+				actionsRef.value?.focusFirstButton();
+			}
+		};
+
+		// --- Keydown Handling ---
+		const onKeydown = ( e ) => {
+			// Keydown logic is now simplified:
+			// - Action button navigation (Arrows, Home, End, Tab) is handled *within* CommandPaletteListItemActions
+			// - We only need to handle Enter/Space on the list item itself for selection.
+
+			// Only handle keys if the event target is the list item itself
+			if ( e.target !== rootRef.value ) {
+				return;
+			}
+
+			let handled = false;
+			switch ( e.key ) {
+				case 'Enter':
+				case ' ': // Allow space to select as well
+					onClick();
+					handled = true;
+					break;
+				// Arrow keys (Up/Down) are handled by the parent list for list navigation.
+				// Arrow keys (Left/Right), Home, End, Tab are potentially handled by the actions component if it has focus.
+			}
+
+			if ( handled ) {
+				e.preventDefault();
+				e.stopPropagation();
+			}
+		};
+
+		// --- Computed Properties ---
 		const rootClasses = computed( () => ( {
 			'citizen-command-palette-list-item--active': props.active && props.highlighted,
 			'citizen-command-palette-list-item--highlighted': props.highlighted
@@ -248,56 +207,30 @@ module.exports = exports = defineComponent( {
 		// eslint-disable-next-line mediawiki/msg-doc
 		const typeLabel = computed( () => mw.message( `citizen-command-palette-type-${ props.type }` ).text() );
 
-		const onFocus = ( event ) => {
-			if ( props.actions && props.actions.length > 0 && !rootRef.value.contains( event.relatedTarget ) ) {
-				focusFirstButton();
-			}
-		};
-
-		const onKeydown = ( e ) => {
-			if ( handleActionButtonKeydown( e ) ) {
-				return;
-			}
-
-			// Only handle item selection keys if the event target is the list item itself,
-			// not one of its descendants (like an action button).
-			if ( e.target !== rootRef.value ) {
-				return;
-			}
-
-			let handled = false;
-			switch ( e.key ) {
-				case 'Enter':
-				case ' ':
-					onClick();
-					handled = true;
-					break;
-			}
-
-			if ( handled ) {
-				e.preventDefault();
-				e.stopPropagation();
-			}
-		};
-
+		// --- Expose Methods ---
 		expose( {
+			// Expose method to focus the list item itself
 			focus: () => rootRef.value?.focus(),
-			focusFirstButton
+			// Expose methods to focus buttons within the actions sub-component
+			focusFirstButton: () => actionsRef.value?.focusFirstButton(),
+			focusLastButton: () => actionsRef.value?.focusLastButton()
 		} );
 
 		return {
+			// Refs
+			rootRef,
+			actionsRef,
+			// Event Handlers
 			onMouseMove,
 			onMouseLeave,
 			onMouseDown,
 			onClick,
-			onActionClick,
-			rootClasses,
-			typeLabel,
-			rootRef,
-			setButtonRef,
+			onAction,
 			onFocus,
 			onKeydown,
-			onButtonFocus
+			// Computed
+			rootClasses,
+			typeLabel // Pass computed typeLabel to content sub-component
 		};
 	}
 } );
@@ -307,107 +240,17 @@ module.exports = exports = defineComponent( {
 .citizen-command-palette-list-item {
 	position: relative;
 	list-style: none;
-
-	&__content {
-		display: flex;
-		column-gap: var( --space-sm );
-		align-items: center;
-		padding: var( --space-sm ) var( --citizen-command-palette-side-padding );
-		text-decoration: none;
-
-		&:hover {
-			text-decoration: none;
-		}
-	}
-
-	&__text {
-		flex: 1;
-		min-width: 0;
-		overflow: hidden;
-
-		&__label,
-		&__description {
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
-
-		&__label {
-			font-weight: var( --font-weight-semi-bold );
-			color: var( --color-emphasized );
-
-			.cdx-search-result-title {
-				/* So that text-overflow works */
-				display: inline;
-			}
-		}
-
-		&__description {
-			font-size: var( --font-size-x-small );
-			color: var( --color-subtle );
-		}
-
-		.cdx-search-result-title {
-			font-weight: var( --font-weight-semi-bold );
-			color: var( --color-emphasized );
-
-			&__match {
-				color: var( --color-subtle );
-			}
-		}
-	}
-
-	&__metadata {
-		display: flex;
-		gap: var( --space-xxs );
-		font-size: var( --font-size-x-small );
-		color: var( --color-subtle );
-
-		&__item {
-			display: flex;
-			column-gap: var( --space-xxs );
-			align-items: center;
-			// TODO: Should probably create a Citizen badge component
-			padding: var( --space-xxs ) var( --space-xs );
-			line-height: var( --line-height-xxx-small );
-			background: var( --color-surface-3 );
-			border: var( --border-subtle );
-			border-radius: var( --border-radius-base );
-		}
-	}
-
-	&__actions {
-		position: absolute;
-		inset-inline-end: var( --citizen-command-palette-side-padding );
-		display: flex;
-		gap: var( --space-xxs );
-		padding-left: var( --space-xl );
-		background-color: inherit;
-		background-image: linear-gradient( to right, transparent 0%, transparent 30%, var( --background-color-interactive-subtle--hover ) 70% );
-		opacity: 0;
-		transition: opacity var( --transition-quick );
-	}
-
-	&__action {
-		border-radius: var( --border-radius-base );
-
-		&--active {
-			color: var( --color-emphasized );
-			background: var( --background-color-interactive-subtle--active );
-		}
-	}
+	outline: none;
 
 	&--highlighted {
 		cursor: pointer;
 		background-color: var( --background-color-interactive-subtle--hover );
-
-		.citizen-command-palette-list-item__actions {
-			opacity: 1;
-		}
+		--actions-fade-color: var( --background-color-interactive-subtle--hover );
 	}
 
 	&--active {
 		background-color: var( --background-color-interactive-subtle--active );
+		--actions-fade-color: var( --background-color-interactive-subtle--active );
 	}
 }
 </style>
