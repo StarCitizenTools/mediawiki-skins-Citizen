@@ -204,15 +204,9 @@ exports.useSearchStore = defineStore( 'search', {
 				return;
 			}
 
-			if ( item?.url ) {
-				// Save a specific item (recent, search result)
-				searchHistoryService.saveRecentItem( {
-					label: item.label,
-					description: item.description,
-					url: item.url,
-					type: item.type || 'recent' // Default to recent if type is missing
-				} );
-			} else if ( !item && this.searchQuery.trim() !== '' && !this.searchQuery.startsWith( '/' ) ) {
+			if ( item ) {
+				searchHistoryService.saveRecentItem( item );
+			} else if ( this.searchQuery.trim() !== '' && !this.searchQuery.startsWith( '/' ) ) {
 				// Save the search query itself if it was a direct search (not a slash command)
 				// and item is null (indicating direct search submission)
 				searchHistoryService.saveSearchQuery( this.searchQuery, this.searchUrl );
