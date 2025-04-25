@@ -1,8 +1,8 @@
 <template>
 	<command-palette-list
-		v-if="itemsWithActions.length > 0"
+		v-if="recentItems.length > 0"
 		:heading="$i18n( 'citizen-command-palette-recent' ).text()"
-		:items="itemsWithActions"
+		:items="recentItems"
 		:highlighted-item-index="highlightedItemIndex"
 		:search-query="searchQuery"
 		:set-item-ref="setItemRef"
@@ -21,10 +21,10 @@
 </template>
 
 <script>
-const { defineComponent, computed } = require( 'vue' );
+const { defineComponent } = require( 'vue' );
 const CommandPaletteList = require( './CommandPaletteList.vue' );
 const CommandPaletteEmptyState = require( './CommandPaletteEmptyState.vue' );
-const { cdxIconArticlesSearch, cdxIconTrash } = require( '../icons.json' );
+const { cdxIconArticlesSearch } = require( '../icons.json' );
 const createRecentItems = require( '../services/recentItems.js' );
 
 // @vue/component
@@ -56,18 +56,6 @@ module.exports = exports = defineComponent( {
 	setup( props, { emit } ) {
 		const recentItemsService = createRecentItems();
 
-		// Add dismiss action to recent items
-		const itemsWithActions = computed( () => props.recentItems.map( ( item ) => ( {
-			...item,
-			actions: [
-				{
-					id: 'dismiss',
-					label: mw.msg( 'citizen-command-palette-dismiss' ),
-					icon: cdxIconTrash
-				}
-			]
-		} ) ) );
-
 		const handleAction = ( action ) => {
 			if ( action.actionId === 'dismiss' ) {
 				const itemToRemove = props.recentItems.find( ( item ) => String( item.id ) === action.itemId );
@@ -80,8 +68,7 @@ module.exports = exports = defineComponent( {
 
 		return {
 			cdxIconArticlesSearch,
-			handleAction,
-			itemsWithActions
+			handleAction
 		};
 	}
 } );
