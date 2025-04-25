@@ -44,6 +44,28 @@ class MwRestSearchClient {
 	}
 
 	/**
+	 * Processes the query
+	 *
+	 * @param {string} query The original search query
+	 * @return {string} The processed query
+	 */
+	processQuery( query ) {
+		// Template syntax: {{Template}} -> Template:Template
+		const templateMatch = query.match( /^{{(.*?)(}})?$/ );
+		if ( templateMatch ) {
+			return `Template:${ templateMatch[ 1 ] }`;
+		}
+
+		// Wikilink syntax: [[Article]] -> Article
+		const wikilinkMatch = query.match( /^\[\[(.*?)(]]?)?$/ );
+		if ( wikilinkMatch ) {
+			return wikilinkMatch[ 1 ];
+		}
+
+		return query;
+	}
+
+	/**
 	 * Adapts the REST API response to the SearchResponse format
 	 *
 	 * @private
@@ -97,7 +119,9 @@ class MwRestSearchClient {
 	 * @return {AbortableSearchFetch}
 	 */
 	fetchByQuery( query, limit = 10, showDescription = true ) {
-		const params = { q: query, limit: limit.toString() };
+		const processedQuery = this.processQuery( query );
+
+		const params = { q: processedQuery, limit: limit.toString() };
 		const search = new URLSearchParams( params );
 		const url = `${ this.searchApiUrl }/v1/search/title?${ search.toString() }`;
 		const result = fetchJson( url, {
