@@ -10,21 +10,8 @@ const { ref, watch, nextTick } = require( 'vue' );
 function usePaletteNavigation( itemsRef, itemRefs ) {
 	const highlightedItemIndex = ref( -1 );
 
-	/**
-	 * Scrolls the container to make the highlighted item visible.
-	 */
 	function scrollToHighlightedItem() {
-		// Ensure itemRefs and the specific ref exist
-		if ( !itemRefs || !itemRefs.value || !itemRefs.value[ highlightedItemIndex.value ] ) {
-			return;
-		}
-		const highlightedElement = itemRefs.value[ highlightedItemIndex.value ];
-		highlightedElement?.scrollIntoView( {
-			block: 'nearest',
-			// Use 'auto' to avoid scrolling if already visible,
-			// or 'smooth'/'instant' if you always want scroll behavior.
-			behavior: 'auto'
-		} );
+		itemRefs.value?.[ highlightedItemIndex.value ]?.$el?.scrollIntoView( { block: 'nearest' } );
 	}
 
 	function highlightNext() {

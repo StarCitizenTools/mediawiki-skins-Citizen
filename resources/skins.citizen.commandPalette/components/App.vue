@@ -3,16 +3,18 @@
 		v-if="isOpen"
 		class="citizen-command-palette-backdrop"
 		@click="close"></div>
-	<div v-if="isOpen" class="citizen-command-palette">
+	<div
+		v-if="isOpen"
+		class="citizen-command-palette"
+		@keydown="handleRootKeydown"
+	>
 		<command-palette-header
 			ref="searchHeader"
 			:model-value="searchStore.searchQuery"
 			:is-pending="searchStore.isPending"
 			:show-pending="searchStore.showPending"
 			@update:model-value="searchStore.updateQuery( $event )"
-			@keydown="onKeydown"
 			@close="close"
-			@focus-active-item="focusItem( highlightedItemIndex )"
 		></command-palette-header>
 		<div
 			ref="resultsContainer"
@@ -28,8 +30,7 @@
 					@update:highlighted-item-index="updatehighlightedItemIndex"
 					@select="selectResult"
 					@update:recent-items="searchStore.updateQuery( '' )"
-					@focus-input="focusInput"
-					@navigate-list="handleListNavigation"
+					@navigate-list="handleActionNavigation"
 				></command-palette-presults>
 			</template>
 			<!-- Show Empty State when query exists, not pending, and no results -->
@@ -50,14 +51,12 @@
 					@update:highlighted-item-index="updatehighlightedItemIndex"
 					@select="selectResult"
 					@action="handleAction"
-					@focus-input="focusInput"
-					@navigate-list="handleListNavigation"
+					@navigate-list="handleActionNavigation"
 				></command-palette-list>
 			</template>
 		</div>
 		<command-palette-footer
 			:has-highlighted-item-with-actions="hasHighlightedItemWithActions"
-			:is-action-button-focused="isActionButtonFocused"
 		></command-palette-footer>
 	</div>
 </template>
@@ -97,18 +96,9 @@ module.exports = exports = defineComponent( {
 		const isOpen = ref( false );
 		const searchHeader = ref( null );
 		const resultsContainer = ref( null );
-		const isActionButtonFocused = ref( false );
 		const itemRefs = ref( [] );
 
 		const { highlightedItemIndex, handleNavigationKeydown } = useListNavigation( displayedItems, itemRefs );
-
-		const firstActionButtonOfHighlightedItem = computed( () => {
-			if ( highlightedItemIndex.value < 0 || !itemRefs.value[ highlightedItemIndex.value ] ) {
-				return null;
-			}
-			const highlightedElement = itemRefs.value[ highlightedItemIndex.value ];
-			return highlightedElement?.querySelector( 'button, a' );
-		} );
 
 		const focusInput = () => {
 			searchHeader.value?.focus();
@@ -179,46 +169,40 @@ module.exports = exports = defineComponent( {
 		};
 
 		const onKeydown = ( event ) => {
-			if ( handleNavigationKeydown( event ) ) {
-				return;
+			// Handle list navigation (Up/Down/Home/End)
+			if ( [ 'ArrowUp', 'ArrowDown', 'Home', 'End' ].includes( event.key ) ) {
+				if ( handleNavigationKeydown( event ) ) {
+					// Highlight updated, ensure input remains focused
+					nextTick( focusInput );
+					return;
+				}
 			}
 
 			if ( event.key === 'Enter' ) {
-				if ( isActionButtonFocused.value ) {
-					return;
-				}
-
 				event.preventDefault();
 				const selectedItem = highlightedItemIndex.value >= 0 ?
 					displayedItems.value[ highlightedItemIndex.value ] :
 					null;
-				selectResult( selectedItem );
-			} else if ( event.key === 'Tab' ) {
-				const currentHighlightedItem = hasHighlightedItemWithActions.value ? displayedItems.value[ highlightedItemIndex.value ] : null;
-				if ( currentHighlightedItem && !event.shiftKey ) {
-					const firstActionButton = firstActionButtonOfHighlightedItem.value;
-					if ( firstActionButton ) {
-						event.preventDefault();
-						firstActionButton.focus();
-						isActionButtonFocused.value = true;
-					}
-				} else if ( isActionButtonFocused.value && event.shiftKey ) {
-					event.preventDefault();
-					focusInput();
-					isActionButtonFocused.value = false;
+				if ( selectedItem ) {
+					selectResult( selectedItem );
 				}
 			} else if ( event.key === 'Escape' ) {
 				close();
+			} else if ( event.key === 'ArrowRight' ) {
+				// Handle moving focus to actions
+				const inputElement = event.target;
+				const isCursorAtEnd = inputElement.selectionStart === inputElement.value.length && inputElement.selectionEnd === inputElement.value.length;
+				const currentItemIndex = highlightedItemIndex.value;
+				const itemHasActions = hasHighlightedItemWithActions.value; // Cache computed value
+
+				if ( isCursorAtEnd && currentItemIndex >= 0 && itemHasActions ) {
+					const itemComponent = itemRefs.value[ currentItemIndex ];
+					if ( itemComponent?.focusFirstButton ) {
+						event.preventDefault();
+						itemComponent.focusFirstButton();
+					}
+				}
 			}
-		};
-
-		const handleListNavigation = ( event ) => {
-			onKeydown( event );
-		};
-
-		const focusItem = ( index ) => {
-			const element = itemRefs.value[ index ];
-			element?.focus();
 		};
 
 		// Watch for changes in displayed items to potentially reset selection
@@ -229,9 +213,78 @@ module.exports = exports = defineComponent( {
 			} else if ( newItems.length === 0 ) {
 				// Reset if list becomes empty
 				highlightedItemIndex.value = -1;
-				isActionButtonFocused.value = false;
 			}
 		} );
+
+		// Watch for the store flag indicating input focus is needed
+		watch( () => searchStore.needsInputFocus, ( needsFocus ) => {
+			if ( needsFocus ) {
+				focusInput();
+				// Reset the flag in the store after focusing
+				searchStore.setNeedsInputFocus( false );
+			}
+		} );
+
+		// Handler for events coming from action buttons (via list/item)
+		const handleActionNavigation = ( event ) => {
+			// This event is emitted when ArrowUp/ArrowDown is pressed on an action button
+			// We need to navigate the list (focus is handled by the store watcher).
+			if ( handleNavigationKeydown( event ) ) {
+				// Highlight updated. Input focus will be triggered by useActionNavigation
+				// calling store.triggerFocusSearchInput(), which the watcher below catches.
+			}
+		};
+
+		// Global keydown handler for the palette root element
+		const handleRootKeydown = ( event ) => {
+			// Ignore if modifier keys are pressed
+			if ( event.altKey || event.ctrlKey || event.metaKey || event.shiftKey ) {
+				return;
+			}
+
+			// Get the actual input element from the searchHeader component
+			const inputElement = searchHeader.value?.$refs.searchInputRef?.$el.querySelector( 'input' );
+
+			// Let the header's own handler deal with events originating from the input
+			if ( event.target === inputElement ) {
+				onKeydown( event ); // Call the existing specific handler
+				return;
+			}
+
+			// Check if focus is currently within an action button
+			const isActionFocused = event.target?.closest( '.citizen-command-palette-list-item__action' );
+
+			if ( isActionFocused ) {
+				// Check for specifically handled keys within actions (handled by useActionNavigation)
+				const handledByActionNav = [ 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Enter', ' ' ];
+				if ( handledByActionNav.includes( event.key ) ) {
+					// Let the action button's own handler manage these
+					return;
+				}
+
+				// Check for other navigation/control keys we don't want to trigger refocus
+				const nonTypingKeys = [ 'Escape', 'Tab', 'Home', 'End', 'PageUp', 'PageDown' ];
+				if ( nonTypingKeys.includes( event.key ) ) {
+					// Handle Escape globally, ignore others
+					if ( event.key === 'Escape' ) {
+						close();
+					}
+					return;
+				}
+
+				// If it's likely a typing key (length 1 or Backspace/Delete)
+				if ( event.key.length === 1 || event.key === 'Backspace' || event.key === 'Delete' ) {
+					focusInput();
+					// Do not preventDefault, allow the keypress into the input
+					return;
+				}
+			}
+
+			// If focus is not in input or actions, handle Escape globally
+			if ( event.key === 'Escape' ) {
+				close();
+			}
+		};
 
 		return {
 			searchStore,
@@ -246,14 +299,11 @@ module.exports = exports = defineComponent( {
 			close,
 			selectResult,
 			handleAction,
-			onKeydown,
-			handleListNavigation,
+			handleActionNavigation,
+			handleRootKeydown,
 			updatehighlightedItemIndex,
 			cdxIconArticleNotFound,
-			hasHighlightedItemWithActions,
-			isActionButtonFocused,
-			focusItem,
-			focusInput
+			hasHighlightedItemWithActions
 		};
 	}
 } );

@@ -11,13 +11,10 @@ Partially based on the MenuItem component from Codex.
 		class="citizen-command-palette-list-item"
 		:class="rootClasses"
 		:data-type="type"
-		:tabindex="highlighted ? 0 : -1"
 		@mousemove="onMouseMove"
 		@mouseleave="onMouseLeave"
 		@mousedown.prevent="onMouseDown"
 		@click.prevent="onClick"
-		@focus="onFocus"
-		@keydown="onKeydown"
 	>
 		<command-palette-list-item-content
 			:label="label"
@@ -36,6 +33,7 @@ Partially based on the MenuItem component from Codex.
 			:actions="actions"
 			:highlighted="highlighted"
 			@action="onAction"
+			@navigate-list="$emit( 'navigate-list', $event )"
 		></command-palette-list-item-actions>
 	</li>
 </template>
@@ -112,7 +110,6 @@ module.exports = exports = defineComponent( {
 		'change',
 		'select',
 		'action',
-		'focus-input',
 		'navigate-list'
 	],
 	setup( props, { emit, expose } ) {
@@ -157,35 +154,6 @@ module.exports = exports = defineComponent( {
 			emit( 'action', actionPayload );
 		};
 
-		// --- Focus Handling ---
-		const onFocus = ( event ) => {
-			// When the list item itself receives focus, try focusing the first action button if available
-			if ( props.actions && props.actions.length > 0 && !rootRef.value.contains( event.relatedTarget ) ) {
-				actionsRef.value?.focusFirstButton();
-			}
-		};
-
-		// --- Keydown Handling ---
-		const onKeydown = ( e ) => {
-			// Only handle keys if the event target is the list item itself
-			if ( e.target !== rootRef.value ) {
-				return;
-			}
-
-			let handled = false;
-			switch ( e.key ) {
-				case 'Enter':
-					onClick();
-					handled = true;
-					break;
-			}
-
-			if ( handled ) {
-				e.preventDefault();
-				e.stopPropagation();
-			}
-		};
-
 		// --- Computed Properties ---
 		const rootClasses = computed( () => ( {
 			'citizen-command-palette-list-item--active': props.active && props.highlighted,
@@ -199,7 +167,6 @@ module.exports = exports = defineComponent( {
 
 		// --- Expose Methods ---
 		expose( {
-			focus: () => rootRef.value?.focus(),
 			focusFirstButton: () => actionsRef.value?.focusFirstButton(),
 			focusLastButton: () => actionsRef.value?.focusLastButton()
 		} );
@@ -214,8 +181,6 @@ module.exports = exports = defineComponent( {
 			onMouseDown,
 			onClick,
 			onAction,
-			onFocus,
-			onKeydown,
 			// Computed
 			rootClasses,
 			typeLabel

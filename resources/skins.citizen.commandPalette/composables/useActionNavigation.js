@@ -1,4 +1,5 @@
 const { ref, nextTick } = require( 'vue' );
+const { useSearchStore } = require( '../stores/searchStore.js' );
 
 /**
  * Composable for handling keyboard navigation and focus within action buttons of a list item.
@@ -9,6 +10,7 @@ const { ref, nextTick } = require( 'vue' );
  * @return {Object} { handleActionButtonKeydown, onButtonFocus, focusFirstButton }
  */
 function useActionNavigation( actionsRef, buttonRefs, emit ) {
+	const searchStore = useSearchStore();
 	const activeButtonId = ref( null );
 
 	/**
@@ -56,9 +58,10 @@ function useActionNavigation( actionsRef, buttonRefs, emit ) {
 		switch ( event.key ) {
 			case 'ArrowLeft':
 				if ( currentButtonIndex === 0 ) {
-					// Signal to parent component (ListItem) to focus the input
-					emit( 'focus-input' );
+					// On the first button, trigger store action to focus input
+					searchStore.triggerFocusSearchInput();
 				} else {
+					// Move focus to the previous button
 					const prevActionId = actions[ currentButtonIndex - 1 ].id;
 					const prevButton = buttons[ prevActionId ];
 					if ( prevButton?.$el ) {
@@ -71,6 +74,7 @@ function useActionNavigation( actionsRef, buttonRefs, emit ) {
 				break;
 			case 'ArrowRight':
 				if ( currentButtonIndex < actions.length - 1 ) {
+					// Move focus to the next button
 					const nextActionId = actions[ currentButtonIndex + 1 ].id;
 					const nextButton = buttons[ nextActionId ];
 					if ( nextButton?.$el ) {
@@ -78,13 +82,19 @@ function useActionNavigation( actionsRef, buttonRefs, emit ) {
 					} else if ( typeof nextButton?.focus === 'function' ) {
 						nextButton.focus();
 					}
-				} // else: do nothing, stay on last button
-				handled = true;
+					// If on the last button, do nothing (handled = false below)
+					handled = true;
+				} else {
+					// On the last button, do nothing and let handled stay false
+					handled = false;
+				}
 				break;
 			case 'ArrowUp':
 			case 'ArrowDown':
-				// Signal to parent component (ListItem) to navigate the main list
-				emit( 'navigate-list', event ); // Pass the original event
+				// Signal to parent to navigate the list via emit
+				emit( 'navigate-list', event );
+				// Trigger store action to focus input
+				searchStore.triggerFocusSearchInput();
 				handled = true;
 				break;
 			case 'Enter':

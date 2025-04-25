@@ -27,6 +27,7 @@ const providers = [
  * @property {?number} debounceTimeout - Timeout ID for debouncing search requests.
  * @property {?number} pendingDelayTimeout - Timeout ID for delaying the pending indicator.
  * @property {boolean} autoSelectFirst - Whether the first item should be automatically selected.
+ * @property {boolean} needsInputFocus - Flag to signal App.vue to focus input
  */
 exports.useSearchStore = defineStore( 'search', {
 	state: () => ( {
@@ -43,7 +44,9 @@ exports.useSearchStore = defineStore( 'search', {
 		/** @type {?number} */
 		pendingDelayTimeout: null, // Separate timeout for loading animation delay, it should only be shown when the provider is slow
 		/** @type {boolean} */
-		autoSelectFirst: false
+		autoSelectFirst: false,
+		/** @type {boolean} */
+		needsInputFocus: false
 	} ),
 
 	getters: {
@@ -229,6 +232,23 @@ exports.useSearchStore = defineStore( 'search', {
 			this.showPending = false;
 			// If we are setting final results, any pending delay timeout is irrelevant
 			clearTimeout( this.pendingDelayTimeout );
+		},
+
+		/**
+		 * Updates the `needsInputFocus` state flag.
+		 *
+		 * @param {boolean} value The new value for the flag.
+		 */
+		setNeedsInputFocus( value ) {
+			this.needsInputFocus = value;
+		},
+
+		/**
+		 * Action called externally (e.g., from useActionNavigation) to signal
+		 * that the search input should be focused.
+		 */
+		triggerFocusSearchInput() {
+			this.setNeedsInputFocus( true );
 		}
 	}
 } );

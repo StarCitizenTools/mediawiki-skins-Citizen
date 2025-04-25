@@ -11,14 +11,9 @@
 			<kbd class="citizen-keyboard-hint-key">↑↓</kbd>
 		</div>
 		<!-- Actions hint - only shown when item has actions -->
-		<div v-if="hasHighlightedItemWithActions && !isActionButtonFocused" class="citizen-keyboard-hint">
+		<div v-if="hasHighlightedItemWithActions" class="citizen-keyboard-hint">
 			<span class="citizen-keyboard-hint-label">{{ $i18n( 'citizen-command-palette-keyhint-actions' ).text() }}</span>
 			<kbd class="citizen-keyboard-hint-key">→</kbd>
-		</div>
-		<!-- Return hint - only shown when action is focused -->
-		<div v-if="isActionButtonFocused" class="citizen-keyboard-hint">
-			<span class="citizen-keyboard-hint-label">{{ $i18n( 'citizen-command-palette-keyhint-return' ).text() }}</span>
-			<kbd class="citizen-keyboard-hint-key">←</kbd>
 		</div>
 		<!-- Exit hint -->
 		<div class="citizen-keyboard-hint">
@@ -36,10 +31,6 @@ module.exports = exports = defineComponent( {
 	name: 'CommandPaletteKeyboardHints',
 	props: {
 		hasHighlightedItemWithActions: {
-			type: Boolean,
-			required: true
-		},
-		isActionButtonFocused: {
 			type: Boolean,
 			required: true
 		}
