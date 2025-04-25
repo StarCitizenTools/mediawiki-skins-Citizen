@@ -9,7 +9,6 @@
 		@update:highlighted-item-index="$emit( 'update:highlighted-item-index', $event )"
 		@select="$emit( 'select', $event )"
 		@action="handleAction"
-		@focus-input="$emit( 'focus-input' )"
 		@navigate-list="( direction ) => $emit( 'navigate-list', direction )"
 	></command-palette-list>
 	<command-palette-empty-state
@@ -52,7 +51,7 @@ module.exports = exports = defineComponent( {
 			default: null
 		}
 	},
-	emits: [ 'update:highlighted-item-index', 'select', 'update:recent-items', 'focus-input', 'navigate-list' ],
+	emits: [ 'update:highlighted-item-index', 'select', 'update:recent-items', 'navigate-list' ],
 	setup( props, { emit } ) {
 		const recentItemsService = createRecentItems();
 
