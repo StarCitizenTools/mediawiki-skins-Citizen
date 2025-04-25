@@ -82,7 +82,7 @@
 	"citizen-user-info-text-anon": "Votre adresse IP sera visible au public si vous faites des modifications.",
 	"citizen-user-info-text-temp": "Ce compte temporaire a été créé après une modification sans compte sur ce navigateur et cet appareil.",
 	"citizen-command-palette-recent": "Récent",
-	"citizen-command-palette-keyhint-select": "Sélectionner",
+	"citizen-command-palette-keyhint-enter-select": "Sélectionner",
 	"citizen-command-palette-keyhint-navigate": "Naviguer",
 	"citizen-command-palette-keyhint-exit": "Quitter",
 	"citizen-command-palette-keyhint-actions": "Actions",

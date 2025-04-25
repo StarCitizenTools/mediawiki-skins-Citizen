@@ -85,8 +85,9 @@
 
 	"citizen-command-palette-recent": "Recent",
 
-	"citizen-command-palette-keyhint-select": "Select",
-	"citizen-command-palette-keyhint-select-open": "Open",
+	"citizen-command-palette-keyhint-enter-select": "Select",
+	"citizen-command-palette-keyhint-enter-open": "Open",
+	"citizen-command-palette-keyhint-enter-search": "Search",
 	"citizen-command-palette-keyhint-navigate": "Navigate",
 	"citizen-command-palette-keyhint-exit": "Exit",
 	"citizen-command-palette-keyhint-actions": "Actions",

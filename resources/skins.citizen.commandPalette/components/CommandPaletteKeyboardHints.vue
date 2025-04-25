@@ -1,8 +1,8 @@
 <template>
 	<div class="citizen-command-palette__footer-hints">
 		<!-- Select hint -->
-		<div v-if="showSelectHint" class="citizen-keyboard-hint">
-			<span class="citizen-keyboard-hint-label">{{ $i18n( 'citizen-command-palette-keyhint-select' ).text() }}</span>
+		<div class="citizen-keyboard-hint">
+			<span class="citizen-keyboard-hint-label">{{ enterKeyLabel }}</span>
 			<kbd class="citizen-keyboard-hint-key">↵</kbd>
 		</div>
 		<!-- Navigate hint -->
@@ -70,7 +70,13 @@ module.exports = exports = defineComponent( {
 		}
 	},
 	setup( props ) {
-		const showSelectHint = computed( () => props.highlightedItemType !== null || props.isActionFocused );
+		const enterKeyLabel = computed( () => {
+			if ( props.highlightedItemType !== null || props.isActionFocused ) {
+				return mw.message( 'citizen-command-palette-keyhint-enter-select' ).text();
+			} else {
+				return mw.message( 'citizen-command-palette-keyhint-enter-search' ).text();
+			}
+		} );
 
 		const navigateActionsKeys = computed( () => {
 			let keys = '↑↓'; // Always show up/down when action is focused
@@ -92,7 +98,7 @@ module.exports = exports = defineComponent( {
 		} );
 
 		return {
-			showSelectHint,
+			enterKeyLabel,
 			navigateActionsKeys
 		};
 	}

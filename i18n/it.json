@@ -54,7 +54,7 @@
 	"citizen-user-info-text-anon": "Il tuo indirizzo IP sarà visibile pubblicamente se effettuerai modifiche.",
 	"citizen-user-info-text-temp": "Questa utenza temporanea è stata creata dopo che è stata apportata una modifica senza un'utenza su questo browser e dispositivo.",
 	"citizen-command-palette-recent": "Recenti",
-	"citizen-command-palette-keyhint-select": "Seleziona",
+	"citizen-command-palette-keyhint-enter-select": "Seleziona",
 	"citizen-command-palette-type-page": "Pagina",
 	"citizen-command-palette-type-fulltext-search": "Ricerca nell'intero testo"
 }
