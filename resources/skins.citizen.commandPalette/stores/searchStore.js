@@ -212,20 +212,34 @@ exports.useSearchStore = defineStore( 'search', {
 		},
 
 		/**
-		 * Updates the `needsInputFocus` state flag.
+		 * Sets the `needsInputFocus` state flag.
+		 * Used by components to request that the search input be focused.
 		 *
-		 * @param {boolean} value The new value for the flag.
+		 * @param {boolean} value Whether focus is needed.
+		 * @return {void}
 		 */
 		setNeedsInputFocus( value ) {
 			this.needsInputFocus = value;
 		},
 
 		/**
-		 * Action called externally (e.g., from useActionNavigation) to signal
-		 * that the search input should be focused.
+		 * Action to signal that the input focus request has been handled.
+		 * Resets the `needsInputFocus` flag to false.
+		 *
+		 * @return {void}
+		 */
+		focusHandled() {
+			this.needsInputFocus = false;
+		},
+
+		/**
+		 * Sets the `needsInputFocus` flag to true, signaling App.vue to focus the search input.
+		 * This is typically called after an action that changes the query (like selecting a command).
+		 *
+		 * @return {void}
 		 */
 		triggerFocusSearchInput() {
-			this.setNeedsInputFocus( true );
+			this.needsInputFocus = true;
 		}
 	}
 } );

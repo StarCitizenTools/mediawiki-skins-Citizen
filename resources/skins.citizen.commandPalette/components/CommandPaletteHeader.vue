@@ -46,9 +46,15 @@ module.exports = exports = defineComponent( {
 		}
 	},
 	emits: [ 'update:modelValue', 'keydown', 'close', 'focus-active-item' ],
-	setup( props, { emit } ) {
+	setup( props, { emit, expose } ) {
 		const searchInputRef = ref( null );
 		const value = computed( () => props.modelValue );
+
+		const getInputElement = () => searchInputRef.value?.$el?.querySelector( 'input' ) || null;
+
+		const focus = () => {
+			getInputElement()?.focus();
+		};
 
 		const onKeydown = ( event ) => {
 			switch ( event.key ) {
@@ -82,20 +88,17 @@ module.exports = exports = defineComponent( {
 			}
 		};
 
+		expose( {
+			focus,
+			getInputElement
+		} );
+
 		return {
 			searchInputRef,
 			value,
 			cdxIconSearch,
 			onKeydown
 		};
-	},
-	methods: {
-		/**
-		 * @public
-		 */
-		focus() {
-			this.$refs.searchInputRef?.$el.querySelector( 'input' )?.focus();
-		}
 	}
 } );
 </script>

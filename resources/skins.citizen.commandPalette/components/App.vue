@@ -30,7 +30,7 @@
 					@update:highlighted-item-index="updatehighlightedItemIndex"
 					@select="selectResult"
 					@update:recent-items="searchStore.updateQuery( '' )"
-					@navigate-list="handleActionNavigation"
+					@navigate-list="handleNavigationKeydown"
 				></command-palette-presults>
 			</template>
 			<!-- Show Empty State when query exists, not pending, and no results -->
@@ -51,7 +51,7 @@
 					@update:highlighted-item-index="updatehighlightedItemIndex"
 					@select="selectResult"
 					@action="handleAction"
-					@navigate-list="handleActionNavigation"
+					@navigate-list="handleNavigationKeydown"
 				></command-palette-list>
 			</template>
 		</div>
@@ -172,7 +172,7 @@ module.exports = exports = defineComponent( {
 			// Handle list navigation (Up/Down/Home/End)
 			if ( [ 'ArrowUp', 'ArrowDown', 'Home', 'End' ].includes( event.key ) ) {
 				if ( handleNavigationKeydown( event ) ) {
-					// Highlight updated, ensure input remains focused
+					event.preventDefault();
 					nextTick( focusInput );
 					return;
 				}
@@ -221,19 +221,9 @@ module.exports = exports = defineComponent( {
 			if ( needsFocus ) {
 				focusInput();
 				// Reset the flag in the store after focusing
-				searchStore.setNeedsInputFocus( false );
+				searchStore.focusHandled();
 			}
 		} );
-
-		// Handler for events coming from action buttons (via list/item)
-		const handleActionNavigation = ( event ) => {
-			// This event is emitted when ArrowUp/ArrowDown is pressed on an action button
-			// We need to navigate the list (focus is handled by the store watcher).
-			if ( handleNavigationKeydown( event ) ) {
-				// Highlight updated. Input focus will be triggered by useActionNavigation
-				// calling store.triggerFocusSearchInput(), which the watcher below catches.
-			}
-		};
 
 		// Global keydown handler for the palette root element
 		const handleRootKeydown = ( event ) => {
@@ -242,12 +232,12 @@ module.exports = exports = defineComponent( {
 				return;
 			}
 
-			// Get the actual input element from the searchHeader component
-			const inputElement = searchHeader.value?.$refs.searchInputRef?.$el.querySelector( 'input' );
+			// Get the input element via the header component's method
+			const inputElement = searchHeader.value?.getInputElement();
 
 			// Let the header's own handler deal with events originating from the input
-			if ( event.target === inputElement ) {
-				onKeydown( event ); // Call the existing specific handler
+			if ( inputElement && event.target === inputElement ) {
+				onKeydown( event );
 				return;
 			}
 
@@ -294,12 +284,12 @@ module.exports = exports = defineComponent( {
 			searchHeader,
 			resultsContainer,
 			setItemRef,
+			handleNavigationKeydown,
 			// eslint-disable-next-line vue/no-unused-properties
 			open,
 			close,
 			selectResult,
 			handleAction,
-			handleActionNavigation,
 			handleRootKeydown,
 			updatehighlightedItemIndex,
 			cdxIconArticleNotFound,
