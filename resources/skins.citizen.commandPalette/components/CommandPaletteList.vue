@@ -17,11 +17,10 @@
 				v-for="( item, index ) in items"
 				:key="item.id"
 				v-bind="getListItemBindings( item, index )"
-				:ref="( el ) => setItemRef && setItemRef( el?.$el, index )"
+				:ref="( el ) => setItemRef && setItemRef( el, index )"
 				@change="( property, value ) => onItemChange( item.id, property, value, index )"
 				@select="( result ) => $emit( 'select', result )"
 				@action="( action ) => $emit( 'action', action )"
-				@focus-input="$emit( 'focus-input' )"
 				@navigate-list="( direction ) => $emit( 'navigate-list', direction )"
 			></command-palette-list-item>
 		</ul>
@@ -61,7 +60,7 @@ module.exports = exports = defineComponent( {
 			default: null
 		}
 	},
-	emits: [ 'update:highlightedItemIndex', 'select', 'action', 'focus-input', 'navigate-list' ],
+	emits: [ 'update:highlightedItemIndex', 'select', 'action', 'navigate-list' ],
 	setup( props, { emit } ) {
 		const listRef = ref( null );
 		const activeItemId = ref( null );

@@ -6,7 +6,6 @@
 		</div>
 		<command-palette-keyboard-hints
 			:has-highlighted-item-with-actions="hasHighlightedItemWithActions"
-			:is-action-button-focused="isActionButtonFocused"
 		></command-palette-keyboard-hints>
 	</div>
 </template>
@@ -23,10 +22,6 @@ module.exports = exports = defineComponent( {
 	},
 	props: {
 		hasHighlightedItemWithActions: {
-			type: Boolean,
-			required: true
-		},
-		isActionButtonFocused: {
 			type: Boolean,
 			required: true
 		}
