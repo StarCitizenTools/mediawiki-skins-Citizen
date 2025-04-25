@@ -105,6 +105,7 @@ module.exports = exports = defineComponent( {
 
 .citizen-command-palette {
 	&__search {
+		position: relative;
 		/* 8px from CdxTextInput */
 		padding: var( --space-sm ) calc( var( --citizen-command-palette-side-padding ) - @spacing-50 );
 	}
@@ -123,6 +124,7 @@ module.exports = exports = defineComponent( {
 
 	&__progress-indicator {
 		position: absolute;
+		bottom: 0;
 		right: 0;
 		left: 0;
 	}
