@@ -75,8 +75,7 @@ function useActionNavigation( actionsRef, buttonRefs, emit ) {
 			case 'ArrowRight':
 				if ( currentButtonIndex < actions.length - 1 ) {
 					// Move focus to the next button
-					const nextActionId = actions[ currentButtonIndex + 1 ].id;
-					const nextButton = buttons[ nextActionId ];
+					const nextButton = buttons[ actions[ currentButtonIndex + 1 ].id ];
 					if ( nextButton?.$el ) {
 						nextButton.$el.focus();
 					} else if ( typeof nextButton?.focus === 'function' ) {
@@ -84,9 +83,6 @@ function useActionNavigation( actionsRef, buttonRefs, emit ) {
 					}
 					// If on the last button, do nothing (handled = false below)
 					handled = true;
-				} else {
-					// On the last button, do nothing and let handled stay false
-					handled = false;
 				}
 				break;
 			case 'ArrowUp':
