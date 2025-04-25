@@ -5,6 +5,10 @@ const recentItemsService = createRecentItems();
 
 /** @type {CommandPaletteProvider} */
 module.exports = {
+	/** Whether this provider returns results asynchronously */
+	isAsync: false,
+	/** Debounce time in milliseconds for async providers */
+	debounceMs: 0,
 	/** Whether the first result from this provider should be automatically selected */
 	shouldAutoSelectFirst: false,
 

@@ -38,6 +38,10 @@ function getCommandListItems( filterPrefix ) {
 
 /** @type {CommandPaletteProvider} */
 module.exports = {
+	/** Whether this provider returns results asynchronously */
+	isAsync: true, // Although some commands might be sync, the handler resolution can be async
+	/** Debounce time in milliseconds for async providers */
+	debounceMs: 0, // No debounce for commands for responsiveness
 	/** Whether the first result from this provider should be automatically selected */
 	shouldAutoSelectFirst: true,
 
