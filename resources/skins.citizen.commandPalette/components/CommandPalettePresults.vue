@@ -10,6 +10,8 @@
 		@select="$emit( 'select', $event )"
 		@action="handleAction"
 		@navigate-list="( direction ) => $emit( 'navigate-list', direction )"
+		@focus-action="( payload ) => $emit( 'focus-action', payload )"
+		@blur-actions="() => $emit( 'blur-actions' )"
 	></command-palette-list>
 	<command-palette-empty-state
 		v-else
@@ -51,7 +53,7 @@ module.exports = exports = defineComponent( {
 			default: null
 		}
 	},
-	emits: [ 'update:highlighted-item-index', 'select', 'update:recent-items', 'navigate-list' ],
+	emits: [ 'update:highlighted-item-index', 'select', 'update:recent-items', 'navigate-list', 'focus-action', 'blur-actions' ],
 	setup( props, { emit } ) {
 		const recentItemsService = createRecentItems();
 

@@ -361,6 +361,7 @@
 				"citizen-command-palette-recent",
 				"citizen-command-palette-keyhint-actions",
 				"citizen-command-palette-keyhint-select",
+				"citizen-command-palette-keyhint-select-open",
 				"citizen-command-palette-keyhint-navigate",
 				"citizen-command-palette-keyhint-exit",
 				"citizen-command-palette-keyhint-return",

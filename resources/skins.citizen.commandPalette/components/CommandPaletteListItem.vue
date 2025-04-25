@@ -34,6 +34,8 @@ Partially based on the MenuItem component from Codex.
 			:highlighted="highlighted"
 			@action="onAction"
 			@navigate-list="$emit( 'navigate-list', $event )"
+			@focus-action="$emit( 'focus-action', $event )"
+			@blur-actions="$emit( 'blur-actions' )"
 		></command-palette-list-item-actions>
 	</li>
 </template>
@@ -110,7 +112,9 @@ module.exports = exports = defineComponent( {
 		'change',
 		'select',
 		'action',
-		'navigate-list'
+		'navigate-list',
+		'focus-action',
+		'blur-actions'
 	],
 	setup( props, { emit, expose } ) {
 		const rootRef = ref( null );

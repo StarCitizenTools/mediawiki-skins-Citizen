@@ -51,7 +51,7 @@ module.exports = exports = defineComponent( {
 			required: true
 		}
 	},
-	emits: [ 'action', 'navigate-list' ],
+	emits: [ 'action', 'navigate-list', 'focus-action', 'blur-actions' ],
 	setup( props, { emit, expose } ) {
 		const buttonRefs = ref( {} );
 

@@ -31,6 +31,8 @@
 					@select="selectResult"
 					@update:recent-items="searchStore.updateQuery( '' )"
 					@navigate-list="handleNavigationKeydown"
+					@focus-action="handleFocusAction"
+					@blur-actions="handleBlurActions"
 				></command-palette-presults>
 			</template>
 			<!-- Show Empty State when query exists, not pending, and no results -->
@@ -52,11 +54,19 @@
 					@select="selectResult"
 					@action="handleAction"
 					@navigate-list="handleNavigationKeydown"
+					@focus-action="handleFocusAction"
+					@blur-actions="handleBlurActions"
 				></command-palette-list>
 			</template>
 		</div>
 		<command-palette-footer
 			:has-highlighted-item-with-actions="hasHighlightedItemWithActions"
+			:item-count="itemCount"
+			:highlighted-item-type="highlightedItemType"
+			:is-action-focused="actionFocusActive"
+			:is-first-action-focused="firstActionFocusActive"
+			:focused-action-index="focusedActionIndex"
+			:action-count="actionCount"
 		></command-palette-footer>
 	</div>
 </template>
@@ -97,6 +107,9 @@ module.exports = exports = defineComponent( {
 		const searchHeader = ref( null );
 		const resultsContainer = ref( null );
 		const itemRefs = ref( [] );
+		const actionFocusActive = ref( false );
+		const firstActionFocusActive = ref( false );
+		const focusedActionIndex = ref( -1 );
 
 		const { highlightedItemIndex, handleNavigationKeydown } = useListNavigation( displayedItems, itemRefs );
 
@@ -135,6 +148,30 @@ module.exports = exports = defineComponent( {
 				highlightedItem.actions.length > 0
 			);
 		} );
+
+		const itemCount = computed( () => displayedItems.value.length );
+
+		const currentItem = computed( () => {
+			if ( highlightedItemIndex.value >= 0 && displayedItems.value.length > highlightedItemIndex.value ) {
+				return displayedItems.value[ highlightedItemIndex.value ];
+			}
+			return null;
+		} );
+
+		const highlightedItemType = computed( () => currentItem.value?.type || null );
+		const actionCount = computed( () => currentItem.value?.actions?.length || 0 );
+
+		const handleFocusAction = ( payload ) => {
+			actionFocusActive.value = true;
+			firstActionFocusActive.value = payload.isFirst;
+			focusedActionIndex.value = payload.index;
+		};
+
+		const handleBlurActions = () => {
+			actionFocusActive.value = false;
+			firstActionFocusActive.value = false;
+			focusedActionIndex.value = -1;
+		};
 
 		const selectResult = ( result ) => {
 			const selectionAction = searchStore.handleSelection( result );
@@ -293,7 +330,15 @@ module.exports = exports = defineComponent( {
 			handleRootKeydown,
 			updatehighlightedItemIndex,
 			cdxIconArticleNotFound,
-			hasHighlightedItemWithActions
+			hasHighlightedItemWithActions,
+			itemCount,
+			highlightedItemType,
+			actionFocusActive,
+			firstActionFocusActive,
+			focusedActionIndex,
+			actionCount,
+			handleFocusAction,
+			handleBlurActions
 		};
 	}
 } );

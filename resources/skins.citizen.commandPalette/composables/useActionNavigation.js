@@ -41,7 +41,6 @@ function useActionNavigation( actionsRef, buttonRefs, emit ) {
 	function handleActionButtonKeydown( event ) {
 		const currentActionId = activeButtonId.value;
 		if ( !currentActionId ) {
-			// Should not be called if no action button is focused, but check defensively.
 			return false;
 		}
 
@@ -51,14 +50,14 @@ function useActionNavigation( actionsRef, buttonRefs, emit ) {
 		const currentButtonIndex = actions.findIndex( ( action ) => action.id === currentActionId );
 
 		if ( currentButtonIndex === -1 ) {
-			// Action ID not found in current actions, should not happen
 			return false;
 		}
 
 		switch ( event.key ) {
 			case 'ArrowLeft':
 				if ( currentButtonIndex === 0 ) {
-					// On the first button, trigger store action to focus input
+					// On the first button, blur actions and let parent focus input
+					emit( 'blur-actions' );
 					searchStore.triggerFocusSearchInput();
 				} else {
 					// Move focus to the previous button
@@ -81,15 +80,15 @@ function useActionNavigation( actionsRef, buttonRefs, emit ) {
 					} else if ( typeof nextButton?.focus === 'function' ) {
 						nextButton.focus();
 					}
-					// If on the last button, do nothing (handled = false below)
 					handled = true;
+					// If on the last button, ArrowRight is not handled here, allowing potential browser behavior or parent handling
 				}
 				break;
 			case 'ArrowUp':
 			case 'ArrowDown':
-				// Signal to parent to navigate the list via emit
+				// Blur actions, signal parent list navigation, and focus input
+				emit( 'blur-actions' );
 				emit( 'navigate-list', event );
-				// Trigger store action to focus input
 				searchStore.triggerFocusSearchInput();
 				handled = true;
 				break;
@@ -106,6 +105,12 @@ function useActionNavigation( actionsRef, buttonRefs, emit ) {
 					handled = true;
 				}
 				break;
+			case 'Escape':
+				// Blur actions and let the parent component (App.vue) decide what to do (e.g., close palette)
+				emit( 'blur-actions' );
+				// We don't call close() or focusInput() here, let the global handler in App.vue manage Escape.
+				handled = true;
+				break;
 		}
 
 		if ( handled ) {
@@ -117,13 +122,17 @@ function useActionNavigation( actionsRef, buttonRefs, emit ) {
 	}
 
 	/**
-	 * Updates the ID of the currently focused action button.
+	 * Updates the ID of the currently focused action button and emits focus event.
 	 * Should be called from the button's focus handler.
 	 *
 	 * @param {string} actionId The ID of the action button that received focus.
 	 */
 	function onButtonFocus( actionId ) {
 		activeButtonId.value = actionId;
+		const actions = actionsRef.value;
+		const index = actions.findIndex( ( action ) => action.id === actionId );
+		const isFirst = index === 0;
+		emit( 'focus-action', { isFirst: isFirst, index: index } );
 	}
 
 	return {

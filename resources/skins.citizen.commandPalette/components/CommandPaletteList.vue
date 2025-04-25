@@ -22,6 +22,8 @@
 				@select="( result ) => $emit( 'select', result )"
 				@action="( action ) => $emit( 'action', action )"
 				@navigate-list="( direction ) => $emit( 'navigate-list', direction )"
+				@focus-action="( payload ) => $emit( 'focus-action', payload )"
+				@blur-actions="() => $emit( 'blur-actions' )"
 			></command-palette-list-item>
 		</ul>
 	</section>
@@ -60,7 +62,7 @@ module.exports = exports = defineComponent( {
 			default: null
 		}
 	},
-	emits: [ 'update:highlightedItemIndex', 'select', 'action', 'navigate-list' ],
+	emits: [ 'update:highlightedItemIndex', 'select', 'action', 'navigate-list', 'focus-action', 'blur-actions' ],
 	setup( props, { emit } ) {
 		const listRef = ref( null );
 		const activeItemId = ref( null );
