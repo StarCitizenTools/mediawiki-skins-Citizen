@@ -9,6 +9,9 @@ const SearchProvider = require( '../providers/SearchProvider.js' );
 
 const recentItemsService = createRecentItems();
 
+// Delay for showing the pending indicator, in milliseconds.
+const SHOW_PENDING_DELAY_MS = 300;
+
 // List of providers in order of priority
 /** @type {Array<CommandPaletteProvider>} */
 const providers = [
@@ -71,6 +74,93 @@ exports.useSearchStore = defineStore( 'search', {
 
 	actions: {
 		/**
+		 * Handles fetching results from a synchronous provider.
+		 *
+		 * @param {CommandPaletteProvider} provider The synchronous provider.
+		 * @param {string} query The search query.
+		 * @private
+		 */
+		handleSyncProvider( provider, query ) {
+			try {
+				// Ensure getResults exists and call it
+				const results = typeof provider.getResults === 'function' ? provider.getResults( query ) : [];
+				// Check if query changed during sync execution (minimal risk, but safe)
+				if ( this.searchQuery === query ) {
+					this.setResults( Array.isArray( results ) ? results : [], !!provider.shouldAutoSelectFirst, false );
+				}
+			} catch ( error ) {
+				mw.log.error( `[skins.citizen.commandPalette] Sync Provider failed for query "${ query }":`, error );
+				// Ensure we clear results only if the query hasn't changed
+				if ( this.searchQuery === query ) {
+					this.setResults( [], false, false );
+				}
+			}
+		},
+
+		/**
+		 * Handles fetching results from an asynchronous provider with debouncing and pending state.
+		 *
+		 * @param {CommandPaletteProvider} provider The asynchronous provider.
+		 * @param {string} query The search query.
+		 * @private
+		 */
+		handleAsyncProvider( provider, query ) {
+			this.isPending = true; // Set pending state for the duration of the async operation
+
+			// Setup delayed pending indicator
+			this.pendingDelayTimeout = setTimeout( () => {
+				// Show pending indicator only if the operation is still relevant and marked as pending
+				if ( this.isPending && this.searchQuery === query ) {
+					this.showPending = true;
+				}
+			}, SHOW_PENDING_DELAY_MS );
+
+			// Debounce the async provider call
+			// eslint-disable-next-line es-x/no-async-functions
+			this.debounceTimeout = setTimeout( async () => {
+				// Abort if the query changed during the debounce period
+				if ( this.searchQuery !== query ) {
+					// The new updateQuery call will handle the state for the new query.
+					return;
+				}
+
+				// No need to set isPending = true again, it was set before the timeout.
+
+				try {
+					// Ensure getResults exists before calling
+					const results = typeof provider.getResults === 'function' ? await provider.getResults( query ) : [];
+
+					// Check query *again* after await, as it might have changed
+					if ( this.searchQuery === query ) {
+						// Operation successful for the current query
+						this.setResults( Array.isArray( results ) ? results : [], !!provider.shouldAutoSelectFirst, false );
+					}
+					// If query changed while awaiting, the new updateQuery call manages state.
+				} catch ( error ) {
+					mw.log.error( `[skins.citizen.commandPalette] Async Provider failed for query "${ query }":`, error );
+					// Only clear results if this error corresponds to the current query
+					if ( this.searchQuery === query ) {
+						this.setResults( [], false, false );
+					}
+					// If query changed, the new updateQuery call manages state.
+				}
+				// setResults handles resetting pending flags and clearing pendingDelayTimeout
+			}, provider.debounceMs ?? 250 );
+		},
+
+		/**
+		 * Resets state related to ongoing or previous search operations.
+		 *
+		 * @private
+		 */
+		resetOperationState() {
+			clearTimeout( this.debounceTimeout );
+			clearTimeout( this.pendingDelayTimeout );
+			this.isPending = false;
+			this.showPending = false;
+		},
+
+		/**
 		 * Update the search query and trigger the appropriate provider.
 		 *
 		 * @param {string} query The new search query.
@@ -79,77 +169,22 @@ exports.useSearchStore = defineStore( 'search', {
 		updateQuery( query ) {
 			this.searchQuery = query;
 
-			// Clear existing timeouts
-			clearTimeout( this.debounceTimeout );
-			clearTimeout( this.pendingDelayTimeout );
-			// Don't reset showPending here, let setResults handle it or the pendingDelayTimeout
+			this.resetOperationState();
 
-			/** @type {CommandPaletteProvider|undefined} */
 			const provider = providers.find( ( p ) => p.canProvide( query ) );
 
 			if ( !provider ) {
-				this.setResults( [], false, false );
+				this.setResults( [], false, false ); // No provider -> clear results
 				return;
 			}
 
-			const isAsync = !!provider.isAsync;
-			const debounceMs = provider.debounceMs ?? ( isAsync ? 250 : 0 );
-			const showPendingDelayMs = 300; // Keep UI delay consistent for now
-
-			// Set pending state immediately only if the provider is async
-			this.isPending = isAsync;
-
-			// Delay showing the spinner only for async providers
-			if ( isAsync ) {
-				this.pendingDelayTimeout = setTimeout( () => {
-					// Only show if the query hasn't changed *and* we are still marked as pending
-					if ( this.isPending && this.searchQuery === query ) {
-						this.showPending = true;
-					}
-				}, showPendingDelayMs );
+			// Delegate to the appropriate handler
+			// Use module-level constant SHOW_PENDING_DELAY_MS
+			if ( provider.isAsync ) {
+				this.handleAsyncProvider( provider, query );
+			} else {
+				this.handleSyncProvider( provider, query );
 			}
-
-			// Handle sync providers immediately (or after 0ms timeout if preferred)
-			if ( !isAsync ) {
-				try {
-					// Ensure getResults exists and call it
-					const results = typeof provider.getResults === 'function' ? provider.getResults( query ) : [];
-					// Race condition check: Ensure query didn't change during sync execution (unlikely but safe)
-					if ( this.searchQuery === query ) {
-						this.setResults( Array.isArray( results ) ? results : [], !!provider.shouldAutoSelectFirst, false );
-					}
-				} catch ( error ) {
-					mw.log.error( `[skins.citizen.commandPalette] Sync Provider failed for query "${ query }":`, error );
-					if ( this.searchQuery === query ) {
-						this.setResults( [], false, false );
-					}
-				}
-				return; // Handled synchronously
-			}
-
-			// Debounce the async provider call
-			// eslint-disable-next-line es-x/no-async-functions
-			this.debounceTimeout = setTimeout( async () => {
-				// Abort if the query changed during the debounce/async operation
-				if ( this.searchQuery !== query ) {
-					return;
-				}
-
-				try {
-					// Ensure getResults exists before calling
-					const results = typeof provider.getResults === 'function' ? await provider.getResults( query ) : [];
-					// Check query *again* after await, in case it changed while fetching
-					if ( this.searchQuery === query ) {
-						this.setResults( Array.isArray( results ) ? results : [], !!provider.shouldAutoSelectFirst, false );
-					}
-				} catch ( error ) {
-					mw.log.error( `[skins.citizen.commandPalette] Async Provider failed for query "${ query }":`, error );
-					// Only clear results if the query is still the same one that caused the error
-					if ( this.searchQuery === query ) {
-						this.setResults( [], false, false );
-					}
-				}
-			}, debounceMs );
 		},
 
 		/**
@@ -158,7 +193,6 @@ exports.useSearchStore = defineStore( 'search', {
 		 * @return {void}
 		 */
 		clearSearch() {
-			// Setting query to empty triggers RecentItemsProvider via updateQuery
 			this.updateQuery( '' );
 		},
 
