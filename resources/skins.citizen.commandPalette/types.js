@@ -49,8 +49,7 @@
  * @typedef {Object} CommandHandler
  * @property {string} label The user-facing label for the command (used in root '/' suggestions).
  * @property {string} description The user-facing description for the command (used in root '/' suggestions).
- * @property {function(string): Promise<Array<Object>>} getResults Asynchronously fetches raw suggestion data based on the sub-query.
- * @property {function(Object): CommandPaletteItem} adaptResult Synchronously transforms a single raw result object into a CommandPaletteItem.
+ * @property {function(string): Promise<Array<CommandPaletteItem>>} getResults Asynchronously fetches and adapts suggestion data based on the sub-query, returning CommandPaletteItems.
  */
 
 /**
