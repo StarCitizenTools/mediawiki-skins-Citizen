@@ -3,6 +3,10 @@ const SearchClientFactory = require( '../searchClients/SearchClientFactory.js' )
 
 /** @type {CommandPaletteProvider} */
 module.exports = {
+	/** Whether this provider returns results asynchronously */
+	isAsync: true,
+	/** Debounce time in milliseconds for async providers */
+	debounceMs: 250,
 	/** Whether the first result from this provider should be automatically selected */
 	shouldAutoSelectFirst: false,
 

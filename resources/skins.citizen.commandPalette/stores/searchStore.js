@@ -82,7 +82,7 @@ exports.useSearchStore = defineStore( 'search', {
 			// Clear existing timeouts
 			clearTimeout( this.debounceTimeout );
 			clearTimeout( this.pendingDelayTimeout );
-			// Don't reset showPending here, let _setResults handle it or the pendingDelayTimeout
+			// Don't reset showPending here, let setResults handle it or the pendingDelayTimeout
 
 			/** @type {CommandPaletteProvider|undefined} */
 			const provider = providers.find( ( p ) => p.canProvide( query ) );
@@ -92,29 +92,11 @@ exports.useSearchStore = defineStore( 'search', {
 				return;
 			}
 
-			// --- Synchronous handling for initial recent items ---
-			const isInitialRecent = provider === RecentItemsProvider && query === '';
-			if ( isInitialRecent ) {
-				let results = [];
-				try {
-					// RecentItemsProvider.getResults should be synchronous
-					const rawResults = provider.getResults( query );
-					results = Array.isArray( rawResults ) ? rawResults : [];
-				} catch ( error ) {
-					mw.log.error( '[skins.citizen.commandPalette] RecentItemsProvider failed on initial load:', error );
-					// results is already []
-				}
-				this.setResults( results, false, false ); // Update state via helper
-				// Important: Return early to bypass the async/debounce logic below
-				return;
-			}
-			// --- End synchronous handling ---
+			const isAsync = !!provider.isAsync;
+			const debounceMs = provider.debounceMs ?? ( isAsync ? 250 : 0 );
+			const showPendingDelayMs = 300; // Keep UI delay consistent for now
 
-			const isAsync = provider === SearchProvider;
-			const debounceMs = isAsync ? 250 : 0; // 0 debounce for sync providers (uses setTimeout(0))
-			const showPendingDelayMs = 300;
-
-			// Set pending state only for truly async providers
+			// Set pending state immediately only if the provider is async
 			this.isPending = isAsync;
 
 			// Delay showing the spinner only for async providers
@@ -127,7 +109,25 @@ exports.useSearchStore = defineStore( 'search', {
 				}, showPendingDelayMs );
 			}
 
-			// Debounce the provider call (or run after 0ms for sync providers)
+			// Handle sync providers immediately (or after 0ms timeout if preferred)
+			if ( !isAsync ) {
+				try {
+					// Ensure getResults exists and call it
+					const results = typeof provider.getResults === 'function' ? provider.getResults( query ) : [];
+					// Race condition check: Ensure query didn't change during sync execution (unlikely but safe)
+					if ( this.searchQuery === query ) {
+						this.setResults( Array.isArray( results ) ? results : [], !!provider.shouldAutoSelectFirst, false );
+					}
+				} catch ( error ) {
+					mw.log.error( `[skins.citizen.commandPalette] Sync Provider failed for query "${ query }":`, error );
+					if ( this.searchQuery === query ) {
+						this.setResults( [], false, false );
+					}
+				}
+				return; // Handled synchronously
+			}
+
+			// Debounce the async provider call
 			// eslint-disable-next-line es-x/no-async-functions
 			this.debounceTimeout = setTimeout( async () => {
 				// Abort if the query changed during the debounce/async operation
@@ -136,13 +136,14 @@ exports.useSearchStore = defineStore( 'search', {
 				}
 
 				try {
-					const results = await provider.getResults( query );
+					// Ensure getResults exists before calling
+					const results = typeof provider.getResults === 'function' ? await provider.getResults( query ) : [];
 					// Check query *again* after await, in case it changed while fetching
 					if ( this.searchQuery === query ) {
-						this.setResults( Array.isArray( results ) ? results : [], provider.shouldAutoSelectFirst, false );
+						this.setResults( Array.isArray( results ) ? results : [], !!provider.shouldAutoSelectFirst, false );
 					}
 				} catch ( error ) {
-					mw.log.error( `[skins.citizen.commandPalette] Provider failed for query "${ query }":`, error );
+					mw.log.error( `[skins.citizen.commandPalette] Async Provider failed for query "${ query }":`, error );
 					// Only clear results if the query is still the same one that caused the error
 					if ( this.searchQuery === query ) {
 						this.setResults( [], false, false );
@@ -173,46 +174,22 @@ exports.useSearchStore = defineStore( 'search', {
 			if ( !result ) {
 				// Handle Enter press with no selection (direct search)
 				if ( this.searchQuery && !this.searchQuery.startsWith( '/' ) ) {
-					this.saveToHistory( null ); // Save the query itself
+					recentItemsService.saveSearchQuery( this.searchQuery, this.searchUrl );
 					return { action: 'navigate', payload: this.searchUrl };
 				}
-				// If no result and it's a slash command or empty, do nothing specific on Enter
 				return { action: 'none' };
 			}
 
 			switch ( result.type ) {
 				case 'command':
 				case 'namespace':
-					// Let the store handle the query update, return instruction to focus input
 					this.updateQuery( result.value );
 					return { action: 'updateQuery' };
 				default:
-					// Save to history and return instruction to navigate
-					this.saveToHistory( result );
+					if ( result ) {
+						recentItemsService.saveRecentItem( result );
+					}
 					return { action: 'navigate', payload: result.url };
-			}
-		},
-
-		/**
-		 * Saves a selected result or search query to history.
-		 * Relies on items having a standard structure (e.g., url, label, description).
-		 *
-		 * @param {CommandPaletteItem|null} item The item to save, or null to save the current search query.
-		 * @return {void}
-		 */
-		saveToHistory( item ) {
-			// Don't save intermediate command selections (like '/ns' itself or namespaces)
-			const excludedTypes = [ 'command', 'namespace' ];
-			if ( item?.type && excludedTypes.includes( item.type ) ) {
-				return;
-			}
-
-			if ( item ) {
-				recentItemsService.saveRecentItem( item );
-			} else if ( this.searchQuery.trim() !== '' && !this.searchQuery.startsWith( '/' ) ) {
-				// Save the search query itself if it was a direct search (not a slash command)
-				// and item is null (indicating direct search submission)
-				recentItemsService.saveSearchQuery( this.searchQuery, this.searchUrl );
 			}
 		},
 
