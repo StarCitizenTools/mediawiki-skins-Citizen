@@ -6,6 +6,7 @@ const urlGenerator = urlGeneratorFactory();
 // Cache variables
 let cachedResults = null;
 let fetchPromise = null;
+let cachedArticleId = null;
 
 /**
  * Placeholder provider for related articles shown when the query is empty.
@@ -35,17 +36,28 @@ const RelatedArticlesProvider = {
 	 * @return {Array<CommandPaletteItem>}
 	 */
 	getResults() {
-		// Return cached results if available
-		if ( cachedResults !== null ) {
+		const currentArticleId = mw.config.get( 'wgArticleId' );
+
+		// Return cached results if available and for the current article
+		if ( cachedResults !== null && cachedArticleId === currentArticleId ) {
 			return Promise.resolve( cachedResults );
 		}
 
-		// Return existing promise if a fetch is already in progress
-		if ( fetchPromise !== null ) {
+		// Return existing promise if a fetch is already in progress for the current article
+		if ( fetchPromise !== null && cachedArticleId === currentArticleId ) {
 			return fetchPromise;
 		}
 
+		// If cache is invalid or for a different article, reset (promise/results cleared below)
+		if ( cachedArticleId !== currentArticleId ) {
+			cachedResults = null;
+			fetchPromise = null;
+			// Let the new fetch proceed, cachedArticleId will be set
+		}
+
 		// Start a new fetch
+		// Store the article ID for which the fetch is initiated
+		cachedArticleId = currentArticleId;
 		fetchPromise = new Promise( ( resolve ) => {
 			const onSuccess = async ( require ) => {
 				try {
@@ -69,20 +81,27 @@ const RelatedArticlesProvider = {
 						thumbnailIcon: cdxIconArticle,
 						actions: []
 					} ) );
-					// Cache the results on success
+					// Cache the results and the article ID on success
 					cachedResults = results;
+					// cachedArticleId is already set to currentArticleId
 					fetchPromise = null; // Reset promise ref
 					resolve( results );
 				} catch ( error ) {
 					mw.log.error( '[skins.citizen.commandPalette] RelatedArticlesProvider: Error inside mw.loader success callback:', error );
-					fetchPromise = null; // Reset promise ref on error
+					// Reset cache state fully on error
+					cachedResults = null;
+					fetchPromise = null;
+					cachedArticleId = null;
 					resolve( [] );
 				}
 			};
 
 			const onFailure = () => {
 				// This happens if the module is not installed, so we resolve with empty array
-				fetchPromise = null; // Reset promise ref on failure
+				// Reset cache state fully on failure
+				cachedResults = null;
+				fetchPromise = null;
+				cachedArticleId = null;
 				resolve( [] );
 			};
 

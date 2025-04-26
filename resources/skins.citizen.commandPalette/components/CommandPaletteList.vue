@@ -48,8 +48,7 @@ module.exports = exports = defineComponent( {
 		},
 		highlightedItemIndex: {
 			type: Number,
-			required: true,
-			default: -1
+			required: true
 		},
 		searchQuery: {
 			type: String,

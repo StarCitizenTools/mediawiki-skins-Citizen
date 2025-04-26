@@ -32,7 +32,7 @@
 					@navigate-list="handleNavigationKeydown"
 					@focus-action="handleFocusAction"
 					@blur-actions="handleBlurActions"
-					@hover="( index ) => highlightedItemIndex = index"
+					@hover="handleHover"
 					@action="handleAction"
 				></command-palette-presults>
 			</template>
@@ -56,7 +56,7 @@
 					@navigate-list="handleNavigationKeydown"
 					@focus-action="handleFocusAction"
 					@blur-actions="handleBlurActions"
-					@hover="( index ) => highlightedItemIndex = index"
+					@hover="handleHover"
 				></command-palette-list>
 			</template>
 		</div>
@@ -107,7 +107,7 @@ module.exports = exports = defineComponent( {
 		const isOpen = ref( false );
 		const searchHeader = ref( null );
 		const resultsContainer = ref( null );
-		const itemRefs = ref( [] ); // Will hold refs for the navigable list
+		const itemRefs = ref( new Map() );
 		const actionFocusActive = ref( false );
 		const firstActionFocusActive = ref( false );
 		const focusedActionIndex = ref( -1 );
@@ -128,16 +128,9 @@ module.exports = exports = defineComponent( {
 		// setItemRef now expects the GLOBAL index within navigableItems
 		const setItemRef = ( el, globalIndex ) => {
 			if ( el ) {
-				// Ensure the array is large enough (Vue 3 might not auto-expand sparse arrays refs)
-				if ( globalIndex >= itemRefs.value.length ) {
-					itemRefs.value.length = globalIndex + 1;
-				}
-				itemRefs.value[ globalIndex ] = el;
+				itemRefs.value.set( globalIndex, el );
 			} else {
-				// Handle element removal if necessary, e.g., setting to null
-				if ( globalIndex < itemRefs.value.length ) {
-					itemRefs.value[ globalIndex ] = null; // Or splice, depending on desired behavior
-				}
+				itemRefs.value.delete( globalIndex );
 			}
 		};
 
@@ -177,6 +170,18 @@ module.exports = exports = defineComponent( {
 			actionFocusActive.value = false;
 			firstActionFocusActive.value = false;
 			focusedActionIndex.value = -1;
+		};
+
+		/**
+		 * Updates the highlighted index only if it has changed.
+		 * Prevents unnecessary updates from frequent hover events.
+		 *
+		 * @param {number} newIndex The index received from the hover event.
+		 */
+		const handleHover = ( newIndex ) => {
+			if ( newIndex !== highlightedItemIndex.value ) {
+				highlightedItemIndex.value = newIndex;
+			}
 		};
 
 		const selectResult = ( result ) => {
@@ -247,14 +252,18 @@ module.exports = exports = defineComponent( {
 			} else if ( event.key === 'Escape' ) {
 				close();
 			} else if ( event.key === 'ArrowRight' ) {
-				// Handle moving focus to actions
-				const inputElement = event.target;
+				// Only handle moving focus to actions if the event originated from the input element
+				const inputElement = searchHeader.value?.getInputElement();
+				if ( !inputElement || event.target !== inputElement ) {
+					return;
+				}
+
 				const isCursorAtEnd = inputElement.selectionStart === inputElement.value.length && inputElement.selectionEnd === inputElement.value.length;
 				const currentItemIndex = highlightedItemIndex.value;
 				const itemHasActions = hasHighlightedItemWithActions.value; // Cache computed value
 
 				if ( isCursorAtEnd && currentItemIndex >= 0 && itemHasActions ) {
-					const itemComponent = itemRefs.value[ currentItemIndex ];
+					const itemComponent = itemRefs.value.get( currentItemIndex );
 					if ( itemComponent?.focusFirstButton ) {
 						event.preventDefault();
 						itemComponent.focusFirstButton();
@@ -263,19 +272,26 @@ module.exports = exports = defineComponent( {
 			}
 		};
 
-		// Watch for changes in displayed items to potentially reset selection
-		watch( navigableItems, ( newItems ) => { // Watch navigableItems, remove unused oldItems
-			// Clear refs only if the list identity or major structure changes
-			// Simple approach: always clear if items change. Might be inefficient.
-			itemRefs.value = [];
-			if ( newItems.length > 0 ) {
-				// Reset to first item, or stay if possible?
-				// Resetting is simpler for now.
-				highlightedItemIndex.value = 0;
-			} else {
+		// Watch for changes in displayed items to adjust highlighting
+		watch( navigableItems, ( newItems ) => {
+			const previousIndex = highlightedItemIndex.value;
+
+			// Always clear refs as the DOM structure might change
+			itemRefs.value.clear();
+
+			if ( newItems.length === 0 ) {
+				// List is empty, reset highlight
 				highlightedItemIndex.value = -1;
+			} else {
+				// List has items, try to preserve highlight
+				if ( previousIndex < 0 || previousIndex >= newItems.length ) {
+					// Previous index is invalid (was -1 or now out of bounds), reset to first item
+					highlightedItemIndex.value = 0;
+				} else {
+					// Previous index is still valid, keep it (do nothing)
+				}
 			}
-		}, { flush: 'post' } ); // flush: 'post' ensures DOM updates before watcher runs
+		}, { flush: 'post' } );
 
 		// Watch for the store flag indicating input focus is needed
 		watch( () => searchStore.needsInputFocus, ( needsFocus ) => {
@@ -370,7 +386,8 @@ module.exports = exports = defineComponent( {
 			actionCount,
 			handleFocusAction,
 			handleBlurActions,
-			highlightedItemIndex
+			highlightedItemIndex,
+			handleHover
 		};
 	}
 } );

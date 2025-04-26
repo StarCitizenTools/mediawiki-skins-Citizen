@@ -4,14 +4,15 @@ const { ref, watch, nextTick } = require( 'vue' );
  * Composable for handling keyboard navigation (highlighting, scrolling) within a list.
  *
  * @param {import('vue').Ref<Array>} itemsRef Reactive reference to the list of items.
- * @param {import('vue').Ref<Array<HTMLElement|null>>} itemRefs Reactive reference to the array of DOM elements for the items.
+ * @param {import('vue').Ref<Map<number, HTMLElement|null>>} itemRefs Reactive reference to the Map of DOM elements for the items.
  * @return {Object} { highlightedItemIndex, handleNavigationKeydown }
  */
 function usePaletteNavigation( itemsRef, itemRefs ) {
 	const highlightedItemIndex = ref( -1 );
 
 	function scrollToHighlightedItem() {
-		itemRefs.value?.[ highlightedItemIndex.value ]?.$el?.scrollIntoView( { block: 'nearest' } );
+		const itemElement = itemRefs.value?.get( highlightedItemIndex.value );
+		itemElement?.$el?.scrollIntoView( { block: 'nearest' } );
 	}
 
 	function highlightNext() {

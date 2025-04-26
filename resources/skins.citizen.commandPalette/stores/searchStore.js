@@ -144,7 +144,10 @@ exports.useSearchStore = defineStore( 'search', {
 			let finalItems = items;
 
 			// Add fulltext search item if applicable
-			if ( this.searchQuery && !this.searchQuery.startsWith( '/' ) ) {
+			if (
+				this.searchQuery &&
+				!this.searchQuery.startsWith( '/' )
+			) {
 				const fulltextSearchItem = this.createFulltextSearchItem( this.searchQuery );
 				// Ensure fulltext item is always at the end
 				finalItems = [ ...items, fulltextSearchItem ];
@@ -199,6 +202,8 @@ exports.useSearchStore = defineStore( 'search', {
 			this.debounceTimeout = null;
 			this.debounceTimeout = setTimeout( async () => {
 				if ( this.searchQuery !== query ) {
+					// Query changed before timeout completed, reset pending state and bail.
+					this.resetPendingState();
 					return;
 				}
 
@@ -274,7 +279,7 @@ exports.useSearchStore = defineStore( 'search', {
 		 */
 		async fetchRelatedArticles() {
 			try {
-				const articles = await RelatedArticlesProvider.getResults();
+				const articles = await RelatedArticlesProvider.getResults( '' );
 				// Add source and ensure it's an array
 				return Array.isArray( articles ) ? articles.map( ( item ) => ( { ...item, source: 'related' } ) ) : [];
 			} catch ( error ) {
@@ -292,7 +297,8 @@ exports.useSearchStore = defineStore( 'search', {
 		 */
 		fetchRecentItems() {
 			try {
-				const items = RecentItemsProvider.getResults();
+				// Pass empty query for interface consistency
+				const items = RecentItemsProvider.getResults( '' );
 				// Add source and ensure it's an array
 				return Array.isArray( items ) ? items.map( ( item ) => ( { ...item, source: 'recent' } ) ) : [];
 			} catch ( error ) {
@@ -325,8 +331,10 @@ exports.useSearchStore = defineStore( 'search', {
 			// Use the originally fetched recent items for filtering, not the potentially modified displayedItems
 			const filteredRecentItems = fetchedRecentItems.filter( ( item ) => !item.url || !relatedUrls.has( item.url ) );
 
-			// Update the displayedItems list with the combined and filtered results
-			this.displayedItems = [ ...fetchedRelatedArticles, ...filteredRecentItems ];
+			// Only update when we are still in presults
+			if ( this.searchQuery === '' ) {
+				this.displayedItems = [ ...fetchedRelatedArticles, ...filteredRecentItems ];
+			}
 		},
 
 		/**

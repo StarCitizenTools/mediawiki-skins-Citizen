@@ -102,9 +102,5 @@
 	"citizen-command-palette-type-fulltext-search-description": "Search the full text of all pages",
 
 	"citizen-command-palette-type-command-namespace-label": "Search by Namespace",
-	"citizen-command-palette-type-command-namespace-description": "Type /ns: followed by a namespace name or ID",
-
-	"citizen-command-palette-heading-actions": "Actions",
-	"citizen-command-palette-heading-result-actions": "Result Actions",
-	"citizen-command-palette-item-action-dismiss-button-tooltip": "Dismiss this item"
+	"citizen-command-palette-type-command-namespace-description": "Type /ns: followed by a namespace name or ID"
 }

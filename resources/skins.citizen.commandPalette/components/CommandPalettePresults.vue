@@ -73,8 +73,7 @@ module.exports = exports = defineComponent( {
 			default: null
 		}
 	},
-	// Renamed update:recent-items to items-updated for clarity
-	emits: [ 'select', 'action', 'items-updated', 'navigate-list', 'focus-action', 'blur-actions', 'hover' ],
+	emits: [ 'select', 'action', 'navigate-list', 'focus-action', 'blur-actions', 'hover' ],
 	setup( props, { emit } ) {
 		// Computed properties to filter items by source
 		const computedRelatedItems = computed( () => props.items.filter( ( item ) => item.source === 'related' ) );
