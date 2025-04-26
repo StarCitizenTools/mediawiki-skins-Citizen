@@ -79,6 +79,7 @@
 	"citizen-user-info-text-anon": "Description in the user menu when user is not logged in.",
 	"citizen-user-info-text-temp": "Description in the user menu when user is using a temporary account.",
 	"citizen-command-palette-heading-recent": "Label for the recently searched results in the command palette",
+	"citizen-command-palette-heading-related": "Label for the related results in the command palette",
 	"citizen-command-palette-keyhint-actions": "Keyboard hint for the key to select an action in an item in the command palette",
 	"citizen-command-palette-keyhint-return": "Keyboard hint for the key to return to search in the command palette",
 	"citizen-command-palette-keyhint-enter-select": "Keyboard hint for the key to select an item in the command palette",
@@ -91,6 +92,10 @@
 	"citizen-command-palette-type-command": "Label for the command type of the result in the command palette",
 	"citizen-command-palette-type-fulltext-search": "Label for the fulltext search type of the result in the command palette",
 	"citizen-command-palette-type-fulltext-search-description": "Description for the fulltext search in the command palette",
-	"citizen-command-palette-type-command-namespace-label": "Label for the command namespace type of the result in the command palette",
-	"citizen-command-palette-type-command-namespace-description": "Description for the command namespace type of the result in the command palette"
+	"citizen-command-palette-type-command-namespace-label": "Label for the namespace command in the command palette",
+	"citizen-command-palette-type-command-namespace-description": "Description for the namespace command in the command palette",
+	"citizen-command-palette-type-special-page": "Label for the special page type of the result in the command palette",
+	"citizen-command-palette-type-command-action-label": "Label for the action command in the command palette",
+	"citizen-command-palette-type-command-action-description": "Description for the action command in the command palette",
+	"citizen-command-palette-type-menu-item": "Label for the menu item type of the result in the command palette"
 }

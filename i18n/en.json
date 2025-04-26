@@ -98,9 +98,14 @@
 	"citizen-command-palette-type-fulltext-search": "Fulltext search",
 	"citizen-command-palette-type-namespace": "Namespace",
 	"citizen-command-palette-type-command": "Command",
+	"citizen-command-palette-type-special-page": "Special page",
+	"citizen-command-palette-type-menu-item": "Menu item",
 
 	"citizen-command-palette-type-fulltext-search-description": "Search the full text of all pages",
 
-	"citizen-command-palette-type-command-namespace-label": "Search by Namespace",
-	"citizen-command-palette-type-command-namespace-description": "Type /ns: followed by a namespace name or ID"
+	"citizen-command-palette-type-command-namespace-label": "Namespace",
+	"citizen-command-palette-type-command-namespace-description": "Search for a page in a specific namespace",
+
+	"citizen-command-palette-type-command-action-label": "Action",
+	"citizen-command-palette-type-command-action-description": "Perform a specific action"
 }
