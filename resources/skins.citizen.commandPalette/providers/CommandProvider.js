@@ -42,8 +42,6 @@ module.exports = {
 	isAsync: true, // Although some commands might be sync, the handler resolution can be async
 	/** Debounce time in milliseconds for async providers */
 	debounceMs: 0, // No debounce for commands for responsiveness
-	/** Whether the first result from this provider should be automatically selected */
-	shouldAutoSelectFirst: true,
 
 	/**
 	 * Determines if this provider should handle the current query.

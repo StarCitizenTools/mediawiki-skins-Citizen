@@ -89,5 +89,8 @@
 	"citizen-command-palette-type-page": "Label for the page type of the result in the command palette",
 	"citizen-command-palette-type-namespace": "Label for the namespace type of the result in the command palette",
 	"citizen-command-palette-type-command": "Label for the command type of the result in the command palette",
-	"citizen-command-palette-type-fulltext-search": "Label for the fulltext search type of the result in the command palette"
+	"citizen-command-palette-type-fulltext-search": "Label for the fulltext search type of the result in the command palette",
+	"citizen-command-palette-type-fulltext-search-description": "Description for the fulltext search in the command palette",
+	"citizen-command-palette-type-command-namespace-label": "Label for the command namespace type of the result in the command palette",
+	"citizen-command-palette-type-command-namespace-description": "Description for the command namespace type of the result in the command palette"
 }
