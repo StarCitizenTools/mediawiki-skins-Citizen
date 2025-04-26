@@ -85,16 +85,13 @@ exports.useSearchStore = defineStore( 'search', {
 		 * @param {boolean} [clearItems=true] - Whether to clear the displayedItems array.
 		 * @private
 		 */
-		resetOperationState( clearItems = true ) {
+		resetOperationState( /* clearItems = true */ ) {
 			clearTimeout( this.debounceTimeout );
 			this.debounceTimeout = null;
 			clearTimeout( this.pendingDelayTimeout );
 			this.pendingDelayTimeout = null;
 			this.isPending = false;
 			this.showPending = false;
-			if ( clearItems ) {
-				this.displayedItems = [];
-			}
 		},
 
 		/**
@@ -146,7 +143,7 @@ exports.useSearchStore = defineStore( 'search', {
 			// Add fulltext search item if applicable
 			if (
 				this.searchQuery &&
-				!this.searchQuery.startsWith( '/' )
+				!CommandProvider.canProvide( this.searchQuery )
 			) {
 				const fulltextSearchItem = this.createFulltextSearchItem( this.searchQuery );
 				// Ensure fulltext item is always at the end
@@ -168,9 +165,8 @@ exports.useSearchStore = defineStore( 'search', {
 			try {
 				const results = typeof provider.getResults === 'function' ? provider.getResults( query ) : [];
 				if ( this.searchQuery === query ) {
-					// Pass a source hint based on provider type or query
-					const sourceHint = query.startsWith( '/' ) ? 'command' : 'search';
-					this.setProviderResults( results, sourceHint );
+					// Pass a source hint based on whether it's a command
+					this.setProviderResults( results, provider === CommandProvider ? 'command' : 'search' );
 				}
 			} catch ( error ) {
 				mw.log.error( `[skins.citizen.commandPalette] Sync Provider failed for query "${ query }":`, error );
@@ -210,9 +206,7 @@ exports.useSearchStore = defineStore( 'search', {
 				try {
 					const results = typeof provider.getResults === 'function' ? await provider.getResults( query ) : [];
 					if ( this.searchQuery === query ) {
-						// Pass a source hint
-						const sourceHint = query.startsWith( '/' ) ? 'command' : 'search';
-						this.setProviderResults( results, sourceHint );
+						this.setProviderResults( results, provider === CommandProvider ? 'command' : 'search' );
 					}
 				} catch ( error ) {
 					mw.log.error( `[skins.citizen.commandPalette] Async Provider failed for query "${ query }":`, error );
@@ -242,18 +236,28 @@ exports.useSearchStore = defineStore( 'search', {
 				return;
 			}
 
-			// Reset debounce/pending state and clear previous items for non-empty query
-			this.resetOperationState();
+			// Reset debounce/pending state, but keep existing items temporarily
+			this.resetOperationState( false ); // Pass false to keep items
 
-			// --- Handle non-empty query ---
+			// Immediately update or add the fulltext search item if applicable
+			// Use CommandProvider.canProvide to check if it's NOT a command query
+			if ( query && !CommandProvider.canProvide( query ) ) {
+				const newFulltextItem = this.createFulltextSearchItem( query );
+				const existingFulltextIndex = this.displayedItems.findIndex( ( item ) => item.type === 'fulltext-search' );
 
-			// Immediately display just the fulltext search item if applicable
-			if ( query && !query.startsWith( '/' ) ) {
-				const fulltextSearchItem = this.createFulltextSearchItem( query );
-				this.displayedItems = [ fulltextSearchItem ];
+				if ( existingFulltextIndex !== -1 ) {
+					// Replace existing fulltext item
+					this.displayedItems.splice( existingFulltextIndex, 1, newFulltextItem );
+				} else {
+					// Add fulltext item if it wasn't there (e.g., coming from presults)
+					this.displayedItems.push( newFulltextItem );
+				}
 			} else {
-				// Command query, start with empty list
-				this.displayedItems = [];
+				// If it's a command query or became one, remove any existing fulltext item immediately
+				const existingFulltextIndex = this.displayedItems.findIndex( ( item ) => item.type === 'fulltext-search' );
+				if ( existingFulltextIndex !== -1 ) {
+					this.displayedItems.splice( existingFulltextIndex, 1 );
+				}
 			}
 
 			const provider = providers.find( ( p ) => p.canProvide( query ) );

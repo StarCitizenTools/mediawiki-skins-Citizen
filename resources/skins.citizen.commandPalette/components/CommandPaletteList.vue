@@ -70,11 +70,16 @@ module.exports = exports = defineComponent( {
 		const activeItemId = ref( null );
 
 		function getListItemBindings( listItem, index ) {
+			// Determine the query to use for highlighting
+			// Use the specific highlightTerm if provided by the provider (for sub-queries),
+			// otherwise fall back to the main search query.
+			const highlightQuery = listItem.highlightTerm ?? props.searchQuery;
+
 			return {
 				...listItem,
 				active: listItem.id === activeItemId.value,
 				highlighted: index === props.highlightedItemIndex,
-				searchQuery: props.searchQuery,
+				searchQuery: highlightQuery, // Use the determined query for highlighting
 				id: String( listItem.id )
 			};
 		}

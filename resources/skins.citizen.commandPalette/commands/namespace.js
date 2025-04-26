@@ -21,7 +21,8 @@ function adaptNamespaceResult( nsResult ) {
 			{
 				label: nsResult.value
 			}
-		]
+		],
+		highlightQuery: true
 	};
 }
 
@@ -39,13 +40,12 @@ function getNamespaceResults( subQuery ) {
 		value: id
 	} ) ).filter( ( ns ) => ns.value !== MAIN_NAMESPACE_ID ); // Use the constant here
 
-	const trimmedQuery = subQuery.trim();
-	const lowerQuery = trimmedQuery.toLowerCase();
+	const lowerQuery = subQuery.toLowerCase();
 
 	// Combine results using a Map to handle duplicates based on namespace ID (value)
 	const combinedResults = new Map();
 
-	if ( !trimmedQuery ) {
+	if ( !subQuery ) {
 		// If the query is empty, return all namespaces
 		allNamespaces.forEach( ( ns ) => combinedResults.set( ns.value, ns ) );
 	} else {
@@ -56,7 +56,7 @@ function getNamespaceResults( subQuery ) {
 				combinedResults.set( ns.value, ns );
 			}
 			// Check ID prefix (case-sensitive)
-			if ( ns.value.startsWith( trimmedQuery ) ) {
+			if ( ns.value.startsWith( subQuery ) ) {
 				combinedResults.set( ns.value, ns );
 			}
 		} );
@@ -67,6 +67,7 @@ function getNamespaceResults( subQuery ) {
 
 /** @type {CommandHandler} */
 module.exports = {
+	triggers: [ '/ns:', ':' ],
 	label: mw.msg( 'citizen-command-palette-type-command-namespace-label' ),
 	description: mw.msg( 'citizen-command-palette-type-command-namespace-description' ),
 	getResults: getNamespaceResults
