@@ -83,7 +83,8 @@
 	"citizen-user-info-text-anon": "Your IP address will be publicly visible if you make any edits.",
 	"citizen-user-info-text-temp": "This temporary account was created after an edit was made without an account on this browser and device.",
 
-	"citizen-command-palette-recent": "Recent",
+	"citizen-command-palette-heading-recent": "Recent",
+	"citizen-command-palette-heading-related": "Related",
 
 	"citizen-command-palette-keyhint-enter-select": "Select",
 	"citizen-command-palette-keyhint-enter-open": "Open",
@@ -101,5 +102,9 @@
 	"citizen-command-palette-type-fulltext-search-description": "Search the full text of all pages",
 
 	"citizen-command-palette-type-command-namespace-label": "Search by Namespace",
-	"citizen-command-palette-type-command-namespace-description": "Type /ns: followed by a namespace name or ID"
+	"citizen-command-palette-type-command-namespace-description": "Type /ns: followed by a namespace name or ID",
+
+	"citizen-command-palette-heading-actions": "Actions",
+	"citizen-command-palette-heading-result-actions": "Result Actions",
+	"citizen-command-palette-item-action-dismiss-button-tooltip": "Dismiss this item"
 }

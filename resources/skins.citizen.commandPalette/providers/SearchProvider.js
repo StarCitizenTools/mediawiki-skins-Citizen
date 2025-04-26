@@ -25,7 +25,6 @@ module.exports = {
 	 * @param {string} query The search query.
 	 * @return {Promise<Array<CommandPaletteItem>>} A promise resolving to search results.
 	 */
-	// eslint-disable-next-line es-x/no-async-functions
 	async getResults( query ) {
 		const searchClient = SearchClientFactory.create();
 

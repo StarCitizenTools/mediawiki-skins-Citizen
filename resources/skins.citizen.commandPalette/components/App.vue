@@ -20,19 +20,20 @@
 			ref="resultsContainer"
 			class="citizen-command-palette__results"
 		>
-			<!-- Show Recent Items (using Presults) when query is empty and not loading -->
+			<!-- Show Presults when query is empty and not loading -->
 			<template v-if="!searchStore.searchQuery && !searchStore.isPending">
 				<command-palette-presults
-					:recent-items="displayedItems"
+					:items="displayedItems"
 					:highlighted-item-index="highlightedItemIndex"
 					:search-query="searchStore.searchQuery"
 					:set-item-ref="setItemRef"
-					@update:highlighted-item-index="updatehighlightedItemIndex"
 					@select="selectResult"
 					@update:recent-items="searchStore.updateQuery( '' )"
 					@navigate-list="handleNavigationKeydown"
 					@focus-action="handleFocusAction"
 					@blur-actions="handleBlurActions"
+					@hover="( index ) => highlightedItemIndex = index"
+					@action="handleAction"
 				></command-palette-presults>
 			</template>
 			<!-- Show Empty State when query exists, not pending, and no results -->
@@ -50,12 +51,12 @@
 					:highlighted-item-index="highlightedItemIndex"
 					:search-query="searchStore.searchQuery"
 					:set-item-ref="setItemRef"
-					@update:highlighted-item-index="updatehighlightedItemIndex"
 					@select="selectResult"
 					@action="handleAction"
 					@navigate-list="handleNavigationKeydown"
 					@focus-action="handleFocusAction"
 					@blur-actions="handleBlurActions"
+					@hover="( index ) => highlightedItemIndex = index"
 				></command-palette-list>
 			</template>
 		</div>
@@ -100,48 +101,53 @@ module.exports = exports = defineComponent( {
 	setup() {
 		const searchStore = useSearchStore();
 		const {
-			displayedItems
+			displayedItems // Now the single unified list
 		} = storeToRefs( searchStore );
 
 		const isOpen = ref( false );
 		const searchHeader = ref( null );
 		const resultsContainer = ref( null );
-		const itemRefs = ref( [] );
+		const itemRefs = ref( [] ); // Will hold refs for the navigable list
 		const actionFocusActive = ref( false );
 		const firstActionFocusActive = ref( false );
 		const focusedActionIndex = ref( -1 );
 
-		const { highlightedItemIndex, handleNavigationKeydown } = useListNavigation( displayedItems, itemRefs );
+		// Computed property for the list that navigation should operate on
+		const navigableItems = computed( () => displayedItems.value );
 
-		const focusInput = () => {
-			searchHeader.value?.focus();
-		};
-
-		const setItemRef = ( el, index ) => {
-			if ( el ) {
-				itemRefs.value[ index ] = el;
-			}
-		};
-
-		const open = () => {
-			isOpen.value = true;
-			searchStore.clearSearch();
-			nextTick( focusInput );
-		};
+		const { highlightedItemIndex, handleNavigationKeydown } = useListNavigation( navigableItems, itemRefs ); // Use navigableItems
 
 		const close = () => {
 			isOpen.value = false;
 		};
 
-		const updatehighlightedItemIndex = ( index ) => {
-			highlightedItemIndex.value = index;
+		const focusInput = () => {
+			searchHeader.value?.focus();
+		};
+
+		// setItemRef now expects the GLOBAL index within navigableItems
+		const setItemRef = ( el, globalIndex ) => {
+			if ( el ) {
+				// Ensure the array is large enough (Vue 3 might not auto-expand sparse arrays refs)
+				if ( globalIndex >= itemRefs.value.length ) {
+					itemRefs.value.length = globalIndex + 1;
+				}
+				itemRefs.value[ globalIndex ] = el;
+			} else {
+				// Handle element removal if necessary, e.g., setting to null
+				if ( globalIndex < itemRefs.value.length ) {
+					itemRefs.value[ globalIndex ] = null; // Or splice, depending on desired behavior
+				}
+			}
 		};
 
 		const hasHighlightedItemWithActions = computed( () => {
-			if ( displayedItems.value.length === 0 || highlightedItemIndex.value < 0 ) {
+			// Use navigableItems which contains the combined list in Presults view
+			if ( navigableItems.value.length === 0 || highlightedItemIndex.value < 0 || highlightedItemIndex.value >= navigableItems.value.length ) {
 				return false;
 			}
-			const highlightedItem = displayedItems.value[ highlightedItemIndex.value ];
+			// Access the correct item using the global index from the combined list
+			const highlightedItem = navigableItems.value[ highlightedItemIndex.value ];
 			return Boolean(
 				highlightedItem &&
 				highlightedItem.actions &&
@@ -149,11 +155,11 @@ module.exports = exports = defineComponent( {
 			);
 		} );
 
-		const itemCount = computed( () => displayedItems.value.length );
+		const itemCount = computed( () => navigableItems.value.length );
 
 		const currentItem = computed( () => {
-			if ( highlightedItemIndex.value >= 0 && displayedItems.value.length > highlightedItemIndex.value ) {
-				return displayedItems.value[ highlightedItemIndex.value ];
+			if ( highlightedItemIndex.value >= 0 && navigableItems.value.length > highlightedItemIndex.value ) {
+				return navigableItems.value[ highlightedItemIndex.value ];
 			}
 			return null;
 		} );
@@ -180,7 +186,7 @@ module.exports = exports = defineComponent( {
 				case 'navigate':
 					if ( selectionAction.payload ) {
 						window.location.href = selectionAction.payload;
-						close(); // Close after initiating navigation
+						close();
 					}
 					break;
 				case 'updateQuery':
@@ -189,20 +195,35 @@ module.exports = exports = defineComponent( {
 					break;
 				case 'none':
 				default:
-					// No specific action needed from the component side
-					// Potential improvement: Maybe close if enter is pressed on empty slash command?
 					break;
 			}
 		};
 
 		const handleAction = ( action ) => {
+			// Route action based on its properties
+
+			// 1. Dismiss Action (specific to recent items)
+			if ( action.actionId === 'dismiss' && action.itemId !== undefined ) {
+				searchStore.dismissRecentItem( action.itemId );
+				return;
+			}
+
+			// 2. Navigation Action
 			if ( action.url ) {
 				window.location.href = action.url;
 				close();
-			} else if ( action.event ) {
-				// Use mw.log for debugging in MediaWiki context if preferred
-				// console.log( 'Action event:', action.event );
+				return;
 			}
+
+			// 3. Custom Event Action
+			if ( action.event ) {
+				// Handle custom events if needed in the future
+				// mw.log.log( '[CommandPalette] Action event received:', action.event );
+				return;
+			}
+
+			// 4. Fallback for unknown actions
+			mw.log.warn( '[CommandPalette] Unknown action structure received:', action );
 		};
 
 		const onKeydown = ( event ) => {
@@ -218,7 +239,7 @@ module.exports = exports = defineComponent( {
 			if ( event.key === 'Enter' ) {
 				event.preventDefault();
 				const selectedItem = highlightedItemIndex.value >= 0 ?
-					displayedItems.value[ highlightedItemIndex.value ] :
+					navigableItems.value[ highlightedItemIndex.value ] :
 					null;
 				if ( selectedItem ) {
 					selectResult( selectedItem );
@@ -243,15 +264,18 @@ module.exports = exports = defineComponent( {
 		};
 
 		// Watch for changes in displayed items to potentially reset selection
-		watch( displayedItems, ( newItems ) => {
-			// Reset selection to the first item if the list is not empty
+		watch( navigableItems, ( newItems ) => { // Watch navigableItems, remove unused oldItems
+			// Clear refs only if the list identity or major structure changes
+			// Simple approach: always clear if items change. Might be inefficient.
+			itemRefs.value = [];
 			if ( newItems.length > 0 ) {
+				// Reset to first item, or stay if possible?
+				// Resetting is simpler for now.
 				highlightedItemIndex.value = 0;
 			} else {
-				// Reset if list becomes empty
 				highlightedItemIndex.value = -1;
 			}
-		} );
+		}, { flush: 'post' } ); // flush: 'post' ensures DOM updates before watcher runs
 
 		// Watch for the store flag indicating input focus is needed
 		watch( () => searchStore.needsInputFocus, ( needsFocus ) => {
@@ -313,22 +337,29 @@ module.exports = exports = defineComponent( {
 			}
 		};
 
+		// Define open before close as close is used within other functions defined later
+		// This function is called externally from init.js
+		const open = () => {
+			isOpen.value = true;
+			// clearSearch now fetches recent items AND related articles
+			searchStore.clearSearch();
+			nextTick( focusInput );
+		};
+
 		return {
 			searchStore,
+			displayedItems, // Pass the unified list down
 			isOpen,
-			displayedItems,
-			highlightedItemIndex,
 			searchHeader,
 			resultsContainer,
 			setItemRef,
 			handleNavigationKeydown,
-			// eslint-disable-next-line vue/no-unused-properties
+			// eslint-disable-next-line vue/no-unused-properties -- Used externally by init.js
 			open,
 			close,
 			selectResult,
 			handleAction,
 			handleRootKeydown,
-			updatehighlightedItemIndex,
 			cdxIconArticleNotFound,
 			hasHighlightedItemWithActions,
 			itemCount,
@@ -338,7 +369,8 @@ module.exports = exports = defineComponent( {
 			focusedActionIndex,
 			actionCount,
 			handleFocusAction,
-			handleBlurActions
+			handleBlurActions,
+			highlightedItemIndex
 		};
 	}
 } );

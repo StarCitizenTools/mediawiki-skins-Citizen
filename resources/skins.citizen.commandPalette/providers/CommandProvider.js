@@ -59,7 +59,6 @@ module.exports = {
 	 * @param {string} query
 	 * @return {Promise<Array<CommandPaletteItem>>}
 	 */
-	// eslint-disable-next-line es-x/no-async-functions
 	async getResults( query ) {
 		// Handle ':' as a shortcut for '/ns:'
 		if ( query.startsWith( ':' ) ) {
