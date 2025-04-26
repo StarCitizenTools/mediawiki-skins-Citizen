@@ -10,6 +10,9 @@ const { cdxIconArticleSearch } = require( '../icons.json' );
 
 const recentItemsService = createRecentItems();
 
+// Cache the localized description for full-text search
+const FULLTEXT_SEARCH_DESCRIPTION = mw.message( 'citizen-command-palette-type-fulltext-search-description' ).text();
+
 // Delay for showing the pending indicator, in milliseconds.
 const SHOW_PENDING_DELAY_MS = 300;
 
@@ -78,7 +81,9 @@ exports.useSearchStore = defineStore( 'search', {
 		 */
 		resetOperationState() {
 			clearTimeout( this.debounceTimeout );
+			this.debounceTimeout = null;
 			clearTimeout( this.pendingDelayTimeout );
+			this.pendingDelayTimeout = null;
 			this.isPending = false;
 			this.showPending = false;
 		},
@@ -93,6 +98,25 @@ exports.useSearchStore = defineStore( 'search', {
 			this.isPending = false;
 			this.showPending = false;
 			clearTimeout( this.pendingDelayTimeout );
+			this.pendingDelayTimeout = null;
+		},
+
+		/**
+		 * Creates the command palette item for initiating a full-text search.
+		 *
+		 * @param {string} query The search query to use.
+		 * @return {CommandPaletteItem} The full-text search item.
+		 * @private
+		 */
+		createFulltextSearchItem( query ) {
+			return {
+				label: query,
+				description: FULLTEXT_SEARCH_DESCRIPTION,
+				type: 'fulltext-search',
+				url: urlGenerator.generateUrl( 'Special:Search', { search: query } ), // Generate URL directly
+				thumbnailIcon: cdxIconArticleSearch,
+				actions: []
+			};
 		},
 
 		/**
@@ -107,15 +131,7 @@ exports.useSearchStore = defineStore( 'search', {
 
 			// Check if the current query qualifies for a fulltext search link
 			if ( this.searchQuery && !this.searchQuery.startsWith( '/' ) ) {
-				/** @type {CommandPaletteItem} */
-				const fulltextSearchItem = {
-					label: this.searchQuery,
-					description: mw.message( 'citizen-command-palette-type-fulltext-search-description' ).text(),
-					type: 'fulltext-search',
-					url: this.searchUrl,
-					thumbnailIcon: cdxIconArticleSearch,
-					actions: []
-				};
+				const fulltextSearchItem = this.createFulltextSearchItem( this.searchQuery );
 				// Ensure fulltext item is always at the end
 				finalItems = [ ...items, fulltextSearchItem ];
 			}
@@ -162,6 +178,7 @@ exports.useSearchStore = defineStore( 'search', {
 
 			// Clear any previous pending delay timeout
 			clearTimeout( this.pendingDelayTimeout );
+			this.pendingDelayTimeout = null;
 			// Setup delayed pending indicator
 			this.pendingDelayTimeout = setTimeout( () => {
 				// Show pending indicator only if the operation is still relevant (query hasn't changed) and marked as pending
@@ -172,6 +189,7 @@ exports.useSearchStore = defineStore( 'search', {
 
 			// Clear previous debounce timeout and set a new one
 			clearTimeout( this.debounceTimeout );
+			this.debounceTimeout = null;
 			// eslint-disable-next-line es-x/no-async-functions
 			this.debounceTimeout = setTimeout( async () => {
 				// Abort if the query changed during the debounce period
@@ -228,15 +246,7 @@ exports.useSearchStore = defineStore( 'search', {
 
 			// Immediately update displayed items with fulltext search item if applicable
 			if ( query && !query.startsWith( '/' ) ) {
-				/** @type {CommandPaletteItem} */
-				const fulltextSearchItem = {
-					label: query,
-					description: mw.message( 'citizen-command-palette-type-fulltext-search-description' ).text(),
-					type: 'fulltext-search',
-					url: this.searchUrl, // Uses the latest query via getter
-					thumbnailIcon: cdxIconArticleSearch,
-					actions: []
-				};
+				const fulltextSearchItem = this.createFulltextSearchItem( query );
 				// Display just the fulltext item for now. Provider results will be added later.
 				this.displayedItems = [ fulltextSearchItem ];
 			} else {
@@ -289,6 +299,7 @@ exports.useSearchStore = defineStore( 'search', {
 				case 'command':
 				case 'namespace':
 					this.updateQuery( result.value );
+					this.triggerFocusSearchInput();
 					return { action: 'updateQuery' };
 				case 'fulltext-search':
 					// Save only the query for fulltext search actions
