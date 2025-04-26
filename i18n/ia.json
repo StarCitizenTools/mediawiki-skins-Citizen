@@ -69,7 +69,7 @@
 	"citizen-feature-custom-width-full-label": "Plen",
 	"citizen-user-info-text-anon": "Tu adresse IP essera visibile publicamente si tu face modificationes.",
 	"citizen-user-info-text-temp": "Iste conto temporari ha essite create post que un modification ha essite effectuate sin conto sur iste navigator e apparato.",
-	"citizen-command-palette-recent": "Recente",
+	"citizen-command-palette-heading-recent": "Recente",
 	"citizen-command-palette-keyhint-enter-select": "Seliger",
 	"citizen-command-palette-keyhint-navigate": "Navigar",
 	"citizen-command-palette-keyhint-exit": "Exir",

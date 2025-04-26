@@ -45,7 +45,7 @@
 	"citizen-feature-custom-width-name": "Ширина",
 	"citizen-feature-custom-width-wide-label": "Широко",
 	"citizen-user-info-text-anon": "Ваша IP адреса биће јавно видљива ако начините било какву измену.",
-	"citizen-command-palette-recent": "Недавно",
+	"citizen-command-palette-heading-recent": "Недавно",
 	"citizen-command-palette-keyhint-exit": "Излаз",
 	"citizen-command-palette-keyhint-actions": "Радње",
 	"citizen-command-palette-keyhint-return": "Назад",

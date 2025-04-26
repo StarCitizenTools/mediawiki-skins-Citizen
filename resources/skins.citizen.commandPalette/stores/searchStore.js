@@ -6,6 +6,7 @@ const urlGenerator = require( '../utils/urlGenerator.js' )();
 const RecentItemsProvider = require( '../providers/RecentItemsProvider.js' );
 const CommandProvider = require( '../providers/CommandProvider.js' );
 const SearchProvider = require( '../providers/SearchProvider.js' );
+const RelatedArticlesProvider = require( '../providers/RelatedArticlesProvider.js' );
 const { cdxIconArticleSearch } = require( '../icons.json' );
 
 const recentItemsService = createRecentItems();
@@ -21,14 +22,18 @@ const SHOW_PENDING_DELAY_MS = 300;
 const providers = [
 	RecentItemsProvider,
 	CommandProvider,
-	SearchProvider
+	SearchProvider,
+	RelatedArticlesProvider
 ];
 
 /**
  * Pinia store for managing command palette search state using providers.
  *
  * @property {string} searchQuery - The current search input value.
- * @property {Array<Object>} displayedItems - The currently displayed list items.
+ * @property {Array<Object>} searchResults - Results from search/command providers.
+ * @property {Array<Object>} recentItems - Recently visited/searched items for presults.
+ * @property {Array<Object>} relatedArticles - Related articles for presults.
+ * @property {Array<Object>} displayedItems - Unified list of items to display.
  * @property {boolean} isPending - Whether a result fetch is currently in progress.
  * @property {boolean} showPending - Whether to show the pending indicator (allows for delay).
  * @property {?number} debounceTimeout - Timeout ID for debouncing search requests.
@@ -40,7 +45,7 @@ exports.useSearchStore = defineStore( 'search', {
 		/** @type {string} */
 		searchQuery: '',
 		/** @type {Array<Object>} */
-		displayedItems: [], // Unified list for all items
+		displayedItems: [],
 		/** @type {boolean} */
 		isPending: false,
 		/** @type {boolean} */
@@ -48,7 +53,7 @@ exports.useSearchStore = defineStore( 'search', {
 		/** @type {?number} */
 		debounceTimeout: null,
 		/** @type {?number} */
-		pendingDelayTimeout: null, // Separate timeout for loading animation delay, it should only be shown when the provider is slow
+		pendingDelayTimeout: null, // Separate timeout for loading animation delay
 		/** @type {boolean} */
 		needsInputFocus: false
 	} ),
@@ -75,17 +80,21 @@ exports.useSearchStore = defineStore( 'search', {
 
 	actions: {
 		/**
-		 * Resets state related to ongoing or previous search operations.
+		 * Resets state related to ongoing or previous search/presults operations.
 		 *
+		 * @param {boolean} [clearItems=true] - Whether to clear the displayedItems array.
 		 * @private
 		 */
-		resetOperationState() {
+		resetOperationState( clearItems = true ) {
 			clearTimeout( this.debounceTimeout );
 			this.debounceTimeout = null;
 			clearTimeout( this.pendingDelayTimeout );
 			this.pendingDelayTimeout = null;
 			this.isPending = false;
 			this.showPending = false;
+			if ( clearItems ) {
+				this.displayedItems = [];
+			}
 		},
 
 		/**
@@ -115,29 +124,37 @@ exports.useSearchStore = defineStore( 'search', {
 				type: 'fulltext-search',
 				url: urlGenerator.generateUrl( 'Special:Search', { search: query } ), // Generate URL directly
 				thumbnailIcon: cdxIconArticleSearch,
-				actions: []
+				actions: [],
+				source: 'fulltext-search' // Add source property
 			};
 		},
 
 		/**
 		 * Sets the results from a provider, combining them with the fulltext search item if necessary.
+		 * Adds a 'source' property based on the provider type or defaults.
 		 *
 		 * @param {Array<CommandPaletteItem>} providerItems Items returned by the provider.
+		 * @param {string} sourceHint A hint for the source (e.g., 'search', 'command')
 		 * @private
 		 */
-		setProviderResults( providerItems ) {
-			const items = Array.isArray( providerItems ) ? providerItems : [];
+		setProviderResults( providerItems, sourceHint = 'search' ) {
+			const items = Array.isArray( providerItems ) ?
+				providerItems.map( ( item ) => ( { ...item, source: item.source || sourceHint } ) ) :
+				[];
 			let finalItems = items;
 
-			// Check if the current query qualifies for a fulltext search link
-			if ( this.searchQuery && !this.searchQuery.startsWith( '/' ) ) {
+			// Add fulltext search item if applicable
+			if (
+				this.searchQuery &&
+				!this.searchQuery.startsWith( '/' )
+			) {
 				const fulltextSearchItem = this.createFulltextSearchItem( this.searchQuery );
 				// Ensure fulltext item is always at the end
 				finalItems = [ ...items, fulltextSearchItem ];
 			}
 
+			// Update the single displayedItems list
 			this.displayedItems = finalItems;
-			// Note: Pending state is reset separately by resetPendingState or resetOperationState
 		},
 
 		/**
@@ -149,19 +166,16 @@ exports.useSearchStore = defineStore( 'search', {
 		 */
 		handleSyncProvider( provider, query ) {
 			try {
-				// Ensure getResults exists and call it
 				const results = typeof provider.getResults === 'function' ? provider.getResults( query ) : [];
-				// Check if query changed during sync execution (minimal risk, but safe)
 				if ( this.searchQuery === query ) {
-					// Set results from the provider
-					this.setProviderResults( results );
-					// Sync operations don't have a pending state to reset here
+					// Pass a source hint based on provider type or query
+					const sourceHint = query.startsWith( '/' ) ? 'command' : 'search';
+					this.setProviderResults( results, sourceHint );
 				}
 			} catch ( error ) {
 				mw.log.error( `[skins.citizen.commandPalette] Sync Provider failed for query "${ query }":`, error );
-				// Ensure we clear provider results only if the query hasn't changed
 				if ( this.searchQuery === query ) {
-					this.setProviderResults( [] );
+					this.setProviderResults( [], 'error' ); // Clear results on error
 				}
 			}
 		},
@@ -174,60 +188,41 @@ exports.useSearchStore = defineStore( 'search', {
 		 * @private
 		 */
 		handleAsyncProvider( provider, query ) {
-			this.isPending = true; // Set pending state immediately for the async operation
+			this.isPending = true;
 
-			// Clear any previous pending delay timeout
 			clearTimeout( this.pendingDelayTimeout );
 			this.pendingDelayTimeout = null;
-			// Setup delayed pending indicator
 			this.pendingDelayTimeout = setTimeout( () => {
-				// Show pending indicator only if the operation is still relevant (query hasn't changed) and marked as pending
 				if ( this.isPending && this.searchQuery === query ) {
 					this.showPending = true;
 				}
 			}, SHOW_PENDING_DELAY_MS );
 
-			// Clear previous debounce timeout and set a new one
 			clearTimeout( this.debounceTimeout );
 			this.debounceTimeout = null;
-			// eslint-disable-next-line es-x/no-async-functions
 			this.debounceTimeout = setTimeout( async () => {
-				// Abort if the query changed during the debounce period
 				if ( this.searchQuery !== query ) {
-					// The new updateQuery call will handle the state for the new query.
-					// We might need to reset pending state if the new query doesn't trigger an async op.
-					// However, updateQuery calls resetOperationState which handles this.
+					// Query changed before timeout completed, reset pending state and bail.
+					this.resetPendingState();
 					return;
 				}
 
-				// No need to set isPending = true again, it was set before the timeout.
-
 				try {
-					// Ensure getResults exists before calling
 					const results = typeof provider.getResults === 'function' ? await provider.getResults( query ) : [];
-
-					// Check query *again* after await, as it might have changed
 					if ( this.searchQuery === query ) {
-						// Operation successful for the current query
-						this.setProviderResults( results );
+						// Pass a source hint
+						const sourceHint = query.startsWith( '/' ) ? 'command' : 'search';
+						this.setProviderResults( results, sourceHint );
 					}
-					// If query changed while awaiting, the new updateQuery call manages state.
 				} catch ( error ) {
 					mw.log.error( `[skins.citizen.commandPalette] Async Provider failed for query "${ query }":`, error );
-					// Only clear provider results if this error corresponds to the current query
 					if ( this.searchQuery === query ) {
-						this.setProviderResults( [] );
+						this.setProviderResults( [], 'error' ); // Clear results on error
 					}
-					// If query changed, the new updateQuery call manages state.
 				} finally {
-					// Regardless of success or error, if the query is still the one we started with,
-					// reset the pending state now that the async operation is complete.
 					if ( this.searchQuery === query ) {
 						this.resetPendingState();
 					}
-					// If the query changed, the *new* updateQuery -> handleProvider flow
-					// is responsible for managing the pending state. resetOperationState
-					// called by updateQuery handles clearing any lingering state from this cancelled op.
 				}
 			}, provider.debounceMs ?? 250 );
 		},
@@ -241,23 +236,30 @@ exports.useSearchStore = defineStore( 'search', {
 		updateQuery( query ) {
 			this.searchQuery = query;
 
-			// Reset debounce/pending state from any previous operation
+			// If query is empty, switch to presults mode via clearSearch
+			if ( !query ) {
+				this.clearSearch();
+				return;
+			}
+
+			// Reset debounce/pending state and clear previous items for non-empty query
 			this.resetOperationState();
 
-			// Immediately update displayed items with fulltext search item if applicable
+			// --- Handle non-empty query ---
+
+			// Immediately display just the fulltext search item if applicable
 			if ( query && !query.startsWith( '/' ) ) {
 				const fulltextSearchItem = this.createFulltextSearchItem( query );
-				// Display just the fulltext item for now. Provider results will be added later.
 				this.displayedItems = [ fulltextSearchItem ];
 			} else {
-				// No query or it's a command, clear items initially. Provider might add some.
+				// Command query, start with empty list
 				this.displayedItems = [];
 			}
 
 			const provider = providers.find( ( p ) => p.canProvide( query ) );
 
 			if ( !provider ) {
-				this.setProviderResults( [] );
+				// No specific provider, displayedItems might just contain the fulltext item
 				return;
 			}
 
@@ -269,12 +271,70 @@ exports.useSearchStore = defineStore( 'search', {
 		},
 
 		/**
-		 * Clears the search query and shows recent items.
+		 * Fetches and processes related articles, adding a 'source' property.
+		 * Returns an empty array on failure.
+		 *
+		 * @return {Promise<Array<CommandPaletteItem>>} Processed related articles.
+		 * @private
+		 */
+		async fetchRelatedArticles() {
+			try {
+				const articles = await RelatedArticlesProvider.getResults( '' );
+				// Add source and ensure it's an array
+				return Array.isArray( articles ) ? articles.map( ( item ) => ( { ...item, source: 'related' } ) ) : [];
+			} catch ( error ) {
+				mw.log.error( '[skins.citizen.commandPalette] Failed to get related articles:', error );
+				return [];
+			}
+		},
+
+		/**
+		 * Fetches and processes recent items, adding a 'source' property.
+		 * Returns an empty array on failure.
+		 *
+		 * @return {Array<CommandPaletteItem>} Processed recent items.
+		 * @private
+		 */
+		fetchRecentItems() {
+			try {
+				// Pass empty query for interface consistency
+				const items = RecentItemsProvider.getResults( '' );
+				// Add source and ensure it's an array
+				return Array.isArray( items ) ? items.map( ( item ) => ( { ...item, source: 'recent' } ) ) : [];
+			} catch ( error ) {
+				mw.log.error( '[skins.citizen.commandPalette] Failed to get recent items:', error );
+				return [];
+			}
+		},
+
+		/**
+		 * Clears the search query and populates displayedItems for presults.
+		 * Fetches recent items first for immediate display, then fetches related articles.
+		 * removing duplicate recent items based on URL.
 		 *
 		 * @return {void}
 		 */
-		clearSearch() {
-			this.updateQuery( '' );
+		async clearSearch() {
+			this.searchQuery = '';
+			// Reset state, but keep existing items displayed while fetching new ones
+			this.resetOperationState( false );
+
+			// Fetch recent items synchronously and display them immediately
+			const fetchedRecentItems = this.fetchRecentItems();
+			this.displayedItems = [ ...fetchedRecentItems ]; // Show recent items first
+
+			// Asynchronously fetch related articles
+			const fetchedRelatedArticles = await this.fetchRelatedArticles();
+
+			// Filter recent items to remove duplicates already present in related articles (based on URL)
+			const relatedUrls = new Set( fetchedRelatedArticles.map( ( item ) => item.url ).filter( Boolean ) );
+			// Use the originally fetched recent items for filtering, not the potentially modified displayedItems
+			const filteredRecentItems = fetchedRecentItems.filter( ( item ) => !item.url || !relatedUrls.has( item.url ) );
+
+			// Only update when we are still in presults
+			if ( this.searchQuery === '' ) {
+				this.displayedItems = [ ...fetchedRelatedArticles, ...filteredRecentItems ];
+			}
 		},
 
 		/**
@@ -287,7 +347,6 @@ exports.useSearchStore = defineStore( 'search', {
 		 */
 		handleSelection( result ) {
 			if ( !result ) {
-				// Handle Enter press with no selection (direct search)
 				if ( this.searchQuery && !this.searchQuery.startsWith( '/' ) ) {
 					recentItemsService.saveSearchQuery( this.searchQuery, this.searchUrl );
 					return { action: 'navigate', payload: this.searchUrl };
@@ -302,15 +361,31 @@ exports.useSearchStore = defineStore( 'search', {
 					this.triggerFocusSearchInput();
 					return { action: 'updateQuery' };
 				case 'fulltext-search':
-					// Save only the query for fulltext search actions
-					recentItemsService.saveSearchQuery( this.searchQuery, this.searchUrl );
+					recentItemsService.saveSearchQuery( this.searchQuery, result.url );
 					return { action: 'navigate', payload: result.url };
 				default:
-					// Save the whole item for other types
-					if ( result ) {
-						recentItemsService.saveRecentItem( result );
-					}
+					recentItemsService.saveRecentItem( result );
 					return { action: 'navigate', payload: result.url };
+			}
+		},
+
+		/**
+		 * Removes a recent item and refreshes the presults list.
+		 *
+		 * @param {string|number} itemId The ID of the item to dismiss.
+		 */
+		dismissRecentItem( itemId ) {
+			// Find the item in the current list (it should be there if the dismiss button was visible)
+			const itemToRemove = this.displayedItems.find(
+				( item ) => String( item.id ) === String( itemId ) && item.source === 'recent'
+			);
+
+			if ( itemToRemove ) {
+				recentItemsService.removeRecentItem( itemToRemove );
+				// Refresh the presults list by calling clearSearch
+				this.clearSearch();
+				// Optionally trigger focus back to input after list update
+				this.triggerFocusSearchInput();
 			}
 		},
 

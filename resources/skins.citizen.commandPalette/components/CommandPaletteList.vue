@@ -24,6 +24,8 @@
 				@navigate-list="( direction ) => $emit( 'navigate-list', direction )"
 				@focus-action="( payload ) => $emit( 'focus-action', payload )"
 				@blur-actions="() => $emit( 'blur-actions' )"
+				@mouseenter="() => $emit( 'hover', index )"
+				@mouseleave="() => $emit( 'hover', -1 )"
 			></command-palette-list-item>
 		</ul>
 	</section>
@@ -62,8 +64,8 @@ module.exports = exports = defineComponent( {
 			default: null
 		}
 	},
-	emits: [ 'update:highlightedItemIndex', 'select', 'action', 'navigate-list', 'focus-action', 'blur-actions' ],
-	setup( props, { emit } ) {
+	emits: [ /* 'update:highlightedItemIndex', */ 'select', 'action', 'navigate-list', 'focus-action', 'blur-actions', 'hover' ],
+	setup( props /* , { emit } */ ) {
 		const listRef = ref( null );
 		const activeItemId = ref( null );
 
@@ -77,10 +79,10 @@ module.exports = exports = defineComponent( {
 			};
 		}
 
-		function onItemChange( itemId, property, value, index ) {
+		function onItemChange( itemId, property, value /* , index */ ) {
 			if ( property === 'highlighted' ) {
 				if ( value ) {
-					emit( 'update:highlightedItemIndex', index );
+					// No longer emitting index update, parent manages it
 				}
 			} else if ( property === 'active' ) {
 				activeItemId.value = value ? itemId : null;

@@ -11,8 +11,6 @@ Partially based on the MenuItem component from Codex.
 		class="citizen-command-palette-list-item"
 		:class="rootClasses"
 		:data-type="type"
-		@mousemove="onMouseMove"
-		@mouseleave="onMouseLeave"
 		@mousedown.prevent="onMouseDown"
 		@click.prevent="onClick"
 	>
@@ -114,28 +112,18 @@ module.exports = exports = defineComponent( {
 		}
 	},
 	emits: [
-		'change',
 		'select',
 		'action',
 		'navigate-list',
 		'focus-action',
-		'blur-actions'
+		'blur-actions',
+		'change'
 	],
 	setup( props, { emit, expose } ) {
 		const rootRef = ref( null );
 		const actionsRef = ref( null );
 
 		// --- Item Interaction Logic ---
-		const onMouseMove = () => {
-			if ( !props.highlighted ) {
-				emit( 'change', 'highlighted', true );
-			}
-		};
-
-		const onMouseLeave = () => {
-			emit( 'change', 'highlighted', false );
-		};
-
 		const onMouseDown = ( e ) => {
 			if ( e.button === 0 ) {
 				emit( 'change', 'active', true );
@@ -185,8 +173,6 @@ module.exports = exports = defineComponent( {
 			rootRef,
 			actionsRef,
 			// Event Handlers
-			onMouseMove,
-			onMouseLeave,
 			onMouseDown,
 			onClick,
 			onAction,
