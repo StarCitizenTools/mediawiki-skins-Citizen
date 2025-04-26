@@ -26,6 +26,7 @@ Partially based on the MenuItem component from Codex.
 			:type-label="typeLabel"
 			:search-query="searchQuery"
 			:url="url"
+			:highlight-query="highlightQuery"
 		></command-palette-list-item-content>
 		<command-palette-list-item-actions
 			ref="actionsRef"
@@ -106,6 +107,10 @@ module.exports = exports = defineComponent( {
 		actions: {
 			type: Array,
 			default: () => []
+		},
+		highlightQuery: {
+			type: Boolean,
+			default: false
 		}
 	},
 	emits: [

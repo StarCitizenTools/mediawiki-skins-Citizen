@@ -67,7 +67,7 @@ function getNamespaceResults( subQuery ) {
 
 /** @type {CommandHandler} */
 module.exports = {
-	label: mw.msg( 'citizen-command-palette-command-namespace-label' ),
-	description: mw.msg( 'citizen-command-palette-command-namespace-description' ),
+	label: mw.msg( 'citizen-command-palette-type-command-namespace-label' ),
+	description: mw.msg( 'citizen-command-palette-type-command-namespace-description' ),
 	getResults: getNamespaceResults
 };

@@ -105,7 +105,8 @@ class MwRestSearchClient {
 							icon: cdxIconEdit,
 							url: this.urlGenerator.generateUrl( page, { action: 'edit' } )
 						}
-					]
+					],
+					highlightQuery: true
 				};
 			} )
 		};

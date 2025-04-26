@@ -244,10 +244,10 @@ module.exports = exports = defineComponent( {
 
 		// Watch for changes in displayed items to potentially reset selection
 		watch( displayedItems, ( newItems ) => {
-			// Reset selection to the first item if the provider indicated it
-			if ( searchStore.autoSelectFirst && newItems.length > 0 ) {
+			// Reset selection to the first item if the list is not empty
+			if ( newItems.length > 0 ) {
 				highlightedItemIndex.value = 0;
-			} else if ( newItems.length === 0 ) {
+			} else {
 				// Reset if list becomes empty
 				highlightedItemIndex.value = -1;
 			}

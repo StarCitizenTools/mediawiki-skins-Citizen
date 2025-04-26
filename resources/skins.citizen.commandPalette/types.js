@@ -40,6 +40,7 @@
  * @property {Array<CommandPaletteItemMetadata>} [metadata] Optional list of metadata badges/tags.
  * @property {Array<CommandPaletteItemAction>} [actions] Optional list of actions available for the item.
  * @property {string} [value] Optional value associated with the item, used for specific types like commands (e.g. the command trigger string '/ns').
+ * @property {boolean} [highlightQuery] Whether to highlight the query in the label.
  */
 
 /**
@@ -82,7 +83,6 @@
  * Defines the interface for a provider of search results for the Command Palette.
  *
  * @typedef {Object} CommandPaletteProvider
- * @property {boolean} shouldAutoSelectFirst Whether the first result from this provider should be automatically selected in the list.
  * @property {function(string): boolean} canProvide Determines if this provider should handle the given query.
  * @property {function(string): (Array<CommandPaletteItem>|Promise<Array<CommandPaletteItem>>)} getResults Gets the results for the given query. Can be synchronous or asynchronous.
  */

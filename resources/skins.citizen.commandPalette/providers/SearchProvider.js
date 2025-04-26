@@ -7,8 +7,6 @@ module.exports = {
 	isAsync: true,
 	/** Debounce time in milliseconds for async providers */
 	debounceMs: 250,
-	/** Whether the first result from this provider should be automatically selected */
-	shouldAutoSelectFirst: false,
 
 	/**
 	 * Determines if this provider should handle the current query.

@@ -338,10 +338,10 @@
 						"cdxIconArticles",
 						"cdxIconArticleNotFound",
 						"cdxIconArticleRedirect",
+						"cdxIconArticleSearch",
 						"cdxIconArticlesSearch",
 						"cdxIconCode",
 						"cdxIconEdit",
-						"cdxIconHistory",
 						"cdxIconSearch",
 						"cdxIconTrash"
 					]
@@ -370,8 +370,9 @@
 				"citizen-command-palette-type-fulltext-search",
 				"citizen-command-palette-type-namespace",
 				"citizen-command-palette-type-command",
-				"citizen-command-palette-command-namespace-label",
-				"citizen-command-palette-command-namespace-description"
+				"citizen-command-palette-type-fulltext-search-description",
+				"citizen-command-palette-type-command-namespace-label",
+				"citizen-command-palette-type-command-namespace-description"
 			]
 		},
 		"skins.citizen.commandPalette.codex": {

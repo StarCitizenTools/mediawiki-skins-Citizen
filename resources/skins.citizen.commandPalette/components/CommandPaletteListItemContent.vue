@@ -12,9 +12,16 @@
 			<div class="citizen-command-palette-list-item__text__label">
 				<!-- Technically you are not supposed to use CdxSearchResultTitle... -->
 				<cdx-search-result-title
+					v-if="highlightQuery"
 					:title="label"
 					:search-query="searchQuery"
 				></cdx-search-result-title>
+				<span
+					v-else
+					class="citizen-command-palette-list-item__text__label"
+				>
+					{{ label }}
+				</span>
 			</div>
 			<div
 				v-if="description"
@@ -102,6 +109,10 @@ module.exports = exports = defineComponent( {
 		searchQuery: {
 			type: String,
 			default: ''
+		},
+		highlightQuery: {
+			type: Boolean,
+			default: false
 		}
 	}
 } );
