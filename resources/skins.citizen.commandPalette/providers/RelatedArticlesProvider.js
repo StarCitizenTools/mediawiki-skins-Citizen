@@ -74,7 +74,7 @@ const RelatedArticlesProvider = {
 						label: page.title,
 						description: page.description || page.extract,
 						type: 'page',
-						url: urlGenerator.generateUrl( page.pageid ),
+						url: urlGenerator.generateUrl( page ),
 						thumbnail: page.thumbnail ? {
 							url: page.thumbnail.source
 						} : null,
