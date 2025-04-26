@@ -79,6 +79,7 @@
 	"citizen-user-info-text-anon": "Description in the user menu when user is not logged in.",
 	"citizen-user-info-text-temp": "Description in the user menu when user is using a temporary account.",
 	"citizen-command-palette-heading-recent": "Label for the recently searched results in the command palette",
+	"citizen-command-palette-heading-related": "Label for the related results in the command palette",
 	"citizen-command-palette-keyhint-actions": "Keyboard hint for the key to select an action in an item in the command palette",
 	"citizen-command-palette-keyhint-return": "Keyboard hint for the key to return to search in the command palette",
 	"citizen-command-palette-keyhint-enter-select": "Keyboard hint for the key to select an item in the command palette",

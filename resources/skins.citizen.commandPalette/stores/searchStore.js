@@ -82,10 +82,9 @@ exports.useSearchStore = defineStore( 'search', {
 		/**
 		 * Resets state related to ongoing or previous search/presults operations.
 		 *
-		 * @param {boolean} [clearItems=true] - Whether to clear the displayedItems array.
 		 * @private
 		 */
-		resetOperationState( /* clearItems = true */ ) {
+		resetOperationState() {
 			clearTimeout( this.debounceTimeout );
 			this.debounceTimeout = null;
 			clearTimeout( this.pendingDelayTimeout );
@@ -236,8 +235,7 @@ exports.useSearchStore = defineStore( 'search', {
 				return;
 			}
 
-			// Reset debounce/pending state, but keep existing items temporarily
-			this.resetOperationState( false ); // Pass false to keep items
+			this.resetOperationState();
 
 			// Immediately update or add the fulltext search item if applicable
 			// Use CommandProvider.canProvide to check if it's NOT a command query
@@ -246,17 +244,17 @@ exports.useSearchStore = defineStore( 'search', {
 				const existingFulltextIndex = this.displayedItems.findIndex( ( item ) => item.type === 'fulltext-search' );
 
 				if ( existingFulltextIndex !== -1 ) {
-					// Replace existing fulltext item
-					this.displayedItems.splice( existingFulltextIndex, 1, newFulltextItem );
+					const newItems = [ ...this.displayedItems ];
+					newItems.splice( existingFulltextIndex, 1, newFulltextItem );
+					this.displayedItems = newItems;
 				} else {
-					// Add fulltext item if it wasn't there (e.g., coming from presults)
-					this.displayedItems.push( newFulltextItem );
+					this.displayedItems = [ ...this.displayedItems, newFulltextItem ];
 				}
 			} else {
 				// If it's a command query or became one, remove any existing fulltext item immediately
 				const existingFulltextIndex = this.displayedItems.findIndex( ( item ) => item.type === 'fulltext-search' );
 				if ( existingFulltextIndex !== -1 ) {
-					this.displayedItems.splice( existingFulltextIndex, 1 );
+					this.displayedItems = this.displayedItems.filter( ( _, index ) => index !== existingFulltextIndex );
 				}
 			}
 
@@ -320,8 +318,7 @@ exports.useSearchStore = defineStore( 'search', {
 		 */
 		async clearSearch() {
 			this.searchQuery = '';
-			// Reset state, but keep existing items displayed while fetching new ones
-			this.resetOperationState( false );
+			this.resetOperationState();
 
 			// Fetch recent items synchronously and display them immediately
 			const fetchedRecentItems = this.fetchRecentItems();

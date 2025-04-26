@@ -1,12 +1,21 @@
 const { CommandPaletteItem, CommandPaletteProvider } = require( '../types.js' );
 const { cdxIconCode } = require( '../icons.json' );
 
+// TODO: Make this configurable
+const MAX_COMMAND_RESULTS = 10;
+
 // Registry for slash command handlers
 // TODO: Allow extensions to register their own commands
 const commandRegistry = {
 	ns: require( '../commands/namespace.js' ),
 	action: require( '../commands/action.js' )
 };
+
+// Precompute a flat list of { trigger: string, cmdName: string } pairs for efficient prefix filtering.
+const flatTriggerList = Object.entries( commandRegistry ).reduce( ( list, [ cmdName, handler ] ) => {
+	const handlerTriggers = ( handler.triggers ?? [] ).map( ( trigger ) => ( { trigger, cmdName } ) );
+	return list.concat( handlerTriggers );
+}, [] ); // Initial value is an empty array
 
 /**
  * Generates the list of command items based on the commandRegistry.
@@ -15,49 +24,55 @@ const commandRegistry = {
  * @return {Array<CommandPaletteItem>}
  */
 function getCommandListItems( filterPrefix ) {
-	let entries = Object.entries( commandRegistry );
+	let entries;
 
 	if ( filterPrefix ) {
-		// Filter entries based on handler triggers
-		entries = entries.filter( ( [ /* cmdName */, handler ] ) => {
-			const lowerFilterPrefix = filterPrefix.toLowerCase();
-			const match = handler.triggers && handler.triggers.some( ( trigger ) => {
-				const lowerTrigger = trigger.toLowerCase();
-				const starts = lowerTrigger.startsWith( lowerFilterPrefix );
-				return starts;
-			} );
-			return match;
-		} );
+		// Use the precomputed flat list for efficient filtering
+		const lowerFilterPrefix = filterPrefix.toLowerCase();
+		const filteredTriggers = flatTriggerList.filter( ( { trigger } ) => trigger.toLowerCase().startsWith( lowerFilterPrefix ) );
+		// Get unique command names from the filtered triggers
+		const uniqueCmdNames = [ ...new Set( filteredTriggers.map( ( { cmdName } ) => cmdName ) ) ];
+		// Retrieve the full command entries based on the unique names
+		entries = uniqueCmdNames.map( ( cmdName ) => [ cmdName, commandRegistry[ cmdName ] ] );
+	} else {
+		// No filter, get all entries
+		entries = Object.entries( commandRegistry );
 	}
 
-	const mappedResults = entries.map( ( [ cmdName, handler ] ) => {
-		let metadata = [];
-		if ( handler.triggers && handler.triggers.length > 0 ) {
-			metadata = handler.triggers.map( ( trigger, index ) => ( {
-				label: trigger,
-				highlightQuery: index === 0 // Highlight only the first trigger
-			} ) );
-		} else {
-			// Fallback if no triggers are defined
-			metadata.push( {
-				label: `/${ cmdName }`,
-				highlightQuery: true
-			} );
-		}
+	try {
+		const mappedResults = entries.map( ( [ cmdName, handler ] ) => {
+			let metadata = [];
+			if ( handler.triggers?.length > 0 ) {
+				metadata = handler.triggers.map( ( trigger, index ) => ( {
+					label: trigger,
+					highlightQuery: index === 0 // Highlight only the first trigger
+				} ) );
+			} else {
+				// Fallback if no triggers are defined
+				metadata.push( {
+					label: `/${ cmdName }`,
+					highlightQuery: true
+				} );
+			}
 
-		return {
-			id: `citizen-command-palette-item-command-${ cmdName }`,
-			type: 'command',
-			label: handler.label ?? cmdName,
-			description: handler.description,
-			thumbnailIcon: cdxIconCode,
-			// Use the first trigger as the primary value
-			value: handler.triggers ? handler.triggers[ 0 ] : `/${ cmdName }`,
-			metadata: metadata // Use the generated metadata array
-		};
-	} );
+			const item = {
+				id: `citizen-command-palette-item-command-${ cmdName }`,
+				type: 'command',
+				label: handler.label ?? cmdName,
+				description: handler.description,
+				thumbnailIcon: cdxIconCode,
+				// Use the first trigger as the primary value, using optional chaining
+				value: handler.triggers?.[ 0 ] ?? `/${ cmdName }`,
+				metadata: metadata // Use the generated metadata array
+			};
+			return item;
+		} );
 
-	return mappedResults;
+		return mappedResults;
+	} catch ( error ) {
+		mw.log.error( '[CommandProvider|getCommandListItems] Error during mapping:', error );
+		return []; // Return empty array in case of error
+	}
 }
 
 /** @type {CommandPaletteProvider} */
@@ -77,10 +92,8 @@ module.exports = {
 		// Handle if the query starts with '/' (for root query and prefix search)
 		const startsWithSlash = query.startsWith( '/' );
 
-		// Handle if the query starts with any registered trigger
-		const startsWithTrigger = Object.values( commandRegistry ).some( ( handler ) => (
-			handler.triggers && handler.triggers.some( ( trigger ) => query.startsWith( trigger ) )
-		) );
+		// Handle if the query starts with any registered trigger, using optional chaining
+		const startsWithTrigger = Object.values( commandRegistry ).some( ( handler ) => handler.triggers?.some( ( trigger ) => query.startsWith( trigger ) ) );
 
 		return startsWithSlash || startsWithTrigger;
 	},
@@ -98,6 +111,10 @@ module.exports = {
 
 		// Find the handler and trigger that match the query start
 		for ( const [ cmd, handler ] of Object.entries( commandRegistry ) ) {
+			if ( !handler ) {
+				mw.log.warn( `[[skins.citizen.commandPalette] Found null or undefined handler for command: ${ cmd }` );
+				continue;
+			}
 			if ( handler.triggers ) {
 				for ( const trigger of handler.triggers ) {
 					if ( query.startsWith( trigger ) ) {
@@ -112,11 +129,15 @@ module.exports = {
 			}
 		}
 
-		// --- Query Handling Logic ---
-
+		// Query Handling Logic
 		// Case 1: Root query "/" - Show all available commands
 		if ( query === '/' ) {
-			return getCommandListItems().slice( 0, 10 );
+			const commandItems = getCommandListItems();
+			if ( !Array.isArray( commandItems ) ) {
+				mw.log.error( '[CommandProvider] getCommandListItems did not return an array for query "/"!' );
+				return []; // Return empty array defensively
+			}
+			return commandItems.slice( 0, MAX_COMMAND_RESULTS );
 		}
 
 		// Case 2: A specific command trigger is fully matched (e.g., query starts with "/ns" or ":")
@@ -125,12 +146,8 @@ module.exports = {
 			const subQuery = query.slice( matchedTrigger.length ).trim();
 
 			// Handle cases where the trigger might end with ':' (like /ns:) vs just /ns
-			let actualSubQuery = subQuery;
-			if ( matchedTrigger.endsWith( ':' ) && subQuery.startsWith( ':' ) ) {
-				actualSubQuery = subQuery.slice( 1 ).trim();
-			} else if ( subQuery.startsWith( ':' ) && !matchedTrigger.endsWith( ':' ) ) {
-				actualSubQuery = subQuery.slice( 1 ).trim();
-			}
+			// Normalize subquery by removing leading colon if present
+			const actualSubQuery = subQuery.startsWith( ':' ) ? subQuery.slice( 1 ).trim() : subQuery;
 
 			if ( typeof matchedHandler.getResults !== 'function' ) {
 				mw.log.error( `[CommandProvider] Command handler for "${ commandName }" (triggered by "${ matchedTrigger }") is missing required getResults function.` );
@@ -146,7 +163,7 @@ module.exports = {
 					}
 					return item;
 				} );
-				return processedResults.slice( 0, 10 );
+				return processedResults.slice( 0, MAX_COMMAND_RESULTS );
 			} catch ( err ) {
 				mw.log.error( `[CommandProvider] Handler for "${ commandName }" (triggered by "${ matchedTrigger }") failed:`, err );
 				return [];
@@ -156,7 +173,7 @@ module.exports = {
 		// Case 3: No specific trigger matched, but query starts with '/' (e.g., "/n" or "/unknown")
 		// Perform prefix search on command triggers.
 		if ( !matchedTrigger && query.startsWith( '/' ) ) {
-			return getCommandListItems( query ).slice( 0, 10 ); // Filter commands by query prefix
+			return getCommandListItems( query ).slice( 0, MAX_COMMAND_RESULTS ); // Filter commands by query prefix
 		}
 
 		// Case 4: Query doesn't match any command pattern - return empty array

@@ -24,7 +24,8 @@ let menuItemCache = null;
  * @return {Promise<Array<CommandPaletteItem>>} A promise that resolves with an array of special page items.
  */
 function fetchSpecialPages() {
-	if ( specialPageCache ) {
+	// Check if the cache promise has been initialized
+	if ( specialPageCache !== null ) {
 		return specialPageCache;
 	}
 
@@ -94,11 +95,10 @@ function fetchMenuItems() {
 		const portletElement = document.getElementById( portletId );
 
 		if ( !portletElement ) {
-			// console.debug( `Portlet element not found: ${ portletId }` ); // TODO: Consider mw.log.warn or similar if needed
-			return; // Skip this portlet if not found
+			return;
 		}
 
-		const menuLabel = portletElement.querySelector( '.citizen-menu__heading' )?.textContent.trim();
+		const menuLabel = portletElement.querySelector( '.citizen-menu__heading' )?.textContent?.trim();
 		const links = portletElement.querySelectorAll( '.citizen-menu__content-list li a' );
 
 		links.forEach( ( link ) => {
@@ -112,9 +112,10 @@ function fetchMenuItems() {
 				return;
 			}
 
-			const label = labelElement.textContent.trim();
+			// Should not happen, but just in case
+			const label = labelElement.textContent?.trim() || '';
 			// Remove trailing access key hint like "[alt-shift-j]"
-			const description = link.getAttribute( 'title' )?.replace( /\s*\[.*?\]\s*$/, '' );
+			const description = link.getAttribute( 'title' )?.replace( /\s*\[[^\]]*\]\s*$/, '' );
 
 			allItems.push( {
 				id: id || 'menuitem-' + label.toLowerCase().replace( /\s+/g, '-' ), // Generate an ID if none exists
@@ -156,10 +157,8 @@ function itemMatchesQuery( item, lowerCaseQuery ) {
 		return true;
 	}
 
-	// Check ID based on type
-	if ( item.type === 'special-page' && item.id.slice( 'special-'.length ).includes( lowerCaseQuery ) ) {
-		return true;
-	} else if ( item.type === 'menu-item' && item.id.toLowerCase().includes( lowerCaseQuery ) ) {
+	// Check ID (covers both special pages and menu items)
+	if ( item.id.toLowerCase().includes( lowerCaseQuery ) ) {
 		return true;
 	}
 
@@ -177,7 +176,7 @@ async function getActionResults( subQuery ) {
 	// Use Promise.all to fetch concurrently, though fetchMenuItems is currently synchronous
 	const [ specialPages, menuItems ] = await Promise.all( [
 		fetchSpecialPages(),
-		Promise.resolve( fetchMenuItems() ) // Fetch items from all target portlets
+		fetchMenuItems()
 	] );
 
 	// Combine the results, filtering out any potential null/undefined items from promises
