@@ -4,7 +4,7 @@ const createRecentItems = require( '../services/recentItems.js' );
 const urlGenerator = require( '../utils/urlGenerator.js' )();
 
 const RecentItemsProvider = require( '../providers/RecentItemsProvider.js' );
-const SlashCommandProvider = require( '../providers/SlashCommandProvider.js' );
+const CommandProvider = require( '../providers/CommandProvider.js' );
 const SearchProvider = require( '../providers/SearchProvider.js' );
 
 const recentItemsService = createRecentItems();
@@ -16,7 +16,7 @@ const SHOW_PENDING_DELAY_MS = 300;
 /** @type {Array<CommandPaletteProvider>} */
 const providers = [
 	RecentItemsProvider,
-	SlashCommandProvider,
+	CommandProvider,
 	SearchProvider
 ];
 

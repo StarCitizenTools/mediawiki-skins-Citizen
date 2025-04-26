@@ -52,7 +52,7 @@ module.exports = {
 	 * @return {boolean}
 	 */
 	canProvide( query ) {
-		return query.startsWith( '/' );
+		return query.startsWith( '/' ) || query.startsWith( ':' );
 	},
 
 	/**
@@ -63,6 +63,11 @@ module.exports = {
 	 */
 	// eslint-disable-next-line es-x/no-async-functions
 	async getResults( query ) {
+		// Handle ':' as a shortcut for '/ns:'
+		if ( query.startsWith( ':' ) ) {
+			query = '/ns' + query;
+		}
+
 		// Case 1: Root query "/" - Show available commands
 		if ( query === '/' ) {
 			return getCommandListItems();
@@ -81,7 +86,7 @@ module.exports = {
 			const commandHandler = commandRegistry[ commandName ];
 
 			if ( typeof commandHandler.getResults !== 'function' ) {
-				mw.log.error( `[SlashCommandProvider] Command handler for "${ commandName }" is missing required getResults function.` );
+				mw.log.error( `[CommandProvider] Command handler for "${ commandName }" is missing required getResults function.` );
 				return [];
 			}
 
@@ -89,7 +94,7 @@ module.exports = {
 				const results = await commandHandler.getResults( subQuery );
 				return Array.isArray( results ) ? results : [];
 			} catch ( err ) {
-				mw.log.error( `[SlashCommandProvider] "${ commandName }" failed:`, err );
+				mw.log.error( `[CommandProvider] "${ commandName }" failed:`, err );
 				return [];
 			}
 		} else {

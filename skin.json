@@ -318,7 +318,7 @@
 				"resources/skins.citizen.commandPalette/searchClients/MwRestSearchClient.js",
 				"resources/skins.citizen.commandPalette/providers/RecentItemsProvider.js",
 				"resources/skins.citizen.commandPalette/providers/SearchProvider.js",
-				"resources/skins.citizen.commandPalette/providers/SlashCommandProvider.js",
+				"resources/skins.citizen.commandPalette/providers/CommandProvider.js",
 				"resources/skins.citizen.commandPalette/commands/namespace.js",
 				"resources/skins.citizen.commandPalette/components/App.vue",
 				"resources/skins.citizen.commandPalette/components/CommandPaletteEmptyState.vue",
