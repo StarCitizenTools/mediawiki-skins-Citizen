@@ -72,7 +72,7 @@ const RelatedArticlesProvider = {
 					const results = relatedPages.map( ( page ) => ( {
 						id: page.pageid,
 						label: page.title,
-						description: page.extract,
+						description: page.description || page.extract,
 						type: 'page',
 						url: urlGenerator.generateUrl( page.pageid ),
 						thumbnail: page.thumbnail ? {
