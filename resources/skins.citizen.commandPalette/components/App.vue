@@ -184,8 +184,8 @@ module.exports = exports = defineComponent( {
 			}
 		};
 
-		const selectResult = ( result ) => {
-			const selectionAction = searchStore.handleSelection( result );
+		const selectResult = async ( result ) => {
+			const selectionAction = await searchStore.handleSelection( result );
 
 			switch ( selectionAction.action ) {
 				case 'navigate':
