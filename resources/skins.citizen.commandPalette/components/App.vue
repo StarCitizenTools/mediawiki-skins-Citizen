@@ -204,31 +204,41 @@ module.exports = exports = defineComponent( {
 			}
 		};
 
+		/**
+		 * Handles custom actions triggered by buttons within list items.
+		 *
+		 * @param {import('../types.js').CommandPaletteActionEvent} action The action event payload.
+		 */
 		const handleAction = ( action ) => {
-			// Route action based on its properties
+			switch ( action.type ) {
+				case 'dismiss':
+					// Specific to recent items, handled by the store
+					if ( action.itemId !== undefined ) {
+						searchStore.dismissRecentItem( action.itemId );
+					} else {
+						mw.log.warn( '[CommandPalette] Dismiss action missing itemId:', action );
+					}
+					break;
 
-			// 1. Dismiss Action (specific to recent items)
-			if ( action.actionId === 'dismiss' && action.itemId !== undefined ) {
-				searchStore.dismissRecentItem( action.itemId );
-				return;
+				case 'navigate':
+					// Standard navigation action
+					if ( action.url ) {
+						window.location.href = action.url;
+						close();
+					} else {
+						mw.log.warn( '[CommandPalette] Navigate action missing url:', action );
+					}
+					break;
+
+				case 'event':
+					// Placeholder for custom event handling
+					// console.debug( '[CommandPalette] Action event received:', action.event );
+					break;
+
+				default:
+					// Fallback for unknown or untyped actions
+					mw.log.warn( '[CommandPalette] Unknown or missing action type received:', action );
 			}
-
-			// 2. Navigation Action
-			if ( action.url ) {
-				window.location.href = action.url;
-				close();
-				return;
-			}
-
-			// 3. Custom Event Action
-			if ( action.event ) {
-				// Handle custom events if needed in the future
-				// console.debug( '[CommandPalette] Action event received:', action.event );
-				return;
-			}
-
-			// 4. Fallback for unknown actions
-			mw.log.warn( '[CommandPalette] Unknown action structure received:', action );
 		};
 
 		const onKeydown = ( event ) => {

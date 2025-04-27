@@ -57,7 +57,6 @@ function registerCommand( handler ) {
 	}
 
 	commandRegistry.set( commandId, handler );
-	// console.debug( `[skins.citizen.commandPalette|CommandProvider] Registered command: ${ commandId }` );
 
 	// Update the flat list whenever a command is successfully registered
 	// We have to update flatTriggerList immediately after registration rather than
@@ -169,8 +168,6 @@ module.exports = {
 		// Find the handler and trigger that match the query start using the flatTriggerList and lowerQuery
 		const matchingTriggers = flatTriggerList.filter( ( { lowerTrigger } ) => query.toLowerCase().startsWith( lowerTrigger ) );
 
-		// console.debug( `[CommandProvider] Query: "${ query }". Found ${ matchingTriggers.length } matching triggers.` );
-
 		if ( matchingTriggers.length > 0 ) {
 			// Sort by trigger length descending to find the longest match
 			matchingTriggers.sort( ( a, b ) => b.trigger.length - a.trigger.length );
@@ -178,8 +175,6 @@ module.exports = {
 			matchedTrigger = bestMatch.trigger;
 			commandId = bestMatch.id;
 			matchedHandler = commandRegistry.get( commandId ); // Get the handler from the map
-
-			// console.debug( `[CommandProvider] Best match: Trigger="${ matchedTrigger }", ID="${ commandId }". Handler found: ${ !!matchedHandler }` );
 
 			// Basic check if handler was found (it should be, given flatTriggerList is derived from it)
 			if ( !matchedHandler ) {
@@ -209,7 +204,6 @@ module.exports = {
 				// It's a sub-query command, process the sub-query
 				const subQuery = query.slice( matchedTrigger.length ).trim();
 				const actualSubQuery = subQuery.startsWith( ':' ) ? subQuery.slice( 1 ).trim() : subQuery;
-				// console.debug( `[CommandProvider] Matched sub-query command: ${ commandId }. SubQuery: "${ actualSubQuery }"` );
 
 				try {
 					// Pass the actual sub-query to the handler
@@ -279,7 +273,6 @@ module.exports = {
 				} else if ( typeof handler.onCommandSelect === 'function' ) {
 					return handler.onCommandSelect( item );
 				} else {
-					// console.debug( `[CommandProvider] No onCommandSelect defined for simple command handler ${ handlerId }.` );
 					return { action: 'none' };
 				}
 			} else {
@@ -287,7 +280,6 @@ module.exports = {
 				if ( typeof handler.onResultSelect === 'function' ) {
 					return handler.onResultSelect( item );
 				} else {
-					// console.debug( `[CommandProvider] No onResultSelect defined for handler ${ handlerId }.` );
 					return { action: 'none' };
 				}
 			}

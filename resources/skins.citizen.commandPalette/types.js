@@ -67,6 +67,17 @@
  */
 
 /**
+ * Describes the payload emitted when an action button within a CommandPaletteItem is clicked.
+ *
+ * @typedef {Object} CommandPaletteActionEvent
+ * @property {'dismiss'|'navigate'|'event'|string} type The type of action triggered.
+ * @property {string} itemId The ID of the parent CommandPaletteItem.
+ * @property {string} actionId The ID of the specific action that was clicked (e.g., 'dismiss', 'edit').
+ * @property {string} [url] The URL associated with the action, if any.
+ * @property {*} [event] Optional event data for 'event' type actions.
+ */
+
+/**
  * @typedef {Object} CitizenCommandPaletteSearchClient
  * @property {function(string): Promise<CommandPaletteSearchResponse>} fetchByQuery
  * @property {function(): Promise<CommandPaletteSearchResponse>} [loadMore]
