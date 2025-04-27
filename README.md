@@ -72,7 +72,7 @@ Name | Description | Values | Default
 ### Development
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
-`$wgEnableCommandPalette` | [EXPERIMENTAL] Enables or disable the command palette. Command palette is in active development and may not work as expected. | `true` - enable; `false` - disable | `false`
+`$wgCitizenEnableCommandPalette` | [EXPERIMENTAL] Enables or disable the command palette. Command palette is in active development and may not work as expected. | `true` - enable; `false` - disable | `false`
 
 ```php
 $wgCitizenManifestOptions = [
