@@ -2,6 +2,88 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.0.0...v3.1.0) (2025-04-27)
+
+
+### Features
+
+* **commandPalette:** ✨ add action command ([#1049](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1049)) ([a5360c3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a5360c3a9a38cdb0c49d9b799271e77b10dd619b))
+* **commandPalette:** ✨ add ctrl/cmd+k binding ([49961f5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/49961f5dfca9fd06bbcd8e074809afab2a671e0f))
+* **commandPalette:** ✨ add edit action to page results ([85a48c1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/85a48c1ad3a9fe9b6f8a0a2a71fc01f5bb47787e))
+* **commandPalette:** ✨ add fulltext search as a result  ([86375c0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/86375c07eae1e334436a3c89580be19c2949e60d))
+* **commandPalette:** ✨ add keyboard hints ([b482d27](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b482d277e2b8af44e547a065a73e46ebb973a1d8))
+* **commandPalette:** ✨ add loading state to command palette search results ([#1033](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1033)) ([2389466](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2389466c93dd75b43b98d98d802d15874babb1cb))
+* **commandPalette:** ✨ add namespace command and various refactor ([#1043](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1043)) ([4de089d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4de089d99b4541b435791dcefc253a9c47b2c72c))
+* **commandPalette:** ✨ add recent search ([19ea550](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/19ea550158c200e23bfdddcb2904753c0d674df0))
+* **commandPalette:** ✨ add redirect title to search results ([#1032](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1032)) ([4b29b4c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4b29b4c9b4451df52a79666d5ba96042f24d9eaa))
+* **commandPalette:** ✨ add RelatedArticles to presults if supported ([#1048](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1048)) ([cbfb03f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cbfb03f485c966f0322c4ebdf31d1b09a60f34aa))
+* **commandPalette:** ✨ add tab key functionality to close input ([8eccfeb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8eccfeb0098047748d1610039a343278d16ef839))
+* **commandPalette:** ✨ allow `:` the namespace command ([0e6fe57](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0e6fe574eefdc1864fa9c6cf7c511da0e4ed5f11))
+* **CommandPalette:** ✨ allow command to be extensible through mw.hook ([#1050](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1050)) ([8b2ef4c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8b2ef4c8af9c675df9efba92a100198af461bd6c))
+* **commandPalette:** ✨ allow recent items to be removed ([08425a6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/08425a6707f5f2a02593de053b4bd67c64a22714))
+* **commandPalette:** ✨ handle wikilink and template syntax in query ([a1a38af](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a1a38afd4ed7958108aad172b26cd4f979f986a2))
+* **commandPalette:** ✨ improve enter key logic ([4adb6c6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4adb6c6f217a075ea3b5a83d4b76ebe60cd18976))
+* **commandPalette:** ✨ improve no results empty state ([19f7d86](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/19f7d86193c0bc60486d481908ee217a4bd96256))
+* **commandPalette:** ✨ increase max-height for results container ([b49c5ba](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b49c5baebbc219874e33eeb633e7d20fe0a068f2))
+* **commandPalette:** ✨ initial implementation of Command Palette ([55cb33b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/55cb33b2dd1339bc7ba41d8b50ead69db45a7f56))
+* **commandPalette:** ✨ make command search case-insensitive ([34d9483](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/34d9483c4c01f24a6d22b54bfa1c8998bc9541a3))
+* **commandPalette:** ✨ set up foundation for result type ([b1cc5d7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b1cc5d77f7a88f2f524848bd6055e571e8d893dc))
+* **commandPalette:** ✨ show command as metadata in result ([4c1063d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4c1063d6d4da692d2771dee60875d027efe10799))
+* **commandPalette:** ✨ show keyhints conditionally ([32b46a0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/32b46a02f7afcce80019b3b9e775a17f1069df45))
+* **commandPalette:** ✨ tweak various styles ([79c4ee7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/79c4ee7f21096a2982d053fcf36471f05f2a2fb9))
+* **commandPalette:** ✨ use Pinia for state management ([56a9e91](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/56a9e912f738a255386cb5e8bff10d8450f988ef))
+* **commandPalette:** ✨ use prefix search for command list ([10d3dfb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/10d3dfb22c95d4201f8de3d428149333844b3e4e))
+* **composer:** 🐛 allow Composer v2 for installation ([2960a7d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2960a7d4807b3fba0fcf10c97597b00a735bb4ea))
+* **core:** ✨ add padding for device safe area ([9db68fb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9db68fbaeece7009512a5d4fc5e733c5ff080e5d))
+* **core:** ✨ apply font grade to light mode instead of dark mode ([ab3853a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ab3853aa6fd304a1f5addb1543f5ec299c3e9673))
+* **core:** ✨ drop view transitions ([17e76eb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/17e76eb42fbec0de742e8dd1de5d56e0d5ddc3d1))
+* **core:** ✨ reduce spacing between paragraph element and other elements that have top margin ([6339841](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6339841b5fb5a3e869f00eb25f203c11d64cdea1))
+* **core:** ✨ reduce subtle background color brightness ([12ce5e4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/12ce5e4c344d2060d672d91279b9efbfe41a4280))
+* **core:** ✨ use darker surface colors ([c6ec6d8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c6ec6d804d976dbb4984c5faa48fbe67b2b2fc75))
+* **dropdown:** ✨ use &lt;kbd&gt; tag for keyboard hint ([4128bd4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4128bd4b67116688d27333e835dd16bc42b836da))
+* **Echo:** ✨ use red dot for alert badge ([216bdff](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/216bdffab4e56bd55f28d229e4a628a26b6f0ff7)), closes [#1027](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1027)
+* **typography:** ✨ tweak label text font styles ([d753c03](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d753c038d88671e49b12c6729016931a6364e4e0))
+* **wikitable:** ✨ add wikitable--fluid utitlity class for full width tables ([ff64f43](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ff64f439c81c0beea0e80e4b5e686d531029a662))
+
+
+### Bug Fixes
+
+* **commandPalatte:** 🐛 fix incorrect list item header color ([53e0c55](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/53e0c55c7ec241f316e54784ca24c571afb6c8bc))
+* **commandPalette:** 🐛 add missing components ([892ca23](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/892ca23f735e2e62a19f0b92e84054a3b4b03c70))
+* **commandPalette:** 🐛 allow icon prop to accept both String and Object types ([5e18f04](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5e18f043eac9e20a77711acce49dee152aa6ad1b))
+* **commandPalette:** 🐛 fix conflict with OOUI overlay ([be51f79](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/be51f79b70d47530b6b97e85ecaf94b1762412d0))
+* **CommandPalette:** 🐛 fix incorrect URL for related articles ([cf8fe3c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cf8fe3c382751fcb85416f4c54093292d46e485d))
+* **commandPalette:** 🐛 fix misaligned progress bar ([d474817](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d474817e571f38c99d9534101f2605c39e5881a0))
+* **commandPalette:** 🐛 fix missing aria-label for edit action ([5711804](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/57118043317dd6662fe09c5f785a98eaa581bc7d))
+* **commandPalette:** 🐛 fix missing message for namespace command ([a09470e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a09470e6bbbc0bd00cbe4fea4776dd55445fa307))
+* **CommandPalette:** 🐛 make selectResult function asynchronous for improved handling ([b3d9d78](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b3d9d7853f6f5c0bd28cb7065fecd45918add7cd))
+* **commandPalette:** 🐛 persist results before fetching new results ([957d042](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/957d0424c07e6bd24382d4bdf68879e6abc01d28))
+* **commandPalette:** 🐛 prevent saving empty search queries to history ([51371a3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/51371a362515dc927d8d8c5a5eb053aa92364ea7))
+* **commandPalette:** 🐛 remove reference to non-existing file ([b1b854d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b1b854d950eeba1e9d5c19e515e5501d5ae8393c))
+* **commandPalette:** 🐛 save the entire result item in recent items ([cede0bb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cede0bb2dd9bad86bbebbf030a91e3dfed196020))
+* **CommandPalette:** 🐛 use page.description if available for RelatedArticle ([afef5ce](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/afef5cefbf8ea3fb87e7484464cec2be80f53914))
+* **CommandPaletteListItem:** 🐛 add aria-selected to selected result ([21bf426](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/21bf426a6119be20c3cd6a768984a9937ea32d4d))
+* **CommentStreams:** 🐛 fix broken `font-weight` ([8ebbf53](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8ebbf5302835f3fdaa9d829407c994a6351170fd))
+* **core:** 🐛 fix padding for device safe area ([c52085d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c52085de5c576217755a71c128e98416ab6db8cf))
+* **core:** 🐛 use a more sane viewport meta tag ([db64579](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/db64579926fd470740759cf3f146dd61e1bcaa06))
+* **DiscussionTools:** 🐛 remove additional space in title ([19a1f71](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/19a1f716f7fe05a7a6beca6c315c3ea34faed364))
+* **FloatingUI:** 🐛 update box-shadow variable ([fab3d98](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fab3d984fd5fd9d84bfbcd8ac20134ae6116859a))
+* **header:** 🐛 prevent header wrapping ([af49110](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/af49110e6659a3832202c9dd504adb4afb115572))
+* **Popups:** 🐛 fix broken `background-image` for references ([75f2618](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/75f2618083daf62efa85fc232540fa342e8b1568))
+* **README:** 🐛 fix incorrect command palette configuration name ([0247962](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/024796251614ece23cb8b0ed86c5e427f886ae86))
+* **VisualEditor:** 🐛 fix toolbar `z-index` ([5bbf2d8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5bbf2d846e9831262474c8732122053cba83cc46))
+
+
+### Performance Improvements
+
+* **CommandPalette:** cache special page API request ([9337142](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/93371428f9ccf16c86ad7a19b0c72cd9d1e62eab))
+
+
+### Miscellaneous Chores
+
+* **commandPalette:** 🔧 add dummy ResourceLoader and Codex icon configurations for development ([7de5671](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7de5671938e45b2b81ef9f4676ea3114d8daebb8))
+* **package:** 🔧 sync Vue and Pinia version with MW 1.43 ([394c9e1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/394c9e186c03d00cd168c399adc424642dd4b3da))
+
 ## [3.0.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v2.40.2...v3.0.0) (2025-03-28)
 
 
