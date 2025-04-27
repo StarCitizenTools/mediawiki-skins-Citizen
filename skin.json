@@ -376,11 +376,11 @@
 				"citizen-command-palette-type-namespace",
 				"citizen-command-palette-type-command",
 				"citizen-command-palette-type-fulltext-search-description",
-				"citizen-command-palette-type-command-namespace-label",
-				"citizen-command-palette-type-command-namespace-description",
+				"citizen-command-palette-command-ns-label",
+				"citizen-command-palette-command-ns-description",
 				"citizen-command-palette-type-special-page",
-				"citizen-command-palette-type-command-action-label",
-				"citizen-command-palette-type-command-action-description",
+				"citizen-command-palette-command-action-label",
+				"citizen-command-palette-command-action-description",
 				"citizen-command-palette-type-menu-item"
 			]
 		},

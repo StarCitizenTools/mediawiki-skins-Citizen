@@ -1,11 +1,10 @@
-const { CommandPaletteItem, CommandPaletteProvider } = require( '../types.js' );
+const { CommandPaletteItem, CommandPaletteProvider, CommandPaletteActionResult } = require( '../types.js' );
 const SearchClientFactory = require( '../searchClients/SearchClientFactory.js' );
 
 /** @type {CommandPaletteProvider} */
 module.exports = {
-	/** Whether this provider returns results asynchronously */
+	id: 'search',
 	isAsync: true,
-	/** Debounce time in milliseconds for async providers */
 	debounceMs: 250,
 
 	/**
@@ -31,7 +30,9 @@ module.exports = {
 		try {
 			const { fetch } = searchClient.fetchByQuery( query );
 			const searchResponse = await fetch;
-			return searchResponse.results ?? [];
+			const results = searchResponse.results ?? [];
+			// Ensure source is added by the provider
+			return Array.isArray( results ) ? results.map( ( item ) => ( { ...item, source: this.id } ) ) : [];
 		} catch ( error ) {
 			if ( error.name === 'AbortError' ) {
 				// Search was aborted, ignore
@@ -39,5 +40,20 @@ module.exports = {
 			}
 			throw error;
 		}
+	},
+
+	/**
+	 * Handles the selection of a search result item.
+	 * Default action is to navigate to the item's URL.
+	 *
+	 * @param {CommandPaletteItem} item The selected item.
+	 * @return {CommandPaletteActionResult} Action result for the UI.
+	 */
+	async onResultSelect( item ) {
+		// Default behavior for search results is navigation
+		if ( item.url ) {
+			return { action: 'navigate', payload: item.url };
+		}
+		return { action: 'none' }; // Fallback if no URL
 	}
 };

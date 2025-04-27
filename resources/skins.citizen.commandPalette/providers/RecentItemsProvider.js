@@ -1,13 +1,12 @@
-const { CommandPaletteItem, CommandPaletteProvider } = require( '../types.js' );
+const { CommandPaletteItem, CommandPaletteProvider, CommandPaletteActionResult } = require( '../types.js' );
 const createRecentItems = require( '../services/recentItems.js' );
 
 const recentItemsService = createRecentItems();
 
 /** @type {CommandPaletteProvider} */
 module.exports = {
-	/** Whether this provider returns results asynchronously */
-	isAsync: false,
-	/** Debounce time in milliseconds for async providers */
+	id: 'recent',
+	isAsync: false, // We load from localStorage, so no need to debounce
 	debounceMs: 0,
 
 	/**
@@ -29,6 +28,24 @@ module.exports = {
 	 * @return {Array<CommandPaletteItem>} An array of recent items.
 	 */
 	getResults() {
-		return recentItemsService.getRecentItems();
+		const items = recentItemsService.getRecentItems();
+		// Ensure source is added by the provider
+		return Array.isArray( items ) ? items.map( ( item ) => ( { ...item, source: this.id } ) ) : [];
+	},
+
+	/**
+	 * Handles the selection of a recent item.
+	 * Default action is to navigate to the item's URL.
+	 *
+	 * @param {CommandPaletteItem} item The selected item.
+	 * @return {CommandPaletteActionResult} Action result for the UI.
+	 */
+	async onResultSelect( item ) {
+		// Default behavior for recent items is navigation
+		if ( item.url ) {
+			return { action: 'navigate', payload: item.url };
+		}
+		// If no URL, do nothing (should ideally not happen for saved items)
+		return { action: 'none' };
 	}
 };

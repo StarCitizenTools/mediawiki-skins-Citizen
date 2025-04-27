@@ -1,4 +1,4 @@
-const { CommandPaletteItem, CommandPaletteProvider } = require( '../types.js' );
+const { CommandPaletteItem, CommandPaletteProvider, CommandPaletteActionResult } = require( '../types.js' );
 const { cdxIconArticle } = require( '../icons.json' );
 const urlGeneratorFactory = require( '../utils/urlGenerator.js' );
 const urlGenerator = urlGeneratorFactory();
@@ -85,7 +85,10 @@ const RelatedArticlesProvider = {
 					cachedResults = results;
 					// cachedArticleId is already set to currentArticleId
 					fetchPromise = null; // Reset promise ref
-					resolve( results );
+					// Ensure source is added by the provider
+					const resultsWithSource = Array.isArray( results ) ? results.map( ( item ) => ( { ...item, source: this.id } ) ) : [];
+					cachedResults = resultsWithSource; // Update cache with source added
+					resolve( resultsWithSource );
 				} catch ( error ) {
 					mw.log.error( '[skins.citizen.commandPalette] RelatedArticlesProvider: Error inside mw.loader success callback:', error );
 					// Reset cache state fully on error
@@ -111,10 +114,23 @@ const RelatedArticlesProvider = {
 		return fetchPromise;
 	},
 
-	// This provider is now asynchronous
 	isAsync: true,
+	debounceMs: 0, // Results can come from a local cache
 
-	debounceMs: 0
+	/**
+	 * Handles the selection of a related article item.
+	 * Default action is to navigate to the item's URL.
+	 *
+	 * @param {CommandPaletteItem} item The selected item.
+	 * @return {CommandPaletteActionResult} Action result for the UI.
+	 */
+	async onResultSelect( item ) {
+		// Default behavior for related articles is navigation
+		if ( item.url ) {
+			return { action: 'navigate', payload: item.url };
+		}
+		return { action: 'none' }; // Fallback if no URL
+	}
 };
 
 module.exports = RelatedArticlesProvider;

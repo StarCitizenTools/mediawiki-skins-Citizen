@@ -223,7 +223,7 @@ module.exports = exports = defineComponent( {
 			// 3. Custom Event Action
 			if ( action.event ) {
 				// Handle custom events if needed in the future
-				// mw.log.log( '[CommandPalette] Action event received:', action.event );
+				// console.debug( '[CommandPalette] Action event received:', action.event );
 				return;
 			}
 

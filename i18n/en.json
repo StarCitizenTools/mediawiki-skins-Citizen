@@ -103,9 +103,9 @@
 
 	"citizen-command-palette-type-fulltext-search-description": "Search the full text of all pages",
 
-	"citizen-command-palette-type-command-namespace-label": "Namespace",
-	"citizen-command-palette-type-command-namespace-description": "Search for a page in a specific namespace",
+	"citizen-command-palette-command-ns-label": "Namespace",
+	"citizen-command-palette-command-ns-description": "Search for a page in a specific namespace",
 
-	"citizen-command-palette-type-command-action-label": "Action",
-	"citizen-command-palette-type-command-action-description": "Perform a specific action"
+	"citizen-command-palette-command-action-label": "Action",
+	"citizen-command-palette-command-action-description": "Perform a specific action"
 }
