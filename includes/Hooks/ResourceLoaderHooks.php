@@ -100,6 +100,8 @@ class ResourceLoaderHooks {
 		RL\Context $context,
 		Config $config
 	) {
-		return [];
+		return [
+			'wgSearchSuggestCacheExpiry' => $config->get( MainConfigNames::SearchSuggestCacheExpiry )
+		];
 	}
 }

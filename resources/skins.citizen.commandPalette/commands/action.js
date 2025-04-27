@@ -3,6 +3,7 @@
  */
 const { CommandPaletteItem, CommandHandler } = require( '../types.js' );
 const { cdxIconSpecialPages, cdxIconPlay } = require( '../icons.json' );
+const config = require( '../config.json' );
 
 /**
  * Cache for special page results to avoid repeated API calls.
@@ -32,7 +33,9 @@ function fetchSpecialPages() {
 	specialPageCache = new mw.Api().get( {
 		action: 'query',
 		meta: 'siteinfo',
-		siprop: 'specialpagealiases'
+		siprop: 'specialpagealiases',
+		maxage: config.wgSearchSuggestCacheExpiry,
+		smaxage: config.wgSearchSuggestCacheExpiry
 	} ).then( ( data ) => {
 		const specialPages = data.query.specialpagealiases;
 		/** @type {Array<CommandPaletteItem>} */
