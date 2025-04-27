@@ -110,7 +110,7 @@ module.exports = exports = defineComponent( {
 
 .citizen-command-palette__footer-hints {
 	display: flex;
-	gap: var( --space-sm );
 	flex-wrap: wrap;
+	gap: var( --space-sm );
 }
 </style>

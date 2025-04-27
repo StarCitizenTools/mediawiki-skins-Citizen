@@ -104,20 +104,20 @@ module.exports = exports = defineComponent( {
 	&__actions {
 		position: absolute;
 		inset-inline-end: var( --citizen-command-palette-side-padding );
+		top: 0;
 		display: flex;
 		gap: var( --space-xxs );
 		align-items: center;
 		height: 100%;
-		top: 0;
 		padding-left: var( --space-xl );
+		pointer-events: none;
 		background-image: linear-gradient( to right, transparent 0%, transparent 30%, var( --actions-fade-color, inherit ) 70% );
 		opacity: 0;
 		transition: opacity var( --transition-quick );
-		pointer-events: none;
 
 		&--visible {
-			opacity: 1;
 			pointer-events: auto;
+			opacity: 1;
 		}
 	}
 

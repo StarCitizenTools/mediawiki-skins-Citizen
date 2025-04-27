@@ -187,8 +187,8 @@ module.exports = exports = defineComponent( {
 <style lang="less">
 .citizen-command-palette-list-item {
 	position: relative;
-	list-style: none;
 	outline: none;
+	list-style: none;
 
 	&--highlighted {
 		cursor: pointer;
