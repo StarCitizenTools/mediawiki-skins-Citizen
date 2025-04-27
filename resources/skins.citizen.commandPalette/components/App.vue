@@ -83,6 +83,7 @@ const CommandPalettePresults = require( './CommandPalettePresults.vue' );
 const CommandPaletteFooter = require( './CommandPaletteFooter.vue' );
 const CommandPaletteHeader = require( './CommandPaletteHeader.vue' );
 const { cdxIconArticleNotFound } = require( '../icons.json' );
+const { CommandPaletteItem, CommandPaletteActionEvent } = require( '../types.js' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
@@ -184,6 +185,11 @@ module.exports = exports = defineComponent( {
 			}
 		};
 
+		/**
+		 * Handles the selection of a result item.
+		 *
+		 * @param {CommandPaletteItem} result The selected item.
+		 */
 		const selectResult = async ( result ) => {
 			const selectionAction = await searchStore.handleSelection( result );
 
@@ -207,7 +213,7 @@ module.exports = exports = defineComponent( {
 		/**
 		 * Handles custom actions triggered by buttons within list items.
 		 *
-		 * @param {import('../types.js').CommandPaletteActionEvent} action The action event payload.
+		 * @param {CommandPaletteActionEvent} action The action event payload.
 		 */
 		const handleAction = ( action ) => {
 			switch ( action.type ) {
@@ -241,44 +247,76 @@ module.exports = exports = defineComponent( {
 			}
 		};
 
+		/**
+		 * Handles the Enter key press within the input.
+		 *
+		 * @param {KeyboardEvent} event The keydown event.
+		 */
+		const handleEnterKey = ( event ) => {
+			event.preventDefault();
+			const selectedItem = highlightedItemIndex.value >= 0 ?
+				navigableItems.value[ highlightedItemIndex.value ] :
+				null;
+			if ( selectedItem ) {
+				selectResult( selectedItem );
+			}
+		};
+
+		/**
+		 * Handles the ArrowRight key press within the input to potentially focus actions.
+		 *
+		 * @param {KeyboardEvent} event The keydown event.
+		 */
+		const handleArrowRightKey = ( event ) => {
+			// Only handle moving focus to actions if the event originated from the input element
+			const inputElement = searchHeader.value?.getInputElement();
+			if ( !inputElement || event.target !== inputElement ) {
+				return;
+			}
+
+			const isCursorAtEnd = inputElement.selectionStart === inputElement.value.length && inputElement.selectionEnd === inputElement.value.length;
+			const currentItemIndex = highlightedItemIndex.value;
+			// Use hasHighlightedItemWithActions computed property directly
+			const itemHasActions = hasHighlightedItemWithActions.value;
+
+			if ( isCursorAtEnd && currentItemIndex >= 0 && itemHasActions ) {
+				const itemComponent = itemRefs.value.get( currentItemIndex );
+				if ( itemComponent?.focusFirstButton ) {
+					event.preventDefault();
+					itemComponent.focusFirstButton();
+				}
+			}
+		};
+
+		/**
+		 * Handles keydown events within the palette root element.
+		 *
+		 * @param {KeyboardEvent} event The keydown event.
+		 */
 		const onKeydown = ( event ) => {
 			// Handle list navigation (Up/Down/Home/End)
 			if ( [ 'ArrowUp', 'ArrowDown', 'Home', 'End' ].includes( event.key ) ) {
 				if ( handleNavigationKeydown( event ) ) {
 					event.preventDefault();
+					// Focus input only if navigation actually occurred and changed highlight
+					// handleNavigationKeydown returns true if it handled the event
 					nextTick( focusInput );
-					return;
+					return; // Navigation handled, exit
 				}
+				event.preventDefault();
 			}
 
-			if ( event.key === 'Enter' ) {
-				event.preventDefault();
-				const selectedItem = highlightedItemIndex.value >= 0 ?
-					navigableItems.value[ highlightedItemIndex.value ] :
-					null;
-				if ( selectedItem ) {
-					selectResult( selectedItem );
-				}
-			} else if ( event.key === 'Escape' ) {
-				close();
-			} else if ( event.key === 'ArrowRight' ) {
-				// Only handle moving focus to actions if the event originated from the input element
-				const inputElement = searchHeader.value?.getInputElement();
-				if ( !inputElement || event.target !== inputElement ) {
-					return;
-				}
-
-				const isCursorAtEnd = inputElement.selectionStart === inputElement.value.length && inputElement.selectionEnd === inputElement.value.length;
-				const currentItemIndex = highlightedItemIndex.value;
-				const itemHasActions = hasHighlightedItemWithActions.value; // Cache computed value
-
-				if ( isCursorAtEnd && currentItemIndex >= 0 && itemHasActions ) {
-					const itemComponent = itemRefs.value.get( currentItemIndex );
-					if ( itemComponent?.focusFirstButton ) {
-						event.preventDefault();
-						itemComponent.focusFirstButton();
-					}
-				}
+			// Handle specific key actions
+			switch ( event.key ) {
+				case 'Enter':
+					handleEnterKey( event );
+					break;
+				case 'Escape':
+					close();
+					break;
+				case 'ArrowRight':
+					handleArrowRightKey( event );
+					break;
 			}
 		};
 
