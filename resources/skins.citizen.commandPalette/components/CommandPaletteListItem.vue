@@ -8,6 +8,7 @@ Partially based on the MenuItem component from Codex.
 		:id="id"
 		ref="rootRef"
 		role="option"
+		:aria-selected="highlighted"
 		class="citizen-command-palette-list-item"
 		:class="rootClasses"
 		:data-type="type"
