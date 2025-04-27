@@ -27,6 +27,13 @@ const providers = [
 ];
 
 /**
+ * Map of provider IDs to providers for faster lookups.
+ *
+ * @type {Map<string, CommandPaletteProvider>}
+ */
+const providerMap = new Map( providers.map( ( p ) => [ p.id, p ] ) );
+
+/**
  * Pinia store for managing command palette search state using providers.
  *
  * @property {string} searchQuery - The current search input value.
@@ -127,16 +134,13 @@ exports.useSearchStore = defineStore( 'search', {
 
 		/**
 		 * Sets the results from a provider, combining them with the fulltext search item if necessary.
-		 * Adds a 'source' property based on the provider type or defaults.
 		 *
 		 * @param {Array<CommandPaletteItem>} providerItems Items returned by the provider.
-		 * @param {string} sourceHint A hint for the source (e.g., 'search', 'command')
 		 * @private
 		 */
-		setProviderResults( providerItems, sourceHint = 'search' ) {
-			const items = Array.isArray( providerItems ) ?
-				providerItems.map( ( item ) => ( { ...item, source: item.source || sourceHint } ) ) :
-				[];
+		setProviderResults( providerItems ) {
+			// Source is now added by providers themselves
+			const items = Array.isArray( providerItems ) ? providerItems : [];
 			let finalItems = items;
 
 			// Add fulltext search item if applicable
@@ -282,8 +286,8 @@ exports.useSearchStore = defineStore( 'search', {
 		async fetchRelatedArticles() {
 			try {
 				const articles = await RelatedArticlesProvider.getResults( '' );
-				// Add source and ensure it's an array
-				return Array.isArray( articles ) ? articles.map( ( item ) => ( { ...item, source: 'related' } ) ) : [];
+				// Source is now added by the provider
+				return Array.isArray( articles ) ? articles : [];
 			} catch ( error ) {
 				mw.log.error( '[skins.citizen.commandPalette] Failed to get related articles:', error );
 				return [];
@@ -301,8 +305,8 @@ exports.useSearchStore = defineStore( 'search', {
 			try {
 				// Pass empty query for interface consistency
 				const items = RecentItemsProvider.getResults( '' );
-				// Add source and ensure it's an array
-				return Array.isArray( items ) ? items.map( ( item ) => ( { ...item, source: 'recent' } ) ) : [];
+				// Source is now added by the provider
+				return Array.isArray( items ) ? items : [];
 			} catch ( error ) {
 				mw.log.error( '[skins.citizen.commandPalette] Failed to get recent items:', error );
 				return [];
@@ -346,27 +350,69 @@ exports.useSearchStore = defineStore( 'search', {
 		 * @param {CommandPaletteItem|null} result The selected item, or null if Enter was pressed with no selection.
 		 * @return {CommandPaletteActionResult} An object describing the next UI action.
 		 */
-		handleSelection( result ) {
+		async handleSelection( result ) {
+			// Case 1: Enter pressed with no selection (handle fulltext search)
 			if ( !result ) {
 				if ( this.searchQuery && !this.searchQuery.startsWith( '/' ) ) {
+					// Save the fulltext search query as a recent item
 					recentItemsService.saveSearchQuery( this.searchQuery, this.searchUrl );
 					return { action: 'navigate', payload: this.searchUrl };
 				}
-				return { action: 'none' };
+				return { action: 'none' }; // Nothing to do if query is empty or a command stub
 			}
 
-			switch ( result.type ) {
-				case 'command':
-				case 'namespace':
-					this.updateQuery( result.value );
-					this.triggerFocusSearchInput();
-					return { action: 'updateQuery' };
-				case 'fulltext-search':
-					recentItemsService.saveSearchQuery( this.searchQuery, result.url );
+			// Case 2: An item was selected
+
+			// Handle the special fulltext-search item type directly
+			if ( result.type === 'fulltext-search' ) {
+				recentItemsService.saveSearchQuery( this.searchQuery, result.url );
+				return { action: 'navigate', payload: result.url };
+			}
+
+			// Find the provider responsible for the item based on its source
+			// Handle structured source 'provider:handlerId' by taking the first part
+			const providerId = result.source?.match( /^([^:]+)(?::.*)?$/ )?.[ 1 ] || result.source;
+			const sourceProvider = providerId ? providerMap.get( providerId ) : null;
+
+			let actionResult = { action: 'none' }; // Default action
+
+			if ( sourceProvider && typeof sourceProvider.onResultSelect === 'function' ) {
+				try {
+					// Delegate selection handling to the provider
+					actionResult = await sourceProvider.onResultSelect( result );
+					if ( !actionResult ) {
+						return { action: 'none' };
+					}
+
+					switch ( actionResult.action ) {
+						case 'navigate':
+							recentItemsService.saveRecentItem( result );
+							break;
+						case 'updateQuery':
+							if ( actionResult.payload !== undefined ) {
+								this.updateQuery( actionResult.payload );
+							}
+							this.triggerFocusSearchInput();
+							break;
+					}
+
+					// Return the provider's result
+					return actionResult;
+				} catch ( error ) {
+					mw.log.error( `[skins.citizen.commandPalette|searchStore] Error handling selection for source: ${ result.source }`, error );
+					return { action: 'none' };
+				}
+			} else {
+				mw.log.warn( `[skins.citizen.commandPalette|searchStore] No provider or onResultSelect found for source: ${ result.source }`, result );
+				// Default fallback: navigate if URL exists
+				if ( result.url ) {
+					// Save generic non-command items before navigating
+					if ( result.source !== 'command' ) {
+						recentItemsService.saveRecentItem( result );
+					}
 					return { action: 'navigate', payload: result.url };
-				default:
-					recentItemsService.saveRecentItem( result );
-					return { action: 'navigate', payload: result.url };
+				}
+				return { action: 'none' };
 			}
 		},
 

@@ -1,7 +1,7 @@
 /**
  * Placeholder command handler for actions.
  */
-const { CommandPaletteItem, CommandHandler } = require( '../types.js' );
+const { CommandPaletteItem, CommandPaletteCommand, CommandPaletteActionResult } = require( '../types.js' );
 const { cdxIconSpecialPages, cdxIconPlay } = require( '../icons.json' );
 const config = require( '../config.json' );
 
@@ -196,10 +196,25 @@ async function getActionResults( subQuery ) {
 	return allItems.filter( ( item ) => itemMatchesQuery( item, lowerSubQuery ) );
 }
 
-/** @type {CommandHandler} */
+/** @type {CommandPaletteCommand} */
 module.exports = {
+	id: 'action',
 	triggers: [ '/action:', '>' ],
-	label: mw.message( 'citizen-command-palette-type-command-action-label' ).text(),
-	description: mw.message( 'citizen-command-palette-type-command-action-description' ).text(),
-	getResults: getActionResults
+	label: mw.message( 'citizen-command-palette-command-action-label' ).text(),
+	description: mw.message( 'citizen-command-palette-command-action-description' ).text(),
+	getResults: getActionResults,
+	/**
+	 * Handles selection of an action item result (Special Page or Menu Item).
+	 *
+	 * @param {CommandPaletteItem} item The selected result item.
+	 * @return {CommandPaletteActionResult}
+	 */
+	onResultSelect( item ) {
+		if ( item.url ) {
+			return { action: 'navigate', payload: item.url };
+		}
+
+		// Fallback
+		return { action: 'none' };
+	}
 };

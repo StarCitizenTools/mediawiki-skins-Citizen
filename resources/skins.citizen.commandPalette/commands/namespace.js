@@ -1,10 +1,16 @@
 /**
  * Command handler for retrieving namespace suggestions.
  */
-const { CommandPaletteItem, CommandHandler, NamespaceResult } = require( '../types.js' );
+const { CommandPaletteItem, CommandPaletteCommand, CommandPaletteActionResult } = require( '../types.js' );
 const { cdxIconArticles } = require( '../icons.json' );
 
 const MAIN_NAMESPACE_ID = '0';
+
+/**
+ * @typedef {Object} NamespaceResult
+ * @property {string} label The namespace label.
+ * @property {number} value The namespace ID.
+ */
 
 /**
  * @param {NamespaceResult} nsResult
@@ -30,7 +36,7 @@ function adaptNamespaceResult( nsResult ) {
  * Gets namespace suggestions based on the sub-query by filtering local config.
  *
  * @param {string} subQuery The part of the query after "/ns" or "/ns ", or the ID part (e.g., "1").
- * @return {Array<NamespaceResult>} An array of raw namespace suggestion objects { label, value }.
+ * @return {Promise<Array<CommandPaletteItem>>} A promise resolving to an array of adapted namespace items.
  */
 function getNamespaceResults( subQuery ) {
 	// Fetch namespaces from MediaWiki configuration
@@ -62,13 +68,28 @@ function getNamespaceResults( subQuery ) {
 		} );
 	}
 
-	return Array.from( combinedResults.values(), adaptNamespaceResult );
+	const results = Array.from( combinedResults.values(), adaptNamespaceResult );
+	return Promise.resolve( results );
 }
 
-/** @type {CommandHandler} */
+/** @type {CommandPaletteCommand} */
 module.exports = {
+	id: 'namespace',
 	triggers: [ '/ns:', ':' ],
-	label: mw.msg( 'citizen-command-palette-type-command-namespace-label' ),
-	description: mw.msg( 'citizen-command-palette-type-command-namespace-description' ),
-	getResults: getNamespaceResults
+	label: mw.message( 'citizen-command-palette-command-ns-label' ).text(),
+	description: mw.message( 'citizen-command-palette-command-ns-description' ).text(),
+	getResults: getNamespaceResults,
+	/**
+	 * Handles selection of a namespace result item.
+	 *
+	 * @param {CommandPaletteItem} item The selected namespace result item.
+	 * @return {CommandPaletteActionResult}
+	 */
+	onResultSelect( item ) {
+		// Default behavior: update query with the namespace trigger (e.g., "Talk:")
+		if ( item.value ) {
+			return { action: 'updateQuery', payload: item.value };
+		}
+		return { action: 'none' };
+	}
 };

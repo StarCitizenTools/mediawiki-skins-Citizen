@@ -109,6 +109,10 @@ module.exports = exports = defineComponent( {
 		highlightQuery: {
 			type: Boolean,
 			default: false
+		},
+		source: {
+			type: String,
+			default: undefined
 		}
 	},
 	emits: [
@@ -141,7 +145,8 @@ module.exports = exports = defineComponent( {
 				thumbnailIcon: props.thumbnailIcon,
 				description: props.description,
 				metadata: props.metadata,
-				actions: props.actions
+				actions: props.actions,
+				source: props.source
 			} );
 		};
 
