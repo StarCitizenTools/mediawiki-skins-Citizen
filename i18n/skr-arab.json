@@ -18,8 +18,13 @@
 	"citizen-feature-autohide-navigation-1-label": "آن",
 	"citizen-command-palette-heading-recent": "حالیہ",
 	"citizen-command-palette-keyhint-enter-select": "چݨو",
+	"citizen-command-palette-keyhint-enter-open": "کھولو",
+	"citizen-command-palette-keyhint-enter-search": "ڳولو",
+	"citizen-command-palette-keyhint-navigate": "نیویگیٹ",
 	"citizen-command-palette-keyhint-exit": "نکلو",
 	"citizen-command-palette-keyhint-actions": "عمل",
 	"citizen-command-palette-keyhint-return": "ولدا واپس",
-	"citizen-command-palette-type-page": "ورقہ"
+	"citizen-command-palette-type-page": "ورقہ",
+	"citizen-command-palette-type-namespace": "ناں جاہ",
+	"citizen-command-palette-type-command": "کمانڈ"
 }

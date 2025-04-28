@@ -79,5 +79,12 @@
 	"citizen-feature-custom-width-full-label": "全屏",
 	"citizen-user-info-text-anon": "若您做出任何編輯，會公開您的 IP 位址。",
 	"citizen-user-info-text-temp": "此臨時帳號是在此瀏覽器與設備上沒有帳號的情況下，做出編輯後建立的。",
+	"citizen-command-palette-heading-recent": "近期",
+	"citizen-command-palette-keyhint-enter-select": "選擇",
+	"citizen-command-palette-keyhint-navigate": "導航",
+	"citizen-command-palette-keyhint-exit": "離開",
+	"citizen-command-palette-keyhint-actions": "操作",
+	"citizen-command-palette-keyhint-return": "返回",
+	"citizen-command-palette-type-page": "頁面",
 	"citizen-command-palette-type-fulltext-search": "全文搜尋"
 }

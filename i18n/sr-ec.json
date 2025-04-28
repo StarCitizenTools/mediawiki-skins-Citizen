@@ -49,5 +49,7 @@
 	"citizen-command-palette-keyhint-exit": "Излаз",
 	"citizen-command-palette-keyhint-actions": "Радње",
 	"citizen-command-palette-keyhint-return": "Назад",
-	"citizen-command-palette-type-page": "Страница"
+	"citizen-command-palette-type-page": "Страница",
+	"citizen-command-palette-type-namespace": "Именски простор",
+	"citizen-command-palette-type-command": "Команда"
 }

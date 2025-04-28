@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"A100Star",
 			"Amire80",
 			"YaronSh",
 			"מקף"
@@ -68,5 +69,15 @@
 	"citizen-feature-custom-width-wide-label": "רחב",
 	"citizen-feature-custom-width-full-label": "מלא",
 	"citizen-user-info-text-anon": "כתובת ה־IP שלך תהיה גלויה לציבור אם תעשה עריכות כלשהן.",
-	"citizen-user-info-text-temp": "החשבון החולף הזה נוצר לאחר שנעשתה עריכה ללא חשבון בדפדפן ובמכשיר הזה."
+	"citizen-user-info-text-temp": "החשבון החולף הזה נוצר לאחר שנעשתה עריכה ללא חשבון בדפדפן ובמכשיר הזה.",
+	"citizen-command-palette-heading-recent": "אחרונים",
+	"citizen-command-palette-keyhint-enter-select": "בחירה",
+	"citizen-command-palette-keyhint-navigate": "נווט",
+	"citizen-command-palette-keyhint-exit": "יציאה",
+	"citizen-command-palette-keyhint-actions": "פעולות",
+	"citizen-command-palette-keyhint-return": "חזרה",
+	"citizen-command-palette-type-page": "דף",
+	"citizen-command-palette-type-fulltext-search": "חיפוש טקסט מלא",
+	"citizen-command-palette-type-namespace": "מרחב שם",
+	"citizen-command-palette-type-command": "פקודה"
 }

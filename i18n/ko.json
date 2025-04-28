@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"22258",
 			"Alistair3149",
 			"Gustmd7410",
 			"Markingdots",
@@ -72,5 +73,8 @@
 	"citizen-feature-custom-width-wide-label": "넓게",
 	"citizen-feature-custom-width-full-label": "가득 채우기",
 	"citizen-user-info-text-anon": "지금 편집한다면 당신의 IP 주소가 공개될 수 있습니다.",
-	"citizen-user-info-text-temp": "이 임시 계정은 이 브라우저와 기기에서 계정 없이 편집이 이루어진 후 생성되었습니다."
+	"citizen-user-info-text-temp": "이 임시 계정은 이 브라우저와 기기에서 계정 없이 편집이 이루어진 후 생성되었습니다.",
+	"citizen-command-palette-keyhint-enter-open": "열기",
+	"citizen-command-palette-keyhint-enter-search": "검색",
+	"citizen-command-palette-command-action-label": "동작"
 }

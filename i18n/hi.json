@@ -10,5 +10,6 @@
 	"citizen-search-fulltext": "युक्त पृष्ठों को खोजें",
 	"citizen-command-palette-keyhint-enter-select": "चुनें",
 	"citizen-command-palette-keyhint-exit": "निकास",
-	"citizen-command-palette-type-page": "पृष्ठ"
+	"citizen-command-palette-type-page": "पृष्ठ",
+	"citizen-command-palette-type-namespace": "नामस्थान"
 }

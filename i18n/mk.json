@@ -70,5 +70,13 @@
 	"citizen-feature-custom-width-wide-label": "Широко",
 	"citizen-feature-custom-width-full-label": "Полно",
 	"citizen-user-info-text-anon": "Вашата IP-адреса ќе биде јавно видлива ако правите уредувања.",
-	"citizen-user-info-text-temp": "Оваа привремена сметка е создадена откако е направено уредување без сметка на овој прелистувач и уред."
+	"citizen-user-info-text-temp": "Оваа привремена сметка е создадена откако е направено уредување без сметка на овој прелистувач и уред.",
+	"citizen-command-palette-heading-recent": "Скорешнo",
+	"citizen-command-palette-keyhint-enter-select": "Избери",
+	"citizen-command-palette-keyhint-navigate": "Прегледник",
+	"citizen-command-palette-keyhint-exit": "Излези",
+	"citizen-command-palette-keyhint-actions": "Дејства",
+	"citizen-command-palette-keyhint-return": "Назад",
+	"citizen-command-palette-type-page": "Страница",
+	"citizen-command-palette-type-fulltext-search": "Пребарување по цел текст"
 }

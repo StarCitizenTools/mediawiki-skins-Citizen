@@ -48,10 +48,13 @@
 	"citizen-feature-custom-width-wide-label": "Breet",
 	"citizen-user-info-text-anon": "Är IP-Adress ass ëffentlech siichtbar, wann Dir Ännerunge maacht.",
 	"citizen-command-palette-heading-recent": "Rezent",
+	"citizen-command-palette-keyhint-enter-open": "Opmaachen",
+	"citizen-command-palette-keyhint-enter-search": "Sichen",
 	"citizen-command-palette-keyhint-navigate": "Navigéieren",
 	"citizen-command-palette-keyhint-exit": "Erausgoen",
 	"citizen-command-palette-keyhint-actions": "Aktiounen",
 	"citizen-command-palette-keyhint-return": "Zréck",
 	"citizen-command-palette-type-page": "Säit",
-	"citizen-command-palette-type-fulltext-search": "Volltext-Sich"
+	"citizen-command-palette-type-fulltext-search": "Volltext-Sich",
+	"citizen-command-palette-type-namespace": "Nummraum"
 }

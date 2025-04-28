@@ -1,8 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
+			"Maxset",
 			"Reedy"
 		]
 	},
-	"citizen-theme-name": "Colour"
+	"citizen-theme-name": "Colour",
+	"citizen-command-palette-keyhint-enter-open": "Ashıw",
+	"citizen-command-palette-keyhint-enter-search": "Izlew"
 }
