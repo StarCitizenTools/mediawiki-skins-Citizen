@@ -57,13 +57,17 @@ function createRecentItems() {
 			icon: cdxIconTrash
 		};
 
-		return items.map( ( item ) => ( {
-			...item,
-			actions: [
-				...( Array.isArray( item.actions ) ? item.actions : [] ),
-				dismissAction
-			]
-		} ) );
+		return items.map( ( item ) => {
+			const actions = Array.isArray( item.actions ) ? [ ...item.actions ] : [];
+			if ( !actions.some( ( action ) => action.id === 'dismiss' ) ) {
+				actions.push( dismissAction );
+			}
+
+			return {
+				...item,
+				actions
+			};
+		} );
 	}
 
 	/**
