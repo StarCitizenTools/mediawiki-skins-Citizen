@@ -79,7 +79,7 @@ module.exports = exports = defineComponent( {
 				...listItem,
 				active: listItem.id === activeItemId.value,
 				highlighted: index === props.highlightedItemIndex,
-				searchQuery: highlightQuery, // Use the determined query for highlighting
+				searchQuery: highlightQuery.trim(),
 				id: String( listItem.id )
 			};
 		}
