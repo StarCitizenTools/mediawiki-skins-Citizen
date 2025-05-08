@@ -31,7 +31,7 @@ class CitizenComponentPageSidebarTest extends MediaWikiUnitTestCase {
 	 */
 	private function getMockMessageLocalizer(): MessageLocalizer&MockObject {
 		$mock = $this->createMock( MessageLocalizer::class );
-		$mock->method( 'msg' )->willReturnCallback( static fn( string $key ) => $key . '-mocked' );
+		$mock->method( 'msg' )->willReturnCallback( static fn ( string $key ) => $key . '-mocked' );
 		return $mock;
 	}
 
