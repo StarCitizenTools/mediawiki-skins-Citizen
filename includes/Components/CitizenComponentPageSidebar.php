@@ -4,49 +4,29 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Components;
 
-use MediaWiki\Language\Language;
-use MediaWiki\Output\OutputPage;
-use MediaWiki\StubObject\StubUserLang;
 use MediaWiki\Title\Title;
-use MediaWiki\User\UserIdentity;
 use MessageLocalizer;
 
 /**
  * CitizenComponentPageSidebar component
- * FIXME: Need unit test
  */
 class CitizenComponentPageSidebar implements CitizenComponent {
 
 	public function __construct(
 		private MessageLocalizer $localizer,
-		private OutputPage $out,
-		private Language|StubUserLang $pageLang,
 		private Title $title,
-		private UserIdentity $user
+		private array $lastModifiedData
 	) {
 	}
 
-	/**
-	 * Get the last modified data
-	 * TODO: Use core instead when update to MW 1.43
-	 */
 	private function getLastModData(): array {
-		$timestamp = $this->out->getRevisionTimestamp();
+		$lastModifiedData = $this->lastModifiedData;
+		$timestamp = $this->lastModifiedData['timestamp'];
 
-		if ( !$timestamp ) {
+		if ( $timestamp === null ) {
 			return [];
 		}
 
-		$localizer = $this->localizer;
-		$pageLang = $this->pageLang;
-		$title = $this->title;
-		$user = $this->user;
-
-		$d = $pageLang->userDate( $timestamp, $user );
-		$t = $pageLang->userTime( $timestamp, $user );
-		$s = $localizer->msg( 'lastmodifiedat', $d, $t );
-
-		// FIXME: Use CitizenComponentMenuListItem
 		$items = [
 			'item-id' => 'lm-time',
 			'item-class' => 'mw-list-item',
@@ -58,26 +38,27 @@ class CitizenComponentPageSidebar implements CitizenComponent {
 					],
 					[
 						'key' => 'href',
-						'value' => $title->getLocalURL( [ 'diff' => '' ] )
+						'value' => $this->title->getLocalURL( [ 'diff' => '' ] )
 					],
 					[
 						'key' => 'title',
-						'value' => $s
+						'value' => trim( $lastModifiedData['text'] )
 					],
 					[
 						'key' => 'data-timestamp',
-						'value' => wfTimestamp( TS_UNIX, $timestamp )
+						'value' => wfTimestamp( TS_UNIX, $lastModifiedData['timestamp'] )
 					]
 				],
 				'icon' => 'history',
-				'text' => $d
+				'text' => $lastModifiedData['date']
 			]
 		];
 
+		// TODO: We should not use CitizenComponentMenu here, but a custom component
 		$menu = new CitizenComponentMenu(
 			[
 				'id' => 'citizen-sidebar-lastmod',
-				'label' => $localizer->msg( 'citizen-page-info-lastmod' ),
+				'label' => $this->localizer->msg( 'citizen-page-info-lastmod' ),
 				'array-list-items' => $items
 			]
 		);

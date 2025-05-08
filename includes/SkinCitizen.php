@@ -125,10 +125,8 @@ class SkinCitizen extends SkinMustache {
 			),
 			'data-page-sidebar' => new CitizenComponentPageSidebar(
 				$localizer,
-				$out,
-				$pageLang,
 				$title,
-				$user
+				$parentData['data-last-modified']
 			),
 			'data-page-tools' => new CitizenComponentPageTools(
 				$config,
