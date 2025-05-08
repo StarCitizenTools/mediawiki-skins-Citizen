@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.1.0...v3.2.0) (2025-05-08)
+
+
+### Features
+
+* **search:** ✨ add the citizen-search-trigger class to trigger search UI ([577788e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/577788eda7fb6975270c0350b058d396c693a6ec))
+
+
+### Bug Fixes
+
+* **CommandPalette:** 🐛 ignore trailing space in search query highlight ([eca18e3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/eca18e3a7739406298c3109ec10b02016772f6fb))
+* **commandPalette:** 🐛 prevent duplicate dismiss action in recent items ([901935b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/901935baa534d620af5fb98d141c0ce8774fdf20))
+
 ## [3.1.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.0.0...v3.1.0) (2025-04-27)
 
 
