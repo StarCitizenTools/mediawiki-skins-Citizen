@@ -29,12 +29,14 @@ cite {
 	font-style: inherit;
 }
 
-p + ul,
-p + ol,
-p + table,
-p + dl,
-p + blockquote {
-	margin-top: calc( var( --space-xs ) * -1 );
+p:not( .mw-empty-elt ) {
+	+ ul,
+	+ ol,
+	+ table,
+	+ dl,
+	+ blockquote {
+		margin-top: calc( var( --space-xs ) * -1 );
+	}
 }
 
 blockquote {
