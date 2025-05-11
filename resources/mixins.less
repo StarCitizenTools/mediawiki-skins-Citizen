@@ -200,6 +200,6 @@
 	filter: saturate( 0% ) brightness( 0% ) invert( @lightness ) opacity( @a );
 
 	// color filter
-	@svg-filter-id: "recolor";
+	@svg-filter-id: 'recolor';
 	filter: url( ';data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="@{svg-filter-id}" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 @{r} 0 0 0 0 @{g} 0 0 0 0 @{b} 0 0 0 @{a} 0"/></filter></svg> #@{svg-filter-id}' );
 }
