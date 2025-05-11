@@ -119,7 +119,9 @@
 		}
 
 		.citizen-scroll--down {
-			--height-sticky-header: ~'0px' !important;
+			// Need the unit for calc() (#1058)
+			// stylelint-disable-next-line length-zero-no-unit
+			--height-sticky-header: 0px !important;
 
 			.citizen-header,
 			.citizen-page-header,
