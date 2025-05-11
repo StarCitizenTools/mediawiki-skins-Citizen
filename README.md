@@ -111,7 +111,6 @@ Name | Version
 [AdvancedSearch](https://www.mediawiki.org/wiki/Extension:AdvancedSearch) | REL1_39 `3a0eed7`
 [AJAXPoll](https://www.mediawiki.org/wiki/Extension:AJAXPoll) | REL1_39 `8429d8d`
 [ApprovedRevs](https://www.mediawiki.org/wiki/Extension:Approved_Revs) | N/A
-[Babel](https://www.mediawiki.org/wiki/Extension:Babel) | MLEB 2021.07
 [Capiunto](https://www.mediawiki.org/wiki/Extension:Capiunto) | REL1_39 `3a6d523`
 [Cargo](https://www.mediawiki.org/wiki/Extension:Cargo) | REL1_39 `b4c6314`
 [CategoryTree](https://www.mediawiki.org/wiki/Extension:CategoryTree) | N/A
