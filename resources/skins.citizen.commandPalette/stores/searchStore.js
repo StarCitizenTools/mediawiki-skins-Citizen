@@ -450,4 +450,3 @@ exports.useSearchStore = defineStore( 'search', {
 		}
 	}
 } );
-
