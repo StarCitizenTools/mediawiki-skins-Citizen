@@ -139,15 +139,11 @@ exports.useSearchStore = defineStore( 'search', {
 		 * @private
 		 */
 		setProviderResults( providerItems ) {
-			// Source is now added by providers themselves
 			const items = Array.isArray( providerItems ) ? providerItems : [];
 			let finalItems = items;
 
 			// Add fulltext search item if applicable
-			if (
-				this.searchQuery &&
-				!CommandProvider.canProvide( this.searchQuery )
-			) {
+			if ( this.searchQuery ) {
 				const fulltextSearchItem = this.createFulltextSearchItem( this.searchQuery );
 				// Ensure fulltext item is always at the end
 				finalItems = [ ...items, fulltextSearchItem ];
@@ -231,28 +227,29 @@ exports.useSearchStore = defineStore( 'search', {
 		 * @return {void}
 		 */
 		updateQuery( query ) {
+			const previousSearchQuery = this.searchQuery;
 			this.searchQuery = query;
 
-			// If query is empty, switch to presults mode via clearSearch
 			if ( !query ) {
 				this.clearSearch();
 				return;
 			}
 
 			this.resetOperationState();
-			this.displayedItems = []; // Clear previous items (presults or old search results)
-
-			// If it's a non-command query, prepare and display the fulltext search item immediately.
-			// This item might be the only thing visible until actual search results arrive.
-			if ( query && !CommandProvider.canProvide( query ) ) {
-				const fulltextSearchItem = this.createFulltextSearchItem( query );
-				this.displayedItems = [ fulltextSearchItem ];
-			}
 
 			const provider = providers.find( ( p ) => p.canProvide( query ) );
 
 			if ( !provider ) {
+				// Always show the full-text search fallback. This replaces any previous results
+				// or ensures presults are cleared if previousSearchQuery was empty.
+				this.setProviderResults( [] );
 				return;
+			}
+
+			// If transitioning from presults (empty previous query) to a new query with a provider,
+			// clear the presults and establish the full-text fallback before the provider acts.
+			if ( !previousSearchQuery ) {
+				this.setProviderResults( [] );
 			}
 
 			if ( provider.isAsync ) {
@@ -453,3 +450,4 @@ exports.useSearchStore = defineStore( 'search', {
 		}
 	}
 } );
+
