@@ -240,32 +240,18 @@ exports.useSearchStore = defineStore( 'search', {
 			}
 
 			this.resetOperationState();
+			this.displayedItems = []; // Clear previous items (presults or old search results)
 
-			// Immediately update or add the fulltext search item if applicable
-			// Use CommandProvider.canProvide to check if it's NOT a command query
+			// If it's a non-command query, prepare and display the fulltext search item immediately.
+			// This item might be the only thing visible until actual search results arrive.
 			if ( query && !CommandProvider.canProvide( query ) ) {
-				const newFulltextItem = this.createFulltextSearchItem( query );
-				const existingFulltextIndex = this.displayedItems.findIndex( ( item ) => item.type === 'fulltext-search' );
-
-				if ( existingFulltextIndex !== -1 ) {
-					const newItems = [ ...this.displayedItems ];
-					newItems.splice( existingFulltextIndex, 1, newFulltextItem );
-					this.displayedItems = newItems;
-				} else {
-					this.displayedItems = [ ...this.displayedItems, newFulltextItem ];
-				}
-			} else {
-				// If it's a command query or became one, remove any existing fulltext item immediately
-				const existingFulltextIndex = this.displayedItems.findIndex( ( item ) => item.type === 'fulltext-search' );
-				if ( existingFulltextIndex !== -1 ) {
-					this.displayedItems = this.displayedItems.filter( ( _, index ) => index !== existingFulltextIndex );
-				}
+				const fulltextSearchItem = this.createFulltextSearchItem( query );
+				this.displayedItems = [ fulltextSearchItem ];
 			}
 
 			const provider = providers.find( ( p ) => p.canProvide( query ) );
 
 			if ( !provider ) {
-				// No specific provider, displayedItems might just contain the fulltext item
 				return;
 			}
 
@@ -362,7 +348,6 @@ exports.useSearchStore = defineStore( 'search', {
 			}
 
 			// Case 2: An item was selected
-
 			// Handle the special fulltext-search item type directly
 			if ( result.type === 'fulltext-search' ) {
 				recentItemsService.saveSearchQuery( this.searchQuery, result.url );
