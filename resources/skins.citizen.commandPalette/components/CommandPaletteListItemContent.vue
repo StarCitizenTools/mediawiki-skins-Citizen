@@ -184,6 +184,10 @@ module.exports = exports = defineComponent( {
 			background: var( --color-surface-3 );
 			border: var( --border-subtle );
 			border-radius: var( --border-radius-base );
+
+			.cdx-icon {
+				color: var( --color-subtle );
+			}
 		}
 	}
 }
