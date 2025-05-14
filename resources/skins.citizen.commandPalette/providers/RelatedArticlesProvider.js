@@ -1,7 +1,5 @@
 const { CommandPaletteItem, CommandPaletteProvider, CommandPaletteActionResult } = require( '../types.js' );
 const { cdxIconArticle } = require( '../icons.json' );
-const urlGeneratorFactory = require( '../utils/urlGenerator.js' );
-const urlGenerator = urlGeneratorFactory();
 
 // Cache variables
 let cachedResults = null;
@@ -75,7 +73,7 @@ const RelatedArticlesProvider = {
 						label: page.title,
 						description: page.description || page.extract,
 						type: 'page',
-						url: urlGenerator.generateUrl( page ),
+						url: mw.util.getUrl( page ),
 						thumbnail: page.thumbnail ? {
 							url: page.thumbnail.source
 						} : null,

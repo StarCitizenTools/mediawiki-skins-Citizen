@@ -1,7 +1,6 @@
 const { CommandPaletteItem, CommandPaletteActionResult, CommandPaletteProvider } = require( '../types.js' );
 const { defineStore } = require( 'pinia' );
 const createRecentItems = require( '../services/recentItems.js' );
-const urlGenerator = require( '../utils/urlGenerator.js' )();
 
 const RecentItemsProvider = require( '../providers/RecentItemsProvider.js' );
 const CommandProvider = require( '../providers/CommandProvider.js' );
@@ -78,7 +77,7 @@ exports.useSearchStore = defineStore( 'search', {
 		 * @param {Object} state The store state.
 		 * @return {string}
 		 */
-		searchUrl: ( state ) => urlGenerator.generateUrl( 'Special:Search', {
+		searchUrl: ( state ) => mw.util.getUrl( 'Special:Search', {
 			search: state.searchQuery
 		} )
 	},

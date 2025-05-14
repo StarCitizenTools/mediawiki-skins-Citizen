@@ -6,7 +6,6 @@
 
 const { CitizenCommandPaletteSearchClient, CommandPaletteSearchResponse, AbortableSearchFetch } = require( '../types.js' );
 const fetchJson = require( '../utils/fetch.js' );
-const urlGenerator = require( '../utils/urlGenerator.js' );
 const { cdxIconArticle, cdxIconArticleRedirect, cdxIconEdit } = require( '../icons.json' );
 
 /**
@@ -38,7 +37,6 @@ const { cdxIconArticle, cdxIconArticleRedirect, cdxIconEdit } = require( '../ico
 class MwRestSearchClient {
 
 	constructor() {
-		this.urlGenerator = urlGenerator();
 		this.editMessage = mw.msg( 'action-edit' );
 		this.searchApiUrl = mw.config.get( 'wgScriptPath' ) + '/rest.php';
 	}
@@ -84,7 +82,7 @@ class MwRestSearchClient {
 					type: 'page',
 					label: page.title,
 					description: showDescription ? page.description : undefined,
-					url: this.urlGenerator.generateUrl( page ),
+					url: mw.util.getUrl( page ),
 					thumbnail: thumbnail ? {
 						url: thumbnail.url,
 						width: thumbnail.width ?? undefined,
@@ -103,7 +101,7 @@ class MwRestSearchClient {
 							id: 'edit',
 							label: this.editMessage,
 							icon: cdxIconEdit,
-							url: this.urlGenerator.generateUrl( page, { action: 'edit' } )
+							url: mw.util.getUrl( page, { action: 'edit' } )
 						}
 					],
 					highlightQuery: true
