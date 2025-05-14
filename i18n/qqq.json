@@ -88,7 +88,7 @@
 	"citizen-command-palette-keyhint-actions": "Keyboard hint for the key to select an action in an item in the command palette",
 	"citizen-command-palette-keyhint-return": "Keyboard hint for the key to return to search in the command palette",
 	"citizen-command-palette-type-page": "Label for the page type of the result in the command palette",
-	"citizen-command-palette-type-fulltext-search": "Label for the fulltext search type of the result in the command palette",
+	"citizen-command-palette-type-action": "Label for the action type of the result in the command palette",
 	"citizen-command-palette-type-namespace": "Label for the namespace type of the result in the command palette",
 	"citizen-command-palette-type-command": "Label for the command type of the result in the command palette",
 	"citizen-command-palette-type-special-page": "Label for the special page type of the result in the command palette",
