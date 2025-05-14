@@ -12,7 +12,8 @@ const commandRegistry = new Map(); // Initialize empty, will be populated below
 // Define and load built-in commands
 const builtInCommands = {
 	namespace: require( '../commands/namespace.js' ),
-	action: require( '../commands/action.js' )
+	action: require( '../commands/action.js' ),
+	user: require( '../commands/user.js' )
 };
 
 /** @type {Array<{trigger: string, id: string, lowerTrigger: string}>} */
