@@ -82,7 +82,7 @@ class MwRestSearchClient {
 					type: 'page',
 					label: page.title,
 					description: showDescription ? page.description : undefined,
-					url: mw.util.getUrl( page ),
+					url: mw.util.getUrl( page.title ),
 					thumbnail: thumbnail ? {
 						url: thumbnail.url,
 						width: thumbnail.width ?? undefined,
@@ -101,7 +101,7 @@ class MwRestSearchClient {
 							id: 'edit',
 							label: this.editMessage,
 							icon: cdxIconEdit,
-							url: mw.util.getUrl( page, { action: 'edit' } )
+							url: mw.util.getUrl( page.title, { action: 'edit' } )
 						}
 					],
 					highlightQuery: true
