@@ -32,11 +32,6 @@ const exampleSubqueryCommand = {
 	triggers: [ '/subquery:', '/sub:' ],
 
 	/**
-	 * Label: The display name of the command in the initial command list.
-	 */
-	label: 'Sub-query Example Command',
-
-	/**
 	 * Description: A short explanation shown below the label.
 	 */
 	description: 'Requires a sub-query to show results.',

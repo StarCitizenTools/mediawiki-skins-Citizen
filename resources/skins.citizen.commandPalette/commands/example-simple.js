@@ -33,11 +33,6 @@ const exampleSimpleCommand = {
 	triggers: [ '/simple', '/sim' ],
 
 	/**
-	 * Label: The display name of the command in the initial command list.
-	 */
-	label: 'Simple Example Command',
-
-	/**
 	 * Description: A short explanation shown below the label.
 	 */
 	description: 'Executes a simple action directly.',

@@ -51,7 +51,6 @@
  * @typedef {Object} CommandPaletteCommand
  * @property {string} id A unique programmatic identifier for the command.
  * @property {string[]} triggers The triggers for the command.
- * @property {string} label The user-facing label for the command (used in root '/' suggestions).
  * @property {string} [description] The user-facing description for the command (used in root '/' suggestions).
  * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onCommandSelect] Optional: Handles selection of the command item itself.
  * @property {function(string): Promise<Array<CommandPaletteItem>>} [getResults] Optional: Asynchronously fetches and adapts suggestion data based on the sub-query, returning CommandPaletteItems.

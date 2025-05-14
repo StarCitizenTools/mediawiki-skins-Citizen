@@ -91,29 +91,18 @@ function getCommandListItems( filterPrefix ) {
 
 	try {
 		const mappedResults = entries.map( ( [ id, handler ] ) => {
-			let metadata = [];
-			if ( handler.triggers?.length > 0 ) {
-				metadata = handler.triggers.map( ( trigger, index ) => ( {
-					label: trigger,
-					highlightQuery: index === 0 // Highlight only the first trigger
-				} ) );
-			} else {
-				// Fallback if no triggers are defined
-				metadata.push( {
-					label: `/${ id }`,
-					highlightQuery: true
-				} );
-			}
-
 			const item = {
 				id: `citizen-command-palette-item-command-${ id }`,
 				type: 'command',
-				label: handler.label ?? id,
+				label: handler.triggers[ 0 ],
 				description: handler.description,
 				thumbnailIcon: cdxIconCode,
-				value: handler.triggers?.[ 0 ] ?? `/${ id }`,
-				metadata: metadata,
-				source: `command:${ id }`
+				value: handler.triggers[ 0 ],
+				metadata: handler.triggers.length > 1 ?
+					handler.triggers.slice( 1 ).map( ( trigger ) => ( { label: trigger } ) ) :
+					undefined,
+				source: `command:${ id }`,
+				highlightQuery: true
 			};
 			return item;
 		} );
