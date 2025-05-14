@@ -136,6 +136,7 @@ module.exports = {
 	id: 'command',
 	isAsync: true, // Although some commands might be sync, the handler resolution can be async
 	debounceMs: 0,
+	keepStaleResultsOnQueryChange: true,
 
 	/**
 	 * Determines if this provider should handle the current query.

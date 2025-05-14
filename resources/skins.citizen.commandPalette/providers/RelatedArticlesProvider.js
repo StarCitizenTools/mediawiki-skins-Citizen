@@ -17,6 +17,7 @@ const RelatedArticlesProvider = {
 	id: 'related',
 	// Assuming this message key will be added to i18n/en.json etc.
 	label: mw.message( 'citizen-command-palette-heading-related' ).text(),
+	keepStaleResultsOnQueryChange: false,
 
 	/**
 	 * Determines if this provider can supply results for the given query.
@@ -115,7 +116,7 @@ const RelatedArticlesProvider = {
 	},
 
 	isAsync: true,
-	debounceMs: 0, // Results can come from a local cache
+	debounceMs: 0, // The request is only called once and then cached
 
 	/**
 	 * Handles the selection of a related article item.

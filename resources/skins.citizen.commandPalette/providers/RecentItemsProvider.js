@@ -8,6 +8,7 @@ module.exports = {
 	id: 'recent',
 	isAsync: false, // We load from localStorage, so no need to debounce
 	debounceMs: 0,
+	keepStaleResultsOnQueryChange: false,
 
 	/**
 	 * Determines if this provider should handle the current query.

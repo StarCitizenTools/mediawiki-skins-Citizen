@@ -230,27 +230,23 @@ exports.useSearchStore = defineStore( 'search', {
 			const previousSearchQuery = this.searchQuery;
 			this.searchQuery = query;
 
+			this.resetOperationState();
+
 			if ( !query ) {
 				this.clearSearch();
 				return;
 			}
 
-			this.resetOperationState();
-
 			const provider = providers.find( ( p ) => p.canProvide( query ) );
 
 			if ( !provider ) {
-				// Always show the full-text search fallback. This replaces any previous results
-				// or ensures presults are cleared if previousSearchQuery was empty.
 				this.setProviderResults( [] );
 				return;
 			}
 
-			// If transitioning from presults (empty previous query) to a new query with a provider,
-			// clear the presults and establish the full-text fallback before the provider acts.
-			if ( !previousSearchQuery ) {
-				this.setProviderResults( [] );
-			}
+			this.setProviderResults( previousSearchQuery && provider.keepStaleResultsOnQueryChange !== false ?
+				this.displayedItems.filter( ( item ) => item.type !== 'fulltext-search' ) : []
+			);
 
 			if ( provider.isAsync ) {
 				this.handleAsyncProvider( provider, query );

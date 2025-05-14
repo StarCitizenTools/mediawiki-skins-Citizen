@@ -6,6 +6,7 @@ module.exports = {
 	id: 'search',
 	isAsync: true,
 	debounceMs: 250,
+	keepStaleResultsOnQueryChange: true,
 
 	/**
 	 * Determines if this provider should handle the current query.
