@@ -93,9 +93,10 @@
 	"citizen-command-palette-type-command": "Label for the command type of the result in the command palette",
 	"citizen-command-palette-type-special-page": "Label for the special page type of the result in the command palette",
 	"citizen-command-palette-type-menu-item": "Label for the menu item type of the result in the command palette",
-	"citizen-command-palette-type-fulltext-search-description": "Description for the fulltext search in the command palette",
 	"citizen-command-palette-command-ns-label": "Label for the namespace command in the command palette",
 	"citizen-command-palette-command-ns-description": "Description for the namespace command in the command palette",
 	"citizen-command-palette-command-action-label": "Label for the action command in the command palette",
-	"citizen-command-palette-command-action-description": "Description for the action command in the command palette"
+	"citizen-command-palette-command-action-description": "Description for the action command in the command palette",
+	"citizen-command-palette-queryaction-fulltext-search-description": "Description for the fulltext search in the command palette",
+	"citizen-command-palette-queryaction-media-search-description": "Description for the media search in the command palette"
 }

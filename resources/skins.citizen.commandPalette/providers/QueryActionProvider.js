@@ -1,8 +1,26 @@
 const { CommandPaletteProvider } = require( '../types.js' );
 const urlGeneratorFactory = require( '../utils/urlGenerator.js' );
-const { cdxIconArticleSearch } = require( '../icons.json' );
+const { cdxIconArticleSearch, cdxIconImageGallery } = require( '../icons.json' );
+const config = require( '../config.json' );
 
 const urlGenerator = urlGeneratorFactory();
+
+const queryActionDefinitions = [
+	{
+		id: 'fulltext-search',
+		description: mw.message( 'citizen-command-palette-queryaction-fulltext-search-description' ).text(),
+		icon: cdxIconArticleSearch,
+		showItem: true,
+		getUrl: ( query ) => urlGenerator.generateUrl( 'Special:Search', { search: query } )
+	},
+	{
+		id: 'media-search',
+		description: mw.message( 'citizen-command-palette-queryaction-media-search-description' ).text(),
+		icon: cdxIconImageGallery,
+		showItem: config.isMediaSearchExtensionEnabled,
+		getUrl: ( query ) => urlGenerator.generateUrl( 'Special:MediaSearch', { search: query } )
+	}
+];
 
 /** @type {CommandPaletteProvider} */
 const QueryActionProvider = {
@@ -19,16 +37,21 @@ const QueryActionProvider = {
 			return results;
 		}
 
-		results.push( {
-			id: 'citizen-command-palette-item-fulltext-search',
-			type: 'action',
-			label: query,
-			description: mw.message( 'citizen-command-palette-type-fulltext-search-description' ).text(),
-			url: urlGenerator.generateUrl( 'Special:Search', { search: query } ),
-			thumbnailIcon: cdxIconArticleSearch,
-			actions: [],
-			source: `${ this.id }:fulltext-search`
+		queryActionDefinitions.forEach( ( itemConfig ) => {
+			if ( itemConfig.showItem ) {
+				results.push( {
+					id: `citizen-command-palette-item-${ itemConfig.id }`,
+					type: 'action',
+					label: query,
+					description: itemConfig.description,
+					url: itemConfig.getUrl( query ),
+					thumbnailIcon: itemConfig.icon,
+					actions: [],
+					source: `${ this.id }:${ itemConfig.id }`
+				} );
+			}
 		} );
+
 		return results;
 	},
 

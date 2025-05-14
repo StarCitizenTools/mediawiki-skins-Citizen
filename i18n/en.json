@@ -101,11 +101,12 @@
 	"citizen-command-palette-type-special-page": "Special page",
 	"citizen-command-palette-type-menu-item": "Menu item",
 
-	"citizen-command-palette-type-fulltext-search-description": "Search the full text of all pages",
-
 	"citizen-command-palette-command-ns-label": "Namespace",
 	"citizen-command-palette-command-ns-description": "Search for a page in a specific namespace",
 
 	"citizen-command-palette-command-action-label": "Action",
-	"citizen-command-palette-command-action-description": "Perform a specific action"
+	"citizen-command-palette-command-action-description": "Perform a specific action",
+
+	"citizen-command-palette-queryaction-fulltext-search-description": "Search the full text of all pages",
+	"citizen-command-palette-queryaction-media-search-description": "Search for media files"
 }

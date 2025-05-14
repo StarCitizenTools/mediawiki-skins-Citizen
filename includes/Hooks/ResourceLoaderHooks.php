@@ -79,9 +79,11 @@ class ResourceLoaderHooks {
 		RL\Context $context,
 		Config $config
 	) {
+		$extensionRegistry = ExtensionRegistry::getInstance();
+
 		return [
-			'isAdvancedSearchExtensionEnabled' => ExtensionRegistry::getInstance()->isLoaded( 'AdvancedSearch' ),
-			'isMediaSearchExtensionEnabled' => ExtensionRegistry::getInstance()->isLoaded( 'MediaSearch' ),
+			'isAdvancedSearchExtensionEnabled' => $extensionRegistry->isLoaded( 'AdvancedSearch' ),
+			'isMediaSearchExtensionEnabled' => $extensionRegistry->isLoaded( 'MediaSearch' ),
 			'wgCitizenSearchGateway' => $config->get( 'CitizenSearchGateway' ),
 			'wgCitizenSearchDescriptionSource' => $config->get( 'CitizenSearchDescriptionSource' ),
 			'wgCitizenMaxSearchResults' => $config->get( 'CitizenMaxSearchResults' ),
@@ -100,7 +102,10 @@ class ResourceLoaderHooks {
 		RL\Context $context,
 		Config $config
 	) {
+		$extensionRegistry = ExtensionRegistry::getInstance();
+
 		return [
+			'isMediaSearchExtensionEnabled' => $extensionRegistry->isLoaded( 'MediaSearch' ),
 			'wgSearchSuggestCacheExpiry' => $config->get( MainConfigNames::SearchSuggestCacheExpiry )
 		];
 	}
