@@ -73,7 +73,7 @@ const RelatedArticlesProvider = {
 						label: page.title,
 						description: page.description || page.extract,
 						type: 'page',
-						url: mw.util.getUrl( page ),
+						url: mw.util.getUrl( page.title ),
 						thumbnail: page.thumbnail ? {
 							url: page.thumbnail.source
 						} : null,
