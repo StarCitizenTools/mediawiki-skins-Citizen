@@ -108,5 +108,6 @@
 	"citizen-command-palette-command-action-description": "Perform a specific action",
 
 	"citizen-command-palette-queryaction-fulltext-search-description": "Search the full text of all pages",
-	"citizen-command-palette-queryaction-media-search-description": "Search for media files"
+	"citizen-command-palette-queryaction-media-search-description": "Search for media files",
+	"citizen-command-palette-queryaction-page-edit-description": "Create or edit page"
 }

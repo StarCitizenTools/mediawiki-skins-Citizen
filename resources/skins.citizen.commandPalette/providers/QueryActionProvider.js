@@ -1,6 +1,6 @@
 const { CommandPaletteProvider } = require( '../types.js' );
 const urlGeneratorFactory = require( '../utils/urlGenerator.js' );
-const { cdxIconArticleSearch, cdxIconImageGallery } = require( '../icons.json' );
+const { cdxIconArticleSearch, cdxIconImageGallery, cdxIconEdit } = require( '../icons.json' );
 const config = require( '../config.json' );
 
 const urlGenerator = urlGeneratorFactory();
@@ -19,6 +19,13 @@ const queryActionDefinitions = [
 		icon: cdxIconImageGallery,
 		showItem: config.isMediaSearchExtensionEnabled,
 		getUrl: ( query ) => urlGenerator.generateUrl( 'Special:MediaSearch', { search: query } )
+	},
+	{
+		id: 'page-edit',
+		description: mw.message( 'citizen-command-palette-queryaction-page-edit-description' ).text(),
+		icon: cdxIconEdit,
+		showItem: !!mw.config.get( 'wgRelevantPageIsProbablyEditable' ), // Guessing if the page is editable, because it's too expensive to do for every query
+		getUrl: ( query ) => urlGenerator.generateUrl( query, { action: 'edit' } )
 	}
 ];
 

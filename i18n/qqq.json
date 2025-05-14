@@ -98,5 +98,6 @@
 	"citizen-command-palette-command-action-label": "Label for the action command in the command palette",
 	"citizen-command-palette-command-action-description": "Description for the action command in the command palette",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Description for the fulltext search in the command palette",
-	"citizen-command-palette-queryaction-media-search-description": "Description for the media search in the command palette"
+	"citizen-command-palette-queryaction-media-search-description": "Description for the media search in the command palette",
+	"citizen-command-palette-queryaction-page-edit-description": "Description for the page edit action in the command palette"
 }
