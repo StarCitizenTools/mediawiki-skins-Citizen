@@ -95,7 +95,7 @@
 	"citizen-command-palette-keyhint-return": "Return",
 
 	"citizen-command-palette-type-page": "Page",
-	"citizen-command-palette-type-fulltext-search": "Fulltext search",
+	"citizen-command-palette-type-action": "Action",
 	"citizen-command-palette-type-namespace": "Namespace",
 	"citizen-command-palette-type-command": "Command",
 	"citizen-command-palette-type-special-page": "Special page",
