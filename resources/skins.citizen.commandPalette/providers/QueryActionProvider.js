@@ -15,7 +15,7 @@ const queryActionDefinitions = [
 		description: mw.message( 'citizen-command-palette-queryaction-media-search-description' ).text(),
 		icon: cdxIconImageGallery,
 		showItem: config.isMediaSearchExtensionEnabled,
-		getUrl: ( query ) => mw.util.getUrl( 'Special:MediaSearch', { search: query } )
+		getUrl: ( query ) => mw.util.getUrl( 'Special:MediaSearch', { search: query, type: 'image' } )
 	},
 	{
 		id: 'page-edit',
