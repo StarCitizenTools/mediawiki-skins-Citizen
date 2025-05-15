@@ -1,45 +1,61 @@
 .citizen-footer {
+	--min-width-footer-link: 10rem;
 	clear: both;
 	padding: var( --space-xxl ) var( --padding-page );
 	margin-top: var( --space-xxl );
 	// Reserve space for header
 	margin-bottom: var( --header-size );
 	font-size: var( --font-size-small );
+	line-height: var( --line-height-small );
 	color: var( --color-subtle );
-	background-color: var( --color-surface-2 );
+	background-color: var( --color-surface-1 );
 	direction: ltr;
 	contain: content;
 
 	&__container {
-		max-width: var( --width-layout--extended );
+		max-width: var( --width-page );
 		margin-inline: auto;
 	}
 
 	&__content,
 	&__bottom {
 		display: flex;
-		flex-wrap: wrap;
-		gap: var( --space-md );
+		gap: var( --space-md ) var( --space-xxl );
 		justify-content: space-between;
 		padding: var( --space-md ) 0;
+		margin-inline: auto;
+
+		@media ( max-width: @min-width-breakpoint-tablet ) {
+			flex-direction: column;
+		}
 	}
 
 	&__bottom {
-		align-items: center;
 		margin-inline: auto;
 		border-top: var( --border-width-base ) solid var( --border-color-base );
+
+		@media ( min-width: @min-width-breakpoint-tablet ) {
+			align-items: center;
+		}
 	}
 
 	&__siteinfo {
 		display: flex;
+		flex-grow: 1;
 		flex-direction: column;
 		gap: var( --space-xs );
 		max-width: 90ch;
+	}
 
-		p {
-			margin: 0;
-			line-height: var( --line-height );
+	&__sitetitle {
+		.mw-logo-wordmark {
+			font-size: var( --font-size-xxx-large );
 		}
+	}
+
+	&__desc {
+		margin: 0;
+		line-height: var( --line-height-small );
 	}
 
 	a {
@@ -48,8 +64,6 @@
 	}
 
 	ul {
-		display: flex;
-		flex-wrap: wrap;
 		margin: 0;
 	}
 
@@ -60,8 +74,19 @@
 
 #footer {
 	&-places {
+		flex-grow: 1;
+
+		@media ( max-width: @max-width-breakpoint-tablet ) {
+			margin-inline: calc( -1 * var( --space-md ) );
+		}
+
+		@media ( min-width: @min-width-breakpoint-desktop ) {
+			margin-top: calc( -1 * var( --space-xs ) );
+		}
+
 		ul {
-			flex-direction: column;
+			display: grid;
+			grid-template-columns: repeat( auto-fit, minmax( var( --min-width-footer-link ), 1fr ) );
 		}
 
 		a {
@@ -82,10 +107,6 @@
 				text-decoration: none;
 			}
 		}
-	}
-
-	&-tagline {
-		padding: var( --space-xs ) 0;
 	}
 
 	&-icons {
@@ -111,9 +132,5 @@
 @media ( min-width: @min-width-breakpoint-desktop ) {
 	.citizen-footer {
 		margin-bottom: 0;
-	}
-
-	#footer-sitetitle {
-		font-size: 2rem;
 	}
 }
