@@ -2,7 +2,7 @@
 	--min-width-footer-link: 10rem;
 	clear: both;
 	padding: var( --space-xxl ) var( --padding-page );
-	margin-top: var( --space-xxl );
+	margin-top: 8rem;
 	// Reserve space for header
 	margin-bottom: var( --header-size );
 	font-size: var( --font-size-small );
@@ -48,6 +48,10 @@
 	}
 
 	&__sitetitle {
+		display: flex;
+    	gap: var( --space-sm );
+    	flex-direction: column;
+
 		.mw-logo-wordmark {
 			font-size: var( --font-size-xxx-large );
 		}
@@ -74,6 +78,8 @@
 
 #footer {
 	&-places {
+		display: flex;
+		align-items: flex-end;
 		flex-grow: 1;
 
 		@media ( max-width: @max-width-breakpoint-tablet ) {
@@ -87,6 +93,7 @@
 		ul {
 			display: grid;
 			grid-template-columns: repeat( auto-fit, minmax( var( --min-width-footer-link ), 1fr ) );
+			flex-grow: 1;
 		}
 
 		a {

@@ -1,24 +1,8 @@
-{{!
-	LogoDefinition logo
-	string link-mainpage link to the main page
-	TODO: Maybe merge with Drawer__logo?
-}}
-{{#data-logos}}
 <div class="citizen-header__logo">
 	<a href="{{link-mainpage}}" class="mw-logo citizen-header__button" title="{{msg-tooltip-p-logo}}">
 		{{! alt is provided for valid HTML but given aria-hidden not needed. }}
-		<img class="mw-logo-icon" src="{{!
-			Pick an icon based on this order: Icon > SVG > 1x
-			Need a better way to indent the syntax below
-			}}{{#icon}}{{.}}{{/icon}}{{!
-			}}{{^icon}}{{!
-				}}{{#svg}}{{.}}{{/svg}}{{!
-				}}{{^svg}}{{!
-					}}{{#1x}}{{.}}{{/1x}}{{!
-				}}{{/svg}}{{!
-			}}{{/icon}}"{{!
+		<img class="mw-logo-icon" src="{{>Logo_icon_src}}"{{!
 			}} alt="" aria-hidden="true" height="32" width="32">
 		{{#icon-home}}{{>Icon}}{{/icon-home}}
 	</a>
 </div>
-{{/data-logos}}

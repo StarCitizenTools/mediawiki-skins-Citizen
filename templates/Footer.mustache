@@ -20,7 +20,10 @@
 	<div class="citizen-footer__container">
 		<section class="citizen-footer__content">
 			<div class="citizen-footer__siteinfo">
-				<div id="footer-sitetitle" class="citizen-footer__sitetitle mw-wiki-title">{{>Wordmark}}</div>
+				<div id="footer-sitetitle" class="citizen-footer__sitetitle mw-wiki-title">
+					<img class="mw-logo-icon" src="{{>Logo_icon_src}}" alt="" aria-hidden="true" loading="lazy" height="48" width="48">
+					{{>Wordmark}}
+				</div>
 				<p id="footer-desc" class="citizen-footer__desc">{{{msg-citizen-footer-desc}}}</p>
 			</div>
 			{{#data-places}}{{>Footer__row}}{{/data-places}}

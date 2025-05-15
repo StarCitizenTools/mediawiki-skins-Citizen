@@ -1,0 +1,12 @@
+{{!
+	HACK: Get the icon from the logo data in this order:
+	Icon > SVG > 1x
+}}{{#data-logos}}{{!
+}}{{#icon}}{{.}}{{/icon}}{{!
+}}{{^icon}}{{!
+	}}{{#svg}}{{.}}{{/svg}}{{!
+	}}{{^svg}}{{!
+		}}{{#1x}}{{.}}{{/1x}}{{!
+	}}{{/svg}}{{!
+}}{{/icon}} 
+{{/data-logos}}
