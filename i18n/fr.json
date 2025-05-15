@@ -5,6 +5,7 @@
 			"Bananax47",
 			"EmDashUser002",
 			"Gomoko",
+			"JLTRY",
 			"MacOS Weed",
 			"Mahabarata",
 			"Nicolas.poinsu",
@@ -82,6 +83,7 @@
 	"citizen-user-info-text-anon": "Votre adresse IP sera visible au public si vous faites des modifications.",
 	"citizen-user-info-text-temp": "Ce compte temporaire a été créé après une modification sans compte sur ce navigateur et cet appareil.",
 	"citizen-command-palette-heading-recent": "Récent",
+	"citizen-command-palette-heading-related": "Reliés",
 	"citizen-command-palette-keyhint-enter-select": "Sélectionner",
 	"citizen-command-palette-keyhint-enter-open": "Ouvrir",
 	"citizen-command-palette-keyhint-enter-search": "Rechercher",
@@ -90,7 +92,12 @@
 	"citizen-command-palette-keyhint-actions": "Actions",
 	"citizen-command-palette-keyhint-return": "Retour",
 	"citizen-command-palette-type-page": "Page",
-	"citizen-command-palette-type-fulltext-search": "Recherche en texte intégral",
+	"citizen-command-palette-type-action": "Action",
 	"citizen-command-palette-type-namespace": "Espace de noms",
-	"citizen-command-palette-type-command": "Commandes"
+	"citizen-command-palette-type-command": "Commandes",
+	"citizen-command-palette-type-special-page": "Page spéciale",
+	"citizen-command-palette-type-menu-item": "Élément de menu",
+	"citizen-command-palette-command-ns-description": "Rechercher une page dans un espace de noms spécifique",
+	"citizen-command-palette-command-action-description": "Effectuer une action spécifique",
+	"citizen-command-palette-queryaction-fulltext-search-description": "Rechercher le texte intégral de toutes les pages"
 }

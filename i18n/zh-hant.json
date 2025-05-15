@@ -85,6 +85,5 @@
 	"citizen-command-palette-keyhint-exit": "離開",
 	"citizen-command-palette-keyhint-actions": "操作",
 	"citizen-command-palette-keyhint-return": "返回",
-	"citizen-command-palette-type-page": "頁面",
-	"citizen-command-palette-type-fulltext-search": "全文搜尋"
+	"citizen-command-palette-type-page": "頁面"
 }

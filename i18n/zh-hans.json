@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Administrator66",
 			"Alistair3149",
 			"Dianliang233",
 			"Gaoyu",
@@ -86,5 +87,22 @@
 	"citizen-feature-custom-width-wide-label": "宽",
 	"citizen-feature-custom-width-full-label": "全宽",
 	"citizen-user-info-text-anon": "未登录用户的IP地址会在进行任意编辑后公开展示。",
-	"citizen-user-info-text-temp": "此临时账号是因您在此浏览器及设备上进行了无账号编辑而创建。"
+	"citizen-user-info-text-temp": "此临时账号是因您在此浏览器及设备上进行了无账号编辑而创建。",
+	"citizen-command-palette-heading-recent": "近期",
+	"citizen-command-palette-heading-related": "相关",
+	"citizen-command-palette-keyhint-enter-select": "选择",
+	"citizen-command-palette-keyhint-enter-open": "开放",
+	"citizen-command-palette-keyhint-enter-search": "搜索",
+	"citizen-command-palette-keyhint-navigate": "导航",
+	"citizen-command-palette-keyhint-exit": "退出",
+	"citizen-command-palette-keyhint-actions": "操作",
+	"citizen-command-palette-keyhint-return": "返回",
+	"citizen-command-palette-type-page": "页面",
+	"citizen-command-palette-type-action": "操作",
+	"citizen-command-palette-type-namespace": "命名空间",
+	"citizen-command-palette-type-command": "命令",
+	"citizen-command-palette-type-special-page": "特殊页面",
+	"citizen-command-palette-type-menu-item": "菜单项",
+	"citizen-command-palette-command-ns-description": "在特定命名空间中搜索页面",
+	"citizen-command-palette-queryaction-fulltext-search-description": "在所有页面全文搜索"
 }

@@ -57,7 +57,6 @@
 	"citizen-command-palette-heading-related": "Risultati correlati",
 	"citizen-command-palette-keyhint-enter-select": "Seleziona",
 	"citizen-command-palette-type-page": "Pagina",
-	"citizen-command-palette-type-fulltext-search": "Ricerca nell'intero testo",
 	"citizen-command-palette-type-namespace": "Namespace",
 	"citizen-command-palette-type-special-page": "Pagina speciale"
 }

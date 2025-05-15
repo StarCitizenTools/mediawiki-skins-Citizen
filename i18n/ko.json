@@ -9,6 +9,7 @@
 			"렌즈"
 		]
 	},
+	"skinname-citizen": "시티즌",
 	"citizen-skin-desc": "확장 기능을 통합된 경험의 일부로 만들어주는 아름답고 쓸만한 반응형 미디어위키 스킨입니다. 원래 [https://starcitizen.tools/ 스타 시티즌 위키]를 위해 만들어졌습니다.",
 	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|토론]]",
 	"citizen.css": "/* 여기의 모든 CSS는 시티즌 스킨을 사용하는 사용자에게 로드됩니다 */",
@@ -76,5 +77,8 @@
 	"citizen-user-info-text-temp": "이 임시 계정은 이 브라우저와 기기에서 계정 없이 편집이 이루어진 후 생성되었습니다.",
 	"citizen-command-palette-keyhint-enter-open": "열기",
 	"citizen-command-palette-keyhint-enter-search": "검색",
-	"citizen-command-palette-command-action-label": "동작"
+	"citizen-command-palette-type-action": "동작",
+	"citizen-command-palette-type-namespace": "이름공간",
+	"citizen-command-palette-type-special-page": "특수 문서",
+	"citizen-command-palette-type-menu-item": "메뉴 항목"
 }

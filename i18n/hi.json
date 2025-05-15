@@ -11,5 +11,6 @@
 	"citizen-command-palette-keyhint-enter-select": "चुनें",
 	"citizen-command-palette-keyhint-exit": "निकास",
 	"citizen-command-palette-type-page": "पृष्ठ",
-	"citizen-command-palette-type-namespace": "नामस्थान"
+	"citizen-command-palette-type-namespace": "नामस्थान",
+	"citizen-command-palette-type-user": "सदस्य"
 }

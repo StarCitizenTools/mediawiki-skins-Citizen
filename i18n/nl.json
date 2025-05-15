@@ -83,14 +83,12 @@
 	"citizen-command-palette-keyhint-actions": "Handelingen",
 	"citizen-command-palette-keyhint-return": "Terug",
 	"citizen-command-palette-type-page": "Pagina",
-	"citizen-command-palette-type-fulltext-search": "In volledige tekst zoeken",
+	"citizen-command-palette-type-action": "Handeling",
 	"citizen-command-palette-type-namespace": "Naamruimte",
 	"citizen-command-palette-type-command": "Commando",
 	"citizen-command-palette-type-special-page": "Speciale pagina",
 	"citizen-command-palette-type-menu-item": "Menu-item",
-	"citizen-command-palette-queryaction-fulltext-search-description": "In de volledige tekst van alle pagina’s zoeken",
-	"citizen-command-palette-command-ns-label": "Naamruimte",
 	"citizen-command-palette-command-ns-description": "Naar een pagina in een bepaalde naamruimte zoeken",
-	"citizen-command-palette-command-action-label": "Handeling",
-	"citizen-command-palette-command-action-description": "Een bepaalde handeling verrichten"
+	"citizen-command-palette-command-action-description": "Een bepaalde handeling verrichten",
+	"citizen-command-palette-queryaction-fulltext-search-description": "In de volledige tekst van alle pagina’s zoeken"
 }

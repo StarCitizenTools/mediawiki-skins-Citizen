@@ -10,6 +10,7 @@
 			"Sadrettin",
 			"SaldırganSincap",
 			"Sayginer",
+			"Sümeyye",
 			"Toghrul Rahimli"
 		]
 	},
@@ -38,5 +39,8 @@
 	"citizen-tagline-ns-mediawiki": "MediaWiki arayüz sayfası",
 	"citizen-tagline-ns-template": "Şablon sayfası",
 	"citizen-tagline-ns-help": "Yardım sayfası",
-	"citizen-tagline-ns-category": "Kategori sayfası"
+	"citizen-tagline-ns-category": "Kategori sayfası",
+	"citizen-command-palette-heading-related": "İlgili",
+	"citizen-command-palette-type-special-page": "Özel sayfa",
+	"citizen-command-palette-queryaction-fulltext-search-description": "Tüm sayfaların tam metnini arayın"
 }

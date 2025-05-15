@@ -77,6 +77,5 @@
 	"citizen-command-palette-keyhint-exit": "Излези",
 	"citizen-command-palette-keyhint-actions": "Дејства",
 	"citizen-command-palette-keyhint-return": "Назад",
-	"citizen-command-palette-type-page": "Страница",
-	"citizen-command-palette-type-fulltext-search": "Пребарување по цел текст"
+	"citizen-command-palette-type-page": "Страница"
 }

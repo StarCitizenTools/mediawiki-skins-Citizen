@@ -55,6 +55,10 @@
 	"citizen-command-palette-keyhint-actions": "Aktiounen",
 	"citizen-command-palette-keyhint-return": "Zréck",
 	"citizen-command-palette-type-page": "Säit",
-	"citizen-command-palette-type-fulltext-search": "Volltext-Sich",
-	"citizen-command-palette-type-namespace": "Nummraum"
+	"citizen-command-palette-type-namespace": "Nummraum",
+	"citizen-command-palette-type-special-page": "Spezialsäit",
+	"citizen-command-palette-type-user": "Benotzer",
+	"citizen-command-palette-command-user-description": "No engem Benotzer sichen",
+	"citizen-command-palette-queryaction-media-search-description": "No Mediefichiere sichen",
+	"citizen-command-palette-queryaction-page-edit-description": "Säit uleeën oder änneren"
 }

@@ -17,6 +17,7 @@
 	"citizen-feature-autohide-navigation-0-label": "بند",
 	"citizen-feature-autohide-navigation-1-label": "آن",
 	"citizen-command-palette-heading-recent": "حالیہ",
+	"citizen-command-palette-heading-related": "متعلقہ",
 	"citizen-command-palette-keyhint-enter-select": "چݨو",
 	"citizen-command-palette-keyhint-enter-open": "کھولو",
 	"citizen-command-palette-keyhint-enter-search": "ڳولو",
@@ -26,5 +27,7 @@
 	"citizen-command-palette-keyhint-return": "ولدا واپس",
 	"citizen-command-palette-type-page": "ورقہ",
 	"citizen-command-palette-type-namespace": "ناں جاہ",
-	"citizen-command-palette-type-command": "کمانڈ"
+	"citizen-command-palette-type-command": "کمانڈ",
+	"citizen-command-palette-type-special-page": "خاص ورقہ",
+	"citizen-command-palette-type-user": "ورتݨ آلا"
 }
