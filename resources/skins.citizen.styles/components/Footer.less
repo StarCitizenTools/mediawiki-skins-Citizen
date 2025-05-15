@@ -49,8 +49,8 @@
 
 	&__sitetitle {
 		display: flex;
-    	gap: var( --space-sm );
-    	flex-direction: column;
+		flex-direction: column;
+		gap: var( --space-sm );
 
 		.mw-logo-wordmark {
 			font-size: var( --font-size-xxx-large );
@@ -79,8 +79,8 @@
 #footer {
 	&-places {
 		display: flex;
-		align-items: flex-end;
 		flex-grow: 1;
+		align-items: flex-end;
 
 		@media ( max-width: @max-width-breakpoint-tablet ) {
 			margin-inline: calc( -1 * var( --space-md ) );
@@ -92,8 +92,8 @@
 
 		ul {
 			display: grid;
-			grid-template-columns: repeat( auto-fit, minmax( var( --min-width-footer-link ), 1fr ) );
 			flex-grow: 1;
+			grid-template-columns: repeat( auto-fit, minmax( var( --min-width-footer-link ), 1fr ) );
 		}
 
 		a {
