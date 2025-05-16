@@ -28,7 +28,6 @@ namespace MediaWiki\Skins\Citizen\Hooks;
 use MediaWiki\Hook\SidebarBeforeOutputHook;
 use MediaWiki\Hook\SkinBuildSidebarHook;
 use MediaWiki\Html\Html;
-use MediaWiki\Language\Language;
 use MediaWiki\Output\Hook\BeforePageDisplayHook;
 use MediaWiki\Output\Hook\OutputPageAfterGetHeadLinksArrayHook;
 use MediaWiki\Output\OutputPage;
@@ -37,7 +36,6 @@ use MediaWiki\ResourceLoader as RL;
 use MediaWiki\Skin\SkinComponentUtils;
 use MediaWiki\Skins\Citizen\GetConfigTrait;
 use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;
-use MediaWiki\Title\Title;
 use Skin;
 use SkinTemplate;
 

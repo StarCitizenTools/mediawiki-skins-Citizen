@@ -23,7 +23,6 @@
 
 namespace MediaWiki\Skins\Citizen;
 
-use MediaWiki\Language\Language;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentFooter;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentMainMenu;
