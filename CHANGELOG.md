@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.1.0...v3.2.0) (2025-05-16)
+
+
+### Features
+
+* **commandPalette:** ✨ add media search action if supported ([04157d8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/04157d84217c4bc65df46df28a63529402f49c9c))
+* **commandPalette:** ✨ add page edit action ([55addaf](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/55addaf9004144f3c7753abad032d95ac14de979))
+* **commandPalette:** ✨ add user command ([#1061](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1061)) ([104adbd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/104adbdb07fdbc527c06c382c89200daa4cdc963))
+* **commandPalette:** ✨ improve results transition logic ([8ff903d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8ff903d92293bd30b8500d1083f33773dbc29967))
+* **footer:** ✨ add wiki icon to footer if avaliable ([e431222](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e43122291c5d25e14811a18e713f6377535adefe))
+* **footer:** ✨ update footer styles ([6ab4db4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6ab4db4d385babafc100ab02c786816575f6e7e3))
+* **search:** ✨ add the citizen-search-trigger class to trigger search UI ([577788e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/577788eda7fb6975270c0350b058d396c693a6ec))
+* **sectionLinks:** ✨ reimplement edit section and use Codex button ([2152ac5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2152ac52228f66af70fc1711ad33795e52cca296))
+
+
+### Bug Fixes
+
+* **commandPalette:** 🐛 always clear the results on new query ([1392ae0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1392ae00a978de5313d83de37db938737dd5e6a9))
+* **commandPalette:** 🐛 fix incorrect URL generation for RelatedArticles ([21bf5f1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/21bf5f11ceae89341defc7fe4a35982159ec45a0))
+* **commandPalette:** 🐛 fix incorrect URL generation for REST search ([d062fd5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d062fd563b5665347a345322bfd791c116186d0a))
+* **commandPalette:** 🐛 fulltext search should be updated instantly ([814f306](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/814f3068c780a46a2320f58803f391e73f8d6327))
+* **CommandPalette:** 🐛 ignore trailing space in search query highlight ([eca18e3](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/eca18e3a7739406298c3109ec10b02016772f6fb))
+* **commandPalette:** 🐛 prevent duplicate dismiss action in recent items ([901935b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/901935baa534d620af5fb98d141c0ce8774fdf20))
+* **commandPalette:** 🐛 update URL generation for media search to include type parameter ([460803b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/460803b2de77c75ea3f4e5bc99fb82bc32986fc7))
+* **footer:** 🐛 fix incorrect footer icon wrapping ([73e38ed](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/73e38ededa03f4f8efc48fe26d36fbdbb4316173))
+* **footer:** 🐛 fix incorrect footer styles ([66c7253](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/66c7253851eedf4e5c9b2fabf7f59f1965a6cae8))
+* **header:** 🐛 fix missing home icon in header ([9ba86b9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9ba86b9194532be32c80b90565c5ea2d06f0ef0b))
+* **SyntaxHighlight:** 🐛 add background for line numbers ([#1059](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1059)) ([2aabdab](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2aabdab560fddc8a851e70e5f364fd0a17de12aa))
+* **toc:** 🐛 fix scrolling when sticky header is disabled ([#1058](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1058)) ([6ea7a57](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6ea7a57202fe727e29f952d79fb457fa1a5a74d7))
+* **typography:** 🐛 do not use negative top margin for nested elements after paragraphs ([bd38820](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bd388201030e33d157da09f930bec5855ce1885b))
+
+
+### Miscellaneous Chores
+
+* **Babel:** 🔧 remove unnessecary extension styles ([ceacb7a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ceacb7a60fc0ff6db7d3a0b6f8ef87dbc1493947))
+
 ## [3.1.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.0.0...v3.1.0) (2025-04-27)
 
 
