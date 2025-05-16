@@ -2,45 +2,23 @@
  * Citizen
  *
  * Module: mediawiki.skinning.interface-edit-section-links
- * Version: REL1_39
+ * Version: REL1_43
  *
- * Date: 2022-11-15
+ * Date: 2025-05-16
 */
 
 .mw-editsection {
-	float: right; // Can't target the container so have to use to float
+	float: right; // TODO: Drop float when mw-heading change is shipped
 	display: flex;
 	align-items: center;
 	margin-left: var( --space-sm );
+	font-size: var( --font-size-small );
 	-webkit-user-select: none;
 	user-select: none;
 
-	// Hide dividers since we are making links into icons
-	&-bracket,
-	&-divider {
-		display: none;
-	}
-
-	// Fallback text button if extensions register those
-	a {
-		font-size: var( --font-size-small );
-		color: var( --color-base );
-		border-radius: var( --border-radius-base );
-
-		&:hover {
-			background-color: var( --background-color-button-quiet--hover );
-		}
-
-		&:active {
-			background-color: var( --background-color-button-quiet--hover );
-		}
-
-		&.citizen-ui-icon {
-			width: @min-size-interactive-pointer;
-			height: @min-size-interactive-pointer;
-			padding: calc( ( @min-size-interactive-pointer - var( --size-icon ) ) / 2 );
-			font-size: 0;
-			text-indent: -9999px; // Hide text
+	.cdx-button--icon-only {
+		span:not( .citizen-ui-icon ) {
+			display: none;
 		}
 	}
 }

@@ -28,7 +28,7 @@ Live demo: [English](https://starcitizen.tools), [German](https://star-citizen.w
 
 ## Installation
 1. [Download](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/archive/main.zip) place the file(s) in a directory called `Citizen` in your `skins/` folder.
-2. Add the following code at the bottom of your LocalSettings.php and **after all other extensions**:
+2. Add the following code at the bottom of your LocalSettings.php:
 ```php
 wfLoadSkin( 'Citizen' );
 ```

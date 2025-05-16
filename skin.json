@@ -34,6 +34,7 @@
 					"name": "citizen",
 					"responsive": true,
 					"supportsMwHeading": true,
+					"templateSectionLinks": "SectionLinks",
 					"toc": false,
 					"wrapSiteNotice": true,
 					"link": {
@@ -55,6 +56,7 @@
 					],
 					"styles": [
 						"skins.citizen.styles",
+						"skins.citizen.codex.styles",
 						"skins.citizen.icons"
 					],
 					"messages": [
@@ -105,7 +107,6 @@
 		"OutputPageAfterGetHeadLinksArray": "SkinHooks",
 		"SidebarBeforeOutput": "SkinHooks",
 		"SkinBuildSidebar": "SkinHooks",
-		"SkinEditSectionLinks": "SkinHooks",
 		"SkinPageReadyConfig": "SkinHooks"
 	},
 	"ResourceModules": {
@@ -121,6 +122,16 @@
 			},
 			"styles": [
 				"resources/skins.citizen.styles/skin.less"
+			]
+		},
+		"skins.citizen.codex.styles": {
+			"class": "MediaWiki\\ResourceLoader\\CodexModule",
+			"codexStyleOnly": true,
+			"codexComponents": [
+				"CdxButton"
+			],
+			"styles": [
+				"resources/skins.citizen.codex.styles/CdxButton.less"
 			]
 		},
 		"skins.citizen.styles.fonts.cjk": {
