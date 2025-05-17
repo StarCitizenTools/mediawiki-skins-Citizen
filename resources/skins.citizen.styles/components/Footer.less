@@ -22,7 +22,6 @@
 		display: flex;
 		gap: var( --space-md ) var( --space-xxl );
 		justify-content: space-between;
-		padding: var( --space-md ) 0;
 		margin-inline: auto;
 
 		@media ( max-width: @min-width-breakpoint-tablet ) {
@@ -32,6 +31,8 @@
 
 	&__bottom {
 		margin-inline: auto;
+		margin-top: var( --space-md );
+		padding-top: var( --space-xs );
 		border-top: var( --border-width-base ) solid var( --border-color-base );
 
 		@media ( min-width: @min-width-breakpoint-tablet ) {
@@ -49,7 +50,8 @@
 
 	&__sitetitle {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
+		align-items: center;
 		gap: var( --space-sm );
 
 		.mw-logo-wordmark {
@@ -59,7 +61,7 @@
 
 	&__desc {
 		margin: 0;
-		line-height: var( --line-height-small );
+		line-height: var( --line-height-xx-small );
 	}
 
 	a {
@@ -82,23 +84,27 @@
 		flex-grow: 1;
 		align-items: flex-end;
 
-		@media ( max-width: @max-width-breakpoint-tablet ) {
-			margin-inline: calc( -1 * var( --space-md ) );
-		}
-
-		@media ( min-width: @min-width-breakpoint-desktop ) {
-			margin-top: calc( -1 * var( --space-xs ) );
+		@media ( min-width: @min-width-breakpoint-tablet ) {
+			text-align: end;
 		}
 
 		ul {
 			display: grid;
 			flex-grow: 1;
 			grid-template-columns: repeat( auto-fit, minmax( var( --min-width-footer-link ), 1fr ) );
+			gap: var( --space-xs );
+
+			@media ( max-width: @max-width-breakpoint-mobile ) {
+				display: flex;
+				flex-wrap: wrap;
+			}
 		}
 
 		a {
-			display: block;
+			display: inline-block;
+			text-align: center;
 			padding: var( --space-xs ) var( --space-md );
+			border: var( --border-base );
 			border-radius: var( --border-radius-base );
 
 			&:hover {
@@ -121,6 +127,10 @@
 			display: flex;
 			flex-wrap: wrap;
 			gap: var( --space-xs );
+
+			@media ( min-width: @min-width-breakpoint-tablet ) {
+				flex-wrap: nowrap;
+			}
 		}
 
 		li {
