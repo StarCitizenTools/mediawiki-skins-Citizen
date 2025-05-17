@@ -84,15 +84,15 @@
 		flex-grow: 1;
 		align-items: flex-end;
 
-		@media ( min-width: @min-width-breakpoint-tablet ) {
-			justify-content: flex-end;
-		}
-
 		ul {
 			display: grid;
 			flex-grow: 1;
 			grid-template-columns: repeat( auto-fit, minmax( var( --min-width-footer-link ), 1fr ) );
 			gap: var( --space-xs );
+
+			@media ( min-width: @min-width-breakpoint-tablet ) {
+				justify-items: end;
+			}
 
 			@media ( max-width: @max-width-breakpoint-mobile ) {
 				display: flex;
