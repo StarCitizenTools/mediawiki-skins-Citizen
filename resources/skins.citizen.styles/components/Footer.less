@@ -103,6 +103,7 @@
 			display: inline-block;
 			padding: var( --space-xs ) var( --space-md );
 			text-align: center;
+			text-wrap: nowrap;
 			border: var( --border-base );
 			border-radius: var( --border-radius-base );
 
@@ -142,6 +143,10 @@
 			align-items: center;
 			background-color: var( --background-color-base-fixed ); // To prevent this being flipped in dark mode
 		}
+	}
+
+	&-tagline {
+		word-break: keep-all;
 	}
 }
 
