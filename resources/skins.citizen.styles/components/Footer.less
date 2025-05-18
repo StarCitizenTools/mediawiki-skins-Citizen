@@ -1,5 +1,4 @@
 .citizen-footer {
-	--min-width-footer-link: 10rem;
 	clear: both;
 	padding: var( --space-xxl ) var( --padding-page );
 	margin-top: 8rem;
@@ -20,8 +19,9 @@
 	&__content,
 	&__bottom {
 		display: flex;
-		gap: var( --space-md ) var( --space-xxl );
+		gap: var( --space-md );
 		justify-content: space-between;
+		padding: var( --space-md ) 0;
 		margin-inline: auto;
 
 		@media ( max-width: @min-width-breakpoint-tablet ) {
@@ -30,9 +30,8 @@
 	}
 
 	&__bottom {
-		padding-top: var( --space-xs );
+		flex-wrap: wrap;
 		margin-inline: auto;
-		margin-top: var( --space-md );
 		border-top: var( --border-width-base ) solid var( --border-color-base );
 
 		@media ( min-width: @min-width-breakpoint-tablet ) {
@@ -84,6 +83,11 @@
 		flex-grow: 1;
 		align-items: flex-end;
 
+		@media ( max-width: @max-width-breakpoint-tablet ) {
+			margin-inline: calc( -1 * var( --space-sm ) );
+			padding-inline: calc( -1 * var( --space-sm ) );
+		}
+
 		ul {
 			display: grid;
 			flex-grow: 1;
@@ -97,11 +101,23 @@
 				display: flex;
 				flex-wrap: wrap;
 			}
+
+			@media ( max-width: @max-width-breakpoint-tablet ) {
+				> li {
+					&:nth-child( odd ) {
+						justify-self: start;
+					}
+
+					&:nth-child( even ) {
+						justify-self: end;
+					}
+				}
+			}
 		}
 
 		a {
 			display: inline-block;
-			padding: var( --space-xs ) var( --space-md );
+			padding: var( --space-xs ) var( --space-sm );
 			text-align: center;
 			text-wrap: nowrap;
 			border: var( --border-base );
