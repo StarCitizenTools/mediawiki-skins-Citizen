@@ -1,4 +1,5 @@
 .citizen-footer {
+	--min-width-footer-link: 10rem;
 	clear: both;
 	padding: var( --space-xxl ) var( --padding-page );
 	margin-top: 8rem;
@@ -97,12 +98,9 @@
 				justify-items: end;
 			}
 
-			@media ( max-width: @max-width-breakpoint-mobile ) {
-				display: flex;
-				flex-wrap: wrap;
-			}
-
 			@media ( max-width: @max-width-breakpoint-tablet ) {
+				grid-template-columns: repeat( auto-fit, minmax( var( --min-width-footer-link ), 1fr ) );
+
 				> li {
 					&:nth-child( odd ) {
 						justify-self: start;
