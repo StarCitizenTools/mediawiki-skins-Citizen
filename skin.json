@@ -874,8 +874,8 @@
 			"description": "@var The minimum number of headings required to collapse all headings in the sticky table of contents by default."
 		},
 		"EnableCommandPalette": {
-			"value": false,
-			"description": "[EXPERIMENTAL] Enables or disable the command palette. Command palette is in active development and may not work as expected.",
+			"value": true,
+			"description": "Enables or disable the command palette. Disable to use the old search module.",
 			"descriptionmsg": "citizen-config-enablecommandpalette",
 			"public": true
 		}

@@ -18,12 +18,12 @@ Live demo: [English](https://starcitizen.tools), [German](https://star-citizen.w
 
 ## Notable features
 - **Responsive layout**: Responsive and able to adapt to different screen sizes. 📱💻🖥️
+- **Command palette**: Quick access to everything. 🔍⚡️
 - **Light/dark mode**: Switch between light and dark mode. ☀️🌙
 - **Improved extension UI**: Adjust supported extensions to be more usable and cohesive. 🤝🔗
 - **Reading preferences**: Adjust page width, font size, and line height. 👀📃
 - **Collapsible sections**: Collapse and expand article sections. 📖📕
 - **Persistent ToC**: Access ToC anywhere in the article. 🔍📖
-- **Rich search suggestions**: More helpful search suggestions with images and descriptions. 🔍👀
 - **Progressive Web App**: Give a more app-like experience when user add your wiki to their home screen. 📱
 
 ## Installation
@@ -55,7 +55,14 @@ Name | Description | Values | Default
 `$wgCitizenOverflowInheritedClasses` | Defines css classes inherited by the overflow wrapper | List of css classes. Extend with `$wgCitizenOverflowInheritedClasses[] = 'my_class';` | `["floatleft", "floatright" ]`
 `$wgCitizenOverflowNowrapClasses` | Defines css classes ignored by the overflow wrapper | List of css classes. Extend with `$wgCitizenOverflowNowrapClasses[] = 'my_class';` | `["citizen-table-nowrap", "diff", "mw-changeslist-line", "mw-recentchanges-table", "infobox", "cargoDynamicTable", "dataTable", "srf-datatable", "smw-datatable", "mw-capiunto-infobox" ]`
 
+### Command palette
+Name | Description | Values | Default
+:--- | :--- | :--- | :---
+`$wgCitizenEnableCommandPalette` | Enables or disable the command palette. Disable to use the old search module | `true` - enable; `false` - disable | `true`
+
 ### Search suggestions
+These options are only for the old search module when the command palette is disabled.
+
 Name | Description | Values | Default
 :--- | :--- | :--- | :---
 `$wgCitizenSearchModule` | Which ResourceLoader module to use for search suggestion | `skins.citizen.search`; `mediawiki.searchSuggest`; string | `skins.citizen.search`
@@ -68,11 +75,6 @@ Name | Description | Values | Default
 :--- | :--- | :--- | :---
 `$wgCitizenEnableManifest` | Enable or disable [web app manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest) | `true` - enable; `false` - disable | `true`
 `$wgCitizenManifestOptions` | Options of the web app manifest | - | See below
-
-### Development
-Name | Description | Values | Default
-:--- | :--- | :--- | :---
-`$wgCitizenEnableCommandPalette` | [EXPERIMENTAL] Enables or disable the command palette. Command palette is in active development and may not work as expected. | `true` - enable; `false` - disable | `false`
 
 ```php
 $wgCitizenManifestOptions = [
