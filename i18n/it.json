@@ -58,5 +58,10 @@
 	"citizen-command-palette-keyhint-enter-select": "Seleziona",
 	"citizen-command-palette-type-page": "Pagina",
 	"citizen-command-palette-type-namespace": "Namespace",
-	"citizen-command-palette-type-special-page": "Pagina speciale"
+	"citizen-command-palette-type-special-page": "Pagina speciale",
+	"citizen-command-palette-tip-commands": "Digita <code>/</code> per tutti i comandi",
+	"citizen-command-palette-tip-users": "Digita <code>@</code> per cercare gli utenti",
+	"citizen-command-palette-tip-namespace": "Digita <code>:</code> per cercare i namespace",
+	"citizen-command-palette-tip-templates": "Digita <code>{{</code> per cercare i template",
+	"citizen-command-palette-tip-actions": "Digita <code>></code> per un elenco di azioni"
 }

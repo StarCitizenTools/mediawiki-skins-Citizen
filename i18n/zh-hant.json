@@ -80,10 +80,22 @@
 	"citizen-user-info-text-anon": "若您做出任何編輯，會公開您的 IP 位址。",
 	"citizen-user-info-text-temp": "此臨時帳號是在此瀏覽器與設備上沒有帳號的情況下，做出編輯後建立的。",
 	"citizen-command-palette-heading-recent": "近期",
+	"citizen-command-palette-heading-related": "相關",
 	"citizen-command-palette-keyhint-enter-select": "選擇",
+	"citizen-command-palette-keyhint-enter-open": "開啟",
+	"citizen-command-palette-keyhint-enter-search": "搜尋",
 	"citizen-command-palette-keyhint-navigate": "導航",
 	"citizen-command-palette-keyhint-exit": "離開",
 	"citizen-command-palette-keyhint-actions": "操作",
 	"citizen-command-palette-keyhint-return": "返回",
-	"citizen-command-palette-type-page": "頁面"
+	"citizen-command-palette-type-page": "頁面",
+	"citizen-command-palette-type-action": "操作",
+	"citizen-command-palette-type-namespace": "命名空間",
+	"citizen-command-palette-type-special-page": "特殊頁面",
+	"citizen-command-palette-type-menu-item": "選單項目",
+	"citizen-command-palette-type-user": "使用者",
+	"citizen-command-palette-command-ns-description": "在特定命名空間中搜尋頁面",
+	"citizen-command-palette-command-user-description": "搜尋使用者",
+	"citizen-command-palette-queryaction-media-search-description": "搜尋媒體檔案",
+	"citizen-command-palette-queryaction-page-edit-description": "建立或編輯頁面"
 }
