@@ -1,6 +1,7 @@
-const { CommandPaletteProvider } = require( '../types.js' );
+const { CommandPaletteProvider, CommandPaletteItem, CommandPaletteActionResult } = require( '../types.js' );
 const { cdxIconArticleSearch, cdxIconImageGallery, cdxIconEdit } = require( '../icons.json' );
 const config = require( '../config.json' );
+const { getNavigationAction } = require( '../utils/providerActions.js' );
 
 const queryActionDefinitions = [
 	{
@@ -59,11 +60,14 @@ const QueryActionProvider = {
 		return results;
 	},
 
+	/**
+	 * Handles the selection of a query action item.
+	 *
+	 * @param {CommandPaletteItem} item The selected item (which includes eventDetails if applicable).
+	 * @return {Promise<CommandPaletteActionResult>} Action result for the UI.
+	 */
 	async onResultSelect( item ) {
-		if ( item.url ) {
-			return { action: 'navigate', payload: item.url };
-		}
-		return { action: 'none' };
+		return getNavigationAction( item );
 	}
 };
 

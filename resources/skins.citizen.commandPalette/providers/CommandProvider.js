@@ -236,7 +236,7 @@ module.exports = {
 	 * Finds the responsible handler based on item.source and delegates.
 	 *
 	 * @param {CommandPaletteItem} item The selected item.
-	 * @return {CommandPaletteActionResult} Action result for the UI.
+	 * @return {Promise<CommandPaletteActionResult>} Action result for the UI.
 	 */
 	async onResultSelect( item ) {
 		// Extract handler ID from structured source (e.g., 'command:namespace')

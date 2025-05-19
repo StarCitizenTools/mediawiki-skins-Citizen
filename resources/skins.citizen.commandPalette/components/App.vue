@@ -188,7 +188,7 @@ module.exports = exports = defineComponent( {
 		/**
 		 * Handles the selection of a result item.
 		 *
-		 * @param {CommandPaletteItem} result The selected item.
+		 * @param {CommandPaletteItem} result The selected item
 		 */
 		const selectResult = async ( result ) => {
 			const selectionAction = await searchStore.handleSelection( result );
@@ -200,8 +200,12 @@ module.exports = exports = defineComponent( {
 						close();
 					}
 					break;
+				case 'navigate-new-tab':
+					if ( selectionAction.payload ) {
+						window.open( selectionAction.payload, '_blank' );
+					}
+					break;
 				case 'updateQuery':
-					// Query already updated by the store action, just focus input
 					nextTick( focusInput );
 					break;
 				case 'none':
@@ -218,7 +222,6 @@ module.exports = exports = defineComponent( {
 		const handleAction = ( action ) => {
 			switch ( action.type ) {
 				case 'dismiss':
-					// Specific to recent items, handled by the store
 					if ( action.itemId !== undefined ) {
 						searchStore.dismissRecentItem( action.itemId );
 					} else {
@@ -227,7 +230,6 @@ module.exports = exports = defineComponent( {
 					break;
 
 				case 'navigate':
-					// Standard navigation action
 					if ( action.url ) {
 						window.location.href = action.url;
 						close();

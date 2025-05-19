@@ -1,5 +1,6 @@
 const { CommandPaletteItem, CommandPaletteProvider, CommandPaletteActionResult } = require( '../types.js' );
 const { cdxIconArticle } = require( '../icons.json' );
+const { getNavigationAction } = require( '../utils/providerActions.js' );
 
 // Cache variables
 let cachedResults = null;
@@ -121,14 +122,10 @@ const RelatedArticlesProvider = {
 	 * Default action is to navigate to the item's URL.
 	 *
 	 * @param {CommandPaletteItem} item The selected item.
-	 * @return {CommandPaletteActionResult} Action result for the UI.
+	 * @return {Promise<CommandPaletteActionResult>} Action result for the UI.
 	 */
 	async onResultSelect( item ) {
-		// Default behavior for related articles is navigation
-		if ( item.url ) {
-			return { action: 'navigate', payload: item.url };
-		}
-		return { action: 'none' }; // Fallback if no URL
+		return getNavigationAction( item );
 	}
 };
 
