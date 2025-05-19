@@ -4,6 +4,7 @@
 const { CommandPaletteItem, CommandPaletteCommand, CommandPaletteActionResult } = require( '../types.js' );
 const { cdxIconEdit, cdxIconUserAvatar, cdxIconUserContributions, cdxIconUserTalk } = require( '../icons.json' );
 const config = require( '../config.json' );
+const { getNavigationAction } = require( '../utils/providerActions.js' );
 
 /** @type {Set<string>} */
 const loadedMessageKeys = new Set();
@@ -152,12 +153,9 @@ module.exports = {
 	 * Handles selection of a user result item.
 	 *
 	 * @param {CommandPaletteItem} item The selected user result item.
-	 * @return {CommandPaletteActionResult}
+	 * @return {Promise<CommandPaletteActionResult>}
 	 */
-	onResultSelect( item ) {
-		if ( item.url ) {
-			return { action: 'navigate', payload: item.url };
-		}
-		return { action: 'none' };
+	async onResultSelect( item ) {
+		return getNavigationAction( item );
 	}
 };

@@ -324,6 +324,7 @@
 				"resources/skins.citizen.commandPalette/composables/useListNavigation.js",
 				"resources/skins.citizen.commandPalette/composables/useActionNavigation.js",
 				"resources/skins.citizen.commandPalette/utils/fetch.js",
+				"resources/skins.citizen.commandPalette/utils/providerActions.js",
 				"resources/skins.citizen.commandPalette/stores/searchStore.js",
 				"resources/skins.citizen.commandPalette/services/recentItems.js",
 				"resources/skins.citizen.commandPalette/searchClients/SearchClientFactory.js",

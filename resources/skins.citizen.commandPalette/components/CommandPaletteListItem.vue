@@ -130,12 +130,15 @@ module.exports = exports = defineComponent( {
 
 		// --- Item Interaction Logic ---
 		const onMouseDown = ( e ) => {
+			// Prevents focus shifting from the input field
+			// and triggering blur on the command palette.
+			// Also used to set the item to 'active' visually.
 			if ( e.button === 0 ) {
 				emit( 'change', 'active', true );
 			}
 		};
 
-		const onClick = () => {
+		const onClick = ( event ) => {
 			emit( 'select', {
 				id: props.id,
 				label: props.label,
@@ -147,7 +150,14 @@ module.exports = exports = defineComponent( {
 				description: props.description,
 				metadata: props.metadata,
 				actions: props.actions,
-				source: props.source
+				source: props.source,
+				eventDetails: {
+					button: event.button,
+					ctrlKey: event.ctrlKey,
+					metaKey: event.metaKey,
+					shiftKey: event.shiftKey,
+					altKey: event.altKey
+				}
 			} );
 		};
 

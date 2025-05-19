@@ -1,6 +1,7 @@
 const { CommandPaletteItem, CommandPaletteActionResult, CommandPaletteProvider } = require( '../types.js' );
 const { defineStore } = require( 'pinia' );
 const createRecentItems = require( '../services/recentItems.js' );
+const { getNavigationAction } = require( '../utils/providerActions.js' );
 
 const RecentItemsProvider = require( '../providers/RecentItemsProvider.js' );
 const CommandProvider = require( '../providers/CommandProvider.js' );
@@ -301,8 +302,8 @@ exports.useSearchStore = defineStore( 'search', {
 		 * Determines the appropriate action based on the item type and returns instructions
 		 * for the UI component.
 		 *
-		 * @param {CommandPaletteItem|null} result The selected item, or null if Enter was pressed with no selection.
-		 * @return {CommandPaletteActionResult} An object describing the next UI action.
+		 * @param {CommandPaletteItem|null} result The selected item or null if Enter was pressed with no selection.
+		 * @return {Promise<CommandPaletteActionResult>} An object describing the next UI action.
 		 */
 		async handleSelection( result ) {
 			if ( !result ) {
@@ -319,15 +320,17 @@ exports.useSearchStore = defineStore( 'search', {
 			if ( sourceProvider && typeof sourceProvider.onResultSelect === 'function' ) {
 				try {
 					// Delegate selection handling to the provider
-					// Pass the whole store state to onResultSelect for context if needed (e.g., current searchQuery)
-					actionResult = await sourceProvider.onResultSelect( result, this.$state );
+					actionResult = await sourceProvider.onResultSelect( result );
 					if ( !actionResult ) {
 						return { action: 'none' };
 					}
 
 					switch ( actionResult.action ) {
 						case 'navigate':
-							recentItemsService.saveRecentItem( result );
+						case 'navigate-new-tab':
+							if ( result.type !== 'command' ) {
+								recentItemsService.saveRecentItem( result );
+							}
 							break;
 						case 'updateQuery':
 							if ( actionResult.payload !== undefined ) {
@@ -343,15 +346,13 @@ exports.useSearchStore = defineStore( 'search', {
 				}
 			} else {
 				mw.log.warn( `[skins.citizen.commandPalette|searchStore] No provider or onResultSelect found for source: ${ result.source }`, result );
-				// Default fallback: navigate if URL exists
-				if ( result.url ) {
-					// Save generic non-command items before navigating
-					if ( result.source !== 'command' ) {
+				actionResult = getNavigationAction( result );
+				if ( actionResult.action === 'navigate' || actionResult.action === 'navigate-new-tab' ) {
+					if ( result.type !== 'command' ) {
 						recentItemsService.saveRecentItem( result );
 					}
-					return { action: 'navigate', payload: result.url };
 				}
-				return { action: 'none' };
+				return actionResult;
 			}
 		},
 
