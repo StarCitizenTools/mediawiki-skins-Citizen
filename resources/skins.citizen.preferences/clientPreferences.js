@@ -293,7 +293,7 @@ function makeClientPreference( parent, featureName, config ) {
 		return;
 	} else {
 		const id = `skin-client-prefs-${ featureName }`;
-		const portlet = portlets.addDefaultPortlet( portlets.addPortlet( id, labelMsg.text() ) );
+		const portlet = portlets.addDefaultPortlet( mw.util.addPortlet( id, labelMsg.text() ) );
 		const labelElement = portlet.querySelector( 'label' );
 
 		const descriptionMsg = getMessage( `${ featureName }-description` );
