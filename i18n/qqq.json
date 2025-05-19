@@ -99,5 +99,10 @@
 	"citizen-command-palette-command-user-description": "Description for the user command in the command palette",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Description for the fulltext search in the command palette",
 	"citizen-command-palette-queryaction-media-search-description": "Description for the media search in the command palette",
-	"citizen-command-palette-queryaction-page-edit-description": "Description for the page edit action in the command palette"
+	"citizen-command-palette-queryaction-page-edit-description": "Description for the page edit action in the command palette",
+	"citizen-command-palette-tip-commands": "Tip for the commands in the command palette",
+	"citizen-command-palette-tip-users": "Tip for the users in the command palette",
+	"citizen-command-palette-tip-namespace": "Tip for the namespace in the command palette",
+	"citizen-command-palette-tip-templates": "Tip for the templates in the command palette",
+	"citizen-command-palette-tip-actions": "Tip for the actions in the command palette"
 }
