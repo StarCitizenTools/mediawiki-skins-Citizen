@@ -90,5 +90,10 @@
 	"citizen-command-palette-command-user-description": "Cercar un usator",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Cercar in le texto complete de tote le paginas",
 	"citizen-command-palette-queryaction-media-search-description": "Cercar files multimedial",
-	"citizen-command-palette-queryaction-page-edit-description": "Crear o modificar pagina"
+	"citizen-command-palette-queryaction-page-edit-description": "Crear o modificar pagina",
+	"citizen-command-palette-tip-commands": "Digita <code>/</code> pro vider tote le commandos",
+	"citizen-command-palette-tip-users": "Digita <code>@</code> pro cercar usatores",
+	"citizen-command-palette-tip-namespace": "Digita <code>:</code> pro cercar un spatio de nomines",
+	"citizen-command-palette-tip-templates": "Digita <code>{{</code> pro cercar patronos",
+	"citizen-command-palette-tip-actions": "Digita <code>></code> pro un lista de actiones"
 }

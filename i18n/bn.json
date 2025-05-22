@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Nokib Sarkar",
 			"R4356th",
 			"San1joy23",
 			"আফতাবুজ্জামান",
@@ -47,5 +48,10 @@
 	"citizen-tagline-ns-template": "টেমপ্লেট পাতা",
 	"citizen-tagline-ns-help": "সাহায্য পাতা",
 	"citizen-tagline-ns-category": "বিষয়শ্রেণীর পাতা",
-	"citizen-tagline-user-regdate": "যোগদান করেছেন $1"
+	"citizen-tagline-user-regdate": "যোগদান করেছেন $1",
+	"citizen-command-palette-tip-commands": "সকল কমান্ডের জন্য <code>/</code> টাইপ করুন",
+	"citizen-command-palette-tip-users": "ব্যবহারকারীদের খুঁজতে <code>@</code> টাইপ করুন",
+	"citizen-command-palette-tip-namespace": "নামস্থান অনুসন্ধান করতে <code>:</code> টাইপ করুন",
+	"citizen-command-palette-tip-templates": "টেমপ্লেট অনুসন্ধান করতে <code>{{</code> টাইপ করুন।",
+	"citizen-command-palette-tip-actions": "কর্মের তালিকার জন্য <code>></code> টাইপ করুন"
 }
