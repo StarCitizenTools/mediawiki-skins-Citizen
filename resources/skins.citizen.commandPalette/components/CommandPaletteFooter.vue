@@ -59,10 +59,10 @@ module.exports = exports = defineComponent( {
 		// TODO: Make this expandable with more tips, probably with a mw hook
 		// TODO: Maybe we should move this to store?
 		const tips = [
-			mw.message( 'citizen-command-palette-tip-commands' ).text(),
-			mw.message( 'citizen-command-palette-tip-users' ).text(),
-			mw.message( 'citizen-command-palette-tip-namespace' ).text(),
-			mw.message( 'citizen-command-palette-tip-templates' ).text()
+			mw.message( 'citizen-command-palette-tip-commands' ).plain(),
+			mw.message( 'citizen-command-palette-tip-users' ).plain(),
+			mw.message( 'citizen-command-palette-tip-namespace' ).plain(),
+			mw.message( 'citizen-command-palette-tip-templates' ).plain()
 		];
 
 		const currentTipIndex = ref( 0 );
