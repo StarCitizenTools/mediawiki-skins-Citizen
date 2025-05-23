@@ -82,6 +82,8 @@
 
 	"citizen-user-info-text-anon": "Your IP address will be publicly visible if you make any edits.",
 	"citizen-user-info-text-temp": "This temporary account was created after an edit was made without an account on this browser and device.",
+	"citizen-user-info-edits-label": "Edits",
+	"citizen-user-info-joined-label": "Joined",
 
 	"citizen-command-palette-heading-recent": "Recent",
 	"citizen-command-palette-heading-related": "Related",

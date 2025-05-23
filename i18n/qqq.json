@@ -78,6 +78,8 @@
 	"citizen-feature-custom-width-full-label": "Label for full page width. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-width-name}}).",
 	"citizen-user-info-text-anon": "Description in the user menu when user is not logged in.",
 	"citizen-user-info-text-temp": "Description in the user menu when user is using a temporary account.",
+	"citizen-user-info-edits-label": "Label for the edit count in the user info",
+	"citizen-user-info-joined-label": "Label for the registration date in the user info",
 	"citizen-command-palette-heading-recent": "Label for the recently searched results in the command palette",
 	"citizen-command-palette-heading-related": "Label for the related results in the command palette",
 	"citizen-command-palette-keyhint-enter-select": "Keyboard hint for the key to select an item in the command palette",
