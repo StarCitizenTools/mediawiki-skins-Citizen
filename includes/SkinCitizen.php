@@ -94,14 +94,12 @@ class SkinCitizen extends SkinMustache {
 
 		$config = $this->getConfig();
 		$localizer = $this->getContext();
+		$lang = $this->getLanguage();
 		$out = $this->getOutput();
 		$title = $this->getTitle();
 		$user = $this->getUser();
 		$pageLang = $title->getPageLanguage();
 		$services = MediaWikiServices::getInstance();
-
-		$isRegistered = $user->isRegistered();
-		$isTemp = $user->isTemp();
 
 		$bodycontent = new BodyContent( $this );
 
@@ -151,9 +149,8 @@ class SkinCitizen extends SkinMustache {
 				$pageLang
 			),
 			'data-user-info' => new CitizenComponentUserInfo(
-				$isRegistered,
-				$isTemp,
 				$services,
+				$lang,
 				$localizer,
 				$title,
 				$user,

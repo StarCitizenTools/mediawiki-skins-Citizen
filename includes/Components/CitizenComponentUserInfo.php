@@ -4,6 +4,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Components;
 
+use MediaWiki\Language\Language;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\MalformedTitleException;
 use MediaWiki\Title\Title;
@@ -16,9 +17,8 @@ use MessageLocalizer;
 class CitizenComponentUserInfo implements CitizenComponent {
 
 	public function __construct(
-		private bool $isRegistered,
-		private bool $isTemp,
 		private MediaWikiServices $services,
+		private Language $lang,
 		private MessageLocalizer $localizer,
 		private Title $title,
 		private User $user,
@@ -30,19 +30,41 @@ class CitizenComponentUserInfo implements CitizenComponent {
 	 * Get the user edit count
 	 */
 	private function getUserEditCount(): ?array {
-		// Return user edits
-		$edits = $this->services->getUserEditTracker()->getUserEditCount( $this->user );
+		$edits = $this->user->getEditCount();
 
-		if ( !$edits ) {
+		if ( $edits === null ) {
 			return null;
 		}
 
-		$edits = number_format( $edits, 0 );
-		$label = $this->localizer->msg( 'citizen-sitestats-edits-label' )->text();
+		return [
+			'value' => number_format( $edits, 0 ),
+			'label' => $this->localizer->msg( 'citizen-user-info-edits-label' )->text()
+		];
+	}
+
+	/**
+	 * Get the user registration date
+	 */
+	private function getUserRegistration(): ?array {
+		$timestamp = $this->user->getRegistration();
+
+		if ( $timestamp === false || $timestamp === null ) {
+			return null;
+		}
+
+		$isAnniversary = substr( $timestamp, 4, 4 ) === substr( wfTimestampNow(), 4, 4 );
+
+		$html = sprintf(
+			'<time datetime="%s">%s</time>%s',
+			wfTimestamp( TS_ISO_8601, $timestamp ),
+			// Since this is not accessible by anon, we can use user language
+			$this->lang->userDate( $timestamp, $this->user ),
+			$isAnniversary ? ' <span aria-label="anniversary">🎂</span>' : ''
+		);
 
 		return [
-			'count' => $edits,
-			'label' => $label
+			'value' => $html,
+			'label' => $this->localizer->msg( 'citizen-user-info-joined-label' )->text()
 		];
 	}
 
@@ -124,15 +146,21 @@ class CitizenComponentUserInfo implements CitizenComponent {
 	 */
 	public function getTemplateData(): array {
 		$localizer = $this->localizer;
+		$user = $this->user;
 		$data = [];
 
-		if ( $this->isRegistered ) {
+		if ( $user->isRegistered() ) {
 			$data = [
 				'data-user-page' => $this->getUserPage(),
-				'data-user-edit' => $this->getUserEditCount()
+				'data-user-stats' => [
+					'array-stats-items' => [
+						$this->getUserEditCount(),
+						$this->getUserRegistration()
+					]
+				]
 			];
 
-			if ( $this->isTemp ) {
+			if ( $user->isTemp() ) {
 				$data['text'] = $localizer->msg( 'citizen-user-info-text-temp' );
 			} else {
 				$data['data-user-groups'] = $this->getUserGroups();

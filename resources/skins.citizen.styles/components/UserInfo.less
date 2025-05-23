@@ -42,10 +42,6 @@
 		font-size: var( --font-size-small );
 		line-height: var( --line-height-xx-small );
 		color: var( --color-subtle );
-
-		+ .citizen-userInfo-edits {
-			margin-top: var( --space-sm );
-		}
 	}
 
 	&-usergroups {
@@ -60,17 +56,27 @@
 		}
 	}
 
-	&-edits {
-		&-count {
-			font-size: 1.75rem;
-			font-weight: var( --font-weight-medium );
-			color: var( --color-emphasized );
-		}
+	&-stats {
+		margin-top: var( --space-sm );
+		line-height: var( --line-height-xx-small );
+		display: flex;
+		flex-wrap: wrap;
+		gap: var( --space-xs ) var( --space-lg );
 
-		&-label {
-			font-size: var( --font-size-small );
-			font-weight: var( --font-weight-medium );
-			color: var( --color-subtle );
+		&-item {
+			display: flex;
+			flex-direction: column;
+
+			&-value {
+				color: var( --color-emphasized );
+				font-weight: var( --font-weight-medium );
+				white-space: nowrap;
+			}
+
+			&-label {
+				color: var( --color-subtle );
+				font-size: var( --font-size-x-small );
+			}
 		}
 	}
 }

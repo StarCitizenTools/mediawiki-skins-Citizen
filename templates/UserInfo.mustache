@@ -11,10 +11,14 @@
 			</ul>
 		{{/data-user-groups}}
 	</div>
-	{{#data-user-edit}}
-		<div class="citizen-userInfo-edits">
-			<div class="citizen-userInfo-edits-count">{{count}}</div>
-			<div class="citizen-userInfo-edits-label">{{label}}</div>
+	{{#data-user-stats}}
+		<div class="citizen-userInfo-stats">
+			{{#array-stats-items}}
+				<div class="citizen-userInfo-stats-item">
+					<div class="citizen-userInfo-stats-item-value">{{{value}}}</div>
+					<div class="citizen-userInfo-stats-item-label">{{label}}</div>
+				</div>
+			{{/array-stats-items}}
 		</div>
-	{{/data-user-edit}}
+	{{/data-user-stats}}
 </div>
