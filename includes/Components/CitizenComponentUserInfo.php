@@ -52,14 +52,11 @@ class CitizenComponentUserInfo implements CitizenComponent {
 			return null;
 		}
 
-		$isAnniversary = substr( $timestamp, 4, 4 ) === substr( wfTimestampNow(), 4, 4 );
-
 		$html = sprintf(
-			'<time datetime="%s">%s</time>%s',
+			'<time class="citizen-user-regdate" datetime="%s">%s</time>',
 			wfTimestamp( TS_ISO_8601, $timestamp ),
 			// Since this is not accessible by anon, we can use user language
-			$this->lang->userDate( $timestamp, $this->user ),
-			$isAnniversary ? ' <span aria-label="anniversary">🎂</span>' : ''
+			$this->lang->userDate( $timestamp, $this->user )
 		);
 
 		return [

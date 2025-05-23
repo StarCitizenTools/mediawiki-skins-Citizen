@@ -22,7 +22,8 @@
 		"es-x/no-rest-spread-properties": "warn",
 		"es-x/no-symbol-prototype-description": "warn",
 		"compat/compat": "warn",
-		"mediawiki/class-doc": "off"
+		"mediawiki/class-doc": "off",
+		"mediawiki/no-nodelist-unsupported-methods": "off"
 	},
 	"parserOptions": {
 		"ecmaVersion": 11,

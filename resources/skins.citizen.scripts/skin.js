@@ -55,12 +55,15 @@ function registerServiceWorker() {
 function initBodyContent( bodyContent ) {
 	const
 		sections = require( './sections.js' ),
-		overflowElements = require( './overflowElements.js' );
+		overflowElements = require( './overflowElements.js' ),
+		contentEnhancements = require( './contentEnhancements.js' );
 
 	// Collapsable sections
 	sections.init( bodyContent );
 	// Overflow element enhancements
 	overflowElements.init( bodyContent );
+	// Content enhancements
+	contentEnhancements.init();
 }
 
 /**

@@ -86,8 +86,14 @@ class CitizenComponentPageHeading implements CitizenComponent {
 		}
 
 		if ( is_string( $regDate ) ) {
-			$regDateTs = wfTimestamp( TS_UNIX, $regDate );
-			$msgRegDate = $localizer->msg( 'citizen-tagline-user-regdate', $this->pageLang->userDate( new MWTimestamp( $regDate ), $user ) );
+			$regDateTs = wfTimestamp( TS_ISO_8601, $regDate );
+			$regDateHtml = sprintf(
+				'<time class="citizen-user-regdate" datetime="%s">%s</time>',
+				$regDateTs,
+				$this->pageLang->userDate( new MWTimestamp( $regDate ), $user )
+			);
+
+			$msgRegDate = $localizer->msg( 'citizen-tagline-user-regdate', $regDateHtml );
 			$tagline .= "<span id=\"citizen-tagline-user-regdate\" data-user-regdate=\"$regDateTs\">$msgRegDate</span>";
 		}
 

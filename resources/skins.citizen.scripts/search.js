@@ -196,7 +196,6 @@ function renderSearchClearButton( input ) {
  * @return {void}
  */
 function bindSearchTrigger( details ) {
-	// eslint-disable-next-line mediawiki/no-nodelist-unsupported-methods
 	document.querySelectorAll( '.citizen-search-trigger' ).forEach( ( trigger ) => {
 		trigger.addEventListener( 'click', () => openSearch( details ) );
 	} );

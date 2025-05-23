@@ -151,6 +151,7 @@
 					"name": "resources/skins.citizen.scripts/config.json",
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenResourceLoaderConfig"
 				},
+				"resources/skins.citizen.scripts/contentEnhancements.js",
 				"resources/skins.citizen.scripts/deferUntilFrame.js",
 				"resources/skins.citizen.scripts/dropdown.js",
 				"resources/skins.citizen.scripts/echo.js",
