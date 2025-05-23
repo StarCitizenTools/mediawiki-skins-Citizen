@@ -82,7 +82,7 @@ class MwRestSearchClient {
 					type: 'page',
 					label: page.title,
 					description: showDescription ? page.description : undefined,
-					url: mw.util.getUrl( page.title ),
+					url: mw.util.getUrl( page.matched_title ?? page.title ), // #1065, revisit when REST API has anchor field
 					thumbnail: thumbnail ? {
 						url: thumbnail.url,
 						width: thumbnail.width ?? undefined,
