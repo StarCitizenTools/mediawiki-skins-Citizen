@@ -88,6 +88,8 @@
 	"citizen-feature-custom-width-full-label": "全宽",
 	"citizen-user-info-text-anon": "未登录用户的IP地址会在进行任意编辑后公开展示。",
 	"citizen-user-info-text-temp": "此临时账号是因您在此浏览器及设备上进行了无账号编辑而创建。",
+	"citizen-user-info-edits-label": "编辑数",
+	"citizen-user-info-joined-label": "加入时间",
 	"citizen-command-palette-heading-recent": "近期",
 	"citizen-command-palette-heading-related": "相关",
 	"citizen-command-palette-keyhint-enter-select": "选择",
@@ -103,6 +105,16 @@
 	"citizen-command-palette-type-command": "命令",
 	"citizen-command-palette-type-special-page": "特殊页面",
 	"citizen-command-palette-type-menu-item": "菜单项",
+	"citizen-command-palette-type-user": "用户",
 	"citizen-command-palette-command-ns-description": "在特定命名空间中搜索页面",
-	"citizen-command-palette-queryaction-fulltext-search-description": "在所有页面全文搜索"
+	"citizen-command-palette-command-action-description": "执行特定操作",
+	"citizen-command-palette-command-user-description": "搜索用户",
+	"citizen-command-palette-queryaction-fulltext-search-description": "在所有页面全文搜索",
+	"citizen-command-palette-queryaction-media-search-description": "搜索媒体文件",
+	"citizen-command-palette-queryaction-page-edit-description": "创建或编辑页面",
+	"citizen-command-palette-tip-commands": "输入<code>/</code>查看所有命令",
+	"citizen-command-palette-tip-users": "输入<code>@</code>来搜索用户",
+	"citizen-command-palette-tip-namespace": "键入<code>:</code>在特定命名空间中搜索",
+	"citizen-command-palette-tip-templates": "输入<code>{{</code>来搜索模板",
+	"citizen-command-palette-tip-actions": "输入<code>></code>获取操作列表"
 }

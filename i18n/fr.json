@@ -3,6 +3,7 @@
 		"authors": [
 			"Alien333",
 			"Bananax47",
+			"Derugon",
 			"EmDashUser002",
 			"Gomoko",
 			"JLTRY",
@@ -82,6 +83,8 @@
 	"citizen-feature-custom-width-full-label": "Plein",
 	"citizen-user-info-text-anon": "Votre adresse IP sera visible au public si vous faites des modifications.",
 	"citizen-user-info-text-temp": "Ce compte temporaire a été créé après une modification sans compte sur ce navigateur et cet appareil.",
+	"citizen-user-info-edits-label": "Modifications",
+	"citizen-user-info-joined-label": "Inscrit",
 	"citizen-command-palette-heading-recent": "Récent",
 	"citizen-command-palette-heading-related": "Reliés",
 	"citizen-command-palette-keyhint-enter-select": "Sélectionner",
@@ -97,7 +100,16 @@
 	"citizen-command-palette-type-command": "Commandes",
 	"citizen-command-palette-type-special-page": "Page spéciale",
 	"citizen-command-palette-type-menu-item": "Élément de menu",
+	"citizen-command-palette-type-user": "Utilisateur",
 	"citizen-command-palette-command-ns-description": "Rechercher une page dans un espace de noms spécifique",
 	"citizen-command-palette-command-action-description": "Effectuer une action spécifique",
-	"citizen-command-palette-queryaction-fulltext-search-description": "Rechercher le texte intégral de toutes les pages"
+	"citizen-command-palette-command-user-description": "Rechercher un utilisateur",
+	"citizen-command-palette-queryaction-fulltext-search-description": "Rechercher le texte intégral de toutes les pages",
+	"citizen-command-palette-queryaction-media-search-description": "Rechercher des fichiers multimédias",
+	"citizen-command-palette-queryaction-page-edit-description": "Créer ou modifier une page",
+	"citizen-command-palette-tip-commands": "Entrez <code>/</code> pour toutes les commandes",
+	"citizen-command-palette-tip-users": "Entrez <code>@</code> pour rechercher des utilisateurs",
+	"citizen-command-palette-tip-namespace": "Entrez <code>:</code> pour rechercher dans un espace de noms",
+	"citizen-command-palette-tip-templates": "Entrez <code>{{</code> pour rechercher des modèles",
+	"citizen-command-palette-tip-actions": "Entrez <code>></code> pour une liste d'actions"
 }
