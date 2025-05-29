@@ -4,7 +4,7 @@
 	form {
 		display: grid;
 		// This is not the best because it does not adapt to the text length but will revisit later
-		grid-template-columns: repeat( 3, 1fr );
+		grid-template-columns: repeat( var( --pref-columns, 2 ), 1fr );
 		gap: var( --space-xxs );
 		padding-inline: var( --space-md );
 	}
@@ -62,6 +62,8 @@
 }
 
 #skin-client-prefs-skin-theme {
+	--pref-columns: 3;
+
 	.citizen-client-prefs-radio__label {
 		background: var( --color-surface-0 );
 
@@ -82,25 +84,15 @@
 }
 
 #skin-client-prefs-citizen-feature-custom-font-size {
-	.citizen-client-prefs-radio__label {
-		font-size: var( --font-size-medium );
+	--pref-columns: 2;
+}
 
-		&[ for='skin-client-pref-citizen-feature-custom-font-size-value-small' ] {
-			font-size: var( --font-size-small );
-		}
-
-		&[ for='skin-client-pref-citizen-feature-custom-font-size-value-large' ] {
-			font-size: var( --font-size-large );
-		}
-	}
+#skin-client-prefs-citizen-feature-custom-width {
+	--pref-columns: 3;
 }
 
 #skin-client-prefs-citizen-feature-pure-black {
 	display: none;
-
-	form {
-		grid-template-columns: repeat( 2, 1fr );
-	}
 
 	// Display on dark theme
 	.skin-theme-clientpref-night & {

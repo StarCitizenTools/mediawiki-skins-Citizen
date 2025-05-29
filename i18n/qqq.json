@@ -72,6 +72,7 @@
 	"citizen-feature-custom-font-size-small-label": "Label for small font size. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-font-size-name}}).",
 	"citizen-feature-custom-font-size-standard-label": "Label for standard font size. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-font-size-name}})",
 	"citizen-feature-custom-font-size-large-label": "Label for large font size. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-font-size-name}}).",
+	"citizen-feature-custom-font-size-xlarge-label": "Label for extra large font size. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-font-size-name}}).",
 	"citizen-feature-custom-width-name": "Heading label for page width",
 	"citizen-feature-custom-width-standard-label": "Label for standard page width. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-width-name}}).",
 	"citizen-feature-custom-width-wide-label": "Label for wide page width. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-width-name}}).",
