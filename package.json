@@ -15,7 +15,7 @@
 		"@commitlint/cli": "^19.6.1",
 		"@commitlint/config-conventional": "^19.6.0",
 		"devmoji": "^2.3.0",
-		"eslint-config-wikimedia": "0.29.1",
+		"eslint-config-wikimedia": "0.30.0",
 		"grunt-banana-checker": "0.13.0",
 		"husky": "^9.1.7",
 		"stylelint": "16.19.1",
