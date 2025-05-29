@@ -179,8 +179,8 @@ module.exports = exports = defineComponent( {
 			display: flex;
 			column-gap: var( --space-xxs );
 			align-items: center;
-			padding: var( --space-xxs ) var( --space-xs );
-			line-height: var( --line-height-xxx-small );
+			padding: 2px var( --space-xs );
+			line-height: var( --line-height-small );
 			background: var( --color-surface-3 );
 			border: var( --border-subtle );
 			border-radius: var( --border-radius-base );
