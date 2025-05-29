@@ -1,4 +1,5 @@
 @import '../tokens-theme-dark.less';
+@import '../tokens-codex.less';
 
 .feature-pure-black() {
 	--color-surface-0-oklch__l: 0%;
@@ -53,13 +54,13 @@
 
 .citizen-feature-custom-font-size-clientpref-small {
 	:root& {
-		--font-size-base: 0.875rem;
+		.cdx-mode-small();
 	}
 }
 
 .citizen-feature-custom-font-size-clientpref-large {
 	:root& {
-		--font-size-base: 1.125rem;
+		.cdx-mode-large();
 	}
 }
 

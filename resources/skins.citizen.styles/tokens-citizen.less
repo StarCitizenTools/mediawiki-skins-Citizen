@@ -21,15 +21,12 @@
 	--filter-invert-fixed: invert( 1 ) hue-rotate( 180deg );
 
 	/* Font */
-	// Used as base unit to caluclate font-size
-	--font-size-base: 1rem;
 	--font-family-citizen-base: 'Roboto', 'Roboto-fallback';
 	--font-family-citizen-serif: 'Roboto Serif', 'Roboto Serif-fallback';
 	--font-family-citizen-monospace: 'Roboto Mono', 'Roboto Mono-fallback';
 	--font-family-language-base: '';
 	--font-family-language-serif: '';
 	--font-family-language-monospace: '';
-	--line-height: 1.6;
 
 	/* Size */
 	/* TODO: Need to standardize the naming convention */
@@ -99,26 +96,12 @@
 	--font-family-base: @font-family-base;
 	--font-family-serif: @font-family-serif;
 	--font-family-monospace: @font-family-monospace;
-	--font-size-x-small: calc( var( --font-size-base ) * 0.75 );
-	--font-size-small: calc( var( --font-size-base ) * 0.875 );
-	--font-size-medium: var( --font-size-base );
-	--font-size-large: calc( var( --font-size-base ) * 1.125 );
-	--font-size-x-large: calc( var( --font-size-base ) * 1.25 );
-	--font-size-xx-large: calc( var( --font-size-base ) * 1.375 );
-	--font-size-xxx-large: calc( var( --font-size-base ) * 1.75 );
 	--font-weight-normal: 400;
 	--font-weight-medium: calc( var( --font-weight-normal ) + 100 );
 	--font-weight-semi-bold: calc( var( --font-weight-normal ) + 200 );
 	--font-weight-bold: calc( var( --font-weight-normal ) + 300 );
-	--line-height-xxx-small: 1.25;
-	--line-height-xx-small: 1.375;
-	--line-height-medium: var( --line-height );
 
 	@media ( min-width: @min-width-breakpoint-tablet ) {
-		--font-size-x-small: calc( var( --font-size-base ) *  0.8125 );
-		--font-size-x-large: calc( var( --font-size-base ) *  1.375 );
-		--font-size-xx-large: calc( var( --font-size-base ) *  1.5 );
-		--font-size-xxx-large: calc( var( --font-size-base ) *  2 );
 		--padding-page: calc( @padding-page * 1.5 );
 	}
 
@@ -139,7 +122,7 @@
 	&:lang( ja ),
 	&:lang( ko ),
 	&:lang( zh ) {
-		--line-height: 1.75;
+		--line-height-medium: 1.75;
 	}
 
 	/**
@@ -148,6 +131,10 @@
 	--color-primary__h: var( --color-progressive-hsl__h );
 	--color-primary__s: var( --color-progressive-hsl__s );
 	--color-primary__l: var( --color-progressive-hsl__l );
+	--font-size-base: var( --font-size-medium );
+	--line-height: 1.6;
+	--line-height-xxx-small: 1.25; // Deprecated with Codex 2.0
+	--line-height-xx-small: 1.375; // Deprecated with Codex 2.0
 }
 
 // TODO: Update with implementation on T376559 when it is finalized

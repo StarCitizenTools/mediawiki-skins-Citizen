@@ -456,7 +456,7 @@ module.exports = exports = defineComponent( {
 	margin-inline: auto;
 	overflow: hidden;
 	font-size: var( --font-size-medium );
-	line-height: var( --line-height-xx-small );
+	line-height: var( --line-height-small );
 	background-color: var( --color-surface-1 );
 	border: var( --border-base );
 	border-radius: var( --border-radius-medium );
