@@ -1,6 +1,6 @@
 {
 	"citizen-feature-custom-font-size": {
-		"options": [ "small", "standard", "large" ],
+		"options": [ "small", "standard", "large", "xlarge" ],
 		"preferenceKey": "citizen-font-size"
 	},
 	"skin-theme": {
