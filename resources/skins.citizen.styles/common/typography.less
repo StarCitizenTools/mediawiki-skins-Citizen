@@ -84,4 +84,11 @@ em {
 .citizen-body {
 	font-size: var( --font-size-medium );
 	line-height: var( --line-height-content );
+
+	/* CJK languages need increased line-height for readability */
+	&:lang( ja ),
+	&:lang( ko ),
+	&:lang( zh ) {
+		--line-height-content: 1.75;
+	}
 }
