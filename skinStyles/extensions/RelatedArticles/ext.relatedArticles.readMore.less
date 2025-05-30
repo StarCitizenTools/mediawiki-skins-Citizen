@@ -9,6 +9,7 @@
 */
 
 @import '../../../resources/variables.less';
+@import '../../../resources/mixins.less';
 
 #mw-data-after-content > .read-more-container {
 	display: flex;
@@ -32,10 +33,7 @@
 .read-more-container-heading {
 	padding: 0;
 	margin: 0;
-	font-size: var( --font-size-x-small );
-	font-weight: var( --font-weight-medium );
-	text-transform: none;
-	letter-spacing: 0;
+	.mixin-citizen-font-styles( 'overline' );
 }
 
 .read-more-container-card-list {
@@ -51,6 +49,7 @@
 	}
 
 	.cdx-card {
+		align-items: center;
 		// TODO: Remove when we find a way to customize Codex
 		border-radius: var( --border-radius-medium );
 
@@ -78,7 +77,8 @@
 		}
 
 		&__description {
-			font-size: var( --font-size-small );
+			margin-top: 0;
+			.mixin-citizen-font-styles( 'small' );
 		}
 	}
 }

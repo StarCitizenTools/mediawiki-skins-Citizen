@@ -105,12 +105,14 @@ module.exports = exports = defineComponent( {
 
 <style lang="less">
 @import 'mediawiki.skin.variables.less';
+@import '../../mixins.less';
 
 .citizen-command-palette {
 	&__search {
 		position: relative;
 		/* 8px from CdxTextInput */
 		padding: var( --space-sm ) calc( var( --citizen-command-palette-side-padding ) - @spacing-50 );
+		.mixin-citizen-font-styles( 'body' );
 	}
 
 	&__input {

@@ -3,6 +3,8 @@
  * https://starcitizen.tools
 */
 
+@import '../../resources/mixins.less';
+
 // T326017
 ul.gallery.gallery.gallery {
 	padding: 0;
@@ -13,9 +15,8 @@ ul.gallery.gallery.gallery {
 div.gallerytext {
 	padding: 0 var( --border-radius-base );
 	margin-block: var( --space-xs );
-	font-size: var( --font-size-x-small );
-	font-weight: var( --font-weight-medium );
 	color: var( --color-subtle );
+	.mixin-citizen-font-styles( 'small' );
 
 	p {
 		margin: var( --space-xxs ) 0; // reset default style

@@ -8,10 +8,11 @@
  * Date: 2023-06-23
  */
 
+@import '../../resources/mixins.less';
+
 .mw-notification-area {
 	padding: var( --space-xs );
-	font-size: var( --font-size-small );
-	line-height: var( --line-height-small );
+	.mixin-citizen-font-styles( 'small' );
 }
 
 .mw-notification {

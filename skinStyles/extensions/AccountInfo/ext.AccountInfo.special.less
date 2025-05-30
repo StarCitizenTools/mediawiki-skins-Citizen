@@ -8,11 +8,12 @@
  * Date: 2024-07-24
 */
 
+@import '../../../resources/mixins.less';
+
 .mw-special-AccountInfo h1 {
 	margin-bottom: 0.25em;
-	font-size: var( --font-size-xxx-large );
-	font-weight: var( --font-weight-semi-bold );
 	border-bottom: 0;
+	.mixin-citizen-font-styles( 'heading-1' );
 }
 
 .mw-special-AccountInfo p {
@@ -30,11 +31,11 @@
 .mw-special-AccountInfo #mw-content-text > p {
 	padding: var( --space-md );
 	margin-top: var( --space-md );
-	font-size: var( --font-size-small );
 	color: var( --color-base );
 	background: var( --color-surface-2 );
 	border: var( --border-width-base ) solid var( --border-color-base );
 	border-radius: var( --border-radius-medium );
+	.mixin-citizen-font-styles( 'small' );
 }
 
 .mw-special-AccountInfo td,
@@ -47,7 +48,7 @@
 }
 
 .mw-special-AccountInfo table thead th {
-	font-size: var( --font-size-x-small );
+	font-size: inherit;
 	font-weight: var( --font-weight-semi-bold );
 	color: var( --color-emphasized );
 	text-transform: none;
@@ -69,11 +70,11 @@
 	max-width: none;
 	margin: var( --space-md ) 0;
 	overflow: initial;
-	font-size: var( --font-size-small );
 	border-collapse: collapse;
 	border-color: var( --border-color-base );
 	border-radius: var( --border-radius-medium );
 	box-shadow: var( --box-shadow-border );
+	.mixin-citizen-font-styles( 'small' );
 }
 
 .mw-special-AccountInfo tr.mw-accountinfo-current {

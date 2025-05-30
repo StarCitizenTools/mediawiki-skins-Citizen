@@ -13,7 +13,6 @@
 // FIXME: It is not great to load both Parsoid and Parsoid legacy media styles
 // Maybe there is a way to detect it without introducing a new RL module?
 @import 'skinning/content.media-common.less';
-@import 'skinning/content.thumbnails-common.less';
 @import 'skinning/interface-subtitle.less';
 
 @media screen {
@@ -52,12 +51,10 @@
 	// This get loaded regardless so we don't have to use skinStyles to target them
 	// It is organized to be same as core because naming is hard :'(
 	// @see https://github.com/wikimedia/mediawiki/commits/master/resources/src/mediawiki.skinning
-	@import 'skinning/content.body.less';
 	@import 'skinning/content.links.less';
 	@import 'skinning/content.externallinks.less';
 	@import 'skinning/content.tables.less';
 	@import 'skinning/content.media-screen.less';
-	@import 'skinning/content.thumbnails-screen.less';
 	@import 'skinning/interface-edit-section-links.less';
 	@import 'skinning/interface-message-box.less';
 	@import 'skinning/interface-user-message.less';

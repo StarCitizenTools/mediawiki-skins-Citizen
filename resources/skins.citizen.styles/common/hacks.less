@@ -8,20 +8,41 @@ a.feedlink {
 }
 
 /**
- * OOUI has some layout issues when the font size is not
- * same as what is being used in Vector. This is a dirty
- * hack to ensure that the UI is displayed correctly.
- *
- * This is put here because the OOUI skinstyle is lazyloaded,
- * causing significant layout shift
- *
- * Revisit this when T254055 is resolved
+ * Utility legacy classes that are commonly used
  */
-.oo-ui-widget {
-	font-size: var( --font-size-small );
+.center {
+	width: 100%;
+	text-align: center;
 }
 
-// Replace 50em (50 * 0.875rem) with 50rem
-.oo-ui-textInputWidget {
-	max-width: 50rem;
+*.center * {
+	margin-inline: auto;
+}
+
+.floatleft,
+.floatright {
+	margin: 0;
+}
+
+div.tleft,
+div.tright {
+	margin: var( --space-xs ) 0 var( --space-md ) 0;
+}
+
+@media ( min-width: @min-width-breakpoint-tablet ) {
+	/* @noflip */
+	div.tright,
+	.floatright {
+		float: right;
+		clear: right;
+		margin-left: var( --space-lg );
+	}
+
+	/* @noflip */
+	div.tleft,
+	.floatleft {
+		float: left;
+		clear: left;
+		margin-right: var( --space-lg );
+	}
 }

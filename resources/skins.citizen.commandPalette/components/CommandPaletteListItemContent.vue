@@ -119,6 +119,8 @@ module.exports = exports = defineComponent( {
 </script>
 
 <style lang="less">
+@import '../../mixins.less';
+
 .citizen-command-palette-list-item {
 	&__content {
 		display: flex;
@@ -136,17 +138,12 @@ module.exports = exports = defineComponent( {
 		flex: 1;
 		min-width: 0;
 		overflow: hidden;
-
-		&__label,
-		&__description {
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
+		line-height: 1.125rem; // Match height of the thumbnail
 
 		&__label {
 			font-weight: var( --font-weight-semi-bold );
 			color: var( --color-emphasized );
+			.mixin-citizen-font-styles( 'body' );
 
 			.cdx-search-result-title {
 				/* So that text-overflow works */
@@ -155,7 +152,6 @@ module.exports = exports = defineComponent( {
 		}
 
 		&__description {
-			font-size: var( --font-size-x-small );
 			color: var( --color-subtle );
 		}
 
@@ -167,12 +163,18 @@ module.exports = exports = defineComponent( {
 				color: var( --color-subtle );
 			}
 		}
+
+		&__label,
+		&__description {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
 	}
 
 	&__metadata {
 		display: flex;
 		gap: var( --space-xxs );
-		font-size: var( --font-size-x-small );
 		color: var( --color-subtle );
 
 		&__item {

@@ -104,15 +104,16 @@ module.exports = exports = defineComponent( {
 </script>
 
 <style lang="less">
+@import '../../mixins.less';
+
 .citizen-command-palette-list {
 	padding-block: var( --space-xs );
 
 	&__heading {
 		padding-block: var( --space-xs ) var( --space-xxs );
 		padding-inline: var( --citizen-command-palette-side-padding );
-		font-size: var( --font-size-x-small );
-		font-weight: var( --font-weight-medium );
 		color: var( --color-subtle );
+		.mixin-citizen-font-styles( 'overline' );
 	}
 
 	&__listbox {

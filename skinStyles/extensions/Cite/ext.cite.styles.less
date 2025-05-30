@@ -3,10 +3,12 @@
  * https://starcitizen.tools
 */
 
+@import '../../../resources/mixins.less';
+
 .mw-references-wrap {
 	margin-top: var( --space-md );
-	font-size: var( --font-size-x-small );
 	color: var( --color-base );
+	.mixin-citizen-font-styles( 'small' );
 }
 
 .mw-body-content {
@@ -17,10 +19,6 @@
 			margin-bottom: var( --space-xxs );
 		}
 	}
-}
-
-span.reference {
-	font-size: 80%;
 }
 
 .skin-citizen {

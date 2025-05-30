@@ -135,18 +135,15 @@
 					}
 
 					&[ rel='heading-2' ] {
-						font-size: var( --font-size-xx-large );
-						font-weight: var( --font-weight-semi-bold );
+						.mixin-citizen-font-styles( 'heading-2' );
 					}
 
 					&[ rel='heading-3' ] {
-						font-size: var( --font-size-x-large );
-						font-weight: var( --font-weight-semi-bold );
+						.mixin-citizen-font-styles( 'heading-3' );
 					}
 
 					&[ rel='heading-4' ] {
-						font-size: var( --font-size-large );
-						font-weight: var( --font-weight-semi-bold );
+						.mixin-citizen-font-styles( 'heading-4' );
 					}
 
 					&[ rel='heading-5' ] {
@@ -243,9 +240,8 @@
 	.wikieditor-toolbar-field-wrapper {
 		/* Input field label */
 		> label {
-			font-size: var( --font-size-x-small );
-			font-weight: var( --font-weight-medium );
 			color: var( --color-subtle );
+			.mixin-citizen-font-styles( 'overline' );
 
 			~ input,
 			~ select {

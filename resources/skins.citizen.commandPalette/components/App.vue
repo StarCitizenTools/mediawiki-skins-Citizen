@@ -445,6 +445,7 @@ module.exports = exports = defineComponent( {
 
 <style lang="less">
 @import 'mediawiki.skin.variables.less';
+@import '../../mixins.less';
 
 .citizen-command-palette {
 	--citizen-command-palette-side-padding: var( --space-md );
@@ -455,12 +456,11 @@ module.exports = exports = defineComponent( {
 	max-width: @size-5600;
 	margin-inline: auto;
 	overflow: hidden;
-	font-size: var( --font-size-medium );
-	line-height: var( --line-height-small );
 	background-color: var( --color-surface-1 );
 	border: var( --border-base );
 	border-radius: var( --border-radius-medium );
 	box-shadow: var( --box-shadow-drop-xx-large );
+	.mixin-citizen-font-styles( 'small' );
 
 	@media ( min-width: @max-width-breakpoint-tablet ) {
 		top: 3rem;

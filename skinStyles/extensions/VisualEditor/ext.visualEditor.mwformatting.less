@@ -8,12 +8,10 @@
  * Date: 2023-02-06
 */
 
+@import '../../../resources/mixins.less';
+
 // Sync with Citizen font styles
 .oo-ui-menuToolGroup-tools .oo-ui-tool-name {
-	&-paragraph .oo-ui-tool-title {
-		font-size: 1rem;
-	}
-
 	&-heading1,
 	&-heading2,
 	&-heading3,
@@ -21,33 +19,34 @@
 	&-heading5,
 	&-heading6 {
 		.oo-ui-tool-title {
-			font-weight: var( --font-weight-semi-bold );
 			color: var( --color-emphasized );
 		}
 	}
 
 	&-heading1 .oo-ui-tool-title {
-		font-size: var( --font-size-xxx-large );
+		.mixin-citizen-font-styles( 'heading-1' );
 	}
 
 	&-heading2 .oo-ui-tool-title {
-		font-size: var( --font-size-xx-large );
+		.mixin-citizen-font-styles( 'heading-2' );
 	}
 
 	&-heading3 .oo-ui-tool-title {
-		font-size: var( --font-size-x-large );
+		.mixin-citizen-font-styles( 'heading-3' );
 	}
 
 	&-heading4 .oo-ui-tool-title {
-		font-size: var( --font-size-large );
+		.mixin-citizen-font-styles( 'heading-4' );
 	}
 
 	&-heading5 .oo-ui-tool-title {
 		font-size: var( --font-size-medium );
+		font-weight: var( --font-weight-semi-bold );
 	}
 
 	&-heading6 .oo-ui-tool-title {
 		font-size: var( --font-size-medium );
+		font-weight: var( --font-weight-semi-bold );
 	}
 
 	&-preformatted .oo-ui-tool-title {

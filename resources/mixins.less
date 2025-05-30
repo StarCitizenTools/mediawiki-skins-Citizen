@@ -203,3 +203,52 @@
 	@svg-filter-id: 'recolor';
 	filter: url( ';data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="@{svg-filter-id}" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 @{r} 0 0 0 0 @{g} 0 0 0 0 @{b} 0 0 0 @{a} 0"/></filter></svg> #@{svg-filter-id}' );
 }
+
+// Based on Codex 2.0 typography tokens from T363845
+// TODO: Revisit when T333890 is resolved
+.mixin-citizen-font-styles( @type ) {
+	& when ( @type = 'heading-1' ) {
+		font-size: var( --font-size-xxx-large );
+		font-weight: var( --font-weight-semi-bold );
+		line-height: var( --line-height-xxx-large );
+	}
+
+	& when ( @type = 'heading-2' ) {
+		font-size: var( --font-size-xx-large );
+		font-weight: var( --font-weight-semi-bold );
+		line-height: var( --line-height-xx-large );
+	}
+
+	& when ( @type = 'heading-3' ) {
+		font-size: var( --font-size-x-large );
+		font-weight: var( --font-weight-semi-bold );
+		line-height: var( --line-height-x-large );
+	}
+
+	& when ( @type = 'heading-4' ) {
+		font-size: var( --font-size-large );
+		font-weight: var( --font-weight-semi-bold );
+		line-height: var( --line-height-large );
+	}
+
+	& when ( @type = 'body' ) {
+		font-size: var( --font-size-medium );
+		// font-weight: var( --font-weight-normal ); - No need to specify
+		line-height: var( --line-height-medium );
+	}
+
+	& when ( @type = 'small' ) {
+		font-size: var( --font-size-small );
+		// font-weight: var( --font-weight-normal ); - No need to specify
+		line-height: var( --line-height-small );
+	}
+
+	& when ( @type = 'overline' ) {
+		font-family: var( --font-family-overline );
+		font-size: var( --font-size-overline );
+		font-weight: var( --font-weight-overline );
+		line-height: var( --line-height-overline );
+		text-transform: var( --text-transform-overline );
+		letter-spacing: var( --letter-spacing-overline );
+	}
+}
