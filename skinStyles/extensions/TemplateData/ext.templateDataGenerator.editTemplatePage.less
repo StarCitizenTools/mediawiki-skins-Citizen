@@ -6,11 +6,13 @@
  * Version: REL1_43
 */
 
+@import '../../../resources/mixins.less';
+
 .tdg-editscreen-main {
 	padding-bottom: var( --space-sm );
 	margin: var( --space-sm );
-	font-size: var( --font-size-small );
 	border-bottom: var( --border-width-base ) solid var( --border-color-base );
+	.mixin-citizen-font-styles( 'small' );
 }
 
 .tdg-templateDataParamWidget-param {
@@ -27,7 +29,7 @@
 	}
 
 	&-aliases {
-		font-size: var( --font-size-x-small );
+		.mixin-citizen-font-styles( 'small' );
 	}
 
 	&-description {

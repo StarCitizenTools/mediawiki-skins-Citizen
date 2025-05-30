@@ -89,7 +89,6 @@ module.exports = exports = defineComponent( {
 	align-items: center;
 	justify-content: space-between;
 	padding: var( --space-sm ) var( --citizen-command-palette-side-padding );
-	font-size: var( --font-size-x-small );
 	color: var( --color-subtle );
 	border-top: var( --border-subtle );
 

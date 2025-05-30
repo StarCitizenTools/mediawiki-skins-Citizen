@@ -7,6 +7,8 @@
  * Date: 2024-07-09
  */
 
+@import '../../../resources/mixins.less';
+
 /*
  * Backported fixes
  * @see https://github.com/Leaflet/Leaflet/blob/main/dist/leaflet.css
@@ -37,10 +39,9 @@
 
 .leaflet-container {
 	font-family: var( --font-family-base );
-	font-size: var( --font-size-x-small );
-	line-height: var( --line-height-medium );
 	background: var( --color-surface-3 ) !important; // Override inline styles
 	border-radius: var( --border-radius-medium );
+	.mixin-citizen-font-styles( 'small' );
 
 	a {
 		color: var( --color-link );

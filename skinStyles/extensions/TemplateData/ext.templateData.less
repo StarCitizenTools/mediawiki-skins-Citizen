@@ -6,6 +6,8 @@
  * Version: REL1_43
 */
 
+@import '../../../resources/mixins.less';
+
 .mw-templatedata-doc-params {
 	caption {
 		background-color: var( --color-surface-1 );
@@ -58,8 +60,8 @@
 }
 
 .mw-templatedata-format {
-	font-size: var( --font-size-small );
 	color: var( --color-base );
+	.mixin-citizen-font-styles( 'overline' );
 }
 
 .mw-templateData-template-map-list-menu-panel {

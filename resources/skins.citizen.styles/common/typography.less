@@ -43,16 +43,21 @@ blockquote {
 	font-style: italic;
 	/* NOTE: This only works for Chromium browsers for now */
 	text-wrap: pretty;
+	.mixin-citizen-font-styles( 'body' );
 
 	cite {
-		font-size: var( --font-size-x-small );
 		font-style: normal;
+		.mixin-citizen-font-styles( 'small' );
 	}
 }
 
-sub,
-sup {
-	font-size: 80%;
+figcaption {
+	color: var( --color-subtle );
+	.mixin-citizen-font-styles( 'small' );
+}
+
+small {
+	.mixin-citizen-font-styles( 'small' );
 }
 
 em {
@@ -77,6 +82,5 @@ em {
 }
 
 .citizen-body {
-	font-size: var( --font-size-medium );
-	line-height: var( --line-height-medium );
+	.mixin-citizen-font-styles( 'body' );
 }

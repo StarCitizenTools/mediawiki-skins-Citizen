@@ -7,13 +7,15 @@
  * Date: 2024-03-19
 */
 
+@import '../../resources/mixins.less';
+
 /* jquery.dataTables.css */
 table.dataTable {
 	box-sizing: border-box; /* Fix #888 */
 	display: table;
 	max-width: 100%;
 	overflow: hidden; // let datatables handle responsiveness
-	font-size: var( --font-size-small );
+	.mixin-citizen-font-styles( 'small' );
 }
 
 table.dataTable thead th,
@@ -342,11 +344,9 @@ div.dtsp-panesContainer {
 	div.dtsp-title {
 		flex-grow: 1;
 		padding: var( --space-xs ) 0;
-		font-size: var( --font-size-x-small );
-		font-weight: var( --font-weight-medium );
-		line-height: 1;
 		color: var( --color-subtle );
 		text-align: start;
+		.mixin-citizen-font-styles( 'overline' );
 	}
 
 	div.dtsp-title,
@@ -499,7 +499,7 @@ div.dtsp-panesContainer {
 		}
 
 		div.dtsp-nameCont span.dtsp-pill {
-			font-size: var( --font-size-x-small );
+			font-size: var( --font-size-small );
 			color: var( --color-base );
 			background: var( --color-surface-2 );
 			border: var( --border-width-base ) solid var( --border-color-base );

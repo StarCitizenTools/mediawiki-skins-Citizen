@@ -1,3 +1,5 @@
+@import '../../mixins.less';
+
 .citizen-typeahead-list-item {
 	&-link {
 		display: flex;
@@ -45,7 +47,6 @@
 		flex-direction: column;
 		gap: 2px;
 		overflow: hidden;
-		font-size: var( --font-size-small );
 		color: var( --color-emphasized );
 		white-space: nowrap;
 	}
@@ -57,12 +58,11 @@
 	}
 
 	&-title {
-		font-size: var( --font-size-medium );
 		font-weight: var( --font-weight-semi-bold );
+		.mixin-citizen-font-styles( 'body' );
 	}
 
 	&-description {
-		font-size: var( --font-size-x-small );
 		color: var( --color-subtle );
 	}
 
@@ -70,7 +70,7 @@
 		&-link {
 			gap: var( --space-xs );
 			min-height: 36px;
-			padding-inline: var( --space-sm );
+			padding: var( --space-xxs ) var( --space-sm );
 			border: 1px solid var( --border-color-base );
 			border-radius: var( --border-radius-medium );
 		}

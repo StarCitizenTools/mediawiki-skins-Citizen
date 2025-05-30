@@ -8,23 +8,21 @@
  * Date: 2024-07-08
 */
 
+@import '../../../resources/mixins.less';
+
 .mw-specialCiteThisPage-bibliographic {
 	width: auto;
 	padding: 0;
 	margin: 0;
 	background-color: transparent;
 
-	h2 {
-		font-size: var( --font-size-large );
-	}
-
 	/* Similar to table styles */
 	ul {
 		margin-left: 0;
-		font-size: var( --font-size-small );
 		list-style: none;
 		border: var( --border-width-base ) solid var( --border-color-base );
 		border-radius: var( --border-radius-medium );
+		.mixin-citizen-font-styles( 'small' );
 	}
 
 	li {
@@ -41,23 +39,16 @@
 	padding: 0;
 	margin: 0;
 
-	h2 {
-		font-size: var( --font-size-large );
-	}
-
-	h3 {
-		font-size: var( --font-size-medium );
-	}
-
 	/* Similar to pre styles */
-	> h3 + p {
+	> h3 + p,
+	.mw-heading-3 + p {
 		padding: var( --space-md );
 		font-family: var( --font-family-serif );
-		font-size: var( --font-size-small );
 		font-variant-numeric: lining-nums;
 		color: var( --color-emphasized );
 		background: var( --color-surface-2 );
 		border: var( --border-width-base ) solid var( --border-color-base );
 		border-radius: var( --border-radius-large );
+		.mixin-citizen-font-styles( 'small' );
 	}
 }

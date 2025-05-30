@@ -5,23 +5,22 @@
 	gap: var( --space-xl );
 	padding-top: var( --space-xl );
 	margin-top: var( --space-xl );
-	line-height: var( --line-height-small );
+	.mixin-citizen-font-styles( 'small' );
 }
 
 .page-info {
 	display: flex;
 	flex-wrap: wrap;
 	gap: var( --space-xl );
-	font-size: var( --font-size-x-small );
 
 	&__item {
 		display: flex;
 		flex-direction: column;
-		gap: var( --space-xs );
+		gap: var( --space-xxs );
 	}
 
 	&__label {
-		font-weight: var( --font-weight-medium );
 		color: var( --color-subtle );
+		.mixin-citizen-font-styles( 'overline' );
 	}
 }

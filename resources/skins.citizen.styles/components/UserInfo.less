@@ -2,6 +2,7 @@
 	padding: var( --space-sm ) var( --space-md ) var( --space-md );
 	margin-bottom: var( --space-xs );
 	border-bottom: var( --border-width-base ) solid var( --border-color-base );
+	.mixin-citizen-font-styles( 'small' );
 
 	&-title {
 		font-weight: var( --font-weight-medium );
@@ -11,8 +12,9 @@
 	#pt-userpage-2 > a,
 	#pt-tmpuserpage-2 > span {
 		padding-block: var( --space-xxs );
-		font-size: var( --font-size-medium );
+		font-weight: var( --font-weight-semi-bold );
 		color: var( --color-emphasized );
+		.mixin-citizen-font-styles( 'body' );
 	}
 
 	#pt-userpage-2 {
@@ -34,13 +36,10 @@
 	}
 
 	#pt-userpage-username {
-		font-size: var( --font-size-small );
 		color: var( --color-subtle );
 	}
 
 	&-text {
-		font-size: var( --font-size-small );
-		line-height: var( --line-height-small );
 		color: var( --color-subtle );
 	}
 
@@ -61,7 +60,6 @@
 		flex-wrap: wrap;
 		gap: var( --space-xs ) var( --space-lg );
 		margin-top: var( --space-sm );
-		line-height: var( --line-height-small );
 
 		&-item {
 			display: flex;
@@ -74,8 +72,8 @@
 			}
 
 			&-label {
-				font-size: var( --font-size-x-small );
 				color: var( --color-subtle );
+				.mixin-citizen-font-styles( 'overline' );
 			}
 		}
 	}

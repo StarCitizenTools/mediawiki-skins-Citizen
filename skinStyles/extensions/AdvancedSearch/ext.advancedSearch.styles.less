@@ -8,6 +8,8 @@
  * Date: 2022-12-12
 */
 
+@import '../../../resources/mixins.less';
+
 .mw-advancedSearch-container {
 	margin-top: var( --space-xs );
 	border-bottom: var( --border-width-base ) solid var( --border-color-base );
@@ -17,9 +19,8 @@
 .mw-advancedSearch-searchPreview-label,
 .advancedsearch-namespacesPreview-label {
 	margin-right: var( --space-xs );
-	font-size: var( --font-size-small );
-	font-weight: var( --font-weight-medium );
 	color: var( --color-subtle );
+	.mixin-citizen-font-styles( 'overline' );
 }
 
 .mw-advancedSearch-fieldContainer {

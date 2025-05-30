@@ -1,8 +1,9 @@
+@import '../../resources/mixins.less';
+
 /*
  * Apply styles from .citizen-body
  * T347199
  */
 #mw-teleport-target {
-	font-size: var( --font-size-small );
-	line-height: var( --line-height-medium );
+	.mixin-citizen-font-styles( 'body' );
 }

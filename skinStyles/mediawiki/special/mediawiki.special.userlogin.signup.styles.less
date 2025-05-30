@@ -9,6 +9,7 @@
 */
 
 @import '../../../resources/variables.less';
+@import '../../../resources/mixins.less';
 
 .mw-createacct-benefits {
 	&-container {
@@ -20,10 +21,8 @@
 		padding: 0;
 		margin-block: 0 var( --space-md );
 		font-family: var( --font-family-base );
-		font-size: var( --font-size-xxx-large );
-		font-weight: var( --font-weight-semi-bold );
-		line-height: var( --line-height-xs );
 		color: var( --color-emphasized );
+		.mixin-citizen-font-styles( 'heading-1' );
 	}
 }
 
@@ -38,11 +37,9 @@
 
 		span {
 			font-family: var( --font-family-base );
-			font-size: var( --font-size-xxx-large );
-			font-weight: var( --font-weight-semi-bold );
-			line-height: var( --line-height-xs );
 			color: var( --color-emphasized );
 			text-align: inherit;
+			.mixin-citizen-font-styles( 'heading-1' );
 		}
 
 		p {

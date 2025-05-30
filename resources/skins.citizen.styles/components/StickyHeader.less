@@ -47,7 +47,7 @@
 	.firstHeading {
 		overflow: hidden;
 		text-overflow: ellipsis;
-		font-size: var( --font-size-large );
+		.mixin-citizen-font-styles( 'heading-4' );
 	}
 
 	.citizen-jumptotop {
@@ -82,14 +82,4 @@ html {
  */
 .mw-sticky-header-element {
 	.mixin-citizen-sticky-header-element;
-}
-
-// Make sticky header more compact if there are less screen estate
-@media ( max-height: 800px ) {
-	.citizen-sticky-header-visible {
-		.firstHeading,
-		.mw-page-title-parenthesis {
-			font-size: var( --font-size-large );
-		}
-	}
 }

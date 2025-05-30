@@ -20,10 +20,6 @@
 	display: flex;
 	gap: var( --space-xl );
 	justify-content: space-between;
-
-	.oo-ui-widget {
-		font-size: 1rem; // HACK: Override the 14px hack we use for OOUI
-	}
 }
 
 .mw-search-profile-tabs {
@@ -93,12 +89,6 @@
 
 .mw-search-createlink,
 .mw-search-exists {
-	// These can generate a empty card when there are no text content
-	// FIXME: re-enable when this is addressed in core
-	// padding: var( --space-sm ) var( --space-md );
-	// background: var( --color-surface-2 );
-	// border-radius: var( --border-radius-base );
-	margin-top: 0 !important;
 	color: var( --color-emphasized );
 }
 

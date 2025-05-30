@@ -8,10 +8,12 @@
  * Date: 2025-04-04
 */
 
+@import '../../../resources/mixins.less';
+
 .ext-floatingui-floating-inner {
-	font-size: var( --font-size-small );
 	background-color: var( --color-surface-1 );
 	border-color: var( --border-color-base );
 	border-radius: var( --border-radius-base );
 	box-shadow: var( --box-shadow-drop-medium );
+	.mixin-citizen-font-styles( 'small' );
 }

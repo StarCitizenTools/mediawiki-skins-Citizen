@@ -1,7 +1,6 @@
 .citizen-toc {
 	--citizen-toc-toggle-size: ~'calc( var( --line-height-small ) + var( --space-xs ) * 2 )';
-	font-size: var( --font-size-small );
-	line-height: var( --line-height-small );
+	.mixin-citizen-font-styles( 'small' );
 
 	&-top {
 		.citizen-ui-icon {
@@ -25,6 +24,7 @@
 		position: relative;
 		display: flex;
 		gap: var( --space-xs );
+		align-items: center;
 		padding: var( --space-xs );
 		font-weight: var( --font-weight-medium );
 		color: var( --color-base );
@@ -89,7 +89,6 @@
 	}
 
 	&-summary {
-		font-size: var( --font-size-x-small );
 		color: var( --color-subtle );
 	}
 

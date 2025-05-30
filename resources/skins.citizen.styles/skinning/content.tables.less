@@ -12,18 +12,17 @@
 	max-width: max-content; // Needed for the border
 	margin: var( --space-md ) 0;
 	overflow-x: auto;
-	font-size: var( --font-size-small );
 	border-collapse: collapse;
 	border-color: var( --border-color-base );
 	border-radius: var( --border-radius-medium );
 	box-shadow: var( --box-shadow-border );
+	.mixin-citizen-font-styles( 'small' );
 
 	caption {
 		padding: var( --space-xs ) var( --space-sm );
-		font-size: var( --font-size-medium );
-		font-weight: var( --font-weight-semi-bold );
 		color: var( --color-emphasized );
 		text-align: start;
+		.mixin-citizen-font-styles( 'heading-4' );
 	}
 
 	tbody tr {

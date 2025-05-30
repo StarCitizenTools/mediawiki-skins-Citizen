@@ -7,6 +7,9 @@
  *
  * Date: 2022-04-29
 */
+
+@import '../../../resources/mixins.less';
+
 @media screen {
 	span.mw-lingo-term {
 		border-bottom-color: var( --color-subtle );
@@ -18,13 +21,12 @@
 }
 
 .mw-lingo-tooltip {
-	font-size: var( --font-size-x-small );
-	line-height: var( --line-height-small );
 	color: var( --color-base );
 	background-color: var( --color-surface-1 );
 	border: 0;
 	border-radius: var( --border-radius-medium );
 	box-shadow: var( --box-shadow-drop-xx-large );
+	.mixin-citizen-font-styles( 'small' );
 
 	.qtip-content {
 		padding: var( --space-sm );

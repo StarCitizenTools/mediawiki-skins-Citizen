@@ -1,5 +1,5 @@
 .citizen-menu {
-	font-size: var( --font-size-small );
+	.mixin-citizen-font-styles( 'small' );
 
 	&__card {
 		--transform-origin-offset-start: var( --space-xs );
@@ -25,9 +25,8 @@
 		display: block;
 		padding: var( --space-xs ) var( --space-md );
 		margin: 0;
-		font-size: var( --font-size-x-small );
-		font-weight: var( --font-weight-medium );
 		color: var( --color-subtle );
+		.mixin-citizen-font-styles( 'overline' );
 	}
 
 	&__content-list {
@@ -36,13 +35,12 @@
 	}
 
 	.mw-list-item {
-		line-height: var( --line-height-small );
-
 		a {
 			display: flex;
 			gap: var( --space-sm );
 			align-items: center;
-			padding: var( --space-xs ) var( --space-md );
+			min-height: 2.25rem;
+			padding-inline: var( --space-md );
 			font-weight: var( --font-weight-medium );
 			color: var( --color-base );
 			transition: var( --transition-hover );

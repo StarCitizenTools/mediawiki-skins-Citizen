@@ -8,14 +8,16 @@
  * Date: 2024-07-05
 */
 
+@import '../../../resources/mixins.less';
+
 .searchdigest-admin-tools {
 	border-color: var( --border-color-base );
 }
 
 .searchdigest-stats-table {
-	font-size: var( --font-size-small );
 	border-collapse: collapse;
 	border-color: var( --border-color-base );
+	.mixin-citizen-font-styles( 'small' );
 }
 
 .searchdigest-stats-table thead th,
