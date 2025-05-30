@@ -7,38 +7,6 @@
  * Date: 2022-11-14
  */
 
-/* Links */
-// Some of the link styles are handled in content.links
-a {
-	color: var( --color-link );
-	text-decoration: none;
-
-	&:not( [ href ] ) {
-		cursor: pointer; /* Always cursor:pointer even without href */
-	}
-
-	&:hover {
-		color: var( --color-link--hover );
-	}
-
-	&:active {
-		color: var( --color-link--active );
-	}
-
-	&:hover,
-	&:focus {
-		text-decoration: underline;
-	}
-}
-
-a:lang( ar ),
-a:lang( kk-arab ),
-a:lang( mzn ),
-a:lang( ps ),
-a:lang( ur ) {
-	text-decoration: none;
-}
-
 /* Inline Elements */
 img {
 	vertical-align: middle;

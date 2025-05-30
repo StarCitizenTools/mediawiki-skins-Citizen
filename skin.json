@@ -114,7 +114,7 @@
 			"class": "MediaWiki\\ResourceLoader\\SkinModule",
 			"features": {
 				"normalize": true,
-				"content-links": true,
+				"content-links": false,
 				"content-links-external": false,
 				"i18n-ordered-lists": true,
 				"i18n-headings": true,

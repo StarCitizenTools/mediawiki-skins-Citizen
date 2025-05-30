@@ -1,0 +1,73 @@
+@import 'mediawiki.skin.variables.less';
+
+.citizen-cdx-mixin-link-base-overrides() {
+	// We don't want to use color-progressive for link colors
+	color: var( --color-link );
+
+	&:hover {
+		color: var( --color-link--hover );
+	}
+
+	&:active {
+		color: var( --color-link--active );
+	}
+
+	// FIX: Visited hover color is missing in MW 1.43
+	&:visited:hover {
+		color: var( --color-visited--hover );
+	}
+}
+
+// T373989
+a:where( :not( [ role='button' ] ) ) {
+	// See https://github.com/wikimedia/mediawiki/blob/master/resources/lib/codex/mixins/link.less
+	.cdx-mixin-link-base();
+	.citizen-cdx-mixin-link-base-overrides();
+ }
+
+a:where( .new:not( [ role='button' ] ) ) {
+	.cdx-mixin-link-red();
+}
+
+/* External links */
+.mw-parser-output {
+	a {
+		&.external {
+			&::after {
+				margin-inline-start: 4px;
+				content: '';
+				.cdx-mixin-css-icon( @cdx-icon-link-external, currentColor, @size-icon-x-small );
+				.cdx-mixin-css-icon-alignment( baseline );
+			}
+		}
+	}
+
+	/* Plainlinks */
+	.plainlinks a {
+		&.external {
+			&::after {
+				display: none;
+			}
+		}
+	}
+}
+
+/* Self links */
+a.mw-selflink {
+	font-weight: var( --font-weight-semi-bold );
+	color: inherit;
+	text-decoration: inherit;
+
+	&:hover {
+		cursor: inherit;
+	}
+}
+
+/* Underline preference */
+.mw-underline-always a {
+	text-decoration: underline;
+}
+
+.mw-underline-never a {
+	text-decoration: none;
+}
