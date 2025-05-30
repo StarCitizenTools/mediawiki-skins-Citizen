@@ -2,10 +2,6 @@
  * Miscellaneous styles that apply to body content
  */
 
-/**
- * Add affordance to thumbnails to replace magnify icon
- * On hover, enlarge the image to inform the user that a full-size image will be shown (to MMV or file page)
- */
 .citizen-body {
 	a.image {
 		display: inline-block;
@@ -20,7 +16,7 @@
 		// Add affordance to replace magnify icon
 		&:hover:not( .lazy ):not( .new ) {
 			> img {
-				transform: scale( 1.1 );
+				transform: var( --transform-image-hover );
 			}
 		}
 	}
