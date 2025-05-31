@@ -1,22 +1,15 @@
-/*
- * Framework
-*/
 html {
 	box-sizing: border-box;
-}
-
-html,
-body {
-	padding: 0;
-	margin: 0;
-	color: var( --color-base );
-	accent-color: var( --color-progressive );
-	background: var( --color-surface-0 );
+	font-size: 100%;
+	scroll-padding-top: ~'calc( var( --height-sticky-header ) + var( --space-xl ) )';
 }
 
 body {
 	min-height: ~'calc( 100vh - env( safe-area-inset-bottom,0 ) - env( safe-area-inset-top,0 ) )';
 	min-height: 100dvh;
+	color: var( --color-base );
+	accent-color: var( --accent-color-base );
+	background: var( --color-surface-0 );
 }
 
 // Apply border-box universally unless overwritten
@@ -34,7 +27,7 @@ body {
 }
 
 ::placeholder {
-	color: var( --color-subtle );
+	color: var( --color-placeholder );
 }
 
 ::selection {
@@ -119,9 +112,6 @@ td {
 	background-color: var( --color-surface-2 );
 }
 
-/*
- * Content
-*/
 .mw-body,
 .parsoid-body {
 	direction: ltr;
