@@ -19,7 +19,7 @@
 	&__content,
 	&__bottom {
 		display: flex;
-		gap: var( --space-md ) var( --space-xxl );
+		gap: var( --space-md );
 		justify-content: space-between;
 		padding: var( --space-md ) 0;
 		margin-inline: auto;
@@ -30,6 +30,7 @@
 	}
 
 	&__bottom {
+		flex-wrap: wrap;
 		margin-inline: auto;
 		border-top: var( --border-width-base ) solid var( --border-color-base );
 
@@ -48,8 +49,9 @@
 
 	&__sitetitle {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		gap: var( --space-sm );
+		align-items: center;
 
 		.mw-logo-wordmark {
 			font-size: var( --font-size-xxx-large );
@@ -58,7 +60,7 @@
 
 	&__desc {
 		margin: 0;
-		line-height: var( --line-height-small );
+		line-height: var( --line-height-xx-small );
 	}
 
 	a {
@@ -82,22 +84,34 @@
 		align-items: flex-end;
 
 		@media ( max-width: @max-width-breakpoint-tablet ) {
-			margin-inline: calc( -1 * var( --space-md ) );
-		}
-
-		@media ( min-width: @min-width-breakpoint-desktop ) {
-			margin-top: calc( -1 * var( --space-xs ) );
+			margin-inline: calc( -1 * var( --space-sm ) );
+			padding-inline: calc( -1 * var( --space-sm ) );
 		}
 
 		ul {
 			display: grid;
 			flex-grow: 1;
-			grid-template-columns: repeat( auto-fit, minmax( var( --min-width-footer-link ), 1fr ) );
+			gap: var( --space-xs );
+
+			@media ( min-width: @min-width-breakpoint-tablet ) {
+				justify-items: end;
+			}
+
+			@media ( max-width: @max-width-breakpoint-mobile ) {
+				grid-template-columns: repeat( auto-fit, minmax( var( --min-width-footer-link ), 1fr ) );
+
+				> li {
+					justify-self: start;
+				}
+			}
 		}
 
 		a {
-			display: block;
-			padding: var( --space-xs ) var( --space-md );
+			display: inline-block;
+			padding: var( --space-xs ) var( --space-sm );
+			text-align: center;
+			text-wrap: nowrap;
+			border: var( --border-base );
 			border-radius: var( --border-radius-base );
 
 			&:hover {
@@ -120,6 +134,10 @@
 			display: flex;
 			flex-wrap: wrap;
 			gap: var( --space-xs );
+
+			@media ( min-width: @min-width-breakpoint-tablet ) {
+				flex-wrap: nowrap;
+			}
 		}
 
 		li {
