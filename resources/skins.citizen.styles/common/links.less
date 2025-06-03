@@ -1,23 +1,5 @@
 @import 'mediawiki.skin.variables.less';
 
-.citizen-cdx-mixin-link-base-overrides() {
-	// We don't want to use color-progressive for link colors
-	color: var( --color-link );
-
-	&:hover {
-		color: var( --color-link--hover );
-	}
-
-	&:active {
-		color: var( --color-link--active );
-	}
-
-	// FIX: Visited hover color is missing in MW 1.43
-	&:visited:hover {
-		color: var( --color-visited--hover );
-	}
-}
-
 // T373989
 a:where( :not( [ role='button' ] ) ) {
 	// See https://github.com/wikimedia/mediawiki/blob/master/resources/lib/codex/mixins/link.less

@@ -204,6 +204,24 @@
 	filter: url( ';data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="@{svg-filter-id}" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 @{r} 0 0 0 0 @{g} 0 0 0 0 @{b} 0 0 0 @{a} 0"/></filter></svg> #@{svg-filter-id}' );
 }
 
+.citizen-cdx-mixin-link-base-overrides() {
+	// We don't want to use color-progressive for link colors
+	color: var( --color-link );
+
+	&:hover {
+		color: var( --color-link--hover );
+	}
+
+	&:active {
+		color: var( --color-link--active );
+	}
+
+	// FIX: Visited hover color is missing in MW 1.43
+	&:visited:hover {
+		color: var( --color-visited--hover );
+	}
+}
+
 // Based on Codex 2.0 typography tokens from T363845
 // TODO: Revisit when T333890 is resolved
 .mixin-citizen-font-styles( @type ) {

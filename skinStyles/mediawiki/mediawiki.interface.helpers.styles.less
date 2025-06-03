@@ -3,14 +3,16 @@
  *
  * SkinStyles for helper classes used across special pages and actions
  * Module: mediawiki.interface.helpers.styles
- * Version: 1.39.0
+ * Version: REL1_43
  *
- * Date: 2023-07-11
+ * Date: 2025-06-25
 */
+
+@import 'mediawiki.skin.variables.less';
+@import '../../resources/mixins.less';
 
 .unpatrolled {
 	font-weight: var( --font-weight-semi-bold );
-	color: var( --color-destructive );
 }
 
 .newpage,
@@ -19,47 +21,13 @@
 	font-weight: var( --font-weight-semi-bold );
 }
 
-.autocomment,
-.autocomment a,
-.autocomment a:visited {
-	color: var( --color-subtle );
-}
-
-/* Make tags into pills */
-.mw-tag-markers {
-	margin-left: var( --space-xxs );
-
-	.mw-tag-marker {
-		padding: 2px 8px;
-		font-size: var( --font-size-x-small );
-		background-color: var( --color-surface-2 );
-		border: 1px solid var( --border-color-base );
-		border-radius: var( --border-radius-pill );
-
-		&::after {
-			display: none;
-		}
-	}
-
-	&::before,
-	&::after {
-		display: none;
-	}
-}
-
-li span.deleted,
-span.history-deleted {
-	color: var( --color-subtle );
-}
-
-span.mw-history-suppressed {
-	color: var( --color-base );
-}
-
-.mw-usertoollinks-contribs-no-edits {
-	color: var( --color-link--new );
-
-	&:visited {
-		color: var( --color-link--new );
+// Backported from T381315 for MW 1.43
+.mw-logevent-actionlink,
+.mw-logevent-tool,
+.mw-diff-tool,
+.mw-pager-tools {
+	a {
+		.cdx-mixin-link-base();
+		.citizen-cdx-mixin-link-base-overrides();
 	}
 }
