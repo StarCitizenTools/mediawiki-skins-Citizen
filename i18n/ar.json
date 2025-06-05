@@ -50,8 +50,16 @@
 	"citizen-feature-custom-font-size-small-label": "صغير",
 	"citizen-feature-custom-font-size-standard-label": "قياسي",
 	"citizen-feature-custom-font-size-large-label": "كبير",
+	"citizen-feature-custom-font-size-xlarge-label": "كبير جدًا",
 	"citizen-feature-custom-width-name": "العرض",
 	"citizen-feature-custom-width-standard-label": "قياسي",
 	"citizen-user-info-text-anon": "سيكون عنوان الآيبي الخاص بك مرئيًا للعامة إذا قمت بإجراء أي تعديلات.",
-	"citizen-user-info-text-temp": "تم إنشاء هذا الحساب المؤقت بعد إجراء تعديل بدون حساب على هذا المتصفح والجهاز."
+	"citizen-user-info-text-temp": "تم إنشاء هذا الحساب المؤقت بعد إجراء تعديل بدون حساب على هذا المتصفح والجهاز.",
+	"citizen-user-info-edits-label": "التعديلات",
+	"citizen-user-info-joined-label": "انضم",
+	"citizen-command-palette-tip-commands": "اكتب <code>/</code> لجميع الأوامر",
+	"citizen-command-palette-tip-users": "اكتب <code>@</code> للبحث عن المستخدمين",
+	"citizen-command-palette-tip-namespace": "أكتب <code>:</code> للبحث عن النطاق",
+	"citizen-command-palette-tip-templates": "اكتب <code>{{</code> للبحث عن القوالب",
+	"citizen-command-palette-tip-actions": "اكتب <code>></code> للحصول على قائمة الإجراءات"
 }
