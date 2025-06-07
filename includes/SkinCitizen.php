@@ -32,6 +32,7 @@ use MediaWiki\Skins\Citizen\Components\CitizenComponentPageSidebar;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageTools;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentSearchBox;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentSiteStats;
+use MediaWiki\Skins\Citizen\Components\CitizenComponentStickyHeader;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentUserInfo;
 use MediaWiki\Skins\Citizen\Partials\BodyContent;
 use MediaWiki\Skins\Citizen\Partials\Metadata;
@@ -155,6 +156,9 @@ class SkinCitizen extends SkinMustache {
 				$title,
 				$user,
 				$parentData['data-portlets']['data-user-page']
+			),
+			'data-sticky-header' => new CitizenComponentStickyHeader(
+				$this->isVisualEditorTabPositionFirst( $parentData['data-portlets']['data-views'] )
 			)
 		];
 
@@ -165,14 +169,40 @@ class SkinCitizen extends SkinMustache {
 			}
 		}
 
+		// HACK: So that we only get the tagline once
+		$parentData['data-sticky-header']['html-tagline'] = $parentData['data-page-heading']['html-tagline'];
+
 		// HACK: So that we can use Icon.mustache in Header__logo.mustache
 		$parentData['data-logos']['icon-home'] = 'home';
 
+		$isTocEnabled = !empty( $parentData['data-toc'][ 'array-sections' ] );
+		if ( $isTocEnabled ) {
+			$this->getOutput()->addBodyClasses( 'citizen-toc-enabled' );
+		}
+
 		return array_merge( $parentData, [
 			// Booleans
-			'toc-enabled' => !empty( $parentData['data-toc'] ),
+			'toc-enabled' => $isTocEnabled,
 			'html-body-content--formatted' => $bodycontent->decorateBodyContent( $parentData['html-body-content'] )
 		] );
+	}
+
+	/**
+	 * Check whether Visual Editor Tab Position is first
+	 * From Vector 2022
+	 *
+	 * @param array $dataViews
+	 * @return bool
+	 */
+	private function isVisualEditorTabPositionFirst( array $dataViews ): bool {
+		$names = [ 've-edit', 'edit' ];
+		// find if under key 'name' 've-edit' or 'edit' is the before item in the array
+		for ( $i = 0; $i < count( $dataViews[ 'array-items' ] ); $i++ ) {
+			if ( in_array( $dataViews[ 'array-items' ][ $i ][ 'name' ], $names ) ) {
+				return $dataViews[ 'array-items' ][ $i ][ 'name' ] === $names[ 0 ];
+			}
+		}
+		return false;
 	}
 
 	/**
