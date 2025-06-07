@@ -41,24 +41,24 @@ function copyButtonAttributes( from, to ) {
 }
 
 /**
- * Prepare the more menu dropdown for the sticky header.
+ * Prepare the menu dropdown for the sticky header.
  *
- * @param {HTMLElement} moreMenuDropdown
+ * @param {HTMLElement} menuDropdown
  * @return {HTMLElement}
  */
-function prepareMoreMenuDropdown( moreMenuDropdown ) {
+function prepareMenuDropdown( menuDropdown ) {
 	const
-		moreMenuDropdownClone = moreMenuDropdown.cloneNode( true ),
-		moreMenuDropdownStickyElementsWithIds = moreMenuDropdownClone.querySelectorAll( '[ id ]' ),
-		moreMenuDropdownButton = moreMenuDropdownClone.querySelector( '.citizen-dropdown-summary' );
+		menuDropdownClone = menuDropdown.cloneNode( true ),
+		menuDropdownStickyElementsWithIds = menuDropdownClone.querySelectorAll( '[ id ]' ),
+		menuDropdownButton = menuDropdownClone.querySelector( '.citizen-dropdown-summary' );
 
-	moreMenuDropdownStickyElementsWithIds.forEach( ( stickyElement ) => {
+	menuDropdownStickyElementsWithIds.forEach( ( stickyElement ) => {
 		// Remove the id attribute to prevent duplicate ids
 		stickyElement.removeAttribute( 'id' );
 	} );
 
 	// Make the button look like a cdx-button
-	moreMenuDropdownButton.classList.add(
+	menuDropdownButton.classList.add(
 		'cdx-button',
 		'cdx-button--fake-button',
 		'cdx-button--fake-button--enabled',
@@ -66,9 +66,25 @@ function prepareMoreMenuDropdown( moreMenuDropdown ) {
 		'cdx-button--size-large',
 		'cdx-button--icon-only'
 	);
-	moreMenuDropdownButton.setAttribute( 'tabindex', '-1' );
+	menuDropdownButton.setAttribute( 'tabindex', '-1' );
 
-	return moreMenuDropdownClone;
+	return menuDropdownClone;
+}
+
+/**
+ * Append dropdown to the sticky header.
+ *
+ * @param {HTMLElement} dropdown
+ * @param {HTMLElement} container
+ * @return {void}
+ */
+function appendDropdown( dropdown, container ) {
+	if ( !dropdown || !container ) {
+		return;
+	}
+
+	const dropdownClone = prepareMenuDropdown( dropdown );
+	container.appendChild( dropdownClone );
 }
 
 /**
@@ -168,12 +184,12 @@ function init( stickyHeader ) {
 
 	const
 		moreMenuDropdown = document.getElementById( 'citizen-page-more-dropdown' ),
-		moreMenuDropdownContainer = document.getElementById( 'citizen-sticky-header-more' );
+		moreMenuDropdownContainer = document.getElementById( 'citizen-sticky-header-more' ),
+		languagesDropdown = document.getElementById( 'citizen-page-languages-dropdown' ),
+		languagesDropdownContainer = document.getElementById( 'citizen-sticky-header-languages' );
 
-	if ( moreMenuDropdown && moreMenuDropdownContainer ) {
-		const moreMenuDropdownClone = prepareMoreMenuDropdown( moreMenuDropdown );
-		moreMenuDropdownContainer.appendChild( moreMenuDropdownClone );
-	}
+	appendDropdown( moreMenuDropdown, moreMenuDropdownContainer );
+	appendDropdown( languagesDropdown, languagesDropdownContainer );
 }
 
 module.exports = {
