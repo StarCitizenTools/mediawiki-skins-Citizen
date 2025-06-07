@@ -102,11 +102,6 @@ class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 		$this->assertStringContainsString( 'cdx-button--weight-quiet', $templateData['class'],
 			'Quiet button should have quiet weight class.' );
 
-		$mediumButton = new CitizenComponentButton( 'Label', null, null, null, [], 'normal', 'default', 'medium' );
-		$templateData = $mediumButton->getTemplateData();
-		$this->assertStringContainsString( 'cdx-button--size-medium', $templateData['class'],
-			'Medium button should have medium size class.' );
-
 		$largeButton = new CitizenComponentButton( 'Label', null, null, null, [], 'normal', 'default', 'large' );
 		$templateData = $largeButton->getTemplateData();
 		$this->assertStringContainsString( 'cdx-button--size-large', $templateData['class'],

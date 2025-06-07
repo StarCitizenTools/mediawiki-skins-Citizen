@@ -44,7 +44,7 @@ function copyButtonAttributes( from, to ) {
  * Prepare the more menu dropdown for the sticky header.
  *
  * @param {HTMLElement} moreMenuDropdown
- * @return {void}
+ * @return {HTMLElement}
  */
 function prepareMoreMenuDropdown( moreMenuDropdown ) {
 	const
