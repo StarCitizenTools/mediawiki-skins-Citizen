@@ -131,8 +131,6 @@
 			--height-sticky-header: 0px !important;
 
 			.citizen-header,
-			.citizen-page-header,
-			.citizen-page-heading,
 			.citizen-toc,
 			.page-actions {
 				transition-timing-function: var( --transition-timing-function-ease-in );
@@ -151,12 +149,8 @@
 			}
 
 			&.citizen-sticky-header-visible {
-				.citizen-page-header {
+				.citizen-sticky-header-container {
 					transform: translate3d( 0, -100%, 0 );
-				}
-
-				.citizen-page-heading {
-					opacity: 0;
 				}
 			}
 		}

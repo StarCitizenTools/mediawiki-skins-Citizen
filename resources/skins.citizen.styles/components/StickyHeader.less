@@ -13,62 +13,150 @@
 	}
 }
 
-.citizen-page-header {
-	position: -webkit-sticky;
-	position: sticky;
-}
+.citizen-sticky-header {
+	padding-inline: var( --padding-page );
+	border-bottom: var( --border-base );
+	.mixin-citizen-frosted-glass( citizen-sticky-header-backdrop, 0 );
 
-.citizen-sticky-header-visible {
-	.citizen-page-header {
+	&-container {
+		position: fixed;
 		top: 0;
-		z-index: @z-index-stacking-3;
-		flex-wrap: nowrap;
-		padding-top: env( safe-area-inset-top );
-		white-space: nowrap;
-		// So that it won't change the height of the header
-		box-shadow: 0 0 0 1px var( --border-color-base );
-		.mixin-citizen-frosted-glass( citizen-page-header-backdrop, 0 );
+		right: 0;
+		left: 0;
+		z-index: @z-index-sticky;
+		visibility: hidden;
+		transform: translateY( -100% );
+		transition-timing-function: var( --transition-timing-function-ease-out );
+		transition-duration: var( --transition-duration-medium );
+		transition-property: transform, visibility;
 
-		.citizen-page-header-inner {
-			padding-block: var( --space-sm );
+		@media ( min-width: @min-width-breakpoint-desktop ) {
+			margin-left: var( --header-size );
 		}
+	}
 
-		#siteSub,
-		.mw-indicators {
+	&-inner {
+		display: flex;
+		gap: var( --space-md );
+		align-items: center;
+		justify-content: space-between;
+		max-width: var( --width-page );
+		min-height: 3.25rem;
+		padding-block: var( --space-xxs );
+		margin-inline: auto;
+	}
+
+	&-start {
+		display: flex;
+		flex-grow: 1;
+		align-items: center;
+		margin-inline-start: -16px; // Compensate for the cdx button padding
+		overflow: hidden;
+	}
+
+	&-end {
+		display: flex;
+		align-items: center;
+
+		// Already have fixed page tools in narrow screen
+		@media ( max-width: @max-width-breakpoint-tablet ) {
 			display: none;
 		}
 	}
 
-	.citizen-page-heading {
-		position: relative;
-		min-width: 0;
-	}
+	&-backtotop {
+		flex-grow: 1;
 
-	.firstHeading {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		.mixin-citizen-font-styles( 'heading-4' );
-	}
-
-	.citizen-jumptotop {
-		position: absolute;
-		inset: 0 0 0 0;
-		margin: ~'calc( var(  --space-xs ) * -1 )';
-		border-radius: var( --border-radius-base );
+		&.cdx-button {
+			gap: var( --space-xs );
+			justify-content: flex-start;
+			max-width: none;
+		}
 
 		&:hover {
-			background-color: var( --background-color-button-quiet--hover );
+			.citizen-ui-icon {
+				opacity: 1;
+			}
+
+			.citizen-sticky-header-page-info {
+				transform: translateX( calc( var( --size-icon ) + var( --space-xs ) ) );
+			}
 		}
 
-		&:active {
-			background-color: var( --background-color-button-quiet--active );
+		.citizen-ui-icon {
+			position: absolute;
+			opacity: 0;
+			transform: rotate( 90deg ) !important;
+			transition-timing-function: var( --transition-timing-function-ease );
+			transition-duration: var( --transition-duration-medium );
+			transition-property: opacity;
 		}
 	}
 
-	// Collapse page tools label in sticky header
-	.page-actions > .mw-portlet li > a {
-		gap: 0;
-		font-size: 0;
+	&-page-info {
+		overflow: hidden;
+		transition-timing-function: var( --transition-timing-function-ease );
+		transition-duration: var( --transition-duration-base );
+		transition-property: transform;
+	}
+
+	&-page-title,
+	&-page-tagline {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	&-page-title {
+		font-size: var( --font-size-large );
+		font-weight: var( --font-weight-semi-bold );
+		color: var( --color-emphasized );
+	}
+
+	&-page-tagline {
+		display: none;
+		font-size: var( --font-size-small );
+		color: var( --color-subtle );
+	}
+
+	&-more {
+		.citizen-dropdown-details {
+			&[ open ] {
+				.citizen-dropdown-summary {
+					background-color: var( --background-color-button-quiet--active );
+				}
+			}
+		}
+
+		.citizen-dropdown {
+			position: relative;
+		}
+
+		.citizen-menu__card {
+			top: calc( 100% + var( --space-xs ) );
+			right: calc( var( --space-xs ) * -1 );
+			max-width: 80vw;
+			max-height: 60vh;
+			padding-block: var( --space-xs );
+			transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-start );
+		}
+	}
+
+	// The buttons are not supposed to be focusable
+	.cdx-button {
+		&:focus {
+			border-color: transparent !important;
+			box-shadow: none !important;
+		}
+	}
+}
+
+.citizen-sticky-header-visible {
+	.citizen-sticky-header {
+		&-container {
+			visibility: visible;
+			transform: none;
+		}
 	}
 }
 

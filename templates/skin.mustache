@@ -11,7 +11,7 @@
 }}
 
 {{>Header}}
-<div class="citizen-page-container {{#toc-enabled}}citizen-toc-enabled{{/toc-enabled}}">
+<div class="citizen-page-container">
 	<div class="citizen-sitenotice-container">{{{html-site-notice}}}</div>
 	<main class="mw-body" id="content">
 		{{>PageHeader}}
@@ -29,3 +29,4 @@
 	{{{html-after-content}}}
 	{{#data-footer}}{{>Footer}}{{/data-footer}}
 </div>
+{{#data-sticky-header}}{{>StickyHeader}}{{/data-sticky-header}}

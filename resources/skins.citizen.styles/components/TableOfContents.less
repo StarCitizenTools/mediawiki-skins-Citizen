@@ -35,6 +35,8 @@
 			height: 0;
 			padding-block: 0;
 			opacity: 0;
+			transition-timing-function: var( --transition-timing-function-ease-out );
+			transition-duration: var( --transition-duration-medium );
 			transition-property: opacity, height;
 		}
 
@@ -165,7 +167,6 @@
 		pointer-events: none; // HACK: Make background clickable
 
 		&-card {
-			position: absolute;
 			// Get consistent margin
 			bottom: ~'calc( 100% - var( --space-xs ) )';
 			width: max-content;
@@ -224,6 +225,7 @@
 		overscroll-behavior: contain;
 
 		.citizen-menu__card {
+			position: relative;
 			min-width: auto;
 			margin: 0;
 			background: transparent;
