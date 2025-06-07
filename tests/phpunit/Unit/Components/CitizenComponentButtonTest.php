@@ -29,6 +29,8 @@ class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 				'expectedClasses' => 'cdx-button',
 				// Default button weight.
 				'weight' => 'normal',
+				// Default button size.
+				'size' => 'medium',
 				// Indicates that the button is not icon-only.
 				'iconOnly' => false,
 				// No link for a basic button.
@@ -42,6 +44,8 @@ class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 					'cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-primary',
 				// Indicates primary visual importance.
 				'weight' => 'primary',
+				// Default button size.
+				'size' => 'medium',
 				// Still not an icon-only button.
 				'iconOnly' => false,
 				// Providing an href activates additional styles.
@@ -54,6 +58,8 @@ class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 				'expectedClasses' => 'cdx-button cdx-button--icon-only',
 				// Default weight even for icon-only buttons.
 				'weight' => 'normal',
+				// Default button size.
+				'size' => 'medium',
 				// This button is icon-only.
 				'iconOnly' => true,
 				// No link for this icon-only button.
@@ -80,7 +86,7 @@ class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 			'Primary button should have primary weight class.' );
 
 		$iconOnlyButton = new CitizenComponentButton(
-			'Label', null, null, null, [], 'normal', 'default', true );
+			'Label', null, null, null, [], 'normal', 'default', 'medium', true );
 		$templateData = $iconOnlyButton->getTemplateData();
 		$this->assertStringContainsString( 'cdx-button--icon-only', $templateData['class'],
 			'Icon-only button should have icon-only class.' );
@@ -101,6 +107,16 @@ class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 		$templateData = $quietButton->getTemplateData();
 		$this->assertStringContainsString( 'cdx-button--weight-quiet', $templateData['class'],
 			'Quiet button should have quiet weight class.' );
+
+		$mediumButton = new CitizenComponentButton( 'Label', null, null, null, [], 'normal', 'default', 'medium' );
+		$templateData = $mediumButton->getTemplateData();
+		$this->assertStringContainsString( 'cdx-button--size-medium', $templateData['class'],
+			'Medium button should have medium size class.' );
+
+		$largeButton = new CitizenComponentButton( 'Label', null, null, null, [], 'normal', 'default', 'large' );
+		$templateData = $largeButton->getTemplateData();
+		$this->assertStringContainsString( 'cdx-button--size-large', $templateData['class'],
+			'Large button should have large size class.' );
 	}
 
 	/**
@@ -128,6 +144,8 @@ class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 			$weight,
 			// Default action type.
 			'default',
+			// Default button size.
+			'medium',
 			$iconOnly,
 			$href
 		);
