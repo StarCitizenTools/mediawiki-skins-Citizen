@@ -51,6 +51,12 @@ class CitizenComponentStickyHeader implements CitizenComponent {
 		'icon' => 'wikimedia-editLock'
 	];
 
+	private const ADD_SECTION_ICON = [
+		'id' => 'ca-addsection-sticky-header',
+		'clickTarget' => '#ca-addsection > a',
+		'icon' => 'speechBubbleAdd'
+	];
+
 	public function __construct(
 		private bool $visualEditorTabPositionFirst = false
 	) {
@@ -66,6 +72,7 @@ class CitizenComponentStickyHeader implements CitizenComponent {
 			$this->visualEditorTabPositionFirst ? self::EDIT_VE_ICON : self::EDIT_WIKITEXT_ICON,
 			$this->visualEditorTabPositionFirst ? self::EDIT_WIKITEXT_ICON : self::EDIT_VE_ICON,
 			self::EDIT_PROTECTED_ICON,
+			self::ADD_SECTION_ICON,
 			self::TALK_ICON,
 			self::SUBJECT_ICON
 		];
