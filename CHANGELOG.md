@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.2.0...v3.3.0) (2025-06-07)
+
+
+### Features
+
+* **contentEnhancements:** ✨ add user anniversary feature and improve registration date display ([64cb5d7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/64cb5d7ab3a6dc0381fae54b31e8fc4afadc8beb))
+* **core:** ✨ add --transform-image-hover variable that controls image hover zoom ([d84e4c5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d84e4c557e913389780f07749161b4c7a1a01bd6))
+* **preferences:** ✨ add extra large font size option ([dc7d3bd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/dc7d3bd8cb412344527e1bc0ff99471d0e0a0155))
+* **preferences:** ✨ restrict font size to body content ([2d89125](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2d891252ccca26ae14284312fb104f69abe09e76))
+* **stickyHeader:** ✨ add 'Add Section' button to sticky header ([0bc62b6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0bc62b643c212aeb1addf8bc9b694bfaec91bed8))
+* **stickyHeader:** ✨ add language dropdown to sticky header ([3260022](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/32600222feefef31d33b13242c2b2c47f041f0a3))
+* **stickyHeader:** ✨ re-implement sticky header ([#1073](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1073)) ([fbb1d4f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fbb1d4fe9627281567706f3f6fc99a42ce16fdc4)), closes [#906](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/906)
+* **typography:** ✨ add utility classes for typography styles ([4251f3c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4251f3c31740397cd45012f36b831fd89d6a41f6))
+* **typography:** ✨ backport and use Codex 2.0 font tokens ([0e13c8e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0e13c8e7ee13f93768fee5e0e5b488dd3dc08969))
+* **typography:** ✨ implement Codex 2.0 font styles across components ([bfd7e63](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bfd7e6394cbbbef94c253eea69693f765b752f66))
+* **typography:** ✨ move CJK line-height adjustment to citizen-body styles ([111fb03](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/111fb03f38899c4ceaa3766e165423d4e9a9296a))
+* **userMenu:** ✨ improve user stats layout and add registration date ([87eb6c7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/87eb6c746bf65a5d417a62f40f6ba594b4238a56))
+
+
+### Bug Fixes
+
+* **commandPalette:** 🐛 fix incorrect msg call for tips ([fdee8f4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fdee8f486ae6b12622b09f14fb29d83801604244))
+* **commandPalette:** 🐛 use matched title for URL when available ([e538bb8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e538bb81b1f0e97a41a89028d6a68055ba77c6b8)), closes [#1065](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1065)
+* **core:** 🐛 correct import path for mixins in edit styles ([8b25299](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8b252998d91d310c163c81531c682587266b702c))
+* **core:** 🐛 default link to be not underlined ([8e7e57b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8e7e57b5c182afb1ad72341f1855445ab01ca5e9))
+* **links:** 🐛 fix various broken link styles in diff and log pages ([066191d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/066191d062fd5aada5f4581cd96052514c842c6b))
+* **toc:** 🐛 prevent applying Codex link styles to toc links ([15adb98](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/15adb98a51b858e50303d97738a76bc54392946a))
+* **typography:** 🐛 citizen-body should use unitless line height ([783eb6e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/783eb6e61f5c2db6186a7be829457b4aad99be68))
+* **VisualEditor:** 🐛 allow categories to be clicked ([4135a49](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4135a493dfe039cf531d3324fd56ec0b3f51208e))
+
 ## [3.2.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.1.0...v3.2.0) (2025-05-19)
 
 
