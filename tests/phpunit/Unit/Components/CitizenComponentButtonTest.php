@@ -29,8 +29,6 @@ class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 				'expectedClasses' => 'cdx-button',
 				// Default button weight.
 				'weight' => 'normal',
-				// Default button size.
-				'size' => 'medium',
 				// Indicates that the button is not icon-only.
 				'iconOnly' => false,
 				// No link for a basic button.
@@ -44,8 +42,6 @@ class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 					'cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-primary',
 				// Indicates primary visual importance.
 				'weight' => 'primary',
-				// Default button size.
-				'size' => 'medium',
 				// Still not an icon-only button.
 				'iconOnly' => false,
 				// Providing an href activates additional styles.
@@ -58,8 +54,6 @@ class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 				'expectedClasses' => 'cdx-button cdx-button--icon-only',
 				// Default weight even for icon-only buttons.
 				'weight' => 'normal',
-				// Default button size.
-				'size' => 'medium',
 				// This button is icon-only.
 				'iconOnly' => true,
 				// No link for this icon-only button.
