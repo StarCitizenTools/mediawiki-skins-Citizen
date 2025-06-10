@@ -50,7 +50,10 @@
 	.citizen-section {
 		&-heading {
 			cursor: pointer;
-			user-select: none;
+
+			@supports ( user-select: none ) {
+				user-select: none;
+			}
 		}
 
 		&-indicator {

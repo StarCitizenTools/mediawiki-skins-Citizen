@@ -67,12 +67,11 @@
 html.citizen-loading::after {
 	position: fixed;
 	top: 0;
-}
 
-@media ( display-mode: standalone ) {
 	// Standalone PWA has no loading affordance
 	// So we provide one
-	html.citizen-loading::after {
+	/* stylelint-disable-next-line plugin/use-baseline */
+	@media ( display-mode: standalone ) {
 		--delay-progress-bar: 0ms;
 	}
 }

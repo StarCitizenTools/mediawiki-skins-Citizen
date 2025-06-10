@@ -37,9 +37,11 @@ p:not( .mw-empty-elt ) {
 
 blockquote {
 	font-style: italic;
-	/* NOTE: This only works for Chromium browsers for now */
-	text-wrap: pretty;
 	.mixin-citizen-font-styles( 'body' );
+
+	@supports ( text-wrap: pretty ) {
+		text-wrap: pretty;
+	}
 
 	cite {
 		font-style: normal;

@@ -171,13 +171,14 @@
 			padding: ~'calc( var( --mmv-error-icon-size ) + var( --space-xxl ) )' 0 0 0;
 			margin: var( --space-md ) 4.5rem;
 			line-height: var( --line-height-small );
-			word-break: break-word;
+			overflow-wrap: break-word;
 			background-size: var( --mmv-error-icon-size );
 
 			.mw-mmv-error {
 				&-text {
 					font-size: var( --font-size-xxx-large );
 					font-weight: var( --font-weight-semi-bold );
+					color: ~'hsl( var( --color-progressive-hsl__h ), 35%, 65% )';
 				}
 
 				&-description {

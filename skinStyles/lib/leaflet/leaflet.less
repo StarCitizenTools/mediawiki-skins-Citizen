@@ -101,8 +101,15 @@
 		min-height: 32px;
 		padding: 0 var( --space-xs );
 		cursor: pointer;
-		user-select: none;
 		border-radius: var( --border-radius-base );
+
+		@supports ( user-select: none ) {
+			user-select: none;
+		}
+
+		@supports ( -webkit-user-select: none ) {
+			-webkit-user-select: none;
+		}
 
 		&:hover {
 			background: var( --background-color-quiet--hover );

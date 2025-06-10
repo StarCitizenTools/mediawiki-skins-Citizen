@@ -24,8 +24,7 @@
 				"available": "2024",
 				"ignoreSelectors": [
 					"nesting"
-				],
-				"severity": "warning"
+				]
 			}
 		]
 	}

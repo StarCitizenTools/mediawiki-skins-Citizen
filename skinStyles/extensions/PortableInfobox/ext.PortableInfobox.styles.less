@@ -41,7 +41,13 @@
 .client-js .pi-collapse {
 	.pi-header:first-child {
 		// So that clicking the header won't highlight the entire section
-		user-select: none;
+		@supports ( user-select: none ) {
+			user-select: none;
+		}
+
+		@supports ( -webkit-user-select: none ) {
+			-webkit-user-select: none;
+		}
 	}
 }
 
