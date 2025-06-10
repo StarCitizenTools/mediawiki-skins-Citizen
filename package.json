@@ -18,13 +18,14 @@
 		"eslint-config-wikimedia": "0.30.0",
 		"grunt-banana-checker": "0.13.0",
 		"husky": "^9.1.7",
+		"pinia": "2.0.16",
 		"stylelint": "16.20.0",
 		"stylelint-config-recess-order": "6.0.0",
 		"stylelint-config-wikimedia": "0.18.0",
 		"stylelint-order": "^7.0.0",
+		"stylelint-plugin-use-baseline": "^0.6.0",
 		"types-mediawiki": "1.10.1",
-		"vue": "3.4.27",
-		"pinia": "2.0.16"
+		"vue": "3.4.27"
 	},
 	"version": "3.3.0"
 }
