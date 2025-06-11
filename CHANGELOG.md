@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.3.0...v3.3.1) (2025-06-11)
+
+
+### Bug Fixes
+
+* **layout:** 🐛 fix incorrect --width-page for extended pages ([ac273af](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ac273af04fa1eac805d12a2367ed935280fbc9eb))
+* **security:** 🐛 🔒️ fix various stored XSS system message vulnerabilities ([93c36ac](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/93c36ac778397e0e7c46cf7adb1e5d848265f1bd))
+* **styles:** 🐛 correct font-family variable for overline text ([407052e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/407052e7069bdeae927d6f1a2a1c9a45b473bf9a))
+
+
+### Miscellaneous Chores
+
+* 🔧 add stylelint Baseline config ([4b44f69](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4b44f69d7f5c8f630cfc9ae226729c6d2866ab47))
+
 ## [3.3.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.2.0...v3.3.0) (2025-06-07)
 
 
