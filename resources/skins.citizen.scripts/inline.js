@@ -20,26 +20,6 @@ window.clientPrefs = () => {
 				new RegExp( '(^| )' + pref.replace( /-clientpref-\w+$|[^\w-]+/g, '' ) + '-clientpref-\\w+( |$)' ),
 				'$1' + pref + '$2'
 			);
-
-			// Legacy support
-			if ( pref.startsWith( 'skin-theme-clientpref-' ) ) {
-				const CLIENTPREFS_THEME_MAP = {
-					os: 'auto',
-					day: 'light',
-					night: 'dark'
-				};
-				const matchedKey = CLIENTPREFS_THEME_MAP[ pref.replace( 'skin-theme-clientpref-', '' ) ];
-				if ( matchedKey ) {
-					// eslint-disable-next-line max-len, es-x/no-object-values
-					const classesToRemove = Object.values( CLIENTPREFS_THEME_MAP ).map( ( theme ) => LEGACY_PREFIX + theme );
-					className = className.replace(
-
-						new RegExp( classesToRemove.join( '|' ), 'g' ),
-						''
-					);
-					className += ` ${ LEGACY_PREFIX }${ matchedKey }`;
-				}
-			}
 		} );
 		document.documentElement.className = className;
 	}
