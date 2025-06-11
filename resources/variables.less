@@ -41,10 +41,6 @@
 @font-family-monospace: var( --font-family-citizen-monospace ), var( --font-family-language-monospace ), 'Menlo', 'Consolas', 'Liberation Mono', 'Fira Code', 'Courier New', monospace;
 
 /* == Colors == */
-/* Base theme */
-@color-primary__h: 220;
-@color-primary__s: 60%;
-@color-primary__l: 50%;
 
 /*
  * Syntax highlight colors
@@ -107,26 +103,9 @@
  * Those styles should be updated to the new standard.
  * After that we can remove all theses LESS variables.
 */
-@color-base:				#54595d;
-@color-base--emphasized:	#202122;
-@color-base--subtle:		#72777d;
-
-@color-primary:				#36c;
-@color-primary--hover:		#5b84d6;
-@color-primary--active:		#2a4b8d;
-
 @dark-bg-10: #1d2129;
 @dark-bg-20: #22262d;
 @dark-bg-30: #24272f;
 @dark-bg-40: #2b2f36;
 @dark-bg-50: #33363d;
 @dark-bg-60: #34383f;
-
-/*
- * Used by Math and WikiHiero for recolor
- * TODO: Figure out a way to do recolor with CSS variable
- * e.g. If the primary color is changed on wiki, it won't be reflected here.
-*/
-@dark-color-base:				hsl( @color-primary__h, 25%, 80% );
-@dark-color-base--emphasized:	hsl( @color-primary__h, 80%, 95% );
-@dark-color-base--subtle:		hsl( @color-primary__h, 25%, 65% );
