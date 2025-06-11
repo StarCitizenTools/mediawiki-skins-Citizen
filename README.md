@@ -169,7 +169,6 @@ Name | Version
 [VisualEditor](https://www.mediawiki.org/wiki/Extension:VisualEditor) | REL1_43
 [Wikibase](https://www.mediawiki.org/wiki/Extension:Wikibase) | REL1_35 `7bb503b`
 [WikiEditor](https://www.mediawiki.org/wiki/Extension:WikiEditor) | REL1_43
-[WikiHiero](https://www.mediawiki.org/wiki/Extension:WikiHiero) | REL1_39 `3a2be51`
 [WSSearchFront](https://www.mediawiki.org/wiki/Extension:WSSearchFront) | 3.5.4 `c27ebcb5`
 
 Some of the field are tagged as N/A because the information was not tracked before.
