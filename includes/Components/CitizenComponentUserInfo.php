@@ -4,6 +4,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Components;
 
+use MediaWiki\Html\Html;
 use MediaWiki\Language\Language;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\MalformedTitleException;
@@ -52,11 +53,15 @@ class CitizenComponentUserInfo implements CitizenComponent {
 			return null;
 		}
 
-		$html = sprintf(
-			'<time class="citizen-user-regdate" datetime="%s">%s</time>',
-			wfTimestamp( TS_ISO_8601, $timestamp ),
-			// Since this is not accessible by anon, we can use user language
-			$this->lang->userDate( $timestamp, $this->user )
+		// Since this is not accessible by anon, we can use user language
+		$date = $this->lang->userDate( $timestamp, $this->user );
+		$html = Html::element(
+			'time',
+			[
+				'class' => 'citizen-user-regdate',
+				'datetime' => wfTimestamp( TS_ISO_8601, $timestamp )
+			],
+			$date
 		);
 
 		return [

@@ -312,6 +312,7 @@
 			"class": "MediaWiki\\ResourceLoader\\CodexModule",
 			"dependencies": [
 				"mediawiki.api",
+				"mediawiki.jqueryMsg",
 				"mediawiki.language",
 				"mediawiki.page.ready",
 				"mediawiki.storage",

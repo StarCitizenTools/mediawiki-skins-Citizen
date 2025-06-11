@@ -15,7 +15,7 @@ function addDefaultPortlet( portlet ) {
 	if ( label ) {
 		const labelDiv = document.createElement( 'div' );
 		labelDiv.classList.add( 'citizen-menu__heading' );
-		labelDiv.innerHTML = label.textContent || '';
+		labelDiv.textContent = label.textContent || '';
 		portlet.insertBefore( labelDiv, label );
 		label.remove();
 	}
