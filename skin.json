@@ -564,7 +564,6 @@
 			"+ext.Lingo": "skinStyles/extensions/Lingo/ext.Lingo.less",
 			"+ext.managewiki.oouiform.styles": "skinStyles/extensions/ManageWiki/ext.managewiki.oouiform.styles.less",
 			"+ext.maps.leaflet.library": "skinStyles/lib/leaflet/leaflet.less",
-			"+ext.math.styles": "skinStyles/extensions/Math/ext.math.styles.less",
 			"+mediasearch.styles": "skinStyles/extensions/MediaSearch/mediasearch.styles.less",
 			"+mmv": "skinStyles/extensions/MultimediaViewer/mmv.less",
 			"+ext.MsUpload": "skinStyles/extensions/MsUpload/ext.MsUpload.less",
