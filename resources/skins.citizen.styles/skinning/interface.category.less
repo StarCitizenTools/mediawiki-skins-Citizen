@@ -27,14 +27,19 @@
 		> a {
 			display: block;
 			padding: var( --space-xs ) var( --space-md );
-			color: var( --color-subtle );
+			color: var( --color-base );
 			border: var( --border-width-base ) solid var( --border-color-interactive );
 			border-radius: var( --border-radius-pill );
+			transition-timing-function: var( --transition-timing-function-ease );
+			transition-duration: var( --transition-duration-base );
+			transition-property: transform;
 
 			&:hover,
 			&:hover:visited {
 				color: var( --color-inverted-primary );
 				background-color: var( --color-progressive--hover );
+				border-radius: var( --border-radius-medium );
+				transform: scale( 1.05 );
 			}
 
 			&:hover,
@@ -51,6 +56,10 @@
 					color: var( --color-inverted-fixed );
 					background-color: var( --color-destructive--hover );
 				}
+			}
+
+			&.mw-redirect {
+				font-style: italic;
 			}
 		}
 	}
