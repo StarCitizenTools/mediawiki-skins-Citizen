@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.3.1...v3.3.2) (2025-06-12)
+
+
+### Bug Fixes
+
+* **CookieWarning:** add missing styles import ([#1078](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1078)) ([ab5efaf](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ab5efafa65df4305c0bdebaa4b79c42a89f5880f))
+* **DataMaps:** add missing styles import ([44782c8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/44782c89afdd014310d5bdca0b40ed0ce42e9775))
+* **typography:** 🐛 rollback &lt;small&gt; element styles ([37ee040](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/37ee040e88feccc1396fcc08d0da1a4a761e57a4)), closes [#1074](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1074)
+
+
+### Miscellaneous Chores
+
+* **Math:** 🔧 🗑️ remove Math extension styles and references ([6fba95e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6fba95efeed84a0acbf336678550edd71761a2f5))
+* **variables:** 🔧 🗑️ remove unused variables ([d2f7561](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d2f7561d62619ca70dedffc33cce71921a51b4a1))
+* **WikiHiero:** 🔧 🗑️ remove WikiHiero extension and associated styles ([cea735a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cea735a160232a79483cc462632b610b3c22069f))
+
 ## [3.3.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.3.0...v3.3.1) (2025-06-11)
 
 
