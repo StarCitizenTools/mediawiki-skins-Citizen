@@ -147,7 +147,7 @@ Name | Version
 [Score](https://www.mediawiki.org/wiki/Extension:Score) | REL1_39 `0a66cef`
 [Scribunto](https://www.mediawiki.org/wiki/Extension:Scribunto) | REL1_39 `ebb91f2`
 [SearchDigest](https://www.mediawiki.org/wiki/Extension:SearchDigest) | Master `ddd4665`
-[Semantic MediaWiki](https://www.mediawiki.org/wiki/Extension:Semantic_MediaWiki) | 4.0.2 `0fcdfce`
+[Semantic MediaWiki](https://www.mediawiki.org/wiki/Extension:Semantic_MediaWiki) | 5.0.2
 [Semantic Result Formats](https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats) | 5.0.0
 [SimpleTooltip](https://www.mediawiki.org/wiki/Extension:SimpleTooltip) | N/A
 [SmiteSpam](https://www.mediawiki.org/wiki/Extension:SmiteSpam) | REL1_39 `c81b04b`

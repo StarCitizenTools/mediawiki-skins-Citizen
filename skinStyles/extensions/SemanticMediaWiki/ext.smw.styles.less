@@ -2,10 +2,10 @@
  * Citizen
  *
  * SkinStyles for Extension:SemanticMediaWiki
- * Module: ext.smw.style
- * Version: 4.0.2 (0fcdfce)
+ * Module: ext.smw.styles
+ * Version: 5.0.2
  *
- * Date: 2022-10-20
+ * Date: 2025-06-12
 */
 
 /* smw/ext.smw.css */
@@ -154,47 +154,6 @@ hr.smw-form-horizontalrule {
 	line-height: inherit;
 	background-color: var( --color-surface-2 );
 	border-radius: var( --border-radius-base );
-}
-
-.smw-callout-info {
-	background: var( -background-color-primary--hover );
-	border-left-color: var( --color-progressive );
-}
-
-.smw-callout-info .title {
-	color: var( --color-progressive );
-}
-
-.smw-callout-info-light {
-	background: var( --color-surface-2 );
-	border-left-color: var( --border-color-base );
-}
-
-.smw-callout-info-light .title {
-	color: var( --color-progressive );
-}
-
-.smw-callout-warning {
-	background: var( --background-color-warning-subtle );
-	border-left-color: var( --color-warning );
-}
-
-.smw-callout-warning .title {
-	color: var( --color-warning );
-}
-
-.smw-callout-success {
-	background: var( --background-color-success-subtle );
-	border-left-color: var( --color-success );
-}
-
-.smw-callout-success .title {
-	color: var( --color-success );
-}
-
-.smw-callout-error {
-	background: var( --background-color-destructive-subtle );
-	border-left-color: var( --color-destructive );
 }
 
 .autocomplete-suggestions {
@@ -521,58 +480,10 @@ a.smw-ask-action-btn-lblue:active {
 	color: var( --background-color-icon--hover );
 }
 
-.smw-factbox section {
-	border-color: var( --border-color-base );
-}
-
-.smw-factbox input.nav-tab:checked + label.nav-label {
-	background: transparent;
-	border-color: transparent;
-	border-top: var( --border-width-base ) solid transparent;
-	border-bottom: var( --border-width-thick ) solid var( --color-progressive );
-}
-
-.smw-factbox input.nav-tab:checked + label#tab-label-facts-attachment.nav-label {
-	border-color: transparent;
-	border-top: var( --border-width-base ) solid transparent;
-	border-bottom: var( --border-width-thick ) solid var( --color-progressive );
-}
-
-.smw-factbox .smwfact {
-	background-color: var( --color-surface-0 );
-}
-
 /* smw/smw.indicators.css */
 .smw-indicator-vertical-bar-loader {
 	/* This can cause significant layout shift on pages, hide it completely. */
 	display: none;
-
-	/* Turn SMW logo into a loading spinner */
-	/*
-	width: 20px;
-	height: 20px;
-	margin: 0;
-	background: url( data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDM3NSAzMzUiIHZpZXdCb3g9IjAgMCAzNzUgMzM1Ij48cGF0aCBkPSJNMjY2LjggMzA1SDEwOC4yTDI4LjggMTY3LjUgMTA4LjIgMzBoMTU4LjdsNzkuMyAxMzcuNUwyNjYuOCAzMDV6bS0xNTAtMTVoMTQxLjNsNzAuNy0xMjIuNUwyNTguMiA0NUgxMTYuOEw0Ni4yIDE2Ny41IDExNi44IDI5MHoiLz48Y2lyY2xlIGN4PSIxMTIuNSIgY3k9IjM3LjUiIHI9IjM3LjUiLz48Y2lyY2xlIGN4PSIyNjIuNSIgY3k9IjM3LjUiIHI9IjM3LjUiLz48Y2lyY2xlIGN4PSIzNy41IiBjeT0iMTY3LjUiIHI9IjM3LjUiLz48Y2lyY2xlIGN4PSIzMzcuNSIgY3k9IjE2Ny41IiByPSIzNy41Ii8+PGNpcmNsZSBjeD0iMTEyLjUiIGN5PSIyOTcuNSIgcj0iMzcuNSIvPjxjaXJjbGUgY3g9IjI2Mi41IiBjeT0iMjk3LjUiIHI9IjM3LjUiLz48Y2lyY2xlIGN4PSIxODcuNSIgY3k9IjE2Ny41IiByPSI3NSIvPjwvc3ZnPg== );
-	background-repeat: no-repeat;
-	background-position: center;
-	opacity: var( --opacity-icon-base );
-	animation: load2 1s infinite ease-in-out;
-
-	&::before,
-	&::after {
-		display: none;
-	}
-	*/
-}
-
-@keyframes load2 {
-	from {
-		transform: rotate( 0deg );
-	}
-
-	to {
-		transform: rotate( 359deg );
-	}
 }
 
 .smw-icon-indicator-placeholder {
@@ -659,4 +570,26 @@ span {
 	&[ class^='smw-icon-' ] {
 		filter: var( --filter-invert );
 	}
+}
+
+/* smw/ext.smw.table.css */
+.smw-table-header {
+	background-color: var( --color-surface-2 );
+}
+
+.smw-table-cell,
+.smw-table-head {
+	border-color: var( --border-color-base );
+}
+
+.smw-table-footer {
+	background-color: var( --color-surface-2 );
+}
+
+.smw-table-sort-asc::after {
+	color: var( --background-color-icon );
+}
+
+.smw-table-sort-desc::after {
+	color: var( --background-color-icon );
 }
