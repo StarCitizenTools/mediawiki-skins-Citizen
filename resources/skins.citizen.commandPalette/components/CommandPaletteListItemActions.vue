@@ -125,11 +125,16 @@ module.exports = exports = defineComponent( {
 		pointer-events: none;
 		background-image: linear-gradient( to right, transparent 0%, transparent 30%, var( --actions-fade-color, inherit ) 70% );
 		opacity: 0;
-		transition: opacity var( --transition-quick );
+		transform: translateX( 16px );
+		transition-timing-function: var( --transition-timing-function-ease-in );
+		transition-duration: var( --transition-duration-base );
+		transition-property: opacity, transform;
 
 		&--visible {
 			pointer-events: auto;
 			opacity: 1;
+			transform: none;
+			transition-timing-function: var( --transition-timing-function-ease-out );
 		}
 	}
 
