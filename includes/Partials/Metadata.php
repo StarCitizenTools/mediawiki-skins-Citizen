@@ -34,7 +34,7 @@ final class Metadata extends Partial {
 	/**
 	 * Adds metadata to the output page
 	 */
-	public function addMetadata() {
+	public function addMetadata(): void {
 		// Theme color
 		$this->out->addMeta( 'theme-color', $this->getConfigValue( 'CitizenThemeColor' ) ?? '' );
 
@@ -48,7 +48,7 @@ final class Metadata extends Partial {
 	 * * User has read access (i.e. not a private wiki)
 	 * Manifest link will be empty if wfExpandUrl throws an exception.
 	 */
-	private function addManifest() {
+	private function addManifest(): void {
 		if (
 			$this->getConfigValue( 'CitizenEnableManifest' ) !== true ||
 			$this->getConfigValue( MainConfigNames::GroupPermissions )['*']['read'] !== true

@@ -247,7 +247,7 @@ class SkinCitizen extends SkinMustache {
 		$metadata->addMetadata();
 
 		// Add theme handler
-		$skinTheme->setSkinTheme( $options );
+		$skinTheme->setSkinTheme();
 
 		// Clientprefs feature handling
 		$this->addClientPrefFeature( 'citizen-feature-autohide-navigation', '1' );
