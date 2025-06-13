@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.3.2...v3.4.0) (2025-06-13)
+
+
+### Features
+
+* **catlinks:** ✨ update category pill styles ([eaa043e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/eaa043ec748348e7b4e3af5ba9e7f8efe15e8f43))
+* **commandPalette:** ✨ add transition to list actions ([3eb5275](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3eb5275af0cd4ebe3e4098dac613b21c79aa9b3a))
+* **SemanticMediaWiki:** ✨ update styles to 5.0.2 ([5720476](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/57204762bfebd49e4f76bfdd748f15f85ac40617))
+
 ## [3.3.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.3.1...v3.3.2) (2025-06-12)
 
 
