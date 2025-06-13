@@ -26,10 +26,12 @@ use Exception;
 use MediaWiki\Api\ApiBase;
 use MediaWiki\Api\ApiMain;
 use MediaWiki\Config\Config;
+use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\MainConfigNames;
-use MediaWiki\MediaWikiServices;
+use MediaWiki\Language\Language;
 use MediaWiki\SpecialPage\SpecialPage;
 use MediaWiki\Title\Title;
+use MediaWiki\Utils\UrlUtils;
 
 /**
  * Based on the MobileFrontend extension
@@ -43,11 +45,7 @@ class ApiWebappManifest extends ApiBase {
 	/* 1 week */
 	private const CACHE_MAX_AGE = 604800;
 
-	private ApiMain $main;
-
 	private Config $config;
-
-	private MediaWikiServices $services;
 
 	private array $options;
 
@@ -55,13 +53,14 @@ class ApiWebappManifest extends ApiBase {
 	 * @inheritDoc
 	 */
 	public function __construct(
-		ApiMain $main,
-		$moduleName
+		private ApiMain $main,
+		private string $moduleName,
+		private Language $contentLanguage,
+		private HttpRequestFactory $httpRequestFactory,
+		private UrlUtils $urlUtils,
 	) {
 		parent::__construct( $main, $moduleName );
-		$this->main = $main;
 		$this->config = $this->getConfig();
-		$this->services = MediaWikiServices::getInstance();
 		$this->options = $this->config->get( 'CitizenManifestOptions' );
 	}
 
@@ -70,12 +69,11 @@ class ApiWebappManifest extends ApiBase {
 	 */
 	public function execute(): void {
 		$config = $this->config;
-		$services = $this->services;
 		$resultObj = $this->getResult();
 		$main = $this->main;
 		$options = $this->options;
 
-		$resultObj->addValue( null, 'dir', $services->getContentLanguage()->getDir() );
+		$resultObj->addValue( null, 'dir', $this->contentLanguage->getDir() );
 		$resultObj->addValue( null, 'lang', $config->get( MainConfigNames::LanguageCode ) );
 		$resultObj->addValue( null, 'name', $config->get( MainConfigNames::Sitename ) );
 		// Need to set it manually because the default from start_url does not include script namespace
@@ -128,8 +126,8 @@ class ApiWebappManifest extends ApiBase {
 	 * Get icons from wgLogos
 	 */
 	private function getIconsFromLogos(): array {
-		$urlUtils = $this->services->getUrlUtils();
-		$httpRequestFactory = $this->services->getHttpRequestFactory();
+		$urlUtils = $this->urlUtils;
+		$httpRequestFactory = $this->httpRequestFactory;
 
 		$icons = [];
 		$logos = $this->config->get( MainConfigNames::Logos );

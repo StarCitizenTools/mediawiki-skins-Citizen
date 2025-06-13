@@ -94,7 +94,12 @@
 	},
 	"APIModules": {
 		"webapp-manifest": {
-			"class": "MediaWiki\\Skins\\Citizen\\Api\\ApiWebappManifest"
+			"class": "MediaWiki\\Skins\\Citizen\\Api\\ApiWebappManifest",
+			"services": [
+				"ContentLanguage",
+				"HttpRequestFactory",
+				"UrlUtils"
+			]
 		}
 	},
 	"HookHandlers": {
