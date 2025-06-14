@@ -170,8 +170,8 @@ class SkinCitizen extends SkinMustache {
 		}
 
 		// HACK: So that we only get the tagline once
-		$patterns = ['/<a href=/', '/<\/a>/'];
-		$replacements = ['<span data-href=', '</span>'];
+		$patterns = [ '/<a href=/', '/<\/a>/' ];
+		$replacements = [ '<span data-href=', '</span>' ];
 		$parentData['data-sticky-header']['html-tagline'] = preg_replace( $patterns, $replacements, $parentData['data-page-heading']['html-tagline'] );
 
 		// HACK: So that we can use Icon.mustache in Header__logo.mustache
