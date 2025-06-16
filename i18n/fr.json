@@ -111,6 +111,6 @@
 	"citizen-command-palette-tip-commands": "Entrez <code>/</code> pour toutes les commandes",
 	"citizen-command-palette-tip-users": "Entrez <code>@</code> pour rechercher des utilisateurs",
 	"citizen-command-palette-tip-namespace": "Entrez <code>:</code> pour rechercher dans un espace de noms",
-	"citizen-command-palette-tip-templates": "Entrez <code>{{</code> pour rechercher des modèles",
+	"citizen-command-palette-tip-templates": "Entrez <code><nowiki>{{</nowiki></code> pour rechercher des modèles",
 	"citizen-command-palette-tip-actions": "Entrez <code>></code> pour une liste d'actions"
 }

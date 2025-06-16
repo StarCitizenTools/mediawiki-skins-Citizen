@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Asma",
+			"Meno25",
 			"Mohammed Qays"
 		]
 	},
@@ -60,6 +61,6 @@
 	"citizen-command-palette-tip-commands": "اكتب <code>/</code> لجميع الأوامر",
 	"citizen-command-palette-tip-users": "اكتب <code>@</code> للبحث عن المستخدمين",
 	"citizen-command-palette-tip-namespace": "أكتب <code>:</code> للبحث عن النطاق",
-	"citizen-command-palette-tip-templates": "اكتب <code>{{</code> للبحث عن القوالب",
+	"citizen-command-palette-tip-templates": "يكتب <code><nowiki>{{</nowiki></code> للبحث عن القوالب",
 	"citizen-command-palette-tip-actions": "اكتب <code>></code> للحصول على قائمة الإجراءات"
 }

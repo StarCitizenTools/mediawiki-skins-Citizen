@@ -66,12 +66,15 @@
 	"citizen-feature-custom-font-size-small-label": "Nhỏ",
 	"citizen-feature-custom-font-size-standard-label": "Chuẩn",
 	"citizen-feature-custom-font-size-large-label": "Lớn",
+	"citizen-feature-custom-font-size-xlarge-label": "Cực lớn",
 	"citizen-feature-custom-width-name": "Chiều rộng nội dung",
 	"citizen-feature-custom-width-standard-label": "Chuẩn",
 	"citizen-feature-custom-width-wide-label": "Rộng",
 	"citizen-feature-custom-width-full-label": "Đầy đủ",
 	"citizen-user-info-text-anon": "Địa chỉ IP của bạn sẽ được hiển thị công khai nếu bạn thực hiện bất kỳ sửa đổi nào.",
 	"citizen-user-info-text-temp": "Tài khoản tạm thời này được tạo sau khi thực hiện sửa đổi mà không có tài khoản trên trình duyệt và thiết bị này.",
+	"citizen-user-info-edits-label": "Sửa đổi",
+	"citizen-user-info-joined-label": "Đã tham gia",
 	"citizen-command-palette-heading-recent": "Gần đây",
 	"citizen-command-palette-heading-related": "Liên quan",
 	"citizen-command-palette-keyhint-enter-select": "Lựa chọn",
@@ -93,5 +96,10 @@
 	"citizen-command-palette-command-user-description": "Tìm kiếm người dùng",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Tìm kiếm toàn văn của tất cả các trang",
 	"citizen-command-palette-queryaction-media-search-description": "Tìm kiếm tập tin phương tiện",
-	"citizen-command-palette-queryaction-page-edit-description": "Tạo và sửa trang"
+	"citizen-command-palette-queryaction-page-edit-description": "Tạo và sửa trang",
+	"citizen-command-palette-tip-commands": "Nhập <code>/</code> cho tất cả các lệnh",
+	"citizen-command-palette-tip-users": "Nhập <code>@</code> để tìm kiếm người dùng",
+	"citizen-command-palette-tip-namespace": "Nhập <code>:</code> để tìm kiếm không gian tên",
+	"citizen-command-palette-tip-templates": "Nhập <code>{{</code> để tìm kiếm bản mẫu",
+	"citizen-command-palette-tip-actions": "Nhập <code>></code> để có danh sách các hành động"
 }
