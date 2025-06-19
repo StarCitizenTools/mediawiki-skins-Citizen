@@ -97,6 +97,6 @@
 	"citizen-command-palette-tip-commands": "Digita <code>/</code> pro vider tote le commandos",
 	"citizen-command-palette-tip-users": "Digita <code>@</code> pro cercar usatores",
 	"citizen-command-palette-tip-namespace": "Digita <code>:</code> pro cercar un spatio de nomines",
-	"citizen-command-palette-tip-templates": "Digita <code>{{</code> pro cercar patronos",
+	"citizen-command-palette-tip-templates": "Digita <code><nowiki>{{</nowiki></code> pro cercar patronos",
 	"citizen-command-palette-tip-actions": "Digita <code>></code> pro un lista de actiones"
 }

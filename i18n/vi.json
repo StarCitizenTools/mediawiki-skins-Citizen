@@ -100,6 +100,6 @@
 	"citizen-command-palette-tip-commands": "Nhập <code>/</code> cho tất cả các lệnh",
 	"citizen-command-palette-tip-users": "Nhập <code>@</code> để tìm kiếm người dùng",
 	"citizen-command-palette-tip-namespace": "Nhập <code>:</code> để tìm kiếm không gian tên",
-	"citizen-command-palette-tip-templates": "Nhập <code>{{</code> để tìm kiếm bản mẫu",
+	"citizen-command-palette-tip-templates": "Nhập <code><nowiki>{{</nowiki></code> để tìm kiếm bản mẫu",
 	"citizen-command-palette-tip-actions": "Nhập <code>></code> để có danh sách các hành động"
 }

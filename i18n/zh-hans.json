@@ -116,6 +116,6 @@
 	"citizen-command-palette-tip-commands": "输入<code>/</code>查看所有命令",
 	"citizen-command-palette-tip-users": "输入<code>@</code>来搜索用户",
 	"citizen-command-palette-tip-namespace": "键入<code>:</code>在特定命名空间中搜索",
-	"citizen-command-palette-tip-templates": "输入<code>{{</code>来搜索模板",
+	"citizen-command-palette-tip-templates": "输入<code><nowiki>{{</nowiki></code>来搜索模板",
 	"citizen-command-palette-tip-actions": "输入<code>></code>获取操作列表"
 }
