@@ -18,7 +18,7 @@ const CLIENTPREF_DELIMITER = ',';
  * @return {boolean}
  */
 function isValidFeatureName( value ) {
-	return value.match( /^[a-zA-Z0-9-]+$/ ) !== null;
+	return /^[a-zA-Z0-9-]+$/.exec( value ) !== null;
 }
 
 /**
@@ -29,7 +29,7 @@ function isValidFeatureName( value ) {
  * @return {boolean}
  */
 function isValidFeatureValue( value ) {
-	return value.match( /^[a-zA-Z0-9]+$/ ) !== null;
+	return /^[a-zA-Z0-9]+$/.exec( value ) !== null;
 }
 
 /**
@@ -44,7 +44,7 @@ function saveClientPrefs( feature, value ) {
 	const existingStorage = mw.storage.get( CLIENTPREF_STORAGE_NAME ) || '';
 	const data = {};
 	existingStorage.split( CLIENTPREF_DELIMITER ).forEach( ( keyValuePair ) => {
-		const m = keyValuePair.match( /^([\w-]+)-clientpref-(\w+)$/ );
+		const m = /^([\w-]+)-clientpref-(\w+)$/.exec( keyValuePair );
 		if ( m ) {
 			data[ m[ 1 ] ] = m[ 2 ];
 		}
@@ -102,10 +102,10 @@ function clientPrefs() {
 			const featureRegEx = new RegExp(
 				'(^| )' + mw.util.escapeRegExp( featurePrefix ) + '([a-zA-Z0-9]+)( |$)'
 			);
-			const match = docClass.match( featureRegEx );
+			const match = featureRegEx.exec( docClass );
 
 			// check no further matches if we replaced this occurance.
-			const isAmbiguous = docClass.replace( featureRegEx, '$1$3' ).match( featureRegEx ) !== null;
+			const isAmbiguous = featureRegEx.exec( docClass.replace( featureRegEx, '$1$3' ) ) !== null;
 			return !isAmbiguous && match ? match[ 2 ] : false;
 		}
 	};
