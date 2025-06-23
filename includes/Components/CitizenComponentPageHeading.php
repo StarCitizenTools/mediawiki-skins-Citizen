@@ -72,20 +72,11 @@ class CitizenComponentPageHeading implements CitizenComponent {
 			return '';
 		}
 
-		$html = Html::rawElement(
-			'div',
-			[ 'id' => 'citizen-tagline-user' ],
-			$taglineContent
-		);
-		return $html;
-
-		/*
 		return Html::rawElement(
 			'div',
 			[ 'id' => 'citizen-tagline-user' ],
 			$taglineContent
 		);
-		*/
 	}
 
 	/**
