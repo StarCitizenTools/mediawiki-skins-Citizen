@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Alistair3149",
+			"Brettchenweber",
 			"CayceP",
 			"CyberOne25",
 			"FF-11",
@@ -67,6 +68,7 @@
 	"citizen-feature-custom-font-size-small-label": "Klein",
 	"citizen-feature-custom-font-size-standard-label": "Mittel",
 	"citizen-feature-custom-font-size-large-label": "Groß",
+	"citizen-feature-custom-font-size-xlarge-label": "Extragroß",
 	"citizen-feature-custom-width-name": "Breite",
 	"citizen-feature-custom-width-standard-label": "Standard",
 	"citizen-feature-custom-width-wide-label": "Breit",

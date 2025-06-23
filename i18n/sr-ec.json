@@ -60,6 +60,6 @@
 	"citizen-command-palette-tip-commands": "Откуцајте <code>/</code> за све команде",
 	"citizen-command-palette-tip-users": "Откуцајте <code>@</code> за претрагу корисника",
 	"citizen-command-palette-tip-namespace": "Откуцајте <code>:</code> за претрагу именских простора",
-	"citizen-command-palette-tip-templates": "Откуцајте <code>{{</code> за претрагу шаблона",
+	"citizen-command-palette-tip-templates": "Откуцајте <code><nowiki>{{</nowiki></code> за претрагу шаблона",
 	"citizen-command-palette-tip-actions": "Откуцајте <code>></code> за списак радњи"
 }
