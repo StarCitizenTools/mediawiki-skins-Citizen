@@ -170,7 +170,7 @@ class SkinCitizen extends SkinMustache {
 		}
 
 		// HACK: So that we only get the tagline once
-		$parentData['data-sticky-header']['html-tagline'] = $parentData['data-page-heading']['html-tagline'];
+		$parentData['data-sticky-header']['html-sticky-header-tagline'] = $this->prepareStickyHeaderTagline( $parentData['data-page-heading']['html-tagline'] );
 
 		// HACK: So that we can use Icon.mustache in Header__logo.mustache
 		$parentData['data-logos']['icon-home'] = 'home';
@@ -203,6 +203,18 @@ class SkinCitizen extends SkinMustache {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Prepare the tagline for the sticky header
+	 * Replace <a> elements with <span> elements because
+	 * you can't nest <a> elements in <a> elements
+	 *
+	 * @param string $tagline
+	 * @return string
+	 */
+	private function prepareStickyHeaderTagline( string $tagline ): string {
+		return preg_replace( '/<a\s+href="([^"]+)"[^>]*>(.*?)<\/a>/', '<span>$2</span>', $tagline );
 	}
 
 	/**
