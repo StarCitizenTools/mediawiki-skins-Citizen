@@ -4,6 +4,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Components;
 
+use MediaWiki\Html\Html;
 use MediaWiki\Language\Language;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Output\OutputPage;
@@ -58,47 +59,120 @@ class CitizenComponentPageHeading implements CitizenComponent {
 	 * @return string
 	 */
 	private function buildUserTagline(): string {
-		$localizer = $this->localizer;
-
 		$user = $this->buildPageUserObject();
 		if ( !$user ) {
 			return '';
 		}
 
-		$tagline = '<div id="citizen-tagline-user">';
-		$editCount = $user->getEditCount();
-		$regDate = $user->getRegistration();
-		$gender = $this->services->getGenderCache()->getGenderOf( $user, __METHOD__ );
+		$taglineContent = $this->buildGenderTagline( $user ) .
+			$this->buildEditCountTagline( $user ) .
+			$this->buildRegistrationDateTagline( $user );
 
+		if ( $taglineContent === '' ) {
+			return '';
+		}
+
+		$html = Html::rawElement(
+			'div',
+			[ 'id' => 'citizen-tagline-user' ],
+			$taglineContent
+		);
+		return $html;
+
+		/*
+		return Html::rawElement(
+			'div',
+			[ 'id' => 'citizen-tagline-user' ],
+			$taglineContent
+		);
+		*/
+	}
+
+	/**
+	 * Builds the HTML for the user's gender.
+	 *
+	 * @param User $user
+	 * @return string
+	 */
+	private function buildGenderTagline( User $user ): string {
+		$gender = $this->services->getGenderCache()->getGenderOf( $user, __METHOD__ );
+		$msgGender = '';
 		if ( $gender === 'male' ) {
 			$msgGender = '♂';
 		} elseif ( $gender === 'female' ) {
 			$msgGender = '♀';
 		}
-		if ( isset( $msgGender ) ) {
-			$tagline .= "<span id=\"citizen-tagline-user-gender\" data-user-gender=\"$gender\">$msgGender</span>";
-		}
 
-		if ( $editCount ) {
-			$msgEditCount = $localizer->msg( 'usereditcount' )->numParams( sprintf( '%s', number_format( $editCount, 0 ) ) );
-			$editCountHref = SkinComponentUtils::makeSpecialUrlSubpage( 'Contributions', $user );
-			$tagline .= "<span id=\"citizen-tagline-user-editcount\" data-user-editcount=\"$editCount\"><a href=\"$editCountHref\">$msgEditCount</a></span>";
-		}
-
-		if ( is_string( $regDate ) ) {
-			$regDateTs = wfTimestamp( TS_ISO_8601, $regDate );
-			$regDateHtml = sprintf(
-				'<time class="citizen-user-regdate" datetime="%s">%s</time>',
-				$regDateTs,
-				$this->pageLang->userDate( new MWTimestamp( $regDate ), $user )
+		if ( $msgGender ) {
+			return Html::rawElement(
+				'span',
+				[
+					'id' => 'citizen-tagline-user-gender',
+					'data-user-gender' => $gender,
+				],
+				$msgGender
 			);
+		}
+		return '';
+	}
 
-			$msgRegDate = $localizer->msg( 'citizen-tagline-user-regdate', $regDateHtml );
-			$tagline .= "<span id=\"citizen-tagline-user-regdate\" data-user-regdate=\"$regDateTs\">$msgRegDate</span>";
+	/**
+	 * Builds the HTML for the user's edit count.
+	 *
+	 * @param User $user
+	 * @return string
+	 */
+	private function buildEditCountTagline( User $user ): string {
+		$editCount = $user->getEditCount();
+		if ( !$editCount ) {
+			return '';
+		}
+		$msgEditCount = $this->localizer->msg( 'usereditcount' )->numParams( number_format( (float)$editCount, 0 ) )->text();
+		$editCountHref = SkinComponentUtils::makeSpecialUrlSubpage( 'Contributions', $user );
+		$link = Html::element( 'a', [ 'href' => $editCountHref ], $msgEditCount );
+
+		return Html::rawElement(
+			'span',
+			[
+				'id' => 'citizen-tagline-user-editcount',
+				'data-user-editcount' => (string)$editCount
+			],
+			$link
+		);
+	}
+
+	/**
+	 * Builds the HTML for the user's registration date.
+	 *
+	 * @param User $user
+	 * @return string
+	 */
+	private function buildRegistrationDateTagline( User $user ): string {
+		$regDate = $user->getRegistration();
+		if ( !is_string( $regDate ) ) {
+			return '';
 		}
 
-		$tagline .= '</div>';
-		return $tagline;
+		$regDateTs = wfTimestamp( TS_ISO_8601, $regDate );
+		$regDateHtml = Html::rawElement(
+			'time',
+			[
+				'class' => 'citizen-user-regdate',
+				'datetime' => $regDateTs,
+			],
+			$this->pageLang->userDate( new MWTimestamp( $regDate ), $user )
+		);
+
+		$msgRegDate = $this->localizer->msg( 'citizen-tagline-user-regdate', $regDateHtml )->parse();
+
+		return Html::rawElement(
+			'span',
+			[
+				'id' => 'citizen-tagline-user-regdate',
+				'data-user-regdate' => $regDateTs
+			],
+			$msgRegDate
+		);
 	}
 
 	/**
@@ -202,8 +276,8 @@ class CitizenComponentPageHeading implements CitizenComponent {
 	 */
 	public function getTemplateData(): array {
 		return [
-		'html-tagline' => $this->getTagline(),
-		'html-title-heading' => $this->getPageHeading()
+			'html-tagline' => $this->getTagline(),
+			'html-title-heading' => $this->getPageHeading()
 		];
 	}
 }
