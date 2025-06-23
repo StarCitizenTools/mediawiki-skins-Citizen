@@ -54,6 +54,10 @@ class CitizenComponentButton implements CitizenComponent {
 			case 'quiet':
 				$classes .= ' cdx-button--weight-quiet';
 				break;
+			case 'normal':
+			default:
+				$classes .= ' cdx-button--weight-normal';
+				break;
 		}
 		switch ( $this->action ) {
 			case 'progressive':
@@ -62,10 +66,18 @@ class CitizenComponentButton implements CitizenComponent {
 			case 'destructive':
 				$classes .= ' cdx-button--action-destructive';
 				break;
+			case 'default':
+			default:
+				$classes .= ' cdx-button--action-default';
+				break;
 		}
 		switch ( $this->size ) {
 			case 'large':
 				$classes .= ' cdx-button--size-large';
+				break;
+			case 'medium':
+			default:
+				$classes .= ' cdx-button--size-medium';
 				break;
 		}
 		if ( $this->iconOnly ) {
