@@ -33,14 +33,14 @@ const RelatedArticlesProvider = {
 	 * Gets the placeholder related article results.
 	 *
 	 * @param {string} query The search query (unused here).
-	 * @return {Array<CommandPaletteItem>}
+	 * @return {Promise<Array<CommandPaletteItem>>}
 	 */
-	getResults() {
+	async getResults() {
 		const currentArticleId = mw.config.get( 'wgArticleId' );
 
 		// Return cached results if available and for the current article
 		if ( cachedResults !== null && cachedArticleId === currentArticleId ) {
-			return Promise.resolve( cachedResults );
+			return cachedResults;
 		}
 
 		// Return existing promise if a fetch is already in progress for the current article

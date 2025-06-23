@@ -311,49 +311,64 @@ exports.useSearchStore = defineStore( 'search', {
 			}
 
 			// Find the provider responsible for the item based on its source
-			// Handle structured source 'provider:handlerId' by taking the first part
 			const providerId = result.source?.match( /^([^:]+)(?::.*)?$/ )?.[ 1 ] || result.source;
 			const sourceProvider = providerId ? providerMap.get( providerId ) : null;
-
-			let actionResult = { action: 'none' }; // Default action
 
 			if ( sourceProvider && typeof sourceProvider.onResultSelect === 'function' ) {
 				try {
 					// Delegate selection handling to the provider
-					actionResult = await sourceProvider.onResultSelect( result );
-					if ( !actionResult ) {
-						return { action: 'none' };
-					}
-
-					switch ( actionResult.action ) {
-						case 'navigate':
-						case 'navigate-new-tab':
-							if ( result.type !== 'command' ) {
-								recentItemsService.saveRecentItem( result );
-							}
-							break;
-						case 'updateQuery':
-							if ( actionResult.payload !== undefined ) {
-								this.updateQuery( actionResult.payload );
-							}
-							this.triggerFocusSearchInput();
-							break;
-					}
-					return actionResult;
+					const actionResult = await sourceProvider.onResultSelect( result );
+					return this.processProviderAction( actionResult, result );
 				} catch ( error ) {
 					mw.log.error( `[skins.citizen.commandPalette|searchStore] Error handling selection for source: ${ result.source }`, error );
 					return { action: 'none' };
 				}
 			} else {
-				mw.log.warn( `[skins.citizen.commandPalette|searchStore] No provider or onResultSelect found for source: ${ result.source }`, result );
-				actionResult = getNavigationAction( result );
-				if ( actionResult.action === 'navigate' || actionResult.action === 'navigate-new-tab' ) {
-					if ( result.type !== 'command' ) {
-						recentItemsService.saveRecentItem( result );
-					}
-				}
-				return actionResult;
+				return this.handleFallbackSelection( result );
 			}
+		},
+
+		/**
+		 * Processes the action result from a provider after a selection.
+		 * Saves the item if it's a navigation action and handles query updates.
+		 *
+		 * @param {CommandPaletteActionResult|null} actionResult The result from the provider.
+		 * @param {CommandPaletteItem} result The originally selected item.
+		 * @return {CommandPaletteActionResult} The final action result for the UI.
+		 */
+		processProviderAction( actionResult, result ) {
+			if ( !actionResult ) {
+				return { action: 'none' };
+			}
+
+			// Save item on navigation, unless it's a command
+			if ( ( actionResult.action === 'navigate' || actionResult.action === 'navigate-new-tab' ) && result.type !== 'command' ) {
+				recentItemsService.saveRecentItem( result );
+			}
+
+			// Handle query updates
+			if ( actionResult.action === 'updateQuery' ) {
+				if ( actionResult.payload !== undefined ) {
+					this.updateQuery( actionResult.payload );
+				}
+				this.triggerFocusSearchInput();
+			}
+
+			return actionResult;
+		},
+
+		/**
+		 * Handles selection when no specific provider is found.
+		 * Generates a default navigation action and saves the item if applicable.
+		 *
+		 * @param {CommandPaletteItem} result The selected item.
+		 * @return {CommandPaletteActionResult} An object describing the next UI action.
+		 */
+		handleFallbackSelection( result ) {
+			mw.log.warn( `[skins.citizen.commandPalette|searchStore] No provider or onResultSelect found for source: ${ result.source }`, result );
+			const actionResult = getNavigationAction( result );
+			// Process the fallback action (e.g., to save recent item)
+			return this.processProviderAction( actionResult, result );
 		},
 
 		/**
