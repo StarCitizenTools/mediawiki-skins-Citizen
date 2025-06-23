@@ -110,10 +110,12 @@ class SkinHooks implements
 	 */
 	public function onSidebarBeforeOutput( $skin, &$sidebar ): void {
 		// Be extra safe because it might be active on other skins with caching
-		if ( $skin->getSkinName() === 'citizen' && $sidebar ) {
-			if ( isset( $sidebar['TOOLBOX'] ) ) {
-				self::updateToolboxMenu( $sidebar );
-			}
+		if ( $skin->getSkinName() !== 'citizen' ) {
+			return;
+		}
+
+		if ( isset( $sidebar['TOOLBOX'] ) ) {
+			self::updateToolboxMenu( $sidebar );
 		}
 	}
 
@@ -127,7 +129,7 @@ class SkinHooks implements
 	 */
 	public function onSkinBuildSidebar( $skin, &$bar ): void {
 		// Be extra safe because it might be active on other skins with caching
-		if ( $skin->getSkinName() !== 'citizen' || !$bar ) {
+		if ( $skin->getSkinName() !== 'citizen' ) {
 			return;
 		}
 
