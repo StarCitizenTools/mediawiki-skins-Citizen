@@ -147,7 +147,15 @@ class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 		$this->assertEquals( 'icon-sample', $templateData['icon'] );
 		$this->assertEquals( 'btn-id', $templateData['id'] );
 		// Ensures the class string contains all expected CSS classes.
-		$this->assertStringContainsString( $expectedClasses, $templateData['class'] );
+		$actualClasses = explode( ' ', $templateData['class'] );
+		$expectedClassArray = explode( ' ', $expectedClasses );
+		foreach ( $expectedClassArray as $expectedClass ) {
+			$this->assertContains(
+				$expectedClass,
+				$actualClasses,
+				"Expected class '$expectedClass' not found in button classes."
+			);
+		}
 		$this->assertEquals( $href, $templateData['href'] );
 		// Verifies custom attributes are included appropriately.
 		$this->assertContains( [ 'key' => 'data-test', 'value' => 'true' ], $templateData['array-attributes'] );
