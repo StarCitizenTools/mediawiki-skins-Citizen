@@ -311,7 +311,7 @@ exports.useSearchStore = defineStore( 'search', {
 			}
 
 			// Find the provider responsible for the item based on its source
-			const providerId = result.source?.match( /^([^:]+)(?::.*)?$/ )?.[ 1 ] || result.source;
+			const providerId = ( /^([^:]+)(?::.*)?$/ ).exec( result.source ?? '' )?.[ 1 ] || result.source;
 			const sourceProvider = providerId ? providerMap.get( providerId ) : null;
 
 			if ( sourceProvider && typeof sourceProvider.onResultSelect === 'function' ) {
