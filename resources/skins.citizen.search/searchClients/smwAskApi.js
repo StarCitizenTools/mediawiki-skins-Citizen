@@ -113,8 +113,7 @@ function smwAskApiSearchClient( config ) {
 			const getConditions = () => {
 				const separateConditions = ( s ) => s.replace( /\]\]\s*\[\[/g, '|' );
 				const removeSquareBrackets = ( s ) => s.replace( /\[|\]/g, '' );
-				const conditions = removeSquareBrackets( separateConditions( q ) );
-				return conditions;
+				return removeSquareBrackets( separateConditions( q ) );
 			};
 
 			const getPrintouts = () => {
