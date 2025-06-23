@@ -14,6 +14,32 @@ function useActionNavigation( actionsRef, buttonRefs, emit ) {
 	const activeButtonId = ref( null );
 
 	/**
+	 * Focuses a button element, handling both Vue components and standard elements.
+	 *
+	 * @param {HTMLElement|{ $el: HTMLElement }} button The button element to focus.
+	 */
+	function focusButton( button ) {
+		if ( button?.$el ) { // For Codex CdxButton
+			button.$el.focus();
+		} else if ( typeof button?.focus === 'function' ) { // Fallback for standard elements
+			button.focus();
+		}
+	}
+
+	/**
+	 * Clicks a button element, handling both Vue components and standard elements.
+	 *
+	 * @param {HTMLElement|{ $el: HTMLElement }} button The button element to click.
+	 */
+	function clickButton( button ) {
+		if ( button?.$el ) { // For Codex CdxButton
+			button.$el.click();
+		} else if ( typeof button?.click === 'function' ) { // Fallback for standard elements
+			button.click();
+		}
+	}
+
+	/**
 	 * Focuses the first available action button based on the current order in actionsRef.
 	 */
 	function focusFirstButton() {
@@ -44,7 +70,6 @@ function useActionNavigation( actionsRef, buttonRefs, emit ) {
 			return false;
 		}
 
-		let handled = false;
 		const actions = actionsRef.value;
 		const buttons = buttonRefs.value;
 		const currentButtonIndex = actions.findIndex( ( action ) => action.id === currentActionId );
@@ -53,67 +78,44 @@ function useActionNavigation( actionsRef, buttonRefs, emit ) {
 			return false;
 		}
 
-		switch ( event.key ) {
-			case 'ArrowLeft':
+		const keyAction = {
+			ArrowLeft: () => {
 				if ( currentButtonIndex === 0 ) {
-					// On the first button, blur actions and let parent focus input
 					emit( 'blur-actions' );
 					searchStore.triggerFocusSearchInput();
 				} else {
-					// Move focus to the previous button
 					const prevActionId = actions[ currentButtonIndex - 1 ].id;
-					const prevButton = buttons[ prevActionId ];
-					if ( prevButton?.$el ) {
-						prevButton.$el.focus();
-					} else if ( typeof prevButton?.focus === 'function' ) {
-						prevButton.focus();
-					}
+					focusButton( buttons[ prevActionId ] );
 				}
-				handled = true;
-				break;
-			case 'ArrowRight':
+				return true;
+			},
+			ArrowRight: () => {
 				if ( currentButtonIndex < actions.length - 1 ) {
-					// Move focus to the next button
-					const nextButton = buttons[ actions[ currentButtonIndex + 1 ].id ];
-					if ( nextButton?.$el ) {
-						nextButton.$el.focus();
-					} else if ( typeof nextButton?.focus === 'function' ) {
-						nextButton.focus();
-					}
-					handled = true;
-					// If on the last button, ArrowRight is not handled here, allowing potential browser behavior or parent handling
+					const nextActionId = actions[ currentButtonIndex + 1 ].id;
+					focusButton( buttons[ nextActionId ] );
+					return true;
 				}
-				break;
-			case 'ArrowUp':
-			case 'ArrowDown':
-				// Blur actions, signal parent list navigation, and focus input
+				return false;
+			},
+			ArrowUp: () => {
 				emit( 'blur-actions' );
 				emit( 'navigate-list', event );
 				searchStore.triggerFocusSearchInput();
-				handled = true;
-				break;
-			case 'Enter':
-			case ' ': // Space key
-				{
-					// Trigger click on the currently focused button
-					const currentButton = buttons[ currentActionId ];
-					if ( currentButton?.$el ) {
-						currentButton.$el.click();
-					} else if ( typeof currentButton?.click === 'function' ) {
-						currentButton.click();
-					}
-					handled = true;
-				}
-				break;
-			case 'Escape':
-				// Blur actions and let the parent component (App.vue) decide what to do (e.g., close palette)
+				return true;
+			},
+			ArrowDown: () => keyAction.ArrowUp(),
+			Enter: () => {
+				clickButton( buttons[ currentActionId ] );
+				return true;
+			},
+			' ': () => keyAction.Enter(),
+			Escape: () => {
 				emit( 'blur-actions' );
-				// We don't call close() or focusInput() here, let the global handler in App.vue manage Escape.
-				handled = true;
-				break;
-		}
+				return true;
+			}
+		};
 
-		if ( handled ) {
+		if ( keyAction[ event.key ] && keyAction[ event.key ]() ) {
 			event.preventDefault();
 			event.stopPropagation();
 			return true;
