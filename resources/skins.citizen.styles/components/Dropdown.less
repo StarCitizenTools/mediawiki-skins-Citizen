@@ -1,9 +1,9 @@
 .citizen-dropdown {
 	.citizen-menu__card {
 		z-index: @z-index-dropdown;
-		content-visibility: hidden;
 		min-width: 16rem;
 		max-width: 80vw;
+		content-visibility: hidden;
 		transition-timing-function: var( --transition-timing-function-ease-in );
 		transition-duration: var( --transition-duration-base );
 		transition-property: transform, content-visibility;
@@ -58,10 +58,10 @@
 
 		&[ open ] {
 			+ .citizen-menu__card {
+				content-visibility: visible;
 				transform: none;
 				transition-timing-function: var( --transition-timing-function-ease-out );
 				transition-duration: var( --transition-duration-medium );
-				content-visibility: visible;
 
 				.citizen-menu__card-content {
 					opacity: 1;

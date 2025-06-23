@@ -24,19 +24,19 @@
 		place-items: center;
 		width: var( --header-button-size );
 		height: var( --header-button-size );
-		border-radius: var( --border-radius-base );
 		contain: strict;
+		border-radius: var( --border-radius-base );
 
 		// Pure CSS icons
 		&Icon {
 			width: var( --header-icon-size );
 			height: var( --header-icon-size );
+			contain: strict;
 			overflow: hidden; // Sometimes CSS animation can clip
 			opacity: var( --opacity-icon-base );
 			filter: var( --filter-invert );
 			transition: var( --transition-hover );
 			transition-property: transform, opacity;
-			contain: strict;
 		}
 
 		&Icon,
@@ -115,8 +115,8 @@
 			place-items: center;
 			width: var( --header-button-size );
 			height: var( --header-button-size );
-			border-radius: var( --border-radius-base );
 			contain: strict;
+			border-radius: var( --border-radius-base );
 		}
 	}
 }
