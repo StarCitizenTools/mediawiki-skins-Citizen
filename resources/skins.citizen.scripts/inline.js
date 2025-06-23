@@ -3,7 +3,6 @@
  *
  * Inline script used in includes/Hooks/SkinHooks.php
  */
-const LEGACY_PREFIX = 'skin-citizen-';
 
 /**
  * Backported from MW 1.42
