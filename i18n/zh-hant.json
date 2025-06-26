@@ -74,12 +74,15 @@
 	"citizen-feature-custom-font-size-small-label": "小",
 	"citizen-feature-custom-font-size-standard-label": "標準",
 	"citizen-feature-custom-font-size-large-label": "大",
+	"citizen-feature-custom-font-size-xlarge-label": "特大",
 	"citizen-feature-custom-width-name": "寬度",
 	"citizen-feature-custom-width-standard-label": "標準",
 	"citizen-feature-custom-width-wide-label": "寬",
 	"citizen-feature-custom-width-full-label": "全屏",
 	"citizen-user-info-text-anon": "若您做出任何編輯，會公開您的 IP 位址。",
 	"citizen-user-info-text-temp": "此臨時帳號是在此瀏覽器與設備上沒有帳號的情況下，做出編輯後建立的。",
+	"citizen-user-info-edits-label": "編輯次數",
+	"citizen-user-info-joined-label": "加入時間",
 	"citizen-command-palette-heading-recent": "近期",
 	"citizen-command-palette-heading-related": "相關",
 	"citizen-command-palette-keyhint-enter-select": "選擇",
@@ -105,6 +108,6 @@
 	"citizen-command-palette-tip-commands": "輸入<code>/</code>查看所有命令",
 	"citizen-command-palette-tip-users": "輸入<code>@</code>來搜尋用戶",
 	"citizen-command-palette-tip-namespace": "鍵入<code>:</code>搜尋命名空間",
-	"citizen-command-palette-tip-templates": "輸入<code>{{</code>搜尋模板",
+	"citizen-command-palette-tip-templates": "輸入<code><nowiki>{{</nowiki></code>來搜尋模板",
 	"citizen-command-palette-tip-actions": "輸入<code>></code>取得操作列表"
 }
