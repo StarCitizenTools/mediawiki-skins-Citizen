@@ -36,10 +36,10 @@ trait GetConfigTrait {
 	 *
 	 * @param string $key
 	 * @param OutputPage|null $out
-	 * @return mixed|null
+	 * @return mixed
 	 * @see SkinTemplate::getConfig()
 	 */
-	protected function getConfigValue( $key, $out = null ) {
+	protected function getConfigValue( string $key, ?OutputPage $out = null ): mixed {
 		if ( isset( $this->out ) ) {
 			$out = $this->out;
 		}
