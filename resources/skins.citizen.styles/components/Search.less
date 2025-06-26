@@ -11,7 +11,6 @@
 
 	.citizen-menu__card {
 		--size-icon: 1rem;
-		position: fixed;
 		top: 0;
 		right: 0;
 		left: 0;
@@ -32,8 +31,14 @@
 		content-visibility: visible;
 	}
 
-	.citizen-dropdown-details[ open ] + .citizen-menu__card > .citizen-search__form {
-		transition: none; /* Do not animate typeahead since it looks weird */
+	.citizen-dropdown-details {
+		+ .citizen-menu__card {
+			position: fixed;
+		}
+
+		&[ open ] + .citizen-menu__card > .citizen-search__form {
+			transition: none; /* Do not animate typeahead since it looks weird */
+		}
 	}
 
 	&__formButton,
