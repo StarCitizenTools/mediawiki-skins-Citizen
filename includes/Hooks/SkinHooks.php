@@ -215,7 +215,7 @@ class SkinHooks implements
 		}
 
 		if ( isset( $links['user-interface-preferences'] ) ) {
-			self::updateUserInterfacePreferencesMenu( $sktemplate, $links );
+			self::updateUserInterfacePreferencesMenu( $links );
 		}
 
 		if ( isset( $links['views'] ) ) {
@@ -227,9 +227,8 @@ class SkinHooks implements
 	 * Update actions menu items
 	 *
 	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
-	 * @param array &$links
 	 */
-	private static function updateActionsMenu( &$links ) {
+	private static function updateActionsMenu( array &$links ): void {
 		// Most icons are not mapped yet in the actions menu
 		$iconMap = [
 			'delete' => 'trash',
@@ -253,9 +252,8 @@ class SkinHooks implements
 	 * Update associated pages menu items
 	 *
 	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
-	 * @param array &$links
 	 */
-	private static function updateAssociatedPagesMenu( &$links ) {
+	private static function updateAssociatedPagesMenu( array &$links ): void {
 		// Most icons are not mapped yet in the associated pages menu
 		$iconMap = [
 			'main' => 'article',
@@ -284,9 +282,8 @@ class SkinHooks implements
 	 * Update toolbox menu items
 	 *
 	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
-	 * @param array &$links
 	 */
-	private static function updateToolboxMenu( &$links ) {
+	private static function updateToolboxMenu( array &$links ): void {
 		// Most icons are not mapped yet in the toolbox menu
 		$iconMap = [
 			'recentchangeslinked' => 'recentChanges',
@@ -316,9 +313,8 @@ class SkinHooks implements
 	 * Update notifications menu
 	 *
 	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
-	 * @param array &$links
 	 */
-	private static function updateNotificationsMenu( &$links ) {
+	private static function updateNotificationsMenu( array &$links ): void {
 		$iconMap = [
 			'notifications-alert' => 'bell',
 			'notifications-notice' => 'tray'
@@ -353,10 +349,8 @@ class SkinHooks implements
 	 * Update user menu
 	 *
 	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
-	 * @param SkinTemplate $sktemplate
-	 * @param array &$links
 	 */
-	private static function updateUserMenu( $sktemplate, &$links ) {
+	private static function updateUserMenu( SkinTemplate $sktemplate, array &$links ): void {
 		$user = $sktemplate->getUser();
 		$isRegistered = $user->isRegistered();
 		$isTemp = $user->isTemp();
@@ -381,10 +375,8 @@ class SkinHooks implements
 	 * Update user interface preferences menu
 	 *
 	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
-	 * @param SkinTemplate $sktemplate
-	 * @param array &$links
 	 */
-	private static function updateUserInterfacePreferencesMenu( $sktemplate, &$links ) {
+	private static function updateUserInterfacePreferencesMenu( array &$links ): void {
 		self::addIconsToMenuItems( $links, 'user-interface-preferences' );
 	}
 
@@ -392,9 +384,8 @@ class SkinHooks implements
 	 * Update views menu items
 	 *
 	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
-	 * @param array &$links
 	 */
-	private static function updateViewsMenu( &$links ) {
+	private static function updateViewsMenu( array &$links ): void {
 		// Most icons are not mapped yet in the views menu
 		$iconMap = [
 			'view' => 'article',
@@ -424,12 +415,8 @@ class SkinHooks implements
 
 	/**
 	 * Set the icon parameter of the menu item based on the mapping
-	 *
-	 * @param array &$links
-	 * @param string $menu identifier
-	 * @param array $map icon mapping
 	 */
-	private static function mapIconsToMenuItems( &$links, $menu, $map ) {
+	private static function mapIconsToMenuItems( array &$links, string $menu, array $map ): void {
 		foreach ( $map as $key => $icon ) {
 			if ( isset( $links[$menu][$key] ) ) {
 				$links[$menu][$key]['icon'] ??= $icon;
@@ -439,11 +426,8 @@ class SkinHooks implements
 
 	/**
 	 * Add the HTML needed for icons to menu items
-	 *
-	 * @param array &$links
-	 * @param string $menu identifier
 	 */
-	private static function addIconsToMenuItems( &$links, $menu ) {
+	private static function addIconsToMenuItems( array &$links, string $menu ): void {
 		// Loop through each menu to check/append its link classes.
 		foreach ( $links[$menu] as $key => $item ) {
 			$icon = $item['icon'] ?? '';
@@ -465,7 +449,7 @@ class SkinHooks implements
 	 * @param array|string &$item to update
 	 * @param array|string $classes to add to the item
 	 */
-	private static function appendClassToItem( &$item, $classes ) {
+	private static function appendClassToItem( mixed &$item, mixed $classes ): void {
 		$existingClasses = $item;
 
 		if ( is_array( $existingClasses ) ) {
