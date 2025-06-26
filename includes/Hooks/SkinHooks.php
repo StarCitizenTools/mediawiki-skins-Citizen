@@ -268,11 +268,9 @@ class SkinHooks implements
 		// Since talk keys have namespace as prefix
 		foreach ( $links['associated-pages'] as $key => $item ) {
 			$keyStr = (string)$key;
-			// TODO: use str_ends_with when we drop PHP 7.X
-			if ( substr( $keyStr, -5 ) === '_talk' ) {
+			if ( str_ends_with( $keyStr, '_talk' ) ) {
 				// Extract the namespace key from the talk key (e.g. Project from Project_talk)
-				// TODO: use str_starts_with when we drop PHP 7.X
-				$namespace = substr( $keyStr, 0, -5 );
+				$namespace = substr( $keyStr, 0, -strlen( '_talk' ) );
 				$links['associated-pages'][$key]['icon'] = 'speechBubbles';
 				$links['associated-pages'][$namespace]['icon'] = 'arrowPrevious';
 			}
