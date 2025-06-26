@@ -233,9 +233,11 @@ class CitizenComponentPageHeading implements CitizenComponent {
 	}
 
 	private function getCitizenTagline( string $msgKey ): string {
-		return $this->localizer->msg( $msgKey )->isDisabled() ?
-			$this->localizer->msg( 'tagline' )->parse() :
-			$this->localizer->msg( $msgKey )->parse();
+		$msg = $this->localizer->msg( $msgKey );
+		if ( $msg->isDisabled() ) {
+			$msg = $this->localizer->msg( 'tagline' );
+		}
+		return $msg->parse();
 	}
 
 	/**
