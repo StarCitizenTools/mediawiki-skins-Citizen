@@ -134,7 +134,6 @@ Name | Version
 [Graph](https://www.mediawiki.org/wiki/Extension:Graph) | N/A
 [Interwiki](https://www.mediawiki.org/wiki/Extension:Interwiki) | REL1_35 `a65a18e`
 [Lingo](https://www.mediawiki.org/wiki/Extension:Lingo) | REL1_35 `e948775`
-[ManageWiki](https://www.mediawiki.org/wiki/Extension:ManageWiki) | master `e626a9f`
 [MediaSearch](https://www.mediawiki.org/wiki/Extension:MediaSearch) | REL1_39 `e0aa7bb`
 [MsUpload](https://www.mediawiki.org/wiki/Extension:MsUpload) | REL1_35 `32eb420`
 [MultimediaViewer](https://www.mediawiki.org/wiki/Extension:MultimediaViewer) | REL1_43
