@@ -567,7 +567,6 @@
 			"+ext.interwiki.specialpage": "skinStyles/extensions/Interwiki/ext.interwiki.specialpage.less",
 			"+ext.kartographer.style": "skinStyles/lib/leaflet/leaflet.less",
 			"+ext.Lingo": "skinStyles/extensions/Lingo/ext.Lingo.less",
-			"+ext.managewiki.oouiform.styles": "skinStyles/extensions/ManageWiki/ext.managewiki.oouiform.styles.less",
 			"+ext.maps.leaflet.library": "skinStyles/lib/leaflet/leaflet.less",
 			"+mediasearch.styles": "skinStyles/extensions/MediaSearch/mediasearch.styles.less",
 			"+mmv": "skinStyles/extensions/MultimediaViewer/mmv.less",
