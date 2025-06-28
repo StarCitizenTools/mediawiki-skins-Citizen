@@ -269,3 +269,21 @@
 		letter-spacing: var( --letter-spacing-overline );
 	}
 }
+
+// Used to retrofit input element into Codex styles
+.mixin-citizen-cdx-input() {
+	min-height: @min-size-interactive-pointer;
+	padding: @spacing-25 @spacing-50;
+	font-size: @font-size-medium;
+	line-height: @line-height-small;
+	border-radius: @border-radius-base;
+	box-shadow: @box-shadow-inset-small @box-shadow-color-transparent;
+	transition-duration: @transition-duration-medium;
+	transition-property: @transition-property-base;
+
+	&:focus {
+		outline: @outline-base--focus;
+		border-color: @border-color-progressive--focus;
+		box-shadow: @box-shadow-inset-small @box-shadow-color-progressive--focus;
+	}
+}

@@ -3,10 +3,13 @@
  *
  * SkinStyles for Extension:ReplaceText
  * Module: ext.ReplaceTextStyles
- * Version: REL1_39 af4840a
+ * Version: REL1_43
  *
- * Date: 2023-01-03
+ * Date: 2025-06-27
 */
+
+@import 'mediawiki.skin.variables.less';
+@import '../../../resources/mixins.less';
 
 .ext-replacetext-searchmatch {
 	font-weight: var( --font-weight-semi-bold );
@@ -14,10 +17,50 @@
 }
 
 .ext-replacetext-searchoptions {
-	background-color: var( --color-surface-2 );
-	border: var( --border-width-base ) solid var( --border-color-base );
+	margin-block: var( --space-md );
+	background-color: var( --color-surface-1 );
+	border-color: var( --border-color-base );
+	border-radius: var( --border-radius-medium );
 
 	.ext-replacetext-divider {
-		border-bottom: var( --border-width-base ) solid var( --border-color-base );
+		border-bottom-color: var( --border-color-base );
+	}
+}
+
+/* HACK: Fake Codex styles */
+.ext-replacetext-searchoptions p > input,
+#powersearch textarea {
+	display: block;
+	width: 100% !important;
+	.mixin-citizen-cdx-input();
+}
+
+#powersearch {
+	table {
+		display: block;
+		margin-block: var( --space-lg );
+	}
+
+	tbody {
+		display: block;
+	}
+
+	tr {
+		display: flex;
+		flex-direction: column;
+		gap: var( --space-xxs );
+
+		+ tr {
+			margin-block-start: var( --space-md );
+		}
+	}
+
+	td {
+		display: block;
+		padding: 0;
+
+		&:first-child {
+			font-weight: var( --font-weight-semi-bold );
+		}
 	}
 }
