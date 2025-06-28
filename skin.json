@@ -728,7 +728,6 @@
 			"+mediawiki.ui.icon": "skinStyles/mediawiki/ui/mediawiki.ui.icon.less",
 			"+mediawiki.diff.styles": "skinStyles/mediawiki/mediawiki.diff.styles.less",
 			"+mediawiki.filewarning": "skinStyles/mediawiki/mediawiki.filewarning.less",
-			"+mediawiki.htmlform.styles": "skinStyles/mediawiki/mediawiki.htmlform.styles.less",
 			"+mediawiki.htmlform.ooui.styles": "skinStyles/mediawiki/mediawiki.htmlform.ooui.styles.less",
 			"+mediawiki.legacy.shared": "skinStyles/mediawiki/mediawiki.legacy.shared.less",
 			"+mediawiki.page.gallery.styles": "skinStyles/mediawiki/mediawiki.page.gallery.styles.less",
