@@ -66,6 +66,6 @@
 	"citizen-command-palette-tip-commands": "Tippt <code>/</code> fir all Befeeler",
 	"citizen-command-palette-tip-users": "Tippt <code>@</code> fir no Benotzer ze sichen",
 	"citizen-command-palette-tip-namespace": "Tippt <code>:</code> fir no Nummraim ze sichen",
-	"citizen-command-palette-tip-templates": "Tippt <code>{{</code> fir no Schablounen ze sichen",
+	"citizen-command-palette-tip-templates": "Tippt <code><nowiki>{{</nowiki></code> fir no Schablounen ze sichen",
 	"citizen-command-palette-tip-actions": "Tippt <code>></code> fir eng Lëscht vun Aktiounen"
 }
