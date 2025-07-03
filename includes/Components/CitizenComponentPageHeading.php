@@ -248,7 +248,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 		// from Extension:ShortDescription
 		$shortdesc = $this->out->getProperty( 'shortdesc' );
 		if ( $shortdesc ) {
-			$tagline = $shortdesc;
+			$tagline = htmlspecialchars( $shortdesc, ENT_QUOTES );
 		} else {
 			$tagline = $this->determineTagline();
 		}
