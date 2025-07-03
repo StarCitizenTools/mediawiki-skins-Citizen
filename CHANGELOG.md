@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.3.2...v3.4.0) (2025-07-03)
+
+
+### Features
+
+* **catlinks:** ✨ update category pill styles ([eaa043e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/eaa043ec748348e7b4e3af5ba9e7f8efe15e8f43))
+* **commandPalette:** ✨ add transition to list actions ([3eb5275](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3eb5275af0cd4ebe3e4098dac613b21c79aa9b3a))
+* **commandPalette:** ✨ use frosted glass effect as background ([dfdcc2a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/dfdcc2a0bf28621d9d4a8aac2a40a5948fb03f15))
+* **ManageWiki:** ✨ drop unused ManageWiki styles ([e498e9a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e498e9ac5de153e4cfcb976505afef068d76c1dd))
+* **ReplaceText:** ✨ revamp ReplaceText styles ([cf4ff02](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cf4ff025240fe3e912637a4f59cac7cc6396d876))
+* **SemanticMediaWiki:** ✨ update styles to 5.0.2 ([5720476](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/57204762bfebd49e4f76bfdd748f15f85ac40617))
+
+
+### Bug Fixes
+
+* **search:** 🐛 fix incorrect position for old search card ([10b336f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/10b336fa45c1244d2d599323ae267107d5a7b305))
+* **SECURITY:** 🐛 🔒️ sanitize search result descriptions in old search module ([aedbceb](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/aedbceb3380bb48db6b59e272fc187529c71c8ca))
+* **SECURITY:** 🐛 🔒️ sanitize short description page tagline ([c85a40b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c85a40bddc8651fff66df83a72debddcb34f0521))
+* **stickyHeader:** 🐛 fix sticky header title alignment on user pages ([835e02d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/835e02da0b5ba18882bc5b12c83f35cc20f727a7)), closes [#1080](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1080)
+
+
+### Performance Improvements
+
+* **commandPalette:** ⚡️ use regex exec over string match ([426105c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/426105c4a9609fd5db67c8f2edee81b921202c75))
+* **pageHeading:** ⚡️ remove redundant method call ([b554d03](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b554d0369576fbf12743fd27fe9e68aed4659740))
+* **prefs:** ⚡️ use regex exec over string match ([0d22c32](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0d22c3206f8373facd9e733fe093a64e775a967a))
+
 ## [3.3.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.3.1...v3.3.2) (2025-06-12)
 
 
