@@ -8,6 +8,7 @@
 			"Okras",
 			"Toghrul Rahimli",
 			"UniCollab",
+			"Vonavy",
 			"WerySkok",
 			"Yurina Tatiana"
 		]
@@ -80,8 +81,8 @@
 	"citizen-feature-custom-width-full-label": "Полный",
 	"citizen-user-info-text-anon": "Ваш IP-адрес будет виден всем, если вы внесёте какие-либо изменения.",
 	"citizen-user-info-text-temp": "Эта временная учётная запись была создана после того, как редактирование было сделано без авторизации в этом браузере и на этом устройстве.",
-	"citizen-user-info-edits-label": "Редактировано",
-	"citizen-user-info-joined-label": "Присоединиться",
+	"citizen-user-info-edits-label": "Правок",
+	"citizen-user-info-joined-label": "Присоединился",
 	"citizen-command-palette-heading-recent": "Недавние",
 	"citizen-command-palette-heading-related": "Связанное",
 	"citizen-command-palette-keyhint-enter-select": "Выбрать",
@@ -100,13 +101,13 @@
 	"citizen-command-palette-type-user": "Участник",
 	"citizen-command-palette-command-ns-description": "Поиск страницы в определённом пространстве имён",
 	"citizen-command-palette-command-action-description": "Выполнить определенное действие",
-	"citizen-command-palette-command-user-description": "Поиск юзера",
+	"citizen-command-palette-command-user-description": "Поиск участника",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Поиск полного текста на всех страницах",
 	"citizen-command-palette-queryaction-media-search-description": "Поиск в медиафайлах",
 	"citizen-command-palette-queryaction-page-edit-description": "Создать или редактировать страницу",
-	"citizen-command-palette-tip-commands": "Нажми <code>/</code> для всех команд",
-	"citizen-command-palette-tip-users": "Нажми <code>@</code> для поиска пользователей",
-	"citizen-command-palette-tip-namespace": "Нажми <code>:</code> для поиска пространства имён",
-	"citizen-command-palette-tip-templates": "Нажми <code><nowiki>{{</nowiki></code> для поиска шаблонов",
-	"citizen-command-palette-tip-actions": "Нажми <code>></code> для получения списка действий"
+	"citizen-command-palette-tip-commands": "Введите <code>/</code> для отображения всех команд",
+	"citizen-command-palette-tip-users": "Введите <code>@</code> для поиска по участникам",
+	"citizen-command-palette-tip-namespace": "Введите <code>:</code> для поиска по пространствам имён",
+	"citizen-command-palette-tip-templates": "Введите <code><nowiki>{{</nowiki></code> для поиска шаблонов",
+	"citizen-command-palette-tip-actions": "Введите <code>></code> для получения списка действий"
 }
