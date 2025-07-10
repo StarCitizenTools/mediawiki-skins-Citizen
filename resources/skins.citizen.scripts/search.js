@@ -197,7 +197,24 @@ function renderSearchClearButton( input ) {
  */
 function bindSearchTrigger( details ) {
 	document.querySelectorAll( '.citizen-search-trigger' ).forEach( ( trigger ) => {
-		trigger.addEventListener( 'click', () => openSearch( details ) );
+		trigger.addEventListener( 'click', ( event ) => {
+			openSearch( details );
+			if ( event.target.dataset.citizenSearchPrefill ) {
+				// Add a delay to ensure the search UI is open
+				setTimeout( () => {
+					const input = config.wgCitizenEnableCommandPalette ?
+						document.querySelector( '.citizen-command-palette__input > .cdx-text-input__input' ) :
+						document.getElementById( 'searchInput' );
+
+					if ( input === null ) {
+						return;
+					}
+
+					// Escape just to be safe
+					input.value = mw.html.escape( event.target.dataset.citizenSearchPrefill );
+				}, 0 );
+			}
+		} );
 	} );
 }
 
