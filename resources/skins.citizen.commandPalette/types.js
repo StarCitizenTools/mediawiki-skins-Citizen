@@ -4,15 +4,6 @@
  */
 
 /**
- * @typedef {Object} CommandPaletteEventDetails
- * @property {number} button Mouse button pressed (e.g., 0 for left, 1 for middle, 2 for right).
- * @property {boolean} ctrlKey Whether Ctrl key was pressed.
- * @property {boolean} metaKey Whether Meta key (Cmd on macOS, Windows key on Windows) was pressed.
- * @property {boolean} shiftKey Whether Shift key was pressed.
- * @property {boolean} altKey Whether Alt key was pressed.
- */
-
-/**
  * @typedef {Object} CommandPaletteItemAction
  * @property {string} id Action identifier (e.g., 'edit').
  * @property {string} label Localized action label.
@@ -51,7 +42,7 @@
  * @property {string} [value] Optional value associated with the item, used for specific types like commands (e.g. the command trigger string '/ns').
  * @property {boolean} [highlightQuery] Whether to highlight the query in the label.
  * @property {string} [source] Identifier of the provider that generated this item (e.g., 'recent', 'command', 'search').
- * @property {CommandPaletteEventDetails} [eventDetails] Details about the event that triggered the selection.
+ * @property {boolean} [isMouseClick] True if the selection was triggered by a mouse click.
  */
 
 /**
@@ -76,14 +67,6 @@
  */
 
 /**
- * Action to navigate to a URL in a new tab.
- *
- * @typedef {Object} CommandPaletteNavigateNewTabAction
- * @property {'navigate-new-tab'} action
- * @property {string} payload - The URL to navigate to.
- */
-
-/**
  * Action to update the command palette's query string.
  *
  * @typedef {Object} CommandPaletteUpdateQueryAction
@@ -103,7 +86,7 @@
  * Describes the action the UI should take after an item selection is handled.
  * This is a discriminated union based on the 'action' property.
  *
- * @typedef {CommandPaletteNavigateAction | CommandPaletteNavigateNewTabAction | CommandPaletteUpdateQueryAction | CommandPaletteNoneAction} CommandPaletteActionResult
+ * @typedef {CommandPaletteNavigateAction | CommandPaletteUpdateQueryAction | CommandPaletteNoneAction} CommandPaletteActionResult
  */
 
 /**

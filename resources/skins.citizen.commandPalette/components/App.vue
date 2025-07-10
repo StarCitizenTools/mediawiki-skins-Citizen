@@ -196,13 +196,11 @@ module.exports = exports = defineComponent( {
 			switch ( selectionAction.action ) {
 				case 'navigate':
 					if ( selectionAction.payload ) {
-						window.location.href = selectionAction.payload;
+						// <a> tags are handled by the browser on mouse click, so we don't need to navigate.
+						if ( !result.isMouseClick ) {
+							window.location.href = selectionAction.payload;
+						}
 						close();
-					}
-					break;
-				case 'navigate-new-tab':
-					if ( selectionAction.payload ) {
-						window.open( selectionAction.payload, '_blank' );
 					}
 					break;
 				case 'updateQuery':

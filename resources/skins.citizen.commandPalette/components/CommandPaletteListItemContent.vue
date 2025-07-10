@@ -1,5 +1,8 @@
 <template>
-	<div
+	<component
+		:is="url ? 'a' : 'button'"
+		:href="url || undefined"
+		:type="url ? undefined : 'button'"
 		class="citizen-command-palette-list-item__content"
 	>
 		<cdx-thumbnail
@@ -62,7 +65,7 @@
 				{{ typeLabel }}
 			</div>
 		</div>
-	</div>
+	</component>
 </template>
 
 <script>
@@ -78,6 +81,10 @@ module.exports = exports = defineComponent( {
 		CdxThumbnail
 	},
 	props: {
+		url: {
+			type: String,
+			default: ''
+		},
 		label: {
 			type: String,
 			required: true
@@ -128,6 +135,17 @@ module.exports = exports = defineComponent( {
 		align-items: center;
 		padding: var( --space-sm ) var( --citizen-command-palette-side-padding );
 		text-decoration: none;
+
+		// Reset button styles
+		button& {
+			cursor: pointer;
+			background: none;
+			border: none;
+			font: inherit;
+			color: inherit;
+			text-align: inherit;
+			width: 100%;
+		}
 
 		&:hover {
 			text-decoration: none;

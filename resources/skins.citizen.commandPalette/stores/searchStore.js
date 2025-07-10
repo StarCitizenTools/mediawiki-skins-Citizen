@@ -342,7 +342,7 @@ exports.useSearchStore = defineStore( 'search', {
 			}
 
 			// Save item on navigation, unless it's a command
-			if ( ( actionResult.action === 'navigate' || actionResult.action === 'navigate-new-tab' ) && result.type !== 'command' ) {
+			if ( actionResult.action === 'navigate' && result.type !== 'command' ) {
 				recentItemsService.saveRecentItem( result );
 			}
 

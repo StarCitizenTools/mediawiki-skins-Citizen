@@ -13,7 +13,6 @@ Partially based on the MenuItem component from Codex.
 		:class="rootClasses"
 		:data-type="type"
 		@mousedown.prevent="onMouseDown"
-		@click.prevent="onClick"
 	>
 		<command-palette-list-item-content
 			:label="label"
@@ -26,6 +25,7 @@ Partially based on the MenuItem component from Codex.
 			:search-query="searchQuery"
 			:url="url"
 			:highlight-query="highlightQuery"
+			@click="onClick"
 		></command-palette-list-item-content>
 		<command-palette-list-item-actions
 			ref="actionsRef"
@@ -45,6 +45,7 @@ const { defineComponent, computed, ref } = require( 'vue' );
 // Import the new sub-components
 const CommandPaletteListItemContent = require( './CommandPaletteListItemContent.vue' );
 const CommandPaletteListItemActions = require( './CommandPaletteListItemActions.vue' );
+const { CommandPaletteItem } = require( '../types.js' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
@@ -138,27 +139,23 @@ module.exports = exports = defineComponent( {
 			}
 		};
 
-		const onClick = ( event ) => {
-			emit( 'select', {
-				id: props.id,
-				label: props.label,
-				url: props.url,
-				type: props.type,
-				value: props.value,
-				thumbnail: props.thumbnail,
-				thumbnailIcon: props.thumbnailIcon,
-				description: props.description,
-				metadata: props.metadata,
-				actions: props.actions,
-				source: props.source,
-				eventDetails: {
-					button: event.button,
-					ctrlKey: event.ctrlKey,
-					metaKey: event.metaKey,
-					shiftKey: event.shiftKey,
-					altKey: event.altKey
-				}
-			} );
+		const onClick = () => {
+			emit( 'select',
+				/** @type {CommandPaletteItem} */ ( {
+					id: props.id,
+					label: props.label,
+					url: props.url,
+					type: props.type,
+					value: props.value,
+					thumbnail: props.thumbnail,
+					thumbnailIcon: props.thumbnailIcon,
+					description: props.description,
+					metadata: props.metadata,
+					actions: props.actions,
+					source: props.source,
+					isMouseClick: true
+				} )
+			);
 		};
 
 		// --- Action Handling ---
