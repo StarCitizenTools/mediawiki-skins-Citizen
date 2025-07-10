@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.4.0...v3.5.0) (2025-07-10)
+
+
+### Features
+
+* **CommandPalette:** ✨ use `<a>` or `<button>` respectively ([7e6bfe4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7e6bfe454712b3044bf23a7a40269b777f8c44be)), closes [#1089](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1089)
+* **Search:** ✨ enhance citizen-search-trigger to support pre-filling input ([5dce5a2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5dce5a289c34ad8691ce23a9a8728432d7384a25))
+
 ## [3.4.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.3.2...v3.4.0) (2025-07-03)
 
 
