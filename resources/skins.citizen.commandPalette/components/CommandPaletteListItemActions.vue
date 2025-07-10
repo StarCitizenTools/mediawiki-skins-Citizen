@@ -4,15 +4,14 @@
 		class="citizen-command-palette-list-item__actions"
 		:class="{ 'citizen-command-palette-list-item__actions--visible': highlighted }"
 	>
-		<cdx-button
+		<component
+			:is="action.url ? 'a' : 'cdx-button'"
 			v-for="action in actions"
 			:key="action.id"
 			:ref="( el ) => setButtonRef( el, action.id )"
 			class="citizen-command-palette-list-item__action"
-			:aria-label="action.label"
-			weight="quiet"
-			:tabindex="-1"
-			@click.stop.prevent="onActionClick( action )"
+			v-bind="getButtonAttributes( action )"
+			@click="handleActionClick( action, $event )"
 			@focus="onButtonFocus( action.id )"
 			@keydown="handleActionButtonKeydown"
 		>
@@ -21,13 +20,14 @@
 				size="small"
 				class="citizen-command-palette-list-item__action__icon"
 			></cdx-icon>
-		</cdx-button>
+		</component>
 	</div>
 </template>
 
 <script>
 const { defineComponent, ref, computed, onBeforeUpdate } = require( 'vue' );
 const { CdxIcon, CdxButton } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
+const { CommandPaletteActionEvent } = require( '../types.js' );
 const useActionNavigation = require( '../composables/useActionNavigation.js' );
 
 // @vue/component
@@ -55,9 +55,27 @@ module.exports = exports = defineComponent( {
 	setup( props, { emit, expose } ) {
 		const buttonRefs = ref( {} );
 
-		// Use the composable here
 		const { handleActionButtonKeydown, onButtonFocus, focusFirstButton, focusLastButton } =
 			useActionNavigation( computed( () => props.actions ), buttonRefs, emit );
+
+		const getButtonAttributes = ( action ) => {
+			const isLink = !!action.url;
+			const attributes = {
+				'aria-label': action.label,
+				tabindex: -1
+			};
+
+			if ( isLink ) {
+				attributes.class = {
+					'cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only': true
+				};
+				attributes.href = action.url;
+			} else {
+				attributes.weight = 'quiet';
+			}
+
+			return attributes;
+		};
 
 		// Reset refs before update
 		onBeforeUpdate( () => {
@@ -72,38 +90,41 @@ module.exports = exports = defineComponent( {
 			}
 		};
 
-		// Handle clicks on action buttons
 		const onActionClick = ( action ) => {
-			// Determine the type based on the action details
-			let actionType = 'event'; // Default to 'event' or a specific type if needed
+			let actionType = 'event';
 			if ( action.id === 'dismiss' ) {
 				actionType = 'dismiss';
 			} else if ( action.url ) {
 				actionType = 'navigate';
-			} // Add other conditions if action.id determines other types like 'edit' (that aren't navigation)
+			}
 
-			/** @type {import('../types.js').CommandPaletteActionEvent} */
+			/** @type {CommandPaletteActionEvent} */
 			const payload = {
 				type: actionType,
 				itemId: props.itemId, // Include parent item ID
 				actionId: action.id,
 				url: action.url
-				// Pass any other relevant action properties if needed
 			};
 			emit( 'action', payload );
 		};
 
-		// Expose focus methods for parent component
+		const handleActionClick = ( action, event ) => {
+			event.stopPropagation();
+			if ( !action.url ) {
+				event.preventDefault();
+			}
+			onActionClick( action );
+		};
+
 		expose( {
 			focusFirstButton,
 			focusLastButton
 		} );
 
 		return {
-			// buttonRefs needed by setButtonRef
+			getButtonAttributes,
 			setButtonRef,
-			onActionClick,
-			// Pass composable methods to template
+			handleActionClick,
 			handleActionButtonKeydown,
 			onButtonFocus
 		};
@@ -140,6 +161,12 @@ module.exports = exports = defineComponent( {
 
 	&__action {
 		border-radius: var( --border-radius-base );
+
+		// The Codex link styles somehow override the icon padding, so we need to reset it.
+		// Original selector: a:where(:not([role='button'])) .cdx-icon:not(.cdx-thumbnail__placeholder__icon--vue):last-child
+		a&.cdx-button .cdx-icon {
+			padding: 0;
+		}
 	}
 }
 </style>
