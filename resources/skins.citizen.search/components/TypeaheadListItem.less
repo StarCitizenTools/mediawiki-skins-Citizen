@@ -3,10 +3,10 @@
 .citizen-typeahead-list-item {
 	&-link {
 		display: flex;
-		gap: var( --spacing-small );
+		gap: var( --space-sm );
 		align-items: center;
 		min-height: 44px;
-		padding: var( --spacing-x-small ) var( --spacing-medium );
+		padding: var( --space-xs ) var( --space-md );
 
 		&:hover,
 		&[ data-mw-typeahead-selected ] {
@@ -68,9 +68,9 @@
 
 	.citizen-typeahead-group--chips & {
 		&-link {
-			gap: var( --spacing-x-small );
+			gap: var( --space-xs );
 			min-height: 36px;
-			padding: var( --spacing-xx-small ) var( --spacing-small );
+			padding: var( --space-xxs ) var( --space-sm );
 			border: 1px solid var( --border-color-base );
 			border-radius: var( --border-radius-medium );
 		}

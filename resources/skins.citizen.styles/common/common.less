@@ -1,7 +1,7 @@
 html {
 	box-sizing: border-box;
 	font-size: 100%;
-	scroll-padding-top: ~'calc( var( --height-sticky-header ) + var( --spacing-xx-large ) )';
+	scroll-padding-top: ~'calc( var( --height-sticky-header ) + var( --space-xl ) )';
 }
 
 body {
@@ -57,12 +57,12 @@ textarea {
 }
 
 blockquote {
-	margin: var( --spacing-medium );
+	margin: var( --space-md );
 	color: var( --color-subtle );
 
 	cite {
 		display: block;
-		margin-top: var( --spacing-small );
+		margin-top: var( --space-sm );
 
 		&::before {
 			content: '— ';
@@ -123,16 +123,16 @@ td {
 }
 
 #mw-content-text {
-	margin-block-start: var( --spacing-medium );
+	margin-block-start: var( --space-md );
 }
 
 // TODO: Think of better places to put indicators;
 .mw-indicators {
 	display: flex;
-	column-gap: var( --spacing-x-small );
+	column-gap: var( --space-xs );
 	align-items: center;
-	padding-inline-start: var( --spacing-x-small );
-	margin-inline-start: var( --spacing-x-small );
+	padding-inline-start: var( --space-xs );
+	margin-inline-start: var( --space-xs );
 	font-size: var( --font-size-small );
 	border-inline-start: var( --border-width-base ) solid var( --border-color-base );
 }

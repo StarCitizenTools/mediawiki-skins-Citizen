@@ -5,16 +5,16 @@
 		display: grid;
 		// This is not the best because it does not adapt to the text length but will revisit later
 		grid-template-columns: repeat( var( --pref-columns, 2 ), 1fr );
-		gap: var( --spacing-xx-small );
-		padding-inline: var( --spacing-medium );
+		gap: var( --space-xxs );
+		padding-inline: var( --space-md );
 	}
 }
 
 .citizen-preferences-content {
 	display: flex;
 	flex-direction: column;
-	gap: var( --spacing-x-small );
-	padding-block: var( --spacing-x-small );
+	gap: var( --space-xs );
+	padding-block: var( --space-xs );
 }
 
 // New clientPrefs styles
@@ -36,7 +36,7 @@
 			align-items: center;
 			justify-content: center;
 			height: 100%;
-			padding: var( --spacing-x-small ) var( --spacing-medium );
+			padding: var( --space-xs ) var( --space-md );
 			font-weight: var( --font-weight-medium );
 			cursor: pointer;
 			border: var( --border-width-thick ) solid var( --border-color-base );
@@ -56,7 +56,7 @@
 #citizen-client-prefs {
 	.citizen-menu {
 		&__content {
-			padding: 0 var( --spacing-medium );
+			padding: 0 var( --space-md );
 		}
 	}
 }
