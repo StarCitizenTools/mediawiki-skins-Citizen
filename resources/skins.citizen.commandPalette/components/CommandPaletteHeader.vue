@@ -111,14 +111,14 @@ module.exports = exports = defineComponent( {
 	&__search {
 		position: relative;
 		/* 8px from CdxTextInput */
-		padding: var( --space-sm ) calc( var( --citizen-command-palette-side-padding ) - @spacing-50 );
+		padding: var( --spacing-small ) calc( var( --citizen-command-palette-side-padding ) - @spacing-50 );
 		.mixin-citizen-font-styles( 'body' );
 	}
 
 	&__input {
 		.cdx-text-input__input {
 			padding-block: 0;
-			padding-left: calc( @spacing-50 + @size-icon-medium + var( --space-sm ) );
+			padding-left: calc( @spacing-50 + @size-icon-medium + var( --spacing-small ) );
 			outline: 0 !important;
 			background-color: transparent !important;
 			border: 0 !important;

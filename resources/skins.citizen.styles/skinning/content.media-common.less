@@ -38,7 +38,7 @@ figure[ typeof~='mw:File/Frameless' ] {
 figure[ typeof~='mw:File/Thumb' ],
 figure[ typeof~='mw:File/Frame' ] {
 	display: table;
-	margin: var( --space-xs ) auto var( --space-md ) auto;
+	margin: var( --spacing-x-small ) auto var( --spacing-medium ) auto;
 	text-align: center;
 	.mixin-citizen-font-styles( 'small' );
 
@@ -62,7 +62,7 @@ figure[ typeof~='mw:File/Frame' ] {
 		caption-side: bottom;
 
 		&:not( :empty ) {
-			margin-top: var( --space-xs );
+			margin-top: var( --spacing-x-small );
 		}
 	}
 }
@@ -118,7 +118,7 @@ figure[ typeof~='mw:File/Frame' ] {
 			/* @noflip */
 			clear: right;
 			/* @noflip */
-			margin-left: var( --space-lg );
+			margin-left: var( --spacing-x-large );
 		}
 
 		.mw-content-rtl & {
@@ -127,7 +127,7 @@ figure[ typeof~='mw:File/Frame' ] {
 			/* @noflip */
 			clear: left;
 			/* @noflip */
-			margin-right: var( --space-lg );
+			margin-right: var( --spacing-x-large );
 		}
 	}
 
@@ -143,7 +143,7 @@ figure[ typeof~='mw:File/Frame' ] {
 			/* @noflip */
 			margin-right: 0;
 			/* @noflip */
-			margin-left: var( --space-lg );
+			margin-left: var( --spacing-x-large );
 		}
 
 		&.mw-halign-left {
@@ -152,7 +152,7 @@ figure[ typeof~='mw:File/Frame' ] {
 			/* @noflip */
 			clear: left;
 			/* @noflip */
-			margin-right: var( --space-lg );
+			margin-right: var( --spacing-x-large );
 			/* @noflip */
 			margin-left: 0;
 		}

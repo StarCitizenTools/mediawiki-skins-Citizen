@@ -22,7 +22,7 @@
 	.mixin-citizen-sticky-header;
 
 	@media ( min-width: @min-width-breakpoint-desktop ) {
-		right: ~'calc( var( --space-xl ) * -1 )'; // Fix #797
+		right: ~'calc( var( --spacing-xx-large ) * -1 )'; // Fix #797
 	}
 
 	li {
@@ -31,9 +31,9 @@
 
 	a {
 		display: block;
-		padding: var( --space-xxs ) var( --space-md );
-		margin-top: var( --space-xs );
-		margin-bottom: var( --space-xs );
+		padding: var( --spacing-xx-small ) var( --spacing-medium );
+		margin-top: var( --spacing-x-small );
+		margin-bottom: var( --spacing-x-small );
 		border-radius: var( --border-radius-base );
 
 		&:hover {
@@ -47,17 +47,17 @@
 }
 
 .mw-filepage-resolutioninfo {
-	margin-top: var( --space-xs );
-	margin-right: ~'calc( var(  --space-xxs ) * -1 )';
+	margin-top: var( --spacing-x-small );
+	margin-right: ~'calc( var(  --spacing-xx-small ) * -1 )';
 	// Compensate for margin in links, because we can't use flex gap
-	margin-left: ~'calc( var(  --space-xxs ) * -1 )';
+	margin-left: ~'calc( var(  --spacing-xx-small ) * -1 )';
 	// HACK: Hide text
 	font-size: 0;
 
 	.mw-thumbnail-link {
 		display: inline-block;
-		padding: var( --space-xxs ) var( --space-md );
-		margin: var( --space-xxs );
+		padding: var( --spacing-xx-small ) var( --spacing-medium );
+		margin: var( --spacing-xx-small );
 		font-size: var( --font-size-small );
 		color: var( --color-subtle );
 		background-color: var( --color-surface-0 );
@@ -86,8 +86,8 @@
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	margin-top: var( --space-xl );
-	margin-bottom: var( --space-xl );
+	margin-top: var( --spacing-xx-large );
+	margin-bottom: var( --spacing-xx-large );
 
 	img {
 		// Large image can overflow
@@ -142,7 +142,7 @@
 
 .mw_metadata td,
 .mw_metadata th {
-	padding: var( --space-xs );
+	padding: var( --spacing-x-small );
 	background-color: transparent;
 	border: 0;
 }

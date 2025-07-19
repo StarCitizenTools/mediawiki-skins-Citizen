@@ -10,10 +10,10 @@
 
 	&__header {
 		display: flex;
-		gap: var( --space-md );
+		gap: var( --spacing-medium );
 		align-items: center;
 		justify-content: center;
-		padding: var( --space-md );
+		padding: var( --spacing-medium );
 		border-bottom: var( --border-width-base ) solid var( --border-color-base );
 	}
 
@@ -26,18 +26,18 @@
 	&__siteinfo {
 		display: flex;
 		flex-direction: column;
-		gap: var( --space-xxs );
+		gap: var( --spacing-xx-small );
 	}
 
 	&__menu {
 		--size-icon: 1rem;
 		display: grid;
 		grid-template-columns: repeat( auto-fit, minmax( 15rem, auto ) );
-		gap: var( --space-sm );
+		gap: var( --spacing-small );
 		justify-content: center;
 		max-width: inherit;
-		padding: var( --space-xs );
-		margin-bottom: var( --space-xs );
+		padding: var( --spacing-x-small );
+		margin-bottom: var( --spacing-x-small );
 
 		.mw-list-item a {
 			border-radius: var( --border-radius-base );

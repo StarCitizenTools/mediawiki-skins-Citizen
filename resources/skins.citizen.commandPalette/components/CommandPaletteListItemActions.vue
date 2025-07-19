@@ -139,10 +139,10 @@ module.exports = exports = defineComponent( {
 		inset-inline-end: var( --citizen-command-palette-side-padding );
 		top: 0;
 		display: flex;
-		gap: var( --space-xxs );
+		gap: var( --spacing-xx-small );
 		align-items: center;
 		height: 100%;
-		padding-left: var( --space-xl );
+		padding-left: var( --spacing-xx-large );
 		pointer-events: none;
 		background-image: linear-gradient( to right, transparent 0%, transparent 30%, var( --actions-fade-color, inherit ) 70% );
 		opacity: 0;
