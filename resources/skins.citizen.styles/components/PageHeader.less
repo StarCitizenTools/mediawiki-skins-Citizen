@@ -2,16 +2,16 @@
 	position: relative;
 	z-index: @z-index-above-content;
 	padding-inline: var( --padding-page );
-	margin-top: var( --spacing-xx-large );
+	margin-top: var( --space-xl );
 
 	&-inner {
 		display: flex;
 		flex-wrap: wrap;
-		gap: var( --spacing-medium );
+		gap: var( --space-md );
 		align-items: center;
 		/* max-width should sync with .citizen-body-container */
 		max-width: var( --width-layout );
-		padding-block: var( --spacing-medium );
+		padding-block: var( --space-md );
 		margin-inline: auto;
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {
@@ -44,7 +44,7 @@
 	}
 
 	&-separator {
-		margin-right: var( --spacing-xx-small );
+		margin-right: var( --space-xxs );
 		color: var( --color-subtle );
 	}
 

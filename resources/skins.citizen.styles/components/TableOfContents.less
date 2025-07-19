@@ -1,5 +1,5 @@
 .citizen-toc {
-	--citizen-toc-toggle-size: ~'calc( var( --line-height-small ) + var( --spacing-x-small ) * 2 )';
+	--citizen-toc-toggle-size: ~'calc( var( --line-height-small ) + var( --space-xs ) * 2 )';
 	.mixin-citizen-font-styles( 'small' );
 
 	&-top {
@@ -10,7 +10,7 @@
 
 	&-contents,
 	&-list {
-		margin: 0 0 0 var( --spacing-x-small );
+		margin: 0 0 0 var( --space-xs );
 		list-style: none;
 		border-left: var( --border-width-thick ) solid var( --border-color-base );
 
@@ -23,9 +23,9 @@
 	&-link {
 		position: relative;
 		display: flex;
-		gap: var( --spacing-x-small );
+		gap: var( --space-xs );
 		align-items: center;
-		padding: var( --spacing-x-small );
+		padding: var( --space-xs );
 		font-weight: var( --font-weight-medium );
 		color: var( --color-base );
 		text-decoration: none;
@@ -77,13 +77,13 @@
 		left: 0;
 		flex-shrink: 0;
 		width: var( --border-width-thick );
-		margin-block: var( --spacing-x-small );
+		margin-block: var( --space-xs );
 		margin-left: ~'calc( var( --border-width-thick ) * -1 )';
 	}
 
 	&-text {
 		display: flex;
-		gap: var( --spacing-x-small );
+		gap: var( --space-xs );
 	}
 
 	&-numb {
@@ -153,7 +153,7 @@
 .citizen-sticky-header-visible {
 	.citizen-toc-top.citizen-toc-link {
 		height: 2rem; // 1rem text + 1rem padding
-		padding-block: var( --spacing-x-small );
+		padding-block: var( --space-xs );
 		opacity: 1;
 	}
 }
@@ -161,19 +161,19 @@
 @media ( max-width: ( @max-width-breakpoint-tablet ) ) {
 	.citizen-toc {
 		position: fixed;
-		bottom: ~'calc( var( --header-size ) + max( env( safe-area-inset-bottom ), var( --spacing-x-small ) ) )';
+		bottom: ~'calc( var( --header-size ) + max( env( safe-area-inset-bottom ), var( --space-xs ) ) )';
 		left: 0;
 		z-index: @z-index-sticky; // Keep ToC above sticky header and page action, but below site header
 		pointer-events: none; // HACK: Make background clickable
 
 		&-card {
 			// Get consistent margin
-			bottom: ~'calc( 100% - var( --spacing-x-small ) )';
+			bottom: ~'calc( 100% - var( --space-xs ) )';
 			width: max-content;
 			// This is not bulletproof since it will get covered by page header
 			// in extremely short height. but it should be good for now
 			max-height: ~'calc( var( --header-card-maxheight ) - 8rem )';
-			padding: var( --spacing-x-small );
+			padding: var( --space-xs );
 			transform-origin: var( --transform-origin-offset-start ) var( --transform-origin-offset-end );
 		}
 
@@ -184,7 +184,7 @@
 				place-content: center;
 				width: var( --toolbar-size );
 				height: var( --toolbar-size );
-				margin: var( --spacing-x-small );
+				margin: var( --space-xs );
 				pointer-events: auto; // HACK: Make button clickable
 				background-color: var( --color-surface-1 );
 				border: 1px solid var( --border-color-base );
@@ -220,7 +220,7 @@
 		position: sticky;
 		top: var( --height-sticky-header );
 		max-height: ~'calc( 100vh - var( --height-sticky-header ) )';
-		padding: var( --spacing-x-small ) 0;
+		padding: var( --space-xs ) 0;
 		overflow-y: auto;
 		overscroll-behavior: contain;
 

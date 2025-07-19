@@ -1,6 +1,6 @@
 .page-actions {
 	display: flex;
-	gap: var( --spacing-xx-small );
+	gap: var( --space-xxs );
 	align-items: center;
 
 	// TODO: Merge this with header__item
@@ -10,9 +10,9 @@
 
 	.citizen-menu {
 		&__card {
-			right: ~'calc( var( --spacing-x-small ) * -1 )'; // counteract margin
+			right: ~'calc( var( --space-xs ) * -1 )'; // counteract margin
 			display: grid;
-			gap: var( --spacing-x-small );
+			gap: var( --space-xs );
 			max-height: 60vh;
 			transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-end );
 
@@ -22,7 +22,7 @@
 			}
 
 			&-content {
-				padding-block: var( --spacing-x-small );
+				padding-block: var( --space-xs );
 			}
 		}
 	}
@@ -46,13 +46,13 @@
 	> .mw-portlet {
 		ul {
 			display: flex;
-			gap: var( --spacing-xx-small );
+			gap: var( --space-xxs );
 		}
 
 		li > a {
 			gap: 0;
-			padding-right: var( --spacing-small );
-			padding-left: var( --spacing-small );
+			padding-right: var( --space-sm );
+			padding-left: var( --space-sm );
 			font-size: 0;
 			border-radius: var( --border-radius-medium );
 
@@ -132,7 +132,7 @@
 	}
 
 	&#ca-edit {
-		margin-left: ~'calc( var( --spacing-xx-small ) * -1 )';
+		margin-left: ~'calc( var( --space-xxs ) * -1 )';
 		border-left: var( --border-width-base ) solid var( --color-progressive--hover );
 
 		> a {
@@ -157,9 +157,9 @@
 	.page-actions {
 		position: fixed;
 		right: 0;
-		bottom: ~'calc( var( --header-size ) + max( env( safe-area-inset-bottom ), var( --spacing-x-small ) ) )';
+		bottom: ~'calc( var( --header-size ) + max( env( safe-area-inset-bottom ), var( --space-xs ) ) )';
 		height: var( --toolbar-size );
-		margin: var( --spacing-x-small );
+		margin: var( --space-xs );
 		background: var( --color-surface-1 );
 		border: 1px solid var( --border-color-base );
 		border-radius: var( --border-radius-medium );
@@ -194,7 +194,7 @@
 	.page-actions {
 		> .mw-portlet {
 			li > a {
-				gap: var( --spacing-x-small );
+				gap: var( --space-xs );
 				font-size: inherit;
 			}
 		}

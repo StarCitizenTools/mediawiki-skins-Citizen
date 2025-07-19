@@ -37,12 +37,12 @@
 
 	&-inner {
 		display: flex;
-		gap: var( --spacing-medium );
+		gap: var( --space-md );
 		align-items: center;
 		justify-content: space-between;
 		max-width: var( --width-page );
 		min-height: 3.25rem;
-		padding-block: var( --spacing-xx-small );
+		padding-block: var( --space-xxs );
 		margin-inline: auto;
 	}
 
@@ -68,7 +68,7 @@
 		flex-grow: 1;
 
 		&.cdx-button {
-			gap: var( --spacing-x-small );
+			gap: var( --space-xs );
 			justify-content: flex-start;
 			max-width: none;
 		}
@@ -79,7 +79,7 @@
 			}
 
 			.citizen-sticky-header-page-info {
-				transform: translateX( calc( var( --size-icon ) + var( --spacing-x-small ) ) );
+				transform: translateX( calc( var( --size-icon ) + var( --space-xs ) ) );
 			}
 		}
 
@@ -133,14 +133,14 @@
 		}
 
 		.citizen-menu__card {
-			top: calc( 100% + var( --spacing-x-small ) );
-			right: calc( var( --spacing-x-small ) * -1 );
+			top: calc( 100% + var( --space-xs ) );
+			right: calc( var( --space-xs ) * -1 );
 			max-width: 80vw;
 			max-height: 60vh;
 			transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-start );
 
 			&-content {
-				padding-block: var( --spacing-x-small );
+				padding-block: var( --space-xs );
 			}
 		}
 	}

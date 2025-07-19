@@ -446,11 +446,11 @@ module.exports = exports = defineComponent( {
 @import '../../mixins.less';
 
 .citizen-command-palette {
-	--citizen-command-palette-side-padding: var( --spacing-medium );
+	--citizen-command-palette-side-padding: var( --space-md );
 	position: fixed;
-	top: var( --spacing-x-small );
-	right: var( --spacing-x-small );
-	left: var( --spacing-x-small );
+	top: var( --space-xs );
+	right: var( --space-xs );
+	left: var( --space-xs );
 	max-width: @size-5600;
 	margin-inline: auto;
 	overflow: hidden;
@@ -483,7 +483,7 @@ module.exports = exports = defineComponent( {
 	}
 
 	&__no-results {
-		padding: var( --spacing-medium ) var( --citizen-command-palette-side-padding );
+		padding: var( --space-md ) var( --citizen-command-palette-side-padding );
 		text-align: center;
 	}
 }

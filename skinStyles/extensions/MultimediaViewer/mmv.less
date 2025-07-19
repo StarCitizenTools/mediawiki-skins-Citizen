@@ -13,11 +13,11 @@
 		right: 0;
 		left: 0;
 		width: auto;
-		padding-block: var( --spacing-x-small ) var( --spacing-medium );
-		padding-inline: var( --spacing-medium );
+		padding-block: var( --space-xs ) var( --space-md );
+		padding-inline: var( --space-md );
 		border-top-left-radius: var( --border-radius-medium );
 		border-top-right-radius: var( --border-radius-medium );
-		transform: ~'translateY( calc( var( --spacing-x-small ) * -1 ) )'; // counteract top positioning
+		transform: ~'translateY( calc( var( --space-xs ) * -1 ) )'; // counteract top positioning
 
 		&.mw-mmv-untruncated {
 			box-shadow: none;
@@ -26,7 +26,7 @@
 
 	&-above-fold {
 		display: flex;
-		gap: var( --spacing-medium );
+		gap: var( --space-md );
 		align-items: center;
 		height: auto;
 		padding-bottom: 0;
@@ -34,8 +34,8 @@
 
 	&-progress {
 		top: -2px;
-		right: ~'calc( var( --spacing-medium ) * -1 )';
-		left: ~'calc( var( --spacing-medium ) * -1 )';
+		right: ~'calc( var( --space-md ) * -1 )';
+		left: ~'calc( var( --space-md ) * -1 )';
 		width: auto;
 		height: 2px;
 		background-color: transparent;
@@ -47,7 +47,7 @@
 	}
 
 	&-title-contain {
-		padding-block: var( --spacing-x-small );
+		padding-block: var( --space-xs );
 	}
 
 	&-title-para {
@@ -55,7 +55,7 @@
 		flex-grow: 1;
 		order: -1;
 		height: auto;
-		padding: var( --spacing-x-small ) 0 !important;
+		padding: var( --space-xs ) 0 !important;
 		margin: 0 !important;
 		font-size: var( --font-size-medium ) !important;
 		line-height: var( --line-height-small ) !important;
@@ -87,7 +87,7 @@
 
 	&-image-metadata {
 		display: flex;
-		gap: var( --spacing-medium );
+		gap: var( --space-md );
 		justify-content: space-between;
 		padding-top: 0;
 		margin-top: 0;
@@ -95,7 +95,7 @@
 		line-height: 2; // Only show one line of text in collapsed state
 		background-color: transparent;
 		border-top: 0;
-		transform: ~'translateY( calc( var( --spacing-xx-small ) * -1 ) )';
+		transform: ~'translateY( calc( var( --space-xxs ) * -1 ) )';
 
 		&-desc-column,
 		&-links-column {
@@ -146,7 +146,7 @@
 	}
 
 	&-permission-box {
-		margin: var( --spacing-medium ) 0;
+		margin: var( --space-md ) 0;
 	}
 
 	&-image {
@@ -168,8 +168,8 @@
 			--mmv-error-icon-size: 80px;
 			position: relative;
 			inset: unset;
-			padding: ~'calc( var( --mmv-error-icon-size ) + var( --spacing-double ) )' 0 0 0;
-			margin: var( --spacing-medium ) 4.5rem;
+			padding: ~'calc( var( --mmv-error-icon-size ) + var( --space-xxl ) )' 0 0 0;
+			margin: var( --space-md ) 4.5rem;
 			line-height: var( --line-height-small );
 			overflow-wrap: break-word;
 			background-size: var( --mmv-error-icon-size );
@@ -182,7 +182,7 @@
 				}
 
 				&-description {
-					margin-top: var( --spacing-medium );
+					margin-top: var( --space-md );
 					font-size: var( --font-size-small );
 					color: ~'hsl( var( --color-progressive-hsl__h ), 35%, 65% )';
 				}
@@ -237,8 +237,8 @@
 .mw-mmv-untruncated {
 	.mw-mmv {
 		&-above-fold {
-			padding-bottom: var( --spacing-x-small );
-			margin-bottom: var( --spacing-medium );
+			padding-bottom: var( --space-xs );
+			margin-bottom: var( --space-md );
 			border-bottom: 1px solid var( --border-color-base );
 		}
 

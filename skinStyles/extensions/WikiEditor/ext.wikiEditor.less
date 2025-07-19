@@ -42,10 +42,10 @@
 	.tabs span.tab a,
 	.group .tool-select .label {
 		display: flex;
-		column-gap: var( --spacing-xx-small );
+		column-gap: var( --space-xxs );
 		align-items: center;
 		height: @wikieditor-button-size; /* Align with VE */
-		padding-inline: var( --spacing-x-small );
+		padding-inline: var( --space-xs );
 		font-weight: var( --font-weight-medium );
 		color: var( --color-emphasized );
 		text-decoration: none;
@@ -160,8 +160,8 @@
 		div {
 			display: flex;
 			flex-wrap: wrap;
-			gap: var( --spacing-xx-small );
-			padding: var( --spacing-xx-small );
+			gap: var( --space-xxs );
+			padding: var( --space-xxs );
 
 			span {
 				display: flex;
@@ -230,7 +230,7 @@
 
 .wikiEditor-toolbar-dialog {
 	.ui-dialog-content {
-		padding: var( --spacing-medium ) !important;
+		padding: var( --space-md ) !important;
 	}
 
 	.ui-dialog-buttonpane {
@@ -245,13 +245,13 @@
 
 			~ input,
 			~ select {
-				margin-top: var( --spacing-xx-small );
+				margin-top: var( --space-xxs );
 			}
 		}
 
 		/* Checkbox text */
 		> input + label {
-			margin-left: var( --spacing-x-small );
+			margin-left: var( --space-xs );
 			font-size: inherit;
 			color: var( --color-base );
 			letter-spacing: inherit;

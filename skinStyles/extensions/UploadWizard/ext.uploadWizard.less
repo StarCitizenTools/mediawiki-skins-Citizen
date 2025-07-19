@@ -59,7 +59,7 @@
 	}
 
 	&-filelist {
-		margin-top: var( --spacing-medium );
+		margin-top: var( --space-md );
 
 		&:empty {
 			margin-top: 0;
@@ -67,7 +67,7 @@
 	}
 
 	&-stepdiv-deeds:not( :empty ) {
-		padding-block: var( --spacing-medium );
+		padding-block: var( --space-md );
 	}
 
 	&-content {
@@ -107,8 +107,8 @@
 
 		// Style as message box
 		&-intro {
-			padding: var( --spacing-medium );
-			margin-block: var( --spacing-xx-large ) var( --spacing-medium );
+			padding: var( --space-md );
+			margin-block: var( --space-xl ) var( --space-md );
 			font-size: var( --font-size-small );
 			line-height: var( --line-height-small );
 			background-color: var( --background-color-notice-subtle );
@@ -120,7 +120,7 @@
 
 .mwe-upwiz-add-files-0,
 #mwe-upwiz-files {
-	margin-block: var( --spacing-medium );
+	margin-block: var( --space-md );
 }
 
 .mwe-upwiz {
@@ -135,7 +135,7 @@
 	&-add-file {
 		.mwe-upwiz-add-files-0 & {
 			display: grid;
-			gap: var( --spacing-x-small );
+			gap: var( --space-xs );
 			place-content: center;
 			min-height: 40vh;
 			font-size: var( --font-size-medium );
@@ -177,7 +177,7 @@
 
 			label.oo-ui-radioOptionWidget {
 				flex-grow: 1;
-				padding: var( --spacing-small ) var( --spacing-medium );
+				padding: var( --space-sm ) var( --space-md );
 				margin-right: 0;
 
 				&:hover {
@@ -205,7 +205,7 @@
 			// Fake notice box
 			&-explain,
 			&-custom-multiple-intro {
-				padding-inline: var( --spacing-medium );
+				padding-inline: var( --space-md );
 				font-size: var( --font-size-small );
 				line-height: var( --line-height-small );
 				background-color: var( --background-color-notice-subtle );
@@ -214,7 +214,7 @@
 			}
 
 			&-explain {
-				padding-top: var( --spacing-medium );
+				padding-top: var( --space-md );
 				color: var( --color-emphasized );
 				border-top-width: 1px;
 				border-top-left-radius: var( --border-radius-base );
@@ -222,8 +222,8 @@
 
 				// No text beneath
 				&:has( + ol ) {
-					padding-bottom: var( --spacing-medium );
-					margin-bottom: var( --spacing-medium );
+					padding-bottom: var( --space-md );
+					margin-bottom: var( --space-md );
 					border-bottom-width: 1px;
 					border-bottom-right-radius: var( --border-radius-base );
 					border-bottom-left-radius: var( --border-radius-base );
@@ -231,9 +231,9 @@
 			}
 
 			&-custom-multiple-intro {
-				padding-top: var( --spacing-x-small );
-				padding-bottom: var( --spacing-medium );
-				margin-bottom: var( --spacing-medium );
+				padding-top: var( --space-xs );
+				padding-bottom: var( --space-md );
+				margin-bottom: var( --space-md );
 				font-size: var( --font-size-small );
 				border-bottom-width: 1px;
 				border-bottom-right-radius: var( --border-radius-base );
@@ -244,8 +244,8 @@
 
 	&-deeds {
 		&-individual {
-			gap: var( --spacing-x-large );
-			padding-block: var( --spacing-xx-large );
+			gap: var( --space-lg );
+			padding-block: var( --space-xl );
 
 			.mwe-upwiz-deeds-individual-thumbnail {
 				margin-right: 0;
@@ -258,8 +258,8 @@
 			.mwe-upwiz-deed {
 				&-ownwork,
 				&-thirdparty {
-					padding-top: var( --spacing-x-large );
-					margin-top: var( --spacing-x-large );
+					padding-top: var( --space-lg );
+					margin-top: var( --space-lg );
 					margin-left: 0;
 				}
 			}
@@ -283,8 +283,8 @@
 		}
 
 		&-subgroup {
-			padding: var( --spacing-medium );
-			margin-block: var( --spacing-small );
+			padding: var( --space-md );
+			margin-block: var( --space-sm );
 			border: 1px solid var( --border-color-base );
 			border-radius: var( --border-radius-base );
 		}

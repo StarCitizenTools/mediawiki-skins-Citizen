@@ -2,9 +2,9 @@
 	.mixin-citizen-font-styles( 'small' );
 
 	&__card {
-		--transform-origin-offset-start: var( --spacing-x-small );
-		--transform-origin-offset-end: ~'calc( 100% - var( --spacing-x-small ) )';
-		margin: var( --spacing-x-small );
+		--transform-origin-offset-start: var( --space-xs );
+		--transform-origin-offset-end: ~'calc( 100% - var( --space-xs ) )';
+		margin: var( --space-xs );
 		contain: content;
 		border: var( --border-width-base ) solid var( --border-color-base );
 		border-radius: var( --border-radius-medium );
@@ -26,7 +26,7 @@
 
 	&__heading {
 		display: block;
-		padding: var( --spacing-x-small ) var( --spacing-medium );
+		padding: var( --space-xs ) var( --space-md );
 		margin: 0;
 		color: var( --color-subtle );
 		.mixin-citizen-font-styles( 'overline' );
@@ -40,10 +40,10 @@
 	.mw-list-item {
 		a {
 			display: flex;
-			gap: var( --spacing-small );
+			gap: var( --space-sm );
 			align-items: center;
 			min-height: 2.25rem;
-			padding-inline: var( --spacing-medium );
+			padding-inline: var( --space-md );
 			font-weight: var( --font-weight-medium );
 			color: var( --color-base );
 			transition: var( --transition-hover );
