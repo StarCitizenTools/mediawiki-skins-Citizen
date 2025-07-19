@@ -1,7 +1,7 @@
 .citizen-footer {
 	--min-width-footer-link: 10rem;
 	clear: both;
-	padding: var( --spacing-double ) var( --padding-page );
+	padding: var( --space-xxl ) var( --padding-page );
 	margin-top: 8rem;
 	// Reserve space for header
 	margin-bottom: var( --header-size );
@@ -19,9 +19,9 @@
 	&__content,
 	&__bottom {
 		display: flex;
-		gap: var( --spacing-medium ) var( --spacing-double );
+		gap: var( --space-md ) var( --space-xxl );
 		justify-content: space-between;
-		padding: var( --spacing-medium ) 0;
+		padding: var( --space-md ) 0;
 		margin-inline: auto;
 
 		@media ( max-width: @min-width-breakpoint-tablet ) {
@@ -42,14 +42,14 @@
 		display: flex;
 		flex-grow: 1;
 		flex-direction: column;
-		gap: var( --spacing-x-small );
+		gap: var( --space-xs );
 		max-width: 90ch;
 	}
 
 	&__sitetitle {
 		display: flex;
 		flex-direction: column;
-		gap: var( --spacing-small );
+		gap: var( --space-sm );
 
 		.mw-logo-wordmark {
 			font-size: var( --font-size-xxx-large );
@@ -82,11 +82,11 @@
 		align-items: flex-end;
 
 		@media ( max-width: @max-width-breakpoint-tablet ) {
-			margin-inline: calc( -1 * var( --spacing-medium ) );
+			margin-inline: calc( -1 * var( --space-md ) );
 		}
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {
-			margin-top: calc( -1 * var( --spacing-x-small ) );
+			margin-top: calc( -1 * var( --space-xs ) );
 		}
 
 		ul {
@@ -97,7 +97,7 @@
 
 		a {
 			display: block;
-			padding: var( --spacing-x-small ) var( --spacing-medium );
+			padding: var( --space-xs ) var( --space-md );
 			border-radius: var( --border-radius-base );
 
 			&:hover {
@@ -119,12 +119,12 @@
 		ul {
 			display: flex;
 			flex-wrap: wrap;
-			gap: var( --spacing-x-small );
+			gap: var( --space-xs );
 		}
 
 		li {
 			display: flex; // Horizontally aligned with there are two icons in the same li
-			gap: var( --spacing-x-small ); // Sometimes there can be multiple icon under the same li
+			gap: var( --space-xs ); // Sometimes there can be multiple icon under the same li
 		}
 
 		a {

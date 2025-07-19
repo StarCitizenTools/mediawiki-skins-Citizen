@@ -52,10 +52,10 @@ module.exports = exports = defineComponent( {
 .citizen-command-palette-empty-state {
 	display: flex;
 	flex-direction: column;
-	gap: var( --spacing-x-small );
+	gap: var( --space-xs );
 	align-items: center;
 	justify-content: center;
-	padding: var( --spacing-double ) var( --citizen-command-palette-side-padding );
+	padding: var( --space-xxl ) var( --citizen-command-palette-side-padding );
 	text-align: center;
 
 	&__icon {
