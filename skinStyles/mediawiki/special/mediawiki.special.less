@@ -22,8 +22,8 @@
 /* Special:Version */
 /* MediaWiki License */
 #mw-version-license + .plainlinks {
-	padding: var( --space-md );
-	margin-top: var( --space-md );
+	padding: var( --spacing-medium );
+	margin-top: var( --spacing-medium );
 	font-size: var( --font-size-small );
 	color: var( --color-subtle );
 	border: var( --border-width-base ) solid var( --border-color-base );
@@ -44,7 +44,7 @@
 	tbody {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		gap: var( --space-xs );
+		gap: var( --spacing-x-small );
 		border: 0;
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {
@@ -55,7 +55,7 @@
 	tr {
 		display: flex;
 		flex-direction: column;
-		padding: var( --space-sm ) var( --space-md );
+		padding: var( --spacing-small ) var( --spacing-medium );
 		border: var( --border-width-base ) solid var( --border-color-base );
 		border-radius: var( --border-radius-medium );
 	}

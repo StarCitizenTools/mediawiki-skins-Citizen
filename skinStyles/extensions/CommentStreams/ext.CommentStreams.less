@@ -11,7 +11,7 @@
 
 .cs {
 	&-comments {
-		margin-top: var( --space-md );
+		margin-top: var( --spacing-medium );
 		font-family: var( --font-family-base );
 
 		div.ve-ce-branchNode {
@@ -20,17 +20,17 @@
 	}
 
 	&-stream {
-		margin-block: var( --space-xs );
+		margin-block: var( --spacing-x-small );
 	}
 
 	&-reply {
 		&-comment {
-			margin-top: var( --space-md );
+			margin-top: var( --spacing-medium );
 		}
 
 		&-comment,
 		&-edit-box {
-			margin-left: var( --space-lg );
+			margin-left: var( --spacing-x-large );
 		}
 	}
 
@@ -38,7 +38,7 @@
 		&-header {
 			display: flex;
 			flex-wrap: wrap;
-			padding: var( --space-xs ) var( --space-sm );
+			padding: var( --spacing-x-small ) var( --spacing-small );
 
 			&-center {
 				flex-grow: 1;
@@ -90,14 +90,14 @@
 		}
 
 		&-body {
-			margin-bottom: var( --space-xs );
+			margin-bottom: var( --spacing-x-small );
 			font-size: inherit;
 		}
 	}
 
 	&-edit-box {
-		padding: var( --space-xs );
-		margin-bottom: var( --space-sm );
+		padding: var( --spacing-x-small );
+		margin-bottom: var( --spacing-small );
 		background-color: var( --color-surface-1 );
 		border: var( --border-width-base ) solid var( --border-color-base );
 	}
@@ -105,7 +105,7 @@
 	&-title,
 	&-body {
 		&-edit-field {
-			padding: var( --space-xs );
+			padding: var( --spacing-x-small );
 			font-family: var( --font-family-base );
 			border-color: var( --border-color-base );
 			border-radius: var( --border-radius-base );
@@ -117,7 +117,7 @@
 	}
 
 	&-toc {
-		padding: var( --space-xs );
+		padding: var( --spacing-x-small );
 		background-color: var( --color-surface-1 );
 		border-color: var( --border-color-base );
 		.mixin-citizen-font-styles( 'small' );
@@ -131,12 +131,12 @@
 
 .commentstreams-history-table {
 	th {
-		padding: var( --space-xs );
+		padding: var( --spacing-x-small );
 		font-weight: var( --font-weight-semi-bold );
 	}
 
 	td {
-		padding-inline: var( --space-xs );
+		padding-inline: var( --spacing-x-small );
 	}
 
 	tr {

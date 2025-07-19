@@ -25,7 +25,7 @@ table.dataTable tfoot th {
 
 table.dataTable thead th,
 table.dataTable thead td {
-	padding: var( --space-xs ) var( --space-sm );
+	padding: var( --spacing-x-small ) var( --spacing-small );
 	border-bottom-color: var( --border-color-base );
 }
 
@@ -52,8 +52,8 @@ table.dataTable thead .sorting_desc,
 table.dataTable thead .sorting_asc_disabled,
 table.dataTable thead .sorting_desc_disabled {
 	// 19px is the icon size
-	padding-right: ~'calc( 19px + var( --space-sm ) )';
-	background-position-x: ~'calc( 100% - var( --space-xs ) )';
+	padding-right: ~'calc( 19px + var( --spacing-small ) )';
+	background-position-x: ~'calc( 100% - var( --spacing-x-small ) )';
 }
 
 table.dataTable tbody tr {
@@ -66,7 +66,7 @@ table.dataTable tbody tr.selected {
 
 table.dataTable tbody th,
 table.dataTable tbody td {
-	padding: var( --space-xs ) var( --space-sm );
+	padding: var( --spacing-x-small ) var( --spacing-small );
 }
 
 table.dataTable.row-border tbody th,
@@ -279,16 +279,16 @@ table.dataTable > tbody > tr.child ul.dtr-details > li {
 /* Filter */
 .dataTables_wrapper {
 	.dataTables_filter {
-		margin-bottom: var( --space-sm );
+		margin-bottom: var( --spacing-small );
 
 		input {
-			margin-left: var( --space-xxs );
+			margin-left: var( --spacing-xx-small );
 		}
 	}
 
 	.dataTables_length select,
 	.dataTables_filter input {
-		padding: var( --space-xs );
+		padding: var( --spacing-x-small );
 		border: var( --border-width-base ) solid var( --border-color-interactive );
 		border-radius: var( --border-radius-base );
 	}
@@ -333,17 +333,17 @@ div.dtsp-columns-2 {
 }
 
 div.dtsp-panesContainer {
-	margin-bottom: var( --space-sm );
+	margin-bottom: var( --spacing-small );
 
 	div.dtsp-titleRow {
 		display: flex;
 		flex-wrap: wrap;
-		margin-bottom: var( --space-xxs );
+		margin-bottom: var( --spacing-xx-small );
 	}
 
 	div.dtsp-title {
 		flex-grow: 1;
-		padding: var( --space-xs ) 0;
+		padding: var( --spacing-x-small ) 0;
 		color: var( --color-subtle );
 		text-align: start;
 		.mixin-citizen-font-styles( 'overline' );
@@ -360,7 +360,7 @@ div.dtsp-panesContainer {
 	button.dtsp-clearAll,
 	button.dtsp-collapseAll,
 	button.dtsp-showAll {
-		padding: var( --space-xs ) var( --space-sm );
+		padding: var( --spacing-x-small ) var( --spacing-small );
 		font-weight: var( --font-weight-medium );
 		color: var( --color-emphasized );
 		border: 0;
@@ -383,7 +383,7 @@ div.dtsp-panesContainer {
 	}
 
 	div.dtsp-searchPanes {
-		gap: var( --space-xs );
+		gap: var( --spacing-x-small );
 
 		div.dtsp-searchPane {
 			height: fit-content;
@@ -418,7 +418,7 @@ div.dtsp-panesContainer {
 				border-bottom-left-radius: 0;
 
 				div.dtsp-searchCont input.dtsp-search {
-					padding-left: var( --space-sm );
+					padding-left: var( --spacing-small );
 					border-radius: var( --border-radius-base );
 				}
 			}
@@ -488,7 +488,7 @@ div.dtsp-panesContainer {
 		table {
 			tr > th,
 			tr > td {
-				padding: var( --space-xs ) var( --space-sm );
+				padding: var( --spacing-x-small ) var( --spacing-small );
 			}
 		}
 

@@ -131,9 +131,9 @@ module.exports = exports = defineComponent( {
 .citizen-command-palette-list-item {
 	&__content {
 		display: flex;
-		column-gap: var( --space-sm );
+		column-gap: var( --spacing-small );
 		align-items: center;
-		padding: var( --space-sm ) var( --citizen-command-palette-side-padding );
+		padding: var( --spacing-small ) var( --citizen-command-palette-side-padding );
 		text-decoration: none;
 
 		// Reset button styles
@@ -192,14 +192,14 @@ module.exports = exports = defineComponent( {
 
 	&__metadata {
 		display: flex;
-		gap: var( --space-xxs );
+		gap: var( --spacing-xx-small );
 		color: var( --color-subtle );
 
 		&__item {
 			display: flex;
-			column-gap: var( --space-xxs );
+			column-gap: var( --spacing-xx-small );
 			align-items: center;
-			padding: 2px var( --space-xs );
+			padding: 2px var( --spacing-x-small );
 			line-height: var( --line-height-small );
 			background: var( --color-surface-3 );
 			border: var( --border-subtle );

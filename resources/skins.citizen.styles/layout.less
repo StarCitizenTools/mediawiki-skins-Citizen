@@ -19,11 +19,11 @@
 		'footer';
 	// Using auto as min value will cause overflow
 	grid-template-columns: minmax( 0, var( --width-layout ) );
-	gap: 0 var( --space-lg );
+	gap: 0 var( --spacing-x-large );
 	justify-content: center;
 	padding: 0 var( --padding-page );
 	// Bottom margin is added because data-after-content cannot
-	margin-bottom: var( --space-xl );
+	margin-bottom: var( --spacing-xx-large );
 }
 
 .citizen-body {
@@ -33,7 +33,7 @@
 }
 
 #mw-data-after-content:not( :empty ) {
-	margin-top: var( --space-xl );
+	margin-top: var( --spacing-xx-large );
 }
 
 @media ( min-width: @min-width-breakpoint-desktop ) {
@@ -43,7 +43,7 @@
 	}
 
 	.citizen-toc-enabled {
-		--width-page: calc( var( --width-layout ) + var( --width-toc ) + var( --space-lg ) );
+		--width-page: calc( var( --width-layout ) + var( --width-toc ) + var( --spacing-x-large ) );
 
 		.citizen-body-container {
 			// stylelint-disable-next-line @stylistic/declaration-colon-space-after
@@ -88,7 +88,7 @@
 		&-6,
 		&-14 {
 			--width-layout: var( --width-layout--extended );
-			--width-page: calc( var( --width-layout--extended ) + var( --width-toc ) + var( --space-lg ) );
+			--width-page: calc( var( --width-layout--extended ) + var( --width-toc ) + var( --spacing-x-large ) );
 		}
 	}
 }

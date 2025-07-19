@@ -26,7 +26,7 @@
 
 	.mw-indicators {
 		padding-left: 0;
-		margin-top: var( --space-xs );
+		margin-top: var( --spacing-x-small );
 		margin-left: 0;
 		border-left: 0;
 	}
@@ -648,13 +648,13 @@
 
 	&__body {
 		z-index: @z-index-stacking-1;
-		padding: var( --space-sm ) 0 0 0;
+		padding: var( --spacing-small ) 0 0 0;
 		// HACK: Hide thumbnail overflow
 		background-color: var( --color-surface-0 );
 	}
 
 	&__meta {
-		margin-top: var( --space-xxs );
+		margin-top: var( --spacing-xx-small );
 		font-size: var( --font-size-small );
 	}
 
@@ -683,7 +683,7 @@
 	}
 
 	&__duration {
-		padding: var( --space-xxs ) var( --space-xs );
+		padding: var( --spacing-xx-small ) var( --spacing-x-small );
 		font-weight: var( --font-weight-medium );
 		color: var( --color-base );
 		background-color: var( --color-surface-2 );
@@ -697,12 +697,12 @@
 
 /* AudioResult.less */
 .sdms-audio-result {
-	padding: var( --space-md ) 0;
+	padding: var( --spacing-medium ) 0;
 	font-size: var( --font-size-small );
 	border-bottom: 0;
 
 	&__title + &__meta {
-		margin-top: var( --space-xxs );
+		margin-top: var( --spacing-xx-small );
 	}
 
 	&__meta {
@@ -714,7 +714,7 @@
 	}
 
 	&__duration {
-		padding: var( --space-xxs ) var( --space-xs );
+		padding: var( --spacing-xx-small ) var( --spacing-x-small );
 		font-weight: var( --font-weight-medium );
 		color: var( --color-base );
 		background-color: var( --color-surface-2 );
@@ -728,7 +728,7 @@
 
 /* PageResult.less */
 .sdms-page-result {
-	padding: var( --space-md ) 0;
+	padding: var( --spacing-medium ) 0;
 	font-size: var( --font-size-small );
 	border-bottom: 0;
 
@@ -739,7 +739,7 @@
 
 	// Sync with duration styles
 	&__namespace {
-		padding: var( --space-xxs ) var( --space-xs );
+		padding: var( --spacing-xx-small ) var( --spacing-x-small );
 		font-size: var( --font-size-small );
 		font-weight: var( --font-weight-medium );
 		color: var( --color-base );
@@ -763,8 +763,8 @@
 .sdms-search-results {
 	&__details {
 		&--expanded {
-			top: var( --space-md );
-			height: ~'calc( 100vh - var( --space-md ) * 2 )';
+			top: var( --spacing-medium );
+			height: ~'calc( 100vh - var( --spacing-medium ) * 2 )';
 			background-color: var( --color-surface-2 );
 			border-radius: var( --border-radius-large );
 

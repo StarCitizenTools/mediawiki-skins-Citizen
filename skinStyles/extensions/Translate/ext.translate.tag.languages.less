@@ -11,9 +11,9 @@
 .mw-pt-languages {
 	display: flex;
 	flex-direction: column;
-	gap: var( --space-xs );
+	gap: var( --spacing-x-small );
 	// Language tag can appear anywhere in content, reserve spacing just in case
-	padding: var( --space-md ) 0;
+	padding: var( --spacing-medium ) 0;
 	font-size: var( --font-size-small );
 	background-color: transparent;
 	border-bottom: 0;
@@ -31,7 +31,7 @@
 .mw-pt-languages .mw-pt-languages-list {
 	display: flex;
 	flex-wrap: wrap;
-	gap: var( --space-xs );
+	gap: var( --spacing-x-small );
 	padding: 0;
 	margin: 0;
 }
@@ -46,7 +46,7 @@
 	a.new,
 	.mw-pt-progress {
 		display: block;
-		padding: var( --space-xs ) var( --space-md );
+		padding: var( --spacing-x-small ) var( --spacing-medium );
 		color: var( --color-subtle );
 		border: var( --border-width-base ) solid var( --border-color-interactive );
 		border-radius: var( --border-radius-pill );
@@ -72,7 +72,7 @@
 	// Offset right padding for progress icon
 	// Extra specificity to override previous styles
 	.mw-pt-progress {
-		padding-right: ~'calc( var( --space-md ) + 11px )';
+		padding-right: ~'calc( var( --spacing-medium ) + 11px )';
 		background-position: right 9px center;
 
 		&:hover {

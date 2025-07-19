@@ -8,18 +8,18 @@
 // T326017
 ul.gallery.gallery.gallery {
 	padding: 0;
-	margin: var( --space-xxs ) 0;
+	margin: var( --spacing-xx-small ) 0;
 }
 
 // Sync with caption styles
 div.gallerytext {
 	padding: 0 var( --border-radius-base );
-	margin-block: var( --space-xs );
+	margin-block: var( --spacing-x-small );
 	color: var( --color-subtle );
 	.mixin-citizen-font-styles( 'small' );
 
 	p {
-		margin: var( --space-xxs ) 0; // reset default style
+		margin: var( --spacing-xx-small ) 0; // reset default style
 	}
 }
 
@@ -28,7 +28,7 @@ ul.mw-gallery-packed-overlay li.gallerybox div.gallerytextwrapper,
 ul.mw-gallery-packed-hover li.gallerybox.mw-gallery-focused div.gallerytextwrapper {
 	right: 0;
 	width: auto !important;
-	padding: 0 var( --space-xs );
+	padding: 0 var( --spacing-x-small );
 	margin: 0;
 	font-weight: var( --font-weight-normal ); // should use the same weight as caption
 	background: var( --background-color-backdrop-light );
@@ -44,8 +44,8 @@ ul.gallery.mw-gallery-slideshow {
 
 	.mw-gallery-slideshow {
 		&-buttons {
-			padding-top: var( --space-md );
-			padding-bottom: var( --space-sm );
+			padding-top: var( --spacing-medium );
+			padding-bottom: var( --spacing-small );
 		}
 
 		&-img-container {

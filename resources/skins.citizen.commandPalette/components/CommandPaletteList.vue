@@ -107,10 +107,10 @@ module.exports = exports = defineComponent( {
 @import '../../mixins.less';
 
 .citizen-command-palette-list {
-	padding-block: var( --space-xs );
+	padding-block: var( --spacing-x-small );
 
 	&__heading {
-		padding-block: var( --space-xs ) var( --space-xxs );
+		padding-block: var( --spacing-x-small ) var( --spacing-xx-small );
 		padding-inline: var( --citizen-command-palette-side-padding );
 		color: var( --color-subtle );
 		.mixin-citizen-font-styles( 'overline' );

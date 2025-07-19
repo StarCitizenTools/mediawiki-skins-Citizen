@@ -22,7 +22,7 @@
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {
 			top: @position-offset-y-desktop;
-			max-height: ~'calc( 100vh - ( var( --space-xs ) + @{position-offset-y-desktop} ) * 2 )';
+			max-height: ~'calc( 100vh - ( var( --spacing-x-small ) + @{position-offset-y-desktop} ) * 2 )';
 		}
 	}
 
@@ -45,8 +45,8 @@
 	&__formIcon {
 		display: grid;
 		place-content: center;
-		/* Sync with left icons (--size-icon + --space-sm * 2) and typeahead */
-		width: ~'calc( 1.25rem + var( --space-sm ) * 2 )';
+		/* Sync with left icons (--size-icon + --spacing-small * 2) and typeahead */
+		width: ~'calc( 1.25rem + var( --spacing-small ) * 2 )';
 		height: var( --height-search-bar );
 	}
 
@@ -125,11 +125,11 @@
 	&__footer {
 		bottom: 0;
 		display: flex;
-		gap: var( --space-lg );
+		gap: var( --spacing-x-large );
 		align-items: center;
 		justify-content: space-between;
 		min-height: 2.5rem;
-		padding: 0 var( --space-md );
+		padding: 0 var( --spacing-medium );
 		overflow: hidden;
 		color: var( --color-subtle );
 		white-space: nowrap;
@@ -139,7 +139,7 @@
 		&-start,
 		&-end {
 			display: flex;
-			gap: var( --space-md );
+			gap: var( --spacing-medium );
 			align-items: center;
 		}
 	}
