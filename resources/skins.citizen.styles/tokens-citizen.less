@@ -59,13 +59,13 @@
 
 	/* Spacing */
 	--space-unit: @space-unit;
-	--space-xxs: calc( 0.25 * var( --space-unit ) );
-	--space-xs: calc( 0.5 * var( --space-unit ) );
-	--space-sm: calc( 0.75 * var( --space-unit ) );
-	--space-md: var( --space-unit );
-	--space-lg: calc( 1.25 * var( --space-unit ) );
-	--space-xl: calc( 1.5 * var( --space-unit ) );
-	--space-xxl: calc( 2 * var( --space-unit ) );
+	--spacing-xx-small: calc( 0.25 * var( --space-unit ) );
+	--spacing-x-small: calc( 0.5 * var( --space-unit ) );
+	--spacing-small: calc( 0.75 * var( --space-unit ) );
+	--spacing-medium: var( --space-unit );
+	--spacing-x-large: calc( 1.25 * var( --space-unit ) );
+	--spacing-xx-large: calc( 1.5 * var( --space-unit ) );
+	--spacing-double: calc( 2 * var( --space-unit ) );
 
 	/* Transition */
 	--transition-delay-menu: 100ms;
@@ -121,7 +121,7 @@
 
 	@media ( min-width: @min-width-breakpoint-desktop ) {
 		--padding-page: calc( @padding-page * 2 );
-		--header-card-maxheight: calc( 100vh - var( --space-sm ) * 2 );
+		--header-card-maxheight: calc( 100vh - var( --spacing-small ) * 2 );
 	}
 
 	@media ( prefers-contrast: more ) {

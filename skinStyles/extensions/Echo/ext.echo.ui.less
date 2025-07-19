@@ -19,7 +19,7 @@
 	.mw-echo-ui-notificationBadgeButtonPopupWidget-popup {
 		top: unset !important;
 		bottom: calc( var( --header-size ) + env( safe-area-inset-bottom ) ) !important;
-		margin: var( --space-xs );
+		margin: var( --spacing-x-small );
 		box-shadow: var( --box-shadow-drop-xx-large );
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {
@@ -38,7 +38,7 @@
 				align-items: center;
 				height: auto;
 				min-height: @size-300;
-				padding-inline: var( --space-md );
+				padding-inline: var( --spacing-medium );
 				background: var( --color-surface-1 );
 				border-bottom-color: transparent;
 
@@ -49,7 +49,7 @@
 
 				> .oo-ui-labelElement-label {
 					flex-grow: 1;
-					margin-left: var( --space-xs );
+					margin-left: var( --spacing-x-small );
 					font-size: var( --font-size-medium );
 					font-weight: var( --font-weight-semi-bold );
 					line-height: var( --line-height-small );
@@ -113,7 +113,7 @@
 	display: grid;
 	place-content: center;
 	min-height: @size-800;
-	padding: var( --space-sm ) var( --space-md );
+	padding: var( --spacing-small ) var( --spacing-medium );
 	color: var( --color-subtle );
 	text-align: center;
 	background-color: transparent;
@@ -121,7 +121,7 @@
 
 /* mw.echo.ui.NotificationItemWidget.less */
 .mw-echo-ui-notificationItemWidget {
-	padding: var( --space-sm ) var( --space-md );
+	padding: var( --spacing-small ) var( --spacing-medium );
 	background-color: transparent;
 
 	&-unread {
@@ -137,11 +137,11 @@
 	}
 
 	&-content {
-		padding-left: var( --space-sm );
+		padding-left: var( --spacing-small );
 		margin-left: 20px;
 
 		&-actions {
-			margin-top: var( --space-xs );
+			margin-top: var( --spacing-x-small );
 			font-size: var( --font-size-small );
 
 			&-timestamp {

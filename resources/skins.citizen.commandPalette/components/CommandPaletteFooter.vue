@@ -85,10 +85,10 @@ module.exports = exports = defineComponent( {
 
 .citizen-command-palette__footer {
 	display: flex;
-	gap: var( --space-sm );
+	gap: var( --spacing-small );
 	align-items: center;
 	justify-content: space-between;
-	padding: var( --space-sm ) var( --citizen-command-palette-side-padding );
+	padding: var( --spacing-small ) var( --citizen-command-palette-side-padding );
 	color: var( --color-subtle );
 	border-top: var( --border-subtle );
 
