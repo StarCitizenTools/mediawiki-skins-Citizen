@@ -33,7 +33,9 @@
 	--color-content-removed: var( --color-destructive );
 	--filter-invert-icon: 0;
 	--filter-invert-primary-button-icon: 1;
-	--box-shadow-color-base: ~'hsla( var( --shadow-color ), var( --shadow-opacity ) )';
+	// This is not correct since Codex 2.0 since it becomes a solid color
+	// But we keep it for now for compatibility with Codex 1.x
+	--box-shadow-color-base: var( --box-shadow-color-alpha-base );
 	--box-shadow-color-progressive--active: var( --color-progressive--active );
 	--box-shadow-color-progressive--focus: var( --color-progressive );
 	--box-shadow-color-progressive-selected: var( --color-progressive );
@@ -153,6 +155,8 @@
 
 	--accent-color-base: var( --color-progressive );
 
+	--box-shadow-color-alpha-base: ~'oklch( var( --shadow-color-oklch__l ) var( --shadow-color-oklch__c ) var( --color-progressive-oklch__h ) / var( --shadow-opacity ) )';
+
 	/* Font tokens */
 	.cdx-mode-medium();
 
@@ -178,6 +182,8 @@
 		//--background-color-button-quiet--active: rgba( 0, 24, 73, 0.082 );
 		//--background-color-tab-list-item-framed--hover: rgba( 255, 255, 255, 0.3 );
 		//--background-color-tab-list-item-framed--active: rgba( 255, 255, 255, 0.65 );
+
+		--box-shadow-color-alpha-base: ~'hsl( var( --color-progressive-hsl__h ) var( --shadow-color-hsl__s ) var( --shadow-color-hsl__l ) / var( --shadow-opacity ) )';
 	}
 }
 
