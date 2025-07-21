@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.4.0...v3.5.0) (2025-07-21)
+
+
+### Features
+
+* **CommandPalette:** ✨ use `<a>` or `<button>` respectively ([7e6bfe4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7e6bfe454712b3044bf23a7a40269b777f8c44be)), closes [#1089](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1089)
+* **core:** ✨ add disabled styles for default HTML elements ([6445ecd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6445ecdd1d53bf7f19df4c3d5e139570cd11f2b1)), closes [#885](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/885)
+* **core:** ✨ tweak box shadow styles ([0847197](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0847197c340443097973aef38928e9abc95204c6))
+* **Search:** ✨ enhance citizen-search-trigger to support pre-filling input ([5dce5a2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5dce5a289c34ad8691ce23a9a8728432d7384a25))
+* **tokens:** ✨ deprecate box-shadow-drop variables ([6c1c60f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6c1c60f062fac9994de41c492f7cd825da7f4126))
+
+
+### Bug Fixes
+
+* [#885](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/885) ([6445ecd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6445ecdd1d53bf7f19df4c3d5e139570cd11f2b1))
+
 ## [3.4.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.3.2...v3.4.0) (2025-07-03)
 
 
