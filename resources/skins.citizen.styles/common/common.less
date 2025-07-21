@@ -46,6 +46,15 @@ textarea {
 	color: var( --color-emphasized );
 	background-color: transparent;
 	border: var( --border-width-base ) solid var( --border-color-interactive );
+
+	&[ disabled ] {
+		color: var( --color-disabled );
+		border-color: var( --border-color-disabled );
+
+		~ label {
+			color: var( --color-disabled );
+		}
+	}
 }
 
 select option {
