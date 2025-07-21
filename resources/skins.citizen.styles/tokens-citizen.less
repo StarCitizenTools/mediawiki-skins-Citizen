@@ -92,19 +92,14 @@
 	--border-radius-sharp: 0;
 	--border-radius-pill: 9999px;
 	--border-radius-circle: 50%;
-	// TODO: Refactor this to support filter drop-shadow
-	// TODO: LESS compiler in MW 1.39 does not support multiline, switch to that in 1.43
+	--box-shadow-small: 0 0 0 1px var( --border-color-base );
 	// @see https://www.joshwcomeau.com/shadow-palette
-	--box-shadow-drop-small:
-		0px 0.5px 0.6px var( --box-shadow-color-alpha-base ),
-		0px 0.8px 0.9px -1.2px var( --box-shadow-color-alpha-base ),
-		0px 2px 2.3px -2.5px var( --box-shadow-color-alpha-base );
-	--box-shadow-drop-medium:
+	--box-shadow-medium:
 		0px 0.5px 0.6px var( --box-shadow-color-alpha-base ),
 		0px 1.6px 1.8px -0.8px var( --box-shadow-color-alpha-base ),
 		0px 4px 4.5px -1.7px var( --box-shadow-color-alpha-base ),
 		0px 9.8px 11px -2.5px var( --box-shadow-color-alpha-base );
-	--box-shadow-drop-xx-large:
+	--box-shadow-large:
 		0px 0.5px 0.6px var( --box-shadow-color-alpha-base ),
 		0px 2.8px 3.1px -0.4px var( --box-shadow-color-alpha-base ),
 		0px 5.3px 6px -0.7px var( --box-shadow-color-alpha-base ),
@@ -152,6 +147,9 @@
 	--line-height: 1.6;
 	--line-height-xxx-small: 1.25; // Deprecated with Codex 2.0
 	--line-height-xx-small: 1.375; // Deprecated with Codex 2.0
+	--box-shadow-drop-small: var( --box-shadow-small );
+	--box-shadow-drop-medium: var( --box-shadow-medium );
+	--box-shadow-drop-xx-large: var( --box-shadow-large );
 }
 
 // TODO: Update with implementation on T376559 when it is finalized
