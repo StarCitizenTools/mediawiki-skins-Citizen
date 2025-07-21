@@ -144,7 +144,7 @@ module.exports = exports = defineComponent( {
 			text-align: inherit;
 			cursor: pointer;
 			background: none;
-			border: none;
+			border: 0;
 		}
 
 		&:hover {
