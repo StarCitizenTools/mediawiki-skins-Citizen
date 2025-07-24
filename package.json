@@ -20,7 +20,7 @@
 		"grunt-banana-checker": "0.13.0",
 		"husky": "^9.1.7",
 		"pinia": "2.0.16",
-		"stylelint": "16.21.1",
+		"stylelint": "16.22.0",
 		"stylelint-config-recess-order": "7.1.0",
 		"stylelint-config-wikimedia": "0.18.0",
 		"stylelint-order": "^7.0.0",
@@ -28,5 +28,5 @@
 		"types-mediawiki": "1.10.1",
 		"vue": "3.4.27"
 	},
-	"version": "3.4.0"
+	"version": "3.5.0"
 }

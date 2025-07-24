@@ -47,7 +47,9 @@
 	--color-subtle-oklch__l: 35%;
 	--color-subtle-oklch__c: 0.11;
 	--color-placeholder-oklch__l: 40%;
-	--color-placeholder-oklch__c: 0.11;
+	--color-placeholder-oklch__c: 0.07;
+	--color-disabled-oklch__l: 60%;
+	--color-disabled-oklch__c: 0.05;
 
 	/* State color */
 	--color-inverted-primary: #fff;
@@ -96,8 +98,11 @@
 	--font-grade: 25;
 
 	/* Shadow */
-	--shadow-color: var( --color-progressive-hsl__h ), 10%, 20%;
-	--shadow-opacity: 0.034;
+	--shadow-color-oklch__l: 12%;
+	--shadow-color-oklch__c: 0.01;
+	--shadow-color-hsl__s: 10%;
+	--shadow-color-hsl__l: 20%;
+	--shadow-opacity: 0.03;
 	color-scheme: light;
 
 	/**
@@ -125,8 +130,10 @@
 	--color-base-hsl__l: 20%;
 	--color-subtle-hsl__s: 40%;
 	--color-subtle-hsl__l: 35%;
-	--color-placeholder-hsl__s: 40%;
+	--color-placeholder-hsl__s: 85%;
 	--color-placeholder-hsl__l: 40%;
+	--color-disabled-hsl__s: 85%;
+	--color-disabled-hsl__l: 60%;
 
 	@supports not ( color: oklch( 100% 0 0 ) ) {
 		--color-surface-0: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-0-hsl__s ), var( --color-surface-0-hsl__l ) )';

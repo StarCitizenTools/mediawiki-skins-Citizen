@@ -138,13 +138,13 @@ module.exports = exports = defineComponent( {
 
 		// Reset button styles
 		button& {
-			cursor: pointer;
-			background: none;
-			border: none;
+			width: 100%;
 			font: inherit;
 			color: inherit;
 			text-align: inherit;
-			width: 100%;
+			cursor: pointer;
+			background: none;
+			border: 0;
 		}
 
 		&:hover {

@@ -12,7 +12,7 @@
 	--color-emphasized: ~'oklch( var( --color-emphasized-oklch__l ) var( --color-emphasized-oklch__c ) var( --color-progressive-oklch__h ) )';
 	--color-subtle: ~'oklch( var( --color-subtle-oklch__l ) var( --color-subtle-oklch__c ) var( --color-progressive-oklch__h ) )';
 	--color-placeholder: ~'oklch( var( --color-placeholder-oklch__l ) var( --color-placeholder-oklch__c ) var( --color-progressive-oklch__h ) )';
-	--color-disabled: var( --color-placeholder );
+	--color-disabled: ~'oklch( var( --color-disabled-oklch__l ) var( --color-disabled-oklch__c ) var( --color-progressive-oklch__h ) )';
 	--color-inverted: #fff;
 	--color-inverted-fixed: #fff;
 	--color-progressive: ~'oklch( var( --color-progressive-oklch__l ) var( --color-progressive-oklch__c ) var( --color-progressive-oklch__h ) )';
@@ -33,7 +33,9 @@
 	--color-content-removed: var( --color-destructive );
 	--filter-invert-icon: 0;
 	--filter-invert-primary-button-icon: 1;
-	--box-shadow-color-base: ~'hsla( var( --shadow-color ), var( --shadow-opacity ) )';
+	// This is not correct since Codex 2.0 since it becomes a solid color
+	// But we keep it for now for compatibility with Codex 1.x
+	--box-shadow-color-base: var( --box-shadow-color-alpha-base );
 	--box-shadow-color-progressive--active: var( --color-progressive--active );
 	--box-shadow-color-progressive--focus: var( --color-progressive );
 	--box-shadow-color-progressive-selected: var( --color-progressive );
@@ -153,6 +155,8 @@
 
 	--accent-color-base: var( --color-progressive );
 
+	--box-shadow-color-alpha-base: ~'oklch( var( --shadow-color-oklch__l ) var( --shadow-color-oklch__c ) var( --color-progressive-oklch__h ) / var( --shadow-opacity ) )';
+
 	/* Font tokens */
 	.cdx-mode-medium();
 
@@ -163,6 +167,7 @@
 		--color-emphasized: ~'hsl( var( --color-progressive-hsl__h ), var( --color-emphasized-hsl__s ), var( --color-emphasized-hsl__l ) )';
 		--color-subtle: ~'hsl( var( --color-progressive-hsl__h ), var( --color-subtle-hsl__s ), var( --color-subtle-hsl__l ) )';
 		--color-placeholder: ~'hsl( var( --color-progressive-hsl__h ), var( --color-placeholder-hsl__s ), var( --color-placeholder-hsl__l ) )';
+		--color-disabled: ~'hsl( var( --color-progressive-hsl__h ), var( --color-disabled-hsl__s ), var( --color-disabled-hsl__l ) )';
 		--color-progressive: ~'hsl( var( --color-progressive-hsl__h ), var( --color-progressive-hsl__s ), var( --color-progressive-hsl__l ) )';
 		--color-progressive--hover: ~'hsl( var( --color-progressive-hsl__h ), var( --color-progressive-hsl__s ), calc( var( --color-progressive-hsl__l ) + var( --delta-lightness-hover-state ) ) )';
 		--color-progressive--active: ~'hsl( var( --color-progressive-hsl__h ), var( --color-progressive-hsl__s ), calc( var( --color-progressive-hsl__l ) + var( --delta-lightness-active-state ) ) )';
@@ -178,6 +183,8 @@
 		//--background-color-button-quiet--active: rgba( 0, 24, 73, 0.082 );
 		//--background-color-tab-list-item-framed--hover: rgba( 255, 255, 255, 0.3 );
 		//--background-color-tab-list-item-framed--active: rgba( 255, 255, 255, 0.65 );
+
+		--box-shadow-color-alpha-base: ~'hsl( var( --color-progressive-hsl__h ) var( --shadow-color-hsl__s ) var( --shadow-color-hsl__l ) / var( --shadow-opacity ) )';
 	}
 }
 

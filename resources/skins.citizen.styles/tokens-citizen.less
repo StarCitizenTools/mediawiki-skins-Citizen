@@ -73,11 +73,8 @@
 	--transition-timing-function-ease: cubic-bezier( 0.44, 0.21, 0, 1 );
 	--transition-timing-function-ease-in: cubic-bezier( 0.75, 0, 1, 1 );
 	--transition-timing-function-ease-out: cubic-bezier( 0.215, 0.61, 0.355, 1 );
-	--shadow-color: var( --color-progressive-hsl__h ), 10%, 20%;
-	--shadow-opacity: 0.034;
 
 	/* Transform */
-
 	/**
 	* Add affordance to thumbnails to replace magnify icon
 	* On hover, enlarge the image to inform the user that a full-size image will be shown (to MMV or file page)
@@ -95,12 +92,10 @@
 	--border-radius-sharp: 0;
 	--border-radius-pill: 9999px;
 	--border-radius-circle: 50%;
-	// TODO: Refactor this to support filter drop-shadow
-	// TODO: LESS compiler in MW 1.39 does not support multiline, switch to that in 1.43
+	--box-shadow-small: 0 0 0 1px var( --border-color-base );
 	// @see https://www.joshwcomeau.com/shadow-palette
-	--box-shadow-drop-small: 0.3px 0.5px 0.7px var( --box-shadow-color-base ), 0.4px 0.8px 1px -1.2px var( --box-shadow-color-base ), 1px 2px 2.5px -2.5px var( --box-shadow-color-base );
-	--box-shadow-drop-medium: 0.3px 0.5px 0.7px var( --box-shadow-color-base ), 0.8px 1.6px 2px -0.8px var( --box-shadow-color-base ), 2.1px 4.1px 5.2px -1.7px var( --box-shadow-color-base ), 5px 10px 12.6px -2.5px var( --box-shadow-color-base );
-	--box-shadow-drop-xx-large: 0.3px 0.5px 0.7px var( --box-shadow-color-base ), 1.5px 2.9px 3.7px -0.4px var( --box-shadow-color-base ), 2.7px 5.4px 6.8px -0.7px var( --box-shadow-color-base ), 4.5px 8.9px 11.2px -1.1px var( --box-shadow-color-base ), 7.1px 14.3px 18px -1.4px var( --box-shadow-color-base ), 11.2px 22.3px 28.1px -1.8px var( --box-shadow-color-base ), 17px 33.9px 42.7px -2.1px var( --box-shadow-color-base ), 25px 50px 62.9px -2.5px var( --box-shadow-color-base );
+	--box-shadow-medium: 0 0.5px 0.6px var( --box-shadow-color-alpha-base ), 0 1.6px 1.8px -0.8px var( --box-shadow-color-alpha-base ), 0 4px 4.5px -1.7px var( --box-shadow-color-alpha-base ), 0 9.8px 11px -2.5px var( --box-shadow-color-alpha-base );
+	--box-shadow-large: 0 0.5px 0.6px var( --box-shadow-color-alpha-base ), 0 2.8px 3.1px -0.4px var( --box-shadow-color-alpha-base ), 0 5.3px 6px -0.7px var( --box-shadow-color-alpha-base ), 0 8.7px 9.8px -1.1px var( --box-shadow-color-alpha-base ), 0 13.9px 15.6px -1.4px var( --box-shadow-color-alpha-base ), 0 21.8px 24.5px -1.8px var( --box-shadow-color-alpha-base );
 	--font-family-base: @font-family-base;
 	--font-family-serif: @font-family-serif;
 	--font-family-monospace: @font-family-monospace;
@@ -142,6 +137,9 @@
 	--line-height: 1.6;
 	--line-height-xxx-small: 1.25; // Deprecated with Codex 2.0
 	--line-height-xx-small: 1.375; // Deprecated with Codex 2.0
+	--box-shadow-drop-small: var( --box-shadow-small );
+	--box-shadow-drop-medium: var( --box-shadow-medium );
+	--box-shadow-drop-xx-large: var( --box-shadow-large );
 }
 
 // TODO: Update with implementation on T376559 when it is finalized
