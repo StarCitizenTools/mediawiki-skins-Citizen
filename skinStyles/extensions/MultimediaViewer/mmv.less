@@ -7,6 +7,7 @@
 */
 
 @import '../../../resources/variables.less';
+@import '../../../resources/mixins.less';
 
 .mw-mmv {
 	&-post-image {
@@ -15,9 +16,14 @@
 		width: auto;
 		padding-block: var( --space-xs ) var( --space-md );
 		padding-inline: var( --space-md );
+		border-top: var( --border-base );
 		border-top-left-radius: var( --border-radius-medium );
 		border-top-right-radius: var( --border-radius-medium );
 		transform: ~'translateY( calc( var( --space-xs ) * -1 ) )'; // counteract top positioning
+		transition-timing-function: var( --transition-timing-function-ease );
+		transition-duration: var( --transition-duration-medium );
+		transition-property: background-color, border-color, color;
+		.mixin-citizen-frosted-glass-simple;
 
 		&.mw-mmv-untruncated {
 			box-shadow: none;
@@ -30,6 +36,9 @@
 		align-items: center;
 		height: auto;
 		padding-bottom: 0;
+		transition-timing-function: var( --transition-timing-function-ease );
+		transition-duration: var( --transition-duration-medium );
+		transition-property: margin, padding, border;
 	}
 
 	&-progress {
@@ -194,6 +203,7 @@
 .mw-mmv-post-image:not( .mw-mmv-untruncated ) {
 	color: ~'hsl( var( --color-progressive-hsl__h ), 45%, 80% )'; // color-base in dark mode
 	background-color: transparent;
+	border-color: transparent;
 
 	.mw-mmv {
 		&-title-para {
