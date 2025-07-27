@@ -97,6 +97,9 @@
 
 .mixin-citizen-sticky-header-element() {
 	top: var( --height-sticky-header ) !important;
+	transition-timing-function: var( --transition-timing-function-ease );
+	transition-duration: var( --transition-duration-medium );
+	transition-property: top;
 }
 
 .mixin-citizen-sticky-header-background() {
