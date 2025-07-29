@@ -160,7 +160,7 @@ class SkinHooks implements
 		}
 
 		foreach ( $bar as $key => $item ) {
-			self::addIconsToMenuItems( $bar, $key );
+			self::addIconsToMenuItems( $bar, (string)$key );
 		}
 	}
 
