@@ -4,7 +4,8 @@
 	"pull-request-title-pattern": "build: release ${version}",
 	"extra-files": [
 		"skin.json",
-		"package.json"
+		"package.json",
+		"package-lock.json"
 	],
 	"packages": {
 		".": {}
