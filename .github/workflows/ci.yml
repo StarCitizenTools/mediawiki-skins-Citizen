@@ -126,8 +126,12 @@ jobs:
       matrix:
         include:
           - mw: "REL1_43"
-            php: 8.3
+            php: 8.2
             coverage: xdebug
+            experimental: false
+          - mw: "REL1_44"
+            php: 8.3
+            coverage: none
             experimental: false
           - mw: "master"
             php: 8.4
