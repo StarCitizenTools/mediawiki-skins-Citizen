@@ -29,10 +29,10 @@ use DOMDocument;
 use DOMElement;
 use DOMNode;
 use DOMXpath;
-use HtmlFormatter\HtmlFormatter;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 use Wikimedia\Parsoid\Utils\DOMCompat;
+use Wikimedia\Parsoid\Utils\DOMUtils;
 use Wikimedia\Services\NoSuchServiceException;
 
 final class BodyContent extends Partial {
@@ -93,12 +93,12 @@ final class BodyContent extends Partial {
 
 		// Make section and sanitize the output
 		if ( $this->shouldFormatPage( $title ) ) {
-			$formatter = new HtmlFormatter( $bodyContent );
-			$doc = $formatter->getDoc();
+			$doc = DOMUtils::parseHTML( $bodyContent );
+
 			// Make top level sections
 			$this->makeSections( $doc, $this->getTopHeadings( $doc ) );
-			$formatter->filterContent();
-			$bodyContent = $formatter->getText();
+
+			$bodyContent = DOMCompat::getOuterHTML( $doc );
 		}
 
 		return $bodyContent;
