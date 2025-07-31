@@ -53,6 +53,8 @@ function prepareMenuDropdown( menuDropdown ) {
 		menuDropdownButton = menuDropdownClone.querySelector( '.citizen-dropdown-summary' );
 
 	menuDropdownStickyElementsWithIds.forEach( ( stickyElement ) => {
+		// Set up the click target to keep JS click handlers working (#1100)
+		stickyElement.setAttribute( 'data-mw-citizen-click-target', `#${ stickyElement.id } > a` );
 		// Remove the id attribute to prevent duplicate ids
 		stickyElement.removeAttribute( 'id' );
 	} );
@@ -104,10 +106,12 @@ function getClickTarget( fakeButton ) {
  * @return {void}
  */
 function handleClick( event ) {
-	const fakeButton = event.target.closest( '.citizen-sticky-header-fake-button' );
+	const fakeButton = event.target.closest( '[data-mw-citizen-click-target]' );
 	if ( fakeButton ) {
 		const target = getClickTarget( fakeButton );
 		if ( target !== null ) {
+			event.preventDefault();
+			event.stopPropagation();
 			target.click();
 		}
 	}
