@@ -24,6 +24,7 @@
 namespace MediaWiki\Skins\Citizen;
 
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Skins\Citizen\Components\CitizenComponentBodyContent;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentFooter;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentMainMenu;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageFooter;
@@ -34,11 +35,12 @@ use MediaWiki\Skins\Citizen\Components\CitizenComponentSearchBox;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentSiteStats;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentStickyHeader;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentUserInfo;
-use MediaWiki\Skins\Citizen\Partials\BodyContent;
 use MediaWiki\Skins\Citizen\Partials\Metadata;
 use MediaWiki\Skins\Citizen\Partials\Theme;
+use MediaWiki\Title\Title;
 use SkinMustache;
 use SkinTemplate;
+use Wikimedia\Services\NoSuchServiceException;
 
 /**
  * Skin subclass for Citizen
@@ -68,10 +70,10 @@ class SkinCitizen extends SkinMustache {
 	 * Ensure onSkinTemplateNavigation runs after all SkinTemplateNavigation hooks
 	 * @see T287622
 	 *
-	 * @param SkinTemplate $skin The skin template object.
-	 * @param array &$content_navigation The content navigation array.
+	 * @param SkinTemplate $skin
+	 * @param array &$content_navigation
 	 */
-	protected function runOnSkinTemplateNavigationHooks( SkinTemplate $skin, &$content_navigation ) {
+	protected function runOnSkinTemplateNavigationHooks( SkinTemplate $skin, &$content_navigation ): void {
 		parent::runOnSkinTemplateNavigationHooks( $skin, $content_navigation );
 		Hooks\SkinHooks::onSkinTemplateNavigation( $skin, $content_navigation );
 	}
@@ -101,8 +103,6 @@ class SkinCitizen extends SkinMustache {
 		$user = $this->getUser();
 		$pageLang = $title->getPageLanguage();
 		$services = MediaWikiServices::getInstance();
-
-		$bodycontent = new BodyContent( $this );
 
 		$components = [
 			'data-footer' => new CitizenComponentFooter(
@@ -159,7 +159,11 @@ class SkinCitizen extends SkinMustache {
 			),
 			'data-sticky-header' => new CitizenComponentStickyHeader(
 				$this->isVisualEditorTabPositionFirst( $parentData['data-portlets']['data-views'] )
-			)
+			),
+			'data-body-content' => new CitizenComponentBodyContent(
+				$parentData['html-body-content'],
+				$this->shouldMakeSections( $title )
+			),
 		];
 
 		foreach ( $components as $key => $component ) {
@@ -182,17 +186,13 @@ class SkinCitizen extends SkinMustache {
 
 		return array_merge( $parentData, [
 			// Booleans
-			'toc-enabled' => $isTocEnabled,
-			'html-body-content--formatted' => $bodycontent->decorateBodyContent( $parentData['html-body-content'] )
+			'toc-enabled' => $isTocEnabled
 		] );
 	}
 
 	/**
 	 * Check whether Visual Editor Tab Position is first
 	 * From Vector 2022
-	 *
-	 * @param array $dataViews
-	 * @return bool
 	 */
 	private function isVisualEditorTabPositionFirst( array $dataViews ): bool {
 		$names = [ 've-edit', 'edit' ];
@@ -206,12 +206,34 @@ class SkinCitizen extends SkinMustache {
 	}
 
 	/**
+	 * Check if collapsible sections should be made
+	 */
+	private function shouldMakeSections( Title $title ): bool {
+		if (
+			$this->getConfig()->get( 'CitizenEnableCollapsibleSections' ) === false ||
+			!$title->canExist() ||
+			$title->isMainPage() ||
+			!$title->isContentPage() ||
+			$title->getContentModel() !== CONTENT_MODEL_WIKITEXT
+		) {
+			return false;
+		}
+
+		// Check if page is in mobile view and let MF do the formatting
+		try {
+			$mfCxt = MediaWikiServices::getInstance()->getService( 'MobileFrontend.Context' );
+			return !$mfCxt->shouldDisplayMobileView();
+		} catch ( NoSuchServiceException $ex ) {
+			// MobileFrontend not installed. Don't do anything
+		}
+
+		return true;
+	}
+
+	/**
 	 * Prepare the tagline for the sticky header
 	 * Replace <a> elements with <span> elements because
 	 * you can't nest <a> elements in <a> elements
-	 *
-	 * @param string $tagline
-	 * @return string
 	 */
 	private function prepareStickyHeaderTagline( string $tagline ): string {
 		return preg_replace( '/<a\s+href="([^"]+)"[^>]*>(.*?)<\/a>/', '<span>$2</span>', $tagline );
