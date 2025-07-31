@@ -20,7 +20,7 @@
 				<div id="contentSub"{{{html-user-language-attributes}}}>{{{html-subtitle}}}</div>
 				{{#html-undelete-link}}<div id="contentSub2">{{{.}}}</div>{{/html-undelete-link}}
 				{{{html-user-message}}}
-				{{{html-body-content--formatted}}}
+				{{#data-body-content}}{{{html-body-content}}}{{/data-body-content}}
 			</div>
 			{{#toc-enabled}}{{>PageSidebar}}{{/toc-enabled}}
 			{{>PageFooter}}
