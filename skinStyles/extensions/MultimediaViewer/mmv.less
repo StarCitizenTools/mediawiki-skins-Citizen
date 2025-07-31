@@ -198,6 +198,15 @@
 			}
 		}
 	}
+
+	&-dialog {
+		// Prevent the dialog from being too wide on mobile
+		// 66px is the right offset of mw-mmv-dialog
+		max-width: calc( 100vw - 66px - var( --padding-page ) );
+		background-color: var( --color-surface-1 );
+		border: var( --border-base );
+		border-radius: var( --border-radius-base );
+	}
 }
 
 .mw-mmv-post-image:not( .mw-mmv-untruncated ) {
