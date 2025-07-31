@@ -2,5 +2,12 @@
 	.cdx-button {
 		font-weight: var( --font-weight-medium );
 		border-radius: var( --border-radius-base );
+
+		&--weight-quiet {
+			// Fixes: #1105
+			// Citizen already handles the quiet button hover color,
+			// and the multiply blend mode has issue with gradient backgrounds.
+			--mix-blend-mode-blend: normal;
+		}
 	}
 }
