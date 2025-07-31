@@ -6,10 +6,10 @@
 @import 'variables.less';
 
 .mixin-citizen-opaque-background( @surface: 1 ) {
-	background: ~'oklch( var( --color-surface-@{surface}-oklch__l ) var( --color-surface-@{surface}-oklch__c ) var( --color-progressive-oklch__h ) / var( --backdrop-opacity ) )';
+	background: ~'oklch( var( --color-surface-@{surface}-oklch__l ) var( --color-surface-@{surface}-oklch__c ) var( --color-progressive-oklch__h ) / var( --opacity-glass ) )';
 
 	@supports not ( color: oklch( 100% 0 0 ) ) {
-		background: ~'hsl( var( --color-surface-@{surface}-hsl__h ), var( --color-surface-@{surface}-hsl__s ), var( --color-surface-@{surface}-hsl__l ) / var( --backdrop-opacity ) )';
+		background: ~'hsl( var( --color-surface-@{surface}-hsl__h ), var( --color-surface-@{surface}-hsl__s ), var( --color-surface-@{surface}-hsl__l ) / var( --oapcity-glass ) )';
 	}
 }
 
