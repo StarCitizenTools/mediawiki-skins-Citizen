@@ -4,8 +4,8 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Tests\phpunit\Components;
 
-use MediaWikiIntegrationTestCase;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentBodyContent;
+use MediaWikiIntegrationTestCase;
 
 /**
  * @coversDefaultClass \MediaWiki\Skins\Citizen\Components\CitizenComponentBodyContent
