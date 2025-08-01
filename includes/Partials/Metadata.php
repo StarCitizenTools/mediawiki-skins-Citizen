@@ -27,9 +27,20 @@ namespace MediaWiki\Skins\Citizen\Partials;
 
 use Exception;
 use MediaWiki\MainConfigNames;
-use MediaWiki\MediaWikiServices;
+use MediaWiki\Skins\Citizen\SkinCitizen;
+use MediaWiki\Utils\UrlUtils;
 
 final class Metadata extends Partial {
+
+	/**
+	 * @inheritDoc
+	 */
+	public function __construct(
+		SkinCitizen $skin,
+		private UrlUtils $urlUtils
+	) {
+		parent::__construct( $skin );
+	}
 
 	/**
 	 * Adds metadata to the output page
@@ -57,8 +68,7 @@ final class Metadata extends Partial {
 		}
 
 		try {
-			$href = MediaWikiServices::getInstance()->getUrlUtils()
-				->expand( wfAppendQuery( wfScript( 'api' ),
+			$href = $this->urlUtils->expand( wfAppendQuery( wfScript( 'api' ),
 					[ 'action' => 'webapp-manifest' ] ), PROTO_RELATIVE );
 		} catch ( Exception $e ) {
 			$href = '';

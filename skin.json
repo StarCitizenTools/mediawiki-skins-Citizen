@@ -37,7 +37,8 @@
 				"ContentLanguage",
 				"PermissionManager",
 				"ExtensionRegistry",
-				"UserGroupManager"
+				"UserGroupManager",
+				"UrlUtils"
 			],
 			"optional_services": [
 				"MobileFrontend.Context"

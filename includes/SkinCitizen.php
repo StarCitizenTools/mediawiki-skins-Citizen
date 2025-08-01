@@ -45,6 +45,7 @@ use MediaWiki\Title\Title;
 use MediaWiki\User\UserFactory;
 use MediaWiki\User\UserGroupManager;
 use MediaWiki\User\UserIdentityLookup;
+use MediaWiki\Utils\UrlUtils;
 use MobileContext;
 use SkinMustache;
 use SkinTemplate;
@@ -72,6 +73,7 @@ class SkinCitizen extends SkinMustache {
 		private PermissionManager $permissionManager,
 		private ExtensionRegistry $extensionRegistry,
 		private UserGroupManager $userGroupManager,
+		private UrlUtils $urlUtils,
 		private ?MobileContext $mfContext,
 		array $options = []
 	) {
@@ -288,7 +290,7 @@ class SkinCitizen extends SkinMustache {
 		$config = $this->getConfig();
 		$title = $this->getOutput()->getTitle();
 
-		$metadata = new Metadata( $this );
+		$metadata = new Metadata( $this, $this->urlUtils );
 		$skinTheme = new Theme( $this );
 
 		// Add metadata
