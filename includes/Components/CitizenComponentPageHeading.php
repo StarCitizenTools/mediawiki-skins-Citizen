@@ -4,14 +4,17 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Components;
 
+use MediaWiki\Cache\GenderCache;
 use MediaWiki\Html\Html;
 use MediaWiki\Language\Language;
-use MediaWiki\MediaWikiServices;
+use MediaWiki\Languages\LanguageConverterFactory;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Skin\SkinComponentUtils;
 use MediaWiki\StubObject\StubUserLang;
 use MediaWiki\Title\Title;
 use MediaWiki\User\User;
+use MediaWiki\User\UserFactory;
+use MediaWiki\User\UserIdentityLookup;
 use MediaWiki\Utils\MWTimestamp;
 use MessageLocalizer;
 use Wikimedia\IPUtils;
@@ -23,7 +26,11 @@ use Wikimedia\IPUtils;
 class CitizenComponentPageHeading implements CitizenComponent {
 
 	public function __construct(
-		private MediaWikiServices $services,
+		private UserFactory $userFactory,
+		private GenderCache $genderCache,
+		private UserIdentityLookup $userIdentityLookup,
+		private LanguageConverterFactory $languageConverterFactory,
+		private Language $contentLanguage,
 		private MessageLocalizer $localizer,
 		private OutputPage $out,
 		private Language|StubUserLang $pageLang,
@@ -42,12 +49,12 @@ class CitizenComponentPageHeading implements CitizenComponent {
 		$titleText = $this->title->getText();
 
 		if ( IPUtils::isIPAddress( $titleText ) ) {
-			return $this->services->getUserFactory()->newFromName( $titleText );
+			return $this->userFactory->newFromName( $titleText );
 		}
 
-		$userIdentity = $this->services->getUserIdentityLookup()->getUserIdentityByName( $titleText );
+		$userIdentity = $this->userIdentityLookup->getUserIdentityByName( $titleText );
 		if ( $userIdentity && $userIdentity->isRegistered() ) {
-			return $this->services->getUserFactory()->newFromId( $userIdentity->getId() );
+			return $this->userFactory->newFromId( $userIdentity->getId() );
 		}
 
 		return null;
@@ -86,7 +93,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 	 * @return string
 	 */
 	private function buildGenderTagline( User $user ): string {
-		$gender = $this->services->getGenderCache()->getGenderOf( $user, __METHOD__ );
+		$gender = $this->genderCache->getGenderOf( $user, __METHOD__ );
 		$msgGender = '';
 		if ( $gender === 'male' ) {
 			$msgGender = '♂';
@@ -255,9 +262,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 
 		if ( $tagline !== '' ) {
 			// Apply language variant conversion
-			$langConv = $this->services
-				->getLanguageConverterFactory()
-				->getLanguageConverter( $this->services->getContentLanguage() );
+			$langConv = $this->languageConverterFactory->getLanguageConverter( $this->contentLanguage );
 			$tagline = $langConv->convert( $tagline );
 		}
 

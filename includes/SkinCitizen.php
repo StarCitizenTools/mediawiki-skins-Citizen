@@ -23,7 +23,11 @@
 
 namespace MediaWiki\Skins\Citizen;
 
-use MediaWiki\MediaWikiServices;
+use MediaWiki\Cache\GenderCache;
+use MediaWiki\Language\Language;
+use MediaWiki\Languages\LanguageConverterFactory;
+use MediaWiki\Permissions\PermissionManager;
+use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentBodyContent;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentFooter;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentMainMenu;
@@ -38,9 +42,13 @@ use MediaWiki\Skins\Citizen\Components\CitizenComponentUserInfo;
 use MediaWiki\Skins\Citizen\Partials\Metadata;
 use MediaWiki\Skins\Citizen\Partials\Theme;
 use MediaWiki\Title\Title;
+use MediaWiki\User\UserFactory;
+use MediaWiki\User\UserGroupManager;
+use MediaWiki\User\UserIdentityLookup;
+use MediaWiki\Utils\UrlUtils;
+use MobileContext;
 use SkinMustache;
 use SkinTemplate;
-use Wikimedia\Services\NoSuchServiceException;
 
 /**
  * Skin subclass for Citizen
@@ -56,7 +64,19 @@ class SkinCitizen extends SkinMustache {
 	 *
 	 * @inheritDoc
 	 */
-	public function __construct( $options = [] ) {
+	public function __construct(
+		private UserFactory $userFactory,
+		private GenderCache $genderCache,
+		private UserIdentityLookup $userIdentityLookup,
+		private LanguageConverterFactory $languageConverterFactory,
+		private Language $contentLanguage,
+		private PermissionManager $permissionManager,
+		private ExtensionRegistry $extensionRegistry,
+		private UserGroupManager $userGroupManager,
+		private UrlUtils $urlUtils,
+		private ?MobileContext $mfContext,
+		array $options = []
+	) {
 		if ( !isset( $options['name'] ) ) {
 			$options['name'] = 'citizen';
 		}
@@ -102,7 +122,6 @@ class SkinCitizen extends SkinMustache {
 		$title = $this->getTitle();
 		$user = $this->getUser();
 		$pageLang = $title->getPageLanguage();
-		$services = MediaWikiServices::getInstance();
 
 		$components = [
 			'data-footer' => new CitizenComponentFooter(
@@ -115,7 +134,11 @@ class SkinCitizen extends SkinMustache {
 				$parentData['data-footer']['data-info']
 			),
 			'data-page-heading' => new CitizenComponentPageHeading(
-				$services,
+				$this->userFactory,
+				$this->genderCache,
+				$this->userIdentityLookup,
+				$this->languageConverterFactory,
+				$this->contentLanguage,
 				$localizer,
 				$out,
 				$pageLang,
@@ -132,7 +155,7 @@ class SkinCitizen extends SkinMustache {
 				$localizer,
 				$title,
 				$user,
-				$services->getPermissionManager(),
+				$this->permissionManager,
 				count( $this->getLanguagesCached() ),
 				$parentData['data-portlets-sidebar'],
 				// These portlets can be unindexed
@@ -141,7 +164,7 @@ class SkinCitizen extends SkinMustache {
 			),
 			'data-search-box' => new CitizenComponentSearchBox(
 				$localizer,
-				$services->getExtensionRegistry(),
+				$this->extensionRegistry,
 				$parentData['data-search-box']
 			),
 			'data-site-stats' => new CitizenComponentSiteStats(
@@ -150,7 +173,7 @@ class SkinCitizen extends SkinMustache {
 				$pageLang
 			),
 			'data-user-info' => new CitizenComponentUserInfo(
-				$services,
+				$this->userGroupManager,
 				$lang,
 				$localizer,
 				$title,
@@ -219,15 +242,8 @@ class SkinCitizen extends SkinMustache {
 			return false;
 		}
 
-		// Check if page is in mobile view and let MF do the formatting
-		try {
-			$mfCxt = MediaWikiServices::getInstance()->getService( 'MobileFrontend.Context' );
-			return !$mfCxt->shouldDisplayMobileView();
-		} catch ( NoSuchServiceException $ex ) {
-			// MobileFrontend not installed. Don't do anything
-		}
-
-		return true;
+		// If MF is installed, check if page is in mobile view and let MF do the formatting
+		return $this->mfContext === null || !$this->mfContext->shouldDisplayMobileView();
 	}
 
 	/**
@@ -274,7 +290,7 @@ class SkinCitizen extends SkinMustache {
 		$config = $this->getConfig();
 		$title = $this->getOutput()->getTitle();
 
-		$metadata = new Metadata( $this );
+		$metadata = new Metadata( $this, $this->urlUtils );
 		$skinTheme = new Theme( $this );
 
 		// Add metadata

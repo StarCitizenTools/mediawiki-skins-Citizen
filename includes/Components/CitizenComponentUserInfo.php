@@ -6,10 +6,10 @@ namespace MediaWiki\Skins\Citizen\Components;
 
 use MediaWiki\Html\Html;
 use MediaWiki\Language\Language;
-use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\MalformedTitleException;
 use MediaWiki\Title\Title;
 use MediaWiki\User\User;
+use MediaWiki\User\UserGroupManager;
 use MessageLocalizer;
 
 /**
@@ -18,7 +18,7 @@ use MessageLocalizer;
 class CitizenComponentUserInfo implements CitizenComponent {
 
 	public function __construct(
-		private MediaWikiServices $services,
+		private UserGroupManager $userGroupManager,
 		private Language $lang,
 		private MessageLocalizer $localizer,
 		private Title $title,
@@ -74,7 +74,7 @@ class CitizenComponentUserInfo implements CitizenComponent {
 	 * Build the template data for the user groups
 	 */
 	private function getUserGroups(): ?array {
-		$groups = $this->services->getUserGroupManager()->getUserGroups( $this->user );
+		$groups = $this->userGroupManager->getUserGroups( $this->user );
 
 		if ( !$groups ) {
 			return null;

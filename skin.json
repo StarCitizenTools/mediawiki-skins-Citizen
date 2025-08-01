@@ -29,6 +29,20 @@
 	"ValidSkinNames": {
 		"citizen": {
 			"class": "MediaWiki\\Skins\\Citizen\\SkinCitizen",
+			"services": [
+				"UserFactory",
+				"GenderCache",
+				"UserIdentityLookup",
+				"LanguageConverterFactory",
+				"ContentLanguage",
+				"PermissionManager",
+				"ExtensionRegistry",
+				"UserGroupManager",
+				"UrlUtils"
+			],
+			"optional_services": [
+				"MobileFrontend.Context"
+			],
 			"args": [
 				{
 					"name": "citizen",
