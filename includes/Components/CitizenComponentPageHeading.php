@@ -7,7 +7,7 @@ namespace MediaWiki\Skins\Citizen\Components;
 use MediaWiki\Cache\GenderCache;
 use MediaWiki\Html\Html;
 use MediaWiki\Language\Language;
-use MediaWiki\Language\LanguageConverterFactory;
+use MediaWiki\Languages\LanguageConverterFactory;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Skin\SkinComponentUtils;
 use MediaWiki\StubObject\StubUserLang;
