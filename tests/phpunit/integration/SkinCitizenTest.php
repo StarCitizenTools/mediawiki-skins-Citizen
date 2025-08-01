@@ -15,14 +15,34 @@ use RequestContext;
  * @group Citizen
  */
 class SkinCitizenTest extends MediaWikiIntegrationTestCase {
+
+	/**
+	 * @return SkinCitizen
+	 */
+	private function createSkinInstance() {
+		return new SkinCitizen(
+			$this->getServiceContainer()->getUserFactory(),
+			$this->getServiceContainer()->getGenderCache(),
+			$this->getServiceContainer()->getUserIdentityLookup(),
+			$this->getServiceContainer()->getLanguageConverterFactory(),
+			$this->getServiceContainer()->getContentLanguage(),
+			$this->getServiceContainer()->getPermissionManager(),
+			$this->getServiceContainer()->getExtensionRegistry(),
+			$this->getServiceContainer()->getUserGroupManager(),
+			$this->getServiceContainer()->getUrlUtils(),
+			null,
+			[
+				'name' => 'Citizen',
+			]
+		);
+	}
+
 	/**
 	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen
 	 * @return void
 	 */
 	public function testConstructor() {
-		$skin = new SkinCitizen( [
-			'name' => 'Citizen',
-		] );
+		$skin = $this->createSkinInstance();
 
 		$this->assertInstanceOf( SkinCitizen::class, $skin );
 	}
@@ -42,9 +62,7 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 			'CitizenEnableManifest' => true,
 		] );
 
-		$skin = new SkinCitizen( [
-			'name' => 'Citizen',
-		] );
+		$skin = $this->createSkinInstance();
 		$title = Title::newFromText( 'TestTitle' );
 		$skin->setRelevantTitle( $title );
 
@@ -71,9 +89,7 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 			'CitizenEnableManifest' => false,
 		] );
 
-		$skin = new SkinCitizen( [
-			'name' => 'Citizen',
-		] );
+		$skin = $this->createSkinInstance();
 
 		$this->assertEmpty( $skin->getOutput()->getLinkTags() );
 	}
@@ -89,9 +105,7 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 			'CitizenEnableCJKFonts' => true,
 		] );
 
-		$skin = new SkinCitizen( [
-			'name' => 'Citizen',
-		] );
+		$skin = $this->createSkinInstance();
 
 		$this->assertArrayHasKey( 'styles', $skin->getOptions() );
 		$this->assertContains( 'skins.citizen.styles.fonts.cjk', $skin->getOptions()['styles'] );
@@ -112,9 +126,7 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 			'CitizenEnableCollapsibleSections' => true,
 		] );
 
-		$skin = new SkinCitizen( [
-			'name' => 'Citizen',
-		] );
+		$skin = $this->createSkinInstance();
 
 		$this->assertArrayHasKey( 'bodyClasses', $skin->getOptions() );
 		$this->assertContains( 'citizen-sections-enabled', $skin->getOptions()['bodyClasses'] );
