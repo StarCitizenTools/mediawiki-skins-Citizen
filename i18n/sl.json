@@ -4,6 +4,7 @@
 			"Eleassar"
 		]
 	},
+	"skinname-citizen": "Citizen",
 	"citizen-skin-desc": "Lepa, uporabna in odzivna preobleka MediaWiki, s katero postanejo razširitve del celoste izkušnje. Prvotno je bila razvita za viki [https://starcitizen.tools/ Star Citizen].",
 	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|Pogovor]]",
 	"citizen.css": "/* Vsa koda CSS tukaj se bo naložila za uporabnike preobleke Citizen */",
@@ -19,7 +20,7 @@
 	"citizen-sitestats-articles-label": "članki",
 	"citizen-sitestats-images-label": "datoteke",
 	"citizen-sitestats-users-label": "uporabniki",
-	"citizen-sitestats-edits-label": "urejanja",
+	"citizen-sitestats-edits-label": "urejanj",
 	"citizen-page-info-copyright": "Avtorske pravice",
 	"citizen-page-info-credits": "Zasluge",
 	"citizen-page-info-lastmod": "Zadnja sprememba",
@@ -41,6 +42,7 @@
 	"citizen-tagline-ns-help": "Stran pomoči",
 	"citizen-tagline-ns-category": "Stran kategorije",
 	"citizen-tagline-user-regdate": "Pridružitev: $1",
+	"citizen-theme-description": "Sprememba teme vikija",
 	"citizen-theme-night-label": "Temno",
 	"citizen-feature-autohide-navigation-name": "Samodejno skrij navigacijo",
 	"citizen-feature-autohide-navigation-0-label": "Izklop",
