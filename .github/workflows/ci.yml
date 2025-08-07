@@ -200,9 +200,9 @@ jobs:
 
       - name: Scan with SonarQube
         uses: sonarsource/sonarqube-scan-action@v5
-        # Only one once
-        if: ${{ matrix.coverage == 'xdebug' && secrets.SONAR_TOKEN != '' }}
-        with:
-          projectBaseDir: mediawiki/skins/Citizen
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        # Only one once
+        if: ${{ matrix.coverage == 'xdebug' && env.SONAR_TOKEN != '' }}
+        with:
+          projectBaseDir: mediawiki/skins/Citizen
