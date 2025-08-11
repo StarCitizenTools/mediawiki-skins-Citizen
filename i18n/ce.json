@@ -4,9 +4,13 @@
 			"Умар"
 		]
 	},
+	"citizen-skin-desc": "Хаза, лело атта MediaWiki тема, шордарех цхьана интерфейсан дакъа деш йолу. Йуьхьанца [https://starcitizen.tools/ Star Citizen Wiki] лерина кечйина.",
 	"citizen-prefs-talkpage": "[[mw:Skin_talk:Citizen|Дийцар]]",
+	"citizen.css": "/* Кхузахь дӀахӀоттийна йолу CSS чуйоккхур йу Citizen тема лелош болчу декъашхошна */",
+	"citizen.js": "/* Кхузахь дӀахӀоттийна йолу JavaScript код чуйоккхур йу Citizen тема лелош болчу декъашхошна */",
 	"citizen-drawer-toggle": "Схьайелла меню",
 	"citizen-usermenu-toggle": "Схьайелла персоналан меню",
+	"citizen-preferences-toggle": "Нисдаран гӀирсан меню хийца",
 	"citizen-search-poweredby": "ГӀо лоцуш $1",
 	"citizen-search-poweredby-mediawiki": "MediaWiki",
 	"citizen-search-toggle": "Схьаделла лехам",
@@ -64,6 +68,8 @@
 	"citizen-feature-custom-width-standard-label": "Стандартан",
 	"citizen-feature-custom-width-wide-label": "Шуьйра",
 	"citizen-feature-custom-width-full-label": "Дуьззина",
+	"citizen-user-info-text-anon": "Хьан IP-адрес массарна а гуш хир ду, ахь хийцамаш бахь.",
+	"citizen-user-info-text-temp": "ХӀара ханна йолу аккаунт кхоьллина йу, хӀокху браузерехь а, хӀокху гӀирсехь а авторизаци йале хийцамаш бинчул тӀаьхьа.",
 	"citizen-user-info-edits-label": "Нисдарш",
 	"citizen-user-info-joined-label": "ДӀакхетта",
 	"citizen-command-palette-heading-recent": "Дукху хан йоцуш",
@@ -82,7 +88,15 @@
 	"citizen-command-palette-type-special-page": "Леррина агӀо",
 	"citizen-command-palette-type-menu-item": "Меню пункт",
 	"citizen-command-palette-type-user": "Декъашхо",
+	"citizen-command-palette-command-ns-description": "Билггалчу цӀерийн меттигехь агӀо лаха",
+	"citizen-command-palette-command-action-description": "Билгала ардам кхочушбе",
 	"citizen-command-palette-command-user-description": "Декъашхо лаха",
+	"citizen-command-palette-queryaction-fulltext-search-description": "Массо а агӀонаш тӀехь йуьззина текст лаха",
 	"citizen-command-palette-queryaction-media-search-description": "Медиа-файлашкахь леха",
-	"citizen-command-palette-queryaction-page-edit-description": "АгӀонаш кхоллар йа тайар"
+	"citizen-command-palette-queryaction-page-edit-description": "АгӀонаш кхоллар йа тайар",
+	"citizen-command-palette-tip-commands": "<code>/</code> йазде массо а командаш гайта",
+	"citizen-command-palette-tip-users": "Декъашхошца леха <code>@</code> йазде",
+	"citizen-command-palette-tip-namespace": "ЦӀерийн меттигашца леха <code>:</code> йазде",
+	"citizen-command-palette-tip-templates": "Кепаш лаха <code><nowiki>{{</nowiki></code> йазде",
+	"citizen-command-palette-tip-actions": "<code>></code> йазде, ардамийн могӀам схьаэца"
 }
