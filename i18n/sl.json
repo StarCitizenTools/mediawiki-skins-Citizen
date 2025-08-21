@@ -46,5 +46,6 @@
 	"citizen-theme-night-label": "Temno",
 	"citizen-feature-autohide-navigation-name": "Samodejno skrij navigacijo",
 	"citizen-feature-autohide-navigation-0-label": "Izklop",
-	"citizen-feature-autohide-navigation-1-label": "Vklop"
+	"citizen-feature-autohide-navigation-1-label": "Vklop",
+	"citizen-command-palette-type-action": "Dejanje"
 }
