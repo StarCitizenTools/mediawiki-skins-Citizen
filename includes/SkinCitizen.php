@@ -273,6 +273,25 @@ class SkinCitizen extends SkinMustache {
 	}
 
 	/**
+	 * Build the sidebar but remove specialpages that is duplicated in the toolbox
+	 * 
+	 * It's a pretty dirty workaround soo
+	 * maybe throw it in the TODO with the buildNavUrls function
+	 */
+	public function buildSidebar(): array {
+		$sidebar = parent::buildSidebar();
+
+		if ( isset( $sidebar['navigation'] ) && is_array( $sidebar['navigation'] ) ) {
+			$sidebar['navigation'] = array_filter(
+				$sidebar['navigation'],
+				fn( $item ) => isset($item['id']) && $item['id'] !== 'n-specialpages'
+			);
+		}
+
+		return $sidebar;
+	}
+
+	/**
 	 * Add client preferences features
 	 * Did not add the citizen-feature- prefix because there might be features from core MW or extensions
 	 *
