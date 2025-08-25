@@ -73,6 +73,7 @@
 	"citizen-user-info-text-anon": "כתובת ה־IP שלך תהיה גלויה לציבור אם תעשה עריכות כלשהן.",
 	"citizen-user-info-text-temp": "החשבון החולף הזה נוצר לאחר שנעשתה עריכה ללא חשבון בדפדפן ובמכשיר הזה.",
 	"citizen-user-info-edits-label": "עריכות",
+	"citizen-user-info-joined-label": "תאריך הצטרפות",
 	"citizen-command-palette-heading-recent": "אחרונים",
 	"citizen-command-palette-heading-related": "קשורות",
 	"citizen-command-palette-keyhint-enter-select": "בחירה",

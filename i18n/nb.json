@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Jon Harald Søby"
+			"Jon Harald Søby",
+			"Yupik"
 		]
 	},
 	"citizen-skin-desc": "Ei responsiv drakt utviklet for Star Citizen Wiki",
@@ -11,5 +12,6 @@
 	"citizen-search-toggle": "Vis/skjul søk",
 	"citizen-footer-desc": "Rediger denne teksten i [[MediaWiki:Citizen-footer-desc/nb]]",
 	"citizen-footer-tagline": "Rediger denne teksten i [[MediaWiki:Citizen-footer-tagline/nb]]",
-	"citizen-search-fulltext": "Søk etter sider som inneholder"
+	"citizen-search-fulltext": "Søk etter sider som inneholder",
+	"citizen-feature-custom-font-size-name": "Tekst"
 }
