@@ -5,9 +5,16 @@
 
 @import '../../../resources/variables.less';
 
-.skin-theme-clientpref-night {
-	.mw-apisandbox-toolbar {
-		background: var( --color-surface-0 );
-		border-bottom: var( --border-width-base ) solid @dark-bg-50;
+.mw-apisandbox-toolbar {
+	border-bottom: var( --border-base );
+	box-shadow: none;
+	top: calc(3.25rem + 1px);
+	transition-duration: var( --transition-duration-medium );
+	transition-property: top;
+
+	@media screen and ( max-width: @max-width-breakpoint-tablet ) {
+		.citizen-feature-autohide-navigation-clientpref-1 .citizen-scroll--down & {
+			top: 0;
+		}
 	}
 }
