@@ -3,11 +3,8 @@
  * https://starcitizen.tools
 */
 
-@import '../../../resources/variables.less';
+@import '../../../resources/mixins.less';
 
-.skin-theme-clientpref-night {
-	.mw-apisandbox-toolbar {
-		background: var( --color-surface-0 );
-		border-bottom: var( --border-width-base ) solid @dark-bg-50;
-	}
+.mw-apisandbox-toolbar {
+	.mixin-citizen-sticky-header;
 }
