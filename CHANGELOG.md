@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.6.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.5.0...v3.6.0) (2025-09-06)
+
+
+### Features
+
+* **core:** ✨ add transition to sticky element ([291d266](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/291d266b9dcc9eafed5452eb29dc23b3d152d15e))
+* **core:** ✨ simplify and improve loading indicator styles ([3f95e54](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3f95e5426210943dfaddb580aa7be91e93c2d09e))
+* **MultimediaViewer:** ✨ improve dialog styles ([9d8d557](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9d8d557289eafe8219317b185cacfb6d28d1cae1)), closes [#1096](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1096)
+* **MultimediaViewer:** ✨ improve lightbox styles ([c97a259](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c97a2594eca6f810113665efc7d3c58cee016a80))
+* **stickyHeader:** ✨ enhance click handling and target setup ([1f8b364](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1f8b36446305512b91510400e7120c3ac195add7)), closes [#1100](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1100)
+* **tokens:** ✨ add opacity-glass variable for frosted glass background ([a619b1e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a619b1e4a1361d7148e23ea3fba9c41b39ef31dc))
+* **userMenu:** ✨ tweak font sizing ([32a303c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/32a303cd23ae741097248954d9081eb6c5beeba4))
+
+
+### Bug Fixes
+
+* **Codex:** 🐛 fix incorrect quiet button hover color for MW 1.44+ ([4cc33d2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4cc33d20a827fa5dbda0c448a72c14e8e1241875)), closes [#1105](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1105)
+* **core:** 🐛 cast key to string when adding icons to menu items ([c574159](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c5741595701273b60b16dd635048a0f6a5e3462e)), closes [#1103](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1103)
+* **core:** 🐛 do not add site tools if it exists ([56a1e79](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/56a1e795605319c795c1026ae082127830b7c312)), closes [#1116](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1116) [#1117](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1117)
+* **mediawiki:** 🐛 fix overlapped sticky header in Special:ApiSandbox ([#1120](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1120)) ([721e20e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/721e20e5750a0f703cbb2e6c8f7f291e4ce3ab26))
+* use pre-1.45 namespace for LanguageConverterFactory ([fa0342e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fa0342e057605aeea9d18b7d3af357d938327d78))
+
+
+### Performance Improvements
+
+* **core:** ⚡️ rewrite collapsible section parser ([6a7c36c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6a7c36c40c49a1da47cd7f2ca3e83f872d73f162))
+
 ## [3.5.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.4.0...v3.5.0) (2025-07-21)
 
 
