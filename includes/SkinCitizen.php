@@ -256,23 +256,6 @@ class SkinCitizen extends SkinMustache {
 	}
 
 	/**
-	 * @inheritDoc
-	 *
-	 * Manually disable some site-wide tools in TOOLBOX
-	 * They are re-added in the drawer
-	 *
-	 * TODO: Remove this hack when Desktop Improvements separate page and site tools
-	 */
-	protected function buildNavUrls(): array {
-		$urls = parent::buildNavUrls();
-
-		$urls['upload'] = false;
-		$urls['specialpages'] = false;
-
-		return $urls;
-	}
-
-	/**
 	 * Add client preferences features
 	 * Did not add the citizen-feature- prefix because there might be features from core MW or extensions
 	 *

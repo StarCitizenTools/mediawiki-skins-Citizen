@@ -305,6 +305,17 @@ class SkinHooks implements
 			'wikibase' => 'logoWikidata'
 		];
 
+		// Remove upload and specialpages from toolbox as we moved them to drawer
+		// TODO: Check again in the next LTS release, in case it's handled there
+		$siteTools = [
+			'upload',
+			'specialpages'
+		];
+
+		foreach ( $siteTools as $siteTool ) {
+			unset( $links['TOOLBOX'][$siteTool] );
+		}
+
 		self::mapIconsToMenuItems( $links, 'TOOLBOX', $iconMap );
 		self::addIconsToMenuItems( $links, 'TOOLBOX' );
 	}
