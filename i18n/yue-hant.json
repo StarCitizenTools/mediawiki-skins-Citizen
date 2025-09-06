@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"JeffreyKim",
 			"Winston Sung"
 		]
 	},
@@ -24,7 +25,7 @@
 	"citizen-footer-tagline": "喺[[MediaWiki:Citizen-footer-tagline]]喥改",
 	"citizen-action-addsection": "加主題",
 	"citizen-jumptotop": "返到上面",
-	"citizen-search-fulltext": "喺每頁入面喥搵$1",
+	"citizen-search-fulltext": "喺每頁入面度搵$1",
 	"citizen-search-empty-desc": "打字開始搵",
 	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}}嘅討論頁",
 	"citizen-tagline-ns-project": "關於{{SITENAME}}嘅資料",
