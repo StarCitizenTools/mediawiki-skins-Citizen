@@ -134,20 +134,27 @@ class SkinHooks implements
 		}
 
 		$out = $skin->getOutput();
-		$globalToolsId = $this->getConfigValue( 'CitizenGlobalToolsPortlet', $out );
-		// remove initial p- for backward compatibility
-		$name = empty( $globalToolsId ) ? 'navigation' : preg_replace( '/^p-/', '', $globalToolsId );
-		$bar[$name]['specialpages'] = [
-			'text'  => $skin->msg( 'specialpages' ),
-			'href'  => SkinComponentUtils::makeSpecialUrl( 'Specialpages' ),
-			'title' => $skin->msg( 'tooltip-t-specialpages' ),
-			'icon'  => 'specialPages',
-			'id'    => 't-specialpages',
-		];
+		$customSiteToolsMenuId = $this->getConfigValue( 'CitizenGlobalToolsPortlet', $out );
 
-		if ( $this->getConfigValue( 'EnableUploads', $out ) === true ) {
+		$siteToolsMenuId = empty( $customSiteToolsMenuId )
+			? array_key_first( $bar )
+			// remove initial p- for backward compatibility
+			: preg_replace( '/^p-/', '', $customSiteToolsMenuId );
+
+		// Do not override specialpages if it already exists (#1116)
+		if ( !isset( $bar[$siteToolsMenuId]['specialpages'] ) ) {
+			$bar[$siteToolsMenuId]['specialpages'] = [
+				'text'  => $skin->msg( 'specialpages' ),
+				'href'  => SkinComponentUtils::makeSpecialUrl( 'Specialpages' ),
+				'title' => $skin->msg( 'tooltip-t-specialpages' ),
+				'icon'  => 'specialPages',
+				'id'    => 't-specialpages',
+			];
+		}
+
+		if ( !isset( $bar[$siteToolsMenuId]['upload'] ) && $this->getConfigValue( 'EnableUploads', $out ) === true ) {
 			$isUploadWizardEnabled = ExtensionRegistry::getInstance()->isLoaded( 'Upload Wizard' );
-			$bar[$name]['upload'] = [
+			$bar[$siteToolsMenuId]['upload'] = [
 				'text'  => $skin->msg( 'upload' ),
 				'href'  => SkinComponentUtils::makeSpecialUrl( $isUploadWizardEnabled ?
 					'UploadWizard' :
@@ -162,6 +169,13 @@ class SkinHooks implements
 		foreach ( $bar as $key => $item ) {
 			self::addIconsToMenuItems( $bar, (string)$key );
 		}
+	}
+
+	private function addSiteTool( array &$bar, string $siteToolsMenuId, string $itemId, array $item ): void {
+		if ( isset( $bar[$siteToolsMenuId][$itemId] ) ) {
+			return;
+		}
+		$bar[$siteToolsMenuId][$itemId] = $item;
 	}
 
 	/**
