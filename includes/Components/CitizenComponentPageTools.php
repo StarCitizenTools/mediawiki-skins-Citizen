@@ -17,6 +17,9 @@ use MessageLocalizer;
  */
 class CitizenComponentPageTools implements CitizenComponent {
 
+	/** @var string */
+	public const TOOLBOX_ID = 'p-tb';
+
 	public function __construct(
 		private Config $config,
 		private MessageLocalizer $localizer,
@@ -24,35 +27,10 @@ class CitizenComponentPageTools implements CitizenComponent {
 		private User $user,
 		private PermissionManager $permissionManager,
 		private int $numLanguages,
-		private array $sidebarData,
+		private array $pageToolsMenu,
 		private array $languagesData,
 		private array $variantsData
 	) {
-	}
-
-	/**
-	 * Extract article tools from sidebar and return the data
-	 *
-	 * The reason we do this is because:
-	 * 1. We removed some site-wide tools from the toolbar in Drawer.php,
-	 * 	  now we just want the leftovers
-	 * 2. Toolbox is not currently avaliable as data-portlet, have to wait
-	 *    till Desktop Improvements
-	 */
-	private function getArticleToolsData(): array {
-		$data = [
-			'is-empty' => true,
-		];
-
-		foreach ( $this->sidebarData['array-portlets-rest'] as $portlet ) {
-			if ( $portlet['id'] === 'p-tb' ) {
-				$data = $portlet;
-				$data['is-empty'] = false;
-				break;
-			}
-		}
-
-		return $data;
 	}
 
 	/**
@@ -95,7 +73,7 @@ class CitizenComponentPageTools implements CitizenComponent {
 		$hasLanguages =
 			( $this->languagesData && $this->languagesData[ 'is-empty' ] !== true ) ||
 			( $this->variantsData && $this->variantsData[ 'is-empty' ] !== true );
-		$articleTools = $this->getArticleToolsData();
+		$articleTools = $this->pageToolsMenu;
 
 		return [
 			'data-article-tools' => $articleTools,

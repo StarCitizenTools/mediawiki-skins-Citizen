@@ -16,22 +16,12 @@ class CitizenComponentMainMenu implements CitizenComponent {
 	 * @inheritDoc
 	 */
 	public function getTemplateData(): array {
-		$portletsRest = [];
-		foreach ( $this->sidebarData[ 'array-portlets-rest' ] as $data ) {
-			/**
-			 * Remove toolbox from main menu as we moved it to article tools
-			 * TODO: Move handling to SkinCitizen.php after we convert pagetools to component
-			 */
-			if ( $data['id'] === 'p-tb' ) {
-				continue;
-			}
-			$portletsRest[] = ( new CitizenComponentMenu( $data ) )->getTemplateData();
-		}
-		$firstPortlet = new CitizenComponentMenu( $this->sidebarData['data-portlets-first'] );
-
 		return [
-			'data-portlets-first' => $firstPortlet->getTemplateData(),
-			'array-portlets-rest' => $portletsRest
+			'data-portlets-first' => ( new CitizenComponentMenu( $this->sidebarData['data-portlets-first'] ) )->getTemplateData(),
+			'array-portlets-rest' => array_map(
+				static fn( array $data ): array => ( new CitizenComponentMenu( $data ) )->getTemplateData(),
+				$this->sidebarData[ 'array-portlets-rest' ]
+			)
 		];
 	}
 }
