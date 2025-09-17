@@ -148,7 +148,8 @@ class SkinHooks implements
 				'href'  => SkinComponentUtils::makeSpecialUrl( 'Specialpages' ),
 				'title' => $skin->msg( 'tooltip-t-specialpages' ),
 				'icon'  => 'specialPages',
-				'id'    => 't-specialpages',
+				// TODO: Revisit in next LTS release (T333211)
+				'id'    => version_compare( MW_VERSION, '1.44', '>=' ) ? 'n-specialpages' : 't-specialpages',
 			];
 		}
 
