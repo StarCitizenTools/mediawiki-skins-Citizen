@@ -100,14 +100,14 @@
 #ca-ve-edit {
 	> a {
 		color: var( --color-inverted-primary );
-		background-color: var( --color-progressive );
+		background-color: var( --background-color-progressive );
 
 		&:hover {
-			background-color: var( --color-progressive--hover );
+			background-color: var( --background-color-progressive--hover );
 		}
 
 		&:active {
-			background-color: var( --color-progressive--active );
+			background-color: var( --background-color-progressive--active );
 		}
 	}
 }
@@ -133,13 +133,13 @@
 
 	&#ca-edit {
 		margin-left: ~'calc( var( --space-xxs ) * -1 )';
-		border-left: var( --border-width-base ) solid var( --color-progressive--hover );
 
 		> a {
 			gap: 0;
 			font-size: 0; // hide edit source text
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
+			border-left: var( --border-subtle );
 		}
 	}
 }
