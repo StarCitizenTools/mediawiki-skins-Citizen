@@ -7,11 +7,14 @@
 :root {
 	/* @since Codex Design Tokens v1.14.0 (MediaWiki 1.43) */
 	--color-base: ~'oklch( var( --color-base-oklch__l ) var( --color-base-oklch__c ) var( --color-progressive-oklch__h ) )';
+	--color-base-fixed: #202122;
 	--color-base--hover: ~'oklch( calc( var( --color-base-oklch__l ) + var( --delta-lightness-hover-state ) ) var( --color-base-oklch__c ) var( --color-progressive-oklch__h ) )';
 	--color-emphasized: ~'oklch( var( --color-emphasized-oklch__l ) var( --color-emphasized-oklch__c ) var( --color-progressive-oklch__h ) )';
 	--color-subtle: ~'oklch( var( --color-subtle-oklch__l ) var( --color-subtle-oklch__c ) var( --color-progressive-oklch__h ) )';
 	--color-placeholder: ~'oklch( var( --color-placeholder-oklch__l ) var( --color-placeholder-oklch__c ) var( --color-progressive-oklch__h ) )';
 	--color-disabled: ~'oklch( var( --color-disabled-oklch__l ) var( --color-disabled-oklch__c ) var( --color-progressive-oklch__h ) )';
+	--color-inverted: #fff;
+	--color-inverted-fixed: #fff;
 	--color-progressive: ~'oklch( var( --color-progressive-oklch__l ) var( --color-progressive-oklch__c ) var( --color-progressive-oklch__h ) )';
 	--color-progressive--hover: ~'oklch( calc( var( --color-progressive-oklch__l ) + var( --delta-lightness-hover-state ) ) var( --color-progressive-oklch__c ) var( --color-progressive-oklch__h ) )';
 	--color-progressive--active: ~'oklch( calc( var( --color-progressive-oklch__l ) + var( --delta-lightness-active-state ) ) var( --color-progressive-oklch__c ) var( --color-progressive-oklch__h ) )';
@@ -28,6 +31,8 @@
 	--color-notice: var( --color-base );
 	--color-content-added: var( --color-success );
 	--color-content-removed: var( --color-destructive );
+	--filter-invert-icon: 0;
+	--filter-invert-primary-button-icon: 1;
 	// This is not correct since Codex 2.0 since it becomes a solid color
 	// But we keep it for now for compatibility with Codex 1.x
 	--box-shadow-color-base: var( --box-shadow-color-alpha-base );
@@ -37,6 +42,7 @@
 	--box-shadow-color-progressive-selected--hover: var( --color-progressive--hover );
 	--box-shadow-color-progressive-selected--active: var( --color-progressive--active );
 	--box-shadow-color-destructive--focus: var( --color-progressive );
+	--box-shadow-color-inverted: #fff;
 	--box-shadow-color-transparent: transparent;
 	--background-color-base: var( --color-surface-0 );
 	--background-color-base-fixed: ~'oklch( 96% 0.01 var( --color-progressive-oklch__h ) )';
@@ -46,6 +52,7 @@
 	--background-color-interactive-subtle: var( --color-surface-1 );
 	--background-color-disabled: var( --color-surface-3 );
 	--background-color-disabled-subtle: var( --color-surface-1 );
+	--background-color-inverted: #101418;
 	--background-color-progressive: var( --color-progressive );
 	--background-color-progressive--hover: var( --color-progressive--hover );
 	--background-color-progressive--active: var( --color-progressive--active );
@@ -73,11 +80,18 @@
 	--background-color-input-binary--checked: var( --color-progressive );
 	--background-color-tab-list-item-framed--hover: rgba( 255, 255, 255, 0.3 );
 	--background-color-tab-list-item-framed--active: rgba( 255, 255, 255, 0.65 );
+	--opacity-icon-base: 0.6;
+	--opacity-icon-base--hover: 0.74;
+	--opacity-icon-base--selected: 1;
+	--opacity-icon-base--disabled: 0.51;
+	--opacity-icon-placeholder: 0.51;
+	--opacity-icon-subtle: 0.67;
 	--border-color-base: ~'rgb( 0 0 0 / 0.1 )';
 	--border-color-subtle: ~'rgb( 0 0 0 / 0.05 )';
 	--border-color-muted: ~'rgb( 0 0 0 / 0.03 )';
 	--border-color-interactive: ~'rgb( 0 0 0 / 0.1 )';
 	--border-color-disabled: var( --border-color-subtle );
+	--border-color-inverted: #fff;
 	--border-color-progressive: var( --color-progressive );
 	--border-color-progressive--hover: var( --color-progressive--hover );
 	--border-color-progressive--active: var( --color-progressive--active );
