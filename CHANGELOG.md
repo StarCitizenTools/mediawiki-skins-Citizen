@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.7.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.6.0...v3.7.0) (2025-09-19)
+
+
+### Features
+
+* **tokens:** ✨ increase border color contrast ([02b67b8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/02b67b8ad1ff533fd82cc93a0dfe4ac5a306aa39))
+
+
+### Bug Fixes
+
+* **core:** 🐛 use --color-visited--active ([c32e8cd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c32e8cd4a6413cc047ceda166526019a58a484b6))
+* **sidebar:** 🐛 fix incorrect ID for special page link in sidebar ([7ff58fc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7ff58fc919324b46c997f58e5cbf3c3a7beb0e35))
+* **sidebar:** 🐛 only add special page link on MW 1.43.X ([2c36fc9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2c36fc926cc6b6fc538e6f25c8e8e8c70fb57386))
+
 ## [3.6.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.5.0...v3.6.0) (2025-09-06)
 
 
