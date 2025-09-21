@@ -16,7 +16,15 @@
 .citizen-sticky-header {
 	padding-inline: var( --padding-page );
 	border-bottom: var( --border-base );
-	.mixin-citizen-frosted-glass( citizen-sticky-header-backdrop, 0 );
+
+	// Need a separate background because backdrop-filter
+	// will apply to all elements inside the sticky header
+	&-background {
+		position: absolute;
+		inset: 0;
+		z-index: @z-index-bottom;
+		.mixin-citizen-frosted-glass( 0 );
+	}
 
 	&-container {
 		position: fixed;

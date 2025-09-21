@@ -13,53 +13,12 @@
 	}
 }
 
-.mixin-citizen-frosted-glass-simple( @surface: 1 ) {
+.mixin-citizen-frosted-glass( @surface: 1 ) {
 	.mixin-citizen-opaque-background( @surface );
 
 	@supports ( backdrop-filter: blur( 16px ) ) or ( -webkit-backdrop-filter: blur( 16px ) ) {
 		-webkit-backdrop-filter: var( --backdrop-filter-frosted-glass );
 		backdrop-filter: var( --backdrop-filter-frosted-glass );
-	}
-}
-
-/**
- * Frosted glass effect
- * @see https://www.joshwcomeau.com/css/backdrop-filter
- */
-.mixin-citizen-frosted-glass( @backdropClass, @surface: 1 ) {
-	.mixin-citizen-opaque-background( @surface );
-
-	.@{backdropClass} {
-		position: absolute;
-		inset: 0;
-		z-index: @z-index-bottom;
-		overflow: hidden;
-		pointer-events: none;
-		transition: none !important; // cancel out card content transition
-	}
-
-	@supports ( backdrop-filter: blur( 16px ) ) or ( -webkit-backdrop-filter: blur( 16px ) ) {
-		.@{backdropClass} {
-			// Backdrop
-			&::before {
-				position: absolute;
-				inset: 0;
-				content: '';
-				background: ~'linear-gradient( to bottom, var( --color-surface-@{surface} ), transparent 50% )';
-				-webkit-backdrop-filter: var( --backdrop-filter-frosted-glass );
-				backdrop-filter: var( --backdrop-filter-frosted-glass );
-			}
-		}
-	}
-
-	@supports ( mask-image: none ) or ( -webkit-mask-image: none ) {
-		.@{backdropClass} {
-			&::before {
-				height: 200%;
-				-webkit-mask-image: linear-gradient( to bottom, #000 0% 50%, transparent 50% 100% );
-				mask-image: linear-gradient( to bottom, #000 0% 50%, transparent 50% 100% );
-			}
-		}
 	}
 }
 
