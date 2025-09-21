@@ -107,7 +107,7 @@ function fetchMenuItems() {
 
 		links.forEach( ( link ) => {
 			const listItem = link.closest( 'li' );
-			const id = listItem ? listItem.id : ''; // e.g., 't-whatlinkshere'
+			const id = listItem ? `${listItem.id}-command-palette-item` : ''; // e.g., 't-whatlinkshere-command-palette-item'
 			const url = link.getAttribute( 'href' ) || '#';
 			const labelElement = link.querySelector( 'span:not([class*="icon"])' ); // Get the text span, excluding icon spans
 
