@@ -12,7 +12,7 @@
 	gap: var( --space-xxs );
 	padding: ~'var( --space-xs ) max( env( safe-area-inset-right ), var( --space-xs ) ) max( env( safe-area-inset-bottom ), var( --space-xs ) ) max( env( safe-area-inset-left ), var( --space-xs ) )';
 	background-color: var( --color-surface-0 );
-	border-top: var( --border-width-base ) solid var( --border-color-base );
+	border-top: var( --border-base );
 
 	&__item {
 		display: flex;
@@ -69,7 +69,7 @@
 	&__logo {
 		padding: 0 var( --space-xs ) 0 0;
 		margin: 0 var( --space-xxs );
-		border-right: var( --border-width-base ) solid var( --border-color-base );
+		border-right: var( --border-subtle );
 
 		img {
 			margin: auto;
@@ -162,13 +162,13 @@
 		right: unset;
 		left: 0;
 		border-top: 0;
-		border-right: var( --border-width-base ) solid var( --border-color-base );
+		border-right: var( --border-base );
 
 		&__logo {
 			padding: 0 0 var( --space-xs ) 0;
 			margin: var( --space-xxs ) 0;
 			border-right: 0;
-			border-bottom: var( --border-width-base ) solid var( --border-color-base );
+			border-bottom: var( --border-subtle );
 		}
 	}
 }
