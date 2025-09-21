@@ -82,8 +82,9 @@
 		}
 
 		&:hover {
-			.citizen-ui-icon {
+			.citizen-ui-icon.mw-ui-icon-wikimedia-arrowUp {
 				opacity: 1;
+				transform: none;
 			}
 
 			.citizen-sticky-header-page-info {
@@ -94,10 +95,10 @@
 		.citizen-ui-icon {
 			position: absolute;
 			opacity: 0;
-			transform: rotate( 90deg ) !important;
+			transform: translateX( -25% );
 			transition-timing-function: var( --transition-timing-function-ease );
 			transition-duration: var( --transition-duration-medium );
-			transition-property: opacity;
+			transition-property: opacity, transform;
 		}
 	}
 
