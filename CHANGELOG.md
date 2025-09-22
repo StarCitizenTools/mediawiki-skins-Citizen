@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.7.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.6.0...v3.7.0) (2025-09-22)
+
+
+### Features
+
+* **core:** ✨ add transition for icons that uses content-visibility ([57837fa](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/57837fa1f186d5ed5284c6fe9b66950e004b6751))
+* **core:** ✨ simplify frosted glass implementation ([8c10712](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8c10712c345549591d6ff1632bf21ad1eb4e5605))
+* **core:** ✨ use Codex arrow up icon for back to top icon ([6d61fc8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6d61fc8b8723c1140137202bba9c0df125634282))
+* **core:** ✨ use subtle borders for inner border ([c30c040](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c30c04055277b352adaa4ea903aa9b7a3e465931))
+* **mediawiki:** ✨ tweak change list date font styles ([36b77f4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/36b77f4369fa2ed750e62575bd38d0c6c9dd08b0))
+* **preferences:** ✨ replace setting gear icon with configure icon ([d835649](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d83564917d294acd8a2bf795b20c3b1a02bcb8c3))
+* **tokens:** ✨ increase border color contrast ([02b67b8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/02b67b8ad1ff533fd82cc93a0dfe4ac5a306aa39))
+
+
+### Bug Fixes
+
+* **commandPalette:** 🐛 do not reuse menu ID ([b4d8513](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b4d851398d38996f5643655c299170f50b1244c0))
+* **core:** 🐛 include settings icon in skin module ([5afe8d1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5afe8d1b78854f49d56875d394be3fda7f12a388))
+* **core:** 🐛 use --color-visited--active ([c32e8cd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c32e8cd4a6413cc047ceda166526019a58a484b6))
+* **OOUI:** 🐛 fix incorrect indicator style in framed tabs ([7bc4c35](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7bc4c350e4288e854a4996530cf43d2de04c4943))
+* **sidebar:** 🐛 fix incorrect ID for special page link in sidebar ([7ff58fc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7ff58fc919324b46c997f58e5cbf3c3a7beb0e35))
+* **sidebar:** 🐛 only add special page link on MW 1.43.X ([2c36fc9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2c36fc926cc6b6fc538e6f25c8e8e8c70fb57386))
+* **stickyHeader:** 🐛 use edit icon when source edit is the only button ([9095ce7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9095ce7176aa8b04c05ac09eb7057902e9193cc7))
+
+
+### Performance Improvements
+
+* **icons:** ⚡️ use SVG instead of base64 for configure icon ([6e7b1cd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6e7b1cd85400607f573c6368902bd96059be2145))
+
 ## [3.6.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.5.0...v3.6.0) (2025-09-06)
 
 
