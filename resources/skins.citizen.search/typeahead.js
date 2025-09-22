@@ -364,7 +364,7 @@ async function getSuggestions() {
 			// Update placeholder with no result content
 			listEl.innerHTML = '';
 			groupEl.hidden = true;
-			placeholderEl.innerHTML = searchResults.getPlaceholderHTML( searchQuery.valueHtml, compiledTemplates );
+			placeholderEl.innerHTML = searchResults.getPlaceholderHTML( searchQuery.value, compiledTemplates );
 			placeholderEl.hidden = false;
 		}
 
