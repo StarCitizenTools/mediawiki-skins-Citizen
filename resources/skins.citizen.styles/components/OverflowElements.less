@@ -18,6 +18,7 @@
 
 		&:has( .citizen-overflow-content > .wikitable ) {
 			margin-block: var( --space-md );
+			margin-inline: var( --border-width-base ); /* Fix clipping border */
 			border-radius: var( --border-radius-medium );
 			box-shadow: var( --box-shadow-border );
 		}
