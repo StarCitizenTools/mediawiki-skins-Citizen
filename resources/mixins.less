@@ -253,3 +253,17 @@
 		box-shadow: @box-shadow-inset-small @box-shadow-color-progressive--focus;
 	}
 }
+
+.mixin-citizen-mask-gradient(@direction, @color1, @color2, @color3: null, @color4: null) {
+	& when (@color3 =null),
+	(@color4 =null) {
+		-webkit-mask-image: linear-gradient( @direction, @color1, @color2 );
+		mask-image: linear-gradient( @direction, @color1, @color2 );
+	}
+
+	& when not(@color3 =null),
+	not(@color4 =null) {
+		-webkit-mask-image: linear-gradient( @direction, @color1, @color2, @color3, @color4 );
+		mask-image: linear-gradient( @direction, @color1, @color2, @color3, @color4 );
+	}
+}

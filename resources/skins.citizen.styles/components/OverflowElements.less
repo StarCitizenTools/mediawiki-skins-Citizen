@@ -1,17 +1,3 @@
-.mask-gradient(@direction, @color1, @color2, @color3: null, @color4: null) {
-	& when (@color3 =null),
-	(@color4 =null) {
-		-webkit-mask-image: linear-gradient( @direction, @color1, @color2 );
-		mask-image: linear-gradient( @direction, @color1, @color2 );
-	}
-
-	& when not(@color3 =null),
-	not(@color4 =null) {
-		-webkit-mask-image: linear-gradient( @direction, @color1, @color2, @color3, @color4 );
-		mask-image: linear-gradient( @direction, @color1, @color2, @color3, @color4 );
-	}
-}
-
 .hideOverflowButton() {
 	visibility: hidden;
 	pointer-events: none;
@@ -55,15 +41,15 @@
 		}
 
 		.citizen-overflow--left > & {
-			.mask-gradient(90deg, transparent, #000 var( --overflow-gradient-size ));
+			.mixin-citizen-mask-gradient(90deg, transparent, #000 var( --overflow-gradient-size ));
 		}
 
 		.citizen-overflow--right > & {
-			.mask-gradient(270deg, transparent, #000 var( --overflow-gradient-size ));
+			.mixin-citizen-mask-gradient(270deg, transparent, #000 var( --overflow-gradient-size ));
 		}
 
 		.citizen-overflow--left.citizen-overflow--right > & {
-			.mask-gradient(90deg, transparent, #000 var( --overflow-gradient-size ), #000 ~'calc( 100% - var( --overflow-gradient-size ) )', transparent);
+			.mixin-citizen-mask-gradient(90deg, transparent, #000 var( --overflow-gradient-size ), #000 ~'calc( 100% - var( --overflow-gradient-size ) )', transparent);
 		}
 
 		&:has( .citizen-overflow-content-sticky-header ) {
