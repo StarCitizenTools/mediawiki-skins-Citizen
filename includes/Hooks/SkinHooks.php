@@ -133,6 +133,30 @@ class SkinHooks implements
 			return;
 		}
 
+		$this->addSiteTools( $skin, $bar );
+
+		$iconMap = [
+			'n-specialpages' => 'specialPages', // TODO: Remove when we drop MW 1.43 support AND T405413 is resolved
+			't-specialpages' => 'specialPages', // TODO: Remove when we drop MW 1.43 support
+			't-upload' => 'upload',
+		];
+
+		foreach ( $bar as &$menu ) {
+			// Sidebar links do not have a string as key, so we need to loop through each item
+			foreach ( $menu as &$item ) {
+				if ( isset( $item['id'] ) && array_key_exists( $item['id'], $iconMap ) ) {
+					$item['icon'] = $iconMap[$item['id']];
+				}
+
+				if ( !empty( $item['icon'] ) ) {
+					$item['link-html'] = self::getIconHtml( $item['icon'] );
+				}
+			}
+		}
+		unset( $menu, $item );
+	}
+
+	private function addSiteTools( Skin $skin, array &$bar ): void {
 		$out = $skin->getOutput();
 		$customSiteToolsMenuId = $this->getConfigValue( 'CitizenGlobalToolsPortlet', $out );
 
@@ -144,39 +168,26 @@ class SkinHooks implements
 		// Do not override specialpages if it already exists (#1116)
 		// TODO: Revisit in next LTS release (T333211)
 		if ( version_compare( MW_VERSION, '1.44', '<' ) ) {
-			$bar[$siteToolsMenuId]['specialpages'] = [
+			$bar[$siteToolsMenuId][] = [
 				'text'  => $skin->msg( 'specialpages' ),
 				'href'  => SkinComponentUtils::makeSpecialUrl( 'Specialpages' ),
 				'title' => $skin->msg( 'tooltip-t-specialpages' ),
-				'icon'  => 'specialPages',
 				'id'    => 't-specialpages',
 			];
 		}
 
 		if ( !isset( $bar[$siteToolsMenuId]['upload'] ) && $this->getConfigValue( 'EnableUploads', $out ) === true ) {
 			$isUploadWizardEnabled = ExtensionRegistry::getInstance()->isLoaded( 'Upload Wizard' );
-			$bar[$siteToolsMenuId]['upload'] = [
+			$bar[$siteToolsMenuId][] = [
 				'text'  => $skin->msg( 'upload' ),
 				'href'  => SkinComponentUtils::makeSpecialUrl( $isUploadWizardEnabled ?
 					'UploadWizard' :
 					'Upload'
 				),
 				'title' => $skin->msg( 'tooltip-t-upload' ),
-				'icon'  => 'upload',
 				'id'    => 't-upload',
 			];
 		}
-
-		foreach ( $bar as $key => $item ) {
-			self::addIconsToMenuItems( $bar, (string)$key );
-		}
-	}
-
-	private function addSiteTool( array &$bar, string $siteToolsMenuId, string $itemId, array $item ): void {
-		if ( isset( $bar[$siteToolsMenuId][$itemId] ) ) {
-			return;
-		}
-		$bar[$siteToolsMenuId][$itemId] = $item;
 	}
 
 	/**
@@ -459,13 +470,20 @@ class SkinHooks implements
 			$icon = $item['icon'] ?? '';
 
 			if ( $icon ) {
-				// Html::makeLink will pass this through rawElement
-				// Avoid using mw-ui-icon in case its styles get loaded
-				// Sometimes extension includes the "wikimedia-" part in the icon key (e.g. ULS),
-				// so we apply both classes just to be safe
-				$links[$menu][$key]['link-html'] = '<span class="citizen-ui-icon mw-ui-icon-' . $icon . ' mw-ui-icon-wikimedia-' . $icon . '"></span>';
+				$links[$menu][$key]['link-html'] = self::getIconHtml( $icon );
 			}
 		}
+	}
+
+	/**
+	 * Get the HTML for an icon
+	 */
+	private static function getIconHtml( string $icon ): string {
+		// Html::makeLink will pass this through rawElement
+		// Avoid using mw-ui-icon in case its styles get loaded
+		// Sometimes extension includes the "wikimedia-" part in the icon key (e.g. ULS),
+		// so we apply both classes just to be safe
+		return '<span class="citizen-ui-icon mw-ui-icon-' . $icon . ' mw-ui-icon-wikimedia-' . $icon . '"></span>';
 	}
 
 	/**
