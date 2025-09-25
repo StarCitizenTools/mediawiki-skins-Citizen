@@ -25,3 +25,15 @@
 		min-width: 0;
 	}
 }
+
+.skin-citizen {
+	.ve-init-mw-desktopArticleTarget {
+		.cm-editor {
+			// @since MW 1.44
+			// T357482
+			// Ensure that CodeMirror overlay is on top of VE so the highlight works properly
+			z-index: 0;
+			padding: 0;
+		}
+	}
+}
