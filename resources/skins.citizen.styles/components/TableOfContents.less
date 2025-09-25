@@ -210,10 +210,18 @@
 
 @media ( min-width: @min-width-breakpoint-desktop ) {
 	.citizen-toc {
+		--header-offset: var( --height-sticky-header );
+
+		@media ( min-width: @min-width-breakpoint-desktop ) {
+			.citizen-header-position-top & {
+				--header-offset: calc( var( --header-size ) + var( --height-sticky-header ) );
+			}
+		}
+
 		position: -webkit-sticky;
 		position: sticky;
-		top: var( --height-sticky-header );
-		max-height: ~'calc( 100vh - var( --height-sticky-header ) )';
+		top: var( --header-offset );
+		max-height: ~'calc( 100vh - var( --header-offset ) )';
 		padding: var( --space-xs ) 0;
 		overflow-y: auto;
 		overscroll-behavior: contain;

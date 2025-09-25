@@ -23,6 +23,33 @@
 		box-shadow: var( --box-shadow-large );
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {
+			.citizen-header-position-left & {
+        		right: unset !important;
+				left: var( --header-size ) !important;
+				bottom: 0 !important;
+			}
+
+			.citizen-header-position-right & {
+				right: var( --header-size ) !important;
+				left: unset !important;
+				bottom: 0 !important;
+			}
+
+			.citizen-header-position-top & {
+				right: 0 !important;
+				left: unset !important;
+				top: var( --header-size ) !important;
+				bottom: unset !important;
+			}
+
+			.citizen-header-position-bottom & {
+				right: 0 !important;
+				left: unset !important;
+				bottom: var( --header-size ) !important;
+			}
+		}
+
+		@media ( min-width: @min-width-breakpoint-desktop ) {
 			bottom: 0 !important;
 			left: var( --header-size ) !important;
 		}
@@ -83,6 +110,13 @@
 	top: unset;
 	bottom: 0;
 	z-index: @z-index-overlay; // Higher than header
+
+	@media ( min-width: @min-width-breakpoint-desktop ) {
+		.citizen-header-position-top & {
+			top: 0;
+			bottom: unset;
+		}
+	}
 
 	// Add dismiss affordnance backdrop
 	@media ( max-width: @max-width-breakpoint-tablet ) {

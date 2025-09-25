@@ -893,6 +893,12 @@
 			"description": "Enables or disable the command palette. Disable to use the old search module.",
 			"descriptionmsg": "citizen-config-enablecommandpalette",
 			"public": true
+		},
+		"HeaderPosition": {
+			"value": "left",
+			"description": "Position of the header on the desktop layout. Possible values: 'left', 'right', 'top' and 'bottom'",
+			"descriptionmsg": "citizen-config-headerposition",
+			"public": true
 		}
 	},
 	"manifest_version": 2
