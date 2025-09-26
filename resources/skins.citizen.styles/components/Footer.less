@@ -9,9 +9,11 @@
 	direction: ltr;
 	.mixin-citizen-font-styles( 'small' );
 
-	.citizen-feature-autohide-navigation-clientpref-0 & {
-		// Reserve space for header, add only if autohide is off to avoid empty space
-		margin-bottom: var( --header-size );
+	@media ( max-width: @min-width-breakpoint-desktop ) {
+		.citizen-feature-autohide-navigation-clientpref-0 & {
+			// Reserve space for header, add only if autohide is off to avoid empty space
+			margin-bottom: var( --header-size );
+		}
 	}
 
 	&__container {
