@@ -212,10 +212,16 @@
 	.citizen-toc {
 		--header-offset: var( --height-sticky-header );
 
-		@media ( min-width: @min-width-breakpoint-desktop ) {
-			.citizen-header-position-top & {
-				--header-offset: calc( var( --header-size ) + var( --height-sticky-header ) );
-			}
+		.citizen-header-position-top & {
+			--header-offset: calc( var( --header-size ) + var( --height-sticky-header ) );
+		}
+
+		.ve-active & {
+			--header-offset: 48px;
+		}
+
+		.citizen-header-position-top.ve-active & {
+			--header-offset: calc( var( --header-size ) + 48px );
 		}
 
 		position: -webkit-sticky;
