@@ -337,5 +337,14 @@ class SkinCitizen extends SkinMustache {
 		if ( $config->get( 'CitizenEnableARFonts' ) === true ) {
 			$options['styles'][] = 'skins.citizen.styles.fonts.ar';
 		}
+
+		// Header position
+		$headerPosition = $config->get( 'CitizenHeaderPosition' );
+		
+		if ( !in_array( $headerPosition, [ 'left', 'right', 'top', 'bottom' ] ) ) {
+			$headerPosition = 'left';
+		}
+		
+		$this->getOutput()->addHtmlClasses( 'citizen-header-position-' . $headerPosition );
 	}
 }

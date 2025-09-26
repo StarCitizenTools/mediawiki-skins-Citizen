@@ -14,6 +14,12 @@
 	/* Fix weird gap between save button and toolbar bottom */
 	border-bottom: 0;
 	box-shadow: 0 1px 0 0 var( --border-color-base );
+
+	@media ( min-width: @min-width-breakpoint-desktop ) {
+		.citizen-header-position-top .ve-ui-toolbar-floating& {
+			top: var( --header-size );
+		}
+	}
 }
 
 /* ve.ce.BranchNode.css */

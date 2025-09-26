@@ -39,7 +39,21 @@
 @media ( min-width: @min-width-breakpoint-desktop ) {
 	.citizen-page-container {
 		// Reserve space for header
-		margin-left: var( --header-size );
+		.citizen-header-position-left & {
+			margin-left: var( --header-size );
+		}
+
+		.citizen-header-position-right & {
+			margin-right: var( --header-size );
+		}
+
+		.citizen-header-position-top & {
+			margin-top: var( --header-size );
+		}
+
+		.citizen-header-position-bottom & {
+			margin-bottom: var( --header-size );
+		}
 	}
 
 	.citizen-toc-enabled {

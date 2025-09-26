@@ -49,6 +49,12 @@
 	&-bar {
 		border-bottom-color: var( --border-color-base );
 		box-shadow: none;
+
+		@media ( min-width: @min-width-breakpoint-desktop ) {
+			.citizen-header-position-top & {
+				top: var( --header-size );
+			}
+		}
 	}
 }
 

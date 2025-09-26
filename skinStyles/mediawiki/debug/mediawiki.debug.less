@@ -147,7 +147,17 @@ a.mw-debug-panelabel:visited {
 
 	@media ( min-width: @min-width-breakpoint-desktop ) {
 		// So that it is not hidden by header
-		margin-left: var( --header-size );
+		.citizen-header-position-left & {
+			margin-left: var( --header-size );
+		}
+
+		.citizen-header-position-right & {
+			margin-right: var( --header-size );
+		}
+
+		.citizen-header-position-top & {
+			margin-top: var( --header-size );
+		}
 	}
 }
 
