@@ -765,6 +765,7 @@
 		&--expanded {
 			top: var( --space-md );
 			height: ~'calc( 100vh - var( --space-md ) * 2 )';
+			padding-bottom: var( --header-size-block-end ); // So that header won't hide the bottom
 			background-color: var( --color-surface-2 );
 			border-radius: var( --border-radius-large );
 
@@ -776,13 +777,8 @@
 				left: 0;
 				width: 100%;
 				max-height: 40vh;
-				padding-bottom: var( --header-size ); // So that header won't hide the bottom
 				border-bottom-right-radius: 0;
 				border-bottom-left-radius: 0;
-			}
-
-			.citizen-header-position-bottom & {
-				padding-bottom: var( --header-size );
 			}
 		}
 	}

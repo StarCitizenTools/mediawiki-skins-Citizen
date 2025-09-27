@@ -18,7 +18,7 @@
 .skin-citizen {
 	.mw-echo-ui-notificationBadgeButtonPopupWidget-popup {
 		top: unset !important;
-		bottom: calc( var( --header-size ) + env( safe-area-inset-bottom ) ) !important;
+		bottom: calc( var( --header-size-block-end ) + env( safe-area-inset-bottom ) ) !important;
 		margin: var( --space-xs );
 		box-shadow: var( --box-shadow-large );
 
@@ -26,17 +26,17 @@
 			.citizen-header-position-left & {
 				right: unset !important;
 				bottom: 0 !important;
-				left: var( --header-size ) !important;
+				left: var( --header-size-inline-start ) !important;
 			}
 
 			.citizen-header-position-right & {
-				right: var( --header-size ) !important;
+				right: var( --header-size-inline-end ) !important;
 				bottom: 0 !important;
 				left: unset !important;
 			}
 
 			.citizen-header-position-top & {
-				top: var( --header-size ) !important;
+				top: var( --header-size-block-start ) !important;
 				right: 0 !important;
 				bottom: unset !important;
 				left: unset !important;
@@ -44,7 +44,7 @@
 
 			.citizen-header-position-bottom & {
 				right: 0 !important;
-				bottom: var( --header-size ) !important;
+				bottom: var( --header-size-block-end ) !important;
 				left: unset !important;
 			}
 		}

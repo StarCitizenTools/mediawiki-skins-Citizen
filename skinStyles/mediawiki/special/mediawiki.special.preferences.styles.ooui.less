@@ -30,16 +30,9 @@
 
 #preferences {
 	.mw-htmlform-submit-buttons {
+		bottom: var( --header-size-block-end );
 		padding-inline: 0;
 		margin-inline: 0;
-
-		@media ( max-width: @max-width-breakpoint-tablet ) {
-			bottom: var( --header-size );
-		}
-
-		.citizen-header-position-bottom & {
-			bottom: var( --header-size );
-		}
 	}
 }
 

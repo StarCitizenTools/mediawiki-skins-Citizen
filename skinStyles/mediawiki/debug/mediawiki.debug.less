@@ -11,18 +11,15 @@
 @import '../../../resources/variables.less';
 
 /* $wgDebugToolbar = true; */
+@height-debug-toolbar: 54px;
+
 #jquery-foot-hovzer {
 	z-index: @z-index-toolbar;
 	// @see https://caniuse.com/mdn-css_properties_width_stretch
 	width: -webkit-fill-available;
 	width: -moz-available;
-	margin-bottom: var( --header-size );
-
-	@media ( min-width: @min-width-breakpoint-desktop ) {
-		margin-bottom: 0;
-		// So that it is not hidden by header
-		margin-left: ~'calc( var( --header-size ) + 1px )'; // compensate border
-	}
+	margin-block-end: var( --header-size-block-end );
+	margin-inline: var( --header-size-inline-start ) var( --header-size-inline-end );
 }
 
 .mw-debug {
@@ -144,25 +141,28 @@ a.mw-debug-panelabel:visited {
 		font-weight: var( --font-weight-medium );
 		color: var( --color-subtle );
 	}
-
-	@media ( min-width: @min-width-breakpoint-desktop ) {
-		// So that it is not hidden by header
-		.citizen-header-position-left & {
-			margin-left: var( --header-size );
-		}
-
-		.citizen-header-position-right & {
-			margin-right: var( --header-size );
-		}
-
-		.citizen-header-position-top & {
-			margin-top: var( --header-size );
-		}
-	}
 }
 
 #mw-debug-html {
 	padding-left: var( --space-lg ); // So that it is not clipped
 	margin-left: 0;
 	overflow-x: auto;
+}
+
+// HACK: Move the bottom elements above the debug toolbar (#1146)
+// TODO: Clean this up when we implement an universal approach to bottom toolbar
+html:has( #mw-debug-toolbar ) {
+	.citizen-toc,
+	.page-actions {
+		@media ( max-width: @max-width-breakpoint-tablet ) {
+			margin-block-end: @height-debug-toolbar; // Height of the debug toolbar
+		}
+	}
+}
+
+.citizen-header-position-bottom:has( #mw-debug-toolbar ) {
+	.citizen-toc,
+	.page-actions {
+		margin-block-end: @height-debug-toolbar; // Height of the debug toolbar
+	}
 }

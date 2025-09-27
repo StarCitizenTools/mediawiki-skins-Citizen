@@ -128,6 +128,7 @@
 			// Need the unit for calc() (#1058)
 			// stylelint-disable-next-line length-zero-no-unit
 			--height-sticky-header: 0px !important;
+			--header-size-block-end: 0;
 
 			.citizen-header,
 			.citizen-toc,
@@ -144,7 +145,7 @@
 			.page-actions {
 				pointer-events: none;
 				opacity: 0;
-				transform: translate3d( 0, var( --header-size ), 0 );
+				transform: translate3d( 0, var( --header-offset-block-end ), 0 );
 			}
 
 			&.citizen-sticky-header-visible {

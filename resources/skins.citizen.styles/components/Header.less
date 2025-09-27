@@ -1,19 +1,24 @@
 .citizen-header {
 	--header-icon-size: ~'calc( var( --header-button-size ) / 2 )';
 	--header-button-size: ~'calc( var( --header-size ) - var(  --space-xs ) * 2 )';
-	--header-direction: row;
 	position: fixed;
-	right: 0;
-	bottom: 0;
-	left: 0;
+	top: var( --header-inset-block-start );
+	right: var( --header-inset-inline-end );
+	bottom: var( --header-inset-block-end );
+	left: var( --header-inset-inline-start );
 	z-index: @z-index-fixed;
 	display: flex;
 	flex-direction: var( --header-direction );
 	gap: var( --space-xxs );
 	padding: ~'var( --space-xs ) max( env( safe-area-inset-right ), var( --space-xs ) ) max( env( safe-area-inset-bottom ), var( --space-xs ) ) max( env( safe-area-inset-left ), var( --space-xs ) )';
 	background-color: var( --color-surface-0 );
-	border: 0 solid var( --border-color-base );
-	border-top-width: var( --border-width-base );
+	border-color: var( --border-color-base );
+	border-style: solid;
+	border-width: 0;
+	border-block-start-width: var( --header-border-block-start-width );
+	border-block-end-width: var( --header-border-block-end-width );
+	border-inline-start-width: var( --header-border-inline-start-width );
+	border-inline-end-width: var( --header-border-inline-end-width );
 
 	&__item {
 		display: flex;
@@ -159,9 +164,12 @@
 
 @media ( min-width: @min-width-breakpoint-desktop ) {
 	.citizen-header {
-		top: 0;
-		right: unset;
-		left: 0;
+		inset-block: var( --header-inset-block-start ) var( --header-inset-block-end );
+		inset-inline: var( --header-inset-inline-start ) var( --header-inset-inline-end );
+		border-block-start-width: var( --header-border-block-start-width );
+		border-block-end-width: var( --header-border-block-end-width );
+		border-inline-start-width: var( --header-border-inline-start-width );
+		border-inline-end-width: var( --header-border-inline-end-width );
 
 		.citizen-header-position-left &__logo,
 		.citizen-header-position-right &__logo {
@@ -169,36 +177,6 @@
 			margin: var( --space-xxs ) 0;
 			border-right: 0;
 			border-bottom-width: var( --border-width-base );
-		}
-
-		.citizen-header-position-left & {
-			--header-direction: column;
-			right: unset;
-			left: 0;
-			border-right-width: var( --border-width-base );
-		}
-
-		.citizen-header-position-right & {
-			--header-direction: column;
-			right: 0;
-			left: unset;
-			border-left-width: var( --border-width-base );
-		}
-
-		.citizen-header-position-top & {
-			top: 0;
-			right: 0;
-			bottom: unset;
-			left: 0;
-			border-bottom-width: var( --border-width-base );
-		}
-
-		.citizen-header-position-bottom & {
-			top: unset;
-			right: 0;
-			bottom: 0;
-			left: 0;
-			border-top-width: var( --border-width-base );
 		}
 	}
 }

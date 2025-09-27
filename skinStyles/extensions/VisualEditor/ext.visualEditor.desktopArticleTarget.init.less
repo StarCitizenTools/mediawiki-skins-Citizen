@@ -9,6 +9,8 @@
 @import '../../../resources/variables.less';
 
 .ve-activated {
+	--header-offset-block-start: calc( var( --header-size-block-start ) + var( --height-sticky-header ) + 48px );
+
 	#citizen-page-header-sticky-sentinel {
 		display: none;
 	}
@@ -47,14 +49,9 @@
 
 .ve-init-mw-desktopArticleTarget-toolbarPlaceholder {
 	&-bar {
+		top: var( --header-size-block-start );
 		border-bottom-color: var( --border-color-base );
 		box-shadow: none;
-
-		@media ( min-width: @min-width-breakpoint-desktop ) {
-			.citizen-header-position-top & {
-				top: var( --header-size );
-			}
-		}
 	}
 }
 
