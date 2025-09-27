@@ -39,21 +39,8 @@
 @media ( min-width: @min-width-breakpoint-desktop ) {
 	.citizen-page-container {
 		// Reserve space for header
-		.citizen-header-position-left & {
-			margin-left: var( --header-size );
-		}
-
-		.citizen-header-position-right & {
-			margin-right: var( --header-size );
-		}
-
-		.citizen-header-position-top & {
-			margin-top: var( --header-size );
-		}
-
-		.citizen-header-position-bottom & {
-			margin-bottom: var( --header-size );
-		}
+		margin-block: var( --header-size-block-start ) var( --header-size-block-end );
+		margin-inline: var( --header-size-inline-start ) var( --header-size-inline-end );
 	}
 
 	.citizen-toc-enabled {

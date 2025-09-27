@@ -155,7 +155,7 @@
 @media ( max-width: ( @max-width-breakpoint-tablet ) ) {
 	.citizen-toc {
 		position: fixed;
-		bottom: ~'calc( var( --header-size ) + max( env( safe-area-inset-bottom ), var( --space-xs ) ) )';
+		bottom: ~'calc( var( --header-size-block-end ) + max( env( safe-area-inset-bottom ), var( --space-xs ) ) )';
 		left: 0;
 		z-index: @z-index-sticky; // Keep ToC above sticky header and page action, but below site header
 		pointer-events: none; // HACK: Make background clickable
@@ -210,23 +210,10 @@
 
 @media ( min-width: @min-width-breakpoint-desktop ) {
 	.citizen-toc {
-		--header-offset: var( --height-sticky-header );
-
-		.citizen-header-position-top & {
-			--header-offset: calc( var( --header-size ) + var( --height-sticky-header ) );
-		}
-
-		.ve-active & {
-			--header-offset: 48px;
-		}
-
-		.citizen-header-position-top.ve-active & {
-			--header-offset: calc( var( --header-size ) + 48px );
-		}
 		position: -webkit-sticky;
 		position: sticky;
-		top: var( --header-offset );
-		max-height: ~'calc( 100vh - var( --header-offset ) )';
+		top: var( --header-offset-block-start );
+		max-height: ~'calc( 100vh - var( --header-offset-block-start ) )';
 		padding: var( --space-xs ) 0;
 		overflow-y: auto;
 		overscroll-behavior: contain;

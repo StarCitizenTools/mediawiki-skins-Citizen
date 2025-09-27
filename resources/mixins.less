@@ -55,14 +55,7 @@
 }
 
 .mixin-citizen-sticky-header-element() {
-	--header-offset: var( --height-sticky-header );
-
-	@media ( min-width: @min-width-breakpoint-desktop ) {
-		.citizen-header-position-top & {
-			--header-offset: calc( var( --header-size ) + var( --height-sticky-header ) );
-		}
-	}
-	top: var( --header-offset ) !important;
+	top: var( --header-offset-block-start ) !important;
 	transition-timing-function: var( --transition-timing-function-ease );
 	transition-duration: var( --transition-duration-medium );
 	transition-property: top;
