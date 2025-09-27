@@ -340,11 +340,11 @@ class SkinCitizen extends SkinMustache {
 
 		// Header position
 		$headerPosition = $config->get( 'CitizenHeaderPosition' );
-		
+
 		if ( !in_array( $headerPosition, [ 'left', 'right', 'top', 'bottom' ] ) ) {
 			$headerPosition = 'left';
 		}
-		
+
 		$this->getOutput()->addHtmlClasses( 'citizen-header-position-' . $headerPosition );
 	}
 }

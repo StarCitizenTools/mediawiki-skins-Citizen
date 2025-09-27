@@ -85,7 +85,7 @@
 		.mixin-citizen-header-card( end );
 		transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-end );
 
-		@media ( min-width: @min-width-breakpoint-desktop ) {			
+		@media ( min-width: @min-width-breakpoint-desktop ) {
 			.citizen-header-position-left & {
 				right: unset;
 				left: 100%;
@@ -101,16 +101,16 @@
 			.citizen-header-position-top & {
 				top: 100%;
 				right: 0;
-				left: unset;
 				bottom: unset;
+				left: unset;
 				transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-start );
 			}
 
 			.citizen-header-position-bottom & {
 				top: unset;
 				right: 0;
-				left: unset;
 				bottom: 100%;
+				left: unset;
 				transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-end );
 			}
 		}
