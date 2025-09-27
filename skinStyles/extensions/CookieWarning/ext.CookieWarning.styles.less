@@ -28,7 +28,15 @@
 
 	@media only screen and ( min-width: @min-width-breakpoint-desktop ) {
 		right: unset;
-		left: var( --header-size );
+		left: 0;
+
+		.citizen-header-position-left & {
+			left: var( --header-size );
+		}
+	}
+
+	.citizen-header-position-bottom & {
+		bottom: var( --header-size );
 	}
 
 	.mw-cookiewarning-text {

@@ -12,7 +12,8 @@
 	gap: var( --space-xxs );
 	padding: ~'var( --space-xs ) max( env( safe-area-inset-right ), var( --space-xs ) ) max( env( safe-area-inset-bottom ), var( --space-xs ) ) max( env( safe-area-inset-left ), var( --space-xs ) )';
 	background-color: var( --color-surface-0 );
-	border-top: var( --border-base );
+	border: 0 solid var( --border-color-base );
+	border-top-width: var( --border-width-base );
 
 	&__item {
 		display: flex;
@@ -69,7 +70,8 @@
 	&__logo {
 		padding: 0 var( --space-xs ) 0 0;
 		margin: 0 var( --space-xxs );
-		border-right: var( --border-subtle );
+		border: 0 solid var( --border-color-subtle );
+		border-right-width: var( --border-width-base );
 
 		img {
 			margin: auto;
@@ -157,18 +159,46 @@
 
 @media ( min-width: @min-width-breakpoint-desktop ) {
 	.citizen-header {
-		--header-direction: column;
 		top: 0;
 		right: unset;
 		left: 0;
-		border-top: 0;
-		border-right: var( --border-base );
-
-		&__logo {
+		
+		.citizen-header-position-left &__logo,
+		.citizen-header-position-right &__logo {
 			padding: 0 0 var( --space-xs ) 0;
 			margin: var( --space-xxs ) 0;
 			border-right: 0;
-			border-bottom: var( --border-subtle );
+			border-bottom-width: var( --border-width-base );
+		}
+
+		.citizen-header-position-left & {
+			--header-direction: column;
+			right: unset;
+			left: 0;
+			border-right-width: var( --border-width-base );
+		}
+
+		.citizen-header-position-right & {
+			--header-direction: column;
+			right: 0;
+			left: unset;
+			border-left-width: var( --border-width-base );
+		}
+
+		.citizen-header-position-top & {
+			top: 0;
+			right: 0;
+			bottom: unset;
+			left: 0;
+			border-bottom-width: var( --border-width-base );
+		}
+
+		.citizen-header-position-bottom & {
+			top: unset;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			border-top-width: var( --border-width-base );
 		}
 	}
 }

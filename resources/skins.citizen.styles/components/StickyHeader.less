@@ -39,7 +39,17 @@
 		transition-property: transform, visibility;
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {
-			margin-left: var( --header-size );
+			.citizen-header-position-left & {
+				margin-left: var( --header-size );
+			}
+
+			.citizen-header-position-right & {
+				margin-right: var( --header-size );
+			}
+			
+			.citizen-header-position-top & {
+				transform: translateY( calc( var( --header-size ) - 100% ) );
+			}
 		}
 	}
 
@@ -168,6 +178,12 @@
 		&-container {
 			visibility: visible;
 			transform: none;
+
+			@media ( min-width: @min-width-breakpoint-desktop ) {
+				.citizen-header-position-top & {
+					transform: translateY( calc( var( --header-size ) + var( --border-width-base ) ) );
+				}
+			}
 		}
 	}
 }

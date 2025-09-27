@@ -3,13 +3,18 @@
 	clear: both;
 	padding: var( --space-xxl ) var( --padding-page );
 	margin-top: 8rem;
-	// Reserve space for header
-	margin-bottom: var( --header-size );
 	contain: content;
 	color: var( --color-subtle );
 	background-color: var( --color-surface-1 );
 	direction: ltr;
 	.mixin-citizen-font-styles( 'small' );
+
+	@media ( max-width: @min-width-breakpoint-desktop ) {
+		.citizen-feature-autohide-navigation-clientpref-0 & {
+			// Reserve space for header, add only if autohide is off to avoid empty space
+			margin-bottom: var( --header-size );
+		}
+	}
 
 	&__container {
 		max-width: var( --width-page );

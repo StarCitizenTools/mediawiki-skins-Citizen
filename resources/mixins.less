@@ -55,7 +55,15 @@
 }
 
 .mixin-citizen-sticky-header-element() {
-	top: var( --height-sticky-header ) !important;
+	--header-offset: var( --height-sticky-header );
+
+	@media ( min-width: @min-width-breakpoint-desktop ) {
+		.citizen-header-position-top & {
+			--header-offset: calc( var( --header-size ) + var( --height-sticky-header ) );
+		}
+	}
+
+	top: var( --header-offset ) !important;
 	transition-timing-function: var( --transition-timing-function-ease );
 	transition-duration: var( --transition-duration-medium );
 	transition-property: top;
