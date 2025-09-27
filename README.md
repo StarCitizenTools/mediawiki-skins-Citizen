@@ -54,6 +54,7 @@ Name | Description | Values | Default
 `$wgCitizenEnablePreferences` | Enable the preferences menu | `true` - enable; `false` - disable | `true`
 `$wgCitizenOverflowInheritedClasses` | Defines css classes inherited by the overflow wrapper | List of css classes. Extend with `$wgCitizenOverflowInheritedClasses[] = 'my_class';` | `["floatleft", "floatright" ]`
 `$wgCitizenOverflowNowrapClasses` | Defines css classes ignored by the overflow wrapper | List of css classes. Extend with `$wgCitizenOverflowNowrapClasses[] = 'my_class';` | `["citizen-table-nowrap", "diff", "mw-changeslist-line", "mw-recentchanges-table", "infobox", "cargoDynamicTable", "dataTable", "srf-datatable", "smw-datatable", "mw-capiunto-infobox" ]`
+`$wgCitizenHeaderPosition` | Position of the header on the desktop layout | `left`, `right`, `top`, `bottom` | `left`
 
 ### Command palette
 Name | Description | Values | Default
