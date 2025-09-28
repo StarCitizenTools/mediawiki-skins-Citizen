@@ -4,6 +4,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Components;
 
+use MediaWiki\Config\Config;
 use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\Skin\SkinComponentUtils;
 use MessageLocalizer;
@@ -14,6 +15,7 @@ use MessageLocalizer;
 class CitizenComponentSearchBox implements CitizenComponent {
 
 	public function __construct(
+		private Config $config,
 		private MessageLocalizer $localizer,
 		private ExtensionRegistry $extensionRegistry,
 		private array $searchBoxData
@@ -59,7 +61,8 @@ class CitizenComponentSearchBox implements CitizenComponent {
 			'array-keyboard-hint' => $this->getKeyboardHintData(),
 			'msg-citizen-search-footer' => $this->getFooterMessage(),
 			'msg-citizen-search-toggle-shortcut' => '[/]',
-			'html-random-href' => SkinComponentUtils::makeSpecialUrl( 'Randompage' )
+			'html-random-href' => SkinComponentUtils::makeSpecialUrl( 'Randompage' ),
+			'id-controls' => $this->config->get( 'CitizenEnableCommandPalette' ) ? false : 'citizen-search__card',
 		];
 		return $searchBoxData;
 	}

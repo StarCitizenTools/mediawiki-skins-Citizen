@@ -168,6 +168,7 @@ class SkinCitizen extends SkinMustache {
 				$parentData['data-portlets']['data-variants'] ?? []
 			),
 			'data-search-box' => new CitizenComponentSearchBox(
+				$config,
 				$localizer,
 				$this->extensionRegistry,
 				$parentData['data-search-box']
