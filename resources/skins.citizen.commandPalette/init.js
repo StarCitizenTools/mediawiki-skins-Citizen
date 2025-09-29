@@ -36,13 +36,20 @@ function initApp() {
  */
 function registerButton( commandPalette ) {
 	const details = document.getElementById( 'citizen-search-details' );
-	// Remove the search card from the DOM so it won't be triggered by the button
-	document.getElementById( 'citizen-search__card' )?.remove();
+	removeSearchCard();
 
 	details.open = false;
 	details.addEventListener( 'click', () => {
 		commandPalette.open();
 	} );
+}
+
+function removeSearchCard() {
+	// Remove the search card from the DOM so it won't be triggered by the button
+	document.getElementById( 'citizen-search__card' )?.remove();
+
+	// Remove aria-details since citizen-search__card no longer exists
+	document.getElementById( 'citizen-search-summary' )?.removeAttribute( 'aria-details' );
 }
 
 initApp();
