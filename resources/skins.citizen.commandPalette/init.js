@@ -49,7 +49,7 @@ function removeSearchCard() {
 	document.getElementById( 'citizen-search__card' )?.remove();
 
 	// Remove aria-details since citizen-search__card no longer exists
-	document.getElementById( 'citizen-search-summary' ).removeAttribute( 'aria-details' );
+	document.getElementById( 'citizen-search-summary' )?.removeAttribute( 'aria-details' );
 }
 
 initApp();
