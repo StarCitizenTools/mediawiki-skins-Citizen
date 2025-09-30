@@ -17,17 +17,4 @@ function loadClientPreferences() {
 	}
 }
 
-/**
- * Set up the listen for preferences button
- *
- * @return {void}
- */
-function listenForButtonClick() {
-	const details = document.getElementById( 'citizen-preferences-details' );
-	if ( !details ) {
-		return;
-	}
-	details.addEventListener( 'click', loadClientPreferences, { once: true } );
-}
-
-listenForButtonClick();
+loadClientPreferences();

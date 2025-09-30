@@ -71,10 +71,12 @@ function initBodyContent( bodyContent ) {
  * @return {void}
  */
 function initPreferences() {
-	document.getElementById( 'citizen-preferences-details' ).addEventListener( 'toggle',
-		mw.loader.load( 'skins.citizen.preferences' ),
-		{ once: true }
-	);
+	document.getElementById( 'citizen-preferences-details' ).addEventListener( 'toggle', () => {
+		mw.loader.load( 'skins.citizen.preferences' );
+	},
+	{
+		once: true
+	} );
 }
 
 /**
