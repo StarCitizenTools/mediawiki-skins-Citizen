@@ -1,7 +1,7 @@
 {
 	"name": "starcitizentools/citizen-skin",
 	"type": "mediawiki-skin",
-	"description": "A responsive skin developed for the Star Citizen Wiki",
+	"description": "A beautiful, usable, responsive MediaWiki skin with in-depth extension support. Originally developed for the Star Citizen Wiki.",
 	"keywords": [
 		"wiki",
 		"MediaWiki",
