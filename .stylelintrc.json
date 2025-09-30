@@ -21,7 +21,7 @@
 		"plugin/use-baseline": [
 			true,
 			{
-				"available": "2024",
+				"available": "newly",
 				"ignoreSelectors": [
 					"nesting"
 				]

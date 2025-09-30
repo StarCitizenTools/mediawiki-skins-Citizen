@@ -15,11 +15,8 @@
 
 .mixin-citizen-frosted-glass( @surface: 1 ) {
 	.mixin-citizen-opaque-background( @surface );
-
-	@supports ( backdrop-filter: blur( 16px ) ) or ( -webkit-backdrop-filter: blur( 16px ) ) {
-		-webkit-backdrop-filter: var( --backdrop-filter-frosted-glass );
-		backdrop-filter: var( --backdrop-filter-frosted-glass );
-	}
+	-webkit-backdrop-filter: var( --backdrop-filter-frosted-glass );
+	backdrop-filter: var( --backdrop-filter-frosted-glass );
 }
 
 // Header card popups
