@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.7.0...v3.8.0) (2025-10-06)
+
+
+### Features
+
+* **core:** ✨ make site header position configurable ([ff2f22a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ff2f22a2eae006ddb9430e233f27c41ebef23fd6))
+* **header:** ✨ use CSS variables to define header behavior ([5b611c5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5b611c51ba4f7fecfaf1c9d50b878bffe1fb1bec))
+* **header:** ✨ use padding instead of margin for page container ([41a472f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/41a472f033559b0cd476289c95e3f631ae480173))
+* **pref:** ✨ add performance mode client preferences ([0a01979](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0a01979c83ee93ee5a370f2442e2261f07e9f566)), closes [#1151](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1151)
+* **pref:** ✨ apply performance mode if it is not set and GPU accel is not avaliable ([22ae76f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/22ae76fd4dd8898e49b49322e75560a8de3962bb))
+
+
+### Bug Fixes
+
+* **CodeMirror:** 🐛 fix the misaligned CodeMirror v6 overlay on VE ([#1139](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1139)) ([555babe](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/555babebd3c6311ac835bcdaaa683a77fd8080e9))
+* **commandPalette:** 🐛 use page.key for id ([bbd9e1d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bbd9e1d92ef893d4ab578520e3e396a18b623e97))
+* **debugToolbar:** 🐛 fix ToC button above the debug toolbar ([ada6352](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ada6352baf7488df605967761b130207b6b8d39c))
+* **overflow:** 🐛 add inline margin to prevent clipping borders ([68325a0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/68325a0dbc9650b82511e93a69d0a88f6665e5f6))
+* **prefs:** 🐛 fix incorrect opacity and backdrop filter for performance mode in dark mode ([f8c3cf9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f8c3cf913289aee8a99acd9c534de227e2c5e281))
+* **search:** 🐛 fix double escaping in legacy search box ([#1135](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1135)) ([abbee1d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/abbee1d8e33428ff96fce646e75ee4be862859a0))
+* **search:** 🐛 remove aria-details if using command palette ([3fda30f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3fda30ff49176da05a301fc54316eb68d89ca265))
+* **sidebar:** add icon to special pages link in sidebar for MW 1.44+ ([05a4fbe](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/05a4fbe696f1019a87de623572c85a3228c2618e))
+* **SyntaxHighlight:** 🐛 remove background color that exceeds the border ([#1145](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1145)) ([3c083f0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3c083f00437f6d11f23c99505130fd32c6b69c10))
+* **tokens:** 🐛 include unit in CSS variables with zero as value ([77d7c09](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/77d7c09c6480d07eba0ea774c2712357b2060132)), closes [#1152](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1152)
+
+
+### Performance Improvements
+
+* **preferences:** ⚡️ only load preferences module when preference button is clicked ([9fe31f4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9fe31f4c9a039cdf07dda5377807e3ca301d4e8c))
+
+
+### Miscellaneous Chores
+
+* **composer:** 🔧 sync package description ([6e0cb50](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6e0cb505cb1a5d5cc9df80893f96c4604414f7cc))
+* **deps-dev:** 🔗 pin ESLint to 8.57.0 ([e7c8264](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e7c8264c850f368138a918b0025d01dd5e5ce8fc))
+
 ## [3.7.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.6.0...v3.7.0) (2025-09-22)
 
 
