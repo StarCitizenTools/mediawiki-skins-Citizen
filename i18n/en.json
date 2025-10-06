@@ -66,6 +66,10 @@
 	"citizen-feature-autohide-navigation-0-label": "Off",
 	"citizen-feature-autohide-navigation-1-label": "On",
 
+	"citizen-feature-performance-mode-name": "Performance mode",
+	"citizen-feature-performance-mode-0-label": "Off",
+	"citizen-feature-performance-mode-1-label": "On",
+
 	"citizen-feature-pure-black-name": "Pure black mode",
 	"citizen-feature-pure-black-0-label": "Off",
 	"citizen-feature-pure-black-1-label": "On",

@@ -18,5 +18,9 @@
 	"citizen-feature-autohide-navigation": {
 		"options": [ "0", "1" ],
 		"preferenceKey": "citizen-autohide-navigation"
+	},
+	"citizen-feature-performance-mode": {
+		"options": [ "0", "1" ],
+		"preferenceKey": "citizen-performance-mode"
 	}
 }
