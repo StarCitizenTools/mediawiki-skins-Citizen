@@ -104,11 +104,14 @@ function initPerformanceMode() {
 		}
 	} );
 
-	if ( hasGpu ) {
-		document.documentElement.classList.remove( prefName + '1' );
-		document.documentElement.classList.add( prefName + '0' );
-		localStorage.setItem( 'mwclientpreferences', clientPrefs ? `${ clientPrefs },${ prefName }0` : `${ prefName }0` );
+	if ( !hasGpu ) {
+		// Performance mode ON is default, so we don't need to do anything
+		return;
 	}
+
+	document.documentElement.classList.remove( prefName + '1' );
+	document.documentElement.classList.add( prefName + '0' );
+	localStorage.setItem( 'mwclientpreferences', clientPrefs ? `${ clientPrefs },${ prefName }0` : `${ prefName }0` );
 }
 
 /**
