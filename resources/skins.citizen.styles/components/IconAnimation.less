@@ -8,11 +8,21 @@ summary ) {
 	.citizen-ui-icon {
 		transition: var( --transition-hover );
 		transition-property: transform;
+
+		&.mw-ui-icon-wikimedia-configure {
+			// HACK: Manually rotate the configure icon to create an illusion
+			// that the sliders are being moved.
+			transition: none;
+		}
 	}
 
 	@media ( hover: hover ) {
 		&:hover {
 			.citizen-ui-icon {
+				&.mw-ui-icon-wikimedia-configure {
+					transform: rotate( 180deg );
+				}
+
 				// Move pen to the right like drawing a line
 				// TODO: Perhaps we can add a line somehow through CSS
 				&.mw-ui-icon-wikimedia-edit {
