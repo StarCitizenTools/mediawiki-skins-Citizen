@@ -51,6 +51,8 @@
 	"citizen-tagline-ns-help": "Pagina d'aiuto",
 	"citizen-tagline-ns-category": "Pagina delle categorie",
 	"citizen-tagline-user-regdate": "Iscritto $1",
+	"citizen-feature-performance-mode-0-label": "Disattivato",
+	"citizen-feature-performance-mode-1-label": "Attivo",
 	"citizen-user-info-text-anon": "Il tuo indirizzo IP sarà visibile pubblicamente se effettuerai modifiche.",
 	"citizen-user-info-text-temp": "Questa utenza temporanea è stata creata dopo che è stata apportata una modifica senza un'utenza su questo browser e dispositivo.",
 	"citizen-user-info-edits-label": "Modifiche",
