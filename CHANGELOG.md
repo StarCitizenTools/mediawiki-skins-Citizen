@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.9.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.8.0...v3.9.0) (2025-10-10)
+
+
+### Features
+
+* **icon:** ✨ add microinteraction for configure icon ([8f55d2d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8f55d2df3cebf82934774d8aa2b89f6fbb19ee35))
+
+
+### Bug Fixes
+
+* **menu:** 🐛 language card goes off-screen when page title is too long ([70181e4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/70181e49ffb72dda5141637ee6efcac8c0c3e117))
+
 ## [3.8.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.7.0...v3.8.0) (2025-10-06)
 
 
