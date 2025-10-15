@@ -37,3 +37,8 @@
 @color-link-external: var( --color-link );
 @color-link-external--visited: var( --color-link );
 @color-link-external--active: var( --color-link--active );
+// work around the limitations of `min-` and `max-` prefixes and viewports with fractional widths.
+// see https://github.com/twbs/bootstrap/blob/8f3d0580a36d3eba2a9f90d90ceaf6e50f452365/scss/mixins/_breakpoints.scss#L43 for why `- 0.02px` is used.
+@max-width-breakpoint-mobile: ( @min-width-breakpoint-tablet - 0.02px );
+@max-width-breakpoint-tablet: ( @min-width-breakpoint-desktop - 0.02px );
+@max-width-breakpoint-desktop: ( @min-width-breakpoint-desktop-wide - 0.02px );
