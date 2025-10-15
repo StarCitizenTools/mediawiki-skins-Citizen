@@ -126,14 +126,14 @@ function bindOpenOnSlash( window, details ) {
 	const onExpandOnSlash = ( /** @type {KeyboardEvent} */ event ) => {
 		const isKeyPressed = () => {
 			// "/" key is standard on many sites
-			if ( event.key === '/' ) {
+			if ( event.code === 'Slash' || event.key === '/' ) {
 				return true;
 			// "Ctrl" + "K" (or "Command" + "K" on Mac)
-			} else if ( ( event.ctrlKey || event.metaKey ) && event.key.toLowerCase() === 'k' ) {
+			} else if ( ( event.ctrlKey || event.metaKey ) && ( event.code === 'KeyK' || event.key.toLowerCase() === 'k' ) ) {
 				return true;
 			// "Alt" + "Shift" + "F" is the MW standard key
 			// Shift key might makes F key goes capital, so we need to make it lowercase
-			} else if ( event.altKey && event.shiftKey && event.key.toLowerCase() === 'f' ) {
+			} else if ( event.altKey && event.shiftKey && ( event.code === 'KeyF' || event.key.toLowerCase() === 'f' ) ) {
 				return true;
 			} else {
 				return false;
