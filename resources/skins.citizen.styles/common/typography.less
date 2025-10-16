@@ -55,16 +55,20 @@ figcaption {
 }
 
 em {
-	// Languages that do not use italics for emphasis
-	// References:
-	// zh: https://www.w3.org/TR/2025/DNOTE-clreq-20251008/#id84
-	// ja: https://www.w3.org/TR/2020/NOTE-jlreq-20200811/#composition_of_emphasis_dots
-	// mn: https://www.w3.org/TR/2025/DNOTE-mlreq-20250710/#h_emphasis
-	// ko: emphasis not mentioned in klreq, further investigation needed
+	/**
+	 * Languages that do not use italics for emphasis
+	 *
+	 * References:
+	 * - zh: {@link https://www.w3.org/TR/2025/DNOTE-clreq-20251008/#id84}
+	 * - ja: {@link https://www.w3.org/TR/2020/NOTE-jlreq-20200811/#composition_of_emphasis_dots}
+	 * - mn: {@link https://www.w3.org/TR/2025/DNOTE-mlreq-20250710/#h_emphasis}
+	 * - ko: emphasis not mentioned in klreq, further investigation needed
+	 *
+	 * We assume that `mn` without `-Mong` is written in Cyrillic, namely `mn-Cyrl`
+	 */
 	&:lang( zh ),
 	&:lang( ja ),
 	&:lang( ko ),
-	// We assume that `mn` without `-Mong` is written in Cyrillic, namely `mn-Cyrl`
 	&:lang( mn-Mong ) {
 		font-style: normal;
 	}
@@ -86,7 +90,7 @@ em {
 
 	&:lang( mn-Mong ) {
 		// For vertical text, wavy line should appear on the right side
-		// but we are unable to implement this
+		// but we are unable to implement that
 		text-decoration: underline wavy;
 	}
 }
