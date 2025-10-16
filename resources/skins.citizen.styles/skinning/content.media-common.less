@@ -9,9 +9,7 @@
 
 @import '../../mixins.less';
 
-/**
- * Block media items
- */
+// Block media items
 figure[ typeof~='mw:File' ],
 figure[ typeof~='mw:File/Frameless' ],
 figure[ typeof~='mw:File/Thumb' ],
@@ -29,9 +27,8 @@ figure[ typeof~='mw:File/Frame' ] {
 
 figure[ typeof~='mw:File' ],
 figure[ typeof~='mw:File/Frameless' ] {
-	/* Hide the caption for frameless and plain floated images */
 	> figcaption {
-		display: none;
+		display: none; // Hide the caption for frameless and plain floated images
 	}
 }
 
@@ -44,13 +41,10 @@ figure[ typeof~='mw:File/Frame' ] {
 
 	> a:first-child,
 	> span:first-child {
-		/**
-		 * Broken media get a span instead.
-		 */
+		// Broken media get a span instead
 		span.mw-broken-media {
 			display: inline-block;
-			/* This is hardcoded in Linker::makeThumbLink2 for broken media */
-			width: 180px;
+			width: 180px; // This is hardcoded in Linker::makeThumbLink2 for broken media
 			overflow-wrap: break-word;
 		}
 	}
@@ -67,10 +61,8 @@ figure[ typeof~='mw:File/Frame' ] {
 	}
 }
 
-/**
- * Inline media items
- * img is needed for 1.39 compat, change to .mw-file-element later
- */
+// Inline media items
+// img is needed for 1.39 compat, change to .mw-file-element later
 .mw-valign-middle img {
 	vertical-align: middle;
 }

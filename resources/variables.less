@@ -11,28 +11,25 @@
  *
 */
 
-/* Imports */
-/*
- * MediaWiki mixins
- * @see https://github.com/wikimedia/mediawiki/blob/master/resources/src/mediawiki.less/mediawiki.mixins.less
- */
+// Imports
+
+// MediaWiki mixins
+// @see https://github.com/wikimedia/mediawiki/blob/master/resources/src/mediawiki.less/mediawiki.mixins.less
 @import 'mediawiki.mixins';
-/*
- * MediaWiki skin variables
- * mediawiki.less/mediawiki.skin.variables.less
- * @see https://github.com/wikimedia/mediawiki/blob/master/resources/src/mediawiki.less/mediawiki.skin.defaults.less
- */
+
+// MediaWiki skin variables
+// mediawiki.less/mediawiki.skin.variables.less
+// @see https://github.com/wikimedia/mediawiki/blob/master/resources/src/mediawiki.less/mediawiki.skin.defaults.less
 @import 'mediawiki.skin.variables.less';
 
-/* == Spacing == */
+// Spacing
 @space-unit: 1rem;
 
-/* == Fonts == */
-/*
- * --font-family-citizen-base-xx are default fonts prioritized by Citizen.
- * --font-family-language-xx are language-specific fonts from language RL module.
- * It is empty by default but populated by Citizen language modules such as the CJK one.
- */
+// Fonts
+// --font-family-citizen-base-xx are default fonts prioritized by Citizen.
+// --font-family-language-xx are language-specific fonts from language RL module.
+// It is empty by default but populated by Citizen language modules such as the CJK one.
+
 // Citizen sans-serif fonts
 @font-family-base: var( --font-family-citizen-base ), var( --font-family-language-base ), system-ui, -apple-system, sans-serif;
 // Citizen serif fonts
@@ -40,13 +37,11 @@
 // Citizen monospace fonts
 @font-family-monospace: var( --font-family-citizen-monospace ), var( --font-family-language-monospace ), 'Menlo', 'Consolas', 'Liberation Mono', 'Fira Code', 'Courier New', monospace;
 
-/* == Colors == */
+// Colors
 
-/*
- * Syntax highlight colors
- * Based on Material Theme Lighter
- * https://material-theme.site
-*/
+// Syntax highlight colors
+// Based on Material Theme Lighter
+// https://material-theme.site
 @color-syntax-red: #e53935;
 @color-syntax-orange: #f76d47;
 @color-syntax-yellow: #e2931d;
@@ -60,11 +55,9 @@
 @color-syntax-violet: #945eb8;
 @color-syntax-grey: #90a4ae;
 
-/*
- * Syntax highlight colors
- * Based on Material Theme Palenight
- * https://material-theme.site
-*/
+// Syntax highlight colors
+// Based on Material Theme Palenight
+// https://material-theme.site
 @color-syntax-red-dark: #f07178;
 @color-syntax-orange-dark: #f78c6c;
 @color-syntax-yellow-dark: #ffcb6b;
@@ -78,8 +71,8 @@
 @color-syntax-violet-dark: #bb80b3;
 @color-syntax-grey-dark: #676E95;
 
-/* == Box model properties == */
-/* `--*size` variables are used for `*width` & `*height` properties. */
+// Box model properties
+// `--*size` variables are used for `*width` & `*height` properties.
 @size-icon:		1.25rem;
 // Not in the header section it is also used outside of header
 @header-size:	3.5rem;
@@ -89,20 +82,17 @@
 // TODO: Revise this number, fixed value isn't great but we need it for b
 @width-toc: 240px;
 
-/* Paddings */
+// Paddings
 @padding-page:	16px;
 
-/* Transitions */
+// Transitions
 @transition-hover: var( --transition-duration-base ) var( --transition-timing-function-ease );
 @transition-menu: var( --transition-duration-medium ) var( --transition-timing-function-ease-out );
 
-/*
- * Legacy colors
- *
- * They are used by the SMW skinstyles and a few MW UI stuff.
- * Those styles should be updated to the new standard.
- * After that we can remove all theses LESS variables.
-*/
+// Legacy colors
+// They are used by the SMW skinstyles and a few MW UI stuff.
+// Those styles should be updated to the new standard.
+// After that we can remove all theses LESS variables.
 @dark-bg-10: #1d2129;
 @dark-bg-20: #22262d;
 @dark-bg-30: #24272f;

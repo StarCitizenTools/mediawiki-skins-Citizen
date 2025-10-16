@@ -12,12 +12,12 @@
 	--delta-lightness-active-state: calc( var( --delta-lightness-state-base ) * -1 );
 	--delta-lightness-surface-base: -2%;
 
-	/* Progressive color */
+	// Progressive color
 	--color-progressive-oklch__l: 53.25%;
 	--color-progressive-oklch__c: 0.1679;
 	--color-progressive-oklch__h: 262.29;
 
-	/* Surface color */
+	// Surface color
 	--color-surface-0-oklch__l: 96%;
 	--color-surface-0-oklch__c: 0.01;
 	--color-surface-1-oklch__l: calc( var( --color-surface-0-oklch__l ) + var( --delta-lightness-surface-base ) );
@@ -39,7 +39,7 @@
 	--color-surface-3: ~'oklch( var( --color-surface-3-oklch__l ) var( --color-surface-3-oklch__c ) var( --color-progressive-oklch__h ) )';
 	--color-surface-4: ~'oklch( var( --color-surface-4-oklch__l ) var( --color-surface-4-oklch__c ) var( --color-progressive-oklch__h ) )';
 
-	/* Text color */
+	// Text color
 	--color-emphasized-oklch__l: 5%;
 	--color-emphasized-oklch__c: 0.07;
 	--color-base-oklch__l: 20%;
@@ -51,7 +51,7 @@
 	--color-disabled-oklch__l: 60%;
 	--color-disabled-oklch__c: 0.05;
 
-	/* State color */
+	// State color
 	--color-inverted-primary: #fff;
 	--color-destructive__h: 340;
 	--color-destructive__l: 40%;
@@ -62,17 +62,17 @@
 	--background-color-subtle__s: 95%;
 	--background-color-subtle__l: 95%;
 
-	/* Icon color */
+	// Icon color
 	--background-color-icon: ~'rgba( 0, 0, 0, var( --opacity-icon-base ) )';
 	--background-color-icon--hover: ~'rgba( 0, 0, 0, var( --opacity-icon-base--hover ) )';
 	--background-color-icon--active: ~'rgba( 0, 0, 0, var( --opacity-icon-base--active ) )';
 
-	/* Link color */
+	// Link color
 	--color-link: var( --color-progressive );
 	--color-link--hover: var( --color-progressive--hover );
 	--color-link--active: var( --color-progressive--active );
 
-	/* Syntax highlight color */
+	// Syntax highlight color
 	--color-syntax-red: @color-syntax-red;
 	--color-syntax-orange: @color-syntax-orange;
 	--color-syntax-yellow: @color-syntax-yellow;
@@ -86,20 +86,20 @@
 	--color-syntax-violet: @color-syntax-violet;
 	--color-syntax-grey: @color-syntax-grey;
 
-	/* Backdrop */
+	// Backdrop
 	--backdrop-filter-frosted-glass: ~'blur( 16px ) saturate( 140% )';
 	--backdrop-opacity: 0.65;
 
-	/* Filter */
+	// Filter
 	--filter-invert: none;
 	--filter-invert-primary: invert( 1 ) hue-rotate( 180deg );
 
 	--opacity-glass: 0.9;
 
-	/* Font */
+	// Font
 	--font-grade: 25;
 
-	/* Shadow */
+	// Shadow
 	--shadow-color-oklch__l: 12%;
 	--shadow-color-oklch__c: 0.01;
 	--shadow-color-hsl__s: 10%;
@@ -107,10 +107,8 @@
 	--shadow-opacity: 0.03;
 	color-scheme: light;
 
-	/**
-	 * Fallback for browsers that do not support OKLCH
-	 * TODO: Remove this once OKLCH is supported in all browsers
-	 */
+	// Fallback for browsers that do not support OKLCH
+	// TODO: Remove this once OKLCH is supported in all browsers
 	--color-progressive-hsl__h: 220;
 	--color-progressive-hsl__s: 60%;
 	--color-progressive-hsl__l: 50%;

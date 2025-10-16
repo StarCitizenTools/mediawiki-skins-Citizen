@@ -10,17 +10,17 @@
 :root {
 	.theme-base();
 
-	/* Border */
+	// Border
 	--border-radius-medium: calc( var( --border-radius-base ) * 2 );
 	--border-radius-large: calc( var( --border-radius-base ) * 3 );
 
-	/* Box shadow */
+	// Box shadow
 	--box-shadow-border: var( --border-color-base ) 0 0 0 1px;
 
-	/* Filter */
+	// Filter
 	--filter-invert-fixed: invert( 1 ) hue-rotate( 180deg );
 
-	/* Font */
+	// Font
 	--font-family-citizen-base: 'Roboto', 'Roboto-fallback';
 	--font-family-citizen-serif: 'Roboto Serif', 'Roboto Serif-fallback';
 	--font-family-citizen-monospace: 'Roboto Mono', 'Roboto Mono-fallback';
@@ -28,9 +28,9 @@
 	--font-family-language-serif: '';
 	--font-family-language-monospace: '';
 
-	/* Size */
-	/* TODO: Need to standardize the naming convention */
-	/* TODO: Perhaps move some of these into a scoped element? */
+	// Size
+	// TODO: Need to standardize the naming convention
+	// TODO: Perhaps move some of these into a scoped element?
 	--size-icon: @size-icon;
 	// Height of the bottom toolbar used by page tools and ToC toggle
 	--toolbar-size: 2.5rem;
@@ -57,7 +57,7 @@
 	// This is set in px to enforce safe area on a page
 	--padding-page: @padding-page;
 
-	/* Spacing */
+	// Spacing
 	--space-unit: @space-unit;
 	--space-xxs: calc( 0.25 * var( --space-unit ) );
 	--space-xs: calc( 0.5 * var( --space-unit ) );
@@ -67,23 +67,19 @@
 	--space-xl: calc( 1.5 * var( --space-unit ) );
 	--space-xxl: calc( 2 * var( --space-unit ) );
 
-	/* Transition */
+	// Transition
 	--transition-delay-menu: 100ms;
-	/* @see https://www.joshwcomeau.com/animation/css-transitions/#custom-curves-7 */
+	// @see https://www.joshwcomeau.com/animation/css-transitions/#custom-curves-7
 	--transition-timing-function-ease: cubic-bezier( 0.44, 0.21, 0, 1 );
 	--transition-timing-function-ease-in: cubic-bezier( 0.75, 0, 1, 1 );
 	--transition-timing-function-ease-out: cubic-bezier( 0.215, 0.61, 0.355, 1 );
 
-	/* Transform */
-	/**
-	* Add affordance to thumbnails to replace magnify icon
-	* On hover, enlarge the image to inform the user that a full-size image will be shown (to MMV or file page)
-	*/
+	// Transform
+	// Add affordance to thumbnails to replace magnify icon
+	// On hover, enlarge the image to inform the user that a full-size image will be shown (to MMV or file page)
 	--transform-image-hover: scale( 1.1 );
 
-	/**
-	 * Codex Design Tokens but not included as CSS variables
-	 */
+	// Codex Design Tokens but not included as CSS variables
 	--border-base: var( --border-width-base ) solid var( --border-color-base );
 	--border-subtle: var( --border-width-base ) solid var( --border-color-subtle );
 	--border-width-base: 1px;
@@ -127,9 +123,9 @@
 		--font-weight-normal: 300;
 	}
 
-	/* Header position tokens */
-	/* Unit is required for calc() functions */
-	/* stylelint-disable length-zero-no-unit */
+	// Header position tokens
+	// Unit is required for calc() functions
+	// stylelint-disable length-zero-no-unit
 	--header-direction: row;
 	--header-size-inline-start: 0px;
 	--header-size-inline-end: 0px;
@@ -148,7 +144,7 @@
 	--header-offset-block-start: calc( var( --header-size-block-start ) + var( --height-sticky-header ) );
 	--header-offset-block-end: var( --header-size-block-end );
 
-	/* Always default to bottom in mobile for now */
+	// Always default to bottom in mobile for now
 	@media ( max-width: @max-width-breakpoint-tablet ) {
 		--header-direction: row;
 		--header-inset-inline-start: 0px;
@@ -204,11 +200,9 @@
 			}
 		}
 	}
-	/* stylelint-enable length-zero-no-unit */
+	// stylelint-enable length-zero-no-unit
 
-	/**
-	 * Deprecated tokens
-	 */
+	// Deprecated tokens
 	--color-primary__h: var( --color-progressive-hsl__h );
 	--color-primary__s: var( --color-progressive-hsl__s );
 	--color-primary__l: var( --color-progressive-hsl__l );
@@ -223,7 +217,7 @@
 
 // TODO: Update with implementation on T376559 when it is finalized
 .citizen-animations-ready {
-	/* Only apply transition when page is ready for it */
+	// Only apply transition when page is ready for it
 	--transition-hover: @transition-hover;
 	--transition-menu: @transition-menu;
 	--transition-duration-base: 100ms;

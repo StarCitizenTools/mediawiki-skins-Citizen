@@ -3,7 +3,7 @@
 	gap: var( --space-xs );
 	align-items: center;
 
-	/* Should have a keyboard */
+	// Should have a keyboard
 	@media ( hover: hover ) and ( pointer: fine ) {
 		display: flex;
 	}
@@ -16,20 +16,18 @@
 		font-family: var( --font-family-base );
 		font-weight: var( --font-weight-medium );
 		color: var( --color-subtle );
-		/* stylelint-disable-next-line declaration-property-value-disallowed-list */
+		// stylelint-disable-next-line declaration-property-value-disallowed-list
 		text-transform: capitalize;
 	}
 }
 
-/* Align keyhint to the right */
+// Align keyhint to the right
 .citizen-menu .mw-list-item .citizen-keyboard-hint-key {
 	margin-left: auto;
 }
 
-/*
- * Hide key hint in main menu for now
- * It has some wrapping issue with long label text
- */
+// Hide key hint in main menu for now
+// It has some wrapping issue with long label text
 #p-navigation .citizen-keyboard-hint-key {
 	display: none;
 }

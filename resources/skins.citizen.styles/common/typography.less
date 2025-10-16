@@ -3,12 +3,10 @@ body {
 	font-family: var( --font-family-base );
 	font-variation-settings: 'GRAD' var( --font-grade );
 	font-weight: var( --font-weight-normal );
-	/*
-	 * TODO: Revisit this when italic VF is better supported
-	 * Don't let browser faux font styles and weight
-	 * 1. We are already using VF
-	 * 2. Not all font styles apply to some languages (e.g. Italic is different in ZH)
-	 */
+	// TODO: Revisit this when italic VF is better supported
+	// Don't let browser faux font styles and weight
+	// 1. We are already using VF
+	// 2. Not all font styles apply to some languages (e.g. Italic is different in ZH)
 	// font-synthesis: none;
 }
 
@@ -55,17 +53,15 @@ figcaption {
 }
 
 em {
-	/**
-	 * Languages that do not use italics for emphasis
-	 *
-	 * References:
-	 * - zh: {@link https://www.w3.org/TR/2025/DNOTE-clreq-20251008/#id84}
-	 * - ja: {@link https://www.w3.org/TR/2020/NOTE-jlreq-20200811/#composition_of_emphasis_dots}
-	 * - mn: {@link https://www.w3.org/TR/2025/DNOTE-mlreq-20250710/#h_emphasis}
-	 * - ko: emphasis not mentioned in klreq, further investigation needed
-	 *
-	 * We assume that `mn` without `-Mong` is written in Cyrillic, namely `mn-Cyrl`
-	 */
+	// Languages that do not use italics for emphasis
+	//
+	// References:
+	// - zh: {@link https://www.w3.org/TR/2025/DNOTE-clreq-20251008/#id84}
+	// - ja: {@link https://www.w3.org/TR/2020/NOTE-jlreq-20200811/#composition_of_emphasis_dots}
+	// - mn: {@link https://www.w3.org/TR/2025/DNOTE-mlreq-20250710/#h_emphasis}
+	// - ko: emphasis not mentioned in klreq, further investigation needed
+	//
+	// We assume that `mn` without `-Mong` is written in Cyrillic, namely `mn-Cyrl`
 	&:lang( zh ),
 	&:lang( ja ),
 	&:lang( ko ),
@@ -99,7 +95,7 @@ em {
 	font-size: var( --font-size-medium );
 	line-height: var( --line-height-content );
 
-	/* CJK languages need increased line-height for readability */
+	// CJK languages need increased line-height for readability
 	&:lang( ja ),
 	&:lang( ko ),
 	&:lang( zh ) {
@@ -107,9 +103,7 @@ em {
 	}
 }
 
-/*
- * Utility classes
- */
+// Utility classes
 .citizen-text-heading-1 {
 	.mixin-citizen-font-styles( 'heading-1' );
 }
