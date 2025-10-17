@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.9.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.8.0...v3.9.0) (2025-10-17)
+
+
+### Features
+
+* **icon:** ✨ add microinteraction for configure icon ([8f55d2d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8f55d2df3cebf82934774d8aa2b89f6fbb19ee35))
+* **search:** ✨ make search shortcuts keyboard layout-independent ([6c806b5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6c806b567505f1ea65e36f8c0829e103d5b1a391))
+* **typography:** ✨ improve emphasis styles for East Asian scripts ([#1165](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1165)) ([4e82bdc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4e82bdc954ba1ba4675c755406258b7d54735900))
+
+
+### Bug Fixes
+
+* **layout:** 🐛 fix page tools center alignment on main page ([#1167](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1167)) ([e72c859](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e72c8596ec793c2214b43da40cd42fefa6b40abf))
+* **menu:** 🐛 language card goes off-screen when page title is too long ([70181e4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/70181e49ffb72dda5141637ee6efcac8c0c3e117))
+* **SECURITY:** 🐛 fix stored XSS in sticky header button messages ([e006923](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e006923c6dbf113c9a025ca186ecc09fe7b93a15))
+* **tokens:** 🐛 fix layout issues with fractional viewport sizes ([7ae0f48](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7ae0f48d6c94a07cd77759c13d9e1e78a608ed68))
+
 ## [3.8.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.7.0...v3.8.0) (2025-10-06)
 
 
