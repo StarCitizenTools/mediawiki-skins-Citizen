@@ -36,7 +36,7 @@ function copyButtonAttributes( from, to ) {
 	copyAttribute( from, to, 'title' );
 	// Copy button labels
 	if ( to.lastElementChild && from.lastElementChild ) {
-		to.lastElementChild.innerHTML = from.lastElementChild.textContent || '';
+		to.lastElementChild.textContent = from.lastElementChild.textContent || '';
 	}
 }
 
