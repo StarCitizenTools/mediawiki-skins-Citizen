@@ -1,5 +1,5 @@
 @width-search-bar: 800px;
-@position-offset-y-desktop: 3.5rem; /* Sync with search button position */
+@position-offset-y-desktop: 3.5rem; // Sync with search button position
 
 .citizen-search {
 	--width-search-bar: @width-search-bar;
@@ -26,9 +26,8 @@
 		}
 	}
 
-	/* So that JS can find the DOM element for the keyboard shortcut */
 	&.citizen-dropdown .citizen-menu__card {
-		content-visibility: visible;
+		content-visibility: visible; // So that JS can find the DOM element for the keyboard shortcut
 	}
 
 	.citizen-dropdown-details {
@@ -37,7 +36,7 @@
 		}
 
 		&[ open ] + .citizen-menu__card > .citizen-search__form {
-			transition: none; /* Do not animate typeahead since it looks weird */
+			transition: none; // Do not animate typeahead since it looks weird
 		}
 	}
 
@@ -45,8 +44,7 @@
 	&__formIcon {
 		display: grid;
 		place-content: center;
-		/* Sync with left icons (--size-icon + --space-sm * 2) and typeahead */
-		width: ~'calc( 1.25rem + var( --space-sm ) * 2 )';
+		width: ~'calc( 1.25rem + var( --space-sm ) * 2 )'; // Sync with left icons (--size-icon + --space-sm * 2) and typeahead
 		height: var( --height-search-bar );
 	}
 
@@ -112,10 +110,8 @@
 			font-size: var( --font-size-medium );
 		}
 
-		/**
-		 * Loading indicator for searchbox
-		 * See common/progressbar.less
-		 **/
+		// Loading indicator for searchbox
+		// See common/progressbar.less
 		&.citizen-loading::after {
 			position: absolute;
 			bottom: 0;

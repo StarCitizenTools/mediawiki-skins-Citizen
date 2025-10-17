@@ -5,7 +5,7 @@
  * Changelog: https://github.com/wikimedia/design-codex/blob/main/CHANGELOG.md
 */
 :root {
-	/* @since Codex Design Tokens v1.14.0 (MediaWiki 1.43) */
+	// @since Codex Design Tokens v1.14.0 (MediaWiki 1.43)
 	--color-base: ~'oklch( var( --color-base-oklch__l ) var( --color-base-oklch__c ) var( --color-progressive-oklch__h ) )';
 	--color-base-fixed: #202122;
 	--color-base--hover: ~'oklch( calc( var( --color-base-oklch__l ) + var( --delta-lightness-hover-state ) ) var( --color-base-oklch__c ) var( --color-progressive-oklch__h ) )';
@@ -122,7 +122,7 @@
 	--border-color-input-binary--focus: var( --border-color-progressive--focus );
 	--border-color-input-binary--checked: var( --border-color-progressive );
 
-	/* @since Codex Design Tokens v1.20.1 (MediaWiki master) */
+	// @since Codex Design Tokens v1.20.1 (MediaWiki master)
 	//--color-disabled-emphasized: #a2a9b1;
 	--color-visited--hover: var( --color-progressive--hover );
 	--color-visited--active: var( --color-progressive--active );
@@ -157,10 +157,10 @@
 
 	--box-shadow-color-alpha-base: ~'oklch( var( --shadow-color-oklch__l ) var( --shadow-color-oklch__c ) var( --color-progressive-oklch__h ) / var( --shadow-opacity ) )';
 
-	/* Font tokens */
+	// Font tokens
 	.cdx-mode-medium();
 
-	/* Fallback for browsers that do not support OKLCH */
+	// Fallback for browsers that do not support OKLCH
 	@supports not ( color: oklch( 100% 0 0 ) ) {
 		--color-base: ~'hsl( var( --color-progressive-hsl__h ), var( --color-base-hsl__s ), var( --color-base-hsl__l ) )';
 		--color-base--hover: ~'hsl( var( --color-progressive-hsl__h ), var( --color-base-hsl__s ), calc( var( --color-base-hsl__l ) + var( --delta-lightness-hover-state ) ) )';
@@ -188,10 +188,8 @@
 	}
 }
 
-/**
- * Backported Codex 2.0 font tokens
- * TODO: Remove this when LTS MW has Codex 2.0
-*/
+// Backported Codex 2.0 font tokens
+// TODO: Remove this when LTS MW has Codex 2.0
 .cdx-mode-small() {
 	--font-size-x-small: 0.625rem;
 	--font-size-small: 0.75rem;

@@ -72,13 +72,13 @@
 		}
 	}
 
-	/* Add border separator between caption, tr, thead, tbody, tfoot */
+	// Add border separator between caption, tr, thead, tbody, tfoot
 	> :where( caption, tr, thead, tbody, tfoot ):not( [ hidden ] ) ~ :where( caption, tr, thead, tbody, tfoot ):not( [ hidden ] ),
 	> :where( thead, tbody, tfoot ) > :where( tr, thead, tbody, tfoot ):not( [ hidden ] ) ~ :where( tr, thead, tbody, tfoot ):not( [ hidden ] ) {
 		border-top: var( --border-width-base ) solid var( --border-color-base );
 	}
 
-	/* Reset border radius between thead tbody, tbody tfoot, etc. */
+	// Reset border radius between thead tbody, tbody tfoot, etc.
 	> :where( thead, tbody, tfoot ):has( + :where( thead, tbody, tfoot ):not( :empty ) ) {
 		tr:last-of-type {
 			th,

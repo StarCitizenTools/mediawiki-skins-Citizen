@@ -22,10 +22,10 @@
 		"husky": "^9.1.7",
 		"pinia": "2.0.16",
 		"stylelint": "16.25.0",
-		"stylelint-config-recess-order": "7.3.0",
+		"stylelint-config-recess-order": "7.4.0",
 		"stylelint-config-wikimedia": "0.18.0",
 		"stylelint-order": "^7.0.0",
-		"stylelint-plugin-use-baseline": "^1.0.1",
+		"stylelint-plugin-use-baseline": "^1.0.2",
 		"types-mediawiki": "2.0.0",
 		"vue": "3.4.27"
 	},

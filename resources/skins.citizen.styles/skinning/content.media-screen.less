@@ -2,23 +2,19 @@
  * Citizen
  *
  * Module: mediawiki.skinning.content.media-screen
- * Version: REL1_39
- *
- * Date: 2023-07-23
+ * Version: REL1_43
  */
 
 figure[ typeof~='mw:File' ],
 figure[ typeof~='mw:File/Frameless' ],
 figure[ typeof~='mw:File/Thumb' ],
 figure[ typeof~='mw:File/Frame' ] {
-	> a:first-child {
+	> .mw-file-description {
 		display: inline-block;
 		overflow: hidden;
 
-		img,
+		.mw-file-element,
 		source {
-			max-width: 100%;
-			height: auto;
 			contain: strict;
 			transition: var( --transition-hover );
 			transition-property: transform;
@@ -31,7 +27,7 @@ figure[ typeof~='mw:File/Frame' ] {
 
 		// Add affordance to replace magnify icon
 		&:hover:not( .lazy ):not( .new ) {
-			img,
+			.mw-file-element,
 			source {
 				transform: var( --transform-image-hover );
 			}
@@ -41,7 +37,7 @@ figure[ typeof~='mw:File/Frame' ] {
 
 figure[ typeof~='mw:File/Thumb' ],
 figure[ typeof~='mw:File/Frame' ] {
-	> a:first-child,
+	> .mw-file-description,
 	> span:first-child {
 		display: block;
 		border-radius: var( --border-radius-base );
@@ -72,6 +68,16 @@ figure[ typeof~='mw:File/Frame' ] {
 			&:active {
 				background-color: var( --color-destructive--active );
 			}
+		}
+	}
+}
+
+body.skin--responsive .mw-parser-output {
+	.noresize figure,
+	figure.noresize {
+		img.mw-file-element,
+		source {
+			max-width: none;
 		}
 	}
 }
