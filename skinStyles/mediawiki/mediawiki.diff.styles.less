@@ -39,12 +39,15 @@
 	}
 
 	&-editfont-monospace {
-		.diff {
-			&-addedline,
-			&-deletedline,
-			&-context {
-				font-family: var( --font-family-monospace );
-			}
+		.diff-addedline,
+		.diff-deletedline,
+		.diff-context,
+		.mw-diff-inline-added,
+		.mw-diff-inline-deleted,
+		.mw-diff-inline-moved,
+		.mw-diff-inline-changed,
+		.mw-diff-inline-context {
+			font-family: var( --font-family-monospace );
 		}
 	}
 }
