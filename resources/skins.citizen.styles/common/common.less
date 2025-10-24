@@ -9,11 +9,8 @@ body {
 	min-height: ~'calc( 100vh - env( safe-area-inset-bottom,0 ) - env( safe-area-inset-top,0 ) )';
 	min-height: 100dvh;
 	color: var( --color-base );
+	accent-color: var( --accent-color-base );
 	background: var( --color-surface-0 );
-
-	@supports ( accent-color: var( --accent-color-base ) ) {
-		accent-color: var( --accent-color-base );
-	}
 }
 
 // Apply border-box universally unless overwritten
@@ -34,11 +31,9 @@ body {
 	color: var( --color-placeholder );
 }
 
-@supports selector( ::selection ) {
-	::selection {
-		color: var( --color-inverted-primary );
-		background-color: var( --color-progressive );
-	}
+::selection {
+	color: var( --color-inverted-primary );
+	background-color: var( --color-progressive );
 }
 
 input,

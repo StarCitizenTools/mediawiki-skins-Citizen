@@ -22,19 +22,16 @@
 	height: var( --height-progress-bar );
 	content: '';
 	// Add a progress-bar to the loading indicator
-	background:
- linear-gradient( 90deg, var( --color-progressive ) 0%, var( --color-progressive ) 100% )
-		-10% 0 ~'/' 0 var( --height-progress-bar )
-		no-repeat,transparent;
+	background: linear-gradient( 90deg, var( --color-progressive ) 0%, var( --color-progressive ) 100% ) -10% 0 ~'/' 0 var( --height-progress-bar ) no-repeat, transparent;
 	// Align style with the form
 	border-radius: 0 0 var( --border-radius-large ) var( --border-radius-large );
 	// Fancy shadow under progress
 	filter: drop-shadow( 0 0 16px var( --color-progressive ) ) drop-shadow( 0 0 24px var( --color-progressive ) );
 	// Animates the progress-bar.
-	animation: progress-bar 1200ms linear var( --delay-progress-bar ) infinite alternate;
+	animation: progressbar 1200ms linear var( --delay-progress-bar ) infinite alternate;
 }
 
-@keyframes progress-bar {
+@keyframes progressbar {
 	0% {
 		background-position: -10% 0;
 		background-size: 0 var( --height-progress-bar );

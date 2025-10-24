@@ -35,11 +35,8 @@ p:not( .mw-empty-elt ) {
 
 blockquote {
 	font-style: italic;
+	text-wrap: pretty;
 	.mixin-citizen-font-styles( 'body' );
-
-	@supports ( text-wrap: pretty ) {
-		text-wrap: pretty;
-	}
 
 	cite {
 		font-style: normal;

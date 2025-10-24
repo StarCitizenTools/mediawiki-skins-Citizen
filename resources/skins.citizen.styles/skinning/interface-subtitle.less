@@ -28,15 +28,9 @@
 
 #citizen-tagline-user > span + span::before {
 	margin: 0 var( --space-xxs );
+	-webkit-user-select: none;
+	user-select: none;
 	content: '·';
-
-	@supports ( user-select: none ) {
-		user-select: none;
-	}
-
-	@supports ( -webkit-user-select: none ) {
-		-webkit-user-select: none;
-	}
 }
 
 span.subpages {

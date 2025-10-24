@@ -15,6 +15,8 @@
 	// border-radius: var( --border-radius-medium );
 
 	.mwe-popups-container {
+		background: var( --color-surface-1 );
+
 		footer {
 			// Hide footer as it is not needed
 			display: none;
@@ -90,15 +92,6 @@
 	&.flipped-y {
 		&::after {
 			border-bottom-color: var( --color-surface-1 );
-		}
-	}
-}
-
-// stylelint-disable-next-line plugin/use-baseline
-@supports ( clip-path: polygon( 1px 1px ) ) {
-	.mwe-popups {
-		.mwe-popups-container {
-			background: var( --color-surface-1 );
 		}
 	}
 }

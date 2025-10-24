@@ -23,7 +23,16 @@
 			{
 				"available": "newly",
 				"ignoreSelectors": [
-					"nesting"
+					"nesting",
+					"selection"
+				],
+				"ignoreProperties": {
+					"accent-color": [],
+					"text-wrap": [ "pretty" ],
+					"user-select": [ "none" ]
+				},
+				"ignoreAtRules": [
+					"view-transition"
 				]
 			}
 		]
