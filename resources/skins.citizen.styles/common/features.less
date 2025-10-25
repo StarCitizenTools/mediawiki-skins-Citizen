@@ -137,6 +137,11 @@
 				transition-duration: var( --transition-duration-base );
 			}
 
+			// HACK: Stop the page actions from flickering when the header is hidden
+			.page-actions {
+				transition-property: transform;
+			}
+
 			.citizen-header {
 				transform: translate3d( 0, 100%, 0 );
 			}
@@ -152,12 +157,6 @@
 				.citizen-sticky-header-container {
 					transform: translate3d( 0, -100%, 0 );
 				}
-			}
-		}
-
-		.citizen-scroll--up {
-			.page-actions {
-				transition-delay: ~'calc( var( --transition-duration-medium ) + 100ms )';
 			}
 		}
 	}
