@@ -4,7 +4,8 @@
 			"Faalagorn",
 			"Kareyac",
 			"Meeqoo",
-			"Rail"
+			"Rail",
+			"SaldırganSincap"
 		]
 	},
 	"citizen-skin-desc": "Piękna, użyteczna i responsywna skórka MediaWiki, czyniąca z rozszerzeń część spójnego doświadczenia. Pierwotnie stworzona na potrzeby [https://starcitizen.tools/ Star Citizen Wiki]",
@@ -98,6 +99,6 @@
 	"citizen-command-palette-tip-commands": "Wpisz <code>/</code>, aby wyświetlić wszystkie komendy",
 	"citizen-command-palette-tip-users": "Wpisz <code>@</code>, aby szukać użytkowników",
 	"citizen-command-palette-tip-namespace": "Wpisz <code>:</code>, aby szukać przestrzeni nazw",
-	"citizen-command-palette-tip-templates": "Wpisz code><nowiki>{{</nowiki></code>, aby szukać szablonów",
+	"citizen-command-palette-tip-templates": "Wpisz <code><nowiki>{{</nowiki></code>, aby szukać szablonów",
 	"citizen-command-palette-tip-actions": "Wpisz <code>></code>, aby wyświetlić listę akcji"
 }
