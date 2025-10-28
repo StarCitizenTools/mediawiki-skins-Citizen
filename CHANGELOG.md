@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.10.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.9.0...v3.10.0) (2025-10-28)
+
+
+### Features
+
+* **core:** ✨ allow CSS keyword transition by default ([0561ad1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0561ad1792e83238f50f1318154823ef9d7e52e1))
+* **typography:** ✨ apply more monospace font ([504f36b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/504f36bae3144da1564ed4d25e9a0e1523dbc8c9))
+
+
+### Bug Fixes
+
+* **mixins:** 🐛 fix unknown custom properties in hsl mode ([#1172](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1172)) ([6d2586e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6d2586e65255ffcb32accde2cb0d99a9c5a493d0))
+* **OOUI:** 🐛 use fixed font size for some UI of VisualEditor and DiscussionTools ([bb82009](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bb820098821eb390b59f1103e74e84a81d3afc17))
+* **pageActions:** 🐛 prevent flickering of page actions when header is hidden ([8b2c0cd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8b2c0cd0f3d225085c3875838587fad59cc19d66))
+* **skinning:** 🐛 fix image padding regression ([d014d9b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d014d9bb6c227f62adc46a41fddf3cd2093b6667)), closes [#1168](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1168)
+
 ## [3.9.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.8.0...v3.9.0) (2025-10-17)
 
 
