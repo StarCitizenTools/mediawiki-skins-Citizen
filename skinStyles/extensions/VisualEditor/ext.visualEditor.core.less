@@ -8,6 +8,15 @@
 
 @import '../../../resources/variables.less';
 
+// T373875: Use fixed font size for VE UI elements
+.ve-init-mw-desktopArticleTarget-toolbar,
+.ve-init-mw-desktopArticleTarget-toolbarPlaceholder,
+.ve-ui-overlay-local,
+.ve-ui-overlay-global,
+.ve-ui-sidebarDialogWindowManager {
+	font-size: 0.875rem;
+}
+
 .ve-ui-toolbar > .oo-ui-toolbar-bar {
 	/* Fix z-index */
 	z-index: @z-index-sticky;

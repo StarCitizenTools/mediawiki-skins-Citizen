@@ -6,6 +6,19 @@
  * Version: REL1_43
 */
 
+// T373875: Use fixed font size for DiscussionTools ReplyWidget
+.ext-discussiontools-ui-newTopic,
+.ext-discussiontools-ui-replyWidget {
+	font-size: 0.875rem;
+	line-height: 1.5714285;
+}
+
+.ext-discussiontools-ui-replyWidget-bodyWrapper,
+.ext-discussiontools-ui-newTopic-sectionTitle-field > .oo-ui-fieldLayout-body {
+	font-size: var( --font-size-medium );
+	line-height: var( --line-height-medium );
+}
+
 .ext-discussiontools-ui-replyWidget {
 	&-preview {
 		&::before {
