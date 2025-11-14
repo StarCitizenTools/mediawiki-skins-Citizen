@@ -32,12 +32,9 @@ use MediaWiki\Utils\UrlUtils;
 
 final class Metadata extends Partial {
 
-	/**
-	 * @inheritDoc
-	 */
 	public function __construct(
 		SkinCitizen $skin,
-		private UrlUtils $urlUtils
+		private readonly UrlUtils $urlUtils
 	) {
 		parent::__construct( $skin );
 	}

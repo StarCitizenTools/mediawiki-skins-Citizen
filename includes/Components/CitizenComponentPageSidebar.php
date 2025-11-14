@@ -13,9 +13,9 @@ use MessageLocalizer;
 class CitizenComponentPageSidebar implements CitizenComponent {
 
 	public function __construct(
-		private MessageLocalizer $localizer,
-		private Title $title,
-		private array $lastModifiedData
+		private readonly MessageLocalizer $localizer,
+		private readonly Title $title,
+		private readonly array $lastModifiedData
 	) {
 	}
 
@@ -66,9 +66,6 @@ class CitizenComponentPageSidebar implements CitizenComponent {
 		return $menu->getTemplateData();
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public function getTemplateData(): array {
 		return [
 			'data-page-sidebar-lastmod' => $this->getLastModData()

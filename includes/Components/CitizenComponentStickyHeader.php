@@ -58,7 +58,7 @@ class CitizenComponentStickyHeader implements CitizenComponent {
 	];
 
 	public function __construct(
-		private bool $visualEditorTabPositionFirst = false
+		private readonly bool $visualEditorTabPositionFirst = false
 	) {
 	}
 
@@ -98,9 +98,6 @@ class CitizenComponentStickyHeader implements CitizenComponent {
 		return $iconButtons;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public function getTemplateData(): array {
 		return [
 			'array-icon-buttons' => $this->getIconButtons()

@@ -10,15 +10,12 @@ namespace MediaWiki\Skins\Citizen\Components;
 class CitizenComponentMenuListItem implements CitizenComponent {
 
 	public function __construct(
-		private CitizenComponentLink $link,
-		private string $class = '',
-		private string $id = ''
+		private readonly CitizenComponentLink $link,
+		private readonly string $class = '',
+		private readonly string $id = ''
 	) {
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public function getTemplateData(): array {
 		return [
 			'array-links' => $this->link->getTemplateData(),

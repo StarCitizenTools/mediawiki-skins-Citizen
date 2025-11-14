@@ -18,12 +18,12 @@ use MessageLocalizer;
 class CitizenComponentUserInfo implements CitizenComponent {
 
 	public function __construct(
-		private UserGroupManager $userGroupManager,
-		private Language $lang,
-		private MessageLocalizer $localizer,
-		private Title $title,
-		private User $user,
-		private array $userPageData,
+		private readonly UserGroupManager $userGroupManager,
+		private readonly Language $lang,
+		private readonly MessageLocalizer $localizer,
+		private readonly Title $title,
+		private readonly User $user,
+		private readonly array $userPageData,
 	) {
 	}
 
@@ -143,9 +143,6 @@ class CitizenComponentUserInfo implements CitizenComponent {
 		return $menu->getTemplateData();
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public function getTemplateData(): array {
 		$localizer = $this->localizer;
 		$user = $this->user;

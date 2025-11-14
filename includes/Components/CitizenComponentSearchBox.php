@@ -14,9 +14,9 @@ use MessageLocalizer;
 class CitizenComponentSearchBox implements CitizenComponent {
 
 	public function __construct(
-		private MessageLocalizer $localizer,
-		private ExtensionRegistry $extensionRegistry,
-		private array $searchBoxData
+		private readonly MessageLocalizer $localizer,
+		private readonly ExtensionRegistry $extensionRegistry,
+		private readonly array $searchBoxData
 	) {
 	}
 
@@ -51,9 +51,6 @@ class CitizenComponentSearchBox implements CitizenComponent {
 		)->text();
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public function getTemplateData(): array {
 		$searchBoxData = $this->searchBoxData + [
 			'array-keyboard-hint' => $this->getKeyboardHintData(),

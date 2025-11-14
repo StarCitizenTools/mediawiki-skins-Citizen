@@ -29,6 +29,7 @@ use MediaWiki\Output\OutputPage;
 use MediaWiki\Skins\Citizen\GetConfigTrait;
 use MediaWiki\Skins\Citizen\SkinCitizen;
 use MediaWiki\Title\Title;
+use MediaWiki\User\User;
 
 /**
  * The base class for all skin partials
@@ -38,24 +39,15 @@ abstract class Partial {
 
 	use GetConfigTrait;
 
-	/** @var SkinCitizen */
-	protected $skin;
+	protected OutputPage $out;
 
-	/** @var OutputPage */
-	protected $out;
+	protected ?Title $title;
 
-	/** @var Title */
-	protected $title;
+	protected User $user;
 
-	/** @var User */
-	protected $user;
-
-	/**
-	 * Constructor
-	 * @param SkinCitizen $skin
-	 */
-	public function __construct( SkinCitizen $skin ) {
-		$this->skin = $skin;
+	public function __construct(
+		protected readonly SkinCitizen $skin
+	) {
 		$this->out = $skin->getOutput();
 		$this->title = $this->out->getTitle();
 		$this->user = $this->out->getUser();

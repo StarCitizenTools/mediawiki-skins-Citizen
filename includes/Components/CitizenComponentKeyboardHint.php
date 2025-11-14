@@ -10,14 +10,11 @@ namespace MediaWiki\Skins\Citizen\Components;
 class CitizenComponentKeyboardHint implements CitizenComponent {
 
 	public function __construct(
-		private string $label = '',
-		private string $key = ''
+		private readonly string $label = '',
+		private readonly string $key = ''
 	) {
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public function getTemplateData(): array {
 		return [
 			'label' => $this->label,

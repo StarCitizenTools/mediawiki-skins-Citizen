@@ -14,17 +14,14 @@ use MessageLocalizer;
 class CitizenComponentLink implements CitizenComponent {
 
 	public function __construct(
-		private string $href,
-		private string $text,
-		private ?string $icon = null,
-		private ?MessageLocalizer $localizer = null,
-		private ?string $accessKeyHint = null
+		private readonly string $href,
+		private readonly string $text,
+		private readonly ?string $icon = null,
+		private readonly ?MessageLocalizer $localizer = null,
+		private readonly ?string $accessKeyHint = null
 	) {
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public function getTemplateData(): array {
 		$localizer = $this->localizer;
 		$accessKeyHint = $this->accessKeyHint;
