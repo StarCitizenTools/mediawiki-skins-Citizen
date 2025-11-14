@@ -15,46 +15,6 @@ use MediaWikiUnitTestCase;
 class CitizenComponentMenuTest extends MediaWikiUnitTestCase {
 
 	/**
-	 * @return array[]
-	 */
-	public function provideMenuData(): array {
-		return [
-			[
-				[
-					'class' => 'some-class',
-					'label' => 'Some label',
-					'html-tooltip' => 'Some tooltip',
-					'label-class' => 'some-label-class',
-					'html-before-portal' => 'Some before portal',
-					'html-items' => 'Some items',
-					'html-after-portal' => 'Some after portal',
-					'array-list-items' => [ 'some-item-one', 'some-item-2', 'some-item-3' ]
-				]
-			]
-		];
-	}
-
-	/**
-	 * @return array[]
-	 */
-	public function provideCountData(): array {
-		return [
-			[
-				[
-					'array-list-items' => [ 'some-item-one', 'some-item-2', 'some-item-3' ]
-				],
-				3
-			],
-			[
-				[
-					'html-items' => '<li>Some item</li><li>Some item</li><li>Some item</li>'
-				],
-				3
-			]
-		];
-	}
-
-	/**
 	 * This test checks if the count method returns the correct number of items
 	 * @covers ::count
 	 * @dataProvider provideCountData
@@ -65,6 +25,21 @@ class CitizenComponentMenuTest extends MediaWikiUnitTestCase {
 
 		// Check if the count method returns the correct number of items
 		$this->assertSame( $expected, $menu->count() );
+	}
+
+	public static function provideCountData(): iterable {
+		yield 'With array-list-items' => [
+			[
+				'array-list-items' => [ 'some-item-one', 'some-item-2', 'some-item-3' ]
+			],
+			3
+		];
+		yield 'With html-items' => [
+			[
+				'html-items' => '<li>Some item</li><li>Some item</li><li>Some item</li>'
+			],
+			3
+		];
 	}
 
 	/**
@@ -82,5 +57,20 @@ class CitizenComponentMenuTest extends MediaWikiUnitTestCase {
 
 		// Check if the getTemplateData method returns the correct data
 		$this->assertSame( $data, $actualData );
+	}
+
+	public static function provideMenuData(): iterable {
+		yield 'Complete menu data' => [
+			[
+				'class' => 'some-class',
+				'label' => 'Some label',
+				'html-tooltip' => 'Some tooltip',
+				'label-class' => 'some-label-class',
+				'html-before-portal' => 'Some before portal',
+				'html-items' => 'Some items',
+				'html-after-portal' => 'Some after portal',
+				'array-list-items' => [ 'some-item-one', 'some-item-2', 'some-item-3' ]
+			]
+		];
 	}
 }

@@ -31,20 +31,6 @@ class CitizenComponentMainMenuTest extends MediaWikiUnitTestCase {
 	}
 
 	/**
-	 * @return array[]
-	 */
-	public function provideMainMenuData(): array {
-		return [
-			[
-				'sidebarData' => [
-					'data-portlets-first' => [],
-					'array-portlets-rest' => [],
-				]
-			]
-		];
-	}
-
-	/**
 	 * @covers ::__construct
 	 * @covers ::getTemplateData
 	 * @dataProvider provideMainMenuData
@@ -63,5 +49,14 @@ class CitizenComponentMainMenuTest extends MediaWikiUnitTestCase {
 		// Assert the structure and types of expected keys
 		$this->assertArrayHasKey( 'data-portlets-first', $templateData );
 		$this->assertArrayHasKey( 'array-portlets-rest', $templateData );
+	}
+
+	public static function provideMainMenuData(): iterable {
+		yield 'empty sidebar data' => [
+			'sidebarData' => [
+				'data-portlets-first' => [],
+				'array-portlets-rest' => [],
+			]
+		];
 	}
 }

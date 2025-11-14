@@ -15,54 +15,6 @@ use MediaWikiUnitTestCase;
 class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 
 	/**
-	 * Provides various configurations of CitizenComponentButton to test different scenarios.
-	 * Each case includes different combinations of the button's properties.
-	 *
-	 * @return array[] An array of test cases with parameters and expected values.
-	 */
-	public static function provideButtonData(): array {
-		return [
-			'Basic Button' => [
-				// The visible text on the button.
-				'label' => 'Click Me',
-				// CSS classes expected without additional properties.
-				'expectedClasses' => 'cdx-button',
-				// Default button weight.
-				'weight' => 'normal',
-				// Indicates that the button is not icon-only.
-				'iconOnly' => false,
-				// No link for a basic button.
-				'href' => null,
-			],
-			'Button With Primary Weight' => [
-				// The visible text indicating a primary action.
-				'label' => 'Primary Action',
-				// Additional classes are expected due to the primary weight.
-				'expectedClasses' =>
-					'cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-primary',
-				// Indicates primary visual importance.
-				'weight' => 'primary',
-				// Still not an icon-only button.
-				'iconOnly' => false,
-				// Providing an href activates additional styles.
-				'href' => '/mock-link',
-			],
-			'Icon Only Button' => [
-				// No visible text for an icon-only button.
-				'label' => '',
-				// CSS classes specifically for icon-only.
-				'expectedClasses' => 'cdx-button cdx-button--icon-only',
-				// Default weight even for icon-only buttons.
-				'weight' => 'normal',
-				// This button is icon-only.
-				'iconOnly' => true,
-				// No link for this icon-only button.
-				'href' => null,
-			],
-		];
-	}
-
-	/**
 	 * Tests CSS class generation logic within CitizenComponentButton.
 	 * This method verifies that the class string is generated correctly based on the button's properties.
 	 *
@@ -119,6 +71,8 @@ class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 		string $label,
 		string $expectedClasses,
 		string $weight,
+		string $action,
+		string $size,
 		bool $iconOnly,
 		?string $href
 	) {
@@ -131,10 +85,8 @@ class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 			// Custom data attribute as an example.
 			[ 'data-test' => 'true' ],
 			$weight,
-			// Default action type.
-			'default',
-			// Default button size.
-			'medium',
+			$action,
+			$size,
 			$iconOnly,
 			$href
 		);
@@ -143,9 +95,9 @@ class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 		$templateData = $button->getTemplateData();
 
 		// Assert each aspect of the template data matches expectations.
-		$this->assertEquals( $label, $templateData['label'] );
-		$this->assertEquals( 'icon-sample', $templateData['icon'] );
-		$this->assertEquals( 'btn-id', $templateData['id'] );
+		$this->assertSame( $label, $templateData['label'] );
+		$this->assertSame( 'icon-sample', $templateData['icon'] );
+		$this->assertSame( 'btn-id', $templateData['id'] );
 		// Ensures the class string contains all expected CSS classes.
 		$actualClasses = explode( ' ', $templateData['class'] );
 		$expectedClassArray = explode( ' ', $expectedClasses );
@@ -156,8 +108,51 @@ class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 				"Expected class '$expectedClass' not found in button classes."
 			);
 		}
-		$this->assertEquals( $href, $templateData['href'] );
+		$this->assertSame( $href, $templateData['href'] );
 		// Verifies custom attributes are included appropriately.
 		$this->assertContains( [ 'key' => 'data-test', 'value' => 'true' ], $templateData['array-attributes'] );
+	}
+
+	/**
+	 * Provides various configurations of CitizenComponentButton to test different scenarios.
+	 * Each case includes different combinations of the button's properties.
+	 */
+	public static function provideButtonData(): iterable {
+		yield 'Basic Button' => [
+			'label' => 'Click Me',
+			'expectedClasses' => 'cdx-button cdx-button--weight-normal cdx-button--action-default cdx-button--size-medium',
+			'weight' => 'normal',
+			'action' => 'default',
+			'size' => 'medium',
+			'iconOnly' => false,
+			'href' => null,
+		];
+		yield 'Primary progressive large button' => [
+			'label' => 'Submit',
+			'expectedClasses' => 'cdx-button cdx-button--weight-primary cdx-button--action-progressive cdx-button--size-large',
+			'weight' => 'primary',
+			'action' => 'progressive',
+			'size' => 'large',
+			'iconOnly' => false,
+			'href' => null,
+		];
+		yield 'Quiet destructive button with link' => [
+			'label' => 'Delete',
+			'expectedClasses' => 'cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--action-destructive cdx-button--size-medium',
+			'weight' => 'quiet',
+			'action' => 'destructive',
+			'size' => 'medium',
+			'iconOnly' => false,
+			'href' => '/delete',
+		];
+		yield 'Icon only button' => [
+			'label' => '',
+			'expectedClasses' => 'cdx-button cdx-button--icon-only cdx-button--weight-normal cdx-button--action-default cdx-button--size-medium',
+			'weight' => 'normal',
+			'action' => 'default',
+			'size' => 'medium',
+			'iconOnly' => true,
+			'href' => null,
+		];
 	}
 }

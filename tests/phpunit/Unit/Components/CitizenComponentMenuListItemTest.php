@@ -44,20 +44,18 @@ class CitizenComponentMenuListItemTest extends MediaWikiUnitTestCase {
 		$this->assertSame( 'Test Link', $templateData['array-links']['text'] );
 	}
 
-	public static function provideMenuListItemData(): array {
-		return [
-			'minimal parameters' => [
-				'',
-				'',
-				'',
-				'',
-			],
-			'with class and id' => [
-				'test-class',
-				'test-id',
-				'test-class',
-				'test-id',
-			],
+	public static function provideMenuListItemData(): iterable {
+		yield 'minimal parameters' => [
+			'class' => '',
+			'id' => '',
+			'expectedClass' => '',
+			'expectedId' => '',
+		];
+		yield 'with class and id' => [
+			'class' => 'test-class',
+			'id' => 'test-id',
+			'expectedClass' => 'test-class',
+			'expectedId' => 'test-id',
 		];
 	}
 

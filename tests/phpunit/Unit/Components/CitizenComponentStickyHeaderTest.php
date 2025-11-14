@@ -30,8 +30,8 @@ class CitizenComponentStickyHeaderTest extends MediaWikiUnitTestCase {
 
 		// Verify button properties for the first button as a sample check
 		$firstButton = $buttons[0];
-		$this->assertEquals( 'quiet', $this->getButtonProperty( $firstButton['class'], 'weight' ) );
-		$this->assertEquals( 'large', $this->getButtonProperty( $firstButton['class'], 'size' ) );
+		$this->assertSame( 'quiet', $this->getButtonProperty( $firstButton['class'], 'weight' ) );
+		$this->assertSame( 'large', $this->getButtonProperty( $firstButton['class'], 'size' ) );
 		$this->assertStringContainsString( 'cdx-button--icon-only', $firstButton['class'] );
 		$this->assertContains( [ 'key' => 'tabindex', 'value' => '-1' ], $firstButton['array-attributes'] );
 
@@ -40,10 +40,16 @@ class CitizenComponentStickyHeaderTest extends MediaWikiUnitTestCase {
 		$this->assertSame( $expectedSecondEditIcon, $buttons[3]['icon'] );
 	}
 
-	public static function provideVisualEditorTabPosition(): array {
-		return [
-			'VE tab first' => [ true, 'wikimedia-edit', 'wikimedia-wikiText' ],
-			'Wikitext tab first (default)' => [ false, 'wikimedia-wikiText', 'wikimedia-edit' ],
+	public static function provideVisualEditorTabPosition(): iterable {
+		yield 'VE tab first' => [
+			'veTabFirst' => true,
+			'expectedFirstEditIcon' => 'wikimedia-edit',
+			'expectedSecondEditIcon' => 'wikimedia-wikiText'
+		];
+		yield 'Wikitext tab first (default)' => [
+			'veTabFirst' => false,
+			'expectedFirstEditIcon' => 'wikimedia-wikiText',
+			'expectedSecondEditIcon' => 'wikimedia-edit'
 		];
 	}
 
