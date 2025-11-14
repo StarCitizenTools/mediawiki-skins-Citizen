@@ -174,7 +174,7 @@ class ApiWebappManifest extends ApiBase {
 			}
 
 			// Set sizes to any if it is a SVG
-			if ( substr( $logoPath, -3 ) === 'svg' ) {
+			if ( str_ends_with( $logoPath, 'svg' ) ) {
 				$icon['sizes'] = 'any';
 				$icon['type'] = 'image/svg+xml';
 			}
