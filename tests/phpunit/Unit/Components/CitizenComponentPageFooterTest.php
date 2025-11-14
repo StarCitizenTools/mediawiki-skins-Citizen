@@ -17,44 +17,6 @@ use MessageLocalizer;
 class CitizenComponentPageFooterTest extends MediaWikiUnitTestCase {
 
 	/**
-	 * @return array[]
-	 */
-	public function provideFooterData(): array {
-		return [
-			'footer with lastmod and viewcount' => [
-				[
-					'array-items' => [
-						[
-							'name' => 'lastmod',
-							'id' => 'footer-info-lastmod',
-							'html' => 'Last modified: 2024-03-10'
-						],
-						[
-							'name' => 'viewcount',
-							'id' => 'footer-info-viewcount',
-							'html' => 'Views: 100'
-						]
-					]
-				],
-				[
-					'lastmod' => [
-						'name' => 'lastmod',
-						'id' => 'footer-info-lastmod',
-						'html' => 'Last modified: 2024-03-10',
-						'label' => 'Translated citizen-page-info-lastmod'
-					],
-					'viewcount' => [
-						'name' => 'viewcount',
-						'id' => 'footer-info-viewcount',
-						'html' => 'Views: 100',
-						'label' => 'Translated citizen-page-info-viewcount'
-					]
-				]
-			]
-		];
-	}
-
-	/**
 	 * @covers ::__construct
 	 * @covers ::getTemplateData
 	 * @dataProvider provideFooterData
@@ -85,7 +47,40 @@ class CitizenComponentPageFooterTest extends MediaWikiUnitTestCase {
 		foreach ( $result['array-items'] as $item ) {
 			$name = $item['name'];
 			$this->assertArrayHasKey( $name, $expected );
-			$this->assertEquals( $expected[$name], $item );
+			$this->assertSame( $expected[$name], $item );
 		}
+	}
+
+	public static function provideFooterData(): iterable {
+		yield 'footer with lastmod and viewcount' => [
+			[
+				'array-items' => [
+					[
+						'name' => 'lastmod',
+						'id' => 'footer-info-lastmod',
+						'html' => 'Last modified: 2024-03-10'
+					],
+					[
+						'name' => 'viewcount',
+						'id' => 'footer-info-viewcount',
+						'html' => 'Views: 100'
+					]
+				]
+			],
+			[
+				'lastmod' => [
+					'name' => 'lastmod',
+					'id' => 'footer-info-lastmod',
+					'html' => 'Last modified: 2024-03-10',
+					'label' => 'Translated citizen-page-info-lastmod'
+				],
+				'viewcount' => [
+					'name' => 'viewcount',
+					'id' => 'footer-info-viewcount',
+					'html' => 'Views: 100',
+					'label' => 'Translated citizen-page-info-viewcount'
+				]
+			]
+		];
 	}
 }
