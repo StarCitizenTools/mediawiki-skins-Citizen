@@ -115,7 +115,7 @@ class ApiWebappManifest extends ApiBase {
 			if ( count( $icon ) === 0 ) {
 				continue;
 			}
-			array_push( $icons, $icon );
+			$icons[] = $icon;
 		}
 		return $icons;
 	}
