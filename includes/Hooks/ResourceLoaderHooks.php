@@ -1,4 +1,7 @@
 <?php
+
+declare( strict_types=1 );
+
 /**
  * Citizen - A responsive skin developed for the Star Citizen Wiki
  *
@@ -20,8 +23,6 @@
  * @file
  * @ingroup Skins
  */
-
-declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Hooks;
 
