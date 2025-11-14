@@ -65,16 +65,16 @@ class SkinCitizen extends SkinMustache {
 	 * @inheritDoc
 	 */
 	public function __construct(
-		private UserFactory $userFactory,
-		private GenderCache $genderCache,
-		private UserIdentityLookup $userIdentityLookup,
-		private LanguageConverterFactory $languageConverterFactory,
-		private Language $contentLanguage,
-		private PermissionManager $permissionManager,
-		private ExtensionRegistry $extensionRegistry,
-		private UserGroupManager $userGroupManager,
-		private UrlUtils $urlUtils,
-		private ?MobileContext $mfContext,
+		private readonly UserFactory $userFactory,
+		private readonly GenderCache $genderCache,
+		private readonly UserIdentityLookup $userIdentityLookup,
+		private readonly LanguageConverterFactory $languageConverterFactory,
+		private readonly Language $contentLanguage,
+		private readonly PermissionManager $permissionManager,
+		private readonly ExtensionRegistry $extensionRegistry,
+		private readonly UserGroupManager $userGroupManager,
+		private readonly UrlUtils $urlUtils,
+		private readonly ?MobileContext $mfContext,
 		array $options = []
 	) {
 		if ( !isset( $options['name'] ) ) {

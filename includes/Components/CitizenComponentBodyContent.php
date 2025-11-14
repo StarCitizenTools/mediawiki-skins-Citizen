@@ -38,8 +38,8 @@ class CitizenComponentBodyContent implements CitizenComponent {
 	private ?string $topHeadingName = null;
 
 	public function __construct(
-		private string $html,
-		private bool $shouldMakeSections
+		private readonly string $html,
+		private readonly bool $shouldMakeSections
 	) {
 	}
 

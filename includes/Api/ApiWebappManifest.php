@@ -49,15 +49,12 @@ class ApiWebappManifest extends ApiBase {
 
 	private array $options;
 
-	/**
-	 * @inheritDoc
-	 */
 	public function __construct(
-		private ApiMain $main,
-		private string $moduleName,
-		private Language $contentLanguage,
-		private HttpRequestFactory $httpRequestFactory,
-		private UrlUtils $urlUtils,
+		private readonly ApiMain $main,
+		private readonly string $moduleName,
+		private readonly Language $contentLanguage,
+		private readonly HttpRequestFactory $httpRequestFactory,
+		private readonly UrlUtils $urlUtils,
 	) {
 		parent::__construct( $main, $moduleName );
 		$this->config = $this->getConfig();

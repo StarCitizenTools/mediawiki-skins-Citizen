@@ -21,15 +21,15 @@ class CitizenComponentPageTools implements CitizenComponent {
 	public const TOOLBOX_ID = 'p-tb';
 
 	public function __construct(
-		private Config $config,
-		private MessageLocalizer $localizer,
-		private Title $title,
-		private User $user,
-		private PermissionManager $permissionManager,
-		private int $numLanguages,
-		private array $pageToolsMenu,
-		private array $languagesData,
-		private array $variantsData
+		private readonly Config $config,
+		private readonly MessageLocalizer $localizer,
+		private readonly Title $title,
+		private readonly User $user,
+		private readonly PermissionManager $permissionManager,
+		private readonly int $numLanguages,
+		private readonly array $pageToolsMenu,
+		private readonly array $languagesData,
+		private readonly array $variantsData
 	) {
 	}
 
@@ -66,9 +66,6 @@ class CitizenComponentPageTools implements CitizenComponent {
 		return (bool)$condition;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public function getTemplateData(): array {
 		$hasLanguages =
 			( $this->languagesData && $this->languagesData[ 'is-empty' ] !== true ) ||

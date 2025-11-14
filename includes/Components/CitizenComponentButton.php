@@ -89,9 +89,6 @@ class CitizenComponentButton implements CitizenComponent {
 		return $classes;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public function getTemplateData(): array {
 		$arrayAttributes = [];
 		foreach ( $this->attributes as $key => $value ) {

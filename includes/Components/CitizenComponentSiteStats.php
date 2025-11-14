@@ -26,9 +26,9 @@ class CitizenComponentSiteStats implements CitizenComponent {
 	];
 
 	public function __construct(
-		private Config $config,
-		private MessageLocalizer $localizer,
-		private Language|StubUserLang $pageLang
+		private readonly Config $config,
+		private readonly MessageLocalizer $localizer,
+		private readonly Language|StubUserLang $pageLang
 	) {
 	}
 
@@ -45,9 +45,6 @@ class CitizenComponentSiteStats implements CitizenComponent {
 		return $fmt ? $fmt->format( $value ) : number_format( $value );
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public function getTemplateData(): array {
 		$config = $this->config;
 		if ( !$config->get( 'CitizenEnableDrawerSiteStats' ) ) {

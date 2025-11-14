@@ -26,16 +26,16 @@ use Wikimedia\IPUtils;
 class CitizenComponentPageHeading implements CitizenComponent {
 
 	public function __construct(
-		private UserFactory $userFactory,
-		private GenderCache $genderCache,
-		private UserIdentityLookup $userIdentityLookup,
-		private LanguageConverterFactory $languageConverterFactory,
-		private Language $contentLanguage,
-		private MessageLocalizer $localizer,
-		private OutputPage $out,
-		private Language|StubUserLang $pageLang,
-		private Title $title,
-		private string $titleData
+		private readonly UserFactory $userFactory,
+		private readonly GenderCache $genderCache,
+		private readonly UserIdentityLookup $userIdentityLookup,
+		private readonly LanguageConverterFactory $languageConverterFactory,
+		private readonly Language $contentLanguage,
+		private readonly MessageLocalizer $localizer,
+		private readonly OutputPage $out,
+		private readonly Language|StubUserLang $pageLang,
+		private readonly Title $title,
+		private readonly string $titleData
 	) {
 	}
 
