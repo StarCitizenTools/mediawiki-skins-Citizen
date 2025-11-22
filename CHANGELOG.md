@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.10.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.10.0...v3.10.1) (2025-11-22)
+
+
+### Performance Improvements
+
+* **core:** ⚡️ re-use the same frame counting function ([7b0894b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7b0894b491e6e51c4470483ad5343c7184f64bba))
+
+
+### Miscellaneous Chores
+
+* **dev-deps:** 🔧 revert ESLint to v8 ([20d5dc1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/20d5dc17eb74f7063264bdab9f594139678f9324))
+
 ## [3.10.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.9.0...v3.10.0) (2025-10-28)
 
 
