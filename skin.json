@@ -210,8 +210,9 @@
 				"citizen-share-copied"
 			],
 			"dependencies": [
-				"mediawiki.util",
-				"mediawiki.page.ready"
+				"mediawiki.storage",
+				"mediawiki.page.ready",
+				"mediawiki.util"
 			]
 		},
 		"skins.citizen.search": {

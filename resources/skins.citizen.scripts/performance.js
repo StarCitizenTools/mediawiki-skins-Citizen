@@ -30,7 +30,7 @@ function initPerformanceMode() {
 
 	document.documentElement.classList.remove( prefName + '1' );
 	document.documentElement.classList.add( prefName + '0' );
-	localStorage.setItem( 'mwclientpreferences', clientPrefs ? `${ clientPrefs },${ prefName }0` : `${ prefName }0` );
+	mw.storage.set( 'mwclientpreferences', clientPrefs ? `${ clientPrefs },${ prefName }0` : `${ prefName }0` );
 }
 
 module.exports = {
