@@ -6,7 +6,7 @@
  */
 function initPerformanceMode() {
 	const prefName = 'citizen-feature-performance-mode-clientpref-';
-	const clientPrefs = localStorage.getItem( 'mwclientpreferences' );
+	const clientPrefs = mw.storage.get( 'mwclientpreferences' );
 
 	if ( clientPrefs && ( clientPrefs.includes( prefName + '0' ) || clientPrefs.includes( prefName + '1' ) ) ) {
 		return;
@@ -36,4 +36,3 @@ function initPerformanceMode() {
 module.exports = {
 	init: initPerformanceMode
 };
-

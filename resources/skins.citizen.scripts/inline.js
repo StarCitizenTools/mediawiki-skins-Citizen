@@ -10,7 +10,14 @@
  */
 window.clientPrefs = () => {
 	let className = document.documentElement.className;
-	const storage = localStorage.getItem( 'mwclientpreferences' );
+	let storage;
+	try {
+		// mw.storage is not available in this context
+		// eslint-disable-next-line mediawiki/no-storage
+		storage = localStorage.getItem( 'mwclientpreferences' );
+	} catch ( e ) {
+		// localStorage is not available, ignore
+	}
 	if ( storage ) {
 		// TODO: Just use array for localStorage
 		storage.split( ',' ).forEach( ( pref ) => {
