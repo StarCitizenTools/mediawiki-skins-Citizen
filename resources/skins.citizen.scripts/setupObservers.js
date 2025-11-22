@@ -3,7 +3,7 @@ const
 	scrollObserver = require( './scrollObserver.js' ),
 	initSectionObserver = require( './sectionObserver.js' ),
 	stickyHeader = require( './stickyHeader.js' ),
-	initTableOfContents = require( './tableOfContents.js' ),
+	TableOfContents = require( './tableOfContents.js' ),
 	deferUntilFrame = require( './deferUntilFrame.js' ),
 	TOC_ID = 'citizen-toc',
 	BODY_CONTENT_ID = 'bodyContent',
@@ -64,7 +64,7 @@ function getDocumentScrollPaddingTop() {
  * @param {HTMLElement|null} tocElement
  * @param {HTMLElement|null} bodyContent
  * @param {initSectionObserver} initSectionObserverFn
- * @return {tableOfContents|null}
+ * @return {TableOfContents|null}
  */
 const setupTableOfContents = ( tocElement, bodyContent, initSectionObserverFn ) => {
 	if ( !(
@@ -104,7 +104,7 @@ const setupTableOfContents = ( tocElement, bodyContent, initSectionObserverFn ) 
 		}, 3 );
 	};
 
-	const tableOfContents = initTableOfContents( {
+	const tableOfContents = new TableOfContents( {
 		container: tocElement,
 		onHeadingClick: handleTocSectionChange,
 		onHashChange: handleTocSectionChange
@@ -114,7 +114,7 @@ const setupTableOfContents = ( tocElement, bodyContent, initSectionObserverFn ) 
 	const sectionObserver = initSectionObserverFn( {
 		elements: elements(),
 		topMargin: getDocumentScrollPaddingTop(),
-		onIntersection: getHeadingIntersectionHandler( tableOfContents.changeActiveSection )
+		onIntersection: getHeadingIntersectionHandler( tableOfContents.changeActiveSection.bind( tableOfContents ) )
 	} );
 	const updateElements = () => {
 		sectionObserver.resume();
