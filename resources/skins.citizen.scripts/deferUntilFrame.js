@@ -10,14 +10,16 @@
  * specified callback.
  */
 function deferUntilFrame( callback, frameCount ) {
-	if ( frameCount === 0 ) {
-		callback();
-		return;
-	}
+	const checkFrame = () => {
+		if ( frameCount <= 0 ) {
+			callback();
+		} else {
+			frameCount--;
+			requestAnimationFrame( checkFrame );
+		}
+	};
 
-	requestAnimationFrame( () => {
-		deferUntilFrame( callback, frameCount - 1 );
-	} );
+	checkFrame();
 }
 
 module.exports = deferUntilFrame;
