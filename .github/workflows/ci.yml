@@ -72,52 +72,25 @@ jobs:
           files: |
             i18n/*.json
 
-      # Bypass the phpcbf non-standard exit code
       - name: Lint PHP
         if: steps.changed-php.outputs.any_changed == 'true'
-        continue-on-error: true
         run: |
-          sh ./bin/phpcbf.sh
-          composer fix
           composer test
 
       - name: Lint script
         if: steps.changed-script.outputs.any_changed == 'true'
-        continue-on-error: true
         run: |
-          npm run lint:fix:js
           npm run lint:js
 
       - name: Lint stylesheet
         if: steps.changed-stylesheet.outputs.any_changed == 'true'
-        continue-on-error: true
         run: |
-          npm run lint:fix:styles
           npm run lint:styles
 
       - name: Lint i18n
         if: steps.changed-i18n.outputs.any_changed == 'true'
-        continue-on-error: true
         run: |
           npm run lint:i18n
-
-      # Only patch code when it is a push event
-      - name: Push the changes
-        if: github.event_name == 'push'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          if ! git diff --exit-code --quiet; then
-            git config --global user.name "github-actions"
-            git config --global user.email "github-actions@users.noreply.github.com"
-            git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-            git add .
-            git commit -am "ci: 👷 lint code to MediaWiki standards" -m "Check commit and GitHub actions for more details"
-            git pull --rebase
-            git push
-          else
-            echo "No changes to commit"
-          fi
 
   test-php:
     name: "🧪 PHP tests: MW ${{ matrix.mw }}, PHP ${{ matrix.php }}"
