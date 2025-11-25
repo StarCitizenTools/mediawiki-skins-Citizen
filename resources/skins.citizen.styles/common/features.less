@@ -126,9 +126,6 @@
 			transition-property: opacity;
 		}
 
-
-
-
 		.citizen-scroll--down {
 			// Need the unit for calc() (#1058)
 			// stylelint-disable-next-line length-zero-no-unit
@@ -137,8 +134,8 @@
 			// Because we have already used `transform` to hide the header
 			// If we use bottom in the meantime, the transition will not work.
 
-			
-            .citizen-sticky-header-container, // header should use the same timing function
+			// header should use the same timing function
+			.citizen-sticky-header-container,
 			.citizen-header,
 			.citizen-toc,
 			.page-actions {
