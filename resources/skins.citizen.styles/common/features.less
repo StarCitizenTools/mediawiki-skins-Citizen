@@ -106,7 +106,9 @@
 		.citizen-page-heading,
 		.citizen-toc,
 		.page-actions {
+			// use ease-out when scrolling up, in consistence with the title bar (.citizen-sticky-header-container)
 			transition-timing-function: var( --transition-timing-function-ease-out );
+			// use the same duration as the title bar
 			transition-duration: var( --transition-duration-medium );
 		}
 
@@ -128,18 +130,16 @@
 			// Need the unit for calc() (#1058)
 			// stylelint-disable-next-line length-zero-no-unit
 			--height-sticky-header: 0px !important;
-			--header-size-block-end: 0;
+			// Just do not modify --header-size-block-end
+			// Because we have already used `transform` to hide the header
+			// If we use bottom in the meantime, the transition will not work.
 
+			// header should use the same timing function
+			.citizen-sticky-header-container,
 			.citizen-header,
 			.citizen-toc,
 			.page-actions {
 				transition-timing-function: var( --transition-timing-function-ease-in );
-				transition-duration: var( --transition-duration-base );
-			}
-
-			// HACK: Stop the page actions from flickering when the header is hidden
-			.page-actions {
-				transition-property: transform;
 			}
 
 			.citizen-header {
