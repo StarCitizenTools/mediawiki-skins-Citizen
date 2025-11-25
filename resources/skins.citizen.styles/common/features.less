@@ -106,7 +106,9 @@
 		.citizen-page-heading,
 		.citizen-toc,
 		.page-actions {
+			// use ease-out when scrolling up, in consistence with the title bar (.citizen-sticky-header-container)
 			transition-timing-function: var( --transition-timing-function-ease-out );
+			// use the same duration as the title bar
 			transition-duration: var( --transition-duration-medium );
 		}
 
@@ -125,14 +127,6 @@
 		}
 
 
-
-		.citizen-header,
-		.citizen-toc,
-		.page-actions {
-			// use ease-out when scrolling up, in consistence with the title bar (.citizen-sticky-header-container)
-			transition-timing-function: var( --transition-timing-function-ease-out );
-			transition-duration: var( --transition-duration-medium ); // use the same duration as the title bar
-		}
 
 
 		.citizen-scroll--down {
