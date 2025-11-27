@@ -140,10 +140,6 @@
 	--header-border-inline-start-width: 0px;
 	--header-border-inline-end-width: 0px;
 
-	// Only block-start is needed because sticky header is always on top
-	--header-offset-block-start: calc( var( --header-size-block-start ) + var( --height-sticky-header ) );
-	--header-offset-block-end: var( --header-size-block-end );
-
 	// Always default to bottom in mobile for now
 	@media ( max-width: @max-width-breakpoint-tablet ) {
 		--header-direction: row;
@@ -222,4 +218,11 @@
 	--transition-menu: @transition-menu;
 	--transition-duration-base: 100ms;
 	--transition-duration-medium: 250ms;
+}
+
+// These values requires input from the body element
+body {
+	// Only block-start is needed because sticky header is always on top
+	--header-offset-block-start: calc( var( --header-size-block-start ) + var( --height-sticky-header ) );
+	--header-offset-block-end: var( --header-size-block-end );
 }
