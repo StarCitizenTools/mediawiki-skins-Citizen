@@ -42,7 +42,3 @@ Thumbs.db
 /.htaccess
 /.htpasswd
 .eslintcache
-
-# Storybook
-/.storybook/resolve-less-imports/
-/.storybook/integration.less.vscode/
