@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.11.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.10.0...v3.11.0) (2025-11-27)
+
+
+### Features
+
+* **core:** ✨ use table icon for SMW and Cargo ([c99f053](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c99f0539ba807386f71958e4c526b3f4a086b86e))
+* **PageForms:** ✨ add icon for Page Forms button ([9c4bd7b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9c4bd7ba96c686039023cd65f804b139a3346882)), closes [#1200](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1200)
+
+
+### Bug Fixes
+
+* **pageActions:** fixes transition for page actions and ToC buttons ([#1199](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1199)) ([4ba8120](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4ba812093a0acfcbf5d1b8de193abac2e0eac0b9)), closes [#1193](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1193)
+* **stickyHeader:** 🐛 sticky element should collapse when sticky header is hidden ([4458ddd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4458ddd3e98555413b853fdcc22945711dee70c3)), closes [#1195](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1195)
+* **tests:** 🐛 fix incorrect namespace in CitizenComponentBodyContentTest ([56ea7e6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/56ea7e676c8a6a97b3e9ccba9d13a1f3ddeb7869))
+
+
+### Performance Improvements
+
+* **core:** ⚡️ re-use the same frame counting function ([7b0894b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7b0894b491e6e51c4470483ad5343c7184f64bba))
+
+
+### Miscellaneous Chores
+
+* **dev-deps:** 🔧 revert ESLint to v8 ([20d5dc1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/20d5dc17eb74f7063264bdab9f594139678f9324))
+
 ## [3.10.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.9.0...v3.10.0) (2025-10-28)
 
 
