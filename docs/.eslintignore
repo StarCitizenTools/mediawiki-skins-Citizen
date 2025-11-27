@@ -1,0 +1,7 @@
+# Unignore .vitepress directory
+!/.vitepress/**
+
+# Ignore build artifacts
+.vitepress/dist
+.vitepress/cache
+node_modules

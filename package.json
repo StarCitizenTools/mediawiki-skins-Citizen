@@ -11,6 +11,8 @@
 		"docs:install": "cd docs && npm install",
 		"docs:dev": "cd docs && npm run docs:dev",
 		"docs:build": "cd docs && npm run docs:build",
+		"docs:preview": "cd docs && npm run docs:preview",
+		"docs:lint": "cd docs && npm run lint",
 		"test": "",
 		"prepare": "husky"
 	},

@@ -1,0 +1,21 @@
+{
+	"root": true,
+	"extends": [
+		"wikimedia/common",
+		"wikimedia/node"
+	],
+	"overrides": [
+		{
+			"files": [ "**/*.mts", "**/*.ts" ],
+			"parser": "@typescript-eslint/parser",
+			"plugins": [ "@typescript-eslint" ],
+			"extends": [
+				"wikimedia/common",
+				"wikimedia/node"
+			],
+			"rules": {
+				"strict": "off"
+			}
+		}
+	]
+}

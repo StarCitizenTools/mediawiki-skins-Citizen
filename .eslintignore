@@ -1,7 +1,8 @@
-/docs/
-/i18n/
-/node_modules/
-/vendor/
+dist/
+docs/
+i18n/
+node_modules/
+vendor/
 
 # ES6 files
 resources/skins.citizen.scripts.search/typeahead-init.js
