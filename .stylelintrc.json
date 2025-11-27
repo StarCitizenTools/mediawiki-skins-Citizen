@@ -29,6 +29,7 @@
 				"ignoreProperties": {
 					"accent-color": [],
 					"interpolate-size": [ "allow-keywords" ],
+					"text-spacing-trim": [ "normal" ],
 					"text-wrap": [ "pretty" ],
 					"user-select": [ "none" ]
 				},
