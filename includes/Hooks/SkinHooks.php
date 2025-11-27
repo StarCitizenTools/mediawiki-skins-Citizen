@@ -412,7 +412,9 @@ class SkinHooks implements
 			// Extension:VisualEditor
 			've-edit' => 'edit',
 			// Extension:DiscussionTools
-			'addsection' => 'speechBubbleAdd'
+			'addsection' => 'speechBubbleAdd',
+			// Extension:Page Forms
+			'formedit' => 'tableAddRowBefore'
 		];
 
 		// If both visual edit and source edit buttons are present
