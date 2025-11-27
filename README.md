@@ -14,7 +14,7 @@
 
 Citizen is a beautiful, usable, responsive [MediaWiki](https://www.mediawiki.org) skin that makes [extensions](https://www.mediawiki.org/wiki/Manual:Extensions) part of the cohesive experience. It was initially created for the [Star Citizen Wiki](https://starcitizen.tools) but is flexible to run on various MediaWiki configurations.
 
-Live demo: [English](https://starcitizen.tools), [German](https://star-citizen.wiki), [Chinese](https://citizenwiki.cn)
+Demo: [Star Citizen Wiki](https://starcitizen.tools) | [Other curated wikis](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/wiki/Curated-wikis)
 
 ## Notable features
 - **Responsive layout**: Responsive and able to adapt to different screen sizes. 📱💻🖥️
@@ -37,7 +37,7 @@ wfLoadSkin( 'Citizen' );
 ## Configurations
 **The skin works out of the box without any configurations.**
 The config flags allow more customization on the specific features in the skin.
-Check out [this wiki page](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/wiki/Using-Citizen-styles) on how to adapt Citizen styles on your wiki.
+Check out [this wiki page](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/wiki/Using-Citizen) on how to adapt Citizen styles on your wiki.
 
 ### Appearance
 Name | Description | Values | Default
