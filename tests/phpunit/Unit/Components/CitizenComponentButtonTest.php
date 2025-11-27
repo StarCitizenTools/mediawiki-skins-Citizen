@@ -120,7 +120,8 @@ class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 	public static function provideButtonData(): iterable {
 		yield 'Basic Button' => [
 			'label' => 'Click Me',
-			'expectedClasses' => 'cdx-button cdx-button--weight-normal cdx-button--action-default cdx-button--size-medium',
+			'expectedClasses' => 'cdx-button cdx-button--weight-normal ' .
+				'cdx-button--action-default cdx-button--size-medium',
 			'weight' => 'normal',
 			'action' => 'default',
 			'size' => 'medium',
@@ -129,7 +130,8 @@ class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 		];
 		yield 'Primary progressive large button' => [
 			'label' => 'Submit',
-			'expectedClasses' => 'cdx-button cdx-button--weight-primary cdx-button--action-progressive cdx-button--size-large',
+			'expectedClasses' => 'cdx-button cdx-button--weight-primary ' .
+				'cdx-button--action-progressive cdx-button--size-large',
 			'weight' => 'primary',
 			'action' => 'progressive',
 			'size' => 'large',
@@ -138,7 +140,9 @@ class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 		];
 		yield 'Quiet destructive button with link' => [
 			'label' => 'Delete',
-			'expectedClasses' => 'cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--action-destructive cdx-button--size-medium',
+			'expectedClasses' => 'cdx-button cdx-button--fake-button ' .
+				'cdx-button--fake-button--enabled cdx-button--weight-quiet ' .
+				'cdx-button--action-destructive cdx-button--size-medium',
 			'weight' => 'quiet',
 			'action' => 'destructive',
 			'size' => 'medium',
@@ -147,7 +151,8 @@ class CitizenComponentButtonTest extends MediaWikiUnitTestCase {
 		];
 		yield 'Icon only button' => [
 			'label' => '',
-			'expectedClasses' => 'cdx-button cdx-button--icon-only cdx-button--weight-normal cdx-button--action-default cdx-button--size-medium',
+			'expectedClasses' => 'cdx-button cdx-button--icon-only cdx-button--weight-normal ' .
+				'cdx-button--action-default cdx-button--size-medium',
 			'weight' => 'normal',
 			'action' => 'default',
 			'size' => 'medium',

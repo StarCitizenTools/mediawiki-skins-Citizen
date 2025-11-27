@@ -114,8 +114,10 @@ class SkinHooks implements
 		$this->addSiteTools( $skin, $bar );
 
 		$iconMap = [
-			'n-specialpages' => 'specialPages', // TODO: Remove when we drop MW 1.43 support AND T405413 is resolved
-			't-specialpages' => 'specialPages', // TODO: Remove when we drop MW 1.43 support
+			// TODO: Remove when we drop MW 1.43 support AND T405413 is resolved
+			'n-specialpages' => 'specialPages',
+			// TODO: Remove when we drop MW 1.43 support
+			't-specialpages' => 'specialPages',
 			't-upload' => 'upload',
 		];
 

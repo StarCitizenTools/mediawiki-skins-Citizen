@@ -183,7 +183,8 @@ class SkinCitizen extends SkinMustache {
 		}
 
 		// HACK: So that we only get the tagline once
-		$parentData['data-sticky-header']['html-sticky-header-tagline'] = $this->prepareStickyHeaderTagline( $parentData['data-page-heading']['html-tagline'] );
+		$parentData['data-sticky-header']['html-sticky-header-tagline'] =
+			$this->prepareStickyHeaderTagline( $parentData['data-page-heading']['html-tagline'] );
 
 		// HACK: So that we can use Icon.mustache in Header__logo.mustache
 		$parentData['data-logos']['icon-home'] = 'home';

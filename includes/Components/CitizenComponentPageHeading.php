@@ -125,7 +125,9 @@ class CitizenComponentPageHeading implements CitizenComponent {
 		if ( !$editCount ) {
 			return '';
 		}
-		$msgEditCount = $this->localizer->msg( 'usereditcount' )->numParams( number_format( (float)$editCount, 0 ) )->text();
+		$msgEditCount = $this->localizer->msg( 'usereditcount' )
+			->numParams( number_format( (float)$editCount, 0 ) )
+			->text();
 		$editCountHref = SkinComponentUtils::makeSpecialUrlSubpage( 'Contributions', $user );
 		$link = Html::element( 'a', [ 'href' => $editCountHref ], $msgEditCount );
 

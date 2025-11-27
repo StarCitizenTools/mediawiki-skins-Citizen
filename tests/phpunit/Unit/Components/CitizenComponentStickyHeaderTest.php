@@ -20,7 +20,11 @@ class CitizenComponentStickyHeaderTest extends MediaWikiUnitTestCase {
 	 * @covers ::getTemplateData
 	 * @dataProvider provideVisualEditorTabPosition
 	 */
-	public function testGetTemplateData( bool $veTabFirst, string $expectedFirstEditIcon, string $expectedSecondEditIcon ) {
+	public function testGetTemplateData(
+		bool $veTabFirst,
+		string $expectedFirstEditIcon,
+		string $expectedSecondEditIcon
+	): void {
 		$header = new CitizenComponentStickyHeader( $veTabFirst );
 		$data = $header->getTemplateData();
 

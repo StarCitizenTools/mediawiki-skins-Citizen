@@ -91,7 +91,7 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 
 		$skin = $this->createSkinInstance();
 
-		$this->assertEmpty( $skin->getOutput()->getLinkTags() );
+		$this->assertSame( [], $skin->getOutput()->getLinkTags() );
 	}
 
 	/**
