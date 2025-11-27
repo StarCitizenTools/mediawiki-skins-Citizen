@@ -1,10 +1,10 @@
-name: 📖 Deploy docs
+name: 🔨📖 Deploy docs
 
 on:
   push:
     branches: [main]
     paths:
-      - 'docs/**'
+      - "docs/**"
   workflow_dispatch:
 
 permissions:
@@ -54,4 +54,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-

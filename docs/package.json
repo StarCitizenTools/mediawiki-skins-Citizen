@@ -6,16 +6,19 @@
 		"docs:dev": "vitepress dev",
 		"docs:build": "vitepress build",
 		"docs:preview": "vitepress preview",
-		"lint": "npm -s run lint:js",
-		"lint:fix": "npm -s run lint:fix:js",
+		"lint": "npm -s run lint:js && npm -s run lint:md",
+		"lint:fix": "npm -s run lint:fix:js && npm -s run lint:fix:md",
 		"lint:js": "eslint . .vitepress --ext .mts,.ts,.js,.vue --no-error-on-unmatched-pattern",
-		"lint:fix:js": "npm run lint:js -- --fix"
+		"lint:fix:js": "npm run lint:js -- --fix",
+		"lint:md": "markdownlint \"**/*.md\" --ignore node_modules",
+		"lint:fix:md": "npm run lint:md -- --fix"
 	},
 	"devDependencies": {
 		"@typescript-eslint/eslint-plugin": "^8.48.0",
 		"@typescript-eslint/parser": "^8.48.0",
 		"eslint": "8.57.1",
 		"eslint-config-wikimedia": "^0.32.2",
+		"markdownlint-cli": "^0.46.0",
 		"typescript": "^5.9.3",
 		"vitepress": "^1.0.0",
 		"vue": "^3.0.0"

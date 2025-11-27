@@ -3,7 +3,7 @@ on:
     branches:
       - main
     paths-ignore:
-      - 'docs/**'
+      - "docs/**"
 
 permissions:
   contents: write
