@@ -1,0 +1,30 @@
+name: 🩹📖 Lint Docs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+  pull_request:
+    paths:
+      - "docs/**"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
+
+      - name: Install dependencies
+        run: cd docs && npm ci
+
+      - name: Lint Docs
+        run: cd docs && npm run lint
