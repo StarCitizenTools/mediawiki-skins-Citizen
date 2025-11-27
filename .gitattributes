@@ -18,11 +18,13 @@ README.md export-ignore
 .github export-ignore
 
 # Composer
-bin export-ignore
 .phpcs.xml export-ignore
 composer.json export-ignore
 composer.lock export-ignore
 vendor export-ignore
+
+# Docs
+docs export-ignore
 
 # Release-please
 .release-please-manifest.json export-ignore

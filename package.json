@@ -8,6 +8,9 @@
 		"lint:js": "eslint --cache --max-warnings 0 .",
 		"lint:styles": "stylelint \"**/*.{less,css,vue}\"",
 		"lint:i18n": "banana-checker --requireLowerCase=0 i18n/",
+		"docs:install": "cd docs && npm install",
+		"docs:dev": "cd docs && npm run docs:dev",
+		"docs:build": "cd docs && npm run docs:build",
 		"test": "",
 		"prepare": "husky"
 	},
