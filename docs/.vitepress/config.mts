@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: '/mediawiki-skins-Citizen/',
   title: "Citizen",
   description: "Documentation for Citizen Skin",
   srcDir: 'src',
