@@ -295,13 +295,13 @@ class SkinHooks implements
 			'contributions' => 'userContributions',
 			'emailuser' => 'message',
 			// Extension:Cargo
-			'cargo-pagevalues' => 'database',
+			'cargo-pagevalues' => 'table',
 			// Extension:CiteThisPage
 			'citethispage' => 'quotes',
 			// Extension:CreateRedirect
 			'createredirect' => 'articleRedirect',
 			// Extension:SemanticMediaWiki
-			'smwbrowselink' => 'database',
+			'smwbrowselink' => 'table',
 			// Extension:UrlShortener
 			'urlshortener' => 'link',
 			'urlshortener-qrcode' => 'qrCode',
