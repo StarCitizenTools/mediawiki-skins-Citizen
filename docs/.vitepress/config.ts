@@ -9,10 +9,11 @@ export default defineConfig( {
 	cleanUrls: true,
 	lastUpdated: true,
 	themeConfig: {
+		logo: '/img/layout.svg',
 		nav: [
 			{
-				text: 'Docs',
-				link: '/changelogs',
+				text: 'Guide',
+				link: '/guide/introduction',
 			},
 			{
 				text: pkg.version,
@@ -33,18 +34,79 @@ export default defineConfig( {
 
 		sidebar: [
 			{
+				text: 'Guide',
+				collapsed: false,
+				items: [
+					{
+						text: 'Introduction 🚧',
+						link: '/guide/introduction',
+					},
+					{
+						text: 'Installation 🚧',
+						link: '/guide/installation',
+					},
+				],
+			},
+			{
+				text: 'Configuration',
+				collapsed: false,
+				items: [
+					{
+						text: 'Site config',
+						link: '/config/',
+					},
+					{
+						text: 'Extensions 🚧',
+						link: '/config/extensions',
+					},
+				],
+			},
+			{
+				text: 'Customization',
+				collapsed: false,
+				items: [
+					{
+						text: 'Theming 🚧',
+						link: '/customization/theming',
+					},
+					{
+						text: 'Command palette 🚧',
+						link: '/customization/command-palette',
+					},
+					{
+						text: 'Utility classes',
+						link: '/customization/utility-classes',
+					},
+					{
+						text: 'Wiki templates 🚧',
+						link: '/customization/wiki-templates',
+					},
+				],
+			},
+			{
+				text: 'Community',
+				collapsed: false,
+				items: [
+					{
+						text: 'Showcase',
+						link: '/community/showcase',
+					},
+					{
+						text: 'Tips and tricks 🚧',
+						link: '/community/tips',
+					},
+				],
+			},
+			{
+				text: 'Project',
 				items: [
 					{
 						text: 'Changelogs',
-						link: '/changelogs',
+						link: '/changelogs/',
 					},
 					{
 						text: 'Contribute',
-						link: '/docs/contribute',
-					},
-					{
-						text: 'Site config',
-						link: '/docs/site-config',
+						link: '/contribute/',
 					},
 				],
 			},

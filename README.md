@@ -12,9 +12,15 @@
 
 ![](https://upload.wikimedia.org/wikipedia/commons/0/07/Screenshot-skin-citizen.png)
 
-Citizen is a beautiful, usable, responsive [MediaWiki](https://www.mediawiki.org) skin that makes [extensions](https://www.mediawiki.org/wiki/Manual:Extensions) part of the cohesive experience. It was initially created for the [Star Citizen Wiki](https://starcitizen.tools) but is flexible to run on various MediaWiki configurations.
+<h3 align="center">
+  Citizen is a beautiful, usable, responsive <a href="https://www.mediawiki.org">MediaWiki</a> skin that makes <a href="https://www.mediawiki.org/wiki/Manual:Extensions">extensions</a> part of the cohesive experience.
+</h3>
 
-Demo: [Star Citizen Wiki](https://starcitizen.tools) | [Other curated wikis](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/wiki/Curated-wikis)
+<p align="center">
+  <a href="https://starcitizen.tools">🚀 Live demo</a> |
+  <a href="https://starcitizentools.github.io/mediawiki-skins-Citizen/community/showcase/">✨ Showcase</a> |
+  <a href="https://starcitizentools.github.io/mediawiki-skins-Citizen">📚 Documentation</a>
+</p>
 
 ## Notable features
 - **Responsive layout**: Responsive and able to adapt to different screen sizes. 📱💻🖥️
@@ -35,7 +41,7 @@ wfLoadSkin( 'Citizen' );
 3. **✔️Done** - Navigate to Special:Version on your wiki to verify that the skin is successfully installed.
 
 ## Configurations
-Check out the [configuration documentation](https://starcitizentools.github.io/mediawiki-skins-Citizen/docs/site-config/) for more details.
+Check out the [configuration documentation](https://starcitizentools.github.io/mediawiki-skins-Citizen/config/) for more details.
 
 ## Requirements
 * [MediaWiki](https://www.mediawiki.org) 1.43.0 or later

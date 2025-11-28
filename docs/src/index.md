@@ -8,8 +8,8 @@ head:
 
 hero:
   name: "Citizen"
-  text: "Beautiful, usable, responsive MediaWiki skin"
-  tagline: Documentation coming soon!
+  text: "Elevate your wiki"
+  tagline: A beautiful, usable, and responsive MediaWiki skin
 
   actions:
     - theme: alt
