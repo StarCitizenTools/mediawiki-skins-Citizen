@@ -23,9 +23,8 @@ const changelog = computed( () => formatChangelog( md, release[ type.value ].bod
     </header>
     <div v-html="changelog" />
     <Contributors
-      :body="release[type].body!"
-      :author="release[type].author.login"
-      :tag="release[type].tag_name"
+      v-if="release[type].body"
+      :body="release[type].body"
     />
   </div>
   <div class="fullChangelog">
