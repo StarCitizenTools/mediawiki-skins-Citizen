@@ -24,7 +24,9 @@ jobs:
           cache-dependency-path: docs/package-lock.json
 
       - name: Install dependencies
-        run: cd docs && npm ci
+        working-directory: docs
+        run: npm ci
 
       - name: Lint Docs
-        run: cd docs && npm run lint
+        working-directory: docs
+        run: npm run lint
