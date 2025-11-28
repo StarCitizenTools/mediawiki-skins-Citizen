@@ -18,8 +18,8 @@ const release = computed( () => changelogs.find( r => r.tag_name === tag.value )
 const latestStableTag = computed( () => {
 	const stable = changelogs
 		.filter( r => !r.draft && !r.prerelease )
-		// eslint-disable-next-line max-len
-		.toSorted( ( a, b ) => new Date( b.published_at! ).getTime() - new Date( a.published_at! ).getTime() );
+		.slice()
+		.sort( ( a, b ) => new Date( b.published_at! ).getTime() - new Date( a.published_at! ).getTime() );
 	return stable[ 0 ]?.tag_name;
 } );
 const isLatest = computed( () => latestStableTag.value === tag.value );
@@ -40,7 +40,7 @@ const isLatest = computed( () => latestStableTag.value === tag.value );
       {{ new Date(release!.published_at!).toLocaleDateString('en', { dateStyle: 'medium' }) }}
     </time>
     <div v-html="renderMarkdown(release!.body)" />
-    <Contributors :body="release!.body!" :author="release!.author.login" :tag="release!.tag_name" />
+    <Contributors :body="release!.body!" />
   </div>
   <div v-else>
     <p>Release not found.</p>

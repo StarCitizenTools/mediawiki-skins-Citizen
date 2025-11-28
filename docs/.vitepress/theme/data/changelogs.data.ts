@@ -3,7 +3,7 @@ import { Octokit } from '@octokit/rest';
 import { defineLoader } from 'vitepress';
 import { GITHUB_OWNER, GITHUB_REPO } from '../../constants';
 
-const octokit = new Octokit();
+const octokit = new Octokit( { auth: process.env.GITHUB_TOKEN } );
 
 type GitHubReleaseList = GetResponseDataTypeFromEndpointMethod<typeof octokit.repos.listReleases>;
 
