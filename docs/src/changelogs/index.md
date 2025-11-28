@@ -1,5 +1,4 @@
 ---
-title: Changelogs
 description: Changelogs of all Citizen stable releases.
 lastUpdated: false
 editLink: false
