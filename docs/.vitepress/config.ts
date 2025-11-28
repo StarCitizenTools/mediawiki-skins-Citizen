@@ -5,6 +5,7 @@ export default defineConfig( {
 	title: 'Citizen',
 	description: 'Documentation for Citizen Skin',
 	srcDir: 'src',
+	cleanUrls: true,
 	themeConfig: {
 		nav: [
 			{ text: 'Home', link: '/' },
