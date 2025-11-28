@@ -36,15 +36,15 @@ export default defineConfig( {
 				items: [
 					{
 						text: 'Changelogs',
-						link: '/changelogs/',
+						link: '/changelogs',
 					},
 					{
 						text: 'Contribute',
-						link: '/contribute/',
+						link: '/docs/contribute',
 					},
 					{
 						text: 'Site config',
-						link: '/site-config/',
+						link: '/docs/site-config',
 					},
 				],
 			},

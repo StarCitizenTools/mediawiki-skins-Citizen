@@ -35,7 +35,7 @@ wfLoadSkin( 'Citizen' );
 3. **✔️Done** - Navigate to Special:Version on your wiki to verify that the skin is successfully installed.
 
 ## Configurations
-Check out the [configuration documentation](https://starcitizentools.github.io/mediawiki-skins-Citizen/site-config/) for more details.
+Check out the [configuration documentation](https://starcitizentools.github.io/mediawiki-skins-Citizen/docs/site-config/) for more details.
 
 ## Requirements
 * [MediaWiki](https://www.mediawiki.org) 1.43.0 or later
