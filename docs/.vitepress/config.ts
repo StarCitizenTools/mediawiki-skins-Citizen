@@ -33,6 +33,10 @@ export default defineConfig( {
 						text: 'Changelogs',
 						link: '/changelogs/',
 					},
+					{
+						text: 'Site config',
+						link: '/site-config/',
+					},
 				],
 			},
 		],

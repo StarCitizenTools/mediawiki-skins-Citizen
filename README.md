@@ -35,57 +35,7 @@ wfLoadSkin( 'Citizen' );
 3. **✔️Done** - Navigate to Special:Version on your wiki to verify that the skin is successfully installed.
 
 ## Configurations
-**The skin works out of the box without any configurations.**
-The config flags allow more customization on the specific features in the skin.
-Check out [this wiki page](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/wiki/Using-Citizen) on how to adapt Citizen styles on your wiki.
-
-### Appearance
-Name | Description | Values | Default
-:--- | :--- | :--- | :---
-`$wgCitizenThemeDefault` | The default theme of the skin | `auto` - switch between light and dark according to OS/browser settings; `light`; `dark` | `auto`
-`$wgCitizenEnableCollapsibleSections` | Enables or disable collapsible sections on content pages | `true` - enable; `false` - disable | `true`
-`$wgCitizenShowPageTools` | The condition of page tools visibility | `true` - always visible; `login` - visible to logged-in users; `permission` - visible to users with the right permissions | `true`
-`$wgCitizenGlobalToolsPortlet` | ID of the portlet to attach the global tools | string |
-`$wgCitizenEnableDrawerSiteStats` | Enables the site statistics in drawer menu | `true` - enable; `false` - disable | `true`
-`$wgCitizenUseNumberFormatter` | Use NumberFormatter for site statistics, which allows formatting number in a localized way | `true` - enable; `false` - disable | `true`
-`$wgCitizenThemeColor` | The color defined in the `theme-color` meta tag | Hex color code | `#0d0e12`
-`$wgCitizenEnableARFonts` | Enable included Noto Naskh Arabic for wikis that serve Arabic | `true` - enable; `false` - disable | `false`
-`$wgCitizenEnableCJKFonts` | Enable included Noto Sans CJK for wikis that serves CJK languages | `true` - enable; `false` - disable | `false`
-`$wgCitizenEnablePreferences` | Enable the preferences menu | `true` - enable; `false` - disable | `true`
-`$wgCitizenOverflowInheritedClasses` | Defines css classes inherited by the overflow wrapper | List of css classes. Extend with `$wgCitizenOverflowInheritedClasses[] = 'my_class';` | `["floatleft", "floatright" ]`
-`$wgCitizenOverflowNowrapClasses` | Defines css classes ignored by the overflow wrapper | List of css classes. Extend with `$wgCitizenOverflowNowrapClasses[] = 'my_class';` | `["citizen-table-nowrap", "diff", "mw-changeslist-line", "mw-recentchanges-table", "infobox", "cargoDynamicTable", "dataTable", "srf-datatable", "smw-datatable", "mw-capiunto-infobox" ]`
-`$wgCitizenHeaderPosition` | Position of the header on the desktop layout | `left`, `right`, `top`, `bottom` | `left`
-
-### Command palette
-Name | Description | Values | Default
-:--- | :--- | :--- | :---
-`$wgCitizenEnableCommandPalette` | Enables or disable the command palette. Disable to use the old search module | `true` - enable; `false` - disable | `true`
-
-### Search suggestions
-These options are only for the old search module when the command palette is disabled.
-
-Name | Description | Values | Default
-:--- | :--- | :--- | :---
-`$wgCitizenSearchModule` | Which ResourceLoader module to use for search suggestion | `skins.citizen.search`; `mediawiki.searchSuggest`; string | `skins.citizen.search`
-`$wgCitizenSearchGateway` | Which gateway to use for fetching search suggestion |`mwActionApi`; `mwRestApi`; `smwAskApi`; string | `mwRestApi`
-`$wgCitizenSearchDescriptionSource` | Source of description text on search suggestions (only takes effect if `$wgCitizenSearchGateway` is `mwActionApi`) | `wikidata` - Use description provided by [WikibaseLib](Extension:WikibaseLib) or [ShortDescription](https://www.mediawiki.org/wiki/Extension:ShortDescription); `textextracts` - Use description provided by [TextExtracts](https://www.mediawiki.org/wiki/Extension:TextExtracts); `pagedescription` - Use description provided by [Description2](https://www.mediawiki.org/wiki/Extension:Description2) or any other extension that sets the `description` page property | `textextracts`
-`$wgCitizenMaxSearchResults` | Max number of search suggestions | Integer > 0 | `10`
-
-### Webapp manifest
-Name | Description | Values | Default
-:--- | :--- | :--- | :---
-`$wgCitizenEnableManifest` | Enable or disable [web app manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest) | `true` - enable; `false` - disable | `true`
-`$wgCitizenManifestOptions` | Options of the web app manifest | - | See below
-
-```php
-$wgCitizenManifestOptions = [
-	'background_color' => '#0d0e12',
-	'description' => '',
-	'short_name' => '',
-	'theme_color' => "#0d0e12",
-	'icons' => [],
-];
-```
+Check out the [configuration documentation](https://starcitizentools.github.io/mediawiki-skins-Citizen/mediawiki-config/) for more details.
 
 ## Requirements
 * [MediaWiki](https://www.mediawiki.org) 1.43.0 or later
