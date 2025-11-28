@@ -27,4 +27,4 @@ You can submit translations via [TranslateWiki.net](https://translatewiki.net/w/
 
 ## Questions
 
-If you have any questions about contributing to *Citizen*, feel free to [open an issue](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/new/choose) in the *Citizen* repository and ask. There are additional resources in the [GitHub wiki](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/wiki) as well.
+If you have any questions about contributing to *Citizen*, feel free to [open an issue](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/new/choose) in the *Citizen* repository and ask.

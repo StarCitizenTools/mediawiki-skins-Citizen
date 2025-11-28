@@ -26,7 +26,7 @@ export default defineConfig( {
 						text: 'Changelogs',
 						link: '/changelogs/',
 						activeMatch: '/changelogs/',
-					}
+					},
 				],
 			},
 		],
@@ -37,6 +37,10 @@ export default defineConfig( {
 					{
 						text: 'Changelogs',
 						link: '/changelogs/',
+					},
+					{
+						text: 'Contribute',
+						link: '/contribute/',
 					},
 					{
 						text: 'Site config',
@@ -73,7 +77,7 @@ export default defineConfig( {
 
 		editLink: {
 			pattern: 'https://github.com/StarCitizenTools/mediawiki-skins-Citizen/edit/main/docs/src/:path',
-			text: 'Edit this page on GitHub',
+			text: 'Help us improve this page',
 		},
 	},
 } );
