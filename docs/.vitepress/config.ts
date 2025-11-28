@@ -6,10 +6,25 @@ export default defineConfig( {
 	description: 'Documentation for Citizen Skin',
 	srcDir: 'src',
 	cleanUrls: true,
+	lastUpdated: true,
 	themeConfig: {
 		nav: [
-			{ text: 'Home', link: '/' },
-			{ text: 'Changelogs', link: '/changelogs' },
+			{
+				text: 'Docs',
+				link: '/changelogs',
+				activeMatch: '/changelogs/',
+			},
+		],
+
+		sidebar: [
+			{
+				items: [
+					{
+						text: 'Changelogs',
+						link: '/changelogs/',
+					},
+				]
+			}
 		],
 
 		socialLinks: [
