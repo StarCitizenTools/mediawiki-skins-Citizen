@@ -65,5 +65,10 @@ export default defineConfig( {
 		search: {
 			provider: 'local',
 		},
+
+		editLink: {
+			pattern: 'https://github.com/StarCitizenTools/mediawiki-skins-Citizen/edit/main/docs/src/:path',
+			text: 'Edit this page on GitHub',
+		},
 	},
 } );
