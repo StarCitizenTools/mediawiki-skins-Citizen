@@ -5,8 +5,10 @@ description: MediaWiki site configuration for the Citizen skin.
 
 # Site configuration
 
-**Citizen works out of the box without any configurations!**
+::: tip Citizen works out of the box without any configurations!
+
 The site configs allow more customization on the specific features in the skin.
+:::
 
 ## Appearance
 
