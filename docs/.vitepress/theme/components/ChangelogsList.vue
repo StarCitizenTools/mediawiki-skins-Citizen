@@ -24,11 +24,7 @@
 		</time>
 		<!-- eslint-disable-next-line vue/no-v-html -->
 		<div v-html="renderMarkdown( release.body )" />
-		<ContributorList
-			:body="release.body!"
-			:author="release.author.login"
-			:tag="release.tag_name"
-		/>
+		<ContributorList :body="release.body!" />
 	</div>
 </template>
 
