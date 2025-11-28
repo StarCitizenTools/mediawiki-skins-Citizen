@@ -24,7 +24,7 @@ const changelog = computed( () => formatChangelog( md, release[ type.value ].bod
     <div v-html="changelog" />
     <Contributors
       v-if="release[type].body"
-      :body="release[type].body"
+      :body="release[type].body!"
     />
   </div>
   <div class="fullChangelog">
