@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress';
+import pkg from '../../package.json';
 
 export default defineConfig( {
 	base: '/mediawiki-skins-Citizen/',
@@ -12,7 +13,16 @@ export default defineConfig( {
 			{
 				text: 'Docs',
 				link: '/changelogs',
-				activeMatch: '/changelogs/',
+			},
+			{
+				text: pkg.version,
+				items: [
+					{
+						text: 'Changelogs',
+						link: '/changelogs/',
+						activeMatch: '/changelogs/',
+					},
+				],
 			},
 		],
 
