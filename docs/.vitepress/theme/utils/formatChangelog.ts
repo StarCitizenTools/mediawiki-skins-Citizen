@@ -17,6 +17,11 @@ function formatCommitLinks( input: string ): string {
 		.replace( /\[([0-9a-f]{7})\]\((.*?)\)/g, '[`$1`]($2)' );
 }
 
+function formatCVELinks( input: string ): string {
+
+	return input.replace( /(?<!\[)`?CVE-(\d{4})-(\d+)`?(?!\])/g, '[`CVE-$1-$2`](https://www.cve.org/CVERecord?id=CVE-$1-$2)' );
+}
+
 function formatPRLinks( input: string ): string {
 	const repoUrl = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}`;
 	// eslint-disable-next-line security/detect-non-literal-regexp
@@ -38,6 +43,7 @@ export function formatChangelog(
 	text = downgradeHeadings( text );
 	text = linkContributors( text );
 	text = formatCommitLinks( text );
+	text = formatCVELinks( text );
 	text = formatPRLinks( text );
 	text = formatFullChangelogLink( text );
 
