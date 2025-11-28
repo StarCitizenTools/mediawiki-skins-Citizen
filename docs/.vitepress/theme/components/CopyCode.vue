@@ -1,48 +1,59 @@
+<template>
+	<div class="copy-code">
+		<code>{{ code }}</code>
+		<button
+			class="copy-btn"
+			:title="copied ? 'Copied' : 'Copy to clipboard'"
+			@click="copy">
+			<span
+				v-if="!copied"
+				class="icon-copy"
+				:style="{ maskImage: `url('${copyIcon}')` }"
+			/>
+			<span
+				v-else
+				class="icon-check"
+				:style="{ maskImage: `url('${checkIcon}')` }"
+			/>
+		</button>
+	</div>
+</template>
+
 <script setup lang="ts">
-import { ref } from 'vue'
-import { withBase } from 'vitepress'
+import { ref } from 'vue';
+import { withBase } from 'vitepress';
 
 const props = defineProps<{
   code: string
-}>()
+}>();
 
-const copied = ref(false)
-const copyIcon = withBase('/img/copy.svg')
-const checkIcon = withBase('/img/check.svg')
+const copied = ref( false );
+const copyIcon = withBase( '/img/copy.svg' );
+const checkIcon = withBase( '/img/check.svg' );
 
-function copy() {
-  navigator.clipboard.writeText(props.code)
-  copied.value = true
-  setTimeout(() => {
-    copied.value = false
-  }, 2000)
+async function copy() {
+	const clipboard = navigator.clipboard;
+
+	try {
+		if ( !clipboard ) {
+			throw new Error( 'Clipboard API not supported' );
+		}
+		await clipboard.writeText( props.code );
+		copied.value = true;
+		setTimeout( () => {
+			copied.value = false;
+		}, 2000 );
+	} catch {
+		copied.value = false;
+	}
 }
 </script>
-
-<template>
-  <div class="copy-code">
-    <code>{{ code }}</code>
-    <button class="copy-btn" @click="copy" :title="copied ? 'Copied' : 'Copy to clipboard'">
-      <span
-        v-if="!copied"
-        class="icon-copy"
-        :style="{ maskImage: `url('${copyIcon}')` }"
-      />
-      <span
-        v-else
-        class="icon-check"
-        :style="{ maskImage: `url('${checkIcon}')` }"
-      />
-    </button>
-  </div>
-</template>
 
 <style scoped>
 .copy-code {
   display: inline-flex;
   align-items: baseline;
   gap: 0.25rem;
-  line-height: 1.5;
 }
 
 .copy-code > code {
