@@ -8,12 +8,15 @@
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,
-		"skipLibCheck": true
+		"sourceMap": true,
+		"skipLibCheck": true,
+		"allowImportingTsExtensions": true,
+		"noEmit": true
 	},
 	"include": [
 		"src/**/*.ts",
 		"src/**/*.vue",
 		".vitepress/**/*.ts",
-		".vitepress/**/*.mts"
+		".vitepress/**/*.vue",
 	]
 }
