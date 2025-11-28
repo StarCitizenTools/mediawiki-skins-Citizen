@@ -23,8 +23,8 @@ export default defineConfig( {
 						text: 'Changelogs',
 						link: '/changelogs/',
 					},
-				]
-			}
+				],
+			},
 		],
 
 		socialLinks: [
@@ -47,5 +47,9 @@ export default defineConfig( {
 				ariaLabel: 'MediaWiki skin page',
 			},
 		],
+
+		search: {
+			provider: 'local',
+		},
 	},
 } );

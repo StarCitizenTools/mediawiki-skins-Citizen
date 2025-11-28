@@ -36,8 +36,9 @@ const isLatest = computed( () => latestStableTag.value === tag.value );
         :aria-label="`Permalink to &quot;${release.tag_name}&quot;`"
       />
     </h1>
-    <!-- eslint-disable-next-line max-len -->
-    <time :datetime="release!.published_at!">{{ new Date(release!.published_at!).toLocaleDateString('en', { dateStyle: 'medium' }) }}</time>
+    <time :datetime="release!.published_at!">
+      {{ new Date(release!.published_at!).toLocaleDateString('en', { dateStyle: 'medium' }) }}
+    </time>
     <div v-html="renderMarkdown(release!.body)" />
     <Contributors :body="release!.body!" :author="release!.author.login" :tag="release!.tag_name" />
   </div>
