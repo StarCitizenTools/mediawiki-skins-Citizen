@@ -1,9 +1,43 @@
+<template>
+	<div
+		v-for="( release, index ) of changelogs"
+		:key="release.tag_name"
+	>
+		<h2 :id="index === 0 ? 'latest' : release.tag_name">
+			<a
+				:href="withBase( `/changelogs/${release.tag_name}` )"
+			>
+				{{ release.tag_name.substring( 1 ) }}
+			</a>
+			<Badge
+				v-if="index === 0"
+				type="tip"
+				text="Latest" />
+			<a
+				class="header-anchor"
+				:href="index === 0 ? '#latest' : `#${release.tag_name}`"
+				:aria-label="`Permalink to &quot;${release.tag_name}&quot;`"
+			/>
+		</h2>
+		<time :datetime="release.published_at!">
+			{{ dateFormatter.format( new Date( release.published_at! ) ) }}
+		</time>
+		<!-- eslint-disable-next-line vue/no-v-html -->
+		<div v-html="renderMarkdown( release.body )" />
+		<ContributorList
+			:body="release.body!"
+			:author="release.author.login"
+			:tag="release.tag_name"
+		/>
+	</div>
+</template>
+
 <script setup lang="ts">
 import { withBase } from 'vitepress';
 import MarkdownIt from 'markdown-it';
 import { data as changelogs } from '../data/changelogs.data';
 import { formatChangelog } from '../utils/formatChangelog.ts';
-import Contributors from './Contributors.vue';
+import ContributorList from './ContributorList.vue';
 import { GITHUB_OWNER, GITHUB_REPO } from '../../constants';
 
 const md = new MarkdownIt( { html: true } );
@@ -20,36 +54,6 @@ const dateFormatter = new Intl.DateTimeFormat( 'en', {
 	dateStyle: 'medium'
 } );
 </script>
-
-<template>
-  <div
-    v-for="(release, index) of changelogs"
-    :key="release.tag_name"
-  >
-    <h2 :id="index === 0 ? 'latest' : release.tag_name">
-      <a
-        :href="withBase(`/changelogs/${release.tag_name}`)"
-      >
-        {{ release.tag_name.substring(1) }}
-      </a>
-      <Badge v-if="index === 0" type="tip" text="Latest" />
-      <a
-        class="header-anchor"
-        :href="index === 0 ? '#latest' : `#${release.tag_name}`"
-        :aria-label="`Permalink to &quot;${release.tag_name}&quot;`"
-      />
-    </h2>
-    <time :datetime="release.published_at!">
-      {{ dateFormatter.format(new Date(release.published_at!)) }}
-    </time>
-    <div v-html="renderMarkdown(release.body)" />
-    <Contributors
-      :body="release.body!"
-      :author="release.author.login"
-      :tag="release.tag_name"
-    />
-  </div>
-</template>
 
 <style lang="less" scoped>
 h2 {
