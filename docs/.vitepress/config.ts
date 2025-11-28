@@ -18,10 +18,15 @@ export default defineConfig( {
 				text: pkg.version,
 				items: [
 					{
+						text: 'Releases',
+						link: 'https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases',
+						target: '_blank',
+					},
+					{
 						text: 'Changelogs',
 						link: '/changelogs/',
 						activeMatch: '/changelogs/',
-					},
+					}
 				],
 			},
 		],
