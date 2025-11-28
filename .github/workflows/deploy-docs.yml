@@ -35,10 +35,12 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Install dependencies
-        run: cd docs && npm ci
+        working-directory: docs
+        run: npm ci
 
       - name: Build with VitePress
-        run: cd docs && npm run docs:build
+        working-directory: docs
+        run: npm run docs:build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
