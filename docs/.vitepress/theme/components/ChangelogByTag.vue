@@ -38,11 +38,11 @@ const isLatest = computed( () => latestStableTag.value === tag.value );
         :aria-label="`Permalink to &quot;${release.tag_name}&quot;`"
       />
     </h1>
-    <time :datetime="release!.published_at!">
-      {{ new Date(release!.published_at!).toLocaleDateString('en', { dateStyle: 'medium' }) }}
+    <time :datetime="release.published_at!">
+      {{ new Date(release.published_at!).toLocaleDateString('en', { dateStyle: 'medium' }) }}
     </time>
-    <div v-html="renderMarkdown(release!.body)" />
-    <Contributors :body="release!.body!" />
+    <div v-html="renderMarkdown(release.body)" />
+    <Contributors :body="release.body!" />
   </div>
   <div v-else>
     <p>Release not found.</p>

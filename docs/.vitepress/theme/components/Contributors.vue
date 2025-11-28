@@ -5,11 +5,11 @@ import { extractContributors } from '../utils/contributors';
 const props = defineProps<{ body: string }>();
 const { body } = toRefs( props );
 
-const nonExistent = ref<string[]>( [] );
+const nonExistent = ref<Set<string>>( new Set() );
 
 const contributors = computed( () => {
 	return extractContributors( body.value )
-		.filter( user => !nonExistent.value.includes( user ) );
+		.filter( user => !nonExistent.value.has( user ) );
 } );
 
 const listFormatter = new Intl.ListFormat( 'en', {
@@ -29,8 +29,8 @@ const contributorsText = computed( () => {
 } );
 
 function addToNonExistent( user: string ) {
-	if ( !nonExistent.value.includes( user ) ) {
-		nonExistent.value.push( user );
+	if ( !nonExistent.value.has( user ) ) {
+		nonExistent.value.add( user );
 	}
 }
 </script>
