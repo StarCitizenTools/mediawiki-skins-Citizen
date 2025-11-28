@@ -4,9 +4,12 @@
 		"wikimedia/common",
 		"wikimedia/node"
 	],
+	"globals": {
+		"Badge": "readonly"
+	},
 	"overrides": [
 		{
-			"files": [ "**/*.mts", "**/*.ts" ],
+			"files": [ "**/*.ts" ],
 			"parser": "@typescript-eslint/parser",
 			"plugins": [ "@typescript-eslint" ],
 			"extends": [
@@ -15,6 +18,19 @@
 			],
 			"rules": {
 				"strict": "off"
+			}
+		},
+		{
+			"files": [ "**/*.ts", "**/*.vue" ],
+			"rules": {
+				"n/no-missing-import": "off"
+			}
+		},
+		{
+			"files": [ "*.vue" ],
+			"parser": "vue-eslint-parser",
+			"parserOptions": {
+				"parser": "@typescript-eslint/parser"
 			}
 		}
 	]

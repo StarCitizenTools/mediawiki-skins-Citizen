@@ -7,12 +7,13 @@ export default defineConfig( {
 	srcDir: 'src',
 	themeConfig: {
 		nav: [
-			{ text: 'Home', link: '/' }
+			{ text: 'Home', link: '/' },
+			{ text: 'Changelogs', link: '/changelogs' },
 		],
 
 		socialLinks: [
 			{ icon: 'github', link: 'https://github.com/StarCitizenTools/mediawiki-skins-Citizen' },
-			{ icon: 'discord', link: 'https://discord.gg/XcKwqyD4sc' }
-		]
-	}
+			{ icon: 'discord', link: 'https://discord.gg/XcKwqyD4sc' },
+		],
+	},
 } );
