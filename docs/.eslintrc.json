@@ -1,13 +1,48 @@
 {
 	"root": true,
 	"extends": [
-		"wikimedia/common",
-		"wikimedia/node"
+		"wikimedia"
 	],
+	"env": {
+		"browser": true
+	},
 	"globals": {
 		"Badge": "readonly"
 	},
 	"overrides": [
+		{
+			"files": [ "**/*.ts", "**/*.vue" ],
+			"plugins": [
+				"@typescript-eslint/eslint-plugin"
+			],
+			"parserOptions": {
+				"parser": "@typescript-eslint/parser",
+				"sourceType": "module",
+				"extraFileExtensions": [ ".vue" ]
+			},
+			"extends": [
+				"plugin:@typescript-eslint/stylistic",
+				"plugin:@typescript-eslint/recommended"
+			]
+		},
+		{
+			"files": [ "**/*.ts", "**/*.vue" ],
+			"plugins": [
+				"@typescript-eslint/eslint-plugin"
+			],
+			"parserOptions": {
+				"parser": "@typescript-eslint/parser",
+				"sourceType": "module",
+				"extraFileExtensions": [ ".vue" ],
+				"project": [
+					"./tsconfig.json"
+				]
+			},
+			"extends": [
+				"plugin:@typescript-eslint/stylistic-type-checked",
+				"plugin:@typescript-eslint/recommended-type-checked"
+			]
+		},
 		{
 			"files": [ "**/*.ts" ],
 			"parser": "@typescript-eslint/parser",
@@ -21,16 +56,20 @@
 			}
 		},
 		{
-			"files": [ "**/*.ts", "**/*.vue" ],
-			"rules": {
-				"n/no-missing-import": "off"
+			"files": [ "**/*.vue" ],
+			"parser": "vue-eslint-parser",
+			"extends": [
+				"wikimedia/vue3/common",
+				"wikimedia/client/common"
+			],
+			"parserOptions": {
+				"parser": "@typescript-eslint/parser"
 			}
 		},
 		{
-			"files": [ "**/*.vue" ],
-			"parser": "vue-eslint-parser",
-			"parserOptions": {
-				"parser": "@typescript-eslint/parser"
+			"files": [ "**/*.ts", "**/*.vue" ],
+			"rules": {
+				"n/no-missing-import": "off"
 			}
 		}
 	]
