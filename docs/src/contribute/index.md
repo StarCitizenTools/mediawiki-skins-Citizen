@@ -41,3 +41,9 @@ Changes are typically merged into the project bi-weekly.
 Stuck? Have a question? We'd love to hear from you!
 
 Feel free to [open an issue](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/new/choose) in the repository to ask questions or discuss ideas.
+
+## Contributors
+
+<a href="https://github.com/StarCitizenTools/mediawiki-skins-citizen/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=StarCitizenTools/mediawiki-skins-citizen" alt="Citizen contributors" title="Citizen contributors" width="812px" />
+</a>
