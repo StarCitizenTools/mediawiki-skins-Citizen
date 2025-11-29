@@ -78,7 +78,7 @@ To customise the **automatic mode**'s dark mode, do this. Note that you will nee
 ```
 
 ## Fonts
-Citizen uses CSS variable to define fonts used through the skin and extension styles. Dfault fonts can be changed by simply redefining the CSS variables.
+Citizen uses CSS variable to define fonts used through the skin and extension styles. Default fonts can be changed by simply redefining the CSS variables.
 
 Since Citizen uses variable fonts heavily, it is recommended to use a variable font for replacement so the font styles are preserved.
 | Property                          | Description                                      | Default value    |
