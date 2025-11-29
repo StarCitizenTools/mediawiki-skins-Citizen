@@ -1,5 +1,7 @@
 import { defineConfig } from 'vitepress';
 import pkg from '../../package.json';
+import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons';
+import { tabsMarkdownPlugin } from 'vitepress-plugin-tabs';
 
 export default defineConfig( {
 	base: '/mediawiki-skins-Citizen/',
@@ -42,7 +44,7 @@ export default defineConfig( {
 						link: '/guide/introduction',
 					},
 					{
-						text: 'Installation 🚧',
+						text: 'Installation',
 						link: '/guide/installation',
 					},
 				],
@@ -52,7 +54,7 @@ export default defineConfig( {
 				collapsed: false,
 				items: [
 					{
-						text: 'Site config',
+						text: 'Skin',
 						link: '/config/',
 					},
 					{
@@ -71,6 +73,7 @@ export default defineConfig( {
 					},
 					{
 						text: 'Features',
+						collapsed: true,
 						link: '/customization/features',
 						items: [
 							{
@@ -143,5 +146,16 @@ export default defineConfig( {
 			pattern: 'https://github.com/StarCitizenTools/mediawiki-skins-Citizen/edit/main/docs/src/:path',
 			text: 'Help us improve this page',
 		},
+	},
+	markdown: {
+		config: ( md ) => {
+			md.use( groupIconMdPlugin );
+			md.use( tabsMarkdownPlugin );
+		},
+	},
+	vite: {
+		plugins: [
+			groupIconVitePlugin(),
+		],
 	},
 } );

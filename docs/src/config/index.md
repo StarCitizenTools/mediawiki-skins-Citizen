@@ -1,13 +1,13 @@
 ---
-title: Site configuration
-description: MediaWiki site configuration for the Citizen skin.
+title: Configuration
+description: MediaWiki skin configuration for the Citizen skin.
 ---
 
-# Site configuration
+# Configuration
 
 ::: tip Citizen works out of the box without any configurations!
 
-The site configs allow more customization on the specific features in the skin.
+The skin configs allow more customization on the specific features in the skin.
 :::
 
 ## Appearance
