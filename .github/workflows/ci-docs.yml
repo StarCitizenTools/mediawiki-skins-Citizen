@@ -57,6 +57,7 @@ jobs:
           cache-dependency-path: docs/package-lock.json
 
       - name: Setup Pages
+        id: pages
         uses: actions/configure-pages@v5
 
       - name: Install dependencies
@@ -65,6 +66,8 @@ jobs:
 
       - name: Build with VitePress
         working-directory: docs
+        env:
+          BASE_URL: ${{ steps.pages.outputs.base_path }}
         run: npm run docs:build
 
       - name: Upload artifact

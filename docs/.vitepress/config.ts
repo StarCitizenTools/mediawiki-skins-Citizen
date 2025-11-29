@@ -4,7 +4,7 @@ import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-i
 import { tabsMarkdownPlugin } from 'vitepress-plugin-tabs';
 
 export default defineConfig( {
-	base: '/mediawiki-skins-Citizen/',
+	base: process.env.BASE_URL ?? '/',
 	title: 'Citizen',
 	description: 'Documentation for Citizen Skin',
 	srcDir: 'src',
