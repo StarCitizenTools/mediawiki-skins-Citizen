@@ -4,7 +4,8 @@ description: Customizing the look and feel of Citizen
 ---
 
 # Theming
-Citizen allows users with the ability to customise interface to change the look and feel of their wiki with just a few variables.
+
+Customize the interface to change the look and feel of their wiki with just a few CSS variables.
 
 ## Primary color
 
@@ -12,32 +13,34 @@ Citizen uses the **OKLCH** syntax for primary color to calculate right colors fo
 
 By default, Citizen uses the Codex default progressive color: `#36c`. To change the primary color, simply convert the desired color to OKLCH to set the following variables in the table below.
 
-| Property	| Description	| Default value |
+| Property | Description | Default value |
 | --------- | ----------- | ------------- |
 | `--color-progressive-oklch__l` | Lightness of primary color | `53.25%` |
 | `--color-progressive-oklch__c` | Chroma of primary color | `0.1679` |
 | `--color-progressive-oklch__h` | Hue of primary color, this will affect other text and surface colors | `262.29` |
 
-::: info DEPRECATION
+::: warning Deprecated
 Primary colors can be customised further with HSL fallback variables. However, it has been soft-deprecated, and will be discontinued in the future.
-| Property                     | Description	|
-| ---------------------------- | ----------- |
+
+| Property                     | Description                                                          |
+| ---------------------------- | -------------------------------------------------------------------- |
 | `--color-progressive-hsl__h` | Hue of primary color, this will affect other text and surface colors |
-| `--color-progressive-hsl__s` | Saturation of primary color |
-| `--color-progressive-hsl__l` | Lightness of primary color |
+| `--color-progressive-hsl__s` | Saturation of primary color                                          |
+| `--color-progressive-hsl__l` | Lightness of primary color                                           |
+
 :::
 
 Primary colors can also be changed as a whole via `--color-progressive` itself.
 
 ## Surface color
 
-| Property            | Description |
-| ------------------- | ----------- |
-| `--color-surface-0` | Site background only (e.g. surface that has the same color as site background) |
+| Property            | Description                                                                                                   |
+| ------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `--color-surface-0` | Site background only (e.g. surface that has the same color as site background)                                |
 | `--color-surface-1` | Surface background 1 (e.g. modal, dropdown) (this has the same color as site background (#fff) in light mode) |
-| `--color-surface-2` | Surface background 2 |
-| `--color-surface-3` | Surface background 3 |
-| `--color-surface-4` | Surface background 4 |
+| `--color-surface-2` | Surface background 2                                                                                          |
+| `--color-surface-3` | Surface background 3                                                                                          |
+| `--color-surface-4` | Surface background 4                                                                                          |
 
 ## Text color
 
@@ -53,13 +56,13 @@ Citizen is able to customise text colors with ease.
 
 Citizen provides multiple appearance options including light, dark, and pure black modes.
 
-| Theme            | Class    | Notes |
-| ---------------- | -------- | ----- |
-| Light mode       | `.skin-theme-clientpref-day` | |
-| Dark mode        | `.skin-theme-clientpref-night` | |
-| Pure black mode  | `.skin-theme-clientpref-night.citizen-feature-pure-black-clientpref-1` | Pure black mode is only accessible if the user selects dark mode. |
-| Automatic mode   | `.skin-theme-clientpref-os` | Uses your device's appearance. |
-| Performance mode | `.citizen-feature-performance-mode-clientpref-1` | Disables any filter using `--backdrop-filter-frosted-glass`. |
+| Theme            | Class                                                                    | Notes                                                             |
+| ---------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| Light mode       | `.skin-theme-clientpref-day`                                             |                                                                   |
+| Dark mode        | `.skin-theme-clientpref-night`                                           |                                                                   |
+| Pure black mode  | `.skin-theme-clientpref-night.citizen-feature-pure-black-clientpref-1`   | Pure black mode is only accessible if the user selects dark mode. |
+| Automatic mode   | `.skin-theme-clientpref-os`                                              | Uses your device's appearance.                                    |
+| Performance mode | `.citizen-feature-performance-mode-clientpref-1`                         | Disables any filter using `--backdrop-filter-frosted-glass`.      |
 
 ### Customising the appearance
 
