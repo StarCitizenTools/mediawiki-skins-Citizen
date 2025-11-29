@@ -12,6 +12,8 @@ hero:
   tagline: A beautiful, usable, and responsive MediaWiki skin
 
   actions:
+    - text: Get started
+      link: /guide/installation
     - theme: alt
       text: See changes
       link: /changelogs/

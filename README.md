@@ -49,8 +49,8 @@ Check out the [configuration documentation](https://starcitizentools.github.io/m
 
 Version | MediaWiki version
 :--- | :---
-[2.40.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v2.40.2) | > 1.39.4
-[1.17.9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v1.17.9) | > 1.35.2
+[2.40.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v2.40.2) | 1.39.4 – 1.42.7
+[1.17.9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v1.17.9) | 1.35.2 – 1.39.3
 
 ## Recommended extensions
 These extensions are optional. They are recommended to enable additional feature in Citizen.
