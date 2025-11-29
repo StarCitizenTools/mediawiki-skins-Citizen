@@ -52,11 +52,12 @@ Citizen is able to customise text colors with ease.
 ## Appearance
 
 Citizen provides multiple appearance options including light, dark, and pure black modes.
+
 | Theme            | Class    | Notes |
 | ---------------- | -------- | ---- |
 | Light mode       | `.skin-theme-clientpref-day` | |
 | Dark mode        | `.skin-theme-clientpref-night` | |
-| Pure black mode  | `.skin-theme-clientpref-night.citizen-feature-pure-black-clientpref-1` | Pure black mode is only accessible if the user selects dark mode. | 
+| Pure black mode  | `.skin-theme-clientpref-night.citizen-feature-pure-black-clientpref-1` | Pure black mode is only accessible if the user selects dark mode. |
 | Automatic mode   | `.skin-theme-clientpref-os` | Uses your device's appearance. |
 | Performance mode | `.citizen-feature-performance-mode-clientpref-1` | Disables any filter using `--backdrop-filter-frosted-glass`. |
 
