@@ -19,8 +19,8 @@ By default, Citizen uses the Codex default progressive color: `#36c`. To change 
 
 ::: info DEPRECATION
 Primary colors can be customised further with HSL fallback variables. However, it has been soft-deprecated, and will be discontinued in the future.
-| Property	| Description	| Default value |
-| --------- | ----------- | ------------- |
+| Property                     | Description	| 
+| ---------------------------- | ----------- | 
 | `--color-progressive-hsl__h` | Hue of primary color, this will affect other text and surface colors |
 | `--color-progressive-hsl__s` | Saturation of primary color |
 | `--color-progressive-hsl__l` | Lightness of primary color |
