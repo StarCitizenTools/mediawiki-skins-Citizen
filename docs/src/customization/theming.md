@@ -7,6 +7,7 @@ description: Customizing the look and feel of Citizen
 Citizen allows users with the ability to customise interface to change the look and feel of their wiki with just a few variables.
 
 ## Primary color
+
 Citizen uses the **OKLCH** syntax for primary color to calculate right colors for different themes, including surface colors, text colors, etc. For browser that does not support OKLCH, it will fallback to HSL colors. Primary colors are then applied throughout all UI elements, including all supported extensions through skinStyles.
 
 By default, Citizen uses the Codex default progressive color: `#36c`. To change the primary color, simply convert the desired color to OKLCH to set the following variables in the table below. 
@@ -29,6 +30,7 @@ Primary colors can be customised further with HSL fallback variables. However, i
 Primary colors can also be changed as a whole via `--color-progressive` itself.
 
 ## Surface color
+
 | Property            | Description |
 | ------------------- | ----------- |
 | `--color-surface-0` | Site background only (e.g. surface that has the same color as site background) |
@@ -38,7 +40,9 @@ Primary colors can also be changed as a whole via `--color-progressive` itself.
 | `--color-surface-4` | Surface background 4 |
 
 ## Text color
+
 Citizen is able to customise text colors with ease.
+
 | Property             | Description                        |
 | -------------------- | ---------------------------------- |
 | `--color-base`       | Base text color (e.g. body text)   |
@@ -46,6 +50,7 @@ Citizen is able to customise text colors with ease.
 | `--color-subtle`     | Subtle text color (e.g. caption)   |
 
 ## Appearance
+
 Citizen provides multiple appearance options including light, dark, and pure black modes.
 | Theme            | Class    | Notes |
 | ---------------- | -------- | ---- |
@@ -56,11 +61,13 @@ Citizen provides multiple appearance options including light, dark, and pure bla
 | Performance mode | `.citizen-feature-performance-mode-clientpref-1` | Disables any filter using `--backdrop-filter-frosted-glass`. |
 
 ### Customising the appearance
+
 ::: tip
 If customising both dark and pure black mode, use `.skin-theme-clientpref-night.citizen-feature-pure-black-clientpref-0` to select only dark mode.
 :::
 
 Users with the ability to customise the interface can adjust any of these modes further using CSS. For example, to customise the primary color's hue to purple in **light mode**, do this:
+
 ```css
 :root.skin-theme-clientpref-day {
     --color-progressive-oklch__h: 301.11;
@@ -68,6 +75,7 @@ Users with the ability to customise the interface can adjust any of these modes 
 ```
 
 To customise the **automatic mode**'s dark mode, do this. Note that you will need to set automatic mode in addition of the night mode color.
+
 ```css
 /* Automatic mode */
 @media screen and (prefers-color-scheme: dark) {
@@ -78,9 +86,11 @@ To customise the **automatic mode**'s dark mode, do this. Note that you will nee
 ```
 
 ## Fonts
+
 Citizen uses CSS variable to define fonts used through the skin and extension styles. Default fonts can be changed by simply redefining the CSS variables.
 
 Since Citizen uses variable fonts heavily, it is recommended to use a variable font for replacement so the font styles are preserved.
+
 | Property                          | Description                                      | Default value    |
 | --------------------------------- | ------------------------------------------------ | ---------------- |
 | `--font-family-citizen-base`      | Default fonts, used in most places               | `'Roboto'`       |
@@ -88,6 +98,7 @@ Since Citizen uses variable fonts heavily, it is recommended to use a variable f
 | `--font-family-citizen-monospace` | Monospace fonts, used in editors and code blocks | `'Roboto Mono'`  |
 
 ## Page width
+
 Citizen uses CSS variable `--width-layout` to define page content width. The variable can be redefined on either the html or the body element.
 
 | Option   | Selector                                                 | Default value |
