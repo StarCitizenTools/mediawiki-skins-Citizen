@@ -66,16 +66,18 @@ export default defineConfig( {
 				collapsed: false,
 				items: [
 					{
-						text: 'Theming 🚧',
+						text: 'Theming',
 						link: '/customization/theming',
 					},
 					{
-						text: 'Command palette 🚧',
-						link: '/customization/command-palette',
-					},
-					{
-						text: 'Utility classes',
-						link: '/customization/utility-classes',
+						text: 'Features',
+						link: '/customization/features',
+						items: [
+							{
+								text: 'Command palette',
+								link: '/customization/command-palette',
+							},
+						],
 					},
 					{
 						text: 'Wiki templates 🚧',
