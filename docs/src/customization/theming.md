@@ -10,7 +10,7 @@ Citizen allows users with the ability to customise interface to change the look 
 
 Citizen uses the **OKLCH** syntax for primary color to calculate right colors for different themes, including surface colors, text colors, etc. For browser that does not support OKLCH, it will fallback to HSL colors. Primary colors are then applied throughout all UI elements, including all supported extensions through skinStyles.
 
-By default, Citizen uses the Codex default progressive color: `#36c`. To change the primary color, simply convert the desired color to OKLCH to set the following variables in the table below. 
+By default, Citizen uses the Codex default progressive color: `#36c`. To change the primary color, simply convert the desired color to OKLCH to set the following variables in the table below.
 
 | Property	| Description	| Default value |
 | --------- | ----------- | ------------- |
@@ -20,8 +20,8 @@ By default, Citizen uses the Codex default progressive color: `#36c`. To change 
 
 ::: info DEPRECATION
 Primary colors can be customised further with HSL fallback variables. However, it has been soft-deprecated, and will be discontinued in the future.
-| Property                     | Description	| 
-| ---------------------------- | ----------- | 
+| Property                     | Description	|
+| ---------------------------- | ----------- |
 | `--color-progressive-hsl__h` | Hue of primary color, this will affect other text and surface colors |
 | `--color-progressive-hsl__s` | Saturation of primary color |
 | `--color-progressive-hsl__l` | Lightness of primary color |
@@ -54,7 +54,7 @@ Citizen is able to customise text colors with ease.
 Citizen provides multiple appearance options including light, dark, and pure black modes.
 
 | Theme            | Class    | Notes |
-| ---------------- | -------- | ---- |
+| ---------------- | -------- | ----- |
 | Light mode       | `.skin-theme-clientpref-day` | |
 | Dark mode        | `.skin-theme-clientpref-night` | |
 | Pure black mode  | `.skin-theme-clientpref-night.citizen-feature-pure-black-clientpref-1` | Pure black mode is only accessible if the user selects dark mode. |
