@@ -1,35 +1,37 @@
 ---
 title: Features
-description: See the exclusive features that Citizen has to offer
+description: Explore the exclusive features that Citizen offers
 ---
 
 # Features
 
-Citizen includes several exclusive features designed to improve and enhance wiki functionality.
+Citizen includes several built-in features designed to enhance the functionality and interactivity of your wiki.
 
 ## Command palette
 
-See [command palette](./command-palette).
+The command palette is a powerful tool for quick navigation and actions. Learn more about how to configure and use it in the [command palette documentation](./command-palette).
 
 ## Utility classes
 
-Citizen provides several utility classes to help with content formatting and interaction.
+Citizen provides a set of utility classes to help you format content and add interactivity without writing custom CSS.
 
 ### Layout
 
+Control the positioning and flow of your content.
+
 | Class | Description |
 | :--- | :--- |
-| <CopyCode code=".floatright" /> | Floats content to the right and clears other floats. Stacks vertically on small screens. |
-| <CopyCode code=".floatleft" /> | Floats content to the left and clears other floats. Stacks vertically on small screens. |
-| <CopyCode code=".floatnone" /> | Clears floating alignment on both sides. |
-| <CopyCode code=".citizen-overflow" /> | Wraps content in a horizontally scrollable container with scroll indicators. |
-| <CopyCode code=".citizen-overflow-sticky-header" /> | Makes an element (like a table row) sticky while scrolling within a `.citizen-overflow` container. |
+| <CopyCode code=".floatright" /> | Floats content to the right. Stacks vertically on small screens. |
+| <CopyCode code=".floatleft" /> | Floats content to the left. Stacks vertically on small screens. |
+| <CopyCode code=".floatnone" /> | Clears floating alignment. |
+| <CopyCode code=".citizen-overflow" /> | Wraps content in a horizontally scrollable container with indicators. |
+| <CopyCode code=".citizen-overflow-sticky-header" /> | Makes an element sticky within a `.citizen-overflow` container. |
 
 #### Element sticky header
 
-Sticky header can be added to elements wrapped by `citizen-overflow` (e.g. wikitable) by adding the `citizen-overflow-sticky-header` class to the element to be stickied.
+You can make headers sticky within a scrollable area (like a wide table) by adding the `citizen-overflow-sticky-header` class. This works for both `div` elements and wikitables.
 
-For div elements:
+For `div` elements:
 
 ```html
 <div class="citizen-overflow">
@@ -38,7 +40,7 @@ For div elements:
 </div>
 ```
 
-For tables:
+For wikitables:
 
 ```wikitext
 {| class="wikitable"
@@ -55,15 +57,19 @@ For tables:
 
 ### Tables
 
+Enhance the look and feel of your tables.
+
 | Class | Description |
 | :--- | :--- |
-| <CopyCode code=".wikitable" /> | Applies standard Citizen table styling. Automatically wrapped in `.citizen-overflow`. |
-| <CopyCode code=".wikitable--border" /> | Adds vertical borders to a `.wikitable`. |
-| <CopyCode code=".wikitable--stripe" /> | Adds zebra striping to a `.wikitable`. |
+| <CopyCode code=".wikitable" /> | Applies standard Citizen styling. Automatically wrapped in `.citizen-overflow`. |
+| <CopyCode code=".wikitable--border" /> | Adds vertical borders. |
+| <CopyCode code=".wikitable--stripe" /> | Adds zebra striping for better readability. |
 | <CopyCode code=".wikitable--fluid" /> | Expands the table to fill 100% of the available width. |
-| <CopyCode code=".citizen-table-nowrap" /> | Prevents the table from being wrapped by `.citizen-overflow` |
+| <CopyCode code=".citizen-table-nowrap" /> | Prevents the table from being wrapped in a scrollable container. |
 
 ### Interaction
+
+Add interactive elements to your pages.
 
 | Class | Description |
 | :--- | :--- |
@@ -71,23 +77,25 @@ For tables:
 
 #### Search trigger
 
-Citizen has an utility class called `.citizen-search-trigger` that can be used to trigger the search popup.
+You can create buttons or links that trigger the search popup using the `.citizen-search-trigger` class.
 
-To create a button that opens search, simply do:
+To create a simple search button:
 
 ```html
 <div class="citizen-search-trigger">Click me to open search</div>
 ```
 
-To create a button that opens search with prefill, simply do:
+To prefill the search query (for example, to search only templates):
 
 ```html
 <div class="citizen-search-trigger" data-citizen-search-prefill="Template:">Click me to search templates</div>
 ```
 
-## Dark mode inversion
+## Dark mode support
 
-Images might need to be "flipped" to be visible in dark theme. Simply add the following rule to the direct element that contains the icon:
+Some images, especially black text or icons, might not be visible in dark mode. You can invert their colors using the `--filter-invert` variable.
+
+Simply add this CSS rule to the element containing the image:
 
 ```css
 filter: var( --filter-invert );
