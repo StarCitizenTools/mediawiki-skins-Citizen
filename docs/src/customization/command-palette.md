@@ -11,7 +11,7 @@ By default, Citizen includes these commands:
 
 | Command | Alias | Functionality |
 | :--- | :--- | :--- |
-| `/` | - | Show a list of avalaible commands. |
+| `/` | - | Show a list of available commands. |
 | `/ns:` | `:` | Search for a page in a specific namespace. |
 | `/action:` | `>` | Search for actions avaliable on the current page. |
 | `/user:` | `@` | Search for a user. |
