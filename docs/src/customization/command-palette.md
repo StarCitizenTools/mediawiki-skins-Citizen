@@ -11,20 +11,30 @@ By default, Citizen includes these commands:
 
 | Command | Alias | Functionality |
 | :--- | :--- | :--- |
+| `/` | - | Show a list of avalaible commands. |
 | `/ns:` | `:` | Search for a page in a specific namespace. |
 | `/action:` | `>` | Search for actions avaliable on the current page. |
 | `/user:` | `@` | Search for a user. |
 
 ## Creating custom commands
 
-If you have permission to edit JavaScript on your wiki, you can create your own custom commands. This is great for adding shortcuts to external tools, common redirects, or specific workflows.
+Administrators and developers can extend the command palette with custom actions. Use this feature to create shortcuts for external tools, streamlined workflows, or handy redirects.
 
-Here are a few examples of what's possible:
+Check out these live examples from other wikis. To try them, visit the site, press `/` to open the palette, and type the command:
 
 <LinkGrid>
- <LinkCard title="Music command" href="https://tagging.wiki" />
- <LinkCard title="Kit Builder redirect" href="https://itemasylum.miraheze.org" />
- <LinkCard title="Roblox game redirect" href="https://tagging.wiki" />
+    <LinkCard title="Music command" href="https://tagging.wiki">
+        Command: `/music`
+    </LinkCard>
+    <LinkCard title="Kit Builder redirect" href="https://itemasylum.miraheze.org">
+        Command: `/kit builder`
+    </LinkCard>
+    <LinkCard title="Roblox game redirect" href="https://tagging.wiki">
+        Command: `/play`
+    </LinkCard>
+    <LinkCard title="Confetti" href="https://starcitizen.tools/MediaWiki:Gadget-Confetti.js#L-17">
+        Command: `/confetti`
+    </LinkCard>
 </LinkGrid>
 
 ### Example: Simple command
