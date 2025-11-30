@@ -1,6 +1,8 @@
 name: 🔍 CI
 
 on:
+  schedule:
+    - cron: "0 0 * * *"
   push:
     branches:
       - "main"
@@ -19,32 +21,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint:
-    name: 🩹 Lint
-    timeout-minutes: 10
+  changes:
     runs-on: ubuntu-latest
+    outputs:
+      php: ${{ steps.filter.outputs.php_any_changed }}
+      script: ${{ steps.filter.outputs.script_any_changed }}
+      stylesheet: ${{ steps.filter.outputs.stylesheet_any_changed }}
+      i18n: ${{ steps.filter.outputs.i18n_any_changed }}
     steps:
       - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: /home/runner/cache
-          key: ${{ runner.os }}-${{ hashFiles('**/*.lock') }}
-
-      # Check for changed files
-      - name: Check for changed files
-        id: changes
-        uses: tj-actions/changed-files@v47
+      - uses: tj-actions/changed-files@v47
+        id: filter
         with:
           files_yaml: |
             php:
               - includes/**/*.php
               - tests/**/*.php
+              - skin.json
               - composer.json
               - composer.lock
+              - .github/workflows/ci.yml
             script:
               - resources/**/*.js
               - package.json
@@ -62,38 +58,56 @@ jobs:
               - package.json
               - package-lock.json
 
+  lint:
+    name: 🩹 Lint
+    needs: changes
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0 # OR "2" -> To retrieve the preceding commit.
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: /home/runner/cache
+          key: ${{ runner.os }}-${{ hashFiles('**/*.lock') }}
+
       - name: Install PHP dependencies
-        if: steps.changes.outputs.php_any_changed == 'true'
+        if: needs.changes.outputs.php == 'true'
         run: |
           composer validate
           composer install --prefer-dist --no-progress
 
       - name: Install Node dependencies
-        if: steps.changes.outputs.script_any_changed == 'true' || steps.changes.outputs.stylesheet_any_changed == 'true' || steps.changes.outputs.i18n_any_changed == 'true'
+        if: needs.changes.outputs.script == 'true' || needs.changes.outputs.stylesheet == 'true' || needs.changes.outputs.i18n == 'true'
         run: npm ci
 
       - name: Lint PHP
-        if: steps.changes.outputs.php_any_changed == 'true'
+        if: needs.changes.outputs.php == 'true'
         run: |
           composer test
 
       - name: Lint script
-        if: steps.changes.outputs.script_any_changed == 'true'
+        if: needs.changes.outputs.script == 'true'
         run: |
           npm run lint:js
 
       - name: Lint stylesheet
-        if: steps.changes.outputs.stylesheet_any_changed == 'true'
+        if: needs.changes.outputs.stylesheet == 'true'
         run: |
           npm run lint:styles
 
       - name: Lint i18n
-        if: steps.changes.outputs.i18n_any_changed == 'true'
+        if: needs.changes.outputs.i18n == 'true'
         run: |
           npm run lint:i18n
 
   test-php:
     name: "🧪 PHP tests: MW ${{ matrix.mw }}, PHP ${{ matrix.php }}"
+    needs: changes
+    if: needs.changes.outputs.php == 'true' || github.event_name == 'schedule'
     continue-on-error: ${{ matrix.experimental }}
     timeout-minutes: 30
 
