@@ -5,83 +5,105 @@ description: Customizing the look and feel of Citizen
 
 # Theming
 
-Customize the interface to change the look and feel of their wiki with just a few CSS variables.
+Citizen allows you to customize the interface to match your brand or personal preference. With just a few CSS variables, you can completely change the look and feel of your wiki.
 
-## Primary color
+## Colors
 
-Citizen uses the **OKLCH** syntax for primary color to calculate right colors for different themes, including surface colors, text colors, etc. For browser that does not support OKLCH, it will fallback to HSL colors. Primary colors are then applied throughout all UI elements, including all supported extensions through skinStyles.
+Citizen's color system is designed to be flexible and accessible.
 
-By default, Citizen uses the Codex default progressive color: `#36c`. To change the primary color, simply convert the desired color to OKLCH to set the following variables in the table below.
+### Primary color
+
+Citizen uses the **OKLCH** color model for its primary color system to ensure consistent theming across light and dark mode. The default progressive color is a standard blue (`#36c`), but you can change it by updating the hue, chroma, and lightness variables.
 
 | Property | Description | Default value |
-| --------- | ----------- | ------------- |
-| `--color-progressive-oklch__l` | Lightness of primary color | `53.25%` |
-| `--color-progressive-oklch__c` | Chroma of primary color | `0.1679` |
-| `--color-progressive-oklch__h` | Hue of primary color, this will affect other text and surface colors | `262.29` |
+| :--- | :--- | :--- |
+| `--color-progressive-oklch__l` | Lightness of the primary color. | `53.25%` |
+| `--color-progressive-oklch__c` | Chroma (saturation) of the primary color. | `0.1679` |
+| `--color-progressive-oklch__h` | Hue of the primary color. affects text and surface accents. | `262.29` |
 
 ::: warning Deprecated
-Primary colors can be customised further with HSL fallback variables. However, it has been soft-deprecated, and will be discontinued in the future.
+The HSL fallback variables are soft-deprecated and will be removed in a future version. We recommend using the OKLCH variables above.
 
-| Property                     | Description                                                          |
-| ---------------------------- | -------------------------------------------------------------------- |
-| `--color-progressive-hsl__h` | Hue of primary color, this will affect other text and surface colors |
-| `--color-progressive-hsl__s` | Saturation of primary color                                          |
-| `--color-progressive-hsl__l` | Lightness of primary color                                           |
+| Property | Description |
+| :--- | :--- |
+| `--color-progressive-hsl__h` | Hue (affects accents) |
+| `--color-progressive-hsl__s` | Saturation |
+| `--color-progressive-hsl__l` | Lightness |
 
 :::
 
-Primary colors can also be changed as a whole via `--color-progressive` itself.
+### Surface color
 
-## Surface color
+These variables control the background colors of various UI elements.
 
-| Property            | Description                                                                                                   |
-| ------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `--color-surface-0` | Site background only (e.g. surface that has the same color as site background)                                |
-| `--color-surface-1` | Surface background 1 (e.g. modal, dropdown) (this has the same color as site background (#fff) in light mode) |
-| `--color-surface-2` | Surface background 2                                                                                          |
-| `--color-surface-3` | Surface background 3                                                                                          |
-| `--color-surface-4` | Surface background 4                                                                                          |
+| Property | Description |
+| :--- | :--- |
+| `--color-surface-0` | The main site background. |
+| `--color-surface-1` | Secondary surfaces like modals and dropdowns. |
+| `--color-surface-2` | Tertiary surfaces. |
+| `--color-surface-3` | Quaternary surfaces. |
+| `--color-surface-4` | Quinary surfaces. |
 
-## Text color
+### Text color
 
-Citizen is able to customise text colors with ease.
+Adjust these variables to change the readability and hierarchy of your text.
 
-| Property             | Description                        |
-| -------------------- | ---------------------------------- |
-| `--color-base`       | Base text color (e.g. body text)   |
-| `--color-emphasized` | Emphasized text color (e.g. title) |
-| `--color-subtle`     | Subtle text color (e.g. caption)   |
+| Property | Description |
+| :--- | :--- |
+| `--color-base` | The default body text color. |
+| `--color-emphasized` | High-contrast text for titles and headers. |
+| `--color-subtle` | Low-contrast text for captions and metadata. |
 
-## Appearance
+## Typography
 
-Citizen provides multiple appearance options including light, dark, and pure black modes.
+Define the fonts used throughout your wiki. Since Citizen relies heavily on font weights, we recommend using variable fonts to ensure styles are preserved correctly.
 
-| Theme            | Class                                                                    | Notes                                                             |
-| ---------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------- |
-| Light mode       | `.skin-theme-clientpref-day`                                             |                                                                   |
-| Dark mode        | `.skin-theme-clientpref-night`                                           |                                                                   |
-| Pure black mode  | `.skin-theme-clientpref-night.citizen-feature-pure-black-clientpref-1`   | Pure black mode is only accessible if the user selects dark mode. |
-| Automatic mode   | `.skin-theme-clientpref-os`                                              | Uses your device's appearance.                                    |
-| Performance mode | `.citizen-feature-performance-mode-clientpref-1`                         | Disables any filter using `--backdrop-filter-frosted-glass`.      |
+| Property | Description | Default value |
+| :--- | :--- | :--- |
+| `--font-family-citizen-base` | The default font used for most text. | `'Roboto'` |
+| `--font-family-citizen-serif` | Serif font used for blockquotes and specific accents. | `'Roboto Serif'` |
+| `--font-family-citizen-monospace` | Monospace font used for code blocks and editors. | `'Roboto Mono'` |
 
-### Customising the appearance
+## Layout
 
-::: tip
-If customising both dark and pure black mode, use `.skin-theme-clientpref-night.citizen-feature-pure-black-clientpref-0` to select only dark mode.
-:::
+You can control the maximum width of the page content using the `--width-layout` variable. This can be applied to the `:root` or `body` element.
 
-Users with the ability to customise the interface can adjust any of these modes further using CSS. For example, to customise the primary color's hue to purple in **light mode**, do this:
+| Option | Selector | Default value |
+| :--- | :--- | :--- |
+| Standard | `:root.citizen-feature-custom-width-clientpref-standard` | `1080px` |
+| Wide | `:root.citizen-feature-custom-width-clientpref-wide` | `1600px` |
+| Full | `:root.citizen-feature-custom-width-clientpref-full` | `100vw` |
+
+## Theme modes
+
+Citizen provides built-in support for Light, Dark, and Pure Black modes, as well as an Automatic mode that follows the user's device settings.
+
+| Theme | Class | Notes |
+| :--- | :--- | :--- |
+| Light mode | `.skin-theme-clientpref-day` | |
+| Dark mode | `.skin-theme-clientpref-night` | |
+| Pure black mode | `.skin-theme-clientpref-night.citizen-feature-pure-black-clientpref-1` | Available only when Dark mode is active. |
+| Automatic mode | `.skin-theme-clientpref-os` | Respects the device's system preference. |
+| Performance mode | `.citizen-feature-performance-mode-clientpref-1` | Can be used to target low-performance mode |
+
+## Recipes
+
+Here are some common customizations you can apply to your wiki.
+
+### Customizing the primary color
+
+To change the primary color (for example, to purple) only in **light mode**:
 
 ```css
 :root.skin-theme-clientpref-day {
+    /* Set hue to purple */
     --color-progressive-oklch__h: 301.11;
 }
 ```
 
-To customise the **automatic mode**'s dark mode, do this. Note that you will need to set automatic mode in addition of the night mode color.
+To change the color for **automatic mode** (when the device is in dark mode):
 
 ```css
-/* Automatic mode */
 @media screen and (prefers-color-scheme: dark) {
     :root.skin-theme-clientpref-os {
       --color-progressive-oklch__h: 301.11;
@@ -89,24 +111,27 @@ To customise the **automatic mode**'s dark mode, do this. Note that you will nee
 }
 ```
 
-## Fonts
+::: tip
+If you are customizing both standard Dark mode and Pure Black mode, you can target standard Dark mode specifically using `.skin-theme-clientpref-night.citizen-feature-pure-black-clientpref-0`.
+:::
 
-Citizen uses CSS variable to define fonts used through the skin and extension styles. Default fonts can be changed by simply redefining the CSS variables.
+### Disabling image zoom
 
-Since Citizen uses variable fonts heavily, it is recommended to use a variable font for replacement so the font styles are preserved.
+By default, images slightly zoom in when hovered. You can disable this effect:
 
-| Property                          | Description                                      | Default value    |
-| --------------------------------- | ------------------------------------------------ | ---------------- |
-| `--font-family-citizen-base`      | Default fonts, used in most places               | `'Roboto'`       |
-| `--font-family-citizen-serif`     | Serif fonts, used in blockquotes and some cases  | `'Roboto Serif'` |
-| `--font-family-citizen-monospace` | Monospace fonts, used in editors and code blocks | `'Roboto Mono'`  |
+```css
+:root {
+    --transform-image-hover: none;
+}
+```
 
-## Page width
+### Disabling frosted glass
 
-Citizen uses CSS variable `--width-layout` to define page content width. The variable can be redefined on either the html or the body element.
+To remove the frosted glass effect from sticky headers and other overlays:
 
-| Option   | Selector                                                 | Default value |
-| -------- | -------------------------------------------------------- | ------------- |
-| Standard | `:root.citizen-feature-custom-width-clientpref-standard` | `1080px`      |
-| Wide     | `:root.citizen-feature-custom-width-clientpref-wide`     | `1600px`      |
-| Full     | `:root.citizen-feature-custom-width-clientpref-full`     | `100vw`       |
+```css
+:root {
+    --backdrop-filter-frosted-glass: none;
+    --opacity-glass: 1;
+}
+```
