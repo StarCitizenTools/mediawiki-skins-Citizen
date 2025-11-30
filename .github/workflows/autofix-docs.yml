@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   autofix:
+    name: 🔧 Auto-fix
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

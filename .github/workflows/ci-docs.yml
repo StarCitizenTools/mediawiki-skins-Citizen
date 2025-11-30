@@ -15,6 +15,7 @@ permissions:
 
 jobs:
   lint:
+    name: 🩹 Lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,6 +37,7 @@ jobs:
         run: npm run lint
 
   build:
+    name: 🏗️ Build
     needs: lint
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
@@ -77,9 +79,9 @@ jobs:
 
   # Deployment job
   deploy:
+    name: 🚀 Deploy
     needs: build
     runs-on: ubuntu-latest
-    name: Deploy
     permissions:
       pages: write
       id-token: write
