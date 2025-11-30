@@ -22,4 +22,5 @@ Check out these amazing wikis powering their content with Citizen:
  <LinkCard title="The Outlaster Wiki" href="https://outlaster.peakprecision.wiki" />
  <LinkCard title="The EUC Wiki" href="https://monowheel.wiki" />
  <LinkCard title="Battlestar Wiki" href="https://en.battlestarwiki.org" />
+ <LinkCard title="Wordle Hub" href="https://wordles.miraheze.org" />
 </LinkGrid>
