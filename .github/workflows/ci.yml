@@ -21,11 +21,12 @@ concurrency:
 jobs:
   lint:
     name: 🩹 Lint
+    timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
         with:
-          fetch-depth: 0 # OR "2" -> To retrieve the preceding commit.
+          fetch-depth: 0
 
       - name: Cache dependencies
         uses: actions/cache@v4
@@ -33,72 +34,68 @@ jobs:
           path: /home/runner/cache
           key: ${{ runner.os }}-${{ hashFiles('**/*.lock') }}
 
-      - name: Install dependencies
+      # Check for changed files
+      - name: Check for changed files
+        id: changes
+        uses: tj-actions/changed-files@v47
+        with:
+          files_yaml: |
+            php:
+              - includes/**/*.php
+              - tests/**/*.php
+              - composer.json
+              - composer.lock
+            script:
+              - resources/**/*.js
+              - package.json
+              - package-lock.json
+              - .eslintrc.json
+            stylesheet:
+              - resources/**/*.css
+              - resources/**/*.less
+              - skinStyles/**/*.css
+              - skinStyles/**/*.less
+              - package.json
+              - package-lock.json
+            i18n:
+              - i18n/*.json
+              - package.json
+              - package-lock.json
+
+      - name: Install PHP dependencies
+        if: steps.changes.outputs.php_any_changed == 'true'
         run: |
           composer validate
           composer install --prefer-dist --no-progress
-          npm ci
 
-      # Check for changed files
-      - name: Check for PHP changes
-        id: changed-php
-        uses: tj-actions/changed-files@v47
-        with:
-          since_last_remote_commit: "true"
-          files: |
-            includes/**/*.php
-            tests/**/*.php
-
-      - name: Check for script changes
-        id: changed-script
-        uses: tj-actions/changed-files@v47
-        with:
-          since_last_remote_commit: "true"
-          files: |
-            resources/**/*.js
-
-      - name: Check for stylesheet changes
-        id: changed-stylesheet
-        uses: tj-actions/changed-files@v47
-        with:
-          since_last_remote_commit: "true"
-          files: |
-            resources/**/*.css
-            resources/**/*.less
-            skinStyles/**/*.css
-            skinStyles/**/*.less
-
-      - name: Check for i18n changes
-        id: changed-i18n
-        uses: tj-actions/changed-files@v47
-        with:
-          since_last_remote_commit: "true"
-          files: |
-            i18n/*.json
+      - name: Install Node dependencies
+        if: steps.changes.outputs.script_any_changed == 'true' || steps.changes.outputs.stylesheet_any_changed == 'true' || steps.changes.outputs.i18n_any_changed == 'true'
+        run: npm ci
 
       - name: Lint PHP
-        if: steps.changed-php.outputs.any_changed == 'true'
+        if: steps.changes.outputs.php_any_changed == 'true'
         run: |
           composer test
 
       - name: Lint script
-        if: steps.changed-script.outputs.any_changed == 'true'
+        if: steps.changes.outputs.script_any_changed == 'true'
         run: |
           npm run lint:js
 
       - name: Lint stylesheet
-        if: steps.changed-stylesheet.outputs.any_changed == 'true'
+        if: steps.changes.outputs.stylesheet_any_changed == 'true'
         run: |
           npm run lint:styles
 
       - name: Lint i18n
-        if: steps.changed-i18n.outputs.any_changed == 'true'
+        if: steps.changes.outputs.i18n_any_changed == 'true'
         run: |
           npm run lint:i18n
 
   test-php:
     name: "🧪 PHP tests: MW ${{ matrix.mw }}, PHP ${{ matrix.php }}"
     continue-on-error: ${{ matrix.experimental }}
+    timeout-minutes: 30
 
     strategy:
       matrix:
@@ -154,7 +151,7 @@ jobs:
 
       - name: Install MediaWiki
         if: steps.cache-mediawiki.outputs.cache-hit != 'true'
-        working-directory: ~
+        working-directory: "~"
         run: bash EarlyCopy/.github/workflows/installWiki.sh ${{ matrix.mw }}
 
       - uses: actions/checkout@v6
