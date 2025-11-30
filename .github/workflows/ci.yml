@@ -4,11 +4,15 @@ on:
   push:
     branches:
       - "main"
+    paths-ignore:
+      - "docs/**"
   pull_request:
     branches:
       - "**"
       - "!dependabot/**"
       - "!release-please--branches--**"
+    paths-ignore:
+      - "docs/**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
