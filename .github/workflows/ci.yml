@@ -166,7 +166,7 @@ jobs:
 
       - name: Install MediaWiki
         if: steps.cache-mediawiki.outputs.cache-hit != 'true'
-        working-directory: "~"
+        working-directory: ~
         run: bash EarlyCopy/.github/workflows/installWiki.sh ${{ matrix.mw }}
 
       - uses: actions/checkout@v6
