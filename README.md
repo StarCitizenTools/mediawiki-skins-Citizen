@@ -127,7 +127,6 @@ Name | Version
 [WSSearchFront](https://www.mediawiki.org/wiki/Extension:WSSearchFront) | 3.5.4 `c27ebcb5`
 
 Some of the field are tagged as N/A because the information was not tracked before.
-If you are interested in adding skinstyles, please check out [this page on the wiki](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/wiki/Adding-extension-SkinStyles)!
 
 ## Contributors
 
