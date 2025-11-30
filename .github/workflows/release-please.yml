@@ -13,6 +13,7 @@ name: 🔖 Write release-please PR
 
 jobs:
   release-please:
+    if: github.repository == 'StarCitizenTools/mediawiki-skins-Citizen'
     runs-on: ubuntu-latest
     steps:
       - uses: googleapis/release-please-action@v4
