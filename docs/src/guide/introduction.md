@@ -5,7 +5,7 @@ description: Introduction to the Citizen skin
 
 # Introduction
 
-![](https://upload.wikimedia.org/wikipedia/commons/0/07/Screenshot-skin-citizen.png)
+![Citizen skin screenshot showing the responsive layout and modern interface](https://upload.wikimedia.org/wikipedia/commons/0/07/Screenshot-skin-citizen.png)
 
 Citizen is a beautiful, usable, responsive <a href="https://www.mediawiki.org">MediaWiki</a> skin that makes <a href="https://www.mediawiki.org/wiki/Manual:Extensions">extensions</a> part of the cohesive experience. Originally made for the Star Citizen Wiki, it has now been made flexible to run on various MediaWiki configurations.
 
@@ -31,7 +31,7 @@ Unlike the other standard MediaWiki skins, Citizen has a lot more to offer:
         Article sections on the wiki can be collapsed and expanded.
     </LinkCard>
     <LinkCard title="Progressive web app">
-        Users can add your wiki to their home screen, giving a more app-like experience.
+        Users can add a wiki using Citizen to their home screen, giving a more app-like experience.
     </LinkCard>
 </LinkGrid>
 
