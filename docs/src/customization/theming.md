@@ -146,7 +146,7 @@ To disable automatic mode, add this in your CSS. Ensure that `$wgCitizenThemeDef
 }
 
 #skin-client-prefs-skin-theme form { 
-	  grid-template-columns: repeat(2,1fr);
+   grid-template-columns: repeat(2,1fr);
 }
 ```
 
@@ -156,7 +156,7 @@ Add this in your CSS to disable the autohide navigation for mobile devices:
 
 ```css
 #skin-client-prefs-citizen-feature-autohide-navigation { 
-	display: none !important; 
+ display: none !important; 
 }
 ```
 
@@ -168,4 +168,4 @@ To disable pure black mode:
 #skin-client-prefs-citizen-feature-pure-black {
     display: none;
 }
-``` 
+```
