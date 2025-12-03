@@ -1,0 +1,113 @@
+name: 📖 Docs CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+  pull_request:
+    paths:
+      - "docs/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: 🩹 Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
+
+      - name: Install dependencies
+        working-directory: docs
+        run: npm ci
+
+      - name: Lint Docs
+        working-directory: docs
+        run: npm run lint
+
+  check-pages:
+    name: 🔍 Check GitHub Pages
+    runs-on: ubuntu-latest
+    outputs:
+      pages_enabled: ${{ steps.check.outputs.pages_enabled }}
+    steps:
+      - name: Check if GitHub Pages is enabled
+        id: check
+        run: |
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/${{ github.repository }}/pages)
+          if [ "$RESPONSE" -eq 200 ]; then
+            echo "pages_enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "pages_enabled=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  build:
+    name: 🏗️ Build
+    needs: [lint, check-pages]
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.check-pages.outputs.pages_enabled == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Install dependencies
+        working-directory: docs
+        run: npm ci
+
+      - name: Build with VitePress
+        working-directory: docs
+        env:
+          BASE_URL: ${{ steps.pages.outputs.base_path }}
+        run: npm run docs:build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs/.vitepress/dist
+
+  # Deployment job
+  deploy:
+    name: 🚀 Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

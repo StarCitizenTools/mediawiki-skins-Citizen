@@ -1,8 +1,10 @@
 import { defineConfig } from 'vitepress';
 import pkg from '../../package.json';
+import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons';
+import { tabsMarkdownPlugin } from 'vitepress-plugin-tabs';
 
 export default defineConfig( {
-	base: '/mediawiki-skins-Citizen/',
+	base: process.env.BASE_URL ?? '/',
 	title: 'Citizen',
 	description: 'Documentation for Citizen Skin',
 	srcDir: 'src',
@@ -42,7 +44,7 @@ export default defineConfig( {
 						link: '/guide/introduction',
 					},
 					{
-						text: 'Installation 🚧',
+						text: 'Installation',
 						link: '/guide/installation',
 					},
 				],
@@ -52,7 +54,7 @@ export default defineConfig( {
 				collapsed: false,
 				items: [
 					{
-						text: 'Site config',
+						text: 'Skin',
 						link: '/config/',
 					},
 					{
@@ -66,16 +68,19 @@ export default defineConfig( {
 				collapsed: false,
 				items: [
 					{
-						text: 'Theming 🚧',
+						text: 'Theming',
 						link: '/customization/theming',
 					},
 					{
-						text: 'Command palette 🚧',
-						link: '/customization/command-palette',
-					},
-					{
-						text: 'Utility classes',
-						link: '/customization/utility-classes',
+						text: 'Features',
+						collapsed: true,
+						link: '/customization/features',
+						items: [
+							{
+								text: 'Command palette',
+								link: '/customization/command-palette',
+							},
+						],
 					},
 					{
 						text: 'Wiki templates 🚧',
@@ -141,5 +146,16 @@ export default defineConfig( {
 			pattern: 'https://github.com/StarCitizenTools/mediawiki-skins-Citizen/edit/main/docs/src/:path',
 			text: 'Help us improve this page',
 		},
+	},
+	markdown: {
+		config: ( md ) => {
+			md.use( groupIconMdPlugin );
+			md.use( tabsMarkdownPlugin );
+		},
+	},
+	vite: {
+		plugins: [
+			groupIconVitePlugin(),
+		],
 	},
 } );

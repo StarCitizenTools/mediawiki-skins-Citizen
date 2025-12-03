@@ -49,8 +49,8 @@ Check out the [configuration documentation](https://starcitizentools.github.io/m
 
 Version | MediaWiki version
 :--- | :---
-[2.40.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v2.40.2) | > 1.39.4
-[1.17.9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v1.17.9) | > 1.35.2
+[2.40.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v2.40.2) | 1.39.4 – 1.42.7
+[1.17.9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v1.17.9) | 1.35.2 – 1.39.3
 
 ## Recommended extensions
 These extensions are optional. They are recommended to enable additional feature in Citizen.
@@ -127,7 +127,6 @@ Name | Version
 [WSSearchFront](https://www.mediawiki.org/wiki/Extension:WSSearchFront) | 3.5.4 `c27ebcb5`
 
 Some of the field are tagged as N/A because the information was not tracked before.
-If you are interested in adding skinstyles, please check out [this page on the wiki](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/wiki/Adding-extension-SkinStyles)!
 
 ## Contributors
 
