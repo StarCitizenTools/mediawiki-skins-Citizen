@@ -135,3 +135,37 @@ To remove the frosted glass effect from sticky headers and other overlays:
     --opacity-glass: 1;
 }
 ```
+
+### Disabling automatic mode
+
+To disable automatic mode, add this in your CSS. Ensure that `$wgCitizenThemeDefault` is set to either light or dark mode.
+
+```css
+#skin-client-prefs-skin-theme .citizen-client-prefs-radio:has(input[value="os"]) {
+    display: none;
+}
+
+#skin-client-prefs-skin-theme form { 
+	  grid-template-columns: repeat(2,1fr);
+}
+```
+
+### Disabling autohide navigation for mobile
+
+Add this in your CSS to disable the autohide navigation for mobile devices:
+
+```css
+#skin-client-prefs-citizen-feature-autohide-navigation { 
+	display: none !important; 
+}
+```
+
+### Disabling pure black mode
+
+To disable pure black mode:
+
+```css
+#skin-client-prefs-citizen-feature-pure-black {
+    display: none;
+}
+``` 
