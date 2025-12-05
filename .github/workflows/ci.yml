@@ -152,7 +152,7 @@ jobs:
             !mediawiki/extensions/
             !mediawiki/vendor/
             mediawiki/phpunit.xml.dist
-          key: mw_${{ matrix.mw }}-php${{ matrix.php }}-v24
+          key: mw_${{ matrix.mw }}-php${{ matrix.php }}-v25
 
       - name: Cache Composer cache
         uses: actions/cache@v4
