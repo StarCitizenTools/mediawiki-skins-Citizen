@@ -40,7 +40,7 @@ export default defineConfig( {
 				collapsed: false,
 				items: [
 					{
-						text: 'Introduction 🚧',
+						text: 'Introduction',
 						link: '/guide/introduction',
 					},
 					{
