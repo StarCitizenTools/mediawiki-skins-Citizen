@@ -7,7 +7,6 @@ namespace MediaWiki\Skins\Citizen\Components;
 use DOMDocument;
 use DOMElement;
 use DOMNode;
-use DOMXpath;
 use Wikimedia\Parsoid\Utils\DOMCompat;
 use Wikimedia\Parsoid\Utils\DOMUtils;
 
@@ -47,17 +46,9 @@ class CitizenComponentBodyContent implements CitizenComponent {
 	 * Splits the body of the document into sections in a single pass.
 	 */
 	private function makeSections( DOMDocument $doc ): DOMDocument {
-		$xpath = new DOMXpath( $doc );
-		$containers = $xpath->query(
-			'//div[contains(concat(" ",normalize-space(@class)," ")," mw-parser-output ")][1]'
-		);
+		$container = DOMCompat::querySelector( $doc, 'div.mw-parser-output' );
 
-		if ( $containers->length === 0 ) {
-			return $doc;
-		}
-
-		$container = $containers->item( 0 );
-		if ( !( $container instanceof DOMElement ) ) {
+		if ( $container === null ) {
 			return $doc;
 		}
 
