@@ -52,10 +52,13 @@
 }
 
 .mixin-citizen-sticky-header-element() {
-	top: var( --header-offset-block-start ) !important;
-	transition-timing-function: var( --transition-timing-function-ease );
+	top: 0 !important;
+	// If we use `top` to position sticky elements,
+	// the sticky header does not fit together with the title header perfectly.
+	transform: translateY( var( --header-offset-block-start ) );
+	transition-timing-function: @mobile-header-transition-timing-function;
 	transition-duration: var( --transition-duration-medium );
-	transition-property: top;
+	transition-property: transform;
 }
 
 .mixin-citizen-sticky-header-background() {
