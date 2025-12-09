@@ -31,9 +31,11 @@ function fetchJson( resource, init ) {
 	// As of 2020, browser support for AbortController is limited:
 	// https://caniuse.com/abortcontroller
 	// so replacing it with no-op if it doesn't exist.
+	/* eslint-disable compat/compat */
 	const controller = window.AbortController ?
 		new AbortController() :
 		nullAbortController;
+	/* eslint-enable compat/compat */
 
 	const getJson = fetch( resource, Object.assign( {}, init, {
 		signal: controller.signal

@@ -342,9 +342,7 @@ const typeahead = {
 
 /**
  * Fetch suggestions from API and render the suggetions in HTML
- *
  */
-// eslint-disable-next-line es-x/no-async-functions
 async function getSuggestions() {
 	const typeaheadInputElement = typeahead.input.element;
 

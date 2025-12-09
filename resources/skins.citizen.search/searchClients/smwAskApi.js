@@ -154,7 +154,7 @@ function smwAskApiSearchClient( config ) {
 				}
 			} );
 			const searchResponsePromise = result.fetch
-				.then( ( /** @type {SMWAskArgResponse} */ res ) => adaptApiResponse(
+				.then( ( res ) => adaptApiResponse(
 					config, q, res, showDescription ) );
 			return {
 				abort: result.abort,

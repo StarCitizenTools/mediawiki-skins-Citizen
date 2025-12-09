@@ -11,6 +11,7 @@ function init() {
 	}
 
 	const lang = document.documentElement.getAttribute( 'lang' );
+	// eslint-disable-next-line compat/compat
 	const rtf = new Intl.RelativeTimeFormat( lang );
 
 	const DIVISIONS = [

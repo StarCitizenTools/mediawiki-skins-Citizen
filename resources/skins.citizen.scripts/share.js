@@ -17,7 +17,6 @@ function init() {
 		url: url
 	};
 
-	// eslint-disable-next-line es-x/no-async-functions
 	const handleShareButtonClick = async () => {
 		shareButton.disabled = true; // Disable the button
 		try {
