@@ -3,15 +3,6 @@
 		"../.eslintrc.json"
 	],
 	"rules": {
-		"max-len": "off",
-		"es-x/no-object-values": "off",
-		"es-x/no-optional-chaining": "off",
-		"es-x/no-nullish-coalescing-operators": "off",
-		"es-x/no-symbol-prototype-description": "off",
-		"es-x/no-rest-spread-properties": "off",
-		"es-x/no-object-entries": "off",
-		"es-x/no-array-prototype-includes": "off",
-		"es-x/no-async-functions": "off",
-		"es-x/no-array-prototype-flat": "off"
+		"max-len": "off"
 	}
 }
