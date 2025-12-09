@@ -89,7 +89,8 @@ function adaptApiResponse( config, query, response, showDescription ) {
 			}, [] )
 		);
 
-		// Sometimes there can be multiple redirect object for the same page, only take the one with lower index
+		// Sometimes there can be multiple redirect object for the same page, only take the
+		// one with lower index
 		if ( response.pages.length !== pageCount ) {
 			response.pages = response.pages.filter( ( obj ) => Object.prototype.hasOwnProperty.call( obj, 'title' ) );
 		}
@@ -204,7 +205,8 @@ function mwActionApiSearchClient( config ) {
 				}
 			} );
 			const searchResponsePromise = result.fetch
-				.then( ( /** @type {ActionResponse} */ res ) => adaptApiResponse( config, q, res, showDescription ) );
+				.then( ( /** @type {ActionResponse} */ res ) => adaptApiResponse(
+					config, q, res, showDescription ) );
 			return {
 				abort: result.abort,
 				fetch: searchResponsePromise

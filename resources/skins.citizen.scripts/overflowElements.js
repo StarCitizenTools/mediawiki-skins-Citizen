@@ -38,8 +38,9 @@ class OverflowElement {
 	}
 
 	/**
-	 * Checks if the state of the overflow element has changed by comparing the current element width, content scroll left,
-	 * and content width with the cached values. Returns true if any of the values have changed, otherwise returns false.
+	 * Checks if the state of the overflow element has changed by comparing the current element
+	 * width, content scroll left, and content width with the cached values. Returns true if
+	 * any of the values have changed, otherwise returns false.
 	 *
 	 * @return {boolean} - True if the state has changed, false otherwise.
 	 */
@@ -52,7 +53,8 @@ class OverflowElement {
 	}
 
 	/**
-	 * Checks if the element has overflowed horizontally by comparing the element width with the content width.
+	 * Checks if the element has overflowed horizontally by comparing the element width with the
+	 * content width.
 	 *
 	 * @return {boolean} - True if the element has overflowed, false otherwise.
 	 */
@@ -61,9 +63,11 @@ class OverflowElement {
 	}
 
 	/**
-	 * Updates the state of the overflow element by calculating the element width, content scroll left, and content width.
+	 * Updates the state of the overflow element by calculating the element width, content
+	 * scroll left, and content width.
 	 * If the width values are invalid, logs an error and returns.
-	 * Compares the current state with the previous state and updates the cache if there is a change.
+	 * Compares the current state with the previous state and updates the cache if there is
+	 * a change.
 	 * Toggles classes on the content element based on the overflow state (left or right).
 	 *
 	 * @return {void}
@@ -111,7 +115,8 @@ class OverflowElement {
 	 */
 	handleInheritedClasses() {
 		const inheritedClasses = config.wgCitizenOverflowInheritedClasses;
-		const filteredClasses = inheritedClasses.filter( ( cls ) => this.element.classList.contains( cls )
+		const filteredClasses = inheritedClasses.filter(
+			( cls ) => this.element.classList.contains( cls )
 		);
 
 		filteredClasses.forEach( ( cls ) => {
@@ -127,10 +132,13 @@ class OverflowElement {
 	/**
 	 * Wraps the element in a div container with the class 'citizen-overflow-wrapper'.
 	 * Checks if the element or its parent node is null or undefined, and logs an error if so.
-	 * Verifies the existence of the necessary configuration classes for wrapping and logs an error if missing.
-	 * Creates a new div wrapper element, adds the class 'citizen-overflow-wrapper', and appends it to the parent node before the element.
+	 * Verifies the existence of the necessary configuration classes for wrapping and logs an
+	 * error if missing.
+	 * Creates a new div wrapper element, adds the class 'citizen-overflow-wrapper', and
+	 * appends it to the parent node before the element.
 	 * Moves the element inside the wrapper.
-	 * Handles inherited classes such as 'floatleft' and 'floatright' by adding them to the wrapper and removing them from the element.
+	 * Handles inherited classes such as 'floatleft' and 'floatright' by adding them to the
+	 * wrapper and removing them from the element.
 	 * Logs any errors that occur during the wrapping process.
 	 *
 	 * @return {void}
@@ -291,7 +299,8 @@ class OverflowElement {
 	}
 
 	/**
-	 * Handles the scroll event by requesting an animation frame to update the state of the overflow element.
+	 * Handles the scroll event by requesting an animation frame to update the state of the
+	 * overflow element.
 	 *
 	 * @return {void}
 	 */
@@ -300,9 +309,11 @@ class OverflowElement {
 	}
 
 	/**
-	 * Resumes the functionality of the overflow element by updating its state, adding a scroll event listener, and observing element resize.
+	 * Resumes the functionality of the overflow element by updating its state, adding a scroll
+	 * event listener, and observing element resize.
 	 * Calls the 'updateState' method to update the state of the overflow element.
-	 * Adds a scroll event listener to the content element to handle scroll events by calling the 'onScroll' method.
+	 * Adds a scroll event listener to the content element to handle scroll events by calling
+	 * the 'onScroll' method.
 	 * Observes the element for resize changes using the 'resizeObserver'.
 	 *
 	 * @return {void}
@@ -317,8 +328,10 @@ class OverflowElement {
 	}
 
 	/**
-	 * Pauses the functionality of the overflow element by removing the scroll event listener and stopping observation of element resize.
-	 * Removes the scroll event listener from the content element that triggers the 'onScroll' method.
+	 * Pauses the functionality of the overflow element by removing the scroll event listener
+	 * and stopping observation of element resize.
+	 * Removes the scroll event listener from the content element that triggers the 'onScroll'
+	 * method.
 	 * Stops observing resize changes of the element using the 'resizeObserver'.
 	 *
 	 * @return {void}
@@ -333,8 +346,10 @@ class OverflowElement {
 
 	/**
 	 * Sets up an IntersectionObserver to handle intersection changes for the overflow element.
-	 * When the element intersects with the viewport, resumes the functionality by calling the 'resume' method.
-	 * When the element is not intersecting with the viewport, pauses the functionality by calling the 'pause' method.
+	 * When the element intersects with the viewport, resumes the functionality by calling the
+	 * 'resume' method.
+	 * When the element is not intersecting with the viewport, pauses the functionality by
+	 * calling the 'pause' method.
 	 * Observes the intersection changes for the element using the IntersectionObserver.
 	 *
 	 * @return {void}
@@ -354,7 +369,8 @@ class OverflowElement {
 	}
 
 	/**
-	 * Sets up a ResizeObserver to monitor changes in the size of the element and triggers the 'updateState' method accordingly.
+	 * Sets up a ResizeObserver to monitor changes in the size of the element and triggers
+	 * the 'updateState' method accordingly.
 	 *
 	 * @return {void}
 	 */
@@ -364,8 +380,10 @@ class OverflowElement {
 	}
 
 	/**
-	 * Initializes the OverflowElement by wrapping the element, setting up a ResizeObserver to monitor size changes,
-	 * setting up an IntersectionObserver to handle intersection changes, and resuming the functionality of the overflow element.
+	 * Initializes the OverflowElement by wrapping the element, setting up a ResizeObserver to
+	 * monitor size changes,
+	 * setting up an IntersectionObserver to handle intersection changes, and resuming the
+	 * functionality of the overflow element.
 	 *
 	 * @return {void}
 	 */

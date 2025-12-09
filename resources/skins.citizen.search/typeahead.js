@@ -280,7 +280,10 @@ const typeahead = {
 		];
 
 		replaceRules.forEach( ( rule ) => {
-			if ( rule.clients.includes( searchClient.active.id ) && searchQuery.value.startsWith( rule.startWith ) ) {
+			if (
+				rule.clients.includes( searchClient.active.id ) &&
+				searchQuery.value.startsWith( rule.startWith )
+			) {
 				searchQuery.replace( rule.pattern, rule.replace );
 			}
 		} );
@@ -364,7 +367,10 @@ async function getSuggestions() {
 			// Update placeholder with no result content
 			listEl.innerHTML = '';
 			groupEl.hidden = true;
-			placeholderEl.innerHTML = searchResults.getPlaceholderHTML( searchQuery.value, compiledTemplates );
+			placeholderEl.innerHTML = searchResults.getPlaceholderHTML(
+				searchQuery.value,
+				compiledTemplates
+			);
 			placeholderEl.hidden = false;
 		}
 

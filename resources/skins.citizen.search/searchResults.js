@@ -4,7 +4,8 @@ const searchAction = require( './searchAction.js' )();
 /**
  * Returns an object with methods for handling search results in a citizen search context.
  * It includes methods for getting redirect labels, highlighting titles, getting placeholder HTML,
- * getting results HTML, fetching search results, rendering search actions, and clearing search results.
+ * getting results HTML, fetching search results, rendering search actions, and clearing search
+ * results.
  *
  * Methods:
  * - getRedirectLabel: Returns a redirect label for a matched title based on query value.

@@ -1,8 +1,11 @@
 /**
- * Represents a search history object that stores search queries and provides methods to manipulate the history.
+ * Represents a search history object that stores search queries and provides methods to manipulate
+ * the history.
  *
- * @param {Object} config - The configuration object containing the maximum number of search results allowed.
- * @return {Object} An object with methods to get, set, add, clear, and initialize the search history.
+ * @param {Object} config - The configuration object containing the maximum number of search results
+ * allowed.
+ * @return {Object} An object with methods to get, set, add, clear, and initialize the search
+ * history.
  */
 function searchHistory( config ) {
 	return {

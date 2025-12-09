@@ -177,7 +177,10 @@ class TableOfContents {
 			this.activeSubSection = undefined;
 		}
 		if ( this.activeTopSection ) {
-			this.activeTopSection.classList.remove( ACTIVE_TOP_SECTION_CLASS, EXPANDED_SECTION_CLASS );
+			this.activeTopSection.classList.remove(
+				ACTIVE_TOP_SECTION_CLASS,
+				EXPANDED_SECTION_CLASS
+			);
 			this.activeTopSection = undefined;
 		}
 	}
@@ -206,7 +209,8 @@ class TableOfContents {
 			}
 		}
 
-		const isContainerScrollable = this.props.container.scrollHeight > this.props.container.clientHeight;
+		const isContainerScrollable = this.props.container.scrollHeight >
+			this.props.container.clientHeight;
 		if ( link && isContainerScrollable ) {
 			const containerRect = this.props.container.getBoundingClientRect();
 			const linkRect = link.getBoundingClientRect();

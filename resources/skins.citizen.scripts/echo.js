@@ -4,7 +4,8 @@
  * Upgrades Echo for icon consistency.
  * Undos work inside Echo to replace our button.
  *
- * TODO: Switch to mw.hook( 'ext.echo.NotificationBadgeWidget.onInitialize' ) when we drop 1.39 support
+ * TODO: Switch to mw.hook( 'ext.echo.NotificationBadgeWidget.onInitialize' ) when
+ * we drop 1.39 support
  */
 function init() {
 	if ( document.querySelectorAll( '#pt-notifications-alert a, #pt-notifications-notice a' ).length !== 2 ) {

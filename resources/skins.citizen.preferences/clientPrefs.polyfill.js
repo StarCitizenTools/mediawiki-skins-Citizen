@@ -51,7 +51,9 @@ function saveClientPrefs( feature, value ) {
 	} );
 	data[ feature ] = value;
 
-	const newStorage = Object.keys( data ).map( ( key ) => key + CLIENTPREF_SUFFIX + data[ key ] ).join( CLIENTPREF_DELIMITER );
+	const newStorage = Object.keys( data )
+		.map( ( key ) => key + CLIENTPREF_SUFFIX + data[ key ] )
+		.join( CLIENTPREF_DELIMITER );
 	mw.storage.set( CLIENTPREF_STORAGE_NAME, newStorage );
 }
 

@@ -12,7 +12,8 @@ const isPointerDevice = window.matchMedia( '(hover: hover) and (pointer: fine)' 
 
 /**
  * Represents a Dropdown menu with enhanced functionality.
- * This class handles the behavior of a dropdown menu, including dismissing the menu when clicking outside,
+ * This class handles the behavior of a dropdown menu,
+ * including dismissing the menu when clicking outside,
  * pressing the ESCAPE key, losing focus, or clicking on links.
  * It provides methods to bind and unbind event listeners for different actions.
  * The 'init' method initializes the dropdown menu by adding necessary event listeners.
