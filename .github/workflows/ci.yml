@@ -126,7 +126,7 @@ jobs:
           - mw: "REL1_45"
             php: 8.4
             coverage: none
-            experimental: false
+            experimental: true
           - mw: "master"
             php: 8.5
             coverage: none
