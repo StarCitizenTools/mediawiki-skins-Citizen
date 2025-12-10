@@ -121,7 +121,9 @@ class CitizenComponentBodyContent implements CitizenComponent {
 		if ( DOMCompat::getClassList( $node )->contains( 'mw-heading' ) ) {
 			$headingNode = DOMCompat::querySelector( $node, implode( ',', $this->topHeadingTags ) );
 			if ( $headingNode instanceof Element ) {
-				$tagName = $headingNode->tagName;
+				// Normalize the tag name to lowercase
+				// Since tagName seems to return uppercase in MW 1.44+ with PHP 8.4+
+				$tagName = strtolower( $headingNode->tagName );
 				return in_array( $tagName, $this->topHeadingTags ) ? $tagName : null;
 			}
 			return null;
