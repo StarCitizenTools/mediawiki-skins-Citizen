@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.12.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.11.0...v3.12.0) (2025-12-10)
+
+
+### Features
+
+* **typography:** ✨ improve CJK spacing support ([fbc7398](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fbc73984abd874d1505daaa5351f2e2a127595a2))
+
+
+### Bug Fixes
+
+* **bodyContent:** 🐛 fix section collapsing in MW 1.44+ with PHP 8.4+ ([9c87c3b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9c87c3b70213614a543dbada1548c63e64cbcf1f))
+* **bodyContent:** 🐛 follow-up to fix for section collapsing ([2bd47f8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2bd47f8a22fc0fe9903f48be561cf6b35d33bf48))
+* **bodyContent:** 🐛 only normalize heading tags for comparison ([ef352e0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ef352e058382c3405a8c7d2d1bf840e86f7cd288))
+* **bodyContent:** 🐛 use Parsoid DOM types to support PHP &gt;= 8.4 ([d0c5515](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d0c5515b5ba803c70517cbf7dafedb4a4420e1fa))
+
+
+### Miscellaneous Chores
+
+* 🔧 do not trigger non-exit code for ESLint warning ([3dd3d98](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3dd3d981aceac7d4ec6ea63198ba186c0ac0cd15))
+* 🔧 use the same set of eslint rules across the skin ([c0d0f78](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c0d0f78f4762cc1fd24acdce9a80920b7e0992e0))
+* **docs:** 🔧 📚️ update ESLint configuration ([3f6a040](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3f6a040f47e8ca41d8c8ec3bca9139f2503105a1))
+* **gitignore:** 🔧 remove Storybook related entries ([1f3fbe6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1f3fbe6b6413a48f9da9ab71e6b58147053bbb8d))
+* **release:** 🚀 ignore documentation in release workflow ([0cfbf22](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0cfbf227edd60ef90cff2d87f700d6bc0d8970da))
+* **wiki:** 🔧 📦️ add @types/node to devDeps ([16ef577](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/16ef5778c8e7a2f119096fc329d89bedc332d338))
+* **wiki:** 🔧 fix incorrect path for doc wiki ([827dd7c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/827dd7cae8778fd16997b9e049ac152c9a54cdc4))
+* **wiki:** 🔧 setup markdownlint for docs wiki ([7b53c47](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7b53c474d327f079c215ba2d45e3924ae1d687c3))
+
 ## [3.11.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.10.0...v3.11.0) (2025-11-27)
 
 
