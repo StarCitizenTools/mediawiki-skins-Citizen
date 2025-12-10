@@ -121,16 +121,16 @@ class CitizenComponentBodyContent implements CitizenComponent {
 		if ( DOMCompat::getClassList( $node )->contains( 'mw-heading' ) ) {
 			$headingNode = DOMCompat::querySelector( $node, implode( ',', $this->topHeadingTags ) );
 			if ( $headingNode instanceof Element ) {
+				$tagName = $headingNode->tagName;
 				// Normalize the tag name to lowercase
 				// Since tagName seems to return uppercase in MW 1.44+ with PHP 8.4+
-				$tagName = strtolower( $headingNode->tagName );
-				return in_array( $tagName, $this->topHeadingTags ) ? $tagName : null;
+				return in_array( strtolower( $tagName ), $this->topHeadingTags ) ? $tagName : null;
 			}
 			return null;
 		}
 
-		$tagName = strtolower( $node->tagName );
-		return in_array( $tagName, $this->topHeadingTags ) ? $tagName : null;
+		$tagName = $node->tagName;
+		return in_array( strtolower( $tagName ), $this->topHeadingTags ) ? $tagName : null;
 	}
 
 	/**
@@ -141,7 +141,7 @@ class CitizenComponentBodyContent implements CitizenComponent {
 	private function isValidSectionHeading( Element $element ): bool {
 		// A heading element can be the element itself (h1-h6) or a wrapper div.
 		$headingElement = $element;
-		if ( !in_array( $element->tagName, $this->topHeadingTags ) ) {
+		if ( !in_array( strtolower( $element->tagName ), $this->topHeadingTags ) ) {
 			// If the element is not a heading tag, it might be a wrapper.
 			$found = DOMCompat::querySelector( $element, implode( ',', $this->topHeadingTags ) );
 			if ( !$found ) {
