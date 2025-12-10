@@ -129,7 +129,7 @@ class CitizenComponentBodyContent implements CitizenComponent {
 			return null;
 		}
 
-		$tagName = $node->tagName;
+		$tagName = strtolower( $node->tagName );
 		return in_array( $tagName, $this->topHeadingTags ) ? $tagName : null;
 	}
 
