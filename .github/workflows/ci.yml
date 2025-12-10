@@ -154,6 +154,7 @@ jobs:
           path: |
             mediawiki
             !mediawiki/extensions/
+            !mediawiki/skins/
             !mediawiki/vendor/
             mediawiki/phpunit.xml.dist
           key: mw_${{ matrix.mw }}-php${{ matrix.php }}-v26
