@@ -107,7 +107,7 @@
 		"MediaWiki\\Skins\\Citizen\\Tests\\": "tests/phpunit/"
 	},
 	"APIModules": {
-		"webapp-manifest": {
+		"appmanifest": {
 			"class": "MediaWiki\\Skins\\Citizen\\Api\\ApiWebappManifest",
 			"services": [
 				"ContentLanguage",
