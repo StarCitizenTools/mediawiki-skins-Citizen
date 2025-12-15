@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Agam Riyandana",
-			"Leapofod"
+			"Leapofod",
+			"Penyuwangi"
 		]
 	},
 	"citizen-skin-desc": "Kulit MediaWiki yang indah, mudah digunakan, dan responsif yang membuat ekstensi menjadi bagian dari pengalaman kohesif. Awalnya dibuat untuk [https://starcitizen.tools/ Star Citizen Wiki].",
@@ -59,5 +60,5 @@
 	"citizen-feature-custom-width-wide-label": "Lebar",
 	"citizen-feature-custom-width-full-label": "Penuh",
 	"citizen-user-info-text-anon": "Alamat IP anda akan terlihat secara publik jika Anda membuat penyuntingan.",
-	"citizen-user-info-text-temp": "Akun sementara ini dibuat setelah terjadi penyuntingan tanpa akun di browser dan perangkat ini."
+	"citizen-user-info-text-temp": "Akun sementara ini dibuat setelah terjadi penyuntingan tanpa akun di peramban dan perangkat ini."
 }
