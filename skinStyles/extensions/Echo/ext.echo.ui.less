@@ -16,7 +16,8 @@
 }
 
 .skin-citizen {
-	.mw-echo-ui-notificationBadgeButtonPopupWidget-popup {
+	.mw-echo-ui-notificationBadgeButtonPopupWidget-popup,
+	.mw-echo-ui-notificationBadgeController-popup {
 		top: unset !important;
 		bottom: calc( var( --header-size-block-end ) + env( safe-area-inset-bottom ) ) !important;
 		margin: var( --space-xs );
@@ -90,7 +91,8 @@
 /* mw.echo.ui.mobile.less */
 @media all and ( max-width: 720px ) {
 	.mw-echo-ui-overlay {
-		.mw-echo-ui-notificationBadgeButtonPopupWidget-popup {
+		.mw-echo-ui-notificationBadgeButtonPopupWidget-popup,
+		.mw-echo-ui-notificationBadgeController-popup {
 			right: 0 !important;
 			left: 0 !important;
 		}
@@ -126,7 +128,7 @@
 			transition-property: opacity;
 		}
 
-		&:has( > .mw-echo-ui-notificationBadgeButtonPopupWidget-popup:not( .oo-ui-element-hidden ) ) {
+		&:has( > :is( .mw-echo-ui-notificationBadgeButtonPopupWidget-popup, .mw-echo-ui-notificationBadgeController-popup ):not( .oo-ui-element-hidden ) ) {
 			&::before {
 				position: fixed;
 				inset: 0;
