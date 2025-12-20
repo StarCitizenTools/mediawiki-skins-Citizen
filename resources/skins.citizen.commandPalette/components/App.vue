@@ -495,9 +495,9 @@ module.exports = exports = defineComponent( {
 		text-align: center;
 	}
 
-	&-list-item:not( [data-type="action"] ) {
+	&-list-item:not( [data-type='action'] ) {
 		opacity: 1;
-		transition: opacity .25s;
+		transition: opacity 0.25s;
 		transition-delay: calc( 0.1s * ( sibling-index() - 1 ) );
 
 		@starting-style {
