@@ -457,15 +457,28 @@ module.exports = exports = defineComponent( {
 	border: var( --border-base );
 	border-radius: var( --border-radius-medium );
 	box-shadow: var( --box-shadow-drop-xx-large );
-	transform: unset;
-	transition-property: transform;
-	transition-duration: var( --transition-duration-medium );
-	transition-timing-function: var( --transition-timing-function-ease-out );
 	.mixin-citizen-frosted-glass;
 	.mixin-citizen-font-styles( 'small' );
+
+	@supports (transition-behavior: allow-discrete) {
+		transform: unset;
+		transition-timing-function: var( --transition-timing-function-ease-out );
+		transition-duration: var( --transition-duration-medium );
+		transition-property: transform;
+
+		@starting-style {
+			transform: scale(0) translateY(-200%);
+		}
+
+		&-list-item:not([data-type="action"]) {
+			opacity: 1;
+			transition: opacity .25s;
+			transition-delay: calc(0.05s * (sibling-index() - 1));
 	
-	@starting-style {
-		transform: scale(0) translateY(-200%);
+			@starting-style {
+				opacity: 0;
+			}
+		}
 	}
 	
 	@media ( min-width: @max-width-breakpoint-tablet ) {
@@ -493,16 +506,6 @@ module.exports = exports = defineComponent( {
 	&__no-results {
 		padding: var( --space-md ) var( --citizen-command-palette-side-padding );
 		text-align: center;
-	}
-
-	&-list-item:not([data-type="action"]) {
-    	opacity: 1;
-    	transition: opacity .25s;
-    	transition-delay: calc(0.05s * (sibling-index() - 1));
-
-    	@starting-style {
-        	opacity: 0;
-    	}
 	}
 }
 </style>
