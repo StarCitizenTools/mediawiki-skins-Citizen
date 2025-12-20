@@ -130,16 +130,14 @@
 
 @media ( max-width: @min-width-breakpoint-desktop ) {
 	.citizen-feature-performance-mode-clientpref-0 .citizen-header {
-		background: transparent 
-	
+		background: transparent;
+		
 		&::after {
-		    position: absolute;
-		    inset: 0;
-		    z-index: @z-index-bottom;
-			width: 100%; 
-			height: 100%;
-		    content: '';
-		    .mixin-citizen-frosted-glass;
+			position: absolute;
+			inset: 0;
+			z-index: @z-index-bottom;
+			content: '';
+			.mixin-citizen-frosted-glass;
 		}
 	}
 }
