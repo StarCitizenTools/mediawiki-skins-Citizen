@@ -20,6 +20,9 @@
 	/* stylelint-disable-next-line declaration-property-value-disallowed-list */
 	text-transform: capitalize;
 	border-radius: var( --border-radius-base );
+	margin-top: -1px;
+	font-weight: var( --font-weight-medium );
+	background: var( --color-surface-3 );
 }
 
 .profile-header-statistics {
@@ -28,7 +31,10 @@
 
 .external-link.tooltip:hover::after {
 	color: var( --color-emphasized );
+	font-size: var( --font-size-small );
+	margin-top: 10px;
 	border-radius: var( --border-radius-base );
+	background: var( --color-surface-3 ) !important;
 }
 
 .profile-externalLinks svg {
