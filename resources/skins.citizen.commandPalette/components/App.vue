@@ -467,7 +467,6 @@ module.exports = exports = defineComponent( {
 	@starting-style {
 		transform: scale( 0 ) translateY( -200% );
 	}
-	
 	@media ( min-width: @max-width-breakpoint-tablet ) {
 		top: 3rem;
 	}
