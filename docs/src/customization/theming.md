@@ -53,6 +53,7 @@ Adjust these variables to change the readability and hierarchy of your text.
 | `--color-base` | The default body text color. |
 | `--color-emphasized` | High-contrast text for titles and headers. |
 | `--color-subtle` | Low-contrast text for captions and metadata. |
+| `--color-link` | The default body link color. |
 
 ## Typography
 
