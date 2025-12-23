@@ -650,6 +650,7 @@
 			"+onoi.dataTables.styles": "skinStyles/extensions/SemanticResultFormats/jquery/jquery.dataTables.less",
 			"+ext.SimpleTooltip": "skinStyles/extensions/SimpleTooltip/ext.SimpleTooltip.less",
 			"+ext.SmiteSpam.retriever": "skinStyles/extensions/SmiteSpam/ext.SmiteSpam.retriever.less",
+			"+ext.spoilers.styles": "skinStyles/extensions/Spoilers/ext.Spoilers.less",
 			"+ext.structuredNav.NavigationView.styles": "skinStyles/extensions/StructuredNavigation/ext.structuredNav.NavigationView.less",
 			"+ext.pygments": "skinStyles/extensions/SyntaxHighlight_GeSHi/ext.pygments.less",
 			"+ext.searchdigest.styles": "skinStyles/extensions/SearchDigest/ext.searchdigest.styles.less",
