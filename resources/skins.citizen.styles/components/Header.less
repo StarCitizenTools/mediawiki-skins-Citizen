@@ -128,6 +128,20 @@
 	}
 }
 
+@media ( max-width: @min-width-breakpoint-desktop ) {
+	.citizen-feature-performance-mode-clientpref-0 .citizen-header {
+		background: transparent;
+
+		&::after {
+			position: absolute;
+			inset: 0;
+			z-index: @z-index-bottom;
+			content: '';
+			.mixin-citizen-frosted-glass;
+		}
+	}
+}
+
 // Notifications
 #p-notifications {
 	ul {
@@ -177,6 +191,10 @@
 			margin: var( --space-xxs ) 0;
 			border-right: 0;
 			border-bottom-width: var( --border-width-base );
+		}
+
+		.citizen-header-position-top & {
+			padding: var( --space-xs ) var( --space-xxl );
 		}
 	}
 }
