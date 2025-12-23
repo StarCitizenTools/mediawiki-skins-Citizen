@@ -16,9 +16,12 @@
 }
 
 .profile-user-group {
+	margin-top: -1px;
+	font-weight: var( --font-weight-medium );
 	color: var( --color-emphasized );
 	/* stylelint-disable-next-line declaration-property-value-disallowed-list */
 	text-transform: capitalize;
+	background: var( --color-surface-3 );
 	border-radius: var( --border-radius-base );
 }
 
@@ -27,7 +30,10 @@
 }
 
 .external-link.tooltip:hover::after {
+	margin-top: 10px;
+	font-size: var( --font-size-small );
 	color: var( --color-emphasized );
+	background: var( --color-surface-3 ) !important;
 	border-radius: var( --border-radius-base );
 }
 
