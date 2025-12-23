@@ -495,10 +495,11 @@ module.exports = exports = defineComponent( {
 		text-align: center;
 	}
 
-	&-list-item:not( [ data-type='action' ] ) {
+	.citizen-command-palette-list-item:not( [ data-type='action' ] ) {
 		opacity: 1;
 		transition: opacity 0.25s;
-		transition-delay: calc( 0.1s * ( sibling-index() - 1 ) );
+		/* stylelint-disable-next-line */
+		transition-delay: calc( 0.05s * ( sibling-index() - 1 ) );
 
 		@starting-style {
 			opacity: 0;
