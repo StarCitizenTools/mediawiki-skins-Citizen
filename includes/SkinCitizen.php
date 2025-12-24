@@ -5,8 +5,8 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen;
 
 use MediaWiki\Cache\GenderCache;
-use MediaWiki\Language\Language;
 use MediaWiki\Languages\LanguageConverterFactory;
+use MediaWiki\Languages\LanguageNameUtils;
 use MediaWiki\Permissions\PermissionManager;
 use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentBodyContent;
@@ -50,7 +50,7 @@ class SkinCitizen extends SkinMustache {
 		private readonly GenderCache $genderCache,
 		private readonly UserIdentityLookup $userIdentityLookup,
 		private readonly LanguageConverterFactory $languageConverterFactory,
-		private readonly Language $contentLanguage,
+		private readonly LanguageNameUtils $languageNameUtils,
 		private readonly PermissionManager $permissionManager,
 		private readonly ExtensionRegistry $extensionRegistry,
 		private readonly UserGroupManager $userGroupManager,
@@ -102,7 +102,6 @@ class SkinCitizen extends SkinMustache {
 		$out = $this->getOutput();
 		$title = $this->getTitle();
 		$user = $this->getUser();
-		$pageLang = $title->getPageLanguage();
 
 		$sidebar = $parentData['data-portlets-sidebar'];
 		$pageToolsMenu = [];
@@ -155,7 +154,8 @@ class SkinCitizen extends SkinMustache {
 			'data-site-stats' => new CitizenComponentSiteStats(
 				$config,
 				$localizer,
-				$lang
+				$lang,
+				$this->languageNameUtils
 			),
 			'data-user-info' => new CitizenComponentUserInfo(
 				$this->userGroupManager,

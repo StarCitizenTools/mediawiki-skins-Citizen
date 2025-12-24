@@ -78,16 +78,6 @@ $wgCitizenEnableDrawerSiteStats = true;
 
 **Values**: `true`, `false`
 
-### `$wgCitizenUseNumberFormatter`
-
-Formats numbers in site statistics according to the wiki's language rules (e.g., using commas or dots as separators).
-
-```php [LocalSettings.php]
-$wgCitizenUseNumberFormatter = true;
-```
-
-**Values**: `true`, `false`
-
 ### `$wgCitizenThemeColor`
 
 Sets the color of the browser address bar on mobile devices to match your brand.

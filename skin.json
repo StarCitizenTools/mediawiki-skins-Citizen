@@ -34,7 +34,7 @@
 				"GenderCache",
 				"UserIdentityLookup",
 				"LanguageConverterFactory",
-				"ContentLanguage",
+				"LanguageNameUtils",
 				"PermissionManager",
 				"ExtensionRegistry",
 				"UserGroupManager",
@@ -844,12 +844,6 @@
 			"value": true,
 			"description": "Enables the site statistics in drawer menu",
 			"descriptionmsg": "citizen-config-enabledrawersitestats",
-			"public": true
-		},
-		"UseNumberFormatter": {
-			"value": true,
-			"description": "Use NumberFormatter for site statistics",
-			"descriptionmsg": "citizen-config-usenumberformatter",
 			"public": true
 		},
 		"EnableCJKFonts": {
