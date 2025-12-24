@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.12.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.11.0...v3.12.0) (2025-12-24)
+
+
+### Features
+
+* **commandPalette:** ✨ enhance entrance and exit animation ([a3c5a1a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a3c5a1a4ef6a1b73e3df4784c27f2985c1dd7405))
+* **header:** ✨ various tweaks to site header styles ([85bbf1b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/85bbf1b1c85bc934f1a1b4de80c4f44afd7bc366))
+* **SimpleTooltip:** ✨ use Citizen fonts for tooltip content ([26de618](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/26de618322e6b25c9db9de78c172428c363f768f))
+* **siteStats:** ✨ always use NumberFormatter for site stats ([a933e62](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a933e624100c49971872793859351f1e56d7e96e))
+* **Spoilers:** ✨ add styles for Extension:Spoilers ([b7f375c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b7f375c9521f4f0dab5359e97695a9ba410bd656))
+* **typography:** ✨ improve CJK spacing support ([fbc7398](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/fbc73984abd874d1505daaa5351f2e2a127595a2))
+* **UserProfileV2:** ✨ improve various styles ([b21625f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b21625fd4d65b74524bbbaf55c012b5de9edc595))
+
+
+### Bug Fixes
+
+* **bodyContent:** 🐛 fix section collapsing in MW 1.44+ with PHP 8.4+ ([9c87c3b](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9c87c3b70213614a543dbada1548c63e64cbcf1f))
+* **bodyContent:** 🐛 follow-up to fix for section collapsing ([2bd47f8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2bd47f8a22fc0fe9903f48be561cf6b35d33bf48))
+* **bodyContent:** 🐛 only normalize heading tags for comparison ([ef352e0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ef352e058382c3405a8c7d2d1bf840e86f7cd288))
+* **bodyContent:** 🐛 use Parsoid DOM types to support PHP &gt;= 8.4 ([d0c5515](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d0c5515b5ba803c70517cbf7dafedb4a4420e1fa))
+* **Codex:** 🐛 fix checkbox alignment in newer Codex versions ([e9d7670](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e9d7670854699642be54a12f10dabe162ea4ddc8)), closes [#1223](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1223)
+* **Echo:** 🐛 fix incorrect Echo popup location for MW 1.45+ ([#1227](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1227)) ([1aa4097](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1aa40975dec6460e494832a5ddcfc3400450dcdf))
+* **MobileFrontend:** 🐛 fix incompatibility in MW 1.45 ([6e0e56a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6e0e56a35722bc3275695b55812f1e0888ac8534)), closes [#1224](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1224)
+* **MultimediaViewer:** 🐛 fix clipped image when info card is collapsed ([9da2bcd](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9da2bcd3f58bee87f0efe0520044d67e05bcab4e))
+* **pageTools:** 🐛  fix incorrect VE button border-radius when source edit is selected ([#1225](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1225)) ([db37181](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/db37181fff456c2246e566080b79d08f13f347f6))
+
+
+### Miscellaneous Chores
+
+* 🔧 do not trigger non-exit code for ESLint warning ([3dd3d98](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3dd3d981aceac7d4ec6ea63198ba186c0ac0cd15))
+* 🔧 use the same set of eslint rules across the skin ([c0d0f78](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c0d0f78f4762cc1fd24acdce9a80920b7e0992e0))
+* **docs:** 🔧 📚️ update ESLint configuration ([3f6a040](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/3f6a040f47e8ca41d8c8ec3bca9139f2503105a1))
+* **gitignore:** 🔧 remove Storybook related entries ([1f3fbe6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1f3fbe6b6413a48f9da9ab71e6b58147053bbb8d))
+* **package-lock:** 🔧 remove 'peer' property from multiple dependencies in package-lock.json ([a77a84d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a77a84d5cb9f9b4963dab048f75ce78584a6e52b))
+* **release:** 🚀 ignore documentation in release workflow ([0cfbf22](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0cfbf227edd60ef90cff2d87f700d6bc0d8970da))
+* **wiki:** 🔧 📦️ add @types/node to devDeps ([16ef577](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/16ef5778c8e7a2f119096fc329d89bedc332d338))
+* **wiki:** 🔧 fix incorrect path for doc wiki ([827dd7c](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/827dd7cae8778fd16997b9e049ac152c9a54cdc4))
+* **wiki:** 🔧 setup markdownlint for docs wiki ([7b53c47](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7b53c474d327f079c215ba2d45e3924ae1d687c3))
+
 ## [3.11.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.10.0...v3.11.0) (2025-11-27)
 
 
