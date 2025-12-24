@@ -124,10 +124,9 @@ class SkinCitizen extends SkinMustache {
 				$this->genderCache,
 				$this->userIdentityLookup,
 				$this->languageConverterFactory,
-				$this->contentLanguage,
+				$lang,
 				$localizer,
 				$out,
-				$pageLang,
 				$title,
 				$parentData['html-title-heading']
 			),
@@ -156,7 +155,7 @@ class SkinCitizen extends SkinMustache {
 			'data-site-stats' => new CitizenComponentSiteStats(
 				$config,
 				$localizer,
-				$pageLang
+				$lang
 			),
 			'data-user-info' => new CitizenComponentUserInfo(
 				$this->userGroupManager,

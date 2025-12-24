@@ -10,7 +10,6 @@ use MediaWiki\Language\Language;
 use MediaWiki\Languages\LanguageConverterFactory;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Skin\SkinComponentUtils;
-use MediaWiki\StubObject\StubUserLang;
 use MediaWiki\Title\Title;
 use MediaWiki\User\User;
 use MediaWiki\User\UserFactory;
@@ -30,10 +29,9 @@ class CitizenComponentPageHeading implements CitizenComponent {
 		private readonly GenderCache $genderCache,
 		private readonly UserIdentityLookup $userIdentityLookup,
 		private readonly LanguageConverterFactory $languageConverterFactory,
-		private readonly Language $contentLanguage,
+		private readonly Language $lang,
 		private readonly MessageLocalizer $localizer,
 		private readonly OutputPage $out,
-		private readonly Language|StubUserLang $pageLang,
 		private readonly Title $title,
 		private readonly string $titleData
 	) {
@@ -160,7 +158,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 				'class' => 'citizen-user-regdate',
 				'datetime' => $regDateTs,
 			],
-			$this->pageLang->userDate( new MWTimestamp( $regDate ), $user )
+			$this->lang->userDate( new MWTimestamp( $regDate ), $user )
 		);
 
 		$msgRegDate = $this->localizer->msg( 'citizen-tagline-user-regdate', $regDateHtml )->parse();
@@ -264,7 +262,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 
 		if ( $tagline !== '' ) {
 			// Apply language variant conversion
-			$langConv = $this->languageConverterFactory->getLanguageConverter( $this->contentLanguage );
+			$langConv = $this->languageConverterFactory->getLanguageConverter( $this->lang );
 			$tagline = $langConv->convert( $tagline );
 		}
 

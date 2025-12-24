@@ -8,7 +8,6 @@ use IntlException;
 use MediaWiki\Config\Config;
 use MediaWiki\Language\Language;
 use MediaWiki\SiteStats\SiteStats;
-use MediaWiki\StubObject\StubUserLang;
 use MessageLocalizer;
 use NumberFormatter;
 
@@ -28,7 +27,7 @@ class CitizenComponentSiteStats implements CitizenComponent {
 	public function __construct(
 		private readonly Config $config,
 		private readonly MessageLocalizer $localizer,
-		private readonly Language|StubUserLang $pageLang
+		private readonly Language $lang
 	) {
 	}
 
@@ -56,18 +55,13 @@ class CitizenComponentSiteStats implements CitizenComponent {
 
 		// Get NumberFormatter here so that we don't have to call it for every stats
 		if ( $config->get( 'CitizenUseNumberFormatter' ) && class_exists( NumberFormatter::class ) ) {
-			$locale = $this->pageLang->getHtmlCode() ?? 'en_US';
+			$locale = $this->lang->getHtmlCode() ?? 'en_US';
+
 			try {
 				$fmt = new NumberFormatter( $locale, NumberFormatter::PADDING_POSITION );
 				$fmt->setAttribute( NumberFormatter::ROUNDING_MODE, NumberFormatter::ROUND_DOWN );
 				$fmt->setAttribute( NumberFormatter::MAX_FRACTION_DIGITS, 1 );
-			} catch ( IntlException $exception ) {
-				/*
-				 * FIXME: Put a proper log or error message here?
-				 * For some unknown reason, NumberFormatter can throw an IntlException: Constructor failed
-				 * This should allow Citizen to run as usual even if such exception is encountered.
-				 */
-			}
+			} catch ( IntlException $exception ) {}
 		}
 
 		foreach ( self::SITESTATS_ICON_MAP as $key => $icon ) {
