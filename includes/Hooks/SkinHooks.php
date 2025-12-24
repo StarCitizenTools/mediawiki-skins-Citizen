@@ -405,7 +405,7 @@ class SkinHooks implements
 	private static function updateViewsMenu( array &$links ): void {
 		// Most icons are not mapped yet in the views menu
 		$iconMap = [
-			'view' => 'article',
+			'view' => 'eye',
 			// View source button only appears when the user do not have permission
 			'viewsource' => 'editLock',
 			'history' => 'history',

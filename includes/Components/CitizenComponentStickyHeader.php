@@ -24,7 +24,7 @@ class CitizenComponentStickyHeader implements CitizenComponent {
 	private const SUBJECT_ICON = [
 		'id' => 'ca-subject-sticky-header',
 		'clickTarget' => '#ca-subject > a',
-		'icon' => 'article'
+		'icon' => 'eye'
 	];
 
 	private const HISTORY_ICON = [
