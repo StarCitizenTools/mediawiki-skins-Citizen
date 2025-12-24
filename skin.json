@@ -150,7 +150,8 @@
 				"CdxButton"
 			],
 			"styles": [
-				"resources/skins.citizen.codex.styles/CdxButton.less"
+				"resources/skins.citizen.codex.styles/CdxButton.less",
+				"resources/skins.citizen.codex.styles/CdxCheckbox.less"
 			]
 		},
 		"skins.citizen.styles.fonts.cjk": {
