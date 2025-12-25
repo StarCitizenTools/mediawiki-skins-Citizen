@@ -2,11 +2,12 @@
 	"@metadata": {
 		"authors": [
 			"Sabelöga",
+			"Stefan2255",
 			"WikiPhoenix",
 			"Yupik"
 		]
 	},
-	"citizen-skin-desc": "Ett responsiv utseende utvecklat för Star Citizen Wiki",
+	"citizen-skin-desc": "Ett vackert, användbart och responsivt MediaWiki-skal som gör tillägg till en del av den sammanhängande upplevelsen. Ursprungligen skapat för [https://starcitizen.tools/ Star Citizen Wiki].",
 	"citizen.css": "/* All CSS här kommer laddas in för användare av utseendet Citizen */",
 	"citizen.js": "/* All JavaScript här kommer laddas in för användare av utseendet Citizen */",
 	"citizen-drawer-toggle": "Visa/dölj menyn",
@@ -17,8 +18,8 @@
 	"citizen-sitestats-edits-label": "redigeringar",
 	"citizen-footer-desc": "Redigera den här texten på [[MediaWiki:Citizen-footer-desc/sv]]",
 	"citizen-footer-tagline": "Redigera den här texten på [[MediaWiki:Citizen-footer-tagline/sv]]",
-	"citizen-search-fulltext": "Sök efter sidor som innehåller $1",
+	"citizen-search-fulltext": "Söktext",
 	"citizen-search-noresults-title": "Ånej! Inga resultat för $1",
-	"citizen-search-noresults-desc": "Kanske prova alternativen nedan?",
+	"citizen-search-noresults-desc": "Kanske testa alternativen ovan?",
 	"citizen-feature-custom-font-size-name": "Text"
 }
