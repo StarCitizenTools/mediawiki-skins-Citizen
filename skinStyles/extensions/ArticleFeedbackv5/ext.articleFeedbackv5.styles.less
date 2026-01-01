@@ -1,0 +1,130 @@
+.articleFeedbackv5-panel {
+	width: 100% !important;
+	max-width: unset !important;
+	background: oklch( from var( --color-surface-1 ) l c h / 20% );
+	border: var( --border-base );
+	border-radius: var( --border-radius-medium );
+	.mixin-citizen-frosted-glass;
+}
+
+.articleFeedbackv5-panel .articleFeedbackv5-buffer {
+	padding: var( --space-md );
+}
+
+.articleFeedbackv5-panel .ui-button {
+	padding: var( --space-xs ) var( --space-md ) !important;
+	font-weight: normal !important;
+	color: var( --color-base ) !important;
+	background-color: transparent;
+	border-radius: var( --border-radius-pill ) !important;
+	box-shadow: unset !important;
+	transition-timing-function: var( --transition-timing-function-ease );
+	transition-duration: var( --transition-duration-base );
+	transition-property: transform;
+
+	&:hover {
+		color: var( --color-inverted-primary ) !important;
+		background-color: var( --color-progressive--hover );
+		border-radius: var( --border-radius-medium ) !important;
+		transform: scale( 1.05 );
+	}
+}
+
+.articleFeedbackv5-ui .articleFeedbackv5-submit span,
+.articleFeedbackv5-ui .articleFeedbackv5-cta-button span,
+.articleFeedbackv5-panel .ui-button {
+	height: auto;
+	font-size: var( --font-size-small ) !important;
+	line-height: var( --line-height-small ) !important;
+}
+
+.articleFeedbackv5-ui .articleFeedbackv5-submit,
+.articleFeedbackv5-ui .articleFeedbackv5-cta-button,
+.articleFeedbackv5-ui .buttons .articleFeedbackv5-button-placeholder {
+	height: auto !important;
+	border: var( --border-base ) !important;
+}
+
+.articleFeedbackv5-ui .form-row {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-bottom: unset;
+}
+
+.articleFeedbackv5-panel .ui-button-text-only .ui-button-text {
+	padding: unset !important;
+}
+
+.articleFeedbackv5-ui .articleFeedbackv5-submit span,
+.articleFeedbackv5-ui .articleFeedbackv5-cta-button span {
+	padding: var( --space-sm ) !important;
+}
+
+.articleFeedbackv5-ui .articleFeedbackv5-disclosure p {
+	color: var( --color-subtle ) !important;
+}
+
+.articleFeedbackv5-ui .feedback-text {
+	width: 100%;
+	height: auto;
+	padding: var( --space-md );
+	font-family: var( --font-family-citizen-base ) !important;
+	background-color: transparent;
+	border: var( --border-subtle ) !important;
+	border-radius: var( --border-radius-medium );
+}
+
+.articleFeedbackv5-title {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.articleFeedbackv5-tooltip-trigger {
+	display: none;
+}
+
+.articleFeedbackv5-panel .articleFeedbackv5-title-wrap {
+	display: flex;
+	gap: var( --space-sm );
+	align-items: center;
+}
+
+.articleFeedbackv5-clear {
+	display: none !important;
+}
+
+.articleFeedbackv5-bucket6-toggle .buttons {
+	display: flex;
+	gap: var( --space-sm );
+
+	& .form-item {
+		margin: unset;
+
+		&&[ data-value='no' ] {
+			.ui-button:hover {
+				background: var( --color-destructive--hover );
+			}
+		}
+	}
+}
+
+.articleFeedbackv5-arrow-back {
+	display: block;
+	width: var( --font-size-small );
+	min-width: var( --size-icon );
+	height: var( --font-size-small );
+	min-height: var( --size-icon );
+	padding: unset;
+	margin-right: unset;
+	background: var( --color-base );
+	-webkit-mask-image: url( https://tagging.wiki/w/load.php?modules=skins.citizen.icons&image=collapse&format=original&lang=en&skin=citizen&version=85ugn );
+	mask-image: url( https://tagging.wiki/w/load.php?modules=skins.citizen.icons&image=collapse&format=original&lang=en&skin=citizen&version=85ugn );
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	mask-position: center;
+	-webkit-mask-size: contain;
+	mask-size: contain;
+	transform: rotate( -90deg ) translateX( 1px );
+}
