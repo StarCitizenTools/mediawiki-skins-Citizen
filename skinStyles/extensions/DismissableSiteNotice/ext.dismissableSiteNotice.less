@@ -2,11 +2,13 @@
 	.mw-dismissable-notice {
 		&-close {
 			font-size: 0; // hide brackets
+			margin-right: 32px;
 
 			> a {
 				display: block;
 				width: 24px;
 				height: 24px;
+				border-radius: var(--border-radius-base);
 
 				&::before {
 					display: block;
@@ -15,18 +17,15 @@
 					color: var( --color-base );
 					text-align: center;
 					content: '\00d7'; // close icon
+					cursor: pointer;
 				}
 
 				&:hover {
-					&::before {
-						color: var( --color-subtle );
-					}
+					background-color: var(--background-color-button-quiet--hover);
 				}
 
 				&:active {
-					&::before {
-						color: var( --color-emphasized );
-					}
+					background-color: var(--background-color-button-quiet--active);
 				}
 			}
 		}
