@@ -536,6 +536,8 @@
 			"+ext.advancedSearch.styles": "skinStyles/extensions/AdvancedSearch/ext.advancedSearch.styles.less",
 			"+ext.ajaxpoll": "skinStyles/extensions/AJAXPoll/ext.ajaxpoll.less",
 			"+ext.ApprovedRevs": "skinStyles/extensions/ApprovedRevs/ext.ApprovedRevs.less",
+			"+ext.articleFeedbackv5.styles": "skinStyles/extensions/ArticleFeedbackv5/ext.articleFeedbackv5.styles.less",
+			"+ext.articleFeedbackv5.dashboard.styles": "skinStyles/extensions/ArticleFeedbackv5/ext.articleFeedbackv5.dashboard.styles.less",
 			"+capiunto.infobox.main": "skinStyles/extensions/Capiunto/capiunto.infobox.main.less",
 			"+ext.cargo.main": "skinStyles/extensions/Cargo/ext.cargo.main.less",
 			"+ext.cargo.pagevalues": "skinStyles/extensions/Cargo/ext.cargo.pagevalues.less",
