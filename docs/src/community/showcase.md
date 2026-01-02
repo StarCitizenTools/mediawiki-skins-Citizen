@@ -23,4 +23,5 @@ Check out these amazing wikis powering their content with Citizen:
  <LinkCard title="The EUC Wiki" href="https://monowheel.wiki" />
  <LinkCard title="Battlestar Wiki" href="https://en.battlestarwiki.org" />
  <LinkCard title="Wordle Hub" href="https://wordles.miraheze.org" />
+ <LinkCard title="Sorry We're Closed Wiki" href="https://sorrywereclosed.wiki" />
 </LinkGrid>
