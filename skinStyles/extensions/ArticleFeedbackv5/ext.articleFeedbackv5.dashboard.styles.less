@@ -1,0 +1,94 @@
+.articleFeedbackv5-feedback .articleFeedbackv5-feature-marker,
+.articleFeedbackv5-feedback .articleFeedbackv5-resolve-marker,
+.articleFeedbackv5-feedback .articleFeedbackv5-noaction-marker,
+.articleFeedbackv5-feedback .articleFeedbackv5-inappropriate-marker,
+.articleFeedbackv5-feedback .articleFeedbackv5-autohide-marker,
+.articleFeedbackv5-feedback .articleFeedbackv5-hide-marker,
+.articleFeedbackv5-feedback .articleFeedbackv5-archive-marker,
+.articleFeedbackv5-feedback .articleFeedbackv5-oversight-marker {
+	position: relative;
+	color: var( --color-subtle );
+
+	&::before {
+		position: absolute;
+		top: 50%;
+		left: 0;
+		float: unset;
+		width: var( --font-size-small );
+		min-width: var( --size-icon );
+		height: var( --font-size-small );
+		min-height: var( --size-icon );
+		mask-position: center;
+		mask-size: cover;
+		transform: translateX( -30px ) translateY( -50% );
+	}
+}
+
+.articleFeedbackv5-feedback .articleFeedbackv5-feature-marker::before {
+	background: currentcolor;
+	mask-image: url( /1.44/extensions/ArticleFeedbackv5/modules/jquery.articleFeedbackv5/images/toolbox_feature.svg?d9ba5 );
+}
+
+#articleFeedbackv5-show-feedback {
+	display: flex;
+	flex-direction: column;
+}
+
+.articleFeedbackv5-sort-label,
+.filter-active,
+.filter-active:visited,
+#articleFeedbackv5-filter-select,
+#articleFeedbackv5-sort-select,
+.filter-active #articleFeedbackv5-filter-select,
+.filter-active #articleFeedbackv5-sort-select {
+	font-family: var( --font-family-citizen-base );
+	color: var( --color-base );
+}
+
+#articleFeedbackv5-showing-count-wrap,
+#articleFeedbackv5-special-watchlist-showing-wrap {
+	color: var( --color-subtle );
+}
+
+.articleFeedbackv5-comment-wrap h3 {
+	font-size: var( --font-size-large ) !important;
+	color: var( --color-subtle );
+
+	a {
+		font-size: inherit !important;
+	}
+}
+
+.articleFeedbackv5-feedback {
+	display: flex;
+	flex-direction: row-reverse;
+	padding: 0 var( --space-md );
+	margin: var( --space-xl ) 0;
+	background-image: unset;
+	border: unset;
+
+	.articleFeedbackv5-feedback-tools {
+		float: unset;
+		padding: var( --space-md );
+		background: var( --color-surface-2 );
+		border-radius: var( --border-radius-medium );
+
+		p {
+			margin-top: unset;
+		}
+	}
+}
+
+.articleFeedbackv5-feedback-tools a.articleFeedbackv5-note-link {
+	padding: var( --space-xs );
+	background: var( --color-surface-4 );
+	border: var( --border-subtle );
+}
+
+#articleFeedbackv5-sort-filter-controls {
+	position: sticky;
+	top: calc( var( --height-sticky-header ) * 2 );
+	z-index: 5;
+	padding-top: var( --space-md );
+	.mixin-citizen-frosted-glass;
+}
