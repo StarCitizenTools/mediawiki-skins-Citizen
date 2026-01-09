@@ -17,7 +17,7 @@
 		"prepare": "husky"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^20.3.0",
+		"@commitlint/cli": "^20.3.1",
 		"@commitlint/config-conventional": "^20.3.0",
 		"devmoji": "^2.3.0",
 		"eslint": "8.57.1",
