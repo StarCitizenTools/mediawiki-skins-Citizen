@@ -48,9 +48,9 @@
 		display: flex;
 		padding: var( --space-xs ) var( --space-md );
 		color: var( --color-subtle );
+		text-decoration: none;
 		border: var( --border-width-base ) solid var( --border-color-interactive );
 		border-radius: var( --border-radius-pill );
-		text-decoration: none;
 
 		&:hover,
 		&:active {
@@ -109,21 +109,21 @@
 		&.mw-pt-progress--med {
 			&.mw-pt-languages-selected::after,
 			&:hover::after {
-				background: conic-gradient(var( --color-inverted-fixed ) 180deg, var( --background-color-transparent ) 0deg);
+				background: conic-gradient( var( --color-inverted-fixed ) 180deg, var( --background-color-transparent ) 0deg );
 			}
 		}
 
 		&.mw-pt-progress--high {
 			&.mw-pt-languages-selected::after,
 			&:hover::after {
-				background: conic-gradient(var( --color-inverted-fixed ) 252deg, var( --background-color-transparent ) 0deg);
+				background: conic-gradient( var( --color-inverted-fixed ) 252deg, var( --background-color-transparent ) 0deg );
 			}
 		}
 
 		&.mw-pt-progress--complete {
 			&.mw-pt-languages-selected::after,
 			&:hover::after {
-				background: conic-gradient(var( --color-inverted-fixed ) 360deg, var( --background-color-transparent ) 0deg);
+				background: conic-gradient( var( --color-inverted-fixed ) 360deg, var( --background-color-transparent ) 0deg );
 			}
 		}
 	}
