@@ -30,7 +30,7 @@
 		"stylelint-config-recess-order": "7.4.0",
 		"stylelint-config-wikimedia": "0.18.0",
 		"stylelint-order": "^7.0.1",
-		"stylelint-plugin-use-baseline": "^1.1.5",
+		"stylelint-plugin-use-baseline": "^1.1.6",
 		"types-mediawiki": "2.0.0",
 		"vue": "3.4.27"
 	},
