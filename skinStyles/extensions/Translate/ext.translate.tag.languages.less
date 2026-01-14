@@ -45,9 +45,10 @@
 .mw-pt-languages-list {
 	a.new,
 	.mw-pt-progress {
-		display: block;
+		display: flex;
 		padding: var( --space-xs ) var( --space-md );
 		color: var( --color-subtle );
+		text-decoration: none;
 		border: var( --border-width-base ) solid var( --border-color-interactive );
 		border-radius: var( --border-radius-pill );
 
@@ -72,7 +73,7 @@
 	// Offset right padding for progress icon
 	// Extra specificity to override previous styles
 	.mw-pt-progress {
-		padding-right: ~'calc( var( --space-md ) + 11px )';
+		padding-right: var( --space-md );
 		background-position: right 9px center;
 
 		&:hover {
@@ -87,6 +88,43 @@
 			font-weight: var( --font-weight-normal );
 			color: var( --color-inverted-primary );
 			background-color: var( --color-progressive--active );
+		}
+
+		&::after {
+			margin-left: var( --space-xs );
+		}
+
+		&.mw-pt-languages-selected::after,
+		&:hover::after {
+			outline-color: var( --color-inverted-fixed );
+		}
+
+		&.mw-pt-progress--low {
+			&.mw-pt-languages-selected::after,
+			&:hover::after {
+				border-color: var( --color-inverted-fixed );
+			}
+		}
+
+		&.mw-pt-progress--med {
+			&.mw-pt-languages-selected::after,
+			&:hover::after {
+				background: conic-gradient( var( --color-inverted-fixed ) 180deg, var( --background-color-transparent ) 0deg );
+			}
+		}
+
+		&.mw-pt-progress--high {
+			&.mw-pt-languages-selected::after,
+			&:hover::after {
+				background: conic-gradient( var( --color-inverted-fixed ) 252deg, var( --background-color-transparent ) 0deg );
+			}
+		}
+
+		&.mw-pt-progress--complete {
+			&.mw-pt-languages-selected::after,
+			&:hover::after {
+				background: conic-gradient( var( --color-inverted-fixed ) 360deg, var( --background-color-transparent ) 0deg );
+			}
 		}
 	}
 }
