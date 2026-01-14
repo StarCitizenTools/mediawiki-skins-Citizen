@@ -1,12 +1,14 @@
 .skin-citizen {
 	.mw-dismissable-notice {
 		&-close {
+			margin-right: 32px;
 			font-size: 0; // hide brackets
 
 			> a {
 				display: block;
 				width: 24px;
 				height: 24px;
+				border-radius: var( --border-radius-base );
 
 				&::before {
 					display: block;
@@ -14,19 +16,16 @@
 					line-height: 1;
 					color: var( --color-base );
 					text-align: center;
+					cursor: pointer;
 					content: '\00d7'; // close icon
 				}
 
 				&:hover {
-					&::before {
-						color: var( --color-subtle );
-					}
+					background-color: var( --background-color-button-quiet--hover );
 				}
 
 				&:active {
-					&::before {
-						color: var( --color-emphasized );
-					}
+					background-color: var( --background-color-button-quiet--active );
 				}
 			}
 		}
