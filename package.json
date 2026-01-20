@@ -27,7 +27,7 @@
 		"husky": "^9.1.7",
 		"pinia": "2.0.16",
 		"stylelint": "17.0.0",
-		"stylelint-config-recess-order": "7.4.0",
+		"stylelint-config-recess-order": "7.5.0",
 		"stylelint-config-wikimedia": "0.18.0",
 		"stylelint-order": "^7.0.1",
 		"stylelint-plugin-use-baseline": "^1.2.0",
