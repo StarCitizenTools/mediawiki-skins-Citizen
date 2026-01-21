@@ -117,9 +117,6 @@
 	min-height: var( --size-icon );
 	padding: unset;
 	margin-right: unset;
-	background: var( --color-base );
-	-webkit-mask-image: url( https://tagging.wiki/w/load.php?modules=skins.citizen.icons&image=collapse&format=original&lang=en&skin=citizen&version=85ugn );
-	mask-image: url( https://tagging.wiki/w/load.php?modules=skins.citizen.icons&image=collapse&format=original&lang=en&skin=citizen&version=85ugn );
 	-webkit-mask-repeat: no-repeat;
 	mask-repeat: no-repeat;
 	-webkit-mask-position: center;
@@ -127,4 +124,5 @@
 	-webkit-mask-size: contain;
 	mask-size: contain;
 	transform: rotate( -90deg ) translateX( 1px );
+	.cdx-mixin-css-icon( @cdx-icon-collapse, @color-base );
 }
