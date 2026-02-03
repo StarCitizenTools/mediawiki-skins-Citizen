@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.13.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.12.0...v3.13.0) (2026-02-03)
+
+
+### Features
+
+* **core:** ✨ use eye icon for read button ([131f3ae](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/131f3aec4ec9b8d4af799a91287d6f0fb55c2997))
+* **DismissableSiteNotice:** ✨ modernize dismiss button styling ([8ba653e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8ba653e42905d7b8044bf897c372dcb5a956ab7d))
+
+
+### Bug Fixes
+
+* **pageHeading:** 🐛 fix "strtolower(): Argument [#1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1) ($string) must be of type string, bool given" ([#1275](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1275)) ([f972516](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/f972516d32d693227f0dd467684340d8abd6123e))
+* **pwa:** 🐛 fix incorrect manifest link ([c22526e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c22526e58d028be6b9aaba0ef49f558e9abc3e3e))
+* **pwa:** 🐛 fix incorrect manifest link in test ([e79bcd5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e79bcd50d2ffa8959dd5eb7018990e45ec1cc68e))
+* **Translate:** 🐛 fix progress indicator styling for language pills ([711a796](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/711a796cda0941aaa82518cfe01556113183d672))
+* **UserProfileV2:** 🐛 fix incorrect profile header font ([c1f52cc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c1f52cc15d92e03cf818fdf86973a0fb68af892c))
+
 ## [3.12.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.11.0...v3.12.0) (2025-12-24)
 
 
