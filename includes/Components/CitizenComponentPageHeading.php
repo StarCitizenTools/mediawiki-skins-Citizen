@@ -214,9 +214,11 @@ class CitizenComponentPageHeading implements CitizenComponent {
 			return $this->buildUserTagline();
 		}
 
-		$nsMsgKey = 'citizen-tagline-ns-' . strtolower( $title->getNsText() );
-		if ( !$this->localizer->msg( $nsMsgKey )->isDisabled() ) {
-			return $this->localizer->msg( $nsMsgKey )->parse();
+		if ( $title->getNsText() ) {
+			$nsMsgKey = 'citizen-tagline-ns-' . strtolower( $title->getNsText() );
+			if ( !$this->localizer->msg( $nsMsgKey )->isDisabled() ) {
+				return $this->localizer->msg( $nsMsgKey )->parse();
+			}
 		}
 
 		return $this->getCitizenTagline( 'citizen-tagline' );
