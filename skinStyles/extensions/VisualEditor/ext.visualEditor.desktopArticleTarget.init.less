@@ -58,3 +58,57 @@
 .ve-activated .ve-init-mw-desktopArticleTarget-originalContent #catlinks:hover {
 	background-color: var( --background-color-button-quiet--hover );
 }
+
+// Style VE category edit button as a pill (REL 1.45+)
+.ve-init-mw-desktopArticleTarget-categoryEdit {
+	display: flex;
+	gap: var( --space-xxs );
+	align-items: center;
+	height: 40px;
+	padding: var( --space-xs ) var( --space-md );
+	margin-top: auto;
+	color: var( --color-base );
+	cursor: pointer;
+	border: var( --border-width-base ) solid var( --border-color-interactive );
+	border-radius: var( --border-radius-pill );
+	transition-timing-function: var( --transition-timing-function-ease );
+	transition-duration: var( --transition-duration-base );
+	transition-property: transform;
+
+	// Hide original square brackets
+	.mw-editsection-bracket {
+		display: none;
+	}
+
+	a {
+		display: flex;
+		align-items: center;
+		font-size: 0; // Hide "edit" text
+		color: inherit;
+		text-decoration: none;
+
+		// Edit icon
+		&::before {
+			display: block;
+			width: 1rem;
+			height: 1rem;
+			content: '';
+			background-color: currentcolor;
+			-webkit-mask-image: url( /load.php?modules=skins.citizen.icons&image=edit&format=original&skin=citizen );
+			mask-image: url( /load.php?modules=skins.citizen.icons&image=edit&format=original&skin=citizen );
+			-webkit-mask-repeat: no-repeat;
+			mask-repeat: no-repeat;
+			-webkit-mask-position: center;
+			mask-position: center;
+			-webkit-mask-size: contain;
+			mask-size: contain;
+		}
+	}
+
+	&:hover {
+		color: var( --color-inverted-primary );
+		background-color: var( --color-progressive--hover );
+		border-radius: var( --border-radius-medium );
+		transform: scale( 1.05 );
+	}
+}
