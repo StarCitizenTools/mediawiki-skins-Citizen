@@ -159,7 +159,7 @@
 
 @media ( max-width: @max-width-breakpoint-tablet ) {
 	// HACK: Disable page from scolling when a dropdown menu is opened
-	body:has( .citizen-dropdown-details[ open ] ) {
+	body[data-citizen-dropdown-open] {
 		overflow: hidden;
 	}
 }
