@@ -92,7 +92,7 @@ class Dropdown {
 		window.addEventListener( 'touchstart', this.dismissIfExternalEventTarget, { passive: true } );
 		window.addEventListener( 'focusin', this.dismissIfExternalEventTarget );
 		window.addEventListener( 'keyup', this.dismissOnEscape );
-		document.body.dataset.citizenDropdownOpen = true
+		document.body.dataset.citizenDropdownOpen = true;
 	}
 
 	onDetailsToggle() {
