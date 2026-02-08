@@ -80,7 +80,7 @@ class Dropdown {
 		window.removeEventListener( 'touchstart', this.dismissIfExternalEventTarget );
 		window.removeEventListener( 'focusin', this.dismissIfExternalEventTarget );
 		window.removeEventListener( 'keyup', this.dismissOnEscape );
-		delete document.body.citizenDropdownOpen;
+		delete document.body.dataset.citizenDropdownOpen;
 	}
 
 	/**
