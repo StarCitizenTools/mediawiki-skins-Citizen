@@ -80,6 +80,7 @@ class Dropdown {
 		window.removeEventListener( 'touchstart', this.dismissIfExternalEventTarget );
 		window.removeEventListener( 'focusin', this.dismissIfExternalEventTarget );
 		window.removeEventListener( 'keyup', this.dismissOnEscape );
+		delete document.body.citizenDropdownOpen;
 	}
 
 	/**
@@ -91,6 +92,7 @@ class Dropdown {
 		window.addEventListener( 'touchstart', this.dismissIfExternalEventTarget, { passive: true } );
 		window.addEventListener( 'focusin', this.dismissIfExternalEventTarget );
 		window.addEventListener( 'keyup', this.dismissOnEscape );
+		document.body.dataset.citizenDropdownOpen = true
 	}
 
 	onDetailsToggle() {
