@@ -20,7 +20,7 @@
 		"@commitlint/cli": "^20.4.0",
 		"@commitlint/config-conventional": "^20.3.1",
 		"devmoji": "^2.3.0",
-		"eslint": "8.57.1",
+		"eslint": "10.0.0",
 		"eslint-config-wikimedia": "0.32.3",
 		"eslint-plugin-compat": "^6.1.0",
 		"grunt-banana-checker": "0.13.0",
