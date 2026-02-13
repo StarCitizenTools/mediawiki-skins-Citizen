@@ -58,12 +58,12 @@
 			> .oo-ui-widget {
 				> .mw-echo-ui-sortedListWidget-group { 
 					padding: 50px 10px 0 10px; 
-					height: 100%!important; 
+					height: 100% !important; 
 					overflow-y: auto;
 				}
 					
 				> .mw-echo-ui-sortedListWidget-group > .mw-echo-ui-notificationItemWidget { 
-					border: 2px solid var( --border-color-base )!important; 
+					border: 2px solid var( --border-color-base ) !important; 
 					border-radius: var( --border-radius-medium ); 
 					margin: 10px 0; 
 					transition: var( --transition-duration-medium ) all;
@@ -77,15 +77,6 @@
 
 		> .oo-ui-popupWidget-popup {
 			background: transparent;
-
-			> .oo-ui-popupWidget-head,
-			> .oo-ui-popupWidget-footer {
-				position: absolute;
-				left: 0;
-				width: 100%;
-				z-index: 5;
-				background: oklch( var( --color-surface-1-oklch__l ) var( --color-surface-1-oklch__c ) var( --color-progressive-oklch__h ) )!important;
-			}
 			
 			> .oo-ui-popupWidget-head {
 				display: flex;
@@ -93,8 +84,8 @@
 				height: auto;
 				min-height: @size-300;
 				padding-inline: var( --space-md );
+				background: var( --color-surface-1 );
 				border-bottom-color: transparent;
-				top: 0;
 
 				> .oo-ui-iconWidget {
 					float: none;
@@ -117,7 +108,7 @@
 			}
 
 			> .oo-ui-popupWidget-footer {
-				bottom: 0;
+				background: var( --color-surface-1 );
 				
 				.oo-ui-buttonElement-button {
 					background: transparent;
