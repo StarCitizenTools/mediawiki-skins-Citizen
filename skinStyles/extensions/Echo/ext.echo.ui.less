@@ -22,6 +22,7 @@
 		bottom: calc( var( --header-size-block-end ) + env( safe-area-inset-bottom ) ) !important;
 		margin: var( --space-xs );
 		box-shadow: var( --box-shadow-large );
+		.mixin-citizen-frosted-glass;
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {
 			.citizen-header-position-left & {
@@ -53,17 +54,47 @@
 		.oo-ui-popupWidget-body {
 			height: auto !important;
 			max-height: ~'calc( var( --header-card-maxheight ) - 2 * 3.1428571em )'; // 3.1428571em = height of .oo-ui-popupWidget-head & .oo-ui-popupWidget-footer
+
+			> .oo-ui-widget {
+				> .mw-echo-ui-sortedListWidget-group { 
+					padding: 50px 10px 0 10px; 
+					height: 100%!important; 
+					overflow-y: auto;
+				}
+					
+				> .mw-echo-ui-sortedListWidget-group > .mw-echo-ui-notificationItemWidget { 
+					border: 2px solid var( --border-color-base )!important; 
+					border-radius: var( --border-radius-medium ); 
+					margin: 10px 0; 
+					transition: var( --transition-duration-medium ) all;
+				
+					&:hover { 
+						border: 2px solid var( --color-progressive ); 
+					}
+				}
+			}
 		}
 
 		> .oo-ui-popupWidget-popup {
+			background: transparent;
+
+			> .oo-ui-popupWidget-head,
+			> .oo-ui-popupWidget-footer {
+				position: absolute;
+				left: 0;
+				width: 100%;
+				z-index: 5;
+				background: oklch( var( --color-surface-1-oklch__l ) var( --color-surface-1-oklch__c ) var( --color-progressive-oklch__h ) )!important;
+			}
+			
 			> .oo-ui-popupWidget-head {
 				display: flex;
 				align-items: center;
 				height: auto;
 				min-height: @size-300;
 				padding-inline: var( --space-md );
-				background: var( --color-surface-1 );
 				border-bottom-color: transparent;
+				top: 0;
 
 				> .oo-ui-iconWidget {
 					float: none;
@@ -84,7 +115,20 @@
 					margin: 0;
 				}
 			}
+
+			> .oo-ui-popupWidget-footer {
+				bottom: 0;
+				
+				.oo-ui-buttonElement-button {
+					background: transparent;
+				}
+			}
 		}
+	}
+
+	.mw-echo-ui-notificationBadgeButtonPopupWidget-popup,
+	.oo-ui-popupWidget-popup {
+		border-radius: var( --border-radius-medium );
 	}
 }
 
@@ -183,4 +227,9 @@
 			}
 		}
 	}
+}
+
+.mw-echo-ui-notificationItemWidget-unread {
+	background: var( --background-color-button-quiet--hover );
+	transition: var( --transition-duration-medium ) background;
 }
