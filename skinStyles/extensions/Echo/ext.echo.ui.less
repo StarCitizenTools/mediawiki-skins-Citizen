@@ -22,6 +22,7 @@
 		bottom: calc( var( --header-size-block-end ) + env( safe-area-inset-bottom ) ) !important;
 		margin: var( --space-xs );
 		box-shadow: var( --box-shadow-large );
+		border-radius: var( --border-radius-medium );
 		.mixin-citizen-frosted-glass;
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {
@@ -59,18 +60,19 @@
 			> .oo-ui-widget {
 				> .mw-echo-ui-sortedListWidget-group {
 					height: 100% !important;
-					padding: 50px 10px 0 10px;
+					padding: var( --space-sm ) var( --space-sm );
 					overflow-y: auto;
 				}
 
 				> .mw-echo-ui-sortedListWidget-group > .mw-echo-ui-notificationItemWidget {
-					margin: 10px 0;
+					margin: var( --space-sm ) 0;
 					border: 2px solid var( --border-color-base ) !important;
 					border-radius: var( --border-radius-medium );
-					transition: var( --transition-duration-medium ) all;
+					transition-property: background, border-color;
+					transition-duration: var( --transition-duration-medium );
 
 					&:hover {
-						border: 2px solid var( --color-progressive );
+						border-color: var( --color-progressive );
 					}
 				}
 			}
@@ -116,11 +118,6 @@
 				}
 			}
 		}
-	}
-
-	.mw-echo-ui-notificationBadgeButtonPopupWidget-popup,
-	.oo-ui-popupWidget-popup {
-		border-radius: var( --border-radius-medium );
 	}
 }
 
@@ -192,7 +189,8 @@
 	background-color: transparent;
 
 	&-unread {
-		background-color: var( --color-surface-2 );
+		background-color: var( --background-color-button-quiet--hover );
+		transition: var( --transition-duration-medium ) background-color;
 	}
 
 	&-icon {
@@ -219,9 +217,4 @@
 			}
 		}
 	}
-}
-
-.mw-echo-ui-notificationItemWidget-unread {
-	background: var( --background-color-button-quiet--hover );
-	transition: var( --transition-duration-medium ) background;
 }
