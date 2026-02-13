@@ -21,8 +21,8 @@
 		top: unset !important;
 		bottom: calc( var( --header-size-block-end ) + env( safe-area-inset-bottom ) ) !important;
 		margin: var( --space-xs );
-		box-shadow: var( --box-shadow-large );
 		border-radius: var( --border-radius-medium );
+		box-shadow: var( --box-shadow-large );
 		.mixin-citizen-frosted-glass;
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {
@@ -60,7 +60,7 @@
 			> .oo-ui-widget {
 				> .mw-echo-ui-sortedListWidget-group {
 					height: 100% !important;
-					padding: var( --space-sm ) var( --space-sm );
+					padding: var( --space-sm );
 					overflow-y: auto;
 				}
 
@@ -68,8 +68,8 @@
 					margin: var( --space-sm ) 0;
 					border: 2px solid var( --border-color-base ) !important;
 					border-radius: var( --border-radius-medium );
-					transition-property: background, border-color;
 					transition-duration: var( --transition-duration-medium );
+					transition-property: background, border-color;
 
 					&:hover {
 						border-color: var( --color-progressive );
