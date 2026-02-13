@@ -53,23 +53,24 @@
 
 		.oo-ui-popupWidget-body {
 			height: auto !important;
-			max-height: ~'calc( var( --header-card-maxheight ) - 2 * 3.1428571em )'; // 3.1428571em = height of .oo-ui-popupWidget-head & .oo-ui-popupWidget-footer
+			max-height: ~'calc( var( --header-card-maxheight ) - 2 * 3.1428571em )';
+			// 3.1428571em = height of .oo-ui-popupWidget-head & .oo-ui-popupWidget-footer
 
 			> .oo-ui-widget {
-				> .mw-echo-ui-sortedListWidget-group { 
-					padding: 50px 10px 0 10px; 
-					height: 100% !important; 
+				> .mw-echo-ui-sortedListWidget-group {
+					height: 100% !important;
+					padding: 50px 10px 0 10px;
 					overflow-y: auto;
 				}
-					
-				> .mw-echo-ui-sortedListWidget-group > .mw-echo-ui-notificationItemWidget { 
-					border: 2px solid var( --border-color-base ) !important; 
-					border-radius: var( --border-radius-medium ); 
-					margin: 10px 0; 
+
+				> .mw-echo-ui-sortedListWidget-group > .mw-echo-ui-notificationItemWidget {
+					margin: 10px 0;
+					border: 2px solid var( --border-color-base ) !important;
+					border-radius: var( --border-radius-medium );
 					transition: var( --transition-duration-medium ) all;
-				
-					&:hover { 
-						border: 2px solid var( --color-progressive ); 
+
+					&:hover {
+						border: 2px solid var( --color-progressive );
 					}
 				}
 			}
@@ -77,7 +78,7 @@
 
 		> .oo-ui-popupWidget-popup {
 			background: transparent;
-			
+
 			> .oo-ui-popupWidget-head {
 				display: flex;
 				align-items: center;
@@ -109,7 +110,7 @@
 
 			> .oo-ui-popupWidget-footer {
 				background: var( --color-surface-1 );
-				
+
 				.oo-ui-buttonElement-button {
 					background: transparent;
 				}
