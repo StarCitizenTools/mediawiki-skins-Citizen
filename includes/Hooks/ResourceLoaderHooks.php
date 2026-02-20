@@ -66,6 +66,8 @@ class ResourceLoaderHooks {
 			'wgCitizenSearchGateway' => $config->get( 'CitizenSearchGateway' ),
 			'wgCitizenSearchDescriptionSource' => $config->get( 'CitizenSearchDescriptionSource' ),
 			'wgCitizenMaxSearchResults' => $config->get( 'CitizenMaxSearchResults' ),
+			'wgCitizenSearchSmwApiAction' => $config->get( 'CitizenSearchSmwApiAction' ),
+			'wgCitizenSearchSmwAskApiQueryTemplate' => $config->get( 'CitizenSearchSmwAskApiQueryTemplate' ),
 			'wgScriptPath' => $config->get( MainConfigNames::ScriptPath ),
 			'wgSearchSuggestCacheExpiry' => $config->get( MainConfigNames::SearchSuggestCacheExpiry )
 		];
@@ -85,6 +87,11 @@ class ResourceLoaderHooks {
 
 		return [
 			'isMediaSearchExtensionEnabled' => $extensionRegistry->isLoaded( 'MediaSearch' ),
+			'wgCitizenSearchGateway' => $config->get( 'CitizenSearchGateway' ),
+			'wgCitizenMaxSearchResults' => $config->get( 'CitizenMaxSearchResults' ),
+			'wgCitizenSearchSmwApiAction' => $config->get( 'CitizenSearchSmwApiAction' ),
+			'wgCitizenSearchSmwAskApiQueryTemplate' => $config->get( 'CitizenSearchSmwAskApiQueryTemplate' ),
+			'wgScriptPath' => $config->get( MainConfigNames::ScriptPath ),
 			'wgSearchSuggestCacheExpiry' => $config->get( MainConfigNames::SearchSuggestCacheExpiry )
 		];
 	}

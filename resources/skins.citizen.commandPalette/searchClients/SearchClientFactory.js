@@ -6,6 +6,9 @@
 
 const { CitizenCommandPaletteSearchClient } = require( '../types.js' );
 const MwRestSearchClient = require( './MwRestSearchClient.js' );
+const SmwAskApiSearchClient = require( './SmwAskApiSearchClient.js' );
+
+const config = require( '../config.json' );
 
 /**
  * Registry of available search client factory functions.
@@ -14,7 +17,19 @@ const MwRestSearchClient = require( './MwRestSearchClient.js' );
  * @type {Object.<string, function(mw.Map): CitizenCommandPaletteSearchClient>}
  */
 const searchClientRegistry = {
-	MwRestSearchClient: () => new MwRestSearchClient()
+	MwRestSearchClient: () => new MwRestSearchClient(),
+	SmwAskApiSearchClient: () => new SmwAskApiSearchClient()
+};
+
+/**
+ * Maps gateway config values to search client registry keys.
+ *
+ * @type {Object.<string, string>}
+ */
+const gatewayToClientMap = {
+	smwAskApi: 'SmwAskApiSearchClient',
+	mwRestApi: 'MwRestSearchClient',
+	mwActionApi: 'MwRestSearchClient'
 };
 
 /**
@@ -24,12 +39,11 @@ const searchClientRegistry = {
  * @throws {Error} If the configured type is not registered or config is missing.
  */
 function create() {
-	// We don't have any other client type yet
-	const clientType = 'MwRestSearchClient';
+	const gateway = config.wgCitizenSearchGateway || 'mwRestApi';
+	const clientType = gatewayToClientMap[ gateway ] || 'MwRestSearchClient';
 
 	const factory = searchClientRegistry[ clientType ];
 	if ( !factory ) {
-		// Use mw.log.error in production? Throwing for now.
 		throw new Error( `Unknown or unregistered search client type configured: ${ clientType }` );
 	}
 
