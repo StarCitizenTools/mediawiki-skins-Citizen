@@ -67,15 +67,11 @@
 	align-self: flex-start;
 	order: 1;
 	height: 40px;
-	padding: var( --space-xs ) var( --space-md );
+	width: 40px;
+	padding: var( --space-xs );
 	margin-top: auto;
 	color: var( --color-base );
 	cursor: pointer;
-	border: var( --border-width-base ) solid var( --border-color-interactive );
-	border-radius: var( --border-radius-pill );
-	transition-timing-function: var( --transition-timing-function-ease );
-	transition-duration: var( --transition-duration-base );
-	transition-property: transform;
 
 	// Hide original square brackets
 	.mw-editsection-bracket {
@@ -88,6 +84,7 @@
 		font-size: 0; // Hide "edit" text
 		color: inherit;
 		text-decoration: none;
+		margin: auto;
 
 		// Edit icon
 		&::before {
@@ -108,10 +105,8 @@
 	}
 
 	&:hover {
-		color: var( --color-inverted-primary );
-		background-color: var( --color-progressive--hover );
-		border-radius: var( --border-radius-medium );
-		transform: scale( 1.05 );
+		background-color: var( --background-color-interactive-subtle--hover );
+		border-radius: var( --border-radius-base );
 	}
 
 	&:focus {
