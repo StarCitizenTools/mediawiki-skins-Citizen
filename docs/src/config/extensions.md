@@ -10,7 +10,7 @@ description: Extensions supported by Citizen
 Citizen allows for customizing extension styles using skinStyles, which apply unique styling to both extensions and core libraries.
 :::
 
-## Current supported extensions and libraries
+## Current supported extensions
 
 Name | Version
 :--- | :---
@@ -33,9 +33,9 @@ Name | Version
 [DiscussionTools](https://www.mediawiki.org/wiki/Extension:DiscussionTools) | REL1_39 `1aae2cc`
 [DismissableSiteNotice](https://www.mediawiki.org/wiki/Extension:DismissableSiteNotice) | N/A
 [Echo](https://www.mediawiki.org/wiki/Extension:Echo) | REL1_35 `347c30e`
+[FlaggedRevs](https://www.mediawiki.org/wiki/Extension:FlaggedRevs) | REL1_39 `130a28f`
 [FloatingUI](https://www.mediawiki.org/wiki/Extension:FloatingUI) | 0.0.1
 [Flow (StructuredDiscussions)](https://www.mediawiki.org/wiki/Extension:StructuredDiscussions) | REL1_35 `e3379f0`
-[FlaggedRevs](https://www.mediawiki.org/wiki/Extension:FlaggedRevs) | REL1_39 `130a28f`
 [Graph](https://www.mediawiki.org/wiki/Extension:Graph) | N/A
 [Interwiki](https://www.mediawiki.org/wiki/Extension:Interwiki) | REL1_35 `a65a18e`
 [Lingo](https://www.mediawiki.org/wiki/Extension:Lingo) | REL1_35 `e948775`
@@ -57,14 +57,14 @@ Name | Version
 [SmiteSpam](https://www.mediawiki.org/wiki/Extension:SmiteSpam) | REL1_39 `c81b04b`
 [StructuredNavigation](https://www.mediawiki.org/wiki/Extension:StructuredNavigation) | REL1_39 `55e2ec0`
 [SyntaxHighlight](https://www.mediawiki.org/wiki/Extension:SyntaxHighlight) | REL1_35 `05598b3`
-[Tabs](https://www.mediawiki.org/wiki/Extension:Tabs) | REL1_39 `63ccef2`
 [Tabber](https://www.mediawiki.org/wiki/Extension:Tabber) | N/A
 [TabberNeue](https://www.mediawiki.org/wiki/Extension:TabberNeue) | 2.6.0
+[Tabs](https://www.mediawiki.org/wiki/Extension:Tabs) | REL1_39 `63ccef2`
 [TemplateData](https://www.mediawiki.org/wiki/Extension:TemplateData) | REL1_43
 [TimedMediaHandler](https://www.mediawiki.org/wiki/Extension:TimedMediaHandler) | N/A
 [TinyMCE](https://www.mediawiki.org/wiki/Extension:TinyMCE) | 1.1.2
 [Translate](https://www.mediawiki.org/wiki/Extension:Translate) | MLEB 2023.01
-[TwoColConflict](https://www.mediawiki.org/wiki/Extension:TwoColConflict) | REL1_39 5a2a947
+[TwoColConflict](https://www.mediawiki.org/wiki/Extension:TwoColConflict) | REL1_39 `5a2a947`
 [UniversalLanguageSelector](https://www.mediawiki.org/wiki/Extension:UniversalLanguageSelector) | MLEB 2021.12
 [UploadWizard](https://www.mediawiki.org/wiki/Extension:UploadWizard) | REL1_43
 [UserProfileV2](https://gitlab.com/telepedia/extensions/userprofilev2) | Main `effb3b1`
