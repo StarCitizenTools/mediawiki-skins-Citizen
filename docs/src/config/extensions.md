@@ -5,7 +5,7 @@ description: Extensions supported by Citizen
 
 # Extensions
 
-While these extensions are optional to have Citizen work out of the box, there are additional features in Citizen that only them can provide:
+While these extensions are optional to have Citizen work out of the box, there are additional features in Citizen that only they can provide:
 
 - [PageImages](https://www.mediawiki.org/wiki/Extension:PageImages) (bundled with MediaWiki) - Add image to search suggestion results.
 - [TextExtracts](https://www.mediawiki.org/wiki/Extension:TextExtracts) (bundled with MediaWiki) - Add description to search suggestion results.
