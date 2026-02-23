@@ -12,7 +12,6 @@ While these extensions are optional to have Citizen work out of the box, there a
 - [ShortDescription](https://www.mediawiki.org/wiki/Extension:ShortDescription) - Add short description to under page title and search suggestion results (needs to set $wgCitizenSearchDescriptionSource to wikidata).
 - [TemplateStylesExtender](https://www.mediawiki.org/wiki/Extension:TemplateStylesExtender) (if you use [TemplateStyles](https://www.mediawiki.org/wiki/Extension:TemplateStyles)) - Allow the use of CSS variables in TemplateStyles, including the ones provided by Citizen.
 
-
 ## Extension styles
 
 ::: tip Citizen supports additional styles for your favorite extensions
