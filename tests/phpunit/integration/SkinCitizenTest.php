@@ -2,7 +2,7 @@
 
 declare( strict_types=1 );
 
-namespace MediaWiki\Skins\Citizen\Integration\Tests;
+namespace MediaWiki\Skins\Citizen\Tests\Integration;
 
 use MediaWiki\Skins\Citizen\SkinCitizen;
 use MediaWiki\Title\Title;
