@@ -27,7 +27,7 @@ composer phpunit -- skins/Citizen/tests/phpunit/path/to/MyTest.php
 ## Coding conventions
 
 ### PHP
-- All files start with `declare( strict_types = 1 );`
+- All files start with `declare( strict_types=1 );`
 - Use native PHP types (properties, parameters, return values); use PHPDoc only for collection types like `string[]`
 - Avoid boolean parameters; use class constants or named arrays instead
 - PHPUnit test class names match the class under test (`FooTest` for `Foo`); use `@covers` with FQN
