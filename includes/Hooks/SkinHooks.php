@@ -26,6 +26,8 @@ class SkinHooks implements
 	SkinBuildSidebarHook,
 	SkinPageReadyConfigHook
 {
+	private static ?string $inlineScript = null;
+
 	/**
 	 * Adds the inline theme switcher script to the page
 	 *
@@ -39,10 +41,13 @@ class SkinHooks implements
 		}
 
 		if ( $out->getConfig()->get( 'CitizenEnablePreferences' ) === true ) {
-			$script = file_get_contents( MW_INSTALL_PATH . '/skins/Citizen/resources/skins.citizen.scripts/inline.js' );
-			$script = Html::inlineScript( $script );
-			$script = RL\ResourceLoader::filter( 'minify-js', $script );
-			$out->addHeadItem( 'skin.citizen.inline', $script );
+			self::$inlineScript ??= Html::inlineScript(
+				RL\ResourceLoader::filter(
+					'minify-js',
+					file_get_contents( MW_INSTALL_PATH . '/skins/Citizen/resources/skins.citizen.scripts/inline.js' )
+				)
+			);
+			$out->addHeadItem( 'skin.citizen.inline', self::$inlineScript );
 		}
 	}
 
