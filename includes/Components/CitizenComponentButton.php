@@ -25,18 +25,18 @@ class CitizenComponentButton implements CitizenComponent {
 		private bool $iconOnly = false,
 		private ?string $href = null
 	) {
-		// Weight can only be normal, primary, or quiet
-		if ( $this->weight !== 'primary' && $this->weight !== 'quiet' ) {
-			$this->weight = 'normal';
-		}
-		// Action can only be default, progressive or destructive
-		if ( $this->action !== 'progressive' && $this->action !== 'destructive' ) {
-			$this->action = 'default';
-		}
-		// Size can only be medium or large
-		if ( $this->size !== 'medium' && $this->size !== 'large' ) {
-			$this->size = 'medium';
-		}
+		$this->weight = match ( $this->weight ) {
+			'primary', 'quiet' => $this->weight,
+			default => 'normal',
+		};
+		$this->action = match ( $this->action ) {
+			'progressive', 'destructive' => $this->action,
+			default => 'default',
+		};
+		$this->size = match ( $this->size ) {
+			'large' => 'large',
+			default => 'medium',
+		};
 	}
 
 	/**
@@ -47,39 +47,20 @@ class CitizenComponentButton implements CitizenComponent {
 		if ( $this->href ) {
 			$classes .= ' cdx-button--fake-button cdx-button--fake-button--enabled';
 		}
-		switch ( $this->weight ) {
-			case 'primary':
-				$classes .= ' cdx-button--weight-primary';
-				break;
-			case 'quiet':
-				$classes .= ' cdx-button--weight-quiet';
-				break;
-			case 'normal':
-			default:
-				$classes .= ' cdx-button--weight-normal';
-				break;
-		}
-		switch ( $this->action ) {
-			case 'progressive':
-				$classes .= ' cdx-button--action-progressive';
-				break;
-			case 'destructive':
-				$classes .= ' cdx-button--action-destructive';
-				break;
-			case 'default':
-			default:
-				$classes .= ' cdx-button--action-default';
-				break;
-		}
-		switch ( $this->size ) {
-			case 'large':
-				$classes .= ' cdx-button--size-large';
-				break;
-			case 'medium':
-			default:
-				$classes .= ' cdx-button--size-medium';
-				break;
-		}
+		$classes .= match ( $this->weight ) {
+			'primary' => ' cdx-button--weight-primary',
+			'quiet' => ' cdx-button--weight-quiet',
+			default => ' cdx-button--weight-normal',
+		};
+		$classes .= match ( $this->action ) {
+			'progressive' => ' cdx-button--action-progressive',
+			'destructive' => ' cdx-button--action-destructive',
+			default => ' cdx-button--action-default',
+		};
+		$classes .= match ( $this->size ) {
+			'large' => ' cdx-button--size-large',
+			default => ' cdx-button--size-medium',
+		};
 		if ( $this->iconOnly ) {
 			$classes .= ' cdx-button--icon-only';
 		}

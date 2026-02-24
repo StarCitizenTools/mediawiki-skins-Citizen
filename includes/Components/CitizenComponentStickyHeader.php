@@ -79,19 +79,16 @@ class CitizenComponentStickyHeader implements CitizenComponent {
 		$iconButtons = [];
 		foreach ( $icons as $icon ) {
 			$button = new CitizenComponentButton(
-				"",
-				$icon[ 'icon' ],
-				$icon[ 'id' ],
-				$icon[ 'class' ] ?? '',
-				[
+				icon: $icon['icon'],
+				id: $icon['id'],
+				class: $icon['class'] ?? '',
+				attributes: [
 					'tabindex' => '-1',
-					'data-mw-citizen-click-target' => $icon[ 'clickTarget' ] ?? null,
+					'data-mw-citizen-click-target' => $icon['clickTarget'] ?? null,
 				],
-				'quiet',
-				'default',
-				'large',
-				true,
-				null
+				weight: 'quiet',
+				size: 'large',
+				iconOnly: true,
 			);
 			$iconButtons[] = $button->getTemplateData();
 		}
