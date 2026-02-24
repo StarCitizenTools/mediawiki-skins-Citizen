@@ -23,6 +23,7 @@ If you would like to contribute to *Citizen*, follow these steps:
 We will review your pull request and, if everything looks good, merge it into the main codebase.
 
 ## Translations
+
 You can submit translations via [TranslateWiki.net](https://translatewiki.net/w/i.php?title=Special:Translate&group=mwgithub-star-citizen). They are usually merged bi-weekly.
 
 ## Questions
