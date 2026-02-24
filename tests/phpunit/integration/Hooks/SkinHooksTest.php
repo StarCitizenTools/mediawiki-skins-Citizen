@@ -270,4 +270,87 @@ class SkinHooksTest extends MediaWikiIntegrationTestCase {
 		$this->assertArrayNotHasKey( 'anonuserpage', $links['user-menu'] );
 		$this->assertArrayHasKey( 'login', $links['user-menu'] );
 	}
+
+	public function testToolboxMenuRemovesSiteTools(): void {
+		$skinMock = $this->createMock( Skin::class );
+		$skinMock->method( 'getSkinName' )->willReturn( 'citizen' );
+
+		$sidebar = [
+			'TOOLBOX' => [
+				'whatlinkshere' => [ 'id' => 't-whatlinkshere' ],
+				'upload' => [ 'id' => 't-upload' ],
+				'specialpages' => [ 'id' => 't-specialpages' ],
+				'print' => [ 'id' => 't-print' ],
+			],
+		];
+
+		$this->newSkinHooks()->onSidebarBeforeOutput( $skinMock, $sidebar );
+
+		$this->assertArrayNotHasKey( 'upload', $sidebar['TOOLBOX'] );
+		$this->assertArrayNotHasKey( 'specialpages', $sidebar['TOOLBOX'] );
+		$this->assertArrayHasKey( 'whatlinkshere', $sidebar['TOOLBOX'] );
+		$this->assertArrayHasKey( 'print', $sidebar['TOOLBOX'] );
+	}
+
+	public function testToolboxMenuMapsIcons(): void {
+		$skinMock = $this->createMock( Skin::class );
+		$skinMock->method( 'getSkinName' )->willReturn( 'citizen' );
+
+		$sidebar = [
+			'TOOLBOX' => [
+				'print' => [ 'id' => 't-print' ],
+				'recentchangeslinked' => [ 'id' => 't-recentchangeslinked' ],
+			],
+		];
+
+		$this->newSkinHooks()->onSidebarBeforeOutput( $skinMock, $sidebar );
+
+		$this->assertSame( 'printer', $sidebar['TOOLBOX']['print']['icon'] );
+		$this->assertSame( 'recentChanges', $sidebar['TOOLBOX']['recentchangeslinked']['icon'] );
+	}
+
+	public function testNotificationsMenuMapsIconsAndRewritesClasses(): void {
+		$sktemplate = $this->createSkinTemplateMock();
+		$links = [
+			'notifications' => [
+				'notifications-alert' => [
+					'id' => 'pt-notifications-alert',
+					'icon' => null,
+					'link-class' => [ 'mw-echo-unseen-notifications' ],
+				],
+				'notifications-notice' => [
+					'id' => 'pt-notifications-notice',
+					'icon' => null,
+					'link-class' => [],
+				],
+			],
+		];
+
+		SkinHooks::onSkinTemplateNavigation( $sktemplate, $links );
+
+		// Icons should be mapped
+		$this->assertSame( 'bell', $links['notifications']['notifications-alert']['icon'] );
+		$this->assertSame( 'tray', $links['notifications']['notifications-notice']['icon'] );
+
+		// Alert had unseen class — it should be preserved
+		$this->assertContains(
+			'mw-echo-unseen-notifications',
+			$links['notifications']['notifications-alert']['link-class']
+		);
+		$this->assertContains(
+			'citizen-echo-notification-badge',
+			$links['notifications']['notifications-alert']['link-class']
+		);
+
+		// Notice did NOT have unseen class — it should NOT be present
+		$this->assertNotContains(
+			'mw-echo-unseen-notifications',
+			$links['notifications']['notifications-notice']['link-class']
+		);
+		// But the class rewrite should still have happened
+		$this->assertContains(
+			'citizen-echo-notification-badge',
+			$links['notifications']['notifications-notice']['link-class']
+		);
+	}
 }
