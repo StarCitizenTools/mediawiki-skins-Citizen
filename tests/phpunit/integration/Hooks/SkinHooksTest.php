@@ -7,8 +7,10 @@ namespace MediaWiki\Skins\Citizen\Tests\Integration\Hooks;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\ResourceLoader\Context;
 use MediaWiki\Skins\Citizen\Hooks\SkinHooks;
+use MediaWiki\User\User;
 use MediaWikiIntegrationTestCase;
 use Skin;
+use SkinTemplate;
 
 /**
  * @group Citizen
@@ -87,5 +89,80 @@ class SkinHooksTest extends MediaWikiIntegrationTestCase {
 		$this->newSkinHooks()->onOutputPageAfterGetHeadLinksArray( $tags, $out );
 
 		$this->assertArrayNotHasKey( 'meta-viewport', $tags );
+	}
+
+	private function createSkinTemplateMock( string $skinName = 'citizen' ): SkinTemplate {
+		$user = $this->createMock( User::class );
+		$user->method( 'isRegistered' )->willReturn( true );
+		$user->method( 'isTemp' )->willReturn( false );
+
+		$sktemplate = $this->createMock( SkinTemplate::class );
+		$sktemplate->method( 'getSkinName' )->willReturn( $skinName );
+		$sktemplate->method( 'getUser' )->willReturn( $user );
+
+		return $sktemplate;
+	}
+
+	public function testViewsMenuMapsIcons(): void {
+		$sktemplate = $this->createSkinTemplateMock();
+		$links = [
+			'views' => [
+				'view' => [ 'id' => 'ca-view' ],
+				'edit' => [ 'id' => 'ca-edit', 'class' => '' ],
+				'history' => [ 'id' => 'ca-history' ],
+			],
+		];
+
+		SkinHooks::onSkinTemplateNavigation( $sktemplate, $links );
+
+		$this->assertSame( 'eye', $links['views']['view']['icon'] );
+		$this->assertSame( 'edit', $links['views']['edit']['icon'] );
+		$this->assertSame( 'history', $links['views']['history']['icon'] );
+	}
+
+	public function testViewsMenuMergesVeAndSourceEdit(): void {
+		$sktemplate = $this->createSkinTemplateMock();
+		$links = [
+			'views' => [
+				've-edit' => [ 'id' => 'ca-ve-edit', 'class' => '' ],
+				'edit' => [ 'id' => 'ca-edit', 'class' => '' ],
+			],
+		];
+
+		SkinHooks::onSkinTemplateNavigation( $sktemplate, $links );
+
+		// When both exist, source edit should use wikiText icon
+		$this->assertSame( 'wikiText', $links['views']['edit']['icon'] );
+		$this->assertSame( 'edit', $links['views']['ve-edit']['icon'] );
+		// Both should have the merged CSS class
+		$this->assertStringContainsString( 'citizen-ve-edit-merged', $links['views']['ve-edit']['class'] );
+		$this->assertStringContainsString( 'citizen-ve-edit-merged', $links['views']['edit']['class'] );
+	}
+
+	public function testViewsMenuWithOnlySourceEdit(): void {
+		$sktemplate = $this->createSkinTemplateMock();
+		$links = [
+			'views' => [
+				'edit' => [ 'id' => 'ca-edit', 'class' => '' ],
+			],
+		];
+
+		SkinHooks::onSkinTemplateNavigation( $sktemplate, $links );
+
+		// Without VE, source edit should keep the edit icon
+		$this->assertSame( 'edit', $links['views']['edit']['icon'] );
+	}
+
+	public function testNavigationSkipsNonCitizen(): void {
+		$sktemplate = $this->createSkinTemplateMock( 'vector' );
+		$links = [
+			'views' => [
+				'edit' => [ 'id' => 'ca-edit', 'class' => '' ],
+			],
+		];
+
+		SkinHooks::onSkinTemplateNavigation( $sktemplate, $links );
+
+		$this->assertArrayNotHasKey( 'icon', $links['views']['edit'] );
 	}
 }
