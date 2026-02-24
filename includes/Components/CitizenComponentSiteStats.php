@@ -4,12 +4,12 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Components;
 
+use Locale;
 use MediaWiki\Config\Config;
 use MediaWiki\Language\Language;
 use MediaWiki\Languages\LanguageNameUtils;
 use MediaWiki\MainConfigNames;
 use MediaWiki\SiteStats\SiteStats;
-use Locale;
 use MessageLocalizer;
 use NumberFormatter;
 use RuntimeException;
@@ -64,7 +64,8 @@ class CitizenComponentSiteStats implements CitizenComponent {
 			$this->config->get( MainConfigNames::TranslateNumerals )
 			&& $this->langNameUtils->isValidCode( $locale )
 		) ) {
-			$locale = Locale::getDefault(); // POSIX system default locale
+			// POSIX system default locale
+			$locale = Locale::getDefault();
 		}
 
 		$fmt = $this->createNumberFormatter( $locale );
