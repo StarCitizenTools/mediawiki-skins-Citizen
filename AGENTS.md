@@ -9,13 +9,13 @@ Citizen is a MediaWiki skin (requires MW 1.43+) built on `SkinMustache`. It uses
 Run only what's relevant to the files you changed.
 
 | Files changed | Command |
-|---|---|
+| --- | --- |
 | `*.php` | `composer test` (lint and style only) then PHPUnit (see below) |
 | `*.js`, `*.vue` | `npm run lint:js` |
-| `*.less`, `*.css` | `npm run lint:styles` |
+| `*.less`, `*.css`, `*.vue` | `npm run lint:styles` |
 | `i18n/` | `npm run lint:i18n` |
 
-Auto-fix commands: `composer fix` (PHP), `npm run lint:fix:js` (JS), `npm run lint:fix:styles` (LESS).
+Auto-fix commands: `composer fix` (PHP), `npm run lint:fix:js` (JS), `npm run lint:fix:styles` (styles).
 
 ### PHPUnit
 
@@ -32,23 +32,28 @@ If using a different MediaWiki dev environment, adapt the command to run `compos
 ## Coding conventions
 
 ### PHP
+
 - All files start with `declare( strict_types=1 );`
 - Use native PHP types (properties, parameters, return values); use PHPDoc only for collection types like `string[]`
 - Avoid boolean parameters; use class constants or named arrays instead
 - PHPUnit test class names match the class under test (`FooTest` for `Foo`); use `@covers` with FQN
 
 ### JavaScript
+
 - CommonJS modules: `require()` for imports, `module.exports` for exports
 
 ### Vue
+
 - Composition API (`setup()`)
 - CommonJS: `const { defineComponent } = require( 'vue' );` + `module.exports = exports = defineComponent(...)`
 
 ### LESS/CSS
+
 - CSS custom properties (from `tokens-citizen.less`) preferred over LESS variables
 - Only import `variables.less` or `mixins.less` when LESS-specific features are needed
 
 ### Codex
+
 - Use the Codex version bundled with MediaWiki — do not assume a specific version. The minimum is v1.14.0 (bundled with MW 1.43), but newer MW versions may provide a newer Codex.
 - Codex components requiring JS must be listed in `skin.json` under the appropriate `CodexModule`
 
@@ -60,5 +65,6 @@ If using a different MediaWiki dev environment, adapt the command to run `compos
 - Config variables are declared under `config` in `skin.json` (prefixed `wgCitizen`). In PHP they are accessed via `$this->getConfig()->get( 'CitizenFoo' )`, and can be injected into JS via `ResourceLoaderHooks`
 
 ### i18n
+
 - Any user-facing string needs a message key in `i18n/en.json`
 - Every key in `en.json` must also have a documentation entry in `i18n/qqq.json`
