@@ -165,4 +165,49 @@ class SkinHooksTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertArrayNotHasKey( 'icon', $links['views']['edit'] );
 	}
+
+	public function testActionsMenuMapsIcons(): void {
+		$sktemplate = $this->createSkinTemplateMock();
+		$links = [
+			'actions' => [
+				'delete' => [ 'id' => 'ca-delete' ],
+				'move' => [ 'id' => 'ca-move' ],
+				'protect' => [ 'id' => 'ca-protect' ],
+			],
+		];
+
+		SkinHooks::onSkinTemplateNavigation( $sktemplate, $links );
+
+		$this->assertSame( 'trash', $links['actions']['delete']['icon'] );
+		$this->assertSame( 'move', $links['actions']['move']['icon'] );
+		$this->assertSame( 'lock', $links['actions']['protect']['icon'] );
+	}
+
+	public function testAssociatedPagesMenuMapsTalkPageIcons(): void {
+		$sktemplate = $this->createSkinTemplateMock();
+		$links = [
+			'associated-pages' => [
+				'main' => [ 'id' => 'ca-nstab-main' ],
+				'main_talk' => [ 'id' => 'ca-talk' ],
+			],
+		];
+
+		SkinHooks::onSkinTemplateNavigation( $sktemplate, $links );
+
+		$this->assertSame( 'speechBubbles', $links['associated-pages']['main_talk']['icon'] );
+		$this->assertSame( 'arrowPrevious', $links['associated-pages']['main']['icon'] );
+	}
+
+	public function testAssociatedPagesMenuMapsFileIcon(): void {
+		$sktemplate = $this->createSkinTemplateMock();
+		$links = [
+			'associated-pages' => [
+				'file' => [ 'id' => 'ca-nstab-image' ],
+			],
+		];
+
+		SkinHooks::onSkinTemplateNavigation( $sktemplate, $links );
+
+		$this->assertSame( 'image', $links['associated-pages']['file']['icon'] );
+	}
 }
