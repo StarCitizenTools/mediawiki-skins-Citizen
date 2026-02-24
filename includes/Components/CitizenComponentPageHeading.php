@@ -92,12 +92,11 @@ class CitizenComponentPageHeading implements CitizenComponent {
 	 */
 	private function buildGenderTagline( User $user ): string {
 		$gender = $this->genderCache->getGenderOf( $user, __METHOD__ );
-		$msgGender = '';
-		if ( $gender === 'male' ) {
-			$msgGender = '♂';
-		} elseif ( $gender === 'female' ) {
-			$msgGender = '♀';
-		}
+		$msgGender = match ( $gender ) {
+			'male' => '♂',
+			'female' => '♀',
+			default => '',
+		};
 
 		if ( $msgGender ) {
 			return Html::rawElement(

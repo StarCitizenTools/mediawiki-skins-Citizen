@@ -27,9 +27,9 @@ class ApiWebappManifest extends ApiBase {
 	/* 1 week */
 	private const CACHE_MAX_AGE = 604800;
 
-	private Config $config;
+	private readonly Config $config;
 
-	private array $options;
+	private readonly array $options;
 
 	public function __construct(
 		private readonly ApiMain $main,
