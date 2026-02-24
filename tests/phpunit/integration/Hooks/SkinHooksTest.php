@@ -210,4 +210,64 @@ class SkinHooksTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertSame( 'image', $links['associated-pages']['file']['icon'] );
 	}
+
+	private function createSkinTemplateWithUser(
+		bool $isRegistered,
+		bool $isTemp
+	): SkinTemplate {
+		$user = $this->createMock( User::class );
+		$user->method( 'isRegistered' )->willReturn( $isRegistered );
+		$user->method( 'isTemp' )->willReturn( $isTemp );
+
+		$sktemplate = $this->createMock( SkinTemplate::class );
+		$sktemplate->method( 'getSkinName' )->willReturn( 'citizen' );
+		$sktemplate->method( 'getUser' )->willReturn( $user );
+
+		return $sktemplate;
+	}
+
+	public function testUserMenuRemovesUserpageForRegistered(): void {
+		$sktemplate = $this->createSkinTemplateWithUser( true, false );
+		$links = [
+			'user-menu' => [
+				'userpage' => [ 'id' => 'pt-userpage' ],
+				'preferences' => [ 'id' => 'pt-preferences' ],
+			],
+		];
+
+		SkinHooks::onSkinTemplateNavigation( $sktemplate, $links );
+
+		$this->assertArrayNotHasKey( 'userpage', $links['user-menu'] );
+		$this->assertArrayHasKey( 'preferences', $links['user-menu'] );
+	}
+
+	public function testUserMenuRemovesTmpuserpageForTemp(): void {
+		$sktemplate = $this->createSkinTemplateWithUser( true, true );
+		$links = [
+			'user-menu' => [
+				'tmpuserpage' => [ 'id' => 'pt-tmpuserpage' ],
+				'preferences' => [ 'id' => 'pt-preferences' ],
+			],
+		];
+
+		SkinHooks::onSkinTemplateNavigation( $sktemplate, $links );
+
+		$this->assertArrayNotHasKey( 'tmpuserpage', $links['user-menu'] );
+		$this->assertArrayHasKey( 'preferences', $links['user-menu'] );
+	}
+
+	public function testUserMenuRemovesAnonuserpageForAnon(): void {
+		$sktemplate = $this->createSkinTemplateWithUser( false, false );
+		$links = [
+			'user-menu' => [
+				'anonuserpage' => [ 'id' => 'pt-anonuserpage' ],
+				'login' => [ 'id' => 'pt-login' ],
+			],
+		];
+
+		SkinHooks::onSkinTemplateNavigation( $sktemplate, $links );
+
+		$this->assertArrayNotHasKey( 'anonuserpage', $links['user-menu'] );
+		$this->assertArrayHasKey( 'login', $links['user-menu'] );
+	}
 }
