@@ -11,6 +11,8 @@ use MediaWiki\Title\Title;
 use MediaWiki\User\User;
 use MediaWiki\User\UserGroupManager;
 use MessageLocalizer;
+use Wikimedia\Parsoid\Utils\DOMCompat;
+use Wikimedia\Parsoid\Utils\DOMUtils;
 
 /**
  * CitizenComponentUserInfo component
@@ -118,19 +120,10 @@ class CitizenComponentUserInfo implements CitizenComponent {
 		$userPageData = $this->userPageData;
 
 		$htmlItems = $userPageData['html-items'];
-		$realname = htmlspecialchars( $user->getRealName(), ENT_QUOTES );
+		$realname = $user->getRealName();
 		if ( $realname !== '' ) {
-			$username = htmlspecialchars( $user->getName(), ENT_QUOTES );
-			$innerHtml = <<<HTML
-				<span id="pt-userpage-realname">$realname</span>
-				<span id="pt-userpage-username">$username</span>
-			HTML;
-			// Dirty but it works
-			$htmlItems = str_replace(
-				">" . $username . "<",
-				">" . $innerHtml . "<",
-				$userPageData['html-items']
-			);
+			$username = $user->getName();
+			$htmlItems = $this->replaceUsernameWithRealName( $htmlItems, $username, $realname );
 		}
 
 		$menu = new CitizenComponentMenu( [
@@ -141,6 +134,36 @@ class CitizenComponentUserInfo implements CitizenComponent {
 		] );
 
 		return $menu->getTemplateData();
+	}
+
+	/**
+	 * Replace the username text inside anchor elements with a real name + username span structure.
+	 * Uses DOM manipulation to handle HTML entity encoding correctly.
+	 */
+	private function replaceUsernameWithRealName( string $html, string $username, string $realname ): string {
+		$doc = DOMUtils::parseHTML( $html );
+		$body = DOMCompat::getBody( $doc );
+
+		foreach ( DOMCompat::querySelectorAll( $body, 'a' ) as $anchor ) {
+			foreach ( $anchor->childNodes as $child ) {
+				if ( $child->nodeType === XML_TEXT_NODE && $child->textContent === $username ) {
+					$realnameSpan = $doc->createElement( 'span' );
+					$realnameSpan->setAttribute( 'id', 'pt-userpage-realname' );
+					$realnameSpan->appendChild( $doc->createTextNode( $realname ) );
+
+					$usernameSpan = $doc->createElement( 'span' );
+					$usernameSpan->setAttribute( 'id', 'pt-userpage-username' );
+					$usernameSpan->appendChild( $doc->createTextNode( $username ) );
+
+					$anchor->replaceChild( $usernameSpan, $child );
+					$anchor->insertBefore( $realnameSpan, $usernameSpan );
+					$anchor->insertBefore( $doc->createTextNode( ' ' ), $usernameSpan );
+					break 2;
+				}
+			}
+		}
+
+		return DOMCompat::getInnerHTML( $body );
 	}
 
 	public function getTemplateData(): array {
