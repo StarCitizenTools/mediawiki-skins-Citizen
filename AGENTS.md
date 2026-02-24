@@ -10,19 +10,24 @@ Run only what's relevant to the files you changed.
 
 | Files changed | Command |
 |---|---|
-| `*.php` | `composer test` |
+| `*.php` | `composer test` (lint and style only) then PHPUnit (see below) |
 | `*.js`, `*.vue` | `npm run lint:js` |
 | `*.less`, `*.css` | `npm run lint:styles` |
 | `i18n/` | `npm run lint:i18n` |
 
 Auto-fix commands: `composer fix` (PHP), `npm run lint:fix:js` (JS), `npm run lint:fix:styles` (LESS).
 
-PHPUnit tests require a running MediaWiki Docker instance (`localhost:8080`). If available:
+### PHPUnit
+
+PHPUnit must be run for all PHP changes. Tests must be executed from within the MediaWiki installation that has this skin loaded, targeting `skins/Citizen/tests/phpunit/`.
+
+This project's standard dev environment is the MediaWiki Docker setup defined in the parent `mediawiki/` directory — see `../../DEVELOPERS.md` for setup instructions. Using that environment:
+
 ```sh
-docker compose exec mediawiki bash
-# Inside the container:
-composer phpunit -- skins/Citizen/tests/phpunit/path/to/MyTest.php
+docker compose exec mediawiki bash -c "cd /var/www/html/w && composer phpunit -- skins/Citizen/tests/phpunit/path/to/MyTest.php"
 ```
+
+If using a different MediaWiki dev environment, adapt the command to run `composer phpunit` from the MediaWiki root.
 
 ## Coding conventions
 
