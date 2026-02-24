@@ -51,7 +51,6 @@ class ApiWebappManifestTest extends MediaWikiUnitTestCase {
 		$api = $this->createApiWithConfig( $config );
 
 		$method = new ReflectionMethod( $api, 'getIcons' );
-		$method->setAccessible( true );
 		return $method->invoke( $api );
 	}
 
@@ -112,7 +111,6 @@ class ApiWebappManifestTest extends MediaWikiUnitTestCase {
 		$api = $this->createApiWithConfig( $config );
 
 		$method = new ReflectionMethod( $api, 'getIcons' );
-		$method->setAccessible( true );
 		$icons = $method->invoke( $api );
 
 		$this->assertSame( [], $icons );
