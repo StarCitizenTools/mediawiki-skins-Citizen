@@ -3,14 +3,14 @@
 <h1>Citizen</h1>
 <p>
 
-[![](https://img.shields.io/github/contributors/StarCitizenTools/mediawiki-skins-Citizen?style=flat-square&logo=github)](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/graphs/contributors)
+[![Contributors](https://img.shields.io/github/contributors/StarCitizenTools/mediawiki-skins-Citizen?style=flat-square&logo=github)](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/graphs/contributors)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat-square&logo=GNU)](https://www.gnu.org/licenses/gpl-3.0)
 [![MediaWiki: >=1.43.0](https://img.shields.io/badge/MediaWiki-%3E%3D1.43.0-%2336c?style=flat-square&logo=Wikipedia)](https://www.mediawiki.org)
-[![](https://img.shields.io/badge/translations-translatewiki-%23013467?style=flat-square&logo=GoogleTranslate)](https://translatewiki.net/w/i.php?title=Special:Translate&group=mwgithub-star-citizen)
+[![Translations](https://img.shields.io/badge/translations-translatewiki-%23013467?style=flat-square&logo=GoogleTranslate)](https://translatewiki.net/w/i.php?title=Special:Translate&group=mwgithub-star-citizen)
 </p>
 </div>
 
-![](https://upload.wikimedia.org/wikipedia/commons/0/07/Screenshot-skin-citizen.png)
+![Citizen skin screenshot](https://upload.wikimedia.org/wikipedia/commons/0/07/Screenshot-skin-citizen.png)
 
 <h3 align="center">
   Citizen is a beautiful, usable, responsive <a href="https://www.mediawiki.org">MediaWiki</a> skin that makes <a href="https://www.mediawiki.org/wiki/Manual:Extensions">extensions</a> part of the cohesive experience.
@@ -23,6 +23,7 @@
 </p>
 
 ## Notable features
+
 - **Responsive layout**: Responsive and able to adapt to different screen sizes. 📱💻🖥️
 - **Command palette**: Quick access to everything. 🔍⚡️
 - **Light/dark mode**: Switch between light and dark mode. ☀️🌙
@@ -33,19 +34,24 @@
 - **Progressive Web App**: Give a more app-like experience when user add your wiki to their home screen. 📱
 
 ## Installation
+
 1. [Download](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/archive/main.zip) place the file(s) in a directory called `Citizen` in your `skins/` folder.
 2. Add the following code at the bottom of your LocalSettings.php:
-```php
-wfLoadSkin( 'Citizen' );
-```
+
+   ```php
+   wfLoadSkin( 'Citizen' );
+   ```
+
 3. **✔️Done** - Navigate to Special:Version on your wiki to verify that the skin is successfully installed.
 
 ## Configurations
+
 Check out the [configuration documentation](https://starcitizentools.github.io/mediawiki-skins-Citizen/config/) for more details.
 
 ## Requirements
-* [MediaWiki](https://www.mediawiki.org) 1.43.0 or later
-* For the legacy versions, check the other release branches:
+
+- [MediaWiki](https://www.mediawiki.org) 1.43.0 or later
+- For the legacy versions, check the other release branches:
 
 Version | MediaWiki version
 :--- | :---
@@ -53,17 +59,21 @@ Version | MediaWiki version
 [1.17.9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v1.17.9) | 1.35.2 – 1.39.3
 
 ## Recommended extensions
+
 These extensions are optional. They are recommended to enable additional feature in Citizen.
+
 - [PageImages](https://www.mediawiki.org/wiki/Extension:PageImages) (bundled with MediaWiki) - Add image to search suggestion results
 - [TextExtracts](https://www.mediawiki.org/wiki/Extension:TextExtracts) (bundled with MediaWiki) - Add description to search suggestion results
 - [ShortDescription](https://www.mediawiki.org/wiki/Extension:ShortDescription) - Add short description to under page title and search suggestion results (needs to set `$wgCitizenSearchDescriptionSource` to `wikidata`)
 - [TemplateStylesExtender](https://www.mediawiki.org/wiki/Extension:TemplateStylesExtender) (if you use [TemplateStyles](https://www.mediawiki.org/wiki/Extension:TemplateStyles)) - Allow the use of CSS variables in TemplateStyles, including the ones provided by Citizen
 
 ## Extension styles
+
 Citizen overrides some extension styles through skinStyles that applies custom styling to extensions and core libraries.
 Please feel free to submit PRs if you want to add support for more extensions!
 
 ### Extensions
+
 Name | Version
 :--- | :---
 [AccountInfo](https://www.mediawiki.org/wiki/Extension:AccountInfo) | REL1_39 `3145de8`

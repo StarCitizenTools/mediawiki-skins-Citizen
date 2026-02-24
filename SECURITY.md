@@ -23,6 +23,7 @@ We consider security research and vulnerability disclosure activities conducted 
 ## Publishing the security advisory
 
 For the security advisory to be published:
+
 - The security advisory must contain a CVE ID
 - The vulnerability must be fixed in the `main` branch
 - A new release must be published

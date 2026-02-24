@@ -29,6 +29,7 @@ jobs:
       script: ${{ steps.filter.outputs.script_any_changed }}
       stylesheet: ${{ steps.filter.outputs.stylesheet_any_changed }}
       i18n: ${{ steps.filter.outputs.i18n_any_changed }}
+      markdown: ${{ steps.filter.outputs.markdown_any_changed }}
     steps:
       - uses: actions/checkout@v6
       - uses: tj-actions/changed-files@v47
@@ -58,6 +59,9 @@ jobs:
               - i18n/*.json
               - package.json
               - package-lock.json
+            markdown:
+              - '*.md'
+              - .markdownlint.json
 
   lint:
     name: 🩹 Lint
@@ -82,7 +86,7 @@ jobs:
           composer install --prefer-dist --no-progress
 
       - name: Install Node dependencies
-        if: needs.changes.outputs.script == 'true' || needs.changes.outputs.stylesheet == 'true' || needs.changes.outputs.i18n == 'true'
+        if: needs.changes.outputs.script == 'true' || needs.changes.outputs.stylesheet == 'true' || needs.changes.outputs.i18n == 'true' || needs.changes.outputs.markdown == 'true'
         run: npm ci
 
       - name: Lint PHP
@@ -104,6 +108,11 @@ jobs:
         if: needs.changes.outputs.i18n == 'true'
         run: |
           npm run lint:i18n
+
+      - name: Lint markdown
+        if: needs.changes.outputs.markdown == 'true'
+        run: |
+          npm run lint:md
 
   test-php:
     name: "🧪 Test PHP (MW ${{ matrix.mw }}, PHP ${{ matrix.php }})"

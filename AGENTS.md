@@ -14,8 +14,9 @@ Run only what's relevant to the files you changed.
 | `*.js`, `*.vue` | `npm run lint:js` |
 | `*.less`, `*.css`, `*.vue` | `npm run lint:styles` |
 | `i18n/` | `npm run lint:i18n` |
+| `*.md` | `npm run lint:md` |
 
-Auto-fix commands: `composer fix` (PHP), `npm run lint:fix:js` (JS), `npm run lint:fix:styles` (styles).
+Auto-fix commands: `composer fix` (PHP), `npm run lint:fix:js` (JS), `npm run lint:fix:styles` (styles), `npm run lint:fix:md` (markdown).
 
 ### PHPUnit
 
@@ -58,6 +59,7 @@ If using a different MediaWiki dev environment, adapt the command to run `compos
 - Codex components requiring JS must be listed in `skin.json` under the appropriate `CodexModule`
 
 ### skin.json
+
 `skin.json` is the source of truth for how the skin is wired — ResourceLoader modules, hooks, config variables, and extension skin styles are all declared here.
 
 - When adding or removing files under `resources/`, update the corresponding `packageFiles` or `styles` list in `skin.json`
