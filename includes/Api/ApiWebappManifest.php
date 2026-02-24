@@ -143,13 +143,15 @@ class ApiWebappManifest extends ApiBase {
 
 			if ( $logoContent !== '' ) {
 				$logoSize = getimagesizefromstring( $logoContent );
+			} else {
+				$logoSize = false;
 			}
 
 			$icon = [
 				'src' => $logoPath
 			];
 
-			if ( isset( $logoSize ) && $logoSize !== false ) {
+			if ( $logoSize !== false ) {
 				$icon['sizes'] = $logoSize[0] . 'x' . $logoSize[1];
 				$icon['type'] = $logoSize['mime'];
 			}
