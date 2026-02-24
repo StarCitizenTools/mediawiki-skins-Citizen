@@ -2,7 +2,7 @@
 
 declare( strict_types=1 );
 
-namespace MediaWiki\Skins\Citizen\Tests\Components;
+namespace MediaWiki\Skins\Citizen\Tests\Unit\Components;
 
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageSidebar;
 use MediaWiki\Title\Title;
@@ -107,5 +107,11 @@ class CitizenComponentPageSidebarTest extends MediaWikiUnitTestCase {
 			}
 		}
 		$this->assertTrue( $foundTimestampAttribute, 'data-timestamp attribute not found' );
+
+		// Verify no unused menu defaults leak in
+		$this->assertArrayNotHasKey( 'html-tooltip', $lastModData );
+		$this->assertArrayNotHasKey( 'html-before-portal', $lastModData );
+		$this->assertArrayNotHasKey( 'html-after-portal', $lastModData );
+		$this->assertArrayNotHasKey( 'label-class', $lastModData );
 	}
 }
