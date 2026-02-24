@@ -18,7 +18,7 @@ Run only what's relevant to the files you changed.
 
 Auto-fix commands: `composer fix` (PHP), `npm run lint:fix:js` (JS), `npm run lint:fix:styles` (styles), `npm run lint:fix:md` (markdown).
 
-**Always run the relevant checks before committing.**
+**Always run the relevant checks before committing.** Read the full output — PHPCS warnings must be fixed, not just errors. The command exits 0 even with warnings, so do not treat exit code alone as a pass.
 
 ### Dev environment
 
