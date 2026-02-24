@@ -353,7 +353,7 @@ class SkinCitizen extends SkinMustache {
 	 */
 	private function setSkinTheme( OutputPage $out, Config $config ): void {
 		$theme = $config->get( 'CitizenThemeDefault' ) ?? 'auto';
-		if ( self::CLIENTPREFS_THEME_MAP[ $theme ] ) {
+		if ( isset( self::CLIENTPREFS_THEME_MAP[ $theme ] ) ) {
 			$out->addHtmlClasses( 'skin-theme-clientpref-' . self::CLIENTPREFS_THEME_MAP[ $theme ] );
 		}
 	}

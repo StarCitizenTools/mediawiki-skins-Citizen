@@ -110,6 +110,16 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 		);
 	}
 
+	public function testSetSkinThemeWithInvalidValue(): void {
+		$this->overrideConfigValues( [
+			'CitizenThemeDefault' => 'invalid-value',
+		] );
+
+		// Should not throw an undefined array key error
+		$skin = $this->createSkinInstance();
+		$this->assertInstanceOf( SkinCitizen::class, $skin );
+	}
+
 	public function testCollapsibleSectionsBodyClass(): void {
 		$title = Title::newFromText( 'CollapsibleSectionsTest' );
 		RequestContext::resetMain();
