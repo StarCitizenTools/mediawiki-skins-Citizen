@@ -76,6 +76,11 @@ When your test plan includes steps that require a browser (e.g., verifying scrip
 - When adding support for a new extension, add a LESS file under `skinStyles/` and register it in `skin.json` under `ResourceModuleSkinStyles`
 - Config variables are declared under `config` in `skin.json` (prefixed `wgCitizen`). In PHP they are accessed via `$this->getConfig()->get( 'CitizenFoo' )`, and can be injected into JS via `ResourceLoaderHooks`
 
+### Commits
+
+- Use [Conventional Commits](https://www.conventionalcommits.org/) (e.g. `fix(tests):`, `feat:`, `refactor:`)
+- Do **not** include emojis — a pre-commit hook adds them automatically based on the commit type prefix
+
 ### i18n
 
 - Any user-facing string needs a message key in `i18n/en.json`
