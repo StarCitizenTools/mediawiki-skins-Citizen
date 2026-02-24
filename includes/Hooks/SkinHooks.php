@@ -473,9 +473,6 @@ class SkinHooks implements
 	/**
 	 * Adds class to a property
 	 * Based on Vector
-	 *
-	 * @param array|string|null &$item to update
-	 * @param array|string $classes to add to the item
 	 */
 	private static function appendClassToItem( array|string|null &$item, array|string $classes ): void {
 		$existingClasses = $item;
