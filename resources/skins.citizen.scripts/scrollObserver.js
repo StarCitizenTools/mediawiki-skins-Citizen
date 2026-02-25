@@ -28,12 +28,14 @@ function initDirectionObserver( onScrollDown, onScrollUp, threshold = 0 ) {
 		lastScrollPosition = currentScrollPosition <= 0 ? 0 : currentScrollPosition;
 	};
 
+	const throttledOnScroll = mw.util.throttle( onScroll, 100 );
+
 	return {
 		resume: () => {
-			window.addEventListener( 'scroll', mw.util.throttle( onScroll, 100 ) );
+			window.addEventListener( 'scroll', throttledOnScroll );
 		},
 		pause: () => {
-			window.removeEventListener( 'scroll', mw.util.throttle( onScroll, 100 ) );
+			window.removeEventListener( 'scroll', throttledOnScroll );
 		}
 	};
 }
