@@ -16,13 +16,16 @@ describe( 'deferUntilFrame', () => {
 
 	it( 'should call callback immediately when frameCount is 0', () => {
 		const callback = vi.fn();
+
 		deferUntilFrame( callback, 0 );
+
 		expect( callback ).toHaveBeenCalledOnce();
 		expect( globalThis.requestAnimationFrame ).not.toHaveBeenCalled();
 	} );
 
 	it( 'should defer callback by the specified number of frames', () => {
 		const callback = vi.fn();
+
 		deferUntilFrame( callback, 3 );
 
 		expect( callback ).not.toHaveBeenCalled();
@@ -45,7 +48,9 @@ describe( 'deferUntilFrame', () => {
 
 	it( 'should call callback immediately when frameCount is negative', () => {
 		const callback = vi.fn();
+
 		deferUntilFrame( callback, -1 );
+
 		expect( callback ).toHaveBeenCalledOnce();
 		expect( globalThis.requestAnimationFrame ).not.toHaveBeenCalled();
 	} );
