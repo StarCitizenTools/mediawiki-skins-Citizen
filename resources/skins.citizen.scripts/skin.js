@@ -65,7 +65,7 @@ function main( window ) {
 		echo = require( './echo.js' ),
 		search = require( './search.js' ),
 		dropdown = require( './dropdown.js' ),
-		lastModified = require( './lastModified.js' ),
+		{ createLastModified } = require( './lastModified.js' ),
 		share = require( './share.js' ),
 		setupObservers = require( './setupObservers.js' ),
 		performance = require( './performance.js' );
@@ -74,7 +74,7 @@ function main( window ) {
 	echo();
 	setupObservers.main();
 	dropdown.init();
-	lastModified.init();
+	createLastModified( { document, Intl } ).init();
 	share.init();
 	performance.init();
 
