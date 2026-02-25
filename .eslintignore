@@ -3,6 +3,7 @@ docs/
 i18n/
 node_modules/
 vendor/
+vitest.config.js
 
 # ES6 files
 resources/skins.citizen.scripts.search/typeahead-init.js

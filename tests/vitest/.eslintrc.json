@@ -1,0 +1,26 @@
+{
+	"root": true,
+	"env": {
+		"node": true,
+		"es6": true
+	},
+	"parserOptions": {
+		"ecmaVersion": 2020
+	},
+	"globals": {
+		"vi": "readonly",
+		"describe": "readonly",
+		"it": "readonly",
+		"test": "readonly",
+		"expect": "readonly",
+		"beforeEach": "readonly",
+		"afterEach": "readonly",
+		"beforeAll": "readonly",
+		"afterAll": "readonly",
+		"globalThis": "readonly"
+	},
+	"rules": {
+		"no-undef": "error",
+		"no-unused-vars": "warn"
+	}
+}
