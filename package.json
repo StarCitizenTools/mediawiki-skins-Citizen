@@ -15,7 +15,8 @@
 		"docs:build": "cd docs && npm run docs:build",
 		"docs:preview": "cd docs && npm run docs:preview",
 		"docs:lint": "cd docs && npm run lint",
-		"test": "",
+		"test": "vitest run",
+		"test:watch": "vitest",
 		"prepare": "husky"
 	},
 	"devDependencies": {
@@ -35,6 +36,7 @@
 		"stylelint-order": "^7.0.1",
 		"stylelint-plugin-use-baseline": "^1.2.4",
 		"types-mediawiki": "2.0.0",
+		"vitest": "^4.0.18",
 		"vue": "3.4.27"
 	},
 	"version": "3.13.0"
