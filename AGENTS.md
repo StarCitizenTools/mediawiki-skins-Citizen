@@ -11,12 +11,14 @@ Run only what's relevant to the files you changed.
 | Files changed | Command |
 | --- | --- |
 | `*.php` | `composer test` (lint and style only) then PHPUnit (see below) |
-| `*.js`, `*.vue` | `npm run lint:js` |
+| `*.js`, `*.vue` | `npm run lint:js` then `npm test` |
 | `*.less`, `*.css`, `*.vue` | `npm run lint:styles` |
 | `i18n/` | `npm run lint:i18n` |
 | `*.md` | `npm run lint:md` |
 
 Auto-fix commands: `composer fix` (PHP), `npm run lint:fix:js` (JS), `npm run lint:fix:styles` (styles), `npm run lint:fix:md` (markdown).
+
+**Preflight**: Run `npm run preflight` to execute all Node-based lints and JS tests in one command. PHP checks (`composer test`, PHPUnit) must be run separately as they require a MediaWiki environment.
 
 **Always run the relevant checks before committing.** Read the full output — PHPCS warnings must be fixed, not just errors. The command exits 0 even with warnings, so do not treat exit code alone as a pass.
 

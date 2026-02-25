@@ -45,6 +45,8 @@ jobs:
               - .github/workflows/ci.yml
             script:
               - resources/**/*.js
+              - tests/vitest/**
+              - vitest.config.js
               - package.json
               - package-lock.json
               - .eslintrc.json
@@ -73,11 +75,11 @@ jobs:
         with:
           fetch-depth: 0 # OR "2" -> To retrieve the preceding commit.
 
-      - name: Cache dependencies
-        uses: actions/cache@v5
+      - name: Setup Node
+        if: needs.changes.outputs.script == 'true' || needs.changes.outputs.stylesheet == 'true' || needs.changes.outputs.i18n == 'true' || needs.changes.outputs.markdown == 'true'
+        uses: actions/setup-node@v6
         with:
-          path: /home/runner/cache
-          key: ${{ runner.os }}-${{ hashFiles('**/*.lock') }}
+          cache: npm
 
       - name: Install PHP dependencies
         if: needs.changes.outputs.php == 'true'
@@ -113,6 +115,26 @@ jobs:
         if: needs.changes.outputs.markdown == 'true'
         run: |
           npm run lint:md
+
+  test-js:
+    name: 🧪 Test JS
+    needs: changes
+    if: needs.changes.outputs.script == 'true' || github.event_name == 'schedule'
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
 
   test-php:
     name: "🧪 Test PHP (MW ${{ matrix.mw }}, PHP ${{ matrix.php }})"
