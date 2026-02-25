@@ -54,6 +54,7 @@ When your test plan includes steps that require a browser (e.g., verifying scrip
 ### JavaScript
 
 - CommonJS modules: `require()` for imports, `module.exports` for exports
+- JS tests use Vitest (`tests/vitest/`)
 
 ### Vue
 
@@ -82,6 +83,10 @@ When your test plan includes steps that require a browser (e.g., verifying scrip
 
 - Use [Conventional Commits](https://www.conventionalcommits.org/) (e.g. `fix(tests):`, `feat:`, `refactor:`)
 - Do **not** include emojis — a pre-commit hook adds them automatically based on the commit type prefix
+
+### Tests
+
+- Use Arrange-Act-Assert with blank lines separating each phase
 
 ### i18n
 
