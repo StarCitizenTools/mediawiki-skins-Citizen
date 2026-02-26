@@ -40,7 +40,10 @@ If using a different dev environment, adapt the command to run `composer phpunit
 
 ### Browser testing
 
-When your test plan includes steps that require a browser (e.g., verifying scripts load, checking runtime behavior, confirming interactions work), use available browser automation tools (e.g., Chrome DevTools MCP, Playwright MCP) to test against the dev environment URL before asking the user to test manually. Always check the browser console for warnings and errors, not just visual correctness.
+When your test plan includes steps that require a browser (e.g., verifying scripts load, checking runtime behavior, confirming interactions work):
+
+- Use available browser automation tools (e.g., Chrome DevTools MCP, Playwright MCP) to test against the dev environment URL before asking the user to test manually
+- Always check the browser console for warnings and errors, not just visual correctness
 
 ## Coding conventions
 
