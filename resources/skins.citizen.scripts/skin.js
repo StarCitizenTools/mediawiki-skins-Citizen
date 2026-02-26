@@ -73,7 +73,7 @@ function main( window ) {
 	search.init( window );
 	createEchoUpgrade( { document, mw, MutationObserver } ).init();
 	setupObservers.main();
-	dropdown.init();
+	dropdown.init( { document, window } );
 	createLastModified( { document, Intl } ).init();
 	createShare( { document, window, mw, navigator } ).init();
 	createPerformanceMode( { document, mw } ).init();
