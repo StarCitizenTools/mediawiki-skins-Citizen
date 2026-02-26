@@ -11,6 +11,7 @@ const templateTocLine = require( /** @type {string} */ ( './templates/TableOfCon
  */
 const tableOfContentsConfig = require( /** @type {string} */ ( './tableOfContentsConfig.json' ) );
 const deferUntilFrame = require( './deferUntilFrame.js' );
+const { getTableOfContentsSectionsData } = require( './tableOfContentsSections.js' );
 
 const SECTION_ID_PREFIX = 'toc-';
 const SECTION_CLASS = 'citizen-toc-list-item';
@@ -57,6 +58,9 @@ const TOC_CONTENTS_ID = 'mw-panel-toc-list';
  * matches the id of a LINK_CLASS anchor element.
  * @property {onToggleClick} [onToggleClick] Called when an arrow is clicked.
  * @property {onTogglePinned} onTogglePinned Called when pinned toggle buttons are clicked.
+ * @property {Window} window
+ * @property {Document} document
+ * @property {Object} mw
  */
 
 /**
@@ -103,6 +107,9 @@ class TableOfContents {
 	 */
 	constructor( props ) {
 		this.props = props;
+		this.window = props.window;
+		this.document = props.document;
+		this.mw = props.mw;
 		/** @type {HTMLElement | undefined} */
 		this.activeTopSection = undefined;
 		/** @type {HTMLElement | undefined} */
@@ -132,7 +139,7 @@ class TableOfContents {
 	 * @return {boolean}
 	 */
 	prefersReducedMotion() {
-		return window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
+		return this.window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
 	}
 
 	/**
@@ -144,7 +151,7 @@ class TableOfContents {
 	 * @param {string} id The id of the element to be activated in the Table of Contents.
 	 */
 	activateSection( id ) {
-		const selectedTocSection = document.getElementById( id );
+		const selectedTocSection = this.document.getElementById( id );
 		const {
 			parent: previousActiveTopId,
 			child: previousActiveSubSectionId
@@ -191,7 +198,7 @@ class TableOfContents {
 	 * @param {string} id The id of the element to be scrolled to in the Table of Contents.
 	 */
 	scrollToActiveSection( id ) {
-		const section = document.getElementById( id );
+		const section = this.document.getElementById( id );
 		if ( !section ) {
 			return;
 		}
@@ -201,7 +208,7 @@ class TableOfContents {
 		if ( link && !link.offsetParent ) {
 			// If active link is a hidden subsection, use active parent link
 			const { parent: activeTopId } = this.getActiveSectionIds();
-			const parentSection = document.getElementById( activeTopId || '' );
+			const parentSection = this.document.getElementById( activeTopId || '' );
 			if ( parentSection ) {
 				link = /** @type {HTMLElement|null} */( parentSection.firstElementChild );
 			} else {
@@ -222,7 +229,7 @@ class TableOfContents {
 			// Because the bottom of the TOC can extend below the viewport,
 			// min() is used to find the value where the active section first becomes hidden
 			const linkHiddenBottomValue = linkRect.bottom -
-				Math.min( containerRect.bottom, window.innerHeight );
+				Math.min( containerRect.bottom, this.window.innerHeight );
 
 			// Respect 'prefers-reduced-motion' user preference
 			const scrollBehavior = this.prefersReducedMotion() ? undefined : 'smooth';
@@ -251,7 +258,7 @@ class TableOfContents {
 	 * @param {string} id
 	 */
 	expandSection( id ) {
-		const tocSection = document.getElementById( id );
+		const tocSection = this.document.getElementById( id );
 
 		if ( !tocSection ) {
 			return;
@@ -297,7 +304,7 @@ class TableOfContents {
 	 * @return {boolean}
 	 */
 	isTopLevelSection( id ) {
-		const section = document.getElementById( id );
+		const section = this.document.getElementById( id );
 		return !!section && section.classList.contains( TOP_SECTION_CLASS );
 	}
 
@@ -354,8 +361,8 @@ class TableOfContents {
 	 * Event handler for hash change event.
 	 */
 	handleHashChange() {
-		const hash = location.hash.slice( 1 );
-		const listItem = mw.util.getTargetFromFragment( `${ SECTION_ID_PREFIX }${ hash }` );
+		const hash = this.window.location.hash.slice( 1 );
+		const listItem = this.mw.util.getTargetFromFragment( `${ SECTION_ID_PREFIX }${ hash }` );
 
 		if ( !listItem ) {
 			return;
@@ -376,14 +383,14 @@ class TableOfContents {
 	 * precedence.
 	 */
 	bindHashChangeListener() {
-		window.addEventListener( 'hashchange', this.handleHashChange );
+		this.window.addEventListener( 'hashchange', this.handleHashChange );
 	}
 
 	/**
 	 * Unbinds event listener for hash change events.
 	 */
 	unbindHashChangeListener() {
-		window.removeEventListener( 'hashchange', this.handleHashChange );
+		this.window.removeEventListener( 'hashchange', this.handleHashChange );
 	}
 
 	/**
@@ -394,7 +401,7 @@ class TableOfContents {
 			return;
 		}
 
-		document.querySelectorAll( '.citizen-toc-pinnable-header button' ).forEach( ( btn ) => {
+		this.document.querySelectorAll( '.citizen-toc-pinnable-header button' ).forEach( ( btn ) => {
 			btn.addEventListener( 'click', () => {
 				this.props.onTogglePinned();
 			} );
@@ -487,7 +494,7 @@ class TableOfContents {
 			this.reloadPartialHTML( TOC_CONTENTS_ID, '' );
 			return Promise.resolve( [] );
 		}
-		const load = () => mw.loader.using( 'mediawiki.template.mustache' ).then( () => {
+		const load = () => this.mw.loader.using( 'mediawiki.template.mustache' ).then( () => {
 			const { parent: activeParentId, child: activeChildId } = this.getActiveSectionIds();
 			this.reloadPartialHTML( TOC_CONTENTS_ID, this.getTableOfContentsHTML( sections ) );
 			// Reexpand sections that were expanded before the table of contents was reloaded.
@@ -515,7 +522,7 @@ class TableOfContents {
 	 * @param {string} html
 	 */
 	reloadPartialHTML( elementId, html ) {
-		const htmlElement = document.getElementById( elementId );
+		const htmlElement = this.document.getElementById( elementId );
 		if ( htmlElement ) {
 			htmlElement.innerHTML = html;
 		}
@@ -538,7 +545,7 @@ class TableOfContents {
 	 * @return {string}
 	 */
 	getTableOfContentsListHtml( data ) {
-		const mustacheCompiler = mw.template.getCompiler( 'mustache' );
+		const mustacheCompiler = this.mw.template.getCompiler( 'mustache' );
 		const compiledTemplateTocContents = mustacheCompiler.compile( templateTocContents );
 
 		// Identifier 'TableOfContents__line' is not in camel case
@@ -556,47 +563,11 @@ class TableOfContents {
 	 * @return {SectionsListData}
 	 */
 	getTableOfContentsData( sections ) {
-		const tableOfContentsLevel1Sections = this.getTableOfContentsSectionsData( sections, 1 );
+		const tableOfContentsLevel1Sections = getTableOfContentsSectionsData( sections, 1 );
 		return {
 			'array-sections': tableOfContentsLevel1Sections,
 			'citizen-is-collapse-sections-enabled': tableOfContentsLevel1Sections.length > 3 && sections.length >= tableOfContentsConfig.CitizenTableOfContentsCollapseAtCount
 		};
-	}
-
-	/**
-	 * Prepares the data for rendering the table of contents,
-	 * nesting child sections within their parent sections.
-	 * This should yield the same result as the php function
-	 * CitizenComponentTableOfContents::getTemplateData(),
-	 * please make sure to keep them in sync.
-	 *
-	 * TODO: CitizenComponentTableOfContents is not implemented as we need to support MW 1.39
-	 *
-	 * @param {Section[]} sections
-	 * @param {number} toclevel
-	 * @return {Section[]}
-	 */
-	getTableOfContentsSectionsData( sections, toclevel = 1 ) {
-		const data = [];
-		for ( let i = 0; i < sections.length; i++ ) {
-			const section = sections[ i ];
-			if ( section.toclevel === toclevel ) {
-				const childSections = this.getTableOfContentsSectionsData(
-					sections.slice( i + 1 ),
-					toclevel + 1
-				);
-				section[ 'array-sections' ] = childSections;
-				section[ 'is-top-level-section' ] = toclevel === 1;
-				section[ 'is-parent-section' ] = childSections.length > 0;
-				data.push( section );
-			}
-			// Child section belongs to a higher parent.
-			if ( section.toclevel < toclevel ) {
-				return data;
-			}
-		}
-
-		return data;
 	}
 
 	/**
@@ -616,4 +587,4 @@ TableOfContents.EXPANDED_SECTION_CLASS = EXPANDED_SECTION_CLASS;
 TableOfContents.LINK_CLASS = LINK_CLASS;
 TableOfContents.TOGGLE_CLASS = TOGGLE_CLASS;
 
-module.exports = TableOfContents;
+module.exports = { TableOfContents };
