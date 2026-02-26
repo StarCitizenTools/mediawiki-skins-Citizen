@@ -133,8 +133,16 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
 
-      - name: Run tests
-        run: npm test
+      - name: Run tests with coverage
+        run: npx vitest run --coverage
+
+      - name: Upload JS coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: js-coverage
+          path: coverage/js/lcov.info
+          retention-days: 1
 
   test-php:
     name: "🧪 Test PHP (MW ${{ matrix.mw }}, PHP ${{ matrix.php }})"
@@ -223,11 +231,41 @@ jobs:
           composer phpunit:coverage-edit -- skins/Citizen
           XDEBUG_MODE=coverage composer phpunit -- --testsuite skins --coverage-clover skins/Citizen/coverage/php/coverage.xml skins/Citizen/tests/phpunit --exclude-group Stub
 
+      - name: Upload PHP coverage
+        if: ${{ matrix.coverage == 'xdebug' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: php-coverage
+          path: mediawiki/skins/Citizen/coverage/php/coverage.xml
+          retention-days: 1
+
+  sonarqube:
+    name: 📊 SonarQube
+    needs: [test-js, test-php]
+    if: always() && !failure()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Download JS coverage
+        uses: actions/download-artifact@v4
+        with:
+          name: js-coverage
+          path: coverage/js
+        continue-on-error: true
+
+      - name: Download PHP coverage
+        uses: actions/download-artifact@v4
+        with:
+          name: php-coverage
+          path: coverage/php
+        continue-on-error: true
+
       - name: Scan with SonarQube
         uses: sonarsource/sonarqube-scan-action@v7
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        # Only one once
-        if: ${{ matrix.coverage == 'xdebug' && env.SONAR_TOKEN != '' }}
-        with:
-          projectBaseDir: mediawiki/skins/Citizen
+        if: env.SONAR_TOKEN != ''

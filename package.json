@@ -23,6 +23,7 @@
 	"devDependencies": {
 		"@commitlint/cli": "^20.4.2",
 		"@commitlint/config-conventional": "^20.4.2",
+		"@vitest/coverage-v8": "^4.0.18",
 		"devmoji": "^2.3.0",
 		"eslint": "8.57.1",
 		"eslint-config-wikimedia": "0.32.3",
