@@ -30,13 +30,17 @@ function deferredTasks() {
 function initBodyContent( bodyContent ) {
 	const
 		{ createSections } = require( './sections.js' ),
-		overflowElements = require( './overflowElements.js' ),
-		{ createContentEnhancements } = require( './contentEnhancements.js' );
+		overflowElements = require( './overflowElements/index.js' ),
+		{ createContentEnhancements } = require( './contentEnhancements.js' ),
+		config = require( './config.json' );
 
 	// Collapsable sections
 	createSections( { document, bodyContent } ).init();
 	// Overflow element enhancements
-	overflowElements.init( bodyContent );
+	overflowElements.init( {
+		document, window, mw, IntersectionObserver, ResizeObserver,
+		bodyContent, config
+	} );
 	// Content enhancements
 	createContentEnhancements( { document, bodyContent } ).init();
 }
