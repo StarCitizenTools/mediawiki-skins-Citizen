@@ -192,6 +192,7 @@
 				"resources/skins.citizen.scripts/speculationRules.js",
 				"resources/skins.citizen.scripts/stickyHeader.js",
 				"resources/skins.citizen.scripts/tableOfContents.js",
+				"resources/skins.citizen.scripts/tableOfContentsSections.js",
 				{
 					"name": "resources/skins.citizen.scripts/tableOfContentsConfig.json",
 					"config": [

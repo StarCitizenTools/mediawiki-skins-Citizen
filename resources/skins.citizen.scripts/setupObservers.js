@@ -3,7 +3,7 @@ const
 	{ createDirectionObserver, createScrollObserver } = require( './scrollObserver.js' ),
 	{ createSectionObserver } = require( './sectionObserver.js' ),
 	{ StickyHeader, STICKY_HEADER_ID, STICKY_HEADER_VISIBLE_CLASS } = require( './stickyHeader.js' ),
-	TableOfContents = require( './tableOfContents.js' ),
+	{ TableOfContents } = require( './tableOfContents.js' ),
 	deferUntilFrame = require( './deferUntilFrame.js' ),
 	TOC_ID = 'citizen-toc',
 	BODY_CONTENT_ID = 'bodyContent',
@@ -106,7 +106,10 @@ const setupTableOfContents = ( tocElement, bodyContent ) => {
 	const tableOfContents = new TableOfContents( {
 		container: tocElement,
 		onHeadingClick: handleTocSectionChange,
-		onHashChange: handleTocSectionChange
+		onHashChange: handleTocSectionChange,
+		window,
+		document,
+		mw
 	} );
 	const elements = () => bodyContent.querySelectorAll( `${ HEADING_SELECTOR }, .mw-body-content` );
 
