@@ -11,11 +11,13 @@ const SEARCH_LOADING_CLASS = 'citizen-loading';
  * After the search module is loaded, executes a function to remove
  * the loading indicator.
  *
+ * @param {Document} document
+ * @param {Object} mw
  * @param {HTMLElement} element search input.
  * @param {string} moduleName resourceLoader module to load.
  * @param {function(): void} afterLoadFn function to execute after search module loads.
  */
-function loadSearchModule( element, moduleName, afterLoadFn ) {
+function loadSearchModule( document, mw, element, moduleName, afterLoadFn ) {
 	const requestSearchModule = () => {
 		mw.loader.using( moduleName, afterLoadFn );
 		element.removeEventListener( 'focus', requestSearchModule );
@@ -151,10 +153,12 @@ function bindOpenOnSlash( window, details ) {
 /**
  * Add clear button to search field when there are input value
  *
+ * @param {Document} document
+ * @param {Window} window
  * @param {HTMLInputElement} input
  * @return {void}
  */
-function renderSearchClearButton( input ) {
+function renderSearchClearButton( document, window, input ) {
 	const
 		clearButton = document.createElement( 'span' ),
 		clearIcon = document.createElement( 'span' );
@@ -172,7 +176,7 @@ function renderSearchClearButton( input ) {
 		clearButton.classList.add( 'hidden' );
 		input.value = '';
 		input.dispatchEvent( new Event( 'input' ) );
-		requestAnimationFrame( () => {
+		window.requestAnimationFrame( () => {
 			input.focus();
 		} );
 	} );
@@ -191,10 +195,12 @@ function renderSearchClearButton( input ) {
 /**
  * Bind the search trigger to open the search UI
  *
+ * @param {Document} document
+ * @param {Object} mw
  * @param {HTMLDetailsElement} details
  * @return {void}
  */
-function bindSearchTrigger( details ) {
+function bindSearchTrigger( document, mw, details ) {
 	document.querySelectorAll( '.citizen-search-trigger' ).forEach( ( trigger ) => {
 		trigger.addEventListener( 'click', ( event ) => {
 			openSearch( details );
@@ -202,7 +208,9 @@ function bindSearchTrigger( details ) {
 				// Add a delay to ensure the search UI is open
 				setTimeout( () => {
 					const input = config.wgCitizenEnableCommandPalette ?
-						document.querySelector( '.citizen-command-palette__input > .cdx-text-input__input' ) :
+						document.querySelector(
+							'.citizen-command-palette__input > .cdx-text-input__input'
+						) :
 						document.getElementById( 'searchInput' );
 
 					if ( input === null ) {
@@ -210,7 +218,9 @@ function bindSearchTrigger( details ) {
 					}
 
 					// Escape just to be safe
-					input.value = mw.html.escape( event.target.dataset.citizenSearchPrefill );
+					input.value = mw.html.escape(
+						event.target.dataset.citizenSearchPrefill
+					);
 				}, 0 );
 			}
 		} );
@@ -234,14 +244,17 @@ function openSearch( details ) {
 /**
  * Initializes the search functionality for the Citizen search boxes.
  *
- * @param {Window} window
+ * @param {Object} deps
+ * @param {Window} deps.window
+ * @param {Document} deps.document
+ * @param {Object} deps.mw
  * @return {void}
  */
-function initSearch( window ) {
+function initSearch( { window, document, mw } ) {
 	const details = document.getElementById( 'citizen-search-details' );
 
 	bindOpenOnSlash( window, details );
-	bindSearchTrigger( details );
+	bindSearchTrigger( document, mw, details );
 
 	if ( config.wgCitizenEnableCommandPalette ) {
 		// Short-circuit the search module initialization,
@@ -273,9 +286,9 @@ function initSearch( window ) {
 			} );
 		}
 
-		renderSearchClearButton( input );
+		renderSearchClearButton( document, window, input );
 		setLoadingIndicatorListeners( searchBox, true, renderSearchLoadingIndicator );
-		loadSearchModule( input, config.wgCitizenSearchModule, () => {
+		loadSearchModule( document, mw, input, config.wgCitizenSearchModule, () => {
 			setLoadingIndicatorListeners( searchBox, false, renderSearchLoadingIndicator );
 		} );
 	} );

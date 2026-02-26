@@ -74,7 +74,7 @@ function main( window ) {
 		setupObservers = require( './setupObservers.js' ),
 		{ createPerformanceMode } = require( './performance.js' );
 
-	search.init( window );
+	search.init( { window, document, mw } );
 	createEchoUpgrade( { document, mw, MutationObserver } ).init();
 	setupObservers.main();
 	dropdown.init( { document, window } );
