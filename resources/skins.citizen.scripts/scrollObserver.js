@@ -1,12 +1,15 @@
 /**
- * Initialize a direction observer based on scroll behavior.
+ * Create a direction observer based on scroll behavior.
  *
- * @param {Function} onScrollDown - Function to be called when scrolling down.
- * @param {Function} onScrollUp - Function to be called when scrolling up.
- * @param {number} threshold - The threshold for significant scroll position change.
+ * @param {Object} deps
+ * @param {Window} deps.window
+ * @param {Function} deps.throttle - Throttle function (e.g. mw.util.throttle).
+ * @param {Function} deps.onScrollDown - Called when scrolling down.
+ * @param {Function} deps.onScrollUp - Called when scrolling up.
+ * @param {number} [deps.threshold] - Minimum scroll delta to trigger a direction change.
  * @return {Object}
  */
-function initDirectionObserver( onScrollDown, onScrollUp, threshold = 0 ) {
+function createDirectionObserver( { window, throttle, onScrollDown, onScrollUp, threshold = 0 } ) {
 	let lastScrollPosition = 0;
 	let lastScrollDirection = '';
 
@@ -28,7 +31,7 @@ function initDirectionObserver( onScrollDown, onScrollUp, threshold = 0 ) {
 		lastScrollPosition = currentScrollPosition <= 0 ? 0 : currentScrollPosition;
 	};
 
-	const throttledOnScroll = mw.util.throttle( onScroll, 100 );
+	const throttledOnScroll = throttle( onScroll, 100 );
 
 	return {
 		resume: () => {
@@ -41,26 +44,32 @@ function initDirectionObserver( onScrollDown, onScrollUp, threshold = 0 ) {
 }
 
 /**
- * Create an observer for showing/hiding feature and for firing scroll event hooks.
+ * Create an intersection-based scroll observer for show/hide behavior.
  *
- * @param {Function} show functionality for when feature is visible
- * @param {Function} hide functionality for when feature is hidden
- * @return {IntersectionObserver}
+ * @param {Object} deps
+ * @param {typeof IntersectionObserver} deps.IntersectionObserver
+ * @return {Object}
  */
-function initScrollObserver( show, hide ) {
-	/* eslint-disable-next-line compat/compat */
-	return new IntersectionObserver( ( entries ) => {
-		if ( !entries[ 0 ].isIntersecting && entries[ 0 ].boundingClientRect.top < 0 ) {
-			// Viewport has crossed the bottom edge of the target element.
-			show();
-		} else {
-			// Viewport is above the bottom edge of the target element.
-			hide();
-		}
-	} );
+function createScrollObserver( { IntersectionObserver } ) {
+	/**
+	 * @param {Function} show - Called when target scrolls out of view above viewport.
+	 * @param {Function} hide - Called when target is in view.
+	 * @return {IntersectionObserver}
+	 */
+	function observe( show, hide ) {
+		return new IntersectionObserver( ( entries ) => {
+			if ( !entries[ 0 ].isIntersecting && entries[ 0 ].boundingClientRect.top < 0 ) {
+				show();
+			} else {
+				hide();
+			}
+		} );
+	}
+
+	return { observe };
 }
 
 module.exports = {
-	initDirectionObserver,
-	initScrollObserver
+	createDirectionObserver,
+	createScrollObserver
 };
