@@ -1,4 +1,4 @@
-const { createDirectionObserver } = require( '../../../resources/skins.citizen.scripts/scrollObserver.js' );
+const { createDirectionObserver, createScrollObserver } = require( '../../../resources/skins.citizen.scripts/scrollObserver.js' );
 
 describe( 'createDirectionObserver', () => {
 	let win;
@@ -136,5 +136,57 @@ describe( 'createDirectionObserver', () => {
 		// After clamping to 0, scrolling to 50 should be a down scroll
 		simulateScroll( 50 );
 		expect( onScrollDown ).toHaveBeenCalled();
+	} );
+} );
+
+describe( 'createScrollObserver', () => {
+	let show;
+	let hide;
+	let observerCallback;
+
+	function createMockIntersectionObserver() {
+		return function MockIntersectionObserver( callback ) {
+			observerCallback = callback;
+			return { observe: vi.fn(), disconnect: vi.fn() };
+		};
+	}
+
+	beforeEach( () => {
+		show = vi.fn();
+		hide = vi.fn();
+	} );
+
+	afterEach( () => {
+		vi.restoreAllMocks();
+	} );
+
+	it( 'should call show when element is above viewport', () => {
+		const scrollObs = createScrollObserver( { IntersectionObserver: createMockIntersectionObserver() } );
+		scrollObs.observe( show, hide );
+
+		observerCallback( [ { isIntersecting: false, boundingClientRect: { top: -10 } } ] );
+
+		expect( show ).toHaveBeenCalledOnce();
+		expect( hide ).not.toHaveBeenCalled();
+	} );
+
+	it( 'should call hide when element is in view', () => {
+		const scrollObs = createScrollObserver( { IntersectionObserver: createMockIntersectionObserver() } );
+		scrollObs.observe( show, hide );
+
+		observerCallback( [ { isIntersecting: true, boundingClientRect: { top: 100 } } ] );
+
+		expect( hide ).toHaveBeenCalledOnce();
+		expect( show ).not.toHaveBeenCalled();
+	} );
+
+	it( 'should call hide when element is not intersecting but below viewport', () => {
+		const scrollObs = createScrollObserver( { IntersectionObserver: createMockIntersectionObserver() } );
+		scrollObs.observe( show, hide );
+
+		observerCallback( [ { isIntersecting: false, boundingClientRect: { top: 100 } } ] );
+
+		expect( hide ).toHaveBeenCalledOnce();
+		expect( show ).not.toHaveBeenCalled();
 	} );
 } );
