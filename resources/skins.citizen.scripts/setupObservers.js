@@ -49,13 +49,15 @@ const getHeadingIntersectionHandler = ( changeActiveSection ) =>
  * Return the computed value of the `scroll-margin-top` CSS property of the document element
  * which is also used for the scroll intersection threshold (T317661).
  *
+ * @param {Window} window
+ * @param {Document} document
  * @return {number} Value of scroll-margin-top OR 75 if falsy.
  * 75 derived from @scroll-padding-top LESS variable
  * https://gerrit.wikimedia.org/r/c/mediawiki/skins/Vector/+/894696/3/resources/common/variables.less ?
  */
-function getDocumentScrollPaddingTop() {
+function getDocumentScrollPaddingTop( window, document ) {
 	const defaultScrollPaddingTop = 75;
-	const documentStyles = getComputedStyle( document.documentElement );
+	const documentStyles = window.getComputedStyle( document.documentElement );
 	const scrollPaddingTopString = documentStyles.getPropertyValue( 'scroll-padding-top' );
 	return ( parseInt( scrollPaddingTopString, 10 ) || defaultScrollPaddingTop );
 }
@@ -63,9 +65,16 @@ function getDocumentScrollPaddingTop() {
 /**
  * @param {HTMLElement|null} tocElement
  * @param {HTMLElement|null} bodyContent
+ * @param {Object} deps
+ * @param {Document} deps.document
+ * @param {Window} deps.window
+ * @param {Object} deps.mw
+ * @param {typeof IntersectionObserver} deps.IntersectionObserver
  * @return {TableOfContents|null}
  */
-const setupTableOfContents = ( tocElement, bodyContent ) => {
+const setupTableOfContents = (
+	tocElement, bodyContent, { document, window, mw, IntersectionObserver }
+) => {
 	if ( !(
 		tocElement &&
 		bodyContent
@@ -118,7 +127,7 @@ const setupTableOfContents = ( tocElement, bodyContent ) => {
 		mw,
 		IntersectionObserver,
 		elements: elements(),
-		topMargin: getDocumentScrollPaddingTop(),
+		topMargin: getDocumentScrollPaddingTop( window, document ),
 		onIntersection: getHeadingIntersectionHandler(
 			tableOfContents.changeActiveSection.bind( tableOfContents )
 		)
@@ -141,7 +150,7 @@ const setupTableOfContents = ( tocElement, bodyContent ) => {
 	} );
 
 	const setInitialActiveSection = () => {
-		const hash = location.hash.slice( 1 );
+		const hash = window.location.hash.slice( 1 );
 		// If hash fragment is blank, determine the active section with section
 		// observer.
 		if ( hash === '' ) {
@@ -182,20 +191,27 @@ const setupTableOfContents = ( tocElement, bodyContent ) => {
 };
 
 /**
+ * @param {Object} deps
+ * @param {Document} deps.document
+ * @param {Window} deps.window
+ * @param {Object} deps.mw
+ * @param {typeof IntersectionObserver} deps.IntersectionObserver
  * @return {void}
  */
-const main = () => {
+const init = ( { document, window, mw, IntersectionObserver } ) => {
 	const tocElement = document.getElementById( TOC_ID );
 	const bodyContent = document.getElementById( BODY_CONTENT_ID );
 
 	/* eslint-disable no-unused-vars */
-	const tableOfContents = setupTableOfContents( tocElement, bodyContent );
+	const tableOfContents = setupTableOfContents(
+		tocElement, bodyContent, { document, window, mw, IntersectionObserver }
+	);
 
 	const
 		stickyHeaderElement = document.getElementById( STICKY_HEADER_ID ),
 		stickyIntersection = document.getElementById( 'citizen-page-header-sticky-sentinel' );
 
-	const shouldStickyHeader = getComputedStyle( stickyIntersection )?.getPropertyValue( 'display' ) !== 'none';
+	const shouldStickyHeader = window.getComputedStyle( stickyIntersection )?.getPropertyValue( 'display' ) !== 'none';
 	const isStickyHeaderAllowed = !!stickyHeaderElement &&
 		!!stickyIntersection &&
 		shouldStickyHeader;
@@ -269,5 +285,5 @@ const main = () => {
 };
 
 module.exports = {
-	main
+	init
 };

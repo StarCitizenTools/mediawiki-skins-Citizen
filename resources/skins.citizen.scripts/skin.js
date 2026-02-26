@@ -76,7 +76,7 @@ function main( window ) {
 
 	search.init( { window, document, mw } );
 	createEchoUpgrade( { document, mw, MutationObserver } ).init();
-	setupObservers.main();
+	setupObservers.init( { document, window, mw, IntersectionObserver } );
 	dropdown.init( { document, window } );
 	createLastModified( { document, Intl } ).init();
 	createShare( { document, window, mw, navigator } ).init();
