@@ -2,10 +2,10 @@
  * @return {void}
  */
 function deferredTasks() {
-	const speculationRules = require( './speculationRules.js' );
+	const { createSpeculationRules } = require( './speculationRules.js' );
 	const serviceWorker = require( './serviceWorker.js' );
 
-	speculationRules.init();
+	createSpeculationRules( { document, mw, HTMLScriptElement } ).init();
 	serviceWorker.register();
 
 	window.addEventListener( 'beforeunload', () => {
