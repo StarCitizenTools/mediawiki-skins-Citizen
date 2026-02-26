@@ -1,7 +1,13 @@
 /**
+ * @param {Object} deps
+ * @param {Document} deps.document
+ * @param {Window} deps.window
+ * @param {Object} deps.mw
+ * @param {Object} deps.navigator
+ * @param {Object} deps.HTMLScriptElement
  * @return {void}
  */
-function deferredTasks() {
+function deferredTasks( { document, window, mw, navigator, HTMLScriptElement } ) {
 	const { createSpeculationRules } = require( './speculationRules.js' );
 	const { createServiceWorker } = require( './serviceWorker.js' );
 
@@ -25,9 +31,17 @@ function deferredTasks() {
  * Initialize scripts related to wiki page content
  *
  * @param {HTMLElement} bodyContent
+ * @param {Object} deps
+ * @param {Document} deps.document
+ * @param {Window} deps.window
+ * @param {Object} deps.mw
+ * @param {typeof IntersectionObserver} deps.IntersectionObserver
+ * @param {typeof ResizeObserver} deps.ResizeObserver
  * @return {void}
  */
-function initBodyContent( bodyContent ) {
+function initBodyContent(
+	bodyContent, { document, window, mw, IntersectionObserver, ResizeObserver }
+) {
 	const
 		{ createSections } = require( './sections.js' ),
 		overflowElements = require( './overflowElements/index.js' ),
@@ -48,9 +62,12 @@ function initBodyContent( bodyContent ) {
 /**
  * Initialize preferences module when the preferences button is first clicked
  *
+ * @param {Object} deps
+ * @param {Document} deps.document
+ * @param {Object} deps.mw
  * @return {void}
  */
-function initPreferences() {
+function initPreferences( { document, mw } ) {
 	document.getElementById( 'citizen-preferences-details' ).addEventListener( 'toggle', () => {
 		mw.loader.load( 'skins.citizen.preferences' );
 	},
@@ -85,16 +102,21 @@ function main( window ) {
 	mw.hook( 'wikipage.content' ).add( ( content ) => {
 		// content is a jQuery object
 		// note that this refers to .mw-body-content, not #bodyContent
-		initBodyContent( content[ 0 ] );
+		initBodyContent(
+			content[ 0 ], { document, window, mw, IntersectionObserver, ResizeObserver }
+		);
 	} );
 
 	// Preferences module
 	if ( config.wgCitizenEnablePreferences === true ) {
-		initPreferences();
+		initPreferences( { document, mw } );
 	}
 
 	// Defer non-essential tasks
-	mw.requestIdleCallback( deferredTasks, { timeout: 3000 } );
+	mw.requestIdleCallback(
+		() => deferredTasks( { document, window, mw, navigator, HTMLScriptElement } ),
+		{ timeout: 3000 }
+	);
 }
 
 if ( document.readyState === 'interactive' || document.readyState === 'complete' ) {
