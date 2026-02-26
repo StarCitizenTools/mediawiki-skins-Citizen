@@ -7,31 +7,13 @@
  */
 
 /**
- * @typedef {Object} SectionObserverProps
- * @property {NodeList} elements A list of HTML elements to observe for
- * intersection changes. This list can be updated through the `elements` setter.
- * @property {OnIntersection} onIntersection Called when a new intersection is observed.
- * @property {number} [topMargin] The number of pixels to shrink the top of
- * the viewport's bounding box before calculating intersections. This is useful
- * for sticky elements (e.g. sticky headers). Defaults to 0 pixels.
- * @property {number} [throttleMs] The number of milliseconds that the scroll
- * handler should be throttled.
- */
-
-/**
- * @callback initSectionObserver
- * @param {SectionObserverProps} props
- * @return {SectionObserver}
- */
-
-/**
  * Observe intersection changes with the viewport for one or more elements. This
  * is intended to be used with the headings in the content so that the
  * corresponding section(s) in the table of contents can be "activated" (e.g.
  * bolded).
  *
  * When sectionObserver notices a new intersection change, the
- * `props.onIntersection` callback will be fired with the corresponding section
+ * `onIntersection` callback will be fired with the corresponding section
  * as a param.
  *
  * Because sectionObserver uses a scroll event listener (in combination with
@@ -41,28 +23,38 @@
  * observed tags off the main thread and in a manner that does not cause
  * expensive forced synchronous layouts.
  *
- * @param {SectionObserverProps} props
+ * @param {Object} deps
+ * @param {Window} deps.window
+ * @param {Object} deps.mw - MediaWiki global (used for mw.log.warn).
+ * @param {typeof IntersectionObserver} deps.IntersectionObserver
+ * @param {NodeList} deps.elements - Elements to observe for intersection changes.
+ * @param {number} [deps.topMargin] - Pixels to shrink the top of the viewport's
+ *   bounding box before calculating intersections. Defaults to 0.
+ * @param {number} [deps.throttleMs] - Milliseconds to throttle the scroll handler. Defaults to 200.
+ * @param {OnIntersection} [deps.onIntersection] - Called when a new intersection is observed.
  * @return {SectionObserver}
  */
-module.exports = function sectionObserver( props ) {
-	props = Object.assign( {
-		topMargin: 0,
-		throttleMs: 200,
-		onIntersection: () => {}
-	}, props );
+function createSectionObserver( deps ) {
+	const {
+		window: win,
+		mw: mediawiki,
+		IntersectionObserver: IntersectionObserverCtor,
+		elements: initialElements,
+		topMargin = 0,
+		throttleMs = 200,
+		onIntersection = () => {}
+	} = deps;
 
+	let elements = initialElements;
 	let /** @type {number | undefined} */ timeoutId;
 	let /** @type {HTMLElement | undefined} */ current;
 
-	// eslint-disable-next-line compat/compat
-	const observer = new IntersectionObserver( ( entries ) => {
+	const observer = new IntersectionObserverCtor( ( entries ) => {
 		let /** @type {IntersectionObserverEntry | undefined} */ closestNegativeEntry;
 		let /** @type {IntersectionObserverEntry | undefined} */ closestPositiveEntry;
-		const topMargin = /** @type {number} */ ( props.topMargin );
 
 		entries.forEach( ( entry ) => {
-			const top =
-					entry.boundingClientRect.top - topMargin;
+			const top = entry.boundingClientRect.top - topMargin;
 			if (
 				top > 0 &&
 				(
@@ -91,7 +83,7 @@ module.exports = function sectionObserver( props ) {
 
 		// If the intersection is new, fire the `onIntersection` callback.
 		if ( current !== closestTag ) {
-			props.onIntersection( closestTag );
+			onIntersection( closestTag );
 		}
 		current = closestTag;
 
@@ -113,9 +105,9 @@ module.exports = function sectionObserver( props ) {
 	function calcIntersection() {
 		// IntersectionObserver will asynchronously calculate the boundingClientRect
 		// of each observed element off the main thread after `observe` is called.
-		props.elements.forEach( ( element ) => {
+		elements.forEach( ( element ) => {
 			if ( !element.parentNode ) {
-				mw.log.warn( 'Element being observed is not in DOM', element );
+				mediawiki.log.warn( 'Element being observed is not in DOM', element );
 				return;
 			}
 			observer.observe( /** @type {HTMLElement} */ ( element ) );
@@ -123,21 +115,21 @@ module.exports = function sectionObserver( props ) {
 	}
 
 	function handleScroll() {
-		// Throttle the scroll event handler to fire at a rate limited by `props.throttleMs`.
+		// Throttle the scroll event handler to fire at a rate limited by `throttleMs`.
 		if ( !timeoutId ) {
-			timeoutId = window.setTimeout( () => {
+			timeoutId = win.setTimeout( () => {
 				calcIntersection();
 				timeoutId = undefined;
-			}, props.throttleMs );
+			}, throttleMs );
 		}
 	}
 
 	function bindScrollListener() {
-		window.addEventListener( 'scroll', handleScroll );
+		win.addEventListener( 'scroll', handleScroll );
 	}
 
 	function unbindScrollListener() {
-		window.removeEventListener( 'scroll', handleScroll );
+		win.removeEventListener( 'scroll', handleScroll );
 	}
 
 	/**
@@ -173,7 +165,7 @@ module.exports = function sectionObserver( props ) {
 	 * @param {NodeList} list
 	 */
 	function setElements( list ) {
-		props.elements = list;
+		elements = list;
 	}
 
 	bindScrollListener();
@@ -193,4 +185,8 @@ module.exports = function sectionObserver( props ) {
 		unmount,
 		setElements
 	};
+}
+
+module.exports = {
+	createSectionObserver
 };
