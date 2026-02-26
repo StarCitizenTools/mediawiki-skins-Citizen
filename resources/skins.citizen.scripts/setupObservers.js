@@ -2,7 +2,7 @@
 const
 	{ createDirectionObserver, createScrollObserver } = require( './scrollObserver.js' ),
 	{ createSectionObserver } = require( './sectionObserver.js' ),
-	stickyHeader = require( './stickyHeader.js' ),
+	{ StickyHeader, STICKY_HEADER_ID, STICKY_HEADER_VISIBLE_CLASS } = require( './stickyHeader.js' ),
 	TableOfContents = require( './tableOfContents.js' ),
 	deferUntilFrame = require( './deferUntilFrame.js' ),
 	TOC_ID = 'citizen-toc',
@@ -189,13 +189,17 @@ const main = () => {
 	const tableOfContents = setupTableOfContents( tocElement, bodyContent );
 
 	const
-		stickyHeaderElement = document.getElementById( stickyHeader.STICKY_HEADER_ID ),
+		stickyHeaderElement = document.getElementById( STICKY_HEADER_ID ),
 		stickyIntersection = document.getElementById( 'citizen-page-header-sticky-sentinel' );
 
 	const shouldStickyHeader = getComputedStyle( stickyIntersection )?.getPropertyValue( 'display' ) !== 'none';
 	const isStickyHeaderAllowed = !!stickyHeaderElement &&
 		!!stickyIntersection &&
 		shouldStickyHeader;
+
+	const stickyHeaderInstance = isStickyHeaderAllowed ?
+		new StickyHeader( { stickyHeaderElement, document } ) :
+		null;
 
 	const scrollDirectionObserver = createDirectionObserver( {
 		window,
@@ -211,17 +215,17 @@ const main = () => {
 		threshold: 10
 	} );
 
-	if ( isStickyHeaderAllowed ) {
-		stickyHeader.init( stickyHeaderElement );
+	if ( stickyHeaderInstance ) {
+		stickyHeaderInstance.init();
 	}
 
 	const resumeStickyHeader = () => {
 		if (
-			isStickyHeaderAllowed &&
-			!document.body.classList.contains( stickyHeader.STICKY_HEADER_VISIBLE_CLASS ) &&
+			stickyHeaderInstance &&
+			!document.body.classList.contains( STICKY_HEADER_VISIBLE_CLASS ) &&
 			document.body.classList.contains( PAGE_TITLE_INTERSECTION_CLASS )
 		) {
-			stickyHeader.show( stickyHeaderElement );
+			stickyHeaderInstance.show();
 			if ( document.documentElement.classList.contains( 'citizen-feature-autohide-navigation-clientpref-1' ) ) {
 				scrollDirectionObserver.resume();
 			}
@@ -229,8 +233,11 @@ const main = () => {
 	};
 
 	const pauseStickyHeader = () => {
-		if ( document.body.classList.contains( stickyHeader.STICKY_HEADER_VISIBLE_CLASS ) ) {
-			stickyHeader.hide( stickyHeaderElement );
+		if (
+			stickyHeaderInstance &&
+			document.body.classList.contains( STICKY_HEADER_VISIBLE_CLASS )
+		) {
+			stickyHeaderInstance.hide();
 			scrollDirectionObserver.pause();
 		}
 	};
