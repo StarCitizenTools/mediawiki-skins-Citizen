@@ -3,10 +3,10 @@
  */
 function deferredTasks() {
 	const { createSpeculationRules } = require( './speculationRules.js' );
-	const serviceWorker = require( './serviceWorker.js' );
+	const { createServiceWorker } = require( './serviceWorker.js' );
 
 	createSpeculationRules( { document, mw, HTMLScriptElement } ).init();
-	serviceWorker.register();
+	createServiceWorker( { mw, navigator } ).register();
 
 	window.addEventListener( 'beforeunload', () => {
 		// Set up loading indicator
@@ -29,16 +29,16 @@ function deferredTasks() {
  */
 function initBodyContent( bodyContent ) {
 	const
-		sections = require( './sections.js' ),
+		{ createSections } = require( './sections.js' ),
 		overflowElements = require( './overflowElements.js' ),
-		contentEnhancements = require( './contentEnhancements.js' );
+		{ createContentEnhancements } = require( './contentEnhancements.js' );
 
 	// Collapsable sections
-	sections.init( bodyContent );
+	createSections( { document, bodyContent } ).init();
 	// Overflow element enhancements
 	overflowElements.init( bodyContent );
 	// Content enhancements
-	contentEnhancements.init();
+	createContentEnhancements( { document, bodyContent } ).init();
 }
 
 /**
@@ -62,21 +62,21 @@ function initPreferences() {
 function main( window ) {
 	const
 		config = require( './config.json' ),
-		echo = require( './echo.js' ),
+		{ createEchoUpgrade } = require( './echo.js' ),
 		search = require( './search.js' ),
 		dropdown = require( './dropdown.js' ),
 		{ createLastModified } = require( './lastModified.js' ),
-		share = require( './share.js' ),
+		{ createShare } = require( './share.js' ),
 		setupObservers = require( './setupObservers.js' ),
-		performance = require( './performance.js' );
+		{ createPerformanceMode } = require( './performance.js' );
 
 	search.init( window );
-	echo();
+	createEchoUpgrade( { document, mw, MutationObserver } ).init();
 	setupObservers.main();
 	dropdown.init();
 	createLastModified( { document, Intl } ).init();
-	share.init();
-	performance.init();
+	createShare( { document, window, mw, navigator } ).init();
+	createPerformanceMode( { document, mw } ).init();
 
 	mw.hook( 'wikipage.content' ).add( ( content ) => {
 		// content is a jQuery object
