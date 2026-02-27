@@ -16,11 +16,8 @@
 /**
  * Prepares the data for rendering the table of contents,
  * nesting child sections within their parent sections.
- * This should yield the same result as the php function
- * CitizenComponentTableOfContents::getTemplateData(),
- * please make sure to keep them in sync.
- *
- * TODO: CitizenComponentTableOfContents is not implemented as we need to support MW 1.39
+ * The PHP equivalent is CitizenComponentTableOfContents::getTemplateData().
+ * Keep the two implementations in sync.
  *
  * @param {Section[]} sections
  * @param {number} toclevel

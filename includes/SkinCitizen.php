@@ -23,6 +23,7 @@ use MediaWiki\Skins\Citizen\Components\CitizenComponentPageTools;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentSearchBox;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentSiteStats;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentStickyHeader;
+use MediaWiki\Skins\Citizen\Components\CitizenComponentTableOfContents;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentUserInfo;
 use MediaWiki\Title\Title;
 use MediaWiki\User\UserFactory;
@@ -191,6 +192,11 @@ class SkinCitizen extends SkinMustache {
 			'data-body-content' => new CitizenComponentBodyContent(
 				$parentData['html-body-content'],
 				$this->shouldMakeSections( $config, $title )
+			),
+			'data-toc' => new CitizenComponentTableOfContents(
+				$parentData['data-toc'] ?? [],
+				$localizer,
+				$config
 			),
 		];
 

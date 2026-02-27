@@ -60,7 +60,6 @@
 		width: var( --citizen-toc-toggle-size );
 		height: var( --citizen-toc-toggle-size );
 		padding: 0;
-		background: transparent;
 	}
 
 	&-indicator {
@@ -117,8 +116,6 @@
 		--size-icon: var( --font-size-x-small );
 		display: grid;
 		place-content: center;
-		cursor: pointer;
-		border-radius: var( --border-radius-base );
 
 		.citizen-ui-icon {
 			&::before {
@@ -126,14 +123,6 @@
 				transition: var( --transition-hover );
 				transition-property: transform;
 			}
-		}
-
-		&:hover {
-			background-color: var( --background-color-button-quiet--hover );
-		}
-
-		&:active {
-			background-color: var( --background-color-button-quiet--active );
 		}
 	}
 
