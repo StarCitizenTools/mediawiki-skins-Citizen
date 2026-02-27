@@ -138,7 +138,7 @@ jobs:
 
       - name: Upload JS coverage
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: js-coverage
           path: coverage/js/lcov.info
@@ -233,7 +233,7 @@ jobs:
 
       - name: Upload PHP coverage
         if: ${{ matrix.coverage == 'xdebug' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: php-coverage
           path: mediawiki/skins/Citizen/coverage/php/coverage.xml
