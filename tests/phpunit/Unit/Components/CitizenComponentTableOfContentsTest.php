@@ -157,6 +157,51 @@ class CitizenComponentTableOfContentsTest extends MediaWikiUnitTestCase {
 	/**
 	 * @covers ::__construct
 	 * @covers ::getTemplateData
+	 */
+	public function testMissingNumberSectionCountDefaultsToZero(): void {
+		$tocData = [
+			'array-sections' => [
+				[
+					'is-top-level-section' => true,
+					'is-parent-section' => false,
+					'line' => 'Section 1',
+				],
+				[
+					'is-top-level-section' => true,
+					'is-parent-section' => false,
+					'line' => 'Section 2',
+				],
+				[
+					'is-top-level-section' => true,
+					'is-parent-section' => false,
+					'line' => 'Section 3',
+				],
+				[
+					'is-top-level-section' => true,
+					'is-parent-section' => false,
+					'line' => 'Section 4',
+				],
+			],
+			// 'number-section-count' intentionally omitted
+		];
+
+		$component = new CitizenComponentTableOfContents(
+			$tocData,
+			$this->createLocalizer(),
+			$this->createConfig( 1 )
+		);
+
+		$result = $component->getTemplateData();
+
+		$this->assertFalse(
+			$result['citizen-is-collapse-sections-enabled'],
+			'Should not collapse when number-section-count is missing (defaults to 0)'
+		);
+	}
+
+	/**
+	 * @covers ::__construct
+	 * @covers ::getTemplateData
 	 * @dataProvider provideCollapseScenarios
 	 */
 	public function testCollapseSectionsEnabled(
