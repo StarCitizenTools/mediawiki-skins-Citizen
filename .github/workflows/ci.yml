@@ -251,14 +251,14 @@ jobs:
           fetch-depth: 0
 
       - name: Download JS coverage
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: js-coverage
           path: coverage/js
         continue-on-error: true
 
       - name: Download PHP coverage
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: php-coverage
           path: coverage/php
