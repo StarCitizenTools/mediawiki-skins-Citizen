@@ -38,6 +38,7 @@
 	"citizen-footer-tagline": "Default text for the site footer tagline.",
 	"citizen-action-addsection": "Used in the Citizen skin. See for example {{canonicalurl:Talk:Main_Page|useskin=vector}}\n{{Identical|Add topic}}. Same as vector-action-addsection in Vector skin.",
 	"citizen-jumptotop": "Label for link to jump to top of page",
+	"citizen-toc-toggle-button-label": "Accessible label for the toggle button that expands/collapses a table of contents subsection. $1 is the section heading text.",
 	"citizen-search-advancedsearch": "Label for AdvancedSearch button in search actions",
 	"citizen-search-fulltext": "Label for fulltext button in search actions",
 	"citizen-search-mediasearch": "Label for MediaSearch button in search actions",

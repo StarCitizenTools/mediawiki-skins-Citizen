@@ -33,7 +33,8 @@
 	"citizen-footer-tagline": "Edit this text on [[MediaWiki:Citizen-footer-tagline]]",
 	"citizen-action-addsection": "Add topic",
 	"citizen-jumptotop": "Back to top",
-	
+	"citizen-toc-toggle-button-label": "Toggle $1 subsection",
+
 	"citizen-search-advancedsearch": "Advanced search",
 	"citizen-search-fulltext": "Search text",
 	"citizen-search-mediasearch": "Search media",
