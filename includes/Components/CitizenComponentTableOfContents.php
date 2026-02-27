@@ -41,7 +41,7 @@ class CitizenComponentTableOfContents implements CitizenComponent {
 		return array_merge( $this->tocData, [
 			'citizen-is-collapse-sections-enabled' =>
 				count( $sections ) > 3 &&
-				$this->tocData['number-section-count'] >=
+				( $this->tocData['number-section-count'] ?? 0 ) >=
 					$this->config->get( 'CitizenTableOfContentsCollapseAtCount' ),
 		] );
 	}
