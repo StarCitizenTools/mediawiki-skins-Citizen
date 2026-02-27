@@ -30,6 +30,7 @@
 		"eslint-plugin-compat": "^6.2.0",
 		"grunt-banana-checker": "0.13.0",
 		"husky": "^9.1.7",
+		"jsdom": "^28.1.0",
 		"markdownlint-cli": "^0.47.0",
 		"pinia": "2.0.16",
 		"stylelint": "17.4.0",
