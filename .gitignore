@@ -31,6 +31,9 @@ sftp-config.json
 ## Windows
 Thumbs.db
 
+# Working artifacts
+/design
+
 # Misc
 .buildpath
 .classpath
