@@ -42,5 +42,4 @@ vitest.config.js export-ignore
 .editorconfig export-ignore
 .markdownlint.json export-ignore
 .markdownlintignore export-ignore
-.phan export-ignore
 sonar-project.properties export-ignore

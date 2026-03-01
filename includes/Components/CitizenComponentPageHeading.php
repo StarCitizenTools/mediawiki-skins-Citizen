@@ -232,7 +232,6 @@ class CitizenComponentPageHeading implements CitizenComponent {
 			return false;
 		}
 
-		// @phan-suppress-next-line PhanTypeMismatchArgument
 		if ( !$this->title->inNamespaces( [ NS_USER_WIKI, NS_USER_PROFILE ] ) ) {
 			return false;
 		}
