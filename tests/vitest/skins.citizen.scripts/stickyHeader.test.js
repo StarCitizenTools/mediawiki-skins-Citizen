@@ -6,61 +6,28 @@ const { StickyHeader } = require( '../../../resources/skins.citizen.scripts/stic
 /**
  * Build a minimal sticky header DOM with fake buttons and click targets.
  *
- * Structure:
- *   stickyHeader#citizen-sticky-header
- *     button.cdx-button[data-mw-citizen-click-target="#real-target"]
- *       span (label child)
- *     button.cdx-button[data-mw-citizen-click-target="#orphan-target"] (no real target)
- *       span (label child)
- *   #real-target[title="Edit"]
- *     span "Edit page"
- *   #ca-edit-sticky-header
- *     span.citizen-ui-icon.mw-ui-icon-wikimedia-wikiText
- *
  * @return {{ stickyHeader: HTMLElement, realTarget: HTMLElement }}
  */
 function buildStickyHeaderDom() {
-	const stickyHeader = document.createElement( 'div' );
-	stickyHeader.id = 'citizen-sticky-header';
+	document.body.innerHTML = `
+		<div id="citizen-sticky-header">
+			<button class="cdx-button" data-mw-citizen-click-target="#real-target">
+				<span></span>
+			</button>
+			<button class="cdx-button" data-mw-citizen-click-target="#orphan-target">
+				<span></span>
+			</button>
+		</div>
+		<button id="real-target" title="Edit"><span>Edit page</span></button>
+		<div id="ca-edit-sticky-header">
+			<span class="citizen-ui-icon mw-ui-icon-wikimedia-wikiText"></span>
+		</div>
+	`;
 
-	// Fake button with a valid target
-	const fakeButton = document.createElement( 'button' );
-	fakeButton.classList.add( 'cdx-button' );
-	fakeButton.setAttribute( 'data-mw-citizen-click-target', '#real-target' );
-	const fakeLabel = document.createElement( 'span' );
-	fakeLabel.textContent = '';
-	fakeButton.appendChild( fakeLabel );
-	stickyHeader.appendChild( fakeButton );
-
-	// Fake button with no matching target (orphan)
-	const orphanButton = document.createElement( 'button' );
-	orphanButton.classList.add( 'cdx-button' );
-	orphanButton.setAttribute( 'data-mw-citizen-click-target', '#orphan-target' );
-	const orphanLabel = document.createElement( 'span' );
-	orphanLabel.textContent = '';
-	orphanButton.appendChild( orphanLabel );
-	stickyHeader.appendChild( orphanButton );
-
-	// Real target element
-	const realTarget = document.createElement( 'button' );
-	realTarget.id = 'real-target';
-	realTarget.setAttribute( 'title', 'Edit' );
-	const realLabel = document.createElement( 'span' );
-	realLabel.textContent = 'Edit page';
-	realTarget.appendChild( realLabel );
-
-	// Source edit button for updateEditIcon tests
-	const sourceEditButton = document.createElement( 'div' );
-	sourceEditButton.id = 'ca-edit-sticky-header';
-	const icon = document.createElement( 'span' );
-	icon.classList.add( 'citizen-ui-icon', 'mw-ui-icon-wikimedia-wikiText' );
-	sourceEditButton.appendChild( icon );
-
-	document.body.appendChild( stickyHeader );
-	document.body.appendChild( realTarget );
-	document.body.appendChild( sourceEditButton );
-
-	return { stickyHeader, realTarget };
+	return {
+		stickyHeader: document.getElementById( 'citizen-sticky-header' ),
+		realTarget: document.getElementById( 'real-target' )
+	};
 }
 
 /**
@@ -241,26 +208,17 @@ describe( 'StickyHeader', () => {
 			const { stickyHeader } = buildStickyHeaderDom();
 			const header = createStickyHeader( stickyHeader );
 
-			// Create a dropdown to clone
-			const dropdown = document.createElement( 'details' );
-			dropdown.id = 'citizen-page-more-dropdown';
-			const summary = document.createElement( 'summary' );
-			summary.classList.add(
-				'citizen-dropdown-summary',
-				'citizen-cdx-button--size-large',
-				'cdx-button'
-			);
-			dropdown.appendChild( summary );
-			document.body.appendChild( dropdown );
-
-			// Create the container in the sticky header
-			const container = document.createElement( 'div' );
-			container.id = 'citizen-sticky-header-more';
-			document.body.appendChild( container );
+			document.body.insertAdjacentHTML( 'beforeend', `
+				<details id="citizen-page-more-dropdown">
+					<summary class="citizen-dropdown-summary citizen-cdx-button--size-large cdx-button"></summary>
+				</details>
+				<div id="citizen-sticky-header-more"></div>
+			` );
 
 			header.initDropdowns();
 
-			const clonedButton = container.querySelector( '.citizen-dropdown-summary' );
+			const clonedButton = document.getElementById( 'citizen-sticky-header-more' )
+				.querySelector( '.citizen-dropdown-summary' );
 			expect( clonedButton.classList.contains( 'citizen-cdx-button--size-large' ) ).toBe( false );
 			expect( clonedButton.classList.contains( 'cdx-button--size-large' ) ).toBe( true );
 		} );

@@ -90,6 +90,7 @@ When your test plan includes steps that require a browser (e.g., verifying scrip
 ### Tests
 
 - Use Arrange-Act-Assert with blank lines separating each phase
+- In Vitest, set up DOM fixtures with `document.body.innerHTML` and an HTML string rather than imperative `createElement` chains — it's more readable and mirrors the actual markup
 
 ### i18n
 
