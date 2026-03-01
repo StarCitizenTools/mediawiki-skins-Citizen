@@ -22,14 +22,12 @@ function createMockWindow( overrides = {} ) {
  * Create a bodyContent element attached to the document.
  * Elements must be in the DOM so parentNode is available for the wrapper module.
  *
- * @param {HTMLElement[]} children
+ * @param {string} [innerHTML]
  * @return {HTMLElement}
  */
-function createBodyContent( children = [] ) {
+function createBodyContent( innerHTML = '' ) {
 	const bodyContent = document.createElement( 'div' );
-	children.forEach( ( child ) => {
-		bodyContent.appendChild( child );
-	} );
+	bodyContent.innerHTML = innerHTML;
 	document.body.appendChild( bodyContent );
 	return bodyContent;
 }
@@ -132,9 +130,7 @@ describe( 'overflowElements', () => {
 		} );
 
 		it( 'should skip elements that have a nowrap class', () => {
-			const table = document.createElement( 'table' );
-			table.classList.add( 'wikitable', 'nowrap' );
-			const bodyContent = createBodyContent( [ table ] );
+			const bodyContent = createBodyContent( '<table class="wikitable nowrap"></table>' );
 			const win = createMockWindow();
 			const config = createConfig();
 			const observers = createMockObservers();
@@ -157,9 +153,7 @@ describe( 'overflowElements', () => {
 
 	describe( 'OverflowElement', () => {
 		it( 'should return early from init when wrapper returns null', () => {
-			const table = document.createElement( 'table' );
-			table.classList.add( 'wikitable' );
-			const bodyContent = createBodyContent( [ table ] );
+			const bodyContent = createBodyContent( '<table class="wikitable"></table>' );
 
 			// Force the wrapper to fail by making insertBefore throw
 			bodyContent.insertBefore = () => {
@@ -187,20 +181,16 @@ describe( 'overflowElements', () => {
 		} );
 
 		it( 'should create sticky header only when header row exists', () => {
-			const table = document.createElement( 'table' );
-			table.classList.add( 'wikitable' );
-			const thead = document.createElement( 'thead' );
-			const headerRow = document.createElement( 'tr' );
-			headerRow.classList.add( 'citizen-overflow-sticky-header' );
-			const th1 = document.createElement( 'th' );
-			th1.textContent = 'Column 1';
-			const th2 = document.createElement( 'th' );
-			th2.textContent = 'Column 2';
-			headerRow.appendChild( th1 );
-			headerRow.appendChild( th2 );
-			thead.appendChild( headerRow );
-			table.appendChild( thead );
-			const bodyContent = createBodyContent( [ table ] );
+			const bodyContent = createBodyContent( `
+				<table class="wikitable">
+					<thead>
+						<tr class="citizen-overflow-sticky-header">
+							<th>Column 1</th>
+							<th>Column 2</th>
+						</tr>
+					</thead>
+				</table>
+			` );
 			const win = createMockWindow();
 			const config = createConfig();
 			const observers = createMockObservers();
@@ -222,9 +212,7 @@ describe( 'overflowElements', () => {
 		} );
 
 		it( 'should bind and unbind listeners on resume and pause', () => {
-			const table = document.createElement( 'table' );
-			table.classList.add( 'wikitable' );
-			const bodyContent = createBodyContent( [ table ] );
+			const bodyContent = createBodyContent( '<table class="wikitable"></table>' );
 			const win = createMockWindow( {
 				matchMedia: vi.fn( () => ( { matches: true } ) )
 			} );
@@ -240,6 +228,8 @@ describe( 'overflowElements', () => {
 				bodyContent,
 				config
 			} );
+
+			const table = bodyContent.querySelector( 'table' );
 
 			// resume() is called during init — resize observer should observe the element
 			expect( observers.resizeObserve ).toHaveBeenCalledWith( table );
@@ -270,9 +260,7 @@ describe( 'overflowElements', () => {
 		} );
 
 		it( 'should clamp scrollLeft between 0 and max using rAF', () => {
-			const table = document.createElement( 'table' );
-			table.classList.add( 'wikitable' );
-			const bodyContent = createBodyContent( [ table ] );
+			const bodyContent = createBodyContent( '<table class="wikitable"></table>' );
 			const rAF = vi.fn( ( cb ) => cb() );
 			const win = createMockWindow( {
 				matchMedia: vi.fn( () => ( { matches: true } ) ),
@@ -332,9 +320,7 @@ describe( 'overflowElements', () => {
 		} );
 
 		it( 'should handle only navButton clicks and distinguish left from right', () => {
-			const table = document.createElement( 'table' );
-			table.classList.add( 'wikitable' );
-			const bodyContent = createBodyContent( [ table ] );
+			const bodyContent = createBodyContent( '<table class="wikitable"></table>' );
 			const rAF = vi.fn( ( cb ) => cb() );
 			const win = createMockWindow( {
 				matchMedia: vi.fn( () => ( { matches: true } ) ),

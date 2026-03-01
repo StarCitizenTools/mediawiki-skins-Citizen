@@ -7,31 +7,22 @@ const config = require( '../mocks/config.js' );
 /**
  * Build a minimal search DOM structure with a details toggle and a search box.
  *
- * Structure:
- *   <details id="citizen-search-details">
- *     <div class="citizen-search-box">
- *       <input name="search" id="searchInput">
- *     </div>
- *   </details>
- *
  * @return {{ details: HTMLDetailsElement, searchBox: HTMLElement, input: HTMLInputElement }}
  */
 function buildSearchDom() {
-	const details = document.createElement( 'details' );
-	details.id = 'citizen-search-details';
+	document.body.innerHTML = `
+		<details id="citizen-search-details">
+			<div class="citizen-search-box">
+				<input name="search" id="searchInput">
+			</div>
+		</details>
+	`;
 
-	const searchBox = document.createElement( 'div' );
-	searchBox.classList.add( 'citizen-search-box' );
-
-	const input = document.createElement( 'input' );
-	input.setAttribute( 'name', 'search' );
-	input.setAttribute( 'id', 'searchInput' );
-
-	searchBox.appendChild( input );
-	details.appendChild( searchBox );
-	document.body.appendChild( details );
-
-	return { details, searchBox, input };
+	return {
+		details: document.getElementById( 'citizen-search-details' ),
+		searchBox: document.querySelector( '.citizen-search-box' ),
+		input: document.getElementById( 'searchInput' )
+	};
 }
 
 /**
@@ -232,9 +223,7 @@ describe( 'search', () => {
 
 	describe( 'no search boxes', () => {
 		it( 'should no-op gracefully when .citizen-search-box is not in DOM', () => {
-			const details = document.createElement( 'details' );
-			details.id = 'citizen-search-details';
-			document.body.appendChild( details );
+			document.body.innerHTML = '<details id="citizen-search-details"></details>';
 
 			mw.loader.using.mockClear();
 			const { init } = require( '../../../resources/skins.citizen.scripts/search.js' );
