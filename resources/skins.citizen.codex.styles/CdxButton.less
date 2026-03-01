@@ -17,16 +17,16 @@
 		// Now we are only keeping the default focus styles for keyboard navigation
 		&:enabled,
 		&.cdx-button--fake-button--enabled {
-			&:not(:active):not(.cdx-button--is-active) {
+			&:not( :active ):not( .cdx-button--is-active ) {
 				&:focus {
-					border-color: var( --border-color-interactive );
+					border-color: transparent;
 					box-shadow: none;
 				}
 
 				&:focus-visible {
+					outline: @outline-base--focus;
 					border-color: var( --border-color-progressive--focus );
 					box-shadow: @box-shadow-inset-small var( --color-progressive );
-					outline: @outline-base--focus;
 				}
 			}
 		}
