@@ -1,6 +1,10 @@
 // @vitest-environment jsdom
 /* global document */
 
+const fs = require( 'fs' );
+const path = require( 'path' );
+const Mustache = require( 'mustache' );
+
 // deferUntilFrame — execute callback immediately in tests
 vi.mock( '../../../resources/skins.citizen.scripts/deferUntilFrame.js', () => ( {
 	default: ( fn ) => fn()
@@ -12,68 +16,76 @@ vi.mock( '../../../resources/skins.citizen.scripts/tableOfContentsSections.js', 
 
 const { TableOfContents } = require( '../../../resources/skins.citizen.scripts/tableOfContents.js' );
 
+const TEMPLATES_DIR = path.resolve( __dirname, '../../../templates' );
+const listTemplate = fs.readFileSync(
+	path.join( TEMPLATES_DIR, 'TableOfContents__list.mustache' ), 'utf8'
+);
+const lineTemplate = fs.readFileSync(
+	path.join( TEMPLATES_DIR, 'TableOfContents__line.mustache' ), 'utf8'
+);
+
 /**
- * Build a minimal ToC DOM structure with top-level and nested sections.
+ * Template data matching the shape produced by CitizenComponentTableOfContents.
  *
  * Structure:
- *   container
- *     #toc-section1.citizen-toc-list-item.citizen-toc-level-1
- *       a.citizen-toc-link
- *       button.citizen-toc-toggle
- *       ul
- *         #toc-section1a.citizen-toc-list-item
- *           a.citizen-toc-link
- *     #toc-section2.citizen-toc-list-item.citizen-toc-level-1
- *       a.citizen-toc-link
- *       button.citizen-toc-toggle
+ *   section1 (top-level parent, toclevel 1)
+ *     section1a (child, toclevel 2)
+ *   section2 (top-level parent, toclevel 1, no children)
+ */
+const tocTemplateData = {
+	'array-sections': [
+		{
+			anchor: 'section1',
+			linkAnchor: 'section1',
+			toclevel: 1,
+			number: '1',
+			line: 'Section One',
+			'is-top-level-section': true,
+			'is-parent-section': true,
+			'citizen-button-label': 'Toggle Section One subsection',
+			'array-sections': [
+				{
+					anchor: 'section1a',
+					linkAnchor: 'section1a',
+					toclevel: 2,
+					number: '1.1',
+					line: 'Section One A',
+					'is-top-level-section': false,
+					'is-parent-section': false,
+					'array-sections': []
+				}
+			]
+		},
+		{
+			anchor: 'section2',
+			linkAnchor: 'section2',
+			toclevel: 1,
+			number: '2',
+			line: 'Section Two',
+			'is-top-level-section': true,
+			'is-parent-section': true,
+			'citizen-button-label': 'Toggle Section Two subsection',
+			'array-sections': []
+		}
+	]
+};
+
+/**
+ * Render a ToC DOM from real Mustache templates using template data that
+ * mirrors the shape produced by CitizenComponentTableOfContents::getTemplateData().
  *
+ * @param {Object} [data] Template data override; defaults to tocTemplateData.
  * @return {{ container: HTMLElement }}
  */
-function buildTocDom() {
-	const container = document.createElement( 'div' );
+function renderTocDom( data ) {
+	const html = Mustache.render( listTemplate, data || tocTemplateData, {
+		TableOfContents__line: lineTemplate
+	} );
 
-	// Section 1 — top level with a subsection
-	const section1 = document.createElement( 'li' );
-	section1.id = 'toc-section1';
-	section1.classList.add( 'citizen-toc-list-item', 'citizen-toc-level-1' );
+	const wrapper = document.createElement( 'div' );
+	wrapper.innerHTML = html;
+	const container = wrapper.firstElementChild;
 
-	const link1 = document.createElement( 'a' );
-	link1.classList.add( 'citizen-toc-link' );
-	section1.appendChild( link1 );
-
-	const toggle1 = document.createElement( 'button' );
-	toggle1.classList.add( 'citizen-toc-toggle' );
-	section1.appendChild( toggle1 );
-
-	const subList = document.createElement( 'ul' );
-	const section1a = document.createElement( 'li' );
-	section1a.id = 'toc-section1a';
-	section1a.classList.add( 'citizen-toc-list-item' );
-
-	const link1a = document.createElement( 'a' );
-	link1a.classList.add( 'citizen-toc-link' );
-	section1a.appendChild( link1a );
-
-	subList.appendChild( section1a );
-	section1.appendChild( subList );
-
-	// Section 2 — top level, no subsections
-	const section2 = document.createElement( 'li' );
-	section2.id = 'toc-section2';
-	section2.classList.add( 'citizen-toc-list-item', 'citizen-toc-level-1' );
-
-	const link2 = document.createElement( 'a' );
-	link2.classList.add( 'citizen-toc-link' );
-	section2.appendChild( link2 );
-
-	const toggle2 = document.createElement( 'button' );
-	toggle2.classList.add( 'citizen-toc-toggle' );
-	section2.appendChild( toggle2 );
-
-	container.appendChild( section1 );
-	container.appendChild( section2 );
-
-	// Attach to document so getElementById works
 	document.body.appendChild( container );
 
 	return { container };
@@ -118,7 +130,7 @@ afterEach( () => {
 describe( 'TableOfContents', () => {
 	describe( 'activateSection', () => {
 		it( 'should add active classes to subsection and its top-level ancestor', () => {
-			const { container } = buildTocDom();
+			const { container } = renderTocDom();
 			const toc = createToc( container );
 
 			toc.activateSection( 'toc-section1a' );
@@ -131,7 +143,7 @@ describe( 'TableOfContents', () => {
 		} );
 
 		it( 'should not re-add classes when activating the same section', () => {
-			const { container } = buildTocDom();
+			const { container } = renderTocDom();
 			const toc = createToc( container );
 
 			toc.activateSection( 'toc-section1a' );
@@ -145,7 +157,7 @@ describe( 'TableOfContents', () => {
 		} );
 
 		it( 'should no-op when given a non-existent id', () => {
-			const { container } = buildTocDom();
+			const { container } = renderTocDom();
 			const toc = createToc( container );
 
 			toc.activateSection( 'toc-does-not-exist' );
@@ -157,7 +169,7 @@ describe( 'TableOfContents', () => {
 
 	describe( 'deactivateSections', () => {
 		it( 'should remove active classes and reset state', () => {
-			const { container } = buildTocDom();
+			const { container } = renderTocDom();
 			const toc = createToc( container );
 
 			toc.activateSection( 'toc-section1a' );
@@ -174,7 +186,7 @@ describe( 'TableOfContents', () => {
 
 	describe( 'expandSection / collapseSections', () => {
 		it( 'should add expanded class and set aria-expanded on expand', () => {
-			const { container } = buildTocDom();
+			const { container } = renderTocDom();
 			const toc = createToc( container );
 
 			toc.expandSection( 'toc-section2' );
@@ -186,7 +198,7 @@ describe( 'TableOfContents', () => {
 		} );
 
 		it( 'should remove expanded class and set aria-expanded false on collapse', () => {
-			const { container } = buildTocDom();
+			const { container } = renderTocDom();
 			const toc = createToc( container );
 
 			toc.expandSection( 'toc-section2' );
@@ -199,7 +211,7 @@ describe( 'TableOfContents', () => {
 		} );
 
 		it( 'should not duplicate entries when expanding the same section twice', () => {
-			const { container } = buildTocDom();
+			const { container } = renderTocDom();
 			const toc = createToc( container );
 
 			toc.expandSection( 'toc-section2' );
@@ -211,7 +223,7 @@ describe( 'TableOfContents', () => {
 
 	describe( 'toggleExpandSection', () => {
 		it( 'should collapse an expanded top-level section', () => {
-			const { container } = buildTocDom();
+			const { container } = renderTocDom();
 			const toc = createToc( container );
 
 			toc.expandSection( 'toc-section2' );
@@ -222,7 +234,7 @@ describe( 'TableOfContents', () => {
 		} );
 
 		it( 'should expand a collapsed top-level section', () => {
-			const { container } = buildTocDom();
+			const { container } = renderTocDom();
 			const toc = createToc( container );
 
 			toc.toggleExpandSection( 'toc-section1' );
@@ -232,7 +244,7 @@ describe( 'TableOfContents', () => {
 		} );
 
 		it( 'should no-op for a non-top-level section', () => {
-			const { container } = buildTocDom();
+			const { container } = renderTocDom();
 			const toc = createToc( container );
 
 			const before = toc.getExpandedSectionIds().length;
@@ -244,7 +256,7 @@ describe( 'TableOfContents', () => {
 
 	describe( 'scrollToActiveSection', () => {
 		it( 'should call scrollTo when link is above visible area', () => {
-			const { container } = buildTocDom();
+			const { container } = renderTocDom();
 			const scrollToMock = vi.fn();
 
 			// Make the container appear scrollable
@@ -274,7 +286,7 @@ describe( 'TableOfContents', () => {
 		} );
 
 		it( 'should use undefined scroll behavior when prefers-reduced-motion', () => {
-			const { container } = buildTocDom();
+			const { container } = renderTocDom();
 			const scrollToMock = vi.fn();
 
 			Object.defineProperty( container, 'scrollHeight', { value: 1000 } );
@@ -310,7 +322,7 @@ describe( 'TableOfContents', () => {
 		} );
 
 		it( 'should fall back to parent link when subsection link is hidden', () => {
-			const { container } = buildTocDom();
+			const { container } = renderTocDom();
 			const scrollToMock = vi.fn();
 
 			Object.defineProperty( container, 'scrollHeight', { value: 1000 } );
@@ -344,7 +356,7 @@ describe( 'TableOfContents', () => {
 
 	describe( 'changeActiveSection', () => {
 		it( 'should deactivate old section and activate new section', () => {
-			const { container } = buildTocDom();
+			const { container } = renderTocDom();
 			const toc = createToc( container );
 
 			toc.activateSection( 'toc-section1' );
@@ -357,7 +369,7 @@ describe( 'TableOfContents', () => {
 		} );
 
 		it( 'should no-op when parent and child ids both match', () => {
-			const { container } = buildTocDom();
+			const { container } = renderTocDom();
 			const toc = createToc( container );
 
 			// Activate a top-level section (parent === child === the same id)
@@ -372,7 +384,7 @@ describe( 'TableOfContents', () => {
 
 	describe( 'handleHashChange', () => {
 		it( 'should expand and activate section matching the hash', () => {
-			const { container } = buildTocDom();
+			const { container } = renderTocDom();
 			const onHashChange = vi.fn();
 			const listItem = document.getElementById( 'toc-section2' );
 
@@ -399,7 +411,7 @@ describe( 'TableOfContents', () => {
 		} );
 
 		it( 'should no-op when hash does not match any section', () => {
-			const { container } = buildTocDom();
+			const { container } = renderTocDom();
 			const onHashChange = vi.fn();
 
 			const mw = {
@@ -425,7 +437,7 @@ describe( 'TableOfContents', () => {
 
 	describe( 'unmount', () => {
 		it( 'should remove hashchange event listener from window', () => {
-			const { container } = buildTocDom();
+			const { container } = renderTocDom();
 			const win = {
 				addEventListener: vi.fn(),
 				removeEventListener: vi.fn(),
