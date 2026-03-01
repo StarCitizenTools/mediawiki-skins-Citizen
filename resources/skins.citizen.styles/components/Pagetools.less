@@ -1,4 +1,4 @@
-.page-actions {
+.citizen-page-actions {
 	display: flex;
 	gap: var( --space-xxs );
 	align-items: center;
@@ -122,7 +122,7 @@
 
 // To avoid more menu from overflow in narrow screen
 @media ( max-width: @max-width-breakpoint-tablet ) {
-	.page-actions {
+	.citizen-page-actions {
 		position: fixed;
 		right: 0;
 		bottom: ~'calc( var( --header-size-block-end ) + max( env( safe-area-inset-bottom ), var( --space-xs ) ) )';
@@ -157,7 +157,7 @@
 }
 
 @media ( min-width: @min-width-breakpoint-desktop ) {
-	.page-actions {
+	.citizen-page-actions {
 		> .mw-portlet {
 			li > a {
 				gap: var( --space-xs );
