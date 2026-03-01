@@ -33,14 +33,6 @@
 			// Only attach dropdown menu to the button on desktop mode
 			position: relative;
 		}
-
-		&-summary {
-			display: grid;
-			place-items: center;
-			width: 2.5rem; // Same width as other buttons
-			height: 2.25rem; // Same height as other buttons
-			border-radius: var( --border-radius-medium );
-		}
 	}
 
 	// Visible page tools styles
@@ -56,14 +48,6 @@
 			padding-left: var( --space-sm );
 			font-size: 0;
 			border-radius: var( --border-radius-medium );
-
-			&:hover {
-				background-color: var( --background-color-button-quiet--hover );
-			}
-
-			&:active {
-				background-color: var( --background-color-button-quiet--active );
-			}
 		}
 	}
 
@@ -92,23 +76,6 @@
 			content: attr( data-counter-text );
 			background: var( --color-surface-0 );
 			border-radius: var( --border-radius-pill );
-		}
-	}
-}
-
-// Edit button
-#ca-edit,
-#ca-ve-edit {
-	> a {
-		color: var( --color-inverted-primary );
-		background-color: var( --background-color-progressive );
-
-		&:hover {
-			background-color: var( --background-color-progressive--hover );
-		}
-
-		&:active {
-			background-color: var( --background-color-progressive--active );
 		}
 	}
 }

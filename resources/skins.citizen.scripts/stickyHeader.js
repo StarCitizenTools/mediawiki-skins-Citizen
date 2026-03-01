@@ -49,15 +49,9 @@ function prepareMenuDropdown( menuDropdown ) {
 		stickyElement.removeAttribute( 'id' );
 	} );
 
-	// Make the button look like a cdx-button
-	menuDropdownButton.classList.add(
-		'cdx-button',
-		'cdx-button--fake-button',
-		'cdx-button--fake-button--enabled',
-		'cdx-button--weight-quiet',
-		'cdx-button--size-large',
-		'cdx-button--icon-only'
-	);
+	// Sticky header buttons use Codex large size (44px) instead of Citizen's (40px)
+	menuDropdownButton.classList.remove( 'citizen-cdx-button--size-large' );
+	menuDropdownButton.classList.add( 'cdx-button--size-large' );
 	menuDropdownButton.setAttribute( 'tabindex', '-1' );
 
 	return menuDropdownClone;

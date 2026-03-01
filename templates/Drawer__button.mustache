@@ -1,8 +1,11 @@
- {{!
+{{!
 	string msg-citizen-drawer-toggle The label used by the drawer button.
+
+	Uses citizen-cdx-button--css-icon instead of cdx-button--icon-only because
+	the multi-span CSS icon structure is incompatible with Codex's span+span hiding rule.
 }}
 <summary
-	class="citizen-dropdown-summary" 
+	class="citizen-dropdown-summary citizen-cdx-button--size-large citizen-cdx-button--css-icon cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet"
 	title="{{msg-citizen-drawer-toggle}}"
 	aria-details="citizen-drawer__card">
 	<span class="citizen-ui-icon">

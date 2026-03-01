@@ -71,12 +71,11 @@
 				}
 			}
 
-			> .citizen-dropdown-summary {
+			// Match cdx-button--is-active styles for quiet buttons
+			// Extra .cdx-button class needed to beat Codex quiet base specificity
+			> .citizen-dropdown-summary.cdx-button {
+				color: var( --color-emphasized );
 				background-color: var( --background-color-button-quiet--active );
-
-				&:hover {
-					background-color: var( --background-color-button-quiet--hover );
-				}
 			}
 		}
 	}

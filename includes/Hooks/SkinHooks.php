@@ -284,6 +284,7 @@ class SkinHooks implements
 
 		self::mapIconsToMenuItems( $links, 'associated-pages', $iconMap );
 		self::addIconsToMenuItems( $links, 'associated-pages' );
+		self::addButtonClassesToMenuItems( $links, 'associated-pages' );
 	}
 
 	/**
@@ -432,6 +433,14 @@ class SkinHooks implements
 
 		self::mapIconsToMenuItems( $links, 'views', $iconMap );
 		self::addIconsToMenuItems( $links, 'views' );
+		self::addButtonClassesToMenuItems( $links, 'views' );
+
+		// Make edit buttons progressive primary instead of quiet
+		foreach ( [ 'edit', 've-edit' ] as $key ) {
+			if ( isset( $links['views'][$key] ) ) {
+				self::setProgressiveAction( $links['views'][$key]['link-class'] );
+			}
+		}
 	}
 
 	/**
@@ -441,6 +450,25 @@ class SkinHooks implements
 		foreach ( $map as $key => $icon ) {
 			if ( isset( $links[$menu][$key] ) ) {
 				$links[$menu][$key]['icon'] ??= $icon;
+			}
+		}
+	}
+
+	/**
+	 * Add Codex button classes to menu items
+	 */
+	private static function addButtonClassesToMenuItems( array &$links, string $menu ): void {
+		$buttonClasses = [
+			'citizen-cdx-button--size-large',
+			'cdx-button',
+			'cdx-button--fake-button',
+			'cdx-button--fake-button--enabled',
+			'cdx-button--weight-quiet',
+		];
+
+		foreach ( $links[$menu] as &$item ) {
+			if ( is_array( $item ) ) {
+				self::appendClassToItem( $item['link-class'], $buttonClasses );
 			}
 		}
 	}
@@ -468,6 +496,21 @@ class SkinHooks implements
 		// Sometimes extension includes the "wikimedia-" part in the icon key (e.g. ULS),
 		// so we apply both classes just to be safe
 		return '<span class="citizen-ui-icon mw-ui-icon-' . $icon . ' mw-ui-icon-wikimedia-' . $icon . '"></span>';
+	}
+
+	/**
+	 * Promote a menu item from quiet to progressive primary
+	 */
+	private static function setProgressiveAction( array|string|null &$linkClass ): void {
+		if ( is_array( $linkClass ) ) {
+			$linkClass = array_values( array_diff( $linkClass, [ 'cdx-button--weight-quiet' ] ) );
+		} elseif ( is_string( $linkClass ) ) {
+			$linkClass = trim( str_replace( 'cdx-button--weight-quiet', '', $linkClass ) );
+		}
+		self::appendClassToItem( $linkClass, [
+			'cdx-button--weight-primary',
+			'cdx-button--action-progressive',
+		] );
 	}
 
 	/**
