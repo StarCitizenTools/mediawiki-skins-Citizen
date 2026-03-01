@@ -236,6 +236,36 @@ describe( 'StickyHeader', () => {
 		} );
 	} );
 
+	describe( 'initDropdowns / prepareMenuDropdown', () => {
+		it( 'should swap citizen-cdx-button--size-large to cdx-button--size-large on cloned dropdown button', () => {
+			const { stickyHeader } = buildStickyHeaderDom();
+			const header = createStickyHeader( stickyHeader );
+
+			// Create a dropdown to clone
+			const dropdown = document.createElement( 'details' );
+			dropdown.id = 'citizen-page-more-dropdown';
+			const summary = document.createElement( 'summary' );
+			summary.classList.add(
+				'citizen-dropdown-summary',
+				'citizen-cdx-button--size-large',
+				'cdx-button'
+			);
+			dropdown.appendChild( summary );
+			document.body.appendChild( dropdown );
+
+			// Create the container in the sticky header
+			const container = document.createElement( 'div' );
+			container.id = 'citizen-sticky-header-more';
+			document.body.appendChild( container );
+
+			header.initDropdowns();
+
+			const clonedButton = container.querySelector( '.citizen-dropdown-summary' );
+			expect( clonedButton.classList.contains( 'citizen-cdx-button--size-large' ) ).toBe( false );
+			expect( clonedButton.classList.contains( 'cdx-button--size-large' ) ).toBe( true );
+		} );
+	} );
+
 	describe( 'updateEditIcon', () => {
 		it( 'should swap wikiText icon to edit icon when VE button is absent', () => {
 			buildStickyHeaderDom();

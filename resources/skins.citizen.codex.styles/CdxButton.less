@@ -1,5 +1,23 @@
 @import '../variables.less';
 
+// Citizen's large button size override for Codex buttons (40px)
+.citizen-cdx-button--size-large {
+	&.cdx-button {
+		min-height: 40px;
+	}
+
+	&.cdx-button--icon-only,
+	&.citizen-cdx-button--css-icon {
+		min-width: 40px;
+	}
+
+	&.citizen-cdx-button--css-icon {
+		display: grid;
+		place-items: center;
+		padding: 0;
+	}
+}
+
 .skin-citizen {
 	.cdx-button {
 		font-weight: var( --font-weight-medium );
