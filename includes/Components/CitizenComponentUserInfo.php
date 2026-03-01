@@ -87,9 +87,10 @@ class CitizenComponentUserInfo implements CitizenComponent {
 		foreach ( $groups as $group ) {
 			$id = sprintf( $msgKey, $group );
 			$text = $this->localizer->msg( $id )->text();
+			$title = null;
 			try {
 				$title = $this->title->newFromTextThrow( $text, NS_PROJECT );
-			} catch ( MalformedTitleException $e ) {
+			} catch ( MalformedTitleException ) {
 				// ignore
 			}
 

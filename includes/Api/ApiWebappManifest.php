@@ -136,7 +136,7 @@ class ApiWebappManifest extends ApiBase {
 				$request = $httpRequestFactory->create( $logoUrl, [], __METHOD__ );
 				$request->execute();
 				$logoContent = $request->getContent();
-			} catch ( Exception $e ) {
+			} catch ( Exception ) {
 				// Log the exception or handle it accordingly
 				$logoContent = '';
 			}

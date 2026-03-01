@@ -62,12 +62,17 @@ class CitizenComponentBodyContent implements CitizenComponent {
 		while ( $currentNode ) {
 			$nextNode = $currentNode->nextSibling;
 
+			// @phan-suppress-next-line PhanTypeMismatchArgument DOMNode is a Parsoid DOM\Node alias
 			if ( !$this->isSectionBreak( $currentNode ) ) {
 				$sectionBody->appendChild( $currentNode );
 			} else {
 				$container->insertBefore( $sectionBody, $currentNode );
 
-				$this->prepareHeading( $doc, $currentNode );
+				// isSectionBreak() guarantees $currentNode is an Element,
+				// but Phan cannot infer that from the control flow.
+				if ( $currentNode instanceof Element ) {
+					$this->prepareHeading( $doc, $currentNode );
+				}
 
 				$sectionNumber++;
 				$sectionBody = $this->createSectionBodyElement( $doc, $sectionNumber );
@@ -181,6 +186,7 @@ class CitizenComponentBodyContent implements CitizenComponent {
 		$sectionBody->setAttribute( 'id', 'citizen-section-' . $sectionNumber );
 		$sectionBody->setAttribute( 'class', self::SECTION_CLASS );
 
+		// @phan-suppress-next-line PhanTypeMismatchReturnSuperType DOMElement is a Parsoid DOM\Element alias
 		return $sectionBody;
 	}
 

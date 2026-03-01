@@ -44,10 +44,11 @@ class CitizenComponentSiteStats implements CitizenComponent {
 				$locale,
 				// PHP 8.4 introduced NumberFormatter::DECIMAL_COMPACT_SHORT
 				defined( 'NumberFormatter::DECIMAL_COMPACT_SHORT' )
+					// @phan-suppress-next-line PhanUndeclaredConstantOfClass Guarded by defined() check
 					? NumberFormatter::DECIMAL_COMPACT_SHORT
 					: 14
 			);
-		} catch ( ValueError $exception ) {
+		} catch ( ValueError ) {
 			// Value Errors are thrown since php8.4 for invalid locales (T376711)
 			return null;
 		}
@@ -71,7 +72,7 @@ class CitizenComponentSiteStats implements CitizenComponent {
 		$fmt = $this->createNumberFormatter( $locale );
 
 		if ( !$fmt ) {
-			$fallbacks = $this->lang->getFallbackLanguages( $locale );
+			$fallbacks = $this->lang->getFallbackLanguages();
 			foreach ( $fallbacks as $fallbackCode ) {
 				$fmt = $this->createNumberFormatter( $fallbackCode );
 				if ( $fmt ) {

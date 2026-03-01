@@ -125,7 +125,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 		$msgEditCount = $this->localizer->msg( 'usereditcount' )
 			->numParams( number_format( (float)$editCount, 0 ) )
 			->text();
-		$editCountHref = SkinComponentUtils::makeSpecialUrlSubpage( 'Contributions', $user );
+		$editCountHref = SkinComponentUtils::makeSpecialUrlSubpage( 'Contributions', $user->getName() );
 		$link = Html::element( 'a', [ 'href' => $editCountHref ], $msgEditCount );
 
 		return Html::rawElement(
@@ -232,6 +232,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 			return false;
 		}
 
+		// @phan-suppress-next-line PhanTypeMismatchArgument NS constants from SocialProfile extension
 		if ( !$this->title->inNamespaces( [ NS_USER_WIKI, NS_USER_PROFILE ] ) ) {
 			return false;
 		}

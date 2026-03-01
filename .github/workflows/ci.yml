@@ -42,6 +42,7 @@ jobs:
               - skin.json
               - composer.json
               - composer.lock
+              - .phan/config.php
               - .github/workflows/ci.yml
             script:
               - resources/**/*.js
@@ -115,6 +116,69 @@ jobs:
         if: needs.changes.outputs.markdown == 'true'
         run: |
           npm run lint:md
+
+  analyze-php:
+    name: 🔬 Analyze PHP
+    needs: changes
+    if: needs.changes.outputs.php == 'true' || github.event_name == 'schedule'
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: mediawiki
+
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: mbstring, intl, ast
+          tools: composer
+
+      - name: Cache MediaWiki
+        id: cache-mediawiki
+        uses: actions/cache@v5
+        with:
+          path: |
+            mediawiki
+            !mediawiki/extensions/
+            !mediawiki/skins/
+            !mediawiki/vendor/
+          key: mw_phan_REL1_43-php8.2-v1
+
+      - name: Cache Composer cache
+        uses: actions/cache@v5
+        with:
+          path: ~/.composer/cache
+          key: composer-phan-php8.2
+
+      - uses: actions/checkout@v6
+        with:
+          path: EarlyCopy
+
+      - name: Download MediaWiki
+        if: steps.cache-mediawiki.outputs.cache-hit != 'true'
+        working-directory: ~
+        run: |
+          wget "https://github.com/wikimedia/mediawiki/archive/refs/heads/REL1_43.tar.gz" -nv
+          tar -zxf REL1_43.tar.gz
+          mv mediawiki-REL1_43 mediawiki
+
+      - name: Install MediaWiki dependencies
+        run: composer install --no-ansi --no-interaction --no-progress
+
+      - uses: actions/checkout@v6
+        with:
+          path: mediawiki/skins/Citizen
+
+      - name: Install Citizen dependencies
+        working-directory: mediawiki/skins/Citizen
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run Phan
+        working-directory: mediawiki/skins/Citizen
+        run: composer phan
 
   test-js:
     name: 🧪 Test JS
