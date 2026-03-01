@@ -1,17 +1,17 @@
 <div
 	id="citizen-page-more-dropdown"
-	class="page-actions-more page-actions__item citizen-dropdown"
+	class="citizen-page-actions-more citizen-page-actions__item citizen-dropdown"
 >
 	<details class="citizen-dropdown-details">
 		<summary
 			class="citizen-dropdown-summary citizen-cdx-button--size-large cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only"
 			title="{{msg-citizen-actions-more-toggle}}"
-			aria-details="page-actions-more__card">
+			aria-details="citizen-page-actions-more__card">
 			<span class="citizen-ui-icon mw-ui-icon-wikimedia-ellipsis"></span>
 			<span>{{msg-citizen-actions-more-toggle}}</span>
 		</summary>
 	</details>
-	<aside id="page-actions-more__card" class="citizen-menu__card">
+	<aside id="citizen-page-actions-more__card" class="citizen-menu__card">
 		<div class="citizen-menu__card-content">
 			{{#is-visible}}
 					{{#data-portlets.data-actions}}{{>Menu}}{{/data-portlets.data-actions}}
