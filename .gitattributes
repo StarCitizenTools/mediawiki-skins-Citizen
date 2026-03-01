@@ -36,7 +36,7 @@ tests export-ignore
 vitest.config.js export-ignore
 
 # Misc
-.husky export-ignore
+lefthook.yml export-ignore
 .commitlintrc.json export-ignore
 .djlintrc export-ignore
 .editorconfig export-ignore
