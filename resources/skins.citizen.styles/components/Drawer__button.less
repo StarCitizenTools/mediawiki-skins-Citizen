@@ -1,85 +1,40 @@
-// TODO: Use SVG animtation to replace CSS icons
 .citizen-drawer {
 	.citizen-dropdown-summary {
-		> .citizen-ui-icon {
-			display: grid;
-			place-content: center;
-			transition: var( --transition-hover );
-			transition-property: transform;
-
-			> span {
-				display: block;
-				width: 1.125rem;
-				height: 0.125rem;
-				margin: 0.09375rem 0;
-				background-color: currentcolor;
-				border-radius: var( --border-radius-large );
-				transform-origin: 0.25rem 0;
-				transition: inherit;
-
-				&:first-child {
-					transform-origin: 0 0;
-				}
-
-				&:nth-child( 2 ) {
-					transform-origin: 0 100%;
-				}
-			}
-
-			// Since this is a CSS icon, we don't need this
-			&::before {
-				content: none;
+		> svg {
+			> rect {
+				transform-origin: center;
+				transform-box: fill-box;
+				transition: var( --transition-hover );
+				transition-property: transform, opacity;
 			}
 		}
 
-		&:hover {
-			> .citizen-ui-icon {
-				> span {
-					&:first-child {
-						transform: translate3d( -50%, 0, 0 );
-					}
-				}
+		// Shorten the first bar from the end on hover
+		@media ( hover: hover ) {
+			&:hover > svg > rect:first-child {
+				transform: translateX( -25% ) scaleX( 0.5 );
 			}
 		}
 	}
 
 	> .citizen-dropdown-details[ open ] {
 		> .citizen-dropdown-summary {
-			> .citizen-ui-icon {
-				> span {
+			> svg {
+				> rect {
 					&:first-child {
-						opacity: 0;
-						/* @noflip */
-						transform: rotate( 0deg ) scale( 0.2, 0.2 );
+						transform: translateY( 6px ) rotate( 45deg );
 					}
-					// Reflect line
+
 					&:nth-child( 2 ) {
-						/* @noflip */
-						transform: rotate( -45deg ) translate3d( -0.125rem, 0.375rem, 0 );
+						opacity: 0;
+						transform: scaleX( 0 );
 					}
 
-					// Hide line
 					&:last-child {
-						/* @noflip */
-						transform: rotate( 45deg ) translate3d( -0.3125rem, -0.4375rem, 0 );
+						transform: translateY( -6px ) rotate( -45deg );
 					}
 				}
 			}
-
-			&:hover {
-				> .citizen-ui-icon {
-					transform: scale( 0.85 );
-				}
-			}
-		}
-	}
-}
-
-// RTL
-.rtl {
-	.citizen-drawer .citizen-dropdown-summary:hover {
-		> .citizen-ui-icon > span:first-child {
-			transform: translate3d( 50%, 0, 0 );
 		}
 	}
 }
