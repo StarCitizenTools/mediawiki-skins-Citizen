@@ -17,10 +17,14 @@ Module._extensions[ '.mustache' ] = function ( mod ) {
 // Intercept require() for specific virtual modules.
 const originalResolveFilename = Module._resolveFilename;
 Module._resolveFilename = function ( request, parent, ...rest ) {
-	if ( request === './tableOfContentsConfig.json' &&
-		parent && parent.filename &&
+	if ( parent && parent.filename &&
 		parent.filename.includes( 'skins.citizen.scripts' ) ) {
-		return path.resolve( __dirname, 'mocks/tableOfContentsConfig.js' );
+		if ( request === './tableOfContentsConfig.json' ) {
+			return path.resolve( __dirname, 'mocks/tableOfContentsConfig.js' );
+		}
+		if ( request === './config.json' ) {
+			return path.resolve( __dirname, 'mocks/config.js' );
+		}
 	}
 	return originalResolveFilename.call( this, request, parent, ...rest );
 };
