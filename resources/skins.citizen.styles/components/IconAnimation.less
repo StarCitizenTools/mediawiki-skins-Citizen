@@ -1,7 +1,23 @@
 /**
  * Microinteractions for icons
- * TODO: Look into animating the SVG directly
  */
+
+// Inline SVG icon hover: open state shrink
+:is( .citizen-drawer, .citizen-search ) {
+	> .citizen-dropdown-details[ open ] > .citizen-dropdown-summary {
+		> svg {
+			transition: var( --transition-hover );
+			transition-property: transform;
+		}
+
+		@media ( hover: hover ) {
+			&:hover > svg {
+				transform: scale( 0.85 );
+			}
+		}
+	}
+}
+
 :is( a,
 button,
 summary ) {

@@ -1,65 +1,36 @@
-// TODO: Use SVG animtation to replace CSS icons
+// Circle circumference: 2 * pi * 6 = 37.699
+@search-circle-circumference: 37.699;
+// Handle length: sqrt((18-12.5)^2 + (18-12.5)^2) ≈ 7.778
+@search-handle-length: 7.778;
+
 .citizen-search {
 	.citizen-dropdown-summary {
-		> .citizen-ui-icon {
-			box-sizing: content-box; // Magic
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			transition: var( --transition-hover );
-			transition-property: transform;
-
-			> span {
-				position: relative;
-				border-radius: var( --border-radius-base );
-				transition: inherit;
-
-				&:first-child {
-					top: 0.3125rem;
-					/* @noflip */
-					left: 0.75rem;
-					height: 0.5rem;
-					transform: rotate( -45deg );
-				}
-
-				&:nth-child( 2 ) {
-					width: 0.625rem;
-					height: 0.625rem;
-					margin-top: -0.3125rem;
-					/* @noflip */
-					margin-left: -0.125rem;
-					border: 0.125rem solid currentcolor;
-					border-radius: 100%;
-					transform: rotate( -45deg );
-				}
-
-				&:last-child {
-					left: -0.4375rem;
-					height: 1rem;
-					opacity: 0;
-					transform: rotate( -135deg );
-				}
-
-				&:first-child,
-				&:last-child {
-					width: 0.125rem;
-					background-color: currentcolor;
-				}
+		> svg {
+			> circle {
+				stroke-dasharray: @search-circle-circumference;
+				stroke-dashoffset: 0;
+				transition: var( --transition-hover );
+				transition-property: stroke-dashoffset, opacity;
 			}
 
-			// Since this is a CSS icon, we don't need this
-			&::before {
-				content: none;
+			.citizen-icon-search__handle {
+				stroke-dasharray: @search-handle-length;
+				stroke-dashoffset: 0;
+				transition: var( --transition-hover );
+				transition-property: stroke-dashoffset, opacity;
+			}
+
+			.citizen-icon-search__close {
+				opacity: 0;
+				transition: var( --transition-hover );
+				transition-property: opacity;
 			}
 		}
 
-		&:hover {
-			> .citizen-ui-icon {
-				> span {
-					&:first-child {
-						height: 0.375rem;
-						transform: translate3d( 0.125rem, 0.125rem, 0 ) rotate( -45deg );
-					}
+		@media ( hover: hover ) {
+			&:hover > svg {
+				.citizen-icon-search__handle {
+					stroke-dashoffset: -( @search-handle-length / 2 );
 				}
 			}
 		}
@@ -67,42 +38,19 @@
 
 	> .citizen-dropdown-details[ open ] {
 		> .citizen-dropdown-summary {
-			> .citizen-ui-icon {
-				> span {
-					&:first-child {
-						height: 1rem;
-						transform: translate3d( -0.3125rem, -0.3125rem, 0 ) rotate( 135deg );
-					}
-
-					&:nth-child( 2 ) {
-						border-color: transparent;
-					}
-
-					&:last-child {
-						opacity: 1;
-					}
+			> svg {
+				> circle {
+					opacity: 0;
+					stroke-dashoffset: @search-circle-circumference;
 				}
-			}
 
-			&:hover {
-				> .citizen-ui-icon {
-					transform: scale( 0.85 );
+				.citizen-icon-search__handle {
+					opacity: 0;
 				}
-			}
-		}
-	}
-}
 
-/* @noflip */
-.rtl {
-	.citizen-search .citizen-dropdown-summary:hover {
-		> .citizen-ui-icon > span {
-			&:first-child {
-				left: 0.125rem;
-			}
-
-			&:nth-child( 2 ) {
-				margin-left: -0.25rem;
+				.citizen-icon-search__close {
+					opacity: 1;
+				}
 			}
 		}
 	}
