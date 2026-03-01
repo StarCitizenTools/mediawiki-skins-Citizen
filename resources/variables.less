@@ -99,3 +99,13 @@
 @dark-bg-40: #2b2f36;
 @dark-bg-50: #33363d;
 @dark-bg-60: #34383f;
+
+// We use this for title header, ToC, page-actions, bottom header,
+// and .mixin-citizen-sticky-header-element,
+// whether the user is scrolling up or down on mobile.
+// Although it seems that we should use ease-in for fade-out, symmetrical to ease-out for fade-in,
+// but actually using ease-out for both does not look weird.
+// Instead, ease-out is actually better because fading out with ease-in is laggy.
+// Also, using different timing functions for fade-in and fade-out creates the trouble
+// that we cannot use a single mixin class `.mixin-citizen-sticky-header-element` for both cases.
+@mobile-header-transition-timing-function: var( --transition-timing-function-ease-out );
