@@ -30,6 +30,7 @@ class CitizenComponentTableOfContents implements CitizenComponent {
 		foreach ( $sections as &$section ) {
 			if ( $section['is-top-level-section'] && $section['is-parent-section'] ) {
 				$section['citizen-button-label'] =
+					// @phan-suppress-next-line SecurityCheck-XSS $section['line'] is pre-escaped HTML from the parser
 					$this->localizer->msg( 'citizen-toc-toggle-button-label' )
 						->rawParams( $section['line'] )
 						->escaped();

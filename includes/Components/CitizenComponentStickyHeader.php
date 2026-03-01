@@ -81,9 +81,11 @@ class CitizenComponentStickyHeader implements CitizenComponent {
 			$button = new CitizenComponentButton(
 				icon: $icon['icon'],
 				id: $icon['id'],
+				// @phan-suppress-next-line PhanCoalescingAlwaysNullInLoop
 				class: $icon['class'] ?? '',
 				attributes: [
 					'tabindex' => '-1',
+					// @phan-suppress-next-line PhanCoalescingNeverNullInLoop
 					'data-mw-citizen-click-target' => $icon['clickTarget'] ?? null,
 				],
 				weight: 'quiet',

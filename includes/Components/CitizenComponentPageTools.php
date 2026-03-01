@@ -58,7 +58,7 @@ class CitizenComponentPageTools implements CitizenComponent {
 			try {
 				$condition = $this->permissionManager->userCan(
 					$permission, $user, $this->title );
-			} catch ( Exception $e ) {
+			} catch ( Exception ) {
 				$condition = false;
 			}
 		}

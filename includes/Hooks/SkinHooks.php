@@ -142,7 +142,7 @@ class SkinHooks implements
 		$out = $skin->getOutput();
 		$customSiteToolsMenuId = $out->getConfig()->get( 'CitizenGlobalToolsPortlet' );
 
-		$siteToolsMenuId = empty( $customSiteToolsMenuId )
+		$siteToolsMenuId = $customSiteToolsMenuId === ''
 			? array_key_first( $bar )
 			// remove initial p- for backward compatibility
 			: preg_replace( '/^p-/', '', $customSiteToolsMenuId );

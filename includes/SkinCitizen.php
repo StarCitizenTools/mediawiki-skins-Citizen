@@ -77,6 +77,7 @@ class SkinCitizen extends SkinMustache {
 		private readonly ExtensionRegistry $extensionRegistry,
 		private readonly UserGroupManager $userGroupManager,
 		private readonly UrlUtils $urlUtils,
+		// @phan-suppress-next-line PhanUndeclaredTypeParameter,PhanUndeclaredTypeProperty
 		private readonly ?MobileContext $mfContext,
 		array $options = []
 	) {
@@ -223,7 +224,7 @@ class SkinCitizen extends SkinMustache {
 	 * Extracts the page tools menu from the sidebar and returns both.
 	 * From Vector 2022
 	 *
-	 * @return array{ 0: array, 1: array } [ $sidebar, $pageToolsMenu ]
+	 * @return array [ $sidebar, $pageToolsMenu ]
 	 */
 	private function extractPageToolsFromSidebar( array $sidebar ): array {
 		$restPortlets = $sidebar[ 'array-portlets-rest' ] ?? [];
@@ -275,6 +276,7 @@ class SkinCitizen extends SkinMustache {
 		}
 
 		// If MF is installed, check if page is in mobile view and let MF do the formatting
+		// @phan-suppress-next-line PhanUndeclaredClassMethod MobileFrontend is an optional dependency
 		return $this->mfContext === null || !$this->mfContext->shouldDisplayMobileView();
 	}
 
@@ -344,7 +346,7 @@ class SkinCitizen extends SkinMustache {
 		try {
 			$href = $this->urlUtils->expand( wfAppendQuery( wfScript( 'api' ),
 					[ 'action' => 'appmanifest' ] ), PROTO_RELATIVE );
-		} catch ( Exception $e ) {
+		} catch ( Exception ) {
 			$href = '';
 		}
 

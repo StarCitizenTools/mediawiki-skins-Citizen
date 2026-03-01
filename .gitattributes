@@ -19,6 +19,7 @@ CLAUDE.md export-ignore
 .github export-ignore
 
 # Composer
+.phan/ export-ignore
 .phpcs.xml export-ignore
 composer.json export-ignore
 composer.lock export-ignore
