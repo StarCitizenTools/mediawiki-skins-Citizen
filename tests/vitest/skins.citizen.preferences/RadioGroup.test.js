@@ -132,18 +132,18 @@ describe( 'RadioGroup', () => {
 
 			const wrapper = mountRadioGroup( { options: optionsWithPreview } );
 
-			const previews = wrapper.findAll( '.citizen-pref-card__preview--theme' );
+			const previews = wrapper.findAll( '.citizen-preferences-card__preview--theme' );
 
 			expect( previews ).toHaveLength( 2 );
 			expect( previews[ 0 ].element.style.getPropertyValue( '--preview-bg' ) ).toBe( '#fff' );
 			expect( previews[ 0 ].element.style.getPropertyValue( '--preview-text' ) ).toBe( '#000' );
-			expect( previews[ 0 ].findAll( '.citizen-pref-card__line' ) ).toHaveLength( 3 );
+			expect( previews[ 0 ].findAll( '.citizen-preferences-card__line' ) ).toHaveLength( 3 );
 		} );
 
 		it( 'should not render preview when options have no preview data', () => {
 			const wrapper = mountRadioGroup();
 
-			const previews = wrapper.findAll( '.citizen-pref-card__preview' );
+			const previews = wrapper.findAll( '.citizen-preferences-card__preview' );
 
 			expect( previews ).toHaveLength( 0 );
 		} );
@@ -151,7 +151,7 @@ describe( 'RadioGroup', () => {
 		it( 'should render labels for all cards', () => {
 			const wrapper = mountRadioGroup();
 
-			const labels = wrapper.findAll( '.citizen-pref-card__label' );
+			const labels = wrapper.findAll( '.citizen-preferences-card__label' );
 
 			expect( labels ).toHaveLength( 3 );
 			expect( labels[ 0 ].text() ).toBe( 'Auto' );

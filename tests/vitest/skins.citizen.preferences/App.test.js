@@ -8,7 +8,7 @@ globalThis.mw = mw;
 mw.loader.require = vi.fn( () => ( {
 	CdxField: {
 		name: 'CdxField',
-		template: '<fieldset :id="id" class="cdx-field citizen-pref-group"><div class="cdx-label"><slot name="label" /></div><div class="cdx-label__description"><slot name="description" /></div><slot /></fieldset>',
+		template: '<fieldset :id="id" class="cdx-field citizen-preferences-group"><div class="cdx-label"><slot name="label" /></div><div class="cdx-label__description"><slot name="description" /></div><slot /></fieldset>',
 		props: [ 'id', 'isFieldset' ]
 	},
 	CdxRadio: {
@@ -25,7 +25,7 @@ mw.loader.require = vi.fn( () => ( {
 	},
 	CdxToggleSwitch: {
 		name: 'CdxToggleSwitch',
-		template: '<span :id="id" class="cdx-toggle-switch citizen-pref-group"><input type="checkbox" /><span class="cdx-label__label__text"><slot /></span><span class="cdx-label__description"><slot name="description" /></span></span>',
+		template: '<span :id="id" class="cdx-toggle-switch citizen-preferences-group"><input type="checkbox" /><span class="cdx-label__label__text"><slot /></span><span class="cdx-label__description"><slot name="description" /></span></span>',
 		props: [ 'id', 'modelValue' ],
 		emits: [ 'update:modelValue' ]
 	}
@@ -106,7 +106,7 @@ describe( 'App', () => {
 		it( 'should render preference groups for all active preferences', () => {
 			const wrapper = mountApp( ALL_PREF_CLASSES );
 
-			const groups = wrapper.findAll( '.citizen-pref-group' );
+			const groups = wrapper.findAll( '.citizen-preferences-group' );
 
 			expect( groups ).toHaveLength( 6 );
 		} );
@@ -128,7 +128,7 @@ describe( 'App', () => {
 				'skin-theme-clientpref-os'
 			] );
 
-			const groups = wrapper.findAll( '.citizen-pref-group' );
+			const groups = wrapper.findAll( '.citizen-preferences-group' );
 
 			expect( groups ).toHaveLength( 1 );
 			expect( groups[ 0 ].attributes( 'id' ) ).toBe( 'skin-client-prefs-skin-theme' );

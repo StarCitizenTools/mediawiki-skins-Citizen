@@ -1,6 +1,6 @@
 <template>
 	<div
-		class="citizen-pref-radio"
+		class="citizen-preferences-radio"
 		:style="{ '--pref-columns': columns }"
 	>
 		<cdx-radio
@@ -11,20 +11,22 @@
 			:name="featureName"
 			@update:model-value="$emit( 'update:modelValue', $event )"
 		>
-			<span class="citizen-pref-card">
+			<span class="citizen-preferences-card">
+				<!-- eslint-disable max-len -->
 				<span
 					v-if="option.previewColors"
-					class="citizen-pref-card__preview citizen-pref-card__preview--theme"
+					class="citizen-preferences-card__preview citizen-preferences-card__preview--theme"
 					:style="{
 						'--preview-bg': option.previewColors.surface,
 						'--preview-text': option.previewColors.text
 					}"
 				>
-					<span class="citizen-pref-card__line citizen-pref-card__line--long"></span>
-					<span class="citizen-pref-card__line citizen-pref-card__line--short"></span>
-					<span class="citizen-pref-card__line citizen-pref-card__line--medium"></span>
+					<span class="citizen-preferences-card__line citizen-preferences-card__line--long"></span>
+					<span class="citizen-preferences-card__line citizen-preferences-card__line--short"></span>
+					<span class="citizen-preferences-card__line citizen-preferences-card__line--medium"></span>
 				</span>
-				<span class="citizen-pref-card__label">{{ option.label }}</span>
+				<!-- eslint-enable max-len -->
+				<span class="citizen-preferences-card__label">{{ option.label }}</span>
 			</span>
 		</cdx-radio>
 	</div>
@@ -63,7 +65,7 @@ module.exports = exports = defineComponent( {
 <style lang="less">
 @import 'mediawiki.skin.variables.less';
 
-.citizen-pref-radio {
+.citizen-preferences-radio {
 	display: grid;
 	grid-template-columns: repeat( var( --pref-columns, 2 ), 1fr );
 	gap: var( --space-xxs );
@@ -97,7 +99,7 @@ module.exports = exports = defineComponent( {
 	}
 }
 
-.citizen-pref-card {
+.citizen-preferences-card {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
