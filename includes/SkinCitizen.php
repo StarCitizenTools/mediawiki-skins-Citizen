@@ -85,9 +85,52 @@ class SkinCitizen extends SkinMustache {
 			$options['name'] = 'citizen';
 		}
 
-		// Add skin-specific features
+		// Add skin-specific features that only modify the $options array.
+		// OutputPage modifications (HTML classes, metadata) are deferred to
+		// initPage() and getHtmlElementAttributes() so that they only run
+		// when Citizen is the active rendering skin. Without this separation,
+		// Special:Preferences pollutes other skins' OutputPage when it
+		// instantiates all registered skins to gather their configuration.
 		$this->buildSkinFeatures( $options );
 		parent::__construct( $options );
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function initPage( OutputPage $out ): void {
+		parent::initPage( $out );
+		$this->addMetadata( $out, $this->getConfig() );
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getHtmlElementAttributes(): array {
+		$attrs = parent::getHtmlElementAttributes();
+		$config = $this->getConfig();
+		$classes = [];
+
+		// Theme
+		$theme = $config->get( 'CitizenThemeDefault' ) ?? 'auto';
+		if ( isset( self::CLIENTPREFS_THEME_MAP[$theme] ) ) {
+			$classes[] = 'skin-theme-clientpref-' . self::CLIENTPREFS_THEME_MAP[$theme];
+		}
+
+		// Default client preferences
+		foreach ( self::DEFAULT_CLIENT_PREFS as $feature => $value ) {
+			$classes[] = $feature . '-clientpref-' . $value;
+		}
+
+		// Header position
+		$headerPosition = $config->get( 'CitizenHeaderPosition' );
+		if ( !in_array( $headerPosition, [ 'left', 'right', 'top', 'bottom' ], true ) ) {
+			$headerPosition = 'left';
+		}
+		$classes[] = 'citizen-header-position-' . $headerPosition;
+
+		$attrs['class'] = trim( $attrs['class'] . ' ' . implode( ' ', $classes ) );
+		return $attrs;
 	}
 
 	/**
@@ -214,6 +257,9 @@ class SkinCitizen extends SkinMustache {
 
 		$parentData['toc-enabled'] = !empty( $parentData['data-toc'][ 'array-sections' ] );
 		if ( $parentData['toc-enabled'] ) {
+			// This body class depends on template data so it can't move to
+			// getHtmlElementAttributes(). Safe here because getTemplateData()
+			// only runs for the active rendering skin.
 			$out->addBodyClasses( 'citizen-toc-enabled' );
 		}
 
@@ -286,23 +332,17 @@ class SkinCitizen extends SkinMustache {
 	 * you can't nest <a> elements in <a> elements
 	 */
 	private static function prepareStickyHeaderTagline( string $tagline ): string {
-		return preg_replace( '/<a\s+href="([^"]+)"[^>]*>(.*?)<\/a>/', '<span>$2</span>', $tagline );
+		return preg_replace( '/<a\s+href="([^"]+)"[^>]*>(.*?)<\/a>/', '<span>$2</span>', $tagline ) ?? $tagline;
 	}
 
 	/**
-	 * Set up optional skin features
+	 * Set up skin features that modify the constructor $options array.
+	 * Only bodyClasses and styles belong here — OutputPage modifications
+	 * are handled by initPage() and getHtmlElementAttributes().
 	 */
 	private function buildSkinFeatures( array &$options ): void {
 		$config = $this->getConfig();
-		$out = $this->getOutput();
-		$title = $out->getTitle();
-
-		$this->addMetadata( $out, $config );
-		$this->setSkinTheme( $out, $config );
-
-		foreach ( self::DEFAULT_CLIENT_PREFS as $feature => $value ) {
-			$out->addHtmlClasses( $feature . '-clientpref-' . $value );
-		}
+		$title = $this->getOutput()->getTitle();
 
 		if ( $title !== null ) {
 			// Collapsible sections
@@ -319,15 +359,6 @@ class SkinCitizen extends SkinMustache {
 				$options['styles'][] = $module;
 			}
 		}
-
-		// Header position
-		$headerPosition = $config->get( 'CitizenHeaderPosition' );
-
-		if ( !in_array( $headerPosition, [ 'left', 'right', 'top', 'bottom' ], true ) ) {
-			$headerPosition = 'left';
-		}
-
-		$out->addHtmlClasses( 'citizen-header-position-' . $headerPosition );
 	}
 
 	/**
@@ -356,13 +387,4 @@ class SkinCitizen extends SkinMustache {
 		] );
 	}
 
-	/**
-	 * Sets the corresponding theme class on the <html> element
-	 */
-	private function setSkinTheme( OutputPage $out, Config $config ): void {
-		$theme = $config->get( 'CitizenThemeDefault' ) ?? 'auto';
-		if ( isset( self::CLIENTPREFS_THEME_MAP[ $theme ] ) ) {
-			$out->addHtmlClasses( 'skin-theme-clientpref-' . self::CLIENTPREFS_THEME_MAP[ $theme ] );
-		}
-	}
 }
