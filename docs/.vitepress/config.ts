@@ -80,6 +80,10 @@ export default defineConfig( {
 								text: 'Command palette',
 								link: '/customization/command-palette',
 							},
+							{
+								text: 'Preferences',
+								link: '/customization/preferences',
+							},
 						],
 					},
 					{
