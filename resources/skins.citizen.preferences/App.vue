@@ -9,7 +9,7 @@
 			:id="'skin-client-prefs-' + pref.featureName"
 			:model-value="values[ pref.featureName ] === '1'"
 			:align-switch="true"
-			class="citizen-pref-group"
+			class="citizen-preferences-group"
 			@update:model-value="setValue( pref.featureName, $event ? '1' : '0' )"
 		>
 			{{ pref.heading }}
@@ -25,7 +25,7 @@
 			v-show="visibilities[ pref.featureName ]"
 			:id="'skin-client-prefs-' + pref.featureName"
 			:is-fieldset="true"
-			class="citizen-pref-group"
+			class="citizen-preferences-group"
 		>
 			<template #label>
 				{{ pref.heading }}
@@ -238,7 +238,7 @@ module.exports = exports = defineComponent( {
 <style lang="less">
 @import 'mediawiki.skin.variables.less';
 
-.citizen-pref {
+.citizen-preferences {
 	display: flex;
 	flex-direction: column;
 	gap: var( --space-sm );
@@ -246,7 +246,7 @@ module.exports = exports = defineComponent( {
 	padding-block: var( --space-md );
 }
 
-.citizen-pref-group {
+.citizen-preferences-group {
 	display: flex;
 	padding-inline: var( --space-md );
 	margin-block: 0;
