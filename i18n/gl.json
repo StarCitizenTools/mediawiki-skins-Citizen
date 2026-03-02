@@ -30,6 +30,7 @@
 	"citizen-footer-tagline": "Edita este texto en «[[MediaWiki:Citizen-footer-tagline]]»",
 	"citizen-action-addsection": "Engadir un fío",
 	"citizen-jumptotop": "Volver ao inicio",
+	"citizen-toc-toggle-button-label": "Mostrar ou agochar a subsección «$1»",
 	"citizen-search-advancedsearch": "Procura avanzada",
 	"citizen-search-fulltext": "Buscar o texto",
 	"citizen-search-mediasearch": "Buscar contido multimedia",
