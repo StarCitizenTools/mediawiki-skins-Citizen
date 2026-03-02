@@ -31,7 +31,9 @@ function createPerformanceMode( { document, mw } ) {
 		} );
 
 		if ( !hasGpu ) {
-			// Performance mode ON is default, so we don't need to do anything
+			// Performance mode ON is the default, persist the result so we
+			// don't repeat the WebGL probe on every subsequent page load.
+			mw.storage.set( 'mwclientpreferences', clientPrefs ? `${ clientPrefs },${ prefName }1` : `${ prefName }1` );
 			return;
 		}
 
