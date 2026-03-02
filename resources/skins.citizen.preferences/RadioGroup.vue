@@ -12,7 +12,6 @@
 			@update:model-value="$emit( 'update:modelValue', $event )"
 		>
 			<span class="citizen-preferences-card">
-				<!-- eslint-disable max-len -->
 				<span
 					v-if="option.previewColors"
 					class="citizen-preferences-card__preview citizen-preferences-card__preview--theme"
@@ -25,7 +24,6 @@
 					<span class="citizen-preferences-card__line citizen-preferences-card__line--short"></span>
 					<span class="citizen-preferences-card__line citizen-preferences-card__line--medium"></span>
 				</span>
-				<!-- eslint-enable max-len -->
 				<span class="citizen-preferences-card__label">{{ option.label }}</span>
 			</span>
 		</cdx-radio>
