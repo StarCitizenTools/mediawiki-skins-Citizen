@@ -39,11 +39,16 @@ Module._resolveFilename = function ( request, parent, ...rest ) {
 	}
 	if ( parent && parent.filename &&
 		parent.filename.includes( 'skins.citizen.preferences' ) ) {
-		if ( request === './clientPreferences.json' ) {
-			return path.resolve( __dirname, '../../resources/skins.citizen.preferences/clientPreferences.json' );
-		}
 		if ( request === './config.json' ) {
 			return path.resolve( __dirname, 'mocks/preferencesConfig.js' );
+		}
+		if ( request === './overrides.json' ) {
+			return path.resolve( __dirname, 'mocks/preferencesOverrides.js' );
+		}
+		// Stub .vue imports from non-Vue JS files (e.g. init.js).
+		// Vue SFCs go through Vite's plugin pipeline and don't hit this path.
+		if ( request === './App.vue' ) {
+			return path.resolve( __dirname, 'mocks/AppStub.js' );
 		}
 	}
 	return originalResolveFilename.call( this, request, parent, ...rest );
