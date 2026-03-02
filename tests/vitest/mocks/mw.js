@@ -30,10 +30,33 @@ const mw = {
 		const registry = {};
 		return ( name ) => {
 			if ( !registry[ name ] ) {
+				const listeners = [];
+				let lastArgs = null;
 				registry[ name ] = {
-					add: vi.fn(),
-					fire: vi.fn(),
-					remove: vi.fn()
+					add: vi.fn( ( fn ) => {
+						listeners.push( fn );
+						// Replay last fire to late subscriber
+						if ( lastArgs !== null ) {
+							fn( ...lastArgs );
+						}
+					} ),
+					fire: vi.fn( ( ...args ) => {
+						lastArgs = args;
+						listeners.forEach( ( fn ) => fn( ...args ) );
+					} ),
+					remove: vi.fn( ( fn ) => {
+						const idx = listeners.indexOf( fn );
+						if ( idx !== -1 ) {
+							listeners.splice( idx, 1 );
+						}
+					} ),
+					_reset() {
+						listeners.length = 0;
+						lastArgs = null;
+						registry[ name ].add.mockClear();
+						registry[ name ].fire.mockClear();
+						registry[ name ].remove.mockClear();
+					}
 				};
 			}
 			return registry[ name ];
