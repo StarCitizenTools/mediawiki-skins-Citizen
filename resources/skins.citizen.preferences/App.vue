@@ -1,99 +1,82 @@
 <template>
 	<template
-		v-for="pref in preferences"
-		:key="pref.featureName"
+		v-for="section in sections"
+		:key="section.key"
 	>
-		<cdx-toggle-switch
-			v-if="pref.type === 'switch'"
-			v-show="visibilities[ pref.featureName ]"
-			:id="'skin-client-prefs-' + pref.featureName"
-			:model-value="values[ pref.featureName ] === '1'"
-			:align-switch="true"
-			class="citizen-preferences-group"
-			@update:model-value="setValue( pref.featureName, $event ? '1' : '0' )"
+		<section
+			v-if="section.preferences.length"
+			class="citizen-preferences-section"
 		>
-			{{ pref.heading }}
-			<template
-				v-if="pref.description"
-				#description
-			>
-				{{ pref.description }}
-			</template>
-		</cdx-toggle-switch>
-		<cdx-field
-			v-else
-			v-show="visibilities[ pref.featureName ]"
-			:id="'skin-client-prefs-' + pref.featureName"
-			:is-fieldset="true"
-			class="citizen-preferences-group"
-		>
-			<template #label>
-				{{ pref.heading }}
-			</template>
-			<template
-				v-if="pref.description"
-				#description
-			>
-				{{ pref.description }}
-			</template>
-			<cdx-select
-				v-if="pref.type === 'select'"
-				:menu-items="pref.menuItems"
-				:selected="values[ pref.featureName ]"
-				@update:selected="setValue( pref.featureName, $event )"
-			></cdx-select>
-			<radio-group
-				v-else
-				:model-value="values[ pref.featureName ]"
-				:options="pref.options"
-				:feature-name="pref.featureName"
-				:columns="pref.columns"
-				@update:model-value="setValue( pref.featureName, $event )"
-			></radio-group>
-		</cdx-field>
+			<div class="citizen-preferences-section__heading">
+				{{ section.label }}
+			</div>
+			<div class="citizen-preferences-section__content">
+				<template
+					v-for="pref in section.preferences"
+					:key="pref.featureName"
+				>
+					<cdx-toggle-switch
+						v-if="pref.type === 'switch'"
+						v-show="visibilities[ pref.featureName ]"
+						:id="'skin-client-prefs-' + pref.featureName"
+						:model-value="values[ pref.featureName ] === '1'"
+						:align-switch="true"
+						class="citizen-preferences-group"
+						@update:model-value="setValue( pref.featureName, $event ? '1' : '0' )"
+					>
+						{{ pref.heading }}
+						<template
+							v-if="pref.description"
+							#description
+						>
+							{{ pref.description }}
+						</template>
+					</cdx-toggle-switch>
+					<cdx-field
+						v-else
+						v-show="visibilities[ pref.featureName ]"
+						:id="'skin-client-prefs-' + pref.featureName"
+						:is-fieldset="true"
+						class="citizen-preferences-group"
+					>
+						<template #label>
+							{{ pref.heading }}
+						</template>
+						<template
+							v-if="pref.description"
+							#description
+						>
+							{{ pref.description }}
+						</template>
+						<cdx-select
+							v-if="pref.type === 'select'"
+							:menu-items="pref.menuItems"
+							:selected="values[ pref.featureName ]"
+							@update:selected="setValue( pref.featureName, $event )"
+						></cdx-select>
+						<radio-group
+							v-else
+							:model-value="values[ pref.featureName ]"
+							:options="pref.options"
+							:feature-name="pref.featureName"
+							:columns="pref.columns"
+							@update:model-value="setValue( pref.featureName, $event )"
+						></radio-group>
+					</cdx-field>
+				</template>
+			</div>
+		</section>
 	</template>
 </template>
 
 <script>
-const { defineComponent, reactive, ref } = require( 'vue' );
+const { defineComponent, inject, reactive, ref } = require( 'vue' );
+const { NormalizedPreferencesConfig } = require( './types.js' );
 const { CdxField, CdxSelect, CdxToggleSwitch } = mw.loader.require( 'skins.citizen.preferences.codex' );
 const RadioGroup = require( './RadioGroup.vue' );
 const useVisibility = require( './useVisibility.js' );
-const clientPreferenceConfig = require( './clientPreferences.json' );
+const { resolveLabel } = require( './configRegistry.js' );
 const clientPrefs = require( './clientPrefs.polyfill.js' )();
-const serverConfig = require( './config.json' );
-
-/**
- * Preference display configuration.
- * Maps feature names to their UI-specific settings.
- */
-const PREF_CONFIG = {
-	'skin-theme': { columns: 3, type: 'radio', visibilityCondition: 'always' },
-	'citizen-feature-custom-font-size': { type: 'select', visibilityCondition: 'always' },
-	'citizen-feature-custom-width': { type: 'select', visibilityCondition: 'always' },
-	'citizen-feature-pure-black': { columns: 2, type: 'switch', visibilityCondition: 'dark-theme' },
-	'citizen-feature-autohide-navigation': { columns: 2, type: 'switch', visibilityCondition: 'tablet-viewport' },
-	'citizen-feature-performance-mode': { columns: 2, type: 'switch', visibilityCondition: 'always' }
-};
-
-/**
- * Maps PHP config values ('auto', 'light', 'dark') to the clientpref class
- * values ('os', 'day', 'night') used in the skin-theme-clientpref-* classes.
- */
-const THEME_CONFIG_MAP = { auto: 'os', light: 'day', dark: 'night' };
-
-/**
- * Wrapper for mw.message to translate skin-theme- keys to citizen-theme- keys.
- *
- * @param {string} messageKey
- * @return {string}
- */
-function getMessage( messageKey ) {
-	if ( messageKey.startsWith( 'skin-theme-' ) ) {
-		messageKey = messageKey.replace( 'skin-theme-', 'citizen-theme-' );
-	}
-	return mw.message( messageKey ).text();
-}
 
 /**
  * Read computed theme colors for a given theme value.
@@ -123,32 +106,6 @@ function getThemePreviewColors( value ) {
 	return { surface, text };
 }
 
-/**
- * Get active client preferences from the HTML element's class list.
- *
- * @return {string[]}
- */
-function getActivePreferences() {
-	return Array.from( document.documentElement.classList )
-		.filter( ( cls ) => cls.includes( '-clientpref-' ) )
-		.map( ( cls ) => cls.split( '-clientpref-' )[ 0 ] );
-}
-
-/**
- * Get the description for a preference, if it exists.
- *
- * @param {string} featureName
- * @return {string}
- */
-function getDescription( featureName ) {
-	const key = featureName === 'skin-theme' ?
-		'citizen-theme-description' :
-		featureName + '-description';
-	// Key is dynamically constructed; all possible keys are registered in skin.json messages.
-	const msg = mw.message( key ); // eslint-disable-line mediawiki/msg-doc
-	return msg.exists() ? msg.text() : '';
-}
-
 // @vue/component
 module.exports = exports = defineComponent( {
 	name: 'App',
@@ -159,61 +116,71 @@ module.exports = exports = defineComponent( {
 		RadioGroup
 	},
 	setup() {
-		const activePrefs = getActivePreferences();
+		/** @type {NormalizedPreferencesConfig} */
+		const config = inject( 'preferencesConfig' );
 		const values = reactive( {} );
 		const visibilities = reactive( {} );
 
-		// Map config value (auto/light/dark) to clientpref value (os/day/night).
-		const rawDefault = serverConfig.wgCitizenThemeDefault || 'auto';
-		const themeValue = ref( THEME_CONFIG_MAP[ rawDefault ] || rawDefault );
+		const themeDefault = inject( 'themeDefault', 'os' );
+		const themeValue = ref( themeDefault );
 
-		const preferences = Object.keys( clientPreferenceConfig )
-			.filter( ( key ) => activePrefs.includes( key ) )
-			.map( ( featureName ) => {
-				const config = clientPreferenceConfig[ featureName ];
-				const uiConfig = PREF_CONFIG[ featureName ] || {};
-				const currentValue = clientPrefs.get( featureName );
+		const sections = Object.entries( config.sections ).map( ( [ key, sectionDef ] ) => {
+			const sectionPrefs = Object.entries( config.preferences )
+				.filter( ( [ , pref ] ) => pref.section === key )
+				.map( ( [ featureName, prefConfig ] ) => {
+					const storedValue = clientPrefs.get( featureName );
+					const allowedValues = new Set(
+						prefConfig.options.map( ( opt ) => opt.value )
+					);
+					values[ featureName ] = (
+						typeof storedValue === 'string' && allowedValues.has( storedValue )
+					) ? storedValue : prefConfig.options[ 0 ].value;
 
-				values[ featureName ] = typeof currentValue === 'string' ? currentValue : config.options[ 0 ];
+					const condition = prefConfig.visibilityCondition || 'always';
+					const { isVisible } = useVisibility( condition, themeValue );
+					visibilities[ featureName ] = isVisible;
 
-				const condition = uiConfig.visibilityCondition || 'always';
-				const { isVisible } = useVisibility( condition, themeValue );
-				visibilities[ featureName ] = isVisible;
+					const options = prefConfig.options.map( ( opt ) => {
+						const option = {
+							value: opt.value,
+							label: resolveLabel( opt, 'label' )
+						};
+						if ( featureName === 'skin-theme' ) {
+							option.previewColors = getThemePreviewColors( opt.value );
+						}
+						return option;
+					} );
 
-				const options = config.options.map( ( value ) => {
-					const option = {
-						value,
-						label: getMessage( `${ featureName }-${ value }-label` )
+					const pref = {
+						featureName,
+						heading: resolveLabel( prefConfig, 'label' ),
+						description: resolveLabel( prefConfig, 'description' ),
+						type: prefConfig.type,
+						columns: prefConfig.columns || 2,
+						options
 					};
 
-					if ( featureName === 'skin-theme' ) {
-						option.previewColors = getThemePreviewColors( value );
+					if ( pref.type === 'select' ) {
+						pref.menuItems = options;
 					}
 
-					return option;
+					return pref;
 				} );
 
-				const pref = {
-					featureName,
-					heading: getMessage( `${ featureName }-name` ),
-					description: getDescription( featureName ),
-					type: uiConfig.type || 'radio',
-					columns: uiConfig.columns || 2,
-					options
-				};
+			return {
+				key,
+				label: resolveLabel( sectionDef, 'label' ),
+				preferences: sectionPrefs
+			};
+		} );
 
-				if ( pref.type === 'select' ) {
-					pref.menuItems = options;
-				}
+		// Set the actual theme value now that values are populated.
+		// This must happen synchronously before setup() returns so that
+		// useVisibility composables (which depend on themeValue) compute
+		// correct initial visibility for dark-theme conditions.
+		themeValue.value = values[ 'skin-theme' ] || themeDefault;
 
-				return pref;
-			} );
-
-		// Now that values are populated, set the actual theme value.
-		if ( values[ 'skin-theme' ] ) {
-			themeValue.value = values[ 'skin-theme' ];
-		}
-
+		// Fires mw.hook( 'citizen.preferences.changed' ) with ( featureName, value )
 		function setValue( featureName, value ) {
 			clientPrefs.set( featureName, value );
 			values[ featureName ] = value;
@@ -222,11 +189,12 @@ module.exports = exports = defineComponent( {
 				themeValue.value = value;
 			}
 
+			mw.hook( 'citizen.preferences.changed' ).fire( featureName, value );
 			window.dispatchEvent( new Event( 'resize' ) );
 		}
 
 		return {
-			preferences,
+			sections,
 			values,
 			visibilities,
 			setValue
@@ -237,6 +205,7 @@ module.exports = exports = defineComponent( {
 
 <style lang="less">
 @import 'mediawiki.skin.variables.less';
+@import '../mixins.less';
 
 .citizen-preferences {
 	display: flex;
@@ -246,10 +215,29 @@ module.exports = exports = defineComponent( {
 	padding-block: var( --space-md );
 }
 
+.citizen-preferences-section {
+	margin-inline: var( --space-md );
+
+	&__heading {
+		margin-bottom: var( --space-sm );
+		color: var( --color-subtle );
+		.mixin-citizen-font-styles( 'overline' );
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		row-gap: var( --space-sm );
+	}
+
+	+ .citizen-preferences-section {
+		margin-top: var( --space-md );
+	}
+}
+
 .citizen-preferences-group {
 	display: flex;
-	padding-inline: var( --space-md );
-	margin-block: 0;
+	margin-top: 0;
 
 	.cdx-label {
 		padding-bottom: var( --space-xs );
@@ -257,8 +245,8 @@ module.exports = exports = defineComponent( {
 
 	.cdx-label__label__text {
 		font-size: var( --font-size-small );
-		font-weight: var( --font-weight-semi-bold );
-		color: var( --color-emphasized );
+		font-weight: var( --font-weight-medium );
+		color: var( --color-base );
 	}
 
 	.cdx-label__description {

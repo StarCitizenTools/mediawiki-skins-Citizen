@@ -301,7 +301,6 @@
 				"resources/skins.citizen.preferences/App.vue",
 				"resources/skins.citizen.preferences/RadioGroup.vue",
 				"resources/skins.citizen.preferences/useVisibility.js",
-				"resources/skins.citizen.preferences/clientPreferences.json",
 				"resources/skins.citizen.preferences/defaultConfig.js",
 				"resources/skins.citizen.preferences/configRegistry.js",
 				"resources/skins.citizen.preferences/types.js",
