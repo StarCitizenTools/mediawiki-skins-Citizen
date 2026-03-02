@@ -309,6 +309,10 @@
 				{
 					"name": "resources/skins.citizen.preferences/config.json",
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenPreferencesResourceLoaderConfig"
+				},
+				{
+					"name": "resources/skins.citizen.preferences/overrides.json",
+					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenPreferencesOverrides"
 				}
 			],
 			"messages": [

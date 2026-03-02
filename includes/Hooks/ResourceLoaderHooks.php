@@ -6,8 +6,10 @@ namespace MediaWiki\Skins\Citizen\Hooks;
 
 use MediaWiki\Config\Config;
 use MediaWiki\MainConfigNames;
+use MediaWiki\MediaWikiServices;
 use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\ResourceLoader as RL;
+use MediaWiki\Skins\Citizen\PreferencesConfigProvider;
 
 /**
  * Hooks to run relating to the resource loader
@@ -87,5 +89,25 @@ class ResourceLoaderHooks {
 			'isMediaSearchExtensionEnabled' => $extensionRegistry->isLoaded( 'MediaSearch' ),
 			'wgSearchSuggestCacheExpiry' => $config->get( MainConfigNames::SearchSuggestCacheExpiry )
 		];
+	}
+
+	/**
+	 * Return on-wiki preferences overrides with pre-resolved message texts.
+	 *
+	 * @param RL\Context $context
+	 * @param Config $config
+	 * @return array{overrides: ?array, messages: \stdClass|array<string, string>}
+	 */
+	public static function getCitizenPreferencesOverrides(
+		RL\Context $context,
+		Config $config
+	): array {
+		$services = MediaWikiServices::getInstance();
+		$provider = new PreferencesConfigProvider(
+			$services->getRevisionLookup(),
+			$services->getTitleFactory(),
+			$context
+		);
+		return $provider->getOverrides( $context->getLanguage() );
 	}
 }
