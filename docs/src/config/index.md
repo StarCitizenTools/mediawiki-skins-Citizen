@@ -161,10 +161,86 @@ $wgCitizenEnableCommandPalette = true;
 
 **Values**: `true`, `false`
 
-## Search suggestions
+## Search
+
+### `$wgCitizenSearchGateway`
+
+Selects the backend used to fetch search results in both the command palette and the legacy search module.
+
+```php [LocalSettings.php]
+$wgCitizenSearchGateway = 'mwRestApi';
+```
+
+**Values**:
+
+- `'mwRestApi'`: MediaWiki REST API (default, recommended for most wikis)
+- `'mwActionApi'`: MediaWiki Action API
+- `'smwAskApi'`: [Semantic MediaWiki](https://www.semantic-mediawiki.org/) Ask API — uses SMW queries to fetch results with custom properties like display titles, thumbnails, and descriptions
+
+### `$wgCitizenMaxSearchResults`
+
+The maximum number of search results to display at once.
+
+```php [LocalSettings.php]
+$wgCitizenMaxSearchResults = 10;
+```
+
+### `$wgCitizenSearchSmwApiAction`
+
+The Semantic MediaWiki query action to use. Only applies when `$wgCitizenSearchGateway` is set to `'smwAskApi'`.
+
+```php [LocalSettings.php]
+$wgCitizenSearchSmwApiAction = 'ask';
+```
+
+**Values**:
+
+- `'ask'`: Standard SMW [ask](https://www.semantic-mediawiki.org/wiki/Ask_API) action — uses a single query string
+- `'compoundquery'`: SMW [compoundquery](https://www.mediawiki.org/wiki/Extension:SemanticCompoundQueries) action — allows multiple sub-queries separated by `|`, each with their own conditions and printouts (requires the [SemanticCompoundQueries](https://www.mediawiki.org/wiki/Extension:SemanticCompoundQueries) extension)
+
+### `$wgCitizenSearchSmwAskApiQueryTemplate`
+
+The SMW query template used to fetch search suggestions. Only applies when `$wgCitizenSearchGateway` is set to `'smwAskApi'`.
+
+```php [LocalSettings.php]
+// Single query (action: 'ask')
+$wgCitizenSearchSmwAskApiQueryTemplate = '[[Display_title_of::~*${input}*]]|?Display_title_of=displaytitle|?Page_Image=thumbnail|?Description=desc';
+
+// Compound query (action: 'compoundquery') — exact match first, then fuzzy
+$wgCitizenSearchSmwAskApiQueryTemplate = '
+[[HasNormalizedLabel::${input_normalized}]][[HasId::!~*#*]];?HasLabel=displaytitle;?HasImage=thumbnail;?HasDescription=desc;limit=1
+|[[HasNormalizedLabel::~*${input_normalized_tokenized}*]][[HasId::!~*#*]];?HasLabel=displaytitle;?HasImage=thumbnail;?HasDescription=desc;limit=7
+';
+```
+
+**Template variables** — these placeholders are replaced at query time:
+
+| Variable | Description |
+| :--- | :--- |
+| `${input}` | The raw user input |
+| `${input_lowercase}` | Lowercased input |
+| `${input_normalized}` | Lowercased with non-alphanumeric characters removed |
+| `${input_normalized_tokenized}` | Each word normalized separately, joined with `*` wildcards |
+
+**Printout aliases** — use these aliases in your `?Property=alias` printouts to map results to the search UI:
+
+| Alias | Maps to |
+| :--- | :--- |
+| `displaytitle` | Result label (supports multi-language JSON values) |
+| `thumbnail` | Result thumbnail image |
+| `desc` | Result description (supports multi-language JSON values) |
+| `type` | Result type badge |
+
+**Special behaviors:**
+
+- **UUID detection**: If the input matches a UUID pattern (`xxxxxxxx-xxxx-...`), the query automatically switches to `[[HasUuid::{input}]]` for direct lookup
+- **Namespace filtering**: Input like `Category:Something` automatically adds a `[[Category:+]]` condition and searches for `Something` only
+- **Multi-language support**: Properties returning JSON objects (e.g. `{"en": "Battery", "de": "Batterie"}`) are resolved based on the user's language preference, falling back to English, then the first available value
+
+### Deprecated search settings
 
 ::: warning Deprecated
-The old search module is soft-deprecated. Please use the command palette instead.
+These settings only apply to the legacy search module (`skins.citizen.search`) and have no effect when the command palette is enabled.
 :::
 
 ### `$wgCitizenSearchModule`
@@ -177,16 +253,6 @@ $wgCitizenSearchModule = 'skins.citizen.search';
 
 **Values**: `'skins.citizen.search'`, `'mediawiki.searchSuggest'`, other ResourceLoader module names
 
-### `$wgCitizenSearchGateway`
-
-Selects the API method used to fetch search results. `'mwRestApi'` is generally faster and recommended.
-
-```php [LocalSettings.php]
-$wgCitizenSearchGateway = 'mwRestApi';
-```
-
-**Values**: `'mwActionApi'`, `'mwRestApi'`, `'smwAskApi'`
-
 ### `$wgCitizenSearchDescriptionSource`
 
 Determines where the short description text in search results comes from (only applies if using `'mwActionApi'`).
@@ -198,14 +264,6 @@ $wgCitizenSearchDescriptionSource = 'textextracts';
 - `wikidata`: [Wikibase](https://www.mediawiki.org/wiki/Extension:Wikibase) or [ShortDescription](https://www.mediawiki.org/wiki/Extension:ShortDescription).
 - `textextracts`: [TextExtracts](https://www.mediawiki.org/wiki/Extension:TextExtracts).
 - `pagedescription`: [Description2](https://www.mediawiki.org/wiki/Extension:Description2) or other extensions that sets the `description` page property.
-
-### `$wgCitizenMaxSearchResults`
-
-The maximum number of search suggestions to display at once.
-
-```php [LocalSettings.php]
-$wgCitizenMaxSearchResults = 10;
-```
 
 ## Webapp manifest
 

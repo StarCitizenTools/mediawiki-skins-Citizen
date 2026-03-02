@@ -13,7 +13,8 @@ const commandRegistry = new Map(); // Initialize empty, will be populated below
 const builtInCommands = {
 	namespace: require( '../commands/namespace.js' ),
 	action: require( '../commands/action.js' ),
-	user: require( '../commands/user.js' )
+	user: require( '../commands/user.js' ),
+	smwAsk: require( '../commands/smwAsk.js' )
 };
 
 /** @type {Array<{trigger: string, id: string, lowerTrigger: string}>} */

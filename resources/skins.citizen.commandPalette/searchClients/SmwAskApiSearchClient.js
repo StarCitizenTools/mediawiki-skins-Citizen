@@ -1,13 +1,14 @@
-/** @module smwAskApiSearchClient */
-
-const fetchJson = require( '../fetch.js' );
-const urlGenerator = require( '../urlGenerator.js' );
-
 /**
- * @typedef {Object} SearchResponse
- * @property {string} query
- * @property {SearchResult[]} results
+ * SMW Ask API search client implementation for the command palette
+ *
+ * @module SmwAskApiSearchClient
  */
+
+const { CitizenCommandPaletteSearchClient, CommandPaletteSearchResponse, AbortableSearchFetch } = require( '../types.js' );
+const fetchJson = require( '../utils/fetch.js' );
+const { cdxIconArticle, cdxIconEdit } = require( '../icons.json' );
+
+const config = require( '../config.json' );
 
 /**
  * Helper method to get the first string value.
@@ -46,7 +47,6 @@ function getMultiLangText( items ) {
 		return '';
 	}
 
-	// Check if it is a multi-lang structure
 	if ( items[ 0 ][ 'Language code' ] && items[ 0 ].Text &&
 		items[ 0 ].Text.item && items[ 0 ].Text.item.length ) {
 		const userLang = mw.config.get( 'wgUserLanguage' );
@@ -71,7 +71,6 @@ function getMultiLangText( items ) {
 		return items[ 0 ].Text.item[ 0 ];
 	}
 
-	// Simple (non-multi-lang) value
 	const first = getFirstString( items );
 	return first !== undefined ? first : '';
 }
@@ -79,11 +78,10 @@ function getMultiLangText( items ) {
 /**
  * Build the SMW ask query URL from the user's search input.
  *
- * @param {Object} config - The config object from ResourceLoader
  * @param {string} input - The raw search input from the user
  * @return {string} The full API URL
  */
-function buildAskUrl( config, input ) {
+function buildAskUrl( input ) {
 	const searchApiUrl = config.wgScriptPath + '/api.php';
 	const maxResults = config.wgCitizenMaxSearchResults;
 	const useCompoundQuery = config.wgCitizenSearchSmwApiAction === 'compoundquery';
@@ -114,7 +112,7 @@ function buildAskUrl( config, input ) {
 			askQuery = askQuery.replace( askQuery.split( '|?' )[ 0 ], uuidQuery );
 		}
 	} else {
-		// Namespace filtering: when input contains ':', extract namespace prefix
+		// Namespace filtering
 		if ( input.includes( ':' ) ) {
 			let namespace = input.split( ':' )[ 0 ];
 			if ( namespace === 'Category' ) {
@@ -147,9 +145,6 @@ function buildAskUrl( config, input ) {
 				/(\[\[[\s]*[^\s\[]+[\s]*::[^\[]*)\${input_normalized_tokenized}([\s\S^\]]*\]\])/gm,
 				( match, pre, post ) => {
 					let res = '';
-					// e.g. "[[ HasNormalizedLabel::~*${input_normalized_tokenized}*]]" with input "Word1 Word2"
-					// => "[[ HasNormalizedLabel::~*word1*]][[ HasNormalizedLabel::~*word2*]]"
-					// Also matches "word2 word1"
 					for ( const token of input.split( ' ' ) ) {
 						if ( token !== '' ) {
 							res += pre + token.toLowerCase().replace( /[^0-9a-z]/gi, '' ) + post;
@@ -185,27 +180,26 @@ function buildAskUrl( config, input ) {
 }
 
 /**
- * Adapt the raw SMW API response into the SearchResponse format.
- *
- * @param {Object} config
- * @param {string} query - The original search query
- * @param {Object} response - The raw API response
- * @return {SearchResponse}
+ * @class
+ * @implements {CitizenCommandPaletteSearchClient}
  */
-function adaptApiResponse( config, query, response ) {
-	const urlGeneratorInstance = urlGenerator();
+class SmwAskApiSearchClient {
 
-	if ( !response.query || !response.query.results ) {
-		return { query, results: [] };
+	constructor() {
+		this.editMessage = mw.msg( 'action-edit' );
 	}
 
-	const data = Object.values( response.query.results );
-
-	const getDisplayTitle = ( item ) => {
+	/**
+	 * Get the display title with optional type/category suffix.
+	 *
+	 * @private
+	 * @param {Object} item - SMW result item
+	 * @return {string}
+	 */
+	getDisplayTitle( item ) {
 		let displaytitle = '';
 		let categoryOrType = '';
 
-		// Extract type/category (multi-lang aware)
 		if ( item.printouts.type && item.printouts.type.length ) {
 			categoryOrType = getMultiLangText( item.printouts.type );
 		} else if ( item.type && item.type !== '' ) {
@@ -214,7 +208,6 @@ function adaptApiResponse( config, query, response ) {
 			categoryOrType = item.fulltext.includes( ':' ) ? item.fulltext.split( ':' )[ 0 ] : '';
 		}
 
-		// Extract display title (multi-lang aware)
 		if ( item.printouts.displaytitle && item.printouts.displaytitle.length ) {
 			displaytitle = getMultiLangText( item.printouts.displaytitle );
 		}
@@ -231,16 +224,31 @@ function adaptApiResponse( config, query, response ) {
 		}
 
 		return displaytitle;
-	};
+	}
 
-	const getDescription = ( item ) => {
+	/**
+	 * Get the description (multi-lang aware).
+	 *
+	 * @private
+	 * @param {Object} item - SMW result item
+	 * @return {string|undefined}
+	 */
+	getDescription( item ) {
 		if ( item.printouts.desc && item.printouts.desc.length ) {
-			return getMultiLangText( item.printouts.desc );
+			const desc = getMultiLangText( item.printouts.desc );
+			return desc || undefined;
 		}
-		return '';
-	};
+		return undefined;
+	}
 
-	const getThumbnail = ( item ) => {
+	/**
+	 * Get thumbnail from printouts.
+	 *
+	 * @private
+	 * @param {Object} item - SMW result item
+	 * @return {Object|undefined}
+	 */
+	getThumbnail( item ) {
 		if ( item.printouts.thumbnail && item.printouts.thumbnail.length ) {
 			const imgTitle = item.printouts.thumbnail[ 0 ].fulltext;
 			return {
@@ -250,75 +258,80 @@ function adaptApiResponse( config, query, response ) {
 			};
 		}
 		return undefined;
-	};
+	}
 
-	const results = data.map( ( item, index ) => {
-		const label = getDisplayTitle( item );
-		return {
-			id: index,
-			label: label,
-			key: item.fulltext.replace( / /g, '_' ),
-			title: item.fulltext,
-			description: getDescription( item ),
-			url: urlGeneratorInstance.generateUrl( item.fulltext ),
-			thumbnail: getThumbnail( item )
-		};
-	} );
-
-	// Rank results where title length is closer to query length higher
-	results.sort( ( a, b ) => query.length / b.title.length - query.length / a.title.length );
-
-	return {
-		query,
-		results: results.slice( 0, config.wgCitizenMaxSearchResults )
-	};
-}
-
-/**
- * @typedef {Object} AbortableSearchFetch
- * @property {Promise<SearchResponse>} fetch
- * @property {Function} abort
- */
-
-/**
- * @callback fetchByTitle
- * @param {string} query The search term.
- * @param {number} [limit] Maximum number of results.
- * @return {AbortableSearchFetch}
- */
-
-/**
- * @typedef {Object} SearchClient
- * @property {fetchByTitle} fetchByTitle
- */
-
-/**
- * @param {Object} config
- * @return {SearchClient}
- */
-function smwAskApiSearchClient( config ) {
-	return {
-		/**
-		 * @type {fetchByTitle}
-		 */
-		fetchByTitle: ( q, limit = config.wgCitizenMaxSearchResults ) => {
-			const url = buildAskUrl( config, q );
-
-			const result = fetchJson( url, {
-				headers: {
-					accept: 'application/json'
-				}
-			} );
-
-			const searchResponsePromise = result.fetch
-				.then( ( res ) => adaptApiResponse( config, q, res ) );
-
-			return {
-				abort: result.abort,
-				fetch: searchResponsePromise
-			};
+	/**
+	 * Adapts the SMW API response to the CommandPaletteSearchResponse format.
+	 *
+	 * @private
+	 * @param {string} query
+	 * @param {Object} response
+	 * @param {boolean} showDescription
+	 * @return {CommandPaletteSearchResponse}
+	 */
+	adaptApiResponse( query, response, showDescription ) {
+		if ( !response.query || !response.query.results ) {
+			return { query, results: [] };
 		}
-	};
+
+		const data = Object.values( response.query.results );
+
+		const results = data.map( ( item ) => {
+			const key = item.fulltext.replace( / /g, '_' );
+			const label = this.getDisplayTitle( item );
+			return {
+				id: `citizen-command-palette-item-page-${ key }`,
+				type: 'page',
+				label: label,
+				description: showDescription ? this.getDescription( item ) : undefined,
+				url: mw.util.getUrl( item.fulltext ),
+				thumbnail: this.getThumbnail( item ),
+				thumbnailIcon: cdxIconArticle,
+				actions: [
+					{
+						id: 'edit',
+						label: this.editMessage,
+						icon: cdxIconEdit,
+						url: mw.util.getUrl( item.fulltext, { action: 'edit' } )
+					}
+				],
+				highlightQuery: true
+			};
+		} );
+
+		// Rank results where title length is closer to query length higher
+		results.sort( ( a, b ) => query.length / b.label.length - query.length / a.label.length );
+
+		return {
+			query,
+			results: results.slice( 0, config.wgCitizenMaxSearchResults )
+		};
+	}
+
+	/**
+	 * @override
+	 * @param {string} query The search term
+	 * @param {number} [limit=10] Maximum number of results
+	 * @param {boolean} [showDescription=true] Whether to show descriptions
+	 * @return {AbortableSearchFetch}
+	 */
+	fetchByQuery( query, limit = config.wgCitizenMaxSearchResults, showDescription = true ) {
+		const url = buildAskUrl( query );
+
+		const result = fetchJson( url, {
+			headers: {
+				accept: 'application/json'
+			}
+		} );
+
+		const searchResponsePromise = result.fetch
+			.then( ( res ) => this.adaptApiResponse( query, res, showDescription ) );
+
+		return {
+			abort: result.abort,
+			fetch: searchResponsePromise
+		};
+	}
 }
 
-module.exports = smwAskApiSearchClient;
+module.exports = SmwAskApiSearchClient;
