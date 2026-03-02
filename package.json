@@ -29,7 +29,7 @@
 		"eslint-config-wikimedia": "0.32.3",
 		"eslint-plugin-compat": "^6.2.0",
 		"grunt-banana-checker": "0.13.0",
-		"lefthook": "^2.1.1",
+		"lefthook": "^2.1.2",
 		"jsdom": "^28.1.0",
 		"markdownlint-cli": "^0.47.0",
 		"mustache": "^4.2.0",
