@@ -14,15 +14,25 @@
 			<span class="citizen-preferences-card">
 				<span
 					v-if="option.previewColors"
-					class="citizen-preferences-card__preview citizen-preferences-card__preview--theme"
+					class="citizen-preferences-card__preview
+						citizen-preferences-card__preview--theme"
 					:style="{
 						'--preview-bg': option.previewColors.surface,
 						'--preview-text': option.previewColors.text
 					}"
 				>
-					<span class="citizen-preferences-card__line citizen-preferences-card__line--long"></span>
-					<span class="citizen-preferences-card__line citizen-preferences-card__line--short"></span>
-					<span class="citizen-preferences-card__line citizen-preferences-card__line--medium"></span>
+					<span
+						class="citizen-preferences-card__line
+							citizen-preferences-card__line--long"
+					></span>
+					<span
+						class="citizen-preferences-card__line
+							citizen-preferences-card__line--short"
+					></span>
+					<span
+						class="citizen-preferences-card__line
+							citizen-preferences-card__line--medium"
+					></span>
 				</span>
 				<span class="citizen-preferences-card__label">{{ option.label }}</span>
 			</span>
