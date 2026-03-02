@@ -4,7 +4,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen;
 
-use Exception;
+use BadMethodCallException;
 use MediaWiki\Cache\GenderCache;
 use MediaWiki\Config\Config;
 use MediaWiki\Languages\LanguageConverterFactory;
@@ -112,7 +112,7 @@ class SkinCitizen extends SkinMustache {
 		$classes = [];
 
 		// Theme
-		$theme = $config->get( 'CitizenThemeDefault' ) ?? 'auto';
+		$theme = $config->get( 'CitizenThemeDefault' );
 		if ( isset( self::CLIENTPREFS_THEME_MAP[$theme] ) ) {
 			$classes[] = 'skin-theme-clientpref-' . self::CLIENTPREFS_THEME_MAP[$theme];
 		}
@@ -248,11 +248,11 @@ class SkinCitizen extends SkinMustache {
 			$parentData[$key] = $component->getTemplateData();
 		}
 
-		// HACK: So that we only get the tagline once
+		// TODO: Pass tagline through the component instead of reaching across template data
 		$parentData['data-sticky-header']['html-sticky-header-tagline'] =
 			$this->prepareStickyHeaderTagline( $parentData['data-page-heading']['html-tagline'] );
 
-		// HACK: So that we can use Icon.mustache in Header__logo.mustache
+		// TODO: Pass the home icon through the component instead of injecting into logos data
 		$parentData['data-logos']['icon-home'] = 'home';
 
 		$parentData['toc-enabled'] = !empty( $parentData['data-toc'][ 'array-sections' ] );
@@ -365,7 +365,7 @@ class SkinCitizen extends SkinMustache {
 	 * Adds metadata to the output page (theme-color and manifest)
 	 */
 	private function addMetadata( OutputPage $out, Config $config ): void {
-		$out->addMeta( 'theme-color', $config->get( 'CitizenThemeColor' ) ?? '' );
+		$out->addMeta( 'theme-color', $config->get( 'CitizenThemeColor' ) );
 
 		if (
 			$config->get( 'CitizenEnableManifest' ) !== true ||
@@ -377,7 +377,7 @@ class SkinCitizen extends SkinMustache {
 		try {
 			$href = $this->urlUtils->expand( wfAppendQuery( wfScript( 'api' ),
 					[ 'action' => 'appmanifest' ] ), PROTO_RELATIVE );
-		} catch ( Exception ) {
+		} catch ( BadMethodCallException ) {
 			$href = '';
 		}
 
