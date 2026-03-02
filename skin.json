@@ -286,51 +286,64 @@
 				"mediawiki.util"
 			]
 		},
+		"skins.citizen.preferences.codex": {
+			"class": "MediaWiki\\ResourceLoader\\CodexModule",
+			"codexComponents": [
+				"CdxField",
+				"CdxRadio",
+				"CdxSelect",
+				"CdxToggleSwitch"
+			]
+		},
 		"skins.citizen.preferences": {
-			"styles": [
-				"resources/skins.citizen.preferences/skins.citizen.preferences.less"
-			],
 			"packageFiles": [
-				"resources/skins.citizen.preferences/skins.citizen.preferences.js",
+				"resources/skins.citizen.preferences/init.js",
+				"resources/skins.citizen.preferences/App.vue",
+				"resources/skins.citizen.preferences/RadioGroup.vue",
+				"resources/skins.citizen.preferences/useVisibility.js",
+				"resources/skins.citizen.preferences/clientPreferences.json",
+				"resources/skins.citizen.preferences/clientPrefs.polyfill.js",
 				{
 					"name": "resources/skins.citizen.preferences/config.json",
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenPreferencesResourceLoaderConfig"
-				},
-				"resources/skins.citizen.preferences/addPortlet.polyfill.js",
-				"resources/skins.citizen.preferences/clientPreferences.js",
-				"resources/skins.citizen.preferences/clientPreferences.json",
-				"resources/skins.citizen.preferences/clientPrefs.polyfill.js"
+				}
 			],
 			"messages": [
 				"citizen-feature-autohide-navigation-0-label",
 				"citizen-feature-autohide-navigation-1-label",
+				"citizen-feature-autohide-navigation-description",
 				"citizen-feature-autohide-navigation-name",
+				"citizen-feature-custom-font-size-description",
 				"citizen-feature-custom-font-size-name",
 				"citizen-feature-custom-font-size-small-label",
 				"citizen-feature-custom-font-size-standard-label",
 				"citizen-feature-custom-font-size-large-label",
 				"citizen-feature-custom-font-size-xlarge-label",
+				"citizen-feature-custom-width-description",
 				"citizen-feature-custom-width-full-label",
 				"citizen-feature-custom-width-name",
 				"citizen-feature-custom-width-standard-label",
 				"citizen-feature-custom-width-wide-label",
 				"citizen-feature-performance-mode-0-label",
 				"citizen-feature-performance-mode-1-label",
+				"citizen-feature-performance-mode-description",
 				"citizen-feature-performance-mode-name",
 				"citizen-feature-pure-black-0-label",
 				"citizen-feature-pure-black-1-label",
+				"citizen-feature-pure-black-description",
 				"citizen-feature-pure-black-name",
 				"citizen-theme-description",
 				"citizen-theme-day-label",
-				"citizen-theme-exclusion-notice",
 				"citizen-theme-name",
 				"citizen-theme-night-label",
 				"citizen-theme-os-label",
 				"preferences"
 			],
 			"dependencies": [
+				"skins.citizen.preferences.codex",
 				"mediawiki.storage",
-				"mediawiki.util"
+				"mediawiki.util",
+				"vue"
 			]
 		},
 		"skins.citizen.serviceWorker": {
