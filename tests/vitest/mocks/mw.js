@@ -42,6 +42,10 @@ const mw = {
 	html: {
 		escape: vi.fn( ( s ) => s )
 	},
+	messages: {
+		set: vi.fn(),
+		get: vi.fn( ( key ) => key )
+	},
 	message: vi.fn( ( key ) => ( {
 		text: vi.fn( () => key ),
 		exists: vi.fn( () => true ),

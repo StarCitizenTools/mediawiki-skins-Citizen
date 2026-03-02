@@ -57,6 +57,8 @@
 	"citizen-tagline-ns-help": "Tagline for pages in help namespace",
 	"citizen-tagline-ns-category": "Tagline for pages in category namespace",
 	"citizen-tagline-user-regdate": "Label for registration date in taglines on userpages",
+	"citizen-preferences-section-appearance": "Label for the appearance section in the preferences panel",
+	"citizen-preferences-section-behavior": "Label for the behavior section in the preferences panel",
 	"citizen-theme-name": "Heading label for setting that allows you to change theme.",
 	"citizen-theme-description": "Description for theme.",
 	"citizen-theme-day-label": "Label for light/day theme.",

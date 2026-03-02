@@ -302,6 +302,9 @@
 				"resources/skins.citizen.preferences/RadioGroup.vue",
 				"resources/skins.citizen.preferences/useVisibility.js",
 				"resources/skins.citizen.preferences/clientPreferences.json",
+				"resources/skins.citizen.preferences/defaultConfig.js",
+				"resources/skins.citizen.preferences/configRegistry.js",
+				"resources/skins.citizen.preferences/types.js",
 				"resources/skins.citizen.preferences/clientPrefs.polyfill.js",
 				{
 					"name": "resources/skins.citizen.preferences/config.json",
@@ -332,6 +335,8 @@
 				"citizen-feature-pure-black-1-label",
 				"citizen-feature-pure-black-description",
 				"citizen-feature-pure-black-name",
+				"citizen-preferences-section-appearance",
+				"citizen-preferences-section-behavior",
 				"citizen-theme-description",
 				"citizen-theme-day-label",
 				"citizen-theme-name",

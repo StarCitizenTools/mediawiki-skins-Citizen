@@ -56,6 +56,9 @@
 	"citizen-tagline-ns-category": "Category page",
 	"citizen-tagline-user-regdate": "Joined $1",
 
+	"citizen-preferences-section-appearance": "Appearance",
+	"citizen-preferences-section-behavior": "Behavior",
+
 	"citizen-theme-name": "Color",
 	"citizen-theme-description": "Switch between light and dark mode",
 	"citizen-theme-day-label": "Light",
