@@ -57,31 +57,34 @@
 	"citizen-tagline-user-regdate": "Joined $1",
 
 	"citizen-theme-name": "Color",
-	"citizen-theme-description": "Change the theme of the wiki",
+	"citizen-theme-description": "Switch between light and dark mode",
 	"citizen-theme-day-label": "Light",
 	"citizen-theme-night-label": "Dark",
 	"citizen-theme-os-label": "Auto",
-	"citizen-theme-exclusion-notice": "This page is always in light mode.",
-
 	"citizen-feature-autohide-navigation-name": "Automatically hide navigation",
+	"citizen-feature-autohide-navigation-description": "Hide the navigation bar when scrolling down",
 	"citizen-feature-autohide-navigation-0-label": "Off",
 	"citizen-feature-autohide-navigation-1-label": "On",
 
 	"citizen-feature-performance-mode-name": "Performance mode",
+	"citizen-feature-performance-mode-description": "Reduce animations and visual effects",
 	"citizen-feature-performance-mode-0-label": "Off",
 	"citizen-feature-performance-mode-1-label": "On",
 
 	"citizen-feature-pure-black-name": "Pure black mode",
+	"citizen-feature-pure-black-description": "Replace dark gray backgrounds with pure black",
 	"citizen-feature-pure-black-0-label": "Off",
 	"citizen-feature-pure-black-1-label": "On",
 
 	"citizen-feature-custom-font-size-name": "Text",
+	"citizen-feature-custom-font-size-description": "Change the font size of the body text",
 	"citizen-feature-custom-font-size-small-label": "Small",
 	"citizen-feature-custom-font-size-standard-label": "Standard",
 	"citizen-feature-custom-font-size-large-label": "Large",
 	"citizen-feature-custom-font-size-xlarge-label": "Extra large",
 
 	"citizen-feature-custom-width-name": "Width",
+	"citizen-feature-custom-width-description": "Change the width of the content area",
 	"citizen-feature-custom-width-standard-label": "Standard",
 	"citizen-feature-custom-width-wide-label": "Wide",
 	"citizen-feature-custom-width-full-label": "Full",

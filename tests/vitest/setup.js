@@ -37,5 +37,14 @@ Module._resolveFilename = function ( request, parent, ...rest ) {
 			return path.resolve( TEMPLATES_DIR, templateMatch[ 1 ] );
 		}
 	}
+	if ( parent && parent.filename &&
+		parent.filename.includes( 'skins.citizen.preferences' ) ) {
+		if ( request === './clientPreferences.json' ) {
+			return path.resolve( __dirname, '../../resources/skins.citizen.preferences/clientPreferences.json' );
+		}
+		if ( request === './config.json' ) {
+			return path.resolve( __dirname, 'mocks/preferencesConfig.js' );
+		}
+	}
 	return originalResolveFilename.call( this, request, parent, ...rest );
 };

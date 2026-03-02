@@ -16,11 +16,13 @@ const mw = {
 	util: {
 		throttle: vi.fn( ( fn ) => fn ),
 		debounce: vi.fn( ( fn ) => fn ),
-		getTargetFromFragment: vi.fn( () => null )
+		getTargetFromFragment: vi.fn( () => null ),
+		escapeRegExp: vi.fn( ( str ) => str.replace( /[\\^$.*+?()[\]{}|]/g, '\\$&' ) )
 	},
 	loader: {
 		using: vi.fn( () => Promise.resolve() ),
 		load: vi.fn(),
+		require: vi.fn( () => ( {} ) ),
 		getState: vi.fn( () => 'ready' ),
 		moduleRegistry: {}
 	},
@@ -40,6 +42,11 @@ const mw = {
 	html: {
 		escape: vi.fn( ( s ) => s )
 	},
+	message: vi.fn( ( key ) => ( {
+		text: vi.fn( () => key ),
+		exists: vi.fn( () => true ),
+		parse: vi.fn( () => key )
+	} ) ),
 	msg: vi.fn( ( key ) => key ),
 	log: {
 		error: vi.fn(),
