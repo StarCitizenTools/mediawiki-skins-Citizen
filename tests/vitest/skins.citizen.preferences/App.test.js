@@ -133,6 +133,7 @@ const ALL_PREF_CLASSES = [
 	'citizen-feature-custom-font-size-clientpref-standard',
 	'citizen-feature-custom-width-clientpref-standard',
 	'citizen-feature-pure-black-clientpref-0',
+	'citizen-feature-image-dimming-clientpref-0',
 	'citizen-feature-autohide-navigation-clientpref-0',
 	'citizen-feature-performance-mode-clientpref-0'
 ];
@@ -186,9 +187,9 @@ describe( 'App', () => {
 
 			const sections = wrapper.findAll( '.citizen-preferences-section' );
 
-			// Appearance section: skin-theme, custom-font-size, custom-width, pure-black
+			// Appearance section: skin-theme, custom-font-size, custom-width, pure-black, image-dimming
 			const appearanceGroups = sections[ 0 ].findAll( '.citizen-preferences-group' );
-			expect( appearanceGroups ).toHaveLength( 4 );
+			expect( appearanceGroups ).toHaveLength( 5 );
 
 			// Behavior section: autohide-navigation, performance-mode
 			const behaviorGroups = sections[ 1 ].findAll( '.citizen-preferences-group' );
@@ -202,7 +203,7 @@ describe( 'App', () => {
 
 			const groups = wrapper.findAll( '.citizen-preferences-group' );
 
-			expect( groups ).toHaveLength( 6 );
+			expect( groups ).toHaveLength( 7 );
 		} );
 
 		it( 'should hide conditionally invisible groups via v-show', () => {
@@ -223,7 +224,7 @@ describe( 'App', () => {
 
 			const groups = wrapper.findAll( '.citizen-preferences-group' );
 
-			expect( groups ).toHaveLength( 6 );
+			expect( groups ).toHaveLength( 7 );
 		} );
 
 		it( 'should render CdxToggleSwitch for switch-type preferences', async () => {
@@ -247,9 +248,9 @@ describe( 'App', () => {
 
 			const switches = wrapper.findAllComponents( { name: 'CdxToggleSwitch' } );
 
-			// pure-black (dark-theme), autohide-navigation (tablet-viewport),
-			// performance-mode (always) are switch types
-			expect( switches ).toHaveLength( 3 );
+			// pure-black (dark-theme), image-dimming (dark-theme),
+			// autohide-navigation (tablet-viewport), performance-mode (always) are switch types
+			expect( switches ).toHaveLength( 4 );
 
 			globalThis.matchMedia = savedMatchMedia;
 		} );
@@ -449,7 +450,7 @@ describe( 'App', () => {
 
 			const groups = wrapper.findAll( '.citizen-preferences-group' );
 
-			expect( groups ).toHaveLength( 7 );
+			expect( groups ).toHaveLength( 8 );
 		} );
 	} );
 } );

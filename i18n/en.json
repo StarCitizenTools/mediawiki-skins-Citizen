@@ -74,6 +74,11 @@
 	"citizen-feature-performance-mode-0-label": "Off",
 	"citizen-feature-performance-mode-1-label": "On",
 
+	"citizen-feature-image-dimming-name": "Image dimming",
+	"citizen-feature-image-dimming-description": "Reduce the brightness of images",
+	"citizen-feature-image-dimming-0-label": "Off",
+	"citizen-feature-image-dimming-1-label": "On",
+
 	"citizen-feature-pure-black-name": "Pure black mode",
 	"citizen-feature-pure-black-description": "Replace dark gray backgrounds with pure black",
 	"citizen-feature-pure-black-0-label": "Off",

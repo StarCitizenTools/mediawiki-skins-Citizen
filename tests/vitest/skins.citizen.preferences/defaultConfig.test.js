@@ -21,15 +21,16 @@ describe( 'defaultConfig', () => {
 		expect( config.sections.behavior ).toHaveProperty( 'labelMsg' );
 	} );
 
-	it( 'should return all 6 built-in preferences', () => {
+	it( 'should return all 7 built-in preferences', () => {
 		const config = getDefaultConfig();
 		const keys = Object.keys( config.preferences );
 
-		expect( keys ).toHaveLength( 6 );
+		expect( keys ).toHaveLength( 7 );
 		expect( keys ).toContain( 'skin-theme' );
 		expect( keys ).toContain( 'citizen-feature-custom-font-size' );
 		expect( keys ).toContain( 'citizen-feature-custom-width' );
 		expect( keys ).toContain( 'citizen-feature-pure-black' );
+		expect( keys ).toContain( 'citizen-feature-image-dimming' );
 		expect( keys ).toContain( 'citizen-feature-autohide-navigation' );
 		expect( keys ).toContain( 'citizen-feature-performance-mode' );
 	} );
