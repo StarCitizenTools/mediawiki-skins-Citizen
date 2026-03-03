@@ -352,9 +352,14 @@ class SkinHooks implements
 			if ( $icon ) {
 				$linkClass = $item['link-class'] ?? [];
 				$newLinkClass = [
-					// Allows Echo to react to clicks
 					'citizen-echo-notification-badge',
-					'citizen-header__button',
+					'cdx-button',
+					'cdx-button--fake-button',
+					'cdx-button--fake-button--enabled',
+					'cdx-button--icon-only',
+					'cdx-button--weight-quiet',
+					'citizen-cdx-button--size-large',
+					// Allows Echo to react to clicks
 					'mw-echo-notification-badge-nojs'
 				];
 				if ( in_array( 'mw-echo-unseen-notifications', $linkClass ) ) {

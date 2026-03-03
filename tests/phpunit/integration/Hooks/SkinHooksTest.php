@@ -395,6 +395,16 @@ class SkinHooksTest extends MediaWikiIntegrationTestCase {
 			'citizen-echo-notification-badge',
 			$links['notifications']['notifications-alert']['link-class']
 		);
+		// CdxButton classes should be applied
+		$alertClasses = $links['notifications']['notifications-alert']['link-class'];
+		$this->assertContains( 'cdx-button', $alertClasses );
+		$this->assertContains( 'cdx-button--fake-button', $alertClasses );
+		$this->assertContains( 'cdx-button--fake-button--enabled', $alertClasses );
+		$this->assertContains( 'cdx-button--icon-only', $alertClasses );
+		$this->assertContains( 'cdx-button--weight-quiet', $alertClasses );
+		$this->assertContains( 'citizen-cdx-button--size-large', $alertClasses );
+		// Echo reads this class from the PHP anchor to identify the element
+		$this->assertContains( 'mw-echo-notification-badge-nojs', $alertClasses );
 
 		// Notice did NOT have unseen class — it should NOT be present
 		$this->assertNotContains(
@@ -402,9 +412,9 @@ class SkinHooksTest extends MediaWikiIntegrationTestCase {
 			$links['notifications']['notifications-notice']['link-class']
 		);
 		// But the class rewrite should still have happened
-		$this->assertContains(
-			'citizen-echo-notification-badge',
-			$links['notifications']['notifications-notice']['link-class']
-		);
+		$noticeClasses = $links['notifications']['notifications-notice']['link-class'];
+		$this->assertContains( 'citizen-echo-notification-badge', $noticeClasses );
+		$this->assertContains( 'cdx-button', $noticeClasses );
+		$this->assertContains( 'mw-echo-notification-badge-nojs', $noticeClasses );
 	}
 }

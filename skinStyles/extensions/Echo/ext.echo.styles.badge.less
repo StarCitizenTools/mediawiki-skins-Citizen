@@ -11,6 +11,37 @@
 @import '../../../resources/mixins.less';
 
 .citizen-echo-notification-badge {
+	position: relative;
+
+	&.cdx-button.cdx-button--icon-only {
+		gap: 0;
+		padding-inline: 0;
+	}
+
+	// Icon rendering via CSS-only approach, activated after echo.js adds the
+	// icon class (mw-ui-icon-wikimedia-*) to the anchor.
+	// Echo replaces anchor children on every update, so icon spans cannot persist.
+	// The mask-image is provided by skins.citizen.icons (OOUIIconPackModule).
+	&[ class*='mw-ui-icon-wikimedia-' ] {
+		// Hide Echo's text content — only the icon (::before) should be visible
+		font-size: 0;
+
+		&::before {
+			display: block;
+			width: var( --size-icon );
+			height: var( --size-icon );
+			content: '';
+			background-color: currentcolor;
+			-webkit-mask-repeat: no-repeat;
+			mask-repeat: no-repeat;
+			-webkit-mask-position: center;
+			mask-position: center;
+			-webkit-mask-size: contain;
+			mask-size: contain;
+		}
+	}
+
+	// Badge dot for unread notifications
 	&:not( [ data-counter-text='0' ] )::after {
 		position: absolute;
 		top: var( --space-xxs );
@@ -28,6 +59,7 @@
 		}
 	}
 
+	// Hide text label — screen-reader only in both JS and no-JS modes
 	> span:last-child {
 		.mixin-citizen-screen-reader-only;
 	}
