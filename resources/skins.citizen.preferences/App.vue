@@ -70,7 +70,7 @@
 </template>
 
 <script>
-const { defineComponent, inject, reactive, ref } = require( 'vue' );
+const { defineComponent, computed, inject, reactive, ref, watch } = require( 'vue' );
 const { NormalizedPreferencesConfig } = require( './types.js' );
 const { CdxField, CdxSelect, CdxToggleSwitch } = mw.loader.require( 'skins.citizen.preferences.codex' );
 const RadioGroup = require( './RadioGroup.vue' );
@@ -124,61 +124,100 @@ module.exports = exports = defineComponent( {
 		const themeDefault = inject( 'themeDefault', 'os' );
 		const themeValue = ref( themeDefault );
 
-		const sections = Object.entries( config.sections ).map( ( [ key, sectionDef ] ) => {
-			const sectionPrefs = Object.entries( config.preferences )
-				.filter( ( [ , pref ] ) => pref.section === key )
-				.map( ( [ featureName, prefConfig ] ) => {
-					const storedValue = clientPrefs.get( featureName );
-					const allowedValues = new Set(
-						prefConfig.options.map( ( opt ) => opt.value )
-					);
-					values[ featureName ] = (
-						typeof storedValue === 'string' && allowedValues.has( storedValue )
-					) ? storedValue : prefConfig.options[ 0 ].value;
+		/**
+		 * Resolve the stored (or default) value for a preference and
+		 * store it in the reactive `values` map.
+		 *
+		 * @param {string} featureName
+		 * @param {Object} prefConfig
+		 */
+		function initValue( featureName, prefConfig ) {
+			const storedValue = clientPrefs.get( featureName );
+			const allowedValues = new Set(
+				prefConfig.options.map( ( opt ) => opt.value )
+			);
+			values[ featureName ] = (
+				typeof storedValue === 'string' && allowedValues.has( storedValue )
+			) ? storedValue : prefConfig.options[ 0 ].value;
+		}
 
-					const condition = prefConfig.visibilityCondition || 'always';
-					const { isVisible } = useVisibility( condition, themeValue );
-					visibilities[ featureName ] = isVisible;
-
-					const options = prefConfig.options.map( ( opt ) => {
-						const option = {
-							value: opt.value,
-							label: resolveLabel( opt, 'label' )
-						};
-						if ( featureName === 'skin-theme' ) {
-							option.previewColors = getThemePreviewColors( opt.value );
-						}
-						return option;
-					} );
-
-					const pref = {
-						featureName,
-						heading: resolveLabel( prefConfig, 'label' ),
-						description: resolveLabel( prefConfig, 'description' ),
-						type: prefConfig.type,
-						columns: prefConfig.columns || 2,
-						options
-					};
-
-					if ( pref.type === 'select' ) {
-						pref.menuItems = options;
-					}
-
-					return pref;
-				} );
-
-			return {
-				key,
-				label: resolveLabel( sectionDef, 'label' ),
-				preferences: sectionPrefs
-			};
-		} );
+		// Initialize all preferences that exist at mount time.
+		// useVisibility composables must be called during setup() so that
+		// their onMounted/onUnmounted lifecycle hooks register correctly.
+		for ( const [ featureName, prefConfig ] of Object.entries( config.preferences ) ) {
+			initValue( featureName, prefConfig );
+			const condition = prefConfig.visibilityCondition || 'always';
+			const { isVisible } = useVisibility( condition, themeValue );
+			visibilities[ featureName ] = isVisible;
+		}
 
 		// Set the actual theme value now that values are populated.
 		// This must happen synchronously before setup() returns so that
 		// useVisibility composables (which depend on themeValue) compute
 		// correct initial visibility for dark-theme conditions.
 		themeValue.value = values[ 'skin-theme' ] || themeDefault;
+
+		// Watch for dynamically-added preferences and initialize their
+		// values and visibilities. Dynamic preferences are registered after
+		// mount, so useVisibility lifecycle hooks (onMounted/onUnmounted)
+		// would not fire. Instead, set visibility to a static computed
+		// that returns true — dynamic preferences are always visible.
+		watch(
+			() => Object.keys( config.preferences ),
+			() => {
+				for ( const [ featureName, prefConfig ] of Object.entries( config.preferences ) ) {
+					if ( !( featureName in values ) ) {
+						initValue( featureName, prefConfig );
+						visibilities[ featureName ] = computed( () => true );
+					}
+				}
+			}
+		);
+
+		// eslint-disable-next-line arrow-body-style
+		const sections = computed( () => {
+			return Object.entries( config.sections )
+				.map( ( [ key, sectionDef ] ) => {
+					const sectionPrefs = Object.entries( config.preferences )
+						.filter( ( [ , pref ] ) => pref.section === key )
+						.map( ( [ featureName, prefConfig ] ) => {
+							const options = prefConfig.options.map( ( opt ) => {
+								const option = {
+									value: opt.value,
+									label: resolveLabel( opt, 'label' )
+								};
+								if ( featureName === 'skin-theme' ) {
+									option.previewColors =
+										getThemePreviewColors( opt.value );
+								}
+								return option;
+							} );
+
+							const pref = {
+								featureName,
+								heading: resolveLabel( prefConfig, 'label' ),
+								description: resolveLabel(
+									prefConfig, 'description'
+								),
+								type: prefConfig.type,
+								columns: prefConfig.columns || 2,
+								options
+							};
+
+							if ( pref.type === 'select' ) {
+								pref.menuItems = options;
+							}
+
+							return pref;
+						} );
+
+					return {
+						key,
+						label: resolveLabel( sectionDef, 'label' ),
+						preferences: sectionPrefs
+					};
+				} );
+		} );
 
 		// Fires mw.hook( 'citizen.preferences.changed' ) with ( featureName, value )
 		function setValue( featureName, value ) {
