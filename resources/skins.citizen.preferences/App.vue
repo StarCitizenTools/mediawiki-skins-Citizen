@@ -132,6 +132,9 @@ module.exports = exports = defineComponent( {
 		 * @param {Object} prefConfig
 		 */
 		function initValue( featureName, prefConfig ) {
+			if ( !Array.isArray( prefConfig.options ) || prefConfig.options.length === 0 ) {
+				return;
+			}
 			const storedValue = clientPrefs.get( featureName );
 			const allowedValues = new Set(
 				prefConfig.options.map( ( opt ) => opt.value )
