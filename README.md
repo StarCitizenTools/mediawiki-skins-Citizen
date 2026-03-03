@@ -28,7 +28,7 @@
 - **Command palette**: Quick access to everything. 🔍⚡️
 - **Light/dark mode**: Switch between light and dark mode. ☀️🌙
 - **Improved extension UI**: Adjust supported extensions to be more usable and cohesive. 🤝🔗
-- **Reading preferences**: Adjust page width, font size, and line height. 👀📃
+- **Extensible preferences**: Let users personalize their experience, and let gadgets add their own options. 👀📃
 - **Collapsible sections**: Collapse and expand article sections. 📖📕
 - **Persistent ToC**: Access ToC anywhere in the article. 🔍📖
 - **Progressive Web App**: Give a more app-like experience when user add your wiki to their home screen. 📱

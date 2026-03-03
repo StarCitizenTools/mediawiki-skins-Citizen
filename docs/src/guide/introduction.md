@@ -24,8 +24,8 @@ Unlike the other standard MediaWiki skins, Citizen has a lot more to offer:
     <LinkCard title="Cohesive extension styles" href="../config/extensions">
         With tons of the skin's supported extensions, it has been made to blend with the skin's UI.
     </LinkCard>
-    <LinkCard title="Reading preferences">
-        Users are able to adjust page width, font size, and line height.
+    <LinkCard title="Extensible preferences" href="../customization/preferences">
+        Let users personalize their experience, and let gadgets add their own options.
     </LinkCard>
     <LinkCard title="Collapsible sections" href="../config/#wgcitizenenablecollapsiblesections">
         Article sections on the wiki can be collapsed and expanded.
