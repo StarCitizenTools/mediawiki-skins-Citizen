@@ -84,9 +84,3 @@ Name | Version
 [WSSearchFront](https://www.mediawiki.org/wiki/Extension:WSSearchFront) | 3.5.4 `c27ebcb5`
 
 Some fields are marked as N/A due to untracked information.
-
-### How to add your own skinStyles
-
-::: warning 🚧 Under Construction
-This part is currently being built. Please check back soon!
-:::
