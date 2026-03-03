@@ -1,6 +1,4 @@
 .citizen-header {
-	--header-icon-size: ~'calc( var( --header-button-size ) / 2 )';
-	--header-button-size: ~'calc( var( --header-size ) - var(  --space-xs ) * 2 )';
 	position: fixed;
 	top: var( --header-inset-block-start );
 	right: var( --header-inset-inline-end );
@@ -23,53 +21,6 @@
 	&__item {
 		display: flex;
 		align-items: center;
-	}
-
-	&__button {
-		display: grid;
-		place-items: center;
-		width: var( --header-button-size );
-		height: var( --header-button-size );
-		contain: strict;
-		border-radius: var( --border-radius-base );
-
-		// Pure CSS icons
-		&Icon {
-			width: var( --header-icon-size );
-			height: var( --header-icon-size );
-			contain: strict;
-			overflow: hidden; // Sometimes CSS animation can clip
-			opacity: var( --opacity-icon-base );
-			filter: var( --filter-invert );
-			transition: var( --transition-hover );
-			transition-property: transform, opacity;
-		}
-
-		&Icon,
-		.citizen-ui-icon {
-			margin: auto;
-		}
-
-		&:hover {
-			background-color: var( --background-color-button-quiet--hover );
-
-			.citizen-header__buttonIcon {
-				opacity: var( --opacity-icon-base--hover );
-			}
-		}
-
-		&:active {
-			background-color: var( --background-color-button-quiet--active );
-
-			.citizen-header__buttonIcon {
-				opacity: var( --opacity-icon-base--selected );
-			}
-		}
-
-		// Disable default padding when menu item is used as header button
-		.citizen-menu .mw-list-item & {
-			padding: 0;
-		}
 	}
 
 	&__logo {
@@ -159,22 +110,6 @@
 	// Since it won't do anything
 	.citizen-preferences-dropdown {
 		display: none;
-	}
-}
-
-// Reset hover styles if it is a touch device
-// This is dumb but hover:hover overrides active states
-@media ( hover: none ) {
-	.citizen-header {
-		&__button {
-			&:hover {
-				background-color: transparent;
-
-				.citizen-header__buttonIcon {
-					opacity: var( --opacity-icon-base );
-				}
-			}
-		}
 	}
 }
 
