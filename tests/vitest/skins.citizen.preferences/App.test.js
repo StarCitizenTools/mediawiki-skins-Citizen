@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-const { mount, flushPromises } = require( '@vue/test-utils' );
+const { mount, shallowMount, flushPromises } = require( '@vue/test-utils' );
 const { reactive } = require( 'vue' );
 const mw = require( '../mocks/mw.js' );
 globalThis.mw = mw;
@@ -55,16 +55,18 @@ globalThis.matchMedia = vi.fn( () => ( {
 
 let App;
 
+const getDefaultConfig = require( '../../../resources/skins.citizen.preferences/defaultConfig.js' );
+const { normalizeConfig } = require( '../../../resources/skins.citizen.preferences/configRegistry.js' );
+const BASE_CONFIG = normalizeConfig( getDefaultConfig() );
+
 /**
  * Build a normalized default config for testing.
- * Uses the real getDefaultConfig + normalizeConfig to test integration.
+ * Returns a deep clone of the cached base config so tests can mutate safely.
  *
  * @return {Object}
  */
 function getTestConfig() {
-	const getDefaultConfig = require( '../../../resources/skins.citizen.preferences/defaultConfig.js' );
-	const { normalizeConfig } = require( '../../../resources/skins.citizen.preferences/configRegistry.js' );
-	return normalizeConfig( getDefaultConfig() );
+	return JSON.parse( JSON.stringify( BASE_CONFIG ) );
 }
 
 /**
@@ -77,19 +79,19 @@ function setClassList( prefClasses ) {
 }
 
 /**
- * Mount App with a specific set of active preference classes and optional config.
- * Must be called after setting the classList (before mount reads it in setup()).
+ * Internal helper that mounts App with the given mount function.
  *
+ * @param {Function} mountFn mount or shallowMount from @vue/test-utils
  * @param {string[]} prefClasses Array of full clientpref class strings
  * @param {Object} [configOverride] Optional config to inject instead of default
  * @return {import('@vue/test-utils').VueWrapper}
  */
-function mountApp( prefClasses, configOverride ) {
+function doMount( mountFn, prefClasses, configOverride ) {
 	setClassList( prefClasses );
 	const config = configOverride || getTestConfig();
 	// Wrap in reactive() so computed() in App.vue tracks mutations
 	const reactiveConfig = reactive( config );
-	return mount( App, {
+	return mountFn( App, {
 		global: {
 			provide: {
 				preferencesConfig: reactiveConfig,
@@ -97,6 +99,30 @@ function mountApp( prefClasses, configOverride ) {
 			}
 		}
 	} );
+}
+
+/**
+ * Full mount — renders child components. Use when tests need
+ * findComponent/findAllComponents on child component instances.
+ *
+ * @param {string[]} prefClasses
+ * @param {Object} [configOverride]
+ * @return {import('@vue/test-utils').VueWrapper}
+ */
+function mountApp( prefClasses, configOverride ) {
+	return doMount( mount, prefClasses, configOverride );
+}
+
+/**
+ * Shallow mount — stubs child components. Faster for tests that
+ * only query DOM structure (classes, attributes, text).
+ *
+ * @param {string[]} prefClasses
+ * @param {Object} [configOverride]
+ * @return {import('@vue/test-utils').VueWrapper}
+ */
+function shallowMountApp( prefClasses, configOverride ) {
+	return doMount( shallowMount, prefClasses, configOverride );
 }
 
 /**
@@ -128,7 +154,7 @@ afterAll( () => {
 describe( 'App', () => {
 	describe( 'sections', () => {
 		it( 'should render section headings', () => {
-			const wrapper = mountApp( ALL_PREF_CLASSES );
+			const wrapper = shallowMountApp( ALL_PREF_CLASSES );
 
 			const headings = wrapper.findAll( '.citizen-preferences-section__heading' );
 
@@ -147,7 +173,7 @@ describe( 'App', () => {
 				}
 			}
 
-			const wrapper = mountApp( ALL_PREF_CLASSES, config );
+			const wrapper = shallowMountApp( ALL_PREF_CLASSES, config );
 
 			const headings = wrapper.findAll( '.citizen-preferences-section__heading' );
 
@@ -156,7 +182,7 @@ describe( 'App', () => {
 		} );
 
 		it( 'should group preferences under correct sections', () => {
-			const wrapper = mountApp( ALL_PREF_CLASSES );
+			const wrapper = shallowMountApp( ALL_PREF_CLASSES );
 
 			const sections = wrapper.findAll( '.citizen-preferences-section' );
 
@@ -172,7 +198,7 @@ describe( 'App', () => {
 
 	describe( 'rendering', () => {
 		it( 'should render preference groups for all active preferences', () => {
-			const wrapper = mountApp( ALL_PREF_CLASSES );
+			const wrapper = shallowMountApp( ALL_PREF_CLASSES );
 
 			const groups = wrapper.findAll( '.citizen-preferences-group' );
 
@@ -182,7 +208,7 @@ describe( 'App', () => {
 		it( 'should hide conditionally invisible groups via v-show', () => {
 			// matchMedia defaults to matches:false, so dark-theme (pure-black)
 			// and tablet-viewport (autohide-navigation) are hidden.
-			const wrapper = mountApp( ALL_PREF_CLASSES );
+			const wrapper = shallowMountApp( ALL_PREF_CLASSES );
 
 			const pureBlack = wrapper.find(
 				'#skin-client-prefs-citizen-feature-pure-black'
@@ -193,7 +219,7 @@ describe( 'App', () => {
 
 		it( 'should render all config preferences regardless of classList', () => {
 			// Even with no clientpref classes, all preferences should render
-			const wrapper = mountApp( [] );
+			const wrapper = shallowMountApp( [] );
 
 			const groups = wrapper.findAll( '.citizen-preferences-group' );
 
@@ -353,7 +379,7 @@ describe( 'App', () => {
 
 	describe( 'resolveLabel integration', () => {
 		it( 'should use labelMsg keys from config for preference headings', () => {
-			mountApp( ALL_PREF_CLASSES );
+			shallowMountApp( ALL_PREF_CLASSES );
 
 			// mw.message is called with the labelMsg from the config
 			const calls = mw.message.mock.calls;
@@ -365,7 +391,7 @@ describe( 'App', () => {
 		} );
 
 		it( 'should use descriptionMsg keys from config for descriptions', () => {
-			mountApp( ALL_PREF_CLASSES );
+			shallowMountApp( ALL_PREF_CLASSES );
 
 			const calls = mw.message.mock.calls;
 			const descriptionCall = calls.find(
@@ -376,7 +402,7 @@ describe( 'App', () => {
 		} );
 
 		it( 'should use labelMsg keys from config for option labels', () => {
-			mountApp( ALL_PREF_CLASSES );
+			shallowMountApp( ALL_PREF_CLASSES );
 
 			const calls = mw.message.mock.calls;
 			const optionCall = calls.find(
@@ -390,7 +416,7 @@ describe( 'App', () => {
 	describe( 'dynamic registration', () => {
 		it( 'should render a dynamically added preference', async () => {
 			const config = reactive( getTestConfig() );
-			const wrapper = mountApp( ALL_PREF_CLASSES, config );
+			const wrapper = shallowMountApp( ALL_PREF_CLASSES, config );
 
 			// Dynamically add a new preference
 			config.sections[ 'dynamic' ] = { label: 'Dynamic Section' };
@@ -410,7 +436,7 @@ describe( 'App', () => {
 
 		it( 'should render a dynamically added section with preferences', async () => {
 			const config = reactive( getTestConfig() );
-			const wrapper = mountApp( ALL_PREF_CLASSES, config );
+			const wrapper = shallowMountApp( ALL_PREF_CLASSES, config );
 
 			config.sections[ 'gadget' ] = { label: 'Gadgets' };
 			config.preferences[ 'gadget-toggle' ] = {
