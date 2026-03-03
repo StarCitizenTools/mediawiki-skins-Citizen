@@ -32,6 +32,8 @@ afterEach( () => {
 	// Reset overrides mock to defaults
 	overridesMock.overrides = null;
 	overridesMock.messages = {};
+	// Reset register hook between tests
+	mw.hook( 'citizen.preferences.register' )._reset();
 } );
 
 describe( 'initApp', () => {
@@ -113,5 +115,72 @@ describe( 'initApp', () => {
 
 		// preferencesConfig.js mock has wgCitizenThemeDefault: 'auto' → maps to 'os'
 		expect( mockProvide ).toHaveBeenCalledWith( 'themeDefault', 'os' );
+	} );
+
+	it( 'should fire citizen.preferences.register hook', () => {
+		document.body.innerHTML = '<div id="citizen-preferences-content"></div>';
+
+		initApp();
+
+		const hook = mw.hook( 'citizen.preferences.register' );
+		expect( hook.fire ).toHaveBeenCalledWith( expect.any( Function ) );
+	} );
+
+	it( 'should replay register function to late subscribers', () => {
+		document.body.innerHTML = '<div id="citizen-preferences-content"></div>';
+
+		initApp();
+
+		// Add subscriber AFTER fire() has already been called
+		const registerSpy = vi.fn();
+		mw.hook( 'citizen.preferences.register' ).add( ( register ) => {
+			registerSpy( register );
+		} );
+
+		expect( registerSpy ).toHaveBeenCalledWith( expect.any( Function ) );
+	} );
+
+	it( 'should warn and skip malformed registrations', () => {
+		document.body.innerHTML = '<div id="citizen-preferences-content"></div>';
+
+		mw.hook( 'citizen.preferences.register' ).add( ( register ) => {
+			register( null );
+			register( 'garbage' );
+			register( [ 'an', 'array' ] );
+		} );
+
+		initApp();
+
+		expect( mw.log.warn ).toHaveBeenCalledTimes( 3 );
+	} );
+
+	it( 'should accept registrations via the register function', () => {
+		document.body.innerHTML = '<div id="citizen-preferences-content"></div>';
+
+		// Add a listener before init
+		const registerSpy = vi.fn();
+		mw.hook( 'citizen.preferences.register' ).add( ( register ) => {
+			register( {
+				sections: { gadget: { label: 'Gadgets' } },
+				preferences: {
+					'my-gadget': {
+						section: 'gadget',
+						options: [ '0', '1' ],
+						label: 'My Gadget'
+					}
+				}
+			} );
+			registerSpy();
+		} );
+
+		initApp();
+
+		expect( registerSpy ).toHaveBeenCalled();
+		// Verify the config provided to the Vue app includes the registered preference
+		const configCall = mockProvide.mock.calls.find(
+			( args ) => args[ 0 ] === 'preferencesConfig'
+		);
+		expect( configCall[ 1 ].preferences ).toHaveProperty( 'my-gadget' );
+		expect( configCall[ 1 ].sections ).toHaveProperty( 'gadget' );
 	} );
 } );
