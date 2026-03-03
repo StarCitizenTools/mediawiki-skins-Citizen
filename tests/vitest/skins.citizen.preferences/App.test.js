@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 
 const { mount, flushPromises } = require( '@vue/test-utils' );
+const { reactive } = require( 'vue' );
 const mw = require( '../mocks/mw.js' );
 globalThis.mw = mw;
 
@@ -86,10 +87,12 @@ function setClassList( prefClasses ) {
 function mountApp( prefClasses, configOverride ) {
 	setClassList( prefClasses );
 	const config = configOverride || getTestConfig();
+	// Wrap in reactive() so computed() in App.vue tracks mutations
+	const reactiveConfig = reactive( config );
 	return mount( App, {
 		global: {
 			provide: {
-				preferencesConfig: config,
+				preferencesConfig: reactiveConfig,
 				themeDefault: 'os'
 			}
 		}
@@ -381,6 +384,46 @@ describe( 'App', () => {
 			);
 
 			expect( optionCall ).toBeTruthy();
+		} );
+	} );
+
+	describe( 'dynamic registration', () => {
+		it( 'should render a dynamically added preference', async () => {
+			const config = reactive( getTestConfig() );
+			const wrapper = mountApp( ALL_PREF_CLASSES, config );
+
+			// Dynamically add a new preference
+			config.sections[ 'dynamic' ] = { label: 'Dynamic Section' };
+			config.preferences[ 'my-dynamic-feature' ] = {
+				section: 'dynamic',
+				options: [ { value: '0' }, { value: '1' } ],
+				type: 'switch',
+				labelMsg: 'my-dynamic-feature-name'
+			};
+			await wrapper.vm.$nextTick();
+
+			const headings = wrapper.findAll( '.citizen-preferences-section__heading' );
+			const dynamicHeading = headings.find( ( h ) => h.text() === 'Dynamic Section' );
+
+			expect( dynamicHeading ).toBeTruthy();
+		} );
+
+		it( 'should render a dynamically added section with preferences', async () => {
+			const config = reactive( getTestConfig() );
+			const wrapper = mountApp( ALL_PREF_CLASSES, config );
+
+			config.sections[ 'gadget' ] = { label: 'Gadgets' };
+			config.preferences[ 'gadget-toggle' ] = {
+				section: 'gadget',
+				options: [ { value: '0' }, { value: '1' } ],
+				type: 'switch',
+				label: 'My Gadget'
+			};
+			await wrapper.vm.$nextTick();
+
+			const groups = wrapper.findAll( '.citizen-preferences-group' );
+
+			expect( groups ).toHaveLength( 7 );
 		} );
 	} );
 } );
