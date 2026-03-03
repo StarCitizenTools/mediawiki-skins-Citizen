@@ -4,8 +4,13 @@ const { mount } = require( '@vue/test-utils' );
 const mw = require( '../mocks/mw.js' );
 globalThis.mw = mw;
 
-// Mock CdxRadio before loading the component
+// Mock Codex components before loading the component
 mw.loader.require = vi.fn( () => ( {
+	CdxIcon: {
+		name: 'CdxIcon',
+		template: '<span class="cdx-icon"></span>',
+		props: [ 'icon', 'size' ]
+	},
 	CdxRadio: {
 		name: 'CdxRadio',
 		template: '<div class="cdx-radio"><input type="radio" /><slot /></div>',
@@ -116,7 +121,7 @@ describe( 'RadioGroup', () => {
 	} );
 
 	describe( 'card previews', () => {
-		it( 'should render theme preview with color lines when option has previewColors', () => {
+		it( 'should render theme preview with icon when option has previewColors', () => {
 			const optionsWithPreview = [
 				{
 					value: 'light',
@@ -137,7 +142,7 @@ describe( 'RadioGroup', () => {
 			expect( previews ).toHaveLength( 2 );
 			expect( previews[ 0 ].element.style.getPropertyValue( '--preview-bg' ) ).toBe( '#fff' );
 			expect( previews[ 0 ].element.style.getPropertyValue( '--preview-text' ) ).toBe( '#000' );
-			expect( previews[ 0 ].findAll( '.citizen-preferences-card__line' ) ).toHaveLength( 3 );
+			expect( previews[ 0 ].findComponent( { name: 'CdxIcon' } ).exists() ).toBe( true );
 		} );
 
 		it( 'should not render preview when options have no preview data', () => {

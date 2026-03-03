@@ -45,6 +45,9 @@ Module._resolveFilename = function ( request, parent, ...rest ) {
 		if ( request === './overrides.json' ) {
 			return path.resolve( __dirname, 'mocks/preferencesOverrides.js' );
 		}
+		if ( request === './icons.json' ) {
+			return path.resolve( __dirname, 'mocks/preferencesIcons.js' );
+		}
 		// Stub .vue imports from non-Vue JS files (e.g. init.js).
 		// Vue SFCs go through Vite's plugin pipeline and don't hit this path.
 		if ( request === './App.vue' ) {

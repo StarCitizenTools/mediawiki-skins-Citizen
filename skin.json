@@ -290,6 +290,7 @@
 			"class": "MediaWiki\\ResourceLoader\\CodexModule",
 			"codexComponents": [
 				"CdxField",
+				"CdxIcon",
 				"CdxRadio",
 				"CdxSelect",
 				"CdxToggleSwitch"
@@ -305,6 +306,13 @@
 				"resources/skins.citizen.preferences/configRegistry.js",
 				"resources/skins.citizen.preferences/types.js",
 				"resources/skins.citizen.preferences/clientPrefs.polyfill.js",
+				{
+					"name": "resources/skins.citizen.preferences/icons.json",
+					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
+					"callbackParam": [
+						"cdxIconAlignRight"
+					]
+				},
 				{
 					"name": "resources/skins.citizen.preferences/config.json",
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenPreferencesResourceLoaderConfig"
