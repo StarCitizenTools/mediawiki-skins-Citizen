@@ -78,6 +78,12 @@
 		border: 0 solid var( --border-color-subtle );
 		border-right-width: var( --border-width-base );
 
+		// The logo button needs position:relative so the absolutely-positioned
+		// home icon overlay (.citizen-ui-icon) is contained within it.
+		.cdx-button {
+			position: relative;
+		}
+
 		img {
 			margin: auto;
 		}
@@ -85,6 +91,7 @@
 		.citizen-ui-icon {
 			position: absolute;
 			inset: 0;
+			margin: auto;
 		}
 	}
 
