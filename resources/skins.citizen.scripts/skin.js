@@ -92,7 +92,7 @@ function main( window ) {
 		{ createPerformanceMode } = require( './performance.js' );
 
 	search.init( { window, document, mw } );
-	createEchoUpgrade( { document, mw, MutationObserver } ).init();
+	createEchoUpgrade( { document, mw } ).init();
 	setupObservers.init( { document, window, mw, IntersectionObserver } );
 	dropdown.init( { document, window } );
 	createLastModified( { document, Intl } ).init();
