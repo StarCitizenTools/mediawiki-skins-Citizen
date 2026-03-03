@@ -81,7 +81,9 @@ summary ) {
 		transition-property: color, transform, opacity;
 	}
 
-	.citizen-header__button {
+	// Override CdxButton color to hide the home icon by default;
+	// .skin-citizen prefix needed to beat .skin-citizen .cdx-button specificity.
+	.skin-citizen & .cdx-button {
 		color: transparent;
 
 		&:hover {
