@@ -48,6 +48,7 @@ class SkinCitizen extends SkinMustache {
 
 	private const DEFAULT_CLIENT_PREFS = [
 		'citizen-feature-autohide-navigation' => '1',
+		'citizen-feature-image-dimming' => '0',
 		'citizen-feature-pure-black' => '0',
 		'citizen-feature-custom-font-size' => 'standard',
 		'citizen-feature-custom-width' => 'standard',
