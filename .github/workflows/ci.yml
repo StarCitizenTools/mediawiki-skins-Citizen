@@ -315,18 +315,50 @@ jobs:
           fetch-depth: 0
 
       - name: Download JS coverage
+        id: js-artifact
         uses: actions/download-artifact@v8
         with:
           name: js-coverage
           path: coverage/js
         continue-on-error: true
 
+      - name: Restore cached JS coverage
+        if: steps.js-artifact.outcome != 'success'
+        uses: actions/cache/restore@v5
+        with:
+          path: coverage/js
+          key: coverage-js-
+          restore-keys: coverage-js-
+
+      - name: Cache JS coverage
+        if: steps.js-artifact.outcome == 'success'
+        uses: actions/cache/save@v5
+        with:
+          path: coverage/js
+          key: coverage-js-${{ github.run_id }}
+
       - name: Download PHP coverage
+        id: php-artifact
         uses: actions/download-artifact@v8
         with:
           name: php-coverage
           path: coverage/php
         continue-on-error: true
+
+      - name: Restore cached PHP coverage
+        if: steps.php-artifact.outcome != 'success'
+        uses: actions/cache/restore@v5
+        with:
+          path: coverage/php
+          key: coverage-php-
+          restore-keys: coverage-php-
+
+      - name: Cache PHP coverage
+        if: steps.php-artifact.outcome == 'success'
+        uses: actions/cache/save@v5
+        with:
+          path: coverage/php
+          key: coverage-php-${{ github.run_id }}
 
       - name: Scan with SonarQube
         uses: sonarsource/sonarqube-scan-action@v7
