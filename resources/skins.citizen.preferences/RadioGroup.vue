@@ -21,18 +21,7 @@
 						'--preview-text': option.previewColors.text
 					}"
 				>
-					<span
-						class="citizen-preferences-card__line
-							citizen-preferences-card__line--long"
-					></span>
-					<span
-						class="citizen-preferences-card__line
-							citizen-preferences-card__line--short"
-					></span>
-					<span
-						class="citizen-preferences-card__line
-							citizen-preferences-card__line--medium"
-					></span>
+					<cdx-icon :icon="cdxIconAlignRight"></cdx-icon>
 				</span>
 				<span class="citizen-preferences-card__label">{{ option.label }}</span>
 			</span>
@@ -42,12 +31,13 @@
 
 <script>
 const { defineComponent } = require( 'vue' );
-const { CdxRadio } = mw.loader.require( 'skins.citizen.preferences.codex' );
+const { CdxIcon, CdxRadio } = mw.loader.require( 'skins.citizen.preferences.codex' );
+const { cdxIconAlignRight } = require( './icons.json' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
 	name: 'RadioGroup',
-	components: { CdxRadio },
+	components: { CdxIcon, CdxRadio },
 	props: {
 		modelValue: {
 			type: String,
@@ -66,7 +56,10 @@ module.exports = exports = defineComponent( {
 			default: 2
 		}
 	},
-	emits: [ 'update:modelValue' ]
+	emits: [ 'update:modelValue' ],
+	setup() {
+		return { cdxIconAlignRight };
+	}
 } );
 </script>
 
@@ -142,33 +135,19 @@ module.exports = exports = defineComponent( {
 
 	&__preview {
 		display: flex;
-		flex-direction: column;
-		gap: 3px;
 		align-items: center;
 		justify-content: center;
 		width: 100%;
 		aspect-ratio: 3 / 2;
 		padding: var( --space-xs );
+		color: var( --preview-text );
 		background-color: var( --preview-bg );
-	}
+		border-bottom: var( --border-subtle );
 
-	&__line {
-		display: block;
-		height: 3px;
-		background-color: var( --preview-text );
-		border-radius: 1px;
-		opacity: 0.6;
-
-		&--long {
-			width: 80%;
-		}
-
-		&--medium {
-			width: 60%;
-		}
-
-		&--short {
-			width: 40%;
+		.cdx-icon {
+			width: 2rem;
+			height: 2rem;
+			color: inherit;
 		}
 	}
 }
