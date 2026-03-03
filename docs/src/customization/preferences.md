@@ -5,17 +5,26 @@ description: How to customize the Citizen preferences panel
 
 # Preferences
 
-Citizen's preferences panel is extensible. Wiki admins can add, modify, or remove preferences by creating the JSON page `MediaWiki:Citizen-preferences.json` on their wiki.
+Citizen's preferences panel is extensible. You can add, modify, or remove preferences through two paths — and both use the same configuration schema.
+
+<LinkGrid>
+    <LinkCard title="On-wiki JSON" href="#on-wiki-json" target="_self">
+        Create MediaWiki:Citizen-preferences.json for site-wide configuration managed by admins.
+    </LinkCard>
+    <LinkCard title="JavaScript API" href="#javascript-api" target="_self">
+        Register preferences from any gadget or user script using mw.hook.
+    </LinkCard>
+</LinkGrid>
 
 ## How it works
 
-Citizen ships with a set of built-in preferences (theme, font size, page width, pure black, auto-hide navigation, performance mode). Admins can override any of these, or add entirely new ones, by placing a JSON configuration on `MediaWiki:Citizen-preferences.json`.
+Citizen ships with a set of built-in preferences (theme, font size, page width, pure black, auto-hide navigation, performance mode). Admins can override any of these, or add entirely new ones, by placing a JSON configuration on `MediaWiki:Citizen-preferences.json`. Gadgets and user scripts can do the same thing via the [JavaScript API](#javascript-api).
 
 Changes take effect when users next open the preferences panel — the panel is lazy-loaded, so there's no need to purge caches.
 
 ## Configuration schema
 
-The JSON has two top-level keys: `sections` and `preferences`.
+Whether you're writing JSON on-wiki or passing a config object to the JavaScript API, the shape is the same. There are two top-level keys: `sections` and `preferences`.
 
 ### Sections
 
@@ -83,7 +92,11 @@ Both sections and preferences support two ways to set their display text:
 
 The same pattern applies to `descriptionMsg` / `description`.
 
-## Merge behavior
+## On-wiki JSON
+
+This is the simplest way to manage preferences — just create a JSON page on your wiki.
+
+### Merge behavior
 
 When you create `MediaWiki:Citizen-preferences.json`, your configuration is merged with the built-in defaults:
 
@@ -92,7 +105,7 @@ When you create `MediaWiki:Citizen-preferences.json`, your configuration is merg
 - **Overriding** specific fields of a built-in preference merges them — unspecified fields keep their default values.
 - **Options arrays** are replaced wholesale, not merged element-by-element. If you override `options`, provide the full list.
 
-## Built-in sections
+### Built-in sections
 
 Citizen ships with two sections:
 
@@ -101,9 +114,9 @@ Citizen ships with two sections:
 | `appearance` | Theme, font size, page width, pure black |
 | `behavior` | Auto-hide navigation, performance mode |
 
-## Examples
+### Examples
 
-### Adding a custom toggle
+#### Adding a custom toggle
 
 ```json
 {
@@ -124,7 +137,7 @@ Citizen ships with two sections:
 }
 ```
 
-### Removing a built-in preference
+#### Removing a built-in preference
 
 ```json
 {
@@ -134,7 +147,7 @@ Citizen ships with two sections:
 }
 ```
 
-### Modifying theme options
+#### Modifying theme options
 
 This removes the "auto" option from the theme preference, leaving only day and night:
 
@@ -150,6 +163,81 @@ This removes the "auto" option from the theme preference, leaving only day and n
     }
   }
 }
+```
+
+## JavaScript API
+
+Gadgets and user scripts can register preferences at runtime using `mw.hook`. This is useful when you want a gadget to ship its own preference toggle without requiring an admin to edit the on-wiki JSON.
+
+### Usage
+
+```js
+mw.hook( 'citizen.preferences.register' ).add( function ( register ) {
+    register( {
+        sections: { /* ... */ },
+        preferences: { /* ... */ }
+    } );
+} );
+```
+
+The `register` function accepts the exact same config schema described above — `sections` and `preferences` with the same field reference.
+
+### Timing
+
+You don't need to worry about load order. `mw.hook` replays previously fired data to late subscribers, so your gadget's `.add()` callback will receive the `register` function regardless of whether the preferences panel has loaded yet.
+
+### Example
+
+Here's a gadget registering a simple toggle:
+
+```js
+mw.hook( 'citizen.preferences.register' ).add( function ( register ) {
+    register( {
+        sections: {
+            'my-gadget': { label: 'My Gadget' }
+        },
+        preferences: {
+            'gadget-dark-mode': {
+                section: 'my-gadget',
+                type: 'switch',
+                options: [ '0', '1' ],
+                label: 'Dark mode',
+                description: 'Enable dark mode for this gadget'
+            }
+        }
+    } );
+} );
+```
+
+## Full gadget example
+
+Here's a complete example that registers a preference and reacts to changes — the kind of thing you'd put in a gadget's JavaScript file:
+
+```js
+// Register the preference
+mw.hook( 'citizen.preferences.register' ).add( function ( register ) {
+    register( {
+        sections: {
+            gadgets: { label: 'Gadgets' }
+        },
+        preferences: {
+            'gadget-enhanced-rc': {
+                section: 'gadgets',
+                type: 'switch',
+                options: [ '0', '1' ],
+                label: 'Enhanced recent changes',
+                description: 'Use the enhanced recent changes interface'
+            }
+        }
+    } );
+} );
+
+// React to changes
+mw.hook( 'citizen.preferences.changed' ).add( function ( featureName, value ) {
+    if ( featureName === 'gadget-enhanced-rc' ) {
+        toggleEnhancedRC( value === '1' );
+    }
+} );
 ```
 
 ## Styling custom preferences
@@ -168,6 +256,6 @@ You can react to preference changes in JavaScript using `mw.hook`:
 
 ```js
 mw.hook( 'citizen.preferences.changed' ).add( function ( featureName, value ) {
-  console.log( featureName + ' changed to ' + value );
+    console.log( featureName + ' changed to ' + value );
 } );
 ```

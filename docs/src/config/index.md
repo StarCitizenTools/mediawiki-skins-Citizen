@@ -110,7 +110,7 @@ $wgCitizenEnableCJKFonts = false;
 
 ### `$wgCitizenEnablePreferences`
 
-Enables the user preferences menu, allowing visitors to customize their reading experience (e.g., font size, width).
+Enables the user [preferences panel](/customization/preferences), allowing visitors to customize their experience. The panel is extensible — admins can add custom preferences via on-wiki JSON, and gadgets can register their own options at runtime.
 
 ```php [LocalSettings.php]
 $wgCitizenEnablePreferences = true;
