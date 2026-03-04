@@ -151,6 +151,85 @@ describe( 'useKeyboard', () => {
 		} );
 	} );
 
+	describe( 'keyboardHints', () => {
+		it( 'should return Enter/Search and Exit when no items and nothing highlighted', () => {
+			deps.items.value = [];
+			listNav.highlightedIndex.value = -1;
+
+			const hints = keyboard.keyboardHints.value;
+
+			expect( hints ).toEqual( [
+				{ msgKey: 'citizen-command-palette-keyhint-enter-search', kbd: '↵' },
+				{ msgKey: 'citizen-command-palette-keyhint-exit', kbd: 'esc' }
+			] );
+		} );
+
+		it( 'should return Enter/Select, Navigate, and Exit when item is highlighted with no actions', () => {
+			deps.items.value = [ { id: 1, type: 'page' }, { id: 2, type: 'page' } ];
+			listNav.highlightedIndex.value = 0;
+
+			const hints = keyboard.keyboardHints.value;
+
+			expect( hints ).toEqual( [
+				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵' },
+				{ msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓' },
+				{ msgKey: 'citizen-command-palette-keyhint-exit', kbd: 'esc' }
+			] );
+		} );
+
+		it( 'should include Actions hint when highlighted item has actions', () => {
+			deps.items.value = [
+				{ id: 1, type: 'page', actions: [ { type: 'dismiss' } ] },
+				{ id: 2, type: 'page' }
+			];
+			listNav.highlightedIndex.value = 0;
+
+			const hints = keyboard.keyboardHints.value;
+
+			expect( hints ).toEqual( [
+				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵' },
+				{ msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓' },
+				{ msgKey: 'citizen-command-palette-keyhint-actions', kbd: '→' },
+				{ msgKey: 'citizen-command-palette-keyhint-exit', kbd: 'esc' }
+			] );
+		} );
+
+		it( 'should return Enter/Select, Return, Navigate, and Exit when action focused at first action', () => {
+			deps.items.value = [
+				{ id: 1, type: 'page', actions: [ { type: 'dismiss' } ] }
+			];
+			listNav.highlightedIndex.value = 0;
+			actionNav.isActive.value = true;
+			actionNav.focusedIndex.value = 0;
+
+			const hints = keyboard.keyboardHints.value;
+
+			expect( hints ).toEqual( [
+				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵' },
+				{ msgKey: 'citizen-command-palette-keyhint-return', kbd: '←' },
+				{ msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓' },
+				{ msgKey: 'citizen-command-palette-keyhint-exit', kbd: 'esc' }
+			] );
+		} );
+
+		it( 'should return Enter/Select, Navigate with all arrows, and Exit when action focused in middle of multiple actions', () => {
+			deps.items.value = [
+				{ id: 1, type: 'page', actions: [ { type: 'a' }, { type: 'b' }, { type: 'c' } ] }
+			];
+			listNav.highlightedIndex.value = 0;
+			actionNav.isActive.value = true;
+			actionNav.focusedIndex.value = 1;
+
+			const hints = keyboard.keyboardHints.value;
+
+			expect( hints ).toEqual( [
+				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵' },
+				{ msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓←→' },
+				{ msgKey: 'citizen-command-palette-keyhint-exit', kbd: 'esc' }
+			] );
+		} );
+	} );
+
 	describe( 'action zone — Escape', () => {
 		it( 'should deactivate action navigation on Escape from action zone', () => {
 			actionNav.isActive.value = true;
