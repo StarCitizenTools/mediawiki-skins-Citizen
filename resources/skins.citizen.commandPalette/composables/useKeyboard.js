@@ -41,6 +41,76 @@ function useKeyboard( deps ) {
 		return Boolean( item && item.actions && item.actions.length > 0 );
 	} );
 
+	/**
+	 * Data-driven keyboard hints for the footer.
+	 * Each entry is { msgKey, kbd }.
+	 */
+	const keyboardHints = computed( () => {
+		const hints = [];
+
+		if ( actionNav.isActive.value ) {
+			// Enter/Select
+			hints.push( {
+				msgKey: 'citizen-command-palette-keyhint-enter-select',
+				kbd: '↵'
+			} );
+
+			// Return hint when first action is focused
+			if ( actionNav.focusedIndex.value === 0 ) {
+				hints.push( {
+					msgKey: 'citizen-command-palette-keyhint-return',
+					kbd: '←'
+				} );
+			}
+
+			// Navigate actions
+			const highlightedIndex = listNav.highlightedIndex.value;
+			const item = highlightedIndex >= 0 ? deps.items.value[ highlightedIndex ] : null;
+			const actionCount = item?.actions?.length || 0;
+
+			let navKeys = '↑↓';
+			if ( actionCount > 1 ) {
+				navKeys += '←';
+				if ( actionNav.focusedIndex.value < actionCount - 1 ) {
+					navKeys += '→';
+				}
+			}
+			hints.push( {
+				msgKey: 'citizen-command-palette-keyhint-navigate',
+				kbd: navKeys
+			} );
+		} else {
+			// Input zone — highlight check is equivalent to the original
+			// highlightedItemType !== null because all items have a truthy type
+			const enterMsgKey = listNav.highlightedIndex.value >= 0 ?
+				'citizen-command-palette-keyhint-enter-select' :
+				'citizen-command-palette-keyhint-enter-search';
+			hints.push( { msgKey: enterMsgKey, kbd: '↵' } );
+
+			if ( deps.items.value.length > 1 ) {
+				hints.push( {
+					msgKey: 'citizen-command-palette-keyhint-navigate',
+					kbd: '↑↓'
+				} );
+			}
+
+			if ( highlightedItemHasActions.value ) {
+				hints.push( {
+					msgKey: 'citizen-command-palette-keyhint-actions',
+					kbd: '→'
+				} );
+			}
+		}
+
+		// Always show exit hint
+		hints.push( {
+			msgKey: 'citizen-command-palette-keyhint-exit',
+			kbd: 'esc'
+		} );
+
+		return hints;
+	} );
+
 	function focusInput() {
 		deps.inputRef.value?.focus();
 	}
@@ -203,7 +273,8 @@ function useKeyboard( deps ) {
 		focusInput,
 		requestInputFocus,
 		activeDescendantId,
-		highlightedItemHasActions
+		highlightedItemHasActions,
+		keyboardHints
 	};
 }
 
