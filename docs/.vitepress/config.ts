@@ -11,7 +11,7 @@ export default defineConfig( {
 	cleanUrls: true,
 	lastUpdated: true,
 	sitemap: {
-		hostname: 'https://starcitizentools.github.io',
+		hostname: 'https://starcitizentools.github.io/mediawiki-skins-Citizen/',
 	},
 	themeConfig: {
 		logo: '/img/layout.svg',
