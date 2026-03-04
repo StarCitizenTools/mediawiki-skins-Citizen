@@ -23,7 +23,8 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	const displayedItems = ref( [] );
 	const isPending = ref( false );
 	const showPending = ref( false );
-	const hasDisplayedItems = computed( () => displayedItems.value.length > 0 );
+	const flatItems = computed( () => displayedItems.value.flatMap( ( s ) => s.items ) );
+	const hasDisplayedItems = computed( () => flatItems.value.length > 0 );
 
 	let debounceTimeout = null;
 	let pendingDelayTimeout = null;
@@ -53,7 +54,9 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	 */
 	function setResults( contentItems ) {
 		const items = Array.isArray( contentItems ) ? contentItems : [];
-		displayedItems.value = resultDecorator( items, query.value );
+		const decorated = resultDecorator( items, query.value );
+		displayedItems.value = decorated.length > 0 ?
+			[ { heading: null, items: decorated } ] : [];
 	}
 
 	/**
@@ -158,7 +161,10 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 			}
 		}
 
-		displayedItems.value = [].concat( recentItems );
+		// Show recent section immediately while related loads
+		displayedItems.value = recentItems.length > 0 ?
+			[ { heading: 'citizen-command-palette-heading-recent', items: recentItems } ] :
+			[];
 
 		if ( deps.relatedArticlesProvider ) {
 			try {
@@ -177,7 +183,21 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 					const filteredRecent = recentItems.filter(
 						( item ) => !item.url || !relatedUrls.has( item.url )
 					);
-					displayedItems.value = [].concat( relatedItems, filteredRecent );
+
+					const sections = [];
+					if ( relatedItems.length > 0 ) {
+						sections.push( {
+							heading: 'citizen-command-palette-heading-related',
+							items: relatedItems
+						} );
+					}
+					if ( filteredRecent.length > 0 ) {
+						sections.push( {
+							heading: 'citizen-command-palette-heading-recent',
+							items: filteredRecent
+						} );
+					}
+					displayedItems.value = sections;
 				}
 			} catch ( e ) {
 				mw.log.error(
@@ -211,8 +231,8 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		}
 
 		// Show stale results while loading if configured
-		if ( contentProvider.keepStaleResults && displayedItems.value.length > 0 ) {
-			const staleItems = displayedItems.value.filter(
+		if ( contentProvider.keepStaleResults && flatItems.value.length > 0 ) {
+			const staleItems = flatItems.value.filter(
 				( item ) => item.source && (
 					item.source.startsWith( contentProvider.id + ':' ) ||
 					item.source === contentProvider.id
@@ -300,7 +320,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	 * @param {string|number} itemId The ID of the item to dismiss.
 	 */
 	function dismissRecentItem( itemId ) {
-		const itemToRemove = displayedItems.value.find(
+		const itemToRemove = flatItems.value.find(
 			( item ) => String( item.id ) === String( itemId ) &&
 				item.source === 'recent'
 		);
@@ -314,6 +334,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	return {
 		query,
 		displayedItems,
+		flatItems,
 		isPending,
 		showPending,
 		hasDisplayedItems,
