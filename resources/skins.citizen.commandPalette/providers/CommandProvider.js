@@ -3,6 +3,48 @@ const createProvider = require( './createProvider.js' );
 const MAX_COMMAND_RESULTS = 10;
 
 /**
+ * Handles a matched command trigger by delegating to its handler.
+ *
+ * @param {Object} commandRegistry The command registry service.
+ * @param {Object} match The matched command { handler, trigger, id }.
+ * @param {string} query The full query string.
+ * @return {Promise<Object>} Provider result with items.
+ */
+async function getMatchedCommandResults( commandRegistry, match, query ) {
+	const { handler, trigger, id } = match;
+	if ( typeof handler.getResults !== 'function' ) {
+		const listItems = commandRegistry.getCommandListItems();
+		const thisItem = listItems.find(
+			( item ) => item.source === 'command:' + id
+		);
+		return { items: thisItem ? [ thisItem ] : [] };
+	}
+
+	const subQuery = query.slice( trigger.length ).trim();
+	const actualSubQuery = subQuery.startsWith( ':' ) ?
+		subQuery.slice( 1 ).trim() : subQuery;
+
+	try {
+		const results = await handler.getResults( actualSubQuery );
+		const processedResults = ( Array.isArray( results ) ? results : [] )
+			.map( ( item ) => {
+				if ( item.highlightQuery ) {
+					return { ...item, highlightTerm: actualSubQuery };
+				}
+				return item;
+			} )
+			.map( ( item ) => ( { ...item, source: 'command:' + id } ) )
+			.slice( 0, MAX_COMMAND_RESULTS );
+		return { items: processedResults };
+	} catch ( err ) {
+		mw.log.error(
+			'[commandPalette] Command handler "' + id + '" failed:', err
+		);
+		return { items: [] };
+	}
+}
+
+/**
  * Creates a command provider that delegates to a command registry.
  *
  * @param {Object} commandRegistry The command registry service.
@@ -29,37 +71,7 @@ function createCommandProvider( commandRegistry ) {
 			// Case 2: Specific command trigger matched
 			const match = commandRegistry.findMatchingCommand( query );
 			if ( match ) {
-				const { handler, trigger, id } = match;
-				if ( typeof handler.getResults === 'function' ) {
-					const subQuery = query.slice( trigger.length ).trim();
-					const actualSubQuery = subQuery.startsWith( ':' ) ?
-						subQuery.slice( 1 ).trim() : subQuery;
-
-					try {
-						const results = await handler.getResults( actualSubQuery );
-						const processedResults = ( Array.isArray( results ) ? results : [] )
-							.map( ( item ) => {
-								if ( item.highlightQuery ) {
-									return { ...item, highlightTerm: actualSubQuery };
-								}
-								return item;
-							} )
-							.map( ( item ) => ( { ...item, source: 'command:' + id } ) )
-							.slice( 0, MAX_COMMAND_RESULTS );
-						return { items: processedResults };
-					} catch ( err ) {
-						mw.log.error(
-							'[commandPalette] Command handler "' + id + '" failed:', err
-						);
-						return { items: [] };
-					}
-				} else {
-					const listItems = commandRegistry.getCommandListItems();
-					const thisItem = listItems.find(
-						( item ) => item.source === 'command:' + id
-					);
-					return { items: thisItem ? [ thisItem ] : [] };
-				}
+				return getMatchedCommandResults( commandRegistry, match, query );
 			}
 
 			// Case 3: Prefix search for "/"
