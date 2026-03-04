@@ -42,67 +42,74 @@ function useKeyboard( deps ) {
 	} );
 
 	/**
+	 * Builds keyboard hints for when an action button is focused.
+	 *
+	 * @return {Array} Hint objects for the action zone.
+	 */
+	function getActionZoneHints() {
+		const hints = [
+			{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵' }
+		];
+
+		if ( actionNav.focusedIndex.value === 0 ) {
+			hints.push( {
+				msgKey: 'citizen-command-palette-keyhint-return',
+				kbd: '←'
+			} );
+		}
+
+		const highlightedIndex = listNav.highlightedIndex.value;
+		const item = highlightedIndex >= 0 ? deps.items.value[ highlightedIndex ] : null;
+		const actionCount = item?.actions?.length || 0;
+
+		let navKeys = '↑↓';
+		if ( actionCount > 1 ) {
+			navKeys += '←';
+			if ( actionNav.focusedIndex.value < actionCount - 1 ) {
+				navKeys += '→';
+			}
+		}
+		hints.push( { msgKey: 'citizen-command-palette-keyhint-navigate', kbd: navKeys } );
+
+		return hints;
+	}
+
+	/**
+	 * Builds keyboard hints for when the input or a list item is focused.
+	 *
+	 * @return {Array} Hint objects for the input zone.
+	 */
+	function getInputZoneHints() {
+		const enterMsgKey = listNav.highlightedIndex.value >= 0 ?
+			'citizen-command-palette-keyhint-enter-select' :
+			'citizen-command-palette-keyhint-enter-search';
+		const hints = [ { msgKey: enterMsgKey, kbd: '↵' } ];
+
+		if ( deps.items.value.length > 1 ) {
+			hints.push( {
+				msgKey: 'citizen-command-palette-keyhint-navigate',
+				kbd: '↑↓'
+			} );
+		}
+
+		if ( highlightedItemHasActions.value ) {
+			hints.push( {
+				msgKey: 'citizen-command-palette-keyhint-actions',
+				kbd: '→'
+			} );
+		}
+
+		return hints;
+	}
+
+	/**
 	 * Data-driven keyboard hints for the footer.
 	 * Each entry is { msgKey, kbd }.
 	 */
 	const keyboardHints = computed( () => {
-		const hints = [];
+		const hints = actionNav.isActive.value ?
+			getActionZoneHints() : getInputZoneHints();
 
-		if ( actionNav.isActive.value ) {
-			// Enter/Select
-			hints.push( {
-				msgKey: 'citizen-command-palette-keyhint-enter-select',
-				kbd: '↵'
-			} );
-
-			// Return hint when first action is focused
-			if ( actionNav.focusedIndex.value === 0 ) {
-				hints.push( {
-					msgKey: 'citizen-command-palette-keyhint-return',
-					kbd: '←'
-				} );
-			}
-
-			// Navigate actions
-			const highlightedIndex = listNav.highlightedIndex.value;
-			const item = highlightedIndex >= 0 ? deps.items.value[ highlightedIndex ] : null;
-			const actionCount = item?.actions?.length || 0;
-
-			let navKeys = '↑↓';
-			if ( actionCount > 1 ) {
-				navKeys += '←';
-				if ( actionNav.focusedIndex.value < actionCount - 1 ) {
-					navKeys += '→';
-				}
-			}
-			hints.push( {
-				msgKey: 'citizen-command-palette-keyhint-navigate',
-				kbd: navKeys
-			} );
-		} else {
-			// Input zone — highlight check is equivalent to the original
-			// highlightedItemType !== null because all items have a truthy type
-			const enterMsgKey = listNav.highlightedIndex.value >= 0 ?
-				'citizen-command-palette-keyhint-enter-select' :
-				'citizen-command-palette-keyhint-enter-search';
-			hints.push( { msgKey: enterMsgKey, kbd: '↵' } );
-
-			if ( deps.items.value.length > 1 ) {
-				hints.push( {
-					msgKey: 'citizen-command-palette-keyhint-navigate',
-					kbd: '↑↓'
-				} );
-			}
-
-			if ( highlightedItemHasActions.value ) {
-				hints.push( {
-					msgKey: 'citizen-command-palette-keyhint-actions',
-					kbd: '→'
-				} );
-			}
-		}
-
-		// Always show exit hint
 		hints.push( {
 			msgKey: 'citizen-command-palette-keyhint-exit',
 			kbd: 'esc'
