@@ -9,9 +9,6 @@
 			:clearable="true"
 			:placeholder="$i18n( 'searchsuggest-search' ).text()"
 			@update:model-value="$emit( 'update:modelValue', $event )"
-			@keydown="onKeydown"
-			@keydown.esc="$emit( 'close' )"
-			@keydown.tab="$emit( 'close' )"
 		></cdx-text-input>
 		<div
 			v-if="isPending && showPending"
@@ -45,8 +42,8 @@ module.exports = exports = defineComponent( {
 			default: false
 		}
 	},
-	emits: [ 'update:modelValue', 'keydown', 'close', 'focus-active-item' ],
-	setup( props, { emit, expose } ) {
+	emits: [ 'update:modelValue' ],
+	setup( props, { expose } ) {
 		const searchInputRef = ref( null );
 		const value = computed( () => props.modelValue );
 
@@ -54,38 +51,6 @@ module.exports = exports = defineComponent( {
 
 		const focus = () => {
 			getInputElement()?.focus();
-		};
-
-		const onKeydown = ( event ) => {
-			switch ( event.key ) {
-				case 'ArrowUp':
-				case 'ArrowDown':
-					// Prevent default input cursor movement
-					event.preventDefault();
-					// Emit the event for parent (App.vue) to handle list navigation
-					emit( 'keydown', event );
-					break;
-				case 'ArrowRight': {
-					const inputEl = event.target;
-					// Check if cursor is at the end of the input
-					if ( inputEl.selectionStart === inputEl.value.length ) {
-						// Prevent default cursor movement
-						event.preventDefault();
-						// Signal parent to focus the active list item
-						emit( 'focus-active-item' );
-					}
-					// If not at the end, allow default right arrow behavior within the input
-					// and don't emit 'keydown' to avoid potential double handling.
-					break;
-				}
-				// For other keys like Enter, alphanumeric, etc., let the parent handle or allow default.
-				// We specifically don't emit 'keydown' for ArrowRight when not at the end.
-				default:
-					// Only emit general keydown for keys not specifically handled here
-					// (e.g., Enter for selection, other keys for typing)
-					emit( 'keydown', event );
-					break;
-			}
 		};
 
 		expose( {
@@ -96,8 +61,7 @@ module.exports = exports = defineComponent( {
 		return {
 			searchInputRef,
 			value,
-			cdxIconSearch,
-			onKeydown
+			cdxIconSearch
 		};
 	}
 } );
