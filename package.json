@@ -34,7 +34,7 @@
 		"jsdom": "^28.1.0",
 		"lefthook": "^2.1.2",
 		"less": "^4.5.1",
-		"markdownlint-cli": "^0.47.0",
+		"markdownlint-cli": "^0.48.0",
 		"mustache": "^4.2.0",
 		"pinia": "2.0.16",
 		"stylelint": "17.4.0",
