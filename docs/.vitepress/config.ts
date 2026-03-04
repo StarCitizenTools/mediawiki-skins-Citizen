@@ -10,6 +10,9 @@ export default defineConfig( {
 	srcDir: 'src',
 	cleanUrls: true,
 	lastUpdated: true,
+	sitemap: {
+		hostname: 'https://starcitizentools.github.io',
+	},
 	themeConfig: {
 		logo: '/img/layout.svg',
 		nav: [
