@@ -3,6 +3,20 @@ const { ref, computed } = require( 'vue' );
 const SHOW_PENDING_DELAY_MS = 300;
 
 /**
+ * Normalizes a provider result into an array of items.
+ * Providers may return { items: [...] }, a raw array, or something else.
+ *
+ * @param {*} result The raw provider result.
+ * @return {Array} The normalized items array.
+ */
+function normalizeProviderResult( result ) {
+	if ( result && result.items ) {
+		return result.items;
+	}
+	return Array.isArray( result ) ? result : [];
+}
+
+/**
  * Composable that orchestrates provider selection, dispatching, debouncing,
  * abort coordination, and result assembly.
  *
@@ -68,8 +82,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	async function handleSyncProvider( provider, currentQuery ) {
 		try {
 			const result = await provider.getResults( currentQuery, undefined );
-			const items = result && result.items ?
-				result.items : ( Array.isArray( result ) ? result : [] );
+			const items = normalizeProviderResult( result );
 			if ( query.value === currentQuery ) {
 				setResults( items );
 			}
@@ -116,8 +129,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 
 			try {
 				const result = await provider.getResults( currentQuery, signal );
-				const items = result && result.items ?
-					result.items : ( Array.isArray( result ) ? result : [] );
+				const items = normalizeProviderResult( result );
 				if ( query.value === currentQuery ) {
 					setResults( items );
 				}
@@ -143,6 +155,38 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	}
 
 	/**
+	 * Builds presult sections from related and recent items.
+	 * Deduplicates recent items that already appear in related results.
+	 *
+	 * @param {Array} relatedItems Related article items.
+	 * @param {Array} recentItems Recent items.
+	 * @return {Array} Sections array for displayedItems.
+	 */
+	function buildPresultSections( relatedItems, recentItems ) {
+		const relatedUrls = new Set(
+			relatedItems.map( ( item ) => item.url ).filter( Boolean )
+		);
+		const filteredRecent = recentItems.filter(
+			( item ) => !item.url || !relatedUrls.has( item.url )
+		);
+
+		const sections = [];
+		if ( relatedItems.length > 0 ) {
+			sections.push( {
+				heading: 'citizen-command-palette-heading-related',
+				items: relatedItems
+			} );
+		}
+		if ( filteredRecent.length > 0 ) {
+			sections.push( {
+				heading: 'citizen-command-palette-heading-recent',
+				items: filteredRecent
+			} );
+		}
+		return sections;
+	}
+
+	/**
 	 * Clears the search and populates presults.
 	 */
 	async function clearSearch() {
@@ -153,9 +197,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		if ( deps.recentItemsProvider ) {
 			try {
 				const recentResult = deps.recentItemsProvider.getResults( '' );
-				recentItems = recentResult && recentResult.items ?
-					recentResult.items :
-					( Array.isArray( recentResult ) ? recentResult : [] );
+				recentItems = normalizeProviderResult( recentResult );
 			} catch ( e ) {
 				mw.log.error( '[commandPalette] Failed to get recent items:', e );
 			}
@@ -170,34 +212,11 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 			try {
 				const relatedResult =
 					await deps.relatedArticlesProvider.getResults( '' );
-				const relatedItems = relatedResult && relatedResult.items ?
-					relatedResult.items :
-					( Array.isArray( relatedResult ) ? relatedResult : [] );
+				const relatedItems = normalizeProviderResult( relatedResult );
 
 				if ( query.value === '' ) {
-					const relatedUrls = new Set(
-						relatedItems
-							.map( ( item ) => item.url )
-							.filter( Boolean )
-					);
-					const filteredRecent = recentItems.filter(
-						( item ) => !item.url || !relatedUrls.has( item.url )
-					);
-
-					const sections = [];
-					if ( relatedItems.length > 0 ) {
-						sections.push( {
-							heading: 'citizen-command-palette-heading-related',
-							items: relatedItems
-						} );
-					}
-					if ( filteredRecent.length > 0 ) {
-						sections.push( {
-							heading: 'citizen-command-palette-heading-recent',
-							items: filteredRecent
-						} );
-					}
-					displayedItems.value = sections;
+					displayedItems.value =
+						buildPresultSections( relatedItems, recentItems );
 				}
 			} catch ( e ) {
 				mw.log.error(
