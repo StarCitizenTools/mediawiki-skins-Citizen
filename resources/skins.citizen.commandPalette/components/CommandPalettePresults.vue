@@ -8,9 +8,6 @@
 		:search-query="searchQuery"
 		:set-item-ref="setRelatedItemRef"
 		@select="$emit( 'select', $event )"
-		@navigate-list="( direction ) => $emit( 'navigate-list', direction )"
-		@focus-action="( payload ) => $emit( 'focus-action', payload )"
-		@blur-actions="() => $emit( 'blur-actions' )"
 		@hover="( localIndex ) => handleListHover( 'related', localIndex )"
 		@action="$emit( 'action', $event )"
 	></command-palette-list>
@@ -25,9 +22,6 @@
 		:set-item-ref="setRecentItemRef"
 		@select="$emit( 'select', $event )"
 		@action="$emit( 'action', $event )"
-		@navigate-list="( direction ) => $emit( 'navigate-list', direction )"
-		@focus-action="( payload ) => $emit( 'focus-action', payload )"
-		@blur-actions="() => $emit( 'blur-actions' )"
 		@hover="( localIndex ) => handleListHover( 'recent', localIndex )"
 	></command-palette-list>
 
@@ -73,7 +67,7 @@ module.exports = exports = defineComponent( {
 			default: null
 		}
 	},
-	emits: [ 'select', 'action', 'navigate-list', 'focus-action', 'blur-actions', 'hover' ],
+	emits: [ 'select', 'action', 'hover' ],
 	setup( props, { emit } ) {
 		// Computed properties to filter items by source
 		const computedRelatedItems = computed( () => props.items.filter( ( item ) => item.source === 'related' ) );

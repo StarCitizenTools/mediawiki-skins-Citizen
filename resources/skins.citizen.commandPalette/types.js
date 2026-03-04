@@ -125,4 +125,20 @@
  * @property {?function(CommandPaletteItem): CommandPaletteActionResult|Promise<CommandPaletteActionResult>} onResultSelect - Optional method to handle result selection.
  */
 
+/**
+ * Result returned by a provider's getResults method.
+ *
+ * @typedef {Object} ProviderResult
+ * @property {Array<CommandPaletteItem>} items The result items.
+ * @property {boolean} [stale] If true, these are stale results shown while fresh ones load.
+ */
+
+/**
+ * Configuration for a provider, passed to createProvider.
+ *
+ * @typedef {Object} ProviderConfig
+ * @property {number} [debounceMs=250] Debounce delay in milliseconds.
+ * @property {boolean} [keepStaleResults=false] Whether to show previous results while loading.
+ */
+
 module.exports = {/* Types are only used for JSDoc */};
