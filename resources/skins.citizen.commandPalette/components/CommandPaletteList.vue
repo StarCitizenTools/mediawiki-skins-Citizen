@@ -21,9 +21,6 @@
 				@change="( property, value ) => onItemChange( item.id, property, value, index )"
 				@select="( result ) => $emit( 'select', result )"
 				@action="( action ) => $emit( 'action', action )"
-				@navigate-list="( direction ) => $emit( 'navigate-list', direction )"
-				@focus-action="( payload ) => $emit( 'focus-action', payload )"
-				@blur-actions="() => $emit( 'blur-actions' )"
 				@mouseenter="() => $emit( 'hover', index )"
 				@mouseleave="() => $emit( 'hover', -1 )"
 			></command-palette-list-item>
@@ -64,7 +61,7 @@ module.exports = exports = defineComponent( {
 			default: null
 		}
 	},
-	emits: [ /* 'update:highlightedItemIndex', */ 'select', 'action', 'navigate-list', 'focus-action', 'blur-actions', 'hover' ],
+	emits: [ 'select', 'action', 'hover' ],
 	setup( props /* , { emit } */ ) {
 		const listRef = ref( null );
 		const activeItemId = ref( null );
