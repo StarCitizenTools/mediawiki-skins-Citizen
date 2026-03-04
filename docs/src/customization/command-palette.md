@@ -18,7 +18,9 @@ By default, Citizen includes these commands:
 
 ## Creating custom commands
 
-Administrators and developers can extend the command palette with custom actions. Use this feature to create shortcuts for external tools, streamlined workflows, or handy redirects.
+Administrators and developers can extend the command palette with custom commands. Use this feature to create shortcuts for external tools, streamlined workflows, or handy redirects.
+
+Commands are registered via the `citizen.commandPalette.register` hook. The hook fires with an object containing a `register` function that accepts your command definition.
 
 Check out these live examples from other wikis. To try them, visit the site, press `/` to open the palette, and type the command:
 
@@ -37,49 +39,47 @@ Check out these live examples from other wikis. To try them, visit the site, pre
     </LinkCard>
 </LinkGrid>
 
+### Command object
+
+Every command must have at minimum an `id`, `triggers`, and `description`. Depending on whether the command accepts a sub-query, you'll also implement `getResults` and `onResultSelect`.
+
+| Property | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `id` | `string` | Yes | Unique identifier for this command. |
+| `triggers` | `string[]` | Yes | Prefixes that activate the command. Triggers ending with `:` accept a sub-query. |
+| `description` | `string` | Yes | Short explanation shown in the command list. |
+| `getResults` | `function` | No | `(subQuery) => Promise<Array>` — returns result items for the given sub-query. |
+| `onResultSelect` | `function` | No | `(item) => { action, payload }` — handles selection of a result item. |
+
+#### Action results
+
+`onResultSelect` should return an action object telling the palette what to do:
+
+| Action | Payload | Effect |
+| :--- | :--- | :--- |
+| `{ action: 'none' }` | - | Stay in the palette, do nothing. |
+| `{ action: 'navigate', payload: url }` | URL string | Close the palette and navigate to the URL. |
+| `{ action: 'updateQuery', payload: query }` | Query string | Update the search input with a new query. |
+
 ### Example: Simple command
 
-This example creates a command that triggers an action directly when selected, without needing any additional input.
+This example creates a command that triggers an action directly when selected, without needing any additional input. Triggers should **not** end with a colon since there is no sub-query.
 
 ::: details Toggle code
 
 ```js
-const { CommandPaletteCommand, CommandPaletteItem, CommandPaletteNoneAction } = require( '../types.js' );
-
-const exampleSimpleCommand = {
-    /**
-     * Unique identifier for this command.
-     */
-    id: 'example-simple',
-
-    /**
-     * Triggers: Keywords that activate this command.
-     * Should not end with a colon as there's no sub-query.
-     */
+const myCommand = {
+    id: 'my-simple-command',
     triggers: [ '/simple', '/sim' ],
-
-    /**
-     * Description: A short explanation shown below the label.
-     */
     description: 'Executes a simple action directly.',
-
-    onCommandSelect( item ) {
-        console.debug( '[ExampleSimpleCommand] Command selected:', item );
-        mw.notify( `Simple command '${ item.label }' executed!` );
+    onResultSelect: function ( item ) {
+        mw.notify( 'Simple command executed!' );
         return { action: 'none' };
-    },
-
-    // No getResults or onResultSelect needed for a simple command.
-    type: 'command-example-simple' // Add a specific type if needed
+    }
 };
 
-// Register the command
-mw.loader.using( 'skins.citizen.commandPalette' ).then( () => {
-    mw.hook( 'skins.citizen.commandPalette.registerCommand' ).add( ( registrationData ) => {
-        if ( registrationData && registrationData.registerCommand ) {
-            registrationData.registerCommand( exampleSimpleCommand );
-        }
-    } );
+mw.hook( 'citizen.commandPalette.register' ).add( function ( data ) {
+    data.register( myCommand );
 } );
 ```
 
@@ -87,113 +87,83 @@ mw.loader.using( 'skins.citizen.commandPalette' ).then( () => {
 
 ### Example: Command with sub-query
 
-This example shows how to create a command that accepts additional input (a "sub-query") to generate dynamic results.
+This example shows how to create a command that accepts additional input (a "sub-query") to generate dynamic results. Triggers **must** end with a colon (`:`) to indicate that a sub-query is expected.
 
 ::: details Toggle code
 
 ```js
-const { CommandPaletteCommand, CommandPaletteItem, CommandPaletteNoneAction } = require( '../types.js' );
-
-const exampleSubqueryCommand = {
-    /**
-     * Unique identifier for this command.
-     */
-    id: 'example-subquery',
-
-    /**
-     * Triggers: Keywords that activate this command.
-     * Must end with a colon (':') to indicate a sub-query is expected.
-     */
+const mySubqueryCommand = {
+    id: 'my-subquery-command',
     triggers: [ '/subquery:', '/sub:' ],
+    description: 'Shows results based on your input.',
 
-    /**
-     * Description: A short explanation shown below the label.
-     */
-    description: 'Requires a sub-query to show results.',
-
-    getResults( subQuery ) {
-        console.debug( `[ExampleSubqueryCommand] Received subQuery: "${ subQuery }"` );
-
-        // Always return a Promise
-        return new Promise( ( resolve ) => {
+    getResults: function ( subQuery ) {
+        // Return a Promise resolving to an array of result items
+        return new Promise( function ( resolve ) {
             setTimeout( resolve, 150 ); // Simulate network delay
-        } ).then( () => {
-            let results = [];
-
-            if ( subQuery.toLowerCase().startsWith( 'help' ) ) {
-                results = [
+        } ).then( function () {
+            if ( !subQuery ) {
+                return [
                     {
-                        id: 'example-subquery-help',
-                        label: 'Sub-query Help',
-                        description: 'Shows help info for the sub-query command.',
-                        value: '/subquery help' // Value to insert when selected
-                    }
-                ];
-            } else if ( subQuery ) {
-                // Return items based on the sub-query
-                results = [
-                    {
-                        id: `example-subquery-item-${ subQuery }-1`,
-                        label: `Result 1 for "${ subQuery }"`,
-                        description: 'First simulated result.',
-                        value: `/subquery ${ subQuery } item1`,
-                        highlightQuery: true // Highlight the matched text
-                    },
-                    {
-                        id: `example-subquery-item-${ subQuery }-2`,
-                        label: `Result 2 for "${ subQuery }"`,
-                        description: 'Second simulated result.',
-                        value: `/subquery ${ subQuery } item2`,
-                        highlightQuery: true
-                    }
-                ];
-            } else {
-                // Default results when no sub-query is provided
-                results = [
-                    {
-                        id: 'example-subquery-default-1',
-                        label: 'Default Sub-query Action 1',
-                        description: 'Perform the first default sub-query action.',
-                        value: '/subquery default1'
-                    },
-                    {
-                        id: 'example-subquery-default-2',
-                        label: 'Default Sub-query Action 2',
-                        description: 'Perform the second default sub-query action.',
-                        value: '/subquery default2'
+                        id: 'subquery-default',
+                        label: 'Default action',
+                        description: 'Shown when no sub-query is provided.',
+                        type: 'command-subquery'
                     }
                 ];
             }
 
-            // Add type: 'command-example-subquery'
-            return results.map( ( item ) => Object.assign( {}, item, { type: 'command-example-subquery' } ) );
+            return [
+                {
+                    id: 'subquery-result-1',
+                    label: 'Result for "' + subQuery + '"',
+                    description: 'First result.',
+                    url: mw.util.getUrl( subQuery ),
+                    type: 'command-subquery',
+                    highlightQuery: true
+                }
+            ];
         } );
     },
 
-    onResultSelect( item ) {
-        console.debug( '[ExampleSubqueryCommand] Item selected:', item );
-
-        if ( item.id === 'example-subquery-help' ) {
-            mw.notify( 'Displaying help for the sub-query command!' );
-            return { action: 'none' }; // Stay in palette
-        } else {
-            mw.notify( `Action for ${ item.label } would run now.` );
-            // Example: Navigate if item has a URL
-            // if ( item.url ) {
-            //     return { action: 'navigate', payload: item.url };
-            // }
-            return { action: 'none' };
+    onResultSelect: function ( item ) {
+        if ( item.url ) {
+            return { action: 'navigate', payload: item.url };
         }
+        return { action: 'none' };
     }
 };
 
-// Register the command
-mw.loader.using( 'skins.citizen.commandPalette' ).then( () => {
-    mw.hook( 'skins.citizen.commandPalette.registerCommand' ).add( ( registrationData ) => {
-        if ( registrationData && registrationData.registerCommand ) {
-            registrationData.registerCommand( exampleSubqueryCommand );
-        }
-    } );
+mw.hook( 'citizen.commandPalette.register' ).add( function ( data ) {
+    data.register( mySubqueryCommand );
+} );
+```
+
+:::
+
+::: warning Breaking change
+If you have custom commands registered with the previous API, you'll need to update them:
+
+- The hook has been renamed from `skins.citizen.commandPalette.registerCommand` to `citizen.commandPalette.register`
+- The hook callback now receives `{ register }` instead of `{ registerCommand }`
+- The `onCommandSelect` property has been renamed to `onResultSelect`
+- The `type` property on the command object is no longer needed (set it on individual result items instead)
+
+The old hook name still works but will log a deprecation warning. Please migrate to the new name.
+
+**Before:**
+
+```js
+mw.hook( 'skins.citizen.commandPalette.registerCommand' ).add( function ( data ) {
+    data.registerCommand( myCommand ); // [!code --]
+} );
+```
+
+**After:**
+
+```js
+mw.hook( 'citizen.commandPalette.register' ).add( function ( data ) {
+    data.register( myCommand ); // [!code ++]
 } );
 ```
 
