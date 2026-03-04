@@ -1,56 +1,35 @@
-const { CommandPaletteItem, CommandPaletteProvider, CommandPaletteActionResult } = require( '../types.js' );
-const SearchClientFactory = require( '../searchClients/SearchClientFactory.js' );
+const createProvider = require( './createProvider.js' );
 const { getNavigationAction } = require( '../utils/providerActions.js' );
 
-/** @type {CommandPaletteProvider} */
-module.exports = {
-	id: 'search',
-	isAsync: true,
-	debounceMs: 250,
-	keepStaleResultsOnQueryChange: true,
+/**
+ * Creates a search provider with the given search client.
+ *
+ * @param {Object} searchClient The search client with fetchByQuery method.
+ * @return {Object} A validated provider.
+ */
+function createSearchProvider( searchClient ) {
+	return createProvider( 'search', {
+		canProvide( query ) {
+			return !!query && !query.startsWith( '/' );
+		},
 
-	/**
-	 * Determines if this provider should handle the current query.
-	 *
-	 * @param {string} query The search query.
-	 * @return {boolean}
-	 */
-	canProvide( query ) {
-		// Handles non-empty queries that are not slash commands
-		return !!query && !query.startsWith( '/' );
-	},
-
-	/**
-	 * Performs the search using the configured SearchClient and returns results.
-	 *
-	 * @param {string} query The search query.
-	 * @return {Promise<Array<CommandPaletteItem>>} A promise resolving to search results.
-	 */
-	async getResults( query ) {
-		const searchClient = SearchClientFactory.create();
-
-		try {
-			const { fetch } = searchClient.fetchByQuery( query );
-			const searchResponse = await fetch;
-			const results = searchResponse.results ?? [];
-			// Ensure source is added by the provider
-			return Array.isArray( results ) ? results.map( ( item ) => ( { ...item, source: this.id } ) ) : [];
-		} catch ( error ) {
-			if ( error.name === 'AbortError' ) {
-				// Search was aborted, ignore
-				return [];
+		async getResults( query, signal ) {
+			try {
+				const response = await searchClient.fetchByQuery( query, undefined, signal );
+				const results = response.results ?? [];
+				return { items: results.map( ( item ) => ( { ...item, source: 'search' } ) ) };
+			} catch ( error ) {
+				if ( error.name === 'AbortError' ) {
+					return { items: [] };
+				}
+				throw error;
 			}
-			throw error;
-		}
-	},
+		},
 
-	/**
-	 * Handles the selection of a search result item.
-	 *
-	 * @param {CommandPaletteItem} item The selected item.
-	 * @return {Promise<CommandPaletteActionResult>} Action result.
-	 */
-	async onResultSelect( item ) {
-		return getNavigationAction( item );
-	}
-};
+		onResultSelect( item ) {
+			return getNavigationAction( item );
+		}
+	}, { debounceMs: 250, keepStaleResults: true } );
+}
+
+module.exports = createSearchProvider;
