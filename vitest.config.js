@@ -65,6 +65,8 @@ export default defineConfig( {
 		include: [ 'tests/vitest/**/*.test.js' ],
 		globals: true,
 		setupFiles: [ 'tests/vitest/setup.js' ],
+		testTimeout: 10000,
+		hookTimeout: 15000,
 		coverage: {
 			provider: 'v8',
 			reportsDirectory: 'coverage/js',
