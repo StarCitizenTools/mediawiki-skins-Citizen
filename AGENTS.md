@@ -80,6 +80,7 @@ When your test plan includes steps that require a browser (e.g., verifying scrip
 ### Commits
 
 - Use [Conventional Commits](https://www.conventionalcommits.org/) (e.g. `fix(tests):`, `feat:`, `refactor:`)
+- Use `ci:` or `chore:` for non-user-facing changes (tooling, config, dependencies)
 - Do **not** include emojis — a pre-commit hook adds them automatically based on the commit type prefix
 
 ### Tests
