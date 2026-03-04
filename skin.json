@@ -412,7 +412,6 @@
 				"resources/skins.citizen.commandPalette/components/CommandPaletteListItem.vue",
 				"resources/skins.citizen.commandPalette/components/CommandPaletteListItemActions.vue",
 				"resources/skins.citizen.commandPalette/components/CommandPaletteListItemContent.vue",
-				"resources/skins.citizen.commandPalette/components/CommandPalettePresults.vue",
 				{
 					"name": "resources/skins.citizen.commandPalette/icons.json",
 					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
