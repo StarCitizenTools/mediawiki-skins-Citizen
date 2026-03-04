@@ -16,38 +16,22 @@
 			@update:model-value="updateQuery( $event )"
 		></command-palette-header>
 		<div class="citizen-command-palette__results">
-			<!-- Show Presults when query is empty and not loading -->
-			<template v-if="!query && !isPending">
-				<command-palette-presults
-					:items="displayedItems"
-					:highlighted-item-index="highlightedItemIndex"
-					:search-query="query"
-					:set-item-ref="setItemRef"
-					@select="selectResult"
-					@hover="handleHover"
-					@action="handleAction"
-				></command-palette-presults>
-			</template>
-			<!-- Show Empty State when query exists, not pending, and no results -->
-			<template v-else-if="query && !isPending && displayedItems.length === 0">
-				<command-palette-empty-state
-					:title="$i18n( 'citizen-search-noresults-title' ).params( [ query ] ).text()"
-					:description="$i18n( 'search-nonefound' ).text()"
-					:icon="cdxIconArticleNotFound"
-				></command-palette-empty-state>
-			</template>
-			<!-- Show Regular List for search results or slash commands when query exists and has results, or when loading -->
-			<template v-else-if="( query || isPending ) && displayedItems.length > 0">
-				<command-palette-list
-					:items="displayedItems"
-					:highlighted-item-index="highlightedItemIndex"
-					:search-query="query"
-					:set-item-ref="setItemRef"
-					@select="selectResult"
-					@action="handleAction"
-					@hover="handleHover"
-				></command-palette-list>
-			</template>
+			<command-palette-empty-state
+				v-if="!showPending && flatItems.length === 0"
+				:title="emptyStateTitle"
+				:description="emptyStateDescription"
+				:icon="emptyStateIcon"
+			></command-palette-empty-state>
+			<command-palette-list
+				v-else-if="displayedItems.length > 0"
+				:sections="displayedItems"
+				:highlighted-item-index="highlightedItemIndex"
+				:search-query="query"
+				:set-item-ref="setItemRef"
+				@select="selectResult"
+				@action="handleAction"
+				@hover="handleHover"
+			></command-palette-list>
 		</div>
 		<command-palette-footer
 			:hints="keyboard.keyboardHints.value"
@@ -62,10 +46,9 @@ const useKeyboard = require( '../composables/useKeyboard.js' );
 const useProviderOrchestration = require( '../composables/useProviderOrchestration.js' );
 const CommandPaletteList = require( './CommandPaletteList.vue' );
 const CommandPaletteEmptyState = require( './CommandPaletteEmptyState.vue' );
-const CommandPalettePresults = require( './CommandPalettePresults.vue' );
 const CommandPaletteFooter = require( './CommandPaletteFooter.vue' );
 const CommandPaletteHeader = require( './CommandPaletteHeader.vue' );
-const { cdxIconArticleNotFound } = require( '../icons.json' );
+const { cdxIconArticleNotFound, cdxIconArticlesSearch } = require( '../icons.json' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
@@ -76,7 +59,6 @@ module.exports = exports = defineComponent( {
 	components: {
 		CommandPaletteList,
 		CommandPaletteEmptyState,
-		CommandPalettePresults,
 		CommandPaletteFooter,
 		CommandPaletteHeader
 	},
@@ -101,8 +83,31 @@ module.exports = exports = defineComponent( {
 			recentItemsService
 		} );
 
+		const flatItems = computed( () => orch.flatItems.value );
+
+		const emptyStateTitle = computed( () => {
+			if ( orch.query.value ) {
+				return mw.message( 'citizen-search-noresults-title', orch.query.value ).text();
+			}
+			return mw.message( 'searchsuggest-search' ).text();
+		} );
+
+		const emptyStateDescription = computed( () => {
+			if ( orch.query.value ) {
+				return mw.message( 'search-nonefound' ).text();
+			}
+			return mw.message( 'citizen-search-empty-desc' ).text();
+		} );
+
+		const emptyStateIcon = computed( () => {
+			if ( orch.query.value ) {
+				return cdxIconArticleNotFound;
+			}
+			return cdxIconArticlesSearch;
+		} );
+
 		// List navigation
-		const listNav = useListNavigation( orch.displayedItems );
+		const listNav = useListNavigation( orch.flatItems );
 
 		// Action navigation adapter (managed at App level)
 		const actionFocusedIndex = ref( -1 );
@@ -124,7 +129,7 @@ module.exports = exports = defineComponent( {
 			},
 			focusNext() {
 				const highlightedIdx = listNav.highlightedIndex.value;
-				const items = orch.displayedItems.value;
+				const items = orch.flatItems.value;
 				const actions = ( highlightedIdx >= 0 && items[ highlightedIdx ] ) ?
 					items[ highlightedIdx ].actions || [] : [];
 				if ( actionFocusedIndex.value < actions.length - 1 ) {
@@ -196,7 +201,7 @@ module.exports = exports = defineComponent( {
 		const keyboard = useKeyboard( {
 			inputRef: searchHeader,
 			itemRefs,
-			items: orch.displayedItems,
+			items: orch.flatItems,
 			listNav,
 			actionNav,
 			onSelect: selectResult,
@@ -254,7 +259,7 @@ module.exports = exports = defineComponent( {
 		};
 
 		// Watch for changes in displayed items to adjust highlighting
-		watch( orch.displayedItems, ( newItems ) => {
+		watch( orch.flatItems, ( newItems ) => {
 			itemRefs.value.clear();
 			actionNav.deactivate();
 			if ( newItems.length === 0 ) {
@@ -278,6 +283,7 @@ module.exports = exports = defineComponent( {
 			// Orchestration
 			query: orch.query,
 			displayedItems: orch.displayedItems,
+			flatItems,
 			isPending: orch.isPending,
 			showPending: orch.showPending,
 			updateQuery: orch.updateQuery,
@@ -285,6 +291,10 @@ module.exports = exports = defineComponent( {
 			keyboard,
 			// List nav
 			highlightedItemIndex: listNav.highlightedIndex,
+			// Empty state
+			emptyStateTitle,
+			emptyStateDescription,
+			emptyStateIcon,
 			// Methods
 			// eslint-disable-next-line vue/no-unused-properties -- Used externally by init.js
 			open,
@@ -292,9 +302,7 @@ module.exports = exports = defineComponent( {
 			selectResult,
 			handleAction,
 			handleHover,
-			setItemRef,
-			// Icons
-			cdxIconArticleNotFound
+			setItemRef
 		};
 	}
 } );
