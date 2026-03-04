@@ -50,13 +50,7 @@
 			</template>
 		</div>
 		<command-palette-footer
-			:has-highlighted-item-with-actions="hasHighlightedItemWithActions"
-			:item-count="itemCount"
-			:highlighted-item-type="highlightedItemType"
-			:is-action-focused="actionFocusActive"
-			:is-first-action-focused="firstActionFocusActive"
-			:focused-action-index="focusedActionIndex"
-			:action-count="actionCount"
+			:hints="keyboard.keyboardHints.value"
 		></command-palette-footer>
 	</div>
 </template>
@@ -277,17 +271,6 @@ module.exports = exports = defineComponent( {
 			nextTick( focusInput );
 		};
 
-		// Footer computed props
-		const itemCount = computed( () => orch.displayedItems.value.length );
-		const currentItem = computed( () => {
-			const idx = listNav.highlightedIndex.value;
-			return ( idx >= 0 && orch.displayedItems.value.length > idx ) ?
-				orch.displayedItems.value[ idx ] : null;
-		} );
-		const highlightedItemType = computed( () => currentItem.value?.type || null );
-		const actionCount = computed( () => currentItem.value?.actions?.length || 0 );
-		const firstActionFocusActive = computed( () => actionFocusedIndex.value === 0 );
-
 		return {
 			// State
 			isOpen,
@@ -310,14 +293,6 @@ module.exports = exports = defineComponent( {
 			handleAction,
 			handleHover,
 			setItemRef,
-			// Footer props
-			hasHighlightedItemWithActions: keyboard.highlightedItemHasActions,
-			itemCount,
-			highlightedItemType,
-			actionFocusActive: actionIsActive,
-			firstActionFocusActive,
-			focusedActionIndex: actionFocusedIndex,
-			actionCount,
 			// Icons
 			cdxIconArticleNotFound
 		};
