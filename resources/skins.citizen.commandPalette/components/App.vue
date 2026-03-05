@@ -10,12 +10,16 @@
 	>
 		<command-palette-header
 			ref="searchHeader"
-			:model-value="query"
+			:tokens="tokenInput.tokens.value"
+			:free-text="tokenInput.freeText.value"
+			:selected-token-index="tokenInput.selectedIndex.value"
 			:is-pending="isPending"
 			:show-pending="showPending"
 			:active-mode="activeMode"
 			@exit-mode="exitMode"
-			@update:model-value="updateQuery( $event )"
+			@update:free-text="handleFreeTextUpdate( $event )"
+			@select-token="tokenInput.selectToken( $event )"
+			@remove-token="handleRemoveToken( $event )"
 		></command-palette-header>
 		<div class="citizen-command-palette__results">
 			<command-palette-empty-state
@@ -46,6 +50,7 @@ const { defineComponent, ref, nextTick, computed, watch, inject } = require( 'vu
 const useListNavigation = require( '../composables/useListNavigation.js' );
 const useKeyboard = require( '../composables/useKeyboard.js' );
 const useProviderOrchestration = require( '../composables/useProviderOrchestration.js' );
+const useTokenizedInput = require( '../composables/useTokenizedInput.js' );
 const CommandPaletteList = require( './CommandPaletteList.vue' );
 const CommandPaletteEmptyState = require( './CommandPaletteEmptyState.vue' );
 const CommandPaletteFooter = require( './CommandPaletteFooter.vue' );
@@ -74,6 +79,7 @@ module.exports = exports = defineComponent( {
 		const relatedArticlesProvider = inject( 'relatedArticlesProvider' );
 		const findModeByTrigger = inject( 'findModeByTrigger' );
 		const findModeByQuery = inject( 'findModeByQuery' );
+		const getTokenPatterns = inject( 'getTokenPatterns' );
 
 		// Core refs
 		const isOpen = ref( false );
@@ -86,6 +92,8 @@ module.exports = exports = defineComponent( {
 			relatedArticlesProvider,
 			recentItemsService
 		} );
+
+		const tokenInput = useTokenizedInput( getTokenPatterns(), orch.activeMode );
 
 		const flatItems = computed( () => orch.flatItems.value );
 
@@ -194,13 +202,14 @@ module.exports = exports = defineComponent( {
 					break;
 				case 'updateQuery':
 					if ( orch.activeMode.value ) {
-						// From within a mode: exit and search with the payload
+						// From within a mode: exit and add token
 						orch.exitMode();
-						orch.updateQuery( selectionAction.payload );
+						tokenInput.setFreeText( selectionAction.payload );
 					} else {
 						// From root: try to enter a matching mode
 						const mode = findModeByQuery( selectionAction.payload );
 						if ( mode ) {
+							tokenInput.clear();
 							orch.enterMode( mode );
 						}
 					}
@@ -210,6 +219,16 @@ module.exports = exports = defineComponent( {
 				default:
 					break;
 			}
+		};
+
+		const handleRemoveToken = ( index ) => {
+			const token = tokenInput.tokens.value[ index ];
+			if ( !token ) {
+				return;
+			}
+			tokenInput.removeToken( index );
+			// Prepend the raw text back to freeText (detection is suppressed)
+			tokenInput.setFreeText( token.raw + tokenInput.freeText.value );
 		};
 
 		// Keyboard handler
@@ -223,10 +242,17 @@ module.exports = exports = defineComponent( {
 			onClose: close,
 			query: orch.query,
 			activeMode: orch.activeMode,
-			onClearQuery: () => orch.updateQuery( '' ),
+			onClearQuery: () => {
+				tokenInput.clear();
+				orch.updateQuery( '' );
+			},
 			onExitMode: () => orch.exitMode(),
 			onEnterMode: ( mode ) => orch.enterMode( mode ),
-			findModeByTrigger
+			findModeByTrigger,
+			tokens: tokenInput.tokens,
+			selectedTokenIndex: tokenInput.selectedIndex,
+			onSelectToken: ( index ) => tokenInput.selectToken( index ),
+			onRemoveToken: handleRemoveToken
 		} );
 
 		// setItemRef expects the GLOBAL index within displayedItems
@@ -279,6 +305,15 @@ module.exports = exports = defineComponent( {
 			}
 		};
 
+		const handleFreeTextUpdate = ( text ) => {
+			tokenInput.setFreeText( text );
+		};
+
+		// Sync tokenized fullQuery to orchestrator
+		watch( tokenInput.fullQuery, ( newQuery ) => {
+			orch.updateQuery( newQuery );
+		} );
+
 		// Watch for changes in displayed items to adjust highlighting
 		watch( orch.flatItems, ( newItems ) => {
 			itemRefs.value.clear();
@@ -298,6 +333,7 @@ module.exports = exports = defineComponent( {
 			} else {
 				orch.clearSearch();
 			}
+			tokenInput.clear();
 			nextTick( focusInput );
 		};
 
@@ -313,7 +349,10 @@ module.exports = exports = defineComponent( {
 			flatItems,
 			isPending: orch.isPending,
 			showPending: orch.showPending,
-			updateQuery: orch.updateQuery,
+			// Token state
+			tokenInput,
+			handleFreeTextUpdate,
+			handleRemoveToken,
 			// Keyboard
 			keyboard,
 			// List nav
