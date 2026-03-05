@@ -174,12 +174,12 @@ function createPaletteRegistry() {
 	 * Only returns entries that have getResults (modes), not commands.
 	 *
 	 * @param {string} query The query to match against triggers.
-	 * @return {import('../types.js').PaletteMode|null} The matching mode, or null.
+	 * @return {{ mode: import('../types.js').PaletteMode, trigger: string }|null}
 	 */
 	function findModeByQuery( query ) {
 		const match = findMatchingCommand( query );
 		if ( match && typeof match.handler.getResults === 'function' ) {
-			return match.handler;
+			return { mode: match.handler, trigger: match.trigger };
 		}
 		return null;
 	}

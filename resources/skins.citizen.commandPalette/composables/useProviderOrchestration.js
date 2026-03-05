@@ -28,6 +28,7 @@ function normalizeProviderResult( result ) {
  * @param {Object} [deps.recentItemsProvider] Provider for recent items (presults).
  * @param {Object} [deps.relatedArticlesProvider] Provider for related articles (presults).
  * @param {Object} [deps.recentItemsService] Service for dismissing recent items.
+ * @param {import('vue').Ref<Array>} [deps.tokens] Ref containing the current token array.
  * @return {Object} Orchestration state and methods.
  */
 function useProviderOrchestration( providers, resultDecorator, deps ) {
@@ -234,8 +235,9 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	 * @param {string} currentQuery The query string.
 	 */
 	function handleModeQuery( mode, currentQuery ) {
+		const tokens = deps.tokens ? deps.tokens.value : [];
 		if ( !currentQuery ) {
-			Promise.resolve( mode.getResults( '' ) ).then( ( result ) => {
+			Promise.resolve( mode.getResults( '', undefined, tokens ) ).then( ( result ) => {
 				const items = normalizeProviderResult( result );
 				if ( query.value === currentQuery && activeMode.value === mode ) {
 					displayedItems.value = items.length > 0 ?
@@ -274,7 +276,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 
 			try {
 				const signal = abortController ? abortController.signal : undefined;
-				const result = await mode.getResults( currentQuery, signal );
+				const result = await mode.getResults( currentQuery, signal, tokens );
 				const items = normalizeProviderResult( result );
 				if ( query.value === currentQuery && activeMode.value === mode ) {
 					displayedItems.value = items.length > 0 ?

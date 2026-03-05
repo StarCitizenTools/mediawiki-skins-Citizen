@@ -158,7 +158,7 @@ describe( 'useProviderOrchestration', () => {
 			orch.enterMode( mode );
 			await vi.runAllTimersAsync();
 
-			expect( mode.getResults ).toHaveBeenCalledWith( '' );
+			expect( mode.getResults ).toHaveBeenCalledWith( '', undefined, [] );
 		} );
 
 		it( 'updateQuery routes through active mode getResults when mode is active', async () => {
@@ -176,7 +176,7 @@ describe( 'useProviderOrchestration', () => {
 			vi.advanceTimersByTime( 250 );
 			await vi.runAllTimersAsync();
 
-			expect( mode.getResults ).toHaveBeenCalledWith( 'Talk', expect.any( AbortSignal ) );
+			expect( mode.getResults ).toHaveBeenCalledWith( 'Talk', expect.any( AbortSignal ), [] );
 		} );
 
 		it( 'updateQuery uses normal provider dispatch when no mode is active', async () => {
