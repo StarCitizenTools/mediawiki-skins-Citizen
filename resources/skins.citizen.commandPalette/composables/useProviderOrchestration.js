@@ -1,4 +1,4 @@
-const { ref, computed } = require( 'vue' );
+const { ref, shallowRef, computed } = require( 'vue' );
 
 const SHOW_PENDING_DELAY_MS = 300;
 
@@ -37,6 +37,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	const displayedItems = ref( [] );
 	const isPending = ref( false );
 	const showPending = ref( false );
+	const activeMode = shallowRef( null );
 	const flatItems = computed( () => displayedItems.value.flatMap( ( s ) => s.items ) );
 	const hasDisplayedItems = computed( () => flatItems.value.length > 0 );
 
@@ -227,6 +228,102 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	}
 
 	/**
+	 * Handles a query routed through the active mode's getResults.
+	 *
+	 * @param {Object} mode The active mode object.
+	 * @param {string} currentQuery The query string.
+	 */
+	function handleModeQuery( mode, currentQuery ) {
+		if ( !currentQuery ) {
+			Promise.resolve( mode.getResults( '' ) ).then( ( result ) => {
+				const items = normalizeProviderResult( result );
+				if ( query.value === currentQuery && activeMode.value === mode ) {
+					displayedItems.value = items.length > 0 ?
+						[ { heading: null, items: items } ] : [];
+				}
+			} ).catch( ( error ) => {
+				mw.log.error(
+					'[commandPalette] Mode "' + mode.id + '" failed:', error
+				);
+			} );
+			return;
+		}
+
+		isPending.value = true;
+
+		clearTimeout( pendingDelayTimeout );
+		pendingDelayTimeout = setTimeout( () => {
+			if ( isPending.value && query.value === currentQuery ) {
+				showPending.value = true;
+			}
+		}, SHOW_PENDING_DELAY_MS );
+
+		clearTimeout( debounceTimeout );
+
+		if ( abortController ) {
+			abortController.abort();
+		}
+		abortController = new AbortController();
+
+		debounceTimeout = setTimeout( async () => {
+			if ( query.value !== currentQuery || activeMode.value !== mode ) {
+				isPending.value = false;
+				showPending.value = false;
+				return;
+			}
+
+			try {
+				const signal = abortController ? abortController.signal : undefined;
+				const result = await mode.getResults( currentQuery, signal );
+				const items = normalizeProviderResult( result );
+				if ( query.value === currentQuery && activeMode.value === mode ) {
+					displayedItems.value = items.length > 0 ?
+						[ { heading: null, items: items } ] : [];
+				}
+			} catch ( error ) {
+				if ( error.name !== 'AbortError' ) {
+					mw.log.error(
+						'[commandPalette] Mode "' + mode.id + '" failed:', error
+					);
+					if ( query.value === currentQuery && activeMode.value === mode ) {
+						displayedItems.value = [];
+					}
+				}
+			} finally {
+				if ( query.value === currentQuery ) {
+					isPending.value = false;
+					showPending.value = false;
+					clearTimeout( pendingDelayTimeout );
+					pendingDelayTimeout = null;
+				}
+			}
+		}, mode.debounceMs ?? 250 );
+	}
+
+	/**
+	 * Enters a mode, clearing query and displayed items.
+	 *
+	 * @param {Object} mode The mode to enter.
+	 */
+	function enterMode( mode ) {
+		resetOperationState();
+		activeMode.value = mode;
+		query.value = '';
+		displayedItems.value = [];
+		handleModeQuery( mode, '' );
+	}
+
+	/**
+	 * Exits the current mode and reloads initial results.
+	 *
+	 * @return {Promise} Resolves when initial results are loaded.
+	 */
+	function exitMode() {
+		activeMode.value = null;
+		return clearSearch();
+	}
+
+	/**
 	 * Updates the search query and triggers the appropriate provider.
 	 *
 	 * @param {string} newQuery The new search query.
@@ -234,6 +331,11 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	function updateQuery( newQuery ) {
 		query.value = newQuery;
 		resetOperationState();
+
+		if ( activeMode.value ) {
+			handleModeQuery( activeMode.value, newQuery );
+			return;
+		}
 
 		if ( !newQuery ) {
 			clearSearch();
@@ -287,11 +389,6 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 			}
 		}
 
-		if ( actionResult.action === 'updateQuery' &&
-			actionResult.payload !== undefined ) {
-			updateQuery( actionResult.payload );
-		}
-
 		return actionResult;
 	}
 
@@ -304,6 +401,21 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	async function handleSelection( result ) {
 		if ( !result ) {
 			return { action: 'none' };
+		}
+
+		// If in a mode, delegate to the mode's onResultSelect
+		if ( activeMode.value &&
+			typeof activeMode.value.onResultSelect === 'function' ) {
+			try {
+				const actionResult =
+					await activeMode.value.onResultSelect( result );
+				return processAction( actionResult, result );
+			} catch ( error ) {
+				mw.log.error(
+					'[commandPalette] Mode selection handler failed:', error
+				);
+				return { action: 'none' };
+			}
 		}
 
 		const sourceMatch = ( /^([^:]+)(?::.*)?$/ ).exec(
@@ -357,8 +469,11 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		isPending,
 		showPending,
 		hasDisplayedItems,
+		activeMode,
 		updateQuery,
 		clearSearch,
+		enterMode,
+		exitMode,
 		handleSelection,
 		dismissRecentItem
 	};
