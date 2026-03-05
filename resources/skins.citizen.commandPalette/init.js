@@ -59,6 +59,16 @@ function initApp() {
 		}
 	} );
 
+	// Conditionally load extension-specific modes
+	if ( config.isSemanticMediaWikiEnabled ) {
+		mw.loader.using( 'skins.citizen.commandPalette.smw' ).then( ( req ) => {
+			const smwMode = req( 'skins.citizen.commandPalette.smw' );
+			paletteRegistry.register( smwMode );
+		} ).catch( ( e ) => {
+			mw.log.error( '[commandPalette] Failed to load SMW mode:', e );
+		} );
+	}
+
 	// 4. Create providers
 	const recentItemsProvider = createRecentItemsProvider( recentItemsService );
 	const relatedArticlesProvider = createRelatedArticlesProvider( mw.loader );

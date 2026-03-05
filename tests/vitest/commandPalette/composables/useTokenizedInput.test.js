@@ -7,7 +7,7 @@ const useTokenizedInput = require(
 
 describe( 'useTokenizedInput', () => {
 	it( 'should initialize with empty state', () => {
-		const ti = useTokenizedInput( [] );
+		const ti = useTokenizedInput( () => [] );
 
 		expect( ti.tokens.value ).toEqual( [] );
 		expect( ti.freeText.value ).toBe( '' );
@@ -17,7 +17,7 @@ describe( 'useTokenizedInput', () => {
 
 	describe( 'addToken', () => {
 		it( 'should add a token and update fullQuery', () => {
-			const ti = useTokenizedInput( [] );
+			const ti = useTokenizedInput( () => [] );
 
 			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace' } );
 
@@ -28,7 +28,7 @@ describe( 'useTokenizedInput', () => {
 		} );
 
 		it( 'should concatenate multiple tokens with freeText', () => {
-			const ti = useTokenizedInput( [] );
+			const ti = useTokenizedInput( () => [] );
 
 			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace' } );
 			ti.freeText.value = 'Main Page';
@@ -39,7 +39,7 @@ describe( 'useTokenizedInput', () => {
 
 	describe( 'removeToken', () => {
 		it( 'should remove a token by index', () => {
-			const ti = useTokenizedInput( [] );
+			const ti = useTokenizedInput( () => [] );
 			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace' } );
 			ti.addToken( { label: 'User:', raw: 'User:', modeId: 'namespace' } );
 
@@ -50,7 +50,7 @@ describe( 'useTokenizedInput', () => {
 		} );
 
 		it( 'should reset selectedIndex after removal', () => {
-			const ti = useTokenizedInput( [] );
+			const ti = useTokenizedInput( () => [] );
 			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace' } );
 			ti.selectToken( 0 );
 
@@ -62,7 +62,7 @@ describe( 'useTokenizedInput', () => {
 
 	describe( 'selectToken / deselectToken', () => {
 		it( 'should set selectedIndex', () => {
-			const ti = useTokenizedInput( [] );
+			const ti = useTokenizedInput( () => [] );
 			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace' } );
 
 			ti.selectToken( 0 );
@@ -71,7 +71,7 @@ describe( 'useTokenizedInput', () => {
 		} );
 
 		it( 'should deselect', () => {
-			const ti = useTokenizedInput( [] );
+			const ti = useTokenizedInput( () => [] );
 			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace' } );
 			ti.selectToken( 0 );
 
@@ -83,7 +83,7 @@ describe( 'useTokenizedInput', () => {
 
 	describe( 'clear', () => {
 		it( 'should reset all state', () => {
-			const ti = useTokenizedInput( [] );
+			const ti = useTokenizedInput( () => [] );
 			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace' } );
 			ti.freeText.value = 'test';
 			ti.selectToken( 0 );
@@ -100,12 +100,13 @@ describe( 'useTokenizedInput', () => {
 			const pattern = {
 				modeId: 'namespace',
 				position: 'prefix',
+				activeIn: 'root',
 				match: ( text ) => {
 					const m = text.match( /^(Talk):/ );
 					return m ? { label: m[ 1 ] + ':', raw: m[ 1 ] + ':' } : null;
 				}
 			};
-			const ti = useTokenizedInput( [ pattern ] );
+			const ti = useTokenizedInput( () => [ pattern ] );
 			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace', position: 'prefix' } );
 			ti.removeToken( 0 ); // sets suppressDetection = true
 
@@ -123,12 +124,13 @@ describe( 'useTokenizedInput', () => {
 			const pattern = {
 				modeId: 'namespace',
 				position: 'prefix',
+				activeIn: 'root',
 				match: ( text ) => {
 					const m = text.match( /^(Talk):/ );
 					return m ? { label: m[ 1 ] + ':', raw: m[ 1 ] + ':' } : null;
 				}
 			};
-			const ti = useTokenizedInput( [ pattern ] );
+			const ti = useTokenizedInput( () => [ pattern ] );
 
 			ti.setFreeText( 'Talk:Main Page' );
 
@@ -141,9 +143,10 @@ describe( 'useTokenizedInput', () => {
 			const pattern = {
 				modeId: 'namespace',
 				position: 'prefix',
+				activeIn: 'root',
 				match: () => null
 			};
-			const ti = useTokenizedInput( [ pattern ] );
+			const ti = useTokenizedInput( () => [ pattern ] );
 
 			ti.setFreeText( 'hello world' );
 
@@ -155,6 +158,7 @@ describe( 'useTokenizedInput', () => {
 			const nsPattern = {
 				modeId: 'namespace',
 				position: 'prefix',
+				activeIn: 'root',
 				match: ( text ) => {
 					const m = text.match( /^(Talk):/ );
 					return m ? { label: m[ 1 ] + ':', raw: m[ 1 ] + ':' } : null;
@@ -163,12 +167,13 @@ describe( 'useTokenizedInput', () => {
 			const cirrusPattern = {
 				modeId: 'cirrus',
 				position: 'any',
+				activeIn: 'root',
 				match: ( text ) => {
 					const m = text.match( /^(intitle:\S+)\s?/ );
 					return m ? { label: m[ 1 ], raw: m[ 0 ] } : null;
 				}
 			};
-			const ti = useTokenizedInput( [ nsPattern, cirrusPattern ] );
+			const ti = useTokenizedInput( () => [ nsPattern, cirrusPattern ] );
 
 			ti.setFreeText( 'Talk:intitle:foo query' );
 
@@ -176,16 +181,80 @@ describe( 'useTokenizedInput', () => {
 			expect( ti.freeText.value ).toBe( 'query' );
 		} );
 
+		it( 'should detect tokens separated by whitespace in pasted text', () => {
+			const { ref } = require( 'vue' );
+			const activeMode = ref( { id: 'smw' } );
+			const smwPattern = {
+				modeId: 'smw',
+				position: 'any',
+				activeIn: 'smw',
+				match: ( text ) => {
+					const m = text.match( /^\[\[([^\]]+)\]\]/ );
+					return m ? { label: m[ 1 ], raw: m[ 0 ] } : null;
+				}
+			};
+			const ti = useTokenizedInput( () => [ smwPattern ], activeMode );
+
+			ti.setFreeText( '[[Category:City]] [[Located in::Germany]]' );
+
+			expect( ti.tokens.value ).toHaveLength( 2 );
+			expect( ti.tokens.value[ 0 ].label ).toBe( 'Category:City' );
+			expect( ti.tokens.value[ 1 ].label ).toBe( 'Located in::Germany' );
+			expect( ti.freeText.value ).toBe( '' );
+		} );
+
+		it( 'should strip leading whitespace when followed by a matching token', () => {
+			const { ref } = require( 'vue' );
+			const activeMode = ref( { id: 'smw' } );
+			const smwPattern = {
+				modeId: 'smw',
+				position: 'any',
+				activeIn: 'smw',
+				match: ( text ) => {
+					const m = text.match( /^\[\[([^\]]+)\]\]/ );
+					return m ? { label: m[ 1 ], raw: m[ 0 ] } : null;
+				}
+			};
+			const ti = useTokenizedInput( () => [ smwPattern ], activeMode );
+
+			ti.setFreeText( ' [[Located in::Germany]]' );
+
+			expect( ti.tokens.value ).toHaveLength( 1 );
+			expect( ti.tokens.value[ 0 ].label ).toBe( 'Located in::Germany' );
+			expect( ti.freeText.value ).toBe( '' );
+		} );
+
+		it( 'should preserve whitespace before non-token text', () => {
+			const { ref } = require( 'vue' );
+			const activeMode = ref( { id: 'smw' } );
+			const smwPattern = {
+				modeId: 'smw',
+				position: 'any',
+				activeIn: 'smw',
+				match: ( text ) => {
+					const m = text.match( /^\[\[([^\]]+)\]\]/ );
+					return m ? { label: m[ 1 ], raw: m[ 0 ] } : null;
+				}
+			};
+			const ti = useTokenizedInput( () => [ smwPattern ], activeMode );
+
+			ti.setFreeText( '[[Category:City]] some text' );
+
+			expect( ti.tokens.value ).toHaveLength( 1 );
+			expect( ti.freeText.value ).toBe( ' some text' );
+		} );
+
 		it( 'should suppress detection after removeToken', () => {
 			const pattern = {
 				modeId: 'namespace',
 				position: 'prefix',
+				activeIn: 'root',
 				match: ( text ) => {
 					const m = text.match( /^(Talk):/ );
 					return m ? { label: m[ 1 ] + ':', raw: m[ 1 ] + ':' } : null;
 				}
 			};
-			const ti = useTokenizedInput( [ pattern ] );
+			const ti = useTokenizedInput( () => [ pattern ] );
 			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace', position: 'prefix' } );
 
 			ti.removeToken( 0 );
@@ -200,12 +269,13 @@ describe( 'useTokenizedInput', () => {
 			const pattern = {
 				modeId: 'namespace',
 				position: 'prefix',
+				activeIn: 'root',
 				match: ( text ) => {
 					const m = text.match( /^(Talk):/ );
 					return m ? { label: m[ 1 ] + ':', raw: m[ 1 ] + ':' } : null;
 				}
 			};
-			const ti = useTokenizedInput( [ pattern ] );
+			const ti = useTokenizedInput( () => [ pattern ] );
 			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace', position: 'prefix' } );
 			ti.removeToken( 0 );
 			ti.setFreeText( 'Talk:Main Page' ); // suppressed
@@ -221,9 +291,10 @@ describe( 'useTokenizedInput', () => {
 			const pattern = {
 				modeId: 'test',
 				position: 'any',
+				activeIn: 'root',
 				match: () => ( { label: 'x', raw: '' } )
 			};
-			const ti = useTokenizedInput( [ pattern ] );
+			const ti = useTokenizedInput( () => [ pattern ] );
 
 			ti.setFreeText( 'hello' );
 
@@ -234,12 +305,13 @@ describe( 'useTokenizedInput', () => {
 			const nsPattern = {
 				modeId: 'namespace',
 				position: 'prefix',
+				activeIn: 'root',
 				match: ( text ) => {
 					const m = text.match( /^(Talk):/ );
 					return m ? { label: m[ 1 ] + ':', raw: m[ 1 ] + ':' } : null;
 				}
 			};
-			const ti = useTokenizedInput( [ nsPattern ] );
+			const ti = useTokenizedInput( () => [ nsPattern ] );
 			// Add an 'any' position token first
 			ti.addToken( { label: 'intitle:foo', raw: 'intitle:foo ', modeId: 'cirrus', position: 'any' } );
 
@@ -277,7 +349,7 @@ describe( 'useTokenizedInput', () => {
 		} );
 
 		it( 'should detect a namespace prefix using the real tokenPattern', () => {
-			const ti = useTokenizedInput( [ namespaceMode.tokenPattern ] );
+			const ti = useTokenizedInput( () => [ namespaceMode.tokenPattern ] );
 
 			ti.setFreeText( 'User:Example' );
 
@@ -289,7 +361,7 @@ describe( 'useTokenizedInput', () => {
 		} );
 
 		it( 'should match case-insensitively but return the canonical name', () => {
-			const ti = useTokenizedInput( [ namespaceMode.tokenPattern ] );
+			const ti = useTokenizedInput( () => [ namespaceMode.tokenPattern ] );
 
 			ti.setFreeText( 'talk:Main Page' );
 
@@ -299,7 +371,7 @@ describe( 'useTokenizedInput', () => {
 		} );
 
 		it( 'should match multi-word namespace names', () => {
-			const ti = useTokenizedInput( [ namespaceMode.tokenPattern ] );
+			const ti = useTokenizedInput( () => [ namespaceMode.tokenPattern ] );
 
 			ti.setFreeText( 'User talk:SomePage' );
 
@@ -309,7 +381,7 @@ describe( 'useTokenizedInput', () => {
 		} );
 
 		it( 'should not match unknown namespace prefixes', () => {
-			const ti = useTokenizedInput( [ namespaceMode.tokenPattern ] );
+			const ti = useTokenizedInput( () => [ namespaceMode.tokenPattern ] );
 
 			ti.setFreeText( 'Bogus:Something' );
 
@@ -318,7 +390,7 @@ describe( 'useTokenizedInput', () => {
 		} );
 
 		it( 'should not match the main namespace', () => {
-			const ti = useTokenizedInput( [ namespaceMode.tokenPattern ] );
+			const ti = useTokenizedInput( () => [ namespaceMode.tokenPattern ] );
 
 			ti.setFreeText( ':SomePage' );
 
@@ -340,7 +412,7 @@ describe( 'useTokenizedInput', () => {
 					return m ? { label: m[ 1 ] + ':', raw: m[ 1 ] + ':' } : null;
 				}
 			};
-			const ti = useTokenizedInput( [ pattern ], activeMode );
+			const ti = useTokenizedInput( () => [ pattern ], activeMode );
 
 			ti.setFreeText( 'Talk:Main Page' );
 
@@ -360,7 +432,7 @@ describe( 'useTokenizedInput', () => {
 					return m ? { label: m[ 1 ] + ':', raw: m[ 1 ] + ':' } : null;
 				}
 			};
-			const ti = useTokenizedInput( [ pattern ], activeMode );
+			const ti = useTokenizedInput( () => [ pattern ], activeMode );
 
 			ti.setFreeText( 'Talk:Main Page' );
 
@@ -369,30 +441,71 @@ describe( 'useTokenizedInput', () => {
 			expect( ti.freeText.value ).toBe( 'Main Page' );
 		} );
 
-		it( 'should still match non-root patterns when a mode is active', () => {
+		it( 'should skip mode-specific patterns when a different mode is active', () => {
 			const { ref } = require( 'vue' );
-			const activeMode = ref( { id: 'someMode' } );
+			const activeMode = ref( { id: 'otherMode' } );
 			const pattern = {
-				modeId: 'cirrus',
+				modeId: 'smw',
 				position: 'any',
+				activeIn: 'smw',
 				match: ( text ) => {
-					const m = text.match( /^(intitle:\S+)\s?/ );
+					const m = text.match( /^\[\[([^\]]+)\]\]/ );
 					return m ? { label: m[ 1 ], raw: m[ 0 ] } : null;
 				}
 			};
-			const ti = useTokenizedInput( [ pattern ], activeMode );
+			const ti = useTokenizedInput( () => [ pattern ], activeMode );
 
-			ti.setFreeText( 'intitle:foo query' );
+			ti.setFreeText( '[[Category:City]]rest' );
+
+			expect( ti.tokens.value ).toHaveLength( 0 );
+			expect( ti.freeText.value ).toBe( '[[Category:City]]rest' );
+		} );
+
+		it( 'should skip mode-specific patterns in root mode', () => {
+			const { ref } = require( 'vue' );
+			const activeMode = ref( null );
+			const pattern = {
+				modeId: 'smw',
+				position: 'any',
+				activeIn: 'smw',
+				match: ( text ) => {
+					const m = text.match( /^\[\[([^\]]+)\]\]/ );
+					return m ? { label: m[ 1 ], raw: m[ 0 ] } : null;
+				}
+			};
+			const ti = useTokenizedInput( () => [ pattern ], activeMode );
+
+			ti.setFreeText( '[[Category:City]]rest' );
+
+			expect( ti.tokens.value ).toHaveLength( 0 );
+			expect( ti.freeText.value ).toBe( '[[Category:City]]rest' );
+		} );
+
+		it( 'should match mode-specific patterns when the correct mode is active', () => {
+			const { ref } = require( 'vue' );
+			const activeMode = ref( { id: 'smw' } );
+			const pattern = {
+				modeId: 'smw',
+				position: 'any',
+				activeIn: 'smw',
+				match: ( text ) => {
+					const m = text.match( /^\[\[([^\]]+)\]\]/ );
+					return m ? { label: m[ 1 ], raw: m[ 0 ] } : null;
+				}
+			};
+			const ti = useTokenizedInput( () => [ pattern ], activeMode );
+
+			ti.setFreeText( '[[Category:City]]rest' );
 
 			expect( ti.tokens.value ).toHaveLength( 1 );
-			expect( ti.tokens.value[ 0 ].label ).toBe( 'intitle:foo' );
-			expect( ti.freeText.value ).toBe( 'query' );
+			expect( ti.tokens.value[ 0 ].label ).toBe( 'Category:City' );
+			expect( ti.freeText.value ).toBe( 'rest' );
 		} );
 	} );
 
 	describe( 'fullQuery serialization', () => {
 		it( 'should put prefix tokens before any-position tokens', () => {
-			const ti = useTokenizedInput( [] );
+			const ti = useTokenizedInput( () => [] );
 			ti.addToken( { label: 'intitle:foo', raw: 'intitle:foo ', modeId: 'cirrus', position: 'any' } );
 			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace', position: 'prefix' } );
 			ti.freeText.value = 'query';
