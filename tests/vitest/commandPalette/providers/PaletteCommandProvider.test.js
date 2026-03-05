@@ -1,19 +1,19 @@
 const mw = require( '../../mocks/mw.js' );
 globalThis.mw = mw;
 
-const createCommandProvider = require(
-	'../../../../resources/skins.citizen.commandPalette/providers/CommandProvider.js'
+const createPaletteCommandProvider = require(
+	'../../../../resources/skins.citizen.commandPalette/providers/PaletteCommandProvider.js'
 );
-const createCommandRegistry = require(
-	'../../../../resources/skins.citizen.commandPalette/services/commandRegistry.js'
+const createPaletteRegistry = require(
+	'../../../../resources/skins.citizen.commandPalette/services/paletteRegistry.js'
 );
 
-describe( 'createCommandProvider', () => {
+describe( 'createPaletteCommandProvider', () => {
 	let registry;
 	let provider;
 
 	beforeEach( () => {
-		registry = createCommandRegistry();
+		registry = createPaletteRegistry();
 		registry.register( {
 			id: 'namespace',
 			triggers: [ '/ns:', ':' ],
@@ -29,7 +29,7 @@ describe( 'createCommandProvider', () => {
 			getResults: vi.fn( () => Promise.resolve( [] ) )
 		} );
 
-		provider = createCommandProvider( registry );
+		provider = createPaletteCommandProvider( registry );
 	} );
 
 	afterEach( () => {
@@ -71,6 +71,50 @@ describe( 'createCommandProvider', () => {
 			const result = await provider.getResults( '/ns:Talk' );
 
 			expect( result.items[ 0 ].source ).toBe( 'command:namespace' );
+		} );
+	} );
+
+	describe( 'onResultSelect', () => {
+		it( 'returns updateQuery with trigger value when selecting a mode from command list', async () => {
+			const result = await provider.onResultSelect( {
+				id: 'cmd-ns',
+				type: 'command',
+				value: '/ns:',
+				source: 'command:namespace'
+			} );
+
+			expect( result ).toEqual( {
+				action: 'updateQuery',
+				payload: '/ns:'
+			} );
+		} );
+
+		it( 'delegates to handler onResultSelect for non-command items', async () => {
+			const nsHandler = registry.getHandler( 'namespace' );
+			nsHandler.onResultSelect = vi.fn( () => ( { action: 'navigate', payload: '/wiki/Talk:' } ) );
+
+			const result = await provider.onResultSelect( {
+				id: 'ns-1',
+				type: 'namespace',
+				label: 'Talk',
+				source: 'command:namespace'
+			} );
+
+			expect( nsHandler.onResultSelect ).toHaveBeenCalled();
+			expect( result ).toEqual( {
+				action: 'navigate',
+				payload: '/wiki/Talk:'
+			} );
+		} );
+
+		it( 'returns none for unknown source', async () => {
+			const result = await provider.onResultSelect( {
+				id: 'unknown',
+				type: 'page',
+				source: 'search'
+			} );
+
+			expect( result ).toEqual( { action: 'none' } );
 		} );
 	} );
 } );

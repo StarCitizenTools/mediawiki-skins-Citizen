@@ -3,7 +3,7 @@
 const mw = require( '../../mocks/mw.js' );
 globalThis.mw = mw;
 
-const createCommandRegistry = require( '../../../../resources/skins.citizen.commandPalette/services/commandRegistry.js' );
+const createPaletteRegistry = require( '../../../../resources/skins.citizen.commandPalette/services/paletteRegistry.js' );
 
 /**
  * Creates a minimal valid command handler for testing.
@@ -20,12 +20,12 @@ function makeHandler( overrides = {} ) {
 	};
 }
 
-describe( 'createCommandRegistry', () => {
+describe( 'createPaletteRegistry', () => {
 	let registry;
 
 	beforeEach( () => {
 		vi.restoreAllMocks();
-		registry = createCommandRegistry();
+		registry = createPaletteRegistry();
 	} );
 
 	describe( 'register', () => {
@@ -192,6 +192,70 @@ describe( 'createCommandRegistry', () => {
 			registry.register( makeHandler( { id: 'ns', triggers: [ '/ns:' ] } ) );
 
 			expect( registry.hasMatchingTrigger( 'hello' ) ).toBe( false );
+		} );
+	} );
+
+	describe( 'findModeByTrigger', () => {
+		it( 'finds mode by single-character trigger', () => {
+			registry.register( makeHandler( {
+				id: 'user',
+				triggers: [ '/user:', '@' ],
+				getResults: vi.fn()
+			} ) );
+
+			const mode = registry.findModeByTrigger( '@' );
+
+			expect( mode ).not.toBeNull();
+			expect( mode.id ).toBe( 'user' );
+		} );
+
+		it( 'returns null for handler without getResults', () => {
+			registry.register( makeHandler( {
+				id: 'simple',
+				triggers: [ '!' ]
+			} ) );
+
+			const mode = registry.findModeByTrigger( '!' );
+
+			expect( mode ).toBeNull();
+		} );
+
+		it( 'returns null for unmatched trigger', () => {
+			const mode = registry.findModeByTrigger( '#' );
+
+			expect( mode ).toBeNull();
+		} );
+	} );
+
+	describe( 'findModeByQuery', () => {
+		it( 'finds mode by query prefix', () => {
+			registry.register( makeHandler( {
+				id: 'ns',
+				triggers: [ '/ns:', ':' ],
+				getResults: vi.fn()
+			} ) );
+
+			const mode = registry.findModeByQuery( '/ns:Talk' );
+
+			expect( mode ).not.toBeNull();
+			expect( mode.id ).toBe( 'ns' );
+		} );
+
+		it( 'returns null for handler without getResults', () => {
+			registry.register( makeHandler( {
+				id: 'simple',
+				triggers: [ '/simple' ]
+			} ) );
+
+			const mode = registry.findModeByQuery( '/simple test' );
+
+			expect( mode ).toBeNull();
+		} );
+
+		it( 'returns null for unmatched query', () => {
+			const mode = registry.findModeByQuery( 'hello' );
+
+			expect( mode ).toBeNull();
 		} );
 	} );
 } );

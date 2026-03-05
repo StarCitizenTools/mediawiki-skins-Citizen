@@ -5,18 +5,18 @@ const config = require( './config.json' );
 // Services
 const createRecentItems = require( './services/recentItems.js' );
 const createRestSearchClient = require( './services/searchClient.js' );
-const createCommandRegistry = require( './services/commandRegistry.js' );
+const createPaletteRegistry = require( './services/paletteRegistry.js' );
 
 // Provider factories
 const createSearchProvider = require( './providers/SearchProvider.js' );
-const createCommandProvider = require( './providers/CommandProvider.js' );
+const createPaletteCommandProvider = require( './providers/PaletteCommandProvider.js' );
 const createRecentItemsProvider = require( './providers/RecentItemsProvider.js' );
 const createRelatedArticlesProvider = require( './providers/RelatedArticlesProvider.js' );
 
-// Commands
-const namespaceCommand = require( './commands/namespace.js' );
-const createActionCommand = require( './commands/action.js' );
-const createUserCommand = require( './commands/user.js' );
+// Modes
+const namespaceMode = require( './modes/namespace.js' );
+const createActionMode = require( './modes/action.js' );
+const createUserMode = require( './modes/user.js' );
 
 // Result decorator
 const createAppendQueryActions = require( './utils/appendQueryActions.js' );
@@ -37,15 +37,15 @@ function initApp() {
 	// 1. Create services
 	const recentItemsService = createRecentItems();
 	const searchClient = createRestSearchClient( mw.config.get( 'wgScriptPath' ) );
-	const commandRegistry = createCommandRegistry();
+	const paletteRegistry = createPaletteRegistry();
 
-	// 2. Register built-in commands
-	commandRegistry.register( namespaceCommand );
-	commandRegistry.register( createActionCommand( document, mw.Api ) );
-	commandRegistry.register( createUserCommand( mw.Api ) );
+	// 2. Register built-in modes
+	paletteRegistry.register( namespaceMode );
+	paletteRegistry.register( createActionMode( document, mw.Api ) );
+	paletteRegistry.register( createUserMode( mw.Api ) );
 
 	// 3. Fire hook for extension commands
-	const hookData = { register: commandRegistry.register };
+	const hookData = { register: paletteRegistry.register };
 	mw.hook( 'citizen.commandPalette.register' ).fire( hookData );
 
 	// Backward-compat: fire old hook with deprecation notice
@@ -55,7 +55,7 @@ function initApp() {
 				'[Citizen] The "skins.citizen.commandPalette.registerCommand" hook is deprecated. ' +
 				'Use "citizen.commandPalette.register" instead.'
 			);
-			commandRegistry.register( command );
+			paletteRegistry.register( command );
 		}
 	} );
 
@@ -63,7 +63,7 @@ function initApp() {
 	const recentItemsProvider = createRecentItemsProvider( recentItemsService );
 	const relatedArticlesProvider = createRelatedArticlesProvider( mw.loader );
 	const providers = [
-		createCommandProvider( commandRegistry ),
+		createPaletteCommandProvider( paletteRegistry ),
 		createSearchProvider( searchClient )
 	];
 
@@ -77,6 +77,8 @@ function initApp() {
 	app.provide( 'resultDecorator', appendQueryActions );
 	app.provide( 'recentItemsProvider', recentItemsProvider );
 	app.provide( 'relatedArticlesProvider', relatedArticlesProvider );
+	app.provide( 'findModeByTrigger', paletteRegistry.findModeByTrigger );
+	app.provide( 'findModeByQuery', paletteRegistry.findModeByQuery );
 
 	const commandPalette = app.mount( overlay );
 
