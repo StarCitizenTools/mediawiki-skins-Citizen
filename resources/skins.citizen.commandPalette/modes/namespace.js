@@ -1,7 +1,7 @@
 /**
  * Command handler for retrieving namespace suggestions.
  */
-const { CommandPaletteItem, CommandPaletteCommand, CommandPaletteUpdateQueryAction, CommandPaletteNoneAction } = require( '../types.js' );
+const { CommandPaletteItem, PaletteMode, CommandPaletteUpdateQueryAction, CommandPaletteNoneAction } = require( '../types.js' );
 const { cdxIconArticles } = require( '../icons.json' );
 
 const MAIN_NAMESPACE_ID = '0';
@@ -72,12 +72,14 @@ function getNamespaceResults( subQuery ) {
 	return Promise.resolve( results );
 }
 
-/** @type {CommandPaletteCommand} */
+/** @type {PaletteMode} */
 module.exports = {
 	id: 'namespace',
 	triggers: [ '/ns:', ':' ],
 	label: mw.message( 'citizen-command-palette-command-ns-label' ).text(),
 	description: mw.message( 'citizen-command-palette-command-ns-description' ).text(),
+	placeholder: mw.message( 'citizen-command-palette-mode-ns-placeholder' ).text(),
+	icon: cdxIconArticles,
 	getResults: getNamespaceResults,
 	/**
 	 * Handles selection of a namespace result item.

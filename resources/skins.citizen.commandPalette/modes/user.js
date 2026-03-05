@@ -96,6 +96,7 @@ function createUserCommand( ApiConstructor ) {
 			await loadUserGroupMessages( api, usersFromApi );
 			return usersFromApi.map( adaptUserResult );
 		} catch ( error ) {
+			mw.log.error( '[commandPalette] User search failed:', error );
 			return [];
 		}
 	}
@@ -105,6 +106,8 @@ function createUserCommand( ApiConstructor ) {
 		triggers: [ '/user:', '@' ],
 		label: mw.message( 'citizen-command-palette-command-user-label' ).text(),
 		description: mw.message( 'citizen-command-palette-command-user-description' ).text(),
+		placeholder: mw.message( 'citizen-command-palette-mode-user-placeholder' ).text(),
+		icon: cdxIconUserAvatar,
 		getResults: getUserResults,
 		async onResultSelect( item ) {
 			return getNavigationAction( item );
