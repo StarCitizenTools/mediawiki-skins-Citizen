@@ -5,22 +5,46 @@ description: Citizen's search feature and command palette
 
 # Command palette
 
-The command palette lets you search for articles quickly and efficiently. Unlike traditional search systems, it supports custom commands that allow you to jump to specific sections, perform actions, or execute tools using simple prefixes.
+The command palette lets you search for articles quickly and efficiently. Press `/` to see all available entries, or type to start searching right away.
 
-By default, Citizen includes these commands:
+## Modes and commands
 
-| Command | Alias | Functionality |
-| :--- | :--- | :--- |
-| `/` | - | Show a list of available commands. |
-| `/ns:` | `:` | Search for a page in a specific namespace. |
-| `/action:` | `>` | Search for actions available on the current page. |
-| `/user:` | `@` | Search for a user. |
+The palette supports two kinds of entries:
 
-## Creating custom commands
+- **Modes** switch the palette into a different search context. When you enter a mode, the header updates with the mode's icon and placeholder, and a back button appears. Type a query to search within that mode.
+- **Commands** execute an action immediately when selected — no additional input needed.
 
-Administrators and developers can extend the command palette with custom commands. Use this feature to create shortcuts for external tools, streamlined workflows, or handy redirects.
+### Built-in entries
 
-Commands are registered via the `citizen.commandPalette.register` hook. The hook fires with an object containing a `register` function that accepts your command definition.
+| Trigger | Alias | Type | Description |
+| :--- | :--- | :--- | :--- |
+| `/` | - | - | Show all available modes and commands. |
+| `/ns:` | `:` | Mode | Browse and select a namespace. |
+| `/action:` | `>` | Mode | Search for actions and special pages. |
+| `/user:` | `@` | Mode | Search for a user. |
+
+Single-character aliases like `@`, `>`, and `:` can be typed directly to enter the mode instantly, without needing the `/` prefix.
+
+### Mode behavior
+
+When you enter a mode:
+
+- The search icon changes to the mode's icon
+- The placeholder updates (e.g., "Search users")
+- A back button appears to exit the mode
+- Escape follows a three-level pattern: **clear query** → **exit mode** → **close palette**
+
+## Extending the command palette
+
+Administrators and developers can add custom entries to the command palette. Use this to create shortcuts for external tools, streamlined workflows, or handy redirects.
+
+Entries are registered via the `citizen.commandPalette.register` hook:
+
+```js
+mw.hook( 'citizen.commandPalette.register' ).add( function ( data ) {
+    data.register( myEntry );
+} );
+```
 
 Check out these live examples from other wikis. To try them, visit the site, press `/` to open the palette, and type the command:
 
@@ -39,19 +63,21 @@ Check out these live examples from other wikis. To try them, visit the site, pre
     </LinkCard>
 </LinkGrid>
 
-### Command object
+### Entry properties
 
-Every command must have at minimum an `id`, `triggers`, and `description`. Depending on whether the command accepts a sub-query, you'll also implement `getResults` and `onResultSelect`.
+Every entry must have at minimum an `id`, `triggers`, and `description`. If the entry provides a `getResults` function, it becomes a **mode**. Without `getResults`, it's a **command**.
 
 | Property | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `id` | `string` | Yes | Unique identifier for this command. |
-| `triggers` | `string[]` | Yes | Prefixes that activate the command. Triggers ending with `:` accept a sub-query. |
+| `id` | `string` | Yes | Unique identifier. |
+| `triggers` | `string[]` | Yes | Prefixes that activate this entry. Triggers ending with `:` accept a sub-query. |
 | `description` | `string` | Yes | Short explanation shown in the command list. |
-| `getResults` | `function` | No | `(subQuery) => Promise<Array>` — returns result items for the given sub-query. |
+| `placeholder` | `string` | No | Input placeholder when mode is active (e.g., "Search users"). Modes only. |
+| `icon` | `Object` | No | Codex icon for the header when mode is active. Modes only. |
+| `getResults` | `function` | No | `(subQuery, signal?) => Promise<Array>` — if provided, this entry is a mode. An optional `AbortSignal` is passed for cancellation. |
 | `onResultSelect` | `function` | No | `(item) => { action, payload }` — handles selection of a result item. |
 
-#### Action results
+### Action results
 
 `onResultSelect` should return an action object telling the palette what to do:
 
@@ -61,9 +87,9 @@ Every command must have at minimum an `id`, `triggers`, and `description`. Depen
 | `{ action: 'navigate', payload: url }` | URL string | Close the palette and navigate to the URL. |
 | `{ action: 'updateQuery', payload: query }` | Query string | Update the search input with a new query. |
 
-### Example: Simple command
+### Example: simple command
 
-This example creates a command that triggers an action directly when selected, without needing any additional input. Triggers should **not** end with a colon since there is no sub-query.
+A command triggers an action directly when selected. Triggers should **not** end with a colon since there is no sub-query.
 
 ::: details Toggle code
 
@@ -85,17 +111,19 @@ mw.hook( 'citizen.commandPalette.register' ).add( function ( data ) {
 
 :::
 
-### Example: Command with sub-query
+### Example: custom mode
 
-This example shows how to create a command that accepts additional input (a "sub-query") to generate dynamic results. Triggers **must** end with a colon (`:`) to indicate that a sub-query is expected.
+A mode accepts a sub-query and returns dynamic results. Triggers **must** end with a colon (`:`) to indicate that a sub-query is expected.
 
 ::: details Toggle code
 
 ```js
-const mySubqueryCommand = {
-    id: 'my-subquery-command',
-    triggers: [ '/subquery:', '/sub:' ],
+const myMode = {
+    id: 'my-mode',
+    triggers: [ '/mymode:', '/mm:' ],
     description: 'Shows results based on your input.',
+    placeholder: 'Search my items',
+    // icon: cdxIconMyIcon, // Optional Codex icon
 
     getResults: function ( subQuery ) {
         // Return a Promise resolving to an array of result items
@@ -135,11 +163,13 @@ const mySubqueryCommand = {
 };
 
 mw.hook( 'citizen.commandPalette.register' ).add( function ( data ) {
-    data.register( mySubqueryCommand );
+    data.register( myMode );
 } );
 ```
 
 :::
+
+## Migration from previous API
 
 ::: warning Breaking change
 If you have custom commands registered with the previous API, you'll need to update them:
