@@ -79,6 +79,7 @@ function initApp() {
 	app.provide( 'relatedArticlesProvider', relatedArticlesProvider );
 	app.provide( 'findModeByTrigger', paletteRegistry.findModeByTrigger );
 	app.provide( 'findModeByQuery', paletteRegistry.findModeByQuery );
+	app.provide( 'getTokenPatterns', paletteRegistry.getTokenPatterns );
 
 	const commandPalette = app.mount( overlay );
 

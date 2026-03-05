@@ -7,6 +7,28 @@ const { cdxIconArticles } = require( '../icons.json' );
 const MAIN_NAMESPACE_ID = '0';
 
 /**
+ * Cached namespace entries (excludes main namespace).
+ * Lazily populated on first use from wgFormattedNamespaces.
+ */
+let cachedNamespaceEntries = null;
+
+/**
+ * Returns namespace entries from MediaWiki config, excluding the main namespace.
+ * Results are cached after the first call.
+ *
+ * @return {Array<{id: string, name: string}>}
+ */
+function getNamespaceEntries() {
+	if ( !cachedNamespaceEntries ) {
+		const formattedNamespaces = mw.config.get( 'wgFormattedNamespaces' ) || {};
+		cachedNamespaceEntries = Object.entries( formattedNamespaces )
+			.filter( ( [ id, name ] ) => id !== MAIN_NAMESPACE_ID && name )
+			.map( ( [ id, name ] ) => ( { id, name } ) );
+	}
+	return cachedNamespaceEntries;
+}
+
+/**
  * @typedef {Object} NamespaceResult
  * @property {string} label The namespace label.
  * @property {number} value The namespace ID.
@@ -39,12 +61,10 @@ function adaptNamespaceResult( nsResult ) {
  * @return {Promise<Array<CommandPaletteItem>>} A promise resolving to an array of adapted namespace items.
  */
 function getNamespaceResults( subQuery ) {
-	// Fetch namespaces from MediaWiki configuration
-	const formattedNamespaces = mw.config.get( 'wgFormattedNamespaces' ) || {};
-	const allNamespaces = Object.entries( formattedNamespaces ).map( ( [ id, name ] ) => ( {
-		label: name,
-		value: id
-	} ) ).filter( ( ns ) => ns.value !== MAIN_NAMESPACE_ID ); // Use the constant here
+	const allNamespaces = getNamespaceEntries().map( ( entry ) => ( {
+		label: entry.name,
+		value: entry.id
+	} ) );
 
 	const lowerQuery = subQuery.toLowerCase();
 
@@ -72,6 +92,26 @@ function getNamespaceResults( subQuery ) {
 	return Promise.resolve( results );
 }
 
+/**
+ * Matches a known namespace prefix at the start of the given text.
+ * Uses wgFormattedNamespaces from MediaWiki config, excluding the main namespace.
+ *
+ * @param {string} text The input text to check.
+ * @return {{ label: string, raw: string } | null} Match result or null.
+ */
+function matchNamespacePrefix( text ) {
+	const lowerText = text.toLowerCase();
+
+	for ( const entry of getNamespaceEntries() ) {
+		const prefix = entry.name.toLowerCase() + ':';
+		if ( lowerText.startsWith( prefix ) ) {
+			return { label: entry.name + ':', raw: entry.name + ':' };
+		}
+	}
+
+	return null;
+}
+
 /** @type {PaletteMode} */
 module.exports = {
 	id: 'namespace',
@@ -80,6 +120,12 @@ module.exports = {
 	description: mw.message( 'citizen-command-palette-command-ns-description' ).text(),
 	placeholder: mw.message( 'citizen-command-palette-mode-ns-placeholder' ).text(),
 	icon: cdxIconArticles,
+	tokenPattern: {
+		modeId: 'namespace',
+		position: 'prefix',
+		activeIn: 'root',
+		match: matchNamespacePrefix
+	},
 	getResults: getNamespaceResults,
 	/**
 	 * Handles selection of a namespace result item.

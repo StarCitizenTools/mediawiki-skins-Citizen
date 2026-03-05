@@ -184,11 +184,27 @@ function createPaletteRegistry() {
 		return null;
 	}
 
+	/**
+	 * Collects token patterns from all registered handlers that define one.
+	 *
+	 * @return {Array<import('../types.js').TokenPattern>}
+	 */
+	function getTokenPatterns() {
+		const patterns = [];
+		for ( const handler of handlers.values() ) {
+			if ( handler.tokenPattern ) {
+				patterns.push( handler.tokenPattern );
+			}
+		}
+		return patterns;
+	}
+
 	return {
 		register,
 		findMatchingCommand,
 		getCommandListItems,
 		getHandler,
+		getTokenPatterns,
 		hasMatchingTrigger,
 		findModeByTrigger,
 		findModeByQuery
