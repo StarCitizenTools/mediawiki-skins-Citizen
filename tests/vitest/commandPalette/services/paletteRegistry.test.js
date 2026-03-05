@@ -281,17 +281,18 @@ describe( 'createPaletteRegistry', () => {
 	} );
 
 	describe( 'findModeByQuery', () => {
-		it( 'finds mode by query prefix', () => {
+		it( 'finds mode and trigger by query prefix', () => {
 			registry.register( makeHandler( {
 				id: 'ns',
 				triggers: [ '/ns:', ':' ],
 				getResults: vi.fn()
 			} ) );
 
-			const mode = registry.findModeByQuery( '/ns:Talk' );
+			const match = registry.findModeByQuery( '/ns:Talk' );
 
-			expect( mode ).not.toBeNull();
-			expect( mode.id ).toBe( 'ns' );
+			expect( match ).not.toBeNull();
+			expect( match.mode.id ).toBe( 'ns' );
+			expect( match.trigger ).toBe( '/ns:' );
 		} );
 
 		it( 'returns null for handler without getResults', () => {
@@ -300,15 +301,15 @@ describe( 'createPaletteRegistry', () => {
 				triggers: [ '/simple' ]
 			} ) );
 
-			const mode = registry.findModeByQuery( '/simple test' );
+			const match = registry.findModeByQuery( '/simple test' );
 
-			expect( mode ).toBeNull();
+			expect( match ).toBeNull();
 		} );
 
 		it( 'returns null for unmatched query', () => {
-			const mode = registry.findModeByQuery( 'hello' );
+			const match = registry.findModeByQuery( 'hello' );
 
-			expect( mode ).toBeNull();
+			expect( match ).toBeNull();
 		} );
 	} );
 } );

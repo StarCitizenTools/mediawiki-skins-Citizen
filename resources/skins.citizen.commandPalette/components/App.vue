@@ -87,13 +87,16 @@ module.exports = exports = defineComponent( {
 		const itemRefs = ref( new Map() );
 
 		// Provider orchestration (replaces Pinia searchStore)
-		const orch = useProviderOrchestration( providers, resultDecorator, {
+		const orchDeps = {
 			recentItemsProvider,
 			relatedArticlesProvider,
 			recentItemsService
-		} );
+		};
+		const orch = useProviderOrchestration( providers, resultDecorator, orchDeps );
 
-		const tokenInput = useTokenizedInput( getTokenPatterns(), orch.activeMode );
+		const tokenInput = useTokenizedInput( getTokenPatterns, orch.activeMode );
+		// Late-bind tokens so handleModeQuery can read them at call time
+		orchDeps.tokens = tokenInput.tokens;
 
 		const flatItems = computed( () => orch.flatItems.value );
 
@@ -207,10 +210,10 @@ module.exports = exports = defineComponent( {
 						tokenInput.setFreeText( selectionAction.payload );
 					} else {
 						// From root: try to enter a matching mode
-						const mode = findModeByQuery( selectionAction.payload );
-						if ( mode ) {
+						const match = findModeByQuery( selectionAction.payload );
+						if ( match ) {
 							tokenInput.clear();
-							orch.enterMode( mode );
+							orch.enterMode( match.mode );
 						}
 					}
 					nextTick( focusInput );
@@ -307,10 +310,32 @@ module.exports = exports = defineComponent( {
 
 		const handleFreeTextUpdate = ( text ) => {
 			tokenInput.setFreeText( text );
+			// When detection consumed part of the text (creating tokens),
+			// the DOM input still holds the old value until Vue flushes.
+			// Force-sync it so the next keystroke event carries the correct value.
+			if ( tokenInput.freeText.value !== text ) {
+				nextTick( () => {
+					const el = searchHeader.value?.getInputElement?.();
+					if ( el && el.value !== tokenInput.freeText.value ) {
+						el.value = tokenInput.freeText.value;
+					}
+				} );
+			}
 		};
 
 		// Sync tokenized fullQuery to orchestrator
+		// Auto-enter mode when typed query matches a multi-char trigger (e.g. '/smw:')
 		watch( tokenInput.fullQuery, ( newQuery ) => {
+			if ( !orch.activeMode.value && newQuery ) {
+				const match = findModeByQuery( newQuery );
+				if ( match ) {
+					const subQuery = newQuery.slice( match.trigger.length );
+					tokenInput.setFreeText( subQuery );
+					orch.enterMode( match.mode );
+					nextTick( focusInput );
+					return;
+				}
+			}
 			orch.updateQuery( newQuery );
 		} );
 

@@ -25,7 +25,7 @@
 			></cdx-icon>
 			<cdx-info-chip
 				v-for="( token, index ) in tokens"
-				v-show="!activeMode"
+				v-show="!activeMode || token.modeId === activeMode.id"
 				:key="token.id"
 				class="citizen-command-palette-header__chip"
 				:class="{ 'citizen-command-palette-header__chip--selected': index === selectedTokenIndex }"

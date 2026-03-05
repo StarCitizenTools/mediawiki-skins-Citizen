@@ -56,7 +56,7 @@
  * @property {string} [placeholder] Input placeholder when mode is active (e.g., "Search users").
  * @property {Object} [icon] Codex icon object for the header when mode is active.
  * @property {TokenPattern} [tokenPattern] Optional token detection pattern for auto-tokenization.
- * @property {function(string): Promise<CommandPaletteItem[]>} getResults Returns result items for the given sub-query.
+ * @property {function(string, AbortSignal?, Array?): Promise<CommandPaletteItem[]>} getResults Returns result items for the given sub-query. Optional signal for abort, optional tokens array.
  * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection of a result item.
  */
 
@@ -66,7 +66,7 @@
  * @typedef {Object} TokenPattern
  * @property {string} modeId Which mode produced this pattern.
  * @property {'prefix'|'any'} position Where the token must appear in the query.
- * @property {'root'} [activeIn] If 'root', pattern only matches when no mode is active.
+ * @property {'root'|string} activeIn Controls when pattern is eligible: 'root' = only when no mode active, a mode id string = only when that mode is active.
  * @property {function(string): {label: string, raw: string}|null} match Tests text and returns token data or null.
  */
 
