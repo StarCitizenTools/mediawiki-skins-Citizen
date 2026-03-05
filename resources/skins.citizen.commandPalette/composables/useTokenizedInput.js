@@ -6,11 +6,11 @@ const { ref, computed } = require( 'vue' );
  * The composable exposes a fullQuery computed that serializes tokens + freeText
  * into a plain string for the orchestrator.
  *
- * @param {Array<Object>} tokenPatterns Array of token pattern definitions from modes.
+ * @param {Function} getTokenPatterns Function that returns the current token pattern array.
  * @param {Object} activeMode Vue ref to the currently active mode (null = root).
  * @return {Object} Token state and methods.
  */
-function useTokenizedInput( tokenPatterns, activeMode ) {
+function useTokenizedInput( getTokenPatterns, activeMode ) {
 	let tokenCounter = 0;
 	const tokens = ref( [] );
 	const freeText = ref( '' );
@@ -78,7 +78,12 @@ function useTokenizedInput( tokenPatterns, activeMode ) {
 	 * @return {boolean}
 	 */
 	function isPatternEligible( pattern ) {
-		if ( pattern.activeIn === 'root' && activeMode && activeMode.value ) {
+		const modeActive = activeMode && activeMode.value;
+		if ( pattern.activeIn === 'root' ) {
+			if ( modeActive ) {
+				return false;
+			}
+		} else if ( !modeActive || modeActive.id !== pattern.activeIn ) {
 			return false;
 		}
 		if ( pattern.position === 'prefix' && !tokens.value.every( ( t ) => t.position === 'prefix' ) ) {
@@ -95,7 +100,7 @@ function useTokenizedInput( tokenPatterns, activeMode ) {
 	 * @return {{ remaining: string }|null} The remaining text, or null if no match.
 	 */
 	function tryMatchOneToken( text ) {
-		for ( const pattern of tokenPatterns ) {
+		for ( const pattern of getTokenPatterns() ) {
 			if ( !isPatternEligible( pattern ) ) {
 				continue;
 			}
@@ -124,11 +129,53 @@ function useTokenizedInput( tokenPatterns, activeMode ) {
 	 */
 	function detectTokens( text ) {
 		let remaining = text;
+		// Strip leading whitespace if it would expose a matching pattern.
+		// This handles cases like typing " [[Located in::Germany]]" after
+		// a previously tokenized condition.
+		remaining = stripWhitespaceIfTokenFollows( remaining );
 		let match;
 		while ( ( match = tryMatchOneToken( remaining ) ) ) {
 			remaining = match.remaining;
+			// Strip inter-token whitespace so pasted text like
+			// "[[Category:City]] [[Located in::Germany]]" keeps matching.
+			remaining = stripWhitespaceIfTokenFollows( remaining );
 		}
 		return remaining;
+	}
+
+	/**
+	 * Strips leading whitespace from text only if removing it would expose
+	 * a matching token pattern (side-effect-free peek).
+	 *
+	 * @param {string} text The text to check.
+	 * @return {string} The possibly trimmed text.
+	 */
+	function stripWhitespaceIfTokenFollows( text ) {
+		const trimmed = text.replace( /^\s+/, '' );
+		if ( trimmed !== text && wouldMatchAnyPattern( trimmed ) ) {
+			return trimmed;
+		}
+		return text;
+	}
+
+	/**
+	 * Checks whether any eligible pattern would match the given text,
+	 * without adding a token (side-effect-free peek).
+	 *
+	 * @param {string} text The text to check.
+	 * @return {boolean}
+	 */
+	function wouldMatchAnyPattern( text ) {
+		for ( const pattern of getTokenPatterns() ) {
+			if ( !isPatternEligible( pattern ) ) {
+				continue;
+			}
+			const result = pattern.match( text );
+			if ( result && result.raw.length ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
