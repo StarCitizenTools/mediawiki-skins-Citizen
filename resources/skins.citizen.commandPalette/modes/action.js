@@ -134,6 +134,8 @@ function createActionCommand( documentRef, ApiConstructor ) {
 		triggers: [ '/action:', '>' ],
 		label: mw.message( 'citizen-command-palette-command-action-label' ).text(),
 		description: mw.message( 'citizen-command-palette-command-action-description' ).text(),
+		placeholder: mw.message( 'citizen-command-palette-mode-action-placeholder' ).text(),
+		icon: cdxIconSpecialPages,
 		getResults: getActionResults,
 		async onResultSelect( item ) {
 			return getNavigationAction( item );

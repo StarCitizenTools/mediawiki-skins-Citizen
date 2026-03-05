@@ -46,16 +46,28 @@
  */
 
 /**
- * Defines the interface for a Slash Command handler.
- * Each command handler module should export an object conforming to this type.
+ * A mode switches the palette into a different search/browse context.
  *
- * @typedef {Object} CommandPaletteCommand
- * @property {string} id A unique programmatic identifier for the command.
- * @property {string[]} triggers The triggers for the command.
- * @property {string} [description] The user-facing description for the command (used in root '/' suggestions).
- * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onCommandSelect] Optional: Handles selection of the command item itself.
- * @property {function(string): Promise<Array<CommandPaletteItem>>} [getResults] Optional: Asynchronously fetches and adapts suggestion data based on the sub-query, returning CommandPaletteItems.
- * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Optional: Handles selection of an item *generated* by this command.
+ * @typedef {Object} PaletteMode
+ * @property {string} id Unique identifier for this mode.
+ * @property {string[]} triggers Prefixes that activate the mode (e.g., ['/ns:', ':']).
+ * @property {string} [label] Display label for this mode in the command list.
+ * @property {string} [description] Short explanation shown in the command list.
+ * @property {string} [placeholder] Input placeholder when mode is active (e.g., "Search users").
+ * @property {Object} [icon] Codex icon object for the header when mode is active.
+ * @property {function(string): Promise<CommandPaletteItem[]>} getResults Returns result items for the given sub-query.
+ * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection of a result item.
+ */
+
+/**
+ * A command executes an action immediately on selection (no sub-query).
+ *
+ * @typedef {Object} PaletteCommand
+ * @property {string} id Unique identifier for this command.
+ * @property {string[]} triggers Prefixes that activate the command.
+ * @property {string} [label] Display label for this command in the command list.
+ * @property {string} [description] Short explanation shown in the command list.
+ * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection — executes the command action.
  */
 
 /**
