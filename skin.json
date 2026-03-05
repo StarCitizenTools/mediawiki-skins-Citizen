@@ -389,6 +389,7 @@
 				"resources/skins.citizen.commandPalette/composables/useListNavigation.js",
 				"resources/skins.citizen.commandPalette/composables/useProviderOrchestration.js",
 				"resources/skins.citizen.commandPalette/composables/useKeyboard.js",
+				"resources/skins.citizen.commandPalette/composables/useTokenizedInput.js",
 				"resources/skins.citizen.commandPalette/utils/fetch.js",
 				"resources/skins.citizen.commandPalette/utils/providerActions.js",
 				"resources/skins.citizen.commandPalette/utils/appendQueryActions.js",
@@ -490,6 +491,7 @@
 			"codexComponents": [
 				"CdxButton",
 				"CdxIcon",
+				"CdxInfoChip",
 				"CdxSearchResultTitle",
 				"CdxTextInput",
 				"CdxThumbnail"

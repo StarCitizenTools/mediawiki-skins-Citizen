@@ -18,16 +18,31 @@
 				></cdx-icon>
 			</cdx-button>
 		</transition>
-		<cdx-text-input
-			ref="searchInputRef"
-			:model-value="value"
-			class="citizen-command-palette-header__input"
-			input-type="search"
-			:start-icon="currentIcon"
-			:clearable="true"
-			:placeholder="currentPlaceholder"
-			@update:model-value="$emit( 'update:modelValue', $event )"
-		></cdx-text-input>
+		<div class="citizen-command-palette-header__input-area">
+			<cdx-icon
+				class="citizen-command-palette-header__icon"
+				:icon="currentIcon"
+			></cdx-icon>
+			<cdx-info-chip
+				v-for="( token, index ) in tokens"
+				v-show="!activeMode"
+				:key="token.id"
+				class="citizen-command-palette-header__chip"
+				:class="{ 'citizen-command-palette-header__chip--selected': index === selectedTokenIndex }"
+				@click="$emit( 'select-token', index )"
+			>
+				{{ token.label }}
+			</cdx-info-chip>
+			<cdx-text-input
+				ref="searchInputRef"
+				:model-value="freeText"
+				class="citizen-command-palette-header__input"
+				input-type="search"
+				:clearable="true"
+				:placeholder="currentPlaceholder"
+				@update:model-value="$emit( 'update:freeText', $event )"
+			></cdx-text-input>
+		</div>
 		<div
 			v-if="isPending && showPending"
 			class="citizen-command-palette-header__progress-indicator citizen-loading"
@@ -37,7 +52,7 @@
 
 <script>
 const { defineComponent, ref, computed } = require( 'vue' );
-const { CdxButton, CdxTextInput, CdxIcon } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
+const { CdxButton, CdxInfoChip, CdxTextInput, CdxIcon } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
 const { cdxIconArrowPrevious, cdxIconSearch } = require( '../icons.json' );
 
 // @vue/component
@@ -45,13 +60,22 @@ module.exports = exports = defineComponent( {
 	name: 'CommandPaletteHeader',
 	components: {
 		CdxButton,
+		CdxInfoChip,
 		CdxTextInput,
 		CdxIcon
 	},
 	props: {
-		modelValue: {
+		tokens: {
+			type: Array,
+			default: () => []
+		},
+		freeText: {
 			type: String,
 			default: ''
+		},
+		selectedTokenIndex: {
+			type: Number,
+			default: -1
 		},
 		isPending: {
 			type: Boolean,
@@ -66,10 +90,9 @@ module.exports = exports = defineComponent( {
 			default: null
 		}
 	},
-	emits: [ 'update:modelValue', 'exit-mode' ],
+	emits: [ 'update:freeText', 'select-token', 'exit-mode' ],
 	setup( props, { expose } ) {
 		const searchInputRef = ref( null );
-		const value = computed( () => props.modelValue );
 
 		const currentIcon = computed( () => {
 			if ( props.activeMode && props.activeMode.icon ) {
@@ -98,7 +121,6 @@ module.exports = exports = defineComponent( {
 
 		return {
 			searchInputRef,
-			value,
 			currentIcon,
 			currentPlaceholder,
 			cdxIconArrowPrevious
@@ -146,16 +168,46 @@ module.exports = exports = defineComponent( {
 		transform: translateX( -25% );
 	}
 
-	&__input {
-		.cdx-text-input__start-icon {
-			transition-timing-function: var( --transition-timing-function-ease );
-			transition-duration: var( --transition-duration-base );
-			transition-property: opacity, transform;
+	&__chip {
+		flex-shrink: 0;
+		font-weight: var( --font-weight-medium );
+		background-color: var( --background-color-interactive );
+		border: var( --border-base );
+		border-radius: var( --border-radius-base );
+
+		&--selected {
+			background-color: transparent;
+			border-color: var( --border-color-subtle );
 		}
+	}
+
+	&__input-area {
+		display: flex;
+		flex-grow: 1;
+		flex-wrap: nowrap;
+		gap: @spacing-25;
+		align-items: center;
+	}
+
+	&__icon {
+		flex-shrink: 0;
+		color: @color-placeholder;
+		transition-timing-function: var( --transition-timing-function-ease );
+		transition-duration: var( --transition-duration-base );
+		transition-property: opacity, transform;
+
+		&.cdx-icon {
+			width: 40px;
+		}
+	}
+
+	&__input {
+		flex-grow: 1;
+		min-width: 0;
 
 		.cdx-text-input__input {
 			padding-block: 0;
-			padding-left: calc( @spacing-50 + @size-icon-medium + var( --space-sm ) );
+			padding-inline-start: 0;
 			outline: 0 !important;
 			background-color: transparent !important;
 			border: 0 !important;

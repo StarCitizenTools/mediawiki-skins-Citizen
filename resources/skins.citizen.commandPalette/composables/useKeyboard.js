@@ -18,6 +18,10 @@ const { computed, nextTick } = require( 'vue' );
  * @param {Function} deps.onExitMode Called to exit the current mode.
  * @param {Function} deps.onEnterMode Called to enter a mode.
  * @param {Function} deps.findModeByTrigger Given a character, returns a PaletteMode or null.
+ * @param {import('vue').Ref<Array>} [deps.tokens] Token array ref for chip backspace handling.
+ * @param {import('vue').Ref<number>} [deps.selectedTokenIndex] Selected token index ref (-1 = none).
+ * @param {Function} [deps.onSelectToken] Called with index to select a token chip.
+ * @param {Function} [deps.onRemoveToken] Called with index to remove a selected token chip.
  * @return {Object} Keyboard handler and focus management methods.
  */
 function useKeyboard( deps ) {
@@ -154,11 +158,66 @@ function useKeyboard( deps ) {
 	}
 
 	/**
+	 * Handles Backspace on token chips: first press selects last chip,
+	 * second press removes the selected chip.
+	 *
+	 * @param {KeyboardEvent} event The keydown event.
+	 * @return {boolean} Whether the event was handled.
+	 */
+	function handleTokenBackspace( event ) {
+		if ( !deps.tokens || !deps.onSelectToken || !deps.onRemoveToken ) {
+			return false;
+		}
+		const inputEl = getInputElement();
+		const isCursorAtStart = inputEl &&
+			inputEl.selectionStart === 0 &&
+			inputEl.selectionEnd === 0;
+		if ( !isCursorAtStart || deps.tokens.value.length === 0 ) {
+			return false;
+		}
+		event.preventDefault();
+		if ( deps.selectedTokenIndex.value >= 0 ) {
+			deps.onRemoveToken( deps.selectedTokenIndex.value );
+		} else {
+			deps.onSelectToken( deps.tokens.value.length - 1 );
+		}
+		return true;
+	}
+
+	/**
+	 * Navigates the highlighted item list in a given direction and scrolls.
+	 *
+	 * @param {'next'|'previous'|'first'|'last'} direction Navigation direction.
+	 */
+	function navigateList( direction ) {
+		const methods = {
+			next: 'highlightNext',
+			previous: 'highlightPrevious',
+			first: 'highlightFirst',
+			last: 'highlightLast'
+		};
+		listNav[ methods[ direction ] ]();
+		nextTick( () => {
+			listNav.scrollToHighlighted( deps.itemRefs );
+		} );
+	}
+
+	/**
 	 * Handles keyboard events when focus is in the input zone.
 	 *
 	 * @param {KeyboardEvent} event The keydown event.
 	 */
 	function handleInputZone( event ) {
+		// Typing with a chip selected: deselect the chip, let the character go to input
+		if (
+			deps.selectedTokenIndex &&
+			deps.onSelectToken &&
+			deps.selectedTokenIndex.value >= 0 &&
+			event.key.length === 1
+		) {
+			deps.onSelectToken( -1 );
+		}
+
 		if (
 			!deps.activeMode.value &&
 			!deps.query.value &&
@@ -176,34 +235,22 @@ function useKeyboard( deps ) {
 		switch ( event.key ) {
 			case 'ArrowDown':
 				event.preventDefault();
-				listNav.highlightNext();
-				nextTick( () => {
-					listNav.scrollToHighlighted( deps.itemRefs );
-				} );
+				navigateList( 'next' );
 				break;
 
 			case 'ArrowUp':
 				event.preventDefault();
-				listNav.highlightPrevious();
-				nextTick( () => {
-					listNav.scrollToHighlighted( deps.itemRefs );
-				} );
+				navigateList( 'previous' );
 				break;
 
 			case 'Home':
 				event.preventDefault();
-				listNav.highlightFirst();
-				nextTick( () => {
-					listNav.scrollToHighlighted( deps.itemRefs );
-				} );
+				navigateList( 'first' );
 				break;
 
 			case 'End':
 				event.preventDefault();
-				listNav.highlightLast();
-				nextTick( () => {
-					listNav.scrollToHighlighted( deps.itemRefs );
-				} );
+				navigateList( 'last' );
 				break;
 
 			case 'Enter':
@@ -221,6 +268,10 @@ function useKeyboard( deps ) {
 			case 'Escape':
 				event.preventDefault();
 				handleEscape();
+				break;
+
+			case 'Backspace':
+				handleTokenBackspace( event );
 				break;
 
 			case 'ArrowRight': {
