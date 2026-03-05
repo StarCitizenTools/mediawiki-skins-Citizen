@@ -209,7 +209,7 @@ function bindSearchTrigger( document, mw, details ) {
 				setTimeout( () => {
 					const input = config.wgCitizenEnableCommandPalette ?
 						document.querySelector(
-							'.citizen-command-palette__input > .cdx-text-input__input'
+							'.citizen-command-palette-header__input .cdx-text-input__input'
 						) :
 						document.getElementById( 'searchInput' );
 
