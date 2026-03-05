@@ -475,6 +475,7 @@
 				"citizen-command-palette-type-menu-item",
 				"citizen-command-palette-type-namespace",
 				"citizen-command-palette-type-page",
+				"citizen-command-palette-type-smw",
 				"citizen-command-palette-type-special-page",
 				"citizen-command-palette-type-user",
 				"citizen-search-empty-desc",
@@ -495,6 +496,24 @@
 				"CdxSearchResultTitle",
 				"CdxTextInput",
 				"CdxThumbnail"
+			]
+		},
+		"skins.citizen.commandPalette.smw": {
+			"packageFiles": [
+				"resources/skins.citizen.commandPalette.smw/init.js",
+				{
+					"name": "resources/skins.citizen.commandPalette.smw/icons.json",
+					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
+					"callbackParam": [
+						"cdxIconWikitext"
+					]
+				}
+			],
+			"messages": [
+				"citizen-command-palette-command-smw-description",
+				"citizen-command-palette-command-smw-label",
+				"citizen-command-palette-mode-smw-placeholder",
+				"citizen-command-palette-type-smw"
 			]
 		},
 		"skins.citizen.icons": {

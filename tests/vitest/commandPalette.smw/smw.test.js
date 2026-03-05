@@ -1,0 +1,204 @@
+const mw = require( '../mocks/mw.js' );
+globalThis.mw = mw;
+
+const smwMode = require(
+	'../../../resources/skins.citizen.commandPalette.smw/init.js'
+);
+
+describe( 'SMW mode', () => {
+	describe( 'tokenPattern.match', () => {
+		const match = smwMode.tokenPattern.match;
+
+		it( 'should detect a category condition', () => {
+			const result = match( '[[Category:City]]rest' );
+
+			expect( result ).toEqual( {
+				raw: '[[Category:City]]',
+				label: 'Category: City'
+			} );
+		} );
+
+		it( 'should detect a property condition', () => {
+			const result = match( '[[Located in::Germany]]rest' );
+
+			expect( result ).toEqual( {
+				raw: '[[Located in::Germany]]',
+				label: 'Located in: Germany'
+			} );
+		} );
+
+		it( 'should return null for incomplete conditions', () => {
+			const result = match( '[[Category:Ci' );
+
+			expect( result ).toBeNull();
+		} );
+
+		it( 'should return null for plain text', () => {
+			const result = match( 'hello world' );
+
+			expect( result ).toBeNull();
+		} );
+
+		it( 'should match only from the start of text', () => {
+			const result = match( 'prefix[[Category:City]]' );
+
+			expect( result ).toBeNull();
+		} );
+
+		it( 'should handle greedy matching correctly', () => {
+			const result = match( '[[Has::value]]extra]]' );
+
+			expect( result ).toEqual( {
+				raw: '[[Has::value]]',
+				label: 'Has: value'
+			} );
+		} );
+	} );
+
+	describe( 'mode definition', () => {
+		it( 'should have correct id', () => {
+			expect( smwMode.id ).toBe( 'smw' );
+		} );
+
+		it( 'should have correct triggers', () => {
+			expect( smwMode.triggers ).toEqual( [ '/smw:' ] );
+		} );
+
+		it( 'should have tokenPattern with position any, modeId smw, and activeIn smw', () => {
+			expect( smwMode.tokenPattern.position ).toBe( 'any' );
+			expect( smwMode.tokenPattern.modeId ).toBe( 'smw' );
+			expect( smwMode.tokenPattern.activeIn ).toBe( 'smw' );
+		} );
+
+		it( 'should have getResults function', () => {
+			expect( typeof smwMode.getResults ).toBe( 'function' );
+		} );
+
+		it( 'should return navigate action for items with url', () => {
+			const result = smwMode.onResultSelect( { url: 'https://example.org/wiki/Berlin' } );
+
+			expect( result ).toEqual( { action: 'navigate', payload: 'https://example.org/wiki/Berlin' } );
+		} );
+
+		it( 'should return none action for items without url', () => {
+			const result = smwMode.onResultSelect( {} );
+
+			expect( result ).toEqual( { action: 'none' } );
+		} );
+	} );
+
+	describe( 'getSmwResults', () => {
+		let mockGet;
+
+		beforeEach( () => {
+			mockGet = vi.fn();
+			mw.Api = function () {
+				this.get = mockGet;
+			};
+		} );
+
+		it( 'should return empty array for empty query', async () => {
+			const result = await smwMode.getResults( '', undefined, [] );
+
+			expect( result ).toEqual( [] );
+			expect( mockGet ).not.toHaveBeenCalled();
+		} );
+
+		it( 'should return empty array for incomplete conditions', async () => {
+			const result = await smwMode.getResults( '[[Category:Ci' );
+
+			expect( result ).toEqual( [] );
+			expect( mockGet ).not.toHaveBeenCalled();
+		} );
+
+		it( 'should return empty array when freetext contains non-Ask text after tokens', async () => {
+			const tokens = [
+				{ modeId: 'smw', raw: '[[Category:City]]' }
+			];
+
+			const result = await smwMode.getResults( 'some freetext', undefined, tokens );
+
+			expect( result ).toEqual( [] );
+			expect( mockGet ).not.toHaveBeenCalled();
+		} );
+
+		it( 'should call Ask API and return adapted results', async () => {
+			mockGet.mockResolvedValue( {
+				query: {
+					results: {
+						'Berlin': {
+							fulltext: 'Berlin',
+							fullurl: 'https://example.org/wiki/Berlin'
+						},
+						'Munich': {
+							fulltext: 'Munich',
+							fullurl: 'https://example.org/wiki/Munich'
+						}
+					}
+				}
+			} );
+
+			const result = await smwMode.getResults( '[[Category:City]]' );
+
+			expect( mockGet ).toHaveBeenCalledWith( {
+				action: 'ask',
+				query: '[[Category:City]]|limit=10',
+				format: 'json'
+			} );
+			expect( result ).toEqual( [
+				{
+					id: 'citizen-command-palette-item-smw-0',
+					type: 'smw',
+					label: 'Berlin',
+					url: 'https://example.org/wiki/Berlin'
+				},
+				{
+					id: 'citizen-command-palette-item-smw-1',
+					type: 'smw',
+					label: 'Munich',
+					url: 'https://example.org/wiki/Munich'
+				}
+			] );
+		} );
+
+		it( 'should combine tokens and freeText in the query', async () => {
+			mockGet.mockResolvedValue( { query: { results: {} } } );
+			const tokens = [
+				{ modeId: 'smw', raw: '[[Category:City]]' },
+				{ modeId: 'smw', raw: '[[Located in::Germany]]' }
+			];
+
+			await smwMode.getResults( '[[Has population::>1000000]]', undefined, tokens );
+
+			expect( mockGet ).toHaveBeenCalledWith( {
+				action: 'ask',
+				query: '[[Category:City]][[Located in::Germany]][[Has population::>1000000]]|limit=10',
+				format: 'json'
+			} );
+		} );
+
+		it( 'should return empty array on API error', async () => {
+			mockGet.mockRejectedValue( new Error( 'Network error' ) );
+
+			const result = await smwMode.getResults( '[[Category:City]]' );
+
+			expect( result ).toEqual( [] );
+		} );
+
+		it( 'should ignore non-smw tokens', async () => {
+			mockGet.mockResolvedValue( { query: { results: {} } } );
+			const tokens = [
+				{ modeId: 'smw', raw: '[[Category:City]]' },
+				{ modeId: 'other', raw: '[[Ignored]]' }
+			];
+
+			await smwMode.getResults( '', undefined, tokens );
+
+			expect( mockGet ).toHaveBeenCalledWith( {
+				action: 'ask',
+				query: '[[Category:City]]|limit=10',
+				format: 'json'
+			} );
+		} );
+	} );
+} );
