@@ -13,6 +13,8 @@
 			:model-value="query"
 			:is-pending="isPending"
 			:show-pending="showPending"
+			:active-mode="activeMode"
+			@exit-mode="exitMode"
 			@update:model-value="updateQuery( $event )"
 		></command-palette-header>
 		<div class="citizen-command-palette__results">
@@ -70,6 +72,8 @@ module.exports = exports = defineComponent( {
 		const resultDecorator = inject( 'resultDecorator' );
 		const recentItemsProvider = inject( 'recentItemsProvider' );
 		const relatedArticlesProvider = inject( 'relatedArticlesProvider' );
+		const findModeByTrigger = inject( 'findModeByTrigger' );
+		const findModeByQuery = inject( 'findModeByQuery' );
 
 		// Core refs
 		const isOpen = ref( false );
@@ -189,6 +193,17 @@ module.exports = exports = defineComponent( {
 					}
 					break;
 				case 'updateQuery':
+					if ( orch.activeMode.value ) {
+						// From within a mode: exit and search with the payload
+						orch.exitMode();
+						orch.updateQuery( selectionAction.payload );
+					} else {
+						// From root: try to enter a matching mode
+						const mode = findModeByQuery( selectionAction.payload );
+						if ( mode ) {
+							orch.enterMode( mode );
+						}
+					}
 					nextTick( focusInput );
 					break;
 				case 'none':
@@ -205,7 +220,13 @@ module.exports = exports = defineComponent( {
 			listNav,
 			actionNav,
 			onSelect: selectResult,
-			onClose: close
+			onClose: close,
+			query: orch.query,
+			activeMode: orch.activeMode,
+			onClearQuery: () => orch.updateQuery( '' ),
+			onExitMode: () => orch.exitMode(),
+			onEnterMode: ( mode ) => orch.enterMode( mode ),
+			findModeByTrigger
 		} );
 
 		// setItemRef expects the GLOBAL index within displayedItems
@@ -272,7 +293,11 @@ module.exports = exports = defineComponent( {
 		// This function is called externally from init.js
 		const open = () => {
 			isOpen.value = true;
-			orch.clearSearch();
+			if ( orch.activeMode.value ) {
+				orch.exitMode();
+			} else {
+				orch.clearSearch();
+			}
 			nextTick( focusInput );
 		};
 
@@ -281,6 +306,8 @@ module.exports = exports = defineComponent( {
 			isOpen,
 			searchHeader,
 			// Orchestration
+			activeMode: orch.activeMode,
+			exitMode: orch.exitMode,
 			query: orch.query,
 			displayedItems: orch.displayedItems,
 			flatItems,

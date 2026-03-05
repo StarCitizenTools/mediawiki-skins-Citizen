@@ -102,6 +102,7 @@
 	"citizen-user-info-edits-label": "Edits",
 	"citizen-user-info-joined-label": "Joined",
 
+	"citizen-command-palette-back": "Back",
 	"citizen-command-palette-heading-recent": "Recent",
 	"citizen-command-palette-heading-related": "Related",
 
@@ -124,6 +125,10 @@
 	"citizen-command-palette-command-ns-description": "Search for a page in a specific namespace",
 	"citizen-command-palette-command-action-description": "Perform a specific action",
 	"citizen-command-palette-command-user-description": "Search for a user",
+
+	"citizen-command-palette-mode-action-placeholder": "Search actions",
+	"citizen-command-palette-mode-ns-placeholder": "Search namespaces",
+	"citizen-command-palette-mode-user-placeholder": "Search users",
 
 	"citizen-command-palette-queryaction-fulltext-search-description": "Search the full text of all pages",
 	"citizen-command-palette-queryaction-media-search-description": "Search for media files",

@@ -68,7 +68,13 @@ describe( 'useKeyboard', () => {
 			listNav: listNav,
 			actionNav: actionNav,
 			onSelect: vi.fn(),
-			onClose: vi.fn()
+			onClose: vi.fn(),
+			query: ref( '' ),
+			activeMode: ref( null ),
+			onClearQuery: vi.fn(),
+			onExitMode: vi.fn(),
+			onEnterMode: vi.fn(),
+			findModeByTrigger: vi.fn( () => null )
 		};
 
 		keyboard = useKeyboard( deps );
@@ -130,6 +136,31 @@ describe( 'useKeyboard', () => {
 			keyboard.handleKeydown( event );
 
 			expect( listNav.highlightNext ).not.toHaveBeenCalled();
+		} );
+
+		it( 'should ignore Shift for non-printable keys', () => {
+			var event = createKeyEvent( 'ArrowDown' );
+			event.shiftKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( listNav.highlightNext ).not.toHaveBeenCalled();
+		} );
+
+		it( 'should allow Shift for printable characters like @', () => {
+			deps.query = ref( '' );
+			deps.activeMode = ref( null );
+			const mode = { id: 'user', triggers: [ '@' ] };
+			deps.findModeByTrigger = vi.fn( () => mode );
+			deps.onEnterMode = vi.fn();
+			keyboard = useKeyboard( deps );
+
+			var event = createKeyEvent( '@' );
+			event.shiftKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onEnterMode ).toHaveBeenCalledWith( mode );
 		} );
 	} );
 
@@ -239,6 +270,101 @@ describe( 'useKeyboard', () => {
 			keyboard.handleKeydown( createKeyEvent( 'Escape', actionButton ) );
 
 			expect( actionNav.deactivate ).toHaveBeenCalled();
+		} );
+	} );
+
+	describe( 'three-level Escape', () => {
+		it( 'clears query when Escape pressed with non-empty query', () => {
+			deps.query = ref( 'test' );
+			deps.activeMode = ref( null );
+			deps.onClearQuery = vi.fn();
+			keyboard = useKeyboard( deps );
+			const event = createKeyEvent( 'Escape' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onClearQuery ).toHaveBeenCalled();
+			expect( deps.onClose ).not.toHaveBeenCalled();
+		} );
+
+		it( 'exits mode when Escape pressed with empty query and active mode', () => {
+			deps.query = ref( '' );
+			deps.activeMode = ref( { id: 'ns' } );
+			deps.onExitMode = vi.fn();
+			keyboard = useKeyboard( deps );
+			const event = createKeyEvent( 'Escape' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onExitMode ).toHaveBeenCalled();
+			expect( deps.onClose ).not.toHaveBeenCalled();
+		} );
+
+		it( 'closes palette when Escape pressed with empty query and no mode', () => {
+			deps.query = ref( '' );
+			deps.activeMode = ref( null );
+			keyboard = useKeyboard( deps );
+			const event = createKeyEvent( 'Escape' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onClose ).toHaveBeenCalled();
+		} );
+	} );
+
+	describe( 'trigger interception', () => {
+		it( 'intercepts trigger character and enters mode when no mode active and query empty', () => {
+			deps.query = ref( '' );
+			deps.activeMode = ref( null );
+			const mode = { id: 'user', triggers: [ '@' ] };
+			deps.findModeByTrigger = vi.fn( () => mode );
+			deps.onEnterMode = vi.fn();
+			keyboard = useKeyboard( deps );
+			const event = createKeyEvent( '@' );
+
+			keyboard.handleKeydown( event );
+
+			expect( event.preventDefault ).toHaveBeenCalled();
+			expect( deps.onEnterMode ).toHaveBeenCalledWith( mode );
+		} );
+
+		it( 'does not intercept trigger when mode is already active', () => {
+			deps.query = ref( '' );
+			deps.activeMode = ref( { id: 'ns' } );
+			deps.findModeByTrigger = vi.fn( () => ( { id: 'user' } ) );
+			deps.onEnterMode = vi.fn();
+			keyboard = useKeyboard( deps );
+			const event = createKeyEvent( '@' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onEnterMode ).not.toHaveBeenCalled();
+		} );
+
+		it( 'does not intercept trigger when query is non-empty', () => {
+			deps.query = ref( 'hello' );
+			deps.activeMode = ref( null );
+			deps.findModeByTrigger = vi.fn( () => ( { id: 'user' } ) );
+			deps.onEnterMode = vi.fn();
+			keyboard = useKeyboard( deps );
+			const event = createKeyEvent( '@' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onEnterMode ).not.toHaveBeenCalled();
+		} );
+
+		it( 'does not intercept when findModeByTrigger returns null', () => {
+			deps.query = ref( '' );
+			deps.activeMode = ref( null );
+			deps.findModeByTrigger = vi.fn( () => null );
+			deps.onEnterMode = vi.fn();
+			keyboard = useKeyboard( deps );
+			const event = createKeyEvent( 'x' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onEnterMode ).not.toHaveBeenCalled();
 		} );
 	} );
 } );

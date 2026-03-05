@@ -1,32 +1,52 @@
 <template>
-	<div class="citizen-command-palette__search">
+	<div
+		class="citizen-command-palette-header"
+		:class="{ 'citizen-command-palette-header--mode-active': activeMode }"
+	>
+		<transition name="citizen-command-palette-header-back">
+			<cdx-button
+				v-if="activeMode"
+				class="citizen-command-palette-header__back"
+				weight="quiet"
+				icon-only
+				:aria-label="$i18n( 'citizen-command-palette-back' ).text()"
+				@click="$emit( 'exit-mode' )"
+			>
+				<cdx-icon
+					:icon="cdxIconArrowPrevious"
+					size="small"
+				></cdx-icon>
+			</cdx-button>
+		</transition>
 		<cdx-text-input
 			ref="searchInputRef"
 			:model-value="value"
-			class="citizen-command-palette__input"
+			class="citizen-command-palette-header__input"
 			input-type="search"
-			:start-icon="cdxIconSearch"
+			:start-icon="currentIcon"
 			:clearable="true"
-			:placeholder="$i18n( 'searchsuggest-search' ).text()"
+			:placeholder="currentPlaceholder"
 			@update:model-value="$emit( 'update:modelValue', $event )"
 		></cdx-text-input>
 		<div
 			v-if="isPending && showPending"
-			class="citizen-command-palette__progress-indicator citizen-loading"
+			class="citizen-command-palette-header__progress-indicator citizen-loading"
 		></div>
 	</div>
 </template>
 
 <script>
 const { defineComponent, ref, computed } = require( 'vue' );
-const { CdxTextInput } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
-const { cdxIconSearch } = require( '../icons.json' );
+const { CdxButton, CdxTextInput, CdxIcon } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
+const { cdxIconArrowPrevious, cdxIconSearch } = require( '../icons.json' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
 	name: 'CommandPaletteHeader',
 	components: {
-		CdxTextInput
+		CdxButton,
+		CdxTextInput,
+		CdxIcon
 	},
 	props: {
 		modelValue: {
@@ -40,12 +60,30 @@ module.exports = exports = defineComponent( {
 		showPending: {
 			type: Boolean,
 			default: false
+		},
+		activeMode: {
+			type: Object,
+			default: null
 		}
 	},
-	emits: [ 'update:modelValue' ],
+	emits: [ 'update:modelValue', 'exit-mode' ],
 	setup( props, { expose } ) {
 		const searchInputRef = ref( null );
 		const value = computed( () => props.modelValue );
+
+		const currentIcon = computed( () => {
+			if ( props.activeMode && props.activeMode.icon ) {
+				return props.activeMode.icon;
+			}
+			return cdxIconSearch;
+		} );
+
+		const currentPlaceholder = computed( () => {
+			if ( props.activeMode && props.activeMode.placeholder ) {
+				return props.activeMode.placeholder;
+			}
+			return mw.message( 'searchsuggest-search' ).text();
+		} );
 
 		const getInputElement = () => searchInputRef.value?.$el?.querySelector( 'input' ) || null;
 
@@ -61,7 +99,9 @@ module.exports = exports = defineComponent( {
 		return {
 			searchInputRef,
 			value,
-			cdxIconSearch
+			currentIcon,
+			currentPlaceholder,
+			cdxIconArrowPrevious
 		};
 	}
 } );
@@ -71,15 +111,48 @@ module.exports = exports = defineComponent( {
 @import 'mediawiki.skin.variables.less';
 @import '../../mixins.less';
 
-.citizen-command-palette {
-	&__search {
-		position: relative;
-		/* 8px from CdxTextInput */
-		padding: var( --space-sm ) calc( var( --citizen-command-palette-side-padding ) - @spacing-50 );
-		.mixin-citizen-font-styles( 'body' );
+.citizen-command-palette-header {
+	--citizen-command-palette-back-button-size: 24px;
+	position: relative;
+	/* 8px from CdxTextInput */
+	padding: var( --space-sm ) calc( var( --citizen-command-palette-side-padding ) - @spacing-50 );
+	transition-timing-function: var( --transition-timing-function-ease );
+	transition-duration: var( --transition-duration-base );
+	transition-property: padding-inline-start;
+	.mixin-citizen-font-styles( 'body' );
+
+	&--mode-active {
+		padding-inline-start: calc( var( --citizen-command-palette-side-padding ) - @spacing-50 + var( --citizen-command-palette-back-button-size ) );
+	}
+
+	&__back {
+		position: absolute;
+		inset-block: 0;
+		inset-inline-start: calc( var( --citizen-command-palette-side-padding ) - @spacing-50 );
+		min-width: var( --citizen-command-palette-back-button-size );
+		margin-block: auto;
+	}
+
+	&-back-enter-active,
+	&-back-leave-active {
+		transition-timing-function: var( --transition-timing-function-ease );
+		transition-duration: var( --transition-duration-base );
+		transition-property: opacity, transform;
+	}
+
+	&-back-enter-from,
+	&-back-leave-to {
+		opacity: 0;
+		transform: translateX( -25% );
 	}
 
 	&__input {
+		.cdx-text-input__start-icon {
+			transition-timing-function: var( --transition-timing-function-ease );
+			transition-duration: var( --transition-duration-base );
+			transition-property: opacity, transform;
+		}
+
 		.cdx-text-input__input {
 			padding-block: 0;
 			padding-left: calc( @spacing-50 + @size-icon-medium + var( --space-sm ) );
