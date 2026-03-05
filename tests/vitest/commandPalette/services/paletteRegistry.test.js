@@ -227,6 +227,59 @@ describe( 'createPaletteRegistry', () => {
 		} );
 	} );
 
+	describe( 'getTokenPatterns', () => {
+		it( 'returns empty array when no handlers have tokenPattern', () => {
+			registry.register( makeHandler( { id: 'plain', triggers: [ '/plain:' ] } ) );
+
+			const patterns = registry.getTokenPatterns();
+
+			expect( patterns ).toEqual( [] );
+		} );
+
+		it( 'returns token patterns from registered handlers', () => {
+			const tokenPattern = {
+				modeId: 'ns',
+				position: 'prefix',
+				match: vi.fn(),
+				serialize: vi.fn()
+			};
+			registry.register( makeHandler( {
+				id: 'ns',
+				triggers: [ '/ns:', ':' ],
+				tokenPattern,
+				getResults: vi.fn()
+			} ) );
+
+			const patterns = registry.getTokenPatterns();
+
+			expect( patterns ).toHaveLength( 1 );
+			expect( patterns[ 0 ] ).toBe( tokenPattern );
+		} );
+
+		it( 'skips handlers without tokenPattern', () => {
+			const tokenPattern = {
+				modeId: 'ns',
+				position: 'prefix',
+				match: vi.fn()
+			};
+			registry.register( makeHandler( {
+				id: 'ns',
+				triggers: [ '/ns:' ],
+				tokenPattern,
+				getResults: vi.fn()
+			} ) );
+			registry.register( makeHandler( {
+				id: 'action',
+				triggers: [ '/action:', '>' ]
+			} ) );
+
+			const patterns = registry.getTokenPatterns();
+
+			expect( patterns ).toHaveLength( 1 );
+			expect( patterns[ 0 ].modeId ).toBe( 'ns' );
+		} );
+	} );
+
 	describe( 'findModeByQuery', () => {
 		it( 'finds mode by query prefix', () => {
 			registry.register( makeHandler( {
