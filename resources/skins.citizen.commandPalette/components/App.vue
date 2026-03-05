@@ -330,8 +330,8 @@ module.exports = exports = defineComponent( {
 				const match = findModeByQuery( newQuery );
 				if ( match ) {
 					const subQuery = newQuery.slice( match.trigger.length );
-					tokenInput.setFreeText( subQuery );
 					orch.enterMode( match.mode );
+					tokenInput.setFreeText( subQuery );
 					nextTick( focusInput );
 					return;
 				}
