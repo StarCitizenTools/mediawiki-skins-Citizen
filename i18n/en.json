@@ -118,16 +118,20 @@
 	"citizen-command-palette-type-action": "Action",
 	"citizen-command-palette-type-namespace": "Namespace",
 	"citizen-command-palette-type-command": "Command",
+	"citizen-command-palette-type-smw": "SMW",
 	"citizen-command-palette-type-special-page": "Special page",
 	"citizen-command-palette-type-menu-item": "Menu item",
 	"citizen-command-palette-type-user": "User",
 
 	"citizen-command-palette-command-ns-description": "Search for a page in a specific namespace",
 	"citizen-command-palette-command-action-description": "Perform a specific action",
+	"citizen-command-palette-command-smw-description": "Search using a Semantic MediaWiki query",
+	"citizen-command-palette-command-smw-label": "Semantic MediaWiki query",
 	"citizen-command-palette-command-user-description": "Search for a user",
 
 	"citizen-command-palette-mode-action-placeholder": "Search actions",
 	"citizen-command-palette-mode-ns-placeholder": "Search namespaces",
+	"citizen-command-palette-mode-smw-placeholder": "Enter Ask query, e.g. [[Category:City]]",
 	"citizen-command-palette-mode-user-placeholder": "Search users",
 
 	"citizen-command-palette-queryaction-fulltext-search-description": "Search the full text of all pages",
