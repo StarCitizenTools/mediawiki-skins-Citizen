@@ -12,6 +12,12 @@ const { computed, nextTick } = require( 'vue' );
  * @param {Object} deps.actionNav Action navigation composable return value.
  * @param {Function} deps.onSelect Called when an item is selected (Enter key).
  * @param {Function} deps.onClose Called when the palette should close (Escape key).
+ * @param {import('vue').Ref<string>} deps.query Current query string.
+ * @param {import('vue').Ref<Object|null>} deps.activeMode Current active mode or null.
+ * @param {Function} deps.onClearQuery Called to clear the query.
+ * @param {Function} deps.onExitMode Called to exit the current mode.
+ * @param {Function} deps.onEnterMode Called to enter a mode.
+ * @param {Function} deps.findModeByTrigger Given a character, returns a PaletteMode or null.
  * @return {Object} Keyboard handler and focus management methods.
  */
 function useKeyboard( deps ) {
@@ -118,6 +124,19 @@ function useKeyboard( deps ) {
 		return hints;
 	} );
 
+	/**
+	 * Three-level Escape: clear query → exit mode → close palette.
+	 */
+	function handleEscape() {
+		if ( deps.query.value ) {
+			deps.onClearQuery();
+		} else if ( deps.activeMode.value ) {
+			deps.onExitMode();
+		} else {
+			deps.onClose();
+		}
+	}
+
 	function focusInput() {
 		deps.inputRef.value?.focus();
 	}
@@ -140,6 +159,20 @@ function useKeyboard( deps ) {
 	 * @param {KeyboardEvent} event The keydown event.
 	 */
 	function handleInputZone( event ) {
+		if (
+			!deps.activeMode.value &&
+			!deps.query.value &&
+			event.key.length === 1 &&
+			deps.findModeByTrigger
+		) {
+			const mode = deps.findModeByTrigger( event.key );
+			if ( mode ) {
+				event.preventDefault();
+				deps.onEnterMode( mode );
+				return;
+			}
+		}
+
 		switch ( event.key ) {
 			case 'ArrowDown':
 				event.preventDefault();
@@ -180,12 +213,14 @@ function useKeyboard( deps ) {
 				}
 				break;
 
-			case 'Escape':
-				deps.onClose();
-				break;
-
 			case 'Tab':
 				deps.onClose();
+				event.preventDefault();
+				break;
+
+			case 'Escape':
+				event.preventDefault();
+				handleEscape();
 				break;
 
 			case 'ArrowRight': {
@@ -241,7 +276,8 @@ function useKeyboard( deps ) {
 			case 'Escape':
 				event.preventDefault();
 				actionNav.deactivate();
-				requestInputFocus();
+				handleEscape();
+				focusInput();
 				break;
 
 			default:
@@ -260,8 +296,11 @@ function useKeyboard( deps ) {
 	 * @param {KeyboardEvent} event The keydown event.
 	 */
 	function handleKeydown( event ) {
-		// Ignore events with modifier keys
-		if ( event.altKey || event.ctrlKey || event.metaKey || event.shiftKey ) {
+		// Ignore events with modifier keys (allow Shift for printable characters like @, >, :)
+		if ( event.altKey || event.ctrlKey || event.metaKey ) {
+			return;
+		}
+		if ( event.shiftKey && event.key.length !== 1 ) {
 			return;
 		}
 

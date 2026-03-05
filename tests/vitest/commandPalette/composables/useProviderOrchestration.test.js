@@ -120,6 +120,124 @@ describe( 'useProviderOrchestration', () => {
 		} );
 	} );
 
+	describe( 'mode management', () => {
+		let orch;
+		let mockProviders;
+
+		beforeEach( () => {
+			mockProviders = [ mockSyncProvider, mockAsyncProvider ];
+			orch = useProviderOrchestration( mockProviders, mockDecorator );
+		} );
+
+		it( 'enterMode sets activeMode and clears query', () => {
+			const mode = { id: 'ns', getResults: vi.fn().mockResolvedValue( [] ) };
+
+			orch.enterMode( mode );
+
+			expect( orch.activeMode.value ).toBe( mode );
+			expect( orch.query.value ).toBe( '' );
+		} );
+
+		it( 'exitMode clears activeMode and loads presults', async () => {
+			const mode = { id: 'ns', getResults: vi.fn().mockResolvedValue( [] ) };
+			orch.enterMode( mode );
+
+			await orch.exitMode();
+
+			expect( orch.activeMode.value ).toBeNull();
+		} );
+
+		it( 'enterMode fetches initial results with empty query', async () => {
+			const mode = {
+				id: 'ns',
+				getResults: vi.fn().mockResolvedValue( [
+					{ id: 'ns-1', label: 'Talk', type: 'namespace' }
+				] )
+			};
+
+			orch.enterMode( mode );
+			await vi.runAllTimersAsync();
+
+			expect( mode.getResults ).toHaveBeenCalledWith( '' );
+		} );
+
+		it( 'updateQuery routes through active mode getResults when mode is active', async () => {
+			const mode = {
+				id: 'ns',
+				getResults: vi.fn().mockResolvedValue( [
+					{ id: 'result-1', label: 'Talk', type: 'namespace' }
+				] )
+			};
+			orch.enterMode( mode );
+			await vi.runAllTimersAsync();
+			mode.getResults.mockClear();
+
+			orch.updateQuery( 'Talk' );
+			vi.advanceTimersByTime( 250 );
+			await vi.runAllTimersAsync();
+
+			expect( mode.getResults ).toHaveBeenCalledWith( 'Talk', expect.any( AbortSignal ) );
+		} );
+
+		it( 'updateQuery uses normal provider dispatch when no mode is active', async () => {
+			await orch.updateQuery( 'test' );
+
+			expect( mockProviders[ 0 ].canProvide ).toHaveBeenCalledWith( 'test' );
+		} );
+
+		it( 'enterMode clears displayed items', () => {
+			const mode = { id: 'ns', getResults: vi.fn().mockResolvedValue( [] ) };
+
+			orch.enterMode( mode );
+
+			expect( orch.displayedItems.value ).toEqual( [] );
+		} );
+
+		it( 'exitMode resets to presults', async () => {
+			const mode = { id: 'ns', getResults: vi.fn().mockResolvedValue( [] ) };
+			orch.enterMode( mode );
+
+			await orch.exitMode();
+
+			// After exitMode, clearSearch should have been called
+			// which populates presults. activeMode should be null.
+			expect( orch.activeMode.value ).toBeNull();
+		} );
+
+		it( 'handleSelection delegates to active mode onResultSelect', async () => {
+			const mode = {
+				id: 'ns',
+				getResults: vi.fn().mockResolvedValue( [] ),
+				onResultSelect: vi.fn().mockReturnValue( {
+					action: 'updateQuery', payload: 'Talk:'
+				} )
+			};
+			orch.enterMode( mode );
+
+			const result = { id: 'ns-1', label: 'Talk', value: 'Talk:', type: 'namespace' };
+			const action = await orch.handleSelection( result );
+
+			expect( mode.onResultSelect ).toHaveBeenCalledWith( result );
+			expect( action ).toEqual( { action: 'updateQuery', payload: 'Talk:' } );
+		} );
+
+		it( 'handleSelection does not check providers when mode is active', async () => {
+			const mode = {
+				id: 'ns',
+				getResults: vi.fn().mockResolvedValue( [] ),
+				onResultSelect: vi.fn().mockReturnValue( { action: 'none' } )
+			};
+			orch.enterMode( mode );
+			mockSyncProvider.onResultSelect.mockClear();
+
+			const result = { id: 'ns-1', label: 'Talk', source: 'sync' };
+			await orch.handleSelection( result );
+
+			expect( mode.onResultSelect ).toHaveBeenCalled();
+			expect( mockSyncProvider.onResultSelect ).not.toHaveBeenCalled();
+		} );
+	} );
+
 	describe( 'abort coordination', () => {
 		it( 'should abort previous async request on new query', async () => {
 			const orch = useProviderOrchestration(
