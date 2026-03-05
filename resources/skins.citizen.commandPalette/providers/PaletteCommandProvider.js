@@ -5,15 +5,15 @@ const MAX_COMMAND_RESULTS = 10;
 /**
  * Handles a matched command trigger by delegating to its handler.
  *
- * @param {Object} commandRegistry The command registry service.
+ * @param {Object} paletteRegistry The palette registry service.
  * @param {Object} match The matched command { handler, trigger, id }.
  * @param {string} query The full query string.
  * @return {Promise<Object>} Provider result with items.
  */
-async function getMatchedCommandResults( commandRegistry, match, query ) {
+async function getMatchedCommandResults( paletteRegistry, match, query ) {
 	const { handler, trigger, id } = match;
 	if ( typeof handler.getResults !== 'function' ) {
-		const listItems = commandRegistry.getCommandListItems();
+		const listItems = paletteRegistry.getCommandListItems();
 		const thisItem = listItems.find(
 			( item ) => item.source === 'command:' + id
 		);
@@ -47,37 +47,37 @@ async function getMatchedCommandResults( commandRegistry, match, query ) {
 /**
  * Creates a command provider that delegates to a command registry.
  *
- * @param {Object} commandRegistry The command registry service.
+ * @param {Object} paletteRegistry The palette registry service.
  * @return {Object} A validated provider.
  */
-function createCommandProvider( commandRegistry ) {
+function createPaletteCommandProvider( paletteRegistry ) {
 	return createProvider( 'command', {
 		canProvide( query ) {
 			if ( query.startsWith( '/' ) ) {
 				return true;
 			}
-			return commandRegistry.hasMatchingTrigger( query );
+			return paletteRegistry.hasMatchingTrigger( query );
 		},
 
 		async getResults( query ) {
 			// Case 1: Root "/" — show all commands
 			if ( query === '/' ) {
 				return {
-					items: commandRegistry.getCommandListItems()
+					items: paletteRegistry.getCommandListItems()
 						.slice( 0, MAX_COMMAND_RESULTS )
 				};
 			}
 
 			// Case 2: Specific command trigger matched
-			const match = commandRegistry.findMatchingCommand( query );
+			const match = paletteRegistry.findMatchingCommand( query );
 			if ( match ) {
-				return getMatchedCommandResults( commandRegistry, match, query );
+				return getMatchedCommandResults( paletteRegistry, match, query );
 			}
 
 			// Case 3: Prefix search for "/"
 			if ( query.startsWith( '/' ) ) {
 				return {
-					items: commandRegistry.getCommandListItems( query )
+					items: paletteRegistry.getCommandListItems( query )
 						.slice( 0, MAX_COMMAND_RESULTS )
 				};
 			}
@@ -92,7 +92,7 @@ function createCommandProvider( commandRegistry ) {
 			}
 
 			const handlerId = sourceParts[ 1 ];
-			const handler = commandRegistry.getHandler( handlerId );
+			const handler = paletteRegistry.getHandler( handlerId );
 
 			if ( !handler ) {
 				return { action: 'none' };
@@ -119,4 +119,4 @@ function createCommandProvider( commandRegistry ) {
 	}, { debounceMs: 0, keepStaleResults: true } );
 }
 
-module.exports = createCommandProvider;
+module.exports = createPaletteCommandProvider;
