@@ -109,6 +109,14 @@
  */
 
 /**
+ * Action to update the query string within the current mode without exiting.
+ *
+ * @typedef {Object} CommandPaletteUpdateQueryAction
+ * @property {'updateQuery'} action
+ * @property {string} payload - The new query string.
+ */
+
+/**
  * Action indicating no operation or that the action was self-contained.
  *
  * @typedef {Object} CommandPaletteNoneAction
@@ -120,7 +128,7 @@
  * Describes the action the UI should take after an item selection is handled.
  * This is a discriminated union based on the 'action' property.
  *
- * @typedef {CommandPaletteNavigateAction | CommandPaletteExitWithQueryAction | CommandPaletteNoneAction} CommandPaletteActionResult
+ * @typedef {CommandPaletteNavigateAction | CommandPaletteExitWithQueryAction | CommandPaletteUpdateQueryAction | CommandPaletteNoneAction} CommandPaletteActionResult
  */
 
 /**
