@@ -24,9 +24,9 @@
 		<div class="citizen-command-palette__results">
 			<command-palette-empty-state
 				v-if="!showPending && flatItems.length === 0"
-				:title="emptyStateTitle"
-				:description="emptyStateDescription"
-				:icon="emptyStateIcon"
+				:title="emptyStateContent.title"
+				:description="emptyStateContent.description"
+				:icon="emptyStateContent.icon"
 			></command-palette-empty-state>
 			<command-palette-list
 				v-else-if="displayedItems.length > 0"
@@ -100,25 +100,21 @@ module.exports = exports = defineComponent( {
 
 		const flatItems = computed( () => orch.flatItems.value );
 
-		const emptyStateTitle = computed( () => {
+		const emptyStateContent = computed( () => {
+			const config = orch.stateConfig.value;
 			if ( orch.query.value ) {
-				return mw.message( 'citizen-search-noresults-title', orch.query.value ).text();
+				const content = config.noResults( orch.query.value, tokenInput.tokens.value );
+				return {
+					title: content.title,
+					description: content.description,
+					icon: content.icon || cdxIconArticleNotFound
+				};
 			}
-			return mw.message( 'searchsuggest-search' ).text();
-		} );
-
-		const emptyStateDescription = computed( () => {
-			if ( orch.query.value ) {
-				return mw.message( 'search-nonefound' ).text();
-			}
-			return mw.message( 'citizen-search-empty-desc' ).text();
-		} );
-
-		const emptyStateIcon = computed( () => {
-			if ( orch.query.value ) {
-				return cdxIconArticleNotFound;
-			}
-			return cdxIconArticlesSearch;
+			return {
+				title: config.emptyState.title,
+				description: config.emptyState.description,
+				icon: config.emptyState.icon || cdxIconArticlesSearch
+			};
 		} );
 
 		// List navigation
@@ -383,9 +379,7 @@ module.exports = exports = defineComponent( {
 			// List nav
 			highlightedItemIndex: listNav.highlightedIndex,
 			// Empty state
-			emptyStateTitle,
-			emptyStateDescription,
-			emptyStateIcon,
+			emptyStateContent,
 			// Methods
 			// eslint-disable-next-line vue/no-unused-properties -- Used externally by init.js
 			open,
