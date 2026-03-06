@@ -1,7 +1,7 @@
 /**
  * Command handler for retrieving namespace suggestions.
  */
-const { CommandPaletteItem, PaletteMode, CommandPaletteUpdateQueryAction, CommandPaletteNoneAction } = require( '../types.js' );
+const { CommandPaletteItem, PaletteMode, CommandPaletteExitWithQueryAction, CommandPaletteNoneAction } = require( '../types.js' );
 const { cdxIconArticles } = require( '../icons.json' );
 
 const MAIN_NAMESPACE_ID = '0';
@@ -131,12 +131,12 @@ module.exports = {
 	 * Handles selection of a namespace result item.
 	 *
 	 * @param {CommandPaletteItem} item The selected namespace result item.
-	 * @return {CommandPaletteUpdateQueryAction | CommandPaletteNoneAction}
+	 * @return {CommandPaletteExitWithQueryAction | CommandPaletteNoneAction}
 	 */
 	onResultSelect( item ) {
 		// Default behavior: update query with the namespace trigger (e.g., "Talk:")
 		if ( item.value && typeof item.value === 'string' ) {
-			return { action: 'updateQuery', payload: item.value };
+			return { action: 'exitWithQuery', payload: item.value };
 		}
 		return { action: 'none' };
 	}

@@ -102,7 +102,7 @@ function createPaletteCommandProvider( paletteRegistry ) {
 				// Commands with getResults expand the query on select
 				if ( item.type === 'command' &&
 					typeof handler.getResults === 'function' ) {
-					return { action: 'updateQuery', payload: item.value };
+					return { action: 'exitWithQuery', payload: item.value };
 				}
 
 				if ( typeof handler.onResultSelect === 'function' ) {
