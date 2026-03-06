@@ -193,7 +193,11 @@ function createPaletteRegistry() {
 		const patterns = [];
 		for ( const handler of handlers.values() ) {
 			if ( handler.tokenPattern ) {
-				patterns.push( handler.tokenPattern );
+				if ( Array.isArray( handler.tokenPattern ) ) {
+					patterns.push( ...handler.tokenPattern );
+				} else {
+					patterns.push( handler.tokenPattern );
+				}
 			}
 		}
 		return patterns;
