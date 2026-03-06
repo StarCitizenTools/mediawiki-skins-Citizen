@@ -46,6 +46,15 @@
  */
 
 /**
+ * Content displayed in the empty or no-results state of the command palette.
+ *
+ * @typedef {Object} StateContent
+ * @property {string} title The heading text.
+ * @property {string} description The body text.
+ * @property {Object} icon Codex icon object.
+ */
+
+/**
  * A mode switches the palette into a different search/browse context.
  *
  * @typedef {Object} PaletteMode
@@ -55,6 +64,8 @@
  * @property {string} [description] Short explanation shown in the command list.
  * @property {string} [placeholder] Input placeholder when mode is active (e.g., "Search users").
  * @property {Object} [icon] Codex icon object for the header when mode is active.
+ * @property {StateContent} [emptyState] Content shown when the mode is active with no query. Falls back to default search messaging.
+ * @property {function(string, Array?): StateContent} [noResults] Returns content shown when query produces no results. Receives the query string and optional tokens array. Falls back to default no-results messaging.
  * @property {TokenPattern} [tokenPattern] Optional token detection pattern for auto-tokenization.
  * @property {function(string, AbortSignal?, Array?): Promise<CommandPaletteItem[]>} getResults Returns result items for the given sub-query. Optional signal for abort, optional tokens array.
  * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection of a result item.

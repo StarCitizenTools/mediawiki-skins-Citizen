@@ -238,6 +238,113 @@ describe( 'useProviderOrchestration', () => {
 		} );
 	} );
 
+	describe( 'stateConfig', () => {
+		it( 'should return defaults when no mode is active', () => {
+			const orch = useProviderOrchestration(
+				[ mockSyncProvider ], mockDecorator
+			);
+
+			const config = orch.stateConfig.value;
+
+			expect( config.emptyState.title ).toBe( 'searchsuggest-search' );
+			expect( config.emptyState.description ).toBe( 'citizen-search-empty-desc' );
+			expect( config.emptyState.icon ).toBeNull();
+		} );
+
+		it( 'should return default noResults function when no mode is active', () => {
+			const orch = useProviderOrchestration(
+				[ mockSyncProvider ], mockDecorator
+			);
+
+			const result = orch.stateConfig.value.noResults( 'test query' );
+
+			expect( result.title ).toBe( 'citizen-search-noresults-title' );
+			expect( result.description ).toBe( 'search-nonefound' );
+			expect( result.icon ).toBeNull();
+		} );
+
+		it( 'should use mode emptyState when mode provides it', () => {
+			const orch = useProviderOrchestration(
+				[ mockSyncProvider ], mockDecorator
+			);
+			const mode = {
+				id: 'test',
+				getResults: vi.fn().mockResolvedValue( [] ),
+				emptyState: {
+					title: 'Custom empty',
+					description: 'Custom desc',
+					icon: 'customIcon'
+				}
+			};
+
+			orch.enterMode( mode );
+
+			expect( orch.stateConfig.value.emptyState.title ).toBe( 'Custom empty' );
+			expect( orch.stateConfig.value.emptyState.icon ).toBe( 'customIcon' );
+		} );
+
+		it( 'should use mode noResults when mode provides it', () => {
+			const orch = useProviderOrchestration(
+				[ mockSyncProvider ], mockDecorator
+			);
+			const mode = {
+				id: 'test',
+				getResults: vi.fn().mockResolvedValue( [] ),
+				noResults: ( query ) => ( {
+					title: 'No results for ' + query,
+					description: 'Try again',
+					icon: 'warningIcon'
+				} )
+			};
+
+			orch.enterMode( mode );
+			const result = orch.stateConfig.value.noResults( 'foo' );
+
+			expect( result.title ).toBe( 'No results for foo' );
+			expect( result.icon ).toBe( 'warningIcon' );
+		} );
+
+		it( 'should fall back to defaults for missing mode fields', () => {
+			const orch = useProviderOrchestration(
+				[ mockSyncProvider ], mockDecorator
+			);
+			const mode = {
+				id: 'test',
+				getResults: vi.fn().mockResolvedValue( [] )
+			};
+
+			orch.enterMode( mode );
+
+			expect( orch.stateConfig.value.emptyState.title ).toBe( 'searchsuggest-search' );
+			expect( typeof orch.stateConfig.value.noResults ).toBe( 'function' );
+		} );
+
+		it( 'should update when mode changes', async () => {
+			const orch = useProviderOrchestration(
+				[ mockSyncProvider ], mockDecorator
+			);
+			const mode = {
+				id: 'test',
+				getResults: vi.fn().mockResolvedValue( [] ),
+				emptyState: {
+					title: 'Mode title',
+					description: 'Mode desc',
+					icon: null
+				}
+			};
+
+			expect( orch.stateConfig.value.emptyState.title ).toBe( 'searchsuggest-search' );
+
+			orch.enterMode( mode );
+
+			expect( orch.stateConfig.value.emptyState.title ).toBe( 'Mode title' );
+
+			await orch.exitMode();
+
+			expect( orch.stateConfig.value.emptyState.title ).toBe( 'searchsuggest-search' );
+		} );
+	} );
+
 	describe( 'abort coordination', () => {
 		it( 'should abort previous async request on new query', async () => {
 			const orch = useProviderOrchestration(
