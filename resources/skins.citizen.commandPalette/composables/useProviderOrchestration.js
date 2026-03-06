@@ -2,6 +2,21 @@ const { ref, shallowRef, computed } = require( 'vue' );
 
 const SHOW_PENDING_DELAY_MS = 300;
 
+const DEFAULT_STATE_CONFIG = {
+	emptyState: {
+		title: mw.message( 'searchsuggest-search' ).text(),
+		description: mw.message( 'citizen-search-empty-desc' ).text(),
+		icon: null
+	},
+	noResults( query ) {
+		return {
+			title: mw.message( 'citizen-search-noresults-title', query ).text(),
+			description: mw.message( 'search-nonefound' ).text(),
+			icon: null
+		};
+	}
+};
+
 /**
  * Normalizes a provider result into an array of items.
  * Providers may return { items: [...] }, a raw array, or something else.
@@ -41,6 +56,16 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	const activeMode = shallowRef( null );
 	const flatItems = computed( () => displayedItems.value.flatMap( ( s ) => s.items ) );
 	const hasDisplayedItems = computed( () => flatItems.value.length > 0 );
+	const stateConfig = computed( () => {
+		const mode = activeMode.value;
+		if ( !mode ) {
+			return DEFAULT_STATE_CONFIG;
+		}
+		return {
+			emptyState: mode.emptyState || DEFAULT_STATE_CONFIG.emptyState,
+			noResults: mode.noResults || DEFAULT_STATE_CONFIG.noResults
+		};
+	} );
 
 	let debounceTimeout = null;
 	let pendingDelayTimeout = null;
@@ -471,6 +496,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		isPending,
 		showPending,
 		hasDisplayedItems,
+		stateConfig,
 		activeMode,
 		updateQuery,
 		clearSearch,
