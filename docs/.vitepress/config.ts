@@ -89,6 +89,10 @@ export default defineConfig( {
 							},
 						],
 					},
+					{
+						text: 'Hooks',
+						link: '/customization/hooks',
+					},
 				],
 			},
 			{
