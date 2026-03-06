@@ -216,7 +216,6 @@ module.exports = exports = defineComponent( {
 					break;
 				case 'updateQuery':
 					tokenInput.setFreeText( selectionAction.payload );
-					orch.updateQuery( selectionAction.payload );
 					nextTick( focusInput );
 					break;
 				case 'none':
