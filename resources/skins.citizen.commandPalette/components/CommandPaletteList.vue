@@ -26,7 +26,6 @@
 				@select="( result ) => $emit( 'select', result )"
 				@action="( action ) => $emit( 'action', action )"
 				@mouseenter="() => $emit( 'hover', getGlobalIndex( sectionIndex, localIndex ) )"
-				@mouseleave="() => $emit( 'hover', -1 )"
 			></command-palette-list-item>
 		</template>
 	</div>

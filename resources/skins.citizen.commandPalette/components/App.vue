@@ -21,23 +21,33 @@
 			@select-token="tokenInput.selectToken( $event )"
 			@remove-token="handleRemoveToken( $event )"
 		></command-palette-header>
-		<div class="citizen-command-palette__results">
-			<command-palette-empty-state
-				v-if="!showPending && flatItems.length === 0"
-				:title="emptyStateContent.title"
-				:description="emptyStateContent.description"
-				:icon="emptyStateContent.icon"
-			></command-palette-empty-state>
-			<command-palette-list
-				v-else-if="displayedItems.length > 0"
-				:sections="displayedItems"
-				:highlighted-item-index="highlightedItemIndex"
-				:search-query="query"
-				:set-item-ref="setItemRef"
-				@select="selectResult"
-				@action="handleAction"
-				@hover="handleHover"
-			></command-palette-list>
+		<div
+			class="citizen-command-palette__body"
+			:class="{ 'citizen-command-palette__body--has-detail': highlightedItemDetail }"
+		>
+			<div class="citizen-command-palette__results">
+				<command-palette-empty-state
+					v-if="!showPending && flatItems.length === 0"
+					:title="emptyStateContent.title"
+					:description="emptyStateContent.description"
+					:icon="emptyStateContent.icon"
+				></command-palette-empty-state>
+				<command-palette-list
+					v-else-if="displayedItems.length > 0"
+					:sections="displayedItems"
+					:highlighted-item-index="highlightedItemIndex"
+					:search-query="query"
+					:set-item-ref="setItemRef"
+					@select="selectResult"
+					@action="handleAction"
+					@hover="handleHover"
+				></command-palette-list>
+			</div>
+			<command-palette-detail-panel
+				v-if="highlightedItemDetail"
+				class="citizen-command-palette__detail"
+				:detail="highlightedItemDetail"
+			></command-palette-detail-panel>
 		</div>
 		<command-palette-footer
 			:hints="keyboard.keyboardHints.value"
@@ -55,6 +65,7 @@ const CommandPaletteList = require( './CommandPaletteList.vue' );
 const CommandPaletteEmptyState = require( './CommandPaletteEmptyState.vue' );
 const CommandPaletteFooter = require( './CommandPaletteFooter.vue' );
 const CommandPaletteHeader = require( './CommandPaletteHeader.vue' );
+const CommandPaletteDetailPanel = require( './CommandPaletteDetailPanel.vue' );
 const { cdxIconArticleNotFound, cdxIconArticlesSearch } = require( '../icons.json' );
 
 // @vue/component
@@ -66,6 +77,7 @@ module.exports = exports = defineComponent( {
 	components: {
 		CommandPaletteList,
 		CommandPaletteEmptyState,
+		CommandPaletteDetailPanel,
 		CommandPaletteFooter,
 		CommandPaletteHeader
 	},
@@ -119,6 +131,18 @@ module.exports = exports = defineComponent( {
 
 		// List navigation
 		const listNav = useListNavigation( orch.flatItems );
+
+		const highlightedItemDetail = computed( () => {
+			const index = listNav.highlightedIndex.value;
+			const items = orch.flatItems.value;
+			if ( index >= 0 && index < items.length ) {
+				const detail = items[ index ].detail;
+				if ( detail && detail.pairs && detail.pairs.length ) {
+					return detail;
+				}
+			}
+			return null;
+		} );
 
 		// Action navigation adapter (managed at App level)
 		const actionFocusedIndex = ref( -1 );
@@ -384,6 +408,8 @@ module.exports = exports = defineComponent( {
 			highlightedItemIndex: listNav.highlightedIndex,
 			// Empty state
 			emptyStateContent,
+			// Detail panel
+			highlightedItemDetail,
 			// Methods
 			// eslint-disable-next-line vue/no-unused-properties -- Used externally by init.js
 			open,
@@ -440,10 +466,36 @@ module.exports = exports = defineComponent( {
 		background-color: var( --background-color-backdrop-light );
 	}
 
+	&__body {
+		border-top: var( --border-subtle );
+
+		@media ( min-width: @min-width-breakpoint-tablet ) {
+			&--has-detail {
+				display: flex;
+			}
+		}
+	}
+
 	&__results {
 		max-height: calc( 100vh - 16rem );
 		overflow-y: auto;
-		border-top: var( --border-subtle );
+
+		.citizen-command-palette__body--has-detail & {
+			@media ( min-width: @min-width-breakpoint-tablet ) {
+				flex: 3;
+				border-inline-end: var( --border-subtle );
+			}
+		}
+	}
+
+	&__detail {
+		display: none;
+
+		@media ( min-width: @min-width-breakpoint-tablet ) {
+			display: block;
+			flex: 2;
+			max-height: calc( 100vh - 16rem );
+		}
 	}
 
 	&__no-results {
