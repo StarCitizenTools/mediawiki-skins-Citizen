@@ -83,6 +83,9 @@ const mw = {
 		parse: vi.fn( () => key )
 	} ) ),
 	msg: vi.fn( ( key ) => key ),
+	language: {
+		convertNumber: vi.fn( ( n ) => String( n ) )
+	},
 	log: {
 		error: vi.fn(),
 		warn: vi.fn()
