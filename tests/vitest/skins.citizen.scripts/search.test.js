@@ -1,27 +1,20 @@
 // @vitest-environment jsdom
-/* global document, window, KeyboardEvent, Event */
+/* global document, window, KeyboardEvent */
 
 const mw = require( '../mocks/mw.js' );
-const config = require( '../mocks/config.js' );
 
 /**
- * Build a minimal search DOM structure with a details toggle and a search box.
+ * Build a minimal search DOM structure with a details toggle.
  *
- * @return {{ details: HTMLDetailsElement, searchBox: HTMLElement, input: HTMLInputElement }}
+ * @return {{ details: HTMLDetailsElement }}
  */
 function buildSearchDom() {
 	document.body.innerHTML = `
-		<details id="citizen-search-details">
-			<div class="citizen-search-box">
-				<input name="search" id="searchInput">
-			</div>
-		</details>
+		<details id="citizen-search-details"></details>
 	`;
 
 	return {
-		details: document.getElementById( 'citizen-search-details' ),
-		searchBox: document.querySelector( '.citizen-search-box' ),
-		input: document.getElementById( 'searchInput' )
+		details: document.getElementById( 'citizen-search-details' )
 	};
 }
 
@@ -44,64 +37,37 @@ function dispatchKeydown( target, opts ) {
 afterEach( () => {
 	vi.restoreAllMocks();
 	document.body.innerHTML = '';
-	config.wgCitizenEnableCommandPalette = false;
-	config.wgCitizenSearchModule = 'skins.citizen.search';
 } );
 
 describe( 'search', () => {
-	describe( 'loadSearchModule', () => {
-		it( 'should load search module immediately when input already focused', () => {
-			const { input } = buildSearchDom();
-			input.focus();
-
-			mw.loader.using.mockClear();
+	describe( 'initSearch', () => {
+		it( 'should load command palette module', () => {
 			const { init } = require( '../../../resources/skins.citizen.scripts/search.js' );
+			buildSearchDom();
+			mw.loader.load.mockClear();
+
 			init( { window, document, mw } );
 
-			expect( mw.loader.using ).toHaveBeenCalledWith(
-				'skins.citizen.search',
-				expect.any( Function )
-			);
-		} );
-
-		it( 'should defer search module load to focus event as a one-shot listener', () => {
-			const { input } = buildSearchDom();
-
-			mw.loader.using.mockClear();
-			const { init } = require( '../../../resources/skins.citizen.scripts/search.js' );
-			init( { window, document, mw } );
-
-			expect( mw.loader.using ).not.toHaveBeenCalled();
-
-			input.dispatchEvent( new Event( 'focus' ) );
-
-			expect( mw.loader.using ).toHaveBeenCalledWith(
-				'skins.citizen.search',
-				expect.any( Function )
-			);
-
-			// Second focus should not trigger another load (one-shot)
-			mw.loader.using.mockClear();
-			input.dispatchEvent( new Event( 'focus' ) );
-
-			expect( mw.loader.using ).not.toHaveBeenCalled();
+			expect( mw.loader.load ).toHaveBeenCalledWith( 'skins.citizen.commandPalette' );
 		} );
 	} );
 
 	describe( 'keyboard shortcuts', () => {
-		it( 'should open search when / key is pressed outside a form field', () => {
+		it( 'should call details.click() when / key is pressed outside a form field', () => {
 			const { details } = buildSearchDom();
+			const clickSpy = vi.spyOn( details, 'click' );
 
 			const { init } = require( '../../../resources/skins.citizen.scripts/search.js' );
 			init( { window, document, mw } );
 
 			dispatchKeydown( document.body, { code: 'Slash' } );
 
-			expect( details.open ).toBe( true );
+			expect( clickSpy ).toHaveBeenCalled();
 		} );
 
-		it( 'should open search on Ctrl+K and call preventDefault', () => {
+		it( 'should call details.click() on Ctrl+K and call preventDefault', () => {
 			const { details } = buildSearchDom();
+			const clickSpy = vi.spyOn( details, 'click' );
 
 			const { init } = require( '../../../resources/skins.citizen.scripts/search.js' );
 			init( { window, document, mw } );
@@ -116,12 +82,13 @@ describe( 'search', () => {
 
 			document.body.dispatchEvent( event );
 
-			expect( details.open ).toBe( true );
+			expect( clickSpy ).toHaveBeenCalled();
 			expect( preventDefaultSpy ).toHaveBeenCalled();
 		} );
 
 		it( 'should ignore shortcuts when target is a form field', () => {
 			const { details } = buildSearchDom();
+			const clickSpy = vi.spyOn( details, 'click' );
 
 			const { init } = require( '../../../resources/skins.citizen.scripts/search.js' );
 			init( { window, document, mw } );
@@ -146,11 +113,12 @@ describe( 'search', () => {
 				dispatchKeydown( el, { code: 'Slash' } );
 			} );
 
-			expect( details.open ).not.toBe( true );
+			expect( clickSpy ).not.toHaveBeenCalled();
 		} );
 
 		it( 'should fire shortcuts when target is a checkbox or button', () => {
 			const { details } = buildSearchDom();
+			const clickSpy = vi.spyOn( details, 'click' );
 
 			const { init } = require( '../../../resources/skins.citizen.scripts/search.js' );
 			init( { window, document, mw } );
@@ -161,78 +129,14 @@ describe( 'search', () => {
 
 			dispatchKeydown( checkbox, { code: 'Slash' } );
 
-			expect( details.open ).toBe( true );
-
-			// Reset and test with a button
-			details.open = false;
+			expect( clickSpy ).toHaveBeenCalledTimes( 1 );
 
 			const button = document.createElement( 'button' );
 			document.body.appendChild( button );
 
 			dispatchKeydown( button, { code: 'Slash' } );
 
-			expect( details.open ).toBe( true );
-		} );
-	} );
-
-	describe( 'renderSearchLoadingIndicator', () => {
-		it( 'should add loading class on input, remove on focusout, re-add on focusin with value', () => {
-			const { searchBox, input } = buildSearchDom();
-
-			const { init } = require( '../../../resources/skins.citizen.scripts/search.js' );
-			init( { window, document, mw } );
-
-			// input event adds the loading class
-			input.dispatchEvent( new Event( 'input', { bubbles: true } ) );
-
-			expect( searchBox.classList.contains( 'citizen-loading' ) ).toBe( true );
-
-			// focusout removes the loading class
-			input.dispatchEvent( new Event( 'focusout', { bubbles: true } ) );
-
-			expect( searchBox.classList.contains( 'citizen-loading' ) ).toBe( false );
-
-			// focusin with a value re-adds the loading class
-			input.value = 'test query';
-			input.dispatchEvent( new Event( 'focusin', { bubbles: true } ) );
-
-			expect( searchBox.classList.contains( 'citizen-loading' ) ).toBe( true );
-		} );
-	} );
-
-	describe( 'command palette mode', () => {
-		it( 'should load command palette module and use details.click() for shortcuts', () => {
-			config.wgCitizenEnableCommandPalette = true;
-			vi.resetModules();
-
-			const freshMw = require( '../mocks/mw.js' );
-			const { init } = require( '../../../resources/skins.citizen.scripts/search.js' );
-			const { details } = buildSearchDom();
-			const clickSpy = vi.spyOn( details, 'click' );
-
-			init( { window, document, mw: freshMw } );
-
-			expect( freshMw.loader.load ).toHaveBeenCalledWith( 'skins.citizen.commandPalette' );
-
-			// Keyboard shortcut should use details.click() instead of details.open
-			dispatchKeydown( document.body, { code: 'Slash' } );
-
-			expect( clickSpy ).toHaveBeenCalled();
-		} );
-	} );
-
-	describe( 'no search boxes', () => {
-		it( 'should no-op gracefully when .citizen-search-box is not in DOM', () => {
-			document.body.innerHTML = '<details id="citizen-search-details"></details>';
-
-			mw.loader.using.mockClear();
-			const { init } = require( '../../../resources/skins.citizen.scripts/search.js' );
-
-			expect( () => {
-				init( { window, document, mw } );
-			} ).not.toThrow();
-
-			expect( mw.loader.using ).not.toHaveBeenCalled();
+			expect( clickSpy ).toHaveBeenCalledTimes( 2 );
 		} );
 	} );
 } );
