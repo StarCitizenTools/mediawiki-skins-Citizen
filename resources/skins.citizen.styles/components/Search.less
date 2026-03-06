@@ -1,20 +1,12 @@
-@width-search-bar: 800px;
-@position-offset-y-desktop: 3.5rem; // Sync with search button position
+@position-offset-y-desktop: 3rem; // Sync with search button position
 
 .citizen-search {
-	--width-search-bar: @width-search-bar;
-	--height-search-bar: 2.75rem;
-
-	@media ( min-width: @min-width-breakpoint-desktop ) {
-		--height-search-bar: 3rem;
-	}
-
 	.citizen-menu__card {
 		--size-icon: 1rem;
 		top: 0;
 		right: 0;
 		left: 0;
-		width: var( --width-search-bar );
+		width: 56rem; // Match command palette width
 		max-width: ~'calc(100vw - var( --padding-page ) )';
 		max-height: var( --header-card-maxheight );
 		margin-inline: auto;
@@ -40,74 +32,27 @@
 		}
 	}
 
-	&__formButton,
 	&__formIcon {
+		--size-icon: 20px;
 		display: grid;
 		place-content: center;
-		width: ~'calc( 1.25rem + var( --space-sm ) * 2 )'; // Sync with left icons (--size-icon + --space-sm * 2) and typeahead
-		height: var( --height-search-bar );
-	}
-
-	&__formButton {
-		color: var( --color-base );
-		cursor: pointer;
-		border-radius: var( --border-radius-base );
-
-		.citizen-ui-icon::before {
-			transition: var( --transition-hover );
-			transition-property: opacity;
-		}
-
-		&:hover {
-			background-color: var( --background-color-button-quiet--hover );
-
-			.citizen-ui-icon::before {
-				opacity: var( --opacity-icon-base--hover );
-			}
-		}
-
-		&:active {
-			background-color: var( --background-color-button-quiet--active );
-
-			.citizen-ui-icon::before {
-				opacity: var( --opacity-icon-base--selected );
-			}
-		}
-	}
-
-	&__random {
-		.citizen-ui-icon::before {
-			transition-property: opacity, transform;
-		}
-
-		&:hover {
-			.citizen-ui-icon::before {
-				transform: rotate( 30deg );
-			}
-		}
-	}
-
-	&__form,
-	&__footer {
-		position: sticky;
-		z-index: @z-index-stacking-1;
-		.mixin-citizen-frosted-glass;
+		width: 56px; // Match command palette header height
+		height: 56px; // Match command palette header height
 	}
 
 	&__form {
+		position: sticky;
 		top: 0;
+		z-index: @z-index-stacking-1;
+		.mixin-citizen-frosted-glass;
 		display: flex;
 		height: 100%;
 		overflow: hidden;
-		font-size: var( --font-size-small );
+		font-size: var( --font-size-medium );
 
 		// HACK: Target mobile Safari only to prevent auto zooming the input field
 		@supports (-webkit-touch-callout: none) {
 			font-size: 1rem;
-		}
-
-		@media ( min-width: @min-width-breakpoint-desktop ) {
-			font-size: var( --font-size-medium );
 		}
 
 		// Loading indicator for searchbox
@@ -115,28 +60,6 @@
 		&.citizen-loading::after {
 			position: absolute;
 			bottom: 0;
-		}
-	}
-
-	&__footer {
-		bottom: 0;
-		display: flex;
-		gap: var( --space-lg );
-		align-items: center;
-		justify-content: space-between;
-		min-height: 2.5rem;
-		padding: 0 var( --space-md );
-		overflow: hidden;
-		color: var( --color-subtle );
-		white-space: nowrap;
-		border-top: 1px solid var( --border-color-base );
-		.mixin-citizen-font-styles( 'small' );
-
-		&-start,
-		&-end {
-			display: flex;
-			gap: var( --space-md );
-			align-items: center;
 		}
 	}
 }

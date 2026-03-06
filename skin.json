@@ -36,7 +36,6 @@
 				"LanguageConverterFactory",
 				"LanguageNameUtils",
 				"PermissionManager",
-				"ExtensionRegistry",
 				"UserGroupManager",
 				"UrlUtils"
 			],
