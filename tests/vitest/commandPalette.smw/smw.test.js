@@ -192,7 +192,9 @@ describe( 'SMW mode', () => {
 			expect( mockGet ).toHaveBeenCalledWith( {
 				action: 'smwbrowse',
 				browse: 'category',
-				params: JSON.stringify( { search: 'Ci', limit: 10 } )
+				params: JSON.stringify( { search: 'Ci', limit: 10 } ),
+				maxage: 1200,
+				smaxage: 1200
 			} );
 			expect( result ).toHaveLength( 1 );
 			expect( result[ 0 ] ).toMatchObject( {
@@ -213,7 +215,9 @@ describe( 'SMW mode', () => {
 			expect( mockGet ).toHaveBeenCalledWith( {
 				action: 'smwbrowse',
 				browse: 'pvalue',
-				params: JSON.stringify( { search: 'Ger', property: 'Located in', limit: 10 } )
+				params: JSON.stringify( { search: 'Ger', property: 'Located in', limit: 10 } ),
+				maxage: 1200,
+				smaxage: 1200
 			} );
 			expect( result ).toHaveLength( 2 );
 			expect( result[ 0 ] ).toMatchObject( {
@@ -264,7 +268,9 @@ describe( 'SMW mode', () => {
 			expect( mockGet ).toHaveBeenCalledWith( {
 				action: 'ask',
 				query: '[[Category:City]]|limit=10',
-				format: 'json'
+				format: 'json',
+				maxage: 1200,
+				smaxage: 1200
 			} );
 			expect( result ).toEqual( [
 				{
@@ -294,7 +300,9 @@ describe( 'SMW mode', () => {
 			expect( mockGet ).toHaveBeenCalledWith( {
 				action: 'ask',
 				query: '[[Category:City]][[Located in::Germany]][[Has population::>1000000]]|limit=10',
-				format: 'json'
+				format: 'json',
+				maxage: 1200,
+				smaxage: 1200
 			} );
 		} );
 
@@ -318,7 +326,9 @@ describe( 'SMW mode', () => {
 			expect( mockGet ).toHaveBeenCalledWith( {
 				action: 'ask',
 				query: '[[Category:City]]|limit=10',
-				format: 'json'
+				format: 'json',
+				maxage: 1200,
+				smaxage: 1200
 			} );
 		} );
 	} );

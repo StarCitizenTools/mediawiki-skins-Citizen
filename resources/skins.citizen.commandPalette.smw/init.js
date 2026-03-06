@@ -3,6 +3,7 @@
  * Loaded conditionally only when SMW is installed.
  */
 const { cdxIconAdd, cdxIconTag, cdxIconWikitext } = require( './icons.json' );
+const config = require( './config.json' );
 const parseIncompleteCondition = require( './queryParser.js' );
 
 /**
@@ -60,7 +61,7 @@ function adaptSmwResult( subject, index ) {
 }
 
 /**
- * Creates a cached fetcher for SMW browse suggestions.
+ * Creates a fetcher for SMW browse suggestions.
  *
  * @param {string} browse The smwbrowse type ('property' or 'category').
  * @param {string} typePrefix The item type prefix (e.g. 'smw-property').
@@ -68,16 +69,13 @@ function adaptSmwResult( subject, index ) {
  * @return {function(string): Promise<Array>} Fetcher function.
  */
 function createSmwBrowseFetcher( browse, typePrefix, icon ) {
-	const cache = new Map();
 	return function ( fragment ) {
-		if ( cache.has( fragment ) ) {
-			return cache.get( fragment );
-		}
-
-		const promise = new mw.Api().get( {
+		return new mw.Api().get( {
 			action: 'smwbrowse',
 			browse: browse,
-			params: JSON.stringify( { search: fragment, limit: 10 } )
+			params: JSON.stringify( { search: fragment, limit: 10 } ),
+			maxage: config.wgSearchSuggestCacheExpiry,
+			smaxage: config.wgSearchSuggestCacheExpiry
 		} ).then( ( data ) => {
 			const items = Object.values( data.query || {} );
 			return items.map( ( item, index ) => ( {
@@ -88,22 +86,16 @@ function createSmwBrowseFetcher( browse, typePrefix, icon ) {
 				highlightQuery: true
 			} ) );
 		} ).catch( ( error ) => {
-			cache.delete( fragment );
 			if ( error !== 'AbortError' ) {
 				mw.log.error( '[commandPalette] SMW ' + browse + ' query failed:', error );
 			}
 			return [];
 		} );
-
-		cache.set( fragment, promise );
-		return promise;
 	};
 }
 
 const fetchPropertySuggestions = createSmwBrowseFetcher( 'property', 'smw-property', cdxIconTag );
 const fetchCategorySuggestions = createSmwBrowseFetcher( 'category', 'smw-category', cdxIconTag );
-
-const valueSuggestionCache = new Map();
 
 /**
  * Fetches SMW value suggestions for a specific property.
@@ -113,15 +105,12 @@ const valueSuggestionCache = new Map();
  * @return {Promise<Array>} Array of CommandPaletteItems.
  */
 function fetchValueSuggestions( fragment, property ) {
-	const cacheKey = property + '::' + fragment;
-	if ( valueSuggestionCache.has( cacheKey ) ) {
-		return valueSuggestionCache.get( cacheKey );
-	}
-
-	const promise = new mw.Api().get( {
+	return new mw.Api().get( {
 		action: 'smwbrowse',
 		browse: 'pvalue',
-		params: JSON.stringify( { search: fragment, property: property, limit: 10 } )
+		params: JSON.stringify( { search: fragment, property: property, limit: 10 } ),
+		maxage: config.wgSearchSuggestCacheExpiry,
+		smaxage: config.wgSearchSuggestCacheExpiry
 	} ).then( ( data ) => {
 		const values = data.query || [];
 		return values.map( ( value, index ) => ( {
@@ -133,15 +122,11 @@ function fetchValueSuggestions( fragment, property ) {
 			highlightQuery: true
 		} ) );
 	} ).catch( ( error ) => {
-		valueSuggestionCache.delete( cacheKey );
 		if ( error !== 'AbortError' ) {
 			mw.log.error( '[commandPalette] SMW pvalue query failed:', error );
 		}
 		return [];
 	} );
-
-	valueSuggestionCache.set( cacheKey, promise );
-	return promise;
 }
 
 /**
@@ -212,7 +197,9 @@ async function getSmwResults( subQuery, _signal, tokens ) {
 		const data = await api.get( {
 			action: 'ask',
 			query: askQuery + '|limit=10',
-			format: 'json'
+			format: 'json',
+			maxage: config.wgSearchSuggestCacheExpiry,
+			smaxage: config.wgSearchSuggestCacheExpiry
 		} );
 
 		const results = data?.query?.results;

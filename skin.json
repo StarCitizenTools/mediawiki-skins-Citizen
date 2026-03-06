@@ -439,6 +439,10 @@
 				"resources/skins.citizen.commandPalette.smw/init.js",
 				"resources/skins.citizen.commandPalette.smw/queryParser.js",
 				{
+					"name": "resources/skins.citizen.commandPalette.smw/config.json",
+					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenCommandPaletteResourceLoaderConfig"
+				},
+				{
 					"name": "resources/skins.citizen.commandPalette.smw/icons.json",
 					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
 					"callbackParam": [
