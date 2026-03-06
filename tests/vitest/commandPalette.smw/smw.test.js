@@ -86,6 +86,18 @@ describe( 'SMW mode', () => {
 			expect( result ).toEqual( { action: 'none' } );
 		} );
 
+		it( 'should return updateQuery action for smw-category items', () => {
+			const result = smwMode.onResultSelect( { type: 'smw-category', label: 'City' } );
+
+			expect( result ).toEqual( { action: 'updateQuery', payload: '[[Category:City]]' } );
+		} );
+
+		it( 'should return updateQuery action for smw-property items', () => {
+			const result = smwMode.onResultSelect( { type: 'smw-property', label: 'Located in' } );
+
+			expect( result ).toEqual( { action: 'updateQuery', payload: '[[Located in::' } );
+		} );
+
 		it( 'should have emptyState with title, description, and icon', () => {
 			expect( smwMode.emptyState ).toBeDefined();
 			expect( smwMode.emptyState.title ).toBe( 'citizen-command-palette-mode-smw-empty-title' );
@@ -93,11 +105,18 @@ describe( 'SMW mode', () => {
 			expect( smwMode.emptyState.icon ).toBe( smwMode.icon );
 		} );
 
-		it( 'should return malformed state for incomplete query', () => {
+		it( 'should return no-categories state for incomplete category query', () => {
 			const result = smwMode.noResults( '[[Category:Ci', [] );
 
-			expect( result.title ).toBe( 'citizen-command-palette-mode-smw-malformed-title' );
-			expect( result.description ).toBe( 'citizen-command-palette-mode-smw-malformed-description' );
+			expect( result.title ).toBe( 'citizen-command-palette-mode-smw-nocategories-title' );
+			expect( result.description ).toBe( 'citizen-command-palette-mode-smw-nocategories-description' );
+		} );
+
+		it( 'should return no-properties state for incomplete property query', () => {
+			const result = smwMode.noResults( '[[SomeText', [] );
+
+			expect( result.title ).toBe( 'citizen-command-palette-mode-smw-noproperties-title' );
+			expect( result.description ).toBe( 'citizen-command-palette-mode-smw-noproperties-description' );
 		} );
 
 		it( 'should return no-results state for valid but empty query', () => {
@@ -141,8 +160,31 @@ describe( 'SMW mode', () => {
 			expect( mockGet ).not.toHaveBeenCalled();
 		} );
 
-		it( 'should return empty array for incomplete conditions', async () => {
+		it( 'should fetch category suggestions for incomplete category condition', async () => {
+			mockGet.mockResolvedValue( {
+				query: {
+					City: { label: 'City', key: 'City' }
+				}
+			} );
+
 			const result = await smwMode.getResults( '[[Category:Ci' );
+
+			expect( mockGet ).toHaveBeenCalledWith( {
+				action: 'smwbrowse',
+				browse: 'category',
+				params: JSON.stringify( { search: 'Ci', limit: 10 } )
+			} );
+			expect( result ).toHaveLength( 1 );
+			expect( result[ 0 ] ).toMatchObject( {
+				id: 'citizen-command-palette-item-smw-category-0',
+				type: 'smw-category',
+				label: 'City',
+				highlightQuery: true
+			} );
+		} );
+
+		it( 'should return empty array for incomplete value stage', async () => {
+			const result = await smwMode.getResults( '[[Has population::' );
 
 			expect( result ).toEqual( [] );
 			expect( mockGet ).not.toHaveBeenCalled();

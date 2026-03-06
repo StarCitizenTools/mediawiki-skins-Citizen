@@ -454,12 +454,15 @@
 				"citizen-command-palette-mode-smw-empty-title",
 				"citizen-command-palette-mode-smw-malformed-description",
 				"citizen-command-palette-mode-smw-malformed-title",
+				"citizen-command-palette-mode-smw-nocategories-description",
+				"citizen-command-palette-mode-smw-nocategories-title",
 				"citizen-command-palette-mode-smw-noproperties-description",
 				"citizen-command-palette-mode-smw-noproperties-title",
 				"citizen-command-palette-mode-smw-noresults-description",
 				"citizen-command-palette-mode-smw-noresults-title",
 				"citizen-command-palette-mode-smw-placeholder",
 				"citizen-command-palette-type-smw",
+				"citizen-command-palette-type-smw-category",
 				"citizen-command-palette-type-smw-property"
 			]
 		},
