@@ -220,72 +220,6 @@
 				"mediawiki.util"
 			]
 		},
-		"skins.citizen.search": {
-			"es6": true,
-			"styles": [
-				"resources/skins.citizen.search/skins.citizen.search.less",
-				"resources/skins.citizen.search/components/TypeaheadPlaceholder.less",
-				"resources/skins.citizen.search/components/TypeaheadList.less",
-				"resources/skins.citizen.search/components/TypeaheadListItem.less"
-			],
-			"packageFiles": [
-				"resources/skins.citizen.search/main.js",
-				{
-					"name": "resources/skins.citizen.search/config.json",
-					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenSearchResourceLoaderConfig"
-				},
-				"resources/skins.citizen.search/typeahead.js",
-				{
-					"name": "resources/skins.citizen.search/templates/TypeaheadElement.mustache",
-					"file": "resources/skins.citizen.search/templates/TypeaheadElement.mustache",
-					"type": "text"
-				},
-				{
-					"name": "resources/skins.citizen.search/templates/TypeaheadPlaceholder.mustache",
-					"file": "resources/skins.citizen.search/templates/TypeaheadPlaceholder.mustache",
-					"type": "text"
-				},
-				{
-					"name": "resources/skins.citizen.search/templates/TypeaheadList.mustache",
-					"file": "resources/skins.citizen.search/templates/TypeaheadList.mustache",
-					"type": "text"
-				},
-				{
-					"name": "resources/skins.citizen.search/templates/TypeaheadListItem.mustache",
-					"file": "resources/skins.citizen.search/templates/TypeaheadListItem.mustache",
-					"type": "text"
-				},
-				"resources/skins.citizen.search/fetch.js",
-				"resources/skins.citizen.search/searchAction.js",
-				"resources/skins.citizen.search/searchClient.js",
-				"resources/skins.citizen.search/searchHistory.js",
-				"resources/skins.citizen.search/searchPresults.js",
-				"resources/skins.citizen.search/searchResults.js",
-				"resources/skins.citizen.search/searchQuery.js",
-				"resources/skins.citizen.search/urlGenerator.js",
-				"resources/skins.citizen.search/searchClients/searchClients.json",
-				"resources/skins.citizen.search/searchClients/mwActionApi.js",
-				"resources/skins.citizen.search/searchClients/mwRestApi.js",
-				"resources/skins.citizen.search/searchClients/smwAskApi.js"
-			],
-			"messages": [
-				"citizen-search-advancedsearch",
-				"citizen-search-empty-desc",
-				"citizen-search-editpage",
-				"citizen-search-fulltext",
-				"citizen-search-mediasearch",
-				"citizen-search-noresults-desc",
-				"citizen-search-noresults-title",
-				"search-redirect",
-				"searchsuggest-search"
-			],
-			"dependencies": [
-				"mediawiki.storage",
-				"mediawiki.template.mustache",
-				"mediawiki.user",
-				"mediawiki.util"
-			]
-		},
 		"skins.citizen.preferences.codex": {
 			"class": "MediaWiki\\ResourceLoader\\CodexModule",
 			"codexComponents": [
@@ -483,7 +417,6 @@
 				"citizen-command-palette-type-special-page",
 				"citizen-command-palette-type-user",
 				"citizen-search-empty-desc",
-				"citizen-search-noresults-desc",
 				"citizen-search-noresults-title",
 				"contributions",
 				"search-nonefound",
@@ -872,30 +805,6 @@
 			"descriptionmsg": "citizen-config-manifestoptions",
 			"public": true
 		},
-		"SearchModule": {
-			"value": "skins.citizen.search",
-			"description": "Which module to use for search suggestion. Avaliable options: [skins.citizen.search|mediawiki.searchSuggest|custom]",
-			"descriptionmsg": "citizen-config-searchmodule",
-			"public": true
-		},
-		"SearchGateway": {
-			"value": "mwRestApi",
-			"description": "Which gateway to use for fetching search suggestion. Avaliable options: [mwActionApi|mwRestApi|custom]",
-			"descriptionmsg": "citizen-config-searchgateway",
-			"public": true
-		},
-		"SearchDescriptionSource": {
-			"value": "textextracts",
-			"description": "The source of the short description in the suggestions",
-			"descriptionmsg": "citizen-config-searchdescriptionsource",
-			"public": true
-		},
-		"MaxSearchResults": {
-			"value": 10,
-			"description": "The max number of suggestions in search result",
-			"descriptionmsg": "citizen-config-maxsearchresults",
-			"public": true
-		},
 		"ShowPageTools": {
 			"value": true,
 			"description": "Page tools visibility condition",
@@ -963,12 +872,6 @@
 		"TableOfContentsCollapseAtCount": {
 			"value": 28,
 			"description": "@var The minimum number of headings required to collapse all headings in the sticky table of contents by default."
-		},
-		"EnableCommandPalette": {
-			"value": true,
-			"description": "Enables or disable the command palette. Disable to use the old search module.",
-			"descriptionmsg": "citizen-config-enablecommandpalette",
-			"public": true
 		},
 		"HeaderPosition": {
 			"value": "left",
