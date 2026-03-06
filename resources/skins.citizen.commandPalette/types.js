@@ -39,7 +39,7 @@
  * @property {string} [thumbnailIcon] Optional placeholder icon identifier (e.g., cdxIcon...) if thumbnail URL is missing. Passed to cdx-thumbnail :placeholder-icon prop.
  * @property {Array<CommandPaletteItemMetadata>} [metadata] Optional list of metadata badges/tags.
  * @property {Array<CommandPaletteItemAction>} [actions] Optional list of actions available for the item.
- * @property {string} [value] Optional value associated with the item, used for specific types like commands (e.g. the command trigger string '/ns').
+ * @property {string} [value] Optional mode-specific payload associated with the item (e.g. the namespace trigger '/ns:', or the SMW property name for value suggestions).
  * @property {boolean} [highlightQuery] Whether to highlight the query in the label.
  * @property {string} [source] Identifier of the provider that generated this item (e.g., 'recent', 'command', 'search').
  * @property {boolean} [isMouseClick] True if the selection was triggered by a mouse click.

@@ -98,6 +98,19 @@ describe( 'SMW mode', () => {
 			expect( result ).toEqual( { action: 'updateQuery', payload: '[[Located in::' } );
 		} );
 
+		it( 'should return updateQuery action for smw-value items', () => {
+			const result = smwMode.onResultSelect( {
+				type: 'smw-value',
+				label: 'Germany',
+				value: 'Located in'
+			} );
+
+			expect( result ).toEqual( {
+				action: 'updateQuery',
+				payload: '[[Located in::Germany]]'
+			} );
+		} );
+
 		it( 'should have emptyState with title, description, and icon', () => {
 			expect( smwMode.emptyState ).toBeDefined();
 			expect( smwMode.emptyState.title ).toBe( 'citizen-command-palette-mode-smw-empty-title' );
@@ -110,6 +123,13 @@ describe( 'SMW mode', () => {
 
 			expect( result.title ).toBe( 'citizen-command-palette-mode-smw-nocategories-title' );
 			expect( result.description ).toBe( 'citizen-command-palette-mode-smw-nocategories-description' );
+		} );
+
+		it( 'should return no-values state for incomplete value query', () => {
+			const result = smwMode.noResults( '[[Located in::Ger', [] );
+
+			expect( result.title ).toBe( 'citizen-command-palette-mode-smw-novalues-title' );
+			expect( result.description ).toBe( 'citizen-command-palette-mode-smw-novalues-description' );
 		} );
 
 		it( 'should return no-properties state for incomplete property query', () => {
@@ -183,11 +203,33 @@ describe( 'SMW mode', () => {
 			} );
 		} );
 
-		it( 'should return empty array for incomplete value stage', async () => {
-			const result = await smwMode.getResults( '[[Has population::' );
+		it( 'should fetch value suggestions for incomplete value condition', async () => {
+			mockGet.mockResolvedValue( {
+				query: [ 'Germany', 'Greece' ]
+			} );
 
-			expect( result ).toEqual( [] );
-			expect( mockGet ).not.toHaveBeenCalled();
+			const result = await smwMode.getResults( '[[Located in::Ger' );
+
+			expect( mockGet ).toHaveBeenCalledWith( {
+				action: 'smwbrowse',
+				browse: 'pvalue',
+				params: JSON.stringify( { search: 'Ger', property: 'Located in', limit: 10 } )
+			} );
+			expect( result ).toHaveLength( 2 );
+			expect( result[ 0 ] ).toMatchObject( {
+				id: 'citizen-command-palette-item-smw-value-0',
+				type: 'smw-value',
+				label: 'Germany',
+				value: 'Located in',
+				highlightQuery: true
+			} );
+			expect( result[ 1 ] ).toMatchObject( {
+				id: 'citizen-command-palette-item-smw-value-1',
+				type: 'smw-value',
+				label: 'Greece',
+				value: 'Located in',
+				highlightQuery: true
+			} );
 		} );
 
 		it( 'should return empty array when freetext contains non-Ask text after tokens', async () => {
