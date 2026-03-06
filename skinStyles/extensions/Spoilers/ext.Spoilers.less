@@ -1,19 +1,49 @@
 /*
  * Citizen
  *
- * SkinStyles for Extension:Spoilers
+ * SkinStyles for Spoilers
  * Module: ext.Spoilers
+ * Version: master 7a9b4b
+ *
+ * Date: 2026-03-06
 */
 
 .spoilers {
 	margin-top: var( --space-md );
 }
 
-.spoilers-body {
-	position: relative;
-	margin: var( --space-md ) 0;
-	color: inherit;
-	background-color: var( --color-surface-1 );
-	border-color: var( --border-color-base );
+.spoilers-button {
+	padding: var( --space-xs ) var( --space-md );
+	font-weight: var( --font-weight-medium );
+	color: var( --color-base );
+	user-select: none;
+	background: var( --background-color-interactive-subtle );
+	border: var( --border-width-base ) solid var( --border-color-interactive );
 	border-radius: var( --border-radius-medium );
+
+	&:hover {
+		background-color: var( --background-color-interactive-subtle--hover );
+	}
+
+	&:active {
+		background-color: var( --background-color-interactive-subtle--active );
+	}
+}
+
+.spoilers-body {
+	padding: var( --space-sm );
+	margin-top: var( --space-xs );
+	color: var( --color-base );
+	background-color: var( --color-surface-2 );
+	border: var( --border-width-base ) dashed var( --border-color-base );
+	border-radius: var( --border-radius-medium );
+}
+
+.spoilers-body h1,
+.spoilers-body h2,
+.spoilers-body h3,
+.spoilers-body h4,
+.spoilers-body h5,
+.spoilers-body h6 {
+	color: var( --color-emphasized );
 }
