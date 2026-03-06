@@ -209,7 +209,7 @@ describe( 'useProviderOrchestration', () => {
 				id: 'ns',
 				getResults: vi.fn().mockResolvedValue( [] ),
 				onResultSelect: vi.fn().mockReturnValue( {
-					action: 'updateQuery', payload: 'Talk:'
+					action: 'exitWithQuery', payload: 'Talk:'
 				} )
 			};
 			orch.enterMode( mode );
@@ -218,7 +218,7 @@ describe( 'useProviderOrchestration', () => {
 			const action = await orch.handleSelection( result );
 
 			expect( mode.onResultSelect ).toHaveBeenCalledWith( result );
-			expect( action ).toEqual( { action: 'updateQuery', payload: 'Talk:' } );
+			expect( action ).toEqual( { action: 'exitWithQuery', payload: 'Talk:' } );
 		} );
 
 		it( 'handleSelection does not check providers when mode is active', async () => {

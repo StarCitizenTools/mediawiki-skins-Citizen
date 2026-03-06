@@ -105,7 +105,8 @@ Every entry must have at minimum an `id`, `triggers`, and `description`. If the 
 | :--- | :--- | :--- |
 | `{ action: 'none' }` | - | Stay in the palette, do nothing. |
 | `{ action: 'navigate', payload: url }` | URL string | Close the palette and navigate to the URL. |
-| `{ action: 'updateQuery', payload: query }` | Query string | Update the search input with a new query. |
+| `{ action: 'exitWithQuery', payload: query }` | Query string | Exit the current mode and set the query string. |
+| `{ action: 'updateQuery', payload: query }` | Query string | Update the query within the current mode without exiting. |
 
 ### Token patterns
 

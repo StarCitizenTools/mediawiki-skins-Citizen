@@ -41,10 +41,10 @@ describe( 'namespace mode', () => {
 	} );
 
 	describe( 'onResultSelect', () => {
-		it( 'should return updateQuery action for items with a string value', () => {
+		it( 'should return exitWithQuery action for items with a string value', () => {
 			const result = namespaceMode.onResultSelect( { value: 'Talk:' } );
 
-			expect( result ).toEqual( { action: 'updateQuery', payload: 'Talk:' } );
+			expect( result ).toEqual( { action: 'exitWithQuery', payload: 'Talk:' } );
 		} );
 
 		it( 'should return none action for items without a value', () => {

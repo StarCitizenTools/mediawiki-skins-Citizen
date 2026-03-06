@@ -101,10 +101,10 @@
  */
 
 /**
- * Action to update the command palette's query string.
+ * Action to exit the current mode and set the query string.
  *
- * @typedef {Object} CommandPaletteUpdateQueryAction
- * @property {'updateQuery'} action
+ * @typedef {Object} CommandPaletteExitWithQueryAction
+ * @property {'exitWithQuery'} action
  * @property {string} payload - The new query string.
  */
 
@@ -120,7 +120,7 @@
  * Describes the action the UI should take after an item selection is handled.
  * This is a discriminated union based on the 'action' property.
  *
- * @typedef {CommandPaletteNavigateAction | CommandPaletteUpdateQueryAction | CommandPaletteNoneAction} CommandPaletteActionResult
+ * @typedef {CommandPaletteNavigateAction | CommandPaletteExitWithQueryAction | CommandPaletteNoneAction} CommandPaletteActionResult
  */
 
 /**

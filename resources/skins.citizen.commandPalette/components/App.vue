@@ -199,7 +199,7 @@ module.exports = exports = defineComponent( {
 						close();
 					}
 					break;
-				case 'updateQuery':
+				case 'exitWithQuery':
 					if ( orch.activeMode.value ) {
 						// From within a mode: exit and add token
 						orch.exitMode();

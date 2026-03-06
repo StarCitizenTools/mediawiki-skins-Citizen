@@ -75,7 +75,7 @@ describe( 'createPaletteCommandProvider', () => {
 	} );
 
 	describe( 'onResultSelect', () => {
-		it( 'returns updateQuery with trigger value when selecting a mode from command list', async () => {
+		it( 'returns exitWithQuery with trigger value when selecting a mode from command list', async () => {
 			const result = await provider.onResultSelect( {
 				id: 'cmd-ns',
 				type: 'command',
@@ -84,7 +84,7 @@ describe( 'createPaletteCommandProvider', () => {
 			} );
 
 			expect( result ).toEqual( {
-				action: 'updateQuery',
+				action: 'exitWithQuery',
 				payload: '/ns:'
 			} );
 		} );
