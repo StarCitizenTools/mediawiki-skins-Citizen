@@ -46,6 +46,7 @@ function adaptSmwResult( subject, index ) {
 }
 
 const propertySuggestionCache = new Map();
+const categorySuggestionCache = new Map();
 
 /**
  * Fetches SMW property suggestions matching the given fragment.
@@ -80,6 +81,42 @@ function fetchPropertySuggestions( fragment ) {
 	} );
 
 	propertySuggestionCache.set( fragment, promise );
+	return promise;
+}
+
+/**
+ * Fetches SMW category suggestions matching the given fragment.
+ *
+ * @param {string} fragment The partial category name to search for.
+ * @return {Promise<Array>} Array of CommandPaletteItems.
+ */
+function fetchCategorySuggestions( fragment ) {
+	if ( categorySuggestionCache.has( fragment ) ) {
+		return categorySuggestionCache.get( fragment );
+	}
+
+	const promise = new mw.Api().get( {
+		action: 'smwbrowse',
+		browse: 'category',
+		params: JSON.stringify( { search: fragment, limit: 10 } )
+	} ).then( ( data ) => {
+		const categories = Object.values( data.query || {} );
+		return categories.map( ( item, index ) => ( {
+			id: 'citizen-command-palette-item-smw-category-' + index,
+			type: 'smw-category',
+			thumbnailIcon: cdxIconTag,
+			label: item.label,
+			highlightQuery: true
+		} ) );
+	} ).catch( ( error ) => {
+		categorySuggestionCache.delete( fragment );
+		if ( error !== 'AbortError' ) {
+			mw.log.error( '[commandPalette] SMW category query failed:', error );
+		}
+		return [];
+	} );
+
+	categorySuggestionCache.set( fragment, promise );
 	return promise;
 }
 
@@ -132,7 +169,10 @@ async function getSmwResults( subQuery, _signal, tokens ) {
 		if ( incomplete.stage === 'property' ) {
 			return fetchPropertySuggestions( incomplete.fragment );
 		}
-		// category and value stages: no suggestions yet (layers 2-3)
+		if ( incomplete.stage === 'category' ) {
+			return fetchCategorySuggestions( incomplete.fragment );
+		}
+		// value stage: no suggestions yet (layer 3)
 		return [];
 	}
 
@@ -186,6 +226,13 @@ module.exports = {
 				icon: cdxIconWikitext
 			};
 		}
+		if ( incomplete && incomplete.stage === 'category' ) {
+			return {
+				title: mw.message( 'citizen-command-palette-mode-smw-nocategories-title' ).text(),
+				description: mw.message( 'citizen-command-palette-mode-smw-nocategories-description' ).text(),
+				icon: cdxIconWikitext
+			};
+		}
 
 		const fullQuery = buildAskQuery( query, tokens || [] );
 		if ( !isCompleteAskQuery( fullQuery ) ) {
@@ -211,6 +258,9 @@ module.exports = {
 	onResultSelect( item ) {
 		if ( item.type === 'smw-property' ) {
 			return { action: 'updateQuery', payload: '[[' + item.label + '::' };
+		}
+		if ( item.type === 'smw-category' ) {
+			return { action: 'updateQuery', payload: '[[Category:' + item.label + ']]' };
 		}
 		return item.url ?
 			{ action: 'navigate', payload: item.url } :
