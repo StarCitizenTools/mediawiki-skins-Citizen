@@ -2,8 +2,22 @@
  * Semantic MediaWiki Ask query mode for the command palette.
  * Loaded conditionally only when SMW is installed.
  */
-const { cdxIconTag, cdxIconWikitext } = require( './icons.json' );
+const { cdxIconAdd, cdxIconTag, cdxIconWikitext } = require( './icons.json' );
 const parseIncompleteCondition = require( './queryParser.js' );
+
+/**
+ * Builds a state object for emptyState / noResults display.
+ *
+ * @param {string} key The suffix for the i18n message key (e.g. 'noresults').
+ * @return {{ title: string, description: string, icon: string }}
+ */
+function makeState( key ) {
+	return {
+		title: mw.message( 'citizen-command-palette-mode-smw-' + key + '-title' ).text(),
+		description: mw.message( 'citizen-command-palette-mode-smw-' + key + '-description' ).text(),
+		icon: cdxIconWikitext
+	};
+}
 
 /**
  * Matches a completed SMW condition at the start of text.
@@ -45,78 +59,88 @@ function adaptSmwResult( subject, index ) {
 	};
 }
 
-const propertySuggestionCache = new Map();
-const categorySuggestionCache = new Map();
-
 /**
- * Fetches SMW property suggestions matching the given fragment.
+ * Creates a cached fetcher for SMW browse suggestions.
  *
- * @param {string} fragment The partial property name to search for.
- * @return {Promise<Array>} Array of CommandPaletteItems.
+ * @param {string} browse The smwbrowse type ('property' or 'category').
+ * @param {string} typePrefix The item type prefix (e.g. 'smw-property').
+ * @param {string} icon The icon for result items.
+ * @return {function(string): Promise<Array>} Fetcher function.
  */
-function fetchPropertySuggestions( fragment ) {
-	if ( propertySuggestionCache.has( fragment ) ) {
-		return propertySuggestionCache.get( fragment );
-	}
-
-	const promise = new mw.Api().get( {
-		action: 'smwbrowse',
-		browse: 'property',
-		params: JSON.stringify( { search: fragment, limit: 10 } )
-	} ).then( ( data ) => {
-		const properties = Object.values( data.query || {} );
-		return properties.map( ( item, index ) => ( {
-			id: 'citizen-command-palette-item-smw-property-' + index,
-			type: 'smw-property',
-			thumbnailIcon: cdxIconTag,
-			label: item.label,
-			highlightQuery: true
-		} ) );
-	} ).catch( ( error ) => {
-		propertySuggestionCache.delete( fragment );
-		if ( error !== 'AbortError' ) {
-			mw.log.error( '[commandPalette] SMW property query failed:', error );
+function createSmwBrowseFetcher( browse, typePrefix, icon ) {
+	const cache = new Map();
+	return function ( fragment ) {
+		if ( cache.has( fragment ) ) {
+			return cache.get( fragment );
 		}
-		return [];
-	} );
 
-	propertySuggestionCache.set( fragment, promise );
-	return promise;
+		const promise = new mw.Api().get( {
+			action: 'smwbrowse',
+			browse: browse,
+			params: JSON.stringify( { search: fragment, limit: 10 } )
+		} ).then( ( data ) => {
+			const items = Object.values( data.query || {} );
+			return items.map( ( item, index ) => ( {
+				id: 'citizen-command-palette-item-' + typePrefix + '-' + index,
+				type: typePrefix,
+				thumbnailIcon: icon,
+				label: item.label,
+				highlightQuery: true
+			} ) );
+		} ).catch( ( error ) => {
+			cache.delete( fragment );
+			if ( error !== 'AbortError' ) {
+				mw.log.error( '[commandPalette] SMW ' + browse + ' query failed:', error );
+			}
+			return [];
+		} );
+
+		cache.set( fragment, promise );
+		return promise;
+	};
 }
 
+const fetchPropertySuggestions = createSmwBrowseFetcher( 'property', 'smw-property', cdxIconTag );
+const fetchCategorySuggestions = createSmwBrowseFetcher( 'category', 'smw-category', cdxIconTag );
+
+const valueSuggestionCache = new Map();
+
 /**
- * Fetches SMW category suggestions matching the given fragment.
+ * Fetches SMW value suggestions for a specific property.
  *
- * @param {string} fragment The partial category name to search for.
+ * @param {string} fragment The partial value to search for.
+ * @param {string} property The property name to fetch values for.
  * @return {Promise<Array>} Array of CommandPaletteItems.
  */
-function fetchCategorySuggestions( fragment ) {
-	if ( categorySuggestionCache.has( fragment ) ) {
-		return categorySuggestionCache.get( fragment );
+function fetchValueSuggestions( fragment, property ) {
+	const cacheKey = property + '::' + fragment;
+	if ( valueSuggestionCache.has( cacheKey ) ) {
+		return valueSuggestionCache.get( cacheKey );
 	}
 
 	const promise = new mw.Api().get( {
 		action: 'smwbrowse',
-		browse: 'category',
-		params: JSON.stringify( { search: fragment, limit: 10 } )
+		browse: 'pvalue',
+		params: JSON.stringify( { search: fragment, property: property, limit: 10 } )
 	} ).then( ( data ) => {
-		const categories = Object.values( data.query || {} );
-		return categories.map( ( item, index ) => ( {
-			id: 'citizen-command-palette-item-smw-category-' + index,
-			type: 'smw-category',
-			thumbnailIcon: cdxIconTag,
-			label: item.label,
+		const values = data.query || [];
+		return values.map( ( value, index ) => ( {
+			id: 'citizen-command-palette-item-smw-value-' + index,
+			type: 'smw-value',
+			thumbnailIcon: cdxIconAdd,
+			label: value,
+			value: property,
 			highlightQuery: true
 		} ) );
 	} ).catch( ( error ) => {
-		categorySuggestionCache.delete( fragment );
+		valueSuggestionCache.delete( cacheKey );
 		if ( error !== 'AbortError' ) {
-			mw.log.error( '[commandPalette] SMW category query failed:', error );
+			mw.log.error( '[commandPalette] SMW pvalue query failed:', error );
 		}
 		return [];
 	} );
 
-	categorySuggestionCache.set( fragment, promise );
+	valueSuggestionCache.set( cacheKey, promise );
 	return promise;
 }
 
@@ -172,7 +196,9 @@ async function getSmwResults( subQuery, _signal, tokens ) {
 		if ( incomplete.stage === 'category' ) {
 			return fetchCategorySuggestions( incomplete.fragment );
 		}
-		// value stage: no suggestions yet (layer 3)
+		if ( incomplete.stage === 'value' ) {
+			return fetchValueSuggestions( incomplete.fragment, incomplete.property );
+		}
 		return [];
 	}
 
@@ -212,41 +238,23 @@ module.exports = {
 	label: mw.message( 'citizen-command-palette-command-smw-label' ).text(),
 	description: mw.message( 'citizen-command-palette-command-smw-description' ).text(),
 	placeholder: mw.message( 'citizen-command-palette-mode-smw-placeholder' ).text(),
-	emptyState: {
-		title: mw.message( 'citizen-command-palette-mode-smw-empty-title' ).text(),
-		description: mw.message( 'citizen-command-palette-mode-smw-empty-description' ).text(),
-		icon: cdxIconWikitext
-	},
+	emptyState: makeState( 'empty' ),
 	noResults( query, tokens ) {
 		const incomplete = parseIncompleteCondition( query );
-		if ( incomplete && incomplete.stage === 'property' ) {
-			return {
-				title: mw.message( 'citizen-command-palette-mode-smw-noproperties-title' ).text(),
-				description: mw.message( 'citizen-command-palette-mode-smw-noproperties-description' ).text(),
-				icon: cdxIconWikitext
-			};
-		}
-		if ( incomplete && incomplete.stage === 'category' ) {
-			return {
-				title: mw.message( 'citizen-command-palette-mode-smw-nocategories-title' ).text(),
-				description: mw.message( 'citizen-command-palette-mode-smw-nocategories-description' ).text(),
-				icon: cdxIconWikitext
-			};
+		const stageKeys = {
+			property: 'noproperties',
+			category: 'nocategories',
+			value: 'novalues'
+		};
+		if ( incomplete && stageKeys[ incomplete.stage ] ) {
+			return makeState( stageKeys[ incomplete.stage ] );
 		}
 
 		const fullQuery = buildAskQuery( query, tokens || [] );
 		if ( !isCompleteAskQuery( fullQuery ) ) {
-			return {
-				title: mw.message( 'citizen-command-palette-mode-smw-malformed-title' ).text(),
-				description: mw.message( 'citizen-command-palette-mode-smw-malformed-description' ).text(),
-				icon: cdxIconWikitext
-			};
+			return makeState( 'malformed' );
 		}
-		return {
-			title: mw.message( 'citizen-command-palette-mode-smw-noresults-title' ).text(),
-			description: mw.message( 'citizen-command-palette-mode-smw-noresults-description' ).text(),
-			icon: cdxIconWikitext
-		};
+		return makeState( 'noresults' );
 	},
 	tokenPattern: {
 		modeId: 'smw',
@@ -256,14 +264,17 @@ module.exports = {
 	},
 	getResults: getSmwResults,
 	onResultSelect( item ) {
-		if ( item.type === 'smw-property' ) {
-			return { action: 'updateQuery', payload: '[[' + item.label + '::' };
+		switch ( item.type ) {
+			case 'smw-value':
+				return { action: 'updateQuery', payload: '[[' + item.value + '::' + item.label + ']]' };
+			case 'smw-property':
+				return { action: 'updateQuery', payload: '[[' + item.label + '::' };
+			case 'smw-category':
+				return { action: 'updateQuery', payload: '[[Category:' + item.label + ']]' };
+			default:
+				return item.url ?
+					{ action: 'navigate', payload: item.url } :
+					{ action: 'none' };
 		}
-		if ( item.type === 'smw-category' ) {
-			return { action: 'updateQuery', payload: '[[Category:' + item.label + ']]' };
-		}
-		return item.url ?
-			{ action: 'navigate', payload: item.url } :
-			{ action: 'none' };
 	}
 };

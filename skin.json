@@ -442,6 +442,7 @@
 					"name": "resources/skins.citizen.commandPalette.smw/icons.json",
 					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
 					"callbackParam": [
+						"cdxIconAdd",
 						"cdxIconTag",
 						"cdxIconWikitext"
 					]
@@ -460,10 +461,13 @@
 				"citizen-command-palette-mode-smw-noproperties-title",
 				"citizen-command-palette-mode-smw-noresults-description",
 				"citizen-command-palette-mode-smw-noresults-title",
+				"citizen-command-palette-mode-smw-novalues-description",
+				"citizen-command-palette-mode-smw-novalues-title",
 				"citizen-command-palette-mode-smw-placeholder",
 				"citizen-command-palette-type-smw",
 				"citizen-command-palette-type-smw-category",
-				"citizen-command-palette-type-smw-property"
+				"citizen-command-palette-type-smw-property",
+				"citizen-command-palette-type-smw-value"
 			]
 		},
 		"skins.citizen.icons": {
