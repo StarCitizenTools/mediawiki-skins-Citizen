@@ -26,6 +26,21 @@
  */
 
 /**
+ * A key-value pair displayed in the detail panel.
+ *
+ * @typedef {Object} CommandPaletteDetailPair
+ * @property {string} label The property/field name.
+ * @property {string} value The property/field value.
+ */
+
+/**
+ * Detail data shown in the side panel when an item is focused.
+ *
+ * @typedef {Object} CommandPaletteItemDetail
+ * @property {Array<CommandPaletteDetailPair>} pairs Key-value pairs to display.
+ */
+
+/**
  * Represents a display item in the Command Palette list.
  * Based on the props of CommandPaletteListItem.vue.
  *
@@ -41,6 +56,7 @@
  * @property {Array<CommandPaletteItemAction>} [actions] Optional list of actions available for the item.
  * @property {string} [value] Optional mode-specific payload associated with the item (e.g. the namespace trigger '/ns:', or the SMW property name for value suggestions).
  * @property {boolean} [highlightQuery] Whether to highlight the query in the label.
+ * @property {CommandPaletteItemDetail} [detail] Optional detail data shown in the side panel when focused.
  * @property {string} [source] Identifier of the provider that generated this item (e.g., 'recent', 'command', 'search').
  * @property {boolean} [isMouseClick] True if the selection was triggered by a mouse click.
  */
@@ -66,7 +82,7 @@
  * @property {Object} [icon] Codex icon object for the header when mode is active.
  * @property {StateContent} [emptyState] Content shown when the mode is active with no query. Falls back to default search messaging.
  * @property {function(string, Array?): StateContent} [noResults] Returns content shown when query produces no results. Receives the query string and optional tokens array. Falls back to default no-results messaging.
- * @property {TokenPattern} [tokenPattern] Optional token detection pattern for auto-tokenization.
+ * @property {TokenPattern|TokenPattern[]} [tokenPattern] Optional token detection pattern(s) for auto-tokenization.
  * @property {function(string, AbortSignal?, Array?): Promise<CommandPaletteItem[]>} getResults Returns result items for the given sub-query. Optional signal for abort, optional tokens array.
  * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection of a result item.
  */

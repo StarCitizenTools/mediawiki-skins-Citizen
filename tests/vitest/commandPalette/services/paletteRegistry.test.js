@@ -278,6 +278,48 @@ describe( 'createPaletteRegistry', () => {
 			expect( patterns ).toHaveLength( 1 );
 			expect( patterns[ 0 ].modeId ).toBe( 'ns' );
 		} );
+
+		it( 'flattens array tokenPattern from a single handler', () => {
+			const pattern1 = { modeId: 'smw', position: 'any', activeIn: 'smw', match: vi.fn() };
+			const pattern2 = { modeId: 'smw', position: 'any', activeIn: 'smw', match: vi.fn() };
+			registry.register( makeHandler( {
+				id: 'smw',
+				triggers: [ '/smw:' ],
+				tokenPattern: [ pattern1, pattern2 ],
+				getResults: vi.fn()
+			} ) );
+
+			const patterns = registry.getTokenPatterns();
+
+			expect( patterns ).toHaveLength( 2 );
+			expect( patterns[ 0 ] ).toBe( pattern1 );
+			expect( patterns[ 1 ] ).toBe( pattern2 );
+		} );
+
+		it( 'mixes single and array tokenPatterns from different handlers', () => {
+			const singlePattern = { modeId: 'ns', position: 'prefix', activeIn: 'root', match: vi.fn() };
+			const arrayPattern1 = { modeId: 'smw', position: 'any', activeIn: 'smw', match: vi.fn() };
+			const arrayPattern2 = { modeId: 'smw', position: 'any', activeIn: 'smw', match: vi.fn() };
+			registry.register( makeHandler( {
+				id: 'ns',
+				triggers: [ '/ns:', ':' ],
+				tokenPattern: singlePattern,
+				getResults: vi.fn()
+			} ) );
+			registry.register( makeHandler( {
+				id: 'smw',
+				triggers: [ '/smw:' ],
+				tokenPattern: [ arrayPattern1, arrayPattern2 ],
+				getResults: vi.fn()
+			} ) );
+
+			const patterns = registry.getTokenPatterns();
+
+			expect( patterns ).toHaveLength( 3 );
+			expect( patterns ).toContain( singlePattern );
+			expect( patterns ).toContain( arrayPattern1 );
+			expect( patterns ).toContain( arrayPattern2 );
+		} );
 	} );
 
 	describe( 'findModeByQuery', () => {
