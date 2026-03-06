@@ -123,6 +123,26 @@ module.exports = {
 	label: mw.message( 'citizen-command-palette-command-smw-label' ).text(),
 	description: mw.message( 'citizen-command-palette-command-smw-description' ).text(),
 	placeholder: mw.message( 'citizen-command-palette-mode-smw-placeholder' ).text(),
+	emptyState: {
+		title: mw.message( 'citizen-command-palette-mode-smw-empty-title' ).text(),
+		description: mw.message( 'citizen-command-palette-mode-smw-empty-description' ).text(),
+		icon: cdxIconWikitext
+	},
+	noResults( query, tokens ) {
+		const fullQuery = buildAskQuery( query, tokens || [] );
+		if ( !isCompleteAskQuery( fullQuery ) ) {
+			return {
+				title: mw.message( 'citizen-command-palette-mode-smw-malformed-title' ).text(),
+				description: mw.message( 'citizen-command-palette-mode-smw-malformed-description' ).text(),
+				icon: cdxIconWikitext
+			};
+		}
+		return {
+			title: mw.message( 'citizen-command-palette-mode-smw-noresults-title' ).text(),
+			description: mw.message( 'citizen-command-palette-mode-smw-noresults-description' ).text(),
+			icon: cdxIconWikitext
+		};
+	},
 	tokenPattern: {
 		modeId: 'smw',
 		position: 'any',

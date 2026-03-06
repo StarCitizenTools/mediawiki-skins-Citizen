@@ -131,7 +131,13 @@
 
 	"citizen-command-palette-mode-action-placeholder": "Search actions",
 	"citizen-command-palette-mode-ns-placeholder": "Search namespaces",
-	"citizen-command-palette-mode-smw-placeholder": "Enter Ask query, e.g. [[Category:City]]",
+	"citizen-command-palette-mode-smw-empty-description": "Type conditions like [[Category:City]] or [[Located in::Germany]] to query pages",
+	"citizen-command-palette-mode-smw-empty-title": "Semantic MediaWiki Ask",
+	"citizen-command-palette-mode-smw-malformed-description": "Close your condition with ]] to run the query",
+	"citizen-command-palette-mode-smw-malformed-title": "Incomplete condition",
+	"citizen-command-palette-mode-smw-noresults-description": "Try broadening your conditions or check for typos",
+	"citizen-command-palette-mode-smw-noresults-title": "No matching pages",
+	"citizen-command-palette-mode-smw-placeholder": "Type an Ask query",
 	"citizen-command-palette-mode-user-placeholder": "Search users",
 
 	"citizen-command-palette-queryaction-fulltext-search-description": "Search the full text of all pages",
