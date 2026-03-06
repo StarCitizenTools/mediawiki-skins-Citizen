@@ -2,7 +2,8 @@
  * Semantic MediaWiki Ask query mode for the command palette.
  * Loaded conditionally only when SMW is installed.
  */
-const { cdxIconWikitext } = require( './icons.json' );
+const { cdxIconTag, cdxIconWikitext } = require( './icons.json' );
+const parseIncompleteCondition = require( './queryParser.js' );
 
 /**
  * Matches a completed SMW condition at the start of text.
@@ -42,6 +43,44 @@ function adaptSmwResult( subject, index ) {
 		label: subject.fulltext,
 		url: subject.fullurl
 	};
+}
+
+const propertySuggestionCache = new Map();
+
+/**
+ * Fetches SMW property suggestions matching the given fragment.
+ *
+ * @param {string} fragment The partial property name to search for.
+ * @return {Promise<Array>} Array of CommandPaletteItems.
+ */
+function fetchPropertySuggestions( fragment ) {
+	if ( propertySuggestionCache.has( fragment ) ) {
+		return propertySuggestionCache.get( fragment );
+	}
+
+	const promise = new mw.Api().get( {
+		action: 'smwbrowse',
+		browse: 'property',
+		params: JSON.stringify( { search: fragment, limit: 10 } )
+	} ).then( ( data ) => {
+		const properties = Object.values( data.query || {} );
+		return properties.map( ( item, index ) => ( {
+			id: 'citizen-command-palette-item-smw-property-' + index,
+			type: 'smw-property',
+			thumbnailIcon: cdxIconTag,
+			label: item.label,
+			highlightQuery: true
+		} ) );
+	} ).catch( ( error ) => {
+		propertySuggestionCache.delete( fragment );
+		if ( error !== 'AbortError' ) {
+			mw.log.error( '[commandPalette] SMW property query failed:', error );
+		}
+		return [];
+	} );
+
+	propertySuggestionCache.set( fragment, promise );
+	return promise;
 }
 
 /**
@@ -87,6 +126,16 @@ function isCompleteAskQuery( askQuery ) {
  * @return {Promise<Array>} Array of CommandPaletteItems.
  */
 async function getSmwResults( subQuery, _signal, tokens ) {
+	// Check for incomplete condition — show suggestions instead of Ask results
+	const incomplete = parseIncompleteCondition( subQuery );
+	if ( incomplete ) {
+		if ( incomplete.stage === 'property' ) {
+			return fetchPropertySuggestions( incomplete.fragment );
+		}
+		// category and value stages: no suggestions yet (layers 2-3)
+		return [];
+	}
+
 	const askQuery = buildAskQuery( subQuery, tokens || [] );
 	if ( !askQuery.trim() || !isCompleteAskQuery( askQuery ) ) {
 		return [];
@@ -129,6 +178,15 @@ module.exports = {
 		icon: cdxIconWikitext
 	},
 	noResults( query, tokens ) {
+		const incomplete = parseIncompleteCondition( query );
+		if ( incomplete && incomplete.stage === 'property' ) {
+			return {
+				title: mw.message( 'citizen-command-palette-mode-smw-noproperties-title' ).text(),
+				description: mw.message( 'citizen-command-palette-mode-smw-noproperties-description' ).text(),
+				icon: cdxIconWikitext
+			};
+		}
+
 		const fullQuery = buildAskQuery( query, tokens || [] );
 		if ( !isCompleteAskQuery( fullQuery ) ) {
 			return {
@@ -151,6 +209,9 @@ module.exports = {
 	},
 	getResults: getSmwResults,
 	onResultSelect( item ) {
+		if ( item.type === 'smw-property' ) {
+			return { action: 'updateQuery', payload: '[[' + item.label + '::' };
+		}
 		return item.url ?
 			{ action: 'navigate', payload: item.url } :
 			{ action: 'none' };
