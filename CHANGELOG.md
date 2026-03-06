@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.15.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.14.0...v3.15.0) (2026-03-06)
+
+
+### Features
+
+* **commandPalette:** ✨ add chip rendering and tokenized input UI integration ([e067b89](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/e067b896ffef2f0aabcd991fcd8583250a04c897))
+* **commandPalette:** ✨ add data-driven keyboardHints computed to useKeyboard ([515b3ec](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/515b3ecd2764af2ea65d631d525704adde8639f2))
+* **commandPalette:** ✨ add empty and no-results states to SMW mode ([6113599](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/61135991ccda5001e280c6e0a3d6be2a1c423bb8))
+* **commandPalette:** ✨ add empty and no-results states to user mode ([b73089a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b73089a504dcaa31ca49fee319ec6eecce5b5b32))
+* **commandPalette:** ✨ add mode switching with visual header and transitions ([a77ac6a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a77ac6a2895278ef571f4f125bd29ecec9f440c3))
+* **commandPalette:** ✨ add per-mode state config for empty and no-results UI ([6ad9dc5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/6ad9dc52d16607ec4c81ac9c2fd1a3f32596bd58))
+* **commandPalette:** ✨ add SMW Ask query mode ([5ec07cc](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5ec07cc595cfefa03a06a7bf3eb8293f09ac0232))
+* **commandPalette:** ✨ add token pattern infrastructure and namespace detection ([1a67436](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/1a67436bea752669442d2ee7ada1d3e21e3117af))
+* **commandPalette:** ✨ add useTokenizedInput composable ([b36b2c5](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b36b2c58b39c26e5c354321809a1003e3a9a8a1b))
+* **commandPalette:** ✨ replace Pinia store with composable + DI architecture ([55602a8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/55602a8dac49eed34862ccbd0cebdbee5da40b1f))
+* **commandPalette:** ✨ thread tokens into mode results and improve token pattern infra ([cb83525](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/cb83525f065d1bf65fb49c1fe6635ee208662874))
+
 ## [3.14.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.13.0...v3.14.0) (2026-03-03)
 
 
