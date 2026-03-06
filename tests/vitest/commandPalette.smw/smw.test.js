@@ -85,6 +85,43 @@ describe( 'SMW mode', () => {
 
 			expect( result ).toEqual( { action: 'none' } );
 		} );
+
+		it( 'should have emptyState with title, description, and icon', () => {
+			expect( smwMode.emptyState ).toBeDefined();
+			expect( smwMode.emptyState.title ).toBe( 'citizen-command-palette-mode-smw-empty-title' );
+			expect( smwMode.emptyState.description ).toBe( 'citizen-command-palette-mode-smw-empty-description' );
+			expect( smwMode.emptyState.icon ).toBe( smwMode.icon );
+		} );
+
+		it( 'should return malformed state for incomplete query', () => {
+			const result = smwMode.noResults( '[[Category:Ci', [] );
+
+			expect( result.title ).toBe( 'citizen-command-palette-mode-smw-malformed-title' );
+			expect( result.description ).toBe( 'citizen-command-palette-mode-smw-malformed-description' );
+		} );
+
+		it( 'should return no-results state for valid but empty query', () => {
+			const result = smwMode.noResults( '[[Category:City]]', [] );
+
+			expect( result.title ).toBe( 'citizen-command-palette-mode-smw-noresults-title' );
+			expect( result.description ).toBe( 'citizen-command-palette-mode-smw-noresults-description' );
+		} );
+
+		it( 'should return malformed state when tokens plus freetext form an invalid query', () => {
+			const tokens = [ { modeId: 'smw', raw: '[[Category:City]]' } ];
+
+			const result = smwMode.noResults( 'foo', tokens );
+
+			expect( result.title ).toBe( 'citizen-command-palette-mode-smw-malformed-title' );
+		} );
+
+		it( 'should return no-results state when tokens alone form a complete query', () => {
+			const tokens = [ { modeId: 'smw', raw: '[[Category:City]]' } ];
+
+			const result = smwMode.noResults( '', tokens );
+
+			expect( result.title ).toBe( 'citizen-command-palette-mode-smw-noresults-title' );
+		} );
 	} );
 
 	describe( 'getSmwResults', () => {
