@@ -45,6 +45,46 @@ function matchSmwCondition( text ) {
 }
 
 /**
+ * Extracts a display string from a single SMW printout value.
+ * Page-type values have a fulltext property; others use the raw value.
+ *
+ * @param {Object|string} value A single printout value from the API.
+ * @return {string} Display string.
+ */
+function formatPrintoutValue( value ) {
+	if ( typeof value === 'object' && value !== null ) {
+		if ( value.fulltext !== undefined ) {
+			return String( value.fulltext );
+		}
+		if ( value.raw !== undefined ) {
+			return String( value.raw );
+		}
+		return String( value );
+	}
+	return String( value );
+}
+
+/**
+ * Converts SMW printouts from the Ask API into detail pairs.
+ *
+ * @param {Object} printouts The printouts object from a result subject.
+ * @return {Object|undefined} Detail object with pairs array, or undefined.
+ */
+function adaptPrintouts( printouts ) {
+	if ( !printouts || typeof printouts !== 'object' ) {
+		return undefined;
+	}
+	const pairs = Object.entries( printouts ).map( ( [ label, values ] ) => ( {
+		label,
+		value: Array.isArray( values ) ? values.map( formatPrintoutValue ).join( ', ' ) : ''
+	} ) );
+	if ( pairs.length === 0 ) {
+		return undefined;
+	}
+	return { pairs };
+}
+
+/**
  * Adapts a single SMW Ask API result into a CommandPaletteItem.
  *
  * @param {Object} subject The result subject from the SMW API.
@@ -52,12 +92,17 @@ function matchSmwCondition( text ) {
  * @return {Object} A CommandPaletteItem.
  */
 function adaptSmwResult( subject, index ) {
-	return {
+	const item = {
 		id: 'citizen-command-palette-item-smw-' + index,
 		type: 'smw',
 		label: subject.fulltext,
 		url: subject.fullurl
 	};
+	const detail = adaptPrintouts( subject.printouts );
+	if ( detail ) {
+		item.detail = detail;
+	}
+	return item;
 }
 
 /**
@@ -146,19 +191,17 @@ function buildAskQuery( subQuery, tokens ) {
 /**
  * Tests whether an Ask query string is valid to send to the API.
  * The query must contain at least one complete condition ([[...]]),
- * and any text outside of conditions must be empty or whitespace-only.
- * This prevents sending malformed queries like
+ * and any text outside of conditions and printout statements must be
+ * empty or whitespace-only. This prevents sending malformed queries like
  * "[[Category:City]]some freetext" which the API would reject.
- *
- * Known limitation: printout statements (e.g. |?Property) are not
- * supported — they would be rejected as non-condition text, and would
- * also conflict with the |limit=10 parameter appended by getSmwResults.
  *
  * @param {string} askQuery The combined Ask query string.
  * @return {boolean}
  */
 function isCompleteAskQuery( askQuery ) {
-	const stripped = askQuery.replace( /\[\[[^\]]+\]\]/g, '' );
+	const stripped = askQuery
+		.replace( /\[\[[^\]]+\]\]/g, '' )
+		.replace( /\|\?[^|[\]]+/g, '' );
 	return stripped.trim() === '' && /\[\[[^\]]+\]\]/.test( askQuery );
 }
 

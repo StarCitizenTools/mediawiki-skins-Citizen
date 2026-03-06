@@ -75,4 +75,8 @@ describe( 'parseIncompleteCondition', () => {
 			fragment: 'baz'
 		} );
 	} );
+
+	it( 'returns null for printout syntax (handled as freetext)', () => {
+		expect( parseIncompleteCondition( '|?Pop' ) ).toBeNull();
+	} );
 } );
