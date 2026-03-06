@@ -512,6 +512,12 @@
 			"messages": [
 				"citizen-command-palette-command-smw-description",
 				"citizen-command-palette-command-smw-label",
+				"citizen-command-palette-mode-smw-empty-description",
+				"citizen-command-palette-mode-smw-empty-title",
+				"citizen-command-palette-mode-smw-malformed-description",
+				"citizen-command-palette-mode-smw-malformed-title",
+				"citizen-command-palette-mode-smw-noresults-description",
+				"citizen-command-palette-mode-smw-noresults-title",
 				"citizen-command-palette-mode-smw-placeholder",
 				"citizen-command-palette-type-smw"
 			]
