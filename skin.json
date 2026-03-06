@@ -437,6 +437,7 @@
 		"skins.citizen.commandPalette.smw": {
 			"packageFiles": [
 				"resources/skins.citizen.commandPalette.smw/init.js",
+				"resources/skins.citizen.commandPalette.smw/queryParser.js",
 				{
 					"name": "resources/skins.citizen.commandPalette.smw/icons.json",
 					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
