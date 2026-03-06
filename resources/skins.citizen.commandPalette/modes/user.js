@@ -108,6 +108,18 @@ function createUserCommand( ApiConstructor ) {
 		description: mw.message( 'citizen-command-palette-command-user-description' ).text(),
 		placeholder: mw.message( 'citizen-command-palette-mode-user-placeholder' ).text(),
 		icon: cdxIconUserAvatar,
+		emptyState: {
+			title: mw.message( 'citizen-command-palette-mode-user-empty-title' ).text(),
+			description: mw.message( 'citizen-command-palette-mode-user-empty-description' ).text(),
+			icon: cdxIconUserAvatar
+		},
+		noResults() {
+			return {
+				title: mw.message( 'citizen-command-palette-mode-user-noresults-title' ).text(),
+				description: mw.message( 'citizen-command-palette-mode-user-noresults-description' ).text(),
+				icon: cdxIconUserAvatar
+			};
+		},
 		getResults: getUserResults,
 		async onResultSelect( item ) {
 			return getNavigationAction( item );
