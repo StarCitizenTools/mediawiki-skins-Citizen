@@ -12,7 +12,6 @@ use MediaWiki\Languages\LanguageNameUtils;
 use MediaWiki\MainConfigNames;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\Permissions\PermissionManager;
-use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentBodyContent;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentFooter;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentMainMenu;
@@ -20,7 +19,6 @@ use MediaWiki\Skins\Citizen\Components\CitizenComponentPageFooter;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageHeading;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageSidebar;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageTools;
-use MediaWiki\Skins\Citizen\Components\CitizenComponentSearchBox;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentSiteStats;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentStickyHeader;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentTableOfContents;
@@ -75,7 +73,6 @@ class SkinCitizen extends SkinMustache {
 		private readonly LanguageConverterFactory $languageConverterFactory,
 		private readonly LanguageNameUtils $languageNameUtils,
 		private readonly PermissionManager $permissionManager,
-		private readonly ExtensionRegistry $extensionRegistry,
 		private readonly UserGroupManager $userGroupManager,
 		private readonly UrlUtils $urlUtils,
 		// @phan-suppress-next-line PhanUndeclaredTypeParameter,PhanUndeclaredTypeProperty
@@ -211,11 +208,6 @@ class SkinCitizen extends SkinMustache {
 				// These portlets can be unindexed
 				$parentData['data-portlets']['data-languages'] ?? [],
 				$parentData['data-portlets']['data-variants'] ?? []
-			),
-			'data-search-box' => new CitizenComponentSearchBox(
-				$localizer,
-				$this->extensionRegistry,
-				$parentData['data-search-box']
 			),
 			'data-site-stats' => new CitizenComponentSiteStats(
 				$config,
