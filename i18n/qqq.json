@@ -109,7 +109,7 @@
 	"citizen-command-palette-command-ns-description": "Description for the namespace command in the command palette",
 	"citizen-command-palette-command-action-description": "Description for the action command in the command palette",
 	"citizen-command-palette-command-smw-description": "Description for the Semantic MediaWiki command in the command palette",
-	"citizen-command-palette-command-smw-label": "Label for the Semantic MediaWiki command in the command palette.\n{{notranslate}}",
+	"citizen-command-palette-command-smw-label": "Label for the Semantic MediaWiki command in the command palette.",
 	"citizen-command-palette-command-user-description": "Description for the user command in the command palette",
 	"citizen-command-palette-mode-action-placeholder": "Placeholder text shown in the command palette input when the action mode is active.",
 	"citizen-command-palette-mode-ns-placeholder": "Placeholder text shown in the command palette input when the namespace mode is active.",
