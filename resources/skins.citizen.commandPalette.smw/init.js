@@ -2,7 +2,7 @@
  * Semantic MediaWiki Ask query mode for the command palette.
  * Loaded conditionally only when SMW is installed.
  */
-const { cdxIconAdd, cdxIconTag, cdxIconWikitext } = require( './icons.json' );
+const { cdxIconAdd, cdxIconListBullet, cdxIconTag, cdxIconWikitext } = require( './icons.json' );
 const config = require( './config.json' );
 const parseIncompleteCondition = require( './queryParser.js' );
 
@@ -41,6 +41,28 @@ function matchSmwCondition( text ) {
 	const label = inner
 		.replace( /::/, ': ' )
 		.replace( /^(Category):/, '$1: ' );
+	return { label, raw };
+}
+
+/**
+ * Matches a completed SMW printout at the start of text.
+ * Detects patterns like |?Population or |?Located in.
+ *
+ * Requires a delimiter (| or [) after the property name to avoid
+ * premature tokenization during character-by-character typing.
+ * This means printouts only tokenize when the user has moved on
+ * to typing the next token (e.g. "|?Breed group|?Origin").
+ *
+ * @param {string} text The input text to check.
+ * @return {{ label: string, raw: string }|null} Match result or null.
+ */
+function matchSmwPrintout( text ) {
+	const m = /^\|(\?[^|[\]]+)(?=[|[\]])/.exec( text );
+	if ( !m ) {
+		return null;
+	}
+	const raw = m[ 0 ];
+	const label = m[ 1 ].slice( 1 );
 	return { label, raw };
 }
 
@@ -227,6 +249,16 @@ async function getSmwResults( subQuery, _signal, tokens ) {
 		if ( incomplete.stage === 'value' ) {
 			return fetchValueSuggestions( incomplete.fragment, incomplete.property );
 		}
+		if ( incomplete.stage === 'printout' ) {
+			return fetchPropertySuggestions( incomplete.fragment )
+				.then( ( items ) => items.map( ( item ) => Object.assign(
+					{}, item, {
+						id: item.id.replace( 'smw-property', 'smw-printout' ),
+						type: 'smw-printout',
+						thumbnailIcon: cdxIconListBullet
+					}
+				) ) );
+		}
 		return [];
 	}
 
@@ -274,7 +306,8 @@ module.exports = {
 		const stageKeys = {
 			property: 'noproperties',
 			category: 'nocategories',
-			value: 'novalues'
+			value: 'novalues',
+			printout: 'noprintouts'
 		};
 		if ( incomplete && stageKeys[ incomplete.stage ] ) {
 			return makeState( stageKeys[ incomplete.stage ] );
@@ -286,12 +319,10 @@ module.exports = {
 		}
 		return makeState( 'noresults' );
 	},
-	tokenPattern: {
-		modeId: 'smw',
-		position: 'any',
-		activeIn: 'smw',
-		match: matchSmwCondition
-	},
+	tokenPattern: [
+		{ modeId: 'smw', position: 'any', activeIn: 'smw', match: matchSmwCondition },
+		{ modeId: 'smw', position: 'any', activeIn: 'smw', match: matchSmwPrintout, variant: 'outlined' }
+	],
 	getResults: getSmwResults,
 	onResultSelect( item ) {
 		switch ( item.type ) {
@@ -301,6 +332,8 @@ module.exports = {
 				return { action: 'updateQuery', payload: '[[' + item.label + '::' };
 			case 'smw-category':
 				return { action: 'updateQuery', payload: '[[Category:' + item.label + ']]' };
+			case 'smw-printout':
+				return { action: 'updateQuery', payload: '|?' + item.label };
 			default:
 				return item.url ?
 					{ action: 'navigate', payload: item.url } :

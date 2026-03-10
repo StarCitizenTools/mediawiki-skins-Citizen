@@ -37,6 +37,24 @@ describe( 'useTokenizedInput', () => {
 		} );
 	} );
 
+	describe( 'addToken variant', () => {
+		it( 'should include variant on token when provided', () => {
+			const ti = useTokenizedInput( () => [] );
+
+			ti.addToken( { label: '?Pop', raw: '|?Pop', modeId: 'smw', variant: 'outlined' } );
+
+			expect( ti.tokens.value[ 0 ].variant ).toBe( 'outlined' );
+		} );
+
+		it( 'should omit variant when not provided', () => {
+			const ti = useTokenizedInput( () => [] );
+
+			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace' } );
+
+			expect( ti.tokens.value[ 0 ] ).not.toHaveProperty( 'variant' );
+		} );
+	} );
+
 	describe( 'removeToken', () => {
 		it( 'should remove a token by index', () => {
 			const ti = useTokenizedInput( () => [] );
@@ -265,7 +283,7 @@ describe( 'useTokenizedInput', () => {
 			expect( ti.freeText.value ).toBe( 'Talk:Main Page' );
 		} );
 
-		it( 'should resume detection after one suppressed call', () => {
+		it( 'should stay suppressed while text shrinks after removeToken', () => {
 			const pattern = {
 				modeId: 'namespace',
 				position: 'prefix',
@@ -280,11 +298,33 @@ describe( 'useTokenizedInput', () => {
 			ti.removeToken( 0 );
 			ti.setFreeText( 'Talk:Main Page' ); // suppressed
 
-			ti.setFreeText( 'Talk:Main Page' ); // should detect now
+			ti.setFreeText( 'Talk:Main Pag' ); // still shrinking
+
+			expect( ti.tokens.value ).toHaveLength( 0 );
+			expect( ti.freeText.value ).toBe( 'Talk:Main Pag' );
+		} );
+
+		it( 'should resume detection when text grows after removeToken', () => {
+			const pattern = {
+				modeId: 'namespace',
+				position: 'prefix',
+				activeIn: 'root',
+				match: ( text ) => {
+					const m = text.match( /^(Talk):/ );
+					return m ? { label: m[ 1 ] + ':', raw: m[ 1 ] + ':' } : null;
+				}
+			};
+			const ti = useTokenizedInput( () => [ pattern ] );
+			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace', position: 'prefix' } );
+			ti.removeToken( 0 );
+			ti.setFreeText( 'Talk:Main Page' ); // suppressed
+			ti.setFreeText( 'Talk:Mai' ); // shrinking, still suppressed
+
+			ti.setFreeText( 'Talk:Main' ); // grew — resume detection
 
 			expect( ti.tokens.value ).toHaveLength( 1 );
 			expect( ti.tokens.value[ 0 ].label ).toBe( 'Talk:' );
-			expect( ti.freeText.value ).toBe( 'Main Page' );
+			expect( ti.freeText.value ).toBe( 'Main' );
 		} );
 
 		it( 'should not infinite loop on empty raw match', () => {

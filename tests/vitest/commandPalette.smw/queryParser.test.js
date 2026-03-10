@@ -76,7 +76,24 @@ describe( 'parseIncompleteCondition', () => {
 		} );
 	} );
 
-	it( 'returns null for printout syntax (handled as freetext)', () => {
-		expect( parseIncompleteCondition( '|?Pop' ) ).toBeNull();
+	it( 'detects printout stage with property fragment', () => {
+		expect( parseIncompleteCondition( '|?Pop' ) ).toEqual( {
+			stage: 'printout',
+			fragment: 'Pop'
+		} );
+	} );
+
+	it( 'detects printout stage with empty fragment', () => {
+		expect( parseIncompleteCondition( '|?' ) ).toEqual( {
+			stage: 'printout',
+			fragment: ''
+		} );
+	} );
+
+	it( 'detects printout stage with custom label', () => {
+		expect( parseIncompleteCondition( '|?Population=Custom Label' ) ).toEqual( {
+			stage: 'printout',
+			fragment: 'Population=Custom Label'
+		} );
 	} );
 } );

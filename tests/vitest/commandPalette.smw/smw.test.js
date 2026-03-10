@@ -6,8 +6,8 @@ const smwMode = require(
 );
 
 describe( 'SMW mode', () => {
-	describe( 'tokenPattern.match', () => {
-		const match = smwMode.tokenPattern.match;
+	describe( 'tokenPattern (condition)', () => {
+		const match = smwMode.tokenPattern[ 0 ].match;
 
 		it( 'should detect a category condition', () => {
 			const result = match( '[[Category:City]]rest' );
@@ -55,6 +55,80 @@ describe( 'SMW mode', () => {
 		} );
 	} );
 
+	describe( 'tokenPattern (printout)', () => {
+		const match = smwMode.tokenPattern[ 1 ].match;
+
+		it( 'should detect printout followed by pipe', () => {
+			const result = match( '|?Population|next' );
+
+			expect( result ).toEqual( {
+				raw: '|?Population',
+				label: 'Population'
+			} );
+		} );
+
+		it( 'should detect printout with spaces followed by pipe', () => {
+			const result = match( '|?Located in|next' );
+
+			expect( result ).toEqual( {
+				raw: '|?Located in',
+				label: 'Located in'
+			} );
+		} );
+
+		it( 'should detect printout followed by bracket', () => {
+			const result = match( '|?Population[[Category:City]]' );
+
+			expect( result ).toEqual( {
+				raw: '|?Population',
+				label: 'Population'
+			} );
+		} );
+
+		it( 'should stop at next pipe with another printout', () => {
+			const result = match( '|?Located in|?Population' );
+
+			expect( result ).toEqual( {
+				raw: '|?Located in',
+				label: 'Located in'
+			} );
+		} );
+
+		it( 'should detect printout with label alias followed by pipe', () => {
+			const result = match( '|?Population=Pop|next' );
+
+			expect( result ).toEqual( {
+				raw: '|?Population=Pop',
+				label: 'Population=Pop'
+			} );
+		} );
+
+		it( 'should detect printout with format modifier followed by pipe', () => {
+			const result = match( '|?Has birthday#ISO|next' );
+
+			expect( result ).toEqual( {
+				raw: '|?Has birthday#ISO',
+				label: 'Has birthday#ISO'
+			} );
+		} );
+
+		it( 'should return null for printout without trailing delimiter', () => {
+			expect( match( '|?Population' ) ).toBeNull();
+		} );
+
+		it( 'should return null for plain text', () => {
+			expect( match( 'hello' ) ).toBeNull();
+		} );
+
+		it( 'should return null for incomplete |? with no name', () => {
+			expect( match( '|?' ) ).toBeNull();
+		} );
+
+		it( 'should return null for text not starting with |?', () => {
+			expect( match( 'prefix|?Foo' ) ).toBeNull();
+		} );
+	} );
+
 	describe( 'mode definition', () => {
 		it( 'should have correct id', () => {
 			expect( smwMode.id ).toBe( 'smw' );
@@ -64,9 +138,10 @@ describe( 'SMW mode', () => {
 			expect( smwMode.triggers ).toEqual( [ '/smw:' ] );
 		} );
 
-		it( 'should have tokenPattern with correct modeId', () => {
-			expect( smwMode.tokenPattern.modeId ).toBe( 'smw' );
-			expect( typeof smwMode.tokenPattern.match ).toBe( 'function' );
+		it( 'should have tokenPattern array with correct modeIds', () => {
+			expect( Array.isArray( smwMode.tokenPattern ) ).toBe( true );
+			expect( smwMode.tokenPattern[ 0 ].modeId ).toBe( 'smw' );
+			expect( smwMode.tokenPattern[ 1 ].modeId ).toBe( 'smw' );
 		} );
 
 		it( 'should have getResults function', () => {
@@ -95,6 +170,12 @@ describe( 'SMW mode', () => {
 			const result = smwMode.onResultSelect( { type: 'smw-property', label: 'Located in' } );
 
 			expect( result ).toEqual( { action: 'updateQuery', payload: '[[Located in::' } );
+		} );
+
+		it( 'should return updateQuery action for smw-printout items', () => {
+			const result = smwMode.onResultSelect( { type: 'smw-printout', label: 'Population' } );
+
+			expect( result ).toEqual( { action: 'updateQuery', payload: '|?Population' } );
 		} );
 
 		it( 'should return updateQuery action for smw-value items', () => {
@@ -136,6 +217,12 @@ describe( 'SMW mode', () => {
 
 			expect( result.title ).toBe( 'citizen-command-palette-mode-smw-noproperties-title' );
 			expect( result.description ).toBe( 'citizen-command-palette-mode-smw-noproperties-description' );
+		} );
+
+		it( 'should return no-printouts state for incomplete printout with no results', () => {
+			const result = smwMode.noResults( '|?NonExistent', [] );
+
+			expect( result.title ).toBe( 'citizen-command-palette-mode-smw-noprintouts-title' );
 		} );
 
 		it( 'should return no-results state for valid but empty query', () => {
@@ -235,13 +322,47 @@ describe( 'SMW mode', () => {
 			} );
 		} );
 
-		it( 'should execute Ask query with printout in freetext', async () => {
+		it( 'should fetch property suggestions for incomplete printout', async () => {
+			mockGet.mockResolvedValue( {
+				query: {
+					Population: { label: 'Population', key: 'Population' }
+				}
+			} );
+
+			const result = await smwMode.getResults( '|?Pop' );
+
+			expect( mockGet ).toHaveBeenCalledWith( {
+				action: 'smwbrowse',
+				browse: 'property',
+				params: JSON.stringify( { search: 'Pop', limit: 10 } ),
+				maxage: 1200,
+				smaxage: 1200
+			} );
+			expect( result ).toHaveLength( 1 );
+			expect( result[ 0 ].type ).toBe( 'smw-printout' );
+			expect( result[ 0 ].id ).toContain( 'smw-printout' );
+		} );
+
+		it( 'should fetch all properties for empty printout fragment', async () => {
+			mockGet.mockResolvedValue( { query: {} } );
+
+			await smwMode.getResults( '|?' );
+
+			expect( mockGet ).toHaveBeenCalledWith( expect.objectContaining( {
+				action: 'smwbrowse',
+				browse: 'property',
+				params: JSON.stringify( { search: '', limit: 10 } )
+			} ) );
+		} );
+
+		it( 'should execute Ask query with printout token', async () => {
 			mockGet.mockResolvedValue( { query: { results: {} } } );
 			const tokens = [
 				{ modeId: 'smw', raw: '[[Category:City]]' }
 			];
+			const allTokens = [ ...tokens, { modeId: 'smw', raw: '|?Population' } ];
 
-			await smwMode.getResults( '|?Population', undefined, tokens );
+			await smwMode.getResults( '', undefined, allTokens );
 
 			expect( mockGet ).toHaveBeenCalledWith( {
 				action: 'ask',
@@ -348,8 +469,13 @@ describe( 'SMW mode', () => {
 			const tokens = [
 				{ modeId: 'smw', raw: '[[Category:City]]' }
 			];
+			const allTokens = [
+				...tokens,
+				{ modeId: 'smw', raw: '|?Population' },
+				{ modeId: 'smw', raw: '|?Located in' }
+			];
 
-			const result = await smwMode.getResults( '|?Population|?Located in', undefined, tokens );
+			const result = await smwMode.getResults( '', undefined, allTokens );
 
 			expect( result ).toHaveLength( 1 );
 			expect( result[ 0 ].detail ).toEqual( {
@@ -380,8 +506,9 @@ describe( 'SMW mode', () => {
 			const tokens = [
 				{ modeId: 'smw', raw: '[[Category:City]]' }
 			];
+			const allTokens = [ ...tokens, { modeId: 'smw', raw: '|?Located in' } ];
 
-			const result = await smwMode.getResults( '|?Located in', undefined, tokens );
+			const result = await smwMode.getResults( '', undefined, allTokens );
 
 			expect( result[ 0 ].detail.pairs[ 0 ].value ).toBe( 'Germany, Europe' );
 		} );
@@ -420,8 +547,9 @@ describe( 'SMW mode', () => {
 			const tokens = [
 				{ modeId: 'smw', raw: '[[Category:City]]' }
 			];
+			const allTokens = [ ...tokens, { modeId: 'smw', raw: '|?Score' } ];
 
-			const result = await smwMode.getResults( '|?Score', undefined, tokens );
+			const result = await smwMode.getResults( '', undefined, allTokens );
 
 			expect( result[ 0 ].detail.pairs[ 0 ].value ).toBe( '0' );
 		} );
@@ -443,8 +571,9 @@ describe( 'SMW mode', () => {
 			const tokens = [
 				{ modeId: 'smw', raw: '[[Category:City]]' }
 			];
+			const allTokens = [ ...tokens, { modeId: 'smw', raw: '|?Population' } ];
 
-			const result = await smwMode.getResults( '|?Population', undefined, tokens );
+			const result = await smwMode.getResults( '', undefined, allTokens );
 
 			expect( result[ 0 ].detail.pairs[ 0 ].value ).toBe( '' );
 		} );

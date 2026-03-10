@@ -95,6 +95,7 @@
  * @property {'prefix'|'any'} position Where the token must appear in the query.
  * @property {'root'|string} activeIn Controls when pattern is eligible: 'root' = only when no mode active, a mode id string = only when that mode is active.
  * @property {function(string): {label: string, raw: string}|null} match Tests text and returns token data or null.
+ * @property {string} [variant] Optional visual variant for the chip (e.g. 'outlined').
  */
 
 /**

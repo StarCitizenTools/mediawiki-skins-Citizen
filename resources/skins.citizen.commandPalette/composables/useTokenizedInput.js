@@ -16,6 +16,7 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 	const freeText = ref( '' );
 	const selectedIndex = ref( -1 );
 	let suppressDetection = false;
+	let suppressedTextLength = 0;
 
 	const fullQuery = computed( () => {
 		const prefixTokens = tokens.value.filter( ( t ) => t.position === 'prefix' );
@@ -34,18 +35,23 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 	 * @param {Object} token Token descriptor with label, raw, modeId, and optional position.
 	 */
 	function addToken( token ) {
-		tokens.value = [ ...tokens.value, {
+		const entry = {
 			id: 'token-' + ( tokenCounter++ ),
 			label: token.label,
 			raw: token.raw,
 			modeId: token.modeId,
 			position: token.position || 'any'
-		} ];
+		};
+		if ( token.variant ) {
+			entry.variant = token.variant;
+		}
+		tokens.value = [ ...tokens.value, entry ];
 	}
 
 	/**
-	 * Removes a token by index and suppresses auto-detection for the next
-	 * setFreeText call (the orchestrator handles prepending the raw text).
+	 * Removes a token by index and suppresses auto-detection until the user
+	 * types new content (text length grows). This prevents the removed token's
+	 * raw text from being immediately re-tokenized while the user edits it.
 	 *
 	 * @param {number} index The index of the token to remove.
 	 */
@@ -53,6 +59,7 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 		tokens.value = tokens.value.filter( ( _, i ) => i !== index );
 		selectedIndex.value = -1;
 		suppressDetection = true;
+		suppressedTextLength = Infinity;
 	}
 
 	/**
@@ -112,7 +119,8 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 				label: result.label,
 				raw: result.raw,
 				modeId: pattern.modeId,
-				position: pattern.position
+				position: pattern.position,
+				variant: pattern.variant
 			} );
 			return { remaining: text.slice( result.raw.length ) };
 		}
@@ -182,13 +190,21 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 	 * Sets the free text value. Runs auto-detection against registered
 	 * tokenPatterns unless detection is suppressed (e.g. after removeToken).
 	 *
+	 * Detection stays suppressed while the text is shrinking or unchanged
+	 * (user is backspacing/editing the removed token). It resumes once the
+	 * text grows (user typed new content past the edit point).
+	 *
 	 * @param {string} text The new free text value.
 	 */
 	function setFreeText( text ) {
 		if ( suppressDetection ) {
-			freeText.value = text;
-			suppressDetection = false;
-			return;
+			if ( text.length > suppressedTextLength ) {
+				suppressDetection = false;
+			} else {
+				suppressedTextLength = text.length;
+				freeText.value = text;
+				return;
+			}
 		}
 		freeText.value = detectTokens( text );
 	}
@@ -201,6 +217,7 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 		freeText.value = '';
 		selectedIndex.value = -1;
 		suppressDetection = false;
+		suppressedTextLength = 0;
 	}
 
 	return {

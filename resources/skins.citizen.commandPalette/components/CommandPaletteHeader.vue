@@ -28,7 +28,10 @@
 				v-show="!activeMode || token.modeId === activeMode.id"
 				:key="token.id"
 				class="citizen-command-palette-header__chip"
-				:class="{ 'citizen-command-palette-header__chip--selected': index === selectedTokenIndex }"
+				:class="{
+					'citizen-command-palette-header__chip--selected': index === selectedTokenIndex,
+					[ 'citizen-command-palette-header__chip--' + token.variant ]: token.variant
+				}"
 				@click="$emit( 'select-token', index )"
 			>
 				{{ token.label }}
@@ -174,6 +177,11 @@ module.exports = exports = defineComponent( {
 		background-color: var( --background-color-interactive );
 		border: var( --border-base );
 		border-radius: var( --border-radius-base );
+
+		&--outlined {
+			background-color: transparent;
+			border-style: dashed;
+		}
 
 		&--selected {
 			background-color: transparent;
