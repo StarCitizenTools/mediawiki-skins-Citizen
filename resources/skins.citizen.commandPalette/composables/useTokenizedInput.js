@@ -128,9 +128,43 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 	}
 
 	/**
+	 * Tries to match one eligible eagerMatch pattern against text.
+	 * eagerMatch is an optional, more lenient matcher on token patterns
+	 * (e.g. allowing end-of-string as a terminator) used only after
+	 * the standard pass has already matched at least one token.
+	 *
+	 * @param {string} text The text to match against.
+	 * @return {{ remaining: string }|null} The remaining text, or null if no match.
+	 */
+	function tryMatchOneEagerToken( text ) {
+		for ( const pattern of getTokenPatterns() ) {
+			if ( !isPatternEligible( pattern ) || !pattern.eagerMatch ) {
+				continue;
+			}
+			const result = pattern.eagerMatch( text );
+			if ( !result || !result.raw.length ) {
+				continue;
+			}
+			addToken( {
+				label: result.label,
+				raw: result.raw,
+				modeId: pattern.modeId,
+				position: pattern.position,
+				variant: pattern.variant
+			} );
+			return { remaining: text.slice( result.raw.length ) };
+		}
+		return null;
+	}
+
+	/**
 	 * Runs auto-detection on text against registered tokenPatterns.
 	 * For each match found, creates a token and strips the matched portion,
 	 * then re-runs detection on the remaining text.
+	 *
+	 * After the standard pass, if at least one token was matched (indicating
+	 * a paste or bulk input), runs an eager pass that uses patterns' optional
+	 * eagerMatch to capture terminal tokens like trailing printouts.
 	 *
 	 * @param {string} text The text to detect tokens in.
 	 * @return {string} The remaining text after all matches are stripped.
@@ -142,12 +176,26 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 		// a previously tokenized condition.
 		remaining = stripWhitespaceIfTokenFollows( remaining );
 		let match;
+		let matchedCount = 0;
 		while ( ( match = tryMatchOneToken( remaining ) ) ) {
 			remaining = match.remaining;
+			matchedCount++;
 			// Strip inter-token whitespace so pasted text like
 			// "[[Category:City]] [[Located in::Germany]]" keeps matching.
 			remaining = stripWhitespaceIfTokenFollows( remaining );
 		}
+
+		// Eager pass: when tokens were matched in this call (paste/bulk input),
+		// try lenient matching on the remaining text to capture terminal tokens
+		// (e.g. the last printout in "[[Category:City]]|?Pop|?Origin country").
+		if ( matchedCount > 0 && remaining.trim() ) {
+			const trimmed = remaining.replace( /^\s+/, '' );
+			const eager = tryMatchOneEagerToken( trimmed );
+			if ( eager ) {
+				remaining = eager.remaining;
+			}
+		}
+
 		return remaining;
 	}
 

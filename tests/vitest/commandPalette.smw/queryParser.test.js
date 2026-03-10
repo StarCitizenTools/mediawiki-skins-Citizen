@@ -96,4 +96,8 @@ describe( 'parseIncompleteCondition', () => {
 			fragment: 'Population=Custom Label'
 		} );
 	} );
+
+	it( 'returns null for printout after a closed condition (anchored to start)', () => {
+		expect( parseIncompleteCondition( '[[Foo]]|?Bar' ) ).toBeNull();
+	} );
 } );

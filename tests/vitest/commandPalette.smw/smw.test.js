@@ -5,9 +5,16 @@ const smwMode = require(
 	'../../../resources/skins.citizen.commandPalette.smw/init.js'
 );
 
+const conditionPattern = smwMode.tokenPattern.find(
+	( pattern ) => !pattern.variant
+);
+const printoutPattern = smwMode.tokenPattern.find(
+	( pattern ) => pattern.variant === 'outlined'
+);
+
 describe( 'SMW mode', () => {
 	describe( 'tokenPattern (condition)', () => {
-		const match = smwMode.tokenPattern[ 0 ].match;
+		const match = conditionPattern.match;
 
 		it( 'should detect a category condition', () => {
 			const result = match( '[[Category:City]]rest' );
@@ -56,7 +63,7 @@ describe( 'SMW mode', () => {
 	} );
 
 	describe( 'tokenPattern (printout)', () => {
-		const match = smwMode.tokenPattern[ 1 ].match;
+		const match = printoutPattern.match;
 
 		it( 'should detect printout followed by pipe', () => {
 			const result = match( '|?Population|next' );
@@ -129,6 +136,39 @@ describe( 'SMW mode', () => {
 		} );
 	} );
 
+	describe( 'tokenPattern (printout eagerMatch)', () => {
+		const eagerMatch = printoutPattern.eagerMatch;
+
+		it( 'should detect printout at end of string', () => {
+			expect( eagerMatch( '|?Population' ) ).toEqual( {
+				raw: '|?Population',
+				label: 'Population'
+			} );
+		} );
+
+		it( 'should detect printout with spaces at end of string', () => {
+			expect( eagerMatch( '|?Origin country' ) ).toEqual( {
+				raw: '|?Origin country',
+				label: 'Origin country'
+			} );
+		} );
+
+		it( 'should also detect printout followed by delimiter', () => {
+			expect( eagerMatch( '|?Population|next' ) ).toEqual( {
+				raw: '|?Population',
+				label: 'Population'
+			} );
+		} );
+
+		it( 'should return null for empty |?', () => {
+			expect( eagerMatch( '|?' ) ).toBeNull();
+		} );
+
+		it( 'should return null for plain text', () => {
+			expect( eagerMatch( 'hello' ) ).toBeNull();
+		} );
+	} );
+
 	describe( 'mode definition', () => {
 		it( 'should have correct id', () => {
 			expect( smwMode.id ).toBe( 'smw' );
@@ -138,10 +178,13 @@ describe( 'SMW mode', () => {
 			expect( smwMode.triggers ).toEqual( [ '/smw:' ] );
 		} );
 
-		it( 'should have tokenPattern array with correct modeIds', () => {
+		it( 'should expose condition and outlined printout token patterns', () => {
 			expect( Array.isArray( smwMode.tokenPattern ) ).toBe( true );
-			expect( smwMode.tokenPattern[ 0 ].modeId ).toBe( 'smw' );
-			expect( smwMode.tokenPattern[ 1 ].modeId ).toBe( 'smw' );
+			expect( conditionPattern.modeId ).toBe( 'smw' );
+			expect( printoutPattern ).toMatchObject( {
+				modeId: 'smw',
+				variant: 'outlined'
+			} );
 		} );
 
 		it( 'should have getResults function', () => {
@@ -172,10 +215,19 @@ describe( 'SMW mode', () => {
 			expect( result ).toEqual( { action: 'updateQuery', payload: '[[Located in::' } );
 		} );
 
-		it( 'should return updateQuery action for smw-printout items', () => {
+		it( 'should return addToken action for smw-printout items', () => {
 			const result = smwMode.onResultSelect( { type: 'smw-printout', label: 'Population' } );
 
-			expect( result ).toEqual( { action: 'updateQuery', payload: '|?Population' } );
+			expect( result ).toEqual( {
+				action: 'addToken',
+				payload: {
+					label: 'Population',
+					raw: '|?Population',
+					modeId: 'smw',
+					position: 'any',
+					variant: 'outlined'
+				}
+			} );
 		} );
 
 		it( 'should return updateQuery action for smw-value items', () => {
