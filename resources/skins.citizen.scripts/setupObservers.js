@@ -23,25 +23,31 @@ const
 
 /**
  * @callback OnIntersection
- * @param {HTMLElement} element The section that triggered the new intersection change.
+ * @param {HTMLElement[]} sections The sections currently visible in the viewport.
  */
 
 /**
  * @ignore
- * @param {Function} changeActiveSection
+ * @param {Function} changeActiveSections
  * @return {OnIntersection}
  */
-const getHeadingIntersectionHandler = ( changeActiveSection ) =>
+const getHeadingIntersectionHandler = ( changeActiveSections ) =>
 	/**
-	 * @param {HTMLElement} section
+	 * @param {HTMLElement[]} sections
 	 */
 	// eslint-disable-next-line implicit-arrow-linebreak
-	( section ) => {
-		const headline = section.classList.contains( 'mw-body-content' ) ?
-			section :
-			section.querySelector( HEADLINE_SELECTOR );
-		if ( headline ) {
-			changeActiveSection( `${ TOC_SECTION_ID_PREFIX }${ headline.id }` );
+	( sections ) => {
+		const ids = [];
+		for ( const section of sections ) {
+			const headline = section.classList.contains( 'mw-body-content' ) ?
+				section :
+				section.querySelector( HEADLINE_SELECTOR );
+			if ( headline ) {
+				ids.push( `${ TOC_SECTION_ID_PREFIX }${ headline.id }` );
+			}
+		}
+		if ( ids.length > 0 ) {
+			changeActiveSections( ids );
 		}
 	};
 
@@ -109,6 +115,8 @@ const setupTableOfContents = (
 		deferUntilFrame( () => {
 			// eslint-disable-next-line no-use-before-define
 			sectionObserver.resume();
+			// eslint-disable-next-line no-use-before-define
+			sectionObserver.calcIntersection();
 		}, 3 );
 	};
 
@@ -129,7 +137,7 @@ const setupTableOfContents = (
 		elements: elements(),
 		topMargin: getDocumentScrollPaddingTop( window, document ),
 		onIntersection: getHeadingIntersectionHandler(
-			tableOfContents.changeActiveSection.bind( tableOfContents )
+			tableOfContents.changeActiveSections.bind( tableOfContents )
 		)
 	} );
 	const updateElements = () => {
@@ -149,7 +157,42 @@ const setupTableOfContents = (
 		updateElements();
 	} );
 
+	// On narrow viewports the ToC is a collapsed popover — pause the scroll spy
+	// to avoid unnecessary work. Resume + recalculate when returning to desktop.
+	// Uses @min-width-breakpoint-desktop from MediaWiki core (1120px).
+	const desktopMql = window.matchMedia( '(min-width: 1120px)' );
+	let tocCollapsed = !desktopMql.matches;
+
+	if ( tocCollapsed ) {
+		sectionObserver.pause();
+	}
+
+	desktopMql.addEventListener( 'change', ( e ) => {
+		if ( e.matches ) {
+			// Crossed into desktop — resume scroll spy.
+			tocCollapsed = false;
+			sectionObserver.resume();
+			sectionObserver.calcIntersection();
+		} else {
+			// Crossed into narrow — pause scroll spy.
+			tocCollapsed = true;
+			sectionObserver.pause();
+		}
+	} );
+
+	// Recalculate active sections on window resize since viewport dimensions change.
+	window.addEventListener( 'resize', mw.util.debounce( () => {
+		if ( !tocCollapsed ) {
+			sectionObserver.calcIntersection();
+		}
+	}, 200 ) );
+
+	// Skip initial active section calculation on narrow viewports
+	// since the ToC is collapsed and scroll spy is paused.
 	const setInitialActiveSection = () => {
+		if ( tocCollapsed ) {
+			return;
+		}
 		const hash = window.location.hash.slice( 1 );
 		// If hash fragment is blank, determine the active section with section
 		// observer.
