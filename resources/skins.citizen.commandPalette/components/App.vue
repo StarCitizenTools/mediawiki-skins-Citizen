@@ -247,6 +247,8 @@ module.exports = exports = defineComponent( {
 					tokenInput.setFreeText( '' );
 					// Force re-query: adding a token while clearing freeText
 					// produces the same fullQuery string, so the watcher won't fire.
+					// TODO: A generation counter on useTokenizedInput could replace
+					// this workaround by making the watcher always see a new value.
 					orch.updateQuery( tokenInput.fullQuery.value );
 					nextTick( focusInput );
 					break;

@@ -582,6 +582,45 @@ describe( 'useTokenizedInput', () => {
 			expect( ti.freeText.value ).toBe( '' );
 		} );
 
+		it( 'should handle paste with whitespace before printouts', () => {
+			const { ref } = require( 'vue' );
+			const activeMode = ref( { id: 'smw' } );
+			const conditionPat = {
+				modeId: 'smw',
+				position: 'any',
+				activeIn: 'smw',
+				match: ( text ) => {
+					const m = text.match( /^\[\[([^\]]+)\]\]/ );
+					return m ? { label: m[ 1 ], raw: m[ 0 ] } : null;
+				}
+			};
+			const printoutPat = {
+				modeId: 'smw',
+				position: 'any',
+				activeIn: 'smw',
+				match: ( text ) => {
+					const m = /^\|(\?[^|[\]]+)(?=[|[\]])/.exec( text );
+					return m ? { label: m[ 1 ].slice( 1 ), raw: m[ 0 ] } : null;
+				},
+				eagerMatch: ( text ) => {
+					const m = /^\|(\?[^|[\]]+)(?=[|[\]]|$)/.exec( text );
+					return m ? { label: m[ 1 ].slice( 1 ), raw: m[ 0 ] } : null;
+				},
+				variant: 'outlined'
+			};
+			const ti = useTokenizedInput( () => [ conditionPat, printoutPat ], activeMode );
+
+			ti.setFreeText( '[[Category:City]] |?Population |?Origin country' );
+
+			// The space after "Population" is included in the raw match
+			// because the character class [^|[\]] allows spaces.
+			expect( ti.tokens.value ).toHaveLength( 3 );
+			expect( ti.tokens.value[ 0 ].label ).toBe( 'Category:City' );
+			expect( ti.tokens.value[ 1 ].label ).toBe( 'Population ' );
+			expect( ti.tokens.value[ 2 ].label ).toBe( 'Origin country' );
+			expect( ti.freeText.value ).toBe( '' );
+		} );
+
 		it( 'should not eagerly tokenize when no standard tokens matched', () => {
 			const { ref } = require( 'vue' );
 			const activeMode = ref( { id: 'smw' } );

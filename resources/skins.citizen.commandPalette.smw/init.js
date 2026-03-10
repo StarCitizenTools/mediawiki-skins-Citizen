@@ -45,6 +45,25 @@ function matchSmwCondition( text ) {
 }
 
 /**
+ * Shared implementation for printout matchers.
+ * The regex character class [^|[\]] excludes ] from property names;
+ * SMW properties can technically contain ] but it is rare in practice.
+ *
+ * @param {string} text The input text to check.
+ * @param {RegExp} re The printout regex (differs only in lookahead).
+ * @return {{ label: string, raw: string }|null} Match result or null.
+ */
+function matchPrintout( text, re ) {
+	const m = re.exec( text );
+	if ( !m ) {
+		return null;
+	}
+	const raw = m[ 0 ];
+	const label = m[ 1 ].slice( 1 );
+	return { label, raw };
+}
+
+/**
  * Matches a completed SMW printout at the start of text.
  * Detects patterns like |?Population or |?Located in.
  *
@@ -57,13 +76,7 @@ function matchSmwCondition( text ) {
  * @return {{ label: string, raw: string }|null} Match result or null.
  */
 function matchSmwPrintout( text ) {
-	const m = /^\|(\?[^|[\]]+)(?=[|[\]])/.exec( text );
-	if ( !m ) {
-		return null;
-	}
-	const raw = m[ 0 ];
-	const label = m[ 1 ].slice( 1 );
-	return { label, raw };
+	return matchPrintout( text, /^\|(\?[^|[\]]+)(?=[|[\]])/ );
 }
 
 /**
@@ -76,13 +89,7 @@ function matchSmwPrintout( text ) {
  * @return {{ label: string, raw: string }|null} Match result or null.
  */
 function matchSmwPrintoutEager( text ) {
-	const m = /^\|(\?[^|[\]]+)(?=[|[\]]|$)/.exec( text );
-	if ( !m ) {
-		return null;
-	}
-	const raw = m[ 0 ];
-	const label = m[ 1 ].slice( 1 );
-	return { label, raw };
+	return matchPrintout( text, /^\|(\?[^|[\]]+)(?=[|[\]]|$)/ );
 }
 
 /**
@@ -251,6 +258,10 @@ function isCompleteAskQuery( askQuery ) {
  * token raw strings from the front.  The orchestrator passes the
  * full serialized query (token raws + freeText) as a single string,
  * but parseIncompleteCondition needs only the freeText tail.
+ *
+ * Assumes all SMW tokens appear contiguously at the start of fullQuery
+ * (prefix tokens first, then any-position tokens), matching fullQuery's
+ * serialization order.  Non-SMW tokens are skipped by the modeId check.
  *
  * @param {string} fullQuery The full serialized query.
  * @param {Array} tokens The token array.

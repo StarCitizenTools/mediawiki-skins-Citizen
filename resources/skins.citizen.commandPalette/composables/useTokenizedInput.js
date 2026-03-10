@@ -133,6 +133,9 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 	 * (e.g. allowing end-of-string as a terminator) used only after
 	 * the standard pass has already matched at least one token.
 	 *
+	 * Called once (not looped) because at most one token can be terminal —
+	 * the eager pass only captures the final remaining text.
+	 *
 	 * @param {string} text The text to match against.
 	 * @return {{ remaining: string }|null} The remaining text, or null if no match.
 	 */
@@ -163,8 +166,9 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 	 * then re-runs detection on the remaining text.
 	 *
 	 * After the standard pass, if at least one token was matched (indicating
-	 * a paste or bulk input), runs an eager pass that uses patterns' optional
-	 * eagerMatch to capture terminal tokens like trailing printouts.
+	 * a paste or bulk input), runs a single eager pass that uses a pattern's
+	 * optional eagerMatch to capture the terminal token (e.g. a trailing
+	 * printout that has no following delimiter).
 	 *
 	 * @param {string} text The text to detect tokens in.
 	 * @return {string} The remaining text after all matches are stripped.
@@ -186,8 +190,9 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 		}
 
 		// Eager pass: when tokens were matched in this call (paste/bulk input),
-		// try lenient matching on the remaining text to capture terminal tokens
-		// (e.g. the last printout in "[[Category:City]]|?Pop|?Origin country").
+		// try lenient matching on the remaining text to capture the terminal
+		// token (e.g. the last printout in "[[Category:City]]|?Pop|?Origin country").
+		// Only one eager match is attempted — at most one token can be terminal.
 		if ( matchedCount > 0 && remaining.trim() ) {
 			const trimmed = remaining.replace( /^\s+/, '' );
 			const eager = tryMatchOneEagerToken( trimmed );
