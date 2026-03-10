@@ -37,6 +37,24 @@ describe( 'useTokenizedInput', () => {
 		} );
 	} );
 
+	describe( 'addToken variant', () => {
+		it( 'should include variant on token when provided', () => {
+			const ti = useTokenizedInput( () => [] );
+
+			ti.addToken( { label: '?Pop', raw: '|?Pop', modeId: 'smw', variant: 'outlined' } );
+
+			expect( ti.tokens.value[ 0 ].variant ).toBe( 'outlined' );
+		} );
+
+		it( 'should omit variant when not provided', () => {
+			const ti = useTokenizedInput( () => [] );
+
+			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace' } );
+
+			expect( ti.tokens.value[ 0 ] ).not.toHaveProperty( 'variant' );
+		} );
+	} );
+
 	describe( 'removeToken', () => {
 		it( 'should remove a token by index', () => {
 			const ti = useTokenizedInput( () => [] );
@@ -265,7 +283,7 @@ describe( 'useTokenizedInput', () => {
 			expect( ti.freeText.value ).toBe( 'Talk:Main Page' );
 		} );
 
-		it( 'should resume detection after one suppressed call', () => {
+		it( 'should stay suppressed while text shrinks after removeToken', () => {
 			const pattern = {
 				modeId: 'namespace',
 				position: 'prefix',
@@ -280,11 +298,33 @@ describe( 'useTokenizedInput', () => {
 			ti.removeToken( 0 );
 			ti.setFreeText( 'Talk:Main Page' ); // suppressed
 
-			ti.setFreeText( 'Talk:Main Page' ); // should detect now
+			ti.setFreeText( 'Talk:Main Pag' ); // still shrinking
+
+			expect( ti.tokens.value ).toHaveLength( 0 );
+			expect( ti.freeText.value ).toBe( 'Talk:Main Pag' );
+		} );
+
+		it( 'should resume detection when text grows after removeToken', () => {
+			const pattern = {
+				modeId: 'namespace',
+				position: 'prefix',
+				activeIn: 'root',
+				match: ( text ) => {
+					const m = text.match( /^(Talk):/ );
+					return m ? { label: m[ 1 ] + ':', raw: m[ 1 ] + ':' } : null;
+				}
+			};
+			const ti = useTokenizedInput( () => [ pattern ] );
+			ti.addToken( { label: 'Talk:', raw: 'Talk:', modeId: 'namespace', position: 'prefix' } );
+			ti.removeToken( 0 );
+			ti.setFreeText( 'Talk:Main Page' ); // suppressed
+			ti.setFreeText( 'Talk:Mai' ); // shrinking, still suppressed
+
+			ti.setFreeText( 'Talk:Main' ); // grew — resume detection
 
 			expect( ti.tokens.value ).toHaveLength( 1 );
 			expect( ti.tokens.value[ 0 ].label ).toBe( 'Talk:' );
-			expect( ti.freeText.value ).toBe( 'Main Page' );
+			expect( ti.freeText.value ).toBe( 'Main' );
 		} );
 
 		it( 'should not infinite loop on empty raw match', () => {
@@ -500,6 +540,110 @@ describe( 'useTokenizedInput', () => {
 			expect( ti.tokens.value ).toHaveLength( 1 );
 			expect( ti.tokens.value[ 0 ].label ).toBe( 'Category:City' );
 			expect( ti.freeText.value ).toBe( 'rest' );
+		} );
+	} );
+
+	describe( 'eagerMatch (paste detection)', () => {
+		it( 'should eagerly tokenize terminal text when standard pass matched tokens', () => {
+			const { ref } = require( 'vue' );
+			const activeMode = ref( { id: 'smw' } );
+			const conditionPat = {
+				modeId: 'smw',
+				position: 'any',
+				activeIn: 'smw',
+				match: ( text ) => {
+					const m = text.match( /^\[\[([^\]]+)\]\]/ );
+					return m ? { label: m[ 1 ], raw: m[ 0 ] } : null;
+				}
+			};
+			const printoutPat = {
+				modeId: 'smw',
+				position: 'any',
+				activeIn: 'smw',
+				match: ( text ) => {
+					const m = /^\|(\?[^|[\]]+)(?=[|[\]])/.exec( text );
+					return m ? { label: m[ 1 ].slice( 1 ), raw: m[ 0 ] } : null;
+				},
+				eagerMatch: ( text ) => {
+					const m = /^\|(\?[^|[\]]+)(?=[|[\]]|$)/.exec( text );
+					return m ? { label: m[ 1 ].slice( 1 ), raw: m[ 0 ] } : null;
+				},
+				variant: 'outlined'
+			};
+			const ti = useTokenizedInput( () => [ conditionPat, printoutPat ], activeMode );
+
+			ti.setFreeText( '[[Category:City]]|?Population|?Origin country' );
+
+			expect( ti.tokens.value ).toHaveLength( 3 );
+			expect( ti.tokens.value[ 0 ].label ).toBe( 'Category:City' );
+			expect( ti.tokens.value[ 1 ].label ).toBe( 'Population' );
+			expect( ti.tokens.value[ 2 ].label ).toBe( 'Origin country' );
+			expect( ti.tokens.value[ 2 ].variant ).toBe( 'outlined' );
+			expect( ti.freeText.value ).toBe( '' );
+		} );
+
+		it( 'should handle paste with whitespace before printouts', () => {
+			const { ref } = require( 'vue' );
+			const activeMode = ref( { id: 'smw' } );
+			const conditionPat = {
+				modeId: 'smw',
+				position: 'any',
+				activeIn: 'smw',
+				match: ( text ) => {
+					const m = text.match( /^\[\[([^\]]+)\]\]/ );
+					return m ? { label: m[ 1 ], raw: m[ 0 ] } : null;
+				}
+			};
+			const printoutPat = {
+				modeId: 'smw',
+				position: 'any',
+				activeIn: 'smw',
+				match: ( text ) => {
+					const m = /^\|(\?[^|[\]]+)(?=[|[\]])/.exec( text );
+					return m ? { label: m[ 1 ].slice( 1 ), raw: m[ 0 ] } : null;
+				},
+				eagerMatch: ( text ) => {
+					const m = /^\|(\?[^|[\]]+)(?=[|[\]]|$)/.exec( text );
+					return m ? { label: m[ 1 ].slice( 1 ), raw: m[ 0 ] } : null;
+				},
+				variant: 'outlined'
+			};
+			const ti = useTokenizedInput( () => [ conditionPat, printoutPat ], activeMode );
+
+			ti.setFreeText( '[[Category:City]] |?Population |?Origin country' );
+
+			// The space after "Population" is included in the raw match
+			// because the character class [^|[\]] allows spaces.
+			expect( ti.tokens.value ).toHaveLength( 3 );
+			expect( ti.tokens.value[ 0 ].label ).toBe( 'Category:City' );
+			expect( ti.tokens.value[ 1 ].label ).toBe( 'Population ' );
+			expect( ti.tokens.value[ 2 ].label ).toBe( 'Origin country' );
+			expect( ti.freeText.value ).toBe( '' );
+		} );
+
+		it( 'should not eagerly tokenize when no standard tokens matched', () => {
+			const { ref } = require( 'vue' );
+			const activeMode = ref( { id: 'smw' } );
+			const printoutPat = {
+				modeId: 'smw',
+				position: 'any',
+				activeIn: 'smw',
+				match: ( text ) => {
+					const m = /^\|(\?[^|[\]]+)(?=[|[\]])/.exec( text );
+					return m ? { label: m[ 1 ].slice( 1 ), raw: m[ 0 ] } : null;
+				},
+				eagerMatch: ( text ) => {
+					const m = /^\|(\?[^|[\]]+)(?=[|[\]]|$)/.exec( text );
+					return m ? { label: m[ 1 ].slice( 1 ), raw: m[ 0 ] } : null;
+				}
+			};
+			const ti = useTokenizedInput( () => [ printoutPat ], activeMode );
+
+			ti.setFreeText( '|?Population' );
+
+			// No standard match → eager pass skipped → stays as freeText
+			expect( ti.tokens.value ).toHaveLength( 0 );
+			expect( ti.freeText.value ).toBe( '|?Population' );
 		} );
 	} );
 

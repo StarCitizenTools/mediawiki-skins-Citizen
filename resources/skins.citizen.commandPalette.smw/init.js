@@ -2,7 +2,7 @@
  * Semantic MediaWiki Ask query mode for the command palette.
  * Loaded conditionally only when SMW is installed.
  */
-const { cdxIconAdd, cdxIconTag, cdxIconWikitext } = require( './icons.json' );
+const { cdxIconAdd, cdxIconListBullet, cdxIconTag, cdxIconWikitext } = require( './icons.json' );
 const config = require( './config.json' );
 const parseIncompleteCondition = require( './queryParser.js' );
 
@@ -42,6 +42,54 @@ function matchSmwCondition( text ) {
 		.replace( /::/, ': ' )
 		.replace( /^(Category):/, '$1: ' );
 	return { label, raw };
+}
+
+/**
+ * Shared implementation for printout matchers.
+ * The regex character class [^|[\]] excludes ] from property names;
+ * SMW properties can technically contain ] but it is rare in practice.
+ *
+ * @param {string} text The input text to check.
+ * @param {RegExp} re The printout regex (differs only in lookahead).
+ * @return {{ label: string, raw: string }|null} Match result or null.
+ */
+function matchPrintout( text, re ) {
+	const m = re.exec( text );
+	if ( !m ) {
+		return null;
+	}
+	const raw = m[ 0 ];
+	const label = m[ 1 ].slice( 1 );
+	return { label, raw };
+}
+
+/**
+ * Matches a completed SMW printout at the start of text.
+ * Detects patterns like |?Population or |?Located in.
+ *
+ * Requires a delimiter (| or [) after the property name to avoid
+ * premature tokenization during character-by-character typing.
+ * This means printouts only tokenize when the user has moved on
+ * to typing the next token (e.g. "|?Breed group|?Origin").
+ *
+ * @param {string} text The input text to check.
+ * @return {{ label: string, raw: string }|null} Match result or null.
+ */
+function matchSmwPrintout( text ) {
+	return matchPrintout( text, /^\|(\?[^|[\]]+)(?=[|[\]])/ );
+}
+
+/**
+ * Eager variant of matchSmwPrintout that also accepts end-of-string
+ * as a valid terminator.  Used by the tokenizer's eager pass to
+ * capture the last printout in a pasted query (e.g. the trailing
+ * "|?Origin country" in "[[Category:City]]|?Population|?Origin country").
+ *
+ * @param {string} text The input text to check.
+ * @return {{ label: string, raw: string }|null} Match result or null.
+ */
+function matchSmwPrintoutEager( text ) {
+	return matchPrintout( text, /^\|(\?[^|[\]]+)(?=[|[\]]|$)/ );
 }
 
 /**
@@ -206,35 +254,36 @@ function isCompleteAskQuery( askQuery ) {
 }
 
 /**
- * Fetches results from the SMW Ask API.
+ * Extracts the free-text portion of the full query by stripping
+ * token raw strings from the front.  The orchestrator passes the
+ * full serialized query (token raws + freeText) as a single string,
+ * but parseIncompleteCondition needs only the freeText tail.
  *
- * @param {string} subQuery The free text portion of the query.
- * @param {AbortSignal} [_signal] Unused — mw.Api does not support AbortSignal.
- *   Kept for interface conformance with PaletteMode.getResults.
- * @param {Array} [tokens] Optional tokens array.
+ * Assumes all SMW tokens appear contiguously at the start of fullQuery
+ * (prefix tokens first, then any-position tokens), matching fullQuery's
+ * serialization order.  Non-SMW tokens are skipped by the modeId check.
+ *
+ * @param {string} fullQuery The full serialized query.
+ * @param {Array} tokens The token array.
+ * @return {string} The remaining free text after all token raws.
+ */
+function extractFreeText( fullQuery, tokens ) {
+	let text = fullQuery;
+	for ( const t of tokens ) {
+		if ( t.modeId === 'smw' && text.startsWith( t.raw ) ) {
+			text = text.slice( t.raw.length );
+		}
+	}
+	return text;
+}
+
+/**
+ * Executes an Ask API query and returns adapted results.
+ *
+ * @param {string} askQuery The complete Ask query string.
  * @return {Promise<Array>} Array of CommandPaletteItems.
  */
-async function getSmwResults( subQuery, _signal, tokens ) {
-	// Check for incomplete condition — show suggestions instead of Ask results
-	const incomplete = parseIncompleteCondition( subQuery );
-	if ( incomplete ) {
-		if ( incomplete.stage === 'property' ) {
-			return fetchPropertySuggestions( incomplete.fragment );
-		}
-		if ( incomplete.stage === 'category' ) {
-			return fetchCategorySuggestions( incomplete.fragment );
-		}
-		if ( incomplete.stage === 'value' ) {
-			return fetchValueSuggestions( incomplete.fragment, incomplete.property );
-		}
-		return [];
-	}
-
-	const askQuery = buildAskQuery( subQuery, tokens || [] );
-	if ( !askQuery.trim() || !isCompleteAskQuery( askQuery ) ) {
-		return [];
-	}
-
+async function executeAskQuery( askQuery ) {
 	const api = new mw.Api();
 	try {
 		const data = await api.get( {
@@ -252,13 +301,60 @@ async function getSmwResults( subQuery, _signal, tokens ) {
 
 		return Object.values( results ).map( adaptSmwResult );
 	} catch ( error ) {
-		// mw.Api rejects with string error codes (not Error objects),
-		// so we compare with !== rather than error.name.
 		if ( error !== 'AbortError' ) {
 			mw.log.error( '[commandPalette] SMW query failed:', error );
 		}
 		return [];
 	}
+}
+
+/**
+ * Fetches results from the SMW Ask API.
+ *
+ * @param {string} subQuery The full serialized query (token raws + freeText).
+ * @param {AbortSignal} [_signal] Unused — mw.Api does not support AbortSignal.
+ *   Kept for interface conformance with PaletteMode.getResults.
+ * @param {Array} [tokens] Optional tokens array.
+ * @return {Promise<Array>} Array of CommandPaletteItems.
+ */
+async function getSmwResults( subQuery, _signal, tokens ) {
+	// Extract the free-text tail for incomplete-condition detection.
+	// The orchestrator passes the full query (token raws + freeText),
+	// but the parser needs only the freeText portion.
+	const freeText = extractFreeText( subQuery, tokens || [] );
+
+	const askQuery = buildAskQuery( freeText, tokens || [] );
+
+	// Check for incomplete condition — show suggestions instead of Ask results.
+	const incomplete = parseIncompleteCondition( freeText );
+	if ( incomplete ) {
+		if ( incomplete.stage === 'printout' ) {
+			return fetchPropertySuggestions( incomplete.fragment )
+				.then( ( items ) => items.map( ( item ) => Object.assign(
+					{}, item, {
+						id: item.id.replace( 'smw-property', 'smw-printout' ),
+						type: 'smw-printout',
+						thumbnailIcon: cdxIconListBullet
+					}
+				) ) );
+		}
+		if ( incomplete.stage === 'property' ) {
+			return fetchPropertySuggestions( incomplete.fragment );
+		}
+		if ( incomplete.stage === 'category' ) {
+			return fetchCategorySuggestions( incomplete.fragment );
+		}
+		if ( incomplete.stage === 'value' ) {
+			return fetchValueSuggestions( incomplete.fragment, incomplete.property );
+		}
+		return [];
+	}
+
+	if ( askQuery.trim() && isCompleteAskQuery( askQuery ) ) {
+		return executeAskQuery( askQuery );
+	}
+
+	return [];
 }
 
 module.exports = {
@@ -270,28 +366,28 @@ module.exports = {
 	placeholder: mw.message( 'citizen-command-palette-mode-smw-placeholder' ).text(),
 	emptyState: makeState( 'empty' ),
 	noResults( query, tokens ) {
-		const incomplete = parseIncompleteCondition( query );
+		const ft = extractFreeText( query, tokens || [] );
+		const incomplete = parseIncompleteCondition( ft );
 		const stageKeys = {
 			property: 'noproperties',
 			category: 'nocategories',
-			value: 'novalues'
+			value: 'novalues',
+			printout: 'noprintouts'
 		};
 		if ( incomplete && stageKeys[ incomplete.stage ] ) {
 			return makeState( stageKeys[ incomplete.stage ] );
 		}
 
-		const fullQuery = buildAskQuery( query, tokens || [] );
+		const fullQuery = buildAskQuery( ft, tokens || [] );
 		if ( !isCompleteAskQuery( fullQuery ) ) {
 			return makeState( 'malformed' );
 		}
 		return makeState( 'noresults' );
 	},
-	tokenPattern: {
-		modeId: 'smw',
-		position: 'any',
-		activeIn: 'smw',
-		match: matchSmwCondition
-	},
+	tokenPattern: [
+		{ modeId: 'smw', position: 'any', activeIn: 'smw', match: matchSmwCondition },
+		{ modeId: 'smw', position: 'any', activeIn: 'smw', match: matchSmwPrintout, eagerMatch: matchSmwPrintoutEager, variant: 'outlined' }
+	],
 	getResults: getSmwResults,
 	onResultSelect( item ) {
 		switch ( item.type ) {
@@ -301,6 +397,17 @@ module.exports = {
 				return { action: 'updateQuery', payload: '[[' + item.label + '::' };
 			case 'smw-category':
 				return { action: 'updateQuery', payload: '[[Category:' + item.label + ']]' };
+			case 'smw-printout':
+				return {
+					action: 'addToken',
+					payload: {
+						label: item.label,
+						raw: '|?' + item.label,
+						modeId: 'smw',
+						position: 'any',
+						variant: 'outlined'
+					}
+				};
 			default:
 				return item.url ?
 					{ action: 'navigate', payload: item.url } :

@@ -16,6 +16,7 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 	const freeText = ref( '' );
 	const selectedIndex = ref( -1 );
 	let suppressDetection = false;
+	let suppressedTextLength = 0;
 
 	const fullQuery = computed( () => {
 		const prefixTokens = tokens.value.filter( ( t ) => t.position === 'prefix' );
@@ -34,18 +35,23 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 	 * @param {Object} token Token descriptor with label, raw, modeId, and optional position.
 	 */
 	function addToken( token ) {
-		tokens.value = [ ...tokens.value, {
+		const entry = {
 			id: 'token-' + ( tokenCounter++ ),
 			label: token.label,
 			raw: token.raw,
 			modeId: token.modeId,
 			position: token.position || 'any'
-		} ];
+		};
+		if ( token.variant ) {
+			entry.variant = token.variant;
+		}
+		tokens.value = [ ...tokens.value, entry ];
 	}
 
 	/**
-	 * Removes a token by index and suppresses auto-detection for the next
-	 * setFreeText call (the orchestrator handles prepending the raw text).
+	 * Removes a token by index and suppresses auto-detection until the user
+	 * types new content (text length grows). This prevents the removed token's
+	 * raw text from being immediately re-tokenized while the user edits it.
 	 *
 	 * @param {number} index The index of the token to remove.
 	 */
@@ -53,6 +59,7 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 		tokens.value = tokens.value.filter( ( _, i ) => i !== index );
 		selectedIndex.value = -1;
 		suppressDetection = true;
+		suppressedTextLength = Infinity;
 	}
 
 	/**
@@ -112,7 +119,41 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 				label: result.label,
 				raw: result.raw,
 				modeId: pattern.modeId,
-				position: pattern.position
+				position: pattern.position,
+				variant: pattern.variant
+			} );
+			return { remaining: text.slice( result.raw.length ) };
+		}
+		return null;
+	}
+
+	/**
+	 * Tries to match one eligible eagerMatch pattern against text.
+	 * eagerMatch is an optional, more lenient matcher on token patterns
+	 * (e.g. allowing end-of-string as a terminator) used only after
+	 * the standard pass has already matched at least one token.
+	 *
+	 * Called once (not looped) because at most one token can be terminal —
+	 * the eager pass only captures the final remaining text.
+	 *
+	 * @param {string} text The text to match against.
+	 * @return {{ remaining: string }|null} The remaining text, or null if no match.
+	 */
+	function tryMatchOneEagerToken( text ) {
+		for ( const pattern of getTokenPatterns() ) {
+			if ( !isPatternEligible( pattern ) || !pattern.eagerMatch ) {
+				continue;
+			}
+			const result = pattern.eagerMatch( text );
+			if ( !result || !result.raw.length ) {
+				continue;
+			}
+			addToken( {
+				label: result.label,
+				raw: result.raw,
+				modeId: pattern.modeId,
+				position: pattern.position,
+				variant: pattern.variant
 			} );
 			return { remaining: text.slice( result.raw.length ) };
 		}
@@ -124,6 +165,11 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 	 * For each match found, creates a token and strips the matched portion,
 	 * then re-runs detection on the remaining text.
 	 *
+	 * After the standard pass, if at least one token was matched (indicating
+	 * a paste or bulk input), runs a single eager pass that uses a pattern's
+	 * optional eagerMatch to capture the terminal token (e.g. a trailing
+	 * printout that has no following delimiter).
+	 *
 	 * @param {string} text The text to detect tokens in.
 	 * @return {string} The remaining text after all matches are stripped.
 	 */
@@ -134,12 +180,27 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 		// a previously tokenized condition.
 		remaining = stripWhitespaceIfTokenFollows( remaining );
 		let match;
+		let matchedCount = 0;
 		while ( ( match = tryMatchOneToken( remaining ) ) ) {
 			remaining = match.remaining;
+			matchedCount++;
 			// Strip inter-token whitespace so pasted text like
 			// "[[Category:City]] [[Located in::Germany]]" keeps matching.
 			remaining = stripWhitespaceIfTokenFollows( remaining );
 		}
+
+		// Eager pass: when tokens were matched in this call (paste/bulk input),
+		// try lenient matching on the remaining text to capture the terminal
+		// token (e.g. the last printout in "[[Category:City]]|?Pop|?Origin country").
+		// Only one eager match is attempted — at most one token can be terminal.
+		if ( matchedCount > 0 && remaining.trim() ) {
+			const trimmed = remaining.replace( /^\s+/, '' );
+			const eager = tryMatchOneEagerToken( trimmed );
+			if ( eager ) {
+				remaining = eager.remaining;
+			}
+		}
+
 		return remaining;
 	}
 
@@ -182,13 +243,21 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 	 * Sets the free text value. Runs auto-detection against registered
 	 * tokenPatterns unless detection is suppressed (e.g. after removeToken).
 	 *
+	 * Detection stays suppressed while the text is shrinking or unchanged
+	 * (user is backspacing/editing the removed token). It resumes once the
+	 * text grows (user typed new content past the edit point).
+	 *
 	 * @param {string} text The new free text value.
 	 */
 	function setFreeText( text ) {
 		if ( suppressDetection ) {
-			freeText.value = text;
-			suppressDetection = false;
-			return;
+			if ( text.length > suppressedTextLength ) {
+				suppressDetection = false;
+			} else {
+				suppressedTextLength = text.length;
+				freeText.value = text;
+				return;
+			}
 		}
 		freeText.value = detectTokens( text );
 	}
@@ -201,6 +270,7 @@ function useTokenizedInput( getTokenPatterns, activeMode ) {
 		freeText.value = '';
 		selectedIndex.value = -1;
 		suppressDetection = false;
+		suppressedTextLength = 0;
 	}
 
 	return {

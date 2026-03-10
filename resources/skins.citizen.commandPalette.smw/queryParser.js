@@ -3,10 +3,17 @@
  * Finds the last unclosed `[[` and determines what stage of input the user is in.
  *
  * @param {string} text The free text from the input.
- * @return {{ stage: 'property'|'category'|'value', fragment: string, property?: string }|null}
+ * @return {{ stage: 'property'|'category'|'value'|'printout', fragment: string,
+ *   property?: string }|null}
  *   Parse result, or null if no unclosed condition exists.
  */
 function parseIncompleteCondition( text ) {
+	// Detect incomplete printout: |? followed by optional property name fragment
+	const printoutMatch = /^\|\?([^|[\]]*)/.exec( text );
+	if ( printoutMatch ) {
+		return { stage: 'printout', fragment: printoutMatch[ 1 ] };
+	}
+
 	// Find the last [[ that has no matching ]]
 	let openPos = -1;
 	let searchFrom = 0;
