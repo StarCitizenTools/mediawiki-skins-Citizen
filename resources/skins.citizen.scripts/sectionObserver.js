@@ -3,7 +3,7 @@
 
 /**
  * @callback OnIntersection
- * @param {HTMLElement} element The section that triggered the new intersection change.
+ * @param {Array<HTMLElement>} elements The sections currently visible in the viewport.
  */
 
 /**
@@ -13,8 +13,8 @@
  * bolded).
  *
  * When sectionObserver notices a new intersection change, the
- * `onIntersection` callback will be fired with the corresponding section
- * as a param.
+ * `onIntersection` callback will be fired with the corresponding visible
+ * sections as a param.
  *
  * Because sectionObserver uses a scroll event listener (in combination with
  * IntersectionObserver), the changes are throttled to a default maximum rate of
@@ -47,45 +47,57 @@ function createSectionObserver( deps ) {
 
 	let elements = initialElements;
 	let /** @type {number | undefined} */ timeoutId;
-	let /** @type {HTMLElement | undefined} */ current;
+	let /** @type {Array<string>} */ currentIds = [];
 
 	const observer = new IntersectionObserverCtor( ( entries ) => {
-		let /** @type {IntersectionObserverEntry | undefined} */ closestNegativeEntry;
-		let /** @type {IntersectionObserverEntry | undefined} */ closestPositiveEntry;
-
-		entries.forEach( ( entry ) => {
-			const top = entry.boundingClientRect.top - topMargin;
-			if (
-				top > 0 &&
-				(
-					closestPositiveEntry === undefined ||
-					top < closestPositiveEntry.boundingClientRect.top - topMargin
-				)
-			) {
-				closestPositiveEntry = entry;
-			}
-
-			if (
-				top <= 0 &&
-				(
-					closestNegativeEntry === undefined ||
-					top > closestNegativeEntry.boundingClientRect.top - topMargin
-				)
-			) {
-				closestNegativeEntry = entry;
-			}
-		} );
-
-		const closestTag =
-			/** @type {HTMLElement} */ ( closestNegativeEntry ? closestNegativeEntry.target :
-				/** @type {IntersectionObserverEntry} */ ( closestPositiveEntry ).target
-			);
-
-		// If the intersection is new, fire the `onIntersection` callback.
-		if ( current !== closestTag ) {
-			onIntersection( closestTag );
+		if ( entries.length === 0 ) {
+			return;
 		}
-		current = closestTag;
+
+		// Sort all entries by boundingClientRect.top (top to bottom).
+		const sorted = entries.slice().sort(
+			( a, b ) => a.boundingClientRect.top - b.boundingClientRect.top
+		);
+
+		// Partition into above-viewport and at-or-below-viewport entries.
+		const above = sorted.filter(
+			( entry ) => entry.boundingClientRect.top - topMargin <= 0
+		);
+		const below = sorted.filter(
+			( entry ) => entry.boundingClientRect.top - topMargin > 0
+		);
+
+		// Start of range: closest heading above viewport top, or first below.
+		let startIdx;
+		if ( above.length > 0 ) {
+			startIdx = sorted.indexOf( above[ above.length - 1 ] );
+		} else {
+			startIdx = sorted.indexOf( below[ 0 ] );
+		}
+
+		// End of range: last heading whose top is within the viewport height.
+		// Starts from startIdx so the range always includes at least one element.
+		let endIdx = startIdx;
+		for ( let i = startIdx; i < sorted.length; i++ ) {
+			if ( sorted[ i ].boundingClientRect.top < win.innerHeight ) {
+				endIdx = i;
+			}
+		}
+
+		// Collect active set from start to end (inclusive).
+		const activeElements = sorted.slice( startIdx, endIdx + 1 ).map(
+			( entry ) => /** @type {HTMLElement} */ ( entry.target )
+		);
+
+		// Compare with previous active set — only fire if changed.
+		const activeIds = activeElements.map( ( el ) => el.id );
+		if (
+			activeIds.length !== currentIds.length ||
+			activeIds.some( ( id, i ) => id !== currentIds[ i ] )
+		) {
+			onIntersection( activeElements );
+		}
+		currentIds = activeIds;
 
 		// When finished finding the intersecting element, stop observing all
 		// observed elements. The scroll event handler will be responsible for
@@ -140,7 +152,7 @@ function createSectionObserver( deps ) {
 		clearTimeout( timeoutId );
 		timeoutId = undefined;
 		// Assume current is no longer valid while paused.
-		current = undefined;
+		currentIds = [];
 	}
 
 	/**
