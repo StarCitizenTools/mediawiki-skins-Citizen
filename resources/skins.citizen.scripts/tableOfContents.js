@@ -23,6 +23,7 @@ const LINK_CLASS = 'citizen-toc-link';
 const TOGGLE_CLASS = 'citizen-toc-toggle';
 const TOC_CONTENTS_ID = 'mw-panel-toc-list';
 const INDICATOR_CLASS = 'citizen-toc-indicator';
+const COLLAPSE_ENABLED_CLASS = 'citizen-toc--collapse-enabled';
 
 /**
  * Fired when the user clicks a toc link. Note that this callback takes
@@ -639,7 +640,13 @@ class TableOfContents {
 		}
 		const load = () => this.mw.loader.using( 'mediawiki.template.mustache' ).then( () => {
 			const idsToReactivate = [ ...this.activeIds ];
-			this.reloadPartialHTML( TOC_CONTENTS_ID, this.getTableOfContentsHTML( sections ) );
+			const tocData = this.getTableOfContentsData( sections );
+			this.reloadPartialHTML( TOC_CONTENTS_ID, this.getTableOfContentsListHtml( tocData ) );
+			// Toggle collapse class based on new section count.
+			this.props.container.classList.toggle(
+				COLLAPSE_ENABLED_CLASS,
+				!!tocData[ 'citizen-is-collapse-sections-enabled' ]
+			);
 			// Re-acquire indicator bar since innerHTML replacement destroyed the old DOM node.
 			this.indicatorBar = this.props.container.querySelector( `.${ INDICATOR_CLASS }` );
 			this.invalidateIndicatorCache();
