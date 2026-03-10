@@ -44,7 +44,8 @@
 		}
 	}
 
-	&-toggle {
+	// Use .citizen-toc .citizen-toc-toggle to beat Codex .cdx-button specificity
+	.citizen-toc-toggle {
 		display: none;
 		padding: 0;
 	}
@@ -93,8 +94,8 @@
 	}
 }
 
-// Collapse ToC sections by default, excluding no-js
-.client-js .citizen-toc {
+// Collapse ToC sections when enabled via CitizenTableOfContentsCollapseAtCount, excluding no-js
+.client-js .citizen-toc--collapse-enabled {
 	.citizen-toc-level-1 .citizen-toc-list-item {
 		display: none;
 	}
