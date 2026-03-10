@@ -24,7 +24,7 @@ $wgExtractsExtendRestSearch = true;
 
 ### [ShortDescription](https://www.mediawiki.org/wiki/Extension:ShortDescription)
 
-Displays a short description under the page title.
+Displays a short description under the page title and in command palette results. Takes priority over TextExtracts when set.
 
 ### [MediaSearch](https://www.mediawiki.org/wiki/Extension:MediaSearch)
 
