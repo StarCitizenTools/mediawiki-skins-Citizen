@@ -91,6 +91,10 @@ To prefill the search query (for example, to search only templates):
 <div class="citizen-search-trigger" data-citizen-search-prefill="Template:">Click me to search templates</div>
 ```
 
+## Performance mode
+
+Performance mode strips back animations and visual effects so the skin stays smooth on low-end hardware. Learn how it works and how to hook into it in the [performance mode documentation](./performance-mode).
+
 ## Dark mode support
 
 Some images, especially black text or icons, might not be visible in dark mode. You can invert their colors using the `--filter-invert` variable.

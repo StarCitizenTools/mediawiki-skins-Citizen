@@ -84,6 +84,10 @@ export default defineConfig( {
 								link: '/customization/command-palette',
 							},
 							{
+								text: 'Performance mode',
+								link: '/customization/performance-mode',
+							},
+							{
 								text: 'Preferences',
 								link: '/customization/preferences',
 							},
