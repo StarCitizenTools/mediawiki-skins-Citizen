@@ -24,6 +24,7 @@ jobs:
   changes:
     name: 🤔 Detect changes
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     outputs:
       php: ${{ steps.filter.outputs.php_any_changed }}
       script: ${{ steps.filter.outputs.script_any_changed }}
@@ -51,6 +52,7 @@ jobs:
               - package.json
               - package-lock.json
               - .eslintrc.json
+              - .github/workflows/ci.yml
             stylesheet:
               - resources/**/*.css
               - resources/**/*.less
@@ -58,310 +60,63 @@ jobs:
               - skinStyles/**/*.less
               - package.json
               - package-lock.json
+              - .github/workflows/ci.yml
             i18n:
               - i18n/*.json
               - package.json
               - package-lock.json
+              - .github/workflows/ci.yml
             markdown:
               - '*.md'
               - .markdownlint.json
+              - .github/workflows/ci.yml
 
   lint:
-    name: 🩹 Lint
     needs: changes
-    timeout-minutes: 10
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0 # OR "2" -> To retrieve the preceding commit.
-
-      - name: Setup Node
-        if: needs.changes.outputs.script == 'true' || needs.changes.outputs.stylesheet == 'true' || needs.changes.outputs.i18n == 'true' || needs.changes.outputs.markdown == 'true'
-        uses: actions/setup-node@v6
-        with:
-          cache: npm
-
-      - name: Install PHP dependencies
-        if: needs.changes.outputs.php == 'true'
-        run: |
-          composer validate
-          composer install --prefer-dist --no-progress
-
-      - name: Install Node dependencies
-        if: needs.changes.outputs.script == 'true' || needs.changes.outputs.stylesheet == 'true' || needs.changes.outputs.i18n == 'true' || needs.changes.outputs.markdown == 'true'
-        run: npm ci
-
-      - name: Lint PHP
-        if: needs.changes.outputs.php == 'true'
-        run: |
-          composer test
-
-      - name: Lint script
-        if: needs.changes.outputs.script == 'true'
-        run: |
-          npm run lint:js
-
-      - name: Lint stylesheet
-        if: needs.changes.outputs.stylesheet == 'true'
-        run: |
-          npm run lint:styles
-
-      - name: Lint i18n
-        if: needs.changes.outputs.i18n == 'true'
-        run: |
-          npm run lint:i18n
-
-      - name: Lint markdown
-        if: needs.changes.outputs.markdown == 'true'
-        run: |
-          npm run lint:md
+    if: >-
+      needs.changes.outputs.php == 'true' ||
+      needs.changes.outputs.script == 'true' ||
+      needs.changes.outputs.stylesheet == 'true' ||
+      needs.changes.outputs.i18n == 'true' ||
+      needs.changes.outputs.markdown == 'true' ||
+      github.event_name == 'schedule'
+    uses: StarCitizenTools/mediawiki-ci-workflows/.github/workflows/lint.yml@main
+    with:
+      lint-php: ${{ needs.changes.outputs.php == 'true' || github.event_name == 'schedule' }}
+      lint-js: ${{ needs.changes.outputs.script == 'true' || github.event_name == 'schedule' }}
+      lint-styles: ${{ needs.changes.outputs.stylesheet == 'true' || github.event_name == 'schedule' }}
+      lint-i18n: ${{ needs.changes.outputs.i18n == 'true' || github.event_name == 'schedule' }}
+      lint-md: ${{ needs.changes.outputs.markdown == 'true' || github.event_name == 'schedule' }}
 
   analyze-php:
-    name: 🔬 Analyze PHP
     needs: changes
     if: needs.changes.outputs.php == 'true' || github.event_name == 'schedule'
-    timeout-minutes: 15
-    runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: mediawiki
-
-    steps:
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.2
-          extensions: mbstring, intl, ast
-          tools: composer
-
-      - name: Cache MediaWiki
-        id: cache-mediawiki
-        uses: actions/cache@v5
-        with:
-          path: |
-            mediawiki
-            !mediawiki/extensions/
-            !mediawiki/skins/
-            !mediawiki/vendor/
-          key: mw_phan_REL1_43-php8.2-v1
-
-      - name: Cache Composer cache
-        uses: actions/cache@v5
-        with:
-          path: ~/.composer/cache
-          key: composer-phan-php8.2
-
-      - uses: actions/checkout@v6
-        with:
-          path: EarlyCopy
-
-      - name: Download MediaWiki
-        if: steps.cache-mediawiki.outputs.cache-hit != 'true'
-        working-directory: ~
-        run: |
-          wget "https://github.com/wikimedia/mediawiki/archive/refs/heads/REL1_43.tar.gz" -nv
-          tar -zxf REL1_43.tar.gz
-          mv mediawiki-REL1_43 mediawiki
-
-      - name: Install MediaWiki dependencies
-        run: composer install --no-ansi --no-interaction --no-progress
-
-      - uses: actions/checkout@v6
-        with:
-          path: mediawiki/skins/Citizen
-
-      - name: Install Citizen dependencies
-        working-directory: mediawiki/skins/Citizen
-        run: composer install --prefer-dist --no-progress
-
-      - name: Run Phan
-        working-directory: mediawiki/skins/Citizen
-        run: composer phan
+    uses: StarCitizenTools/mediawiki-ci-workflows/.github/workflows/analyze-php.yml@main
+    with:
+      project-type: skin
+      project-name: Citizen
+      skip-cache: ${{ github.event_name == 'schedule' }}
 
   test-js:
-    name: 🧪 Test JS
     needs: changes
     if: needs.changes.outputs.script == 'true' || github.event_name == 'schedule'
-    timeout-minutes: 10
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Setup Node
-        uses: actions/setup-node@v6
-        with:
-          cache: npm
-
-      - name: Install Node dependencies
-        run: npm ci
-
-      - name: Run tests with coverage
-        run: npx vitest run --coverage
-
-      - name: Upload JS coverage
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: js-coverage
-          path: coverage/js/lcov.info
-          retention-days: 1
+    uses: StarCitizenTools/mediawiki-ci-workflows/.github/workflows/test-js.yml@main
 
   test-php:
-    name: "🧪 Test PHP (MW ${{ matrix.mw }}, PHP ${{ matrix.php }})"
     needs: changes
     if: needs.changes.outputs.php == 'true' || github.event_name == 'schedule'
-    continue-on-error: ${{ matrix.experimental }}
-    timeout-minutes: 30
-
-    strategy:
-      matrix:
-        include:
-          - mw: "REL1_43"
-            php: 8.2
-            coverage: xdebug
-            experimental: false
-          - mw: "REL1_44"
-            php: 8.3
-            coverage: none
-            experimental: false
-          - mw: "REL1_45"
-            php: 8.4
-            coverage: none
-            experimental: false
-          - mw: "master"
-            php: 8.5
-            coverage: none
-            experimental: true
-
-    runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: mediawiki
-
-    steps:
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
-          coverage: ${{ matrix.coverage }}
-          extensions: mbstring, intl
-          tools: composer
-
-      - name: Cache MediaWiki
-        id: cache-mediawiki
-        uses: actions/cache@v5
-        with:
-          path: |
-            mediawiki
-            !mediawiki/extensions/
-            !mediawiki/skins/
-            !mediawiki/vendor/
-            mediawiki/phpunit.xml.dist
-          key: mw_${{ matrix.mw }}-php${{ matrix.php }}-v28
-
-      - name: Cache Composer cache
-        uses: actions/cache@v5
-        with:
-          path: ~/.composer/cache
-          key: composer-php${{ matrix.php }}
-
-      - uses: actions/checkout@v6
-        with:
-          path: EarlyCopy
-
-      - name: Install MediaWiki
-        if: steps.cache-mediawiki.outputs.cache-hit != 'true'
-        working-directory: ~
-        run: bash EarlyCopy/.github/workflows/installWiki.sh ${{ matrix.mw }}
-
-      - uses: actions/checkout@v6
-        with:
-          path: mediawiki/skins/Citizen
-          fetch-depth: 0
-
-      - name: Install dependencies with Composer
-        run: composer update --no-ansi --no-interaction --no-progress
-
-      - name: Run tests with PHPUnit
-        if: ${{ matrix.coverage == 'none' }}
-        run: composer phpunit:entrypoint -- skins/Citizen
-
-      - name: Run tests with PHPUnit with coverage
-        if: ${{ matrix.coverage == 'xdebug' }}
-        run: |
-          composer phpunit:coverage-edit -- skins/Citizen
-          XDEBUG_MODE=coverage composer phpunit -- --testsuite skins --coverage-clover skins/Citizen/coverage/php/coverage.xml skins/Citizen/tests/phpunit --exclude-group Stub
-
-      - name: Upload PHP coverage
-        if: ${{ matrix.coverage == 'xdebug' }}
-        uses: actions/upload-artifact@v7
-        with:
-          name: php-coverage
-          path: mediawiki/skins/Citizen/coverage/php/coverage.xml
-          retention-days: 1
+    uses: StarCitizenTools/mediawiki-ci-workflows/.github/workflows/test-php.yml@main
+    with:
+      project-type: skin
+      project-name: Citizen
+      skip-cache: ${{ github.event_name == 'schedule' }}
 
   sonarqube:
-    name: 📊 SonarQube
     needs: [test-js, test-php]
     if: always() && !failure()
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-
-      - name: Download JS coverage
-        id: js-artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: js-coverage
-          path: coverage/js
-        continue-on-error: true
-
-      - name: Restore cached JS coverage
-        if: steps.js-artifact.outcome != 'success'
-        uses: actions/cache/restore@v5
-        with:
-          path: coverage/js
-          key: coverage-js-
-          restore-keys: coverage-js-
-
-      - name: Cache JS coverage
-        if: steps.js-artifact.outcome == 'success'
-        uses: actions/cache/save@v5
-        with:
-          path: coverage/js
-          key: coverage-js-${{ github.run_id }}
-
-      - name: Download PHP coverage
-        id: php-artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: php-coverage
-          path: coverage/php
-        continue-on-error: true
-
-      - name: Restore cached PHP coverage
-        if: steps.php-artifact.outcome != 'success'
-        uses: actions/cache/restore@v5
-        with:
-          path: coverage/php
-          key: coverage-php-
-          restore-keys: coverage-php-
-
-      - name: Cache PHP coverage
-        if: steps.php-artifact.outcome == 'success'
-        uses: actions/cache/save@v5
-        with:
-          path: coverage/php
-          key: coverage-php-${{ github.run_id }}
-
-      - name: Scan with SonarQube
-        uses: sonarsource/sonarqube-scan-action@v7
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        if: env.SONAR_TOKEN != ''
+    uses: StarCitizenTools/mediawiki-ci-workflows/.github/workflows/sonarqube.yml@main
+    with:
+      has-js-coverage: ${{ needs.test-js.result == 'success' }}
+      has-php-coverage: ${{ needs.test-php.result == 'success' }}
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
