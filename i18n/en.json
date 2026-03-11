@@ -99,6 +99,8 @@
 	"citizen-command-palette-keyhint-enter-open": "Open",
 	"citizen-command-palette-keyhint-enter-search": "Search",
 	"citizen-command-palette-keyhint-navigate": "Navigate",
+	"citizen-command-palette-keyhint-clear": "Clear",
+	"citizen-command-palette-keyhint-close": "Close",
 	"citizen-command-palette-keyhint-exit": "Exit",
 	"citizen-command-palette-keyhint-actions": "Actions",
 	"citizen-command-palette-keyhint-return": "Return",
