@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question
+    url: https://discord.gg/XcKwqyD4sc
+    about: Join our Discord server and ask in #citizen-skin-support.
+  - name: Documentation
+    url: https://starcitizentools.github.io/mediawiki-skins-Citizen/
+    about: Check the documentation for setup guides and configuration options.
