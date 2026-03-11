@@ -1,7 +1,23 @@
 /**
  * Microinteractions for icons
- * TODO: Look into animating the SVG directly
  */
+
+// Inline SVG icon hover: open state shrink
+:is( .citizen-drawer, .citizen-search ) {
+	> .citizen-dropdown-details[ open ] > .citizen-dropdown-summary {
+		> svg {
+			transition: var( --transition-hover );
+			transition-property: transform;
+		}
+
+		@media ( hover: hover ) {
+			&:hover > svg {
+				transform: scale( 0.85 );
+			}
+		}
+	}
+}
+
 :is( a,
 button,
 summary ) {
@@ -65,7 +81,9 @@ summary ) {
 		transition-property: color, transform, opacity;
 	}
 
-	.citizen-header__button {
+	// Override CdxButton color to hide the home icon by default;
+	// .skin-citizen prefix needed to beat .skin-citizen .cdx-button specificity.
+	.skin-citizen & .cdx-button {
 		color: transparent;
 
 		&:hover {

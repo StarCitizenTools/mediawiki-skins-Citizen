@@ -3,9 +3,9 @@
  *
  * SkinStyles for UserProfileV2
  * Module: ext.userProfileV2
- * Version: main c3f308b1
+ * Version: main 4dddf5fe
  *
- * Date: 2025-03-27
+ * Date: 2026-03-03
 */
 
 /* ext.userProfileV2.less */
@@ -13,6 +13,8 @@
 .profile-header-attributes > h1,
 .profile-header-attributes > h2 {
 	font-family: var( --font-family-base ) !important;
+	font-size: var( --font-size-xxx-large );
+	font-weight: var( --font-weight-bold );
 }
 
 .profile-user-group {
@@ -21,7 +23,7 @@
 	color: var( --color-emphasized );
 	/* stylelint-disable-next-line declaration-property-value-disallowed-list */
 	text-transform: capitalize;
-	background: var( --color-surface-3 );
+	background: var( --color-surface-1 );
 	border-radius: var( --border-radius-base );
 }
 
@@ -30,18 +32,18 @@
 }
 
 .external-link.tooltip:hover::after {
-	margin-top: 10px;
-	font-size: var( --font-size-small );
+	font-size: var( --font-size-base );
 	color: var( --color-emphasized );
-	background: var( --color-surface-3 ) !important;
+	background: var( --color-surface-2 );
 	border-radius: var( --border-radius-base );
 }
 
-.profile-externalLinks svg {
+.profile-externalLinks svg,
+.profile-avatar-edit-action svg {
 	filter: var( --filter-invert );
 }
 
-@media screen and ( max-width: 512px ) {
+@media screen and ( max-width: 536px ) {
 	.profile-identitybox {
 		flex-direction: column;
 	}
@@ -50,8 +52,7 @@
 		content: '\2003';
 	}
 
-	ul.profile-header-statistics > li:not( :first-child )::before {
-		margin-left: unset;
-		content: unset;
+	ul.profile-header-statistics > li:not( :first-child ) {
+		margin-left: unset !important;
 	}
 }

@@ -2,24 +2,20 @@
 
 declare( strict_types=1 );
 
-namespace MediaWiki\Skins\Citizen\Integration\Tests;
+namespace MediaWiki\Skins\Citizen\Tests\Integration;
 
-use Exception;
 use MediaWiki\Skins\Citizen\SkinCitizen;
 use MediaWiki\Title\Title;
 use MediaWikiIntegrationTestCase;
 use RequestContext;
 
 /**
- * TODO: Fully test tagline logic
  * @group Citizen
+ * @covers \MediaWiki\Skins\Citizen\SkinCitizen
  */
 class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 
-	/**
-	 * @return SkinCitizen
-	 */
-	private function createSkinInstance() {
+	private function createSkinInstance(): SkinCitizen {
 		return new SkinCitizen(
 			$this->getServiceContainer()->getUserFactory(),
 			$this->getServiceContainer()->getGenderCache(),
@@ -27,7 +23,6 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 			$this->getServiceContainer()->getLanguageConverterFactory(),
 			$this->getServiceContainer()->getLanguageNameUtils(),
 			$this->getServiceContainer()->getPermissionManager(),
-			$this->getServiceContainer()->getExtensionRegistry(),
 			$this->getServiceContainer()->getUserGroupManager(),
 			$this->getServiceContainer()->getUrlUtils(),
 			null,
@@ -37,88 +32,105 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 		);
 	}
 
-	/**
-	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen
-	 * @return void
-	 */
-	public function testConstructor() {
-		$skin = $this->createSkinInstance();
+	public function testThemeColorMetaTag(): void {
+		$this->overrideConfigValues( [
+			'CitizenThemeColor' => '#ffaabb',
+		] );
 
-		$this->assertInstanceOf( SkinCitizen::class, $skin );
+		$skin = $this->createSkinInstance();
+		$out = $skin->getOutput();
+		$skin->initPage( $out );
+
+		$this->assertContains(
+			[ 'theme-color', '#ffaabb' ],
+			$out->getMetaTags()
+		);
 	}
 
-	/**
-	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen
-	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen::buildSkinFeatures
-	 * @covers \MediaWiki\Skins\Citizen\Partials\Metadata
-	 * @covers \MediaWiki\Skins\Citizen\Partials\Theme
-	 * @return void
-	 * @throws Exception
-	 */
-	public function testBuildSkinFeatures() {
+	public function testManifestLinkAddedWhenEnabled(): void {
 		$this->overrideConfigValues( [
-			'CitizenThemeDefault' => 'dark',
-			'CitizenThemeColor' => '#ffaabb',
 			'CitizenEnableManifest' => true,
 		] );
 
 		$skin = $this->createSkinInstance();
-		$title = Title::newFromText( 'TestTitle' );
-		$skin->setRelevantTitle( $title );
-
 		$out = $skin->getOutput();
+		$skin->initPage( $out );
 
-		$this->assertContains( [ 'theme-color', '#ffaabb' ], $out->getMetaTags() );
-		$this->assertContains( [
+		$expected = [
 			'rel' => 'manifest',
-			'href' => $this->getServiceContainer()->getUrlUtils()->expand( wfAppendQuery( wfScript( 'api' ),
-				[ 'action' => 'appmanifest' ] ), PROTO_RELATIVE ),
-			], $out->getLinkTags() );
+			'href' => $this->getServiceContainer()->getUrlUtils()->expand(
+				wfAppendQuery( wfScript( 'api' ), [ 'action' => 'appmanifest' ] ),
+				PROTO_RELATIVE
+			),
+		];
+
+		$this->assertContains( $expected, $out->getLinkTags() );
 	}
 
-	/**
-	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen
-	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen::buildSkinFeatures
-	 * @covers \MediaWiki\Skins\Citizen\Partials\Metadata
-	 * @covers \MediaWiki\Skins\Citizen\Partials\Theme
-	 * @return void
-	 * @throws Exception
-	 */
-	public function testBuildSkinFeaturesNotAddManifest() {
+	public function testManifestLinkNotAddedWhenDisabled(): void {
 		$this->overrideConfigValues( [
 			'CitizenEnableManifest' => false,
 		] );
 
 		$skin = $this->createSkinInstance();
+		$out = $skin->getOutput();
+		$skin->initPage( $out );
 
-		$this->assertSame( [], $skin->getOutput()->getLinkTags() );
+		$this->assertSame( [], $out->getLinkTags() );
 	}
 
-	/**
-	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen
-	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen::buildSkinFeatures
-	 * @return void
-	 * @throws Exception
-	 */
-	public function testBuildSkinFeaturesEnableCjk() {
+	public function testManifestLinkNotAddedOnPrivateWiki(): void {
+		$this->overrideConfigValues( [
+			'CitizenEnableManifest' => true,
+			'GroupPermissions' => [ '*' => [ 'read' => false ] ],
+		] );
+
+		$skin = $this->createSkinInstance();
+		$out = $skin->getOutput();
+		$skin->initPage( $out );
+
+		$this->assertSame( [], $out->getLinkTags() );
+	}
+
+	public function testCjkFontModuleEnabled(): void {
 		$this->overrideConfigValues( [
 			'CitizenEnableCJKFonts' => true,
 		] );
 
 		$skin = $this->createSkinInstance();
 
-		$this->assertArrayHasKey( 'styles', $skin->getOptions() );
-		$this->assertContains( 'skins.citizen.styles.fonts.cjk', $skin->getOptions()['styles'] );
+		$this->assertContains(
+			'skins.citizen.styles.fonts.cjk',
+			$skin->getOptions()['styles']
+		);
 	}
 
-	/**
-	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen
-	 * @covers \MediaWiki\Skins\Citizen\SkinCitizen::buildSkinFeatures
-	 * @return void
-	 * @throws Exception
-	 */
-	public function testBuildSkinFeaturesEnableCollapsibleSections() {
-		$title = Title::newFromText( 'BuildSkinFeaturesEnableCollapsibleSections' );
+	public function testArFontModuleEnabled(): void {
+		$this->overrideConfigValues( [
+			'CitizenEnableARFonts' => true,
+		] );
+
+		$skin = $this->createSkinInstance();
+
+		$this->assertContains(
+			'skins.citizen.styles.fonts.ar',
+			$skin->getOptions()['styles']
+		);
+	}
+
+	public function testSetSkinThemeWithInvalidValue(): void {
+		$this->overrideConfigValues( [
+			'CitizenThemeDefault' => 'invalid-value',
+		] );
+
+		// Should not throw an undefined array key error
+		$skin = $this->createSkinInstance();
+		$attrs = $skin->getHtmlElementAttributes();
+		$this->assertStringNotContainsString( 'skin-theme-clientpref-', $attrs['class'] );
+	}
+
+	public function testCollapsibleSectionsBodyClass(): void {
+		$title = Title::newFromText( 'CollapsibleSectionsTest' );
 		RequestContext::resetMain();
 		RequestContext::getMain()->setTitle( $title );
 
@@ -128,7 +140,9 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 
 		$skin = $this->createSkinInstance();
 
-		$this->assertArrayHasKey( 'bodyClasses', $skin->getOptions() );
-		$this->assertContains( 'citizen-sections-enabled', $skin->getOptions()['bodyClasses'] );
+		$this->assertContains(
+			'citizen-sections-enabled',
+			$skin->getOptions()['bodyClasses']
+		);
 	}
 }

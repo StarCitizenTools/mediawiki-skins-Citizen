@@ -1,0 +1,32 @@
+glob_matcher: doublestar
+
+pre-commit:
+  jobs:
+    - group:
+        parallel: true
+        jobs:
+          - name: js-lint
+            run: npx eslint {staged_files}
+            glob: "**/*.{js,vue}"
+          - name: style-lint
+            run: npx stylelint {staged_files}
+            glob: "**/*.{less,css,vue}"
+          - name: i18n-lint
+            run: npm run lint:i18n
+            glob: "i18n/*.json"
+          - name: md-lint
+            run: npm run lint:md
+            glob: "*.md"
+    - name: test
+      run: npx vitest run
+      glob: "**/*.{js,vue}"
+
+commit-msg:
+  commands:
+    commitlint:
+      run: npx commitlint --edit {1}
+
+prepare-commit-msg:
+  commands:
+    devmoji:
+      run: npx devmoji -e --lint

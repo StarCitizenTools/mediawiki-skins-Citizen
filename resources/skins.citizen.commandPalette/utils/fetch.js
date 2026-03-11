@@ -11,16 +11,6 @@
  */
 
 /**
- * @typedef {Object} NullableAbortController
- * @property {AbortSignal | undefined} signal
- * @property {Function} abort
- */
-const nullAbortController = {
-	signal: undefined,
-	abort: () => {} // Do nothing (no-op)
-};
-
-/**
  * A wrapper which combines native fetch() in browsers and the following json() call.
  *
  * @param {string} resource
@@ -28,14 +18,8 @@ const nullAbortController = {
  * @return {AbortableFetch}
  */
 function fetchJson( resource, init ) {
-	// As of 2020, browser support for AbortController is limited:
-	// https://caniuse.com/abortcontroller
-	// so replacing it with no-op if it doesn't exist.
-	/* eslint-disable compat/compat */
-	const controller = window.AbortController ?
-		new AbortController() :
-		nullAbortController;
-	/* eslint-enable compat/compat */
+	// eslint-disable-next-line compat/compat -- MW 1.43+ targets modern browsers
+	const controller = new AbortController();
 
 	const getJson = fetch( resource, Object.assign( {}, init, {
 		signal: controller.signal

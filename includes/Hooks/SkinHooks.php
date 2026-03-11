@@ -12,7 +12,6 @@ use MediaWiki\Output\OutputPage;
 use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\ResourceLoader as RL;
 use MediaWiki\Skin\SkinComponentUtils;
-use MediaWiki\Skins\Citizen\GetConfigTrait;
 use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;
 use Skin;
 use SkinTemplate;
@@ -27,7 +26,7 @@ class SkinHooks implements
 	SkinBuildSidebarHook,
 	SkinPageReadyConfigHook
 {
-	use GetConfigTrait;
+	private static ?string $inlineScript = null;
 
 	/**
 	 * Adds the inline theme switcher script to the page
@@ -41,11 +40,14 @@ class SkinHooks implements
 			return;
 		}
 
-		if ( $this->getConfigValue( 'CitizenEnablePreferences', $out ) === true ) {
-			$script = file_get_contents( MW_INSTALL_PATH . '/skins/Citizen/resources/skins.citizen.scripts/inline.js' );
-			$script = Html::inlineScript( $script );
-			$script = RL\ResourceLoader::filter( 'minify-js', $script );
-			$out->addHeadItem( 'skin.citizen.inline', $script );
+		if ( $out->getConfig()->get( 'CitizenEnablePreferences' ) === true ) {
+			self::$inlineScript ??= Html::inlineScript(
+				RL\ResourceLoader::filter(
+					'minify-js',
+					file_get_contents( MW_INSTALL_PATH . '/skins/Citizen/resources/skins.citizen.scripts/inline.js' )
+				)
+			);
+			$out->addHeadItem( 'skin.citizen.inline', self::$inlineScript );
 		}
 	}
 
@@ -138,9 +140,9 @@ class SkinHooks implements
 
 	private function addSiteTools( Skin $skin, array &$bar ): void {
 		$out = $skin->getOutput();
-		$customSiteToolsMenuId = $this->getConfigValue( 'CitizenGlobalToolsPortlet', $out );
+		$customSiteToolsMenuId = $out->getConfig()->get( 'CitizenGlobalToolsPortlet' );
 
-		$siteToolsMenuId = empty( $customSiteToolsMenuId )
+		$siteToolsMenuId = $customSiteToolsMenuId === ''
 			? array_key_first( $bar )
 			// remove initial p- for backward compatibility
 			: preg_replace( '/^p-/', '', $customSiteToolsMenuId );
@@ -156,7 +158,7 @@ class SkinHooks implements
 			];
 		}
 
-		if ( !isset( $bar[$siteToolsMenuId]['upload'] ) && $this->getConfigValue( 'EnableUploads', $out ) === true ) {
+		if ( !isset( $bar[$siteToolsMenuId]['upload'] ) && $out->getConfig()->get( 'EnableUploads' ) === true ) {
 			$isUploadWizardEnabled = ExtensionRegistry::getInstance()->isLoaded( 'Upload Wizard' );
 			$bar[$siteToolsMenuId][] = [
 				'text'  => $skin->msg( 'upload' ),
@@ -282,6 +284,7 @@ class SkinHooks implements
 
 		self::mapIconsToMenuItems( $links, 'associated-pages', $iconMap );
 		self::addIconsToMenuItems( $links, 'associated-pages' );
+		self::addButtonClassesToMenuItems( $links, 'associated-pages' );
 	}
 
 	/**
@@ -349,9 +352,14 @@ class SkinHooks implements
 			if ( $icon ) {
 				$linkClass = $item['link-class'] ?? [];
 				$newLinkClass = [
-					// Allows Echo to react to clicks
 					'citizen-echo-notification-badge',
-					'citizen-header__button',
+					'cdx-button',
+					'cdx-button--fake-button',
+					'cdx-button--fake-button--enabled',
+					'cdx-button--icon-only',
+					'cdx-button--weight-quiet',
+					'citizen-cdx-button--size-large',
+					// Allows Echo to react to clicks
 					'mw-echo-notification-badge-nojs'
 				];
 				if ( in_array( 'mw-echo-unseen-notifications', $linkClass ) ) {
@@ -430,6 +438,14 @@ class SkinHooks implements
 
 		self::mapIconsToMenuItems( $links, 'views', $iconMap );
 		self::addIconsToMenuItems( $links, 'views' );
+		self::addButtonClassesToMenuItems( $links, 'views' );
+
+		// Make edit buttons progressive primary instead of quiet
+		foreach ( [ 'edit', 've-edit' ] as $key ) {
+			if ( isset( $links['views'][$key] ) ) {
+				self::setProgressiveAction( $links['views'][$key]['link-class'] );
+			}
+		}
 	}
 
 	/**
@@ -439,6 +455,25 @@ class SkinHooks implements
 		foreach ( $map as $key => $icon ) {
 			if ( isset( $links[$menu][$key] ) ) {
 				$links[$menu][$key]['icon'] ??= $icon;
+			}
+		}
+	}
+
+	/**
+	 * Add Codex button classes to menu items
+	 */
+	private static function addButtonClassesToMenuItems( array &$links, string $menu ): void {
+		$buttonClasses = [
+			'citizen-cdx-button--size-large',
+			'cdx-button',
+			'cdx-button--fake-button',
+			'cdx-button--fake-button--enabled',
+			'cdx-button--weight-quiet',
+		];
+
+		foreach ( $links[$menu] as &$item ) {
+			if ( is_array( $item ) ) {
+				self::appendClassToItem( $item['link-class'], $buttonClasses );
 			}
 		}
 	}
@@ -469,13 +504,25 @@ class SkinHooks implements
 	}
 
 	/**
+	 * Promote a menu item from quiet to progressive primary
+	 */
+	private static function setProgressiveAction( array|string|null &$linkClass ): void {
+		if ( is_array( $linkClass ) ) {
+			$linkClass = array_values( array_diff( $linkClass, [ 'cdx-button--weight-quiet' ] ) );
+		} elseif ( is_string( $linkClass ) ) {
+			$linkClass = trim( str_replace( 'cdx-button--weight-quiet', '', $linkClass ) );
+		}
+		self::appendClassToItem( $linkClass, [
+			'cdx-button--weight-primary',
+			'cdx-button--action-progressive',
+		] );
+	}
+
+	/**
 	 * Adds class to a property
 	 * Based on Vector
-	 *
-	 * @param array|string &$item to update
-	 * @param array|string $classes to add to the item
 	 */
-	private static function appendClassToItem( mixed &$item, mixed $classes ): void {
+	private static function appendClassToItem( array|string|null &$item, array|string $classes ): void {
 		$existingClasses = $item;
 
 		if ( is_array( $existingClasses ) ) {

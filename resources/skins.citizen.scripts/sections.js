@@ -1,41 +1,48 @@
 /**
- * Set up functionality of collapsable sections
- *
- * @param {HTMLElement} bodyContent
- * @return {void}
+ * @param {Object} deps
+ * @param {Document} deps.document
+ * @param {HTMLElement} deps.bodyContent
+ * @return {Object}
  */
-function init( bodyContent ) {
-	if ( !document.body.classList.contains( 'citizen-sections-enabled' ) ) {
-		return;
-	}
-
-	const onEditSectionClick = ( e ) => {
-		e.stopPropagation();
-	};
-
-	const handleClick = ( e ) => {
-		const target = e.target;
-		const isEditSection = target.closest( '.mw-editsection, .mw-editsection-like' );
-
-		if ( isEditSection ) {
-			onEditSectionClick( e );
+function createSections( { document, bodyContent } ) {
+	/**
+	 * Set up functionality of collapsable sections
+	 *
+	 * @return {void}
+	 */
+	function init() {
+		if ( !document.body.classList.contains( 'citizen-sections-enabled' ) ) {
 			return;
 		}
 
-		const heading = target.closest( '.citizen-section-heading' );
+		const onEditSectionClick = ( e ) => {
+			e.stopPropagation();
+		};
 
-		if ( heading && heading.nextElementSibling && heading.nextElementSibling.classList.contains( 'citizen-section' ) ) {
-			const section = heading.nextElementSibling;
+		const handleClick = ( e ) => {
+			const target = e.target;
+			const isEditSection = target.closest( '.mw-editsection, .mw-editsection-like' );
 
-			if ( section ) {
-				section.hidden = section.hidden ? false : 'until-found';
+			if ( isEditSection ) {
+				onEditSectionClick( e );
+				return;
 			}
-		}
-	};
 
-	bodyContent.addEventListener( 'click', handleClick, false );
+			const heading = target.closest( '.citizen-section-heading' );
+
+			if ( heading && heading.nextElementSibling && heading.nextElementSibling.classList.contains( 'citizen-section' ) ) {
+				const section = heading.nextElementSibling;
+
+				if ( section ) {
+					section.hidden = section.hidden ? false : 'until-found';
+				}
+			}
+		};
+
+		bodyContent.addEventListener( 'click', handleClick, false );
+	}
+
+	return { init };
 }
 
-module.exports = {
-	init: init
-};
+module.exports = { createSections };

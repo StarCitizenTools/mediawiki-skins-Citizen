@@ -26,17 +26,13 @@
 	"citizen-footer-tagline": "Осы мәтінді [[MediaWiki:Citizen-footer-tagline]] деген бетте өңдеңіз",
 	"citizen-action-addsection": "Тақырып қосу",
 	"citizen-jumptotop": "Жоғары қайту",
-	"citizen-search-fulltext": "\"$1\" бар беттерді іздеу",
-	"citizen-search-mediasearch": "\"$1\" дегенге қатысты медиа іздеу",
 	"citizen-search-empty-desc": "Іздей бастау үшін теріңіз",
 	"citizen-search-noresults-title": "Ойбай! \"$1\" дегенге еш нәтиже таппадық",
-	"citizen-search-noresults-desc": "Мына нұсқаларды қарап көрерсіз?",
 	"citizen-tagline-ns-talk": "{{SUBJECTPAGENAME}} дегеннің талқылау беті",
 	"citizen-tagline-ns-project": "{{SITENAME}} туралы мәлімет",
 	"citizen-tagline-ns-file": "{{SITENAME}} жобасындағы файл",
 	"citizen-tagline-ns-mediawiki": "MediaWiki интерфейс беті",
 	"citizen-tagline-ns-template": "Үлгі беті",
 	"citizen-tagline-ns-help": "Анықтама беті",
-	"citizen-tagline-ns-category": "Санат беті",
-	"citizen-theme-exclusion-notice": "Бұл бет үнемі жарық күйде көрінеді"
+	"citizen-tagline-ns-category": "Санат беті"
 }

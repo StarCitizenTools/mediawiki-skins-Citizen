@@ -27,9 +27,9 @@ class ApiWebappManifest extends ApiBase {
 	/* 1 week */
 	private const CACHE_MAX_AGE = 604800;
 
-	private Config $config;
+	private readonly Config $config;
 
-	private array $options;
+	private readonly array $options;
 
 	public function __construct(
 		private readonly ApiMain $main,
@@ -136,20 +136,22 @@ class ApiWebappManifest extends ApiBase {
 				$request = $httpRequestFactory->create( $logoUrl, [], __METHOD__ );
 				$request->execute();
 				$logoContent = $request->getContent();
-			} catch ( Exception $e ) {
+			} catch ( Exception ) {
 				// Log the exception or handle it accordingly
 				$logoContent = '';
 			}
 
 			if ( $logoContent !== '' ) {
 				$logoSize = getimagesizefromstring( $logoContent );
+			} else {
+				$logoSize = false;
 			}
 
 			$icon = [
 				'src' => $logoPath
 			];
 
-			if ( isset( $logoSize ) && $logoSize !== false ) {
+			if ( $logoSize !== false ) {
 				$icon['sizes'] = $logoSize[0] . 'x' . $logoSize[1];
 				$icon['type'] = $logoSize['mime'];
 			}

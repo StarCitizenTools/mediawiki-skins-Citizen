@@ -1,5 +1,5 @@
 {{#data-toc}}
-<div id="citizen-toc" class="citizen-toc citizen-dropdown">
+<div id="citizen-toc" class="citizen-toc citizen-dropdown{{#citizen-is-collapse-sections-enabled}} citizen-toc--collapse-enabled{{/citizen-is-collapse-sections-enabled}}">
 	<details class="citizen-dropdown-details">
 		<summary
 			class="citizen-dropdown-summary" 
@@ -11,7 +11,7 @@
 	</details>
 	<nav id="mw-panel-toc" class="citizen-toc-card citizen-menu__card" role="navigation" aria-labelledby="mw-panel-toc-label">
 		<div class="citizen-menu__card-content">
-			<a class="citizen-toc-top citizen-toc-link" title="{{html-citizen-jumptotop}}" href="#top" role="button">
+			<a class="citizen-toc-top citizen-toc-link cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet" title="{{html-citizen-jumptotop}}" href="#top" role="button">
 				<div class="citizen-ui-icon mw-ui-icon-wikimedia-arrowUp"></div>
 				<div class="citizen-toc-text">{{msg-citizen-jumptotop}}</div>
 			</a>

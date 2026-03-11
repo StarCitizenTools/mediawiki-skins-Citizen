@@ -1,15 +1,17 @@
 /**
- * Create an observer for showing/hiding feature and for firing scroll event hooks.
+ * Create a resize observer with start/end lifecycle callbacks.
  *
- * @param {Function} onResize functionality for when the element during resize
- * @param {Function} onResizeStart functionality for when the element at the start of resize
- * @param {Function} onResizeEnd functionality for when the element at the end of resize
+ * @param {Object} deps
+ * @param {typeof ResizeObserver} deps.ResizeObserver
+ * @param {Function} deps.onResize - Called on every resize entry.
+ * @param {Function} [deps.onResizeStart] - Called once when resizing begins.
+ * @param {Function} [deps.onResizeEnd] - Called once when resizing settles (after 250ms).
  * @return {ResizeObserver}
  */
-function initResizeObserver( onResize, onResizeStart, onResizeEnd ) {
+function createResizeObserver( { ResizeObserver, onResize, onResizeStart, onResizeEnd } ) {
 	let resizeStarted = false;
+	let resizeEndTimer;
 
-	/* eslint-disable-next-line compat/compat */
 	return new ResizeObserver( ( entries ) => {
 		if ( onResizeStart && !resizeStarted ) {
 			onResizeStart( entries[ 0 ] );
@@ -19,8 +21,8 @@ function initResizeObserver( onResize, onResizeStart, onResizeEnd ) {
 		onResize( entries[ 0 ] );
 
 		if ( onResizeEnd ) {
-			clearTimeout( window.resizedFinished );
-			window.resizedFinished = setTimeout( () => {
+			clearTimeout( resizeEndTimer );
+			resizeEndTimer = setTimeout( () => {
 				onResizeEnd( entries[ 0 ] );
 				resizeStarted = false;
 			}, 250 );
@@ -29,5 +31,5 @@ function initResizeObserver( onResize, onResizeStart, onResizeEnd ) {
 }
 
 module.exports = {
-	initResizeObserver
+	createResizeObserver
 };

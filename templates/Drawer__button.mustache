@@ -1,14 +1,10 @@
- {{!
+{{!
 	string msg-citizen-drawer-toggle The label used by the drawer button.
 }}
 <summary
-	class="citizen-dropdown-summary" 
+	class="citizen-dropdown-summary citizen-cdx-button--size-large cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--icon-only cdx-button--weight-quiet"
 	title="{{msg-citizen-drawer-toggle}}"
 	aria-details="citizen-drawer__card">
-	<span class="citizen-ui-icon">
-		<span></span>
-		<span></span>
-		<span></span>
-	</span>
+	{{>Icon__menu}}
 	<span>{{msg-citizen-drawer-toggle}}</span>
 </summary>

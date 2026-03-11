@@ -1,19 +1,19 @@
 {{!
 	string msg-citizen-preferences-toggle The label used by the preferences button.
 }}
-<div class="citizen-preferences citizen-header__item citizen-dropdown">
+<div class="citizen-preferences-dropdown citizen-header__item citizen-dropdown">
 	<details id="citizen-preferences-details" class="citizen-dropdown-details">
 		<summary
-			class="citizen-dropdown-summary" 
+			class="citizen-dropdown-summary citizen-cdx-button--size-large cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only"
 			title="{{msg-citizen-preferences-toggle}}"
-			aria-details="citizen-preferences__card">
+			aria-details="citizen-preferences-dropdown__card">
 			<span class="citizen-ui-icon mw-ui-icon-wikimedia-configure"></span>
 			<span>{{msg-citizen-preferences-toggle}}</span>
 		</summary>
 	</details>
-	<div id="citizen-preferences__card" class="citizen-menu__card">
+	<div id="citizen-preferences-dropdown__card" class="citizen-menu__card">
 		<div class="citizen-menu__card-content">
-			<div id="citizen-preferences-content" class="citizen-preferences-content"></div>
+			<div id="citizen-preferences-content" class="citizen-preferences"></div>
 		</div>
 	</div>
 </div>

@@ -92,12 +92,11 @@ class CitizenComponentPageHeading implements CitizenComponent {
 	 */
 	private function buildGenderTagline( User $user ): string {
 		$gender = $this->genderCache->getGenderOf( $user, __METHOD__ );
-		$msgGender = '';
-		if ( $gender === 'male' ) {
-			$msgGender = '♂';
-		} elseif ( $gender === 'female' ) {
-			$msgGender = '♀';
-		}
+		$msgGender = match ( $gender ) {
+			'male' => '♂',
+			'female' => '♀',
+			default => '',
+		};
 
 		if ( $msgGender ) {
 			return Html::rawElement(
@@ -126,7 +125,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 		$msgEditCount = $this->localizer->msg( 'usereditcount' )
 			->numParams( number_format( (float)$editCount, 0 ) )
 			->text();
-		$editCountHref = SkinComponentUtils::makeSpecialUrlSubpage( 'Contributions', $user );
+		$editCountHref = SkinComponentUtils::makeSpecialUrlSubpage( 'Contributions', $user->getName() );
 		$link = Html::element( 'a', [ 'href' => $editCountHref ], $msgEditCount );
 
 		return Html::rawElement(
@@ -233,7 +232,7 @@ class CitizenComponentPageHeading implements CitizenComponent {
 			return false;
 		}
 
-		// @phan-suppress-next-line PhanTypeMismatchArgument
+		// @phan-suppress-next-line PhanTypeMismatchArgument NS constants from SocialProfile extension
 		if ( !$this->title->inNamespaces( [ NS_USER_WIKI, NS_USER_PROFILE ] ) ) {
 			return false;
 		}

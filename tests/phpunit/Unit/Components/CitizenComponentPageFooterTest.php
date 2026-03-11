@@ -2,7 +2,7 @@
 
 declare( strict_types=1 );
 
-namespace MediaWiki\Skins\Citizen\Tests\Components;
+namespace MediaWiki\Skins\Citizen\Tests\Unit\Components;
 
 use MediaWiki\Message\Message;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentPageFooter;

@@ -8,26 +8,23 @@ const
 	DROPDOWN_SUMMARY_SELECTOR = '.citizen-dropdown-summary',
 	DROPDOWN_TARGET_SELECTOR = '.citizen-menu__card';
 
-const isPointerDevice = window.matchMedia( '(hover: hover) and (pointer: fine)' ).matches;
-
 /**
  * Represents a Dropdown menu with enhanced functionality.
- * This class handles the behavior of a dropdown menu,
- * including dismissing the menu when clicking outside,
+ * Handles dismissing the menu when clicking outside,
  * pressing the ESCAPE key, losing focus, or clicking on links.
- * It provides methods to bind and unbind event listeners for different actions.
- * The 'init' method initializes the dropdown menu by adding necessary event listeners.
- *
- * @class
  */
 class Dropdown {
-	constructor( details, summary, target ) {
+	constructor( { details, summary, target, window, document, isPointerDevice } ) {
 		this.details = details;
 		this.summary = summary;
 		this.target = target;
+		this.window = window;
+		this.document = document;
+		this.isPointerDevice = isPointerDevice;
 		this.dismissOnEscape = this.dismissOnEscape.bind( this );
 		this.dismissIfExternalEventTarget = this.dismissIfExternalEventTarget.bind( this );
 		this.dismissOnLinkClick = this.dismissOnLinkClick.bind( this );
+		this.dismissOnBeforeUnload = this.dismiss.bind( this );
 		this.onDetailsToggle = this.onDetailsToggle.bind( this );
 	}
 
@@ -49,7 +46,7 @@ class Dropdown {
 	}
 
 	/**
-	 * Dismiss the target when event is outside the target and summary
+	 * Dismiss the target when event is outside the target and summary.
 	 *
 	 * @param {Event} event
 	 */
@@ -60,7 +57,7 @@ class Dropdown {
 	}
 
 	/**
-	 * Dismiss the target on clicks to links and link children elements
+	 * Dismiss the target on clicks to links and link children elements.
 	 *
 	 * @param {Event} event
 	 */
@@ -76,10 +73,10 @@ class Dropdown {
 	 */
 	unbind() {
 		this.target.removeEventListener( 'click', this.dismissOnLinkClick );
-		window.removeEventListener( 'mousedown', this.dismissIfExternalEventTarget );
-		window.removeEventListener( 'touchstart', this.dismissIfExternalEventTarget );
-		window.removeEventListener( 'focusin', this.dismissIfExternalEventTarget );
-		window.removeEventListener( 'keyup', this.dismissOnEscape );
+		this.window.removeEventListener( 'mousedown', this.dismissIfExternalEventTarget );
+		this.window.removeEventListener( 'touchstart', this.dismissIfExternalEventTarget );
+		this.window.removeEventListener( 'focusin', this.dismissIfExternalEventTarget );
+		this.window.removeEventListener( 'keyup', this.dismissOnEscape );
 	}
 
 	/**
@@ -87,10 +84,10 @@ class Dropdown {
 	 */
 	bind() {
 		this.target.addEventListener( 'click', this.dismissOnLinkClick );
-		window.addEventListener( 'mousedown', this.dismissIfExternalEventTarget );
-		window.addEventListener( 'touchstart', this.dismissIfExternalEventTarget, { passive: true } );
-		window.addEventListener( 'focusin', this.dismissIfExternalEventTarget );
-		window.addEventListener( 'keyup', this.dismissOnEscape );
+		this.window.addEventListener( 'mousedown', this.dismissIfExternalEventTarget );
+		this.window.addEventListener( 'touchstart', this.dismissIfExternalEventTarget, { passive: true } );
+		this.window.addEventListener( 'focusin', this.dismissIfExternalEventTarget );
+		this.window.addEventListener( 'keyup', this.dismissOnEscape );
 	}
 
 	onDetailsToggle() {
@@ -102,17 +99,24 @@ class Dropdown {
 	}
 
 	addKeyhint() {
-		if ( !isPointerDevice ) {
+		if ( !this.isPointerDevice ) {
+			return;
+		}
+		if (
+			!this.window.jQuery ||
+			!this.window.jQuery.fn.updateTooltipAccessKeys ||
+			!this.window.jQuery.fn.updateTooltipAccessKeys.getAccessKeyPrefix
+		) {
 			return;
 		}
 
 		const links = this.target.querySelectorAll( '.mw-list-item > a[accesskey]' );
 		links.forEach( ( link ) => {
-			const keyhintText = window.jQuery.fn.updateTooltipAccessKeys.getAccessKeyPrefix() + link.getAttribute( 'accesskey' );
+			const keyhintText = this.window.jQuery.fn.updateTooltipAccessKeys.getAccessKeyPrefix() + link.getAttribute( 'accesskey' );
 			if ( !keyhintText ) {
 				return;
 			}
-			const keyhint = document.createElement( 'kbd' );
+			const keyhint = this.document.createElement( 'kbd' );
 			keyhint.classList.add( 'citizen-keyboard-hint-key' );
 			keyhint.innerText = keyhintText
 				.replace( /-/g, ' ' )
@@ -127,28 +131,35 @@ class Dropdown {
 		this.details.addEventListener( 'toggle', this.onDetailsToggle );
 		// T295085: Close all dropdown menus when page is unloaded to prevent them
 		// from being open when navigating back to a page.
-		window.addEventListener( 'beforeunload', this.dismiss.bind( this ) );
+		this.window.addEventListener( 'beforeunload', this.dismissOnBeforeUnload );
 		this.addKeyhint();
 	}
 }
 
-function init() {
+/**
+ * @param {Object} params
+ * @param {Document} params.document
+ * @param {Window} params.window
+ */
+function init( { document, window } ) {
+	const isPointerDevice = window.matchMedia( '(hover: hover) and (pointer: fine)' ).matches;
 	const dropdowns = document.querySelectorAll( DROPDOWN_CONTAINER_SELECTOR );
 
-	dropdowns.forEach( ( dropdown ) => {
+	dropdowns.forEach( ( container ) => {
 		const
-			details = dropdown.querySelector( DROPDOWN_DETAILS_SELECTOR ),
-			summary = dropdown.querySelector( DROPDOWN_SUMMARY_SELECTOR ),
-			target = dropdown.querySelector( DROPDOWN_TARGET_SELECTOR );
+			details = container.querySelector( DROPDOWN_DETAILS_SELECTOR ),
+			summary = container.querySelector( DROPDOWN_SUMMARY_SELECTOR ),
+			target = container.querySelector( DROPDOWN_TARGET_SELECTOR );
 
 		if ( !( details && summary && target ) ) {
 			return;
 		}
 
-		new Dropdown( details, summary, target ).init();
+		new Dropdown( { details, summary, target, window, document, isPointerDevice } ).init();
 	} );
 }
 
 module.exports = {
-	init: init
+	init,
+	Dropdown
 };

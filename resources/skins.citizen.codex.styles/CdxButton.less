@@ -1,3 +1,19 @@
+@import '../variables.less';
+
+// Citizen's large button size override for Codex buttons (40px)
+.citizen-cdx-button--size-large {
+	&.cdx-button {
+		min-height: 40px;
+	}
+
+	&.cdx-button--icon-only {
+		display: grid;
+		place-items: center;
+		min-width: 40px;
+		padding: 0;
+	}
+}
+
 .skin-citizen {
 	.cdx-button {
 		font-weight: var( --font-weight-medium );
@@ -8,6 +24,25 @@
 			// Citizen already handles the quiet button hover color,
 			// and the multiply blend mode has issue with gradient backgrounds.
 			--mix-blend-mode-blend: normal;
+		}
+
+		// Use focus-visible instead of focus for more subtle appearance
+		// The default Codex focus style is too explicit and can be distracting
+		// Now we are only keeping the default focus styles for keyboard navigation
+		&:enabled,
+		&.cdx-button--fake-button--enabled {
+			&:not( :active ):not( .cdx-button--is-active ) {
+				&:focus {
+					border-color: transparent;
+					box-shadow: none;
+				}
+
+				&:focus-visible {
+					outline: @outline-base--focus;
+					border-color: var( --border-color-progressive--focus );
+					box-shadow: @box-shadow-inset-small var( --color-progressive );
+				}
+			}
 		}
 	}
 }

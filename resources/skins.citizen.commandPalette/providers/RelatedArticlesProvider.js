@@ -1,132 +1,92 @@
-const { CommandPaletteItem, CommandPaletteProvider, CommandPaletteActionResult } = require( '../types.js' );
+const createProvider = require( './createProvider.js' );
 const { cdxIconArticle } = require( '../icons.json' );
 const { getNavigationAction } = require( '../utils/providerActions.js' );
 
-// Cache variables
-let cachedResults = null;
-let fetchPromise = null;
-let cachedArticleId = null;
-
 /**
- * Placeholder provider for related articles shown when the query is empty.
+ * Creates a related articles provider.
  *
- * @implements {CommandPaletteProvider}
+ * @param {Object} loader The mw.loader object.
+ * @return {Object} A validated provider.
  */
-const RelatedArticlesProvider = {
-	id: 'related',
-	// Assuming this message key will be added to i18n/en.json etc.
-	label: mw.message( 'citizen-command-palette-heading-related' ).text(),
-	keepStaleResultsOnQueryChange: false,
+function createRelatedArticlesProvider( loader ) {
+	let cachedResults = null;
+	let fetchPromise = null;
+	let cachedArticleId = null;
 
-	/**
-	 * Determines if this provider can supply results for the given query.
-	 * Only provides results when the query is empty.
-	 *
-	 * @param {string} query The search query.
-	 * @return {boolean}
-	 */
-	canProvide( query ) {
-		return !query;
-	},
+	return createProvider( 'related', {
+		canProvide( query ) {
+			return !query;
+		},
 
-	/**
-	 * Gets the placeholder related article results.
-	 *
-	 * @param {string} query The search query (unused here).
-	 * @return {Promise<Array<CommandPaletteItem>>}
-	 */
-	async getResults() {
-		const currentArticleId = mw.config.get( 'wgArticleId' );
+		async getResults() {
+			const currentArticleId = mw.config.get( 'wgArticleId' );
 
-		// Return cached results if available and for the current article
-		if ( cachedResults !== null && cachedArticleId === currentArticleId ) {
-			return cachedResults;
-		}
+			if ( cachedResults !== null && cachedArticleId === currentArticleId ) {
+				return { items: cachedResults };
+			}
 
-		// Return existing promise if a fetch is already in progress for the current article
-		if ( fetchPromise !== null && cachedArticleId === currentArticleId ) {
-			return fetchPromise;
-		}
+			if ( fetchPromise !== null && cachedArticleId === currentArticleId ) {
+				return fetchPromise;
+			}
 
-		// If cache is invalid or for a different article, reset (promise/results cleared below)
-		if ( cachedArticleId !== currentArticleId ) {
-			cachedResults = null;
-			fetchPromise = null;
-			// Let the new fetch proceed, cachedArticleId will be set
-		}
+			if ( cachedArticleId !== currentArticleId ) {
+				cachedResults = null;
+				fetchPromise = null;
+			}
 
-		// Start a new fetch
-		// Store the article ID for which the fetch is initiated
-		cachedArticleId = currentArticleId;
-		fetchPromise = new Promise( ( resolve ) => {
-			const onSuccess = async ( require ) => {
-				try {
-					const gateway = require( 'ext.relatedArticles.readMore' ).test.relatedPages;
-					const relatedPages = await gateway.getForCurrentPage( 3 );
+			cachedArticleId = currentArticleId;
+			fetchPromise = new Promise( ( resolve ) => {
+				const onSuccess = async ( require ) => {
+					try {
+						const gateway = require( 'ext.relatedArticles.readMore' ).test.relatedPages;
+						const relatedPages = await gateway.getForCurrentPage( 3 );
 
-					if ( relatedPages.length === 0 ) {
-						resolve( [] );
-						return;
+						if ( relatedPages.length === 0 ) {
+							resolve( { items: [] } );
+							return;
+						}
+
+						const results = relatedPages.map( ( page ) => ( {
+							id: page.pageid,
+							label: page.title,
+							description: page.description || page.extract,
+							type: 'page',
+							url: mw.util.getUrl( page.title ),
+							thumbnail: page.thumbnail ? { url: page.thumbnail.source } : null,
+							thumbnailIcon: cdxIconArticle,
+							actions: [],
+							source: 'related'
+						} ) );
+
+						cachedResults = results;
+						fetchPromise = null;
+						resolve( { items: results } );
+					} catch ( error ) {
+						mw.log.error( '[skins.citizen.commandPalette] RelatedArticlesProvider error:', error );
+						cachedResults = null;
+						fetchPromise = null;
+						cachedArticleId = null;
+						resolve( { items: [] } );
 					}
+				};
 
-					const results = relatedPages.map( ( page ) => ( {
-						id: page.pageid,
-						label: page.title,
-						description: page.description || page.extract,
-						type: 'page',
-						url: mw.util.getUrl( page.title ),
-						thumbnail: page.thumbnail ? {
-							url: page.thumbnail.source
-						} : null,
-						thumbnailIcon: cdxIconArticle,
-						actions: []
-					} ) );
-					// Cache the results and the article ID on success
-					cachedResults = results;
-					// cachedArticleId is already set to currentArticleId
-					fetchPromise = null; // Reset promise ref
-					// Ensure source is added by the provider
-					const resultsWithSource = Array.isArray( results ) ? results.map( ( item ) => ( { ...item, source: this.id } ) ) : [];
-					cachedResults = resultsWithSource; // Update cache with source added
-					resolve( resultsWithSource );
-				} catch ( error ) {
-					mw.log.error( '[skins.citizen.commandPalette] RelatedArticlesProvider: Error inside mw.loader success callback:', error );
-					// Reset cache state fully on error
+				const onFailure = () => {
 					cachedResults = null;
 					fetchPromise = null;
 					cachedArticleId = null;
-					resolve( [] );
-				}
-			};
+					resolve( { items: [] } );
+				};
 
-			const onFailure = () => {
-				// This happens if the module is not installed, so we resolve with empty array
-				// Reset cache state fully on failure
-				cachedResults = null;
-				fetchPromise = null;
-				cachedArticleId = null;
-				resolve( [] );
-			};
+				loader.using( [ 'ext.relatedArticles.readMore' ], onSuccess, onFailure );
+			} );
 
-			mw.loader.using( [ 'ext.relatedArticles.readMore' ], onSuccess, onFailure );
-		} );
+			return fetchPromise;
+		},
 
-		return fetchPromise;
-	},
+		onResultSelect( item ) {
+			return getNavigationAction( item );
+		}
+	}, { debounceMs: 0, keepStaleResults: false } );
+}
 
-	isAsync: true,
-	debounceMs: 0, // The request is only called once and then cached
-
-	/**
-	 * Handles the selection of a related article item.
-	 * Default action is to navigate to the item's URL.
-	 *
-	 * @param {CommandPaletteItem} item The selected item.
-	 * @return {Promise<CommandPaletteActionResult>} Action result for the UI.
-	 */
-	async onResultSelect( item ) {
-		return getNavigationAction( item );
-	}
-};
-
-module.exports = RelatedArticlesProvider;
+module.exports = createRelatedArticlesProvider;

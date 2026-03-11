@@ -88,7 +88,11 @@ jobs:
       - name: Build with VitePress
         working-directory: docs
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BASE_URL: ${{ steps.pages.outputs.base_path }}
+          ALGOLIA_APP_ID: ${{ vars.ALGOLIA_APP_ID }}
+          ALGOLIA_API_KEY: ${{ vars.ALGOLIA_API_KEY }}
+          ALGOLIA_INDEX_NAME: ${{ vars.ALGOLIA_INDEX_NAME }}
         run: npm run docs:build
 
       - name: Upload artifact

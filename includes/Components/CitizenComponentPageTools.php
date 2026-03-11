@@ -53,12 +53,12 @@ class CitizenComponentPageTools implements CitizenComponent {
 		}
 
 		// Permission-based condition, return true if condition is met
-		if ( is_string( $condition ) && strpos( $condition, 'permission' ) === 0 ) {
+		if ( is_string( $condition ) && str_starts_with( $condition, 'permission' ) ) {
 			$permission = substr( $condition, 11 );
 			try {
 				$condition = $this->permissionManager->userCan(
 					$permission, $user, $this->title );
-			} catch ( Exception $e ) {
+			} catch ( Exception ) {
 				$condition = false;
 			}
 		}

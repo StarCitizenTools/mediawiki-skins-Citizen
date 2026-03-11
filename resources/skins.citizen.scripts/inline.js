@@ -21,11 +21,16 @@ window.clientPrefs = () => {
 	if ( storage ) {
 		// TODO: Just use array for localStorage
 		storage.split( ',' ).forEach( ( pref ) => {
-			className = className.replace(
-
-				new RegExp( '(^| )' + pref.replace( /-clientpref-\w+$|[^\w-]+/g, '' ) + '-clientpref-\\w+( |$)' ),
-				'$1' + pref + '$2'
+			const pattern = new RegExp(
+				'(^| )' + pref.replace( /-clientpref-\w+$|[^\w-]+/g, '' ) + '-clientpref-\\w+( |$)'
 			);
+			if ( pattern.test( className ) ) {
+				// Replace existing class (built-in prefs rendered by PHP)
+				className = className.replace( pattern, '$1' + pref + '$2' );
+			} else {
+				// Append class (custom prefs not rendered server-side)
+				className += ' ' + pref;
+			}
 		} );
 		document.documentElement.className = className;
 	}

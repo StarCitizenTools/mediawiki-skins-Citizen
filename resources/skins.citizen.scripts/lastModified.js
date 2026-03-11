@@ -1,58 +1,61 @@
+const DIVISIONS = [
+	{ amount: 60, name: 'seconds' },
+	{ amount: 60, name: 'minutes' },
+	{ amount: 24, name: 'hours' },
+	{ amount: 7, name: 'days' },
+	{ amount: 4.34524, name: 'weeks' },
+	{ amount: 12, name: 'months' },
+	{ amount: Number.POSITIVE_INFINITY, name: 'years' }
+];
+
+const SECONDS_IN_MILLISECOND = 1000;
+
 /**
- * Updates the text content of a specific HTML element to display a human-readable,
- * relative time format based on a timestamp attribute.
+ * Formats the time elapsed since a given date in a human-readable relative time format.
  *
- * @return {void}
+ * @param {string} date - The timestamp in seconds to calculate relative time from.
+ * @param {number} nowMs - The current time in milliseconds (e.g. Date.now()).
+ * @param {Intl.RelativeTimeFormat} rtf - The formatter instance.
+ * @param {Array<{amount: number, name: string}>} divisions - Time unit divisions.
+ * @return {string|undefined} The formatted relative time string, or undefined if invalid.
  */
-function init() {
-	const lastmodEl = document.getElementById( 'citizen-lastmod-relative' );
-	if ( !lastmodEl || typeof Intl.RelativeTimeFormat !== 'function' ) {
+function formatTimeAgo( date, nowMs, rtf, divisions ) {
+	const timestamp = parseFloat( date );
+	if ( isNaN( timestamp ) ) {
 		return;
 	}
+	let duration = timestamp - nowMs / SECONDS_IN_MILLISECOND;
 
-	const lang = document.documentElement.getAttribute( 'lang' );
-	// eslint-disable-next-line compat/compat
-	const rtf = new Intl.RelativeTimeFormat( lang );
-
-	const DIVISIONS = [
-		{ amount: 60, name: 'seconds' },
-		{ amount: 60, name: 'minutes' },
-		{ amount: 24, name: 'hours' },
-		{ amount: 7, name: 'days' },
-		{ amount: 4.34524, name: 'weeks' },
-		{ amount: 12, name: 'months' },
-		{ amount: Number.POSITIVE_INFINITY, name: 'years' }
-	];
-
-	const SECONDS_IN_MILLISECOND = 1000;
-
-	// eslint-disable-next-line jsdoc/require-returns-check
-	/**
-	 * Formats the time elapsed since a given date in a human-readable relative time format.
-	 *
-	 * @param {string} date - The timestamp to calculate relative time from.
-	 * @return {string} The formatted relative time string.
-	 */
-	const formatTimeAgo = ( date ) => {
-		const timestamp = parseFloat( date );
-		if ( isNaN( timestamp ) ) {
-			mw.log.error( '[Citizen] Invalid timestamp value' );
-			return;
+	for ( let i = 0; i < divisions.length; i++ ) {
+		const division = divisions[ i ];
+		if ( Math.abs( duration ) < division.amount ) {
+			return rtf.format( Math.round( duration ), division.name );
 		}
-		let duration = timestamp - Date.now() / SECONDS_IN_MILLISECOND;
-
-		for ( let i = 0; i < DIVISIONS.length; i++ ) {
-			const division = DIVISIONS[ i ];
-			if ( Math.abs( duration ) < division.amount ) {
-				return rtf.format( Math.round( duration ), division.name );
-			}
-			duration /= division.amount;
-		}
-	};
-
-	lastmodEl.lastChild.textContent = formatTimeAgo( lastmodEl.getAttribute( 'data-timestamp' ) );
+		duration /= division.amount;
+	}
 }
 
-module.exports = {
-	init: init
-};
+/**
+ * @param {Object} deps
+ * @param {Document} deps.document
+ * @param {Object} deps.Intl
+ * @return {Object}
+ */
+function createLastModified( { document, Intl: IntlObj } ) {
+	function init() {
+		const lastmodEl = document.getElementById( 'citizen-lastmod-relative' );
+		if ( !lastmodEl || typeof IntlObj.RelativeTimeFormat !== 'function' ) {
+			return;
+		}
+
+		const lang = document.documentElement.getAttribute( 'lang' );
+		const rtf = new IntlObj.RelativeTimeFormat( lang );
+		const timestamp = lastmodEl.getAttribute( 'data-timestamp' );
+
+		lastmodEl.lastChild.textContent = formatTimeAgo( timestamp, Date.now(), rtf, DIVISIONS );
+	}
+
+	return { init };
+}
+
+module.exports = { createLastModified, formatTimeAgo, DIVISIONS };
