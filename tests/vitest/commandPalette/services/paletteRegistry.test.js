@@ -1,0 +1,357 @@
+/* global globalThis */
+
+const mw = require( '../../mocks/mw.js' );
+globalThis.mw = mw;
+
+const createPaletteRegistry = require( '../../../../resources/skins.citizen.commandPalette/services/paletteRegistry.js' );
+
+/**
+ * Creates a minimal valid command handler for testing.
+ *
+ * @param {Object} [overrides] Properties to override on the handler.
+ * @return {Object} A command handler object.
+ */
+function makeHandler( overrides = {} ) {
+	return {
+		id: 'test',
+		triggers: [ '/test:' ],
+		description: 'Test command',
+		...overrides
+	};
+}
+
+describe( 'createPaletteRegistry', () => {
+	let registry;
+
+	beforeEach( () => {
+		vi.restoreAllMocks();
+		registry = createPaletteRegistry();
+	} );
+
+	describe( 'register', () => {
+		it( 'registers a valid command', () => {
+			const handler = makeHandler();
+
+			const result = registry.register( handler );
+
+			expect( result ).toBe( true );
+			expect( registry.getHandler( 'test' ) ).toBe( handler );
+		} );
+
+		it( 'rejects command without id', () => {
+			const handler = { triggers: [ '/bad:' ], description: 'No id' };
+
+			const result = registry.register( handler );
+
+			expect( result ).toBe( false );
+		} );
+
+		it( 'rejects null handler', () => {
+			const result = registry.register( null );
+
+			expect( result ).toBe( false );
+		} );
+
+		it( 'overwrites existing command with same id', () => {
+			const original = makeHandler( { description: 'Original' } );
+			const replacement = makeHandler( { description: 'Replacement' } );
+
+			registry.register( original );
+			registry.register( replacement );
+
+			expect( registry.getHandler( 'test' ).description ).toBe( 'Replacement' );
+		} );
+	} );
+
+	describe( 'findMatchingCommand', () => {
+		it( 'finds command by trigger prefix', () => {
+			registry.register( makeHandler( { id: 'ns', triggers: [ '/ns:' ] } ) );
+
+			const match = registry.findMatchingCommand( '/ns:talk' );
+
+			expect( match ).not.toBeNull();
+			expect( match.id ).toBe( 'ns' );
+			expect( match.trigger ).toBe( '/ns:' );
+		} );
+
+		it( 'finds command by abbreviation trigger', () => {
+			registry.register( makeHandler( { id: 'user', triggers: [ '/user:', '@' ] } ) );
+
+			const match = registry.findMatchingCommand( '@admin' );
+
+			expect( match ).not.toBeNull();
+			expect( match.id ).toBe( 'user' );
+			expect( match.trigger ).toBe( '@' );
+		} );
+
+		it( 'returns longest matching trigger when multiple match', () => {
+			registry.register( makeHandler( { id: 'short', triggers: [ '/a' ] } ) );
+			registry.register( makeHandler( { id: 'long', triggers: [ '/action:' ] } ) );
+
+			const match = registry.findMatchingCommand( '/action:test' );
+
+			expect( match ).not.toBeNull();
+			expect( match.id ).toBe( 'long' );
+			expect( match.trigger ).toBe( '/action:' );
+		} );
+
+		it( 'returns null for unmatched query', () => {
+			registry.register( makeHandler( { id: 'ns', triggers: [ '/ns:' ] } ) );
+
+			const match = registry.findMatchingCommand( 'no-match' );
+
+			expect( match ).toBeNull();
+		} );
+
+		it( 'matches case-insensitively', () => {
+			registry.register( makeHandler( { id: 'ns', triggers: [ '/NS:' ] } ) );
+
+			const match = registry.findMatchingCommand( '/ns:talk' );
+
+			expect( match ).not.toBeNull();
+			expect( match.id ).toBe( 'ns' );
+		} );
+	} );
+
+	describe( 'getCommandListItems', () => {
+		it( 'returns all registered commands as palette items with correct format', () => {
+			registry.register( makeHandler( {
+				id: 'alpha',
+				triggers: [ '/alpha:' ],
+				description: 'Alpha command'
+			} ) );
+			registry.register( makeHandler( {
+				id: 'beta',
+				triggers: [ '/beta:' ],
+				description: 'Beta command'
+			} ) );
+
+			const items = registry.getCommandListItems();
+
+			expect( items ).toHaveLength( 2 );
+			expect( items[ 0 ] ).toEqual( expect.objectContaining( {
+				type: 'command',
+				source: 'command:alpha',
+				label: '/alpha:',
+				description: 'Alpha command',
+				highlightQuery: true
+			} ) );
+			expect( items[ 1 ] ).toEqual( expect.objectContaining( {
+				type: 'command',
+				source: 'command:beta'
+			} ) );
+		} );
+
+		it( 'filters commands by prefix', () => {
+			registry.register( makeHandler( { id: 'ns', triggers: [ '/ns:', ':' ] } ) );
+			registry.register( makeHandler( { id: 'action', triggers: [ '/action:', '>' ] } ) );
+
+			const items = registry.getCommandListItems( '/ns' );
+
+			expect( items ).toHaveLength( 1 );
+			expect( items[ 0 ].source ).toBe( 'command:ns' );
+		} );
+
+		it( 'includes alternate triggers as metadata', () => {
+			registry.register( makeHandler( {
+				id: 'user',
+				triggers: [ '/user:', '@' ]
+			} ) );
+
+			const items = registry.getCommandListItems();
+
+			expect( items[ 0 ].metadata ).toEqual( [ { label: '@' } ] );
+		} );
+	} );
+
+	describe( 'getHandler', () => {
+		it( 'returns handler for registered command', () => {
+			const handler = makeHandler();
+			registry.register( handler );
+
+			const result = registry.getHandler( 'test' );
+
+			expect( result ).toBe( handler );
+		} );
+
+		it( 'returns undefined for unregistered command', () => {
+			const result = registry.getHandler( 'nonexistent' );
+
+			expect( result ).toBeUndefined();
+		} );
+	} );
+
+	describe( 'hasMatchingTrigger', () => {
+		it( 'returns true when a trigger matches', () => {
+			registry.register( makeHandler( { id: 'ns', triggers: [ '/ns:' ] } ) );
+
+			expect( registry.hasMatchingTrigger( '/ns:talk' ) ).toBe( true );
+		} );
+
+		it( 'returns false when no trigger matches', () => {
+			registry.register( makeHandler( { id: 'ns', triggers: [ '/ns:' ] } ) );
+
+			expect( registry.hasMatchingTrigger( 'hello' ) ).toBe( false );
+		} );
+	} );
+
+	describe( 'findModeByTrigger', () => {
+		it( 'finds mode by single-character trigger', () => {
+			registry.register( makeHandler( {
+				id: 'user',
+				triggers: [ '/user:', '@' ],
+				getResults: vi.fn()
+			} ) );
+
+			const mode = registry.findModeByTrigger( '@' );
+
+			expect( mode ).not.toBeNull();
+			expect( mode.id ).toBe( 'user' );
+		} );
+
+		it( 'returns null for handler without getResults', () => {
+			registry.register( makeHandler( {
+				id: 'simple',
+				triggers: [ '!' ]
+			} ) );
+
+			const mode = registry.findModeByTrigger( '!' );
+
+			expect( mode ).toBeNull();
+		} );
+
+		it( 'returns null for unmatched trigger', () => {
+			const mode = registry.findModeByTrigger( '#' );
+
+			expect( mode ).toBeNull();
+		} );
+	} );
+
+	describe( 'getTokenPatterns', () => {
+		it( 'returns empty array when no handlers have tokenPattern', () => {
+			registry.register( makeHandler( { id: 'plain', triggers: [ '/plain:' ] } ) );
+
+			const patterns = registry.getTokenPatterns();
+
+			expect( patterns ).toEqual( [] );
+		} );
+
+		it( 'returns token patterns from registered handlers', () => {
+			const tokenPattern = {
+				modeId: 'ns',
+				position: 'prefix',
+				match: vi.fn(),
+				serialize: vi.fn()
+			};
+			registry.register( makeHandler( {
+				id: 'ns',
+				triggers: [ '/ns:', ':' ],
+				tokenPattern,
+				getResults: vi.fn()
+			} ) );
+
+			const patterns = registry.getTokenPatterns();
+
+			expect( patterns ).toHaveLength( 1 );
+			expect( patterns[ 0 ] ).toBe( tokenPattern );
+		} );
+
+		it( 'skips handlers without tokenPattern', () => {
+			const tokenPattern = {
+				modeId: 'ns',
+				position: 'prefix',
+				match: vi.fn()
+			};
+			registry.register( makeHandler( {
+				id: 'ns',
+				triggers: [ '/ns:' ],
+				tokenPattern,
+				getResults: vi.fn()
+			} ) );
+			registry.register( makeHandler( {
+				id: 'action',
+				triggers: [ '/action:', '>' ]
+			} ) );
+
+			const patterns = registry.getTokenPatterns();
+
+			expect( patterns ).toHaveLength( 1 );
+			expect( patterns[ 0 ].modeId ).toBe( 'ns' );
+		} );
+
+		it( 'flattens array tokenPattern from a single handler', () => {
+			const pattern1 = { modeId: 'smw', position: 'any', activeIn: 'smw', match: vi.fn() };
+			const pattern2 = { modeId: 'smw', position: 'any', activeIn: 'smw', match: vi.fn() };
+			registry.register( makeHandler( {
+				id: 'smw',
+				triggers: [ '/smw:' ],
+				tokenPattern: [ pattern1, pattern2 ],
+				getResults: vi.fn()
+			} ) );
+
+			const patterns = registry.getTokenPatterns();
+
+			expect( patterns ).toHaveLength( 2 );
+			expect( patterns[ 0 ] ).toBe( pattern1 );
+			expect( patterns[ 1 ] ).toBe( pattern2 );
+		} );
+
+		it( 'mixes single and array tokenPatterns from different handlers', () => {
+			const singlePattern = { modeId: 'ns', position: 'prefix', activeIn: 'root', match: vi.fn() };
+			const arrayPattern1 = { modeId: 'smw', position: 'any', activeIn: 'smw', match: vi.fn() };
+			const arrayPattern2 = { modeId: 'smw', position: 'any', activeIn: 'smw', match: vi.fn() };
+			registry.register( makeHandler( {
+				id: 'ns',
+				triggers: [ '/ns:', ':' ],
+				tokenPattern: singlePattern,
+				getResults: vi.fn()
+			} ) );
+			registry.register( makeHandler( {
+				id: 'smw',
+				triggers: [ '/smw:' ],
+				tokenPattern: [ arrayPattern1, arrayPattern2 ],
+				getResults: vi.fn()
+			} ) );
+
+			const patterns = registry.getTokenPatterns();
+
+			expect( patterns ).toHaveLength( 3 );
+			expect( patterns ).toContain( singlePattern );
+			expect( patterns ).toContain( arrayPattern1 );
+			expect( patterns ).toContain( arrayPattern2 );
+		} );
+	} );
+
+	describe( 'findModeByQuery', () => {
+		it( 'finds mode and trigger by query prefix', () => {
+			registry.register( makeHandler( {
+				id: 'ns',
+				triggers: [ '/ns:', ':' ],
+				getResults: vi.fn()
+			} ) );
+
+			const match = registry.findModeByQuery( '/ns:Talk' );
+
+			expect( match ).not.toBeNull();
+			expect( match.mode.id ).toBe( 'ns' );
+			expect( match.trigger ).toBe( '/ns:' );
+		} );
+
+		it( 'returns null for handler without getResults', () => {
+			registry.register( makeHandler( {
+				id: 'simple',
+				triggers: [ '/simple' ]
+			} ) );
+
+			const match = registry.findModeByQuery( '/simple test' );
+
+			expect( match ).toBeNull();
+		} );
+
+		it( 'returns null for unmatched query', () => {
+			const match = registry.findModeByQuery( 'hello' );
+
+			expect( match ).toBeNull();
+		} );
+	} );
+} );

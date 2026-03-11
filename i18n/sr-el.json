@@ -2,7 +2,6 @@
 	"@metadata": {
 		"authors": []
 	},
-	"citizen-search-poweredby-mediawiki": "Medijaviki",
 	"citizen-languages-toggle": "Više jezika",
 	"citizen-actions-more-toggle": "Više radnji",
 	"citizen-sitestats-articles-label": "članci",
@@ -14,12 +13,8 @@
 	"citizen-page-info-lastmod": "Poslednja izmena",
 	"citizen-action-addsection": "Dodaj temu",
 	"citizen-jumptotop": "Nazad na vrh",
-	"citizen-search-fulltext": "Pretraži tekst",
-	"citizen-search-mediasearch": "Pretraga medija",
-	"citizen-search-editpage": "Uredite ili napravite stranicu",
 	"citizen-search-empty-desc": "Kucajte da započnete pretraživanje",
 	"citizen-search-noresults-title": "Nema rezultata za $1",
-	"citizen-search-noresults-desc": "Probajte opcija iznad?",
 	"citizen-share": "Podeli ovu stranicu",
 	"citizen-tagline-ns-project": "Informacije o {{SITENAME}}",
 	"citizen-tagline-ns-file": "Datoteke na {{SITENAME}}",

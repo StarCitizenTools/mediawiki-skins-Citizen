@@ -31,6 +31,7 @@ const lineTemplate = fs.readFileSync(
  *   section1 (top-level parent, toclevel 1)
  *     section1a (child, toclevel 2)
  *   section2 (top-level parent, toclevel 1, no children)
+ *   section3 (top-level parent, toclevel 1, no children)
  */
 const tocTemplateData = {
 	'array-sections': [
@@ -66,6 +67,17 @@ const tocTemplateData = {
 			'is-parent-section': true,
 			'citizen-button-label': 'Toggle Section Two subsection',
 			'array-sections': []
+		},
+		{
+			anchor: 'section3',
+			linkAnchor: 'section3',
+			toclevel: 1,
+			number: '3',
+			line: 'Section Three',
+			'is-top-level-section': true,
+			'is-parent-section': true,
+			'citizen-button-label': 'Toggle Section Three subsection',
+			'array-sections': []
 		}
 	]
 };
@@ -92,6 +104,20 @@ function renderTocDom( data ) {
 }
 
 /**
+ * Create a mock matchMedia that supports addEventListener.
+ *
+ * @param {boolean} [matches] Whether the query matches.
+ * @return {Function} matchMedia mock.
+ */
+function createMockMatchMedia( matches = false ) {
+	return vi.fn( () => ( {
+		matches,
+		addEventListener: vi.fn(),
+		removeEventListener: vi.fn()
+	} ) );
+}
+
+/**
  * Create a TableOfContents instance with sensible defaults.
  *
  * @param {HTMLElement} container
@@ -109,13 +135,15 @@ function createToc( container, overrides = {} ) {
 			addEventListener: vi.fn(),
 			removeEventListener: vi.fn(),
 			location: { hash: '' },
-			matchMedia: vi.fn( () => ( { matches: false } ) ),
-			innerHeight: 800
+			matchMedia: createMockMatchMedia(),
+			innerHeight: 800,
+			requestAnimationFrame: ( cb ) => cb()
 		},
 		document,
 		mw: {
 			util: {
-				getTargetFromFragment: vi.fn( () => null )
+				getTargetFromFragment: vi.fn( () => null ),
+				debounce: ( fn ) => fn
 			}
 		},
 		...overrides
@@ -147,13 +175,11 @@ describe( 'TableOfContents', () => {
 			const toc = createToc( container );
 
 			toc.activateSection( 'toc-section1a' );
-			const firstActiveTop = toc.activeTopSection;
-			const firstActiveSub = toc.activeSubSection;
+			const snapshot = new Set( toc.activeIds );
 
 			toc.activateSection( 'toc-section1a' );
 
-			expect( toc.activeTopSection ).toBe( firstActiveTop );
-			expect( toc.activeSubSection ).toBe( firstActiveSub );
+			expect( new Set( toc.activeIds ) ).toEqual( snapshot );
 		} );
 
 		it( 'should no-op when given a non-existent id', () => {
@@ -162,8 +188,7 @@ describe( 'TableOfContents', () => {
 
 			toc.activateSection( 'toc-does-not-exist' );
 
-			expect( toc.activeTopSection ).toBeUndefined();
-			expect( toc.activeSubSection ).toBeUndefined();
+			expect( toc.activeIds.size ).toBe( 0 );
 		} );
 	} );
 
@@ -179,8 +204,7 @@ describe( 'TableOfContents', () => {
 			const top = document.getElementById( 'toc-section1' );
 			expect( sub.classList.contains( 'citizen-toc-list-item--active' ) ).toBe( false );
 			expect( top.classList.contains( 'citizen-toc-level-1--active' ) ).toBe( false );
-			expect( toc.activeTopSection ).toBeUndefined();
-			expect( toc.activeSubSection ).toBeUndefined();
+			expect( toc.activeIds.size ).toBe( 0 );
 		} );
 	} );
 
@@ -307,8 +331,9 @@ describe( 'TableOfContents', () => {
 				addEventListener: vi.fn(),
 				removeEventListener: vi.fn(),
 				location: { hash: '' },
-				matchMedia: vi.fn( () => ( { matches: true } ) ),
-				innerHeight: 800
+				matchMedia: createMockMatchMedia( true ),
+				innerHeight: 800,
+				requestAnimationFrame: ( cb ) => cb()
 			};
 
 			const toc = createToc( container, { window: win } );
@@ -368,17 +393,110 @@ describe( 'TableOfContents', () => {
 			expect( section2.classList.contains( 'citizen-toc-level-1--active' ) ).toBe( true );
 		} );
 
-		it( 'should no-op when parent and child ids both match', () => {
+		it( 'should no-op when same ids provided', () => {
 			const { container } = renderTocDom();
 			const toc = createToc( container );
 
-			// Activate a top-level section (parent === child === the same id)
-			toc.activateSection( 'toc-section1' );
-			const spy = vi.spyOn( toc, 'deactivateSections' );
+			// Activate a top-level section
+			toc.changeActiveSections( [ 'toc-section1' ] );
+			const spy = vi.spyOn( toc, 'deactivateAllSections' );
 
 			toc.changeActiveSection( 'toc-section1' );
 
 			expect( spy ).not.toHaveBeenCalled();
+		} );
+	} );
+
+	describe( 'changeActiveSections', () => {
+		it( 'should activate multiple sections with active class', () => {
+			const { container } = renderTocDom();
+			const toc = createToc( container );
+
+			toc.changeActiveSections( [ 'toc-section1', 'toc-section2' ] );
+
+			const section1 = document.getElementById( 'toc-section1' );
+			const section2 = document.getElementById( 'toc-section2' );
+			expect( section1.classList.contains( 'citizen-toc-list-item--active' ) ).toBe( true );
+			expect( section2.classList.contains( 'citizen-toc-list-item--active' ) ).toBe( true );
+			expect( section1.classList.contains( 'citizen-toc-level-1--active' ) ).toBe( true );
+			expect( section2.classList.contains( 'citizen-toc-level-1--active' ) ).toBe( true );
+		} );
+
+		it( 'should deactivate previous sections when new set provided', () => {
+			const { container } = renderTocDom();
+			const toc = createToc( container );
+
+			toc.changeActiveSections( [ 'toc-section1' ] );
+			toc.changeActiveSections( [ 'toc-section2', 'toc-section3' ] );
+
+			const section1 = document.getElementById( 'toc-section1' );
+			const section2 = document.getElementById( 'toc-section2' );
+			const section3 = document.getElementById( 'toc-section3' );
+			expect( section1.classList.contains( 'citizen-toc-list-item--active' ) ).toBe( false );
+			expect( section2.classList.contains( 'citizen-toc-list-item--active' ) ).toBe( true );
+			expect( section3.classList.contains( 'citizen-toc-list-item--active' ) ).toBe( true );
+		} );
+
+		it( 'should expand parent for active subsections', () => {
+			const { container } = renderTocDom();
+			const toc = createToc( container );
+
+			toc.changeActiveSections( [ 'toc-section1a' ] );
+
+			const topSection = document.getElementById( 'toc-section1' );
+			expect( topSection.classList.contains( 'citizen-toc-list-item--expanded' ) ).toBe( true );
+		} );
+
+		it( 'should no-op when same set provided', () => {
+			const { container } = renderTocDom();
+			const toc = createToc( container );
+
+			toc.changeActiveSections( [ 'toc-section1', 'toc-section2' ] );
+			const spy = vi.spyOn( toc, 'deactivateAllSections' );
+
+			toc.changeActiveSections( [ 'toc-section1', 'toc-section2' ] );
+
+			expect( spy ).not.toHaveBeenCalled();
+		} );
+	} );
+
+	describe( 'updateIndicatorBar', () => {
+		it( 'should set transform custom properties when sections active', () => {
+			const { container } = renderTocDom();
+			const toc = createToc( container );
+
+			// Mock offsetParent on indicator to be the container (positioning context)
+			Object.defineProperty( toc.indicatorBar, 'offsetParent', { value: container } );
+			container.getBoundingClientRect = vi.fn( () => ( {
+				top: 100, bottom: 500, left: 0, right: 200
+			} ) );
+			Object.defineProperty( container, 'scrollTop', { value: 0, writable: true } );
+
+			const link1 = document.querySelector( '#toc-section1 > .citizen-toc-link' );
+			const link2 = document.querySelector( '#toc-section2 > .citizen-toc-link' );
+			Object.defineProperty( link1, 'offsetParent', { value: container } );
+			Object.defineProperty( link2, 'offsetParent', { value: container } );
+			link1.getBoundingClientRect = vi.fn( () => ( {
+				top: 110, bottom: 130, height: 20, left: 0, right: 200
+			} ) );
+			link2.getBoundingClientRect = vi.fn( () => ( {
+				top: 140, bottom: 160, height: 20, left: 0, right: 200
+			} ) );
+
+			toc.changeActiveSections( [ 'toc-section1', 'toc-section2' ] );
+
+			expect( toc.indicatorBar.style.getPropertyValue( '--indicator-top' ) ).toBe( '10px' );
+			// Unit height is first link height (20px), total span is 50px, scale = 50/20 = 2.5
+			expect( toc.indicatorBar.style.getPropertyValue( '--indicator-scale' ) ).toBe( '2.5' );
+		} );
+
+		it( 'should set scale to 0 when no sections active', () => {
+			const { container } = renderTocDom();
+			const toc = createToc( container );
+
+			toc.updateIndicatorBar();
+
+			expect( toc.indicatorBar.style.getPropertyValue( '--indicator-scale' ) ).toBe( '0' );
 		} );
 	} );
 
@@ -390,15 +508,17 @@ describe( 'TableOfContents', () => {
 
 			const mw = {
 				util: {
-					getTargetFromFragment: vi.fn( () => listItem )
+					getTargetFromFragment: vi.fn( () => listItem ),
+					debounce: ( fn ) => fn
 				}
 			};
 			const win = {
 				addEventListener: vi.fn(),
 				removeEventListener: vi.fn(),
 				location: { hash: '#section2' },
-				matchMedia: vi.fn( () => ( { matches: false } ) ),
-				innerHeight: 800
+				matchMedia: createMockMatchMedia(),
+				innerHeight: 800,
+				requestAnimationFrame: ( cb ) => cb()
 			};
 
 			const toc = createToc( container, { window: win, mw, onHashChange } );
@@ -416,15 +536,17 @@ describe( 'TableOfContents', () => {
 
 			const mw = {
 				util: {
-					getTargetFromFragment: vi.fn( () => null )
+					getTargetFromFragment: vi.fn( () => null ),
+					debounce: ( fn ) => fn
 				}
 			};
 			const win = {
 				addEventListener: vi.fn(),
 				removeEventListener: vi.fn(),
 				location: { hash: '#unknown' },
-				matchMedia: vi.fn( () => ( { matches: false } ) ),
-				innerHeight: 800
+				matchMedia: createMockMatchMedia(),
+				innerHeight: 800,
+				requestAnimationFrame: ( cb ) => cb()
 			};
 
 			const toc = createToc( container, { window: win, mw, onHashChange } );
@@ -436,14 +558,15 @@ describe( 'TableOfContents', () => {
 	} );
 
 	describe( 'unmount', () => {
-		it( 'should remove hashchange event listener from window', () => {
+		it( 'should remove hashchange and resize event listeners from window', () => {
 			const { container } = renderTocDom();
 			const win = {
 				addEventListener: vi.fn(),
 				removeEventListener: vi.fn(),
 				location: { hash: '' },
-				matchMedia: vi.fn( () => ( { matches: false } ) ),
-				innerHeight: 800
+				matchMedia: createMockMatchMedia(),
+				innerHeight: 800,
+				requestAnimationFrame: ( cb ) => cb()
 			};
 
 			const toc = createToc( container, { window: win } );
@@ -452,6 +575,10 @@ describe( 'TableOfContents', () => {
 
 			expect( win.removeEventListener ).toHaveBeenCalledWith(
 				'hashchange',
+				expect.any( Function )
+			);
+			expect( win.removeEventListener ).toHaveBeenCalledWith(
+				'resize',
 				expect.any( Function )
 			);
 		} );

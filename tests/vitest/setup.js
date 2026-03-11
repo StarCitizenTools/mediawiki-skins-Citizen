@@ -54,5 +54,19 @@ Module._resolveFilename = function ( request, parent, ...rest ) {
 			return path.resolve( __dirname, 'mocks/AppStub.js' );
 		}
 	}
+	if ( parent && parent.filename &&
+		parent.filename.includes( 'skins.citizen.commandPalette' ) ) {
+		if ( request === './config.json' || request === '../config.json' ) {
+			return path.resolve( __dirname, 'mocks/commandPaletteConfig.js' );
+		}
+		if ( request === './icons.json' || request === '../icons.json' ) {
+			return path.resolve( __dirname, 'mocks/commandPaletteIcons.js' );
+		}
+		// Stub .vue imports from non-Vue JS files (e.g. init.js).
+		// Vue SFCs go through Vite's plugin pipeline and don't hit this path.
+		if ( request === './App.vue' || request === './components/App.vue' ) {
+			return path.resolve( __dirname, 'mocks/AppStub.js' );
+		}
+	}
 	return originalResolveFilename.call( this, request, parent, ...rest );
 };

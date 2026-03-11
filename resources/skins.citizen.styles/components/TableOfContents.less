@@ -1,76 +1,71 @@
 .citizen-toc {
-	--citizen-toc-toggle-size: ~'calc( var( --line-height-small ) + var( --space-xs ) * 2 )';
 	.mixin-citizen-font-styles( 'small' );
 
-	&-contents,
-	&-list {
+	&-contents {
+		position: relative;
 		margin: 0 0 0 var( --space-xs );
-		list-style: none;
 		border-left: var( --border-width-thick ) solid var( --border-color-base );
 
-		.citizen-toc-link {
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
+		// Reset padding on the direct child list since indentation is only for sublists
+		> .citizen-toc-list {
+			padding-left: 0;
 		}
 	}
 
-	&-link {
+	&-list {
 		position: relative;
+		width: 100%;
+		padding-left: var( --space-xs );
+		margin: 0;
+		list-style: none;
+	}
+
+	// Use .citizen-toc .citizen-toc-link to beat Codex .cdx-button specificity
+	.citizen-toc-link {
 		display: flex;
+		flex-grow: 1;
 		gap: var( --space-xs );
 		align-items: center;
-		padding: var( --space-xs );
+		justify-content: normal;
+		max-width: none;
 		font-weight: var( --font-weight-medium );
-		color: var( --color-base );
-		text-decoration: none;
-		border-radius: var( --border-radius-base );
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
 
-		.citizen-toc &.citizen-toc-top {
+		&.citizen-toc-top {
 			height: 0;
-			padding-block: 0;
+			min-height: 0;
+			padding: 0;
+			overflow: hidden;
 			opacity: 0;
 			transition-timing-function: var( --transition-timing-function-ease-out );
 			transition-duration: var( --transition-duration-medium );
-			transition-property: opacity, height;
-		}
-
-		&:has( + .citizen-toc-toggle ) {
-			margin-right: var( --citizen-toc-toggle-size ); // Make space for toggle
-		}
-
-		&:hover {
-			background-color: var( --background-color-button-quiet--hover );
-		}
-
-		&:active {
-			background-color: var( --background-color-button-quiet--active );
-		}
-
-		&:hover,
-		&:focus {
-			text-decoration: none;
+			transition-property: opacity, height, padding;
 		}
 	}
 
-	&-toggle {
-		position: absolute;
-		top: 0;
-		right: 0;
+	// Use .citizen-toc .citizen-toc-toggle to beat Codex .cdx-button specificity
+	.citizen-toc-toggle {
 		display: none;
-		width: var( --citizen-toc-toggle-size );
-		height: var( --citizen-toc-toggle-size );
 		padding: 0;
 	}
 
 	&-indicator {
 		position: absolute;
 		top: 0;
-		bottom: 0;
 		left: 0;
-		flex-shrink: 0;
+		z-index: 1;
 		width: var( --border-width-thick );
-		margin-block: var( --space-xs );
+		height: var( --indicator-unit-height, 2rem );
 		margin-left: ~'calc( var( --border-width-thick ) * -1 )';
+		background-color: var( --color-progressive );
+		border-radius: var( --border-width-thick );
+		// Use transform for GPU-composited animation instead of top/height
+		transform: translateY( var( --indicator-top, 0 ) ) scaleY( var( --indicator-scale, 0 ) );
+		transform-origin: top center;
+		transition-timing-function: var( --transition-timing-function-ease-out );
+		transition-duration: var( --transition-duration-medium );
+		transition-property: transform;
 	}
 
 	&-text {
@@ -89,27 +84,24 @@
 
 	&-list-item {
 		position: relative;
+		display: flex;
+		flex-wrap: wrap;
+	}
 
-		&--active {
-			> .citizen-toc-link {
-				color: var( --color-progressive );
-
-				.citizen-toc-indicator {
-					background-color: var( --color-progressive );
-				}
-			}
-		}
+	// Scoped under .citizen-toc for (0,3,0) specificity to beat Codex .cdx-button color
+	.citizen-toc-list-item--active > .citizen-toc-link {
+		color: var( --color-progressive );
 	}
 }
 
-// Collapse ToC sections by default, excluding no-js
-.client-js .citizen-toc {
+// Collapse ToC sections when enabled via CitizenTableOfContentsCollapseAtCount, excluding no-js
+.client-js .citizen-toc--collapse-enabled {
 	.citizen-toc-level-1 .citizen-toc-list-item {
 		display: none;
 	}
 
 	.citizen-toc-level-1.citizen-toc-list-item--expanded .citizen-toc-list-item {
-		display: block;
+		display: flex;
 	}
 
 	.citizen-toc-toggle {
@@ -133,9 +125,10 @@
 
 // Sticky header styles
 .citizen-sticky-header-visible {
-	.citizen-toc-top.citizen-toc-link {
+	.citizen-toc .citizen-toc-top.citizen-toc-link {
 		height: 2rem; // 1rem text + 1rem padding
 		padding-block: var( --space-xs );
+		overflow: visible;
 		opacity: 1;
 	}
 }
@@ -210,6 +203,7 @@
 			position: relative;
 			min-width: auto;
 			margin: 0;
+			contain: none;
 			content-visibility: visible;
 			background: transparent;
 			border: 0;
@@ -218,6 +212,7 @@
 			transform: none;
 
 			.citizen-menu__card-content {
+				overflow: visible;
 				opacity: 1;
 			}
 

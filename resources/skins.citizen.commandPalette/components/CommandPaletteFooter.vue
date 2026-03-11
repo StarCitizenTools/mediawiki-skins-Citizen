@@ -2,15 +2,7 @@
 	<div class="citizen-command-palette__footer">
 		<!-- eslint-disable-next-line vue/no-v-html -->
 		<div class="citizen-command-palette__footer-note" v-html="currentTip"></div>
-		<command-palette-keyboard-hints
-			:has-highlighted-item-with-actions="hasHighlightedItemWithActions"
-			:item-count="itemCount"
-			:highlighted-item-type="highlightedItemType"
-			:is-action-focused="isActionFocused"
-			:is-first-action-focused="isFirstActionFocused"
-			:focused-action-index="focusedActionIndex"
-			:action-count="actionCount"
-		></command-palette-keyboard-hints>
+		<command-palette-keyboard-hints :hints="hints"></command-palette-keyboard-hints>
 	</div>
 </template>
 
@@ -26,33 +18,9 @@ module.exports = exports = defineComponent( {
 		CommandPaletteKeyboardHints
 	},
 	props: {
-		hasHighlightedItemWithActions: {
-			type: Boolean,
+		hints: {
+			type: Array,
 			required: true
-		},
-		itemCount: {
-			type: Number,
-			required: true
-		},
-		highlightedItemType: {
-			type: [ String, null ],
-			default: null
-		},
-		isActionFocused: {
-			type: Boolean,
-			default: false
-		},
-		isFirstActionFocused: {
-			type: Boolean,
-			default: false
-		},
-		focusedActionIndex: {
-			type: Number,
-			default: -1
-		},
-		actionCount: {
-			type: Number,
-			default: 0
 		}
 	},
 	setup() {

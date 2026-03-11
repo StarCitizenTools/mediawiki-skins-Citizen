@@ -1,106 +1,6 @@
-/* Some of the functions are based on Vector */
-/* ESLint does not like having class names as const */
-
-const config = require( './config.json' );
-const SEARCH_LOADING_CLASS = 'citizen-loading';
-
 /**
- * Loads the search module via `mw.loader.using` on the element's
- * focus event. Or, if the element is already focused, loads the
- * search module immediately.
- * After the search module is loaded, executes a function to remove
- * the loading indicator.
- *
- * @param {Document} document
- * @param {Object} mw
- * @param {HTMLElement} element search input.
- * @param {string} moduleName resourceLoader module to load.
- * @param {function(): void} afterLoadFn function to execute after search module loads.
- */
-function loadSearchModule( document, mw, element, moduleName, afterLoadFn ) {
-	const requestSearchModule = () => {
-		mw.loader.using( moduleName, afterLoadFn );
-		element.removeEventListener( 'focus', requestSearchModule );
-	};
-
-	if ( document.activeElement === element ) {
-		requestSearchModule();
-	} else {
-		element.addEventListener( 'focus', requestSearchModule );
-	}
-}
-
-/**
- * Event callback that shows or hides the loading indicator based on the event type.
- * The loading indicator states are:
- * 1. Show on input event (while user is typing)
- * 2. Hide on focusout event (when user removes focus from the input )
- * 3. Show when input is focused, if it contains a query. (in case user re-focuses on input)
- *
- * @param {Event} event
- */
-function renderSearchLoadingIndicator( event ) {
-	const form = /** @type {HTMLElement} */ ( event.currentTarget ),
-		input = /** @type {HTMLInputElement} */ ( event.target );
-
-	if (
-		!( event.currentTarget instanceof HTMLElement ) ||
-		!( event.target instanceof HTMLInputElement )
-	) {
-		return;
-	}
-
-	if ( event.type === 'input' ) {
-		form.classList.add( SEARCH_LOADING_CLASS );
-
-	} else if ( event.type === 'focusout' ) {
-		form.classList.remove( SEARCH_LOADING_CLASS );
-
-	} else if ( event.type === 'focusin' && input.value.trim() ) {
-		form.classList.add( SEARCH_LOADING_CLASS );
-	}
-}
-
-/**
- * Attaches or detaches the event listeners responsible for activating
- * the loading indicator.
- *
- * @param {HTMLElement} element
- * @param {boolean} attach
- * @param {function(Event): void} eventCallback
- */
-function setLoadingIndicatorListeners( element, attach, eventCallback ) {
-
-	/** @type { "addEventListener" | "removeEventListener" } */
-	const addOrRemoveListener = ( attach ? 'addEventListener' : 'removeEventListener' );
-
-	[ 'input', 'focusin', 'focusout' ].forEach( ( eventType ) => {
-		element[ addOrRemoveListener ]( eventType, eventCallback );
-	} );
-
-	if ( !attach ) {
-		element.classList.remove( SEARCH_LOADING_CLASS );
-	}
-}
-
-/**
- * Manually focus on the input field if search toggle is clicked
- *
- * @param {HTMLDetailsElement} details
- * @param {HTMLInputElement} input
- * @return {void}
- */
-function focusOnOpened( details, input ) {
-	if ( details.open ) {
-		input.focus();
-	} else {
-		input.blur();
-	}
-}
-
-/**
- * Check if the element is a HTML form element or content editable
- * This is to prevent trigger search box when user is typing on a textfield, input, etc.
+ * Check if the element is a HTML form element or content editable.
+ * This is to prevent triggering search box when user is typing on a textfield, input, etc.
  *
  * @param {HTMLElement} element
  * @return {boolean}
@@ -118,7 +18,17 @@ function isFormField( element ) {
 }
 
 /**
- * Manually toggle the details state when the keyboard button is SLASH is pressed.
+ * Open the search UI.
+ *
+ * @param {HTMLDetailsElement} details
+ * @return {void}
+ */
+function openSearch( details ) {
+	details.click();
+}
+
+/**
+ * Bind keyboard shortcuts to open the search UI.
  *
  * @param {Window} window
  * @param {HTMLDetailsElement} details
@@ -151,49 +61,7 @@ function bindOpenOnSlash( window, details ) {
 }
 
 /**
- * Add clear button to search field when there are input value
- *
- * @param {Document} document
- * @param {Window} window
- * @param {HTMLInputElement} input
- * @return {void}
- */
-function renderSearchClearButton( document, window, input ) {
-	const
-		clearButton = document.createElement( 'span' ),
-		clearIcon = document.createElement( 'span' );
-
-	let hasClearButton = false;
-
-	clearButton.classList.add( 'citizen-search__clear', 'citizen-search__formButton' );
-	// TODO: Add i18n for the message below
-	// clearButton.setAttribute( 'aria-label', 'Clear search input' );
-	clearIcon.classList.add( 'citizen-ui-icon', 'mw-ui-icon-wikimedia-trash' );
-	clearButton.append( clearIcon );
-
-	clearButton.addEventListener( 'click', ( event ) => {
-		event.preventDefault();
-		clearButton.classList.add( 'hidden' );
-		input.value = '';
-		input.dispatchEvent( new Event( 'input' ) );
-		window.requestAnimationFrame( () => {
-			input.focus();
-		} );
-	} );
-
-	input.addEventListener( 'input', () => {
-		const value = input.value;
-		const shouldDisplay = value !== '';
-		clearButton.classList.toggle( 'hidden', !shouldDisplay );
-		if ( shouldDisplay && !hasClearButton ) {
-			input.after( clearButton );
-		}
-		hasClearButton = shouldDisplay;
-	} );
-}
-
-/**
- * Bind the search trigger to open the search UI
+ * Bind the search trigger to open the search UI and prefill the input.
  *
  * @param {Document} document
  * @param {Object} mw
@@ -207,11 +75,9 @@ function bindSearchTrigger( document, mw, details ) {
 			if ( event.target.dataset.citizenSearchPrefill ) {
 				// Add a delay to ensure the search UI is open
 				setTimeout( () => {
-					const input = config.wgCitizenEnableCommandPalette ?
-						document.querySelector(
-							'.citizen-command-palette__input > .cdx-text-input__input'
-						) :
-						document.getElementById( 'searchInput' );
+					const input = document.querySelector(
+						'.citizen-command-palette-header__input .cdx-text-input__input'
+					);
 
 					if ( input === null ) {
 						return;
@@ -228,21 +94,7 @@ function bindSearchTrigger( document, mw, details ) {
 }
 
 /**
- * Open the search UI
- *
- * @param {HTMLDetailsElement} details
- * @return {void}
- */
-function openSearch( details ) {
-	if ( config.wgCitizenEnableCommandPalette ) {
-		details.click();
-	} else {
-		details.open = true;
-	}
-}
-
-/**
- * Initializes the search functionality for the Citizen search boxes.
+ * Initializes the search functionality.
  *
  * @param {Object} deps
  * @param {Window} deps.window
@@ -255,43 +107,7 @@ function initSearch( { window, document, mw } ) {
 
 	bindOpenOnSlash( window, details );
 	bindSearchTrigger( document, mw, details );
-
-	if ( config.wgCitizenEnableCommandPalette ) {
-		// Short-circuit the search module initialization,
-		// as it will be replaced by the command palette
-		mw.loader.load( 'skins.citizen.commandPalette' );
-		return;
-	}
-
-	const searchBoxes = document.querySelectorAll( '.citizen-search-box' );
-
-	if ( !searchBoxes.length ) {
-		return;
-	}
-
-	searchBoxes.forEach( ( searchBox ) => {
-		const
-			input = searchBox.querySelector( 'input[name="search"]' ),
-			isPrimarySearch = input && input.getAttribute( 'id' ) === 'searchInput';
-
-		if ( !input ) {
-			return;
-		}
-
-		// Set up primary search box interactions
-		if ( isPrimarySearch ) {
-			// Focus when toggled
-			details.addEventListener( 'toggle', () => {
-				focusOnOpened( details, input );
-			} );
-		}
-
-		renderSearchClearButton( document, window, input );
-		setLoadingIndicatorListeners( searchBox, true, renderSearchLoadingIndicator );
-		loadSearchModule( document, mw, input, config.wgCitizenSearchModule, () => {
-			setLoadingIndicatorListeners( searchBox, false, renderSearchLoadingIndicator );
-		} );
-	} );
+	mw.loader.load( 'skins.citizen.commandPalette' );
 }
 
 module.exports = {

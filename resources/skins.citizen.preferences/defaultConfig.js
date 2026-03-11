@@ -61,6 +61,14 @@ function getDefaultConfig() {
 				descriptionMsg: 'citizen-feature-pure-black-description',
 				visibilityCondition: 'dark-theme'
 			},
+			'citizen-feature-image-dimming': {
+				section: 'appearance',
+				options: [ '0', '1' ],
+				type: 'switch',
+				labelMsg: 'citizen-feature-image-dimming-name',
+				descriptionMsg: 'citizen-feature-image-dimming-description',
+				visibilityCondition: 'dark-theme'
+			},
 			'citizen-feature-autohide-navigation': {
 				section: 'behavior',
 				options: [ '0', '1' ],

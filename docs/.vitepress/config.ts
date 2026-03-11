@@ -10,6 +10,9 @@ export default defineConfig( {
 	srcDir: 'src',
 	cleanUrls: true,
 	lastUpdated: true,
+	sitemap: {
+		hostname: 'https://starcitizentools.github.io/mediawiki-skins-Citizen/',
+	},
 	themeConfig: {
 		logo: '/img/layout.svg',
 		nav: [
@@ -86,6 +89,10 @@ export default defineConfig( {
 							},
 						],
 					},
+					{
+						text: 'Hooks',
+						link: '/customization/hooks',
+					},
 				],
 			},
 			{
@@ -134,9 +141,16 @@ export default defineConfig( {
 			},
 		],
 
-		search: {
-			provider: 'local',
-		},
+		search: process.env.ALGOLIA_APP_ID && process.env.ALGOLIA_API_KEY && process.env.ALGOLIA_INDEX_NAME ?
+			{
+				provider: 'algolia',
+				options: {
+					appId: process.env.ALGOLIA_APP_ID,
+					apiKey: process.env.ALGOLIA_API_KEY,
+					indexName: process.env.ALGOLIA_INDEX_NAME,
+				},
+			} :
+			{ provider: 'local' },
 
 		editLink: {
 			pattern: 'https://github.com/StarCitizenTools/mediawiki-skins-Citizen/edit/main/docs/src/:path',

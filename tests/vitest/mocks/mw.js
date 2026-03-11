@@ -17,6 +17,14 @@ const mw = {
 		throttle: vi.fn( ( fn ) => fn ),
 		debounce: vi.fn( ( fn ) => fn ),
 		getTargetFromFragment: vi.fn( () => null ),
+		getUrl: vi.fn( ( title, params ) => {
+			let url = '/wiki/' + ( title || '' );
+			if ( params && typeof params === 'object' ) {
+				const search = new URLSearchParams( params );
+				url += '?' + search.toString();
+			}
+			return url;
+		} ),
 		escapeRegExp: vi.fn( ( str ) => str.replace( /[\\^$.*+?()[\]{}|]/g, '\\$&' ) )
 	},
 	loader: {
@@ -75,6 +83,9 @@ const mw = {
 		parse: vi.fn( () => key )
 	} ) ),
 	msg: vi.fn( ( key ) => key ),
+	language: {
+		convertNumber: vi.fn( ( n ) => String( n ) )
+	},
 	log: {
 		error: vi.fn(),
 		warn: vi.fn()

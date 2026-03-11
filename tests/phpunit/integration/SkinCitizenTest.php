@@ -23,7 +23,6 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 			$this->getServiceContainer()->getLanguageConverterFactory(),
 			$this->getServiceContainer()->getLanguageNameUtils(),
 			$this->getServiceContainer()->getPermissionManager(),
-			$this->getServiceContainer()->getExtensionRegistry(),
 			$this->getServiceContainer()->getUserGroupManager(),
 			$this->getServiceContainer()->getUrlUtils(),
 			null,

@@ -50,6 +50,7 @@ describe( 'createSectionObserver', () => {
 	beforeEach( () => {
 		vi.useFakeTimers();
 		win = {
+			innerHeight: 800,
 			addEventListener: vi.fn(),
 			removeEventListener: vi.fn(),
 			setTimeout: vi.fn( ( fn, ms ) => globalThis.setTimeout( fn, ms ) ),
@@ -71,23 +72,25 @@ describe( 'createSectionObserver', () => {
 		document.body.innerHTML = '';
 	} );
 
-	it( 'should select the entry closest to viewport top', () => {
+	it( 'should report all visible sections ordered by DOM position', () => {
 		const elA = makeElement( 'a' );
 		const elB = makeElement( 'b' );
 		const elC = makeElement( 'c' );
-		const obs = createObserver( { elements: [ elA, elB, elC ] } );
+		const elD = makeElement( 'd' );
+		const obs = createObserver( { elements: [ elA, elB, elC, elD ] } );
 
 		obs.calcIntersection();
 		observerCallback( [
-			makeEntry( elA, -200 ),
-			makeEntry( elB, -5 ),
-			makeEntry( elC, 300 )
+			makeEntry( elA, -500 ),
+			makeEntry( elB, -100 ),
+			makeEntry( elC, 300 ),
+			makeEntry( elD, 900 )
 		] );
 
-		expect( onIntersection ).toHaveBeenCalledWith( elB );
+		expect( onIntersection ).toHaveBeenCalledWith( [ elB, elC ] );
 	} );
 
-	it( 'should prefer above-viewport (negative) entry over equidistant positive entry', () => {
+	it( 'should report single section when only one heading is above viewport', () => {
 		const elAbove = makeElement( 'above' );
 		const elBelow = makeElement( 'below' );
 		const obs = createObserver( { elements: [ elAbove, elBelow ] } );
@@ -95,39 +98,77 @@ describe( 'createSectionObserver', () => {
 		obs.calcIntersection();
 		observerCallback( [
 			makeEntry( elAbove, -5 ),
-			makeEntry( elBelow, 5 )
+			makeEntry( elBelow, 900 )
 		] );
 
-		expect( onIntersection ).toHaveBeenCalledWith( elAbove );
+		expect( onIntersection ).toHaveBeenCalledWith( [ elAbove ] );
 	} );
 
-	it( 'should not re-fire onIntersection when the same section remains closest', () => {
-		const el = makeElement( 'same' );
-		const obs = createObserver( { elements: [ el ] } );
+	it( 'should not re-fire onIntersection when the same sections remain visible', () => {
+		const elA = makeElement( 'a' );
+		const elB = makeElement( 'b' );
+		const obs = createObserver( { elements: [ elA, elB ] } );
 
 		obs.calcIntersection();
-		observerCallback( [ makeEntry( el, -10 ) ] );
+		observerCallback( [
+			makeEntry( elA, -10 ),
+			makeEntry( elB, 300 )
+		] );
 
 		obs.calcIntersection();
-		observerCallback( [ makeEntry( el, -20 ) ] );
+		observerCallback( [
+			makeEntry( elA, -50 ),
+			makeEntry( elB, 250 )
+		] );
 
 		expect( onIntersection ).toHaveBeenCalledOnce();
 	} );
 
-	it( 'should fire onIntersection when a different section becomes closest', () => {
-		const elA = makeElement( 'first' );
-		const elB = makeElement( 'second' );
+	it( 'should fire onIntersection when the visible set changes', () => {
+		const elA = makeElement( 'a' );
+		const elB = makeElement( 'b' );
+		const elC = makeElement( 'c' );
+		const obs = createObserver( { elements: [ elA, elB, elC ] } );
+
+		obs.calcIntersection();
+		observerCallback( [
+			makeEntry( elA, -10 ),
+			makeEntry( elB, 300 ),
+			makeEntry( elC, 900 )
+		] );
+
+		obs.calcIntersection();
+		observerCallback( [
+			makeEntry( elA, -400 ),
+			makeEntry( elB, -10 ),
+			makeEntry( elC, 300 )
+		] );
+
+		expect( onIntersection ).toHaveBeenCalledTimes( 2 );
+		expect( onIntersection ).toHaveBeenNthCalledWith( 1, [ elA, elB ] );
+		expect( onIntersection ).toHaveBeenNthCalledWith( 2, [ elB, elC ] );
+	} );
+
+	it( 'should report only the closest-above section when all entries are above the viewport', () => {
+		const elA = makeElement( 'a' );
+		const elB = makeElement( 'b' );
 		const obs = createObserver( { elements: [ elA, elB ] } );
 
 		obs.calcIntersection();
-		observerCallback( [ makeEntry( elA, -10 ), makeEntry( elB, 100 ) ] );
+		observerCallback( [
+			makeEntry( elA, -10 ),
+			makeEntry( elB, 300 )
+		] );
 
 		obs.calcIntersection();
-		observerCallback( [ makeEntry( elA, -300 ), makeEntry( elB, -5 ) ] );
+		observerCallback( [
+			makeEntry( elA, -500 ),
+			makeEntry( elB, -400 )
+		] );
 
 		expect( onIntersection ).toHaveBeenCalledTimes( 2 );
-		expect( onIntersection ).toHaveBeenNthCalledWith( 1, elA );
-		expect( onIntersection ).toHaveBeenNthCalledWith( 2, elB );
+		expect( onIntersection ).toHaveBeenNthCalledWith( 1, [ elA, elB ] );
+		expect( onIntersection ).toHaveBeenNthCalledWith( 2, [ elB ] );
 	} );
 
 	it( 'should throttle rapid scroll events so only one recalculation fires per interval', () => {
@@ -194,6 +235,16 @@ describe( 'createSectionObserver', () => {
 
 		expect( win.removeEventListener ).toHaveBeenCalledWith( 'scroll', scrollHandler );
 		expect( mockObserverInstance.disconnect ).toHaveBeenCalled();
+	} );
+
+	it( 'should not throw when IntersectionObserver delivers an empty entries array', () => {
+		const el = makeElement( 'empty-test' );
+		const obs = createObserver( { elements: [ el ] } );
+
+		obs.calcIntersection();
+		observerCallback( [] );
+
+		expect( onIntersection ).not.toHaveBeenCalled();
 	} );
 
 	it( 'should warn and skip elements without a parentNode in calcIntersection', () => {

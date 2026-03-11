@@ -80,12 +80,19 @@ When your test plan includes steps that require a browser (e.g., verifying scrip
 ### Commits
 
 - Use [Conventional Commits](https://www.conventionalcommits.org/) (e.g. `fix(tests):`, `feat:`, `refactor:`)
+- Use `ci:` or `chore:` for non-user-facing changes (tooling, config, dependencies)
 - Do **not** include emojis — a pre-commit hook adds them automatically based on the commit type prefix
 
 ### Tests
 
 - Use Arrange-Act-Assert with blank lines separating each phase
 - In Vitest, set up DOM fixtures with `document.body.innerHTML` and an HTML string rather than imperative `createElement` chains — it's more readable and mirrors the actual markup
+
+### Documentation
+
+- User-facing docs live in `docs/src/` (VitePress site)
+- When changing public APIs, hooks, config options, or user-facing behavior, update the corresponding docs in `docs/src/`
+- When renaming internal concepts that are referenced in docs (e.g., "commands" → "modes"), update the docs to match
 
 ### i18n
 

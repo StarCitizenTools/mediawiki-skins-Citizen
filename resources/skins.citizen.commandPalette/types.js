@@ -26,6 +26,21 @@
  */
 
 /**
+ * A key-value pair displayed in the detail panel.
+ *
+ * @typedef {Object} CommandPaletteDetailPair
+ * @property {string} label The property/field name.
+ * @property {string} value The property/field value.
+ */
+
+/**
+ * Detail data shown in the side panel when an item is focused.
+ *
+ * @typedef {Object} CommandPaletteItemDetail
+ * @property {Array<CommandPaletteDetailPair>} pairs Key-value pairs to display.
+ */
+
+/**
  * Represents a display item in the Command Palette list.
  * Based on the props of CommandPaletteListItem.vue.
  *
@@ -39,23 +54,60 @@
  * @property {string} [thumbnailIcon] Optional placeholder icon identifier (e.g., cdxIcon...) if thumbnail URL is missing. Passed to cdx-thumbnail :placeholder-icon prop.
  * @property {Array<CommandPaletteItemMetadata>} [metadata] Optional list of metadata badges/tags.
  * @property {Array<CommandPaletteItemAction>} [actions] Optional list of actions available for the item.
- * @property {string} [value] Optional value associated with the item, used for specific types like commands (e.g. the command trigger string '/ns').
+ * @property {string} [value] Optional mode-specific payload associated with the item (e.g. the namespace trigger '/ns:', or the SMW property name for value suggestions).
  * @property {boolean} [highlightQuery] Whether to highlight the query in the label.
+ * @property {CommandPaletteItemDetail} [detail] Optional detail data shown in the side panel when focused.
  * @property {string} [source] Identifier of the provider that generated this item (e.g., 'recent', 'command', 'search').
  * @property {boolean} [isMouseClick] True if the selection was triggered by a mouse click.
  */
 
 /**
- * Defines the interface for a Slash Command handler.
- * Each command handler module should export an object conforming to this type.
+ * Content displayed in the empty or no-results state of the command palette.
  *
- * @typedef {Object} CommandPaletteCommand
- * @property {string} id A unique programmatic identifier for the command.
- * @property {string[]} triggers The triggers for the command.
- * @property {string} [description] The user-facing description for the command (used in root '/' suggestions).
- * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onCommandSelect] Optional: Handles selection of the command item itself.
- * @property {function(string): Promise<Array<CommandPaletteItem>>} [getResults] Optional: Asynchronously fetches and adapts suggestion data based on the sub-query, returning CommandPaletteItems.
- * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Optional: Handles selection of an item *generated* by this command.
+ * @typedef {Object} StateContent
+ * @property {string} title The heading text.
+ * @property {string} description The body text.
+ * @property {Object} icon Codex icon object.
+ */
+
+/**
+ * A mode switches the palette into a different search/browse context.
+ *
+ * @typedef {Object} PaletteMode
+ * @property {string} id Unique identifier for this mode.
+ * @property {string[]} triggers Prefixes that activate the mode (e.g., ['/ns:', ':']).
+ * @property {string} [label] Display label for this mode in the command list.
+ * @property {string} [description] Short explanation shown in the command list.
+ * @property {string} [placeholder] Input placeholder when mode is active (e.g., "Search users").
+ * @property {Object} [icon] Codex icon object for the header when mode is active.
+ * @property {StateContent} [emptyState] Content shown when the mode is active with no query. Falls back to default search messaging.
+ * @property {function(string, Array?): StateContent} [noResults] Returns content shown when query produces no results. Receives the query string and optional tokens array. Falls back to default no-results messaging.
+ * @property {TokenPattern|TokenPattern[]} [tokenPattern] Optional token detection pattern(s) for auto-tokenization.
+ * @property {function(string, AbortSignal?, Array?): Promise<CommandPaletteItem[]>} getResults Returns result items for the given sub-query. Optional signal for abort, optional tokens array.
+ * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection of a result item.
+ */
+
+/**
+ * Defines a token detection pattern for auto-tokenization in the input field.
+ *
+ * @typedef {Object} TokenPattern
+ * @property {string} modeId Which mode produced this pattern.
+ * @property {'prefix'|'any'} position Where the token must appear in the query.
+ * @property {'root'|string} activeIn Controls when pattern is eligible: 'root' = only when no mode active, a mode id string = only when that mode is active.
+ * @property {function(string): {label: string, raw: string}|null} match Tests text and returns token data or null.
+ * @property {function(string): {label: string, raw: string}|null} [eagerMatch] Optional lenient matcher used after the standard pass matched at least one token (e.g. paste). Allows end-of-string as a valid terminator.
+ * @property {string} [variant] Optional visual variant for the chip (e.g. 'outlined').
+ */
+
+/**
+ * A command executes an action immediately on selection (no sub-query).
+ *
+ * @typedef {Object} PaletteCommand
+ * @property {string} id Unique identifier for this command.
+ * @property {string[]} triggers Prefixes that activate the command.
+ * @property {string} [label] Display label for this command in the command list.
+ * @property {string} [description] Short explanation shown in the command list.
+ * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection — executes the command action.
  */
 
 /**
@@ -67,7 +119,15 @@
  */
 
 /**
- * Action to update the command palette's query string.
+ * Action to exit the current mode and set the query string.
+ *
+ * @typedef {Object} CommandPaletteExitWithQueryAction
+ * @property {'exitWithQuery'} action
+ * @property {string} payload - The new query string.
+ */
+
+/**
+ * Action to update the query string within the current mode without exiting.
  *
  * @typedef {Object} CommandPaletteUpdateQueryAction
  * @property {'updateQuery'} action
@@ -86,7 +146,7 @@
  * Describes the action the UI should take after an item selection is handled.
  * This is a discriminated union based on the 'action' property.
  *
- * @typedef {CommandPaletteNavigateAction | CommandPaletteUpdateQueryAction | CommandPaletteNoneAction} CommandPaletteActionResult
+ * @typedef {CommandPaletteNavigateAction | CommandPaletteExitWithQueryAction | CommandPaletteUpdateQueryAction | CommandPaletteNoneAction} CommandPaletteActionResult
  */
 
 /**
@@ -123,6 +183,22 @@
  * @property {function(string): boolean} canProvide - Method to check if the provider can handle the query.
  * @property {function(string): Array<CommandPaletteItem>|Promise<Array<CommandPaletteItem>>} getResults - Method to fetch results.
  * @property {?function(CommandPaletteItem): CommandPaletteActionResult|Promise<CommandPaletteActionResult>} onResultSelect - Optional method to handle result selection.
+ */
+
+/**
+ * Result returned by a provider's getResults method.
+ *
+ * @typedef {Object} ProviderResult
+ * @property {Array<CommandPaletteItem>} items The result items.
+ * @property {boolean} [stale] If true, these are stale results shown while fresh ones load.
+ */
+
+/**
+ * Configuration for a provider, passed to createProvider.
+ *
+ * @typedef {Object} ProviderConfig
+ * @property {number} [debounceMs=250] Debounce delay in milliseconds.
+ * @property {boolean} [keepStaleResults=false] Whether to show previous results while loading.
  */
 
 module.exports = {/* Types are only used for JSDoc */};
