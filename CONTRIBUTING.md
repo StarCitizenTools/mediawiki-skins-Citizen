@@ -6,8 +6,8 @@ Thank you for considering contributing to *Citizen*!
 
 - [Code patches](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/pulls)
 - [Documentation improvements](https://starcitizentools.github.io/mediawiki-skins-Citizen/)
-- [Bug reports](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/new?template=bug_report.md)
-- [Feature requests and suggestions](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/new?template=feature_request.md)
+- [Bug reports](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/new?template=bug_report.yml)
+- [Feature requests and suggestions](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/new?template=feature_request.yml)
 - [Translations](#translations)
 
 ## How to submit a contribution
