@@ -1,58 +1,68 @@
 <template>
-	<div
-		v-if="isOpen"
-		class="citizen-command-palette-backdrop"
-		@click="close"></div>
-	<div
-		v-if="isOpen"
-		class="citizen-command-palette"
-		@keydown="keyboard.handleKeydown"
-	>
-		<command-palette-header
-			ref="searchHeader"
-			:tokens="tokenInput.tokens.value"
-			:free-text="tokenInput.freeText.value"
-			:selected-token-index="tokenInput.selectedIndex.value"
-			:is-pending="isPending"
-			:show-pending="showPending"
-			:active-mode="activeMode"
-			@exit-mode="exitMode"
-			@update:free-text="handleFreeTextUpdate( $event )"
-			@select-token="tokenInput.selectToken( $event )"
-			@remove-token="handleRemoveToken( $event )"
-		></command-palette-header>
+	<Transition name="citizen-command-palette-backdrop">
 		<div
-			class="citizen-command-palette__body"
-			:class="{ 'citizen-command-palette__body--has-detail': highlightedItemDetail }"
+			v-if="isOpen"
+			class="citizen-command-palette-backdrop"
+			@click="close"></div>
+	</Transition>
+	<Transition
+		name="citizen-command-palette"
+		@before-enter="setInitialBodyHeight"
+		@after-enter="setupResizeObserver"
+		@after-leave="teardownResizeObserver"
+	>
+		<div
+			v-if="isOpen"
+			class="citizen-command-palette"
+			@keydown="keyboard.handleKeydown"
 		>
-			<div class="citizen-command-palette__results">
-				<command-palette-empty-state
-					v-if="!showPending && flatItems.length === 0"
-					:title="emptyStateContent.title"
-					:description="emptyStateContent.description"
-					:icon="emptyStateContent.icon"
-				></command-palette-empty-state>
-				<command-palette-list
-					v-else-if="displayedItems.length > 0"
-					:sections="displayedItems"
-					:highlighted-item-index="highlightedItemIndex"
-					:search-query="query"
-					:set-item-ref="setItemRef"
-					@select="selectResult"
-					@action="handleAction"
-					@hover="handleHover"
-				></command-palette-list>
+			<command-palette-header
+				ref="searchHeader"
+				:tokens="tokenInput.tokens.value"
+				:free-text="tokenInput.freeText.value"
+				:selected-token-index="tokenInput.selectedIndex.value"
+				:is-pending="isPending"
+				:show-pending="showPending"
+				:active-mode="activeMode"
+				@exit-mode="exitMode"
+				@update:free-text="handleFreeTextUpdate( $event )"
+				@select-token="tokenInput.selectToken( $event )"
+				@remove-token="handleRemoveToken( $event )"
+			></command-palette-header>
+			<div
+				ref="bodyContainer"
+				class="citizen-command-palette__body"
+				:class="{ 'citizen-command-palette__body--has-detail': highlightedItemDetail }"
+			>
+				<div ref="bodyInner" class="citizen-command-palette__results">
+					<command-palette-empty-state
+						v-if="!showPending && flatItems.length === 0"
+						:title="emptyStateContent.title"
+						:description="emptyStateContent.description"
+						:icon="emptyStateContent.icon"
+					></command-palette-empty-state>
+					<command-palette-list
+						v-else-if="displayedItems.length > 0"
+						:sections="displayedItems"
+						:highlighted-item-index="highlightedItemIndex"
+						:search-query="query"
+						:set-item-ref="setItemRef"
+						@select="selectResult"
+						@action="handleAction"
+						@hover="handleHover"
+					></command-palette-list>
+				</div>
+				<command-palette-detail-panel
+					v-if="highlightedItemDetail"
+					class="citizen-command-palette__detail"
+					:detail="highlightedItemDetail"
+				></command-palette-detail-panel>
 			</div>
-			<command-palette-detail-panel
-				v-if="highlightedItemDetail"
-				class="citizen-command-palette__detail"
-				:detail="highlightedItemDetail"
-			></command-palette-detail-panel>
+			<command-palette-footer
+				:hints="keyboard.keyboardHints.value"
+			></command-palette-footer>
 		</div>
-		<command-palette-footer
-			:hints="keyboard.keyboardHints.value"
-		></command-palette-footer>
-	</div>
+	</Transition>
 </template>
 
 <script>
@@ -97,6 +107,39 @@ module.exports = exports = defineComponent( {
 		const isOpen = ref( false );
 		const searchHeader = ref( null );
 		const itemRefs = ref( new Map() );
+		const bodyContainer = ref( null );
+		const bodyInner = ref( null );
+		let resizeObserver = null;
+
+		const updateBodyHeight = () => {
+			const container = bodyContainer.value;
+			const inner = bodyInner.value;
+			if ( container && inner ) {
+				container.style.setProperty(
+					'--citizen-command-palette-body-height',
+					inner.clientHeight + 'px'
+				);
+			}
+		};
+
+		const setupResizeObserver = () => {
+			if ( !bodyInner.value ) {
+				return;
+			}
+			resizeObserver = new ResizeObserver( updateBodyHeight );
+			resizeObserver.observe( bodyInner.value );
+		};
+
+		const teardownResizeObserver = () => {
+			if ( resizeObserver ) {
+				resizeObserver.disconnect();
+				resizeObserver = null;
+			}
+		};
+
+		const setInitialBodyHeight = () => {
+			nextTick( updateBodyHeight );
+		};
 
 		// Provider orchestration (replaces Pinia searchStore)
 		const orchDeps = {
@@ -400,6 +443,12 @@ module.exports = exports = defineComponent( {
 			// State
 			isOpen,
 			searchHeader,
+			bodyContainer,
+			bodyInner,
+			// Body height animation
+			setupResizeObserver,
+			teardownResizeObserver,
+			setInitialBodyHeight,
 			// Orchestration
 			activeMode: orch.activeMode,
 			exitMode: orch.exitMode,
@@ -449,16 +498,8 @@ module.exports = exports = defineComponent( {
 	border: var( --border-base );
 	border-radius: var( --border-radius-medium );
 	box-shadow: var( --box-shadow-drop-xx-large );
-	transform: unset;
-	transition-timing-function: var( --transition-timing-function-ease-out );
-	transition-duration: var( --transition-duration-medium );
-	transition-property: transform;
 	.mixin-citizen-frosted-glass;
 	.mixin-citizen-font-styles( 'small' );
-
-	@starting-style {
-		transform: scale( 0 ) translateY( -200% );
-	}
 
 	@media ( min-width: @max-width-breakpoint-tablet ) {
 		top: 3rem;
@@ -474,10 +515,17 @@ module.exports = exports = defineComponent( {
 		position: fixed;
 		inset: 0;
 		background-color: var( --background-color-backdrop-light );
+		-webkit-backdrop-filter: var( --backdrop-filter-blur );
+		backdrop-filter: var( --backdrop-filter-blur );
 	}
 
 	&__body {
+		height: var( --citizen-command-palette-body-height );
+		overflow: hidden;
 		border-top: var( --border-subtle );
+		transition-timing-function: var( --transition-timing-function-ease-out );
+		transition-duration: var( --transition-duration-medium );
+		transition-property: height;
 
 		@media ( min-width: @min-width-breakpoint-tablet ) {
 			&--has-detail {
@@ -523,5 +571,38 @@ module.exports = exports = defineComponent( {
 			opacity: 0;
 		}
 	}
+}
+
+// Palette entrance/exit
+.citizen-command-palette-enter-active,
+.citizen-command-palette-leave-active {
+	transition-timing-function: var( --transition-timing-function-ease-out );
+	transition-duration: var( --transition-duration-medium );
+	transition-property: transform, opacity;
+}
+
+.citizen-command-palette-enter-from {
+	opacity: 0;
+	transform: scale( 1.06 );
+	transform-origin: 50% 0;
+}
+
+.citizen-command-palette-leave-to {
+	opacity: 0;
+	transform: scale( 1.04 );
+	transform-origin: 50% 0;
+}
+
+// Backdrop entrance/exit
+.citizen-command-palette-backdrop-enter-active,
+.citizen-command-palette-backdrop-leave-active {
+	transition-timing-function: var( --transition-timing-function-ease-out );
+	transition-duration: var( --transition-duration-medium );
+	transition-property: opacity;
+}
+
+.citizen-command-palette-backdrop-enter-from,
+.citizen-command-palette-backdrop-leave-to {
+	opacity: 0;
 }
 </style>
