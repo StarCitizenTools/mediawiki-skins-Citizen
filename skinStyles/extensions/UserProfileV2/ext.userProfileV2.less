@@ -5,7 +5,7 @@
  * Module: ext.userProfileV2
  * Version: main 4dddf5fe
  *
- * Date: 2026-03-03
+ * Date: 2026-03-26
 */
 
 /* ext.userProfileV2.less */
@@ -13,7 +13,7 @@
 .profile-header-attributes > h1,
 .profile-header-attributes > h2 {
 	font-family: var( --font-family-base ) !important;
-	font-size: var( --font-size-xxx-large );
+	font-size: var( --font-size-xxx-large ) !important;
 	font-weight: var( --font-weight-bold );
 }
 
@@ -32,6 +32,7 @@
 }
 
 .external-link.tooltip:hover::after {
+	margin-top: -5px;
 	font-size: var( --font-size-base );
 	color: var( --color-emphasized );
 	background: var( --color-surface-2 );
