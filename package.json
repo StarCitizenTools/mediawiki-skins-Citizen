@@ -43,7 +43,7 @@
 		"stylelint-order": "^7.0.1",
 		"stylelint-plugin-use-baseline": "^1.2.7",
 		"types-mediawiki": "2.0.0",
-		"vitest": "^4.0.18",
+		"vitest": "^4.1.0",
 		"vue": "3.4.27"
 	},
 	"version": "3.14.0"
