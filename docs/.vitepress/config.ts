@@ -75,6 +75,10 @@ export default defineConfig( {
 						link: '/customization/theming',
 					},
 					{
+						text: 'Recipes',
+						link: '/customization/recipes',
+					},
+					{
 						text: 'Features',
 						collapsed: true,
 						link: '/customization/features',
