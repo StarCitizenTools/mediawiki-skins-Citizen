@@ -66,7 +66,7 @@
 </template>
 
 <script>
-const { defineComponent, ref, nextTick, computed, watch, inject } = require( 'vue' );
+const { defineComponent, ref, nextTick, computed, watch, inject, onBeforeUnmount } = require( 'vue' );
 const useListNavigation = require( '../composables/useListNavigation.js' );
 const useKeyboard = require( '../composables/useKeyboard.js' );
 const useProviderOrchestration = require( '../composables/useProviderOrchestration.js' );
@@ -136,6 +136,8 @@ module.exports = exports = defineComponent( {
 				resizeObserver = null;
 			}
 		};
+
+		onBeforeUnmount( teardownResizeObserver );
 
 		const setInitialBodyHeight = () => {
 			nextTick( updateBodyHeight );
