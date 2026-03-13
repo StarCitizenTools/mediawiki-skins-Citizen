@@ -7,7 +7,7 @@
 	</Transition>
 	<Transition
 		name="citizen-command-palette"
-		@before-enter="setInitialBodyHeight"
+		@enter="updateBodyHeight"
 		@after-enter="setupResizeObserver"
 		@after-leave="teardownResizeObserver"
 	>
@@ -138,10 +138,6 @@ module.exports = exports = defineComponent( {
 		};
 
 		onBeforeUnmount( teardownResizeObserver );
-
-		const setInitialBodyHeight = () => {
-			nextTick( updateBodyHeight );
-		};
 
 		// Provider orchestration (replaces Pinia searchStore)
 		const orchDeps = {
@@ -450,7 +446,7 @@ module.exports = exports = defineComponent( {
 			// Body height animation
 			setupResizeObserver,
 			teardownResizeObserver,
-			setInitialBodyHeight,
+			updateBodyHeight,
 			// Orchestration
 			activeMode: orch.activeMode,
 			exitMode: orch.exitMode,
