@@ -1,11 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Adriendelucca"
+			"Adriendelucca",
+			"Huñvreüs"
 		]
 	},
 	"citizen-theme-name": "Liv",
-	"citizen-theme-description": "Cheñch tem ar wiki",
+	"citizen-theme-description": "Dibab mod sklaer pe teñval",
 	"citizen-theme-day-label": "Sklaer",
 	"citizen-theme-night-label": "Teñval",
 	"citizen-theme-os-label": "Emgefre",

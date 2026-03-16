@@ -38,6 +38,7 @@ When your test plan includes steps that require a browser (e.g., verifying scrip
 
 - Use available browser automation tools (e.g., Chrome DevTools MCP, Playwright MCP) to test against the dev environment URL before asking the user to test manually
 - Always check the browser console for warnings and errors, not just visual correctness
+- **XSS testing for i18n**: When changes touch interface messages or how they are rendered, append `?uselang=x-xss` to the URL. This replaces all i18n messages with XSS payloads — if any script executes or markup is injected, the message output is not properly escaped. See [Manual:$wgUseXssLanguage](https://www.mediawiki.org/wiki/Manual:$wgUseXssLanguage)
 
 ## Coding conventions
 
@@ -93,6 +94,15 @@ When your test plan includes steps that require a browser (e.g., verifying scrip
 - User-facing docs live in `docs/src/` (VitePress site)
 - When changing public APIs, hooks, config options, or user-facing behavior, update the corresponding docs in `docs/src/`
 - When renaming internal concepts that are referenced in docs (e.g., "commands" → "modes"), update the docs to match
+
+### Caching considerations
+
+PHP-generated HTML (Mustache templates, `SkinMustache` output) is cached by the parser, page cache, and edge caches. CSS and JS are loaded fresh via ResourceLoader. This means after a deploy, users may see **old cached HTML with new CSS/JS**. If a change renames classes, changes selectors, or restructures markup, the new CSS/JS will break against the old cached HTML. To avoid this, split the work into two commits:
+
+- **Part 1/2**: Add the new HTML and new CSS/JS, but **keep the old CSS/JS** so it still works with cached HTML
+- **Part 2/2**: Remove the old CSS/JS (deploy after caches have expired)
+
+This only applies to PHP-generated HTML. Client-rendered HTML (e.g. Vue components) is not parser-cached and does not need this treatment.
 
 ### i18n
 

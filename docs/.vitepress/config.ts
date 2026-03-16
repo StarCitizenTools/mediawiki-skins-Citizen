@@ -75,6 +75,10 @@ export default defineConfig( {
 						link: '/customization/theming',
 					},
 					{
+						text: 'Recipes',
+						link: '/customization/recipes',
+					},
+					{
 						text: 'Features',
 						collapsed: true,
 						link: '/customization/features',
@@ -82,6 +86,10 @@ export default defineConfig( {
 							{
 								text: 'Command palette',
 								link: '/customization/command-palette',
+							},
+							{
+								text: 'Performance mode',
+								link: '/customization/performance-mode',
 							},
 							{
 								text: 'Preferences',

@@ -390,6 +390,8 @@
 				"citizen-command-palette-keyhint-enter-open",
 				"citizen-command-palette-keyhint-enter-search",
 				"citizen-command-palette-keyhint-enter-select",
+				"citizen-command-palette-keyhint-clear",
+				"citizen-command-palette-keyhint-close",
 				"citizen-command-palette-keyhint-exit",
 				"citizen-command-palette-keyhint-navigate",
 				"citizen-command-palette-keyhint-return",

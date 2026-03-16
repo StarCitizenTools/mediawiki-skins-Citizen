@@ -113,6 +113,18 @@ function useKeyboard( deps ) {
 	}
 
 	/**
+	 * Mirrors the three-level logic in handleEscape(); keep in sync.
+	 */
+	const escHintMsgKey = computed( () => {
+		if ( deps.query.value ) {
+			return 'citizen-command-palette-keyhint-clear';
+		} else if ( deps.activeMode.value ) {
+			return 'citizen-command-palette-keyhint-exit';
+		}
+		return 'citizen-command-palette-keyhint-close';
+	} );
+
+	/**
 	 * Data-driven keyboard hints for the footer.
 	 * Each entry is { msgKey, kbd }.
 	 */
@@ -121,7 +133,7 @@ function useKeyboard( deps ) {
 			getActionZoneHints() : getInputZoneHints();
 
 		hints.push( {
-			msgKey: 'citizen-command-palette-keyhint-exit',
+			msgKey: escHintMsgKey.value,
 			kbd: 'esc'
 		} );
 
