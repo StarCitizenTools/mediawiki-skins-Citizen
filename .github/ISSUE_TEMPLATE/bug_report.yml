@@ -1,0 +1,62 @@
+name: Bug report
+description: Report a bug to help us improve Citizen
+labels: [bug]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: How can we reproduce this?
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen instead?
+    validations:
+      required: true
+  - type: dropdown
+    id: citizen-version
+    attributes:
+      label: Citizen version
+      options:
+        - Latest release
+        - Older release (specify below)
+        - main (development)
+    validations:
+      required: true
+  - type: input
+    id: mw-version
+    attributes:
+      label: MediaWiki version
+      placeholder: e.g. 1.43.0
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser
+      placeholder: e.g. Chrome 130, Firefox 133, Safari 18
+  - type: textarea
+    id: extensions
+    attributes:
+      label: Relevant extensions
+      description: Any installed extensions that may be related.
+      placeholder: e.g. VisualEditor, SemanticMediaWiki 4.0
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Screenshots, error logs, config snippets, etc.

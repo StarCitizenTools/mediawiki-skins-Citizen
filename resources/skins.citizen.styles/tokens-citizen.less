@@ -199,6 +199,11 @@
 	}
 	// stylelint-enable length-zero-no-unit
 
+	// Derived header offset tokens
+	// These combine the static header size with the dynamic sticky header height
+	--header-offset-block-start: calc( var( --header-size-block-start ) + var( --height-sticky-header ) );
+	--header-offset-block-end: var( --header-size-block-end );
+
 	// Deprecated tokens
 	--color-primary__h: var( --color-progressive-hsl__h );
 	--color-primary__s: var( --color-progressive-hsl__s );
@@ -219,11 +224,4 @@
 	--transition-menu: @transition-menu;
 	--transition-duration-base: 100ms;
 	--transition-duration-medium: 250ms;
-}
-
-// These values requires input from the body element
-body {
-	// Only block-start is needed because sticky header is always on top
-	--header-offset-block-start: calc( var( --header-size-block-start ) + var( --height-sticky-header ) );
-	--header-offset-block-end: var( --header-size-block-end );
 }

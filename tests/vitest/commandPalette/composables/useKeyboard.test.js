@@ -191,7 +191,7 @@ describe( 'useKeyboard', () => {
 
 			expect( hints ).toEqual( [
 				{ msgKey: 'citizen-command-palette-keyhint-enter-search', kbd: '↵' },
-				{ msgKey: 'citizen-command-palette-keyhint-exit', kbd: 'esc' }
+				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc' }
 			] );
 		} );
 
@@ -204,7 +204,7 @@ describe( 'useKeyboard', () => {
 			expect( hints ).toEqual( [
 				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵' },
 				{ msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓' },
-				{ msgKey: 'citizen-command-palette-keyhint-exit', kbd: 'esc' }
+				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc' }
 			] );
 		} );
 
@@ -221,7 +221,7 @@ describe( 'useKeyboard', () => {
 				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵' },
 				{ msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓' },
 				{ msgKey: 'citizen-command-palette-keyhint-actions', kbd: '→' },
-				{ msgKey: 'citizen-command-palette-keyhint-exit', kbd: 'esc' }
+				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc' }
 			] );
 		} );
 
@@ -239,7 +239,7 @@ describe( 'useKeyboard', () => {
 				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵' },
 				{ msgKey: 'citizen-command-palette-keyhint-return', kbd: '←' },
 				{ msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓' },
-				{ msgKey: 'citizen-command-palette-keyhint-exit', kbd: 'esc' }
+				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc' }
 			] );
 		} );
 
@@ -256,8 +256,33 @@ describe( 'useKeyboard', () => {
 			expect( hints ).toEqual( [
 				{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵' },
 				{ msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓←→' },
-				{ msgKey: 'citizen-command-palette-keyhint-exit', kbd: 'esc' }
+				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc' }
 			] );
+		} );
+
+		it( 'should show Clear hint when query is non-empty', () => {
+			deps.query.value = 'test';
+			deps.items.value = [];
+			listNav.highlightedIndex.value = -1;
+
+			const hints = keyboard.keyboardHints.value;
+
+			expect( hints[ hints.length - 1 ] ).toEqual(
+				{ msgKey: 'citizen-command-palette-keyhint-clear', kbd: 'esc' }
+			);
+		} );
+
+		it( 'should show Exit hint when in a mode with no query', () => {
+			deps.query.value = '';
+			deps.activeMode.value = { id: 'namespace' };
+			deps.items.value = [];
+			listNav.highlightedIndex.value = -1;
+
+			const hints = keyboard.keyboardHints.value;
+
+			expect( hints[ hints.length - 1 ] ).toEqual(
+				{ msgKey: 'citizen-command-palette-keyhint-exit', kbd: 'esc' }
+			);
 		} );
 	} );
 
