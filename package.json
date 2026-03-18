@@ -33,7 +33,7 @@
 		"grunt-banana-checker": "0.13.0",
 		"jsdom": "^29.0.0",
 		"lefthook": "^2.1.4",
-		"less": "^4.5.1",
+		"less": "^4.6.4",
 		"markdownlint-cli": "^0.48.0",
 		"mustache": "^4.2.0",
 		"pinia": "2.0.16",
