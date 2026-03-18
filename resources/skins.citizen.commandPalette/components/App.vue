@@ -117,7 +117,7 @@ module.exports = exports = defineComponent( {
 			if ( container && inner ) {
 				container.style.setProperty(
 					'--citizen-command-palette-body-height',
-					inner.clientHeight + 'px'
+					inner.scrollHeight + 'px'
 				);
 			}
 		};
