@@ -36,7 +36,6 @@
 		"less": "^4.5.1",
 		"markdownlint-cli": "^0.48.0",
 		"mustache": "^4.2.0",
-		"pinia": "2.0.16",
 		"stylelint": "17.4.0",
 		"stylelint-config-recess-order": "7.6.1",
 		"stylelint-config-wikimedia": "0.18.0",
