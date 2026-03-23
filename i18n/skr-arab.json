@@ -20,6 +20,8 @@
 	"citizen-command-palette-keyhint-enter-open": "کھولو",
 	"citizen-command-palette-keyhint-enter-search": "ڳولو",
 	"citizen-command-palette-keyhint-navigate": "نیویگیٹ",
+	"citizen-command-palette-keyhint-clear": "صاف",
+	"citizen-command-palette-keyhint-close": "بند کرو",
 	"citizen-command-palette-keyhint-exit": "نکلو",
 	"citizen-command-palette-keyhint-actions": "عمل",
 	"citizen-command-palette-keyhint-return": "ولدا واپس",

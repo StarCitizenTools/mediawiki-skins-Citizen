@@ -69,7 +69,7 @@
 	"citizen-command-palette-command-smw-label": "Query semantica di MediaWiki",
 	"citizen-command-palette-mode-action-placeholder": "Cerca azioni",
 	"citizen-command-palette-mode-ns-placeholder": "Cerca namespace",
-	"citizen-command-palette-mode-smw-empty-description": "Inserisci condizioni come [[Categoria:Città]] o [[Situato in::Germania]] per interrogare le pagine",
+	"citizen-command-palette-mode-smw-empty-description": "Inserisci condizioni come [[Category:City]] o [[Located in::Germany]] per interrogare le pagine",
 	"citizen-command-palette-mode-smw-empty-title": "Chiedi a Semantic MediaWiki",
 	"citizen-command-palette-mode-smw-malformed-description": "Chiudi la tua condizione con ]] per eseguire la query",
 	"citizen-command-palette-mode-smw-malformed-title": "Condizione incompleta",
