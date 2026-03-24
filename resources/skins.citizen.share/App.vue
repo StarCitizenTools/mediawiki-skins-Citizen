@@ -18,6 +18,12 @@
         <div class="citizen-share-main__social-options">
             
         </div>
+
+        <div class="citizen-share-main__other">
+            <button id="citizen-share-native-options" @click="showMoreOptions">
+                More options...
+            </button>
+        </div>
 	</div>
 </template>
 
@@ -25,11 +31,24 @@
 const { defineComponent } = require( 'vue' );
 
 
-function copyURL() {
-    const link = document.getElementById( 'citizen-share-link' );
-    link.select();
-    document.execCommand( 'copy' );
-}   
+async function copyURL() {
+    const url = window.location.href;
+    try {
+        await navigator.clipboard.writeText( url );
+    } catch ( e ) {
+        const link = document.getElementById( 'citizen-share-link' );
+        link.select();
+        document.execCommand( 'copy' );
+    }
+}
+
+async function showMoreOptions() {
+    await navigator.share({
+        title: document.title,
+        text: document.title,
+        url: window.location.href
+    });   
+}
 
 
 // @vue/component
@@ -40,7 +59,8 @@ module.exports = exports = defineComponent( {
 	setup() {
 		return {
 			window,
-			copyURL
+			copyURL,
+			showMoreOptions
 		};
 	}
 } );
@@ -115,4 +135,22 @@ module.exports = exports = defineComponent( {
 #citizen-share-copy-button:hover {
     background-color: var(--background-color-progressive--hover);
 }
+
+.citizen-share-main__other {
+    margin-top: var(--space-md);
+}
+
+#citizen-share-native-options {
+    background-color: var(--background-color-button-quiet);
+    color: var(--color-emphasized);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--border-radius-medium);
+    cursor: pointer;
+    width: 100%;
+}
+
+#citizen-share-native-options:hover {
+    background-color: var(--background-color-button-quiet--active);
+}
+
 </style>
