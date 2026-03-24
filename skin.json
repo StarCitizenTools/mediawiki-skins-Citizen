@@ -300,6 +300,15 @@
 				"vue"
 			]
 		},
+		"skins.citizen.share": {
+			"packageFiles": [
+				"resources/skins.citizen.share/init.js",
+				"resources/skins.citizen.share/App.vue"
+			],
+			"dependencies": [
+				"vue"
+			]
+		},
 		"skins.citizen.serviceWorker": {
 			"scripts": [
 				"resources/skins.citizen.serviceWorker/sw.js"
