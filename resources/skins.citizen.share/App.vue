@@ -155,6 +155,10 @@ module.exports = exports = defineComponent( {
     border-bottom-right-radius: 0px;
     border-color: var(--border-color-input--hover);
     field-sizing: content;
+    max-width: 400px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 #citizen-share-link:focus {
