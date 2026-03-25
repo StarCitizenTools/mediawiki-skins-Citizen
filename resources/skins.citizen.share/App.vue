@@ -58,8 +58,7 @@
 					width="24px"
 					height="24px"
 					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 256 256"><path fill="currentColor" d="m154.04,60.36c2.22,9.41,10.67,16.42,20.76,16.42,11.78,0,21.33-9.55,21.33-21.33s-9.55-21.33-21.33-21.33c-10.3,0-18.89,7.3-20.89,17.01-17.25,1.85-30.72,16.48-30.72,34.21,0,.04,0,.07,0,.11-18.76.79-35.89,6.13-49.49,14.56-5.05-3.91-11.39-6.24-18.27-6.24-16.51,0-29.89,13.38-29.89,29.89,0,11.98,7.04,22.3,17.21,27.07.99,34.7,38.8,62.61,85.31,62.61s84.37-27.94,85.31-62.67c10.09-4.8,17.07-15.09,17.07-27,0-16.51-13.38-29.89-29.89-29.89-6.85,0-13.16,2.31-18.2,6.19-13.72-8.49-31.04-13.83-49.99-14.54,0-.03,0-.05,0-.08,0-12.7,9.44-23.24,21.68-24.97Zm-81.54,82.27c.5-10.84,7.7-19.16,16.07-19.16s14.77,8.79,14.27,19.63c-.5,10.84-6.75,14.78-15.13,14.78s-15.71-4.41-15.21-15.25Zm95.06-19.16c8.38,0,15.58,8.32,16.07,19.16.5,10.84-6.84,15.25-15.21,15.25s-14.63-3.93-15.13-14.78c-.5-10.84,5.89-19.63,14.27-19.63Zm-9.96,44.24c1.57.16,2.57,1.79,1.96,3.25-5.15,12.31-17.31,20.96-31.5,20.96s-26.34-8.65-31.5-20.96c-.61-1.46.39-3.09,1.96-3.25,9.2-.93,19.15-1.44,29.54-1.44s20.33.51,29.54,1.44Z" />
-                </svg>
+					viewBox="0 0 256 256"><path fill="currentColor" d="m154.04,60.36c2.22,9.41,10.67,16.42,20.76,16.42,11.78,0,21.33-9.55,21.33-21.33s-9.55-21.33-21.33-21.33c-10.3,0-18.89,7.3-20.89,17.01-17.25,1.85-30.72,16.48-30.72,34.21,0,.04,0,.07,0,.11-18.76.79-35.89,6.13-49.49,14.56-5.05-3.91-11.39-6.24-18.27-6.24-16.51,0-29.89,13.38-29.89,29.89,0,11.98,7.04,22.3,17.21,27.07.99,34.7,38.8,62.61,85.31,62.61s84.37-27.94,85.31-62.67c10.09-4.8,17.07-15.09,17.07-27,0-16.51-13.38-29.89-29.89-29.89-6.85,0-13.16,2.31-18.2,6.19-13.72-8.49-31.04-13.83-49.99-14.54,0-.03,0-.05,0-.08,0-12.7,9.44-23.24,21.68-24.97Zm-81.54,82.27c.5-10.84,7.7-19.16,16.07-19.16s14.77,8.79,14.27,19.63c-.5,10.84-6.75,14.78-15.13,14.78s-15.71-4.41-15.21-15.25Zm95.06-19.16c8.38,0,15.58,8.32,16.07,19.16.5,10.84-6.84,15.25-15.21,15.25s-14.63-3.93-15.13-14.78c-.5-10.84,5.89-19.63,14.27-19.63Zm-9.96,44.24c1.57.16,2.57,1.79,1.96,3.25-5.15,12.31-17.31,20.96-31.5,20.96s-26.34-8.65-31.5-20.96c-.61-1.46.39-3.09,1.96-3.25,9.2-.93,19.15-1.44,29.54-1.44s20.33.51,29.54,1.44Z" /></svg>
 			</div>
 
 			<div
@@ -172,18 +171,18 @@ module.exports = exports = defineComponent( {
 }
 
 .citizen-share-main__header {
-    color: var(--color-emphasized);
-    font-size: var(--font-size-large);
-    font-weight: var(--font-weight-semi-bold);
-    line-height: var(--line-height-large);
-    margin-bottom: var(--space-xs);
+    color: var( --color-emphasized );
+    font-size: var( --font-size-large );
+    font-weight: var( --font-weight-semi-bold );
+    line-height: var( --line-height-large );
+    margin-bottom: var( --space-xs );
 }
 
 .citizen-share-main__header__description {
-    color: var(--color-subtle);
-    font-size: var(--font-size-small);
-    font-weight: var(--font-weight-normal);
-    line-height: var(--line-height-small);
+    color: var( --color-subtle );
+    font-size: var( --font-size-small );
+    font-weight: var( --font-weight-normal );
+    line-height: var( --line-height-small );
 }
 
 .citizen-share-main__copy-link {
@@ -196,12 +195,12 @@ module.exports = exports = defineComponent( {
 #citizen-share-link {
     width: auto;
     outline: none;
-    padding: var(--space-xs) var(--space-sm);
-    border-radius: var(--border-radius-medium);
+    padding: var( --space-xs ) var( --space-sm );
+    border-radius: var( --border-radius-medium );
     border-width: 2px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
-    border-color: var(--border-color-input--hover);
+    border-color: var( --border-color-input--hover );
     field-sizing: content;
     max-width: 400px;
     overflow: hidden;
@@ -210,59 +209,59 @@ module.exports = exports = defineComponent( {
 }
 
 #citizen-share-link:focus {
-    border-color: var(--background-color-progressive);
+    border-color: var( --background-color-progressive );
 }
 
 #citizen-share-copy-button {
-    background-color: var(--background-color-progressive);
-    color: var(--color-surface-0);
+    background-color: var( --background-color-progressive );
+    color: var( --color-surface-0 );
     border: none;
-    padding: var(--space-xs) var(--space-sm);
-    border-radius: var(--border-radius-medium);
+    padding: var( --space-xs ) var( --space-sm );
+    border-radius: var( --border-radius-medium );
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
     cursor: pointer;
 }
 
 #citizen-share-copy-button svg {
-    width: var(--space-md);
-    height: var(--space-md);
-    fill: var(--color-inverted-fixed);
+    width: var( --space-md );
+    height: var( --space-md );
+    fill: var( --color-inverted-fixed );
 }
 
 #citizen-share-copy-button:hover {
-    background-color: var(--background-color-progressive--hover);
+    background-color: var( --background-color-progressive--hover );
 }
 
 .citizen-share-main__other {
-    margin-top: var(--space-md);
+    margin-top: var( --space-md );
 }
 
 #citizen-share-native-options {
-    background-color: var(--background-color-button-quiet);
-    color: var(--color-emphasized);
-    padding: var(--space-xs) var(--space-sm);
-    border-radius: var(--border-radius-medium);
+    background-color: var( --background-color-button-quiet );
+    color: var( --color-emphasized );
+    padding: var( --space-xs ) var( --space-sm );
+    border-radius: var( --border-radius-medium );
     cursor: pointer;
     width: 100%;
 }
 
 #citizen-share-native-options:hover {
-    background-color: var(--background-color-button-quiet--active);
+    background-color: var( --background-color-button-quiet--active );
 }
 
 .citizen-share-main__social-options {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
-    gap: var(--space-xs);
-    margin-top: var(--space-md);
+    grid-template-columns: repeat( auto-fit, minmax( 30%, 1fr ) );
+    gap: var( --space-xs );
+    margin-top: var( --space-md );
 }
 
 .citizen-share-main__social-option {
-    border-radius: var(--border-radius-medium);
-    padding: var(--space-xs);
+    border-radius: var( --border-radius-medium );
+    padding: var( --space-xs );
+    color: #fff;
     cursor: pointer;
-    color: #FFFFFF;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -270,7 +269,7 @@ module.exports = exports = defineComponent( {
 }
 
 #citizen-share-twitter {
-    background-color: #1DA1F2;
+    background-color: #1da1f2;
 }
 
 #citizen-share-reddit {
