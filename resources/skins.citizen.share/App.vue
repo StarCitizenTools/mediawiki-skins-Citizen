@@ -5,7 +5,6 @@
 			<div class="citizen-share-main__header__description">
 				Share a link to this article:
 			</div>
-			<!-- TODO i18n -->
 		</div>
 
 		<div class="citizen-share-main__copy-link">
