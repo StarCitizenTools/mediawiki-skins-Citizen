@@ -12,7 +12,7 @@
 				id="citizen-share-link"
 				type="text"
 				readonly
-				:value="window.location.host + window.location.pathname">
+				:value="window.location.protocol + '//' + window.location.host + window.location.pathname">
 			<button id="citizen-share-copy-button" @click="copyURL">
 				<svg
 					id="citizen-share-copy-button-icon-static"
@@ -92,7 +92,7 @@
 const { defineComponent } = require( 'vue' );
 
 async function copyURL() {
-	const url = window.location.host + window.location.pathname;
+	const url = window.location.protocol + '//' + window.location.host + window.location.pathname;
 	try {
 		const link = document.getElementById( 'citizen-share-link' );
 		link.select();
