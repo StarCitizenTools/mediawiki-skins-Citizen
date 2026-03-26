@@ -905,6 +905,12 @@
 			"value": 28,
 			"description": "@var The minimum number of headings required to collapse all headings in the sticky table of contents by default."
 		},
+		"EnableShare": {
+			"value": true,
+			"description": "Enable or disable the share button",
+			"descriptionmsg": "citizen-config-enableshare",
+			"public": true
+		},
 		"HeaderPosition": {
 			"value": "left",
 			"description": "Position of the header on the desktop layout. Possible values: 'left', 'right', 'top' and 'bottom'",

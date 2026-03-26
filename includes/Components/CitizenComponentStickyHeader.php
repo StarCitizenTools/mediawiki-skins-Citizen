@@ -58,7 +58,8 @@ class CitizenComponentStickyHeader implements CitizenComponent {
 	];
 
 	public function __construct(
-		private readonly bool $visualEditorTabPositionFirst = false
+		private readonly bool $visualEditorTabPositionFirst = false,
+		private readonly bool $enableShare = true
 	) {
 	}
 
@@ -66,8 +67,13 @@ class CitizenComponentStickyHeader implements CitizenComponent {
 	 * Creates array of Button components in the sticky header
 	 */
 	private function getIconButtons(): array {
-		$icons = [
-			self::SHARE_ICON,
+		$icons = [];
+
+		if ( $this->enableShare ) {
+			$icons[] = self::SHARE_ICON;
+		}
+
+		array_push( $icons,
 			self::HISTORY_ICON,
 			$this->visualEditorTabPositionFirst ? self::EDIT_VE_ICON : self::EDIT_WIKITEXT_ICON,
 			$this->visualEditorTabPositionFirst ? self::EDIT_WIKITEXT_ICON : self::EDIT_VE_ICON,
@@ -75,7 +81,7 @@ class CitizenComponentStickyHeader implements CitizenComponent {
 			self::ADD_SECTION_ICON,
 			self::TALK_ICON,
 			self::SUBJECT_ICON
-		];
+		);
 		$iconButtons = [];
 		foreach ( $icons as $icon ) {
 			$button = new CitizenComponentButton(
