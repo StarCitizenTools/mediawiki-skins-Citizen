@@ -21,6 +21,10 @@ function createShare( { document, window, mw, navigator } ) {
 		shareDetails.addEventListener( 'toggle', () => {
 			mw.loader.load( 'skins.citizen.share' );
 		}, { once: true } );
+
+		shareDetails.addEventListener( 'toggle', () => {
+			window.scrollTo( { top: 0, left: 0, behavior: 'auto' } );
+		} );
 	}
 
 	return { init };
