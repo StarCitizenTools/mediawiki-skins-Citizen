@@ -21,15 +21,10 @@
 :is( a,
 button,
 summary ) {
-	.citizen-ui-icon,
-	&.citizen-share > svg > g > rect {
-		transform-origin: center;
-		transform-box: fill-box;
-		transition: var( --transition-hover );
-		transition-property: transform, opacity;
-	}
-
 	.citizen-ui-icon {
+		transition: var( --transition-hover );
+		transition-property: transform;
+
 		&.mw-ui-icon-wikimedia-configure {
 			// HACK: Manually rotate the configure icon to create an illusion
 			// that the sliders are being moved.
@@ -71,12 +66,6 @@ summary ) {
 				&.mw-ui-icon-wikimedia-logIn,
 				&.mw-ui-icon-wikimedia-share {
 					transform: translateX( 2px );
-				}
-			}
-
-			&.citizen-share > svg > rect {
-				&:nth-of-type( 1 ) {
-					transform: rotate( 60deg ) translateY( 25% ) scaleY( 0.5 );
 				}
 			}
 		}
