@@ -223,6 +223,7 @@ module.exports = exports = defineComponent( {
 
 #citizen-share-link {
 	width: auto;
+    height: 32px;
 	outline: none;
 	padding: var( --space-xs ) var( --space-sm );
 	border-radius: var( --border-radius-medium );
