@@ -232,6 +232,7 @@ module.exports = exports = defineComponent( {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	outline: none;
 	border-color: var( --border-color-input--hover );
 	border-width: 2px;
 	border-radius: var( --border-radius-medium );
