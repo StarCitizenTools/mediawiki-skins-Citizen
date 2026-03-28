@@ -12,6 +12,7 @@
 				id="citizen-share-link"
 				type="text"
 				readonly
+				:size="linkInputSize"
 				:value="pageURL">
 			<button
 				id="citizen-share-copy-button"
@@ -89,6 +90,9 @@ module.exports = exports = defineComponent( {
 		const pageTitle = window.document.title;
 
 		const shareServices = computed( () => ( Array.isArray( shareServiceOptions ) ? shareServiceOptions : [] ) );
+
+		// alternative to the "field-sizing: content" css attribute as stylelint only wants "baseline" attributes
+		const linkInputSize = computed( () => Math.min( 80, Math.max( 12, pageURL.length ) ) );
 
 		// replaces the {{url}} and {{title}} placeholders in the URL template
 		function buildURL( urlTemplate ) {
@@ -179,6 +183,7 @@ module.exports = exports = defineComponent( {
 		return {
 			copied,
 			pageURL,
+			linkInputSize,
 			shareServices,
 			buildURL,
 			copyURL,
@@ -232,13 +237,13 @@ module.exports = exports = defineComponent( {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	outline: none;
+	outline: 2px solid transparent;
+	outline-offset: 0;
 	border-color: var( --border-color-input--hover );
 	border-width: 2px;
 	border-radius: var( --border-radius-medium );
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
-	field-sizing: content;
 }
 
 #citizen-share-link:focus {
