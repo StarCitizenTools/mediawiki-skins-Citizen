@@ -1,6 +1,6 @@
 const Vue = require( 'vue' );
-// const { reactive } = Vue;
 const App = require( './App.vue' );
+const config = require( './config.json' );
 
 function initApp() {
 	const mountPoint = document.getElementById( 'citizen-share-content' );
@@ -8,10 +8,9 @@ function initApp() {
 		return;
 	}
 
-    const app = Vue.createMwApp( App );
-    // app.provide( 'preferencesConfig', config );
-    // app.provide( 'themeDefault', themeDefault );
-    app.mount( mountPoint );
+	const app = Vue.createMwApp( App );
+	app.provide( 'shareServiceOptions', config.wgCitizenShareServiceOptions || [] );
+	app.mount( mountPoint );
 }
 
 module.exports = { initApp };
