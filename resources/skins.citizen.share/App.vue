@@ -103,10 +103,13 @@ module.exports = exports = defineComponent( {
 
 		async function copyURL() {
 			const link = document.getElementById( 'citizen-share-link' );
+
+			// try two different methods as navigator.clipboard is not available in all browsers
 			try {
 				if ( link ) {
 					link.select();
 				}
+				// eslint-disable-next-line compat/compat
 				await navigator.clipboard.writeText( pageURL );
 			} catch ( e ) {
 				if ( link ) {
