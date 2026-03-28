@@ -93,7 +93,7 @@ module.exports = exports = defineComponent( {
 		// replaces the {{url}} and {{title}} placeholders in the URL template
 		function buildURL( urlTemplate ) {
 			return urlTemplate
-				.replace( /\{\{url\}\}/g, encodeURIComponent( window.location.href ) )
+				.replace( /\{\{url\}\}/g, encodeURIComponent( pageURL ) )
 				.replace( /\{\{title\}\}/g, encodeURIComponent( pageTitle ) );
 		}
 
