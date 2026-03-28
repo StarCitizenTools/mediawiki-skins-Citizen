@@ -86,7 +86,7 @@ module.exports = exports = defineComponent( {
 		const copied = ref( false );
 		let copyTimer = null;
 
-		const pageURL = window.location.protocol + '//' + window.location.host + window.location.pathname;
+		const pageURL = window.location.protocol + '//' + window.location.host + window.location.pathname + window.location.search;
 		const pageTitle = window.document.title;
 
 		const shareServices = computed( () => ( Array.isArray( shareServiceOptions ) ? shareServiceOptions : [] ) );
