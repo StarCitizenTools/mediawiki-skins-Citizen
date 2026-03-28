@@ -47,7 +47,8 @@
 					v-if="service.icon"
 					class="citizen-share-icon citizen-share-icon--img"
 					:src="service.icon"
-					:alt="service.label">
+					:alt="service.label"
+					:style="getServiceIconStyle( service )">
 				<span
 					v-else-if="service.icon_class"
 					class="citizen-share-icon citizen-share-icon--mask"
@@ -57,7 +58,8 @@
 					v-else-if="service.file"
 					class="citizen-share-icon citizen-share-icon--img"
 					:src="getFilePath( service.file )"
-					:alt="service.label">
+					:alt="service.label"
+					:style="getServiceIconStyle( service )">
 			</div>
 		</div>
 
@@ -156,6 +158,21 @@ module.exports = exports = defineComponent( {
 			return mw.util.getUrl( 'Special:FilePath/' + file );
 		}
 
+		function getServiceIconStyle( service ) {
+			const raw = service.icon_scale;
+			if ( raw === undefined || raw === null || raw === '' ) {
+				return undefined;
+			}
+			const scale = typeof raw === 'number' ? raw : Number( raw );
+			if ( Number.isNaN( scale ) || scale === 1 ) {
+				return undefined;
+			}
+			return {
+				transform: `scale(${ scale })`,
+				transformOrigin: 'center'
+			};
+		}
+
 		return {
 			copied,
 			pageURL,
@@ -164,7 +181,8 @@ module.exports = exports = defineComponent( {
 			copyURL,
 			openShareModal,
 			showMoreOptions,
-			getFilePath
+			getFilePath,
+			getServiceIconStyle
 		};
 	}
 } );
@@ -267,6 +285,8 @@ module.exports = exports = defineComponent( {
 	display: block;
 	width: 100%;
 	height: 100%; // padding should adjust the size properly
+	object-fit: contain;
+	object-position: center;
 	filter: brightness( 0 ) invert( 1 );
 }
 
