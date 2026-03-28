@@ -13,7 +13,10 @@
 				type="text"
 				readonly
 				:value="pageURL">
-			<button id="citizen-share-copy-button" :aria-label="copied ? 'Copied' : 'Copy link'" @click="copyURL">
+			<button
+				id="citizen-share-copy-button"
+				:aria-label="copied ? 'Copied' : 'Copy link'"
+				@click="copyURL">
 				<svg
 					v-if="!copied"
 					xmlns="http://www.w3.org/2000/svg"
@@ -85,9 +88,9 @@ module.exports = exports = defineComponent( {
 		const pageURL = window.location.protocol + '//' + window.location.host + window.location.pathname;
 		const pageTitle = window.document.title;
 
-		/** @type {import('vue').ComputedRef<Array>} */
 		const shareServices = computed( () => ( Array.isArray( shareServiceOptions ) ? shareServiceOptions : [] ) );
 
+		// replaces the {{url}} and {{title}} placeholders in the URL template
 		function buildURL( urlTemplate ) {
 			return urlTemplate
 				.replace( /\{\{url\}\}/g, encodeURIComponent( window.location.href ) )
@@ -200,18 +203,18 @@ module.exports = exports = defineComponent( {
 }
 
 .citizen-share-main__header {
-	color: var( --color-emphasized );
+	margin-bottom: var( --space-xs );
 	font-size: var( --font-size-large );
 	font-weight: var( --font-weight-semi-bold );
 	line-height: var( --line-height-large );
-	margin-bottom: var( --space-xs );
+	color: var( --color-emphasized );
 }
 
 .citizen-share-main__header__description {
-	color: var( --color-subtle );
 	font-size: var( --font-size-small );
 	font-weight: var( --font-weight-normal );
 	line-height: var( --line-height-small );
+	color: var( --color-subtle );
 }
 
 .citizen-share-main__copy-link {
@@ -223,19 +226,18 @@ module.exports = exports = defineComponent( {
 
 #citizen-share-link {
 	width: auto;
-    height: 32px;
-	outline: none;
-	padding: var( --space-xs ) var( --space-sm );
-	border-radius: var( --border-radius-medium );
-	border-width: 2px;
-	border-top-right-radius: 0px;
-	border-bottom-right-radius: 0px;
-	border-color: var( --border-color-input--hover );
-	field-sizing: content;
 	max-width: 400px;
+	height: 32px;
+	padding: var( --space-xs ) var( --space-sm );
 	overflow: hidden;
-	white-space: nowrap;
 	text-overflow: ellipsis;
+	white-space: nowrap;
+	border-color: var( --border-color-input--hover );
+	border-width: 2px;
+	border-radius: var( --border-radius-medium );
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	field-sizing: content;
 }
 
 #citizen-share-link:focus {
@@ -243,14 +245,13 @@ module.exports = exports = defineComponent( {
 }
 
 #citizen-share-copy-button {
-	background-color: var( --background-color-progressive );
-	color: var( --color-surface-0 );
-	border: none;
 	padding: var( --space-xs ) var( --space-sm );
-	border-radius: var( --border-radius-medium );
-	border-top-left-radius: 0px;
-	border-bottom-left-radius: 0px;
+	color: var( --color-surface-0 );
 	cursor: pointer;
+	background-color: var( --background-color-progressive );
+	border-radius: var( --border-radius-medium );
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
 }
 
 #citizen-share-copy-button svg {
@@ -272,14 +273,14 @@ module.exports = exports = defineComponent( {
 }
 
 .citizen-share-main__social-option {
-	border-radius: var( --border-radius-medium );
-	padding: var( --space-xs );
-	color: #fff;
-	cursor: pointer;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	height: 40px;
+	padding: var( --space-xs );
+	color: #fff;
+	cursor: pointer;
+	border-radius: var( --border-radius-medium );
 }
 
 .citizen-share-icon--img {
@@ -302,12 +303,12 @@ module.exports = exports = defineComponent( {
 }
 
 #citizen-share-native-options {
-	background-color: var( --background-color-button-quiet );
-	color: var( --color-emphasized );
-	padding: var( --space-xs ) var( --space-sm );
-	border-radius: var( --border-radius-medium );
-	cursor: pointer;
 	width: 100%;
+	padding: var( --space-xs ) var( --space-sm );
+	color: var( --color-emphasized );
+	cursor: pointer;
+	background-color: var( --background-color-button-quiet );
+	border-radius: var( --border-radius-medium );
 }
 
 #citizen-share-native-options:hover {
