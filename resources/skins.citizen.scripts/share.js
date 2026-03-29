@@ -22,8 +22,10 @@ function createShare( { document, window, mw } ) {
 		}, { once: true } );
 
 		// intended for the sticky share button as the modal is only mounted once in the toolbar
-		shareDetails.addEventListener( 'toggle', () => {
-			window.scrollTo( { top: 0, left: 0, behavior: 'auto' } );
+		shareDetails.addEventListener( 'toggle', ( event ) => {
+			if ( event.target.open ) {
+				window.scrollTo( { top: 0, left: 0, behavior: 'auto' } );
+			}
 		} );
 	}
 
