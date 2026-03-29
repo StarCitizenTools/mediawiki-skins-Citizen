@@ -24,7 +24,7 @@
 		"@commitlint/cli": "^20.5.0",
 		"@commitlint/config-conventional": "^20.5.0",
 		"@vitejs/plugin-vue": "^6.0.5",
-		"@vitest/coverage-v8": "^4.1.1",
+		"@vitest/coverage-v8": "^4.1.2",
 		"@vue/test-utils": "^2.4.6",
 		"devmoji": "^2.3.0",
 		"eslint": "8.57.1",
@@ -36,7 +36,7 @@
 		"less": "^4.6.4",
 		"markdownlint-cli": "^0.48.0",
 		"mustache": "^4.2.0",
-		"stylelint": "17.5.0",
+		"stylelint": "17.6.0",
 		"stylelint-config-recess-order": "7.7.0",
 		"stylelint-config-wikimedia": "0.18.0",
 		"stylelint-order": "^7.0.1",
@@ -45,5 +45,5 @@
 		"vitest": "^4.0.18",
 		"vue": "3.4.27"
 	},
-	"version": "3.14.0"
+	"version": "3.15.0"
 }
