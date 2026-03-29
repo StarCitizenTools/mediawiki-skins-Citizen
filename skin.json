@@ -300,6 +300,20 @@
 				"vue"
 			]
 		},
+		"skins.citizen.share": {
+			"packageFiles": [
+				"resources/skins.citizen.share/init.js",
+				"resources/skins.citizen.share/App.vue",
+				{
+					"name": "resources/skins.citizen.share/config.json",
+					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenShareResourceLoaderConfig"
+				}
+			],
+			"dependencies": [
+				"skins.citizen.icons",
+				"vue"
+			]
+		},
 		"skins.citizen.serviceWorker": {
 			"scripts": [
 				"resources/skins.citizen.serviceWorker/sw.js"
@@ -895,6 +909,39 @@
 		"TableOfContentsCollapseAtCount": {
 			"value": 28,
 			"description": "@var The minimum number of headings required to collapse all headings in the sticky table of contents by default."
+		},
+		"EnableShare": {
+			"value": true,
+			"description": "Enable or disable the share button",
+			"descriptionmsg": "citizen-config-enableshare",
+			"public": true
+		},
+		"ShareServiceOptions": {
+			"value": [
+				{
+					"label": "Twitter",
+					"icon": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xml%3Aspace%3D%22preserve%22%20viewBox%3D%220%200%20248%20204%22%3E%3Cpath%20fill%3D%22%231d9bf0%22%20d%3D%22M221.95%2051.29c.15%202.17.15%204.34.15%206.53%200%2066.73-50.8%20143.69-143.69%20143.69v-.04c-27.44.04-54.31-7.82-77.41-22.64%203.99.48%208%20.72%2012.02.73%2022.74.02%2044.83-7.61%2062.72-21.66-21.61-.41-40.56-14.5-47.18-35.07%207.57%201.46%2015.37%201.16%2022.8-.87-23.56-4.76-40.51-25.46-40.51-49.5v-.64c7.02%203.91%2014.88%206.08%2022.92%206.32C11.58%2063.31%204.74%2033.79%2018.14%2010.71c25.64%2031.55%2063.47%2050.73%20104.08%2052.76-4.07-17.54%201.49-35.92%2014.61-48.25%2020.34-19.12%2052.33-18.14%2071.45%202.19%2011.31-2.23%2022.15-6.38%2032.07-12.26-3.77%2011.69-11.66%2021.62-22.2%2027.93%2010.01-1.18%2019.79-3.86%2029-7.95-6.78%2010.16-15.32%2019.01-25.2%2026.16z%22%2F%3E%3C%2Fsvg%3E",
+					"url": "https://twitter.com/intent/tweet?url={{url}}&text={{title}}",
+					"color": "#1da1f2",
+					"open_in_modal": true
+				},
+				{
+					"label": "Reddit",
+					"icon": "data:image/svg+xml,%3Csvg%20width%3D%2224px%22%20height%3D%2224px%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20fill%3D%22currentColor%22%20d%3D%22m154.04%2C60.36c2.22%2C9.41%2C10.67%2C16.42%2C20.76%2C16.42%2C11.78%2C0%2C21.33-9.55%2C21.33-21.33s-9.55-21.33-21.33-21.33c-10.3%2C0-18.89%2C7.3-20.89%2C17.01-17.25%2C1.85-30.72%2C16.48-30.72%2C34.21%2C0%2C.04%2C0%2C.07%2C0%2C.11-18.76.79-35.89%2C6.13-49.49%2C14.56-5.05-3.91-11.39-6.24-18.27-6.24-16.51%2C0-29.89%2C13.38-29.89%2C29.89%2C0%2C11.98%2C7.04%2C22.3%2C17.21%2C27.07.99%2C34.7%2C38.8%2C62.61%2C85.31%2C62.61s84.37-27.94%2C85.31-62.67c10.09-4.8%2C17.07-15.09%2C17.07-27%2C0-16.51-13.38-29.89-29.89-29.89-6.85%2C0-13.16%2C2.31-18.2%2C6.19-13.72-8.49-31.04-13.83-49.99-14.54%2C0-.03%2C0-.05%2C0-.08%2C0-12.7%2C9.44-23.24%2C21.68-24.97Zm-81.54%2C82.27c.5-10.84%2C7.7-19.16%2C16.07-19.16s14.77%2C8.79%2C14.27%2C19.63c-.5%2C10.84-6.75%2C14.78-15.13%2C14.78s-15.71-4.41-15.21-15.25Zm95.06-19.16c8.38%2C0%2C15.58%2C8.32%2C16.07%2C19.16.5%2C10.84-6.84%2C15.25-15.21%2C15.25s-14.63-3.93-15.13-14.78c-.5-10.84%2C5.89-19.63%2C14.27-19.63Zm-9.96%2C44.24c1.57.16%2C2.57%2C1.79%2C1.96%2C3.25-5.15%2C12.31-17.31%2C20.96-31.5%2C20.96s-26.34-8.65-31.5-20.96c-.61-1.46.39-3.09%2C1.96-3.25%2C9.2-.93%2C19.15-1.44%2C29.54-1.44s20.33.51%2C29.54%2C1.44Z%22%20%2F%3E%3C%2Fsvg%3E",
+					"url": "https://www.reddit.com/submit?url={{url}}&title={{title}}",
+					"color": "#ff4500",
+					"icon_scale": 1.55
+				},
+				{
+					"label": "Facebook",
+					"icon": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20264%20512%22%3E%3Cpath%20d%3D%22M76.7%20512V283H0v-91h76.7v-71.7C76.7%2042.4%20124.3%200%20193.8%200c33.3%200%2061.9%202.5%2070.2%203.6V85h-48.2c-37.8%200-45.1%2018-45.1%2044.3V192H256l-11.7%2091h-73.6v229%22%2F%3E%3C%2Fsvg%3E",
+					"url": "https://www.facebook.com/sharer/sharer.php?u={{url}}",
+					"color": "#0866ff"
+				}
+			],
+			"description": "Options for the share button",
+			"descriptionmsg": "citizen-config-shareoptions",
+			"public": true
 		},
 		"HeaderPosition": {
 			"value": "left",

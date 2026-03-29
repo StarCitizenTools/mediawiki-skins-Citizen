@@ -68,6 +68,21 @@ class ResourceLoaderHooks {
 	}
 
 	/**
+	 * Passes config variables to skins.citizen.share ResourceLoader module.
+	 * @param RL\Context $context
+	 * @param Config $config
+	 * @return array
+	 */
+	public static function getCitizenShareResourceLoaderConfig(
+		RL\Context $context,
+		Config $config
+	): array {
+		return [
+			'wgCitizenShareServiceOptions' => $config->get( 'CitizenShareServiceOptions' ),
+		];
+	}
+
+	/**
 	 * Return on-wiki preferences overrides with pre-resolved message texts.
 	 *
 	 * @param RL\Context $context
