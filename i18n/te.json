@@ -17,5 +17,6 @@
 	"citizen-tagline-ns-project": "{{SITENAME}} గురించిన సమాచారం",
 	"citizen-tagline-ns-template": "మూస పేజీ",
 	"citizen-tagline-ns-help": "సహాయం పేజీ",
-	"citizen-tagline-ns-category": "వర్గం పేజీ"
+	"citizen-tagline-ns-category": "వర్గం పేజీ",
+	"citizen-command-palette-keyhint-close": "మూసివేయి"
 }
