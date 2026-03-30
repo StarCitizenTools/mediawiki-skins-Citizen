@@ -68,7 +68,10 @@
 		</div>
 
 		<div class="citizen-share-main__other">
-			<button id="citizen-share-native-options" @click="showMoreOptions">
+			<button
+				v-if="canShare"
+				id="citizen-share-native-options"
+				@click="showMoreOptions">
 				More options...
 			</button>
 		</div>
@@ -92,6 +95,8 @@ module.exports = exports = defineComponent( {
 
 		const pageURL = window.location.protocol + '//' + window.location.host + window.location.pathname + window.location.search;
 		const pageTitle = window.document.title;
+
+		const canShare = computed( () => typeof navigator !== 'undefined' && typeof navigator.share === 'function' );
 
 		const shareServices = computed( () => ( Array.isArray( shareServiceOptions ) ? shareServiceOptions : [] ) );
 
@@ -161,11 +166,19 @@ module.exports = exports = defineComponent( {
 		}
 
 		async function showMoreOptions() {
-			await navigator.share( {
-				title: document.title,
-				text: document.title,
-				url: window.location.href
-			} );
+			if ( !canShare.value ) {
+				return;
+			}
+
+			try {
+				await navigator.share( {
+					title: document.title,
+					text: document.title,
+					url: window.location.href
+				} );
+			} catch ( e ) {
+				return;
+			}
 		}
 
 		function getFilePath( file ) {
@@ -189,6 +202,7 @@ module.exports = exports = defineComponent( {
 
 		return {
 			i18n,
+			canShare,
 			copied,
 			pageURL,
 			linkInputSize,
