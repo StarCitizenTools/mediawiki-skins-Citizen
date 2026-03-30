@@ -311,7 +311,8 @@
 			],
 			"messages": [
 				"citizen-share",
-				"citizen-share-link-description"
+				"citizen-share-link-description",
+				"citizen-share-native-options"
 			],
 			"dependencies": [
 				"mediawiki.util",

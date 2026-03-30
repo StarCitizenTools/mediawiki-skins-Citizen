@@ -72,7 +72,7 @@
 				v-if="canShare"
 				id="citizen-share-native-options"
 				@click="showMoreOptions">
-				More options...
+				{{ i18n( 'citizen-share-native-options' ) }}
 			</button>
 		</div>
 	</div>
