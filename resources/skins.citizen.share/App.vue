@@ -39,8 +39,8 @@
 			v-if="shareServices.length"
 			class="citizen-share-main__social-options">
 			<div
-				v-for="service in shareServices"
-				:key="service.label"
+				v-for="( service, index ) in shareServices"
+				:key="`${ service.label }-${ index }`"
 				class="citizen-share-main__social-option"
 				:style="{ backgroundColor: service.color }"
 				:title="service.label"
