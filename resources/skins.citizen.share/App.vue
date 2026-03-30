@@ -16,7 +16,7 @@
 				:value="pageURL">
 			<button
 				id="citizen-share-copy-button"
-				:aria-label="copied ? 'Copied' : 'Copy link'"
+				:aria-label="copied ? i18n( 'citizen-share-copied' ) : i18n( 'citizen-share-copy-link' )"
 				@click="copyURL">
 				<svg
 					v-if="!copied"
