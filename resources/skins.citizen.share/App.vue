@@ -1,9 +1,9 @@
 <template>
 	<div class="citizen-share-main">
 		<div class="citizen-share-main__header">
-			Share this article
+			{{ i18n( 'citizen-share' ) }}
 			<div class="citizen-share-main__header__description">
-				Share a link to this article:
+				{{ i18n( 'citizen-share-link-description' ) }}
 			</div>
 		</div>
 
@@ -82,6 +82,10 @@ const { defineComponent, inject, ref, computed } = require( 'vue' );
 module.exports = exports = defineComponent( {
 	name: 'App',
 	setup() {
+		function i18n( key ) {
+			return mw.msg( key );
+		}
+
 		const shareServiceOptions = inject( 'shareServiceOptions', [] );
 		const copied = ref( false );
 		let copyTimer = null;
@@ -184,6 +188,7 @@ module.exports = exports = defineComponent( {
 		}
 
 		return {
+			i18n,
 			copied,
 			pageURL,
 			linkInputSize,

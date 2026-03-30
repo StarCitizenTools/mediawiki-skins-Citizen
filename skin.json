@@ -309,7 +309,12 @@
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenShareResourceLoaderConfig"
 				}
 			],
+			"messages": [
+				"citizen-share",
+				"citizen-share-link-description"
+			],
 			"dependencies": [
+				"mediawiki.util",
 				"skins.citizen.icons",
 				"vue"
 			]
