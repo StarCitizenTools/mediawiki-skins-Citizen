@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.15.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.15.0...v3.15.1) (2026-03-30)
+
+
+### Bug Fixes
+
+* **toc:** 🐛 allow ToC heading to wrap ([0d990ac](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0d990ac68af4bd88dca5f09d3f015472142a1c01)), closes [#1449](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1449)
+
+
+### Miscellaneous Chores
+
+* remove context7.json ([d7b6161](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d7b61610df3c04cb7ab86fd63f5adb39620432f1))
+* set up context7 claim ([177439f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/177439fe01475dc194366511e50af0b9b2a4c65e))
+
 ## [3.15.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.14.0...v3.15.0) (2026-03-24)
 
 
