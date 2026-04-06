@@ -121,5 +121,19 @@
 	"citizen-command-palette-mode-smw-noresults-description": "Poskusite razširiti pogoje ali preverite morebitne tipkarske napake",
 	"citizen-command-palette-mode-smw-noresults-title": "Ni ustrezajočih strani",
 	"citizen-command-palette-mode-smw-novalues-description": "Preverite vrednost ali poskusite s širšim iskanjem",
-	"citizen-command-palette-mode-smw-novalues-title": "Ni ustrezajočih vrednosti"
+	"citizen-command-palette-mode-smw-novalues-title": "Ni ustrezajočih vrednosti",
+	"citizen-command-palette-mode-smw-placeholder": "Vnesite poizvedbo »Ask«",
+	"citizen-command-palette-mode-user-empty-description": "Vnesite uporabniško ime, da poiščete uporabniške profile",
+	"citizen-command-palette-mode-user-empty-title": "Poišči uporabnike",
+	"citizen-command-palette-mode-user-noresults-description": "Preverite črkovanje ali poskusite z drugim imenom",
+	"citizen-command-palette-mode-user-noresults-title": "Ni ustreznih uporabnikov",
+	"citizen-command-palette-mode-user-placeholder": "Poiščite uporabnike",
+	"citizen-command-palette-queryaction-fulltext-search-description": "Preiščite celotno besedilo vseh strani",
+	"citizen-command-palette-queryaction-media-search-description": "Poiščite predstavnostne datoteke",
+	"citizen-command-palette-queryaction-page-edit-description": "Ustvarite ali uredite stran",
+	"citizen-command-palette-tip-commands": "Vnesite <code>/</code> za vse ukaze",
+	"citizen-command-palette-tip-users": "Vnesite <code>@</code> za iskanje uporabnikov",
+	"citizen-command-palette-tip-namespace": "Vnesite <code>:</code> za iskanje imenskega prostora",
+	"citizen-command-palette-tip-templates": "Vnesite <code><nowiki>{{</nowiki></code> za iskanje predlog",
+	"citizen-command-palette-tip-actions": "Vnesite <code>></code> za seznam dejanj"
 }
