@@ -23,7 +23,10 @@ function createShare( { document, window, mw } ) {
 
 		// intended for the sticky share button as the modal is only mounted once in the toolbar
 		shareDetails.addEventListener( 'toggle', ( event ) => {
-			if ( event.target.open ) {
+			if (
+				event.target.open &&
+				!mw.config.get( 'wgIsMainPage' )
+			) {
 				window.scrollTo( { top: 0, left: 0, behavior: 'auto' } );
 			}
 		} );
