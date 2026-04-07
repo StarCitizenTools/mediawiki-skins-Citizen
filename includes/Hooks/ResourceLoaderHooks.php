@@ -10,6 +10,7 @@ use MediaWiki\MediaWikiServices;
 use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\ResourceLoader as RL;
 use MediaWiki\Skins\Citizen\PreferencesConfigProvider;
+use MediaWiki\Skins\Citizen\ShareConfigProvider;
 
 /**
  * Hooks to run relating to the resource loader
@@ -77,8 +78,16 @@ class ResourceLoaderHooks {
 		RL\Context $context,
 		Config $config
 	): array {
+		$services = null;
+		$mwServices = MediaWikiServices::getInstance();
+		$provider = new ShareConfigProvider(
+			$mwServices->getRevisionLookup(),
+			$mwServices->getTitleFactory()
+		);
+		$services = $provider->getServiceOptions();
+
 		return [
-			'wgCitizenShareServiceOptions' => $config->get( 'CitizenShareServiceOptions' ),
+			'wgCitizenShareServiceOptions' => $services ?? $config->get( 'CitizenShareServiceOptions' ),
 		];
 	}
 

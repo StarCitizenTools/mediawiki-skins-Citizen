@@ -92,3 +92,26 @@ To hide a preference from the panel entirely, set it to `null`:
   }
 }
 ```
+
+## Configure share services
+
+Admins can replace the default share targets by creating the `MediaWiki:Citizen-share-services.json` page. Valid JSON **fully replaces** the built-in default services list provided by Citizen. If the page isn't set or is invalid, the wiki falls back to those defaults.
+
+Each service uses a single **`icon`** value (data URI or any URL valid in CSS `url(...)`). Icons glyphs are always monochrome on the colored tile.
+
+Optional legacy field: if **`icon`** is omitted but **`file`** is set, the skin resolves `Special:FilePath/<file>` and uses that URL.
+
+```json
+[
+  {
+    "name": "example",
+    "label": "Example",
+    "url": "https://example.com/share?u={{url}}&t={{title}}",
+    "color": "#336699",
+    "open_in_modal": true,
+    "icon": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%2210%22%20fill%3D%22%23000%22%2F%3E%3C%2Fsvg%3E"
+  }
+]
+```
+
+Use **`name`** for a stable DOM id: each tile is `citizen-share-service-<name>` (letters, digits, `_`, and `-` only). If `name` is missing, the index is used instead. Use **`label`** as the user-facing name that will be passed to screen readers, the alt text, and other related browser functionality.

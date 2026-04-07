@@ -14,9 +14,10 @@
 				readonly
 				:size="linkInputSize"
 				:value="pageURL">
+			<!-- eslint-disable max-len -- copy icon paths -->
 			<button
 				id="citizen-share-copy-button"
-				:aria-label="copied ? i18n( 'citizen-share-copied' ) : i18n( 'citizen-share-copy-link' )"
+				:aria-label="copyButtonAriaLabel"
 				@click="copyURL">
 				<svg
 					v-if="!copied"
@@ -33,6 +34,7 @@
 					width="24px"
 					fill="currentColor"><path d="M382-208 122-468l90-90 170 170 366-366 90 90-456 456Z" /></svg>
 			</button>
+			<!-- eslint-enable max-len -->
 		</div>
 
 		<div
@@ -40,30 +42,24 @@
 			class="citizen-share-main__social-options">
 			<div
 				v-for="( service, index ) in shareServices"
+				:id="shareServiceElementId( service, index )"
 				:key="`${ service.label }-${ index }`"
 				class="citizen-share-main__social-option"
+				role="button"
+				tabindex="0"
+				:aria-label="service.label"
 				:style="{ backgroundColor: service.color }"
 				:title="service.label"
 				:data-url="buildURL( service.url )"
 				:data-open-in-modal="service.open_in_modal"
-				@click="openShareModal">
-				<img
-					v-if="service.icon"
-					class="citizen-share-icon citizen-share-icon--img"
-					:src="service.icon"
-					:alt="service.label"
-					:style="getServiceIconStyle( service )">
+				@click="openShareModal"
+				@keydown="onShareServiceKeydown">
 				<span
-					v-else-if="service.icon_class"
-					class="citizen-share-icon citizen-share-icon--mask"
-					:class="service.icon_class">
+					v-if="shareIconStylesByIndex[ index ]"
+					class="citizen-share-icon"
+					:style="shareIconStylesByIndex[ index ]"
+					aria-hidden="true">
 				</span>
-				<img
-					v-else-if="service.file"
-					class="citizen-share-icon citizen-share-icon--img"
-					:src="getFilePath( service.file )"
-					:alt="service.label"
-					:style="getServiceIconStyle( service )">
 			</div>
 		</div>
 
@@ -81,11 +77,47 @@
 <script>
 const { defineComponent, inject, ref, computed } = require( 'vue' );
 
+/**
+ * @param {string} inner
+ * @return {string}
+ */
+function escapeForCssUrl( inner ) {
+	return inner.replace( /\\/g, '\\\\' ).replace( /"/g, '\\"' );
+}
+
+/**
+ * @param {string} href
+ * @return {string}
+ */
+function cssUrlFunction( href ) {
+	return `url("${ escapeForCssUrl( href ) }")`;
+}
+
+/**
+ * @param {string} raw
+ * @return {string}
+ */
+function stripUrlWrapper( raw ) {
+	const trimmed = raw.trim();
+	if ( /^url\s*\(/i.test( trimmed ) && trimmed.endsWith( ')' ) ) {
+		let inner = trimmed.replace( /^url\s*\(\s*/i, '' ).replace( /\s*\)\s*$/, '' );
+		if (
+			( inner.startsWith( '"' ) && inner.endsWith( '"' ) ) ||
+			( inner.startsWith( '\'' ) && inner.endsWith( '\'' ) )
+		) {
+			inner = inner.slice( 1, -1 );
+		}
+		return inner.trim();
+	}
+	return trimmed;
+}
+
 // @vue/component
 module.exports = exports = defineComponent( {
 	name: 'App',
 	setup() {
 		function i18n( key ) {
+			// eslint-disable-next-line mediawiki/msg-doc -- keys are fixed in template or passed explicitly
 			return mw.msg( key );
 		}
 
@@ -93,14 +125,25 @@ module.exports = exports = defineComponent( {
 		const copied = ref( false );
 		let copyTimer = null;
 
-		const pageURL = window.location.protocol + '//' + window.location.host + window.location.pathname + window.location.search;
+		const pageURL = window.location.protocol + '//' +
+			window.location.host +
+			window.location.pathname +
+			window.location.search;
 		const pageTitle = window.document.title;
 
-		const canShare = computed( () => typeof navigator !== 'undefined' && typeof navigator.share === 'function' );
+		const canShare = computed( () => typeof navigator !== 'undefined' &&
+			typeof navigator.share === 'function' );
 
-		const shareServices = computed( () => ( Array.isArray( shareServiceOptions ) ? shareServiceOptions : [] ) );
+		const shareServices = computed( () => ( Array.isArray( shareServiceOptions ) ?
+			shareServiceOptions : [] ) );
 
-		// alternative to the "field-sizing: content" css attribute as stylelint only wants "baseline" attributes
+		const copyButtonAriaLabel = computed( () => (
+			copied.value ?
+				i18n( 'citizen-share-copied' ) :
+				i18n( 'citizen-share-copy-link' )
+		) );
+
+		// avoid field-sizing; stylelint allows only baseline css
 		const linkInputSize = computed( () => Math.min( 80, Math.max( 12, pageURL.length ) ) );
 
 		// replaces the {{url}} and {{title}} placeholders in the URL template
@@ -108,6 +151,74 @@ module.exports = exports = defineComponent( {
 			return urlTemplate
 				.replace( /\{\{url\}\}/g, encodeURIComponent( pageURL ) )
 				.replace( /\{\{title\}\}/g, encodeURIComponent( pageTitle ) );
+		}
+
+		/**
+		 * @param {Object} service
+		 * @return {string}
+		 */
+		function resolveShareIconHref( service ) {
+			if ( typeof service.icon === 'string' && service.icon.trim() !== '' ) {
+				return stripUrlWrapper( service.icon );
+			}
+			if ( typeof service.file === 'string' && service.file.trim() !== '' ) {
+				return mw.util.getUrl( 'Special:FilePath/' + service.file.trim() );
+			}
+			if ( service.icon_class ) {
+				mw.log.warn( 'citizen-share: icon_class is no longer supported; use icon (URL or data URI) instead.' );
+			}
+			return '';
+		}
+
+		/**
+		 * @param {Object} service
+		 * @return {Object|undefined}
+		 */
+		function getShareIconMaskStyle( service ) {
+			const href = resolveShareIconHref( service );
+			if ( !href ) {
+				return undefined;
+			}
+			const u = cssUrlFunction( href );
+			return {
+				backgroundColor: '#fff',
+				maskImage: u,
+				WebkitMaskImage: u,
+				maskSize: 'contain',
+				maskRepeat: 'no-repeat',
+				maskPosition: 'center',
+				WebkitMaskSize: 'contain',
+				WebkitMaskRepeat: 'no-repeat',
+				WebkitMaskPosition: 'center'
+			};
+		}
+
+		const shareIconStylesByIndex = computed( () => (
+			shareServices.value.map( ( s ) => getShareIconMaskStyle( s ) )
+		) );
+
+		/**
+		 * @param {Object} service
+		 * @param {number} index
+		 * @return {string}
+		 */
+		function shareServiceElementId( service, index ) {
+			const raw = typeof service.name === 'string' ? service.name.trim() : '';
+			const safe = raw.replace( /[^a-zA-Z0-9_-]/g, '' );
+			const suffix = safe !== '' ? safe : String( index );
+			return 'citizen-share-service-' + suffix;
+		}
+
+		/**
+		 * @param {Event} event
+		 * @return {void}
+		 */
+		function onShareServiceKeydown( event ) {
+			if ( event.key !== 'Enter' && event.key !== ' ' ) {
+				return;
+			}
+			event.preventDefault();
+			openShareModal( event );
 		}
 
 		async function copyURL() {
@@ -136,6 +247,9 @@ module.exports = exports = defineComponent( {
 
 		function openShareModal( event ) {
 			const url = event.currentTarget.getAttribute( 'data-url' );
+			if ( !url ) {
+				return;
+			}
 			const openInModal = event.currentTarget.getAttribute( 'data-open-in-modal' ) === 'true';
 
 			if ( !openInModal ) {
@@ -181,38 +295,21 @@ module.exports = exports = defineComponent( {
 			}
 		}
 
-		function getFilePath( file ) {
-			return mw.util.getUrl( 'Special:FilePath/' + file );
-		}
-
-		function getServiceIconStyle( service ) {
-			const raw = service.icon_scale;
-			if ( raw === undefined || raw === null || raw === '' ) {
-				return undefined;
-			}
-			const scale = typeof raw === 'number' ? raw : Number( raw );
-			if ( Number.isNaN( scale ) || scale === 1 ) {
-				return undefined;
-			}
-			return {
-				transform: `scale(${ scale })`,
-				transformOrigin: 'center'
-			};
-		}
-
 		return {
 			i18n,
 			canShare,
 			copied,
+			copyButtonAriaLabel,
 			pageURL,
 			linkInputSize,
 			shareServices,
+			shareIconStylesByIndex,
 			buildURL,
 			copyURL,
 			openShareModal,
+			onShareServiceKeydown,
 			showMoreOptions,
-			getFilePath,
-			getServiceIconStyle
+			shareServiceElementId
 		};
 	}
 } );
@@ -311,16 +408,13 @@ module.exports = exports = defineComponent( {
 	border-radius: var( --border-radius-medium );
 }
 
-.citizen-share-icon--img {
-	display: block;
-	width: 100%;
-	height: 100%; // padding should adjust the size properly
-	object-fit: contain;
-	object-position: center;
-	filter: brightness( 0 ) invert( 1 );
+.citizen-share-main__social-option:focus {
+	outline: 2px solid var( --background-color-progressive );
+	outline-offset: 2px;
 }
 
-.citizen-share-icon--mask {
+.citizen-share-icon {
+	box-sizing: border-box;
 	display: block;
 	width: 100%;
 	height: 100%;
