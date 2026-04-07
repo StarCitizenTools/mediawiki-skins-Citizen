@@ -388,16 +388,20 @@ module.exports = exports = defineComponent( {
 }
 
 .citizen-share-main__social-options {
-	display: grid;
-	grid-template-columns: repeat( auto-fit, minmax( 30%, 1fr ) );
+	display: flex;
+	flex-wrap: wrap;
 	gap: var( --space-xs );
 	margin-top: var( --space-md );
 }
 
 .citizen-share-main__social-option {
+	box-sizing: border-box;
 	display: flex;
+	flex: 1 1 calc( ( 100% - 2 * var( --space-xs ) ) / 3 );
 	align-items: center;
 	justify-content: center;
+	min-width: calc( ( 100% - 2 * var( --space-xs ) ) / 3 );
+	max-width: 100%;
 	height: 40px;
 	padding: var( --space-xs );
 	color: #fff;
