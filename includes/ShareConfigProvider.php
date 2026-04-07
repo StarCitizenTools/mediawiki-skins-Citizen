@@ -105,4 +105,3 @@ class ShareConfigProvider {
 		return true;
 	}
 }
-

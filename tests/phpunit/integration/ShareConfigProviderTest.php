@@ -54,7 +54,8 @@ class ShareConfigProviderTest extends MediaWikiIntegrationTestCase {
 	}
 
 	public function testGetServiceOptionsReturnsArrayWhenRootHasServicesKey(): void {
-		$json = '{"services":[{"label":"Facebook","url":"https://www.facebook.com/sharer/sharer.php?u={{url}}","color":"#0865FE"}]}';
+		$json = '{"services":[{"label":"Facebook",'
+			. '"url":"https://www.facebook.com/sharer/sharer.php?u={{url}}","color":"#0865FE"}]}';
 		$this->editPage( 'Citizen-share-services.json', $json, '', NS_MEDIAWIKI );
 
 		$provider = $this->createProvider();
@@ -67,7 +68,8 @@ class ShareConfigProviderTest extends MediaWikiIntegrationTestCase {
 	}
 
 	public function testGetServiceOptionsFiltersNonArrayEntries(): void {
-		$json = '[{"label":"Mastodon","url":"https://mastodon.social/share?text={{title}}%20{{url}}"},true,123,"bad",null]';
+		$json = '[{"label":"Mastodon","url":"https://mastodon.social/share?text={{title}}%20{{url}}"},'
+			. 'true,123,"bad",null]';
 		$this->editPage( 'Citizen-share-services.json', $json, '', NS_MEDIAWIKI );
 
 		$provider = $this->createProvider();
@@ -79,4 +81,3 @@ class ShareConfigProviderTest extends MediaWikiIntegrationTestCase {
 		$this->assertSame( 'Mastodon', $result[0]['label'] );
 	}
 }
-
