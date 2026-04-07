@@ -164,9 +164,6 @@ module.exports = exports = defineComponent( {
 			if ( typeof service.file === 'string' && service.file.trim() !== '' ) {
 				return mw.util.getUrl( 'Special:FilePath/' + service.file.trim() );
 			}
-			if ( service.icon_class ) {
-				mw.log.warn( 'citizen-share: icon_class is no longer supported; use icon (URL or data URI) instead.' );
-			}
 			return '';
 		}
 
