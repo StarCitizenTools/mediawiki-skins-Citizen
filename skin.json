@@ -924,6 +924,12 @@
 			"descriptionmsg": "citizen-config-enableshare",
 			"public": true
 		},
+		"EnableCustomizableSharePanel": {
+			"value": false,
+			"description": "Use Citizen's customizable share panel (service links and copy UI) instead of the browser Web Share API (with clipboard fallback)",
+			"descriptionmsg": "citizen-config-enablecustomizablesharepanel",
+			"public": true
+		},
 		"ShareServiceOptions": {
 			"value": [
 				{

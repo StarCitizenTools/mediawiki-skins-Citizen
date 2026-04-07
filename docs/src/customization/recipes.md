@@ -95,6 +95,8 @@ To hide a preference from the panel entirely, set it to `null`:
 
 ## Configure share services
 
+By default, the share control uses the [Web Share API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API) when available, with a clipboard fallback. The service list below applies only when the customizable share panel is enabled with `$wgCitizenEnableCustomizableSharePanel = true;` in `LocalSettings.php`.
+
 Admins can replace the default share targets by creating the `MediaWiki:Citizen-share-services.json` page. Valid JSON **fully replaces** the built-in default services list provided by Citizen. If the page isn't set or is invalid, the wiki falls back to those defaults.
 
 ```json
