@@ -5,7 +5,8 @@
 			"Amire80",
 			"Neriah",
 			"YaronSh",
-			"מקף"
+			"מקף",
+			"ערן"
 		]
 	},
 	"citizen-skin-desc": "עיצוב מדיה־ויקי יפה, שמיש ומסתגל שהופך את ההרחבות לחלק מהחוויה המגובשת. נוצר בתחילה עבור [https://starcitizen.tools/ Star Citizen Wiki].",
@@ -74,12 +75,15 @@
 	"citizen-user-info-text-temp": "החשבון החולף הזה נוצר לאחר שנעשתה עריכה ללא חשבון בדפדפן ובמכשיר הזה.",
 	"citizen-user-info-edits-label": "עריכות",
 	"citizen-user-info-joined-label": "תאריך הצטרפות",
+	"citizen-command-palette-back": "חזרה",
 	"citizen-command-palette-heading-recent": "אחרונים",
 	"citizen-command-palette-heading-related": "קשורות",
 	"citizen-command-palette-keyhint-enter-select": "בחירה",
 	"citizen-command-palette-keyhint-enter-open": "פתיחה",
 	"citizen-command-palette-keyhint-enter-search": "חיפוש",
 	"citizen-command-palette-keyhint-navigate": "ניווט",
+	"citizen-command-palette-keyhint-clear": "ניקוי",
+	"citizen-command-palette-keyhint-close": "סגירה",
 	"citizen-command-palette-keyhint-exit": "יציאה",
 	"citizen-command-palette-keyhint-actions": "פעולות",
 	"citizen-command-palette-keyhint-return": "חזרה",
