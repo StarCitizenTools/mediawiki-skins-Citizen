@@ -38,7 +38,6 @@
 	// Used to offset sticky elements with sticky header
 	// This is overriden by inline styles in the html element when sticky header is active
 	// Need the unit for calc() (#1058)
-	// stylelint-disable-next-line length-zero-no-unit
 	--height-sticky-header: 0px;
 	// Width or height of citizen-header, depending on the orientation
 	--header-size: @header-size;
@@ -126,7 +125,6 @@
 
 	// Header position tokens
 	// Unit is required for calc() functions
-	// stylelint-disable length-zero-no-unit
 	--header-direction: row;
 	--header-size-inline-start: 0px;
 	--header-size-inline-end: 0px;
@@ -197,7 +195,7 @@
 			}
 		}
 	}
-	// stylelint-enable length-zero-no-unit
+
 
 	// Derived header offset tokens
 	// These combine the static header size with the dynamic sticky header height

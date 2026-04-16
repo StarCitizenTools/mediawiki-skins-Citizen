@@ -585,7 +585,6 @@ module.exports = exports = defineComponent( {
 	.citizen-command-palette-list-item:not( [ data-type='action' ] ) {
 		opacity: 1;
 		transition: opacity var( --transition-duration-medium );
-		/* stylelint-disable-next-line time-min-milliseconds */
 		transition-delay: calc( 0.05s * ( sibling-index() - 1 ) );
 
 		@starting-style {
