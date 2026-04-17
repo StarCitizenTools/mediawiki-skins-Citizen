@@ -32,7 +32,7 @@
 		"eslint-plugin-compat": "^6.2.0",
 		"grunt-banana-checker": "0.13.0",
 		"jsdom": "^29.0.2",
-		"lefthook": "^2.1.5",
+		"lefthook": "^2.1.6",
 		"less": "^4.6.4",
 		"markdownlint-cli": "^0.48.0",
 		"mustache": "^4.2.0",
