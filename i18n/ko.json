@@ -6,6 +6,7 @@
 			"Embercleave",
 			"Gustmd7410",
 			"Markingdots",
+			"Tensama0415",
 			"Ykhwong",
 			"렌즈"
 		]
@@ -52,6 +53,10 @@
 	"citizen-feature-autohide-navigation-name": "자동으로 메뉴 숨김",
 	"citizen-feature-autohide-navigation-0-label": "끄기",
 	"citizen-feature-autohide-navigation-1-label": "켜기",
+	"citizen-feature-performance-mode-0-label": "끄기",
+	"citizen-feature-performance-mode-1-label": "켜기",
+	"citizen-feature-image-dimming-0-label": "끄기",
+	"citizen-feature-image-dimming-1-label": "켜기",
 	"citizen-feature-pure-black-name": "퓨어 다크 모드",
 	"citizen-feature-pure-black-0-label": "끄기",
 	"citizen-feature-pure-black-1-label": "켜기",
