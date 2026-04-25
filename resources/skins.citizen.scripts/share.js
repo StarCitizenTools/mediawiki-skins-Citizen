@@ -13,9 +13,26 @@ function createShare( { document, window, mw, navigator } ) {
 	 * @return {void}
 	 */
 	function init() {
+		const shareDetails = document.getElementById( 'citizen-share-details' );
 		const shareButton = document.getElementById( 'citizen-share' );
 		if ( !shareButton ) {
-			// Citizen will not add the citizen-share element if the share button is undesirable
+			return;
+		}
+
+		if ( shareDetails ) {
+			shareDetails.addEventListener( 'toggle', () => {
+				mw.loader.load( 'skins.citizen.share' );
+			}, { once: true } );
+
+			// intended for the sticky share button as the modal is only mounted once in the toolbar
+			shareDetails.addEventListener( 'toggle', ( event ) => {
+				if (
+					event.target.open &&
+					!mw.config.get( 'wgIsMainPage' )
+				) {
+					window.scrollTo( { top: 0, left: 0, behavior: 'auto' } );
+				}
+			} );
 			return;
 		}
 
@@ -27,12 +44,11 @@ function createShare( { document, window, mw, navigator } ) {
 		};
 
 		const handleShareButtonClick = async () => {
-			shareButton.disabled = true; // Disable the button
+			shareButton.disabled = true;
 			try {
 				if ( navigator.share ) {
 					await navigator.share( shareData );
 				} else if ( navigator.clipboard ) {
-					// Fallback to navigator.clipboard if Share API is not supported
 					await navigator.clipboard.writeText( url );
 					mw.notify( mw.msg( 'citizen-share-copied' ), {
 						tag: 'citizen-share',
@@ -42,7 +58,7 @@ function createShare( { document, window, mw, navigator } ) {
 			} catch ( error ) {
 				mw.log.error( `[Citizen] ${ error }` );
 			} finally {
-				shareButton.disabled = false; // Re-enable button after error or share completes
+				shareButton.disabled = false;
 			}
 		};
 

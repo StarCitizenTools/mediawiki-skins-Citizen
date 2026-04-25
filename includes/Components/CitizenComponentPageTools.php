@@ -84,7 +84,10 @@ class CitizenComponentPageTools implements CitizenComponent {
 			 */
 			'is-uls-ready' => false,
 			'int-language-count' => $this->numLanguages,
-			'is-sharable' => $this->title->exists() && $this->title->isContentPage(),
+			'is-sharable' => $this->config->get( 'CitizenEnableShare' )
+				&& $this->title->exists()
+				&& $this->title->isContentPage(),
+			'use-customizable-share-panel' => $this->config->get( 'CitizenEnableCustomizableSharePanel' ),
 			'msg-citizen-share' => $this->localizer->msg( "citizen-share" )->text()
 		];
 	}

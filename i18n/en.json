@@ -33,7 +33,10 @@
 	"citizen-search-noresults-title": "Uh oh! No results for $1",
 
 	"citizen-share": "Share this page",
+	"citizen-share-link-description": "Share a link to this page:",
+	"citizen-share-copy-link": "Copy link",
 	"citizen-share-copied": "URL copied to clipboard!",
+	"citizen-share-native-options": "More options...",
 
 	"citizen-tagline": "-",
 	"citizen-tagline-ns-talk": "Discussion page of {{SUBJECTPAGENAME}}",

@@ -10,6 +10,7 @@ use MediaWiki\MediaWikiServices;
 use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\ResourceLoader as RL;
 use MediaWiki\Skins\Citizen\PreferencesConfigProvider;
+use MediaWiki\Skins\Citizen\ShareConfigProvider;
 
 /**
  * Hooks to run relating to the resource loader
@@ -64,6 +65,29 @@ class ResourceLoaderHooks {
 			'isMediaSearchExtensionEnabled' => $extensionRegistry->isLoaded( 'MediaSearch' ),
 			'isSemanticMediaWikiEnabled' => $extensionRegistry->isLoaded( 'SemanticMediaWiki' ),
 			'wgSearchSuggestCacheExpiry' => $config->get( MainConfigNames::SearchSuggestCacheExpiry )
+		];
+	}
+
+	/**
+	 * Passes config variables to skins.citizen.share ResourceLoader module.
+	 * @param RL\Context $context
+	 * @param Config $config
+	 * @return array
+	 */
+	public static function getCitizenShareResourceLoaderConfig(
+		RL\Context $context,
+		Config $config
+	): array {
+		$services = null;
+		$mwServices = MediaWikiServices::getInstance();
+		$provider = new ShareConfigProvider(
+			$mwServices->getRevisionLookup(),
+			$mwServices->getTitleFactory()
+		);
+		$services = $provider->getServiceOptions();
+
+		return [
+			'wgCitizenShareServiceOptions' => $services ?? $config->get( 'CitizenShareServiceOptions' ),
 		];
 	}
 

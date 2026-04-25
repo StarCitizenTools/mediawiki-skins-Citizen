@@ -300,6 +300,28 @@
 				"vue"
 			]
 		},
+		"skins.citizen.share": {
+			"packageFiles": [
+				"resources/skins.citizen.share/init.js",
+				"resources/skins.citizen.share/App.vue",
+				{
+					"name": "resources/skins.citizen.share/config.json",
+					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenShareResourceLoaderConfig"
+				}
+			],
+			"messages": [
+				"citizen-share",
+				"citizen-share-link-description",
+				"citizen-share-copy-link",
+				"citizen-share-copied",
+				"citizen-share-native-options"
+			],
+			"dependencies": [
+				"mediawiki.util",
+				"skins.citizen.icons",
+				"vue"
+			]
+		},
 		"skins.citizen.serviceWorker": {
 			"scripts": [
 				"resources/skins.citizen.serviceWorker/sw.js"
@@ -895,6 +917,54 @@
 		"TableOfContentsCollapseAtCount": {
 			"value": 28,
 			"description": "@var The minimum number of headings required to collapse all headings in the sticky table of contents by default."
+		},
+		"EnableShare": {
+			"value": true,
+			"description": "Enable or disable the share button",
+			"descriptionmsg": "citizen-config-enableshare",
+			"public": true
+		},
+		"EnableCustomizableSharePanel": {
+			"value": false,
+			"description": "Use Citizen's customizable share panel (service links and copy UI) instead of the browser Web Share API (with clipboard fallback)",
+			"descriptionmsg": "citizen-config-enablecustomizablesharepanel",
+			"public": true
+		},
+		"ShareServiceOptions": {
+			"value": [
+				{
+					"name": "facebook",
+					"label": "Facebook",
+					"url": "https://www.facebook.com/sharer/sharer.php?u={{url}}",
+					"color": "#0865FE",
+					"icon": "data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+RmFjZWJvb2s8L3RpdGxlPjxwYXRoIGQ9Ik05LjEwMSAyMy42OTF2LTcuOThINi42Mjd2LTMuNjY3aDIuNDc0di0xLjU4YzAtNC4wODUgMS44NDgtNS45NzggNS44NTgtNS45NzguNDAxIDAgLjk1NS4wNDIgMS40NjguMTAzYTguNjggOC42OCAwIDAgMSAxLjE0MS4xOTV2My4zMjVhOC42MjMgOC42MjMgMCAwIDAtLjY1My0uMDM2IDI2LjgwNSAyNi44MDUgMCAwIDAtLjczMy0uMDA5Yy0uNzA3IDAtMS4yNTkuMDk2LTEuNjc1LjMwOWExLjY4NiAxLjY4NiAwIDAgMC0uNjc5LjYyMmMtLjI1OC40Mi0uMzc0Ljk5NS0uMzc0IDEuNzUydjEuMjk3aDMuOTE5bC0uMzg2IDIuMTAzLS4yODcgMS41NjRoLTMuMjQ2djguMjQ1QzE5LjM5NiAyMy4yMzggMjQgMTguMTc5IDI0IDEyLjA0NGMwLTYuNjI3LTUuMzczLTEyLTEyLTEycy0xMiA1LjM3My0xMiAxMmMwIDUuNjI4IDMuODc0IDEwLjM1IDkuMTAxIDExLjY0N1oiLz48L3N2Zz4="
+				},
+				{
+					"name": "x",
+					"label": "X",
+					"url": "https://x.com/intent/tweet?url={{url}}&text={{title}}",
+					"color": "#000000",
+					"open_in_modal": true,
+					"icon": "data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+WDwvdGl0bGU+PHBhdGggZD0iTTE0LjIzNCAxMC4xNjIgMjIuOTc3IDBoLTIuMDcybC03LjU5MSA4LjgyNEw3LjI1MSAwSC4yNThsOS4xNjggMTMuMzQzTC4yNTggMjRIMi4zM2w4LjAxNi05LjMxOEwxNi43NDkgMjRoNi45OTN6bS0yLjgzNyAzLjI5OS0uOTI5LTEuMzI5TDMuMDc2IDEuNTZoMy4xODJsNS45NjUgOC41MzIuOTI5IDEuMzI5IDcuNzU0IDExLjA5aC0zLjE4MnoiLz48L3N2Zz4="
+				},
+				{
+					"name": "mastodon",
+					"label": "Mastodon",
+					"url": "https://mastodon.social/share?text={{title}}%20{{url}}",
+					"color": "#6364FF",
+					"icon": "data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+TWFzdG9kb248L3RpdGxlPjxwYXRoIGQ9Ik0yMy4yNjggNS4zMTNjLS4zNS0yLjU3OC0yLjYxNy00LjYxLTUuMzA0LTUuMDA0QzE3LjUxLjI0MiAxNS43OTIgMCAxMS44MTMgMGgtLjAzYy0zLjk4IDAtNC44MzUuMjQyLTUuMjg4LjMwOUMzLjg4Mi42OTIgMS40OTYgMi41MTguOTE3IDUuMTI3LjY0IDYuNDEyLjYxIDcuODM3LjY2MSA5LjE0M2MuMDc0IDEuODc0LjA4OCAzLjc0NS4yNiA1LjYxMS4xMTggMS4yNC4zMjUgMi40Ny42MiAzLjY4LjU1IDIuMjM3IDIuNzc3IDQuMDk4IDQuOTYgNC44NTcgMi4zMzYuNzkyIDQuODQ5LjkyMyA3LjI1Ni4zOC4yNjUtLjA2MS41MjctLjEzMi43ODYtLjIxMy41ODUtLjE4NCAxLjI3LS4zOSAxLjc3NC0uNzUzYS4wNTcuMDU3IDAgMCAwIC4wMjMtLjA0M3YtMS44MDlhLjA1Mi4wNTIgMCAwIDAtLjAyLS4wNDEuMDUzLjA1MyAwIDAgMC0uMDQ2LS4wMSAyMC4yODIgMjAuMjgyIDAgMCAxLTQuNzA5LjU0NWMtMi43MyAwLTMuNDYzLTEuMjg0LTMuNjc0LTEuODE4YTUuNTkzIDUuNTkzIDAgMCAxLS4zMTktMS40MzMuMDUzLjA1MyAwIDAgMSAuMDY2LS4wNTRjMS41MTcuMzYzIDMuMDcyLjU0NiA0LjYzMi41NDYuMzc2IDAgLjc1IDAgMS4xMjUtLjAxIDEuNTctLjA0NCAzLjIyNC0uMTI0IDQuNzY4LS40MjIuMDM4LS4wMDguMDc3LS4wMTUuMTEtLjAyNCAyLjQzNS0uNDY0IDQuNzUzLTEuOTIgNC45ODktNS42MDQuMDA4LS4xNDUuMDMtMS41Mi4wMy0xLjY3LjAwMi0uNTEyLjE2Ny0zLjYzLS4wMjQtNS41NDV6bS0zLjc0OCA5LjE5NWgtMi41NjFWOC4yOWMwLTEuMzA5LS41NS0xLjk3Ni0xLjY3LTEuOTc2LTEuMjMgMC0xLjg0Ni43OS0xLjg0NiAyLjM1djMuNDAzaC0yLjU0NlY4LjY2M2MwLTEuNTYtLjYxNy0yLjM1LTEuODQ4LTIuMzUtMS4xMTIgMC0xLjY2OC42NjgtMS42NyAxLjk3N3Y2LjIxOEg0LjgyMlY4LjEwMmMwLTEuMzEuMzM3LTIuMzUgMS4wMTEtMy4xMi42OTYtLjc3IDEuNjA4LTEuMTY0IDIuNzQtMS4xNjQgMS4zMTEgMCAyLjMwMi41IDIuOTYyIDEuNDk4bC42MzggMS4wNi42MzgtMS4wNmMuNjYtLjk5OSAxLjY1LTEuNDk4IDIuOTYtMS40OTggMS4xMyAwIDIuMDQzLjM5NSAyLjc0IDEuMTY0LjY3NS43NyAxLjAxMiAxLjgxIDEuMDEyIDMuMTJ6Ii8+PC9zdmc+"
+				},
+				{
+					"name": "bluesky",
+					"label": "Bluesky",
+					"url": "https://bsky.app/intent/compose?text={{title}}%20{{url}}",
+					"color": "#1185FE",
+					"icon": "data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+Qmx1ZXNreTwvdGl0bGU+PHBhdGggZD0iTTUuMjAyIDIuODU3QzcuOTU0IDQuOTIyIDEwLjkxMyA5LjExIDEyIDExLjM1OGMxLjA4Ny0yLjI0NyA0LjA0Ni02LjQzNiA2Ljc5OC04LjUwMUMyMC43ODMgMS4zNjYgMjQgLjIxMyAyNCAzLjg4M2MwIC43MzItLjQyIDYuMTU2LS42NjcgNy4wMzctLjg1NiAzLjA2MS0zLjk3OCAzLjg0Mi02Ljc1NSAzLjM3IDQuODU0LjgyNiA2LjA4OSAzLjU2MiAzLjQyMiA2LjI5OS01LjA2NSA1LjE5Ni03LjI4LTEuMzA0LTcuODQ3LTIuOTctLjEwNC0uMzA1LS4xNTItLjQ0OC0uMTUzLS4zMjcgMC0uMTIxLS4wNS4wMjItLjE1My4zMjctLjU2OCAxLjY2Ni0yLjc4MiA4LjE2Ni03Ljg0NyAyLjk3LTIuNjY3LTIuNzM3LTEuNDMyLTUuNDczIDMuNDIyLTYuMy0yLjc3Ny40NzMtNS44OTktLjMwOC02Ljc1NS0zLjM2OUMuNDIgMTAuMDQgMCA0LjYxNSAwIDMuODgzYzAtMy42NyAzLjIxNy0yLjUxNyA1LjIwMi0xLjAyNiIvPjwvc3ZnPg=="
+				}
+			],
+			"description": "Options for the share button",
+			"descriptionmsg": "citizen-config-shareoptions",
+			"public": true
 		},
 		"HeaderPosition": {
 			"value": "left",
