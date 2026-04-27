@@ -27,7 +27,7 @@
 		"@vitest/coverage-v8": "^4.1.5",
 		"@vue/test-utils": "^2.4.6",
 		"devmoji": "^2.3.0",
-		"eslint": "8.57.1",
+		"eslint": "10.2.1",
 		"eslint-config-wikimedia": "0.32.3",
 		"eslint-plugin-compat": "^6.2.0",
 		"grunt-banana-checker": "0.13.0",
