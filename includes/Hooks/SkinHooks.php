@@ -44,7 +44,7 @@ class SkinHooks implements
 			self::$inlineScript ??= Html::inlineScript(
 				RL\ResourceLoader::filter(
 					'minify-js',
-					file_get_contents( MW_INSTALL_PATH . '/skins/Citizen/resources/skins.citizen.scripts/inline.js' )
+					file_get_contents( __DIR__ . '/../../resources/skins.citizen.scripts/inline.js' )
 				)
 			);
 			$out->addHeadItem( 'skin.citizen.inline', self::$inlineScript );
