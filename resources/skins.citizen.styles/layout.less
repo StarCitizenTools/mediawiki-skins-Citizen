@@ -13,9 +13,11 @@
 
 .citizen-body-container {
 	display: grid;
+	// stylelint-disable
 	grid-template-areas:
 		'content'
 		'footer';
+	// stylelint-enable
 	// Using auto as min value will cause overflow
 	grid-template-columns: minmax( 0, var( --width-layout ) );
 	gap: 0 var( --space-lg );
@@ -46,9 +48,11 @@
 		--width-page: calc( var( --width-layout ) + var( --width-toc ) + var( --space-lg ) );
 
 		.citizen-body-container {
+			// stylelint-disable
 			grid-template-areas:
 				'content sidebar'
 				'footer footer';
+			// stylelint-enable
 			grid-template-columns: minmax( 0, var( --width-layout ) ) var( --width-toc );
 		}
 	}
