@@ -529,7 +529,6 @@ module.exports = exports = defineComponent( {
 	}
 
 	&__body {
-		flex: 1;
 		min-height: 0;
 		overflow: hidden;
 		border-top: var( --border-subtle );
