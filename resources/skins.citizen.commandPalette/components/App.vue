@@ -581,16 +581,6 @@ module.exports = exports = defineComponent( {
 		padding: var( --space-md ) var( --citizen-command-palette-side-padding );
 		text-align: center;
 	}
-
-	.citizen-command-palette-list-item:not( [ data-type='action' ] ) {
-		opacity: 1;
-		transition: opacity var( --transition-duration-medium );
-		transition-delay: calc( 0.05s * ( sibling-index() - 1 ) );
-
-		@starting-style {
-			opacity: 0;
-		}
-	}
 }
 
 // Palette entrance/exit
