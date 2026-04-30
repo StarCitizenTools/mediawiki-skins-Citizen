@@ -46,7 +46,7 @@
 	"citizen-tagline-ns-category": "분류 문서",
 	"citizen-tagline-user-regdate": "$1에 가입함",
 	"citizen-theme-name": "색상 테마",
-	"citizen-theme-description": "색상 테마 변경",
+	"citizen-theme-description": "라이트 및 다크 테마간 전환",
 	"citizen-theme-day-label": "라이트",
 	"citizen-theme-night-label": "다크",
 	"citizen-theme-os-label": "자동",
