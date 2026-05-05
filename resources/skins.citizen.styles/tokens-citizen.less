@@ -37,8 +37,8 @@
 	--toolbar-size: 2.5rem;
 	// Used to offset sticky elements with sticky header
 	// This is overriden by inline styles in the html element when sticky header is active
-	// Need the unit for calc() (#1058)
-	--height-sticky-header: 0;
+	// stylelint-disable-next-line length-zero-no-unit -- Need the unit for calc() (#1058)
+	--height-sticky-header: 0px;
 	// Width or height of citizen-header, depending on the orientation
 	--header-size: @header-size;
 	// Max-height allowed for header card, 20vh is left for closing affordnance
@@ -128,8 +128,10 @@
 	--header-direction: row;
 	--header-size-inline-start: 0;
 	--header-size-inline-end: 0;
-	--header-size-block-start: 0;
-	--header-size-block-end: 0;
+	// stylelint-disable-next-line length-zero-no-unit -- Need the unit for calc() (#1058)
+	--header-size-block-start: 0px;
+	// stylelint-disable-next-line length-zero-no-unit -- Need the unit for calc() (#1058)
+	--header-size-block-end: 0px;
 	--header-inset-block-start: 0;
 	--header-inset-block-end: 0;
 	--header-inset-inline-start: 0;
