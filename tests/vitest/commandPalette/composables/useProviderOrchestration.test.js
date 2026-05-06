@@ -158,7 +158,7 @@ describe( 'useProviderOrchestration', () => {
 			orch.enterMode( mode );
 			await vi.runAllTimersAsync();
 
-			expect( mode.getResults ).toHaveBeenCalledWith( '', undefined, [] );
+			expect( mode.getResults ).toHaveBeenCalledWith( '', undefined, [], [] );
 		} );
 
 		it( 'updateQuery routes through active mode getResults when mode is active', async () => {
@@ -176,7 +176,7 @@ describe( 'useProviderOrchestration', () => {
 			vi.advanceTimersByTime( 250 );
 			await vi.runAllTimersAsync();
 
-			expect( mode.getResults ).toHaveBeenCalledWith( 'Talk', expect.any( AbortSignal ), [] );
+			expect( mode.getResults ).toHaveBeenCalledWith( 'Talk', expect.any( AbortSignal ), [], [] );
 		} );
 
 		it( 'updateQuery uses normal provider dispatch when no mode is active', async () => {
@@ -359,6 +359,91 @@ describe( 'useProviderOrchestration', () => {
 			await vi.runAllTimersAsync();
 
 			expect( mockAsyncProvider.getResults ).toHaveBeenCalledTimes( 1 );
+		} );
+	} );
+
+	describe( 'mode context', () => {
+		const stubMode = ( id, getResults ) => ( {
+			id,
+			getResults: getResults || vi.fn().mockResolvedValue( [] )
+		} );
+
+		it( 'initialises activeModeContext to empty array', () => {
+			const orch = useProviderOrchestration( [], mockDecorator );
+
+			expect( orch.activeModeContext.value ).toEqual( [] );
+		} );
+
+		it( 'enterMode resets activeModeContext', async () => {
+			const orch = useProviderOrchestration( [], mockDecorator );
+			orch.enterMode( stubMode( 'm' ) );
+			orch.pushModeContext( { name: 'A' } );
+			orch.enterMode( stubMode( 'm2' ) );
+			await vi.runAllTimersAsync();
+
+			expect( orch.activeModeContext.value ).toEqual( [] );
+		} );
+
+		it( 'exitMode clears activeModeContext', async () => {
+			const orch = useProviderOrchestration( [], mockDecorator );
+			orch.enterMode( stubMode( 'm' ) );
+			orch.pushModeContext( { name: 'A' } );
+			orch.exitMode();
+			await vi.runAllTimersAsync();
+
+			expect( orch.activeModeContext.value ).toEqual( [] );
+		} );
+
+		it( 'pushModeContext appends and clears query', async () => {
+			const orch = useProviderOrchestration( [], mockDecorator );
+			orch.enterMode( stubMode( 'm' ) );
+			orch.updateQuery( 'foo' );
+			orch.pushModeContext( { name: 'A' } );
+			orch.pushModeContext( { name: 'B' } );
+			await vi.runAllTimersAsync();
+
+			expect( orch.activeModeContext.value ).toEqual(
+				[ { name: 'A' }, { name: 'B' } ]
+			);
+			expect( orch.query.value ).toBe( '' );
+		} );
+
+		it( 'popModeContext removes last entry', async () => {
+			const orch = useProviderOrchestration( [], mockDecorator );
+			orch.enterMode( stubMode( 'm' ) );
+			orch.pushModeContext( { name: 'A' } );
+			orch.pushModeContext( { name: 'B' } );
+			orch.popModeContext();
+			await vi.runAllTimersAsync();
+
+			expect( orch.activeModeContext.value ).toEqual( [ { name: 'A' } ] );
+		} );
+
+		it( 'popModeContext is a no-op when stack is empty', async () => {
+			const orch = useProviderOrchestration( [], mockDecorator );
+			orch.enterMode( stubMode( 'm' ) );
+			orch.popModeContext();
+			await vi.runAllTimersAsync();
+
+			expect( orch.activeModeContext.value ).toEqual( [] );
+		} );
+
+		it( 'pushModeContext is a no-op when no mode is active', () => {
+			const orch = useProviderOrchestration( [], mockDecorator );
+			orch.pushModeContext( { name: 'A' } );
+
+			expect( orch.activeModeContext.value ).toEqual( [] );
+		} );
+
+		it( 'passes activeModeContext as 4th arg to mode.getResults', async () => {
+			const getResults = vi.fn().mockResolvedValue( [] );
+			const orch = useProviderOrchestration( [], mockDecorator );
+			orch.enterMode( stubMode( 'm', getResults ) );
+			orch.pushModeContext( { name: 'A' } );
+			await vi.runAllTimersAsync();
+
+			const lastCall = getResults.mock.calls[ getResults.mock.calls.length - 1 ];
+			expect( lastCall[ 3 ] ).toEqual( [ { name: 'A' } ] );
 		} );
 	} );
 } );
