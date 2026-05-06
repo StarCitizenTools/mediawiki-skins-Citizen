@@ -32,10 +32,7 @@
 					"text-spacing-trim": [ "normal" ],
 					"text-wrap": [ "pretty" ],
 					"user-select": [ "none" ]
-				},
-				"ignoreAtRules": [
-					"view-transition"
-				]
+				}
 			}
 		]
 	}
