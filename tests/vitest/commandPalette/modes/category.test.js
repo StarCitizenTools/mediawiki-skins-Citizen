@@ -199,11 +199,9 @@ describe( 'category mode', () => {
 	} );
 
 	describe( 'headerLabel', () => {
-		it( 'shows root label when context is empty', () => {
-			const label = mode.headerLabel( [] );
-
-			// mw mock returns the message key verbatim; assert that's what we get.
-			expect( label ).toBe( 'citizen-command-palette-mode-category-breadcrumb-root' );
+		it( 'returns null when context is empty so the header falls back to placeholder', () => {
+			expect( mode.headerLabel( [] ) ).toBeNull();
+			expect( mode.headerLabel( undefined ) ).toBeNull();
 		} );
 
 		it( 'joins context segments with /', () => {

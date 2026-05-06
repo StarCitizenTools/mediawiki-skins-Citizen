@@ -104,7 +104,7 @@ Every entry must have at minimum an `id`, `triggers`, and `description`. If the 
 | `icon` | `Object` | No | Codex icon for the header when mode is active. Modes only. |
 | `getResults` | `function` | No | `(subQuery, signal?, tokens?, modeContext?) => Promise<Array>` — if provided, this entry is a mode. The optional fourth argument is the current [mode context](#mode-context) stack. |
 | `onResultSelect` | `function` | No | `(item) => { action, payload }` — handles selection of a result item. |
-| `headerLabel` | `function` | No | `(modeContext) => string` — replaces the input placeholder with a custom label. Typically used to render a breadcrumb when the mode uses [mode context](#mode-context). Modes only. |
+| `headerLabel` | `function` | No | `(modeContext) => string \| null` — replaces the input placeholder with a custom label. Return `null` to fall back to the regular placeholder — useful for showing a breadcrumb only when the mode is drilled in. Typically used with [mode context](#mode-context). Modes only. |
 | `emptyState` | `Object` | No | `{ title, description, icon }` — content shown when the mode is active with no query. Falls back to default search messaging. Modes only. |
 | `noResults` | `function` | No | `(query, tokens?) => { title, description, icon }` — returns content shown when a query produces no results. Falls back to default no-results messaging. Modes only. |
 | `tokenPattern` | `Object` | No | Token detection pattern for auto-tokenization. See [token patterns](#token-patterns). Modes only. |
@@ -143,7 +143,7 @@ It's opt-in. Modes that don't need it can ignore it entirely.
 - The stack is empty when a mode is entered, and is cleared when the mode exits or the palette closes.
 - `{ action: 'pushModeContext', payload }` appends the payload and clears the input, so the user starts fresh at the new level.
 - `getResults` gets the current stack as its fourth argument and decides what to show per level.
-- `headerLabel( modeContext )` renders a breadcrumb in the header so the user can always tell where they are.
+- `headerLabel( modeContext )` renders a breadcrumb in the header so the user can always tell where they are. Returning `null` falls back to the regular placeholder, so the breadcrumb only shows when there's actually a path to display.
 - <kbd>Backspace</kbd> on an empty input pops one level. With an empty stack, it falls through to the normal exit-mode behavior.
 
 A minimal example of a drill-down mode:
@@ -170,6 +170,9 @@ const myDrillMode = {
     },
 
     headerLabel: function ( modeContext ) {
+        if ( modeContext.length === 0 ) {
+            return null; // fall back to the placeholder at the root
+        }
         return [ 'Folders' ].concat( modeContext.map( ( c ) => c.id ) ).join( ' / ' );
     }
 };

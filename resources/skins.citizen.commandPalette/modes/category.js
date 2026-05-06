@@ -209,8 +209,14 @@ function createCategoryMode( ApiConstructor ) {
 	}
 
 	function headerLabel( modeContext ) {
+		// At root (empty stack) return null so the header falls back to
+		// the more action-oriented placeholder. The breadcrumb only adds
+		// value once the user has drilled in.
+		if ( !modeContext || modeContext.length === 0 ) {
+			return null;
+		}
 		const root = mw.message( 'citizen-command-palette-mode-category-breadcrumb-root' ).text();
-		const segments = [ root ].concat( ( modeContext || [] ).map( ( c ) => c.title ) );
+		const segments = [ root ].concat( modeContext.map( ( c ) => c.title ) );
 		return segments.join( ' / ' );
 	}
 

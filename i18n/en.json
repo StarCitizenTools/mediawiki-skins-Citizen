@@ -130,8 +130,8 @@
 
 	"citizen-command-palette-mode-action-placeholder": "Search actions",
 	"citizen-command-palette-mode-category-breadcrumb-root": "Categories",
-	"citizen-command-palette-mode-category-empty-description": "Start typing to find a category",
-	"citizen-command-palette-mode-category-empty-title": "Search categories",
+	"citizen-command-palette-mode-category-empty-description": "Type to search every category on the wiki",
+	"citizen-command-palette-mode-category-empty-title": "No categories on this page",
 	"citizen-command-palette-mode-category-noresults-description": "Check the spelling or try a different search term",
 	"citizen-command-palette-mode-category-noresults-title": "No matching results",
 	"citizen-command-palette-mode-category-placeholder": "Search categories",

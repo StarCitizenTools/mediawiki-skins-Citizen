@@ -263,16 +263,24 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	function handleModeQuery( mode, currentQuery ) {
 		const tokens = deps.tokens ? deps.tokens.value : [];
 		if ( !currentQuery ) {
+			isPending.value = true;
+			const clearPending = () => {
+				if ( query.value === currentQuery && activeMode.value === mode ) {
+					isPending.value = false;
+				}
+			};
 			Promise.resolve( mode.getResults( '', undefined, tokens, activeModeContext.value ) ).then( ( result ) => {
 				const items = normalizeProviderResult( result );
 				if ( query.value === currentQuery && activeMode.value === mode ) {
 					displayedItems.value = items.length > 0 ?
 						[ { heading: null, items: items } ] : [];
 				}
+				clearPending();
 			} ).catch( ( error ) => {
 				mw.log.error(
 					'[commandPalette] Mode "' + mode.id + '" failed:', error
 				);
+				clearPending();
 			} );
 			return;
 		}

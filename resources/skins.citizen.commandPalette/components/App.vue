@@ -40,7 +40,7 @@
 				>
 					<div class="citizen-command-palette__results">
 						<command-palette-empty-state
-							v-if="!showPending && flatItems.length === 0"
+							v-if="!isPending && flatItems.length === 0"
 							:title="emptyStateContent.title"
 							:description="emptyStateContent.description"
 							:icon="emptyStateContent.icon"

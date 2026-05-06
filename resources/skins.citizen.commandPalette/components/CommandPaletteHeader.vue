@@ -110,7 +110,10 @@ module.exports = exports = defineComponent( {
 
 		const currentPlaceholder = computed( () => {
 			if ( props.activeMode && typeof props.activeMode.headerLabel === 'function' ) {
-				return props.activeMode.headerLabel( props.activeModeContext );
+				const label = props.activeMode.headerLabel( props.activeModeContext );
+				if ( label ) {
+					return label;
+				}
 			}
 			if ( props.activeMode && props.activeMode.placeholder ) {
 				return props.activeMode.placeholder;
