@@ -10,7 +10,7 @@
  *  - drilled, typed query: same fetch, filtered client-side by
  *    case-insensitive title startsWith.
  */
-const { cdxIconArticles, cdxIconArticle } = require( '../icons.json' );
+const { cdxIconTag, cdxIconArticle } = require( '../icons.json' );
 const config = require( '../config.json' );
 
 const CATEGORY_NS_ID = 14;
@@ -37,12 +37,15 @@ function stripPrefix( title ) {
  * @return {Object}
  */
 function adaptCategoryItem( bareTitle ) {
+	// No url is set on category results: drilling, not navigation, is the
+	// primary action. Setting url would render the item as an <a> tag and
+	// the browser would follow it on mouse click before the Vue handler
+	// could fire pushModeContext.
 	return {
 		id: 'citizen-command-palette-item-category-' + bareTitle,
-		thumbnailIcon: cdxIconArticles,
+		thumbnailIcon: cdxIconTag,
 		type: 'category',
 		label: bareTitle,
-		url: mw.util.getUrl( CATEGORY_NS_NAME + ':' + bareTitle ),
 		value: bareTitle,
 		highlightQuery: true
 	};
@@ -193,7 +196,7 @@ function createCategoryMode( ApiConstructor ) {
 		label: mw.message( 'citizen-command-palette-command-category-label' ).text(),
 		description: mw.message( 'citizen-command-palette-command-category-description' ).text(),
 		placeholder: mw.message( 'citizen-command-palette-mode-category-placeholder' ).text(),
-		icon: cdxIconArticles,
+		icon: cdxIconTag,
 		getResults,
 		onResultSelect,
 		headerLabel
