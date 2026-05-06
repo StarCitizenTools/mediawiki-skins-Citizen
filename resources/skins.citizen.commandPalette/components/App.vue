@@ -23,6 +23,7 @@
 				:is-pending="isPending"
 				:show-pending="showPending"
 				:active-mode="activeMode"
+				:active-mode-context="activeModeContext"
 				@exit-mode="exitMode"
 				@update:free-text="handleFreeTextUpdate( $event )"
 				@select-token="tokenInput.selectToken( $event )"
@@ -463,6 +464,7 @@ module.exports = exports = defineComponent( {
 			teardownResizeObserver,
 			// Orchestration
 			activeMode: orch.activeMode,
+			activeModeContext: orch.activeModeContext,
 			exitMode: orch.exitMode,
 			query: orch.query,
 			displayedItems: orch.displayedItems,
