@@ -10,7 +10,7 @@
  *  - drilled, typed query: same fetch, filtered client-side by
  *    case-insensitive title startsWith.
  */
-const { cdxIconTag, cdxIconArticle } = require( '../icons.json' );
+const { cdxIconTag, cdxIconArticle, cdxIconEdit } = require( '../icons.json' );
 const config = require( '../config.json' );
 
 const CATEGORY_NS_ID = 14;
@@ -40,14 +40,30 @@ function adaptCategoryItem( bareTitle ) {
 	// No url is set on category results: drilling, not navigation, is the
 	// primary action. Setting url would render the item as an <a> tag and
 	// the browser would follow it on mouse click before the Vue handler
-	// could fire pushModeContext.
+	// could fire pushModeContext. The "view" action below restores the
+	// path to the actual Category: page.
+	const categoryTitle = CATEGORY_NS_NAME + ':' + bareTitle;
 	return {
 		id: 'citizen-command-palette-item-category-' + bareTitle,
 		thumbnailIcon: cdxIconTag,
 		type: 'category',
 		label: bareTitle,
 		value: bareTitle,
-		highlightQuery: true
+		highlightQuery: true,
+		actions: [
+			{
+				id: 'view',
+				label: mw.message( 'citizen-command-palette-action-view' ).text(),
+				icon: cdxIconArticle,
+				url: mw.util.getUrl( categoryTitle )
+			},
+			{
+				id: 'edit',
+				label: mw.message( 'edit' ).text(),
+				icon: cdxIconEdit,
+				url: mw.util.getUrl( categoryTitle, { action: 'edit' } )
+			}
+		]
 	};
 }
 
@@ -64,7 +80,15 @@ function adaptPageItem( apiPage ) {
 		type: 'page',
 		label: apiPage.title,
 		url: mw.util.getUrl( apiPage.title ),
-		highlightQuery: true
+		highlightQuery: true,
+		actions: [
+			{
+				id: 'edit',
+				label: mw.message( 'edit' ).text(),
+				icon: cdxIconEdit,
+				url: mw.util.getUrl( apiPage.title, { action: 'edit' } )
+			}
+		]
 	};
 }
 

@@ -46,6 +46,15 @@ describe( 'category mode', () => {
 			expect( results[ 0 ].type ).toBe( 'category' );
 		} );
 
+		it( 'attaches view + edit actions to category items', async () => {
+			const results = await mode.getResults( '', undefined, [], [] );
+
+			const actionIds = results[ 0 ].actions.map( ( a ) => a.id );
+			expect( actionIds ).toEqual( [ 'view', 'edit' ] );
+			expect( results[ 0 ].actions[ 0 ].url ).toContain( 'Category:Living people' );
+			expect( results[ 0 ].actions[ 1 ].url ).toContain( 'action=edit' );
+		} );
+
 		it( 'returns empty array when wgCategories is missing', async () => {
 			mw.config.get = vi.fn().mockReturnValue( null );
 
@@ -113,6 +122,18 @@ describe( 'category mode', () => {
 			expect( results[ 0 ].type ).toBe( 'category' );
 			expect( results[ 1 ].label ).toBe( 'Lion' );
 			expect( results[ 1 ].type ).toBe( 'page' );
+		} );
+
+		it( 'attaches edit action to page items', async () => {
+			mockGet.mockResolvedValue( {
+				query: { categorymembers: [ { ns: 0, title: 'Lion' } ] }
+			} );
+
+			const results = await mode.getResults( '', undefined, [], [ { title: 'Cats' } ] );
+
+			expect( results[ 0 ].actions ).toHaveLength( 1 );
+			expect( results[ 0 ].actions[ 0 ].id ).toBe( 'edit' );
+			expect( results[ 0 ].actions[ 0 ].url ).toContain( 'action=edit' );
 		} );
 
 		it( 'uses the deepest entry on the stack', async () => {

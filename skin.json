@@ -392,6 +392,7 @@
 			],
 			"messages": [
 				"action-edit",
+				"citizen-command-palette-action-view",
 				"citizen-command-palette-back",
 				"citizen-command-palette-command-action-description",
 				"citizen-command-palette-command-action-label",
@@ -441,6 +442,7 @@
 				"citizen-search-empty-desc",
 				"citizen-search-noresults-title",
 				"contributions",
+				"edit",
 				"search-nonefound",
 				"searchsuggest-search",
 				"talk"
