@@ -343,7 +343,9 @@ module.exports = exports = defineComponent( {
 			tokens: tokenInput.tokens,
 			selectedTokenIndex: tokenInput.selectedIndex,
 			onSelectToken: ( index ) => tokenInput.selectToken( index ),
-			onRemoveToken: handleRemoveToken
+			onRemoveToken: handleRemoveToken,
+			activeModeContext: orch.activeModeContext,
+			onPopModeContext: () => orch.popModeContext()
 		} );
 
 		// setItemRef expects the GLOBAL index within displayedItems
