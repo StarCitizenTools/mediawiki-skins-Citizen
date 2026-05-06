@@ -2,16 +2,13 @@
  * Citizen
  *
  * Module: mediawiki.skinning.interface.category
- * Version: REL1_39
- *
- * Date: 2022-11-15
 */
 
 .catlinks {
 	clear: both;
 	display: flex;
 	flex-wrap: wrap;
-	gap: var( --space-xs );
+	gap: var( --space-lg );
 
 	ul {
 		display: flex;
@@ -26,7 +23,7 @@
 		// Be more specific because gadgets like hotcat can attach links in category
 		> a {
 			display: block;
-			padding: var( --space-xs ) var( --space-md );
+			padding: var( --space-xxs ) var( --space-sm );
 			color: var( --color-base );
 			border: var( --border-width-base ) solid var( --border-color-interactive );
 			border-radius: var( --border-radius-pill );
