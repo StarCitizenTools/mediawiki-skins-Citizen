@@ -88,6 +88,27 @@ $wgCitizenThemeColor = '#0d0e12';
 
 **Values**: Hex color code
 
+### `$wgCitizenUseNewToken`
+
+::: warning Experimental
+The new color token pipeline is under active development. Token names, values, and the retheme API may change without notice. Production wikis should leave this off.
+:::
+
+Opts the wiki into Citizen's new color token pipeline (`skins.citizen.tokens.new`). Exactly one token module ships per request — when enabled, the new module loads in place of the default `skins.citizen.tokens`, and `<html>` gets `.citizen-token-new`.
+
+```php [LocalSettings.php]
+$wgCitizenUseNewToken = false;
+```
+
+**Values**: `true`, `false`
+
+The setting can also be toggled per-browser without editing `LocalSettings.php`:
+
+- Append `?citizenusenewtoken=1` to any wiki URL to opt in for the current render. The choice is stored in a 24-hour cookie so it persists across pages in the same browser.
+- Append `?citizenusenewtoken=0` to opt back out.
+
+When neither the URL query nor the cookie is present, the value of `$wgCitizenUseNewToken` decides.
+
 ### `$wgCitizenEnableARFonts`
 
 Loads the "Noto Naskh Arabic" font, improving readability for wikis that use Arabic script.

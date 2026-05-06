@@ -3,50 +3,63 @@
  *
  * Loaded only when SkinHooks::resolveColorMode resolves to "new".
  * @layer citizen-tokens means user CSS at :root still wins. The
- * :root.citizen-token-new gating is kept in the mixins so emission
- * scope is explicit even though module loading already implies it.
+ * :root.citizen-token-new gating is kept inside each category mixin
+ * so emission scope is explicit even though module loading already
+ * implies it.
  *
- * Cross-module import: the legacy module's tokens-codex.less is
+ * Files mirror Codex doc-token categories
+ * (https://doc.wikimedia.org/codex/main/design-tokens/overview.html);
+ * Citizen-specific extensions (surface ramp, syntax-color palette)
+ * live in their own files but logically extend the color category.
+ *
+ * Cross-module dependency: the legacy module's tokens-codex.less is
  * pulled in (reference) for the .cdx-mode-medium() font mixin shared
- * between modes — no value chains, just the mixin def. A future
- * shared-font module can break this dependency.
+ * between modes — no value chains, just the mixin def.
  */
 
 @import ( reference ) '../variables.less';
 @import ( reference ) '../skins.citizen.tokens/tokens-codex.less';
 @import ( reference ) 'primitives-codex.less';
 @import ( reference ) 'primitives-citizen.less';
-@import ( reference ) 'semantics-codex.mw-1.43.less';
-@import ( reference ) 'semantics-codex.mw-1.44.less';
-@import ( reference ) 'semantics-codex.mw-1.45.less';
-@import ( reference ) 'semantics-codex.latest.less';
-@import ( reference ) 'semantics-codex.deprecated.less';
-@import ( reference ) 'tokens-theme.less';
+@import ( reference ) 'background-color.less';
+@import ( reference ) 'border-color.less';
+@import ( reference ) 'color.less';
+@import ( reference ) 'box-shadow.less';
+@import ( reference ) 'surface.less';
+@import ( reference ) 'syntax-color.less';
+@import ( reference ) 'opacity.less';
+@import ( reference ) 'font.less';
+@import ( reference ) 'misc.less';
+@import ( reference ) 'dark-overrides.less';
 
 @layer citizen-tokens {
 	.new-primitives-codex();
 	.new-primitives-citizen();
-	.new-semantics-codex-mw-1-43();
-	.new-semantics-codex-mw-1-44();
-	.new-semantics-codex-mw-1-45();
-	.new-semantics-codex-latest();
-	.new-semantics-codex-deprecated();
+
+	.new-background-color();
+	.new-border-color();
+	.new-color();
+	.new-box-shadow();
+	.new-surface();
+	.new-syntax-color();
+	.new-opacity();
+	.new-font();
+	.new-misc();
 
 	:root.citizen-token-new {
 		color-scheme: light;
-		.theme-new();
 	}
 
 	:root.citizen-token-new.skin-theme-clientpref-night {
 		color-scheme: dark;
-		.theme-new-dark-non-color();
+		.new-dark-overrides();
 	}
 
 	:root.citizen-token-new.skin-theme-clientpref-os {
 		color-scheme: light dark;
 
 		@media ( prefers-color-scheme: dark ) {
-			.theme-new-dark-non-color();
+			.new-dark-overrides();
 		}
 	}
 }

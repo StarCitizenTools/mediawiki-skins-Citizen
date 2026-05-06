@@ -1,0 +1,27 @@
+/**
+ * opacity tokens
+ * https://doc.wikimedia.org/codex/main/design-tokens/opacity.html
+ */
+.new-opacity() {
+	:root.citizen-token-new {
+		// Codex (with Citizen-added --active stop, sitting between
+		// hover and selected — consumed by --background-color-icon--active
+		// in dark-overrides.less).
+		--opacity-icon-base: 0.6;
+		--opacity-icon-base--hover: 0.74;
+		--opacity-icon-base--active: 0.87;
+		--opacity-icon-base--selected: 1;
+		--opacity-icon-base--disabled: 0.51;
+		--opacity-icon-placeholder: 0.51;
+		--opacity-icon-subtle: 0.67;
+
+		// Citizen extensions. --opacity-glass is theme-variant; dark
+		// override in dark-overrides.less. --backdrop-opacity drives
+		// --background-color-backdrop-* in background-color.less.
+		// --shadow-opacity drives --box-shadow-color-alpha-base in
+		// box-shadow.less (also theme-variant).
+		--opacity-glass: 0.9;
+		--backdrop-opacity: 0.65;
+		--shadow-opacity: 0.03;
+	}
+}

@@ -33,19 +33,26 @@
 		// Chromatic -1000 stops are retuned to ~16% L (vs Codex ~26%)
 		// to sit ~5% L above Citizen's deeper neutral-1000 canvas,
 		// matching the visual weight of bg-neutral-subtle.
+		//
+		// -950 stops (red, yellow, green) are Citizen extensions for
+		// the soft state-border tier in dark mode. ~25% L with reduced
+		// chroma — sits ~14% L above the canvas with low saturation,
+		// reading at the same visual weight as a chrome border. Codex
+		// itself doesn't have -950 stops.
 
-		// ----- Red (cooler, magenta-leaning hue) -----
-		--color-red-50: oklch( 95% 0.015 12 );
-		--color-red-100: oklch( 92% 0.03 13 );
-		--color-red-200: oklch( 88% 0.056 10 );
-		--color-red-300: oklch( 81% 0.106 12 );
-		--color-red-400: oklch( 73% 0.169 13 );
-		--color-red-500: oklch( 65% 0.215 16 );
-		--color-red-600: oklch( 59% 0.222 18 );
-		--color-red-700: oklch( 54% 0.198 17 );
-		--color-red-800: oklch( 48% 0.171 14 );
-		--color-red-900: oklch( 35% 0.15 10 );
-		--color-red-1000: oklch( 16% 0.055 12 );
+		// ----- Red (constant H=10, magenta-leaning) -----
+		--color-red-50: oklch( 95% 0.015 10 );
+		--color-red-100: oklch( 92% 0.03 10 );
+		--color-red-200: oklch( 88% 0.052 10 );
+		--color-red-300: oklch( 81% 0.095 10 );
+		--color-red-400: oklch( 73% 0.155 10 );
+		--color-red-500: oklch( 65% 0.195 10 );
+		--color-red-600: oklch( 59% 0.2 10 );
+		--color-red-700: oklch( 54% 0.18 10 );
+		--color-red-800: oklch( 48% 0.16 10 );
+		--color-red-900: oklch( 35% 0.135 10 );
+		--color-red-950: oklch( 25% 0.075 10 );
+		--color-red-1000: oklch( 16% 0.05 10 );
 
 		// ----- Orange -----
 		--color-orange-50: #ffead4;
@@ -60,17 +67,18 @@
 		--color-orange-900: #572c19;
 		--color-orange-1000: oklch( 16% 0.043 42 );
 
-		// ----- Yellow (warmer, orange-leaning hue) -----
+		// ----- Yellow (intentional drift: H=95 → H=46) -----
 		--color-yellow-50: oklch( 96% 0.021 95 );
-		--color-yellow-100: oklch( 92% 0.058 96 );
-		--color-yellow-200: oklch( 87% 0.115 96 );
-		--color-yellow-300: oklch( 80% 0.153 92 );
-		--color-yellow-400: oklch( 71% 0.164 84 );
-		--color-yellow-500: oklch( 62% 0.165 70 );
-		--color-yellow-600: oklch( 57% 0.157 58 );
-		--color-yellow-700: oklch( 53% 0.146 49 );
-		--color-yellow-800: oklch( 47% 0.125 46 );
-		--color-yellow-900: oklch( 33% 0.105 46 );
+		--color-yellow-100: oklch( 92% 0.058 92 );
+		--color-yellow-200: oklch( 87% 0.115 88 );
+		--color-yellow-300: oklch( 80% 0.153 82 );
+		--color-yellow-400: oklch( 71% 0.164 75 );
+		--color-yellow-500: oklch( 62% 0.165 67 );
+		--color-yellow-600: oklch( 57% 0.157 60 );
+		--color-yellow-700: oklch( 53% 0.146 54 );
+		--color-yellow-800: oklch( 47% 0.125 50 );
+		--color-yellow-900: oklch( 33% 0.105 47 );
+		--color-yellow-950: oklch( 25% 0.06 46 );
 		--color-yellow-1000: oklch( 16% 0.032 46 );
 
 		// ----- Lime -----
@@ -86,18 +94,19 @@
 		--color-lime-900: #183f20;
 		--color-lime-1000: oklch( 16% 0.041 148 );
 
-		// ----- Green (cooler, blue-leaning hue) -----
-		--color-green-50: oklch( 95% 0.021 166 );
-		--color-green-100: oklch( 91% 0.051 163 );
-		--color-green-200: oklch( 86% 0.089 164 );
+		// ----- Green (constant H=165, cooler/blue-leaning) -----
+		--color-green-50: oklch( 95% 0.021 165 );
+		--color-green-100: oklch( 91% 0.051 165 );
+		--color-green-200: oklch( 86% 0.089 165 );
 		--color-green-300: oklch( 79% 0.13 165 );
-		--color-green-400: oklch( 69% 0.153 163 );
-		--color-green-500: oklch( 61% 0.149 162 );
-		--color-green-600: oklch( 56% 0.127 163 );
-		--color-green-700: oklch( 51% 0.105 166 );
-		--color-green-800: oklch( 46% 0.086 167 );
-		--color-green-900: oklch( 33% 0.073 169 );
-		--color-green-1000: oklch( 16% 0.03 173 );
+		--color-green-400: oklch( 69% 0.153 165 );
+		--color-green-500: oklch( 61% 0.149 165 );
+		--color-green-600: oklch( 56% 0.127 165 );
+		--color-green-700: oklch( 51% 0.105 165 );
+		--color-green-800: oklch( 46% 0.086 165 );
+		--color-green-900: oklch( 33% 0.073 165 );
+		--color-green-950: oklch( 25% 0.05 165 );
+		--color-green-1000: oklch( 16% 0.03 165 );
 
 		// ----- Blue -----
 		// blue-700 is the canonical Wikimedia accent (#36c).
