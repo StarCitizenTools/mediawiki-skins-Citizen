@@ -36,6 +36,9 @@ release-please-config.json export-ignore
 tests export-ignore
 vitest.config.js export-ignore
 
+# Dev scripts
+scripts export-ignore
+
 # Misc
 lefthook.yml export-ignore
 .commitlintrc.json export-ignore

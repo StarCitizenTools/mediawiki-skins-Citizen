@@ -1,0 +1,155 @@
+/**
+ * Codex primitive color palette — new pipeline
+ *
+ * Theme-invariant. Covers every ramp/stop in any Codex version Citizen
+ * targets (1.14.0 → 2.5.1); ships the latest (v2.5.1) value when stops
+ * drift across versions. Citizen-tuned deviations are commented inline
+ * and tracked in scripts/codex-deviations.json.
+ *
+ * Codex itself doesn't emit primitives as CSS variables — these names
+ * (`--color-gray-100` etc.) are Citizen-introduced.
+ *
+ * Source: https://github.com/wikimedia/design-codex/blob/v2.5.1/packages/codex-design-tokens/src/themes/wikimedia-ui.json
+ */
+.new-primitives-codex() {
+	:root.citizen-token-new {
+		// ----- Achromatic -----
+		--color-white: #fff;
+		--color-black: #000;
+
+		// ----- Gray -----
+		--color-gray-50: #f8f9fa;
+		--color-gray-100: #eaecf0;
+		--color-gray-200: #dadde3;
+		--color-gray-300: #c8ccd1;
+		--color-gray-400: #a2a9b1;
+		--color-gray-500: #72777d;
+		--color-gray-600: #54595d;
+		--color-gray-700: #404244;
+		--color-gray-800: #27292d;
+		--color-gray-900: #202122;
+		--color-gray-1000: #101418;
+
+		// Chromatic -1000 stops are retuned to ~16% L (vs Codex ~26%)
+		// to sit ~5% L above Citizen's deeper neutral-1000 canvas,
+		// matching the visual weight of bg-neutral-subtle.
+
+		// ----- Red (cooler, magenta-leaning hue) -----
+		--color-red-50: oklch( 95% 0.015 12 );
+		--color-red-100: oklch( 92% 0.03 13 );
+		--color-red-200: oklch( 88% 0.056 10 );
+		--color-red-300: oklch( 81% 0.106 12 );
+		--color-red-400: oklch( 73% 0.169 13 );
+		--color-red-500: oklch( 65% 0.215 16 );
+		--color-red-600: oklch( 59% 0.222 18 );
+		--color-red-700: oklch( 54% 0.198 17 );
+		--color-red-800: oklch( 48% 0.171 14 );
+		--color-red-900: oklch( 35% 0.15 10 );
+		--color-red-1000: oklch( 16% 0.055 12 );
+
+		// ----- Orange -----
+		--color-orange-50: #ffead4;
+		--color-orange-100: #ffdcb8;
+		--color-orange-200: #ffc894;
+		--color-orange-300: #ffa758;
+		--color-orange-400: #f97f26;
+		--color-orange-500: #d46926;
+		--color-orange-600: #bb5c26;
+		--color-orange-700: #a95226;
+		--color-orange-800: #8e4424;
+		--color-orange-900: #572c19;
+		--color-orange-1000: oklch( 16% 0.043 42 );
+
+		// ----- Yellow (warmer, orange-leaning hue) -----
+		--color-yellow-50: oklch( 96% 0.021 95 );
+		--color-yellow-100: oklch( 92% 0.058 96 );
+		--color-yellow-200: oklch( 87% 0.115 96 );
+		--color-yellow-300: oklch( 80% 0.153 92 );
+		--color-yellow-400: oklch( 71% 0.164 84 );
+		--color-yellow-500: oklch( 62% 0.165 70 );
+		--color-yellow-600: oklch( 57% 0.157 58 );
+		--color-yellow-700: oklch( 53% 0.146 49 );
+		--color-yellow-800: oklch( 47% 0.125 46 );
+		--color-yellow-900: oklch( 33% 0.105 46 );
+		--color-yellow-1000: oklch( 16% 0.032 46 );
+
+		// ----- Lime -----
+		--color-lime-50: #e3f2e4;
+		--color-lime-100: #d1e9d2;
+		--color-lime-200: #b9debc;
+		--color-lime-300: #94cb9a;
+		--color-lime-400: #5db26c;
+		--color-lime-500: #259948;
+		--color-lime-600: #1f893f;
+		--color-lime-700: #1f7a39;
+		--color-lime-800: #1f6631;
+		--color-lime-900: #183f20;
+		--color-lime-1000: oklch( 16% 0.041 148 );
+
+		// ----- Green (cooler, blue-leaning hue) -----
+		--color-green-50: oklch( 95% 0.021 166 );
+		--color-green-100: oklch( 91% 0.051 163 );
+		--color-green-200: oklch( 86% 0.089 164 );
+		--color-green-300: oklch( 79% 0.13 165 );
+		--color-green-400: oklch( 69% 0.153 163 );
+		--color-green-500: oklch( 61% 0.149 162 );
+		--color-green-600: oklch( 56% 0.127 163 );
+		--color-green-700: oklch( 51% 0.105 166 );
+		--color-green-800: oklch( 46% 0.086 167 );
+		--color-green-900: oklch( 33% 0.073 169 );
+		--color-green-1000: oklch( 16% 0.03 173 );
+
+		// ----- Blue -----
+		// blue-700 is the canonical Wikimedia accent (#36c).
+		--color-blue-50: #e8eeff;
+		--color-blue-100: #d9e2ff;
+		--color-blue-200: #b6d4fb;
+		--color-blue-300: #a6bbf5;
+		--color-blue-400: #88a3e8;
+		--color-blue-500: #6485d1;
+		--color-blue-600: #4b77d6;
+		--color-blue-700: #36c;
+		--color-blue-800: #3056a9;
+		--color-blue-900: #233566;
+		--color-blue-1000: oklch( 16% 0.052 271 );
+
+		// ----- Purple -----
+		--color-purple-50: #f0ecf6;
+		--color-purple-100: #e6e0f0;
+		--color-purple-200: #d9d0e9;
+		--color-purple-300: #c5b9dd;
+		--color-purple-400: #a799cd;
+		--color-purple-500: #8d7ebd;
+		--color-purple-600: #7a6db7;
+		--color-purple-700: #6a60b0;
+		--color-purple-800: #534fa3;
+		--color-purple-900: #353262;
+		--color-purple-1000: oklch( 16% 0.05 288 );
+
+		// ----- Pink -----
+		--color-pink-50: #f5ebf2;
+		--color-pink-100: #eedeea;
+		--color-pink-200: #e6cede;
+		--color-pink-300: #d9b4cd;
+		--color-pink-400: #c690b4;
+		--color-pink-500: #b5739e;
+		--color-pink-600: #ac5c90;
+		--color-pink-700: #9b527f;
+		--color-pink-800: #82456a;
+		--color-pink-900: #4e2c40;
+		--color-pink-1000: oklch( 16% 0.034 347 );
+
+		// ----- Maroon -----
+		--color-maroon-50: #f6ebeb;
+		--color-maroon-100: #f0dedd;
+		--color-maroon-200: #e8cecd;
+		--color-maroon-300: #dcb5b3;
+		--color-maroon-400: #c99391;
+		--color-maroon-500: #b57775;
+		--color-maroon-600: #ac6262;
+		--color-maroon-700: #9f5555;
+		--color-maroon-800: #854848;
+		--color-maroon-900: #512e2e;
+		--color-maroon-1000: oklch( 16% 0.03 23 );
+	}
+}

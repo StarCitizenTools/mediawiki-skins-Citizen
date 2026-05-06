@@ -143,5 +143,7 @@
 	"citizen-command-palette-tip-users": "Tip for the users in the command palette",
 	"citizen-command-palette-tip-namespace": "Tip for the namespace in the command palette",
 	"citizen-command-palette-tip-templates": "Tip for the templates in the command palette",
-	"citizen-command-palette-tip-actions": "Tip for the actions in the command palette"
+	"citizen-command-palette-tip-actions": "Tip for the actions in the command palette",
+
+	"citizen-config-usenewtoken": "Description for the {{Help|UseNewToken}} config option. Used in extension registration metadata."
 }

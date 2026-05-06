@@ -1,0 +1,269 @@
+/**
+ * Codex Design Tokens overrides — LEGACY pipeline
+ * @see https://github.com/wikimedia/mediawiki/blob/master/resources/lib/codex-design-tokens/theme-wikimedia-ui-root.css
+ *
+ * Frozen as of new pipeline introduction. Active when $wgCitizenUseNewToken=false.
+ * Do not edit logic; only surgical bug fixes.
+ *
+ * Changelog: https://github.com/wikimedia/design-codex/blob/main/CHANGELOG.md
+ */
+.tokens-codex-legacy() {
+	:root {
+		// @since Codex Design Tokens v1.14.0 (MediaWiki 1.43)
+		--color-base: ~'oklch( var( --color-base-oklch__l ) var( --color-base-oklch__c ) var( --color-progressive-oklch__h ) )';
+		--color-base-fixed: #202122;
+		--color-base--hover: ~'oklch( calc( var( --color-base-oklch__l ) + var( --delta-lightness-hover-state ) ) var( --color-base-oklch__c ) var( --color-progressive-oklch__h ) )';
+		--color-emphasized: ~'oklch( var( --color-emphasized-oklch__l ) var( --color-emphasized-oklch__c ) var( --color-progressive-oklch__h ) )';
+		--color-subtle: ~'oklch( var( --color-subtle-oklch__l ) var( --color-subtle-oklch__c ) var( --color-progressive-oklch__h ) )';
+		--color-placeholder: ~'oklch( var( --color-placeholder-oklch__l ) var( --color-placeholder-oklch__c ) var( --color-progressive-oklch__h ) )';
+		--color-disabled: ~'oklch( var( --color-disabled-oklch__l ) var( --color-disabled-oklch__c ) var( --color-progressive-oklch__h ) )';
+		--color-inverted: #fff;
+		--color-inverted-fixed: #fff;
+		--color-progressive: ~'oklch( var( --color-progressive-oklch__l ) var( --color-progressive-oklch__c ) var( --color-progressive-oklch__h ) )';
+		--color-progressive--hover: ~'oklch( calc( var( --color-progressive-oklch__l ) + var( --delta-lightness-hover-state ) ) var( --color-progressive-oklch__c ) var( --color-progressive-oklch__h ) )';
+		--color-progressive--active: ~'oklch( calc( var( --color-progressive-oklch__l ) + var( --delta-lightness-active-state ) ) var( --color-progressive-oklch__c ) var( --color-progressive-oklch__h ) )';
+		--color-progressive--focus: var( --color-progressive );
+		--color-destructive: ~'hsl( var( --color-destructive__h ), 100%, var( --color-destructive__l ) )';
+		--color-destructive--hover: ~'hsl( var( --color-destructive__h ), 100%, calc( var( --color-destructive__l ) + var( --delta-lightness-hover-state ) ) )';
+		--color-destructive--active: ~'hsl( var( --color-destructive__h ), 100%, calc( var( --color-destructive__l ) + var( --delta-lightness-active-state ) ) )';
+		--color-destructive--focus: var( --color-progressive );
+		--color-visited: var( --color-link );
+		--color-destructive--visited: var( --color-destructive );
+		--color-error: var( --color-destructive );
+		--color-warning: ~'hsl( var( --color-warning__h ), 100%, var( --color-warning__l ) )';
+		--color-success: ~'hsl( var( --color-success__h ), 100%, var( --color-success__l ) )';
+		--color-notice: var( --color-base );
+		--color-content-added: var( --color-success );
+		--color-content-removed: var( --color-destructive );
+		--filter-invert-icon: 0;
+		--filter-invert-primary-button-icon: 1;
+		// This is not correct since Codex 2.0 since it becomes a solid color
+		// But we keep it for now for compatibility with Codex 1.x
+		--box-shadow-color-base: var( --box-shadow-color-alpha-base );
+		--box-shadow-color-progressive--active: var( --color-progressive--active );
+		--box-shadow-color-progressive--focus: var( --color-progressive );
+		--box-shadow-color-progressive-selected: var( --color-progressive );
+		--box-shadow-color-progressive-selected--hover: var( --color-progressive--hover );
+		--box-shadow-color-progressive-selected--active: var( --color-progressive--active );
+		--box-shadow-color-destructive--focus: var( --color-progressive );
+		--box-shadow-color-inverted: #fff;
+		--box-shadow-color-transparent: transparent;
+		--background-color-base: var( --color-surface-0 );
+		--background-color-base-fixed: ~'oklch( 96% 0.01 var( --color-progressive-oklch__h ) )';
+		--background-color-neutral: var( --color-surface-2 );
+		--background-color-neutral-subtle: var( --color-surface-1 );
+		--background-color-interactive: var( --color-surface-2 );
+		--background-color-interactive-subtle: var( --color-surface-1 );
+		--background-color-disabled: var( --color-surface-3 );
+		--background-color-disabled-subtle: var( --color-surface-1 );
+		--background-color-inverted: #101418;
+		--background-color-progressive: var( --color-progressive );
+		--background-color-progressive--hover: var( --color-progressive--hover );
+		--background-color-progressive--active: var( --color-progressive--active );
+		--background-color-progressive--focus: var( --color-progressive );
+		--background-color-progressive-subtle: ~'hsl( var( --color-progressive-hsl__h ), var( --color-progressive-hsl__s ), var( --background-color-subtle__l ) )';
+		--background-color-destructive: var( --color-destructive );
+		--background-color-destructive--hover: var( --color-destructive--hover );
+		--background-color-destructive--active: var( --color-destructive--active );
+		--background-color-destructive--focus: var( --color-progressive );
+		--background-color-destructive-subtle: ~'hsl( var( --color-destructive__h ), var( --background-color-subtle__s ), var( --background-color-subtle__l ) )';
+		--background-color-error: var( --color-destructive );
+		--background-color-error--hover: var( --color-destructive--hover );
+		--background-color-error--active: var( --color-destructive--active );
+		--background-color-error-subtle: var( --background-color-destructive-subtle );
+		--background-color-warning-subtle: ~'hsl( var( --color-warning__h ), var( --background-color-subtle__s ), var( --background-color-subtle__l ) )';
+		--background-color-success-subtle: ~'hsl( var( --color-success__h ), var( --background-color-subtle__s ), var( --background-color-subtle__l ) )';
+		--background-color-notice-subtle: var( --color-surface-2 );
+		--background-color-content-added: var( --background-color-success-subtle );
+		--background-color-content-removed: var( --background-color-destructive-subtle );
+		--background-color-transparent: transparent;
+		--background-color-backdrop-light: ~'oklch( var( --color-surface-0-oklch__l ) var( --color-surface-0-oklch__c ) var( --color-progressive-oklch__h ) / var( --backdrop-opacity ) )';
+		--background-color-backdrop-dark: ~'rgba( 0, 0, 0, var( --backdrop-opacity ) )';
+		--background-color-button-quiet--hover: rgba( 0, 24, 73, 0.027 );
+		--background-color-button-quiet--active: rgba( 0, 24, 73, 0.082 );
+		--background-color-input-binary--checked: var( --color-progressive );
+		--background-color-tab-list-item-framed--hover: rgba( 255, 255, 255, 0.3 );
+		--background-color-tab-list-item-framed--active: rgba( 255, 255, 255, 0.65 );
+		--opacity-icon-base: 0.6;
+		--opacity-icon-base--hover: 0.74;
+		--opacity-icon-base--selected: 1;
+		--opacity-icon-base--disabled: 0.51;
+		--opacity-icon-placeholder: 0.51;
+		--opacity-icon-subtle: 0.67;
+		--border-color-base: ~'rgb( 0 0 0 / 0.1 )';
+		--border-color-subtle: ~'rgb( 0 0 0 / 0.05 )';
+		--border-color-muted: ~'rgb( 0 0 0 / 0.03 )';
+		--border-color-interactive: ~'rgb( 0 0 0 / 0.1 )';
+		--border-color-disabled: var( --border-color-subtle );
+		--border-color-inverted: #fff;
+		--border-color-progressive: var( --color-progressive );
+		--border-color-progressive--hover: var( --color-progressive--hover );
+		--border-color-progressive--active: var( --color-progressive--active );
+		--border-color-progressive--focus: var( --color-progressive );
+		--border-color-destructive: var( --color-destructive );
+		--border-color-destructive--hover: var( --color-destructive--hover );
+		--border-color-destructive--active: var( --color-destructive--active );
+		--border-color-destructive--focus: var( --color-progressive );
+		--border-color-error: var( --border-color-base );
+		--border-color-error--hover: var( --border-color-base );
+		--border-color-warning: var( --border-color-base );
+		--border-color-success: var( --border-color-base );
+		--border-color-notice: var( --border-color-base );
+		--border-color-content-added: var( --border-color-base );
+		--border-color-content-removed: var( --border-color-base );
+		--border-color-transparent: transparent;
+		--border-color-divider: var( --border-color-base );
+		--outline-color-progressive--focus: var( --color-progressive );
+		--color-link-red: var( --color-destructive );
+		--color-link-red--hover: var( --color-destructive--hover );
+		--color-link-red--active: var( --color-destructive--active );
+		--color-link-red--focus: var( --color-destructive--focus );
+		--color-link-red--visited: var( --color-destructive--visited );
+		--border-color-input--hover: var( --border-color-interactive );
+		--border-color-input-binary: var( --border-color-interactive );
+		--border-color-input-binary--hover: var( --border-color-progressive--hover );
+		--border-color-input-binary--active: var( --border-color-progressive--active );
+		--border-color-input-binary--focus: var( --border-color-progressive--focus );
+		--border-color-input-binary--checked: var( --border-color-progressive );
+
+		// @since Codex Design Tokens v1.20.1 (MediaWiki master)
+		//--color-disabled-emphasized: #a2a9b1;
+		--color-visited--hover: var( --color-progressive--hover );
+		--color-visited--active: var( --color-progressive--active );
+		--color-destructive--visited--hover: var( --color-destructive--hover );
+		--color-destructive--visited--active: var( --color-destructive--active );
+		//--color-error--hover: #9f3526;
+		//--color-error--active: #612419;
+		//--color-icon-error: #f54739;
+		//--color-icon-warning: #ab7f2a;
+		//--color-icon-success: #099979;
+		//--color-icon-notice: #72777d;
+		//--mix-blend-mode-base: normal;
+		//--mix-blend-mode-blend: multiply;
+		--background-color-interactive--hover: var( --color-surface-2--hover );
+		--background-color-interactive--active: var( --color-surface-2--active );
+		//--background-color-progressive-subtle--hover: #dce3f9;
+		//--background-color-progressive-subtle--active: #cbd6f6;
+		//--background-color-destructive-subtle--hover: #ffdad3;
+		//--background-color-destructive-subtle--active: #ffc8bd;
+		//--background-color-error-subtle--hover: #ffdad3;
+		//--background-color-error-subtle--active: #ffc8bd;
+		//--border-color-interactive--hover: #27292d;
+		//--border-color-interactive--active: #202122;
+		//--border-color-error--active: #612419;
+		--color-link-red--visited--hover: var( --color-destructive--visited--hover );
+		--color-link-red--visited--active: var( --color-destructive--visited--active );
+
+		--background-color-interactive-subtle--hover: var( --color-surface-1--hover );
+		--background-color-interactive-subtle--active: var( --color-surface-1--active );
+
+		--accent-color-base: var( --color-progressive );
+
+		--box-shadow-color-alpha-base: ~'oklch( var( --shadow-color-oklch__l ) var( --shadow-color-oklch__c ) var( --color-progressive-oklch__h ) / var( --shadow-opacity ) )';
+
+		// Font tokens
+		.cdx-mode-medium();
+
+		// Fallback for browsers that do not support OKLCH
+		@supports not ( color: oklch( 100% 0 0 ) ) {
+			--color-base: ~'hsl( var( --color-progressive-hsl__h ), var( --color-base-hsl__s ), var( --color-base-hsl__l ) )';
+			--color-base--hover: ~'hsl( var( --color-progressive-hsl__h ), var( --color-base-hsl__s ), calc( var( --color-base-hsl__l ) + var( --delta-lightness-hover-state ) ) )';
+			--color-emphasized: ~'hsl( var( --color-progressive-hsl__h ), var( --color-emphasized-hsl__s ), var( --color-emphasized-hsl__l ) )';
+			--color-subtle: ~'hsl( var( --color-progressive-hsl__h ), var( --color-subtle-hsl__s ), var( --color-subtle-hsl__l ) )';
+			--color-placeholder: ~'hsl( var( --color-progressive-hsl__h ), var( --color-placeholder-hsl__s ), var( --color-placeholder-hsl__l ) )';
+			--color-disabled: ~'hsl( var( --color-progressive-hsl__h ), var( --color-disabled-hsl__s ), var( --color-disabled-hsl__l ) )';
+			--color-progressive: ~'hsl( var( --color-progressive-hsl__h ), var( --color-progressive-hsl__s ), var( --color-progressive-hsl__l ) )';
+			--color-progressive--hover: ~'hsl( var( --color-progressive-hsl__h ), var( --color-progressive-hsl__s ), calc( var( --color-progressive-hsl__l ) + var( --delta-lightness-hover-state ) ) )';
+			--color-progressive--active: ~'hsl( var( --color-progressive-hsl__h ), var( --color-progressive-hsl__s ), calc( var( --color-progressive-hsl__l ) + var( --delta-lightness-active-state ) ) )';
+			//--color-destructive: ~'hsl( var( --color-destructive__h ), 100%, var( --color-destructive__l ) )';
+			//--color-destructive--hover: ~'hsl( var( --color-destructive__h ), 100%, calc( var( --color-destructive__l ) + var( --delta-lightness-hover-state ) ) )';
+			//--color-destructive--active: ~'hsl( var( --color-destructive__h ), 100%, calc( var( --color-destructive__l ) + var( --delta-lightness-active-state ) ) )';
+			//--background-color-progressive-subtle: ~'hsl( var( --color-progressive-hsl__h ), var( --color-progressive-hsl__s ), var( --background-color-subtle__l ) )';
+			//--background-color-destructive-subtle: ~'hsl( var( --color-destructive__h ), var( --background-color-subtle__s ), var( --background-color-subtle__l ) )';
+			//--background-color-warning-subtle: ~'hsl( var( --color-warning__h ), var( --background-color-subtle__s ), var( --background-color-subtle__l ) )';
+			//--background-color-success-subtle: ~'hsl( var( --color-success__h ), var( --background-color-subtle__s ), var( --background-color-subtle__l ) )';
+			--background-color-backdrop-light: ~'hsl( var( --color-progressive-hsl__h ), var( --color-surface-0-hsl__s ), var( --color-surface-0-hsl__l ) / var( --backdrop-opacity ) )';
+			//--background-color-button-quiet--hover: rgba( 0, 24, 73, 0.027 );
+			//--background-color-button-quiet--active: rgba( 0, 24, 73, 0.082 );
+			//--background-color-tab-list-item-framed--hover: rgba( 255, 255, 255, 0.3 );
+			//--background-color-tab-list-item-framed--active: rgba( 255, 255, 255, 0.65 );
+
+			--box-shadow-color-alpha-base: ~'hsl( var( --color-progressive-hsl__h ) var( --shadow-color-hsl__s ) var( --shadow-color-hsl__l ) / var( --shadow-opacity ) )';
+		}
+	}
+}
+
+// Backported Codex 2.0 font tokens
+// TODO: Remove this when LTS MW has Codex 2.0
+// Font-mode mixins — shared between legacy and new (NOT guarded, top-level)
+.cdx-mode-small() {
+	--font-size-x-small: 0.625rem;
+	--font-size-small: 0.75rem;
+	--font-size-medium: 0.875rem;
+	--font-size-large: 1rem;
+	--font-size-x-large: 1.125rem;
+	--font-size-xx-large: 1.375rem;
+	--font-size-xxx-large: 1.625rem;
+	--line-height-x-small: 1.125rem;
+	--line-height-small: 1.25rem;
+	--line-height-medium: 1.375rem;
+	--line-height-large: 1.625rem;
+	--line-height-x-large: 1.75rem;
+	--line-height-xx-large: 2rem;
+	--line-height-xxx-large: 2.25rem;
+	--line-height-content: 1.5714285;
+}
+
+.cdx-mode-medium() {
+	--font-size-x-small: 0.75rem;
+	--font-size-small: 0.875rem;
+	--font-size-medium: 1rem;
+	--font-size-large: 1.125rem;
+	--font-size-x-large: 1.25rem;
+	--font-size-xx-large: 1.5rem;
+	--font-size-xxx-large: 1.75rem;
+	--line-height-x-small: 1.25rem;
+	--line-height-small: 1.375rem;
+	--line-height-medium: 1.625rem;
+	--line-height-large: 1.75rem;
+	--line-height-x-large: 1.875rem;
+	--line-height-xx-large: 2.125rem;
+	--line-height-xxx-large: 2.375rem;
+	--line-height-content: 1.625;
+}
+
+.cdx-mode-large() {
+	--font-size-x-small: 0.875rem;
+	--font-size-small: 1rem;
+	--font-size-medium: 1.125rem;
+	--font-size-large: 1.25rem;
+	--font-size-x-large: 1.375rem;
+	--font-size-xx-large: 1.625rem;
+	--font-size-xxx-large: 1.875rem;
+	--line-height-x-small: 1.375rem;
+	--line-height-small: 1.625rem;
+	--line-height-medium: 1.75rem;
+	--line-height-large: 1.875rem;
+	--line-height-x-large: 2rem;
+	--line-height-xx-large: 2.25rem;
+	--line-height-xxx-large: 2.5rem;
+	--line-height-content: 1.55;
+}
+
+.cdx-mode-x-large() {
+	--font-size-x-small: 1rem;
+	--font-size-small: 1.125rem;
+	--font-size-medium: 1.25rem;
+	--font-size-large: 1.375rem;
+	--font-size-x-large: 1.5rem;
+	--font-size-xx-large: 1.75rem;
+	--font-size-xxx-large: 2rem;
+	--line-height-x-small: 1.625rem;
+	--line-height-small: 1.75rem;
+	--line-height-medium: 1.875rem;
+	--line-height-large: 2rem;
+	--line-height-x-large: 2.125rem;
+	--line-height-xx-large: 2.375rem;
+	--line-height-xxx-large: 2.625rem;
+	--line-height-content: 1.5;
+}

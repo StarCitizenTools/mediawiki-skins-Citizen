@@ -79,31 +79,24 @@ const { resolveLabel } = require( './configRegistry.js' );
 const clientPrefs = require( './clientPrefs.polyfill.js' )();
 
 /**
- * Read computed theme colors for a given theme value.
- * Swaps the theme class on <html>, reads computed styles, then restores.
- * Synchronous — no visual flash occurs.
+ * Map a theme-pref value to a CSS `color-scheme` value. The preview
+ * element sets this on itself, which causes the inherited light-dark()
+ * tokens (--color-surface-0, --color-base) to resolve to the correct
+ * side per preview — without swapping classes or reading computed
+ * styles.
  *
  * @param {string} value - 'os', 'day', or 'night'
- * @return {{ surface: string, text: string }}
+ * @return {string}
  */
-function getThemePreviewColors( value ) {
-	const root = document.documentElement;
-	const themeClassPattern = /^skin-theme-clientpref-/;
-
-	const existing = Array.from( root.classList ).filter(
-		( cls ) => themeClassPattern.test( cls )
-	);
-	existing.forEach( ( cls ) => root.classList.remove( cls ) );
-	root.classList.add( `skin-theme-clientpref-${ value }` );
-
-	const styles = getComputedStyle( root );
-	const surface = styles.getPropertyValue( '--color-surface-0' );
-	const text = styles.getPropertyValue( '--color-base' );
-
-	root.classList.remove( `skin-theme-clientpref-${ value }` );
-	existing.forEach( ( cls ) => root.classList.add( cls ) );
-
-	return { surface, text };
+function getThemeColorScheme( value ) {
+	if ( value === 'day' ) {
+		return 'light';
+	}
+	if ( value === 'night' ) {
+		return 'dark';
+	}
+	// 'os' (or anything else) — defer to the user's OS preference.
+	return 'light dark';
 }
 
 // @vue/component
@@ -190,8 +183,8 @@ module.exports = exports = defineComponent( {
 									label: resolveLabel( opt, 'label' )
 								};
 								if ( featureName === 'skin-theme' ) {
-									option.previewColors =
-										getThemePreviewColors( opt.value );
+									option.colorScheme =
+										getThemeColorScheme( opt.value );
 								}
 								return option;
 							} );

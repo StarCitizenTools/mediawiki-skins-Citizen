@@ -1,11 +1,13 @@
 /**
- * Citizen tokens
+ * Citizen tokens — LEGACY light theme base
  * CSS variables for the base theme
+ *
+ * Frozen as of new pipeline introduction. Active when $wgCitizenUseNewToken=false.
  *
  * TODO: Remove HSL fallback when OKLCH is supported in all browsers
  * TODO: Use CSS relative color syntax when supported in all browsers
  */
-.theme-base() {
+.theme-base-legacy() {
 	// Hover and active states are calculated by a modifier of the lightness value (e.g. hover: +2%, active: -2%)
 	--delta-lightness-state-base: 4%;
 	--delta-lightness-hover-state: calc( var( --delta-lightness-state-base ) * 1 );

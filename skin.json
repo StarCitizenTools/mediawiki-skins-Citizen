@@ -128,6 +128,18 @@
 		"SkinPageReadyConfig": "SkinHooks"
 	},
 	"ResourceModules": {
+		"skins.citizen.tokens": {
+			"class": "MediaWiki\\ResourceLoader\\SkinModule",
+			"styles": [
+				"resources/skins.citizen.tokens/tokens.less"
+			]
+		},
+		"skins.citizen.tokens.new": {
+			"class": "MediaWiki\\ResourceLoader\\SkinModule",
+			"styles": [
+				"resources/skins.citizen.tokens.new/tokens.less"
+			]
+		},
 		"skins.citizen.styles": {
 			"class": "MediaWiki\\ResourceLoader\\SkinModule",
 			"features": {
@@ -900,6 +912,12 @@
 			"value": "left",
 			"description": "Position of the header on the desktop layout. Possible values: 'left', 'right', 'top' and 'bottom'",
 			"descriptionmsg": "citizen-config-headerposition",
+			"public": true
+		},
+		"UseNewToken": {
+			"value": false,
+			"description": "Opt-in switch for the new color token pipeline. Set to true to enable. Defaults to false through the current major Citizen release so existing wikis aren't visually shifted without explicit consent; the new pipeline becomes the default — and legacy is removed — in the next major release.",
+			"descriptionmsg": "citizen-config-usenewtoken",
 			"public": true
 		}
 	},
