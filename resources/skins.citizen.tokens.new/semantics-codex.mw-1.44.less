@@ -1,0 +1,30 @@
+/**
+ * Codex semantic tokens — additions for MW 1.44 (Codex 1.23.0)
+ *
+ * Theme-invariant additions and aliases. Theme-variant tokens from
+ * this Codex version live in tokens-theme.less.
+ */
+.new-semantics-codex-mw-1-44() {
+	:root.citizen-token-new {
+		// Visited variants — Citizen aliases to progressive/destructive
+		// instead of Codex's purple/maroon.
+		--color-visited--hover: var( --color-progressive--hover );
+		--color-visited--active: var( --color-progressive--active );
+		--color-destructive--visited--hover: var( --color-destructive--hover );
+		--color-destructive--visited--active: var( --color-destructive--active );
+		--color-link-red--visited--hover: var( --color-destructive--visited--hover );
+		--color-link-red--visited--active: var( --color-destructive--visited--active );
+
+		--color-icon-error: var( --color-red-500 );
+		--color-icon-warning: var( --color-yellow-500 );
+		--color-icon-success: var( --color-green-500 );
+		--color-icon-notice: var( --color-neutral-500 );
+
+		--mix-blend-mode-base: normal;
+		--mix-blend-mode-blend: multiply;
+
+		--border-color-inverted-fixed: var( --color-white );
+
+		--accent-color-base: var( --color-progressive );
+	}
+}

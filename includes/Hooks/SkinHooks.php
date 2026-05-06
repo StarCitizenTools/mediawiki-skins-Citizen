@@ -29,7 +29,8 @@ class SkinHooks implements
 	private static ?string $inlineScript = null;
 
 	/**
-	 * Adds the inline theme switcher script to the page
+	 * Adds the inline theme switcher script and resolves the active
+	 * color-token pipeline for the current request.
 	 *
 	 * @param OutputPage $out
 	 * @param Skin $skin
@@ -48,6 +49,44 @@ class SkinHooks implements
 				)
 			);
 			$out->addHeadItem( 'skin.citizen.inline', self::$inlineScript );
+		}
+
+		self::resolveColorMode( $out );
+	}
+
+	/**
+	 * Pick the color-token module for this request and add it.
+	 *
+	 * Priority: ?citizenusenewtoken=0|1 URL param > citizenusenewtoken
+	 * cookie > $wgCitizenUseNewToken config. The URL param also writes
+	 * a 24-hour cookie. Mode flip takes effect on the next request —
+	 * exactly one token module ships per request.
+	 */
+	private static function resolveColorMode( OutputPage $out ): void {
+		$request = $out->getRequest();
+		$urlVal = $request->getRawVal( 'citizenusenewtoken' );
+
+		if ( $urlVal === '0' || $urlVal === '1' ) {
+			$useNew = $urlVal === '1';
+			$request->response()->setCookie(
+				'citizenusenewtoken',
+				$urlVal,
+				time() + 86400
+			);
+		} else {
+			$cookieVal = $request->getCookie( 'citizenusenewtoken', null, '' );
+			if ( $cookieVal === '0' || $cookieVal === '1' ) {
+				$useNew = $cookieVal === '1';
+			} else {
+				$useNew = (bool)$out->getConfig()->get( 'CitizenUseNewToken' );
+			}
+		}
+
+		if ( $useNew ) {
+			$out->addModuleStyles( [ 'skins.citizen.tokens.new' ] );
+			$out->addHtmlClasses( 'citizen-token-new' );
+		} else {
+			$out->addModuleStyles( [ 'skins.citizen.tokens' ] );
 		}
 	}
 

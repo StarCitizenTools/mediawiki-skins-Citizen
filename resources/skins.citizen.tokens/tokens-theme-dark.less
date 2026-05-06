@@ -1,11 +1,13 @@
 /**
- * Citizen tokens
+ * Citizen tokens — LEGACY dark theme
  * CSS variables for the dark theme
+ *
+ * Frozen as of new pipeline introduction. Active when $wgCitizenUseNewToken=false.
  *
  * TODO: Remove HSL fallback when OKLCH is supported in all browsers
  * TODO: Use CSS relative color syntax when supported in all browsers
  */
-.theme-dark() {
+.theme-dark-legacy() {
 	--delta-lightness-surface-base: 2%;
 
 	--color-progressive-oklch__l: 60%; // TODO: Separate background-color-progressive from color-progressive

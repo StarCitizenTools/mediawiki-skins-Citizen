@@ -45,3 +45,6 @@ Thumbs.db
 /.htaccess
 /.htpasswd
 .eslintcache
+
+# Codex audit cache
+scripts/.cache/

@@ -1,0 +1,92 @@
+/**
+ * Codex semantic tokens — MW 1.43 LTS baseline (Codex 1.14.0)
+ *
+ * Theme-invariant tokens and reference aliases. Theme-variant
+ * mappings live in tokens-theme.less as light-dark() pairs.
+ * Citizen deviations: scripts/codex-deviations.json.
+ *
+ * Newer Codex versions add tokens in semantics-codex.mw-1.44.less,
+ * mw-1.45.less, and latest.less.
+ */
+.new-semantics-codex-mw-1-43() {
+	:root.citizen-token-new {
+		// ----- Fixed text colors -----
+		--color-base-fixed: var( --color-gray-900 );
+		--color-inverted-fixed: var( --color-white );
+
+		// Visited / diff: Citizen routes through the progressive accent
+		// and MW diff convention (green added, red removed) instead of
+		// Codex's purple/maroon and -999 highlight stops.
+		--color-destructive--visited: var( --color-destructive );
+		--color-visited: var( --color-progressive );
+		--color-content-added: var( --color-success );
+		--color-content-removed: var( --color-destructive );
+
+		// ----- Theme-invariant backgrounds -----
+		--background-color-base-fixed: var( --color-white );
+		// Codex 2.x splits bg.error from bg.destructive — error uses
+		// the lighter red-500/600/700 stops.
+		--background-color-error: var( --color-red-500 );
+		--background-color-error--hover: var( --color-red-600 );
+		--background-color-error--active: var( --color-red-700 );
+		--background-color-content-added: var( --background-color-success-subtle );
+		--background-color-content-removed: var( --background-color-destructive-subtle );
+		--background-color-transparent: transparent;
+		--background-color-backdrop-dark: rgba( 0, 0, 0, var( --backdrop-opacity ) );
+		--background-color-input-binary--checked: var( --color-progressive );
+		--background-color-tab-list-item-framed--hover: rgba( 255, 255, 255, 0.3 );
+		--background-color-tab-list-item-framed--active: rgba( 255, 255, 255, 0.65 );
+
+		// ----- Opacity -----
+		--opacity-icon-base: 0.6;
+		--opacity-icon-base--hover: 0.74;
+		--opacity-icon-base--selected: 1;
+		--opacity-icon-base--disabled: 0.51;
+		--opacity-icon-placeholder: 0.51;
+		--opacity-icon-subtle: 0.67;
+
+		// ----- Theme-invariant border tokens -----
+		--border-color-content-added: var( --color-green-500 );
+		--border-color-content-removed: var( --color-red-500 );
+		--border-color-notice: var( --color-neutral-500 );
+		--border-color-transparent: transparent;
+
+		// Inlined (rather than aliased to --border-color-progressive--focus)
+		// so the audit reads the primitives directly.
+		--outline-color-progressive--focus: light-dark( var( --color-primary-700 ), var( --color-primary-500 ) );
+
+		// ----- Link / red-link aliases -----
+		--color-link-red: var( --color-destructive );
+		--color-link-red--hover: var( --color-destructive--hover );
+		--color-link-red--active: var( --color-destructive--active );
+		--color-link-red--focus: var( --color-destructive--focus );
+		--color-link-red--visited: var( --color-destructive--visited );
+
+		// ----- Input borders -----
+		--border-color-input--hover: var( --border-color-interactive );
+		--border-color-input-binary: var( --border-color-interactive );
+		--border-color-input-binary--hover: var( --border-color-progressive--hover );
+		--border-color-input-binary--active: var( --border-color-progressive--active );
+		--border-color-input-binary--focus: var( --border-color-progressive--focus );
+		--border-color-input-binary--checked: var( --border-color-progressive );
+
+		// ----- Box shadow color references -----
+		--box-shadow-color-base: var( --box-shadow-color-alpha-base );
+		--box-shadow-color-progressive--active: var( --color-progressive--active );
+		--box-shadow-color-progressive--focus: var( --color-progressive );
+		--box-shadow-color-progressive-selected: var( --color-progressive );
+		--box-shadow-color-progressive-selected--hover: var( --color-progressive--hover );
+		--box-shadow-color-progressive-selected--active: var( --color-progressive--active );
+		--box-shadow-color-destructive--focus: var( --color-progressive );
+		--box-shadow-color-inverted: var( --color-white );
+		--box-shadow-color-transparent: transparent;
+
+		// ----- Filter -----
+		--filter-invert-icon: 0;
+		--filter-invert-primary-button-icon: 1;
+
+		// Font tokens — see legacy module's tokens-codex.less for the
+		// .cdx-mode-medium() mixin (shared between modes).
+		.cdx-mode-medium();
+	}
+}

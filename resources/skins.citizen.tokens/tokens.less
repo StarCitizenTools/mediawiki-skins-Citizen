@@ -1,0 +1,33 @@
+/**
+ * Citizen legacy token pipeline — ResourceLoader module entry.
+ *
+ * Loaded by SkinHooks::resolveColorMode when legacy mode is active.
+ * The successor lives in skins.citizen.tokens.new; only one module
+ * ships per request.
+ */
+@import ( reference ) '../variables.less';
+@import ( reference ) 'tokens-codex.less';
+@import ( reference ) 'tokens-theme-base.less';
+@import ( reference ) 'tokens-theme-dark.less';
+
+@layer citizen-tokens {
+	.tokens-codex-legacy();
+
+	:root {
+		.theme-base-legacy();
+	}
+
+	.skin-theme-clientpref-night {
+		:root& {
+			.theme-dark-legacy();
+		}
+	}
+
+	.skin-theme-clientpref-os {
+		@media ( prefers-color-scheme: dark ) {
+			:root& {
+				.theme-dark-legacy();
+			}
+		}
+	}
+}

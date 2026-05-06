@@ -155,5 +155,7 @@
 	"citizen-command-palette-tip-users": "Type <code>@</code> to search for users",
 	"citizen-command-palette-tip-namespace": "Type <code>:</code> to search for namespace",
 	"citizen-command-palette-tip-templates": "Type <code><nowiki>{{</nowiki></code> to search for templates",
-	"citizen-command-palette-tip-actions": "Type <code>></code> for a list of actions"
+	"citizen-command-palette-tip-actions": "Type <code>></code> for a list of actions",
+
+	"citizen-config-usenewtoken": "Opt-in switch for the new color token pipeline. Defaults to false; set to true to enable. The new pipeline becomes the default — and legacy is removed — in the next major Citizen release."
 }

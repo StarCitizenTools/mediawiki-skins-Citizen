@@ -1,15 +1,13 @@
 /**
- * Citizen tokens
- * CSS variables that are used throughout the skin
+ * Citizen non-color tokens — layout, spacing, fonts, header
+ * positioning, transitions. Color tokens themselves are emitted by
+ * skins.citizen.tokens or skins.citizen.tokens.new (one or the other
+ * per request, picked by SkinHooks).
  *
- * TODO: Remove HSL fallback when OKLCH is supported in all browsers
- * TODO: Use CSS relative color syntax when supported in all browsers
+ * TODO: Remove HSL fallback when OKLCH is supported in all browsers.
+ * TODO: Use CSS relative color syntax when supported in all browsers.
  */
-@import 'tokens-theme-base.less';
-
 :root {
-	.theme-base();
-
 	// Border
 	--border-radius-medium: calc( var( --border-radius-base ) * 2 );
 	--border-radius-large: calc( var( --border-radius-base ) * 3 );
@@ -203,7 +201,7 @@
 	--header-offset-block-start: calc( var( --header-size-block-start ) + var( --height-sticky-header ) );
 	--header-offset-block-end: var( --header-size-block-end );
 
-	// Deprecated tokens
+	// Deprecated aliases — drop alongside the legacy pipeline.
 	--color-primary__h: var( --color-progressive-hsl__h );
 	--color-primary__s: var( --color-progressive-hsl__s );
 	--color-primary__l: var( --color-progressive-hsl__l );
