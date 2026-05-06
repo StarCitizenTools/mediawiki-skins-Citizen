@@ -107,6 +107,7 @@
 
 	"citizen-command-palette-type-page": "Page",
 	"citizen-command-palette-type-action": "Action",
+	"citizen-command-palette-type-category": "Category",
 	"citizen-command-palette-type-namespace": "Namespace",
 	"citizen-command-palette-type-command": "Command",
 	"citizen-command-palette-type-smw": "SMW",
@@ -118,6 +119,8 @@
 	"citizen-command-palette-type-menu-item": "Menu item",
 	"citizen-command-palette-type-user": "User",
 
+	"citizen-command-palette-command-category-description": "Search and explore categories",
+	"citizen-command-palette-command-category-label": "Categories",
 	"citizen-command-palette-command-ns-description": "Search for a page in a specific namespace",
 	"citizen-command-palette-command-action-description": "Perform a specific action",
 	"citizen-command-palette-command-smw-description": "Search using a Semantic MediaWiki query",
@@ -125,6 +128,8 @@
 	"citizen-command-palette-command-user-description": "Search for a user",
 
 	"citizen-command-palette-mode-action-placeholder": "Search actions",
+	"citizen-command-palette-mode-category-breadcrumb-root": "Categories",
+	"citizen-command-palette-mode-category-placeholder": "Search categories",
 	"citizen-command-palette-mode-ns-placeholder": "Search namespaces",
 	"citizen-command-palette-mode-smw-empty-description": "Type conditions like [[Category:City]] or [[Located in::Germany]] to query pages",
 	"citizen-command-palette-mode-smw-empty-title": "Semantic MediaWiki Ask",
