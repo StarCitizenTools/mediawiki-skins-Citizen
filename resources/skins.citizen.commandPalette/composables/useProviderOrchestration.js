@@ -54,6 +54,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	const isPending = ref( false );
 	const showPending = ref( false );
 	const activeMode = shallowRef( null );
+	const activeModeContext = ref( [] );
 	const flatItems = computed( () => displayedItems.value.flatMap( ( s ) => s.items ) );
 	const hasDisplayedItems = computed( () => flatItems.value.length > 0 );
 	const stateConfig = computed( () => {
@@ -262,16 +263,24 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	function handleModeQuery( mode, currentQuery ) {
 		const tokens = deps.tokens ? deps.tokens.value : [];
 		if ( !currentQuery ) {
-			Promise.resolve( mode.getResults( '', undefined, tokens ) ).then( ( result ) => {
+			isPending.value = true;
+			const clearPending = () => {
+				if ( query.value === currentQuery && activeMode.value === mode ) {
+					isPending.value = false;
+				}
+			};
+			Promise.resolve( mode.getResults( '', undefined, tokens, activeModeContext.value ) ).then( ( result ) => {
 				const items = normalizeProviderResult( result );
 				if ( query.value === currentQuery && activeMode.value === mode ) {
 					displayedItems.value = items.length > 0 ?
 						[ { heading: null, items: items } ] : [];
 				}
+				clearPending();
 			} ).catch( ( error ) => {
 				mw.log.error(
 					'[commandPalette] Mode "' + mode.id + '" failed:', error
 				);
+				clearPending();
 			} );
 			return;
 		}
@@ -301,7 +310,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 
 			try {
 				const signal = abortController ? abortController.signal : undefined;
-				const result = await mode.getResults( currentQuery, signal, tokens );
+				const result = await mode.getResults( currentQuery, signal, tokens, activeModeContext.value );
 				const items = normalizeProviderResult( result );
 				if ( query.value === currentQuery && activeMode.value === mode ) {
 					displayedItems.value = items.length > 0 ?
@@ -335,6 +344,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	function enterMode( mode ) {
 		resetOperationState();
 		activeMode.value = mode;
+		activeModeContext.value = [];
 		query.value = '';
 		displayedItems.value = [];
 		handleModeQuery( mode, '' );
@@ -347,7 +357,44 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	 */
 	function exitMode() {
 		activeMode.value = null;
+		activeModeContext.value = [];
 		return clearSearch();
+	}
+
+	/**
+	 * Pushes a value onto the active mode's context stack and re-runs
+	 * the mode's getResults with an empty query. Cancels any in-flight
+	 * fetch and clears the displayed list so the previous level's
+	 * results don't bleed into the new one.
+	 *
+	 * @param {*} value Value to append to activeModeContext.
+	 */
+	function pushModeContext( value ) {
+		if ( !activeMode.value ) {
+			return;
+		}
+		activeModeContext.value = activeModeContext.value.concat( [ value ] );
+		resetOperationState();
+		query.value = '';
+		displayedItems.value = [];
+		handleModeQuery( activeMode.value, '' );
+	}
+
+	/**
+	 * Pops the last entry from the active mode's context stack.
+	 * No-op when the stack is empty or no mode is active. Cancels any
+	 * in-flight fetch and clears the displayed list so the deeper
+	 * level's results don't bleed into the parent.
+	 */
+	function popModeContext() {
+		if ( !activeMode.value || activeModeContext.value.length === 0 ) {
+			return;
+		}
+		activeModeContext.value = activeModeContext.value.slice( 0, -1 );
+		resetOperationState();
+		query.value = '';
+		displayedItems.value = [];
+		handleModeQuery( activeMode.value, '' );
 	}
 
 	/**
@@ -498,10 +545,13 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		hasDisplayedItems,
 		stateConfig,
 		activeMode,
+		activeModeContext,
 		updateQuery,
 		clearSearch,
 		enterMode,
 		exitMode,
+		pushModeContext,
+		popModeContext,
 		handleSelection,
 		dismissRecentItem
 	};

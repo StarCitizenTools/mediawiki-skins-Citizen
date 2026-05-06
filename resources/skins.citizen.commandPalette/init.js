@@ -17,6 +17,7 @@ const createRelatedArticlesProvider = require( './providers/RelatedArticlesProvi
 const namespaceMode = require( './modes/namespace.js' );
 const createActionMode = require( './modes/action.js' );
 const createUserMode = require( './modes/user.js' );
+const createCategoryMode = require( './modes/category.js' );
 
 // Result decorator
 const createAppendQueryActions = require( './utils/appendQueryActions.js' );
@@ -43,6 +44,7 @@ function initApp() {
 	paletteRegistry.register( namespaceMode );
 	paletteRegistry.register( createActionMode( document, mw.Api ) );
 	paletteRegistry.register( createUserMode( mw.Api ) );
+	paletteRegistry.register( createCategoryMode( mw.Api ) );
 
 	// 3. Fire hook for extension commands
 	const hookData = { register: paletteRegistry.register };

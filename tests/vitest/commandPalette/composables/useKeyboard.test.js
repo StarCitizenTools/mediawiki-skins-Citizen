@@ -392,4 +392,69 @@ describe( 'useKeyboard', () => {
 			expect( deps.onEnterMode ).not.toHaveBeenCalled();
 		} );
 	} );
+
+	describe( 'Backspace with mode context', () => {
+		function setupBackspace( { tokens, query, modeContext } ) {
+			const inputEl = {
+				selectionStart: 0,
+				selectionEnd: 0,
+				value: '',
+				focus: vi.fn(),
+				closest: vi.fn( () => null )
+			};
+			deps.inputRef.value.getInputElement = vi.fn( () => inputEl );
+			deps.tokens = ref( tokens );
+			deps.selectedTokenIndex = ref( -1 );
+			deps.onSelectToken = vi.fn();
+			deps.onRemoveToken = vi.fn();
+			deps.query = ref( query );
+			deps.activeMode = ref( modeContext.length > 0 ? { id: 'm' } : null );
+			deps.activeModeContext = ref( modeContext );
+			deps.onPopModeContext = vi.fn();
+			keyboard = useKeyboard( deps );
+			return { inputEl };
+		}
+
+		it( 'pops context when input empty and stack non-empty', () => {
+			const { inputEl } = setupBackspace( {
+				tokens: [],
+				query: '',
+				modeContext: [ { name: 'A' } ]
+			} );
+			const event = createKeyEvent( 'Backspace', inputEl );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onPopModeContext ).toHaveBeenCalledTimes( 1 );
+			expect( event.preventDefault ).toHaveBeenCalled();
+		} );
+
+		it( 'no-ops Backspace when stack is empty and no tokens', () => {
+			const { inputEl } = setupBackspace( {
+				tokens: [],
+				query: '',
+				modeContext: []
+			} );
+			const event = createKeyEvent( 'Backspace', inputEl );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onPopModeContext ).not.toHaveBeenCalled();
+			expect( event.preventDefault ).not.toHaveBeenCalled();
+		} );
+
+		it( 'falls through to token logic when context empty but tokens exist', () => {
+			const { inputEl } = setupBackspace( {
+				tokens: [ { id: 't1', label: 'Talk' } ],
+				query: '',
+				modeContext: []
+			} );
+			const event = createKeyEvent( 'Backspace', inputEl );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onPopModeContext ).not.toHaveBeenCalled();
+			expect( deps.onSelectToken ).toHaveBeenCalledWith( 0 );
+		} );
+	} );
 } );

@@ -91,6 +91,10 @@ module.exports = exports = defineComponent( {
 		activeMode: {
 			type: Object,
 			default: null
+		},
+		activeModeContext: {
+			type: Array,
+			default: () => []
 		}
 	},
 	emits: [ 'update:freeText', 'select-token', 'exit-mode' ],
@@ -105,6 +109,12 @@ module.exports = exports = defineComponent( {
 		} );
 
 		const currentPlaceholder = computed( () => {
+			if ( props.activeMode && typeof props.activeMode.headerLabel === 'function' ) {
+				const label = props.activeMode.headerLabel( props.activeModeContext );
+				if ( label ) {
+					return label;
+				}
+			}
 			if ( props.activeMode && props.activeMode.placeholder ) {
 				return props.activeMode.placeholder;
 			}

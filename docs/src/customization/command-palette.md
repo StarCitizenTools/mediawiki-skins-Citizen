@@ -22,6 +22,7 @@ The palette supports two kinds of entries:
 | `/ns:` | `:` | Mode | Browse and select a namespace. |
 | `/action:` | `>` | Mode | Search for actions and special pages. |
 | `/user:` | `@` | Mode | Search for a user. |
+| `/cat:` | `#` | Mode | Find a category, then step inside to see its subcategories and pages. |
 | `/smw:` | - | Mode | Query pages with Semantic MediaWiki Ask syntax. Only available when SMW is installed. |
 
 Single-character aliases like `@`, `>`, and `:` can be typed directly to enter the mode instantly, without needing the `/` prefix.
@@ -42,6 +43,16 @@ Some modes support **tokenized input**, where structured parts of the query are 
 ## Built-in modes
 
 Most built-in modes (namespace, action, user) work as straightforward search — type a query, get results. The modes below have additional behavior worth knowing about.
+
+### Categories
+
+The category mode helps you find a category and see what's inside it. Open it with `/cat:` or `#`.
+
+- **An empty input** shows the current page's categories — a quick way to see what this article belongs to without scrolling to the bottom of the page.
+- **Type a query** to search every category on the wiki by name.
+- **Pick a category** to step inside. The header turns into a breadcrumb (e.g. `Categories / Animals / Mammals`), and the list shows the category's subcategories first, then its pages. Keep typing to filter what's at the current level.
+- **<kbd>Backspace</kbd> on an empty input** backs out one level. At the top, <kbd>Backspace</kbd> closes the mode.
+- **Each result has action buttons** on the right — focus them with <kbd>→</kbd>. Categories offer **View** (the actual `Category:` page) and **Edit**; pages offer **Edit**.
 
 ### Semantic MediaWiki
 
@@ -91,8 +102,9 @@ Every entry must have at minimum an `id`, `triggers`, and `description`. If the 
 | `description` | `string` | Yes | Short explanation shown in the command list. |
 | `placeholder` | `string` | No | Input placeholder when mode is active (e.g., "Search users"). Modes only. |
 | `icon` | `Object` | No | Codex icon for the header when mode is active. Modes only. |
-| `getResults` | `function` | No | `(subQuery, signal?, tokens?) => Promise<Array>` — if provided, this entry is a mode. An optional `AbortSignal` and the current token array are passed as additional arguments. |
+| `getResults` | `function` | No | `(subQuery, signal?, tokens?, modeContext?) => Promise<Array>` — if provided, this entry is a mode. The optional fourth argument is the current [mode context](#mode-context) stack. |
 | `onResultSelect` | `function` | No | `(item) => { action, payload }` — handles selection of a result item. |
+| `headerLabel` | `function` | No | `(modeContext) => string \| null` — replaces the input placeholder with a custom label. Return `null` to fall back to the regular placeholder — useful for showing a breadcrumb only when the mode is drilled in. Typically used with [mode context](#mode-context). Modes only. |
 | `emptyState` | `Object` | No | `{ title, description, icon }` — content shown when the mode is active with no query. Falls back to default search messaging. Modes only. |
 | `noResults` | `function` | No | `(query, tokens?) => { title, description, icon }` — returns content shown when a query produces no results. Falls back to default no-results messaging. Modes only. |
 | `tokenPattern` | `Object` | No | Token detection pattern for auto-tokenization. See [token patterns](#token-patterns). Modes only. |
@@ -107,6 +119,7 @@ Every entry must have at minimum an `id`, `triggers`, and `description`. If the 
 | `{ action: 'navigate', payload: url }` | URL string | Close the palette and navigate to the URL. |
 | `{ action: 'exitWithQuery', payload: query }` | Query string | Exit the current mode and set the query string. |
 | `{ action: 'updateQuery', payload: query }` | Query string | Update the query within the current mode without exiting. |
+| `{ action: 'pushModeContext', payload: any }` | Any | Step the active mode into a new level. Appends to the [mode context](#mode-context) stack and clears the input. |
 
 ### Token patterns
 
@@ -120,6 +133,50 @@ Modes can declare a `tokenPattern` to enable auto-tokenization — when the user
 | `match` | `function` | `(text) => { label, raw } \| null` — tests whether the text starts with a tokenizable pattern. Returns `label` (display text) and `raw` (the original text) on match, or `null`. |
 
 Tokens are passed to `getResults` and `noResults` so modes can incorporate them into queries. For example, the SMW mode reconstructs the full Ask query from its token chips plus any free text.
+
+### Mode context
+
+Some modes need to step *into* a result rather than navigate away from it — the category mode walks through nested categories, for example. Mode context is the primitive that supports this: a small stack the active mode owns and pushes onto when the user picks a result.
+
+It's opt-in. Modes that don't need it can ignore it entirely.
+
+- The stack is empty when a mode is entered, and is cleared when the mode exits or the palette closes.
+- `{ action: 'pushModeContext', payload }` appends the payload and clears the input, so the user starts fresh at the new level.
+- `getResults` gets the current stack as its fourth argument and decides what to show per level.
+- `headerLabel( modeContext )` renders a breadcrumb in the header so the user can always tell where they are. Returning `null` falls back to the regular placeholder, so the breadcrumb only shows when there's actually a path to display.
+- <kbd>Backspace</kbd> on an empty input pops one level. With an empty stack, it falls through to the normal exit-mode behavior.
+
+A minimal example of a drill-down mode:
+
+```js
+const myDrillMode = {
+    id: 'mydrill',
+    triggers: [ '/drill:' ],
+    description: 'Drill through nested folders.',
+
+    getResults: function ( subQuery, signal, tokens, modeContext ) {
+        const path = modeContext || [];
+        const current = path.length ? path[ path.length - 1 ] : null;
+        return fetchFolderContents( current, subQuery );
+    },
+
+    onResultSelect: function ( item ) {
+        if ( item.type === 'folder' ) {
+            return { action: 'pushModeContext', payload: { id: item.value } };
+        }
+        return item.url ?
+            { action: 'navigate', payload: item.url } :
+            { action: 'none' };
+    },
+
+    headerLabel: function ( modeContext ) {
+        if ( modeContext.length === 0 ) {
+            return null; // fall back to the placeholder at the root
+        }
+        return [ 'Folders' ].concat( modeContext.map( ( c ) => c.id ) ).join( ' / ' );
+    }
+};
+```
 
 ### Example: simple command
 

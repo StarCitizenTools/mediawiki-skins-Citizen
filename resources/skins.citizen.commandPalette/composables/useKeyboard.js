@@ -22,6 +22,8 @@ const { computed, nextTick } = require( 'vue' );
  * @param {import('vue').Ref<number>} [deps.selectedTokenIndex] Selected token index ref (-1 = none).
  * @param {Function} [deps.onSelectToken] Called with index to select a token chip.
  * @param {Function} [deps.onRemoveToken] Called with index to remove a selected token chip.
+ * @param {import('vue').Ref<Array>} [deps.activeModeContext] Active mode's drill-down stack ref.
+ * @param {Function} [deps.onPopModeContext] Called to pop the last entry from the active mode's context stack.
  * @return {Object} Keyboard handler and focus management methods.
  */
 function useKeyboard( deps ) {
@@ -177,21 +179,40 @@ function useKeyboard( deps ) {
 	 * @return {boolean} Whether the event was handled.
 	 */
 	function handleTokenBackspace( event ) {
-		if ( !deps.tokens || !deps.onSelectToken || !deps.onRemoveToken ) {
-			return false;
-		}
 		const inputEl = getInputElement();
 		const isCursorAtStart = inputEl &&
 			inputEl.selectionStart === 0 &&
 			inputEl.selectionEnd === 0;
-		if ( !isCursorAtStart || deps.tokens.value.length === 0 ) {
+		if ( !isCursorAtStart ) {
+			return false;
+		}
+
+		const tokensLength = deps.tokens ? deps.tokens.value.length : 0;
+		const freeTextEmpty = !deps.query || !deps.query.value;
+
+		if (
+			tokensLength === 0 &&
+			freeTextEmpty &&
+			deps.activeModeContext &&
+			deps.activeModeContext.value.length > 0 &&
+			deps.onPopModeContext
+		) {
+			event.preventDefault();
+			deps.onPopModeContext();
+			return true;
+		}
+
+		if ( !deps.tokens || !deps.onSelectToken || !deps.onRemoveToken ) {
+			return false;
+		}
+		if ( tokensLength === 0 ) {
 			return false;
 		}
 		event.preventDefault();
 		if ( deps.selectedTokenIndex.value >= 0 ) {
 			deps.onRemoveToken( deps.selectedTokenIndex.value );
 		} else {
-			deps.onSelectToken( deps.tokens.value.length - 1 );
+			deps.onSelectToken( tokensLength - 1 );
 		}
 		return true;
 	}

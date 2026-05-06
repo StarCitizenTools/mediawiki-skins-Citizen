@@ -23,6 +23,7 @@
 				:is-pending="isPending"
 				:show-pending="showPending"
 				:active-mode="activeMode"
+				:active-mode-context="activeModeContext"
 				@exit-mode="exitMode"
 				@update:free-text="handleFreeTextUpdate( $event )"
 				@select-token="tokenInput.selectToken( $event )"
@@ -39,7 +40,7 @@
 				>
 					<div class="citizen-command-palette__results">
 						<command-palette-empty-state
-							v-if="!showPending && flatItems.length === 0"
+							v-if="!isPending && flatItems.length === 0"
 							:title="emptyStateContent.title"
 							:description="emptyStateContent.description"
 							:icon="emptyStateContent.icon"
@@ -301,6 +302,11 @@ module.exports = exports = defineComponent( {
 					orch.updateQuery( tokenInput.fullQuery.value );
 					nextTick( focusInput );
 					break;
+				case 'pushModeContext':
+					orch.pushModeContext( selectionAction.payload );
+					tokenInput.clear();
+					nextTick( focusInput );
+					break;
 				case 'none':
 				default:
 					break;
@@ -338,7 +344,9 @@ module.exports = exports = defineComponent( {
 			tokens: tokenInput.tokens,
 			selectedTokenIndex: tokenInput.selectedIndex,
 			onSelectToken: ( index ) => tokenInput.selectToken( index ),
-			onRemoveToken: handleRemoveToken
+			onRemoveToken: handleRemoveToken,
+			activeModeContext: orch.activeModeContext,
+			onPopModeContext: () => orch.popModeContext()
 		} );
 
 		// setItemRef expects the GLOBAL index within displayedItems
@@ -456,6 +464,7 @@ module.exports = exports = defineComponent( {
 			teardownResizeObserver,
 			// Orchestration
 			activeMode: orch.activeMode,
+			activeModeContext: orch.activeModeContext,
 			exitMode: orch.exitMode,
 			query: orch.query,
 			displayedItems: orch.displayedItems,
