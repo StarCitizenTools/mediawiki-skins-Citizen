@@ -1,0 +1,20 @@
+/**
+ * Citizen surface ramp — color-category extension
+ *
+ * In-skin LESS uses --color-surface-N as a depth ladder, parallel to
+ * Codex's bg-* tier hierarchy. surface-0 mirrors background-color-base;
+ * surfaces 1+ step into tinted neutrals for elevation.
+ */
+.new-surface() {
+	:root.citizen-token-new {
+		--color-surface-0: light-dark( var( --color-white ), var( --color-neutral-1000 ) );
+		--color-surface-1: light-dark( var( --color-neutral-50 ), var( --color-neutral-900 ) );
+		--color-surface-1--hover: light-dark( var( --color-neutral-100 ), var( --color-neutral-800 ) );
+		--color-surface-1--active: light-dark( var( --color-neutral-200 ), var( --color-neutral-700 ) );
+		--color-surface-2: light-dark( var( --color-neutral-100 ), var( --color-neutral-800 ) );
+		--color-surface-2--hover: light-dark( var( --color-neutral-200 ), var( --color-neutral-700 ) );
+		--color-surface-2--active: light-dark( var( --color-neutral-300 ), var( --color-neutral-600 ) );
+		--color-surface-3: light-dark( var( --color-neutral-200 ), var( --color-neutral-700 ) );
+		--color-surface-4: light-dark( var( --color-neutral-300 ), var( --color-neutral-600 ) );
+	}
+}

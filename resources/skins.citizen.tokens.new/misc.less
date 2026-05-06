@@ -1,0 +1,45 @@
+/**
+ * Codex categories that don't have a dedicated doc-token page or are
+ * small enough that they don't warrant their own file — outline,
+ * mix-blend-mode, accent-color, filter (Codex defines invert tokens
+ * but no /design-tokens/filter.html page) — plus Citizen back-compat
+ * aliases.
+ */
+.new-misc() {
+	:root.citizen-token-new {
+		// Codex — outline (https://doc.wikimedia.org/codex/main/design-tokens/outline.html)
+		// Inlined as a light-dark() pair (rather than aliased to
+		// --border-color-progressive--focus) so the audit reads the
+		// primitives directly.
+		--outline-color-progressive--focus: light-dark( var( --color-primary-700 ), var( --color-primary-500 ) );
+
+		// Codex — mix-blend-mode
+		--mix-blend-mode-base: normal;
+		--mix-blend-mode-blend: multiply;
+
+		// Codex — accent-color
+		--accent-color-base: var( --color-progressive );
+
+		// Codex — filter (no dedicated doc page; tokens live in
+		// application.json). Citizen-extended with --filter-invert*
+		// for image dimming and --backdrop-filter-* for frosted glass.
+		// --filter-invert is theme-variant; dark override in
+		// dark-overrides.less.
+		--filter-invert-icon: 0;
+		--filter-invert-primary-button-icon: 1;
+		--filter-invert: none;
+		--filter-invert-primary: invert( 1 ) hue-rotate( 180deg );
+		--backdrop-filter-blur: blur( 2px );
+		--backdrop-filter-frosted-glass: ~'blur( 16px ) saturate( 140% )';
+
+		// Citizen extensions — legacy aliases. mixins.less still
+		// consumes --color-progressive-oklch__h. The HSL trio feeds
+		// tokens-citizen.less's deprecated --color-primary__h/__s/__l.
+		// __l is theme-variant — dark override in dark-overrides.less.
+		// Drop alongside the legacy pipeline.
+		--color-progressive-oklch__h: var( --color-primary-oklch__h );
+		--color-progressive-hsl__h: 220;
+		--color-progressive-hsl__s: 60%;
+		--color-progressive-hsl__l: 50%;
+	}
+}

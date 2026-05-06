@@ -132,19 +132,14 @@ function parseCitizenPrimitives() {
 }
 
 function parseCitizenSemantics() {
-	// Parse all .less files in the new token module so we capture both the
-	// theme mixin (light-dark() declarations) and per-Codex-version
-	// semantics files (which use plain var() references). First match wins
-	// per token — tokens-theme.less (the unified mixin) is loaded first
-	// since it's the cascade-effective source for theme-variant tokens.
-	const files = [
-		join( CITIZEN_TOKENS_DIR, 'tokens-theme.less' ),
-		join( CITIZEN_TOKENS_DIR, 'semantics-codex.mw-1.43.less' ),
-		join( CITIZEN_TOKENS_DIR, 'semantics-codex.mw-1.44.less' ),
-		join( CITIZEN_TOKENS_DIR, 'semantics-codex.mw-1.45.less' ),
-		join( CITIZEN_TOKENS_DIR, 'semantics-codex.latest.less' ),
-		join( CITIZEN_TOKENS_DIR, 'semantics-codex.deprecated.less' )
-	];
+	// Parse every .less file in the new-token module directory except
+	// the entry (tokens.less) and the primitive files (already handled
+	// by parseCitizenPrimitives). Each category file emits at
+	// :root.citizen-token-new and is parsed for token declarations.
+	const SKIP = new Set( [ 'tokens.less', 'primitives-codex.less', 'primitives-citizen.less' ] );
+	const files = readdirSync( CITIZEN_TOKENS_DIR )
+		.filter( name => name.endsWith( '.less' ) && !SKIP.has( name ) )
+		.map( name => join( CITIZEN_TOKENS_DIR, name ) );
 
 	const map = {}; // tokenName → { light, dark } (with 'both' if theme-invariant)
 

@@ -6,6 +6,9 @@
 		"yellow-999": "Citizen drops Codex's -999 out-of-band diff highlight stops",
 		"green-999": "Citizen drops Codex's -999 out-of-band diff highlight stops",
 		"blue-999": "Citizen drops Codex's -999 out-of-band diff highlight stops",
+		"red-950": "Citizen extension — soft state-border tier in dark mode (~25% L, lower chroma than Codex's *-900). Codex doesn't have a -950 stop",
+		"yellow-950": "Citizen extension — soft state-border tier in dark mode",
+		"green-950": "Citizen extension — soft state-border tier in dark mode",
 		"red-1000": "Citizen retunes chromatic -1000 stops to ~16% L (vs Codex's ~26% L) so subtle dark backgrounds sit ~5% L above Citizen's deeper canvas",
 		"orange-1000": "Citizen retunes chromatic -1000 stops to ~16% L for canvas-relative subtlety",
 		"yellow-1000": "Citizen retunes chromatic -1000 stops to ~16% L for canvas-relative subtlety",
@@ -48,6 +51,13 @@
 	},
 
 	"semantics": {
+		"color-base:dark": "Citizen prefers softer body text in dark mode (~84% L instead of Codex's 94%) for a less harsh reading feel",
+		"color-base--hover:dark": "Citizen softens body-text hover in dark mode to track the softer rest tone",
+
+		"background-color-error": "Citizen tracks Codex 2.x semantic split — bg-error uses lighter red-500/600/700 stops than bg-destructive (which uses red-700/800/900). On Codex 1.x-mapped MW versions both pointed to the same darker stops",
+		"background-color-error--hover": "Citizen tracks Codex 2.x semantic split — see background-color-error",
+		"background-color-error--active": "Citizen tracks Codex 2.x semantic split — see background-color-error",
+
 		"border-color-base": "Citizen uses softer borders",
 		"border-color-subtle": "Citizen uses softer borders",
 		"border-color-muted": "Citizen uses softer borders",

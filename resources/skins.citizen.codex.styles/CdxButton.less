@@ -47,7 +47,9 @@
 	}
 }
 
-// Polyfill for Codex 2.X styles, remove on MW 1.47
+// Polyfill for Codex 2.x button styles. Remove once the minimum
+// supported MW bundles Codex >= 2.0 (currently MW 1.43 ships
+// Codex 1.14, so this stays as long as we target REL1_43).
 .citizen-token-new .cdx-button {
 	&:enabled,
 	&.cdx-button--fake-button--enabled {
