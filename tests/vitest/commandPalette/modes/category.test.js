@@ -191,7 +191,6 @@ describe( 'category mode', () => {
 
 			// mw mock returns the message key verbatim; assert that's what we get.
 			expect( label ).toBe( 'citizen-command-palette-mode-category-breadcrumb-root' );
-			expect( label ).not.toContain( ' / ' );
 		} );
 
 		it( 'joins context segments with /', () => {

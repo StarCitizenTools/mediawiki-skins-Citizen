@@ -355,7 +355,9 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 
 	/**
 	 * Pushes a value onto the active mode's context stack and re-runs
-	 * the mode's getResults with an empty query.
+	 * the mode's getResults with an empty query. Cancels any in-flight
+	 * fetch and clears the displayed list so the previous level's
+	 * results don't bleed into the new one.
 	 *
 	 * @param {*} value Value to append to activeModeContext.
 	 */
@@ -364,20 +366,26 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 			return;
 		}
 		activeModeContext.value = activeModeContext.value.concat( [ value ] );
+		resetOperationState();
 		query.value = '';
+		displayedItems.value = [];
 		handleModeQuery( activeMode.value, '' );
 	}
 
 	/**
 	 * Pops the last entry from the active mode's context stack.
-	 * No-op when the stack is empty or no mode is active.
+	 * No-op when the stack is empty or no mode is active. Cancels any
+	 * in-flight fetch and clears the displayed list so the deeper
+	 * level's results don't bleed into the parent.
 	 */
 	function popModeContext() {
 		if ( !activeMode.value || activeModeContext.value.length === 0 ) {
 			return;
 		}
 		activeModeContext.value = activeModeContext.value.slice( 0, -1 );
+		resetOperationState();
 		query.value = '';
+		displayedItems.value = [];
 		handleModeQuery( activeMode.value, '' );
 	}
 
