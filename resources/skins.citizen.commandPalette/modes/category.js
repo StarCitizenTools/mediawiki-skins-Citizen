@@ -221,6 +221,18 @@ function createCategoryMode( ApiConstructor ) {
 		description: mw.message( 'citizen-command-palette-command-category-description' ).text(),
 		placeholder: mw.message( 'citizen-command-palette-mode-category-placeholder' ).text(),
 		icon: cdxIconTag,
+		emptyState: {
+			title: mw.message( 'citizen-command-palette-mode-category-empty-title' ).text(),
+			description: mw.message( 'citizen-command-palette-mode-category-empty-description' ).text(),
+			icon: cdxIconTag
+		},
+		noResults() {
+			return {
+				title: mw.message( 'citizen-command-palette-mode-category-noresults-title' ).text(),
+				description: mw.message( 'citizen-command-palette-mode-category-noresults-description' ).text(),
+				icon: cdxIconTag
+			};
+		},
 		getResults,
 		onResultSelect,
 		headerLabel

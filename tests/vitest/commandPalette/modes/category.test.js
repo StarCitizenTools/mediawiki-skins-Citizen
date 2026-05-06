@@ -35,6 +35,19 @@ describe( 'category mode', () => {
 		it( 'exposes headerLabel function', () => {
 			expect( typeof mode.headerLabel ).toBe( 'function' );
 		} );
+
+		it( 'has emptyState with title and description', () => {
+			expect( mode.emptyState ).toBeDefined();
+			expect( mode.emptyState.title ).toBeTruthy();
+			expect( mode.emptyState.description ).toBeTruthy();
+		} );
+
+		it( 'has noResults function returning title and description', () => {
+			const state = mode.noResults( 'foo' );
+
+			expect( state.title ).toBeTruthy();
+			expect( state.description ).toBeTruthy();
+		} );
 	} );
 
 	describe( 'getResults — root empty', () => {
