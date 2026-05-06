@@ -40,6 +40,18 @@ When your test plan includes steps that require a browser (e.g., verifying scrip
 - Always check the browser console for warnings and errors, not just visual correctness
 - **XSS testing for i18n**: When changes touch interface messages or how they are rendered, append `?uselang=x-xss` to the URL. This replaces all i18n messages with XSS payloads — if any script executes or markup is injected, the message output is not properly escaped. See [Manual:$wgUseXssLanguage](https://www.mediawiki.org/wiki/Manual:$wgUseXssLanguage)
 
+## Skills
+
+Project-local agent skills live in `.agents/skills/<name>/SKILL.md`. They are auto-discovered by Claude Code, Codex, Copilot CLI, and other compatible agent tooling. Each skill's frontmatter `description` declares when the skill should be invoked.
+
+Available skills:
+
+| Skill | Use when |
+| --- | --- |
+| `finalize-release` | A Release Please PR has been merged and the GitHub release needs author tags, highlights, new contributors, and a docs CI rebuild |
+
+To add a new skill, create `.agents/skills/<name>/SKILL.md` with frontmatter (`name`, `description`) and a body that describes the workflow. Add a row to the table above so it is discoverable.
+
 ## Coding conventions
 
 ### PHP
