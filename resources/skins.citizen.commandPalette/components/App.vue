@@ -301,6 +301,11 @@ module.exports = exports = defineComponent( {
 					orch.updateQuery( tokenInput.fullQuery.value );
 					nextTick( focusInput );
 					break;
+				case 'pushModeContext':
+					orch.pushModeContext( selectionAction.payload );
+					tokenInput.clear();
+					nextTick( focusInput );
+					break;
 				case 'none':
 				default:
 					break;
