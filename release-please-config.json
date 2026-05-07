@@ -8,6 +8,10 @@
 		"package-lock.json"
 	],
 	"packages": {
-		".": {}
+		".": {
+			"exclude-paths": [
+				"docs/**"
+			]
+		}
 	}
 }
