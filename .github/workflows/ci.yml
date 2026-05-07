@@ -23,7 +23,7 @@ concurrency:
 jobs:
   changes:
     name: 🤔 Detect changes
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 5
     outputs:
       php: ${{ steps.filter.outputs.php_any_changed }}
@@ -87,6 +87,7 @@ jobs:
       lint-styles: ${{ needs.changes.outputs.stylesheet == 'true' || github.event_name == 'schedule' }}
       lint-i18n: ${{ needs.changes.outputs.i18n == 'true' || github.event_name == 'schedule' }}
       lint-md: ${{ needs.changes.outputs.markdown == 'true' || github.event_name == 'schedule' }}
+      runner: ubuntu-24.04-arm
 
   analyze-php:
     needs: changes
@@ -96,11 +97,14 @@ jobs:
       project-type: skin
       project-name: Citizen
       skip-cache: ${{ github.event_name == 'schedule' }}
+      runner: ubuntu-24.04-arm
 
   test-js:
     needs: changes
     if: needs.changes.outputs.script == 'true' || github.event_name == 'schedule'
     uses: StarCitizenTools/mediawiki-ci-workflows/.github/workflows/test-js.yml@main
+    with:
+      runner: ubuntu-24.04-arm
 
   test-php:
     needs: changes
@@ -110,6 +114,7 @@ jobs:
       project-type: skin
       project-name: Citizen
       skip-cache: ${{ github.event_name == 'schedule' }}
+      runner: ubuntu-24.04-arm
 
   sonarqube:
     needs: [test-js, test-php]
@@ -118,5 +123,6 @@ jobs:
     with:
       has-js-coverage: ${{ needs.test-js.result == 'success' }}
       has-php-coverage: ${{ needs.test-php.result == 'success' }}
+      runner: ubuntu-24.04-arm
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
