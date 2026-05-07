@@ -93,10 +93,5 @@
 	"citizen-command-palette-type-menu-item": "메뉴 항목",
 	"citizen-command-palette-type-user": "사용자",
 	"citizen-command-palette-mode-user-empty-title": "사용자 검색",
-	"citizen-command-palette-mode-user-placeholder": "사용자 검색",
-	"citizen-command-palette-tip-commands": "<code>/</code>를 입력하여 모든 명령어를 확인하세요.",
-	"citizen-command-palette-tip-users": "<code>@</code>를 입력하여 사용자를 검색하세요.",
-	"citizen-command-palette-tip-namespace": "<code>:</code>를 입력하여 이름공간을 검색하세요.",
-	"citizen-command-palette-tip-templates": "<code><nowiki>{{</nowiki></code>를 입력하여 틀을 검색하세요.",
-	"citizen-command-palette-tip-actions": "<code>></code>를 입력하여 동작 목록을 확인하세요."
+	"citizen-command-palette-mode-user-placeholder": "사용자 검색"
 }

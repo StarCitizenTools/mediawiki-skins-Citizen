@@ -149,19 +149,18 @@
 	"citizen-command-palette-mode-smw-noproperties-title": "Title shown in the command palette SMW mode when property suggestions return no matches",
 	"citizen-command-palette-mode-smw-noresults-description": "Description shown in the command palette SMW mode when a valid query returns no matching pages",
 	"citizen-command-palette-mode-smw-noresults-title": "Title shown in the command palette SMW mode when a valid query returns no results",
+	"citizen-command-palette-mode-smw-description-help": "Long-form description of the Semantic MediaWiki mode shown in the help overlay, illustrating how to chain Ask conditions.",
 	"citizen-command-palette-mode-smw-novalues-description": "Description shown in the command palette SMW mode when value suggestions return no matches",
 	"citizen-command-palette-mode-smw-novalues-title": "Title shown in the command palette SMW mode when value suggestions return no matches",
-	"citizen-command-palette-mode-smw-description-help": "Long-form description of the Semantic MediaWiki mode shown in the help overlay, illustrating how to chain Ask conditions.",
 	"citizen-command-palette-mode-smw-placeholder": "Placeholder text shown in the command palette input when the Semantic MediaWiki mode is active",
+	"citizen-command-palette-mode-user-description-help": "Long-form description of the user mode shown in the help overlay, pointing at the per-result Talk and Contributions action buttons.",
 	"citizen-command-palette-mode-user-empty-description": "Description shown in the command palette user mode when no query has been entered",
 	"citizen-command-palette-mode-user-empty-title": "Title shown in the command palette user mode when no query has been entered",
 	"citizen-command-palette-mode-user-noresults-description": "Description shown in the command palette user mode when the search returns no matching users",
 	"citizen-command-palette-mode-user-noresults-title": "Title shown in the command palette user mode when the search returns no matching users",
-	"citizen-command-palette-mode-user-description-help": "Long-form description of the user mode shown in the help overlay, pointing at the per-result Talk and Contributions action buttons.",
 	"citizen-command-palette-mode-user-placeholder": "Placeholder text shown in the command palette input when the user search mode is active.",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Description for the fulltext search in the command palette",
 	"citizen-command-palette-queryaction-media-search-description": "Description for the media search in the command palette",
 	"citizen-command-palette-queryaction-page-edit-description": "Description for the page edit action in the command palette",
-
 	"citizen-config-usenewtoken": "Description for the {{Help|UseNewToken}} config option. Used in extension registration metadata."
 }

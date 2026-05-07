@@ -83,15 +83,10 @@
 	"citizen-command-palette-type-special-page": "Specialsida",
 	"citizen-command-palette-type-menu-item": "Menyalternativ",
 	"citizen-command-palette-type-user": "Användare",
-	"citizen-command-palette-command-ns-description": "Sök efter en sida i ett specifikt namnutrymme",
 	"citizen-command-palette-command-action-description": "Utför en specifik åtgärd",
+	"citizen-command-palette-command-ns-description": "Sök efter en sida i ett specifikt namnutrymme",
 	"citizen-command-palette-command-user-description": "Sök efter en användare",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Sök efter hela texten på alla sidor",
 	"citizen-command-palette-queryaction-media-search-description": "Sök efter mediefiler",
-	"citizen-command-palette-queryaction-page-edit-description": "Skapa och redigera sidor.",
-	"citizen-command-palette-tip-commands": "Skriv <code>/</code> för alla kommandon",
-	"citizen-command-palette-tip-users": "Skriv <code>@</code> för att söka efter användare",
-	"citizen-command-palette-tip-namespace": "Skriv <code>:</code> för att söka efter namnrymd",
-	"citizen-command-palette-tip-templates": "Skriv <code><nowiki>{{</nowiki></code> för att söka efter mallar",
-	"citizen-command-palette-tip-actions": "Skriv <code>></code> för en lista med åtgärder"
+	"citizen-command-palette-queryaction-page-edit-description": "Skapa och redigera sidor."
 }

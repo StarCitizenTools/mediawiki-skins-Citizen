@@ -105,8 +105,9 @@
 	"citizen-command-palette-type-special-page": "Page spéciale",
 	"citizen-command-palette-type-menu-item": "Élément de menu",
 	"citizen-command-palette-type-user": "Utilisateur",
-	"citizen-command-palette-command-ns-description": "Rechercher une page dans un espace de noms spécifique",
 	"citizen-command-palette-command-action-description": "Effectuer une action spécifique",
+	"citizen-command-palette-command-ns-description": "Rechercher une page dans un espace de noms spécifique",
+	"citizen-command-palette-command-ns-label": "Espace de noms",
 	"citizen-command-palette-command-user-description": "Rechercher un utilisateur",
 	"citizen-command-palette-mode-action-placeholder": "Options de recherche",
 	"citizen-command-palette-mode-ns-placeholder": "Rechercher dans les espaces de noms",
@@ -114,10 +115,5 @@
 	"citizen-command-palette-mode-smw-malformed-title": "Condition incomplète",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Rechercher le texte intégral de toutes les pages",
 	"citizen-command-palette-queryaction-media-search-description": "Rechercher des fichiers multimédias",
-	"citizen-command-palette-queryaction-page-edit-description": "Créer ou modifier une page",
-	"citizen-command-palette-tip-commands": "Entrez <code>/</code> pour toutes les commandes",
-	"citizen-command-palette-tip-users": "Entrez <code>@</code> pour rechercher des utilisateurs",
-	"citizen-command-palette-tip-namespace": "Entrez <code>:</code> pour rechercher dans un espace de noms",
-	"citizen-command-palette-tip-templates": "Entrez <code><nowiki>{{</nowiki></code> pour rechercher des modèles",
-	"citizen-command-palette-tip-actions": "Entrez <code>></code> pour une liste d'actions"
+	"citizen-command-palette-queryaction-page-edit-description": "Créer ou modifier une page"
 }

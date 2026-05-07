@@ -111,8 +111,8 @@
 	"citizen-command-palette-type-special-page": "Özel sayfa",
 	"citizen-command-palette-type-menu-item": "Menü ögesi",
 	"citizen-command-palette-type-user": "Kullanıcı",
-	"citizen-command-palette-command-ns-description": "Belirli bir ad alanında bir sayfa ara",
 	"citizen-command-palette-command-action-description": "Belirli bir eylemi gerçekleştir",
+	"citizen-command-palette-command-ns-description": "Belirli bir ad alanında bir sayfa ara",
 	"citizen-command-palette-command-smw-description": "Bir Semantic MediaWiki sorgusu kullanarak ara",
 	"citizen-command-palette-command-smw-label": "Semantic MediaWiki sorgusu",
 	"citizen-command-palette-command-user-description": "Bir kullanıcı ara",
@@ -140,10 +140,5 @@
 	"citizen-command-palette-mode-user-placeholder": "Kullanıcıları ara",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Tüm sayfaların tam metnini arayın",
 	"citizen-command-palette-queryaction-media-search-description": "Medya dosyası ara",
-	"citizen-command-palette-queryaction-page-edit-description": "Sayfa oluştur veya düzenle",
-	"citizen-command-palette-tip-commands": "Tüm komutlar için <code>/</code> yazın",
-	"citizen-command-palette-tip-users": "Kullanıcı aramak için <code>@</code> yazın",
-	"citizen-command-palette-tip-namespace": "Ad alanı aramak için <code>:</code> yazın",
-	"citizen-command-palette-tip-templates": "Şablon aramak için <code><nowiki>{{</nowiki></code> yazın",
-	"citizen-command-palette-tip-actions": "Eylem listesi için <code>></code> yazın"
+	"citizen-command-palette-queryaction-page-edit-description": "Sayfa oluştur veya düzenle"
 }

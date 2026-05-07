@@ -101,8 +101,8 @@
 	"citizen-command-palette-type-special-page": "Posebna stran",
 	"citizen-command-palette-type-menu-item": "Predmet menija",
 	"citizen-command-palette-type-user": "Uporabnik",
-	"citizen-command-palette-command-ns-description": "Iskanje strani v določenem imenskem prostoru",
 	"citizen-command-palette-command-action-description": "Izvedba določenega dejanja",
+	"citizen-command-palette-command-ns-description": "Iskanje strani v določenem imenskem prostoru",
 	"citizen-command-palette-command-smw-description": "Iskanje z uporabo semantične poizvedbe MediaWiki",
 	"citizen-command-palette-command-smw-label": "Semantična poizvedba MediaWiki",
 	"citizen-command-palette-command-user-description": "Iskanje uporabnika",
@@ -130,10 +130,5 @@
 	"citizen-command-palette-mode-user-placeholder": "Poiščite uporabnike",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Preiščite celotno besedilo vseh strani",
 	"citizen-command-palette-queryaction-media-search-description": "Poiščite predstavnostne datoteke",
-	"citizen-command-palette-queryaction-page-edit-description": "Ustvarite ali uredite stran",
-	"citizen-command-palette-tip-commands": "Vnesite <code>/</code> za vse ukaze",
-	"citizen-command-palette-tip-users": "Vnesite <code>@</code> za iskanje uporabnikov",
-	"citizen-command-palette-tip-namespace": "Vnesite <code>:</code> za iskanje imenskega prostora",
-	"citizen-command-palette-tip-templates": "Vnesite <code><nowiki>{{</nowiki></code> za iskanje predlog",
-	"citizen-command-palette-tip-actions": "Vnesite <code>></code> za seznam dejanj"
+	"citizen-command-palette-queryaction-page-edit-description": "Ustvarite ali uredite stran"
 }

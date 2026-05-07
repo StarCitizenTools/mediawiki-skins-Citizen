@@ -104,8 +104,9 @@
 	"citizen-command-palette-type-special-page": "Speciale pagina",
 	"citizen-command-palette-type-menu-item": "Menu-item",
 	"citizen-command-palette-type-user": "Gebruiker",
-	"citizen-command-palette-command-ns-description": "Naar een pagina in een bepaalde naamruimte zoeken",
 	"citizen-command-palette-command-action-description": "Een bepaalde handeling verrichten",
+	"citizen-command-palette-command-ns-description": "Naar een pagina in een bepaalde naamruimte zoeken",
+	"citizen-command-palette-command-ns-label": "Naamruimte",
 	"citizen-command-palette-command-smw-description": "Zoeken met behulp van een Semantic MediaWiki-zoekopdracht",
 	"citizen-command-palette-command-smw-label": "Semantic MediaWiki-zoekopdracht",
 	"citizen-command-palette-command-user-description": "Een gebruiker zoeken",
@@ -133,10 +134,5 @@
 	"citizen-command-palette-mode-user-placeholder": "Gebruikers zoeken",
 	"citizen-command-palette-queryaction-fulltext-search-description": "In de volledige tekst van alle pagina’s zoeken",
 	"citizen-command-palette-queryaction-media-search-description": "Mediabestanden zoeken",
-	"citizen-command-palette-queryaction-page-edit-description": "Pagina aanmaken of bewerken",
-	"citizen-command-palette-tip-commands": "Typ <code>/</code> om alle commando’s te zien",
-	"citizen-command-palette-tip-users": "Typ <code>@</code> om gebruikers te zoeken",
-	"citizen-command-palette-tip-namespace": "Typ <code>:</code> om de naamruimte te zoeken",
-	"citizen-command-palette-tip-templates": "Type <code><nowiki>{{</nowiki></code> om sjablonen te zoeken",
-	"citizen-command-palette-tip-actions": "Typ <code>></code> voor een lijst met handelingen"
+	"citizen-command-palette-queryaction-page-edit-description": "Pagina aanmaken of bewerken"
 }

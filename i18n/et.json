@@ -87,8 +87,8 @@
 	"citizen-command-palette-type-special-page": "Erilehekülg",
 	"citizen-command-palette-type-menu-item": "Menüü-üksus",
 	"citizen-command-palette-type-user": "Kasutaja",
-	"citizen-command-palette-command-ns-description": "Otsi lehte kindlas nimeruumis",
 	"citizen-command-palette-command-action-description": "Tee konkreetne toiming",
+	"citizen-command-palette-command-ns-description": "Otsi lehte kindlas nimeruumis",
 	"citizen-command-palette-command-user-description": "Otsi kasutajat",
 	"citizen-command-palette-mode-action-placeholder": "Otsingu toimingud",
 	"citizen-command-palette-mode-smw-noresults-title": "Vastavaid lehti pole",
@@ -96,10 +96,5 @@
 	"citizen-command-palette-mode-user-placeholder": "Otsi kasutajaid",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Täistekstiotsing kõigil lehekülgedel",
 	"citizen-command-palette-queryaction-media-search-description": "Failide otsimine",
-	"citizen-command-palette-queryaction-page-edit-description": "Loo lehekülg või muuda seda",
-	"citizen-command-palette-tip-commands": "Kõikide käskude nägemiseks kirjuta <code>/</code>",
-	"citizen-command-palette-tip-users": "Kasutajate otsimiseks kirjuta <code>@</code>",
-	"citizen-command-palette-tip-namespace": "Nimeruumi otsimiseks kirjuta <code>:</code>",
-	"citizen-command-palette-tip-templates": "Mallide otsimiseks kirjuta <code><nowiki>{{</nowiki></code>",
-	"citizen-command-palette-tip-actions": "Toimingute nimekirja jaoks kirjuta <code>></code>"
+	"citizen-command-palette-queryaction-page-edit-description": "Loo lehekülg või muuda seda"
 }
