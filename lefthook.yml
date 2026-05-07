@@ -9,7 +9,7 @@ pre-commit:
             run: npx eslint {staged_files}
             glob: "**/*.{js,vue}"
           - name: style-lint
-            run: npx stylelint {staged_files}
+            run: npx stylelint --allow-empty-input {staged_files}
             glob: "**/*.{less,css,vue}"
           - name: i18n-lint
             run: npm run lint:i18n
