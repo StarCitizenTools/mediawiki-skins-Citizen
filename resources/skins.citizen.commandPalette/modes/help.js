@@ -13,6 +13,7 @@ module.exports = {
 	triggers: [ '/help', '?' ],
 	label: mw.message( 'citizen-command-palette-command-help-label' ).text(),
 	description: mw.message( 'citizen-command-palette-command-help-description' ).text(),
+	compactResults: true,
 	onResultSelect() {
 		return { action: 'toggleHelp' };
 	}

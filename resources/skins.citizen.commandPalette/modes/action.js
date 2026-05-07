@@ -136,6 +136,7 @@ function createActionCommand( documentRef, ApiConstructor ) {
 		description: mw.message( 'citizen-command-palette-command-action-description' ).text(),
 		placeholder: mw.message( 'citizen-command-palette-mode-action-placeholder' ).text(),
 		icon: cdxIconSpecialPages,
+		compactResults: true,
 		help: {
 			description: 'citizen-command-palette-mode-action-description-help'
 		},

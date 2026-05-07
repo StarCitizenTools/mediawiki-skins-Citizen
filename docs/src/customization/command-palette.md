@@ -114,6 +114,7 @@ Every entry must have at minimum an `id`, `triggers`, and `description`. If the 
 | `description` | `string` | Yes | Short explanation shown in the command list. |
 | `placeholder` | `string` | No | Input placeholder when mode is active (e.g., "Search users"). Modes only. |
 | `icon` | `Object` | No | Codex icon for the header when mode is active. Modes only. |
+| `compactResults` | `boolean` | No | Render results in a denser layout — a small icon instead of a thumbnail and the description inline beside the label. Use this for command-style modes whose items don't have real thumbnail images. Modes only. |
 | `getResults` | `function` | No | `(subQuery, signal?, tokens?, modeContext?) => Promise<Array>` — if provided, this entry is a mode. The optional fourth argument is the current [mode context](#mode-context) stack. |
 | `onResultSelect` | `function` | No | `(item) => { action, payload }` — handles selection of a result item. |
 | `headerLabel` | `function` | No | `(modeContext) => string \| null` — replaces the input placeholder with a custom label. Return `null` to fall back to the regular placeholder — useful for showing a breadcrumb only when the mode is drilled in. Typically used with [mode context](#mode-context). Modes only. |

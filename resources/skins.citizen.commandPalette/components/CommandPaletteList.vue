@@ -22,6 +22,7 @@
 				:key="item.id"
 				v-bind="getListItemBindings( item, getGlobalIndex( sectionIndex, localIndex ) )"
 				:ref="( el ) => setItemRef && setItemRef( el, getGlobalIndex( sectionIndex, localIndex ) )"
+				:compact="compact"
 				@change="( property, value ) => onItemChange( item.id, property, value )"
 				@select="( result ) => $emit( 'select', result )"
 				@action="( action ) => $emit( 'action', action )"
@@ -58,6 +59,10 @@ module.exports = exports = defineComponent( {
 			type: Function,
 			required: false,
 			default: null
+		},
+		compact: {
+			type: Boolean,
+			default: false
 		}
 	},
 	emits: [ 'select', 'action', 'hover' ],
