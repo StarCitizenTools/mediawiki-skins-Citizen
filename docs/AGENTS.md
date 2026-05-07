@@ -22,3 +22,4 @@ Auto-fix: `npm run lint:fix`.
 - Use LESS instead of CSS.
 - Use VitePress CSS variables when applicable.
 - VitePress config files under `.vitepress/` use TypeScript.
+- To suppress an oxlint warning on a single line, use `// oxlint-disable-next-line rule-name`. Old `// eslint-disable-*` comments are inert under oxlint and should be removed when encountered.

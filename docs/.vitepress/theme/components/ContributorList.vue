@@ -37,10 +37,8 @@ const { body } = toRefs( props );
 
 const nonExistent = ref<Set<string>>( new Set() );
 
-const contributors = computed( () => {
-	return extractContributors( body.value )
-		.filter( user => !nonExistent.value.has( user ) );
-} );
+const contributors = computed( () => extractContributors( body.value )
+	.filter( user => !nonExistent.value.has( user ) ) );
 
 const listFormatter = new Intl.ListFormat( 'en', {
 	style: 'long',

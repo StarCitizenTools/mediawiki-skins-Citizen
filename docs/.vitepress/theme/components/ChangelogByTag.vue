@@ -17,7 +17,6 @@
 				'en', { dateStyle: 'medium' }
 			) }}
 		</time>
-		<!-- eslint-disable-next-line vue/no-v-html -->
 		<div v-html="renderMarkdown( release.body )" />
 		<ContributorList :body="release.body!" />
 	</div>
@@ -46,8 +45,7 @@ const release = computed( () => changelogs.find( r => r.tag_name === tag.value )
 const latestStableTag = computed( () => {
 	const stable = changelogs
 		.filter( r => !r.draft && !r.prerelease )
-		.slice()
-		.sort( ( a, b ) =>
+		.toSorted( ( a, b ) =>
 			new Date( b.published_at! ).getTime() - new Date( a.published_at! ).getTime()
 		);
 	return stable[ 0 ]?.tag_name;

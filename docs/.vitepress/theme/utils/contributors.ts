@@ -7,5 +7,5 @@ export function extractContributors( text: string ): string[] {
 }
 
 export function linkContributors( text: string ): string {
-	return text.replace( CONTRIBUTORS_REGEX, '[@$2](https://github.com/$2)' );
+	return text.replaceAll( CONTRIBUTORS_REGEX, '[@$2](https://github.com/$2)' );
 }
