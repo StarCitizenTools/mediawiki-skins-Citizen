@@ -1,19 +1,23 @@
 <template>
-	<div
-		class="citizen-command-palette-detail-panel"
-		aria-live="polite"
-	>
-		<dl class="citizen-command-palette-detail-panel__pairs">
+	<div class="citizen-command-palette-detail-panel" aria-live="polite">
+		<slot name="header"></slot>
+		<dl
+			v-if="detail.pairs && detail.pairs.length > 0"
+			class="citizen-command-palette-detail-panel__pairs"
+		>
 			<div
 				v-for="( pair, index ) in detail.pairs"
-				:key="index"
+				:key="pair.key || index"
 				class="citizen-command-palette-detail-panel__pair"
 			>
 				<dt class="citizen-command-palette-detail-panel__label">
 					{{ pair.label }}
 				</dt>
 				<dd class="citizen-command-palette-detail-panel__value">
-					{{ pair.value }}
+					<!-- eslint-disable-next-line mediawiki/no-vue-dynamic-i18n -- slot name is the consumer's pair key, not an i18n message -->
+					<slot :name="pair.key || `pair-${index}`" :pair="pair">
+						{{ pair.value }}
+					</slot>
 				</dd>
 			</div>
 		</dl>
@@ -48,6 +52,12 @@ module.exports = exports = defineComponent( {
 		flex-direction: column;
 		gap: var( --space-sm );
 		margin: 0;
+	}
+
+	&__pair {
+		display: flex;
+		flex-direction: column;
+		gap: var( --space-xs );
 	}
 
 	&__label {

@@ -30,7 +30,11 @@
  *
  * @typedef {Object} CommandPaletteDetailPair
  * @property {string} label The property/field name.
- * @property {string} value The property/field value.
+ * @property {string} [value] The property/field value. Used as a fallback
+ *   when no slot is provided for this pair.
+ * @property {string} [key] Optional slot name. When set, the detail panel
+ *   renders the named slot in place of `value`, allowing rich content like
+ *   chips, lists, or other components.
  */
 
 /**
