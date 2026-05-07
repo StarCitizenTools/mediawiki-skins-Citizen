@@ -1,37 +1,37 @@
-import { defineConfig } from 'vitepress';
-import pkg from '../../package.json';
-import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons';
-import { tabsMarkdownPlugin } from 'vitepress-plugin-tabs';
+import { defineConfig } from "vitepress";
+import pkg from "../../package.json";
+import { groupIconMdPlugin, groupIconVitePlugin } from "vitepress-plugin-group-icons";
+import { tabsMarkdownPlugin } from "vitepress-plugin-tabs";
 
-export default defineConfig( {
-	base: process.env.BASE_URL ?? '/',
-	title: 'Citizen',
-	description: 'Documentation for Citizen Skin',
-	srcDir: 'src',
+export default defineConfig({
+	base: process.env.BASE_URL ?? "/",
+	title: "Citizen",
+	description: "Documentation for Citizen Skin",
+	srcDir: "src",
 	cleanUrls: true,
 	lastUpdated: true,
 	sitemap: {
-		hostname: 'https://starcitizentools.github.io/mediawiki-skins-Citizen/',
+		hostname: "https://starcitizentools.github.io/mediawiki-skins-Citizen/",
 	},
 	themeConfig: {
-		logo: '/img/layout.svg',
+		logo: "/img/layout.svg",
 		nav: [
 			{
-				text: 'Guide',
-				link: '/guide/introduction',
+				text: "Guide",
+				link: "/guide/introduction",
 			},
 			{
 				text: pkg.version,
 				items: [
 					{
-						text: 'Releases',
-						link: 'https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases',
-						target: '_blank',
+						text: "Releases",
+						link: "https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases",
+						target: "_blank",
 					},
 					{
-						text: 'Changelogs',
-						link: '/changelogs/',
-						activeMatch: '/changelogs/',
+						text: "Changelogs",
+						link: "/changelogs/",
+						activeMatch: "/changelogs/",
 					},
 				],
 			},
@@ -39,90 +39,90 @@ export default defineConfig( {
 
 		sidebar: [
 			{
-				text: 'Guide',
+				text: "Guide",
 				collapsed: false,
 				items: [
 					{
-						text: 'Introduction',
-						link: '/guide/introduction',
+						text: "Introduction",
+						link: "/guide/introduction",
 					},
 					{
-						text: 'Installation',
-						link: '/guide/installation',
+						text: "Installation",
+						link: "/guide/installation",
 					},
 				],
 			},
 			{
-				text: 'Configuration',
+				text: "Configuration",
 				collapsed: false,
 				items: [
 					{
-						text: 'Skin',
-						link: '/config/',
+						text: "Skin",
+						link: "/config/",
 					},
 					{
-						text: 'Extensions',
-						link: '/config/extensions',
+						text: "Extensions",
+						link: "/config/extensions",
 					},
 				],
 			},
 			{
-				text: 'Customization',
+				text: "Customization",
 				collapsed: false,
 				items: [
 					{
-						text: 'Theming',
-						link: '/customization/theming',
+						text: "Theming",
+						link: "/customization/theming",
 					},
 					{
-						text: 'Recipes',
-						link: '/customization/recipes',
+						text: "Recipes",
+						link: "/customization/recipes",
 					},
 					{
-						text: 'Features',
+						text: "Features",
 						collapsed: true,
-						link: '/customization/features',
+						link: "/customization/features",
 						items: [
 							{
-								text: 'Command palette',
-								link: '/customization/command-palette',
+								text: "Command palette",
+								link: "/customization/command-palette",
 							},
 							{
-								text: 'Performance mode',
-								link: '/customization/performance-mode',
+								text: "Performance mode",
+								link: "/customization/performance-mode",
 							},
 							{
-								text: 'Preferences',
-								link: '/customization/preferences',
+								text: "Preferences",
+								link: "/customization/preferences",
 							},
 						],
 					},
 					{
-						text: 'Hooks',
-						link: '/customization/hooks',
+						text: "Hooks",
+						link: "/customization/hooks",
 					},
 				],
 			},
 			{
-				text: 'Community',
+				text: "Community",
 				collapsed: false,
 				items: [
 					{
-						text: 'Showcase',
-						link: '/community/showcase',
+						text: "Showcase",
+						link: "/community/showcase",
 					},
 				],
 			},
 			{
-				text: 'Project',
+				text: "Project",
 				items: [
 					{
-						text: 'Changelogs',
-						link: '/changelogs/',
+						text: "Changelogs",
+						link: "/changelogs/",
 					},
 					{
-						text: 'Contribute',
-						link: '/contribute/',
+						text: "Contribute",
+						link: "/contribute/",
 					},
 				],
 			},
@@ -130,50 +130,52 @@ export default defineConfig( {
 
 		socialLinks: [
 			{
-				icon: 'github',
-				link: 'https://github.com/StarCitizenTools/mediawiki-skins-Citizen',
-				ariaLabel: 'GitHub repository',
+				icon: "github",
+				link: "https://github.com/StarCitizenTools/mediawiki-skins-Citizen",
+				ariaLabel: "GitHub repository",
 			},
 			{
-				icon: 'discord',
-				link: 'https://discord.gg/XcKwqyD4sc',
-				ariaLabel: 'Discord server',
+				icon: "discord",
+				link: "https://discord.gg/XcKwqyD4sc",
+				ariaLabel: "Discord server",
 			},
 			{
 				icon: {
 					// From codex-icons
 					svg: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><!----><g><g xmlns:xlink="http://www.w3.org/1999/xlink" transform="translate(10 10)"><g id="cdx-icon-logo-MediaWiki-b"><path id="cdx-icon-logo-MediaWiki-a" d="M0 10c-2.9-3.3-.8-5.9 0-5.9S2.9 6.7 0 10"></path><use xlink:href="#cdx-icon-logo-MediaWiki-a" transform="rotate(15)"></use><use xlink:href="#cdx-icon-logo-MediaWiki-a" transform="rotate(30)"></use><use xlink:href="#cdx-icon-logo-MediaWiki-a" transform="rotate(45)"></use><use xlink:href="#cdx-icon-logo-MediaWiki-a" transform="rotate(60)"></use><use xlink:href="#cdx-icon-logo-MediaWiki-a" transform="rotate(75)"></use></g><use xlink:href="#cdx-icon-logo-MediaWiki-b" transform="rotate(90)"></use><use xlink:href="#cdx-icon-logo-MediaWiki-b" transform="rotate(180)"></use><use xlink:href="#cdx-icon-logo-MediaWiki-b" transform="rotate(270)"></use></g></g></svg>',
 				},
-				link: 'https://www.mediawiki.org/wiki/Skin:Citizen',
-				ariaLabel: 'MediaWiki skin page',
+				link: "https://www.mediawiki.org/wiki/Skin:Citizen",
+				ariaLabel: "MediaWiki skin page",
 			},
 		],
 
-		search: process.env.ALGOLIA_APP_ID && process.env.ALGOLIA_API_KEY && process.env.ALGOLIA_INDEX_NAME ?
-			{
-				provider: 'algolia',
-				options: {
-					appId: process.env.ALGOLIA_APP_ID,
-					apiKey: process.env.ALGOLIA_API_KEY,
-					indexName: process.env.ALGOLIA_INDEX_NAME,
-				},
-			} :
-			{ provider: 'local' },
+		search:
+			process.env.ALGOLIA_APP_ID &&
+			process.env.ALGOLIA_API_KEY &&
+			process.env.ALGOLIA_INDEX_NAME
+				? {
+						provider: "algolia",
+						options: {
+							appId: process.env.ALGOLIA_APP_ID,
+							apiKey: process.env.ALGOLIA_API_KEY,
+							indexName: process.env.ALGOLIA_INDEX_NAME,
+						},
+					}
+				: { provider: "local" },
 
 		editLink: {
-			pattern: 'https://github.com/StarCitizenTools/mediawiki-skins-Citizen/edit/main/docs/src/:path',
-			text: 'Help us improve this page',
+			pattern:
+				"https://github.com/StarCitizenTools/mediawiki-skins-Citizen/edit/main/docs/src/:path",
+			text: "Help us improve this page",
 		},
 	},
 	markdown: {
-		config: ( md ) => {
-			md.use( groupIconMdPlugin );
-			md.use( tabsMarkdownPlugin );
+		config: (md) => {
+			md.use(groupIconMdPlugin);
+			md.use(tabsMarkdownPlugin);
 		},
 	},
 	vite: {
-		plugins: [
-			groupIconVitePlugin(),
-		],
+		plugins: [groupIconVitePlugin()],
 	},
-} );
+});

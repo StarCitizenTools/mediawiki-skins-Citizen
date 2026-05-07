@@ -8,8 +8,9 @@ This is the VitePress documentation site for the Citizen MediaWiki skin. Content
 | --- | --- |
 | `*.md` | `npm run lint:md` |
 | `*.ts`, `*.js`, `*.vue` | `npm run lint:js` |
+| `*.ts`, `*.js`, `*.vue` formatting | `npm run format:check` (or `npm run format` to fix) |
 
-Auto-fix: `npm run lint:fix`.
+`npm run lint` runs all of the above (lint:js, lint:md, and format:check). Auto-fix: `npm run lint:fix`.
 
 ## Writing style
 
