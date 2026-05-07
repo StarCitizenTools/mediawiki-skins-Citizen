@@ -26,16 +26,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, toRefs } from "vue";
+import { computed, ref } from "vue";
 import { extractContributors } from "../utils/contributors";
 
-const props = defineProps<{ body: string }>();
-const { body } = toRefs(props);
+const { body } = defineProps<{ body: string }>();
 
 const nonExistent = ref<Set<string>>(new Set());
 
 const contributors = computed(() =>
-	extractContributors(body.value).filter((user) => !nonExistent.value.has(user)),
+	extractContributors(body).filter((user) => !nonExistent.value.has(user)),
 );
 
 const listFormatter = new Intl.ListFormat("en", {

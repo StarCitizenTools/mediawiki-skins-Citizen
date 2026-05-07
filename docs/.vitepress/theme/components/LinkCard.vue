@@ -20,16 +20,11 @@
 </template>
 
 <script setup lang="ts">
-withDefaults(
-	defineProps<{
-		href: string;
-		title: string;
-		target?: string;
-	}>(),
-	{
-		target: "_blank",
-	},
-);
+const { target = "_blank" } = defineProps<{
+	href: string;
+	title: string;
+	target?: string;
+}>();
 </script>
 
 <style scoped>

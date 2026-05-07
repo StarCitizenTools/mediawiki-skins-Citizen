@@ -22,13 +22,12 @@
 
 <script setup lang="ts">
 import MarkdownIt from "markdown-it";
-import { computed, toRefs } from "vue";
+import { computed } from "vue";
 import { data as changelogs } from "../data/changelogs.data";
 import { formatChangelog } from "../utils/formatChangelog.ts";
 import ContributorList from "./ContributorList.vue";
 
-const props = defineProps<{ tag: string }>();
-const { tag } = toRefs(props);
+const { tag } = defineProps<{ tag: string }>();
 
 const md = new MarkdownIt({ html: true });
 
@@ -36,7 +35,7 @@ function renderMarkdown(string: string | null | undefined) {
 	return formatChangelog(md, string);
 }
 
-const release = computed(() => changelogs.find((r) => r.tag_name === tag.value));
+const release = computed(() => changelogs.find((r) => r.tag_name === tag));
 const latestStableTag = computed(() => {
 	const stable = changelogs
 		.filter((r) => !r.draft && !r.prerelease)
@@ -45,7 +44,7 @@ const latestStableTag = computed(() => {
 		);
 	return stable[0]?.tag_name;
 });
-const isLatest = computed(() => latestStableTag.value === tag.value);
+const isLatest = computed(() => latestStableTag.value === tag);
 </script>
 
 <style lang="less" scoped>
