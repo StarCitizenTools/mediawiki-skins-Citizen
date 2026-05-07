@@ -24,8 +24,20 @@ The palette supports two kinds of entries:
 | `/user:` | `@` | Mode | Search for a user. |
 | `/cat:` | `#` | Mode | Find a category, then step inside to see its subcategories and pages. |
 | `/smw:` | - | Mode | Query pages with Semantic MediaWiki Ask syntax. Only available when SMW is installed. |
+| `/help` | `?` | Command | Open the help overlay to browse every available mode. |
 
-Single-character aliases like `@`, `>`, and `:` can be typed directly to enter the mode instantly, without needing the `/` prefix.
+Single-character aliases like `@`, `>`, `:`, and `?` can be typed directly to enter the mode or trigger the command instantly, without needing the `/` prefix.
+
+### Help overlay
+
+Press `?` at an empty input to open the help overlay. The footer surfaces the same `?` shortcut as a contextual hint whenever pressing it would do something. While help is open, the header swaps to a help indicator with a back button, and <kbd>Esc</kbd> closes help before any other action. Help is a transient layer: opening it preserves your active mode, query, and any drilled-in mode context, so you can peek and bounce back to where you were.
+
+What you see depends on where you are:
+
+- **At root**: a list of every registered mode on the left and a detail pane on the right. As you arrow through the list, the right pane shows the highlighted mode's icon, name, short description, triggers, and a longer description. Selecting a mode enters it and closes help.
+- **Inside a mode**: the same detail pane fills the dialog, describing whichever mode you're currently in.
+
+The overlay focuses on *what each mode is for* — keyboard shortcuts live in the palette footer, where they update contextually as you move around.
 
 ### Mode behavior
 
@@ -34,7 +46,7 @@ When you enter a mode:
 - The search icon changes to the mode's icon
 - The placeholder updates (e.g., "Search users")
 - A back button appears to exit the mode
-- Escape follows a three-level pattern: **clear query** → **exit mode** → **close palette**
+- Escape follows the pattern: **close help (if open)** → **clear query** → **exit mode** → **close palette**
 
 ### Tokenized input
 
@@ -108,6 +120,7 @@ Every entry must have at minimum an `id`, `triggers`, and `description`. If the 
 | `emptyState` | `Object` | No | `{ title, description, icon }` — content shown when the mode is active with no query. Falls back to default search messaging. Modes only. |
 | `noResults` | `function` | No | `(query, tokens?) => { title, description, icon }` — returns content shown when a query produces no results. Falls back to default no-results messaging. Modes only. |
 | `tokenPattern` | `Object` | No | Token detection pattern for auto-tokenization. See [token patterns](#token-patterns). Modes only. |
+| `help` | `Object` | No | Content surfaced by the help overlay when this entry is active. See [help content](#help-content). |
 
 ### Action results
 
@@ -120,6 +133,7 @@ Every entry must have at minimum an `id`, `triggers`, and `description`. If the 
 | `{ action: 'exitWithQuery', payload: query }` | Query string | Exit the current mode and set the query string. |
 | `{ action: 'updateQuery', payload: query }` | Query string | Update the query within the current mode without exiting. |
 | `{ action: 'pushModeContext', payload: any }` | Any | Step the active mode into a new level. Appends to the [mode context](#mode-context) stack and clears the input. |
+| `{ action: 'toggleHelp' }` | - | Toggle the help overlay. |
 
 ### Token patterns
 
@@ -133,6 +147,24 @@ Modes can declare a `tokenPattern` to enable auto-tokenization — when the user
 | `match` | `function` | `(text) => { label, raw } \| null` — tests whether the text starts with a tokenizable pattern. Returns `label` (display text) and `raw` (the original text) on match, or `null`. |
 
 Tokens are passed to `getResults` and `noResults` so modes can incorporate them into queries. For example, the SMW mode reconstructs the full Ask query from its token chips plus any free text.
+
+### Help content
+
+The optional `help` field declares the long-form description shown in the help overlay's detail pane, below the triggers.
+
+```js
+help: {
+    description: 'my-extension-mode-description-help'
+}
+```
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `description` | `string` | An i18n message key. The message is rendered with `mw.message().parse()`, so inline markup like `<code>` and `<kbd>` works. |
+
+The mode's existing one-line `description` still appears beside the icon at the top of the help summary; `help.description` is the longer prose continuation that explains how the mode actually behaves — drill-down rules, chip behaviour, anything a user can't infer from the short label.
+
+Keyboard shortcuts live in the palette footer rather than here, so the help overlay can stay focused on what a mode is *for*.
 
 ### Mode context
 
