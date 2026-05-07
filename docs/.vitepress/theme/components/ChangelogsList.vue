@@ -22,7 +22,6 @@
 		<time :datetime="release.published_at!">
 			{{ dateFormatter.format( new Date( release.published_at! ) ) }}
 		</time>
-		<!-- eslint-disable-next-line vue/no-v-html -->
 		<div v-html="renderMarkdown( release.body )" />
 		<ContributorList :body="release.body!" />
 	</div>

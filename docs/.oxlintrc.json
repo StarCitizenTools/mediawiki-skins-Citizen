@@ -1,0 +1,74 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"plugins": [
+		"typescript",
+		"vue",
+		"import",
+		"unicorn",
+		"promise",
+		"node"
+	],
+	"categories": {
+		"correctness": "error",
+		"suspicious": "error",
+		"perf": "warn",
+		"pedantic": "warn",
+		"style": "warn",
+		"restriction": "off",
+		"nursery": "off"
+	},
+	"options": {
+		"typeAware": true
+	},
+	"ignorePatterns": [
+		"node_modules",
+		".vitepress/cache",
+		".vitepress/dist"
+	],
+	"rules": {
+		// reason: VitePress config and Octokit options use intentionally grouped (not alphabetized) keys; sorting scrambles logical structure (nav/sidebar/socialLinks/search/editLink) into noise
+		"sort-keys": "off",
+		// reason: import order in this codebase groups by source (deps, then local) rather than alphabetizing; alphabetic sort fights that grouping
+		"sort-imports": "off",
+		// reason: the codebase uses function declarations for top-level helpers (hoisted, named in stack traces); switching to expressions is pure churn
+		"func-style": "off",
+		// reason: named exports are used throughout for constants and utility helpers; default exports would force renaming on every consumer
+		"import/no-named-export": "off",
+		// reason: contradicts our use of named exports for utilities — keeping single-named-export files named is intentional
+		"import/prefer-default-export": "off",
+		// reason: contradicts our use of named exports — multiple grouped exports is fine
+		"import/group-exports": "off",
+		// reason: VitePress defineConfig takes a plain object literal as default export; wrapping in a named const just to satisfy the rule is noise
+		"import/no-anonymous-default-export": "off",
+		// reason: contradicts the existing layout in formatChangelog.ts where helpers follow the public export; reordering hurts readability
+		"import/exports-last": "off",
+		// reason: side-effect-only imports (CSS, LESS, virtual modules) are required by VitePress and bundlers; assigning them to a variable would be dead code
+		"import/no-unassigned-import": "off",
+		// reason: regexes here only target ASCII (markdown headings, hex shas, CVE IDs); the 'u' flag adds no behavior and changes none of the matches
+		"require-unicode-regexp": "off",
+		// reason: numbers like 100 (per_page), 0 (first element), 2 (regex group index) are self-explanatory in context; extracting constants for them adds noise
+		"no-magic-numbers": "off",
+		// reason: short identifiers like `r`, `md`, `a`, `b` are conventional in callbacks and well-scoped; enforcing a min length is churn
+		"id-length": "off",
+		// reason: Vue SFC filenames follow PascalCase by Vue convention (matches component name); kebab-case would diverge from the rest of the project
+		"unicorn/filename-case": "off",
+		// reason: ternary expressions are used idiomatically for the search-provider toggle and other config branches; a guard-style rewrite would be less readable
+		"no-ternary": "off",
+		// reason: `!!value` is a concise, idiomatic boolean coercion in this codebase
+		"no-implicit-coercion": "off",
+		// reason: `const x = obj.prop` is clearer than destructuring when only one property is read
+		"prefer-destructuring": "off",
+		// reason: `() => { return expr; }` blocks are sometimes clearer than implicit-return arrows, especially with multi-line expressions
+		"arrow-body-style": "off",
+		// reason: default parameters only trigger on `undefined`; the existing `body ?? fallback` pattern handles `null` too, which the type signature allows
+		"unicorn/prefer-default-parameters": "off",
+		// reason: `arr.slice()` is more familiar than `[...arr]` for shallow-copying before in-place ops; behavior is identical
+		"unicorn/prefer-spread": "off",
+		// reason: `defineProps` + `toRefs` is the destructure-with-reactivity pattern this codebase uses; the rule pushes a different style without semantic improvement
+		"vue/define-props-destructuring": "off",
+		// reason: enforcing readonly on every parameter (including framework-typed ones like MarkdownIt and Octokit response items) generates dozens of warnings without catching real mutation bugs
+		"typescript/prefer-readonly-parameter-types": "off",
+		// reason: `process.env.X && process.env.Y && ...` is idiomatic for "all are set"; the rule wants explicit `!== undefined && !== ''` chains which are noisier without catching bugs
+		"typescript/strict-boolean-expressions": "off"
+	}
+}

@@ -15,7 +15,6 @@ export default defineLoader( {
 		const releases = await octokit.paginate( octokit.repos.listReleases, {
 			owner: GITHUB_OWNER,
 			repo: GITHUB_REPO,
-			// eslint-disable-next-line camelcase
 			per_page: 100,
 		} );
 
