@@ -30,8 +30,8 @@
 		"sort-keys": "off",
 		// reason: import order in this codebase groups by source (deps, then local) rather than alphabetizing; alphabetic sort fights that grouping
 		"sort-imports": "off",
-		// reason: the codebase uses function declarations for top-level helpers (hoisted, named in stack traces); switching to expressions is pure churn
-		"func-style": "off",
+		// Enforce function declarations consistently — the codebase already uses them everywhere for top-level helpers
+		"func-style": ["warn", "declaration"],
 		// reason: named exports are used throughout for constants and utility helpers; default exports would force renaming on every consumer
 		"import/no-named-export": "off",
 		// reason: contradicts our use of named exports for utilities — keeping single-named-export files named is intentional
@@ -50,22 +50,16 @@
 		"no-magic-numbers": "off",
 		// reason: short identifiers like `r`, `md`, `a`, `b` are conventional in callbacks and well-scoped; enforcing a min length is churn
 		"id-length": "off",
-		// reason: Vue SFC filenames follow PascalCase by Vue convention (matches component name); kebab-case would diverge from the rest of the project
-		"unicorn/filename-case": "off",
+		// Vue SFCs use PascalCase, TS files use camelCase — allow both
+		"unicorn/filename-case": ["warn", { "cases": { "camelCase": true, "pascalCase": true } }],
 		// reason: ternary expressions are used idiomatically for the search-provider toggle and other config branches; a guard-style rewrite would be less readable
 		"no-ternary": "off",
 		// reason: `!!value` is a concise, idiomatic boolean coercion in this codebase
 		"no-implicit-coercion": "off",
 		// reason: `const x = obj.prop` is clearer than destructuring when only one property is read
 		"prefer-destructuring": "off",
-		// reason: `() => { return expr; }` blocks are sometimes clearer than implicit-return arrows, especially with multi-line expressions
-		"arrow-body-style": "off",
 		// reason: default parameters only trigger on `undefined`; the existing `body ?? fallback` pattern handles `null` too, which the type signature allows
 		"unicorn/prefer-default-parameters": "off",
-		// reason: `arr.slice()` is more familiar than `[...arr]` for shallow-copying before in-place ops; behavior is identical
-		"unicorn/prefer-spread": "off",
-		// reason: `defineProps` + `toRefs` is the destructure-with-reactivity pattern this codebase uses; the rule pushes a different style without semantic improvement
-		"vue/define-props-destructuring": "off",
 		// reason: enforcing readonly on every parameter (including framework-typed ones like MarkdownIt and Octokit response items) generates dozens of warnings without catching real mutation bugs
 		"typescript/prefer-readonly-parameter-types": "off",
 		// reason: `process.env.X && process.env.Y && ...` is idiomatic for "all are set"; the rule wants explicit `!== undefined && !== ''` chains which are noisier without catching bugs

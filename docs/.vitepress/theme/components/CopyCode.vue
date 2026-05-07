@@ -17,7 +17,7 @@
 import { ref } from "vue";
 import { withBase } from "vitepress";
 
-const props = defineProps<{
+const { code } = defineProps<{
 	code: string;
 }>();
 
@@ -32,7 +32,7 @@ async function copy() {
 		if (!clipboard) {
 			throw new Error("Clipboard API not supported");
 		}
-		await clipboard.writeText(props.code);
+		await clipboard.writeText(code);
 		copied.value = true;
 		setTimeout(() => {
 			copied.value = false;
