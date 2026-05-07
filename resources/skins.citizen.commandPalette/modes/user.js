@@ -120,6 +120,9 @@ function createUserCommand( ApiConstructor ) {
 				icon: cdxIconUserAvatar
 			};
 		},
+		help: {
+			description: 'citizen-command-palette-mode-user-description-help'
+		},
 		getResults: getUserResults,
 		async onResultSelect( item ) {
 			return getNavigationAction( item );

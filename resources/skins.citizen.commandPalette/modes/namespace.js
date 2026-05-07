@@ -126,6 +126,9 @@ module.exports = {
 		activeIn: 'root',
 		match: matchNamespacePrefix
 	},
+	help: {
+		description: 'citizen-command-palette-mode-namespace-description-help'
+	},
 	getResults: getNamespaceResults,
 	/**
 	 * Handles selection of a namespace result item.

@@ -239,6 +239,9 @@ function createCategoryMode( ApiConstructor ) {
 				icon: cdxIconTag
 			};
 		},
+		help: {
+			description: 'citizen-command-palette-mode-category-description-help'
+		},
 		getResults,
 		onResultSelect,
 		headerLabel
