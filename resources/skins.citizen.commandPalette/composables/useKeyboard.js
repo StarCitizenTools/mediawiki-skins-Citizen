@@ -24,6 +24,9 @@ const { computed, nextTick } = require( 'vue' );
  * @param {Function} [deps.onRemoveToken] Called with index to remove a selected token chip.
  * @param {import('vue').Ref<Array>} [deps.activeModeContext] Active mode's drill-down stack ref.
  * @param {Function} [deps.onPopModeContext] Called to pop the last entry from the active mode's context stack.
+ * @param {import('vue').Ref<boolean>} [deps.helpVisible] Whether the help overlay is currently open.
+ * @param {Function} [deps.onToggleHelp] Called to toggle the help overlay.
+ * @param {Function} [deps.onCloseHelp] Called to close the help overlay.
  * @return {Object} Keyboard handler and focus management methods.
  */
 function useKeyboard( deps ) {
@@ -111,13 +114,29 @@ function useKeyboard( deps ) {
 			} );
 		}
 
+		// Show the help hint only when "?" would actually open help — empty
+		// input, no tokens, help not already visible. Mirrors the gate in
+		// handleInputZone so the hint appears exactly when the key fires.
+		const helpAlreadyOpen = deps.helpVisible && deps.helpVisible.value;
+		const inputEmpty = !deps.query.value &&
+			( !deps.tokens || deps.tokens.value.length === 0 );
+		if ( !helpAlreadyOpen && inputEmpty && deps.onToggleHelp ) {
+			hints.push( {
+				msgKey: 'citizen-command-palette-command-help-label',
+				kbd: '?'
+			} );
+		}
+
 		return hints;
 	}
 
 	/**
-	 * Mirrors the three-level logic in handleEscape(); keep in sync.
+	 * Mirrors the four-level logic in handleEscape(); keep in sync.
 	 */
 	const escHintMsgKey = computed( () => {
+		if ( deps.helpVisible && deps.helpVisible.value ) {
+			return 'citizen-command-palette-keyhint-close';
+		}
 		if ( deps.query.value ) {
 			return 'citizen-command-palette-keyhint-clear';
 		} else if ( deps.activeMode.value ) {
@@ -143,9 +162,15 @@ function useKeyboard( deps ) {
 	} );
 
 	/**
-	 * Three-level Escape: clear query → exit mode → close palette.
+	 * Four-level Escape: close help → clear query → exit mode → close palette.
+	 * Help takes precedence so users can peek at the overlay and dismiss it
+	 * without losing query/mode state.
 	 */
 	function handleEscape() {
+		if ( deps.helpVisible && deps.helpVisible.value && deps.onCloseHelp ) {
+			deps.onCloseHelp();
+			return;
+		}
 		if ( deps.query.value ) {
 			deps.onClearQuery();
 		} else if ( deps.activeMode.value ) {
@@ -241,6 +266,54 @@ function useKeyboard( deps ) {
 	 * @param {KeyboardEvent} event The keydown event.
 	 */
 	function handleInputZone( event ) {
+		// While help is visible, only navigation, selection, and dismissal are
+		// allowed. Other keys are swallowed so they don't enter modes, alter
+		// the query, or pop the mode-context stack underneath the overlay.
+		const helpIsVisible = deps.helpVisible && deps.helpVisible.value;
+		if ( helpIsVisible ) {
+			switch ( event.key ) {
+				case 'ArrowDown':
+					event.preventDefault();
+					navigateList( 'next' );
+					return;
+				case 'ArrowUp':
+					event.preventDefault();
+					navigateList( 'previous' );
+					return;
+				case 'Home':
+					event.preventDefault();
+					navigateList( 'first' );
+					return;
+				case 'End':
+					event.preventDefault();
+					navigateList( 'last' );
+					return;
+				case 'Enter':
+					event.preventDefault();
+					if ( listNav.highlightedIndex.value >= 0 ) {
+						deps.onSelect( deps.items.value[ listNav.highlightedIndex.value ] );
+					}
+					return;
+				case 'Escape':
+					event.preventDefault();
+					handleEscape();
+					return;
+				case '?':
+					if ( deps.onToggleHelp ) {
+						event.preventDefault();
+						deps.onToggleHelp();
+						return;
+					}
+					break;
+				default:
+					// Swallow all other keys while help is open.
+					if ( event.key.length === 1 || event.key === 'Backspace' ) {
+						event.preventDefault();
+					}
+					return;
+			}
+		}
+
 		// Typing with a chip selected: deselect the chip, let the character go to input
 		if (
 			deps.selectedTokenIndex &&
@@ -249,6 +322,19 @@ function useKeyboard( deps ) {
 			event.key.length === 1
 		) {
 			deps.onSelectToken( -1 );
+		}
+
+		// "?" toggles the help overlay when there is no in-progress input. Runs
+		// regardless of activeMode so users can peek at help mid-mode.
+		if (
+			event.key === '?' &&
+			!deps.query.value &&
+			( !deps.tokens || deps.tokens.value.length === 0 ) &&
+			deps.onToggleHelp
+		) {
+			event.preventDefault();
+			deps.onToggleHelp();
+			return;
 		}
 
 		if (

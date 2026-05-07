@@ -75,6 +75,18 @@
  */
 
 /**
+ * Optional help content for a mode or command, surfaced by the in-palette
+ * help overlay. The description is an i18n message key whose body is rendered
+ * via `mw.message( key ).parse()` — so it may contain inline HTML such as
+ * `<kbd>`, `<code>`, and `<strong>` for keyboard hints or examples. Used as a
+ * longer-form continuation of the mode's one-line `description`. Keyboard
+ * shortcuts live in the palette footer rather than here.
+ *
+ * @typedef {Object} PaletteHelp
+ * @property {string} [description] Localised i18n message key whose parsed (HTML) body is rendered in the help overlay.
+ */
+
+/**
  * A mode switches the palette into a different search/browse context.
  *
  * @typedef {Object} PaletteMode
@@ -87,6 +99,7 @@
  * @property {StateContent} [emptyState] Content shown when the mode is active with no query. Falls back to default search messaging.
  * @property {function(string, Array?): StateContent} [noResults] Returns content shown when query produces no results. Receives the query string and optional tokens array. Falls back to default no-results messaging.
  * @property {TokenPattern|TokenPattern[]} [tokenPattern] Optional token detection pattern(s) for auto-tokenization.
+ * @property {PaletteHelp} [help] Optional content surfaced by the help overlay when this mode is active.
  * @property {function(string, AbortSignal?, Array?, Array?): Promise<CommandPaletteItem[]>} getResults Returns result items for the given sub-query. Optional signal for abort, optional tokens array, optional mode context array (only meaningful for modes that opt in to drill-down state).
  * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection of a result item.
  * @property {function(Array): string} [headerLabel] Optional breadcrumb label rendered in the header. Receives the current modeContext stack. Falls back to the input placeholder when absent.
@@ -112,6 +125,7 @@
  * @property {string[]} triggers Prefixes that activate the command.
  * @property {string} [label] Display label for this command in the command list.
  * @property {string} [description] Short explanation shown in the command list.
+ * @property {PaletteHelp} [help] Optional content surfaced by the help overlay.
  * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection — executes the command action.
  */
 
@@ -149,6 +163,14 @@
  */
 
 /**
+ * Action to toggle the in-palette help overlay.
+ *
+ * @typedef {Object} CommandPaletteToggleHelpAction
+ * @property {'toggleHelp'} action
+ * @property {undefined} [payload] - Payload is not applicable for 'toggleHelp'.
+ */
+
+/**
  * Action indicating no operation or that the action was self-contained.
  *
  * @typedef {Object} CommandPaletteNoneAction
@@ -160,7 +182,7 @@
  * Describes the action the UI should take after an item selection is handled.
  * This is a discriminated union based on the 'action' property.
  *
- * @typedef {CommandPaletteNavigateAction | CommandPaletteExitWithQueryAction | CommandPaletteUpdateQueryAction | CommandPalettePushModeContextAction | CommandPaletteNoneAction} CommandPaletteActionResult
+ * @typedef {CommandPaletteNavigateAction | CommandPaletteExitWithQueryAction | CommandPaletteUpdateQueryAction | CommandPalettePushModeContextAction | CommandPaletteToggleHelpAction | CommandPaletteNoneAction} CommandPaletteActionResult
  */
 
 /**

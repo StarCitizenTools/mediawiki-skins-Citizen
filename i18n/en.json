@@ -124,12 +124,18 @@
 	"citizen-command-palette-command-action-label": "Actions",
 	"citizen-command-palette-command-category-description": "Search and explore categories",
 	"citizen-command-palette-command-category-label": "Categories",
+	"citizen-command-palette-command-help-description": "Browse every available mode",
+	"citizen-command-palette-command-help-label": "Help",
 	"citizen-command-palette-command-ns-description": "Search for a page in a specific namespace",
 	"citizen-command-palette-command-ns-label": "Namespaces",
 	"citizen-command-palette-command-smw-description": "Search using a Semantic MediaWiki query",
 	"citizen-command-palette-command-smw-label": "Semantic MediaWiki query",
 	"citizen-command-palette-command-user-description": "Search for a user",
 	"citizen-command-palette-command-user-label": "Users",
+
+	"citizen-command-palette-help-section-description": "Description",
+	"citizen-command-palette-help-section-modes": "Modes",
+	"citizen-command-palette-help-section-triggers": "Triggers",
 
 	"citizen-command-palette-mode-action-placeholder": "Search actions",
 	"citizen-command-palette-mode-category-breadcrumb-root": "Categories",

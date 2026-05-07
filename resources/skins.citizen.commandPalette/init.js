@@ -18,6 +18,7 @@ const namespaceMode = require( './modes/namespace.js' );
 const createActionMode = require( './modes/action.js' );
 const createUserMode = require( './modes/user.js' );
 const createCategoryMode = require( './modes/category.js' );
+const helpMode = require( './modes/help.js' );
 
 // Result decorator
 const createAppendQueryActions = require( './utils/appendQueryActions.js' );
@@ -45,6 +46,7 @@ function initApp() {
 	paletteRegistry.register( createActionMode( document, mw.Api ) );
 	paletteRegistry.register( createUserMode( mw.Api ) );
 	paletteRegistry.register( createCategoryMode( mw.Api ) );
+	paletteRegistry.register( helpMode );
 
 	// 3. Fire hook for extension commands
 	const hookData = { register: paletteRegistry.register };
@@ -92,6 +94,9 @@ function initApp() {
 	app.provide( 'findModeByTrigger', paletteRegistry.findModeByTrigger );
 	app.provide( 'findModeByQuery', paletteRegistry.findModeByQuery );
 	app.provide( 'getTokenPatterns', paletteRegistry.getTokenPatterns );
+	app.provide( 'getHandler', paletteRegistry.getHandler );
+	app.provide( 'getHelpCatalogItems', () => paletteRegistry.getCommandListItems()
+		.filter( ( item ) => item.source !== 'command:help' ) );
 
 	const commandPalette = app.mount( overlay );
 

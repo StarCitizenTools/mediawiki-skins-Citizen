@@ -24,7 +24,9 @@
 				:show-pending="showPending"
 				:active-mode="activeMode"
 				:active-mode-context="activeModeContext"
+				:help-visible="helpVisible"
 				@exit-mode="exitMode"
+				@close-help="orchCloseHelp"
 				@update:free-text="handleFreeTextUpdate( $event )"
 				@select-token="tokenInput.selectToken( $event )"
 				@remove-token="handleRemoveToken( $event )"
@@ -36,33 +38,49 @@
 				<div
 					ref="bodyViewport"
 					class="citizen-command-palette__body-viewport"
-					:class="{ 'citizen-command-palette__body-viewport--has-detail': highlightedItemDetail }"
+					:class="{
+						'citizen-command-palette__body-viewport--has-detail': viewportHasDetail,
+						'citizen-command-palette__body-viewport--uniform-type': uniformItemType
+					}"
 				>
-					<div class="citizen-command-palette__results">
-						<command-palette-empty-state
-							v-if="!isPending && flatItems.length === 0"
-							:title="emptyStateContent.title"
-							:description="emptyStateContent.description"
-							:icon="emptyStateContent.icon"
-						></command-palette-empty-state>
-						<command-palette-list
-							v-else-if="displayedItems.length > 0"
-							:sections="displayedItems"
-							:highlighted-item-index="highlightedItemIndex"
-							:search-query="query"
-							:set-item-ref="setItemRef"
-							@select="selectResult"
-							@action="handleAction"
-							@hover="handleHover"
-						></command-palette-list>
-					</div>
-					<Transition name="citizen-command-palette-detail">
-						<command-palette-detail-panel
-							v-if="highlightedItemDetail"
-							class="citizen-command-palette__detail"
-							:detail="highlightedItemDetail"
-						></command-palette-detail-panel>
-					</Transition>
+					<command-palette-help-view
+						v-if="helpVisible"
+						:active-mode="activeMode"
+						:highlighted-help-mode="highlightedHelpMode"
+						:displayed-items="displayedItems"
+						:highlighted-item-index="highlightedItemIndex"
+						:search-query="query"
+						:set-item-ref="setItemRef"
+						@select="selectResult"
+						@hover="handleHover"
+					></command-palette-help-view>
+					<template v-else>
+						<div class="citizen-command-palette__results">
+							<command-palette-empty-state
+								v-if="!isPending && flatItems.length === 0"
+								:title="emptyStateContent.title"
+								:description="emptyStateContent.description"
+								:icon="emptyStateContent.icon"
+							></command-palette-empty-state>
+							<command-palette-list
+								v-else-if="displayedItems.length > 0"
+								:sections="displayedItems"
+								:highlighted-item-index="highlightedItemIndex"
+								:search-query="query"
+								:set-item-ref="setItemRef"
+								@select="selectResult"
+								@action="handleAction"
+								@hover="handleHover"
+							></command-palette-list>
+						</div>
+						<Transition name="citizen-command-palette-detail">
+							<command-palette-detail-panel
+								v-if="highlightedItemDetail"
+								class="citizen-command-palette__detail"
+								:detail="highlightedItemDetail"
+							></command-palette-detail-panel>
+						</Transition>
+					</template>
 				</div>
 			</div>
 			<command-palette-footer
@@ -83,6 +101,7 @@ const CommandPaletteEmptyState = require( './CommandPaletteEmptyState.vue' );
 const CommandPaletteFooter = require( './CommandPaletteFooter.vue' );
 const CommandPaletteHeader = require( './CommandPaletteHeader.vue' );
 const CommandPaletteDetailPanel = require( './CommandPaletteDetailPanel.vue' );
+const CommandPaletteHelpView = require( './CommandPaletteHelpView.vue' );
 const { cdxIconArticleNotFound, cdxIconArticlesSearch } = require( '../icons.json' );
 
 // @vue/component
@@ -96,7 +115,8 @@ module.exports = exports = defineComponent( {
 		CommandPaletteEmptyState,
 		CommandPaletteDetailPanel,
 		CommandPaletteFooter,
-		CommandPaletteHeader
+		CommandPaletteHeader,
+		CommandPaletteHelpView
 	},
 	props: {},
 	setup() {
@@ -109,6 +129,8 @@ module.exports = exports = defineComponent( {
 		const findModeByTrigger = inject( 'findModeByTrigger' );
 		const findModeByQuery = inject( 'findModeByQuery' );
 		const getTokenPatterns = inject( 'getTokenPatterns' );
+		const getHelpCatalogItems = inject( 'getHelpCatalogItems', null );
+		const getHandler = inject( 'getHandler', null );
 
 		// Core refs
 		const isOpen = ref( false );
@@ -152,7 +174,8 @@ module.exports = exports = defineComponent( {
 		const orchDeps = {
 			recentItemsProvider,
 			relatedArticlesProvider,
-			recentItemsService
+			recentItemsService,
+			getHelpCatalogItems
 		};
 		const orch = useProviderOrchestration( providers, resultDecorator, orchDeps );
 
@@ -192,6 +215,58 @@ module.exports = exports = defineComponent( {
 				}
 			}
 			return null;
+		} );
+
+		// While help is open at root, the highlighted catalog row's source
+		// (e.g. "command:category") tells us which registered handler to
+		// surface in the right pane. Outside the help-at-root case there is
+		// no help-detail to render.
+		const highlightedHelpMode = computed( () => {
+			if ( !orch.helpVisible.value || orch.activeMode.value || !getHandler ) {
+				return null;
+			}
+			const idx = listNav.highlightedIndex.value;
+			const items = orch.flatItems.value;
+			if ( idx < 0 || idx >= items.length ) {
+				return null;
+			}
+			const item = items[ idx ];
+			if ( !item || !item.source ) {
+				return null;
+			}
+			const match = ( /^command:(.+)$/ ).exec( item.source );
+			if ( !match ) {
+				return null;
+			}
+			return getHandler( match[ 1 ] ) || null;
+		} );
+
+		// Two-pane layout activates when:
+		//   - a regular result has structured detail data (existing behaviour), OR
+		//   - help is open at root with a highlighted mode to describe.
+		const viewportHasDetail = computed( () => {
+			if ( orch.helpVisible.value ) {
+				return !orch.activeMode.value && highlightedHelpMode.value !== null;
+			}
+			return highlightedItemDetail.value !== null;
+		} );
+
+		// When every visible item shares the same type, the per-row type
+		// badge is redundant. We surface this as a class on the viewport so
+		// CSS can hide the badge — the underlying item data (including its
+		// `type` field, which the click path reads via props) stays intact.
+		// Mixed-type listings (default search, drilled category mode,
+		// recents+related) keep the badge to disambiguate.
+		const uniformItemType = computed( () => {
+			const items = orch.flatItems.value;
+			if ( items.length === 0 ) {
+				return false;
+			}
+			const firstType = items[ 0 ] && items[ 0 ].type;
+			if ( !firstType ) {
+				return false;
+			}
+			return items.every( ( it ) => it.type === firstType );
 		} );
 
 		// Action navigation adapter (managed at App level)
@@ -261,6 +336,7 @@ module.exports = exports = defineComponent( {
 		 * @param {Object} result The selected item
 		 */
 		const selectResult = async ( result ) => {
+			const wasHelpVisible = orch.helpVisible.value;
 			const selectionAction = await orch.handleSelection( result );
 
 			switch ( selectionAction.action ) {
@@ -283,6 +359,11 @@ module.exports = exports = defineComponent( {
 						const match = findModeByQuery( selectionAction.payload );
 						if ( match ) {
 							tokenInput.clear();
+							// Closing help before entering the mode keeps openHelp's
+							// catalog from being preserved across the enterMode reset.
+							if ( wasHelpVisible ) {
+								orch.closeHelp();
+							}
 							orch.enterMode( match.mode );
 						}
 					}
@@ -307,9 +388,26 @@ module.exports = exports = defineComponent( {
 					tokenInput.clear();
 					nextTick( focusInput );
 					break;
+				case 'toggleHelp':
+					orch.toggleHelp();
+					tokenInput.clear();
+					nextTick( focusInput );
+					break;
 				case 'none':
 				default:
 					break;
+			}
+
+			// Auto-dismiss help after any non-toggle selection from inside the
+			// help overlay. Skipped for 'navigate' (the palette closes) and
+			// 'exitWithQuery' (which already closed help before entering mode).
+			if (
+				wasHelpVisible &&
+				selectionAction.action !== 'toggleHelp' &&
+				selectionAction.action !== 'navigate' &&
+				selectionAction.action !== 'exitWithQuery'
+			) {
+				orch.closeHelp();
 			}
 		};
 
@@ -346,7 +444,10 @@ module.exports = exports = defineComponent( {
 			onSelectToken: ( index ) => tokenInput.selectToken( index ),
 			onRemoveToken: handleRemoveToken,
 			activeModeContext: orch.activeModeContext,
-			onPopModeContext: () => orch.popModeContext()
+			onPopModeContext: () => orch.popModeContext(),
+			helpVisible: orch.helpVisible,
+			onToggleHelp: () => orch.toggleHelp(),
+			onCloseHelp: () => orch.closeHelp()
 		} );
 
 		// setItemRef expects the GLOBAL index within displayedItems
@@ -444,6 +545,7 @@ module.exports = exports = defineComponent( {
 		// This function is called externally from init.js
 		const open = () => {
 			isOpen.value = true;
+			orch.closeHelp();
 			if ( orch.activeMode.value ) {
 				orch.exitMode();
 			} else {
@@ -471,12 +573,17 @@ module.exports = exports = defineComponent( {
 			flatItems,
 			isPending: orch.isPending,
 			showPending: orch.showPending,
+			helpVisible: orch.helpVisible,
+			orchCloseHelp: orch.closeHelp,
 			// Token state
 			tokenInput,
 			handleFreeTextUpdate,
 			handleRemoveToken,
 			// Keyboard
 			keyboard,
+			highlightedHelpMode,
+			viewportHasDetail,
+			uniformItemType,
 			// List nav
 			highlightedItemIndex: listNav.highlightedIndex,
 			// Empty state
@@ -556,6 +663,12 @@ module.exports = exports = defineComponent( {
 				display: flex;
 			}
 		}
+
+		// Uniform-type lists (e.g. the help catalog, /user: results) would
+		// repeat the same type label on every row, so hide it.
+		&--uniform-type .citizen-command-palette-list-item__metadata__item--type {
+			display: none;
+		}
 	}
 
 	&__results {
@@ -567,8 +680,17 @@ module.exports = exports = defineComponent( {
 
 		.citizen-command-palette__body-viewport--has-detail & {
 			@media ( min-width: @min-width-breakpoint-tablet ) {
-				flex: 3;
+				flex: 2;
 				border-inline-end: var( --border-subtle );
+
+				// In two-pane mode the right pane carries the rich content,
+				// so the catalog rows on the left stay compact — drop the
+				// alias/type badges and inline description that would
+				// otherwise crowd the row.
+				.citizen-command-palette-list-item__metadata,
+				.citizen-command-palette-list-item__text__description {
+					display: none;
+				}
 			}
 		}
 	}
@@ -578,7 +700,7 @@ module.exports = exports = defineComponent( {
 
 		@media ( min-width: @min-width-breakpoint-tablet ) {
 			display: block;
-			flex: 2;
+			flex: 3;
 			max-height: calc( 100vh - 12rem );
 			overflow-y: auto;
 			overscroll-behavior: contain;

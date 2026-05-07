@@ -1,16 +1,16 @@
 <template>
 	<div
 		class="citizen-command-palette-header"
-		:class="{ 'citizen-command-palette-header--mode-active': activeMode }"
+		:class="{ 'citizen-command-palette-header--mode-active': activeMode || helpVisible }"
 	>
 		<transition name="citizen-command-palette-header-back">
 			<cdx-button
-				v-if="activeMode"
+				v-if="activeMode || helpVisible"
 				class="citizen-command-palette-header__back"
 				weight="quiet"
 				icon-only
 				:aria-label="$i18n( 'citizen-command-palette-back' ).text()"
-				@click="$emit( 'exit-mode' )"
+				@click="onBackClick"
 			>
 				<cdx-icon
 					:icon="cdxIconArrowPrevious"
@@ -56,7 +56,7 @@
 <script>
 const { defineComponent, ref, computed } = require( 'vue' );
 const { CdxButton, CdxInfoChip, CdxTextInput, CdxIcon } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
-const { cdxIconArrowPrevious, cdxIconSearch } = require( '../icons.json' );
+const { cdxIconArrowPrevious, cdxIconHelp, cdxIconSearch } = require( '../icons.json' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
@@ -95,13 +95,20 @@ module.exports = exports = defineComponent( {
 		activeModeContext: {
 			type: Array,
 			default: () => []
+		},
+		helpVisible: {
+			type: Boolean,
+			default: false
 		}
 	},
-	emits: [ 'update:freeText', 'select-token', 'exit-mode' ],
-	setup( props, { expose } ) {
+	emits: [ 'update:freeText', 'select-token', 'exit-mode', 'close-help' ],
+	setup( props, { expose, emit } ) {
 		const searchInputRef = ref( null );
 
 		const currentIcon = computed( () => {
+			if ( props.helpVisible ) {
+				return cdxIconHelp;
+			}
 			if ( props.activeMode && props.activeMode.icon ) {
 				return props.activeMode.icon;
 			}
@@ -109,6 +116,9 @@ module.exports = exports = defineComponent( {
 		} );
 
 		const currentPlaceholder = computed( () => {
+			if ( props.helpVisible ) {
+				return mw.message( 'citizen-command-palette-command-help-label' ).text();
+			}
 			if ( props.activeMode && typeof props.activeMode.headerLabel === 'function' ) {
 				const label = props.activeMode.headerLabel( props.activeModeContext );
 				if ( label ) {
@@ -120,6 +130,17 @@ module.exports = exports = defineComponent( {
 			}
 			return mw.message( 'searchsuggest-search' ).text();
 		} );
+
+		// Help is layered on top of the active mode, so the back button
+		// closes help first; the underlying mode's back affordance reappears
+		// once help dismisses.
+		const onBackClick = () => {
+			if ( props.helpVisible ) {
+				emit( 'close-help' );
+			} else {
+				emit( 'exit-mode' );
+			}
+		};
 
 		const getInputElement = () => searchInputRef.value?.$el?.querySelector( 'input' ) || null;
 
@@ -136,6 +157,7 @@ module.exports = exports = defineComponent( {
 			searchInputRef,
 			currentIcon,
 			currentPlaceholder,
+			onBackClick,
 			cdxIconArrowPrevious
 		};
 	}

@@ -44,6 +44,7 @@ function normalizeProviderResult( result ) {
  * @param {Object} [deps.relatedArticlesProvider] Provider for related articles (presults).
  * @param {Object} [deps.recentItemsService] Service for dismissing recent items.
  * @param {import('vue').Ref<Array>} [deps.tokens] Ref containing the current token array.
+ * @param {Function} [deps.getHelpCatalogItems] Returns the list of registered modes/commands shown in the help overlay's mode catalog at root.
  * @return {Object} Orchestration state and methods.
  */
 function useProviderOrchestration( providers, resultDecorator, deps ) {
@@ -55,6 +56,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	const showPending = ref( false );
 	const activeMode = shallowRef( null );
 	const activeModeContext = ref( [] );
+	const helpVisible = ref( false );
 	const flatItems = computed( () => displayedItems.value.flatMap( ( s ) => s.items ) );
 	const hasDisplayedItems = computed( () => flatItems.value.length > 0 );
 	const stateConfig = computed( () => {
@@ -406,6 +408,13 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		query.value = newQuery;
 		resetOperationState();
 
+		// Help layers over the underlying state and owns displayedItems while
+		// visible. Skip the provider pipeline so input clears that fire after
+		// openHelp (e.g. selecting `/help`) don't overwrite the catalog.
+		if ( helpVisible.value ) {
+			return;
+		}
+
 		if ( activeMode.value ) {
 			handleModeQuery( activeMode.value, newQuery );
 			return;
@@ -520,6 +529,79 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	}
 
 	/**
+	 * Loads the registered-modes catalog into displayedItems so listNav can
+	 * navigate it. Only meaningful at root (no active mode).
+	 */
+	function loadHelpCatalog() {
+		if ( !deps.getHelpCatalogItems ) {
+			return;
+		}
+		const items = deps.getHelpCatalogItems() || [];
+		resetOperationState();
+		displayedItems.value = items.length > 0 ?
+			[ { heading: 'citizen-command-palette-help-section-modes', items: items } ] :
+			[];
+	}
+
+	/**
+	 * Opens the help overlay. Help is layered on top of the active mode and
+	 * mode context — opening it does not modify query, activeMode, or
+	 * activeModeContext, so users can peek at help and return to where they
+	 * were without losing in-progress state.
+	 *
+	 * At root, the mode catalog is loaded into displayedItems so listNav can
+	 * navigate it. Inside a mode, displayedItems is cleared so that pressing
+	 * Enter while help shows a static view does not select an invisible
+	 * result underneath.
+	 */
+	function openHelp() {
+		if ( helpVisible.value ) {
+			return;
+		}
+		helpVisible.value = true;
+		if ( activeMode.value ) {
+			resetOperationState();
+			displayedItems.value = [];
+		} else {
+			loadHelpCatalog();
+		}
+	}
+
+	/**
+	 * Closes the help overlay. At root, restores recents/related results that
+	 * were displaced by the mode catalog. Inside a mode, re-runs the mode's
+	 * getResults so the list that was hidden under help comes back.
+	 */
+	function closeHelp() {
+		if ( !helpVisible.value ) {
+			return;
+		}
+		helpVisible.value = false;
+		if ( activeMode.value ) {
+			handleModeQuery( activeMode.value, query.value );
+		} else if ( !query.value ) {
+			clearSearch();
+		}
+		// else: at root with a non-empty query is unreachable — `?` only
+		// opens help at empty input, and selecting `/help` triggers a
+		// tokenInput.clear() whose watcher empties query.value (the
+		// updateQuery guard prevents displayedItems mutation). Callers that
+		// follow up with enterMode (e.g. exitWithQuery) handle the next
+		// state themselves; closing here would race with their setup.
+	}
+
+	/**
+	 * Toggles the help overlay.
+	 */
+	function toggleHelp() {
+		if ( helpVisible.value ) {
+			closeHelp();
+		} else {
+			openHelp();
+		}
+	}
+
+	/**
 	 * Dismisses a recent item and refreshes presults.
 	 *
 	 * @param {string|number} itemId The ID of the item to dismiss.
@@ -546,12 +628,16 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		stateConfig,
 		activeMode,
 		activeModeContext,
+		helpVisible,
 		updateQuery,
 		clearSearch,
 		enterMode,
 		exitMode,
 		pushModeContext,
 		popModeContext,
+		toggleHelp,
+		openHelp,
+		closeHelp,
 		handleSelection,
 		dismissRecentItem
 	};
