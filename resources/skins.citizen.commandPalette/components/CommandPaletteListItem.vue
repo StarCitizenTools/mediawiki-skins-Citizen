@@ -25,6 +25,7 @@ Partially based on the MenuItem component from Codex.
 			:search-query="searchQuery"
 			:url="url"
 			:highlight-query="highlightQuery"
+			:compact="compact"
 			@click="onClick"
 		></command-palette-list-item-content>
 		<command-palette-list-item-actions
@@ -106,6 +107,10 @@ module.exports = exports = defineComponent( {
 			default: () => []
 		},
 		highlightQuery: {
+			type: Boolean,
+			default: false
+		},
+		compact: {
 			type: Boolean,
 			default: false
 		},

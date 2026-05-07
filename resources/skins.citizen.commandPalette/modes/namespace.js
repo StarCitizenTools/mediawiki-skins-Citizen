@@ -120,6 +120,7 @@ module.exports = {
 	description: mw.message( 'citizen-command-palette-command-ns-description' ).text(),
 	placeholder: mw.message( 'citizen-command-palette-mode-ns-placeholder' ).text(),
 	icon: cdxIconArticles,
+	compactResults: true,
 	tokenPattern: {
 		modeId: 'namespace',
 		position: 'prefix',

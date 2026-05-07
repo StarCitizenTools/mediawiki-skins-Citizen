@@ -227,6 +227,7 @@ function createCategoryMode( ApiConstructor ) {
 		description: mw.message( 'citizen-command-palette-command-category-description' ).text(),
 		placeholder: mw.message( 'citizen-command-palette-mode-category-placeholder' ).text(),
 		icon: cdxIconTag,
+		compactResults: true,
 		emptyState: {
 			title: mw.message( 'citizen-command-palette-mode-category-empty-title' ).text(),
 			description: mw.message( 'citizen-command-palette-mode-category-empty-description' ).text(),

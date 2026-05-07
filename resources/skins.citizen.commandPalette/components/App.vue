@@ -68,6 +68,7 @@
 								:highlighted-item-index="highlightedItemIndex"
 								:search-query="query"
 								:set-item-ref="setItemRef"
+								:compact="!!activeMode?.compactResults"
 								@select="selectResult"
 								@action="handleAction"
 								@hover="handleHover"
@@ -688,7 +689,8 @@ module.exports = exports = defineComponent( {
 				// alias/type badges and inline description that would
 				// otherwise crowd the row.
 				.citizen-command-palette-list-item__metadata,
-				.citizen-command-palette-list-item__text__description {
+				.citizen-command-palette-list-item__text__description,
+				.citizen-command-palette-list-item__text-inline__description {
 					display: none;
 				}
 			}
