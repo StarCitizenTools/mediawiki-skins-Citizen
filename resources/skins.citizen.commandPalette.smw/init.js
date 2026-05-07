@@ -388,6 +388,9 @@ module.exports = {
 		{ modeId: 'smw', position: 'any', activeIn: 'smw', match: matchSmwCondition },
 		{ modeId: 'smw', position: 'any', activeIn: 'smw', match: matchSmwPrintout, eagerMatch: matchSmwPrintoutEager, variant: 'outlined' }
 	],
+	help: {
+		description: 'citizen-command-palette-mode-smw-description-help'
+	},
 	getResults: getSmwResults,
 	onResultSelect( item ) {
 		switch ( item.type ) {
