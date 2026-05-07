@@ -446,4 +446,147 @@ describe( 'useProviderOrchestration', () => {
 			expect( lastCall[ 3 ] ).toEqual( [ { name: 'A' } ] );
 		} );
 	} );
+
+	describe( 'help overlay', () => {
+		it( 'starts hidden', () => {
+			const orch = useProviderOrchestration( [], mockDecorator );
+
+			expect( orch.helpVisible.value ).toBe( false );
+		} );
+
+		it( 'openHelp loads the catalog into displayedItems at root', () => {
+			const catalogItems = [
+				{ id: 'cmd-a', source: 'command:a' },
+				{ id: 'cmd-b', source: 'command:b' }
+			];
+			const getHelpCatalogItems = vi.fn( () => catalogItems );
+			const orch = useProviderOrchestration( [], mockDecorator, { getHelpCatalogItems } );
+
+			orch.openHelp();
+
+			expect( orch.helpVisible.value ).toBe( true );
+			expect( orch.displayedItems.value ).toHaveLength( 1 );
+			expect( orch.displayedItems.value[ 0 ].heading ).toBe( 'citizen-command-palette-help-section-modes' );
+			expect( orch.displayedItems.value[ 0 ].items ).toEqual( catalogItems );
+		} );
+
+		it( 'openHelp inside an active mode preserves the mode and does not load the catalog', async () => {
+			const getHelpCatalogItems = vi.fn( () => [] );
+			const mode = {
+				id: 'cat',
+				triggers: [ '#' ],
+				getResults: vi.fn( () => [ { id: 'r1', label: 'In-mode result' } ] )
+			};
+			const orch = useProviderOrchestration( [], mockDecorator, { getHelpCatalogItems } );
+
+			orch.enterMode( mode );
+			await vi.runAllTimersAsync();
+			orch.openHelp();
+
+			expect( orch.helpVisible.value ).toBe( true );
+			expect( orch.activeMode.value ).toBe( mode );
+			expect( getHelpCatalogItems ).not.toHaveBeenCalled();
+		} );
+
+		it( 'closeHelp at root with no query restores presults via clearSearch', () => {
+			const recentItems = [ { id: 'recent-1', url: '/Recent', source: 'recent' } ];
+			const orch = useProviderOrchestration( [], mockDecorator, {
+				getHelpCatalogItems: () => [ { id: 'cmd', source: 'command:x' } ],
+				recentItemsProvider: { getResults: () => ( { items: recentItems } ) }
+			} );
+
+			orch.openHelp();
+			orch.closeHelp();
+
+			expect( orch.helpVisible.value ).toBe( false );
+			expect( orch.displayedItems.value ).toEqual( [
+				{ heading: 'citizen-command-palette-heading-recent', items: recentItems }
+			] );
+		} );
+
+		it( 'closeHelp inside an active mode preserves activeMode and modeContext', async () => {
+			const mode = {
+				id: 'cat',
+				triggers: [ '#' ],
+				getResults: vi.fn( () => [ { id: 'r1', label: 'A' } ] )
+			};
+			const orch = useProviderOrchestration( [], mockDecorator, {
+				getHelpCatalogItems: () => []
+			} );
+
+			orch.enterMode( mode );
+			await vi.runAllTimersAsync();
+			orch.pushModeContext( { name: 'Animals' } );
+			await vi.runAllTimersAsync();
+
+			orch.openHelp();
+			orch.closeHelp();
+
+			expect( orch.helpVisible.value ).toBe( false );
+			expect( orch.activeMode.value ).toBe( mode );
+			expect( orch.activeModeContext.value ).toEqual( [ { name: 'Animals' } ] );
+		} );
+
+		it( 'toggleHelp flips the flag both directions', () => {
+			const orch = useProviderOrchestration( [], mockDecorator, {
+				getHelpCatalogItems: () => []
+			} );
+
+			orch.toggleHelp();
+			expect( orch.helpVisible.value ).toBe( true );
+
+			orch.toggleHelp();
+			expect( orch.helpVisible.value ).toBe( false );
+		} );
+
+		it( 'open/close are idempotent', () => {
+			const orch = useProviderOrchestration( [], mockDecorator, {
+				getHelpCatalogItems: vi.fn( () => [ { id: 'a', source: 'command:a' } ] )
+			} );
+
+			orch.openHelp();
+			orch.openHelp();
+			expect( orch.helpVisible.value ).toBe( true );
+
+			orch.closeHelp();
+			orch.closeHelp();
+			expect( orch.helpVisible.value ).toBe( false );
+		} );
+
+		it( 'updateQuery does not overwrite the help catalog while help is visible', () => {
+			// Regression: selecting `/help` calls openHelp, then tokenInput.clear()
+			// triggers the fullQuery watcher, which calls updateQuery(''). Without
+			// the helpVisible guard, clearSearch overwrites the catalog with recents.
+			const catalogItems = [ { id: 'cmd-a', source: 'command:a' } ];
+			const recentItems = [ { id: 'r1', url: '/R', source: 'recent' } ];
+			const orch = useProviderOrchestration( [], mockDecorator, {
+				getHelpCatalogItems: () => catalogItems,
+				recentItemsProvider: { getResults: () => ( { items: recentItems } ) }
+			} );
+
+			orch.updateQuery( '/help' );
+			orch.openHelp();
+			orch.updateQuery( '' );
+
+			expect( orch.helpVisible.value ).toBe( true );
+			expect( orch.displayedItems.value ).toHaveLength( 1 );
+			expect( orch.displayedItems.value[ 0 ].items ).toEqual( catalogItems );
+		} );
+
+		it( 'closeHelp at root with empty query restores presults', async () => {
+			const recentItems = [ { id: 'r1', url: '/R', source: 'recent' } ];
+			const orch = useProviderOrchestration( [], mockDecorator, {
+				getHelpCatalogItems: () => [ { id: 'cmd-a', source: 'command:a' } ],
+				recentItemsProvider: { getResults: () => ( { items: recentItems } ) }
+			} );
+
+			orch.openHelp();
+			orch.closeHelp();
+
+			expect( orch.helpVisible.value ).toBe( false );
+			expect( orch.displayedItems.value ).toEqual( [
+				{ heading: 'citizen-command-palette-heading-recent', items: recentItems }
+			] );
+		} );
+	} );
 } );

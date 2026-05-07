@@ -457,4 +457,130 @@ describe( 'useKeyboard', () => {
 			expect( deps.onSelectToken ).toHaveBeenCalledWith( 0 );
 		} );
 	} );
+
+	describe( 'help overlay', () => {
+		function setupHelp( { helpVisible = false, query = '', tokens = [], activeMode = null } = {} ) {
+			deps.query = ref( query );
+			deps.tokens = ref( tokens );
+			deps.activeMode = ref( activeMode );
+			deps.helpVisible = ref( helpVisible );
+			deps.onToggleHelp = vi.fn();
+			deps.onCloseHelp = vi.fn();
+			keyboard = useKeyboard( deps );
+		}
+
+		it( '"?" at empty input toggles help', () => {
+			setupHelp( { query: '', tokens: [] } );
+			const event = createKeyEvent( '?' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onToggleHelp ).toHaveBeenCalledTimes( 1 );
+			expect( event.preventDefault ).toHaveBeenCalled();
+		} );
+
+		it( '"?" toggles help even when a mode is active, as long as input is empty', () => {
+			setupHelp( { query: '', tokens: [], activeMode: { id: 'category' } } );
+			const event = createKeyEvent( '?' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onToggleHelp ).toHaveBeenCalledTimes( 1 );
+		} );
+
+		it( '"?" mid-typing does NOT toggle help', () => {
+			setupHelp( { query: 'cat', tokens: [] } );
+			const event = createKeyEvent( '?' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onToggleHelp ).not.toHaveBeenCalled();
+		} );
+
+		it( '"?" with tokens present does NOT toggle help', () => {
+			setupHelp( { query: '', tokens: [ { id: 't1', label: 'Talk:' } ] } );
+			const event = createKeyEvent( '?' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onToggleHelp ).not.toHaveBeenCalled();
+		} );
+
+		it( 'Escape closes help when help is visible (precedence over 3-level ladder)', () => {
+			setupHelp( { helpVisible: true, query: 'still has query', activeMode: { id: 'foo' } } );
+			const event = createKeyEvent( 'Escape' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onCloseHelp ).toHaveBeenCalledTimes( 1 );
+			expect( deps.onClearQuery ).not.toHaveBeenCalled();
+			expect( deps.onExitMode ).not.toHaveBeenCalled();
+			expect( deps.onClose ).not.toHaveBeenCalled();
+		} );
+
+		it( '"?" closes help when help is visible', () => {
+			setupHelp( { helpVisible: true } );
+			const event = createKeyEvent( '?' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onToggleHelp ).toHaveBeenCalledTimes( 1 );
+		} );
+
+		it( 'ArrowDown still navigates while help is visible', () => {
+			setupHelp( { helpVisible: true } );
+			const event = createKeyEvent( 'ArrowDown' );
+
+			keyboard.handleKeydown( event );
+
+			expect( listNav.highlightNext ).toHaveBeenCalled();
+		} );
+
+		it( 'Enter still selects highlighted item while help is visible', () => {
+			setupHelp( { helpVisible: true } );
+			listNav.highlightedIndex.value = 0;
+			const event = createKeyEvent( 'Enter' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onSelect ).toHaveBeenCalledWith( deps.items.value[ 0 ] );
+		} );
+
+		it( 'mode-trigger keys are swallowed while help is visible', () => {
+			setupHelp( { helpVisible: true } );
+			const mode = { id: 'user', triggers: [ '@' ] };
+			deps.findModeByTrigger = vi.fn( () => mode );
+			deps.onEnterMode = vi.fn();
+			keyboard = useKeyboard( deps );
+			const event = createKeyEvent( '@' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onEnterMode ).not.toHaveBeenCalled();
+			expect( event.preventDefault ).toHaveBeenCalled();
+		} );
+
+		it( 'Backspace is swallowed while help is visible (does not pop mode context)', () => {
+			setupHelp( { helpVisible: true } );
+			deps.activeModeContext = ref( [ { name: 'A' } ] );
+			deps.onPopModeContext = vi.fn();
+			keyboard = useKeyboard( deps );
+			const event = createKeyEvent( 'Backspace' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onPopModeContext ).not.toHaveBeenCalled();
+			expect( event.preventDefault ).toHaveBeenCalled();
+		} );
+
+		it( 'escHintMsgKey is "close" while help is visible, even with non-empty query', () => {
+			setupHelp( { helpVisible: true, query: 'something' } );
+
+			const hints = keyboard.keyboardHints.value;
+
+			expect( hints[ hints.length - 1 ] ).toEqual(
+				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc' }
+			);
+		} );
+	} );
 } );
