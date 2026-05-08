@@ -215,6 +215,12 @@ describe( 'SMW mode', () => {
 			expect( result ).toEqual( { action: 'updateQuery', payload: '[[Located in::' } );
 		} );
 
+		it( 'should return updateQuery action for smw-namespace items', () => {
+			const result = smwMode.onResultSelect( { type: 'smw-namespace', label: 'Category' } );
+
+			expect( result ).toEqual( { action: 'updateQuery', payload: '[[Category:' } );
+		} );
+
 		it( 'should return addToken action for smw-printout items', () => {
 			const result = smwMode.onResultSelect( { type: 'smw-printout', label: 'Population' } );
 
@@ -416,6 +422,56 @@ describe( 'SMW mode', () => {
 				browse: 'property',
 				params: JSON.stringify( { search: '', limit: 10 } )
 			} ) );
+		} );
+
+		it( 'should prepend Category namespace primitive at empty property fragment', async () => {
+			mockGet.mockResolvedValue( {
+				query: {
+					'Located in': { label: 'Located in', key: 'Located_in' }
+				}
+			} );
+
+			const result = await smwMode.getResults( '[[' );
+
+			expect( result[ 0 ] ).toEqual( {
+				id: 'citizen-command-palette-item-smw-namespace-category',
+				type: 'smw-namespace',
+				thumbnailIcon: expect.any( String ),
+				label: 'Category',
+				highlightQuery: true
+			} );
+			expect( result[ 1 ] ).toMatchObject( { type: 'smw-property', label: 'Located in' } );
+		} );
+
+		it( 'should keep Category primitive while fragment prefix-matches "Category"', async () => {
+			mockGet.mockResolvedValue( { query: {} } );
+
+			const result = await smwMode.getResults( '[[Cat' );
+
+			expect( result ).toHaveLength( 1 );
+			expect( result[ 0 ].type ).toBe( 'smw-namespace' );
+		} );
+
+		it( 'should keep Category primitive at exact-match fragment "Category"', async () => {
+			mockGet.mockResolvedValue( { query: {} } );
+
+			const result = await smwMode.getResults( '[[Category' );
+
+			expect( result ).toHaveLength( 1 );
+			expect( result[ 0 ].type ).toBe( 'smw-namespace' );
+		} );
+
+		it( 'should drop Category primitive once fragment cannot prefix-match "Category"', async () => {
+			mockGet.mockResolvedValue( {
+				query: {
+					'Located in': { label: 'Located in', key: 'Located_in' }
+				}
+			} );
+
+			const result = await smwMode.getResults( '[[Lo' );
+
+			expect( result.every( ( item ) => item.type !== 'smw-namespace' ) ).toBe( true );
+			expect( result[ 0 ] ).toMatchObject( { type: 'smw-property', label: 'Located in' } );
 		} );
 
 		it( 'should execute Ask query with printout token', async () => {

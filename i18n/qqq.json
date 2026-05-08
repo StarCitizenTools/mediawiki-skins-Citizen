@@ -105,6 +105,7 @@
 	"citizen-command-palette-type-command": "Label for the command type of the result in the command palette",
 	"citizen-command-palette-type-smw": "Type label shown for Semantic MediaWiki query results in the command palette",
 	"citizen-command-palette-type-smw-category": "Type label for SMW category suggestions in the command palette",
+	"citizen-command-palette-type-smw-namespace": "Type label for SMW namespace primitives (e.g. the Category entry-point) in the command palette",
 	"citizen-command-palette-type-smw-printout": "Type label for SMW printout suggestions in the command palette",
 	"citizen-command-palette-type-smw-property": "Type label for SMW property suggestions in the command palette",
 	"citizen-command-palette-type-smw-value": "Type label for SMW value suggestions in the command palette",

@@ -340,7 +340,26 @@ async function getSmwResults( subQuery, _signal, tokens ) {
 				) ) );
 		}
 		if ( incomplete.stage === 'property' ) {
-			return fetchPropertySuggestions( incomplete.fragment );
+			return fetchPropertySuggestions( incomplete.fragment ).then( ( items ) => {
+				// Surface "Category" as a primitive at the top of property
+				// suggestions so users can discover the category-namespace
+				// path (`[[Category:...]]`) without knowing the syntax.
+				// Hide it once the fragment can no longer prefix-match
+				// "Category" so it doesn't clutter unrelated lookups.
+				if ( 'category'.startsWith( incomplete.fragment.toLowerCase() ) ) {
+					return [
+						{
+							id: 'citizen-command-palette-item-smw-namespace-category',
+							type: 'smw-namespace',
+							thumbnailIcon: cdxIconTag,
+							label: 'Category',
+							highlightQuery: true
+						},
+						...items
+					];
+				}
+				return items;
+			} );
 		}
 		if ( incomplete.stage === 'category' ) {
 			return fetchCategorySuggestions( incomplete.fragment );
@@ -400,6 +419,8 @@ module.exports = {
 				return { action: 'updateQuery', payload: '[[' + item.value + '::' + item.label + ']]' };
 			case 'smw-property':
 				return { action: 'updateQuery', payload: '[[' + item.label + '::' };
+			case 'smw-namespace':
+				return { action: 'updateQuery', payload: '[[' + item.label + ':' };
 			case 'smw-category':
 				return { action: 'updateQuery', payload: '[[Category:' + item.label + ']]' };
 			case 'smw-printout':

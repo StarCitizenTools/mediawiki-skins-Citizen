@@ -113,6 +113,7 @@
 	"citizen-command-palette-type-command": "Command",
 	"citizen-command-palette-type-smw": "SMW",
 	"citizen-command-palette-type-smw-category": "SMW category",
+	"citizen-command-palette-type-smw-namespace": "SMW namespace",
 	"citizen-command-palette-type-smw-printout": "SMW printout",
 	"citizen-command-palette-type-smw-property": "SMW property",
 	"citizen-command-palette-type-smw-value": "SMW value",
