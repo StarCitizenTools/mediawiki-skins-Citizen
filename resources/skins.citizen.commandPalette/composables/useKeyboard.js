@@ -56,11 +56,12 @@ const coreBindings = [
 		handle: ( state, event ) => {
 			event.preventDefault();
 			state.actionNav.deactivate();
-			if ( event.key === 'ArrowUp' ) {
-				state.listNav.highlightPrevious();
-			} else {
-				state.listNav.highlightNext();
-			}
+			// Route through navigateList so the layout-aware dispatch
+			// picks the right composable: list wraps on overflow, grid
+			// clamps and steps by column count. Direct calls to
+			// listNav.* would silently use list semantics in gallery
+			// modes that someday declare per-item actions.
+			state.navigateList( event.key === 'ArrowUp' ? 'up' : 'down' );
 			state.requestInputFocus();
 		},
 		hint: null
@@ -137,7 +138,7 @@ const coreBindings = [
 		worksDuringHelp: true,
 		handle: ( state, event ) => {
 			event.preventDefault();
-			state.navigateList( 'next' );
+			state.navigateList( 'down' );
 		},
 		hint: null
 	},
@@ -149,7 +150,34 @@ const coreBindings = [
 		worksDuringHelp: true,
 		handle: ( state, event ) => {
 			event.preventDefault();
+			state.navigateList( 'up' );
+		},
+		hint: null
+	},
+	// Gallery layouts: ←/→ navigate between tiles in the same row. List
+	// layouts route ←/→ to action-zone navigation (see below) so we only
+	// fire here when the active mode declares layout='gallery'.
+	{
+		id: 'input-arrow-left-gallery',
+		zone: 'input',
+		keys: [ 'ArrowLeft' ],
+		when: ( state ) => state.isGalleryLayout,
+		worksDuringHelp: true,
+		handle: ( state, event ) => {
+			event.preventDefault();
 			state.navigateList( 'previous' );
+		},
+		hint: null
+	},
+	{
+		id: 'input-arrow-right-gallery',
+		zone: 'input',
+		keys: [ 'ArrowRight' ],
+		when: ( state ) => state.isGalleryLayout,
+		worksDuringHelp: true,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.navigateList( 'next' );
 		},
 		hint: null
 	},
@@ -181,9 +209,17 @@ const coreBindings = [
 		id: 'input-navigate-hint',
 		zone: 'input',
 		keys: [],
-		when: ( state ) => state.items.length > 1,
+		when: ( state ) => state.items.length > 1 && !state.isGalleryLayout,
 		handle: () => {},
 		hint: { msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓', order: 20 }
+	},
+	{
+		id: 'input-navigate-hint-gallery',
+		zone: 'input',
+		keys: [],
+		when: ( state ) => state.items.length > 1 && state.isGalleryLayout,
+		handle: () => {},
+		hint: { msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓←→', order: 20 }
 	},
 
 	// --- INPUT ZONE: Enter ---
@@ -446,6 +482,11 @@ function actionCount( state ) {
 function useKeyboard( deps ) {
 	const listNav = deps.listNav;
 	const actionNav = deps.actionNav;
+	// Optional: gallery support. When provided, navigateList branches on
+	// `isGalleryLayout` to use the grid composable's column-aware methods.
+	// Modes that don't declare layout='gallery' fall through to listNav.
+	const gridNav = deps.gridNav;
+	const isGalleryLayout = deps.isGalleryLayout;
 
 	/**
 	 * Effective binding list: mode-contributed bindings (if any) prepended
@@ -492,15 +533,31 @@ function useKeyboard( deps ) {
 	}
 
 	function navigateList( direction ) {
-		const methods = {
+		const isGallery = !!( gridNav && isGalleryLayout && isGalleryLayout.value );
+		const targetNav = isGallery ? gridNav : listNav;
+		const methods = isGallery ? {
 			next: 'highlightNext',
 			previous: 'highlightPrevious',
+			down: 'highlightDown',
+			up: 'highlightUp',
+			first: 'highlightFirst',
+			last: 'highlightLast'
+		} : {
+			next: 'highlightNext',
+			previous: 'highlightPrevious',
+			down: 'highlightNext',
+			up: 'highlightPrevious',
 			first: 'highlightFirst',
 			last: 'highlightLast'
 		};
-		listNav[ methods[ direction ] ]();
+		const method = methods[ direction ];
+		if ( method && typeof targetNav[ method ] === 'function' ) {
+			targetNav[ method ]();
+		}
 		nextTick( () => {
-			listNav.scrollToHighlighted( deps.itemRefs );
+			if ( typeof targetNav.scrollToHighlighted === 'function' ) {
+				targetNav.scrollToHighlighted( deps.itemRefs );
+			}
 		} );
 	}
 
@@ -557,6 +614,7 @@ function useKeyboard( deps ) {
 			inputElement: getInputElement(),
 			modeContext: deps.activeModeContext ? deps.activeModeContext.value : [],
 			activeMode: deps.activeMode.value,
+			isGalleryLayout: !!( isGalleryLayout && isGalleryLayout.value ),
 			highlightedIndex: highlightedIndex,
 			items: items,
 			highlightedItem: highlightedItem,
