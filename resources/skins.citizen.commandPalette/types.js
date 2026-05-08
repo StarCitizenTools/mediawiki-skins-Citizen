@@ -63,6 +63,8 @@
  * @property {CommandPaletteItemDetail} [detail] Optional detail data shown in the side panel when focused.
  * @property {string} [source] Identifier of the provider that generated this item (e.g., 'recent', 'command', 'search').
  * @property {boolean} [isMouseClick] True if the selection was triggered by a mouse click.
+ * @property {boolean} [previewable] Whether the item's URL is suitable for in-place preview by an external preview gadget (e.g. Instant Diffs).
+ * @property {boolean} [modifierClick] True if the click had a modifier key held (Ctrl, Cmd, Alt, Shift) or was non-primary (middle-click). Signals "I want different behavior than the row's default" — open in new tab, navigate fully past a preview, etc.
  */
 
 /**

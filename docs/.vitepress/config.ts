@@ -61,7 +61,7 @@ export default defineConfig({
 						link: "/config/",
 					},
 					{
-						text: "Extensions",
+						text: "Extensions and gadgets",
 						link: "/config/extensions",
 					},
 				],

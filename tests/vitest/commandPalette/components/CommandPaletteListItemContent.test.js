@@ -139,4 +139,30 @@ describe( 'CommandPaletteListItemContent', () => {
 			expect( items.length ).toBeGreaterThanOrEqual( 2 );
 		} );
 	} );
+
+	describe( 'previewable flag', () => {
+		it( 'renders data-instantdiffs-link="event" when previewable and url are set', () => {
+			const wrapper = mountContent( { previewable: true } );
+
+			expect( wrapper.find( 'a' ).attributes( 'data-instantdiffs-link' ) ).toBe( 'event' );
+		} );
+
+		it( 'omits data-instantdiffs-link when previewable is false', () => {
+			const wrapper = mountContent( { previewable: false } );
+
+			expect( wrapper.find( 'a' ).attributes( 'data-instantdiffs-link' ) ).toBeUndefined();
+		} );
+
+		it( 'omits data-instantdiffs-link when previewable is not specified', () => {
+			const wrapper = mountContent();
+
+			expect( wrapper.find( 'a' ).attributes( 'data-instantdiffs-link' ) ).toBeUndefined();
+		} );
+
+		it( 'omits data-instantdiffs-link when url is empty even if previewable is true', () => {
+			const wrapper = mountContent( { url: '', previewable: true } );
+
+			expect( wrapper.find( 'button' ).attributes( 'data-instantdiffs-link' ) ).toBeUndefined();
+		} );
+	} );
 } );
