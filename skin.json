@@ -513,6 +513,7 @@
 				"citizen-command-palette-mode-smw-placeholder",
 				"citizen-command-palette-type-smw",
 				"citizen-command-palette-type-smw-category",
+				"citizen-command-palette-type-smw-namespace",
 				"citizen-command-palette-type-smw-printout",
 				"citizen-command-palette-type-smw-property",
 				"citizen-command-palette-type-smw-value"
