@@ -38,10 +38,27 @@
  */
 
 /**
+ * Optional header rendered above the detail panel's pairs. When set, the
+ * panel renders a label + subtitle (and an inline copy-to-clipboard button
+ * when `copyValue` is provided). Consumers needing a fully custom header
+ * can still override the panel's `#header` slot — the inline default
+ * shape exists so modes don't have to.
+ *
+ * @typedef {Object} CommandPaletteItemDetailHeader
+ * @property {string} label Primary heading text (e.g. a filename).
+ * @property {string} [description] Subtle subtitle text (e.g. "PNG image").
+ * @property {string} [copyValue] When set, the panel renders a copy
+ *   button next to the label. Clicking it (or pressing Cmd/Ctrl+C with
+ *   the item highlighted and no text selected) copies this value to the
+ *   clipboard and shows a success-tinted check icon for ~1.5s.
+ */
+
+/**
  * Detail data shown in the side panel when an item is focused.
  *
  * @typedef {Object} CommandPaletteItemDetail
- * @property {Array<CommandPaletteDetailPair>} pairs Key-value pairs to display.
+ * @property {Array<CommandPaletteDetailPair>} [pairs] Key-value pairs to display.
+ * @property {CommandPaletteItemDetailHeader} [header] Optional header rendered above the pairs.
  */
 
 /**
@@ -98,6 +115,9 @@
  * @property {string} [description] Short explanation shown in the command list.
  * @property {string} [placeholder] Input placeholder when mode is active (e.g., "Search users").
  * @property {Object} [icon] Codex icon object for the header when mode is active.
+ * @property {'list'|'gallery'} [layout='list'] Result rendering layout. `'list'` (default) renders a vertical list. `'gallery'` renders a tiled grid for thumbnail-driven content and widens the palette to fit. Mutually exclusive with `compactResults`.
+ * @property {boolean} [compactResults=false] Render results in a denser layout — small icon instead of thumbnail, description inline. Use for command-style modes whose items lack real thumbnails. Ignored in gallery layout.
+ * @property {KeyBinding[]} [keybindings] Optional mode-contributed keyboard bindings. Prepended onto the core binding list at dispatch time, so mode bindings win on key collisions within their own zone.
  * @property {StateContent} [emptyState] Content shown when the mode is active with no query. Falls back to default search messaging.
  * @property {function(string, Array?): StateContent} [noResults] Returns content shown when query produces no results. Receives the query string and optional tokens array. Falls back to default no-results messaging.
  * @property {TokenPattern|TokenPattern[]} [tokenPattern] Optional token detection pattern(s) for auto-tokenization.
@@ -129,6 +149,32 @@
  * @property {string} [description] Short explanation shown in the command list.
  * @property {PaletteHelp} [help] Optional content surfaced by the help overlay.
  * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection — executes the command action.
+ */
+
+/**
+ * A footer hint surfaced when its parent binding's `when` predicate
+ * passes. Bindings with `keys: []` are hint-only — the corresponding
+ * handler lives in a sibling binding entry.
+ *
+ * @typedef {Object} KeyBindingHint
+ * @property {string} msgKey i18n message key for the hint label.
+ * @property {string} kbd Keyboard glyph shown next to the label (e.g. '↵', '↑↓', '⌘C').
+ * @property {number} [order] Sort order within the footer (lower = leftmost).
+ */
+
+/**
+ * A single keyboard binding in the palette's binding registry. Both the
+ * dispatcher and the footer derive from this list, so a hint is visible
+ * iff its handler will fire — by construction.
+ *
+ * @typedef {Object} KeyBinding
+ * @property {string} id Unique binding identifier (used for debugging).
+ * @property {'input'|'action'} zone Which focus zone the binding applies to.
+ * @property {string[]} keys Event `key` values that fire `handle`. An empty array marks the binding as hint-only.
+ * @property {function(Object): boolean} when Predicate over the dispatch state — false suppresses both the handler and the hint.
+ * @property {function(Object, KeyboardEvent)} handle Called when a `keys` entry matches and `when` passes. Should call `event.preventDefault()` to claim the keystroke.
+ * @property {boolean} [worksDuringHelp] When true, the binding fires even with the help overlay open. Defaults to false.
+ * @property {KeyBindingHint|null} [hint] Footer hint to surface, or null to omit one.
  */
 
 /**
