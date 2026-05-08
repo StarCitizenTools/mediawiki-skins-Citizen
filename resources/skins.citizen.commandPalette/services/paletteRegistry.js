@@ -33,7 +33,14 @@ function createPaletteRegistry() {
 	 * @return {boolean} True if registration was successful, false otherwise.
 	 */
 	function register( handler ) {
-		if ( typeof handler !== 'object' || handler === null ) {
+		if ( handler === null ) {
+			mw.log.warn(
+				'[paletteRegistry] Invalid handler provided for registration: null. ' +
+				'Likely a `defineMode` / `defineCommand` call that hard-failed validation — check earlier console errors.'
+			);
+			return false;
+		}
+		if ( typeof handler !== 'object' ) {
 			mw.log.warn( '[paletteRegistry] Invalid handler provided for registration: not an object.' );
 			return false;
 		}
@@ -45,6 +52,38 @@ function createPaletteRegistry() {
 
 		if ( handlers.has( handlerId ) ) {
 			mw.log.warn( `[paletteRegistry] Handler "${ handlerId }" is already registered. Overwriting.` );
+		}
+
+		// Defensive registration warnings — defineMode catches these at
+		// build time, but raw object-literal modes (or third-party modes
+		// that bypass defineMode) bottleneck through here. Cheap to check;
+		// silent failures are expensive to debug.
+		if ( !Array.isArray( handler.triggers ) || handler.triggers.length === 0 ) {
+			mw.log.warn(
+				`[paletteRegistry] Handler "${ handlerId }" has no triggers — it cannot be activated.`
+			);
+		} else {
+			handler.triggers.forEach( ( trigger ) => {
+				const conflict = flatTriggerList.find(
+					( t ) => t.lowerTrigger === trigger.toLowerCase() && t.id !== handlerId
+				);
+				if ( conflict ) {
+					mw.log.warn(
+						`[paletteRegistry] Handler "${ handlerId }" trigger "${ trigger }" ` +
+						`collides with existing handler "${ conflict.id }". Last registration wins.`
+					);
+				}
+			} );
+		}
+
+		if (
+			typeof handler.getResults !== 'function' &&
+			typeof handler.onResultSelect !== 'function'
+		) {
+			mw.log.warn(
+				`[paletteRegistry] Handler "${ handlerId }" has neither \`getResults\` nor \`onResultSelect\` — ` +
+				'selecting it can never produce a useful action.'
+			);
 		}
 
 		handlers.set( handlerId, handler );
