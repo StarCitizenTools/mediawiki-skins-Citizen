@@ -13,6 +13,8 @@
 	"citizen-drawer-toggle": "Toggle menu",
 	"citizen-usermenu-toggle": "Toggle personal menu",
 	"citizen-preferences-toggle": "Toggle preferences menu",
+	"citizen-preferences-load-error": "Couldn't load preferences. Check your connection and try again.",
+	"citizen-preferences-load-retry": "Retry",
 	"citizen-search-toggle": "Toggle search",
 	"citizen-languages-toggle": "More languages",
 	"citizen-actions-more-toggle": "More actions",

@@ -60,23 +60,6 @@ function initBodyContent(
 }
 
 /**
- * Initialize preferences module when the preferences button is first clicked
- *
- * @param {Object} deps
- * @param {Document} deps.document
- * @param {Object} deps.mw
- * @return {void}
- */
-function initPreferences( { document, mw } ) {
-	document.getElementById( 'citizen-preferences-details' ).addEventListener( 'toggle', () => {
-		mw.loader.load( 'skins.citizen.preferences' );
-	},
-	{
-		once: true
-	} );
-}
-
-/**
  * @param {Window} window
  * @return {void}
  */
@@ -89,7 +72,8 @@ function main( window ) {
 		{ createLastModified } = require( './lastModified.js' ),
 		{ createShare } = require( './share.js' ),
 		setupObservers = require( './setupObservers.js' ),
-		{ createPerformanceMode } = require( './performance.js' );
+		{ createPerformanceMode } = require( './performance.js' ),
+		{ createPreferences } = require( './preferences.js' );
 
 	search.init( { window, document, mw } );
 	createEchoUpgrade( { document, mw } ).init();
@@ -109,7 +93,7 @@ function main( window ) {
 
 	// Preferences module
 	if ( config.wgCitizenEnablePreferences === true ) {
-		initPreferences( { document, mw } );
+		createPreferences( { document, mw } ).init();
 	}
 
 	// Defer non-essential tasks
