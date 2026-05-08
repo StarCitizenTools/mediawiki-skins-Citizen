@@ -19,6 +19,7 @@ const createActionMode = require( './modes/action.js' );
 const createUserMode = require( './modes/user.js' );
 const createCategoryMode = require( './modes/category.js' );
 const createHistoryMode = require( './modes/history.js' );
+const createFileMode = require( './modes/file.js' );
 const helpMode = require( './modes/help.js' );
 
 // Result decorator
@@ -50,6 +51,7 @@ function initApp( overlayEl, options ) {
 	paletteRegistry.register( createUserMode( mw.Api ) );
 	paletteRegistry.register( createCategoryMode( mw.Api ) );
 	paletteRegistry.register( createHistoryMode( mw.Api ) );
+	paletteRegistry.register( createFileMode( mw.Api ) );
 	paletteRegistry.register( helpMode );
 
 	const hookData = { register: paletteRegistry.register };
