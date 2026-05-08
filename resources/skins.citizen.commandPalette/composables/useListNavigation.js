@@ -3,11 +3,17 @@ const { ref } = require( 'vue' );
 /**
  * Composable for managing list navigation index state.
  *
+ * Optionally accepts an external highlightedIndex ref via options so the
+ * list composable can share state with a sibling grid composable. When
+ * shared, swapping between layouts preserves the user's selection.
+ *
  * @param {import('vue').Ref<Array>} itemsRef Reactive reference to the list of items.
+ * @param {Object} [options]
+ * @param {import('vue').Ref<number>} [options.highlightedIndex] External index ref.
  * @return {Object} Navigation API with index state and control functions.
  */
-function useListNavigation( itemsRef ) {
-	const highlightedIndex = ref( -1 );
+function useListNavigation( itemsRef, options ) {
+	const highlightedIndex = ( options && options.highlightedIndex ) || ref( -1 );
 
 	function highlightNext() {
 		if ( !itemsRef.value || itemsRef.value.length === 0 ) {
