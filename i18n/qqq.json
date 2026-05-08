@@ -91,6 +91,7 @@
 	"citizen-command-palette-back": "Aria label for the back button in the command palette header when a mode is active.",
 	"citizen-command-palette-heading-recent": "Label for the recently searched results in the command palette",
 	"citizen-command-palette-heading-related": "Label for the related results in the command palette",
+	"citizen-command-palette-load-error": "Toast notification surfaced via mw.notify when the command palette module fails to load.",
 	"citizen-command-palette-keyhint-enter-select": "Keyboard hint for the key to select an item in the command palette",
 	"citizen-command-palette-keyhint-enter-open": "Keyboard hint for the key to open a link in the command palette",
 	"citizen-command-palette-keyhint-enter-search": "Keyboard hint for the key to perform a search in the command palette",

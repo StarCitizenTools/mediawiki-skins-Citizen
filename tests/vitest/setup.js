@@ -20,6 +20,11 @@ Module._extensions[ '.mustache' ] = function ( mod, filename ) {
 const originalResolveFilename = Module._resolveFilename;
 const TEMPLATES_DIR = path.resolve( __dirname, '../../templates' );
 Module._resolveFilename = function ( request, parent, ...rest ) {
+	// Virtual ResourceLoader modules with bare names (no relative path),
+	// addressed by their module name from any consumer.
+	if ( request === 'mediawiki.page.ready' ) {
+		return path.resolve( __dirname, 'mocks/mediawikiPageReady.js' );
+	}
 	if ( parent && parent.filename &&
 		parent.filename.includes( 'skins.citizen.scripts' ) ) {
 		if ( request === './tableOfContentsConfig.json' ) {

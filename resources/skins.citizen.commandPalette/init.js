@@ -25,24 +25,26 @@ const helpMode = require( './modes/help.js' );
 const createAppendQueryActions = require( './utils/appendQueryActions.js' );
 
 /**
- * Initialize the command palette
+ * Mount the command palette into the provided overlay element.
  *
- * @return {void}
+ * Caller (commandPalette.js) owns the trigger lifecycle: this function
+ * only mounts. Opening is the caller's responsibility — calling
+ * `open()` after mount lets Vue's standard enter transition play, so
+ * the first trigger on every fresh page gets a real open animation
+ * rather than a snap-in.
+ *
+ * @param {HTMLElement} overlayEl
+ * @param {Object} [options]
+ * @param {Function} [options.onClose] Called when the palette is dismissed from inside (Esc, backdrop).
+ * @return {Object} mounted palette instance with `open(prefill?)` and `close()`
  */
-function initApp() {
-	const teleportTarget = require( 'mediawiki.page.ready' ).teleportTarget;
+function initApp( overlayEl, options ) {
+	const opts = options || {};
 
-	// We can't mount directly to the teleportTarget or it will break OOUI overlays
-	const overlay = document.createElement( 'div' );
-	overlay.classList.add( 'citizen-command-palette-overlay' );
-	teleportTarget.appendChild( overlay );
-
-	// 1. Create services
 	const recentItemsService = createRecentItems();
 	const searchClient = createRestSearchClient( mw.config.get( 'wgScriptPath' ) );
 	const paletteRegistry = createPaletteRegistry();
 
-	// 2. Register built-in modes
 	paletteRegistry.register( namespaceMode );
 	paletteRegistry.register( createActionMode( document, mw.Api ) );
 	paletteRegistry.register( createUserMode( mw.Api ) );
@@ -50,11 +52,9 @@ function initApp() {
 	paletteRegistry.register( createHistoryMode( mw.Api ) );
 	paletteRegistry.register( helpMode );
 
-	// 3. Fire hook for extension commands
 	const hookData = { register: paletteRegistry.register };
 	mw.hook( 'citizen.commandPalette.register' ).fire( hookData );
 
-	// Backward-compat: fire old hook with deprecation notice
 	mw.hook( 'skins.citizen.commandPalette.registerCommand' ).fire( {
 		registerCommand: function ( command ) {
 			mw.log.warn(
@@ -65,7 +65,6 @@ function initApp() {
 		}
 	} );
 
-	// Conditionally load extension-specific modes
 	if ( config.isSemanticMediaWikiEnabled ) {
 		mw.loader.using( 'skins.citizen.commandPalette.smw' ).then( ( req ) => {
 			const smwMode = req( 'skins.citizen.commandPalette.smw' );
@@ -75,7 +74,6 @@ function initApp() {
 		} );
 	}
 
-	// 4. Create providers
 	const recentItemsProvider = createRecentItemsProvider( recentItemsService );
 	const relatedArticlesProvider = createRelatedArticlesProvider( mw.loader );
 	const providers = [
@@ -83,10 +81,8 @@ function initApp() {
 		createSearchProvider( searchClient )
 	];
 
-	// 5. Create result decorator
 	const appendQueryActions = createAppendQueryActions( config );
 
-	// 6. Mount Vue app with provide
 	const app = Vue.createMwApp( App, {}, config );
 	app.provide( 'providers', providers );
 	app.provide( 'recentItemsService', recentItemsService );
@@ -99,35 +95,18 @@ function initApp() {
 	app.provide( 'getHandler', paletteRegistry.getHandler );
 	app.provide( 'getHelpCatalogItems', () => paletteRegistry.getCommandListItems()
 		.filter( ( item ) => item.source !== 'command:help' ) );
+	// Called from App.vue's close() so the orchestrator can hide its
+	// overlay wrapper and reset the trigger's `<details>` open state when
+	// the palette is dismissed from inside (Esc, backdrop click). Falls
+	// back to just hiding the wrapper if no callback was supplied.
+	const externalClose = ( typeof opts.onClose === 'function' ) ?
+		opts.onClose :
+		() => {
+			overlayEl.hidden = true;
+		};
+	app.provide( 'paletteExternalClose', externalClose );
 
-	const commandPalette = app.mount( overlay );
-
-	// 7. Wire up trigger button
-	setupTrigger( commandPalette );
+	return app.mount( overlayEl );
 }
 
-/**
- * Setup the button to open the command palette
- *
- * @param {Object} commandPalette The mounted Vue app instance.
- * @return {void}
- */
-function setupTrigger( commandPalette ) {
-	const details = document.getElementById( 'citizen-search-details' );
-	if ( !details ) {
-		return;
-	}
-
-	// Remove the search card from the DOM so it won't be triggered by the button
-	document.getElementById( 'citizen-search__card' )?.remove();
-
-	// Remove aria-details since citizen-search__card no longer exists
-	document.getElementById( 'citizen-search-summary' )?.removeAttribute( 'aria-details' );
-
-	details.open = false;
-	details.addEventListener( 'click', () => {
-		commandPalette.open();
-	} );
-}
-
-initApp();
+module.exports = { initApp };
