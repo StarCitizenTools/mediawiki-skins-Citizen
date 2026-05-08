@@ -115,6 +115,22 @@ mw.hook( 'citizen.commandPalette.register' ).add( function ( data ) {
 } );
 ```
 
+The hook payload exposes three things:
+
+| Field | Purpose |
+| :--- | :--- |
+| `register( entry )` | Add a mode or command to the palette. |
+| `defineMode( config )` | Validate a mode and fill in defaults. Returns the normalized config, or `null` if validation fails. |
+| `defineCommand( config )` | Same as `defineMode`, but for entries that fire an action immediately on selection. |
+
+Wrapping your entry with `defineMode` or `defineCommand` is optional — `register()` accepts plain objects too — but it catches mistakes at load time instead of letting them slip through silently. You get:
+
+- **Typo warnings.** Write `placholder` instead of `placeholder` and the console flags it. The field is kept on the config, so a newer Citizen version that knows about the new key can still use it.
+- **Sane defaults.** An unknown `layout` falls back to `'list'`, `compactResults` is coerced to a boolean, and `compactResults: true` paired with `layout: 'gallery'` is dropped (gallery has no rows to compact).
+- **Refusal on broken shapes.** Modes missing an `id`, with empty `triggers`, with non-string trigger entries, or without `getResults` return `null` instead of registering a broken entry.
+
+`register()` accepts `null` safely — it logs a warning and skips registration without touching other modes — so you can chain `data.register( data.defineMode( ... ) )` without a null guard.
+
 Check out these live examples from other wikis. To try them, visit the site, press `/` to open the palette, and type the command:
 
 <LinkGrid>
@@ -248,18 +264,16 @@ A command triggers an action directly when selected. Triggers should **not** end
 ::: details Toggle code
 
 ```js
-const myCommand = {
-    id: 'my-simple-command',
-    triggers: [ '/simple', '/sim' ],
-    description: 'Executes a simple action directly.',
-    onResultSelect: function ( item ) {
-        mw.notify( 'Simple command executed!' );
-        return { action: 'none' };
-    }
-};
-
 mw.hook( 'citizen.commandPalette.register' ).add( function ( data ) {
-    data.register( myCommand );
+    data.register( data.defineCommand( {
+        id: 'my-simple-command',
+        triggers: [ '/simple', '/sim' ],
+        description: 'Executes a simple action directly.',
+        onResultSelect: function ( item ) {
+            mw.notify( 'Simple command executed!' );
+            return { action: 'none' };
+        }
+    } ) );
 } );
 ```
 
@@ -272,61 +286,59 @@ A mode accepts a sub-query and returns dynamic results. Triggers **must** end wi
 ::: details Toggle code
 
 ```js
-const myMode = {
-    id: 'my-mode',
-    triggers: [ '/mymode:', '/mm:' ],
-    description: 'Shows results based on your input.',
-    placeholder: 'Search my items',
-    // icon: cdxIconMyIcon, // Optional Codex icon
-
-    // Shown when the mode is active but no query has been typed
-    emptyState: {
-        title: 'My custom mode',
-        description: 'Type something to search your items.'
-        // icon: cdxIconMyIcon // Optional Codex icon
-    },
-
-    // Shown when a query returns no results
-    noResults: function ( query ) {
-        return {
-            title: 'No items found',
-            description: 'Try a different search term.'
-            // icon: cdxIconMyIcon // Optional Codex icon
-        };
-    },
-
-    getResults: function ( subQuery ) {
-        // Return a Promise resolving to an array of result items
-        return new Promise( function ( resolve ) {
-            setTimeout( resolve, 150 ); // Simulate network delay
-        } ).then( function () {
-            if ( !subQuery ) {
-                return [];
-            }
-
-            return [
-                {
-                    id: 'subquery-result-1',
-                    label: 'Result for "' + subQuery + '"',
-                    description: 'First result.',
-                    url: mw.util.getUrl( subQuery ),
-                    type: 'command-subquery',
-                    highlightQuery: true
-                }
-            ];
-        } );
-    },
-
-    onResultSelect: function ( item ) {
-        if ( item.url ) {
-            return { action: 'navigate', payload: item.url };
-        }
-        return { action: 'none' };
-    }
-};
-
 mw.hook( 'citizen.commandPalette.register' ).add( function ( data ) {
-    data.register( myMode );
+    data.register( data.defineMode( {
+        id: 'my-mode',
+        triggers: [ '/mymode:', '/mm:' ],
+        description: 'Shows results based on your input.',
+        placeholder: 'Search my items',
+        // icon: cdxIconMyIcon, // Optional Codex icon
+
+        // Shown when the mode is active but no query has been typed
+        emptyState: {
+            title: 'My custom mode',
+            description: 'Type something to search your items.'
+            // icon: cdxIconMyIcon // Optional Codex icon
+        },
+
+        // Shown when a query returns no results
+        noResults: function ( query ) {
+            return {
+                title: 'No items found',
+                description: 'Try a different search term.'
+                // icon: cdxIconMyIcon // Optional Codex icon
+            };
+        },
+
+        getResults: function ( subQuery ) {
+            // Return a Promise resolving to an array of result items
+            return new Promise( function ( resolve ) {
+                setTimeout( resolve, 150 ); // Simulate network delay
+            } ).then( function () {
+                if ( !subQuery ) {
+                    return [];
+                }
+
+                return [
+                    {
+                        id: 'subquery-result-1',
+                        label: 'Result for "' + subQuery + '"',
+                        description: 'First result.',
+                        url: mw.util.getUrl( subQuery ),
+                        type: 'command-subquery',
+                        highlightQuery: true
+                    }
+                ];
+            } );
+        },
+
+        onResultSelect: function ( item ) {
+            if ( item.url ) {
+                return { action: 'navigate', payload: item.url };
+            }
+            return { action: 'none' };
+        }
+    } ) );
 } );
 ```
 

@@ -6,6 +6,7 @@ const config = require( './config.json' );
 const createRecentItems = require( './services/recentItems.js' );
 const createRestSearchClient = require( './services/searchClient.js' );
 const createPaletteRegistry = require( './services/paletteRegistry.js' );
+const { defineMode, defineCommand } = require( './services/defineMode.js' );
 
 // Provider factories
 const createSearchProvider = require( './providers/SearchProvider.js' );
@@ -54,7 +55,16 @@ function initApp( overlayEl, options ) {
 	paletteRegistry.register( createFileMode( mw.Api ) );
 	paletteRegistry.register( helpMode );
 
-	const hookData = { register: paletteRegistry.register };
+	// `defineMode` / `defineCommand` are exposed on the hook payload so
+	// extension authors get the same registration-time diagnostics that
+	// built-in modes do — typo warnings, layout/compactResults coercion,
+	// and hard-fails for missing-id/missing-getResults shapes. Using them
+	// stays optional; the registry still accepts plain object literals.
+	const hookData = {
+		register: paletteRegistry.register,
+		defineMode,
+		defineCommand
+	};
 	mw.hook( 'citizen.commandPalette.register' ).fire( hookData );
 
 	mw.hook( 'skins.citizen.commandPalette.registerCommand' ).fire( {
