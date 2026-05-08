@@ -25,6 +25,7 @@ const {
 	cdxIconPlay
 } = require( '../icons.json' );
 const config = require( '../config.json' );
+const { defineMode } = require( '../services/defineMode.js' );
 
 const FILE_NAMESPACE = 6;
 const RESULT_LIMIT = 50;
@@ -414,7 +415,7 @@ function createFileMode( ApiConstructor ) {
 		};
 	}
 
-	return {
+	return defineMode( {
 		id: 'file',
 		triggers: [ '/file:', '~' ],
 		label: mw.message( 'citizen-command-palette-command-file-label' ).text(),
@@ -439,7 +440,7 @@ function createFileMode( ApiConstructor ) {
 		},
 		getResults,
 		onResultSelect
-	};
+	} );
 }
 
 module.exports = createFileMode;

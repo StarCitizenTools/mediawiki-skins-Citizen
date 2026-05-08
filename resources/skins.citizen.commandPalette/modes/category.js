@@ -12,6 +12,7 @@
  */
 const { cdxIconTag, cdxIconArticle, cdxIconEdit } = require( '../icons.json' );
 const config = require( '../config.json' );
+const { defineMode } = require( '../services/defineMode.js' );
 
 const CATEGORY_NS_ID = 14;
 const CATEGORY_NS_NAME = 'Category';
@@ -220,7 +221,7 @@ function createCategoryMode( ApiConstructor ) {
 		return segments.join( ' / ' );
 	}
 
-	return {
+	return defineMode( {
 		id: 'category',
 		triggers: [ '/cat:', '#' ],
 		label: mw.message( 'citizen-command-palette-command-category-label' ).text(),
@@ -246,7 +247,7 @@ function createCategoryMode( ApiConstructor ) {
 		getResults,
 		onResultSelect,
 		headerLabel
-	};
+	} );
 }
 
 module.exports = createCategoryMode;

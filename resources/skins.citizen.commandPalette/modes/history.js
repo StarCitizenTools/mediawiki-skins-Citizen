@@ -12,6 +12,7 @@
  */
 const { cdxIconHistory } = require( '../icons.json' );
 const config = require( '../config.json' );
+const { defineMode } = require( '../services/defineMode.js' );
 
 const REV_LIMIT = 50;
 
@@ -337,7 +338,7 @@ function createHistoryMode( ApiConstructor ) {
 		};
 	}
 
-	return {
+	return defineMode( {
 		id: 'history',
 		triggers: [ '/hist:', '!' ],
 		label: mw.message( 'citizen-command-palette-command-history-label' ).text(),
@@ -362,7 +363,7 @@ function createHistoryMode( ApiConstructor ) {
 		},
 		getResults,
 		onResultSelect
-	};
+	} );
 }
 
 module.exports = createHistoryMode;
