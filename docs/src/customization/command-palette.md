@@ -23,10 +23,11 @@ The palette supports two kinds of entries:
 | `/action:` | `>` | Mode | Search for actions and special pages. |
 | `/user:` | `@` | Mode | Search for a user. |
 | `/cat:` | `#` | Mode | Find a category, then step inside to see its subcategories and pages. |
+| `/hist:` | `!` | Mode | Browse the current page's edit history and jump to a diff. |
 | `/smw:` | - | Mode | Query pages with Semantic MediaWiki Ask syntax. Only available when SMW is installed. |
 | `/help` | `?` | Command | Open the help overlay to browse every available mode. |
 
-Single-character aliases like `@`, `>`, `:`, and `?` can be typed directly to enter the mode or trigger the command instantly, without needing the `/` prefix.
+Single-character aliases like `@`, `>`, `:`, `#`, `!`, and `?` can be typed directly to enter the mode or trigger the command instantly, without needing the `/` prefix.
 
 ### Help overlay
 
@@ -67,6 +68,15 @@ The category mode helps you find a category and see what's inside it. Open it wi
 - **Pick a category** to step inside. The header turns into a breadcrumb (e.g. `Categories / Animals / Mammals`), and the list shows the category's subcategories first, then its pages. Keep typing to filter what's at the current level.
 - **<kbd>Backspace</kbd> on an empty input** backs out one level. At the top, <kbd>Backspace</kbd> closes the mode.
 - **Each result has action buttons** on the right — focus them with <kbd>→</kbd>. Categories offer **View** (the actual `Category:` page) and **Edit**; pages offer **Edit**.
+
+### Revision history
+
+The history mode lists recent edits to the current page so you can scan who changed what and jump to a diff. Open it with `/hist:` or `!`.
+
+- **An empty input** shows the last 50 revisions, newest first.
+- **Type to filter** by editor name or any text in the edit summary — either field can match.
+- **Press <kbd>↵</kbd>** on a revision to see what that edit changed (a diff against the previous revision). The **View** action button reads the page as it existed at that revision.
+- **Open a wiki page first.** On a special page (or anywhere without a real article), the mode shows an empty state.
 
 ### Semantic MediaWiki
 

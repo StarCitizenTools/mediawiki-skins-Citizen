@@ -67,6 +67,7 @@
 				v-for="item in metadata"
 				:key="item.label"
 				class="citizen-command-palette-list-item__metadata__item"
+				:class="item.status && `citizen-command-palette-list-item__metadata__item--status-${ item.status }`"
 			>
 				<cdx-icon
 					v-if="item.icon"
@@ -288,6 +289,18 @@ module.exports = exports = defineComponent( {
 
 			.cdx-icon {
 				color: var( --color-subtle );
+			}
+
+			&--status-success {
+				color: var( --color-success );
+				background-color: var( --background-color-success-subtle );
+				border-color: var( --border-color-success );
+			}
+
+			&--status-error {
+				color: var( --color-error );
+				background-color: var( --background-color-error-subtle );
+				border-color: var( --border-color-error );
 			}
 		}
 	}
