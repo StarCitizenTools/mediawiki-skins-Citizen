@@ -1,5 +1,5 @@
 const MODULE = 'skins.citizen.preferences';
-const INTENT_EVENTS = [ 'pointerenter', 'focus', 'touchstart' ];
+const { bindIntentPrefetch } = require( './intentPrefetch.js' );
 
 /**
  * @param {Object} deps
@@ -34,17 +34,8 @@ function createPreferences( { document, mw } ) {
 			errorEl.querySelector( '.citizen-preferences-error__retry' ) :
 			null;
 
-		let prefetched = false;
 		let loading = false;
 		let mounted = false;
-
-		function prefetch() {
-			if ( prefetched || mounted ) {
-				return;
-			}
-			prefetched = true;
-			mw.loader.load( MODULE );
-		}
 
 		function showSkeleton() {
 			if ( errorEl ) {
@@ -66,6 +57,8 @@ function createPreferences( { document, mw } ) {
 			}
 		}
 
+		const cancelPrefetch = bindIntentPrefetch( summary, MODULE, mw );
+
 		function load() {
 			if ( mounted || loading ) {
 				return;
@@ -77,6 +70,7 @@ function createPreferences( { document, mw } ) {
 				() => {
 					mounted = true;
 					loading = false;
+					cancelPrefetch();
 				},
 				() => {
 					showError();
@@ -84,10 +78,6 @@ function createPreferences( { document, mw } ) {
 				}
 			);
 		}
-
-		INTENT_EVENTS.forEach( ( evt ) => {
-			summary.addEventListener( evt, prefetch, { once: true, passive: true } );
-		} );
 
 		details.addEventListener( 'toggle', () => {
 			if ( details.open ) {
