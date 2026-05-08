@@ -126,6 +126,8 @@
 	"citizen-command-palette-command-category-label": "Label for the category command in the command palette command list.",
 	"citizen-command-palette-command-file-description": "Description for the file/media mode in the command palette command list.",
 	"citizen-command-palette-command-file-label": "Label for the file/media mode in the command palette command list.",
+	"citizen-command-palette-detail-copy-action": "Tooltip and aria-label for the copy-to-clipboard button rendered in the detail panel header (e.g. next to a file's name).",
+	"citizen-command-palette-detail-copy-feedback": "Tooltip text shown for ~1.5s on the copy-to-clipboard button after a successful copy.",
 	"citizen-command-palette-command-help-description": "Description for the help command in the command palette command list. Selecting it opens the in-palette help overlay.",
 	"citizen-command-palette-command-help-label": "Label for the help command in the command palette command list.",
 	"citizen-command-palette-command-history-description": "Description for the revision history mode in the command palette",

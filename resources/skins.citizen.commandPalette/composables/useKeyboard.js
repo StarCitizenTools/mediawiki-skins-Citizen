@@ -1,6 +1,12 @@
 const { computed, nextTick } = require( 'vue' );
 const { resolveBinding, resolveHints } = require( './useKeyboardBindings.js' );
 
+// Mac vs everywhere-else copy shortcut, computed once. Mac users
+// recognise ⌘C; Windows/Linux users recognise Ctrl+C.
+const IS_MAC = typeof navigator !== 'undefined' &&
+	/Mac|iPhone|iPad/i.test( navigator.platform || '' );
+const COPY_KBD = IS_MAC ? '⌘C' : 'Ctrl+C';
+
 /**
  * Core keybinding registry for the command palette.
  *
@@ -282,6 +288,19 @@ const coreBindings = [
 		hint: { msgKey: 'citizen-command-palette-keyhint-actions', kbd: '→', order: 30 }
 	},
 
+	// --- INPUT ZONE: copy header shortcut (hint-only) ---
+	// The actual handler lives at the top of handleKeydown, before the
+	// modifier-key early-return. This binding only contributes the
+	// footer hint, shown when the highlighted item declares a copyValue.
+	{
+		id: 'input-copy-header-hint',
+		zone: 'input',
+		keys: [],
+		when: ( state ) => state.highlightedItemHasCopyValue,
+		handle: () => {},
+		hint: { msgKey: 'citizen-command-palette-detail-copy-action', kbd: COPY_KBD, order: 35 }
+	},
+
 	// --- INPUT ZONE: help toggle ---
 	// Split into a handler (worksDuringHelp: true, so the same key closes help)
 	// and a hint-only sibling that lacks worksDuringHelp — isActive() then
@@ -477,6 +496,7 @@ function actionCount( state ) {
  * @param {import('vue').Ref<boolean>} [deps.helpVisible] Whether the help overlay is currently open.
  * @param {Function} [deps.onToggleHelp] Called to toggle the help overlay.
  * @param {Function} [deps.onCloseHelp] Called to close the help overlay.
+ * @param {Function} [deps.requestHeaderCopy] Called when Cmd/Ctrl+C should copy the highlighted item's `detail.header.copyValue`.
  * @return {Object} Keyboard handler and focus management methods.
  */
 function useKeyboard( deps ) {
@@ -621,6 +641,12 @@ function useKeyboard( deps ) {
 			highlightedItemHasActions: Boolean(
 				highlightedItem && highlightedItem.actions && highlightedItem.actions.length > 0
 			),
+			highlightedItemHasCopyValue: Boolean(
+				highlightedItem &&
+				highlightedItem.detail &&
+				highlightedItem.detail.header &&
+				highlightedItem.detail.header.copyValue
+			),
 			helpVisible: deps.helpVisible ? deps.helpVisible.value : false,
 			actionsFocused: actionNav.isActive.value,
 			onClose: deps.onClose,
@@ -652,7 +678,45 @@ function useKeyboard( deps ) {
 		} ) );
 	} );
 
+	/**
+	 * Whether a non-empty user selection exists anywhere in the palette.
+	 * Used by the copy shortcut to back off when the user actually wants
+	 * to copy a selection rather than the highlighted item's copyValue.
+	 *
+	 * @return {boolean}
+	 */
+	function hasTextSelection() {
+		const sel = typeof window !== 'undefined' && window.getSelection ?
+			window.getSelection() :
+			null;
+		return Boolean( sel && sel.toString().length > 0 );
+	}
+
 	function handleKeydown( event ) {
+		// Cmd/Ctrl+C: when nothing is selected and the highlighted item
+		// declares `detail.header.copyValue`, hijack the shortcut to copy
+		// that value. With a selection present, the browser's native copy
+		// wins so users keep their normal text-copy behaviour.
+		if (
+			( event.metaKey || event.ctrlKey ) &&
+			!event.altKey &&
+			!event.shiftKey &&
+			( event.key === 'c' || event.key === 'C' ) &&
+			!hasTextSelection() &&
+			deps.requestHeaderCopy
+		) {
+			const items = deps.items.value;
+			const idx = listNav.highlightedIndex.value;
+			const item = idx >= 0 && idx < items.length ? items[ idx ] : null;
+			const copyValue = item && item.detail && item.detail.header &&
+				item.detail.header.copyValue;
+			if ( copyValue ) {
+				event.preventDefault();
+				deps.requestHeaderCopy();
+				return;
+			}
+		}
+
 		// Ignore events with modifier keys (Shift is allowed for printable chars
 		// like @, >, :, ?).
 		if ( event.altKey || event.ctrlKey || event.metaKey ) {
