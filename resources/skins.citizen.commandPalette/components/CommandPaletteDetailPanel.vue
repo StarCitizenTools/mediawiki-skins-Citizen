@@ -22,6 +22,9 @@
 					:title="copyTooltip"
 					weight="quiet"
 					class="citizen-command-palette-detail-panel__header-copy"
+					:class="{
+						'citizen-command-palette-detail-panel__header-copy--copied': copied
+					}"
 					@click="onCopyClick"
 				>
 					<cdx-icon :icon="copied ? cdxIconCheck : cdxIconCopy" size="small"></cdx-icon>
@@ -183,6 +186,15 @@ module.exports = exports = defineComponent( {
 
 	&__header-copy {
 		flex-shrink: 0;
+
+		// Tint the check icon green during the post-copy feedback window
+		// to reinforce that the action succeeded. `!important` overrides
+		// CdxButton's own quiet-weight color rules, which are more
+		// specific. Reverts when `copied` flips back off and the icon
+		// returns to the clipboard glyph.
+		&--copied {
+			color: var( --color-success ) !important;
+		}
 	}
 
 	&__pairs {
