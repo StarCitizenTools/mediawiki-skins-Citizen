@@ -118,6 +118,14 @@ PHP-generated HTML (Mustache templates, `SkinMustache` output) is cached by the 
 
 This only applies to PHP-generated HTML. Client-rendered HTML (e.g. Vue components) is not parser-cached and does not need this treatment.
 
+#### Alternative: defensive JS fallback
+
+The two-commit pattern is additive — new state coexists with old during the deploy window. When a change *removes* a load or mount mechanism that the old HTML depends on, coexistence costs more (double-binding handlers across two flows) than the alternative.
+
+For those changes, the new JS detects when expected new HTML is missing (`getElementById(...) === null`) and reconstructs it at runtime as a one-time safety net. Single deploy, robust to any cache state.
+
+Track the fallback's removal as a GitHub issue: it must ship with the release that lands the migration, and can be removed in the next release.
+
 ### i18n
 
 - Any user-facing string needs a message key in `i18n/en.json`
