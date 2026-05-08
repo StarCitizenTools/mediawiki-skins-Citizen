@@ -1,8 +1,422 @@
 const { computed, nextTick } = require( 'vue' );
+const { resolveBinding, resolveHints } = require( './useKeyboardBindings.js' );
+
+/**
+ * Core keybinding registry for the command palette.
+ *
+ * Each binding is data: { id, zone, keys, when, worksDuringHelp, handle, hint }.
+ * Both the dispatcher and the footer hints derive from this list, so a hint is
+ * visible iff its handler will fire — by construction.
+ *
+ * Some entries are "hint-only" (empty `keys` array): they only contribute a
+ * footer label. The matching handlers live in sibling entries with `hint: null`.
+ * This pattern lets a single hint represent a group of keys (e.g. `↑↓` for
+ * ArrowUp/ArrowDown/Home/End).
+ */
+const coreBindings = [
+	// --- ACTION ZONE ---
+	{
+		id: 'action-select',
+		zone: 'action',
+		keys: [ 'Enter', ' ' ],
+		when: () => true,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.actionNav.clickFocused();
+		},
+		hint: { msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵', order: 10 }
+	},
+	{
+		id: 'action-prev',
+		zone: 'action',
+		keys: [ 'ArrowLeft' ],
+		when: () => true,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.actionNav.focusPrevious();
+		},
+		hint: null
+	},
+	{
+		id: 'action-next',
+		zone: 'action',
+		keys: [ 'ArrowRight' ],
+		when: () => true,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.actionNav.focusNext();
+		},
+		hint: null
+	},
+	{
+		id: 'action-back-to-list',
+		zone: 'action',
+		keys: [ 'ArrowUp', 'ArrowDown' ],
+		when: () => true,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.actionNav.deactivate();
+			if ( event.key === 'ArrowUp' ) {
+				state.listNav.highlightPrevious();
+			} else {
+				state.listNav.highlightNext();
+			}
+			state.requestInputFocus();
+		},
+		hint: null
+	},
+	{
+		id: 'action-escape',
+		zone: 'action',
+		keys: [ 'Escape' ],
+		when: () => true,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.actionNav.deactivate();
+			state.dispatchEscape( state, event );
+			state.focusInput();
+		},
+		hint: null
+	},
+	// Action-zone navigate hint variants. Mutually exclusive `when` clauses
+	// produce one of: `↑↓`, `↑↓←`, or `↑↓←→` depending on action count and
+	// focused index.
+	{
+		id: 'action-navigate-single',
+		zone: 'action',
+		keys: [],
+		when: ( state ) => actionCount( state ) <= 1,
+		handle: () => {},
+		hint: { msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓', order: 30 }
+	},
+	{
+		id: 'action-navigate-multi-last',
+		zone: 'action',
+		keys: [],
+		when: ( state ) => {
+			const count = actionCount( state );
+			return count > 1 && state.actionNav.focusedIndex.value >= count - 1;
+		},
+		handle: () => {},
+		hint: { msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓←', order: 30 }
+	},
+	{
+		id: 'action-navigate-multi-mid',
+		zone: 'action',
+		keys: [],
+		when: ( state ) => {
+			const count = actionCount( state );
+			return count > 1 && state.actionNav.focusedIndex.value < count - 1;
+		},
+		handle: () => {},
+		hint: { msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓←→', order: 30 }
+	},
+	{
+		id: 'action-return',
+		zone: 'action',
+		keys: [],
+		when: ( state ) => state.actionNav.focusedIndex.value === 0,
+		handle: () => {},
+		hint: { msgKey: 'citizen-command-palette-keyhint-return', kbd: '←', order: 20 }
+	},
+	{
+		id: 'action-escape-hint',
+		zone: 'action',
+		keys: [],
+		when: () => true,
+		handle: () => {},
+		hint: { msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc', order: 999 }
+	},
+
+	// --- INPUT ZONE: navigation handlers ---
+	{
+		id: 'input-arrow-down',
+		zone: 'input',
+		keys: [ 'ArrowDown' ],
+		when: () => true,
+		worksDuringHelp: true,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.navigateList( 'next' );
+		},
+		hint: null
+	},
+	{
+		id: 'input-arrow-up',
+		zone: 'input',
+		keys: [ 'ArrowUp' ],
+		when: () => true,
+		worksDuringHelp: true,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.navigateList( 'previous' );
+		},
+		hint: null
+	},
+	{
+		id: 'input-home',
+		zone: 'input',
+		keys: [ 'Home' ],
+		when: () => true,
+		worksDuringHelp: true,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.navigateList( 'first' );
+		},
+		hint: null
+	},
+	{
+		id: 'input-end',
+		zone: 'input',
+		keys: [ 'End' ],
+		when: () => true,
+		worksDuringHelp: true,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.navigateList( 'last' );
+		},
+		hint: null
+	},
+	{
+		id: 'input-navigate-hint',
+		zone: 'input',
+		keys: [],
+		when: ( state ) => state.items.length > 1,
+		handle: () => {},
+		hint: { msgKey: 'citizen-command-palette-keyhint-navigate', kbd: '↑↓', order: 20 }
+	},
+
+	// --- INPUT ZONE: Enter ---
+	{
+		id: 'input-enter-select',
+		zone: 'input',
+		keys: [ 'Enter' ],
+		when: ( state ) => state.highlightedIndex >= 0,
+		worksDuringHelp: true,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.onSelect( state.items[ state.highlightedIndex ] );
+		},
+		hint: { msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵', order: 10 }
+	},
+	{
+		id: 'input-enter-search',
+		zone: 'input',
+		keys: [ 'Enter' ],
+		when: ( state ) => state.highlightedIndex < 0,
+		handle: ( state, event ) => {
+			// Today's behavior: Enter with no highlight prevents default but
+			// fires no callback; the "Search" hint is shown for affordance.
+			event.preventDefault();
+		},
+		hint: { msgKey: 'citizen-command-palette-keyhint-enter-search', kbd: '↵', order: 10 }
+	},
+
+	// --- INPUT ZONE: ArrowRight to actions ---
+	// Handler requires the cursor at the end of the input. The hint is
+	// intentionally less strict so it shows whenever the highlighted item has
+	// actions (matches today's behavior).
+	{
+		id: 'input-arrow-right-to-actions',
+		zone: 'input',
+		keys: [ 'ArrowRight' ],
+		when: ( state ) => {
+			if ( !state.highlightedItemHasActions ) {
+				return false;
+			}
+			const el = state.inputElement;
+			if ( !el ) {
+				return false;
+			}
+			return el.selectionStart === el.value.length &&
+				el.selectionEnd === el.value.length;
+		},
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.actionNav.focusFirst();
+		},
+		hint: null
+	},
+	{
+		id: 'input-arrow-right-hint',
+		zone: 'input',
+		keys: [],
+		when: ( state ) => state.highlightedItemHasActions,
+		handle: () => {},
+		hint: { msgKey: 'citizen-command-palette-keyhint-actions', kbd: '→', order: 30 }
+	},
+
+	// --- INPUT ZONE: help toggle ---
+	// Split into a handler (worksDuringHelp: true, so the same key closes help)
+	// and a hint-only sibling that lacks worksDuringHelp — isActive() then
+	// filters the hint out while the overlay is open, hiding `?` from the
+	// footer without needing a redundant !helpVisible clause in `when`.
+	{
+		id: 'input-toggle-help',
+		zone: 'input',
+		keys: [ '?' ],
+		when: ( state ) => Boolean( state.onToggleHelp ) &&
+			!state.query &&
+			state.tokens.length === 0,
+		worksDuringHelp: true,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.onToggleHelp();
+		},
+		hint: null
+	},
+	{
+		id: 'input-toggle-help-hint',
+		zone: 'input',
+		keys: [],
+		when: ( state ) => Boolean( state.onToggleHelp ) &&
+			!state.query &&
+			state.tokens.length === 0,
+		handle: () => {},
+		hint: { msgKey: 'citizen-command-palette-command-help-label', kbd: '?', order: 40 }
+	},
+
+	// --- INPUT ZONE: Tab closes the palette ---
+	{
+		id: 'input-tab-close',
+		zone: 'input',
+		keys: [ 'Tab' ],
+		when: () => true,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.onClose();
+		},
+		hint: null
+	},
+
+	// --- INPUT ZONE: Escape (4 disjoint cases) ---
+	{
+		id: 'input-escape-close-help',
+		zone: 'input',
+		keys: [ 'Escape' ],
+		when: ( state ) => state.helpVisible && Boolean( state.onCloseHelp ),
+		worksDuringHelp: true,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.onCloseHelp();
+		},
+		hint: { msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc', order: 999 }
+	},
+	{
+		id: 'input-escape-clear-query',
+		zone: 'input',
+		keys: [ 'Escape' ],
+		when: ( state ) => !state.helpVisible && Boolean( state.query ),
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.onClearQuery();
+		},
+		hint: { msgKey: 'citizen-command-palette-keyhint-clear', kbd: 'esc', order: 999 }
+	},
+	{
+		id: 'input-escape-exit-mode',
+		zone: 'input',
+		keys: [ 'Escape' ],
+		when: ( state ) => !state.helpVisible && !state.query && Boolean( state.activeMode ),
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.onExitMode();
+		},
+		hint: { msgKey: 'citizen-command-palette-keyhint-exit', kbd: 'esc', order: 999 }
+	},
+	{
+		id: 'input-escape-close-palette',
+		zone: 'input',
+		keys: [ 'Escape' ],
+		when: ( state ) => !state.helpVisible && !state.query && !state.activeMode,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.onClose();
+		},
+		hint: { msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc', order: 999 }
+	},
+
+	// --- INPUT ZONE: Backspace (3 disjoint cases) ---
+	{
+		id: 'input-pop-mode-context',
+		zone: 'input',
+		keys: [ 'Backspace' ],
+		when: ( state ) => {
+			if ( !cursorAtStart( state ) ) {
+				return false;
+			}
+			return state.tokens.length === 0 &&
+				!state.query &&
+				state.modeContext.length > 0 &&
+				Boolean( state.onPopModeContext );
+		},
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.onPopModeContext();
+		},
+		hint: { msgKey: 'citizen-command-palette-keyhint-back', kbd: '⌫', order: 200 }
+	},
+	{
+		id: 'input-remove-selected-token',
+		zone: 'input',
+		keys: [ 'Backspace' ],
+		when: ( state ) => {
+			if ( !cursorAtStart( state ) ) {
+				return false;
+			}
+			return state.tokens.length > 0 &&
+				state.selectedTokenIndex >= 0 &&
+				Boolean( state.onRemoveToken );
+		},
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.onRemoveToken( state.selectedTokenIndex );
+		},
+		hint: { msgKey: 'citizen-command-palette-keyhint-remove-token', kbd: '⌫', order: 200 }
+	},
+	{
+		id: 'input-select-last-token',
+		zone: 'input',
+		keys: [ 'Backspace' ],
+		when: ( state ) => {
+			if ( !cursorAtStart( state ) ) {
+				return false;
+			}
+			return state.tokens.length > 0 && Boolean( state.onSelectToken );
+		},
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.onSelectToken( state.tokens.length - 1 );
+		},
+		hint: { msgKey: 'citizen-command-palette-keyhint-select-token', kbd: '⌫', order: 200 }
+	}
+];
+
+/**
+ * @param {Object} state
+ * @return {boolean}
+ */
+function cursorAtStart( state ) {
+	const el = state.inputElement;
+	return Boolean( el && el.selectionStart === 0 && el.selectionEnd === 0 );
+}
+
+/**
+ * @param {Object} state
+ * @return {number}
+ */
+function actionCount( state ) {
+	const item = state.highlightedItem;
+	return item && item.actions ? item.actions.length : 0;
+}
 
 /**
  * Centralized keyboard routing composable for the command palette.
- * Implements a state machine with INPUT and ACTIONS focus zones.
+ *
+ * Internally this wires reactive Vue refs into a plain state snapshot the
+ * pure resolver consumes. Both keydown dispatch and the footer hints derive
+ * from `activeBindings`, which prepends any `keybindings` array exported by
+ * the active mode onto `coreBindings` so mode bindings win on collisions.
  *
  * @param {Object} deps Dependencies.
  * @param {import('vue').Ref} deps.inputRef Ref to the header component (exposes focus(), getInputElement()).
@@ -34,6 +448,17 @@ function useKeyboard( deps ) {
 	const actionNav = deps.actionNav;
 
 	/**
+	 * Effective binding list: mode-contributed bindings (if any) prepended
+	 * onto `coreBindings`. Prepending means the mode wins on key collisions
+	 * within its own zone. `coreBindings` itself stays immutable.
+	 */
+	const activeBindings = computed( () => {
+		const mode = deps.activeMode.value;
+		const modeBindings = mode && Array.isArray( mode.keybindings ) ? mode.keybindings : [];
+		return modeBindings.concat( coreBindings );
+	} );
+
+	/**
 	 * The ID of the currently highlighted item, for aria-activedescendant.
 	 */
 	const activeDescendantId = computed( () => {
@@ -56,197 +481,16 @@ function useKeyboard( deps ) {
 		return Boolean( item && item.actions && item.actions.length > 0 );
 	} );
 
-	/**
-	 * Builds keyboard hints for when an action button is focused.
-	 *
-	 * @return {Array} Hint objects for the action zone.
-	 */
-	function getActionZoneHints() {
-		const hints = [
-			{ msgKey: 'citizen-command-palette-keyhint-enter-select', kbd: '↵' }
-		];
-
-		if ( actionNav.focusedIndex.value === 0 ) {
-			hints.push( {
-				msgKey: 'citizen-command-palette-keyhint-return',
-				kbd: '←'
-			} );
-		}
-
-		const highlightedIndex = listNav.highlightedIndex.value;
-		const item = highlightedIndex >= 0 ? deps.items.value[ highlightedIndex ] : null;
-		const actionCount = item?.actions?.length || 0;
-
-		let navKeys = '↑↓';
-		if ( actionCount > 1 ) {
-			navKeys += '←';
-			if ( actionNav.focusedIndex.value < actionCount - 1 ) {
-				navKeys += '→';
-			}
-		}
-		hints.push( { msgKey: 'citizen-command-palette-keyhint-navigate', kbd: navKeys } );
-
-		return hints;
-	}
-
-	/**
-	 * Builds keyboard hints for when the input or a list item is focused.
-	 *
-	 * @return {Array} Hint objects for the input zone.
-	 */
-	function getInputZoneHints() {
-		const enterMsgKey = listNav.highlightedIndex.value >= 0 ?
-			'citizen-command-palette-keyhint-enter-select' :
-			'citizen-command-palette-keyhint-enter-search';
-		const hints = [ { msgKey: enterMsgKey, kbd: '↵' } ];
-
-		if ( deps.items.value.length > 1 ) {
-			hints.push( {
-				msgKey: 'citizen-command-palette-keyhint-navigate',
-				kbd: '↑↓'
-			} );
-		}
-
-		if ( highlightedItemHasActions.value ) {
-			hints.push( {
-				msgKey: 'citizen-command-palette-keyhint-actions',
-				kbd: '→'
-			} );
-		}
-
-		// Show the help hint only when "?" would actually open help — empty
-		// input, no tokens, help not already visible. Mirrors the gate in
-		// handleInputZone so the hint appears exactly when the key fires.
-		const helpAlreadyOpen = deps.helpVisible && deps.helpVisible.value;
-		const inputEmpty = !deps.query.value &&
-			( !deps.tokens || deps.tokens.value.length === 0 );
-		if ( !helpAlreadyOpen && inputEmpty && deps.onToggleHelp ) {
-			hints.push( {
-				msgKey: 'citizen-command-palette-command-help-label',
-				kbd: '?'
-			} );
-		}
-
-		return hints;
-	}
-
-	/**
-	 * Mirrors the four-level logic in handleEscape(); keep in sync.
-	 */
-	const escHintMsgKey = computed( () => {
-		if ( deps.helpVisible && deps.helpVisible.value ) {
-			return 'citizen-command-palette-keyhint-close';
-		}
-		if ( deps.query.value ) {
-			return 'citizen-command-palette-keyhint-clear';
-		} else if ( deps.activeMode.value ) {
-			return 'citizen-command-palette-keyhint-exit';
-		}
-		return 'citizen-command-palette-keyhint-close';
-	} );
-
-	/**
-	 * Data-driven keyboard hints for the footer.
-	 * Each entry is { msgKey, kbd }.
-	 */
-	const keyboardHints = computed( () => {
-		const hints = actionNav.isActive.value ?
-			getActionZoneHints() : getInputZoneHints();
-
-		hints.push( {
-			msgKey: escHintMsgKey.value,
-			kbd: 'esc'
-		} );
-
-		return hints;
-	} );
-
-	/**
-	 * Four-level Escape: close help → clear query → exit mode → close palette.
-	 * Help takes precedence so users can peek at the overlay and dismiss it
-	 * without losing query/mode state.
-	 */
-	function handleEscape() {
-		if ( deps.helpVisible && deps.helpVisible.value && deps.onCloseHelp ) {
-			deps.onCloseHelp();
-			return;
-		}
-		if ( deps.query.value ) {
-			deps.onClearQuery();
-		} else if ( deps.activeMode.value ) {
-			deps.onExitMode();
-		} else {
-			deps.onClose();
-		}
-	}
-
 	function focusInput() {
-		deps.inputRef.value?.focus();
+		if ( deps.inputRef.value ) {
+			deps.inputRef.value.focus();
+		}
 	}
 
 	function requestInputFocus() {
 		nextTick( focusInput );
 	}
 
-	function getInputElement() {
-		const header = deps.inputRef.value;
-		if ( header && typeof header.getInputElement === 'function' ) {
-			return header.getInputElement();
-		}
-		return null;
-	}
-
-	/**
-	 * Handles Backspace on token chips: first press selects last chip,
-	 * second press removes the selected chip.
-	 *
-	 * @param {KeyboardEvent} event The keydown event.
-	 * @return {boolean} Whether the event was handled.
-	 */
-	function handleTokenBackspace( event ) {
-		const inputEl = getInputElement();
-		const isCursorAtStart = inputEl &&
-			inputEl.selectionStart === 0 &&
-			inputEl.selectionEnd === 0;
-		if ( !isCursorAtStart ) {
-			return false;
-		}
-
-		const tokensLength = deps.tokens ? deps.tokens.value.length : 0;
-		const freeTextEmpty = !deps.query || !deps.query.value;
-
-		if (
-			tokensLength === 0 &&
-			freeTextEmpty &&
-			deps.activeModeContext &&
-			deps.activeModeContext.value.length > 0 &&
-			deps.onPopModeContext
-		) {
-			event.preventDefault();
-			deps.onPopModeContext();
-			return true;
-		}
-
-		if ( !deps.tokens || !deps.onSelectToken || !deps.onRemoveToken ) {
-			return false;
-		}
-		if ( tokensLength === 0 ) {
-			return false;
-		}
-		event.preventDefault();
-		if ( deps.selectedTokenIndex.value >= 0 ) {
-			deps.onRemoveToken( deps.selectedTokenIndex.value );
-		} else {
-			deps.onSelectToken( tokensLength - 1 );
-		}
-		return true;
-	}
-
-	/**
-	 * Navigates the highlighted item list in a given direction and scrolls.
-	 *
-	 * @param {'next'|'previous'|'first'|'last'} direction Navigation direction.
-	 */
 	function navigateList( direction ) {
 		const methods = {
 			next: 'highlightNext',
@@ -260,213 +504,99 @@ function useKeyboard( deps ) {
 		} );
 	}
 
+	function getInputElement() {
+		const header = deps.inputRef.value;
+		if ( header && typeof header.getInputElement === 'function' ) {
+			return header.getInputElement();
+		}
+		return null;
+	}
+
 	/**
-	 * Handles keyboard events when focus is in the input zone.
+	 * Re-runs the input-zone Escape ladder from inside the action-zone Escape
+	 * binding. The action-zone handler deactivates first, then needs to fall
+	 * through to the same close-help/clear/exit/close logic the input zone uses.
 	 *
-	 * @param {KeyboardEvent} event The keydown event.
+	 * Lives inside the composable so it resolves against `activeBindings` —
+	 * mode-contributed bindings participate in the fallback too.
+	 *
+	 * @param {Object} state
+	 * @param {KeyboardEvent} event
 	 */
-	function handleInputZone( event ) {
-		// While help is visible, only navigation, selection, and dismissal are
-		// allowed. Other keys are swallowed so they don't enter modes, alter
-		// the query, or pop the mode-context stack underneath the overlay.
-		const helpIsVisible = deps.helpVisible && deps.helpVisible.value;
-		if ( helpIsVisible ) {
-			switch ( event.key ) {
-				case 'ArrowDown':
-					event.preventDefault();
-					navigateList( 'next' );
-					return;
-				case 'ArrowUp':
-					event.preventDefault();
-					navigateList( 'previous' );
-					return;
-				case 'Home':
-					event.preventDefault();
-					navigateList( 'first' );
-					return;
-				case 'End':
-					event.preventDefault();
-					navigateList( 'last' );
-					return;
-				case 'Enter':
-					event.preventDefault();
-					if ( listNav.highlightedIndex.value >= 0 ) {
-						deps.onSelect( deps.items.value[ listNav.highlightedIndex.value ] );
-					}
-					return;
-				case 'Escape':
-					event.preventDefault();
-					handleEscape();
-					return;
-				case '?':
-					if ( deps.onToggleHelp ) {
-						event.preventDefault();
-						deps.onToggleHelp();
-						return;
-					}
-					break;
-				default:
-					// Swallow all other keys while help is open.
-					if ( event.key.length === 1 || event.key === 'Backspace' ) {
-						event.preventDefault();
-					}
-					return;
-			}
-		}
-
-		// Typing with a chip selected: deselect the chip, let the character go to input
-		if (
-			deps.selectedTokenIndex &&
-			deps.onSelectToken &&
-			deps.selectedTokenIndex.value >= 0 &&
-			event.key.length === 1
-		) {
-			deps.onSelectToken( -1 );
-		}
-
-		// "?" toggles the help overlay when there is no in-progress input. Runs
-		// regardless of activeMode so users can peek at help mid-mode.
-		if (
-			event.key === '?' &&
-			!deps.query.value &&
-			( !deps.tokens || deps.tokens.value.length === 0 ) &&
-			deps.onToggleHelp
-		) {
-			event.preventDefault();
-			deps.onToggleHelp();
-			return;
-		}
-
-		if (
-			!deps.activeMode.value &&
-			!deps.query.value &&
-			event.key.length === 1 &&
-			deps.findModeByTrigger
-		) {
-			const mode = deps.findModeByTrigger( event.key );
-			if ( mode ) {
-				event.preventDefault();
-				deps.onEnterMode( mode );
-				return;
-			}
-		}
-
-		switch ( event.key ) {
-			case 'ArrowDown':
-				event.preventDefault();
-				navigateList( 'next' );
-				break;
-
-			case 'ArrowUp':
-				event.preventDefault();
-				navigateList( 'previous' );
-				break;
-
-			case 'Home':
-				event.preventDefault();
-				navigateList( 'first' );
-				break;
-
-			case 'End':
-				event.preventDefault();
-				navigateList( 'last' );
-				break;
-
-			case 'Enter':
-				event.preventDefault();
-				if ( listNav.highlightedIndex.value >= 0 ) {
-					deps.onSelect( deps.items.value[ listNav.highlightedIndex.value ] );
-				}
-				break;
-
-			case 'Tab':
-				deps.onClose();
-				event.preventDefault();
-				break;
-
-			case 'Escape':
-				event.preventDefault();
-				handleEscape();
-				break;
-
-			case 'Backspace':
-				handleTokenBackspace( event );
-				break;
-
-			case 'ArrowRight': {
-				const inputEl = getInputElement();
-				if ( inputEl && event.target === inputEl ) {
-					const atEnd = inputEl.selectionStart === inputEl.value.length &&
-						inputEl.selectionEnd === inputEl.value.length;
-					if ( atEnd && highlightedItemHasActions.value ) {
-						event.preventDefault();
-						actionNav.focusFirst();
-					}
-				}
-				break;
-			}
+	function dispatchEscape( state, event ) {
+		// Strip dispatchEscape from the cloned state so a mode-contributed
+		// Escape binding cannot recurse into us. A bad mode binding will
+		// throw a TypeError instead of looping silently — easier to diagnose.
+		const inputState = Object.assign( {}, state, {
+			actionsFocused: false,
+			dispatchEscape: null
+		} );
+		const binding = resolveBinding( inputState, { key: 'Escape' }, activeBindings.value );
+		if ( binding ) {
+			binding.handle( inputState, event );
 		}
 	}
 
 	/**
-	 * Handles keyboard events when focus is in the action zone.
+	 * Build a plain state snapshot for the resolver. Captures all refs at
+	 * dispatch time and exposes navigation helpers.
 	 *
-	 * @param {KeyboardEvent} event The keydown event.
+	 * @return {Object}
 	 */
-	function handleActionZone( event ) {
-		switch ( event.key ) {
-			case 'ArrowLeft':
-				event.preventDefault();
-				actionNav.focusPrevious();
-				break;
+	function buildState() {
+		const highlightedIndex = listNav.highlightedIndex.value;
+		const items = deps.items.value;
+		const highlightedItem = highlightedIndex >= 0 && highlightedIndex < items.length ?
+			items[ highlightedIndex ] :
+			null;
 
-			case 'ArrowRight':
-				event.preventDefault();
-				actionNav.focusNext();
-				break;
-
-			case 'ArrowUp':
-			case 'ArrowDown':
-				event.preventDefault();
-				actionNav.deactivate();
-				if ( event.key === 'ArrowUp' ) {
-					listNav.highlightPrevious();
-				} else {
-					listNav.highlightNext();
-				}
-				requestInputFocus();
-				break;
-
-			case 'Enter':
-			case ' ':
-				event.preventDefault();
-				actionNav.clickFocused();
-				break;
-
-			case 'Escape':
-				event.preventDefault();
-				actionNav.deactivate();
-				handleEscape();
-				focusInput();
-				break;
-
-			default:
-				// Typing keys redirect to input
-				if ( event.key.length === 1 || event.key === 'Backspace' || event.key === 'Delete' ) {
-					actionNav.deactivate();
-					focusInput();
-				}
-				break;
-		}
+		return {
+			query: deps.query.value,
+			tokens: deps.tokens ? deps.tokens.value : [],
+			selectedTokenIndex: deps.selectedTokenIndex ? deps.selectedTokenIndex.value : -1,
+			inputElement: getInputElement(),
+			modeContext: deps.activeModeContext ? deps.activeModeContext.value : [],
+			activeMode: deps.activeMode.value,
+			highlightedIndex: highlightedIndex,
+			items: items,
+			highlightedItem: highlightedItem,
+			highlightedItemHasActions: Boolean(
+				highlightedItem && highlightedItem.actions && highlightedItem.actions.length > 0
+			),
+			helpVisible: deps.helpVisible ? deps.helpVisible.value : false,
+			actionsFocused: actionNav.isActive.value,
+			onClose: deps.onClose,
+			onClearQuery: deps.onClearQuery,
+			onExitMode: deps.onExitMode,
+			onEnterMode: deps.onEnterMode,
+			onSelect: deps.onSelect,
+			onToggleHelp: deps.onToggleHelp,
+			onCloseHelp: deps.onCloseHelp,
+			onSelectToken: deps.onSelectToken,
+			onRemoveToken: deps.onRemoveToken,
+			onPopModeContext: deps.onPopModeContext,
+			findModeByTrigger: deps.findModeByTrigger,
+			listNav: listNav,
+			actionNav: actionNav,
+			focusInput: focusInput,
+			requestInputFocus: requestInputFocus,
+			navigateList: navigateList,
+			dispatchEscape: dispatchEscape
+		};
 	}
 
-	/**
-	 * Main keydown handler — attach to the palette root element.
-	 *
-	 * @param {KeyboardEvent} event The keydown event.
-	 */
+	const keyboardHints = computed( () => {
+		const state = buildState();
+		const zone = state.actionsFocused ? 'action' : 'input';
+		return resolveHints( state, zone, activeBindings.value ).map( ( hint ) => ( {
+			msgKey: hint.msgKey,
+			kbd: hint.kbd
+		} ) );
+	} );
+
 	function handleKeydown( event ) {
-		// Ignore events with modifier keys (allow Shift for printable characters like @, >, :)
+		// Ignore events with modifier keys (Shift is allowed for printable chars
+		// like @, >, :, ?).
 		if ( event.altKey || event.ctrlKey || event.metaKey ) {
 			return;
 		}
@@ -474,13 +604,77 @@ function useKeyboard( deps ) {
 			return;
 		}
 
-		// Determine which zone the event is from
-		const isActionFocused = event.target?.closest( '.citizen-command-palette-list-item__action' );
+		const state = buildState();
+		// The actual focus zone is determined by the event target (an action
+		// button), not just actionNav.isActive — the activation may lag in
+		// some test setups.
+		const isActionFocused = Boolean(
+			event.target &&
+			typeof event.target.closest === 'function' &&
+			event.target.closest( '.citizen-command-palette-list-item__action' )
+		);
+		state.actionsFocused = isActionFocused;
 
-		if ( isActionFocused ) {
-			handleActionZone( event );
-		} else {
-			handleInputZone( event );
+		// Typing with a chip selected: deselect the chip first, then let the
+		// character flow through to the dispatcher so it lands in the input.
+		if (
+			!state.actionsFocused &&
+			!state.helpVisible &&
+			deps.selectedTokenIndex &&
+			deps.onSelectToken &&
+			state.selectedTokenIndex >= 0 &&
+			event.key.length === 1
+		) {
+			deps.onSelectToken( -1 );
+			state.selectedTokenIndex = -1;
+		}
+
+		const binding = resolveBinding( state, event, activeBindings.value );
+		if ( binding ) {
+			binding.handle( state, event );
+			return;
+		}
+
+		// Help-mode swallow: while the overlay is up, eat printable keys and
+		// Backspace so they neither modify input nor trigger modes/tokens.
+		if ( state.helpVisible && ( event.key.length === 1 || event.key === 'Backspace' ) ) {
+			event.preventDefault();
+			return;
+		}
+
+		// Action-zone fallback: typing redirects to the input field.
+		if (
+			state.actionsFocused &&
+			(
+				event.key.length === 1 ||
+				event.key === 'Backspace' ||
+				event.key === 'Delete'
+			)
+		) {
+			actionNav.deactivate();
+			focusInput();
+			return;
+		}
+
+		// Mode-trigger fallback (Note C): a printable single-char with no active
+		// mode and empty query routes through findModeByTrigger. The set of
+		// trigger characters is open-ended, so it can't be enumerated as bindings.
+		// The `!state.helpVisible` guard makes help-mode protection explicit at
+		// this fallback rather than relying on the help-swallow fallback above
+		// firing first.
+		if (
+			!state.actionsFocused &&
+			!state.helpVisible &&
+			!state.activeMode &&
+			!state.query &&
+			event.key.length === 1 &&
+			deps.findModeByTrigger
+		) {
+			const mode = deps.findModeByTrigger( event.key );
+			if ( mode ) {
+				event.preventDefault();
+				deps.onEnterMode( mode );
+			}
 		}
 	}
 

@@ -286,6 +286,72 @@ describe( 'useKeyboard', () => {
 		} );
 	} );
 
+	describe( 'Backspace hints', () => {
+		function setupCursorAtStart() {
+			deps.inputRef.value.getInputElement = vi.fn( () => ( {
+				selectionStart: 0,
+				selectionEnd: 0,
+				value: '',
+				focus: vi.fn(),
+				closest: vi.fn( () => null )
+			} ) );
+		}
+
+		it( 'shows the Back hint when drilled with empty input and no tokens', () => {
+			setupCursorAtStart();
+			deps.activeModeContext = ref( [ { title: 'Category A' } ] );
+			deps.onPopModeContext = vi.fn();
+			deps.query.value = '';
+
+			keyboard = useKeyboard( deps );
+
+			expect( keyboard.keyboardHints.value.some(
+				( h ) => h.msgKey === 'citizen-command-palette-keyhint-back'
+			) ).toBe( true );
+		} );
+
+		it( 'shows the Remove tag hint when a token is selected', () => {
+			setupCursorAtStart();
+			deps.tokens = ref( [ { id: 't1', label: 'Foo' } ] );
+			deps.selectedTokenIndex = ref( 0 );
+			deps.onSelectToken = vi.fn();
+			deps.onRemoveToken = vi.fn();
+
+			keyboard = useKeyboard( deps );
+
+			expect( keyboard.keyboardHints.value.some(
+				( h ) => h.msgKey === 'citizen-command-palette-keyhint-remove-token'
+			) ).toBe( true );
+		} );
+
+		it( 'shows the Select tag hint when tokens are present and none selected', () => {
+			setupCursorAtStart();
+			deps.tokens = ref( [ { id: 't1', label: 'Foo' } ] );
+			deps.selectedTokenIndex = ref( -1 );
+			deps.onSelectToken = vi.fn();
+			deps.onRemoveToken = vi.fn();
+
+			keyboard = useKeyboard( deps );
+
+			expect( keyboard.keyboardHints.value.some(
+				( h ) => h.msgKey === 'citizen-command-palette-keyhint-select-token'
+			) ).toBe( true );
+		} );
+
+		it( 'omits Backspace hints in the action zone', () => {
+			setupCursorAtStart();
+			deps.activeModeContext = ref( [ { title: 'A' } ] );
+			deps.onPopModeContext = vi.fn();
+			actionNav.isActive.value = true;
+
+			keyboard = useKeyboard( deps );
+
+			expect( keyboard.keyboardHints.value.some(
+				( h ) => h.kbd === '⌫'
+			) ).toBe( false );
+		} );
+	} );
+
 	describe( 'action zone — Escape', () => {
 		it( 'should deactivate action navigation on Escape from action zone', () => {
 			actionNav.isActive.value = true;
@@ -295,6 +361,57 @@ describe( 'useKeyboard', () => {
 			keyboard.handleKeydown( createKeyEvent( 'Escape', actionButton ) );
 
 			expect( actionNav.deactivate ).toHaveBeenCalled();
+		} );
+	} );
+
+	describe( 'action-zone Escape delegates to input-zone Escape ladder', () => {
+		let actionTarget;
+
+		beforeEach( () => {
+			actionTarget = {
+				closest: vi.fn( ( selector ) => (
+					selector === '.citizen-command-palette-list-item__action' ? actionTarget : null
+				) )
+			};
+			actionNav.isActive.value = true;
+		} );
+
+		it( 'clears the query when query is non-empty', () => {
+			deps.query.value = 'hello';
+
+			keyboard = useKeyboard( deps );
+			keyboard.handleKeydown( createKeyEvent( 'Escape', actionTarget ) );
+
+			expect( actionNav.deactivate ).toHaveBeenCalled();
+			expect( deps.onClearQuery ).toHaveBeenCalled();
+			expect( deps.onExitMode ).not.toHaveBeenCalled();
+			expect( deps.onClose ).not.toHaveBeenCalled();
+		} );
+
+		it( 'exits the active mode when query is empty and a mode is active', () => {
+			deps.query.value = '';
+			deps.activeMode.value = { id: 'category' };
+
+			keyboard = useKeyboard( deps );
+			keyboard.handleKeydown( createKeyEvent( 'Escape', actionTarget ) );
+
+			expect( actionNav.deactivate ).toHaveBeenCalled();
+			expect( deps.onExitMode ).toHaveBeenCalled();
+			expect( deps.onClearQuery ).not.toHaveBeenCalled();
+			expect( deps.onClose ).not.toHaveBeenCalled();
+		} );
+
+		it( 'closes the palette when query is empty and no mode is active', () => {
+			deps.query.value = '';
+			deps.activeMode.value = null;
+
+			keyboard = useKeyboard( deps );
+			keyboard.handleKeydown( createKeyEvent( 'Escape', actionTarget ) );
+
+			expect( actionNav.deactivate ).toHaveBeenCalled();
+			expect( deps.onClose ).toHaveBeenCalled();
+			expect( deps.onClearQuery ).not.toHaveBeenCalled();
+			expect( deps.onExitMode ).not.toHaveBeenCalled();
 		} );
 	} );
 
@@ -573,6 +690,29 @@ describe( 'useKeyboard', () => {
 			expect( event.preventDefault ).toHaveBeenCalled();
 		} );
 
+		it( 'Backspace is swallowed while help is visible (does not remove or select tokens)', () => {
+			setupHelp( { helpVisible: true } );
+			deps.tokens = ref( [ { id: 't1', label: 'Talk:' } ] );
+			deps.selectedTokenIndex = ref( 0 );
+			deps.onRemoveToken = vi.fn();
+			deps.onSelectToken = vi.fn();
+			deps.inputRef.value.getInputElement = vi.fn( () => ( {
+				selectionStart: 0,
+				selectionEnd: 0,
+				value: '',
+				focus: vi.fn(),
+				closest: vi.fn( () => null )
+			} ) );
+			keyboard = useKeyboard( deps );
+			const event = createKeyEvent( 'Backspace' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onRemoveToken ).not.toHaveBeenCalled();
+			expect( deps.onSelectToken ).not.toHaveBeenCalled();
+			expect( event.preventDefault ).toHaveBeenCalled();
+		} );
+
 		it( 'escHintMsgKey is "close" while help is visible, even with non-empty query', () => {
 			setupHelp( { helpVisible: true, query: 'something' } );
 
@@ -581,6 +721,86 @@ describe( 'useKeyboard', () => {
 			expect( hints[ hints.length - 1 ] ).toEqual(
 				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc' }
 			);
+		} );
+	} );
+
+	describe( 'mode keybindings contribution', () => {
+		it( 'prepends mode bindings before core (mode wins on collision)', () => {
+			const modeHandler = vi.fn();
+			deps.activeMode.value = {
+				id: 'test',
+				keybindings: [ {
+					id: 'mode-enter-override',
+					zone: 'input',
+					keys: [ 'Enter' ],
+					when: () => true,
+					handle: modeHandler
+				} ]
+			};
+			listNav.highlightedIndex.value = 0;
+
+			keyboard = useKeyboard( deps );
+			keyboard.handleKeydown( createKeyEvent( 'Enter' ) );
+
+			expect( modeHandler ).toHaveBeenCalled();
+			expect( deps.onSelect ).not.toHaveBeenCalled();
+		} );
+
+		it( 'falls back to core when mode binding when() is false', () => {
+			deps.activeMode.value = {
+				id: 'test',
+				keybindings: [ {
+					id: 'mode-enter-noop',
+					zone: 'input',
+					keys: [ 'Enter' ],
+					when: () => false,
+					handle: vi.fn()
+				} ]
+			};
+			listNav.highlightedIndex.value = 0;
+
+			keyboard = useKeyboard( deps );
+			keyboard.handleKeydown( createKeyEvent( 'Enter' ) );
+
+			expect( deps.onSelect ).toHaveBeenCalled();
+		} );
+
+		it( 'is a no-op when mode has no keybindings', () => {
+			deps.activeMode.value = { id: 'no-bindings' };
+			listNav.highlightedIndex.value = 0;
+
+			keyboard = useKeyboard( deps );
+			keyboard.handleKeydown( createKeyEvent( 'Enter' ) );
+
+			expect( deps.onSelect ).toHaveBeenCalled();
+		} );
+
+		it( 'is a no-op when activeMode is null', () => {
+			deps.activeMode.value = null;
+			listNav.highlightedIndex.value = 0;
+
+			keyboard = useKeyboard( deps );
+			keyboard.handleKeydown( createKeyEvent( 'Enter' ) );
+
+			expect( deps.onSelect ).toHaveBeenCalled();
+		} );
+
+		it( 'merges mode hints into the keyboardHints output', () => {
+			deps.activeMode.value = {
+				id: 'test',
+				keybindings: [ {
+					id: 'mode-special',
+					zone: 'input',
+					keys: [ 'F1' ],
+					when: () => true,
+					handle: () => {},
+					hint: { msgKey: 'citizen-command-palette-keyhint-actions', kbd: 'F1', order: 50 }
+				} ]
+			};
+
+			keyboard = useKeyboard( deps );
+
+			expect( keyboard.keyboardHints.value.some( ( h ) => h.kbd === 'F1' ) ).toBe( true );
 		} );
 	} );
 } );
