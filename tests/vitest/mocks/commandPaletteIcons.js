@@ -10,6 +10,7 @@ module.exports = {
 	cdxIconArticles: 'M5 1a2 2 0 0 0-2 2v14',
 	cdxIconCode: 'M5 1a2 2 0 0 0-2 2v14',
 	cdxIconEdit: 'M16.77 8l1.94-2a1 1 0 0 0 0-1.41',
+	cdxIconHistory: 'M5 1a2 2 0 0 0-2 2v14',
 	cdxIconImageGallery: 'M5 1a2 2 0 0 0-2 2v14',
 	cdxIconListBullet: 'M5 1a2 2 0 0 0-2 2v14',
 	cdxIconPlay: 'M5 1a2 2 0 0 0-2 2v14',

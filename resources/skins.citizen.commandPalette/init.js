@@ -18,6 +18,7 @@ const namespaceMode = require( './modes/namespace.js' );
 const createActionMode = require( './modes/action.js' );
 const createUserMode = require( './modes/user.js' );
 const createCategoryMode = require( './modes/category.js' );
+const createHistoryMode = require( './modes/history.js' );
 const helpMode = require( './modes/help.js' );
 
 // Result decorator
@@ -46,6 +47,7 @@ function initApp() {
 	paletteRegistry.register( createActionMode( document, mw.Api ) );
 	paletteRegistry.register( createUserMode( mw.Api ) );
 	paletteRegistry.register( createCategoryMode( mw.Api ) );
+	paletteRegistry.register( createHistoryMode( mw.Api ) );
 	paletteRegistry.register( helpMode );
 
 	// 3. Fire hook for extension commands
