@@ -136,6 +136,8 @@
 	"citizen-command-palette-command-category-label": "Categories",
 	"citizen-command-palette-command-file-description": "Find images, PDFs, audio, video and other files",
 	"citizen-command-palette-command-file-label": "Files and media",
+	"citizen-command-palette-detail-copy-action": "Copy",
+	"citizen-command-palette-detail-copy-feedback": "Copied",
 	"citizen-command-palette-command-help-description": "Browse every available mode",
 	"citizen-command-palette-command-help-label": "Help",
 	"citizen-command-palette-command-history-description": "Browse this page's edit history and jump to a diff.",

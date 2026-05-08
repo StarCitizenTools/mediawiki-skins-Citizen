@@ -90,6 +90,7 @@
 								v-if="highlightedItemDetail"
 								class="citizen-command-palette__detail"
 								:detail="highlightedItemDetail"
+								:copy-trigger="copyTrigger"
 							></command-palette-detail-panel>
 						</Transition>
 					</template>
@@ -292,7 +293,10 @@ module.exports = exports = defineComponent( {
 			const items = orch.flatItems.value;
 			if ( index >= 0 && index < items.length ) {
 				const detail = items[ index ].detail;
-				if ( detail && detail.pairs && detail.pairs.length ) {
+				if ( detail && (
+					( detail.pairs && detail.pairs.length ) ||
+					detail.header
+				) ) {
 					return detail;
 				}
 			}
@@ -535,6 +539,15 @@ module.exports = exports = defineComponent( {
 			tokenInput.setFreeText( token.raw + tokenInput.freeText.value );
 		};
 
+		// Bumped by the keyboard's Cmd/Ctrl+C handler so the detail panel
+		// can run the same copy + feedback path the click handler uses.
+		// Counter rather than a boolean flag because two copies in a row
+		// must each fire — booleans wouldn't trigger the watcher again.
+		const copyTrigger = ref( 0 );
+		function requestHeaderCopy() {
+			copyTrigger.value++;
+		}
+
 		// Keyboard handler
 		const keyboard = useKeyboard( {
 			inputRef: searchHeader,
@@ -548,6 +561,7 @@ module.exports = exports = defineComponent( {
 			onClose: close,
 			query: orch.query,
 			activeMode: orch.activeMode,
+			requestHeaderCopy,
 			onClearQuery: () => {
 				tokenInput.clear();
 				orch.updateQuery( '' );
@@ -730,6 +744,7 @@ module.exports = exports = defineComponent( {
 			emptyStateContent,
 			// Detail panel
 			highlightedItemDetail,
+			copyTrigger,
 			// Methods
 			// eslint-disable-next-line vue/no-unused-properties -- Used externally by init.js
 			open,
