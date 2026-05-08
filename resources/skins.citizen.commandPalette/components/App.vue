@@ -14,6 +14,7 @@
 			v-if="isOpen"
 			ref="paletteRoot"
 			class="citizen-command-palette"
+			:data-palette-layout="paletteLayout"
 			@keydown="keyboard.handleKeydown"
 		>
 			<command-palette-header
@@ -63,6 +64,15 @@
 								:description="emptyStateContent.description"
 								:icon="emptyStateContent.icon"
 							></command-palette-empty-state>
+							<command-palette-gallery
+								v-else-if="isGalleryLayout && displayedItems.length > 0"
+								ref="galleryRef"
+								:sections="displayedItems"
+								:highlighted-item-index="highlightedItemIndex"
+								:set-item-ref="setItemRef"
+								@select="selectResult"
+								@hover="handleHover"
+							></command-palette-gallery>
 							<command-palette-list
 								v-else-if="displayedItems.length > 0"
 								:sections="displayedItems"
@@ -95,10 +105,12 @@
 <script>
 const { defineComponent, ref, nextTick, computed, watch, inject, onBeforeUnmount } = require( 'vue' );
 const useListNavigation = require( '../composables/useListNavigation.js' );
+const useGridNavigation = require( '../composables/useGridNavigation.js' );
 const useKeyboard = require( '../composables/useKeyboard.js' );
 const useProviderOrchestration = require( '../composables/useProviderOrchestration.js' );
 const useTokenizedInput = require( '../composables/useTokenizedInput.js' );
 const CommandPaletteList = require( './CommandPaletteList.vue' );
+const CommandPaletteGallery = require( './CommandPaletteGallery.vue' );
 const CommandPaletteEmptyState = require( './CommandPaletteEmptyState.vue' );
 const CommandPaletteFooter = require( './CommandPaletteFooter.vue' );
 const CommandPaletteHeader = require( './CommandPaletteHeader.vue' );
@@ -115,6 +127,7 @@ module.exports = exports = defineComponent( {
 	},
 	components: {
 		CommandPaletteList,
+		CommandPaletteGallery,
 		CommandPaletteEmptyState,
 		CommandPaletteDetailPanel,
 		CommandPaletteFooter,
@@ -145,7 +158,16 @@ module.exports = exports = defineComponent( {
 		const itemRefs = ref( new Map() );
 		const bodyContainer = ref( null );
 		const bodyViewport = ref( null );
+		const galleryRef = ref( null );
+		// Column count drives 2D grid navigation. Updated via ResizeObserver
+		// when the gallery is mounted. Defaults to 1 (list-equivalent) so
+		// the grid composable behaves correctly even before measurement.
+		const galleryColumnCount = ref( 1 );
 		let resizeObserver = null;
+		let galleryResizeObserver = null;
+		// Mirror of the gallery template ref's `repeat( auto-fill, minmax( 140px, 1fr ) )`.
+		// Keep this in sync with the value in CommandPaletteGallery.vue's stylesheet.
+		const GALLERY_MIN_TILE_WIDTH = 140;
 
 		/**
 		 * Sync the body container's height CSS variable to the viewport's
@@ -175,7 +197,27 @@ module.exports = exports = defineComponent( {
 			}
 		};
 
-		onBeforeUnmount( teardownResizeObserver );
+		const updateGalleryColumnCount = ( element ) => {
+			if ( !element ) {
+				return;
+			}
+			const width = element.clientWidth;
+			galleryColumnCount.value = Math.max(
+				1, Math.floor( width / GALLERY_MIN_TILE_WIDTH )
+			);
+		};
+
+		const teardownGalleryResizeObserver = () => {
+			if ( galleryResizeObserver ) {
+				galleryResizeObserver.disconnect();
+				galleryResizeObserver = null;
+			}
+		};
+
+		onBeforeUnmount( () => {
+			teardownResizeObserver();
+			teardownGalleryResizeObserver();
+		} );
 
 		// Provider orchestration (replaces Pinia searchStore)
 		const orchDeps = {
@@ -209,8 +251,41 @@ module.exports = exports = defineComponent( {
 			};
 		} );
 
-		// List navigation
-		const listNav = useListNavigation( orch.flatItems );
+		// List + grid navigation share a single highlightedIndex ref so the
+		// active selection is preserved across layout swaps (e.g. entering a
+		// gallery mode from a list mode and back).
+		const sharedHighlightedIndex = ref( -1 );
+		const listNav = useListNavigation( orch.flatItems, {
+			highlightedIndex: sharedHighlightedIndex
+		} );
+		const gridNav = useGridNavigation( orch.flatItems, galleryColumnCount, {
+			highlightedIndex: sharedHighlightedIndex
+		} );
+
+		const isGalleryLayout = computed(
+			() => Boolean( orch.activeMode.value && orch.activeMode.value.layout === 'gallery' )
+		);
+
+		// String form for the [data-palette-layout] attribute, which CSS
+		// targets to widen the modal in gallery layouts.
+		const paletteLayout = computed( () => isGalleryLayout.value ? 'gallery' : 'list' );
+
+		// Attach a ResizeObserver to the gallery container only while it is
+		// mounted. Vue sets `galleryRef` to the component proxy when the
+		// gallery enters the DOM and back to `null` when it leaves.
+		watch( galleryRef, ( newInstance, oldInstance ) => {
+			if ( oldInstance ) {
+				teardownGalleryResizeObserver();
+			}
+			if ( newInstance && newInstance.$el ) {
+				const element = newInstance.$el;
+				updateGalleryColumnCount( element );
+				galleryResizeObserver = new ResizeObserver(
+					() => updateGalleryColumnCount( element )
+				);
+				galleryResizeObserver.observe( element );
+			}
+		} );
 
 		const highlightedItemDetail = computed( () => {
 			const index = listNav.highlightedIndex.value;
@@ -466,6 +541,8 @@ module.exports = exports = defineComponent( {
 			itemRefs,
 			items: orch.flatItems,
 			listNav,
+			gridNav,
+			isGalleryLayout,
 			actionNav,
 			onSelect: selectResult,
 			onClose: close,
@@ -621,6 +698,9 @@ module.exports = exports = defineComponent( {
 			searchHeader,
 			bodyContainer,
 			bodyViewport,
+			galleryRef,
+			isGalleryLayout,
+			paletteLayout,
 			// Body height animation
 			setupResizeObserver,
 			teardownResizeObserver,
@@ -682,6 +762,36 @@ module.exports = exports = defineComponent( {
 	border: var( --border-base );
 	border-radius: var( --border-radius-medium );
 	box-shadow: var( --box-shadow-drop-xx-large );
+	// Steady-state width transition — when a mode flips the palette
+	// into gallery layout (or back), the modal eases between widths
+	// so the grid doesn't snap. The mount/unmount entrance and exit
+	// transitions override transition-property to transform+opacity,
+	// so this only fires on user-driven layout swaps.
+	transition-timing-function: var( --transition-timing-function-ease-out );
+	transition-duration: var( --transition-duration-medium );
+	transition-property: max-width;
+
+	// Modes that declare layout='gallery' (e.g. the file mode) get a wider
+	// frame so the tile grid can fit ~6 columns at the desktop breakpoint.
+	// In gallery layout the left pane (the tile grid) carries the visual
+	// weight, so it gets 60% of the row to the detail panel's 40% — flipped
+	// from the list default where rows are compact and the detail pane
+	// holds the rich content.
+	&[ data-palette-layout='gallery' ] {
+		max-width: 60rem;
+
+		.citizen-command-palette__body-viewport--has-detail {
+			@media ( min-width: @min-width-breakpoint-tablet ) {
+				.citizen-command-palette__results {
+					flex: 3;
+				}
+
+				.citizen-command-palette__detail {
+					flex: 2;
+				}
+			}
+		}
+	}
 	.mixin-citizen-frosted-glass;
 	.mixin-citizen-font-styles( 'small' );
 
