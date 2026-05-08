@@ -9,6 +9,7 @@
 			:highlighted-item-index="highlightedItemIndex"
 			:search-query="searchQuery"
 			:set-item-ref="setItemRef"
+			:compact="true"
 			@select="( result ) => $emit( 'select', result )"
 			@hover="( index ) => $emit( 'hover', index )"
 		></command-palette-list>

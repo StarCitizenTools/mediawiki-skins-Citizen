@@ -2,7 +2,7 @@
  * Semantic MediaWiki Ask query mode for the command palette.
  * Loaded conditionally only when SMW is installed.
  */
-const { cdxIconAdd, cdxIconListBullet, cdxIconTag, cdxIconWikitext } = require( './icons.json' );
+const { cdxIconAdd, cdxIconArticle, cdxIconListBullet, cdxIconTag, cdxIconWikitext } = require( './icons.json' );
 const config = require( './config.json' );
 const parseIncompleteCondition = require( './queryParser.js' );
 
@@ -144,7 +144,8 @@ function adaptSmwResult( subject, index ) {
 		id: 'citizen-command-palette-item-smw-' + index,
 		type: 'smw',
 		label: subject.fulltext,
-		url: subject.fullurl
+		url: subject.fullurl,
+		thumbnailIcon: cdxIconArticle
 	};
 	const detail = adaptPrintouts( subject.printouts );
 	if ( detail ) {
@@ -361,6 +362,7 @@ module.exports = {
 	id: 'smw',
 	triggers: [ '/smw:' ],
 	icon: cdxIconWikitext,
+	compactResults: true,
 	label: mw.message( 'citizen-command-palette-command-smw-label' ).text(),
 	description: mw.message( 'citizen-command-palette-command-smw-description' ).text(),
 	placeholder: mw.message( 'citizen-command-palette-mode-smw-placeholder' ).text(),
