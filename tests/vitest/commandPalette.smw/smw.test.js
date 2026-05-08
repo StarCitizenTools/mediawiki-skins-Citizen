@@ -334,13 +334,15 @@ describe( 'SMW mode', () => {
 				maxage: 1200,
 				smaxage: 1200
 			} );
-			expect( result ).toHaveLength( 1 );
-			expect( result[ 0 ] ).toMatchObject( {
-				id: 'citizen-command-palette-item-smw-category-0',
-				type: 'smw-category',
-				label: 'City',
-				highlightQuery: true
-			} );
+			expect( result ).toEqual( [
+				{
+					id: 'citizen-command-palette-item-smw-category-0',
+					type: 'smw-category',
+					thumbnailIcon: expect.any( String ),
+					label: 'City',
+					highlightQuery: true
+				}
+			] );
 		} );
 
 		it( 'should fetch value suggestions for incomplete value condition', async () => {
@@ -357,21 +359,24 @@ describe( 'SMW mode', () => {
 				maxage: 1200,
 				smaxage: 1200
 			} );
-			expect( result ).toHaveLength( 2 );
-			expect( result[ 0 ] ).toMatchObject( {
-				id: 'citizen-command-palette-item-smw-value-0',
-				type: 'smw-value',
-				label: 'Germany',
-				value: 'Located in',
-				highlightQuery: true
-			} );
-			expect( result[ 1 ] ).toMatchObject( {
-				id: 'citizen-command-palette-item-smw-value-1',
-				type: 'smw-value',
-				label: 'Greece',
-				value: 'Located in',
-				highlightQuery: true
-			} );
+			expect( result ).toEqual( [
+				{
+					id: 'citizen-command-palette-item-smw-value-0',
+					type: 'smw-value',
+					thumbnailIcon: expect.any( String ),
+					label: 'Germany',
+					value: 'Located in',
+					highlightQuery: true
+				},
+				{
+					id: 'citizen-command-palette-item-smw-value-1',
+					type: 'smw-value',
+					thumbnailIcon: expect.any( String ),
+					label: 'Greece',
+					value: 'Located in',
+					highlightQuery: true
+				}
+			] );
 		} );
 
 		it( 'should fetch property suggestions for incomplete printout', async () => {
@@ -390,9 +395,15 @@ describe( 'SMW mode', () => {
 				maxage: 1200,
 				smaxage: 1200
 			} );
-			expect( result ).toHaveLength( 1 );
-			expect( result[ 0 ].type ).toBe( 'smw-printout' );
-			expect( result[ 0 ].id ).toContain( 'smw-printout' );
+			expect( result ).toEqual( [
+				{
+					id: 'citizen-command-palette-item-smw-printout-0',
+					type: 'smw-printout',
+					thumbnailIcon: expect.any( String ),
+					label: 'Population',
+					highlightQuery: true
+				}
+			] );
 		} );
 
 		it( 'should fetch all properties for empty printout fragment', async () => {
@@ -466,13 +477,15 @@ describe( 'SMW mode', () => {
 					id: 'citizen-command-palette-item-smw-0',
 					type: 'smw',
 					label: 'Berlin',
-					url: 'https://example.org/wiki/Berlin'
+					url: 'https://example.org/wiki/Berlin',
+					thumbnailIcon: expect.any( String )
 				},
 				{
 					id: 'citizen-command-palette-item-smw-1',
 					type: 'smw',
 					label: 'Munich',
-					url: 'https://example.org/wiki/Munich'
+					url: 'https://example.org/wiki/Munich',
+					thumbnailIcon: expect.any( String )
 				}
 			] );
 		} );
