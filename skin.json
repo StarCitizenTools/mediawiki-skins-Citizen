@@ -339,6 +339,7 @@
 				"resources/skins.citizen.commandPalette/init.js",
 				"resources/skins.citizen.commandPalette/types.js",
 				"resources/skins.citizen.commandPalette/composables/useListNavigation.js",
+				"resources/skins.citizen.commandPalette/composables/useGridNavigation.js",
 				"resources/skins.citizen.commandPalette/composables/useProviderOrchestration.js",
 				"resources/skins.citizen.commandPalette/composables/useKeyboardBindings.js",
 				"resources/skins.citizen.commandPalette/composables/useKeyboard.js",
