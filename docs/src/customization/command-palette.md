@@ -24,10 +24,11 @@ The palette supports two kinds of entries:
 | `/user:` | `@` | Mode | Search for a user. |
 | `/cat:` | `#` | Mode | Find a category, then step inside to see its subcategories and pages. |
 | `/hist:` | `!` | Mode | Browse the current page's edit history and jump to a diff. |
+| `/file:` | `~` | Mode | Find images, PDFs, audio, video, and other files as a gallery. |
 | `/smw:` | - | Mode | Query pages with Semantic MediaWiki Ask syntax. Only available when SMW is installed. |
 | `/help` | `?` | Command | Open the help overlay to browse every available mode. |
 
-Single-character aliases like `@`, `>`, `:`, `#`, `!`, and `?` can be typed directly to enter the mode or trigger the command instantly, without needing the `/` prefix.
+Single-character aliases like `@`, `>`, `:`, `#`, `!`, `~`, and `?` can be typed directly to enter the mode or trigger the command instantly, without needing the `/` prefix.
 
 ### Help overlay
 
@@ -82,6 +83,18 @@ The history mode lists recent edits to the current page so you can scan who chan
 If users have the [Instant Diffs](https://www.mediawiki.org/wiki/Instant_Diffs) gadget enabled, activating a revision opens the gadget's preview dialog above the still-mounted palette, so they can dismiss it and pick another revision without losing their place. See [Extensions and gadgets](../config/extensions.md#gadget-enhancements) for details.
 :::
 
+### Files and media
+
+The file mode finds images, PDFs, audio, video, and other files on the wiki and renders them as a gallery of thumbnails. Open it with `/file:` or `~`.
+
+- **An empty input on a content page** shows the files used on the current page — a quick way to grab the filename of an image you're looking at without leaving the article. Off-article (or on pages with no file usage) the mode shows its idle empty state.
+- **Type a query** to search the wiki's media library. Results appear as tiles with a thumbnail (or a fallback icon for non-visual files like audio or archives).
+- **Arrow keys move 2D**: <kbd>←</kbd>/<kbd>→</kbd> step within a row, <kbd>↑</kbd>/<kbd>↓</kbd> jump between rows.
+- **The detail panel** on the right shows the highlighted file's type, dimensions, byte size, uploader, upload age, and license short-name (when available). A copy-to-clipboard button next to the filename — or <kbd>⌘C</kbd> / <kbd>Ctrl</kbd>+<kbd>C</kbd> — copies the filename for use in wikitext.
+- **Press <kbd>↵</kbd>** to open the file's `File:` description page.
+
+The mode matches file titles by prefix first, so typing the start of a filename works on every wiki regardless of search backend. If nothing matches by prefix, it falls back to a full-text search — which surfaces deeper hits when [CirrusSearch](https://www.mediawiki.org/wiki/Extension:CirrusSearch) is installed.
+
 ### Semantic MediaWiki
 
 When [Semantic MediaWiki](https://www.semantic-mediawiki.org/) is installed, the `/smw:` mode lets you run Ask queries interactively. Type conditions like `[[Category:City]]` or `[[Located in::Germany]]` — each completed `[[...]]` condition becomes a token chip, and matching pages appear as results.
@@ -131,6 +144,7 @@ Every entry must have at minimum an `id`, `triggers`, and `description`. If the 
 | `placeholder` | `string` | No | Input placeholder when mode is active (e.g., "Search users"). Modes only. |
 | `icon` | `Object` | No | Codex icon for the header when mode is active. Modes only. |
 | `compactResults` | `boolean` | No | Render results in a denser layout — a small icon instead of a thumbnail and the description inline beside the label. Use this for command-style modes whose items don't have real thumbnail images. Modes only. |
+| `layout` | `'list' \| 'gallery'` | No | Result layout. `'list'` (default) renders a vertical list. `'gallery'` renders a tiled grid for thumbnail-driven content like media browsers, and widens the palette to fit. Modes only. |
 | `getResults` | `function` | No | `(subQuery, signal?, tokens?, modeContext?) => Promise<Array>` — if provided, this entry is a mode. The optional fourth argument is the current [mode context](#mode-context) stack. |
 | `onResultSelect` | `function` | No | `(item) => { action, payload }` — handles selection of a result item. |
 | `headerLabel` | `function` | No | `(modeContext) => string \| null` — replaces the input placeholder with a custom label. Return `null` to fall back to the regular placeholder — useful for showing a breadcrumb only when the mode is drilled in. Typically used with [mode context](#mode-context). Modes only. |

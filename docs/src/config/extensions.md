@@ -26,10 +26,6 @@ $wgExtractsExtendRestSearch = true;
 
 Displays a short description under the page title and in command palette results. Takes priority over TextExtracts when set.
 
-### [MediaSearch](https://www.mediawiki.org/wiki/Extension:MediaSearch)
-
-Adds a media search action to command palette results. Works automatically when installed.
-
 ### [MobileFrontend](https://www.mediawiki.org/wiki/Extension:MobileFrontend)
 
 ::: warning Not recommended
