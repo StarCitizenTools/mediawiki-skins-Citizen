@@ -95,11 +95,28 @@ function htmlToText( html ) {
  * @return {{section: string|null, text: string}}
  */
 function parseSectionComment( comment ) {
-	const match = /^\s*\/\*\s*(.+?)\s*\*\/\s*(.*)$/.exec( comment || '' );
-	if ( match ) {
-		return { section: match[ 1 ], text: match[ 2 ] };
+	// String operations only — no regex. Earlier regex versions kept
+	// tripping S5852 on overlapping quantifiers. indexOf + slice + trim
+	// is O(n), no backtracking possible. MediaWiki's auto-generated
+	// section prefix is always at position 0, so no leading-whitespace
+	// tolerance is needed.
+	const input = comment || '';
+	if ( !input.startsWith( '/*' ) ) {
+		return { section: null, text: input };
 	}
-	return { section: null, text: comment || '' };
+	const closeIdx = input.indexOf( '*/', 2 );
+	if ( closeIdx === -1 ) {
+		return { section: null, text: input };
+	}
+	const section = input.slice( 2, closeIdx ).trim();
+	if ( section === '' ) {
+		return { section: null, text: input };
+	}
+	let textStart = closeIdx + 2;
+	if ( input.charAt( textStart ) === ' ' ) {
+		textStart++;
+	}
+	return { section, text: input.slice( textStart ) };
 }
 
 /**
