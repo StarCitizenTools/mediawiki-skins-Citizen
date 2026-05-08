@@ -83,7 +83,7 @@ function initApp( overlayEl, options ) {
 		createSearchProvider( searchClient )
 	];
 
-	const appendQueryActions = createAppendQueryActions( config );
+	const appendQueryActions = createAppendQueryActions();
 
 	const app = Vue.createMwApp( App, {}, config );
 	app.provide( 'providers', providers );

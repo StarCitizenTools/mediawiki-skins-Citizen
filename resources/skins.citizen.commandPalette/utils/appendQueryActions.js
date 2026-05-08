@@ -1,4 +1,4 @@
-const { cdxIconArticleSearch, cdxIconImageGallery, cdxIconEdit } = require( '../icons.json' );
+const { cdxIconArticleSearch, cdxIconEdit } = require( '../icons.json' );
 
 /**
  * Creates a decorator function that appends query action items to search results.
@@ -6,13 +6,11 @@ const { cdxIconArticleSearch, cdxIconImageGallery, cdxIconEdit } = require( '../
  * This replaces the former QueryActionProvider by converting its logic from a
  * provider into a pure result decorator. The returned function can be applied
  * to any items array to append contextual action items (fulltext search,
- * media search, page edit) based on the current query.
+ * page edit) based on the current query.
  *
- * @param {Object} config
- * @param {boolean} config.isMediaSearchExtensionEnabled Whether the MediaSearch extension is active.
  * @return {Function} A decorator function `(items, query) => decoratedItems`.
  */
-function createAppendQueryActions( config ) {
+function createAppendQueryActions() {
 	const isPageEditable = !!mw.config.get( 'wgRelevantPageIsProbablyEditable' );
 
 	const queryActionDefinitions = [
@@ -22,13 +20,6 @@ function createAppendQueryActions( config ) {
 			icon: cdxIconArticleSearch,
 			showItem: true,
 			getUrl: ( query ) => mw.util.getUrl( 'Special:Search', { search: query } )
-		},
-		{
-			id: 'media-search',
-			description: mw.message( 'citizen-command-palette-queryaction-media-search-description' ).text(),
-			icon: cdxIconImageGallery,
-			showItem: config.isMediaSearchExtensionEnabled,
-			getUrl: ( query ) => mw.util.getUrl( 'Special:MediaSearch', { search: query, type: 'image' } )
 		},
 		{
 			id: 'page-edit',
