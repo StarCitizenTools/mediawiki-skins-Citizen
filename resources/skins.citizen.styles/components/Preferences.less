@@ -1,0 +1,89 @@
+// Skeleton and error states for the lazy-loaded preferences module.
+// Visible from initial paint; replaced when Vue mounts inside
+// #citizen-preferences-content.
+
+.citizen-preferences {
+	min-width: 20rem;
+}
+
+.citizen-preferences-skeleton {
+	display: flex;
+	flex-direction: column;
+	gap: var( --space-sm );
+	min-height: 18rem;
+	padding: var( --space-md );
+
+	&__heading {
+		width: 5rem;
+		height: 0.625rem;
+		margin-block: var( --space-sm ) var( --space-xs );
+		border-radius: var( --border-radius-base );
+
+		&:first-child {
+			margin-block-start: 0;
+		}
+	}
+
+	&__row {
+		display: flex;
+		flex-direction: column;
+		gap: var( --space-xxs );
+		padding-block: var( --space-xxs );
+	}
+
+	&__label {
+		width: 55%;
+		height: var( --font-size-small );
+		border-radius: var( --border-radius-base );
+	}
+
+	&__description {
+		width: 80%;
+		height: var( --font-size-small );
+		border-radius: var( --border-radius-base );
+	}
+
+	&__heading,
+	&__label,
+	&__description {
+		background-color: var( --background-color-neutral );
+		background-image: linear-gradient( 90deg, transparent 0%, var( --background-color-interactive--hover ) 50%, transparent 100% );
+		background-repeat: no-repeat;
+		background-position: 200% 0;
+		background-size: 200% 100%;
+
+		@media ( prefers-reduced-motion: no-preference ) {
+			animation: citizen-preferences-skeleton-shimmer @animation-duration-medium linear infinite;
+		}
+	}
+}
+
+@keyframes citizen-preferences-skeleton-shimmer {
+	to {
+		background-position: -200% 0;
+	}
+}
+
+.citizen-preferences-error {
+	display: flex;
+	flex-direction: column;
+	gap: var( --space-sm );
+	align-items: center;
+	justify-content: center;
+	min-height: 12rem;
+	padding: var( --space-md );
+	text-align: center;
+
+	&__message {
+		margin: 0;
+		color: var( --color-subtle );
+	}
+}
+
+// Class-based `display: flex` rules above override the browser's default
+// `[hidden] { display: none }`. Restore it explicitly for both states so
+// the JS-driven `el.hidden = true` actually hides the element.
+.citizen-preferences-skeleton[ hidden ],
+.citizen-preferences-error[ hidden ] {
+	display: none;
+}

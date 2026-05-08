@@ -19,6 +19,8 @@
 	"citizen-drawer-toggle": "Tooltip of drawer menu toggle",
 	"citizen-usermenu-toggle": "Tooltip of personal menu toggle",
 	"citizen-preferences-toggle": "Tooltip of preferences menu toggle",
+	"citizen-preferences-load-error": "Error message shown in the preferences dropdown when the preferences ResourceLoader module fails to load.",
+	"citizen-preferences-load-retry": "Label of the retry button shown alongside the preferences load error.\n{{Identical|Retry}}",
 	"citizen-search-toggle": "Tooltip of search box toggle",
 	"citizen-languages-toggle": "Tooltip of languages menu toggle",
 	"citizen-actions-more-toggle": "Tooltip of more page actions menu toggle",
