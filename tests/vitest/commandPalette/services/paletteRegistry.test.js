@@ -46,10 +46,26 @@ describe( 'createPaletteRegistry', () => {
 			expect( result ).toBe( false );
 		} );
 
-		it( 'rejects null handler', () => {
+		it( 'rejects null handler with a null-specific warning', () => {
+			mw.log.warn.mockClear();
+
 			const result = registry.register( null );
 
 			expect( result ).toBe( false );
+			expect( mw.log.warn ).toHaveBeenCalledWith(
+				expect.stringContaining( 'null' )
+			);
+		} );
+
+		it( 'rejects non-object handler with a not-an-object warning', () => {
+			mw.log.warn.mockClear();
+
+			const result = registry.register( 'oops' );
+
+			expect( result ).toBe( false );
+			expect( mw.log.warn ).toHaveBeenCalledWith(
+				expect.stringContaining( 'not an object' )
+			);
 		} );
 
 		it( 'overwrites existing command with same id', () => {
@@ -60,6 +76,73 @@ describe( 'createPaletteRegistry', () => {
 			registry.register( replacement );
 
 			expect( registry.getHandler( 'test' ).description ).toBe( 'Replacement' );
+		} );
+
+		it( 'warns when triggers is missing or empty', () => {
+			mw.log.warn.mockClear();
+
+			registry.register( makeHandler( { id: 'no-trig', triggers: [] } ) );
+
+			expect( mw.log.warn ).toHaveBeenCalledWith(
+				expect.stringContaining( 'no triggers' )
+			);
+		} );
+
+		it( 'warns when a trigger collides with an already-registered one', () => {
+			registry.register( makeHandler( { id: 'first', triggers: [ '/x:' ] } ) );
+			mw.log.warn.mockClear();
+
+			registry.register( makeHandler( { id: 'second', triggers: [ '/x:' ] } ) );
+
+			expect( mw.log.warn ).toHaveBeenCalledWith(
+				expect.stringContaining( 'collides' )
+			);
+		} );
+
+		it( 'does not warn about self-collision when overwriting same id', () => {
+			registry.register( makeHandler( { id: 'same', triggers: [ '/x:' ] } ) );
+			mw.log.warn.mockClear();
+
+			registry.register( makeHandler( { id: 'same', triggers: [ '/x:' ] } ) );
+
+			// "already registered. Overwriting" warning is fine; the
+			// trigger-collision warning would be wrong (it's the same handler).
+			const collisionWarnings = mw.log.warn.mock.calls.filter(
+				( c ) => /collides/.test( c[ 0 ] )
+			);
+			expect( collisionWarnings ).toHaveLength( 0 );
+		} );
+
+		it( 'warns when a handler has neither getResults nor onResultSelect', () => {
+			mw.log.warn.mockClear();
+
+			registry.register( makeHandler( { id: 'no-op' } ) );
+
+			expect( mw.log.warn ).toHaveBeenCalledWith(
+				expect.stringContaining( 'never produce a useful action' )
+			);
+		} );
+
+		it( 'does not warn no-op when getResults is provided', () => {
+			mw.log.warn.mockClear();
+
+			registry.register( makeHandler( { id: 'mode', getResults: () => [] } ) );
+
+			const noOpWarnings = mw.log.warn.mock.calls.filter(
+				( c ) => /never produce a useful action/.test( c[ 0 ] )
+			);
+			expect( noOpWarnings ).toHaveLength( 0 );
+		} );
+
+		it( 'does not warn no-op when onResultSelect is provided', () => {
+			mw.log.warn.mockClear();
+
+			registry.register( makeHandler( { id: 'cmd', onResultSelect: () => ( { action: 'none' } ) } ) );
+
+			const noOpWarnings = mw.log.warn.mock.calls.filter(
+				( c ) => /never produce a useful action/.test( c[ 0 ] )
+			);
+			expect( noOpWarnings ).toHaveLength( 0 );
 		} );
 	} );
 
