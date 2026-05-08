@@ -1,31 +1,10 @@
 // @vitest-environment jsdom
 /* global document, window, KeyboardEvent */
 
-const mw = require( '../mocks/mw.js' );
-
-/**
- * Build a minimal search DOM structure with a details toggle.
- *
- * @return {{ details: HTMLDetailsElement }}
- */
 function buildSearchDom() {
-	document.body.innerHTML = `
-		<details id="citizen-search-details"></details>
-	`;
-
-	return {
-		details: document.getElementById( 'citizen-search-details' )
-	};
+	document.body.innerHTML = '<details id="citizen-search-details"></details>';
 }
 
-/**
- * Dispatch a keydown event from the given target element.
- * Because bindOpenOnSlash uses capture mode, the event reaches the
- * window listener during the capture phase with the correct target.
- *
- * @param {HTMLElement} target
- * @param {Object} opts KeyboardEvent init options
- */
 function dispatchKeydown( target, opts ) {
 	target.dispatchEvent( new KeyboardEvent( 'keydown', {
 		bubbles: true,
@@ -40,37 +19,35 @@ afterEach( () => {
 } );
 
 describe( 'search', () => {
+	let triggerOpen;
+	let init;
+
+	beforeEach( () => {
+		triggerOpen = vi.fn();
+		init = require( '../../../resources/skins.citizen.scripts/search.js' ).init;
+	} );
+
 	describe( 'initSearch', () => {
-		it( 'should load command palette module', () => {
-			const { init } = require( '../../../resources/skins.citizen.scripts/search.js' );
+		it( 'no longer requires an mw dependency (eager load is gone)', () => {
 			buildSearchDom();
-			mw.loader.load.mockClear();
 
-			init( { window, document, mw } );
-
-			expect( mw.loader.load ).toHaveBeenCalledWith( 'skins.citizen.commandPalette' );
+			expect( () => init( { window, document, triggerOpen } ) ).not.toThrow();
 		} );
 	} );
 
 	describe( 'keyboard shortcuts', () => {
-		it( 'should call details.click() when / key is pressed outside a form field', () => {
-			const { details } = buildSearchDom();
-			const clickSpy = vi.spyOn( details, 'click' );
-
-			const { init } = require( '../../../resources/skins.citizen.scripts/search.js' );
-			init( { window, document, mw } );
+		it( 'calls triggerOpen() when / is pressed outside a form field', () => {
+			buildSearchDom();
+			init( { window, document, triggerOpen } );
 
 			dispatchKeydown( document.body, { code: 'Slash' } );
 
-			expect( clickSpy ).toHaveBeenCalled();
+			expect( triggerOpen ).toHaveBeenCalled();
 		} );
 
-		it( 'should call details.click() on Ctrl+K and call preventDefault', () => {
-			const { details } = buildSearchDom();
-			const clickSpy = vi.spyOn( details, 'click' );
-
-			const { init } = require( '../../../resources/skins.citizen.scripts/search.js' );
-			init( { window, document, mw } );
+		it( 'calls triggerOpen() on Ctrl+K and calls preventDefault', () => {
+			buildSearchDom();
+			init( { window, document, triggerOpen } );
 
 			const event = new KeyboardEvent( 'keydown', {
 				code: 'KeyK',
@@ -82,16 +59,22 @@ describe( 'search', () => {
 
 			document.body.dispatchEvent( event );
 
-			expect( clickSpy ).toHaveBeenCalled();
+			expect( triggerOpen ).toHaveBeenCalled();
 			expect( preventDefaultSpy ).toHaveBeenCalled();
 		} );
 
-		it( 'should ignore shortcuts when target is a form field', () => {
-			const { details } = buildSearchDom();
-			const clickSpy = vi.spyOn( details, 'click' );
+		it( 'calls triggerOpen() on Alt+Shift+F', () => {
+			buildSearchDom();
+			init( { window, document, triggerOpen } );
 
-			const { init } = require( '../../../resources/skins.citizen.scripts/search.js' );
-			init( { window, document, mw } );
+			dispatchKeydown( document.body, { code: 'KeyF', altKey: true, shiftKey: true } );
+
+			expect( triggerOpen ).toHaveBeenCalled();
+		} );
+
+		it( 'ignores shortcuts when target is a form field', () => {
+			buildSearchDom();
+			init( { window, document, triggerOpen } );
 
 			const textInput = document.createElement( 'input' );
 			textInput.setAttribute( 'type', 'text' );
@@ -105,7 +88,6 @@ describe( 'search', () => {
 
 			const contentEditable = document.createElement( 'div' );
 			contentEditable.setAttribute( 'contenteditable', 'true' );
-			// JSDOM does not implement isContentEditable, so define it manually
 			Object.defineProperty( contentEditable, 'isContentEditable', { value: true } );
 			document.body.appendChild( contentEditable );
 
@@ -113,15 +95,12 @@ describe( 'search', () => {
 				dispatchKeydown( el, { code: 'Slash' } );
 			} );
 
-			expect( clickSpy ).not.toHaveBeenCalled();
+			expect( triggerOpen ).not.toHaveBeenCalled();
 		} );
 
-		it( 'should fire shortcuts when target is a checkbox or button', () => {
-			const { details } = buildSearchDom();
-			const clickSpy = vi.spyOn( details, 'click' );
-
-			const { init } = require( '../../../resources/skins.citizen.scripts/search.js' );
-			init( { window, document, mw } );
+		it( 'fires shortcuts when target is a checkbox or button', () => {
+			buildSearchDom();
+			init( { window, document, triggerOpen } );
 
 			const checkbox = document.createElement( 'input' );
 			checkbox.setAttribute( 'type', 'checkbox' );
@@ -129,14 +108,40 @@ describe( 'search', () => {
 
 			dispatchKeydown( checkbox, { code: 'Slash' } );
 
-			expect( clickSpy ).toHaveBeenCalledTimes( 1 );
+			expect( triggerOpen ).toHaveBeenCalledTimes( 1 );
 
 			const button = document.createElement( 'button' );
 			document.body.appendChild( button );
 
 			dispatchKeydown( button, { code: 'Slash' } );
 
-			expect( clickSpy ).toHaveBeenCalledTimes( 2 );
+			expect( triggerOpen ).toHaveBeenCalledTimes( 2 );
+		} );
+	} );
+
+	describe( 'auxiliary search triggers', () => {
+		it( 'calls triggerOpen with prefill text from data attribute', () => {
+			document.body.innerHTML =
+				'<details id="citizen-search-details"></details>' +
+				'<a class="citizen-search-trigger" data-citizen-search-prefill="hello">go</a>';
+
+			init( { window, document, triggerOpen } );
+
+			document.querySelector( '.citizen-search-trigger' ).click();
+
+			expect( triggerOpen ).toHaveBeenCalledWith( 'hello' );
+		} );
+
+		it( 'calls triggerOpen with null when no prefill', () => {
+			document.body.innerHTML =
+				'<details id="citizen-search-details"></details>' +
+				'<a class="citizen-search-trigger">go</a>';
+
+			init( { window, document, triggerOpen } );
+
+			document.querySelector( '.citizen-search-trigger' ).click();
+
+			expect( triggerOpen ).toHaveBeenCalledWith( null );
 		} );
 	} );
 } );

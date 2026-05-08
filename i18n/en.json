@@ -98,6 +98,8 @@
 	"citizen-command-palette-heading-recent": "Recent",
 	"citizen-command-palette-heading-related": "Related",
 
+	"citizen-command-palette-load-error": "The command palette couldn't be loaded. Please try again.",
+
 	"citizen-command-palette-keyhint-enter-select": "Select",
 	"citizen-command-palette-keyhint-enter-open": "Open",
 	"citizen-command-palette-keyhint-enter-search": "Search",

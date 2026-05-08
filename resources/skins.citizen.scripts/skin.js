@@ -73,9 +73,13 @@ function main( window ) {
 		{ createShare } = require( './share.js' ),
 		setupObservers = require( './setupObservers.js' ),
 		{ createPerformanceMode } = require( './performance.js' ),
-		{ createPreferences } = require( './preferences.js' );
+		{ createPreferences } = require( './preferences.js' ),
+		{ createCommandPalette } = require( './commandPalette.js' );
 
-	search.init( { window, document, mw } );
+	const commandPalette = createCommandPalette( { document, mw } );
+	commandPalette.init();
+
+	search.init( { window, document, triggerOpen: commandPalette.triggerOpen } );
 	createEchoUpgrade( { document, mw } ).init();
 	setupObservers.init( { document, window, mw, IntersectionObserver } );
 	dropdown.init( { document, window } );

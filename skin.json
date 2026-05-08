@@ -185,6 +185,7 @@
 					"name": "resources/skins.citizen.scripts/config.json",
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenResourceLoaderConfig"
 				},
+				"resources/skins.citizen.scripts/commandPalette.js",
 				"resources/skins.citizen.scripts/contentEnhancements.js",
 				"resources/skins.citizen.scripts/deferUntilFrame.js",
 				"resources/skins.citizen.scripts/dropdown.js",
@@ -227,6 +228,7 @@
 				}
 			],
 			"messages": [
+				"citizen-command-palette-load-error",
 				"citizen-share",
 				"citizen-share-copied"
 			],

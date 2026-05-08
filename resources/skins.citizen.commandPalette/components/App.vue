@@ -132,6 +132,9 @@ module.exports = exports = defineComponent( {
 		const getTokenPatterns = inject( 'getTokenPatterns' );
 		const getHelpCatalogItems = inject( 'getHelpCatalogItems', null );
 		const getHandler = inject( 'getHandler', null );
+		// Provided by commandPalette.js so the trigger orchestrator can hide
+		// its overlay wrapper after the palette closes from inside (Esc, backdrop).
+		const paletteExternalClose = inject( 'paletteExternalClose', null );
 
 		// Core refs
 		const isOpen = ref( false );
@@ -324,7 +327,13 @@ module.exports = exports = defineComponent( {
 		};
 
 		const close = () => {
+			if ( !isOpen.value ) {
+				return;
+			}
 			isOpen.value = false;
+			if ( typeof paletteExternalClose === 'function' ) {
+				paletteExternalClose();
+			}
 		};
 
 		const focusInput = () => {
@@ -543,8 +552,8 @@ module.exports = exports = defineComponent( {
 			}
 		}, { flush: 'post' } );
 
-		// This function is called externally from init.js
-		const open = () => {
+		// This function is called externally from commandPalette.js
+		const open = ( prefillText ) => {
 			isOpen.value = true;
 			orch.closeHelp();
 			if ( orch.activeMode.value ) {
@@ -553,6 +562,9 @@ module.exports = exports = defineComponent( {
 				orch.clearSearch();
 			}
 			tokenInput.clear();
+			if ( typeof prefillText === 'string' && prefillText.length > 0 ) {
+				tokenInput.setFreeText( prefillText );
+			}
 			nextTick( focusInput );
 		};
 
@@ -629,12 +641,6 @@ module.exports = exports = defineComponent( {
 	@media ( min-width: @max-width-breakpoint-tablet ) {
 		top: 3rem;
 		max-height: calc( 100vh - 3rem * 2 );
-	}
-
-	&-overlay {
-		position: absolute;
-		top: 0;
-		left: 0;
 	}
 
 	&-backdrop {
