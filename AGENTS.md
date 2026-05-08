@@ -95,6 +95,7 @@ To add a new skill, create `.agents/skills/<name>/SKILL.md` with frontmatter (`n
 - Use [Conventional Commits](https://www.conventionalcommits.org/) (e.g. `fix(tests):`, `feat:`, `refactor:`)
 - Use `ci:` or `chore:` for non-user-facing changes (tooling, config, dependencies)
 - Do **not** include emojis — a pre-commit hook adds them automatically based on the commit type prefix
+- Subject lines are surfaced in the auto-generated changelog. Write them in plain user-facing language, not implementation jargon — compare `suggest Category as a primitive in SMW property stage` (jargon) with `suggest Category in SMW mode` (clear). The body is where implementation detail belongs.
 
 ### Tests
 
