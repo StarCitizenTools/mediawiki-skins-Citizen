@@ -108,7 +108,7 @@
 	"citizen-command-palette-keyhint-actions": "Actions",
 	"citizen-command-palette-keyhint-return": "Return",
 	"citizen-command-palette-keyhint-back": "Back",
-	"citizen-command-palette-keyhint-remove-token": "Remove tag",
+	"citizen-command-palette-keyhint-edit-token": "Edit tag",
 	"citizen-command-palette-keyhint-select-token": "Select tag",
 
 	"citizen-command-palette-type-page": "Page",
