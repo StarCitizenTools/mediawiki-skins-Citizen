@@ -351,6 +351,7 @@
 				"resources/skins.citizen.commandPalette/services/recentItems.js",
 				"resources/skins.citizen.commandPalette/services/searchClient.js",
 				"resources/skins.citizen.commandPalette/services/paletteRegistry.js",
+				"resources/skins.citizen.commandPalette/services/defineMode.js",
 				"resources/skins.citizen.commandPalette/providers/createProvider.js",
 				"resources/skins.citizen.commandPalette/providers/PaletteCommandProvider.js",
 				"resources/skins.citizen.commandPalette/providers/RecentItemsProvider.js",
