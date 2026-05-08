@@ -48,9 +48,11 @@ When you enter a mode:
 - A back button appears to exit the mode
 - Escape follows the pattern: **close help (if open)** → **clear query** → **exit mode** → **close palette**
 
-### Tokenized input
+### Tags
 
-Some modes support **tokenized input**, where structured parts of the query are displayed as chips in the search field. For example, typing `Talk:` in the default search converts the prefix into a chip, so further input searches within the Talk namespace. Press backspace on an empty input to remove the last chip.
+Some modes turn parts of your query into tags. For example, typing `Talk:` in default search becomes a `Talk:` tag, so the rest of what you type searches within the Talk namespace.
+
+To change a tag, press <kbd>Backspace</kbd> on an empty input. The first press highlights the last tag (footer hint: **Select tag**). A second press turns it back into editable text (footer hint: **Edit tag**), so you can fix a typo without retyping the whole thing. Keep pressing to delete the text character by character.
 
 ## Built-in modes
 
