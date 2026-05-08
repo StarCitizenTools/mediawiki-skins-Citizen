@@ -71,12 +71,16 @@ The category mode helps you find a category and see what's inside it. Open it wi
 
 ### Revision history
 
-The history mode lists recent edits to the current page so you can scan who changed what and jump to a diff. Open it with `/hist:` or `!`.
+The history mode lists recent edits to the current page so you can scan who changed what and jump to a revision. Open it with `/hist:` or `!`.
 
 - **An empty input** shows the last 50 revisions, newest first.
 - **Type to filter** by editor name or any text in the edit summary — either field can match.
-- **Press <kbd>↵</kbd>** on a revision to see what that edit changed (a diff against the previous revision). The **View** action button reads the page as it existed at that revision.
+- **Press <kbd>↵</kbd>** on a revision to view the page as it existed at that point.
 - **Open a wiki page first.** On a special page (or anywhere without a real article), the mode shows an empty state.
+
+::: tip Pair with the Instant Diffs gadget
+If users have the [Instant Diffs](https://www.mediawiki.org/wiki/Instant_Diffs) gadget enabled, activating a revision opens the gadget's preview dialog above the still-mounted palette, so they can dismiss it and pick another revision without losing their place. See [Extensions and gadgets](../config/extensions.md#gadget-enhancements) for details.
+:::
 
 ### Semantic MediaWiki
 

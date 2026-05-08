@@ -10,7 +10,7 @@
  *   which has no parent in the database — distinct from "the oldest in
  *   the 50-rev window," which may still have a real parent outside it).
  */
-const { cdxIconHistory, cdxIconArticle } = require( '../icons.json' );
+const { cdxIconHistory } = require( '../icons.json' );
 const config = require( '../config.json' );
 
 const REV_LIMIT = 50;
@@ -202,15 +202,9 @@ function adaptRevisionItem( rev, parentRev, title, tagDisplayNames ) {
 		label: formatTimestamp( rev.timestamp ) + ' · ' + rev.user,
 		description: summary,
 		metadata: buildMetadata( rev, parentRev, section, tagDisplayNames ),
+		url: mw.util.getUrl( title, { oldid: rev.revid } ),
+		previewable: true,
 		highlightQuery: true,
-		actions: [
-			{
-				id: 'view',
-				label: mw.message( 'citizen-command-palette-mode-history-action-view' ).text(),
-				icon: cdxIconArticle,
-				url: mw.util.getUrl( title, { oldid: rev.revid } )
-			}
-		],
 		// Internal — used by onResultSelect. Not part of the public
 		// CommandPaletteItem shape; consumers should ignore these.
 		revid: rev.revid,

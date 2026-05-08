@@ -3,6 +3,7 @@
 		:is="url ? 'a' : 'button'"
 		:href="url || undefined"
 		:type="url ? undefined : 'button'"
+		:data-instantdiffs-link="( url && previewable ) ? 'event' : undefined"
 		class="citizen-command-palette-list-item__content"
 		:class="{ 'citizen-command-palette-list-item__content--compact': compact }"
 	>
@@ -152,6 +153,10 @@ module.exports = exports = defineComponent( {
 			default: false
 		},
 		compact: {
+			type: Boolean,
+			default: false
+		},
+		previewable: {
 			type: Boolean,
 			default: false
 		}

@@ -12,6 +12,7 @@
 	>
 		<div
 			v-if="isOpen"
+			ref="paletteRoot"
 			class="citizen-command-palette"
 			@keydown="keyboard.handleKeydown"
 		>
@@ -103,6 +104,7 @@ const CommandPaletteFooter = require( './CommandPaletteFooter.vue' );
 const CommandPaletteHeader = require( './CommandPaletteHeader.vue' );
 const CommandPaletteDetailPanel = require( './CommandPaletteDetailPanel.vue' );
 const CommandPaletteHelpView = require( './CommandPaletteHelpView.vue' );
+const instantDiffs = require( '../services/instantDiffs.js' );
 const { cdxIconArticleNotFound, cdxIconArticlesSearch } = require( '../icons.json' );
 
 // @vue/component
@@ -138,6 +140,7 @@ module.exports = exports = defineComponent( {
 
 		// Core refs
 		const isOpen = ref( false );
+		const paletteRoot = ref( null );
 		const searchHeader = ref( null );
 		const itemRefs = ref( new Map() );
 		const bodyContainer = ref( null );
@@ -352,6 +355,32 @@ module.exports = exports = defineComponent( {
 			switch ( selectionAction.action ) {
 				case 'navigate':
 					if ( selectionAction.payload ) {
+						// Previewable result with an in-place preview handler
+						// available: keep the palette open so the user can
+						// dismiss the preview and pick another row. Plain
+						// mouse clicks are already intercepted by the
+						// handler; keyboard activation synthesizes a click
+						// on the highlighted row's anchor so the handler
+						// can take over. Modifier or non-primary clicks
+						// (Ctrl, Cmd, Alt, Shift, middle) fall through to
+						// the existing navigate+close path so users keep
+						// their browser-level escape hatches.
+						if (
+							result.previewable &&
+							instantDiffs.isAvailable() &&
+							!result.modifierClick
+						) {
+							if ( !result.isMouseClick && paletteRoot.value ) {
+								const anchor = paletteRoot.value.querySelector(
+									'.citizen-command-palette-list-item--highlighted a'
+								);
+								if ( anchor ) {
+									instantDiffs.triggerForAnchor( anchor );
+								}
+							}
+							break;
+						}
+
 						// <a> tags are handled by the browser on mouse click, so we don't need to navigate.
 						if ( !result.isMouseClick ) {
 							window.location.href = selectionAction.payload;
@@ -550,7 +579,24 @@ module.exports = exports = defineComponent( {
 			} else if ( listNav.highlightedIndex.value < 0 || listNav.highlightedIndex.value >= newItems.length ) {
 				listNav.highlightedIndex.value = 0;
 			}
+
+			// Notify the preview handler (if any) so it can scan the
+			// freshly-rendered list for previewable anchors and attach
+			// its click listeners. The watcher's `flush: 'post'` already
+			// runs us after DOM updates from the items mutation.
+			if ( paletteRoot.value ) {
+				instantDiffs.processContext( paletteRoot.value );
+			}
 		}, { flush: 'post' } );
+
+		// Late-load handler: if the preview handler initializes after the
+		// palette is already open, re-process whatever is currently
+		// rendered so the existing anchors get wired up.
+		instantDiffs.onReady( () => {
+			if ( paletteRoot.value ) {
+				instantDiffs.processContext( paletteRoot.value );
+			}
+		} );
 
 		// This function is called externally from commandPalette.js
 		const open = ( prefillText ) => {
@@ -571,6 +617,7 @@ module.exports = exports = defineComponent( {
 		return {
 			// State
 			isOpen,
+			paletteRoot,
 			searchHeader,
 			bodyContainer,
 			bodyViewport,

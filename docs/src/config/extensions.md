@@ -1,10 +1,10 @@
 ---
-title: Extensions
-description: Extension enhancements and supported extensions for Citizen
+title: Extensions and gadgets
+description: Extensions and gadgets that integrate well with Citizen
 outline: [2, 3]
 ---
 
-# Extensions
+# Extensions and gadgets
 
 ## Extension enhancements
 
@@ -57,6 +57,18 @@ Adds an Ask query mode to the command palette. Type `/smw:` to build structured 
 ### [TemplateStylesExtender](https://www.mediawiki.org/wiki/Extension:TemplateStylesExtender)
 
 Only needed if you use [TemplateStyles](https://www.mediawiki.org/wiki/Extension:TemplateStyles). Enables CSS variables in TemplateStyles, including Citizen's design tokens.
+
+## Gadget enhancements
+
+Some on-wiki gadgets pair particularly well with Citizen. Unlike extensions, gadgets are installed wiki-side (see [Extension:Gadgets](https://www.mediawiki.org/wiki/Extension:Gadgets)) and enabled per-user from `Special:Preferences`.
+
+### [Instant Diffs](https://www.mediawiki.org/wiki/Instant_Diffs)
+
+Opens diffs and revisions in a dialog instead of navigating away. When installed, the command palette's revision history mode (`/hist:` or `!`) opens previews above the still-mounted palette so you can dismiss the dialog and pick another revision without losing your place.
+
+::: tip
+Press <kbd>←</kbd> / <kbd>→</kbd> inside the dialog to step through adjacent revisions, or <kbd>Esc</kbd> to close it. Without the gadget, palette activation navigates to the revision page as usual.
+:::
 
 ## Extension styles
 

@@ -221,14 +221,28 @@ describe( 'history mode', () => {
 			expect( minorBadge ).toBeUndefined();
 		} );
 
-		it( 'has exactly one action — view revision', async () => {
+		it( 'has the revision URL as a top-level url', async () => {
 			mockGet.mockResolvedValue( makeApiData( SAMPLE_REVISIONS ) );
 
 			const [ first ] = await mode.getResults( '', undefined );
 
-			expect( first.actions ).toHaveLength( 1 );
-			expect( first.actions[ 0 ].id ).toBe( 'view' );
-			expect( first.actions[ 0 ].url ).toContain( 'oldid=105' );
+			expect( first.url ).toContain( 'oldid=105' );
+		} );
+
+		it( 'is marked previewable so the row opts into Instant Diffs preview', async () => {
+			mockGet.mockResolvedValue( makeApiData( SAMPLE_REVISIONS ) );
+
+			const [ first ] = await mode.getResults( '', undefined );
+
+			expect( first.previewable ).toBe( true );
+		} );
+
+		it( 'does not produce any sub-actions (the row itself navigates)', async () => {
+			mockGet.mockResolvedValue( makeApiData( SAMPLE_REVISIONS ) );
+
+			const [ first ] = await mode.getResults( '', undefined );
+
+			expect( first.actions ).toBeUndefined();
 		} );
 	} );
 
