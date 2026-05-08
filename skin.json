@@ -189,6 +189,7 @@
 				"resources/skins.citizen.scripts/deferUntilFrame.js",
 				"resources/skins.citizen.scripts/dropdown.js",
 				"resources/skins.citizen.scripts/echo.js",
+				"resources/skins.citizen.scripts/intentPrefetch.js",
 				"resources/skins.citizen.scripts/lastModified.js",
 				"resources/skins.citizen.scripts/overflowElements/index.js",
 				"resources/skins.citizen.scripts/overflowElements/wrapper.js",
