@@ -3,6 +3,7 @@
  */
 const { CommandPaletteItem, PaletteMode, CommandPaletteExitWithQueryAction, CommandPaletteNoneAction } = require( '../types.js' );
 const { cdxIconArticles } = require( '../icons.json' );
+const { defineMode } = require( '../services/defineMode.js' );
 
 const MAIN_NAMESPACE_ID = '0';
 
@@ -113,7 +114,7 @@ function matchNamespacePrefix( text ) {
 }
 
 /** @type {PaletteMode} */
-module.exports = {
+module.exports = defineMode( {
 	id: 'namespace',
 	triggers: [ '/ns:', ':' ],
 	label: mw.message( 'citizen-command-palette-command-ns-label' ).text(),
@@ -144,4 +145,4 @@ module.exports = {
 		}
 		return { action: 'none' };
 	}
-};
+} );

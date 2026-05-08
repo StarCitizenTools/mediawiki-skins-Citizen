@@ -1,3 +1,5 @@
+const { defineCommand } = require( '../services/defineMode.js' );
+
 /**
  * Help command for the command palette.
  *
@@ -8,7 +10,7 @@
  *
  * @type {import('../types.js').PaletteCommand}
  */
-module.exports = {
+module.exports = defineCommand( {
 	id: 'help',
 	triggers: [ '/help', '?' ],
 	label: mw.message( 'citizen-command-palette-command-help-label' ).text(),
@@ -16,4 +18,4 @@ module.exports = {
 	onResultSelect() {
 		return { action: 'toggleHelp' };
 	}
-};
+} );
