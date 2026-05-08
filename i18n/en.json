@@ -202,7 +202,6 @@
 	"citizen-command-palette-mode-user-placeholder": "Search users",
 
 	"citizen-command-palette-queryaction-fulltext-search-description": "Search the full text of all pages",
-	"citizen-command-palette-queryaction-media-search-description": "Search for media files",
 	"citizen-command-palette-queryaction-page-edit-description": "Create or edit page",
 
 	"citizen-config-usenewtoken": "Opt-in switch for the new color token pipeline. Defaults to false; set to true to enable. The new pipeline becomes the default — and legacy is removed — in the next major Citizen release."

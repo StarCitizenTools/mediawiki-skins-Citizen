@@ -189,7 +189,6 @@
 	"citizen-command-palette-mode-user-noresults-title": "Title shown in the command palette user mode when the search returns no matching users",
 	"citizen-command-palette-mode-user-placeholder": "Placeholder text shown in the command palette input when the user search mode is active.",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Description for the fulltext search in the command palette",
-	"citizen-command-palette-queryaction-media-search-description": "Description for the media search in the command palette",
 	"citizen-command-palette-queryaction-page-edit-description": "Description for the page edit action in the command palette",
 	"citizen-config-usenewtoken": "Description for the {{Help|UseNewToken}} config option. Used in extension registration metadata."
 }

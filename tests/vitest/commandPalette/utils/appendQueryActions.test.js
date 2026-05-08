@@ -11,7 +11,7 @@ describe( 'createAppendQueryActions', () => {
 	} );
 
 	it( 'returns items unchanged when query is empty', () => {
-		const appendQueryActions = createAppendQueryActions( { isMediaSearchExtensionEnabled: true } );
+		const appendQueryActions = createAppendQueryActions();
 		const items = [ { id: 'existing-item' } ];
 
 		const result = appendQueryActions( items, '' );
@@ -20,7 +20,7 @@ describe( 'createAppendQueryActions', () => {
 	} );
 
 	it( 'appends fulltext search action item', () => {
-		const appendQueryActions = createAppendQueryActions( { isMediaSearchExtensionEnabled: false } );
+		const appendQueryActions = createAppendQueryActions();
 
 		const result = appendQueryActions( [], 'test query' );
 
@@ -32,19 +32,8 @@ describe( 'createAppendQueryActions', () => {
 		expect( fulltextAction.url ).toBe( '/wiki/Special:Search?search=test+query' );
 	} );
 
-	it( 'appends media search action when extension is enabled', () => {
-		const appendQueryActions = createAppendQueryActions( { isMediaSearchExtensionEnabled: true } );
-
-		const result = appendQueryActions( [], 'cat photos' );
-
-		const mediaAction = result.find( ( item ) => item.id === 'citizen-command-palette-item-media-search' );
-		expect( mediaAction ).toBeDefined();
-		expect( mediaAction.source ).toBe( 'queryAction:media-search' );
-		expect( mediaAction.url ).toBe( '/wiki/Special:MediaSearch?search=cat+photos&type=image' );
-	} );
-
-	it( 'does not append media search when extension is disabled', () => {
-		const appendQueryActions = createAppendQueryActions( { isMediaSearchExtensionEnabled: false } );
+	it( 'no longer emits the media-search action (handled by the file mode now)', () => {
+		const appendQueryActions = createAppendQueryActions();
 
 		const result = appendQueryActions( [], 'cat photos' );
 
@@ -53,7 +42,7 @@ describe( 'createAppendQueryActions', () => {
 	} );
 
 	it( 'preserves original items at the beginning', () => {
-		const appendQueryActions = createAppendQueryActions( { isMediaSearchExtensionEnabled: true } );
+		const appendQueryActions = createAppendQueryActions();
 		const originalItems = [
 			{ id: 'first-item', label: 'First' },
 			{ id: 'second-item', label: 'Second' }

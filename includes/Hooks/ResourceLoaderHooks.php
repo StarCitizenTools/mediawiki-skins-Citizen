@@ -61,7 +61,6 @@ class ResourceLoaderHooks {
 		$extensionRegistry = ExtensionRegistry::getInstance();
 
 		return [
-			'isMediaSearchExtensionEnabled' => $extensionRegistry->isLoaded( 'MediaSearch' ),
 			'isSemanticMediaWikiEnabled' => $extensionRegistry->isLoaded( 'SemanticMediaWiki' ),
 			'wgSearchSuggestCacheExpiry' => $config->get( MainConfigNames::SearchSuggestCacheExpiry )
 		];
