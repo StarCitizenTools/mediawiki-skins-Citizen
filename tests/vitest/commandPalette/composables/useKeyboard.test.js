@@ -310,7 +310,7 @@ describe( 'useKeyboard', () => {
 			) ).toBe( true );
 		} );
 
-		it( 'shows the Remove tag hint when a token is selected', () => {
+		it( 'shows the Edit tag hint when a token is selected', () => {
 			setupCursorAtStart();
 			deps.tokens = ref( [ { id: 't1', label: 'Foo' } ] );
 			deps.selectedTokenIndex = ref( 0 );
@@ -320,7 +320,7 @@ describe( 'useKeyboard', () => {
 			keyboard = useKeyboard( deps );
 
 			expect( keyboard.keyboardHints.value.some(
-				( h ) => h.msgKey === 'citizen-command-palette-keyhint-remove-token'
+				( h ) => h.msgKey === 'citizen-command-palette-keyhint-edit-token'
 			) ).toBe( true );
 		} );
 

@@ -372,7 +372,7 @@ const coreBindings = [
 			event.preventDefault();
 			state.onRemoveToken( state.selectedTokenIndex );
 		},
-		hint: { msgKey: 'citizen-command-palette-keyhint-remove-token', kbd: '⌫', order: 200 }
+		hint: { msgKey: 'citizen-command-palette-keyhint-edit-token', kbd: '⌫', order: 200 }
 	},
 	{
 		id: 'input-select-last-token',
