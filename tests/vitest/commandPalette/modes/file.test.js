@@ -165,7 +165,9 @@ describe( 'file mode', () => {
 			expect( params.gpsnamespace ).toBe( 6 );
 			expect( params.gpslimit ).toBe( 50 );
 			expect( params.prop ).toBe( 'imageinfo' );
-			expect( params.iiprop ).toBe( 'url|size|mime|mediatype|extmetadata|user|timestamp' );
+			// The list-stage iiprop is intentionally minimal — heavier fields
+			// (extmetadata, size, mime, user, timestamp) move to getItemDetail.
+			expect( params.iiprop ).toBe( 'url|mediatype' );
 			expect( params.iiurlwidth ).toBe( 300 );
 		} );
 
@@ -230,6 +232,22 @@ describe( 'file mode', () => {
 			expect( result.every( ( r ) => r.type === 'file' ) ).toBe( true );
 		} );
 
+		it( 'carries pageid on each item so getItemDetail can request it', async () => {
+			mockGet.mockResolvedValue( { query: { pages: SAMPLE_PAGES } } );
+
+			const result = await mode.getResults( 'thing', undefined );
+
+			expect( result.map( ( r ) => r.pageid ) ).toEqual( [ 100, 101, 102 ] );
+		} );
+
+		it( 'carries mediatype on each item so getItemDetail can derive friendly type', async () => {
+			mockGet.mockResolvedValue( { query: { pages: SAMPLE_PAGES } } );
+
+			const result = await mode.getResults( 'thing', undefined );
+
+			expect( result.map( ( r ) => r.mediatype ) ).toEqual( [ 'BITMAP', 'AUDIO', 'OFFICE' ] );
+		} );
+
 		it( 'strips the File: prefix from the displayed label', async () => {
 			mockGet.mockResolvedValue( { query: { pages: SAMPLE_PAGES } } );
 
@@ -263,122 +281,18 @@ describe( 'file mode', () => {
 			expect( audio ).toHaveProperty( 'thumbnailIcon' );
 		} );
 
-		it( 'builds detail.pairs for size, uploaded, license (type lives in the header)', async () => {
-			mockGet.mockResolvedValue( { query: { pages: SAMPLE_PAGES } } );
-
-			const [ first ] = await mode.getResults( 'thing', undefined );
-
-			const keys = first.detail.pairs.map( ( p ) => p.key );
-			expect( keys ).not.toContain( 'type' );
-			expect( keys ).toContain( 'size' );
-			expect( keys ).toContain( 'uploaded' );
-			expect( keys ).toContain( 'license' );
-		} );
-
-		it( 'builds detail.header with filename, friendly type, and copyValue', async () => {
+		it( 'builds a list-stage detail.header with filename + copyValue only (no description, no pairs)', async () => {
 			mockGet.mockResolvedValue( { query: { pages: SAMPLE_PAGES } } );
 
 			const result = await mode.getResults( 'thing', undefined );
 
 			const bitmap = result.find( ( r ) => r.label === 'Diagram.png' );
-			const audio = result.find( ( r ) => r.label === 'Lecture.mp3' );
 
 			expect( bitmap.detail.header.label ).toBe( 'Diagram.png' );
-			expect( bitmap.detail.header.description ).toBe( 'PNG image' );
 			expect( bitmap.detail.header.copyValue ).toBe( 'Diagram.png' );
-
-			expect( audio.detail.header.label ).toBe( 'Lecture.mp3' );
-			expect( audio.detail.header.description ).toBe( 'MPEG audio' );
-			expect( audio.detail.header.copyValue ).toBe( 'Lecture.mp3' );
-		} );
-
-		it( 'formats size as "<dim> × <dim>, <bytes>" for visual files', async () => {
-			mockGet.mockResolvedValue( { query: { pages: SAMPLE_PAGES } } );
-
-			const [ first ] = await mode.getResults( 'thing', undefined );
-
-			const sizePair = first.detail.pairs.find( ( p ) => p.key === 'size' );
-			expect( sizePair.value ).toContain( '1280 × 960' );
-			expect( sizePair.value ).toMatch( /KB|MB/ );
-		} );
-
-		it( 'formats size as bytes-only for non-visual files', async () => {
-			mockGet.mockResolvedValue( { query: { pages: SAMPLE_PAGES } } );
-
-			const result = await mode.getResults( 'thing', undefined );
-
-			const audio = result.find( ( r ) => r.label === 'Lecture.mp3' );
-			const sizePair = audio.detail.pairs.find( ( p ) => p.key === 'size' );
-			expect( sizePair.value ).not.toContain( '×' );
-			expect( sizePair.value ).toMatch( /MB$/ );
-		} );
-
-		it( 'omits the license pair when extmetadata.LicenseShortName is missing', async () => {
-			mockGet.mockResolvedValue( { query: { pages: SAMPLE_PAGES } } );
-
-			const result = await mode.getResults( 'thing', undefined );
-
-			const audio = result.find( ( r ) => r.label === 'Lecture.mp3' );
-			const licensePair = audio.detail.pairs.find( ( p ) => p.key === 'license' );
-			expect( licensePair ).toBeUndefined();
-		} );
-
-		it( 'derives a friendly type label from mime + mediatype (rendered as header subtitle)', async () => {
-			mockGet.mockResolvedValue( { query: { pages: SAMPLE_PAGES } } );
-
-			const result = await mode.getResults( 'thing', undefined );
-
-			const bitmap = result.find( ( r ) => r.label === 'Diagram.png' );
-			const audio = result.find( ( r ) => r.label === 'Lecture.mp3' );
-			const office = result.find( ( r ) => r.label === 'Manual.pdf' );
-
-			expect( bitmap.detail.header.description ).toBe( 'PNG image' );
-			expect( audio.detail.header.description ).toBe( 'MPEG audio' );
-			expect( office.detail.header.description ).toBe( 'PDF document' );
-		} );
-
-		it( 'preserves brand casing for WebM and WebP subtypes', async () => {
-			const pages = {
-				1: {
-					pageid: 1,
-					ns: 6,
-					title: 'File:Demo.webm',
-					index: 1,
-					imageinfo: [ {
-						url: '/wiki/File:Demo.webm',
-						size: 25000,
-						width: 320,
-						height: 240,
-						mime: 'video/webm',
-						mediatype: 'VIDEO',
-						extmetadata: {}
-					} ]
-				},
-				2: {
-					pageid: 2,
-					ns: 6,
-					title: 'File:Photo.webp',
-					index: 2,
-					imageinfo: [ {
-						url: '/wiki/File:Photo.webp',
-						thumburl: '/thumb/Photo.webp',
-						thumbwidth: 300, thumbheight: 200,
-						size: 50000,
-						width: 1024, height: 768,
-						mime: 'image/webp',
-						mediatype: 'BITMAP',
-						extmetadata: {}
-					} ]
-				}
-			};
-			mockGet.mockResolvedValue( { query: { pages } } );
-
-			const result = await mode.getResults( 'demo', undefined );
-
-			const webm = result.find( ( r ) => r.label === 'Demo.webm' );
-			const webp = result.find( ( r ) => r.label === 'Photo.webp' );
-			expect( webm.detail.header.description ).toBe( 'WebM video' );
-			expect( webp.detail.header.description ).toBe( 'WebP image' );
+			// Description and pairs are populated lazily by getItemDetail.
+			expect( bitmap.detail.header.description ).toBeUndefined();
+			expect( bitmap.detail.pairs ).toBeUndefined();
 		} );
 
 		it( 'sets url to the File: page URL', async () => {
@@ -399,6 +313,157 @@ describe( 'file mode', () => {
 			const result = await mode.getResults( 'thing', undefined );
 
 			expect( result ).toHaveLength( 1 );
+		} );
+	} );
+
+	describe( 'getItemDetail', () => {
+		// Mirrors what `adaptListItem` produces from the list query: pageid
+		// plus mediatype carried over so the detail query doesn't need to
+		// re-request `mediatype`.
+		const ITEM_100 = { pageid: 100, mediatype: 'BITMAP' };
+		const ITEM_101 = { pageid: 101, mediatype: 'AUDIO' };
+		const ITEM_102 = { pageid: 102, mediatype: 'OFFICE' };
+
+		it( 'requests imageinfo by pageid with the heavy fields and a license filter', async () => {
+			mockGet.mockResolvedValue( { query: { pages: { 100: SAMPLE_PAGES[ 100 ] } } } );
+
+			await mode.getItemDetail( ITEM_100, undefined );
+
+			expect( mockGet ).toHaveBeenCalledTimes( 1 );
+			const params = mockGet.mock.calls[ 0 ][ 0 ];
+			expect( params.action ).toBe( 'query' );
+			expect( params.prop ).toBe( 'imageinfo' );
+			expect( params.pageids ).toBe( 100 );
+			expect( params.iiprop ).toBe( 'size|mime|extmetadata|user|timestamp' );
+			expect( params.iiextmetadatafilter ).toBe( 'LicenseShortName' );
+		} );
+
+		it( 'returns description (friendly type) and pairs (size, uploaded, license)', async () => {
+			mockGet.mockResolvedValue( { query: { pages: { 100: SAMPLE_PAGES[ 100 ] } } } );
+
+			const detail = await mode.getItemDetail( ITEM_100, undefined );
+
+			expect( detail.description ).toBe( 'PNG image' );
+			const keys = detail.pairs.map( ( p ) => p.key );
+			expect( keys ).toEqual( [ 'size', 'uploaded', 'license' ] );
+		} );
+
+		it( 'formats the size pair as "<dim> × <dim>, <bytes>" for visual files', async () => {
+			mockGet.mockResolvedValue( { query: { pages: { 100: SAMPLE_PAGES[ 100 ] } } } );
+
+			const detail = await mode.getItemDetail( ITEM_100, undefined );
+
+			const sizePair = detail.pairs.find( ( p ) => p.key === 'size' );
+			expect( sizePair.value ).toContain( '1280 × 960' );
+			expect( sizePair.value ).toMatch( /KB|MB/ );
+		} );
+
+		it( 'formats the size pair as bytes-only for non-visual files', async () => {
+			mockGet.mockResolvedValue( { query: { pages: { 101: SAMPLE_PAGES[ 101 ] } } } );
+
+			const detail = await mode.getItemDetail( ITEM_101, undefined );
+
+			const sizePair = detail.pairs.find( ( p ) => p.key === 'size' );
+			expect( sizePair.value ).not.toContain( '×' );
+			expect( sizePair.value ).toMatch( /MB$/ );
+		} );
+
+		it( 'omits the license pair when extmetadata.LicenseShortName is missing', async () => {
+			mockGet.mockResolvedValue( { query: { pages: { 101: SAMPLE_PAGES[ 101 ] } } } );
+
+			const detail = await mode.getItemDetail( ITEM_101, undefined );
+
+			expect( detail.pairs.find( ( p ) => p.key === 'license' ) ).toBeUndefined();
+		} );
+
+		it( 'derives the friendly type label from mime + mediatype', async () => {
+			mockGet.mockResolvedValueOnce( { query: { pages: { 101: SAMPLE_PAGES[ 101 ] } } } );
+			const audio = await mode.getItemDetail( ITEM_101, undefined );
+			expect( audio.description ).toBe( 'MPEG audio' );
+
+			mockGet.mockResolvedValueOnce( { query: { pages: { 102: SAMPLE_PAGES[ 102 ] } } } );
+			const office = await mode.getItemDetail( ITEM_102, undefined );
+			expect( office.description ).toBe( 'PDF document' );
+		} );
+
+		it( 'preserves brand casing for WebM and WebP subtypes', async () => {
+			const webmPage = {
+				pageid: 1,
+				title: 'File:Demo.webm',
+				imageinfo: [ {
+					size: 25000, width: 320, height: 240,
+					mime: 'video/webm', mediatype: 'VIDEO', extmetadata: {}
+				} ]
+			};
+			const webpPage = {
+				pageid: 2,
+				title: 'File:Photo.webp',
+				imageinfo: [ {
+					size: 50000, width: 1024, height: 768,
+					mime: 'image/webp', mediatype: 'BITMAP', extmetadata: {}
+				} ]
+			};
+			mockGet.mockResolvedValueOnce( { query: { pages: { 1: webmPage } } } );
+			mockGet.mockResolvedValueOnce( { query: { pages: { 2: webpPage } } } );
+
+			const webm = await mode.getItemDetail( { pageid: 1, mediatype: 'VIDEO' }, undefined );
+			const webp = await mode.getItemDetail( { pageid: 2, mediatype: 'BITMAP' }, undefined );
+
+			expect( webm.description ).toBe( 'WebM video' );
+			expect( webp.description ).toBe( 'WebP image' );
+		} );
+
+		it( 'caches by pageid: a second call for the same item does not hit the API', async () => {
+			mockGet.mockResolvedValue( { query: { pages: { 100: SAMPLE_PAGES[ 100 ] } } } );
+
+			const first = await mode.getItemDetail( ITEM_100, undefined );
+			const second = await mode.getItemDetail( ITEM_100, undefined );
+
+			expect( mockGet ).toHaveBeenCalledTimes( 1 );
+			expect( second ).toBe( first );
+		} );
+
+		it( 'caches an empty default when the response has no imageinfo (prevents retry loops)', async () => {
+			mockGet.mockResolvedValueOnce( { query: { pages: {} } } );
+
+			const detail = await mode.getItemDetail( ITEM_100, undefined );
+			expect( detail ).toEqual( { description: '', pairs: [] } );
+
+			mockGet.mockClear();
+			const cached = await mode.getItemDetail( ITEM_100, undefined );
+			expect( mockGet ).not.toHaveBeenCalled();
+			expect( cached ).toEqual( { description: '', pairs: [] } );
+		} );
+
+		it( 'returns the empty default and skips the API when item has no pageid', async () => {
+			const detail = await mode.getItemDetail( {}, undefined );
+
+			expect( detail ).toEqual( { description: '', pairs: [] } );
+			expect( mockGet ).not.toHaveBeenCalled();
+		} );
+
+		it( 'propagates AbortError without writing to the cache', async () => {
+			const abortErr = new Error( 'aborted' );
+			abortErr.name = 'AbortError';
+			mockGet.mockRejectedValueOnce( abortErr );
+
+			await expect( mode.getItemDetail( ITEM_100, undefined ) ).rejects.toBe( abortErr );
+
+			// A subsequent call still hits the API — the abort did not poison the cache.
+			mockGet.mockResolvedValueOnce( { query: { pages: { 100: SAMPLE_PAGES[ 100 ] } } } );
+			const detail = await mode.getItemDetail( ITEM_100, undefined );
+			expect( detail.description ).toBe( 'PNG image' );
+			expect( mockGet ).toHaveBeenCalledTimes( 2 );
+		} );
+
+		it( 'threads the abort signal through to the API call', async () => {
+			mockGet.mockResolvedValue( { query: { pages: { 100: SAMPLE_PAGES[ 100 ] } } } );
+			const signal = new AbortController().signal;
+
+			await mode.getItemDetail( ITEM_100, signal );
+
+			const options = mockGet.mock.calls[ 0 ][ 1 ];
+			expect( options.signal ).toBe( signal );
 		} );
 	} );
 

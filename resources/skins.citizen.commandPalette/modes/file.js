@@ -250,12 +250,25 @@ function buildDetailPairs( info ) {
 }
 
 /**
- * Adapt one imageinfo response page to a CommandPaletteItem.
+ * Adapt one page entry to a list-stage gallery item.
+ *
+ * The list query intentionally requests only `iiprop=url|mediatype` —
+ * everything else (size, mime, extmetadata, user, timestamp) belongs to
+ * the detail panel and is fetched lazily by `getItemDetail` when the
+ * item is focused. Returning extmetadata for every file in the list
+ * costs ~80% of the response time and bandwidth, and we use exactly
+ * one field from it (LicenseShortName) — see the design doc for
+ * measurements against starcitizen.tools/Hull_B.
+ *
+ * `detail.header` is set immediately so the detail pane renders with
+ * filename + copy button as soon as the list arrives, without waiting
+ * for the per-item detail fetch. `detail.header.description` (friendly
+ * type) and `detail.pairs` are populated later by `getItemDetail`.
  *
  * @param {Object} page A page entry from `query.pages`
  * @return {Object|null} A palette item, or null when the page has no usable info
  */
-function adaptFileItem( page ) {
+function adaptListItem( page ) {
 	const info = page.imageinfo && page.imageinfo[ 0 ];
 	if ( !info ) {
 		return null;
@@ -274,21 +287,22 @@ function adaptFileItem( page ) {
 	return {
 		id: 'citizen-command-palette-item-file-' + page.pageid,
 		type: 'file',
+		// Carried so `getItemDetail` can request the focused file's
+		// detail by pageid without re-deriving it from the item id.
+		pageid: page.pageid,
+		// Carried so `getItemDetail` can build the friendly type label
+		// without re-requesting `mediatype` in the detail query — the
+		// list response already has it.
+		mediatype: mediatype,
 		label: label,
 		url: mw.util.getUrl( page.title ),
 		thumbnail: thumbnail,
 		thumbnailIcon: placeholderIcon,
-		// Drives the right pane. The header carries the filename and
-		// friendly type label (rendered as the subtitle); the pairs
-		// row carries the rest of the metadata. `copyValue` enables
-		// the detail panel's copy-filename button.
 		detail: {
 			header: {
 				label: label,
-				description: friendlyType( info.mime, mediatype ),
 				copyValue: label
-			},
-			pairs: buildDetailPairs( info )
+			}
 		}
 	};
 }
@@ -300,15 +314,40 @@ function adaptFileItem( page ) {
  * @return {Object} Mode descriptor.
  */
 function createFileMode( ApiConstructor ) {
-	const baseImageinfoParams = {
+	// List-stage params: enough to render a gallery tile (thumbnail URL,
+	// fallback icon via mediatype) and nothing else. Splitting the heavier
+	// fields out drops cold-cache response time from ~5.7 s to ~0.7 s on
+	// pages with many files.
+	const baseListImageinfoParams = {
 		action: 'query',
 		format: 'json',
 		prop: 'imageinfo',
-		iiprop: 'url|size|mime|mediatype|extmetadata|user|timestamp',
+		iiprop: 'url|mediatype',
 		iiurlwidth: THUMB_WIDTH,
 		maxage: config.wgSearchSuggestCacheExpiry,
 		smaxage: config.wgSearchSuggestCacheExpiry
 	};
+
+	// Detail-stage params: everything the right-pane renders. Filtered
+	// to LicenseShortName because that's the only extmetadata field we
+	// surface today; widening the filter is a follow-up if/when more
+	// detail-panel fields are added.
+	const detailImageinfoParams = {
+		action: 'query',
+		format: 'json',
+		prop: 'imageinfo',
+		iiprop: 'size|mime|extmetadata|user|timestamp',
+		iiextmetadatafilter: 'LicenseShortName',
+		maxage: config.wgSearchSuggestCacheExpiry,
+		smaxage: config.wgSearchSuggestCacheExpiry
+	};
+
+	// Per-pageid cache for detail data. Lives for the page lifetime
+	// (the mode factory is called once per palette init). Re-focusing a
+	// previously focused item returns the cached value synchronously
+	// rather than re-firing the API. Not persisted to mw.storage so
+	// file-overwrite / re-licensing changes show up after a reload.
+	const detailCache = new Map();
 
 	/**
 	 * Run an API query and return its `query.pages` array sorted by
@@ -335,7 +374,7 @@ function createFileMode( ApiConstructor ) {
 	}
 
 	function fetchFilesByPrefix( subQuery, signal ) {
-		return queryPages( Object.assign( {}, baseImageinfoParams, {
+		return queryPages( Object.assign( {}, baseListImageinfoParams, {
 			generator: 'prefixsearch',
 			gpssearch: subQuery,
 			gpsnamespace: FILE_NAMESPACE,
@@ -344,7 +383,7 @@ function createFileMode( ApiConstructor ) {
 	}
 
 	function fetchFilesByFullText( subQuery, signal ) {
-		return queryPages( Object.assign( {}, baseImageinfoParams, {
+		return queryPages( Object.assign( {}, baseListImageinfoParams, {
 			generator: 'search',
 			gsrsearch: subQuery,
 			gsrnamespace: FILE_NAMESPACE,
@@ -367,7 +406,7 @@ function createFileMode( ApiConstructor ) {
 			return Promise.resolve( [] );
 		}
 		const title = mw.config.get( 'wgPageName' );
-		return queryPages( Object.assign( {}, baseImageinfoParams, {
+		return queryPages( Object.assign( {}, baseListImageinfoParams, {
 			generator: 'images',
 			titles: title,
 			gimlimit: RESULT_LIMIT
@@ -377,12 +416,68 @@ function createFileMode( ApiConstructor ) {
 	function pagesToItems( pages ) {
 		const items = [];
 		pages.forEach( ( page ) => {
-			const item = adaptFileItem( page );
+			const item = adaptListItem( page );
 			if ( item ) {
 				items.push( item );
 			}
 		} );
 		return items;
+	}
+
+	/**
+	 * Lazy-load detail data for a focused file item. Called by the
+	 * orchestration when the highlighted item changes.
+	 *
+	 * Returns `{ description, pairs }` for the item's detail panel:
+	 * `description` is the friendly type label (rendered as the header
+	 * subtitle), `pairs` is the size / uploaded / license rows. The
+	 * orchestration mutates the item's `detail` reactively when this
+	 * resolves.
+	 *
+	 * Caches per pageid for the page lifetime. Aborted fetches do not
+	 * write to the cache (the rejection bypasses `cache.set`). An empty
+	 * or malformed response caches the empty default to prevent a
+	 * retry loop on a permanently broken file.
+	 *
+	 * @param {Object} item Palette item produced by `adaptListItem`.
+	 * @param {AbortSignal} [signal]
+	 * @return {Promise<{description: string, pairs: Array<Object>}>}
+	 */
+	async function getItemDetail( item, signal ) {
+		const pageid = item && item.pageid;
+		if ( !pageid ) {
+			return { description: '', pairs: [] };
+		}
+		if ( detailCache.has( pageid ) ) {
+			return detailCache.get( pageid );
+		}
+
+		const api = new ApiConstructor();
+		const data = await api.get(
+			Object.assign( {}, detailImageinfoParams, { pageids: pageid } ),
+			{ signal }
+		);
+
+		const pages = ( data && data.query && data.query.pages ) || {};
+		// Read by exact pageid only. A missing file lands under a synthetic
+		// negative key with no imageinfo — `pages[ pageid ]` returns
+		// undefined and the empty default below covers that case. A
+		// `pages` map with multiple entries is not expected for a
+		// `pageids=N` query, and falling back to `Object.values()[ 0 ]`
+		// would risk caching another file's metadata under this pageid.
+		const page = pages[ pageid ];
+		const info = page && page.imageinfo && page.imageinfo[ 0 ];
+		// `mediatype` is carried over from the list-stage item so the
+		// detail query stays narrow — re-requesting it would cost nothing
+		// over the wire but adds a field to a query that's intentionally
+		// minimal.
+		const detail = info ? {
+			description: friendlyType( info.mime, item.mediatype || 'UNKNOWN' ),
+			pairs: buildDetailPairs( info )
+		} : { description: '', pairs: [] };
+
+		detailCache.set( pageid, detail );
+		return detail;
 	}
 
 	async function getResults( subQuery, signal ) {
@@ -439,6 +534,7 @@ function createFileMode( ApiConstructor ) {
 			description: 'citizen-command-palette-mode-file-description-help'
 		},
 		getResults,
+		getItemDetail,
 		onResultSelect
 	} );
 }
