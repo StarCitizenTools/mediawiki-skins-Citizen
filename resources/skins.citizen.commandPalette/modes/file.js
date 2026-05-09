@@ -322,6 +322,19 @@ function adaptListItem( page ) {
 	const placeholderIcon = iconForMediatype( mediatype );
 	const label = stripFilePrefix( page.title );
 
+	// Detail-panel media block — same source URL as the gallery tile so
+	// the browser cache hit makes the panel render instantly on focus.
+	// Renders with `object-fit: contain` (vs. the tile's `cover`), so the
+	// full image is visible — no clipping. `placeholderIcon` doubles as
+	// the load-error fallback if the URL 404s, and as the only content
+	// when the file has no renderable thumbnail (audio, video, archive).
+	const media = {
+		src: thumbnail ? thumbnail.url : '',
+		width: thumbnail ? thumbnail.width : null,
+		height: thumbnail ? thumbnail.height : null,
+		placeholderIcon: placeholderIcon
+	};
+
 	return {
 		id: 'citizen-command-palette-item-file-' + page.pageid,
 		type: 'file',
@@ -337,6 +350,7 @@ function adaptListItem( page ) {
 		thumbnail: thumbnail,
 		thumbnailIcon: placeholderIcon,
 		detail: {
+			media: media,
 			header: {
 				label: label,
 				copyValue: label

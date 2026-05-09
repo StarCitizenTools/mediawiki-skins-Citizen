@@ -443,6 +443,31 @@ describe( 'file mode', () => {
 			expect( bitmap.detail.pairs ).toBeUndefined();
 		} );
 
+		it( 'builds detail.media from the list-stage thumbnail so the panel renders without a second fetch', async () => {
+			mockGet.mockResolvedValue( { query: { pages: SAMPLE_PAGES } } );
+
+			const result = await mode.getResults( 'thing', undefined );
+
+			const bitmap = result.find( ( r ) => r.label === 'Diagram.png' );
+			expect( bitmap.detail.media.src ).toBe( '/thumb/diagram.png' );
+			expect( bitmap.detail.media.width ).toBe( 300 );
+			expect( bitmap.detail.media.height ).toBe( 200 );
+			// placeholderIcon is always assigned; resolved icon values come
+			// from icons.json which is a dev stub in unit tests, so just
+			// assert the field shape.
+			expect( bitmap.detail.media ).toHaveProperty( 'placeholderIcon' );
+		} );
+
+		it( 'builds detail.media with empty src for non-image files (CommandPaletteImage will render the placeholder)', async () => {
+			mockGet.mockResolvedValue( { query: { pages: SAMPLE_PAGES } } );
+
+			const result = await mode.getResults( 'thing', undefined );
+
+			const audio = result.find( ( r ) => r.label === 'Lecture.mp3' );
+			expect( audio.detail.media.src ).toBe( '' );
+			expect( audio.detail.media ).toHaveProperty( 'placeholderIcon' );
+		} );
+
 		it( 'sets url to the File: page URL', async () => {
 			mockGet.mockResolvedValue( { query: { pages: SAMPLE_PAGES } } );
 

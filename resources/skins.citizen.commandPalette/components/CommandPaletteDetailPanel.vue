@@ -1,5 +1,24 @@
 <template>
 	<div class="citizen-command-palette-detail-panel" aria-live="polite">
+		<!--
+			Media preview, above the header so visual identity reads
+			before the filename. Uses `object-fit: contain` so the whole
+			image is visible — distinct from the gallery tile's `cover`
+			framing. For files with no renderable thumbnail (audio,
+			video, archive, 3D), CommandPaletteImage falls back to the
+			placeholder icon centered in the same square frame.
+		-->
+		<command-palette-image
+			v-if="detail.media"
+			class="citizen-command-palette-detail-panel__media"
+			:src="detail.media.src"
+			:width="detail.media.width"
+			:height="detail.media.height"
+			alt=""
+			aspect-ratio="3:2"
+			object-fit="contain"
+			:placeholder-icon="detail.media.placeholderIcon || null"
+		></command-palette-image>
 		<slot name="header">
 			<div
 				v-if="detail.header"
@@ -58,6 +77,7 @@
 const { defineComponent, ref, computed, watch, onBeforeUnmount } = require( 'vue' );
 const { CdxButton, CdxIcon } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
 const { cdxIconCopy, cdxIconCheck } = require( '../icons.json' );
+const CommandPaletteImage = require( './CommandPaletteImage.vue' );
 
 const COPY_FEEDBACK_MS = 1500;
 
@@ -66,13 +86,14 @@ module.exports = exports = defineComponent( {
 	name: 'CommandPaletteDetailPanel',
 	components: {
 		CdxButton,
-		CdxIcon
+		CdxIcon,
+		CommandPaletteImage
 	},
 	props: {
 		detail: {
 			type: Object,
 			required: true,
-			validator: ( val ) => Array.isArray( val.pairs ) || !!val.header
+			validator: ( val ) => Array.isArray( val.pairs ) || !!val.header || !!val.media
 		},
 		// Counter that increments when an external trigger (the keyboard
 		// shortcut, currently) wants the panel to copy `detail.header.copyValue`.
@@ -158,6 +179,17 @@ module.exports = exports = defineComponent( {
 .citizen-command-palette-detail-panel {
 	padding: var( --space-md ) var( --citizen-command-palette-side-padding );
 	overflow-y: auto;
+
+	// Spacing + chrome around CommandPaletteImage when it's used as the
+	// detail-panel preview. The image component owns the aspect-ratio
+	// frame and `object-fit: contain` rendering; the panel adds the
+	// border + radius so the preview reads as a contained card and
+	// drops a margin so it doesn't crowd the header.
+	&__media {
+		margin-block-end: var( --space-md );
+		border: 1px solid var( --border-color-subtle );
+		border-radius: var( --border-radius-medium );
+	}
 
 	// Inline default header. Shown when a result's `detail.header` is set
 	// and no consumer overrides the `header` slot.
