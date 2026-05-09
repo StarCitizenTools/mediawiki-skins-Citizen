@@ -275,10 +275,57 @@ describe( 'file mode', () => {
 
 			const audio = result.find( ( r ) => r.label === 'Lecture.mp3' );
 			expect( audio.thumbnail ).toBeNull();
-			// thumbnailIcon is always assigned by adaptFileItem; the actual
+			// thumbnailIcon is always assigned by adaptListItem; the actual
 			// icon glyph is wired up by MediaWiki's ResourceLoader at runtime
 			// (icons.json is a stub in unit tests). Just check the field exists.
 			expect( audio ).toHaveProperty( 'thumbnailIcon' );
+		} );
+
+		it( 'sets thumbnail to null when MW echoes the original URL as thumburl (no real thumb)', async () => {
+			// For files MW cannot thumbnail (audio, webm video without
+			// poster, archives, …) the API echoes the original `url` back
+			// as `thumburl`, sometimes with -1 dimensions and sometimes
+			// with the requested width and a positive height. Real
+			// thumbnails live at /thumb/ paths distinct from `url`, so
+			// the only reliable signal is `thumburl !== url`. Without
+			// this guard, the gallery would render a broken <img> for
+			// every non-image file.
+			const pages = {
+				200: {
+					pageid: 200,
+					ns: 6,
+					title: 'File:Demo.webm',
+					index: 1,
+					imageinfo: [ {
+						url: '/w/images/Demo.webm',
+						thumburl: '/w/images/Demo.webm',
+						thumbwidth: 300,
+						thumbheight: 225,
+						mediatype: 'VIDEO'
+					} ]
+				},
+				201: {
+					pageid: 201,
+					ns: 6,
+					title: 'File:Audio.mp3',
+					index: 2,
+					imageinfo: [ {
+						url: '/w/images/Audio.mp3',
+						thumburl: '/w/images/Audio.mp3',
+						thumbwidth: 300,
+						thumbheight: -1,
+						mediatype: 'AUDIO'
+					} ]
+				}
+			};
+			mockGet.mockResolvedValue( { query: { pages } } );
+
+			const result = await mode.getResults( 'media', undefined );
+
+			expect( result[ 0 ].thumbnail ).toBeNull();
+			expect( result[ 1 ].thumbnail ).toBeNull();
+			expect( result[ 0 ] ).toHaveProperty( 'thumbnailIcon' );
+			expect( result[ 1 ] ).toHaveProperty( 'thumbnailIcon' );
 		} );
 
 		it( 'builds a list-stage detail.header with filename + copyValue only (no description, no pairs)', async () => {

@@ -275,11 +275,21 @@ function adaptListItem( page ) {
 	}
 
 	const mediatype = info.mediatype || 'UNKNOWN';
-	const thumbUrl = info.thumburl || '';
-	const thumbnail = thumbUrl ? {
-		url: thumbUrl,
-		width: info.thumbwidth || THUMB_WIDTH,
-		height: info.thumbheight || THUMB_WIDTH
+	// MW returns `thumburl` set to the original file URL when no thumb
+	// can be generated (audio, video without poster, archives, …), often
+	// with `thumbheight: -1` but sometimes with positive dimensions
+	// echoed back from the request. Real thumbnails live at /thumb/…
+	// paths distinct from the original URL — `thumburl !== info.url` is
+	// the reliable signal. Without this, native <img> would try to load
+	// the underlying media (mp3, webm, pdf) and render a broken-image
+	// glyph instead of falling back to the placeholder icon.
+	const hasThumbnail = info.thumburl &&
+		info.thumburl !== info.url &&
+		info.thumbwidth > 0 && info.thumbheight > 0;
+	const thumbnail = hasThumbnail ? {
+		url: info.thumburl,
+		width: info.thumbwidth,
+		height: info.thumbheight
 	} : null;
 	const placeholderIcon = iconForMediatype( mediatype );
 	const label = stripFilePrefix( page.title );
