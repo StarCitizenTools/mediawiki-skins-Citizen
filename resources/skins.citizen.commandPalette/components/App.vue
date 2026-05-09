@@ -105,6 +105,7 @@
 
 <script>
 const { defineComponent, ref, nextTick, computed, watch, inject, onBeforeUnmount } = require( 'vue' );
+const useActionNavigation = require( '../composables/useActionNavigation.js' );
 const useListNavigation = require( '../composables/useListNavigation.js' );
 const useGridNavigation = require( '../composables/useGridNavigation.js' );
 const useKeyboard = require( '../composables/useKeyboard.js' );
@@ -355,58 +356,11 @@ module.exports = exports = defineComponent( {
 			return items.every( ( it ) => it.type === firstType );
 		} );
 
-		// Action navigation adapter (managed at App level)
-		const actionFocusedIndex = ref( -1 );
-		const actionIsActive = computed( () => actionFocusedIndex.value >= 0 );
-
-		function getHighlightedItemComponent() {
-			return itemRefs.value.get( listNav.highlightedIndex.value );
-		}
-
-		const actionNav = {
-			isActive: actionIsActive,
-			focusedIndex: actionFocusedIndex,
-			focusFirst() {
-				const item = getHighlightedItemComponent();
-				if ( item && item.focusFirstButton ) {
-					item.focusFirstButton();
-					actionFocusedIndex.value = 0;
-				}
-			},
-			focusNext() {
-				const highlightedIdx = listNav.highlightedIndex.value;
-				const items = orch.flatItems.value;
-				const actions = ( highlightedIdx >= 0 && items[ highlightedIdx ] ) ?
-					items[ highlightedIdx ].actions || [] : [];
-				if ( actionFocusedIndex.value < actions.length - 1 ) {
-					actionFocusedIndex.value++;
-					const item = getHighlightedItemComponent();
-					if ( item && item.focusButtonAtIndex ) {
-						item.focusButtonAtIndex( actionFocusedIndex.value );
-					}
-				}
-			},
-			focusPrevious() {
-				if ( actionFocusedIndex.value <= 0 ) {
-					actionFocusedIndex.value = -1;
-				} else {
-					actionFocusedIndex.value--;
-					const item = getHighlightedItemComponent();
-					if ( item && item.focusButtonAtIndex ) {
-						item.focusButtonAtIndex( actionFocusedIndex.value );
-					}
-				}
-			},
-			deactivate() {
-				actionFocusedIndex.value = -1;
-			},
-			clickFocused() {
-				const item = getHighlightedItemComponent();
-				if ( item && item.clickButtonAtIndex ) {
-					item.clickButtonAtIndex( actionFocusedIndex.value );
-				}
-			}
-		};
+		const actionNav = useActionNavigation( {
+			items: orch.flatItems,
+			highlightedIndex: listNav.highlightedIndex,
+			itemRefs
+		} );
 
 		const close = () => {
 			if ( !isOpen.value ) {
