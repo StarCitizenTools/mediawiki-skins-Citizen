@@ -293,17 +293,27 @@ function adaptListItem( page ) {
 	}
 
 	const mediatype = info.mediatype || 'UNKNOWN';
-	// MW returns `thumburl` set to the original file URL when no thumb
-	// can be generated (audio, video without poster, archives, …), often
-	// with `thumbheight: -1` but sometimes with positive dimensions
-	// echoed back from the request. Real thumbnails live at /thumb/…
-	// paths distinct from the original URL — `thumburl !== info.url` is
-	// the reliable signal. Without this, native <img> would try to load
-	// the underlying media (mp3, webm, pdf) and render a broken-image
-	// glyph instead of falling back to the placeholder icon.
+	// MW returns `thumburl === info.url` in two distinct cases:
+	//   1. The file IS its own thumbnail — SVGs (DRAWING), or a bitmap
+	//      smaller than the requested `iiurlwidth`. Native <img> renders
+	//      these correctly; the URL is fine to use.
+	//   2. No thumbnail could be generated — audio, video without a
+	//      poster, archives, 3D models. The `thumburl` is echoed back as
+	//      the raw media URL, often with `thumbheight: -1` but sometimes
+	//      with positive dimensions. Native <img> would attempt to load
+	//      the raw media (mp3, webm, pdf) and render a broken glyph.
+	// Mediatype is the discriminator: typical BITMAP (PNG/JPEG/GIF/WebP)
+	// and DRAWING (SVG) URLs render directly in <img>. Non-renderable
+	// BITMAP subtypes exist (TIFF, BMP) but are protected by the other
+	// branch — when MW can produce a thumb for them, it lives at a
+	// separate /thumb/… path so `thumburl !== info.url` catches it; when
+	// it can't, `thumburl` is missing entirely and `hasThumbnail` is
+	// false. The `thumburl !== info.url` branch also covers the common
+	// case of resampled bitmaps and PDF rasterization.
+	const isInlineRenderable = mediatype === 'BITMAP' || mediatype === 'DRAWING';
 	const hasThumbnail = info.thumburl &&
-		info.thumburl !== info.url &&
-		info.thumbwidth > 0 && info.thumbheight > 0;
+		info.thumbwidth > 0 && info.thumbheight > 0 &&
+		( info.thumburl !== info.url || isInlineRenderable );
 	const thumbnail = hasThumbnail ? {
 		url: info.thumburl,
 		width: info.thumbwidth,
