@@ -104,9 +104,10 @@
 </template>
 
 <script>
-const { defineComponent, ref, nextTick, computed, watch, inject, onBeforeUnmount } = require( 'vue' );
+const { defineComponent, ref, nextTick, computed, watch, inject } = require( 'vue' );
 const useActionNavigation = require( '../composables/useActionNavigation.js' );
 const useBodyHeightAnimation = require( '../composables/useBodyHeightAnimation.js' );
+const useGalleryColumnCount = require( '../composables/useGalleryColumnCount.js' );
 const useListNavigation = require( '../composables/useListNavigation.js' );
 const useGridNavigation = require( '../composables/useGridNavigation.js' );
 const useKeyboard = require( '../composables/useKeyboard.js' );
@@ -162,40 +163,13 @@ module.exports = exports = defineComponent( {
 		const bodyContainer = ref( null );
 		const bodyViewport = ref( null );
 		const galleryRef = ref( null );
-		// Column count drives 2D grid navigation. Updated via ResizeObserver
-		// when the gallery is mounted. Defaults to 1 (list-equivalent) so
-		// the grid composable behaves correctly even before measurement.
-		const galleryColumnCount = ref( 1 );
-		let galleryResizeObserver = null;
-		// Mirror of the gallery template ref's `repeat( auto-fill, minmax( 140px, 1fr ) )`.
-		// Keep this in sync with the value in CommandPaletteGallery.vue's stylesheet.
-		const GALLERY_MIN_TILE_WIDTH = 140;
 
 		const { setupResizeObserver, teardownResizeObserver } = useBodyHeightAnimation( {
 			bodyContainer,
 			bodyViewport
 		} );
 
-		const updateGalleryColumnCount = ( element ) => {
-			if ( !element ) {
-				return;
-			}
-			const width = element.clientWidth;
-			galleryColumnCount.value = Math.max(
-				1, Math.floor( width / GALLERY_MIN_TILE_WIDTH )
-			);
-		};
-
-		const teardownGalleryResizeObserver = () => {
-			if ( galleryResizeObserver ) {
-				galleryResizeObserver.disconnect();
-				galleryResizeObserver = null;
-			}
-		};
-
-		onBeforeUnmount( () => {
-			teardownGalleryResizeObserver();
-		} );
+		const galleryColumnCount = useGalleryColumnCount( { galleryRef } );
 
 		// Provider orchestration (replaces Pinia searchStore)
 		const orchDeps = {
@@ -247,23 +221,6 @@ module.exports = exports = defineComponent( {
 		// String form for the [data-palette-layout] attribute, which CSS
 		// targets to widen the modal in gallery layouts.
 		const paletteLayout = computed( () => isGalleryLayout.value ? 'gallery' : 'list' );
-
-		// Attach a ResizeObserver to the gallery container only while it is
-		// mounted. Vue sets `galleryRef` to the component proxy when the
-		// gallery enters the DOM and back to `null` when it leaves.
-		watch( galleryRef, ( newInstance, oldInstance ) => {
-			if ( oldInstance ) {
-				teardownGalleryResizeObserver();
-			}
-			if ( newInstance && newInstance.$el ) {
-				const element = newInstance.$el;
-				updateGalleryColumnCount( element );
-				galleryResizeObserver = new ResizeObserver(
-					() => updateGalleryColumnCount( element )
-				);
-				galleryResizeObserver.observe( element );
-			}
-		} );
 
 		const highlightedItemDetail = computed( () => {
 			const index = listNav.highlightedIndex.value;
