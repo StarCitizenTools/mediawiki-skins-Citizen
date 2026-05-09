@@ -320,15 +320,14 @@ describe( 'file mode', () => {
 			expect( audio ).toHaveProperty( 'thumbnailIcon' );
 		} );
 
-		it( 'sets thumbnail to null when MW echoes the original URL as thumburl (no real thumb)', async () => {
-			// For files MW cannot thumbnail (audio, webm video without
-			// poster, archives, …) the API echoes the original `url` back
-			// as `thumburl`, sometimes with -1 dimensions and sometimes
-			// with the requested width and a positive height. Real
-			// thumbnails live at /thumb/ paths distinct from `url`, so
-			// the only reliable signal is `thumburl !== url`. Without
-			// this guard, the gallery would render a broken <img> for
-			// every non-image file.
+		it( 'sets thumbnail to null for non-renderable mediatypes when MW echoes the original URL as thumburl', async () => {
+			// MW echoes `thumburl=url` when no separate thumb can be
+			// generated — audio, webm video without poster, archives, …
+			// — sometimes with -1 dimensions, sometimes with the requested
+			// width and a positive height. Native <img> would attempt to
+			// load the raw media and render a broken glyph, so we gate on
+			// mediatype: AUDIO / VIDEO / OFFICE / ARCHIVE / 3D fall back
+			// to the placeholder icon.
 			const pages = {
 				200: {
 					pageid: 200,
@@ -365,6 +364,69 @@ describe( 'file mode', () => {
 			expect( result[ 1 ].thumbnail ).toBeNull();
 			expect( result[ 0 ] ).toHaveProperty( 'thumbnailIcon' );
 			expect( result[ 1 ] ).toHaveProperty( 'thumbnailIcon' );
+		} );
+
+		it( 'sets a thumbnail for SVGs when MW echoes the original URL as thumburl', async () => {
+			// SVGs are vector — MW returns the original URL as `thumburl`
+			// because the file is its own thumbnail. Native <img> renders
+			// SVG inline, so the URL is fine to use. mediatype=DRAWING is
+			// the discriminator that distinguishes this from the
+			// non-renderable echo case (audio/video/archive).
+			const pages = {
+				300: {
+					pageid: 300,
+					ns: 6,
+					title: 'File:Logo.svg',
+					index: 1,
+					imageinfo: [ {
+						url: '/w/images/Logo.svg',
+						thumburl: '/w/images/Logo.svg',
+						thumbwidth: 512,
+						thumbheight: 512,
+						mediatype: 'DRAWING'
+					} ]
+				}
+			};
+			mockGet.mockResolvedValue( { query: { pages } } );
+
+			const result = await mode.getResults( 'logo', undefined );
+
+			expect( result[ 0 ].thumbnail ).toEqual( {
+				url: '/w/images/Logo.svg',
+				width: 512,
+				height: 512
+			} );
+		} );
+
+		it( 'sets a thumbnail for small bitmaps when MW echoes the original URL as thumburl', async () => {
+			// When the original bitmap is smaller than the requested
+			// `iiurlwidth`, MW returns the original URL as `thumburl`
+			// with the original (smaller) dimensions instead of upscaling.
+			// Native <img> renders BITMAP inline, so the URL is fine.
+			const pages = {
+				400: {
+					pageid: 400,
+					ns: 6,
+					title: 'File:Tiny.png',
+					index: 1,
+					imageinfo: [ {
+						url: '/w/images/Tiny.png',
+						thumburl: '/w/images/Tiny.png',
+						thumbwidth: 64,
+						thumbheight: 64,
+						mediatype: 'BITMAP'
+					} ]
+				}
+			};
+			mockGet.mockResolvedValue( { query: { pages } } );
+
+			const result = await mode.getResults( 'tiny', undefined );
+
+			expect( result[ 0 ].thumbnail ).toEqual( {
+				url: '/w/images/Tiny.png',
+				width: 64,
+				height: 64
+			} );
 		} );
 
 		it( 'builds a list-stage detail.header with filename + copyValue only (no description, no pairs)', async () => {
