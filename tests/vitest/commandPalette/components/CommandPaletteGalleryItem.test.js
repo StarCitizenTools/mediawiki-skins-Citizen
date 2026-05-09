@@ -5,10 +5,10 @@ const mw = require( '../../mocks/mw.js' );
 globalThis.mw = mw;
 
 mw.loader.require = vi.fn( () => ( {
-	CdxThumbnail: {
-		name: 'CdxThumbnail',
-		template: '<div class="cdx-thumbnail-stub"></div>',
-		props: [ 'thumbnail', 'placeholderIcon' ]
+	CdxIcon: {
+		name: 'CdxIcon',
+		template: '<span class="cdx-icon-stub"></span>',
+		props: [ 'icon' ]
 	}
 } ) );
 
@@ -36,29 +36,40 @@ beforeAll( async () => {
 
 describe( 'CommandPaletteGalleryItem', () => {
 	describe( 'thumbnail rendering', () => {
-		it( 'forwards the thumbnail object to CdxThumbnail', () => {
+		it( 'renders a native <img loading="lazy"> when thumbnail is set', () => {
 			const thumb = { url: '/img/foo.png', width: 300, height: 200 };
 			const wrapper = mountTile( { thumbnail: thumb } );
 
-			const cdxThumb = wrapper.findComponent( { name: 'CdxThumbnail' } );
-			expect( cdxThumb.exists() ).toBe( true );
-			expect( cdxThumb.props( 'thumbnail' ) ).toEqual( thumb );
+			const img = wrapper.find( 'img.citizen-command-palette-gallery-item__thumbnail-image' );
+			expect( img.exists() ).toBe( true );
+			expect( img.attributes( 'src' ) ).toBe( '/img/foo.png' );
+			expect( img.attributes( 'loading' ) ).toBe( 'lazy' );
+			expect( img.attributes( 'decoding' ) ).toBe( 'async' );
+			expect( img.attributes( 'width' ) ).toBe( '300' );
+			expect( img.attributes( 'height' ) ).toBe( '200' );
+			// Empty alt because the filename is already in the title attribute
+			// and surrounding label — a duplicated alt would just add noise
+			// for screen readers.
+			expect( img.attributes( 'alt' ) ).toBe( '' );
 		} );
 
-		it( 'forwards the placeholder icon to CdxThumbnail', () => {
+		it( 'renders a placeholder with the cdx-icon when no thumbnail', () => {
 			const wrapper = mountTile( { thumbnailIcon: 'icon-name' } );
 
-			const cdxThumb = wrapper.findComponent( { name: 'CdxThumbnail' } );
-			expect( cdxThumb.exists() ).toBe( true );
-			expect( cdxThumb.props( 'placeholderIcon' ) ).toBe( 'icon-name' );
+			expect( wrapper.find( 'img.citizen-command-palette-gallery-item__thumbnail-image' ).exists() ).toBe( false );
+			const placeholder = wrapper.find( '.citizen-command-palette-gallery-item__thumbnail-placeholder' );
+			expect( placeholder.exists() ).toBe( true );
+			const icon = placeholder.findComponent( { name: 'CdxIcon' } );
+			expect( icon.exists() ).toBe( true );
+			expect( icon.props( 'icon' ) ).toBe( 'icon-name' );
 		} );
 
-		it( 'omits the placeholder icon prop when thumbnailIcon is empty', () => {
+		it( 'renders an empty placeholder (no icon) when neither thumbnail nor thumbnailIcon are set', () => {
 			const wrapper = mountTile( { thumbnailIcon: '' } );
 
-			const cdxThumb = wrapper.findComponent( { name: 'CdxThumbnail' } );
-			// Empty string maps to undefined so CdxThumbnail uses its default.
-			expect( cdxThumb.props( 'placeholderIcon' ) ).toBeUndefined();
+			const placeholder = wrapper.find( '.citizen-command-palette-gallery-item__thumbnail-placeholder' );
+			expect( placeholder.exists() ).toBe( true );
+			expect( placeholder.findComponent( { name: 'CdxIcon' } ).exists() ).toBe( false );
 		} );
 	} );
 
