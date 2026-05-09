@@ -15,48 +15,36 @@
 		@mousedown.prevent="onMouseDown"
 		@click="onClick"
 	>
-		<span class="citizen-command-palette-gallery-item__thumbnail">
-			<!--
-				Native <img> with `loading="lazy"` and `decoding="async"`
-				so the browser schedules thumbnail fetches on its own —
-				the gallery can render up to 50 tiles at once.
-				CdxImage is the right Codex equivalent but isn't
-				available in MW 1.43; switch to it on the next LTS.
-			-->
-			<img
-				v-if="thumbnail"
-				:src="thumbnail.url"
-				:width="thumbnail.width"
-				:height="thumbnail.height"
-				loading="lazy"
-				decoding="async"
-				alt=""
-				class="citizen-command-palette-gallery-item__thumbnail-image"
-			>
-			<span
-				v-else
-				class="citizen-command-palette-gallery-item__thumbnail-placeholder"
-			>
-				<cdx-icon
-					v-if="thumbnailIcon"
-					:icon="thumbnailIcon"
-					class="cdx-thumbnail__placeholder__icon--vue"
-				></cdx-icon>
-			</span>
-		</span>
+		<!--
+			CommandPaletteImage handles src + lazy-loaded <img>, the
+			placeholder fallback, and the broken-image bail. Wraps the
+			same square aspect-ratio container the tile previously
+			built inline. Mirrors the CdxImage prop API so swapping it
+			out (when MW LTS bundles a Codex with CdxImage) is a
+			component-rename.
+		-->
+		<command-palette-image
+			class="citizen-command-palette-gallery-item__thumbnail"
+			:src="thumbnail ? thumbnail.url : ''"
+			:width="thumbnail ? thumbnail.width : null"
+			:height="thumbnail ? thumbnail.height : null"
+			aspect-ratio="1:1"
+			object-fit="cover"
+			:placeholder-icon="thumbnailIcon || null"
+		></command-palette-image>
 	</component>
 </template>
 
 <script>
 const { defineComponent, computed, ref } = require( 'vue' );
-const { CdxIcon } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
+const CommandPaletteImage = require( './CommandPaletteImage.vue' );
 const { CommandPaletteItem } = require( '../types.js' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
 	name: 'CommandPaletteGalleryItem',
 	components: {
-		CdxIcon
+		CommandPaletteImage
 	},
 	props: {
 		id: {
@@ -198,18 +186,12 @@ module.exports = exports = defineComponent( {
 		text-decoration: none;
 	}
 
-	// Square 1:1 tile that holds either a lazy-loaded <img> (when the
-	// file has a thumbnail) or a centred placeholder icon (audio, archive,
-	// 3D, etc.). overflow:hidden keeps the corners rounded against the
-	// image's intrinsic edges. position:relative is the containing block
-	// for the ::after focus-ring overlay.
+	// Tile chrome layered on top of CommandPaletteImage's square frame.
+	// The image component owns aspect-ratio, background, and the
+	// `<img>` / placeholder swap. The gallery item adds the border and
+	// the focus-ring overlay so only tiles get them — when the image
+	// component is reused in the detail pane, the chrome doesn't follow.
 	&__thumbnail {
-		position: relative;
-		display: block;
-		width: 100%;
-		aspect-ratio: 1 / 1;
-		overflow: hidden;
-		background-color: var( --background-color-neutral-subtle );
 		border: 1px solid var( --border-color-subtle );
 		border-radius: var( --border-radius-medium );
 
@@ -225,33 +207,6 @@ module.exports = exports = defineComponent( {
 			content: '';
 			border-radius: inherit;
 			box-shadow: inset 0 0 0 2px transparent;
-		}
-	}
-
-	&__thumbnail-image {
-		display: block;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-
-	&__thumbnail-placeholder {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
-		color: var( --color-subtle );
-
-		// Codex's CdxIcon defaults to a `cdx-icon--medium` (1.25rem) size
-		// modifier — too small for a 140px tile. Override the modifier
-		// dimensions; the SVG inside fills 100% / 100% via Codex's own
-		// rule, so it scales up cleanly.
-		.cdx-icon--medium {
-			width: @size-200;
-			min-width: 0;
-			height: @size-200;
-			min-height: 0;
 		}
 	}
 
