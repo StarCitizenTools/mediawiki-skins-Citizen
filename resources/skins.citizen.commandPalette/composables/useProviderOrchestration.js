@@ -4,6 +4,13 @@ const useOperationLifecycle = require( './useOperationLifecycle.js' );
 const SHOW_PENDING_DELAY_MS = 300;
 const DEFAULT_DEBOUNCE_MS = 250;
 
+// Per-item detail fetches fire on focus changes (arrow keys, hover).
+// Lower than the query debounce because the user expects detail to settle
+// faster than they expect search results, and aborts handle rapid
+// scrubbing — a settled focus of ~80ms is the threshold beyond which the
+// fetch is worth running.
+const DETAIL_DEBOUNCE_MS = 80;
+
 const DEFAULT_STATE_CONFIG = {
 	emptyState: {
 		title: mw.message( 'searchsuggest-search' ).text(),
@@ -78,6 +85,19 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		pendingDelayMs: SHOW_PENDING_DELAY_MS
 	} );
 	const resetOperationState = lifecycle.reset;
+
+	// Detail fetches run in their own abort domain so a focus change does
+	// not cancel an in-flight list fetch and a list refresh does not cancel
+	// a settled detail fetch. Pending state is internal — the UI today does
+	// not need a detail-specific spinner.
+	const detailPending = ref( false );
+	const detailShowPending = ref( false );
+	const detailLifecycle = useOperationLifecycle( {
+		isPending: detailPending,
+		showPending: detailShowPending,
+		pendingDelayMs: SHOW_PENDING_DELAY_MS
+	} );
+	const resetDetailState = detailLifecycle.reset;
 
 	/**
 	 * Applies the result decorator and updates displayedItems.
@@ -176,6 +196,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	async function clearSearch() {
 		query.value = '';
 		resetOperationState();
+		resetDetailState();
 
 		let recentItems = [];
 		if ( deps.recentItemsProvider ) {
@@ -282,6 +303,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	 */
 	function enterMode( mode ) {
 		resetOperationState();
+		resetDetailState();
 		activeMode.value = mode;
 		activeModeContext.value = [];
 		query.value = '';
@@ -297,6 +319,10 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	function exitMode() {
 		activeMode.value = null;
 		activeModeContext.value = [];
+		// clearSearch() also calls resetDetailState(), but the direct call
+		// here keeps exitMode's contract self-evident — every navigation
+		// function explicitly resets both lifecycles.
+		resetDetailState();
 		return clearSearch();
 	}
 
@@ -314,6 +340,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		}
 		activeModeContext.value = activeModeContext.value.concat( [ value ] );
 		resetOperationState();
+		resetDetailState();
 		query.value = '';
 		displayedItems.value = [];
 		handleModeQuery( activeMode.value, '' );
@@ -331,6 +358,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		}
 		activeModeContext.value = activeModeContext.value.slice( 0, -1 );
 		resetOperationState();
+		resetDetailState();
 		query.value = '';
 		displayedItems.value = [];
 		handleModeQuery( activeMode.value, '' );
@@ -344,6 +372,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	function updateQuery( newQuery ) {
 		query.value = newQuery;
 		resetOperationState();
+		resetDetailState();
 
 		// Help layers over the underlying state and owns displayedItems while
 		// visible. Skip the provider pipeline so input clears that fire after
@@ -466,6 +495,59 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	}
 
 	/**
+	 * Lazy-load detail data for a focused item. Modes that opt in by
+	 * declaring `getItemDetail` (validated by defineMode) get this hook
+	 * called when the highlighted item changes. The mode owns the API
+	 * call and any per-item caching; the orchestration provides debounce,
+	 * abort, and reactive mutation.
+	 *
+	 * On result, `item.detail.header.description` and `item.detail.pairs`
+	 * are mutated in place — Vue 3 deep reactivity propagates through
+	 * displayedItems so App.vue's highlightedItemDetail computed picks
+	 * up the new fields without explicit invalidation.
+	 *
+	 * `isStale` checks both the mode (rejects results from a mode swap)
+	 * and item identity in `flatItems` (rejects results for items that
+	 * have been replaced by a list refresh). A focus change to a new item
+	 * before this resolves aborts via the lifecycle on the next call.
+	 *
+	 * @param {Object} item Highlighted palette item.
+	 */
+	function requestItemDetail( item ) {
+		const mode = activeMode.value;
+		if ( !mode || typeof mode.getItemDetail !== 'function' || !item ) {
+			return;
+		}
+		const capturedItem = item;
+		const isStale = () => activeMode.value !== mode ||
+			!flatItems.value.includes( capturedItem );
+		detailLifecycle.runDebouncedAbortable( {
+			debounceMs: DETAIL_DEBOUNCE_MS,
+			isStale,
+			run: ( signal ) => mode.getItemDetail( capturedItem, signal ),
+			onResult: ( result ) => {
+				if ( !result || !capturedItem.detail ) {
+					return;
+				}
+				if ( !capturedItem.detail.header ) {
+					capturedItem.detail.header = {};
+				}
+				if ( result.description !== undefined ) {
+					capturedItem.detail.header.description = result.description;
+				}
+				if ( result.pairs !== undefined ) {
+					capturedItem.detail.pairs = result.pairs;
+				}
+			},
+			onError: ( error ) => {
+				mw.log.error(
+					'[commandPalette] Mode "' + mode.id + '" item detail failed:', error
+				);
+			}
+		} );
+	}
+
+	/**
 	 * Loads the registered-modes catalog into displayedItems so listNav can
 	 * navigate it. Only meaningful at root (no active mode).
 	 */
@@ -475,6 +557,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		}
 		const items = deps.getHelpCatalogItems() || [];
 		resetOperationState();
+		resetDetailState();
 		displayedItems.value = items.length > 0 ?
 			[ { heading: 'citizen-command-palette-help-section-modes', items: items } ] :
 			[];
@@ -498,6 +581,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		helpVisible.value = true;
 		if ( activeMode.value ) {
 			resetOperationState();
+			resetDetailState();
 			displayedItems.value = [];
 		} else {
 			loadHelpCatalog();
@@ -576,6 +660,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		openHelp,
 		closeHelp,
 		handleSelection,
+		requestItemDetail,
 		dismissRecentItem
 	};
 }
