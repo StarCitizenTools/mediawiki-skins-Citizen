@@ -589,4 +589,218 @@ describe( 'useProviderOrchestration', () => {
 			] );
 		} );
 	} );
+
+	describe( 'requestItemDetail', () => {
+		// Build a mode with a getItemDetail mock and pre-load it as activeMode
+		// with a known list of items in displayedItems.
+		function setupModeWithItems( items, getItemDetailImpl ) {
+			const mode = {
+				id: 'file',
+				getResults: vi.fn().mockResolvedValue( items ),
+				getItemDetail: vi.fn( getItemDetailImpl )
+			};
+			const orch = useProviderOrchestration(
+				[ mockSyncProvider ], mockDecorator
+			);
+			orch.enterMode( mode );
+			return { orch, mode };
+		}
+
+		it( 'is a no-op when there is no active mode', () => {
+			const orch = useProviderOrchestration(
+				[ mockSyncProvider ], mockDecorator
+			);
+
+			expect( () => orch.requestItemDetail( { id: '1' } ) ).not.toThrow();
+		} );
+
+		it( 'is a no-op when the active mode does not declare getItemDetail', () => {
+			const mode = {
+				id: 'plain',
+				getResults: vi.fn().mockResolvedValue( [] )
+			};
+			const orch = useProviderOrchestration(
+				[ mockSyncProvider ], mockDecorator
+			);
+			orch.enterMode( mode );
+
+			expect( () => orch.requestItemDetail( { id: '1' } ) ).not.toThrow();
+		} );
+
+		it( 'is a no-op when item is null/undefined', () => {
+			const { orch, mode } = setupModeWithItems(
+				[ { id: '1', detail: { header: {} } } ],
+				() => Promise.resolve( { description: 'x', pairs: [] } )
+			);
+
+			orch.requestItemDetail( null );
+			vi.advanceTimersByTime( 100 );
+
+			expect( mode.getItemDetail ).not.toHaveBeenCalled();
+		} );
+
+		it( 'calls mode.getItemDetail after the detail debounce and mutates item.detail', async () => {
+			const { orch, mode } = setupModeWithItems(
+				[ { id: '1', detail: { header: { label: 'F' } } } ],
+				() => Promise.resolve( {
+					description: 'PNG image',
+					pairs: [ { key: 'size', label: 'Size', value: '1 KB' } ]
+				} )
+			);
+			await vi.runAllTimersAsync();
+			// App.vue passes the live (proxied) item from flatItems; doing
+			// the same here ensures the staleness identity check matches.
+			const item = orch.flatItems.value[ 0 ];
+
+			orch.requestItemDetail( item );
+			expect( mode.getItemDetail ).not.toHaveBeenCalled();
+
+			vi.advanceTimersByTime( 80 );
+			await vi.runAllTimersAsync();
+
+			expect( mode.getItemDetail ).toHaveBeenCalledTimes( 1 );
+			expect( mode.getItemDetail ).toHaveBeenCalledWith( item, expect.any( AbortSignal ) );
+			expect( item.detail.header.description ).toBe( 'PNG image' );
+			expect( item.detail.pairs ).toEqual( [
+				{ key: 'size', label: 'Size', value: '1 KB' }
+			] );
+		} );
+
+		it( 'aborts a prior in-flight detail fetch when called again with a different item', async () => {
+			const seenSignals = [];
+			const { orch, mode } = setupModeWithItems(
+				[
+					{ id: '1', detail: { header: {} } },
+					{ id: '2', detail: { header: {} } }
+				],
+				( _item, signal ) => {
+					seenSignals.push( signal );
+					// Resolve only the second call; leave the first hanging until aborted.
+					return seenSignals.length === 1 ?
+						new Promise( () => {} ) :
+						Promise.resolve( { description: 'd', pairs: [] } );
+				}
+			);
+			await vi.runAllTimersAsync();
+			const item1 = orch.flatItems.value[ 0 ];
+			const item2 = orch.flatItems.value[ 1 ];
+
+			orch.requestItemDetail( item1 );
+			vi.advanceTimersByTime( 80 );
+			await vi.runAllTimersAsync();
+
+			orch.requestItemDetail( item2 );
+			vi.advanceTimersByTime( 80 );
+			await vi.runAllTimersAsync();
+
+			expect( mode.getItemDetail ).toHaveBeenCalledTimes( 2 );
+			expect( seenSignals[ 0 ].aborted ).toBe( true );
+			expect( seenSignals[ 1 ].aborted ).toBe( false );
+		} );
+
+		it( 'drops a stale result when the item has been replaced in flatItems', async () => {
+			let resolveDetail;
+			const orch = useProviderOrchestration(
+				[ mockSyncProvider ], mockDecorator
+			);
+			const mode = {
+				id: 'file',
+				getResults: vi.fn().mockResolvedValue( [
+					{ id: 'a', detail: { header: {} } }
+				] ),
+				getItemDetail: vi.fn( () => new Promise( ( resolve ) => {
+					resolveDetail = resolve;
+				} ) )
+			};
+			orch.enterMode( mode );
+			await vi.runAllTimersAsync();
+
+			const captured = orch.flatItems.value[ 0 ];
+			orch.requestItemDetail( captured );
+			vi.advanceTimersByTime( 80 );
+			await vi.runAllTimersAsync();
+
+			// Replace the items array (simulates a list refresh from a new query).
+			mode.getResults.mockResolvedValueOnce( [
+				{ id: 'b', detail: { header: {} } }
+			] );
+			orch.updateQuery( 'b' );
+			vi.advanceTimersByTime( 250 );
+			await vi.runAllTimersAsync();
+
+			// updateQuery's resetDetailState() aborts the in-flight signal,
+			// so the lifecycle's finally block already cleared it. The
+			// resolution we trigger here arrives at a no-op onResult because
+			// isStale is true (captured no longer in flatItems).
+			resolveDetail( { description: 'late', pairs: [ { key: 'k', label: 'L', value: 'V' } ] } );
+			await vi.runAllTimersAsync();
+
+			expect( captured.detail.header.description ).toBeUndefined();
+			expect( captured.detail.pairs ).toBeUndefined();
+		} );
+
+		it( 'enterMode resets the detail lifecycle (aborts in-flight fetch)', async () => {
+			let seenSignal;
+			const { orch, mode } = setupModeWithItems(
+				[ { id: '1', detail: { header: {} } } ],
+				( _item, signal ) => {
+					seenSignal = signal;
+					return new Promise( () => {} ); // never resolves
+				}
+			);
+			await vi.runAllTimersAsync();
+			const item = orch.flatItems.value[ 0 ];
+
+			orch.requestItemDetail( item );
+			vi.advanceTimersByTime( 80 );
+			await vi.runAllTimersAsync();
+
+			expect( seenSignal.aborted ).toBe( false );
+
+			orch.enterMode( Object.assign( {}, mode, { id: 'other' } ) );
+
+			expect( seenSignal.aborted ).toBe( true );
+		} );
+
+		it( 'exitMode resets the detail lifecycle (aborts in-flight fetch)', async () => {
+			let seenSignal;
+			const { orch } = setupModeWithItems(
+				[ { id: '1', detail: { header: {} } } ],
+				( _item, signal ) => {
+					seenSignal = signal;
+					return new Promise( () => {} );
+				}
+			);
+			await vi.runAllTimersAsync();
+			const item = orch.flatItems.value[ 0 ];
+
+			orch.requestItemDetail( item );
+			vi.advanceTimersByTime( 80 );
+			await vi.runAllTimersAsync();
+
+			expect( seenSignal.aborted ).toBe( false );
+
+			orch.exitMode();
+
+			expect( seenSignal.aborted ).toBe( true );
+		} );
+
+		it( 'logs and leaves item.detail untouched when getItemDetail rejects', async () => {
+			mw.log.error.mockClear();
+			const { orch } = setupModeWithItems(
+				[ { id: '1', detail: { header: { label: 'F' } } } ],
+				() => Promise.reject( new Error( 'boom' ) )
+			);
+			await vi.runAllTimersAsync();
+			const item = orch.flatItems.value[ 0 ];
+
+			orch.requestItemDetail( item );
+			vi.advanceTimersByTime( 80 );
+			await vi.runAllTimersAsync();
+
+			expect( mw.log.error ).toHaveBeenCalled();
+			expect( item.detail.header.description ).toBeUndefined();
+			expect( item.detail.pairs ).toBeUndefined();
+		} );
+	} );
 } );
