@@ -473,40 +473,53 @@ function actionCount( state ) {
  * from `activeBindings`, which prepends any `keybindings` array exported by
  * the active mode onto `coreBindings` so mode bindings win on collisions.
  *
- * @param {Object} deps Dependencies.
- * @param {import('vue').Ref} deps.inputRef Ref to the header component (exposes focus(), getInputElement()).
- * @param {import('vue').Ref<Map>} deps.itemRefs Map of index to item component refs.
- * @param {import('vue').Ref<Array>} deps.items The displayed items list.
- * @param {Object} deps.listNav List navigation composable return value.
- * @param {Object} deps.actionNav Action navigation composable return value.
- * @param {Function} deps.onSelect Called when an item is selected (Enter key).
- * @param {Function} deps.onClose Called when the palette should close (Escape key).
- * @param {import('vue').Ref<string>} deps.query Current query string.
- * @param {import('vue').Ref<Object|null>} deps.activeMode Current active mode or null.
- * @param {Function} deps.onClearQuery Called to clear the query.
- * @param {Function} deps.onExitMode Called to exit the current mode.
- * @param {Function} deps.onEnterMode Called to enter a mode.
- * @param {Function} deps.findModeByTrigger Given a character, returns a PaletteMode or null.
- * @param {import('vue').Ref<Array>} [deps.tokens] Token array ref for chip backspace handling.
- * @param {import('vue').Ref<number>} [deps.selectedTokenIndex] Selected token index ref (-1 = none).
- * @param {Function} [deps.onSelectToken] Called with index to select a token chip.
- * @param {Function} [deps.onRemoveToken] Called with index to remove a selected token chip.
- * @param {import('vue').Ref<Array>} [deps.activeModeContext] Active mode's drill-down stack ref.
- * @param {Function} [deps.onPopModeContext] Called to pop the last entry from the active mode's context stack.
- * @param {import('vue').Ref<boolean>} [deps.helpVisible] Whether the help overlay is currently open.
- * @param {Function} [deps.onToggleHelp] Called to toggle the help overlay.
- * @param {Function} [deps.onCloseHelp] Called to close the help overlay.
- * @param {Function} [deps.requestHeaderCopy] Called when Cmd/Ctrl+C should copy the highlighted item's `detail.header.copyValue`.
+ * Options are grouped into named buckets so the dependency surface is
+ * self-documenting at the call site (see `App.vue`):
+ *  - `core`       — DOM handles + palette-wide callbacks the dispatcher
+ *                   always needs (input ref, item map, items, query,
+ *                   onSelect, onClose, onClearQuery, requestHeaderCopy).
+ *  - `navigation` — list/grid/action composables and the layout flag.
+ *  - `mode`       — active-mode refs, mode-context stack, mode-trigger
+ *                   callbacks, and the cross-mode lookup.
+ *  - `tokens`     — token state + selection callbacks for chip handling.
+ *  - `help`       — help overlay visibility flag and toggle/close callbacks.
+ *
+ * Optionality contract:
+ *  - `tokens` and `help` are entire-bucket-optional — callers without
+ *    chip or help-overlay subsystems can omit them.
+ *  - `mode.activeModeContext` is field-level optional within the required
+ *    `mode` bucket — modes that don't drill in (no `pushModeContext`)
+ *    can leave it out. Every other field in `core`, `navigation`, and
+ *    `mode` is required.
+ *
+ * @param {Object} options
+ * @param {Object} options.core Required. inputRef, itemRefs, items,
+ *   query, requestHeaderCopy, onSelect, onClose, onClearQuery.
+ * @param {Object} options.navigation Required. listNav, gridNav,
+ *   isGalleryLayout, actionNav.
+ * @param {Object} options.mode Required. activeMode, findModeByTrigger,
+ *   onEnterMode, onExitMode, onPopModeContext, plus optional
+ *   activeModeContext.
+ * @param {Object} [options.tokens] tokens, selectedTokenIndex,
+ *   onSelectToken, onRemoveToken.
+ * @param {Object} [options.help] helpVisible, onToggleHelp, onCloseHelp.
  * @return {Object} Keyboard handler and focus management methods.
  */
-function useKeyboard( deps ) {
-	const listNav = deps.listNav;
-	const actionNav = deps.actionNav;
-	// Optional: gallery support. When provided, navigateList branches on
-	// `isGalleryLayout` to use the grid composable's column-aware methods.
-	// Modes that don't declare layout='gallery' fall through to listNav.
-	const gridNav = deps.gridNav;
-	const isGalleryLayout = deps.isGalleryLayout;
+function useKeyboard( options ) {
+	const core = options.core;
+	const navigation = options.navigation;
+	const mode = options.mode;
+	const tokens = options.tokens || {};
+	const help = options.help || {};
+
+	const listNav = navigation.listNav;
+	const actionNav = navigation.actionNav;
+	// Gallery support: `gridNav` and `isGalleryLayout` are always present in
+	// the navigation bucket, but `isGalleryLayout.value` is only true while
+	// the active mode declares layout='gallery'. `navigateList` branches on
+	// the live value to pick the right composable per dispatch.
+	const gridNav = navigation.gridNav;
+	const isGalleryLayout = navigation.isGalleryLayout;
 
 	/**
 	 * Effective binding list: mode-contributed bindings (if any) prepended
@@ -514,8 +527,10 @@ function useKeyboard( deps ) {
 	 * within its own zone. `coreBindings` itself stays immutable.
 	 */
 	const activeBindings = computed( () => {
-		const mode = deps.activeMode.value;
-		const modeBindings = mode && Array.isArray( mode.keybindings ) ? mode.keybindings : [];
+		const activeMode = mode.activeMode.value;
+		const modeBindings = activeMode && Array.isArray( activeMode.keybindings ) ?
+			activeMode.keybindings :
+			[];
 		return modeBindings.concat( coreBindings );
 	} );
 
@@ -524,8 +539,8 @@ function useKeyboard( deps ) {
 	 */
 	const activeDescendantId = computed( () => {
 		const index = listNav.highlightedIndex.value;
-		if ( index >= 0 && deps.items.value[ index ] ) {
-			return String( deps.items.value[ index ].id );
+		if ( index >= 0 && core.items.value[ index ] ) {
+			return String( core.items.value[ index ].id );
 		}
 		return null;
 	} );
@@ -535,16 +550,16 @@ function useKeyboard( deps ) {
 	 */
 	const highlightedItemHasActions = computed( () => {
 		const index = listNav.highlightedIndex.value;
-		if ( index < 0 || index >= deps.items.value.length ) {
+		if ( index < 0 || index >= core.items.value.length ) {
 			return false;
 		}
-		const item = deps.items.value[ index ];
+		const item = core.items.value[ index ];
 		return Boolean( item && item.actions && item.actions.length > 0 );
 	} );
 
 	function focusInput() {
-		if ( deps.inputRef.value ) {
-			deps.inputRef.value.focus();
+		if ( core.inputRef.value ) {
+			core.inputRef.value.focus();
 		}
 	}
 
@@ -576,13 +591,13 @@ function useKeyboard( deps ) {
 		}
 		nextTick( () => {
 			if ( typeof targetNav.scrollToHighlighted === 'function' ) {
-				targetNav.scrollToHighlighted( deps.itemRefs );
+				targetNav.scrollToHighlighted( core.itemRefs );
 			}
 		} );
 	}
 
 	function getInputElement() {
-		const header = deps.inputRef.value;
+		const header = core.inputRef.value;
 		if ( header && typeof header.getInputElement === 'function' ) {
 			return header.getInputElement();
 		}
@@ -622,18 +637,18 @@ function useKeyboard( deps ) {
 	 */
 	function buildState() {
 		const highlightedIndex = listNav.highlightedIndex.value;
-		const items = deps.items.value;
+		const items = core.items.value;
 		const highlightedItem = highlightedIndex >= 0 && highlightedIndex < items.length ?
 			items[ highlightedIndex ] :
 			null;
 
 		return {
-			query: deps.query.value,
-			tokens: deps.tokens ? deps.tokens.value : [],
-			selectedTokenIndex: deps.selectedTokenIndex ? deps.selectedTokenIndex.value : -1,
+			query: core.query.value,
+			tokens: tokens.tokens ? tokens.tokens.value : [],
+			selectedTokenIndex: tokens.selectedTokenIndex ? tokens.selectedTokenIndex.value : -1,
 			inputElement: getInputElement(),
-			modeContext: deps.activeModeContext ? deps.activeModeContext.value : [],
-			activeMode: deps.activeMode.value,
+			modeContext: mode.activeModeContext ? mode.activeModeContext.value : [],
+			activeMode: mode.activeMode.value,
 			isGalleryLayout: !!( isGalleryLayout && isGalleryLayout.value ),
 			highlightedIndex: highlightedIndex,
 			items: items,
@@ -647,19 +662,19 @@ function useKeyboard( deps ) {
 				highlightedItem.detail.header &&
 				highlightedItem.detail.header.copyValue
 			),
-			helpVisible: deps.helpVisible ? deps.helpVisible.value : false,
+			helpVisible: help.helpVisible ? help.helpVisible.value : false,
 			actionsFocused: actionNav.isActive.value,
-			onClose: deps.onClose,
-			onClearQuery: deps.onClearQuery,
-			onExitMode: deps.onExitMode,
-			onEnterMode: deps.onEnterMode,
-			onSelect: deps.onSelect,
-			onToggleHelp: deps.onToggleHelp,
-			onCloseHelp: deps.onCloseHelp,
-			onSelectToken: deps.onSelectToken,
-			onRemoveToken: deps.onRemoveToken,
-			onPopModeContext: deps.onPopModeContext,
-			findModeByTrigger: deps.findModeByTrigger,
+			onClose: core.onClose,
+			onClearQuery: core.onClearQuery,
+			onExitMode: mode.onExitMode,
+			onEnterMode: mode.onEnterMode,
+			onSelect: core.onSelect,
+			onToggleHelp: help.onToggleHelp,
+			onCloseHelp: help.onCloseHelp,
+			onSelectToken: tokens.onSelectToken,
+			onRemoveToken: tokens.onRemoveToken,
+			onPopModeContext: mode.onPopModeContext,
+			findModeByTrigger: mode.findModeByTrigger,
 			listNav: listNav,
 			actionNav: actionNav,
 			focusInput: focusInput,
@@ -703,16 +718,16 @@ function useKeyboard( deps ) {
 			!event.shiftKey &&
 			( event.key === 'c' || event.key === 'C' ) &&
 			!hasTextSelection() &&
-			deps.requestHeaderCopy
+			core.requestHeaderCopy
 		) {
-			const items = deps.items.value;
+			const items = core.items.value;
 			const idx = listNav.highlightedIndex.value;
 			const item = idx >= 0 && idx < items.length ? items[ idx ] : null;
 			const copyValue = item && item.detail && item.detail.header &&
 				item.detail.header.copyValue;
 			if ( copyValue ) {
 				event.preventDefault();
-				deps.requestHeaderCopy();
+				core.requestHeaderCopy();
 				return;
 			}
 		}
@@ -742,12 +757,12 @@ function useKeyboard( deps ) {
 		if (
 			!state.actionsFocused &&
 			!state.helpVisible &&
-			deps.selectedTokenIndex &&
-			deps.onSelectToken &&
+			tokens.selectedTokenIndex &&
+			tokens.onSelectToken &&
 			state.selectedTokenIndex >= 0 &&
 			event.key.length === 1
 		) {
-			deps.onSelectToken( -1 );
+			tokens.onSelectToken( -1 );
 			state.selectedTokenIndex = -1;
 		}
 
@@ -790,12 +805,12 @@ function useKeyboard( deps ) {
 			!state.activeMode &&
 			!state.query &&
 			event.key.length === 1 &&
-			deps.findModeByTrigger
+			mode.findModeByTrigger
 		) {
-			const mode = deps.findModeByTrigger( event.key );
-			if ( mode ) {
+			const matched = mode.findModeByTrigger( event.key );
+			if ( matched ) {
 				event.preventDefault();
-				deps.onEnterMode( mode );
+				mode.onEnterMode( matched );
 			}
 		}
 	}

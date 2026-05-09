@@ -8,6 +8,60 @@ const useKeyboard = require(
 	'../../../../resources/skins.citizen.commandPalette/composables/useKeyboard.js'
 );
 
+/**
+ * Adapter: useKeyboard takes grouped buckets, but the test fixtures here
+ * keep their dependencies flat for ergonomics. Funnel the flat shape into
+ * the bucketed shape on each call so the existing `deps.X` mutations in
+ * test bodies keep working without per-test rewrites.
+ *
+ * MUST stay in sync with useKeyboard.js's bucket definitions. If a field
+ * moves buckets (e.g. requestHeaderCopy promoted to its own bucket), update
+ * this mapping or tests will silently put the field in the wrong place and
+ * the binding handler will quietly stop firing.
+ *
+ * @param {Object} deps
+ * @return {Object}
+ */
+function toGrouped( deps ) {
+	return {
+		core: {
+			inputRef: deps.inputRef,
+			itemRefs: deps.itemRefs,
+			items: deps.items,
+			query: deps.query,
+			requestHeaderCopy: deps.requestHeaderCopy,
+			onSelect: deps.onSelect,
+			onClose: deps.onClose,
+			onClearQuery: deps.onClearQuery
+		},
+		navigation: {
+			listNav: deps.listNav,
+			gridNav: deps.gridNav,
+			isGalleryLayout: deps.isGalleryLayout,
+			actionNav: deps.actionNav
+		},
+		mode: {
+			activeMode: deps.activeMode,
+			activeModeContext: deps.activeModeContext,
+			findModeByTrigger: deps.findModeByTrigger,
+			onEnterMode: deps.onEnterMode,
+			onExitMode: deps.onExitMode,
+			onPopModeContext: deps.onPopModeContext
+		},
+		tokens: {
+			tokens: deps.tokens,
+			selectedTokenIndex: deps.selectedTokenIndex,
+			onSelectToken: deps.onSelectToken,
+			onRemoveToken: deps.onRemoveToken
+		},
+		help: {
+			helpVisible: deps.helpVisible,
+			onToggleHelp: deps.onToggleHelp,
+			onCloseHelp: deps.onCloseHelp
+		}
+	};
+}
+
 describe( 'useKeyboard', () => {
 	let listNav;
 	let actionNav;
@@ -77,7 +131,7 @@ describe( 'useKeyboard', () => {
 			findModeByTrigger: vi.fn( () => null )
 		};
 
-		keyboard = useKeyboard( deps );
+		keyboard = useKeyboard( toGrouped( deps ) );
 	} );
 
 	afterEach( () => {
@@ -153,7 +207,7 @@ describe( 'useKeyboard', () => {
 			const mode = { id: 'user', triggers: [ '@' ] };
 			deps.findModeByTrigger = vi.fn( () => mode );
 			deps.onEnterMode = vi.fn();
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 
 			var event = createKeyEvent( '@' );
 			event.shiftKey = true;
@@ -303,7 +357,7 @@ describe( 'useKeyboard', () => {
 			deps.onPopModeContext = vi.fn();
 			deps.query.value = '';
 
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 
 			expect( keyboard.keyboardHints.value.some(
 				( h ) => h.msgKey === 'citizen-command-palette-keyhint-back'
@@ -317,7 +371,7 @@ describe( 'useKeyboard', () => {
 			deps.onSelectToken = vi.fn();
 			deps.onRemoveToken = vi.fn();
 
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 
 			expect( keyboard.keyboardHints.value.some(
 				( h ) => h.msgKey === 'citizen-command-palette-keyhint-edit-token'
@@ -331,7 +385,7 @@ describe( 'useKeyboard', () => {
 			deps.onSelectToken = vi.fn();
 			deps.onRemoveToken = vi.fn();
 
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 
 			expect( keyboard.keyboardHints.value.some(
 				( h ) => h.msgKey === 'citizen-command-palette-keyhint-select-token'
@@ -344,7 +398,7 @@ describe( 'useKeyboard', () => {
 			deps.onPopModeContext = vi.fn();
 			actionNav.isActive.value = true;
 
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 
 			expect( keyboard.keyboardHints.value.some(
 				( h ) => h.kbd === '⌫'
@@ -379,7 +433,7 @@ describe( 'useKeyboard', () => {
 		it( 'clears the query when query is non-empty', () => {
 			deps.query.value = 'hello';
 
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			keyboard.handleKeydown( createKeyEvent( 'Escape', actionTarget ) );
 
 			expect( actionNav.deactivate ).toHaveBeenCalled();
@@ -392,7 +446,7 @@ describe( 'useKeyboard', () => {
 			deps.query.value = '';
 			deps.activeMode.value = { id: 'category' };
 
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			keyboard.handleKeydown( createKeyEvent( 'Escape', actionTarget ) );
 
 			expect( actionNav.deactivate ).toHaveBeenCalled();
@@ -405,7 +459,7 @@ describe( 'useKeyboard', () => {
 			deps.query.value = '';
 			deps.activeMode.value = null;
 
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			keyboard.handleKeydown( createKeyEvent( 'Escape', actionTarget ) );
 
 			expect( actionNav.deactivate ).toHaveBeenCalled();
@@ -420,7 +474,7 @@ describe( 'useKeyboard', () => {
 			deps.query = ref( 'test' );
 			deps.activeMode = ref( null );
 			deps.onClearQuery = vi.fn();
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( 'Escape' );
 
 			keyboard.handleKeydown( event );
@@ -433,7 +487,7 @@ describe( 'useKeyboard', () => {
 			deps.query = ref( '' );
 			deps.activeMode = ref( { id: 'ns' } );
 			deps.onExitMode = vi.fn();
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( 'Escape' );
 
 			keyboard.handleKeydown( event );
@@ -445,7 +499,7 @@ describe( 'useKeyboard', () => {
 		it( 'closes palette when Escape pressed with empty query and no mode', () => {
 			deps.query = ref( '' );
 			deps.activeMode = ref( null );
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( 'Escape' );
 
 			keyboard.handleKeydown( event );
@@ -461,7 +515,7 @@ describe( 'useKeyboard', () => {
 			const mode = { id: 'user', triggers: [ '@' ] };
 			deps.findModeByTrigger = vi.fn( () => mode );
 			deps.onEnterMode = vi.fn();
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( '@' );
 
 			keyboard.handleKeydown( event );
@@ -475,7 +529,7 @@ describe( 'useKeyboard', () => {
 			deps.activeMode = ref( { id: 'ns' } );
 			deps.findModeByTrigger = vi.fn( () => ( { id: 'user' } ) );
 			deps.onEnterMode = vi.fn();
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( '@' );
 
 			keyboard.handleKeydown( event );
@@ -488,7 +542,7 @@ describe( 'useKeyboard', () => {
 			deps.activeMode = ref( null );
 			deps.findModeByTrigger = vi.fn( () => ( { id: 'user' } ) );
 			deps.onEnterMode = vi.fn();
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( '@' );
 
 			keyboard.handleKeydown( event );
@@ -501,7 +555,7 @@ describe( 'useKeyboard', () => {
 			deps.activeMode = ref( null );
 			deps.findModeByTrigger = vi.fn( () => null );
 			deps.onEnterMode = vi.fn();
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( 'x' );
 
 			keyboard.handleKeydown( event );
@@ -528,7 +582,7 @@ describe( 'useKeyboard', () => {
 			deps.activeMode = ref( modeContext.length > 0 ? { id: 'm' } : null );
 			deps.activeModeContext = ref( modeContext );
 			deps.onPopModeContext = vi.fn();
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			return { inputEl };
 		}
 
@@ -583,7 +637,7 @@ describe( 'useKeyboard', () => {
 			deps.helpVisible = ref( helpVisible );
 			deps.onToggleHelp = vi.fn();
 			deps.onCloseHelp = vi.fn();
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 		}
 
 		it( '"?" at empty input toggles help', () => {
@@ -668,7 +722,7 @@ describe( 'useKeyboard', () => {
 			const mode = { id: 'user', triggers: [ '@' ] };
 			deps.findModeByTrigger = vi.fn( () => mode );
 			deps.onEnterMode = vi.fn();
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( '@' );
 
 			keyboard.handleKeydown( event );
@@ -681,7 +735,7 @@ describe( 'useKeyboard', () => {
 			setupHelp( { helpVisible: true } );
 			deps.activeModeContext = ref( [ { name: 'A' } ] );
 			deps.onPopModeContext = vi.fn();
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( 'Backspace' );
 
 			keyboard.handleKeydown( event );
@@ -703,7 +757,7 @@ describe( 'useKeyboard', () => {
 				focus: vi.fn(),
 				closest: vi.fn( () => null )
 			} ) );
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( 'Backspace' );
 
 			keyboard.handleKeydown( event );
@@ -739,7 +793,7 @@ describe( 'useKeyboard', () => {
 			};
 			listNav.highlightedIndex.value = 0;
 
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			keyboard.handleKeydown( createKeyEvent( 'Enter' ) );
 
 			expect( modeHandler ).toHaveBeenCalled();
@@ -759,7 +813,7 @@ describe( 'useKeyboard', () => {
 			};
 			listNav.highlightedIndex.value = 0;
 
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			keyboard.handleKeydown( createKeyEvent( 'Enter' ) );
 
 			expect( deps.onSelect ).toHaveBeenCalled();
@@ -769,7 +823,7 @@ describe( 'useKeyboard', () => {
 			deps.activeMode.value = { id: 'no-bindings' };
 			listNav.highlightedIndex.value = 0;
 
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			keyboard.handleKeydown( createKeyEvent( 'Enter' ) );
 
 			expect( deps.onSelect ).toHaveBeenCalled();
@@ -779,7 +833,7 @@ describe( 'useKeyboard', () => {
 			deps.activeMode.value = null;
 			listNav.highlightedIndex.value = 0;
 
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			keyboard.handleKeydown( createKeyEvent( 'Enter' ) );
 
 			expect( deps.onSelect ).toHaveBeenCalled();
@@ -798,7 +852,7 @@ describe( 'useKeyboard', () => {
 				} ]
 			};
 
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 
 			expect( keyboard.keyboardHints.value.some( ( h ) => h.kbd === 'F1' ) ).toBe( true );
 		} );
