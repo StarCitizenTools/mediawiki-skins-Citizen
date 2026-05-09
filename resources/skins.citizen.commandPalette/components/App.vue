@@ -225,20 +225,38 @@ module.exports = exports = defineComponent( {
 		// targets to widen the modal in gallery layouts.
 		const paletteLayout = computed( () => isGalleryLayout.value ? 'gallery' : 'list' );
 
-		const highlightedItemDetail = computed( () => {
+		const highlightedItem = computed( () => {
 			const index = listNav.highlightedIndex.value;
 			const items = orch.flatItems.value;
-			if ( index >= 0 && index < items.length ) {
-				const detail = items[ index ].detail;
-				if ( detail && (
-					( detail.pairs && detail.pairs.length ) ||
-					detail.header
-				) ) {
-					return detail;
-				}
+			return index >= 0 && index < items.length ? items[ index ] : null;
+		} );
+
+		const highlightedItemDetail = computed( () => {
+			const item = highlightedItem.value;
+			if ( !item ) {
+				return null;
+			}
+			const detail = item.detail;
+			if ( detail && (
+				( detail.pairs && detail.pairs.length ) ||
+				detail.header
+			) ) {
+				return detail;
 			}
 			return null;
 		} );
+
+		// Modes that opt in via `getItemDetail` (file mode, currently)
+		// fetch per-item detail lazily when an item is focused. The
+		// orchestration handles debounce, abort, and reactive mutation
+		// — App.vue just needs to call `requestItemDetail` whenever the
+		// highlighted item changes. `immediate: true` covers the case
+		// where the first item is auto-highlighted on initial render.
+		watch( highlightedItem, ( item ) => {
+			if ( item ) {
+				orch.requestItemDetail( item );
+			}
+		}, { immediate: true } );
 
 		// While help is open at root, the highlighted catalog row's source
 		// (e.g. "command:category") tells us which registered handler to
