@@ -38,6 +38,7 @@ const MODE_FIELDS = COMMON_FIELDS.concat( [
 	'noResults',
 	'tokenPattern',
 	'getResults',
+	'getItemDetail',
 	'headerLabel'
 ] );
 
@@ -146,6 +147,13 @@ function applyOptionalFieldChecks( config ) {
 			`[commandPalette] mode "${ out.id }" \`keybindings\` must be an array. Dropping the field.`
 		);
 		delete out.keybindings;
+	}
+
+	if ( out.getItemDetail !== undefined && typeof out.getItemDetail !== 'function' ) {
+		mw.log.warn(
+			`[commandPalette] mode "${ out.id }" \`getItemDetail\` must be a function. Dropping the field.`
+		);
+		delete out.getItemDetail;
 	}
 
 	if (

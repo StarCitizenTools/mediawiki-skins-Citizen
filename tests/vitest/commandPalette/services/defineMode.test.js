@@ -156,6 +156,20 @@ describe( 'defineMode', () => {
 			expect( result.keybindings ).toBe( bindings );
 		} );
 
+		it( 'warns and drops getItemDetail when not a function', () => {
+			const result = defineMode( Object.assign( {}, VALID_MODE, { getItemDetail: 'oops' } ) );
+
+			expect( result.getItemDetail ).toBeUndefined();
+			expect( mw.log.warn ).toHaveBeenCalled();
+		} );
+
+		it( 'preserves valid getItemDetail as-is', () => {
+			const fn = async () => ( { description: '', pairs: [] } );
+			const result = defineMode( Object.assign( {}, VALID_MODE, { getItemDetail: fn } ) );
+
+			expect( result.getItemDetail ).toBe( fn );
+		} );
+
 		it( 'warns and drops tokenPattern when not an object/array', () => {
 			const result = defineMode( Object.assign( {}, VALID_MODE, { tokenPattern: 'oops' } ) );
 
