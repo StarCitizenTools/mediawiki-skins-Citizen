@@ -339,36 +339,47 @@ module.exports = exports = defineComponent( {
 			copyTrigger.value++;
 		}
 
-		// Keyboard handler
+		// Keyboard handler. Options group into named buckets so each
+		// dependency's role is self-documenting at the call site.
 		const keyboard = useKeyboard( {
-			inputRef: searchHeader,
-			itemRefs,
-			items: orch.flatItems,
-			listNav,
-			gridNav,
-			isGalleryLayout,
-			actionNav,
-			onSelect: selectResult,
-			onClose: close,
-			query: orch.query,
-			activeMode: orch.activeMode,
-			requestHeaderCopy,
-			onClearQuery: () => {
-				tokenInput.clear();
-				orch.updateQuery( '' );
+			core: {
+				inputRef: searchHeader,
+				itemRefs,
+				items: orch.flatItems,
+				query: orch.query,
+				requestHeaderCopy,
+				onSelect: selectResult,
+				onClose: close,
+				onClearQuery: () => {
+					tokenInput.clear();
+					orch.updateQuery( '' );
+				}
 			},
-			onExitMode: () => orch.exitMode(),
-			onEnterMode: ( mode ) => orch.enterMode( mode ),
-			findModeByTrigger,
-			tokens: tokenInput.tokens,
-			selectedTokenIndex: tokenInput.selectedIndex,
-			onSelectToken: ( index ) => tokenInput.selectToken( index ),
-			onRemoveToken: handleRemoveToken,
-			activeModeContext: orch.activeModeContext,
-			onPopModeContext: () => orch.popModeContext(),
-			helpVisible: orch.helpVisible,
-			onToggleHelp: () => orch.toggleHelp(),
-			onCloseHelp: () => orch.closeHelp()
+			navigation: {
+				listNav,
+				gridNav,
+				isGalleryLayout,
+				actionNav
+			},
+			mode: {
+				activeMode: orch.activeMode,
+				activeModeContext: orch.activeModeContext,
+				findModeByTrigger,
+				onEnterMode: ( m ) => orch.enterMode( m ),
+				onExitMode: () => orch.exitMode(),
+				onPopModeContext: () => orch.popModeContext()
+			},
+			tokens: {
+				tokens: tokenInput.tokens,
+				selectedTokenIndex: tokenInput.selectedIndex,
+				onSelectToken: ( index ) => tokenInput.selectToken( index ),
+				onRemoveToken: handleRemoveToken
+			},
+			help: {
+				helpVisible: orch.helpVisible,
+				onToggleHelp: () => orch.toggleHelp(),
+				onCloseHelp: () => orch.closeHelp()
+			}
 		} );
 
 		// setItemRef expects the GLOBAL index within displayedItems
