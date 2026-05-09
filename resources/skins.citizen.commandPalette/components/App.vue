@@ -112,6 +112,7 @@ const useListNavigation = require( '../composables/useListNavigation.js' );
 const useGridNavigation = require( '../composables/useGridNavigation.js' );
 const useKeyboard = require( '../composables/useKeyboard.js' );
 const useProviderOrchestration = require( '../composables/useProviderOrchestration.js' );
+const useResultRouter = require( '../composables/useResultRouter.js' );
 const useTokenizedInput = require( '../composables/useTokenizedInput.js' );
 const CommandPaletteList = require( './CommandPaletteList.vue' );
 const CommandPaletteGallery = require( './CommandPaletteGallery.vue' );
@@ -309,112 +310,13 @@ module.exports = exports = defineComponent( {
 			searchHeader.value?.focus();
 		};
 
-		/**
-		 * Handles the selection of a result item.
-		 *
-		 * @param {Object} result The selected item
-		 */
-		const selectResult = async ( result ) => {
-			const wasHelpVisible = orch.helpVisible.value;
-			const selectionAction = await orch.handleSelection( result );
-
-			switch ( selectionAction.action ) {
-				case 'navigate':
-					if ( selectionAction.payload ) {
-						// Previewable result with an in-place preview handler
-						// available: keep the palette open so the user can
-						// dismiss the preview and pick another row. Plain
-						// mouse clicks are already intercepted by the
-						// handler; keyboard activation synthesizes a click
-						// on the highlighted row's anchor so the handler
-						// can take over. Modifier or non-primary clicks
-						// (Ctrl, Cmd, Alt, Shift, middle) fall through to
-						// the existing navigate+close path so users keep
-						// their browser-level escape hatches.
-						if (
-							result.previewable &&
-							instantDiffs.isAvailable() &&
-							!result.modifierClick
-						) {
-							if ( !result.isMouseClick && paletteRoot.value ) {
-								const anchor = paletteRoot.value.querySelector(
-									'.citizen-command-palette-list-item--highlighted a'
-								);
-								if ( anchor ) {
-									instantDiffs.triggerForAnchor( anchor );
-								}
-							}
-							break;
-						}
-
-						// <a> tags are handled by the browser on mouse click, so we don't need to navigate.
-						if ( !result.isMouseClick ) {
-							window.location.href = selectionAction.payload;
-						}
-						close();
-					}
-					break;
-				case 'exitWithQuery':
-					if ( orch.activeMode.value ) {
-						// From within a mode: exit and add token
-						orch.exitMode();
-						tokenInput.setFreeText( selectionAction.payload );
-					} else {
-						// From root: try to enter a matching mode
-						const match = findModeByQuery( selectionAction.payload );
-						if ( match ) {
-							tokenInput.clear();
-							// Closing help before entering the mode keeps openHelp's
-							// catalog from being preserved across the enterMode reset.
-							if ( wasHelpVisible ) {
-								orch.closeHelp();
-							}
-							orch.enterMode( match.mode );
-						}
-					}
-					nextTick( focusInput );
-					break;
-				case 'updateQuery':
-					tokenInput.setFreeText( selectionAction.payload );
-					nextTick( focusInput );
-					break;
-				case 'addToken':
-					tokenInput.addToken( selectionAction.payload );
-					tokenInput.setFreeText( '' );
-					// Force re-query: adding a token while clearing freeText
-					// produces the same fullQuery string, so the watcher won't fire.
-					// TODO: A generation counter on useTokenizedInput could replace
-					// this workaround by making the watcher always see a new value.
-					orch.updateQuery( tokenInput.fullQuery.value );
-					nextTick( focusInput );
-					break;
-				case 'pushModeContext':
-					orch.pushModeContext( selectionAction.payload );
-					tokenInput.clear();
-					nextTick( focusInput );
-					break;
-				case 'toggleHelp':
-					orch.toggleHelp();
-					tokenInput.clear();
-					nextTick( focusInput );
-					break;
-				case 'none':
-				default:
-					break;
-			}
-
-			// Auto-dismiss help after any non-toggle selection from inside the
-			// help overlay. Skipped for 'navigate' (the palette closes) and
-			// 'exitWithQuery' (which already closed help before entering mode).
-			if (
-				wasHelpVisible &&
-				selectionAction.action !== 'toggleHelp' &&
-				selectionAction.action !== 'navigate' &&
-				selectionAction.action !== 'exitWithQuery'
-			) {
-				orch.closeHelp();
-			}
-		};
+		const { selectResult, handleAction } = useResultRouter( {
+			orchestrator: orch,
+			tokenInput,
+			navigation: { findModeByQuery },
+			control: { focusInput, close, paletteRoot },
+			preview: instantDiffs
+		} );
 
 		const handleRemoveToken = ( index ) => {
 			const token = tokenInput.tokens.value[ index ];
@@ -485,35 +387,6 @@ module.exports = exports = defineComponent( {
 		const handleHover = ( newIndex ) => {
 			if ( newIndex !== listNav.highlightedIndex.value ) {
 				listNav.highlightedIndex.value = newIndex;
-			}
-		};
-
-		/**
-		 * Handles custom actions triggered by buttons within list items.
-		 *
-		 * @param {Object} action The action event payload.
-		 */
-		const handleAction = ( action ) => {
-			switch ( action.type ) {
-				case 'dismiss':
-					if ( action.itemId !== undefined ) {
-						orch.dismissRecentItem( action.itemId );
-					} else {
-						mw.log.warn( '[CommandPalette] Dismiss action missing itemId:', action );
-					}
-					break;
-				case 'navigate':
-					if ( action.url ) {
-						window.location.href = action.url;
-						close();
-					} else {
-						mw.log.warn( '[CommandPalette] Navigate action missing url:', action );
-					}
-					break;
-				case 'event':
-					break;
-				default:
-					mw.log.warn( '[CommandPalette] Unknown or missing action type received:', action );
 			}
 		};
 
