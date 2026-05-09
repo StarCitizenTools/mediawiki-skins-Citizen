@@ -1,6 +1,8 @@
 const { ref, shallowRef, computed } = require( 'vue' );
+const useOperationLifecycle = require( './useOperationLifecycle.js' );
 
 const SHOW_PENDING_DELAY_MS = 300;
+const DEFAULT_DEBOUNCE_MS = 250;
 
 const DEFAULT_STATE_CONFIG = {
 	emptyState: {
@@ -70,26 +72,12 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		};
 	} );
 
-	let debounceTimeout = null;
-	let pendingDelayTimeout = null;
-	let abortController = null;
-
-	/**
-	 * Resets all operation state.
-	 */
-	function resetOperationState() {
-		clearTimeout( debounceTimeout );
-		debounceTimeout = null;
-		clearTimeout( pendingDelayTimeout );
-		pendingDelayTimeout = null;
-		isPending.value = false;
-		showPending.value = false;
-
-		if ( abortController ) {
-			abortController.abort();
-			abortController = null;
-		}
-	}
+	const lifecycle = useOperationLifecycle( {
+		isPending,
+		showPending,
+		pendingDelayMs: SHOW_PENDING_DELAY_MS
+	} );
+	const resetOperationState = lifecycle.reset;
 
 	/**
 	 * Applies the result decorator and updates displayedItems.
@@ -133,55 +121,21 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	 * @param {string} currentQuery The query at dispatch time.
 	 */
 	function handleAsyncProvider( provider, currentQuery ) {
-		isPending.value = true;
-
-		clearTimeout( pendingDelayTimeout );
-		pendingDelayTimeout = setTimeout( () => {
-			if ( isPending.value && query.value === currentQuery ) {
-				showPending.value = true;
-			}
-		}, SHOW_PENDING_DELAY_MS );
-
-		clearTimeout( debounceTimeout );
-
-		if ( abortController ) {
-			abortController.abort();
-		}
-		abortController = new AbortController();
-		const signal = abortController.signal;
-
-		debounceTimeout = setTimeout( async () => {
-			if ( query.value !== currentQuery ) {
-				isPending.value = false;
-				showPending.value = false;
-				return;
-			}
-
-			try {
-				const result = await provider.getResults( currentQuery, signal );
-				const items = normalizeProviderResult( result );
-				if ( query.value === currentQuery ) {
-					setResults( items );
-				}
-			} catch ( error ) {
-				if ( error.name !== 'AbortError' ) {
-					mw.log.error(
-						'[commandPalette] Async provider "' +
-						provider.id + '" failed:', error
-					);
-					if ( query.value === currentQuery ) {
-						setResults( [] );
-					}
-				}
-			} finally {
-				if ( query.value === currentQuery ) {
-					isPending.value = false;
-					showPending.value = false;
-					clearTimeout( pendingDelayTimeout );
-					pendingDelayTimeout = null;
+		const isStale = () => query.value !== currentQuery;
+		lifecycle.runDebouncedAbortable( {
+			debounceMs: provider.debounceMs || DEFAULT_DEBOUNCE_MS,
+			isStale,
+			run: ( signal ) => provider.getResults( currentQuery, signal ),
+			onResult: ( result ) => setResults( normalizeProviderResult( result ) ),
+			onError: ( error ) => {
+				mw.log.error(
+					'[commandPalette] Async provider "' + provider.id + '" failed:', error
+				);
+				if ( !isStale() ) {
+					setResults( [] );
 				}
 			}
-		}, provider.debounceMs || 250 );
+		} );
 	}
 
 	/**
@@ -257,6 +211,22 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	}
 
 	/**
+	 * Renders mode-getResults output into a single section. Both the
+	 * empty-query and debounced branches funnel through this so the
+	 * staleness check stays consistent.
+	 *
+	 * @param {Object} mode
+	 * @param {string} currentQuery
+	 * @param {Array} items
+	 */
+	function applyModeResults( mode, currentQuery, items ) {
+		if ( query.value === currentQuery && activeMode.value === mode ) {
+			displayedItems.value = items.length > 0 ?
+				[ { heading: null, items: items } ] : [];
+		}
+	}
+
+	/**
 	 * Handles a query routed through the active mode's getResults.
 	 *
 	 * @param {Object} mode The active mode object.
@@ -264,78 +234,45 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	 */
 	function handleModeQuery( mode, currentQuery ) {
 		const tokens = deps.tokens ? deps.tokens.value : [];
+
+		// Empty query: fire immediately. No debounce, no abort — modes
+		// load their root state on entry and the user expects no delay.
 		if ( !currentQuery ) {
 			isPending.value = true;
-			const clearPending = () => {
-				if ( query.value === currentQuery && activeMode.value === mode ) {
-					isPending.value = false;
-				}
-			};
-			Promise.resolve( mode.getResults( '', undefined, tokens, activeModeContext.value ) ).then( ( result ) => {
-				const items = normalizeProviderResult( result );
-				if ( query.value === currentQuery && activeMode.value === mode ) {
-					displayedItems.value = items.length > 0 ?
-						[ { heading: null, items: items } ] : [];
-				}
-				clearPending();
-			} ).catch( ( error ) => {
-				mw.log.error(
-					'[commandPalette] Mode "' + mode.id + '" failed:', error
-				);
-				clearPending();
-			} );
-			return;
-		}
-
-		isPending.value = true;
-
-		clearTimeout( pendingDelayTimeout );
-		pendingDelayTimeout = setTimeout( () => {
-			if ( isPending.value && query.value === currentQuery ) {
-				showPending.value = true;
-			}
-		}, SHOW_PENDING_DELAY_MS );
-
-		clearTimeout( debounceTimeout );
-
-		if ( abortController ) {
-			abortController.abort();
-		}
-		abortController = new AbortController();
-
-		debounceTimeout = setTimeout( async () => {
-			if ( query.value !== currentQuery || activeMode.value !== mode ) {
-				isPending.value = false;
-				showPending.value = false;
-				return;
-			}
-
-			try {
-				const signal = abortController ? abortController.signal : undefined;
-				const result = await mode.getResults( currentQuery, signal, tokens, activeModeContext.value );
-				const items = normalizeProviderResult( result );
-				if ( query.value === currentQuery && activeMode.value === mode ) {
-					displayedItems.value = items.length > 0 ?
-						[ { heading: null, items: items } ] : [];
-				}
-			} catch ( error ) {
-				if ( error.name !== 'AbortError' ) {
+			( async () => {
+				try {
+					const result = await mode.getResults(
+						'', undefined, tokens, activeModeContext.value
+					);
+					applyModeResults( mode, currentQuery, normalizeProviderResult( result ) );
+				} catch ( error ) {
 					mw.log.error(
 						'[commandPalette] Mode "' + mode.id + '" failed:', error
 					);
+				} finally {
 					if ( query.value === currentQuery && activeMode.value === mode ) {
-						displayedItems.value = [];
+						isPending.value = false;
 					}
 				}
-			} finally {
-				if ( query.value === currentQuery ) {
-					isPending.value = false;
-					showPending.value = false;
-					clearTimeout( pendingDelayTimeout );
-					pendingDelayTimeout = null;
+			} )();
+			return;
+		}
+
+		const isStale = () => query.value !== currentQuery || activeMode.value !== mode;
+		lifecycle.runDebouncedAbortable( {
+			debounceMs: mode.debounceMs ?? DEFAULT_DEBOUNCE_MS,
+			isStale,
+			run: ( signal ) => mode.getResults( currentQuery, signal, tokens, activeModeContext.value ),
+			onResult: ( result ) => applyModeResults( mode, currentQuery, normalizeProviderResult( result ) ),
+			onError: ( error ) => {
+				mw.log.error(
+					'[commandPalette] Mode "' + mode.id + '" failed:', error
+				);
+				if ( !isStale() ) {
+					displayedItems.value = [];
 				}
 			}
-		}, mode.debounceMs ?? 250 );
+		} );
 	}
 
 	/**
