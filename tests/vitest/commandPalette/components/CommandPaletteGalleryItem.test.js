@@ -4,6 +4,9 @@ const { mount } = require( '@vue/test-utils' );
 const mw = require( '../../mocks/mw.js' );
 globalThis.mw = mw;
 
+// CommandPaletteImage (the gallery tile's child) imports CdxIcon via
+// `mw.loader.require` at module load — stub it so the component tree
+// renders without a real Codex bundle.
 mw.loader.require = vi.fn( () => ( {
 	CdxIcon: {
 		name: 'CdxIcon',
@@ -40,7 +43,7 @@ describe( 'CommandPaletteGalleryItem', () => {
 			const thumb = { url: '/img/foo.png', width: 300, height: 200 };
 			const wrapper = mountTile( { thumbnail: thumb } );
 
-			const img = wrapper.find( 'img.citizen-command-palette-gallery-item__thumbnail-image' );
+			const img = wrapper.find( 'img.citizen-command-palette-image__image' );
 			expect( img.exists() ).toBe( true );
 			expect( img.attributes( 'src' ) ).toBe( '/img/foo.png' );
 			expect( img.attributes( 'loading' ) ).toBe( 'lazy' );
@@ -53,11 +56,22 @@ describe( 'CommandPaletteGalleryItem', () => {
 			expect( img.attributes( 'alt' ) ).toBe( '' );
 		} );
 
+		it( 'tile uses cover framing so the grid stays uniform', () => {
+			const thumb = { url: '/img/foo.png', width: 300, height: 200 };
+			const wrapper = mountTile( { thumbnail: thumb } );
+
+			// CommandPaletteImage applies the object-fit modifier to the
+			// inner <img> (matching CdxImage's class structure). Asserting
+			// the class (rather than computed style) catches accidental
+			// fit changes in either direction.
+			expect( wrapper.find( 'img.citizen-command-palette-image__image--fit-cover' ).exists() ).toBe( true );
+		} );
+
 		it( 'renders a placeholder with the cdx-icon when no thumbnail', () => {
 			const wrapper = mountTile( { thumbnailIcon: 'icon-name' } );
 
-			expect( wrapper.find( 'img.citizen-command-palette-gallery-item__thumbnail-image' ).exists() ).toBe( false );
-			const placeholder = wrapper.find( '.citizen-command-palette-gallery-item__thumbnail-placeholder' );
+			expect( wrapper.find( 'img.citizen-command-palette-image__image' ).exists() ).toBe( false );
+			const placeholder = wrapper.find( '.citizen-command-palette-image__placeholder' );
 			expect( placeholder.exists() ).toBe( true );
 			const icon = placeholder.findComponent( { name: 'CdxIcon' } );
 			expect( icon.exists() ).toBe( true );
@@ -67,7 +81,7 @@ describe( 'CommandPaletteGalleryItem', () => {
 		it( 'renders an empty placeholder (no icon) when neither thumbnail nor thumbnailIcon are set', () => {
 			const wrapper = mountTile( { thumbnailIcon: '' } );
 
-			const placeholder = wrapper.find( '.citizen-command-palette-gallery-item__thumbnail-placeholder' );
+			const placeholder = wrapper.find( '.citizen-command-palette-image__placeholder' );
 			expect( placeholder.exists() ).toBe( true );
 			expect( placeholder.findComponent( { name: 'CdxIcon' } ).exists() ).toBe( false );
 		} );
