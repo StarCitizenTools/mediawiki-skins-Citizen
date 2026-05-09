@@ -121,7 +121,6 @@ const CommandPaletteFooter = require( './CommandPaletteFooter.vue' );
 const CommandPaletteHeader = require( './CommandPaletteHeader.vue' );
 const CommandPaletteDetailPanel = require( './CommandPaletteDetailPanel.vue' );
 const CommandPaletteHelpView = require( './CommandPaletteHelpView.vue' );
-const instantDiffs = require( '../services/instantDiffs.js' );
 const { cdxIconArticleNotFound, cdxIconArticlesSearch } = require( '../icons.json' );
 
 // @vue/component
@@ -152,6 +151,9 @@ module.exports = exports = defineComponent( {
 		const getTokenPatterns = inject( 'getTokenPatterns' );
 		const getHelpCatalogItems = inject( 'getHelpCatalogItems', null );
 		const getHandler = inject( 'getHandler', null );
+		// Duck-typed { isAvailable, processContext, triggerForAnchor, onReady }
+		// service — today the InstantDiffs gadget bridge, swappable via init.js.
+		const previewService = inject( 'previewService' );
 		// Provided by commandPalette.js so the trigger orchestrator can hide
 		// its overlay wrapper after the palette closes from inside (Esc, backdrop).
 		const paletteExternalClose = inject( 'paletteExternalClose', null );
@@ -315,7 +317,7 @@ module.exports = exports = defineComponent( {
 			tokenInput,
 			navigation: { findModeByQuery },
 			control: { focusInput, close, paletteRoot },
-			preview: instantDiffs
+			preview: previewService
 		} );
 
 		const handleRemoveToken = ( index ) => {
@@ -436,16 +438,16 @@ module.exports = exports = defineComponent( {
 			// its click listeners. The watcher's `flush: 'post'` already
 			// runs us after DOM updates from the items mutation.
 			if ( paletteRoot.value ) {
-				instantDiffs.processContext( paletteRoot.value );
+				previewService.processContext( paletteRoot.value );
 			}
 		}, { flush: 'post' } );
 
 		// Late-load handler: if the preview handler initializes after the
 		// palette is already open, re-process whatever is currently
 		// rendered so the existing anchors get wired up.
-		instantDiffs.onReady( () => {
+		previewService.onReady( () => {
 			if ( paletteRoot.value ) {
-				instantDiffs.processContext( paletteRoot.value );
+				previewService.processContext( paletteRoot.value );
 			}
 		} );
 

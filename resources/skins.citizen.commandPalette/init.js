@@ -7,6 +7,7 @@ const createRecentItems = require( './services/recentItems.js' );
 const createRestSearchClient = require( './services/searchClient.js' );
 const createPaletteRegistry = require( './services/paletteRegistry.js' );
 const { defineMode, defineCommand } = require( './services/defineMode.js' );
+const previewService = require( './services/instantDiffs.js' );
 
 // Provider factories
 const createSearchProvider = require( './providers/SearchProvider.js' );
@@ -107,6 +108,13 @@ function initApp( overlayEl, options ) {
 	app.provide( 'getHandler', paletteRegistry.getHandler );
 	app.provide( 'getHelpCatalogItems', () => paletteRegistry.getCommandListItems()
 		.filter( ( item ) => item.source !== 'command:help' ) );
+	// Preview-handler service — currently the InstantDiffs gadget bridge,
+	// but the consumer (useResultRouter + the App-level processContext /
+	// onReady wiring) only depends on the duck-typed
+	// `{ isAvailable, processContext, triggerForAnchor, onReady }` shape.
+	// Future preview integrations become a swap of this provider, not a
+	// code change in the dispatcher.
+	app.provide( 'previewService', previewService );
 	// Called from App.vue's close() so the orchestrator can hide its
 	// overlay wrapper and reset the trigger's `<details>` open state when
 	// the palette is dismissed from inside (Esc, backdrop click). Falls
