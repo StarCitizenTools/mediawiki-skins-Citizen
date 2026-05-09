@@ -29,7 +29,25 @@ const { defineMode } = require( '../services/defineMode.js' );
 
 const FILE_NAMESPACE = 6;
 const RESULT_LIMIT = 50;
-const THUMB_WIDTH = 300;
+
+// Gallery tiles render in a `minmax(140px, 1fr)` grid; the average
+// rendered tile width is roughly BASE_TILE_WIDTH. The MW server resamples
+// to whatever `iiurlwidth` we request, so picking a width that matches
+// the user's DPR avoids over-fetching on 1× displays and prevents the
+// browser from upscaling on retina-class (2×, 3×) displays. Capped at
+// MAX_THUMB_WIDTH to avoid runaway values from unusual ratios. Computed
+// per request rather than at module load so a window dragged between a
+// 1× and a 2× display picks up the new ratio on the next list refresh.
+const BASE_TILE_WIDTH = 160;
+const MAX_THUMB_WIDTH = 400;
+
+function computeThumbWidth() {
+	const dpr = ( typeof window !== 'undefined' && window.devicePixelRatio ) || 1;
+	return Math.min(
+		MAX_THUMB_WIDTH,
+		Math.ceil( BASE_TILE_WIDTH * Math.max( 1, dpr ) )
+	);
+}
 
 const KB = 1024;
 const MB = KB * 1024;
@@ -333,10 +351,15 @@ function createFileMode( ApiConstructor ) {
 		format: 'json',
 		prop: 'imageinfo',
 		iiprop: 'url|mediatype',
-		iiurlwidth: THUMB_WIDTH,
 		maxage: config.wgSearchSuggestCacheExpiry,
 		smaxage: config.wgSearchSuggestCacheExpiry
 	};
+
+	function listParams( extra ) {
+		return Object.assign(
+			{}, baseListImageinfoParams, { iiurlwidth: computeThumbWidth() }, extra
+		);
+	}
 
 	// Detail-stage params: everything the right-pane renders. Filtered
 	// to LicenseShortName because that's the only extmetadata field we
@@ -384,7 +407,7 @@ function createFileMode( ApiConstructor ) {
 	}
 
 	function fetchFilesByPrefix( subQuery, signal ) {
-		return queryPages( Object.assign( {}, baseListImageinfoParams, {
+		return queryPages( listParams( {
 			generator: 'prefixsearch',
 			gpssearch: subQuery,
 			gpsnamespace: FILE_NAMESPACE,
@@ -393,7 +416,7 @@ function createFileMode( ApiConstructor ) {
 	}
 
 	function fetchFilesByFullText( subQuery, signal ) {
-		return queryPages( Object.assign( {}, baseListImageinfoParams, {
+		return queryPages( listParams( {
 			generator: 'search',
 			gsrsearch: subQuery,
 			gsrnamespace: FILE_NAMESPACE,
@@ -416,7 +439,7 @@ function createFileMode( ApiConstructor ) {
 			return Promise.resolve( [] );
 		}
 		const title = mw.config.get( 'wgPageName' );
-		return queryPages( Object.assign( {}, baseListImageinfoParams, {
+		return queryPages( listParams( {
 			generator: 'images',
 			titles: title,
 			gimlimit: RESULT_LIMIT
