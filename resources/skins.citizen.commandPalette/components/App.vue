@@ -106,6 +106,7 @@
 <script>
 const { defineComponent, ref, nextTick, computed, watch, inject, onBeforeUnmount } = require( 'vue' );
 const useActionNavigation = require( '../composables/useActionNavigation.js' );
+const useBodyHeightAnimation = require( '../composables/useBodyHeightAnimation.js' );
 const useListNavigation = require( '../composables/useListNavigation.js' );
 const useGridNavigation = require( '../composables/useGridNavigation.js' );
 const useKeyboard = require( '../composables/useKeyboard.js' );
@@ -165,39 +166,15 @@ module.exports = exports = defineComponent( {
 		// when the gallery is mounted. Defaults to 1 (list-equivalent) so
 		// the grid composable behaves correctly even before measurement.
 		const galleryColumnCount = ref( 1 );
-		let resizeObserver = null;
 		let galleryResizeObserver = null;
 		// Mirror of the gallery template ref's `repeat( auto-fill, minmax( 140px, 1fr ) )`.
 		// Keep this in sync with the value in CommandPaletteGallery.vue's stylesheet.
 		const GALLERY_MIN_TILE_WIDTH = 140;
 
-		/**
-		 * Sync the body container's height CSS variable to the viewport's
-		 * rendered height. The CSS transition on the body handles animation.
-		 */
-		const updateBodyHeight = () => {
-			const container = bodyContainer.value;
-			const viewport = bodyViewport.value;
-			if ( container && viewport ) {
-				container.style.height = viewport.clientHeight + 'px';
-			}
-		};
-
-		const setupResizeObserver = () => {
-			if ( !bodyViewport.value ) {
-				return;
-			}
-			updateBodyHeight();
-			resizeObserver = new ResizeObserver( updateBodyHeight );
-			resizeObserver.observe( bodyViewport.value );
-		};
-
-		const teardownResizeObserver = () => {
-			if ( resizeObserver ) {
-				resizeObserver.disconnect();
-				resizeObserver = null;
-			}
-		};
+		const { setupResizeObserver, teardownResizeObserver } = useBodyHeightAnimation( {
+			bodyContainer,
+			bodyViewport
+		} );
 
 		const updateGalleryColumnCount = ( element ) => {
 			if ( !element ) {
@@ -217,7 +194,6 @@ module.exports = exports = defineComponent( {
 		};
 
 		onBeforeUnmount( () => {
-			teardownResizeObserver();
 			teardownGalleryResizeObserver();
 		} );
 
