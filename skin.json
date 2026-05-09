@@ -346,6 +346,7 @@
 				"resources/skins.citizen.commandPalette/composables/useProviderOrchestration.js",
 				"resources/skins.citizen.commandPalette/composables/useKeyboardBindings.js",
 				"resources/skins.citizen.commandPalette/composables/useKeyboard.js",
+				"resources/skins.citizen.commandPalette/composables/useResultRouter.js",
 				"resources/skins.citizen.commandPalette/composables/useTokenizedInput.js",
 				"resources/skins.citizen.commandPalette/utils/fetch.js",
 				"resources/skins.citizen.commandPalette/utils/providerActions.js",
