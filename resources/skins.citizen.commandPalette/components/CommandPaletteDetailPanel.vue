@@ -200,14 +200,14 @@ module.exports = exports = defineComponent( {
 	&__pairs {
 		display: flex;
 		flex-direction: column;
-		gap: var( --space-sm );
+		gap: var( --space-md );
 		margin: 0;
 	}
 
 	&__pair {
 		display: flex;
 		flex-direction: column;
-		gap: var( --space-xs );
+		gap: @spacing-12;
 	}
 
 	&__label {
