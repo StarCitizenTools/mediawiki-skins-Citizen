@@ -239,7 +239,8 @@ module.exports = exports = defineComponent( {
 			const detail = item.detail;
 			if ( detail && (
 				( detail.pairs && detail.pairs.length ) ||
-				detail.header
+				detail.header ||
+				detail.media
 			) ) {
 				return detail;
 			}
