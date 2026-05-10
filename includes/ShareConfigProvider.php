@@ -4,10 +4,6 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen;
 
-use MediaWiki\Content\TextContent;
-use MediaWiki\Revision\RevisionLookup;
-use MediaWiki\Revision\SlotRecord;
-use MediaWiki\Title\TitleFactory;
 use MediaWiki\Utils\UrlUtils;
 
 /**
@@ -18,8 +14,7 @@ class ShareConfigProvider {
 	private const PAGE_NAME = 'Citizen-share-services.json';
 
 	public function __construct(
-		private readonly RevisionLookup $revisionLookup,
-		private readonly TitleFactory $titleFactory,
+		private readonly OnWikiJsonReader $reader,
 		private readonly UrlUtils $urlUtils
 	) {
 	}
@@ -37,7 +32,7 @@ class ShareConfigProvider {
 	 * @return ?array<int, array<string, mixed>>
 	 */
 	public function getServiceOptions(): ?array {
-		$data = $this->readOnWikiConfig();
+		$data = $this->reader->read( self::PAGE_NAME );
 		if ( $data === null ) {
 			return null;
 		}
@@ -96,35 +91,6 @@ class ShareConfigProvider {
 			return false;
 		}
 		return preg_match( '/^(?:' . $protocols . ')/i', $url ) === 1;
-	}
-
-	/**
-	 * Read and parse MediaWiki:Citizen-share-services.json.
-	 *
-	 * @return ?array Parsed JSON or null if the page is missing/invalid
-	 */
-	private function readOnWikiConfig(): ?array {
-		$title = $this->titleFactory->newFromText(
-			self::PAGE_NAME,
-			NS_MEDIAWIKI
-		);
-
-		if ( !$title || !$title->exists() ) {
-			return null;
-		}
-
-		$rev = $this->revisionLookup->getRevisionByTitle( $title );
-		if ( !$rev ) {
-			return null;
-		}
-
-		$content = $rev->getContent( SlotRecord::MAIN );
-		if ( !( $content instanceof TextContent ) ) {
-			return null;
-		}
-
-		$data = json_decode( $content->getText(), true );
-		return is_array( $data ) ? $data : null;
 	}
 
 	/**

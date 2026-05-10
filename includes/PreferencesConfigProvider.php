@@ -4,10 +4,6 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen;
 
-use MediaWiki\Content\TextContent;
-use MediaWiki\Revision\RevisionLookup;
-use MediaWiki\Revision\SlotRecord;
-use MediaWiki\Title\TitleFactory;
 use MessageLocalizer;
 
 /**
@@ -18,17 +14,14 @@ class PreferencesConfigProvider {
 
 	private const PAGE_NAME = 'Citizen-preferences.json';
 
-	private RevisionLookup $revisionLookup;
-	private TitleFactory $titleFactory;
+	private OnWikiJsonReader $reader;
 	private MessageLocalizer $messageLocalizer;
 
 	public function __construct(
-		RevisionLookup $revisionLookup,
-		TitleFactory $titleFactory,
+		OnWikiJsonReader $reader,
 		MessageLocalizer $messageLocalizer
 	) {
-		$this->revisionLookup = $revisionLookup;
-		$this->titleFactory = $titleFactory;
+		$this->reader = $reader;
 		$this->messageLocalizer = $messageLocalizer;
 	}
 
@@ -39,7 +32,7 @@ class PreferencesConfigProvider {
 	 * @return array{overrides: ?array, messages: array<string, string>}
 	 */
 	public function getOverrides( string $langCode ): array {
-		$overrides = $this->readOnWikiConfig();
+		$overrides = $this->reader->read( self::PAGE_NAME );
 		if ( $overrides === null ) {
 			return [ 'overrides' => null, 'messages' => [] ];
 		}
@@ -54,34 +47,6 @@ class PreferencesConfigProvider {
 			'overrides' => $overrides,
 			'messages' => $messages
 		];
-	}
-
-	/**
-	 * Read and parse MediaWiki:Citizen-preferences.json.
-	 *
-	 * @return ?array Parsed JSON or null if the page is missing/invalid
-	 */
-	private function readOnWikiConfig(): ?array {
-		$title = $this->titleFactory->newFromText(
-			self::PAGE_NAME, NS_MEDIAWIKI
-		);
-
-		if ( !$title || !$title->exists() ) {
-			return null;
-		}
-
-		$rev = $this->revisionLookup->getRevisionByTitle( $title );
-		if ( !$rev ) {
-			return null;
-		}
-
-		$content = $rev->getContent( SlotRecord::MAIN );
-		if ( !( $content instanceof TextContent ) ) {
-			return null;
-		}
-
-		$data = json_decode( $content->getText(), true );
-		return is_array( $data ) ? $data : null;
 	}
 
 	/**

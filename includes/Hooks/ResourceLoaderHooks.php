@@ -9,6 +9,7 @@ use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\ResourceLoader as RL;
+use MediaWiki\Skins\Citizen\OnWikiJsonReader;
 use MediaWiki\Skins\Citizen\PreferencesConfigProvider;
 use MediaWiki\Skins\Citizen\ShareConfigProvider;
 
@@ -79,8 +80,10 @@ class ResourceLoaderHooks {
 	): array {
 		$mwServices = MediaWikiServices::getInstance();
 		$provider = new ShareConfigProvider(
-			$mwServices->getRevisionLookup(),
-			$mwServices->getTitleFactory(),
+			new OnWikiJsonReader(
+				$mwServices->getRevisionLookup(),
+				$mwServices->getTitleFactory()
+			),
 			$mwServices->getUrlUtils()
 		);
 		$services = $provider->getServiceOptions();
@@ -107,8 +110,10 @@ class ResourceLoaderHooks {
 	): array {
 		$services = MediaWikiServices::getInstance();
 		$provider = new PreferencesConfigProvider(
-			$services->getRevisionLookup(),
-			$services->getTitleFactory(),
+			new OnWikiJsonReader(
+				$services->getRevisionLookup(),
+				$services->getTitleFactory()
+			),
 			$context
 		);
 		return $provider->getOverrides( $context->getLanguage() );

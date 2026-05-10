@@ -4,6 +4,7 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Tests\Integration;
 
+use MediaWiki\Skins\Citizen\OnWikiJsonReader;
 use MediaWiki\Skins\Citizen\ShareConfigProvider;
 use MediaWikiIntegrationTestCase;
 
@@ -17,8 +18,10 @@ class ShareConfigProviderTest extends MediaWikiIntegrationTestCase {
 	private function createProvider(): ShareConfigProvider {
 		$services = $this->getServiceContainer();
 		return new ShareConfigProvider(
-			$services->getRevisionLookup(),
-			$services->getTitleFactory(),
+			new OnWikiJsonReader(
+				$services->getRevisionLookup(),
+				$services->getTitleFactory()
+			),
 			$services->getUrlUtils()
 		);
 	}

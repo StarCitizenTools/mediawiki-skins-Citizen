@@ -5,6 +5,7 @@ declare( strict_types=1 );
 namespace MediaWiki\Skins\Citizen\Tests\Integration;
 
 use MediaWiki\Context\RequestContext;
+use MediaWiki\Skins\Citizen\OnWikiJsonReader;
 use MediaWiki\Skins\Citizen\PreferencesConfigProvider;
 use MediaWikiIntegrationTestCase;
 
@@ -18,8 +19,10 @@ class PreferencesConfigProviderTest extends MediaWikiIntegrationTestCase {
 	private function createProvider(): PreferencesConfigProvider {
 		$services = $this->getServiceContainer();
 		return new PreferencesConfigProvider(
-			$services->getRevisionLookup(),
-			$services->getTitleFactory(),
+			new OnWikiJsonReader(
+				$services->getRevisionLookup(),
+				$services->getTitleFactory()
+			),
 			RequestContext::getMain()
 		);
 	}
