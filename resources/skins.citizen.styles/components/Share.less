@@ -13,10 +13,51 @@
 	border-radius: var( --border-radius-medium );
 	box-shadow: var( --box-shadow-drop-xx-large );
 
+	// Closed-state styles. The dialog steps to these on close and starts
+	// from them on open (via @starting-style). transition-behavior on
+	// `display` and `overlay` is what lets a discrete property animate
+	// at all, since both flip values rather than tween.
+	@media ( prefers-reduced-motion: no-preference ) {
+		opacity: 0;
+		transform: scale( 0.96 );
+		transition-timing-function: var( --transition-timing-function-ease-out );
+		transition-duration: var( --transition-duration-medium );
+		transition-property: opacity, transform, display, overlay;
+		transition-behavior: allow-discrete;
+
+		&[ open ] {
+			opacity: 1;
+			transform: scale( 1 );
+
+			@starting-style {
+				opacity: 0;
+				transform: scale( 0.96 );
+			}
+		}
+	}
+
 	&::backdrop {
 		background-color: var( --background-color-backdrop-light );
 		-webkit-backdrop-filter: var( --backdrop-filter-blur );
 		backdrop-filter: var( --backdrop-filter-blur );
+
+		@media ( prefers-reduced-motion: no-preference ) {
+			opacity: 0;
+			transition-timing-function: var( --transition-timing-function-ease-out );
+			transition-duration: var( --transition-duration-medium );
+			transition-property: opacity, display, overlay;
+			transition-behavior: allow-discrete;
+		}
+	}
+
+	&[ open ]::backdrop {
+		@media ( prefers-reduced-motion: no-preference ) {
+			opacity: 1;
+
+			@starting-style {
+				opacity: 0;
+			}
+		}
 	}
 
 	&__content {
