@@ -241,28 +241,4 @@ describe( 'createShare', () => {
 		} );
 	} );
 
-	describe( 'scroll-to-top behavior', () => {
-		it( 'scrolls to top when panel opens on a non-main page', () => {
-			createShare( deps( 'panel' ) ).init();
-			click();
-
-			expect( windowMock.scrollTo ).toHaveBeenCalledWith( { top: 0, left: 0, behavior: 'auto' } );
-		} );
-
-		it( 'skips scroll-to-top on the main page', () => {
-			mw.config.get.mockReturnValue( true );
-			createShare( deps( 'panel' ) ).init();
-			click();
-
-			expect( windowMock.scrollTo ).not.toHaveBeenCalled();
-		} );
-
-		it( 'does not scroll when native share is used', async () => {
-			createShare( deps( 'auto' ) ).init();
-			click();
-			await Promise.resolve();
-
-			expect( windowMock.scrollTo ).not.toHaveBeenCalled();
-		} );
-	} );
 } );

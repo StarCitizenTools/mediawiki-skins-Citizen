@@ -139,14 +139,6 @@ function createPanel( { trigger, nativeDialog, mountPoint, mw, window } ) {
 			if ( !nativeDialog.open ) {
 				nativeDialog.showModal();
 			}
-
-			// The sticky-header share button forwards clicks to this
-			// off-screen trigger; bring the page to top so the dialog
-			// is visible. Skip on the main page where the toolbar may
-			// already sit near the top.
-			if ( !mw.config.get( 'wgIsMainPage' ) ) {
-				window.scrollTo( { top: 0, left: 0, behavior: 'auto' } );
-			}
 		}
 	};
 }
