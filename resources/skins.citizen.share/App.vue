@@ -14,9 +14,11 @@
 				:model-value="pageURL"
 				readonly></cdx-text-input>
 			<cdx-button
+				id="citizen-share-copy-button"
 				class="citizen-share-main__copy-link__button"
 				weight="quiet"
 				:aria-label="copyButtonAriaLabel"
+				autofocus
 				@click.stop="copyURL">
 				<cdx-icon :icon="copied ? cdxIconCheck : cdxIconCopy"></cdx-icon>
 			</cdx-button>
@@ -53,7 +55,7 @@
 </template>
 
 <script>
-const { defineComponent, inject, ref, computed, onBeforeUnmount } = require( 'vue' );
+const { defineComponent, inject, ref, computed, onMounted, onBeforeUnmount, nextTick } = require( 'vue' );
 const { CdxButton, CdxIcon, CdxTextInput } = mw.loader.require( 'skins.citizen.share.codex' );
 const { cdxIconCheck, cdxIconCopy } = require( './icons.json' );
 
@@ -213,6 +215,19 @@ module.exports = exports = defineComponent( {
 
 		onBeforeUnmount( () => {
 			clearTimeout( copyTimer );
+		} );
+
+		// On first mount, the dialog was already opened with showModal()
+		// before this app existed — so the native `autofocus` attribute on
+		// the copy button missed its chance. Move focus here so keyboard
+		// users land on the copy action instead of the readonly input.
+		onMounted( () => {
+			nextTick( () => {
+				const copyBtn = document.getElementById( 'citizen-share-copy-button' );
+				if ( copyBtn ) {
+					copyBtn.focus();
+				}
+			} );
 		} );
 
 		function openShareModal( service ) {
