@@ -1,4 +1,20 @@
+const MODULE = 'skins.citizen.share';
+const { bindIntentPrefetch } = require( './intentPrefetch.js' );
+const { triggerNativeShare } = require( './triggerNativeShare.js' );
+
 /**
+ * Wire intent prefetching and lazy loading for the customizable share panel.
+ *
+ * The skeleton inside #citizen-share-content is server-rendered and stays
+ * visible until Vue's mount() replaces it. If the bundle fails to load
+ * (offline, network error), we degrade to the browser's native share path
+ * via triggerNativeShare — the curated service list becomes invisible, but
+ * the user can still share, which matches what they'd get with
+ * $wgCitizenEnableCustomizableSharePanel = false.
+ *
+ * Rendered by Share.mustache when $wgCitizenEnableCustomizableSharePanel is
+ * true. Coexists with createShareNative, which handles the no-panel case.
+ *
  * @param {Object} deps
  * @param {Document} deps.document
  * @param {Window} deps.window
@@ -7,62 +23,58 @@
  * @return {Object}
  */
 function createShare( { document, window, mw, navigator } ) {
-	/**
-	 * Initializes the share button functionality for Citizen
-	 *
-	 * @return {void}
-	 */
 	function init() {
-		const shareDetails = document.getElementById( 'citizen-share-details' );
-		const shareButton = document.getElementById( 'citizen-share' );
-		if ( !shareButton ) {
+		const details = document.getElementById( 'citizen-share-details' );
+		if ( !details ) {
 			return;
 		}
 
-		if ( shareDetails ) {
-			shareDetails.addEventListener( 'toggle', () => {
-				mw.loader.load( 'skins.citizen.share' );
-			}, { once: true } );
-
-			// intended for the sticky share button as the modal is only mounted once in the toolbar
-			shareDetails.addEventListener( 'toggle', ( event ) => {
-				if (
-					event.target.open &&
-					!mw.config.get( 'wgIsMainPage' )
-				) {
-					window.scrollTo( { top: 0, left: 0, behavior: 'auto' } );
-				}
-			} );
+		const summary = details.querySelector( 'summary' );
+		const contentEl = document.getElementById( 'citizen-share-content' );
+		if ( !summary || !contentEl ) {
 			return;
 		}
 
-		const canonicalLink = document.querySelector( 'link[rel="canonical"]' );
-		const url = canonicalLink ? canonicalLink.href : window.location.href;
-		const shareData = {
-			title: document.title,
-			url: url
-		};
+		let loading = false;
+		let mounted = false;
 
-		const handleShareButtonClick = async () => {
-			shareButton.disabled = true;
-			try {
-				if ( navigator.share ) {
-					await navigator.share( shareData );
-				} else if ( navigator.clipboard ) {
-					await navigator.clipboard.writeText( url );
-					mw.notify( mw.msg( 'citizen-share-copied' ), {
-						tag: 'citizen-share',
-						type: 'success'
-					} );
-				}
-			} catch ( error ) {
-				mw.log.error( `[Citizen] ${ error }` );
-			} finally {
-				shareButton.disabled = false;
+		const cancelPrefetch = bindIntentPrefetch( summary, MODULE, mw );
+
+		function load() {
+			if ( mounted || loading ) {
+				return;
 			}
-		};
+			loading = true;
 
-		shareButton.addEventListener( 'click', mw.util.debounce( handleShareButtonClick, 100 ) );
+			mw.loader.using( MODULE ).then(
+				() => {
+					mounted = true;
+					loading = false;
+					cancelPrefetch();
+				},
+				() => {
+					loading = false;
+					// Bundle didn't load — close the empty panel and trigger
+					// the browser's share sheet so the click isn't dropped.
+					details.open = false;
+					triggerNativeShare( { document, window, mw, navigator } );
+				}
+			);
+		}
+
+		details.addEventListener( 'toggle', () => {
+			if ( !details.open ) {
+				return;
+			}
+			load();
+			// Bring the page to the top so the panel is visible: the sticky
+			// header's share button forwards clicks to this toolbar trigger,
+			// which is otherwise off-screen when scrolled. Skip on the main
+			// page where the toolbar may already sit at top.
+			if ( !mw.config.get( 'wgIsMainPage' ) ) {
+				window.scrollTo( { top: 0, left: 0, behavior: 'auto' } );
+			}
+		} );
 	}
 
 	return { init };

@@ -206,6 +206,8 @@
 				"resources/skins.citizen.scripts/serviceWorker.js",
 				"resources/skins.citizen.scripts/setupObservers.js",
 				"resources/skins.citizen.scripts/share.js",
+				"resources/skins.citizen.scripts/shareNative.js",
+				"resources/skins.citizen.scripts/triggerNativeShare.js",
 				"resources/skins.citizen.scripts/speculationRules.js",
 				"resources/skins.citizen.scripts/stickyHeader.js",
 				"resources/skins.citizen.scripts/tableOfContents.js",

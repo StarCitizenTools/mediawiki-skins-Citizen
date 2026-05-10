@@ -1,0 +1,46 @@
+// Skeleton placeholder for the lazy-loaded share panel.
+// Visible from initial paint; replaced when Vue mounts inside
+// #citizen-share-content. On load failure share.js closes the panel
+// and falls back to the browser's native share sheet, so there is no
+// in-place error state.
+
+.citizen-share-skeleton {
+	display: flex;
+	flex-direction: column;
+	gap: var( --space-sm );
+	min-width: 16rem;
+	min-height: 8rem;
+	padding: var( --space-md );
+
+	&__bar {
+		height: 0.625rem;
+		background-color: var( --background-color-neutral );
+		background-image: linear-gradient( 90deg, transparent 0%, var( --background-color-interactive--hover ) 50%, transparent 100% );
+		background-repeat: no-repeat;
+		background-position: 200% 0;
+		background-size: 200% 100%;
+		border-radius: var( --border-radius-base );
+
+		@media ( prefers-reduced-motion: no-preference ) {
+			animation: citizen-share-skeleton-shimmer @animation-duration-medium linear infinite;
+		}
+
+		&--short {
+			width: 30%;
+		}
+
+		&--medium {
+			width: 60%;
+		}
+
+		&--wide {
+			width: 90%;
+		}
+	}
+}
+
+@keyframes citizen-share-skeleton-shimmer {
+	to {
+		background-position: -200% 0;
+	}
+}

@@ -1,3 +1,6 @@
+{{!
+	string msg-citizen-share The label used by the share button.
+}}
 <div class="citizen-share-dropdown citizen-header__item citizen-dropdown">
 	<details id="citizen-share-details" class="citizen-dropdown-details">
 		<summary
@@ -12,7 +15,13 @@
 	</details>
 	<div id="citizen-share-dropdown__card" class="citizen-menu__card">
 		<div class="citizen-menu__card-content">
-			<div id="citizen-share-content" class="citizen-share"></div>
+			<div id="citizen-share-content" class="citizen-share">
+				<div class="citizen-share-skeleton" role="status" aria-busy="true" aria-live="polite">
+					<div class="citizen-share-skeleton__bar citizen-share-skeleton__bar--short"></div>
+					<div class="citizen-share-skeleton__bar citizen-share-skeleton__bar--wide"></div>
+					<div class="citizen-share-skeleton__bar citizen-share-skeleton__bar--medium"></div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
