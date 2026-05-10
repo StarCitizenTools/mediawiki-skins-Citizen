@@ -1,15 +1,35 @@
-// Skeleton placeholder for the lazy-loaded share panel.
-// Visible from initial paint; replaced when Vue mounts inside
-// #citizen-share-content. On load failure share.js closes the panel
-// and falls back to the browser's native share sheet, so there is no
-// in-place error state.
+// Share modal: server-rendered <dialog> with skeleton content visible
+// until Vue mounts inside #citizen-share-dialog-content. On load
+// failure share.js closes the dialog and falls back to the browser's
+// native share sheet, so there is no in-place error state.
+
+.citizen-share-dialog {
+	width: min( 32rem, calc( 100vw - 2 * var( --space-md ) ) );
+	max-height: calc( 100vh - 2 * var( --space-md ) );
+	padding: 0;
+	overflow: hidden;
+	background-color: var( --background-color-base );
+	border: var( --border-base );
+	border-radius: var( --border-radius-medium );
+	box-shadow: var( --box-shadow-drop-xx-large );
+
+	&::backdrop {
+		background-color: var( --background-color-backdrop-light );
+		-webkit-backdrop-filter: var( --backdrop-filter-blur );
+		backdrop-filter: var( --backdrop-filter-blur );
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		min-height: 8rem;
+	}
+}
 
 .citizen-share-skeleton {
 	display: flex;
 	flex-direction: column;
 	gap: var( --space-sm );
-	min-width: 16rem;
-	min-height: 8rem;
 	padding: var( --space-md );
 
 	&__bar {

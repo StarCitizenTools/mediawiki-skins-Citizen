@@ -320,10 +320,26 @@
 				"vue"
 			]
 		},
+		"skins.citizen.share.codex": {
+			"class": "MediaWiki\\ResourceLoader\\CodexModule",
+			"codexComponents": [
+				"CdxButton",
+				"CdxIcon",
+				"CdxTextInput"
+			]
+		},
 		"skins.citizen.share": {
 			"packageFiles": [
 				"resources/skins.citizen.share/init.js",
 				"resources/skins.citizen.share/App.vue",
+				{
+					"name": "resources/skins.citizen.share/icons.json",
+					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
+					"callbackParam": [
+						"cdxIconCheck",
+						"cdxIconCopy"
+					]
+				},
 				{
 					"name": "resources/skins.citizen.share/config.json",
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenShareResourceLoaderConfig"
@@ -331,12 +347,11 @@
 			],
 			"messages": [
 				"citizen-share",
-				"citizen-share-link-description",
 				"citizen-share-copy-link",
-				"citizen-share-copied",
-				"citizen-share-native-options"
+				"citizen-share-copied"
 			],
 			"dependencies": [
+				"skins.citizen.share.codex",
 				"mediawiki.util",
 				"skins.citizen.icons",
 				"vue"

@@ -11,12 +11,11 @@ const NATIVE_FIXTURE = `
 `;
 
 const PANEL_FIXTURE = `
-<div class="citizen-share-dropdown">
-	<details id="citizen-share-details">
-		<summary id="citizen-share" class="citizen-dropdown-summary">
-			<span>Share</span>
-		</summary>
-	</details>
+<div class="citizen-share-trigger">
+	<button type="button" id="citizen-share">
+		<span>Share</span>
+	</button>
+	<dialog id="citizen-share-dialog"></dialog>
 </div>
 `;
 
@@ -54,12 +53,11 @@ describe( 'createShareNative', () => {
 			} ).not.toThrow();
 		} );
 
-		it( 'no-ops when #citizen-share is a summary (panel mode)', () => {
+		it( 'no-ops when #citizen-share-dialog exists (panel mode owns the click)', () => {
 			document.body.innerHTML = PANEL_FIXTURE;
 
 			createShareNative( { document, window: windowMock, mw, navigator: navigatorMock } ).init();
-			const summary = document.getElementById( 'citizen-share' );
-			summary.click();
+			document.getElementById( 'citizen-share' ).click();
 
 			expect( navigatorMock.share ).not.toHaveBeenCalled();
 		} );

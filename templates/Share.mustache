@@ -1,27 +1,32 @@
 {{!
 	string msg-citizen-share The label used by the share button.
+	boolean use-customizable-share-panel When true, render the modal scaffolding alongside the button.
 }}
-<div class="citizen-share-dropdown citizen-header__item citizen-dropdown">
-	<details id="citizen-share-details" class="citizen-dropdown-details">
-		<summary
-			id="citizen-share"
-			class="citizen-share citizen-dropdown-summary citizen-cdx-button--size-large cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only"
-			title="{{msg-citizen-share}}"
-			aria-details="citizen-share-dropdown__card"
-		>
-			<span class="citizen-ui-icon mw-ui-icon-wikimedia-share"></span>
-			<span>{{msg-citizen-share}}</span>
-		</summary>
-	</details>
-	<div id="citizen-share-dropdown__card" class="citizen-menu__card">
-		<div class="citizen-menu__card-content">
-			<div id="citizen-share-content" class="citizen-share">
-				<div class="citizen-share-skeleton" role="status" aria-busy="true" aria-live="polite">
-					<div class="citizen-share-skeleton__bar citizen-share-skeleton__bar--short"></div>
-					<div class="citizen-share-skeleton__bar citizen-share-skeleton__bar--wide"></div>
-					<div class="citizen-share-skeleton__bar citizen-share-skeleton__bar--medium"></div>
-				</div>
+<div class="citizen-share-trigger citizen-header__item">
+	<button
+		type="button"
+		id="citizen-share"
+		class="citizen-share citizen-cdx-button--size-large cdx-button cdx-button--weight-quiet cdx-button--icon-only"
+		title="{{msg-citizen-share}}"
+		aria-label="{{msg-citizen-share}}"
+		{{#use-customizable-share-panel}}aria-haspopup="dialog"{{/use-customizable-share-panel}}
+	>
+		<span class="citizen-ui-icon mw-ui-icon-wikimedia-share"></span>
+		<span>{{msg-citizen-share}}</span>
+	</button>
+	{{#use-customizable-share-panel}}
+	<dialog
+		id="citizen-share-dialog"
+		class="citizen-share-dialog"
+		aria-labelledby="citizen-share-dialog-title"
+	>
+		<div id="citizen-share-dialog-content" class="citizen-share-dialog__content">
+			<div class="citizen-share-skeleton" role="status" aria-busy="true" aria-live="polite">
+				<div class="citizen-share-skeleton__bar citizen-share-skeleton__bar--short"></div>
+				<div class="citizen-share-skeleton__bar citizen-share-skeleton__bar--wide"></div>
+				<div class="citizen-share-skeleton__bar citizen-share-skeleton__bar--medium"></div>
 			</div>
 		</div>
-	</div>
+	</dialog>
+	{{/use-customizable-share-panel}}
 </div>
