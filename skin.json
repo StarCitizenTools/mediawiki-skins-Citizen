@@ -341,7 +341,7 @@
 					]
 				},
 				{
-					"name": "resources/skins.citizen.share/config.json",
+					"name": "resources/skins.citizen.share/services.json",
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenShareResourceLoaderConfig"
 				}
 			],

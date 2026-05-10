@@ -1,6 +1,6 @@
 const Vue = require( 'vue' );
 const App = require( './App.vue' );
-const config = require( './config.json' );
+const services = require( './services.json' );
 
 /**
  * Mount the share dialog content into the given target.
@@ -16,7 +16,7 @@ const config = require( './config.json' );
  */
 function initApp( mountPoint ) {
 	const app = Vue.createMwApp( App );
-	app.provide( 'shareServiceOptions', config.wgCitizenShareServiceOptions || [] );
+	app.provide( 'shareServiceOptions', Array.isArray( services ) ? services : [] );
 	app.mount( mountPoint );
 }
 

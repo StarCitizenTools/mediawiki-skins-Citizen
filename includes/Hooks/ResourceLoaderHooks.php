@@ -87,9 +87,7 @@ class ResourceLoaderHooks {
 			$mwServices->getUrlUtils()
 		);
 
-		return [
-			'wgCitizenShareServiceOptions' => $provider->getServiceOptions() ?? [],
-		];
+		return $provider->getServiceOptions() ?? [];
 	}
 
 	/**
