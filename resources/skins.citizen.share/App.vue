@@ -81,7 +81,7 @@
 </template>
 
 <script>
-const { defineComponent, inject, ref, computed } = require( 'vue' );
+const { defineComponent, inject, ref, computed, onBeforeUnmount } = require( 'vue' );
 
 const SHARE_POPUP_WINDOW_NAME = 'citizen-share-popup';
 
@@ -253,6 +253,10 @@ module.exports = exports = defineComponent( {
 				copied.value = false;
 			}, 2000 );
 		}
+
+		onBeforeUnmount( () => {
+			clearTimeout( copyTimer );
+		} );
 
 		function openShareModal( event ) {
 			const url = event.currentTarget.getAttribute( 'data-url' );
