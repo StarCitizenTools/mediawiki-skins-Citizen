@@ -77,16 +77,20 @@ class ResourceLoaderHooks {
 		RL\Context $context,
 		Config $config
 	): array {
-		$services = null;
 		$mwServices = MediaWikiServices::getInstance();
 		$provider = new ShareConfigProvider(
 			$mwServices->getRevisionLookup(),
-			$mwServices->getTitleFactory()
+			$mwServices->getTitleFactory(),
+			$mwServices->getUrlUtils()
 		);
 		$services = $provider->getServiceOptions();
+		if ( $services === null ) {
+			$fallback = $config->get( 'CitizenShareServiceOptions' );
+			$services = $provider->sanitizeServices( is_array( $fallback ) ? $fallback : [] );
+		}
 
 		return [
-			'wgCitizenShareServiceOptions' => $services ?? $config->get( 'CitizenShareServiceOptions' ),
+			'wgCitizenShareServiceOptions' => $services,
 		];
 	}
 

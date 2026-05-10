@@ -18,7 +18,8 @@ class ShareConfigProviderTest extends MediaWikiIntegrationTestCase {
 		$services = $this->getServiceContainer();
 		return new ShareConfigProvider(
 			$services->getRevisionLookup(),
-			$services->getTitleFactory()
+			$services->getTitleFactory(),
+			$services->getUrlUtils()
 		);
 	}
 
@@ -79,5 +80,40 @@ class ShareConfigProviderTest extends MediaWikiIntegrationTestCase {
 		$this->assertIsArray( $result );
 		$this->assertCount( 1, $result );
 		$this->assertSame( 'Mastodon', $result[0]['label'] );
+	}
+
+	public function testGetServiceOptionsDropsJavaScriptUrls(): void {
+		$json = '[{"label":"Safe","url":"https://example.com/share?u={{url}}"},'
+			. '{"label":"Evil","url":"javascript:alert(1)"},'
+			. '{"label":"NoUrl"},'
+			. '{"label":"NumberUrl","url":123}]';
+		$this->editPage( 'Citizen-share-services.json', $json, '', NS_MEDIAWIKI );
+
+		$provider = $this->createProvider();
+
+		$result = $provider->getServiceOptions();
+
+		$this->assertIsArray( $result );
+		$this->assertCount( 1, $result );
+		$this->assertSame( 'Safe', $result[0]['label'] );
+	}
+
+	public function testSanitizeServicesAppliesProtocolAllowList(): void {
+		$provider = $this->createProvider();
+
+		$result = $provider->sanitizeServices( [
+			[ 'label' => 'Https', 'url' => 'https://example.com/' ],
+			[ 'label' => 'Http', 'url' => 'http://example.com/' ],
+			[ 'label' => 'Mailto', 'url' => 'mailto:share@example.com' ],
+			[ 'label' => 'Js', 'url' => 'javascript:alert(1)' ],
+			[ 'label' => 'Data', 'url' => 'data:text/html,<script>1</script>' ],
+		] );
+
+		$labels = array_column( $result, 'label' );
+		$this->assertContains( 'Https', $labels );
+		$this->assertContains( 'Http', $labels );
+		$this->assertContains( 'Mailto', $labels );
+		$this->assertNotContains( 'Js', $labels );
+		$this->assertNotContains( 'Data', $labels );
 	}
 }

@@ -8,6 +8,7 @@ use MediaWiki\Content\TextContent;
 use MediaWiki\Revision\RevisionLookup;
 use MediaWiki\Revision\SlotRecord;
 use MediaWiki\Title\TitleFactory;
+use MediaWiki\Utils\UrlUtils;
 
 /**
  * Reads on-wiki share service configuration from MediaWiki:Citizen-share-services.json.
@@ -18,7 +19,8 @@ class ShareConfigProvider {
 
 	public function __construct(
 		private readonly RevisionLookup $revisionLookup,
-		private readonly TitleFactory $titleFactory
+		private readonly TitleFactory $titleFactory,
+		private readonly UrlUtils $urlUtils
 	) {
 	}
 
@@ -51,14 +53,49 @@ class ShareConfigProvider {
 			return null;
 		}
 
-		$normalized = [];
+		return $this->sanitizeServices( $services );
+	}
+
+	/**
+	 * Drop entries that are not arrays or whose `url` does not use an allowed protocol.
+	 * `url` is rendered into `data-url` and passed to `window.open`, so a `javascript:`
+	 * URL would execute — defer to `$wgUrlProtocols` for the allow-list.
+	 *
+	 * @param array $services
+	 * @return array<int, array<string, mixed>>
+	 */
+	public function sanitizeServices( array $services ): array {
+		$sanitized = [];
 		foreach ( $services as $service ) {
-			if ( is_array( $service ) ) {
-				$normalized[] = $service;
+			$entry = $this->sanitizeService( $service );
+			if ( $entry !== null ) {
+				$sanitized[] = $entry;
 			}
 		}
+		return $sanitized;
+	}
 
-		return $normalized;
+	/**
+	 * @param mixed $service
+	 * @return ?array<string, mixed>
+	 */
+	private function sanitizeService( $service ): ?array {
+		if ( !is_array( $service ) ) {
+			return null;
+		}
+		$url = $service['url'] ?? null;
+		if ( !is_string( $url ) || !$this->hasAllowedProtocol( $url ) ) {
+			return null;
+		}
+		return $service;
+	}
+
+	private function hasAllowedProtocol( string $url ): bool {
+		$protocols = $this->urlUtils->validAbsoluteProtocols();
+		if ( $protocols === '' ) {
+			return false;
+		}
+		return preg_match( '/^(?:' . $protocols . ')/i', $url ) === 1;
 	}
 
 	/**
