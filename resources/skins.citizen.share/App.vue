@@ -35,6 +35,12 @@
 					fill="currentColor"><path d="M382-208 122-468l90-90 170 170 366-366 90 90-456 456Z" /></svg>
 			</button>
 			<!-- eslint-enable max-len -->
+			<div
+				class="citizen-share-main__copy-link__status"
+				role="status"
+				aria-live="polite">
+				{{ copyStatusMessage }}
+			</div>
 		</div>
 
 		<div
@@ -143,6 +149,10 @@ module.exports = exports = defineComponent( {
 			copied.value ?
 				i18n( 'citizen-share-copied' ) :
 				i18n( 'citizen-share-copy-link' )
+		) );
+
+		const copyStatusMessage = computed( () => (
+			copied.value ? i18n( 'citizen-share-copied' ) : ''
 		) );
 
 		// avoid field-sizing; stylelint allows only baseline css
@@ -300,6 +310,7 @@ module.exports = exports = defineComponent( {
 			canShare,
 			copied,
 			copyButtonAriaLabel,
+			copyStatusMessage,
 			pageURL,
 			linkInputSize,
 			shareServices,
@@ -317,6 +328,7 @@ module.exports = exports = defineComponent( {
 
 <style lang="less">
 @import 'mediawiki.skin.variables.less';
+@import '../mixins.less';
 
 .citizen-share-main {
 	margin-inline: var( --space-md );
@@ -346,6 +358,10 @@ module.exports = exports = defineComponent( {
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
+}
+
+.citizen-share-main__copy-link__status {
+	.mixin-citizen-screen-reader-only();
 }
 
 #citizen-share-link {
