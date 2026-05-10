@@ -126,6 +126,20 @@ For those changes, the new JS detects when expected new HTML is missing (`getEle
 
 Track the fallback's removal as a GitHub issue: it must ship with the release that lands the migration, and can be removed in the next release.
 
+### Lazy-loaded Vue modules
+
+Vue and per-module bundles are not part of the initial page load — they're loaded on intent via `mw.loader`. Any control that mounts a Vue app needs:
+
+- **Intent prefetch** via `bindIntentPrefetch()` on the trigger so hover/focus/touch starts the network round-trip before the click.
+- **Lazy load on activation** via `mw.loader.using()` on the actual click/toggle event.
+- **Server-rendered skeleton** inside the mount target for in-place panels (Preferences, Share). Vue's `mount()` replaces it on success. The skeleton must be server-rendered because the JS that would render it isn't there yet.
+- **A failure path** sized to the UI's tolerance for staying broken. Pick what fits:
+  - Retry the load in place (Preferences renders a retry button beside the skeleton).
+  - Degrade to a non-Vue path that achieves the same goal (Share closes the panel and triggers the browser's native share sheet).
+  - Surface a toast and dismiss the UI (Command palette uses `mw.notify`; the overlay sits empty during the load and disappears on failure).
+
+See `createPreferences`, `createShare`, and `createCommandPalette` for the patterns.
+
 ### i18n
 
 - Any user-facing string needs a message key in `i18n/en.json`
