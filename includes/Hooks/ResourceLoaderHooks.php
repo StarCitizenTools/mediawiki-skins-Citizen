@@ -32,6 +32,7 @@ class ResourceLoaderHooks {
 			'wgCitizenEnablePreferences' => $config->get( 'CitizenEnablePreferences' ),
 			'wgCitizenOverflowInheritedClasses' => $config->get( 'CitizenOverflowInheritedClasses' ),
 			'wgCitizenOverflowNowrapClasses' => $config->get( 'CitizenOverflowNowrapClasses' ),
+			'wgCitizenShareMode' => $config->get( 'CitizenShareMode' ),
 		];
 	}
 

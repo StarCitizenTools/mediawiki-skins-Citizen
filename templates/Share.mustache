@@ -1,6 +1,6 @@
 {{!
 	string msg-citizen-share The label used by the share button.
-	boolean use-customizable-share-panel When true, render the modal scaffolding alongside the button.
+	boolean has-share-panel-markup When true, render the dialog scaffolding alongside the button.
 }}
 <div class="citizen-share-trigger citizen-header__item">
 	<button
@@ -9,12 +9,12 @@
 		class="citizen-share citizen-cdx-button--size-large cdx-button cdx-button--weight-quiet cdx-button--icon-only"
 		title="{{msg-citizen-share}}"
 		aria-label="{{msg-citizen-share}}"
-		{{#use-customizable-share-panel}}aria-haspopup="dialog"{{/use-customizable-share-panel}}
+		{{#has-share-panel-markup}}aria-haspopup="dialog"{{/has-share-panel-markup}}
 	>
 		<span class="citizen-ui-icon mw-ui-icon-wikimedia-share"></span>
 		<span>{{msg-citizen-share}}</span>
 	</button>
-	{{#use-customizable-share-panel}}
+	{{#has-share-panel-markup}}
 	<dialog
 		id="citizen-share-dialog"
 		class="citizen-share-dialog"
@@ -28,5 +28,5 @@
 			</div>
 		</div>
 	</dialog>
-	{{/use-customizable-share-panel}}
+	{{/has-share-panel-markup}}
 </div>

@@ -206,7 +206,6 @@
 				"resources/skins.citizen.scripts/serviceWorker.js",
 				"resources/skins.citizen.scripts/setupObservers.js",
 				"resources/skins.citizen.scripts/share.js",
-				"resources/skins.citizen.scripts/shareNative.js",
 				"resources/skins.citizen.scripts/triggerNativeShare.js",
 				"resources/skins.citizen.scripts/speculationRules.js",
 				"resources/skins.citizen.scripts/stickyHeader.js",
@@ -1030,10 +1029,10 @@
 			"descriptionmsg": "citizen-config-enableshare",
 			"public": true
 		},
-		"EnableCustomizableSharePanel": {
-			"value": false,
-			"description": "Use Citizen's customizable share panel (service links and copy UI) instead of the browser Web Share API (with clipboard fallback)",
-			"descriptionmsg": "citizen-config-enablecustomizablesharepanel",
+		"ShareMode": {
+			"value": "auto",
+			"description": "Which share UI to present. 'auto' (default): try the browser's Web Share API first and fall back to Citizen's panel when unavailable. 'panel': always use Citizen's panel. 'native': always use the Web Share API, with a clipboard fallback on unsupported browsers.",
+			"descriptionmsg": "citizen-config-sharemode",
 			"public": true
 		},
 		"HeaderPosition": {

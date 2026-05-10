@@ -5,14 +5,15 @@ description: How to configure Citizen's share panel and service tiles
 
 # Share
 
-Citizen has two share modes, controlled by `$wgCitizenEnableCustomizableSharePanel` in `LocalSettings.php`:
+Citizen has three share modes, set via `$wgCitizenShareMode` in `LocalSettings.php`:
 
-- **Native (default)** — clicking share opens the operating system's share dialog. On older browsers it copies the URL to the clipboard. No configuration needed.
-- **Customizable panel** — opens an in-page dialog with a one-click copy-link field and your chosen share targets. Set `$wgCitizenEnableCustomizableSharePanel = true;` to enable.
+- **`'auto'`** *(default)* — uses the browser's Web Share API when available (mobile devices, desktop Safari, Chrome, Edge). Falls back to Citizen's in-page panel on browsers without it (e.g. desktop Firefox). Best of both worlds for most wikis.
+- **`'panel'`** — always opens Citizen's in-page panel. Use this when you want consistent branding across all browsers, or when your curated share targets are central to your wiki's identity.
+- **`'native'`** — always uses the Web Share API. Falls back to a clipboard copy with a toast notification on browsers without it. Use this when you want to defer entirely to the OS share experience.
 
 ## What users see
 
-The customizable panel always shows a copy-link field, so sharing always works even if you haven't set up any services. The grid of service tiles below it only appears when you've configured services on your wiki.
+When the panel opens, it always shows a copy-link field, so sharing always works even if you haven't set up any services. The grid of service tiles below it only appears when you've configured services on your wiki.
 
 Citizen doesn't ship with a built-in service list. The right services depend on your audience — a German federated wiki may want Diaspora; a corporate intranet may want none at all. You pick.
 

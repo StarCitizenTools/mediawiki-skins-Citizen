@@ -71,7 +71,6 @@ function main( window ) {
 		dropdown = require( './dropdown.js' ),
 		{ createLastModified } = require( './lastModified.js' ),
 		{ createShare } = require( './share.js' ),
-		{ createShareNative } = require( './shareNative.js' ),
 		setupObservers = require( './setupObservers.js' ),
 		{ createPerformanceMode } = require( './performance.js' ),
 		{ createPreferences } = require( './preferences.js' ),
@@ -85,8 +84,13 @@ function main( window ) {
 	setupObservers.init( { document, window, mw, IntersectionObserver } );
 	dropdown.init( { document, window } );
 	createLastModified( { document, Intl } ).init();
-	createShare( { document, window, mw, navigator } ).init();
-	createShareNative( { document, window, mw, navigator } ).init();
+	createShare( {
+		document,
+		window,
+		mw,
+		navigator,
+		mode: config.wgCitizenShareMode
+	} ).init();
 	createPerformanceMode( { document, mw } ).init();
 
 	mw.hook( 'wikipage.content' ).add( ( content ) => {

@@ -182,17 +182,21 @@ $wgCitizenEnableShare = true;
 
 **Values**: `true`, `false`
 
-### `$wgCitizenEnableCustomizableSharePanel`
+### `$wgCitizenShareMode`
 
-When `true`, opening share shows Citizen's customizable panel (copy field and per-service links). When `false` (default), the control uses the browser's share dialog when supported, otherwise copies the page URL to the clipboard (for older browsers that don't support it).
+Which share UI to present.
 
 ```php [LocalSettings.php]
-$wgCitizenEnableCustomizableSharePanel = false;
+$wgCitizenShareMode = 'auto';
 ```
 
-**Values**: `true`, `false`
+**Values**:
 
-The panel renders the copy-link field unconditionally. To populate the per-service tiles, create `MediaWiki:Citizen-share-services.json` — see the [Share customization page](/customization/share) for the JSON shape and a starter pack.
+- `'auto'` (default) — try the browser's Web Share API first; fall back to Citizen's panel when the API isn't available (e.g. desktop Firefox).
+- `'panel'` — always use Citizen's panel.
+- `'native'` — always use the Web Share API, with a clipboard fallback on browsers that don't support it.
+
+See the [Share customization page](/customization/share) for the panel's JSON shape and a starter pack.
 
 ## Webapp manifest
 

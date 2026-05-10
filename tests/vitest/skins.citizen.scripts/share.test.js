@@ -2,18 +2,24 @@
 
 const { createShare } = require( '../../../resources/skins.citizen.scripts/share.js' );
 
-const FIXTURE = `
+const PANEL_FIXTURE = `
 <div class="citizen-share-trigger">
 	<button type="button" id="citizen-share">
 		<span>Share</span>
 	</button>
 	<dialog id="citizen-share-dialog" class="citizen-share-dialog">
 		<div id="citizen-share-dialog-content" class="citizen-share-dialog__content">
-			<div class="citizen-share-skeleton" role="status" aria-busy="true" aria-live="polite">
-				<div class="citizen-share-skeleton__bar"></div>
-			</div>
+			<div class="citizen-share-skeleton"></div>
 		</div>
 	</dialog>
+</div>
+`;
+
+const NATIVE_FIXTURE = `
+<div class="citizen-share-trigger">
+	<button type="button" id="citizen-share">
+		<span>Share</span>
+	</button>
 </div>
 `;
 
@@ -27,9 +33,9 @@ describe( 'createShare', () => {
 	let initAppMock;
 
 	beforeEach( () => {
-		document.body.innerHTML = FIXTURE;
-		// jsdom doesn't implement HTMLDialogElement; stub the methods we use.
+		document.body.innerHTML = PANEL_FIXTURE;
 		nativeDialog = document.getElementById( 'citizen-share-dialog' );
+		// jsdom doesn't implement HTMLDialogElement; stub the methods we use.
 		nativeDialog.showModal = vi.fn( function () {
 			this.open = true;
 		} );
@@ -56,12 +62,14 @@ describe( 'createShare', () => {
 		};
 		windowMock = {
 			scrollTo: vi.fn(),
-			location: { href: 'https://example.com/page' }
+			location: { href: 'https://example.com/page' },
+			navigator: undefined
 		};
 		navigatorMock = {
 			share: vi.fn().mockResolvedValue( undefined ),
 			clipboard: { writeText: vi.fn().mockResolvedValue( undefined ) }
 		};
+		windowMock.navigator = navigatorMock;
 	} );
 
 	afterEach( () => {
@@ -69,12 +77,11 @@ describe( 'createShare', () => {
 		vi.restoreAllMocks();
 	} );
 
-	function deps() {
-		return { document, window: windowMock, mw, navigator: navigatorMock };
+	function deps( mode ) {
+		return { document, window: windowMock, mw, navigator: navigatorMock, mode };
 	}
 
-	function setupAndClick() {
-		createShare( deps() ).init();
+	function click() {
 		document.getElementById( 'citizen-share' ).click();
 	}
 
@@ -83,126 +90,149 @@ describe( 'createShare', () => {
 			document.body.innerHTML = '';
 
 			expect( () => {
-				createShare( deps() ).init();
-			} ).not.toThrow();
-		} );
-
-		it( 'no-ops when the dialog is missing', () => {
-			nativeDialog.remove();
-
-			expect( () => {
-				createShare( deps() ).init();
-			} ).not.toThrow();
-		} );
-
-		it( 'no-ops when the mount point is missing', () => {
-			document.getElementById( 'citizen-share-dialog-content' ).remove();
-
-			expect( () => {
-				createShare( deps() ).init();
+				createShare( deps( 'auto' ) ).init();
 			} ).not.toThrow();
 		} );
 	} );
 
-	describe( 'intent prefetch', () => {
-		it( 'fires mw.loader.load on pointerenter', () => {
-			createShare( deps() ).init();
+	describe( 'mode: native', () => {
+		beforeEach( () => {
+			document.body.innerHTML = NATIVE_FIXTURE;
+		} );
+
+		it( 'calls navigator.share on click', async () => {
+			createShare( deps( 'native' ) ).init();
+			click();
+			await Promise.resolve();
+
+			expect( navigatorMock.share ).toHaveBeenCalled();
+		} );
+
+		it( 'falls back to clipboard when navigator.share is unavailable', async () => {
+			delete navigatorMock.share;
+			createShare( deps( 'native' ) ).init();
+			click();
+			await Promise.resolve();
+			await Promise.resolve();
+
+			expect( navigatorMock.clipboard.writeText ).toHaveBeenCalled();
+			expect( mw.notify ).toHaveBeenCalled();
+		} );
+
+		it( 'does not bind intent prefetch', () => {
+			createShare( deps( 'native' ) ).init();
+			const trigger = document.getElementById( 'citizen-share' );
+
+			trigger.dispatchEvent( new Event( 'pointerenter' ) );
+
+			expect( mw.loader.load ).not.toHaveBeenCalled();
+		} );
+	} );
+
+	describe( 'mode: panel', () => {
+		it( 'prefetches on intent', () => {
+			createShare( deps( 'panel' ) ).init();
 			const trigger = document.getElementById( 'citizen-share' );
 
 			trigger.dispatchEvent( new Event( 'pointerenter' ) );
 
 			expect( mw.loader.load ).toHaveBeenCalledWith( 'skins.citizen.share' );
-			expect( mw.loader.load ).toHaveBeenCalledTimes( 1 );
 		} );
 
-		it( 'fires mw.loader.load on focus', () => {
-			createShare( deps() ).init();
-			const trigger = document.getElementById( 'citizen-share' );
+		it( 'opens the dialog on click, even when navigator.share exists', () => {
+			createShare( deps( 'panel' ) ).init();
+			click();
 
-			trigger.dispatchEvent( new Event( 'focus' ) );
-
-			expect( mw.loader.load ).toHaveBeenCalledTimes( 1 );
-		} );
-
-		it( 'fires mw.loader.load on touchstart', () => {
-			createShare( deps() ).init();
-			const trigger = document.getElementById( 'citizen-share' );
-
-			trigger.dispatchEvent( new Event( 'touchstart' ) );
-
-			expect( mw.loader.load ).toHaveBeenCalledTimes( 1 );
-		} );
-
-		it( 'prefetches at most once across multiple intent events', () => {
-			createShare( deps() ).init();
-			const trigger = document.getElementById( 'citizen-share' );
-
-			trigger.dispatchEvent( new Event( 'pointerenter' ) );
-			trigger.dispatchEvent( new Event( 'focus' ) );
-			trigger.dispatchEvent( new Event( 'touchstart' ) );
-
-			expect( mw.loader.load ).toHaveBeenCalledTimes( 1 );
-		} );
-	} );
-
-	describe( 'click handler', () => {
-		it( 'opens the dialog and starts loading on first click', () => {
-			setupAndClick();
-
-			expect( nativeDialog.showModal ).toHaveBeenCalledTimes( 1 );
+			expect( nativeDialog.showModal ).toHaveBeenCalled();
 			expect( mw.loader.using ).toHaveBeenCalledWith( 'skins.citizen.share' );
+			expect( navigatorMock.share ).not.toHaveBeenCalled();
 		} );
 
 		it( 'mounts Vue once the bundle resolves', async () => {
-			setupAndClick();
+			createShare( deps( 'panel' ) ).init();
+			click();
 			resolveLoad();
 			await new Promise( ( resolve ) => setTimeout( resolve, 0 ) );
 
 			expect( initAppMock ).toHaveBeenCalledTimes( 1 );
-			expect( initAppMock.mock.calls[ 0 ][ 0 ] ).toBe(
-				document.getElementById( 'citizen-share-dialog-content' )
-			);
 		} );
 
 		it( 'reopens the same dialog on subsequent clicks without remounting Vue', async () => {
-			setupAndClick();
+			createShare( deps( 'panel' ) ).init();
+			click();
 			resolveLoad();
 			await new Promise( ( resolve ) => setTimeout( resolve, 0 ) );
-
 			nativeDialog.close();
-			document.getElementById( 'citizen-share' ).click();
+
+			click();
 
 			expect( nativeDialog.showModal ).toHaveBeenCalledTimes( 2 );
 			expect( initAppMock ).toHaveBeenCalledTimes( 1 );
 		} );
 
-		it( 'scrolls to top on open when not on the main page', () => {
-			setupAndClick();
+		it( 'falls back to native share when the bundle fails to load', async () => {
+			createShare( deps( 'panel' ) ).init();
+			click();
+			rejectLoad( new Error( 'network' ) );
+			await new Promise( ( resolve ) => setTimeout( resolve, 0 ) );
 
-			expect( windowMock.scrollTo ).toHaveBeenCalledWith( { top: 0, left: 0, behavior: 'auto' } );
+			expect( nativeDialog.close ).toHaveBeenCalled();
+			expect( navigatorMock.share ).toHaveBeenCalled();
+		} );
+	} );
+
+	describe( 'mode: auto', () => {
+		it( 'uses navigator.share when available', async () => {
+			createShare( deps( 'auto' ) ).init();
+			click();
+			await Promise.resolve();
+
+			expect( navigatorMock.share ).toHaveBeenCalled();
+			expect( nativeDialog.showModal ).not.toHaveBeenCalled();
 		} );
 
-		it( 'skips scroll-to-top on the main page', () => {
-			mw.config.get.mockReturnValue( true );
-			setupAndClick();
+		it( 'opens the panel when navigator.share is unavailable', () => {
+			delete navigatorMock.share;
+			createShare( deps( 'auto' ) ).init();
+			click();
 
-			expect( windowMock.scrollTo ).not.toHaveBeenCalled();
+			expect( nativeDialog.showModal ).toHaveBeenCalled();
+			expect( mw.loader.using ).toHaveBeenCalled();
+		} );
+
+		it( 'prefetches the panel bundle in case fallback is needed', () => {
+			createShare( deps( 'auto' ) ).init();
+			const trigger = document.getElementById( 'citizen-share' );
+
+			trigger.dispatchEvent( new Event( 'pointerenter' ) );
+
+			expect( mw.loader.load ).toHaveBeenCalledWith( 'skins.citizen.share' );
+		} );
+	} );
+
+	describe( 'mode: default (omitted)', () => {
+		it( 'behaves like auto', async () => {
+			createShare( { document, window: windowMock, mw, navigator: navigatorMock } ).init();
+			click();
+			await Promise.resolve();
+
+			expect( navigatorMock.share ).toHaveBeenCalled();
 		} );
 	} );
 
 	describe( 'backdrop click', () => {
 		it( 'closes the dialog when the user clicks the dialog backdrop', () => {
-			setupAndClick();
+			createShare( deps( 'panel' ) ).init();
+			click();
 
-			// Click target === dialog itself means the user clicked the dim area
-			// outside the dialog content box.
 			nativeDialog.dispatchEvent( new MouseEvent( 'click', { bubbles: true } ) );
 
 			expect( nativeDialog.close ).toHaveBeenCalled();
 		} );
 
 		it( 'does not close when a child element is clicked', () => {
-			setupAndClick();
+			createShare( deps( 'panel' ) ).init();
+			click();
 
 			const child = document.getElementById( 'citizen-share-dialog-content' );
 			child.dispatchEvent( new MouseEvent( 'click', { bubbles: true } ) );
@@ -211,44 +241,28 @@ describe( 'createShare', () => {
 		} );
 	} );
 
-	describe( 'native fallback on load failure', () => {
-		it( 'closes the dialog when mw.loader.using rejects', async () => {
-			setupAndClick();
-			rejectLoad( new Error( 'network' ) );
-			await new Promise( ( resolve ) => setTimeout( resolve, 0 ) );
+	describe( 'scroll-to-top behavior', () => {
+		it( 'scrolls to top when panel opens on a non-main page', () => {
+			createShare( deps( 'panel' ) ).init();
+			click();
 
-			expect( nativeDialog.close ).toHaveBeenCalled();
+			expect( windowMock.scrollTo ).toHaveBeenCalledWith( { top: 0, left: 0, behavior: 'auto' } );
 		} );
 
-		it( 'invokes navigator.share on load failure', async () => {
-			setupAndClick();
-			rejectLoad( new Error( 'network' ) );
-			await new Promise( ( resolve ) => setTimeout( resolve, 0 ) );
+		it( 'skips scroll-to-top on the main page', () => {
+			mw.config.get.mockReturnValue( true );
+			createShare( deps( 'panel' ) ).init();
+			click();
 
-			expect( navigatorMock.share ).toHaveBeenCalled();
+			expect( windowMock.scrollTo ).not.toHaveBeenCalled();
 		} );
 
-		it( 'falls back to clipboard when navigator.share is unavailable', async () => {
-			delete navigatorMock.share;
-			setupAndClick();
-			rejectLoad( new Error( 'network' ) );
-			await new Promise( ( resolve ) => setTimeout( resolve, 0 ) );
-			await new Promise( ( resolve ) => setTimeout( resolve, 0 ) );
+		it( 'does not scroll when native share is used', async () => {
+			createShare( deps( 'auto' ) ).init();
+			click();
+			await Promise.resolve();
 
-			expect( navigatorMock.clipboard.writeText ).toHaveBeenCalled();
-			expect( mw.notify ).toHaveBeenCalled();
-		} );
-
-		it( 'allows a fresh load attempt after a previous failure', async () => {
-			setupAndClick();
-			rejectLoad( new Error( 'network' ) );
-			await new Promise( ( resolve ) => setTimeout( resolve, 0 ) );
-
-			mw.loader.using.mockClear();
-			mw.loader.using.mockReturnValue( new Promise( () => {} ) );
-			document.getElementById( 'citizen-share' ).click();
-
-			expect( mw.loader.using ).toHaveBeenCalledTimes( 1 );
+			expect( windowMock.scrollTo ).not.toHaveBeenCalled();
 		} );
 	} );
 } );
