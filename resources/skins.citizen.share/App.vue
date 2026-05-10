@@ -77,6 +77,8 @@
 <script>
 const { defineComponent, inject, ref, computed } = require( 'vue' );
 
+const SHARE_POPUP_WINDOW_NAME = 'citizen-share-popup';
+
 /**
  * @param {string} inner
  * @return {string}
@@ -250,7 +252,7 @@ module.exports = exports = defineComponent( {
 			const openInModal = event.currentTarget.getAttribute( 'data-open-in-modal' ) === 'true';
 
 			if ( !openInModal ) {
-				window.open( url, '_blank' );
+				window.open( url, '_blank', 'noopener,noreferrer' );
 				return;
 			}
 
@@ -265,14 +267,15 @@ module.exports = exports = defineComponent( {
 				const height = 400;
 				const left = ( screen.width - width ) / 2;
 				const top = ( screen.height - height ) / 2;
-				const features = `width=${ width },height=${ height },top=${ top },left=${ left },resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,status=yes`;
+				const features = `width=${ width },height=${ height },top=${ top },left=${ left },resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,status=yes,noopener,noreferrer`;
 
-				const newWindow = window.open( url, 'Share this article', features );
+				// noopener makes window.open return null, so the focus call is best-effort only
+				const newWindow = window.open( url, SHARE_POPUP_WINDOW_NAME, features );
 				if ( newWindow ) {
 					newWindow.focus();
 				}
 			} catch ( e ) {
-				window.open( url, '_blank' );
+				window.open( url, '_blank', 'noopener,noreferrer' );
 			}
 		}
 
