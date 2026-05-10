@@ -95,6 +95,10 @@ export default defineConfig({
 								text: "Preferences",
 								link: "/customization/preferences",
 							},
+							{
+								text: "Share",
+								link: "/customization/share",
+							},
 						],
 					},
 					{

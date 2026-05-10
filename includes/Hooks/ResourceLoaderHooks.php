@@ -86,14 +86,9 @@ class ResourceLoaderHooks {
 			),
 			$mwServices->getUrlUtils()
 		);
-		$services = $provider->getServiceOptions();
-		if ( $services === null ) {
-			$fallback = $config->get( 'CitizenShareServiceOptions' );
-			$services = $provider->sanitizeServices( is_array( $fallback ) ? $fallback : [] );
-		}
 
 		return [
-			'wgCitizenShareServiceOptions' => $services,
+			'wgCitizenShareServiceOptions' => $provider->getServiceOptions() ?? [],
 		];
 	}
 
