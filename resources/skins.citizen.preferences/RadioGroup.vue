@@ -13,13 +13,10 @@
 		>
 			<span class="citizen-preferences-card">
 				<span
-					v-if="option.previewColors"
+					v-if="option.colorScheme"
 					class="citizen-preferences-card__preview
 						citizen-preferences-card__preview--theme"
-					:style="{
-						'--preview-bg': option.previewColors.surface,
-						'--preview-text': option.previewColors.text
-					}"
+					:style="{ colorScheme: option.colorScheme }"
 				>
 					<cdx-icon :icon="cdxIconAlignRight"></cdx-icon>
 				</span>
@@ -140,8 +137,12 @@ module.exports = exports = defineComponent( {
 		width: 100%;
 		aspect-ratio: 3 / 2;
 		padding: var( --space-xs );
-		color: var( --preview-text );
-		background-color: var( --preview-bg );
+		// `color-scheme` is set inline per option on theme previews —
+		// the inherited light-dark() tokens below resolve to whichever
+		// side matches the option's scheme, so each preview shows its
+		// own theme colors without class-swapping.
+		color: var( --color-base );
+		background-color: var( --color-surface-0 );
 		border-bottom: var( --border-subtle );
 
 		.cdx-icon {

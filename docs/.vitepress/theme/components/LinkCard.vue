@@ -3,7 +3,8 @@
 		:href="href"
 		class="link-card"
 		:target="target"
-		:rel="target === '_blank' ? 'noopener noreferrer' : undefined">
+		:rel="target === '_blank' ? 'noopener noreferrer' : undefined"
+	>
 		<div class="link-card-content">
 			<div class="title">
 				{{ title }}
@@ -19,13 +20,11 @@
 </template>
 
 <script setup lang="ts">
-withDefaults( defineProps<{
-	href: string
-	title: string
-	target?: string
-}>(), {
-	target: '_blank'
-} );
+const { target = "_blank" } = defineProps<{
+	href: string;
+	title: string;
+	target?: string;
+}>();
 </script>
 
 <style scoped>
@@ -35,7 +34,9 @@ withDefaults( defineProps<{
 	border-radius: 12px;
 	height: 100%;
 	background-color: var(--vp-c-bg-soft);
-	transition: border-color 0.25s, background-color 0.25s;
+	transition:
+		border-color 0.25s,
+		background-color 0.25s;
 	text-decoration: none !important;
 }
 

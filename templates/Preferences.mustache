@@ -1,5 +1,7 @@
 {{!
 	string msg-citizen-preferences-toggle The label used by the preferences button.
+	string msg-citizen-preferences-load-error Message shown when the preferences module fails to load.
+	string msg-citizen-preferences-load-retry Label of the retry button shown alongside the load error.
 }}
 <div class="citizen-preferences-dropdown citizen-header__item citizen-dropdown">
 	<details id="citizen-preferences-details" class="citizen-dropdown-details">
@@ -13,7 +15,38 @@
 	</details>
 	<div id="citizen-preferences-dropdown__card" class="citizen-menu__card">
 		<div class="citizen-menu__card-content">
-			<div id="citizen-preferences-content" class="citizen-preferences"></div>
+			<div id="citizen-preferences-content" class="citizen-preferences">
+				<div class="citizen-preferences-skeleton" role="status" aria-busy="true" aria-live="polite">
+					<div class="citizen-preferences-skeleton__heading"></div>
+					<div class="citizen-preferences-skeleton__row">
+						<div class="citizen-preferences-skeleton__label"></div>
+						<div class="citizen-preferences-skeleton__description"></div>
+					</div>
+					<div class="citizen-preferences-skeleton__row">
+						<div class="citizen-preferences-skeleton__label"></div>
+						<div class="citizen-preferences-skeleton__description"></div>
+					</div>
+					<div class="citizen-preferences-skeleton__row">
+						<div class="citizen-preferences-skeleton__label"></div>
+						<div class="citizen-preferences-skeleton__description"></div>
+					</div>
+					<div class="citizen-preferences-skeleton__heading"></div>
+					<div class="citizen-preferences-skeleton__row">
+						<div class="citizen-preferences-skeleton__label"></div>
+						<div class="citizen-preferences-skeleton__description"></div>
+					</div>
+					<div class="citizen-preferences-skeleton__row">
+						<div class="citizen-preferences-skeleton__label"></div>
+						<div class="citizen-preferences-skeleton__description"></div>
+					</div>
+				</div>
+				<div class="citizen-preferences-error" role="alert" hidden>
+					<p class="citizen-preferences-error__message">{{msg-citizen-preferences-load-error}}</p>
+					<button class="cdx-button citizen-preferences-error__retry" type="button">
+						{{msg-citizen-preferences-load-retry}}
+					</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

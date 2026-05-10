@@ -1,0 +1,65 @@
+/**
+ * Citizen new token pipeline — ResourceLoader module entry.
+ *
+ * Loaded only when SkinHooks::resolveColorMode resolves to "new".
+ * @layer citizen-tokens means user CSS at :root still wins. The
+ * :root.citizen-token-new gating is kept inside each category mixin
+ * so emission scope is explicit even though module loading already
+ * implies it.
+ *
+ * Files mirror Codex doc-token categories
+ * (https://doc.wikimedia.org/codex/main/design-tokens/overview.html);
+ * Citizen-specific extensions (surface ramp, syntax-color palette)
+ * live in their own files but logically extend the color category.
+ *
+ * Cross-module dependency: the legacy module's tokens-codex.less is
+ * pulled in (reference) for the .cdx-mode-medium() font mixin shared
+ * between modes — no value chains, just the mixin def.
+ */
+
+@import ( reference ) '../variables.less';
+@import ( reference ) '../skins.citizen.tokens/tokens-codex.less';
+@import ( reference ) 'primitives-codex.less';
+@import ( reference ) 'primitives-citizen.less';
+@import ( reference ) 'background-color.less';
+@import ( reference ) 'border-color.less';
+@import ( reference ) 'color.less';
+@import ( reference ) 'box-shadow.less';
+@import ( reference ) 'surface.less';
+@import ( reference ) 'syntax-color.less';
+@import ( reference ) 'opacity.less';
+@import ( reference ) 'font.less';
+@import ( reference ) 'misc.less';
+@import ( reference ) 'dark-overrides.less';
+
+@layer citizen-tokens {
+	.new-primitives-codex();
+	.new-primitives-citizen();
+
+	.new-background-color();
+	.new-border-color();
+	.new-color();
+	.new-box-shadow();
+	.new-surface();
+	.new-syntax-color();
+	.new-opacity();
+	.new-font();
+	.new-misc();
+
+	:root.citizen-token-new {
+		color-scheme: light;
+	}
+
+	:root.citizen-token-new.skin-theme-clientpref-night {
+		color-scheme: dark;
+		.new-dark-overrides();
+	}
+
+	:root.citizen-token-new.skin-theme-clientpref-os {
+		color-scheme: light dark;
+
+		@media ( prefers-color-scheme: dark ) {
+			.new-dark-overrides();
+		}
+	}
+}

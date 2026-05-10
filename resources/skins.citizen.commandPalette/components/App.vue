@@ -12,7 +12,9 @@
 	>
 		<div
 			v-if="isOpen"
+			ref="paletteRoot"
 			class="citizen-command-palette"
+			:data-palette-layout="paletteLayout"
 			@keydown="keyboard.handleKeydown"
 		>
 			<command-palette-header
@@ -23,7 +25,10 @@
 				:is-pending="isPending"
 				:show-pending="showPending"
 				:active-mode="activeMode"
+				:active-mode-context="activeModeContext"
+				:help-visible="helpVisible"
 				@exit-mode="exitMode"
+				@close-help="orchCloseHelp"
 				@update:free-text="handleFreeTextUpdate( $event )"
 				@select-token="tokenInput.selectToken( $event )"
 				@remove-token="handleRemoveToken( $event )"
@@ -35,33 +40,60 @@
 				<div
 					ref="bodyViewport"
 					class="citizen-command-palette__body-viewport"
-					:class="{ 'citizen-command-palette__body-viewport--has-detail': highlightedItemDetail }"
+					:class="{
+						'citizen-command-palette__body-viewport--has-detail': viewportHasDetail,
+						'citizen-command-palette__body-viewport--uniform-type': uniformItemType
+					}"
 				>
-					<div class="citizen-command-palette__results">
-						<command-palette-empty-state
-							v-if="!showPending && flatItems.length === 0"
-							:title="emptyStateContent.title"
-							:description="emptyStateContent.description"
-							:icon="emptyStateContent.icon"
-						></command-palette-empty-state>
-						<command-palette-list
-							v-else-if="displayedItems.length > 0"
-							:sections="displayedItems"
-							:highlighted-item-index="highlightedItemIndex"
-							:search-query="query"
-							:set-item-ref="setItemRef"
-							@select="selectResult"
-							@action="handleAction"
-							@hover="handleHover"
-						></command-palette-list>
-					</div>
-					<Transition name="citizen-command-palette-detail">
-						<command-palette-detail-panel
-							v-if="highlightedItemDetail"
-							class="citizen-command-palette__detail"
-							:detail="highlightedItemDetail"
-						></command-palette-detail-panel>
-					</Transition>
+					<command-palette-help-view
+						v-if="helpVisible"
+						:active-mode="activeMode"
+						:highlighted-help-mode="highlightedHelpMode"
+						:displayed-items="displayedItems"
+						:highlighted-item-index="highlightedItemIndex"
+						:search-query="query"
+						:set-item-ref="setItemRef"
+						@select="selectResult"
+						@hover="handleHover"
+					></command-palette-help-view>
+					<template v-else>
+						<div class="citizen-command-palette__results">
+							<command-palette-empty-state
+								v-if="!isPending && flatItems.length === 0"
+								:title="emptyStateContent.title"
+								:description="emptyStateContent.description"
+								:icon="emptyStateContent.icon"
+							></command-palette-empty-state>
+							<command-palette-gallery
+								v-else-if="isGalleryLayout && displayedItems.length > 0"
+								ref="galleryRef"
+								:sections="displayedItems"
+								:highlighted-item-index="highlightedItemIndex"
+								:set-item-ref="setItemRef"
+								@select="selectResult"
+								@hover="handleHover"
+							></command-palette-gallery>
+							<command-palette-list
+								v-else-if="displayedItems.length > 0"
+								:sections="displayedItems"
+								:highlighted-item-index="highlightedItemIndex"
+								:search-query="query"
+								:set-item-ref="setItemRef"
+								:compact="!!activeMode?.compactResults"
+								@select="selectResult"
+								@action="handleAction"
+								@hover="handleHover"
+							></command-palette-list>
+						</div>
+						<Transition name="citizen-command-palette-detail">
+							<command-palette-detail-panel
+								v-if="highlightedItemDetail"
+								class="citizen-command-palette__detail"
+								:detail="highlightedItemDetail"
+								:copy-trigger="copyTrigger"
+							></command-palette-detail-panel>
+						</Transition>
+					</template>
 				</div>
 			</div>
 			<command-palette-footer
@@ -72,16 +104,23 @@
 </template>
 
 <script>
-const { defineComponent, ref, nextTick, computed, watch, inject, onBeforeUnmount } = require( 'vue' );
+const { defineComponent, ref, nextTick, computed, watch, inject } = require( 'vue' );
+const useActionNavigation = require( '../composables/useActionNavigation.js' );
+const useBodyHeightAnimation = require( '../composables/useBodyHeightAnimation.js' );
+const useGalleryColumnCount = require( '../composables/useGalleryColumnCount.js' );
 const useListNavigation = require( '../composables/useListNavigation.js' );
+const useGridNavigation = require( '../composables/useGridNavigation.js' );
 const useKeyboard = require( '../composables/useKeyboard.js' );
 const useProviderOrchestration = require( '../composables/useProviderOrchestration.js' );
+const useResultRouter = require( '../composables/useResultRouter.js' );
 const useTokenizedInput = require( '../composables/useTokenizedInput.js' );
 const CommandPaletteList = require( './CommandPaletteList.vue' );
+const CommandPaletteGallery = require( './CommandPaletteGallery.vue' );
 const CommandPaletteEmptyState = require( './CommandPaletteEmptyState.vue' );
 const CommandPaletteFooter = require( './CommandPaletteFooter.vue' );
 const CommandPaletteHeader = require( './CommandPaletteHeader.vue' );
 const CommandPaletteDetailPanel = require( './CommandPaletteDetailPanel.vue' );
+const CommandPaletteHelpView = require( './CommandPaletteHelpView.vue' );
 const { cdxIconArticleNotFound, cdxIconArticlesSearch } = require( '../icons.json' );
 
 // @vue/component
@@ -92,10 +131,12 @@ module.exports = exports = defineComponent( {
 	},
 	components: {
 		CommandPaletteList,
+		CommandPaletteGallery,
 		CommandPaletteEmptyState,
 		CommandPaletteDetailPanel,
 		CommandPaletteFooter,
-		CommandPaletteHeader
+		CommandPaletteHeader,
+		CommandPaletteHelpView
 	},
 	props: {},
 	setup() {
@@ -108,50 +149,37 @@ module.exports = exports = defineComponent( {
 		const findModeByTrigger = inject( 'findModeByTrigger' );
 		const findModeByQuery = inject( 'findModeByQuery' );
 		const getTokenPatterns = inject( 'getTokenPatterns' );
+		const getHelpCatalogItems = inject( 'getHelpCatalogItems', null );
+		const getHandler = inject( 'getHandler', null );
+		// Duck-typed { isAvailable, processContext, triggerForAnchor, onReady }
+		// service — today the InstantDiffs gadget bridge, swappable via init.js.
+		const previewService = inject( 'previewService' );
+		// Provided by commandPalette.js so the trigger orchestrator can hide
+		// its overlay wrapper after the palette closes from inside (Esc, backdrop).
+		const paletteExternalClose = inject( 'paletteExternalClose', null );
 
 		// Core refs
 		const isOpen = ref( false );
+		const paletteRoot = ref( null );
 		const searchHeader = ref( null );
 		const itemRefs = ref( new Map() );
 		const bodyContainer = ref( null );
 		const bodyViewport = ref( null );
-		let resizeObserver = null;
+		const galleryRef = ref( null );
 
-		/**
-		 * Sync the body container's height CSS variable to the viewport's
-		 * rendered height. The CSS transition on the body handles animation.
-		 */
-		const updateBodyHeight = () => {
-			const container = bodyContainer.value;
-			const viewport = bodyViewport.value;
-			if ( container && viewport ) {
-				container.style.height = viewport.clientHeight + 'px';
-			}
-		};
+		const { setupResizeObserver, teardownResizeObserver } = useBodyHeightAnimation( {
+			bodyContainer,
+			bodyViewport
+		} );
 
-		const setupResizeObserver = () => {
-			if ( !bodyViewport.value ) {
-				return;
-			}
-			updateBodyHeight();
-			resizeObserver = new ResizeObserver( updateBodyHeight );
-			resizeObserver.observe( bodyViewport.value );
-		};
-
-		const teardownResizeObserver = () => {
-			if ( resizeObserver ) {
-				resizeObserver.disconnect();
-				resizeObserver = null;
-			}
-		};
-
-		onBeforeUnmount( teardownResizeObserver );
+		const galleryColumnCount = useGalleryColumnCount( { galleryRef } );
 
 		// Provider orchestration (replaces Pinia searchStore)
 		const orchDeps = {
 			recentItemsProvider,
 			relatedArticlesProvider,
-			recentItemsService
+			recentItemsService,
+			getHelpCatalogItems
 		};
 		const orch = useProviderOrchestration( providers, resultDecorator, orchDeps );
 
@@ -178,134 +206,138 @@ module.exports = exports = defineComponent( {
 			};
 		} );
 
-		// List navigation
-		const listNav = useListNavigation( orch.flatItems );
+		// List + grid navigation share a single highlightedIndex ref so the
+		// active selection is preserved across layout swaps (e.g. entering a
+		// gallery mode from a list mode and back).
+		const sharedHighlightedIndex = ref( -1 );
+		const listNav = useListNavigation( orch.flatItems, {
+			highlightedIndex: sharedHighlightedIndex
+		} );
+		const gridNav = useGridNavigation( orch.flatItems, galleryColumnCount, {
+			highlightedIndex: sharedHighlightedIndex
+		} );
 
-		const highlightedItemDetail = computed( () => {
+		const isGalleryLayout = computed(
+			() => Boolean( orch.activeMode.value && orch.activeMode.value.layout === 'gallery' )
+		);
+
+		// String form for the [data-palette-layout] attribute, which CSS
+		// targets to widen the modal in gallery layouts.
+		const paletteLayout = computed( () => isGalleryLayout.value ? 'gallery' : 'list' );
+
+		const highlightedItem = computed( () => {
 			const index = listNav.highlightedIndex.value;
 			const items = orch.flatItems.value;
-			if ( index >= 0 && index < items.length ) {
-				const detail = items[ index ].detail;
-				if ( detail && detail.pairs && detail.pairs.length ) {
-					return detail;
-				}
+			return index >= 0 && index < items.length ? items[ index ] : null;
+		} );
+
+		const highlightedItemDetail = computed( () => {
+			const item = highlightedItem.value;
+			if ( !item ) {
+				return null;
+			}
+			const detail = item.detail;
+			if ( detail && (
+				( detail.pairs && detail.pairs.length ) ||
+				detail.header ||
+				detail.media
+			) ) {
+				return detail;
 			}
 			return null;
 		} );
 
-		// Action navigation adapter (managed at App level)
-		const actionFocusedIndex = ref( -1 );
-		const actionIsActive = computed( () => actionFocusedIndex.value >= 0 );
-
-		function getHighlightedItemComponent() {
-			return itemRefs.value.get( listNav.highlightedIndex.value );
-		}
-
-		const actionNav = {
-			isActive: actionIsActive,
-			focusedIndex: actionFocusedIndex,
-			focusFirst() {
-				const item = getHighlightedItemComponent();
-				if ( item && item.focusFirstButton ) {
-					item.focusFirstButton();
-					actionFocusedIndex.value = 0;
-				}
-			},
-			focusNext() {
-				const highlightedIdx = listNav.highlightedIndex.value;
-				const items = orch.flatItems.value;
-				const actions = ( highlightedIdx >= 0 && items[ highlightedIdx ] ) ?
-					items[ highlightedIdx ].actions || [] : [];
-				if ( actionFocusedIndex.value < actions.length - 1 ) {
-					actionFocusedIndex.value++;
-					const item = getHighlightedItemComponent();
-					if ( item && item.focusButtonAtIndex ) {
-						item.focusButtonAtIndex( actionFocusedIndex.value );
-					}
-				}
-			},
-			focusPrevious() {
-				if ( actionFocusedIndex.value <= 0 ) {
-					actionFocusedIndex.value = -1;
-				} else {
-					actionFocusedIndex.value--;
-					const item = getHighlightedItemComponent();
-					if ( item && item.focusButtonAtIndex ) {
-						item.focusButtonAtIndex( actionFocusedIndex.value );
-					}
-				}
-			},
-			deactivate() {
-				actionFocusedIndex.value = -1;
-			},
-			clickFocused() {
-				const item = getHighlightedItemComponent();
-				if ( item && item.clickButtonAtIndex ) {
-					item.clickButtonAtIndex( actionFocusedIndex.value );
-				}
+		// Modes that opt in via `getItemDetail` (file mode, currently)
+		// fetch per-item detail lazily when an item is focused. The
+		// orchestration handles debounce, abort, and reactive mutation
+		// — App.vue just needs to call `requestItemDetail` whenever the
+		// highlighted item changes. `immediate: true` covers the case
+		// where the first item is auto-highlighted on initial render.
+		watch( highlightedItem, ( item ) => {
+			if ( item ) {
+				orch.requestItemDetail( item );
 			}
-		};
+		}, { immediate: true } );
+
+		// While help is open at root, the highlighted catalog row's source
+		// (e.g. "command:category") tells us which registered handler to
+		// surface in the right pane. Outside the help-at-root case there is
+		// no help-detail to render.
+		const highlightedHelpMode = computed( () => {
+			if ( !orch.helpVisible.value || orch.activeMode.value || !getHandler ) {
+				return null;
+			}
+			const idx = listNav.highlightedIndex.value;
+			const items = orch.flatItems.value;
+			if ( idx < 0 || idx >= items.length ) {
+				return null;
+			}
+			const item = items[ idx ];
+			if ( !item || !item.source ) {
+				return null;
+			}
+			const match = ( /^command:(.+)$/ ).exec( item.source );
+			if ( !match ) {
+				return null;
+			}
+			return getHandler( match[ 1 ] ) || null;
+		} );
+
+		// Two-pane layout activates when:
+		//   - a regular result has structured detail data (existing behaviour), OR
+		//   - help is open at root with a highlighted mode to describe.
+		const viewportHasDetail = computed( () => {
+			if ( orch.helpVisible.value ) {
+				return !orch.activeMode.value && highlightedHelpMode.value !== null;
+			}
+			return highlightedItemDetail.value !== null;
+		} );
+
+		// When every visible item shares the same type, the per-row type
+		// badge is redundant. We surface this as a class on the viewport so
+		// CSS can hide the badge — the underlying item data (including its
+		// `type` field, which the click path reads via props) stays intact.
+		// Mixed-type listings (default search, drilled category mode,
+		// recents+related) keep the badge to disambiguate.
+		const uniformItemType = computed( () => {
+			const items = orch.flatItems.value;
+			if ( items.length === 0 ) {
+				return false;
+			}
+			const firstType = items[ 0 ] && items[ 0 ].type;
+			if ( !firstType ) {
+				return false;
+			}
+			return items.every( ( it ) => it.type === firstType );
+		} );
+
+		const actionNav = useActionNavigation( {
+			items: orch.flatItems,
+			highlightedIndex: listNav.highlightedIndex,
+			itemRefs
+		} );
 
 		const close = () => {
+			if ( !isOpen.value ) {
+				return;
+			}
 			isOpen.value = false;
+			if ( typeof paletteExternalClose === 'function' ) {
+				paletteExternalClose();
+			}
 		};
 
 		const focusInput = () => {
 			searchHeader.value?.focus();
 		};
 
-		/**
-		 * Handles the selection of a result item.
-		 *
-		 * @param {Object} result The selected item
-		 */
-		const selectResult = async ( result ) => {
-			const selectionAction = await orch.handleSelection( result );
-
-			switch ( selectionAction.action ) {
-				case 'navigate':
-					if ( selectionAction.payload ) {
-						// <a> tags are handled by the browser on mouse click, so we don't need to navigate.
-						if ( !result.isMouseClick ) {
-							window.location.href = selectionAction.payload;
-						}
-						close();
-					}
-					break;
-				case 'exitWithQuery':
-					if ( orch.activeMode.value ) {
-						// From within a mode: exit and add token
-						orch.exitMode();
-						tokenInput.setFreeText( selectionAction.payload );
-					} else {
-						// From root: try to enter a matching mode
-						const match = findModeByQuery( selectionAction.payload );
-						if ( match ) {
-							tokenInput.clear();
-							orch.enterMode( match.mode );
-						}
-					}
-					nextTick( focusInput );
-					break;
-				case 'updateQuery':
-					tokenInput.setFreeText( selectionAction.payload );
-					nextTick( focusInput );
-					break;
-				case 'addToken':
-					tokenInput.addToken( selectionAction.payload );
-					tokenInput.setFreeText( '' );
-					// Force re-query: adding a token while clearing freeText
-					// produces the same fullQuery string, so the watcher won't fire.
-					// TODO: A generation counter on useTokenizedInput could replace
-					// this workaround by making the watcher always see a new value.
-					orch.updateQuery( tokenInput.fullQuery.value );
-					nextTick( focusInput );
-					break;
-				case 'none':
-				default:
-					break;
-			}
-		};
+		const { selectResult, handleAction } = useResultRouter( {
+			orchestrator: orch,
+			tokenInput,
+			navigation: { findModeByQuery },
+			control: { focusInput, close, paletteRoot },
+			preview: previewService
+		} );
 
 		const handleRemoveToken = ( index ) => {
 			const token = tokenInput.tokens.value[ index ];
@@ -317,28 +349,56 @@ module.exports = exports = defineComponent( {
 			tokenInput.setFreeText( token.raw + tokenInput.freeText.value );
 		};
 
-		// Keyboard handler
+		// Bumped by the keyboard's Cmd/Ctrl+C handler so the detail panel
+		// can run the same copy + feedback path the click handler uses.
+		// Counter rather than a boolean flag because two copies in a row
+		// must each fire — booleans wouldn't trigger the watcher again.
+		const copyTrigger = ref( 0 );
+		function requestHeaderCopy() {
+			copyTrigger.value++;
+		}
+
+		// Keyboard handler. Options group into named buckets so each
+		// dependency's role is self-documenting at the call site.
 		const keyboard = useKeyboard( {
-			inputRef: searchHeader,
-			itemRefs,
-			items: orch.flatItems,
-			listNav,
-			actionNav,
-			onSelect: selectResult,
-			onClose: close,
-			query: orch.query,
-			activeMode: orch.activeMode,
-			onClearQuery: () => {
-				tokenInput.clear();
-				orch.updateQuery( '' );
+			core: {
+				inputRef: searchHeader,
+				itemRefs,
+				items: orch.flatItems,
+				query: orch.query,
+				requestHeaderCopy,
+				onSelect: selectResult,
+				onClose: close,
+				onClearQuery: () => {
+					tokenInput.clear();
+					orch.updateQuery( '' );
+				}
 			},
-			onExitMode: () => orch.exitMode(),
-			onEnterMode: ( mode ) => orch.enterMode( mode ),
-			findModeByTrigger,
-			tokens: tokenInput.tokens,
-			selectedTokenIndex: tokenInput.selectedIndex,
-			onSelectToken: ( index ) => tokenInput.selectToken( index ),
-			onRemoveToken: handleRemoveToken
+			navigation: {
+				listNav,
+				gridNav,
+				isGalleryLayout,
+				actionNav
+			},
+			mode: {
+				activeMode: orch.activeMode,
+				activeModeContext: orch.activeModeContext,
+				findModeByTrigger,
+				onEnterMode: ( m ) => orch.enterMode( m ),
+				onExitMode: () => orch.exitMode(),
+				onPopModeContext: () => orch.popModeContext()
+			},
+			tokens: {
+				tokens: tokenInput.tokens,
+				selectedTokenIndex: tokenInput.selectedIndex,
+				onSelectToken: ( index ) => tokenInput.selectToken( index ),
+				onRemoveToken: handleRemoveToken
+			},
+			help: {
+				helpVisible: orch.helpVisible,
+				onToggleHelp: () => orch.toggleHelp(),
+				onCloseHelp: () => orch.closeHelp()
+			}
 		} );
 
 		// setItemRef expects the GLOBAL index within displayedItems
@@ -359,35 +419,6 @@ module.exports = exports = defineComponent( {
 		const handleHover = ( newIndex ) => {
 			if ( newIndex !== listNav.highlightedIndex.value ) {
 				listNav.highlightedIndex.value = newIndex;
-			}
-		};
-
-		/**
-		 * Handles custom actions triggered by buttons within list items.
-		 *
-		 * @param {Object} action The action event payload.
-		 */
-		const handleAction = ( action ) => {
-			switch ( action.type ) {
-				case 'dismiss':
-					if ( action.itemId !== undefined ) {
-						orch.dismissRecentItem( action.itemId );
-					} else {
-						mw.log.warn( '[CommandPalette] Dismiss action missing itemId:', action );
-					}
-					break;
-				case 'navigate':
-					if ( action.url ) {
-						window.location.href = action.url;
-						close();
-					} else {
-						mw.log.warn( '[CommandPalette] Navigate action missing url:', action );
-					}
-					break;
-				case 'event':
-					break;
-				default:
-					mw.log.warn( '[CommandPalette] Unknown or missing action type received:', action );
 			}
 		};
 
@@ -431,49 +462,81 @@ module.exports = exports = defineComponent( {
 			} else if ( listNav.highlightedIndex.value < 0 || listNav.highlightedIndex.value >= newItems.length ) {
 				listNav.highlightedIndex.value = 0;
 			}
+
+			// Notify the preview handler (if any) so it can scan the
+			// freshly-rendered list for previewable anchors and attach
+			// its click listeners. The watcher's `flush: 'post'` already
+			// runs us after DOM updates from the items mutation.
+			if ( paletteRoot.value ) {
+				previewService.processContext( paletteRoot.value );
+			}
 		}, { flush: 'post' } );
 
-		// This function is called externally from init.js
-		const open = () => {
+		// Late-load handler: if the preview handler initializes after the
+		// palette is already open, re-process whatever is currently
+		// rendered so the existing anchors get wired up.
+		previewService.onReady( () => {
+			if ( paletteRoot.value ) {
+				previewService.processContext( paletteRoot.value );
+			}
+		} );
+
+		// This function is called externally from commandPalette.js
+		const open = ( prefillText ) => {
 			isOpen.value = true;
+			orch.closeHelp();
 			if ( orch.activeMode.value ) {
 				orch.exitMode();
 			} else {
 				orch.clearSearch();
 			}
 			tokenInput.clear();
+			if ( typeof prefillText === 'string' && prefillText.length > 0 ) {
+				tokenInput.setFreeText( prefillText );
+			}
 			nextTick( focusInput );
 		};
 
 		return {
 			// State
 			isOpen,
+			paletteRoot,
 			searchHeader,
 			bodyContainer,
 			bodyViewport,
+			galleryRef,
+			isGalleryLayout,
+			paletteLayout,
 			// Body height animation
 			setupResizeObserver,
 			teardownResizeObserver,
 			// Orchestration
 			activeMode: orch.activeMode,
+			activeModeContext: orch.activeModeContext,
 			exitMode: orch.exitMode,
 			query: orch.query,
 			displayedItems: orch.displayedItems,
 			flatItems,
 			isPending: orch.isPending,
 			showPending: orch.showPending,
+			helpVisible: orch.helpVisible,
+			orchCloseHelp: orch.closeHelp,
 			// Token state
 			tokenInput,
 			handleFreeTextUpdate,
 			handleRemoveToken,
 			// Keyboard
 			keyboard,
+			highlightedHelpMode,
+			viewportHasDetail,
+			uniformItemType,
 			// List nav
 			highlightedItemIndex: listNav.highlightedIndex,
 			// Empty state
 			emptyStateContent,
 			// Detail panel
 			highlightedItemDetail,
+			copyTrigger,
 			// Methods
 			// eslint-disable-next-line vue/no-unused-properties -- Used externally by init.js
 			open,
@@ -506,18 +569,42 @@ module.exports = exports = defineComponent( {
 	border: var( --border-base );
 	border-radius: var( --border-radius-medium );
 	box-shadow: var( --box-shadow-drop-xx-large );
+	// Steady-state width transition — when a mode flips the palette
+	// into gallery layout (or back), the modal eases between widths
+	// so the grid doesn't snap. The mount/unmount entrance and exit
+	// transitions override transition-property to transform+opacity,
+	// so this only fires on user-driven layout swaps.
+	transition-timing-function: var( --transition-timing-function-ease-out );
+	transition-duration: var( --transition-duration-medium );
+	transition-property: max-width;
+
+	// Modes that declare layout='gallery' (e.g. the file mode) get a wider
+	// frame so the tile grid can fit ~6 columns at the desktop breakpoint.
+	// In gallery layout the left pane (the tile grid) carries the visual
+	// weight, so it gets 60% of the row to the detail panel's 40% — flipped
+	// from the list default where rows are compact and the detail pane
+	// holds the rich content.
+	&[ data-palette-layout='gallery' ] {
+		max-width: 60rem;
+
+		.citizen-command-palette__body-viewport--has-detail {
+			@media ( min-width: @min-width-breakpoint-tablet ) {
+				.citizen-command-palette__results {
+					flex: 3;
+				}
+
+				.citizen-command-palette__detail {
+					flex: 2;
+				}
+			}
+		}
+	}
 	.mixin-citizen-frosted-glass;
 	.mixin-citizen-font-styles( 'small' );
 
 	@media ( min-width: @max-width-breakpoint-tablet ) {
 		top: 3rem;
 		max-height: calc( 100vh - 3rem * 2 );
-	}
-
-	&-overlay {
-		position: absolute;
-		top: 0;
-		left: 0;
 	}
 
 	&-backdrop {
@@ -529,7 +616,6 @@ module.exports = exports = defineComponent( {
 	}
 
 	&__body {
-		flex: 1;
 		min-height: 0;
 		overflow: hidden;
 		border-top: var( --border-subtle );
@@ -548,6 +634,12 @@ module.exports = exports = defineComponent( {
 				display: flex;
 			}
 		}
+
+		// Uniform-type lists (e.g. the help catalog, /user: results) would
+		// repeat the same type label on every row, so hide it.
+		&--uniform-type .citizen-command-palette-list-item__metadata__item--type {
+			display: none;
+		}
 	}
 
 	&__results {
@@ -559,8 +651,18 @@ module.exports = exports = defineComponent( {
 
 		.citizen-command-palette__body-viewport--has-detail & {
 			@media ( min-width: @min-width-breakpoint-tablet ) {
-				flex: 3;
+				flex: 2;
 				border-inline-end: var( --border-subtle );
+
+				// In two-pane mode the right pane carries the rich content,
+				// so the catalog rows on the left stay compact — drop the
+				// alias/type badges and inline description that would
+				// otherwise crowd the row.
+				.citizen-command-palette-list-item__metadata,
+				.citizen-command-palette-list-item__text__description,
+				.citizen-command-palette-list-item__text-inline__description {
+					display: none;
+				}
 			}
 		}
 	}
@@ -570,7 +672,7 @@ module.exports = exports = defineComponent( {
 
 		@media ( min-width: @min-width-breakpoint-tablet ) {
 			display: block;
-			flex: 2;
+			flex: 3;
 			max-height: calc( 100vh - 12rem );
 			overflow-y: auto;
 			overscroll-behavior: contain;
@@ -580,17 +682,6 @@ module.exports = exports = defineComponent( {
 	&__no-results {
 		padding: var( --space-md ) var( --citizen-command-palette-side-padding );
 		text-align: center;
-	}
-
-	.citizen-command-palette-list-item:not( [ data-type='action' ] ) {
-		opacity: 1;
-		transition: opacity var( --transition-duration-medium );
-		/* stylelint-disable-next-line time-min-milliseconds */
-		transition-delay: calc( 0.05s * ( sibling-index() - 1 ) );
-
-		@starting-style {
-			opacity: 0;
-		}
 	}
 }
 

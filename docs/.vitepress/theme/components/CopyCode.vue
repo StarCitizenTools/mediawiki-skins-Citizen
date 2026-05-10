@@ -5,45 +5,38 @@
 			class="copy-btn"
 			:title="copied ? 'Copied' : 'Copy to clipboard'"
 			:aria-label="copied ? 'Copied' : 'Copy to clipboard'"
-			@click="copy">
-			<span
-				v-if="!copied"
-				class="icon-copy"
-				:style="{ maskImage: `url('${copyIcon}')` }"
-			/>
-			<span
-				v-else
-				class="icon-check"
-				:style="{ maskImage: `url('${checkIcon}')` }"
-			/>
+			@click="copy"
+		>
+			<span v-if="!copied" class="icon-copy" :style="{ maskImage: `url('${copyIcon}')` }" />
+			<span v-else class="icon-check" :style="{ maskImage: `url('${checkIcon}')` }" />
 		</button>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { withBase } from 'vitepress';
+import { ref } from "vue";
+import { withBase } from "vitepress";
 
-const props = defineProps<{
-  code: string
+const { code } = defineProps<{
+	code: string;
 }>();
 
-const copied = ref( false );
-const copyIcon = withBase( '/img/copy.svg' );
-const checkIcon = withBase( '/img/check.svg' );
+const copied = ref(false);
+const copyIcon = withBase("/img/copy.svg");
+const checkIcon = withBase("/img/check.svg");
 
 async function copy() {
 	const clipboard = navigator.clipboard;
 
 	try {
-		if ( !clipboard ) {
-			throw new Error( 'Clipboard API not supported' );
+		if (!clipboard) {
+			throw new Error("Clipboard API not supported");
 		}
-		await clipboard.writeText( props.code );
+		await clipboard.writeText(code);
 		copied.value = true;
-		setTimeout( () => {
+		setTimeout(() => {
 			copied.value = false;
-		}, 2000 );
+		}, 2000);
 	} catch {
 		copied.value = false;
 	}
@@ -71,7 +64,10 @@ async function copy() {
 	border-radius: 4px;
 	cursor: pointer;
 	color: var(--vp-c-text-2);
-	transition: opacity 0.25s, color 0.25s, background-color 0.25s;
+	transition:
+		opacity 0.25s,
+		color 0.25s,
+		background-color 0.25s;
 	padding: 4px; /* Reduced icon size relative to button */
 	transform: translateY(-50%);
 	opacity: 0;

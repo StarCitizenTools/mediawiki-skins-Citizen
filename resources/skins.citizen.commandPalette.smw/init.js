@@ -2,7 +2,7 @@
  * Semantic MediaWiki Ask query mode for the command palette.
  * Loaded conditionally only when SMW is installed.
  */
-const { cdxIconAdd, cdxIconListBullet, cdxIconTag, cdxIconWikitext } = require( './icons.json' );
+const { cdxIconAdd, cdxIconArticle, cdxIconListBullet, cdxIconTag, cdxIconWikitext } = require( './icons.json' );
 const config = require( './config.json' );
 const parseIncompleteCondition = require( './queryParser.js' );
 
@@ -144,7 +144,8 @@ function adaptSmwResult( subject, index ) {
 		id: 'citizen-command-palette-item-smw-' + index,
 		type: 'smw',
 		label: subject.fulltext,
-		url: subject.fullurl
+		url: subject.fullurl,
+		thumbnailIcon: cdxIconArticle
 	};
 	const detail = adaptPrintouts( subject.printouts );
 	if ( detail ) {
@@ -339,7 +340,26 @@ async function getSmwResults( subQuery, _signal, tokens ) {
 				) ) );
 		}
 		if ( incomplete.stage === 'property' ) {
-			return fetchPropertySuggestions( incomplete.fragment );
+			return fetchPropertySuggestions( incomplete.fragment ).then( ( items ) => {
+				// Surface "Category" as a primitive at the top of property
+				// suggestions so users can discover the category-namespace
+				// path (`[[Category:...]]`) without knowing the syntax.
+				// Hide it once the fragment can no longer prefix-match
+				// "Category" so it doesn't clutter unrelated lookups.
+				if ( 'category'.startsWith( incomplete.fragment.toLowerCase() ) ) {
+					return [
+						{
+							id: 'citizen-command-palette-item-smw-namespace-category',
+							type: 'smw-namespace',
+							thumbnailIcon: cdxIconTag,
+							label: 'Category',
+							highlightQuery: true
+						},
+						...items
+					];
+				}
+				return items;
+			} );
 		}
 		if ( incomplete.stage === 'category' ) {
 			return fetchCategorySuggestions( incomplete.fragment );
@@ -361,6 +381,7 @@ module.exports = {
 	id: 'smw',
 	triggers: [ '/smw:' ],
 	icon: cdxIconWikitext,
+	compactResults: true,
 	label: mw.message( 'citizen-command-palette-command-smw-label' ).text(),
 	description: mw.message( 'citizen-command-palette-command-smw-description' ).text(),
 	placeholder: mw.message( 'citizen-command-palette-mode-smw-placeholder' ).text(),
@@ -388,6 +409,9 @@ module.exports = {
 		{ modeId: 'smw', position: 'any', activeIn: 'smw', match: matchSmwCondition },
 		{ modeId: 'smw', position: 'any', activeIn: 'smw', match: matchSmwPrintout, eagerMatch: matchSmwPrintoutEager, variant: 'outlined' }
 	],
+	help: {
+		description: 'citizen-command-palette-mode-smw-description-help'
+	},
 	getResults: getSmwResults,
 	onResultSelect( item ) {
 		switch ( item.type ) {
@@ -395,6 +419,8 @@ module.exports = {
 				return { action: 'updateQuery', payload: '[[' + item.value + '::' + item.label + ']]' };
 			case 'smw-property':
 				return { action: 'updateQuery', payload: '[[' + item.label + '::' };
+			case 'smw-namespace':
+				return { action: 'updateQuery', payload: '[[' + item.label + ':' };
 			case 'smw-category':
 				return { action: 'updateQuery', payload: '[[Category:' + item.label + ']]' };
 			case 'smw-printout':

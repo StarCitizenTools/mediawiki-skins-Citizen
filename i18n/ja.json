@@ -91,15 +91,10 @@
 	"citizen-command-palette-type-special-page": "特別ページ",
 	"citizen-command-palette-type-menu-item": "メニュー項目",
 	"citizen-command-palette-type-user": "利用者",
-	"citizen-command-palette-command-ns-description": "特定の名前空間内のページを検索する",
 	"citizen-command-palette-command-action-description": "特定の操作を実行する",
+	"citizen-command-palette-command-ns-description": "特定の名前空間内のページを検索する",
 	"citizen-command-palette-command-user-description": "利用者を検索する",
 	"citizen-command-palette-queryaction-fulltext-search-description": "すべてのページの全文を検索をする",
 	"citizen-command-palette-queryaction-media-search-description": "メディアファイルを検索する",
-	"citizen-command-palette-queryaction-page-edit-description": "ページを作成または編集する",
-	"citizen-command-palette-tip-commands": "すべてのコマンドを見るには<code>/</code>と入力する",
-	"citizen-command-palette-tip-users": "利用者を検索するには<code>@</code>を入力する",
-	"citizen-command-palette-tip-namespace": "名前空間を検索するには<code>:</code>を入力する",
-	"citizen-command-palette-tip-templates": "テンプレートを検索するには<code><nowiki>{{</nowiki></code>を入力する",
-	"citizen-command-palette-tip-actions": "操作のリストを見るには<code>></code>を入力する"
+	"citizen-command-palette-queryaction-page-edit-description": "ページを作成または編集する"
 }

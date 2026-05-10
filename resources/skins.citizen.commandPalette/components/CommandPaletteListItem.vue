@@ -25,6 +25,8 @@ Partially based on the MenuItem component from Codex.
 			:search-query="searchQuery"
 			:url="url"
 			:highlight-query="highlightQuery"
+			:compact="compact"
+			:previewable="previewable"
 			@click="onClick"
 		></command-palette-list-item-content>
 		<command-palette-list-item-actions
@@ -109,9 +111,17 @@ module.exports = exports = defineComponent( {
 			type: Boolean,
 			default: false
 		},
+		compact: {
+			type: Boolean,
+			default: false
+		},
 		source: {
 			type: String,
 			default: undefined
+		},
+		previewable: {
+			type: Boolean,
+			default: false
 		}
 	},
 	emits: [
@@ -133,7 +143,19 @@ module.exports = exports = defineComponent( {
 			}
 		};
 
-		const onClick = () => {
+		const onClick = ( event ) => {
+			// Modifier or non-primary clicks (Ctrl, Cmd, Alt, Shift,
+			// middle-click) signal "I want a different action than the
+			// row's default" — open in new tab, navigate fully past a
+			// preview gadget, etc. App-level select handler reads this
+			// to skip preview-keep-open behavior in that case.
+			const modifierClick = !!( event && (
+				event.button > 0 ||
+				event.ctrlKey ||
+				event.metaKey ||
+				event.altKey ||
+				event.shiftKey
+			) );
 			emit( 'select',
 				/** @type {CommandPaletteItem} */ ( {
 					id: props.id,
@@ -147,7 +169,9 @@ module.exports = exports = defineComponent( {
 					metadata: props.metadata,
 					actions: props.actions,
 					source: props.source,
-					isMouseClick: true
+					previewable: props.previewable,
+					isMouseClick: true,
+					modifierClick
 				} )
 			);
 		};

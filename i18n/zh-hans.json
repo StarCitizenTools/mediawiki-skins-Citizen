@@ -120,8 +120,9 @@
 	"citizen-command-palette-type-special-page": "特殊页面",
 	"citizen-command-palette-type-menu-item": "菜单项",
 	"citizen-command-palette-type-user": "用户",
-	"citizen-command-palette-command-ns-description": "在特定命名空间中搜索页面",
 	"citizen-command-palette-command-action-description": "执行特定操作",
+	"citizen-command-palette-command-ns-description": "在特定命名空间中搜索页面",
+	"citizen-command-palette-command-ns-label": "命名空间",
 	"citizen-command-palette-command-smw-description": "使用Semantic MediaWiki查询进行搜索",
 	"citizen-command-palette-command-smw-label": "语义MediaWiki查询",
 	"citizen-command-palette-command-user-description": "搜索用户",
@@ -149,10 +150,5 @@
 	"citizen-command-palette-mode-user-placeholder": "搜索用户",
 	"citizen-command-palette-queryaction-fulltext-search-description": "在所有页面全文搜索",
 	"citizen-command-palette-queryaction-media-search-description": "搜索媒体文件",
-	"citizen-command-palette-queryaction-page-edit-description": "创建或编辑页面",
-	"citizen-command-palette-tip-commands": "输入<code>/</code>查看所有命令",
-	"citizen-command-palette-tip-users": "输入<code>@</code>可搜索用户",
-	"citizen-command-palette-tip-namespace": "输入<code>:</code>可搜索指定命名空间",
-	"citizen-command-palette-tip-templates": "输入<code><nowiki>{{</nowiki></code>可搜索模板",
-	"citizen-command-palette-tip-actions": "输入<code>></code>查看操作列表"
+	"citizen-command-palette-queryaction-page-edit-description": "创建或编辑页面"
 }

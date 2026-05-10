@@ -1,6 +1,15 @@
 const { ref, shallowRef, computed } = require( 'vue' );
+const useOperationLifecycle = require( './useOperationLifecycle.js' );
 
 const SHOW_PENDING_DELAY_MS = 300;
+const DEFAULT_DEBOUNCE_MS = 250;
+
+// Per-item detail fetches fire on focus changes (arrow keys, hover).
+// Lower than the query debounce because the user expects detail to settle
+// faster than they expect search results, and aborts handle rapid
+// scrubbing — a settled focus of ~80ms is the threshold beyond which the
+// fetch is worth running.
+const DETAIL_DEBOUNCE_MS = 80;
 
 const DEFAULT_STATE_CONFIG = {
 	emptyState: {
@@ -44,6 +53,7 @@ function normalizeProviderResult( result ) {
  * @param {Object} [deps.relatedArticlesProvider] Provider for related articles (presults).
  * @param {Object} [deps.recentItemsService] Service for dismissing recent items.
  * @param {import('vue').Ref<Array>} [deps.tokens] Ref containing the current token array.
+ * @param {Function} [deps.getHelpCatalogItems] Returns the list of registered modes/commands shown in the help overlay's mode catalog at root.
  * @return {Object} Orchestration state and methods.
  */
 function useProviderOrchestration( providers, resultDecorator, deps ) {
@@ -54,6 +64,8 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	const isPending = ref( false );
 	const showPending = ref( false );
 	const activeMode = shallowRef( null );
+	const activeModeContext = ref( [] );
+	const helpVisible = ref( false );
 	const flatItems = computed( () => displayedItems.value.flatMap( ( s ) => s.items ) );
 	const hasDisplayedItems = computed( () => flatItems.value.length > 0 );
 	const stateConfig = computed( () => {
@@ -67,26 +79,25 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		};
 	} );
 
-	let debounceTimeout = null;
-	let pendingDelayTimeout = null;
-	let abortController = null;
+	const lifecycle = useOperationLifecycle( {
+		isPending,
+		showPending,
+		pendingDelayMs: SHOW_PENDING_DELAY_MS
+	} );
+	const resetOperationState = lifecycle.reset;
 
-	/**
-	 * Resets all operation state.
-	 */
-	function resetOperationState() {
-		clearTimeout( debounceTimeout );
-		debounceTimeout = null;
-		clearTimeout( pendingDelayTimeout );
-		pendingDelayTimeout = null;
-		isPending.value = false;
-		showPending.value = false;
-
-		if ( abortController ) {
-			abortController.abort();
-			abortController = null;
-		}
-	}
+	// Detail fetches run in their own abort domain so a focus change does
+	// not cancel an in-flight list fetch and a list refresh does not cancel
+	// a settled detail fetch. Pending state is internal — the UI today does
+	// not need a detail-specific spinner.
+	const detailPending = ref( false );
+	const detailShowPending = ref( false );
+	const detailLifecycle = useOperationLifecycle( {
+		isPending: detailPending,
+		showPending: detailShowPending,
+		pendingDelayMs: SHOW_PENDING_DELAY_MS
+	} );
+	const resetDetailState = detailLifecycle.reset;
 
 	/**
 	 * Applies the result decorator and updates displayedItems.
@@ -130,55 +141,21 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	 * @param {string} currentQuery The query at dispatch time.
 	 */
 	function handleAsyncProvider( provider, currentQuery ) {
-		isPending.value = true;
-
-		clearTimeout( pendingDelayTimeout );
-		pendingDelayTimeout = setTimeout( () => {
-			if ( isPending.value && query.value === currentQuery ) {
-				showPending.value = true;
-			}
-		}, SHOW_PENDING_DELAY_MS );
-
-		clearTimeout( debounceTimeout );
-
-		if ( abortController ) {
-			abortController.abort();
-		}
-		abortController = new AbortController();
-		const signal = abortController.signal;
-
-		debounceTimeout = setTimeout( async () => {
-			if ( query.value !== currentQuery ) {
-				isPending.value = false;
-				showPending.value = false;
-				return;
-			}
-
-			try {
-				const result = await provider.getResults( currentQuery, signal );
-				const items = normalizeProviderResult( result );
-				if ( query.value === currentQuery ) {
-					setResults( items );
-				}
-			} catch ( error ) {
-				if ( error.name !== 'AbortError' ) {
-					mw.log.error(
-						'[commandPalette] Async provider "' +
-						provider.id + '" failed:', error
-					);
-					if ( query.value === currentQuery ) {
-						setResults( [] );
-					}
-				}
-			} finally {
-				if ( query.value === currentQuery ) {
-					isPending.value = false;
-					showPending.value = false;
-					clearTimeout( pendingDelayTimeout );
-					pendingDelayTimeout = null;
+		const isStale = () => query.value !== currentQuery;
+		lifecycle.runDebouncedAbortable( {
+			debounceMs: provider.debounceMs || DEFAULT_DEBOUNCE_MS,
+			isStale,
+			run: ( signal ) => provider.getResults( currentQuery, signal ),
+			onResult: ( result ) => setResults( normalizeProviderResult( result ) ),
+			onError: ( error ) => {
+				mw.log.error(
+					'[commandPalette] Async provider "' + provider.id + '" failed:', error
+				);
+				if ( !isStale() ) {
+					setResults( [] );
 				}
 			}
-		}, provider.debounceMs || 250 );
+		} );
 	}
 
 	/**
@@ -219,6 +196,7 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	async function clearSearch() {
 		query.value = '';
 		resetOperationState();
+		resetDetailState();
 
 		let recentItems = [];
 		if ( deps.recentItemsProvider ) {
@@ -254,6 +232,22 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	}
 
 	/**
+	 * Renders mode-getResults output into a single section. Both the
+	 * empty-query and debounced branches funnel through this so the
+	 * staleness check stays consistent.
+	 *
+	 * @param {Object} mode
+	 * @param {string} currentQuery
+	 * @param {Array} items
+	 */
+	function applyModeResults( mode, currentQuery, items ) {
+		if ( query.value === currentQuery && activeMode.value === mode ) {
+			displayedItems.value = items.length > 0 ?
+				[ { heading: null, items: items } ] : [];
+		}
+	}
+
+	/**
 	 * Handles a query routed through the active mode's getResults.
 	 *
 	 * @param {Object} mode The active mode object.
@@ -261,70 +255,45 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	 */
 	function handleModeQuery( mode, currentQuery ) {
 		const tokens = deps.tokens ? deps.tokens.value : [];
+
+		// Empty query: fire immediately. No debounce, no abort — modes
+		// load their root state on entry and the user expects no delay.
 		if ( !currentQuery ) {
-			Promise.resolve( mode.getResults( '', undefined, tokens ) ).then( ( result ) => {
-				const items = normalizeProviderResult( result );
-				if ( query.value === currentQuery && activeMode.value === mode ) {
-					displayedItems.value = items.length > 0 ?
-						[ { heading: null, items: items } ] : [];
-				}
-			} ).catch( ( error ) => {
-				mw.log.error(
-					'[commandPalette] Mode "' + mode.id + '" failed:', error
-				);
-			} );
-			return;
-		}
-
-		isPending.value = true;
-
-		clearTimeout( pendingDelayTimeout );
-		pendingDelayTimeout = setTimeout( () => {
-			if ( isPending.value && query.value === currentQuery ) {
-				showPending.value = true;
-			}
-		}, SHOW_PENDING_DELAY_MS );
-
-		clearTimeout( debounceTimeout );
-
-		if ( abortController ) {
-			abortController.abort();
-		}
-		abortController = new AbortController();
-
-		debounceTimeout = setTimeout( async () => {
-			if ( query.value !== currentQuery || activeMode.value !== mode ) {
-				isPending.value = false;
-				showPending.value = false;
-				return;
-			}
-
-			try {
-				const signal = abortController ? abortController.signal : undefined;
-				const result = await mode.getResults( currentQuery, signal, tokens );
-				const items = normalizeProviderResult( result );
-				if ( query.value === currentQuery && activeMode.value === mode ) {
-					displayedItems.value = items.length > 0 ?
-						[ { heading: null, items: items } ] : [];
-				}
-			} catch ( error ) {
-				if ( error.name !== 'AbortError' ) {
+			isPending.value = true;
+			( async () => {
+				try {
+					const result = await mode.getResults(
+						'', undefined, tokens, activeModeContext.value
+					);
+					applyModeResults( mode, currentQuery, normalizeProviderResult( result ) );
+				} catch ( error ) {
 					mw.log.error(
 						'[commandPalette] Mode "' + mode.id + '" failed:', error
 					);
+				} finally {
 					if ( query.value === currentQuery && activeMode.value === mode ) {
-						displayedItems.value = [];
+						isPending.value = false;
 					}
 				}
-			} finally {
-				if ( query.value === currentQuery ) {
-					isPending.value = false;
-					showPending.value = false;
-					clearTimeout( pendingDelayTimeout );
-					pendingDelayTimeout = null;
+			} )();
+			return;
+		}
+
+		const isStale = () => query.value !== currentQuery || activeMode.value !== mode;
+		lifecycle.runDebouncedAbortable( {
+			debounceMs: mode.debounceMs ?? DEFAULT_DEBOUNCE_MS,
+			isStale,
+			run: ( signal ) => mode.getResults( currentQuery, signal, tokens, activeModeContext.value ),
+			onResult: ( result ) => applyModeResults( mode, currentQuery, normalizeProviderResult( result ) ),
+			onError: ( error ) => {
+				mw.log.error(
+					'[commandPalette] Mode "' + mode.id + '" failed:', error
+				);
+				if ( !isStale() ) {
+					displayedItems.value = [];
 				}
 			}
-		}, mode.debounceMs ?? 250 );
+		} );
 	}
 
 	/**
@@ -334,7 +303,9 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	 */
 	function enterMode( mode ) {
 		resetOperationState();
+		resetDetailState();
 		activeMode.value = mode;
+		activeModeContext.value = [];
 		query.value = '';
 		displayedItems.value = [];
 		handleModeQuery( mode, '' );
@@ -347,7 +318,50 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	 */
 	function exitMode() {
 		activeMode.value = null;
+		activeModeContext.value = [];
+		// clearSearch() also calls resetDetailState(), but the direct call
+		// here keeps exitMode's contract self-evident — every navigation
+		// function explicitly resets both lifecycles.
+		resetDetailState();
 		return clearSearch();
+	}
+
+	/**
+	 * Pushes a value onto the active mode's context stack and re-runs
+	 * the mode's getResults with an empty query. Cancels any in-flight
+	 * fetch and clears the displayed list so the previous level's
+	 * results don't bleed into the new one.
+	 *
+	 * @param {*} value Value to append to activeModeContext.
+	 */
+	function pushModeContext( value ) {
+		if ( !activeMode.value ) {
+			return;
+		}
+		activeModeContext.value = activeModeContext.value.concat( [ value ] );
+		resetOperationState();
+		resetDetailState();
+		query.value = '';
+		displayedItems.value = [];
+		handleModeQuery( activeMode.value, '' );
+	}
+
+	/**
+	 * Pops the last entry from the active mode's context stack.
+	 * No-op when the stack is empty or no mode is active. Cancels any
+	 * in-flight fetch and clears the displayed list so the deeper
+	 * level's results don't bleed into the parent.
+	 */
+	function popModeContext() {
+		if ( !activeMode.value || activeModeContext.value.length === 0 ) {
+			return;
+		}
+		activeModeContext.value = activeModeContext.value.slice( 0, -1 );
+		resetOperationState();
+		resetDetailState();
+		query.value = '';
+		displayedItems.value = [];
+		handleModeQuery( activeMode.value, '' );
 	}
 
 	/**
@@ -358,6 +372,14 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	function updateQuery( newQuery ) {
 		query.value = newQuery;
 		resetOperationState();
+		resetDetailState();
+
+		// Help layers over the underlying state and owns displayedItems while
+		// visible. Skip the provider pipeline so input clears that fire after
+		// openHelp (e.g. selecting `/help`) don't overwrite the catalog.
+		if ( helpVisible.value ) {
+			return;
+		}
 
 		if ( activeMode.value ) {
 			handleModeQuery( activeMode.value, newQuery );
@@ -473,6 +495,134 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 	}
 
 	/**
+	 * Lazy-load detail data for a focused item. Modes that opt in by
+	 * declaring `getItemDetail` (validated by defineMode) get this hook
+	 * called when the highlighted item changes. The mode owns the API
+	 * call and any per-item caching; the orchestration provides debounce,
+	 * abort, and reactive mutation.
+	 *
+	 * On result, `item.detail.header.description` and `item.detail.pairs`
+	 * are mutated in place — Vue 3 deep reactivity propagates through
+	 * displayedItems so App.vue's highlightedItemDetail computed picks
+	 * up the new fields without explicit invalidation.
+	 *
+	 * `isStale` checks both the mode (rejects results from a mode swap)
+	 * and item identity in `flatItems` (rejects results for items that
+	 * have been replaced by a list refresh). A focus change to a new item
+	 * before this resolves aborts via the lifecycle on the next call.
+	 *
+	 * @param {Object} item Highlighted palette item.
+	 */
+	function requestItemDetail( item ) {
+		const mode = activeMode.value;
+		if ( !mode || typeof mode.getItemDetail !== 'function' || !item ) {
+			return;
+		}
+		const capturedItem = item;
+		const isStale = () => activeMode.value !== mode ||
+			!flatItems.value.includes( capturedItem );
+		detailLifecycle.runDebouncedAbortable( {
+			debounceMs: DETAIL_DEBOUNCE_MS,
+			isStale,
+			run: ( signal ) => mode.getItemDetail( capturedItem, signal ),
+			onResult: ( result ) => {
+				if ( !result || !capturedItem.detail ) {
+					return;
+				}
+				if ( !capturedItem.detail.header ) {
+					capturedItem.detail.header = {};
+				}
+				if ( result.description !== undefined ) {
+					capturedItem.detail.header.description = result.description;
+				}
+				if ( result.pairs !== undefined ) {
+					capturedItem.detail.pairs = result.pairs;
+				}
+			},
+			onError: ( error ) => {
+				mw.log.error(
+					'[commandPalette] Mode "' + mode.id + '" item detail failed:', error
+				);
+			}
+		} );
+	}
+
+	/**
+	 * Loads the registered-modes catalog into displayedItems so listNav can
+	 * navigate it. Only meaningful at root (no active mode).
+	 */
+	function loadHelpCatalog() {
+		if ( !deps.getHelpCatalogItems ) {
+			return;
+		}
+		const items = deps.getHelpCatalogItems() || [];
+		resetOperationState();
+		resetDetailState();
+		displayedItems.value = items.length > 0 ?
+			[ { heading: 'citizen-command-palette-help-section-modes', items: items } ] :
+			[];
+	}
+
+	/**
+	 * Opens the help overlay. Help is layered on top of the active mode and
+	 * mode context — opening it does not modify query, activeMode, or
+	 * activeModeContext, so users can peek at help and return to where they
+	 * were without losing in-progress state.
+	 *
+	 * At root, the mode catalog is loaded into displayedItems so listNav can
+	 * navigate it. Inside a mode, displayedItems is cleared so that pressing
+	 * Enter while help shows a static view does not select an invisible
+	 * result underneath.
+	 */
+	function openHelp() {
+		if ( helpVisible.value ) {
+			return;
+		}
+		helpVisible.value = true;
+		if ( activeMode.value ) {
+			resetOperationState();
+			resetDetailState();
+			displayedItems.value = [];
+		} else {
+			loadHelpCatalog();
+		}
+	}
+
+	/**
+	 * Closes the help overlay. At root, restores recents/related results that
+	 * were displaced by the mode catalog. Inside a mode, re-runs the mode's
+	 * getResults so the list that was hidden under help comes back.
+	 */
+	function closeHelp() {
+		if ( !helpVisible.value ) {
+			return;
+		}
+		helpVisible.value = false;
+		if ( activeMode.value ) {
+			handleModeQuery( activeMode.value, query.value );
+		} else if ( !query.value ) {
+			clearSearch();
+		}
+		// else: at root with a non-empty query is unreachable — `?` only
+		// opens help at empty input, and selecting `/help` triggers a
+		// tokenInput.clear() whose watcher empties query.value (the
+		// updateQuery guard prevents displayedItems mutation). Callers that
+		// follow up with enterMode (e.g. exitWithQuery) handle the next
+		// state themselves; closing here would race with their setup.
+	}
+
+	/**
+	 * Toggles the help overlay.
+	 */
+	function toggleHelp() {
+		if ( helpVisible.value ) {
+			closeHelp();
+		} else {
+			openHelp();
+		}
+	}
+
+	/**
 	 * Dismisses a recent item and refreshes presults.
 	 *
 	 * @param {string|number} itemId The ID of the item to dismiss.
@@ -498,11 +648,19 @@ function useProviderOrchestration( providers, resultDecorator, deps ) {
 		hasDisplayedItems,
 		stateConfig,
 		activeMode,
+		activeModeContext,
+		helpVisible,
 		updateQuery,
 		clearSearch,
 		enterMode,
 		exitMode,
+		pushModeContext,
+		popModeContext,
+		toggleHelp,
+		openHelp,
+		closeHelp,
 		handleSelection,
+		requestItemDetail,
 		dismissRecentItem
 	};
 }

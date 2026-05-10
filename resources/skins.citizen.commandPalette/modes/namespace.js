@@ -3,6 +3,7 @@
  */
 const { CommandPaletteItem, PaletteMode, CommandPaletteExitWithQueryAction, CommandPaletteNoneAction } = require( '../types.js' );
 const { cdxIconArticles } = require( '../icons.json' );
+const { defineMode } = require( '../services/defineMode.js' );
 
 const MAIN_NAMESPACE_ID = '0';
 
@@ -113,18 +114,22 @@ function matchNamespacePrefix( text ) {
 }
 
 /** @type {PaletteMode} */
-module.exports = {
+module.exports = defineMode( {
 	id: 'namespace',
 	triggers: [ '/ns:', ':' ],
 	label: mw.message( 'citizen-command-palette-command-ns-label' ).text(),
 	description: mw.message( 'citizen-command-palette-command-ns-description' ).text(),
 	placeholder: mw.message( 'citizen-command-palette-mode-ns-placeholder' ).text(),
 	icon: cdxIconArticles,
+	compactResults: true,
 	tokenPattern: {
 		modeId: 'namespace',
 		position: 'prefix',
 		activeIn: 'root',
 		match: matchNamespacePrefix
+	},
+	help: {
+		description: 'citizen-command-palette-mode-namespace-description-help'
 	},
 	getResults: getNamespaceResults,
 	/**
@@ -140,4 +145,4 @@ module.exports = {
 		}
 		return { action: 'none' };
 	}
-};
+} );

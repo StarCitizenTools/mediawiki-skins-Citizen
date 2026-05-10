@@ -6,11 +6,11 @@
 @import 'variables.less';
 
 .mixin-citizen-opaque-background( @surface: 1 ) {
-	background: ~'oklch( var( --color-surface-@{surface}-oklch__l ) var( --color-surface-@{surface}-oklch__c ) var( --color-progressive-oklch__h ) / var( --opacity-glass ) )';
-
-	@supports not ( color: oklch( 100% 0 0 ) ) {
-		background: ~'hsl( var( --color-progressive-hsl__h ) var( --color-surface-@{surface}-hsl__s ) var( --color-surface-@{surface}-hsl__l ) / var( --opacity-glass ) )';
-	}
+	// Use color-mix on the public --color-surface-@{surface} token instead of
+	// reaching into legacy-only OKLCH derivation primitives. Works in both
+	// legacy and new color modes (both define --color-surface-N), and picks up
+	// the active surface value rather than legacy's idea of it.
+	background-color: ~'color-mix( in oklch, var( --color-surface-@{surface} ) calc( var( --opacity-glass ) * 100% ), transparent )';
 }
 
 .mixin-citizen-frosted-glass( @surface: 1 ) {

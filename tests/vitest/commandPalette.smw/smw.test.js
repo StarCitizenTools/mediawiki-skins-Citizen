@@ -215,6 +215,12 @@ describe( 'SMW mode', () => {
 			expect( result ).toEqual( { action: 'updateQuery', payload: '[[Located in::' } );
 		} );
 
+		it( 'should return updateQuery action for smw-namespace items', () => {
+			const result = smwMode.onResultSelect( { type: 'smw-namespace', label: 'Category' } );
+
+			expect( result ).toEqual( { action: 'updateQuery', payload: '[[Category:' } );
+		} );
+
 		it( 'should return addToken action for smw-printout items', () => {
 			const result = smwMode.onResultSelect( { type: 'smw-printout', label: 'Population' } );
 
@@ -334,13 +340,15 @@ describe( 'SMW mode', () => {
 				maxage: 1200,
 				smaxage: 1200
 			} );
-			expect( result ).toHaveLength( 1 );
-			expect( result[ 0 ] ).toMatchObject( {
-				id: 'citizen-command-palette-item-smw-category-0',
-				type: 'smw-category',
-				label: 'City',
-				highlightQuery: true
-			} );
+			expect( result ).toEqual( [
+				{
+					id: 'citizen-command-palette-item-smw-category-0',
+					type: 'smw-category',
+					thumbnailIcon: expect.any( String ),
+					label: 'City',
+					highlightQuery: true
+				}
+			] );
 		} );
 
 		it( 'should fetch value suggestions for incomplete value condition', async () => {
@@ -357,21 +365,24 @@ describe( 'SMW mode', () => {
 				maxage: 1200,
 				smaxage: 1200
 			} );
-			expect( result ).toHaveLength( 2 );
-			expect( result[ 0 ] ).toMatchObject( {
-				id: 'citizen-command-palette-item-smw-value-0',
-				type: 'smw-value',
-				label: 'Germany',
-				value: 'Located in',
-				highlightQuery: true
-			} );
-			expect( result[ 1 ] ).toMatchObject( {
-				id: 'citizen-command-palette-item-smw-value-1',
-				type: 'smw-value',
-				label: 'Greece',
-				value: 'Located in',
-				highlightQuery: true
-			} );
+			expect( result ).toEqual( [
+				{
+					id: 'citizen-command-palette-item-smw-value-0',
+					type: 'smw-value',
+					thumbnailIcon: expect.any( String ),
+					label: 'Germany',
+					value: 'Located in',
+					highlightQuery: true
+				},
+				{
+					id: 'citizen-command-palette-item-smw-value-1',
+					type: 'smw-value',
+					thumbnailIcon: expect.any( String ),
+					label: 'Greece',
+					value: 'Located in',
+					highlightQuery: true
+				}
+			] );
 		} );
 
 		it( 'should fetch property suggestions for incomplete printout', async () => {
@@ -390,9 +401,15 @@ describe( 'SMW mode', () => {
 				maxage: 1200,
 				smaxage: 1200
 			} );
-			expect( result ).toHaveLength( 1 );
-			expect( result[ 0 ].type ).toBe( 'smw-printout' );
-			expect( result[ 0 ].id ).toContain( 'smw-printout' );
+			expect( result ).toEqual( [
+				{
+					id: 'citizen-command-palette-item-smw-printout-0',
+					type: 'smw-printout',
+					thumbnailIcon: expect.any( String ),
+					label: 'Population',
+					highlightQuery: true
+				}
+			] );
 		} );
 
 		it( 'should fetch all properties for empty printout fragment', async () => {
@@ -405,6 +422,56 @@ describe( 'SMW mode', () => {
 				browse: 'property',
 				params: JSON.stringify( { search: '', limit: 10 } )
 			} ) );
+		} );
+
+		it( 'should prepend Category namespace primitive at empty property fragment', async () => {
+			mockGet.mockResolvedValue( {
+				query: {
+					'Located in': { label: 'Located in', key: 'Located_in' }
+				}
+			} );
+
+			const result = await smwMode.getResults( '[[' );
+
+			expect( result[ 0 ] ).toEqual( {
+				id: 'citizen-command-palette-item-smw-namespace-category',
+				type: 'smw-namespace',
+				thumbnailIcon: expect.any( String ),
+				label: 'Category',
+				highlightQuery: true
+			} );
+			expect( result[ 1 ] ).toMatchObject( { type: 'smw-property', label: 'Located in' } );
+		} );
+
+		it( 'should keep Category primitive while fragment prefix-matches "Category"', async () => {
+			mockGet.mockResolvedValue( { query: {} } );
+
+			const result = await smwMode.getResults( '[[Cat' );
+
+			expect( result ).toHaveLength( 1 );
+			expect( result[ 0 ].type ).toBe( 'smw-namespace' );
+		} );
+
+		it( 'should keep Category primitive at exact-match fragment "Category"', async () => {
+			mockGet.mockResolvedValue( { query: {} } );
+
+			const result = await smwMode.getResults( '[[Category' );
+
+			expect( result ).toHaveLength( 1 );
+			expect( result[ 0 ].type ).toBe( 'smw-namespace' );
+		} );
+
+		it( 'should drop Category primitive once fragment cannot prefix-match "Category"', async () => {
+			mockGet.mockResolvedValue( {
+				query: {
+					'Located in': { label: 'Located in', key: 'Located_in' }
+				}
+			} );
+
+			const result = await smwMode.getResults( '[[Lo' );
+
+			expect( result.every( ( item ) => item.type !== 'smw-namespace' ) ).toBe( true );
+			expect( result[ 0 ] ).toMatchObject( { type: 'smw-property', label: 'Located in' } );
 		} );
 
 		it( 'should execute Ask query with printout token', async () => {
@@ -466,13 +533,15 @@ describe( 'SMW mode', () => {
 					id: 'citizen-command-palette-item-smw-0',
 					type: 'smw',
 					label: 'Berlin',
-					url: 'https://example.org/wiki/Berlin'
+					url: 'https://example.org/wiki/Berlin',
+					thumbnailIcon: expect.any( String )
 				},
 				{
 					id: 'citizen-command-palette-item-smw-1',
 					type: 'smw',
 					label: 'Munich',
-					url: 'https://example.org/wiki/Munich'
+					url: 'https://example.org/wiki/Munich',
+					thumbnailIcon: expect.any( String )
 				}
 			] );
 		} );

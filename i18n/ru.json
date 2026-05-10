@@ -104,8 +104,8 @@
 	"citizen-command-palette-type-special-page": "Служебная страница",
 	"citizen-command-palette-type-menu-item": "Пункт меню",
 	"citizen-command-palette-type-user": "Участник",
-	"citizen-command-palette-command-ns-description": "Поиск страницы в определённом пространстве имён",
 	"citizen-command-palette-command-action-description": "Выполнить определенное действие",
+	"citizen-command-palette-command-ns-description": "Поиск страницы в определённом пространстве имён",
 	"citizen-command-palette-command-user-description": "Поиск участника",
 	"citizen-command-palette-mode-ns-placeholder": "Поиск по пространствам имён",
 	"citizen-command-palette-mode-user-empty-description": "Введите имя для поиска профиля участника",
@@ -115,10 +115,5 @@
 	"citizen-command-palette-mode-user-placeholder": "Поиск участников",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Поиск полного текста на всех страницах",
 	"citizen-command-palette-queryaction-media-search-description": "Поиск в медиафайлах",
-	"citizen-command-palette-queryaction-page-edit-description": "Создать или редактировать страницу",
-	"citizen-command-palette-tip-commands": "Введите <code>/</code> для отображения всех команд",
-	"citizen-command-palette-tip-users": "Введите <code>@</code> для поиска по участникам",
-	"citizen-command-palette-tip-namespace": "Введите <code>:</code> для поиска по пространствам имён",
-	"citizen-command-palette-tip-templates": "Введите <code><nowiki>{{</nowiki></code> для поиска шаблонов",
-	"citizen-command-palette-tip-actions": "Введите <code>></code> для получения списка действий"
+	"citizen-command-palette-queryaction-page-edit-description": "Создать или редактировать страницу"
 }

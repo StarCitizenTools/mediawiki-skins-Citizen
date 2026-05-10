@@ -30,14 +30,35 @@
  *
  * @typedef {Object} CommandPaletteDetailPair
  * @property {string} label The property/field name.
- * @property {string} value The property/field value.
+ * @property {string} [value] The property/field value. Used as a fallback
+ *   when no slot is provided for this pair.
+ * @property {string} [key] Optional slot name. When set, the detail panel
+ *   renders the named slot in place of `value`, allowing rich content like
+ *   chips, lists, or other components.
+ */
+
+/**
+ * Optional header rendered above the detail panel's pairs. When set, the
+ * panel renders a label + subtitle (and an inline copy-to-clipboard button
+ * when `copyValue` is provided). Consumers needing a fully custom header
+ * can still override the panel's `#header` slot — the inline default
+ * shape exists so modes don't have to.
+ *
+ * @typedef {Object} CommandPaletteItemDetailHeader
+ * @property {string} label Primary heading text (e.g. a filename).
+ * @property {string} [description] Subtle subtitle text (e.g. "PNG image").
+ * @property {string} [copyValue] When set, the panel renders a copy
+ *   button next to the label. Clicking it (or pressing Cmd/Ctrl+C with
+ *   the item highlighted and no text selected) copies this value to the
+ *   clipboard and shows a success-tinted check icon for ~1.5s.
  */
 
 /**
  * Detail data shown in the side panel when an item is focused.
  *
  * @typedef {Object} CommandPaletteItemDetail
- * @property {Array<CommandPaletteDetailPair>} pairs Key-value pairs to display.
+ * @property {Array<CommandPaletteDetailPair>} [pairs] Key-value pairs to display.
+ * @property {CommandPaletteItemDetailHeader} [header] Optional header rendered above the pairs.
  */
 
 /**
@@ -59,6 +80,8 @@
  * @property {CommandPaletteItemDetail} [detail] Optional detail data shown in the side panel when focused.
  * @property {string} [source] Identifier of the provider that generated this item (e.g., 'recent', 'command', 'search').
  * @property {boolean} [isMouseClick] True if the selection was triggered by a mouse click.
+ * @property {boolean} [previewable] Whether the item's URL is suitable for in-place preview by an external preview gadget (e.g. Instant Diffs).
+ * @property {boolean} [modifierClick] True if the click had a modifier key held (Ctrl, Cmd, Alt, Shift) or was non-primary (middle-click). Signals "I want different behavior than the row's default" — open in new tab, navigate fully past a preview, etc.
  */
 
 /**
@@ -71,6 +94,18 @@
  */
 
 /**
+ * Optional help content for a mode or command, surfaced by the in-palette
+ * help overlay. The description is an i18n message key whose body is rendered
+ * via `mw.message( key ).parse()` — so it may contain inline HTML such as
+ * `<kbd>`, `<code>`, and `<strong>` for keyboard hints or examples. Used as a
+ * longer-form continuation of the mode's one-line `description`. Keyboard
+ * shortcuts live in the palette footer rather than here.
+ *
+ * @typedef {Object} PaletteHelp
+ * @property {string} [description] Localised i18n message key whose parsed (HTML) body is rendered in the help overlay.
+ */
+
+/**
  * A mode switches the palette into a different search/browse context.
  *
  * @typedef {Object} PaletteMode
@@ -80,11 +115,16 @@
  * @property {string} [description] Short explanation shown in the command list.
  * @property {string} [placeholder] Input placeholder when mode is active (e.g., "Search users").
  * @property {Object} [icon] Codex icon object for the header when mode is active.
+ * @property {'list'|'gallery'} [layout='list'] Result rendering layout. `'list'` (default) renders a vertical list. `'gallery'` renders a tiled grid for thumbnail-driven content and widens the palette to fit. Mutually exclusive with `compactResults`.
+ * @property {boolean} [compactResults=false] Render results in a denser layout — small icon instead of thumbnail, description inline. Use for command-style modes whose items lack real thumbnails. Ignored in gallery layout.
+ * @property {KeyBinding[]} [keybindings] Optional mode-contributed keyboard bindings. Prepended onto the core binding list at dispatch time, so mode bindings win on key collisions within their own zone.
  * @property {StateContent} [emptyState] Content shown when the mode is active with no query. Falls back to default search messaging.
  * @property {function(string, Array?): StateContent} [noResults] Returns content shown when query produces no results. Receives the query string and optional tokens array. Falls back to default no-results messaging.
  * @property {TokenPattern|TokenPattern[]} [tokenPattern] Optional token detection pattern(s) for auto-tokenization.
- * @property {function(string, AbortSignal?, Array?): Promise<CommandPaletteItem[]>} getResults Returns result items for the given sub-query. Optional signal for abort, optional tokens array.
+ * @property {PaletteHelp} [help] Optional content surfaced by the help overlay when this mode is active.
+ * @property {function(string, AbortSignal?, Array?, Array?): Promise<CommandPaletteItem[]>} getResults Returns result items for the given sub-query. Optional signal for abort, optional tokens array, optional mode context array (only meaningful for modes that opt in to drill-down state).
  * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection of a result item.
+ * @property {function(Array): string} [headerLabel] Optional breadcrumb label rendered in the header. Receives the current modeContext stack. Falls back to the input placeholder when absent.
  */
 
 /**
@@ -107,7 +147,34 @@
  * @property {string[]} triggers Prefixes that activate the command.
  * @property {string} [label] Display label for this command in the command list.
  * @property {string} [description] Short explanation shown in the command list.
+ * @property {PaletteHelp} [help] Optional content surfaced by the help overlay.
  * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection — executes the command action.
+ */
+
+/**
+ * A footer hint surfaced when its parent binding's `when` predicate
+ * passes. Bindings with `keys: []` are hint-only — the corresponding
+ * handler lives in a sibling binding entry.
+ *
+ * @typedef {Object} KeyBindingHint
+ * @property {string} msgKey i18n message key for the hint label.
+ * @property {string} kbd Keyboard glyph shown next to the label (e.g. '↵', '↑↓', '⌘C').
+ * @property {number} [order] Sort order within the footer (lower = leftmost).
+ */
+
+/**
+ * A single keyboard binding in the palette's binding registry. Both the
+ * dispatcher and the footer derive from this list, so a hint is visible
+ * iff its handler will fire — by construction.
+ *
+ * @typedef {Object} KeyBinding
+ * @property {string} id Unique binding identifier (used for debugging).
+ * @property {'input'|'action'} zone Which focus zone the binding applies to.
+ * @property {string[]} keys Event `key` values that fire `handle`. An empty array marks the binding as hint-only.
+ * @property {function(Object): boolean} when Predicate over the dispatch state — false suppresses both the handler and the hint.
+ * @property {function(Object, KeyboardEvent)} handle Called when a `keys` entry matches and `when` passes. Should call `event.preventDefault()` to claim the keystroke.
+ * @property {boolean} [worksDuringHelp] When true, the binding fires even with the help overlay open. Defaults to false.
+ * @property {KeyBindingHint|null} [hint] Footer hint to surface, or null to omit one.
  */
 
 /**
@@ -135,6 +202,23 @@
  */
 
 /**
+ * Action to push a context value onto the active mode's context stack
+ * and clear the input query.
+ *
+ * @typedef {Object} CommandPalettePushModeContextAction
+ * @property {'pushModeContext'} action
+ * @property {*} payload The value pushed onto activeModeContext.
+ */
+
+/**
+ * Action to toggle the in-palette help overlay.
+ *
+ * @typedef {Object} CommandPaletteToggleHelpAction
+ * @property {'toggleHelp'} action
+ * @property {undefined} [payload] - Payload is not applicable for 'toggleHelp'.
+ */
+
+/**
  * Action indicating no operation or that the action was self-contained.
  *
  * @typedef {Object} CommandPaletteNoneAction
@@ -146,7 +230,7 @@
  * Describes the action the UI should take after an item selection is handled.
  * This is a discriminated union based on the 'action' property.
  *
- * @typedef {CommandPaletteNavigateAction | CommandPaletteExitWithQueryAction | CommandPaletteUpdateQueryAction | CommandPaletteNoneAction} CommandPaletteActionResult
+ * @typedef {CommandPaletteNavigateAction | CommandPaletteExitWithQueryAction | CommandPaletteUpdateQueryAction | CommandPalettePushModeContextAction | CommandPaletteToggleHelpAction | CommandPaletteNoneAction} CommandPaletteActionResult
  */
 
 /**

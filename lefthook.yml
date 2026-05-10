@@ -9,7 +9,7 @@ pre-commit:
             run: npx eslint {staged_files}
             glob: "**/*.{js,vue}"
           - name: style-lint
-            run: npx stylelint {staged_files}
+            run: npx stylelint --allow-empty-input {staged_files}
             glob: "**/*.{less,css,vue}"
           - name: i18n-lint
             run: npm run lint:i18n
@@ -29,4 +29,8 @@ commit-msg:
 prepare-commit-msg:
   commands:
     devmoji:
-      run: npx devmoji -e --lint
+      # devmoji's -e flag walks up looking for `.git` as a directory, but in a git
+      # worktree `.git` is a file (a gitdir pointer), so it fails to find COMMIT_EDITMSG.
+      # Workaround per https://github.com/folke/devmoji/issues/227 — pipe through
+      # stdin/stdout using the path git supplies as {1} (worktree-aware).
+      run: 'tmp=$(mktemp); npx devmoji --lint < {1} > "$tmp" && mv "$tmp" {1}'

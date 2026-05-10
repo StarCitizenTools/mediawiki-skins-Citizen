@@ -71,3 +71,20 @@ body > .oo-ui-windowManager {
 	border-radius: var( --border-radius-medium );
 	box-shadow: var( --box-shadow-large );
 }
+
+// Suppress the browser's default focus ring on the dialog's focus traps.
+// OOUI uses three classes that receive focus without being meaningful
+// interactive targets: `.oo-ui-window-content` and inner
+// `.oo-ui-panelLayout[tabindex="-1"]` get programmatic focus when a
+// dialog opens, while `.oo-ui-window-focusTrap` (tabindex="0") sentinels
+// receive focus briefly during tab wraparound. The default outline on
+// any of these draws a faint ring around the whole dialog frame —
+// visually jarring in dark mode and redundant since the dialog itself
+// is the user's contextual focus. Mirrors what Codex does on its
+// `.cdx-dialog-focus-trap`. Real interactive elements inside the
+// dialog keep their own focus styles.
+.oo-ui-window-active .oo-ui-window-content:focus,
+.oo-ui-window-active .oo-ui-panelLayout[ tabindex='-1' ]:focus,
+.oo-ui-window-focusTrap:focus {
+	outline: 0;
+}

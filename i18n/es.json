@@ -89,10 +89,5 @@
 	"citizen-command-palette-command-user-description": "Buscar un usuario",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Busca el texto completo de todas las páginas",
 	"citizen-command-palette-queryaction-media-search-description": "Buscar archivos multimedia",
-	"citizen-command-palette-queryaction-page-edit-description": "Crea o edita una página",
-	"citizen-command-palette-tip-commands": "Escribe <code>/</code> para todos los comandos",
-	"citizen-command-palette-tip-users": "Escribe <code>@</code> para buscar usuarios",
-	"citizen-command-palette-tip-namespace": "Escribe <code>:</code> para buscar por espacio de nombre",
-	"citizen-command-palette-tip-templates": "Escribe <code><nowiki>{{</nowiki></code> para buscar plantillas",
-	"citizen-command-palette-tip-actions": "Escriba <code>></code> para una lista de acciones"
+	"citizen-command-palette-queryaction-page-edit-description": "Crea o edita una página"
 }

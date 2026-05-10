@@ -121,17 +121,17 @@ describe( 'RadioGroup', () => {
 	} );
 
 	describe( 'card previews', () => {
-		it( 'should render theme preview with icon when option has previewColors', () => {
+		it( 'should render theme preview with icon when option has colorScheme', () => {
 			const optionsWithPreview = [
 				{
 					value: 'light',
 					label: 'Light',
-					previewColors: { surface: '#fff', text: '#000' }
+					colorScheme: 'light'
 				},
 				{
 					value: 'dark',
 					label: 'Dark',
-					previewColors: { surface: '#1a1a1a', text: '#fff' }
+					colorScheme: 'dark'
 				}
 			];
 
@@ -140,8 +140,8 @@ describe( 'RadioGroup', () => {
 			const previews = wrapper.findAll( '.citizen-preferences-card__preview--theme' );
 
 			expect( previews ).toHaveLength( 2 );
-			expect( previews[ 0 ].element.style.getPropertyValue( '--preview-bg' ) ).toBe( '#fff' );
-			expect( previews[ 0 ].element.style.getPropertyValue( '--preview-text' ) ).toBe( '#000' );
+			expect( previews[ 0 ].element.style.colorScheme ).toBe( 'light' );
+			expect( previews[ 1 ].element.style.colorScheme ).toBe( 'dark' );
 			expect( previews[ 0 ].findComponent( { name: 'CdxIcon' } ).exists() ).toBe( true );
 		} );
 

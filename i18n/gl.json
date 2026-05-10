@@ -100,8 +100,8 @@
 	"citizen-command-palette-type-special-page": "Páxina especial",
 	"citizen-command-palette-type-menu-item": "Elemento do menú",
 	"citizen-command-palette-type-user": "Usuario",
-	"citizen-command-palette-command-ns-description": "Buscar unha páxina nun espazo de nomes específico",
 	"citizen-command-palette-command-action-description": "Realizar unha acción específica",
+	"citizen-command-palette-command-ns-description": "Buscar unha páxina nun espazo de nomes específico",
 	"citizen-command-palette-command-smw-description": "Procurar usando unha consulta de Semantic MediaWiki",
 	"citizen-command-palette-command-smw-label": "Consulta de Semantic MediaWiki",
 	"citizen-command-palette-command-user-description": "Buscar un usuario",
@@ -129,10 +129,5 @@
 	"citizen-command-palette-mode-user-placeholder": "Buscar usuarios",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Buscar o texto completo en todas as páxinas",
 	"citizen-command-palette-queryaction-media-search-description": "Buscar ficheiros multimedia",
-	"citizen-command-palette-queryaction-page-edit-description": "Crear ou editar unha páxina",
-	"citizen-command-palette-tip-commands": "Escribe <code>/</code> para ver todos os comandos",
-	"citizen-command-palette-tip-users": "Escribe <code>@</code> para buscar usuarios",
-	"citizen-command-palette-tip-namespace": "Escribe <code>:</code> para buscar espazos de nomes",
-	"citizen-command-palette-tip-templates": "Escribe <code><nowiki>{{</nowiki></code> para buscar modelos",
-	"citizen-command-palette-tip-actions": "Escribe <code>></code> para ver unha lista de accións"
+	"citizen-command-palette-queryaction-page-edit-description": "Crear ou editar unha páxina"
 }

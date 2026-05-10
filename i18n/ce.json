@@ -79,15 +79,10 @@
 	"citizen-command-palette-type-special-page": "Леррина агӀо",
 	"citizen-command-palette-type-menu-item": "Меню пункт",
 	"citizen-command-palette-type-user": "Декъашхо",
-	"citizen-command-palette-command-ns-description": "Билггалчу цӀерийн меттигехь агӀо лаха",
 	"citizen-command-palette-command-action-description": "Билгала ардам кхочушбе",
+	"citizen-command-palette-command-ns-description": "Билггалчу цӀерийн меттигехь агӀо лаха",
 	"citizen-command-palette-command-user-description": "Декъашхо лаха",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Массо а агӀонаш тӀехь йуьззина текст лаха",
 	"citizen-command-palette-queryaction-media-search-description": "Медиа-файлашкахь леха",
-	"citizen-command-palette-queryaction-page-edit-description": "АгӀонаш кхоллар йа тайар",
-	"citizen-command-palette-tip-commands": "<code>/</code> йазде массо а командаш гайта",
-	"citizen-command-palette-tip-users": "Декъашхошца леха <code>@</code> йазде",
-	"citizen-command-palette-tip-namespace": "ЦӀерийн меттигашца леха <code>:</code> йазде",
-	"citizen-command-palette-tip-templates": "Кепаш лаха <code><nowiki>{{</nowiki></code> йазде",
-	"citizen-command-palette-tip-actions": "<code>></code> йазде, ардамийн могӀам схьаэца"
+	"citizen-command-palette-queryaction-page-edit-description": "АгӀонаш кхоллар йа тайар"
 }

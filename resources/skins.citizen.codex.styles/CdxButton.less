@@ -26,11 +26,11 @@
 			--mix-blend-mode-blend: normal;
 		}
 
-		// Use focus-visible instead of focus for more subtle appearance
-		// The default Codex focus style is too explicit and can be distracting
-		// Now we are only keeping the default focus styles for keyboard navigation
 		&:enabled,
 		&.cdx-button--fake-button--enabled {
+			// Use focus-visible instead of focus for more subtle appearance
+			// The default Codex focus style is too explicit and can be distracting
+			// Now we are only keeping the default focus styles for keyboard navigation
 			&:not( :active ):not( .cdx-button--is-active ) {
 				&:focus {
 					border-color: transparent;
@@ -41,6 +41,27 @@
 					outline: @outline-base--focus;
 					border-color: var( --border-color-progressive--focus );
 					box-shadow: @box-shadow-inset-small var( --color-progressive );
+				}
+			}
+		}
+	}
+}
+
+// Polyfill for Codex 2.x button styles. Remove once the minimum
+// supported MW bundles Codex >= 2.0 (currently MW 1.43 ships
+// Codex 1.14, so this stays as long as we target REL1_43).
+.citizen-token-new .cdx-button {
+	&:enabled,
+	&.cdx-button--fake-button--enabled {
+		color: var( --color-neutral );
+
+		&.cdx-button--weight-primary {
+			&.cdx-button--action-progressive,
+			&.cdx-button--action-destructive {
+				&,
+				&:hover,
+				&:active {
+					border-color: transparent;
 				}
 			}
 		}

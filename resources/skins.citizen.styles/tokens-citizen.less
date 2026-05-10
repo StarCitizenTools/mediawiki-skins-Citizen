@@ -1,15 +1,13 @@
 /**
- * Citizen tokens
- * CSS variables that are used throughout the skin
+ * Citizen non-color tokens — layout, spacing, fonts, header
+ * positioning, transitions. Color tokens themselves are emitted by
+ * skins.citizen.tokens or skins.citizen.tokens.new (one or the other
+ * per request, picked by SkinHooks).
  *
- * TODO: Remove HSL fallback when OKLCH is supported in all browsers
- * TODO: Use CSS relative color syntax when supported in all browsers
+ * TODO: Remove HSL fallback when OKLCH is supported in all browsers.
+ * TODO: Use CSS relative color syntax when supported in all browsers.
  */
-@import 'tokens-theme-base.less';
-
 :root {
-	.theme-base();
-
 	// Border
 	--border-radius-medium: calc( var( --border-radius-base ) * 2 );
 	--border-radius-large: calc( var( --border-radius-base ) * 3 );
@@ -22,9 +20,11 @@
 	--filter-image-brightness: none; // Revisit on the next LTS (T401654)
 
 	// Font
+	// Customization point — set just the brand font (plus a metric-matched fallback if any).
+	// Generic and OS-level fallbacks (system-ui, sans-serif, etc.) are composed downstream in variables.less.
 	--font-family-citizen-base: 'Roboto', 'Roboto-fallback';
-	--font-family-citizen-serif: 'Roboto Serif', 'Roboto Serif-fallback';
-	--font-family-citizen-monospace: 'Roboto Mono', 'Roboto Mono-fallback';
+	--font-family-citizen-serif: 'Roboto Serif';
+	--font-family-citizen-monospace: 'Roboto Mono';
 	--font-family-language-base: '';
 	--font-family-language-serif: '';
 	--font-family-language-monospace: '';
@@ -37,8 +37,7 @@
 	--toolbar-size: 2.5rem;
 	// Used to offset sticky elements with sticky header
 	// This is overriden by inline styles in the html element when sticky header is active
-	// Need the unit for calc() (#1058)
-	// stylelint-disable-next-line length-zero-no-unit
+	// stylelint-disable-next-line length-zero-no-unit -- Need the unit for calc() (#1058)
 	--height-sticky-header: 0px;
 	// Width or height of citizen-header, depending on the orientation
 	--header-size: @header-size;
@@ -126,26 +125,27 @@
 
 	// Header position tokens
 	// Unit is required for calc() functions
-	// stylelint-disable length-zero-no-unit
 	--header-direction: row;
-	--header-size-inline-start: 0px;
-	--header-size-inline-end: 0px;
+	--header-size-inline-start: 0;
+	--header-size-inline-end: 0;
+	// stylelint-disable-next-line length-zero-no-unit -- Need the unit for calc() (#1058)
 	--header-size-block-start: 0px;
+	// stylelint-disable-next-line length-zero-no-unit -- Need the unit for calc() (#1058)
 	--header-size-block-end: 0px;
-	--header-inset-block-start: 0px;
-	--header-inset-block-end: 0px;
-	--header-inset-inline-start: 0px;
-	--header-inset-inline-end: 0px;
-	--header-border-block-start-width: 0px;
-	--header-border-block-end-width: 0px;
-	--header-border-inline-start-width: 0px;
-	--header-border-inline-end-width: 0px;
+	--header-inset-block-start: 0;
+	--header-inset-block-end: 0;
+	--header-inset-inline-start: 0;
+	--header-inset-inline-end: 0;
+	--header-border-block-start-width: 0;
+	--header-border-block-end-width: 0;
+	--header-border-inline-start-width: 0;
+	--header-border-inline-end-width: 0;
 
 	// Always default to bottom in mobile for now
 	@media ( max-width: @max-width-breakpoint-tablet ) {
 		--header-direction: row;
-		--header-inset-inline-start: 0px;
-		--header-inset-inline-end: 0px;
+		--header-inset-inline-start: 0;
+		--header-inset-inline-end: 0;
 		--header-size-block-end: var( --header-size );
 		--header-inset-block-start: auto;
 		--header-inset-block-end: 0;
@@ -157,20 +157,20 @@
 			&-left,
 			&-right {
 				--header-direction: column;
-				--header-inset-block-start: 0px;
-				--header-inset-block-end: 0px;
+				--header-inset-block-start: 0;
+				--header-inset-block-end: 0;
 			}
 
 			&-top,
 			&-bottom {
 				--header-direction: row;
-				--header-inset-inline-start: 0px;
-				--header-inset-inline-end: 0px;
+				--header-inset-inline-start: 0;
+				--header-inset-inline-end: 0;
 			}
 
 			&-left {
 				--header-size-inline-start: var( --header-size );
-				--header-inset-inline-start: 0px;
+				--header-inset-inline-start: 0;
 				--header-inset-inline-end: auto;
 				--header-border-inline-end-width: var( --border-width-base );
 			}
@@ -178,13 +178,13 @@
 			&-right {
 				--header-size-inline-end: var( --header-size );
 				--header-inset-inline-start: auto;
-				--header-inset-inline-end: 0px;
+				--header-inset-inline-end: 0;
 				--header-border-inline-start-width: var( --border-width-base );
 			}
 
 			&-top {
 				--header-size-block-start: var( --header-size );
-				--header-inset-block-start: 0px;
+				--header-inset-block-start: 0;
 				--header-inset-block-end: auto;
 				--header-border-block-end-width: var( --border-width-base );
 			}
@@ -192,19 +192,18 @@
 			&-bottom {
 				--header-size-block-end: var( --header-size );
 				--header-inset-block-start: auto;
-				--header-inset-block-end: 0px;
+				--header-inset-block-end: 0;
 				--header-border-block-start-width: var( --border-width-base );
 			}
 		}
 	}
-	// stylelint-enable length-zero-no-unit
 
 	// Derived header offset tokens
 	// These combine the static header size with the dynamic sticky header height
 	--header-offset-block-start: calc( var( --header-size-block-start ) + var( --height-sticky-header ) );
 	--header-offset-block-end: var( --header-size-block-end );
 
-	// Deprecated tokens
+	// Deprecated aliases — drop alongside the legacy pipeline.
 	--color-primary__h: var( --color-progressive-hsl__h );
 	--color-primary__s: var( --color-progressive-hsl__s );
 	--color-primary__l: var( --color-progressive-hsl__l );

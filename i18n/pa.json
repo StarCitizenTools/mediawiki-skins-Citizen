@@ -59,13 +59,8 @@
 	"citizen-command-palette-type-command": "ਹੁਕਮ",
 	"citizen-command-palette-type-special-page": "ਖ਼ਾਸ ਵਰਕਾ",
 	"citizen-command-palette-type-user": "ਵਰਤੋਂਕਾਰ",
-	"citizen-command-palette-command-ns-description": "ਕਿਸੇ ਖ਼ਾਸ ਨਾਂ-ਥਾਂ ਵਿੱਚ ਇੱਕ ਵਰਕੇ ਦੀ ਖੋਜ ਕਰੋ",
 	"citizen-command-palette-command-action-description": "ਇੱਕ ਖਾਸ ਕਾਰਵਾਈ ਕਰੋ",
+	"citizen-command-palette-command-ns-description": "ਕਿਸੇ ਖ਼ਾਸ ਨਾਂ-ਥਾਂ ਵਿੱਚ ਇੱਕ ਵਰਕੇ ਦੀ ਖੋਜ ਕਰੋ",
 	"citizen-command-palette-command-user-description": "ਵਰਤੋਂਕਾਰ ਦੀ ਖੋਜ ਕਰੋ",
-	"citizen-command-palette-queryaction-page-edit-description": "ਵਰਕੇ ਬਣਾਓ ਜਾਂ ਸੋਧੋ",
-	"citizen-command-palette-tip-commands": "ਸਾਰੀਆਂ ਕਮਾਂਡਾਂ ਲਈ <code>/</code> ਲਿਖੋ",
-	"citizen-command-palette-tip-users": "ਵਰਤੋਂਕਾਰਾਂ ਨੂੰ ਖੋਜਣ ਲਈ <code>@</code> ਲਿਖੋ",
-	"citizen-command-palette-tip-namespace": "ਨਾਂ-ਥਾਂ ਲੱਭਣ ਲਈ <code>:</code> ਲਿਖੋ",
-	"citizen-command-palette-tip-templates": "ਫਰਮੇ ਖੋਜਣ ਲਈ <code><nowiki>{{</nowiki></code> ਲਿਖੋ",
-	"citizen-command-palette-tip-actions": "ਕਾਰਵਾਈਆਂ ਦੀ ਸੂਚੀ ਲਈ <code>/</code> ਲਿਖੋ"
+	"citizen-command-palette-queryaction-page-edit-description": "ਵਰਕੇ ਬਣਾਓ ਜਾਂ ਸੋਧੋ"
 }

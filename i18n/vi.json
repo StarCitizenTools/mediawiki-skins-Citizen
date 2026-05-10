@@ -88,6 +88,8 @@
 	"citizen-command-palette-keyhint-enter-open": "Mở",
 	"citizen-command-palette-keyhint-enter-search": "Tìm kiếm",
 	"citizen-command-palette-keyhint-navigate": "Điều hướng",
+	"citizen-command-palette-keyhint-clear": "Tẩy trống",
+	"citizen-command-palette-keyhint-close": "Đóng",
 	"citizen-command-palette-keyhint-exit": "Thoát",
 	"citizen-command-palette-keyhint-actions": "Tác vụ",
 	"citizen-command-palette-keyhint-return": "Trở lại",
@@ -103,8 +105,8 @@
 	"citizen-command-palette-type-special-page": "Trang đặc biệt",
 	"citizen-command-palette-type-menu-item": "Mục bảng chọn",
 	"citizen-command-palette-type-user": "Người dùng",
-	"citizen-command-palette-command-ns-description": "Tìm kiếm một trang trong một không gian tên cụ thể",
 	"citizen-command-palette-command-action-description": "Thực hiện một hành động cụ thể",
+	"citizen-command-palette-command-ns-description": "Tìm kiếm một trang trong một không gian tên cụ thể",
 	"citizen-command-palette-command-smw-description": "Tìm kiếm bằng truy vấn Semantic MediaWiki",
 	"citizen-command-palette-command-smw-label": "Truy vấn Semantic MediaWiki",
 	"citizen-command-palette-command-user-description": "Tìm kiếm người dùng",
@@ -132,10 +134,5 @@
 	"citizen-command-palette-mode-user-placeholder": "Tìm người dùng",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Tìm kiếm toàn văn của tất cả các trang",
 	"citizen-command-palette-queryaction-media-search-description": "Tìm kiếm tập tin phương tiện",
-	"citizen-command-palette-queryaction-page-edit-description": "Tạo và sửa trang",
-	"citizen-command-palette-tip-commands": "Nhập <code>/</code> cho tất cả các lệnh",
-	"citizen-command-palette-tip-users": "Nhập <code>@</code> để tìm kiếm người dùng",
-	"citizen-command-palette-tip-namespace": "Nhập <code>:</code> để tìm kiếm không gian tên",
-	"citizen-command-palette-tip-templates": "Nhập <code><nowiki>{{</nowiki></code> để tìm kiếm bản mẫu",
-	"citizen-command-palette-tip-actions": "Nhập <code>></code> để có danh sách các hành động"
+	"citizen-command-palette-queryaction-page-edit-description": "Tạo và sửa trang"
 }

@@ -1,6 +1,7 @@
 const { cdxIconEdit, cdxIconUserAvatar, cdxIconUserContributions, cdxIconUserTalk } = require( '../icons.json' );
 const config = require( '../config.json' );
 const { getNavigationAction } = require( '../utils/providerActions.js' );
+const { defineMode } = require( '../services/defineMode.js' );
 
 /**
  * Creates the user command handler.
@@ -101,13 +102,14 @@ function createUserCommand( ApiConstructor ) {
 		}
 	}
 
-	return {
+	return defineMode( {
 		id: 'user',
 		triggers: [ '/user:', '@' ],
 		label: mw.message( 'citizen-command-palette-command-user-label' ).text(),
 		description: mw.message( 'citizen-command-palette-command-user-description' ).text(),
 		placeholder: mw.message( 'citizen-command-palette-mode-user-placeholder' ).text(),
 		icon: cdxIconUserAvatar,
+		compactResults: true,
 		emptyState: {
 			title: mw.message( 'citizen-command-palette-mode-user-empty-title' ).text(),
 			description: mw.message( 'citizen-command-palette-mode-user-empty-description' ).text(),
@@ -120,11 +122,14 @@ function createUserCommand( ApiConstructor ) {
 				icon: cdxIconUserAvatar
 			};
 		},
+		help: {
+			description: 'citizen-command-palette-mode-user-description-help'
+		},
 		getResults: getUserResults,
 		async onResultSelect( item ) {
 			return getNavigationAction( item );
 		}
-	};
+	} );
 }
 
 module.exports = createUserCommand;

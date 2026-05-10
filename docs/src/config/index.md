@@ -88,33 +88,26 @@ $wgCitizenThemeColor = '#0d0e12';
 
 **Values**: Hex color code
 
-## Share
+### `$wgCitizenUseNewToken`
 
-### `$wgCitizenEnableShare`
+::: warning Experimental
+The new color token pipeline is under active development. Token names, values, and the retheme API may change without notice. Production wikis should leave this off.
+:::
 
-Shows the share option on content pages (when the page exists).
+Opts the wiki into Citizen's new color token pipeline (`skins.citizen.tokens.new`). Exactly one token module ships per request — when enabled, the new module loads in place of the default `skins.citizen.tokens`, and `<html>` gets `.citizen-token-new`.
 
 ```php [LocalSettings.php]
-$wgCitizenEnableShare = true;
+$wgCitizenUseNewToken = false;
 ```
 
 **Values**: `true`, `false`
 
-### `$wgCitizenEnableCustomizableSharePanel`
+The setting can also be toggled per-browser without editing `LocalSettings.php`:
 
-When `true`, opening share shows Citizen's customizable panel (copy field, per-service links, and optional native share from there). When `false` (default), the control uses the browser's share dialog when supported, otherwise copies the page URL to the clipboard (for older browsers that don't support it).
+- Append `?citizenusenewtoken=1` to any wiki URL to opt in for the current render. The choice is stored in a 24-hour cookie so it persists across pages in the same browser.
+- Append `?citizenusenewtoken=0` to opt back out.
 
-```php [LocalSettings.php]
-$wgCitizenEnableCustomizableSharePanel = false;
-```
-
-**Values**: `true`, `false`
-
-`$wgCitizenShareServiceOptions` and `MediaWiki:Citizen-share-services.json` apply only when this is `true`.
-
-### `$wgCitizenShareServiceOptions`
-
-Default list of share services for the custom panel. See the [share services reference](/customization/recipes#configure-share-services) for the JSON shape and on-wiki overrides.
+When neither the URL query nor the cookie is present, the value of `$wgCitizenUseNewToken` decides.
 
 ### `$wgCitizenEnableARFonts`
 
@@ -176,6 +169,34 @@ The minimum number of headings required before the sticky table of contents auto
 ```php [LocalSettings.php]
 $wgCitizenTableOfContentsCollapseAtCount = 28;
 ```
+
+## Share
+
+### `$wgCitizenEnableShare`
+
+Shows the share option on content pages (when the page exists).
+
+```php [LocalSettings.php]
+$wgCitizenEnableShare = true;
+```
+
+**Values**: `true`, `false`
+
+### `$wgCitizenEnableCustomizableSharePanel`
+
+When `true`, opening share shows Citizen's customizable panel (copy field, per-service links, and optional native share from there). When `false` (default), the control uses the browser's share dialog when supported, otherwise copies the page URL to the clipboard (for older browsers that don't support it).
+
+```php [LocalSettings.php]
+$wgCitizenEnableCustomizableSharePanel = false;
+```
+
+**Values**: `true`, `false`
+
+`$wgCitizenShareServiceOptions` and `MediaWiki:Citizen-share-services.json` apply only when this is `true`.
+
+### `$wgCitizenShareServiceOptions`
+
+Default list of share services for the custom panel. See the [share services reference](/customization/recipes#configure-share-services) for the JSON shape and on-wiki overrides.
 
 ## Webapp manifest
 

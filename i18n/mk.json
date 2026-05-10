@@ -81,15 +81,10 @@
 	"citizen-command-palette-type-special-page": "Службена страница",
 	"citizen-command-palette-type-menu-item": "Ставка од мени",
 	"citizen-command-palette-type-user": "Корисник",
-	"citizen-command-palette-command-ns-description": "Пребарување на страница во даден именски простор",
 	"citizen-command-palette-command-action-description": "Вршење на дадено дејство",
+	"citizen-command-palette-command-ns-description": "Пребарување на страница во даден именски простор",
 	"citizen-command-palette-command-user-description": "Пребарување на корисник",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Пребарување по целиот текст на сите страници",
 	"citizen-command-palette-queryaction-media-search-description": "Пребарување на медиумски податотеки",
-	"citizen-command-palette-queryaction-page-edit-description": "Создавање или уредување на страница",
-	"citizen-command-palette-tip-commands": "Внесете <code>/</code> за сите наредби",
-	"citizen-command-palette-tip-users": "Внесете <code>@</code> за да пребарате корисници",
-	"citizen-command-palette-tip-namespace": "Внесете <code>:</code> за да пребарате именски простор",
-	"citizen-command-palette-tip-templates": "Внесете <code><nowiki>{{</nowiki></code> за да пребарате предлошки",
-	"citizen-command-palette-tip-actions": "Внесете <code>></code> за список на дејства"
+	"citizen-command-palette-queryaction-page-edit-description": "Создавање или уредување на страница"
 }

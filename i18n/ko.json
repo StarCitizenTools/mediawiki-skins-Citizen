@@ -6,6 +6,7 @@
 			"Embercleave",
 			"Gustmd7410",
 			"Markingdots",
+			"Tensama0415",
 			"Ykhwong",
 			"렌즈"
 		]
@@ -45,13 +46,17 @@
 	"citizen-tagline-ns-category": "분류 문서",
 	"citizen-tagline-user-regdate": "$1에 가입함",
 	"citizen-theme-name": "색상 테마",
-	"citizen-theme-description": "색상 테마 변경",
+	"citizen-theme-description": "라이트 및 다크 테마간 전환",
 	"citizen-theme-day-label": "라이트",
 	"citizen-theme-night-label": "다크",
 	"citizen-theme-os-label": "자동",
 	"citizen-feature-autohide-navigation-name": "자동으로 메뉴 숨김",
 	"citizen-feature-autohide-navigation-0-label": "끄기",
 	"citizen-feature-autohide-navigation-1-label": "켜기",
+	"citizen-feature-performance-mode-0-label": "끄기",
+	"citizen-feature-performance-mode-1-label": "켜기",
+	"citizen-feature-image-dimming-0-label": "끄기",
+	"citizen-feature-image-dimming-1-label": "켜기",
 	"citizen-feature-pure-black-name": "퓨어 다크 모드",
 	"citizen-feature-pure-black-0-label": "끄기",
 	"citizen-feature-pure-black-1-label": "켜기",
@@ -88,10 +93,5 @@
 	"citizen-command-palette-type-menu-item": "메뉴 항목",
 	"citizen-command-palette-type-user": "사용자",
 	"citizen-command-palette-mode-user-empty-title": "사용자 검색",
-	"citizen-command-palette-mode-user-placeholder": "사용자 검색",
-	"citizen-command-palette-tip-commands": "<code>/</code>를 입력하여 모든 명령어를 확인하세요.",
-	"citizen-command-palette-tip-users": "<code>@</code>를 입력하여 사용자를 검색하세요.",
-	"citizen-command-palette-tip-namespace": "<code>:</code>를 입력하여 이름공간을 검색하세요.",
-	"citizen-command-palette-tip-templates": "<code><nowiki>{{</nowiki></code>를 입력하여 틀을 검색하세요.",
-	"citizen-command-palette-tip-actions": "<code>></code>를 입력하여 동작 목록을 확인하세요."
+	"citizen-command-palette-mode-user-placeholder": "사용자 검색"
 }

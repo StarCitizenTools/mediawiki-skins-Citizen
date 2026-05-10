@@ -1,7 +1,7 @@
-@import '../tokens-theme-dark.less';
 @import '../tokens-codex.less';
 
 .feature-pure-black() {
+	// ----- Legacy mode: zero out chroma on legacy derivation primitives -----
 	--color-surface-0-oklch__l: 0%;
 	--color-surface-0-oklch__c: 0;
 	--color-surface-1-oklch__c: 0;
@@ -29,6 +29,26 @@
 	--border-color-base: rgba( 255, 255, 255, 0.1 );
 	--border-color-subtle: rgba( 255, 255, 255, 0.05 );
 	--border-color-interactive: rgba( 255, 255, 255, 0.15 );
+
+	// ----- new mode: redeclare neutral primitives at zero chroma -----
+	// In the new pipeline, surfaces and text neutrals come from --color-neutral-N
+	// (Citizen extension primitive), not legacy derivation vars. Redeclare
+	// each neutral stop with the same L but chroma 0 — pitch black for the
+	// deepest stop (which maps to surface-0 in dark mode), pure gray for
+	// the rest. Primary palette is intentionally untouched so the
+	// progressive accent stays tinted in pure-black mode (matches legacy
+	// behavior).
+	--color-neutral-50: oklch( 98% 0 var( --color-primary-oklch__h ) );
+	--color-neutral-100: oklch( 94% 0 var( --color-primary-oklch__h ) );
+	--color-neutral-200: oklch( 90% 0 var( --color-primary-oklch__h ) );
+	--color-neutral-300: oklch( 84% 0 var( --color-primary-oklch__h ) );
+	--color-neutral-400: oklch( 73% 0 var( --color-primary-oklch__h ) );
+	--color-neutral-500: oklch( 51% 0 var( --color-primary-oklch__h ) );
+	--color-neutral-600: oklch( 39% 0 var( --color-primary-oklch__h ) );
+	--color-neutral-700: oklch( 30% 0 var( --color-primary-oklch__h ) );
+	--color-neutral-800: oklch( 22% 0 var( --color-primary-oklch__h ) );
+	--color-neutral-900: oklch( 17% 0 var( --color-primary-oklch__h ) );
+	--color-neutral-1000: oklch( 0% 0 var( --color-primary-oklch__h ) );
 }
 
 // T365102 invert class specifically for image related element
@@ -37,19 +57,7 @@
 	filter: var( --filter-invert );
 }
 
-.skin-theme-clientpref-night {
-	:root& {
-		.theme-dark();
-	}
-}
-
-.skin-theme-clientpref-os {
-	@media ( prefers-color-scheme: dark ) {
-		:root& {
-			.theme-dark();
-		}
-	}
-}
+// Dark-theme switches live inside each color-token module.
 
 .citizen-feature-custom-font-size-clientpref-small {
 	.citizen-body {
@@ -127,8 +135,7 @@
 		}
 
 		.citizen-scroll--down {
-			// Need the unit for calc() (#1058)
-			// stylelint-disable-next-line length-zero-no-unit
+			// stylelint-disable-next-line length-zero-no-unit -- Need the unit for calc() (#1058)
 			--height-sticky-header: 0px !important;
 			// Just do not modify --header-size-block-end
 			// Because we have already used `transform` to hide the header

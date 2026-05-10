@@ -8,6 +8,60 @@ const useKeyboard = require(
 	'../../../../resources/skins.citizen.commandPalette/composables/useKeyboard.js'
 );
 
+/**
+ * Adapter: useKeyboard takes grouped buckets, but the test fixtures here
+ * keep their dependencies flat for ergonomics. Funnel the flat shape into
+ * the bucketed shape on each call so the existing `deps.X` mutations in
+ * test bodies keep working without per-test rewrites.
+ *
+ * MUST stay in sync with useKeyboard.js's bucket definitions. If a field
+ * moves buckets (e.g. requestHeaderCopy promoted to its own bucket), update
+ * this mapping or tests will silently put the field in the wrong place and
+ * the binding handler will quietly stop firing.
+ *
+ * @param {Object} deps
+ * @return {Object}
+ */
+function toGrouped( deps ) {
+	return {
+		core: {
+			inputRef: deps.inputRef,
+			itemRefs: deps.itemRefs,
+			items: deps.items,
+			query: deps.query,
+			requestHeaderCopy: deps.requestHeaderCopy,
+			onSelect: deps.onSelect,
+			onClose: deps.onClose,
+			onClearQuery: deps.onClearQuery
+		},
+		navigation: {
+			listNav: deps.listNav,
+			gridNav: deps.gridNav,
+			isGalleryLayout: deps.isGalleryLayout,
+			actionNav: deps.actionNav
+		},
+		mode: {
+			activeMode: deps.activeMode,
+			activeModeContext: deps.activeModeContext,
+			findModeByTrigger: deps.findModeByTrigger,
+			onEnterMode: deps.onEnterMode,
+			onExitMode: deps.onExitMode,
+			onPopModeContext: deps.onPopModeContext
+		},
+		tokens: {
+			tokens: deps.tokens,
+			selectedTokenIndex: deps.selectedTokenIndex,
+			onSelectToken: deps.onSelectToken,
+			onRemoveToken: deps.onRemoveToken
+		},
+		help: {
+			helpVisible: deps.helpVisible,
+			onToggleHelp: deps.onToggleHelp,
+			onCloseHelp: deps.onCloseHelp
+		}
+	};
+}
+
 describe( 'useKeyboard', () => {
 	let listNav;
 	let actionNav;
@@ -77,7 +131,7 @@ describe( 'useKeyboard', () => {
 			findModeByTrigger: vi.fn( () => null )
 		};
 
-		keyboard = useKeyboard( deps );
+		keyboard = useKeyboard( toGrouped( deps ) );
 	} );
 
 	afterEach( () => {
@@ -153,7 +207,7 @@ describe( 'useKeyboard', () => {
 			const mode = { id: 'user', triggers: [ '@' ] };
 			deps.findModeByTrigger = vi.fn( () => mode );
 			deps.onEnterMode = vi.fn();
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 
 			var event = createKeyEvent( '@' );
 			event.shiftKey = true;
@@ -286,6 +340,72 @@ describe( 'useKeyboard', () => {
 		} );
 	} );
 
+	describe( 'Backspace hints', () => {
+		function setupCursorAtStart() {
+			deps.inputRef.value.getInputElement = vi.fn( () => ( {
+				selectionStart: 0,
+				selectionEnd: 0,
+				value: '',
+				focus: vi.fn(),
+				closest: vi.fn( () => null )
+			} ) );
+		}
+
+		it( 'shows the Back hint when drilled with empty input and no tokens', () => {
+			setupCursorAtStart();
+			deps.activeModeContext = ref( [ { title: 'Category A' } ] );
+			deps.onPopModeContext = vi.fn();
+			deps.query.value = '';
+
+			keyboard = useKeyboard( toGrouped( deps ) );
+
+			expect( keyboard.keyboardHints.value.some(
+				( h ) => h.msgKey === 'citizen-command-palette-keyhint-back'
+			) ).toBe( true );
+		} );
+
+		it( 'shows the Edit tag hint when a token is selected', () => {
+			setupCursorAtStart();
+			deps.tokens = ref( [ { id: 't1', label: 'Foo' } ] );
+			deps.selectedTokenIndex = ref( 0 );
+			deps.onSelectToken = vi.fn();
+			deps.onRemoveToken = vi.fn();
+
+			keyboard = useKeyboard( toGrouped( deps ) );
+
+			expect( keyboard.keyboardHints.value.some(
+				( h ) => h.msgKey === 'citizen-command-palette-keyhint-edit-token'
+			) ).toBe( true );
+		} );
+
+		it( 'shows the Select tag hint when tokens are present and none selected', () => {
+			setupCursorAtStart();
+			deps.tokens = ref( [ { id: 't1', label: 'Foo' } ] );
+			deps.selectedTokenIndex = ref( -1 );
+			deps.onSelectToken = vi.fn();
+			deps.onRemoveToken = vi.fn();
+
+			keyboard = useKeyboard( toGrouped( deps ) );
+
+			expect( keyboard.keyboardHints.value.some(
+				( h ) => h.msgKey === 'citizen-command-palette-keyhint-select-token'
+			) ).toBe( true );
+		} );
+
+		it( 'omits Backspace hints in the action zone', () => {
+			setupCursorAtStart();
+			deps.activeModeContext = ref( [ { title: 'A' } ] );
+			deps.onPopModeContext = vi.fn();
+			actionNav.isActive.value = true;
+
+			keyboard = useKeyboard( toGrouped( deps ) );
+
+			expect( keyboard.keyboardHints.value.some(
+				( h ) => h.kbd === '⌫'
+			) ).toBe( false );
+		} );
+	} );
+
 	describe( 'action zone — Escape', () => {
 		it( 'should deactivate action navigation on Escape from action zone', () => {
 			actionNav.isActive.value = true;
@@ -298,12 +418,63 @@ describe( 'useKeyboard', () => {
 		} );
 	} );
 
+	describe( 'action-zone Escape delegates to input-zone Escape ladder', () => {
+		let actionTarget;
+
+		beforeEach( () => {
+			actionTarget = {
+				closest: vi.fn( ( selector ) => (
+					selector === '.citizen-command-palette-list-item__action' ? actionTarget : null
+				) )
+			};
+			actionNav.isActive.value = true;
+		} );
+
+		it( 'clears the query when query is non-empty', () => {
+			deps.query.value = 'hello';
+
+			keyboard = useKeyboard( toGrouped( deps ) );
+			keyboard.handleKeydown( createKeyEvent( 'Escape', actionTarget ) );
+
+			expect( actionNav.deactivate ).toHaveBeenCalled();
+			expect( deps.onClearQuery ).toHaveBeenCalled();
+			expect( deps.onExitMode ).not.toHaveBeenCalled();
+			expect( deps.onClose ).not.toHaveBeenCalled();
+		} );
+
+		it( 'exits the active mode when query is empty and a mode is active', () => {
+			deps.query.value = '';
+			deps.activeMode.value = { id: 'category' };
+
+			keyboard = useKeyboard( toGrouped( deps ) );
+			keyboard.handleKeydown( createKeyEvent( 'Escape', actionTarget ) );
+
+			expect( actionNav.deactivate ).toHaveBeenCalled();
+			expect( deps.onExitMode ).toHaveBeenCalled();
+			expect( deps.onClearQuery ).not.toHaveBeenCalled();
+			expect( deps.onClose ).not.toHaveBeenCalled();
+		} );
+
+		it( 'closes the palette when query is empty and no mode is active', () => {
+			deps.query.value = '';
+			deps.activeMode.value = null;
+
+			keyboard = useKeyboard( toGrouped( deps ) );
+			keyboard.handleKeydown( createKeyEvent( 'Escape', actionTarget ) );
+
+			expect( actionNav.deactivate ).toHaveBeenCalled();
+			expect( deps.onClose ).toHaveBeenCalled();
+			expect( deps.onClearQuery ).not.toHaveBeenCalled();
+			expect( deps.onExitMode ).not.toHaveBeenCalled();
+		} );
+	} );
+
 	describe( 'three-level Escape', () => {
 		it( 'clears query when Escape pressed with non-empty query', () => {
 			deps.query = ref( 'test' );
 			deps.activeMode = ref( null );
 			deps.onClearQuery = vi.fn();
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( 'Escape' );
 
 			keyboard.handleKeydown( event );
@@ -316,7 +487,7 @@ describe( 'useKeyboard', () => {
 			deps.query = ref( '' );
 			deps.activeMode = ref( { id: 'ns' } );
 			deps.onExitMode = vi.fn();
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( 'Escape' );
 
 			keyboard.handleKeydown( event );
@@ -328,7 +499,7 @@ describe( 'useKeyboard', () => {
 		it( 'closes palette when Escape pressed with empty query and no mode', () => {
 			deps.query = ref( '' );
 			deps.activeMode = ref( null );
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( 'Escape' );
 
 			keyboard.handleKeydown( event );
@@ -344,7 +515,7 @@ describe( 'useKeyboard', () => {
 			const mode = { id: 'user', triggers: [ '@' ] };
 			deps.findModeByTrigger = vi.fn( () => mode );
 			deps.onEnterMode = vi.fn();
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( '@' );
 
 			keyboard.handleKeydown( event );
@@ -358,7 +529,7 @@ describe( 'useKeyboard', () => {
 			deps.activeMode = ref( { id: 'ns' } );
 			deps.findModeByTrigger = vi.fn( () => ( { id: 'user' } ) );
 			deps.onEnterMode = vi.fn();
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( '@' );
 
 			keyboard.handleKeydown( event );
@@ -371,7 +542,7 @@ describe( 'useKeyboard', () => {
 			deps.activeMode = ref( null );
 			deps.findModeByTrigger = vi.fn( () => ( { id: 'user' } ) );
 			deps.onEnterMode = vi.fn();
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( '@' );
 
 			keyboard.handleKeydown( event );
@@ -384,12 +555,306 @@ describe( 'useKeyboard', () => {
 			deps.activeMode = ref( null );
 			deps.findModeByTrigger = vi.fn( () => null );
 			deps.onEnterMode = vi.fn();
-			keyboard = useKeyboard( deps );
+			keyboard = useKeyboard( toGrouped( deps ) );
 			const event = createKeyEvent( 'x' );
 
 			keyboard.handleKeydown( event );
 
 			expect( deps.onEnterMode ).not.toHaveBeenCalled();
+		} );
+	} );
+
+	describe( 'Backspace with mode context', () => {
+		function setupBackspace( { tokens, query, modeContext } ) {
+			const inputEl = {
+				selectionStart: 0,
+				selectionEnd: 0,
+				value: '',
+				focus: vi.fn(),
+				closest: vi.fn( () => null )
+			};
+			deps.inputRef.value.getInputElement = vi.fn( () => inputEl );
+			deps.tokens = ref( tokens );
+			deps.selectedTokenIndex = ref( -1 );
+			deps.onSelectToken = vi.fn();
+			deps.onRemoveToken = vi.fn();
+			deps.query = ref( query );
+			deps.activeMode = ref( modeContext.length > 0 ? { id: 'm' } : null );
+			deps.activeModeContext = ref( modeContext );
+			deps.onPopModeContext = vi.fn();
+			keyboard = useKeyboard( toGrouped( deps ) );
+			return { inputEl };
+		}
+
+		it( 'pops context when input empty and stack non-empty', () => {
+			const { inputEl } = setupBackspace( {
+				tokens: [],
+				query: '',
+				modeContext: [ { name: 'A' } ]
+			} );
+			const event = createKeyEvent( 'Backspace', inputEl );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onPopModeContext ).toHaveBeenCalledTimes( 1 );
+			expect( event.preventDefault ).toHaveBeenCalled();
+		} );
+
+		it( 'no-ops Backspace when stack is empty and no tokens', () => {
+			const { inputEl } = setupBackspace( {
+				tokens: [],
+				query: '',
+				modeContext: []
+			} );
+			const event = createKeyEvent( 'Backspace', inputEl );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onPopModeContext ).not.toHaveBeenCalled();
+			expect( event.preventDefault ).not.toHaveBeenCalled();
+		} );
+
+		it( 'falls through to token logic when context empty but tokens exist', () => {
+			const { inputEl } = setupBackspace( {
+				tokens: [ { id: 't1', label: 'Talk' } ],
+				query: '',
+				modeContext: []
+			} );
+			const event = createKeyEvent( 'Backspace', inputEl );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onPopModeContext ).not.toHaveBeenCalled();
+			expect( deps.onSelectToken ).toHaveBeenCalledWith( 0 );
+		} );
+	} );
+
+	describe( 'help overlay', () => {
+		function setupHelp( { helpVisible = false, query = '', tokens = [], activeMode = null } = {} ) {
+			deps.query = ref( query );
+			deps.tokens = ref( tokens );
+			deps.activeMode = ref( activeMode );
+			deps.helpVisible = ref( helpVisible );
+			deps.onToggleHelp = vi.fn();
+			deps.onCloseHelp = vi.fn();
+			keyboard = useKeyboard( toGrouped( deps ) );
+		}
+
+		it( '"?" at empty input toggles help', () => {
+			setupHelp( { query: '', tokens: [] } );
+			const event = createKeyEvent( '?' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onToggleHelp ).toHaveBeenCalledTimes( 1 );
+			expect( event.preventDefault ).toHaveBeenCalled();
+		} );
+
+		it( '"?" toggles help even when a mode is active, as long as input is empty', () => {
+			setupHelp( { query: '', tokens: [], activeMode: { id: 'category' } } );
+			const event = createKeyEvent( '?' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onToggleHelp ).toHaveBeenCalledTimes( 1 );
+		} );
+
+		it( '"?" mid-typing does NOT toggle help', () => {
+			setupHelp( { query: 'cat', tokens: [] } );
+			const event = createKeyEvent( '?' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onToggleHelp ).not.toHaveBeenCalled();
+		} );
+
+		it( '"?" with tokens present does NOT toggle help', () => {
+			setupHelp( { query: '', tokens: [ { id: 't1', label: 'Talk:' } ] } );
+			const event = createKeyEvent( '?' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onToggleHelp ).not.toHaveBeenCalled();
+		} );
+
+		it( 'Escape closes help when help is visible (precedence over 3-level ladder)', () => {
+			setupHelp( { helpVisible: true, query: 'still has query', activeMode: { id: 'foo' } } );
+			const event = createKeyEvent( 'Escape' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onCloseHelp ).toHaveBeenCalledTimes( 1 );
+			expect( deps.onClearQuery ).not.toHaveBeenCalled();
+			expect( deps.onExitMode ).not.toHaveBeenCalled();
+			expect( deps.onClose ).not.toHaveBeenCalled();
+		} );
+
+		it( '"?" closes help when help is visible', () => {
+			setupHelp( { helpVisible: true } );
+			const event = createKeyEvent( '?' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onToggleHelp ).toHaveBeenCalledTimes( 1 );
+		} );
+
+		it( 'ArrowDown still navigates while help is visible', () => {
+			setupHelp( { helpVisible: true } );
+			const event = createKeyEvent( 'ArrowDown' );
+
+			keyboard.handleKeydown( event );
+
+			expect( listNav.highlightNext ).toHaveBeenCalled();
+		} );
+
+		it( 'Enter still selects highlighted item while help is visible', () => {
+			setupHelp( { helpVisible: true } );
+			listNav.highlightedIndex.value = 0;
+			const event = createKeyEvent( 'Enter' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onSelect ).toHaveBeenCalledWith( deps.items.value[ 0 ] );
+		} );
+
+		it( 'mode-trigger keys are swallowed while help is visible', () => {
+			setupHelp( { helpVisible: true } );
+			const mode = { id: 'user', triggers: [ '@' ] };
+			deps.findModeByTrigger = vi.fn( () => mode );
+			deps.onEnterMode = vi.fn();
+			keyboard = useKeyboard( toGrouped( deps ) );
+			const event = createKeyEvent( '@' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onEnterMode ).not.toHaveBeenCalled();
+			expect( event.preventDefault ).toHaveBeenCalled();
+		} );
+
+		it( 'Backspace is swallowed while help is visible (does not pop mode context)', () => {
+			setupHelp( { helpVisible: true } );
+			deps.activeModeContext = ref( [ { name: 'A' } ] );
+			deps.onPopModeContext = vi.fn();
+			keyboard = useKeyboard( toGrouped( deps ) );
+			const event = createKeyEvent( 'Backspace' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onPopModeContext ).not.toHaveBeenCalled();
+			expect( event.preventDefault ).toHaveBeenCalled();
+		} );
+
+		it( 'Backspace is swallowed while help is visible (does not remove or select tokens)', () => {
+			setupHelp( { helpVisible: true } );
+			deps.tokens = ref( [ { id: 't1', label: 'Talk:' } ] );
+			deps.selectedTokenIndex = ref( 0 );
+			deps.onRemoveToken = vi.fn();
+			deps.onSelectToken = vi.fn();
+			deps.inputRef.value.getInputElement = vi.fn( () => ( {
+				selectionStart: 0,
+				selectionEnd: 0,
+				value: '',
+				focus: vi.fn(),
+				closest: vi.fn( () => null )
+			} ) );
+			keyboard = useKeyboard( toGrouped( deps ) );
+			const event = createKeyEvent( 'Backspace' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onRemoveToken ).not.toHaveBeenCalled();
+			expect( deps.onSelectToken ).not.toHaveBeenCalled();
+			expect( event.preventDefault ).toHaveBeenCalled();
+		} );
+
+		it( 'escHintMsgKey is "close" while help is visible, even with non-empty query', () => {
+			setupHelp( { helpVisible: true, query: 'something' } );
+
+			const hints = keyboard.keyboardHints.value;
+
+			expect( hints[ hints.length - 1 ] ).toEqual(
+				{ msgKey: 'citizen-command-palette-keyhint-close', kbd: 'esc' }
+			);
+		} );
+	} );
+
+	describe( 'mode keybindings contribution', () => {
+		it( 'prepends mode bindings before core (mode wins on collision)', () => {
+			const modeHandler = vi.fn();
+			deps.activeMode.value = {
+				id: 'test',
+				keybindings: [ {
+					id: 'mode-enter-override',
+					zone: 'input',
+					keys: [ 'Enter' ],
+					when: () => true,
+					handle: modeHandler
+				} ]
+			};
+			listNav.highlightedIndex.value = 0;
+
+			keyboard = useKeyboard( toGrouped( deps ) );
+			keyboard.handleKeydown( createKeyEvent( 'Enter' ) );
+
+			expect( modeHandler ).toHaveBeenCalled();
+			expect( deps.onSelect ).not.toHaveBeenCalled();
+		} );
+
+		it( 'falls back to core when mode binding when() is false', () => {
+			deps.activeMode.value = {
+				id: 'test',
+				keybindings: [ {
+					id: 'mode-enter-noop',
+					zone: 'input',
+					keys: [ 'Enter' ],
+					when: () => false,
+					handle: vi.fn()
+				} ]
+			};
+			listNav.highlightedIndex.value = 0;
+
+			keyboard = useKeyboard( toGrouped( deps ) );
+			keyboard.handleKeydown( createKeyEvent( 'Enter' ) );
+
+			expect( deps.onSelect ).toHaveBeenCalled();
+		} );
+
+		it( 'is a no-op when mode has no keybindings', () => {
+			deps.activeMode.value = { id: 'no-bindings' };
+			listNav.highlightedIndex.value = 0;
+
+			keyboard = useKeyboard( toGrouped( deps ) );
+			keyboard.handleKeydown( createKeyEvent( 'Enter' ) );
+
+			expect( deps.onSelect ).toHaveBeenCalled();
+		} );
+
+		it( 'is a no-op when activeMode is null', () => {
+			deps.activeMode.value = null;
+			listNav.highlightedIndex.value = 0;
+
+			keyboard = useKeyboard( toGrouped( deps ) );
+			keyboard.handleKeydown( createKeyEvent( 'Enter' ) );
+
+			expect( deps.onSelect ).toHaveBeenCalled();
+		} );
+
+		it( 'merges mode hints into the keyboardHints output', () => {
+			deps.activeMode.value = {
+				id: 'test',
+				keybindings: [ {
+					id: 'mode-special',
+					zone: 'input',
+					keys: [ 'F1' ],
+					when: () => true,
+					handle: () => {},
+					hint: { msgKey: 'citizen-command-palette-keyhint-actions', kbd: 'F1', order: 50 }
+				} ]
+			};
+
+			keyboard = useKeyboard( toGrouped( deps ) );
+
+			expect( keyboard.keyboardHints.value.some( ( h ) => h.kbd === 'F1' ) ).toBe( true );
 		} );
 	} );
 } );

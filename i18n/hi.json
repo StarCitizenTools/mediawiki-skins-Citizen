@@ -97,8 +97,8 @@
 	"citizen-command-palette-type-special-page": "विशेष पृष्ठ",
 	"citizen-command-palette-type-menu-item": "मेन्यू प्रविष्टि",
 	"citizen-command-palette-type-user": "सदस्य",
-	"citizen-command-palette-command-ns-description": "किसी विशिष्ट नामस्थान में कोई पृष्ठ खोजें",
 	"citizen-command-palette-command-action-description": "कोई विशिष्ट क्रिया करें",
+	"citizen-command-palette-command-ns-description": "किसी विशिष्ट नामस्थान में कोई पृष्ठ खोजें",
 	"citizen-command-palette-command-smw-description": "सिमेंटिक मीडियाविकि क्वेरी से खोजें",
 	"citizen-command-palette-command-user-description": "कोई सदस्य खोजें",
 	"citizen-command-palette-mode-action-placeholder": "क्रियाएँ खोजें",
@@ -123,10 +123,5 @@
 	"citizen-command-palette-mode-user-placeholder": "सदस्य खोजें",
 	"citizen-command-palette-queryaction-fulltext-search-description": "सभी पृष्ठों का पूरा टेक्स्ट खोजें",
 	"citizen-command-palette-queryaction-media-search-description": "मीडिया फ़ाइलें खोजें",
-	"citizen-command-palette-queryaction-page-edit-description": "पृष्ठ बनाएँ या सम्पादित करें",
-	"citizen-command-palette-tip-commands": "सभी कमांड्स के लिए <code>/</code> लिखें",
-	"citizen-command-palette-tip-users": "सदस्य खोजने के लिए <code>@</code> लिखें",
-	"citizen-command-palette-tip-namespace": "नामस्थान खोजने के लिए <code>:</code> लिखें",
-	"citizen-command-palette-tip-templates": "साँचा खोजने के लिए <code><nowiki>{{</nowiki></code> लिखें",
-	"citizen-command-palette-tip-actions": "क्रियाओं की सूची के लिए <code>></code> लिखें"
+	"citizen-command-palette-queryaction-page-edit-description": "पृष्ठ बनाएँ या सम्पादित करें"
 }

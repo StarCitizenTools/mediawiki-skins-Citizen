@@ -93,7 +93,5 @@
 	"citizen-command-palette-command-user-description": "Nach einem Benutzer suchen",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Durchsuche den Volltext aller Seiten",
 	"citizen-command-palette-queryaction-media-search-description": "Suche nach Mediendateien",
-	"citizen-command-palette-queryaction-page-edit-description": "Erstelle oder bearbeite Seite",
-	"citizen-command-palette-tip-users": "Gib <code>@</code> ein, um nach Benutzern zu suchen",
-	"citizen-command-palette-tip-templates": "Tippen Sie <code><nowiki>{{</nowiki></code>, um nach Templates zu suchen"
+	"citizen-command-palette-queryaction-page-edit-description": "Erstelle oder bearbeite Seite"
 }

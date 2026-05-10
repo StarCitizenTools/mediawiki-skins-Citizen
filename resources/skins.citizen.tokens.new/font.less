@@ -1,0 +1,17 @@
+/**
+ * font tokens
+ * https://doc.wikimedia.org/codex/main/design-tokens/font.html
+ */
+.new-font() {
+	:root.citizen-token-new {
+		// Codex — emits font-size, font-weight, line-height, etc.
+		// Mixin lives in the legacy module's tokens-codex.less (shared
+		// between modes — eligible for a future shared-font module).
+		.cdx-mode-medium();
+
+		// Citizen extension. Theme-variant; dark override in
+		// dark-overrides.less. Drives Roboto Flex's `GRAD` axis to
+		// reduce optical bloom on dark backgrounds.
+		--font-grade: 25;
+	}
+}

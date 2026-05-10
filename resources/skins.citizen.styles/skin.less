@@ -3,12 +3,12 @@
 @import '../variables.less';
 @import '../mixins.less';
 
-// Common
-@import 'tokens.less';
+// Common — color tokens come from skins.citizen.tokens or
+// skins.citizen.tokens.new (loaded conditionally by SkinHooks).
+@import 'tokens-citizen.less';
 @import 'fonts.less';
 @import 'icons.less';
 @import 'common/typography.less';
-@import 'common/viewTransition.less';
 @import 'skinning/elements.less';
 
 // FIXME: It is not great to load both Parsoid and Parsoid legacy media styles
@@ -40,6 +40,7 @@
 	@import 'components/PageSidebar.less';
 	@import 'components/PageFooter.less';
 	@import 'components/Footer.less';
+	@import 'components/Preferences.less';
 	@import 'components/TableOfContents.less';
 	@import 'components/StickyHeader.less';
 	@import 'components/Sitestats.less';

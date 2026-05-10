@@ -1,6 +1,7 @@
 const { cdxIconSpecialPages, cdxIconPlay } = require( '../icons.json' );
 const config = require( '../config.json' );
 const { getNavigationAction } = require( '../utils/providerActions.js' );
+const { defineMode } = require( '../services/defineMode.js' );
 
 /**
  * Creates the action command handler.
@@ -129,18 +130,22 @@ function createActionCommand( documentRef, ApiConstructor ) {
 		return allItems.filter( ( item ) => itemMatchesQuery( item, lowerSubQuery ) );
 	}
 
-	return {
+	return defineMode( {
 		id: 'action',
 		triggers: [ '/action:', '>' ],
 		label: mw.message( 'citizen-command-palette-command-action-label' ).text(),
 		description: mw.message( 'citizen-command-palette-command-action-description' ).text(),
 		placeholder: mw.message( 'citizen-command-palette-mode-action-placeholder' ).text(),
 		icon: cdxIconSpecialPages,
+		compactResults: true,
+		help: {
+			description: 'citizen-command-palette-mode-action-description-help'
+		},
 		getResults: getActionResults,
 		async onResultSelect( item ) {
 			return getNavigationAction( item );
 		}
-	};
+	} );
 }
 
 module.exports = createActionCommand;

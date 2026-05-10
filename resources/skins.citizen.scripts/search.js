@@ -1,6 +1,7 @@
 /**
  * Check if the element is a HTML form element or content editable.
- * This is to prevent triggering search box when user is typing on a textfield, input, etc.
+ * Used to gate keyboard shortcuts so typing in an input does not
+ * accidentally open the command palette.
  *
  * @param {HTMLElement} element
  * @return {boolean}
@@ -18,23 +19,13 @@ function isFormField( element ) {
 }
 
 /**
- * Open the search UI.
- *
- * @param {HTMLDetailsElement} details
- * @return {void}
- */
-function openSearch( details ) {
-	details.click();
-}
-
-/**
- * Bind keyboard shortcuts to open the search UI.
+ * Bind keyboard shortcuts that open the command palette.
  *
  * @param {Window} window
- * @param {HTMLDetailsElement} details
+ * @param {Function} triggerOpen
  * @return {void}
  */
-function bindOpenOnSlash( window, details ) {
+function bindOpenOnSlash( window, triggerOpen ) {
 	const onExpandOnSlash = ( /** @type {KeyboardEvent} */ event ) => {
 		const isKeyPressed = () => {
 			// "/" key is standard on many sites
@@ -51,9 +42,9 @@ function bindOpenOnSlash( window, details ) {
 			}
 		};
 		if ( isKeyPressed() && !isFormField( event.target ) ) {
-			// Since Firefox quickfind interfere with this
+			// Firefox quickfind would otherwise intercept "/"
 			event.preventDefault();
-			openSearch( details );
+			triggerOpen();
 		}
 	};
 
@@ -61,53 +52,39 @@ function bindOpenOnSlash( window, details ) {
 }
 
 /**
- * Bind the search trigger to open the search UI and prefill the input.
+ * Bind external `.citizen-search-trigger` links (with optional
+ * `data-citizen-search-prefill`) to open the palette with optional
+ * prefill text.
  *
  * @param {Document} document
- * @param {Object} mw
- * @param {HTMLDetailsElement} details
+ * @param {Function} triggerOpen
  * @return {void}
  */
-function bindSearchTrigger( document, mw, details ) {
+function bindSearchTrigger( document, triggerOpen ) {
 	document.querySelectorAll( '.citizen-search-trigger' ).forEach( ( trigger ) => {
 		trigger.addEventListener( 'click', ( event ) => {
-			openSearch( details );
-			if ( event.target.dataset.citizenSearchPrefill ) {
-				// Add a delay to ensure the search UI is open
-				setTimeout( () => {
-					const input = document.querySelector(
-						'.citizen-command-palette-header__input .cdx-text-input__input'
-					);
-
-					if ( input === null ) {
-						return;
-					}
-
-					// Escape just to be safe
-					input.value = mw.html.escape(
-						event.target.dataset.citizenSearchPrefill
-					);
-				}, 0 );
-			}
+			const prefill = event.target.dataset && event.target.dataset.citizenSearchPrefill ?
+				event.target.dataset.citizenSearchPrefill :
+				null;
+			triggerOpen( prefill );
 		} );
 	} );
 }
 
 /**
- * Initializes the search functionality.
+ * Initializes the search functionality (keyboard shortcuts and
+ * auxiliary triggers). The command palette itself is owned by
+ * `commandPalette.js`; this module just routes user intent to it.
  *
  * @param {Object} deps
  * @param {Window} deps.window
  * @param {Document} deps.document
- * @param {Object} deps.mw
+ * @param {Function} deps.triggerOpen
  * @return {void}
  */
-function initSearch( { window, document, mw } ) {
-	const details = document.getElementById( 'citizen-search-details' );
-
-	bindOpenOnSlash( window, details );
-	bindSearchTrigger( document, mw, details );
-	mw.loader.load( 'skins.citizen.commandPalette' );
+function initSearch( { window, document, triggerOpen } ) {
+	bindOpenOnSlash( window, triggerOpen );
+	bindSearchTrigger( document, triggerOpen );
 }
 
 module.exports = {
