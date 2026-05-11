@@ -1,6 +1,7 @@
 import { defineConfig } from "vitepress";
 import { routex } from "@itznotabug/routex";
 import { groupIconMdPlugin, groupIconVitePlugin } from "vitepress-plugin-group-icons";
+import llmstxt, { copyOrDownloadAsMarkdownButtons } from "vitepress-plugin-llms";
 import { tabsMarkdownPlugin } from "vitepress-plugin-tabs";
 
 const BASE_URL = process.env.BASE_URL ?? "/";
@@ -199,11 +200,13 @@ export default defineConfig({
 		config: (md) => {
 			md.use(groupIconMdPlugin);
 			md.use(tabsMarkdownPlugin);
+			md.use(copyOrDownloadAsMarkdownButtons);
 		},
 	},
 	vite: {
 		plugins: [
 			groupIconVitePlugin(),
+			llmstxt(),
 			routex({
 				rules: redirects,
 				options: { addCanonical: true, ignoreDeadLinks: true },
