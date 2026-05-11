@@ -60,6 +60,12 @@ Module._resolveFilename = function ( request, parent, ...rest ) {
 		}
 	}
 	if ( parent && parent.filename &&
+		parent.filename.includes( 'skins.citizen.share' ) ) {
+		if ( request === './icons.json' ) {
+			return path.resolve( __dirname, 'mocks/shareIcons.js' );
+		}
+	}
+	if ( parent && parent.filename &&
 		parent.filename.includes( 'skins.citizen.commandPalette' ) ) {
 		if ( request === './config.json' || request === '../config.json' ) {
 			return path.resolve( __dirname, 'mocks/commandPaletteConfig.js' );
