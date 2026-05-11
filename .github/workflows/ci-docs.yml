@@ -32,38 +32,24 @@ jobs:
         working-directory: docs
         run: npm ci
 
-      - name: Lint Docs
+      - name: Lint docs
         working-directory: docs
         run: npm run lint
 
-  check-pages:
-    name: 🔍 Check GitHub Pages
-    runs-on: ubuntu-latest
-    outputs:
-      pages_enabled: ${{ steps.check.outputs.pages_enabled }}
-    steps:
-      - name: Check if GitHub Pages is enabled
-        id: check
-        run: |
-          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/${{ github.repository }}/pages)
-          if [ "$RESPONSE" -eq 200 ]; then
-            echo "pages_enabled=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "pages_enabled=false" >> "$GITHUB_OUTPUT"
-          fi
+      - name: Run docs tests
+        working-directory: docs
+        run: npm test
 
-  build:
-    name: 🏗️ Build
-    needs: [lint, check-pages]
-    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && needs.check-pages.outputs.pages_enabled == 'true'
+  build-and-deploy:
+    name: 🏗️ Build and deploy
+    needs: lint
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.repository == 'StarCitizenTools/mediawiki-skins-Citizen'
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      pages: write
-      id-token: write
+      contents: write
+    concurrency:
+      group: gh-pages-deploy
+      cancel-in-progress: false
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -77,10 +63,6 @@ jobs:
           cache: npm
           cache-dependency-path: docs/package-lock.json
 
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v6
-
       - name: Install dependencies
         working-directory: docs
         run: npm ci
@@ -89,29 +71,67 @@ jobs:
         working-directory: docs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BASE_URL: ${{ steps.pages.outputs.base_path }}
+          BASE_URL: /mediawiki-skins-Citizen/
+          DOCS_VERSION: main
           ALGOLIA_APP_ID: ${{ vars.ALGOLIA_APP_ID }}
           ALGOLIA_API_KEY: ${{ vars.ALGOLIA_API_KEY }}
           ALGOLIA_INDEX_NAME: ${{ vars.ALGOLIA_INDEX_NAME }}
         run: npm run docs:build
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5
-        with:
-          path: docs/.vitepress/dist
+      - name: Checkout existing gh-pages into worktree
+        run: |
+          git fetch origin gh-pages || true
+          if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
+            git worktree add gh-pages origin/gh-pages
+          else
+            mkdir gh-pages
+            (cd gh-pages && git init -b gh-pages)
+          fi
 
-  # Deployment job
-  deploy:
-    name: 🚀 Deploy
-    needs: build
+      - name: Sync new build into gh-pages root
+        run: |
+          # Remove only root-level files from the previous main build,
+          # leaving versioned subpaths (v*) and the .git directory intact.
+          find gh-pages -mindepth 1 -maxdepth 1 \
+            -not -name 'v*' \
+            -not -name '.git' \
+            -exec rm -rf {} +
+          cp -R docs/.vitepress/dist/. gh-pages/
+
+      - name: Regenerate versions.json
+        run: node .github/scripts/generate-versions-json.mjs gh-pages
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: gh-pages
+          publish_branch: gh-pages
+          keep_files: false
+          commit_message: "docs: deploy main @ ${{ github.sha }}"
+
+  build-pr:
+    name: 🏗️ Build (PR)
+    needs: lint
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    concurrency:
-      group: pages
-      cancel-in-progress: false
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
+
+      - name: Install dependencies
+        working-directory: docs
+        run: npm ci
+
+      - name: Build (no deploy)
+        working-directory: docs
+        env:
+          DOCS_VERSION: main
+        run: npm run docs:build
