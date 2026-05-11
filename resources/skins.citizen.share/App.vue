@@ -191,6 +191,7 @@ module.exports = exports = defineComponent( {
 
 		async function copyURL() {
 			const link = document.getElementById( 'citizen-share-link' );
+			let succeeded = false;
 
 			// try two different methods as navigator.clipboard is not available in all browsers
 			try {
@@ -199,11 +200,21 @@ module.exports = exports = defineComponent( {
 				}
 				// eslint-disable-next-line compat/compat
 				await navigator.clipboard.writeText( pageURL );
+				succeeded = true;
 			} catch ( e ) {
 				if ( link ) {
 					link.select();
-					document.execCommand( 'copy' );
+					try {
+						succeeded = document.execCommand( 'copy' );
+					} catch ( ignored ) {
+						// execCommand throws in some sandboxed contexts —
+						// leave succeeded=false so we don't lie to the user.
+					}
 				}
+			}
+
+			if ( !succeeded ) {
+				return;
 			}
 
 			copied.value = true;
