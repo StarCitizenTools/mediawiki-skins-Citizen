@@ -7,7 +7,6 @@ namespace MediaWiki\Skins\Citizen\Components;
 use Exception;
 use MediaWiki\Config\Config;
 use MediaWiki\Permissions\PermissionManager;
-use MediaWiki\Skins\Citizen\ShareMode;
 use MediaWiki\Title\Title;
 use MediaWiki\User\User;
 use MessageLocalizer;
@@ -92,8 +91,10 @@ class CitizenComponentPageTools implements CitizenComponent {
 			// at click time. 'native' skips it entirely; 'auto' and 'panel'
 			// both potentially mount Vue inside the dialog, so the dialog
 			// markup must be in the initial HTML.
-			'has-share-panel-markup' => ShareMode::rendersPanelMarkup(
-				ShareMode::resolve( $this->config->get( 'CitizenShareMode' ) )
+			'has-share-panel-markup' => in_array(
+				$this->config->get( 'CitizenShareMode' ),
+				[ 'auto', 'panel' ],
+				true
 			),
 			'msg-citizen-share' => $this->localizer->msg( "citizen-share" )->text()
 		];

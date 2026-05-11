@@ -12,7 +12,6 @@ use MediaWiki\ResourceLoader as RL;
 use MediaWiki\Skins\Citizen\OnWikiJsonReader;
 use MediaWiki\Skins\Citizen\PreferencesConfigProvider;
 use MediaWiki\Skins\Citizen\ShareConfigProvider;
-use MediaWiki\Skins\Citizen\ShareMode;
 
 /**
  * Hooks to run relating to the resource loader
@@ -33,7 +32,7 @@ class ResourceLoaderHooks {
 			'wgCitizenEnablePreferences' => $config->get( 'CitizenEnablePreferences' ),
 			'wgCitizenOverflowInheritedClasses' => $config->get( 'CitizenOverflowInheritedClasses' ),
 			'wgCitizenOverflowNowrapClasses' => $config->get( 'CitizenOverflowNowrapClasses' ),
-			'wgCitizenShareMode' => ShareMode::resolve( $config->get( 'CitizenShareMode' ) ),
+			'wgCitizenShareMode' => $config->get( 'CitizenShareMode' ),
 		];
 	}
 
