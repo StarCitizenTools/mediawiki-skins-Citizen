@@ -109,6 +109,5 @@
 	"citizen-command-palette-mode-smw-novalues-description": "נא לבדוק מה הערך או לנסות חיפוש רחב יותר",
 	"citizen-command-palette-mode-smw-novalues-title": "אין ערכים תואמים",
 	"citizen-command-palette-queryaction-fulltext-search-description": "חיפוש בטקסט המלא של כל הדפים",
-	"citizen-command-palette-queryaction-media-search-description": "חיפוש קובצי מדיה",
 	"citizen-command-palette-queryaction-page-edit-description": "יצירה או עריכה של דף"
 }

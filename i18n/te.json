@@ -18,5 +18,6 @@
 	"citizen-tagline-ns-template": "మూస పేజీ",
 	"citizen-tagline-ns-help": "సహాయం పేజీ",
 	"citizen-tagline-ns-category": "వర్గం పేజీ",
-	"citizen-command-palette-keyhint-close": "మూసివేయి"
+	"citizen-command-palette-keyhint-close": "మూసివేయి",
+	"citizen-command-palette-mode-history-placeholder": "ఎడిటరును బట్టి లేదా దిద్దుబాటు సారాంశాన్ని బట్టి వడపోయండి"
 }

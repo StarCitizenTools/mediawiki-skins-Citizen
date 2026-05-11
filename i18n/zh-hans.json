@@ -149,6 +149,5 @@
 	"citizen-command-palette-mode-user-noresults-title": "没有匹配的用户",
 	"citizen-command-palette-mode-user-placeholder": "搜索用户",
 	"citizen-command-palette-queryaction-fulltext-search-description": "在所有页面全文搜索",
-	"citizen-command-palette-queryaction-media-search-description": "搜索媒体文件",
 	"citizen-command-palette-queryaction-page-edit-description": "创建或编辑页面"
 }

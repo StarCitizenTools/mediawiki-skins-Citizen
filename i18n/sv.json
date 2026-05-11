@@ -87,6 +87,5 @@
 	"citizen-command-palette-command-ns-description": "Sök efter en sida i ett specifikt namnutrymme",
 	"citizen-command-palette-command-user-description": "Sök efter en användare",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Sök efter hela texten på alla sidor",
-	"citizen-command-palette-queryaction-media-search-description": "Sök efter mediefiler",
 	"citizen-command-palette-queryaction-page-edit-description": "Skapa och redigera sidor."
 }

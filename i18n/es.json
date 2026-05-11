@@ -88,6 +88,5 @@
 	"citizen-command-palette-command-action-description": "Realizar una acción específica",
 	"citizen-command-palette-command-user-description": "Buscar un usuario",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Busca el texto completo de todas las páginas",
-	"citizen-command-palette-queryaction-media-search-description": "Buscar archivos multimedia",
 	"citizen-command-palette-queryaction-page-edit-description": "Crea o edita una página"
 }

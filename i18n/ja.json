@@ -95,6 +95,5 @@
 	"citizen-command-palette-command-ns-description": "特定の名前空間内のページを検索する",
 	"citizen-command-palette-command-user-description": "利用者を検索する",
 	"citizen-command-palette-queryaction-fulltext-search-description": "すべてのページの全文を検索をする",
-	"citizen-command-palette-queryaction-media-search-description": "メディアファイルを検索する",
 	"citizen-command-palette-queryaction-page-edit-description": "ページを作成または編集する"
 }

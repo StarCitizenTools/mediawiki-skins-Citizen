@@ -88,6 +88,5 @@
 	"citizen-command-palette-command-ns-description": "Szukaj strony w określonej przestrzeni nazw",
 	"citizen-command-palette-command-user-description": "Szukaj użytkownika",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Szukaj tekstu w treści stron",
-	"citizen-command-palette-queryaction-media-search-description": "Szukaj mediów i plików",
 	"citizen-command-palette-queryaction-page-edit-description": "Stwórz lub edytuj stronę"
 }

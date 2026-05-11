@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Alistair3149",
+			"AnupamM",
 			"Brettchenweber",
 			"CayceP",
 			"CyberOne25",
@@ -77,6 +78,7 @@
 	"citizen-user-info-text-anon": "Ihre IP-Adresse wird öffentlich sichtbar sein, wenn Sie Änderungen vornehmen.",
 	"citizen-user-info-text-temp": "Dieses temporäre Konto wurde erstellt, nachdem eine Bearbeitung ohne Konto in diesem Browser und auf diesem Gerät vorgenommen wurde.",
 	"citizen-user-info-edits-label": "Bearbeitungen",
+	"citizen-command-palette-action-view": "Ansehen",
 	"citizen-command-palette-keyhint-enter-select": "Auswählen",
 	"citizen-command-palette-keyhint-enter-open": "Öffnen",
 	"citizen-command-palette-keyhint-enter-search": "Suchen",
@@ -85,13 +87,17 @@
 	"citizen-command-palette-keyhint-actions": "Aktionen",
 	"citizen-command-palette-type-page": "Seite",
 	"citizen-command-palette-type-action": "Aktion",
+	"citizen-command-palette-type-category": "Kategorie",
 	"citizen-command-palette-type-namespace": "Namensraum",
 	"citizen-command-palette-type-command": "Befehl",
 	"citizen-command-palette-type-special-page": "Spezialseite",
 	"citizen-command-palette-type-user": "Benutzer",
+	"citizen-command-palette-command-action-label": "Aktionen",
+	"citizen-command-palette-command-help-label": "Hilfe",
 	"citizen-command-palette-command-ns-description": "Suche nach einer Seite in einem spezifischen Namensraum",
 	"citizen-command-palette-command-user-description": "Nach einem Benutzer suchen",
+	"citizen-command-palette-command-user-label": "Benutzer",
+	"citizen-command-palette-help-section-description": "Beschreibung",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Durchsuche den Volltext aller Seiten",
-	"citizen-command-palette-queryaction-media-search-description": "Suche nach Mediendateien",
 	"citizen-command-palette-queryaction-page-edit-description": "Erstelle oder bearbeite Seite"
 }

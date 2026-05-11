@@ -122,6 +122,5 @@
 	"citizen-command-palette-mode-user-noresults-title": "कोई मेल खाने वाला सदस्य नहीं मिला",
 	"citizen-command-palette-mode-user-placeholder": "सदस्य खोजें",
 	"citizen-command-palette-queryaction-fulltext-search-description": "सभी पृष्ठों का पूरा टेक्स्ट खोजें",
-	"citizen-command-palette-queryaction-media-search-description": "मीडिया फ़ाइलें खोजें",
 	"citizen-command-palette-queryaction-page-edit-description": "पृष्ठ बनाएँ या सम्पादित करें"
 }

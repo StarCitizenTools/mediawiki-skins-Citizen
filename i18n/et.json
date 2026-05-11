@@ -95,6 +95,5 @@
 	"citizen-command-palette-mode-user-empty-title": "Otsi kasutajaid",
 	"citizen-command-palette-mode-user-placeholder": "Otsi kasutajaid",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Täistekstiotsing kõigil lehekülgedel",
-	"citizen-command-palette-queryaction-media-search-description": "Failide otsimine",
 	"citizen-command-palette-queryaction-page-edit-description": "Loo lehekülg või muuda seda"
 }

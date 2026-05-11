@@ -85,6 +85,5 @@
 	"citizen-command-palette-command-ns-description": "Пребарување на страница во даден именски простор",
 	"citizen-command-palette-command-user-description": "Пребарување на корисник",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Пребарување по целиот текст на сите страници",
-	"citizen-command-palette-queryaction-media-search-description": "Пребарување на медиумски податотеки",
 	"citizen-command-palette-queryaction-page-edit-description": "Создавање или уредување на страница"
 }

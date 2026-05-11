@@ -129,6 +129,5 @@
 	"citizen-command-palette-mode-user-noresults-title": "Ni ustreznih uporabnikov",
 	"citizen-command-palette-mode-user-placeholder": "Poiščite uporabnike",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Preiščite celotno besedilo vseh strani",
-	"citizen-command-palette-queryaction-media-search-description": "Poiščite predstavnostne datoteke",
 	"citizen-command-palette-queryaction-page-edit-description": "Ustvarite ali uredite stran"
 }

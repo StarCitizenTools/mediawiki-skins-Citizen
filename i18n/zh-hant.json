@@ -95,6 +95,5 @@
 	"citizen-command-palette-command-ns-description": "在特定命名空間中搜尋頁面",
 	"citizen-command-palette-command-user-description": "搜尋使用者",
 	"citizen-command-palette-queryaction-fulltext-search-description": "搜尋所有頁面的全文",
-	"citizen-command-palette-queryaction-media-search-description": "搜尋媒體檔案",
 	"citizen-command-palette-queryaction-page-edit-description": "建立或編輯頁面"
 }

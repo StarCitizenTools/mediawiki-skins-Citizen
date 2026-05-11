@@ -114,6 +114,5 @@
 	"citizen-command-palette-mode-smw-malformed-description": "Terminez votre condition par ]] pour exécuter la requête.",
 	"citizen-command-palette-mode-smw-malformed-title": "Condition incomplète",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Rechercher le texte intégral de toutes les pages",
-	"citizen-command-palette-queryaction-media-search-description": "Rechercher des fichiers multimédias",
 	"citizen-command-palette-queryaction-page-edit-description": "Créer ou modifier une page"
 }

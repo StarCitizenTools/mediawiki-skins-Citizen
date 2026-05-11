@@ -133,6 +133,5 @@
 	"citizen-command-palette-mode-user-noresults-title": "Không tìm thấy người dùng",
 	"citizen-command-palette-mode-user-placeholder": "Tìm người dùng",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Tìm kiếm toàn văn của tất cả các trang",
-	"citizen-command-palette-queryaction-media-search-description": "Tìm kiếm tập tin phương tiện",
 	"citizen-command-palette-queryaction-page-edit-description": "Tạo và sửa trang"
 }
