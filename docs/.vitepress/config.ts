@@ -32,6 +32,7 @@ export default defineConfig({
 	themeConfig: {
 		docsVersion: process.env.DOCS_VERSION ?? "main",
 		logo: "/img/layout.svg",
+		outline: [2, 3],
 		nav: [
 			{
 				text: "Guide",
