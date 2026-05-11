@@ -352,7 +352,6 @@
 			"dependencies": [
 				"skins.citizen.share.codex",
 				"mediawiki.util",
-				"skins.citizen.icons",
 				"vue"
 			]
 		},
