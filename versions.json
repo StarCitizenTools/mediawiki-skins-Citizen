@@ -1,4 +1,11 @@
 {
   "main": "/",
-  "versions": []
+  "versions": [
+    {
+      "id": "v3.13",
+      "label": "v3.13",
+      "path": "/v3.13/"
+    }
+  ],
+  "stable": "v3.13"
 }
