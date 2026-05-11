@@ -5,6 +5,7 @@ import { enhanceAppWithTabs } from "vitepress-plugin-tabs/client";
 import CopyCode from "./components/CopyCode.vue";
 import LinkGrid from "./components/LinkGrid.vue";
 import LinkCard from "./components/LinkCard.vue";
+import VersionSwitcher from "./components/VersionSwitcher.vue";
 import "./styles.less";
 
 export default {
@@ -14,5 +15,6 @@ export default {
 		app.component("CopyCode", CopyCode);
 		app.component("LinkGrid", LinkGrid);
 		app.component("LinkCard", LinkCard);
+		app.component("VersionSwitcher", VersionSwitcher);
 	},
 } satisfies Theme;

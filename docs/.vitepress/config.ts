@@ -1,5 +1,4 @@
 import { defineConfig } from "vitepress";
-import pkg from "../../package.json";
 import { groupIconMdPlugin, groupIconVitePlugin } from "vitepress-plugin-group-icons";
 import { tabsMarkdownPlugin } from "vitepress-plugin-tabs";
 
@@ -14,6 +13,7 @@ export default defineConfig({
 		hostname: "https://starcitizentools.github.io/mediawiki-skins-Citizen/",
 	},
 	themeConfig: {
+		docsVersion: process.env.DOCS_VERSION ?? "main",
 		logo: "/img/layout.svg",
 		nav: [
 			{
@@ -21,7 +21,7 @@ export default defineConfig({
 				link: "/guide/introduction",
 			},
 			{
-				text: pkg.version,
+				text: "Resources",
 				items: [
 					{
 						text: "Releases",
@@ -34,6 +34,9 @@ export default defineConfig({
 						activeMatch: "/changelogs/",
 					},
 				],
+			},
+			{
+				component: "VersionSwitcher",
 			},
 		],
 
