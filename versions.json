@@ -2,10 +2,15 @@
   "main": "/",
   "versions": [
     {
+      "id": "v3.15",
+      "label": "v3.15",
+      "path": "/v3.15/"
+    },
+    {
       "id": "v3.13",
       "label": "v3.13",
       "path": "/v3.13/"
     }
   ],
-  "stable": "v3.13"
+  "stable": "v3.15"
 }
