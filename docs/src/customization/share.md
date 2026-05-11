@@ -71,6 +71,7 @@ Icons are [Simple Icons](https://simpleicons.org/) (CC0).
 | `color` | string | Background color of the tile. Match the service's brand color when possible. |
 | `open_in_modal` | boolean | Open in a small popup window instead of a new tab. Useful for services that show a share dialog, like X. |
 | `icon` | string | The icon shown on the tile. See [Icons](#icons) below. |
+| `file` | string | Alternative to `icon`: the filename of an SVG uploaded to your wiki. See [Icons](#icons) below. |
 
 ### Icons
 
