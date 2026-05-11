@@ -7,7 +7,10 @@
 	width: min( 32rem, calc( 100vw - 2 * var( --space-md ) ) );
 	max-height: calc( 100vh - 2 * var( --space-md ) );
 	padding: 0;
-	overflow: hidden;
+	// Horizontal hidden keeps the rounded corners clean; vertical auto
+	// lets the dialog scroll when the configured services overflow the
+	// viewport-bounded max-height.
+	overflow: hidden auto;
 	background-color: var( --background-color-base );
 	border: var( --border-base );
 	border-radius: var( --border-radius-medium );
