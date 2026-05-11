@@ -18,10 +18,10 @@ A beautiful, usable, and responsive MediaWiki skin
 
 ### Features
 
-- [Command palette](/mediawiki-skins-Citizen/features/command-palette.md): Citizen's search feature and command palette
-- [Performance mode](/mediawiki-skins-Citizen/features/performance-mode.md): How Citizen adapts to low-end hardware and how to hook into it in custom styles
-- [Preferences](/mediawiki-skins-Citizen/features/preferences.md): How to customize the Citizen preferences panel
-- [Share](/mediawiki-skins-Citizen/features/share.md): How to configure Citizen's share panel and service tiles
+- [Command palette](/mediawiki-skins-Citizen/features/command-palette.md): A keyboard-driven palette for jumping to pages, running actions, and searching the wiki.
+- [Performance mode](/mediawiki-skins-Citizen/features/performance-mode.md): A lightweight mode that strips animations and visual effects for fast page loads.
+- [Preferences](/mediawiki-skins-Citizen/features/preferences.md): A panel for personalizing the skin, extensible with on-wiki JSON or JavaScript.
+- [Share](/mediawiki-skins-Citizen/features/share.md): Share the current page via the browser's native share sheet or a configurable grid of services.
 
 ### Customization
 

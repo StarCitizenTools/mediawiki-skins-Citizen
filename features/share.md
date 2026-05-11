@@ -1,36 +1,68 @@
 ---
 url: /mediawiki-skins-Citizen/features/share.md
-description: How to configure Citizen's share panel and service tiles
+description: >-
+  Share the current page via the browser's native share sheet or a configurable
+  grid of services.
 ---
 
 # Share
 
-Citizen has three share modes, set via `$wgCitizenShareMode` in `LocalSettings.php`:
+The share panel lets readers send the current page to other people — through their device's native share sheet, a configurable grid of services on the wiki, or as a short URL or QR code.
 
-* **`'auto'`** *(default)* — uses the browser's Web Share API when available (mobile devices, desktop Safari, Chrome, Edge). Falls back to Citizen's in-page panel on browsers without it (e.g. desktop Firefox). Best of both worlds for most wikis.
-* **`'panel'`** — always opens Citizen's in-page panel. Use this when you want consistent branding across all browsers, or when your curated share targets are central to your wiki's identity.
-* **`'native'`** — always uses the Web Share API. Falls back to a clipboard copy with a toast notification on browsers without it. Use this when you want to defer entirely to the OS share experience.
+## How it works
 
-## What users see
+Citizen offers three share modes:
 
-When the panel opens, it always shows a copy-link field, so sharing always works even if you haven't set up any services. The grid of service tiles below it only appears when you've configured services on your wiki.
+* **Native** — surfaces the device's OS-level share sheet (apps, contacts, AirDrop, etc.). Available on mobile devices and desktop Safari, Chrome, and Edge; on browsers without Web Share API support it falls back to a clipboard copy with a toast notification.
+* **Panel** — opens Citizen's in-page panel. Always includes a copy-link field, and if you've configured services on your wiki, a grid of branded service tiles below it. Optionally adds short URL and QR code buttons when [Extension:UrlShortener](https://www.mediawiki.org/wiki/Extension:UrlShortener) is installed.
+* **Auto** *(default)* — uses Native when the browser supports it, falls back to Panel otherwise.
+
+Wiki admins choose which mode is active — see [Configuration](#configuration) below.
 
 Citizen doesn't ship with a built-in service list. The right services depend on your audience — a German federated wiki may want Diaspora; a corporate intranet may want none at all. You pick.
 
-## Short URLs and QR codes
+::: tip Which URL gets shared
+Native mode reads `<link rel="canonical">` and shares the canonical URL. The in-page panel — both the copy-link field and the service tiles — shares the current page URL without the hash. If you rely on canonical URLs for analytics or social previews, prefer Native mode.
+:::
+
+### Short URLs and QR codes
 
 When [Extension:UrlShortener](https://www.mediawiki.org/wiki/Extension:UrlShortener) is installed, the share panel adds two buttons below the copy-link field:
 
-* **Copy short URL** — copies a shortened URL to the clipboard in one click. The result is reused for the rest of the session, so clicking again or reopening the panel is instant.
+* **Copy short URL** — copies a shortened URL to the clipboard in one click, with a brief success state on the button. The result is cached for the lifetime of the dialog, so clicking again or reopening the panel is instant.
 * **Show QR code** — opens a focused QR view inside the same panel, with the short URL printed below as a fallback for anything that can't scan. Only appears when `$wgUrlShortenerEnableQrCode` is enabled.
+
+If the UrlShortener API call fails, both buttons disappear together and the panel falls back to its copy-link-and-services layout.
 
 The copy-link field and the share tiles always use the full page URL — short URLs are reserved for the dedicated button and the QR view. If UrlShortener isn't installed, neither button appears and the rest of the panel works the same.
 
-## Adding share services
+## Configuration
+
+Share is enabled by default. To turn it off entirely, set `$wgCitizenEnableShare = false;` in `LocalSettings.php`.
+
+When enabled, pick how share behaves with `$wgCitizenShareMode`:
+
+```php
+$wgCitizenShareMode = 'auto'; // 'auto' | 'panel' | 'native'
+```
+
+| Value | When to use |
+| :--- | :--- |
+| `'auto'` *(default)* | Best of both worlds — most wikis should keep the default. |
+| `'panel'` | When you want consistent branding across all browsers, or when your curated share targets are central to your wiki's identity. |
+| `'native'` | When you want to defer entirely to the OS share experience. |
+
+## Extending the share panel
+
+### On-wiki JSON
 
 Create the page `MediaWiki:Citizen-share-services.json` on your wiki and paste a JSON array of service entries. Save the page, and the new services appear the next time anyone opens the panel.
 
-### Starter pack
+::: warning Allowed URL protocols
+Citizen drops any service whose `url` uses a protocol not in MediaWiki's `$wgUrlProtocols` list (`http://`, `https://`, `mailto:` and a handful of others by default). If a service silently disappears after you add it, check the protocol first.
+:::
+
+#### Starter pack
 
 Here's a Facebook / X / Mastodon / Bluesky setup you can copy in as-is. Icons are embedded directly, so nothing extra needs to be uploaded:
 
@@ -70,19 +102,19 @@ Here's a Facebook / X / Mastodon / Bluesky setup you can copy in as-is. Icons ar
 
 Icons are [Simple Icons](https://simpleicons.org/) (CC0).
 
-### Service fields
+#### Service fields
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
-| `name` | string | Internal identifier. Used as the tile's CSS id (`citizen-share-service-<name>`) so you can target it with custom CSS on your wiki. |
+| `name` | string | Internal identifier. Used as the tile's CSS id (`citizen-share-service-<name>`) so you can target it with custom CSS on your wiki. Characters outside `[a-zA-Z0-9_-]` are stripped from the id. |
 | `label` | string | The name your users see — read by screen readers and shown on hover. |
 | `url` | string | The link opened when the tile is clicked. Use `{{url}}` and `{{title}}` placeholders for the current page's URL and title. |
 | `color` | string | Background color of the tile. Match the service's brand color when possible. |
-| `open_in_modal` | boolean | Open in a small popup window instead of a new tab. Useful for services that show a share dialog, like X. |
+| `open_in_modal` | boolean | Open in a small popup window instead of a new tab. Useful for services that show a share dialog, like X. `mailto:` links always open in the same tab and ignore this flag. |
 | `icon` | string | The icon shown on the tile. See [Icons](#icons) below. |
 | `file` | string | Alternative to `icon`: the filename of an SVG uploaded to your wiki. See [Icons](#icons) below. |
 
-### Icons
+#### Icons
 
 The icon is shown in white on the brand color, so single-color glyphs work best. Three ways to provide one:
 

@@ -491,19 +491,21 @@ Citizen provides custom styles for many popular extensions via [skinStyles](http
 
 ---
 url: /mediawiki-skins-Citizen/features/command-palette.md
-description: Citizen's search feature and command palette
+description: >-
+  A keyboard-driven palette for jumping to pages, running actions, and searching
+  the wiki.
 ---
 
 # Command palette
 
-The command palette lets you search for articles quickly and efficiently. Press `/` to see all available entries, or type to start searching right away.
+The command palette is a keyboard-driven launcher for the wiki. Press `/` to see all available entries, or just start typing to search.
 
-## Modes and commands
+## How it works
 
-The palette supports two kinds of entries:
+The palette has two kinds of entries:
 
-* **Modes** switch the palette into a different search context. When you enter a mode, the header updates with the mode's icon and placeholder, and a back button appears. Type a query to search within that mode.
-* **Commands** execute an action immediately when selected — no additional input needed.
+* **Modes** change the palette's search context. The header shows the mode's icon and placeholder, and a back button appears. Type to search within the mode.
+* **Commands** run their action when you pick them. No input needed.
 
 ### Built-in entries
 
@@ -519,11 +521,13 @@ The palette supports two kinds of entries:
 | `/smw:` | - | Mode | Query pages with Semantic MediaWiki Ask syntax. Only available when SMW is installed. |
 | `/help` | `?` | Command | Open the help overlay to browse every available mode. |
 
-Single-character aliases like `@`, `>`, `:`, `#`, `!`, `~`, and `?` can be typed directly to enter the mode or trigger the command instantly, without needing the `/` prefix.
+You can type the single-character aliases (`@`, `>`, `:`, `#`, `!`, `~`, `?`) directly — no `/` prefix needed.
 
 ### Help overlay
 
-Press `?` at an empty input to open the help overlay. The footer surfaces the same `?` shortcut as a contextual hint whenever pressing it would do something. While help is open, the header swaps to a help indicator with a back button, and Esc closes help before any other action. Help is a transient layer: opening it preserves your active mode, query, and any drilled-in mode context, so you can peek and bounce back to where you were.
+Press `?` at an empty input to open the help overlay. The footer shows the `?` shortcut as a hint whenever it's available. While help is open, the header swaps to a help indicator with a back button, and Esc closes help before any other action.
+
+Help is an overlay — opening it preserves your active mode, query, and any drill-down position, so you can peek and return to where you were.
 
 What you see depends on where you are:
 
@@ -547,11 +551,11 @@ Some modes turn parts of your query into tags. For example, typing `Talk:` in de
 
 To change a tag, press Backspace on an empty input. The first press highlights the last tag (footer hint: **Select tag**). A second press turns it back into editable text (footer hint: **Edit tag**), so you can fix a typo without retyping the whole thing. Keep pressing to delete the text character by character.
 
-## Built-in modes
+### Built-in modes
 
 Most built-in modes (namespace, action, user) work as straightforward search — type a query, get results. The modes below have additional behavior worth knowing about.
 
-### Categories
+#### Categories
 
 The category mode helps you find a category and see what's inside it. Open it with `/cat:` or `#`.
 
@@ -561,32 +565,32 @@ The category mode helps you find a category and see what's inside it. Open it wi
 * **Backspace on an empty input** backs out one level. At the top, Backspace closes the mode.
 * **Each result has action buttons** on the right — focus them with →. Categories offer **View** (the actual `Category:` page) and **Edit**; pages offer **Edit**.
 
-### Revision history
+#### Revision history
 
-The history mode lists recent edits to the current page so you can scan who changed what and jump to a revision. Open it with `/hist:` or `!`.
+The history mode lists recent edits to the current page so you can scan who changed what and jump to a diff. Open it with `/hist:` or `!`.
 
 * **An empty input** shows the last 50 revisions, newest first.
 * **Type to filter** by editor name or any text in the edit summary — either field can match.
-* **Press ↵** on a revision to view the page as it existed at that point.
+* **Press ↵** on a revision to open the diff against the previous revision. The page's first edit has no previous revision, so it opens that revision directly.
 * **Open a wiki page first.** On a special page (or anywhere without a real article), the mode shows an empty state.
 
 ::: tip Pair with the Instant Diffs gadget
 If users have the [Instant Diffs](https://www.mediawiki.org/wiki/Instant_Diffs) gadget enabled, activating a revision opens the gadget's preview dialog above the still-mounted palette, so they can dismiss it and pick another revision without losing their place. See [Extensions and gadgets](../config/extensions.md#gadget-enhancements) for details.
 :::
 
-### Files and media
+#### Files and media
 
 The file mode finds images, PDFs, audio, video, and other files on the wiki and renders them as a gallery of thumbnails. Open it with `/file:` or `~`.
 
 * **An empty input on a content page** shows the files used on the current page — a quick way to grab the filename of an image you're looking at without leaving the article. Off-article (or on pages with no file usage) the mode shows its idle empty state.
 * **Type a query** to search the wiki's media library. Results appear as tiles with a thumbnail (or a fallback icon for non-visual files like audio or archives).
 * **Arrow keys move 2D**: ←/→ step within a row, ↑/↓ jump between rows.
-* **The detail panel** on the right shows the highlighted file's type, dimensions, byte size, uploader, upload age, and license short-name (when available). A copy-to-clipboard button next to the filename — or ⌘C / Ctrl+C — copies the filename for use in wikitext.
+* **The detail panel** on the right shows the file's type, size (dimensions and byte count), upload info (timestamp and uploader), and the license short-name when available. A copy-to-clipboard button next to the filename — or ⌘C / Ctrl+C — copies the filename for use in wikitext.
 * **Press ↵** to open the file's `File:` description page.
 
 The mode matches file titles by prefix first, so typing the start of a filename works on every wiki regardless of search backend. If nothing matches by prefix, it falls back to a full-text search — which surfaces deeper hits when [CirrusSearch](https://www.mediawiki.org/wiki/Extension:CirrusSearch) is installed.
 
-### Semantic MediaWiki
+#### Semantic MediaWiki
 
 When [Semantic MediaWiki](https://www.semantic-mediawiki.org/) is installed, the `/smw:` mode lets you run Ask queries interactively. Type conditions like `[[Category:City]]` or `[[Located in::Germany]]` — each completed `[[...]]` condition becomes a token chip, and matching pages appear as results.
 
@@ -633,16 +637,19 @@ Every entry must have at minimum an `id`, `triggers`, and `description`. If the 
 | `id` | `string` | Yes | Unique identifier. |
 | `triggers` | `string[]` | Yes | Prefixes that activate this entry. Triggers ending with `:` accept a sub-query. |
 | `description` | `string` | Yes | Short explanation shown in the command list. |
-| `placeholder` | `string` | No | Input placeholder when mode is active (e.g., "Search users"). Modes only. |
-| `icon` | `Object` | No | Codex icon for the header when mode is active. Modes only. |
-| `compactResults` | `boolean` | No | Render results in a denser layout — a small icon instead of a thumbnail and the description inline beside the label. Use this for command-style modes whose items don't have real thumbnail images. Modes only. |
+| `label` | `string` | No | Display label shown for the entry in command lists. Falls back to a humanised form of `id` when omitted. |
+| `placeholder` | `string` | No | Input placeholder when the mode is active (e.g., "Search users"). Modes only. |
+| `icon` | `Object` | No | Codex icon for the header when the mode is active. Modes only. |
+| `compactResults` | `boolean` | No | Render results in a denser layout — a small icon instead of a thumbnail and the description inline beside the label. Use this for command-style modes whose items don't have real thumbnail images. Ignored in gallery layout. Modes only. |
 | `layout` | `'list' \| 'gallery'` | No | Result layout. `'list'` (default) renders a vertical list. `'gallery'` renders a tiled grid for thumbnail-driven content like media browsers, and widens the palette to fit. Modes only. |
 | `getResults` | `function` | No | `(subQuery, signal?, tokens?, modeContext?) => Promise<Array>` — if provided, this entry is a mode. The optional fourth argument is the current [mode context](#mode-context) stack. |
+| `getItemDetail` | `function` | No | `(item, signal?) => Promise<Object>` — lazy detail-pane data for the highlighted item. Use this when the detail is too heavy to compute for every item upfront (the file mode uses it for image metadata and licensing). Modes only. |
 | `onResultSelect` | `function` | No | `(item) => { action, payload }` — handles selection of a result item. |
 | `headerLabel` | `function` | No | `(modeContext) => string \| null` — replaces the input placeholder with a custom label. Return `null` to fall back to the regular placeholder — useful for showing a breadcrumb only when the mode is drilled in. Typically used with [mode context](#mode-context). Modes only. |
 | `emptyState` | `Object` | No | `{ title, description, icon }` — content shown when the mode is active with no query. Falls back to default search messaging. Modes only. |
 | `noResults` | `function` | No | `(query, tokens?) => { title, description, icon }` — returns content shown when a query produces no results. Falls back to default no-results messaging. Modes only. |
-| `tokenPattern` | `Object` | No | Token detection pattern for auto-tokenization. See [token patterns](#token-patterns). Modes only. |
+| `tokenPattern` | `Object \| Object[]` | No | Token detection pattern (or array of patterns) for auto-tokenization. See [token patterns](#token-patterns). Modes only. |
+| `keybindings` | `KeyBinding[]` | No | Mode-contributed keyboard bindings, active while the mode is active. See [keybindings](#keybindings). Modes only. |
 | `help` | `Object` | No | Content surfaced by the help overlay when this entry is active. See [help content](#help-content). |
 
 ### Action results
@@ -655,6 +662,7 @@ Every entry must have at minimum an `id`, `triggers`, and `description`. If the 
 | `{ action: 'navigate', payload: url }` | URL string | Close the palette and navigate to the URL. |
 | `{ action: 'exitWithQuery', payload: query }` | Query string | Exit the current mode and set the query string. |
 | `{ action: 'updateQuery', payload: query }` | Query string | Update the query within the current mode without exiting. |
+| `{ action: 'addToken', payload: token }` | Token object | Append a token chip to the input and clear the free text. Use this when picking a result should add a structured condition to the query — like the SMW mode appending `[[Property::]]` after you pick a property. |
 | `{ action: 'pushModeContext', payload: any }` | Any | Step the active mode into a new level. Appends to the [mode context](#mode-context) stack and clears the input. |
 | `{ action: 'toggleHelp' }` | - | Toggle the help overlay. |
 
@@ -668,8 +676,12 @@ Modes can declare a `tokenPattern` to enable auto-tokenization — when the user
 | `position` | `'prefix' \| 'any'` | Where tokens can appear — `prefix` means only at the start, `any` means anywhere in the input. |
 | `activeIn` | `string` | Which mode context this pattern is active in (`'root'` for default search, or a mode id like `'smw'`). |
 | `match` | `function` | `(text) => { label, raw } \| null` — tests whether the text starts with a tokenizable pattern. Returns `label` (display text) and `raw` (the original text) on match, or `null`. |
+| `eagerMatch` | `function` | Optional lenient matcher used after the standard `match` pass has produced at least one token (useful for paste handling). Allows end-of-string as a valid terminator. Same signature as `match`. |
+| `variant` | `string` | Optional visual variant for the chip — e.g. `'outlined'` for chips that should look different from the default solid style. |
 
 Tokens are passed to `getResults` and `noResults` so modes can incorporate them into queries. For example, the SMW mode reconstructs the full Ask query from its token chips plus any free text.
+
+Modes that need multiple tokenization rules — like SMW, which tokenizes both `[[…]]` conditions and printout selectors — can declare `tokenPattern` as an array of pattern objects instead of a single one.
 
 ### Help content
 
@@ -695,7 +707,7 @@ Some modes need to step *into* a result rather than navigate away from it — th
 
 It's opt-in. Modes that don't need it can ignore it entirely.
 
-* The stack is empty when a mode is entered, and is cleared when the mode exits or the palette closes.
+* The stack is empty when a mode is entered, and is cleared when the mode exits.
 * `{ action: 'pushModeContext', payload }` appends the payload and clears the input, so the user starts fresh at the new level.
 * `getResults` gets the current stack as its fourth argument and decides what to show per level.
 * `headerLabel( modeContext )` renders a breadcrumb in the header so the user can always tell where they are. Returning `null` falls back to the regular placeholder, so the breadcrumb only shows when there's actually a path to display.
@@ -732,6 +744,49 @@ const myDrillMode = {
     }
 };
 ```
+
+### Keybindings
+
+Modes can contribute their own keyboard bindings via the `keybindings` array. Each binding declares when it fires, what it does, and (optionally) what hint to show in the palette footer.
+
+```js
+keybindings: [
+    {
+        id: 'mydrill.refresh',
+        zone: 'input',
+        keys: [ 'r' ],
+        when: ( state ) => state.modifierKey,
+        handle: ( state, event ) => {
+            event.preventDefault();
+            refreshResults();
+        },
+        hint: {
+            msgKey: 'my-extension-mode-refresh-hint',
+            kbd: '⌘R'
+        }
+    }
+]
+```
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `id` | `string` | Unique binding identifier (used for debugging). |
+| `zone` | `'input' \| 'action'` | Which focus zone the binding applies to. |
+| `keys` | `string[]` | Event `key` values that fire `handle`. An empty array marks the binding as hint-only. |
+| `when` | `function` | `(state) => boolean` — predicate over the dispatch state. False suppresses both the handler and the hint. |
+| `handle` | `function` | `(state, event) => void` — called when a `keys` entry matches and `when` passes. Call `event.preventDefault()` to claim the keystroke. |
+| `worksDuringHelp` | `boolean` | When true, the binding fires even with the help overlay open. Defaults to false. |
+| `hint` | `Object \| null` | Footer hint to surface, or `null` to omit one. |
+
+Hint shape:
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `msgKey` | `string` | i18n message key for the hint label. |
+| `kbd` | `string` | Keyboard glyph shown next to the label (e.g. `↵`, `↑↓`, `⌘C`). |
+| `order` | `number` | Sort order within the footer (lower = leftmost). |
+
+Mode keybindings are prepended to the core bindings while the mode is active, so a mode binding wins on key collisions within its own focus zone. Footer hints derive from the same list, so a hint is visible iff its handler will fire — no risk of stale hints.
 
 ### Example: simple command
 
@@ -820,7 +875,7 @@ mw.hook( 'citizen.commandPalette.register' ).add( function ( data ) {
 
 :::
 
-## Migration from previous API
+### Migration from previous API
 
 ::: warning Breaking change
 If you have custom commands registered with the previous API, you'll need to update them:
@@ -855,31 +910,32 @@ mw.hook( 'citizen.commandPalette.register' ).add( function ( data ) {
 ---
 url: /mediawiki-skins-Citizen/features/performance-mode.md
 description: >-
-  How Citizen adapts to low-end hardware and how to hook into it in custom
-  styles
+  A lightweight mode that strips animations and visual effects for fast page
+  loads.
 ---
 
 # Performance mode
 
 Performance mode dials back animations and visual effects so the skin feels fast on any device.
 
-## What it does
+## How it works
 
-When performance mode is on, Citizen:
+With performance mode on, Citizen:
 
-* Turns off CSS animations and transitions
-* Drops frosted glass backdrop effects
-* Replaces the blurred mobile header with a solid background
+* Turns off transitions and animations across the whole skin (every element, not just ones using Citizen's transition tokens)
+* Disables smooth scrolling
+* Drops frosted-glass backdrop effects
+* Skips the frosted overlay on the mobile header, leaving the default solid background
 
 ::: tip Relationship with `prefers-reduced-motion`
 MediaWiki core handles the OS-level `prefers-reduced-motion` media query on its own. Performance mode is a skin-level toggle that goes further — it also strips out frosted glass and other visual flourishes that reduced motion doesn't cover.
 :::
 
-## Automatic detection
+Performance mode is on by default. On the first page load, Citizen probes the browser for WebGL support — if the device can render WebGL, performance mode turns off; otherwise it stays on. The result is saved in the browser, so the check only runs once. Users can flip the toggle in their preferences at any time.
 
-Performance mode starts **on by default**. On the first page load, Citizen checks for WebGL support and quietly turns it off if the device has GPU acceleration. Without a GPU, it stays on. The result is saved in the browser, so the check only runs once. Users can always flip it in their preferences.
+## Extending performance mode
 
-## Admin controls
+### On-wiki JSON
 
 You can hide the performance mode toggle or lock it to a specific value through [preference overrides](./preferences#removing-a-built-in-preference). To remove it from the preferences panel entirely:
 
@@ -893,7 +949,7 @@ You can hide the performance mode toggle or lock it to a specific value through 
 
 Place this on `MediaWiki:Citizen-preferences.json`.
 
-## Hooking into performance mode
+### Custom styles
 
 Citizen sets a class on the root element that you can target in your own styles:
 
@@ -916,9 +972,9 @@ Use these to gate heavy effects, swap in lighter alternatives, or simplify layou
 }
 ```
 
-### Animation readiness
+#### Animation readiness
 
-Citizen also prevents transitions from firing during initial page load. The `.citizen-animations-ready` class is added to the root element once the skin's JavaScript has loaded — transition tokens like `--transition-hover` and `--transition-menu` are only defined under this class.
+Citizen also prevents transitions from firing during initial page load. The `.citizen-animations-ready` class is added to the root element after the skin finishes its deferred startup tasks (scheduled via `requestIdleCallback`) — transition tokens like `--transition-duration-base`, `--transition-hover`, and `--transition-menu` are only defined under this class.
 
 Gate your own transitions the same way to avoid jank on first paint:
 
@@ -928,7 +984,7 @@ Gate your own transitions the same way to avoid jank on first paint:
 }
 ```
 
-### Affected custom properties
+#### Affected custom properties
 
 Performance mode overrides these custom properties, so anything that references them adapts without extra work:
 
@@ -937,28 +993,41 @@ Performance mode overrides these custom properties, so anything that references 
 | `--backdrop-filter-frosted-glass` | `blur(…)` | `none` |
 | `--opacity-glass` | `<0–1>` | `1` |
 
+On top of that, performance mode applies `transition-duration: 0ms !important` and `animation-duration: 0.01ms !important` to every element via the universal selector, so transitions and animations are flattened even when your styles don't reference Citizen's tokens.
+
 ---
 
 ---
 url: /mediawiki-skins-Citizen/features/preferences.md
-description: How to customize the Citizen preferences panel
+description: >-
+  A panel for personalizing the skin, extensible with on-wiki JSON or
+  JavaScript.
 ---
 
 # Preferences
 
-Citizen's preferences panel is extensible. You can add, modify, or remove preferences through two paths — and both use the same configuration schema.
+Citizen's preferences panel lets readers personalize the skin — theme, font size, page width, and any toggles your wiki adds. You extend the panel through two paths, both using the same configuration schema.
 
 ## How it works
 
-Citizen ships with a set of built-in preferences (theme, font size, page width, pure black, auto-hide navigation, performance mode). Admins can override any of these, or add entirely new ones, by placing a JSON configuration on `MediaWiki:Citizen-preferences.json`. Gadgets and user scripts can do the same thing via the [JavaScript API](#javascript-api).
+Citizen ships with two built-in sections:
 
-Changes take effect when users next open the preferences panel — the panel is lazy-loaded, so there's no need to purge caches.
+| Section | Preferences |
+| :--- | :--- |
+| `appearance` | Theme, font size, page width, pure black, image dimming |
+| `behavior` | Auto-hide navigation, performance mode |
 
-## Configuration schema
+The panel is lazy-loaded, so it doesn't ship in the initial page bundle. Changes to preference configuration — through on-wiki JSON or the JavaScript API — take effect the next time a user opens the panel, with no cache purge required.
+
+## Extending preferences
+
+Admins can override any built-in preference, or add entirely new ones, through `MediaWiki:Citizen-preferences.json`. Gadgets and user scripts can do the same thing via the JavaScript API. Both paths share the same configuration schema.
+
+### Configuration schema
 
 Whether you're writing JSON on-wiki or passing a config object to the JavaScript API, the shape is the same. There are two top-level keys: `sections` and `preferences`.
 
-### Sections
+#### Sections
 
 Sections group related preferences together. Each section needs either an i18n message key or a literal label.
 
@@ -986,7 +1055,7 @@ Using a literal label:
 }
 ```
 
-### Preference entries
+#### Preference entries
 
 Each preference is keyed by its feature name.
 
@@ -1004,51 +1073,43 @@ Each preference is keyed by its feature name.
 }
 ```
 
-#### Field reference
+**Field reference:**
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
 | `section` | string | Which section this preference belongs to. |
-| `type` | string | `"switch"`, `"select"`, or `"radio"`. Auto-detected if omitted (2 options = switch, 3+ = select). |
-| `options` | array | Short form `["0", "1"]` or long form `[{"value": "0", "labelMsg": "..."}]`. |
+| `type` | string | `"switch"`, `"select"`, or `"radio"`. Switch and select are auto-detected from the option count (2 options = switch, 3+ = select); `"radio"` must be set explicitly. |
+| `options` | array | Short form `["0", "1"]` or long form `[{"value": "0", "labelMsg": "..."}]`. Long-form options also accept `"label"` for literal text instead of an i18n key. |
 | `labelMsg` / `label` | string | i18n message key or literal text for the preference name. |
 | `descriptionMsg` / `description` | string | i18n message key or literal text for the description. |
 | `columns` | number | For radio type, number of columns (default: 2). |
+| `visibilityCondition` | string | Optional gate on when the preference appears: `"always"` (default), `"dark-theme"` (visible only in dark theme), `"tablet-viewport"` (visible only at tablet width or above). |
 
-## `label` vs `labelMsg`
+### `label` vs `labelMsg`
 
 Both sections and preferences support two ways to set their display text:
 
-* **`labelMsg`** (and `descriptionMsg`): References an i18n message key. The message must be loadable via the MediaWiki API. Use this for multilingual wikis so that labels are translated automatically.
-* **`label`** (and `description`): A literal string used as-is. Use this for single-language wikis or quick prototyping.
+* **`labelMsg`** (and `descriptionMsg`) references an i18n message key. The message must be loadable via the MediaWiki API. Use this for multilingual wikis so labels are translated automatically.
+* **`label`** (and `description`) is a literal string used as-is. Use this for single-language wikis or quick prototyping.
 
 The same pattern applies to `descriptionMsg` / `description`.
 
-## On-wiki JSON
+### On-wiki JSON
 
-This is the simplest way to manage preferences — just create a JSON page on your wiki.
+The simplest way to manage preferences — create a JSON page on your wiki at `MediaWiki:Citizen-preferences.json`.
 
-### Merge behavior
+#### Merge behavior
 
-When you create `MediaWiki:Citizen-preferences.json`, your configuration is merged with the built-in defaults:
+Your configuration is merged with the built-in defaults:
 
-* **Omitting** a built-in preference keeps its default.
-* Setting a preference to **`null`** removes it from the panel.
+* **Omitting** a built-in preference or section keeps its default.
+* Setting a preference to **`null`** removes it from the panel. Sections with no remaining preferences are dropped automatically.
 * **Overriding** specific fields of a built-in preference merges them — unspecified fields keep their default values.
 * **Options arrays** are replaced wholesale, not merged element-by-element. If you override `options`, provide the full list.
 
-### Built-in sections
+#### Examples
 
-Citizen ships with two sections:
-
-| Section | Preferences |
-| :--- | :--- |
-| `appearance` | Theme, font size, page width, pure black |
-| `behavior` | Auto-hide navigation, performance mode |
-
-### Examples
-
-#### Adding a custom toggle
+##### Adding a custom toggle
 
 ```json
 {
@@ -1069,7 +1130,7 @@ Citizen ships with two sections:
 }
 ```
 
-#### Removing a built-in preference
+##### Removing a built-in preference
 
 ```json
 {
@@ -1079,7 +1140,7 @@ Citizen ships with two sections:
 }
 ```
 
-#### Modifying theme options
+##### Modifying theme options
 
 This removes the "auto" option from the theme preference, leaving only day and night:
 
@@ -1097,11 +1158,11 @@ This removes the "auto" option from the theme preference, leaving only day and n
 }
 ```
 
-## JavaScript API
+### JavaScript API
 
-Gadgets and user scripts can register preferences at runtime using `mw.hook`. This is useful when you want a gadget to ship its own preference toggle without requiring an admin to edit the on-wiki JSON.
+Gadgets and user scripts can register preferences at runtime via `mw.hook`. Use this when a gadget needs to ship its own preference toggle without requiring an admin to edit the on-wiki JSON.
 
-### Usage
+#### Usage
 
 ```js
 mw.hook( 'citizen.preferences.register' ).add( function ( register ) {
@@ -1112,15 +1173,15 @@ mw.hook( 'citizen.preferences.register' ).add( function ( register ) {
 } );
 ```
 
-The `register` function accepts the exact same config schema described above — `sections` and `preferences` with the same field reference.
+The `register` function accepts the same config schema as the on-wiki JSON — `sections` and `preferences` with the same field reference.
 
-### Timing
+#### Timing
 
-You don't need to worry about load order. `mw.hook` replays previously fired data to late subscribers, so your gadget's `.add()` callback will receive the `register` function regardless of whether the preferences panel has loaded yet.
+You don't need to worry about load order. `mw.hook` replays previously fired data to late subscribers, so your `.add()` callback receives the `register` function regardless of whether the preferences panel has loaded. The panel's config is reactive too — calling `register()` after the panel is open updates it in place, no reload needed.
 
-### Example
+#### Example
 
-Here's a gadget registering a simple toggle:
+A gadget registering a simple toggle:
 
 ```js
 mw.hook( 'citizen.preferences.register' ).add( function ( register ) {
@@ -1141,9 +1202,9 @@ mw.hook( 'citizen.preferences.register' ).add( function ( register ) {
 } );
 ```
 
-## Full gadget example
+#### Full gadget example
 
-Here's a complete example that registers a preference and reacts to changes — the kind of thing you'd put in a gadget's JavaScript file:
+A complete example that registers a preference and reacts to changes — the kind of thing you'd put in a gadget's JavaScript file:
 
 ```js
 // Register the preference
@@ -1172,7 +1233,7 @@ mw.hook( 'citizen.preferences.changed' ).add( function ( featureName, value ) {
 } );
 ```
 
-## Styling custom preferences
+### Custom styles
 
 When a user selects a value, Citizen adds a CSS class to the `<html>` element in the format `<feature>-clientpref-<value>`. You can target these classes in `MediaWiki:Common.css` or gadget styles:
 
@@ -1182,9 +1243,9 @@ html.my-extension-dark-reader-clientpref-1 {
 }
 ```
 
-## Listening for changes
+### Listening for changes
 
-You can react to preference changes in JavaScript using `mw.hook`:
+React to preference changes in JavaScript using `mw.hook`:
 
 ```js
 mw.hook( 'citizen.preferences.changed' ).add( function ( featureName, value ) {
@@ -1196,37 +1257,69 @@ mw.hook( 'citizen.preferences.changed' ).add( function ( featureName, value ) {
 
 ---
 url: /mediawiki-skins-Citizen/features/share.md
-description: How to configure Citizen's share panel and service tiles
+description: >-
+  Share the current page via the browser's native share sheet or a configurable
+  grid of services.
 ---
 
 # Share
 
-Citizen has three share modes, set via `$wgCitizenShareMode` in `LocalSettings.php`:
+The share panel lets readers send the current page to other people — through their device's native share sheet, a configurable grid of services on the wiki, or as a short URL or QR code.
 
-* **`'auto'`** *(default)* — uses the browser's Web Share API when available (mobile devices, desktop Safari, Chrome, Edge). Falls back to Citizen's in-page panel on browsers without it (e.g. desktop Firefox). Best of both worlds for most wikis.
-* **`'panel'`** — always opens Citizen's in-page panel. Use this when you want consistent branding across all browsers, or when your curated share targets are central to your wiki's identity.
-* **`'native'`** — always uses the Web Share API. Falls back to a clipboard copy with a toast notification on browsers without it. Use this when you want to defer entirely to the OS share experience.
+## How it works
 
-## What users see
+Citizen offers three share modes:
 
-When the panel opens, it always shows a copy-link field, so sharing always works even if you haven't set up any services. The grid of service tiles below it only appears when you've configured services on your wiki.
+* **Native** — surfaces the device's OS-level share sheet (apps, contacts, AirDrop, etc.). Available on mobile devices and desktop Safari, Chrome, and Edge; on browsers without Web Share API support it falls back to a clipboard copy with a toast notification.
+* **Panel** — opens Citizen's in-page panel. Always includes a copy-link field, and if you've configured services on your wiki, a grid of branded service tiles below it. Optionally adds short URL and QR code buttons when [Extension:UrlShortener](https://www.mediawiki.org/wiki/Extension:UrlShortener) is installed.
+* **Auto** *(default)* — uses Native when the browser supports it, falls back to Panel otherwise.
+
+Wiki admins choose which mode is active — see [Configuration](#configuration) below.
 
 Citizen doesn't ship with a built-in service list. The right services depend on your audience — a German federated wiki may want Diaspora; a corporate intranet may want none at all. You pick.
 
-## Short URLs and QR codes
+::: tip Which URL gets shared
+Native mode reads `<link rel="canonical">` and shares the canonical URL. The in-page panel — both the copy-link field and the service tiles — shares the current page URL without the hash. If you rely on canonical URLs for analytics or social previews, prefer Native mode.
+:::
+
+### Short URLs and QR codes
 
 When [Extension:UrlShortener](https://www.mediawiki.org/wiki/Extension:UrlShortener) is installed, the share panel adds two buttons below the copy-link field:
 
-* **Copy short URL** — copies a shortened URL to the clipboard in one click. The result is reused for the rest of the session, so clicking again or reopening the panel is instant.
+* **Copy short URL** — copies a shortened URL to the clipboard in one click, with a brief success state on the button. The result is cached for the lifetime of the dialog, so clicking again or reopening the panel is instant.
 * **Show QR code** — opens a focused QR view inside the same panel, with the short URL printed below as a fallback for anything that can't scan. Only appears when `$wgUrlShortenerEnableQrCode` is enabled.
+
+If the UrlShortener API call fails, both buttons disappear together and the panel falls back to its copy-link-and-services layout.
 
 The copy-link field and the share tiles always use the full page URL — short URLs are reserved for the dedicated button and the QR view. If UrlShortener isn't installed, neither button appears and the rest of the panel works the same.
 
-## Adding share services
+## Configuration
+
+Share is enabled by default. To turn it off entirely, set `$wgCitizenEnableShare = false;` in `LocalSettings.php`.
+
+When enabled, pick how share behaves with `$wgCitizenShareMode`:
+
+```php
+$wgCitizenShareMode = 'auto'; // 'auto' | 'panel' | 'native'
+```
+
+| Value | When to use |
+| :--- | :--- |
+| `'auto'` *(default)* | Best of both worlds — most wikis should keep the default. |
+| `'panel'` | When you want consistent branding across all browsers, or when your curated share targets are central to your wiki's identity. |
+| `'native'` | When you want to defer entirely to the OS share experience. |
+
+## Extending the share panel
+
+### On-wiki JSON
 
 Create the page `MediaWiki:Citizen-share-services.json` on your wiki and paste a JSON array of service entries. Save the page, and the new services appear the next time anyone opens the panel.
 
-### Starter pack
+::: warning Allowed URL protocols
+Citizen drops any service whose `url` uses a protocol not in MediaWiki's `$wgUrlProtocols` list (`http://`, `https://`, `mailto:` and a handful of others by default). If a service silently disappears after you add it, check the protocol first.
+:::
+
+#### Starter pack
 
 Here's a Facebook / X / Mastodon / Bluesky setup you can copy in as-is. Icons are embedded directly, so nothing extra needs to be uploaded:
 
@@ -1266,19 +1359,19 @@ Here's a Facebook / X / Mastodon / Bluesky setup you can copy in as-is. Icons ar
 
 Icons are [Simple Icons](https://simpleicons.org/) (CC0).
 
-### Service fields
+#### Service fields
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
-| `name` | string | Internal identifier. Used as the tile's CSS id (`citizen-share-service-<name>`) so you can target it with custom CSS on your wiki. |
+| `name` | string | Internal identifier. Used as the tile's CSS id (`citizen-share-service-<name>`) so you can target it with custom CSS on your wiki. Characters outside `[a-zA-Z0-9_-]` are stripped from the id. |
 | `label` | string | The name your users see — read by screen readers and shown on hover. |
 | `url` | string | The link opened when the tile is clicked. Use `{{url}}` and `{{title}}` placeholders for the current page's URL and title. |
 | `color` | string | Background color of the tile. Match the service's brand color when possible. |
-| `open_in_modal` | boolean | Open in a small popup window instead of a new tab. Useful for services that show a share dialog, like X. |
+| `open_in_modal` | boolean | Open in a small popup window instead of a new tab. Useful for services that show a share dialog, like X. `mailto:` links always open in the same tab and ignore this flag. |
 | `icon` | string | The icon shown on the tile. See [Icons](#icons) below. |
 | `file` | string | Alternative to `icon`: the filename of an SVG uploaded to your wiki. See [Icons](#icons) below. |
 
-### Icons
+#### Icons
 
 The icon is shown in white on the brand color, so single-color glyphs work best. Three ways to provide one:
 

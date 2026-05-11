@@ -1,23 +1,34 @@
 ---
 url: /mediawiki-skins-Citizen/features/preferences.md
-description: How to customize the Citizen preferences panel
+description: >-
+  A panel for personalizing the skin, extensible with on-wiki JSON or
+  JavaScript.
 ---
 
 # Preferences
 
-Citizen's preferences panel is extensible. You can add, modify, or remove preferences through two paths — and both use the same configuration schema.
+Citizen's preferences panel lets readers personalize the skin — theme, font size, page width, and any toggles your wiki adds. You extend the panel through two paths, both using the same configuration schema.
 
 ## How it works
 
-Citizen ships with a set of built-in preferences (theme, font size, page width, pure black, auto-hide navigation, performance mode). Admins can override any of these, or add entirely new ones, by placing a JSON configuration on `MediaWiki:Citizen-preferences.json`. Gadgets and user scripts can do the same thing via the [JavaScript API](#javascript-api).
+Citizen ships with two built-in sections:
 
-Changes take effect when users next open the preferences panel — the panel is lazy-loaded, so there's no need to purge caches.
+| Section | Preferences |
+| :--- | :--- |
+| `appearance` | Theme, font size, page width, pure black, image dimming |
+| `behavior` | Auto-hide navigation, performance mode |
 
-## Configuration schema
+The panel is lazy-loaded, so it doesn't ship in the initial page bundle. Changes to preference configuration — through on-wiki JSON or the JavaScript API — take effect the next time a user opens the panel, with no cache purge required.
+
+## Extending preferences
+
+Admins can override any built-in preference, or add entirely new ones, through `MediaWiki:Citizen-preferences.json`. Gadgets and user scripts can do the same thing via the JavaScript API. Both paths share the same configuration schema.
+
+### Configuration schema
 
 Whether you're writing JSON on-wiki or passing a config object to the JavaScript API, the shape is the same. There are two top-level keys: `sections` and `preferences`.
 
-### Sections
+#### Sections
 
 Sections group related preferences together. Each section needs either an i18n message key or a literal label.
 
@@ -45,7 +56,7 @@ Using a literal label:
 }
 ```
 
-### Preference entries
+#### Preference entries
 
 Each preference is keyed by its feature name.
 
@@ -63,51 +74,43 @@ Each preference is keyed by its feature name.
 }
 ```
 
-#### Field reference
+**Field reference:**
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
 | `section` | string | Which section this preference belongs to. |
-| `type` | string | `"switch"`, `"select"`, or `"radio"`. Auto-detected if omitted (2 options = switch, 3+ = select). |
-| `options` | array | Short form `["0", "1"]` or long form `[{"value": "0", "labelMsg": "..."}]`. |
+| `type` | string | `"switch"`, `"select"`, or `"radio"`. Switch and select are auto-detected from the option count (2 options = switch, 3+ = select); `"radio"` must be set explicitly. |
+| `options` | array | Short form `["0", "1"]` or long form `[{"value": "0", "labelMsg": "..."}]`. Long-form options also accept `"label"` for literal text instead of an i18n key. |
 | `labelMsg` / `label` | string | i18n message key or literal text for the preference name. |
 | `descriptionMsg` / `description` | string | i18n message key or literal text for the description. |
 | `columns` | number | For radio type, number of columns (default: 2). |
+| `visibilityCondition` | string | Optional gate on when the preference appears: `"always"` (default), `"dark-theme"` (visible only in dark theme), `"tablet-viewport"` (visible only at tablet width or above). |
 
-## `label` vs `labelMsg`
+### `label` vs `labelMsg`
 
 Both sections and preferences support two ways to set their display text:
 
-* **`labelMsg`** (and `descriptionMsg`): References an i18n message key. The message must be loadable via the MediaWiki API. Use this for multilingual wikis so that labels are translated automatically.
-* **`label`** (and `description`): A literal string used as-is. Use this for single-language wikis or quick prototyping.
+* **`labelMsg`** (and `descriptionMsg`) references an i18n message key. The message must be loadable via the MediaWiki API. Use this for multilingual wikis so labels are translated automatically.
+* **`label`** (and `description`) is a literal string used as-is. Use this for single-language wikis or quick prototyping.
 
 The same pattern applies to `descriptionMsg` / `description`.
 
-## On-wiki JSON
+### On-wiki JSON
 
-This is the simplest way to manage preferences — just create a JSON page on your wiki.
+The simplest way to manage preferences — create a JSON page on your wiki at `MediaWiki:Citizen-preferences.json`.
 
-### Merge behavior
+#### Merge behavior
 
-When you create `MediaWiki:Citizen-preferences.json`, your configuration is merged with the built-in defaults:
+Your configuration is merged with the built-in defaults:
 
-* **Omitting** a built-in preference keeps its default.
-* Setting a preference to **`null`** removes it from the panel.
+* **Omitting** a built-in preference or section keeps its default.
+* Setting a preference to **`null`** removes it from the panel. Sections with no remaining preferences are dropped automatically.
 * **Overriding** specific fields of a built-in preference merges them — unspecified fields keep their default values.
 * **Options arrays** are replaced wholesale, not merged element-by-element. If you override `options`, provide the full list.
 
-### Built-in sections
+#### Examples
 
-Citizen ships with two sections:
-
-| Section | Preferences |
-| :--- | :--- |
-| `appearance` | Theme, font size, page width, pure black |
-| `behavior` | Auto-hide navigation, performance mode |
-
-### Examples
-
-#### Adding a custom toggle
+##### Adding a custom toggle
 
 ```json
 {
@@ -128,7 +131,7 @@ Citizen ships with two sections:
 }
 ```
 
-#### Removing a built-in preference
+##### Removing a built-in preference
 
 ```json
 {
@@ -138,7 +141,7 @@ Citizen ships with two sections:
 }
 ```
 
-#### Modifying theme options
+##### Modifying theme options
 
 This removes the "auto" option from the theme preference, leaving only day and night:
 
@@ -156,11 +159,11 @@ This removes the "auto" option from the theme preference, leaving only day and n
 }
 ```
 
-## JavaScript API
+### JavaScript API
 
-Gadgets and user scripts can register preferences at runtime using `mw.hook`. This is useful when you want a gadget to ship its own preference toggle without requiring an admin to edit the on-wiki JSON.
+Gadgets and user scripts can register preferences at runtime via `mw.hook`. Use this when a gadget needs to ship its own preference toggle without requiring an admin to edit the on-wiki JSON.
 
-### Usage
+#### Usage
 
 ```js
 mw.hook( 'citizen.preferences.register' ).add( function ( register ) {
@@ -171,15 +174,15 @@ mw.hook( 'citizen.preferences.register' ).add( function ( register ) {
 } );
 ```
 
-The `register` function accepts the exact same config schema described above — `sections` and `preferences` with the same field reference.
+The `register` function accepts the same config schema as the on-wiki JSON — `sections` and `preferences` with the same field reference.
 
-### Timing
+#### Timing
 
-You don't need to worry about load order. `mw.hook` replays previously fired data to late subscribers, so your gadget's `.add()` callback will receive the `register` function regardless of whether the preferences panel has loaded yet.
+You don't need to worry about load order. `mw.hook` replays previously fired data to late subscribers, so your `.add()` callback receives the `register` function regardless of whether the preferences panel has loaded. The panel's config is reactive too — calling `register()` after the panel is open updates it in place, no reload needed.
 
-### Example
+#### Example
 
-Here's a gadget registering a simple toggle:
+A gadget registering a simple toggle:
 
 ```js
 mw.hook( 'citizen.preferences.register' ).add( function ( register ) {
@@ -200,9 +203,9 @@ mw.hook( 'citizen.preferences.register' ).add( function ( register ) {
 } );
 ```
 
-## Full gadget example
+#### Full gadget example
 
-Here's a complete example that registers a preference and reacts to changes — the kind of thing you'd put in a gadget's JavaScript file:
+A complete example that registers a preference and reacts to changes — the kind of thing you'd put in a gadget's JavaScript file:
 
 ```js
 // Register the preference
@@ -231,7 +234,7 @@ mw.hook( 'citizen.preferences.changed' ).add( function ( featureName, value ) {
 } );
 ```
 
-## Styling custom preferences
+### Custom styles
 
 When a user selects a value, Citizen adds a CSS class to the `<html>` element in the format `<feature>-clientpref-<value>`. You can target these classes in `MediaWiki:Common.css` or gadget styles:
 
@@ -241,9 +244,9 @@ html.my-extension-dark-reader-clientpref-1 {
 }
 ```
 
-## Listening for changes
+### Listening for changes
 
-You can react to preference changes in JavaScript using `mw.hook`:
+React to preference changes in JavaScript using `mw.hook`:
 
 ```js
 mw.hook( 'citizen.preferences.changed' ).add( function ( featureName, value ) {
