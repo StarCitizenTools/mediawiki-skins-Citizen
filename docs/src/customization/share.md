@@ -79,4 +79,4 @@ The icon is shown in white on the brand color, so single-color glyphs work best.
 
 1. **Embedded** — paste the SVG directly into the JSON as a `data:image/svg+xml;base64,...` value (like the starter pack above). Nothing extra to upload, nothing external to depend on. Best for most wikis.
 2. **From your wiki's media library** — upload the SVG via `Special:Upload`, then leave `icon` out and add a `file` field with the filename. Useful if you already maintain icons as wiki files.
-3. **External URL** — point `icon` at any image URL. Quick to set up, but every page view will fetch the icon from the third party. Best avoided.
+3. **External URL** — point `icon` at any image URL. Quick to set up, but the icon comes from a third party — first-time visitors pay a network round-trip for it (cached afterwards), and your share panel breaks if that host goes down or removes the file. Best avoided.
