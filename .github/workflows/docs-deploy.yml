@@ -1,0 +1,159 @@
+name: 📚 Docs deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gh-pages-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy-main:
+    name: 🚀 Deploy main
+    if: |
+      github.repository == 'StarCitizenTools/mediawiki-skins-Citizen' &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
+
+      - name: Install dependencies
+        working-directory: docs
+        run: npm ci
+
+      - name: Build with VitePress
+        working-directory: docs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASE_URL: /mediawiki-skins-Citizen/
+          DOCS_VERSION: main
+          ALGOLIA_APP_ID: ${{ vars.ALGOLIA_APP_ID }}
+          ALGOLIA_API_KEY: ${{ vars.ALGOLIA_API_KEY }}
+          ALGOLIA_INDEX_NAME: ${{ vars.ALGOLIA_INDEX_NAME }}
+        run: npm run docs:build
+
+      - name: Checkout existing gh-pages into worktree
+        run: |
+          git fetch origin gh-pages || true
+          if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
+            git worktree add gh-pages origin/gh-pages
+          else
+            mkdir gh-pages
+            (cd gh-pages && git init -b gh-pages)
+          fi
+
+      - name: Sync new build into gh-pages root
+        run: |
+          # Remove only root-level files from the previous main build,
+          # leaving versioned subpaths (v*) and the .git directory intact.
+          find gh-pages -mindepth 1 -maxdepth 1 \
+            -not -name 'v*' \
+            -not -name '.git' \
+            -exec rm -rf {} +
+          cp -R docs/.vitepress/dist/. gh-pages/
+
+      - name: Regenerate versions.json
+        run: node .github/scripts/generate-versions-json.mjs gh-pages
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: gh-pages
+          publish_branch: gh-pages
+          keep_files: false
+          commit_message: "docs: deploy main @ ${{ github.sha }}"
+
+  deploy-version:
+    name: 🚀 Deploy version
+    if: github.event_name == 'release' && github.repository == 'StarCitizenTools/mediawiki-skins-Citizen'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve tag
+        id: tag
+        run: |
+          TAG="${{ github.event.release.tag_name }}"
+          if [[ ! "$TAG" =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+) ]]; then
+            echo "Tag '$TAG' is not vMAJOR.MINOR.PATCH" >&2
+            exit 1
+          fi
+          MINOR="v${BASH_REMATCH[1]}.${BASH_REMATCH[2]}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "minor=$MINOR" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout tag
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ steps.tag.outputs.tag }}
+          fetch-depth: 0
+
+      - name: Checkout generator script from main
+        run: |
+          git fetch origin main
+          git checkout origin/main -- .github/scripts/generate-versions-json.mjs
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
+
+      - name: Install dependencies
+        working-directory: docs
+        run: npm ci
+
+      - name: Build
+        working-directory: docs
+        env:
+          BASE_URL: /mediawiki-skins-Citizen/${{ steps.tag.outputs.minor }}/
+          DOCS_VERSION: ${{ steps.tag.outputs.minor }}
+        run: npm run docs:build
+
+      - name: Checkout existing gh-pages into worktree
+        run: |
+          git fetch origin gh-pages || true
+          if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
+            git worktree add gh-pages origin/gh-pages
+          else
+            mkdir gh-pages
+            (cd gh-pages && git init -b gh-pages)
+          fi
+
+      - name: Place build at /{minor}/
+        run: |
+          MINOR="${{ steps.tag.outputs.minor }}"
+          rm -rf "gh-pages/$MINOR"
+          mkdir -p "gh-pages/$MINOR"
+          cp -R docs/.vitepress/dist/. "gh-pages/$MINOR/"
+
+      - name: Regenerate versions.json
+        run: node .github/scripts/generate-versions-json.mjs gh-pages
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: gh-pages
+          publish_branch: gh-pages
+          keep_files: false
+          commit_message: "docs: deploy ${{ steps.tag.outputs.tag }} to /${{ steps.tag.outputs.minor }}/"
