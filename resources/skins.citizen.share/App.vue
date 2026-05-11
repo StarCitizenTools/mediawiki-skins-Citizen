@@ -1,6 +1,6 @@
 <template>
 	<div class="citizen-share-main">
-		<div id="citizen-share-dialog-title" class="citizen-share-main__header">
+		<div class="citizen-share-main__header">
 			{{ i18n( 'citizen-share' ) }}
 		</div>
 
