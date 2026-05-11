@@ -5,14 +5,14 @@ description: A keyboard-driven palette for jumping to pages, running actions, an
 
 # Command palette
 
-The command palette lets you search for articles quickly and efficiently. Press `/` to see all available entries, or type to start searching right away.
+The command palette is a keyboard-driven launcher for the wiki. Press `/` to see all available entries, or just start typing to search.
 
 ## How it works
 
-The palette supports two kinds of entries:
+The palette has two kinds of entries:
 
-- **Modes** switch the palette into a different search context. When you enter a mode, the header updates with the mode's icon and placeholder, and a back button appears. Type a query to search within that mode.
-- **Commands** execute an action immediately when selected — no additional input needed.
+- **Modes** change the palette's search context. The header shows the mode's icon and placeholder, and a back button appears. Type to search within the mode.
+- **Commands** run their action when you pick them. No input needed.
 
 ### Built-in entries
 
@@ -28,11 +28,13 @@ The palette supports two kinds of entries:
 | `/smw:` | - | Mode | Query pages with Semantic MediaWiki Ask syntax. Only available when SMW is installed. |
 | `/help` | `?` | Command | Open the help overlay to browse every available mode. |
 
-Single-character aliases like `@`, `>`, `:`, `#`, `!`, `~`, and `?` can be typed directly to enter the mode or trigger the command instantly, without needing the `/` prefix.
+You can type the single-character aliases (`@`, `>`, `:`, `#`, `!`, `~`, `?`) directly — no `/` prefix needed.
 
 ### Help overlay
 
-Press `?` at an empty input to open the help overlay. The footer surfaces the same `?` shortcut as a contextual hint whenever pressing it would do something. While help is open, the header swaps to a help indicator with a back button, and <kbd>Esc</kbd> closes help before any other action. Help is a transient layer: opening it preserves your active mode, query, and any drilled-in mode context, so you can peek and bounce back to where you were.
+Press `?` at an empty input to open the help overlay. The footer shows the `?` shortcut as a hint whenever it's available. While help is open, the header swaps to a help indicator with a back button, and <kbd>Esc</kbd> closes help before any other action.
+
+Help is an overlay — opening it preserves your active mode, query, and any drill-down position, so you can peek and return to where you were.
 
 What you see depends on where you are:
 
@@ -72,11 +74,11 @@ The category mode helps you find a category and see what's inside it. Open it wi
 
 #### Revision history
 
-The history mode lists recent edits to the current page so you can scan who changed what and jump to a revision. Open it with `/hist:` or `!`.
+The history mode lists recent edits to the current page so you can scan who changed what and jump to a diff. Open it with `/hist:` or `!`.
 
 - **An empty input** shows the last 50 revisions, newest first.
 - **Type to filter** by editor name or any text in the edit summary — either field can match.
-- **Press <kbd>↵</kbd>** on a revision to view the page as it existed at that point.
+- **Press <kbd>↵</kbd>** on a revision to open the diff against the previous revision. The page's first edit has no previous revision, so it opens that revision directly.
 - **Open a wiki page first.** On a special page (or anywhere without a real article), the mode shows an empty state.
 
 ::: tip Pair with the Instant Diffs gadget
@@ -90,7 +92,7 @@ The file mode finds images, PDFs, audio, video, and other files on the wiki and 
 - **An empty input on a content page** shows the files used on the current page — a quick way to grab the filename of an image you're looking at without leaving the article. Off-article (or on pages with no file usage) the mode shows its idle empty state.
 - **Type a query** to search the wiki's media library. Results appear as tiles with a thumbnail (or a fallback icon for non-visual files like audio or archives).
 - **Arrow keys move 2D**: <kbd>←</kbd>/<kbd>→</kbd> step within a row, <kbd>↑</kbd>/<kbd>↓</kbd> jump between rows.
-- **The detail panel** on the right shows the highlighted file's type, dimensions, byte size, uploader, upload age, and license short-name (when available). A copy-to-clipboard button next to the filename — or <kbd>⌘C</kbd> / <kbd>Ctrl</kbd>+<kbd>C</kbd> — copies the filename for use in wikitext.
+- **The detail panel** on the right shows the file's type, size (dimensions and byte count), upload info (timestamp and uploader), and the license short-name when available. A copy-to-clipboard button next to the filename — or <kbd>⌘C</kbd> / <kbd>Ctrl</kbd>+<kbd>C</kbd> — copies the filename for use in wikitext.
 - **Press <kbd>↵</kbd>** to open the file's `File:` description page.
 
 The mode matches file titles by prefix first, so typing the start of a filename works on every wiki regardless of search backend. If nothing matches by prefix, it falls back to a full-text search — which surfaces deeper hits when [CirrusSearch](https://www.mediawiki.org/wiki/Extension:CirrusSearch) is installed.
@@ -157,16 +159,19 @@ Every entry must have at minimum an `id`, `triggers`, and `description`. If the 
 | `id` | `string` | Yes | Unique identifier. |
 | `triggers` | `string[]` | Yes | Prefixes that activate this entry. Triggers ending with `:` accept a sub-query. |
 | `description` | `string` | Yes | Short explanation shown in the command list. |
-| `placeholder` | `string` | No | Input placeholder when mode is active (e.g., "Search users"). Modes only. |
-| `icon` | `Object` | No | Codex icon for the header when mode is active. Modes only. |
-| `compactResults` | `boolean` | No | Render results in a denser layout — a small icon instead of a thumbnail and the description inline beside the label. Use this for command-style modes whose items don't have real thumbnail images. Modes only. |
+| `label` | `string` | No | Display label shown for the entry in command lists. Falls back to a humanised form of `id` when omitted. |
+| `placeholder` | `string` | No | Input placeholder when the mode is active (e.g., "Search users"). Modes only. |
+| `icon` | `Object` | No | Codex icon for the header when the mode is active. Modes only. |
+| `compactResults` | `boolean` | No | Render results in a denser layout — a small icon instead of a thumbnail and the description inline beside the label. Use this for command-style modes whose items don't have real thumbnail images. Ignored in gallery layout. Modes only. |
 | `layout` | `'list' \| 'gallery'` | No | Result layout. `'list'` (default) renders a vertical list. `'gallery'` renders a tiled grid for thumbnail-driven content like media browsers, and widens the palette to fit. Modes only. |
 | `getResults` | `function` | No | `(subQuery, signal?, tokens?, modeContext?) => Promise<Array>` — if provided, this entry is a mode. The optional fourth argument is the current [mode context](#mode-context) stack. |
+| `getItemDetail` | `function` | No | `(item, signal?) => Promise<Object>` — lazy detail-pane data for the highlighted item. Use this when the detail is too heavy to compute for every item upfront (the file mode uses it for image metadata and licensing). Modes only. |
 | `onResultSelect` | `function` | No | `(item) => { action, payload }` — handles selection of a result item. |
 | `headerLabel` | `function` | No | `(modeContext) => string \| null` — replaces the input placeholder with a custom label. Return `null` to fall back to the regular placeholder — useful for showing a breadcrumb only when the mode is drilled in. Typically used with [mode context](#mode-context). Modes only. |
 | `emptyState` | `Object` | No | `{ title, description, icon }` — content shown when the mode is active with no query. Falls back to default search messaging. Modes only. |
 | `noResults` | `function` | No | `(query, tokens?) => { title, description, icon }` — returns content shown when a query produces no results. Falls back to default no-results messaging. Modes only. |
-| `tokenPattern` | `Object` | No | Token detection pattern for auto-tokenization. See [token patterns](#token-patterns). Modes only. |
+| `tokenPattern` | `Object \| Object[]` | No | Token detection pattern (or array of patterns) for auto-tokenization. See [token patterns](#token-patterns). Modes only. |
+| `keybindings` | `KeyBinding[]` | No | Mode-contributed keyboard bindings, active while the mode is active. See [keybindings](#keybindings). Modes only. |
 | `help` | `Object` | No | Content surfaced by the help overlay when this entry is active. See [help content](#help-content). |
 
 ### Action results
@@ -179,6 +184,7 @@ Every entry must have at minimum an `id`, `triggers`, and `description`. If the 
 | `{ action: 'navigate', payload: url }` | URL string | Close the palette and navigate to the URL. |
 | `{ action: 'exitWithQuery', payload: query }` | Query string | Exit the current mode and set the query string. |
 | `{ action: 'updateQuery', payload: query }` | Query string | Update the query within the current mode without exiting. |
+| `{ action: 'addToken', payload: token }` | Token object | Append a token chip to the input and clear the free text. Use this when picking a result should add a structured condition to the query — like the SMW mode appending `[[Property::]]` after you pick a property. |
 | `{ action: 'pushModeContext', payload: any }` | Any | Step the active mode into a new level. Appends to the [mode context](#mode-context) stack and clears the input. |
 | `{ action: 'toggleHelp' }` | - | Toggle the help overlay. |
 
@@ -192,8 +198,12 @@ Modes can declare a `tokenPattern` to enable auto-tokenization — when the user
 | `position` | `'prefix' \| 'any'` | Where tokens can appear — `prefix` means only at the start, `any` means anywhere in the input. |
 | `activeIn` | `string` | Which mode context this pattern is active in (`'root'` for default search, or a mode id like `'smw'`). |
 | `match` | `function` | `(text) => { label, raw } \| null` — tests whether the text starts with a tokenizable pattern. Returns `label` (display text) and `raw` (the original text) on match, or `null`. |
+| `eagerMatch` | `function` | Optional lenient matcher used after the standard `match` pass has produced at least one token (useful for paste handling). Allows end-of-string as a valid terminator. Same signature as `match`. |
+| `variant` | `string` | Optional visual variant for the chip — e.g. `'outlined'` for chips that should look different from the default solid style. |
 
 Tokens are passed to `getResults` and `noResults` so modes can incorporate them into queries. For example, the SMW mode reconstructs the full Ask query from its token chips plus any free text.
+
+Modes that need multiple tokenization rules — like SMW, which tokenizes both `[[…]]` conditions and printout selectors — can declare `tokenPattern` as an array of pattern objects instead of a single one.
 
 ### Help content
 
@@ -219,7 +229,7 @@ Some modes need to step *into* a result rather than navigate away from it — th
 
 It's opt-in. Modes that don't need it can ignore it entirely.
 
-- The stack is empty when a mode is entered, and is cleared when the mode exits or the palette closes.
+- The stack is empty when a mode is entered, and is cleared when the mode exits.
 - `{ action: 'pushModeContext', payload }` appends the payload and clears the input, so the user starts fresh at the new level.
 - `getResults` gets the current stack as its fourth argument and decides what to show per level.
 - `headerLabel( modeContext )` renders a breadcrumb in the header so the user can always tell where they are. Returning `null` falls back to the regular placeholder, so the breadcrumb only shows when there's actually a path to display.
@@ -256,6 +266,49 @@ const myDrillMode = {
     }
 };
 ```
+
+### Keybindings
+
+Modes can contribute their own keyboard bindings via the `keybindings` array. Each binding declares when it fires, what it does, and (optionally) what hint to show in the palette footer.
+
+```js
+keybindings: [
+    {
+        id: 'mydrill.refresh',
+        zone: 'input',
+        keys: [ 'r' ],
+        when: ( state ) => state.modifierKey,
+        handle: ( state, event ) => {
+            event.preventDefault();
+            refreshResults();
+        },
+        hint: {
+            msgKey: 'my-extension-mode-refresh-hint',
+            kbd: '⌘R'
+        }
+    }
+]
+```
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `id` | `string` | Unique binding identifier (used for debugging). |
+| `zone` | `'input' \| 'action'` | Which focus zone the binding applies to. |
+| `keys` | `string[]` | Event `key` values that fire `handle`. An empty array marks the binding as hint-only. |
+| `when` | `function` | `(state) => boolean` — predicate over the dispatch state. False suppresses both the handler and the hint. |
+| `handle` | `function` | `(state, event) => void` — called when a `keys` entry matches and `when` passes. Call `event.preventDefault()` to claim the keystroke. |
+| `worksDuringHelp` | `boolean` | When true, the binding fires even with the help overlay open. Defaults to false. |
+| `hint` | `Object \| null` | Footer hint to surface, or `null` to omit one. |
+
+Hint shape:
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `msgKey` | `string` | i18n message key for the hint label. |
+| `kbd` | `string` | Keyboard glyph shown next to the label (e.g. `↵`, `↑↓`, `⌘C`). |
+| `order` | `number` | Sort order within the footer (lower = leftmost). |
+
+Mode keybindings are prepended to the core bindings while the mode is active, so a mode binding wins on key collisions within its own focus zone. Footer hints derive from the same list, so a hint is visible iff its handler will fire — no risk of stale hints.
 
 ### Example: simple command
 

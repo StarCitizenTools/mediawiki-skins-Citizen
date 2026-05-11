@@ -9,17 +9,18 @@ Performance mode dials back animations and visual effects so the skin feels fast
 
 ## How it works
 
-When performance mode is on, Citizen:
+With performance mode on, Citizen:
 
-- Turns off CSS animations and transitions
-- Drops frosted glass backdrop effects
-- Replaces the blurred mobile header with a solid background
+- Turns off transitions and animations across the whole skin (every element, not just ones using Citizen's transition tokens)
+- Disables smooth scrolling
+- Drops frosted-glass backdrop effects
+- Skips the frosted overlay on the mobile header, leaving the default solid background
 
 ::: tip Relationship with `prefers-reduced-motion`
 MediaWiki core handles the OS-level `prefers-reduced-motion` media query on its own. Performance mode is a skin-level toggle that goes further — it also strips out frosted glass and other visual flourishes that reduced motion doesn't cover.
 :::
 
-Performance mode starts **on by default**. On the first page load, Citizen checks for WebGL support and quietly turns it off if the device has GPU acceleration. Without a GPU, it stays on. The result is saved in the browser, so the check only runs once. Users can always flip it in their preferences.
+Performance mode is on by default. On the first page load, Citizen probes the browser for WebGL support — if the device can render WebGL, performance mode turns off; otherwise it stays on. The result is saved in the browser, so the check only runs once. Users can flip the toggle in their preferences at any time.
 
 ## Extending performance mode
 
@@ -62,7 +63,7 @@ Use these to gate heavy effects, swap in lighter alternatives, or simplify layou
 
 #### Animation readiness
 
-Citizen also prevents transitions from firing during initial page load. The `.citizen-animations-ready` class is added to the root element once the skin's JavaScript has loaded — transition tokens like `--transition-hover` and `--transition-menu` are only defined under this class.
+Citizen also prevents transitions from firing during initial page load. The `.citizen-animations-ready` class is added to the root element after the skin finishes its deferred startup tasks (scheduled via `requestIdleCallback`) — transition tokens like `--transition-duration-base`, `--transition-hover`, and `--transition-menu` are only defined under this class.
 
 Gate your own transitions the same way to avoid jank on first paint:
 
@@ -80,3 +81,5 @@ Performance mode overrides these custom properties, so anything that references 
 | :--- | :--- | :--- |
 | `--backdrop-filter-frosted-glass` | `blur(…)` | `none` |
 | `--opacity-glass` | `<0–1>` | `1` |
+
+On top of that, performance mode applies `transition-duration: 0ms !important` and `animation-duration: 0.01ms !important` to every element via the universal selector, so transitions and animations are flattened even when your styles don't reference Citizen's tokens.

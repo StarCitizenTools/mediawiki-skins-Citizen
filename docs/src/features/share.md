@@ -19,18 +19,26 @@ Wiki admins choose which mode is active — see [Configuration](#configuration) 
 
 Citizen doesn't ship with a built-in service list. The right services depend on your audience — a German federated wiki may want Diaspora; a corporate intranet may want none at all. You pick.
 
+::: tip Which URL gets shared
+Native mode reads `<link rel="canonical">` and shares the canonical URL. The in-page panel — both the copy-link field and the service tiles — shares the current page URL without the hash. If you rely on canonical URLs for analytics or social previews, prefer Native mode.
+:::
+
 ### Short URLs and QR codes
 
 When [Extension:UrlShortener](https://www.mediawiki.org/wiki/Extension:UrlShortener) is installed, the share panel adds two buttons below the copy-link field:
 
-- **Copy short URL** — copies a shortened URL to the clipboard in one click. The result is reused for the rest of the session, so clicking again or reopening the panel is instant.
+- **Copy short URL** — copies a shortened URL to the clipboard in one click, with a brief success state on the button. The result is cached for the lifetime of the dialog, so clicking again or reopening the panel is instant.
 - **Show QR code** — opens a focused QR view inside the same panel, with the short URL printed below as a fallback for anything that can't scan. Only appears when `$wgUrlShortenerEnableQrCode` is enabled.
+
+If the UrlShortener API call fails, both buttons disappear together and the panel falls back to its copy-link-and-services layout.
 
 The copy-link field and the share tiles always use the full page URL — short URLs are reserved for the dedicated button and the QR view. If UrlShortener isn't installed, neither button appears and the rest of the panel works the same.
 
 ## Configuration
 
-Set the share mode via `$wgCitizenShareMode` in `LocalSettings.php`:
+Share is enabled by default. To turn it off entirely, set `$wgCitizenEnableShare = false;` in `LocalSettings.php`.
+
+When enabled, pick how share behaves with `$wgCitizenShareMode`:
 
 ```php
 $wgCitizenShareMode = 'auto'; // 'auto' | 'panel' | 'native'
@@ -47,6 +55,10 @@ $wgCitizenShareMode = 'auto'; // 'auto' | 'panel' | 'native'
 ### On-wiki JSON
 
 Create the page `MediaWiki:Citizen-share-services.json` on your wiki and paste a JSON array of service entries. Save the page, and the new services appear the next time anyone opens the panel.
+
+::: warning Allowed URL protocols
+Citizen drops any service whose `url` uses a protocol not in MediaWiki's `$wgUrlProtocols` list (`http://`, `https://`, `mailto:` and a handful of others by default). If a service silently disappears after you add it, check the protocol first.
+:::
 
 #### Starter pack
 
@@ -92,11 +104,11 @@ Icons are [Simple Icons](https://simpleicons.org/) (CC0).
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
-| `name` | string | Internal identifier. Used as the tile's CSS id (`citizen-share-service-<name>`) so you can target it with custom CSS on your wiki. |
+| `name` | string | Internal identifier. Used as the tile's CSS id (`citizen-share-service-<name>`) so you can target it with custom CSS on your wiki. Characters outside `[a-zA-Z0-9_-]` are stripped from the id. |
 | `label` | string | The name your users see — read by screen readers and shown on hover. |
 | `url` | string | The link opened when the tile is clicked. Use `{{url}}` and `{{title}}` placeholders for the current page's URL and title. |
 | `color` | string | Background color of the tile. Match the service's brand color when possible. |
-| `open_in_modal` | boolean | Open in a small popup window instead of a new tab. Useful for services that show a share dialog, like X. |
+| `open_in_modal` | boolean | Open in a small popup window instead of a new tab. Useful for services that show a share dialog, like X. `mailto:` links always open in the same tab and ignore this flag. |
 | `icon` | string | The icon shown on the tile. See [Icons](#icons) below. |
 | `file` | string | Alternative to `icon`: the filename of an SVG uploaded to your wiki. See [Icons](#icons) below. |
 
