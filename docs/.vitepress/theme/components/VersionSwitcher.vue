@@ -40,6 +40,7 @@ function fromSiteRoot(rootRelative: string): string {
 const manifest = ref<VersionsManifest | undefined>(undefined);
 const manifestError = ref(false);
 const open = ref(false);
+const root = ref<HTMLElement | undefined>(undefined);
 const buttonId = useId();
 const menuId = useId();
 
@@ -107,46 +108,65 @@ async function selectVersion(entry: VersionEntry): Promise<void> {
 	const candidate = `${targetBase}${pathAfterBase()}`;
 	globalThis.location.href = await resolveTarget(targetBase, candidate);
 }
+
+function onBlur(event: FocusEvent) {
+	const next = event.relatedTarget as Node | null;
+	if (!root.value || !next || !root.value.contains(next)) {
+		open.value = false;
+	}
+}
 </script>
 
 <template>
-	<div class="VersionSwitcher">
+	<div
+		ref="root"
+		class="VersionSwitcher"
+		@mouseenter="open = true"
+		@mouseleave="open = false"
+		@focusout="onBlur"
+	>
 		<button
 			:id="buttonId"
-			class="VPNavBarMenuLink VersionSwitcher__button"
+			type="button"
+			class="VersionSwitcher__button"
 			:aria-expanded="open"
 			:aria-controls="menuId"
 			aria-haspopup="menu"
 			@click="open = !open"
 		>
-			<span class="VersionSwitcher__label">{{ currentVersion }}</span>
-			<span class="VersionSwitcher__caret" aria-hidden="true">▾</span>
+			<span class="VersionSwitcher__text">
+				<span>{{ currentVersion }}</span>
+				<span class="vpi-chevron-down VersionSwitcher__chevron" aria-hidden="true" />
+			</span>
 		</button>
-		<div v-if="open" :id="menuId" class="VersionSwitcher__menu" role="menu">
-			<template v-if="manifestError">
-				<div
-					class="VersionSwitcher__item VersionSwitcher__item--disabled"
-					role="menuitem"
-					aria-disabled="true"
-				>
-					Other versions unavailable
-				</div>
-			</template>
-			<template v-else>
-				<button
-					v-for="entry in entries"
-					:key="entry.id"
-					class="VersionSwitcher__item"
-					role="menuitem"
-					:aria-current="entry.id === currentVersion ? 'true' : undefined"
-					@click="selectVersion(entry)"
-				>
-					<span>{{ entry.label }}</span>
-					<span v-if="badgeFor(entry)" class="VersionSwitcher__badge">{{
-						badgeFor(entry)
-					}}</span>
-				</button>
-			</template>
+		<div :id="menuId" class="VersionSwitcher__menu" role="menu">
+			<div class="VersionSwitcher__panel">
+				<template v-if="manifestError">
+					<div
+						class="VersionSwitcher__item VersionSwitcher__item--disabled"
+						role="menuitem"
+						aria-disabled="true"
+					>
+						Other versions unavailable
+					</div>
+				</template>
+				<template v-else>
+					<button
+						v-for="entry in entries"
+						:key="entry.id"
+						type="button"
+						class="VersionSwitcher__item"
+						role="menuitem"
+						:aria-current="entry.id === currentVersion ? 'true' : undefined"
+						@click="selectVersion(entry)"
+					>
+						<span>{{ entry.label }}</span>
+						<span v-if="badgeFor(entry)" class="VersionSwitcher__badge">{{
+							badgeFor(entry)
+						}}</span>
+					</button>
+				</template>
+			</div>
 		</div>
 	</div>
 </template>
@@ -154,44 +174,66 @@ async function selectVersion(entry: VersionEntry): Promise<void> {
 <style scoped>
 .VersionSwitcher {
 	position: relative;
-	display: inline-flex;
-	align-items: center;
+}
+
+.VersionSwitcher:hover .VersionSwitcher__text,
+.VersionSwitcher__button:focus-visible .VersionSwitcher__text {
+	color: var(--vp-c-text-2);
 }
 
 .VersionSwitcher__button {
-	display: inline-flex;
+	display: flex;
 	align-items: center;
-	gap: 4px;
-	font-size: 14px;
-	font-weight: 500;
+	padding: 0 12px;
+	height: var(--vp-nav-height);
 	color: var(--vp-c-text-1);
 	background: transparent;
 	border: 0;
-	padding: 0 12px;
-	height: var(--vp-nav-height);
 	cursor: pointer;
+	transition: color 0.5s;
 }
 
-.VersionSwitcher__button:hover {
-	color: var(--vp-c-brand-1);
+.VersionSwitcher__text {
+	display: flex;
+	align-items: center;
+	line-height: var(--vp-nav-height);
+	font-size: 14px;
+	font-weight: 500;
+	color: var(--vp-c-text-1);
+	transition: color 0.25s;
 }
 
-.VersionSwitcher__caret {
-	font-size: 10px;
-	transform: translateY(1px);
+.VersionSwitcher__chevron {
+	margin-left: 4px;
+	font-size: 14px;
 }
 
 .VersionSwitcher__menu {
 	position: absolute;
-	top: calc(var(--vp-nav-height) - 4px);
+	top: calc(var(--vp-nav-height) / 2 + 20px);
 	right: 0;
-	min-width: 180px;
-	background: var(--vp-c-bg-elv);
+	opacity: 0;
+	visibility: hidden;
+	transition:
+		opacity 0.25s,
+		visibility 0.25s,
+		transform 0.25s;
+}
+
+.VersionSwitcher:hover .VersionSwitcher__menu,
+.VersionSwitcher__button[aria-expanded="true"] + .VersionSwitcher__menu {
+	opacity: 1;
+	visibility: visible;
+}
+
+.VersionSwitcher__panel {
+	min-width: 192px;
+	padding: 12px;
 	border: 1px solid var(--vp-c-divider);
 	border-radius: 12px;
-	padding: 6px;
+	background-color: var(--vp-c-bg-elv);
 	box-shadow: var(--vp-shadow-3);
-	z-index: var(--vp-z-index-nav);
+	transition: background-color 0.5s;
 }
 
 .VersionSwitcher__item {
@@ -200,24 +242,39 @@ async function selectVersion(entry: VersionEntry): Promise<void> {
 	align-items: center;
 	justify-content: space-between;
 	gap: 8px;
-	padding: 6px 10px;
-	border-radius: 8px;
+	padding: 0 12px;
+	line-height: 32px;
+	border-radius: 6px;
 	font-size: 14px;
+	font-weight: 500;
 	color: var(--vp-c-text-1);
 	background: transparent;
 	border: 0;
 	cursor: pointer;
 	text-align: left;
+	white-space: nowrap;
+	transition:
+		background-color 0.25s,
+		color 0.25s;
 }
 
 .VersionSwitcher__item:hover {
-	background: var(--vp-c-default-soft);
+	background-color: var(--vp-c-default-soft);
+	color: var(--vp-c-brand-1);
+}
+
+.VersionSwitcher__item[aria-current="true"] {
 	color: var(--vp-c-brand-1);
 }
 
 .VersionSwitcher__item--disabled {
 	color: var(--vp-c-text-3);
 	cursor: not-allowed;
+}
+
+.VersionSwitcher__item--disabled:hover {
+	background-color: transparent;
+	color: var(--vp-c-text-3);
 }
 
 .VersionSwitcher__badge {
@@ -227,5 +284,6 @@ async function selectVersion(entry: VersionEntry): Promise<void> {
 	background: var(--vp-c-default-soft);
 	padding: 2px 6px;
 	border-radius: 999px;
+	line-height: 1;
 }
 </style>
