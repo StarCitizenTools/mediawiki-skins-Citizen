@@ -1,0 +1,3 @@
+{
+	"@doc": "An empty fallback config for development purposes. Real values are provided by the ResourceLoader/ShareConfigProvider hook for the `MediaWiki:Citizen-share-services.json` on-wiki JSON interface page."
+}

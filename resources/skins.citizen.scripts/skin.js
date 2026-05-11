@@ -84,7 +84,13 @@ function main( window ) {
 	setupObservers.init( { document, window, mw, IntersectionObserver } );
 	dropdown.init( { document, window } );
 	createLastModified( { document, Intl } ).init();
-	createShare( { document, window, mw, navigator } ).init();
+	createShare( {
+		document,
+		window,
+		mw,
+		navigator,
+		mode: config.wgCitizenShareMode
+	} ).init();
 	createPerformanceMode( { document, mw } ).init();
 
 	mw.hook( 'wikipage.content' ).add( ( content ) => {

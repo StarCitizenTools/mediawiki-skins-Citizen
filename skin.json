@@ -206,6 +206,7 @@
 				"resources/skins.citizen.scripts/serviceWorker.js",
 				"resources/skins.citizen.scripts/setupObservers.js",
 				"resources/skins.citizen.scripts/share.js",
+				"resources/skins.citizen.scripts/triggerNativeShare.js",
 				"resources/skins.citizen.scripts/speculationRules.js",
 				"resources/skins.citizen.scripts/stickyHeader.js",
 				"resources/skins.citizen.scripts/tableOfContents.js",
@@ -314,6 +315,42 @@
 			"dependencies": [
 				"skins.citizen.preferences.codex",
 				"mediawiki.storage",
+				"mediawiki.util",
+				"vue"
+			]
+		},
+		"skins.citizen.share.codex": {
+			"class": "MediaWiki\\ResourceLoader\\CodexModule",
+			"codexComponents": [
+				"CdxButton",
+				"CdxIcon",
+				"CdxTextInput"
+			]
+		},
+		"skins.citizen.share": {
+			"packageFiles": [
+				"resources/skins.citizen.share/init.js",
+				"resources/skins.citizen.share/App.vue",
+				{
+					"name": "resources/skins.citizen.share/icons.json",
+					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
+					"callbackParam": [
+						"cdxIconCheck",
+						"cdxIconCopy"
+					]
+				},
+				{
+					"name": "resources/skins.citizen.share/services.json",
+					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenShareResourceLoaderConfig"
+				}
+			],
+			"messages": [
+				"citizen-share",
+				"citizen-share-copy-link",
+				"citizen-share-copied"
+			],
+			"dependencies": [
+				"skins.citizen.share.codex",
 				"mediawiki.util",
 				"vue"
 			]
@@ -984,6 +1021,18 @@
 		"TableOfContentsCollapseAtCount": {
 			"value": 28,
 			"description": "@var The minimum number of headings required to collapse all headings in the sticky table of contents by default."
+		},
+		"EnableShare": {
+			"value": true,
+			"description": "Enable or disable the share button",
+			"descriptionmsg": "citizen-config-enableshare",
+			"public": true
+		},
+		"ShareMode": {
+			"value": "auto",
+			"description": "Which share UI to present. 'auto' (default): try the browser's Web Share API first and fall back to Citizen's panel when unavailable. 'panel': always use Citizen's panel. 'native': always use the Web Share API, with a clipboard fallback on unsupported browsers.",
+			"descriptionmsg": "citizen-config-sharemode",
+			"public": true
 		},
 		"HeaderPosition": {
 			"value": "left",

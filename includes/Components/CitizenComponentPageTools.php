@@ -84,7 +84,18 @@ class CitizenComponentPageTools implements CitizenComponent {
 			 */
 			'is-uls-ready' => false,
 			'int-language-count' => $this->numLanguages,
-			'is-sharable' => $this->title->exists() && $this->title->isContentPage(),
+			'is-sharable' => $this->config->get( 'CitizenEnableShare' )
+				&& $this->title->exists()
+				&& $this->title->isContentPage(),
+			// The panel scaffolding renders for any mode that might use it
+			// at click time. 'native' skips it entirely; 'auto' and 'panel'
+			// both potentially mount Vue inside the dialog, so the dialog
+			// markup must be in the initial HTML.
+			'has-share-panel-markup' => in_array(
+				$this->config->get( 'CitizenShareMode' ),
+				[ 'auto', 'panel' ],
+				true
+			),
 			'msg-citizen-share' => $this->localizer->msg( "citizen-share" )->text()
 		];
 	}

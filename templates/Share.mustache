@@ -1,8 +1,32 @@
-<button
-	id="citizen-share"
-	class="citizen-share citizen-dropdown-summary citizen-cdx-button--size-large cdx-button cdx-button--weight-quiet cdx-button--icon-only"
-	title="{{msg-citizen-share}}"
->
-	<span class="citizen-ui-icon mw-ui-icon-wikimedia-share"></span>
-	<span>{{msg-citizen-share}}</span>
-</button>
+{{!
+	string msg-citizen-share The label used by the share button.
+	boolean has-share-panel-markup When true, render the dialog scaffolding alongside the button.
+}}
+<div class="citizen-share-trigger citizen-header__item">
+	<button
+		type="button"
+		id="citizen-share"
+		class="citizen-share citizen-cdx-button--size-large cdx-button cdx-button--weight-quiet cdx-button--icon-only"
+		title="{{msg-citizen-share}}"
+		aria-label="{{msg-citizen-share}}"
+		{{#has-share-panel-markup}}aria-haspopup="dialog"{{/has-share-panel-markup}}
+	>
+		<span class="citizen-ui-icon mw-ui-icon-wikimedia-share"></span>
+		<span>{{msg-citizen-share}}</span>
+	</button>
+	{{#has-share-panel-markup}}
+	<dialog
+		id="citizen-share-dialog"
+		class="citizen-share-dialog"
+		aria-label="{{msg-citizen-share}}"
+	>
+		<div id="citizen-share-dialog-content" class="citizen-share-dialog__content">
+			<div class="citizen-share-skeleton" role="status" aria-busy="true" aria-live="polite">
+				<div class="citizen-share-skeleton__bar citizen-share-skeleton__bar--short"></div>
+				<div class="citizen-share-skeleton__bar citizen-share-skeleton__bar--wide"></div>
+				<div class="citizen-share-skeleton__bar citizen-share-skeleton__bar--medium"></div>
+			</div>
+		</div>
+	</dialog>
+	{{/has-share-panel-markup}}
+</div>

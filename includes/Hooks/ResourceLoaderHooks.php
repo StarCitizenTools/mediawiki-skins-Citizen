@@ -9,7 +9,9 @@ use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\ResourceLoader as RL;
+use MediaWiki\Skins\Citizen\OnWikiJsonReader;
 use MediaWiki\Skins\Citizen\PreferencesConfigProvider;
+use MediaWiki\Skins\Citizen\ShareConfigProvider;
 
 /**
  * Hooks to run relating to the resource loader
@@ -30,6 +32,7 @@ class ResourceLoaderHooks {
 			'wgCitizenEnablePreferences' => $config->get( 'CitizenEnablePreferences' ),
 			'wgCitizenOverflowInheritedClasses' => $config->get( 'CitizenOverflowInheritedClasses' ),
 			'wgCitizenOverflowNowrapClasses' => $config->get( 'CitizenOverflowNowrapClasses' ),
+			'wgCitizenShareMode' => $config->get( 'CitizenShareMode' ),
 		];
 	}
 
@@ -67,6 +70,28 @@ class ResourceLoaderHooks {
 	}
 
 	/**
+	 * Passes config variables to skins.citizen.share ResourceLoader module.
+	 * @param RL\Context $context
+	 * @param Config $config
+	 * @return array
+	 */
+	public static function getCitizenShareResourceLoaderConfig(
+		RL\Context $context,
+		Config $config
+	): array {
+		$mwServices = MediaWikiServices::getInstance();
+		$provider = new ShareConfigProvider(
+			new OnWikiJsonReader(
+				$mwServices->getRevisionLookup(),
+				$mwServices->getTitleFactory()
+			),
+			$mwServices->getUrlUtils()
+		);
+
+		return $provider->getServiceOptions() ?? [];
+	}
+
+	/**
 	 * Return on-wiki preferences overrides with pre-resolved message texts.
 	 *
 	 * @param RL\Context $context
@@ -79,8 +104,10 @@ class ResourceLoaderHooks {
 	): array {
 		$services = MediaWikiServices::getInstance();
 		$provider = new PreferencesConfigProvider(
-			$services->getRevisionLookup(),
-			$services->getTitleFactory(),
+			new OnWikiJsonReader(
+				$services->getRevisionLookup(),
+				$services->getTitleFactory()
+			),
 			$context
 		);
 		return $provider->getOverrides( $context->getLanguage() );

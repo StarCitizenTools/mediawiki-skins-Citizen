@@ -170,6 +170,34 @@ The minimum number of headings required before the sticky table of contents auto
 $wgCitizenTableOfContentsCollapseAtCount = 28;
 ```
 
+## Share
+
+### `$wgCitizenEnableShare`
+
+Shows the share option on content pages (when the page exists).
+
+```php [LocalSettings.php]
+$wgCitizenEnableShare = true;
+```
+
+**Values**: `true`, `false`
+
+### `$wgCitizenShareMode`
+
+Which share UI to present.
+
+```php [LocalSettings.php]
+$wgCitizenShareMode = 'auto';
+```
+
+**Values**:
+
+- `'auto'` (default) — try the browser's Web Share API first; fall back to Citizen's panel when the API isn't available (e.g. desktop Firefox).
+- `'panel'` — always use Citizen's panel.
+- `'native'` — always use the Web Share API, with a clipboard fallback on browsers that don't support it.
+
+See the [Share customization page](/customization/share) for the panel's JSON shape and a starter pack.
+
 ## Webapp manifest
 
 ### `$wgCitizenEnableManifest`
