@@ -1,23 +1,25 @@
 ---
 title: Share
-description: How to configure Citizen's share panel and service tiles
+description: Share the current page via the browser's native share sheet or a configurable grid of services.
 ---
 
 # Share
 
-Citizen has three share modes, set via `$wgCitizenShareMode` in `LocalSettings.php`:
+The share panel lets readers send the current page to other people — through their device's native share sheet, a configurable grid of services on the wiki, or as a short URL or QR code.
 
-- **`'auto'`** *(default)* — uses the browser's Web Share API when available (mobile devices, desktop Safari, Chrome, Edge). Falls back to Citizen's in-page panel on browsers without it (e.g. desktop Firefox). Best of both worlds for most wikis.
-- **`'panel'`** — always opens Citizen's in-page panel. Use this when you want consistent branding across all browsers, or when your curated share targets are central to your wiki's identity.
-- **`'native'`** — always uses the Web Share API. Falls back to a clipboard copy with a toast notification on browsers without it. Use this when you want to defer entirely to the OS share experience.
+## How it works
 
-## What users see
+Citizen offers three share modes:
 
-When the panel opens, it always shows a copy-link field, so sharing always works even if you haven't set up any services. The grid of service tiles below it only appears when you've configured services on your wiki.
+- **Native** — surfaces the device's OS-level share sheet (apps, contacts, AirDrop, etc.). Available on mobile devices and desktop Safari, Chrome, and Edge; on browsers without Web Share API support it falls back to a clipboard copy with a toast notification.
+- **Panel** — opens Citizen's in-page panel. Always includes a copy-link field, and if you've configured services on your wiki, a grid of branded service tiles below it. Optionally adds short URL and QR code buttons when [Extension:UrlShortener](https://www.mediawiki.org/wiki/Extension:UrlShortener) is installed.
+- **Auto** *(default)* — uses Native when the browser supports it, falls back to Panel otherwise.
+
+Wiki admins choose which mode is active — see [Configuration](#configuration) below.
 
 Citizen doesn't ship with a built-in service list. The right services depend on your audience — a German federated wiki may want Diaspora; a corporate intranet may want none at all. You pick.
 
-## Short URLs and QR codes
+### Short URLs and QR codes
 
 When [Extension:UrlShortener](https://www.mediawiki.org/wiki/Extension:UrlShortener) is installed, the share panel adds two buttons below the copy-link field:
 
@@ -26,11 +28,27 @@ When [Extension:UrlShortener](https://www.mediawiki.org/wiki/Extension:UrlShorte
 
 The copy-link field and the share tiles always use the full page URL — short URLs are reserved for the dedicated button and the QR view. If UrlShortener isn't installed, neither button appears and the rest of the panel works the same.
 
-## Adding share services
+## Configuration
+
+Set the share mode via `$wgCitizenShareMode` in `LocalSettings.php`:
+
+```php
+$wgCitizenShareMode = 'auto'; // 'auto' | 'panel' | 'native'
+```
+
+| Value | When to use |
+| :--- | :--- |
+| `'auto'` *(default)* | Best of both worlds — most wikis should keep the default. |
+| `'panel'` | When you want consistent branding across all browsers, or when your curated share targets are central to your wiki's identity. |
+| `'native'` | When you want to defer entirely to the OS share experience. |
+
+## Extending the share panel
+
+### On-wiki JSON
 
 Create the page `MediaWiki:Citizen-share-services.json` on your wiki and paste a JSON array of service entries. Save the page, and the new services appear the next time anyone opens the panel.
 
-### Starter pack
+#### Starter pack
 
 Here's a Facebook / X / Mastodon / Bluesky setup you can copy in as-is. Icons are embedded directly, so nothing extra needs to be uploaded:
 
@@ -70,7 +88,7 @@ Here's a Facebook / X / Mastodon / Bluesky setup you can copy in as-is. Icons ar
 
 Icons are [Simple Icons](https://simpleicons.org/) (CC0).
 
-### Service fields
+#### Service fields
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
@@ -82,7 +100,7 @@ Icons are [Simple Icons](https://simpleicons.org/) (CC0).
 | `icon` | string | The icon shown on the tile. See [Icons](#icons) below. |
 | `file` | string | Alternative to `icon`: the filename of an SVG uploaded to your wiki. See [Icons](#icons) below. |
 
-### Icons
+#### Icons
 
 The icon is shown in white on the brand color, so single-color glyphs work best. Three ways to provide one:
 

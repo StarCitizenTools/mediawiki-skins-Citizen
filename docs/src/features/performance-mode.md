@@ -1,13 +1,13 @@
 ---
 title: Performance mode
-description: How Citizen adapts to low-end hardware and how to hook into it in custom styles
+description: A lightweight mode that strips animations and visual effects for fast page loads.
 ---
 
 # Performance mode
 
 Performance mode dials back animations and visual effects so the skin feels fast on any device.
 
-## What it does
+## How it works
 
 When performance mode is on, Citizen:
 
@@ -19,11 +19,11 @@ When performance mode is on, Citizen:
 MediaWiki core handles the OS-level `prefers-reduced-motion` media query on its own. Performance mode is a skin-level toggle that goes further — it also strips out frosted glass and other visual flourishes that reduced motion doesn't cover.
 :::
 
-## Automatic detection
-
 Performance mode starts **on by default**. On the first page load, Citizen checks for WebGL support and quietly turns it off if the device has GPU acceleration. Without a GPU, it stays on. The result is saved in the browser, so the check only runs once. Users can always flip it in their preferences.
 
-## Admin controls
+## Extending performance mode
+
+### On-wiki JSON
 
 You can hide the performance mode toggle or lock it to a specific value through [preference overrides](./preferences#removing-a-built-in-preference). To remove it from the preferences panel entirely:
 
@@ -37,7 +37,7 @@ You can hide the performance mode toggle or lock it to a specific value through 
 
 Place this on `MediaWiki:Citizen-preferences.json`.
 
-## Hooking into performance mode
+### Custom styles
 
 Citizen sets a class on the root element that you can target in your own styles:
 
@@ -60,7 +60,7 @@ Use these to gate heavy effects, swap in lighter alternatives, or simplify layou
 }
 ```
 
-### Animation readiness
+#### Animation readiness
 
 Citizen also prevents transitions from firing during initial page load. The `.citizen-animations-ready` class is added to the root element once the skin's JavaScript has loaded — transition tokens like `--transition-hover` and `--transition-menu` are only defined under this class.
 
@@ -72,7 +72,7 @@ Gate your own transitions the same way to avoid jank on first paint:
 }
 ```
 
-### Affected custom properties
+#### Affected custom properties
 
 Performance mode overrides these custom properties, so anything that references them adapts without extra work:
 
