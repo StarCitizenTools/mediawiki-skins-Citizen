@@ -64,7 +64,7 @@ The sticky header and some overlays use a frosted glass effect — a heavier blu
 
 ## Remove or modify preferences
 
-Admins can remove or customize any built-in preference through `MediaWiki:Citizen-preferences.json`. See the [preferences documentation](/customization/preferences) for the full schema.
+Admins can remove or customize any built-in preference through `MediaWiki:Citizen-preferences.json`. See the [preferences documentation](/features/preferences) for the full schema.
 
 For example, to keep only light and dark in the theme switcher (removing automatic mode):
 

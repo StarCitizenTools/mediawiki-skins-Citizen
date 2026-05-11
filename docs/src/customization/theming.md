@@ -115,3 +115,11 @@ Citizen supports Light, Dark, Pure Black, and Automatic modes. Use these selecto
 | Dark | `.skin-theme-clientpref-night` |
 | Pure black | `.skin-theme-clientpref-night.citizen-feature-pure-black-clientpref-1` |
 | Automatic | `.skin-theme-clientpref-os` |
+
+### Inverting images in dark mode
+
+Some images, especially black text or icons on a transparent background, become invisible in dark mode. Citizen exposes a `--filter-invert` CSS variable that inverts colors only when a dark theme is active. Apply it to the element containing the image:
+
+```css
+filter: var( --filter-invert );
+```

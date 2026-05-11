@@ -1,21 +1,13 @@
 ---
-title: Features
-description: Explore the exclusive features that Citizen offers
+title: Utility classes
+description: CSS classes Citizen exposes for formatting and interactivity
 ---
 
-# Features
+# Utility classes
 
-Citizen includes several built-in features designed to enhance the functionality and interactivity of your wiki.
+Citizen provides a set of utility classes you can use directly in wikitext, templates, and gadgets to format content and add interactivity without writing custom CSS.
 
-## Command palette
-
-The command palette is a powerful tool for quick navigation and actions. Learn more about how to configure and use it in the [command palette documentation](./command-palette).
-
-## Utility classes
-
-Citizen provides a set of utility classes to help you format content and add interactivity without writing custom CSS.
-
-### Layout
+## Layout
 
 Control the positioning and flow of your content.
 
@@ -27,7 +19,7 @@ Control the positioning and flow of your content.
 | <CopyCode code=".citizen-overflow" /> | Wraps content in a horizontally scrollable container with indicators. |
 | <CopyCode code=".citizen-overflow-sticky-header" /> | Makes an element sticky within a `.citizen-overflow` container. |
 
-#### Element sticky header
+### Element sticky header
 
 You can make headers sticky within a scrollable area (like a wide table) by adding the `citizen-overflow-sticky-header` class. This works for both `div` elements and wikitables.
 
@@ -55,7 +47,7 @@ For wikitables:
 |}
 ```
 
-### Tables
+## Tables
 
 Enhance the look and feel of your tables.
 
@@ -67,7 +59,7 @@ Enhance the look and feel of your tables.
 | <CopyCode code=".wikitable--fluid" /> | Expands the table to fill 100% of the available width. |
 | <CopyCode code=".citizen-table-nowrap" /> | Prevents the table from being wrapped in a scrollable container. |
 
-### Interaction
+## Interaction
 
 Add interactive elements to your pages.
 
@@ -75,7 +67,7 @@ Add interactive elements to your pages.
 | :--- | :--- |
 | <CopyCode code=".citizen-search-trigger" /> | Opens the site search interface when clicked. |
 
-#### Search trigger
+### Search trigger
 
 You can create buttons or links that trigger the search popup using the `.citizen-search-trigger` class.
 
@@ -89,18 +81,4 @@ To prefill the search query (for example, to search only templates):
 
 ```html
 <div class="citizen-search-trigger" data-citizen-search-prefill="Template:">Click me to search templates</div>
-```
-
-## Performance mode
-
-Performance mode strips back animations and visual effects so the skin stays smooth on low-end hardware. Learn how it works and how to hook into it in the [performance mode documentation](./performance-mode).
-
-## Dark mode support
-
-Some images, especially black text or icons, might not be visible in dark mode. You can invert their colors using the `--filter-invert` variable.
-
-Simply add this CSS rule to the element containing the image:
-
-```css
-filter: var( --filter-invert );
 ```

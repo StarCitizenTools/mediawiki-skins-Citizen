@@ -131,7 +131,7 @@ $wgCitizenEnableCJKFonts = false;
 
 ### `$wgCitizenEnablePreferences`
 
-Enables the user [preferences panel](/customization/preferences), allowing visitors to customize their experience. The panel is extensible — admins can add custom preferences via on-wiki JSON, and gadgets can register their own options at runtime.
+Enables the user [preferences panel](/features/preferences), allowing visitors to customize their experience. The panel is extensible — admins can add custom preferences via on-wiki JSON, and gadgets can register their own options at runtime.
 
 ```php [LocalSettings.php]
 $wgCitizenEnablePreferences = true;
@@ -196,7 +196,7 @@ $wgCitizenShareMode = 'auto';
 - `'panel'` — always use Citizen's panel.
 - `'native'` — always use the Web Share API, with a clipboard fallback on browsers that don't support it.
 
-See the [Share customization page](/customization/share) for the panel's JSON shape and a starter pack.
+See the [Share customization page](/features/share) for the panel's JSON shape and a starter pack.
 
 ## Webapp manifest
 
