@@ -1,6 +1,18 @@
 const Vue = require( 'vue' );
 const App = require( './App.vue' );
-const services = require( './services.json' );
+const config = require( './config.json' );
+
+const DEFAULT_URL_SHORTENER_CONFIG = {
+	available: false,
+	qrAvailable: false
+};
+
+const services = Array.isArray( config.services ) ? config.services : [];
+const urlShortener = Object.assign(
+	{},
+	DEFAULT_URL_SHORTENER_CONFIG,
+	config.urlShortener || {}
+);
 
 /**
  * Mount the share dialog content into the given target.
@@ -16,7 +28,8 @@ const services = require( './services.json' );
  */
 function initApp( mountPoint ) {
 	const app = Vue.createMwApp( App );
-	app.provide( 'shareServiceOptions', Array.isArray( services ) ? services : [] );
+	app.provide( 'shareServiceOptions', services );
+	app.provide( 'urlShortenerConfig', urlShortener );
 	app.mount( mountPoint );
 }
 

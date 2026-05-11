@@ -73,7 +73,7 @@ class ResourceLoaderHooks {
 	 * Passes config variables to skins.citizen.share ResourceLoader module.
 	 * @param RL\Context $context
 	 * @param Config $config
-	 * @return array
+	 * @return array{services: array, urlShortener: array{available: bool, qrAvailable: bool}}
 	 */
 	public static function getCitizenShareResourceLoaderConfig(
 		RL\Context $context,
@@ -88,7 +88,19 @@ class ResourceLoaderHooks {
 			$mwServices->getUrlUtils()
 		);
 
-		return $provider->getServiceOptions() ?? [];
+		$extensionRegistry = ExtensionRegistry::getInstance();
+		$urlShortenerLoaded = $extensionRegistry->isLoaded( 'UrlShortener' );
+		$qrAvailable = $urlShortenerLoaded
+			&& $config->has( 'UrlShortenerEnableQrCode' )
+			&& (bool)$config->get( 'UrlShortenerEnableQrCode' );
+
+		return [
+			'services' => $provider->getServiceOptions() ?? [],
+			'urlShortener' => [
+				'available' => $urlShortenerLoaded,
+				'qrAvailable' => $qrAvailable,
+			],
+		];
 	}
 
 	/**

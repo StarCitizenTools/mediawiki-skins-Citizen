@@ -330,24 +330,39 @@
 		"skins.citizen.share": {
 			"packageFiles": [
 				"resources/skins.citizen.share/init.js",
+				"resources/skins.citizen.share/composables/useUrlShortener.js",
+				"resources/skins.citizen.share/composables/useDialogResizeAnimation.js",
+				"resources/skins.citizen.share/iconStyle.js",
 				"resources/skins.citizen.share/App.vue",
 				{
 					"name": "resources/skins.citizen.share/icons.json",
 					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
 					"callbackParam": [
+						"cdxIconArrowPrevious",
 						"cdxIconCheck",
-						"cdxIconCopy"
+						"cdxIconCopy",
+						"cdxIconLink",
+						"cdxIconQrCode"
 					]
 				},
 				{
-					"name": "resources/skins.citizen.share/services.json",
+					"name": "resources/skins.citizen.share/config.json",
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenShareResourceLoaderConfig"
 				}
 			],
 			"messages": [
 				"citizen-share",
 				"citizen-share-copy-link",
-				"citizen-share-copied"
+				"citizen-share-copied",
+				"citizen-share-copy-short-url",
+				"citizen-share-short-url-copied",
+				"citizen-share-short-url-error",
+				"citizen-share-show-qr",
+				"citizen-share-qr-title",
+				"citizen-share-qr-scan-hint",
+				"citizen-share-qr-error",
+				"citizen-share-qr-retry",
+				"citizen-share-back"
 			],
 			"dependencies": [
 				"skins.citizen.share.codex",

@@ -4,12 +4,23 @@
 // native share sheet, so there is no in-place error state.
 
 .citizen-share-dialog {
+	// `useDialogResizeAnimation` writes the measured content height to
+	// the dialog's inline `style.height`. Under the project's global
+	// `border-box`, that value would include the dialog's border, so
+	// the content area would be 2 px shorter than the content it holds
+	// and the resulting overflow would summon a scrollbar. `content-box`
+	// makes the inline height refer to the content area directly, which
+	// matches what the composable measures on the Vue root.
+	box-sizing: content-box;
 	width: min( 32rem, calc( 100vw - 2 * var( --space-md ) ) );
 	max-height: calc( 100vh - 2 * var( --space-md ) );
 	padding: 0;
 	// Horizontal hidden keeps the rounded corners clean; vertical auto
 	// lets the dialog scroll when the configured services overflow the
-	// viewport-bounded max-height.
+	// viewport-bounded max-height. The height animation set by Vue's
+	// useDialogResizeAnimation composable writes the rendered content
+	// height as inline `style.height`, so the scrollbar only appears
+	// when content genuinely exceeds the viewport-bounded max-height.
 	overflow: hidden auto;
 	background-color: var( --background-color-base );
 	border: var( --border-base );
@@ -25,7 +36,6 @@
 	&__content {
 		display: flex;
 		flex-direction: column;
-		min-height: 8rem;
 	}
 }
 
@@ -40,8 +50,21 @@
 		transform: scale( 0.96 );
 		transition-timing-function: var( --transition-timing-function-ease-out );
 		transition-duration: var( --transition-duration-medium );
+		// `transition-behavior: allow-discrete` applies only to the
+		// discrete `display` and `overlay` properties.
 		transition-property: opacity, transform, display, overlay;
 		transition-behavior: allow-discrete;
+	}
+
+	// Height is added to `transition-property` only after Vue's
+	// useDialogResizeAnimation composable has written the first inline
+	// `style.height`. Animating height during the initial open would
+	// make the dialog grow from the skeleton's intrinsic height to the
+	// mounted-content height as a visible animation; gating on a class
+	// keeps that first paint static and reserves the animation for view
+	// swaps (default ↔ QR) that the user explicitly triggers.
+	.citizen-share-dialog--animated {
+		transition-property: opacity, transform, height, display, overlay;
 	}
 
 	.citizen-share-dialog[ open ] {
@@ -79,6 +102,11 @@
 	display: flex;
 	flex-direction: column;
 	gap: var( --space-sm );
+	// Keep the loading state visually substantial during the brief
+	// `mw.loader.using()` round-trip. Once Vue mounts and replaces this
+	// element, the dialog hugs its content height via the resize
+	// composable, so this min-height only applies to the skeleton.
+	min-height: 8rem;
 	padding: var( --space-md );
 
 	&__bar {
