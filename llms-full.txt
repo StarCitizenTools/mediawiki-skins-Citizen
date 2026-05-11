@@ -403,6 +403,10 @@ Adds an Ask query mode to the command palette. Type `/smw:` to build structured 
 
 Only needed if you use [TemplateStyles](https://www.mediawiki.org/wiki/Extension:TemplateStyles). Enables CSS variables in TemplateStyles, including Citizen's design tokens.
 
+### [UrlShortener](https://www.mediawiki.org/wiki/Extension:UrlShortener)
+
+Adds a "Copy short URL" button to the share panel for one-click clipboard copy, plus a QR code view when `$wgUrlShortenerEnableQrCode` is enabled. See [Share](../features/share.md#short-urls-and-qr-codes) for details.
+
 ## Gadget enhancements
 
 Some on-wiki gadgets pair particularly well with Citizen. Unlike extensions, gadgets are installed wiki-side (see [Extension:Gadgets](https://www.mediawiki.org/wiki/Extension:Gadgets)) and enabled per-user from `Special:Preferences`.
@@ -1208,6 +1212,15 @@ Citizen has three share modes, set via `$wgCitizenShareMode` in `LocalSettings.p
 When the panel opens, it always shows a copy-link field, so sharing always works even if you haven't set up any services. The grid of service tiles below it only appears when you've configured services on your wiki.
 
 Citizen doesn't ship with a built-in service list. The right services depend on your audience — a German federated wiki may want Diaspora; a corporate intranet may want none at all. You pick.
+
+## Short URLs and QR codes
+
+When [Extension:UrlShortener](https://www.mediawiki.org/wiki/Extension:UrlShortener) is installed, the share panel adds two buttons below the copy-link field:
+
+* **Copy short URL** — copies a shortened URL to the clipboard in one click. The result is reused for the rest of the session, so clicking again or reopening the panel is instant.
+* **Show QR code** — opens a focused QR view inside the same panel, with the short URL printed below as a fallback for anything that can't scan. Only appears when `$wgUrlShortenerEnableQrCode` is enabled.
+
+The copy-link field and the share tiles always use the full page URL — short URLs are reserved for the dedicated button and the QR view. If UrlShortener isn't installed, neither button appears and the rest of the panel works the same.
 
 ## Adding share services
 

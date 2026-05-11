@@ -53,6 +53,10 @@ Adds an Ask query mode to the command palette. Type `/smw:` to build structured 
 
 Only needed if you use [TemplateStyles](https://www.mediawiki.org/wiki/Extension:TemplateStyles). Enables CSS variables in TemplateStyles, including Citizen's design tokens.
 
+### [UrlShortener](https://www.mediawiki.org/wiki/Extension:UrlShortener)
+
+Adds a "Copy short URL" button to the share panel for one-click clipboard copy, plus a QR code view when `$wgUrlShortenerEnableQrCode` is enabled. See [Share](../features/share.md#short-urls-and-qr-codes) for details.
+
 ## Gadget enhancements
 
 Some on-wiki gadgets pair particularly well with Citizen. Unlike extensions, gadgets are installed wiki-side (see [Extension:Gadgets](https://www.mediawiki.org/wiki/Extension:Gadgets)) and enabled per-user from `Special:Preferences`.
