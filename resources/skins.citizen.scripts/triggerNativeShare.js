@@ -1,10 +1,10 @@
 /**
  * Trigger the browser's native share sheet, with a clipboard fallback.
  *
- * Used directly by createShareNative for the simple-button mode and as the
- * fallback path inside createShare when the customizable panel's Vue bundle
- * fails to load. Stays DOM-free so either caller can invoke it without
- * setting up the panel's `<details>` markup.
+ * Called from share.js for the 'native' mode path, for the 'auto' mode
+ * Web Share API fast-path, and as the last-resort fallback when the
+ * panel bundle fails to load. Stays DOM-free so any caller can invoke
+ * it without setting up the panel's `<dialog>` scaffolding.
  *
  * @param {Object} deps
  * @param {Document} deps.document
