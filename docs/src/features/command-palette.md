@@ -1,13 +1,13 @@
 ---
 title: Command palette
-description: Citizen's search feature and command palette
+description: A keyboard-driven palette for jumping to pages, running actions, and searching the wiki.
 ---
 
 # Command palette
 
 The command palette lets you search for articles quickly and efficiently. Press `/` to see all available entries, or type to start searching right away.
 
-## Modes and commands
+## How it works
 
 The palette supports two kinds of entries:
 
@@ -56,11 +56,11 @@ Some modes turn parts of your query into tags. For example, typing `Talk:` in de
 
 To change a tag, press <kbd>Backspace</kbd> on an empty input. The first press highlights the last tag (footer hint: **Select tag**). A second press turns it back into editable text (footer hint: **Edit tag**), so you can fix a typo without retyping the whole thing. Keep pressing to delete the text character by character.
 
-## Built-in modes
+### Built-in modes
 
 Most built-in modes (namespace, action, user) work as straightforward search — type a query, get results. The modes below have additional behavior worth knowing about.
 
-### Categories
+#### Categories
 
 The category mode helps you find a category and see what's inside it. Open it with `/cat:` or `#`.
 
@@ -70,7 +70,7 @@ The category mode helps you find a category and see what's inside it. Open it wi
 - **<kbd>Backspace</kbd> on an empty input** backs out one level. At the top, <kbd>Backspace</kbd> closes the mode.
 - **Each result has action buttons** on the right — focus them with <kbd>→</kbd>. Categories offer **View** (the actual `Category:` page) and **Edit**; pages offer **Edit**.
 
-### Revision history
+#### Revision history
 
 The history mode lists recent edits to the current page so you can scan who changed what and jump to a revision. Open it with `/hist:` or `!`.
 
@@ -83,7 +83,7 @@ The history mode lists recent edits to the current page so you can scan who chan
 If users have the [Instant Diffs](https://www.mediawiki.org/wiki/Instant_Diffs) gadget enabled, activating a revision opens the gadget's preview dialog above the still-mounted palette, so they can dismiss it and pick another revision without losing their place. See [Extensions and gadgets](../config/extensions.md#gadget-enhancements) for details.
 :::
 
-### Files and media
+#### Files and media
 
 The file mode finds images, PDFs, audio, video, and other files on the wiki and renders them as a gallery of thumbnails. Open it with `/file:` or `~`.
 
@@ -95,7 +95,7 @@ The file mode finds images, PDFs, audio, video, and other files on the wiki and 
 
 The mode matches file titles by prefix first, so typing the start of a filename works on every wiki regardless of search backend. If nothing matches by prefix, it falls back to a full-text search — which surfaces deeper hits when [CirrusSearch](https://www.mediawiki.org/wiki/Extension:CirrusSearch) is installed.
 
-### Semantic MediaWiki
+#### Semantic MediaWiki
 
 When [Semantic MediaWiki](https://www.semantic-mediawiki.org/) is installed, the `/smw:` mode lets you run Ask queries interactively. Type conditions like `[[Category:City]]` or `[[Located in::Germany]]` — each completed `[[...]]` condition becomes a token chip, and matching pages appear as results.
 
@@ -344,7 +344,7 @@ mw.hook( 'citizen.commandPalette.register' ).add( function ( data ) {
 
 :::
 
-## Migration from previous API
+### Migration from previous API
 
 ::: warning Breaking change
 If you have custom commands registered with the previous API, you'll need to update them:
