@@ -11,13 +11,14 @@ const { triggerNativeShare } = require( './triggerNativeShare.js' );
  * - 'auto' (default): prefer Web Share API when the browser supports it;
  *   fall back to the panel when it doesn't.
  *
- * When the panel is reachable in the current mode, share.js binds intent
- * prefetch on the trigger, opens the server-rendered `<dialog>` with a
- * skeleton on click, and lazy-loads `skins.citizen.share`. The Vue app
- * mounts inside the dialog and replaces the skeleton; subsequent clicks
- * reopen the same `<dialog>`. If the bundle fails to load, the dialog
- * closes and we degrade to the native share path so the click is never
- * lost.
+ * When the panel is reachable in the current mode (always for 'panel',
+ * and for 'auto' only when the browser lacks the Web Share API), share.js
+ * binds intent prefetch on the trigger, opens the server-rendered
+ * `<dialog>` with a skeleton on click, and lazy-loads `skins.citizen.share`.
+ * The Vue app mounts inside the dialog and replaces the skeleton;
+ * subsequent clicks reopen the same `<dialog>`. If the bundle fails to
+ * load, the dialog closes and we degrade to the native share path so the
+ * click is never lost.
  *
  * @param {Object} deps
  * @param {Document} deps.document
@@ -37,18 +38,26 @@ function createShare( { document, window, mw, navigator, mode = 'auto' } ) {
 			return;
 		}
 
-		const nativeDialog = document.getElementById( 'citizen-share-dialog' );
-		const mountPoint = document.getElementById( 'citizen-share-dialog-content' );
-		const hasPanelScaffolding = nativeDialog !== null && mountPoint !== null;
+		// Decide once at init time: in 'auto' mode, a browser with the
+		// Web Share API will never reach the panel, so prefetching the
+		// Vue bundle on hover is wasted bandwidth. 'panel' always needs
+		// the scaffolding; 'native' never does.
+		const hasWebShare = typeof navigator.share === 'function';
+		const needsPanel = mode === 'panel' || ( mode === 'auto' && !hasWebShare );
 
-		// 'auto' can fall back to the panel, so it needs the scaffolding.
-		// 'panel' obviously needs it. 'native' never touches it.
-		const panelEnabled = ( mode === 'panel' || mode === 'auto' ) && hasPanelScaffolding;
+		const nativeDialog = needsPanel ?
+			document.getElementById( 'citizen-share-dialog' ) :
+			null;
+		const mountPoint = needsPanel ?
+			document.getElementById( 'citizen-share-dialog-content' ) :
+			null;
+		const panelEnabled = needsPanel && nativeDialog !== null && mountPoint !== null;
 
 		if ( !panelEnabled ) {
-			// 'native' mode, or a page that lacks the scaffolding. The
-			// button calls navigator.share directly with a clipboard
-			// fallback — no lazy-load, no prefetch.
+			// 'native' mode, 'auto' with the Web Share API available, or
+			// a page that lacks the panel scaffolding. The button calls
+			// navigator.share directly with a clipboard fallback — no
+			// lazy-load, no prefetch.
 			trigger.addEventListener( 'click', ( event ) => {
 				event.preventDefault();
 				triggerNativeShare( nativeDeps );
@@ -60,12 +69,6 @@ function createShare( { document, window, mw, navigator, mode = 'auto' } ) {
 
 		trigger.addEventListener( 'click', ( event ) => {
 			event.preventDefault();
-			// Decide native vs panel at click time. 'panel' always uses
-			// the panel; 'auto' prefers native when the API exists.
-			if ( mode === 'auto' && typeof navigator.share === 'function' ) {
-				triggerNativeShare( nativeDeps );
-				return;
-			}
 			panel.open();
 		} );
 	}

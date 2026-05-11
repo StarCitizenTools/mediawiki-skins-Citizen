@@ -200,13 +200,23 @@ describe( 'createShare', () => {
 			expect( mw.loader.using ).toHaveBeenCalled();
 		} );
 
-		it( 'prefetches the panel bundle in case fallback is needed', () => {
+		it( 'prefetches the panel bundle when navigator.share is unavailable', () => {
+			delete navigatorMock.share;
 			createShare( deps( 'auto' ) ).init();
 			const trigger = document.getElementById( 'citizen-share' );
 
 			trigger.dispatchEvent( new Event( 'pointerenter' ) );
 
 			expect( mw.loader.load ).toHaveBeenCalledWith( 'skins.citizen.share' );
+		} );
+
+		it( 'does not prefetch when navigator.share is available', () => {
+			createShare( deps( 'auto' ) ).init();
+			const trigger = document.getElementById( 'citizen-share' );
+
+			trigger.dispatchEvent( new Event( 'pointerenter' ) );
+
+			expect( mw.loader.load ).not.toHaveBeenCalled();
 		} );
 	} );
 
