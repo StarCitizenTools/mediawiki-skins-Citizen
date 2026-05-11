@@ -73,7 +73,7 @@ describe("VersionSwitcher rendering", () => {
 		const wrapper = mount(VersionSwitcher);
 		await flushPromises();
 
-		expect(wrapper.find(".VersionSwitcher__label").text()).toBe("main");
+		expect(wrapper.find(".VersionSwitcher__text").text()).toBe("main");
 	});
 
 	it("lists main + manifest entries in the dropdown", async () => {
