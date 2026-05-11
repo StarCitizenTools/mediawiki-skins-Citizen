@@ -15,7 +15,7 @@ Unlike the other standard MediaWiki skins, Citizen has a lot more to offer:
     <LinkCard title="Responsive layout" href="../customization/theming#layout">
         The skin is responsive and is able to adapt to different screen sizes.
     </LinkCard>
-    <LinkCard title="Command palette" href="../customization/command-palette">
+    <LinkCard title="Command palette" href="../features/command-palette">
         Citizen's search is an upgrade, with a better search experience and support for custom commands.
     </LinkCard>
     <LinkCard title="Theme modes" href="../customization/theming#theme-modes">
@@ -24,7 +24,7 @@ Unlike the other standard MediaWiki skins, Citizen has a lot more to offer:
     <LinkCard title="Cohesive extension styles" href="../config/extensions">
         With tons of the skin's supported extensions, it has been made to blend with the skin's UI.
     </LinkCard>
-    <LinkCard title="Extensible preferences" href="../customization/preferences">
+    <LinkCard title="Extensible preferences" href="../features/preferences">
         Let users personalize their experience, and let gadgets add their own options.
     </LinkCard>
     <LinkCard title="Collapsible sections" href="../config/#wgcitizenenablecollapsiblesections">

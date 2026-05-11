@@ -11,9 +11,9 @@ Citizen fires several [`mw.hook`](https://doc.wikimedia.org/mediawiki-core/maste
 
 | Hook | Parameters | Description |
 | :--- | :--- | :--- |
-| `citizen.commandPalette.register` | `{ register }` | Register custom modes and commands in the [command palette](/customization/command-palette#extending-the-command-palette). `register( entry )` accepts a mode or command object. |
-| `citizen.preferences.register` | `register` | Register custom sections and preferences in the [preferences panel](/customization/preferences#javascript-api). `register( config )` accepts a config object with `sections` and `preferences`. |
-| `citizen.preferences.changed` | `featureName, value` | Fired when a user changes a preference. Use this to [react to changes](/customization/preferences#listening-for-changes) in real time. |
+| `citizen.commandPalette.register` | `{ register }` | Register custom modes and commands in the [command palette](/features/command-palette#extending-the-command-palette). `register( entry )` accepts a mode or command object. |
+| `citizen.preferences.register` | `register` | Register custom sections and preferences in the [preferences panel](/features/preferences#javascript-api). `register( config )` accepts a config object with `sections` and `preferences`. |
+| `citizen.preferences.changed` | `featureName, value` | Fired when a user changes a preference. Use this to [react to changes](/features/preferences#listening-for-changes) in real time. |
 
 ## Usage pattern
 
@@ -47,6 +47,6 @@ mw.hook( 'citizen.preferences.changed' ).add( function ( featureName, value ) {
 
 | Hook | Replacement |
 | :--- | :--- |
-| `skins.citizen.commandPalette.registerCommand` | [`citizen.commandPalette.register`](/customization/command-palette#migration-from-previous-api) |
+| `skins.citizen.commandPalette.registerCommand` | [`citizen.commandPalette.register`](/features/command-palette#migration-from-previous-api) |
 
-The old hook still works but logs a deprecation warning. See the [migration guide](/customization/command-palette#migration-from-previous-api) for details.
+The old hook still works but logs a deprecation warning. See the [migration guide](/features/command-palette#migration-from-previous-api) for details.
