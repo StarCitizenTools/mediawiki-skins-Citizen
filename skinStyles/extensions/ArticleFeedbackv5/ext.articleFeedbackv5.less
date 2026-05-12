@@ -1,0 +1,191 @@
+@import 'mediawiki.skin.variables.less';
+@import '../../../resources/mixins.less';
+
+.skin-citizen {
+	#mw-articlefeedbackv5 {
+		margin-block: var( --space-md ) 0;
+	}
+
+	#articleFeedbackv5 {
+		&-bucket6-toggle-wrapper {
+			&-yes {
+				.cdx-mixin-css-icon( @cdx-icon-check );
+
+				&:hover {
+					background-color: var( --color-success );
+				}
+			}
+
+			&-no {
+				.cdx-mixin-css-icon( @cdx-icon-close );
+
+				&:hover {
+					background-color: var( --color-destructive );
+				}
+			}
+
+			&-yes,
+			&-no {
+				min-width: @min-size-interactive-touch;
+				min-height: @min-size-interactive-touch;
+				background-color: var( --color-neutral );
+				border-radius: var( --border-radius-base );
+			}
+		}
+	}
+
+	.articleFeedbackv5 {
+		&-panel {
+			max-width: unset;
+			background: var( --color-surface-1 );
+			border: var( --border-base );
+			border-radius: var( --border-radius-medium );
+
+			.articleFeedbackv5 {
+				&-buffer {
+					padding: var( --space-md );
+				}
+
+				&-title-wrap {
+					display: flex;
+					gap: var( --space-xs );
+					align-items: center;
+				}
+			}
+		}
+
+		&-title {
+			margin-block: 0;
+			font-size: var( --font-size-medium );
+			line-height: var( --line-height-small );
+		}
+
+		&-tooltip-trigger-wrap {
+			// Opinionated: The help tooltip doesn't add much value especially for third party wikis
+			display: none;
+		}
+
+		&-top-error {
+			margin-bottom: 0;
+			color: var( --color-error );
+		}
+
+		&-ui {
+			.form-row {
+				margin: 0; // Use flex to handle spacing
+			}
+
+			.feedback-text {
+				.mixin-citizen-cdx-input();
+				min-width: 100%;
+				min-height: calc( var( --line-height-medium ) * 3 );
+				background: var( --color-surface-0 );
+				border-color: var( --border-color-interactive );
+			}
+
+			.articleFeedbackv5 {
+				&-disclosure {
+					margin-top: var( --space-xxs );
+					margin-bottom: 0;
+
+					p {
+						font-size: var( --font-size-small );
+						color: var( --color-subtle );
+					}
+				}
+
+				&-submit {
+					width: 100%;
+					height: auto !important;
+					min-height: @min-size-interactive-touch;
+					padding: 0;
+					margin-top: var( --space-md ) !important;
+					color: var( --color-inverted-primary );
+					background-color: var( --background-color-progressive );
+					border: 1px solid var( --border-color-interactive ) !important;
+					border-color: var( --border-color-progressive );
+					border-radius: var( --border-radius-base );
+					box-shadow: none;
+
+					&:hover {
+						background-color: var( --background-color-progressive--hover );
+					}
+
+					&:active {
+						background-color: var( --background-color-progressive--active );
+					}
+
+					.ui-button-text {
+						height: auto;
+						padding: 0 var( --space-md );
+						font-size: var( --font-size-medium );
+						font-weight: var( --font-weight-medium );
+						line-height: normal;
+					}
+				}
+			}
+		}
+
+		&-bucket6-toggle {
+			display: flex;
+			gap: var( --space-sm );
+
+			.instructions-left {
+				flex-grow: 1;
+				margin: 0;
+				font-size: var( --font-size-medium );
+				color: var( --color-subtle );
+			}
+
+			.buttons {
+				display: flex;
+				margin-top: calc( var( --line-height-small ) * -1 ); // height of the title
+
+				.form-item {
+					margin-right: 0;
+
+					+ .form-item::before {
+						content: '';
+					}
+				}
+
+				.articleFeedbackv5-button-placeholder {
+					opacity: 0; // Needed to color the Codex icon
+				}
+			}
+
+			@media ( max-width: @max-width-breakpoint-mobile ) {
+				flex-direction: column;
+
+				.buttons {
+					margin-top: 0;
+
+					.form-item {
+						flex-grow: 1;
+					}
+				}
+			}
+		}
+
+		&-clear {
+			display: none !important; // No need for clear when we use flex
+		}
+
+		&-arrow-back {
+			.cdx-mixin-css-icon( @cdx-icon-previous );
+			min-width: @min-size-interactive-pointer;
+			min-height: @min-size-interactive-pointer;
+			padding: 0;
+			margin: 0;
+			background: var( --color-neutral );
+
+			&:hover {
+				background: var( --color-emphasized );
+			}
+		}
+
+		&-comment {
+			margin-top: var( --space-md );
+		}
+	}
+}
