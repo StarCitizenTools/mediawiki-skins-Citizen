@@ -30,7 +30,7 @@
 		"eslint": "8.57.1",
 		"eslint-config-wikimedia": "0.32.4",
 		"eslint-plugin-compat": "^6.2.0",
-		"eslint-plugin-mediawiki": "0.8.2",
+		"eslint-plugin-mediawiki": "0.8.3",
 		"grunt-banana-checker": "0.13.0",
 		"jsdom": "^29.1.1",
 		"lefthook": "^2.1.6",
@@ -47,7 +47,7 @@
 		"vue": "3.4.27"
 	},
 	"overrides": {
-		"eslint-plugin-mediawiki": "0.8.2"
+		"eslint-plugin-mediawiki": "0.8.3"
 	},
 	"version": "3.16.0"
 }
