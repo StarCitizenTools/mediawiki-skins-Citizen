@@ -1,0 +1,2858 @@
+---
+url: /mediawiki-skins-Citizen/v3.16/guide/introduction.md
+description: Introduction to the Citizen skin
+---
+
+# Introduction
+
+![Citizen skin screenshot showing the responsive layout and modern interface](https://upload.wikimedia.org/wikipedia/commons/0/07/Screenshot-skin-citizen.png)
+
+Citizen is a beautiful, usable, responsive MediaWiki skin that makes extensions part of the cohesive experience. Originally made for the Star Citizen Wiki, it has now been made flexible to run on various MediaWiki configurations.
+
+Unlike the other standard MediaWiki skins, Citizen has a lot more to offer:
+
+Citizen is a small open-source project, and we really appreciate any help from the community. Feel free to [contribute](../contribute/) towards the project ❤️
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/guide/installation.md
+description: Installing the Citizen skin to your wiki
+---
+
+# Installation
+
+Ready to give your wiki a fresh look? Follow these steps to install Citizen.
+
+## Requirements
+
+* [MediaWiki](https://www.mediawiki.org) 1.43.0 or later
+
+::: details Using older versions of MediaWiki?
+
+Please use one of the following legacy releases:
+
+| Citizen version | MediaWiki version |
+| :--- | :--- |
+| [2.40.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v2.40.2) | 1.39.4 – 1.42.7 |
+| [1.17.9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases/tag/v1.17.9) | 1.35.2 – 1.39.3 |
+
+:::
+
+## Get the skin
+
+:::: tabs
+\== Manual
+
+1. [Download the latest release](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/archive/refs/heads/main.zip).
+2. Extract the contents into a directory called `Citizen` in your `skins/` folder.
+
+```text
+mediawiki/
+└── skins/
+    └── Citizen/
+        ├── skin.json
+        ├── i18n/
+        ├── includes/
+        ├── resources/
+        └── ...
+```
+
+\== Composer
+Run the following commands in the root of your MediaWiki installation:
+
+```sh
+COMPOSER=composer.local.json composer require starcitizentools/citizen-skin
+composer update --no-dev
+```
+
+\== Git
+Run the following command in the root of your MediaWiki installation:
+
+```sh
+git clone https://github.com/StarCitizenTools/mediawiki-skins-Citizen.git skins/Citizen
+```
+
+::: tip Note
+Using `git` allows `Special:Version` to display the current commit ID. To link the commit ID to GitHub, add the following to your `LocalSettings.php`:
+
+```php [LocalSettings.php]
+$wgGitRepositoryViewers['https://github.com/(.*?)(.git)?'] = 'https://github.com/$1/commit/%H';
+```
+
+:::
+
+::: warning
+The `git` repository includes development files. For production environments where file size is a concern, consider using the **Manual** or **Composer** methods.
+:::
+::::
+
+## Activate
+
+To enable the skin, add this to your `LocalSettings.php`:
+
+```php [LocalSettings.php]
+wfLoadSkin( 'Citizen' );
+```
+
+Head over to `Special:Version` to verify that the skin is successfully enabled.
+
+## Configure
+
+### Set as default
+
+To set Citizen as the wiki's default skin, add this to your `LocalSettings.php`:
+
+```php [LocalSettings.php]
+$wgDefaultSkin = 'citizen';
+```
+
+### Next steps
+
+Citizen works out of the box without additional configuration, but you can customize it further:
+
+* **[Skin configuration](../config/index.md)**: Tweak colors, layout, and features.
+* **[Extension support](../config/extensions.md)**: Configure Citizen's improved support for popular extensions.
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/config.md
+description: MediaWiki skin configuration for the Citizen skin.
+---
+
+# Configuration
+
+::: tip Citizen works out of the box without any configurations!
+
+The skin configs allow more customization on the specific features in the skin.
+:::
+
+## Appearance
+
+### `$wgCitizenHeaderPosition`
+
+Determines where the site header appears on desktop screens.
+
+```php [LocalSettings.php]
+$wgCitizenHeaderPosition = 'left';
+```
+
+**Values**: `'left'`, `'right'`, `'top'`, `'bottom'`
+
+### `$wgCitizenThemeDefault`
+
+Sets the default color theme for new visitors.
+
+```php [LocalSettings.php]
+$wgCitizenThemeDefault = 'auto';
+```
+
+**Values**:
+
+* `'auto'`: Matches the user's system or browser preference
+* `'light'`: Always starts in light mode
+* `'dark'`: Always starts in dark mode
+
+### `$wgCitizenEnableCollapsibleSections`
+
+Allows users to collapse and expand sections on pages, making long articles easier to navigate.
+
+```php [LocalSettings.php]
+$wgCitizenEnableCollapsibleSections = true;
+```
+
+**Values**: `true`, `false`
+
+### `$wgCitizenShowPageTools`
+
+Controls who can see the page tools menu (edit, history, etc.).
+
+```php [LocalSettings.php]
+$wgCitizenShowPageTools = true;
+```
+
+**Values**:
+
+* `true`: Always visible to everyone
+* `'login'`: Visible only to logged-in users
+* `'permission'`: Visible only to users with specific permissions
+
+### `$wgCitizenGlobalToolsPortlet`
+
+The ID of the menu where global tools (like user preferences) should appear. Leave this empty to use the default location.
+
+```php [LocalSettings.php]
+$wgCitizenGlobalToolsPortlet = '';
+```
+
+### `$wgCitizenEnableDrawerSiteStats`
+
+Shows site statistics, such as the total page count, at the header of the side drawer menu.
+
+```php [LocalSettings.php]
+$wgCitizenEnableDrawerSiteStats = true;
+```
+
+**Values**: `true`, `false`
+
+### `$wgCitizenThemeColor`
+
+Sets the color of the browser address bar on mobile devices to match your brand.
+
+```php [LocalSettings.php]
+$wgCitizenThemeColor = '#0d0e12';
+```
+
+**Values**: Hex color code
+
+### `$wgCitizenUseNewToken`
+
+::: warning Experimental
+The new color token pipeline is under active development. Token names, values, and the retheme API may change without notice. Production wikis should leave this off.
+:::
+
+Opts the wiki into Citizen's new color token pipeline (`skins.citizen.tokens.new`). Exactly one token module ships per request — when enabled, the new module loads in place of the default `skins.citizen.tokens`, and `<html>` gets `.citizen-token-new`.
+
+```php [LocalSettings.php]
+$wgCitizenUseNewToken = false;
+```
+
+**Values**: `true`, `false`
+
+The setting can also be toggled per-browser without editing `LocalSettings.php`:
+
+* Append `?citizenusenewtoken=1` to any wiki URL to opt in for the current render. The choice is stored in a 24-hour cookie so it persists across pages in the same browser.
+* Append `?citizenusenewtoken=0` to opt back out.
+
+When neither the URL query nor the cookie is present, the value of `$wgCitizenUseNewToken` decides.
+
+### `$wgCitizenEnableARFonts`
+
+Loads the "Noto Naskh Arabic" font, improving readability for wikis that use Arabic script.
+
+```php [LocalSettings.php]
+$wgCitizenEnableARFonts = false;
+```
+
+**Values**: `true`, `false`
+
+### `$wgCitizenEnableCJKFonts`
+
+Loads the "Noto Sans CJK" font, improving readability for wikis that use Chinese, Japanese, or Korean characters.
+
+```php [LocalSettings.php]
+$wgCitizenEnableCJKFonts = false;
+```
+
+**Values**: `true`, `false`
+
+### `$wgCitizenEnablePreferences`
+
+Enables the user [preferences panel](/features/preferences), allowing visitors to customize their experience. The panel is extensible — admins can add custom preferences via on-wiki JSON, and gadgets can register their own options at runtime.
+
+```php [LocalSettings.php]
+$wgCitizenEnablePreferences = true;
+```
+
+**Values**: `true`, `false`
+
+### `$wgCitizenOverflowInheritedClasses`
+
+A list of CSS classes that should be preserved when tables or images are wrapped in a scrollable container.
+
+```php [LocalSettings.php]
+$wgCitizenOverflowInheritedClasses = [ 'floatleft', 'floatright' ];
+```
+
+### `$wgCitizenOverflowNowrapClasses`
+
+A list of CSS classes that prevent an element from being wrapped in a scrollable container. Use this for elements that should always display fully.
+
+```php [LocalSettings.php]
+$wgCitizenOverflowNowrapClasses = [
+    'noresize',
+    'citizen-table-nowrap',
+    'cargoDynamicTable',
+    'dataTable',
+    'smw-datatable',
+    'srf-datatable'
+];
+```
+
+### `$wgCitizenTableOfContentsCollapseAtCount`
+
+The minimum number of headings required before the sticky table of contents automatically collapses its sub-sections to save space.
+
+```php [LocalSettings.php]
+$wgCitizenTableOfContentsCollapseAtCount = 28;
+```
+
+## Share
+
+### `$wgCitizenEnableShare`
+
+Shows the share option on content pages (when the page exists).
+
+```php [LocalSettings.php]
+$wgCitizenEnableShare = true;
+```
+
+**Values**: `true`, `false`
+
+### `$wgCitizenShareMode`
+
+Which share UI to present.
+
+```php [LocalSettings.php]
+$wgCitizenShareMode = 'auto';
+```
+
+**Values**:
+
+* `'auto'` (default) — try the browser's Web Share API first; fall back to Citizen's panel when the API isn't available (e.g. desktop Firefox).
+* `'panel'` — always use Citizen's panel.
+* `'native'` — always use the Web Share API, with a clipboard fallback on browsers that don't support it.
+
+See the [Share customization page](/features/share) for the panel's JSON shape and a starter pack.
+
+## Webapp manifest
+
+### `$wgCitizenEnableManifest`
+
+Enables the [web app manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest), allowing users to install your wiki as a standalone app on their device.
+
+```php [LocalSettings.php]
+$wgCitizenEnableManifest = true;
+```
+
+**Values**: `true`, `false`
+
+### `$wgCitizenManifestOptions`
+
+Customizes the web app manifest settings, such as the app name, colors, and icons.
+
+::: details View default configuration
+
+```php
+$wgCitizenManifestOptions = [
+    'background_color' => '#0d0e12',
+    'description' => '',
+    'short_name' => '',
+    'theme_color' => "#0d0e12",
+    'icons' => [],
+];
+```
+
+:::
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/config/extensions.md
+description: Extensions and gadgets that integrate well with Citizen
+---
+
+# Extensions and gadgets
+
+## Extension enhancements
+
+Citizen works out of the box, but these extensions unlock additional features when installed.
+
+### [PageImages](https://www.mediawiki.org/wiki/Extension:PageImages)
+
+Bundled with MediaWiki. Adds thumbnails to command palette results.
+
+### [TextExtracts](https://www.mediawiki.org/wiki/Extension:TextExtracts)
+
+Bundled with MediaWiki. Adds descriptions to command palette results.
+
+```php [LocalSettings.php]
+$wgExtractsExtendRestSearch = true;
+```
+
+### [ShortDescription](https://www.mediawiki.org/wiki/Extension:ShortDescription)
+
+Displays a short description under the page title and in command palette results. Takes priority over TextExtracts when set.
+
+### [MobileFrontend](https://www.mediawiki.org/wiki/Extension:MobileFrontend)
+
+::: warning Not recommended
+Citizen is a fully responsive skin, so MobileFrontend's separate mobile experience is redundant and may conflict with Citizen's layout.
+:::
+
+If you still need MobileFrontend, set the default mobile skin to Citizen:
+
+```php [LocalSettings.php]
+$wgDefaultMobileSkin = 'citizen';
+```
+
+### [RelatedArticles](https://www.mediawiki.org/wiki/Extension:RelatedArticles)
+
+Shows related pages in the command palette when no query is entered. To also show them at the bottom of pages:
+
+```php [LocalSettings.php]
+$wgRelatedArticlesFooterAllowedSkins[] = 'citizen';
+```
+
+### [Semantic MediaWiki](https://www.mediawiki.org/wiki/Extension:Semantic_MediaWiki)
+
+Adds an Ask query mode to the command palette. Type `/smw:` to build structured queries with autocomplete for properties, categories, and values. Works automatically when installed.
+
+### [TemplateStylesExtender](https://www.mediawiki.org/wiki/Extension:TemplateStylesExtender)
+
+Only needed if you use [TemplateStyles](https://www.mediawiki.org/wiki/Extension:TemplateStyles). Enables CSS variables in TemplateStyles, including Citizen's design tokens.
+
+### [UrlShortener](https://www.mediawiki.org/wiki/Extension:UrlShortener)
+
+Adds a "Copy short URL" button to the share panel for one-click clipboard copy, plus a QR code view when `$wgUrlShortenerEnableQrCode` is enabled. See [Share](../features/share.md#short-urls-and-qr-codes) for details.
+
+## Gadget enhancements
+
+Some on-wiki gadgets pair particularly well with Citizen. Unlike extensions, gadgets are installed wiki-side (see [Extension:Gadgets](https://www.mediawiki.org/wiki/Extension:Gadgets)) and enabled per-user from `Special:Preferences`.
+
+### [Instant Diffs](https://www.mediawiki.org/wiki/Instant_Diffs)
+
+Opens diffs and revisions in a dialog instead of navigating away. When installed, the command palette's revision history mode (`/hist:` or `!`) opens previews above the still-mounted palette so you can dismiss the dialog and pick another revision without losing your place.
+
+::: tip
+Press ← / → inside the dialog to step through adjacent revisions, or Esc to close it. Without the gadget, palette activation navigates to the revision page as usual.
+:::
+
+## Extension styles
+
+::: tip
+Citizen provides custom styles for many popular extensions via [skinStyles](https://www.mediawiki.org/wiki/Manual:$wgResourceModuleSkinStyles). These apply automatically when the extension is installed.
+:::
+
+### Supported extensions
+
+* [AccountInfo](https://www.mediawiki.org/wiki/Extension:AccountInfo)
+* [AdvancedSearch](https://www.mediawiki.org/wiki/Extension:AdvancedSearch)
+* [AJAXPoll](https://www.mediawiki.org/wiki/Extension:AJAXPoll)
+* [ApprovedRevs](https://www.mediawiki.org/wiki/Extension:Approved_Revs)
+* [Capiunto](https://www.mediawiki.org/wiki/Extension:Capiunto)
+* [Cargo](https://www.mediawiki.org/wiki/Extension:Cargo)
+* [CategoryTree](https://www.mediawiki.org/wiki/Extension:CategoryTree)
+* [CentralNotice](https://www.mediawiki.org/wiki/Extension:CentralNotice)
+* [Cite](https://www.mediawiki.org/wiki/Extension:Cite)
+* [CiteThisPage](https://www.mediawiki.org/wiki/Extension:CiteThisPage)
+* [CleanChanges](https://www.mediawiki.org/wiki/Extension:CleanChanges)
+* [CodeEditor](https://www.mediawiki.org/wiki/Extension:CodeEditor)
+* [CodeMirror](https://www.mediawiki.org/wiki/Extension:CodeMirror)
+* [CommentStreams](https://www.mediawiki.org/wiki/Extension:CommentStreams)
+* [CookieWarning](https://www.mediawiki.org/wiki/Extension:CookieWarning)
+* [DataMaps](https://www.mediawiki.org/wiki/Extension:DataMaps)
+* [DiscussionTools](https://www.mediawiki.org/wiki/Extension:DiscussionTools)
+* [DismissableSiteNotice](https://www.mediawiki.org/wiki/Extension:DismissableSiteNotice)
+* [Echo](https://www.mediawiki.org/wiki/Extension:Echo)
+* [FlaggedRevs](https://www.mediawiki.org/wiki/Extension:FlaggedRevs)
+* [FloatingUI](https://www.mediawiki.org/wiki/Extension:FloatingUI)
+* [Flow (StructuredDiscussions)](https://www.mediawiki.org/wiki/Extension:StructuredDiscussions)
+* [Graph](https://www.mediawiki.org/wiki/Extension:Graph)
+* [Interwiki](https://www.mediawiki.org/wiki/Extension:Interwiki)
+* [Lingo](https://www.mediawiki.org/wiki/Extension:Lingo)
+* [MediaSearch](https://www.mediawiki.org/wiki/Extension:MediaSearch)
+* [MsUpload](https://www.mediawiki.org/wiki/Extension:MsUpload)
+* [MultimediaViewer](https://www.mediawiki.org/wiki/Extension:MultimediaViewer)
+* [OAuth](https://www.mediawiki.org/wiki/Extension:OAuth)
+* [Popups](https://www.mediawiki.org/wiki/Extension:Popups)
+* [PortableInfobox](https://www.mediawiki.org/wiki/Extension:PortableInfobox)
+* [RelatedArticles](https://www.mediawiki.org/wiki/Extension:RelatedArticles)
+* [ReplaceText](https://www.mediawiki.org/wiki/Extension:ReplaceText)
+* [RevisionSlider](https://www.mediawiki.org/wiki/Extension:RevisionSlider)
+* [Score](https://www.mediawiki.org/wiki/Extension:Score)
+* [Scribunto](https://www.mediawiki.org/wiki/Extension:Scribunto)
+* [SearchDigest](https://www.mediawiki.org/wiki/Extension:SearchDigest)
+* [Semantic MediaWiki](https://www.mediawiki.org/wiki/Extension:Semantic_MediaWiki)
+* [Semantic Result Formats](https://www.mediawiki.org/wiki/Extension:Semantic_Result_Formats)
+* [SimpleTooltip](https://www.mediawiki.org/wiki/Extension:SimpleTooltip)
+* [SmiteSpam](https://www.mediawiki.org/wiki/Extension:SmiteSpam)
+* [StructuredNavigation](https://www.mediawiki.org/wiki/Extension:StructuredNavigation)
+* [SyntaxHighlight](https://www.mediawiki.org/wiki/Extension:SyntaxHighlight)
+* [Tabber](https://www.mediawiki.org/wiki/Extension:Tabber)
+* [TabberNeue](https://www.mediawiki.org/wiki/Extension:TabberNeue)
+* [Tabs](https://www.mediawiki.org/wiki/Extension:Tabs)
+* [TemplateData](https://www.mediawiki.org/wiki/Extension:TemplateData)
+* [TimedMediaHandler](https://www.mediawiki.org/wiki/Extension:TimedMediaHandler)
+* [TinyMCE](https://www.mediawiki.org/wiki/Extension:TinyMCE)
+* [Translate](https://www.mediawiki.org/wiki/Extension:Translate)
+* [TwoColConflict](https://www.mediawiki.org/wiki/Extension:TwoColConflict)
+* [UniversalLanguageSelector](https://www.mediawiki.org/wiki/Extension:UniversalLanguageSelector)
+* [UploadWizard](https://www.mediawiki.org/wiki/Extension:UploadWizard)
+* [UserProfileV2](https://gitlab.com/telepedia/extensions/userprofilev2)
+* [VEForAll](https://www.mediawiki.org/wiki/Extension:VEForAll)
+* [VisualEditor](https://www.mediawiki.org/wiki/Extension:VisualEditor)
+* [Wikibase](https://www.mediawiki.org/wiki/Extension:Wikibase)
+* [WikiEditor](https://www.mediawiki.org/wiki/Extension:WikiEditor)
+* [WSSearchFront](https://www.mediawiki.org/wiki/Extension:WSSearchFront)
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/features/command-palette.md
+description: >-
+  A keyboard-driven palette for jumping to pages, running actions, and searching
+  the wiki.
+---
+
+# Command palette
+
+The command palette is a keyboard-driven launcher for the wiki. Press `/` to see all available entries, or just start typing to search.
+
+## How it works
+
+The palette has two kinds of entries:
+
+* **Modes** change the palette's search context. The header shows the mode's icon and placeholder, and a back button appears. Type to search within the mode.
+* **Commands** run their action when you pick them. No input needed.
+
+### Built-in entries
+
+| Trigger | Alias | Type | Description |
+| :--- | :--- | :--- | :--- |
+| `/` | - | - | Show all available modes and commands. |
+| `/ns:` | `:` | Mode | Browse and select a namespace. |
+| `/action:` | `>` | Mode | Search for actions and special pages. |
+| `/user:` | `@` | Mode | Search for a user. |
+| `/cat:` | `#` | Mode | Find a category, then step inside to see its subcategories and pages. |
+| `/hist:` | `!` | Mode | Browse the current page's edit history and jump to a diff. |
+| `/file:` | `~` | Mode | Find images, PDFs, audio, video, and other files as a gallery. |
+| `/smw:` | - | Mode | Query pages with Semantic MediaWiki Ask syntax. Only available when SMW is installed. |
+| `/help` | `?` | Command | Open the help overlay to browse every available mode. |
+
+You can type the single-character aliases (`@`, `>`, `:`, `#`, `!`, `~`, `?`) directly — no `/` prefix needed.
+
+### Help overlay
+
+Press `?` at an empty input to open the help overlay. The footer shows the `?` shortcut as a hint whenever it's available. While help is open, the header swaps to a help indicator with a back button, and Esc closes help before any other action.
+
+Help is an overlay — opening it preserves your active mode, query, and any drill-down position, so you can peek and return to where you were.
+
+What you see depends on where you are:
+
+* **At root**: a list of every registered mode on the left and a detail pane on the right. As you arrow through the list, the right pane shows the highlighted mode's icon, name, short description, triggers, and a longer description. Selecting a mode enters it and closes help.
+* **Inside a mode**: the same detail pane fills the dialog, describing whichever mode you're currently in.
+
+The overlay focuses on *what each mode is for* — keyboard shortcuts live in the palette footer, where they update contextually as you move around.
+
+### Mode behavior
+
+When you enter a mode:
+
+* The search icon changes to the mode's icon
+* The placeholder updates (e.g., "Search users")
+* A back button appears to exit the mode
+* Escape follows the pattern: **close help (if open)** → **clear query** → **exit mode** → **close palette**
+
+### Tags
+
+Some modes turn parts of your query into tags. For example, typing `Talk:` in default search becomes a `Talk:` tag, so the rest of what you type searches within the Talk namespace.
+
+To change a tag, press Backspace on an empty input. The first press highlights the last tag (footer hint: **Select tag**). A second press turns it back into editable text (footer hint: **Edit tag**), so you can fix a typo without retyping the whole thing. Keep pressing to delete the text character by character.
+
+### Built-in modes
+
+Most built-in modes (namespace, action, user) work as straightforward search — type a query, get results. The modes below have additional behavior worth knowing about.
+
+#### Categories
+
+The category mode helps you find a category and see what's inside it. Open it with `/cat:` or `#`.
+
+* **An empty input** shows the current page's categories — a quick way to see what this article belongs to without scrolling to the bottom of the page.
+* **Type a query** to search every category on the wiki by name.
+* **Pick a category** to step inside. The header turns into a breadcrumb (e.g. `Categories / Animals / Mammals`), and the list shows the category's subcategories first, then its pages. Keep typing to filter what's at the current level.
+* **Backspace on an empty input** backs out one level. At the top, Backspace closes the mode.
+* **Each result has action buttons** on the right — focus them with →. Categories offer **View** (the actual `Category:` page) and **Edit**; pages offer **Edit**.
+
+#### Revision history
+
+The history mode lists recent edits to the current page so you can scan who changed what and jump to a diff. Open it with `/hist:` or `!`.
+
+* **An empty input** shows the last 50 revisions, newest first.
+* **Type to filter** by editor name or any text in the edit summary — either field can match.
+* **Press ↵** on a revision to open the diff against the previous revision. The page's first edit has no previous revision, so it opens that revision directly.
+* **Open a wiki page first.** On a special page (or anywhere without a real article), the mode shows an empty state.
+
+::: tip Pair with the Instant Diffs gadget
+If users have the [Instant Diffs](https://www.mediawiki.org/wiki/Instant_Diffs) gadget enabled, activating a revision opens the gadget's preview dialog above the still-mounted palette, so they can dismiss it and pick another revision without losing their place. See [Extensions and gadgets](../config/extensions.md#gadget-enhancements) for details.
+:::
+
+#### Files and media
+
+The file mode finds images, PDFs, audio, video, and other files on the wiki and renders them as a gallery of thumbnails. Open it with `/file:` or `~`.
+
+* **An empty input on a content page** shows the files used on the current page — a quick way to grab the filename of an image you're looking at without leaving the article. Off-article (or on pages with no file usage) the mode shows its idle empty state.
+* **Type a query** to search the wiki's media library. Results appear as tiles with a thumbnail (or a fallback icon for non-visual files like audio or archives).
+* **Arrow keys move 2D**: ←/→ step within a row, ↑/↓ jump between rows.
+* **The detail panel** on the right shows the file's type, size (dimensions and byte count), upload info (timestamp and uploader), and the license short-name when available. A copy-to-clipboard button next to the filename — or ⌘C / Ctrl+C — copies the filename for use in wikitext.
+* **Press ↵** to open the file's `File:` description page.
+
+The mode matches file titles by prefix first, so typing the start of a filename works on every wiki regardless of search backend. If nothing matches by prefix, it falls back to a full-text search — which surfaces deeper hits when [CirrusSearch](https://www.mediawiki.org/wiki/Extension:CirrusSearch) is installed.
+
+#### Semantic MediaWiki
+
+When [Semantic MediaWiki](https://www.semantic-mediawiki.org/) is installed, the `/smw:` mode lets you run Ask queries interactively. Type conditions like `[[Category:City]]` or `[[Located in::Germany]]` — each completed `[[...]]` condition becomes a token chip, and matching pages appear as results.
+
+You can chain multiple conditions together. Each chip narrows the query further, just like conditions in a regular SMW Ask query.
+
+This mode is loaded conditionally and only registered when SMW is available on the wiki.
+
+## Extending the command palette
+
+Administrators and developers can add custom entries to the command palette. Use this to create shortcuts for external tools, streamlined workflows, or handy redirects.
+
+Entries are registered via the `citizen.commandPalette.register` hook:
+
+```js
+mw.hook( 'citizen.commandPalette.register' ).add( function ( data ) {
+    data.register( myEntry );
+} );
+```
+
+The hook payload exposes three things:
+
+| Field | Purpose |
+| :--- | :--- |
+| `register( entry )` | Add a mode or command to the palette. |
+| `defineMode( config )` | Validate a mode and fill in defaults. Returns the normalized config, or `null` if validation fails. |
+| `defineCommand( config )` | Same as `defineMode`, but for entries that fire an action immediately on selection. |
+
+Wrapping your entry with `defineMode` or `defineCommand` is optional — `register()` accepts plain objects too — but it catches mistakes at load time instead of letting them slip through silently. You get:
+
+* **Typo warnings.** Write `placholder` instead of `placeholder` and the console flags it. The field is kept on the config, so a newer Citizen version that knows about the new key can still use it.
+* **Sane defaults.** An unknown `layout` falls back to `'list'`, `compactResults` is coerced to a boolean, and `compactResults: true` paired with `layout: 'gallery'` is dropped (gallery has no rows to compact).
+* **Refusal on broken shapes.** Modes missing an `id`, with empty `triggers`, with non-string trigger entries, or without `getResults` return `null` instead of registering a broken entry.
+
+`register()` accepts `null` safely — it logs a warning and skips registration without touching other modes — so you can chain `data.register( data.defineMode( ... ) )` without a null guard.
+
+Check out these live examples from other wikis. To try them, visit the site, press `/` to open the palette, and type the command:
+
+### Entry properties
+
+Every entry must have at minimum an `id`, `triggers`, and `description`. If the entry provides a `getResults` function, it becomes a **mode**. Without `getResults`, it's a **command**.
+
+| Property | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `id` | `string` | Yes | Unique identifier. |
+| `triggers` | `string[]` | Yes | Prefixes that activate this entry. Triggers ending with `:` accept a sub-query. |
+| `description` | `string` | Yes | Short explanation shown in the command list. |
+| `label` | `string` | No | Display label shown for the entry in command lists. Falls back to a humanised form of `id` when omitted. |
+| `placeholder` | `string` | No | Input placeholder when the mode is active (e.g., "Search users"). Modes only. |
+| `icon` | `Object` | No | Codex icon for the header when the mode is active. Modes only. |
+| `compactResults` | `boolean` | No | Render results in a denser layout — a small icon instead of a thumbnail and the description inline beside the label. Use this for command-style modes whose items don't have real thumbnail images. Ignored in gallery layout. Modes only. |
+| `layout` | `'list' \| 'gallery'` | No | Result layout. `'list'` (default) renders a vertical list. `'gallery'` renders a tiled grid for thumbnail-driven content like media browsers, and widens the palette to fit. Modes only. |
+| `getResults` | `function` | No | `(subQuery, signal?, tokens?, modeContext?) => Promise<Array>` — if provided, this entry is a mode. The optional fourth argument is the current [mode context](#mode-context) stack. |
+| `getItemDetail` | `function` | No | `(item, signal?) => Promise<Object>` — lazy detail-pane data for the highlighted item. Use this when the detail is too heavy to compute for every item upfront (the file mode uses it for image metadata and licensing). Modes only. |
+| `onResultSelect` | `function` | No | `(item) => { action, payload }` — handles selection of a result item. |
+| `headerLabel` | `function` | No | `(modeContext) => string \| null` — replaces the input placeholder with a custom label. Return `null` to fall back to the regular placeholder — useful for showing a breadcrumb only when the mode is drilled in. Typically used with [mode context](#mode-context). Modes only. |
+| `emptyState` | `Object` | No | `{ title, description, icon }` — content shown when the mode is active with no query. Falls back to default search messaging. Modes only. |
+| `noResults` | `function` | No | `(query, tokens?) => { title, description, icon }` — returns content shown when a query produces no results. Falls back to default no-results messaging. Modes only. |
+| `tokenPattern` | `Object \| Object[]` | No | Token detection pattern (or array of patterns) for auto-tokenization. See [token patterns](#token-patterns). Modes only. |
+| `keybindings` | `KeyBinding[]` | No | Mode-contributed keyboard bindings, active while the mode is active. See [keybindings](#keybindings). Modes only. |
+| `help` | `Object` | No | Content surfaced by the help overlay when this entry is active. See [help content](#help-content). |
+
+### Action results
+
+`onResultSelect` should return an action object telling the palette what to do:
+
+| Action | Payload | Effect |
+| :--- | :--- | :--- |
+| `{ action: 'none' }` | - | Stay in the palette, do nothing. |
+| `{ action: 'navigate', payload: url }` | URL string | Close the palette and navigate to the URL. |
+| `{ action: 'exitWithQuery', payload: query }` | Query string | Exit the current mode and set the query string. |
+| `{ action: 'updateQuery', payload: query }` | Query string | Update the query within the current mode without exiting. |
+| `{ action: 'addToken', payload: token }` | Token object | Append a token chip to the input and clear the free text. Use this when picking a result should add a structured condition to the query — like the SMW mode appending `[[Property::]]` after you pick a property. |
+| `{ action: 'pushModeContext', payload: any }` | Any | Step the active mode into a new level. Appends to the [mode context](#mode-context) stack and clears the input. |
+| `{ action: 'toggleHelp' }` | - | Toggle the help overlay. |
+
+### Token patterns
+
+Modes can declare a `tokenPattern` to enable auto-tokenization — when the user's input matches the pattern, the matched text is converted into a chip. This is how the namespace mode turns `Talk:` into a chip, and how the SMW mode turns `[[Category:City]]` into one.
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `modeId` | `string` | Identifies which mode owns this token. |
+| `position` | `'prefix' \| 'any'` | Where tokens can appear — `prefix` means only at the start, `any` means anywhere in the input. |
+| `activeIn` | `string` | Which mode context this pattern is active in (`'root'` for default search, or a mode id like `'smw'`). |
+| `match` | `function` | `(text) => { label, raw } \| null` — tests whether the text starts with a tokenizable pattern. Returns `label` (display text) and `raw` (the original text) on match, or `null`. |
+| `eagerMatch` | `function` | Optional lenient matcher used after the standard `match` pass has produced at least one token (useful for paste handling). Allows end-of-string as a valid terminator. Same signature as `match`. |
+| `variant` | `string` | Optional visual variant for the chip — e.g. `'outlined'` for chips that should look different from the default solid style. |
+
+Tokens are passed to `getResults` and `noResults` so modes can incorporate them into queries. For example, the SMW mode reconstructs the full Ask query from its token chips plus any free text.
+
+Modes that need multiple tokenization rules — like SMW, which tokenizes both `[[…]]` conditions and printout selectors — can declare `tokenPattern` as an array of pattern objects instead of a single one.
+
+### Help content
+
+The optional `help` field declares the long-form description shown in the help overlay's detail pane, below the triggers.
+
+```js
+help: {
+    description: 'my-extension-mode-description-help'
+}
+```
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `description` | `string` | An i18n message key. The message is rendered with `mw.message().parse()`, so inline markup like `<code>` and `<kbd>` works. |
+
+The mode's existing one-line `description` still appears beside the icon at the top of the help summary; `help.description` is the longer prose continuation that explains how the mode actually behaves — drill-down rules, chip behaviour, anything a user can't infer from the short label.
+
+Keyboard shortcuts live in the palette footer rather than here, so the help overlay can stay focused on what a mode is *for*.
+
+### Mode context
+
+Some modes need to step *into* a result rather than navigate away from it — the category mode walks through nested categories, for example. Mode context is the primitive that supports this: a small stack the active mode owns and pushes onto when the user picks a result.
+
+It's opt-in. Modes that don't need it can ignore it entirely.
+
+* The stack is empty when a mode is entered, and is cleared when the mode exits.
+* `{ action: 'pushModeContext', payload }` appends the payload and clears the input, so the user starts fresh at the new level.
+* `getResults` gets the current stack as its fourth argument and decides what to show per level.
+* `headerLabel( modeContext )` renders a breadcrumb in the header so the user can always tell where they are. Returning `null` falls back to the regular placeholder, so the breadcrumb only shows when there's actually a path to display.
+* Backspace on an empty input pops one level. With an empty stack, it falls through to the normal exit-mode behavior.
+
+A minimal example of a drill-down mode:
+
+```js
+const myDrillMode = {
+    id: 'mydrill',
+    triggers: [ '/drill:' ],
+    description: 'Drill through nested folders.',
+
+    getResults: function ( subQuery, signal, tokens, modeContext ) {
+        const path = modeContext || [];
+        const current = path.length ? path[ path.length - 1 ] : null;
+        return fetchFolderContents( current, subQuery );
+    },
+
+    onResultSelect: function ( item ) {
+        if ( item.type === 'folder' ) {
+            return { action: 'pushModeContext', payload: { id: item.value } };
+        }
+        return item.url ?
+            { action: 'navigate', payload: item.url } :
+            { action: 'none' };
+    },
+
+    headerLabel: function ( modeContext ) {
+        if ( modeContext.length === 0 ) {
+            return null; // fall back to the placeholder at the root
+        }
+        return [ 'Folders' ].concat( modeContext.map( ( c ) => c.id ) ).join( ' / ' );
+    }
+};
+```
+
+### Keybindings
+
+Modes can contribute their own keyboard bindings via the `keybindings` array. Each binding declares when it fires, what it does, and (optionally) what hint to show in the palette footer.
+
+```js
+keybindings: [
+    {
+        id: 'mydrill.refresh',
+        zone: 'input',
+        keys: [ 'r' ],
+        when: ( state ) => state.modifierKey,
+        handle: ( state, event ) => {
+            event.preventDefault();
+            refreshResults();
+        },
+        hint: {
+            msgKey: 'my-extension-mode-refresh-hint',
+            kbd: '⌘R'
+        }
+    }
+]
+```
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `id` | `string` | Unique binding identifier (used for debugging). |
+| `zone` | `'input' \| 'action'` | Which focus zone the binding applies to. |
+| `keys` | `string[]` | Event `key` values that fire `handle`. An empty array marks the binding as hint-only. |
+| `when` | `function` | `(state) => boolean` — predicate over the dispatch state. False suppresses both the handler and the hint. |
+| `handle` | `function` | `(state, event) => void` — called when a `keys` entry matches and `when` passes. Call `event.preventDefault()` to claim the keystroke. |
+| `worksDuringHelp` | `boolean` | When true, the binding fires even with the help overlay open. Defaults to false. |
+| `hint` | `Object \| null` | Footer hint to surface, or `null` to omit one. |
+
+Hint shape:
+
+| Property | Type | Description |
+| :--- | :--- | :--- |
+| `msgKey` | `string` | i18n message key for the hint label. |
+| `kbd` | `string` | Keyboard glyph shown next to the label (e.g. `↵`, `↑↓`, `⌘C`). |
+| `order` | `number` | Sort order within the footer (lower = leftmost). |
+
+Mode keybindings are prepended to the core bindings while the mode is active, so a mode binding wins on key collisions within its own focus zone. Footer hints derive from the same list, so a hint is visible iff its handler will fire — no risk of stale hints.
+
+### Example: simple command
+
+A command triggers an action directly when selected. Triggers should **not** end with a colon since there is no sub-query.
+
+::: details Toggle code
+
+```js
+mw.hook( 'citizen.commandPalette.register' ).add( function ( data ) {
+    data.register( data.defineCommand( {
+        id: 'my-simple-command',
+        triggers: [ '/simple', '/sim' ],
+        description: 'Executes a simple action directly.',
+        onResultSelect: function ( item ) {
+            mw.notify( 'Simple command executed!' );
+            return { action: 'none' };
+        }
+    } ) );
+} );
+```
+
+:::
+
+### Example: custom mode
+
+A mode accepts a sub-query and returns dynamic results. Triggers **must** end with a colon (`:`) to indicate that a sub-query is expected.
+
+::: details Toggle code
+
+```js
+mw.hook( 'citizen.commandPalette.register' ).add( function ( data ) {
+    data.register( data.defineMode( {
+        id: 'my-mode',
+        triggers: [ '/mymode:', '/mm:' ],
+        description: 'Shows results based on your input.',
+        placeholder: 'Search my items',
+        // icon: cdxIconMyIcon, // Optional Codex icon
+
+        // Shown when the mode is active but no query has been typed
+        emptyState: {
+            title: 'My custom mode',
+            description: 'Type something to search your items.'
+            // icon: cdxIconMyIcon // Optional Codex icon
+        },
+
+        // Shown when a query returns no results
+        noResults: function ( query ) {
+            return {
+                title: 'No items found',
+                description: 'Try a different search term.'
+                // icon: cdxIconMyIcon // Optional Codex icon
+            };
+        },
+
+        getResults: function ( subQuery ) {
+            // Return a Promise resolving to an array of result items
+            return new Promise( function ( resolve ) {
+                setTimeout( resolve, 150 ); // Simulate network delay
+            } ).then( function () {
+                if ( !subQuery ) {
+                    return [];
+                }
+
+                return [
+                    {
+                        id: 'subquery-result-1',
+                        label: 'Result for "' + subQuery + '"',
+                        description: 'First result.',
+                        url: mw.util.getUrl( subQuery ),
+                        type: 'command-subquery',
+                        highlightQuery: true
+                    }
+                ];
+            } );
+        },
+
+        onResultSelect: function ( item ) {
+            if ( item.url ) {
+                return { action: 'navigate', payload: item.url };
+            }
+            return { action: 'none' };
+        }
+    } ) );
+} );
+```
+
+:::
+
+### Migration from previous API
+
+::: warning Breaking change
+If you have custom commands registered with the previous API, you'll need to update them:
+
+* The hook has been renamed from `skins.citizen.commandPalette.registerCommand` to `citizen.commandPalette.register`
+* The hook callback now receives `{ register }` instead of `{ registerCommand }`
+* The `onCommandSelect` property has been renamed to `onResultSelect`
+* The `type` property on the command object is no longer needed (set it on individual result items instead)
+
+The old hook name still works but will log a deprecation warning. Please migrate to the new name.
+
+**Before:**
+
+```js
+mw.hook( 'skins.citizen.commandPalette.registerCommand' ).add( function ( data ) {
+    data.registerCommand( myCommand ); // [!code --]
+} );
+```
+
+**After:**
+
+```js
+mw.hook( 'citizen.commandPalette.register' ).add( function ( data ) {
+    data.register( myCommand ); // [!code ++]
+} );
+```
+
+:::
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/features/performance-mode.md
+description: >-
+  A lightweight mode that strips animations and visual effects for fast page
+  loads.
+---
+
+# Performance mode
+
+Performance mode dials back animations and visual effects so the skin feels fast on any device.
+
+## How it works
+
+With performance mode on, Citizen:
+
+* Turns off transitions and animations across the whole skin (every element, not just ones using Citizen's transition tokens)
+* Disables smooth scrolling
+* Drops frosted-glass backdrop effects
+* Skips the frosted overlay on the mobile header, leaving the default solid background
+
+::: tip Relationship with `prefers-reduced-motion`
+MediaWiki core handles the OS-level `prefers-reduced-motion` media query on its own. Performance mode is a skin-level toggle that goes further — it also strips out frosted glass and other visual flourishes that reduced motion doesn't cover.
+:::
+
+Performance mode is on by default. On the first page load, Citizen probes the browser for WebGL support — if the device can render WebGL, performance mode turns off; otherwise it stays on. The result is saved in the browser, so the check only runs once. Users can flip the toggle in their preferences at any time.
+
+## Extending performance mode
+
+### On-wiki JSON
+
+You can hide the performance mode toggle or lock it to a specific value through [preference overrides](./preferences#removing-a-built-in-preference). To remove it from the preferences panel entirely:
+
+```json
+{
+  "preferences": {
+    "citizen-feature-performance-mode": null
+  }
+}
+```
+
+Place this on `MediaWiki:Citizen-preferences.json`.
+
+### Custom styles
+
+Citizen sets a class on the root element that you can target in your own styles:
+
+| Class | State |
+| :--- | :--- |
+| `.citizen-feature-performance-mode-clientpref-0` | Performance mode **off** |
+| `.citizen-feature-performance-mode-clientpref-1` | Performance mode **on** |
+
+Use these to gate heavy effects, swap in lighter alternatives, or simplify layouts when the user or device prefers a leaner experience:
+
+```css
+/* Full effect when performance mode is off */
+.citizen-feature-performance-mode-clientpref-0 .my-element {
+  backdrop-filter: blur( 16px );
+}
+
+/* Lighter fallback when performance mode is on */
+.citizen-feature-performance-mode-clientpref-1 .my-element {
+  background-color: var( --color-surface-1 );
+}
+```
+
+#### Animation readiness
+
+Citizen also prevents transitions from firing during initial page load. The `.citizen-animations-ready` class is added to the root element after the skin finishes its deferred startup tasks (scheduled via `requestIdleCallback`) — transition tokens like `--transition-duration-base`, `--transition-hover`, and `--transition-menu` are only defined under this class.
+
+Gate your own transitions the same way to avoid jank on first paint:
+
+```css
+.citizen-animations-ready .my-element {
+  transition: opacity var( --transition-duration-medium );
+}
+```
+
+#### Affected custom properties
+
+Performance mode overrides these custom properties, so anything that references them adapts without extra work:
+
+| Property | Default | Performance mode |
+| :--- | :--- | :--- |
+| `--backdrop-filter-frosted-glass` | `blur(…)` | `none` |
+| `--opacity-glass` | `<0–1>` | `1` |
+
+On top of that, performance mode applies `transition-duration: 0ms !important` and `animation-duration: 0.01ms !important` to every element via the universal selector, so transitions and animations are flattened even when your styles don't reference Citizen's tokens.
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/features/preferences.md
+description: >-
+  A panel for personalizing the skin, extensible with on-wiki JSON or
+  JavaScript.
+---
+
+# Preferences
+
+Citizen's preferences panel lets readers personalize the skin — theme, font size, page width, and any toggles your wiki adds. You extend the panel through two paths, both using the same configuration schema.
+
+## How it works
+
+Citizen ships with two built-in sections:
+
+| Section | Preferences |
+| :--- | :--- |
+| `appearance` | Theme, font size, page width, pure black, image dimming |
+| `behavior` | Auto-hide navigation, performance mode |
+
+The panel is lazy-loaded, so it doesn't ship in the initial page bundle. Changes to preference configuration — through on-wiki JSON or the JavaScript API — take effect the next time a user opens the panel, with no cache purge required.
+
+## Extending preferences
+
+Admins can override any built-in preference, or add entirely new ones, through `MediaWiki:Citizen-preferences.json`. Gadgets and user scripts can do the same thing via the JavaScript API. Both paths share the same configuration schema.
+
+### Configuration schema
+
+Whether you're writing JSON on-wiki or passing a config object to the JavaScript API, the shape is the same. There are two top-level keys: `sections` and `preferences`.
+
+#### Sections
+
+Sections group related preferences together. Each section needs either an i18n message key or a literal label.
+
+Using an i18n message key:
+
+```json
+{
+  "sections": {
+    "my-section": {
+      "labelMsg": "my-extension-section-label"
+    }
+  }
+}
+```
+
+Using a literal label:
+
+```json
+{
+  "sections": {
+    "my-section": {
+      "label": "My Section"
+    }
+  }
+}
+```
+
+#### Preference entries
+
+Each preference is keyed by its feature name.
+
+```json
+{
+  "preferences": {
+    "my-feature": {
+      "section": "my-section",
+      "type": "switch",
+      "options": ["0", "1"],
+      "labelMsg": "my-feature-name",
+      "descriptionMsg": "my-feature-description"
+    }
+  }
+}
+```
+
+**Field reference:**
+
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `section` | string | Which section this preference belongs to. |
+| `type` | string | `"switch"`, `"select"`, or `"radio"`. Switch and select are auto-detected from the option count (2 options = switch, 3+ = select); `"radio"` must be set explicitly. |
+| `options` | array | Short form `["0", "1"]` or long form `[{"value": "0", "labelMsg": "..."}]`. Long-form options also accept `"label"` for literal text instead of an i18n key. |
+| `labelMsg` / `label` | string | i18n message key or literal text for the preference name. |
+| `descriptionMsg` / `description` | string | i18n message key or literal text for the description. |
+| `columns` | number | For radio type, number of columns (default: 2). |
+| `visibilityCondition` | string | Optional gate on when the preference appears: `"always"` (default), `"dark-theme"` (visible only in dark theme), `"tablet-viewport"` (visible only at tablet width or above). |
+
+### `label` vs `labelMsg`
+
+Both sections and preferences support two ways to set their display text:
+
+* **`labelMsg`** (and `descriptionMsg`) references an i18n message key. The message must be loadable via the MediaWiki API. Use this for multilingual wikis so labels are translated automatically.
+* **`label`** (and `description`) is a literal string used as-is. Use this for single-language wikis or quick prototyping.
+
+The same pattern applies to `descriptionMsg` / `description`.
+
+### On-wiki JSON
+
+The simplest way to manage preferences — create a JSON page on your wiki at `MediaWiki:Citizen-preferences.json`.
+
+#### Merge behavior
+
+Your configuration is merged with the built-in defaults:
+
+* **Omitting** a built-in preference or section keeps its default.
+* Setting a preference to **`null`** removes it from the panel. Sections with no remaining preferences are dropped automatically.
+* **Overriding** specific fields of a built-in preference merges them — unspecified fields keep their default values.
+* **Options arrays** are replaced wholesale, not merged element-by-element. If you override `options`, provide the full list.
+
+#### Examples
+
+##### Adding a custom toggle
+
+```json
+{
+  "sections": {
+    "extensions": {
+      "label": "Extensions"
+    }
+  },
+  "preferences": {
+    "my-extension-dark-reader": {
+      "section": "extensions",
+      "type": "switch",
+      "options": ["0", "1"],
+      "label": "Dark Reader",
+      "description": "Enable Dark Reader extension"
+    }
+  }
+}
+```
+
+##### Removing a built-in preference
+
+```json
+{
+  "preferences": {
+    "citizen-feature-performance-mode": null
+  }
+}
+```
+
+##### Modifying theme options
+
+This removes the "auto" option from the theme preference, leaving only day and night:
+
+```json
+{
+  "preferences": {
+    "skin-theme": {
+      "options": [
+        { "value": "day", "labelMsg": "citizen-theme-day-label" },
+        { "value": "night", "labelMsg": "citizen-theme-night-label" }
+      ],
+      "columns": 2
+    }
+  }
+}
+```
+
+### JavaScript API
+
+Gadgets and user scripts can register preferences at runtime via `mw.hook`. Use this when a gadget needs to ship its own preference toggle without requiring an admin to edit the on-wiki JSON.
+
+#### Usage
+
+```js
+mw.hook( 'citizen.preferences.register' ).add( function ( register ) {
+    register( {
+        sections: { /* ... */ },
+        preferences: { /* ... */ }
+    } );
+} );
+```
+
+The `register` function accepts the same config schema as the on-wiki JSON — `sections` and `preferences` with the same field reference.
+
+#### Timing
+
+You don't need to worry about load order. `mw.hook` replays previously fired data to late subscribers, so your `.add()` callback receives the `register` function regardless of whether the preferences panel has loaded. The panel's config is reactive too — calling `register()` after the panel is open updates it in place, no reload needed.
+
+#### Example
+
+A gadget registering a simple toggle:
+
+```js
+mw.hook( 'citizen.preferences.register' ).add( function ( register ) {
+    register( {
+        sections: {
+            'my-gadget': { label: 'My Gadget' }
+        },
+        preferences: {
+            'gadget-dark-mode': {
+                section: 'my-gadget',
+                type: 'switch',
+                options: [ '0', '1' ],
+                label: 'Dark mode',
+                description: 'Enable dark mode for this gadget'
+            }
+        }
+    } );
+} );
+```
+
+#### Full gadget example
+
+A complete example that registers a preference and reacts to changes — the kind of thing you'd put in a gadget's JavaScript file:
+
+```js
+// Register the preference
+mw.hook( 'citizen.preferences.register' ).add( function ( register ) {
+    register( {
+        sections: {
+            gadgets: { label: 'Gadgets' }
+        },
+        preferences: {
+            'gadget-enhanced-rc': {
+                section: 'gadgets',
+                type: 'switch',
+                options: [ '0', '1' ],
+                label: 'Enhanced recent changes',
+                description: 'Use the enhanced recent changes interface'
+            }
+        }
+    } );
+} );
+
+// React to changes
+mw.hook( 'citizen.preferences.changed' ).add( function ( featureName, value ) {
+    if ( featureName === 'gadget-enhanced-rc' ) {
+        toggleEnhancedRC( value === '1' );
+    }
+} );
+```
+
+### Custom styles
+
+When a user selects a value, Citizen adds a CSS class to the `<html>` element in the format `<feature>-clientpref-<value>`. You can target these classes in `MediaWiki:Common.css` or gadget styles:
+
+```css
+html.my-extension-dark-reader-clientpref-1 {
+  /* styles when dark reader is enabled */
+}
+```
+
+### Listening for changes
+
+React to preference changes in JavaScript using `mw.hook`:
+
+```js
+mw.hook( 'citizen.preferences.changed' ).add( function ( featureName, value ) {
+    console.log( featureName + ' changed to ' + value );
+} );
+```
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/features/share.md
+description: >-
+  Share the current page via the browser's native share sheet or a configurable
+  grid of services.
+---
+
+# Share
+
+The share panel lets readers send the current page to other people — through their device's native share sheet, a configurable grid of services on the wiki, or as a short URL or QR code.
+
+## How it works
+
+Citizen offers three share modes:
+
+* **Native** — surfaces the device's OS-level share sheet (apps, contacts, AirDrop, etc.). Available on mobile devices and desktop Safari, Chrome, and Edge; on browsers without Web Share API support it falls back to a clipboard copy with a toast notification.
+* **Panel** — opens Citizen's in-page panel. Always includes a copy-link field, and if you've configured services on your wiki, a grid of branded service tiles below it. Optionally adds short URL and QR code buttons when [Extension:UrlShortener](https://www.mediawiki.org/wiki/Extension:UrlShortener) is installed.
+* **Auto** *(default)* — uses Native when the browser supports it, falls back to Panel otherwise.
+
+Wiki admins choose which mode is active — see [Configuration](#configuration) below.
+
+Citizen doesn't ship with a built-in service list. The right services depend on your audience — a German federated wiki may want Diaspora; a corporate intranet may want none at all. You pick.
+
+::: tip Which URL gets shared
+Native mode reads `<link rel="canonical">` and shares the canonical URL. The in-page panel — both the copy-link field and the service tiles — shares the current page URL without the hash. If you rely on canonical URLs for analytics or social previews, prefer Native mode.
+:::
+
+### Short URLs and QR codes
+
+When [Extension:UrlShortener](https://www.mediawiki.org/wiki/Extension:UrlShortener) is installed, the share panel adds two buttons below the copy-link field:
+
+* **Copy short URL** — copies a shortened URL to the clipboard in one click, with a brief success state on the button. The result is cached for the lifetime of the dialog, so clicking again or reopening the panel is instant.
+* **Show QR code** — opens a focused QR view inside the same panel, with the short URL printed below as a fallback for anything that can't scan. Only appears when `$wgUrlShortenerEnableQrCode` is enabled.
+
+If the UrlShortener API call fails, both buttons disappear together and the panel falls back to its copy-link-and-services layout.
+
+The copy-link field and the share tiles always use the full page URL — short URLs are reserved for the dedicated button and the QR view. If UrlShortener isn't installed, neither button appears and the rest of the panel works the same.
+
+## Configuration
+
+Share is enabled by default. To turn it off entirely, set `$wgCitizenEnableShare = false;` in `LocalSettings.php`.
+
+When enabled, pick how share behaves with `$wgCitizenShareMode`:
+
+```php
+$wgCitizenShareMode = 'auto'; // 'auto' | 'panel' | 'native'
+```
+
+| Value | When to use |
+| :--- | :--- |
+| `'auto'` *(default)* | Best of both worlds — most wikis should keep the default. |
+| `'panel'` | When you want consistent branding across all browsers, or when your curated share targets are central to your wiki's identity. |
+| `'native'` | When you want to defer entirely to the OS share experience. |
+
+## Extending the share panel
+
+### On-wiki JSON
+
+Create the page `MediaWiki:Citizen-share-services.json` on your wiki and paste a JSON array of service entries. Save the page, and the new services appear the next time anyone opens the panel.
+
+::: warning Allowed URL protocols
+Citizen drops any service whose `url` uses a protocol not in MediaWiki's `$wgUrlProtocols` list (`http://`, `https://`, `mailto:` and a handful of others by default). If a service silently disappears after you add it, check the protocol first.
+:::
+
+#### Starter pack
+
+Here's a Facebook / X / Mastodon / Bluesky setup you can copy in as-is. Icons are embedded directly, so nothing extra needs to be uploaded:
+
+```json
+[
+  {
+    "name": "facebook",
+    "label": "Facebook",
+    "url": "https://www.facebook.com/sharer/sharer.php?u={{url}}",
+    "color": "#0865FE",
+    "icon": "data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+RmFjZWJvb2s8L3RpdGxlPjxwYXRoIGQ9Ik05LjEwMSAyMy42OTF2LTcuOThINi42Mjd2LTMuNjY3aDIuNDc0di0xLjU4YzAtNC4wODUgMS44NDgtNS45NzggNS44NTgtNS45NzguNDAxIDAgLjk1NS4wNDIgMS40NjguMTAzYTguNjggOC42OCAwIDAgMSAxLjE0MS4xOTV2My4zMjVhOC42MjMgOC42MjMgMCAwIDAtLjY1My0uMDM2IDI2LjgwNSAyNi44MDUgMCAwIDAtLjczMy0uMDA5Yy0uNzA3IDAtMS4yNTkuMDk2LTEuNjc1LjMwOWExLjY4NiAxLjY4NiAwIDAgMC0uNjc5LjYyMmMtLjI1OC40Mi0uMzc0Ljk5NS0uMzc0IDEuNzUydjEuMjk3aDMuOTE5bC0uMzg2IDIuMTAzLS4yODcgMS41NjRoLTMuMjQ2djguMjQ1QzE5LjM5NiAyMy4yMzggMjQgMTguMTc5IDI0IDEyLjA0NGMwLTYuNjI3LTUuMzczLTEyLTEyLTEycy0xMiA1LjM3My0xMiAxMmMwIDUuNjI4IDMuODc0IDEwLjM1IDkuMTAxIDExLjY0N1oiLz48L3N2Zz4="
+  },
+  {
+    "name": "x",
+    "label": "X",
+    "url": "https://x.com/intent/tweet?url={{url}}&text={{title}}",
+    "color": "#000000",
+    "open_in_modal": true,
+    "icon": "data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+WDwvdGl0bGU+PHBhdGggZD0iTTE0LjIzNCAxMC4xNjIgMjIuOTc3IDBoLTIuMDcybC03LjU5MSA4LjgyNEw3LjI1MSAwSC4yNThsOS4xNjggMTMuMzQzTC4yNTggMjRIMi4zM2w4LjAxNi05LjMxOEwxNi43NDkgMjRoNi45OTN6bS0yLjgzNyAzLjI5OS0uOTI5LTEuMzI5TDMuMDc2IDEuNTZoMy4xODJsNS45NjUgOC41MzIuOTI5IDEuMzI5IDcuNzU0IDExLjA5aC0zLjE4MnoiLz48L3N2Zz4="
+  },
+  {
+    "name": "mastodon",
+    "label": "Mastodon",
+    "url": "https://mastodon.social/share?text={{title}}%20{{url}}",
+    "color": "#6364FF",
+    "icon": "data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+TWFzdG9kb248L3RpdGxlPjxwYXRoIGQ9Ik0yMy4yNjggNS4zMTNjLS4zNS0yLjU3OC0yLjYxNy00LjYxLTUuMzA0LTUuMDA0QzE3LjUxLjI0MiAxNS43OTIgMCAxMS44MTMgMGgtLjAzYy0zLjk4IDAtNC44MzUuMjQyLTUuMjg4LjMwOUMzLjg4Mi42OTIgMS40OTYgMi41MTguOTE3IDUuMTI3LjY0IDYuNDEyLjYxIDcuODM3LjY2MSA5LjE0M2MuMDc0IDEuODc0LjA4OCAzLjc0NS4yNiA1LjYxMS4xMTggMS4yNC4zMjUgMi40Ny42MiAzLjY4LjU1IDIuMjM3IDIuNzc3IDQuMDk4IDQuOTYgNC44NTcgMi4zMzYuNzkyIDQuODQ5LjkyMyA3LjI1Ni4zOC4yNjUtLjA2MS41MjctLjEzMi43ODYtLjIxMy41ODUtLjE4NCAxLjI3LS4zOSAxLjc3NC0uNzUzYS4wNTcuMDU3IDAgMCAwIC4wMjMtLjA0M3YtMS44MDlhLjA1Mi4wNTIgMCAwIDAtLjAyLS4wNDEuMDUzLjA1MyAwIDAgMC0uMDQ2LS4wMSAyMC4yODIgMjAuMjgyIDAgMCAxLTQuNzA5LjU0NWMtMi43MyAwLTMuNDYzLTEuMjg0LTMuNjc0LTEuODE4YTUuNTkzIDUuNTkzIDAgMCAxLS4zMTktMS40MzMuMDUzLjA1MyAwIDAgMSAuMDY2LS4wNTRjMS41MTcuMzYzIDMuMDcyLjU0NiA0LjYzMi41NDYuMzc2IDAgLjc1IDAgMS4xMjUtLjAxIDEuNTctLjA0NCAzLjIyNC0uMTI0IDQuNzY4LS40MjIuMDM4LS4wMDguMDc3LS4wMTUuMTEtLjAyNCAyLjQzNS0uNDY0IDQuNzUzLTEuOTIgNC45ODktNS42MDQuMDA4LS4xNDUuMDMtMS41Mi4wMy0xLjY3LjAwMi0uNTEyLjE2Ny0zLjYzLS4wMjQtNS41NDV6bS0zLjc0OCA5LjE5NWgtMi41NjFWOC4yOWMwLTEuMzA5LS41NS0xLjk3Ni0xLjY3LTEuOTc2LTEuMjMgMC0xLjg0Ni43OS0xLjg0NiAyLjM1djMuNDAzaC0yLjU0NlY4LjY2M2MwLTEuNTYtLjYxNy0yLjM1LTEuODQ4LTIuMzUtMS4xMTIgMC0xLjY2OC42NjgtMS42NyAxLjk3N3Y2LjIxOEg0LjgyMlY4LjEwMmMwLTEuMzEuMzM3LTIuMzUgMS4wMTEtMy4xMi42OTYtLjc3IDEuNjA4LTEuMTY0IDIuNzQtMS4xNjQgMS4zMTEgMCAyLjMwMi41IDIuOTYyIDEuNDk4bC42MzggMS4wNi42MzgtMS4wNmMuNjYtLjk5OSAxLjY1LTEuNDk4IDIuOTYtMS40OTggMS4xMyAwIDIuMDQzLjM5NSAyLjc0IDEuMTY0LjY3NS43NyAxLjAxMiAxLjgxIDEuMDEyIDMuMTJ6Ii8+PC9zdmc+"
+  },
+  {
+    "name": "bluesky",
+    "label": "Bluesky",
+    "url": "https://bsky.app/intent/compose?text={{title}}%20{{url}}",
+    "color": "#1185FE",
+    "icon": "data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+Qmx1ZXNreTwvdGl0bGU+PHBhdGggZD0iTTUuMjAyIDIuODU3QzcuOTU0IDQuOTIyIDEwLjkxMyA5LjExIDEyIDExLjM1OGMxLjA4Ny0yLjI0NyA0LjA0Ni02LjQzNiA2Ljc5OC04LjUwMUMyMC43ODMgMS4zNjYgMjQgLjIxMyAyNCAzLjg4M2MwIC43MzItLjQyIDYuMTU2LS42NjcgNy4wMzctLjg1NiAzLjA2MS0zLjk3OCAzLjg0Mi02Ljc1NSAzLjM3IDQuODU0LjgyNiA2LjA4OSAzLjU2MiAzLjQyMiA2LjI5OS01LjA2NSA1LjE5Ni03LjI4LTEuMzA0LTcuODQ3LTIuOTctLjEwNC0uMzA1LS4xNTItLjQ0OC0uMTUzLS4zMjcgMC0uMTIxLS4wNS4wMjItLjE1My4zMjctLjU2OCAxLjY2Ni0yLjc4MiA4LjE2Ni03Ljg0NyAyLjk3LTIuNjY3LTIuNzM3LTEuNDMyLTUuNDczIDMuNDIyLTYuMy0yLjc3Ny40NzMtNS44OTktLjMwOC02Ljc1NS0zLjM2OUMuNDIgMTAuMDQgMCA0LjYxNSAwIDMuODgzYzAtMy42NyAzLjIxNy0yLjUxNyA1LjIwMi0xLjAyNiIvPjwvc3ZnPg=="
+  }
+]
+```
+
+Icons are [Simple Icons](https://simpleicons.org/) (CC0).
+
+#### Service fields
+
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `name` | string | Internal identifier. Used as the tile's CSS id (`citizen-share-service-<name>`) so you can target it with custom CSS on your wiki. Characters outside `[a-zA-Z0-9_-]` are stripped from the id. |
+| `label` | string | The name your users see — read by screen readers and shown on hover. |
+| `url` | string | The link opened when the tile is clicked. Use `{{url}}` and `{{title}}` placeholders for the current page's URL and title. |
+| `color` | string | Background color of the tile. Match the service's brand color when possible. |
+| `open_in_modal` | boolean | Open in a small popup window instead of a new tab. Useful for services that show a share dialog, like X. `mailto:` links always open in the same tab and ignore this flag. |
+| `icon` | string | The icon shown on the tile. See [Icons](#icons) below. |
+| `file` | string | Alternative to `icon`: the filename of an SVG uploaded to your wiki. See [Icons](#icons) below. |
+
+#### Icons
+
+The icon is shown in white on the brand color, so single-color glyphs work best. Three ways to provide one:
+
+1. **Embedded** — paste the SVG directly into the JSON as a `data:image/svg+xml;base64,...` value (like the starter pack above). Nothing extra to upload, nothing external to depend on. Best for most wikis.
+2. **From your wiki's media library** — upload the SVG via `Special:Upload`, then leave `icon` out and add a `file` field with the filename. Useful if you already maintain icons as wiki files.
+3. **External URL** — point `icon` at any image URL. Quick to set up, but the icon comes from a third party — first-time visitors pay a network round-trip for it (cached afterwards), and your share panel breaks if that host goes down or removes the file. Best avoided.
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/customization/theming.md
+description: Customizing the look and feel of Citizen
+---
+
+# Theming
+
+Citizen's visual appearance is controlled by CSS custom properties. Override them in `MediaWiki:Citizen.css` to match your wiki's brand.
+
+## Colors
+
+### Primary color
+
+Citizen uses the **OKLCH** color model for its primary color (called "progressive" in MediaWiki). OKLCH keeps colors perceptually consistent across light and dark mode. The default is a standard blue (`#36c`) — most wikis only need to change the hue.
+
+| Property | Description | Default value |
+| :--- | :--- | :--- |
+| `--color-progressive-oklch__l` | Lightness. | `53.25%` |
+| `--color-progressive-oklch__c` | Chroma (saturation). | `0.1679` |
+| `--color-progressive-oklch__h` | Hue — the easiest way to rebrand. | `262.29` |
+
+::: warning Deprecated
+The HSL fallback variables are soft-deprecated and will be removed in a future version. Use the OKLCH variables above instead.
+
+| Property | Description |
+| :--- | :--- |
+| `--color-progressive-hsl__h` | Hue |
+| `--color-progressive-hsl__s` | Saturation |
+| `--color-progressive-hsl__l` | Lightness |
+
+:::
+
+### Surface colors
+
+Surface colors form the depth hierarchy of the UI — lower numbers sit further back.
+
+| Property | Description |
+| :--- | :--- |
+| `--color-surface-0` | Page background. |
+| `--color-surface-1` | Cards, modals, and dropdowns. |
+| `--color-surface-2` | Raised elements within cards. |
+| `--color-surface-3` | Hover states and subtle highlights. |
+| `--color-surface-4` | Active states and strong highlights. |
+
+### Text colors
+
+| Property | Description |
+| :--- | :--- |
+| `--color-base` | Default body text. |
+| `--color-emphasized` | Titles and headings. |
+| `--color-subtle` | Captions and metadata. |
+| `--color-link` | Link text. |
+
+## Typography
+
+Citizen ships with [Roboto Flex](https://fonts.google.com/specimen/Roboto+Flex) as its default typeface. You can swap it out by overriding the font family variables:
+
+| Property | Description | Default value |
+| :--- | :--- | :--- |
+| `--font-family-citizen-base` | Most text in the UI. | `'Roboto'` |
+| `--font-family-citizen-serif` | Serif option in the editor and some extensions. | `'Roboto Serif'` |
+| `--font-family-citizen-monospace` | Code blocks and editors. | `'Roboto Mono'` |
+
+To use a font from [Google Fonts](https://fonts.google.com) (or any other source), import it and set the variable in `MediaWiki:Citizen.css`. Request the full weight range so all of Citizen's weight variations work correctly:
+
+```css
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+:root {
+    --font-family-citizen-base: 'Inter';
+}
+```
+
+::: tip
+Set just the font name. Citizen adds `system-ui`, `sans-serif`, and language-specific fallbacks downstream — putting them here yourself can short-circuit the chain for users on the CJK or Arabic modules.
+:::
+
+::: tip
+Any font works, but [variable fonts](https://fonts.google.com/variablefonts) are recommended — Citizen uses multiple font weights, and a variable font serves them all from a single file.
+:::
+
+### Avoiding font flicker
+
+Web fonts load asynchronously — until yours arrives, the browser shows a system fallback. If the two fonts have different metrics, text visibly resizes or shifts when the swap happens.
+
+Citizen ships a metric-matched fallback for Roboto Flex that hides this. If you've swapped Roboto for another font, you can do the same:
+
+1. Generate override descriptors with a tool like [font-style-matcher](https://meowni.ca/font-style-matcher/) or [screenspan.net/fallback](https://screenspan.net/fallback).
+2. Add the resulting `@font-face` to your CSS under a distinct family name like `'Inter-fallback'`.
+3. Reference it right after your font in the variable:
+
+```css
+:root {
+    --font-family-citizen-base: 'Inter', 'Inter-fallback';
+}
+```
+
+## Layout
+
+The page width options are user preferences — users pick from Standard, Wide, or Full in the preferences panel. You can override the widths for each option:
+
+| Option | Selector | Default value |
+| :--- | :--- | :--- |
+| Standard | `:root.citizen-feature-custom-width-clientpref-standard` | `1080px` |
+| Wide | `:root.citizen-feature-custom-width-clientpref-wide` | `1600px` |
+| Full | `:root.citizen-feature-custom-width-clientpref-full` | `100vw` |
+
+## Theme modes
+
+Citizen supports Light, Dark, Pure Black, and Automatic modes. Use these selectors in `MediaWiki:Citizen.css` to apply mode-specific styles:
+
+| Mode | Selector |
+| :--- | :--- |
+| Light | `.skin-theme-clientpref-day` |
+| Dark | `.skin-theme-clientpref-night` |
+| Pure black | `.skin-theme-clientpref-night.citizen-feature-pure-black-clientpref-1` |
+| Automatic | `.skin-theme-clientpref-os` |
+
+### Inverting images in dark mode
+
+Some images, especially black text or icons on a transparent background, become invisible in dark mode. Citizen exposes a `--filter-invert` CSS variable that inverts colors only when a dark theme is active. Apply it to the element containing the image:
+
+```css
+filter: var( --filter-invert );
+```
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/customization/utility-classes.md
+description: CSS classes Citizen exposes for formatting and interactivity
+---
+
+# Utility classes
+
+Citizen provides a set of utility classes you can use directly in wikitext, templates, and gadgets to format content and add interactivity without writing custom CSS.
+
+## Layout
+
+Control the positioning and flow of your content.
+
+| Class | Description |
+| :--- | :--- |
+|  | Floats content to the right. Stacks vertically on small screens. |
+|  | Floats content to the left. Stacks vertically on small screens. |
+|  | Clears floating alignment. |
+|  | Wraps content in a horizontally scrollable container with indicators. |
+|  | Makes an element sticky within a `.citizen-overflow` container. |
+
+### Element sticky header
+
+You can make headers sticky within a scrollable area (like a wide table) by adding the `citizen-overflow-sticky-header` class. This works for both `div` elements and wikitables.
+
+For `div` elements:
+
+```html
+<div class="citizen-overflow">
+  <div class="citizen-overflow-sticky-header">I am sticky 👍</div>
+  <div>I am not sticky 👎</div>
+</div>
+```
+
+For wikitables:
+
+```wikitext
+{| class="wikitable"
+|- class="citizen-overflow-sticky-header"
+! Header text !! Header text !! Header text
+|-
+| Example || Example || Example
+|-
+| Example || Example || Example
+|-
+| Example || Example || Example
+|}
+```
+
+## Tables
+
+Enhance the look and feel of your tables.
+
+| Class | Description |
+| :--- | :--- |
+|  | Applies standard Citizen styling. Automatically wrapped in `.citizen-overflow`. |
+|  | Adds vertical borders. |
+|  | Adds zebra striping for better readability. |
+|  | Expands the table to fill 100% of the available width. |
+|  | Prevents the table from being wrapped in a scrollable container. |
+
+## Interaction
+
+Add interactive elements to your pages.
+
+| Class | Description |
+| :--- | :--- |
+|  | Opens the site search interface when clicked. |
+
+### Search trigger
+
+You can create buttons or links that trigger the search popup using the `.citizen-search-trigger` class.
+
+To create a simple search button:
+
+```html
+<div class="citizen-search-trigger">Click me to open search</div>
+```
+
+To prefill the search query (for example, to search only templates):
+
+```html
+<div class="citizen-search-trigger" data-citizen-search-prefill="Template:">Click me to search templates</div>
+```
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/customization/recipes.md
+description: Common customizations and CSS snippets for Citizen
+---
+
+# Recipes
+
+Quick snippets and examples for common Citizen customizations. CSS recipes go in `MediaWiki:Citizen.css`, and for theme-mode selectors, see the [theming reference](/customization/theming#theme-modes).
+
+## Change the primary color
+
+Citizen uses OKLCH for its accent color, so you only need to adjust the hue. This example sets it to purple in light mode:
+
+```css
+:root.skin-theme-clientpref-day {
+    --color-progressive-oklch__h: 301.11;
+}
+```
+
+If your wiki uses automatic mode, you'll also need a media query so the change applies when the device is in dark mode:
+
+```css
+@media screen and (prefers-color-scheme: dark) {
+    :root.skin-theme-clientpref-os {
+        --color-progressive-oklch__h: 301.11;
+    }
+}
+```
+
+::: tip
+To target standard dark mode without affecting pure black mode, use `.skin-theme-clientpref-night.citizen-feature-pure-black-clientpref-0`.
+:::
+
+## Turn off image hover zoom
+
+Images slightly scale up on hover by default. To keep them static:
+
+```css
+:root {
+    --transform-image-hover: none;
+}
+```
+
+## Turn off backdrop blur
+
+Overlays like dropdowns and the command palette apply a subtle blur to the content behind them. To disable it:
+
+```css
+:root {
+    --backdrop-filter-blur: none;
+}
+```
+
+## Turn off frosted glass
+
+The sticky header and some overlays use a frosted glass effect — a heavier blur combined with transparency. To make them fully opaque instead:
+
+```css
+:root {
+    --backdrop-filter-frosted-glass: none;
+    --opacity-glass: 1;
+}
+```
+
+## Remove or modify preferences
+
+Admins can remove or customize any built-in preference through `MediaWiki:Citizen-preferences.json`. See the [preferences documentation](/features/preferences) for the full schema.
+
+For example, to keep only light and dark in the theme switcher (removing automatic mode):
+
+```json
+{
+  "preferences": {
+    "skin-theme": {
+      "options": [
+        { "value": "day", "labelMsg": "citizen-theme-day-label" },
+        { "value": "night", "labelMsg": "citizen-theme-night-label" }
+      ],
+      "columns": 2
+    }
+  }
+}
+```
+
+To hide a preference from the panel entirely, set it to `null`:
+
+```json
+{
+  "preferences": {
+    "citizen-feature-pure-black": null,
+    "citizen-feature-autohide-navigation": null
+  }
+}
+```
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/customization/hooks.md
+description: JavaScript hooks provided by Citizen for extensions and gadgets
+---
+
+# Hooks
+
+Citizen fires several [`mw.hook`](https://doc.wikimedia.org/mediawiki-core/master/js/mw.hook.html) events that extensions, gadgets, and user scripts can subscribe to. This page is a quick reference — see the linked feature pages for full details and examples.
+
+## Hook reference
+
+| Hook | Parameters | Description |
+| :--- | :--- | :--- |
+| `citizen.commandPalette.register` | `{ register }` | Register custom modes and commands in the [command palette](/features/command-palette#extending-the-command-palette). `register( entry )` accepts a mode or command object. |
+| `citizen.preferences.register` | `register` | Register custom sections and preferences in the [preferences panel](/features/preferences#javascript-api). `register( config )` accepts a config object with `sections` and `preferences`. |
+| `citizen.preferences.changed` | `featureName, value` | Fired when a user changes a preference. Use this to [react to changes](/features/preferences#listening-for-changes) in real time. |
+
+## Usage pattern
+
+All Citizen hooks follow the standard `mw.hook` pattern:
+
+```js
+mw.hook( 'citizen.commandPalette.register' ).add( function ( data ) {
+    data.register( myEntry );
+} );
+```
+
+```js
+mw.hook( 'citizen.preferences.register' ).add( function ( register ) {
+    register( myConfig );
+} );
+```
+
+```js
+mw.hook( 'citizen.preferences.changed' ).add( function ( featureName, value ) {
+    if ( featureName === 'my-feature' ) {
+        // React to the change
+    }
+} );
+```
+
+## Timing
+
+`mw.hook` replays previously fired data to late subscribers. You don't need to worry about load order — your `.add()` callback will receive the data regardless of whether the firing module has loaded yet.
+
+## Deprecated hooks
+
+| Hook | Replacement |
+| :--- | :--- |
+| `skins.citizen.commandPalette.registerCommand` | [`citizen.commandPalette.register`](/features/command-palette#migration-from-previous-api) |
+
+The old hook still works but logs a deprecation warning. See the [migration guide](/features/command-palette#migration-from-previous-api) for details.
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/community/showcase.md
+description: A showcase of wikis using Citizen
+---
+
+# Showcase
+
+Check out these amazing wikis powering their content with Citizen:
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs.md
+description: Changelogs of all Citizen stable releases.
+---
+
+# Changelogs
+
+Changelogs of all Citizen stable releases, which are also available [on GitHub](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/releases).
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/contribute.md
+description: How to contribute to the Citizen skin.
+---
+
+# Contributing
+
+Thank you for considering contributing to *Citizen*!
+
+*Citizen* is a small open-source project, and we appreciate any help. Here are some ways you can contribute:
+
+* [Code patches](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/pulls)
+* [Documentation improvements](https://starcitizentools.github.io/mediawiki-skins-Citizen/)
+* [Bug reports](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/new?template=bug_report.yml)
+* [Feature requests and suggestions](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/new?template=feature_request.yml)
+* [Translations](#translations)
+
+## How to submit a contribution
+
+1. [Fork](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/fork) the *Citizen* repository.
+2. Create a new branch in your fork to make your changes.
+3. Commit your changes to your new branch.
+4. Push your changes to your fork on GitHub.
+5. Submit a pull request from your branch to the *Citizen* repository.
+
+We will review your pull request and, if everything looks good, merge it into the main codebase.
+
+## AI-assisted contributions
+
+The maintainers of *Citizen* use AI tools (such as LLMs and code assistants) as part of their development workflow. Contributors are welcome to do the same, subject to the following expectations:
+
+### Human accountability
+
+The person submitting a contribution is fully responsible for it, regardless of how it was produced. If you use AI to help write code, you must understand what the code does, verify that it works, and be prepared to maintain it.
+
+### Licensing and copyright
+
+You must ensure that your contribution is compatible with the project's license ([GPL-3.0-or-later](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/blob/main/LICENSE)) and does not incorporate third-party code in a way that violates its copyright or license terms. This applies to all contributions — whether written by hand, copied from a reference, or generated with a tool.
+
+### Quality over volume
+
+Every submission should be purposeful, well-tested, and reviewed for correctness, style, and fit with the project. PRs that appear to be unreviewed AI output — large dumps of generated code, generic boilerplate, or changes that ignore the project's conventions — will be closed.
+
+### Communication
+
+Commit messages, PR descriptions, and review comments should be clear, specific, and relevant — regardless of how they were drafted. Generic filler like "This PR improves code quality and enhances maintainability" tells reviewers nothing. Make sure your communication actually describes what changed and why.
+
+## Translations
+
+You can submit translations via [TranslateWiki.net](https://translatewiki.net/w/i.php?title=Special:Translate\&group=mwgithub-star-citizen). They are usually merged bi-weekly.
+
+## Questions
+
+If you have any questions about contributing, feel free to [open an issue](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/new/choose) and ask.
+
+## Contributors
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/latest.md
+description: Changelog of the latest version of Citizen.
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v1.10.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v1.13.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v1.14.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v1.14.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v1.15.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v1.16.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v1.16.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v1.17.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v1.17.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v1.17.2.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v1.17.3.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v1.17.4.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v1.17.5.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v1.17.6.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v1.17.7.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v1.17.8.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v1.17.9.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v1.9.4.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v1.9.5.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.0.0-alpha.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.0.0-alpha.2.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.0.0-beta.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.0.0-beta.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.0.0-beta.2.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.0.0-beta.3.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.0.0-beta.4.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.0.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.0.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.1.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.10.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.10.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.11.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.11.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.12.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.13.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.13.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.13.2.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.13.3.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.13.4.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.13.5.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.14.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.14.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.15.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.15.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.16.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.16.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.17.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.17.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.17.2.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.18.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.18.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.19.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.2.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.20.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.21.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.22.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.22.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.23.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.24.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.25.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.26.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.27.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.28.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.29.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.3.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.3.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.3.2.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.3.3.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.3.4.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.3.5.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.3.6.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.30.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.31.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.32.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.33.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.34.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.35.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.36.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.37.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.38.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.38.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.38.2.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.38.3.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.39.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.39.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.39.2.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.39.3.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.39.4.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.4.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.4.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.4.2.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.4.3.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.4.4.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.40.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.40.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.40.2.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.5.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.5.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.5.2.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.6.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.6.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.6.2.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.6.3.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.6.4.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.6.5.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.6.6.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.7.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.7.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.7.10.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.7.11.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.7.2.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.7.3.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.7.4.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.7.5.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.7.6.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.7.7.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.7.8.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.7.9.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.8.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.8.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.8.2.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.8.3.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.8.4.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.8.5.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.9.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v2.9.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.0.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.1.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.10.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.11.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.12.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.13.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.14.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.15.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.15.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.16.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.2.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.3.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.3.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.3.2.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.4.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.5.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.6.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.7.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.8.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/v3.16/changelogs/v3.9.0.md
+---
+
