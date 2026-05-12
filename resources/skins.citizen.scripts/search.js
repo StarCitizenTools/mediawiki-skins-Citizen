@@ -62,11 +62,8 @@ function bindOpenOnSlash( window, triggerOpen ) {
  */
 function bindSearchTrigger( document, triggerOpen ) {
 	document.querySelectorAll( '.citizen-search-trigger' ).forEach( ( trigger ) => {
-		trigger.addEventListener( 'click', ( event ) => {
-			const prefill = event.target.dataset && event.target.dataset.citizenSearchPrefill ?
-				event.target.dataset.citizenSearchPrefill :
-				null;
-			triggerOpen( prefill );
+		trigger.addEventListener( 'click', () => {
+			triggerOpen( trigger.dataset.citizenSearchPrefill || null );
 		} );
 	} );
 }
