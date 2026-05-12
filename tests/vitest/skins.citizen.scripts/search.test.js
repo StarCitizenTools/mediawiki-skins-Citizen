@@ -143,5 +143,19 @@ describe( 'search', () => {
 
 			expect( triggerOpen ).toHaveBeenCalledWith( null );
 		} );
+
+		it( 'reads prefill from the trigger when a descendant is clicked', () => {
+			document.body.innerHTML =
+				'<details id="citizen-search-details"></details>' +
+				'<div class="citizen-search-trigger" data-citizen-search-prefill="Ship:">' +
+					'<div class="hangar-searchbar">Search ships <i></i></div>' +
+				'</div>';
+
+			init( { window, document, triggerOpen } );
+
+			document.querySelector( '.hangar-searchbar i' ).click();
+
+			expect( triggerOpen ).toHaveBeenCalledWith( 'Ship:' );
+		} );
 	} );
 } );
