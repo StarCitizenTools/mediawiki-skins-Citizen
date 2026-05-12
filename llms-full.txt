@@ -1390,6 +1390,11 @@ description: Customizing the look and feel of Citizen
 
 Citizen's visual appearance is controlled by CSS custom properties. Override them in `MediaWiki:Citizen.css` to match your wiki's brand.
 
+::: tip
+To truly make the wiki your own, you would need CSS to style the skin and templates.
+If you are getting started, check out the [How to use Dev Tools guide](https://river.me/blog/dev-tools) from River!
+:::
+
 ## Colors
 
 ### Primary color
