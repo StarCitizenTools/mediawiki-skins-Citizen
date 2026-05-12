@@ -19,11 +19,24 @@ gh release view v<RECENT_PRIOR_VERSION>   # e.g. one or two versions back, for f
 ### 2. Get commit authors
 
 ```bash
-gh api repos/{owner}/{repo}/compare/v<PREV>...v<VERSION> \
+gh api repos/{owner}/{repo}/compare/v<PREV>...v<VERSION> --paginate \
   --jq '.commits[] | "\(.sha[0:7]) \(.author.login // "unknown") \(.commit.message | split("\n")[0])"'
 ```
 
-Map each changelog entry to its author. Add `(by @username)` before the commit link in every line.
+Map each changelog entry to its primary author. Add `(by @username)` before the commit link in every line.
+
+**Then check for co-authors** — `Co-Authored-By:` trailers in the commit body are *not* in `.author.login`:
+
+```bash
+gh api repos/{owner}/{repo}/compare/v<PREV>...v<VERSION> --paginate \
+  --jq '.commits[] | select(.commit.message | test("Co-authored-by"; "i")) | {sha: .sha[0:7], primary: (.author.login // "unknown"), trailers: ([.commit.message | scan("(?im)^Co-Authored-By:\\s*(.+)$")[]])}'
+```
+
+For each non-AI co-author trailer (skip `Claude`, `Copilot`, etc. — credit humans only):
+
+- The trailer format is `Name <id+username@users.noreply.github.com>`. The GitHub handle is the part after the `+`.
+- If two trailers share the same numeric ID, the user renamed their account. Resolve the canonical handle with `gh api user/<id> --jq .login` and use that one.
+- Update the entry to `(by @primary and @coauthor)` — or `(by @primary, @co1, and @co2)` for multiple.
 
 ### 3. Check for new contributors
 
@@ -107,6 +120,9 @@ Wait for it to succeed before reporting done.
 | Mistake | Fix |
 | --- | --- |
 | Missing `(by @author)` on entries | Cross-reference every entry against the compare API output |
+| Missing co-authors | `.author.login` only returns the primary. Always scan commit bodies for `Co-Authored-By:` trailers |
+| Crediting AI co-authors | Skip `Claude`, `Copilot`, etc. — release notes credit humans |
+| Stale username when account was renamed | Two trailers with the same numeric ID = same user. Resolve via `gh api user/<id>` |
 | Guessing new contributors | Always use `generate-notes` API — do not infer from git history |
 | Technical jargon in highlights | Rewrite from the user's perspective — what changed for them? |
 | Forgetting to trigger docs CI | Always run the docs workflow as the final step |
