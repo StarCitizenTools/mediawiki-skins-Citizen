@@ -2783,6 +2783,13 @@ url: /mediawiki-skins-Citizen/changelogs/v3.15.1.md
 ---
 
 ---
+url: /mediawiki-skins-Citizen/changelogs/v3.16.0.md
+---
+
+
+---
+
+---
 url: /mediawiki-skins-Citizen/changelogs/v3.2.0.md
 ---
 
