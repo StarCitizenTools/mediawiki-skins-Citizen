@@ -922,16 +922,15 @@ Performance mode dials back animations and visual effects so the skin feels fast
 
 With performance mode on, Citizen:
 
-* Turns off transitions and animations across the whole skin (every element, not just ones using Citizen's transition tokens)
+* Turns off all transitions and animations site-wide — not just its own
 * Disables smooth scrolling
-* Drops frosted-glass backdrop effects
-* Skips the frosted overlay on the mobile header, leaving the default solid background
+* Drops frosted-glass effects, including the mobile header overlay
 
 ::: tip Relationship with `prefers-reduced-motion`
 MediaWiki core handles the OS-level `prefers-reduced-motion` media query on its own. Performance mode is a skin-level toggle that goes further — it also strips out frosted glass and other visual flourishes that reduced motion doesn't cover.
 :::
 
-Performance mode is on by default. On the first page load, Citizen probes the browser for WebGL support — if the device can render WebGL, performance mode turns off; otherwise it stays on. The result is saved in the browser, so the check only runs once. Users can flip the toggle in their preferences at any time.
+By default, performance mode adapts to the device. On the first page load, Citizen checks for WebGL support: capable devices get the full visual treatment, while older or limited ones stay on performance mode. The check runs once and the result is saved in the browser. Users can override it from their preferences at any time.
 
 ## Extending performance mode
 
@@ -951,32 +950,58 @@ Place this on `MediaWiki:Citizen-preferences.json`.
 
 ### Custom styles
 
-Citizen sets a class on the root element that you can target in your own styles:
+When you're writing styles for your wiki — in `MediaWiki:Common.css`, `MediaWiki:Citizen.css`, gadgets, or an extension — there are two ways to adapt them to performance mode. Reach for the first in most cases; the second is an escape hatch for everything else.
+
+#### Best practice: build on Citizen's tokens
+
+The shortest path is to reference the same CSS custom properties Citizen uses for its own visual effects. Performance mode overrides these tokens, so anything that points at them adapts automatically — no second rule, no class selector, no duplication.
+
+| Property | Default | Performance mode |
+| :--- | :--- | :--- |
+| `--backdrop-filter-frosted-glass` | `blur( 16px ) saturate( 140% )` | `none` |
+| `--opacity-glass` | `0.9` (light theme), `0.8` (dark theme) | `1` |
+
+For example, this frosted card loses the blur and becomes fully opaque under performance mode — with no extra code:
+
+```css
+.my-floating-card {
+  background-color: color-mix(
+    in oklch,
+    var( --color-surface-1 ) calc( var( --opacity-glass ) * 100% ),
+    transparent
+  );
+  backdrop-filter: var( --backdrop-filter-frosted-glass );
+}
+```
+
+The same goes for transitions and animations. Performance mode applies `transition-duration: 0ms !important` and `animation-duration: 0.01ms !important` to every element on the page, so your own animations are disabled too — even if they never touch a Citizen token.
+
+#### Gating other expensive styles with the class
+
+Performance mode is a signal that the user wants a lighter experience overall — not only less blur. If your wiki layers on heavy background images, decorative SVGs, large box-shadows, complex pseudo-element effects, or any other styles that strain weaker devices, gate them on the class Citizen sets on the `<html>` element:
 
 | Class | State |
 | :--- | :--- |
 | `.citizen-feature-performance-mode-clientpref-0` | Performance mode **off** |
 | `.citizen-feature-performance-mode-clientpref-1` | Performance mode **on** |
 
-Use these to gate heavy effects, swap in lighter alternatives, or simplify layouts when the user or device prefers a leaner experience:
-
 ```css
-/* Full effect when performance mode is off */
-.citizen-feature-performance-mode-clientpref-0 .my-element {
-  backdrop-filter: blur( 16px );
+/* Decorative background pattern when performance mode is off */
+.citizen-feature-performance-mode-clientpref-0 .my-banner {
+  background-image: url( /resources/assets/banner-pattern.svg );
 }
 
-/* Lighter fallback when performance mode is on */
-.citizen-feature-performance-mode-clientpref-1 .my-element {
+/* Flat fallback when performance mode is on */
+.citizen-feature-performance-mode-clientpref-1 .my-banner {
   background-color: var( --color-surface-1 );
 }
 ```
 
 #### Animation readiness
 
-Citizen also prevents transitions from firing during initial page load. The `.citizen-animations-ready` class is added to the root element after the skin finishes its deferred startup tasks (scheduled via `requestIdleCallback`) — transition tokens like `--transition-duration-base`, `--transition-hover`, and `--transition-menu` are only defined under this class.
+Citizen also stops transitions from firing during the initial page load, so elements don't slide around while the page is settling in. The `.citizen-animations-ready` class is added to the `<html>` element once the skin finishes its deferred startup work — and Citizen's transition tokens (`--transition-duration-base`, `--transition-hover`, `--transition-menu`, and so on) are only defined under that class.
 
-Gate your own transitions the same way to avoid jank on first paint:
+Gate your own transitions the same way to avoid first-paint jank:
 
 ```css
 .citizen-animations-ready .my-element {
@@ -984,16 +1009,29 @@ Gate your own transitions the same way to avoid jank on first paint:
 }
 ```
 
-#### Affected custom properties
+### Custom scripts
 
-Performance mode overrides these custom properties, so anything that references them adapts without extra work:
+If your gadgets or custom scripts run expensive work — heavy animations, intersection observers, third-party widgets, costly DOM operations — check the same class before kicking off that work:
 
-| Property | Default | Performance mode |
-| :--- | :--- | :--- |
-| `--backdrop-filter-frosted-glass` | `blur(…)` | `none` |
-| `--opacity-glass` | `<0–1>` | `1` |
+```js
+const perfModeOn = document.documentElement.classList.contains(
+  'citizen-feature-performance-mode-clientpref-1'
+);
 
-On top of that, performance mode applies `transition-duration: 0ms !important` and `animation-duration: 0.01ms !important` to every element via the universal selector, so transitions and animations are flattened even when your styles don't reference Citizen's tokens.
+if ( !perfModeOn ) {
+  loadFancyVisualization();
+}
+```
+
+To react to changes mid-session — so users who toggle performance mode without reloading see the new behavior — listen for the preferences hook:
+
+```js
+mw.hook( 'citizen.preferences.changed' ).add( ( featureName, value ) => {
+  if ( featureName === 'citizen-feature-performance-mode' ) {
+    // value is '0' (off) or '1' (on)
+  }
+} );
+```
 
 ---
 
@@ -1511,6 +1549,13 @@ Some images, especially black text or icons on a transparent background, become 
 ```css
 filter: var( --filter-invert );
 ```
+
+## Performance considerations
+
+When you're customizing Citizen, two areas reward extra attention:
+
+* **Expensive styles and scripts.** Citizen lets users opt into a lighter experience that strips animations and visual effects. If your customizations include anything weighty — frosted glass, transitions, heavy background images, decorative SVGs, or scripts doing expensive work — adapt them so users on performance mode get a lighter version. See [Performance mode → Custom styles](../features/performance-mode.md#custom-styles) and [→ Custom scripts](../features/performance-mode.md#custom-scripts) for the patterns.
+* **Font flicker.** Custom web fonts swap in after the page renders, which can shift layout if their metrics don't match the system fallback. See [Avoiding font flicker](#avoiding-font-flicker) above for how to ship a metric-matched fallback.
 
 ---
 
