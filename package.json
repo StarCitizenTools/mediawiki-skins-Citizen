@@ -41,7 +41,7 @@
 		"stylelint-config-recess-order": "7.7.0",
 		"stylelint-config-wikimedia": "0.19.2",
 		"stylelint-order": "^7.0.1",
-		"stylelint-plugin-use-baseline": "^1.4.1",
+		"stylelint-plugin-use-baseline": "^1.4.2",
 		"types-mediawiki": "2.0.0",
 		"vitest": "^4.1.6",
 		"vue": "3.4.27"
