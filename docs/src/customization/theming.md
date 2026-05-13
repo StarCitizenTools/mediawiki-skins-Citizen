@@ -128,3 +128,10 @@ Some images, especially black text or icons on a transparent background, become 
 ```css
 filter: var( --filter-invert );
 ```
+
+## Performance considerations
+
+When you're customizing Citizen, two areas reward extra attention:
+
+- **Expensive styles and scripts.** Citizen lets users opt into a lighter experience that strips animations and visual effects. If your customizations include anything weighty — frosted glass, transitions, heavy background images, decorative SVGs, or scripts doing expensive work — adapt them so users on performance mode get a lighter version. See [Performance mode → Custom styles](../features/performance-mode.md#custom-styles) and [→ Custom scripts](../features/performance-mode.md#custom-scripts) for the patterns.
+- **Font flicker.** Custom web fonts swap in after the page renders, which can shift layout if their metrics don't match the system fallback. See [Avoiding font flicker](#avoiding-font-flicker) above for how to ship a metric-matched fallback.
