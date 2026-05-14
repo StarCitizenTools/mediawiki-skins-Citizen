@@ -1,6 +1,8 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Daisy40"
+		]
 	},
 	"citizen-languages-toggle": "Više jezika",
 	"citizen-actions-more-toggle": "Više radnji",
@@ -16,12 +18,14 @@
 	"citizen-search-empty-desc": "Kucajte da započnete pretraživanje",
 	"citizen-search-noresults-title": "Nema rezultata za $1",
 	"citizen-share": "Podeli ovu stranicu",
+	"citizen-share-qr-title": "QR kod",
 	"citizen-tagline-ns-project": "Informacije o {{SITENAME}}",
 	"citizen-tagline-ns-file": "Datoteke na {{SITENAME}}",
 	"citizen-tagline-ns-template": "Stranica šablona",
 	"citizen-tagline-ns-help": "Stranice pomoći",
 	"citizen-tagline-ns-category": "Stranice kategorija",
 	"citizen-tagline-user-regdate": "Pridružio/la se: $1",
+	"citizen-preferences-section-appearance": "Izgled",
 	"citizen-theme-name": "Boja",
 	"citizen-theme-day-label": "Svetlo",
 	"citizen-theme-night-label": "Tamno",

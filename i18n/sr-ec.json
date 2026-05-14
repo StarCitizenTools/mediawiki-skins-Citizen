@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Daisy40",
 			"Kizule",
 			"Milicevic01"
 		]
@@ -20,12 +21,14 @@
 	"citizen-search-empty-desc": "Куцајте да започнете претраживање",
 	"citizen-search-noresults-title": "Нема резултата за $1",
 	"citizen-share": "Подели ову страницу",
+	"citizen-share-qr-title": "QR код",
 	"citizen-tagline-ns-project": "Информације о {{SITENAME}}",
 	"citizen-tagline-ns-file": "Датотеке на {{SITENAME}}",
 	"citizen-tagline-ns-template": "Страница шаблона",
 	"citizen-tagline-ns-help": "Странице помоћи",
 	"citizen-tagline-ns-category": "Странице категорија",
 	"citizen-tagline-user-regdate": "Придружио/ла се: $1",
+	"citizen-preferences-section-appearance": "Изглед",
 	"citizen-theme-name": "Боја",
 	"citizen-theme-day-label": "Светло",
 	"citizen-theme-night-label": "Тамно",
