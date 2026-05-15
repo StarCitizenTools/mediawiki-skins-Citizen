@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.16.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.16.0...v3.16.1) (2026-05-15)
+
+
+### Bug Fixes
+
+* **search:** 🐛 read prefill from search trigger element, not click target ([72c1259](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/72c125918a99f5eabc2fd3065323a2443cb90937))
+* **tokens:** 🐛 restore px on remaining zero header position tokens ([b27be66](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b27be66dfa952e29e3c6749f04ddb85d2dd09e29))
+
+
+### Miscellaneous Chores
+
+* **agents:** 🔧 record co-author lookup in finalize-release skill ([8094302](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8094302e3dfad12fec1ac6f03361ba938b5dd9a1))
+
 ## [3.16.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.15.1...v3.16.0) (2026-05-12)
 
 
