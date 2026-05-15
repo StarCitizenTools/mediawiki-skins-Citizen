@@ -175,7 +175,10 @@ class SkinCitizen extends SkinMustache {
 		$components = [
 			'data-footer' => new CitizenComponentFooter(
 				$localizer,
-				$parentData['data-footer']
+				[
+					'data-footer-places' => $parentData['data-portlets']['data-footer-places'] ?? [],
+					'data-footer-icons' => $parentData['data-portlets']['data-footer-icons'] ?? [],
+				]
 			),
 			'data-main-menu' => new CitizenComponentMainMenu( $sidebar ),
 			'data-page-footer' => new CitizenComponentPageFooter(

@@ -4,13 +4,13 @@
 	@prop string html of list item
 	@prop footerItem[] items
 
-	@typedef object footerRow
-	@prop string className of list element
+	@typedef object footerMenu
 	@prop string id of list element
+	@prop string|null className of list element
 	@prop footerItem[] array-items
 
-	footerRow[] array-footer-rows iterable list of footer rows
-	footerRow[] array-footer-icons iterable list of footer icons
+	footerMenu data-footer-places site links (privacy/about/disclaimer + Universal-hook additions)
+	footerMenu data-footer-icons site footer icons (noprint)
 	string msg-sitetitle
 	string msg-citizen-footer-desc
 	string msg-citizen-footer-tagline
@@ -26,11 +26,11 @@
 				</div>
 				<p id="footer-desc" class="citizen-footer__desc">{{{msg-citizen-footer-desc}}}</p>
 			</div>
-			{{#data-places}}{{>Footer__row}}{{/data-places}}
+			{{#data-footer-places}}{{>Footer__row}}{{/data-footer-places}}
 		</section>
 		<section class="citizen-footer__bottom">
 			<div id="footer-tagline">{{{msg-citizen-footer-tagline}}}</div>
-			{{#data-icons}}{{>Footer__row}}{{/data-icons}}
+			{{#data-footer-icons}}{{>Footer__row}}{{/data-footer-icons}}
 		</section>
 	</div>
 </footer>
