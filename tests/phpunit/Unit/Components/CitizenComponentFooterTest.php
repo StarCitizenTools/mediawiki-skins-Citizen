@@ -16,51 +16,52 @@ use MessageLocalizer;
  */
 class CitizenComponentFooterTest extends MediaWikiUnitTestCase {
 
-	public function provideFooterData(): array {
+	public function provideFooterPortlets(): array {
 		return [
-			'Footer data with places and icons' => [
-				'places' => [
-					'footer-places-privacy' => [
-						'text' => 'Privacy policy',
-						'href' => '/wiki/Privacy_policy'
+			'footer portlets with places and icons' => [
+				[
+					'data-footer-places' => [
+						'id' => 'footer-places',
+						'className' => null,
+						'array-items' => [
+							[ 'id' => 'footer-places-privacy', 'html' => '<a>Privacy</a>' ],
+							[ 'id' => 'footer-places-about', 'html' => '<a>About</a>' ],
+						],
 					],
-					'footer-places-about' => [
-						'text' => 'About',
-						'href' => '/wiki/About'
-					]
+					'data-footer-icons' => [
+						'id' => 'footer-icons',
+						'className' => 'noprint',
+						'array-items' => [
+							[ 'id' => 'footer-poweredbyico', 'html' => '<img>' ],
+						],
+					],
 				],
-				'icons' => [
-					'poweredby' => [
-						'src' => '/path/to/icon.png',
-						'alt' => 'Powered by MediaWiki'
-					]
-				]
-			]
+			],
 		];
 	}
 
 	/**
 	 * @covers ::__construct
 	 * @covers ::getTemplateData
-	 * @dataProvider provideFooterData
+	 * @dataProvider provideFooterPortlets
 	 */
-	public function testGetTemplateData( array $footerData ): void {
+	public function testGetTemplateData( array $footerPortlets ): void {
 		$localizer = $this->createMock( MessageLocalizer::class );
 		$localizer->method( 'msg' )->willReturnCallback( function ( $key ) {
 			return $this->createConfiguredMock( Message::class, [
-				// Simulated localization output.
 				'inContentLanguage' => $this->createConfiguredMock( Message::class, [
-					'parse' => "$key-mocked"
-				] )
+					'parse' => "$key-mocked",
+				] ),
 			] );
 		} );
 
-		$component = new CitizenComponentFooter( $localizer, $footerData );
-		$expected = array_merge( $footerData, [
-			'msg-citizen-footer-desc' => 'citizen-footer-desc-mocked',
-			'msg-citizen-footer-tagline' => 'citizen-footer-tagline-mocked'
-		] );
+		$component = new CitizenComponentFooter( $localizer, $footerPortlets );
+		$result = $component->getTemplateData();
 
-		$this->assertSame( $expected, $component->getTemplateData() );
+		$this->assertSame( $footerPortlets['data-footer-places'], $result['data-footer-places'] );
+		$this->assertSame( $footerPortlets['data-footer-icons'], $result['data-footer-icons'] );
+		$this->assertArrayNotHasKey( 'data-footer-info', $result );
+		$this->assertSame( 'citizen-footer-desc-mocked', $result['msg-citizen-footer-desc'] );
+		$this->assertSame( 'citizen-footer-tagline-mocked', $result['msg-citizen-footer-tagline'] );
 	}
 }
