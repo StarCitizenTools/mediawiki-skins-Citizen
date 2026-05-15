@@ -159,6 +159,7 @@ class SkinCitizen extends SkinMustache {
 	 */
 	public function getTemplateData(): array {
 		$parentData = parent::getTemplateData();
+		self::polyfillFooterPortlets( $parentData );
 
 		$config = $this->getConfig();
 		$localizer = $this->getContext();
@@ -379,6 +380,80 @@ class SkinCitizen extends SkinMustache {
 			'rel' => 'manifest',
 			'href' => $href,
 		] );
+	}
+
+	/**
+	 * Normalize a footer menu data array to the canonical Citizen shape that
+	 * Footer.mustache consumes.
+	 *
+	 * Different sources of footer menu data carry slightly different outer
+	 * fields — SkinComponentFooter::formatFooterDataForCurrentSpec strips
+	 * 'class' and injects 'className', whereas raw portlet output (from
+	 * SkinComponentMenu via getPortletData) keeps 'class' and never sets
+	 * 'className'. This helper standardises on Citizen's expected shape so
+	 * the template can render either source identically.
+	 *
+	 * @param array $data Source menu data (must include 'array-items' to be usable)
+	 * @param bool $isIcons True for footer-icons (toggles 'noprint' className)
+	 * @param string $id Canonical DOM id (e.g. 'footer-places')
+	 * @return array Canonical Citizen footer menu shape
+	 */
+	private static function normalizeFooterMenu( array $data, bool $isIcons, string $id ): array {
+		return [
+			'id' => $id,
+			'className' => $isIcons ? 'noprint' : null,
+			'array-items' => $data['array-items'] ?? [],
+		];
+	}
+
+	/**
+	 * Populate $parentData['data-portlets']['data-footer-{places,info,icons}']
+	 * so Citizen's templates can consume the modern portlet location on every
+	 * supported MW version.
+	 *
+	 * Either-or strategy: if the portlet bucket already carries items
+	 * (canonical source on MW 1.47+), keep it but normalize its shape.
+	 * Otherwise, build it from the legacy $parentData['data-footer'].*
+	 * slice (canonical source on MW 1.43–1.46). When both are empty, the
+	 * key is set to [] so Mustache skips the empty <nav> render.
+	 *
+	 * Trade-off: on MW 1.43–1.46, an extension that uses
+	 * SkinTemplateNavigation::Universal directly with a footer-* key would
+	 * populate only the portlet bucket, and this strategy would then NOT
+	 * fall back to the legacy bucket — so the built-in privacy/about/
+	 * disclaimer links would be dropped. This is accepted as a rare edge
+	 * case (the MW manual documents that the new hook "only applies to
+	 * modern skins using that menu"). T426358 forward-compat for MW 1.47
+	 * is the primary scope.
+	 *
+	 * @param array &$parentData The full parent template data array
+	 */
+	private static function polyfillFooterPortlets( array &$parentData ): void {
+		if ( !isset( $parentData['data-portlets'] ) || !is_array( $parentData['data-portlets'] ) ) {
+			$parentData['data-portlets'] = [];
+		}
+
+		$pairs = [
+			[ 'data-footer-places', 'data-places', false, 'footer-places' ],
+			[ 'data-footer-info', 'data-info', false, 'footer-info' ],
+			[ 'data-footer-icons', 'data-icons', true, 'footer-icons' ],
+		];
+
+		foreach ( $pairs as [ $portletKey, $legacyKey, $isIcons, $id ] ) {
+			$portlet = $parentData['data-portlets'][ $portletKey ] ?? null;
+			$legacy = $parentData['data-footer'][ $legacyKey ] ?? null;
+
+			if ( !empty( $portlet['array-items'] ) ) {
+				$source = $portlet;
+			} elseif ( !empty( $legacy['array-items'] ) ) {
+				$source = $legacy;
+			} else {
+				$parentData['data-portlets'][ $portletKey ] = [];
+				continue;
+			}
+
+			$parentData['data-portlets'][ $portletKey ] = self::normalizeFooterMenu( $source, $isIcons, $id );
+		}
 	}
 
 }
