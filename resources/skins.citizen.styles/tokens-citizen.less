@@ -124,31 +124,31 @@
 	}
 
 	// Header position tokens
-	// Unit is required for calc() functions
+	// These drive dynamic layout calc()s; a unitless 0 is type <number>
+	// and silently invalidates <number> + <length> calcs (#1058).
+	/* stylelint-disable length-zero-no-unit -- Need the unit for calc() (#1058) */
 	--header-direction: row;
-	--header-size-inline-start: 0;
-	--header-size-inline-end: 0;
-	// stylelint-disable-next-line length-zero-no-unit -- Need the unit for calc() (#1058)
+	--header-size-inline-start: 0px;
+	--header-size-inline-end: 0px;
 	--header-size-block-start: 0px;
-	// stylelint-disable-next-line length-zero-no-unit -- Need the unit for calc() (#1058)
 	--header-size-block-end: 0px;
-	--header-inset-block-start: 0;
-	--header-inset-block-end: 0;
-	--header-inset-inline-start: 0;
-	--header-inset-inline-end: 0;
-	--header-border-block-start-width: 0;
-	--header-border-block-end-width: 0;
-	--header-border-inline-start-width: 0;
-	--header-border-inline-end-width: 0;
+	--header-inset-block-start: 0px;
+	--header-inset-block-end: 0px;
+	--header-inset-inline-start: 0px;
+	--header-inset-inline-end: 0px;
+	--header-border-block-start-width: 0px;
+	--header-border-block-end-width: 0px;
+	--header-border-inline-start-width: 0px;
+	--header-border-inline-end-width: 0px;
 
 	// Always default to bottom in mobile for now
 	@media ( max-width: @max-width-breakpoint-tablet ) {
 		--header-direction: row;
-		--header-inset-inline-start: 0;
-		--header-inset-inline-end: 0;
+		--header-inset-inline-start: 0px;
+		--header-inset-inline-end: 0px;
 		--header-size-block-end: var( --header-size );
 		--header-inset-block-start: auto;
-		--header-inset-block-end: 0;
+		--header-inset-block-end: 0px;
 		--header-border-block-start-width: var( --border-width-base );
 	}
 
@@ -157,20 +157,20 @@
 			&-left,
 			&-right {
 				--header-direction: column;
-				--header-inset-block-start: 0;
-				--header-inset-block-end: 0;
+				--header-inset-block-start: 0px;
+				--header-inset-block-end: 0px;
 			}
 
 			&-top,
 			&-bottom {
 				--header-direction: row;
-				--header-inset-inline-start: 0;
-				--header-inset-inline-end: 0;
+				--header-inset-inline-start: 0px;
+				--header-inset-inline-end: 0px;
 			}
 
 			&-left {
 				--header-size-inline-start: var( --header-size );
-				--header-inset-inline-start: 0;
+				--header-inset-inline-start: 0px;
 				--header-inset-inline-end: auto;
 				--header-border-inline-end-width: var( --border-width-base );
 			}
@@ -178,13 +178,13 @@
 			&-right {
 				--header-size-inline-end: var( --header-size );
 				--header-inset-inline-start: auto;
-				--header-inset-inline-end: 0;
+				--header-inset-inline-end: 0px;
 				--header-border-inline-start-width: var( --border-width-base );
 			}
 
 			&-top {
 				--header-size-block-start: var( --header-size );
-				--header-inset-block-start: 0;
+				--header-inset-block-start: 0px;
 				--header-inset-block-end: auto;
 				--header-border-block-end-width: var( --border-width-base );
 			}
@@ -192,11 +192,12 @@
 			&-bottom {
 				--header-size-block-end: var( --header-size );
 				--header-inset-block-start: auto;
-				--header-inset-block-end: 0;
+				--header-inset-block-end: 0px;
 				--header-border-block-start-width: var( --border-width-base );
 			}
 		}
 	}
+	/* stylelint-enable length-zero-no-unit */
 
 	// Derived header offset tokens
 	// These combine the static header size with the dynamic sticky header height
