@@ -178,6 +178,7 @@ A beautiful, usable, and responsive MediaWiki skin
 - [Untitled](/mediawiki-skins-Citizen/v3.16/changelogs/v3.15.0.md)
 - [Untitled](/mediawiki-skins-Citizen/v3.16/changelogs/v3.15.1.md)
 - [Untitled](/mediawiki-skins-Citizen/v3.16/changelogs/v3.16.0.md)
+- [Untitled](/mediawiki-skins-Citizen/v3.16/changelogs/v3.16.1.md)
 - [Untitled](/mediawiki-skins-Citizen/v3.16/changelogs/v3.2.0.md)
 - [Untitled](/mediawiki-skins-Citizen/v3.16/changelogs/v3.3.0.md)
 - [Untitled](/mediawiki-skins-Citizen/v3.16/changelogs/v3.3.1.md)
