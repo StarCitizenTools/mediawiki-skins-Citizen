@@ -8,6 +8,9 @@ use MessageLocalizer;
 
 /**
  * CitizenComponentPageFooter component
+ *
+ * Consumes $parentData['data-portlets']['data-footer-info'] (polyfilled
+ * by SkinCitizen::polyfillFooterPortlets() for MW 1.43–1.46 compatibility).
  */
 class CitizenComponentPageFooter implements CitizenComponent {
 
@@ -20,10 +23,14 @@ class CitizenComponentPageFooter implements CitizenComponent {
 	public function getTemplateData(): array {
 		$footerData = $this->footerData;
 
-		// Add label to footer-info to use in PageFooter
+		if ( !isset( $footerData['array-items'] ) ) {
+			return $footerData;
+		}
+
 		foreach ( $footerData['array-items'] as &$item ) {
-			$msgKey = 'citizen-page-info-' . $item['name'];
-			$item['label'] = $this->localizer->msg( $msgKey )->text();
+			$name = $item['name'] ?? '';
+			$msg = $this->localizer->msg( 'citizen-page-info-' . $name );
+			$item['label'] = $msg->exists() ? $msg->text() : ( $item['label'] ?? '' );
 		}
 
 		return $footerData;
