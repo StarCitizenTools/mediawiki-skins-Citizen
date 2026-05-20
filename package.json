@@ -33,7 +33,7 @@
 		"eslint-plugin-mediawiki": "0.8.2",
 		"grunt-banana-checker": "0.13.0",
 		"jsdom": "^29.1.1",
-		"lefthook": "^2.1.7",
+		"lefthook": "^2.1.8",
 		"less": "^4.6.4",
 		"markdownlint-cli": "^0.48.0",
 		"mustache": "^4.2.0",
