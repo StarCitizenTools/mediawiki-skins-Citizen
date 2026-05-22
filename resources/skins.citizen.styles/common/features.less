@@ -190,6 +190,16 @@
 	}
 }
 
+// Honour the OS-level "reduce transparency" preference by disabling the
+// frosted glass effect, matching what the manual performance-mode opt-in does.
+// stylelint-disable-next-line plugin/use-baseline
+@media ( prefers-reduced-transparency: reduce ) {
+	:root {
+		--backdrop-filter-frosted-glass: none;
+		--opacity-glass: 1;
+	}
+}
+
 // T400838
 .citizen-feature-image-dimming-clientpref-1 {
 	:root.skin-theme-clientpref-night& {
