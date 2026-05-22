@@ -2,21 +2,16 @@
 	.mixin-citizen-font-styles( 'small' );
 
 	&__card {
-		// Named clip-path and matching translate values for the card's closed state.
-		// Each describes the direction the card visually expands and slides as it
-		// opens — trigger is on the OPPOSITE side of the expand direction.
-		// Each consumer scope (Drawer, Pagetools, Search, ToC, header__end menus,
-		// StickyHeader) picks a direction by setting --citizen-clip-closed and
-		// --citizen-translate-closed; if a menu doesn't set them, the card renders
-		// without clipping or offset (no animation).
-		--citizen-clip-expand-up: inset( 100% 0 0 0 );
-		--citizen-clip-expand-down: inset( 0 0 100% 0 );
-		--citizen-clip-expand-right: inset( 0 100% 0 0 );
-		--citizen-clip-expand-left: inset( 0 0 0 100% );
-		--citizen-translate-expand-up: translateY( var( --space-xs ) );
-		--citizen-translate-expand-down: translateY( calc( var( --space-xs ) * -1 ) );
-		--citizen-translate-expand-right: translateX( calc( var( --space-xs ) * -1 ) );
-		--citizen-translate-expand-left: translateX( var( --space-xs ) );
+		// Closed-state animation direction (--citizen-clip-closed and
+		// --citizen-translate-closed) comes from the page-level cascade in
+		// tokens-citizen.less, keyed off the active .citizen-header-position-*
+		// class on <html>. That is correct for cards anchored to the header
+		// (drawer, header__end menus) — they inherit and require no per-scope
+		// declaration. Any new card whose trigger is NOT on the same edge as
+		// the active header (search, page-actions, sticky header, mobile ToC,
+		// future menus) MUST call .mixin-citizen-card-expand( ... ) in its own
+		// scope to pick its direction; inheriting the page-level value will
+		// produce a wrong animation direction.
 		margin: var( --space-xs );
 		contain: content;
 		-webkit-user-select: none;

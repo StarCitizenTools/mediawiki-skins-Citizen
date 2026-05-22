@@ -152,8 +152,7 @@
 			max-height: ~'calc( var( --header-card-maxheight ) - 8rem )';
 			padding: var( --space-xs );
 			// Floating button at the bottom; card expands upward.
-			--citizen-clip-closed: var( --citizen-clip-expand-up );
-			--citizen-translate-closed: var( --citizen-translate-expand-up );
+			.mixin-citizen-card-expand( up );
 		}
 
 		.citizen-dropdown {

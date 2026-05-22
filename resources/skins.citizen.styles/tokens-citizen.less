@@ -77,6 +77,20 @@
 	// On hover, enlarge the image to inform the user that a full-size image will be shown (to MMV or file page)
 	--transform-image-hover: scale( 1.1 );
 
+	// Card open animation — closed-state direction tokens.
+	// Each name describes the direction the card visually expands; the trigger
+	// sits on the OPPOSITE side. Consumers pick a direction via the
+	// .mixin-citizen-card-expand mixin or inherit one from the page-level
+	// cascade defined alongside the header-position tokens below.
+	--citizen-clip-expand-up: inset( 100% 0 0 0 );
+	--citizen-clip-expand-down: inset( 0 0 100% 0 );
+	--citizen-clip-expand-right: inset( 0 100% 0 0 );
+	--citizen-clip-expand-left: inset( 0 0 0 100% );
+	--citizen-translate-expand-up: translateY( var( --space-xs ) );
+	--citizen-translate-expand-down: translateY( calc( var( --space-xs ) * -1 ) );
+	--citizen-translate-expand-right: translateX( calc( var( --space-xs ) * -1 ) );
+	--citizen-translate-expand-left: translateX( var( --space-xs ) );
+
 	// Codex Design Tokens but not included as CSS variables
 	--border-base: var( --border-width-base ) solid var( --border-color-base );
 	--border-subtle: var( --border-width-base ) solid var( --border-color-subtle );
@@ -120,6 +134,14 @@
 	@media ( prefers-contrast: less ) {
 		--font-weight-normal: 300;
 	}
+
+	// Card open animation — page-level direction cascade.
+	// The default below is overridden by the per-position cascade inside the
+	// header-position media query a few lines down. Header-anchored cards
+	// (drawer, header__end menus) inherit these values without local
+	// declarations; cards with a fixed direction call .mixin-citizen-card-expand
+	// in their own scope.
+	.mixin-citizen-card-expand( up );
 
 	// Header position tokens
 	// These drive dynamic layout calc()s; a unitless 0 is type <number>
@@ -171,6 +193,7 @@
 				--header-inset-inline-start: 0px;
 				--header-inset-inline-end: auto;
 				--header-border-inline-end-width: var( --border-width-base );
+				.mixin-citizen-card-expand( right );
 			}
 
 			&-right {
@@ -178,6 +201,7 @@
 				--header-inset-inline-start: auto;
 				--header-inset-inline-end: 0px;
 				--header-border-inline-start-width: var( --border-width-base );
+				.mixin-citizen-card-expand( left );
 			}
 
 			&-top {
@@ -185,6 +209,7 @@
 				--header-inset-block-start: 0px;
 				--header-inset-block-end: auto;
 				--header-border-block-end-width: var( --border-width-base );
+				.mixin-citizen-card-expand( down );
 			}
 
 			&-bottom {
@@ -192,6 +217,7 @@
 				--header-inset-block-start: auto;
 				--header-inset-block-end: 0px;
 				--header-border-block-start-width: var( --border-width-base );
+				.mixin-citizen-card-expand( up );
 			}
 		}
 	}

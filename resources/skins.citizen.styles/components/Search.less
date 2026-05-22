@@ -11,8 +11,7 @@
 		max-height: var( --header-card-maxheight );
 		margin-inline: auto;
 		// Search bar at the top; card drops down.
-		--citizen-clip-closed: var( --citizen-clip-expand-down );
-		--citizen-translate-closed: var( --citizen-translate-expand-down );
+		.mixin-citizen-card-expand( down );
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {
 			top: @position-offset-y-desktop;

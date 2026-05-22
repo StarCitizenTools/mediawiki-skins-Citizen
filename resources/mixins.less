@@ -19,6 +19,13 @@
 	backdrop-filter: var( --backdrop-filter-frosted-glass );
 }
 
+// Pick the closed-state direction for a card.
+// @direction: up | down | left | right (trigger sits on the OPPOSITE side).
+.mixin-citizen-card-expand( @direction ) {
+	--citizen-clip-closed: ~'var( --citizen-clip-expand-@{direction} )';
+	--citizen-translate-closed: ~'var( --citizen-translate-expand-@{direction} )';
+}
+
 // Header card popups
 .mixin-citizen-header-card( @position ) {
 	right: 0;
