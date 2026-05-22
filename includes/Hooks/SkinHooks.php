@@ -420,10 +420,20 @@ class SkinHooks implements
 		$isTemp = $user->isTemp();
 
 		if ( $isTemp ) {
-			// Remove temporary user page text from user menu and recreate it in user info
+			// Remove temporary user page text and the temp username link from
+			// user menu — both are already shown in the user info header
 			unset( $links['user-menu']['tmpuserpage'] );
-			// Remove links as they are added to the bottom of user menu later
-			// unset( $links['user-menu']['logout'] );
+			unset( $links['user-menu']['userpage'] );
+
+			// Move account links to appear right before the exit session link
+			$tail = [];
+			foreach ( [ 'createaccount', 'login', 'logout' ] as $key ) {
+				if ( isset( $links['user-menu'][$key] ) ) {
+					$tail[$key] = $links['user-menu'][$key];
+					unset( $links['user-menu'][$key] );
+				}
+			}
+			$links['user-menu'] += $tail;
 		} elseif ( $isRegistered ) {
 			// Remove user page link from user menu and recreate it in user info
 			unset( $links['user-menu']['userpage'] );

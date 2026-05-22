@@ -241,19 +241,42 @@ class SkinHooksTest extends MediaWikiIntegrationTestCase {
 		$this->assertArrayHasKey( 'preferences', $links['user-menu'] );
 	}
 
-	public function testUserMenuRemovesTmpuserpageForTemp(): void {
+	public function testUserMenuRemovesTmpuserpageAndUserpageForTemp(): void {
 		$sktemplate = $this->createSkinTemplateWithUser( true, true );
 		$links = [
 			'user-menu' => [
 				'tmpuserpage' => [ 'id' => 'pt-tmpuserpage' ],
-				'preferences' => [ 'id' => 'pt-preferences' ],
+				'userpage' => [ 'id' => 'pt-userpage' ],
+				'mytalk' => [ 'id' => 'pt-mytalk' ],
 			],
 		];
 
 		SkinHooks::onSkinTemplateNavigation( $sktemplate, $links );
 
 		$this->assertArrayNotHasKey( 'tmpuserpage', $links['user-menu'] );
-		$this->assertArrayHasKey( 'preferences', $links['user-menu'] );
+		$this->assertArrayNotHasKey( 'userpage', $links['user-menu'] );
+		$this->assertArrayHasKey( 'mytalk', $links['user-menu'] );
+	}
+
+	public function testUserMenuMovesAccountLinksBeforeLogoutForTemp(): void {
+		$sktemplate = $this->createSkinTemplateWithUser( true, true );
+		$links = [
+			'user-menu' => [
+				'userpage' => [ 'id' => 'pt-userpage' ],
+				'createaccount' => [ 'id' => 'pt-createaccount' ],
+				'login' => [ 'id' => 'pt-login' ],
+				'mytalk' => [ 'id' => 'pt-mytalk' ],
+				'mycontris' => [ 'id' => 'pt-mycontris' ],
+				'logout' => [ 'id' => 'pt-logout' ],
+			],
+		];
+
+		SkinHooks::onSkinTemplateNavigation( $sktemplate, $links );
+
+		$this->assertSame(
+			[ 'mytalk', 'mycontris', 'createaccount', 'login', 'logout' ],
+			array_keys( $links['user-menu'] )
+		);
 	}
 
 	public function testUserMenuRemovesAnonuserpageForAnon(): void {
