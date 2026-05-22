@@ -611,8 +611,6 @@ module.exports = exports = defineComponent( {
 		position: fixed;
 		inset: 0;
 		background-color: var( --background-color-backdrop-light );
-		-webkit-backdrop-filter: var( --backdrop-filter-blur );
-		backdrop-filter: var( --backdrop-filter-blur );
 	}
 
 	&__body {
