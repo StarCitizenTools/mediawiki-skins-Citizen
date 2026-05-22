@@ -6,7 +6,7 @@
 		content-visibility: hidden;
 		transition-timing-function: var( --transition-timing-function-ease-in );
 		transition-duration: var( --transition-duration-base );
-		transition-property: transform, content-visibility;
+		transition-property: clip-path, transform, content-visibility;
 		transition-behavior: allow-discrete;
 
 		.citizen-menu__card-content {
@@ -59,13 +59,13 @@
 		&[ open ] {
 			+ .citizen-menu__card {
 				content-visibility: visible;
+				clip-path: inset( 0 0 0 0 );
 				transform: none;
 				transition-timing-function: var( --transition-timing-function-ease-out );
 				transition-duration: var( --transition-duration-medium );
 
 				.citizen-menu__card-content {
 					opacity: 1;
-					transition-delay: var( --transition-delay-menu );
 					transition-timing-function: var( --transition-timing-function-ease-out );
 					transition-duration: var( --transition-duration-medium );
 				}
@@ -82,19 +82,22 @@
 
 	.citizen-header__end & .citizen-menu__card {
 		.mixin-citizen-header-card( end );
-		transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-end );
+		--citizen-clip-closed: var( --citizen-clip-expand-up );
+		--citizen-translate-closed: var( --citizen-translate-expand-up );
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {
 			.citizen-header-position-left & {
 				right: unset;
 				left: 100%;
-				transform-origin: var( --transform-origin-offset-start ) var( --transform-origin-offset-end );
+				--citizen-clip-closed: var( --citizen-clip-expand-right );
+				--citizen-translate-closed: var( --citizen-translate-expand-right );
 			}
 
 			.citizen-header-position-right & {
 				right: 100%;
 				left: unset;
-				transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-end );
+				--citizen-clip-closed: var( --citizen-clip-expand-left );
+				--citizen-translate-closed: var( --citizen-translate-expand-left );
 			}
 
 			.citizen-header-position-top & {
@@ -102,7 +105,8 @@
 				right: 0;
 				bottom: unset;
 				left: unset;
-				transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-start );
+				--citizen-clip-closed: var( --citizen-clip-expand-down );
+				--citizen-translate-closed: var( --citizen-translate-expand-down );
 			}
 
 			.citizen-header-position-bottom & {
@@ -110,7 +114,8 @@
 				right: 0;
 				bottom: 100%;
 				left: unset;
-				transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-end );
+				--citizen-clip-closed: var( --citizen-clip-expand-up );
+				--citizen-translate-closed: var( --citizen-translate-expand-up );
 			}
 		}
 	}
@@ -126,7 +131,8 @@
 				content: '';
 				background: var( --background-color-backdrop-light );
 				opacity: 0;
-				transition-timing-function: var( --transition-timing-function-ease );
+				// Sync close timing with the card
+				transition-timing-function: var( --transition-timing-function-ease-in );
 				transition-duration: var( --transition-duration-base );
 				transition-property: opacity;
 			}
@@ -137,6 +143,8 @@
 					inset: 0;
 					z-index: @z-index-off-canvas-backdrop;
 					opacity: 1;
+					// Sync open timing with the card
+					transition-timing-function: var( --transition-timing-function-ease-out );
 					transition-duration: var( --transition-duration-medium );
 				}
 
