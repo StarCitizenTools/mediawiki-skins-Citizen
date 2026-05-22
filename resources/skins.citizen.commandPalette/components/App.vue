@@ -685,31 +685,47 @@ module.exports = exports = defineComponent( {
 	}
 }
 
-// Palette entrance/exit
-.citizen-command-palette-enter-active,
-.citizen-command-palette-leave-active {
+// Palette entrance/exit — clip-path expand from top + translate, matching the
+// menu animation pattern. Asymmetric timing: decelerate enter, accelerate exit.
+.citizen-command-palette-enter-active {
 	transition-timing-function: var( --transition-timing-function-ease-out );
 	transition-duration: var( --transition-duration-medium );
-	transition-property: transform, opacity;
+	transition-property: clip-path, transform, opacity;
 }
 
-.citizen-command-palette-enter-from {
-	opacity: 0;
-	transform: scale( 1.06 );
-	transform-origin: 50% 0;
+.citizen-command-palette-leave-active {
+	transition-timing-function: var( --transition-timing-function-ease-in );
+	transition-duration: var( --transition-duration-base );
+	transition-property: clip-path, transform, opacity;
 }
 
+.citizen-command-palette-enter-from,
 .citizen-command-palette-leave-to {
 	opacity: 0;
-	transform: scale( 1.04 );
-	transform-origin: 50% 0;
+	clip-path: inset( 0 0 100% 0 );
+	transform: translateY( calc( var( --space-xs ) * -1 ) );
 }
 
-// Backdrop entrance/exit
-.citizen-command-palette-backdrop-enter-active,
-.citizen-command-palette-backdrop-leave-active {
+// Explicit open-state endpoints so clip-path has two inset() values to
+// interpolate between. Without this, clip-path animates discretely between
+// inset() and the default (none) and the reveal jumps.
+.citizen-command-palette-enter-to,
+.citizen-command-palette-leave-from {
+	opacity: 1;
+	clip-path: inset( 0 0 0 0 );
+	transform: translateY( 0 );
+}
+
+// Backdrop entrance/exit — sync timing with the palette
+.citizen-command-palette-backdrop-enter-active {
 	transition-timing-function: var( --transition-timing-function-ease-out );
 	transition-duration: var( --transition-duration-medium );
+	transition-property: opacity;
+}
+
+.citizen-command-palette-backdrop-leave-active {
+	transition-timing-function: var( --transition-timing-function-ease-in );
+	transition-duration: var( --transition-duration-base );
 	transition-property: opacity;
 }
 
