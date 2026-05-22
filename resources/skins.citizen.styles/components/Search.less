@@ -10,7 +10,9 @@
 		max-width: ~'calc(100vw - var( --padding-page ) )';
 		max-height: var( --header-card-maxheight );
 		margin-inline: auto;
-		transform-origin: center var( --transform-origin-offset-start );
+		// Search bar at the top; card drops down.
+		--citizen-clip-closed: var( --citizen-clip-expand-down );
+		--citizen-translate-closed: var( --citizen-translate-expand-down );
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {
 			top: @position-offset-y-desktop;

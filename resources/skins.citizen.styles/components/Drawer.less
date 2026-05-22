@@ -1,19 +1,22 @@
 .citizen-drawer {
 	&__card {
 		.mixin-citizen-header-card( start );
-		transform-origin: var( --transform-origin-offset-start ) var( --transform-origin-offset-end );
+		--citizen-clip-closed: var( --citizen-clip-expand-up );
+		--citizen-translate-closed: var( --citizen-translate-expand-up );
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {
 			.citizen-header-position-left & {
 				right: unset;
 				left: 100%;
-				transform-origin: var( --transform-origin-offset-start ) var( --transform-origin-offset-start );
+				--citizen-clip-closed: var( --citizen-clip-expand-right );
+				--citizen-translate-closed: var( --citizen-translate-expand-right );
 			}
 
 			.citizen-header-position-right & {
 				right: 100%;
 				left: unset;
-				transform-origin: var( --transform-origin-offset-end ) var( --transform-origin-offset-start );
+				--citizen-clip-closed: var( --citizen-clip-expand-left );
+				--citizen-translate-closed: var( --citizen-translate-expand-left );
 			}
 
 			.citizen-header-position-top & {
@@ -21,7 +24,8 @@
 				right: unset;
 				bottom: unset;
 				left: 0;
-				transform-origin: var( --transform-origin-offset-start ) var( --transform-origin-offset-start );
+				--citizen-clip-closed: var( --citizen-clip-expand-down );
+				--citizen-translate-closed: var( --citizen-translate-expand-down );
 			}
 
 			.citizen-header-position-bottom & {
@@ -29,7 +33,8 @@
 				right: unset;
 				bottom: 100%;
 				left: 0;
-				transform-origin: var( --transform-origin-offset-start ) var( --transform-origin-offset-end );
+				--citizen-clip-closed: var( --citizen-clip-expand-up );
+				--citizen-translate-closed: var( --citizen-translate-expand-up );
 			}
 		}
 	}
