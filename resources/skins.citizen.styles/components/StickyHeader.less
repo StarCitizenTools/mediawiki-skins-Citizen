@@ -148,8 +148,7 @@
 			right: calc( var( --space-xs ) * -1 );
 			max-width: 80vw;
 			max-height: 60vh;
-			--citizen-clip-closed: var( --citizen-clip-expand-down );
-			--citizen-translate-closed: var( --citizen-translate-expand-down );
+			.mixin-citizen-card-expand( down );
 
 			&-content {
 				padding-block: var( --space-xs );

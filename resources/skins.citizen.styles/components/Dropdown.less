@@ -82,22 +82,16 @@
 
 	.citizen-header__end & .citizen-menu__card {
 		.mixin-citizen-header-card( end );
-		--citizen-clip-closed: var( --citizen-clip-expand-up );
-		--citizen-translate-closed: var( --citizen-translate-expand-up );
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {
 			.citizen-header-position-left & {
 				right: unset;
 				left: 100%;
-				--citizen-clip-closed: var( --citizen-clip-expand-right );
-				--citizen-translate-closed: var( --citizen-translate-expand-right );
 			}
 
 			.citizen-header-position-right & {
 				right: 100%;
 				left: unset;
-				--citizen-clip-closed: var( --citizen-clip-expand-left );
-				--citizen-translate-closed: var( --citizen-translate-expand-left );
 			}
 
 			.citizen-header-position-top & {
@@ -105,8 +99,6 @@
 				right: 0;
 				bottom: unset;
 				left: unset;
-				--citizen-clip-closed: var( --citizen-clip-expand-down );
-				--citizen-translate-closed: var( --citizen-translate-expand-down );
 			}
 
 			.citizen-header-position-bottom & {
@@ -114,8 +106,6 @@
 				right: 0;
 				bottom: 100%;
 				left: unset;
-				--citizen-clip-closed: var( --citizen-clip-expand-up );
-				--citizen-translate-closed: var( --citizen-translate-expand-up );
 			}
 		}
 	}
