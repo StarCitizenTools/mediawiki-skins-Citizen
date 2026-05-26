@@ -41,8 +41,8 @@
 	--height-sticky-header: 0px;
 	// Width or height of citizen-header, depending on the orientation
 	--header-size: @header-size;
-	// Max-height allowed for header card, 20vh is left for closing affordnance
-	--header-card-maxheight: 80vh;
+	// Max-height allowed for header card
+	--header-card-maxheight: calc( 100vh - var( --header-size ) - var( --space-xs ) * 2 );
 	// Width of the gradient in citizen-overflow
 	--overflow-gradient-size: 2rem;
 	// Width of the body content
@@ -124,7 +124,6 @@
 
 	@media ( min-width: @min-width-breakpoint-desktop ) {
 		--padding-page: calc( @padding-page * 2 );
-		--header-card-maxheight: calc( 100vh - var( --space-sm ) * 2 );
 	}
 
 	@media ( prefers-contrast: more ) {
@@ -179,6 +178,7 @@
 				--header-direction: column;
 				--header-inset-block-start: 0px;
 				--header-inset-block-end: 0px;
+				--header-card-maxheight: calc( 100vh - var( --space-xs ) * 2 );
 			}
 
 			&-top,
