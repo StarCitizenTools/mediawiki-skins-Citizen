@@ -1,0 +1,95 @@
+@import '../mixins.less';
+
+// Server-rendered notification dropdown shell. The Vue components (App.vue,
+// NotificationItem.vue, NotificationList.vue) style their own markup in their
+// SFC <style> blocks; this file covers what the server renders before — and
+// without — Vue: the dropdown card, the loading skeleton, the load-error
+// fallback and the no-JS state. The skeleton and error classes are shared with
+// the Vue loading/error states, so they live here rather than being duplicated.
+
+// Widen the shared dropdown card for notification content.
+#citizen-notifications-dropdown__card {
+	width: 24rem;
+}
+
+.citizen-notifications {
+	// Skeleton screen — server-rendered so it appears the instant the dropdown
+	// opens (like the preferences menu); reused by the Vue loading state.
+	&__skeleton {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+	}
+
+	&__skeleton-item {
+		display: flex;
+		flex-direction: column;
+		gap: var( --space-xs );
+		padding: var( --space-sm ) var( --space-md );
+		border-bottom: var( --border-subtle );
+	}
+
+	&__skeleton-line {
+		height: var( --font-size-small );
+		background-color: var( --background-color-neutral );
+		background-image: linear-gradient( 90deg, transparent 0%, var( --background-color-interactive--hover ) 50%, transparent 100% );
+		background-repeat: no-repeat;
+		background-position: 200% 0;
+		background-size: 200% 100%;
+		border-radius: var( --border-radius-base );
+
+		// Honour reduced-motion: only shimmer when motion is welcome.
+		@media ( prefers-reduced-motion: no-preference ) {
+			animation: citizen-notifications-skeleton-shimmer @animation-duration-medium linear infinite;
+		}
+
+		&--title {
+			width: 70%;
+		}
+
+		&--meta {
+			width: 40%;
+		}
+	}
+
+	// Load-error fallback (server module-load failure; reused by the Vue
+	// fetch-error state).
+	&__error {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		gap: var( --space-sm );
+		align-items: center;
+		justify-content: center;
+		padding: var( --space-xl ) var( --space-md );
+		color: var( --color-subtle );
+		text-align: center;
+	}
+
+	// Server-rendered no-JS fallback link (shown until the panel mounts).
+	> .citizen-notifications__see-all {
+		display: block;
+		padding: var( --space-md );
+		font-size: var( --font-size-small );
+	}
+}
+
+@keyframes citizen-notifications-skeleton-shimmer {
+	to {
+		background-position: -200% 0;
+	}
+}
+
+// The &__skeleton / &__error class rules set display:flex, which overrides the
+// browser's default [hidden]{display:none}. Restore it so the orchestrator's
+// el.hidden = true actually hides these states.
+.citizen-notifications__skeleton[ hidden ],
+.citizen-notifications__error[ hidden ] {
+	display: none;
+}
+
+// No-JS sessions never mount the panel, so don't shimmer a skeleton forever —
+// the server-rendered "See all notifications" link is the fallback.
+.client-nojs .citizen-notifications__skeleton {
+	display: none;
+}
