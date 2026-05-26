@@ -1,0 +1,54 @@
+{{!
+	object data-notifications Merged notification data: count, href.
+	string msg-citizen-notifications-label The accessible label for the notifications button.
+	string msg-citizen-notifications-error Message shown when the notifications module fails to load.
+	string msg-citizen-notifications-retry Label of the retry button shown alongside the load error.
+	string msg-citizen-notifications-see-all Label of the link to Special:Notifications.
+}}
+<div class="citizen-notifications-dropdown citizen-header__item citizen-dropdown">
+	<details id="citizen-notifications-details" class="citizen-dropdown-details">
+		<summary
+			class="citizen-dropdown-summary citizen-notifications-button citizen-cdx-button--size-large cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-quiet cdx-button--icon-only"
+			title="{{msg-citizen-notifications-label}}"
+			data-counter-text="{{data-notifications.count}}"
+			aria-details="citizen-notifications-dropdown__card">
+			<span class="citizen-ui-icon mw-ui-icon-wikimedia-bell"></span>
+			<span>{{msg-citizen-notifications-label}}</span>
+		</summary>
+	</details>
+	<div id="citizen-notifications-dropdown__card" class="citizen-menu__card">
+		<div class="citizen-menu__card-content">
+			<div id="citizen-notifications-content" class="citizen-notifications">
+				<div class="citizen-notifications__skeleton" role="status" aria-busy="true" aria-live="polite">
+					<div class="citizen-notifications__skeleton-item">
+						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--title"></span>
+						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--meta"></span>
+					</div>
+					<div class="citizen-notifications__skeleton-item">
+						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--title"></span>
+						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--meta"></span>
+					</div>
+					<div class="citizen-notifications__skeleton-item">
+						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--title"></span>
+						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--meta"></span>
+					</div>
+					<div class="citizen-notifications__skeleton-item">
+						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--title"></span>
+						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--meta"></span>
+					</div>
+					<div class="citizen-notifications__skeleton-item">
+						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--title"></span>
+						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--meta"></span>
+					</div>
+				</div>
+				<div class="citizen-notifications__error" role="alert" hidden>
+					<p>{{msg-citizen-notifications-error}}</p>
+					<button class="cdx-button citizen-notifications__retry" type="button">
+						{{msg-citizen-notifications-retry}}
+					</button>
+				</div>
+				<a class="citizen-notifications__see-all" href="{{data-notifications.href}}">{{msg-citizen-notifications-see-all}}</a>
+			</div>
+		</div>
+	</div>
+</div>

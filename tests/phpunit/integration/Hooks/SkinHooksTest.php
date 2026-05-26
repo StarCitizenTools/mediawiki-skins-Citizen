@@ -4,9 +4,11 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Tests\Integration\Hooks;
 
+use MediaWiki\Message\Message;
 use MediaWiki\Output\OutputPage;
 use MediaWiki\ResourceLoader\Context;
 use MediaWiki\Skins\Citizen\Hooks\SkinHooks;
+use MediaWiki\Skins\Citizen\SkinCitizen;
 use MediaWiki\User\User;
 use MediaWikiIntegrationTestCase;
 use Skin;
@@ -99,6 +101,9 @@ class SkinHooksTest extends MediaWikiIntegrationTestCase {
 		$sktemplate = $this->createMock( SkinTemplate::class );
 		$sktemplate->method( 'getSkinName' )->willReturn( $skinName );
 		$sktemplate->method( 'getUser' )->willReturn( $user );
+		$sktemplate->method( 'msg' )->willReturnCallback(
+			fn ( string $key ): Message => $this->createConfiguredMock( Message::class, [ 'text' => $key ] )
+		);
 
 		return $sktemplate;
 	}
@@ -386,58 +391,87 @@ class SkinHooksTest extends MediaWikiIntegrationTestCase {
 		$this->assertContains( 'citizen-cdx-button--size-large', $links['associated-pages']['main']['link-class'] );
 	}
 
-	public function testNotificationsMenuMapsIconsAndRewritesClasses(): void {
-		$sktemplate = $this->createSkinTemplateMock();
+	/**
+	 * Build a SkinCitizen mock whose setNotificationData() records the merged
+	 * data into $captured, so the notifications tests can assert what the hook
+	 * captured.
+	 *
+	 * @param ?array &$captured Receives the data passed to setNotificationData
+	 * @return SkinCitizen
+	 */
+	private function createCitizenMockCapturing( ?array &$captured ): SkinCitizen {
+		$skin = $this->createMock( SkinCitizen::class );
+		$skin->method( 'getSkinName' )->willReturn( 'citizen' );
+		$skin->method( 'setNotificationData' )->willReturnCallback(
+			static function ( array $data ) use ( &$captured ): void {
+				$captured = $data;
+			}
+		);
+		return $skin;
+	}
+
+	public function testNotificationsMenuCapturesMergedDataAndDropsPortlet(): void {
+		$captured = null;
+		$skin = $this->createCitizenMockCapturing( $captured );
 		$links = [
 			'notifications' => [
 				'notifications-alert' => [
 					'id' => 'pt-notifications-alert',
-					'icon' => null,
-					'link-class' => [ 'mw-echo-unseen-notifications' ],
+					'href' => '/wiki/Special:Notifications',
+					'data' => [ 'counter-num' => 3 ],
 				],
 				'notifications-notice' => [
 					'id' => 'pt-notifications-notice',
-					'icon' => null,
-					'link-class' => [],
+					'href' => '/wiki/Special:Notifications',
+					'data' => [ 'counter-num' => 2 ],
 				],
 			],
 		];
 
-		SkinHooks::onSkinTemplateNavigation( $sktemplate, $links );
+		SkinHooks::onSkinTemplateNavigation( $skin, $links );
 
-		// Icons should be mapped
-		$this->assertSame( 'bell', $links['notifications']['notifications-alert']['icon'] );
-		$this->assertSame( 'tray', $links['notifications']['notifications-notice']['icon'] );
+		// Echo's portlet is dropped; Citizen renders its own dropdown.
+		$this->assertArrayNotHasKey( 'notifications', $links );
 
-		// Alert had unseen class — it should be preserved
-		$this->assertContains(
-			'mw-echo-unseen-notifications',
-			$links['notifications']['notifications-alert']['link-class']
-		);
-		$this->assertContains(
-			'citizen-echo-notification-badge',
-			$links['notifications']['notifications-alert']['link-class']
-		);
-		// CdxButton classes should be applied
-		$alertClasses = $links['notifications']['notifications-alert']['link-class'];
-		$this->assertContains( 'cdx-button', $alertClasses );
-		$this->assertContains( 'cdx-button--fake-button', $alertClasses );
-		$this->assertContains( 'cdx-button--fake-button--enabled', $alertClasses );
-		$this->assertContains( 'cdx-button--icon-only', $alertClasses );
-		$this->assertContains( 'cdx-button--weight-quiet', $alertClasses );
-		$this->assertContains( 'citizen-cdx-button--size-large', $alertClasses );
-		// Echo reads this class from the PHP anchor to identify the element
-		$this->assertContains( 'mw-echo-notification-badge-nojs', $alertClasses );
+		// The merged data is handed to the skin: combined count (alert + notice)
+		// and the Special:Notifications target.
+		$this->assertSame( 5, $captured['count'] );
+		$this->assertSame( '/wiki/Special:Notifications', $captured['href'] );
+	}
 
-		// Notice did NOT have unseen class — it should NOT be present
-		$this->assertNotContains(
-			'mw-echo-unseen-notifications',
-			$links['notifications']['notifications-notice']['link-class']
-		);
-		// But the class rewrite should still have happened
-		$noticeClasses = $links['notifications']['notifications-notice']['link-class'];
-		$this->assertContains( 'citizen-echo-notification-badge', $noticeClasses );
-		$this->assertContains( 'cdx-button', $noticeClasses );
-		$this->assertContains( 'mw-echo-notification-badge-nojs', $noticeClasses );
+	public function testNotificationsMenuLeavesEmptyPortletAlone(): void {
+		$captured = null;
+		$skin = $this->createCitizenMockCapturing( $captured );
+		// Echo's portlet is present but provided neither badge.
+		$links = [ 'notifications' => [] ];
+
+		SkinHooks::onSkinTemplateNavigation( $skin, $links );
+
+		// Nothing to merge: the skin gets no data and the empty portlet is left
+		// untouched (not dropped).
+		$this->assertNull( $captured );
+		$this->assertArrayHasKey( 'notifications', $links );
+	}
+
+	public function testNotificationsMenuWithOnlyNoticeBadge(): void {
+		$captured = null;
+		$skin = $this->createCitizenMockCapturing( $captured );
+		$links = [
+			'notifications' => [
+				'notifications-notice' => [
+					'id' => 'pt-notifications-notice',
+					'href' => '/wiki/Special:Notifications?notice',
+					'data' => [ 'counter-num' => 2 ],
+				],
+			],
+		];
+
+		SkinHooks::onSkinTemplateNavigation( $skin, $links );
+
+		// A single badge is enough: count is the notice count, and the href
+		// falls back to the notice badge's target.
+		$this->assertSame( 2, $captured['count'] );
+		$this->assertSame( '/wiki/Special:Notifications?notice', $captured['href'] );
+		$this->assertArrayNotHasKey( 'notifications', $links );
 	}
 }

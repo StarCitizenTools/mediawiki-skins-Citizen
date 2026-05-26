@@ -66,6 +66,12 @@ Module._resolveFilename = function ( request, parent, ...rest ) {
 		}
 	}
 	if ( parent && parent.filename &&
+		parent.filename.includes( 'skins.citizen.notifications' ) ) {
+		if ( request === './icons.json' || request === '../icons.json' ) {
+			return path.resolve( __dirname, 'mocks/notificationsIcons.js' );
+		}
+	}
+	if ( parent && parent.filename &&
 		parent.filename.includes( 'skins.citizen.commandPalette' ) ) {
 		if ( request === './config.json' || request === '../config.json' ) {
 			return path.resolve( __dirname, 'mocks/commandPaletteConfig.js' );

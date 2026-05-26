@@ -66,7 +66,7 @@ function initBodyContent(
 function main( window ) {
 	const
 		config = require( './config.json' ),
-		{ createEchoUpgrade } = require( './echo.js' ),
+		{ createNotifications } = require( './notifications.js' ),
 		search = require( './search.js' ),
 		dropdown = require( './dropdown.js' ),
 		{ createLastModified } = require( './lastModified.js' ),
@@ -80,7 +80,7 @@ function main( window ) {
 	commandPalette.init();
 
 	search.init( { window, document, triggerOpen: commandPalette.triggerOpen } );
-	createEchoUpgrade( { document, mw } ).init();
+	createNotifications( { document, mw } ).init();
 	setupObservers.init( { document, window, mw, IntersectionObserver } );
 	dropdown.init( { document, window } );
 	createLastModified( { document, Intl } ).init();

@@ -62,6 +62,26 @@ class SkinCitizen extends SkinMustache {
 	private ?array $languages = null;
 
 	/**
+	 * Merged notification data (count, alert state, link target) captured from
+	 * Echo's navigation links by SkinHooks during the SkinTemplateNavigation
+	 * hook. Null when the user has no notifications portlet. See
+	 * {@link setNotificationData}.
+	 */
+	private ?array $notificationData = null;
+
+	/**
+	 * Receive merged notification data from SkinHooks::updateNotificationsMenu.
+	 * Called while the SkinTemplateNavigation hook runs inside
+	 * parent::getTemplateData(), so the value is ready by the time this skin
+	 * assembles its own template data.
+	 *
+	 * @param array $data { count: int, href: string }
+	 */
+	public function setNotificationData( array $data ): void {
+		$this->notificationData = $data;
+	}
+
+	/**
 	 * Overrides template, styles and scripts module
 	 *
 	 * @inheritDoc
@@ -252,6 +272,11 @@ class SkinCitizen extends SkinMustache {
 
 		// TODO: Pass the home icon through the component instead of injecting into logos data
 		$parentData['data-logos']['icon-home'] = 'home';
+
+		// Captured by SkinHooks::updateNotificationsMenu during the
+		// SkinTemplateNavigation hook (which ran inside parent::getTemplateData
+		// above). Drives the notifications dropdown in Header.mustache.
+		$parentData['data-notifications'] = $this->notificationData;
 
 		$parentData['toc-enabled'] = !empty( $parentData['data-toc'][ 'array-sections' ] );
 		if ( $parentData['toc-enabled'] ) {
