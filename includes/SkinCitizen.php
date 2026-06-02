@@ -24,6 +24,7 @@ use MediaWiki\Skins\Citizen\Components\CitizenComponentStickyHeader;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentTableOfContents;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentUserInfo;
 use MediaWiki\Title\Title;
+use MediaWiki\User\TempUser\TempUserConfig;
 use MediaWiki\User\UserFactory;
 use MediaWiki\User\UserGroupManager;
 use MediaWiki\User\UserIdentityLookup;
@@ -95,6 +96,7 @@ class SkinCitizen extends SkinMustache {
 		private readonly PermissionManager $permissionManager,
 		private readonly UserGroupManager $userGroupManager,
 		private readonly UrlUtils $urlUtils,
+		private readonly TempUserConfig $tempUserConfig,
 		// @phan-suppress-next-line PhanUndeclaredTypeParameter,PhanUndeclaredTypeProperty
 		private readonly ?MobileContext $mfContext,
 		array $options = []
@@ -245,6 +247,7 @@ class SkinCitizen extends SkinMustache {
 				$localizer,
 				$title,
 				$user,
+				$this->tempUserConfig,
 				$parentData['data-portlets']['data-user-page']
 			),
 			'data-sticky-header' => new CitizenComponentStickyHeader(
