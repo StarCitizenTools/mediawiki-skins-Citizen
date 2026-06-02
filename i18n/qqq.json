@@ -106,6 +106,7 @@
 	"citizen-feature-custom-width-wide-label": "Label for wide page width. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-width-name}}).",
 	"citizen-feature-custom-width-full-label": "Label for full page width. An adjective that describes \"text\" ({{msg-mw|Citizen-feature-custom-width-name}}).",
 	"citizen-user-info-text-anon": "Description in the user menu when user is not logged in.",
+	"citizen-user-info-text-anon-temp": "Description in the user menu when the user is not logged in and temporary accounts are enabled, so an edit will create a temporary account rather than expose the user's IP address.",
 	"citizen-user-info-text-temp": "Description in the user menu when user is using a temporary account.",
 	"citizen-user-info-edits-label": "Label for the edit count in the user info",
 	"citizen-user-info-joined-label": "Label for the registration date in the user info",

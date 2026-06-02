@@ -7,6 +7,7 @@ namespace MediaWiki\Skins\Citizen\Tests\Unit\Components;
 use MediaWiki\Language\Language;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentUserInfo;
 use MediaWiki\Title\Title;
+use MediaWiki\User\TempUser\TempUserConfig;
 use MediaWiki\User\User;
 use MediaWiki\User\UserGroupManager;
 use MediaWikiUnitTestCase;
@@ -42,6 +43,30 @@ class CitizenComponentUserInfoTest extends MediaWikiUnitTestCase {
 		return $user;
 	}
 
+	private function createMockTempUserConfig( bool $autoCreateOnEdit ): TempUserConfig {
+		$tempUserConfig = $this->createMock( TempUserConfig::class );
+		$tempUserConfig->method( 'isAutoCreateAction' )
+			->with( 'edit' )
+			->willReturn( $autoCreateOnEdit );
+
+		return $tempUserConfig;
+	}
+
+	/**
+	 * Localizer whose Message objects echo back the requested key via text(),
+	 * so tests can assert which message key was selected.
+	 */
+	private function createKeyEchoLocalizer(): MessageLocalizer {
+		$localizer = $this->createMock( MessageLocalizer::class );
+		$localizer->method( 'msg' )->willReturnCallback( function ( $key ) {
+			$msg = $this->createMock( Message::class );
+			$msg->method( 'text' )->willReturn( $key );
+			return $msg;
+		} );
+
+		return $localizer;
+	}
+
 	/**
 	 * @covers ::getTemplateData
 	 */
@@ -72,6 +97,7 @@ class CitizenComponentUserInfoTest extends MediaWikiUnitTestCase {
 			$localizer,
 			$title,
 			$user,
+			$this->createMockTempUserConfig( false ),
 			$userPageData
 		);
 
@@ -113,6 +139,7 @@ class CitizenComponentUserInfoTest extends MediaWikiUnitTestCase {
 			$localizer,
 			$title,
 			$user,
+			$this->createMockTempUserConfig( false ),
 			$userPageData
 		);
 
@@ -124,5 +151,49 @@ class CitizenComponentUserInfoTest extends MediaWikiUnitTestCase {
 		$this->assertStringNotContainsString( 'pt-userpage-realname', $resultHtml );
 		$this->assertStringNotContainsString( 'pt-userpage-username', $resultHtml );
 		$this->assertStringContainsString( $encodedUsername, $resultHtml );
+	}
+
+	/**
+	 * @covers ::getTemplateData
+	 */
+	public function testAnonUserSeesIpWarningWhenTempAccountsDisabled(): void {
+		$user = $this->createMock( User::class );
+		$user->method( 'isRegistered' )->willReturn( false );
+
+		$component = new CitizenComponentUserInfo(
+			$this->createMock( UserGroupManager::class ),
+			$this->createMock( Language::class ),
+			$this->createKeyEchoLocalizer(),
+			$this->createMock( Title::class ),
+			$user,
+			$this->createMockTempUserConfig( false ),
+			[]
+		);
+
+		$data = $component->getTemplateData();
+
+		$this->assertSame( 'citizen-user-info-text-anon', $data['text']->text() );
+	}
+
+	/**
+	 * @covers ::getTemplateData
+	 */
+	public function testAnonUserSeesTempWarningWhenTempAccountsEnabled(): void {
+		$user = $this->createMock( User::class );
+		$user->method( 'isRegistered' )->willReturn( false );
+
+		$component = new CitizenComponentUserInfo(
+			$this->createMock( UserGroupManager::class ),
+			$this->createMock( Language::class ),
+			$this->createKeyEchoLocalizer(),
+			$this->createMock( Title::class ),
+			$user,
+			$this->createMockTempUserConfig( true ),
+			[]
+		);
+
+		$data = $component->getTemplateData();
+
+		$this->assertSame( 'citizen-user-info-text-anon-temp', $data['text']->text() );
 	}
 }

@@ -25,6 +25,7 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 			$this->getServiceContainer()->getPermissionManager(),
 			$this->getServiceContainer()->getUserGroupManager(),
 			$this->getServiceContainer()->getUrlUtils(),
+			$this->getServiceContainer()->getTempUserConfig(),
 			null,
 			[
 				'name' => 'Citizen',

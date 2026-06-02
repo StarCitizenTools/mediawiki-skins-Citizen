@@ -37,7 +37,8 @@
 				"LanguageNameUtils",
 				"PermissionManager",
 				"UserGroupManager",
-				"UrlUtils"
+				"UrlUtils",
+				"TempUserConfig"
 			],
 			"optional_services": [
 				"MobileFrontend.Context"

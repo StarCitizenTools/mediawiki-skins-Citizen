@@ -8,6 +8,7 @@ use MediaWiki\Html\Html;
 use MediaWiki\Language\Language;
 use MediaWiki\Title\MalformedTitleException;
 use MediaWiki\Title\Title;
+use MediaWiki\User\TempUser\TempUserConfig;
 use MediaWiki\User\User;
 use MediaWiki\User\UserGroupManager;
 use MessageLocalizer;
@@ -25,6 +26,7 @@ class CitizenComponentUserInfo implements CitizenComponent {
 		private readonly MessageLocalizer $localizer,
 		private readonly Title $title,
 		private readonly User $user,
+		private readonly TempUserConfig $tempUserConfig,
 		private readonly array $userPageData,
 	) {
 	}
@@ -189,9 +191,17 @@ class CitizenComponentUserInfo implements CitizenComponent {
 				$data['data-user-groups'] = $this->getUserGroups();
 			}
 		} else {
+			// When an edit auto-creates a temporary account, the visitor's IP
+			// is not publicly exposed, so the IP-visibility warning would be
+			// inaccurate. Key on the 'edit' action specifically (rather than
+			// isEnabled()) since the message is about editing — a wiki could
+			// enable temp accounts for other actions only.
+			$anonText = $this->tempUserConfig->isAutoCreateAction( 'edit' )
+				? 'citizen-user-info-text-anon-temp'
+				: 'citizen-user-info-text-anon';
 			$data = [
 				'title' => $localizer->msg( 'notloggedin' ),
-				'text' => $localizer->msg( 'citizen-user-info-text-anon' )
+				'text' => $localizer->msg( $anonText )
 			];
 		}
 
