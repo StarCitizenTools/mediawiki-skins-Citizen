@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.17.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.16.1...v3.17.0) (2026-06-04)
+
+
+### Features
+
+* **a11y:** ✨ respect the reduce-transparency preference ([5a478d1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5a478d11adee1a83b0ae3f7f92b189abed6359bf))
+* **commandPalette:** ✨ polish entrance and exit animation ([4d430d8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4d430d8b1f5ad92a3ff5e79c9fda602acab1a1c0))
+* **fonts:** ✨ ship Roboto Mono webfont ([7f3f533](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/7f3f53364c123484e9487452a561d6e6d6254caf))
+* **footer:** ✨ forward-compat for MediaWiki 1.47 footer menu migration ([#1557](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1557)) ([dc7f2a1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/dc7f2a1db0dc1ab8ad84c9fd549adf39845c2499))
+* **menu:** ✨ polish open and close animation ([62ddbe7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/62ddbe7bdc509ae23d252dc1d82a1cdd43d4f76b))
+* **notifications:** ✨ merge Echo's two badges into a single notification panel ([9009de1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9009de101a900cc3372f094f3d8f8a699e4c7648))
+
+
+### Bug Fixes
+
+* **header:** 🐛 base dropdown card max-height on the header size ([422c4d7](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/422c4d787201ac1f3eb29219e8010cea78928c71))
+* **header:** 🐛 use dvh for dropdown card max-height on mobile ([60ff52d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/60ff52d33cb305902e65a5abe0abe282a37177c8))
+* **user-menu:** 🐛 show temp account notice instead of IP warning ([8a6d28a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8a6d28a8511e000b1ffebeb8fdaee08cd4ab8ac5))
+* **userMenu:** 🐛 clean up menu for temporary users ([0153bf6](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/0153bf66a408e2a27ca008ff0618feb1f24b08ff))
+
+
+### Performance Improvements
+
+* **commandPalette:** ⚡️ drop blur on dismiss backdrop ([c0db8a4](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c0db8a4f3d2b3c8dd87cb0c304285bcd4234ecb7))
+* **dropdown:** ⚡️ drop blur on mobile dismiss overlay ([9805624](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9805624006856f25b752bb6e50b8ff219da2d60c))
+
 ## [3.16.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.16.0...v3.16.1) (2026-05-15)
 
 
