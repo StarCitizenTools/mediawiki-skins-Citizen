@@ -1,6 +1,6 @@
 {
 	"name": "Citizen",
-	"version": "3.16.1",
+	"version": "3.17.0",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
 		"[https://www.mediawiki.org/wiki/User:Octfx Octfx]",
@@ -644,7 +644,10 @@
 				{
 					"name": "resources/skins.citizen.notifications/icons.json",
 					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
-					"callbackParam": [ "cdxIconCheckAll", "cdxIconSettings" ]
+					"callbackParam": [
+						"cdxIconCheckAll",
+						"cdxIconSettings"
+					]
 				},
 				"resources/skins.citizen.notifications/sources/echo.js",
 				"resources/skins.citizen.notifications/components/App.vue",
