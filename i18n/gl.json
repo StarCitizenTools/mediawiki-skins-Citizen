@@ -96,6 +96,7 @@
 	"citizen-feature-custom-width-wide-label": "Amplo",
 	"citizen-feature-custom-width-full-label": "Completo",
 	"citizen-user-info-text-anon": "O teu enderezo IP será visible publicamente se fas algunha edición.",
+	"citizen-user-info-text-anon-temp": "Se fas unha edición, crearémosche unha conta temporal.",
 	"citizen-user-info-text-temp": "Esta conta temporal creouse despois de que se fixese unha edición sen unha conta neste navegador e dispositivo.",
 	"citizen-user-info-edits-label": "Edicións",
 	"citizen-user-info-joined-label": "Uniuse",

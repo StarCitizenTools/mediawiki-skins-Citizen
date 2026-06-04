@@ -100,6 +100,7 @@
 	"citizen-feature-custom-width-wide-label": "Breed",
 	"citizen-feature-custom-width-full-label": "Volledig",
 	"citizen-user-info-text-anon": "Uw IP-adres wordt openbaar zichtbaar als u wijzigingen aanbrengt.",
+	"citizen-user-info-text-anon-temp": "Als u een wijziging aanbrengt, wordt er een tijdelijk account voor u aangemaakt.",
 	"citizen-user-info-text-temp": "Dit tijdelijke account is aangemaakt nadat via deze browser op dit apparaat zonder account een pagina is bewerkt.",
 	"citizen-user-info-edits-label": "Bewerkingen",
 	"citizen-user-info-joined-label": "Ingeschreven",

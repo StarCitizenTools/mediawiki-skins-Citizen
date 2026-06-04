@@ -107,6 +107,7 @@
 	"citizen-feature-custom-width-wide-label": "Широкая",
 	"citizen-feature-custom-width-full-label": "Полная",
 	"citizen-user-info-text-anon": "Ваш IP-адрес будет виден всем, если вы внесёте какие-либо изменения.",
+	"citizen-user-info-text-anon-temp": "Если вы внесёте правку, для вас будет создана временная учетная запись.",
 	"citizen-user-info-text-temp": "Эта временная учётная запись была создана после того, как редактирование было сделано без авторизации в этом браузере и на этом устройстве.",
 	"citizen-user-info-edits-label": "Правок",
 	"citizen-user-info-joined-label": "Присоединил{{GENDER:|ся|ась}}",
