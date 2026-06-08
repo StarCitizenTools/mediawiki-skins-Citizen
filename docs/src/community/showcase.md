@@ -19,7 +19,7 @@ Check out these amazing wikis powering their content with Citizen:
  <LinkCard title="Soulframe Wiki" href="https://wiki.avakot.org" />
  <LinkCard title="Industrialist Wiki" href="https://industrialist.miraheze.org" />
  <LinkCard title="Prism Party" href="https://www.prismparty.net" />
- <LinkCard title="The Outlaster Wiki" href="https://outlaster.peakprecision.wiki" />
+ <LinkCard title="The Outlaster Wiki" href="https://outlaster.miraheze.org" />
  <LinkCard title="Battlestar Wiki" href="https://en.battlestarwiki.org" />
  <LinkCard title="Wordle Hub" href="https://wordles.miraheze.org" />
  <LinkCard title="Sorry We're Closed Wiki" href="https://sorrywereclosed.wiki" />
