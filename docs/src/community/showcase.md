@@ -24,4 +24,5 @@ Check out these amazing wikis powering their content with Citizen:
  <LinkCard title="Wordle Hub" href="https://wordles.miraheze.org" />
  <LinkCard title="Sorry We're Closed Wiki" href="https://sorrywereclosed.wiki" />
  <LinkCard title="Obby Wiki" href="https://obbywiki.com/" />
+ <LinkCard title="NITC Wiki" href="https://wiki.fosscell.org" />
 </LinkGrid>
