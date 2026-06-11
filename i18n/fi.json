@@ -34,6 +34,7 @@
 	"citizen-tagline-ns-category": "Luokkasivu",
 	"citizen-feature-custom-font-size-name": "Teksti",
 	"citizen-feature-custom-width-name": "Leveys",
+	"citizen-user-info-text-anon-temp": "Jos teet muokkauksen, sinulle luodaan tilapäinen tunnus",
 	"citizen-command-palette-action-view": "Näytä",
 	"citizen-command-palette-load-error": "Komentopalettia ei voitu ladata. Yritä uudelleen.",
 	"citizen-command-palette-keyhint-back": "Takaisin",
