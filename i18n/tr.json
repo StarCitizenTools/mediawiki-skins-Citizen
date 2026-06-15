@@ -107,6 +107,7 @@
 	"citizen-feature-custom-width-wide-label": "Geniş",
 	"citizen-feature-custom-width-full-label": "Tam genişlik",
 	"citizen-user-info-text-anon": "Herhangi bir düzenleme yaparsanız IP adresiniz herkese açık olarak görünecektir.",
+	"citizen-user-info-text-anon-temp": "Bir düzenleme yaparsanız, sizin için geçici bir hesap oluşturulacaktır.",
 	"citizen-user-info-text-temp": "Bu geçici hesap, bu tarayıcıda ve cihazda hesap olmadan bir düzenleme yapıldıktan sonra oluşturulmuştur.",
 	"citizen-user-info-edits-label": "Düzenlemeler",
 	"citizen-user-info-joined-label": "Katılım",
