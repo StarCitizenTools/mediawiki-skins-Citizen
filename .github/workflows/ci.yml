@@ -32,7 +32,7 @@ jobs:
       i18n: ${{ steps.filter.outputs.i18n_any_changed }}
       markdown: ${{ steps.filter.outputs.markdown_any_changed }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: tj-actions/changed-files@v47
         id: filter
         with:
