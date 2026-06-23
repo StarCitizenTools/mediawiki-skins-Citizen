@@ -139,13 +139,11 @@
 	},
 	"ResourceModules": {
 		"skins.citizen.tokens": {
-			"class": "MediaWiki\\ResourceLoader\\SkinModule",
 			"styles": [
 				"resources/skins.citizen.tokens/tokens.less"
 			]
 		},
 		"skins.citizen.tokens.new": {
-			"class": "MediaWiki\\ResourceLoader\\SkinModule",
 			"styles": [
 				"resources/skins.citizen.tokens.new/tokens.less"
 			]
