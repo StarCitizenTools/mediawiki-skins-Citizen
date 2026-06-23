@@ -30,7 +30,7 @@ class CitizenComponentStickyHeaderTest extends MediaWikiUnitTestCase {
 
 		$this->assertArrayHasKey( 'array-icon-buttons', $data );
 		$buttons = $data['array-icon-buttons'];
-		$this->assertCount( 8, $buttons, 'There should be 8 icon buttons' );
+		$this->assertCount( 9, $buttons, 'There should be 9 icon buttons' );
 
 		// Verify button properties for the first button as a sample check
 		$firstButton = $buttons[0];
@@ -39,9 +39,27 @@ class CitizenComponentStickyHeaderTest extends MediaWikiUnitTestCase {
 		$this->assertStringContainsString( 'cdx-button--icon-only', $firstButton['class'] );
 		$this->assertContains( [ 'key' => 'tabindex', 'value' => '-1' ], $firstButton['array-attributes'] );
 
+		// The read/view button comes first (after share) and targets the read view
+		// tab, which (unlike the old #ca-subject) exists in MediaWiki output (#1586).
+		$viewButton = $buttons[1];
+		$this->assertSame( 'eye', $viewButton['icon'] );
+		$this->assertContains(
+			[ 'key' => 'data-mw-citizen-click-target', 'value' => '#ca-view > a' ],
+			$viewButton['array-attributes']
+		);
+
+		// The subject button targets the (namespace-specific, unselected) associated
+		// page tab, i.e. the "back to the article" link shown on talk pages.
+		$subjectButton = $buttons[2];
+		$this->assertSame( 'article', $subjectButton['icon'] );
+		$this->assertContains(
+			[ 'key' => 'data-mw-citizen-click-target', 'value' => "[id^='ca-nstab-']:not(.selected) > a" ],
+			$subjectButton['array-attributes']
+		);
+
 		// Verify the order of edit icons
-		$this->assertSame( $expectedFirstEditIcon, $buttons[2]['icon'] );
-		$this->assertSame( $expectedSecondEditIcon, $buttons[3]['icon'] );
+		$this->assertSame( $expectedFirstEditIcon, $buttons[4]['icon'] );
+		$this->assertSame( $expectedSecondEditIcon, $buttons[5]['icon'] );
 	}
 
 	public static function provideVisualEditorTabPosition(): iterable {
