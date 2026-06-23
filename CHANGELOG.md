@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.17.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.17.0...v3.17.1) (2026-06-23)
+
+
+### Bug Fixes
+
+* 🐛 restore the Read button in the sticky header on history pages ([9620aaa](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/9620aaab511b252fd06703c890be5b0e4761edfd)), closes [#1586](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1586)
+* 🐛 stop preloading the unused default logo ([353b44a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/353b44ad09d092b7f7e1717b0d822e6b4cd777ce))
+
 ## [3.17.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.16.1...v3.17.0) (2026-06-04)
 
 
