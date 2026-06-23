@@ -21,10 +21,20 @@ class CitizenComponentStickyHeader implements CitizenComponent {
 		'icon' => 'speechBubbles'
 	];
 
+	private const VIEW_ICON = [
+		'id' => 'ca-view-sticky-header',
+		'clickTarget' => '#ca-view > a',
+		'icon' => 'eye'
+	];
+
+	// The subject/associated page tab id is namespace-specific (ca-nstab-main,
+	// ca-nstab-user, ...) and is marked `selected` on the subject page itself, so
+	// target any unselected nstab tab — i.e. the "back to the article" link shown
+	// on talk pages.
 	private const SUBJECT_ICON = [
 		'id' => 'ca-subject-sticky-header',
-		'clickTarget' => '#ca-subject > a',
-		'icon' => 'eye'
+		'clickTarget' => "[id^='ca-nstab-']:not(.selected) > a",
+		'icon' => 'article'
 	];
 
 	private const HISTORY_ICON = [
@@ -74,13 +84,14 @@ class CitizenComponentStickyHeader implements CitizenComponent {
 		}
 
 		array_push( $icons,
+			self::VIEW_ICON,
+			self::SUBJECT_ICON,
 			self::HISTORY_ICON,
 			$this->visualEditorTabPositionFirst ? self::EDIT_VE_ICON : self::EDIT_WIKITEXT_ICON,
 			$this->visualEditorTabPositionFirst ? self::EDIT_WIKITEXT_ICON : self::EDIT_VE_ICON,
 			self::EDIT_PROTECTED_ICON,
 			self::ADD_SECTION_ICON,
-			self::TALK_ICON,
-			self::SUBJECT_ICON
+			self::TALK_ICON
 		);
 		$iconButtons = [];
 		foreach ( $icons as $icon ) {
