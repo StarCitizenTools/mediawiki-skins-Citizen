@@ -169,7 +169,7 @@
 	"citizen-command-palette-mode-action-description-help": "Поиск административных действий, служебных страниц и ссылок из меню страницы.",
 	"citizen-command-palette-mode-action-placeholder": "Поиск действий",
 	"citizen-command-palette-mode-category-breadcrumb-root": "Категории",
-	"citizen-command-palette-mode-category-description-help": "В пустом поле для ввода отображаются категории данной страницы. Выберите одну из них, чтобы перейти к её податегориям и страницам, затем нажмите клавишу <kbd>Backspace</kbd> в пустом поле для ввода, чтобы вернуться на один уровень назад.",
+	"citizen-command-palette-mode-category-description-help": "В пустом поле для ввода отображаются категории данной страницы. Выберите одну из них, чтобы перейти к её подкатегориям и страницам, затем нажмите клавишу <kbd>Backspace</kbd> в пустом поле для ввода, чтобы вернуться на один уровень назад.",
 	"citizen-command-palette-mode-category-empty-description": "Введите текст для поиска по всем категориям вики",
 	"citizen-command-palette-mode-category-empty-title": "На этой странице нет категорий",
 	"citizen-command-palette-mode-category-noresults-description": "Проверьте орфографию или попробуйте другой поисковый запрос",
@@ -217,5 +217,5 @@
 	"citizen-command-palette-mode-user-placeholder": "Поиск участников",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Поиск полного текста на всех страницах",
 	"citizen-command-palette-queryaction-page-edit-description": "Создать или редактировать страницу",
-	"citizen-config-usenewtoken": "Переключатель для включения нового конвейера цветовых токенов. По умолчанию - false (выключен); установите значение true для включения. Новый конвейер станет конвейером по умолчанию, а старый будет удален, в следующем крупном выпуске Citizen."
+	"citizen-config-usenewtoken": "Переключатель для включения нового конвейера цветовых токенов. По умолчанию — false (выключен); установите значение true для включения. Новый конвейер станет конвейером по умолчанию, а старый будет удалён, в следующем крупном выпуске Citizen."
 }

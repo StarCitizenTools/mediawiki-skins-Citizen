@@ -178,6 +178,7 @@
 	"citizen-command-palette-mode-smw-noproperties-title": "Aucune propriété correspondante",
 	"citizen-command-palette-mode-smw-noresults-description": "Essayez d'élargir vos conditions ou vérifiez les fautes de frappe.",
 	"citizen-command-palette-mode-smw-noresults-title": "Aucune page correspondante",
+	"citizen-command-palette-mode-smw-novalues-title": "Aucune valeur correspondante",
 	"citizen-command-palette-mode-user-empty-title": "Rechercher des utilisateurs",
 	"citizen-command-palette-mode-user-noresults-title": "Aucun utilisateur correspondant",
 	"citizen-command-palette-mode-user-placeholder": "Rechercher des utilisateurs",
