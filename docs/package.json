@@ -23,7 +23,7 @@
 		"@octokit/rest": "^22.0.1",
 		"@octokit/types": "^16.0.0",
 		"@types/node": "^24.10.1",
-		"@vitejs/plugin-vue": "^5.2.0",
+		"@vitejs/plugin-vue": "^6.0.7",
 		"@vue/test-utils": "^2.4.6",
 		"jsdom": "^25.0.0",
 		"less": "^4.4.2",
