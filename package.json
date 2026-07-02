@@ -42,7 +42,7 @@
 		"stylelint-config-wikimedia": "0.19.2",
 		"stylelint-order": "^7.0.1",
 		"stylelint-plugin-use-baseline": "^1.4.4",
-		"types-mediawiki": "2.0.0",
+		"types-mediawiki": "2.1.0",
 		"vitest": "^4.1.9",
 		"vue": "3.4.27"
 	},
