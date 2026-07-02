@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.17.2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.17.1...v3.17.2) (2026-07-02)
+
+
+### Bug Fixes
+
+* **Cite:** 🐛 correct code element font styles in cite ([03e1340](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/03e1340a91bebad3cc0fd51232b94156c79aa5ab))
+
 ## [3.17.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.17.0...v3.17.1) (2026-06-23)
 
 
