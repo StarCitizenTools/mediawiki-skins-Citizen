@@ -431,6 +431,7 @@ Citizen provides custom styles for many popular extensions via [skinStyles](http
 * [AdvancedSearch](https://www.mediawiki.org/wiki/Extension:AdvancedSearch)
 * [AJAXPoll](https://www.mediawiki.org/wiki/Extension:AJAXPoll)
 * [ApprovedRevs](https://www.mediawiki.org/wiki/Extension:Approved_Revs)
+* [ArticleFeedbackv5](https://www.mediawiki.org/wiki/Extension:ArticleFeedbackv5)
 * [Capiunto](https://www.mediawiki.org/wiki/Extension:Capiunto)
 * [Cargo](https://www.mediawiki.org/wiki/Extension:Cargo)
 * [CategoryTree](https://www.mediawiki.org/wiki/Extension:CategoryTree)
