@@ -1105,9 +1105,15 @@
 			"descriptionmsg": "citizen-config-headerposition",
 			"public": true
 		},
+		"Preview": {
+			"value": 0,
+			"description": "Version-scoped switch for the Citizen preview channel. Set to the upcoming major release number (currently 4) to preview it ahead of release — during this cycle that enables the new color token pipeline. 0 or any other value keeps the stable experience, so a stale setting never enrolls the wiki in a later cycle.",
+			"descriptionmsg": "citizen-config-preview",
+			"public": true
+		},
 		"UseNewToken": {
 			"value": false,
-			"description": "Opt-in switch for the new color token pipeline. Set to true to enable. Defaults to false through the current major Citizen release so existing wikis aren't visually shifted without explicit consent; the new pipeline becomes the default — and legacy is removed — in the next major release.",
+			"description": "Deprecated alias for $wgCitizenPreview = 4. Honored through the next minor release and then removed — use $wgCitizenPreview instead.",
 			"descriptionmsg": "citizen-config-usenewtoken",
 			"public": true
 		}

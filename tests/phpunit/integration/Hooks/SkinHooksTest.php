@@ -4,13 +4,17 @@ declare( strict_types=1 );
 
 namespace MediaWiki\Skins\Citizen\Tests\Integration\Hooks;
 
+use MediaWiki\Config\HashConfig;
+use MediaWiki\MainConfigNames;
 use MediaWiki\Message\Message;
 use MediaWiki\Output\OutputPage;
+use MediaWiki\Request\FauxRequest;
 use MediaWiki\ResourceLoader\Context;
 use MediaWiki\Skins\Citizen\Hooks\SkinHooks;
 use MediaWiki\Skins\Citizen\SkinCitizen;
 use MediaWiki\User\User;
 use MediaWikiIntegrationTestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 use Skin;
 use SkinTemplate;
 
@@ -473,5 +477,105 @@ class SkinHooksTest extends MediaWikiIntegrationTestCase {
 		$this->assertSame( 2, $captured['count'] );
 		$this->assertSame( '/wiki/Special:Notifications?notice', $captured['href'] );
 		$this->assertArrayNotHasKey( 'notifications', $links );
+	}
+
+	/**
+	 * Build an OutputPage mock wired for the preview channel: the hook
+	 * reads the request (URL params, cookies, response recorder) and the
+	 * skin config from it.
+	 *
+	 * @param FauxRequest $request
+	 * @param array $config Preview-related config overrides
+	 * @return OutputPage&MockObject
+	 */
+	private function createPreviewOutputPage( FauxRequest $request, array $config = [] ): OutputPage&MockObject {
+		$out = $this->createMock( OutputPage::class );
+		$out->method( 'getRequest' )->willReturn( $request );
+		$out->method( 'getConfig' )->willReturn( new HashConfig( $config + [
+			'CitizenEnablePreferences' => false,
+			'CitizenPreview' => 0,
+			'CitizenUseNewToken' => false,
+		] ) );
+
+		return $out;
+	}
+
+	private function createCitizenSkinMock(): Skin {
+		$skin = $this->createMock( Skin::class );
+		$skin->method( 'getSkinName' )->willReturn( 'citizen' );
+
+		return $skin;
+	}
+
+	public function testOnBeforePageDisplayPreviewLoadsNewTokensAndStampsClasses(): void {
+		$request = new FauxRequest( [ 'citizenpreview' => '4' ] );
+		$out = $this->createPreviewOutputPage( $request );
+		$out->expects( $this->once() )->method( 'addModuleStyles' )
+			->with( [ 'skins.citizen.tokens.new' ] );
+		$out->expects( $this->once() )->method( 'addHtmlClasses' )
+			->with( [ 'citizen-v4', 'citizen-token-new' ] );
+
+		$this->newSkinHooks()->onBeforePageDisplay( $out, $this->createCitizenSkinMock() );
+	}
+
+	public function testOnBeforePageDisplayStableLoadsLegacyTokensAndNoClasses(): void {
+		$request = new FauxRequest();
+		$out = $this->createPreviewOutputPage( $request );
+		$out->expects( $this->once() )->method( 'addModuleStyles' )
+			->with( [ 'skins.citizen.tokens' ] );
+		$out->expects( $this->never() )->method( 'addHtmlClasses' );
+
+		$this->newSkinHooks()->onBeforePageDisplay( $out, $this->createCitizenSkinMock() );
+	}
+
+	public function testOnBeforePageDisplayCookieActivatesPreview(): void {
+		$request = new FauxRequest();
+		$request->setCookie( 'citizenpreview', '4' );
+		$out = $this->createPreviewOutputPage( $request );
+		$out->expects( $this->once() )->method( 'addModuleStyles' )
+			->with( [ 'skins.citizen.tokens.new' ] );
+
+		$this->newSkinHooks()->onBeforePageDisplay( $out, $this->createCitizenSkinMock() );
+	}
+
+	public function testOnBeforePageDisplayExplicitUrlValueWritesCookie(): void {
+		$this->overrideConfigValue( MainConfigNames::CookiePrefix, '' );
+		$request = new FauxRequest( [ 'citizenpreview' => '0' ] );
+		$out = $this->createPreviewOutputPage( $request );
+
+		$this->newSkinHooks()->onBeforePageDisplay( $out, $this->createCitizenSkinMock() );
+
+		$response = $request->response();
+		$this->assertSame( '0', $response->getCookie( 'citizenpreview' ) );
+		$cookie = $response->getCookieData( 'citizenpreview' );
+		$this->assertGreaterThan( time(), $cookie['expire'] ?? 0 );
+	}
+
+	public function testOnBeforePageDisplayNonExplicitValueWritesNoCookie(): void {
+		$request = new FauxRequest( [ 'citizenpreview' => 'banana' ] );
+		$out = $this->createPreviewOutputPage( $request );
+
+		$this->newSkinHooks()->onBeforePageDisplay( $out, $this->createCitizenSkinMock() );
+
+		$this->assertSame( [], $request->response()->getCookies() );
+	}
+
+	public function testOnBeforePageDisplayAliasConfigActivatesPreviewAndDeprecates(): void {
+		$this->expectDeprecationAndContinue( '/CitizenUseNewToken/' );
+		$request = new FauxRequest();
+		$out = $this->createPreviewOutputPage( $request, [ 'CitizenUseNewToken' => true ] );
+		$out->expects( $this->once() )->method( 'addModuleStyles' )
+			->with( [ 'skins.citizen.tokens.new' ] );
+
+		$this->newSkinHooks()->onBeforePageDisplay( $out, $this->createCitizenSkinMock() );
+	}
+
+	public function testOnBeforePageDisplaySkipsNonCitizen(): void {
+		$out = $this->createMock( OutputPage::class );
+		$out->expects( $this->never() )->method( 'addModuleStyles' );
+		$skin = $this->createMock( Skin::class );
+		$skin->method( 'getSkinName' )->willReturn( 'vector' );
+
+		$this->newSkinHooks()->onBeforePageDisplay( $out, $skin );
 	}
 }

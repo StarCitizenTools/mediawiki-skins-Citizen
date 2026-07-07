@@ -12,6 +12,7 @@ use MediaWiki\Output\OutputPage;
 use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\ResourceLoader as RL;
 use MediaWiki\Skin\SkinComponentUtils;
+use MediaWiki\Skins\Citizen\PreviewChannel;
 use MediaWiki\Skins\Citizen\SkinCitizen;
 use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;
 use MediaWiki\SpecialPage\SpecialPage;
@@ -31,8 +32,8 @@ class SkinHooks implements
 	private static ?string $inlineScript = null;
 
 	/**
-	 * Adds the inline theme switcher script and resolves the active
-	 * color-token pipeline for the current request.
+	 * Adds the inline theme switcher script and applies the preview
+	 * channel for the current request.
 	 *
 	 * @param OutputPage $out
 	 * @param Skin $skin
@@ -53,41 +54,53 @@ class SkinHooks implements
 			$out->addHeadItem( 'skin.citizen.inline', self::$inlineScript );
 		}
 
-		self::resolveColorMode( $out );
+		self::applyPreviewChannel( $out );
 	}
 
 	/**
-	 * Pick the color-token module for this request and add it.
+	 * Resolve the preview channel for this request and apply it: pick
+	 * the color-token module and stamp the generation class.
 	 *
-	 * Priority: ?citizenusenewtoken=0|1 URL param > citizenusenewtoken
-	 * cookie > $wgCitizenUseNewToken config. The URL param also writes
-	 * a 24-hour cookie. Mode flip takes effect on the next request —
-	 * exactly one token module ships per request.
+	 * Priority: ?citizenpreview= URL param > citizenpreview cookie >
+	 * $wgCitizenPreview config, with deprecated $wgCitizenUseNewToken
+	 * as a second opt-in signal — no config value suppresses it. An
+	 * explicit URL choice also writes a 24-hour cookie, so a flip takes
+	 * effect on subsequent requests — exactly one token module ships
+	 * per request.
 	 */
-	private static function resolveColorMode( OutputPage $out ): void {
+	private static function applyPreviewChannel( OutputPage $out ): void {
 		$request = $out->getRequest();
-		$urlVal = $request->getRawVal( 'citizenusenewtoken' );
+		$config = $out->getConfig();
+		$urlVal = $request->getRawVal( PreviewChannel::REQUEST_KEY );
+		$cookieVal = $request->getCookie( PreviewChannel::REQUEST_KEY );
 
-		if ( $urlVal === '0' || $urlVal === '1' ) {
-			$useNew = $urlVal === '1';
+		if ( PreviewChannel::isExplicitValue( $urlVal ) ) {
 			$request->response()->setCookie(
-				'citizenusenewtoken',
-				$urlVal,
+				PreviewChannel::REQUEST_KEY,
+				(string)$urlVal,
 				time() + 86400
 			);
-		} else {
-			$cookieVal = $request->getCookie( 'citizenusenewtoken', null, '' );
-			if ( $cookieVal === '0' || $cookieVal === '1' ) {
-				$useNew = $cookieVal === '1';
-			} else {
-				$useNew = (bool)$out->getConfig()->get( 'CitizenUseNewToken' );
-			}
 		}
 
-		if ( $useNew ) {
+		// citizen-v4-remove — deprecated alias notice, drop with the alias
+		if ( $config->get( 'CitizenUseNewToken' ) ) {
+			wfDeprecatedMsg(
+				'$wgCitizenUseNewToken is deprecated; set $wgCitizenPreview = '
+					. PreviewChannel::TARGET_MAJOR . ' instead',
+				'3.18.0',
+				'Citizen'
+			);
+		}
+
+		if ( PreviewChannel::isPreview( $urlVal, $cookieVal, $config ) ) {
 			$out->addModuleStyles( [ 'skins.citizen.tokens.new' ] );
-			$out->addHtmlClasses( 'citizen-token-new' );
+			$out->addHtmlClasses( [
+				PreviewChannel::HTML_CLASS,
+				// citizen-v4-remove — pre-rename class for cached HTML
+				PreviewChannel::HTML_CLASS_LEGACY,
+			] );
 		} else {
+			// citizen-v4-remove — legacy pipeline, deleted at the 4.0 flip
 			$out->addModuleStyles( [ 'skins.citizen.tokens' ] );
 		}
 	}
