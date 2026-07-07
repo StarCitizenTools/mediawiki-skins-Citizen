@@ -24,7 +24,7 @@
 		"@commitlint/cli": "^21.1.0",
 		"@commitlint/config-conventional": "^21.2.0",
 		"@vitejs/plugin-vue": "^6.0.7",
-		"@vitest/coverage-v8": "^4.1.8",
+		"@vitest/coverage-v8": "^4.1.10",
 		"@vue/test-utils": "^2.4.11",
 		"devmoji": "^2.3.0",
 		"eslint": "8.57.1",
