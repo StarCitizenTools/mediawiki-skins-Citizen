@@ -6,6 +6,10 @@
  * the browser picks one at use time.
  */
 .new-syntax-color() {
+	// The second selector is the pre-rename generation class, kept for
+	// one minor so compiled CSS keeps matching cached HTML.
+	// citizen-v4-remove
+	:root.citizen-v4,
 	:root.citizen-token-new {
 		--color-syntax-red: light-dark( @color-syntax-red, @color-syntax-red-dark );
 		--color-syntax-orange: light-dark( @color-syntax-orange, @color-syntax-orange-dark );

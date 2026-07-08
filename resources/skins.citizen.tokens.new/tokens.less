@@ -1,9 +1,9 @@
 /**
  * Citizen new token pipeline — ResourceLoader module entry.
  *
- * Loaded only when SkinHooks::resolveColorMode resolves to "new".
+ * Loaded only when SkinHooks::applyPreviewChannel resolves to preview.
  * @layer citizen-tokens means user CSS at :root still wins. The
- * :root.citizen-token-new gating is kept inside each category mixin
+ * :root.citizen-v4 gating is kept inside each category mixin
  * so emission scope is explicit even though module loading already
  * implies it.
  *
@@ -46,15 +46,23 @@
 	.new-font();
 	.new-misc();
 
+	// In each group the second selector is the pre-rename generation
+	// class, kept for one minor so compiled CSS keeps matching cached
+	// HTML. citizen-v4-remove
+	:root.citizen-v4,
 	:root.citizen-token-new {
 		color-scheme: light;
 	}
 
+	// citizen-v4-remove — second selector is the pre-rename class
+	:root.citizen-v4.skin-theme-clientpref-night,
 	:root.citizen-token-new.skin-theme-clientpref-night {
 		color-scheme: dark;
 		.new-dark-overrides();
 	}
 
+	// citizen-v4-remove — second selector is the pre-rename class
+	:root.citizen-v4.skin-theme-clientpref-os,
 	:root.citizen-token-new.skin-theme-clientpref-os {
 		color-scheme: light dark;
 

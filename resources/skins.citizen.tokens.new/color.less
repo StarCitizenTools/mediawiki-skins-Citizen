@@ -3,6 +3,10 @@
  * https://doc.wikimedia.org/codex/main/design-tokens/color.html#color
  */
 .new-color() {
+	// The second selector is the pre-rename generation class, kept for
+	// one minor so compiled CSS keeps matching cached HTML.
+	// citizen-v4-remove
+	:root.citizen-v4,
 	:root.citizen-token-new {
 		// Body text. Citizen deviation: dark-mode body text dimmer than
 		// Codex spec (gray-100/-50, ~94%/98% L) for a softer reading feel.

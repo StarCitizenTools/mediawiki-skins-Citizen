@@ -3,6 +3,10 @@
  * https://doc.wikimedia.org/codex/main/design-tokens/font.html
  */
 .new-font() {
+	// The second selector is the pre-rename generation class, kept for
+	// one minor so compiled CSS keeps matching cached HTML.
+	// citizen-v4-remove
+	:root.citizen-v4,
 	:root.citizen-token-new {
 		// Codex — emits font-size, font-weight, line-height, etc.
 		// Mixin lives in the legacy module's tokens-codex.less (shared

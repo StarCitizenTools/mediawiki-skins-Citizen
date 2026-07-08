@@ -3,6 +3,10 @@
  * https://doc.wikimedia.org/codex/main/design-tokens/opacity.html
  */
 .new-opacity() {
+	// The second selector is the pre-rename generation class, kept for
+	// one minor so compiled CSS keeps matching cached HTML.
+	// citizen-v4-remove
+	:root.citizen-v4,
 	:root.citizen-token-new {
 		// Codex (with Citizen-added --active stop, sitting between
 		// hover and selected — consumed by --background-color-icon--active
