@@ -88,26 +88,26 @@ $wgCitizenThemeColor = '#0d0e12';
 
 **Values**: Hex color code
 
-### `$wgCitizenUseNewToken`
+### `$wgCitizenPreview`
 
-::: warning Experimental
-The new color token pipeline is under active development. Token names, values, and the retheme API may change without notice. Production wikis should leave this off.
+::: warning Preview channel
+Preview features are production-quality, but their shape may change during the cycle. Changes are announced in the release notes.
 :::
 
-Opts the wiki into Citizen's new color token pipeline (`skins.citizen.tokens.new`). Exactly one token module ships per request — when enabled, the new module loads in place of the default `skins.citizen.tokens`, and `<html>` gets `.citizen-token-new`.
+Version-scoped switch for the [preview channel](../guide/migrating-to-citizen-4). Set it to the upcoming major release number to run that preview ahead of release. During the current cycle the number is `4`, which enables the new color token pipeline (`skins.citizen.tokens.new`) — exactly one token module ships per request, and `<html>` gets the `citizen-v4` generation class.
 
 ```php [LocalSettings.php]
-$wgCitizenUseNewToken = false;
+$wgCitizenPreview = 0;
 ```
 
-**Values**: `true`, `false`
+**Values**: `0` (stable, default), `4` (preview Citizen 4). Any other value behaves like `0`, so a stale setting never enrolls the wiki in a later cycle.
 
-The setting can also be toggled per-browser without editing `LocalSettings.php`:
+The channel can also be toggled per-browser without editing `LocalSettings.php`:
 
-- Append `?citizenusenewtoken=1` to any wiki URL to opt in for the current render. The choice is stored in a 24-hour cookie so it persists across pages in the same browser.
-- Append `?citizenusenewtoken=0` to opt back out.
+- Append `?citizenpreview=4` to any wiki URL to opt in for the current browser. The choice persists in a 24-hour cookie.
+- Append `?citizenpreview=0` to opt back out.
 
-When neither the URL query nor the cookie is present, the value of `$wgCitizenUseNewToken` decides.
+When neither the URL parameter nor the cookie is present, `$wgCitizenPreview` decides.
 
 ### `$wgCitizenEnableARFonts`
 
