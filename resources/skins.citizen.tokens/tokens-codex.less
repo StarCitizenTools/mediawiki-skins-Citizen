@@ -2,7 +2,11 @@
  * Codex Design Tokens overrides — LEGACY pipeline
  * @see https://github.com/wikimedia/mediawiki/blob/master/resources/lib/codex-design-tokens/theme-wikimedia-ui-root.css
  *
- * Frozen as of new pipeline introduction. Active when $wgCitizenUseNewToken=false.
+ * Frozen as of new pipeline introduction. Active when the preview
+ * channel is off ($wgCitizenPreview). citizen-v4-remove — but the
+ * .cdx-mode-*() font mixins are consumed by the new pipeline and
+ * unconditionally by skins.citizen.styles (common/features.less);
+ * relocate the whole family before deleting this file.
  * Do not edit logic; only surgical bug fixes.
  *
  * Changelog: https://github.com/wikimedia/design-codex/blob/main/CHANGELOG.md

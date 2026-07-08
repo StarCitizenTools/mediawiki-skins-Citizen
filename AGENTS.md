@@ -126,6 +126,17 @@ For those changes, the new JS detects when expected new HTML is missing (`getEle
 
 Track the fallback's removal as a GitHub issue: it must ship with the release that lands the migration, and can be removed in the next release.
 
+### Preview channel (breaking changes)
+
+Breaking changes never ship unguarded — they ride the preview channel until the next major release. Full conventions: `docs/src/contribute/preview-channel.md`.
+
+- Gating is for unavoidable breaking changes only — anything that works in both worlds ships normally, ungated.
+- One resolution per request: `PreviewChannel::isPreview()` via `SkinHooks::applyPreviewChannel()`. Never re-read `$wgCitizenPreview`/cookie/URL elsewhere.
+- New-world code gates on the `citizen-v4` generation class (`:root.citizen-v4` in LESS, `is-v4` template data, `classList.contains( 'citizen-v4' )` in JS).
+- Legacy-side code that dies at the 4.0 flip carries a `citizen-v4-remove` comment.
+- Gate CSS on the class, not on module presence — the class travels with cached HTML.
+- Gated user-facing commits get a "(preview)" suffix in the subject.
+
 ### Lazy-loaded Vue modules
 
 Vue and per-module bundles are not part of the initial page load — they're loaded on intent via `mw.loader`. Any control that mounts a Vue app needs:

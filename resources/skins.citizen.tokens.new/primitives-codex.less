@@ -12,6 +12,10 @@
  * Source: https://github.com/wikimedia/design-codex/blob/v2.5.1/packages/codex-design-tokens/src/themes/wikimedia-ui.json
  */
 .new-primitives-codex() {
+	// The second selector is the pre-rename generation class, kept for
+	// one minor so compiled CSS keeps matching cached HTML.
+	// citizen-v4-remove
+	:root.citizen-v4,
 	:root.citizen-token-new {
 		// ----- Achromatic -----
 		--color-white: #fff;

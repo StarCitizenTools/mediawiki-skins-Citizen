@@ -3,6 +3,10 @@
  * https://doc.wikimedia.org/codex/main/design-tokens/color.html#background-color
  */
 .new-background-color() {
+	// The second selector is the pre-rename generation class, kept for
+	// one minor so compiled CSS keeps matching cached HTML.
+	// citizen-v4-remove
+	:root.citizen-v4,
 	:root.citizen-token-new {
 		// Solid backgrounds
 		--background-color-base: light-dark( var( --color-white ), var( --color-neutral-1000 ) );

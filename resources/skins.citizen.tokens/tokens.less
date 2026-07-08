@@ -1,9 +1,13 @@
 /**
  * Citizen legacy token pipeline — ResourceLoader module entry.
  *
- * Loaded by SkinHooks::resolveColorMode when legacy mode is active.
+ * Loaded by SkinHooks::applyPreviewChannel when legacy mode is active.
  * The successor lives in skins.citizen.tokens.new; only one module
  * ships per request.
+ *
+ * citizen-v4-remove — this entire legacy pipeline is replaced by the
+ * skins.citizen.tokens.new contents at the 4.0 flip; see
+ * docs/src/contribute/preview-channel.md for the runbook.
  */
 @import ( reference ) '../variables.less';
 @import ( reference ) 'tokens-codex.less';
