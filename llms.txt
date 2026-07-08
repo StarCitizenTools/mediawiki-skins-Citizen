@@ -10,7 +10,6 @@ A beautiful, usable, and responsive MediaWiki skin
 
 - [Introduction](/mediawiki-skins-Citizen/guide/introduction.md): Introduction to the Citizen skin
 - [Installation](/mediawiki-skins-Citizen/guide/installation.md): Installing the Citizen skin to your wiki
-- [Migrating to Citizen 4](/mediawiki-skins-Citizen/guide/migrating-to-citizen-4.md): Preview the Citizen 4 changes and migrate your wiki before the release
 
 ### Configuration
 
@@ -38,6 +37,7 @@ A beautiful, usable, and responsive MediaWiki skin
 ### Project
 
 - [Changelogs](/mediawiki-skins-Citizen/changelogs.md): Changelogs of all Citizen stable releases.
+- [Migrating to Citizen 4](/mediawiki-skins-Citizen/guide/migrating-to-citizen-4.md): Preview the Citizen 4 changes and migrate your wiki before the release
 - [Contribute](/mediawiki-skins-Citizen/contribute.md): How to contribute to the Citizen skin.
 - [Preview channel](/mediawiki-skins-Citizen/contribute/preview-channel.md): How breaking changes ship behind the Citizen preview channel
 
