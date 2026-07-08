@@ -156,6 +156,10 @@ export default defineConfig({
 						text: "Contribute",
 						link: "/contribute/",
 					},
+					{
+						text: "Preview channel",
+						link: "/contribute/preview-channel",
+					},
 				],
 			},
 		],
