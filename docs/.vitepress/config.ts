@@ -71,10 +71,6 @@ export default defineConfig({
 						text: "Installation",
 						link: "/guide/installation",
 					},
-					{
-						text: "Migrating to Citizen 4",
-						link: "/guide/migrating-to-citizen-4",
-					},
 				],
 			},
 			{
@@ -151,6 +147,10 @@ export default defineConfig({
 					{
 						text: "Changelogs",
 						link: "/changelogs/",
+					},
+					{
+						text: "Migrating to Citizen 4",
+						link: "/guide/migrating-to-citizen-4",
 					},
 					{
 						text: "Contribute",
