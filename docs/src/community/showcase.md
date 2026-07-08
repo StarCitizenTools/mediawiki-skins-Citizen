@@ -27,4 +27,5 @@ Check out these amazing wikis powering their content with Citizen:
  <LinkCard title="NITC Wiki" href="https://wiki.fosscell.org" />
  <LinkCard title="Superstar Racers Wiki" href="https://sr.conecorp.cc" />
  <LinkCard title="Stella Sora Wiki" href="https://stellasora.miraheze.org" />
+ <LinkCard title="CapoeiiraWiki" href="https://capoeirawiki.org" />
 </LinkGrid>
