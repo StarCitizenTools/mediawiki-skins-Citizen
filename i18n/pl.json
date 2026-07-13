@@ -4,6 +4,7 @@
 			"Faalagorn",
 			"Kareyac",
 			"Meeqoo",
+			"PanWor",
 			"Rail",
 			"SaldırganSincap"
 		]
@@ -27,7 +28,7 @@
 	"citizen-page-info-lastmod": "Ostatnia zmiana",
 	"citizen-footer-desc": "Zmień ten tekst na stronie [[MediaWiki:Citizen-footer-desc]]",
 	"citizen-footer-tagline": "Zmień ten tekst na stronie [[MediaWiki:Citizen-footer-tagline]]",
-	"citizen-action-addsection": "Dodaj temat",
+	"citizen-action-addsection": "Dodaj wątek",
 	"citizen-jumptotop": "Powrót do góry",
 	"citizen-search-empty-desc": "Zacznij pisać, aby wyszukiwać",
 	"citizen-search-noresults-title": "O nie! Nie ma wyników dla $1",
