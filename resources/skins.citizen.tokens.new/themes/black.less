@@ -10,11 +10,10 @@
 @import ( reference ) '../dark-overrides.less';
 
 .new-theme-black() {
-	// The second selector is the pre-rename generation class, kept for
-	// one minor so compiled CSS keeps matching cached HTML.
-	// citizen-v4-remove
-	:root.citizen-v4.skin-theme-clientpref-black,
-	:root.citizen-token-new.skin-theme-clientpref-black {
+	// Bare clientpref class so the palette applies on <html> and on a
+	// nested ThemePicker chip. The token module is load-gated, so this rule
+	// never leaks outside the new pipeline.
+	.skin-theme-clientpref-black {
 		color-scheme: dark;
 		.new-dark-overrides();
 

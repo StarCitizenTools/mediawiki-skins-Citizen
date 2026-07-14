@@ -55,16 +55,20 @@
 		color-scheme: light;
 	}
 
-	// citizen-v4-remove — second selector is the pre-rename class
-	:root.citizen-v4.skin-theme-clientpref-night,
-	:root.citizen-token-new.skin-theme-clientpref-night {
+	// Built-in theme rules use the bare clientpref class so they apply on
+	// both <html> and a nested preview element (the ThemePicker chip). The
+	// token module is load-gated, so the rules never leak outside it and
+	// need no generation-class prefix.
+	.skin-theme-clientpref-day {
+		color-scheme: light;
+	}
+
+	.skin-theme-clientpref-night {
 		color-scheme: dark;
 		.new-dark-overrides();
 	}
 
-	// citizen-v4-remove — second selector is the pre-rename class
-	:root.citizen-v4.skin-theme-clientpref-os,
-	:root.citizen-token-new.skin-theme-clientpref-os {
+	.skin-theme-clientpref-os {
 		color-scheme: light dark;
 
 		@media ( prefers-color-scheme: dark ) {

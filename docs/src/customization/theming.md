@@ -179,7 +179,7 @@ The picker grid keeps the built-in column count unless you set `columns` to matc
 Add a block to `MediaWiki:Citizen.css` keyed to your theme's value, starting with a `color-scheme` declaration — the comments walk through the rest:
 
 ```css
-:root.skin-theme-clientpref-ocean {
+.skin-theme-clientpref-ocean {
     color-scheme: dark;
 
     /* Dark baseline for effects light-dark() can't express — copy as-is */
@@ -193,6 +193,8 @@ Add a block to `MediaWiki:Citizen.css` keyed to your theme's value, starting wit
     --color-neutral-oklch__h: 220;
 }
 ```
+
+Use the bare `.skin-theme-clientpref-<value>` class (no `:root` prefix) — that is what lets the preferences panel paint a true-color preview of your theme.
 
 Every property you don't override falls through to the default palette's [`light-dark()` pairs](../guide/migrating-to-citizen-4.md#light-and-dark-are-one-declaration-now) — color values that carry a light and a dark side and resolve per `color-scheme`. A dark theme starts from the built-in dark palette, a light theme (`color-scheme: light`) from the light palette, and you sculpt from there. The hue channels are the most useful knobs — `--color-primary-oklch__h` alone rebrands the accent, and `--color-neutral-oklch__h` tints the surfaces to match; see [Rebranding the primary color](../guide/migrating-to-citizen-4.md#rebranding-the-primary-color) for how the two relate.
 
