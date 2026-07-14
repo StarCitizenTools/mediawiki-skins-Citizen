@@ -66,6 +66,16 @@ describe( 'ThemePicker', () => {
 		expect( osCircle.classes() ).not.toContain( 'skin-theme-clientpref-os' );
 	} );
 
+	it( 'wears the theme-preview token scope on every circle', () => {
+		const wrapper = mountThemePicker();
+
+		const circles = wrapper.findAll( '.citizen-preferences-themecircle' );
+		expect( circles ).toHaveLength( 4 );
+		circles.forEach( ( circle ) => {
+			expect( circle.classes() ).toContain( 'citizen-theme-preview' );
+		} );
+	} );
+
 	it( 'gives each option a screen-reader label', () => {
 		const wrapper = mountThemePicker();
 

@@ -5,6 +5,14 @@
  * but no /design-tokens/filter.html page) — plus Citizen back-compat
  * aliases.
  */
+
+// Default HSL fallback-pipeline knobs — single source of truth, shared
+// with the theme-preview knob bridge in
+// skins.citizen.preferences/themePreview.less.
+@color-progressive-hsl__h-default: 220;
+@color-progressive-hsl__s-default: 60%;
+@color-progressive-hsl__l-default: 50%;
+
 .new-misc-decls() {
 	// Codex — outline (https://doc.wikimedia.org/codex/main/design-tokens/outline.html)
 	// Inlined as a light-dark() pair (rather than aliased to
@@ -37,9 +45,9 @@
 	// __l is theme-variant — dark override in dark-overrides.less.
 	// Drop alongside the legacy pipeline.
 	--color-progressive-oklch__h: var( --color-primary-oklch__h );
-	--color-progressive-hsl__h: 220;
-	--color-progressive-hsl__s: 60%;
-	--color-progressive-hsl__l: 50%;
+	--color-progressive-hsl__h: @color-progressive-hsl__h-default;
+	--color-progressive-hsl__s: @color-progressive-hsl__s-default;
+	--color-progressive-hsl__l: @color-progressive-hsl__l-default;
 }
 
 .new-misc() {

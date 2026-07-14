@@ -1,0 +1,59 @@
+/**
+ * Theme-preview token scope.
+ *
+ * A CSS custom property substitutes its var() references where it is
+ * DECLARED, so tokens derived at :root inherit into descendants
+ * pre-baked with :root's primitives — a nested preview element that
+ * overrides primitives via its theme class cannot change them. This
+ * scope re-emits the full base token layer so any element wearing
+ * `citizen-theme-preview` re-derives every token locally; its theme
+ * class (0,1,0) then beats this :where() scope (0,0,0) exactly like
+ * theme classes beat the base tokens on :root.
+ *
+ * Must stay inside @layer citizen-tokens: unlayered declarations would
+ * beat the layered theme classes and invert the cascade.
+ */
+
+@import ( reference ) '../variables.less';
+@import ( reference ) '../skins.citizen.tokens/tokens-codex.less';
+@import ( reference ) '../skins.citizen.tokens.new/primitives-codex.less';
+@import ( reference ) '../skins.citizen.tokens.new/primitives-citizen.less';
+@import ( reference ) '../skins.citizen.tokens.new/background-color.less';
+@import ( reference ) '../skins.citizen.tokens.new/border-color.less';
+@import ( reference ) '../skins.citizen.tokens.new/color.less';
+@import ( reference ) '../skins.citizen.tokens.new/box-shadow.less';
+@import ( reference ) '../skins.citizen.tokens.new/surface.less';
+@import ( reference ) '../skins.citizen.tokens.new/syntax-color.less';
+@import ( reference ) '../skins.citizen.tokens.new/opacity.less';
+@import ( reference ) '../skins.citizen.tokens.new/font.less';
+@import ( reference ) '../skins.citizen.tokens.new/misc.less';
+
+@layer citizen-tokens {
+	:where( .citizen-theme-preview ) {
+		color-scheme: light;
+
+		.new-primitives-codex-decls();
+		.new-primitives-citizen-decls();
+		.new-background-color-decls();
+		.new-border-color-decls();
+		.new-color-decls();
+		.new-box-shadow-decls();
+		.new-surface-decls();
+		.new-syntax-color-decls();
+		.new-opacity-decls();
+		.new-font-decls();
+		.new-misc-decls();
+
+		// Identity-knob bridge: an admin's :root rebrand can't inherit
+		// past this scope's local defaults, so these six knobs accept a
+		// measured baseline (set by the preferences panel) and fall back
+		// to the defaults above. Declared after the decls mixins so they
+		// win over the mixin-emitted plain knob values.
+		--color-primary-oklch__h: var( --citizen-preview-color-primary-oklch__h, @color-primary-oklch__h-default );
+		--color-neutral-oklch__h: var( --citizen-preview-color-neutral-oklch__h, var( --color-primary-oklch__h ) );
+		--color-progressive-oklch__h: var( --citizen-preview-color-progressive-oklch__h, var( --color-primary-oklch__h ) );
+		--color-progressive-hsl__h: var( --citizen-preview-color-progressive-hsl__h, @color-progressive-hsl__h-default );
+		--color-progressive-hsl__s: var( --citizen-preview-color-progressive-hsl__s, @color-progressive-hsl__s-default );
+		--color-progressive-hsl__l: var( --citizen-preview-color-progressive-hsl__l, @color-progressive-hsl__l-default );
+	}
+}

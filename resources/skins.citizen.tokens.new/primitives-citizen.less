@@ -8,6 +8,11 @@
  *
  * Theme-invariant. Theme mixins remap which stop becomes which semantic.
  */
+
+// Default accent hue — single source of truth, shared with the
+// theme-preview knob bridge in skins.citizen.preferences/themePreview.less.
+@color-primary-oklch__h-default: 262.29;
+
 .new-primitives-citizen-decls() {
 	// Retheming knobs — override in MediaWiki:Citizen.css to retheme.
 	// --color-primary-oklch__h:  accent hue (links, buttons, focus rings).
@@ -17,7 +22,7 @@
 	//                            achromatic-feeling hue) to decouple
 	//                            chrome from accent — e.g. gray chrome
 	//                            with a colorful accent.
-	--color-primary-oklch__h: 262.29;
+	--color-primary-oklch__h: @color-primary-oklch__h-default;
 	--color-neutral-oklch__h: var( --color-primary-oklch__h );
 
 	// Primary tracks Codex blue's L profile. Peak chroma sits at

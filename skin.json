@@ -326,6 +326,9 @@
 				"mediawiki.storage",
 				"mediawiki.util",
 				"vue"
+			],
+			"styles": [
+				"resources/skins.citizen.preferences/themePreview.less"
 			]
 		},
 		"skins.citizen.share.codex": {
