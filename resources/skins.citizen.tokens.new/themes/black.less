@@ -1,0 +1,39 @@
+/**
+ * Black theme — dark-only preset.
+ *
+ * Reference implementation of the theme contract documented in
+ * docs/src/customization/theming.md: declare color-scheme, apply the
+ * non-color dark baseline, then override only the tokens that differ
+ * from the default theme. Everything not overridden falls through the
+ * light-dark() pairs to the default palette.
+ */
+@import ( reference ) '../dark-overrides.less';
+
+.new-theme-black() {
+	// The second selector is the pre-rename generation class, kept for
+	// one minor so compiled CSS keeps matching cached HTML.
+	// citizen-v4-remove
+	:root.citizen-v4.skin-theme-clientpref-black,
+	:root.citizen-token-new.skin-theme-clientpref-black {
+		color-scheme: dark;
+		.new-dark-overrides();
+
+		// Neutral ramp at zero chroma — pure gray, no accent tint. Same
+		// lightness stops as primitives-citizen.less, except the deepest
+		// stop drops to 0% so surface-0 renders pitch black. Hue is
+		// inert at chroma 0. The primary ramp is untouched: the
+		// progressive accent stays tinted on black, matching the legacy
+		// pure-black mode.
+		--color-neutral-50: oklch( 98% 0 0 );
+		--color-neutral-100: oklch( 94% 0 0 );
+		--color-neutral-200: oklch( 90% 0 0 );
+		--color-neutral-300: oklch( 84% 0 0 );
+		--color-neutral-400: oklch( 73% 0 0 );
+		--color-neutral-500: oklch( 51% 0 0 );
+		--color-neutral-600: oklch( 39% 0 0 );
+		--color-neutral-700: oklch( 30% 0 0 );
+		--color-neutral-800: oklch( 22% 0 0 );
+		--color-neutral-900: oklch( 17% 0 0 );
+		--color-neutral-1000: oklch( 0% 0 0 );
+	}
+}

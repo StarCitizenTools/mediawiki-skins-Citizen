@@ -31,6 +31,7 @@
 @import ( reference ) 'font.less';
 @import ( reference ) 'misc.less';
 @import ( reference ) 'dark-overrides.less';
+@import ( reference ) 'themes/black.less';
 
 @layer citizen-tokens {
 	.new-primitives-codex();
@@ -70,4 +71,8 @@
 			.new-dark-overrides();
 		}
 	}
+
+	// Shipped themes. Each theme file is self-contained — selector,
+	// color-scheme, and overrides — mirroring the wiki-facing contract.
+	.new-theme-black();
 }
