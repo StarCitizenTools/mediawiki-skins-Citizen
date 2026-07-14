@@ -339,6 +339,47 @@ describe( 'App', () => {
 
 			expect( wrapper.find( '.skin-theme-clientpref-black' ).exists() ).toBe( true );
 		} );
+
+		describe( 'unregistered active theme (citizen-v4)', () => {
+			it( 'shows a synthetic, selected card for an unregistered theme', () => {
+				const v4Config = normalizeConfig( getDefaultConfig() );
+				const classes = [ 'citizen-v4', ...ALL_PREF_CLASSES.map( ( cls ) =>
+					cls.replace( 'skin-theme-clientpref-os', 'skin-theme-clientpref-ocean' ) ) ];
+
+				const wrapper = mountApp( classes, v4Config );
+
+				const picker = wrapper.findComponent( { name: 'ThemePicker' } );
+				const oceanOption = picker.props( 'options' ).find( ( o ) => o.value === 'ocean' );
+				expect( oceanOption ).toEqual( { value: 'ocean', label: 'Ocean' } );
+				expect( picker.props( 'modelValue' ) ).toBe( 'ocean' );
+			} );
+
+			it( 'adds no synthetic card when the active theme is registered', () => {
+				const v4Config = normalizeConfig( getDefaultConfig() );
+
+				const wrapper = mountApp( [ 'citizen-v4', ...ALL_PREF_CLASSES ], v4Config );
+
+				const picker = wrapper.findComponent( { name: 'ThemePicker' } );
+				expect( picker.props( 'options' ).map( ( o ) => o.value ) )
+					.toEqual( [ 'os', 'day', 'night', 'black' ] );
+			} );
+
+			it( 'does not duplicate the card when the theme is registered at runtime', async () => {
+				const config = reactive( normalizeConfig( getDefaultConfig() ) );
+				const classes = [ 'citizen-v4', ...ALL_PREF_CLASSES.map( ( cls ) =>
+					cls.replace( 'skin-theme-clientpref-os', 'skin-theme-clientpref-ocean' ) ) ];
+				const wrapper = mountApp( classes, config );
+
+				// A synthetic 'ocean' card is showing; register a real 'ocean'
+				// option after mount — the dedupe guard must collapse the two.
+				config.preferences[ 'skin-theme' ].options.push( { value: 'ocean', label: 'Ocean' } );
+				await wrapper.vm.$nextTick();
+
+				const picker = wrapper.findComponent( { name: 'ThemePicker' } );
+				const oceanOptions = picker.props( 'options' ).filter( ( o ) => o.value === 'ocean' );
+				expect( oceanOptions ).toHaveLength( 1 );
+			} );
+		} );
 	} );
 
 	describe( 'initialization', () => {

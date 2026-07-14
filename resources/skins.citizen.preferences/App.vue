@@ -113,6 +113,18 @@ function getThemeColorScheme( value ) {
 	return 'light dark';
 }
 
+/**
+ * Capitalize the first letter of a theme value for a display label.
+ * Theme values are already [a-zA-Z0-9]+ (clientPrefs enforces this), so the
+ * result is safe to render as escaped text.
+ *
+ * @param {string} value
+ * @return {string}
+ */
+function titleCase( value ) {
+	return value.charAt( 0 ).toUpperCase() + value.slice( 1 );
+}
+
 // @vue/component
 module.exports = exports = defineComponent( {
 	name: 'App',
@@ -132,6 +144,22 @@ module.exports = exports = defineComponent( {
 		// always claims skin-theme, and delete this const. RadioGroup.vue
 		// itself stays: it still renders wiki-defined radio preferences.
 		const isV4 = document.documentElement.classList.contains( 'citizen-v4' );
+
+		// A theme applied to <html> but absent from the picker options
+		// (e.g. an unregistered default) is surfaced as a real, selectable
+		// card so the panel shows the true selection. Captured once so it
+		// persists even after switching to another theme.
+		const themeOptionValues = new Set(
+			( ( config.preferences[ 'skin-theme' ] &&
+				config.preferences[ 'skin-theme' ].options ) || [] )
+				.map( ( opt ) => opt.value )
+		);
+		const activeTheme = clientPrefs.get( 'skin-theme' );
+		const syntheticTheme = (
+			isV4 && typeof activeTheme === 'string' &&
+			!themeOptionValues.has( activeTheme )
+		) ? { value: activeTheme, label: titleCase( activeTheme ) } : null;
+
 		const values = reactive( {} );
 		const visibilities = reactive( {} );
 
@@ -153,6 +181,14 @@ module.exports = exports = defineComponent( {
 			const allowedValues = new Set(
 				prefConfig.options.map( ( opt ) => opt.value )
 			);
+			// On Citizen 4 the theme applied to <html> is authoritative
+			// even when it isn't a registered option (e.g. an unregistered
+			// $wgCitizenThemeDefault): surface it as the selection instead
+			// of snapping to the first theme.
+			if ( featureName === 'skin-theme' && isV4 && typeof storedValue === 'string' ) {
+				values[ featureName ] = storedValue;
+				return;
+			}
 			values[ featureName ] = (
 				typeof storedValue === 'string' && allowedValues.has( storedValue )
 			) ? storedValue : prefConfig.options[ 0 ].value;
@@ -212,6 +248,13 @@ module.exports = exports = defineComponent( {
 								}
 								return option;
 							} );
+
+							if (
+								featureName === 'skin-theme' && syntheticTheme &&
+								!options.some( ( o ) => o.value === syntheticTheme.value )
+							) {
+								options.push( syntheticTheme );
+							}
 
 							const pref = {
 								featureName,
