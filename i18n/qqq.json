@@ -77,6 +77,7 @@
 	"citizen-theme-description": "Description for theme.",
 	"citizen-theme-day-label": "Label for light/day theme.",
 	"citizen-theme-night-label": "Label for dark/night theme.",
+	"citizen-theme-black-label": "Label for the black theme — a dark theme with pure black backgrounds. Shown in the theme picker of the preferences panel.\n{{Identical|Black}}",
 	"citizen-theme-os-label": "Label for automatic theme (which respects any operating system setting).",
 	"citizen-feature-autohide-navigation-name": "Label for automatically hide navigation",
 	"citizen-feature-autohide-navigation-description": "Description for automatically hide navigation preference.",

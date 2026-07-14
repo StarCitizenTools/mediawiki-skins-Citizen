@@ -83,4 +83,43 @@ describe( 'defaultConfig', () => {
 		expect( config.preferences[ 'citizen-feature-pure-black' ].visibilityCondition )
 			.toBe( 'dark-theme' );
 	} );
+
+	describe( 'preview channel (citizen-v4)', () => {
+		beforeEach( () => {
+			document.documentElement.classList.add( 'citizen-v4' );
+		} );
+
+		afterEach( () => {
+			document.documentElement.classList.remove( 'citizen-v4' );
+		} );
+
+		it( 'should offer Black as a fourth theme', () => {
+			const config = getDefaultConfig();
+
+			const themePref = config.preferences[ 'skin-theme' ];
+			expect( themePref.options ).toHaveLength( 4 );
+			expect( themePref.options[ 3 ] ).toEqual( {
+				value: 'black', labelMsg: 'citizen-theme-black-label'
+			} );
+			expect( themePref.columns ).toBe( 4 );
+		} );
+
+		it( 'should not offer the pure black switch', () => {
+			const config = getDefaultConfig();
+
+			expect( config.preferences ).not.toHaveProperty( 'citizen-feature-pure-black' );
+			expect( Object.keys( config.preferences ) ).toHaveLength( 6 );
+		} );
+	} );
+
+	describe( 'legacy world', () => {
+		it( 'should keep three theme options and the pure black switch', () => {
+			const config = getDefaultConfig();
+
+			const themePref = config.preferences[ 'skin-theme' ];
+			expect( themePref.options ).toHaveLength( 3 );
+			expect( themePref.columns ).toBe( 3 );
+			expect( config.preferences ).toHaveProperty( 'citizen-feature-pure-black' );
+		} );
+	} );
 } );
