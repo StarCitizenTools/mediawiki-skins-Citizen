@@ -153,6 +153,9 @@ $wgCitizenThemeDefault = 'auto';
 * `'auto'`: Matches the user's system or browser preference
 * `'light'`: Always starts in light mode
 * `'dark'`: Always starts in dark mode
+* `'black'`: Always starts in the Black theme
+
+The option also accepts any theme value registered on the wiki, e.g. `'ocean'` for a [custom theme](../customization/theming.md#creating-a-theme). The config itself is not gated — but the Black theme and custom themes ride the [preview channel](../contribute/preview-channel.md) until Citizen 4. Outside the preview, `'black'` falls back to an equivalent dark rendering, and custom themes won't render correctly.
 
 ### `$wgCitizenEnableCollapsibleSections`
 
@@ -1543,6 +1546,8 @@ Citizen supports Light, Dark, Pure Black, and Automatic modes. Use these selecto
 | Pure black | `.skin-theme-clientpref-night.citizen-feature-pure-black-clientpref-1` |
 | Automatic | `.skin-theme-clientpref-os` |
 
+Theming works differently on the Citizen 4 preview — see [Themes (Citizen 4 preview)](#themes-citizen-4-preview) below.
+
 ### Inverting images in dark mode
 
 Some images, especially black text or icons on a transparent background, become invisible in dark mode. Citizen exposes a `--filter-invert` CSS variable that inverts colors only when a dark theme is active. Apply it to the element containing the image:
@@ -1550,6 +1555,81 @@ Some images, especially black text or icons on a transparent background, become 
 ```css
 filter: var( --filter-invert );
 ```
+
+## Themes (Citizen 4 preview)
+
+::: warning Preview (Citizen 4)
+This section describes theming in Citizen 4. Until it ships, these features require the [preview channel](../contribute/preview-channel.md).
+:::
+
+In Citizen 4, themes replace theme modes: a theme is a named set of overrides for the CSS custom properties documented throughout this page. The picker offers Black alongside Light, Dark, and Automatic, and the pure black switch is retired: its look ships as the Black theme, so pick Black in the preferences panel if you had it enabled.
+
+| Theme | Selector |
+| :--- | :--- |
+| Light | `.skin-theme-clientpref-day` |
+| Dark | `.skin-theme-clientpref-night` |
+| Black | `.skin-theme-clientpref-black` |
+| Automatic | `.skin-theme-clientpref-os` |
+| Wiki-defined | `.skin-theme-clientpref-<value>` |
+
+### Creating a theme
+
+Citizen's own Black theme is defined as a small set of overrides, so a theme you add on your wiki appears in the preferences panel right next to the built-in ones. Creating one takes two steps.
+
+#### Register the theme in the picker
+
+Add your theme to the `skin-theme` options in `MediaWiki:Citizen-preferences.json` — see [Extending preferences](../features/preferences.md#extending-preferences) for the full schema. The `options` array replaces the built-in list, so include the built-in themes you want to keep:
+
+```json
+{
+  "preferences": {
+    "skin-theme": {
+      "options": [
+        { "value": "os", "labelMsg": "citizen-theme-os-label" },
+        { "value": "day", "labelMsg": "citizen-theme-day-label" },
+        { "value": "night", "labelMsg": "citizen-theme-night-label" },
+        { "value": "black", "labelMsg": "citizen-theme-black-label" },
+        { "value": "ocean", "label": "Ocean" }
+      ],
+      "columns": 5
+    }
+  }
+}
+```
+
+The picker grid keeps the built-in column count unless you set `columns` to match your option count — leave it out and your fifth theme wraps onto a row of its own. Use `label` for a plain-text name, or `labelMsg` with an interface message (e.g. `MediaWiki:Ocean-theme-label`) on multilingual wikis. Theme values may contain letters and numbers only.
+
+#### Define the theme in CSS
+
+Add a block to `MediaWiki:Citizen.css` keyed to your theme's value, starting with a `color-scheme` declaration — the comments walk through the rest:
+
+```css
+:root.skin-theme-clientpref-ocean {
+    color-scheme: dark;
+
+    /* Dark baseline for effects light-dark() can't express — copy as-is */
+    --opacity-glass: 0.8;
+    --shadow-opacity: 0.44;
+    --font-grade: 0;
+    --filter-invert: invert( 1 ) hue-rotate( 180deg );
+
+    /* Your palette — override only what differs from the default dark theme */
+    --color-primary-oklch__h: 220;
+    --color-neutral-oklch__h: 220;
+}
+```
+
+Every property you don't override falls through to the default palette's [`light-dark()` pairs](../guide/migrating-to-citizen-4.md#light-and-dark-are-one-declaration-now) — color values that carry a light and a dark side and resolve per `color-scheme`. A dark theme starts from the built-in dark palette, a light theme (`color-scheme: light`) from the light palette, and you sculpt from there. The hue channels are the most useful knobs — `--color-primary-oklch__h` alone rebrands the accent, and `--color-neutral-oklch__h` tints the surfaces to match; see [Rebranding the primary color](../guide/migrating-to-citizen-4.md#rebranding-the-primary-color) for how the two relate.
+
+One limitation to know about: a few dark-mode extras are keyed to the built-in themes by name — the image dimming preference, and dark-mode fixes for some extensions — so they don't fire for custom themes. If your theme needs one of them, replicate it in your theme's CSS block.
+
+::: tip
+To make your theme the default for new visitors, set `$wgCitizenThemeDefault = 'ocean';`. Keep the theme registered in the picker too — the preferences panel can't show a selection for a value it doesn't know about.
+:::
+
+::: warning
+The theme picker's preview swatch can't read your CSS, so custom themes preview with an adaptive light/dark swatch rather than your palette.
+:::
 
 ## Performance considerations
 
@@ -1857,6 +1937,7 @@ Citizen 4 will be released some time after MediaWiki 1.47 LTS. Use the [preview 
 ## What's changing
 
 * **New color token pipeline** — colors are defined as `light-dark()` pairs built from primitive ramps instead of computed channel math. Most existing overrides keep working; see [Migrate your token overrides](#migrate-your-token-overrides).
+* **Pure black mode becomes the Black theme** — the switch is retired in favor of a real theme; see [Pure black mode becomes the Black theme](#pure-black-mode-becomes-the-black-theme).
 
 ## Migration steps
 
@@ -2000,6 +2081,10 @@ Move your hue override from `--color-progressive-oklch__h` to `--color-primary-o
 
 Citizen 4 can tint the neutral surfaces separately from the accent. `--color-neutral-oklch__h` sets their hue and defaults to the primary hue — set it to a different value to decouple the two.
 
+## Pure black mode becomes the Black theme
+
+The pure black switch is now a theme in the theme picker. The switch retires without carry-over — if you had it enabled, pick the [Black theme](../customization/theming.md#themes-citizen-4-preview) in the preferences panel to get the same look.
+
 ---
 
 ---
@@ -2138,14 +2223,14 @@ url: /mediawiki-skins-Citizen/changelogs/v1.10.0.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v1.13.0.md
----
-
-
----
-
----
 url: /mediawiki-skins-Citizen/changelogs/v1.14.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v1.13.0.md
 ---
 
 
@@ -2187,13 +2272,6 @@ url: /mediawiki-skins-Citizen/changelogs/v1.17.0.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.17.1.md
----
-
-
----
-
----
 url: /mediawiki-skins-Citizen/changelogs/v1.17.1.md
 ---
 
@@ -2229,14 +2307,14 @@ url: /mediawiki-skins-Citizen/changelogs/v1.17.5.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v1.17.7.md
----
-
-
----
-
----
 url: /mediawiki-skins-Citizen/changelogs/v1.17.6.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v1.17.7.md
 ---
 
 
@@ -2250,56 +2328,7 @@ url: /mediawiki-skins-Citizen/changelogs/v1.17.8.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.13.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.13.1.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.18.0.md
----
-
-
----
-
----
 url: /mediawiki-skins-Citizen/changelogs/v1.17.9.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.13.2.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.39.4.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.13.3.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.22.1.md
 ---
 
 
@@ -2313,35 +2342,7 @@ url: /mediawiki-skins-Citizen/changelogs/v1.9.4.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.13.4.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.13.5.md
----
-
-
----
-
----
 url: /mediawiki-skins-Citizen/changelogs/v1.9.5.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.14.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.14.1.md
 ---
 
 
@@ -2355,28 +2356,7 @@ url: /mediawiki-skins-Citizen/changelogs/v2.0.0-alpha.1.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.15.0.md
----
-
-
----
-
----
 url: /mediawiki-skins-Citizen/changelogs/v2.0.0-alpha.2.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.18.1.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.19.0.md
 ---
 
 
@@ -2390,35 +2370,7 @@ url: /mediawiki-skins-Citizen/changelogs/v2.0.0-beta.0.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.2.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.15.1.md
----
-
-
----
-
----
 url: /mediawiki-skins-Citizen/changelogs/v2.0.0-beta.1.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.20.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.16.0.md
 ---
 
 
@@ -2432,168 +2384,7 @@ url: /mediawiki-skins-Citizen/changelogs/v2.0.0-beta.2.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.16.1.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.21.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.17.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.22.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.23.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.24.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.28.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.25.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.3.4.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.29.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.4.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.3.0.md
----
-
-
----
-
----
 url: /mediawiki-skins-Citizen/changelogs/v2.0.0-beta.3.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.26.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.3.1.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.27.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.3.2.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.3.6.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.3.5.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.3.3.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.30.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.31.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.10.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.0.0.md
 ---
 
 
@@ -2607,14 +2398,7 @@ url: /mediawiki-skins-Citizen/changelogs/v2.0.0-beta.4.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.1.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.17.2.md
+url: /mediawiki-skins-Citizen/changelogs/v2.0.0.md
 ---
 
 
@@ -2622,6 +2406,27 @@ url: /mediawiki-skins-Citizen/changelogs/v2.17.2.md
 
 ---
 url: /mediawiki-skins-Citizen/changelogs/v2.0.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.1.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.10.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.10.1.md
 ---
 
 
@@ -2642,14 +2447,280 @@ url: /mediawiki-skins-Citizen/changelogs/v2.11.1.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.10.1.md
----
-
-
----
-
----
 url: /mediawiki-skins-Citizen/changelogs/v2.12.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.13.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.13.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.13.2.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.13.3.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.13.4.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.13.5.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.14.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.14.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.15.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.15.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.16.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.16.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.17.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.17.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.17.2.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.18.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.18.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.19.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.2.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.20.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.21.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.22.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.22.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.23.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.24.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.25.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.26.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.27.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.28.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.29.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.3.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.3.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.3.2.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.3.3.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.3.4.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.3.5.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.3.6.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.30.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.31.0.md
 ---
 
 
@@ -2754,6 +2825,20 @@ url: /mediawiki-skins-Citizen/changelogs/v2.39.3.md
 ---
 
 ---
+url: /mediawiki-skins-Citizen/changelogs/v2.39.4.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.4.0.md
+---
+
+
+---
+
+---
 url: /mediawiki-skins-Citizen/changelogs/v2.4.1.md
 ---
 
@@ -2832,13 +2917,6 @@ url: /mediawiki-skins-Citizen/changelogs/v2.6.0.md
 
 ---
 url: /mediawiki-skins-Citizen/changelogs/v2.6.1.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.7.9.md
 ---
 
 
@@ -2951,6 +3029,13 @@ url: /mediawiki-skins-Citizen/changelogs/v2.7.7.md
 
 ---
 url: /mediawiki-skins-Citizen/changelogs/v2.7.8.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.7.9.md
 ---
 
 

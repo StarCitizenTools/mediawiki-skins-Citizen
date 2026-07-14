@@ -10,6 +10,7 @@ Citizen 4 will be released some time after MediaWiki 1.47 LTS. Use the [preview 
 ## What's changing
 
 * **New color token pipeline** — colors are defined as `light-dark()` pairs built from primitive ramps instead of computed channel math. Most existing overrides keep working; see [Migrate your token overrides](#migrate-your-token-overrides).
+* **Pure black mode becomes the Black theme** — the switch is retired in favor of a real theme; see [Pure black mode becomes the Black theme](#pure-black-mode-becomes-the-black-theme).
 
 ## Migration steps
 
@@ -152,3 +153,7 @@ Move your hue override from `--color-progressive-oklch__h` to `--color-primary-o
 ```
 
 Citizen 4 can tint the neutral surfaces separately from the accent. `--color-neutral-oklch__h` sets their hue and defaults to the primary hue — set it to a different value to decouple the two.
+
+## Pure black mode becomes the Black theme
+
+The pure black switch is now a theme in the theme picker. The switch retires without carry-over — if you had it enabled, pick the [Black theme](../customization/theming.md#themes-citizen-4-preview) in the preferences panel to get the same look.

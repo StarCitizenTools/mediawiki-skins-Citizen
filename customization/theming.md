@@ -121,6 +121,8 @@ Citizen supports Light, Dark, Pure Black, and Automatic modes. Use these selecto
 | Pure black | `.skin-theme-clientpref-night.citizen-feature-pure-black-clientpref-1` |
 | Automatic | `.skin-theme-clientpref-os` |
 
+Theming works differently on the Citizen 4 preview — see [Themes (Citizen 4 preview)](#themes-citizen-4-preview) below.
+
 ### Inverting images in dark mode
 
 Some images, especially black text or icons on a transparent background, become invisible in dark mode. Citizen exposes a `--filter-invert` CSS variable that inverts colors only when a dark theme is active. Apply it to the element containing the image:
@@ -128,6 +130,81 @@ Some images, especially black text or icons on a transparent background, become 
 ```css
 filter: var( --filter-invert );
 ```
+
+## Themes (Citizen 4 preview)
+
+::: warning Preview (Citizen 4)
+This section describes theming in Citizen 4. Until it ships, these features require the [preview channel](../contribute/preview-channel.md).
+:::
+
+In Citizen 4, themes replace theme modes: a theme is a named set of overrides for the CSS custom properties documented throughout this page. The picker offers Black alongside Light, Dark, and Automatic, and the pure black switch is retired: its look ships as the Black theme, so pick Black in the preferences panel if you had it enabled.
+
+| Theme | Selector |
+| :--- | :--- |
+| Light | `.skin-theme-clientpref-day` |
+| Dark | `.skin-theme-clientpref-night` |
+| Black | `.skin-theme-clientpref-black` |
+| Automatic | `.skin-theme-clientpref-os` |
+| Wiki-defined | `.skin-theme-clientpref-<value>` |
+
+### Creating a theme
+
+Citizen's own Black theme is defined as a small set of overrides, so a theme you add on your wiki appears in the preferences panel right next to the built-in ones. Creating one takes two steps.
+
+#### Register the theme in the picker
+
+Add your theme to the `skin-theme` options in `MediaWiki:Citizen-preferences.json` — see [Extending preferences](../features/preferences.md#extending-preferences) for the full schema. The `options` array replaces the built-in list, so include the built-in themes you want to keep:
+
+```json
+{
+  "preferences": {
+    "skin-theme": {
+      "options": [
+        { "value": "os", "labelMsg": "citizen-theme-os-label" },
+        { "value": "day", "labelMsg": "citizen-theme-day-label" },
+        { "value": "night", "labelMsg": "citizen-theme-night-label" },
+        { "value": "black", "labelMsg": "citizen-theme-black-label" },
+        { "value": "ocean", "label": "Ocean" }
+      ],
+      "columns": 5
+    }
+  }
+}
+```
+
+The picker grid keeps the built-in column count unless you set `columns` to match your option count — leave it out and your fifth theme wraps onto a row of its own. Use `label` for a plain-text name, or `labelMsg` with an interface message (e.g. `MediaWiki:Ocean-theme-label`) on multilingual wikis. Theme values may contain letters and numbers only.
+
+#### Define the theme in CSS
+
+Add a block to `MediaWiki:Citizen.css` keyed to your theme's value, starting with a `color-scheme` declaration — the comments walk through the rest:
+
+```css
+:root.skin-theme-clientpref-ocean {
+    color-scheme: dark;
+
+    /* Dark baseline for effects light-dark() can't express — copy as-is */
+    --opacity-glass: 0.8;
+    --shadow-opacity: 0.44;
+    --font-grade: 0;
+    --filter-invert: invert( 1 ) hue-rotate( 180deg );
+
+    /* Your palette — override only what differs from the default dark theme */
+    --color-primary-oklch__h: 220;
+    --color-neutral-oklch__h: 220;
+}
+```
+
+Every property you don't override falls through to the default palette's [`light-dark()` pairs](../guide/migrating-to-citizen-4.md#light-and-dark-are-one-declaration-now) — color values that carry a light and a dark side and resolve per `color-scheme`. A dark theme starts from the built-in dark palette, a light theme (`color-scheme: light`) from the light palette, and you sculpt from there. The hue channels are the most useful knobs — `--color-primary-oklch__h` alone rebrands the accent, and `--color-neutral-oklch__h` tints the surfaces to match; see [Rebranding the primary color](../guide/migrating-to-citizen-4.md#rebranding-the-primary-color) for how the two relate.
+
+One limitation to know about: a few dark-mode extras are keyed to the built-in themes by name — the image dimming preference, and dark-mode fixes for some extensions — so they don't fire for custom themes. If your theme needs one of them, replicate it in your theme's CSS block.
+
+::: tip
+To make your theme the default for new visitors, set `$wgCitizenThemeDefault = 'ocean';`. Keep the theme registered in the picker too — the preferences panel can't show a selection for a value it doesn't know about.
+:::
+
+::: warning
+The theme picker's preview swatch can't read your CSS, so custom themes preview with an adaptive light/dark swatch rather than your palette.
+:::
 
 ## Performance considerations
 
