@@ -17,6 +17,16 @@ function createMatchMediaMock( matches ) {
 	};
 }
 
+/**
+ * Mocks the computed color-scheme on the document element.
+ *
+ * @param {string} colorScheme
+ * @return {import('vitest').MockInstance}
+ */
+function mockRootColorScheme( colorScheme ) {
+	return vi.spyOn( window, 'getComputedStyle' ).mockReturnValue( { colorScheme } );
+}
+
 // useVisibility relies on Vue lifecycle hooks (onMounted/onUnmounted),
 // so it must be called inside a component's setup(). We mount a minimal
 // wrapper component to test the composable in its intended context.
@@ -67,63 +77,74 @@ describe( 'useVisibility', () => {
 			globalThis.matchMedia = vi.fn( () => createMatchMediaMock( false ) );
 		} );
 
-		it( 'should be visible when themeValue is night', () => {
-			const themeValue = ref( 'night' );
+		it( 'should be visible when the resolved scheme is dark', async () => {
+			mockRootColorScheme( 'dark' );
+			const themeValue = ref( 'black' );
 
 			const wrapper = mountWithVisibility( 'dark-theme', themeValue );
+			await flushPromises();
 
 			expect( wrapper.text() ).toBe( 'visible' );
 		} );
 
-		it( 'should be hidden when themeValue is day', () => {
+		it( 'should be hidden when the resolved scheme is light', async () => {
+			mockRootColorScheme( 'light' );
+			globalThis.matchMedia = vi.fn( () => createMatchMediaMock( true ) );
 			const themeValue = ref( 'day' );
 
 			const wrapper = mountWithVisibility( 'dark-theme', themeValue );
+			await flushPromises();
 
 			expect( wrapper.text() ).toBe( '' );
 		} );
 
-		it( 'should be visible when themeValue is os and prefers-color-scheme is dark', async () => {
+		it( 'should follow the OS preference when the scheme is adaptive', async () => {
+			mockRootColorScheme( 'light dark' );
 			globalThis.matchMedia = vi.fn( () => createMatchMediaMock( true ) );
 			const themeValue = ref( 'os' );
 
 			const wrapper = mountWithVisibility( 'dark-theme', themeValue );
 			await flushPromises();
 
+			expect( globalThis.matchMedia ).toHaveBeenCalledWith( '(prefers-color-scheme: dark)' );
 			expect( wrapper.text() ).toBe( 'visible' );
 		} );
 
-		it( 'should be hidden when themeValue is os and prefers-color-scheme is light', () => {
-			globalThis.matchMedia = vi.fn( () => createMatchMediaMock( false ) );
+		it( 'should be hidden for adaptive scheme when the OS is light', async () => {
+			mockRootColorScheme( 'light dark' );
 			const themeValue = ref( 'os' );
 
 			const wrapper = mountWithVisibility( 'dark-theme', themeValue );
+			await flushPromises();
 
 			expect( wrapper.text() ).toBe( '' );
 		} );
 
-		it( 'should react to themeValue changes', async () => {
+		it( 'should re-resolve when the theme value changes', async () => {
+			const spy = mockRootColorScheme( 'light' );
 			const themeValue = ref( 'day' );
 
 			const wrapper = mountWithVisibility( 'dark-theme', themeValue );
+			await flushPromises();
 
 			expect( wrapper.text() ).toBe( '' );
 
-			themeValue.value = 'night';
-			await flushPromises();
+			spy.mockReturnValue( { colorScheme: 'dark' } );
+			themeValue.value = 'black';
+			await wrapper.vm.$nextTick();
 
 			expect( wrapper.text() ).toBe( 'visible' );
 		} );
 
-		it( 'should register a matchMedia listener for prefers-color-scheme', () => {
-			const mockQuery = createMatchMediaMock( false );
-			globalThis.matchMedia = vi.fn( () => mockQuery );
-			const themeValue = ref( 'os' );
+		it( 'should treat a missing color-scheme as light', async () => {
+			mockRootColorScheme( '' );
+			globalThis.matchMedia = vi.fn( () => createMatchMediaMock( true ) );
+			const themeValue = ref( 'unknowntheme' );
 
-			mountWithVisibility( 'dark-theme', themeValue );
+			const wrapper = mountWithVisibility( 'dark-theme', themeValue );
+			await flushPromises();
 
-			expect( globalThis.matchMedia ).toHaveBeenCalledWith( '(prefers-color-scheme: dark)' );
-			expect( mockQuery.addEventListener ).toHaveBeenCalledWith( 'change', expect.any( Function ) );
+			expect( wrapper.text() ).toBe( '' );
 		} );
 	} );
 

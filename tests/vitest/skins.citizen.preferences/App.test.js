@@ -32,9 +32,12 @@ mw.loader.require = vi.fn( () => ( {
 	}
 } ) );
 
-// Mock getComputedStyle to return fake CSS custom property values
+// Mock getComputedStyle to return fake CSS custom property values and a
+// resolved color-scheme (which useVisibility's dark-theme condition reads).
+let mockColorScheme = 'light';
 const originalGetComputedStyle = globalThis.getComputedStyle;
 globalThis.getComputedStyle = vi.fn( () => ( {
+	colorScheme: mockColorScheme,
 	getPropertyValue: vi.fn( ( prop ) => {
 		if ( prop === '--color-surface-0' ) {
 			return '#ffffff';
@@ -145,6 +148,7 @@ beforeAll( async () => {
 
 afterEach( () => {
 	document.documentElement.className = '';
+	mockColorScheme = 'light';
 	vi.clearAllMocks();
 } );
 
@@ -360,7 +364,7 @@ describe( 'App', () => {
 
 		it( 'should show dark-theme preference when theme changes to night', async () => {
 			// pure-black has dark-theme visibility condition;
-			// with os theme and matchMedia=false it is hidden via v-show.
+			// with a light resolved color-scheme it is hidden via v-show.
 			const wrapper = mountApp( ALL_PREF_CLASSES );
 
 			const pureBlack = wrapper.find(
@@ -369,7 +373,9 @@ describe( 'App', () => {
 
 			expect( pureBlack.attributes( 'style' ) ).toContain( 'display: none' );
 
-			// Changing theme to night makes dark-theme conditions visible.
+			// Changing the theme swaps the root class, so the computed
+			// color-scheme resolves to dark and dark-theme conditions show.
+			mockColorScheme = 'dark';
 			const radioGroup = wrapper.findComponent( { name: 'RadioGroup' } );
 			radioGroup.vm.$emit( 'update:modelValue', 'night' );
 			await wrapper.vm.$nextTick();
