@@ -8,58 +8,62 @@
  *
  * Theme-invariant. Theme mixins remap which stop becomes which semantic.
  */
+.new-primitives-citizen-decls() {
+	// Retheming knobs — override in MediaWiki:Citizen.css to retheme.
+	// --color-primary-oklch__h:  accent hue (links, buttons, focus rings).
+	// --color-neutral-oklch__h:  chrome tint hue. Defaults to the accent
+	//                            hue for a coordinated tint; set to a
+	//                            different value (or hold at a fixed
+	//                            achromatic-feeling hue) to decouple
+	//                            chrome from accent — e.g. gray chrome
+	//                            with a colorful accent.
+	--color-primary-oklch__h: 262.29;
+	--color-neutral-oklch__h: var( --color-primary-oklch__h );
+
+	// Primary tracks Codex blue's L profile. Peak chroma sits at
+	// -700 (the Wikimedia brand-anchor stop, blue-700 = #36c) —
+	// not the typical -500. Chroma curve climbs and decays
+	// smoothly around the -700 peak (no kinks). -1000 retuned
+	// to ~16% L for canvas-relative subtlety in dark — see
+	// chromatic -1000 note in primitives-codex.less.
+	--color-primary-50: oklch( 95% 0.024 var( --color-primary-oklch__h ) );
+	--color-primary-100: oklch( 92% 0.04 var( --color-primary-oklch__h ) );
+	--color-primary-200: oklch( 86% 0.06 var( --color-primary-oklch__h ) );
+	--color-primary-300: oklch( 80% 0.085 var( --color-primary-oklch__h ) );
+	--color-primary-400: oklch( 72% 0.108 var( --color-primary-oklch__h ) );
+	--color-primary-500: oklch( 62% 0.13 var( --color-primary-oklch__h ) );
+	--color-primary-600: oklch( 58% 0.152 var( --color-primary-oklch__h ) );
+	--color-primary-700: oklch( 53% 0.17 var( --color-primary-oklch__h ) );
+	--color-primary-800: oklch( 47% 0.15 var( --color-primary-oklch__h ) );
+	--color-primary-900: oklch( 34% 0.105 var( --color-primary-oklch__h ) );
+	--color-primary-1000: oklch( 16% 0.05 var( --color-primary-oklch__h ) );
+
+	// Neutral is the tinted-gray ramp meant to replace most uses
+	// of Codex gray in Citizen. L tracks Codex gray exactly. Hue
+	// defaults to the accent (chrome carries a hint of the accent
+	// tint) but can be decoupled via --color-neutral-oklch__h.
+	// Chroma is intentionally low (peak 0.04) so chrome reads as
+	// gray-with-a-hint rather than fully tinted — closer to
+	// Monet's neutral-variant tier.
+	--color-neutral-50: oklch( 98% 0.005 var( --color-neutral-oklch__h ) );
+	--color-neutral-100: oklch( 94% 0.012 var( --color-neutral-oklch__h ) );
+	--color-neutral-200: oklch( 90% 0.02 var( --color-neutral-oklch__h ) );
+	--color-neutral-300: oklch( 84% 0.028 var( --color-neutral-oklch__h ) );
+	--color-neutral-400: oklch( 73% 0.035 var( --color-neutral-oklch__h ) );
+	--color-neutral-500: oklch( 51% 0.04 var( --color-neutral-oklch__h ) );
+	--color-neutral-600: oklch( 39% 0.035 var( --color-neutral-oklch__h ) );
+	--color-neutral-700: oklch( 30% 0.028 var( --color-neutral-oklch__h ) );
+	--color-neutral-800: oklch( 22% 0.02 var( --color-neutral-oklch__h ) );
+	--color-neutral-900: oklch( 17% 0.012 var( --color-neutral-oklch__h ) );
+	--color-neutral-1000: oklch( 11% 0.01 var( --color-neutral-oklch__h ) );
+}
+
 .new-primitives-citizen() {
 	// The second selector is the pre-rename generation class, kept for
 	// one minor so compiled CSS keeps matching cached HTML.
 	// citizen-v4-remove
 	:where( :root.citizen-v4 ),
 	:where( :root.citizen-token-new ) {
-		// Retheming knobs — override in MediaWiki:Citizen.css to retheme.
-		// --color-primary-oklch__h:  accent hue (links, buttons, focus rings).
-		// --color-neutral-oklch__h:  chrome tint hue. Defaults to the accent
-		//                            hue for a coordinated tint; set to a
-		//                            different value (or hold at a fixed
-		//                            achromatic-feeling hue) to decouple
-		//                            chrome from accent — e.g. gray chrome
-		//                            with a colorful accent.
-		--color-primary-oklch__h: 262.29;
-		--color-neutral-oklch__h: var( --color-primary-oklch__h );
-
-		// Primary tracks Codex blue's L profile. Peak chroma sits at
-		// -700 (the Wikimedia brand-anchor stop, blue-700 = #36c) —
-		// not the typical -500. Chroma curve climbs and decays
-		// smoothly around the -700 peak (no kinks). -1000 retuned
-		// to ~16% L for canvas-relative subtlety in dark — see
-		// chromatic -1000 note in primitives-codex.less.
-		--color-primary-50: oklch( 95% 0.024 var( --color-primary-oklch__h ) );
-		--color-primary-100: oklch( 92% 0.04 var( --color-primary-oklch__h ) );
-		--color-primary-200: oklch( 86% 0.06 var( --color-primary-oklch__h ) );
-		--color-primary-300: oklch( 80% 0.085 var( --color-primary-oklch__h ) );
-		--color-primary-400: oklch( 72% 0.108 var( --color-primary-oklch__h ) );
-		--color-primary-500: oklch( 62% 0.13 var( --color-primary-oklch__h ) );
-		--color-primary-600: oklch( 58% 0.152 var( --color-primary-oklch__h ) );
-		--color-primary-700: oklch( 53% 0.17 var( --color-primary-oklch__h ) );
-		--color-primary-800: oklch( 47% 0.15 var( --color-primary-oklch__h ) );
-		--color-primary-900: oklch( 34% 0.105 var( --color-primary-oklch__h ) );
-		--color-primary-1000: oklch( 16% 0.05 var( --color-primary-oklch__h ) );
-
-		// Neutral is the tinted-gray ramp meant to replace most uses
-		// of Codex gray in Citizen. L tracks Codex gray exactly. Hue
-		// defaults to the accent (chrome carries a hint of the accent
-		// tint) but can be decoupled via --color-neutral-oklch__h.
-		// Chroma is intentionally low (peak 0.04) so chrome reads as
-		// gray-with-a-hint rather than fully tinted — closer to
-		// Monet's neutral-variant tier.
-		--color-neutral-50: oklch( 98% 0.005 var( --color-neutral-oklch__h ) );
-		--color-neutral-100: oklch( 94% 0.012 var( --color-neutral-oklch__h ) );
-		--color-neutral-200: oklch( 90% 0.02 var( --color-neutral-oklch__h ) );
-		--color-neutral-300: oklch( 84% 0.028 var( --color-neutral-oklch__h ) );
-		--color-neutral-400: oklch( 73% 0.035 var( --color-neutral-oklch__h ) );
-		--color-neutral-500: oklch( 51% 0.04 var( --color-neutral-oklch__h ) );
-		--color-neutral-600: oklch( 39% 0.035 var( --color-neutral-oklch__h ) );
-		--color-neutral-700: oklch( 30% 0.028 var( --color-neutral-oklch__h ) );
-		--color-neutral-800: oklch( 22% 0.02 var( --color-neutral-oklch__h ) );
-		--color-neutral-900: oklch( 17% 0.012 var( --color-neutral-oklch__h ) );
-		--color-neutral-1000: oklch( 11% 0.01 var( --color-neutral-oklch__h ) );
+		.new-primitives-citizen-decls();
 	}
 }

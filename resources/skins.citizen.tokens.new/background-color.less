@@ -2,89 +2,93 @@
  * background-color tokens
  * https://doc.wikimedia.org/codex/main/design-tokens/color.html#background-color
  */
+.new-background-color-decls() {
+	// Solid backgrounds
+	--background-color-base: light-dark( var( --color-white ), var( --color-neutral-1000 ) );
+	--background-color-base-fixed: var( --color-white );
+	--background-color-neutral: light-dark( var( --color-neutral-100 ), var( --color-neutral-800 ) );
+	--background-color-neutral-subtle: light-dark( var( --color-neutral-50 ), var( --color-neutral-900 ) );
+	--background-color-interactive: light-dark( var( --color-neutral-100 ), var( --color-neutral-800 ) );
+	--background-color-interactive--hover: light-dark( var( --color-neutral-200 ), var( --color-neutral-700 ) );
+	--background-color-interactive--active: light-dark( var( --color-neutral-300 ), var( --color-neutral-600 ) );
+	--background-color-interactive-subtle: light-dark( var( --color-neutral-50 ), var( --color-neutral-900 ) );
+	--background-color-interactive-subtle--hover: light-dark( var( --color-neutral-100 ), var( --color-neutral-800 ) );
+	--background-color-interactive-subtle--active: light-dark( var( --color-neutral-200 ), var( --color-neutral-700 ) );
+	--background-color-disabled: light-dark( var( --color-neutral-200 ), var( --color-neutral-700 ) );
+	--background-color-disabled-subtle: light-dark( var( --color-neutral-100 ), var( --color-neutral-800 ) );
+	--background-color-notice-subtle: light-dark( var( --color-neutral-100 ), var( --color-neutral-800 ) );
+	--background-color-inverted: light-dark( var( --color-neutral-1000 ), var( --color-neutral-50 ) );
+
+	// Icon backgrounds — Citizen extension consumed by skinStyles
+	// (e.g. SemanticMediaWiki). Alpha rides the icon opacity ramp.
+	// Escapes kept for parity with the legacy pipeline's declarations.
+	--background-color-icon: ~'light-dark( rgba( 0, 0, 0, var( --opacity-icon-base ) ), rgba( 255, 255, 255, var( --opacity-icon-base ) ) )';
+	--background-color-icon--hover: ~'light-dark( rgba( 0, 0, 0, var( --opacity-icon-base--hover ) ), rgba( 255, 255, 255, var( --opacity-icon-base--hover ) ) )';
+	--background-color-icon--active: ~'light-dark( rgba( 0, 0, 0, var( --opacity-icon-base--active ) ), rgba( 255, 255, 255, var( --opacity-icon-base--active ) ) )';
+
+	// Filled state backgrounds — theme-invariant per Codex (filled
+	// buttons stay saturated). Not aliased to --color-progressive/-destructive:
+	// those are theme-variant text colors, and chaining would drag fills
+	// lighter in dark mode.
+	--background-color-progressive: var( --color-primary-700 );
+	--background-color-progressive--hover: var( --color-primary-800 );
+	--background-color-progressive--active: var( --color-primary-900 );
+	--background-color-progressive--focus: light-dark( var( --color-primary-700 ), var( --color-primary-500 ) );
+	--background-color-destructive: var( --color-red-700 );
+	--background-color-destructive--hover: var( --color-red-800 );
+	--background-color-destructive--active: var( --color-red-900 );
+	--background-color-destructive--focus: light-dark( var( --color-primary-700 ), var( --color-primary-500 ) );
+
+	// Codex 2.x splits bg.error from bg.destructive — error uses
+	// the lighter red-500/600/700 stops.
+	--background-color-error: var( --color-red-500 );
+	--background-color-error--hover: var( --color-red-600 );
+	--background-color-error--active: var( --color-red-700 );
+
+	// Subtle state backgrounds
+	--background-color-progressive-subtle: light-dark( var( --color-primary-50 ), var( --color-primary-1000 ) );
+	--background-color-progressive-subtle--hover: light-dark( var( --color-primary-100 ), var( --color-primary-900 ) );
+	--background-color-progressive-subtle--active: light-dark( var( --color-primary-200 ), var( --color-primary-800 ) );
+	--background-color-destructive-subtle: light-dark( var( --color-red-50 ), var( --color-red-1000 ) );
+	--background-color-destructive-subtle--hover: light-dark( var( --color-red-100 ), var( --color-red-900 ) );
+	--background-color-destructive-subtle--active: light-dark( var( --color-red-200 ), var( --color-red-800 ) );
+	--background-color-error-subtle: light-dark( var( --color-red-50 ), var( --color-red-1000 ) );
+	--background-color-error-subtle--hover: light-dark( var( --color-red-100 ), var( --color-red-900 ) );
+	--background-color-error-subtle--active: light-dark( var( --color-red-200 ), var( --color-red-800 ) );
+	--background-color-warning-subtle: light-dark( var( --color-yellow-50 ), var( --color-yellow-1000 ) );
+	--background-color-success-subtle: light-dark( var( --color-green-50 ), var( --color-green-1000 ) );
+
+	// Diff highlights — Citizen uses MW convention (green added,
+	// red removed), aliased to the matching subtle bg.
+	--background-color-content-added: var( --background-color-success-subtle );
+	--background-color-content-removed: var( --background-color-destructive-subtle );
+
+	// Find-on-page / search-result highlight (Codex 2.5.1)
+	--background-color-target-text: light-dark( var( --color-orange-50 ), var( --color-orange-900 ) );
+
+	// Button-quiet overlays
+	--background-color-button-quiet--hover: light-dark( rgba( 0, 24, 73, 0.027 ), rgba( 255, 255, 255, 0.04 ) );
+	--background-color-button-quiet--active: light-dark( rgba( 0, 24, 73, 0.082 ), rgba( 255, 255, 255, 0.08 ) );
+
+	// Backdrop frosted overlay. Each branch is a complete color-mix
+	// expression so light-dark() picks one of two finished colors
+	// (color-mix can't span a light-dark() pair).
+	--background-color-backdrop-light: light-dark( ~'color-mix( in oklch, var( --color-neutral-50 ) calc( var( --backdrop-opacity ) * 100% ), transparent )', ~'color-mix( in oklch, var( --color-neutral-1000 ) calc( var( --backdrop-opacity ) * 100% ), transparent )' );
+	--background-color-backdrop-dark: rgba( 0, 0, 0, var( --backdrop-opacity ) );
+
+	// Theme-invariant bg utilities
+	--background-color-transparent: transparent;
+	--background-color-input-binary--checked: var( --color-progressive );
+	--background-color-tab-list-item-framed--hover: rgba( 255, 255, 255, 0.3 );
+	--background-color-tab-list-item-framed--active: rgba( 255, 255, 255, 0.65 );
+}
+
 .new-background-color() {
 	// The second selector is the pre-rename generation class, kept for
 	// one minor so compiled CSS keeps matching cached HTML.
 	// citizen-v4-remove
 	:where( :root.citizen-v4 ),
 	:where( :root.citizen-token-new ) {
-		// Solid backgrounds
-		--background-color-base: light-dark( var( --color-white ), var( --color-neutral-1000 ) );
-		--background-color-base-fixed: var( --color-white );
-		--background-color-neutral: light-dark( var( --color-neutral-100 ), var( --color-neutral-800 ) );
-		--background-color-neutral-subtle: light-dark( var( --color-neutral-50 ), var( --color-neutral-900 ) );
-		--background-color-interactive: light-dark( var( --color-neutral-100 ), var( --color-neutral-800 ) );
-		--background-color-interactive--hover: light-dark( var( --color-neutral-200 ), var( --color-neutral-700 ) );
-		--background-color-interactive--active: light-dark( var( --color-neutral-300 ), var( --color-neutral-600 ) );
-		--background-color-interactive-subtle: light-dark( var( --color-neutral-50 ), var( --color-neutral-900 ) );
-		--background-color-interactive-subtle--hover: light-dark( var( --color-neutral-100 ), var( --color-neutral-800 ) );
-		--background-color-interactive-subtle--active: light-dark( var( --color-neutral-200 ), var( --color-neutral-700 ) );
-		--background-color-disabled: light-dark( var( --color-neutral-200 ), var( --color-neutral-700 ) );
-		--background-color-disabled-subtle: light-dark( var( --color-neutral-100 ), var( --color-neutral-800 ) );
-		--background-color-notice-subtle: light-dark( var( --color-neutral-100 ), var( --color-neutral-800 ) );
-		--background-color-inverted: light-dark( var( --color-neutral-1000 ), var( --color-neutral-50 ) );
-
-		// Icon backgrounds — Citizen extension consumed by skinStyles
-		// (e.g. SemanticMediaWiki). Alpha rides the icon opacity ramp.
-		// Escapes kept for parity with the legacy pipeline's declarations.
-		--background-color-icon: ~'light-dark( rgba( 0, 0, 0, var( --opacity-icon-base ) ), rgba( 255, 255, 255, var( --opacity-icon-base ) ) )';
-		--background-color-icon--hover: ~'light-dark( rgba( 0, 0, 0, var( --opacity-icon-base--hover ) ), rgba( 255, 255, 255, var( --opacity-icon-base--hover ) ) )';
-		--background-color-icon--active: ~'light-dark( rgba( 0, 0, 0, var( --opacity-icon-base--active ) ), rgba( 255, 255, 255, var( --opacity-icon-base--active ) ) )';
-
-		// Filled state backgrounds — theme-invariant per Codex (filled
-		// buttons stay saturated). Not aliased to --color-progressive/-destructive:
-		// those are theme-variant text colors, and chaining would drag fills
-		// lighter in dark mode.
-		--background-color-progressive: var( --color-primary-700 );
-		--background-color-progressive--hover: var( --color-primary-800 );
-		--background-color-progressive--active: var( --color-primary-900 );
-		--background-color-progressive--focus: light-dark( var( --color-primary-700 ), var( --color-primary-500 ) );
-		--background-color-destructive: var( --color-red-700 );
-		--background-color-destructive--hover: var( --color-red-800 );
-		--background-color-destructive--active: var( --color-red-900 );
-		--background-color-destructive--focus: light-dark( var( --color-primary-700 ), var( --color-primary-500 ) );
-
-		// Codex 2.x splits bg.error from bg.destructive — error uses
-		// the lighter red-500/600/700 stops.
-		--background-color-error: var( --color-red-500 );
-		--background-color-error--hover: var( --color-red-600 );
-		--background-color-error--active: var( --color-red-700 );
-
-		// Subtle state backgrounds
-		--background-color-progressive-subtle: light-dark( var( --color-primary-50 ), var( --color-primary-1000 ) );
-		--background-color-progressive-subtle--hover: light-dark( var( --color-primary-100 ), var( --color-primary-900 ) );
-		--background-color-progressive-subtle--active: light-dark( var( --color-primary-200 ), var( --color-primary-800 ) );
-		--background-color-destructive-subtle: light-dark( var( --color-red-50 ), var( --color-red-1000 ) );
-		--background-color-destructive-subtle--hover: light-dark( var( --color-red-100 ), var( --color-red-900 ) );
-		--background-color-destructive-subtle--active: light-dark( var( --color-red-200 ), var( --color-red-800 ) );
-		--background-color-error-subtle: light-dark( var( --color-red-50 ), var( --color-red-1000 ) );
-		--background-color-error-subtle--hover: light-dark( var( --color-red-100 ), var( --color-red-900 ) );
-		--background-color-error-subtle--active: light-dark( var( --color-red-200 ), var( --color-red-800 ) );
-		--background-color-warning-subtle: light-dark( var( --color-yellow-50 ), var( --color-yellow-1000 ) );
-		--background-color-success-subtle: light-dark( var( --color-green-50 ), var( --color-green-1000 ) );
-
-		// Diff highlights — Citizen uses MW convention (green added,
-		// red removed), aliased to the matching subtle bg.
-		--background-color-content-added: var( --background-color-success-subtle );
-		--background-color-content-removed: var( --background-color-destructive-subtle );
-
-		// Find-on-page / search-result highlight (Codex 2.5.1)
-		--background-color-target-text: light-dark( var( --color-orange-50 ), var( --color-orange-900 ) );
-
-		// Button-quiet overlays
-		--background-color-button-quiet--hover: light-dark( rgba( 0, 24, 73, 0.027 ), rgba( 255, 255, 255, 0.04 ) );
-		--background-color-button-quiet--active: light-dark( rgba( 0, 24, 73, 0.082 ), rgba( 255, 255, 255, 0.08 ) );
-
-		// Backdrop frosted overlay. Each branch is a complete color-mix
-		// expression so light-dark() picks one of two finished colors
-		// (color-mix can't span a light-dark() pair).
-		--background-color-backdrop-light: light-dark( ~'color-mix( in oklch, var( --color-neutral-50 ) calc( var( --backdrop-opacity ) * 100% ), transparent )', ~'color-mix( in oklch, var( --color-neutral-1000 ) calc( var( --backdrop-opacity ) * 100% ), transparent )' );
-		--background-color-backdrop-dark: rgba( 0, 0, 0, var( --backdrop-opacity ) );
-
-		// Theme-invariant bg utilities
-		--background-color-transparent: transparent;
-		--background-color-input-binary--checked: var( --color-progressive );
-		--background-color-tab-list-item-framed--hover: rgba( 255, 255, 255, 0.3 );
-		--background-color-tab-list-item-framed--active: rgba( 255, 255, 255, 0.65 );
+		.new-background-color-decls();
 	}
 }
