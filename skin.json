@@ -260,6 +260,7 @@
 				"resources/skins.citizen.preferences/init.js",
 				"resources/skins.citizen.preferences/App.vue",
 				"resources/skins.citizen.preferences/RadioGroup.vue",
+				"resources/skins.citizen.preferences/ThemePicker.vue",
 				"resources/skins.citizen.preferences/useVisibility.js",
 				"resources/skins.citizen.preferences/defaultConfig.js",
 				"resources/skins.citizen.preferences/configRegistry.js",
