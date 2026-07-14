@@ -57,7 +57,13 @@ function initApp() {
 		Object.assign( config.preferences, updated.preferences );
 	}
 
-	const themeDefault = THEME_CONFIG_MAP[ serverConfig.wgCitizenThemeDefault ] || 'os';
+	// Legacy config vocabulary maps to clientpref values; anything else
+	// ('black', wiki-defined themes) passes through. No charset check
+	// here, unlike the PHP side: the value never reaches the DOM raw —
+	// App.vue validates it against the registered options list, so an
+	// unregistered value safely falls back to the first option.
+	const themeDefault = THEME_CONFIG_MAP[ serverConfig.wgCitizenThemeDefault ] ||
+		serverConfig.wgCitizenThemeDefault || 'os';
 
 	const app = Vue.createMwApp( App );
 	app.provide( 'preferencesConfig', config );

@@ -135,6 +135,13 @@ class SkinCitizen extends SkinMustache {
 		$theme = $config->get( 'CitizenThemeDefault' );
 		if ( isset( self::CLIENTPREFS_THEME_MAP[$theme] ) ) {
 			$classes[] = 'skin-theme-clientpref-' . self::CLIENTPREFS_THEME_MAP[$theme];
+		} elseif ( is_string( $theme ) && preg_match( '/^[a-zA-Z0-9]+$/', $theme ) === 1 ) {
+			// Theme values outside the legacy vocabulary — 'black' or a
+			// wiki-defined theme — map straight to their clientpref class.
+			// The charset mirrors the clientprefs value validation in
+			// MediaWiki core (isValidFeatureValue in mediawiki.user.js);
+			// keep the two in sync.
+			$classes[] = 'skin-theme-clientpref-' . $theme;
 		}
 
 		// Default client preferences
