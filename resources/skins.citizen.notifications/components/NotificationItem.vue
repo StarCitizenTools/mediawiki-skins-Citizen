@@ -77,7 +77,8 @@ const RELATIVE_UNITS = [
 /**
  * Format a unix timestamp (seconds) as a compact localized relative time via
  * Intl's narrow style, e.g. "now", "2m ago", "5h ago", "3d ago". Returns ''
- * for a missing/invalid timestamp or where Intl is unsupported.
+ * for a missing/invalid timestamp, where Intl is unsupported, or where the
+ * user language is not a valid BCP 47 tag.
  *
  * @param {number} unixSeconds
  * @return {string}
@@ -95,10 +96,24 @@ function formatRelativeTime( unixSeconds ) {
 	const match = RELATIVE_UNITS.find( ( unit ) => abs >= unit[ 1 ] );
 	const unitName = match ? match[ 0 ] : 'second';
 	const divisor = match ? match[ 1 ] : 1;
-	const rtf = new RelativeTimeFormat(
-		mw.config.get( 'wgUserLanguage' ) || undefined,
-		{ style: 'narrow', numeric: 'auto' }
-	);
+
+	let rtf;
+	try {
+		rtf = new RelativeTimeFormat(
+			mw.config.get( 'wgUserLanguage' ) || undefined,
+			{ style: 'narrow', numeric: 'auto' }
+		);
+	} catch ( e ) {
+		// A structurally invalid BCP 47 tag (e.g. the x-xss testing
+		// pseudo-language) makes the constructor throw. Degrade to no relative
+		// timestamp rather than breaking the notification row's render.
+		mw.log.warn(
+			'[Citizen] Skipping the notification relative time; the interface language is not a valid BCP 47 tag:',
+			e
+		);
+		return '';
+	}
+
 	return rtf.format( Math.round( deltaSeconds / divisor ), unitName );
 }
 
