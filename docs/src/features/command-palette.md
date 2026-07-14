@@ -136,13 +136,13 @@ Wrapping your entry with `defineMode` or `defineCommand` is optional — `regist
 Check out these live examples from other wikis. To try them, visit the site, press `/` to open the palette, and type the command:
 
 <LinkGrid>
-    <LinkCard title="Music command" href="https://tagging.wiki">
+    <LinkCard title="Music command" href="https://utg.miraheze.org">
         Command: `/music`
     </LinkCard>
     <LinkCard title="Kit Builder redirect" href="https://itemasylum.miraheze.org">
         Command: `/kit builder`
     </LinkCard>
-    <LinkCard title="Roblox game redirect" href="https://tagging.wiki">
+    <LinkCard title="Roblox game redirect" href="https://utg.miraheze.org">
         Command: `/play`
     </LinkCard>
     <LinkCard title="Confetti" href="https://starcitizen.tools/MediaWiki:Gadget-Confetti.js#L-17">
