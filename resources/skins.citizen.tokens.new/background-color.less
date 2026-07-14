@@ -24,6 +24,13 @@
 		--background-color-notice-subtle: light-dark( var( --color-neutral-100 ), var( --color-neutral-800 ) );
 		--background-color-inverted: light-dark( var( --color-neutral-1000 ), var( --color-neutral-50 ) );
 
+		// Icon backgrounds — Citizen extension consumed by skinStyles
+		// (e.g. SemanticMediaWiki). Alpha rides the icon opacity ramp.
+		// less.php can't parse var() inside rgba(), hence the escapes.
+		--background-color-icon: ~'light-dark( rgba( 0, 0, 0, var( --opacity-icon-base ) ), rgba( 255, 255, 255, var( --opacity-icon-base ) ) )';
+		--background-color-icon--hover: ~'light-dark( rgba( 0, 0, 0, var( --opacity-icon-base--hover ) ), rgba( 255, 255, 255, var( --opacity-icon-base--hover ) ) )';
+		--background-color-icon--active: ~'light-dark( rgba( 0, 0, 0, var( --opacity-icon-base--active ) ), rgba( 255, 255, 255, var( --opacity-icon-base--active ) ) )';
+
 		// Filled state backgrounds — theme-invariant per Codex (filled
 		// buttons stay saturated). Not aliased to --color-progressive/-destructive:
 		// those are theme-variant text colors, and chaining would drag fills
