@@ -1,5 +1,10 @@
 @import '../tokens-codex.less';
 
+// citizen-v4-remove — the pure-black switch is replaced by the Black
+// theme on the preview channel (skins.citizen.tokens.new/themes/black.less).
+// This mixin and the .citizen-feature-pure-black-clientpref-1 block below
+// keep the old look working for cached HTML and the legacy world until
+// the 4.0 flip.
 .feature-pure-black() {
 	// ----- Legacy mode: zero out chroma on legacy derivation primitives -----
 	--color-surface-0-oklch__l: 0%;
@@ -202,7 +207,8 @@
 
 // T400838
 .citizen-feature-image-dimming-clientpref-1 {
-	:root.skin-theme-clientpref-night& {
+	:root.skin-theme-clientpref-night&,
+	:root.skin-theme-clientpref-black& {
 		--filter-image-brightness: brightness( 0.8 );
 	}
 

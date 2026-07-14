@@ -26,7 +26,7 @@
 
 		// Icon backgrounds — Citizen extension consumed by skinStyles
 		// (e.g. SemanticMediaWiki). Alpha rides the icon opacity ramp.
-		// less.php can't parse var() inside rgba(), hence the escapes.
+		// Escapes kept for parity with the legacy pipeline's declarations.
 		--background-color-icon: ~'light-dark( rgba( 0, 0, 0, var( --opacity-icon-base ) ), rgba( 255, 255, 255, var( --opacity-icon-base ) ) )';
 		--background-color-icon--hover: ~'light-dark( rgba( 0, 0, 0, var( --opacity-icon-base--hover ) ), rgba( 255, 255, 255, var( --opacity-icon-base--hover ) ) )';
 		--background-color-icon--active: ~'light-dark( rgba( 0, 0, 0, var( --opacity-icon-base--active ) ), rgba( 255, 255, 255, var( --opacity-icon-base--active ) ) )';

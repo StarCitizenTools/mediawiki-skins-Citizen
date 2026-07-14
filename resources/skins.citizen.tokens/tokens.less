@@ -13,6 +13,9 @@
 @import ( reference ) 'tokens-codex.less';
 @import ( reference ) 'tokens-theme-base.less';
 @import ( reference ) 'tokens-theme-dark.less';
+// Imported only for .feature-pure-black(), reused by the Black-theme
+// alias below; a reference import emits nothing unless invoked.
+@import ( reference ) '../skins.citizen.styles/common/features.less';
 
 @layer citizen-tokens {
 	.tokens-codex-legacy();
@@ -32,6 +35,17 @@
 			:root& {
 				.theme-dark-legacy();
 			}
+		}
+	}
+
+	// citizen-v4-remove — Black-theme alias. Users migrated to
+	// skin-theme=black on the preview channel keep a dark, pure-black
+	// rendering if the wiki turns the preview back off. Dies with the
+	// legacy pipeline at the 4.0 flip.
+	.skin-theme-clientpref-black {
+		:root& {
+			.theme-dark-legacy();
+			.feature-pure-black();
 		}
 	}
 }
