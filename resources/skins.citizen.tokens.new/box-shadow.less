@@ -6,8 +6,8 @@
 	// The second selector is the pre-rename generation class, kept for
 	// one minor so compiled CSS keeps matching cached HTML.
 	// citizen-v4-remove
-	:root.citizen-v4,
-	:root.citizen-token-new {
+	:where( :root.citizen-v4 ),
+	:where( :root.citizen-token-new ) {
 		--box-shadow-color-base: var( --box-shadow-color-alpha-base );
 		--box-shadow-color-alpha-base: light-dark( ~'oklch( 12% 0.01 var( --color-primary-oklch__h ) / var( --shadow-opacity ) )', ~'oklch( 6% 0.01 var( --color-primary-oklch__h ) / var( --shadow-opacity ) )' );
 		--box-shadow-color-progressive--active: var( --color-progressive--active );

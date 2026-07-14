@@ -6,8 +6,8 @@
 	// The second selector is the pre-rename generation class, kept for
 	// one minor so compiled CSS keeps matching cached HTML.
 	// citizen-v4-remove
-	:root.citizen-v4,
-	:root.citizen-token-new {
+	:where( :root.citizen-v4 ),
+	:where( :root.citizen-token-new ) {
 		// Chrome borders. Routed through gray-N (achromatic) rather than
 		// neutral-N (tinted) so borders read as pure structure regardless
 		// of theme. Citizen uses softer stops than Codex spec — see
