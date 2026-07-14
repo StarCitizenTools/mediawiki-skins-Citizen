@@ -15,7 +15,7 @@ Check out these amazing wikis powering their content with Citizen:
  <LinkCard title="中文音MAD维基" href="https://otomad.wiki" />
  <LinkCard title="Coasterpedia" href="https://coasterpedia.net" />
  <LinkCard title="Dustloop Wiki" href="https://dustloop.com" />
- <LinkCard title="Untitled Tag Game Wiki" href="https://tagging.wiki" />
+ <LinkCard title="Untitled Tag Game Wiki" href="https://utg.miraheze.org" />
  <LinkCard title="Soulframe Wiki" href="https://wiki.avakot.org" />
  <LinkCard title="Industrialist Wiki" href="https://industrialist.miraheze.org" />
  <LinkCard title="Prism Party" href="https://www.prismparty.net" />
