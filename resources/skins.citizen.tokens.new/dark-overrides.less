@@ -1,8 +1,8 @@
 /**
  * Dark-mode overrides for theme-variant non-color tokens — all Citizen
  * extensions. light-dark() only handles color values, so these
- * non-color tokens (opacity, font-grade, filter, percentages) plus
- * the dark-only icon-* backgrounds get a separate companion mixin.
+ * non-color tokens (opacity, font-grade, filter, percentages) get a
+ * separate companion mixin.
  *
  * Called at .skin-theme-clientpref-night and at clientpref-os under
  * prefers-color-scheme: dark.
@@ -13,10 +13,4 @@
 	--font-grade: 0;
 	--filter-invert: invert( 1 ) hue-rotate( 180deg );
 	--color-progressive-hsl__l: 60%;
-
-	// Dark-only — light mode renders icons via a different pattern
-	// that doesn't consume these tokens.
-	--background-color-icon: ~'rgba( 255, 255, 255, var( --opacity-icon-base ) )';
-	--background-color-icon--hover: ~'rgba( 255, 255, 255, var( --opacity-icon-base--hover ) )';
-	--background-color-icon--active: ~'rgba( 255, 255, 255, var( --opacity-icon-base--active ) )';
 }
