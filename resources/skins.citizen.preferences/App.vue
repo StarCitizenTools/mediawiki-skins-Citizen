@@ -85,17 +85,20 @@ const clientPrefs = require( './clientPrefs.polyfill.js' )();
  * side per preview — without swapping classes or reading computed
  * styles.
  *
- * @param {string} value - 'os', 'day', or 'night'
+ * @param {string} value - Theme value, e.g. 'os', 'day', 'night', 'black'
  * @return {string}
  */
 function getThemeColorScheme( value ) {
 	if ( value === 'day' ) {
 		return 'light';
 	}
-	if ( value === 'night' ) {
+	// Shipped themes — their scheme is known, hardcode it.
+	if ( value === 'night' || value === 'black' ) {
 		return 'dark';
 	}
-	// 'os' (or anything else) — defer to the user's OS preference.
+	// 'os' — and wiki-defined themes, whose real scheme lives in their
+	// CSS where the swatch can't read it. Adaptive is the least-wrong
+	// preview for both.
 	return 'light dark';
 }
 

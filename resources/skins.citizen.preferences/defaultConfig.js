@@ -7,6 +7,21 @@ const { PreferencesConfig } = require( './types.js' );
  * @return {PreferencesConfig} Default config with sections and preferences
  */
 function getDefaultConfig() {
+	// Black ships as a theme on the preview channel; the legacy world
+	// keeps the pure-black switch instead.
+	// citizen-v4-remove — at the 4.0 flip, inline the v4 branches and
+	// delete the pure-black entry.
+	const isV4 = document.documentElement.classList.contains( 'citizen-v4' );
+
+	const themeOptions = [
+		{ value: 'os', labelMsg: 'citizen-theme-os-label' },
+		{ value: 'day', labelMsg: 'citizen-theme-day-label' },
+		{ value: 'night', labelMsg: 'citizen-theme-night-label' }
+	];
+	if ( isV4 ) {
+		themeOptions.push( { value: 'black', labelMsg: 'citizen-theme-black-label' } );
+	}
+
 	return {
 		sections: {
 			appearance: { labelMsg: 'citizen-preferences-section-appearance' },
@@ -15,13 +30,9 @@ function getDefaultConfig() {
 		preferences: {
 			'skin-theme': {
 				section: 'appearance',
-				options: [
-					{ value: 'os', labelMsg: 'citizen-theme-os-label' },
-					{ value: 'day', labelMsg: 'citizen-theme-day-label' },
-					{ value: 'night', labelMsg: 'citizen-theme-night-label' }
-				],
+				options: themeOptions,
 				type: 'radio',
-				columns: 3,
+				columns: themeOptions.length,
 				labelMsg: 'citizen-theme-name',
 				descriptionMsg: 'citizen-theme-description',
 				visibilityCondition: 'always'
@@ -53,14 +64,16 @@ function getDefaultConfig() {
 			},
 			// Switch preferences use short-form options (strings).
 			// normalizeConfig() converts these to { value: '0' } / { value: '1' }.
-			'citizen-feature-pure-black': {
-				section: 'appearance',
-				options: [ '0', '1' ],
-				type: 'switch',
-				labelMsg: 'citizen-feature-pure-black-name',
-				descriptionMsg: 'citizen-feature-pure-black-description',
-				visibilityCondition: 'dark-theme'
-			},
+			...( isV4 ? {} : {
+				'citizen-feature-pure-black': {
+					section: 'appearance',
+					options: [ '0', '1' ],
+					type: 'switch',
+					labelMsg: 'citizen-feature-pure-black-name',
+					descriptionMsg: 'citizen-feature-pure-black-description',
+					visibilityCondition: 'dark-theme'
+				}
+			} ),
 			'citizen-feature-image-dimming': {
 				section: 'appearance',
 				options: [ '0', '1' ],

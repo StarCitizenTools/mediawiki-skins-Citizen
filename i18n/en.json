@@ -75,6 +75,7 @@
 	"citizen-theme-description": "Switch between light and dark mode",
 	"citizen-theme-day-label": "Light",
 	"citizen-theme-night-label": "Dark",
+	"citizen-theme-black-label": "Black",
 	"citizen-theme-os-label": "Auto",
 	"citizen-feature-autohide-navigation-name": "Automatically hide navigation",
 	"citizen-feature-autohide-navigation-description": "Hide the navigation bar when scrolling down",
