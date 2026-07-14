@@ -49,7 +49,22 @@ function createLastModified( { document, Intl: IntlObj } ) {
 		}
 
 		const lang = document.documentElement.getAttribute( 'lang' );
-		const rtf = new IntlObj.RelativeTimeFormat( lang );
+
+		let rtf;
+		try {
+			rtf = new IntlObj.RelativeTimeFormat( lang );
+		} catch ( e ) {
+			// A structurally invalid BCP 47 tag (e.g. the x-xss testing
+			// pseudo-language) makes the constructor throw. The relative time is
+			// a progressive enhancement, so leave the server-rendered absolute
+			// timestamp in place rather than aborting the rest of skin init.
+			mw.log.warn(
+				'[Citizen] Skipping the relative last-modified time; the interface language is not a valid BCP 47 tag:',
+				e
+			);
+			return;
+		}
+
 		const timestamp = lastmodEl.getAttribute( 'data-timestamp' );
 
 		lastmodEl.lastChild.textContent = formatTimeAgo( timestamp, Date.now(), rtf, DIVISIONS );

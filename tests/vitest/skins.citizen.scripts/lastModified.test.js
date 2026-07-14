@@ -1,4 +1,9 @@
-const { formatTimeAgo, DIVISIONS } = require( '../../../resources/skins.citizen.scripts/lastModified.js' );
+// @vitest-environment jsdom
+
+const mw = require( '../mocks/mw.js' );
+globalThis.mw = mw;
+
+const { createLastModified, formatTimeAgo, DIVISIONS } = require( '../../../resources/skins.citizen.scripts/lastModified.js' );
 
 describe( 'formatTimeAgo', () => {
 	let rtf;
@@ -90,5 +95,44 @@ describe( 'formatTimeAgo', () => {
 		formatTimeAgo( String( timestampSeconds ), nowMs, rtf, DIVISIONS );
 
 		expect( rtf.format ).toHaveBeenCalledWith( -1, 'minutes' );
+	} );
+} );
+
+describe( 'createLastModified', () => {
+	afterEach( () => {
+		document.body.innerHTML = '';
+		document.documentElement.removeAttribute( 'lang' );
+		mw.log.warn.mockClear();
+	} );
+
+	it( 'should not throw when the page language is not a valid BCP 47 tag', () => {
+		document.body.innerHTML = '<span id="citizen-lastmod-relative" data-timestamp="1000000">3 January 2020</span>';
+		document.documentElement.setAttribute( 'lang', 'x-xss' );
+
+		const lastModified = createLastModified( { document, Intl } );
+
+		expect( () => lastModified.init() ).not.toThrow();
+	} );
+
+	it( 'should leave the server-rendered timestamp in place and warn when the language tag is invalid', () => {
+		document.body.innerHTML = '<span id="citizen-lastmod-relative" data-timestamp="1000000">3 January 2020</span>';
+		document.documentElement.setAttribute( 'lang', 'x-xss' );
+
+		createLastModified( { document, Intl } ).init();
+
+		expect( document.getElementById( 'citizen-lastmod-relative' ).textContent ).toBe( '3 January 2020' );
+		expect( mw.log.warn ).toHaveBeenCalled();
+	} );
+
+	it( 'should replace the timestamp with a relative time for a valid language tag', () => {
+		const nowSeconds = Math.floor( Date.now() / 1000 );
+		document.body.innerHTML = `<span id="citizen-lastmod-relative" data-timestamp="${ nowSeconds - 30 }">3 January 2020</span>`;
+		document.documentElement.setAttribute( 'lang', 'en' );
+
+		createLastModified( { document, Intl } ).init();
+
+		const text = document.getElementById( 'citizen-lastmod-relative' ).textContent;
+		expect( text ).not.toBe( '3 January 2020' );
+		expect( text ).toMatch( /second/i );
 	} );
 } );
