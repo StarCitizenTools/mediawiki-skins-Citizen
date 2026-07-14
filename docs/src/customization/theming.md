@@ -165,14 +165,13 @@ Add your theme to the `skin-theme` options in `MediaWiki:Citizen-preferences.jso
         { "value": "night", "labelMsg": "citizen-theme-night-label" },
         { "value": "black", "labelMsg": "citizen-theme-black-label" },
         { "value": "ocean", "label": "Ocean" }
-      ],
-      "columns": 5
+      ]
     }
   }
 }
 ```
 
-The picker grid keeps the built-in column count unless you set `columns` to match your option count — leave it out and your fifth theme wraps onto a row of its own. Use `label` for a plain-text name, or `labelMsg` with an interface message (e.g. `MediaWiki:Ocean-theme-label`) on multilingual wikis. Theme values may contain letters and numbers only.
+The picker sizes itself, so you don't set a column count. Use `label` for a plain-text name, or `labelMsg` with an interface message (e.g. `MediaWiki:Ocean-theme-label`) on multilingual wikis. Theme values may contain letters and numbers only.
 
 #### Define the theme in CSS
 
@@ -204,8 +203,8 @@ One limitation to know about: a few dark-mode extras are keyed to the built-in t
 To make your theme the default for new visitors, set `$wgCitizenThemeDefault = 'ocean';`. Keep the theme registered in the picker too — the preferences panel can't show a selection for a value it doesn't know about.
 :::
 
-::: warning
-The theme picker's preview swatch can't read your CSS, so custom themes preview with an adaptive light/dark swatch rather than your palette.
+::: tip
+On Citizen 4 the preview is live: because your theme uses the bare `.skin-theme-clientpref-<value>` class, the preferences panel paints each circle in the theme's real colors, so what you see in the picker matches what visitors get.
 :::
 
 ## Performance considerations

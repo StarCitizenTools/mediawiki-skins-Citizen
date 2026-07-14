@@ -287,24 +287,57 @@ describe( 'App', () => {
 			document.documentElement.classList.remove( 'citizen-v4' );
 		} );
 
-		it( 'should preview the black theme swatch with a dark color scheme', () => {
+		it( 'should render ThemePicker for skin-theme under citizen-v4', () => {
 			// Build fresh instead of reusing BASE_CONFIG — the cached base
 			// was built without the citizen-v4 class, so it has the legacy
-			// three-theme shape. mountApp resets the classList, but the
-			// config is already built by then.
+			// three-theme shape.
 			const v4Config = normalizeConfig( getDefaultConfig() );
 
-			const wrapper = mountApp( ALL_PREF_CLASSES, v4Config );
+			// citizen-v4 must be IN the class list: setClassList overwrites
+			// className, wiping the class the describe's beforeEach added, and
+			// App.vue reads isV4 from the root class at mount.
+			const wrapper = mountApp( [ 'citizen-v4', ...ALL_PREF_CLASSES ], v4Config );
 
-			const radios = wrapper.findAllComponents( { name: 'CdxRadio' } );
-			const blackRadio = radios.find(
-				( c ) => c.props( 'inputValue' ) === 'black'
-			);
-			expect( blackRadio ).toBeTruthy();
-			const preview = blackRadio.find(
-				'.citizen-preferences-card__preview--theme'
-			);
-			expect( preview.attributes( 'style' ) ).toContain( 'color-scheme: dark' );
+			expect( wrapper.findAllComponents( { name: 'ThemePicker' } ) ).toHaveLength( 1 );
+			expect( wrapper.findAllComponents( { name: 'RadioGroup' } ) ).toHaveLength( 0 );
+		} );
+
+		it( 'should render a custom radio pref as RadioGroup, not ThemePicker', () => {
+			// `radio` is a general preference type: a wiki can register a
+			// custom radio pref that is not the theme picker. Only skin-theme
+			// should route through ThemePicker; everything else uses RadioGroup.
+			const v4Config = normalizeConfig( getDefaultConfig() );
+			v4Config.preferences[ 'test-radio' ] = {
+				section: 'appearance',
+				type: 'radio',
+				options: [
+					{ value: 'a', label: 'A' },
+					{ value: 'b', label: 'B' },
+					{ value: 'c', label: 'C' }
+				],
+				label: 'Test Radio',
+				visibilityCondition: 'always'
+			};
+
+			const wrapper = mountApp( [ 'citizen-v4', ...ALL_PREF_CLASSES ], v4Config );
+
+			// Only skin-theme routes through ThemePicker.
+			expect( wrapper.findAllComponents( { name: 'ThemePicker' } ) ).toHaveLength( 1 );
+			// The custom radio pref falls through to RadioGroup.
+			const radioGroups = wrapper.findAllComponents( { name: 'RadioGroup' } );
+			expect( radioGroups ).toHaveLength( 1 );
+			expect( radioGroups[ 0 ].props( 'featureName' ) ).toBe( 'test-radio' );
+		} );
+
+		it( 'should preview the black theme as a chip wearing its theme class', () => {
+			// Under v4 the ThemePicker paints the real theme: each chip wears
+			// the bare .skin-theme-clientpref-<value> class instead of the
+			// legacy inline color-scheme swatch.
+			const v4Config = normalizeConfig( getDefaultConfig() );
+
+			const wrapper = mountApp( [ 'citizen-v4', ...ALL_PREF_CLASSES ], v4Config );
+
+			expect( wrapper.find( '.skin-theme-clientpref-black' ).exists() ).toBe( true );
 		} );
 	} );
 

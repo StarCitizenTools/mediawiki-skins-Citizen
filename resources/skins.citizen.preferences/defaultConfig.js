@@ -32,9 +32,13 @@ function getDefaultConfig() {
 				section: 'appearance',
 				options: themeOptions,
 				type: 'radio',
+				// Legacy RadioGroup reads columns; the v4 ThemePicker ignores it.
 				columns: themeOptions.length,
-				labelMsg: 'citizen-theme-name',
-				descriptionMsg: 'citizen-theme-description',
+				// v4 relabels this to just "Theme" and drops the description.
+				// The legacy arm (labelMsg/descriptionMsg below) is deleted at
+				// the 4.0 flip when this conditional collapses to the v4 value.
+				labelMsg: isV4 ? 'citizen-theme-name-v4' : 'citizen-theme-name',
+				...( isV4 ? {} : { descriptionMsg: 'citizen-theme-description' } ),
 				visibilityCondition: 'always'
 			},
 			'citizen-feature-custom-font-size': {

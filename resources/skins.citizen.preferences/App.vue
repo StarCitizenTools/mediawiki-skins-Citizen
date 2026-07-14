@@ -54,6 +54,13 @@
 							:selected="values[ pref.featureName ]"
 							@update:selected="setValue( pref.featureName, $event )"
 						></cdx-select>
+						<theme-picker
+							v-else-if="pref.featureName === 'skin-theme' && isV4"
+							:model-value="values[ pref.featureName ]"
+							:options="pref.options"
+							:feature-name="pref.featureName"
+							@update:model-value="setValue( pref.featureName, $event )"
+						></theme-picker>
 						<radio-group
 							v-else
 							:model-value="values[ pref.featureName ]"
@@ -74,6 +81,7 @@ const { defineComponent, computed, inject, reactive, ref, watch } = require( 'vu
 const { NormalizedPreferencesConfig } = require( './types.js' );
 const { CdxField, CdxSelect, CdxToggleSwitch } = mw.loader.require( 'skins.citizen.preferences.codex' );
 const RadioGroup = require( './RadioGroup.vue' );
+const ThemePicker = require( './ThemePicker.vue' );
 const useVisibility = require( './useVisibility.js' );
 const { resolveLabel } = require( './configRegistry.js' );
 const clientPrefs = require( './clientPrefs.polyfill.js' )();
@@ -84,6 +92,9 @@ const clientPrefs = require( './clientPrefs.polyfill.js' )();
  * tokens (--color-surface-0, --color-base) to resolve to the correct
  * side per preview — without swapping classes or reading computed
  * styles.
+ *
+ * citizen-v4-remove — legacy-only. The v4 ThemePicker paints the real
+ * theme via its class, so this whole function dies at the 4.0 flip.
  *
  * @param {string} value - Theme value, e.g. 'os', 'day', 'night', 'black'
  * @return {string}
@@ -109,11 +120,18 @@ module.exports = exports = defineComponent( {
 		CdxField,
 		CdxSelect,
 		CdxToggleSwitch,
-		RadioGroup
+		RadioGroup,
+		ThemePicker
 	},
 	setup() {
 		/** @type {NormalizedPreferencesConfig} */
 		const config = inject( 'preferencesConfig' );
+		// The v4 theme picker (ThemePicker) replaces the legacy RadioGroup
+		// swatch grid for skin-theme. citizen-v4-remove — at the 4.0 flip,
+		// drop the `&& isV4` from ThemePicker's template condition so it
+		// always claims skin-theme, and delete this const. RadioGroup.vue
+		// itself stays: it still renders wiki-defined radio preferences.
+		const isV4 = document.documentElement.classList.contains( 'citizen-v4' );
 		const values = reactive( {} );
 		const visibilities = reactive( {} );
 
@@ -185,7 +203,10 @@ module.exports = exports = defineComponent( {
 									value: opt.value,
 									label: resolveLabel( opt, 'label' )
 								};
-								if ( featureName === 'skin-theme' ) {
+								// Legacy swatch hint only — the v4 ThemePicker paints
+								// the real theme, so it needs no colorScheme.
+								// citizen-v4-remove
+								if ( featureName === 'skin-theme' && !isV4 ) {
 									option.colorScheme =
 										getThemeColorScheme( opt.value );
 								}
@@ -235,7 +256,8 @@ module.exports = exports = defineComponent( {
 			sections,
 			values,
 			visibilities,
-			setValue
+			setValue,
+			isV4
 		};
 	}
 } );

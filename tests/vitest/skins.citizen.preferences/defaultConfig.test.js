@@ -110,6 +110,14 @@ describe( 'defaultConfig', () => {
 			expect( config.preferences ).not.toHaveProperty( 'citizen-feature-pure-black' );
 			expect( Object.keys( config.preferences ) ).toHaveLength( 6 );
 		} );
+
+		it( 'should label the theme pref "Theme" with no description', () => {
+			const config = getDefaultConfig();
+
+			const themePref = config.preferences[ 'skin-theme' ];
+			expect( themePref.labelMsg ).toBe( 'citizen-theme-name-v4' );
+			expect( themePref.descriptionMsg ).toBeUndefined();
+		} );
 	} );
 
 	describe( 'legacy world', () => {
@@ -120,6 +128,14 @@ describe( 'defaultConfig', () => {
 			expect( themePref.options ).toHaveLength( 3 );
 			expect( themePref.columns ).toBe( 3 );
 			expect( config.preferences ).toHaveProperty( 'citizen-feature-pure-black' );
+		} );
+
+		it( 'should keep the "Color" label and description', () => {
+			const config = getDefaultConfig();
+
+			const themePref = config.preferences[ 'skin-theme' ];
+			expect( themePref.labelMsg ).toBe( 'citizen-theme-name' );
+			expect( themePref.descriptionMsg ).toBe( 'citizen-theme-description' );
 		} );
 	} );
 } );

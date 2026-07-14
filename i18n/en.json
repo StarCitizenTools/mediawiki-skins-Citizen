@@ -72,6 +72,7 @@
 	"citizen-preferences-section-behavior": "Behavior",
 
 	"citizen-theme-name": "Color",
+	"citizen-theme-name-v4": "Theme",
 	"citizen-theme-description": "Switch between light and dark mode",
 	"citizen-theme-day-label": "Light",
 	"citizen-theme-night-label": "Dark",
