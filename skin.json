@@ -992,7 +992,7 @@
 	"config": {
 		"ThemeDefault": {
 			"value": "auto",
-			"description": "Default theme of the skin. Valid values are 'light', 'dark' and 'auto'.",
+			"description": "Default theme of the skin. Accepts 'auto', 'light', 'dark', or any theme value such as 'black' or a wiki-defined theme.",
 			"descriptionmsg": "citizen-config-themedefault",
 			"public": true
 		},

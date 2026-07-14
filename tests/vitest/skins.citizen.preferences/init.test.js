@@ -12,6 +12,9 @@ Vue.createMwApp = vi.fn( () => ( { provide: mockProvide, mount: mockMount } ) );
 // Mutable mock — modify .overrides/.messages between tests
 const overridesMock = require( '../mocks/preferencesOverrides.js' );
 
+// Mutable mock — modify .wgCitizenThemeDefault between tests
+const configMock = require( '../mocks/preferencesConfig.js' );
+
 let initApp;
 
 beforeAll( async () => {
@@ -32,6 +35,8 @@ afterEach( () => {
 	// Reset overrides mock to defaults
 	overridesMock.overrides = null;
 	overridesMock.messages = {};
+	// Reset config mock to defaults
+	configMock.wgCitizenThemeDefault = 'auto';
 	// Reset register hook between tests
 	mw.hook( 'citizen.preferences.register' )._reset();
 } );
@@ -115,6 +120,24 @@ describe( 'initApp', () => {
 
 		// preferencesConfig.js mock has wgCitizenThemeDefault: 'auto' → maps to 'os'
 		expect( mockProvide ).toHaveBeenCalledWith( 'themeDefault', 'os' );
+	} );
+
+	it( 'should pass non-legacy theme defaults through to the app', () => {
+		configMock.wgCitizenThemeDefault = 'black';
+		document.body.innerHTML = '<div id="citizen-preferences-content"></div>';
+
+		initApp();
+
+		expect( mockProvide ).toHaveBeenCalledWith( 'themeDefault', 'black' );
+	} );
+
+	it( 'should map legacy theme default vocabulary', () => {
+		configMock.wgCitizenThemeDefault = 'dark';
+		document.body.innerHTML = '<div id="citizen-preferences-content"></div>';
+
+		initApp();
+
+		expect( mockProvide ).toHaveBeenCalledWith( 'themeDefault', 'night' );
 	} );
 
 	it( 'should fire citizen.preferences.register hook', () => {
