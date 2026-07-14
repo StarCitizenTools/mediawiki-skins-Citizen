@@ -13,6 +13,14 @@ mw.loader.require = vi.fn( () => ( {
 	}
 } ) );
 
+// Knob values served to the baseline measurement (themePreviewBaseline.js).
+// The module caches its one getComputedStyle read at module level, so the
+// spy below must serve these for whichever mount happens to fill the cache.
+const BASELINE_KNOBS = {
+	'--color-primary-oklch__h': '30',
+	'--color-progressive-hsl__h': '210'
+};
+
 let ThemePicker;
 
 const OPTIONS = [
@@ -36,6 +44,12 @@ function mountThemePicker( propsOverrides = {} ) {
 beforeAll( async () => {
 	const mod = await import( '../../../resources/skins.citizen.preferences/ThemePicker.vue' );
 	ThemePicker = mod.default;
+} );
+
+beforeEach( () => {
+	vi.spyOn( window, 'getComputedStyle' ).mockImplementation( () => ( {
+		getPropertyValue: ( name ) => BASELINE_KNOBS[ name ] || ''
+	} ) );
 } );
 
 afterEach( () => {
@@ -74,6 +88,18 @@ describe( 'ThemePicker', () => {
 		circles.forEach( ( circle ) => {
 			expect( circle.classes() ).toContain( 'citizen-theme-preview' );
 		} );
+	} );
+
+	it( 'publishes the measured identity baseline on the picker root', () => {
+		const wrapper = mountThemePicker();
+
+		const style = wrapper.find( '.citizen-preferences-themepicker' ).element.style;
+		expect(
+			style.getPropertyValue( '--citizen-preview-color-primary-oklch__h' )
+		).toBe( '30' );
+		expect(
+			style.getPropertyValue( '--citizen-preview-color-progressive-hsl__h' )
+		).toBe( '210' );
 	} );
 
 	it( 'gives each option a screen-reader label', () => {

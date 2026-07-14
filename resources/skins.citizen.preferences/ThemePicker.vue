@@ -1,5 +1,8 @@
 <template>
-	<div class="citizen-preferences-themepicker">
+	<div
+		ref="rootEl"
+		class="citizen-preferences-themepicker"
+	>
 		<div
 			class="citizen-preferences-themepicker__grid"
 			@mouseleave="hovered = null"
@@ -32,8 +35,9 @@
 </template>
 
 <script>
-const { defineComponent, ref, computed, watch } = require( 'vue' );
+const { defineComponent, ref, computed, watch, onMounted } = require( 'vue' );
 const { CdxRadio } = mw.loader.require( 'skins.citizen.preferences.codex' );
+const { measureIdentityBaseline } = require( './themePreviewBaseline.js' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
@@ -46,6 +50,7 @@ module.exports = exports = defineComponent( {
 	},
 	emits: [ 'update:modelValue' ],
 	setup( props ) {
+		const rootEl = ref( null );
 		const hovered = ref( null );
 		// A selection change (including keyboard arrow-key navigation, which
 		// doesn't fire mouseenter/leave) must win over a stuck hover so the
@@ -58,7 +63,21 @@ module.exports = exports = defineComponent( {
 			const option = props.options.find( ( o ) => o.value === value );
 			return option ? option.label : '';
 		} );
-		return { hovered, readoutLabel };
+		// Publish the wiki's identity-knob baseline (defaults plus any
+		// admin rebrand at :root) on the picker root: the circles'
+		// theme-preview scope (themePreview.less) declares its knobs as
+		// var( --citizen-preview-<knob>, <default> ), so these inline
+		// properties inherit into every circle as the pre-theme baseline.
+		onMounted( () => {
+			const baseline = measureIdentityBaseline();
+			for ( const knob in baseline ) {
+				rootEl.value.style.setProperty(
+					'--citizen-preview-' + knob.slice( 2 ),
+					baseline[ knob ]
+				);
+			}
+		} );
+		return { rootEl, hovered, readoutLabel };
 	}
 } );
 </script>

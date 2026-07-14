@@ -204,7 +204,7 @@ To make your theme the default for new visitors, set `$wgCitizenThemeDefault = '
 :::
 
 ::: tip
-On Citizen 4 the preview is live: because your theme uses the bare `.skin-theme-clientpref-<value>` class, the preferences panel paints each circle in the theme's real colors, so what you see in the picker matches what visitors get.
+On Citizen 4 the preview is live: because your theme uses the bare `.skin-theme-clientpref-<value>` class, the preferences panel paints each circle in the theme's real colors, so what you see in the picker matches what visitors get. Identity rebrands made at `:root` — the OKLCH hue knobs described in [Rebranding the primary color](../guide/migrating-to-citizen-4.md#rebranding-the-primary-color) — flow into the previews automatically. If you override other tokens globally beyond those knobs, target `:root, .citizen-theme-preview` so the previews pick them up too.
 :::
 
 ## Performance considerations

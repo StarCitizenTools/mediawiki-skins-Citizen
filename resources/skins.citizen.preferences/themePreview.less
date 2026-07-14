@@ -46,9 +46,10 @@
 
 		// Identity-knob bridge: an admin's :root rebrand can't inherit
 		// past this scope's local defaults, so these six knobs accept a
-		// measured baseline (set by the preferences panel) and fall back
-		// to the defaults above. Declared after the decls mixins so they
-		// win over the mixin-emitted plain knob values.
+		// measured baseline (measured by themePreviewBaseline.js,
+		// published by ThemePicker.vue on the picker root) and fall
+		// back to the defaults above. Declared after the decls mixins
+		// so they win over the mixin-emitted plain knob values.
 		--color-primary-oklch__h: var( --citizen-preview-color-primary-oklch__h, @color-primary-oklch__h-default );
 		--color-neutral-oklch__h: var( --citizen-preview-color-neutral-oklch__h, var( --color-primary-oklch__h ) );
 		--color-progressive-oklch__h: var( --citizen-preview-color-progressive-oklch__h, var( --color-primary-oklch__h ) );
