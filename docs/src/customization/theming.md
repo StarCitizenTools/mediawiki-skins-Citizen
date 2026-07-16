@@ -171,7 +171,7 @@ Add your theme to the `skin-theme` options in `MediaWiki:Citizen-preferences.jso
 }
 ```
 
-The picker sizes itself, so you don't set a column count. Use `label` for a plain-text name, or `labelMsg` with an interface message (e.g. `MediaWiki:Ocean-theme-label`) on multilingual wikis. Theme values may contain letters and numbers only.
+Use `label` for a plain-text name, or `labelMsg` with an interface message (e.g. `MediaWiki:Ocean-theme-label`). Theme values may contain letters and numbers only.
 
 #### Define the theme in CSS
 
@@ -200,11 +200,11 @@ Every property you don't override falls through to the default palette's [`light
 One limitation to know about: a few dark-mode extras are keyed to the built-in themes by name — the image dimming preference, and dark-mode fixes for some extensions — so they don't fire for custom themes. If your theme needs one of them, replicate it in your theme's CSS block.
 
 ::: tip
-To make your theme the default for new visitors, set `$wgCitizenThemeDefault = 'ocean';`. On Citizen 4 the preferences panel surfaces an unregistered default as its own entry — its value, title-cased — so visitors always see the active theme selected. Registering it in the picker is still worth doing: it earns a proper localized name and a permanent spot in the picker for everyone, not just people who already have it active.
+To make your theme the default for new visitors, set `$wgCitizenThemeDefault = 'ocean';`. The preferences panel surfaces an unregistered default as its own entry — its value, title-cased — so visitors always see the active theme selected. Registering it in the picker is still worth doing: it earns a proper localized name and a permanent spot in the picker for everyone, not just people who already have it active.
 :::
 
 ::: tip
-On Citizen 4 the preview is live: because your theme uses the bare `.skin-theme-clientpref-<value>` class, the preferences panel paints each circle in the theme's real colors, so what you see in the picker matches what visitors get. Identity rebrands made at `:root` — the OKLCH hue knobs described in [Rebranding the primary color](../guide/migrating-to-citizen-4.md#rebranding-the-primary-color) — flow into the previews automatically. If you override other tokens globally beyond those knobs, target `:root, .citizen-theme-preview` so the previews pick them up too.
+The preview is live: because your theme uses the bare `.skin-theme-clientpref-<value>` class, the preferences panel paints each circle in the theme's real colors, so what you see in the picker matches what visitors get. Identity rebrands made at `:root` — the OKLCH hue knobs described in [Rebranding the primary color](../guide/migrating-to-citizen-4.md#rebranding-the-primary-color) — flow into the previews automatically. If you override other tokens globally beyond those knobs, target `:root, .citizen-theme-preview` so the previews pick them up too.
 :::
 
 ## Performance considerations
