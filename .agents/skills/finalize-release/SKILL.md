@@ -73,14 +73,23 @@ EOF
 )"
 ```
 
-### 7. Trigger docs CI
+### 7. Rebuild the docs site
+
+The versioned docs (`/v<MINOR>/`) deploy **automatically** when Release Please publishes the release — `📚 Docs deploy` (`docs-deploy.yml`) runs its `deploy-version` job on the `release: published` event. Don't trigger that.
+
+The **root docs** still need a manual rebuild: the changelogs page is built from the GitHub releases API, so it won't show the new release (with the notes you just wrote) until the root docs rebuild. Editing the release fires `release: edited`, **not** `published`, so step 6 does not re-trigger any deploy. Dispatch it after editing:
 
 ```bash
-gh workflow run "<Docs CI workflow name>" --ref main
-gh run watch <RUN_ID> --exit-status
+gh workflow run docs-deploy.yml --ref main
+# the dispatched run takes a few seconds to register, then capture and watch it
+sleep 5
+RUN_ID=$(gh run list --workflow=docs-deploy.yml --event=workflow_dispatch -L 1 --json databaseId --jq '.[0].databaseId')
+gh run watch "$RUN_ID" --exit-status
 ```
 
-Wait for it to succeed before reporting done.
+This runs only the `deploy-main` job (`deploy-version` is skipped on `workflow_dispatch` — expected). Wait for it to succeed, then confirm the live changelogs page lists the new version before reporting done.
+
+> `📖 Docs CI` (`ci-docs.yml`) only lints and builds docs PRs — it does **not** deploy. Don't use it here.
 
 ## Release body format
 
@@ -125,4 +134,5 @@ Wait for it to succeed before reporting done.
 | Stale username when account was renamed | Two trailers with the same numeric ID = same user. Resolve via `gh api user/<id>` |
 | Guessing new contributors | Always use `generate-notes` API — do not infer from git history |
 | Technical jargon in highlights | Rewrite from the user's perspective — what changed for them? |
-| Forgetting to trigger docs CI | Always run the docs workflow as the final step |
+| Forgetting to rebuild the docs site | Dispatch `📚 Docs deploy` (`docs-deploy.yml`) as the final step — `📖 Docs CI` only lints |
+| Expecting the release edit to rebuild docs | `gh release edit` fires `release: edited`, not `published` — dispatch `deploy-main` manually after editing |
