@@ -36,22 +36,13 @@ final class PreviewChannel {
 	public const HTML_CLASS = 'citizen-v4';
 
 	/**
-	 * Pre-rename generation class, stamped alongside HTML_CLASS for one
-	 * minor release so CSS keeps matching HTML cached before the rename.
-	 */
-	// citizen-v4-remove — drop in the minor release after 3.18
-	public const HTML_CLASS_LEGACY = 'citizen-token-new';
-
-	/**
 	 * Resolve the channel for one request.
 	 *
-	 * Precedence: URL param > cookie > $wgCitizenPreview >
-	 * $wgCitizenUseNewToken (deprecated alias). At the URL/cookie level
-	 * '0' is an explicit opt-out and TARGET_MAJOR an explicit opt-in;
-	 * any other value (including absent) is inert and falls through.
-	 * Config and the alias are opt-in-only signals — there is no
-	 * config-level opt-out that suppresses the alias; stable is simply
-	 * both keys at their defaults.
+	 * Precedence: URL param > cookie > $wgCitizenPreview. At the
+	 * URL/cookie level '0' is an explicit opt-out and TARGET_MAJOR an
+	 * explicit opt-in; any other value (including absent) is inert and
+	 * falls through. $wgCitizenPreview is an opt-in-only signal — there
+	 * is no config-level opt-out; stable is simply the default.
 	 *
 	 * @param ?string $urlVal Raw ?citizenpreview= value, null if absent
 	 * @param ?string $cookieVal Raw citizenpreview cookie value, null if absent
@@ -63,13 +54,7 @@ final class PreviewChannel {
 			return $explicit;
 		}
 
-		if ( (int)$config->get( 'CitizenPreview' ) === self::TARGET_MAJOR ) {
-			return true;
-		}
-
-		// citizen-v4-remove — deprecated alias, drop with the skin.json entry.
-		// Loose cast for exact parity with the pre-rename behavior.
-		return (bool)$config->get( 'CitizenUseNewToken' );
+		return (int)$config->get( 'CitizenPreview' ) === self::TARGET_MAJOR;
 	}
 
 	/**

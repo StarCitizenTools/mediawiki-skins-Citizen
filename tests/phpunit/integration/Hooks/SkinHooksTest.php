@@ -494,7 +494,6 @@ class SkinHooksTest extends MediaWikiIntegrationTestCase {
 		$out->method( 'getConfig' )->willReturn( new HashConfig( $config + [
 			'CitizenEnablePreferences' => false,
 			'CitizenPreview' => 0,
-			'CitizenUseNewToken' => false,
 		] ) );
 
 		return $out;
@@ -513,7 +512,7 @@ class SkinHooksTest extends MediaWikiIntegrationTestCase {
 		$out->expects( $this->once() )->method( 'addModuleStyles' )
 			->with( [ 'skins.citizen.tokens.new' ] );
 		$out->expects( $this->once() )->method( 'addHtmlClasses' )
-			->with( [ 'citizen-v4', 'citizen-token-new' ] );
+			->with( [ 'citizen-v4' ] );
 
 		$this->newSkinHooks()->onBeforePageDisplay( $out, $this->createCitizenSkinMock() );
 	}
@@ -558,16 +557,6 @@ class SkinHooksTest extends MediaWikiIntegrationTestCase {
 		$this->newSkinHooks()->onBeforePageDisplay( $out, $this->createCitizenSkinMock() );
 
 		$this->assertSame( [], $request->response()->getCookies() );
-	}
-
-	public function testOnBeforePageDisplayAliasConfigActivatesPreviewAndDeprecates(): void {
-		$this->expectDeprecationAndContinue( '/CitizenUseNewToken/' );
-		$request = new FauxRequest();
-		$out = $this->createPreviewOutputPage( $request, [ 'CitizenUseNewToken' => true ] );
-		$out->expects( $this->once() )->method( 'addModuleStyles' )
-			->with( [ 'skins.citizen.tokens.new' ] );
-
-		$this->newSkinHooks()->onBeforePageDisplay( $out, $this->createCitizenSkinMock() );
 	}
 
 	public function testOnBeforePageDisplaySkipsNonCitizen(): void {

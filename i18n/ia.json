@@ -204,6 +204,5 @@
 	"citizen-command-palette-mode-user-noresults-title": "Necun usator correspondente",
 	"citizen-command-palette-mode-user-placeholder": "Cercar usatores",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Cercar in le texto complete de tote le paginas",
-	"citizen-command-palette-queryaction-page-edit-description": "Crear o modificar pagina",
-	"citizen-config-usenewtoken": "Option pro activar le nove serie de tokens de color. Es predefinite como false; mitte a ver pro activar. Le nove serie devenira le predefinition (e le ancian essera eliminate) in le proxime version major de Citizen."
+	"citizen-command-palette-queryaction-page-edit-description": "Crear o modificar pagina"
 }

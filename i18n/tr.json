@@ -215,6 +215,5 @@
 	"citizen-command-palette-mode-user-noresults-title": "Eşleşen kullanıcı yok",
 	"citizen-command-palette-mode-user-placeholder": "Kullanıcıları ara",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Tüm sayfaların tam metnini arayın",
-	"citizen-command-palette-queryaction-page-edit-description": "Sayfa oluştur veya düzenle",
-	"citizen-config-usenewtoken": "Yeni renk belirteci işlem hattı için isteğe bağlı seçenek. Varsayılan değer false'tur; etkinleştirmek için true olarak ayarlayın. Yeni işlem hattı, bir sonraki büyük Citizen sürümünde varsayılan hale gelecek ve eski işlem hattı kaldırılacaktır."
+	"citizen-command-palette-queryaction-page-edit-description": "Sayfa oluştur veya düzenle"
 }
