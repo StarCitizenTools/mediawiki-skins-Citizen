@@ -29,14 +29,10 @@
 		display: none;
 	}
 
-	// Move header to the bottom of the page
-	#content {
-		display: flex;
-		flex-direction: column;
-	}
-
+	// The header renders after the content in skin.mustache, which puts it
+	// at the bottom of the page without a layout-shift-prone CSS reorder
 	.citizen-page-header {
-		order: 9999;
+		margin-top: calc( var( --space-xl ) * 2 );
 
 		&-inner {
 			justify-content: center;
