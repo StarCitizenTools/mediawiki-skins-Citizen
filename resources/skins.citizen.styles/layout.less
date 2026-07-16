@@ -37,6 +37,17 @@
 	margin-top: var( --space-xl );
 }
 
+// The desktop padding-block rule below stops at the desktop breakpoint, so
+// reserve the top edge here for a mobile top header (reads the token, which
+// is 0px in every other placement). The bottom edge needs no equivalent:
+// with autohide on the bottom header overlays content only transiently, and
+// with autohide off the footer margin ( Footer.less ) reserves it.
+@media ( max-width: @max-width-breakpoint-tablet ) {
+	.citizen-page-container {
+		padding-block-start: var( --header-size-block-start );
+	}
+}
+
 @media ( min-width: @min-width-breakpoint-desktop ) {
 	.citizen-page-container {
 		// Reserve space for header

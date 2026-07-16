@@ -156,6 +156,13 @@ class SkinCitizen extends SkinMustache {
 		}
 		$classes[] = 'citizen-header-position-' . $headerPosition;
 
+		// Header position (mobile and tablet)
+		$headerPositionMobile = $config->get( 'CitizenHeaderPositionMobile' );
+		if ( !in_array( $headerPositionMobile, [ 'top', 'bottom' ], true ) ) {
+			$headerPositionMobile = 'bottom';
+		}
+		$classes[] = 'citizen-header-position-mobile-' . $headerPositionMobile;
+
 		$attrs['class'] = trim( $attrs['class'] . ' ' . implode( ' ', $classes ) );
 		return $attrs;
 	}

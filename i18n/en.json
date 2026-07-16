@@ -230,6 +230,7 @@
 	"citizen-command-palette-queryaction-fulltext-search-description": "Search the full text of all pages",
 	"citizen-command-palette-queryaction-page-edit-description": "Create or edit page",
 
+	"citizen-config-headerpositionmobile": "Position of the site header on the mobile and tablet layout (below the desktop breakpoint). Accepts 'top' or 'bottom'; any other value falls back to 'bottom'.",
 	"citizen-config-preview": "Version-scoped switch for the Citizen preview channel. Set to the upcoming major release number (currently 4) to preview it before release; 0 or any other value keeps the stable experience.",
 	"citizen-config-usenewtoken": "Opt-in switch for the new color token pipeline. Defaults to false; set to true to enable. The new pipeline becomes the default — and legacy is removed — in the next major Citizen release."
 }

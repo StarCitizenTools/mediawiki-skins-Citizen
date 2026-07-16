@@ -171,9 +171,20 @@
 
 			&.citizen-sticky-header-visible {
 				.citizen-sticky-header-container {
-					transform: translate3d( 0, -100%, 0 );
+					// The extra --header-size-block-start travel matters only for a
+					// top mobile header: parked at plain -100% the bar would sit in
+					// the band the hidden header vacates. The token is 0px in every
+					// other placement, so this reduces to -100% there.
+					transform: translate3d( 0, calc( -100% - var( --header-size-block-start ) ), 0 );
 				}
 			}
+		}
+
+		// Top mobile header slides up instead of down. (No sticky-bar rule
+		// needed here — its base transform above already travels past the
+		// header via --header-size-block-start.)
+		&.citizen-header-position-mobile-top .citizen-scroll--down .citizen-header {
+			transform: translate3d( 0, -100%, 0 );
 		}
 	}
 }

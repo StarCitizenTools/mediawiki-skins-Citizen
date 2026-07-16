@@ -1112,6 +1112,12 @@
 			"descriptionmsg": "citizen-config-headerposition",
 			"public": true
 		},
+		"HeaderPositionMobile": {
+			"value": "bottom",
+			"description": "Position of the header on the mobile and tablet layout (below the desktop breakpoint). Possible values: 'top' and 'bottom'",
+			"descriptionmsg": "citizen-config-headerpositionmobile",
+			"public": true
+		},
 		"Preview": {
 			"value": 0,
 			"description": "Version-scoped switch for the Citizen preview channel. Set to the upcoming major release number (currently 4) to preview it ahead of release — during this cycle that enables the new color token pipeline. 0 or any other value keeps the stable experience, so a stale setting never enrolls the wiki in a later cycle.",

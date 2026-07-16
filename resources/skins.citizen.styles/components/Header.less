@@ -18,6 +18,13 @@
 	border-inline-start-width: var( --header-border-inline-start-width );
 	border-inline-end-width: var( --header-border-inline-end-width );
 
+	// A top mobile header sits under the device cutout, not the home bar
+	@media ( max-width: @max-width-breakpoint-tablet ) {
+		.citizen-header-position-mobile-top & {
+			padding: ~'max( env( safe-area-inset-top ), var( --space-xs ) ) max( env( safe-area-inset-right ), var( --space-xs ) ) var( --space-xs ) max( env( safe-area-inset-left ), var( --space-xs ) )';
+		}
+	}
+
 	&__item {
 		display: flex;
 		align-items: center;
