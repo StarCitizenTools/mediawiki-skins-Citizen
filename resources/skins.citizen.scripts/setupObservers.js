@@ -130,15 +130,21 @@ const setupTableOfContents = (
 	} );
 	const elements = () => bodyContent.querySelectorAll( `${ HEADING_SELECTOR }, .mw-body-content` );
 
+	// Whether the scroll spy has activated any section yet. The initial
+	// activation is deferred to idle (see below); once the spy has fired,
+	// its live state is authoritative and the deferred pass must not run.
+	let sectionsActivated = false;
+
 	const sectionObserver = createSectionObserver( {
 		window,
 		mw,
 		IntersectionObserver,
 		elements: elements(),
 		topMargin: getDocumentScrollPaddingTop( window, document ),
-		onIntersection: getHeadingIntersectionHandler(
-			tableOfContents.changeActiveSections.bind( tableOfContents )
-		)
+		onIntersection: getHeadingIntersectionHandler( ( ids ) => {
+			sectionsActivated = true;
+			tableOfContents.changeActiveSections( ids );
+		} )
 	} );
 	const updateElements = () => {
 		sectionObserver.resume();
@@ -228,7 +234,20 @@ const setupTableOfContents = (
 		}
 	};
 
-	setInitialActiveSection();
+	// The boot idle tasks flip document-level classes (performance mode,
+	// animations-ready) and append to <body>; geometry reads issued before
+	// those writes are painted force a full-page reflow. Run the initial
+	// activation at idle plus one frame so its reads land on clean layout.
+	mw.requestIdleCallback( () => {
+		deferUntilFrame( () => {
+			// If the user scrolled or clicked in the meantime, the spy's
+			// live state wins — the boot-time hash heuristic (T325086)
+			// would activate a stale target.
+			if ( !sectionsActivated ) {
+				setInitialActiveSection();
+			}
+		}, 1 );
+	}, { timeout: 3000 } );
 
 	return tableOfContents;
 };
