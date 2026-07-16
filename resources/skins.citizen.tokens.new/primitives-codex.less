@@ -162,11 +162,7 @@
 }
 
 .new-primitives-codex() {
-	// The second selector is the pre-rename generation class, kept for
-	// one minor so compiled CSS keeps matching cached HTML.
-	// citizen-v4-remove
-	:where( :root.citizen-v4 ),
-	:where( :root.citizen-token-new ) {
+	:where( :root.citizen-v4 ) {
 		.new-primitives-codex-decls();
 	}
 }

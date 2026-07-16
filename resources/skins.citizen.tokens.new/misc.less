@@ -39,11 +39,10 @@
 	--backdrop-filter-blur: blur( 2px );
 	--backdrop-filter-frosted-glass: ~'blur( 16px ) saturate( 140% )';
 
-	// Citizen extensions — legacy aliases. mixins.less still
-	// consumes --color-progressive-oklch__h. The HSL trio feeds
-	// tokens-citizen.less's deprecated --color-primary__h/__s/__l.
-	// __l is theme-variant — dark override in dark-overrides.less.
-	// Drop alongside the legacy pipeline.
+	// Citizen extensions — legacy back-compat aliases, dropped alongside
+	// the legacy pipeline. The HSL trio feeds tokens-citizen.less's
+	// deprecated --color-primary__h/__s/__l; __l is theme-variant (dark
+	// override in dark-overrides.less).
 	--color-progressive-oklch__h: var( --color-primary-oklch__h );
 	--color-progressive-hsl__h: @color-progressive-hsl__h-default;
 	--color-progressive-hsl__s: @color-progressive-hsl__s-default;
@@ -51,11 +50,7 @@
 }
 
 .new-misc() {
-	// The second selector is the pre-rename generation class, kept for
-	// one minor so compiled CSS keeps matching cached HTML.
-	// citizen-v4-remove
-	:where( :root.citizen-v4 ),
-	:where( :root.citizen-token-new ) {
+	:where( :root.citizen-v4 ) {
 		.new-misc-decls();
 	}
 }

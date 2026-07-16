@@ -217,6 +217,5 @@
 	"citizen-command-palette-mode-user-noresults-title": "Участники не найдены",
 	"citizen-command-palette-mode-user-placeholder": "Поиск участников",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Поиск полного текста на всех страницах",
-	"citizen-command-palette-queryaction-page-edit-description": "Создать или редактировать страницу",
-	"citizen-config-usenewtoken": "Переключатель для включения нового конвейера цветовых токенов. По умолчанию — false (выключен); установите значение true для включения. Новый конвейер станет конвейером по умолчанию, а старый будет удалён, в следующем крупном выпуске Citizen."
+	"citizen-command-palette-queryaction-page-edit-description": "Создать или редактировать страницу"
 }

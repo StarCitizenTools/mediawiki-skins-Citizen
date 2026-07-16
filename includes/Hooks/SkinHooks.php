@@ -62,11 +62,9 @@ class SkinHooks implements
 	 * the color-token module and stamp the generation class.
 	 *
 	 * Priority: ?citizenpreview= URL param > citizenpreview cookie >
-	 * $wgCitizenPreview config, with deprecated $wgCitizenUseNewToken
-	 * as a second opt-in signal — no config value suppresses it. An
-	 * explicit URL choice also writes a 24-hour cookie, so a flip takes
-	 * effect on subsequent requests — exactly one token module ships
-	 * per request.
+	 * $wgCitizenPreview config. An explicit URL choice also writes a
+	 * 24-hour cookie, so a flip takes effect on subsequent requests —
+	 * exactly one token module ships per request.
 	 */
 	private static function applyPreviewChannel( OutputPage $out ): void {
 		$request = $out->getRequest();
@@ -82,23 +80,9 @@ class SkinHooks implements
 			);
 		}
 
-		// citizen-v4-remove — deprecated alias notice, drop with the alias
-		if ( $config->get( 'CitizenUseNewToken' ) ) {
-			wfDeprecatedMsg(
-				'$wgCitizenUseNewToken is deprecated; set $wgCitizenPreview = '
-					. PreviewChannel::TARGET_MAJOR . ' instead',
-				'3.18.0',
-				'Citizen'
-			);
-		}
-
 		if ( PreviewChannel::isPreview( $urlVal, $cookieVal, $config ) ) {
 			$out->addModuleStyles( [ 'skins.citizen.tokens.new' ] );
-			$out->addHtmlClasses( [
-				PreviewChannel::HTML_CLASS,
-				// citizen-v4-remove — pre-rename class for cached HTML
-				PreviewChannel::HTML_CLASS_LEGACY,
-			] );
+			$out->addHtmlClasses( [ PreviewChannel::HTML_CLASS ] );
 		} else {
 			// citizen-v4-remove — legacy pipeline, deleted at the 4.0 flip
 			$out->addModuleStyles( [ 'skins.citizen.tokens' ] );

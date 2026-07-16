@@ -227,6 +227,5 @@
 	"citizen-command-palette-mode-user-placeholder": "搜索用户",
 	"citizen-command-palette-queryaction-fulltext-search-description": "在所有页面全文搜索",
 	"citizen-command-palette-queryaction-page-edit-description": "创建或编辑页面",
-	"citizen-config-preview": "Citizen预览通道的版本控制开关。设置为即将发布的主版本号（当前为4）即可在正式发布前抢先预览；设置为0或任何其他值则继续体验稳定版本。",
-	"citizen-config-usenewtoken": "启用/禁用新颜色 Token 管道。默认值为 false，设置为 true 即可启用。在下一个 Citizen 主要版本中，新管道将成为默认选项，同时移除旧版管道。"
+	"citizen-config-preview": "Citizen预览通道的版本控制开关。设置为即将发布的主版本号（当前为4）即可在正式发布前抢先预览；设置为0或任何其他值则继续体验稳定版本。"
 }

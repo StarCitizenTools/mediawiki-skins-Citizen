@@ -206,6 +206,5 @@
 	"citizen-command-palette-mode-user-placeholder": "Buscar usuarios",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Buscar o texto completo en todas as páxinas",
 	"citizen-command-palette-queryaction-page-edit-description": "Crear ou editar unha páxina",
-	"citizen-config-preview": "O interruptor de versión para a canle de vista previa de Citizen. Defíneo no número de versión maior seguinte (actualmente a versión 4) para previsualizala antes do lanzamento; 0 ou calquera outro valor mantén a experiencia estable.",
-	"citizen-config-usenewtoken": "Opción de activación para a nova canle de tokens de cor. O valor predeterminado é «false»; establéceo en «true» para activala. A nova canle converterase na predeterminada (e a antiga eliminarase) na seguinte versión de Citizen."
+	"citizen-config-preview": "O interruptor de versión para a canle de vista previa de Citizen. Defíneo no número de versión maior seguinte (actualmente a versión 4) para previsualizala antes do lanzamento; 0 ou calquera outro valor mantén a experiencia estable."
 }

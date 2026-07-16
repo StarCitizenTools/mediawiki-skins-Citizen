@@ -210,6 +210,5 @@
 	"citizen-command-palette-mode-user-placeholder": "Gebruikers zoeken",
 	"citizen-command-palette-queryaction-fulltext-search-description": "In de volledige tekst van alle pagina’s zoeken",
 	"citizen-command-palette-queryaction-page-edit-description": "Pagina aanmaken of bewerken",
-	"citizen-config-preview": "Schakelaar met versiegebonden bereik voor het voorvertoningskanaal van Citizen. Stel in op het nummer van de komende grote versie (momenteel 4) om deze voorafgaand aan de uitgave te bekijken; met 0 of een andere waarde blijft de stabiele versie behouden.",
-	"citizen-config-usenewtoken": "Schakelaar voor het inschakelen van de nieuwe kleurtoken-pipeline. Standaard staat deze op 'false'; zet hem op 'true' om hem in te schakelen. De nieuwe pipeline wordt de standaard en de oude pipeline wordt verwijderd in de volgende grote Citizen-release."
+	"citizen-config-preview": "Schakelaar met versiegebonden bereik voor het voorvertoningskanaal van Citizen. Stel in op het nummer van de komende grote versie (momenteel 4) om deze voorafgaand aan de uitgave te bekijken; met 0 of een andere waarde blijft de stabiele versie behouden."
 }

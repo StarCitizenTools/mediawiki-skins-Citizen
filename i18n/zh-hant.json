@@ -216,6 +216,5 @@
 	"citizen-command-palette-mode-user-noresults-title": "沒有符合的使用者",
 	"citizen-command-palette-mode-user-placeholder": "搜尋使用者",
 	"citizen-command-palette-queryaction-fulltext-search-description": "搜尋所有頁面的全文",
-	"citizen-command-palette-queryaction-page-edit-description": "建立或編輯頁面",
-	"citizen-config-usenewtoken": "請啟用/停用新彩色權仗的管道流程。預設為false；設定為true即可啟用。在下一個Citizen主要版本中，新的流程將成為預設的管道流程，舊流程將被移除。"
+	"citizen-command-palette-queryaction-page-edit-description": "建立或編輯頁面"
 }

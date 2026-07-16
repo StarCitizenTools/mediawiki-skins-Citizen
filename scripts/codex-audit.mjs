@@ -135,7 +135,7 @@ function parseCitizenSemantics() {
 	// Parse every .less file in the new-token module directory except
 	// the entry (tokens.less) and the primitive files (already handled
 	// by parseCitizenPrimitives). Each category file emits at
-	// :root.citizen-token-new and is parsed for token declarations.
+	// :root.citizen-v4 and is parsed for token declarations.
 	const SKIP = new Set( [ 'tokens.less', 'primitives-codex.less', 'primitives-citizen.less' ] );
 	const files = readdirSync( CITIZEN_TOKENS_DIR )
 		.filter( name => name.endsWith( '.less' ) && !SKIP.has( name ) )
