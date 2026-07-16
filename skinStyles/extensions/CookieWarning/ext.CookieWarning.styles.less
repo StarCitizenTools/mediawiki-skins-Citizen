@@ -13,6 +13,9 @@
 
 .mw-cookiewarning-container {
 	right: 0;
+	// Sit above the site header whenever it occupies the bottom edge —
+	// --header-size-block-end is 0px in every other placement
+	bottom: var( --header-size-block-end );
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: var( --space-sm );
@@ -33,10 +36,6 @@
 		.citizen-header-position-left & {
 			left: var( --header-size-inline-start );
 		}
-	}
-
-	.citizen-header-position-bottom & {
-		bottom: var( --header-size-block-end );
 	}
 
 	.mw-cookiewarning-text {
