@@ -204,7 +204,6 @@
 				"resources/skins.citizen.scripts/overflowElements/stickyHeader.js",
 				"resources/skins.citizen.scripts/performance.js",
 				"resources/skins.citizen.scripts/preferences.js",
-				"resources/skins.citizen.scripts/resizeObserver.js",
 				"resources/skins.citizen.scripts/scrollObserver.js",
 				"resources/skins.citizen.scripts/sectionObserver.js",
 				"resources/skins.citizen.scripts/search.js",
