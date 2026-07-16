@@ -137,10 +137,16 @@ module.exports = exports = defineComponent( {
 
 	// The whole radio is one small circular control: keep the pointer
 	// cursor across all of it — Codex's invisible input overlay and label
-	// wrappers otherwise reset the cursor over parts of the circle.
+	// wrappers otherwise reset the cursor over parts of the circle. The
+	// selected one is a no-op to click, so it gets no pointer affordance.
 	.cdx-radio,
 	.cdx-radio * {
 		cursor: pointer;
+	}
+
+	.cdx-radio:has( .cdx-radio__input:checked ),
+	.cdx-radio:has( .cdx-radio__input:checked ) * {
+		cursor: default;
 	}
 
 	.cdx-radio {
