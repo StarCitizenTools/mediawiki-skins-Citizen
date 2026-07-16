@@ -5,20 +5,24 @@
  * Codex's bg-* tier hierarchy. surface-0 mirrors background-color-base;
  * surfaces 1+ step into tinted neutrals for elevation.
  */
+.new-surface-decls() {
+	--color-surface-0: light-dark( var( --color-white ), var( --color-neutral-1000 ) );
+	--color-surface-1: light-dark( var( --color-neutral-50 ), var( --color-neutral-900 ) );
+	--color-surface-1--hover: light-dark( var( --color-neutral-100 ), var( --color-neutral-800 ) );
+	--color-surface-1--active: light-dark( var( --color-neutral-200 ), var( --color-neutral-700 ) );
+	--color-surface-2: light-dark( var( --color-neutral-100 ), var( --color-neutral-800 ) );
+	--color-surface-2--hover: light-dark( var( --color-neutral-200 ), var( --color-neutral-700 ) );
+	--color-surface-2--active: light-dark( var( --color-neutral-300 ), var( --color-neutral-600 ) );
+	--color-surface-3: light-dark( var( --color-neutral-200 ), var( --color-neutral-700 ) );
+	--color-surface-4: light-dark( var( --color-neutral-300 ), var( --color-neutral-600 ) );
+}
+
 .new-surface() {
 	// The second selector is the pre-rename generation class, kept for
 	// one minor so compiled CSS keeps matching cached HTML.
 	// citizen-v4-remove
-	:root.citizen-v4,
-	:root.citizen-token-new {
-		--color-surface-0: light-dark( var( --color-white ), var( --color-neutral-1000 ) );
-		--color-surface-1: light-dark( var( --color-neutral-50 ), var( --color-neutral-900 ) );
-		--color-surface-1--hover: light-dark( var( --color-neutral-100 ), var( --color-neutral-800 ) );
-		--color-surface-1--active: light-dark( var( --color-neutral-200 ), var( --color-neutral-700 ) );
-		--color-surface-2: light-dark( var( --color-neutral-100 ), var( --color-neutral-800 ) );
-		--color-surface-2--hover: light-dark( var( --color-neutral-200 ), var( --color-neutral-700 ) );
-		--color-surface-2--active: light-dark( var( --color-neutral-300 ), var( --color-neutral-600 ) );
-		--color-surface-3: light-dark( var( --color-neutral-200 ), var( --color-neutral-700 ) );
-		--color-surface-4: light-dark( var( --color-neutral-300 ), var( --color-neutral-600 ) );
+	:where( :root.citizen-v4 ),
+	:where( :root.citizen-token-new ) {
+		.new-surface-decls();
 	}
 }

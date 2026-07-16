@@ -165,21 +165,20 @@ Add your theme to the `skin-theme` options in `MediaWiki:Citizen-preferences.jso
         { "value": "night", "labelMsg": "citizen-theme-night-label" },
         { "value": "black", "labelMsg": "citizen-theme-black-label" },
         { "value": "ocean", "label": "Ocean" }
-      ],
-      "columns": 5
+      ]
     }
   }
 }
 ```
 
-The picker grid keeps the built-in column count unless you set `columns` to match your option count — leave it out and your fifth theme wraps onto a row of its own. Use `label` for a plain-text name, or `labelMsg` with an interface message (e.g. `MediaWiki:Ocean-theme-label`) on multilingual wikis. Theme values may contain letters and numbers only.
+Use `label` for a plain-text name, or `labelMsg` with an interface message (e.g. `MediaWiki:Ocean-theme-label`). Theme values may contain letters and numbers only.
 
 #### Define the theme in CSS
 
 Add a block to `MediaWiki:Citizen.css` keyed to your theme's value, starting with a `color-scheme` declaration — the comments walk through the rest:
 
 ```css
-:root.skin-theme-clientpref-ocean {
+.skin-theme-clientpref-ocean {
     color-scheme: dark;
 
     /* Dark baseline for effects light-dark() can't express — copy as-is */
@@ -194,16 +193,14 @@ Add a block to `MediaWiki:Citizen.css` keyed to your theme's value, starting wit
 }
 ```
 
+Use the bare `.skin-theme-clientpref-<value>` class (no `:root` prefix) — that is what lets the preferences panel paint a true-color preview of your theme.
+
 Every property you don't override falls through to the default palette's [`light-dark()` pairs](../guide/migrating-to-citizen-4.md#light-and-dark-are-one-declaration-now) — color values that carry a light and a dark side and resolve per `color-scheme`. A dark theme starts from the built-in dark palette, a light theme (`color-scheme: light`) from the light palette, and you sculpt from there. The hue channels are the most useful knobs — `--color-primary-oklch__h` alone rebrands the accent, and `--color-neutral-oklch__h` tints the surfaces to match; see [Rebranding the primary color](../guide/migrating-to-citizen-4.md#rebranding-the-primary-color) for how the two relate.
 
 One limitation to know about: a few dark-mode extras are keyed to the built-in themes by name — the image dimming preference, and dark-mode fixes for some extensions — so they don't fire for custom themes. If your theme needs one of them, replicate it in your theme's CSS block.
 
 ::: tip
-To make your theme the default for new visitors, set `$wgCitizenThemeDefault = 'ocean';`. Keep the theme registered in the picker too — the preferences panel can't show a selection for a value it doesn't know about.
-:::
-
-::: warning
-The theme picker's preview swatch can't read your CSS, so custom themes preview with an adaptive light/dark swatch rather than your palette.
+Set `$wgCitizenThemeDefault = 'ocean';` to make your theme the default for new visitors.
 :::
 
 ## Performance considerations

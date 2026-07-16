@@ -54,6 +54,13 @@
 							:selected="values[ pref.featureName ]"
 							@update:selected="setValue( pref.featureName, $event )"
 						></cdx-select>
+						<theme-picker
+							v-else-if="pref.featureName === 'skin-theme' && isV4"
+							:model-value="values[ pref.featureName ]"
+							:options="pref.options"
+							:feature-name="pref.featureName"
+							@update:model-value="setValue( pref.featureName, $event )"
+						></theme-picker>
 						<radio-group
 							v-else
 							:model-value="values[ pref.featureName ]"
@@ -74,6 +81,7 @@ const { defineComponent, computed, inject, reactive, ref, watch } = require( 'vu
 const { NormalizedPreferencesConfig } = require( './types.js' );
 const { CdxField, CdxSelect, CdxToggleSwitch } = mw.loader.require( 'skins.citizen.preferences.codex' );
 const RadioGroup = require( './RadioGroup.vue' );
+const ThemePicker = require( './ThemePicker.vue' );
 const useVisibility = require( './useVisibility.js' );
 const { resolveLabel } = require( './configRegistry.js' );
 const clientPrefs = require( './clientPrefs.polyfill.js' )();
@@ -84,6 +92,9 @@ const clientPrefs = require( './clientPrefs.polyfill.js' )();
  * tokens (--color-surface-0, --color-base) to resolve to the correct
  * side per preview — without swapping classes or reading computed
  * styles.
+ *
+ * citizen-v4-remove — legacy-only. The v4 ThemePicker paints the real
+ * theme via its class, so this whole function dies at the 4.0 flip.
  *
  * @param {string} value - Theme value, e.g. 'os', 'day', 'night', 'black'
  * @return {string}
@@ -102,6 +113,18 @@ function getThemeColorScheme( value ) {
 	return 'light dark';
 }
 
+/**
+ * Capitalize the first letter of a theme value for a display label.
+ * Theme values are already [a-zA-Z0-9]+ (clientPrefs enforces this), so the
+ * result is safe to render as escaped text.
+ *
+ * @param {string} value
+ * @return {string}
+ */
+function titleCase( value ) {
+	return value.charAt( 0 ).toUpperCase() + value.slice( 1 );
+}
+
 // @vue/component
 module.exports = exports = defineComponent( {
 	name: 'App',
@@ -109,11 +132,34 @@ module.exports = exports = defineComponent( {
 		CdxField,
 		CdxSelect,
 		CdxToggleSwitch,
-		RadioGroup
+		RadioGroup,
+		ThemePicker
 	},
 	setup() {
 		/** @type {NormalizedPreferencesConfig} */
 		const config = inject( 'preferencesConfig' );
+		// The v4 theme picker (ThemePicker) replaces the legacy RadioGroup
+		// swatch grid for skin-theme. citizen-v4-remove — at the 4.0 flip,
+		// drop the `&& isV4` from ThemePicker's template condition so it
+		// always claims skin-theme, and delete this const. RadioGroup.vue
+		// itself stays: it still renders wiki-defined radio preferences.
+		const isV4 = document.documentElement.classList.contains( 'citizen-v4' );
+
+		// A theme applied to <html> but absent from the picker options
+		// (e.g. an unregistered default) is surfaced as a real, selectable
+		// card so the panel shows the true selection. Captured once so it
+		// persists even after switching to another theme.
+		const themeOptionValues = new Set(
+			( ( config.preferences[ 'skin-theme' ] &&
+				config.preferences[ 'skin-theme' ].options ) || [] )
+				.map( ( opt ) => opt.value )
+		);
+		const activeTheme = clientPrefs.get( 'skin-theme' );
+		const syntheticTheme = (
+			isV4 && typeof activeTheme === 'string' &&
+			!themeOptionValues.has( activeTheme )
+		) ? { value: activeTheme, label: titleCase( activeTheme ) } : null;
+
 		const values = reactive( {} );
 		const visibilities = reactive( {} );
 
@@ -135,6 +181,14 @@ module.exports = exports = defineComponent( {
 			const allowedValues = new Set(
 				prefConfig.options.map( ( opt ) => opt.value )
 			);
+			// On Citizen 4 the theme applied to <html> is authoritative
+			// even when it isn't a registered option (e.g. an unregistered
+			// $wgCitizenThemeDefault): surface it as the selection instead
+			// of snapping to the first theme.
+			if ( featureName === 'skin-theme' && isV4 && typeof storedValue === 'string' ) {
+				values[ featureName ] = storedValue;
+				return;
+			}
 			values[ featureName ] = (
 				typeof storedValue === 'string' && allowedValues.has( storedValue )
 			) ? storedValue : prefConfig.options[ 0 ].value;
@@ -185,12 +239,22 @@ module.exports = exports = defineComponent( {
 									value: opt.value,
 									label: resolveLabel( opt, 'label' )
 								};
-								if ( featureName === 'skin-theme' ) {
+								// Legacy swatch hint only — the v4 ThemePicker paints
+								// the real theme, so it needs no colorScheme.
+								// citizen-v4-remove
+								if ( featureName === 'skin-theme' && !isV4 ) {
 									option.colorScheme =
 										getThemeColorScheme( opt.value );
 								}
 								return option;
 							} );
+
+							if (
+								featureName === 'skin-theme' && syntheticTheme &&
+								!options.some( ( o ) => o.value === syntheticTheme.value )
+							) {
+								options.push( syntheticTheme );
+							}
 
 							const pref = {
 								featureName,
@@ -235,7 +299,8 @@ module.exports = exports = defineComponent( {
 			sections,
 			values,
 			visibilities,
-			setValue
+			setValue,
+			isV4
 		};
 	}
 } );

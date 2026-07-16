@@ -2,84 +2,88 @@
  * color tokens (text & icon)
  * https://doc.wikimedia.org/codex/main/design-tokens/color.html#color
  */
+.new-color-decls() {
+	// Body text. Citizen deviation: dark-mode body text dimmer than
+	// Codex spec (gray-100/-50, ~94%/98% L) for a softer reading feel.
+	// Light mode aligns with Codex.
+	--color-base: light-dark( var( --color-neutral-900 ), var( --color-neutral-300 ) );
+	--color-base--hover: light-dark( var( --color-neutral-700 ), var( --color-neutral-200 ) );
+	--color-base--subtle: light-dark( var( --color-neutral-600 ), var( --color-neutral-400 ) );
+	--color-base-fixed: var( --color-gray-900 );
+	--color-emphasized: light-dark( var( --color-neutral-1000 ), var( --color-neutral-50 ) );
+	--color-subtle: light-dark( var( --color-neutral-600 ), var( --color-neutral-400 ) );
+	--color-placeholder: light-dark( var( --color-neutral-500 ), var( --color-neutral-500 ) );
+	--color-disabled: light-dark( var( --color-neutral-400 ), var( --color-neutral-600 ) );
+	--color-disabled-emphasized: light-dark( var( --color-neutral-400 ), var( --color-neutral-500 ) );
+	--color-neutral: light-dark( var( --color-neutral-700 ), var( --color-neutral-300 ) );
+	--color-notice: light-dark( var( --color-neutral-700 ), var( --color-neutral-400 ) );
+	--color-inverted: light-dark( var( --color-white ), var( --color-neutral-1000 ) );
+	--color-inverted-fixed: var( --color-white );
+	// Citizen extension — used as foreground on filled progressive
+	// surfaces (where Codex would otherwise use --color-inverted).
+	--color-inverted-primary: var( --color-white );
+
+	// Progressive accent
+	--color-progressive: light-dark( var( --color-primary-700 ), var( --color-primary-400 ) );
+	--color-progressive--hover: light-dark( var( --color-primary-800 ), var( --color-primary-300 ) );
+	--color-progressive--active: light-dark( var( --color-primary-900 ), var( --color-primary-200 ) );
+	// color-*--focus is theme-invariant per Codex; the bg-/border-
+	// versions ARE theme-variant.
+	--color-progressive--focus: var( --color-primary-700 );
+
+	// Destructive / state text
+	--color-destructive: light-dark( var( --color-red-700 ), var( --color-red-400 ) );
+	--color-destructive--hover: light-dark( var( --color-red-800 ), var( --color-red-300 ) );
+	--color-destructive--active: light-dark( var( --color-red-900 ), var( --color-red-200 ) );
+	--color-destructive--focus: var( --color-progressive--focus );
+	--color-error: var( --color-destructive );
+	--color-error--hover: var( --color-destructive--hover );
+	--color-error--active: var( --color-destructive--active );
+	--color-warning: light-dark( var( --color-yellow-700 ), var( --color-yellow-400 ) );
+	--color-success: light-dark( var( --color-green-700 ), var( --color-green-400 ) );
+
+	// Visited / diff — Citizen routes through the progressive accent
+	// and MW diff convention (green added, red removed) instead of
+	// Codex's purple/maroon and -999 highlight stops.
+	--color-visited: var( --color-progressive );
+	--color-visited--hover: var( --color-progressive--hover );
+	--color-visited--active: var( --color-progressive--active );
+	--color-destructive--visited: var( --color-destructive );
+	--color-destructive--visited--hover: var( --color-destructive--hover );
+	--color-destructive--visited--active: var( --color-destructive--active );
+	--color-content-added: var( --color-success );
+	--color-content-removed: var( --color-destructive );
+
+	// Link / red-link aliases
+	--color-link: var( --color-progressive );
+	--color-link--hover: var( --color-progressive--hover );
+	--color-link--active: var( --color-progressive--active );
+	--color-link--focus: var( --color-progressive--focus );
+	--color-link--visited: var( --color-visited );
+	--color-link--visited--hover: var( --color-visited--hover );
+	--color-link--visited--active: var( --color-visited--active );
+	--color-link-red: var( --color-destructive );
+	--color-link-red--hover: var( --color-destructive--hover );
+	--color-link-red--active: var( --color-destructive--active );
+	--color-link-red--focus: var( --color-destructive--focus );
+	--color-link-red--visited: var( --color-destructive--visited );
+	--color-link-red--visited--hover: var( --color-destructive--visited--hover );
+	--color-link-red--visited--active: var( --color-destructive--visited--active );
+
+	// Icon
+	--color-icon-progressive: light-dark( var( --color-primary-700 ), var( --color-primary-500 ) );
+	--color-icon-error: var( --color-red-500 );
+	--color-icon-warning: var( --color-yellow-500 );
+	--color-icon-success: var( --color-green-500 );
+	--color-icon-notice: var( --color-neutral-500 );
+}
+
 .new-color() {
 	// The second selector is the pre-rename generation class, kept for
 	// one minor so compiled CSS keeps matching cached HTML.
 	// citizen-v4-remove
-	:root.citizen-v4,
-	:root.citizen-token-new {
-		// Body text. Citizen deviation: dark-mode body text dimmer than
-		// Codex spec (gray-100/-50, ~94%/98% L) for a softer reading feel.
-		// Light mode aligns with Codex.
-		--color-base: light-dark( var( --color-neutral-900 ), var( --color-neutral-300 ) );
-		--color-base--hover: light-dark( var( --color-neutral-700 ), var( --color-neutral-200 ) );
-		--color-base--subtle: light-dark( var( --color-neutral-600 ), var( --color-neutral-400 ) );
-		--color-base-fixed: var( --color-gray-900 );
-		--color-emphasized: light-dark( var( --color-neutral-1000 ), var( --color-neutral-50 ) );
-		--color-subtle: light-dark( var( --color-neutral-600 ), var( --color-neutral-400 ) );
-		--color-placeholder: light-dark( var( --color-neutral-500 ), var( --color-neutral-500 ) );
-		--color-disabled: light-dark( var( --color-neutral-400 ), var( --color-neutral-600 ) );
-		--color-disabled-emphasized: light-dark( var( --color-neutral-400 ), var( --color-neutral-500 ) );
-		--color-neutral: light-dark( var( --color-neutral-700 ), var( --color-neutral-300 ) );
-		--color-notice: light-dark( var( --color-neutral-700 ), var( --color-neutral-400 ) );
-		--color-inverted: light-dark( var( --color-white ), var( --color-neutral-1000 ) );
-		--color-inverted-fixed: var( --color-white );
-		// Citizen extension — used as foreground on filled progressive
-		// surfaces (where Codex would otherwise use --color-inverted).
-		--color-inverted-primary: var( --color-white );
-
-		// Progressive accent
-		--color-progressive: light-dark( var( --color-primary-700 ), var( --color-primary-400 ) );
-		--color-progressive--hover: light-dark( var( --color-primary-800 ), var( --color-primary-300 ) );
-		--color-progressive--active: light-dark( var( --color-primary-900 ), var( --color-primary-200 ) );
-		// color-*--focus is theme-invariant per Codex; the bg-/border-
-		// versions ARE theme-variant.
-		--color-progressive--focus: var( --color-primary-700 );
-
-		// Destructive / state text
-		--color-destructive: light-dark( var( --color-red-700 ), var( --color-red-400 ) );
-		--color-destructive--hover: light-dark( var( --color-red-800 ), var( --color-red-300 ) );
-		--color-destructive--active: light-dark( var( --color-red-900 ), var( --color-red-200 ) );
-		--color-destructive--focus: var( --color-progressive--focus );
-		--color-error: var( --color-destructive );
-		--color-error--hover: var( --color-destructive--hover );
-		--color-error--active: var( --color-destructive--active );
-		--color-warning: light-dark( var( --color-yellow-700 ), var( --color-yellow-400 ) );
-		--color-success: light-dark( var( --color-green-700 ), var( --color-green-400 ) );
-
-		// Visited / diff — Citizen routes through the progressive accent
-		// and MW diff convention (green added, red removed) instead of
-		// Codex's purple/maroon and -999 highlight stops.
-		--color-visited: var( --color-progressive );
-		--color-visited--hover: var( --color-progressive--hover );
-		--color-visited--active: var( --color-progressive--active );
-		--color-destructive--visited: var( --color-destructive );
-		--color-destructive--visited--hover: var( --color-destructive--hover );
-		--color-destructive--visited--active: var( --color-destructive--active );
-		--color-content-added: var( --color-success );
-		--color-content-removed: var( --color-destructive );
-
-		// Link / red-link aliases
-		--color-link: var( --color-progressive );
-		--color-link--hover: var( --color-progressive--hover );
-		--color-link--active: var( --color-progressive--active );
-		--color-link--focus: var( --color-progressive--focus );
-		--color-link--visited: var( --color-visited );
-		--color-link--visited--hover: var( --color-visited--hover );
-		--color-link--visited--active: var( --color-visited--active );
-		--color-link-red: var( --color-destructive );
-		--color-link-red--hover: var( --color-destructive--hover );
-		--color-link-red--active: var( --color-destructive--active );
-		--color-link-red--focus: var( --color-destructive--focus );
-		--color-link-red--visited: var( --color-destructive--visited );
-		--color-link-red--visited--hover: var( --color-destructive--visited--hover );
-		--color-link-red--visited--active: var( --color-destructive--visited--active );
-
-		// Icon
-		--color-icon-progressive: light-dark( var( --color-primary-700 ), var( --color-primary-500 ) );
-		--color-icon-error: var( --color-red-500 );
-		--color-icon-warning: var( --color-yellow-500 );
-		--color-icon-success: var( --color-green-500 );
-		--color-icon-notice: var( --color-neutral-500 );
+	:where( :root.citizen-v4 ),
+	:where( :root.citizen-token-new ) {
+		.new-color-decls();
 	}
 }

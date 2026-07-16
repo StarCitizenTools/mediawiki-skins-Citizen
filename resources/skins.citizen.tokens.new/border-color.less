@@ -2,73 +2,77 @@
  * border-color tokens
  * https://doc.wikimedia.org/codex/main/design-tokens/color.html#border-color
  */
+.new-border-color-decls() {
+	// Chrome borders. Routed through gray-N (achromatic) rather than
+	// neutral-N (tinted) so borders read as pure structure regardless
+	// of theme. Citizen uses softer stops than Codex spec — see
+	// scripts/codex-deviations.json.
+	--border-color-base: light-dark( var( --color-gray-200 ), var( --color-gray-800 ) );
+	--border-color-emphasized: light-dark( var( --color-gray-900 ), var( --color-gray-100 ) );
+	--border-color-subtle: light-dark( var( --color-gray-100 ), var( --color-gray-900 ) );
+	--border-color-muted: light-dark( var( --color-gray-50 ), var( --color-gray-1000 ) );
+	// Interactive progresses 300 → 400 → 500 in light (each step
+	// darker, more visible against light bg) and 700 → 600 → 500
+	// in dark (each step lighter, more visible against dark bg).
+	// Active lands at gray-500 in both modes — mid-gray reads
+	// equally well on either canvas.
+	--border-color-interactive: light-dark( var( --color-gray-300 ), var( --color-gray-700 ) );
+	--border-color-interactive--hover: light-dark( var( --color-gray-400 ), var( --color-gray-600 ) );
+	--border-color-interactive--active: light-dark( var( --color-gray-500 ), var( --color-gray-500 ) );
+	--border-color-disabled: light-dark( var( --color-gray-100 ), var( --color-gray-900 ) );
+	--border-color-divider: light-dark( var( --color-gray-200 ), var( --color-gray-800 ) );
+	--border-color-inverted: light-dark( var( --color-white ), var( --color-gray-1000 ) );
+	--border-color-inverted-fixed: var( --color-white );
+
+	// Progressive borders
+	--border-color-progressive: light-dark( var( --color-primary-700 ), var( --color-primary-500 ) );
+	--border-color-progressive--hover: light-dark( var( --color-primary-800 ), var( --color-primary-400 ) );
+	--border-color-progressive--active: light-dark( var( --color-primary-900 ), var( --color-primary-300 ) );
+	--border-color-progressive--focus: light-dark( var( --color-primary-700 ), var( --color-primary-500 ) );
+
+	// State borders — Citizen deviation: softer outlines. Rest sits
+	// at *-100 (light) / *-950 (dark, Citizen extension), progressing
+	// toward visibility on hover/active. State communication still
+	// flows through bg-*-subtle + icon + text. In filled-button
+	// contexts the border reads as a darker shadow rim rather than
+	// Codex's lighter outline — accepted trade-off.
+	--border-color-error: light-dark( var( --color-red-100 ), var( --color-red-950 ) );
+	--border-color-error--hover: light-dark( var( --color-red-200 ), var( --color-red-900 ) );
+	--border-color-error--active: light-dark( var( --color-red-300 ), var( --color-red-800 ) );
+	--border-color-warning: light-dark( var( --color-yellow-100 ), var( --color-yellow-950 ) );
+	--border-color-warning--hover: light-dark( var( --color-yellow-200 ), var( --color-yellow-900 ) );
+	--border-color-warning--active: light-dark( var( --color-yellow-300 ), var( --color-yellow-800 ) );
+	--border-color-success: light-dark( var( --color-green-100 ), var( --color-green-950 ) );
+	--border-color-destructive: light-dark( var( --color-red-100 ), var( --color-red-950 ) );
+	--border-color-destructive--hover: light-dark( var( --color-red-200 ), var( --color-red-900 ) );
+	--border-color-destructive--active: light-dark( var( --color-red-300 ), var( --color-red-800 ) );
+	--border-color-destructive--focus: light-dark( var( --color-primary-700 ), var( --color-primary-500 ) );
+
+	// Diff highlights — Citizen uses MW convention (green added,
+	// red removed) over Codex's -999 stops. Theme-invariant.
+	--border-color-content-added: var( --color-green-500 );
+	--border-color-content-removed: var( --color-red-500 );
+
+	// Notice / transparent
+	--border-color-notice: var( --color-neutral-500 );
+	--border-color-transparent: transparent;
+
+	// Input borders — alias chains (resolve theme-variantly through
+	// --border-color-interactive and --border-color-progressive--*).
+	--border-color-input--hover: var( --border-color-interactive );
+	--border-color-input-binary: var( --border-color-interactive );
+	--border-color-input-binary--hover: var( --border-color-progressive--hover );
+	--border-color-input-binary--active: var( --border-color-progressive--active );
+	--border-color-input-binary--focus: var( --border-color-progressive--focus );
+	--border-color-input-binary--checked: var( --border-color-progressive );
+}
+
 .new-border-color() {
 	// The second selector is the pre-rename generation class, kept for
 	// one minor so compiled CSS keeps matching cached HTML.
 	// citizen-v4-remove
-	:root.citizen-v4,
-	:root.citizen-token-new {
-		// Chrome borders. Routed through gray-N (achromatic) rather than
-		// neutral-N (tinted) so borders read as pure structure regardless
-		// of theme. Citizen uses softer stops than Codex spec — see
-		// scripts/codex-deviations.json.
-		--border-color-base: light-dark( var( --color-gray-200 ), var( --color-gray-800 ) );
-		--border-color-emphasized: light-dark( var( --color-gray-900 ), var( --color-gray-100 ) );
-		--border-color-subtle: light-dark( var( --color-gray-100 ), var( --color-gray-900 ) );
-		--border-color-muted: light-dark( var( --color-gray-50 ), var( --color-gray-1000 ) );
-		// Interactive progresses 300 → 400 → 500 in light (each step
-		// darker, more visible against light bg) and 700 → 600 → 500
-		// in dark (each step lighter, more visible against dark bg).
-		// Active lands at gray-500 in both modes — mid-gray reads
-		// equally well on either canvas.
-		--border-color-interactive: light-dark( var( --color-gray-300 ), var( --color-gray-700 ) );
-		--border-color-interactive--hover: light-dark( var( --color-gray-400 ), var( --color-gray-600 ) );
-		--border-color-interactive--active: light-dark( var( --color-gray-500 ), var( --color-gray-500 ) );
-		--border-color-disabled: light-dark( var( --color-gray-100 ), var( --color-gray-900 ) );
-		--border-color-divider: light-dark( var( --color-gray-200 ), var( --color-gray-800 ) );
-		--border-color-inverted: light-dark( var( --color-white ), var( --color-gray-1000 ) );
-		--border-color-inverted-fixed: var( --color-white );
-
-		// Progressive borders
-		--border-color-progressive: light-dark( var( --color-primary-700 ), var( --color-primary-500 ) );
-		--border-color-progressive--hover: light-dark( var( --color-primary-800 ), var( --color-primary-400 ) );
-		--border-color-progressive--active: light-dark( var( --color-primary-900 ), var( --color-primary-300 ) );
-		--border-color-progressive--focus: light-dark( var( --color-primary-700 ), var( --color-primary-500 ) );
-
-		// State borders — Citizen deviation: softer outlines. Rest sits
-		// at *-100 (light) / *-950 (dark, Citizen extension), progressing
-		// toward visibility on hover/active. State communication still
-		// flows through bg-*-subtle + icon + text. In filled-button
-		// contexts the border reads as a darker shadow rim rather than
-		// Codex's lighter outline — accepted trade-off.
-		--border-color-error: light-dark( var( --color-red-100 ), var( --color-red-950 ) );
-		--border-color-error--hover: light-dark( var( --color-red-200 ), var( --color-red-900 ) );
-		--border-color-error--active: light-dark( var( --color-red-300 ), var( --color-red-800 ) );
-		--border-color-warning: light-dark( var( --color-yellow-100 ), var( --color-yellow-950 ) );
-		--border-color-warning--hover: light-dark( var( --color-yellow-200 ), var( --color-yellow-900 ) );
-		--border-color-warning--active: light-dark( var( --color-yellow-300 ), var( --color-yellow-800 ) );
-		--border-color-success: light-dark( var( --color-green-100 ), var( --color-green-950 ) );
-		--border-color-destructive: light-dark( var( --color-red-100 ), var( --color-red-950 ) );
-		--border-color-destructive--hover: light-dark( var( --color-red-200 ), var( --color-red-900 ) );
-		--border-color-destructive--active: light-dark( var( --color-red-300 ), var( --color-red-800 ) );
-		--border-color-destructive--focus: light-dark( var( --color-primary-700 ), var( --color-primary-500 ) );
-
-		// Diff highlights — Citizen uses MW convention (green added,
-		// red removed) over Codex's -999 stops. Theme-invariant.
-		--border-color-content-added: var( --color-green-500 );
-		--border-color-content-removed: var( --color-red-500 );
-
-		// Notice / transparent
-		--border-color-notice: var( --color-neutral-500 );
-		--border-color-transparent: transparent;
-
-		// Input borders — alias chains (resolve theme-variantly through
-		// --border-color-interactive and --border-color-progressive--*).
-		--border-color-input--hover: var( --border-color-interactive );
-		--border-color-input-binary: var( --border-color-interactive );
-		--border-color-input-binary--hover: var( --border-color-progressive--hover );
-		--border-color-input-binary--active: var( --border-color-progressive--active );
-		--border-color-input-binary--focus: var( --border-color-progressive--focus );
-		--border-color-input-binary--checked: var( --border-color-progressive );
+	:where( :root.citizen-v4 ),
+	:where( :root.citizen-token-new ) {
+		.new-border-color-decls();
 	}
 }

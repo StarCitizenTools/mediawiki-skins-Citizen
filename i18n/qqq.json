@@ -74,6 +74,7 @@
 	"citizen-preferences-section-appearance": "Görünüm",
 	"citizen-preferences-section-behavior": "Label for the behavior section in the preferences panel",
 	"citizen-theme-name": "Heading label for setting that allows you to change theme.",
+	"citizen-theme-name-v4": "Label for the theme preference in the Citizen 4 preferences panel. Replaces {{msg-mw|citizen-theme-name}} once Citizen 4 ships.\n{{Identical|Theme}}",
 	"citizen-theme-description": "Description for theme.",
 	"citizen-theme-day-label": "Label for light/day theme.",
 	"citizen-theme-night-label": "Label for dark/night theme.",

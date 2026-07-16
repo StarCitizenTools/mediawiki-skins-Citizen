@@ -5,23 +5,27 @@
  * inside light-dark() resolve to literal hex at compile time, then
  * the browser picks one at use time.
  */
+.new-syntax-color-decls() {
+	--color-syntax-red: light-dark( @color-syntax-red, @color-syntax-red-dark );
+	--color-syntax-orange: light-dark( @color-syntax-orange, @color-syntax-orange-dark );
+	--color-syntax-yellow: light-dark( @color-syntax-yellow, @color-syntax-yellow-dark );
+	--color-syntax-green: light-dark( @color-syntax-green, @color-syntax-green-dark );
+	--color-syntax-cyan: light-dark( @color-syntax-cyan, @color-syntax-cyan-dark );
+	--color-syntax-blue: light-dark( @color-syntax-blue, @color-syntax-blue-dark );
+	--color-syntax-paleblue: light-dark( @color-syntax-paleblue, @color-syntax-paleblue-dark );
+	--color-syntax-purple: light-dark( @color-syntax-purple, @color-syntax-purple-dark );
+	--color-syntax-brown: light-dark( @color-syntax-brown, @color-syntax-brown-dark );
+	--color-syntax-pink: light-dark( @color-syntax-pink, @color-syntax-pink-dark );
+	--color-syntax-violet: light-dark( @color-syntax-violet, @color-syntax-violet-dark );
+	--color-syntax-grey: @color-syntax-grey;
+}
+
 .new-syntax-color() {
 	// The second selector is the pre-rename generation class, kept for
 	// one minor so compiled CSS keeps matching cached HTML.
 	// citizen-v4-remove
-	:root.citizen-v4,
-	:root.citizen-token-new {
-		--color-syntax-red: light-dark( @color-syntax-red, @color-syntax-red-dark );
-		--color-syntax-orange: light-dark( @color-syntax-orange, @color-syntax-orange-dark );
-		--color-syntax-yellow: light-dark( @color-syntax-yellow, @color-syntax-yellow-dark );
-		--color-syntax-green: light-dark( @color-syntax-green, @color-syntax-green-dark );
-		--color-syntax-cyan: light-dark( @color-syntax-cyan, @color-syntax-cyan-dark );
-		--color-syntax-blue: light-dark( @color-syntax-blue, @color-syntax-blue-dark );
-		--color-syntax-paleblue: light-dark( @color-syntax-paleblue, @color-syntax-paleblue-dark );
-		--color-syntax-purple: light-dark( @color-syntax-purple, @color-syntax-purple-dark );
-		--color-syntax-brown: light-dark( @color-syntax-brown, @color-syntax-brown-dark );
-		--color-syntax-pink: light-dark( @color-syntax-pink, @color-syntax-pink-dark );
-		--color-syntax-violet: light-dark( @color-syntax-violet, @color-syntax-violet-dark );
-		--color-syntax-grey: @color-syntax-grey;
+	:where( :root.citizen-v4 ),
+	:where( :root.citizen-token-new ) {
+		.new-syntax-color-decls();
 	}
 }
