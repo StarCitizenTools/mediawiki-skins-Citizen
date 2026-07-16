@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.18.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.17.1...v3.18.0) (2026-07-16)
+
+
+### Features
+
+* **config:** ✨ ⚙️ accept any theme as the default theme ([4b597b2](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4b597b263bf507af8152eb439e5ba017e4284f21))
+* **header:** ✨ allow positioning the site header at the top on mobile ([ebfd544](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/ebfd5444d4b836593317c273971db9ad5eecb2d6))
+* **preferences:** ✨ offer Black as a theme in the preferences panel (preview) ([391988e](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/391988ef6df45b0f148770f48ad6af41f4821952))
+* **preferences:** ✨ redesign the theme picker (preview) ([#1654](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1654)) ([d3295af](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/d3295af66f94dd70b963fc7dc9b9b3daf98bae9b))
+* **preview:** ✨ replace the experimental token switch with a version-scoped preview channel ([#1617](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1617)) ([a80d552](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/a80d552ab5581d9863d3e584f8a64908fe89a4d0))
+* **tokens:** ✨ add the Black theme (preview) ([4ca7c18](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/4ca7c186b73df22b46b208fd78d8a8dff8173967))
+
+
+### Bug Fixes
+
+* **Cite:** 🐛 correct code element font styles in cite ([03e1340](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/03e1340a91bebad3cc0fd51232b94156c79aa5ab))
+* **CookieWarning:** 🐛 keep the banner clear of the site header on mobile ([281b78d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/281b78da33ae507eff9d13e9cf0117ac04171daa))
+* **header:** 🐛 match the mobile header glass to the header surface color ([5cb1e42](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5cb1e427bb76287ea3ec7e83174e25df4adf9efa))
+* **notifications:** 🐛 show notifications when the interface language is invalid ([c7acba9](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/c7acba9fde7e08ca654bb1fa39b8de6318565736)), closes [#1638](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1638)
+* **scripts:** 🐛 keep the skin working when the interface language is invalid ([124e1a8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/124e1a877ba584fd18ff6c5e0629b3d490ccf662)), closes [#1638](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1638)
+* **tokens:** 🐛 add light mode icon background colors to the new tokens (preview) ([859001f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/859001f2493b4c3b69cf0f0e02ef97ae56e3dcf5))
+
 ## [3.17.1](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.17.0...v3.17.1) (2026-06-23)
 
 
