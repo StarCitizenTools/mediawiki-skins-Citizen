@@ -163,7 +163,8 @@
 	--header-border-inline-start-width: 0px;
 	--header-border-inline-end-width: 0px;
 
-	// Always default to bottom in mobile for now
+	// Mobile and tablet placement — bottom unless the wiki opts into top
+	// via $wgCitizenHeaderPositionMobile
 	@media ( max-width: @max-width-breakpoint-tablet ) {
 		--header-direction: row;
 		--header-inset-inline-start: 0px;
@@ -172,6 +173,18 @@
 		--header-inset-block-start: auto;
 		--header-inset-block-end: 0px;
 		--header-border-block-start-width: var( --border-width-base );
+	}
+
+	&.citizen-header-position-mobile-top {
+		@media ( max-width: @max-width-breakpoint-tablet ) {
+			--header-size-block-start: var( --header-size );
+			--header-size-block-end: 0px;
+			--header-inset-block-start: 0px;
+			--header-inset-block-end: auto;
+			--header-border-block-start-width: 0px;
+			--header-border-block-end-width: var( --border-width-base );
+			.mixin-citizen-card-expand( down );
+		}
 	}
 
 	&.citizen-header-position {

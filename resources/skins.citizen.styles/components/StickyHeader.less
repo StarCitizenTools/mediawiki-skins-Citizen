@@ -33,13 +33,15 @@
 		left: 0;
 		z-index: @z-index-sticky;
 		visibility: hidden;
+		// Clear the site header when it occupies the top edge —
+		// --header-size-block-start is 0px in every other placement
+		margin-top: var( --header-size-block-start );
 		transform: translateY( -100% );
 		transition-timing-function: var( --transition-timing-function-ease-out );
 		transition-duration: var( --transition-duration-medium );
 		transition-property: transform, visibility;
 
 		@media ( min-width: @min-width-breakpoint-desktop ) {
-			margin-top: var( --header-size-block-start );
 			margin-right: var( --header-size-inline-end );
 			margin-left: var( --header-size-inline-start );
 		}

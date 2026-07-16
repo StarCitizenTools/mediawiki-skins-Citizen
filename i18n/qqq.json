@@ -217,6 +217,7 @@
 	"citizen-command-palette-mode-user-placeholder": "Placeholder text shown in the command palette input when the user search mode is active.",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Description for the fulltext search in the command palette",
 	"citizen-command-palette-queryaction-page-edit-description": "Description for the page edit action in the command palette",
+	"citizen-config-headerpositionmobile": "Description for the {{Help|HeaderPositionMobile}} config option. Used in extension registration metadata.",
 	"citizen-config-preview": "Description for the {{Help|Preview}} config option. Used in extension registration metadata.",
 	"citizen-config-usenewtoken": "Description for the {{Help|UseNewToken}} config option. Used in extension registration metadata."
 }

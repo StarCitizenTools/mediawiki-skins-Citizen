@@ -33,6 +33,18 @@
 	left: 0;
 	max-height: var( --header-card-maxheight );
 
+	// Cards flip below the header when it sits at the top edge on
+	// mobile/tablet. citizen-header-position-mobile-top stays in the
+	// markup at desktop widths too, but is inert there — desktop
+	// positioning is driven by the separate citizen-header-position-*
+	// class (Dropdown.less/Drawer.less), so scope this to mobile only.
+	@media ( max-width: @max-width-breakpoint-tablet ) {
+		.citizen-header-position-mobile-top & {
+			top: 100%;
+			bottom: unset;
+		}
+	}
+
 	@media ( min-width: @min-width-breakpoint-tablet ) {
 		& when (@position =start) {
 			right: unset;

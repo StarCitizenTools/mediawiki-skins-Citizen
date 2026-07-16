@@ -141,6 +141,36 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 		$this->assertStringContainsString( 'skin-theme-clientpref-black', $attrs['class'] );
 	}
 
+	public function testHeaderPositionMobileDefault(): void {
+		$skin = $this->createSkinInstance();
+
+		$attrs = $skin->getHtmlElementAttributes();
+
+		$this->assertStringContainsString( 'citizen-header-position-mobile-bottom', $attrs['class'] );
+	}
+
+	public function testHeaderPositionMobileTop(): void {
+		$this->overrideConfigValues( [
+			'CitizenHeaderPositionMobile' => 'top',
+		] );
+		$skin = $this->createSkinInstance();
+
+		$attrs = $skin->getHtmlElementAttributes();
+
+		$this->assertStringContainsString( 'citizen-header-position-mobile-top', $attrs['class'] );
+	}
+
+	public function testHeaderPositionMobileInvalidValue(): void {
+		$this->overrideConfigValues( [
+			'CitizenHeaderPositionMobile' => 'left',
+		] );
+		$skin = $this->createSkinInstance();
+
+		$attrs = $skin->getHtmlElementAttributes();
+
+		$this->assertStringContainsString( 'citizen-header-position-mobile-bottom', $attrs['class'] );
+	}
+
 	public function testCollapsibleSectionsBodyClass(): void {
 		$title = Title::newFromText( 'CollapsibleSectionsTest' );
 		RequestContext::resetMain();
