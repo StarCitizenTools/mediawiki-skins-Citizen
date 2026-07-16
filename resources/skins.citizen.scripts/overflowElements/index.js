@@ -157,7 +157,20 @@ class OverflowElement {
 }
 
 /**
+ * The observer pair serving the current content generation. Held so a
+ * re-init can disconnect it — the observers otherwise keep the replaced
+ * generation's elements (and through them the detached DOM) alive.
+ *
+ * @type {{intersectionObserver: IntersectionObserver, resizeObserver: ResizeObserver}|null}
+ */
+let activeObservers = null;
+
+/**
  * Initialize overflow element enhancements for all matching elements.
+ *
+ * Runs once per wikipage.content fire — content is replaced (e.g. after a
+ * VisualEditor save), so the previous generation's observers are
+ * disconnected before the new content is processed.
  *
  * All elements share a single IntersectionObserver and a single
  * ResizeObserver. Entries arrive batched, so the resize callback can group
@@ -177,6 +190,12 @@ function init( {
 	document, window, mw, IntersectionObserver, ResizeObserver,
 	bodyContent, config
 } ) {
+	if ( activeObservers ) {
+		activeObservers.intersectionObserver.disconnect();
+		activeObservers.resizeObserver.disconnect();
+		activeObservers = null;
+	}
+
 	const nowrapClasses = config.wgCitizenOverflowNowrapClasses;
 	if ( !nowrapClasses || !Array.isArray( nowrapClasses ) ) {
 		mw.log.error(
@@ -254,6 +273,8 @@ function init( {
 		instances.set( instance.element, instance );
 		intersectionObserver.observe( instance.element );
 	} );
+
+	activeObservers = { intersectionObserver, resizeObserver };
 }
 
 module.exports = {
