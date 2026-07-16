@@ -200,11 +200,7 @@ Every property you don't override falls through to the default palette's [`light
 One limitation to know about: a few dark-mode extras are keyed to the built-in themes by name — the image dimming preference, and dark-mode fixes for some extensions — so they don't fire for custom themes. If your theme needs one of them, replicate it in your theme's CSS block.
 
 ::: tip
-To make your theme the default for new visitors, set `$wgCitizenThemeDefault = 'ocean';`. The preferences panel surfaces an unregistered default as its own entry — its value, title-cased — so visitors always see the active theme selected. Registering it in the picker is still worth doing: it earns a proper localized name and a permanent spot in the picker for everyone, not just people who already have it active.
-:::
-
-::: tip
-The preview is live: because your theme uses the bare `.skin-theme-clientpref-<value>` class, the preferences panel paints each circle in the theme's real colors, so what you see in the picker matches what visitors get. Identity rebrands made at `:root` — the OKLCH hue knobs described in [Rebranding the primary color](../guide/migrating-to-citizen-4.md#rebranding-the-primary-color) — flow into the previews automatically. If you override other tokens globally beyond those knobs, target `:root, .citizen-theme-preview` so the previews pick them up too.
+Set `$wgCitizenThemeDefault = 'ocean';` to make your theme the default for new visitors.
 :::
 
 ## Performance considerations
