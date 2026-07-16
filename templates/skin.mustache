@@ -7,6 +7,7 @@
 	string html-body-content--formatted
 	string html-categories
 	string html-after-content
+	bool is-mainpage whether this is a view of the wiki's main page
 	object data-footer for footer template partial. see Footer.mustache for documentation.
 }}
 
@@ -14,7 +15,10 @@
 <div class="citizen-page-container">
 	<div class="citizen-sitenotice-container">{{{html-site-notice}}}</div>
 	<main class="mw-body" id="content">
-		{{>PageHeader}}
+		{{! On the main page the header renders below the content, so it is
+			emitted after it — matching DOM order to visual order keeps
+			mid-stream paints from shifting the header. }}
+		{{^is-mainpage}}{{>PageHeader}}{{/is-mainpage}}
 		<div class="citizen-body-container">
 			<div id="bodyContent" class="citizen-body" aria-labelledby="firstHeading">
 				<div id="contentSub"{{{html-user-language-attributes}}}>{{{html-subtitle}}}</div>
@@ -25,6 +29,7 @@
 			{{#toc-enabled}}{{>PageSidebar}}{{/toc-enabled}}
 			{{>PageFooter}}
 		</div>
+		{{#is-mainpage}}{{>PageHeader}}{{/is-mainpage}}
 	</main>
 	{{{html-after-content}}}
 	{{#data-footer}}{{>Footer}}{{/data-footer}}

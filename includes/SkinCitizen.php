@@ -295,6 +295,11 @@ class SkinCitizen extends SkinMustache {
 		// above). Drives the notifications dropdown in Header.mustache.
 		$parentData['data-notifications'] = $this->notificationData;
 
+		// Scope matches the .page-Main_Page.action-view main-page styles.
+		// skin.mustache renders the page header after the content on the main
+		// page so its bottom placement holds from the first streamed paint.
+		$parentData['is-mainpage'] = $title->isMainPage() && $this->getActionName() === 'view';
+
 		$parentData['toc-enabled'] = !empty( $parentData['data-toc'][ 'array-sections' ] );
 		if ( $parentData['toc-enabled'] ) {
 			// This body class depends on template data so it can't move to
