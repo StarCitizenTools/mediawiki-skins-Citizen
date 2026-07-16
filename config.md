@@ -22,6 +22,16 @@ $wgCitizenHeaderPosition = 'left';
 
 **Values**: `'left'`, `'right'`, `'top'`, `'bottom'`
 
+### `$wgCitizenHeaderPositionMobile`
+
+Determines where the site header appears below the desktop breakpoint, tablets included. Side placements do not fit small screens, so only the top and bottom edges are supported.
+
+```php [LocalSettings.php]
+$wgCitizenHeaderPositionMobile = 'bottom';
+```
+
+**Values**: `'top'`, `'bottom'`
+
 ### `$wgCitizenThemeDefault`
 
 Sets the default color theme for new visitors.
