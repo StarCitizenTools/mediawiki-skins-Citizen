@@ -55,19 +55,25 @@ function createConfig( overrides = {} ) {
 function createMockObservers() {
 	let intersectionCallback;
 	const intersectionObserve = vi.fn();
+	const intersectionInstances = [];
 	// Must use function (not arrow) so it can be called with new
 	const MockIntersectionObserver = vi.fn( function ( cb ) {
 		intersectionCallback = cb;
 		this.observe = intersectionObserve;
+		this.disconnect = vi.fn();
+		intersectionInstances.push( this );
 	} );
 
 	let resizeCallback;
 	const resizeObserve = vi.fn();
 	const resizeUnobserve = vi.fn();
+	const resizeInstances = [];
 	const MockResizeObserver = vi.fn( function ( cb ) {
 		resizeCallback = cb;
 		this.observe = resizeObserve;
 		this.unobserve = resizeUnobserve;
+		this.disconnect = vi.fn();
+		resizeInstances.push( this );
 	} );
 
 	return {
@@ -76,8 +82,10 @@ function createMockObservers() {
 		getIntersectionCallback: () => intersectionCallback,
 		getResizeCallback: () => resizeCallback,
 		intersectionObserve,
+		intersectionInstances,
 		resizeObserve,
-		resizeUnobserve
+		resizeUnobserve,
+		resizeInstances
 	};
 }
 
@@ -600,6 +608,65 @@ describe( 'overflowElements', () => {
 			expect( handlers[ 0 ] ).toBe( handlers[ 1 ] );
 			expect( observers.resizeObserve ).toHaveBeenCalledTimes( 2 );
 			expect( observers.resizeObserve ).toHaveBeenNthCalledWith( 2, table );
+		} );
+
+		// Note: overflowElements keeps its current observer pair in module
+		// state that persists across tests (matching the production
+		// ResourceLoader singleton). The first init() in a test may therefore
+		// disconnect a pair left behind by an earlier test — assertions here
+		// only use this test's own mock instances, so that bleed is inert.
+		it( 'should disconnect the previous generation of observers on re-init', () => {
+			const observers = createMockObservers();
+			const deps = {
+				document,
+				window: createMockWindow(),
+				mw,
+				IntersectionObserver: observers.IntersectionObserver,
+				ResizeObserver: observers.ResizeObserver,
+				config: createConfig()
+			};
+			const firstContent = createBodyContent( '<table class="wikitable"></table>' );
+
+			init( { ...deps, bodyContent: firstContent } );
+
+			// Simulate a wikipage.content re-fire with replaced content
+			firstContent.remove();
+			const secondContent = createBodyContent( '<table class="wikitable"></table>' );
+
+			init( { ...deps, bodyContent: secondContent } );
+
+			expect( observers.intersectionInstances ).toHaveLength( 2 );
+			expect( observers.intersectionInstances[ 0 ].disconnect ).toHaveBeenCalled();
+			expect( observers.resizeInstances[ 0 ].disconnect ).toHaveBeenCalled();
+			// The live generation stays connected
+			expect( observers.intersectionInstances[ 1 ].disconnect ).not.toHaveBeenCalled();
+			expect( observers.resizeInstances[ 1 ].disconnect ).not.toHaveBeenCalled();
+		} );
+
+		it( 'should disconnect previous observers even when new content has no overflow elements', () => {
+			const observers = createMockObservers();
+			const deps = {
+				document,
+				window: createMockWindow(),
+				mw,
+				IntersectionObserver: observers.IntersectionObserver,
+				ResizeObserver: observers.ResizeObserver,
+				config: createConfig()
+			};
+			const firstContent = createBodyContent( '<table class="wikitable"></table>' );
+
+			init( { ...deps, bodyContent: firstContent } );
+
+			firstContent.remove();
+			const emptyContent = createBodyContent( '<p>No tables here</p>' );
+
+			init( { ...deps, bodyContent: emptyContent } );
+
+			// No new generation is constructed, but the old one is torn down
+			expect( observers.intersectionInstances ).toHaveLength( 1 );
+			expect( observers.resizeInstances ).toHaveLength( 1 );
+			expect( observers.intersectionInstances[ 0 ].disconnect ).toHaveBeenCalled();
+			expect( observers.resizeInstances[ 0 ].disconnect ).toHaveBeenCalled();
 		} );
 
 		it( 'should handle only navButton clicks and distinguish left from right', () => {
