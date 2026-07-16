@@ -500,6 +500,105 @@ describe( 'TableOfContents', () => {
 		} );
 	} );
 
+	describe( 'activation read/write batching', () => {
+		/**
+		 * Instrument an element property with a logging getter.
+		 *
+		 * @param {HTMLElement} el
+		 * @param {string} prop
+		 * @param {*} value
+		 * @param {string[]} log
+		 */
+		function logGetter( el, prop, value, log ) {
+			Object.defineProperty( el, prop, {
+				configurable: true,
+				get() {
+					log.push( 'read' );
+					return value;
+				}
+			} );
+		}
+
+		/**
+		 * @param {HTMLElement} el
+		 * @param {Object} rect
+		 * @param {string[]} log
+		 */
+		function logRect( el, rect, log ) {
+			el.getBoundingClientRect = () => {
+				log.push( 'read' );
+				return rect;
+			};
+		}
+
+		it( 'should perform every geometry read before any style write on activation', () => {
+			const { container } = renderTocDom();
+			const toc = createToc( container );
+			const log = [];
+
+			// Scrollable container so the scroll-into-view path also engages
+			logGetter( container, 'scrollHeight', 1000, log );
+			logGetter( container, 'clientHeight', 200, log );
+			Object.defineProperty( container, 'scrollTop', { value: 0, configurable: true } );
+			container.scrollTo = () => {
+				log.push( 'write' );
+			};
+			logRect( container, { top: 100, bottom: 300, left: 0, right: 200 }, log );
+
+			Object.defineProperty( toc.indicatorBar, 'offsetParent', {
+				configurable: true,
+				get() {
+					log.push( 'read' );
+					return container;
+				}
+			} );
+			vi.spyOn( toc.indicatorBar.style, 'setProperty' ).mockImplementation( () => {
+				log.push( 'write' );
+			} );
+
+			const link1 = document.querySelector( '#toc-section1 > .citizen-toc-link' );
+			const link2 = document.querySelector( '#toc-section2 > .citizen-toc-link' );
+			logGetter( link1, 'offsetParent', container, log );
+			logGetter( link2, 'offsetParent', container, log );
+			logRect( link1, { top: 110, bottom: 130, height: 20, left: 0, right: 200 }, log );
+			logRect( link2, { top: 140, bottom: 160, height: 20, left: 0, right: 200 }, log );
+
+			toc.changeActiveSections( [ 'toc-section1', 'toc-section2' ] );
+
+			expect( log.filter( ( e ) => e === 'read' ).length ).toBeGreaterThan( 0 );
+			expect( log.filter( ( e ) => e === 'write' ).length ).toBeGreaterThan( 0 );
+			// Interleaved reads after writes force extra reflows per activation
+			expect( log.indexOf( 'write' ) ).toBeGreaterThan( log.lastIndexOf( 'read' ) );
+		} );
+
+		it( 'should write the indicator unit height only on first activation', () => {
+			const { container } = renderTocDom();
+			const toc = createToc( container );
+
+			Object.defineProperty( toc.indicatorBar, 'offsetParent', { value: container } );
+			container.getBoundingClientRect = vi.fn( () => ( {
+				top: 100, bottom: 500, left: 0, right: 200
+			} ) );
+			Object.defineProperty( container, 'scrollTop', { value: 0, configurable: true } );
+			[ 'toc-section1', 'toc-section2' ].forEach( ( id ) => {
+				const link = document.querySelector( `#${ id } > .citizen-toc-link` );
+				Object.defineProperty( link, 'offsetParent', { value: container } );
+				link.getBoundingClientRect = vi.fn( () => ( {
+					top: 110, bottom: 130, height: 20, left: 0, right: 200
+				} ) );
+			} );
+
+			toc.changeActiveSections( [ 'toc-section1' ] );
+			const spy = vi.spyOn( toc.indicatorBar.style, 'setProperty' );
+			toc.changeActiveSections( [ 'toc-section2' ] );
+
+			const unitHeightWrites = spy.mock.calls.filter(
+				( call ) => call[ 0 ] === '--indicator-unit-height'
+			);
+			expect( unitHeightWrites ).toHaveLength( 0 );
+		} );
+	} );
+
 	describe( 'handleHashChange', () => {
 		it( 'should expand and activate section matching the hash', () => {
 			const { container } = renderTocDom();

@@ -245,12 +245,16 @@ class TableOfContents {
 		}
 
 		// Defer geometry reads to the next frame so class mutations above
-		// don't force a synchronous layout reflow.
+		// don't force a synchronous layout reflow, and batch both measure
+		// phases ahead of both apply phases so the writes (the unit-height
+		// custom property affects layout) never sit between reads.
 		this.window.requestAnimationFrame( () => {
-			this.updateIndicatorBar();
-			if ( ids.length > 0 ) {
-				this.scrollToActiveSection( ids[ 0 ] );
-			}
+			const indicatorMetrics = this.measureIndicator();
+			const scrollAdjustment = ids.length > 0 ?
+				this.measureScrollAdjustment( ids[ 0 ] ) :
+				null;
+			this.applyIndicator( indicatorMetrics );
+			this.applyScrollAdjustment( scrollAdjustment );
 		} );
 	}
 
@@ -279,65 +283,90 @@ class TableOfContents {
 	}
 
 	/**
-	 * Cache the unit height (one link row) for scaleY calculation.
+	 * Measure everything the indicator bar update needs. Geometry reads
+	 * only — callers can batch this ahead of any write phase.
 	 *
-	 * @param {HTMLElement} link A visible link element to measure.
+	 * @return {Object|null} Metrics for applyIndicator(), or null when
+	 * there is no indicator bar.
 	 */
-	cacheIndicatorUnitHeight( link ) {
-		if ( this.indicatorUnitHeight ) {
-			return;
-		}
-		this.indicatorUnitHeight = link.getBoundingClientRect().height;
-		if ( this.indicatorUnitHeight > 0 ) {
-			this.indicatorBar.style.setProperty(
-				'--indicator-unit-height', this.indicatorUnitHeight + 'px'
-			);
-		}
-	}
-
-	/**
-	 * Update the indicator bar position and height based on active sections.
-	 */
-	updateIndicatorBar() {
+	measureIndicator() {
 		if ( !this.indicatorBar ) {
-			return;
+			return null;
 		}
 		if ( this.activeIds.size === 0 ) {
-			this.indicatorBar.style.setProperty( '--indicator-scale', '0' );
-			return;
+			return { hide: true };
 		}
 
 		const { first: firstLink, last: lastLink } = this.getActiveLinks();
 		if ( !firstLink || !lastLink ) {
-			this.indicatorBar.style.setProperty( '--indicator-scale', '0' );
-			return;
+			return { hide: true };
 		}
 
-		this.cacheIndicatorUnitHeight( firstLink );
+		const unitHeight = this.indicatorUnitHeight ||
+			firstLink.getBoundingClientRect().height;
 
 		// Use the indicator's offset parent (its CSS positioning context) as reference
 		const positioningParent = this.indicatorBar.offsetParent || this.props.container;
 		const containerRect = positioningParent.getBoundingClientRect();
 		const firstRect = firstLink.getBoundingClientRect();
 		const lastRect = lastLink.getBoundingClientRect();
-		const top = firstRect.top - containerRect.top + positioningParent.scrollTop;
-		const height = lastRect.bottom - firstRect.top;
-		const scale = this.indicatorUnitHeight > 0 ?
-			height / this.indicatorUnitHeight : 0;
 
-		this.indicatorBar.style.setProperty( '--indicator-top', top + 'px' );
+		return {
+			hide: false,
+			unitHeight,
+			top: firstRect.top - containerRect.top + positioningParent.scrollTop,
+			height: lastRect.bottom - firstRect.top
+		};
+	}
+
+	/**
+	 * Apply previously measured indicator metrics. Style writes only.
+	 *
+	 * @param {Object|null} metrics Result of measureIndicator().
+	 */
+	applyIndicator( metrics ) {
+		if ( !metrics ) {
+			return;
+		}
+		if ( metrics.hide ) {
+			this.indicatorBar.style.setProperty( '--indicator-scale', '0' );
+			return;
+		}
+
+		// Cache the unit height (one link row) for scaleY calculation
+		if ( !this.indicatorUnitHeight && metrics.unitHeight > 0 ) {
+			this.indicatorUnitHeight = metrics.unitHeight;
+			this.indicatorBar.style.setProperty(
+				'--indicator-unit-height', metrics.unitHeight + 'px'
+			);
+		}
+
+		const scale = this.indicatorUnitHeight > 0 ?
+			metrics.height / this.indicatorUnitHeight : 0;
+
+		this.indicatorBar.style.setProperty( '--indicator-top', metrics.top + 'px' );
 		this.indicatorBar.style.setProperty( '--indicator-scale', String( scale ) );
 	}
 
 	/**
-	 * Scroll active section into view if necessary
+	 * Update the indicator bar position and height based on active sections.
+	 */
+	updateIndicatorBar() {
+		this.applyIndicator( this.measureIndicator() );
+	}
+
+	/**
+	 * Measure whether and how far the ToC container needs scrolling to keep
+	 * the active section visible. Geometry reads only.
 	 *
 	 * @param {string} id The id of the element to be scrolled to in the Table of Contents.
+	 * @return {Object|null} Adjustment for applyScrollAdjustment(), or null
+	 * when no scrolling is needed.
 	 */
-	scrollToActiveSection( id ) {
+	measureScrollAdjustment( id ) {
 		const section = this.document.getElementById( id );
 		if ( !section ) {
-			return;
+			return null;
 		}
 
 		// Get currently visible active link
@@ -355,37 +384,71 @@ class TableOfContents {
 
 		const isContainerScrollable = this.props.container.scrollHeight >
 			this.props.container.clientHeight;
-		if ( link && isContainerScrollable ) {
-			const containerRect = this.props.container.getBoundingClientRect();
-			const linkRect = link.getBoundingClientRect();
+		if ( !link || !isContainerScrollable ) {
+			return null;
+		}
 
-			// Pixels above or below the TOC where we start scrolling the active section into view
-			const hiddenThreshold = 100;
-			const midpoint = ( containerRect.bottom - containerRect.top ) / 2;
-			const linkHiddenTopValue = containerRect.top - linkRect.top;
+		const containerRect = this.props.container.getBoundingClientRect();
+		const linkRect = link.getBoundingClientRect();
+
+		return {
+			midpoint: ( containerRect.bottom - containerRect.top ) / 2,
+			linkHiddenTopValue: containerRect.top - linkRect.top,
 			// Because the bottom of the TOC can extend below the viewport,
 			// min() is used to find the value where the active section first becomes hidden
-			const linkHiddenBottomValue = linkRect.bottom -
-				Math.min( containerRect.bottom, this.window.innerHeight );
+			linkHiddenBottomValue: linkRect.bottom -
+				Math.min( containerRect.bottom, this.window.innerHeight ),
+			scrollTop: this.props.container.scrollTop
+		};
+	}
 
-			// Respect 'prefers-reduced-motion' user preference
-			const scrollBehavior = this.prefersReducedMotion() ? undefined : 'smooth';
-
-			// Manually increment and decrement TOC scroll rather than using scrollToView
-			// in order to account for threshold
-			if ( linkHiddenTopValue + hiddenThreshold > 0 ) {
-				this.props.container.scrollTo( {
-					top: this.props.container.scrollTop - linkHiddenTopValue - midpoint,
-					behavior: scrollBehavior
-				} );
-			}
-			if ( linkHiddenBottomValue + hiddenThreshold > 0 ) {
-				this.props.container.scrollTo( {
-					top: this.props.container.scrollTop + linkHiddenBottomValue + midpoint,
-					behavior: scrollBehavior
-				} );
-			}
+	/**
+	 * Apply a previously measured scroll adjustment. No geometry reads.
+	 *
+	 * @param {Object|null} adjustment Result of measureScrollAdjustment().
+	 */
+	applyScrollAdjustment( adjustment ) {
+		if ( !adjustment ) {
+			return;
 		}
+
+		const { linkHiddenTopValue, linkHiddenBottomValue, midpoint } = adjustment;
+		// Pixels above or below the TOC where we start scrolling the active section into view
+		const hiddenThreshold = 100;
+		// Respect 'prefers-reduced-motion' user preference
+		const scrollBehavior = this.prefersReducedMotion() ? undefined : 'smooth';
+		// Track the target instead of re-reading scrollTop between the two
+		// adjustments so this phase stays free of geometry reads. When both
+		// adjustments fire with instant scrolling, the chained value skips
+		// the browser's clamping of the first jump — a few pixels off, only
+		// reachable with a scrollable container shorter than the threshold.
+		let targetTop = adjustment.scrollTop;
+
+		// Manually increment and decrement TOC scroll rather than using scrollToView
+		// in order to account for threshold
+		if ( linkHiddenTopValue + hiddenThreshold > 0 ) {
+			targetTop = targetTop - linkHiddenTopValue - midpoint;
+			this.props.container.scrollTo( {
+				top: targetTop,
+				behavior: scrollBehavior
+			} );
+		}
+		if ( linkHiddenBottomValue + hiddenThreshold > 0 ) {
+			targetTop = targetTop + linkHiddenBottomValue + midpoint;
+			this.props.container.scrollTo( {
+				top: targetTop,
+				behavior: scrollBehavior
+			} );
+		}
+	}
+
+	/**
+	 * Scroll active section into view if necessary
+	 *
+	 * @param {string} id The id of the element to be scrolled to in the Table of Contents.
+	 */
+	scrollToActiveSection( id ) {
+		this.applyScrollAdjustment( this.measureScrollAdjustment( id ) );
 	}
 
 	/**
