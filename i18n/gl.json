@@ -67,6 +67,7 @@
 	"citizen-theme-description": "Cambiar entre o modo claro e o modo escuro",
 	"citizen-theme-day-label": "Claro",
 	"citizen-theme-night-label": "Escuro",
+	"citizen-theme-black-label": "Negro",
 	"citizen-theme-os-label": "Automático",
 	"citizen-feature-autohide-navigation-name": "Agochar a navegación automaticamente",
 	"citizen-feature-autohide-navigation-description": "Agochar a barra de navegación ao desprazarse cara abaixo",
