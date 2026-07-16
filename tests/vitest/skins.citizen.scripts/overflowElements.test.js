@@ -525,6 +525,83 @@ describe( 'overflowElements', () => {
 			expect( log.indexOf( 'write' ) ).toBeGreaterThan( log.lastIndexOf( 'read' ) );
 		} );
 
+		it( 'should keep measurements aligned when a batch mixes sticky and non-sticky elements', () => {
+			const stickyTable = `
+				<table class="wikitable">
+					<thead>
+						<tr class="citizen-overflow-sticky-header">
+							<th>A</th>
+							<th>B</th>
+						</tr>
+					</thead>
+				</table>
+			`;
+			const plainTable = '<table class="wikitable"><tbody><tr><td>plain</td></tr></tbody></table>';
+			const bodyContent = createBodyContent( stickyTable + plainTable );
+			const tables = bodyContent.querySelectorAll( 'table.wikitable' );
+			tables[ 0 ].querySelectorAll( 'th' ).forEach( ( th ) => {
+				th.getBoundingClientRect = () => ( { width: 150 } );
+			} );
+			const observers = createMockObservers();
+
+			init( {
+				document,
+				window: createMockWindow(),
+				mw,
+				IntersectionObserver: observers.IntersectionObserver,
+				ResizeObserver: observers.ResizeObserver,
+				bodyContent,
+				config: createConfig()
+			} );
+
+			observers.getIntersectionCallback()( [
+				{ isIntersecting: true, target: tables[ 0 ] },
+				{ isIntersecting: true, target: tables[ 1 ] }
+			] );
+			// Deliver with the non-sticky element first to stress index alignment
+			observers.getResizeCallback()( [
+				{ target: tables[ 1 ] },
+				{ target: tables[ 0 ] }
+			] );
+
+			const cols = document.querySelectorAll( '.citizen-overflow-content-sticky-header col' );
+			expect( cols ).toHaveLength( 2 );
+			expect( cols[ 0 ].style.minWidth ).toBe( '150px' );
+			expect( cols[ 1 ].style.minWidth ).toBe( '150px' );
+		} );
+
+		it( 'should stay idempotent on repeated intersection without an intervening pause', () => {
+			const bodyContent = createBodyContent( '<table class="wikitable"></table>' );
+			const table = bodyContent.querySelector( 'table' );
+			const observers = createMockObservers();
+
+			init( {
+				document,
+				window: createMockWindow( {
+					matchMedia: vi.fn( () => ( { matches: true } ) )
+				} ),
+				mw,
+				IntersectionObserver: observers.IntersectionObserver,
+				ResizeObserver: observers.ResizeObserver,
+				bodyContent,
+				config: createConfig()
+			} );
+
+			const contentEl = document.querySelector( '.citizen-overflow-content' );
+			const contentAddSpy = vi.spyOn( contentEl, 'addEventListener' );
+			const intersectionCb = observers.getIntersectionCallback();
+
+			intersectionCb( [ { isIntersecting: true, target: table } ] );
+			intersectionCb( [ { isIntersecting: true, target: table } ] );
+
+			// Same handler reference every time: rebinding stays a no-op for the DOM
+			expect( contentAddSpy ).toHaveBeenCalledTimes( 2 );
+			const handlers = contentAddSpy.mock.calls.map( ( call ) => call[ 1 ] );
+			expect( handlers[ 0 ] ).toBe( handlers[ 1 ] );
+			expect( observers.resizeObserve ).toHaveBeenCalledTimes( 2 );
+			expect( observers.resizeObserve ).toHaveBeenNthCalledWith( 2, table );
+		} );
+
 		it( 'should handle only navButton clicks and distinguish left from right', () => {
 			const bodyContent = createBodyContent( '<table class="wikitable"></table>' );
 			const rAF = vi.fn( ( cb ) => cb() );
