@@ -3,12 +3,16 @@
  * Detects whether the element is a table and creates the appropriate
  * clone structure (table with colgroup or div).
  *
+ * Column widths are synced in two phases so callers can batch the geometry
+ * reads of many tables ahead of any style writes: measureColumns() only
+ * reads, applyColumns() only writes.
+ *
  * @param {Object} params
  * @param {Document} params.document
  * @param {HTMLElement} params.element
  * @param {HTMLElement} params.content
  * @param {HTMLElement} params.headerRow
- * @return {{stickyHeader: HTMLElement, syncColumns: Function|null}}
+ * @return {{stickyHeader: HTMLElement, measureColumns: Function|null, applyColumns: Function|null}}
  */
 function createOverflowStickyHeader( { document, element, content, headerRow } ) {
 	const isTable = element instanceof HTMLTableElement;
@@ -47,22 +51,34 @@ function createOverflowStickyHeader( { document, element, content, headerRow } )
 	stickyHeader.setAttribute( 'aria-hidden', 'true' );
 	content.insertBefore( stickyHeader, element );
 
-	function syncColumns() {
+	function measureColumns() {
 		if ( !colgroup || !originalTh ) {
+			return null;
+		}
+		const widths = [];
+		originalTh.forEach( ( col ) => {
+			widths.push( col.getBoundingClientRect().width );
+		} );
+		return widths;
+	}
+
+	function applyColumns( widths ) {
+		if ( !widths || !colgroup ) {
 			return;
 		}
 		const stickyCols = colgroup.querySelectorAll( 'col' );
-		originalTh.forEach( ( col, index ) => {
-			stickyCols[ index ].style.minWidth = col.getBoundingClientRect().width + 'px';
+		widths.forEach( ( width, index ) => {
+			if ( stickyCols[ index ] ) {
+				stickyCols[ index ].style.setProperty( 'min-width', width + 'px' );
+			}
 		} );
 	}
 
-	// Initial sync
-	if ( isTable ) {
-		syncColumns();
-	}
-
-	return { stickyHeader, syncColumns: isTable ? syncColumns : null };
+	return {
+		stickyHeader,
+		measureColumns: isTable ? measureColumns : null,
+		applyColumns: isTable ? applyColumns : null
+	};
 }
 
 module.exports = { createOverflowStickyHeader };
