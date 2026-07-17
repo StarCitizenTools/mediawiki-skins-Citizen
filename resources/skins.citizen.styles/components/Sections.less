@@ -59,10 +59,73 @@
 			order: -2;
 			width: var( --size-icon );
 			height: var( --size-icon );
-			margin-right: var( --space-sm );
+			margin-inline-end: var( --space-sm );
 			cursor: pointer;
 			transition: var( --transition-hover );
 			transition-property: transform;
+		}
+	}
+}
+
+// Native Parsoid sections (<section data-mw-section-id>) ship their own
+// wrappers, so the collapse affordance is applied purely through CSS —
+// no indicator markup is injected server- or client-side. Scoped to
+// client-js because the sections cannot toggle without JS.
+// Trade-off: this claims the heading's single ::before slot, so any
+// extension or gadget styling .mw-heading::before will conflict here.
+section[ data-mw-section-id ] > .mw-heading {
+	--size-icon: 1.125rem;
+}
+
+.client-js .citizen-sections-enabled {
+	section[ data-mw-section-id ] > .mw-heading {
+		cursor: pointer;
+		-webkit-user-select: none;
+		user-select: none;
+
+		&::before {
+			flex-shrink: 0;
+			order: -2;
+			width: var( --size-icon );
+			height: var( --size-icon );
+			margin-inline-end: var( --space-sm );
+			content: '';
+			background-color: currentcolor;
+			-webkit-mask-image: url( assets/images/cdxIconCollapse.svg );
+			mask-image: url( assets/images/cdxIconCollapse.svg );
+			-webkit-mask-repeat: no-repeat;
+			mask-repeat: no-repeat;
+			-webkit-mask-position: center;
+			mask-position: center;
+			-webkit-mask-size: contain;
+			mask-size: contain;
+			transition: var( --transition-hover );
+			transition-property: transform;
+		}
+
+		:is( h1, h2, h3, h4, h5, h6 ) {
+			transition: var( --transition-hover );
+			transition-property: opacity;
+
+			@media ( hover: hover ) {
+				&:hover {
+					opacity: var( --opacity-icon-base--hover );
+				}
+
+				&:active {
+					opacity: var( --opacity-icon-base--selected );
+				}
+			}
+		}
+	}
+
+	section[ data-mw-section-id ].citizen-parsoid-section--collapsed > .mw-heading {
+		&::before {
+			transform: rotate3d( 1, 0, 0, 180deg );
+		}
+
+		:is( h1, h2, h3, h4, h5, h6 ) {
+			color: var( --color-subtle );
 		}
 	}
 }

@@ -124,5 +124,37 @@ class CitizenComponentBodyContentTest extends MediaWikiIntegrationTestCase {
 			'',
 			''
 		];
+
+		yield 'Escaped Parsoid markup in code samples does not disable sectioning' => [
+			'Documentation showing Parsoid markup as escaped text is still legacy content',
+			'<div class="mw-parser-output">' .
+			'<pre>&lt;section data-mw-section-id="1"&gt;</pre>' .
+			'<h2>Foo</h2><p>Bar</p>' .
+			'</div>',
+			'<div class="mw-parser-output">' .
+			'<section id="citizen-section-0" class="citizen-section">' .
+			// The serializer normalizes &gt; to a bare > in text content
+			'<pre>&lt;section data-mw-section-id="1"></pre></section>' .
+			'<h2 class="citizen-section-heading">' .
+			'<span class="citizen-section-indicator citizen-ui-icon mw-ui-icon-wikimedia-collapse"></span>Foo</h2>' .
+			'<section id="citizen-section-1" class="citizen-section"><p>Bar</p></section>' .
+			'</div>'
+		];
+
+		yield 'Parsoid content is left untouched' => [
+			'Parsoid wraps sections natively; the transform must not run',
+			'<div class="mw-parser-output">' .
+			'<section data-mw-section-id="0" id="mwAQ"><p>Lead</p></section>' .
+			'<section data-mw-section-id="1" id="mwAg">' .
+			'<div class="mw-heading mw-heading2"><h2 id="Foo">Foo</h2></div><p>Bar</p>' .
+			'</section>' .
+			'</div>',
+			'<div class="mw-parser-output">' .
+			'<section data-mw-section-id="0" id="mwAQ"><p>Lead</p></section>' .
+			'<section data-mw-section-id="1" id="mwAg">' .
+			'<div class="mw-heading mw-heading2"><h2 id="Foo">Foo</h2></div><p>Bar</p>' .
+			'</section>' .
+			'</div>'
+		];
 	}
 }
