@@ -77,29 +77,17 @@ function createSections( { document, bodyContent } ) {
 				return;
 			}
 
-			// Sections that contain their own heading: native Parsoid markup
-			// and the legacy transform's converged output
 			const section = getSectionFromHeading( heading );
 			if ( section ) {
 				setSectionCollapsed(
 					section,
 					!section.classList.contains( COLLAPSED_CLASS )
 				);
-				return;
-			}
-
-			// Pre-convergence cached markup: the heading precedes a sibling
-			// section that wraps only the body
-			if ( heading.nextElementSibling && heading.nextElementSibling.classList.contains( 'citizen-section' ) ) {
-				const sibling = heading.nextElementSibling;
-				sibling.hidden = sibling.hidden ? false : 'until-found';
 			}
 		};
 
-		// Pre-convergence cached sections self-heal on find-in-page: the
-		// browser clears the wrapper's own `hidden`. Converged and Parsoid
-		// sections hide individual children, so expand the whole chain of
-		// collapsed ancestors on a match.
+		// Sections hide individual children, so expand the whole chain of
+		// collapsed ancestors on a find-in-page match.
 		const handleBeforeMatch = ( e ) => {
 			let section = e.target instanceof Element ?
 				e.target.closest( COLLAPSED_SECTION_SELECTOR ) :

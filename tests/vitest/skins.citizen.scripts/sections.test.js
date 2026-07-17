@@ -26,40 +26,6 @@ afterEach( () => {
 } );
 
 describe( 'createSections', () => {
-	describe( 'legacy sections (Citizen transform markup)', () => {
-		const LEGACY = `
-			<div class="mw-parser-output">
-				<section id="citizen-section-0" class="citizen-section"><p>Lead</p></section>
-				<div class="mw-heading citizen-section-heading"><h2 id="Foo">Foo</h2>
-					<span class="mw-editsection"><a href="#">edit</a></span>
-				</div>
-				<section id="citizen-section-1" class="citizen-section"><p>Bar</p></section>
-			</div>
-		`;
-
-		it( 'should toggle the sibling section on heading click', () => {
-			const bodyContent = createBodyContent( LEGACY );
-			const heading = bodyContent.querySelector( '.citizen-section-heading' );
-			const section = bodyContent.querySelector( '#citizen-section-1' );
-
-			click( heading );
-			expect( section.hidden ).toBeTruthy();
-
-			click( heading );
-			expect( section.hidden ).toBeFalsy();
-		} );
-
-		it( 'should not toggle when the edit link is clicked', () => {
-			const bodyContent = createBodyContent( LEGACY );
-			const editLink = bodyContent.querySelector( '.mw-editsection a' );
-			const section = bodyContent.querySelector( '#citizen-section-1' );
-
-			click( editLink );
-
-			expect( section.hidden ).toBeFalsy();
-		} );
-	} );
-
 	describe( 'converged legacy sections (heading inside section)', () => {
 		const CONVERGED = `
 			<div class="mw-parser-output">
@@ -229,6 +195,29 @@ describe( 'createSections', () => {
 
 			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( false );
 			expect( hiddenParagraph.hidden ).toBeFalsy();
+		} );
+	} );
+
+	describe( 'stale pre-convergence markup (heading outside section)', () => {
+		// Cached pages from before the sections were converged: the heading
+		// precedes a sibling section that wraps only the body. Collapsing is
+		// unsupported — clicking the heading must be a harmless no-op.
+		const STALE = `
+			<div class="mw-parser-output">
+				<h2 class="citizen-section-heading" id="Old">Old</h2>
+				<section id="citizen-section-1" class="citizen-section"><p>Body</p></section>
+			</div>
+		`;
+
+		it( 'should leave cached pre-convergence sections inert', () => {
+			const bodyContent = createBodyContent( STALE );
+			const heading = bodyContent.querySelector( '.citizen-section-heading' );
+			const section = bodyContent.querySelector( '#citizen-section-1' );
+
+			click( heading );
+
+			expect( section.hidden ).toBeFalsy();
+			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( false );
 		} );
 	} );
 } );
