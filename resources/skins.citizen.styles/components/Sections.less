@@ -19,14 +19,12 @@ section[ data-mw-section-id ] > .mw-heading,
 // markup is injected server- or client-side, so first paint carries it
 // with no layout shift and noscript clients never see it. All markup
 // shapes share one recipe: the legacy transform's sections (heading
-// inside, carrying .citizen-section-heading), native Parsoid sections
-// (<section data-mw-section-id> with the heading inside), and cached
-// pre-convergence markup where the heading precedes a sibling section.
+// inside, carrying .citizen-section-heading) and native Parsoid
+// sections (<section data-mw-section-id> with the heading inside).
 // Trade-off: this claims the heading's single ::before slot, so any
 // extension or gadget styling these headings' ::before will conflict.
 .client-js .citizen-sections-enabled {
-	.citizen-section-heading,
-	section[ data-mw-section-id ] > .mw-heading {
+	section:is( [ data-mw-section-id ], .citizen-section ) > :is( .mw-heading, .citizen-section-heading ) {
 		cursor: pointer;
 		-webkit-user-select: none;
 		user-select: none;
@@ -67,7 +65,6 @@ section[ data-mw-section-id ] > .mw-heading,
 		}
 	}
 
-	.citizen-section-heading:has( + .citizen-section[ hidden ] ),
 	section:is( [ data-mw-section-id ], .citizen-section ).citizen-section--collapsed > :is( .mw-heading, .citizen-section-heading ) {
 		&::before {
 			transform: rotate3d( 1, 0, 0, 180deg );
