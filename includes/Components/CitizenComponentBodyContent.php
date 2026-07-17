@@ -76,7 +76,7 @@ class CitizenComponentBodyContent implements CitizenComponent {
 				// isSectionBreak() guarantees $currentNode is an Element,
 				// but Phan cannot infer that from the control flow.
 				if ( $currentNode instanceof Element ) {
-					$this->prepareHeading( $doc, $currentNode );
+					$this->prepareHeading( $currentNode );
 				}
 
 				$sectionNumber++;
@@ -172,15 +172,12 @@ class CitizenComponentBodyContent implements CitizenComponent {
 	}
 
 	/**
-	 * Prepare section headings, add required classes
+	 * Prepare section headings, add required classes.
+	 * The collapse indicator renders purely through CSS on the heading's
+	 * ::before, the same way native Parsoid sections are styled.
 	 */
-	private function prepareHeading( Document $doc, Element $heading ): void {
+	private function prepareHeading( Element $heading ): void {
 		DOMCompat::getClassList( $heading )->add( 'citizen-section-heading' );
-
-		// prepend indicator - this avoids a reflow by creating a placeholder for a toggling indicator
-		$indicator = $doc->createElement( 'span' );
-		$indicator->setAttribute( 'class', 'citizen-section-indicator citizen-ui-icon mw-ui-icon-wikimedia-collapse' );
-		$heading->insertBefore( $indicator, $heading->firstChild );
 	}
 
 	/**

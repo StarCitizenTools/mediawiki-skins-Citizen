@@ -1,11 +1,15 @@
-// Hide indicator when client is noscript
-// FIXME: On rare occasion, indicator can appear without the .citizen-sections-enabled class, not sure why
-.citizen-section-indicator,
-.client-nojs.citizen-sections-enabled .citizen-section-indicator {
-	display: none;
+// Cached HTML compat: pages rendered before the indicator moved to CSS
+// carry a server-injected indicator span; keep it inert until caches
+// expire. !important because the span also matches .citizen-ui-icon
+// rules of equal specificity elsewhere and must not depend on import
+// order to lose. The next commit removes this rule for wikis that
+// deploy commit by commit.
+.citizen-section-indicator {
+	display: none !important;
 }
 
 .citizen-section-heading,
+section[ data-mw-section-id ] > .mw-heading,
 .mw-editsection {
 	--size-icon: 1.125rem;
 }
@@ -18,66 +22,19 @@
 		.mw-headline {
 			flex-grow: 1;
 		}
-
-		:is( .mw-headline, h1, h2, h3, h4, h5, h6 ) {
-			transition: var( --transition-hover );
-			transition-property: opacity;
-
-			@media ( hover: pointer ) {
-				&:hover {
-					opacity: var( --opacity-icon-base--hover );
-				}
-
-				&:active {
-					opacity: var( --opacity-icon-base--selected );
-				}
-			}
-		}
-
-		&:has( + .citizen-section[ hidden ] ) {
-			.citizen-section-indicator {
-				transform: rotate3d( 1, 0, 0, 180deg );
-			}
-
-			:is( .mw-headline, h1, h2, h3, h4, h5, h6 ) {
-				color: var( --color-subtle );
-			}
-		}
 	}
 }
 
-.citizen-sections-enabled {
-	.citizen-section {
-		&-heading {
-			cursor: pointer;
-			-webkit-user-select: none;
-			user-select: none;
-		}
-
-		&-indicator {
-			display: block;
-			order: -2;
-			width: var( --size-icon );
-			height: var( --size-icon );
-			margin-inline-end: var( --space-sm );
-			cursor: pointer;
-			transition: var( --transition-hover );
-			transition-property: transform;
-		}
-	}
-}
-
-// Native Parsoid sections (<section data-mw-section-id>) ship their own
-// wrappers, so the collapse affordance is applied purely through CSS —
-// no indicator markup is injected server- or client-side. Scoped to
-// client-js because the sections cannot toggle without JS.
+// The collapse affordance is applied purely through CSS — no indicator
+// markup is injected server- or client-side, so first paint carries it
+// with no layout shift and noscript clients never see it. Both markup
+// shapes share one recipe: the legacy transform's sibling sections
+// (heading carries .citizen-section-heading) and native Parsoid sections
+// (<section data-mw-section-id> with the heading inside).
 // Trade-off: this claims the heading's single ::before slot, so any
-// extension or gadget styling .mw-heading::before will conflict here.
-section[ data-mw-section-id ] > .mw-heading {
-	--size-icon: 1.125rem;
-}
-
+// extension or gadget styling these headings' ::before will conflict.
 .client-js .citizen-sections-enabled {
+	.citizen-section-heading,
 	section[ data-mw-section-id ] > .mw-heading {
 		cursor: pointer;
 		-webkit-user-select: none;
@@ -103,7 +60,7 @@ section[ data-mw-section-id ] > .mw-heading {
 			transition-property: transform;
 		}
 
-		:is( h1, h2, h3, h4, h5, h6 ) {
+		:is( .mw-headline, h1, h2, h3, h4, h5, h6 ) {
 			transition: var( --transition-hover );
 			transition-property: opacity;
 
@@ -119,12 +76,13 @@ section[ data-mw-section-id ] > .mw-heading {
 		}
 	}
 
+	.citizen-section-heading:has( + .citizen-section[ hidden ] ),
 	section[ data-mw-section-id ].citizen-parsoid-section--collapsed > .mw-heading {
 		&::before {
 			transform: rotate3d( 1, 0, 0, 180deg );
 		}
 
-		:is( h1, h2, h3, h4, h5, h6 ) {
+		:is( .mw-headline, h1, h2, h3, h4, h5, h6 ) {
 			color: var( --color-subtle );
 		}
 	}
