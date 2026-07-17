@@ -47,6 +47,10 @@ For wikitables:
 |}
 ```
 
+### Floated overflow content
+
+When an element that Citizen wraps for overflow is floated — through an inline `float` style or a class defined in your wiki's CSS — Citizen keeps the float working by re-applying it to the wrapper it adds. This covers any `.citizen-overflow` element as well as wikitables, which are wrapped automatically: floated content sits beside the text on tablet screens and up, and stacks on mobile. To opt out of wrapping (for example, an automatically wrapped wikitable), use `.citizen-table-nowrap` or any class listed in `$wgCitizenOverflowNowrapClasses`.
+
 ## Tables
 
 Enhance the look and feel of your tables.
