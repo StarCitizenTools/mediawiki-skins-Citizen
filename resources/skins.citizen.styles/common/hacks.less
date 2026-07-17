@@ -28,19 +28,13 @@ div.tright {
 }
 
 @media ( min-width: @min-width-breakpoint-tablet ) {
-	/* @noflip */
 	div.tright,
 	.floatright {
-		float: right;
-		clear: right;
-		margin-left: var( --space-lg );
+		.mixin-citizen-float-declarations( right );
 	}
 
-	/* @noflip */
 	div.tleft,
 	.floatleft {
-		float: left;
-		clear: left;
-		margin-right: var( --space-lg );
+		.mixin-citizen-float-declarations( left );
 	}
 }

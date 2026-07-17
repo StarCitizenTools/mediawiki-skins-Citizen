@@ -1,4 +1,5 @@
 const { createOverflowWrapper } = require( './wrapper.js' );
+const { detectFloatDirection } = require( './float.js' );
 const { createOverflowState } = require( './state.js' );
 const { createOverflowStickyHeader } = require( './stickyHeader.js' );
 
@@ -11,13 +12,14 @@ const { createOverflowStickyHeader } = require( './stickyHeader.js' );
 class OverflowElement {
 	constructor( {
 		document, window, mw,
-		element, isPointerDevice, config
+		element, isPointerDevice, floatDirection, config
 	} ) {
 		this.document = document;
 		this.window = window;
 		this.mw = mw;
 		this.element = element;
 		this.isPointerDevice = isPointerDevice;
+		this.floatDirection = floatDirection;
 		this.config = config;
 		// Assigned by the module init() after a successful element init
 		this.resizeObserver = null;
@@ -124,7 +126,8 @@ class OverflowElement {
 			mw: this.mw,
 			element: this.element,
 			isPointerDevice: this.isPointerDevice,
-			inheritedClasses: this.config.wgCitizenOverflowInheritedClasses
+			inheritedClasses: this.config.wgCitizenOverflowInheritedClasses,
+			floatDirection: this.floatDirection
 		} );
 		if ( !refs ) {
 			return false;
@@ -213,15 +216,41 @@ function init( {
 
 	const isPointerDevice = window.matchMedia( '(hover: hover) and (pointer: fine)' ).matches;
 
-	const initialized = [];
+	const inheritedClasses = config.wgCitizenOverflowInheritedClasses || [];
+
+	// Batched read pass before any wrapping: computed-style reads must not
+	// interleave with the DOM writes done by init(). Elements whose float
+	// comes from an inherited class are skipped — the class itself migrates
+	// to the wrapper and stays viewport-correct, unlike a computed snapshot.
+	const candidates = [];
 	overflowElements.forEach( ( el ) => {
 		if ( nowrapClasses.some( ( cls ) => el.classList.contains( cls ) ) ) {
 			return;
 		}
+		const hasInheritedClass = inheritedClasses.some(
+			( cls ) => el.classList.contains( cls )
+		);
+		// Fault-isolate the detection: a throw (e.g. a monkey-patched
+		// getComputedStyle) degrades this one element to no modifier
+		// instead of aborting the wrapping of every element on the page
+		let floatDirection = null;
+		if ( !hasInheritedClass ) {
+			try {
+				floatDirection = detectFloatDirection( el, window );
+			} catch ( error ) {
+				mw.log.error(
+					`[Citizen] Error occurred while detecting float direction: ${ error.message }`
+				);
+			}
+		}
+		candidates.push( { element: el, floatDirection } );
+	} );
 
+	const initialized = [];
+	candidates.forEach( ( { element, floatDirection } ) => {
 		const instance = new OverflowElement( {
 			document, window, mw,
-			element: el, isPointerDevice, config
+			element, isPointerDevice, floatDirection, config
 		} );
 		if ( instance.init() ) {
 			initialized.push( instance );

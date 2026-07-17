@@ -2,6 +2,7 @@
 /* global document */
 
 const { init } = require( '../../../resources/skins.citizen.scripts/overflowElements/index.js' );
+const { detectFloatDirection } = require( '../../../resources/skins.citizen.scripts/overflowElements/float.js' );
 const mw = require( '../mocks/mw.js' );
 
 /**
@@ -14,6 +15,10 @@ function createMockWindow( overrides = {} ) {
 	return {
 		matchMedia: vi.fn( () => ( { matches: false } ) ),
 		requestAnimationFrame: vi.fn( ( cb ) => cb() ),
+		getComputedStyle: vi.fn( ( el ) => ( {
+			float: el.style.getPropertyValue( 'float' ) || 'none',
+			direction: 'ltr'
+		} ) ),
 		...overrides
 	};
 }
@@ -156,6 +161,205 @@ describe( 'overflowElements', () => {
 			// No wrapper should be created for elements with nowrap class
 			expect( document.querySelector( '.citizen-overflow-wrapper' ) ).toBe( null );
 			expect( observers.IntersectionObserver ).not.toHaveBeenCalled();
+		} );
+	} );
+
+	describe( 'detectFloatDirection', () => {
+		const makeWindow = ( style ) => ( {
+			getComputedStyle: vi.fn( () => style )
+		} );
+
+		it.each( [
+			[ { float: 'right', direction: 'ltr' }, 'right' ],
+			[ { float: 'left', direction: 'ltr' }, 'left' ],
+			[ { float: 'none', direction: 'ltr' }, null ],
+			[ { float: 'inline-start', direction: 'ltr' }, 'left' ],
+			[ { float: 'inline-start', direction: 'rtl' }, 'right' ],
+			[ { float: 'inline-end', direction: 'ltr' }, 'right' ],
+			[ { float: 'inline-end', direction: 'rtl' }, 'left' ]
+		] )( 'should resolve computed %o to %s', ( style, expected ) => {
+			expect( detectFloatDirection( {}, makeWindow( style ) ) ).toBe( expected );
+		} );
+	} );
+
+	describe( 'float preservation', () => {
+		it( 'should mirror an inline float onto the wrapper as a modifier class', () => {
+			const bodyContent = createBodyContent(
+				'<table class="wikitable" style="float: right;"><tbody><tr><td>a</td></tr></tbody></table>'
+			);
+			const observers = createMockObservers();
+
+			init( {
+				document,
+				window: createMockWindow(),
+				mw,
+				IntersectionObserver: observers.IntersectionObserver,
+				ResizeObserver: observers.ResizeObserver,
+				bodyContent,
+				config: createConfig()
+			} );
+
+			const wrapper = document.querySelector( '.citizen-overflow-wrapper' );
+			expect( wrapper.classList.contains( 'citizen-overflow-wrapper--floatright' ) ).toBe( true );
+			expect( wrapper.querySelector( 'table' ) ).not.toBe( null );
+		} );
+
+		it( 'should mirror an inline float:left as the floatleft modifier', () => {
+			const bodyContent = createBodyContent(
+				'<table class="wikitable" style="float: left;"><tbody><tr><td>a</td></tr></tbody></table>'
+			);
+			const observers = createMockObservers();
+
+			init( {
+				document,
+				window: createMockWindow(),
+				mw,
+				IntersectionObserver: observers.IntersectionObserver,
+				ResizeObserver: observers.ResizeObserver,
+				bodyContent,
+				config: createConfig()
+			} );
+
+			const wrapper = document.querySelector( '.citizen-overflow-wrapper' );
+			expect( wrapper.classList.contains( 'citizen-overflow-wrapper--floatleft' ) ).toBe( true );
+		} );
+
+		it( 'should mirror an inline float on a .citizen-overflow div', () => {
+			const bodyContent = createBodyContent(
+				'<div class="citizen-overflow" style="float: right;">content</div>'
+			);
+			const observers = createMockObservers();
+
+			init( {
+				document,
+				window: createMockWindow(),
+				mw,
+				IntersectionObserver: observers.IntersectionObserver,
+				ResizeObserver: observers.ResizeObserver,
+				bodyContent,
+				config: createConfig()
+			} );
+
+			const wrapper = document.querySelector( '.citizen-overflow-wrapper' );
+			expect( wrapper.classList.contains( 'citizen-overflow-wrapper--floatright' ) ).toBe( true );
+			expect( wrapper.querySelector( 'div.citizen-overflow' ) ).not.toBe( null );
+		} );
+
+		it( 'should not add a float modifier to non-floated elements', () => {
+			const bodyContent = createBodyContent( '<table class="wikitable"></table>' );
+			const observers = createMockObservers();
+
+			init( {
+				document,
+				window: createMockWindow(),
+				mw,
+				IntersectionObserver: observers.IntersectionObserver,
+				ResizeObserver: observers.ResizeObserver,
+				bodyContent,
+				config: createConfig()
+			} );
+
+			const wrapper = document.querySelector( '.citizen-overflow-wrapper' );
+			expect( wrapper.classList.contains( 'citizen-overflow-wrapper--floatleft' ) ).toBe( false );
+			expect( wrapper.classList.contains( 'citizen-overflow-wrapper--floatright' ) ).toBe( false );
+		} );
+
+		it( 'should migrate inherited classes without adding a float modifier', () => {
+			const bodyContent = createBodyContent(
+				'<table class="wikitable floatright"></table>'
+			);
+			const win = createMockWindow();
+			const observers = createMockObservers();
+
+			init( {
+				document,
+				window: win,
+				mw,
+				IntersectionObserver: observers.IntersectionObserver,
+				ResizeObserver: observers.ResizeObserver,
+				bodyContent,
+				config: createConfig( {
+					wgCitizenOverflowInheritedClasses: [ 'floatright' ]
+				} )
+			} );
+
+			const wrapper = document.querySelector( '.citizen-overflow-wrapper' );
+			// The class migrates wholesale (viewport-correct via hacks.less)
+			expect( wrapper.classList.contains( 'floatright' ) ).toBe( true );
+			expect( wrapper.classList.contains( 'citizen-overflow-wrapper--floatright' ) ).toBe( false );
+			expect( bodyContent.querySelector( 'table' ).classList.contains( 'floatright' ) ).toBe( false );
+			// Detection is skipped entirely for inherited-class elements
+			expect( win.getComputedStyle ).not.toHaveBeenCalled();
+		} );
+
+		it( 'should finish all computed-style reads before any wrapping', () => {
+			const bodyContent = createBodyContent(
+				'<table class="wikitable" style="float: right;"></table>' +
+				'<table class="wikitable" style="float: left;"></table>'
+			);
+			const wrappersAtRead = [];
+			const win = createMockWindow( {
+				getComputedStyle: vi.fn( ( el ) => {
+					wrappersAtRead.push(
+						document.querySelectorAll( '.citizen-overflow-wrapper' ).length
+					);
+					return { float: el.style.getPropertyValue( 'float' ) || 'none', direction: 'ltr' };
+				} )
+			} );
+			const observers = createMockObservers();
+
+			init( {
+				document,
+				window: win,
+				mw,
+				IntersectionObserver: observers.IntersectionObserver,
+				ResizeObserver: observers.ResizeObserver,
+				bodyContent,
+				config: createConfig()
+			} );
+
+			// Every read saw zero wrappers: reads were fully batched ahead of writes
+			expect( wrappersAtRead ).toEqual( [ 0, 0 ] );
+			expect( document.querySelectorAll( '.citizen-overflow-wrapper' ) ).toHaveLength( 2 );
+		} );
+
+		it( 'should isolate a computed-style failure to its own element', () => {
+			const bodyContent = createBodyContent(
+				'<table class="wikitable"></table>' +
+				'<table class="wikitable" style="float: left;"></table>'
+			);
+			const tables = bodyContent.querySelectorAll( 'table' );
+			const win = createMockWindow( {
+				getComputedStyle: vi.fn( ( el ) => {
+					if ( el === tables[ 0 ] ) {
+						throw new Error( 'monkey-patched' );
+					}
+					return { float: el.style.getPropertyValue( 'float' ) || 'none', direction: 'ltr' };
+				} )
+			} );
+			const observers = createMockObservers();
+
+			expect( () => init( {
+				document,
+				window: win,
+				mw,
+				IntersectionObserver: observers.IntersectionObserver,
+				ResizeObserver: observers.ResizeObserver,
+				bodyContent,
+				config: createConfig()
+			} ) ).not.toThrow();
+
+			// Both elements are still wrapped despite the failed detection
+			const wrappers = document.querySelectorAll( '.citizen-overflow-wrapper' );
+			expect( wrappers ).toHaveLength( 2 );
+			// The throwing element degrades to no modifier ...
+			expect( wrappers[ 0 ].classList.contains( 'citizen-overflow-wrapper--floatleft' ) ).toBe( false );
+			expect( wrappers[ 0 ].classList.contains( 'citizen-overflow-wrapper--floatright' ) ).toBe( false );
+			// ... while the healthy element still gets its modifier
+			expect( wrappers[ 1 ].classList.contains( 'citizen-overflow-wrapper--floatleft' ) ).toBe( true );
+			expect( mw.log.error ).toHaveBeenCalledWith(
+				expect.stringContaining( '[Citizen] Error occurred while detecting float direction' )
+			);
 		} );
 	} );
 

@@ -1,7 +1,8 @@
 /**
  * Creates the DOM wrapper structure for an overflow element.
- * Handles inherited class migration (floatleft, floatright, etc.)
- * and optional navigation buttons for pointer devices.
+ * Handles inherited class migration (floatleft, floatright, etc.),
+ * detected-float modifiers, and optional navigation buttons for
+ * pointer devices.
  *
  * @param {Object} params
  * @param {Document} params.document
@@ -9,9 +10,12 @@
  * @param {HTMLElement} params.element
  * @param {boolean} params.isPointerDevice
  * @param {string[]} params.inheritedClasses
+ * @param {string|null} params.floatDirection
  * @return {{wrapper: HTMLElement, content: HTMLElement, nav: HTMLElement|null}|null}
  */
-function createOverflowWrapper( { document, mw, element, isPointerDevice, inheritedClasses } ) {
+function createOverflowWrapper( {
+	document, mw, element, isPointerDevice, inheritedClasses, floatDirection
+} ) {
 	if ( !element || !element.parentNode ) {
 		mw.log.error(
 			'[Citizen] Element or element.parentNode is null or undefined.'
@@ -34,6 +38,12 @@ function createOverflowWrapper( { document, mw, element, isPointerDevice, inheri
 					element.classList.remove( cls );
 				}
 			} );
+		}
+
+		// Re-express a detected float (inline style or unknown wiki class)
+		// as the skin-standard float treatment on the wrapper
+		if ( floatDirection ) {
+			wrapper.classList.add( `citizen-overflow-wrapper--float${ floatDirection }` );
 		}
 
 		let nav = null;
