@@ -30,7 +30,7 @@ class ResourceLoaderHooksTest extends MediaWikiIntegrationTestCase {
 			$this->getServiceContainer()->getMainConfig()
 		);
 
-		$this->assertArraySubmapSame( [
+		$this->assertArrayContains( [
 			'wgCitizenEnablePreferences' => false,
 			'wgCitizenOverflowInheritedClasses' => false,
 			'wgCitizenOverflowNowrapClasses' => false,
@@ -53,7 +53,7 @@ class ResourceLoaderHooksTest extends MediaWikiIntegrationTestCase {
 			$this->getServiceContainer()->getMainConfig()
 		);
 
-		$this->assertArraySubmapSame( [
+		$this->assertArrayContains( [
 			'wgCitizenThemeDefault' => 'dark',
 		], $config );
 	}
