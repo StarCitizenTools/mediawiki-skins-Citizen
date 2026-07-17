@@ -26,11 +26,59 @@
 		&:has( .citizen-overflow-content > .wikitable--fluid ) {
 			max-width: none;
 		}
+
+		&--floatleft,
+		&--floatright {
+			margin: 0;
+
+			// The float and its margins are re-expressed on the wrapper —
+			// zero them on the inner element so author float-spacing does
+			// not double up inside the wrapper
+			.citizen-overflow-content > * {
+				margin: 0 !important;
+			}
+		}
+
+		// Keep this block last: two separate same-specificity ties resolve
+		// by source order and both need this media block to come after the
+		// rules above.
+		//   1. The mixin's margin-left/right ( on `&--float*` ) must beat the
+		//      `margin: 0` base above ( both 0,1,0 ) — the non-table float case.
+		//   2. The nested `:has()` override below must beat the card rule's
+		//      margin-inline ( both 0,3,0 ) — the floated-wikitable case.
+		@media ( min-width: @min-width-breakpoint-tablet ) {
+			&--floatright {
+				.mixin-citizen-float-declarations( right );
+
+				// The card rule's margin-inline (border-clipping fix) has
+				// equal specificity — restore the text-facing gap
+				&:has( .citizen-overflow-content > .wikitable ) {
+					/* @noflip */
+					margin-left: var( --space-lg );
+				}
+			}
+
+			&--floatleft {
+				.mixin-citizen-float-declarations( left );
+
+				&:has( .citizen-overflow-content > .wikitable ) {
+					/* @noflip */
+					margin-right: var( --space-lg );
+				}
+			}
+		}
 	}
 
 	&-content {
 		width: 100%;
 		overflow: auto hidden;
+
+		// A float directly inside the scroll container is never meaningful;
+		// detected floats are re-expressed on the wrapper as --float*
+		// modifiers. !important so inline styles cannot win
+		> * {
+			float: none !important;
+		}
 
 		> .wikitable {
 			display: table;

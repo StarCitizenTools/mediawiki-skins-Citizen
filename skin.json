@@ -200,6 +200,7 @@
 				"resources/skins.citizen.scripts/lastModified.js",
 				"resources/skins.citizen.scripts/overflowElements/index.js",
 				"resources/skins.citizen.scripts/overflowElements/wrapper.js",
+				"resources/skins.citizen.scripts/overflowElements/float.js",
 				"resources/skins.citizen.scripts/overflowElements/state.js",
 				"resources/skins.citizen.scripts/overflowElements/stickyHeader.js",
 				"resources/skins.citizen.scripts/performance.js",
