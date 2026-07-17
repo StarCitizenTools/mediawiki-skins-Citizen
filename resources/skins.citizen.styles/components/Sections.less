@@ -1,13 +1,3 @@
-// Cached HTML compat: pages rendered before the indicator moved to CSS
-// carry a server-injected indicator span; keep it inert until caches
-// expire. !important because the span also matches .citizen-ui-icon
-// rules of equal specificity elsewhere and must not depend on import
-// order to lose. The next commit removes this rule for wikis that
-// deploy commit by commit.
-.citizen-section-indicator {
-	display: none !important;
-}
-
 .citizen-section-heading,
 section[ data-mw-section-id ] > .mw-heading,
 .mw-editsection {
