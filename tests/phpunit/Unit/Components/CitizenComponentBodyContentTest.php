@@ -49,11 +49,9 @@ class CitizenComponentBodyContentTest extends MediaWikiIntegrationTestCase {
 			'<div class="mw-parser-output"><h2>Foo</h2><p>Bar</p><h2>Baz</h2><p>Quux</p></div>',
 			'<div class="mw-parser-output">' .
 			'<section id="citizen-section-0" class="citizen-section"></section>' .
-			'<h2 class="citizen-section-heading">' .
-			'<span class="citizen-section-indicator citizen-ui-icon mw-ui-icon-wikimedia-collapse"></span>Foo</h2>' .
+			'<h2 class="citizen-section-heading">Foo</h2>' .
 			'<section id="citizen-section-1" class="citizen-section"><p>Bar</p></section>' .
-			'<h2 class="citizen-section-heading">' .
-			'<span class="citizen-section-indicator citizen-ui-icon mw-ui-icon-wikimedia-collapse"></span>Baz</h2>' .
+			'<h2 class="citizen-section-heading">Baz</h2>' .
 			'<section id="citizen-section-2" class="citizen-section"><p>Quux</p></section>' .
 			'</div>'
 		];
@@ -63,8 +61,7 @@ class CitizenComponentBodyContentTest extends MediaWikiIntegrationTestCase {
 			'<div class="mw-parser-output"><p>Lead content.</p><h2>Foo</h2><p>Bar</p></div>',
 			'<div class="mw-parser-output">' .
 			'<section id="citizen-section-0" class="citizen-section"><p>Lead content.</p></section>' .
-			'<h2 class="citizen-section-heading">' .
-			'<span class="citizen-section-indicator citizen-ui-icon mw-ui-icon-wikimedia-collapse"></span>Foo</h2>' .
+			'<h2 class="citizen-section-heading">Foo</h2>' .
 			'<section id="citizen-section-1" class="citizen-section"><p>Bar</p></section>' .
 			'</div>'
 		];
@@ -82,9 +79,7 @@ class CitizenComponentBodyContentTest extends MediaWikiIntegrationTestCase {
 			'<div class="mw-parser-output"><div class="mw-heading"><h2>Foo</h2></div><p>Bar</p></div>',
 			'<div class="mw-parser-output">' .
 			'<section id="citizen-section-0" class="citizen-section"></section>' .
-			'<div class="mw-heading citizen-section-heading">' .
-			'<span class="citizen-section-indicator citizen-ui-icon mw-ui-icon-wikimedia-collapse"></span>' .
-			'<h2>Foo</h2></div>' .
+			'<div class="mw-heading citizen-section-heading"><h2>Foo</h2></div>' .
 			'<section id="citizen-section-1" class="citizen-section"><p>Bar</p></section>' .
 			'</div>'
 		];
@@ -98,9 +93,7 @@ class CitizenComponentBodyContentTest extends MediaWikiIntegrationTestCase {
 			'<div class="mw-parser-output">' .
 			'<section id="citizen-section-0" class="citizen-section">' .
 			'<div class="toctitle"><h2>Contents</h2></div></section>' .
-			'<h2 class="citizen-section-heading">' .
-			'<span class="citizen-section-indicator citizen-ui-icon mw-ui-icon-wikimedia-collapse"></span>' .
-			'Real Heading</h2>' .
+			'<h2 class="citizen-section-heading">Real Heading</h2>' .
 			'<section id="citizen-section-1" class="citizen-section"><p>Content</p></section>' .
 			'</div>'
 		];
@@ -110,11 +103,9 @@ class CitizenComponentBodyContentTest extends MediaWikiIntegrationTestCase {
 			'<div class="mw-parser-output"><h2>Foo</h2><h3>Should be ignored</h3><p>Bar</p><h2>Baz</h2></div>',
 			'<div class="mw-parser-output">' .
 			'<section id="citizen-section-0" class="citizen-section"></section>' .
-			'<h2 class="citizen-section-heading">' .
-			'<span class="citizen-section-indicator citizen-ui-icon mw-ui-icon-wikimedia-collapse"></span>Foo</h2>' .
+			'<h2 class="citizen-section-heading">Foo</h2>' .
 			'<section id="citizen-section-1" class="citizen-section"><h3>Should be ignored</h3><p>Bar</p></section>' .
-			'<h2 class="citizen-section-heading">' .
-			'<span class="citizen-section-indicator citizen-ui-icon mw-ui-icon-wikimedia-collapse"></span>Baz</h2>' .
+			'<h2 class="citizen-section-heading">Baz</h2>' .
 			'<section id="citizen-section-2" class="citizen-section"></section>' .
 			'</div>'
 		];
@@ -135,8 +126,7 @@ class CitizenComponentBodyContentTest extends MediaWikiIntegrationTestCase {
 			'<section id="citizen-section-0" class="citizen-section">' .
 			// The serializer normalizes &gt; to a bare > in text content
 			'<pre>&lt;section data-mw-section-id="1"></pre></section>' .
-			'<h2 class="citizen-section-heading">' .
-			'<span class="citizen-section-indicator citizen-ui-icon mw-ui-icon-wikimedia-collapse"></span>Foo</h2>' .
+			'<h2 class="citizen-section-heading">Foo</h2>' .
 			'<section id="citizen-section-1" class="citizen-section"><p>Bar</p></section>' .
 			'</div>'
 		];
