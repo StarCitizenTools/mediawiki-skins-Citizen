@@ -205,7 +205,6 @@
 				"resources/skins.citizen.scripts/performance.js",
 				"resources/skins.citizen.scripts/preferences.js",
 				"resources/skins.citizen.scripts/scrollObserver.js",
-				"resources/skins.citizen.scripts/sectionObserver.js",
 				"resources/skins.citizen.scripts/search.js",
 				"resources/skins.citizen.scripts/sections.js",
 				"resources/skins.citizen.scripts/serviceWorker.js",
@@ -213,25 +212,7 @@
 				"resources/skins.citizen.scripts/share.js",
 				"resources/skins.citizen.scripts/triggerNativeShare.js",
 				"resources/skins.citizen.scripts/speculationRules.js",
-				"resources/skins.citizen.scripts/stickyHeader.js",
-				"resources/skins.citizen.scripts/tableOfContents.js",
-				"resources/skins.citizen.scripts/tableOfContentsSections.js",
-				{
-					"name": "resources/skins.citizen.scripts/tableOfContentsConfig.json",
-					"config": [
-						"CitizenTableOfContentsCollapseAtCount"
-					]
-				},
-				{
-					"name": "resources/skins.citizen.scripts/templates/TableOfContents__list.mustache",
-					"file": "templates/TableOfContents__list.mustache",
-					"type": "text"
-				},
-				{
-					"name": "resources/skins.citizen.scripts/templates/TableOfContents__line.mustache",
-					"file": "templates/TableOfContents__line.mustache",
-					"type": "text"
-				}
+				"resources/skins.citizen.scripts/stickyHeader.js"
 			],
 			"messages": [
 				"citizen-command-palette-load-error",
@@ -241,6 +222,34 @@
 			"dependencies": [
 				"mediawiki.storage",
 				"mediawiki.page.ready",
+				"mediawiki.util"
+			]
+		},
+		"skins.citizen.toc": {
+			"packageFiles": [
+				"resources/skins.citizen.toc/index.js",
+				"resources/skins.citizen.toc/sectionObserver.js",
+				"resources/skins.citizen.toc/tableOfContents.js",
+				"resources/skins.citizen.toc/tableOfContentsSections.js",
+				{
+					"name": "resources/skins.citizen.toc/tableOfContentsConfig.json",
+					"config": [
+						"CitizenTableOfContentsCollapseAtCount"
+					]
+				},
+				{
+					"name": "resources/skins.citizen.toc/templates/TableOfContents__list.mustache",
+					"file": "templates/TableOfContents__list.mustache",
+					"type": "text"
+				},
+				{
+					"name": "resources/skins.citizen.toc/templates/TableOfContents__line.mustache",
+					"file": "templates/TableOfContents__line.mustache",
+					"type": "text"
+				},
+				"resources/skins.citizen.scripts/deferUntilFrame.js"
+			],
+			"dependencies": [
 				"mediawiki.util"
 			]
 		},

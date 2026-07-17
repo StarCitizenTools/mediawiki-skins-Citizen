@@ -1,5 +1,5 @@
 const { getTableOfContentsSectionsData } = require(
-	'../../../resources/skins.citizen.scripts/tableOfContentsSections.js'
+	'../../../resources/skins.citizen.toc/tableOfContentsSections.js'
 );
 
 describe( 'getTableOfContentsSectionsData', () => {

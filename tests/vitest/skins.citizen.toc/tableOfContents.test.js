@@ -10,11 +10,11 @@ vi.mock( '../../../resources/skins.citizen.scripts/deferUntilFrame.js', () => ( 
 	default: ( fn ) => fn()
 } ) );
 // tableOfContentsSections — not under test, stub out
-vi.mock( '../../../resources/skins.citizen.scripts/tableOfContentsSections.js', () => ( {
+vi.mock( '../../../resources/skins.citizen.toc/tableOfContentsSections.js', () => ( {
 	getTableOfContentsSectionsData: vi.fn( () => [] )
 } ) );
 
-const { TableOfContents } = require( '../../../resources/skins.citizen.scripts/tableOfContents.js' );
+const { TableOfContents } = require( '../../../resources/skins.citizen.toc/tableOfContents.js' );
 
 const TEMPLATES_DIR = path.resolve( __dirname, '../../../templates' );
 const listTemplate = fs.readFileSync(
