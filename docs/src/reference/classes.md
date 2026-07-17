@@ -1,11 +1,11 @@
 ---
-title: Utility classes
-description: CSS classes Citizen exposes for formatting and interactivity
+title: Classes
+description: The classes Citizen provides for formatting content and adding interactivity
 ---
 
-# Utility classes
+# Classes
 
-Citizen provides a set of utility classes you can use directly in wikitext, templates, and gadgets to format content and add interactivity without writing custom CSS.
+Citizen provides a set of classes you can add directly in wikitext, templates, and gadgets to format content and add interactivity, without writing custom CSS or JavaScript.
 
 ## Layout
 
