@@ -31,15 +31,15 @@ class CitizenComponentBodyContent implements CitizenComponent {
 	public const SECTION_CLASS = 'citizen-section';
 
 	/**
+	 * Sentinel nesting level for the lead section: no heading level nests
+	 * beneath it, matching Parsoid's lead section semantics.
+	 */
+	private const LEAD_SECTION_LEVEL = 7;
+
+	/**
 	 * List of tags that could be considered as section headers.
 	 */
 	private array $topHeadingTags = [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ];
-
-	/**
-	 * The tag name of the top-level heading elements used for section breaks.
-	 * This is determined on the fly when processing the content.
-	 */
-	private ?string $topHeadingName = null;
 
 	public function __construct(
 		private readonly string $html,
@@ -48,7 +48,13 @@ class CitizenComponentBodyContent implements CitizenComponent {
 	}
 
 	/**
-	 * Splits the body of the document into sections in a single pass.
+	 * Wraps the body of the document into nested sections in a single pass.
+	 *
+	 * The output mirrors the shape Parsoid produces natively: each heading
+	 * starts a <section> that contains the heading and everything up to the
+	 * next heading of equal or higher rank; lower-ranked headings nest their
+	 * sections inside the current one. Content before the first heading goes
+	 * into a headingless lead section.
 	 */
 	private function makeSections( Document $doc ): Document {
 		$container = DOMCompat::querySelector( $doc, 'div.mw-parser-output' );
@@ -57,70 +63,61 @@ class CitizenComponentBodyContent implements CitizenComponent {
 			return $doc;
 		}
 
-		// Reset state for this run
-		$this->topHeadingName = null;
-
 		$sectionNumber = 0;
-		$sectionBody = $this->createSectionBodyElement( $doc, $sectionNumber );
+		$currentLevel = self::LEAD_SECTION_LEVEL;
+		$currentSection = $this->createSectionBodyElement( $doc, $sectionNumber );
+		$container->insertBefore( $currentSection, $container->firstChild );
 
-		$currentNode = $container->firstChild;
+		/** @var array<array{0: int, 1: Element}> Open ancestor sections */
+		$stack = [];
+
+		// The lead section is the container's first child now; walk what follows it
+		$currentNode = $currentSection->nextSibling;
 		while ( $currentNode ) {
 			$nextNode = $currentNode->nextSibling;
 
 			// @phan-suppress-next-line PhanTypeMismatchArgument DOMNode is a Parsoid DOM\Node alias
-			if ( !$this->isSectionBreak( $currentNode ) ) {
-				$sectionBody->appendChild( $currentNode );
+			$level = $this->getSectionHeadingLevel( $currentNode );
+			if ( $level === null ) {
+				$currentSection->appendChild( $currentNode );
 			} else {
-				$container->insertBefore( $sectionBody, $currentNode );
+				// Pop ancestors that cannot contain a section of this rank
+				while ( $stack && end( $stack )[0] >= $level ) {
+					array_pop( $stack );
+				}
+				if ( $currentLevel < $level ) {
+					$stack[] = [ $currentLevel, $currentSection ];
+				}
 
-				// isSectionBreak() guarantees $currentNode is an Element,
-				// but Phan cannot infer that from the control flow.
+				$sectionNumber++;
+				$newSection = $this->createSectionBodyElement( $doc, $sectionNumber );
+				$parent = $stack ? end( $stack )[1] : null;
+				if ( $parent ) {
+					$parent->appendChild( $newSection );
+				} else {
+					$container->insertBefore( $newSection, $currentNode );
+				}
+
+				$newSection->appendChild( $currentNode );
 				if ( $currentNode instanceof Element ) {
 					$this->prepareHeading( $currentNode );
 				}
 
-				$sectionNumber++;
-				$sectionBody = $this->createSectionBodyElement( $doc, $sectionNumber );
+				$currentLevel = $level;
+				$currentSection = $newSection;
 			}
 
 			$currentNode = $nextNode;
 		}
 
-		// Append the final section body, which contains all nodes after the last heading.
-		$container->appendChild( $sectionBody );
-
 		return $doc;
 	}
 
 	/**
-	 * Determines if a given node should be treated as a section break.
-	 * This method has the side effect of setting the `$topHeadingName`
-	 * property when the first valid section heading is found.
+	 * The heading rank (1-6) when the node starts a section, or null when it
+	 * is ordinary content.
 	 */
-	private function isSectionBreak( Node $node ): bool {
-		if ( !$node instanceof Element ) {
-			return false;
-		}
-
-		$currentHeadingName = $this->getHeadingName( $node );
-		if ( !$currentHeadingName ) {
-			return false;
-		}
-
-		if ( $this->topHeadingName === null ) {
-			// This is the first potential heading. If it's valid, make it the standard.
-			if ( $this->isValidSectionHeading( $node ) ) {
-				$this->topHeadingName = $currentHeadingName;
-				return true;
-			}
-			return false;
-		} else {
-			// This is a subsequent heading. Check if it matches the top-level one.
-			return $currentHeadingName === $this->topHeadingName;
-		}
-	}
-
-	private function getHeadingName( Node $node ): ?string {
+	private function getSectionHeadingLevel( Node $node ): ?int {
 		if ( !( $node instanceof Element ) ) {
 			return null;
 		}
@@ -128,19 +125,26 @@ class CitizenComponentBodyContent implements CitizenComponent {
 		// We accept both kinds of nodes: a `<h1>` to `<h6>` node, or a
 		// `<div class="mw-heading">` node wrapping it. In the future, the wrapper
 		// will be required (T13555).
+		$headingNode = $node;
 		if ( DOMCompat::getClassList( $node )->contains( 'mw-heading' ) ) {
 			$headingNode = DOMCompat::querySelector( $node, implode( ',', $this->topHeadingTags ) );
-			if ( $headingNode instanceof Element ) {
-				$tagName = $headingNode->tagName;
-				// Normalize the tag name to lowercase
-				// Since tagName seems to return uppercase in MW 1.44+ with PHP 8.4+
-				return in_array( strtolower( $tagName ), $this->topHeadingTags ) ? $tagName : null;
+			if ( !( $headingNode instanceof Element ) ) {
+				return null;
 			}
+		}
+
+		// Normalize the tag name to lowercase
+		// Since tagName seems to return uppercase in MW 1.44+ with PHP 8.4+
+		$tagName = strtolower( $headingNode->tagName );
+		if ( !in_array( $tagName, $this->topHeadingTags ) ) {
 			return null;
 		}
 
-		$tagName = $node->tagName;
-		return in_array( strtolower( $tagName ), $this->topHeadingTags ) ? $tagName : null;
+		if ( !$this->isValidSectionHeading( $node ) ) {
+			return null;
+		}
+
+		return (int)$tagName[1];
 	}
 
 	/**

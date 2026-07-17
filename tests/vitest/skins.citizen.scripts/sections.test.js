@@ -60,6 +60,75 @@ describe( 'createSections', () => {
 		} );
 	} );
 
+	describe( 'converged legacy sections (heading inside section)', () => {
+		const CONVERGED = `
+			<div class="mw-parser-output">
+				<section id="citizen-section-0" class="citizen-section"><p>Lead</p></section>
+				<section id="citizen-section-1" class="citizen-section">
+					<div class="mw-heading citizen-section-heading"><h2 id="Foo">Foo</h2>
+						<span class="mw-editsection"><a href="#">edit</a></span>
+					</div>
+					<p>Bar</p>
+					<section id="citizen-section-2" class="citizen-section">
+						<h3 class="citizen-section-heading" id="Sub">Sub</h3>
+						<p>Nested</p>
+					</section>
+				</section>
+			</div>
+		`;
+
+		it( 'should toggle a converged section from its heading', () => {
+			const bodyContent = createBodyContent( CONVERGED );
+			const section = bodyContent.querySelector( '#citizen-section-1' );
+			const heading = section.querySelector( ':scope > .mw-heading' );
+
+			click( heading );
+
+			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( true );
+			expect( section.querySelector( ':scope > p' ).hidden ).toBeTruthy();
+			expect( section.querySelector( '#citizen-section-2' ).hidden ).toBeTruthy();
+			expect( heading.hidden ).toBeFalsy();
+
+			click( heading );
+
+			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( false );
+			expect( section.querySelector( ':scope > p' ).hidden ).toBeFalsy();
+		} );
+
+		it( 'should toggle a bare heading section without an mw-heading wrapper', () => {
+			const bodyContent = createBodyContent( CONVERGED );
+			const nested = bodyContent.querySelector( '#citizen-section-2' );
+			const bareHeading = nested.querySelector( ':scope > h3' );
+
+			click( bareHeading );
+
+			expect( nested.classList.contains( 'citizen-section--collapsed' ) ).toBe( true );
+			expect( nested.querySelector( 'p' ).hidden ).toBeTruthy();
+			expect( bareHeading.hidden ).toBeFalsy();
+		} );
+
+		it( 'should not toggle when the edit link is clicked', () => {
+			const bodyContent = createBodyContent( CONVERGED );
+			const section = bodyContent.querySelector( '#citizen-section-1' );
+
+			click( section.querySelector( '.mw-editsection a' ) );
+
+			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( false );
+		} );
+
+		it( 'should expand collapsed converged ancestors on find-in-page', () => {
+			const bodyContent = createBodyContent( CONVERGED );
+			const section = bodyContent.querySelector( '#citizen-section-1' );
+			click( section.querySelector( ':scope > .mw-heading' ) );
+
+			const hidden = section.querySelector( ':scope > p' );
+			hidden.dispatchEvent( new Event( 'beforematch', { bubbles: true } ) );
+
+			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( false );
+			expect( hidden.hidden ).toBeFalsy();
+		} );
+	} );
+
 	describe( 'parsoid sections (native markup)', () => {
 		const PARSOID = `
 			<div class="mw-parser-output">
@@ -85,7 +154,7 @@ describe( 'createSections', () => {
 
 			click( heading );
 
-			expect( section.classList.contains( 'citizen-parsoid-section--collapsed' ) ).toBe( true );
+			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( true );
 			expect( section.querySelector( 'p' ).hidden ).toBeTruthy();
 			expect( section.querySelector( 'table' ).hidden ).toBeTruthy();
 			expect( section.querySelector( 'section[data-mw-section-id="2"]' ).hidden ).toBeTruthy();
@@ -101,7 +170,7 @@ describe( 'createSections', () => {
 			click( heading );
 			click( heading );
 
-			expect( section.classList.contains( 'citizen-parsoid-section--collapsed' ) ).toBe( false );
+			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( false );
 			expect( section.querySelector( 'p' ).hidden ).toBeFalsy();
 			expect( section.querySelector( 'table' ).hidden ).toBeFalsy();
 		} );
@@ -114,10 +183,10 @@ describe( 'createSections', () => {
 
 			click( nestedHeading );
 
-			expect( nested.classList.contains( 'citizen-parsoid-section--collapsed' ) ).toBe( true );
+			expect( nested.classList.contains( 'citizen-section--collapsed' ) ).toBe( true );
 			expect( nested.querySelector( 'p' ).hidden ).toBeTruthy();
 			// The outer section is unaffected
-			expect( outer.classList.contains( 'citizen-parsoid-section--collapsed' ) ).toBe( false );
+			expect( outer.classList.contains( 'citizen-section--collapsed' ) ).toBe( false );
 			expect( outer.querySelector( ':scope > p' ).hidden ).toBeFalsy();
 		} );
 
@@ -128,7 +197,7 @@ describe( 'createSections', () => {
 
 			click( editLink );
 
-			expect( section.classList.contains( 'citizen-parsoid-section--collapsed' ) ).toBe( false );
+			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( false );
 		} );
 
 		it( 'should preserve a nested collapsed state across parent toggles', () => {
@@ -143,7 +212,7 @@ describe( 'createSections', () => {
 			// The nested section is visible again, but its own collapsed
 			// state survived the parent's collapse/expand cycle
 			expect( nested.hidden ).toBeFalsy();
-			expect( nested.classList.contains( 'citizen-parsoid-section--collapsed' ) ).toBe( true );
+			expect( nested.classList.contains( 'citizen-section--collapsed' ) ).toBe( true );
 			expect( nested.querySelector( 'p' ).hidden ).toBeTruthy();
 		} );
 
@@ -153,12 +222,12 @@ describe( 'createSections', () => {
 			const heading = section.querySelector( '.mw-heading2' );
 
 			click( heading );
-			expect( section.classList.contains( 'citizen-parsoid-section--collapsed' ) ).toBe( true );
+			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( true );
 
 			const hiddenParagraph = section.querySelector( ':scope > p' );
 			hiddenParagraph.dispatchEvent( new Event( 'beforematch', { bubbles: true } ) );
 
-			expect( section.classList.contains( 'citizen-parsoid-section--collapsed' ) ).toBe( false );
+			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( false );
 			expect( hiddenParagraph.hidden ).toBeFalsy();
 		} );
 	} );

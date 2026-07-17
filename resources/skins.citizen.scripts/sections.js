@@ -1,4 +1,7 @@
-const COLLAPSED_CLASS = 'citizen-parsoid-section--collapsed';
+const COLLAPSED_CLASS = 'citizen-section--collapsed';
+const HEADING_SELECTOR = '.mw-heading, .citizen-section-heading';
+const COLLAPSED_SECTION_SELECTOR =
+	`section[data-mw-section-id].${ COLLAPSED_CLASS }, section.citizen-section.${ COLLAPSED_CLASS }`;
 
 /**
  * @param {Object} deps
@@ -8,32 +11,38 @@ const COLLAPSED_CLASS = 'citizen-parsoid-section--collapsed';
  */
 function createSections( { document, bodyContent } ) {
 	/**
-	 * The native Parsoid section wrapper a heading belongs to, or null when
-	 * the heading is not the direct heading of such a section (legacy markup).
+	 * The section wrapper a heading belongs to: a native Parsoid section or
+	 * a section produced by the legacy transform (both carry the heading as
+	 * a direct child). Null for pre-convergence cached markup, where the
+	 * heading sits outside the section.
 	 *
 	 * @param {HTMLElement} heading
 	 * @return {HTMLElement|null}
 	 */
-	function getParsoidSection( heading ) {
+	function getSectionFromHeading( heading ) {
 		const section = heading.parentElement;
-		if ( section && section.hasAttribute( 'data-mw-section-id' ) ) {
+		if ( section && (
+			section.hasAttribute( 'data-mw-section-id' ) ||
+			section.classList.contains( 'citizen-section' )
+		) ) {
 			return section;
 		}
 		return null;
 	}
 
 	/**
-	 * Collapse or expand a native Parsoid section. The heading stays visible;
-	 * every other direct child (including nested subsections) is hidden with
-	 * `until-found` so find-in-page can still reach the content.
+	 * Collapse or expand a section that contains its own heading. The
+	 * heading stays visible; every other direct child (including nested
+	 * subsections) is hidden with `until-found` so find-in-page can still
+	 * reach the content.
 	 *
 	 * @param {HTMLElement} section
 	 * @param {boolean} collapsed
 	 */
-	function setParsoidSectionCollapsed( section, collapsed ) {
+	function setSectionCollapsed( section, collapsed ) {
 		section.classList.toggle( COLLAPSED_CLASS, collapsed );
 		for ( const child of section.children ) {
-			if ( child.classList.contains( 'mw-heading' ) ) {
+			if ( child.matches( HEADING_SELECTOR ) ) {
 				continue;
 			}
 			child.hidden = collapsed ? 'until-found' : false;
@@ -63,42 +72,42 @@ function createSections( { document, bodyContent } ) {
 				return;
 			}
 
-			// Native Parsoid sections: the heading is a direct child of its
-			// own <section data-mw-section-id> wrapper
-			const mwHeading = target.closest( '.mw-heading' );
-			if ( mwHeading ) {
-				const parsoidSection = getParsoidSection( mwHeading );
-				if ( parsoidSection ) {
-					setParsoidSectionCollapsed(
-						parsoidSection,
-						!parsoidSection.classList.contains( COLLAPSED_CLASS )
-					);
-					return;
-				}
+			const heading = target.closest( HEADING_SELECTOR );
+			if ( !heading ) {
+				return;
 			}
 
-			const heading = target.closest( '.citizen-section-heading' );
+			// Sections that contain their own heading: native Parsoid markup
+			// and the legacy transform's converged output
+			const section = getSectionFromHeading( heading );
+			if ( section ) {
+				setSectionCollapsed(
+					section,
+					!section.classList.contains( COLLAPSED_CLASS )
+				);
+				return;
+			}
 
-			if ( heading && heading.nextElementSibling && heading.nextElementSibling.classList.contains( 'citizen-section' ) ) {
-				const section = heading.nextElementSibling;
-
-				if ( section ) {
-					section.hidden = section.hidden ? false : 'until-found';
-				}
+			// Pre-convergence cached markup: the heading precedes a sibling
+			// section that wraps only the body
+			if ( heading.nextElementSibling && heading.nextElementSibling.classList.contains( 'citizen-section' ) ) {
+				const sibling = heading.nextElementSibling;
+				sibling.hidden = sibling.hidden ? false : 'until-found';
 			}
 		};
 
-		// Legacy sections self-heal on find-in-page: the browser clears the
-		// wrapper's own `hidden`. Parsoid sections hide individual children,
-		// so expand the whole chain of collapsed ancestors on a match.
+		// Pre-convergence cached sections self-heal on find-in-page: the
+		// browser clears the wrapper's own `hidden`. Converged and Parsoid
+		// sections hide individual children, so expand the whole chain of
+		// collapsed ancestors on a match.
 		const handleBeforeMatch = ( e ) => {
 			let section = e.target instanceof Element ?
-				e.target.closest( `section[data-mw-section-id].${ COLLAPSED_CLASS }` ) :
+				e.target.closest( COLLAPSED_SECTION_SELECTOR ) :
 				null;
 			while ( section ) {
-				setParsoidSectionCollapsed( section, false );
+				setSectionCollapsed( section, false );
 				section = section.parentElement ?
-					section.parentElement.closest( `section[data-mw-section-id].${ COLLAPSED_CLASS }` ) :
+					section.parentElement.closest( COLLAPSED_SECTION_SELECTOR ) :
 					null;
 			}
 		};

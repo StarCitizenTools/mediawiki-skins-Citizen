@@ -28,9 +28,8 @@ class CitizenComponentBodyContentTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * @dataProvider provideSectioningCases
 	 * @covers ::createSectionBodyElement
-	 * @covers ::getHeadingName
+	 * @covers ::getSectionHeadingLevel
 	 * @covers ::getTemplateData
-	 * @covers ::isSectionBreak
 	 * @covers ::isValidSectionHeading
 	 * @covers ::makeSections
 	 * @covers ::prepareHeading
@@ -49,10 +48,10 @@ class CitizenComponentBodyContentTest extends MediaWikiIntegrationTestCase {
 			'<div class="mw-parser-output"><h2>Foo</h2><p>Bar</p><h2>Baz</h2><p>Quux</p></div>',
 			'<div class="mw-parser-output">' .
 			'<section id="citizen-section-0" class="citizen-section"></section>' .
-			'<h2 class="citizen-section-heading">Foo</h2>' .
-			'<section id="citizen-section-1" class="citizen-section"><p>Bar</p></section>' .
-			'<h2 class="citizen-section-heading">Baz</h2>' .
-			'<section id="citizen-section-2" class="citizen-section"><p>Quux</p></section>' .
+			'<section id="citizen-section-1" class="citizen-section">' .
+			'<h2 class="citizen-section-heading">Foo</h2><p>Bar</p></section>' .
+			'<section id="citizen-section-2" class="citizen-section">' .
+			'<h2 class="citizen-section-heading">Baz</h2><p>Quux</p></section>' .
 			'</div>'
 		];
 
@@ -61,8 +60,8 @@ class CitizenComponentBodyContentTest extends MediaWikiIntegrationTestCase {
 			'<div class="mw-parser-output"><p>Lead content.</p><h2>Foo</h2><p>Bar</p></div>',
 			'<div class="mw-parser-output">' .
 			'<section id="citizen-section-0" class="citizen-section"><p>Lead content.</p></section>' .
-			'<h2 class="citizen-section-heading">Foo</h2>' .
-			'<section id="citizen-section-1" class="citizen-section"><p>Bar</p></section>' .
+			'<section id="citizen-section-1" class="citizen-section">' .
+			'<h2 class="citizen-section-heading">Foo</h2><p>Bar</p></section>' .
 			'</div>'
 		];
 
@@ -79,8 +78,8 @@ class CitizenComponentBodyContentTest extends MediaWikiIntegrationTestCase {
 			'<div class="mw-parser-output"><div class="mw-heading"><h2>Foo</h2></div><p>Bar</p></div>',
 			'<div class="mw-parser-output">' .
 			'<section id="citizen-section-0" class="citizen-section"></section>' .
-			'<div class="mw-heading citizen-section-heading"><h2>Foo</h2></div>' .
-			'<section id="citizen-section-1" class="citizen-section"><p>Bar</p></section>' .
+			'<section id="citizen-section-1" class="citizen-section">' .
+			'<div class="mw-heading citizen-section-heading"><h2>Foo</h2></div><p>Bar</p></section>' .
 			'</div>'
 		];
 
@@ -93,20 +92,35 @@ class CitizenComponentBodyContentTest extends MediaWikiIntegrationTestCase {
 			'<div class="mw-parser-output">' .
 			'<section id="citizen-section-0" class="citizen-section">' .
 			'<div class="toctitle"><h2>Contents</h2></div></section>' .
-			'<h2 class="citizen-section-heading">Real Heading</h2>' .
-			'<section id="citizen-section-1" class="citizen-section"><p>Content</p></section>' .
+			'<section id="citizen-section-1" class="citizen-section">' .
+			'<h2 class="citizen-section-heading">Real Heading</h2><p>Content</p></section>' .
 			'</div>'
 		];
 
-		yield 'Uses highest ranking headings' => [
-			'Uses highest ranking headings',
-			'<div class="mw-parser-output"><h2>Foo</h2><h3>Should be ignored</h3><p>Bar</p><h2>Baz</h2></div>',
+		yield 'Subsections nest like Parsoid' => [
+			'An h3 inside an h2 section nests; the next h2 pops back to the top level',
+			'<div class="mw-parser-output"><h2>Foo</h2><h3>Sub</h3><p>Bar</p><h2>Baz</h2></div>',
 			'<div class="mw-parser-output">' .
 			'<section id="citizen-section-0" class="citizen-section"></section>' .
+			'<section id="citizen-section-1" class="citizen-section">' .
 			'<h2 class="citizen-section-heading">Foo</h2>' .
-			'<section id="citizen-section-1" class="citizen-section"><h3>Should be ignored</h3><p>Bar</p></section>' .
-			'<h2 class="citizen-section-heading">Baz</h2>' .
-			'<section id="citizen-section-2" class="citizen-section"></section>' .
+			'<section id="citizen-section-2" class="citizen-section">' .
+			'<h3 class="citizen-section-heading">Sub</h3><p>Bar</p></section>' .
+			'</section>' .
+			'<section id="citizen-section-3" class="citizen-section">' .
+			'<h2 class="citizen-section-heading">Baz</h2></section>' .
+			'</div>'
+		];
+
+		yield 'Rank increases after a lower heading' => [
+			'An h2 after an h3 becomes a sibling, not a child',
+			'<div class="mw-parser-output"><h3>Deep first</h3><p>A</p><h2>Top</h2><p>B</p></div>',
+			'<div class="mw-parser-output">' .
+			'<section id="citizen-section-0" class="citizen-section"></section>' .
+			'<section id="citizen-section-1" class="citizen-section">' .
+			'<h3 class="citizen-section-heading">Deep first</h3><p>A</p></section>' .
+			'<section id="citizen-section-2" class="citizen-section">' .
+			'<h2 class="citizen-section-heading">Top</h2><p>B</p></section>' .
 			'</div>'
 		];
 
@@ -126,8 +140,8 @@ class CitizenComponentBodyContentTest extends MediaWikiIntegrationTestCase {
 			'<section id="citizen-section-0" class="citizen-section">' .
 			// The serializer normalizes &gt; to a bare > in text content
 			'<pre>&lt;section data-mw-section-id="1"></pre></section>' .
-			'<h2 class="citizen-section-heading">Foo</h2>' .
-			'<section id="citizen-section-1" class="citizen-section"><p>Bar</p></section>' .
+			'<section id="citizen-section-1" class="citizen-section">' .
+			'<h2 class="citizen-section-heading">Foo</h2><p>Bar</p></section>' .
 			'</div>'
 		];
 
