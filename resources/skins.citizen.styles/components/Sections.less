@@ -17,10 +17,11 @@ section[ data-mw-section-id ] > .mw-heading,
 
 // The collapse affordance is applied purely through CSS — no indicator
 // markup is injected server- or client-side, so first paint carries it
-// with no layout shift and noscript clients never see it. Both markup
-// shapes share one recipe: the legacy transform's sibling sections
-// (heading carries .citizen-section-heading) and native Parsoid sections
-// (<section data-mw-section-id> with the heading inside).
+// with no layout shift and noscript clients never see it. All markup
+// shapes share one recipe: the legacy transform's sections (heading
+// inside, carrying .citizen-section-heading), native Parsoid sections
+// (<section data-mw-section-id> with the heading inside), and cached
+// pre-convergence markup where the heading precedes a sibling section.
 // Trade-off: this claims the heading's single ::before slot, so any
 // extension or gadget styling these headings' ::before will conflict.
 .client-js .citizen-sections-enabled {
@@ -67,7 +68,7 @@ section[ data-mw-section-id ] > .mw-heading,
 	}
 
 	.citizen-section-heading:has( + .citizen-section[ hidden ] ),
-	section[ data-mw-section-id ].citizen-parsoid-section--collapsed > .mw-heading {
+	section:is( [ data-mw-section-id ], .citizen-section ).citizen-section--collapsed > :is( .mw-heading, .citizen-section-heading ) {
 		&::before {
 			transform: rotate3d( 1, 0, 0, 180deg );
 		}
