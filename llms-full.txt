@@ -922,6 +922,99 @@ mw.hook( 'citizen.commandPalette.register' ).add( function ( data ) {
 ---
 
 ---
+url: /mediawiki-skins-Citizen/features/overflow.md
+description: >-
+  Stop wide tables and code blocks from pushing the whole page sideways —
+  Citizen scrolls them in place, with navigation buttons and sticky headers.
+---
+
+# Overflow handling
+
+When a table, code block, or other element is wider than the page, the whole page scrolls sideways to fit it — and everything else slides off-screen along with it. Citizen confines that sideways scrolling to the wide element alone, so the page stays put and only the element itself scrolls.
+
+## How it works
+
+Citizen makes that sideways scrolling easy to spot and use:
+
+* **Navigation buttons** — on devices with a mouse or trackpad, buttons appear at each edge to scroll the content left and right.
+* **Scroll indicators** — a soft fade appears at any edge where the content continues, so it's clear there's more to see.
+
+Tables with the `wikitable` class are wrapped automatically.
+
+### Opting in
+
+Give any element the same treatment by adding the `citizen-overflow` class:
+
+```html
+<div class="citizen-overflow">
+  Wide content that should scroll on its own instead of pushing the page sideways.
+</div>
+```
+
+### Opting out
+
+To leave an element as-is — for example a table you lay out yourself — add the `citizen-table-nowrap` class:
+
+```wikitext
+{| class="wikitable citizen-table-nowrap"
+! Header !! Header
+|-
+| Example || Example
+|}
+```
+
+The list of opt-out classes is configurable — see [`$wgCitizenOverflowNowrapClasses`](#wgcitizenoverflownowrapclasses).
+
+### Sticky headers
+
+Keep a header visible while the rest of a wide element scrolls by adding the `citizen-overflow-sticky-header` class. It works for both `div` elements and wikitables.
+
+For `div` elements:
+
+```html
+<div class="citizen-overflow">
+  <div class="citizen-overflow-sticky-header">I am sticky 👍</div>
+  <div>I am not sticky 👎</div>
+</div>
+```
+
+For wikitables:
+
+```wikitext
+{| class="wikitable"
+|- class="citizen-overflow-sticky-header"
+! Header text !! Header text !! Header text
+|-
+| Example || Example || Example
+|-
+| Example || Example || Example
+|-
+| Example || Example || Example
+|}
+```
+
+## Configuration
+
+### `$wgCitizenOverflowNowrapClasses`
+
+Classes that make Citizen skip an element entirely. Set this in `LocalSettings.php`. Default:
+
+```php [LocalSettings.php]
+$wgCitizenOverflowNowrapClasses = [
+    'noresize',
+    'citizen-table-nowrap',
+    'cargoDynamicTable',
+    'dataTable',
+    'smw-datatable',
+    'srf-datatable',
+];
+```
+
+The defaults cover `citizen-table-nowrap` and the table classes used by common extensions (Cargo, DataTables, Semantic MediaWiki) that manage their own layout. Add your own classes to skip them too.
+
+---
+
+---
 url: /mediawiki-skins-Citizen/features/performance-mode.md
 description: >-
   A lightweight mode that strips animations and visual effects for fast page
@@ -1665,40 +1758,8 @@ Control the positioning and flow of your content.
 |  | Floats content to the right. Stacks vertically on small screens. |
 |  | Floats content to the left. Stacks vertically on small screens. |
 |  | Clears floating alignment. |
-|  | Wraps content in a horizontally scrollable container with indicators. |
-|  | Makes an element sticky within a `.citizen-overflow` container. |
-
-### Element sticky header
-
-You can make headers sticky within a scrollable area (like a wide table) by adding the `citizen-overflow-sticky-header` class. This works for both `div` elements and wikitables.
-
-For `div` elements:
-
-```html
-<div class="citizen-overflow">
-  <div class="citizen-overflow-sticky-header">I am sticky 👍</div>
-  <div>I am not sticky 👎</div>
-</div>
-```
-
-For wikitables:
-
-```wikitext
-{| class="wikitable"
-|- class="citizen-overflow-sticky-header"
-! Header text !! Header text !! Header text
-|-
-| Example || Example || Example
-|-
-| Example || Example || Example
-|-
-| Example || Example || Example
-|}
-```
-
-### Floated overflow content
-
-When an element that Citizen wraps for overflow is floated — through an inline `float` style or a class defined in your wiki's CSS — Citizen keeps the float working by re-applying it to the wrapper it adds. This covers any `.citizen-overflow` element as well as wikitables, which are wrapped automatically: floated content sits beside the text on tablet screens and up, and stacks on mobile. To opt out of wrapping (for example, an automatically wrapped wikitable), use `.citizen-table-nowrap` or any class listed in `$wgCitizenOverflowNowrapClasses`.
+|  | Wraps content in a horizontal scroll container. See [Overflow handling](/features/overflow). |
+|  | Keeps an element sticky within a `.citizen-overflow` container. See [Overflow handling](/features/overflow#sticky-headers). |
 
 ## Tables
 
@@ -1706,11 +1767,11 @@ Enhance the look and feel of your tables.
 
 | Class | Description |
 | :--- | :--- |
-|  | Applies standard Citizen styling. Automatically wrapped in `.citizen-overflow`. |
+|  | Applies standard Citizen styling. Automatically [wrapped for overflow](/features/overflow). |
 |  | Adds vertical borders. |
 |  | Adds zebra striping for better readability. |
 |  | Expands the table to fill 100% of the available width. |
-|  | Prevents the table from being wrapped in a scrollable container. |
+|  | Prevents the table from being [wrapped for overflow](/features/overflow#opting-out). |
 
 ## Interaction
 
@@ -2227,7 +2288,28 @@ description: Changelog of the latest version of Citizen.
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v1.16.1.md
+url: /mediawiki-skins-Citizen/changelogs/v1.17.5.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v1.10.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v1.13.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v1.14.0.md
 ---
 
 
@@ -2248,13 +2330,6 @@ url: /mediawiki-skins-Citizen/changelogs/v1.15.0.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v1.14.0.md
----
-
-
----
-
----
 url: /mediawiki-skins-Citizen/changelogs/v1.16.0.md
 ---
 
@@ -2262,21 +2337,28 @@ url: /mediawiki-skins-Citizen/changelogs/v1.16.0.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v1.13.0.md
+url: /mediawiki-skins-Citizen/changelogs/v1.16.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v1.10.0.md
+url: /mediawiki-skins-Citizen/changelogs/v1.17.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v1.17.7.md
+url: /mediawiki-skins-Citizen/changelogs/v1.17.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v1.17.2.md
 ---
 
 
@@ -2297,21 +2379,7 @@ url: /mediawiki-skins-Citizen/changelogs/v1.17.4.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v1.17.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v1.17.5.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v1.17.1.md
+url: /mediawiki-skins-Citizen/changelogs/v2.13.5.md
 ---
 
 
@@ -2325,14 +2393,7 @@ url: /mediawiki-skins-Citizen/changelogs/v1.17.6.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v1.17.2.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.0.0-alpha.2.md
+url: /mediawiki-skins-Citizen/changelogs/v1.17.7.md
 ---
 
 
@@ -2340,6 +2401,13 @@ url: /mediawiki-skins-Citizen/changelogs/v2.0.0-alpha.2.md
 
 ---
 url: /mediawiki-skins-Citizen/changelogs/v1.17.8.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v1.17.9.md
 ---
 
 
@@ -2360,13 +2428,6 @@ url: /mediawiki-skins-Citizen/changelogs/v1.9.5.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v1.17.9.md
----
-
-
----
-
----
 url: /mediawiki-skins-Citizen/changelogs/v2.0.0-alpha.1.md
 ---
 
@@ -2374,14 +2435,7 @@ url: /mediawiki-skins-Citizen/changelogs/v2.0.0-alpha.1.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.0.0-beta.4.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.1.0.md
+url: /mediawiki-skins-Citizen/changelogs/v2.0.0-alpha.2.md
 ---
 
 
@@ -2402,21 +2456,7 @@ url: /mediawiki-skins-Citizen/changelogs/v2.0.0-beta.1.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.0.0.md
----
-
-
----
-
----
 url: /mediawiki-skins-Citizen/changelogs/v2.0.0-beta.2.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.0.1.md
 ---
 
 
@@ -2430,7 +2470,35 @@ url: /mediawiki-skins-Citizen/changelogs/v2.0.0-beta.3.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.11.1.md
+url: /mediawiki-skins-Citizen/changelogs/v2.0.0-beta.4.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.0.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.0.1.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.1.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.10.0.md
 ---
 
 
@@ -2451,21 +2519,7 @@ url: /mediawiki-skins-Citizen/changelogs/v2.11.0.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.10.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.13.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.13.2.md
+url: /mediawiki-skins-Citizen/changelogs/v2.11.1.md
 ---
 
 
@@ -2479,6 +2533,13 @@ url: /mediawiki-skins-Citizen/changelogs/v2.12.0.md
 ---
 
 ---
+url: /mediawiki-skins-Citizen/changelogs/v2.13.0.md
+---
+
+
+---
+
+---
 url: /mediawiki-skins-Citizen/changelogs/v2.13.1.md
 ---
 
@@ -2486,14 +2547,7 @@ url: /mediawiki-skins-Citizen/changelogs/v2.13.1.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.13.5.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.14.1.md
+url: /mediawiki-skins-Citizen/changelogs/v2.13.2.md
 ---
 
 
@@ -2507,13 +2561,6 @@ url: /mediawiki-skins-Citizen/changelogs/v2.13.3.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.14.0.md
----
-
-
----
-
----
 url: /mediawiki-skins-Citizen/changelogs/v2.13.4.md
 ---
 
@@ -2521,7 +2568,21 @@ url: /mediawiki-skins-Citizen/changelogs/v2.13.4.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.15.1.md
+url: /mediawiki-skins-Citizen/changelogs/v2.32.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.14.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.14.1.md
 ---
 
 
@@ -2535,7 +2596,7 @@ url: /mediawiki-skins-Citizen/changelogs/v2.15.0.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.16.1.md
+url: /mediawiki-skins-Citizen/changelogs/v2.15.1.md
 ---
 
 
@@ -2549,7 +2610,7 @@ url: /mediawiki-skins-Citizen/changelogs/v2.16.0.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.17.1.md
+url: /mediawiki-skins-Citizen/changelogs/v2.16.1.md
 ---
 
 
@@ -2557,6 +2618,13 @@ url: /mediawiki-skins-Citizen/changelogs/v2.17.1.md
 
 ---
 url: /mediawiki-skins-Citizen/changelogs/v2.17.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v2.17.1.md
 ---
 
 
@@ -2592,13 +2660,6 @@ url: /mediawiki-skins-Citizen/changelogs/v2.19.0.md
 
 ---
 url: /mediawiki-skins-Citizen/changelogs/v2.2.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.27.0.md
 ---
 
 
@@ -2661,7 +2722,7 @@ url: /mediawiki-skins-Citizen/changelogs/v2.26.0.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.33.0.md
+url: /mediawiki-skins-Citizen/changelogs/v2.27.0.md
 ---
 
 
@@ -2745,14 +2806,7 @@ url: /mediawiki-skins-Citizen/changelogs/v2.31.0.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.32.0.md
----
-
-
----
-
----
-url: /mediawiki-skins-Citizen/changelogs/v2.4.0.md
+url: /mediawiki-skins-Citizen/changelogs/v2.33.0.md
 ---
 
 
@@ -2850,7 +2904,7 @@ url: /mediawiki-skins-Citizen/changelogs/v2.39.4.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.6.1.md
+url: /mediawiki-skins-Citizen/changelogs/v2.4.0.md
 ---
 
 
@@ -2934,7 +2988,7 @@ url: /mediawiki-skins-Citizen/changelogs/v2.6.0.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v2.7.6.md
+url: /mediawiki-skins-Citizen/changelogs/v2.6.1.md
 ---
 
 
@@ -3032,7 +3086,7 @@ url: /mediawiki-skins-Citizen/changelogs/v2.7.5.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v3.10.0.md
+url: /mediawiki-skins-Citizen/changelogs/v2.7.6.md
 ---
 
 
@@ -3130,7 +3184,7 @@ url: /mediawiki-skins-Citizen/changelogs/v3.1.0.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v3.2.0.md
+url: /mediawiki-skins-Citizen/changelogs/v3.10.0.md
 ---
 
 
@@ -3214,7 +3268,7 @@ url: /mediawiki-skins-Citizen/changelogs/v3.18.0.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v3.6.0.md
+url: /mediawiki-skins-Citizen/changelogs/v3.2.0.md
 ---
 
 
@@ -3256,7 +3310,7 @@ url: /mediawiki-skins-Citizen/changelogs/v3.5.0.md
 ---
 
 ---
-url: /mediawiki-skins-Citizen/changelogs/v3.9.0.md
+url: /mediawiki-skins-Citizen/changelogs/v3.6.0.md
 ---
 
 
@@ -3271,5 +3325,12 @@ url: /mediawiki-skins-Citizen/changelogs/v3.7.0.md
 
 ---
 url: /mediawiki-skins-Citizen/changelogs/v3.8.0.md
+---
+
+
+---
+
+---
+url: /mediawiki-skins-Citizen/changelogs/v3.9.0.md
 ---
 

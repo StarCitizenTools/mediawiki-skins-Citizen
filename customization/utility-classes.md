@@ -16,40 +16,8 @@ Control the positioning and flow of your content.
 |  | Floats content to the right. Stacks vertically on small screens. |
 |  | Floats content to the left. Stacks vertically on small screens. |
 |  | Clears floating alignment. |
-|  | Wraps content in a horizontally scrollable container with indicators. |
-|  | Makes an element sticky within a `.citizen-overflow` container. |
-
-### Element sticky header
-
-You can make headers sticky within a scrollable area (like a wide table) by adding the `citizen-overflow-sticky-header` class. This works for both `div` elements and wikitables.
-
-For `div` elements:
-
-```html
-<div class="citizen-overflow">
-  <div class="citizen-overflow-sticky-header">I am sticky 👍</div>
-  <div>I am not sticky 👎</div>
-</div>
-```
-
-For wikitables:
-
-```wikitext
-{| class="wikitable"
-|- class="citizen-overflow-sticky-header"
-! Header text !! Header text !! Header text
-|-
-| Example || Example || Example
-|-
-| Example || Example || Example
-|-
-| Example || Example || Example
-|}
-```
-
-### Floated overflow content
-
-When an element that Citizen wraps for overflow is floated — through an inline `float` style or a class defined in your wiki's CSS — Citizen keeps the float working by re-applying it to the wrapper it adds. This covers any `.citizen-overflow` element as well as wikitables, which are wrapped automatically: floated content sits beside the text on tablet screens and up, and stacks on mobile. To opt out of wrapping (for example, an automatically wrapped wikitable), use `.citizen-table-nowrap` or any class listed in `$wgCitizenOverflowNowrapClasses`.
+|  | Wraps content in a horizontal scroll container. See [Overflow handling](/features/overflow). |
+|  | Keeps an element sticky within a `.citizen-overflow` container. See [Overflow handling](/features/overflow#sticky-headers). |
 
 ## Tables
 
@@ -57,11 +25,11 @@ Enhance the look and feel of your tables.
 
 | Class | Description |
 | :--- | :--- |
-|  | Applies standard Citizen styling. Automatically wrapped in `.citizen-overflow`. |
+|  | Applies standard Citizen styling. Automatically [wrapped for overflow](/features/overflow). |
 |  | Adds vertical borders. |
 |  | Adds zebra striping for better readability. |
 |  | Expands the table to fill 100% of the available width. |
-|  | Prevents the table from being wrapped in a scrollable container. |
+|  | Prevents the table from being [wrapped for overflow](/features/overflow#opting-out). |
 
 ## Interaction
 
