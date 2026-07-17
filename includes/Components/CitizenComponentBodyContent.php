@@ -18,6 +18,11 @@ class CitizenComponentBodyContent implements CitizenComponent {
 	/**
 	 * The code below is largely based on the extension MobileFrontend
 	 * All credits go to the author and contributors of the project
+	 *
+	 * Core also has ParserOptions::setCollapsibleSections() (1.42+), which
+	 * wraps legacy-parser section contents in plain divs at parse time.
+	 * Nothing sets it by default and its wrappers carry no class to target,
+	 * so this transform stays; revisit if core ever enables it.
 	 */
 
 	/**
@@ -191,12 +196,25 @@ class CitizenComponentBodyContent implements CitizenComponent {
 	}
 
 	/**
+	 * Whether the HTML was rendered by Parsoid, which wraps sections natively
+	 * in `<section data-mw-section-id>` elements. The tag-open form cannot
+	 * occur in user content: the sanitizer strips data-mw-* attributes from
+	 * wikitext, and escaped markup in code samples never contains a raw `<`.
+	 */
+	private function isParsoidContent( string $html ): bool {
+		return str_contains( $html, '<section data-mw-section-id=' );
+	}
+
+	/**
 	 * @inheritDoc
 	 */
 	public function getTemplateData(): array {
 		$html = $this->html;
 
-		if ( $this->shouldMakeSections ) {
+		// Parsoid content already ships section wrappers; the heading walk
+		// below expects headings as direct children of the parser output and
+		// would fold the whole page into a single section.
+		if ( $this->shouldMakeSections && !$this->isParsoidContent( $html ) ) {
 			$doc = DOMUtils::parseHTML( $html );
 			$this->makeSections( $doc );
 			$html = DOMCompat::getInnerHTML( DOMCompat::getBody( $doc ) );
