@@ -10,7 +10,7 @@ const templateTocLine = require( /** @type {string} */ ( './templates/TableOfCon
  * TableOfContents Config object for filling mustache templates
  */
 const tableOfContentsConfig = require( /** @type {string} */ ( './tableOfContentsConfig.json' ) );
-const deferUntilFrame = require( './deferUntilFrame.js' );
+const deferUntilFrame = require( '../skins.citizen.scripts/deferUntilFrame.js' );
 const { getTableOfContentsSectionsData } = require( './tableOfContentsSections.js' );
 
 const SECTION_ID_PREFIX = 'toc-';

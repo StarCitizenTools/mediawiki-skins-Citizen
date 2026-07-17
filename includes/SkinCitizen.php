@@ -306,6 +306,10 @@ class SkinCitizen extends SkinMustache {
 			// getHtmlElementAttributes(). Safe here because getTemplateData()
 			// only runs for the active rendering skin.
 			$out->addBodyClasses( 'citizen-toc-enabled' );
+			// Queue the scroll spy with the initial module batch. Cached HTML
+			// from before this condition existed is covered by the client-side
+			// element check in setupObservers.js, which mw.loader dedupes.
+			$out->addModules( [ 'skins.citizen.toc' ] );
 		}
 
 		return $parentData;

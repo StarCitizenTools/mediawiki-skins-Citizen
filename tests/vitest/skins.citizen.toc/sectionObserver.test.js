@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 /* global document */
-const { createSectionObserver } = require( '../../../resources/skins.citizen.scripts/sectionObserver.js' );
+const { createSectionObserver } = require( '../../../resources/skins.citizen.toc/sectionObserver.js' );
 
 describe( 'createSectionObserver', () => {
 	let win;

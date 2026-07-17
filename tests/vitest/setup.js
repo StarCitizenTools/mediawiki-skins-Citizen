@@ -27,16 +27,19 @@ Module._resolveFilename = function ( request, parent, ...rest ) {
 	}
 	if ( parent && parent.filename &&
 		parent.filename.includes( 'skins.citizen.scripts' ) ) {
-		if ( request === './tableOfContentsConfig.json' ) {
-			return path.resolve( __dirname, 'mocks/tableOfContentsConfig.js' );
-		}
 		if ( request === './config.json' ) {
 			return path.resolve( __dirname, 'mocks/config.js' );
+		}
+	}
+	if ( parent && parent.filename &&
+		parent.filename.includes( 'skins.citizen.toc' ) ) {
+		if ( request === './tableOfContentsConfig.json' ) {
+			return path.resolve( __dirname, 'mocks/tableOfContentsConfig.js' );
 		}
 		// Redirect template requires to the real templates at the project root.
 		// ResourceLoader packages these from templates/ but the module's
 		// relative path (./templates/Foo.mustache) would resolve to a
-		// non-existent subdirectory inside resources/skins.citizen.scripts/.
+		// non-existent subdirectory inside resources/skins.citizen.toc/.
 		const templateMatch = request.match( /^\.\/templates\/(.+\.mustache)$/ );
 		if ( templateMatch ) {
 			return path.resolve( TEMPLATES_DIR, templateMatch[ 1 ] );
