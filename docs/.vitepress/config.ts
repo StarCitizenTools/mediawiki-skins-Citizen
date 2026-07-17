@@ -96,6 +96,10 @@ export default defineConfig({
 						link: "/features/command-palette",
 					},
 					{
+						text: "Overflow handling",
+						link: "/features/overflow",
+					},
+					{
 						text: "Performance mode",
 						link: "/features/performance-mode",
 					},
