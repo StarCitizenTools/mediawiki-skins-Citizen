@@ -11,8 +11,10 @@ function withBase(path: string): string {
 }
 
 const redirects = {
-	"/customization/features": withBase("/customization/utility-classes"),
-	"/features/": withBase("/customization/utility-classes"),
+	"/customization/features": withBase("/reference/classes"),
+	"/features/": withBase("/reference/classes"),
+	"/customization/utility-classes": withBase("/reference/classes"),
+	"/customization/hooks": withBase("/reference/hooks"),
 	"/customization/command-palette": withBase("/features/command-palette"),
 	"/customization/performance-mode": withBase("/features/performance-mode"),
 	"/customization/preferences": withBase("/features/preferences"),
@@ -122,16 +124,22 @@ export default defineConfig({
 						link: "/customization/theming",
 					},
 					{
-						text: "Utility classes",
-						link: "/customization/utility-classes",
-					},
-					{
 						text: "Recipes",
 						link: "/customization/recipes",
 					},
+				],
+			},
+			{
+				text: "Reference",
+				collapsed: false,
+				items: [
+					{
+						text: "Classes",
+						link: "/reference/classes",
+					},
 					{
 						text: "Hooks",
-						link: "/customization/hooks",
+						link: "/reference/hooks",
 					},
 				],
 			},
