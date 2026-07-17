@@ -105,21 +105,11 @@ figure[ typeof~='mw:File/Frame' ] {
 
 		// When float is not explicitly set
 		.mw-content-ltr & {
-			/* @noflip */
-			float: right;
-			/* @noflip */
-			clear: right;
-			/* @noflip */
-			margin-left: var( --space-lg );
+			.mixin-citizen-float-declarations( right );
 		}
 
 		.mw-content-rtl & {
-			/* @noflip */
-			float: left;
-			/* @noflip */
-			clear: left;
-			/* @noflip */
-			margin-right: var( --space-lg );
+			.mixin-citizen-float-declarations( left );
 		}
 	}
 
@@ -128,23 +118,13 @@ figure[ typeof~='mw:File/Frame' ] {
 	figure[ typeof~='mw:File/Thumb' ],
 	figure[ typeof~='mw:File/Frame' ] {
 		&.mw-halign-right {
-			/* @noflip */
-			float: right;
-			/* @noflip */
-			clear: right;
+			.mixin-citizen-float-declarations( right );
 			/* @noflip */
 			margin-right: 0;
-			/* @noflip */
-			margin-left: var( --space-lg );
 		}
 
 		&.mw-halign-left {
-			/* @noflip */
-			float: left;
-			/* @noflip */
-			clear: left;
-			/* @noflip */
-			margin-right: var( --space-lg );
+			.mixin-citizen-float-declarations( left );
 			/* @noflip */
 			margin-left: 0;
 		}

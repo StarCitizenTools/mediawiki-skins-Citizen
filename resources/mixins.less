@@ -284,9 +284,10 @@
 	}
 }
 
-// Standard float treatment for user-floated content. Shared between the
-// legacy float classes (common/hacks.less) and the overflow wrapper float
-// modifiers (components/OverflowElements.less) so the two cannot drift.
+// Standard float treatment for floated content. Shared by the legacy float
+// classes (common/hacks.less), the overflow wrapper float modifiers
+// (components/OverflowElements.less), and the media/thumbnail floats
+// (skinning/content.media-common.less) so they cannot drift.
 // Floats are physical by MediaWiki convention, so each declaration carries
 // its own /* @noflip */ so CSSJanus does not flip them for RTL wikis.
 // Callers own only the tablet media query. Only the literal keywords
