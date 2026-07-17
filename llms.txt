@@ -27,9 +27,12 @@ A beautiful, usable, and responsive MediaWiki skin
 ### Customization
 
 - [Theming](/mediawiki-skins-Citizen/customization/theming.md): Customizing the look and feel of Citizen
-- [Utility classes](/mediawiki-skins-Citizen/customization/utility-classes.md): CSS classes Citizen exposes for formatting and interactivity
 - [Recipes](/mediawiki-skins-Citizen/customization/recipes.md): Common customizations and CSS snippets for Citizen
-- [Hooks](/mediawiki-skins-Citizen/customization/hooks.md): JavaScript hooks provided by Citizen for extensions and gadgets
+
+### Reference
+
+- [Classes](/mediawiki-skins-Citizen/reference/classes.md): The classes Citizen provides for formatting content and adding interactivity
+- [Hooks](/mediawiki-skins-Citizen/reference/hooks.md): JavaScript hooks provided by Citizen for extensions and gadgets
 
 ### Community
 
@@ -45,7 +48,6 @@ A beautiful, usable, and responsive MediaWiki skin
 ### Other
 
 - [Latest Changelog](/mediawiki-skins-Citizen/changelogs/latest.md): Changelog of the latest version of Citizen.
-- [Untitled](/mediawiki-skins-Citizen/changelogs/v1.17.5.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v1.10.0.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v1.13.0.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v1.14.0.md)
@@ -58,7 +60,7 @@ A beautiful, usable, and responsive MediaWiki skin
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v1.17.2.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v1.17.3.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v1.17.4.md)
-- [Untitled](/mediawiki-skins-Citizen/changelogs/v2.13.5.md)
+- [Untitled](/mediawiki-skins-Citizen/changelogs/v1.17.5.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v1.17.6.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v1.17.7.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v1.17.8.md)
@@ -85,9 +87,9 @@ A beautiful, usable, and responsive MediaWiki skin
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v2.13.2.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v2.13.3.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v2.13.4.md)
-- [Untitled](/mediawiki-skins-Citizen/changelogs/v2.32.0.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v2.14.0.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v2.14.1.md)
+- [Untitled](/mediawiki-skins-Citizen/changelogs/v2.13.5.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v2.15.0.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v2.15.1.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v2.16.0.md)
@@ -119,6 +121,7 @@ A beautiful, usable, and responsive MediaWiki skin
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v2.3.6.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v2.30.0.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v2.31.0.md)
+- [Untitled](/mediawiki-skins-Citizen/changelogs/v2.32.0.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v2.33.0.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v2.34.0.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v2.35.0.md)

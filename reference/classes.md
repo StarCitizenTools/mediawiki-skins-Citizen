@@ -1,11 +1,11 @@
 ---
-url: /mediawiki-skins-Citizen/customization/utility-classes.md
-description: CSS classes Citizen exposes for formatting and interactivity
+url: /mediawiki-skins-Citizen/reference/classes.md
+description: The classes Citizen provides for formatting content and adding interactivity
 ---
 
-# Utility classes
+# Classes
 
-Citizen provides a set of utility classes you can use directly in wikitext, templates, and gadgets to format content and add interactivity without writing custom CSS.
+Citizen provides a set of classes you can add directly in wikitext, templates, and gadgets to format content and add interactivity, without writing custom CSS or JavaScript.
 
 ## Layout
 
