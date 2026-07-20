@@ -85,6 +85,7 @@
 	"citizen-preferences-section-appearance": "外观",
 	"citizen-preferences-section-behavior": "行为",
 	"citizen-theme-name": "颜色",
+	"citizen-theme-name-v4": "主题",
 	"citizen-theme-description": "切换浅色和深色模式",
 	"citizen-theme-day-label": "浅色",
 	"citizen-theme-night-label": "深色",
@@ -227,5 +228,6 @@
 	"citizen-command-palette-mode-user-placeholder": "搜索用户",
 	"citizen-command-palette-queryaction-fulltext-search-description": "在所有页面全文搜索",
 	"citizen-command-palette-queryaction-page-edit-description": "创建或编辑页面",
+	"citizen-config-headerpositionmobile": "网站页眉在移动设备和平板电脑布局下的位置（低于桌面设备布局断点）。接受“top”或“bottom”值；任何其他值均会被视为“bottom”。",
 	"citizen-config-preview": "Citizen预览通道的版本控制开关。设置为即将发布的主版本号（当前为4）即可在正式发布前抢先预览；设置为0或任何其他值则继续体验稳定版本。"
 }

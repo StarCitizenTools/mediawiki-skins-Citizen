@@ -64,6 +64,7 @@
 	"citizen-preferences-section-appearance": "Aparencia",
 	"citizen-preferences-section-behavior": "Comportamento",
 	"citizen-theme-name": "Cor",
+	"citizen-theme-name-v4": "Tema",
 	"citizen-theme-description": "Cambiar entre o modo claro e o modo escuro",
 	"citizen-theme-day-label": "Claro",
 	"citizen-theme-night-label": "Escuro",
@@ -206,5 +207,6 @@
 	"citizen-command-palette-mode-user-placeholder": "Buscar usuarios",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Buscar o texto completo en todas as páxinas",
 	"citizen-command-palette-queryaction-page-edit-description": "Crear ou editar unha páxina",
+	"citizen-config-headerpositionmobile": "Posición da cabeceira do sitio no deseño para móbiles e tabletas (tamaños máis pequenos cá versión de escritorio). Acepta «top» ou «bottom»; calquera outro valor interprétase como «bottom».",
 	"citizen-config-preview": "O interruptor de versión para a canle de vista previa de Citizen. Defíneo no número de versión maior seguinte (actualmente a versión 4) para previsualizala antes do lanzamento; 0 ou calquera outro valor mantén a experiencia estable."
 }
