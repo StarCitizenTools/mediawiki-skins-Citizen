@@ -49,10 +49,10 @@ A beautiful, usable, and responsive MediaWiki skin
 
 - [Latest Changelog](/mediawiki-skins-Citizen/changelogs/latest.md): Changelog of the latest version of Citizen.
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v1.10.0.md)
-- [Untitled](/mediawiki-skins-Citizen/changelogs/v1.13.0.md)
-- [Untitled](/mediawiki-skins-Citizen/changelogs/v1.14.0.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v1.14.1.md)
+- [Untitled](/mediawiki-skins-Citizen/changelogs/v1.13.0.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v1.15.0.md)
+- [Untitled](/mediawiki-skins-Citizen/changelogs/v1.14.0.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v1.16.0.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v1.16.1.md)
 - [Untitled](/mediawiki-skins-Citizen/changelogs/v1.17.0.md)
