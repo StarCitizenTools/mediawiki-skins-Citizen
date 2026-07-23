@@ -1,0 +1,5 @@
+# Cloudflare Pages redirects.
+# Archived version builds (/v3.13/–/v3.18/) were built for the old GitHub Pages
+# base path and still reference /mediawiki-skins-Citizen/... internally — this
+# also covers external links using the old path shape.
+/mediawiki-skins-Citizen/* /:splat 301

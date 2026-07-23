@@ -10,7 +10,7 @@ Thank you for considering contributing to *Citizen*!
 *Citizen* is a small open-source project, and we appreciate any help. Here are some ways you can contribute:
 
 * [Code patches](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/pulls)
-* [Documentation improvements](https://starcitizentools.github.io/mediawiki-skins-Citizen/)
+* [Documentation improvements](https://mwcitizen.skin/)
 * [Bug reports](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/new?template=bug_report.yml)
 * [Feature requests and suggestions](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/new?template=feature_request.yml)
 * [Translations](#translations)
@@ -52,5 +52,11 @@ You can submit translations via [TranslateWiki.net](https://translatewiki.net/w/
 ## Questions
 
 If you have any questions about contributing, feel free to [open an issue](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/new/choose) and ask.
+
+## Documentation previews
+
+Every pull request that changes the documentation gets its own live preview site — a bot comments on the PR with the link shortly after you push, and the preview updates on every subsequent push. No local setup needed to see your changes rendered.
+
+Previews are built for branches in the main repository. Pull requests from forks still run the documentation lint and build checks, but don't get a preview link.
 
 ## Contributors
