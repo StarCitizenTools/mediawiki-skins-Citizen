@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/features/preferences.md
+url: /features/preferences.md
 description: >-
   A panel for personalizing the skin, extensible with on-wiki JSON or
   JavaScript.

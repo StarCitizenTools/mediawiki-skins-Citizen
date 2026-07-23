@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/guide/introduction.md
+url: /guide/introduction.md
 description: Introduction to the Citizen skin
 ---
 

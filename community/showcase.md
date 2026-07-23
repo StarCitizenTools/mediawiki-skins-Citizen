@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/community/showcase.md
+url: /community/showcase.md
 description: A showcase of wikis using Citizen
 ---
 

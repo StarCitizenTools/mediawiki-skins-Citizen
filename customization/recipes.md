@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/customization/recipes.md
+url: /customization/recipes.md
 description: Common customizations and CSS snippets for Citizen
 ---
 

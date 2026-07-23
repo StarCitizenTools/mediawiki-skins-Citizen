@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/reference/classes.md
+url: /reference/classes.md
 description: The classes Citizen provides for formatting content and adding interactivity
 ---
 

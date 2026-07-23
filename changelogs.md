@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/changelogs.md
+url: /changelogs.md
 description: Changelogs of all Citizen stable releases.
 ---
 

@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/contribute.md
+url: /contribute.md
 description: How to contribute to the Citizen skin.
 ---
 

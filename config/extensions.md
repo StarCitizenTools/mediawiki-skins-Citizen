@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/config/extensions.md
+url: /config/extensions.md
 description: Extensions and gadgets that integrate well with Citizen
 ---
 

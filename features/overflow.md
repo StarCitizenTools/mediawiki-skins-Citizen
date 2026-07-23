@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/features/overflow.md
+url: /features/overflow.md
 description: >-
   Stop wide tables and code blocks from pushing the whole page sideways —
   Citizen scrolls them in place, with navigation buttons and sticky headers.
