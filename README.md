@@ -18,8 +18,8 @@
 
 <p align="center">
   <a href="https://starcitizen.tools">🚀 Live demo</a> |
-  <a href="https://starcitizentools.github.io/mediawiki-skins-Citizen/community/showcase/">✨ Showcase</a> |
-  <a href="https://starcitizentools.github.io/mediawiki-skins-Citizen">📚 Documentation</a>
+  <a href="https://mwcitizen.skin/community/showcase/">✨ Showcase</a> |
+  <a href="https://mwcitizen.skin">📚 Documentation</a>
 </p>
 
 ## Notable features
@@ -46,7 +46,7 @@
 
 ## Configurations
 
-Check out the [configuration documentation](https://starcitizentools.github.io/mediawiki-skins-Citizen/config/) for more details.
+Check out the [configuration documentation](https://mwcitizen.skin/config/) for more details.
 
 ## Requirements
 
@@ -60,7 +60,7 @@ Version | MediaWiki version
 
 ## Extensions
 
-Check out the [extensions documentation](https://starcitizentools.github.io/mediawiki-skins-Citizen/config/extensions) for recommended extensions and supported extension styles.
+Check out the [extensions documentation](https://mwcitizen.skin/config/extensions) for recommended extensions and supported extension styles.
 
 ## Contributors
 
