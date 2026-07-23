@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/v3.18/guide/migrating-to-citizen-4.md
+url: /v3.18/guide/migrating-to-citizen-4.md
 description: Preview the Citizen 4 changes and migrate your wiki before the release
 ---
 

@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/v3.18/contribute/preview-channel.md
+url: /v3.18/contribute/preview-channel.md
 description: >-
   How the preview channel ships upcoming Citizen features ahead of a stable
   release

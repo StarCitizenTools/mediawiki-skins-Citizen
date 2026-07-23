@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/v3.16/features/command-palette.md
+url: /v3.16/features/command-palette.md
 description: >-
   A keyboard-driven palette for jumping to pages, running actions, and searching
   the wiki.

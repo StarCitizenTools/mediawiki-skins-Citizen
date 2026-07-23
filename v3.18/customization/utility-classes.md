@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/v3.18/customization/utility-classes.md
+url: /v3.18/customization/utility-classes.md
 description: CSS classes Citizen exposes for formatting and interactivity
 ---
 

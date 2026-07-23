@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/v3.17/features/share.md
+url: /v3.17/features/share.md
 description: >-
   Share the current page via the browser's native share sheet or a configurable
   grid of services.

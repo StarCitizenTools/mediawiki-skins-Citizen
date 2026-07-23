@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/v3.17/contribute.md
+url: /v3.17/contribute.md
 description: How to contribute to the Citizen skin.
 ---
 
@@ -10,7 +10,7 @@ Thank you for considering contributing to *Citizen*!
 *Citizen* is a small open-source project, and we appreciate any help. Here are some ways you can contribute:
 
 * [Code patches](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/pulls)
-* [Documentation improvements](https://starcitizentools.github.io/mediawiki-skins-Citizen/)
+* [Documentation improvements](https://mwcitizen.skin/)
 * [Bug reports](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/new?template=bug_report.yml)
 * [Feature requests and suggestions](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/new?template=feature_request.yml)
 * [Translations](#translations)

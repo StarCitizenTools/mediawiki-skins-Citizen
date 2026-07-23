@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/v3.17/features/performance-mode.md
+url: /v3.17/features/performance-mode.md
 description: >-
   A lightweight mode that strips animations and visual effects for fast page
   loads.

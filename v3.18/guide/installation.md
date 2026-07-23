@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/v3.18/guide/installation.md
+url: /v3.18/guide/installation.md
 description: Installing the Citizen skin to your wiki
 ---
 

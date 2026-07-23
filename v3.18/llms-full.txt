@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/v3.18/guide/introduction.md
+url: /v3.18/guide/introduction.md
 description: Introduction to the Citizen skin
 ---
 
@@ -16,7 +16,7 @@ Citizen is a small open-source project, and we really appreciate any help from t
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/guide/installation.md
+url: /v3.18/guide/installation.md
 description: Installing the Citizen skin to your wiki
 ---
 
@@ -117,7 +117,7 @@ Citizen works out of the box without additional configuration, but you can custo
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/config.md
+url: /v3.18/config.md
 description: MediaWiki skin configuration for the Citizen skin.
 ---
 
@@ -362,7 +362,7 @@ $wgCitizenManifestOptions = [
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/config/extensions.md
+url: /v3.18/config/extensions.md
 description: Extensions and gadgets that integrate well with Citizen
 ---
 
@@ -504,7 +504,7 @@ Citizen provides custom styles for many popular extensions via [skinStyles](http
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/features/command-palette.md
+url: /v3.18/features/command-palette.md
 description: >-
   A keyboard-driven palette for jumping to pages, running actions, and searching
   the wiki.
@@ -922,7 +922,7 @@ mw.hook( 'citizen.commandPalette.register' ).add( function ( data ) {
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/features/performance-mode.md
+url: /v3.18/features/performance-mode.md
 description: >-
   A lightweight mode that strips animations and visual effects for fast page
   loads.
@@ -1050,7 +1050,7 @@ mw.hook( 'citizen.preferences.changed' ).add( ( featureName, value ) => {
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/features/preferences.md
+url: /v3.18/features/preferences.md
 description: >-
   A panel for personalizing the skin, extensible with on-wiki JSON or
   JavaScript.
@@ -1308,7 +1308,7 @@ mw.hook( 'citizen.preferences.changed' ).add( function ( featureName, value ) {
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/features/share.md
+url: /v3.18/features/share.md
 description: >-
   Share the current page via the browser's native share sheet or a configurable
   grid of services.
@@ -1434,7 +1434,7 @@ The icon is shown in white on the brand color, so single-color glyphs work best.
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/customization/theming.md
+url: /v3.18/customization/theming.md
 description: Customizing the look and feel of Citizen
 ---
 
@@ -1648,7 +1648,7 @@ When you're customizing Citizen, two areas reward extra attention:
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/customization/utility-classes.md
+url: /v3.18/customization/utility-classes.md
 description: CSS classes Citizen exposes for formatting and interactivity
 ---
 
@@ -1735,7 +1735,7 @@ To prefill the search query (for example, to search only templates):
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/customization/recipes.md
+url: /v3.18/customization/recipes.md
 description: Common customizations and CSS snippets for Citizen
 ---
 
@@ -1856,7 +1856,7 @@ Users who picked a different theme before you applied this change have it stored
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/customization/hooks.md
+url: /v3.18/customization/hooks.md
 description: JavaScript hooks provided by Citizen for extensions and gadgets
 ---
 
@@ -1911,7 +1911,7 @@ The old hook still works but logs a deprecation warning. See the [migration guid
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/community/showcase.md
+url: /v3.18/community/showcase.md
 description: A showcase of wikis using Citizen
 ---
 
@@ -1922,7 +1922,7 @@ Check out these amazing wikis powering their content with Citizen:
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs.md
+url: /v3.18/changelogs.md
 description: Changelogs of all Citizen stable releases.
 ---
 
@@ -1933,7 +1933,7 @@ Changelogs of all Citizen stable releases, which are also available [on GitHub](
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/guide/migrating-to-citizen-4.md
+url: /v3.18/guide/migrating-to-citizen-4.md
 description: Preview the Citizen 4 changes and migrate your wiki before the release
 ---
 
@@ -2095,7 +2095,7 @@ The pure black switch is now a theme in the theme picker. The switch retires wit
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/contribute.md
+url: /v3.18/contribute.md
 description: How to contribute to the Citizen skin.
 ---
 
@@ -2106,7 +2106,7 @@ Thank you for considering contributing to *Citizen*!
 *Citizen* is a small open-source project, and we appreciate any help. Here are some ways you can contribute:
 
 * [Code patches](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/pulls)
-* [Documentation improvements](https://starcitizentools.github.io/mediawiki-skins-Citizen/)
+* [Documentation improvements](https://mwcitizen.skin/)
 * [Bug reports](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/new?template=bug_report.yml)
 * [Feature requests and suggestions](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/new?template=feature_request.yml)
 * [Translations](#translations)
@@ -2154,7 +2154,7 @@ If you have any questions about contributing, feel free to [open an issue](https
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/contribute/preview-channel.md
+url: /v3.18/contribute/preview-channel.md
 description: >-
   How the preview channel ships upcoming Citizen features ahead of a stable
   release
@@ -2215,7 +2215,7 @@ When you gate a feature:
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/latest.md
+url: /v3.18/changelogs/latest.md
 description: Changelog of the latest version of Citizen.
 ---
 
@@ -2223,1049 +2223,1049 @@ description: Changelog of the latest version of Citizen.
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v1.10.0.md
+url: /v3.18/changelogs/v1.10.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v1.17.3.md
+url: /v3.18/changelogs/v1.17.3.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v1.13.0.md
+url: /v3.18/changelogs/v1.13.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v1.9.4.md
+url: /v3.18/changelogs/v1.9.4.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v1.14.0.md
+url: /v3.18/changelogs/v1.14.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v1.14.1.md
+url: /v3.18/changelogs/v1.14.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v1.17.4.md
+url: /v3.18/changelogs/v1.17.4.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v1.15.0.md
+url: /v3.18/changelogs/v1.15.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v1.17.5.md
+url: /v3.18/changelogs/v1.17.5.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v1.17.6.md
+url: /v3.18/changelogs/v1.17.6.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v1.16.0.md
+url: /v3.18/changelogs/v1.16.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v1.17.7.md
+url: /v3.18/changelogs/v1.17.7.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v1.17.8.md
+url: /v3.18/changelogs/v1.17.8.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v1.16.1.md
+url: /v3.18/changelogs/v1.16.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v1.17.9.md
+url: /v3.18/changelogs/v1.17.9.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v1.17.0.md
+url: /v3.18/changelogs/v1.17.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.0.0-beta.3.md
+url: /v3.18/changelogs/v2.0.0-beta.3.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v1.17.1.md
+url: /v3.18/changelogs/v1.17.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v1.9.5.md
+url: /v3.18/changelogs/v1.9.5.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v1.17.2.md
+url: /v3.18/changelogs/v1.17.2.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.0.0-alpha.1.md
+url: /v3.18/changelogs/v2.0.0-alpha.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.0.0-beta.0.md
+url: /v3.18/changelogs/v2.0.0-beta.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.0.0-beta.1.md
+url: /v3.18/changelogs/v2.0.0-beta.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.0.0-beta.2.md
+url: /v3.18/changelogs/v2.0.0-beta.2.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.0.0-alpha.2.md
+url: /v3.18/changelogs/v2.0.0-alpha.2.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.13.0.md
+url: /v3.18/changelogs/v2.13.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.11.0.md
+url: /v3.18/changelogs/v2.11.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.11.1.md
+url: /v3.18/changelogs/v2.11.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.0.0-beta.4.md
+url: /v3.18/changelogs/v2.0.0-beta.4.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.12.0.md
+url: /v3.18/changelogs/v2.12.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.0.0.md
+url: /v3.18/changelogs/v2.0.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.0.1.md
+url: /v3.18/changelogs/v2.0.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.1.0.md
+url: /v3.18/changelogs/v2.1.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.10.0.md
+url: /v3.18/changelogs/v2.10.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.10.1.md
+url: /v3.18/changelogs/v2.10.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.15.0.md
+url: /v3.18/changelogs/v2.15.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.13.1.md
+url: /v3.18/changelogs/v2.13.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.13.2.md
+url: /v3.18/changelogs/v2.13.2.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.13.3.md
+url: /v3.18/changelogs/v2.13.3.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.13.4.md
+url: /v3.18/changelogs/v2.13.4.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.13.5.md
+url: /v3.18/changelogs/v2.13.5.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.14.0.md
+url: /v3.18/changelogs/v2.14.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.14.1.md
+url: /v3.18/changelogs/v2.14.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.18.1.md
+url: /v3.18/changelogs/v2.18.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.15.1.md
+url: /v3.18/changelogs/v2.15.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.16.0.md
+url: /v3.18/changelogs/v2.16.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.16.1.md
+url: /v3.18/changelogs/v2.16.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.17.0.md
+url: /v3.18/changelogs/v2.17.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.17.1.md
+url: /v3.18/changelogs/v2.17.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.17.2.md
+url: /v3.18/changelogs/v2.17.2.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.18.0.md
+url: /v3.18/changelogs/v2.18.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.28.0.md
+url: /v3.18/changelogs/v2.28.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.19.0.md
+url: /v3.18/changelogs/v2.19.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.2.0.md
+url: /v3.18/changelogs/v2.2.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.20.0.md
+url: /v3.18/changelogs/v2.20.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.21.0.md
+url: /v3.18/changelogs/v2.21.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.22.0.md
+url: /v3.18/changelogs/v2.22.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.22.1.md
+url: /v3.18/changelogs/v2.22.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.23.0.md
+url: /v3.18/changelogs/v2.23.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.24.0.md
+url: /v3.18/changelogs/v2.24.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.25.0.md
+url: /v3.18/changelogs/v2.25.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.26.0.md
+url: /v3.18/changelogs/v2.26.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.27.0.md
+url: /v3.18/changelogs/v2.27.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.38.0.md
+url: /v3.18/changelogs/v2.38.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.29.0.md
+url: /v3.18/changelogs/v2.29.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.3.0.md
+url: /v3.18/changelogs/v2.3.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.3.1.md
+url: /v3.18/changelogs/v2.3.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.3.2.md
+url: /v3.18/changelogs/v2.3.2.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.3.3.md
+url: /v3.18/changelogs/v2.3.3.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.3.4.md
+url: /v3.18/changelogs/v2.3.4.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.3.5.md
+url: /v3.18/changelogs/v2.3.5.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.3.6.md
+url: /v3.18/changelogs/v2.3.6.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.30.0.md
+url: /v3.18/changelogs/v2.30.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.31.0.md
+url: /v3.18/changelogs/v2.31.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.32.0.md
+url: /v3.18/changelogs/v2.32.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.33.0.md
+url: /v3.18/changelogs/v2.33.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.34.0.md
+url: /v3.18/changelogs/v2.34.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.35.0.md
+url: /v3.18/changelogs/v2.35.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.36.0.md
+url: /v3.18/changelogs/v2.36.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.37.0.md
+url: /v3.18/changelogs/v2.37.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.40.2.md
+url: /v3.18/changelogs/v2.40.2.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.38.1.md
+url: /v3.18/changelogs/v2.38.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.38.2.md
+url: /v3.18/changelogs/v2.38.2.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.38.3.md
+url: /v3.18/changelogs/v2.38.3.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.39.0.md
+url: /v3.18/changelogs/v2.39.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.39.1.md
+url: /v3.18/changelogs/v2.39.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.39.2.md
+url: /v3.18/changelogs/v2.39.2.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.39.3.md
+url: /v3.18/changelogs/v2.39.3.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.39.4.md
+url: /v3.18/changelogs/v2.39.4.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.4.0.md
+url: /v3.18/changelogs/v2.4.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.4.1.md
+url: /v3.18/changelogs/v2.4.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.4.2.md
+url: /v3.18/changelogs/v2.4.2.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.4.3.md
+url: /v3.18/changelogs/v2.4.3.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.4.4.md
+url: /v3.18/changelogs/v2.4.4.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.40.0.md
+url: /v3.18/changelogs/v2.40.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.40.1.md
+url: /v3.18/changelogs/v2.40.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.6.6.md
+url: /v3.18/changelogs/v2.6.6.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.5.0.md
+url: /v3.18/changelogs/v2.5.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.5.1.md
+url: /v3.18/changelogs/v2.5.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.5.2.md
+url: /v3.18/changelogs/v2.5.2.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.6.0.md
+url: /v3.18/changelogs/v2.6.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.6.1.md
+url: /v3.18/changelogs/v2.6.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.6.2.md
+url: /v3.18/changelogs/v2.6.2.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.6.3.md
+url: /v3.18/changelogs/v2.6.3.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.6.4.md
+url: /v3.18/changelogs/v2.6.4.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.6.5.md
+url: /v3.18/changelogs/v2.6.5.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.14.0.md
+url: /v3.18/changelogs/v3.14.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.7.0.md
+url: /v3.18/changelogs/v2.7.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.7.1.md
+url: /v3.18/changelogs/v2.7.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.7.10.md
+url: /v3.18/changelogs/v2.7.10.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.7.11.md
+url: /v3.18/changelogs/v2.7.11.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.7.2.md
+url: /v3.18/changelogs/v2.7.2.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.7.3.md
+url: /v3.18/changelogs/v2.7.3.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.7.4.md
+url: /v3.18/changelogs/v2.7.4.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.7.5.md
+url: /v3.18/changelogs/v2.7.5.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.7.6.md
+url: /v3.18/changelogs/v2.7.6.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.7.7.md
+url: /v3.18/changelogs/v2.7.7.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.7.8.md
+url: /v3.18/changelogs/v2.7.8.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.7.9.md
+url: /v3.18/changelogs/v2.7.9.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.15.0.md
+url: /v3.18/changelogs/v3.15.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.8.0.md
+url: /v3.18/changelogs/v2.8.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.15.1.md
+url: /v3.18/changelogs/v3.15.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.8.1.md
+url: /v3.18/changelogs/v2.8.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.16.0.md
+url: /v3.18/changelogs/v3.16.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.16.1.md
+url: /v3.18/changelogs/v3.16.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.17.0.md
+url: /v3.18/changelogs/v3.17.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.17.1.md
+url: /v3.18/changelogs/v3.17.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.18.0.md
+url: /v3.18/changelogs/v3.18.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.2.0.md
+url: /v3.18/changelogs/v3.2.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.3.0.md
+url: /v3.18/changelogs/v3.3.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.3.1.md
+url: /v3.18/changelogs/v3.3.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.8.2.md
+url: /v3.18/changelogs/v2.8.2.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.3.2.md
+url: /v3.18/changelogs/v3.3.2.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.4.0.md
+url: /v3.18/changelogs/v3.4.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.5.0.md
+url: /v3.18/changelogs/v3.5.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.6.0.md
+url: /v3.18/changelogs/v3.6.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.8.3.md
+url: /v3.18/changelogs/v2.8.3.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.7.0.md
+url: /v3.18/changelogs/v3.7.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.8.0.md
+url: /v3.18/changelogs/v3.8.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.8.4.md
+url: /v3.18/changelogs/v2.8.4.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.9.0.md
+url: /v3.18/changelogs/v3.9.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.8.5.md
+url: /v3.18/changelogs/v2.8.5.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.9.0.md
+url: /v3.18/changelogs/v2.9.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v2.9.1.md
+url: /v3.18/changelogs/v2.9.1.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.0.0.md
+url: /v3.18/changelogs/v3.0.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.1.0.md
+url: /v3.18/changelogs/v3.1.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.10.0.md
+url: /v3.18/changelogs/v3.10.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.11.0.md
+url: /v3.18/changelogs/v3.11.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.12.0.md
+url: /v3.18/changelogs/v3.12.0.md
 ---
 
 
 ---
 
 ---
-url: /mediawiki-skins-Citizen/v3.18/changelogs/v3.13.0.md
+url: /v3.18/changelogs/v3.13.0.md
 ---
 

@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/v3.18/config.md
+url: /v3.18/config.md
 description: MediaWiki skin configuration for the Citizen skin.
 ---
 

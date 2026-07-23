@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/v3.17/customization/theming.md
+url: /v3.17/customization/theming.md
 description: Customizing the look and feel of Citizen
 ---
 

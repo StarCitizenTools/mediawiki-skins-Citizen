@@ -1,5 +1,5 @@
 ---
-url: /mediawiki-skins-Citizen/v3.16/customization/hooks.md
+url: /v3.16/customization/hooks.md
 description: JavaScript hooks provided by Citizen for extensions and gadgets
 ---
 
