@@ -68,6 +68,7 @@
 	"citizen-preferences-section-appearance": "Uiterlijk",
 	"citizen-preferences-section-behavior": "Gedrag",
 	"citizen-theme-name": "Kleur",
+	"citizen-theme-name-v4": "Thema",
 	"citizen-theme-description": "Schakelen tussen de lichte en donkere modus",
 	"citizen-theme-day-label": "Licht",
 	"citizen-theme-night-label": "Donker",
@@ -210,5 +211,6 @@
 	"citizen-command-palette-mode-user-placeholder": "Gebruikers zoeken",
 	"citizen-command-palette-queryaction-fulltext-search-description": "In de volledige tekst van alle pagina’s zoeken",
 	"citizen-command-palette-queryaction-page-edit-description": "Pagina aanmaken of bewerken",
+	"citizen-config-headerpositionmobile": "De positie van de siteheader in de lay-out voor mobiele telefoons en tablets (onder het breakpoint voor desktops). Accepteert 'top' of 'bottom'; voor elke andere waarde wordt automatisch 'bottom' gebruikt.",
 	"citizen-config-preview": "Schakelaar met versiegebonden bereik voor het voorvertoningskanaal van Citizen. Stel in op het nummer van de komende grote versie (momenteel 4) om deze voorafgaand aan de uitgave te bekijken; met 0 of een andere waarde blijft de stabiele versie behouden."
 }
