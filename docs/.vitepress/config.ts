@@ -5,6 +5,7 @@ import llmstxt, { copyOrDownloadAsMarkdownButtons } from "vitepress-plugin-llms"
 import { tabsMarkdownPlugin } from "vitepress-plugin-tabs";
 
 const BASE_URL = process.env.BASE_URL ?? "/";
+const SITE_ORIGIN = process.env.SITE_ORIGIN ?? "https://mwcitizen.skin";
 
 function withBase(path: string): string {
 	return `${BASE_URL}${path}`.replaceAll(/\/+/g, "/");
@@ -29,7 +30,7 @@ export default defineConfig({
 	cleanUrls: true,
 	lastUpdated: true,
 	sitemap: {
-		hostname: "https://starcitizentools.github.io/mediawiki-skins-Citizen/",
+		hostname: new URL(BASE_URL, SITE_ORIGIN).href,
 	},
 	themeConfig: {
 		docsVersion: process.env.DOCS_VERSION ?? "main",
