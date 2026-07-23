@@ -44,7 +44,7 @@ jobs:
         working-directory: docs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BASE_URL: /mediawiki-skins-Citizen/
+          BASE_URL: /
           DOCS_VERSION: main
           ALGOLIA_APP_ID: ${{ vars.ALGOLIA_APP_ID }}
           ALGOLIA_API_KEY: ${{ vars.ALGOLIA_API_KEY }}
@@ -81,7 +81,20 @@ jobs:
           publish_dir: gh-pages
           publish_branch: gh-pages
           keep_files: false
+          cname: mwcitizen.skin
           commit_message: "docs: deploy main @ ${{ github.sha }}"
+
+      - name: Prepare tree for Cloudflare upload
+        run: rm -rf gh-pages/.git gh-pages/CNAME
+
+      # Best-effort second host: if this fails after the gh-pages push, re-run via workflow_dispatch to reconcile
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4"
+          command: pages deploy gh-pages --project-name=mediawiki-skins-citizen --branch=main --commit-dirty=true
 
   deploy-version:
     name: 🚀 Deploy version
@@ -125,7 +138,7 @@ jobs:
       - name: Build
         working-directory: docs
         env:
-          BASE_URL: /mediawiki-skins-Citizen/${{ steps.tag.outputs.minor }}/
+          BASE_URL: /${{ steps.tag.outputs.minor }}/
           DOCS_VERSION: ${{ steps.tag.outputs.minor }}
         run: npm run docs:build
 
@@ -156,4 +169,17 @@ jobs:
           publish_dir: gh-pages
           publish_branch: gh-pages
           keep_files: false
+          cname: mwcitizen.skin
           commit_message: "docs: deploy ${{ steps.tag.outputs.tag }} to /${{ steps.tag.outputs.minor }}/"
+
+      - name: Prepare tree for Cloudflare upload
+        run: rm -rf gh-pages/.git gh-pages/CNAME
+
+      # Best-effort second host: if this fails after the gh-pages push, re-run via workflow_dispatch to reconcile
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4"
+          command: pages deploy gh-pages --project-name=mediawiki-skins-citizen --branch=main --commit-dirty=true
