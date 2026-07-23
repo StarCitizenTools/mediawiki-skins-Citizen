@@ -6,6 +6,10 @@ on:
       - "docs/**"
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -60,3 +64,51 @@ jobs:
         env:
           DOCS_VERSION: main
         run: npm run docs:build
+
+      - name: Upload dist for preview deploy
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs-dist
+          path: docs/.vitepress/dist
+          retention-days: 1
+
+  preview:
+    name: 🔍 Preview
+    needs: build
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Download dist
+        uses: actions/download-artifact@v4
+        with:
+          name: docs-dist
+          path: dist
+
+      - name: Deploy preview to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4"
+          command: pages deploy dist --project-name=mediawiki-skins-citizen --branch=pr-${{ github.event.pull_request.number }} --commit-dirty=true
+
+      # Sticky comment: find-and-update via the hidden marker instead of posting a new comment per run
+      - name: Comment preview URL
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          URL: https://pr-${{ github.event.pull_request.number }}.mediawiki-skins-citizen.pages.dev
+          SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          MARKER="<!-- docs-preview-comment -->"
+          BODY="$(printf '%s\nDocs preview: %s (built from %s)' "$MARKER" "$URL" "$SHA")"
+          COMMENT_ID=$(gh api --paginate "repos/$GITHUB_REPOSITORY/issues/$PR/comments" \
+            --jq ".[] | select(.body | startswith(\"$MARKER\")) | .id" | head -n1)
+          if [ -n "$COMMENT_ID" ]; then
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" -f body="$BODY"
+          else
+            gh api "repos/$GITHUB_REPOSITORY/issues/$PR/comments" -f body="$BODY"
+          fi
