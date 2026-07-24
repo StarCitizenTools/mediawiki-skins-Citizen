@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.19.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.18.0...v3.19.0) (2026-07-24)
+
+
+### Features
+
+* **overflow:** ✨ keep floated content floating when wrapped ([b9f803a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/b9f803a166e2e3377bcea716ac4200d5bbf8b373))
+* **sections:** ✨ nest section markup with headings inside like Parsoid ([bdf3af8](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/bdf3af8b1abb11eb89bc4d5441074911c9e6ba4e))
+
+
+### Bug Fixes
+
+* **main-page:** 🐛 render the main page header after the content ([5f0ad0a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/5f0ad0afed670101660440b13035136e156d297a))
+* **overflowElements:** 🐛 disconnect stale observers when content is replaced ([8de107d](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/8de107d1bd6b3777856f271e8a84acbdeb263a23))
+* **sections:** 🐛 support collapsible sections on Parsoid pages ([169a75f](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/169a75f2146aa4159b1437c751c1771357f907a6))
+* **VisualEditor:** 🐛 categoryEdit styling improvements ([62ecf38](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/62ecf389c45d468843bd431cf81d0c1de74bb539))
+
+
+### Performance Improvements
+
+* **overflowElements:** ⚡️ defer table measurement until scrolled into view ([#1659](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1659)) ([2801a33](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/2801a33f8a81208783b28fbe1162b7d68b84c78d))
+* **scripts:** ⚡️ defer observer setup and the GPU probe until after first paint ([#1660](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/issues/1660)) ([00b8c5a](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/00b8c5a8493899c18d5a1df7c7057d2974277f65))
+* **tableOfContents:** ⚡️ keep section activation from forcing page reflows ([80368af](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/80368af518e47bc7ac854ef4eca39c53bc744354))
+* **tableOfContents:** ⚡️ load the table of contents script only on pages that have one ([9357861](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/935786124bde237d4751d195514d4671c463b486))
+
+
+### Miscellaneous Chores
+
+* **finalize-release:** 🔧 fix the stale docs rebuild step ([820a511](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/commit/820a511dc7e4b3b518b6cca3f17a2f64e8890f53))
+
 ## [3.18.0](https://github.com/StarCitizenTools/mediawiki-skins-Citizen/compare/v3.17.1...v3.18.0) (2026-07-16)
 
 
