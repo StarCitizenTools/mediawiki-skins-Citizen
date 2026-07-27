@@ -1,6 +1,10 @@
 <nav
 	id="{{id}}"
 	class="citizen-menu{{#class}} {{.}}{{/class}}"
+	{{! Named with aria-label rather than aria-labelledby pointing at the heading
+		below: the sticky header clones these menus and strips ids from the clone,
+		which would leave the copy with a dangling IDREF. }}
+	{{#label}}aria-label="{{.}}"{{/label}}
 	{{{html-tooltip}}}
 	{{{html-userlangattributes}}}
 >
