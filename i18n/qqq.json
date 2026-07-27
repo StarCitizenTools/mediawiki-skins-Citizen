@@ -47,6 +47,7 @@
 	"citizen-footer-tagline": "Default text for the site footer tagline.",
 	"citizen-action-addsection": "Used in the Citizen skin. See for example {{canonicalurl:Talk:Main_Page|useskin=vector}}\n{{Identical|Add topic}}. Same as vector-action-addsection in Vector skin.",
 	"citizen-jumptotop": "Label for link to jump to top of page",
+	"citizen-jumptocontent": "Label for the link at the very top of the page that skips the site header and jumps straight to the page content. Visually hidden until it receives keyboard focus.",
 	"citizen-toc-toggle-button-label": "Accessible label for the toggle button that expands/collapses a table of contents subsection. $1 is the section heading text.",
 	"citizen-search-empty-desc": "Helper text in the search suggestion when there are no search query",
 	"citizen-search-noresults-title": "Title in the search suggestion when there are no search results",
