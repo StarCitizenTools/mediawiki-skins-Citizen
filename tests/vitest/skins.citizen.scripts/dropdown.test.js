@@ -1,4 +1,4 @@
-const { Dropdown } = require( '../../../resources/skins.citizen.scripts/dropdown.js' );
+const { Dropdown, initDropdown } = require( '../../../resources/skins.citizen.scripts/dropdown.js' );
 
 describe( 'Dropdown', () => {
 	let details;
@@ -272,6 +272,77 @@ describe( 'Dropdown', () => {
 		} );
 	} );
 
+	describe( 'destroy', () => {
+		it( 'should remove the toggle and beforeunload listeners', () => {
+			const dropdown = create();
+			dropdown.init();
+
+			dropdown.destroy();
+
+			expect( details.removeEventListener ).toHaveBeenCalledWith(
+				'toggle', expect.any( Function )
+			);
+			expect( win.removeEventListener ).toHaveBeenCalledWith(
+				'beforeunload', expect.any( Function )
+			);
+		} );
+
+		it( 'should unbind dismissal listeners when destroyed while open', () => {
+			const dropdown = create();
+			dropdown.init();
+			details.open = true;
+			const toggleHandler = details.addEventListener.mock.calls
+				.find( ( call ) => call[ 0 ] === 'toggle' )[ 1 ];
+			toggleHandler();
+
+			dropdown.destroy();
+
+			expect( win.removeEventListener ).toHaveBeenCalledWith(
+				'keyup', expect.any( Function )
+			);
+			expect( target.removeEventListener ).toHaveBeenCalledWith(
+				'click', expect.any( Function )
+			);
+		} );
+	} );
+
+	describe( 'initDropdown', () => {
+		function buildContainer( parts ) {
+			return {
+				querySelector: vi.fn( ( selector ) => parts[ selector ] || null )
+			};
+		}
+
+		it( 'should create and init a Dropdown for a complete container', () => {
+			const container = buildContainer( {
+				'.citizen-dropdown-details': details,
+				'.citizen-dropdown-summary': summary,
+				'.citizen-menu__card': target
+			} );
+
+			const dropdown = initDropdown( container, {
+				window: win, document: doc, isPointerDevice: true
+			} );
+
+			expect( dropdown ).toBeInstanceOf( Dropdown );
+			expect( details.addEventListener ).toHaveBeenCalledWith(
+				'toggle', expect.any( Function )
+			);
+		} );
+
+		it( 'should return null when the container is missing a part', () => {
+			const container = buildContainer( {
+				'.citizen-dropdown-details': details
+			} );
+
+			const dropdown = initDropdown( container, {
+				window: win, document: doc, isPointerDevice: true
+			} );
+
+			expect( dropdown ).toBeNull();
+		} );
+	} );
+
 	describe( 'addKeyhint', () => {
 		it( 'should skip keyhints for non-pointer devices', () => {
 			const dropdown = create( { isPointerDevice: false } );
@@ -305,7 +376,8 @@ describe( 'Dropdown', () => {
 		it( 'should create kbd elements for links with accesskeys', () => {
 			const link = {
 				getAttribute: vi.fn().mockReturnValue( 'e' ),
-				append: vi.fn()
+				append: vi.fn(),
+				querySelector: vi.fn().mockReturnValue( null )
 			};
 			target.querySelectorAll.mockReturnValue( [ link ] );
 			const kbd = { classList: { add: vi.fn() }, innerText: '' };
@@ -318,6 +390,20 @@ describe( 'Dropdown', () => {
 			expect( kbd.classList.add ).toHaveBeenCalledWith( 'citizen-keyboard-hint-key' );
 			expect( link.append ).toHaveBeenCalledWith( kbd );
 			expect( kbd.innerText ).toBe( '⌃ e' );
+		} );
+
+		it( 'should not add a second hint to a link that already has one', () => {
+			const link = {
+				getAttribute: vi.fn().mockReturnValue( 'e' ),
+				append: vi.fn(),
+				querySelector: vi.fn().mockReturnValue( {} )
+			};
+			target.querySelectorAll.mockReturnValue( [ link ] );
+
+			const dropdown = create();
+			dropdown.init();
+
+			expect( link.append ).not.toHaveBeenCalled();
 		} );
 	} );
 } );
