@@ -15,14 +15,33 @@ section[ data-mw-section-id ] > .mw-heading,
 	}
 }
 
-// The collapse affordance is applied purely through CSS — no indicator
-// markup is injected server- or client-side, so first paint carries it
-// with no layout shift and noscript clients never see it. All markup
-// shapes share one recipe: the legacy transform's sections (heading
-// inside, carrying .citizen-section-heading) and native Parsoid
+// The chevron. Drawn on the heading's ::before so first paint carries the
+// affordance with no layout shift and noscript clients never see it, then
+// handed to the injected toggle button once sections.js has run. Both take
+// the same box in the same flex slot, so the handover moves nothing.
+// Trade-off: the pre-JS form claims the heading's single ::before slot, so
+// any extension or gadget styling these headings' ::before will conflict.
+.mixin-citizen-section-chevron() {
+	display: block;
+	width: var( --size-icon );
+	height: var( --size-icon );
+	content: '';
+	background-color: currentcolor;
+	-webkit-mask-image: url( assets/images/cdxIconCollapse.svg );
+	mask-image: url( assets/images/cdxIconCollapse.svg );
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	mask-position: center;
+	-webkit-mask-size: contain;
+	mask-size: contain;
+	transition: var( --transition-hover );
+	transition-property: transform;
+}
+
+// All markup shapes share one recipe: the legacy transform's sections
+// (heading inside, carrying .citizen-section-heading) and native Parsoid
 // sections (<section data-mw-section-id> with the heading inside).
-// Trade-off: this claims the heading's single ::before slot, so any
-// extension or gadget styling these headings' ::before will conflict.
 .client-js .citizen-sections-enabled {
 	section:is( [ data-mw-section-id ], .citizen-section ) > :is( .mw-heading, .citizen-section-heading ) {
 		cursor: pointer;
@@ -32,21 +51,8 @@ section[ data-mw-section-id ] > .mw-heading,
 		&::before {
 			flex-shrink: 0;
 			order: -2;
-			width: var( --size-icon );
-			height: var( --size-icon );
 			margin-inline-end: var( --space-sm );
-			content: '';
-			background-color: currentcolor;
-			-webkit-mask-image: url( assets/images/cdxIconCollapse.svg );
-			mask-image: url( assets/images/cdxIconCollapse.svg );
-			-webkit-mask-repeat: no-repeat;
-			mask-repeat: no-repeat;
-			-webkit-mask-position: center;
-			mask-position: center;
-			-webkit-mask-size: contain;
-			mask-size: contain;
-			transition: var( --transition-hover );
-			transition-property: transform;
+			.mixin-citizen-section-chevron();
 		}
 
 		:is( .mw-headline, h1, h2, h3, h4, h5, h6 ) {
@@ -65,8 +71,53 @@ section[ data-mw-section-id ] > .mw-heading,
 		}
 	}
 
-	section:is( [ data-mw-section-id ], .citizen-section ).citizen-section--collapsed > :is( .mw-heading, .citizen-section-heading ) {
+	// sections.js injects the real control, so the heading's own chevron
+	// stands down. The class only lands once every toggle is in place, which
+	// keeps the affordance continuous across the handover.
+	&.citizen-sections-interactive {
+		section:is( [ data-mw-section-id ], .citizen-section ) > :is( .mw-heading, .citizen-section-heading )::before {
+			content: none;
+		}
+	}
+
+	.citizen-section-toggle {
+		display: flex;
+		flex-shrink: 0;
+		align-items: center;
+		justify-content: center;
+		order: -2;
+		padding: 0;
+		margin-inline-end: var( --space-sm );
+		color: inherit;
+		appearance: none;
+		cursor: pointer;
+		background: transparent;
+		border: 0;
+		border-radius: var( --border-radius-base );
+
 		&::before {
+			.mixin-citizen-section-chevron();
+		}
+
+		&:focus-visible {
+			outline: var( --border-width-thick ) solid var( --color-progressive );
+			outline-offset: var( --space-xxs );
+		}
+
+		@media ( hover: hover ) {
+			&:hover {
+				opacity: var( --opacity-icon-base--hover );
+			}
+
+			&:active {
+				opacity: var( --opacity-icon-base--selected );
+			}
+		}
+	}
+
+	section:is( [ data-mw-section-id ], .citizen-section ).citizen-section--collapsed > :is( .mw-heading, .citizen-section-heading ) {
+		&::before,
+		> .citizen-section-toggle::before {
 			transform: rotate3d( 1, 0, 0, 180deg );
 		}
 

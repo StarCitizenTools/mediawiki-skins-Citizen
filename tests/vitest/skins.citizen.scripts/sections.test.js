@@ -220,4 +220,226 @@ describe( 'createSections', () => {
 			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( false );
 		} );
 	} );
+
+	describe( 'toggle control', () => {
+		// Legacy heading markup: no wrapper, so the heading tag itself is
+		// both the heading and the row that holds the edit links.
+		const LEGACY = `
+			<div class="mw-parser-output">
+				<section id="citizen-section-1" class="citizen-section">
+					<h2 class="citizen-section-heading"><span class="mw-headline" id="Foo">Foo</span>
+						<span class="mw-editsection"><a href="#">edit</a></span>
+					</h2>
+					<p>Bar</p>
+				</section>
+			</div>
+		`;
+
+		// Newer markup wraps the heading tag, so the row is the wrapper.
+		const WRAPPED = `
+			<div class="mw-parser-output">
+				<section data-mw-section-id="1">
+					<div class="mw-heading mw-heading2"><h2 id="Foo">Foo</h2>
+						<span class="mw-editsection"><a href="#">edit</a></span>
+					</div>
+					<p>Bar</p>
+				</section>
+			</div>
+		`;
+
+		const PARSOID_NESTED = `
+			<div class="mw-parser-output">
+				<section data-mw-section-id="1">
+					<div class="mw-heading mw-heading2"><h2 id="Outer">Outer</h2></div>
+					<p>Bar</p>
+					<section data-mw-section-id="2">
+						<div class="mw-heading mw-heading3"><h3 id="Inner">Inner</h3></div>
+						<p>Nested</p>
+					</section>
+				</section>
+			</div>
+		`;
+
+		it( 'should give every collapsible heading a button', () => {
+			const bodyContent = createBodyContent( WRAPPED );
+
+			const toggle = bodyContent.querySelector( '.citizen-section-toggle' );
+
+			expect( toggle.tagName ).toBe( 'BUTTON' );
+			expect( toggle.type ).toBe( 'button' );
+			expect( toggle.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
+		} );
+
+		it( 'should name the button after its section', () => {
+			const bodyContent = createBodyContent( WRAPPED );
+
+			const toggle = bodyContent.querySelector( '.citizen-section-toggle' );
+
+			expect( toggle.getAttribute( 'aria-labelledby' ) ).toBe( 'Foo' );
+		} );
+
+		it( 'should place the button after the heading tag when markup wraps it', () => {
+			const bodyContent = createBodyContent( WRAPPED );
+			const h2 = bodyContent.querySelector( 'h2' );
+
+			const toggle = bodyContent.querySelector( '.citizen-section-toggle' );
+
+			// Outside the h2, so the heading keeps a clean accessible name
+			expect( toggle.closest( 'h2' ) ).toBeNull();
+			expect( h2.hasAttribute( 'aria-labelledby' ) ).toBe( false );
+			// After it, so jumping between headings and reading on reaches
+			// the control. The styles order it first visually.
+			expect( h2.nextElementSibling ).toBe( toggle );
+		} );
+
+		it( 'should pin the heading name when the button lands inside the heading tag', () => {
+			const bodyContent = createBodyContent( LEGACY );
+			const heading = bodyContent.querySelector( '.citizen-section-heading' );
+
+			const toggle = heading.querySelector( '.citizen-section-toggle' );
+
+			expect( toggle.closest( 'h2' ) ).toBe( heading );
+			expect( heading.getAttribute( 'aria-labelledby' ) ).toBe( 'Foo' );
+			// First child, so it precedes the title the heading announces
+			expect( heading.firstElementChild ).toBe( toggle );
+		} );
+
+		it( 'should give every heading on the page its own button', () => {
+			const bodyContent = createBodyContent( `
+				<div class="mw-parser-output">
+					<section data-mw-section-id="1">
+						<div class="mw-heading"><h2 id="One">One</h2></div>
+						<p>First</p>
+						<section data-mw-section-id="2">
+							<div class="mw-heading"><h3 id="Two">Two</h3></div>
+							<p>Nested</p>
+						</section>
+					</section>
+					<section data-mw-section-id="3">
+						<div class="mw-heading"><h2 id="Three">Three</h2></div>
+						<p>Third</p>
+					</section>
+				</div>
+			` );
+
+			const toggles = [ ...bodyContent.querySelectorAll( '.citizen-section-toggle' ) ];
+			const names = toggles.map( ( t ) => t.getAttribute( 'aria-labelledby' ) );
+
+			expect( toggles ).toHaveLength( 3 );
+			expect( new Set( names ).size ).toBe( 3 );
+			expect( names ).toEqual( [ 'One', 'Two', 'Three' ] );
+		} );
+
+		it( 'should leave other sections alone when one is toggled', () => {
+			const bodyContent = createBodyContent( PARSOID_NESTED );
+			const outer = bodyContent.querySelector( 'section[data-mw-section-id="1"]' );
+			const nested = bodyContent.querySelector( 'section[data-mw-section-id="2"]' );
+			const nestedToggle = nested.querySelector( '.citizen-section-toggle' );
+
+			click( nestedToggle );
+
+			expect( nestedToggle.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
+			expect( outer.querySelector( ':scope > .mw-heading > .citizen-section-toggle' )
+				.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
+		} );
+
+		it( 'should not add a second button when run again over the same content', () => {
+			const bodyContent = createBodyContent( WRAPPED );
+
+			// wikipage.content can fire more than once per page view
+			createSections( { document, bodyContent } ).init();
+
+			expect( bodyContent.querySelectorAll( '.citizen-section-toggle' ) ).toHaveLength( 1 );
+		} );
+
+		it( 'should not reuse an id the page already claims', () => {
+			const bodyContent = createBodyContent( `
+				<div class="mw-parser-output">
+					<p id="citizen-section-label-1">Content that took the id first</p>
+					<section data-mw-section-id="1">
+						<div class="mw-heading"><h2>No anchor</h2></div>
+						<p>Bar</p>
+					</section>
+				</div>
+			` );
+
+			const toggle = bodyContent.querySelector( '.citizen-section-toggle' );
+			const labelId = toggle.getAttribute( 'aria-labelledby' );
+
+			expect( labelId ).not.toBe( 'citizen-section-label-1' );
+			expect( document.querySelectorAll( `#${ labelId }` ) ).toHaveLength( 1 );
+		} );
+
+		it( 'should toggle the section when the button is activated', () => {
+			const bodyContent = createBodyContent( WRAPPED );
+			const section = bodyContent.querySelector( 'section[data-mw-section-id="1"]' );
+			const toggle = section.querySelector( '.citizen-section-toggle' );
+
+			// Enter and Space on a native button produce a click
+			click( toggle );
+
+			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( true );
+			expect( section.querySelector( ':scope > p' ).hidden ).toBeTruthy();
+		} );
+
+		it( 'should track the collapsed state in aria-expanded', () => {
+			const bodyContent = createBodyContent( WRAPPED );
+			const section = bodyContent.querySelector( 'section[data-mw-section-id="1"]' );
+			const toggle = section.querySelector( '.citizen-section-toggle' );
+
+			click( toggle );
+
+			expect( toggle.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
+
+			click( toggle );
+
+			expect( toggle.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
+		} );
+
+		it( 'should restore aria-expanded when find-in-page expands the section', () => {
+			const bodyContent = createBodyContent( WRAPPED );
+			const section = bodyContent.querySelector( 'section[data-mw-section-id="1"]' );
+			const toggle = section.querySelector( '.citizen-section-toggle' );
+			click( toggle );
+
+			section.querySelector( ':scope > p' )
+				.dispatchEvent( new Event( 'beforematch', { bubbles: true } ) );
+
+			expect( toggle.getAttribute( 'aria-expanded' ) ).toBe( 'true' );
+		} );
+
+		it( 'should generate an id when the section title has no anchor', () => {
+			const bodyContent = createBodyContent( `
+				<div class="mw-parser-output">
+					<section data-mw-section-id="1">
+						<div class="mw-heading"><h2>Foo</h2></div>
+						<p>Bar</p>
+					</section>
+				</div>
+			` );
+
+			const toggle = bodyContent.querySelector( '.citizen-section-toggle' );
+
+			expect( toggle.getAttribute( 'aria-labelledby' ) )
+				.toBe( bodyContent.querySelector( 'h2' ).id );
+			expect( toggle.getAttribute( 'aria-labelledby' ) ).toBeTruthy();
+		} );
+
+		it( 'should not add a button to a heading that owns no section', () => {
+			const bodyContent = createBodyContent( `
+				<div class="mw-parser-output">
+					<div class="mw-heading"><h2 id="Foo">Foo</h2></div>
+					<section class="citizen-section"><p>Bar</p></section>
+				</div>
+			` );
+
+			expect( bodyContent.querySelector( '.citizen-section-toggle' ) ).toBeNull();
+		} );
+
+		it( 'should mark the body once the toggles are in place', () => {
+			createBodyContent( WRAPPED );
+
+			expect( document.body.classList.contains( 'citizen-sections-interactive' ) ).toBe( true );
+		} );
+	} );
 } );
