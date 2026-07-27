@@ -11,12 +11,12 @@
 			<span>{{msg-citizen-actions-more-toggle}}</span>
 		</summary>
 	</details>
-	<aside id="citizen-page-actions-more__card" class="citizen-menu__card">
+	<div id="citizen-page-actions-more__card" class="citizen-menu__card">
 		<div class="citizen-menu__card-content">
 			{{#is-visible}}
 					{{#data-portlets.data-actions}}{{>Menu}}{{/data-portlets.data-actions}}
 			{{/is-visible}}
 			{{#data-article-tools}}{{>Menu}}{{/data-article-tools}}
 		</div>
-	</aside>
+	</div>
 </div>
