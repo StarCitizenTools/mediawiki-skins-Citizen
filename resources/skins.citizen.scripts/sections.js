@@ -34,7 +34,8 @@ function createSections( { document, bodyContent } ) {
 	 * Collapse or expand a section that contains its own heading. The
 	 * heading stays visible; every other direct child (including nested
 	 * subsections) is hidden with `until-found` so find-in-page can still
-	 * reach the content.
+	 * reach the content. The attribute does not hide on its own — see the
+	 * `.citizen-section--collapsed > [hidden]` rules in Sections.less.
 	 *
 	 * @param {HTMLElement} section
 	 * @param {boolean} collapsed

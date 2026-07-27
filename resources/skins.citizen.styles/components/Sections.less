@@ -74,4 +74,31 @@ section[ data-mw-section-id ] > .mw-heading,
 			color: var( --color-subtle );
 		}
 	}
+
+	// Collapsing hides each child with `hidden="until-found"`, but the
+	// attribute alone cannot be trusted to hide anything: its UA rendering
+	// loses to any author `display` declaration, and its `content-visibility`
+	// form is a no-op on elements whose inner display type is table. Thumbnail
+	// figures and bare wikitables hit both cases and stayed fully painted
+	// while the rest of the section collapsed.
+	section:is( [ data-mw-section-id ], .citizen-section ).citizen-section--collapsed > [ hidden ] {
+		display: none;
+	}
+
+	// The attribute only reads back as `until-found` on engines that accept
+	// the value, and those are exactly the engines that render it as
+	// `content-visibility: hidden`; elsewhere it reflects as a bare `hidden`
+	// and keeps the plain hide above. Giving it a block box makes size
+	// containment apply, so that content-visibility takes hold and
+	// find-in-page still reaches the collapsed content.
+	// The UA matches this keyword case-insensitively and we cannot: less.php
+	// rejects the `i` flag in a selector. Collapsing writes the attribute
+	// through the `hidden` IDL setter on every child, so it is always
+	// canonically cased by the time these rules can match.
+	section:is( [ data-mw-section-id ], .citizen-section ).citizen-section--collapsed > [ hidden='until-found' ] {
+		display: block;
+		// A size-contained box is zero-height but keeps its margins, which
+		// would stack the whole section's dead space under the heading.
+		margin-block: 0;
+	}
 }
