@@ -381,6 +381,30 @@ describe( 'createSections', () => {
 			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( false );
 		} );
 
+		it( 'should reach content rendered into the root after the first run', () => {
+			const bodyContent = createBodyContent( WRAPPED );
+			bodyContent.insertAdjacentHTML( 'beforeend', `
+				<section data-mw-section-id="2">
+					<div class="mw-heading mw-heading2"><h2 id="Later">Later</h2></div>
+					<p>Rendered later</p>
+				</section>
+			` );
+
+			createSections( { document, bodyContent } ).init();
+
+			const later = bodyContent.querySelector( 'section[data-mw-section-id="2"]' );
+			const toggle = later.querySelector( '.citizen-section-toggle' );
+			expect( toggle ).not.toBeNull();
+			expect( toggle.getAttribute( 'aria-labelledby' ) ).toBe( 'Later' );
+
+			// The handlers bound on the first run drive content that did not
+			// exist when they were attached
+			click( toggle );
+
+			expect( later.classList.contains( 'citizen-section--collapsed' ) ).toBe( true );
+			expect( toggle.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
+		} );
+
 		it( 'should bind a content root it has not seen before', () => {
 			const first = createBodyContent( WRAPPED );
 			const second = createBodyContent( WRAPPED );
