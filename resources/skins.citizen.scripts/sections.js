@@ -1,5 +1,8 @@
 const COLLAPSED_CLASS = 'citizen-section--collapsed';
 const HEADING_SELECTOR = '.mw-heading, .citizen-section-heading';
+const HEADING_TAGS = 'h1, h2, h3, h4, h5, h6';
+const TOGGLE_CLASS = 'citizen-section-toggle';
+const INTERACTIVE_CLASS = 'citizen-sections-interactive';
 const COLLAPSED_SECTION_SELECTOR =
 	`section[data-mw-section-id].${ COLLAPSED_CLASS }, section.citizen-section.${ COLLAPSED_CLASS }`;
 
@@ -10,6 +13,7 @@ const COLLAPSED_SECTION_SELECTOR =
  * @return {Object}
  */
 function createSections( { document, bodyContent } ) {
+	let labelCount = 0;
 	/**
 	 * The section wrapper a heading belongs to: a native Parsoid section or
 	 * a section produced by the legacy transform (both carry the heading as
@@ -31,6 +35,88 @@ function createSections( { document, bodyContent } ) {
 	}
 
 	/**
+	 * The element whose text names the section. Legacy heading markup keeps
+	 * it in `.mw-headline`; newer markup drops that wrapper and puts the text
+	 * — and the anchor id — straight on the heading tag.
+	 *
+	 * @param {HTMLElement} heading
+	 * @param {HTMLElement|null} headingTag
+	 * @return {HTMLElement}
+	 */
+	function getHeadingLabel( heading, headingTag ) {
+		return heading.querySelector( '.mw-headline' ) || headingTag || heading;
+	}
+
+	/**
+	 * An id no other element on the page already claims. Section titles
+	 * normally carry their own anchor, so this is only reached for markup
+	 * that has none — but the counter restarts with every instance, and
+	 * nothing reserves the prefix against page content.
+	 *
+	 * @return {string}
+	 */
+	function getUniqueLabelId() {
+		let id;
+		do {
+			labelCount++;
+			id = `citizen-section-label-${ labelCount }`;
+		} while ( document.getElementById( id ) );
+		return id;
+	}
+
+	/**
+	 * Give a heading a real control. Pointer users can already toggle through
+	 * the delegated click handler, but a bare heading is unreachable by
+	 * keyboard and announces neither that it is a control nor what state it
+	 * is in. A native button fixes both and needs no listener of its own:
+	 * Enter and Space fire a click that bubbles to the same handler.
+	 *
+	 * @param {HTMLElement} heading
+	 * @return {void}
+	 */
+	function addToggle( heading ) {
+		if ( heading.querySelector( `.${ TOGGLE_CLASS }` ) ) {
+			return;
+		}
+
+		const headingTag = heading.matches( HEADING_TAGS ) ?
+			heading :
+			heading.querySelector( HEADING_TAGS );
+		const label = getHeadingLabel( heading, headingTag );
+		if ( !label.id ) {
+			label.id = getUniqueLabelId();
+		}
+
+		const toggle = document.createElement( 'button' );
+		toggle.type = 'button';
+		toggle.className = TOGGLE_CLASS;
+		toggle.setAttribute( 'aria-expanded', 'true' );
+		// Naming the control after its section is the disclosure convention:
+		// "Foo, button, collapsed" beats a generic label, and it keeps the
+		// wording out of i18n.
+		toggle.setAttribute( 'aria-labelledby', label.id );
+
+		if ( headingTag && headingTag !== heading ) {
+			// Newer markup wraps the heading tag in a container, so the
+			// button sits beside it and the heading keeps a clean accessible
+			// name. Placing it *after* the heading tag means jumping between
+			// headings and reading on reaches the control; the styles order
+			// it first, so nothing moves.
+			headingTag.after( toggle );
+		} else {
+			// Legacy markup has no wrapper, so the button goes inside the
+			// heading tag — which heading navigation lands on, so first child
+			// reads in the right order. It would otherwise be folded into the
+			// heading's accessible name, so pin that to the title text. Both
+			// can go when the legacy heading DOM does.
+			heading.insertBefore( toggle, heading.firstChild );
+			if ( headingTag && label !== heading ) {
+				heading.setAttribute( 'aria-labelledby', label.id );
+			}
+		}
+	}
+
+	/**
 	 * Collapse or expand a section that contains its own heading. The
 	 * heading stays visible; every other direct child (including nested
 	 * subsections) is hidden with `until-found` so find-in-page can still
@@ -44,6 +130,10 @@ function createSections( { document, bodyContent } ) {
 		section.classList.toggle( COLLAPSED_CLASS, collapsed );
 		for ( const child of section.children ) {
 			if ( child.matches( HEADING_SELECTOR ) ) {
+				const toggle = child.querySelector( `.${ TOGGLE_CLASS }` );
+				if ( toggle ) {
+					toggle.setAttribute( 'aria-expanded', ( !collapsed ).toString() );
+				}
 				continue;
 			}
 			child.hidden = collapsed ? 'until-found' : false;
@@ -59,6 +149,16 @@ function createSections( { document, bodyContent } ) {
 		if ( !document.body.classList.contains( 'citizen-sections-enabled' ) ) {
 			return;
 		}
+
+		for ( const heading of bodyContent.querySelectorAll( HEADING_SELECTOR ) ) {
+			// Pre-convergence cached markup keeps the heading outside the
+			// section, where there is nothing to toggle.
+			if ( getSectionFromHeading( heading ) ) {
+				addToggle( heading );
+			}
+		}
+		// Every toggle is in place, so the styles can hand the chevron over.
+		document.body.classList.add( INTERACTIVE_CLASS );
 
 		const onEditSectionClick = ( e ) => {
 			e.stopPropagation();
