@@ -352,6 +352,46 @@ describe( 'createSections', () => {
 			expect( bodyContent.querySelectorAll( '.citizen-section-toggle' ) ).toHaveLength( 1 );
 		} );
 
+		it( 'should still toggle once per click after running again', () => {
+			const bodyContent = createBodyContent( WRAPPED );
+			const section = bodyContent.querySelector( 'section[data-mw-section-id="1"]' );
+			const toggle = section.querySelector( '.citizen-section-toggle' );
+
+			// A second set of delegated handlers would toggle twice per click
+			createSections( { document, bodyContent } ).init();
+			click( toggle );
+
+			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( true );
+			expect( toggle.getAttribute( 'aria-expanded' ) ).toBe( 'false' );
+		} );
+
+		it( 'should keep toggling after several re-runs', () => {
+			const bodyContent = createBodyContent( WRAPPED );
+			const section = bodyContent.querySelector( 'section[data-mw-section-id="1"]' );
+			const toggle = section.querySelector( '.citizen-section-toggle' );
+
+			createSections( { document, bodyContent } ).init();
+			createSections( { document, bodyContent } ).init();
+			createSections( { document, bodyContent } ).init();
+
+			click( toggle );
+			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( true );
+
+			click( toggle );
+			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( false );
+		} );
+
+		it( 'should bind a content root it has not seen before', () => {
+			const first = createBodyContent( WRAPPED );
+			const second = createBodyContent( WRAPPED );
+			const section = second.querySelector( 'section[data-mw-section-id="1"]' );
+
+			click( section.querySelector( '.citizen-section-toggle' ) );
+
+			expect( first.querySelector( 'section' ).classList.contains( 'citizen-section--collapsed' ) ).toBe( false );
+			expect( section.classList.contains( 'citizen-section--collapsed' ) ).toBe( true );
+		} );
+
 		it( 'should not reuse an id the page already claims', () => {
 			const bodyContent = createBodyContent( `
 				<div class="mw-parser-output">

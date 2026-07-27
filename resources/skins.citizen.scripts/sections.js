@@ -7,6 +7,20 @@ const COLLAPSED_SECTION_SELECTOR =
 	`section[data-mw-section-id].${ COLLAPSED_CLASS }, section.citizen-section.${ COLLAPSED_CLASS }`;
 
 /**
+ * Content roots whose handlers are already attached.
+ *
+ * Setup runs once per `wikipage.content`, which fires again whenever the
+ * content is re-rendered — a live preview, or saving without a reload. The
+ * root element survives that, so a second pass would leave two sets of
+ * delegated handlers on it and every click would toggle a section twice,
+ * landing back where it started. Held weakly so a replaced root is
+ * collectable.
+ *
+ * @type {WeakSet<HTMLElement>}
+ */
+const boundRoots = new WeakSet();
+
+/**
  * @param {Object} deps
  * @param {Document} deps.document
  * @param {HTMLElement} deps.bodyContent
@@ -150,6 +164,7 @@ function createSections( { document, bodyContent } ) {
 			return;
 		}
 
+		// Re-rendered content brings new headings, so this always runs.
 		for ( const heading of bodyContent.querySelectorAll( HEADING_SELECTOR ) ) {
 			// Pre-convergence cached markup keeps the heading outside the
 			// section, where there is nothing to toggle.
@@ -159,6 +174,13 @@ function createSections( { document, bodyContent } ) {
 		}
 		// Every toggle is in place, so the styles can hand the chevron over.
 		document.body.classList.add( INTERACTIVE_CLASS );
+
+		// The handlers below are delegated, so the ones already on this root
+		// cover whatever was just rendered into it.
+		if ( boundRoots.has( bodyContent ) ) {
+			return;
+		}
+		boundRoots.add( bodyContent );
 
 		const onEditSectionClick = ( e ) => {
 			e.stopPropagation();
