@@ -1,0 +1,48 @@
+/*
+ * Skip link — the first focusable control on the page.
+ *
+ * Visually hidden until focused, then drawn above the fixed header and any
+ * open dropdown card (WCAG 2.2 SC 2.4.11). Core's notification toasts sit
+ * higher still, so a toast raised at the moment the link is focused can
+ * partly cover it — 2.4.11 permits partial obscuring, and chasing core's
+ * z-index would only move the problem.
+ *
+ * No `tabindex` on the target: browsers move the sequential focus navigation
+ * starting point on fragment navigation, so the next Tab lands inside
+ * `#bodyContent` on its own. Making a container focusable costs more than it
+ * gives here — assistive technology announces it as an empty group, and it
+ * has been reported to break scroll restoration on iOS back-navigation.
+ *
+ * Styling hangs off `.citizen-jump-link` rather than `.mw-jump-link` so a
+ * third-party jump link injected elsewhere in the page is not flung to the
+ * viewport corner.
+ */
+.citizen-jump-link {
+	&:not( :focus ) {
+		.mixin-citizen-screen-reader-only;
+		// Keep the hidden label out of select-all and page copy.
+		.user-select( none );
+	}
+
+	&:focus {
+		position: fixed;
+		// Pinned to the raw viewport corner rather than the header tokens: the
+		// header can sit on any edge, --header-inset-block-start is `auto` in
+		// the bottom placements, and --header-offset-block-start is rewritten at
+		// runtime by stickyHeader.js, so a token-pinned link would drift while
+		// scrolling.
+		inset-block-start: var( --space-xs );
+		inset-inline-start: var( --space-xs );
+		// Above the header ( @z-index-fixed, 200 ) and any open dropdown card ( 350 ).
+		z-index: @z-index-overlay;
+		padding: var( --space-xs ) var( --space-md );
+		font-weight: var( --font-weight-medium );
+		color: var( --color-emphasized );
+		background-color: var( --color-surface-2 );
+		// The border is what keeps this legible under forced-colors, where the
+		// background is overridden.
+		border-width: var( --border-width-base );
+		border-radius: var( --border-radius-medium );
+		box-shadow: var( --box-shadow-drop-medium );
+	}
+}
