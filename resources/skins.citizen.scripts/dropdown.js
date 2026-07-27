@@ -90,6 +90,18 @@ class Dropdown {
 		this.window.addEventListener( 'keyup', this.dismissOnEscape );
 	}
 
+	/**
+	 * Remove all listeners so the instance can be discarded,
+	 * e.g. when a cloned menu is rebuilt.
+	 */
+	destroy() {
+		// Safe when nothing is bound — removeEventListener no-ops
+		// on unknown handlers.
+		this.unbind();
+		this.details.removeEventListener( 'toggle', this.onDetailsToggle );
+		this.window.removeEventListener( 'beforeunload', this.dismissOnBeforeUnload );
+	}
+
 	onDetailsToggle() {
 		if ( this.details.open ) {
 			this.bind();
@@ -112,6 +124,12 @@ class Dropdown {
 
 		const links = this.target.querySelectorAll( '.mw-list-item > a[accesskey]' );
 		links.forEach( ( link ) => {
+			// Idempotent — a subtree cloned from an initialized menu
+			// already carries hints.
+			if ( link.querySelector( '.citizen-keyboard-hint-key' ) ) {
+				return;
+			}
+
 			const keyhintText = this.window.jQuery.fn.updateTooltipAccessKeys.getAccessKeyPrefix() + link.getAttribute( 'accesskey' );
 			if ( !keyhintText ) {
 				return;
@@ -137,29 +155,48 @@ class Dropdown {
 }
 
 /**
+ * Enhance a single dropdown container.
+ *
+ * @param {HTMLElement} container
+ * @param {Object} deps
+ * @param {Window} deps.window
+ * @param {Document} deps.document
+ * @param {boolean} deps.isPointerDevice
+ * @return {Dropdown|null} the initialized dropdown, or null when the
+ *  container is missing its details, summary, or card
+ */
+function initDropdown( container, { window, document, isPointerDevice } ) {
+	const
+		details = container.querySelector( DROPDOWN_DETAILS_SELECTOR ),
+		summary = container.querySelector( DROPDOWN_SUMMARY_SELECTOR ),
+		target = container.querySelector( DROPDOWN_TARGET_SELECTOR );
+
+	if ( !( details && summary && target ) ) {
+		return null;
+	}
+
+	const dropdown = new Dropdown( {
+		details, summary, target, window, document, isPointerDevice
+	} );
+	dropdown.init();
+	return dropdown;
+}
+
+/**
  * @param {Object} params
  * @param {Document} params.document
  * @param {Window} params.window
  */
 function init( { document, window } ) {
 	const isPointerDevice = window.matchMedia( '(hover: hover) and (pointer: fine)' ).matches;
-	const dropdowns = document.querySelectorAll( DROPDOWN_CONTAINER_SELECTOR );
 
-	dropdowns.forEach( ( container ) => {
-		const
-			details = container.querySelector( DROPDOWN_DETAILS_SELECTOR ),
-			summary = container.querySelector( DROPDOWN_SUMMARY_SELECTOR ),
-			target = container.querySelector( DROPDOWN_TARGET_SELECTOR );
-
-		if ( !( details && summary && target ) ) {
-			return;
-		}
-
-		new Dropdown( { details, summary, target, window, document, isPointerDevice } ).init();
+	document.querySelectorAll( DROPDOWN_CONTAINER_SELECTOR ).forEach( ( container ) => {
+		initDropdown( container, { window, document, isPointerDevice } );
 	} );
 }
 
 module.exports = {
 	init,
+	initDropdown,
 	Dropdown
 };
