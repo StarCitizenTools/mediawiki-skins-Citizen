@@ -21,6 +21,9 @@
 		--color-subtle: ~'oklch( var( --color-subtle-oklch__l ) var( --color-subtle-oklch__c ) var( --color-progressive-oklch__h ) )';
 		--color-placeholder: ~'oklch( var( --color-placeholder-oklch__l ) var( --color-placeholder-oklch__c ) var( --color-progressive-oklch__h ) )';
 		--color-disabled: ~'oklch( var( --color-disabled-oklch__l ) var( --color-disabled-oklch__c ) var( --color-progressive-oklch__h ) )';
+		// Deprecated upstream in favour of --color-subtle, but still emitted
+		// by Codex and read by skinStyles/jquery/jsonview.less.
+		--color-base--subtle: var( --color-subtle );
 		--color-inverted: #fff;
 		--color-inverted-fixed: #fff;
 		--color-progressive: ~'oklch( var( --color-progressive-oklch__l ) var( --color-progressive-oklch__c ) var( --color-progressive-oklch__h ) )';
@@ -130,33 +133,63 @@
 		--border-color-input-binary--focus: var( --border-color-progressive--focus );
 		--border-color-input-binary--checked: var( --border-color-progressive );
 
-		// @since Codex Design Tokens v1.20.1 (MediaWiki master)
-		//--color-disabled-emphasized: #a2a9b1;
+		// @since Codex Design Tokens v1.20.1 (MediaWiki 1.44)
+		// Upstream keeps this level with --color-disabled in light and one
+		// rung brighter in dark; the dark rung lives in tokens-theme-dark.less.
+		--color-disabled-emphasized: var( --color-disabled );
 		--color-visited--hover: var( --color-progressive--hover );
 		--color-visited--active: var( --color-progressive--active );
 		--color-destructive--visited--hover: var( --color-destructive--hover );
 		--color-destructive--visited--active: var( --color-destructive--active );
-		//--color-error--hover: #9f3526;
-		//--color-error--active: #612419;
-		//--color-icon-error: #f54739;
-		//--color-icon-warning: #ab7f2a;
-		//--color-icon-success: #099979;
-		//--color-icon-notice: #72777d;
-		//--mix-blend-mode-base: normal;
-		//--mix-blend-mode-blend: multiply;
+		--color-error--hover: var( --color-destructive--hover );
+		--color-error--active: var( --color-destructive--active );
+		--color-icon-error: var( --color-destructive );
+		--color-icon-warning: var( --color-warning );
+		--color-icon-success: var( --color-success );
+		--color-icon-notice: var( --color-placeholder );
+		--mix-blend-mode-base: normal;
+		// Dark half is `screen`, in tokens-theme-dark.less.
+		--mix-blend-mode-blend: multiply;
 		--background-color-interactive--hover: var( --color-surface-2--hover );
 		--background-color-interactive--active: var( --color-surface-2--active );
-		//--background-color-progressive-subtle--hover: #dce3f9;
-		//--background-color-progressive-subtle--active: #cbd6f6;
-		//--background-color-destructive-subtle--hover: #ffdad3;
-		//--background-color-destructive-subtle--active: #ffc8bd;
-		//--background-color-error-subtle--hover: #ffdad3;
-		//--background-color-error-subtle--active: #ffc8bd;
-		//--border-color-interactive--hover: #27292d;
-		//--border-color-interactive--active: #202122;
-		//--border-color-error--active: #612419;
+		// Subtle state fills step away from the resting subtle lightness
+		// using --delta-lightness-surface-base, which is negative in light
+		// and positive in dark, so one declaration gets both directions.
+		// The multipliers clear Citizen's own surface ramp — at *2 the dark
+		// hover fill lands below --color-surface-1--hover and the state
+		// reads as recessed.
+		--background-color-progressive-subtle--hover: ~'hsl( var( --color-progressive-hsl__h ), var( --color-progressive-hsl__s ), calc( var( --background-color-subtle__l ) + ( var( --delta-lightness-surface-base ) * 3 ) ) )';
+		--background-color-progressive-subtle--active: ~'hsl( var( --color-progressive-hsl__h ), var( --color-progressive-hsl__s ), calc( var( --background-color-subtle__l ) + ( var( --delta-lightness-surface-base ) * 6 ) ) )';
+		--background-color-destructive-subtle--hover: ~'hsl( var( --color-destructive__h ), var( --background-color-subtle__s ), calc( var( --background-color-subtle__l ) + ( var( --delta-lightness-surface-base ) * 3 ) ) )';
+		--background-color-destructive-subtle--active: ~'hsl( var( --color-destructive__h ), var( --background-color-subtle__s ), calc( var( --background-color-subtle__l ) + ( var( --delta-lightness-surface-base ) * 6 ) ) )';
+		--background-color-error-subtle--hover: var( --background-color-destructive-subtle--hover );
+		--background-color-error-subtle--active: var( --background-color-destructive-subtle--active );
+		--border-color-interactive--hover: ~'rgb( 0 0 0 / 0.2 )';
+		--border-color-interactive--active: ~'rgb( 0 0 0 / 0.3 )';
+		// Citizen's borders are alpha, not palette reds — the rest of the
+		// state border family already collapses to --border-color-base.
+		--border-color-error--active: var( --border-color-base );
 		--color-link-red--visited--hover: var( --color-destructive--visited--hover );
 		--color-link-red--visited--active: var( --color-destructive--visited--active );
+		--border-color-inverted-fixed: #fff;
+
+		// @since Codex Design Tokens v2.3.2 (MediaWiki 1.45)
+		--border-color-emphasized: var( --color-base );
+		--border-color-warning--hover: var( --border-color-base );
+		--border-color-warning--active: var( --border-color-base );
+		--color-link--focus: var( --color-progressive--focus );
+		--color-link--visited: var( --color-visited );
+		--color-link--visited--hover: var( --color-visited--hover );
+		--color-link--visited--active: var( --color-visited--active );
+
+		// @since Codex Design Tokens v2.5.1 (MediaWiki 1.46)
+		// --color-neutral is the enabled Codex button label and CSS-icon
+		// mask fill. Codex 1.14 coloured the same selector with
+		// --color-base, so aliasing it keeps buttons identical across a
+		// 1.43 -> 1.46 upgrade.
+		--color-neutral: var( --color-base );
+		--color-icon-progressive: var( --color-progressive );
+		--background-color-target-text: ~'hsl( var( --color-warning__h ), var( --background-color-subtle__s ), calc( var( --background-color-subtle__l ) + ( var( --delta-lightness-surface-base ) * 3 ) ) )';
 
 		--background-color-interactive-subtle--hover: var( --color-surface-1--hover );
 		--background-color-interactive-subtle--active: var( --color-surface-1--active );

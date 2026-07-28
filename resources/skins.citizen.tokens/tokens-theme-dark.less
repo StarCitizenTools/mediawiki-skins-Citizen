@@ -67,6 +67,15 @@
 	--border-color-subtle: ~'rgb( 255 255 255 / 0.05 )';
 	--border-color-muted: ~'rgb( 255 255 255 / 0.03 )';
 	--border-color-interactive: ~'rgb( 255 255 255 / 0.1 )';
+	--border-color-interactive--hover: ~'rgb( 255 255 255 / 0.2 )';
+	--border-color-interactive--active: ~'rgb( 255 255 255 / 0.3 )';
+
+	// Upstream keeps the emphasized rung brighter than --color-disabled in
+	// dark so disabled radio dots and indeterminate checkboxes stay legible.
+	--color-disabled-emphasized: var( --color-placeholder );
+
+	// Codex blends quiet controls with `multiply` on light, `screen` on dark.
+	--mix-blend-mode-blend: screen;
 
 	--opacity-glass: 0.8;
 
