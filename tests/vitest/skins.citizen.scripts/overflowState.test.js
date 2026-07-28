@@ -31,7 +31,6 @@ describe( 'createOverflowState', () => {
 			element,
 			content,
 			wrapper,
-			stickyHeader: null,
 			...overrides
 		} );
 	}
@@ -104,23 +103,6 @@ describe( 'createOverflowState', () => {
 			state.updateState();
 
 			expect( win.requestAnimationFrame ).not.toHaveBeenCalled();
-		} );
-
-		it( 'should sync sticky header scroll CSS variable', () => {
-			element.scrollWidth = 500;
-			content.scrollLeft = 50;
-			content.offsetWidth = 300;
-
-			const stickyHeaderEl = {
-				style: { setProperty: vi.fn() }
-			};
-
-			const state = create( { stickyHeader: stickyHeaderEl } );
-			state.updateState();
-
-			expect( stickyHeaderEl.style.setProperty ).toHaveBeenCalledWith(
-				'--citizen-overflow-scroll-x', '50px'
-			);
 		} );
 	} );
 

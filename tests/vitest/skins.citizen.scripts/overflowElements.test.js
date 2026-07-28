@@ -3,6 +3,8 @@
 
 const { init } = require( '../../../resources/skins.citizen.scripts/overflowElements/index.js' );
 const { detectFloatDirection } = require( '../../../resources/skins.citizen.scripts/overflowElements/float.js' );
+const { resolveBandRows, createStickyRows, hasScrollContainerAncestor } =
+	require( '../../../resources/skins.citizen.scripts/overflowElements/stickyRows.js' );
 const mw = require( '../mocks/mw.js' );
 
 /**
@@ -19,6 +21,8 @@ function createMockWindow( overrides = {} ) {
 			float: el.style.getPropertyValue( 'float' ) || 'none',
 			direction: 'ltr'
 		} ) ),
+		addEventListener: vi.fn(),
+		removeEventListener: vi.fn(),
 		...overrides
 	};
 }
@@ -392,37 +396,6 @@ describe( 'overflowElements', () => {
 			);
 		} );
 
-		it( 'should create sticky header only when header row exists', () => {
-			const bodyContent = createBodyContent( `
-				<table class="wikitable">
-					<thead>
-						<tr class="citizen-overflow-sticky-header">
-							<th>Column 1</th>
-							<th>Column 2</th>
-						</tr>
-					</thead>
-				</table>
-			` );
-			const win = createMockWindow();
-			const config = createConfig();
-			const observers = createMockObservers();
-
-			init( {
-				document,
-				window: win,
-				mw,
-				IntersectionObserver: observers.IntersectionObserver,
-				ResizeObserver: observers.ResizeObserver,
-				bodyContent,
-				config
-			} );
-
-			// The sticky header module creates an element with this class
-			const stickyHeader = document.querySelector( '.citizen-overflow-content-sticky-header' );
-			expect( stickyHeader ).not.toBe( null );
-			expect( stickyHeader.getAttribute( 'aria-hidden' ) ).toBe( 'true' );
-		} );
-
 		it( 'should bind and unbind listeners on resume and pause', () => {
 			const bodyContent = createBodyContent( '<table class="wikitable"></table>' );
 			const win = createMockWindow( {
@@ -633,155 +606,6 @@ describe( 'overflowElements', () => {
 			expect( observers.intersectionObserve ).toHaveBeenCalledWith( tables[ 1 ] );
 		} );
 
-		it( 'should not sync sticky header columns until the resize observer fires', () => {
-			const bodyContent = createBodyContent( `
-				<table class="wikitable">
-					<thead>
-						<tr class="citizen-overflow-sticky-header">
-							<th>Column 1</th>
-							<th>Column 2</th>
-						</tr>
-					</thead>
-				</table>
-			` );
-			const table = bodyContent.querySelector( 'table' );
-			const ths = table.querySelectorAll( 'th' );
-			const boundingRectSpies = [];
-			ths.forEach( ( th ) => {
-				const spy = vi.fn( () => ( { width: 120 } ) );
-				th.getBoundingClientRect = spy;
-				boundingRectSpies.push( spy );
-			} );
-			const observers = createMockObservers();
-
-			init( {
-				document,
-				window: createMockWindow(),
-				mw,
-				IntersectionObserver: observers.IntersectionObserver,
-				ResizeObserver: observers.ResizeObserver,
-				bodyContent,
-				config: createConfig()
-			} );
-
-			// No column measurement at boot
-			boundingRectSpies.forEach( ( spy ) => {
-				expect( spy ).not.toHaveBeenCalled();
-			} );
-
-			observers.getIntersectionCallback()( [ { isIntersecting: true, target: table } ] );
-			observers.getResizeCallback()( [ { target: table } ] );
-
-			boundingRectSpies.forEach( ( spy ) => {
-				expect( spy ).toHaveBeenCalled();
-			} );
-			const cols = document.querySelectorAll( '.citizen-overflow-content-sticky-header col' );
-			expect( cols ).toHaveLength( 2 );
-			expect( cols[ 0 ].style.minWidth ).toBe( '120px' );
-			expect( cols[ 1 ].style.minWidth ).toBe( '120px' );
-		} );
-
-		it( 'should batch all column reads before any column writes across tables', () => {
-			const stickyTable = `
-				<table class="wikitable">
-					<thead>
-						<tr class="citizen-overflow-sticky-header">
-							<th>A</th>
-							<th>B</th>
-						</tr>
-					</thead>
-				</table>
-			`;
-			const bodyContent = createBodyContent( stickyTable + stickyTable );
-			const tables = bodyContent.querySelectorAll( 'table.wikitable' );
-			const log = [];
-			tables.forEach( ( table ) => {
-				table.querySelectorAll( 'th' ).forEach( ( th ) => {
-					th.getBoundingClientRect = () => {
-						log.push( 'read' );
-						return { width: 100 };
-					};
-				} );
-			} );
-			const observers = createMockObservers();
-
-			init( {
-				document,
-				window: createMockWindow(),
-				mw,
-				IntersectionObserver: observers.IntersectionObserver,
-				ResizeObserver: observers.ResizeObserver,
-				bodyContent,
-				config: createConfig()
-			} );
-
-			const cols = document.querySelectorAll( '.citizen-overflow-content-sticky-header col' );
-			cols.forEach( ( col ) => {
-				vi.spyOn( col.style, 'setProperty' ).mockImplementation( () => {
-					log.push( 'write' );
-				} );
-			} );
-
-			observers.getIntersectionCallback()( [
-				{ isIntersecting: true, target: tables[ 0 ] },
-				{ isIntersecting: true, target: tables[ 1 ] }
-			] );
-			observers.getResizeCallback()( [
-				{ target: tables[ 0 ] },
-				{ target: tables[ 1 ] }
-			] );
-
-			expect( log.filter( ( e ) => e === 'read' ) ).toHaveLength( 4 );
-			expect( log.filter( ( e ) => e === 'write' ) ).toHaveLength( 4 );
-			// Every geometry read happens before the first style write
-			expect( log.indexOf( 'write' ) ).toBeGreaterThan( log.lastIndexOf( 'read' ) );
-		} );
-
-		it( 'should keep measurements aligned when a batch mixes sticky and non-sticky elements', () => {
-			const stickyTable = `
-				<table class="wikitable">
-					<thead>
-						<tr class="citizen-overflow-sticky-header">
-							<th>A</th>
-							<th>B</th>
-						</tr>
-					</thead>
-				</table>
-			`;
-			const plainTable = '<table class="wikitable"><tbody><tr><td>plain</td></tr></tbody></table>';
-			const bodyContent = createBodyContent( stickyTable + plainTable );
-			const tables = bodyContent.querySelectorAll( 'table.wikitable' );
-			tables[ 0 ].querySelectorAll( 'th' ).forEach( ( th ) => {
-				th.getBoundingClientRect = () => ( { width: 150 } );
-			} );
-			const observers = createMockObservers();
-
-			init( {
-				document,
-				window: createMockWindow(),
-				mw,
-				IntersectionObserver: observers.IntersectionObserver,
-				ResizeObserver: observers.ResizeObserver,
-				bodyContent,
-				config: createConfig()
-			} );
-
-			observers.getIntersectionCallback()( [
-				{ isIntersecting: true, target: tables[ 0 ] },
-				{ isIntersecting: true, target: tables[ 1 ] }
-			] );
-			// Deliver with the non-sticky element first to stress index alignment
-			observers.getResizeCallback()( [
-				{ target: tables[ 1 ] },
-				{ target: tables[ 0 ] }
-			] );
-
-			const cols = document.querySelectorAll( '.citizen-overflow-content-sticky-header col' );
-			expect( cols ).toHaveLength( 2 );
-			expect( cols[ 0 ].style.minWidth ).toBe( '150px' );
-			expect( cols[ 1 ].style.minWidth ).toBe( '150px' );
-		} );
-
 		it( 'should stay idempotent on repeated intersection without an intervening pause', () => {
 			const bodyContent = createBodyContent( '<table class="wikitable"></table>' );
 			const table = bodyContent.querySelector( 'table' );
@@ -931,6 +755,421 @@ describe( 'overflowElements', () => {
 			leftButton.dispatchEvent( new Event( 'click', { bubbles: true } ) );
 
 			expect( contentEl.scrollLeft ).toBe( 100 );
+		} );
+	} );
+} );
+
+describe( 'sticky band integration', () => {
+	function initWithStickyTable( {
+		supportsViewTimeline = true, supportsMap = null, scrollAncestor = false,
+		tableCount = 1, windowOverrides = {}
+	} = {} ) {
+		const tableHtml = `
+			<table class="wikitable">
+				<tr class="citizen-overflow-sticky-header"><th>a</th><th>b</th></tr>
+				<tr><td>1</td><td>2</td></tr>
+			</table>`;
+		const bodyContent = createBodyContent( `
+			${ scrollAncestor ? '<div style="overflow-y: hidden">' : '' }
+			${ tableHtml.repeat( tableCount ) }
+			${ scrollAncestor ? '</div>' : '' }` );
+		const observers = createMockObservers();
+		// Each probe resolves independently: a mock that returned one shared
+		// boolean for both probe strings could not detect the AND between
+		// them degrading to an OR (or a probe being dropped).
+		const supports = supportsMap || {
+			'animation-timeline: view()': supportsViewTimeline,
+			'animation-range: exit-crossing 0%': supportsViewTimeline
+		};
+		const win = createMockWindow( {
+			CSS: { supports: vi.fn( ( probe ) => supports[ probe ] === true ) },
+			getComputedStyle: vi.fn( ( el ) => ( {
+				float: el.style.getPropertyValue( 'float' ) || 'none',
+				direction: 'ltr',
+				overflowX: el.style.overflowX || 'visible',
+				overflowY: el.style.overflowY || 'visible'
+			} ) ),
+			addEventListener: vi.fn(),
+			removeEventListener: vi.fn(),
+			...windowOverrides
+		} );
+		init( {
+			document, window: win, mw,
+			IntersectionObserver: observers.IntersectionObserver,
+			ResizeObserver: observers.ResizeObserver,
+			bodyContent, config: createConfig()
+		} );
+		return { bodyContent, observers, win };
+	}
+
+	it( 'tags the band and selects the css mode', () => {
+		const { bodyContent } = initWithStickyTable();
+
+		const wrapper = bodyContent.querySelector( '.citizen-overflow-wrapper' );
+		expect( wrapper.classList.contains( 'citizen-overflow-wrapper--sticky-css' ) ).toBe( true );
+		expect( bodyContent.querySelectorAll( '.citizen-overflow-sticky-row' ) ).toHaveLength( 1 );
+	} );
+
+	it( 'falls back to js mode without view timeline support', () => {
+		const { bodyContent } = initWithStickyTable( { supportsViewTimeline: false } );
+
+		expect( bodyContent.querySelector( '.citizen-overflow-wrapper' )
+			.classList.contains( 'citizen-overflow-wrapper--sticky-js' ) ).toBe( true );
+	} );
+
+	it( 'falls back to js mode when view() is supported but exit-crossing is not', () => {
+		const { bodyContent } = initWithStickyTable( {
+			supportsMap: {
+				'animation-timeline: view()': true,
+				'animation-range: exit-crossing 0%': false
+			}
+		} );
+
+		expect( bodyContent.querySelector( '.citizen-overflow-wrapper' )
+			.classList.contains( 'citizen-overflow-wrapper--sticky-js' ) ).toBe( true );
+	} );
+
+	it( 'falls back to js mode when exit-crossing is supported but view() is not', () => {
+		const { bodyContent } = initWithStickyTable( {
+			supportsMap: {
+				'animation-timeline: view()': false,
+				'animation-range: exit-crossing 0%': true
+			}
+		} );
+
+		expect( bodyContent.querySelector( '.citizen-overflow-wrapper' )
+			.classList.contains( 'citizen-overflow-wrapper--sticky-js' ) ).toBe( true );
+	} );
+
+	it( 'falls back to js mode under a scroll-container ancestor', () => {
+		const { bodyContent } = initWithStickyTable( { scrollAncestor: true } );
+
+		expect( bodyContent.querySelector( '.citizen-overflow-wrapper' )
+			.classList.contains( 'citizen-overflow-wrapper--sticky-js' ) ).toBe( true );
+	} );
+
+	it( 'stamps band and travel vars from the resize callback', () => {
+		const { bodyContent, observers } = initWithStickyTable();
+		const wrapper = bodyContent.querySelector( '.citizen-overflow-wrapper' );
+		const table = bodyContent.querySelector( 'table' );
+		vi.spyOn( table.rows[ 0 ], 'getBoundingClientRect' ).mockReturnValue( { top: 0, bottom: 40 } );
+		vi.spyOn( wrapper, 'getBoundingClientRect' ).mockReturnValue( { height: 240 } );
+
+		observers.getResizeCallback()( [ { target: table } ] );
+
+		expect( wrapper.style.getPropertyValue( '--citizen-overflow-sticky-band' ) ).toBe( '40px' );
+		expect( wrapper.style.getPropertyValue( '--citizen-overflow-sticky-travel' ) ).toBe( '200px' );
+	} );
+
+	it( 'batches all measure reads before any band writes across tables on resize', () => {
+		const { bodyContent, observers } = initWithStickyTable( { tableCount: 2 } );
+		const wrappers = Array.from( bodyContent.querySelectorAll( '.citizen-overflow-wrapper' ) );
+		const tables = Array.from( bodyContent.querySelectorAll( 'table' ) );
+		const log = [];
+		wrappers.forEach( ( wrapper, index ) => {
+			vi.spyOn( wrapper, 'getBoundingClientRect' ).mockImplementation( () => {
+				log.push( `read:${ index }` );
+				return { height: 240 };
+			} );
+			vi.spyOn( wrapper.style, 'setProperty' ).mockImplementation( ( name ) => {
+				if ( name === '--citizen-overflow-sticky-band' || name === '--citizen-overflow-sticky-travel' ) {
+					log.push( `write:${ index }` );
+				}
+			} );
+		} );
+		tables.forEach( ( table, index ) => {
+			vi.spyOn( table.rows[ 0 ], 'getBoundingClientRect' ).mockImplementation( () => {
+				log.push( `read:${ index }` );
+				return { top: 0, bottom: 40 };
+			} );
+		} );
+
+		// One batched entries array covering both tables, as a real
+		// ResizeObserver would deliver
+		observers.getResizeCallback()( [ { target: tables[ 0 ] }, { target: tables[ 1 ] } ] );
+
+		expect( log ).toContain( 'read:0' );
+		expect( log ).toContain( 'read:1' );
+		expect( log ).toContain( 'write:0' );
+		expect( log ).toContain( 'write:1' );
+		// Every geometry read across both wrappers must precede every
+		// custom-property write — interleaving would force layout thrash
+		const lastRead = Math.max( log.lastIndexOf( 'read:0' ), log.lastIndexOf( 'read:1' ) );
+		const firstWrite = Math.min( log.indexOf( 'write:0' ), log.indexOf( 'write:1' ) );
+		expect( lastRead ).toBeLessThan( firstWrite );
+	} );
+
+	it( 'drives --citizen-overflow-sticky-top for js-mode instances on scroll', () => {
+		// Realistic rAF semantics, local to this test: the drive's one-frame
+		// coalescing guard needs a numeric id returned before the callback
+		// runs, so the suite-wide synchronous mock cannot exercise it.
+		const rafQueue = [];
+		const flushRaf = () => {
+			while ( rafQueue.length ) {
+				rafQueue.shift()();
+			}
+		};
+		const { bodyContent, observers, win } = initWithStickyTable( {
+			supportsViewTimeline: false,
+			windowOverrides: {
+				// Array#push returns the new length — a valid numeric frame id
+				requestAnimationFrame: vi.fn( ( cb ) => rafQueue.push( cb ) )
+			}
+		} );
+		const wrapper = bodyContent.querySelector( '.citizen-overflow-wrapper' );
+		const table = bodyContent.querySelector( 'table' );
+		const rect = vi.spyOn( wrapper, 'getBoundingClientRect' )
+			.mockReturnValue( { top: -120, height: 240 } );
+
+		// Element scrolls into view → resume() registers it with the drive
+		observers.getIntersectionCallback()( [ { target: table, isIntersecting: true } ] );
+		flushRaf();
+
+		// Registration attaches the listener and drives one immediate update
+		expect( win.addEventListener ).toHaveBeenCalledWith( 'scroll', expect.any( Function ), { passive: true, capture: true } );
+		expect( wrapper.style.getPropertyValue( '--citizen-overflow-sticky-top' ) ).toBe( '-120px' );
+
+		// The page scrolls further → the scroll handler drives a second
+		// update reflecting the new geometry
+		rect.mockReturnValue( { top: -240, height: 240 } );
+		const scrollHandler = win.addEventListener.mock.calls
+			.find( ( call ) => call[ 0 ] === 'scroll' )[ 1 ];
+		scrollHandler();
+		flushRaf();
+
+		expect( wrapper.style.getPropertyValue( '--citizen-overflow-sticky-top' ) ).toBe( '-240px' );
+	} );
+
+	it( 'batches rect reads before top writes across js-mode tables on scroll', () => {
+		const rafQueue = [];
+		const flushRaf = () => {
+			while ( rafQueue.length ) {
+				rafQueue.shift()();
+			}
+		};
+		const { bodyContent, observers, win } = initWithStickyTable( {
+			supportsViewTimeline: false,
+			tableCount: 2,
+			windowOverrides: {
+				requestAnimationFrame: vi.fn( ( cb ) => rafQueue.push( cb ) )
+			}
+		} );
+		const wrappers = Array.from( bodyContent.querySelectorAll( '.citizen-overflow-wrapper' ) );
+		const tables = Array.from( bodyContent.querySelectorAll( 'table' ) );
+		const log = [];
+		wrappers.forEach( ( wrapper, index ) => {
+			vi.spyOn( wrapper, 'getBoundingClientRect' ).mockImplementation( () => {
+				log.push( `read:${ index }` );
+				return { top: -120, height: 240 };
+			} );
+			vi.spyOn( wrapper.style, 'setProperty' ).mockImplementation( ( name ) => {
+				if ( name === '--citizen-overflow-sticky-top' ) {
+					log.push( `write:${ index }` );
+				}
+			} );
+		} );
+		// Both elements scroll into view → resume() registers both with the
+		// drive; flush its registration frame and discard those entries so
+		// the assertion covers the scroll-driven frame alone
+		observers.getIntersectionCallback()( [
+			{ target: tables[ 0 ], isIntersecting: true },
+			{ target: tables[ 1 ], isIntersecting: true }
+		] );
+		flushRaf();
+		log.length = 0;
+
+		const scrollHandler = win.addEventListener.mock.calls
+			.find( ( call ) => call[ 0 ] === 'scroll' )[ 1 ];
+		scrollHandler();
+		flushRaf();
+
+		// Both wrappers' rect reads precede both top writes in the one frame
+		expect( log ).toEqual( [ 'read:0', 'read:1', 'write:0', 'write:1' ] );
+	} );
+
+	it( 'detaches the js drive scroll listener on re-init', () => {
+		const { bodyContent, observers, win } = initWithStickyTable( { supportsViewTimeline: false } );
+		const table = bodyContent.querySelector( 'table' );
+		// Element scrolls into view → resume() attaches the scroll listener
+		observers.getIntersectionCallback()( [ { target: table, isIntersecting: true } ] );
+		const scrollHandler = win.addEventListener.mock.calls
+			.find( ( call ) => call[ 0 ] === 'scroll' )[ 1 ];
+
+		init( {
+			document, window: win, mw,
+			IntersectionObserver: observers.IntersectionObserver,
+			ResizeObserver: observers.ResizeObserver,
+			bodyContent, config: createConfig()
+		} );
+
+		expect( win.removeEventListener ).toHaveBeenCalledWith( 'scroll', scrollHandler, { capture: true } );
+	} );
+} );
+
+describe( 'stickyRows', () => {
+	describe( 'resolveBandRows', () => {
+		it( 'returns rows through the deepest marked row', () => {
+			const bodyContent = createBodyContent( `
+				<table id="t">
+					<tr><th>a</th></tr>
+					<tr class="citizen-overflow-sticky-header"><th>b</th></tr>
+					<tr><td>c</td></tr>
+				</table>` );
+			const rows = resolveBandRows( bodyContent.querySelector( '#t' ) );
+
+			expect( rows ).toHaveLength( 2 );
+		} );
+
+		it( 'uses the deepest marker when multiple rows are marked', () => {
+			const bodyContent = createBodyContent( `
+				<table id="t">
+					<tr class="citizen-overflow-sticky-header"><th>a</th></tr>
+					<tr class="citizen-overflow-sticky-header"><th>b</th></tr>
+					<tr><td>c</td></tr>
+				</table>` );
+
+			const rows = resolveBandRows( bodyContent.querySelector( '#t' ) );
+
+			expect( rows ).toHaveLength( 2 );
+		} );
+
+		it( 'ignores markers inside nested tables', () => {
+			const bodyContent = createBodyContent( `
+				<table id="outer"><tr><td>
+					<table><tr class="citizen-overflow-sticky-header"><th>x</th></tr></table>
+				</td></tr></table>` );
+
+			expect( resolveBandRows( bodyContent.querySelector( '#outer' ) ) ).toBeNull();
+		} );
+
+		it( 'uses direct children for non-table elements', () => {
+			const bodyContent = createBodyContent( `
+				<div id="d" class="citizen-overflow">
+					<div>first</div>
+					<div class="citizen-overflow-sticky-header">second</div>
+					<div>third</div>
+				</div>` );
+
+			expect( resolveBandRows( bodyContent.querySelector( '#d' ) ) ).toHaveLength( 2 );
+		} );
+
+		it( 'returns null when no marker present', () => {
+			const bodyContent = createBodyContent( '<table id="t"><tr><th>a</th></tr></table>' );
+
+			expect( resolveBandRows( bodyContent.querySelector( '#t' ) ) ).toBeNull();
+		} );
+	} );
+
+	describe( 'createStickyRows', () => {
+		it( 'tags band rows and wrapper mode class without touching the marker', () => {
+			const bodyContent = createBodyContent( `
+				<div id="w"><table id="t">
+					<tr class="citizen-overflow-sticky-header"><th>a</th></tr>
+					<tr><td>b</td></tr>
+				</table></div>` );
+			const wrapper = bodyContent.querySelector( '#w' );
+			const element = bodyContent.querySelector( '#t' );
+
+			const sticky = createStickyRows( { element, wrapper, mode: 'css' } );
+
+			const row = element.rows[ 0 ];
+			expect( row.classList.contains( 'citizen-overflow-sticky-row' ) ).toBe( true );
+			expect( row.classList.contains( 'citizen-overflow-sticky-row--boundary' ) ).toBe( true );
+			expect( row.classList.contains( 'citizen-overflow-sticky-header' ) ).toBe( true );
+			expect( wrapper.classList.contains( 'citizen-overflow-wrapper--sticky-css' ) ).toBe( true );
+			expect( sticky.mode ).toBe( 'css' );
+		} );
+
+		it( 'measures band height and travel, applies px vars to wrapper', () => {
+			const bodyContent = createBodyContent( `
+				<div id="w"><table id="t">
+					<tr class="citizen-overflow-sticky-header"><th>a</th></tr>
+					<tr><td>b</td></tr>
+				</table></div>` );
+			const wrapper = bodyContent.querySelector( '#w' );
+			const element = bodyContent.querySelector( '#t' );
+			const sticky = createStickyRows( { element, wrapper, mode: 'js' } );
+			vi.spyOn( element.rows[ 0 ], 'getBoundingClientRect' )
+				.mockReturnValue( { top: 100, bottom: 140 } );
+			vi.spyOn( wrapper, 'getBoundingClientRect' ).mockReturnValue( { height: 400 } );
+
+			const measurement = sticky.measure();
+			sticky.apply( measurement );
+
+			expect( measurement ).toEqual( { bandHeight: 40, travel: 360 } );
+			expect( wrapper.style.getPropertyValue( '--citizen-overflow-sticky-band' ) ).toBe( '40px' );
+			expect( wrapper.style.getPropertyValue( '--citizen-overflow-sticky-travel' ) ).toBe( '360px' );
+		} );
+
+		it( 'puts the boundary class only on the last row of a multi-row band', () => {
+			const bodyContent = createBodyContent( `
+				<div id="w"><table id="t">
+					<tr><th>a</th></tr>
+					<tr class="citizen-overflow-sticky-header"><th>b</th></tr>
+					<tr><td>c</td></tr>
+				</table></div>` );
+			const wrapper = bodyContent.querySelector( '#w' );
+			const element = bodyContent.querySelector( '#t' );
+
+			createStickyRows( { element, wrapper, mode: 'css' } );
+
+			const rows = element.rows;
+			expect( rows[ 0 ].classList.contains( 'citizen-overflow-sticky-row' ) ).toBe( true );
+			expect( rows[ 0 ].classList.contains( 'citizen-overflow-sticky-row--boundary' ) ).toBe( false );
+			expect( rows[ 1 ].classList.contains( 'citizen-overflow-sticky-row' ) ).toBe( true );
+			expect( rows[ 1 ].classList.contains( 'citizen-overflow-sticky-row--boundary' ) ).toBe( true );
+			expect( rows[ 2 ].classList.contains( 'citizen-overflow-sticky-row' ) ).toBe( false );
+		} );
+
+		it( 'clamps travel to zero when the band is taller than the wrapper', () => {
+			const bodyContent = createBodyContent( `
+				<div id="w"><table id="t">
+					<tr class="citizen-overflow-sticky-header"><th>a</th></tr>
+				</table></div>` );
+			const wrapper = bodyContent.querySelector( '#w' );
+			const element = bodyContent.querySelector( '#t' );
+			const sticky = createStickyRows( { element, wrapper, mode: 'js' } );
+			vi.spyOn( element.rows[ 0 ], 'getBoundingClientRect' )
+				.mockReturnValue( { top: 0, bottom: 300 } );
+			vi.spyOn( wrapper, 'getBoundingClientRect' ).mockReturnValue( { height: 200 } );
+
+			const measurement = sticky.measure();
+
+			expect( measurement ).toEqual( { bandHeight: 300, travel: 0 } );
+		} );
+	} );
+
+	describe( 'hasScrollContainerAncestor', () => {
+		it( 'detects an overflow ancestor and ignores visible/clip', () => {
+			const bodyContent = createBodyContent( '<div id="a"><div id="b"></div></div>' );
+			const win = {
+				getComputedStyle: ( el ) => ( {
+					overflowX: el.style.overflowX || 'visible',
+					overflowY: el.style.overflowY || 'visible'
+				} )
+			};
+			const inner = bodyContent.querySelector( '#b' );
+
+			expect( hasScrollContainerAncestor( inner, win ) ).toBe( false );
+
+			bodyContent.querySelector( '#a' ).style.overflowY = 'hidden';
+			expect( hasScrollContainerAncestor( inner, win ) ).toBe( true );
+
+			bodyContent.querySelector( '#a' ).style.overflowY = 'clip';
+			expect( hasScrollContainerAncestor( inner, win ) ).toBe( false );
+		} );
+
+		it( 'detects an overflow-x scroll value', () => {
+			const bodyContent = createBodyContent( '<div id="a"><div id="b"></div></div>' );
+			const win = {
+				getComputedStyle: ( el ) => ( {
+					overflowX: el.style.overflowX || 'visible',
+					overflowY: el.style.overflowY || 'visible'
+				} )
+			};
+			bodyContent.querySelector( '#a' ).style.overflowX = 'auto';
+
+			expect( hasScrollContainerAncestor( bodyContent.querySelector( '#b' ), win ) ).toBe( true );
 		} );
 	} );
 } );

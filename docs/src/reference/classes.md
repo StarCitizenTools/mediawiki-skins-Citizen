@@ -17,7 +17,7 @@ Control the positioning and flow of your content.
 | <CopyCode code=".floatleft" /> | Floats content to the left. Stacks vertically on small screens. |
 | <CopyCode code=".floatnone" /> | Clears floating alignment. |
 | <CopyCode code=".citizen-overflow" /> | Wraps content in a horizontal scroll container. See [Overflow handling](/features/overflow). |
-| <CopyCode code=".citizen-overflow-sticky-header" /> | Keeps an element sticky within a `.citizen-overflow` container. See [Overflow handling](/features/overflow#sticky-headers). |
+| <CopyCode code=".citizen-overflow-sticky-header" /> | Marks the last sticky row of an element inside a `.citizen-overflow` container — everything from the element's start through the marked row stays visible while the rest scrolls. See [Overflow handling](/features/overflow#sticky-headers). |
 
 ## Tables
 

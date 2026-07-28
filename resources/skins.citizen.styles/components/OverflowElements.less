@@ -157,22 +157,6 @@
 		.citizen-overflow--left.citizen-overflow--right > & {
 			.mixin-citizen-mask-gradient(90deg, transparent, #000 var( --overflow-gradient-size ), #000 ~'calc( 100% - var( --overflow-gradient-size ) )', transparent);
 		}
-
-		&:has( .citizen-overflow-content-sticky-header ) {
-			// We need to apply mask-image to hide the fixed position sticky header (#991)
-			-webkit-mask-image: linear-gradient( 90deg, #000, #000 );
-			mask-image: linear-gradient( 90deg, #000, #000 );
-		}
-
-		&-sticky-header {
-			--citizen-overflow-scroll-x: 0; // default value to be overriden
-			position: fixed;
-			top: 0;
-			z-index: @z-index-above-content;
-			border-bottom: var( --border-width-base ) solid var( --border-color-base );
-			transform: ~'translate( calc( var( --citizen-overflow-scroll-x ) * -1 ), var( --header-offset-block-start ) )';
-			.mixin-citizen-sticky-header-background;
-		}
 	}
 
 	&-nav {
@@ -228,6 +212,82 @@
 		&:active {
 			background-color: var( --background-color-button-quiet--active );
 		}
+	}
+}
+
+// Sticky band — real rows translated to follow the page scroll (no clone).
+// The rows stay inside the horizontal scroll container, so horizontal
+// position needs no syncing at all.
+.citizen-overflow-sticky-row {
+	position: relative;
+	z-index: @z-index-above-content;
+
+	// While stuck the band slides over body rows, so its cells need an
+	// opaque surface. Same surface the old clone used underneath its glass.
+	> th,
+	> td {
+		background-color: var( --color-surface-0 );
+	}
+
+	&:not( tr ) {
+		background-color: var( --color-surface-0 );
+	}
+}
+
+.citizen-overflow-sticky-row--boundary {
+	// Shadow, not border: must not change row height
+	> th,
+	> td {
+		box-shadow: 0 1px 0 0 var( --border-color-base );
+	}
+
+	&:not( tr ) {
+		box-shadow: 0 1px 0 0 var( --border-color-base );
+	}
+}
+
+// JS drive: overflowElements/index.js writes the wrapper's viewport top
+// into --citizen-overflow-sticky-top each frame; the offset math stays in
+// CSS so the live --header-offset-block-start var chain resolves here.
+// The 9999px default keeps the band parked until the first write.
+.citizen-overflow-wrapper--sticky-js .citizen-overflow-sticky-row {
+	transform: ~'translateY( clamp( 0px, calc( var( --header-offset-block-start ) - var( --citizen-overflow-sticky-top, 9999px ) ), var( --citizen-overflow-sticky-travel, 0px ) ) )';
+}
+
+// CSS drive: compositor-synced scroll-driven animation. The wrapper is the
+// view-timeline subject — its nearest scroll container is the root, unlike
+// the table, which sits inside the horizontal scroller.
+@supports ( animation-timeline: view() ) and ( animation-range: exit-crossing 0% ) {
+	.citizen-overflow-wrapper--sticky-css {
+		// Not yet baseline, but the enclosing feature check gates it and
+		// browsers that fail the probe take the JS drive instead.
+		// stylelint-disable-next-line plugin/use-baseline
+		view-timeline: --citizen-overflow block;
+		// stylelint-disable-next-line plugin/use-baseline
+		view-timeline-inset: var( --header-offset-block-start ) 0;
+
+		.citizen-overflow-sticky-row {
+			animation: citizen-overflow-sticky-band linear both;
+			animation-timeline: --citizen-overflow;
+			animation-range: ~'exit-crossing 0% exit-crossing calc( 100% - var( --citizen-overflow-sticky-band, 0px ) )';
+		}
+	}
+}
+
+@keyframes citizen-overflow-sticky-band {
+	from {
+		transform: translateY( 0 );
+	}
+
+	to {
+		transform: translateY( var( --citizen-overflow-sticky-travel, 0 ) );
+	}
+}
+
+@media print {
+	.citizen-overflow-sticky-row {
+		transform: none !important;
+		animation: none !important;
 	}
 }
 
