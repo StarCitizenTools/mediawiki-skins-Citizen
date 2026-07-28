@@ -17,7 +17,7 @@ Control the positioning and flow of your content.
 |  | Floats content to the left. Stacks vertically on small screens. |
 |  | Clears floating alignment. |
 |  | Wraps content in a horizontal scroll container. See [Overflow handling](/features/overflow). |
-|  | Keeps an element sticky within a `.citizen-overflow` container. See [Overflow handling](/features/overflow#sticky-headers). |
+|  | Marks the last sticky row of an element inside a `.citizen-overflow` container — everything from the element's start through the marked row stays visible while the rest scrolls. See [Overflow handling](/features/overflow#sticky-headers). |
 
 ## Tables
 
