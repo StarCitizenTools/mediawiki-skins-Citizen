@@ -17,7 +17,10 @@
 	--color-syntax-brown: light-dark( @color-syntax-brown, @color-syntax-brown-dark );
 	--color-syntax-pink: light-dark( @color-syntax-pink, @color-syntax-pink-dark );
 	--color-syntax-violet: light-dark( @color-syntax-violet, @color-syntax-violet-dark );
-	--color-syntax-grey: @color-syntax-grey;
+	--color-syntax-gray: light-dark( @color-syntax-gray, @color-syntax-gray-dark );
+	// Deprecated alias — `grey` was the original spelling. Kept so wiki
+	// CSS written against it keeps working; drop at the next major.
+	--color-syntax-grey: var( --color-syntax-gray );
 }
 
 .new-syntax-color() {
