@@ -1,18 +1,22 @@
 const { createOverflowWrapper } = require( './wrapper.js' );
 const { detectFloatDirection } = require( './float.js' );
 const { createOverflowState } = require( './state.js' );
-const { createOverflowStickyHeader } = require( './stickyHeader.js' );
+const {
+	createStickyRows, hasScrollContainerAncestor, MODE_CSS, MODE_JS
+} = require( './stickyRows.js' );
+
+const STICKY_MARKER_SELECTOR = '.citizen-overflow-sticky-header';
 
 /**
  * Manages the lifecycle of a single overflow element, composing wrapper,
- * state, and optional sticky header sub-modules. Observation is shared:
+ * state, and optional sticky band sub-modules. Observation is shared:
  * init() only builds DOM, and all measurement is driven by the shared
  * observers so off-screen elements are never measured.
  */
 class OverflowElement {
 	constructor( {
-		document, window, mw,
-		element, isPointerDevice, floatDirection, config
+		document, window, mw, element, isPointerDevice,
+		floatDirection, stickyMode, stickyRegistry, config
 	} ) {
 		this.document = document;
 		this.window = window;
@@ -20,6 +24,8 @@ class OverflowElement {
 		this.element = element;
 		this.isPointerDevice = isPointerDevice;
 		this.floatDirection = floatDirection;
+		this.stickyMode = stickyMode;
+		this.stickyRegistry = stickyRegistry;
 		this.config = config;
 		// Assigned by the module init() after a successful element init
 		this.resizeObserver = null;
@@ -69,24 +75,22 @@ class OverflowElement {
 	}
 
 	/**
-	 * Measures sticky header column widths. Geometry reads only.
+	 * Measures the sticky band geometry. Geometry reads only.
 	 *
-	 * @return {number[]|null}
+	 * @return {{bandHeight: number, travel: number}|null}
 	 */
-	measureColumns() {
-		return this.sticky && this.sticky.measureColumns ?
-			this.sticky.measureColumns() :
-			null;
+	measureSticky() {
+		return this.sticky ? this.sticky.measure() : null;
 	}
 
 	/**
-	 * Applies previously measured sticky header column widths. Writes only.
+	 * Applies previously measured sticky band geometry. Writes only.
 	 *
-	 * @param {number[]|null} widths
+	 * @param {{bandHeight: number, travel: number}|null} measurement
 	 */
-	applyColumns( widths ) {
-		if ( widths && this.sticky && this.sticky.applyColumns ) {
-			this.sticky.applyColumns( widths );
+	applySticky( measurement ) {
+		if ( this.sticky ) {
+			this.sticky.apply( measurement );
 		}
 	}
 
@@ -101,6 +105,9 @@ class OverflowElement {
 		if ( this.isPointerDevice && this.nav ) {
 			this.nav.addEventListener( 'click', this.onClick );
 		}
+		if ( this.sticky && this.sticky.mode === MODE_JS ) {
+			this.stickyRegistry.add( this );
+		}
 	}
 
 	/**
@@ -112,10 +119,13 @@ class OverflowElement {
 		if ( this.isPointerDevice && this.nav ) {
 			this.nav.removeEventListener( 'click', this.onClick );
 		}
+		if ( this.sticky && this.sticky.mode === MODE_JS ) {
+			this.stickyRegistry.remove( this );
+		}
 	}
 
 	/**
-	 * Initialize the overflow element DOM: wrapper, sticky header, state.
+	 * Initialize the overflow element DOM: wrapper, sticky band, state.
 	 * DOM writes only — no geometry is read here.
 	 *
 	 * @return {boolean} Whether initialization succeeded
@@ -137,13 +147,11 @@ class OverflowElement {
 		this.content = refs.content;
 		this.nav = refs.nav;
 
-		const headerRow = this.element.querySelector( '.citizen-overflow-sticky-header' );
-		this.sticky = headerRow ?
-			createOverflowStickyHeader( {
-				document: this.document,
+		this.sticky = this.stickyMode ?
+			createStickyRows( {
 				element: this.element,
-				content: this.content,
-				headerRow
+				wrapper: this.wrapper,
+				mode: this.stickyMode
 			} ) :
 			null;
 
@@ -151,8 +159,7 @@ class OverflowElement {
 			window: this.window,
 			element: this.element,
 			content: this.content,
-			wrapper: this.wrapper,
-			stickyHeader: this.sticky ? this.sticky.stickyHeader : null
+			wrapper: this.wrapper
 		} );
 
 		return true;
@@ -160,11 +167,13 @@ class OverflowElement {
 }
 
 /**
- * The observer pair serving the current content generation. Held so a
- * re-init can disconnect it — the observers otherwise keep the replaced
- * generation's elements (and through them the detached DOM) alive.
+ * The observers and sticky registry serving the current content
+ * generation. Held so a re-init can disconnect them — the observers
+ * otherwise keep the replaced generation's elements (and through them
+ * the detached DOM) alive, and the registry's scroll listener would
+ * keep driving stale instances.
  *
- * @type {{intersectionObserver: IntersectionObserver, resizeObserver: ResizeObserver}|null}
+ * @type {?Object}
  */
 let activeObservers = null;
 
@@ -196,6 +205,7 @@ function init( {
 	if ( activeObservers ) {
 		activeObservers.intersectionObserver.disconnect();
 		activeObservers.resizeObserver.disconnect();
+		activeObservers.stickyRegistry.disconnect();
 		activeObservers = null;
 	}
 
@@ -217,6 +227,13 @@ function init( {
 	const isPointerDevice = window.matchMedia( '(hover: hover) and (pointer: fine)' ).matches;
 
 	const inheritedClasses = config.wgCitizenOverflowInheritedClasses || [];
+
+	// Both probes are required: a browser with view() but without
+	// exit-crossing would silently animate over the wrong range.
+	const supportsViewTimeline = !!( window.CSS &&
+		typeof window.CSS.supports === 'function' &&
+		window.CSS.supports( 'animation-timeline: view()' ) &&
+		window.CSS.supports( 'animation-range: exit-crossing 0%' ) );
 
 	// Batched read pass before any wrapping: computed-style reads must not
 	// interleave with the DOM writes done by init(). Elements whose float
@@ -243,14 +260,66 @@ function init( {
 				);
 			}
 		}
-		candidates.push( { element: el, floatDirection } );
+		// The marker probe is cheap detection only — band membership is
+		// resolved strictly from the element's own rows/children by
+		// createStickyRows, so a marker inside a nested table selects a
+		// mode but resolves no band.
+		let stickyMode = null;
+		if ( el.querySelector( STICKY_MARKER_SELECTOR ) ) {
+			stickyMode = ( supportsViewTimeline && !hasScrollContainerAncestor( el, window ) ) ?
+				MODE_CSS : MODE_JS;
+		}
+		candidates.push( { element: el, floatDirection, stickyMode } );
 	} );
 
+	// Shared drive for JS-mode sticky bands: one passive scroll listener
+	// (attached only while the registry is non-empty), one rAF per scroll
+	// burst, all rect reads batched ahead of all custom-property writes.
+	// Capture phase is required: scroll events do not bubble, so a
+	// bubble-phase window listener would never hear scrolls from nested
+	// scroll containers — the exact contexts that route a band to JS mode.
+	const jsStickyInstances = new Set();
+	let stickyFrame = null;
+	const driveJsSticky = () => {
+		if ( stickyFrame !== null ) {
+			return;
+		}
+		stickyFrame = window.requestAnimationFrame( () => {
+			stickyFrame = null;
+			const tops = [];
+			jsStickyInstances.forEach( ( instance ) => {
+				tops.push( [ instance, instance.wrapper.getBoundingClientRect().top ] );
+			} );
+			tops.forEach( ( [ instance, top ] ) => {
+				instance.wrapper.style.setProperty( '--citizen-overflow-sticky-top', top + 'px' );
+			} );
+		} );
+	};
+	const stickyRegistry = {
+		add( instance ) {
+			if ( jsStickyInstances.size === 0 ) {
+				window.addEventListener( 'scroll', driveJsSticky, { passive: true, capture: true } );
+			}
+			jsStickyInstances.add( instance );
+			driveJsSticky();
+		},
+		remove( instance ) {
+			jsStickyInstances.delete( instance );
+			if ( jsStickyInstances.size === 0 ) {
+				window.removeEventListener( 'scroll', driveJsSticky, { capture: true } );
+			}
+		},
+		disconnect() {
+			jsStickyInstances.clear();
+			window.removeEventListener( 'scroll', driveJsSticky, { capture: true } );
+		}
+	};
+
 	const initialized = [];
-	candidates.forEach( ( { element, floatDirection } ) => {
+	candidates.forEach( ( { element, floatDirection, stickyMode } ) => {
 		const instance = new OverflowElement( {
-			document, window, mw,
-			element, isPointerDevice, floatDirection, config
+			document, window, mw, element, isPointerDevice,
+			floatDirection, stickyMode, stickyRegistry, config
 		} );
 		if ( instance.init() ) {
 			initialized.push( instance );
@@ -276,10 +345,10 @@ function init( {
 		affected.forEach( ( instance ) => {
 			instance.state.updateState();
 		} );
-		const measurements = affected.map( ( instance ) => instance.measureColumns() );
+		const measurements = affected.map( ( instance ) => instance.measureSticky() );
 		// ... then all style writes
 		affected.forEach( ( instance, index ) => {
-			instance.applyColumns( measurements[ index ] );
+			instance.applySticky( measurements[ index ] );
 		} );
 	} );
 
@@ -303,7 +372,7 @@ function init( {
 		intersectionObserver.observe( instance.element );
 	} );
 
-	activeObservers = { intersectionObserver, resizeObserver };
+	activeObservers = { intersectionObserver, resizeObserver, stickyRegistry };
 }
 
 module.exports = {

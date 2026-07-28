@@ -44,7 +44,11 @@ The list of opt-out classes is configurable — see [`$wgCitizenOverflowNowrapCl
 
 ### Sticky headers
 
-Keep a header visible while the rest of a wide element scrolls by adding the `citizen-overflow-sticky-header` class. It works for both `div` elements and wikitables.
+Keep a header visible while the rest of a wide element scrolls by adding the
+`citizen-overflow-sticky-header` class. The class marks the **last** sticky
+row: everything from the start of the element through the marked row sticks
+as one unit. For a single-row header that is simply the header row itself.
+It works for both `div` elements and wikitables.
 
 For `div` elements:
 
@@ -67,6 +71,23 @@ For wikitables:
 | Example || Example || Example
 |-
 | Example || Example || Example
+|}
+```
+
+For multi-row headers, put the class on the last header row — rows above it
+are included automatically, and `rowspan`/`colspan` cells behave correctly
+because the real rows never leave the table:
+
+```wikitext
+{| class="wikitable"
+|-
+! rowspan="2" | Item !! colspan="2" | Stats
+|- class="citizen-overflow-sticky-header"
+! Attack !! Defense
+|-
+| Sword || 12 || 3
+|-
+| Shield || 2 || 14
 |}
 ```
 

@@ -1,17 +1,16 @@
 /**
  * Manages overflow state detection and class toggling for an overflow element.
  * Tracks element dimensions and scroll position, toggling left/right overflow
- * indicator classes and syncing sticky header scroll position.
+ * indicator classes.
  *
  * @param {Object} params
  * @param {Window} params.window
  * @param {HTMLElement} params.element
  * @param {HTMLElement} params.content
  * @param {HTMLElement} params.wrapper
- * @param {HTMLElement|null} params.stickyHeader
  * @return {{updateState: Function, hasOverflowed: Function}}
  */
-function createOverflowState( { window, element, content, wrapper, stickyHeader } ) {
+function createOverflowState( { window, element, content, wrapper } ) {
 	let elementWidth = 0;
 	let contentScrollLeft = 0;
 	let contentWidth = 0;
@@ -64,9 +63,6 @@ function createOverflowState( { window, element, content, wrapper, stickyHeader 
 				[ isLeftOverflowing, 'citizen-overflow--left' ],
 				[ isRightOverflowing, 'citizen-overflow--right' ]
 			] );
-			if ( stickyHeader ) {
-				stickyHeader.style.setProperty( '--citizen-overflow-scroll-x', contentScrollLeft + 'px' );
-			}
 		} );
 	}
 
