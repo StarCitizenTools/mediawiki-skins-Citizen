@@ -26,6 +26,8 @@ Give any element the same treatment by adding the `citizen-overflow` class:
 </div>
 ```
 
+An element you opt in this way fills the width of the content column. Wikitables are the exception — they stay as wide as their contents and only scroll once they outgrow the column.
+
 ### Opting out
 
 To leave an element as-is — for example a table you lay out yourself — add the `citizen-table-nowrap` class:

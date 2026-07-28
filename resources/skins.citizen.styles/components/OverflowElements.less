@@ -11,12 +11,21 @@
 
 // Elements enhanced by overflowElements.js
 .citizen-overflow {
+	// The wrapper this element is about to be moved into is a scroll
+	// container, so it contains the margins of everything inside it. Match
+	// that here or the block grows by those margins the moment the script
+	// runs. `.wikitable` is already a scroll container for the same reason.
+	overflow: auto hidden;
+
 	&-wrapper {
 		position: relative;
 		display: flex; /* So that it respects float elements (#878) */
-		max-width: max-content;
 
 		&:has( .citizen-overflow-content > .wikitable ) {
+			// Shrink to the table rather than filling the column, matching
+			// the `max-width` a bare `.wikitable` carries. Anything else
+			// opted in by hand is a plain block and stays full width.
+			max-width: max-content;
 			margin-block: var( --space-md );
 			margin-inline: var( --border-width-base ); // Fix clipping border
 			border-radius: var( --border-radius-medium );
@@ -27,8 +36,40 @@
 			max-width: none;
 		}
 
+		// The skin gives these elements a block margin of their own, and it
+		// has to be zeroed once they sit inside the scroll container, so the
+		// wrapper carries it instead. Same value, same place in the flow.
+		// `.wikitable` is not in the list: the card rule above already gives
+		// the wrapper this margin.
+		&:has( .citizen-overflow-content > :is( ul, ol, dl, blockquote ) ) {
+			margin-block: var( --space-md );
+
+			// hacks.less zeroes the margins of a `floatleft`/`floatright`
+			// element, and that class migrates to the wrapper — so the zero
+			// has to migrate with it. Floats detected from an inline style
+			// keep the margin: nothing zeroed it before the wrap either.
+			&.floatleft,
+			&.floatright {
+				margin-block: 0;
+			}
+		}
+
+		// typography.less pulls a list, table, or quote that directly follows
+		// a paragraph closer to it. Wrapping happens client-side, so from
+		// first paint onwards it is this element sitting in that position
+		// instead: without the same tightening the content, and everything
+		// below it, drops by that much the moment the script runs. Keep the
+		// element list in step with typography.less.
+		p:not( .mw-empty-elt ) + &:has( .citizen-overflow-content > :is( ul, ol, table, dl, blockquote ) ) {
+			margin-top: calc( var( --space-xs ) * -1 );
+		}
+
+		// Both spellings of a floated wrapper: `--float*` when the float was
+		// detected on the element, the bare class when it migrated over
 		&--floatleft,
-		&--floatright {
+		&--floatright,
+		&.floatleft,
+		&.floatright {
 			margin: 0;
 
 			// The float and its margins are re-expressed on the wrapper —
@@ -80,13 +121,29 @@
 			float: none !important;
 		}
 
+		// The wrapper is the scroll container now, so hand back the
+		// containment the element carries in its unwrapped state. Block
+		// margins go with it: kept here they would be trapped inside the
+		// scroll container instead of collapsing with the surrounding flow.
+		// Inline margins stay — they indent list markers.
+		> .citizen-overflow {
+			margin-block: 0;
+			overflow: initial;
+		}
+
 		> .wikitable {
 			display: table;
 			max-width: none;
 			// Handle margin and box-shadow on outer wrapper
-			margin-block: 0;
+			margin: 0;
 			overflow: initial;
 			box-shadow: none;
+
+			// A `table` box shrinks to its content, so `--fluid` has to ask
+			// for the full width here — unlike the unwrapped block box
+			&--fluid {
+				width: 100%;
+			}
 		}
 
 		.citizen-overflow--left > & {

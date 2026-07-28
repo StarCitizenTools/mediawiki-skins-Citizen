@@ -10,7 +10,12 @@
 .wikitable {
 	display: block;
 	max-width: max-content; // Needed for the border
-	margin: var( --space-md ) 0;
+	margin-block: var( --space-md );
+	// The border is a box-shadow, which paints outside the border box. The
+	// inline margin keeps it clear of an ancestor scroll container that
+	// would otherwise clip it, and keeps this box aligned with the wrapper
+	// overflowElements.js swaps in for it.
+	margin-inline: var( --border-width-base );
 	overflow-x: auto;
 	border-collapse: collapse;
 	border-color: var( --border-color-base );
@@ -132,7 +137,10 @@
 		}
 	}
 
+	// A block box already fills the inline axis, so dropping the
+	// max-content cap is all this needs. The wrapped copy is a `table` box
+	// instead and gets an explicit width in OverflowElements.less.
 	&--fluid {
-		width: 100%;
+		max-width: none;
 	}
 }
