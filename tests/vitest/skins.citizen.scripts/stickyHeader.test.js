@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-/* global document, MouseEvent */
+/* global document, window, MouseEvent */
 
 const { StickyHeader } = require( '../../../resources/skins.citizen.scripts/stickyHeader.js' );
 
@@ -31,20 +31,63 @@ function buildStickyHeaderDom() {
 }
 
 /**
+ * Add an original page-tools dropdown and its sticky mount container.
+ */
+function buildDropdownDom() {
+	document.body.insertAdjacentHTML( 'beforeend', `
+		<div id="citizen-page-more-dropdown" class="citizen-dropdown">
+			<details class="citizen-dropdown-details">
+				<summary class="citizen-dropdown-summary citizen-cdx-button--size-large cdx-button" aria-details="citizen-page-actions-more__card"></summary>
+			</details>
+			<div id="citizen-page-actions-more__card" class="citizen-menu__card">
+				<ul><li id="ca-history"><a href="#history">History</a></li></ul>
+			</div>
+		</div>
+		<div id="citizen-sticky-header-more"></div>
+	` );
+}
+
+/**
+ * Add an original languages dropdown and its sticky mount container.
+ */
+function buildLanguagesDropdownDom() {
+	document.body.insertAdjacentHTML( 'beforeend', `
+		<div id="citizen-page-languages-dropdown" class="citizen-dropdown">
+			<details class="citizen-dropdown-details">
+				<summary class="citizen-dropdown-summary citizen-cdx-button--size-large cdx-button" aria-details="citizen-languages__card"></summary>
+			</details>
+			<div id="citizen-languages__card" class="citizen-menu__card">
+				<ul><li id="lang-en"><a href="#en">English</a></li></ul>
+			</div>
+		</div>
+		<div id="citizen-sticky-header-languages"></div>
+	` );
+}
+
+/**
  * Create a StickyHeader instance using real jsdom document.
  *
  * @param {HTMLElement} stickyHeaderElement
+ * @param {Object} [overrides] constructor dep overrides
  * @return {StickyHeader}
  */
-function createStickyHeader( stickyHeaderElement ) {
+function createStickyHeader( stickyHeaderElement, overrides = {} ) {
 	return new StickyHeader( {
 		stickyHeaderElement,
-		document
+		document,
+		window,
+		requestIdleCallback: ( callback ) => callback(),
+		...overrides
 	} );
 }
 
+beforeEach( () => {
+	vi.stubGlobal( 'matchMedia', vi.fn( () => ( { matches: false } ) ) );
+} );
+
 afterEach( () => {
 	vi.restoreAllMocks();
+	vi.unstubAllGlobals();
 	document.body.innerHTML = '';
 	document.body.className = '';
 	document.documentElement.style.cssText = '';
@@ -164,22 +207,22 @@ describe( 'StickyHeader', () => {
 			expect( targetClickSpy ).not.toHaveBeenCalled();
 		} );
 
-		it( 'should click body to dismiss when sticky header contains the active element', () => {
+		it( 'should dismiss an open cloned menu on hide', () => {
 			const { stickyHeader } = buildStickyHeaderDom();
-			const header = createStickyHeader( stickyHeader );
+			buildDropdownDom();
 			stickyHeader.getBoundingClientRect = vi.fn( () => ( {
 				height: 64, top: 0, bottom: 64, left: 0, right: 100, width: 100, x: 0, y: 0
 			} ) );
+			const header = createStickyHeader( stickyHeader );
+			header.initDropdowns();
 			header.show();
-			// Place a focusable element inside the sticky header and focus it
-			const input = document.createElement( 'input' );
-			stickyHeader.appendChild( input );
-			input.focus();
-			const bodyClickSpy = vi.spyOn( document.body, 'click' );
+			const cloneDetails = document.getElementById( 'citizen-sticky-header-more' )
+				.querySelector( 'details' );
+			cloneDetails.open = true;
 
 			header.hide();
 
-			expect( bodyClickSpy ).toHaveBeenCalled();
+			expect( cloneDetails.open ).toBe( false );
 		} );
 	} );
 
@@ -206,14 +249,8 @@ describe( 'StickyHeader', () => {
 	describe( 'initDropdowns / prepareMenuDropdown', () => {
 		it( 'should swap citizen-cdx-button--size-large to cdx-button--size-large on cloned dropdown button', () => {
 			const { stickyHeader } = buildStickyHeaderDom();
+			buildDropdownDom();
 			const header = createStickyHeader( stickyHeader );
-
-			document.body.insertAdjacentHTML( 'beforeend', `
-				<details id="citizen-page-more-dropdown">
-					<summary class="citizen-dropdown-summary citizen-cdx-button--size-large cdx-button"></summary>
-				</details>
-				<div id="citizen-sticky-header-more"></div>
-			` );
 
 			header.initDropdowns();
 
@@ -221,6 +258,134 @@ describe( 'StickyHeader', () => {
 				.querySelector( '.citizen-dropdown-summary' );
 			expect( clonedButton.classList.contains( 'citizen-cdx-button--size-large' ) ).toBe( false );
 			expect( clonedButton.classList.contains( 'cdx-button--size-large' ) ).toBe( true );
+		} );
+
+		it( 'should strip the clone root id and aria-details', () => {
+			const { stickyHeader } = buildStickyHeaderDom();
+			buildDropdownDom();
+			const header = createStickyHeader( stickyHeader );
+
+			header.initDropdowns();
+
+			const clone = document.getElementById( 'citizen-sticky-header-more' ).firstElementChild;
+			expect( clone.hasAttribute( 'id' ) ).toBe( false );
+			expect( document.querySelectorAll( '[id="citizen-page-more-dropdown"]' ) ).toHaveLength( 1 );
+			expect( clone.querySelector( '.citizen-dropdown-summary' ).hasAttribute( 'aria-details' ) ).toBe( false );
+		} );
+
+		it( 'should defer building until idle fires', () => {
+			const { stickyHeader } = buildStickyHeaderDom();
+			buildDropdownDom();
+			let idleCallback;
+			const header = createStickyHeader( stickyHeader, {
+				requestIdleCallback: ( callback ) => {
+					idleCallback = callback;
+				}
+			} );
+
+			header.initDropdowns();
+			const container = document.getElementById( 'citizen-sticky-header-more' );
+			expect( container.children ).toHaveLength( 0 );
+
+			idleCallback();
+			expect( container.children ).toHaveLength( 1 );
+		} );
+
+		it( 'should not rebuild on a clean ensureDropdowns call', () => {
+			const { stickyHeader } = buildStickyHeaderDom();
+			buildDropdownDom();
+			const header = createStickyHeader( stickyHeader );
+			header.initDropdowns();
+			const firstClone = document.getElementById( 'citizen-sticky-header-more' ).firstElementChild;
+
+			header.ensureDropdowns();
+
+			expect( document.getElementById( 'citizen-sticky-header-more' ).firstElementChild ).toBe( firstClone );
+		} );
+
+		it( 'should rebuild at the next show after a menu mutation and destroy the old instance', async () => {
+			const { stickyHeader } = buildStickyHeaderDom();
+			buildDropdownDom();
+			stickyHeader.getBoundingClientRect = vi.fn( () => ( {
+				height: 64, top: 0, bottom: 64, left: 0, right: 100, width: 100, x: 0, y: 0
+			} ) );
+			const header = createStickyHeader( stickyHeader );
+			header.initDropdowns();
+			const oldDropdown = header.cloneDropdowns[ 0 ];
+			const destroySpy = vi.spyOn( oldDropdown, 'destroy' );
+
+			const newItem = document.createElement( 'li' );
+			newItem.innerHTML = '<a href="#new">Gadget item</a>';
+			document.querySelector( '#citizen-page-actions-more__card ul' ).appendChild( newItem );
+			// jsdom delivers mutation records asynchronously
+			await new Promise( ( resolve ) => setTimeout( resolve, 0 ) );
+			expect( header.dropdownsDirty ).toBe( true );
+
+			header.show();
+
+			expect( destroySpy ).toHaveBeenCalled();
+			const clone = document.getElementById( 'citizen-sticky-header-more' ).firstElementChild;
+			expect( clone.querySelector( 'a[href="#new"]' ) ).not.toBeNull();
+		} );
+
+		it( 'should build a closed clone when the original menu is open', () => {
+			const { stickyHeader } = buildStickyHeaderDom();
+			buildDropdownDom();
+			document.querySelector( '#citizen-page-more-dropdown details' ).open = true;
+			const header = createStickyHeader( stickyHeader );
+
+			header.initDropdowns();
+
+			const clone = document.getElementById( 'citizen-sticky-header-more' ).firstElementChild;
+			expect( clone.querySelector( 'details' ).open ).toBe( false );
+			expect( document.querySelector( '#citizen-page-more-dropdown details' ).open ).toBe( true );
+		} );
+
+		it( 'should not rebuild from a late idle callback after a lazy build', () => {
+			const { stickyHeader } = buildStickyHeaderDom();
+			buildDropdownDom();
+			let idleCallback;
+			const header = createStickyHeader( stickyHeader, {
+				requestIdleCallback: ( callback ) => {
+					idleCallback = callback;
+				}
+			} );
+			header.initDropdowns();
+
+			header.ensureDropdowns();
+			const container = document.getElementById( 'citizen-sticky-header-more' );
+			const firstClone = container.firstElementChild;
+			header.dropdownsDirty = true;
+
+			idleCallback();
+
+			expect( container.firstElementChild ).toBe( firstClone );
+		} );
+
+		it( 'should not mark the mirror dirty when the original menu merely opens', async () => {
+			const { stickyHeader } = buildStickyHeaderDom();
+			buildDropdownDom();
+			const header = createStickyHeader( stickyHeader );
+			header.initDropdowns();
+
+			document.querySelector( '#citizen-page-more-dropdown details' ).open = true;
+			// jsdom delivers mutation records asynchronously
+			await new Promise( ( resolve ) => setTimeout( resolve, 0 ) );
+
+			expect( header.dropdownsDirty ).toBe( false );
+		} );
+
+		it( 'should build clones for both dropdowns when both exist', () => {
+			const { stickyHeader } = buildStickyHeaderDom();
+			buildDropdownDom();
+			buildLanguagesDropdownDom();
+			const header = createStickyHeader( stickyHeader );
+
+			header.initDropdowns();
+
+			expect( document.getElementById( 'citizen-sticky-header-more' ).children ).toHaveLength( 1 );
+			expect( document.getElementById( 'citizen-sticky-header-languages' ).children ).toHaveLength( 1 );
+			expect( header.cloneDropdowns ).toHaveLength( 2 );
 		} );
 	} );
 
