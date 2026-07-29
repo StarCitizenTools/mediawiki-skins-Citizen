@@ -75,7 +75,7 @@ export default defineConfig({
 						link: "/guide/installation",
 					},
 					{
-						text: "Upgrading across versions",
+						text: "Upgrading",
 						link: "/guide/upgrading",
 					},
 				],
