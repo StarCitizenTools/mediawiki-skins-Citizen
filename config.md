@@ -124,7 +124,7 @@ When neither the URL parameter nor the cookie is present, `$wgCitizenPreview` de
 
 ### `$wgCitizenCompat`
 
-Serves compatibility styles so HTML cached by older Citizen versions — up to 6 minor releases back — keeps rendering acceptably while your caches expire. Turn it on before an upgrade, and turn it off once the last stale page is gone. See [Upgrading across versions](../guide/upgrading) for the full lifecycle.
+Serves compatibility styles so HTML cached by older Citizen versions — up to 6 minor releases back — keeps rendering acceptably while your caches expire. Turn it on before an upgrade, and turn it off once the last stale page is gone. See [Upgrading](../guide/upgrading) for the full lifecycle.
 
 ```php [LocalSettings.php]
 $wgCitizenCompat = false;
