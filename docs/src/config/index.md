@@ -122,6 +122,16 @@ The channel can also be toggled per-browser without editing `LocalSettings.php`:
 
 When neither the URL parameter nor the cookie is present, `$wgCitizenPreview` decides.
 
+### `$wgCitizenCompat`
+
+Serves compatibility styles so HTML cached by older Citizen versions — up to 6 minor releases back — keeps rendering acceptably while your caches expire. Turn it on before an upgrade, and turn it off once the last stale page is gone. See [Upgrading across versions](../guide/upgrading) for the full lifecycle.
+
+```php [LocalSettings.php]
+$wgCitizenCompat = false;
+```
+
+**Values**: `true`, `false`
+
 ### `$wgCitizenEnableARFonts`
 
 Loads the "Noto Naskh Arabic" font, improving readability for wikis that use Arabic script.
