@@ -40,6 +40,9 @@ jobs:
             php:
               - includes/**/*.php
               - tests/**/*.php
+              # A compat slice is only ever compiled by test-php
+              # (CompatSliceCompileTest), never by stylelint.
+              - resources/compat/**
               - skin.json
               - composer.json
               - composer.lock
@@ -88,6 +91,21 @@ jobs:
       lint-i18n: ${{ needs.changes.outputs.i18n == 'true' || github.event_name == 'schedule' }}
       lint-md: ${{ needs.changes.outputs.markdown == 'true' || github.event_name == 'schedule' }}
       runner: ubuntu-24.04-arm
+
+  # Deliberately not gated on `changes`: a compat slice expires when skin.json's
+  # version moves forward, not when anything under resources/compat/ is edited.
+  # A path filter would skip the very commit that expires a slice.
+  lint-compat:
+    name: 🗓️ Compat window
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      # No `npm ci`: scripts/compat-lint.mjs imports only node: builtins.
+      - run: npm run lint:compat
 
   analyze-php:
     needs: changes

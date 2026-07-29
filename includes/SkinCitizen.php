@@ -164,6 +164,17 @@ class SkinCitizen extends SkinMustache {
 		$classes[] = 'citizen-header-position-mobile-' . $headerPositionMobile;
 
 		$attrs['class'] = trim( $attrs['class'] . ' ' . implode( ' ', $classes ) );
+
+		// Cache-compat generation marker — travels with cached HTML so a future
+		// compat slice can tell which era generated a stale page. Stamped
+		// regardless of $wgCitizenCompat: absence of the attribute has to mean
+		// "older than the framework", so HTML generated while the flag was off
+		// must still say which generation it belongs to.
+		$marker = CompatSlices::getGenerationMarker( CompatSlices::getBasePath() );
+		if ( $marker !== null ) {
+			$attrs[CompatSlices::GENERATION_ATTRIBUTE] = $marker;
+		}
+
 		return $attrs;
 	}
 

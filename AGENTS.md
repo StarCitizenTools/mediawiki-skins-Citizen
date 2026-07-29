@@ -109,22 +109,322 @@ To add a new skill, create `.agents/skills/<name>/SKILL.md` with frontmatter (`n
 - When changing public APIs, hooks, config options, or user-facing behavior, update the corresponding docs in `docs/src/`
 - When renaming internal concepts that are referenced in docs (e.g., "commands" → "modes"), update the docs to match
 
-### Caching considerations
+### Cache compatibility (compat slices)
 
-PHP-generated HTML (Mustache templates, `SkinMustache` output) is cached by the parser, page cache, and edge caches. CSS and JS are loaded fresh via ResourceLoader. This means after a deploy, users may see **old cached HTML with new CSS/JS**. If a change renames classes, changes selectors, or restructures markup, the new CSS/JS will break against the old cached HTML. To avoid this, split the work into two commits:
+PHP-generated HTML is cached (parser cache, page/CDN/file caches) and outlives
+CSS/JS, which ResourceLoader always serves fresh. Old HTML + new assets must
+stay acceptable. Citizen handles this with **compat slices** behind
+`$wgCitizenCompat` — see `resources/compat/README.md` and
+`includes/CompatSlices.php`.
 
-- **Part 1/2**: Add the new HTML and new CSS/JS, but **keep the old CSS/JS** so it still works with cached HTML
-- **Part 2/2**: Remove the old CSS/JS (deploy after caches have expired)
+**Decision rule.** A change is cache-breaking if it renames or removes a
+class/ID that styles or JS target, or restructures markup emitted by PHP
+(`templates/`, components, head elements). Client-rendered (Vue) markup is
+exempt.
 
-This only applies to PHP-generated HTML. Client-rendered HTML (e.g. Vue components) is not parser-cached and does not need this treatment.
+For every cache-breaking change, in the **same commit**:
 
-#### Alternative: defensive JS fallback
+1. **Rewrite** the dying CSS rules into `resources/compat/<next-version>.less`
+   instead of deleting them, under a comment naming the covered change/PR. Do
+   not delete assets those rules reference — assets referenced by a live slice
+   stay in place for the window.
 
-The two-commit pattern is additive — new state coexists with old during the deploy window. When a change *removes* a load or mount mechanism that the old HTML depends on, coexistence costs more (double-binding handlers across two flows) than the alternative.
+   **One slice per breaking change — never append to an existing one.** If
+   `<next-version>.less` is already there (a second breaking change in the same
+   cycle), take the next free patch-level name: `3.22.less`, then
+   `3.22.1.less`, then `3.22.2.less`. The suffix is a sequence number within
+   the cycle, not a release. Appending instead would leave the HTML that
+   continuous-deployment wikis served *between* the two merges carrying a
+   marker no gate can distinguish from post-second-merge HTML. Discovery,
+   sorting, the marker and `npm run lint:compat` all handle patch-level names.
 
-For those changes, the new JS detects when expected new HTML is missing (`getElementById(...) === null`) and reconstructs it at runtime as a one-time safety net. Single deploy, robust to any cache state.
+   **A slice is a standalone stylesheet, not a fragment of `skin.less`.**
+   ResourceLoader compiles every style file as its own LESS entry point, and
+   `CompatSkinModule` appends slices *after* all base styles. Copy-pasting a
+   rule verbatim is therefore wrong. Adapt each rule you move:
 
-Track the fallback's removal as a GitHub issue: it must ship with the release that lands the migration, and can be removed in the next release.
+   - **Carry the imports.** Open the slice with
+     `@import ( reference ) '../variables.less';` and
+     `@import ( reference ) '../mixins.less';`. `skin.less` imports those once
+     for all 48 of its stylesheets and none of that scope reaches a slice. Miss
+     one and the slice throws a compile error, at which point ResourceLoader
+     drops the **whole `skins.citizen.styles` module** — the wiki renders with
+     no skin CSS. (`mediawiki.skin.variables.less`, `mediawiki.mixins` and the
+     Codex paths need no help; import dirs are module-wide.)
+   - **Component-local mixins: import only if the body has no `url()`.** A mixin
+     defined in a component file needs that file reference-imported as well —
+     `@import ( reference ) '../skins.citizen.styles/components/OverflowElements.less';`
+     for `.showOverflowButton()`, say. But `@import ( reference )` does **not**
+     rebase `url()` inside the imported file: the mixin's own paths still
+     resolve against `resources/compat/`, and there is no `url()` in your slice
+     for the rebase rule below to act on. `.mixin-citizen-section-chevron()`
+     (`components/Sections.less`) is the only mixin in the skin whose body
+     carries a relative `url()`; importing it emits
+     `url( …/resources/compat/assets/images/cdxIconCollapse.svg )`, which does
+     not exist, and `CompatSliceCompileTest` fails listing exactly that path as
+     a missing local file ref. For any mixin whose body contains a `url()`,
+     **inline the expansion** and rebase the paths by hand instead of importing.
+     Inlining is also the safer default generally: reference-importing couples a
+     slice — whose whole job is to freeze old CSS — to a file that keeps
+     changing, so a later edit to the mixin silently rewrites frozen output.
+   - **Re-apply the media wrapper.** `skin.less` wraps 40 imports in
+     `@media screen` and `common/print.less` in `@media print`; the wrapper
+     belongs to the import site, not the file. Re-declare the same one in the
+     slice, or the rule silently becomes media-`all` *and* — being concatenated
+     last — outranks `common/print.less` when printing. Seven imports are
+     genuinely media-`all` (`tokens-citizen.less`, `fonts.less`, `icons.less`,
+     `common/typography.less`, `skinning/elements.less`,
+     `skinning/content.media-common.less`, `skinning/interface-subtitle.less`);
+     do **not** wrap rules from those. Not every cache-breaking rule comes from
+     `skin.less`: `templates/Notifications.mustache` server-renders
+     `.citizen-notifications__skeleton`, which is styled by the separate
+     `skins.citizen.notifications` module. When the rule comes from another
+     module, take its media from that module's `styles` entry in `skin.json`
+     (an unkeyed list means `all`) — and note that the slice makes that CSS
+     render-blocking on every page even if the source module was lazy-loaded.
+   - **Rebase `url()`.** Paths resolve against the *slice's* directory, so
+     `url( assets/images/foo.svg )` must become
+     `url( ../skins.citizen.styles/assets/images/foo.svg )` — or
+     `../<source module directory>/…` when the rule came from a module other
+     than `skins.citizen.styles`. Do not copy assets into `resources/compat/`.
+   - **Rebuild the selector; never lift a nested block.** Citizen's stylesheets
+     nest deeply, and the ancestors do not travel with an inner block. Write the
+     full chain flat (`.citizen-page-sidebar .citizen-menu__heading { … }`) and
+     put any generation gate at the front of that reconstructed chain. An
+     orphaned inner block without `&` is valid CSS that applies everywhere; with
+     `&` it resolves against an empty parent and silently loses its gate.
+   - **Re-open `@layer citizen-tokens` — for token-module rules only.** The
+     layer belongs to rules whose home is `skins.citizen.tokens` /
+     `skins.citizen.tokens.new`, and only those. Unlayered rules beat layered
+     ones, so an unwrapped copy of one starts overriding operator CSS in
+     `MediaWiki:Citizen.css` — and it renders *identically* to the layered
+     original on every wiki that has no such override, so eyeballing cannot find
+     it.
+
+     **Everything else stays unlayered, including root-scoped custom
+     properties.** `skins.citizen.styles` declares plenty of those outside any
+     layer, by design: `common/features.less` (`--width-layout`,
+     `--backdrop-filter-frosted-glass`, `--opacity-glass`,
+     `--filter-image-brightness`, each gated on a server-rendered
+     `citizen-feature-*-clientpref-*` root class — the textbook cache-breaking
+     shape), `common/print.less` and `tokens-citizen.less`. Wrapping one of
+     those in `@layer citizen-tokens` makes the slice copy **lose to the
+     unlayered base declaration and stop applying at all**: it compiles, it
+     lints, and it ships completely inert — the exact failure the slice existed
+     to prevent. When in doubt, keep the slice at the layering its source had.
+
+     `CompatSliceCompileTest` derives the owned set at run time — everything the
+     two token modules declare inside `@layer citizen-tokens`, minus everything
+     `skins.citizen.styles` declares root-scoped outside it — and fails only a
+     slice that declares an *owned* property on a `:root`/`html` selector
+     outside the layer.
+   - **Check what used to override it.** Slices win cascade ties. If anything
+     later in `skin.less`'s import order restates the same property for an
+     equally specific selector (e.g. `common/links.less` layers a Citizen link
+     colour over a Codex mixin), move the pair together in their original order,
+     or gate the slice copy so it cannot match current HTML at all.
+
+   RTL/CSSJanus, `/* @noflip */` and reading `var( --token )` all survive a move
+   untouched — no action needed for those.
+
+   **Coverage:** `composer phpunit` compiles every slice
+   (`CompatSliceCompileTest`) and catches missing imports, unresolvable `url()`
+   — including one emitted by an imported mixin, reported as a missing local
+   file ref under `resources/compat/` — and a *token-module-owned* custom
+   property left on a `:root`/`html` selector outside `@layer citizen-tokens`.
+   It deliberately does **not** flag a root-scoped property that
+   `skins.citizen.styles` also declares unlayered (layering that would break
+   it), and it cannot see a token rule moved onto a non-root selector, nor a
+   slice wrapped in the layer that should not have been — that one renders as
+   "no change at all" on the frozen page, so browser-test steps 3–4 are what
+   catch it. `npm run lint:styles` catches an orphaned `&` — fix the selector,
+   never silence it by deleting the `&`. Nothing static catches the media
+   wrapper (browser-test step 5), an over-broad rebuilt selector (step 6) or
+   cascade order (step 7).
+2. Creating the slice file **is** the generation bump. `<html>` carries
+   `data-mw-citizen-html="<every slice version present, oldest first>"` (e.g.
+   `"3.15 3.18 3.22"`), derived from the directory listing — there is no
+   constant to update. Each token means *this HTML is at or after that
+   generation*, so a gate only ever names its **own** version, and expiring a
+   slice cannot orphan a gate. The attribute is stamped whether or not
+   `$wgCitizenCompat` is on, so its absence always means "older than the
+   framework".
+3. **Gate only when the change reuses a class** with a new meaning. Renames and
+   removals need no gate — the old selector cannot match new HTML.
+
+   **Check for an existing gate first.** Grep the live slices for the class you
+   are about to gate — `grep -rn --include='*.less' 'citizen-foo' resources/compat/`. A hit
+   means this is a *repeat reuse*, and neither plain form below is safe on its
+   own; read "Repeat reuse" at the end of this step before writing the gate.
+   Nothing static catches a missed one: both plain forms compile, lint and
+   render correctly on the newest old generation.
+
+   **Preferred: a local discriminator.** Reuse means the class sits on an
+   element in *both* markups, so mark the new one and gate the slice on its
+   absence:
+
+   ```less
+   /* new markup adds .citizen-foo--v2 on the same element */
+   .citizen-foo:not( .citizen-foo--v2 ) {
+       /* old meaning */
+   }
+   ```
+
+   For a **first** reuse the two selectors are mutually exclusive, so nothing
+   depends on source order. Delete the discriminator class in the same commit
+   that deletes the slice. (Same shape as the `citizen-v4` preview gate, but
+   element-scoped, so any number of flips coexist.)
+
+   **Fallback: the root marker**, when no single element can carry a
+   discriminator. Reference your own slice's version — never enumerate
+   generations, and never `:not()` a version other than yours:
+
+   ```less
+   /* pre-3.22 HTML only */
+   :root:not( [ data-mw-citizen-html~='3.22' ] ) .citizen-foo {
+       /* old meaning */
+   }
+   ```
+
+   `~=` matches whole tokens, so `'3.2'` never matches `3.22` HTML — `*=` and
+   `^=` would.
+
+   **Repeat reuse: bound the *colliding declarations* from below.** Both forms
+   above carry the same trap, and it is not about the class — it is about the
+   declaration. HTML older than both reuses carries neither the earlier version
+   token nor the earlier discriminator, so it matches both gates. When both
+   slices gate the same way the selectors are equally specific and the newer
+   wins on source order, because slices are appended oldest-first; when they
+   gate differently — a discriminator is `(0,2,0)`, a root marker `(0,3,0)` —
+   the more specific one wins outright. Either way the newer meaning can land
+   on HTML that predates it.
+
+   Winning that tie is only *wrong* for a declaration both slices set. A slice
+   freezes what its own release would have deleted, so two slices normally
+   freeze different properties — and then pre-both HTML matching both gates is
+   exactly right, because it predates both deletions. Bounding such a
+   declaration below deletes coverage the oldest in-window generation still
+   needs. So add the lower bound **only to those declarations an older live
+   slice also sets** — unless that slice's selector is strictly more specific
+   than yours, in which case it already wins and needs no help — and leave
+   every other declaration on the plain form:
+
+   ```less
+   /* 3.18.less, still live */
+   .citizen-foo:not( .citizen-foo--v2 ) {
+       padding: 8px;
+   }
+
+   /* 3.22.less — padding collides with 3.18.less, so bound it below */
+   .citizen-foo.citizen-foo--v2:not( .citizen-foo--v3 ) {
+       padding: 4px;
+   }
+
+   /* …while margin, which no live slice restates, keeps the plain form */
+   .citizen-foo:not( .citizen-foo--v3 ) {
+       margin: 4px;
+   }
+   ```
+
+   The root marker bounds the same way, with the earlier slice's version:
+
+   ```less
+   /* 3.18 up to 3.22 */
+   :root[ data-mw-citizen-html~='3.18' ]:not( [ data-mw-citizen-html~='3.22' ] ) .citizen-foo {
+       padding: 4px;
+   }
+   ```
+
+   The bound is always available: it is needed only while the earlier slice is
+   still in the window, and the rule to delete a discriminator class with its
+   slice keeps `--v2` on the element for exactly that long.
+
+4. If old HTML references a **renamed/removed RL module**, keep a stub module
+   under the old name and record it in `resources/compat/stubs.json`
+   (`"old.module.name": "<version added>"`).
+5. If CSS cannot bridge the change (e.g. JS binds to renamed IDs, removed
+   mount targets): do **not** force a slice. Add a **"purge required"**
+   warning to the release notes instead. The styles pipeline is the only
+   wired delivery today — a `<version>.js` DOM patch beside the slice would
+   additionally have to be spliced into the `skins.citizen.scripts` package,
+   which is **not yet implemented**, so until that exists a change that needs
+   JS to bridge it is purge-required.
+6. **Mandatory browser test** — every mitigation MUST be verified in a real
+   browser before commit (recipe below). A slice that has not been
+   browser-tested against frozen old HTML does not ship.
+7. Release notes: state the release's cache status
+   (`clean` / `covered by compat` / `purge required`).
+
+**Browser test recipe (mandatory for every slice):**
+
+1. *Before* applying the breaking change (clean tree), freeze old HTML for
+   every page type the change touches, and take reference screenshots. Write
+   the file into the MediaWiki checkout root, which is served under `/w/`, so
+   the frozen page keeps the wiki's **own origin**:
+
+   ```sh
+   curl -s 'http://localhost:8080/wiki/<Page>' > /path/to/mediawiki/frozen-old.html
+   # then open http://localhost:8080/w/frozen-old.html
+   ```
+
+   Do not serve it from a second origin (`file://`, `python3 -m http.server`)
+   and do not rewrite its `/w/…` paths. Citizen draws its icons with
+   `mask-image`, and masks are CORS-restricted exactly like webfonts: from
+   another origin every icon and the webfont fail to load, so the screenshots
+   compare harness artefacts, and a `url()` that 404s looks identical to one
+   that resolves — the single failure this recipe exists to catch.
+
+   **Repeat reuse needs one frozen page per era.** This step gives you the
+   *newest* pre-change generation, and that is the one era where a missing
+   lower bound still looks right. Freeze a page from every in-window generation
+   the class was gated in as well — or hand-edit the frozen page's
+   `data-mw-citizen-html` value and discriminator classes down to that era —
+   and run step 4 against each.
+2. Apply the breaking change + slice. Set `$wgCitizenCompat = true;` in the
+   dev `LocalSettings.php`.
+3. Open `http://localhost:8080/w/frozen-old.html`: old HTML + new assets +
+   slice, exactly what a stale cached page experiences.
+4. Screenshot and compare against the reference: layout intact, text readable,
+   chrome usable. Check the console for new errors *and* the network panel for
+   404s — a mis-rebased mask `url()` paints an empty box and raises no console
+   error, so only the network panel names it. A slice that reads as *no change
+   at all* is the other tell: something in it is inert, most often a rule
+   wrapped in `@layer citizen-tokens` that never belonged there and now loses to
+   the unlayered base declaration.
+5. Repeat step 4 with print emulated (DevTools ▸ Rendering ▸ *Emulate CSS media
+   type: print*, or the Ctrl+P preview). A slice that forgot its
+   `@media screen` wrapper shows up here and nowhere else.
+6. Load a normal live page with the flag on and confirm fresh HTML is
+   unaffected (the slice must be inert against new markup) — including pages
+   the moved rule was never meant to touch, since a rebuilt selector that is
+   too broad renders and lints cleanly.
+7. **Cascade check.** Steps 3–6 cannot see a slice that merely started
+   *winning* something: it renders exactly like the rule it replaced until
+   competing CSS exists. Put a competing declaration in `MediaWiki:Citizen.css`
+   — `:root { --<moved-token>: #f0f; }` for a moved token, otherwise the same
+   property on an equally specific selector — reload the frozen page, and
+   confirm the site CSS still wins. (`CompatSliceCompileTest` already fails a
+   token-module rule that lost `@layer citizen-tokens`; this step covers the
+   ties it cannot see.) Revert the test CSS afterwards.
+8. Remove the flag from `LocalSettings.php` and delete `frozen-old.html`.
+
+**Expiry.** `npm run lint:compat` (part of `npm run lint`) fails when a slice
+or stub outlives the 6-release window. Fix by deleting the slice file (and any
+expired `stubs.json` entries plus their stub modules) — nothing else
+references them. Accepted trade: **downgrading** to a build that still holds a
+since-deleted slice applies that slice's old rules to *newer* cached HTML,
+because the marker token its gate excludes is no longer stamped. A downgrade
+already implies a purge, and expiry is CI-forced, so this is a stated cost of
+"absence means older", not a surprise.
+
+A **major version bump expires every prior-major slice at once** — this is
+intended. The release PR that bumps the major deletes them all (CI enforces
+it), and compat for the flip itself ships as the new `<major>.0.less` slice.
+HTML older than that generation is out of the window: give it a **"purge
+required"** note in the release.
+
+This only applies to PHP-generated HTML. Client-rendered HTML (e.g. Vue
+components) is not parser-cached and does not need this treatment.
 
 ### Preview channel (breaking changes)
 

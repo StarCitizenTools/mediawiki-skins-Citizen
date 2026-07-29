@@ -150,7 +150,7 @@
 			]
 		},
 		"skins.citizen.styles": {
-			"class": "MediaWiki\\ResourceLoader\\SkinModule",
+			"class": "MediaWiki\\Skins\\Citizen\\ResourceLoader\\CompatSkinModule",
 			"features": {
 				"normalize": true,
 				"content-links": false,
@@ -1132,6 +1132,12 @@
 			"value": 0,
 			"description": "Version-scoped switch for the Citizen preview channel. Set to the upcoming major release number (currently 4) to preview it ahead of release — during this cycle that enables the new color token pipeline. 0 or any other value keeps the stable experience, so a stale setting never enrolls the wiki in a later cycle.",
 			"descriptionmsg": "citizen-config-preview",
+			"public": true
+		},
+		"Compat": {
+			"value": false,
+			"description": "Serve cache-compatibility styles so HTML cached by previous Citizen versions keeps rendering acceptably. Enable during a version upgrade, disable after caches have expired.",
+			"descriptionmsg": "citizen-config-compat",
 			"public": true
 		}
 	},
