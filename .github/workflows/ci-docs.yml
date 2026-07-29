@@ -65,18 +65,30 @@ jobs:
           DOCS_VERSION: main
         run: npm run docs:build
 
+      # Keep in sync with the preview job's condition below — no point uploading
+      # a dist nothing will deploy.
       - name: Upload dist for preview deploy
-        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        if: >-
+          github.event_name == 'pull_request'
+          && github.event.pull_request.head.repo.full_name == github.repository
+          && github.event.pull_request.user.login != 'dependabot[bot]'
         uses: actions/upload-artifact@v7
         with:
           name: docs-dist
           path: docs/.vitepress/dist
           retention-days: 1
 
+  # Forks and Dependabot are both excluded because neither can read the
+  # Cloudflare secrets: forks get no secrets at all, and Dependabot-triggered
+  # runs read a separate Dependabot secret store that does not hold them.
+  # Without this the deploy fails with an empty CLOUDFLARE_API_TOKEN.
   preview:
     name: 🔍 Preview
     needs: build
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    if: >-
+      github.event_name == 'pull_request'
+      && github.event.pull_request.head.repo.full_name == github.repository
+      && github.event.pull_request.user.login != 'dependabot[bot]'
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
