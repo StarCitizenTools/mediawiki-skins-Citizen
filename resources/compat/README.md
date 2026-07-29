@@ -82,7 +82,10 @@ first.
   `skins.citizen.styles` declares root-scoped outside it. Nothing static catches
   the reverse mistake — a rule needlessly wrapped in the layer, which renders as
   no change at all on the frozen page — and `npm run lint:styles` does **not**
-  resolve LESS imports.
+  resolve LESS imports. That test also compiles the real `skins.citizen.styles`
+  module, which imports core's Codex design tokens, so a compile failure there can
+  be an upstream token removal on a newer MediaWiki rather than a slice defect —
+  check the variable against the target branch before debugging your slice.
 - Styles are the only wired delivery: a `<version>.js` DOM patch would also need
   splicing into the `skins.citizen.scripts` package, which is not implemented
   yet, so changes that need JS to bridge them are purge-required for now.

@@ -41,6 +41,13 @@ use Wikimedia\TestingAccessWrapper;
  * resources/compat/ holds no slices: they drive the same helpers as the real-module
  * tests and prove those helpers detect a broken slice.
  *
+ * Compiling the real module reaches core: resources/variables.less imports
+ * mediawiki.skin.variables.less, which pulls in core's Codex design tokens. That
+ * coupling is deliberate — it catches upstream token drift (#1690) — but it means a
+ * Less_Exception_Compiler here may be a core-side token removal on a newer MediaWiki
+ * rather than a defect in this skin. Check the failing variable against the target
+ * branch's mediawiki.skin.codex-design-tokens before debugging the slice.
+ *
  * @covers \MediaWiki\Skins\Citizen\ResourceLoader\CompatSkinModule
  * @covers \MediaWiki\Skins\Citizen\CompatSlices
  * @group Citizen
