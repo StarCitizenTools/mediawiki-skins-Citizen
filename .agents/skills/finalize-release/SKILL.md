@@ -59,6 +59,9 @@ Place this between the version heading and the changelog.
   - Yes: "type a prefix to switch between searching pages, users, or namespaces"
   - No: "Pinia replaced with composable + dependency-injection architecture"
 - If there is a breaking change, add a `> warning` callout above the highlights (see v3.14.0 for format)
+- **State the release's cache status** — `clean`, `covered by compat`, or `purge required` (see "Cache compatibility (compat slices)" in `AGENTS.md`)
+  - Determined by whether the release contains cache-breaking changes, and whether compat slices cover them or a purge is owed
+  - `purge required` belongs in a `> warning` callout above the highlights; the other two are a one-line note
 
 ### 5. Show draft and get approval
 
