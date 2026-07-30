@@ -33,7 +33,7 @@
 		"oxlint": "^1.76.0",
 		"oxlint-tsgolint": "^7.0.2001",
 		"vitepress": "2.0.0-alpha.18",
-		"vitepress-plugin-group-icons": "^1.7.5",
+		"vitepress-plugin-group-icons": "^1.7.6",
 		"vitepress-plugin-llms": "^1.13.4",
 		"vitepress-plugin-tabs": "^0.9.1",
 		"vitest": "^4.1.10",
