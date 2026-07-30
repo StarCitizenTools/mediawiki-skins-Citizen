@@ -38,6 +38,7 @@
 	"citizen-footer-tagline": "Edita este texto en «[[MediaWiki:Citizen-footer-tagline]]»",
 	"citizen-action-addsection": "Engadir un fío",
 	"citizen-jumptotop": "Volver ao inicio",
+	"citizen-jumptocontent": "Saltar ao contido",
 	"citizen-toc-toggle-button-label": "Mostrar ou agochar a subsección «$1»",
 	"citizen-search-empty-desc": "Escribe para comezar a buscar",
 	"citizen-search-noresults-title": "Vaites! Non hai resultados para «$1»",
@@ -207,6 +208,7 @@
 	"citizen-command-palette-mode-user-placeholder": "Buscar usuarios",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Buscar o texto completo en todas as páxinas",
 	"citizen-command-palette-queryaction-page-edit-description": "Crear ou editar unha páxina",
+	"citizen-config-compat": "Servir estilos de compatibilidade coa caché para o HTML xerado mediante versións anteriores de Citizen",
 	"citizen-config-headerpositionmobile": "Posición da cabeceira do sitio no deseño para móbiles e tabletas (tamaños máis pequenos cá versión de escritorio). Acepta «top» ou «bottom»; calquera outro valor interprétase como «bottom».",
 	"citizen-config-preview": "O interruptor de versión para a canle de vista previa de Citizen. Defíneo no número de versión maior seguinte (actualmente a versión 4) para previsualizala antes do lanzamento; 0 ou calquera outro valor mantén a experiencia estable."
 }

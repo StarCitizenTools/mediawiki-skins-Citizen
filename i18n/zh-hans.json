@@ -59,6 +59,7 @@
 	"citizen-footer-tagline": "在[[MediaWiki:Citizen-footer-tagline]]编辑此处文本",
 	"citizen-action-addsection": "添加话题",
 	"citizen-jumptotop": "返回顶部",
+	"citizen-jumptocontent": "跳转到内容",
 	"citizen-toc-toggle-button-label": "打开/关闭$1子章节",
 	"citizen-search-empty-desc": "请输入要搜索的内容",
 	"citizen-search-noresults-title": "不妙！没有“$1”的搜索结果",
@@ -228,6 +229,7 @@
 	"citizen-command-palette-mode-user-placeholder": "搜索用户",
 	"citizen-command-palette-queryaction-fulltext-search-description": "在所有页面全文搜索",
 	"citizen-command-palette-queryaction-page-edit-description": "创建或编辑页面",
+	"citizen-config-compat": "为先前的Citizen版本所生成的HTML提供缓存兼容样式",
 	"citizen-config-headerpositionmobile": "网站页眉在移动设备和平板电脑布局下的位置（低于桌面设备布局断点）。接受“top”或“bottom”值；任何其他值均会被视为“bottom”。",
 	"citizen-config-preview": "Citizen预览通道的版本控制开关。设置为即将发布的主版本号（当前为4）即可在正式发布前抢先预览；设置为0或任何其他值则继续体验稳定版本。"
 }
