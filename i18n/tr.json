@@ -49,6 +49,7 @@
 	"citizen-footer-tagline": "Bu metni [[MediaWiki:Citizen-footer-tagline]] üzerinde düzenleyin",
 	"citizen-action-addsection": "Konu ekle",
 	"citizen-jumptotop": "Başa dön",
+	"citizen-jumptocontent": "İçeriğe atla",
 	"citizen-toc-toggle-button-label": "$1 alt bölümünü aç/kapat",
 	"citizen-search-empty-desc": "Aramaya başlamak için yazın",
 	"citizen-search-noresults-title": "Tüh! $1 için arama sonucu bulunamadı.",
@@ -75,9 +76,11 @@
 	"citizen-preferences-section-appearance": "Görünüm",
 	"citizen-preferences-section-behavior": "Davranış",
 	"citizen-theme-name": "Renk",
+	"citizen-theme-name-v4": "Tema",
 	"citizen-theme-description": "Aydınlık ve karanlık mod arasında geçiş yap",
 	"citizen-theme-day-label": "Aydınlık",
 	"citizen-theme-night-label": "Karanlık",
+	"citizen-theme-black-label": "Siyah",
 	"citizen-theme-os-label": "Otomatik",
 	"citizen-feature-autohide-navigation-name": "Dolaşım menüsünü otomatik gizle",
 	"citizen-feature-autohide-navigation-description": "Aşağı kaydırırken dolaşım çubuğunu gizle",
@@ -215,5 +218,8 @@
 	"citizen-command-palette-mode-user-noresults-title": "Eşleşen kullanıcı yok",
 	"citizen-command-palette-mode-user-placeholder": "Kullanıcıları ara",
 	"citizen-command-palette-queryaction-fulltext-search-description": "Tüm sayfaların tam metnini arayın",
-	"citizen-command-palette-queryaction-page-edit-description": "Sayfa oluştur veya düzenle"
+	"citizen-command-palette-queryaction-page-edit-description": "Sayfa oluştur veya düzenle",
+	"citizen-config-compat": "Önceki Citizen sürümleri tarafından oluşturulan HTML için önbellek uyumluluğu stilleri sun",
+	"citizen-config-headerpositionmobile": "Site üst kısmının mobil ve tablet düzenindeki konumu (masaüstü ekran boyutunun altında). 'top' veya 'bottom' değerlerini kabul eder; diğer tüm değerler 'bottom' olarak ayarlanır.",
+	"citizen-config-preview": "Citizen ön izleme kanalı için sürüm kapsamlı anahtar. Yayınlanmadan önce ön izlemek için yaklaşmakta olan ana sürüm numarasına (şu anda 4) ayarlayın; 0 veya başka bir değer, kararlı deneyimi korur."
 }

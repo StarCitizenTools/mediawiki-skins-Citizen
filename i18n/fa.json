@@ -6,6 +6,7 @@
 			"Eshagh",
 			"Jafari",
 			"Jeeputer",
+			"Mohammad ebz",
 			"Reza koulivand"
 		]
 	},
@@ -33,6 +34,7 @@
 	"citizen-search-empty-desc": "برای آغاز جست‌و‌جو‌، بنویسید",
 	"citizen-search-noresults-title": "او نه! نتیجه‌ای برای $1 یافت نشد",
 	"citizen-share": "هم‌رسانی این صفحه",
+	"citizen-share-copy-link": "رونویسی پیوند",
 	"citizen-tagline-ns-talk": "صفحهٔ بحث برای {{SUBJECTPAGENAME}}",
 	"citizen-tagline-ns-project": "اطلاعات درباره {{SITENAME}}",
 	"citizen-tagline-ns-file": "پرونده در {{SITENAME}}",

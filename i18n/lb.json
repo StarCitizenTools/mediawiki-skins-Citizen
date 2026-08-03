@@ -69,6 +69,8 @@
 	"citizen-feature-custom-width-standard-label": "Standard",
 	"citizen-feature-custom-width-wide-label": "Breet",
 	"citizen-user-info-text-anon": "Är IP-Adress ass ëffentlech siichtbar, wann Dir Ännerunge maacht.",
+	"citizen-user-info-text-anon-temp": "Wann Dir eng Ännerung maacht, gëtt en temporäre Kont fir Iech ugeluecht.",
+	"citizen-user-info-text-temp": "Dësen temporäre Kont gouf ugeluecht, nodeems an dësem Browser an op dësem Apparat ouni Kont eng Ännerung gemaach gouf.",
 	"citizen-user-info-edits-label": "Ännerungen",
 	"citizen-command-palette-back": "Zeréck",
 	"citizen-command-palette-heading-recent": "Rezent",
