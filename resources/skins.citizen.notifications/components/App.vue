@@ -191,8 +191,10 @@ module.exports = exports = defineComponent( {
 			() => itemsForSection( SECTION_BY_TAB[ activeTab.value ] )
 		);
 
+		// Summary rows are permanently unread and cannot be cleared from here,
+		// so they must not keep the mark-all button enabled forever.
 		const hasUnreadInScope = computed(
-			() => visibleItems.value.some( ( item ) => !item.read )
+			() => visibleItems.value.some( ( item ) => !item.read && !item.isSummary )
 		);
 
 		function reportCounts() {
@@ -206,10 +208,14 @@ module.exports = exports = defineComponent( {
 		function recountFromItems() {
 			const next = { alert: 0, message: 0, total: 0 };
 			items.value.forEach( ( item ) => {
-				if ( !item.read ) {
-					next[ item.section ] += 1;
-					next.total += 1;
-				}
+				// A summary row stands for unread notifications elsewhere.
+				// Nothing in this panel can clear those, so carry its count
+				// through untouched — otherwise the first local mark-read would
+				// drop the badge to a local-only figure and start disagreeing
+				// with the count the server renders.
+				const unread = item.isSummary ? item.count : ( item.read ? 0 : 1 );
+				next[ item.section ] += unread;
+				next.total += unread;
 			} );
 			counts.value = next;
 			reportCounts();
@@ -273,7 +279,9 @@ module.exports = exports = defineComponent( {
 			// refresh() refetches authoritative state).
 			source.markAllRead( section ).catch( () => {} );
 			visibleItems.value.forEach( ( item ) => {
-				item.read = true;
+				if ( !item.isSummary ) {
+					item.read = true;
+				}
 			} );
 			recountFromItems();
 		}

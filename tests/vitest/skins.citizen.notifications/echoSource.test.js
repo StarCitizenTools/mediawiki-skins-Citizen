@@ -93,6 +93,57 @@ const GROUPED_RESPONSE = {
 	}
 };
 
+/**
+ * Echo's synthetic cross-wiki roll-up, as it arrives with
+ * notcrosswikisummary=1: type 'foreign', id -1, unshifted onto the front of
+ * EVERY requested section's list, with no `read` key and no primary link.
+ *
+ * @param {string} section 'alert' | 'message'
+ * @param {Object} sources `sources` map keyed by wiki id
+ * @param {number} count unread count on the other wikis
+ * @return {Object}
+ */
+function summaryEntry( section, sources, count ) {
+	return {
+		id: -1,
+		type: 'foreign',
+		// Echo files it under a pseudo-category that resolves to 'other'.
+		category: 'other',
+		section: section,
+		count: count,
+		sources: sources,
+		timestamp: { utcunix: '1700000500' },
+		'*': {
+			header: `More ${ section === 'alert' ? 'alerts' : 'notices' } from another wiki`,
+			body: 'Example Wiki',
+			iconUrl: '/icons/global.svg',
+			links: { primary: [], secondary: [] }
+		}
+	};
+}
+
+const ONE_WIKI = {
+	examplewiki: {
+		title: 'Example Wiki',
+		url: 'https://example.org/w/api.php',
+		base: 'https://example.org/wiki/$1',
+		ts: '2023-11-14T00:00:00Z'
+	}
+};
+
+/**
+ * The grouped response with a cross-wiki summary unshifted into both sections.
+ *
+ * @param {Object} [sources] `sources` map to attach to each summary
+ * @return {Object}
+ */
+function responseWithSummary( sources = ONE_WIKI ) {
+	const base = structuredClone( GROUPED_RESPONSE );
+	base.query.notifications.alert.list.unshift( summaryEntry( 'alert', sources, 3 ) );
+	base.query.notifications.message.list.unshift( summaryEntry( 'message', sources, 2 ) );
+	return base;
+}
+
 describe( 'createEchoSource', () => {
 	describe( 'fetch', () => {
 		it( 'requests both sections as grouped model data (no deprecated format/filter)', async () => {
@@ -109,7 +160,10 @@ describe( 'createEchoSource', () => {
 				notsections: 'alert|message',
 				notformat: 'model',
 				notgroupbysection: 1,
-				notlimit: 25
+				notlimit: 25,
+				// Asks for the cross-wiki roll-up row and cross-wiki-inclusive
+				// counts; ignored where the wiki has cross-wiki turned off.
+				notcrosswikisummary: 1
 			} );
 			// `notfilter` only accepts read/!read; rely on its default (both).
 			expect( params.notfilter ).toBeUndefined();
@@ -247,6 +301,103 @@ describe( 'createEchoSource', () => {
 
 			expect( items ).toEqual( [] );
 			expect( counts ).toEqual( { alert: 0, message: 0, total: 0 } );
+		} );
+	} );
+
+	describe( 'cross-wiki summaries', () => {
+		it( 'never exposes Echo\'s placeholder id', async () => {
+			const { ApiConstructor } = makeApi( responseWithSummary() );
+			const source = createEchoSource( ApiConstructor );
+
+			const { items } = await source.fetch();
+
+			expect( items.some( ( item ) => item.id === -1 ) ).toBe( false );
+			expect( items.map( ( item ) => item.id ) )
+				.toEqual( [ 'summary-alert', 'summary-message', 12, 21, 11 ] );
+		} );
+
+		it( 'pins summaries above the sorted list', async () => {
+			const { ApiConstructor } = makeApi( responseWithSummary() );
+			const source = createEchoSource( ApiConstructor );
+
+			const { items } = await source.fetch();
+
+			expect( items.slice( 0, 2 ).map( ( item ) => item.isSummary ) )
+				.toEqual( [ true, true ] );
+			// The remaining items keep the order they have without a summary.
+			expect( items.slice( 2 ).map( ( item ) => item.id ) ).toEqual( [ 12, 21, 11 ] );
+		} );
+
+		it( 'carries the section and the count it stands for', async () => {
+			const { ApiConstructor } = makeApi( responseWithSummary() );
+			const source = createEchoSource( ApiConstructor );
+
+			const { items } = await source.fetch();
+
+			expect( items[ 0 ] ).toMatchObject( { section: 'alert', count: 3, read: false } );
+			expect( items[ 1 ] ).toMatchObject( { section: 'message', count: 2, read: false } );
+		} );
+
+		it( 'leaves the category label off rather than showing "Other"', async () => {
+			const { ApiConstructor } = makeApi( responseWithSummary() );
+			const source = createEchoSource( ApiConstructor );
+
+			const { items } = await source.fetch();
+
+			expect( items[ 0 ].categoryLabel ).toBe( '' );
+			expect( items[ 0 ].category ).toBe( '' );
+		} );
+
+		it( 'keeps Echo\'s own wording for the header and body', async () => {
+			const { ApiConstructor } = makeApi( responseWithSummary() );
+			const source = createEchoSource( ApiConstructor );
+
+			const { items } = await source.fetch();
+
+			expect( items[ 0 ].header ).toBe( 'More alerts from another wiki' );
+			expect( items[ 0 ].body ).toBe( 'Example Wiki' );
+		} );
+
+		it( 'links a single-wiki summary to that wiki\'s notifications', async () => {
+			const { ApiConstructor } = makeApi( responseWithSummary() );
+			const source = createEchoSource( ApiConstructor );
+
+			const { items } = await source.fetch();
+
+			expect( items[ 0 ].primaryUrl )
+				.toBe( 'https://example.org/wiki/Special:Notifications' );
+		} );
+
+		it( 'links a multi-wiki summary to the local special page', async () => {
+			const { ApiConstructor } = makeApi( responseWithSummary( Object.assign(
+				{}, ONE_WIKI, { otherwiki: { title: 'Other', base: 'https://other.org/wiki/$1' } }
+			) ) );
+			const source = createEchoSource( ApiConstructor );
+
+			const { items } = await source.fetch();
+
+			expect( items[ 0 ].primaryUrl ).toBe( '/wiki/Special:Notifications' );
+		} );
+
+		it( 'falls back to the local special page for an unusable base', async () => {
+			const { ApiConstructor } = makeApi( responseWithSummary( {
+				examplewiki: { title: 'Example Wiki', base: 'https://example.org/wiki/Foo' }
+			} ) );
+			const source = createEchoSource( ApiConstructor );
+
+			const { items } = await source.fetch();
+
+			expect( items[ 0 ].primaryUrl ).toBe( '/wiki/Special:Notifications' );
+		} );
+
+		it( 'leaves ordinary items untouched when no summary arrives', async () => {
+			const { ApiConstructor } = makeApi( GROUPED_RESPONSE );
+			const source = createEchoSource( ApiConstructor );
+
+			const { items } = await source.fetch();
+
+			expect( items.some( ( item ) => item.isSummary ) ).toBe( false );
+			expect( items[ 0 ].isSummary ).toBeUndefined();
 		} );
 	} );
 

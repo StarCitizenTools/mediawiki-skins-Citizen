@@ -144,9 +144,13 @@ module.exports = exports = defineComponent( {
 		 * clicked); the click bubbles here either way.
 		 */
 		function onClick() {
-			if ( !props.item.read ) {
-				emit( 'read', props.item.id );
+			// A summary row has no backend id and stands for notifications this
+			// panel cannot clear, so it is never marked read. The stretched
+			// link still navigates.
+			if ( props.item.isSummary || props.item.read ) {
+				return;
 			}
+			emit( 'read', props.item.id );
 		}
 
 		return { formattedTime, plainHeader, actionButtonClass: ACTION_BUTTON_CLASS, onClick };
