@@ -16,6 +16,7 @@
 	"citizen-preferences-load-error": "Couldn't load preferences. Check your connection and try again.",
 	"citizen-preferences-load-retry": "Retry",
 	"citizen-search-toggle": "Toggle search",
+	"citizen-search-toggle-shortcut": "[/]",
 	"citizen-notifications-title": "Notifications",
 	"citizen-notifications-label": "Notifications",
 	"citizen-notifications-tab-all": "All",
