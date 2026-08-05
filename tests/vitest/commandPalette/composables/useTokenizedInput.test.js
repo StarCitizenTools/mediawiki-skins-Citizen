@@ -374,7 +374,17 @@ describe( 'useTokenizedInput', () => {
 						1: 'Talk',
 						2: 'User',
 						3: 'User talk',
-						4: 'Project'
+						10: 'Template'
+					};
+				}
+				if ( key === 'wgNamespaceIds' ) {
+					return {
+						'': 0,
+						talk: 1,
+						user: 2,
+						user_talk: 3,
+						template: 10,
+						t: 10
 					};
 				}
 				return null;
@@ -418,6 +428,30 @@ describe( 'useTokenizedInput', () => {
 			expect( ti.tokens.value ).toHaveLength( 1 );
 			expect( ti.tokens.value[ 0 ].label ).toBe( 'User talk:' );
 			expect( ti.freeText.value ).toBe( 'SomePage' );
+		} );
+
+		it( 'should tag an alias with the canonical name and keep the rest of the query', () => {
+			const ti = useTokenizedInput( () => [ namespaceMode.tokenPattern ] );
+
+			ti.setFreeText( 'T:Infobox' );
+
+			expect( ti.tokens.value ).toHaveLength( 1 );
+			expect( ti.tokens.value[ 0 ].label ).toBe( 'Template:' );
+			expect( ti.freeText.value ).toBe( 'Infobox' );
+			expect( ti.fullQuery.value ).toBe( 'T:Infobox' );
+		} );
+
+		it( 'should restore the alias the user typed when the tag is removed', () => {
+			const ti = useTokenizedInput( () => [ namespaceMode.tokenPattern ] );
+			ti.setFreeText( 'T:Infobox' );
+			const token = ti.tokens.value[ 0 ];
+
+			// Mirrors what App.vue does when a tag is turned back into text
+			ti.removeToken( 0 );
+			ti.setFreeText( token.raw + ti.freeText.value );
+
+			expect( ti.tokens.value ).toHaveLength( 0 );
+			expect( ti.freeText.value ).toBe( 'T:Infobox' );
 		} );
 
 		it( 'should not match unknown namespace prefixes', () => {
