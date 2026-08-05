@@ -281,7 +281,7 @@ keybindings: [
 | :--- | :--- | :--- |
 | `id` | `string` | Unique binding identifier (used for debugging). |
 | `zone` | `'input' \| 'action'` | Which focus zone the binding applies to. |
-| `keys` | `string[]` | Event `key` values that fire `handle`. An empty array marks the binding as hint-only. |
+| `keys` | `string[]` | Event `key` values that fire `handle`. An empty array marks the binding as hint-only. Declare `ArrowLeft`/`ArrowRight` logically (previous/next) — the physical arrow is mirrored on RTL interface languages. |
 | `when` | `function` | `(state) => boolean` — predicate over the dispatch state. False suppresses both the handler and the hint. |
 | `handle` | `function` | `(state, event) => void` — called when a `keys` entry matches and `when` passes. Call `event.preventDefault()` to claim the keystroke. |
 | `worksDuringHelp` | `boolean` | When true, the binding fires even with the help overlay open. Defaults to false. |
@@ -292,7 +292,7 @@ Hint shape:
 | Property | Type | Description |
 | :--- | :--- | :--- |
 | `msgKey` | `string` | i18n message key for the hint label. |
-| `kbd` | `string` | Keyboard glyph shown next to the label (e.g. `↵`, `↑↓`, `⌘C`). |
+| `kbd` | `string` | Keyboard glyph shown next to the label (e.g. `↵`, `↑↓`, `⌘C`). A lone `←` or `→` is swapped on RTL interface languages so the hint names the key the user actually presses; a hint offering both is left alone. |
 | `order` | `number` | Sort order within the footer (lower = leftmost). |
 
 Mode keybindings are prepended to the core bindings while the mode is active, so a mode binding wins on key collisions within its own focus zone. Footer hints derive from the same list, so a hint is visible iff its handler will fire — no risk of stale hints.
