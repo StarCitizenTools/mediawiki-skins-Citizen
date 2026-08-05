@@ -48,7 +48,7 @@ module.exports = exports = defineComponent( {
 
 <style lang="less">
 @import 'mediawiki.skin.variables.less';
-@import '../mixins.less';
+@import '../../mixins.less';
 
 .citizen-command-palette-empty-state {
 	display: flex;
