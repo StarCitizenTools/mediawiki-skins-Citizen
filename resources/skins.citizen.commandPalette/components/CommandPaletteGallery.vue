@@ -1,8 +1,10 @@
 <template>
 	<div
+		id="citizen-command-palette-listbox"
 		ref="galleryRef"
 		class="citizen-command-palette-gallery"
 		role="listbox"
+		:aria-label="$i18n( 'citizen-command-palette-results' ).text()"
 		tabindex="-1"
 	>
 		<template
@@ -13,11 +15,15 @@
 			<div
 				v-if="section.heading"
 				class="citizen-command-palette-gallery__heading"
+				role="presentation"
 			>
 				{{ $i18n( section.heading ).text() }}
 			</div>
 			<!-- eslint-enable mediawiki/msg-doc, mediawiki/no-vue-dynamic-i18n -->
-			<div class="citizen-command-palette-gallery__grid">
+			<div
+				class="citizen-command-palette-gallery__grid"
+				role="presentation"
+			>
 				<command-palette-gallery-item
 					v-for="( item, localIndex ) in section.items"
 					:key="item.id"

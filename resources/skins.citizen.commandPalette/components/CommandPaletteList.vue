@@ -1,8 +1,10 @@
 <template>
 	<div
+		id="citizen-command-palette-listbox"
 		ref="listRef"
 		class="citizen-command-palette-list"
 		role="listbox"
+		:aria-label="$i18n( 'citizen-command-palette-results' ).text()"
 		tabindex="-1"
 	>
 		<template
@@ -13,6 +15,7 @@
 			<div
 				v-if="section.heading"
 				class="citizen-command-palette-list__heading"
+				role="presentation"
 			>
 				{{ $i18n( section.heading ).text() }}
 			</div>
