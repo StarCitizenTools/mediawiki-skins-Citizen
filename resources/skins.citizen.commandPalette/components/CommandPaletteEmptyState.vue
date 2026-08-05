@@ -1,5 +1,10 @@
 <template>
-	<div class="citizen-command-palette-empty-state">
+	<!-- role="status" so a query that returns nothing is announced rather
+		than leaving the combobox silently collapsed. -->
+	<div
+		class="citizen-command-palette-empty-state"
+		role="status"
+	>
 		<div class="citizen-command-palette-empty-state__icon">
 			<slot name="icon">
 				<cdx-icon :icon="icon"></cdx-icon>

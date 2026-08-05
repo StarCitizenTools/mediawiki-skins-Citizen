@@ -36,11 +36,24 @@
 			>
 				{{ token.label }}
 			</cdx-info-chip>
+			<!--
+				CdxTextInput sets `inheritAttrs: false` so these land on the
+				real <input>, not the wrapper. That input is the combobox: focus
+				stays on it while the arrow keys move `aria-activedescendant`
+				through the listbox, which is what lets a screen reader announce
+				the highlighted result.
+			-->
 			<cdx-text-input
 				ref="searchInputRef"
 				:model-value="freeText"
 				class="citizen-command-palette-header__input"
 				input-type="search"
+				role="combobox"
+				aria-autocomplete="list"
+				:aria-label="currentPlaceholder"
+				aria-controls="citizen-command-palette-listbox"
+				:aria-expanded="expanded"
+				:aria-activedescendant="activeDescendantId || undefined"
 				:clearable="true"
 				:placeholder="currentPlaceholder"
 				@update:model-value="$emit( 'update:freeText', $event )"
@@ -99,6 +112,16 @@ module.exports = exports = defineComponent( {
 		helpVisible: {
 			type: Boolean,
 			default: false
+		},
+		/** Whether the listbox is showing results, for `aria-expanded`. */
+		expanded: {
+			type: Boolean,
+			default: false
+		},
+		/** Id of the highlighted option, or null when nothing is highlighted. */
+		activeDescendantId: {
+			type: String,
+			default: null
 		}
 	},
 	emits: [ 'update:freeText', 'select-token', 'exit-mode', 'close-help' ],

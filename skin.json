@@ -503,6 +503,8 @@
 				"action-edit",
 				"citizen-command-palette-action-view",
 				"citizen-command-palette-back",
+				"citizen-command-palette-label",
+				"citizen-command-palette-results",
 				"citizen-command-palette-command-action-description",
 				"citizen-command-palette-command-action-label",
 				"citizen-command-palette-command-category-description",
