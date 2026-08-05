@@ -538,8 +538,12 @@ module.exports = exports = defineComponent( {
 			highlightedItemDetail,
 			copyTrigger,
 			// Methods
-			// eslint-disable-next-line vue/no-unused-properties -- Used externally by init.js
+			// eslint-disable-next-line vue/no-unused-properties -- Used by skins.citizen.scripts/commandPalette.js
 			open,
+			// Restore focus to the search input without resetting anything, for
+			// a trigger fired while the palette is already on screen.
+			// eslint-disable-next-line vue/no-unused-properties -- Used by skins.citizen.scripts/commandPalette.js
+			focus: () => nextTick( focusInput ),
 			close,
 			selectResult,
 			handleAction,

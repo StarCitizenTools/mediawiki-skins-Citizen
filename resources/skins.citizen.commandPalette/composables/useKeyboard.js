@@ -92,6 +92,23 @@ const coreBindings = [
 		},
 		hint: null
 	},
+	// Tab steps back to the input rather than closing, mirroring the Escape
+	// ladder above: one key to leave the action row, a second to leave the
+	// palette. Without a binding here the browser would walk focus out of the
+	// palette from the action row instead.
+	{
+		id: 'action-tab-to-input',
+		zone: 'action',
+		keys: [ 'Tab' ],
+		when: () => true,
+		worksDuringHelp: true,
+		handle: ( state, event ) => {
+			event.preventDefault();
+			state.actionNav.deactivate();
+			state.focusInput();
+		},
+		hint: null
+	},
 	// Action-zone navigate hint variants. Mutually exclusive `when` clauses
 	// produce one of: `↑↓`, `↑↓←`, or `↑↓←→` depending on action count and
 	// focused index.
@@ -339,11 +356,16 @@ const coreBindings = [
 	},
 
 	// --- INPUT ZONE: Tab closes the palette ---
+	// `worksDuringHelp` is load-bearing rather than a nicety: without it the
+	// binding is inactive while the help overlay is up, nothing else claims
+	// Tab, and the browser walks focus out of a palette that can no longer be
+	// dismissed — this handler is bound to the palette itself.
 	{
 		id: 'input-tab-close',
 		zone: 'input',
 		keys: [ 'Tab' ],
 		when: () => true,
+		worksDuringHelp: true,
 		handle: ( state, event ) => {
 			event.preventDefault();
 			state.onClose();
@@ -755,7 +777,11 @@ function useKeyboard( options ) {
 		) {
 			return;
 		}
-		if ( event.shiftKey && event.key.length !== 1 ) {
+		// Tab is exempt: it has a binding of its own, and dropping Shift+Tab
+		// here would skip that binding's preventDefault() and let the browser
+		// walk focus out of the open palette — where Escape no longer reaches
+		// it, since this handler is bound to the palette itself.
+		if ( event.shiftKey && event.key.length !== 1 && event.key !== 'Tab' ) {
 			return;
 		}
 

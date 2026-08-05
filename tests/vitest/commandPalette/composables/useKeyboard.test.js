@@ -196,6 +196,51 @@ describe( 'useKeyboard', () => {
 			expect( listNav.highlightNext ).not.toHaveBeenCalled();
 		} );
 
+		it( 'should close on Shift+Tab, so focus cannot leave the open palette', () => {
+			var event = createKeyEvent( 'Tab' );
+			event.shiftKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onClose ).toHaveBeenCalled();
+			expect( event.preventDefault ).toHaveBeenCalled();
+		} );
+
+		it( 'should still claim Tab while the help overlay is up', () => {
+			deps.helpVisible = ref( true );
+			deps.onToggleHelp = vi.fn();
+			deps.onCloseHelp = vi.fn();
+			keyboard = useKeyboard( toGrouped( deps ) );
+
+			[ false, true ].forEach( ( shift ) => {
+				const event = createKeyEvent( 'Tab' );
+				event.shiftKey = shift;
+
+				keyboard.handleKeydown( event );
+
+				expect( event.preventDefault ).toHaveBeenCalled();
+			} );
+			expect( deps.onClose ).toHaveBeenCalledTimes( 2 );
+		} );
+
+		it( 'should step Tab back to the input from the action zone, not out of the palette', () => {
+			const actionTarget = {
+				closest: vi.fn( ( selector ) => (
+					selector === '.citizen-command-palette-list-item__action' ? actionTarget : null
+				) )
+			};
+			actionNav.isActive.value = true;
+
+			const event = createKeyEvent( 'Tab', actionTarget );
+			event.shiftKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( event.preventDefault ).toHaveBeenCalled();
+			expect( actionNav.deactivate ).toHaveBeenCalled();
+			expect( deps.onClose ).not.toHaveBeenCalled();
+		} );
+
 		it( 'should ignore Shift for non-printable keys', () => {
 			var event = createKeyEvent( 'ArrowDown' );
 			event.shiftKey = true;
