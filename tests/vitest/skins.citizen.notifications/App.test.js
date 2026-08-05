@@ -229,4 +229,93 @@ describe( 'notifications App', () => {
 		// Accessible name is the header with markup stripped.
 		expect( link.attributes( 'aria-label' ) ).toBe( 'NotifBot mentioned you' );
 	} );
+
+	describe( 'cross-wiki summary rows', () => {
+		function makeSummary( section, count ) {
+			return {
+				id: `summary-${ section }`,
+				isSummary: true,
+				count: count,
+				section: section,
+				category: '',
+				categoryLabel: '',
+				read: false,
+				timestamp: 1700000500,
+				iconUrl: '',
+				header: 'More alerts from another wiki',
+				body: 'Example Wiki',
+				primaryUrl: 'https://example.org/wiki/Special:Notifications',
+				secondaryLinks: []
+			};
+		}
+
+		function sourceWithSummary( extraItems = [] ) {
+			return makeSource( {
+				fetch: vi.fn().mockResolvedValue( {
+					items: [ makeSummary( 'alert', 3 ) ].concat( extraItems ),
+					counts: { alert: 3, message: 0, total: 3 }
+				} )
+			} );
+		}
+
+		it( 'never sends a summary row to markRead when clicked', async () => {
+			const source = sourceWithSummary();
+			const wrapper = mountApp( source );
+			await flushPromises();
+
+			await inTab( wrapper, 'all' )[ 0 ].trigger( 'click' );
+
+			expect( source.markRead ).not.toHaveBeenCalled();
+		} );
+
+		it( 'keeps a summary row tinted unread after it is clicked', async () => {
+			const source = sourceWithSummary();
+			const wrapper = mountApp( source );
+			await flushPromises();
+
+			await inTab( wrapper, 'all' )[ 0 ].trigger( 'click' );
+			await wrapper.vm.$nextTick();
+
+			expect( wrapper.findAll( '[data-tab="all"] .citizen-notifications__item--unread' ).length )
+				.toBe( 1 );
+		} );
+
+		it( 'leaves mark-all disabled when only a summary row is unread', async () => {
+			const source = sourceWithSummary();
+			const wrapper = mountApp( source );
+			await flushPromises();
+
+			expect( wrapper.find( '.citizen-notifications__mark-all' ).attributes( 'disabled' ) )
+				.toBeDefined();
+		} );
+
+		it( 'keeps the summary count in the badge after a local mark-read', async () => {
+			const onCountsChange = vi.fn();
+			const local = makeItem( 12, 'alert', false, 1700000400 );
+			const source = sourceWithSummary( [ local ] );
+			const wrapper = mountApp( source, { onCountsChange } );
+			await flushPromises();
+			onCountsChange.mockClear();
+
+			// Click the real notification, not the pinned summary.
+			await inTab( wrapper, 'all' )[ 1 ].trigger( 'click' );
+
+			expect( source.markRead ).toHaveBeenCalledWith( [ 12 ] );
+			// 3 cross-wiki alerts survive; only the local one is cleared.
+			expect( onCountsChange ).toHaveBeenLastCalledWith( { alert: 3, message: 0, total: 3 } );
+		} );
+
+		it( 'keeps the summary count after mark-all clears the local rows', async () => {
+			const onCountsChange = vi.fn();
+			const local = makeItem( 12, 'alert', false, 1700000400 );
+			const source = sourceWithSummary( [ local ] );
+			const wrapper = mountApp( source, { onCountsChange } );
+			await flushPromises();
+			onCountsChange.mockClear();
+
+			await wrapper.find( '.citizen-notifications__mark-all' ).trigger( 'click' );
+
+			expect( onCountsChange ).toHaveBeenLastCalledWith( { alert: 3, message: 0, total: 3 } );
+		} );
+	} );
 } );
