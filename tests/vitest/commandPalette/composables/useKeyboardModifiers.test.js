@@ -84,6 +84,7 @@ describe( 'dispatcher modifier policy', () => {
 			onClose: vi.fn(),
 			onClearQuery: vi.fn(),
 			onEnterMode: vi.fn(),
+			onToggleHelp: vi.fn(),
 			highlightNext: vi.fn(),
 			clickFocused: vi.fn(),
 			deactivate: vi.fn(),
@@ -121,6 +122,11 @@ describe( 'dispatcher modifier policy', () => {
 					deactivate: spies.deactivate,
 					clickFocused: spies.clickFocused
 				}
+			},
+			help: {
+				helpVisible: ref( false ),
+				onToggleHelp: spies.onToggleHelp,
+				onCloseHelp: vi.fn()
 			},
 			mode: {
 				activeMode: ref( null ),
@@ -167,7 +173,33 @@ describe( 'dispatcher modifier policy', () => {
 
 		// Typing in the action zone redirects to the input.
 		[ 'a', 'none', 'action', 'deactivate' ],
-		[ 'a', 'ctrl', 'action', 'ignored' ]
+		[ 'a', 'ctrl', 'action', 'ignored' ],
+		[ 'Tab', 'none', 'action', 'deactivate (claimed)' ],
+
+		// `?` is Shift+/ on a US layout, so Shift must not suppress it.
+		[ '?', 'none', 'input', 'onToggleHelp (claimed)' ],
+		[ '?', 'shift', 'input', 'onToggleHelp (claimed)' ],
+
+		// Chords belong to the browser and the text field.
+		[ 'Tab', 'ctrl', 'input', 'ignored' ],
+		[ 'Home', 'shift', 'input', 'ignored' ],
+		[ 'End', 'shift', 'input', 'ignored' ],
+		[ 'ArrowLeft', 'shift', 'input', 'ignored' ],
+		[ 'ArrowLeft', 'alt', 'input', 'ignored' ],
+		[ 'ArrowLeft', 'ctrl', 'input', 'ignored' ],
+		[ 'Enter', 'shift', 'input', 'ignored' ],
+		[ 'Enter', 'meta', 'input', 'ignored' ],
+		[ 'Backspace', 'ctrl', 'input', 'ignored' ],
+		[ '@', 'meta', 'input', 'ignored' ],
+
+		// Two rows that record a defect rather than an intention. The guards
+		// classify by key shape, not by what the binding wants, so a real chord
+		// reaches a binding that only ever meant to claim a bare key.
+		// `Ctrl+Alt+?` is not AltGr on a US layout — it is a chord.
+		[ '?', 'altgr', 'input', 'onToggleHelp (claimed)' ],
+		// `action-select` lists `Enter` and `' '` together; the space picks up
+		// Shift because Guard B exempts single-character keys.
+		[ ' ', 'shift', 'action', 'clickFocused (claimed)' ]
 	];
 
 	TABLE.forEach( ( [ key, modifiers, zone, expected ] ) => {
