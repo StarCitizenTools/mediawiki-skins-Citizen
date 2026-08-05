@@ -18,6 +18,14 @@
 		color: var( --color-subtle );
 		// stylelint-disable-next-line declaration-property-value-disallowed-list
 		text-transform: capitalize;
+		// Arrow glyphs are bidi-neutral, so a multi-key hint like `↑↓←` takes
+		// the paragraph direction and renders reversed on an RTL wiki. Isolate
+		// it so the authored order survives. @noflip because CSSJanus would
+		// otherwise rewrite this to `rtl` in the RTL build — the one place the
+		// flip must not happen.
+		/* @noflip */
+		direction: ltr;
+		unicode-bidi: isolate;
 	}
 }
 

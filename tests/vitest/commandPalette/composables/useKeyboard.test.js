@@ -445,6 +445,180 @@ describe( 'useKeyboard', () => {
 		} );
 	} );
 
+	describe( 'right-to-left interface languages', () => {
+		function actionZoneTarget() {
+			const target = {
+				closest: vi.fn( ( selector ) => (
+					selector === '.citizen-command-palette-list-item__action' ? target : null
+				) )
+			};
+			actionNav.isActive.value = true;
+			return target;
+		}
+
+		afterEach( () => {
+			document.dir = '';
+		} );
+
+		it( 'steps the action row visually, so ArrowLeft advances under RTL', () => {
+			document.dir = 'rtl';
+			const target = actionZoneTarget();
+
+			keyboard.handleKeydown( createKeyEvent( 'ArrowLeft', target ) );
+
+			expect( actionNav.focusNext ).toHaveBeenCalled();
+			expect( actionNav.focusPrevious ).not.toHaveBeenCalled();
+		} );
+
+		it( 'sends ArrowRight backwards under RTL', () => {
+			document.dir = 'rtl';
+			const target = actionZoneTarget();
+
+			keyboard.handleKeydown( createKeyEvent( 'ArrowRight', target ) );
+
+			expect( actionNav.focusPrevious ).toHaveBeenCalled();
+			expect( actionNav.focusNext ).not.toHaveBeenCalled();
+		} );
+
+		it( 'leaves the action row unmirrored under LTR', () => {
+			document.dir = 'ltr';
+			const target = actionZoneTarget();
+
+			keyboard.handleKeydown( createKeyEvent( 'ArrowRight', target ) );
+
+			expect( actionNav.focusNext ).toHaveBeenCalled();
+			expect( actionNav.focusPrevious ).not.toHaveBeenCalled();
+		} );
+
+		it( 'prefers the input\'s own direction over the document', () => {
+			// A palette inside a direction island must follow the island.
+			document.dir = 'ltr';
+			// A real element: getComputedStyle rejects anything else.
+			const inputEl = document.createElement( 'input' );
+			deps.inputRef.value.getInputElement = vi.fn( () => inputEl );
+			const original = globalThis.getComputedStyle;
+			globalThis.getComputedStyle = vi.fn( () => ( { direction: 'rtl' } ) );
+			keyboard = useKeyboard( toGrouped( deps ) );
+			const target = actionZoneTarget();
+
+			try {
+				keyboard.handleKeydown( createKeyEvent( 'ArrowLeft', target ) );
+			} finally {
+				globalThis.getComputedStyle = original;
+			}
+
+			expect( actionNav.focusNext ).toHaveBeenCalled();
+			expect( actionNav.focusPrevious ).not.toHaveBeenCalled();
+		} );
+
+		it( 'does not mirror the vertical arrows', () => {
+			document.dir = 'rtl';
+
+			keyboard.handleKeydown( createKeyEvent( 'ArrowDown' ) );
+			keyboard.handleKeydown( createKeyEvent( 'ArrowUp' ) );
+
+			expect( listNav.highlightNext ).toHaveBeenCalledTimes( 1 );
+			expect( listNav.highlightPrevious ).toHaveBeenCalledTimes( 1 );
+		} );
+
+		it( 'reaches the action row with ArrowLeft under RTL', () => {
+			// The input to action-row jump: one of the two paths in T1741.
+			document.dir = 'rtl';
+			var inputEl = {
+				selectionStart: 5,
+				selectionEnd: 5,
+				value: 'hello',
+				focus: vi.fn(),
+				closest: vi.fn( () => null )
+			};
+			deps.inputRef.value.getInputElement = vi.fn( () => inputEl );
+			listNav.highlightedIndex.value = 0;
+			keyboard = useKeyboard( toGrouped( deps ) );
+
+			keyboard.handleKeydown( createKeyEvent( 'ArrowLeft', inputEl ) );
+
+			expect( actionNav.focusFirst ).toHaveBeenCalled();
+		} );
+
+		it( 'steps gallery tiles with ArrowLeft under RTL', () => {
+			// Gallery tiles: the other path in T1741.
+			document.dir = 'rtl';
+			const gridNav = {
+				highlightNext: vi.fn(),
+				highlightPrevious: vi.fn(),
+				highlightUp: vi.fn(),
+				highlightDown: vi.fn(),
+				highlightFirst: vi.fn(),
+				highlightLast: vi.fn(),
+				highlightedIndex: ref( 0 ),
+				scrollToHighlighted: vi.fn()
+			};
+			deps.gridNav = gridNav;
+			deps.isGalleryLayout = ref( true );
+			keyboard = useKeyboard( toGrouped( deps ) );
+
+			keyboard.handleKeydown( createKeyEvent( 'ArrowLeft' ) );
+
+			expect( gridNav.highlightNext ).toHaveBeenCalled();
+			expect( gridNav.highlightPrevious ).not.toHaveBeenCalled();
+		} );
+
+		it( 'mirrors every arrow in a combined hint glyph', () => {
+			document.dir = 'rtl';
+			const actionTarget = {
+				closest: vi.fn( ( selector ) => (
+					selector === '.citizen-command-palette-list-item__action' ? actionTarget : null
+				) )
+			};
+			actionNav.isActive.value = true;
+			// focusedIndex at the last action selects the `↑↓←` hint variant.
+			actionNav.focusedIndex.value = 1;
+			deps.items = ref( [ { id: '1', actions: [ { id: 'a' }, { id: 'b' } ] } ] );
+			keyboard = useKeyboard( toGrouped( deps ) );
+			listNav.highlightedIndex.value = 0;
+
+			const kbds = keyboard.keyboardHints.value.map( ( hint ) => hint.kbd );
+
+			expect( kbds ).toContain( '↑↓→' );
+			expect( kbds ).not.toContain( '↑↓←' );
+		} );
+
+		it( 'leaves a hint offering both arrows untouched', () => {
+			// focusedIndex before the last action selects the `↑↓←→` variant,
+			// which already covers either direction — swapping would only
+			// shuffle the glyphs into a stranger order.
+			document.dir = 'rtl';
+			const actionTarget = {
+				closest: vi.fn( ( selector ) => (
+					selector === '.citizen-command-palette-list-item__action' ? actionTarget : null
+				) )
+			};
+			actionNav.isActive.value = true;
+			actionNav.focusedIndex.value = 0;
+			deps.items = ref( [ { id: '1', actions: [ { id: 'a' }, { id: 'b' } ] } ] );
+			keyboard = useKeyboard( toGrouped( deps ) );
+			listNav.highlightedIndex.value = 0;
+
+			const kbds = keyboard.keyboardHints.value.map( ( hint ) => hint.kbd );
+
+			expect( kbds ).toContain( '↑↓←→' );
+		} );
+
+		it( 'mirrors the arrow glyphs in the footer hints', () => {
+			document.dir = 'rtl';
+			deps.items = ref( [ { id: '1', actions: [ { id: 'edit' } ] } ] );
+			keyboard = useKeyboard( toGrouped( deps ) );
+			listNav.highlightedIndex.value = 0;
+
+			const kbds = keyboard.keyboardHints.value.map( ( hint ) => hint.kbd );
+
+			// The action row sits to the left under RTL, so the hint for
+			// reaching it must advertise the key the user actually presses.
+			expect( kbds ).toContain( '←' );
+			expect( kbds ).not.toContain( '→' );
+		} );
+	} );
+
 	describe( 'input zone — ArrowRight at end of input', () => {
 		it( 'should call actionNav.focusFirst when cursor is at end and item has actions', () => {
 			var inputEl = {

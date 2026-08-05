@@ -13,7 +13,9 @@
  * @typedef {Object} KeyBinding
  * @property {string} id Stable identifier (tests, debugging).
  * @property {'input'|'action'} zone Focus zone where this binding applies.
- * @property {string[]} keys Exact event.key values that trigger this binding.
+ * @property {string[]} keys `event.key` values that trigger this binding. The
+ *   two horizontal arrows are logical: the palette mirrors the physical arrow
+ *   for RTL interface languages before resolving.
  * @property {Function} when Predicate `(state) => boolean`; binding active iff true.
  * @property {boolean} [worksDuringHelp] If true, applies even when state.helpVisible.
  * @property {Function} handle Side effect `(state, event) => void`.
@@ -37,18 +39,23 @@ function isActive( state, binding ) {
 /**
  * Find the first binding that should fire for the given event.
  *
+ * Takes the key rather than the event: callers pass a direction-mirrored key
+ * under RTL, and accepting an event here would invite reading other properties
+ * off it — which would then diverge between RTL and LTR without anything
+ * failing.
+ *
  * @param {Object} state
- * @param {KeyboardEvent} event
+ * @param {string} key
  * @param {KeyBinding[]} bindings
  * @return {KeyBinding|null}
  */
-function resolveBinding( state, event, bindings ) {
+function resolveBinding( state, key, bindings ) {
 	const zone = state.actionsFocused ? 'action' : 'input';
 	for ( const binding of bindings ) {
 		if ( binding.zone !== zone ) {
 			continue;
 		}
-		if ( !binding.keys.includes( event.key ) ) {
+		if ( !binding.keys.includes( key ) ) {
 			continue;
 		}
 		if ( !isActive( state, binding ) ) {

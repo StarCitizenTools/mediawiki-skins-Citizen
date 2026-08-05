@@ -14,6 +14,79 @@ const {
 const IS_MAC = isMacPlatform( typeof navigator !== 'undefined' ? navigator : null );
 const COPY_KBD = IS_MAC ? '⌘C' : 'Ctrl+C';
 
+// Arrow keys are physical; the bindings below are logical (previous/next, and
+// input → action row). CSSJanus mirrors the inline axis for RTL interface
+// languages, so on an RTL wiki the two horizontal arrows have to be swapped
+// before a binding is resolved, or navigation runs backwards on screen.
+const MIRRORED_KEYS = Object.assign( Object.create( null ), {
+	ArrowLeft: 'ArrowRight',
+	ArrowRight: 'ArrowLeft'
+} );
+
+/**
+ * Whether the palette is laid out right-to-left.
+ *
+ * Prefers the element's computed direction so a palette inside a direction
+ * island still resolves correctly, and falls back to the document for the
+ * window between mount and the input existing.
+ *
+ * @param {HTMLElement|null} element
+ * @return {boolean}
+ */
+function isRtlDirection( element ) {
+	// getComputedStyle throws on anything that is not an Element, and the
+	// input reference is null until the header mounts.
+	if (
+		element && element.nodeType === 1 &&
+		typeof window !== 'undefined' && window.getComputedStyle
+	) {
+		// Sample the palette, not the input: it is the palette's inline axis
+		// that CSSJanus mirrors, and a search field is the one element here
+		// likely to acquire a direction of its own (`dir="auto"` resolves to
+		// ltr for a Latin query on an RTL wiki, which would silently switch
+		// the mirror off while the layout stayed flipped).
+		const root = typeof element.closest === 'function' ?
+			( element.closest( '.citizen-command-palette' ) || element ) :
+			element;
+		const direction = window.getComputedStyle( root ).direction;
+		if ( direction ) {
+			return direction === 'rtl';
+		}
+	}
+	return typeof document !== 'undefined' && document.dir === 'rtl';
+}
+
+/**
+ * Map a physical arrow onto the logical direction the bindings are written in.
+ *
+ * @param {string} key
+ * @param {boolean} rtl
+ * @return {string}
+ */
+function toLogicalKey( key, rtl ) {
+	return rtl && MIRRORED_KEYS[ key ] ? MIRRORED_KEYS[ key ] : key;
+}
+
+/**
+ * Mirror the arrow glyphs in a footer hint, so the key it advertises is the
+ * one the user actually has to press.
+ *
+ * @param {string} kbd
+ * @param {boolean} rtl
+ * @return {string}
+ */
+function mirrorHint( kbd, rtl ) {
+	if ( !rtl || typeof kbd !== 'string' ) {
+		return kbd;
+	}
+	// A hint offering both arrows already covers either direction, so swapping
+	// them would only shuffle the glyphs into a stranger order.
+	if ( kbd.includes( '←' ) && kbd.includes( '→' ) ) {
+		return kbd;
+	}
+	return kbd.replace( /[←→]/g, ( glyph ) => ( glyph === '←' ? '→' : '←' ) );
+}
+
 /**
  * Core keybinding registry for the command palette.
  *
@@ -652,7 +725,7 @@ function useKeyboard( options ) {
 			actionsFocused: false,
 			dispatchEscape: null
 		} );
-		const binding = resolveBinding( inputState, { key: 'Escape' }, activeBindings.value );
+		const binding = resolveBinding( inputState, 'Escape', activeBindings.value );
 		if ( binding ) {
 			binding.handle( inputState, event );
 		}
@@ -716,9 +789,12 @@ function useKeyboard( options ) {
 	const keyboardHints = computed( () => {
 		const state = buildState();
 		const zone = state.actionsFocused ? 'action' : 'input';
-		return resolveHints( state, zone, activeBindings.value ).map( ( hint ) => ( {
+		const hints = resolveHints( state, zone, activeBindings.value );
+		const rtl = hints.some( ( hint ) => /[←→]/.test( hint.kbd ) ) &&
+			isRtlDirection( state.inputElement );
+		return hints.map( ( hint ) => ( {
 			msgKey: hint.msgKey,
-			kbd: hint.kbd
+			kbd: mirrorHint( hint.kbd, rtl )
 		} ) );
 	} );
 
@@ -810,7 +886,15 @@ function useKeyboard( options ) {
 			state.selectedTokenIndex = -1;
 		}
 
-		const binding = resolveBinding( state, event, activeBindings.value );
+		// Resolve against the logical key, but hand the handler the real event —
+		// the only handler that re-reads event.key distinguishes ArrowUp from
+		// ArrowDown, which the mirror never touches. Direction is only sampled
+		// for the two keys that can be mirrored, so ordinary typing does not
+		// pay for a style read.
+		const logicalKey = MIRRORED_KEYS[ event.key ] ?
+			toLogicalKey( event.key, isRtlDirection( state.inputElement ) ) :
+			event.key;
+		const binding = resolveBinding( state, logicalKey, activeBindings.value );
 		if ( binding ) {
 			binding.handle( state, event );
 			return;
