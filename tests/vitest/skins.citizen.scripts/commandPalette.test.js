@@ -13,6 +13,7 @@ describe( 'createCommandPalette', () => {
 	let resolveLoad;
 	let rejectLoad;
 	let mockOpen;
+	let mockFocus;
 	let mockClose;
 	let mockInitApp;
 
@@ -23,7 +24,12 @@ describe( 'createCommandPalette', () => {
 
 		mockOpen = vi.fn();
 		mockClose = vi.fn();
-		mockInitApp = vi.fn().mockReturnValue( { open: mockOpen, close: mockClose } );
+		mockFocus = vi.fn();
+		mockInitApp = vi.fn().mockReturnValue( {
+			open: mockOpen,
+			focus: mockFocus,
+			close: mockClose
+		} );
 		// `mw.loader.using` resolves with a `req` function that returns the
 		// loaded module's exports. Mirrors the real MediaWiki API contract
 		// and matches the SMW-mode-load pattern in palette init.js.
@@ -147,6 +153,47 @@ describe( 'createCommandPalette', () => {
 
 		expect( mw.loader.using ).not.toHaveBeenCalled();
 		expect( mockOpen ).toHaveBeenCalledWith( 'second' );
+	} );
+
+	it( 'a repeat trigger on an open palette restores focus without resetting it', async () => {
+		const cp = createCommandPalette( { document, mw } );
+		cp.init();
+		cp.triggerOpen();
+		resolveLoad();
+		await new Promise( ( r ) => setTimeout( r, 0 ) );
+		mockOpen.mockClear();
+
+		cp.triggerOpen();
+
+		expect( mockOpen ).not.toHaveBeenCalled();
+		expect( mockFocus ).toHaveBeenCalled();
+	} );
+
+	it( 'a repeat trigger carrying a prefill still replaces the query', async () => {
+		const cp = createCommandPalette( { document, mw } );
+		cp.init();
+		cp.triggerOpen();
+		resolveLoad();
+		await new Promise( ( r ) => setTimeout( r, 0 ) );
+		mockOpen.mockClear();
+
+		cp.triggerOpen( 'Ship:' );
+
+		expect( mockOpen ).toHaveBeenCalledWith( 'Ship:' );
+		expect( mockFocus ).not.toHaveBeenCalled();
+	} );
+
+	it( 'closing returns focus to the search trigger', async () => {
+		const cp = createCommandPalette( { document, mw } );
+		cp.init();
+		cp.triggerOpen();
+		resolveLoad();
+		await new Promise( ( r ) => setTimeout( r, 0 ) );
+		document.body.focus();
+
+		mockInitApp.mock.calls[ 0 ][ 1 ].onClose();
+
+		expect( document.activeElement.id ).toBe( 'citizen-search-summary' );
 	} );
 
 	it( 'cp.close() from mounted state delegates to paletteApp.close', async () => {

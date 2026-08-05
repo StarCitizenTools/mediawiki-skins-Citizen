@@ -28,7 +28,12 @@ function createCommandPalette( { document, mw } ) {
 	let cancelled = false;
 
 	let detailsEl = null;
+	let summaryEl = null;
 	let overlay = null;
+	// Whether the palette is on screen. Distinct from `state`, which tracks
+	// whether the bundle has loaded — the palette can be closed and reopened
+	// any number of times while `state` stays 'mounted'.
+	let isOpen = false;
 
 	/**
 	 * Mirror palette open/closed state onto the `<details>` element. The
@@ -56,6 +61,15 @@ function createCommandPalette( { document, mw } ) {
 		// inner DOM after the leave transition completes.
 		setOpenState( false );
 		pendingPrefill = null;
+		// Hand focus back to the control that opened the palette. Without
+		// this it lands on <body>, so the next Tab restarts from the top of
+		// the document — the palette's own dismissal keys (Esc, Tab) would
+		// otherwise cost a keyboard user their place on the page.
+		const wasOpen = isOpen;
+		isOpen = false;
+		if ( wasOpen && summaryEl ) {
+			summaryEl.focus();
+		}
 	}
 
 	/**
@@ -103,6 +117,7 @@ function createCommandPalette( { document, mw } ) {
 				state = 'mounted';
 				if ( !cancelled ) {
 					paletteApp.open( pendingPrefill );
+					isOpen = true;
 				}
 				pendingPrefill = null;
 				cancelled = false;
@@ -134,7 +149,20 @@ function createCommandPalette( { document, mw } ) {
 		cancelled = false;
 
 		if ( state === 'mounted' ) {
+			// `open()` is unconditionally a reset — it closes help, exits the
+			// active mode and clears the query and token chips. Running it on
+			// a palette that is already on screen would throw away what the
+			// user has typed. The shortcuts stay reachable while the palette
+			// is open (focus only has to be off the input for `isFormField`
+			// to let them through), so a repeat trigger just restores focus.
+			// A prefill is an explicit request to replace the query, so it
+			// still goes through.
+			if ( isOpen && text === null ) {
+				paletteApp.focus();
+				return;
+			}
 			paletteApp.open( text );
+			isOpen = true;
 			return;
 		}
 		if ( state === 'loading' ) {
@@ -161,6 +189,7 @@ function createCommandPalette( { document, mw } ) {
 		if ( !summary ) {
 			return;
 		}
+		summaryEl = summary;
 		detailsEl = document.getElementById( 'citizen-search-details' );
 
 		// `templates/Search.mustache` renders a `<div id="citizen-search__card">`
