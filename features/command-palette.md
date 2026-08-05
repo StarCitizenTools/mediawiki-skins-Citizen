@@ -282,6 +282,7 @@ keybindings: [
 | `id` | `string` | Unique binding identifier (used for debugging). |
 | `zone` | `'input' \| 'action'` | Which focus zone the binding applies to. |
 | `keys` | `string[]` | Event `key` values that fire `handle`. An empty array marks the binding as hint-only. Declare `ArrowLeft`/`ArrowRight` logically (previous/next) — the physical arrow is mirrored on RTL interface languages. |
+| `modifiers` | `string \| string[]` | Which modifier state the binding claims: `none` (the default), `shift`, `accel` (Ctrl, or Command on a Mac), `accel+shift`, or `any`. An array accepts several. A character composed with AltGr and a capital typed with Shift both count as `none` — they are typed text, not chords — so a binding on `?` or `@` needs nothing special. Anything not named stays with the browser. |
 | `when` | `function` | `(state) => boolean` — predicate over the dispatch state. False suppresses both the handler and the hint. |
 | `handle` | `function` | `(state, event) => void` — called when a `keys` entry matches and `when` passes. Call `event.preventDefault()` to claim the keystroke. |
 | `worksDuringHelp` | `boolean` | When true, the binding fires even with the help overlay open. Defaults to false. |
