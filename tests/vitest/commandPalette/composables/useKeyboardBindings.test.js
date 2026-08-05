@@ -7,17 +7,13 @@ function makeState( overrides ) {
 	return Object.assign( { helpVisible: false, actionsFocused: false }, overrides );
 }
 
-function makeEvent( key ) {
-	return { key };
-}
-
 describe( 'resolveBinding', () => {
 	it( 'returns null when no binding matches', () => {
 		const bindings = [
 			{ id: 'a', zone: 'input', keys: [ 'Enter' ], when: () => true, handle: () => {} }
 		];
 
-		const result = resolveBinding( makeState(), makeEvent( 'Tab' ), bindings );
+		const result = resolveBinding( makeState(), 'Tab', bindings );
 
 		expect( result ).toBeNull();
 	} );
@@ -27,7 +23,7 @@ describe( 'resolveBinding', () => {
 			{ id: 'a', zone: 'input', keys: [ 'Enter' ], when: () => true, handle: () => {} }
 		];
 
-		const result = resolveBinding( makeState(), makeEvent( 'Enter' ), bindings );
+		const result = resolveBinding( makeState(), 'Enter', bindings );
 
 		expect( result.id ).toBe( 'a' );
 	} );
@@ -38,7 +34,7 @@ describe( 'resolveBinding', () => {
 			{ id: 'second', zone: 'input', keys: [ 'Backspace' ], when: () => true, handle: () => {} }
 		];
 
-		const result = resolveBinding( makeState(), makeEvent( 'Backspace' ), bindings );
+		const result = resolveBinding( makeState(), 'Backspace', bindings );
 
 		expect( result.id ).toBe( 'first' );
 	} );
@@ -48,7 +44,7 @@ describe( 'resolveBinding', () => {
 			{ id: 'a', zone: 'action', keys: [ 'Enter' ], when: () => true, handle: () => {} }
 		];
 
-		const result = resolveBinding( makeState( { actionsFocused: false } ), makeEvent( 'Enter' ), bindings );
+		const result = resolveBinding( makeState( { actionsFocused: false } ), 'Enter', bindings );
 
 		expect( result ).toBeNull();
 	} );
@@ -59,7 +55,7 @@ describe( 'resolveBinding', () => {
 			{ id: 'help', zone: 'input', keys: [ 'Enter' ], when: () => true, worksDuringHelp: true, handle: () => {} }
 		];
 
-		const result = resolveBinding( makeState( { helpVisible: true } ), makeEvent( 'Enter' ), bindings );
+		const result = resolveBinding( makeState( { helpVisible: true } ), 'Enter', bindings );
 
 		expect( result.id ).toBe( 'help' );
 	} );
@@ -69,8 +65,8 @@ describe( 'resolveBinding', () => {
 			{ id: 'a', zone: 'input', keys: [ 'Backspace' ], when: ( s ) => s.tokens.length > 0, handle: () => {} }
 		];
 
-		expect( resolveBinding( makeState( { tokens: [] } ), makeEvent( 'Backspace' ), bindings ) ).toBeNull();
-		expect( resolveBinding( makeState( { tokens: [ 'a' ] } ), makeEvent( 'Backspace' ), bindings ).id ).toBe( 'a' );
+		expect( resolveBinding( makeState( { tokens: [] } ), 'Backspace', bindings ) ).toBeNull();
+		expect( resolveBinding( makeState( { tokens: [ 'a' ] } ), 'Backspace', bindings ).id ).toBe( 'a' );
 	} );
 
 	it( 'never returns a binding with empty keys array', () => {
@@ -78,7 +74,7 @@ describe( 'resolveBinding', () => {
 			{ id: 'hint-only', zone: 'input', keys: [], when: () => true, handle: () => {}, hint: { msgKey: 'a', kbd: 'x', order: 10 } }
 		];
 
-		const result = resolveBinding( makeState(), makeEvent( 'x' ), bindings );
+		const result = resolveBinding( makeState(), 'x', bindings );
 
 		expect( result ).toBeNull();
 	} );

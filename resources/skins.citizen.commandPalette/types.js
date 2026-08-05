@@ -159,6 +159,8 @@
  * @typedef {Object} KeyBindingHint
  * @property {string} msgKey i18n message key for the hint label.
  * @property {string} kbd Keyboard glyph shown next to the label (e.g. '↵', '↑↓', '⌘C').
+ *   A lone '←' or '→' is swapped on RTL interface languages so the hint names
+ *   the key the user actually presses.
  * @property {number} [order] Sort order within the footer (lower = leftmost).
  */
 
@@ -170,7 +172,7 @@
  * @typedef {Object} KeyBinding
  * @property {string} id Unique binding identifier (used for debugging).
  * @property {'input'|'action'} zone Which focus zone the binding applies to.
- * @property {string[]} keys Event `key` values that fire `handle`. An empty array marks the binding as hint-only.
+ * @property {string[]} keys Event `key` values that fire `handle`. An empty array marks the binding as hint-only. Declare 'ArrowLeft'/'ArrowRight' logically (previous/next): the palette mirrors the physical arrow on RTL interface languages before resolving.
  * @property {function(Object): boolean} when Predicate over the dispatch state — false suppresses both the handler and the hint.
  * @property {function(Object, KeyboardEvent)} handle Called when a `keys` entry matches and `when` passes. Should call `event.preventDefault()` to claim the keystroke.
  * @property {boolean} [worksDuringHelp] When true, the binding fires even with the help overlay open. Defaults to false.
