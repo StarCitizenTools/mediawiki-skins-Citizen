@@ -90,6 +90,7 @@
 						"citizen-preferences-load-retry",
 						"citizen-preferences-toggle",
 						"citizen-search-toggle",
+						"citizen-search-toggle-shortcut",
 						"citizen-usermenu-toggle",
 						"randompage",
 						"search",

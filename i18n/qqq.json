@@ -23,6 +23,7 @@
 	"citizen-preferences-load-error": "Error message shown in the preferences dropdown when the preferences ResourceLoader module fails to load.",
 	"citizen-preferences-load-retry": "Label of the retry button shown alongside the preferences load error.\n{{Identical|Retry}}",
 	"citizen-search-toggle": "Tooltip of search box toggle",
+	"citizen-search-toggle-shortcut": "Keyboard shortcut hint appended to the search button tooltip, after {{msg-citizen|citizen-search-toggle}}. The \"/\" is the key itself and must not be translated; adapt only the brackets if your language uses different ones.\n{{optional}}",
 	"citizen-notifications-title": "Heading of the notification panel that opens from the header notification button.\n{{Identical|Notifications}}",
 	"citizen-notifications-label": "Accessible label and tooltip for the single header notification button.\n{{Identical|Notifications}}",
 	"citizen-notifications-tab-all": "Label of the tab in the notification panel that shows both alerts and notices.\n{{Identical|All}}",
