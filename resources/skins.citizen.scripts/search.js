@@ -1,3 +1,10 @@
+const {
+	isMacPlatform,
+	isLetterPressed,
+	isAltGraphChar,
+	isAccessKeyChord
+} = require( './keyboardLayout.js' );
+
 /**
  * Check if the element is a HTML form element or content editable.
  * Used to gate keyboard shortcuts so typing in an input does not
@@ -19,6 +26,33 @@ function isFormField( element ) {
 }
 
 /**
+ * The chords that open the command palette.
+ *
+ * A flat list rather than a branching chain, so each entry sees the untouched
+ * event and adding one cannot change what another matches.
+ *
+ * @type {Array<function( KeyboardEvent, boolean ): boolean>}
+ */
+const OPEN_SHORTCUTS = [
+	// "/". A bare Ctrl or Command means a chord, but AltGr types "/" on some
+	// layouts and Windows delivers that as Ctrl+Alt.
+	( event, isMac ) => event.key === '/' &&
+		!event.metaKey &&
+		( !event.ctrlKey || isAltGraphChar( event, isMac ) ),
+
+	// Ctrl+K, or Command+K on a Mac. Any further modifier makes it someone
+	// else's chord — Ctrl+Shift+K opens the browser console.
+	( event ) => ( event.ctrlKey || event.metaKey ) &&
+		!event.altKey &&
+		!event.shiftKey &&
+		isLetterPressed( event, 'k' ),
+
+	// "F" is the access key MediaWiki assigns to search; its modifiers are
+	// platform-dependent.
+	( event, isMac ) => isAccessKeyChord( event, isMac ) && isLetterPressed( event, 'f' )
+];
+
+/**
  * Bind keyboard shortcuts that open the command palette.
  *
  * @param {Window} window
@@ -26,22 +60,11 @@ function isFormField( element ) {
  * @return {void}
  */
 function bindOpenOnSlash( window, triggerOpen ) {
+	const isMac = isMacPlatform( window.navigator );
+
 	const onExpandOnSlash = ( /** @type {KeyboardEvent} */ event ) => {
-		const isKeyPressed = () => {
-			// "/" key is standard on many sites
-			if ( event.code === 'Slash' ) {
-				return true;
-			// "Ctrl" + "K" (or "Command" + "K" on Mac)
-			} else if ( ( event.ctrlKey || event.metaKey ) && event.code === 'KeyK' ) {
-				return true;
-			// "Alt" + "Shift" + "F" is the MW standard key
-			} else if ( event.altKey && event.shiftKey && event.code === 'KeyF' ) {
-				return true;
-			} else {
-				return false;
-			}
-		};
-		if ( isKeyPressed() && !isFormField( event.target ) ) {
+		const isKeyPressed = OPEN_SHORTCUTS.some( ( matches ) => matches( event, isMac ) );
+		if ( isKeyPressed && !isFormField( event.target ) ) {
 			// Firefox quickfind would otherwise intercept "/"
 			event.preventDefault();
 			triggerOpen();
