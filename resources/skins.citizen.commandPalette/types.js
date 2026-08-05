@@ -173,6 +173,7 @@
  * @property {string} id Unique binding identifier (used for debugging).
  * @property {'input'|'action'} zone Which focus zone the binding applies to.
  * @property {string[]} keys Event `key` values that fire `handle`. An empty array marks the binding as hint-only. Declare 'ArrowLeft'/'ArrowRight' logically (previous/next): the palette mirrors the physical arrow on RTL interface languages before resolving.
+ * @property {string|string[]} [modifiers='none'] Which modifier state the binding claims, from 'none', 'shift', 'accel' (Ctrl, or Command on a Mac), 'accel+shift', or 'any'. An array accepts several. A character composed with AltGr, and a capital typed with Shift, count as 'none' — they are typed text, not chords. Anything not named here stays with the browser.
  * @property {function(Object): boolean} when Predicate over the dispatch state — false suppresses both the handler and the hint.
  * @property {function(Object, KeyboardEvent)} handle Called when a `keys` entry matches and `when` passes. Should call `event.preventDefault()` to claim the keystroke.
  * @property {boolean} [worksDuringHelp] When true, the binding fires even with the help overlay open. Defaults to false.

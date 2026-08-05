@@ -1,5 +1,5 @@
 const { computed, nextTick } = require( 'vue' );
-const { resolveBinding, resolveHints } = require( './useKeyboardBindings.js' );
+const { modifierToken, resolveBinding, resolveHints } = require( './useKeyboardBindings.js' );
 // keyboardLayout.js is listed in both this module's and
 // skins.citizen.scripts' packageFiles — keep the two in sync
 const {
@@ -173,6 +173,7 @@ const coreBindings = [
 		id: 'action-tab-to-input',
 		zone: 'action',
 		keys: [ 'Tab' ],
+		modifiers: [ 'none', 'shift' ],
 		when: () => true,
 		worksDuringHelp: true,
 		handle: ( state, event ) => {
@@ -437,6 +438,7 @@ const coreBindings = [
 		id: 'input-tab-close',
 		zone: 'input',
 		keys: [ 'Tab' ],
+		modifiers: [ 'none', 'shift' ],
 		when: () => true,
 		worksDuringHelp: true,
 		handle: ( state, event ) => {
@@ -843,23 +845,13 @@ function useKeyboard( options ) {
 			}
 		}
 
-		// Ignore events with modifier keys (Shift is allowed for printable chars
-		// like @, >, :, ?). A character composed with AltGr is not a chord —
-		// that is how `@`, `~` and `#` are typed on many European layouts, and
-		// all three are mode triggers.
-		if (
-			( event.altKey || event.ctrlKey || event.metaKey ) &&
-			!isAltGraphChar( event, IS_MAC )
-		) {
-			return;
-		}
-		// Tab is exempt: it has a binding of its own, and dropping Shift+Tab
-		// here would skip that binding's preventDefault() and let the browser
-		// walk focus out of the open palette — where Escape no longer reaches
-		// it, since this handler is bound to the palette itself.
-		if ( event.shiftKey && event.key.length !== 1 && event.key !== 'Tab' ) {
-			return;
-		}
+		// One reading of the modifier state, shared by the binding lookup and
+		// by the fallbacks below. Bindings declare what they claim; anything
+		// unclaimed stays with the browser and the text field.
+		const modifiers = modifierToken( event, IS_MAC, isAltGraphChar );
+		// `none` is the only state in which a keystroke counts as typed text,
+		// which is what the fallbacks after the dispatcher all act on.
+		const isTypedText = modifiers === 'none';
 
 		const state = buildState();
 		// The actual focus zone is determined by the event target (an action
@@ -875,6 +867,7 @@ function useKeyboard( options ) {
 		// Typing with a chip selected: deselect the chip first, then let the
 		// character flow through to the dispatcher so it lands in the input.
 		if (
+			isTypedText &&
 			!state.actionsFocused &&
 			!state.helpVisible &&
 			tokens.selectedTokenIndex &&
@@ -894,7 +887,7 @@ function useKeyboard( options ) {
 		const logicalKey = MIRRORED_KEYS[ event.key ] ?
 			toLogicalKey( event.key, isRtlDirection( state.inputElement ) ) :
 			event.key;
-		const binding = resolveBinding( state, logicalKey, activeBindings.value );
+		const binding = resolveBinding( state, logicalKey, activeBindings.value, modifiers );
 		if ( binding ) {
 			binding.handle( state, event );
 			return;
@@ -902,13 +895,17 @@ function useKeyboard( options ) {
 
 		// Help-mode swallow: while the overlay is up, eat printable keys and
 		// Backspace so they neither modify input nor trigger modes/tokens.
-		if ( state.helpVisible && ( event.key.length === 1 || event.key === 'Backspace' ) ) {
+		if (
+			isTypedText && state.helpVisible &&
+			( event.key.length === 1 || event.key === 'Backspace' )
+		) {
 			event.preventDefault();
 			return;
 		}
 
 		// Action-zone fallback: typing redirects to the input field.
 		if (
+			isTypedText &&
 			state.actionsFocused &&
 			(
 				event.key.length === 1 ||
@@ -928,6 +925,7 @@ function useKeyboard( options ) {
 		// this fallback rather than relying on the help-swallow fallback above
 		// firing first.
 		if (
+			isTypedText &&
 			!state.actionsFocused &&
 			!state.helpVisible &&
 			!state.activeMode &&

@@ -1,4 +1,5 @@
 const {
+	modifierToken,
 	resolveBinding,
 	resolveHints
 } = require( '../../../../resources/skins.citizen.commandPalette/composables/useKeyboardBindings.js' );
@@ -169,5 +170,107 @@ describe( 'resolveHints', () => {
 
 		expect( hints ).toHaveLength( 1 );
 		expect( hints[ 0 ].kbd ).toBe( '↑↓' );
+	} );
+} );
+
+describe( 'modifierToken', () => {
+	const noAltGraph = () => false;
+
+	function event( overrides ) {
+		return Object.assign( {
+			key: 'a', altKey: false, ctrlKey: false, metaKey: false, shiftKey: false
+		}, overrides );
+	}
+
+	it( 'reports no modifiers for a bare key', () => {
+		expect( modifierToken( event(), false, noAltGraph ) ).toBe( 'none' );
+	} );
+
+	it( 'does not count Shift on a key that produces a character', () => {
+		// `?` is Shift+/ on a US layout; treating Shift as a modifier there
+		// would make the help shortcut unreachable.
+		expect( modifierToken( event( { key: '?', shiftKey: true } ), false, noAltGraph ) )
+			.toBe( 'none' );
+	} );
+
+	it( 'counts Shift on a key that produces no character', () => {
+		expect( modifierToken( event( { key: 'Tab', shiftKey: true } ), false, noAltGraph ) )
+			.toBe( 'shift' );
+	} );
+
+	it( 'reads the accelerator per platform', () => {
+		expect( modifierToken( event( { ctrlKey: true } ), false, noAltGraph ) ).toBe( 'accel' );
+		expect( modifierToken( event( { metaKey: true } ), true, noAltGraph ) ).toBe( 'accel' );
+		// The other one is a foreign chord on that platform.
+		expect( modifierToken( event( { metaKey: true } ), false, noAltGraph ) ).toBe( 'other' );
+		expect( modifierToken( event( { ctrlKey: true } ), true, noAltGraph ) ).toBe( 'other' );
+	} );
+
+	it( 'combines the accelerator with Shift', () => {
+		expect( modifierToken( event( { key: 'Tab', ctrlKey: true, shiftKey: true } ), false, noAltGraph ) )
+			.toBe( 'accel+shift' );
+	} );
+
+	it( 'reports an Alt chord as unclaimable', () => {
+		expect( modifierToken( event( { altKey: true } ), false, noAltGraph ) ).toBe( 'other' );
+	} );
+
+	it( 'treats an AltGr-composed character as typed text', () => {
+		// `@`, `~` and `#` are AltGr characters on European layouts, and all
+		// three are mode triggers.
+		const alwaysAltGraph = () => true;
+
+		expect( modifierToken( event( { key: '@', ctrlKey: true, altKey: true } ), false, alwaysAltGraph ) )
+			.toBe( 'none' );
+	} );
+} );
+
+describe( 'resolveBinding — modifiers', () => {
+	function binding( overrides ) {
+		return Object.assign(
+			{ id: 'b', zone: 'input', keys: [ 'Tab' ], when: () => true, handle: () => {} },
+			overrides
+		);
+	}
+
+	it( 'matches a binding with no declared policy only when none are held', () => {
+		const bindings = [ binding() ];
+
+		expect( resolveBinding( makeState(), 'Tab', bindings, 'none' ) ).not.toBeNull();
+		expect( resolveBinding( makeState(), 'Tab', bindings, 'shift' ) ).toBeNull();
+		expect( resolveBinding( makeState(), 'Tab', bindings, 'accel' ) ).toBeNull();
+	} );
+
+	it( 'treats an omitted modifiers argument as none', () => {
+		expect( resolveBinding( makeState(), 'Tab', [ binding() ] ) ).not.toBeNull();
+	} );
+
+	it( 'matches a required modifier only when it is held', () => {
+		const bindings = [ binding( { keys: [ 'c' ], modifiers: 'accel' } ) ];
+
+		expect( resolveBinding( makeState(), 'c', bindings, 'accel' ) ).not.toBeNull();
+		expect( resolveBinding( makeState(), 'c', bindings, 'none' ) ).toBeNull();
+	} );
+
+	it( 'accepts any of several declared states', () => {
+		const bindings = [ binding( { modifiers: [ 'none', 'shift' ] } ) ];
+
+		expect( resolveBinding( makeState(), 'Tab', bindings, 'none' ) ).not.toBeNull();
+		expect( resolveBinding( makeState(), 'Tab', bindings, 'shift' ) ).not.toBeNull();
+		expect( resolveBinding( makeState(), 'Tab', bindings, 'accel' ) ).toBeNull();
+	} );
+
+	it( 'lets a binding opt out of the policy entirely', () => {
+		const bindings = [ binding( { modifiers: 'any' } ) ];
+
+		expect( resolveBinding( makeState(), 'Tab', bindings, 'other' ) ).not.toBeNull();
+	} );
+
+	it( 'leaves an unnameable chord to the browser', () => {
+		// `other` covers Alt chords and the Windows key; nothing but `any` can
+		// claim one, so they stay with the browser and the text field.
+		const bindings = [ binding( { modifiers: [ 'none', 'shift', 'accel', 'accel+shift' ] } ) ];
+
+		expect( resolveBinding( makeState(), 'Tab', bindings, 'other' ) ).toBeNull();
 	} );
 } );
