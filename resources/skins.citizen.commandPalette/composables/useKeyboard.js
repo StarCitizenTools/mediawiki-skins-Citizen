@@ -1,10 +1,17 @@
 const { computed, nextTick } = require( 'vue' );
 const { resolveBinding, resolveHints } = require( './useKeyboardBindings.js' );
+// keyboardLayout.js is listed in both this module's and
+// skins.citizen.scripts' packageFiles — keep the two in sync
+const {
+	isMacPlatform,
+	isLetterPressed,
+	isAltGraphChar,
+	isComposing
+} = require( '../../skins.citizen.scripts/keyboardLayout.js' );
 
 // Mac vs everywhere-else copy shortcut, computed once. Mac users
 // recognise ⌘C; Windows/Linux users recognise Ctrl+C.
-const IS_MAC = typeof navigator !== 'undefined' &&
-	/Mac|iPhone|iPad/i.test( navigator.platform || '' );
+const IS_MAC = isMacPlatform( typeof navigator !== 'undefined' ? navigator : null );
 const COPY_KBD = IS_MAC ? '⌘C' : 'Ctrl+C';
 
 /**
@@ -708,6 +715,12 @@ function useKeyboard( options ) {
 	}
 
 	function handleKeydown( event ) {
+		// Acting on the key that commits or cancels a composition would
+		// navigate away from (Enter) or clear (Escape) the query being typed.
+		if ( isComposing( event ) ) {
+			return;
+		}
+
 		// Cmd/Ctrl+C: when nothing is selected and the highlighted item
 		// declares `detail.header.copyValue`, hijack the shortcut to copy
 		// that value. With a selection present, the browser's native copy
@@ -716,7 +729,7 @@ function useKeyboard( options ) {
 			( event.metaKey || event.ctrlKey ) &&
 			!event.altKey &&
 			!event.shiftKey &&
-			( event.key === 'c' || event.key === 'C' ) &&
+			isLetterPressed( event, 'c' ) &&
 			!hasTextSelection() &&
 			core.requestHeaderCopy
 		) {
@@ -733,8 +746,13 @@ function useKeyboard( options ) {
 		}
 
 		// Ignore events with modifier keys (Shift is allowed for printable chars
-		// like @, >, :, ?).
-		if ( event.altKey || event.ctrlKey || event.metaKey ) {
+		// like @, >, :, ?). A character composed with AltGr is not a chord —
+		// that is how `@`, `~` and `#` are typed on many European layouts, and
+		// all three are mode triggers.
+		if (
+			( event.altKey || event.ctrlKey || event.metaKey ) &&
+			!isAltGraphChar( event, IS_MAC )
+		) {
 			return;
 		}
 		if ( event.shiftKey && event.key.length !== 1 ) {

@@ -82,7 +82,11 @@ describe( 'useKeyboard', () => {
 			altKey: false,
 			ctrlKey: false,
 			metaKey: false,
-			shiftKey: false
+			shiftKey: false,
+			// Browsers always supply this; the AltGr detection consults it
+			// before falling back to the modifier flags, so a fixture without
+			// it would leave that branch unreachable.
+			getModifierState: vi.fn( () => false )
 		};
 	}
 
@@ -215,6 +219,184 @@ describe( 'useKeyboard', () => {
 			keyboard.handleKeydown( event );
 
 			expect( deps.onEnterMode ).toHaveBeenCalledWith( mode );
+		} );
+	} );
+
+	describe( 'AltGr characters', () => {
+		it( 'should treat a Ctrl+Alt character as typed, not as a chord', () => {
+			deps.query = ref( '' );
+			deps.activeMode = ref( null );
+			const mode = { id: 'user', triggers: [ '@' ] };
+			deps.findModeByTrigger = vi.fn( () => mode );
+			deps.onEnterMode = vi.fn();
+			keyboard = useKeyboard( toGrouped( deps ) );
+
+			// German and Nordic layouts type "@" as AltGr+Q, which Windows
+			// reports as Ctrl+Alt.
+			var event = createKeyEvent( '@' );
+			event.ctrlKey = true;
+			event.altKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onEnterMode ).toHaveBeenCalledWith( mode );
+		} );
+
+		it( 'should still ignore Ctrl+Alt with a non-printable key', () => {
+			// Ctrl+Alt+Arrow is a live desktop shortcut; AltGr cannot produce it.
+			var event = createKeyEvent( 'ArrowDown' );
+			event.ctrlKey = true;
+			event.altKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( listNav.highlightNext ).not.toHaveBeenCalled();
+		} );
+
+		it( 'should redirect an AltGr character typed in the action zone to the input', () => {
+			const actionTarget = {
+				closest: vi.fn( ( selector ) => (
+					selector === '.citizen-command-palette-list-item__action' ? actionTarget : null
+				) )
+			};
+			actionNav.isActive.value = true;
+
+			var event = createKeyEvent( '@', actionTarget );
+			event.ctrlKey = true;
+			event.altKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( actionNav.deactivate ).toHaveBeenCalled();
+		} );
+
+		it( 'should treat a character Firefox reports via getModifierState as typed', () => {
+			deps.query = ref( '' );
+			deps.activeMode = ref( null );
+			const mode = { id: 'user', triggers: [ '@' ] };
+			deps.findModeByTrigger = vi.fn( () => mode );
+			deps.onEnterMode = vi.fn();
+			keyboard = useKeyboard( toGrouped( deps ) );
+
+			// Firefox flags AltGr without setting ctrlKey.
+			var event = createKeyEvent( '@' );
+			event.altKey = true;
+			event.getModifierState = vi.fn( ( m ) => m === 'AltGraph' );
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onEnterMode ).toHaveBeenCalledWith( mode );
+		} );
+
+		it( 'should not let Ctrl+Alt+Space activate the focused action', () => {
+			const actionTarget = {
+				closest: vi.fn( ( selector ) => (
+					selector === '.citizen-command-palette-list-item__action' ? actionTarget : null
+				) )
+			};
+			actionNav.isActive.value = true;
+
+			// Space is a real action-zone binding, and no AltGr layer types a
+			// plain U+0020 — the layouts that map it emit U+00A0.
+			var event = createKeyEvent( ' ', actionTarget );
+			event.ctrlKey = true;
+			event.altKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( actionNav.clickFocused ).not.toHaveBeenCalled();
+		} );
+
+		it( 'should still ignore a Command chord', () => {
+			const actionTarget = {
+				closest: vi.fn( ( selector ) => (
+					selector === '.citizen-command-palette-list-item__action' ? actionTarget : null
+				) )
+			};
+			actionNav.isActive.value = true;
+
+			var event = createKeyEvent( '@', actionTarget );
+			event.metaKey = true;
+			event.altKey = true;
+			event.ctrlKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( actionNav.deactivate ).not.toHaveBeenCalled();
+		} );
+	} );
+
+	describe( 'input method composition', () => {
+		it( 'should ignore the Enter that commits an IME candidate', () => {
+			listNav.highlightedIndex.value = 0;
+
+			var event = createKeyEvent( 'Enter' );
+			event.isComposing = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onSelect ).not.toHaveBeenCalled();
+			expect( event.preventDefault ).not.toHaveBeenCalled();
+		} );
+
+		it( 'should still act on a key that only reports the legacy keyCode 229', () => {
+			// Chrome on Android sets 229 for almost every non-printable key,
+			// Enter included, whether or not anything is being composed. Reading
+			// it would disable the palette's Enter and Backspace on mobile.
+			var event = createKeyEvent( 'Escape' );
+			event.keyCode = 229;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.onClose ).toHaveBeenCalled();
+		} );
+	} );
+
+	describe( 'copy shortcut', () => {
+		function withCopyValue() {
+			deps.items = ref( [
+				{ id: '1', detail: { header: { copyValue: 'File:Foo.png' } } }
+			] );
+			deps.requestHeaderCopy = vi.fn();
+			keyboard = useKeyboard( toGrouped( deps ) );
+			listNav.highlightedIndex.value = 0;
+		}
+
+		it( 'should copy the header value on Ctrl+C', () => {
+			withCopyValue();
+
+			var event = createKeyEvent( 'c' );
+			event.ctrlKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.requestHeaderCopy ).toHaveBeenCalled();
+		} );
+
+		it( 'should copy on a layout that types no Latin letter', () => {
+			withCopyValue();
+
+			// Russian keycaps carry a Latin legend on the US positions.
+			var event = createKeyEvent( 'с' );
+			event.code = 'KeyC';
+			event.ctrlKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.requestHeaderCopy ).toHaveBeenCalled();
+		} );
+
+		it( 'should not copy from the key position when the layout types c elsewhere', () => {
+			withCopyValue();
+
+			// Dvorak types "j" from the US QWERTY "c" position.
+			var event = createKeyEvent( 'j' );
+			event.code = 'KeyC';
+			event.ctrlKey = true;
+
+			keyboard.handleKeydown( event );
+
+			expect( deps.requestHeaderCopy ).not.toHaveBeenCalled();
 		} );
 	} );
 

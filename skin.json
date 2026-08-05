@@ -495,7 +495,8 @@
 				{
 					"name": "resources/skins.citizen.commandPalette/config.json",
 					"callback": "MediaWiki\\Skins\\Citizen\\Hooks\\ResourceLoaderHooks::getCitizenCommandPaletteResourceLoaderConfig"
-				}
+				},
+				"resources/skins.citizen.scripts/keyboardLayout.js"
 			],
 			"messages": [
 				"action-edit",
