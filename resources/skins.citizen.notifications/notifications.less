@@ -7,9 +7,14 @@
 // fallback and the no-JS state. The skeleton and error classes are shared with
 // the Vue loading/error states, so they live here rather than being duplicated.
 
-// Widen the shared dropdown card for notification content.
+// Widen the shared dropdown card for notification content. Below the tablet
+// breakpoint the shared header-card mixin stretches end-anchored cards edge to
+// edge with `left: 0; right: 0`, and an explicit width would defeat that
+// over-constrained stretch — so only pin the width once the card floats free.
 #citizen-notifications-dropdown__card {
-	width: 24rem;
+	@media ( min-width: @min-width-breakpoint-tablet ) {
+		width: 24rem;
+	}
 }
 
 .citizen-notifications {
