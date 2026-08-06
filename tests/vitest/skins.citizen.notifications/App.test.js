@@ -20,6 +20,17 @@ mw.loader.require = vi.fn( () => ( {
 		template: '<span class="cdx-icon"></span>',
 		props: [ 'icon' ]
 	},
+	CdxTabs: {
+		name: 'CdxTabs',
+		template: '<div class="cdx-tabs"><slot /></div>',
+		props: [ 'active', 'framed' ],
+		emits: [ 'update:active' ]
+	},
+	CdxTab: {
+		name: 'CdxTab',
+		template: '<div class="cdx-tab" :data-tab="name"><slot /></div>',
+		props: [ 'name', 'label' ]
+	},
 } ) );
 
 let App;
@@ -56,7 +67,8 @@ function cloneItems() {
 
 function makeSource( overrides ) {
 	return Object.assign( {
-		fetch: vi.fn().mockResolvedValue( { items: cloneItems(), counts: Object.assign( {}, COUNTS ) } ),
+		fetch: vi.fn().mockResolvedValue( { items: cloneItems(), counts: Object.assign( {}, COUNTS ), wikis: [] } ),
+		fetchWiki: vi.fn().mockResolvedValue( { items: [] } ),
 		markSeen: vi.fn().mockResolvedValue(),
 		markRead: vi.fn().mockResolvedValue(),
 		markAllRead: vi.fn().mockResolvedValue()
@@ -100,7 +112,7 @@ describe( 'notifications App', () => {
 
 	it( 'shows an empty state when there is nothing waiting', async () => {
 		const source = makeSource( {
-			fetch: vi.fn().mockResolvedValue( { items: [], counts: { total: 0, local: 0, foreign: 0 } } )
+			fetch: vi.fn().mockResolvedValue( { items: [], counts: { total: 0, local: 0, foreign: 0 }, wikis: [] } )
 		} );
 		const wrapper = mountApp( source );
 		await flushPromises();
@@ -191,7 +203,7 @@ describe( 'notifications App', () => {
 		item.primaryUrl = '/wiki/Target?markasread=5';
 		item.header = '<strong>NotifBot</strong> mentioned you';
 		const source = makeSource( {
-			fetch: vi.fn().mockResolvedValue( { items: [ item ], counts: { total: 1, local: 1, foreign: 0 } } )
+			fetch: vi.fn().mockResolvedValue( { items: [ item ], counts: { total: 1, local: 1, foreign: 0 }, wikis: [] } )
 		} );
 		const wrapper = mountApp( source );
 		await flushPromises();
@@ -203,91 +215,162 @@ describe( 'notifications App', () => {
 		expect( link.attributes( 'aria-label' ) ).toBe( 'NotifBot mentioned you' );
 	} );
 
-	describe( 'cross-wiki roll-up', () => {
-		function makeSummary( count ) {
-			return {
-				id: 'summary-foreign',
-				isSummary: true,
-				count: count,
-				category: '',
-				categoryLabel: '',
-				read: false,
-				timestamp: 1700000500,
-				iconUrl: '',
-				header: 'More notifications from another wiki',
-				body: 'Example Wiki',
-				primaryUrl: 'https://example.org/wiki/Special:Notifications',
-				secondaryLinks: []
-			};
-		}
+	describe( 'other wikis', () => {
+		const WIKIS = [
+			{ id: 'commons', name: 'Wikimedia Commons', url: 'https://commons.example/wiki/Special:Notifications', apiUrl: 'https://commons.example/w/api.php', timestamp: 1700000500 },
+			{ id: 'meta', name: 'Meta', url: 'https://meta.example/wiki/Special:Notifications', apiUrl: 'https://meta.example/w/api.php', timestamp: 1700000100 }
+		];
 
-		function sourceWithSummary( extraItems = [] ) {
-			const local = extraItems.filter( ( i ) => !i.read ).length;
+		function sourceWithWikis( wikis = WIKIS ) {
 			return makeSource( {
 				fetch: vi.fn().mockResolvedValue( {
-					items: [ makeSummary( 3 ) ].concat( extraItems ),
-					counts: { total: 3 + local, local: local, foreign: 3 }
+					items: cloneItems(),
+					counts: { total: 7, local: 2, foreign: 5 },
+					wikis: wikis
 				} )
 			} );
 		}
 
-		it( 'never sends a summary row to markRead when clicked', async () => {
-			const source = sourceWithSummary();
-			const wrapper = mountApp( source );
+		it( 'hides the source switch when there are no other wikis', async () => {
+			const wrapper = mountApp( makeSource() );
 			await flushPromises();
 
-			await rows( wrapper )[ 0 ].trigger( 'click' );
-
-			expect( source.markRead ).not.toHaveBeenCalled();
+			expect( wrapper.find( '.cdx-tabs' ).exists() ).toBe( false );
 		} );
 
-		it( 'never fades a roll-up row, however often it is clicked', async () => {
-			const source = sourceWithSummary();
-			const wrapper = mountApp( source );
+		it( 'shows the source switch once another wiki has something waiting', async () => {
+			const wrapper = mountApp( sourceWithWikis() );
 			await flushPromises();
 
-			await rows( wrapper )[ 0 ].trigger( 'click' );
-			await wrapper.vm.$nextTick();
-
-			expect( wrapper.findAll( '.citizen-notifications__item--read' ) ).toHaveLength( 0 );
+			expect( wrapper.find( '.cdx-tabs' ).exists() ).toBe( true );
 		} );
 
-		it( 'leaves mark-all disabled when only a summary row is unread', async () => {
-			const source = sourceWithSummary();
-			const wrapper = mountApp( source );
+		it( 'keeps this wiki\'s notifications and the wikis in separate tabs', async () => {
+			const wrapper = mountApp( sourceWithWikis() );
 			await flushPromises();
 
-			expect( wrapper.find( '.citizen-notifications__mark-all' ).attributes( 'disabled' ) )
-				.toBeDefined();
+			expect( wrapper.findAll( '[data-tab="local"] .citizen-notifications__item' ) )
+				.toHaveLength( 3 );
+			expect( wrapper.findAll( '[data-tab="foreign"] .citizen-notifications__wiki' ) )
+				.toHaveLength( 2 );
 		} );
 
-		it( 'keeps the summary count in the badge after a local mark-read', async () => {
+		it( 'marks every listed wiki as having something waiting', async () => {
+			const wrapper = mountApp( sourceWithWikis() );
+			await flushPromises();
+
+			// Echo only reports wikis that have unread, so every row is marked.
+			expect( wrapper.findAll( '.citizen-notifications__wiki-dot' ) ).toHaveLength( 2 );
+		} );
+
+		it( 'names each wiki, most recently active first', async () => {
+			const wrapper = mountApp( sourceWithWikis() );
+			await flushPromises();
+			expect( wrapper.findAll( '.citizen-notifications__wiki-name' ).map( ( w ) => w.text() ) )
+				.toEqual( [ 'Wikimedia Commons', 'Meta' ] );
+		} );
+
+		it( 'fetches a wiki only when it is opened, and only once', async () => {
+			const source = sourceWithWikis();
+			source.fetchWiki = vi.fn().mockResolvedValue( {
+				items: [ makeItem( 99, false, 1700000900 ) ]
+			} );
+			const wrapper = mountApp( source );
+			await flushPromises();
+			expect( source.fetchWiki ).not.toHaveBeenCalled();
+
+			await wrapper.findAll( '.citizen-notifications__wiki' )[ 0 ].trigger( 'click' );
+			await flushPromises();
+
+			expect( source.fetchWiki ).toHaveBeenCalledTimes( 1 );
+			expect( source.fetchWiki.mock.calls[ 0 ][ 0 ].id ).toBe( 'commons' );
+			expect( wrapper.findAll( '[data-tab="foreign"] .citizen-notifications__item' ) )
+				.toHaveLength( 1 );
+
+			// Collapse and reopen: still one request.
+			await wrapper.findAll( '.citizen-notifications__wiki' )[ 0 ].trigger( 'click' );
+			await wrapper.findAll( '.citizen-notifications__wiki' )[ 0 ].trigger( 'click' );
+			await flushPromises();
+
+			expect( source.fetchWiki ).toHaveBeenCalledTimes( 1 );
+		} );
+
+		it( 'offers the wiki itself when its notifications cannot be fetched', async () => {
+			const source = sourceWithWikis();
+			source.fetchWiki = vi.fn().mockRejectedValue( new Error( 'no shared login' ) );
+			const wrapper = mountApp( source );
+			await flushPromises();
+			await wrapper.findAll( '.citizen-notifications__wiki' )[ 0 ].trigger( 'click' );
+			await flushPromises();
+
+			const link = wrapper.find( '.citizen-notifications__wiki-open' );
+			expect( link.exists() ).toBe( true );
+			expect( link.attributes( 'href' ) ).toBe( 'https://commons.example/wiki/Special:Notifications' );
+		} );
+
+		it( 'offers the wiki itself when it has nothing to show', async () => {
+			const source = sourceWithWikis();
+			source.fetchWiki = vi.fn().mockResolvedValue( { items: [] } );
+			const wrapper = mountApp( source );
+			await flushPromises();
+			await wrapper.findAll( '.citizen-notifications__wiki' )[ 0 ].trigger( 'click' );
+			await flushPromises();
+
+			expect( wrapper.find( '.citizen-notifications__wiki-open' ).exists() ).toBe( true );
+		} );
+
+		it( 'marks the open wiki as expanded for assistive tech', async () => {
+			const wrapper = mountApp( sourceWithWikis() );
+			await flushPromises();
+			const first = wrapper.findAll( '.citizen-notifications__wiki' )[ 0 ];
+			expect( first.attributes( 'aria-expanded' ) ).toBe( 'false' );
+
+			await first.trigger( 'click' );
+			await flushPromises();
+
+			expect( wrapper.findAll( '.citizen-notifications__wiki' )[ 0 ].attributes( 'aria-expanded' ) )
+				.toBe( 'true' );
+		} );
+
+		it( 'falls back to this wiki when the other wikis go away', async () => {
+			const source = sourceWithWikis();
+			const wrapper = mountApp( source );
+			await flushPromises();
+			expect( wrapper.find( '.citizen-notifications__wikis' ).exists() ).toBe( true );
+
+			source.fetch.mockResolvedValue( {
+				items: cloneItems(), counts: { total: 2, local: 2, foreign: 0 }, wikis: []
+			} );
+			wrapper.vm.refresh();
+			await flushPromises();
+
+			expect( wrapper.find( '.cdx-tabs' ).exists() ).toBe( false );
+			expect( wrapper.findAll( '.citizen-notifications__item' ) ).toHaveLength( 3 );
+		} );
+
+		it( 'keeps the elsewhere count in the badge after a local mark-read', async () => {
 			const onCountsChange = vi.fn();
-			const local = makeItem( 12, false, 1700000400 );
-			const source = sourceWithSummary( [ local ] );
+			const source = sourceWithWikis();
 			const wrapper = mountApp( source, { onCountsChange } );
 			await flushPromises();
 			onCountsChange.mockClear();
 
-			// Click the real notification, not the pinned summary.
-			await rows( wrapper )[ 1 ].trigger( 'click' );
+			await rows( wrapper )[ 0 ].trigger( 'click' );
 
-			expect( source.markRead ).toHaveBeenCalledWith( [ 12 ] );
-			// 3 cross-wiki alerts survive; only the local one is cleared.
-			expect( onCountsChange ).toHaveBeenLastCalledWith( { total: 3, local: 0, foreign: 3 } );
+			// One local notification cleared; the five elsewhere are untouched.
+			expect( onCountsChange ).toHaveBeenLastCalledWith( { total: 6, local: 1, foreign: 5 } );
 		} );
 
-		it( 'keeps the summary count after mark-all clears the local rows', async () => {
+		it( 'keeps the elsewhere count after mark-all clears the local rows', async () => {
 			const onCountsChange = vi.fn();
-			const local = makeItem( 12, false, 1700000400 );
-			const source = sourceWithSummary( [ local ] );
+			const source = sourceWithWikis();
 			const wrapper = mountApp( source, { onCountsChange } );
 			await flushPromises();
 			onCountsChange.mockClear();
 
 			await wrapper.find( '.citizen-notifications__mark-all' ).trigger( 'click' );
 
-			expect( onCountsChange ).toHaveBeenLastCalledWith( { total: 3, local: 0, foreign: 3 } );
+			expect( onCountsChange ).toHaveBeenLastCalledWith( { total: 5, local: 0, foreign: 5 } );
 		} );
 	} );
 } );

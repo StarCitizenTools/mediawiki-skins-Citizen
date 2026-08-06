@@ -9,6 +9,26 @@ const { createEchoSource } = require( '../../../resources/skins.citizen.notifica
  * @param {Object} [resolved] value `get` resolves with
  * @return {{ ApiConstructor: Function, get: Function, postWithToken: Function }}
  */
+/**
+ * Fake `mw.ForeignApi`: records the endpoint it was constructed with and the
+ * params it was asked for, so the cross-wiki request can be asserted without a
+ * second wiki to talk to.
+ *
+ * @param {Object|Error} resolved value to resolve with, or an error to reject
+ * @return {{ ForeignApiConstructor: Function, get: Function, urls: string[] }}
+ */
+function makeForeignApi( resolved ) {
+	const urls = [];
+	const get = vi.fn( () => resolved instanceof Error ?
+		Promise.reject( resolved ) :
+		Promise.resolve( resolved ) );
+	function ForeignApiConstructor( url ) {
+		urls.push( url );
+		this.get = get;
+	}
+	return { ForeignApiConstructor, get, urls };
+}
+
 function makeApi( resolved ) {
 	const get = vi.fn( () => Promise.resolve( resolved ) );
 	const postWithToken = vi.fn( () => Promise.resolve( {} ) );
@@ -258,34 +278,78 @@ describe( 'createEchoSource', () => {
 	} );
 
 	describe( 'cross-wiki roll-up', () => {
-		it( 'never exposes Echo\'s placeholder id', async () => {
+		it( 'never lets the roll-up into the notification list', async () => {
 			const { ApiConstructor } = makeApi( responseWithSummary() );
 			const source = createEchoSource( ApiConstructor );
 
 			const { items } = await source.fetch();
 
+			expect( items.map( ( item ) => item.id ) ).toEqual( [ 12, 21, 11 ] );
 			expect( items.some( ( item ) => item.id === -1 ) ).toBe( false );
-			expect( items[ 0 ].id ).toBe( 'summary-foreign' );
 		} );
 
-		it( 'arrives as a single merged row, not one per section', async () => {
+		it( 'reads the wikis out of it', async () => {
 			const { ApiConstructor } = makeApi( responseWithSummary() );
 			const source = createEchoSource( ApiConstructor );
 
-			const { items } = await source.fetch();
+			const { wikis } = await source.fetch();
 
-			expect( items.filter( ( item ) => item.isSummary ) ).toHaveLength( 1 );
+			expect( wikis ).toEqual( [ {
+				id: 'examplewiki',
+				name: 'Example Wiki',
+				url: 'https://example.org/wiki/Special:Notifications',
+				apiUrl: 'https://example.org/w/api.php',
+				timestamp: Math.floor( Date.parse( '2023-11-14T00:00:00Z' ) / 1000 )
+			} ] );
 		} );
 
-		it( 'pins the roll-up above the list even though Echo sends it last', async () => {
-			const { ApiConstructor } = makeApi( responseWithSummary() );
+		it( 'links every wiki straight to itself, however many there are', async () => {
+			const { ApiConstructor } = makeApi( responseWithSummary( {
+				examplewiki: { title: 'Example Wiki', url: 'https://example.org/w/api.php', base: 'https://example.org/wiki/$1', ts: '2023-11-14T00:00:00Z' },
+				otherwiki: { title: 'Other Wiki', url: 'https://other.org/w/api.php', base: 'https://other.org/wiki/$1', ts: '2023-11-15T00:00:00Z' }
+			} ) );
 			const source = createEchoSource( ApiConstructor );
 
-			const { items } = await source.fetch();
+			const { wikis } = await source.fetch();
 
-			expect( items[ 0 ].isSummary ).toBe( true );
-			// The rest keep the order they have without a roll-up.
-			expect( items.slice( 1 ).map( ( i ) => i.id ) ).toEqual( [ 12, 21, 11 ] );
+			expect( wikis.map( ( w ) => w.url ) ).toEqual( [
+				'https://other.org/wiki/Special:Notifications',
+				'https://example.org/wiki/Special:Notifications'
+			] );
+		} );
+
+		it( 'sorts wikis by most recent activity', async () => {
+			const { ApiConstructor } = makeApi( responseWithSummary( {
+				stale: { title: 'Stale', base: 'https://stale.org/wiki/$1', ts: '2023-01-01T00:00:00Z' },
+				fresh: { title: 'Fresh', base: 'https://fresh.org/wiki/$1', ts: '2023-12-01T00:00:00Z' }
+			} ) );
+			const source = createEchoSource( ApiConstructor );
+
+			const { wikis } = await source.fetch();
+
+			expect( wikis.map( ( w ) => w.name ) ).toEqual( [ 'Fresh', 'Stale' ] );
+		} );
+
+		it( 'falls back to the local special page for an unusable base', async () => {
+			const { ApiConstructor } = makeApi( responseWithSummary( {
+				examplewiki: { title: 'Example Wiki', base: 'https://example.org/wiki/Foo', ts: '2023-11-14T00:00:00Z' }
+			} ) );
+			const source = createEchoSource( ApiConstructor );
+
+			const { wikis } = await source.fetch();
+
+			expect( wikis[ 0 ].url ).toBe( '/wiki/Special:Notifications' );
+		} );
+
+		it( 'falls back to the wiki id when it has no name', async () => {
+			const { ApiConstructor } = makeApi( responseWithSummary( {
+				examplewiki: { base: 'https://example.org/wiki/$1', ts: '2023-11-14T00:00:00Z' }
+			} ) );
+			const source = createEchoSource( ApiConstructor );
+
+			const { wikis } = await source.fetch();
+
+			expect( wikis[ 0 ].name ).toBe( 'examplewiki' );
 		} );
 
 		it( 'splits the count into local and elsewhere', async () => {
@@ -297,65 +361,119 @@ describe( 'createEchoSource', () => {
 			expect( counts ).toEqual( { total: 8, local: 3, foreign: 5 } );
 		} );
 
-		it( 'leaves the category label off rather than showing "Other"', async () => {
-			const { ApiConstructor } = makeApi( responseWithSummary() );
-			const source = createEchoSource( ApiConstructor );
-
-			const { items } = await source.fetch();
-
-			expect( items[ 0 ].categoryLabel ).toBe( '' );
-			expect( items[ 0 ].category ).toBe( '' );
-		} );
-
-		it( 'keeps Echo\'s own wording for the header and body', async () => {
-			const { ApiConstructor } = makeApi( responseWithSummary() );
-			const source = createEchoSource( ApiConstructor );
-
-			const { items } = await source.fetch();
-
-			expect( items[ 0 ].header ).toBe( 'More notifications from another wiki' );
-			expect( items[ 0 ].body ).toBe( 'Example Wiki' );
-		} );
-
-		it( 'links a single-wiki roll-up to that wiki\'s notifications', async () => {
-			const { ApiConstructor } = makeApi( responseWithSummary() );
-			const source = createEchoSource( ApiConstructor );
-
-			const { items } = await source.fetch();
-
-			expect( items[ 0 ].primaryUrl ).toBe( 'https://example.org/wiki/Special:Notifications' );
-		} );
-
-		it( 'links a multi-wiki roll-up to the local special page', async () => {
-			const { ApiConstructor } = makeApi( responseWithSummary( Object.assign(
-				{}, ONE_WIKI, { otherwiki: { title: 'Other', base: 'https://other.org/wiki/$1' } }
-			) ) );
-			const source = createEchoSource( ApiConstructor );
-
-			const { items } = await source.fetch();
-
-			expect( items[ 0 ].primaryUrl ).toBe( '/wiki/Special:Notifications' );
-		} );
-
-		it( 'falls back to the local special page for an unusable base', async () => {
-			const { ApiConstructor } = makeApi( responseWithSummary( {
-				examplewiki: { title: 'Example Wiki', base: 'https://example.org/wiki/Foo' }
-			} ) );
-			const source = createEchoSource( ApiConstructor );
-
-			const { items } = await source.fetch();
-
-			expect( items[ 0 ].primaryUrl ).toBe( '/wiki/Special:Notifications' );
-		} );
-
-		it( 'leaves ordinary items untouched when no roll-up arrives', async () => {
+		it( 'reports no wikis when none arrive', async () => {
 			const { ApiConstructor } = makeApi( RESPONSE );
 			const source = createEchoSource( ApiConstructor );
 
-			const { items } = await source.fetch();
+			const { wikis, counts } = await source.fetch();
 
-			expect( items.some( ( item ) => item.isSummary ) ).toBe( false );
-			expect( items[ 0 ].isSummary ).toBeUndefined();
+			expect( wikis ).toEqual( [] );
+			expect( counts.foreign ).toBe( 0 );
+		} );
+	} );
+
+	describe( 'previewing another wiki', () => {
+		const WIKI = { id: 'examplewiki', name: 'Example Wiki', apiUrl: 'https://example.org/w/api.php' };
+
+		const FOREIGN_RESPONSE = {
+			query: {
+				notifications: {
+					list: [
+						{
+							id: 5,
+							section: 'alert',
+							category: 'mention',
+							timestamp: { utcunix: '1700000100' },
+							'*': { header: 'Older', body: '', iconUrl: '', links: { primary: { url: '/a' }, secondary: [] } }
+						},
+						{
+							id: 7,
+							section: 'message',
+							category: 'edit-thank',
+							timestamp: { utcunix: '1700000900' },
+							'*': { header: 'Newer', body: '', iconUrl: '', links: { primary: { url: '/b' }, secondary: [] } }
+						}
+					],
+					rawcount: 12
+				}
+			}
+		};
+
+		it( 'asks that wiki directly, for its unread only', async () => {
+			const { ApiConstructor } = makeApi( RESPONSE );
+			const { ForeignApiConstructor, get, urls } = makeForeignApi( FOREIGN_RESPONSE );
+			const source = createEchoSource( ApiConstructor, ForeignApiConstructor );
+
+			await source.fetchWiki( WIKI );
+
+			expect( urls ).toEqual( [ 'https://example.org/w/api.php' ] );
+			expect( get.mock.calls[ 0 ][ 0 ] ).toMatchObject( {
+				action: 'query',
+				meta: 'notifications',
+				notformat: 'model',
+				notfilter: '!read',
+				notlimit: 5,
+				notprop: 'list'
+			} );
+		} );
+
+		it( 'normalizes what comes back, newest first', async () => {
+			const { ApiConstructor } = makeApi( RESPONSE );
+			const { ForeignApiConstructor } = makeForeignApi( FOREIGN_RESPONSE );
+			const source = createEchoSource( ApiConstructor, ForeignApiConstructor );
+
+			const { items } = await source.fetchWiki( WIKI );
+
+			expect( items.map( ( i ) => i.id ) ).toEqual( [ 7, 5 ] );
+			expect( items[ 0 ].header ).toBe( 'Newer' );
+		} );
+
+		it( 'labels categories with what the local wiki already told us', async () => {
+			const { ApiConstructor } = makeApi( RESPONSE );
+			const { ForeignApiConstructor } = makeForeignApi( FOREIGN_RESPONSE );
+			const source = createEchoSource( ApiConstructor, ForeignApiConstructor );
+
+			// The local fetch is what learns the category titles.
+			await source.fetch();
+			const { items } = await source.fetchWiki( WIKI );
+
+			expect( items.find( ( i ) => i.id === 5 ).categoryLabel ).toBe( 'Mentions' );
+			expect( items.find( ( i ) => i.id === 7 ).categoryLabel ).toBe( 'Thanks' );
+		} );
+
+		it( 'drops a roll-up row arriving from the other wiki', async () => {
+			const payload = structuredClone( FOREIGN_RESPONSE );
+			payload.query.notifications.list.push( summaryEntry( ONE_WIKI, 3 ) );
+			const { ApiConstructor } = makeApi( RESPONSE );
+			const { ForeignApiConstructor } = makeForeignApi( payload );
+			const source = createEchoSource( ApiConstructor, ForeignApiConstructor );
+
+			const { items } = await source.fetchWiki( WIKI );
+
+			expect( items.map( ( i ) => i.id ) ).toEqual( [ 7, 5 ] );
+		} );
+
+		it( 'rejects rather than guessing when there is no endpoint', async () => {
+			const { ApiConstructor } = makeApi( RESPONSE );
+			const { ForeignApiConstructor } = makeForeignApi( FOREIGN_RESPONSE );
+			const source = createEchoSource( ApiConstructor, ForeignApiConstructor );
+
+			await expect( source.fetchWiki( { id: 'x', apiUrl: '' } ) ).rejects.toThrow();
+		} );
+
+		it( 'rejects when the skin was given no way to reach other wikis', async () => {
+			const { ApiConstructor } = makeApi( RESPONSE );
+			const source = createEchoSource( ApiConstructor );
+
+			await expect( source.fetchWiki( WIKI ) ).rejects.toThrow();
+		} );
+
+		it( 'passes a refusal through so the caller can offer the wiki instead', async () => {
+			const { ApiConstructor } = makeApi( RESPONSE );
+			const { ForeignApiConstructor } = makeForeignApi( new Error( 'http' ) );
+			const source = createEchoSource( ApiConstructor, ForeignApiConstructor );
+
+			await expect( source.fetchWiki( WIKI ) ).rejects.toThrow( 'http' );
 		} );
 	} );
 

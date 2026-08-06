@@ -655,6 +655,7 @@
 			"class": "MediaWiki\\ResourceLoader\\CodexModule",
 			"dependencies": [
 				"mediawiki.api",
+				"mediawiki.ForeignApi",
 				"mediawiki.util",
 				"skins.citizen.notifications.codex",
 				"vue"
@@ -666,17 +667,27 @@
 					"callback": "MediaWiki\\ResourceLoader\\CodexModule::getIcons",
 					"callbackParam": [
 						"cdxIconCheckAll",
+						"cdxIconExpand",
+						"cdxIconLinkExternal",
+						"cdxIconNext",
 						"cdxIconSettings"
 					]
 				},
 				"resources/skins.citizen.notifications/sources/echo.js",
+				"resources/skins.citizen.notifications/relativeTime.js",
 				"resources/skins.citizen.notifications/components/App.vue",
 				"resources/skins.citizen.notifications/components/NotificationList.vue",
-				"resources/skins.citizen.notifications/components/NotificationItem.vue"
+				"resources/skins.citizen.notifications/components/NotificationItem.vue",
+				"resources/skins.citizen.notifications/components/WikiList.vue"
 			],
 			"messages": [
 				"citizen-notifications-title",
 				"citizen-notifications-mark-all-read",
+				"citizen-notifications-source-local",
+				"citizen-notifications-source-other",
+				"citizen-notifications-loading",
+				"citizen-notifications-wiki-open",
+				"citizen-notifications-wiki-unavailable",
 				"citizen-notifications-empty",
 				"citizen-notifications-error",
 				"citizen-notifications-retry",
@@ -691,7 +702,9 @@
 			"class": "MediaWiki\\ResourceLoader\\CodexModule",
 			"codexComponents": [
 				"CdxButton",
-				"CdxIcon"
+				"CdxIcon",
+				"CdxTab",
+				"CdxTabs"
 			]
 		},
 		"skins.citizen.icons": {

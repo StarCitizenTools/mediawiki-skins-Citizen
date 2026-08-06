@@ -21,7 +21,7 @@ function initApp( mountEl, options ) {
 	const opts = options || {};
 
 	const app = Vue.createMwApp( App );
-	app.provide( 'source', createEchoSource( mw.Api ) );
+	app.provide( 'source', createEchoSource( mw.Api, mw.ForeignApi ) );
 	if ( typeof opts.onCountsChange === 'function' ) {
 		app.provide( 'onCountsChange', opts.onCountsChange );
 	}
