@@ -441,7 +441,7 @@ Breaking changes never ship unguarded — they ride the preview channel until th
 
 Vue and per-module bundles are not part of the initial page load — they're loaded on intent via `mw.loader`. Any control that mounts a Vue app needs:
 
-- **Intent prefetch** via `bindIntentPrefetch()` on the trigger so hover/focus/touch starts the network round-trip before the click.
+- **Intent prefetch** via `bindIntentPrefetch()` on the trigger so hover/focus/touch starts the network round-trip before the click. Its optional `onReady` callback fires when the module is ready and can be used to also pre-mount the app during idle time, so the eventual click only pays for the first render — see `createCommandPalette` for the reference implementation (it skips `touchstart` intents, where the tap follows too closely for an idle mount to win).
 - **Lazy load on activation** via `mw.loader.using()` on the actual click/toggle event.
 - **Server-rendered skeleton** inside the mount target for in-place panels (Preferences, Share). Vue's `mount()` replaces it on success. The skeleton must be server-rendered because the JS that would render it isn't there yet.
 - **A failure path** sized to the UI's tolerance for staying broken. Pick what fits:

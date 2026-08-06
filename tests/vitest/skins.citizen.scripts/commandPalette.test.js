@@ -246,14 +246,99 @@ describe( 'createCommandPalette', () => {
 		expect( mw.notify ).not.toHaveBeenCalled();
 	} );
 
-	it( 'hover on summary fires mw.loader.load via intent prefetch', () => {
+	it( 'hover on summary starts the module load via intent prefetch', () => {
 		const cp = createCommandPalette( { document, mw } );
 		cp.init();
 
 		const summary = document.getElementById( 'citizen-search-summary' );
 		summary.dispatchEvent( new Event( 'pointerenter' ) );
 
-		expect( mw.loader.load ).toHaveBeenCalledWith( 'skins.citizen.commandPalette' );
+		expect( mw.loader.using ).toHaveBeenCalledWith( 'skins.citizen.commandPalette' );
+	} );
+
+	it( 'hover prefetch mounts the palette at idle without opening it', async () => {
+		const cp = createCommandPalette( { document, mw } );
+		cp.init();
+
+		const summary = document.getElementById( 'citizen-search-summary' );
+		summary.dispatchEvent( new Event( 'pointerenter' ) );
+		resolveLoad();
+		await new Promise( ( r ) => setTimeout( r, 0 ) );
+
+		// Shared mock runs the idle callback immediately.
+		expect( mockInitApp ).toHaveBeenCalled();
+		expect( mockOpen ).not.toHaveBeenCalled();
+		expect( document.getElementById( 'citizen-search-details' ).open ).toBe( false );
+	} );
+
+	it( 'click after an idle mount opens without another loader round-trip', async () => {
+		const cp = createCommandPalette( { document, mw } );
+		cp.init();
+
+		const summary = document.getElementById( 'citizen-search-summary' );
+		summary.dispatchEvent( new Event( 'pointerenter' ) );
+		resolveLoad();
+		await new Promise( ( r ) => setTimeout( r, 0 ) );
+		mw.loader.using.mockClear();
+
+		summary.dispatchEvent( new MouseEvent( 'click', { bubbles: true, cancelable: true } ) );
+
+		expect( mw.loader.using ).not.toHaveBeenCalled();
+		expect( mockOpen ).toHaveBeenCalledWith( null );
+	} );
+
+	it( 'touchstart prefetch loads the module but does not idle-mount', async () => {
+		const cp = createCommandPalette( { document, mw } );
+		cp.init();
+
+		const summary = document.getElementById( 'citizen-search-summary' );
+		summary.dispatchEvent( new Event( 'touchstart' ) );
+		resolveLoad();
+		await new Promise( ( r ) => setTimeout( r, 0 ) );
+
+		expect( mw.loader.using ).toHaveBeenCalledWith( 'skins.citizen.commandPalette' );
+		expect( mockInitApp ).not.toHaveBeenCalled();
+	} );
+
+	it( 'mounting via the click path disarms the leftover intent listeners', async () => {
+		const cp = createCommandPalette( { document, mw } );
+		cp.init();
+
+		// Open via click with no prior hover — the intent listeners are
+		// still armed when the mount completes.
+		const summary = document.getElementById( 'citizen-search-summary' );
+		summary.dispatchEvent( new MouseEvent( 'click', { bubbles: true, cancelable: true } ) );
+		resolveLoad();
+		await new Promise( ( r ) => setTimeout( r, 0 ) );
+		mw.loader.using.mockClear();
+
+		summary.dispatchEvent( new Event( 'pointerenter' ) );
+
+		expect( mw.loader.using ).not.toHaveBeenCalled();
+	} );
+
+	it( 'click before the idle callback fires wins; the idle callback no-ops', async () => {
+		let idleCallback = null;
+		mw.requestIdleCallback.mockImplementationOnce( ( fn ) => {
+			idleCallback = fn;
+		} );
+		const cp = createCommandPalette( { document, mw } );
+		cp.init();
+
+		const summary = document.getElementById( 'citizen-search-summary' );
+		summary.dispatchEvent( new Event( 'pointerenter' ) );
+		resolveLoad();
+		await new Promise( ( r ) => setTimeout( r, 0 ) );
+
+		// Idle callback captured but not yet run — the user clicks first.
+		summary.dispatchEvent( new MouseEvent( 'click', { bubbles: true, cancelable: true } ) );
+		await new Promise( ( r ) => setTimeout( r, 0 ) );
+		expect( mockOpen ).toHaveBeenCalledWith( null );
+
+		idleCallback();
+
+		expect( mockInitApp ).toHaveBeenCalledTimes( 1 );
+		expect( mockOpen ).toHaveBeenCalledTimes( 1 );
 	} );
 
 	it( 'click on summary fires triggerOpen and preventDefaults the details toggle', () => {

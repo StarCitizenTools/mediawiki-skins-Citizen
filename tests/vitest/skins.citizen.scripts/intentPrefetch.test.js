@@ -63,4 +63,70 @@ describe( 'bindIntentPrefetch', () => {
 
 		expect( mw.loader.load ).not.toHaveBeenCalled();
 	} );
+
+	describe( 'onReady', () => {
+		let req;
+		let onReady;
+
+		beforeEach( () => {
+			req = vi.fn();
+			onReady = vi.fn();
+		} );
+
+		afterEach( () => {
+			mw.loader.using.mockReset();
+			mw.loader.using.mockImplementation( () => Promise.resolve() );
+		} );
+
+		it( 'loads via mw.loader.using and calls onReady with the require function and event type', async () => {
+			const trigger = makeTrigger();
+			mw.loader.using.mockReturnValue( Promise.resolve( req ) );
+
+			bindIntentPrefetch( trigger, 'foo.module', mw, { onReady } );
+			trigger.dispatchEvent( new Event( 'pointerenter' ) );
+			await new Promise( ( r ) => setTimeout( r, 0 ) );
+
+			expect( mw.loader.using ).toHaveBeenCalledWith( 'foo.module' );
+			expect( mw.loader.load ).not.toHaveBeenCalled();
+			expect( onReady ).toHaveBeenCalledWith( req, 'pointerenter' );
+		} );
+
+		it( 'reports the event type that actually fired the prefetch', async () => {
+			const trigger = makeTrigger();
+			mw.loader.using.mockReturnValue( Promise.resolve( req ) );
+
+			bindIntentPrefetch( trigger, 'foo.module', mw, { onReady } );
+			trigger.dispatchEvent( new Event( 'touchstart' ) );
+			await new Promise( ( r ) => setTimeout( r, 0 ) );
+
+			expect( onReady ).toHaveBeenCalledWith( req, 'touchstart' );
+		} );
+
+		it( 'stays silent and skips onReady when the load fails', async () => {
+			const trigger = makeTrigger();
+			mw.loader.using.mockReturnValue( Promise.reject( new Error( 'offline' ) ) );
+
+			bindIntentPrefetch( trigger, 'foo.module', mw, { onReady } );
+			trigger.dispatchEvent( new Event( 'pointerenter' ) );
+			await new Promise( ( r ) => setTimeout( r, 0 ) );
+
+			expect( onReady ).not.toHaveBeenCalled();
+		} );
+
+		it( 'cancel() after the prefetch fired suppresses a pending onReady', async () => {
+			const trigger = makeTrigger();
+			let resolveUsing;
+			mw.loader.using.mockReturnValue( new Promise( ( resolve ) => {
+				resolveUsing = resolve;
+			} ) );
+
+			const cancel = bindIntentPrefetch( trigger, 'foo.module', mw, { onReady } );
+			trigger.dispatchEvent( new Event( 'pointerenter' ) );
+			cancel();
+			resolveUsing( req );
+			await new Promise( ( r ) => setTimeout( r, 0 ) );
+
+			expect( onReady ).not.toHaveBeenCalled();
+		} );
+	} );
 } );
