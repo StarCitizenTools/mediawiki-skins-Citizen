@@ -110,7 +110,6 @@ function createCommandPalette( { document, mw } ) {
 		const mod = req( MODULE );
 		const overlayEl = ensureOverlay();
 		paletteApp = mod.initApp( overlayEl, {
-			prefill: pendingPrefill,
 			onClose: notifyClosed
 		} );
 		state = 'mounted';
