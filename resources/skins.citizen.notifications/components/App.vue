@@ -7,7 +7,7 @@
 			<cdx-button
 				class="citizen-notifications__mark-all"
 				weight="quiet"
-				:disabled="!hasUnreadInScope"
+				:disabled="!hasUnread"
 				:aria-label="msg.markAll"
 				:title="msg.markAll"
 				@click="onMarkAll"
@@ -48,31 +48,17 @@
 					{{ msg.retry }}
 				</cdx-button>
 			</div>
-			<cdx-tabs
+			<notification-list
+				v-else-if="items.length > 0"
+				:items="items"
+				@read="onItemRead"
+			></notification-list>
+			<div
 				v-else
-				ref="tabsEl"
-				v-model:active="activeTab"
-				:framed="false"
+				class="citizen-notifications__empty"
 			>
-				<cdx-tab
-					v-for="tab in tabs"
-					:key="tab.name"
-					:name="tab.name"
-					:label="tab.label"
-				>
-					<notification-list
-						v-if="itemsForSection( tab.section ).length > 0"
-						:items="itemsForSection( tab.section )"
-						@read="onItemRead"
-					></notification-list>
-					<div
-						v-else
-						class="citizen-notifications__empty"
-					>
-						{{ msg.empty }}
-					</div>
-				</cdx-tab>
-			</cdx-tabs>
+				{{ msg.empty }}
+			</div>
 		</div>
 
 		<footer class="citizen-notifications__footer">
@@ -95,13 +81,10 @@
 </template>
 
 <script>
-const { defineComponent, ref, computed, inject, onMounted, watch, nextTick } = require( 'vue' );
-const { CdxButton, CdxIcon, CdxTab, CdxTabs } = mw.loader.require( 'skins.citizen.notifications.codex' );
+const { defineComponent, ref, computed, inject, onMounted } = require( 'vue' );
+const { CdxButton, CdxIcon } = mw.loader.require( 'skins.citizen.notifications.codex' );
 const NotificationList = require( './NotificationList.vue' );
 const icons = require( '../icons.json' );
-
-// Filter value → Echo section. `null` means both sections.
-const SECTION_BY_TAB = { all: null, alert: 'alert', message: 'message' };
 
 // Links styled as quiet cdx buttons need the fake-button variants.
 const FAKE_QUIET_BUTTON_CLASS = [
@@ -118,24 +101,18 @@ module.exports = exports = defineComponent( {
 	components: {
 		CdxButton,
 		CdxIcon,
-		CdxTab,
-		CdxTabs,
 		NotificationList
 	},
 	setup() {
 		const source = inject( 'source' );
 		// Bridge to the (non-Vue) trigger so it can update the bell badge.
 		const onCountsChange = inject( 'onCountsChange', null );
-		// Ref to the CdxTabs component, used to stamp unread counts onto its
-		// (internally rendered) tab buttons.
-		const tabsEl = ref( null );
 
 		// Starts in 'loading' so the freshly-mounted panel shows the skeleton
 		// immediately, before the first fetch resolves.
 		const status = ref( 'loading' ); // 'loading' | 'ready' | 'error'
 		const items = ref( [] );
-		const counts = ref( { alert: 0, message: 0, total: 0 } );
-		const activeTab = ref( 'all' );
+		const counts = ref( { total: 0, local: 0, foreign: 0 } );
 
 		const msg = {
 			title: mw.message( 'citizen-notifications-title' ).text(),
@@ -144,10 +121,7 @@ module.exports = exports = defineComponent( {
 			error: mw.message( 'citizen-notifications-error' ).text(),
 			retry: mw.message( 'citizen-notifications-retry' ).text(),
 			seeAll: mw.message( 'citizen-notifications-see-all' ).text(),
-			prefs: mw.message( 'citizen-notifications-preferences' ).text(),
-			tabAll: mw.message( 'citizen-notifications-tab-all' ).text(),
-			tabAlert: mw.message( 'citizen-notifications-tab-alert' ).text(),
-			tabNotice: mw.message( 'citizen-notifications-tab-notice' ).text()
+			prefs: mw.message( 'citizen-notifications-preferences' ).text()
 		};
 
 		const urls = {
@@ -155,46 +129,10 @@ module.exports = exports = defineComponent( {
 			prefs: mw.util.getUrl( 'Special:Preferences' ) + '#mw-prefsection-echo'
 		};
 
-		const tabs = computed( () => [
-			{ name: 'all', section: null, label: msg.tabAll },
-			{ name: 'alert', section: 'alert', label: msg.tabAlert },
-			{ name: 'message', section: 'message', label: msg.tabNotice }
-		] );
-
-		// CdxTabs renders its tab buttons internally with a plain-text label and
-		// no per-tab hook, so stamp the unread count onto each as a data
-		// attribute (CSS renders it as a badge). Buttons are in tab order.
-		function updateTabCounts() {
-			const root = tabsEl.value && tabsEl.value.$el;
-			if ( !root ) {
-				return;
-			}
-			const buttons = root.querySelectorAll( '.cdx-tabs__list__item' );
-			const ordered = [ counts.value.total, counts.value.alert, counts.value.message ];
-			buttons.forEach( ( button, index ) => {
-				if ( ordered[ index ] > 0 ) {
-					button.setAttribute( 'data-count', String( ordered[ index ] ) );
-				} else {
-					button.removeAttribute( 'data-count' );
-				}
-			} );
-		}
-
-		function itemsForSection( section ) {
-			if ( !section ) {
-				return items.value;
-			}
-			return items.value.filter( ( item ) => item.section === section );
-		}
-
-		const visibleItems = computed(
-			() => itemsForSection( SECTION_BY_TAB[ activeTab.value ] )
-		);
-
-		// Summary rows are permanently unread and cannot be cleared from here,
-		// so they must not keep the mark-all button enabled forever.
-		const hasUnreadInScope = computed(
-			() => visibleItems.value.some( ( item ) => !item.read && !item.isSummary )
+		// Summary rows stand for notifications on other wikis, which this panel
+		// cannot clear, so they must not keep the mark-all button enabled.
+		const hasUnread = computed(
+			() => items.value.some( ( item ) => !item.read && !item.isSummary )
 		);
 
 		function reportCounts() {
@@ -206,18 +144,21 @@ module.exports = exports = defineComponent( {
 		// Recompute counts from the items' current read state — keeps the
 		// badge accurate after local mark-read mutations without a refetch.
 		function recountFromItems() {
-			const next = { alert: 0, message: 0, total: 0 };
+			let local = 0;
+			let foreign = 0;
 			items.value.forEach( ( item ) => {
 				// A summary row stands for unread notifications elsewhere.
 				// Nothing in this panel can clear those, so carry its count
 				// through untouched — otherwise the first local mark-read would
 				// drop the badge to a local-only figure and start disagreeing
 				// with the count the server renders.
-				const unread = item.isSummary ? item.count : ( item.read ? 0 : 1 );
-				next[ item.section ] += unread;
-				next.total += unread;
+				if ( item.isSummary ) {
+					foreign += item.count;
+				} else if ( !item.read ) {
+					local += 1;
+				}
 			} );
-			counts.value = next;
+			counts.value = { total: local + foreign, local: local, foreign: foreign };
 			reportCounts();
 		}
 
@@ -274,11 +215,10 @@ module.exports = exports = defineComponent( {
 		}
 
 		function onMarkAll() {
-			const section = SECTION_BY_TAB[ activeTab.value ];
 			// Best-effort, like onItemRead: swallow rejections (the next open's
 			// refresh() refetches authoritative state).
-			source.markAllRead( section ).catch( () => {} );
-			visibleItems.value.forEach( ( item ) => {
+			source.markAllRead().catch( () => {} );
+			items.value.forEach( ( item ) => {
 				if ( !item.isSummary ) {
 					item.read = true;
 				}
@@ -286,22 +226,12 @@ module.exports = exports = defineComponent( {
 			recountFromItems();
 		}
 
-		// Re-stamp the tab count badges whenever the tabs (re)render or the
-		// counts change.
-		watch(
-			() => [ status.value, counts.value.total, counts.value.alert, counts.value.message ],
-			() => nextTick( updateTabCounts )
-		);
-
 		onMounted( load );
 
 		return {
 			status,
-			activeTab,
-			tabs,
-			tabsEl,
-			itemsForSection,
-			hasUnreadInScope,
+			items,
+			hasUnread,
 			msg,
 			urls,
 			icons,
@@ -352,60 +282,14 @@ module.exports = exports = defineComponent( {
 
 	// Holds the loading, tabs or error state. The active tab panel scrolls,
 	// not this container.
+	// The list itself scrolls; the header and footer stay put.
 	&__body {
-		display: flex;
-		flex: 1;
-		flex-direction: column;
-		min-height: 0;
-	}
-
-	// Codex tabs: keep the tab bar fixed and let the active panel scroll.
-	.cdx-tabs {
-		display: flex;
-		flex: 1;
-		flex-direction: column;
-		min-height: 0;
-
-		// Override default styles
-		&:not( .cdx-tabs--framed ) > .cdx-tabs__header {
-			margin-inline: 0;
-			background-color: transparent;
-		}
-	}
-
-	.cdx-tabs__header {
-		flex-shrink: 0;
-	}
-
-	.cdx-tabs__list {
-		flex-grow: 1;
-	}
-
-	.cdx-tabs__content {
 		display: flex;
 		flex: 1;
 		flex-direction: column;
 		min-height: 0;
 		overflow-y: auto;
 		overscroll-behavior: contain;
-	}
-
-	.cdx-tabs__list__item {
-		flex-grow: 1;
-		padding-block: var( --space-xs );
-		font-size: var( --font-size-small );
-
-		// Unread-count badge stamped onto each tab button by updateTabCounts().
-		&[ data-count ]::after {
-			padding-inline: var( --space-xs );
-			margin-inline-start: var( --space-xs );
-			font-size: var( --font-size-small );
-			font-weight: var( --font-weight-normal );
-			color: var( --color-subtle );
-			content: attr( data-count );
-			background-color: var( --color-surface-3 );
-			border-radius: var( --border-radius-pill );
-		}
 	}
 
 	&__empty {

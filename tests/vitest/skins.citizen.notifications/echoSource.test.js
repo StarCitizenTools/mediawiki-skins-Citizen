@@ -19,69 +19,59 @@ function makeApi( resolved ) {
 	return { ApiConstructor, get, postWithToken };
 }
 
-// Realistic grouped Echo response (groupbysection=1, format=html).
-const GROUPED_RESPONSE = {
+// Realistic ungrouped Echo response (notformat=model, notfilter=!read). Echo
+// returns one flat list, each entry carrying its own section, and a top-level
+// rawcount that includes other wikis when notcrosswikisummary is set.
+const RESPONSE = {
 	query: {
 		notifications: {
-			alert: {
-				list: [
-					{
-						id: 11,
-						section: 'alert',
-						category: 'mention',
-						timestamp: { utcunix: '1700000200' },
-						read: '20231114000000',
-						'*': {
-							header: '<strong>NotifBot</strong> mentioned you',
-							body: 'Hello there',
-							iconUrl: '/icons/mention.svg',
-							links: {
-								primary: { url: '/wiki/Foo?markasread=11', label: 'View mention' },
-								secondary: [ { url: '/wiki/User:NotifBot', label: 'NotifBot' } ]
-							}
-						}
-					},
-					{
-						id: 12,
-						section: 'alert',
-						category: 'edit-user-talk',
-						timestamp: { utcunix: '1700000400' },
-						'*': {
-							header: 'New message on your talk page',
-							body: '',
-							iconUrl: '/icons/edit-user-talk.svg',
-							links: {
-								primary: { url: '/wiki/User_talk:Me?markasread=12', label: 'View message' },
-								secondary: []
-							}
+			list: [
+				{
+					id: 11,
+					section: 'alert',
+					category: 'mention',
+					timestamp: { utcunix: '1700000200' },
+					'*': {
+						header: '<strong>NotifBot</strong> mentioned you',
+						body: 'Hello there',
+						iconUrl: '/icons/mention.svg',
+						links: {
+							primary: { url: '/wiki/Foo?markasread=11', label: 'View mention' },
+							secondary: [ { url: '/wiki/User:NotifBot', label: 'NotifBot' } ]
 						}
 					}
-				],
-				continue: 'foo',
-				rawcount: 1,
-				count: '1'
-			},
-			message: {
-				list: [
-					{
-						id: 21,
-						section: 'message',
-						category: 'edit-thank',
-						timestamp: { utcunix: '1700000300' },
-						'*': {
-							header: '<strong>Someone</strong> thanked you',
-							body: '',
-							iconUrl: '/icons/thanks.svg',
-							links: { primary: { url: '/wiki/Page', label: 'View' }, secondary: [] }
+				},
+				{
+					id: 12,
+					section: 'alert',
+					category: 'edit-user-talk',
+					timestamp: { utcunix: '1700000400' },
+					'*': {
+						header: 'New message on your talk page',
+						body: '',
+						iconUrl: '/icons/edit-user-talk.svg',
+						links: {
+							primary: { url: '/wiki/User_talk:Me?markasread=12', label: 'View message' },
+							secondary: []
 						}
 					}
-				],
-				continue: null,
-				rawcount: 1,
-				count: '1'
-			},
-			rawcount: 2,
-			count: '2'
+				},
+				{
+					id: 21,
+					section: 'message',
+					category: 'edit-thank',
+					timestamp: { utcunix: '1700000300' },
+					'*': {
+						header: '<strong>Someone</strong> thanked you',
+						body: '',
+						iconUrl: '/icons/thanks.svg',
+						links: { primary: { url: '/wiki/Page', label: 'View' }, secondary: [] }
+					}
+				}
+			],
+			continue: null,
+			rawcount: 3,
+			count: '3'
 		},
 		// Parsed echo-category-title-* messages, including one from an
 		// extension (edit-thank, Extension:Thanks).
@@ -95,26 +85,25 @@ const GROUPED_RESPONSE = {
 
 /**
  * Echo's synthetic cross-wiki roll-up, as it arrives with
- * notcrosswikisummary=1: type 'foreign', id -1, unshifted onto the front of
- * EVERY requested section's list, with no `read` key and no primary link.
+ * notcrosswikisummary=1 and no grouping: ONE row covering every section, with
+ * type 'foreign', the placeholder id, no `read` key and no primary link.
  *
- * @param {string} section 'alert' | 'message'
  * @param {Object} sources `sources` map keyed by wiki id
  * @param {number} count unread count on the other wikis
  * @return {Object}
  */
-function summaryEntry( section, sources, count ) {
+function summaryEntry( sources, count ) {
 	return {
 		id: -1,
 		type: 'foreign',
 		// Echo files it under a pseudo-category that resolves to 'other'.
 		category: 'other',
-		section: section,
+		section: 'all',
 		count: count,
 		sources: sources,
 		timestamp: { utcunix: '1700000500' },
 		'*': {
-			header: `More ${ section === 'alert' ? 'alerts' : 'notices' } from another wiki`,
+			header: 'More notifications from another wiki',
 			body: 'Example Wiki',
 			iconUrl: '/icons/global.svg',
 			links: { primary: [], secondary: [] }
@@ -132,22 +121,25 @@ const ONE_WIKI = {
 };
 
 /**
- * The grouped response with a cross-wiki summary unshifted into both sections.
+ * The response with a cross-wiki roll-up appended, as Echo delivers it — at
+ * the END of the list, after the limit has been applied.
  *
- * @param {Object} [sources] `sources` map to attach to each summary
+ * @param {Object} [sources] `sources` map to attach
+ * @param {number} [count] unread count on the other wikis
  * @return {Object}
  */
-function responseWithSummary( sources = ONE_WIKI ) {
-	const base = structuredClone( GROUPED_RESPONSE );
-	base.query.notifications.alert.list.unshift( summaryEntry( 'alert', sources, 3 ) );
-	base.query.notifications.message.list.unshift( summaryEntry( 'message', sources, 2 ) );
+function responseWithSummary( sources = ONE_WIKI, count = 5 ) {
+	const base = structuredClone( RESPONSE );
+	base.query.notifications.list.push( summaryEntry( sources, count ) );
+	// rawcount goes cross-wiki-inclusive once the roll-up is requested.
+	base.query.notifications.rawcount = 3 + count;
 	return base;
 }
 
 describe( 'createEchoSource', () => {
 	describe( 'fetch', () => {
-		it( 'requests both sections as grouped model data (no deprecated format/filter)', async () => {
-			const { ApiConstructor, get } = makeApi( GROUPED_RESPONSE );
+		it( 'requests unread notifications as one flat model list', async () => {
+			const { ApiConstructor, get } = makeApi( RESPONSE );
 			const source = createEchoSource( ApiConstructor );
 
 			await source.fetch();
@@ -159,18 +151,17 @@ describe( 'createEchoSource', () => {
 				meta: 'notifications|allmessages',
 				notsections: 'alert|message',
 				notformat: 'model',
-				notgroupbysection: 1,
+				notfilter: '!read',
 				notlimit: 25,
-				// Asks for the cross-wiki roll-up row and cross-wiki-inclusive
-				// counts; ignored where the wiki has cross-wiki turned off.
+				// Ungrouped, so Echo emits one merged roll-up rather than one
+				// per section.
 				notcrosswikisummary: 1
 			} );
-			// `notfilter` only accepts read/!read; rely on its default (both).
-			expect( params.notfilter ).toBeUndefined();
+			expect( params.notgroupbysection ).toBeUndefined();
 		} );
 
 		it( 'requests all category-title messages in the same parsed request', async () => {
-			const { ApiConstructor, get } = makeApi( GROUPED_RESPONSE );
+			const { ApiConstructor, get } = makeApi( RESPONSE );
 			const source = createEchoSource( ApiConstructor );
 
 			await source.fetch();
@@ -182,115 +173,77 @@ describe( 'createEchoSource', () => {
 			} );
 		} );
 
-		it( 'normalizes grouped model entries into a flat item list', async () => {
-			const { ApiConstructor } = makeApi( GROUPED_RESPONSE );
+		it( 'normalizes model entries into items', async () => {
+			const { ApiConstructor } = makeApi( RESPONSE );
 			const source = createEchoSource( ApiConstructor );
 
 			const { items } = await source.fetch();
 
-			expect( items.map( ( i ) => i.id ) ).toEqual( [ 12, 21, 11 ] );
-			expect( items[ 0 ] ).toEqual( {
-				id: 12,
-				section: 'alert',
-				category: 'edit-user-talk',
-				categoryLabel: 'Talk page edits',
-				read: false,
-				timestamp: 1700000400,
-				iconUrl: '/icons/edit-user-talk.svg',
-				header: 'New message on your talk page',
-				body: '',
-				primaryUrl: '/wiki/User_talk:Me?markasread=12',
-				secondaryLinks: []
-			} );
+			expect( items ).toHaveLength( 3 );
+			expect( items.map( ( item ) => item.id ) ).toEqual( [ 12, 21, 11 ] );
 		} );
 
 		it( 'resolves the category label from the parsed messages, incl. extensions', async () => {
-			const { ApiConstructor } = makeApi( GROUPED_RESPONSE );
+			const { ApiConstructor } = makeApi( RESPONSE );
 			const source = createEchoSource( ApiConstructor );
 
 			const { items } = await source.fetch();
 
-			// edit-thank is defined by Extension:Thanks, not Echo core.
-			expect( items.find( ( i ) => i.id === 21 ).categoryLabel ).toBe( 'Thanks' );
-			expect( items.find( ( i ) => i.id === 11 ).categoryLabel ).toBe( 'Mentions' );
+			const byId = Object.fromEntries( items.map( ( i ) => [ i.id, i ] ) );
+			expect( byId[ 11 ].categoryLabel ).toBe( 'Mentions' );
+			expect( byId[ 21 ].categoryLabel ).toBe( 'Thanks' );
 		} );
 
 		it( 'leaves the category label blank when no message is registered', async () => {
-			const response = { query: {
-				notifications: {
-					alert: { list: [ {
-						id: 7, category: 'some-unknown-extension-category',
-						timestamp: { utcunix: '1700000000' },
-						'*': { header: 'h', body: '', iconUrl: '', links: { primary: [], secondary: [] } }
-					} ], rawcount: 1 },
-					message: { list: [], rawcount: 0 },
-					rawcount: 1
-				},
-				allmessages: [ { name: 'echo-category-title-mention', '*': 'Mentions' } ]
-			} };
-			const { ApiConstructor } = makeApi( response );
+			const payload = structuredClone( RESPONSE );
+			payload.query.allmessages = [];
+			const { ApiConstructor } = makeApi( payload );
 			const source = createEchoSource( ApiConstructor );
 
 			const { items } = await source.fetch();
 
-			expect( items[ 0 ].categoryLabel ).toBe( '' );
+			expect( items.every( ( item ) => item.categoryLabel === '' ) ).toBe( true );
 		} );
 
 		it( 'maps primary and secondary links from the model', async () => {
-			const { ApiConstructor } = makeApi( GROUPED_RESPONSE );
+			const { ApiConstructor } = makeApi( RESPONSE );
 			const source = createEchoSource( ApiConstructor );
 
 			const { items } = await source.fetch();
+
 			const mention = items.find( ( i ) => i.id === 11 );
-
 			expect( mention.primaryUrl ).toBe( '/wiki/Foo?markasread=11' );
-			expect( mention.secondaryLinks ).toEqual( [ { url: '/wiki/User:NotifBot', label: 'NotifBot' } ] );
-			expect( mention.iconUrl ).toBe( '/icons/mention.svg' );
+			expect( mention.secondaryLinks ).toEqual( [
+				{ url: '/wiki/User:NotifBot', label: 'NotifBot' }
+			] );
 		} );
 
-		it( 'derives read state from the presence of a read timestamp', async () => {
-			const { ApiConstructor } = makeApi( GROUPED_RESPONSE );
+		it( 'treats every fetched notification as unread', async () => {
+			const { ApiConstructor } = makeApi( RESPONSE );
 			const source = createEchoSource( ApiConstructor );
 
 			const { items } = await source.fetch();
-			const alert11 = items.find( ( i ) => i.id === 11 );
-			const alert12 = items.find( ( i ) => i.id === 12 );
 
-			expect( alert11.read ).toBe( true );
-			expect( alert12.read ).toBe( false );
+			expect( items.every( ( item ) => item.read === false ) ).toBe( true );
 		} );
 
-		it( 'returns per-section and total unread counts', async () => {
-			const { ApiConstructor } = makeApi( GROUPED_RESPONSE );
+		it( 'sorts newest first', async () => {
+			const { ApiConstructor } = makeApi( RESPONSE );
+			const source = createEchoSource( ApiConstructor );
+
+			const { items } = await source.fetch();
+
+			expect( items.map( ( item ) => item.timestamp ) )
+				.toEqual( [ 1700000400, 1700000300, 1700000200 ] );
+		} );
+
+		it( 'reports the unread count, all of it local without a roll-up', async () => {
+			const { ApiConstructor } = makeApi( RESPONSE );
 			const source = createEchoSource( ApiConstructor );
 
 			const { counts } = await source.fetch();
 
-			expect( counts ).toEqual( { alert: 1, message: 1, total: 2 } );
-		} );
-
-		it( 'sorts unread before read, then newest first', async () => {
-			const entry = ( id, ts, read ) => Object.assign(
-				{ id: id, category: 'mention', timestamp: { utcunix: String( ts ) } },
-				read ? { read: '20231114000000' } : {},
-				{ '*': { header: '', body: '', iconUrl: '', links: { primary: [], secondary: [] } } }
-			);
-			const response = { query: { notifications: {
-				alert: {
-					// A read item that is NEWER than the unread ones.
-					list: [ entry( 1, 900, true ), entry( 2, 300, false ), entry( 3, 500, false ) ],
-					rawcount: 2
-				},
-				message: { list: [], rawcount: 0 },
-				rawcount: 2
-			} } };
-			const { ApiConstructor } = makeApi( response );
-			const source = createEchoSource( ApiConstructor );
-
-			const { items } = await source.fetch();
-
-			// Unread newest-first (3 then 2), then the newer-but-read item (1).
-			expect( items.map( ( i ) => i.id ) ).toEqual( [ 3, 2, 1 ] );
+			expect( counts ).toEqual( { total: 3, local: 3, foreign: 0 } );
 		} );
 
 		it( 'tolerates an empty notifications payload', async () => {
@@ -300,11 +253,11 @@ describe( 'createEchoSource', () => {
 			const { items, counts } = await source.fetch();
 
 			expect( items ).toEqual( [] );
-			expect( counts ).toEqual( { alert: 0, message: 0, total: 0 } );
+			expect( counts ).toEqual( { total: 0, local: 0, foreign: 0 } );
 		} );
 	} );
 
-	describe( 'cross-wiki summaries', () => {
+	describe( 'cross-wiki roll-up', () => {
 		it( 'never exposes Echo\'s placeholder id', async () => {
 			const { ApiConstructor } = makeApi( responseWithSummary() );
 			const source = createEchoSource( ApiConstructor );
@@ -312,30 +265,36 @@ describe( 'createEchoSource', () => {
 			const { items } = await source.fetch();
 
 			expect( items.some( ( item ) => item.id === -1 ) ).toBe( false );
-			expect( items.map( ( item ) => item.id ) )
-				.toEqual( [ 'summary-alert', 'summary-message', 12, 21, 11 ] );
+			expect( items[ 0 ].id ).toBe( 'summary-foreign' );
 		} );
 
-		it( 'pins summaries above the sorted list', async () => {
+		it( 'arrives as a single merged row, not one per section', async () => {
 			const { ApiConstructor } = makeApi( responseWithSummary() );
 			const source = createEchoSource( ApiConstructor );
 
 			const { items } = await source.fetch();
 
-			expect( items.slice( 0, 2 ).map( ( item ) => item.isSummary ) )
-				.toEqual( [ true, true ] );
-			// The remaining items keep the order they have without a summary.
-			expect( items.slice( 2 ).map( ( item ) => item.id ) ).toEqual( [ 12, 21, 11 ] );
+			expect( items.filter( ( item ) => item.isSummary ) ).toHaveLength( 1 );
 		} );
 
-		it( 'carries the section and the count it stands for', async () => {
+		it( 'pins the roll-up above the list even though Echo sends it last', async () => {
 			const { ApiConstructor } = makeApi( responseWithSummary() );
 			const source = createEchoSource( ApiConstructor );
 
 			const { items } = await source.fetch();
 
-			expect( items[ 0 ] ).toMatchObject( { section: 'alert', count: 3, read: false } );
-			expect( items[ 1 ] ).toMatchObject( { section: 'message', count: 2, read: false } );
+			expect( items[ 0 ].isSummary ).toBe( true );
+			// The rest keep the order they have without a roll-up.
+			expect( items.slice( 1 ).map( ( i ) => i.id ) ).toEqual( [ 12, 21, 11 ] );
+		} );
+
+		it( 'splits the count into local and elsewhere', async () => {
+			const { ApiConstructor } = makeApi( responseWithSummary( ONE_WIKI, 5 ) );
+			const source = createEchoSource( ApiConstructor );
+
+			const { counts } = await source.fetch();
+
+			expect( counts ).toEqual( { total: 8, local: 3, foreign: 5 } );
 		} );
 
 		it( 'leaves the category label off rather than showing "Other"', async () => {
@@ -354,21 +313,20 @@ describe( 'createEchoSource', () => {
 
 			const { items } = await source.fetch();
 
-			expect( items[ 0 ].header ).toBe( 'More alerts from another wiki' );
+			expect( items[ 0 ].header ).toBe( 'More notifications from another wiki' );
 			expect( items[ 0 ].body ).toBe( 'Example Wiki' );
 		} );
 
-		it( 'links a single-wiki summary to that wiki\'s notifications', async () => {
+		it( 'links a single-wiki roll-up to that wiki\'s notifications', async () => {
 			const { ApiConstructor } = makeApi( responseWithSummary() );
 			const source = createEchoSource( ApiConstructor );
 
 			const { items } = await source.fetch();
 
-			expect( items[ 0 ].primaryUrl )
-				.toBe( 'https://example.org/wiki/Special:Notifications' );
+			expect( items[ 0 ].primaryUrl ).toBe( 'https://example.org/wiki/Special:Notifications' );
 		} );
 
-		it( 'links a multi-wiki summary to the local special page', async () => {
+		it( 'links a multi-wiki roll-up to the local special page', async () => {
 			const { ApiConstructor } = makeApi( responseWithSummary( Object.assign(
 				{}, ONE_WIKI, { otherwiki: { title: 'Other', base: 'https://other.org/wiki/$1' } }
 			) ) );
@@ -390,8 +348,8 @@ describe( 'createEchoSource', () => {
 			expect( items[ 0 ].primaryUrl ).toBe( '/wiki/Special:Notifications' );
 		} );
 
-		it( 'leaves ordinary items untouched when no summary arrives', async () => {
-			const { ApiConstructor } = makeApi( GROUPED_RESPONSE );
+		it( 'leaves ordinary items untouched when no roll-up arrives', async () => {
+			const { ApiConstructor } = makeApi( RESPONSE );
 			const source = createEchoSource( ApiConstructor );
 
 			const { items } = await source.fetch();
@@ -403,7 +361,7 @@ describe( 'createEchoSource', () => {
 
 	describe( 'mutations', () => {
 		it( 'markSeen posts the given type with a csrf token', async () => {
-			const { ApiConstructor, postWithToken } = makeApi( GROUPED_RESPONSE );
+			const { ApiConstructor, postWithToken } = makeApi( RESPONSE );
 			const source = createEchoSource( ApiConstructor );
 
 			await source.markSeen( 'all' );
@@ -415,7 +373,7 @@ describe( 'createEchoSource', () => {
 		} );
 
 		it( 'markRead posts the id list', async () => {
-			const { ApiConstructor, postWithToken } = makeApi( GROUPED_RESPONSE );
+			const { ApiConstructor, postWithToken } = makeApi( RESPONSE );
 			const source = createEchoSource( ApiConstructor );
 
 			await source.markRead( [ 11, 12 ] );
@@ -427,7 +385,7 @@ describe( 'createEchoSource', () => {
 		} );
 
 		it( 'markRead is a no-op for an empty list', async () => {
-			const { ApiConstructor, postWithToken } = makeApi( GROUPED_RESPONSE );
+			const { ApiConstructor, postWithToken } = makeApi( RESPONSE );
 			const source = createEchoSource( ApiConstructor );
 
 			await source.markRead( [] );
@@ -435,27 +393,15 @@ describe( 'createEchoSource', () => {
 			expect( postWithToken ).not.toHaveBeenCalled();
 		} );
 
-		it( 'markAllRead posts all=true when no section given', async () => {
-			const { ApiConstructor, postWithToken } = makeApi( GROUPED_RESPONSE );
+		it( 'markAllRead clears everything, unscoped', async () => {
+			const { ApiConstructor, postWithToken } = makeApi( RESPONSE );
 			const source = createEchoSource( ApiConstructor );
 
-			await source.markAllRead( null );
+			await source.markAllRead();
 
 			expect( postWithToken ).toHaveBeenCalledWith( 'csrf', {
 				action: 'echomarkread',
 				all: true
-			} );
-		} );
-
-		it( 'markAllRead scopes to a section when given one', async () => {
-			const { ApiConstructor, postWithToken } = makeApi( GROUPED_RESPONSE );
-			const source = createEchoSource( ApiConstructor );
-
-			await source.markAllRead( 'alert' );
-
-			expect( postWithToken ).toHaveBeenCalledWith( 'csrf', {
-				action: 'echomarkread',
-				sections: 'alert'
 			} );
 		} );
 	} );
