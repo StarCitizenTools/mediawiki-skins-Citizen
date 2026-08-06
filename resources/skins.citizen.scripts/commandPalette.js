@@ -5,7 +5,8 @@ const { bindIntentPrefetch } = require( './intentPrefetch.js' );
 /**
  * Create the command palette trigger orchestrator.
  *
- * Owns the lifecycle: intent prefetch on hover/focus/touch, lazy
+ * Owns the lifecycle: intent prefetch on hover/focus/touch, a silent
+ * idle-time mount once a hover/focus prefetch completes, lazy
  * `mw.loader.using` on click/keyboard, prefill queueing, and dispatch
  * to the mounted Vue app once it is ready. On cold cache the user
  * sees nothing for the duration of the load (typically <300ms on
@@ -30,6 +31,7 @@ function createCommandPalette( { document, mw } ) {
 	let detailsEl = null;
 	let summaryEl = null;
 	let overlay = null;
+	let cancelPrefetch = null;
 	// Whether the palette is on screen. Distinct from `state`, which tracks
 	// whether the bundle has loaded — the palette can be closed and reopened
 	// any number of times while `state` stays 'mounted'.
@@ -96,6 +98,29 @@ function createCommandPalette( { document, mw } ) {
 		return overlay;
 	}
 
+	/**
+	 * Mount the Vue app into the overlay without opening it. Shared by the
+	 * click-driven load path and the idle mount after an intent prefetch —
+	 * both end in the same 'mounted' state that `triggerOpen` treats as
+	 * ready-to-open.
+	 *
+	 * @param {Function} req Module require function from `mw.loader.using`
+	 */
+	function mountApp( req ) {
+		const mod = req( MODULE );
+		const overlayEl = ensureOverlay();
+		paletteApp = mod.initApp( overlayEl, {
+			prefill: pendingPrefill,
+			onClose: notifyClosed
+		} );
+		state = 'mounted';
+		// Once mounted, the intent listeners have nothing left to prefetch.
+		if ( cancelPrefetch ) {
+			cancelPrefetch();
+			cancelPrefetch = null;
+		}
+	}
+
 	function load() {
 		state = 'loading';
 		cancelled = false;
@@ -108,13 +133,7 @@ function createCommandPalette( { document, mw } ) {
 		Promise.race( [ mw.loader.using( MODULE ), timeoutPromise ] ).then(
 			( req ) => {
 				clearTimeout( timeoutId );
-				const mod = req( MODULE );
-				const overlayEl = ensureOverlay();
-				paletteApp = mod.initApp( overlayEl, {
-					prefill: pendingPrefill,
-					onClose: notifyClosed
-				} );
-				state = 'mounted';
+				mountApp( req );
 				if ( !cancelled ) {
 					paletteApp.open( pendingPrefill );
 					isOpen = true;
@@ -205,7 +224,30 @@ function createCommandPalette( { document, mw } ) {
 		}
 		summary.removeAttribute( 'aria-details' );
 
-		bindIntentPrefetch( summary, MODULE, mw );
+		// The prefetch fetches and evaluates the bundle, but mounting
+		// would otherwise still land on the click. Mount silently at idle
+		// so a hover-then-click open only pays for the first render.
+		// Touch is excluded: touchstart precedes the tap's click by too
+		// little for an idle mount to win the race.
+		cancelPrefetch = bindIntentPrefetch( summary, MODULE, mw, {
+			onReady: ( req, eventType ) => {
+				if ( eventType === 'touchstart' ) {
+					return;
+				}
+				mw.requestIdleCallback( () => {
+					// A click may have beaten this callback — `load()` owns
+					// the mount from there, and mounting is synchronous, so
+					// the two paths cannot interleave. This also catches a
+					// module that resolves after a click-driven load timed
+					// out (the reject handler resets state to 'idle'): it
+					// mounts silently, so the next trigger opens instantly
+					// instead of reloading.
+					if ( state === 'idle' ) {
+						mountApp( req );
+					}
+				} );
+			}
+		} );
 
 		summary.addEventListener( 'click', ( event ) => {
 			event.preventDefault();
