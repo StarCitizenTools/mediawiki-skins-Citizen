@@ -668,6 +668,7 @@
 					"callbackParam": [
 						"cdxIconCheckAll",
 						"cdxIconExpand",
+						"cdxIconHistory",
 						"cdxIconLinkExternal",
 						"cdxIconNext",
 						"cdxIconSettings"
@@ -678,11 +679,13 @@
 				"resources/skins.citizen.notifications/components/App.vue",
 				"resources/skins.citizen.notifications/components/NotificationList.vue",
 				"resources/skins.citizen.notifications/components/NotificationItem.vue",
-				"resources/skins.citizen.notifications/components/WikiList.vue"
+				"resources/skins.citizen.notifications/components/WikiList.vue",
+				"resources/skins.citizen.notifications/components/PanelFooter.vue"
 			],
 			"messages": [
 				"citizen-notifications-title",
 				"citizen-notifications-mark-all-read",
+				"citizen-notifications-clear-all",
 				"citizen-notifications-source-local",
 				"citizen-notifications-source-other",
 				"citizen-notifications-loading",

@@ -31,7 +31,12 @@
 		flex-direction: column;
 		gap: var( --space-xs );
 		padding: var( --space-sm ) var( --space-md );
-		border-bottom: var( --border-subtle );
+	}
+
+	// Matches the rows the skeleton stands in for: dividers between items,
+	// never a trailing line under the last one.
+	&__skeleton-item + &__skeleton-item {
+		border-top: var( --border-subtle );
 	}
 
 	// Icon-generation skeleton opts in via the modifier so cached pre-icon

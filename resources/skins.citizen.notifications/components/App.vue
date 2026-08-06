@@ -4,16 +4,6 @@
 			<h2 class="citizen-notifications__title">
 				{{ msg.title }}
 			</h2>
-			<cdx-button
-				class="citizen-notifications__mark-all"
-				weight="quiet"
-				:disabled="!canMarkAll"
-				:aria-label="msg.markAll"
-				:title="msg.markAll"
-				@click="onMarkAll"
-			>
-				<cdx-icon :icon="icons.cdxIconCheckAll"></cdx-icon>
-			</cdx-button>
 		</header>
 
 		<div class="citizen-notifications__body">
@@ -59,9 +49,44 @@
 					name="local"
 					:label="msg.sourceLocal"
 				>
+					<div class="citizen-notifications__scroll">
+						<notification-list
+							v-if="items.length > 0"
+							:items="items"
+							:clearing="clearing"
+							@read="onItemRead"
+						></notification-list>
+						<div
+							v-else
+							class="citizen-notifications__empty"
+						>
+							{{ msg.empty }}
+						</div>
+					</div>
+					<panel-footer
+						:has-items="items.length > 0"
+						:can-clear="canMarkAll"
+						@clear="onMarkAll"
+					></panel-footer>
+				</cdx-tab>
+				<cdx-tab
+					name="foreign"
+					:label="msg.sourceForeign"
+				>
+					<div class="citizen-notifications__scroll">
+						<wiki-list
+							:wikis="wikis"
+							:fetch-wiki="fetchWiki"
+						></wiki-list>
+					</div>
+				</cdx-tab>
+			</cdx-tabs>
+			<template v-else>
+				<div class="citizen-notifications__scroll">
 					<notification-list
 						v-if="items.length > 0"
 						:items="items"
+						:clearing="clearing"
 						@read="onItemRead"
 					></notification-list>
 					<div
@@ -70,75 +95,34 @@
 					>
 						{{ msg.empty }}
 					</div>
-				</cdx-tab>
-				<cdx-tab
-					name="foreign"
-					:label="msg.sourceForeign"
-				>
-					<wiki-list
-						:wikis="wikis"
-						:fetch-wiki="fetchWiki"
-					></wiki-list>
-				</cdx-tab>
-			</cdx-tabs>
-			<notification-list
-				v-else-if="items.length > 0"
-				:items="items"
-				@read="onItemRead"
-			></notification-list>
-			<div
-				v-else
-				class="citizen-notifications__empty"
-			>
-				{{ msg.empty }}
-			</div>
+				</div>
+				<panel-footer
+					:has-items="items.length > 0"
+					:can-clear="canMarkAll"
+					@clear="onMarkAll"
+				></panel-footer>
+			</template>
 		</div>
-
-		<footer class="citizen-notifications__footer">
-			<a
-				class="citizen-notifications__see-all"
-				:class="fakeQuietButtonClass"
-				:href="urls.all"
-			>{{ msg.seeAll }}</a>
-			<a
-				class="citizen-notifications__prefs"
-				:class="fakeIconButtonClass"
-				:href="urls.prefs"
-				:aria-label="msg.prefs"
-				:title="msg.prefs"
-			>
-				<cdx-icon :icon="icons.cdxIconSettings"></cdx-icon>
-			</a>
-		</footer>
 	</div>
 </template>
 
 <script>
 const { defineComponent, ref, computed, inject, onMounted } = require( 'vue' );
-const { CdxButton, CdxIcon, CdxTab, CdxTabs } = mw.loader.require( 'skins.citizen.notifications.codex' );
+const { CdxButton, CdxTab, CdxTabs } = mw.loader.require( 'skins.citizen.notifications.codex' );
 const NotificationList = require( './NotificationList.vue' );
 const WikiList = require( './WikiList.vue' );
-const icons = require( '../icons.json' );
-
-// Links styled as quiet cdx buttons need the fake-button variants.
-const FAKE_QUIET_BUTTON_CLASS = [
-	'cdx-button',
-	'cdx-button--fake-button',
-	'cdx-button--fake-button--enabled',
-	'cdx-button--weight-quiet'
-];
-const FAKE_QUIET_ICON_BUTTON_CLASS = FAKE_QUIET_BUTTON_CLASS.concat( [ 'cdx-button--icon-only' ] );
+const PanelFooter = require( './PanelFooter.vue' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
 	name: 'NotificationsApp',
 	components: {
 		CdxButton,
-		CdxIcon,
 		CdxTab,
 		CdxTabs,
 		NotificationList,
-		WikiList
+		WikiList,
+		PanelFooter
 	},
 	setup() {
 		const source = inject( 'source' );
@@ -157,28 +141,24 @@ module.exports = exports = defineComponent( {
 		// data source, hence the longer name.
 		const activeSource = ref( 'local' );
 
+		// True while the clear-all sweep plays; the list empties when it ends.
+		const clearing = ref( false );
+		// The sweep's pending list swap, so fresher data can cancel it.
+		let clearSweepTimer = null;
+
 		const msg = {
 			title: mw.message( 'citizen-notifications-title' ).text(),
-			markAll: mw.message( 'citizen-notifications-mark-all-read' ).text(),
 			empty: mw.message( 'citizen-notifications-empty' ).text(),
 			error: mw.message( 'citizen-notifications-error' ).text(),
 			retry: mw.message( 'citizen-notifications-retry' ).text(),
-			seeAll: mw.message( 'citizen-notifications-see-all' ).text(),
-			prefs: mw.message( 'citizen-notifications-preferences' ).text(),
 			sourceLocal: mw.message( 'citizen-notifications-source-local' ).text(),
 			sourceForeign: mw.message( 'citizen-notifications-source-other' ).text()
 		};
 
-		const urls = {
-			all: mw.util.getUrl( 'Special:Notifications' ),
-			prefs: mw.util.getUrl( 'Special:Preferences' ) + '#mw-prefsection-echo'
-		};
-
-		// Mark-all clears this wiki's notifications, so it stays out of reach
-		// while the other wikis are on screen — nothing there would change.
+		// Mark-all clears this wiki's notifications; the other wikis simply
+		// have no footer, so there is nothing to gate on the active source.
 		const canMarkAll = computed(
-			() => activeSource.value === 'local' &&
-				items.value.some( ( item ) => !item.read )
+			() => !clearing.value && items.value.some( ( item ) => !item.read )
 		);
 
 		function reportCounts() {
@@ -202,6 +182,15 @@ module.exports = exports = defineComponent( {
 		const hasLoaded = ref( false );
 
 		function applyResult( result ) {
+			// Server truth supersedes a clear-all sweep still in flight (the
+			// panel was reopened mid-sweep): cancel the pending swap so it
+			// cannot wipe this fresh list, and stop the sweep so the new rows
+			// don't inherit its exit animation.
+			if ( clearSweepTimer !== null ) {
+				clearTimeout( clearSweepTimer );
+				clearSweepTimer = null;
+			}
+			clearing.value = false;
 			items.value = result.items;
 			counts.value = result.counts;
 			wikis.value = result.wikis || [];
@@ -243,6 +232,9 @@ module.exports = exports = defineComponent( {
 		}
 
 		function onItemRead( id ) {
+			if ( clearing.value ) {
+				return;
+			}
 			const item = items.value.find( ( i ) => i.id === id );
 			if ( !item || item.read ) {
 				return;
@@ -257,14 +249,38 @@ module.exports = exports = defineComponent( {
 			recountFromItems();
 		}
 
+		// How long the clear-all sweep takes end to end: the last row's capped
+		// stagger plus one row's animation (NotificationList.vue owns those
+		// numbers; keep the two files in step).
+		const CLEAR_SWEEP_MS = 560;
+
 		function onMarkAll() {
+			if ( clearing.value ) {
+				return;
+			}
 			// Best-effort, like onItemRead: swallow rejections (the next open's
 			// refresh() refetches authoritative state).
 			source.markAllRead().catch( () => {} );
-			items.value.forEach( ( item ) => {
-				item.read = true;
-			} );
-			recountFromItems();
+			// The badge clears on the click; the rows sweep out and the emptied
+			// panel follows — the button promises "Clear all", so unlike a
+			// single read row nothing lingers. Skip straight to empty when
+			// motion is unwelcome.
+			counts.value = {
+				total: counts.value.foreign,
+				local: 0,
+				foreign: counts.value.foreign
+			};
+			reportCounts();
+			if ( window.matchMedia && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches ) {
+				items.value = [];
+				return;
+			}
+			clearing.value = true;
+			clearSweepTimer = setTimeout( () => {
+				clearSweepTimer = null;
+				items.value = [];
+				clearing.value = false;
+			}, CLEAR_SWEEP_MS );
 		}
 
 		onMounted( load );
@@ -272,15 +288,12 @@ module.exports = exports = defineComponent( {
 		return {
 			status,
 			items,
+			clearing,
 			wikis,
 			fetchWiki: ( wiki ) => source.fetchWiki( wiki ),
 			activeSource,
 			canMarkAll,
 			msg,
-			urls,
-			icons,
-			fakeQuietButtonClass: FAKE_QUIET_BUTTON_CLASS,
-			fakeIconButtonClass: FAKE_QUIET_ICON_BUTTON_CLASS,
 			load,
 			onItemRead,
 			onMarkAll,
@@ -292,7 +305,6 @@ module.exports = exports = defineComponent( {
 </script>
 
 <style lang="less">
-@import 'mediawiki.skin.variables.less';
 @import '../../mixins.less';
 
 .citizen-notifications {
@@ -324,10 +336,17 @@ module.exports = exports = defineComponent( {
 		font-weight: var( --font-weight-semi-bold );
 	}
 
-	// Holds the loading, tabs or error state. The active tab panel scrolls,
-	// not this container.
-	// Without tabs the body is the scroller; with them, the tab panel is.
+	// Holds the loading, tabs or error state. Nothing scrolls here: each view
+	// brings its own scroller so its footer can stay pinned below it.
 	&__body {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		min-height: 0;
+	}
+
+	// The view's list scrolls under its pinned per-view footer.
+	&__scroll {
 		display: flex;
 		flex: 1;
 		flex-direction: column;
@@ -336,7 +355,7 @@ module.exports = exports = defineComponent( {
 		overscroll-behavior: contain;
 	}
 
-	// Source tabs: the bar stays put and the active panel scrolls.
+	// Source tabs: the bar stays put and the active panel's scroller scrolls.
 	.cdx-tabs {
 		display: flex;
 		flex: 1;
@@ -363,8 +382,16 @@ module.exports = exports = defineComponent( {
 		flex: 1;
 		flex-direction: column;
 		min-height: 0;
-		overflow-y: auto;
-		overscroll-behavior: contain;
+	}
+
+	// The tab panel passes the height band on to the view inside it, so the
+	// scroller can take the space its footer leaves. `v-show` toggles the
+	// inline display, so the inactive panel is still hidden.
+	.cdx-tab {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		min-height: 0;
 	}
 
 	.cdx-tabs__list__item {
@@ -383,32 +410,6 @@ module.exports = exports = defineComponent( {
 		padding: var( --space-xl ) var( --space-md );
 		color: var( --color-subtle );
 		text-align: center;
-	}
-
-	&__footer {
-		display: flex;
-		flex-shrink: 0;
-		gap: var( --space-sm );
-		justify-content: space-between;
-		padding: var( --space-xs ) var( --space-md );
-		border-top: var( --border-subtle );
-	}
-
-	&__see-all.cdx-button {
-		margin-inline-start: @spacing-horizontal-button * -1;
-	}
-
-	// The settings link is styled as an icon button. Core's
-	// `a:where( :not( [role='button'] ) ) .cdx-icon:last-child` rule applies
-	// trailing-link-icon sizing/padding to it; override so the icon matches the
-	// icon-only button (centred, no left padding). The extra :not() lifts this
-	// above the core rule's specificity.
-	&__prefs .cdx-icon:not( .cdx-thumbnail__placeholder__icon--vue ):last-child {
-		width: var( --size-icon-medium, 1.25rem );
-		min-width: var( --size-icon-medium, 1.25rem );
-		height: var( --size-icon-medium, 1.25rem );
-		min-height: var( --size-icon-medium, 1.25rem );
-		padding-left: 0;
 	}
 }
 </style>
