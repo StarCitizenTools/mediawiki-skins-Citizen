@@ -200,7 +200,7 @@ Every property you don't override falls through to the default palette's [`light
 One limitation to know about: a few dark-mode extras are keyed to the built-in themes by name — the image dimming preference, and dark-mode fixes for some extensions — so they don't fire for custom themes. If your theme needs one of them, replicate it in your theme's CSS block.
 
 ::: tip
-Set `$wgCitizenThemeDefault = 'ocean';` to make your theme the default for new visitors.
+Make your theme the default for new visitors by adding `"default": "ocean"` to the `skin-theme` block you set up above — alongside `options`, not instead of it, so the theme stays registered in the picker.
 :::
 
 ## Performance considerations

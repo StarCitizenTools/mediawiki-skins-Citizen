@@ -325,6 +325,10 @@ $wgCitizenHeaderPositionMobile = 'bottom';
 
 ### `$wgCitizenThemeDefault`
 
+::: warning Deprecated
+Set the default with the `skin-theme` preference's [`default` field](../features/preferences.md#setting-defaults) in `MediaWiki:Citizen-preferences.json` instead. This config keeps working until Citizen 4 as a fallback — the JSON value wins when both are set.
+:::
+
 Sets the default color theme for new visitors.
 
 ```php [LocalSettings.php]
@@ -1436,6 +1440,8 @@ Each preference is keyed by its feature name.
 | `descriptionMsg` / `description` | string | i18n message key or literal text for the description. |
 | `columns` | number | For radio type, number of columns (default: 2). |
 | `visibilityCondition` | string | Optional gate on when the preference appears: `"always"` (default), `"dark-theme"` (visible only in dark theme), `"tablet-viewport"` (visible only at tablet width or above). |
+| `default` | string | The value that applies when the user hasn't made a choice. Must be one of the `options` values, letters and numbers only. For preferences defined on-wiki this is applied to every page by the server; for preferences registered through the JavaScript API it sets the panel's initial selection. See [Setting defaults](#setting-defaults). |
+| `hidden` | boolean | Set `true` to remove the preference from the panel while keeping it active — for preferences defined on-wiki, its `default` still applies site-wide. Use together with `default` to force a value. Sections whose preferences are all hidden disappear automatically. |
 
 ### `label` vs `labelMsg`
 
@@ -1455,7 +1461,7 @@ The simplest way to manage preferences — create a JSON page on your wiki at `M
 Your configuration is merged with the built-in defaults:
 
 * **Omitting** a built-in preference or section keeps its default.
-* Setting a preference to **`null`** removes it from the panel. Sections with no remaining preferences are dropped automatically.
+* Setting a preference to **`null`** removes it from the panel. Sections with no remaining preferences are dropped automatically. Unlike [`hidden`](#preference-entries), a `null` preference is gone entirely — it can't carry a `default`, and a `null` `skin-theme` stops informing theme-dependent visibility. Prefer `hidden: true` when the feature should stay active.
 * **Overriding** specific fields of a built-in preference merges them — unspecified fields keep their default values.
 * **Options arrays** are replaced wholesale, not merged element-by-element. If you override `options`, provide the full list.
 
@@ -1509,6 +1515,58 @@ This removes the "auto" option from the theme preference, leaving only day and n
   }
 }
 ```
+
+### Setting defaults
+
+Every preference can declare a `default` — the value that applies when a visitor hasn't made a choice. For preferences managed on-wiki (built-in or added in the JSON), Citizen applies the default on the server: the `<feature>-clientpref-<value>` class is on the `<html>` element from the first paint, so CSS keyed to it always works. The server read relies on database messages, so on a wiki running `$wgUseDatabaseMessages = false` a `default` only affects the panel's selection, not the served page.
+
+Changing a built-in default:
+
+```json
+{
+  "preferences": {
+    "citizen-feature-custom-width": { "default": "wide" }
+  }
+}
+```
+
+An added preference with a default:
+
+```json
+{
+  "preferences": {
+    "my-extension-dark-reader": {
+      "section": "extensions",
+      "type": "switch",
+      "options": ["0", "1"],
+      "default": "1",
+      "label": "Dark Reader"
+    }
+  }
+}
+```
+
+The theme works the same way — `"skin-theme": { "default": "night" }` — and supersedes the deprecated [`$wgCitizenThemeDefault`](../config/index.md#wgcitizenthemedefault) config (the JSON value wins when both are set).
+
+The built-in defaults, when you don't override them:
+
+| Preference | Default |
+| :--- | :--- |
+| `skin-theme` | `os` |
+| `citizen-feature-custom-font-size` | `standard` |
+| `citizen-feature-custom-width` | `standard` |
+| `citizen-feature-pure-black`  | `0` |
+| `citizen-feature-image-dimming` | `0` |
+| `citizen-feature-autohide-navigation` | `1` |
+| `citizen-feature-performance-mode` | `1` |
+
+::: warning Performance mode detects the device
+`citizen-feature-performance-mode` is the one preference where your default doesn't stick. On a visitor's first page load, Citizen checks whether their device has GPU acceleration and stores the answer for them — so your `default` only holds until that check runs, and the detected value applies from their next page load on.
+:::
+
+::: info Preferences registered from JavaScript
+The server never sees preferences registered through the JavaScript API, so it can't apply their class ahead of time. Their `default` sets the panel's initial selection, and your CSS should treat "no class on `<html>`" and "class equals the default value" as the same state — a user who explicitly picks the default does get the class.
+:::
 
 ### JavaScript API
 
@@ -1594,6 +1652,8 @@ html.my-extension-dark-reader-clientpref-1 {
   /* styles when dark reader is enabled */
 }
 ```
+
+For preferences with a `default`, remember the contract above: style the default state as the base, and key your overrides to the non-default classes.
 
 ### Listening for changes
 
@@ -1935,7 +1995,7 @@ Every property you don't override falls through to the default palette's [`light
 One limitation to know about: a few dark-mode extras are keyed to the built-in themes by name — the image dimming preference, and dark-mode fixes for some extensions — so they don't fire for custom themes. If your theme needs one of them, replicate it in your theme's CSS block.
 
 ::: tip
-Set `$wgCitizenThemeDefault = 'ocean';` to make your theme the default for new visitors.
+Make your theme the default for new visitors by adding `"default": "ocean"` to the `skin-theme` block you set up above — alongside `options`, not instead of it, so the theme stays registered in the picker.
 :::
 
 ## Performance considerations
@@ -2044,23 +2104,20 @@ To hide a preference from the panel entirely, set it to `null`:
 
 ## Force a theme site-wide
 
-To lock everyone into a single theme, combine two changes — set the default theme, then remove the picker so users can't switch.
-
-First, set the default in `LocalSettings.php` using a valid value for [`$wgCitizenThemeDefault`](../config/#wgcitizenthemedefault):
-
-```php
-$wgCitizenThemeDefault = 'dark';
-```
-
-Then remove the theme picker by editing `MediaWiki:Citizen-preferences.json`:
+To lock everyone into a single theme, give `skin-theme` a default and hide the picker by editing `MediaWiki:Citizen-preferences.json`:
 
 ```json
 {
   "preferences": {
-    "skin-theme": null
+    "skin-theme": {
+      "default": "night",
+      "hidden": true
+    }
   }
 }
 ```
+
+`default` makes the theme apply to everyone who hasn't chosen one, and `hidden` removes the picker so nobody can.
 
 ::: warning
 Users who picked a different theme before you applied this change have it stored in their browser's local storage. They'll keep seeing their old choice until they clear site data — local storage doesn't expire on its own. New visitors get the forced theme immediately.
@@ -2501,28 +2558,35 @@ description: Changelog of the latest version of Citizen.
 ---
 
 ---
-url: /changelogs/v1.16.0.md
+url: /changelogs/v2.38.0.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v1.14.1.md
+url: /changelogs/v2.2.0.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v1.15.0.md
+url: /changelogs/v2.19.0.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v1.14.0.md
+url: /changelogs/v2.20.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.21.0.md
 ---
 
 
@@ -2536,6 +2600,13 @@ url: /changelogs/v1.10.0.md
 ---
 
 ---
+url: /changelogs/v2.22.0.md
+---
+
+
+---
+
+---
 url: /changelogs/v1.13.0.md
 ---
 
@@ -2543,14 +2614,63 @@ url: /changelogs/v1.13.0.md
 ---
 
 ---
-url: /changelogs/v1.17.0.md
+url: /changelogs/v2.22.1.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v1.17.2.md
+url: /changelogs/v1.14.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.23.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.25.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.14.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.16.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.24.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.15.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.26.0.md
 ---
 
 
@@ -2564,7 +2684,49 @@ url: /changelogs/v1.16.1.md
 ---
 
 ---
+url: /changelogs/v2.27.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.28.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.29.0.md
+---
+
+
+---
+
+---
 url: /changelogs/v1.17.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.3.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.2.md
 ---
 
 
@@ -2578,7 +2740,7 @@ url: /changelogs/v1.17.3.md
 ---
 
 ---
-url: /changelogs/v1.17.6.md
+url: /changelogs/v2.3.1.md
 ---
 
 
@@ -2599,7 +2761,28 @@ url: /changelogs/v1.17.5.md
 ---
 
 ---
-url: /changelogs/v1.17.9.md
+url: /changelogs/v2.3.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.6.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.3.3.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.3.4.md
 ---
 
 
@@ -2613,6 +2796,13 @@ url: /changelogs/v1.17.7.md
 ---
 
 ---
+url: /changelogs/v2.3.5.md
+---
+
+
+---
+
+---
 url: /changelogs/v1.17.8.md
 ---
 
@@ -2620,7 +2810,21 @@ url: /changelogs/v1.17.8.md
 ---
 
 ---
-url: /changelogs/v1.9.5.md
+url: /changelogs/v2.3.6.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.17.9.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.30.0.md
 ---
 
 
@@ -2634,7 +2838,35 @@ url: /changelogs/v1.9.4.md
 ---
 
 ---
+url: /changelogs/v2.31.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v1.9.5.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.32.0.md
+---
+
+
+---
+
+---
 url: /changelogs/v2.0.0-alpha.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.33.0.md
 ---
 
 
@@ -2662,6 +2894,13 @@ url: /changelogs/v2.0.0-beta.1.md
 ---
 
 ---
+url: /changelogs/v2.0.0-beta.2.md
+---
+
+
+---
+
+---
 url: /changelogs/v2.0.0-beta.3.md
 ---
 
@@ -2676,7 +2915,7 @@ url: /changelogs/v2.0.0-beta.4.md
 ---
 
 ---
-url: /changelogs/v2.0.0-beta.2.md
+url: /changelogs/v2.34.0.md
 ---
 
 
@@ -2690,357 +2929,7 @@ url: /changelogs/v2.0.0.md
 ---
 
 ---
-url: /changelogs/v2.0.1.md
----
-
-
----
-
----
-url: /changelogs/v2.1.0.md
----
-
-
----
-
----
-url: /changelogs/v2.10.1.md
----
-
-
----
-
----
-url: /changelogs/v2.10.0.md
----
-
-
----
-
----
-url: /changelogs/v2.11.0.md
----
-
-
----
-
----
-url: /changelogs/v2.11.1.md
----
-
-
----
-
----
-url: /changelogs/v2.12.0.md
----
-
-
----
-
----
-url: /changelogs/v2.13.0.md
----
-
-
----
-
----
-url: /changelogs/v2.13.2.md
----
-
-
----
-
----
-url: /changelogs/v2.13.1.md
----
-
-
----
-
----
-url: /changelogs/v2.13.4.md
----
-
-
----
-
----
-url: /changelogs/v2.13.3.md
----
-
-
----
-
----
-url: /changelogs/v2.13.5.md
----
-
-
----
-
----
-url: /changelogs/v2.14.0.md
----
-
-
----
-
----
-url: /changelogs/v2.14.1.md
----
-
-
----
-
----
-url: /changelogs/v2.15.0.md
----
-
-
----
-
----
-url: /changelogs/v2.15.1.md
----
-
-
----
-
----
-url: /changelogs/v2.16.0.md
----
-
-
----
-
----
-url: /changelogs/v2.16.1.md
----
-
-
----
-
----
-url: /changelogs/v2.17.0.md
----
-
-
----
-
----
-url: /changelogs/v2.17.1.md
----
-
-
----
-
----
-url: /changelogs/v2.17.2.md
----
-
-
----
-
----
-url: /changelogs/v2.18.1.md
----
-
-
----
-
----
-url: /changelogs/v2.18.0.md
----
-
-
----
-
----
-url: /changelogs/v2.19.0.md
----
-
-
----
-
----
-url: /changelogs/v2.2.0.md
----
-
-
----
-
----
-url: /changelogs/v2.21.0.md
----
-
-
----
-
----
-url: /changelogs/v2.20.0.md
----
-
-
----
-
----
-url: /changelogs/v2.22.0.md
----
-
-
----
-
----
-url: /changelogs/v2.22.1.md
----
-
-
----
-
----
-url: /changelogs/v2.23.0.md
----
-
-
----
-
----
-url: /changelogs/v2.24.0.md
----
-
-
----
-
----
-url: /changelogs/v2.25.0.md
----
-
-
----
-
----
-url: /changelogs/v2.27.0.md
----
-
-
----
-
----
-url: /changelogs/v2.26.0.md
----
-
-
----
-
----
-url: /changelogs/v2.3.0.md
----
-
-
----
-
----
-url: /changelogs/v2.29.0.md
----
-
-
----
-
----
-url: /changelogs/v2.28.0.md
----
-
-
----
-
----
-url: /changelogs/v2.3.2.md
----
-
-
----
-
----
-url: /changelogs/v2.3.1.md
----
-
-
----
-
----
-url: /changelogs/v2.3.4.md
----
-
-
----
-
----
-url: /changelogs/v2.3.3.md
----
-
-
----
-
----
-url: /changelogs/v2.3.5.md
----
-
-
----
-
----
-url: /changelogs/v2.3.6.md
----
-
-
----
-
----
-url: /changelogs/v2.30.0.md
----
-
-
----
-
----
-url: /changelogs/v2.32.0.md
----
-
-
----
-
----
-url: /changelogs/v2.31.0.md
----
-
-
----
-
----
-url: /changelogs/v2.34.0.md
----
-
-
----
-
----
-url: /changelogs/v2.33.0.md
----
-
-
----
-
----
 url: /changelogs/v2.35.0.md
----
-
-
----
-
----
-url: /changelogs/v2.38.3.md
 ---
 
 
@@ -3054,14 +2943,7 @@ url: /changelogs/v2.36.0.md
 ---
 
 ---
-url: /changelogs/v2.37.0.md
----
-
-
----
-
----
-url: /changelogs/v2.38.0.md
+url: /changelogs/v2.0.1.md
 ---
 
 
@@ -3075,308 +2957,21 @@ url: /changelogs/v2.38.1.md
 ---
 
 ---
+url: /changelogs/v2.37.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.1.0.md
+---
+
+
+---
+
+---
 url: /changelogs/v2.38.2.md
----
-
-
----
-
----
-url: /changelogs/v2.39.3.md
----
-
-
----
-
----
-url: /changelogs/v2.39.0.md
----
-
-
----
-
----
-url: /changelogs/v2.39.1.md
----
-
-
----
-
----
-url: /changelogs/v2.39.2.md
----
-
-
----
-
----
-url: /changelogs/v2.4.0.md
----
-
-
----
-
----
-url: /changelogs/v2.39.4.md
----
-
-
----
-
----
-url: /changelogs/v2.4.1.md
----
-
-
----
-
----
-url: /changelogs/v2.4.2.md
----
-
-
----
-
----
-url: /changelogs/v2.4.3.md
----
-
-
----
-
----
-url: /changelogs/v2.40.0.md
----
-
-
----
-
----
-url: /changelogs/v2.4.4.md
----
-
-
----
-
----
-url: /changelogs/v2.40.2.md
----
-
-
----
-
----
-url: /changelogs/v2.40.1.md
----
-
-
----
-
----
-url: /changelogs/v2.5.1.md
----
-
-
----
-
----
-url: /changelogs/v2.5.0.md
----
-
-
----
-
----
-url: /changelogs/v2.5.2.md
----
-
-
----
-
----
-url: /changelogs/v2.6.0.md
----
-
-
----
-
----
-url: /changelogs/v2.6.2.md
----
-
-
----
-
----
-url: /changelogs/v2.6.1.md
----
-
-
----
-
----
-url: /changelogs/v2.6.4.md
----
-
-
----
-
----
-url: /changelogs/v2.6.3.md
----
-
-
----
-
----
-url: /changelogs/v2.6.5.md
----
-
-
----
-
----
-url: /changelogs/v2.6.6.md
----
-
-
----
-
----
-url: /changelogs/v2.7.1.md
----
-
-
----
-
----
-url: /changelogs/v2.7.10.md
----
-
-
----
-
----
-url: /changelogs/v2.7.0.md
----
-
-
----
-
----
-url: /changelogs/v2.7.11.md
----
-
-
----
-
----
-url: /changelogs/v2.7.2.md
----
-
-
----
-
----
-url: /changelogs/v2.7.4.md
----
-
-
----
-
----
-url: /changelogs/v2.7.3.md
----
-
-
----
-
----
-url: /changelogs/v2.7.6.md
----
-
-
----
-
----
-url: /changelogs/v2.7.5.md
----
-
-
----
-
----
-url: /changelogs/v2.7.7.md
----
-
-
----
-
----
-url: /changelogs/v2.7.8.md
----
-
-
----
-
----
-url: /changelogs/v2.7.9.md
----
-
-
----
-
----
-url: /changelogs/v2.8.0.md
----
-
-
----
-
----
-url: /changelogs/v2.8.1.md
----
-
-
----
-
----
-url: /changelogs/v2.8.2.md
----
-
-
----
-
----
-url: /changelogs/v2.8.3.md
----
-
-
----
-
----
-url: /changelogs/v2.8.4.md
----
-
-
----
-
----
-url: /changelogs/v2.8.5.md
----
-
-
----
-
----
-url: /changelogs/v2.9.1.md
----
-
-
----
-
----
-url: /changelogs/v3.0.0.md
 ---
 
 
@@ -3390,6 +2985,13 @@ url: /changelogs/v3.1.0.md
 ---
 
 ---
+url: /changelogs/v3.0.0.md
+---
+
+
+---
+
+---
 url: /changelogs/v3.10.0.md
 ---
 
@@ -3397,14 +2999,21 @@ url: /changelogs/v3.10.0.md
 ---
 
 ---
-url: /changelogs/v2.9.0.md
----
-
-
----
-
----
 url: /changelogs/v3.11.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.9.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.13.0.md
 ---
 
 
@@ -3425,7 +3034,7 @@ url: /changelogs/v3.14.0.md
 ---
 
 ---
-url: /changelogs/v3.13.0.md
+url: /changelogs/v3.15.0.md
 ---
 
 
@@ -3433,13 +3042,6 @@ url: /changelogs/v3.13.0.md
 
 ---
 url: /changelogs/v3.15.1.md
----
-
-
----
-
----
-url: /changelogs/v3.15.0.md
 ---
 
 
@@ -3460,13 +3062,6 @@ url: /changelogs/v3.16.1.md
 ---
 
 ---
-url: /changelogs/v3.3.0.md
----
-
-
----
-
----
 url: /changelogs/v3.17.0.md
 ---
 
@@ -3481,7 +3076,7 @@ url: /changelogs/v3.17.1.md
 ---
 
 ---
-url: /changelogs/v3.5.0.md
+url: /changelogs/v2.38.3.md
 ---
 
 
@@ -3495,7 +3090,7 @@ url: /changelogs/v3.18.0.md
 ---
 
 ---
-url: /changelogs/v3.3.1.md
+url: /changelogs/v2.39.0.md
 ---
 
 
@@ -3509,7 +3104,49 @@ url: /changelogs/v3.19.0.md
 ---
 
 ---
+url: /changelogs/v2.39.1.md
+---
+
+
+---
+
+---
 url: /changelogs/v3.2.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.39.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.39.3.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.3.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.10.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.3.1.md
 ---
 
 
@@ -3523,21 +3160,14 @@ url: /changelogs/v3.3.2.md
 ---
 
 ---
-url: /changelogs/v3.7.0.md
+url: /changelogs/v2.39.4.md
 ---
 
 
 ---
 
 ---
-url: /changelogs/v3.6.0.md
----
-
-
----
-
----
-url: /changelogs/v3.9.0.md
+url: /changelogs/v2.4.0.md
 ---
 
 
@@ -3551,6 +3181,433 @@ url: /changelogs/v3.4.0.md
 ---
 
 ---
+url: /changelogs/v2.10.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.4.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.5.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.11.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.6.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.11.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.12.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.7.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.4.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.13.0.md
+---
+
+
+---
+
+---
 url: /changelogs/v3.8.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.4.3.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.13.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.4.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.40.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.40.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.40.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.5.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.13.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.13.3.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.5.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.5.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.13.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.6.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v3.9.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.6.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.13.5.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.6.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.14.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.6.3.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.14.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.6.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.6.5.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.15.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.6.6.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.15.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.16.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.10.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.11.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.16.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.3.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.17.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.17.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.5.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.17.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.6.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.7.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.18.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.18.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.8.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.8.2.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.8.3.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.8.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.8.4.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.8.1.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.8.5.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.9.0.md
+---
+
+
+---
+
+---
+url: /changelogs/v2.7.9.md
 ---
 
