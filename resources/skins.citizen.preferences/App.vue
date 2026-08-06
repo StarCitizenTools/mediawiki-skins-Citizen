@@ -170,6 +170,9 @@ module.exports = exports = defineComponent( {
 		 * Resolve the stored (or default) value for a preference and
 		 * store it in the reactive `values` map.
 		 *
+		 * Fallback chain: stored clientpref value → the preference's
+		 * declared `default` → the first option.
+		 *
 		 * @param {string} featureName
 		 * @param {Object} prefConfig
 		 */
@@ -189,9 +192,14 @@ module.exports = exports = defineComponent( {
 				values[ featureName ] = storedValue;
 				return;
 			}
+			if ( typeof storedValue === 'string' && allowedValues.has( storedValue ) ) {
+				values[ featureName ] = storedValue;
+				return;
+			}
 			values[ featureName ] = (
-				typeof storedValue === 'string' && allowedValues.has( storedValue )
-			) ? storedValue : prefConfig.options[ 0 ].value;
+				typeof prefConfig.default === 'string' &&
+				allowedValues.has( prefConfig.default )
+			) ? prefConfig.default : prefConfig.options[ 0 ].value;
 		}
 
 		// Initialize all preferences that exist at mount time.
@@ -232,7 +240,7 @@ module.exports = exports = defineComponent( {
 			return Object.entries( config.sections )
 				.map( ( [ key, sectionDef ] ) => {
 					const sectionPrefs = Object.entries( config.preferences )
-						.filter( ( [ , pref ] ) => pref.section === key )
+						.filter( ( [ , pref ] ) => pref.section === key && pref.hidden !== true )
 						.map( ( [ featureName, prefConfig ] ) => {
 							const options = prefConfig.options.map( ( opt ) => {
 								const option = {

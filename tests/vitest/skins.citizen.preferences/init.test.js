@@ -140,6 +140,41 @@ describe( 'initApp', () => {
 		expect( mockProvide ).toHaveBeenCalledWith( 'themeDefault', 'night' );
 	} );
 
+	it( 'should prefer the JSON skin-theme default over server config', () => {
+		document.body.innerHTML = '<div id="citizen-preferences-content"></div>';
+		overridesMock.overrides = {
+			preferences: { 'skin-theme': { default: 'night' } }
+		};
+		configMock.wgCitizenThemeDefault = 'light';
+
+		initApp();
+
+		expect( mockProvide ).toHaveBeenCalledWith( 'themeDefault', 'night' );
+	} );
+
+	it( 'should pass wiki-defined JSON theme defaults through unmapped', () => {
+		document.body.innerHTML = '<div id="citizen-preferences-content"></div>';
+		overridesMock.overrides = {
+			preferences: { 'skin-theme': { default: 'ocean' } }
+		};
+
+		initApp();
+
+		expect( mockProvide ).toHaveBeenCalledWith( 'themeDefault', 'ocean' );
+	} );
+
+	it( 'should fall back to server config when JSON declares no default', () => {
+		document.body.innerHTML = '<div id="citizen-preferences-content"></div>';
+		overridesMock.overrides = {
+			preferences: { 'skin-theme': { columns: 2 } }
+		};
+		configMock.wgCitizenThemeDefault = 'dark';
+
+		initApp();
+
+		expect( mockProvide ).toHaveBeenCalledWith( 'themeDefault', 'night' );
+	} );
+
 	it( 'should fire citizen.preferences.register hook', () => {
 		document.body.innerHTML = '<div id="citizen-preferences-content"></div>';
 

@@ -32,6 +32,10 @@
  * @property {'always'|'dark-theme'|'tablet-viewport'} [visibilityCondition]
  *   When the preference is visible. Defaults to 'always'.
  * @property {number} [columns] Grid columns for radio type (default: 2).
+ * @property {string} [default] Value applied when the user has not chosen one.
+ *   Must match one of the options values.
+ * @property {boolean} [hidden] When true, the preference stays active but is
+ *   not rendered in the panel.
  */
 
 /**
@@ -71,6 +75,10 @@
  * @property {'always'|'dark-theme'|'tablet-viewport'} [visibilityCondition]
  *   When the preference is visible. Defaults to 'always'.
  * @property {number} [columns] Grid columns for radio type (default: 2).
+ * @property {string} [default] Value applied when the user has not chosen one.
+ *   Must match one of the options values.
+ * @property {boolean} [hidden] When true, the preference stays active but is
+ *   not rendered in the panel.
  */
 
 /**
