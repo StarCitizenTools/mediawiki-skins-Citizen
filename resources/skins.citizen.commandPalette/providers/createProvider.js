@@ -1,8 +1,11 @@
 const { getNavigationAction } = require( '../utils/providerActions.js' );
 
+// Matches Codex TypeaheadSearch's DebounceInterval.
+const DEFAULT_DEBOUNCE_MS = 120;
+
 /** @type {Object} */
 const DEFAULT_CONFIG = {
-	debounceMs: 250,
+	debounceMs: DEFAULT_DEBOUNCE_MS,
 	keepStaleResults: false
 };
 
@@ -50,3 +53,4 @@ function createProvider( id, handler, config ) {
 }
 
 module.exports = createProvider;
+module.exports.DEFAULT_DEBOUNCE_MS = DEFAULT_DEBOUNCE_MS;
