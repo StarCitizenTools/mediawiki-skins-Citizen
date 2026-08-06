@@ -142,7 +142,6 @@ module.exports = exports = defineComponent( {
 		column-gap: var( --space-sm );
 		padding: var( --space-sm ) var( --space-md );
 		cursor: pointer;
-		border-bottom: var( --border-subtle );
 		transition: background-color var( --transition-duration-base );
 
 		&:hover {
@@ -162,6 +161,13 @@ module.exports = exports = defineComponent( {
 				color: var( --color-subtle );
 			}
 		}
+	}
+
+	// The divider belongs between rows, never after the last one — a trailing
+	// line would hang under the end of the list, worst of all above the
+	// borderless footer.
+	&__item + &__item {
+		border-top: var( --border-subtle );
 	}
 
 	// Stretched primary link: an empty link whose ::after is the row-wide hit

@@ -38,7 +38,7 @@
 					<span v-if="state( wiki ).status === 'error'">{{ msg.unavailable }}</span>
 					<a
 						class="citizen-notifications__wiki-open"
-						:class="actionButtonClass"
+						:class="openButtonClass"
 						:href="wiki.url"
 					>
 						<cdx-icon :icon="icons.cdxIconLinkExternal"></cdx-icon>
@@ -57,14 +57,13 @@ const NotificationList = require( './NotificationList.vue' );
 const icons = require( '../icons.json' );
 const formatRelativeTime = require( '../relativeTime.js' );
 
-// Matches the notification rows' action links: quiet progressive Codex
-// buttons, which need the fake-button variants since these are <a>.
-const ACTION_BUTTON_CLASS = [
+// The link out mirrors the panel footer's buttons: a normal-weight framed
+// Codex button (fake-button variants since it is an <a>), stretched across
+// the closing bar.
+const OPEN_BUTTON_CLASS = [
 	'cdx-button',
 	'cdx-button--fake-button',
-	'cdx-button--fake-button--enabled',
-	'cdx-button--weight-quiet',
-	'cdx-button--action-progressive'
+	'cdx-button--fake-button--enabled'
 ];
 
 // @vue/component
@@ -156,7 +155,7 @@ module.exports = exports = defineComponent( {
 
 		return {
 			icons, msg, times, state, isOpen, openLabel, toggle,
-			actionButtonClass: ACTION_BUTTON_CLASS
+			openButtonClass: OPEN_BUTTON_CLASS
 		};
 	}
 } );
@@ -170,6 +169,12 @@ module.exports = exports = defineComponent( {
 		padding: 0;
 		margin: 0;
 		list-style: none;
+	}
+
+	// The divider belongs between wikis, never after the last one — a trailing
+	// line would hang under the end of the list.
+	&__wiki-group + &__wiki-group {
+		border-top: var( --border-subtle );
 	}
 
 	// Deliberately denser than a notification row: this is navigation, not
@@ -193,7 +198,12 @@ module.exports = exports = defineComponent( {
 		cursor: pointer;
 		background-color: var( --color-surface-1 );
 		border: 0;
-		border-bottom: var( --border-subtle );
+
+		// Only an opened wiki has anything below the row to divide it from;
+		// closed, the group divider above does that job.
+		&[ aria-expanded='true' ] {
+			border-bottom: var( --border-subtle );
+		}
 
 		&:hover {
 			background-color: var( --color-surface-1--hover );
@@ -255,20 +265,28 @@ module.exports = exports = defineComponent( {
 		margin-inline-start: auto;
 	}
 
-	// Loading line, and the link out, inside an opened wiki. The negative
-	// inline margin pulls the fake button's own padding back so its text lines
-	// up with everything else in the row.
+	// Loading line, and the link out, inside an opened wiki. The closing bar
+	// mirrors the panel footer: no top padding and no divider — the framed
+	// full-width button carries its own edge.
 	&__wiki-status {
 		display: flex;
 		flex-wrap: wrap;
 		gap: var( --space-xs );
 		align-items: center;
 		justify-content: center;
-		padding: var( --space-xs ) var( --space-md );
+		padding: 0 var( --space-md ) var( --space-xs );
 		font-size: var( --font-size-small );
 		color: var( --color-subtle );
 		text-align: center;
-		border-bottom: var( --border-subtle );
+
+		// The unavailable note takes its own line above the stretched button.
+		> span {
+			flex-basis: 100%;
+		}
+	}
+
+	&__wiki-open {
+		flex: 1;
 	}
 }
 </style>

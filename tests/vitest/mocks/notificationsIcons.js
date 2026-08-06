@@ -5,5 +5,6 @@
  */
 module.exports = {
 	cdxIconCheckAll: 'M0 0Z',
+	cdxIconHistory: 'M0 0Z',
 	cdxIconSettings: 'M0 0Z'
 };

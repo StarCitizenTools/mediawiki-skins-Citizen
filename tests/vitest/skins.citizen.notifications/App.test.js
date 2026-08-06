@@ -159,9 +159,62 @@ describe( 'notifications App', () => {
 		const wrapper = mountApp( source );
 		await flushPromises();
 
-		await wrapper.find( '.citizen-notifications__mark-all' ).trigger( 'click' );
+		await wrapper.find( '.citizen-notifications__footer-clear' ).trigger( 'click' );
 
 		expect( source.markAllRead ).toHaveBeenCalledWith();
+	} );
+
+	it( 'sweeps the rows on clear-all, then empties and flips to caught-up', async () => {
+		vi.useFakeTimers();
+		try {
+			const source = makeSource();
+			const wrapper = mountApp( source );
+			await flushPromises();
+
+			await wrapper.find( '.citizen-notifications__footer-clear' ).trigger( 'click' );
+
+			// The sweep plays first: rows still present, marked as clearing,
+			// and the button is disabled against double fire.
+			expect( wrapper.find( '.citizen-notifications__list--clearing' ).exists() ).toBe( true );
+			expect( wrapper.findAll( '.citizen-notifications__item' ).length ).toBeGreaterThan( 0 );
+			expect( wrapper.find( '.citizen-notifications__footer-clear' ).attributes( 'disabled' ) ).toBeDefined();
+
+			vi.advanceTimersByTime( 600 );
+			await wrapper.vm.$nextTick();
+
+			// The emptied panel follows.
+			expect( wrapper.findAll( '.citizen-notifications__item' ) ).toHaveLength( 0 );
+			expect( wrapper.find( '.citizen-notifications__empty' ).exists() ).toBe( true );
+			expect( wrapper.find( '.citizen-notifications__footer-clear' ).exists() ).toBe( false );
+			expect( wrapper.find( '.citizen-notifications__footer-history--expanded' ).exists() ).toBe( true );
+		} finally {
+			vi.useRealTimers();
+		}
+	} );
+
+	it( 'lets a reopen refetch cancel an in-flight clear-all sweep', async () => {
+		vi.useFakeTimers();
+		try {
+			const source = makeSource();
+			const wrapper = mountApp( source );
+			await flushPromises();
+
+			await wrapper.find( '.citizen-notifications__footer-clear' ).trigger( 'click' );
+			// Reopen mid-sweep: refresh() resolves fresh server data before
+			// the sweep's pending swap fires.
+			wrapper.vm.refresh();
+			await flushPromises();
+
+			expect( wrapper.find( '.citizen-notifications__list--clearing' ).exists() ).toBe( false );
+			expect( wrapper.findAll( '.citizen-notifications__item' ) ).toHaveLength( 3 );
+
+			// The cancelled swap must not wipe the fresh list afterwards.
+			vi.advanceTimersByTime( 1000 );
+			await wrapper.vm.$nextTick();
+			expect( wrapper.findAll( '.citizen-notifications__item' ) ).toHaveLength( 3 );
+		} finally {
+			vi.useRealTimers();
+		}
 	} );
 
 	it( 'reports count changes to the injected callback', async () => {
@@ -172,7 +225,7 @@ describe( 'notifications App', () => {
 
 		expect( onCountsChange ).toHaveBeenCalledWith( { total: 2, local: 2, foreign: 0 } );
 
-		await wrapper.find( '.citizen-notifications__mark-all' ).trigger( 'click' );
+		await wrapper.find( '.citizen-notifications__footer-clear' ).trigger( 'click' );
 		await wrapper.vm.$nextTick();
 		expect( onCountsChange ).toHaveBeenLastCalledWith( { total: 0, local: 0, foreign: 0 } );
 	} );
@@ -194,8 +247,67 @@ describe( 'notifications App', () => {
 		const wrapper = mountApp( source );
 		await flushPromises();
 
-		expect( wrapper.find( '.citizen-notifications__see-all' ).attributes( 'href' ) ).toContain( 'Special:Notifications' );
-		expect( wrapper.find( '.citizen-notifications__prefs' ).attributes( 'href' ) ).toContain( 'Special:Preferences' );
+		expect( wrapper.find( '.citizen-notifications__footer-history' ).attributes( 'href' ) ).toContain( 'Special:Notifications' );
+		expect( wrapper.find( '.citizen-notifications__footer-prefs' ).attributes( 'href' ) ).toContain( 'Special:Preferences' );
+	} );
+
+	describe( 'footer placement', () => {
+		const footer = ( wrapper ) => wrapper.find( '.citizen-notifications__footer' );
+
+		it( 'gives the list a footer', async () => {
+			const wrapper = mountApp( makeSource() );
+			await flushPromises();
+
+			expect( footer( wrapper ).exists() ).toBe( true );
+		} );
+
+		it( 'keeps the footer on the empty state', async () => {
+			const source = makeSource( {
+				fetch: vi.fn().mockResolvedValue( { items: [], counts: { total: 0, local: 0, foreign: 0 }, wikis: [] } )
+			} );
+			const wrapper = mountApp( source );
+			await flushPromises();
+
+			expect( wrapper.find( '.citizen-notifications__empty' ).exists() ).toBe( true );
+			expect( footer( wrapper ).exists() ).toBe( true );
+		} );
+
+		it( 'leaves the empty state nothing to clear, so the link out takes the row', async () => {
+			const source = makeSource( {
+				fetch: vi.fn().mockResolvedValue( { items: [], counts: { total: 0, local: 0, foreign: 0 }, wikis: [] } )
+			} );
+			const wrapper = mountApp( source );
+			await flushPromises();
+
+			expect( wrapper.find( '.citizen-notifications__footer-clear' ).exists() ).toBe( false );
+			expect( wrapper.find( '.citizen-notifications__footer-history' ).classes() )
+				.toContain( 'citizen-notifications__footer-history--expanded' );
+		} );
+
+		it( 'scrolls the list under the footer rather than the whole view', async () => {
+			const wrapper = mountApp( makeSource() );
+			await flushPromises();
+
+			const scroller = wrapper.find( '.citizen-notifications__scroll' );
+
+			expect( scroller.find( '.citizen-notifications__item' ).exists() ).toBe( true );
+			expect( scroller.element.nextElementSibling ).toBe( footer( wrapper ).element );
+		} );
+
+		it( 'shows no footer while loading', () => {
+			const wrapper = mountApp( makeSource() );
+
+			expect( footer( wrapper ).exists() ).toBe( false );
+		} );
+
+		it( 'shows no footer on the error state', async () => {
+			const source = makeSource( { fetch: vi.fn().mockRejectedValue( new Error( 'network' ) ) } );
+			const wrapper = mountApp( source );
+			await flushPromises();
+
+			expect( wrapper.find( '.citizen-notifications__error' ).exists() ).toBe( true );
+			expect( footer( wrapper ).exists() ).toBe( false );
+		} );
 	} );
 
 	it( 'gives each item a stretched primary link labelled by its plain-text header', async () => {
@@ -253,6 +365,16 @@ describe( 'notifications App', () => {
 				.toHaveLength( 3 );
 			expect( wrapper.findAll( '[data-tab="foreign"] .citizen-notifications__wiki' ) )
 				.toHaveLength( 2 );
+		} );
+
+		it( 'gives only this wiki\'s tab a footer', async () => {
+			const wrapper = mountApp( sourceWithWikis() );
+			await flushPromises();
+
+			expect( wrapper.findAll( '[data-tab="local"] .citizen-notifications__footer' ) )
+				.toHaveLength( 1 );
+			expect( wrapper.findAll( '[data-tab="foreign"] .citizen-notifications__footer' ) )
+				.toHaveLength( 0 );
 		} );
 
 		it( 'marks every listed wiki as having something waiting', async () => {
@@ -368,7 +490,7 @@ describe( 'notifications App', () => {
 			await flushPromises();
 			onCountsChange.mockClear();
 
-			await wrapper.find( '.citizen-notifications__mark-all' ).trigger( 'click' );
+			await wrapper.find( '.citizen-notifications__footer-clear' ).trigger( 'click' );
 
 			expect( onCountsChange ).toHaveBeenLastCalledWith( { total: 5, local: 0, foreign: 5 } );
 		} );
