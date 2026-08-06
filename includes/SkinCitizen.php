@@ -293,7 +293,9 @@ class SkinCitizen extends SkinMustache {
 				$parentData['data-portlets']['data-user-page']
 			),
 			'data-sticky-header' => new CitizenComponentStickyHeader(
-				visualEditorTabPositionFirst: $this->isVisualEditorTabPositionFirst( $parentData['data-portlets']['data-views'] ),
+				visualEditorTabPositionFirst: $this->isVisualEditorTabPositionFirst(
+					$parentData['data-portlets']['data-views']
+				),
 				enableShare: $config->get( 'CitizenEnableShare' ) && $title->exists() && $title->isContentPage()
 			),
 			'data-body-content' => new CitizenComponentBodyContent(
