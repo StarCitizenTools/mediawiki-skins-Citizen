@@ -5,13 +5,16 @@
  * only the backend-neutral shapes this module returns:
  *
  *   NotificationItem {
- *     id, section: 'alert'|'message', category, categoryLabel,
+ *     id, category, categoryLabel,
  *     read, timestamp (unix seconds), iconUrl,
  *     header (escaped HTML), body (escaped HTML),
  *     primaryUrl, secondaryLinks: [ { url, label } ],
  *     isSummary, count   // summary rows only; absent on real notifications
  *   }
- *   FetchResult { items: NotificationItem[], counts: { alert, message, total } }
+ *   FetchResult { items: NotificationItem[], counts: { total, local, foreign } }
+ *
+ * Only unread notifications are fetched — the panel shows what is waiting,
+ * and Special:Notifications is where the history lives.
  *
  * A summary row stands for unread notifications the user has somewhere else
  * rather than for one notification here — today, Echo's cross-wiki roll-up. It
@@ -34,23 +37,24 @@
 const SECTIONS = [ 'alert', 'message' ];
 const CATEGORY_TITLE_PREFIX = 'echo-category-title-';
 
-// Echo's synthetic "you have unread notifications on other wikis" row, one per
-// requested section. It is not a real notification — no primary link, no read
-// state, and every section's row carries the same id — so it is normalized
-// separately rather than run through normalizeEntry().
+// Echo's synthetic "you have unread notifications on other wikis" row. It is
+// not a real notification — no primary link, no read state, and a placeholder
+// id — so it is normalized separately rather than run through normalizeEntry().
 const SUMMARY_TYPE = 'foreign';
+
+// How many notifications to ask for. The panel shows what is waiting, not a
+// history, so this is a ceiling nobody normally reaches rather than a page size.
+const FETCH_LIMIT = 25;
 
 /**
  * Normalize one Echo list entry (notformat=model) into a backend-neutral
- * NotificationItem. The section is taken from the group key (authoritative)
- * rather than the entry's own `section` field.
+ * NotificationItem.
  *
  * @param {Object} entry raw Echo notification (model format)
- * @param {string} section 'alert' | 'message'
  * @param {Object} labels category key -> localized title
  * @return {Object} NotificationItem
  */
-function normalizeEntry( entry, section, labels ) {
+function normalizeEntry( entry, labels ) {
 	const model = entry[ '*' ] || {};
 	const links = model.links || {};
 	const primary = links.primary && links.primary.url ? links.primary : null;
@@ -58,7 +62,6 @@ function normalizeEntry( entry, section, labels ) {
 	const category = entry.category || '';
 	return {
 		id: entry.id,
-		section: section,
 		// Notification category key (e.g. 'mention', 'user-rights').
 		category: category,
 		// Localized category title; blank if the wiki registers no message
@@ -98,23 +101,21 @@ function foreignNotificationsUrl( source ) {
  * Normalize Echo's synthetic cross-wiki row into a summary NotificationItem.
  *
  * @param {Object} entry raw Echo notification of type 'foreign'
- * @param {string} section 'alert' | 'message'
  * @return {Object} NotificationItem carrying isSummary and count
  */
-function normalizeSummary( entry, section ) {
+function normalizeSummary( entry ) {
 	const model = entry[ '*' ] || {};
 	const sources = entry.sources || {};
 	const wikis = Object.keys( sources );
 	const utcunix = entry.timestamp && entry.timestamp.utcunix;
 	return {
-		// Echo gives every summary row id -1. A stable per-section string keeps
-		// both sections renderable without a key collision, and can never
-		// address a real notification if it ever reached markRead.
-		id: `summary-${ section }`,
+		// Echo gives the summary row id -1. A stable string keeps it clear of
+		// the numeric ids, and means it can never address a real notification
+		// if it ever reached markRead.
+		id: 'summary-foreign',
 		isSummary: true,
 		// How many notifications on other wikis this row stands for.
 		count: Number( entry.count || 0 ),
-		section: section,
 		// Echo files this row under a 'foreign' pseudo-category that is not a
 		// registered category and resolves to 'other', so a label here would
 		// read "Other". Leave it off rather than mislabel it.
@@ -148,8 +149,8 @@ function createEchoSource( ApiConstructor ) {
 	const api = new ApiConstructor();
 
 	/**
-	 * Fetch the most recent notifications for both sections in one grouped
-	 * request, returning structured data plus per-section unread counts.
+	 * Fetch the notifications waiting for the user, newest first, plus the
+	 * unread counts.
 	 *
 	 * @return {Promise<{ items: Object[], counts: Object }>}
 	 */
@@ -164,18 +165,19 @@ function createEchoSource( ApiConstructor ) {
 			// so the panel renders its own markup, instead of the deprecated
 			// pre-rendered 'flyout'/'html' formats.
 			notformat: 'model',
-			notgroupbysection: 1,
-			notlimit: 25,
-			// Omit notfilter: the default (read|!read) returns both read and
-			// unread, so the panel shows recent activity with unread tinted.
-			// (notfilter only accepts read / !read, never 'all'.)
+			// The panel shows what is waiting, so read notifications are left
+			// to Special:Notifications. This roughly halves the payload for a
+			// typical user, whose unread are a handful among a long history.
+			notfilter: '!read',
+			notlimit: FETCH_LIMIT,
 			notprop: 'list|count',
-			// Ask Echo to prepend its "N unread on other wikis" row to each
-			// section, and to report cross-wiki-inclusive counts — the same
-			// figure the server already renders on the bell. Echo only
-			// registers this parameter where $wgEchoCrossWikiNotifications is
-			// on; elsewhere it is ignored with a harmless API warning, which
-			// is what Echo's own client does too.
+			// Ask Echo for its "N unread on other wikis" row, and for
+			// cross-wiki-inclusive counts — the same figure the server already
+			// renders on the bell. Echo only registers this parameter where
+			// $wgEchoCrossWikiNotifications is on; elsewhere it is ignored with
+			// a harmless API warning, which is what Echo's own client does too.
+			// Ungrouped, Echo emits ONE merged row covering every section
+			// rather than one per section.
 			notcrosswikisummary: 1,
 			// All category titles, parsed (resolves PLURAL etc.), in the
 			// viewer's language.
@@ -190,37 +192,34 @@ function createEchoSource( ApiConstructor ) {
 				labels[ message.name.replace( CATEGORY_TITLE_PREFIX, '' ) ] =
 					( message[ '*' ] || '' ).trim();
 			} );
+
 			const items = [];
 			const summaries = [];
-			const counts = { alert: 0, message: 0, total: 0 };
-
-			SECTIONS.forEach( ( section ) => {
-				const group = notifications[ section ] || {};
-				( group.list || [] ).forEach( ( entry ) => {
-					if ( entry.type === SUMMARY_TYPE ) {
-						summaries.push( normalizeSummary( entry, section ) );
-					} else {
-						items.push( normalizeEntry( entry, section, labels ) );
-					}
-				} );
-				counts[ section ] = Number( group.rawcount || 0 );
-			} );
-
-			counts.total = notifications.rawcount !== undefined ?
-				Number( notifications.rawcount ) :
-				counts.alert + counts.message;
-
-			// Unread first, then newest, across both sections.
-			items.sort( ( a, b ) => {
-				if ( a.read !== b.read ) {
-					return a.read ? 1 : -1;
+			( notifications.list || [] ).forEach( ( entry ) => {
+				if ( entry.type === SUMMARY_TYPE ) {
+					summaries.push( normalizeSummary( entry ) );
+				} else {
+					items.push( normalizeEntry( entry, labels ) );
 				}
-				return b.timestamp - a.timestamp;
 			} );
 
-			// Cross-wiki summaries stay pinned above the list. Echo adds them
-			// after notlimit has been applied, so left to the sort they could
-			// sink below 25 items and out of view.
+			// rawcount covers other wikis too once notcrosswikisummary is set,
+			// so the local figure is what is left after the summary's share.
+			const total = Number( notifications.rawcount || 0 );
+			const foreign = summaries.reduce( ( sum, s ) => sum + s.count, 0 );
+			const counts = {
+				total: total,
+				foreign: foreign,
+				local: Math.max( 0, total - foreign )
+			};
+
+			// Newest first. Everything here is unread, so there is no read
+			// state left to sort on.
+			items.sort( ( a, b ) => b.timestamp - a.timestamp );
+
+			// The cross-wiki summary stays pinned above the list. Echo adds it
+			// after notlimit has been applied, so left to the sort it could
+			// sink below the limit and out of view.
 			return { items: summaries.concat( items ), counts };
 		} );
 	}
@@ -256,19 +255,15 @@ function createEchoSource( ApiConstructor ) {
 	}
 
 	/**
-	 * Mark every notification read, optionally scoped to one section.
+	 * Mark every notification read.
 	 *
-	 * @param {?string} section 'alert' | 'message' | null (= all)
 	 * @return {Promise<void>}
 	 */
-	function markAllRead( section ) {
-		const params = { action: 'echomarkread' };
-		if ( section ) {
-			params.sections = section;
-		} else {
-			params.all = true;
-		}
-		return api.postWithToken( 'csrf', params ).then( () => undefined );
+	function markAllRead() {
+		return api.postWithToken( 'csrf', {
+			action: 'echomarkread',
+			all: true
+		} ).then( () => undefined );
 	}
 
 	return { fetch, markSeen, markRead, markAllRead };

@@ -1,7 +1,7 @@
 <template>
 	<li
 		class="citizen-notifications__item"
-		:class="{ 'citizen-notifications__item--unread': !item.read }"
+		:class="{ 'citizen-notifications__item--read': item.read }"
 		@click="onClick"
 	>
 		<!--
@@ -173,12 +173,17 @@ module.exports = exports = defineComponent( {
 			background-color: var( --color-surface-1--hover );
 		}
 
-		// Unread rows get a subtle tint (the panel's only read/unread cue).
-		&--unread {
-			background-color: var( --color-surface-2 );
+		// Everything here is waiting to be read, so the resting state is plain.
+		// A row recedes once read, marking what you have dealt with this
+		// session; the next open drops it from the list entirely. This shifts
+		// the surface and steps the text down to the palette's own subtle
+		// colour rather than fading the row, which would take the text below
+		// the contrast floor and dim the focus ring with it.
+		&--read {
+			background-color: var( --color-surface-1 );
 
-			&:hover {
-				background-color: var( --color-surface-2--hover );
+			.citizen-notifications__item-header {
+				color: var( --color-subtle );
 			}
 		}
 	}

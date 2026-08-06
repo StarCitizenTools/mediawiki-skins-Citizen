@@ -676,9 +676,6 @@
 			],
 			"messages": [
 				"citizen-notifications-title",
-				"citizen-notifications-tab-all",
-				"citizen-notifications-tab-alert",
-				"citizen-notifications-tab-notice",
 				"citizen-notifications-mark-all-read",
 				"citizen-notifications-empty",
 				"citizen-notifications-error",
@@ -694,9 +691,7 @@
 			"class": "MediaWiki\\ResourceLoader\\CodexModule",
 			"codexComponents": [
 				"CdxButton",
-				"CdxIcon",
-				"CdxTab",
-				"CdxTabs"
+				"CdxIcon"
 			]
 		},
 		"skins.citizen.icons": {

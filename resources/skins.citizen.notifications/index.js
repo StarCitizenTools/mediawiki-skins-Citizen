@@ -13,7 +13,7 @@ const { createEchoSource } = require( './sources/echo.js' );
  *
  * @param {HTMLElement} mountEl
  * @param {Object} [options]
- * @param {Function} [options.onCountsChange] Called with `{ alert, message, total }`
+ * @param {Function} [options.onCountsChange] Called with `{ total, local, foreign }`
  *   whenever unread counts change, so the trigger can update the bell badge.
  * @return {Object} mounted instance exposing `refresh()`
  */
