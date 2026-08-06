@@ -69,10 +69,11 @@ describe( 'createCommandPalette', () => {
 
 		const overlay = document.getElementById( 'citizen-command-palette-overlay' );
 		expect( overlay ).not.toBeNull();
-		expect( mockInitApp ).toHaveBeenCalledWith( overlay, expect.objectContaining( {
-			prefill: null,
+		// Exact match: initApp only reads `onClose`; prefill is delivered
+		// via `open()` and must not creep back into the mount options.
+		expect( mockInitApp ).toHaveBeenCalledWith( overlay, {
 			onClose: expect.any( Function )
-		} ) );
+		} );
 		expect( mockOpen ).toHaveBeenCalledWith( null );
 	} );
 
