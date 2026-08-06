@@ -26,8 +26,10 @@
 				<div
 					v-for="n in 5"
 					:key="n"
-					class="citizen-notifications__skeleton-item"
+					class="citizen-notifications__skeleton-item
+						citizen-notifications__skeleton-item--icon"
 				>
+					<span class="citizen-notifications__skeleton-icon"></span>
 					<span
 						v-for="variant in [ 'title', 'meta' ]"
 						:key="variant"

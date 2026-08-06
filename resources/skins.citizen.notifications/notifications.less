@@ -29,6 +29,23 @@
 		border-bottom: var( --border-subtle );
 	}
 
+	// Icon-generation skeleton opts in via the modifier so cached pre-icon
+	// HTML keeps the plain two-line layout.
+	&__skeleton-item--icon {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		column-gap: var( --space-sm );
+	}
+
+	&__skeleton-icon {
+		grid-row: span 2;
+		width: 2rem;
+		height: 2rem;
+		margin-block-start: 0.125rem;
+		background-color: var( --color-surface-3 );
+		border-radius: var( --border-radius-circle );
+	}
+
 	&__skeleton-line {
 		height: var( --font-size-small );
 		background-color: var( --background-color-neutral );

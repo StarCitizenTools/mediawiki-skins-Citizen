@@ -16,6 +16,13 @@
 			:href="item.primaryUrl"
 			:aria-label="plainHeader"
 		></a>
+		<span class="citizen-notifications__item-badge" aria-hidden="true">
+			<span
+				v-if="iconStyle"
+				class="citizen-notifications__item-icon"
+				:style="iconStyle"
+			></span>
+		</span>
 		<div class="citizen-notifications__item-content">
 			<div class="citizen-notifications__item-meta">
 				<span
@@ -65,6 +72,11 @@ const ACTION_BUTTON_CLASS = [
 	'cdx-button--action-progressive'
 ];
 
+// Only URL shapes Echo legitimately emits (absolute http(s),
+// protocol-relative, or root-relative), with no characters that could
+// escape a CSS url() string. Anything else renders no glyph.
+const ICON_URL_PATTERN = /^(?:https?:\/\/|\/\/|\/)[^"'\\\s]*$/;
+
 // @vue/component
 module.exports = exports = defineComponent( {
 	name: 'NotificationItem',
@@ -86,6 +98,16 @@ module.exports = exports = defineComponent( {
 			return ( el.textContent || '' ).trim();
 		} );
 
+		// The icon file only contributes its alpha shape: it is applied as a
+		// mask and painted with theme tokens, so any icon matches any theme.
+		const iconStyle = computed( () => {
+			const url = props.item.iconUrl || '';
+			if ( !ICON_URL_PATTERN.test( url ) ) {
+				return null;
+			}
+			return { '--citizen-notification-icon': `url( "${ url }" )` };
+		} );
+
 		/**
 		 * Whole-row click: mark read once. Navigation to the primary action is
 		 * handled natively by the stretched link (or by a nested link the user
@@ -98,7 +120,13 @@ module.exports = exports = defineComponent( {
 			emit( 'read', props.item.id );
 		}
 
-		return { formattedTime, plainHeader, actionButtonClass: ACTION_BUTTON_CLASS, onClick };
+		return {
+			formattedTime,
+			plainHeader,
+			iconStyle,
+			actionButtonClass: ACTION_BUTTON_CLASS,
+			onClick
+		};
 	}
 } );
 </script>
@@ -109,6 +137,9 @@ module.exports = exports = defineComponent( {
 .citizen-notifications {
 	&__item {
 		position: relative;
+		display: grid;
+		grid-template-columns: auto 1fr;
+		column-gap: var( --space-sm );
 		padding: var( --space-sm ) var( --space-md );
 		cursor: pointer;
 		border-bottom: var( --border-subtle );
@@ -134,8 +165,14 @@ module.exports = exports = defineComponent( {
 	}
 
 	// Stretched primary link: an empty link whose ::after is the row-wide hit
-	// area and focus surface.
+	// area and focus surface. Taken out of flow so it is not a grid item of the
+	// row — otherwise it would claim the badge's column and push the content on
+	// to a second row. Its box is the row's padding box, so the ::after below
+	// still resolves to exactly the area it covered before.
 	&__item-primary {
+		position: absolute;
+		inset: 0;
+
 		&::after {
 			position: absolute;
 			inset: 0;
@@ -160,6 +197,33 @@ module.exports = exports = defineComponent( {
 	&__item-link {
 		position: relative;
 		z-index: 2;
+	}
+
+	// Decorative icon badge: neutral circle, glyph masked from the backend's
+	// icon file and painted with the text ink so every theme restyles it.
+	&__item-badge {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2rem;
+		height: 2rem;
+		margin-block-start: 0.125rem;
+		background-color: var( --color-surface-3 );
+		border-radius: var( --border-radius-circle );
+	}
+
+	&__item-icon {
+		width: 1rem;
+		height: 1rem;
+		background-color: var( --color-base );
+		-webkit-mask-image: var( --citizen-notification-icon );
+		mask-image: var( --citizen-notification-icon );
+		-webkit-mask-repeat: no-repeat;
+		mask-repeat: no-repeat;
+		-webkit-mask-position: center;
+		mask-position: center;
+		-webkit-mask-size: contain;
+		mask-size: contain;
 	}
 
 	&__item-content {
