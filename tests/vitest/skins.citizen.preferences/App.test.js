@@ -563,4 +563,130 @@ describe( 'App', () => {
 			expect( groups ).toHaveLength( 8 );
 		} );
 	} );
+
+	describe( 'default values', () => {
+		/**
+		 * Build a config containing an extra switch pref carrying a default.
+		 *
+		 * @param {string|undefined} defaultValue
+		 * @return {Object}
+		 */
+		function configWithDefault( defaultValue ) {
+			const config = getTestConfig();
+			config.preferences[ 'gadget-toggle' ] = {
+				section: 'behavior',
+				options: [ { value: '0' }, { value: '1' } ],
+				type: 'switch',
+				default: defaultValue,
+				label: 'My Gadget',
+				visibilityCondition: 'always'
+			};
+			return config;
+		}
+
+		/**
+		 * @param {import('@vue/test-utils').VueWrapper} wrapper
+		 * @return {import('@vue/test-utils').VueWrapper|undefined}
+		 */
+		function findGadgetToggle( wrapper ) {
+			return wrapper
+				.findAllComponents( { name: 'CdxToggleSwitch' } )
+				.find( ( c ) => c.props( 'id' ) === 'skin-client-prefs-gadget-toggle' );
+		}
+
+		it( 'should fall back to the declared default when no value is stored', () => {
+			const wrapper = mountApp( ALL_PREF_CLASSES, configWithDefault( '1' ) );
+
+			expect( findGadgetToggle( wrapper ).props( 'modelValue' ) ).toBe( true );
+		} );
+
+		it( 'should prefer the stored value over the declared default', () => {
+			const wrapper = mountApp(
+				[ ...ALL_PREF_CLASSES, 'gadget-toggle-clientpref-0' ],
+				configWithDefault( '1' )
+			);
+
+			expect( findGadgetToggle( wrapper ).props( 'modelValue' ) ).toBe( false );
+		} );
+
+		it( 'should ignore a default that is not among the options', () => {
+			const wrapper = mountApp( ALL_PREF_CLASSES, configWithDefault( '2' ) );
+
+			expect( findGadgetToggle( wrapper ).props( 'modelValue' ) ).toBe( false );
+		} );
+
+		it( 'should apply the default to dynamically registered preferences', async () => {
+			const config = reactive( getTestConfig() );
+			const wrapper = mountApp( ALL_PREF_CLASSES, config );
+
+			config.sections[ 'gadget' ] = { label: 'Gadgets' };
+			config.preferences[ 'gadget-toggle' ] = {
+				section: 'gadget',
+				options: [ { value: '0' }, { value: '1' } ],
+				type: 'switch',
+				default: '1',
+				label: 'My Gadget'
+			};
+			await wrapper.vm.$nextTick();
+
+			expect( findGadgetToggle( wrapper ).props( 'modelValue' ) ).toBe( true );
+		} );
+	} );
+
+	describe( 'hidden preferences', () => {
+		it( 'should not render a control for a hidden preference', () => {
+			const config = getTestConfig();
+			config.preferences[ 'skin-theme' ].hidden = true;
+
+			const wrapper = shallowMountApp( ALL_PREF_CLASSES, config );
+
+			expect(
+				wrapper.find( '#skin-client-prefs-skin-theme' ).exists()
+			).toBe( false );
+			// The other appearance prefs still render.
+			expect( wrapper.findAll( '.citizen-preferences-group' ) ).toHaveLength( 6 );
+		} );
+
+		it( 'should hide a section whose preferences are all hidden', () => {
+			const config = getTestConfig();
+			for ( const pref of Object.values( config.preferences ) ) {
+				if ( pref.section === 'behavior' ) {
+					pref.hidden = true;
+				}
+			}
+
+			const wrapper = shallowMountApp( ALL_PREF_CLASSES, config );
+
+			const headings = wrapper.findAll( '.citizen-preferences-section__heading' );
+			expect( headings ).toHaveLength( 1 );
+			expect( headings[ 0 ].text() ).toBe( 'citizen-preferences-section-appearance' );
+		} );
+
+		it( 'should keep dark-theme visibility working when skin-theme is hidden', () => {
+			// Hiding only filters the rendered list — the theme value still
+			// seeds the model that dark-theme visibility conditions read.
+			const config = getTestConfig();
+			config.preferences[ 'skin-theme' ].hidden = true;
+			const classes = ALL_PREF_CLASSES.map( ( cls ) =>
+				cls.replace( 'skin-theme-clientpref-os', 'skin-theme-clientpref-night' )
+			);
+			mockColorScheme = 'dark';
+
+			const wrapper = shallowMountApp( classes, config );
+
+			// The theme control itself is gone...
+			expect(
+				wrapper.find( '#skin-client-prefs-skin-theme' ).exists()
+			).toBe( false );
+			// ...but a dark-theme-conditioned pref stays rendered and visible.
+			// v-show omits the style attribute entirely while shown, so
+			// normalize before asserting.
+			const imageDimming = wrapper.find(
+				'#skin-client-prefs-citizen-feature-image-dimming'
+			);
+			expect( imageDimming.exists() ).toBe( true );
+			expect( imageDimming.attributes( 'style' ) || '' )
+				.not.toContain( 'display: none' );
+		} );
+	} );
 } );

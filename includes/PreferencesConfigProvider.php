@@ -12,7 +12,11 @@ use MessageLocalizer;
  */
 class PreferencesConfigProvider {
 
-	private const PAGE_NAME = 'Citizen-preferences.json';
+	/**
+	 * Page under the MediaWiki namespace holding admin overrides.
+	 * Shared with SkinCitizen's per-request defaults read.
+	 */
+	public const PAGE_NAME = 'Citizen-preferences.json';
 
 	private OnWikiJsonReader $reader;
 	private MessageLocalizer $messageLocalizer;
@@ -84,5 +88,41 @@ class PreferencesConfigProvider {
 		}
 
 		return array_values( array_unique( $keys ) );
+	}
+
+	/**
+	 * Extract per-preference default values from a preferences config.
+	 *
+	 * Validation is charset-only — option membership lives in JS
+	 * (defaultConfig.js), so it cannot be checked here. The charsets
+	 * mirror the clientPrefs validation in MediaWiki core
+	 * (isValidFeatureName/isValidFeatureValue in mediawiki.user.js);
+	 * keep the two in sync.
+	 *
+	 * @param array $config Parsed MediaWiki:Citizen-preferences.json
+	 * @return array<string, string> feature name => default value
+	 */
+	public static function extractDefaults( array $config ): array {
+		$prefs = $config['preferences'] ?? [];
+		if ( !is_array( $prefs ) ) {
+			// Valid JSON, wrong shape — e.g. `"preferences": "oops"`.
+			return [];
+		}
+
+		$defaults = [];
+		foreach ( $prefs as $feature => $pref ) {
+			// json_decode turns numeric JSON keys into ints
+			$feature = (string)$feature;
+			if (
+				!is_array( $pref ) ||
+				!is_string( $pref['default'] ?? null ) ||
+				preg_match( '/^[a-zA-Z0-9-]+$/', $feature ) !== 1 ||
+				preg_match( '/^[a-zA-Z0-9]+$/', $pref['default'] ) !== 1
+			) {
+				continue;
+			}
+			$defaults[$feature] = $pref['default'];
+		}
+		return $defaults;
 	}
 }

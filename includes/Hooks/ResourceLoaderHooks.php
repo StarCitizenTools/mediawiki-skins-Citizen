@@ -38,6 +38,11 @@ class ResourceLoaderHooks {
 
 	/**
 	 * Passes config variables to skins.citizen.preferences ResourceLoader module.
+	 *
+	 * citizen-v4-remove — this callback only ships the deprecated
+	 * $wgCitizenThemeDefault; delete it and skin.json's config.json
+	 * virtual file entry at the 4.0 flip.
+	 *
 	 * @param RL\Context $context
 	 * @param Config $config
 	 * @return array

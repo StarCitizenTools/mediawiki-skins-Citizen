@@ -95,23 +95,20 @@ To hide a preference from the panel entirely, set it to `null`:
 
 ## Force a theme site-wide
 
-To lock everyone into a single theme, combine two changes — set the default theme, then remove the picker so users can't switch.
-
-First, set the default in `LocalSettings.php` using a valid value for [`$wgCitizenThemeDefault`](../config/#wgcitizenthemedefault):
-
-```php
-$wgCitizenThemeDefault = 'dark';
-```
-
-Then remove the theme picker by editing `MediaWiki:Citizen-preferences.json`:
+To lock everyone into a single theme, give `skin-theme` a default and hide the picker by editing `MediaWiki:Citizen-preferences.json`:
 
 ```json
 {
   "preferences": {
-    "skin-theme": null
+    "skin-theme": {
+      "default": "night",
+      "hidden": true
+    }
   }
 }
 ```
+
+`default` makes the theme apply to everyone who hasn't chosen one, and `hidden` removes the picker so nobody can.
 
 ::: warning
 Users who picked a different theme before you applied this change have it stored in their browser's local storage. They'll keep seeing their old choice until they clear site data — local storage doesn't expire on its own. New visitors get the forced theme immediately.

@@ -143,15 +143,16 @@ class SkinCitizenTest extends MediaWikiIntegrationTestCase {
 		);
 	}
 
-	public function testSetSkinThemeWithInvalidValue(): void {
+	public function testSetSkinThemeWithInvalidValueFallsBackToOs(): void {
 		$this->overrideConfigValues( [
 			'CitizenThemeDefault' => 'invalid-value',
 		] );
 
-		// Should not throw an undefined array key error
+		// A config value outside the clientpref charset falls back to the
+		// built-in os default instead of leaving the page with no theme class.
 		$skin = $this->createSkinInstance();
 		$attrs = $skin->getHtmlElementAttributes();
-		$this->assertStringNotContainsString( 'skin-theme-clientpref-', $attrs['class'] );
+		$this->assertStringContainsString( 'skin-theme-clientpref-os', $attrs['class'] );
 	}
 
 	public function testSetSkinThemeWithCustomValue(): void {

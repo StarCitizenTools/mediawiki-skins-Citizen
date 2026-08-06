@@ -8,6 +8,8 @@ const {
 	mergeConfigs, normalizeConfig
 } = require( './configRegistry.js' );
 
+// citizen-v4-remove — legacy $wgCitizenThemeDefault vocabulary; dies with
+// the config at the 4.0 flip.
 const THEME_CONFIG_MAP = { auto: 'os', light: 'day', dark: 'night' };
 
 /**
@@ -57,13 +59,27 @@ function initApp() {
 		Object.assign( config.preferences, updated.preferences );
 	}
 
-	// Legacy config vocabulary maps to clientpref values; anything else
-	// ('black', wiki-defined themes) passes through. No charset check
-	// here, unlike the PHP side: the value never reaches the DOM raw —
-	// App.vue validates it against the registered options list, so an
-	// unregistered value safely falls back to the first option.
-	const themeDefault = THEME_CONFIG_MAP[ serverConfig.wgCitizenThemeDefault ] ||
-		serverConfig.wgCitizenThemeDefault || 'os';
+	// The panel's fallback theme when no clientpref class is present:
+	// the on-wiki JSON default wins, then the deprecated
+	// $wgCitizenThemeDefault. Belt-and-braces: skin-theme normally always
+	// resolves from the class or its options, so this seed only decides
+	// theme-dependent visibility in degenerate configs (e.g. skin-theme
+	// with an empty options list). No charset check here, unlike the PHP side:
+	// the value never reaches the DOM raw — App.vue validates it against
+	// the registered options list, so an unregistered value safely falls
+	// back to the first option.
+	const overrides = overrideData.overrides;
+	const jsonThemeDefault = overrides && overrides.preferences &&
+		overrides.preferences[ 'skin-theme' ] &&
+		overrides.preferences[ 'skin-theme' ].default;
+	// citizen-v4-remove — the config fallback dies with
+	// $wgCitizenThemeDefault at the 4.0 flip (along with THEME_CONFIG_MAP
+	// above, the config.json require, and the RL callback in
+	// ResourceLoaderHooks).
+	const configThemeDefault = THEME_CONFIG_MAP[ serverConfig.wgCitizenThemeDefault ] ||
+		serverConfig.wgCitizenThemeDefault;
+	const themeDefault = ( typeof jsonThemeDefault === 'string' && jsonThemeDefault ) ||
+		configThemeDefault || 'os';
 
 	const app = Vue.createMwApp( App );
 	app.provide( 'preferencesConfig', config );
