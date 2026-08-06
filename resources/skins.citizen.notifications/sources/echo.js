@@ -8,10 +8,14 @@
  *     id, category, categoryLabel,
  *     read, timestamp (unix seconds), iconUrl,
  *     header (escaped HTML), body (escaped HTML),
- *     primaryUrl, secondaryLinks: [ { url, label } ],
- *     isSummary, count   // summary rows only; absent on real notifications
+ *     primaryUrl, secondaryLinks: [ { url, label } ]
  *   }
- *   FetchResult { items: NotificationItem[], counts: { total, local, foreign } }
+ *   Wiki { id, name, url, apiUrl, timestamp }  — another wiki with something waiting
+ *   FetchResult {
+ *     items: NotificationItem[],
+ *     counts: { total, local, foreign },
+ *     wikis: Wiki[]
+ *   }
  *
  * Only unread notifications are fetched — the panel shows what is waiting,
  * and Special:Notifications is where the history lives.
@@ -38,13 +42,18 @@ const SECTIONS = [ 'alert', 'message' ];
 const CATEGORY_TITLE_PREFIX = 'echo-category-title-';
 
 // Echo's synthetic "you have unread notifications on other wikis" row. It is
-// not a real notification — no primary link, no read state, and a placeholder
-// id — so it is normalized separately rather than run through normalizeEntry().
+// not a notification at all — no primary link, no read state, a placeholder id
+// — so it is read for the wiki list it carries and never enters `items`.
 const SUMMARY_TYPE = 'foreign';
 
 // How many notifications to ask for. The panel shows what is waiting, not a
 // history, so this is a ceiling nobody normally reaches rather than a page size.
 const FETCH_LIMIT = 25;
+
+// How many notifications to preview from another wiki. Five rows fill about
+// one view of the panel, so one wiki cannot crowd the others out, and the
+// wiki's own page is one click away for the rest.
+const FOREIGN_LIMIT = 5;
 
 /**
  * Normalize one Echo list entry (notformat=model) into a backend-neutral
@@ -98,55 +107,49 @@ function foreignNotificationsUrl( source ) {
 }
 
 /**
- * Normalize Echo's synthetic cross-wiki row into a summary NotificationItem.
+ * Turn Echo's synthetic cross-wiki row into the list of wikis behind it.
+ *
+ * Echo reports one total across every wiki, not a count each, so a wiki knows
+ * its name, its address and when it last had activity — but not how much is
+ * waiting. That arrives only when the wiki itself is asked.
  *
  * @param {Object} entry raw Echo notification of type 'foreign'
- * @return {Object} NotificationItem carrying isSummary and count
+ * @return {Array<{ id: string, name: string, url: string, timestamp: number }>}
+ *   Wikis, most recently active first.
  */
-function normalizeSummary( entry ) {
-	const model = entry[ '*' ] || {};
-	const sources = entry.sources || {};
-	const wikis = Object.keys( sources );
-	const utcunix = entry.timestamp && entry.timestamp.utcunix;
-	return {
-		// Echo gives the summary row id -1. A stable string keeps it clear of
-		// the numeric ids, and means it can never address a real notification
-		// if it ever reached markRead.
-		id: 'summary-foreign',
-		isSummary: true,
-		// How many notifications on other wikis this row stands for.
-		count: Number( entry.count || 0 ),
-		// Echo files this row under a 'foreign' pseudo-category that is not a
-		// registered category and resolves to 'other', so a label here would
-		// read "Other". Leave it off rather than mislabel it.
-		category: '',
-		categoryLabel: '',
-		// It stands for notifications on other wikis, which this panel cannot
-		// clear, so it is always unread.
-		read: false,
-		timestamp: utcunix ? Number( utcunix ) : 0,
-		iconUrl: model.iconUrl || '',
-		// Echo's own localized strings: "More alerts from another wiki", with
-		// the wiki names as the body.
-		header: model.header || '',
-		body: model.body || '',
-		// Echo returns no primary link for this row. With one foreign wiki, go
-		// straight to its notifications; with several, the local special page.
-		primaryUrl: wikis.length === 1 ?
-			foreignNotificationsUrl( sources[ wikis[ 0 ] ] ) :
-			mw.util.getUrl( 'Special:Notifications' ),
-		secondaryLinks: []
-	};
+function normalizeWikis( entry ) {
+	const sources = ( entry && entry.sources ) || {};
+	return Object.keys( sources )
+		.map( ( id ) => {
+			const source = sources[ id ];
+			const ts = Date.parse( source.ts );
+			return {
+				id: id,
+				name: source.title || id,
+				url: foreignNotificationsUrl( source ),
+				// That wiki's api.php, for previewing what is waiting there.
+				apiUrl: source.url || '',
+				timestamp: isNaN( ts ) ? 0 : Math.floor( ts / 1000 )
+			};
+		} )
+		.sort( ( a, b ) => b.timestamp - a.timestamp );
 }
 
 /**
  * Create an Echo-backed notification source.
  *
  * @param {Function} ApiConstructor `mw.Api` constructor (injected for testability)
- * @return {{ fetch: Function, markSeen: Function, markRead: Function, markAllRead: Function }}
+ * @param {Function} [ForeignApiConstructor] `mw.ForeignApi` constructor, used to
+ *   preview another wiki's notifications straight from the browser
+ * @return {{ fetch: Function, fetchWiki: Function, markSeen: Function,
+ *   markRead: Function, markAllRead: Function }}
  */
-function createEchoSource( ApiConstructor ) {
+function createEchoSource( ApiConstructor, ForeignApiConstructor ) {
 	const api = new ApiConstructor();
+	// Category titles from the last fetch. Categories are registered by
+	// extensions, not per wiki, so the local labels serve another wiki's
+	// notifications too and save it a second request.
+	let categoryLabels = {};
 
 	/**
 	 * Fetch the notifications waiting for the user, newest first, plus the
@@ -192,21 +195,22 @@ function createEchoSource( ApiConstructor ) {
 				labels[ message.name.replace( CATEGORY_TITLE_PREFIX, '' ) ] =
 					( message[ '*' ] || '' ).trim();
 			} );
+			categoryLabels = labels;
 
 			const items = [];
-			const summaries = [];
+			let rollup = null;
 			( notifications.list || [] ).forEach( ( entry ) => {
 				if ( entry.type === SUMMARY_TYPE ) {
-					summaries.push( normalizeSummary( entry ) );
+					rollup = entry;
 				} else {
 					items.push( normalizeEntry( entry, labels ) );
 				}
 			} );
 
 			// rawcount covers other wikis too once notcrosswikisummary is set,
-			// so the local figure is what is left after the summary's share.
+			// so the local figure is what is left after their share.
 			const total = Number( notifications.rawcount || 0 );
-			const foreign = summaries.reduce( ( sum, s ) => sum + s.count, 0 );
+			const foreign = rollup ? Number( rollup.count || 0 ) : 0;
 			const counts = {
 				total: total,
 				foreign: foreign,
@@ -217,10 +221,46 @@ function createEchoSource( ApiConstructor ) {
 			// state left to sort on.
 			items.sort( ( a, b ) => b.timestamp - a.timestamp );
 
-			// The cross-wiki summary stays pinned above the list. Echo adds it
-			// after notlimit has been applied, so left to the sort it could
-			// sink below the limit and out of view.
-			return { items: summaries.concat( items ), counts };
+			return { items, counts, wikis: rollup ? normalizeWikis( rollup ) : [] };
+		} );
+	}
+
+	/**
+	 * Preview what is waiting on another wiki, asked of that wiki directly.
+	 *
+	 * The browser can do this itself: `mw.ForeignApi` sends the request with
+	 * credentials, so a farm sharing a login — whether through shared cookies
+	 * or a central account — answers as the user. Going direct also keeps the
+	 * cost flat, since nothing is fetched until a wiki is opened and no wiki
+	 * pays for any other.
+	 *
+	 * Only unread notifications come back; Echo has no way to serve another
+	 * wiki's read history.
+	 *
+	 * @param {{ apiUrl: string }} wiki
+	 * @return {Promise<{ items: Object[] }>} Rejects when that wiki cannot be
+	 *   reached or will not answer for this user.
+	 */
+	function fetchWiki( wiki ) {
+		if ( !ForeignApiConstructor || !wiki || !wiki.apiUrl ) {
+			return Promise.reject( new Error( 'No API endpoint for this wiki' ) );
+		}
+		const foreignApi = new ForeignApiConstructor( wiki.apiUrl );
+		return foreignApi.get( {
+			action: 'query',
+			meta: 'notifications',
+			notsections: SECTIONS.join( '|' ),
+			notformat: 'model',
+			notfilter: '!read',
+			notlimit: FOREIGN_LIMIT,
+			notprop: 'list'
+		} ).then( ( data ) => {
+			const list = ( ( ( data || {} ).query || {} ).notifications || {} ).list || [];
+			const items = list
+				.filter( ( entry ) => entry.type !== SUMMARY_TYPE )
+				.map( ( entry ) => normalizeEntry( entry, categoryLabels ) );
+			items.sort( ( a, b ) => b.timestamp - a.timestamp );
+			return { items };
 		} );
 	}
 
@@ -266,7 +306,7 @@ function createEchoSource( ApiConstructor ) {
 		} ).then( () => undefined );
 	}
 
-	return { fetch, markSeen, markRead, markAllRead };
+	return { fetch, fetchWiki, markSeen, markRead, markAllRead };
 }
 
 module.exports = { createEchoSource };

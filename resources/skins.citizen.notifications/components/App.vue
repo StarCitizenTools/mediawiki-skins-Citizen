@@ -7,7 +7,7 @@
 			<cdx-button
 				class="citizen-notifications__mark-all"
 				weight="quiet"
-				:disabled="!hasUnread"
+				:disabled="!canMarkAll"
 				:aria-label="msg.markAll"
 				:title="msg.markAll"
 				@click="onMarkAll"
@@ -48,6 +48,37 @@
 					{{ msg.retry }}
 				</cdx-button>
 			</div>
+			<cdx-tabs
+				v-else-if="wikis.length > 0"
+				v-model:active="activeSource"
+				:framed="false"
+			>
+				<cdx-tab
+					name="local"
+					:label="msg.sourceLocal"
+				>
+					<notification-list
+						v-if="items.length > 0"
+						:items="items"
+						@read="onItemRead"
+					></notification-list>
+					<div
+						v-else
+						class="citizen-notifications__empty"
+					>
+						{{ msg.empty }}
+					</div>
+				</cdx-tab>
+				<cdx-tab
+					name="foreign"
+					:label="msg.sourceForeign"
+				>
+					<wiki-list
+						:wikis="wikis"
+						:fetch-wiki="fetchWiki"
+					></wiki-list>
+				</cdx-tab>
+			</cdx-tabs>
 			<notification-list
 				v-else-if="items.length > 0"
 				:items="items"
@@ -82,8 +113,9 @@
 
 <script>
 const { defineComponent, ref, computed, inject, onMounted } = require( 'vue' );
-const { CdxButton, CdxIcon } = mw.loader.require( 'skins.citizen.notifications.codex' );
+const { CdxButton, CdxIcon, CdxTab, CdxTabs } = mw.loader.require( 'skins.citizen.notifications.codex' );
 const NotificationList = require( './NotificationList.vue' );
+const WikiList = require( './WikiList.vue' );
 const icons = require( '../icons.json' );
 
 // Links styled as quiet cdx buttons need the fake-button variants.
@@ -101,7 +133,10 @@ module.exports = exports = defineComponent( {
 	components: {
 		CdxButton,
 		CdxIcon,
-		NotificationList
+		CdxTab,
+		CdxTabs,
+		NotificationList,
+		WikiList
 	},
 	setup() {
 		const source = inject( 'source' );
@@ -113,6 +148,12 @@ module.exports = exports = defineComponent( {
 		const status = ref( 'loading' ); // 'loading' | 'ready' | 'error'
 		const items = ref( [] );
 		const counts = ref( { total: 0, local: 0, foreign: 0 } );
+		// Other wikis with something waiting. Empty on all but a farm, where it
+		// is what makes the source switch appear at all.
+		const wikis = ref( [] );
+		// Which source the list is showing. `source` is taken by the injected
+		// data source, hence the longer name.
+		const activeSource = ref( 'local' );
 
 		const msg = {
 			title: mw.message( 'citizen-notifications-title' ).text(),
@@ -121,7 +162,9 @@ module.exports = exports = defineComponent( {
 			error: mw.message( 'citizen-notifications-error' ).text(),
 			retry: mw.message( 'citizen-notifications-retry' ).text(),
 			seeAll: mw.message( 'citizen-notifications-see-all' ).text(),
-			prefs: mw.message( 'citizen-notifications-preferences' ).text()
+			prefs: mw.message( 'citizen-notifications-preferences' ).text(),
+			sourceLocal: mw.message( 'citizen-notifications-source-local' ).text(),
+			sourceForeign: mw.message( 'citizen-notifications-source-other' ).text()
 		};
 
 		const urls = {
@@ -129,10 +172,11 @@ module.exports = exports = defineComponent( {
 			prefs: mw.util.getUrl( 'Special:Preferences' ) + '#mw-prefsection-echo'
 		};
 
-		// Summary rows stand for notifications on other wikis, which this panel
-		// cannot clear, so they must not keep the mark-all button enabled.
-		const hasUnread = computed(
-			() => items.value.some( ( item ) => !item.read && !item.isSummary )
+		// Mark-all clears this wiki's notifications, so it stays out of reach
+		// while the other wikis are on screen — nothing there would change.
+		const canMarkAll = computed(
+			() => activeSource.value === 'local' &&
+				items.value.some( ( item ) => !item.read )
 		);
 
 		function reportCounts() {
@@ -143,21 +187,12 @@ module.exports = exports = defineComponent( {
 
 		// Recompute counts from the items' current read state — keeps the
 		// badge accurate after local mark-read mutations without a refetch.
+		// Other wikis are carried through untouched: nothing in this panel can
+		// clear them, and dropping them would leave the badge disagreeing with
+		// the count the server renders.
 		function recountFromItems() {
-			let local = 0;
-			let foreign = 0;
-			items.value.forEach( ( item ) => {
-				// A summary row stands for unread notifications elsewhere.
-				// Nothing in this panel can clear those, so carry its count
-				// through untouched — otherwise the first local mark-read would
-				// drop the badge to a local-only figure and start disagreeing
-				// with the count the server renders.
-				if ( item.isSummary ) {
-					foreign += item.count;
-				} else if ( !item.read ) {
-					local += 1;
-				}
-			} );
+			const local = items.value.filter( ( item ) => !item.read ).length;
+			const foreign = counts.value.foreign;
 			counts.value = { total: local + foreign, local: local, foreign: foreign };
 			reportCounts();
 		}
@@ -167,6 +202,12 @@ module.exports = exports = defineComponent( {
 		function applyResult( result ) {
 			items.value = result.items;
 			counts.value = result.counts;
+			wikis.value = result.wikis || [];
+			// A farm user who clears the other wikis elsewhere should not be
+			// left looking at a switch with nothing behind it.
+			if ( !wikis.value.length ) {
+				activeSource.value = 'local';
+			}
 			hasLoaded.value = true;
 			reportCounts();
 			// Best-effort: tell Echo the streams were seen so its other surfaces
@@ -219,9 +260,7 @@ module.exports = exports = defineComponent( {
 			// refresh() refetches authoritative state).
 			source.markAllRead().catch( () => {} );
 			items.value.forEach( ( item ) => {
-				if ( !item.isSummary ) {
-					item.read = true;
-				}
+				item.read = true;
 			} );
 			recountFromItems();
 		}
@@ -231,7 +270,10 @@ module.exports = exports = defineComponent( {
 		return {
 			status,
 			items,
-			hasUnread,
+			wikis,
+			fetchWiki: ( wiki ) => source.fetchWiki( wiki ),
+			activeSource,
+			canMarkAll,
 			msg,
 			urls,
 			icons,
@@ -282,7 +324,7 @@ module.exports = exports = defineComponent( {
 
 	// Holds the loading, tabs or error state. The active tab panel scrolls,
 	// not this container.
-	// The list itself scrolls; the header and footer stay put.
+	// Without tabs the body is the scroller; with them, the tab panel is.
 	&__body {
 		display: flex;
 		flex: 1;
@@ -290,6 +332,43 @@ module.exports = exports = defineComponent( {
 		min-height: 0;
 		overflow-y: auto;
 		overscroll-behavior: contain;
+	}
+
+	// Source tabs: the bar stays put and the active panel scrolls.
+	.cdx-tabs {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		min-height: 0;
+
+		// Override default styles
+		&:not( .cdx-tabs--framed ) > .cdx-tabs__header {
+			margin-inline: 0;
+			background-color: transparent;
+		}
+	}
+
+	.cdx-tabs__header {
+		flex-shrink: 0;
+	}
+
+	.cdx-tabs__list {
+		flex-grow: 1;
+	}
+
+	.cdx-tabs__content {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		min-height: 0;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+	}
+
+	.cdx-tabs__list__item {
+		flex-grow: 1;
+		padding-block: var( --space-xs );
+		font-size: var( --font-size-small );
 	}
 
 	&__empty {
