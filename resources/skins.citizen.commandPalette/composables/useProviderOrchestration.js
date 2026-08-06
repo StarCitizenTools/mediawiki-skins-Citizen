@@ -1,8 +1,8 @@
 const { ref, shallowRef, computed } = require( 'vue' );
 const useOperationLifecycle = require( './useOperationLifecycle.js' );
+const { DEFAULT_DEBOUNCE_MS } = require( '../providers/createProvider.js' );
 
 const SHOW_PENDING_DELAY_MS = 300;
-const DEFAULT_DEBOUNCE_MS = 250;
 
 // Per-item detail fetches fire on focus changes (arrow keys, hover).
 // Lower than the query debounce because the user expects detail to settle

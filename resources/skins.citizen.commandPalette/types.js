@@ -284,7 +284,7 @@
  * Configuration for a provider, passed to createProvider.
  *
  * @typedef {Object} ProviderConfig
- * @property {number} [debounceMs=250] Debounce delay in milliseconds.
+ * @property {number} [debounceMs=120] Debounce delay in milliseconds.
  * @property {boolean} [keepStaleResults=false] Whether to show previous results while loading.
  */
 

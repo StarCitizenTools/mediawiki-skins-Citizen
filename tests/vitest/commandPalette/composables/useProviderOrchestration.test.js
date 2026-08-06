@@ -4,6 +4,9 @@ globalThis.mw = mw;
 const useProviderOrchestration = require(
 	'../../../../resources/skins.citizen.commandPalette/composables/useProviderOrchestration.js'
 );
+const { DEFAULT_DEBOUNCE_MS } = require(
+	'../../../../resources/skins.citizen.commandPalette/providers/createProvider.js'
+);
 
 describe( 'useProviderOrchestration', () => {
 	let mockSyncProvider;
@@ -173,7 +176,7 @@ describe( 'useProviderOrchestration', () => {
 			mode.getResults.mockClear();
 
 			orch.updateQuery( 'Talk' );
-			vi.advanceTimersByTime( 250 );
+			vi.advanceTimersByTime( DEFAULT_DEBOUNCE_MS );
 			await vi.runAllTimersAsync();
 
 			expect( mode.getResults ).toHaveBeenCalledWith( 'Talk', expect.any( AbortSignal ), [], [] );
@@ -725,7 +728,7 @@ describe( 'useProviderOrchestration', () => {
 				{ id: 'b', detail: { header: {} } }
 			] );
 			orch.updateQuery( 'b' );
-			vi.advanceTimersByTime( 250 );
+			vi.advanceTimersByTime( DEFAULT_DEBOUNCE_MS );
 			await vi.runAllTimersAsync();
 
 			// updateQuery's resetDetailState() aborts the in-flight signal,

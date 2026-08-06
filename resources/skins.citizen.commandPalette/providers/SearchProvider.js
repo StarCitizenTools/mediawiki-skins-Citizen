@@ -29,7 +29,7 @@ function createSearchProvider( searchClient ) {
 		onResultSelect( item ) {
 			return getNavigationAction( item );
 		}
-	}, { debounceMs: 250, keepStaleResults: true } );
+	}, { keepStaleResults: true } );
 }
 
 module.exports = createSearchProvider;

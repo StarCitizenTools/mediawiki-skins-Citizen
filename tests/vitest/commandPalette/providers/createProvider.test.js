@@ -68,8 +68,9 @@ describe( 'createProvider', () => {
 
 		const provider = createProvider( 'test', handler );
 
-		expect( provider.debounceMs ).toBe( 250 );
+		expect( provider.debounceMs ).toBe( 120 );
 		expect( provider.keepStaleResults ).toBe( false );
+		expect( createProvider.DEFAULT_DEBOUNCE_MS ).toBe( 120 );
 	} );
 
 	it( 'allows config overrides', () => {
