@@ -30,7 +30,6 @@ class CitizenComponentBodyContentTest extends MediaWikiIntegrationTestCase {
 	 * @covers ::createSectionBodyElement
 	 * @covers ::getSectionHeadingLevel
 	 * @covers ::getTemplateData
-	 * @covers ::isValidSectionHeading
 	 * @covers ::makeSections
 	 * @covers ::prepareHeading
 	 */

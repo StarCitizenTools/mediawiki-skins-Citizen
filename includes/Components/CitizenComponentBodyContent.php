@@ -140,39 +140,7 @@ class CitizenComponentBodyContent implements CitizenComponent {
 			return null;
 		}
 
-		if ( !$this->isValidSectionHeading( $node ) ) {
-			return null;
-		}
-
 		return (int)$tagName[1];
-	}
-
-	/**
-	 * Checks if a node is a valid heading for creating a section.
-	 * This is used to filter out headings that shouldn't create sections,
-	 * e.g., headings inside the Table of Contents.
-	 */
-	private function isValidSectionHeading( Element $element ): bool {
-		// A heading element can be the element itself (h1-h6) or a wrapper div.
-		$headingElement = $element;
-		if ( !in_array( strtolower( $element->tagName ), $this->topHeadingTags ) ) {
-			// If the element is not a heading tag, it might be a wrapper.
-			$found = DOMCompat::querySelector( $element, implode( ',', $this->topHeadingTags ) );
-			if ( !$found ) {
-				// Not a valid heading wrapper.
-				return false;
-			}
-		}
-
-		$parent = $headingElement->parentNode;
-		if ( !( $parent instanceof Element ) ) {
-			// Should not happen in a valid document.
-			return false;
-		}
-
-		$classList = DOMCompat::getClassList( $parent );
-		// Ignore headings inside the Table of Contents.
-		return !$classList->contains( 'toctitle' );
 	}
 
 	/**
