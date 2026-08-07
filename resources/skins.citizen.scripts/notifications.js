@@ -11,9 +11,10 @@ const { bindIntentPrefetch } = require( './intentPrefetch.js' );
  * is in flight before the click lands, `mw.loader.using` on first open when
  * intent never fired, mounting into `#citizen-notifications-content`
  * (replacing the server-rendered placeholder), a refresh on each reopen, and
- * keeping the bell badge in sync with unread counts. The card also carries a
- * no-JS "See all notifications" link, and on load failure the server-rendered
- * error block (with retry) is shown.
+ * keeping the bell badge in sync with unread counts. On load failure the
+ * server-rendered error block (with retry) replaces the preview, leaving the
+ * placeholder's footer links — the no-JS fallback, and the only remaining way
+ * to reach the notifications and preferences pages — on screen.
  *
  * No-ops when the dropdown is absent (anonymous views, or markup cached
  * before the feature shipped).
@@ -36,7 +37,16 @@ function createNotifications( { document, mw } ) {
 			return;
 		}
 
-		const placeholderEl = contentEl.querySelector( '.citizen-notifications__placeholder' );
+		// The part of the placeholder the error stands in for. The frame around
+		// it — heading, and the footer's links to the notifications and
+		// preferences pages — survives a failure, because when the module
+		// cannot be fetched those links are the only way left to reach them.
+		// Empty on markup cached before the frame existed, where the error
+		// block and its sibling see-all link already behave this way.
+		const previewEls = [
+			contentEl.querySelector( '.citizen-notifications__placeholder-body' ),
+			contentEl.querySelector( '.citizen-notifications__empty' )
+		].filter( Boolean );
 		const errorEl = contentEl.querySelector( '.citizen-notifications__error' );
 		const retryBtn = errorEl ?
 			errorEl.querySelector( '.citizen-notifications__retry' ) :
@@ -73,19 +83,19 @@ function createNotifications( { document, mw } ) {
 			return Number.isInteger( count ) && count >= 0 ? count : null;
 		}
 
-		function showPlaceholder() {
+		function showPreview() {
 			if ( errorEl ) {
 				errorEl.hidden = true;
 			}
-			if ( placeholderEl ) {
-				placeholderEl.hidden = false;
-			}
+			previewEls.forEach( ( el ) => {
+				el.hidden = false;
+			} );
 		}
 
 		function showError() {
-			if ( placeholderEl ) {
-				placeholderEl.hidden = true;
-			}
+			previewEls.forEach( ( el ) => {
+				el.hidden = true;
+			} );
 			if ( errorEl ) {
 				errorEl.hidden = false;
 			}
@@ -157,7 +167,7 @@ function createNotifications( { document, mw } ) {
 				return;
 			}
 			loading = true;
-			showPlaceholder();
+			showPreview();
 
 			mw.loader.using( MODULE ).then(
 				( req ) => {

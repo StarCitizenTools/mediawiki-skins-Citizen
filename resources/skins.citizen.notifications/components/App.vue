@@ -142,7 +142,9 @@ module.exports = exports = defineComponent( {
 		// (markup cached before the attribute existed).
 		const initialCount = inject( 'initialCount', null );
 
-		// Rows the skeleton previews at most; matches the server placeholder.
+		// Rows the skeleton previews at most. Keep in step with
+		// NOTIFICATIONS_PLACEHOLDER_ROWS in includes/Hooks/SkinHooks.php, which
+		// sizes the server placeholder this one takes over from.
 		const PLACEHOLDER_ROWS = 5;
 		const placeholderRows = initialCount > 0 ?
 			Math.min( initialCount, PLACEHOLDER_ROWS ) :

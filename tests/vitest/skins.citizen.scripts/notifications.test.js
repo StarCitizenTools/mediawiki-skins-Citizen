@@ -22,12 +22,13 @@ const FIXTURE = `
 					<div class="citizen-notifications__placeholder-body">
 						<div class="citizen-notifications__placeholder-item"></div>
 					</div>
+					<div class="citizen-notifications__error" hidden>
+						<button class="citizen-notifications__retry" type="button">Retry</button>
+					</div>
 					<footer class="citizen-notifications__placeholder-footer">
 						<a class="citizen-notifications__placeholder-history" href="/wiki/Special:Notifications">See all</a>
+						<a class="citizen-notifications__placeholder-prefs" href="/wiki/Special:Preferences#mw-prefsection-echo">Preferences</a>
 					</footer>
-				</div>
-				<div class="citizen-notifications__error" hidden>
-					<button class="citizen-notifications__retry" type="button">Retry</button>
 				</div>
 			</div>
 		</div>
@@ -68,8 +69,15 @@ function intent( type ) {
 		.dispatchEvent( new Event( type ) );
 }
 
-function placeholder() {
-	return document.querySelector( '.citizen-notifications__placeholder' );
+// The preview the error stands in for; the frame around it stays put.
+function preview() {
+	return document.querySelector( '.citizen-notifications__placeholder-body' );
+}
+
+function footerLinks() {
+	return Array.from(
+		document.querySelectorAll( '.citizen-notifications__placeholder-footer a' )
+	);
 }
 
 beforeEach( () => {
@@ -212,7 +220,7 @@ describe( 'notifications trigger', () => {
 		await setOpen( true );
 		expect( mw.loader.using ).toHaveBeenCalledWith( 'skins.citizen.notifications' );
 		// Placeholder revealed while loading.
-		expect( placeholder().hidden ).toBe( false );
+		expect( preview().hidden ).toBe( false );
 
 		resolveLoad();
 		await tick();
@@ -287,11 +295,28 @@ describe( 'notifications trigger', () => {
 		await tick();
 
 		expect( document.querySelector( '.citizen-notifications__error' ).hidden ).toBe( false );
-		expect( placeholder().hidden ).toBe( true );
+		expect( preview().hidden ).toBe( true );
 
 		// Retry re-attempts the load.
 		document.querySelector( '.citizen-notifications__retry' ).click();
 		expect( mw.loader.using ).toHaveBeenCalledTimes( 2 );
+	} );
+
+	it( 'keeps the footer links reachable when the module fails to load', async () => {
+		setup();
+
+		await setOpen( true );
+		rejectLoad();
+		await tick();
+
+		// The error replaces the preview, not the frame around it: with the
+		// module unreachable these links are the only way left to get to the
+		// notifications and preferences pages.
+		const links = footerLinks();
+		expect( links.length ).toBeGreaterThan( 0 );
+		links.forEach( ( link ) => {
+			expect( link.closest( '[hidden]' ) ).toBeNull();
+		} );
 	} );
 
 	it( 'stays silent when an intent-driven load fails', async () => {
@@ -304,7 +329,7 @@ describe( 'notifications trigger', () => {
 		// Nothing was asked for yet, so the error block stays hidden; the
 		// click path owns surfacing it.
 		expect( document.querySelector( '.citizen-notifications__error' ).hidden ).toBe( true );
-		expect( placeholder().hidden ).toBe( false );
+		expect( preview().hidden ).toBe( false );
 	} );
 
 	it( 'shows the error and stays reopenable when mounting throws', async () => {

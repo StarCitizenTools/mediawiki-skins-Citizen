@@ -32,6 +32,10 @@ class SkinHooks implements
 	/**
 	 * Rows the notification placeholder previews at most. Enough to fill the
 	 * panel's minimum height; the list itself scrolls once mounted.
+	 *
+	 * The mounted panel previews the same number while it fetches — keep in
+	 * step with PLACEHOLDER_ROWS in
+	 * resources/skins.citizen.notifications/components/App.vue.
 	 */
 	private const NOTIFICATIONS_PLACEHOLDER_ROWS = 5;
 
@@ -394,13 +398,18 @@ class SkinHooks implements
 
 		$alertCount = (int)( $alert['data']['counter-num'] ?? 0 );
 		$noticeCount = (int)( $notice['data']['counter-num'] ?? 0 );
-		$count = $alertCount + $noticeCount;
+		// Clamped because the count sizes an array below, where a negative
+		// would be fatal rather than merely wrong — and this runs on every page
+		// view for every logged-in user.
+		$count = max( 0, $alertCount + $noticeCount );
 
 		if ( $sktemplate instanceof SkinCitizen ) {
 			$sktemplate->setNotificationData( [
 				'count' => $count,
 				'href' => $alert['href'] ?? $notice['href']
 					?? SpecialPage::getTitleFor( 'Notifications' )->getLocalURL(),
+				// Concatenated rather than passed as a Title fragment, because
+				// getLocalURL() omits the fragment and would silently drop it.
 				'prefs-href' => SpecialPage::getTitleFor( 'Preferences' )
 					->getLocalURL() . '#mw-prefsection-echo',
 				// The panel's pre-mount placeholder previews what is waiting:
