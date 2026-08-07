@@ -47,6 +47,18 @@
 					{{^data-notifications.has-unread}}
 						<div class="citizen-notifications__empty">{{msg-citizen-notifications-empty}}</div>
 					{{/data-notifications.has-unread}}
+					{{!
+						Inside the frame, replacing the preview rather than the
+						whole panel: when the module cannot be fetched at all,
+						the footer's links are the only way left to reach the
+						notifications, so they have to outlive the failure.
+					}}
+					<div class="citizen-notifications__error" role="alert" hidden>
+						<p>{{msg-citizen-notifications-error}}</p>
+						<button class="cdx-button citizen-notifications__retry" type="button">
+							{{msg-citizen-notifications-retry}}
+						</button>
+					</div>
 					<footer class="citizen-notifications__placeholder-footer">
 						<a class="citizen-notifications__placeholder-history cdx-button cdx-button--fake-button cdx-button--fake-button--enabled" href="{{data-notifications.href}}">
 							<span class="citizen-ui-icon mw-ui-icon-wikimedia-history"></span>
@@ -56,12 +68,6 @@
 							<span class="citizen-ui-icon mw-ui-icon-wikimedia-settings"></span>
 						</a>
 					</footer>
-				</div>
-				<div class="citizen-notifications__error" role="alert" hidden>
-					<p>{{msg-citizen-notifications-error}}</p>
-					<button class="cdx-button citizen-notifications__retry" type="button">
-						{{msg-citizen-notifications-retry}}
-					</button>
 				</div>
 			</div>
 		</div>

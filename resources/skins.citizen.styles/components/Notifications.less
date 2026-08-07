@@ -194,10 +194,11 @@
 	}
 }
 
-// The &__placeholder / &__error class rules set display:flex, which overrides
-// the browser's default [hidden]{display:none}. Restore it so the
-// orchestrator's el.hidden = true actually hides these states.
-.citizen-notifications__placeholder[ hidden ],
+// These rules set display:flex, which overrides the browser's default
+// [hidden]{display:none}. Restore it so the orchestrator's el.hidden = true
+// actually hides them.
+.citizen-notifications__placeholder-body[ hidden ],
+.citizen-notifications__empty[ hidden ],
 .citizen-notifications__error[ hidden ] {
 	display: none;
 }
