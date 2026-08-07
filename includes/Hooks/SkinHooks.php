@@ -29,6 +29,12 @@ class SkinHooks implements
 	SkinBuildSidebarHook,
 	SkinPageReadyConfigHook
 {
+	/**
+	 * Rows the notification placeholder previews at most. Enough to fill the
+	 * panel's minimum height; the list itself scrolls once mounted.
+	 */
+	private const NOTIFICATIONS_PLACEHOLDER_ROWS = 5;
+
 	private static ?string $inlineScript = null;
 
 	/**
@@ -388,12 +394,22 @@ class SkinHooks implements
 
 		$alertCount = (int)( $alert['data']['counter-num'] ?? 0 );
 		$noticeCount = (int)( $notice['data']['counter-num'] ?? 0 );
+		$count = $alertCount + $noticeCount;
 
 		if ( $sktemplate instanceof SkinCitizen ) {
 			$sktemplate->setNotificationData( [
-				'count' => $alertCount + $noticeCount,
+				'count' => $count,
 				'href' => $alert['href'] ?? $notice['href']
 					?? SpecialPage::getTitleFor( 'Notifications' )->getLocalURL(),
+				'prefs-href' => SpecialPage::getTitleFor( 'Preferences' )
+					->getLocalURL() . '#mw-prefsection-echo',
+				// The panel's pre-mount placeholder previews what is waiting:
+				// rows when something is, the empty state when nothing is.
+				// Mustache cannot count, so the row list is built here.
+				'has-unread' => $count > 0,
+				'placeholder-rows' => array_fill(
+					0, min( $count, self::NOTIFICATIONS_PLACEHOLDER_ROWS ), true
+				),
 			] );
 		}
 

@@ -1,0 +1,209 @@
+// Notification dropdown shell: the card, the server-rendered placeholder that
+// stands in until Vue mounts, and the load-error fallback.
+//
+// These rules live in the always-loaded style module rather than travelling
+// with `skins.citizen.notifications`, because they have to be in effect
+// *before* that module arrives — the placeholder's whole job is to fill the
+// card during the lazy load. Shipped with the module they would land only
+// after Vue had already replaced the markup they style, which is to say never.
+// Preferences.less and Share.less carry their skeletons here for the same
+// reason.
+//
+// The Vue panel styles its own markup in the SFC <style> blocks (App.vue,
+// NotificationList.vue, NotificationItem.vue), which do ship with the module.
+// App.vue's loading state reuses the placeholder classes below, so one rule
+// set serves both the pre-mount and the fetching states.
+
+// Widen the shared dropdown card for notification content. Below the tablet
+// breakpoint the shared header-card mixin stretches end-anchored cards edge to
+// edge with `left: 0; right: 0`, and an explicit width would defeat that
+// over-constrained stretch — so only pin the width once the card floats free.
+#citizen-notifications-dropdown__card {
+	@media ( min-width: @min-width-breakpoint-tablet ) {
+		width: 24rem;
+	}
+}
+
+.citizen-notifications {
+	.mixin-citizen-font-styles( 'small' );
+
+	// Server-rendered stand-in for the Vue panel, mirroring its frame so the
+	// swap at mount changes content rather than layout.
+	//
+	// The height is definite rather than a floor: it is the height the panel
+	// resolves into when nothing is waiting, so the dropdown opens at one size
+	// whatever it lands on, and the preview rows clip instead of setting the
+	// size themselves. A floor would not do — `min-height` caps nothing, so
+	// five rows simply push past it. Keep in step with
+	// `.citizen-notifications__panel` in App.vue.
+	//
+	// Scoped to this class rather than `.citizen-notifications` so HTML cached
+	// before the frame existed keeps rendering exactly as it did — its flat
+	// skeleton is a set of empty divs and spans, which collapse to nothing
+	// without the rules that used to ship (too late) alongside it.
+	&__placeholder {
+		display: flex;
+		flex-direction: column;
+		height: ~'min( 20rem, 60vh )';
+		max-height: var( --header-card-maxheight );
+	}
+
+	&__placeholder-header {
+		display: flex;
+		flex-shrink: 0;
+		gap: var( --space-sm );
+		align-items: center;
+		justify-content: space-between;
+		padding: var( --space-sm ) var( --space-md );
+	}
+
+	&__placeholder-title {
+		margin: 0;
+		font-size: var( --font-size-medium );
+		font-weight: var( --font-weight-semi-bold );
+	}
+
+	// Rows are a preview, not content: let the body shrink inside the band and
+	// clip whatever overflows, so the placeholder opens at the same height as
+	// the empty panel instead of growing past it.
+	&__placeholder-body {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		min-height: 0;
+		overflow: hidden;
+	}
+
+	&__placeholder-item {
+		display: grid;
+		flex-shrink: 0;
+		grid-template-columns: auto 1fr;
+		gap: var( --space-xs );
+		column-gap: var( --space-sm );
+		padding: var( --space-sm ) var( --space-md );
+	}
+
+	// Matches the rows the placeholder stands in for: dividers between items,
+	// never a trailing line under the last one.
+	&__placeholder-item + &__placeholder-item {
+		border-top: var( --border-subtle );
+	}
+
+	&__placeholder-icon {
+		grid-row: span 2;
+		width: 2rem;
+		height: 2rem;
+		margin-block-start: 0.125rem;
+		background-color: var( --color-surface-3 );
+		border-radius: var( --border-radius-circle );
+	}
+
+	&__placeholder-line {
+		height: var( --font-size-small );
+		background-color: var( --background-color-neutral );
+		background-image: linear-gradient( 90deg, transparent 0%, var( --background-color-interactive--hover ) 50%, transparent 100% );
+		background-repeat: no-repeat;
+		background-position: 200% 0;
+		background-size: 200% 100%;
+		border-radius: var( --border-radius-base );
+
+		// Honour reduced-motion: only shimmer when motion is welcome.
+		@media ( prefers-reduced-motion: no-preference ) {
+			animation: citizen-notifications-placeholder-shimmer @animation-duration-medium linear infinite;
+		}
+
+		&--title {
+			width: 70%;
+		}
+
+		&--meta {
+			width: 40%;
+		}
+	}
+
+	// Mirrors PanelFooter.vue's row with nothing waiting: history label out,
+	// settings trimmed to its icon. The Codex button styles these borrow are
+	// always loaded (skins.citizen.codex.styles sits in the skin's styles
+	// list), as are the mask icons (skins.citizen.icons).
+	&__placeholder-footer {
+		display: flex;
+		flex-shrink: 0;
+		gap: var( --space-xs );
+		// No top padding: the row hugs the list's bottom edge so the framed
+		// buttons read as floating over the notifications.
+		padding: 0 var( --space-md ) var( --space-sm );
+	}
+
+	&__placeholder-history {
+		flex: 1;
+	}
+
+	// Core's `a:where( :not( [role='button'] ) ) .cdx-icon:last-child` rule
+	// applies trailing-link-icon sizing to icons inside links. These are mask
+	// spans rather than Codex SVGs so that rule cannot reach them, but the
+	// icon still has to sit flush the way the mounted footer's does.
+	&__placeholder-history .citizen-ui-icon,
+	&__placeholder-prefs .citizen-ui-icon {
+		padding-left: 0;
+	}
+
+	// Shared with the Vue empty state so nothing moves when the panel mounts
+	// with nothing waiting.
+	&__empty {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		gap: var( --space-sm );
+		align-items: center;
+		justify-content: center;
+		padding: var( --space-xl ) var( --space-md );
+		color: var( --color-subtle );
+		text-align: center;
+	}
+
+	// HTML cached before the placeholder frame existed carries this link as a
+	// direct child, with no footer around it. New markup puts the same link
+	// inside `__placeholder-footer` under a different class, so the two never
+	// collide. Kept because the link is real content rather than an empty
+	// shimmer box: it is the no-JS fallback, and it is what stays on screen
+	// beside the error block when the module fails to load.
+	> .citizen-notifications__see-all {
+		display: block;
+		padding: var( --space-md );
+		font-size: var( --font-size-small );
+	}
+
+	// Load-error fallback (server module-load failure; reused by the Vue
+	// fetch-error state).
+	&__error {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		gap: var( --space-sm );
+		align-items: center;
+		justify-content: center;
+		padding: var( --space-xl ) var( --space-md );
+		color: var( --color-subtle );
+		text-align: center;
+	}
+}
+
+@keyframes citizen-notifications-placeholder-shimmer {
+	to {
+		background-position: -200% 0;
+	}
+}
+
+// The &__placeholder / &__error class rules set display:flex, which overrides
+// the browser's default [hidden]{display:none}. Restore it so the
+// orchestrator's el.hidden = true actually hides these states.
+.citizen-notifications__placeholder[ hidden ],
+.citizen-notifications__error[ hidden ] {
+	display: none;
+}
+
+// No-JS sessions never mount the panel, so don't shimmer rows forever — drop
+// the preview and leave the footer's "All notifications" link as the fallback.
+.client-nojs .citizen-notifications__placeholder-body {
+	display: none;
+}

@@ -4,8 +4,9 @@ const { createNotifications } = require( '../../../resources/skins.citizen.scrip
 const mw = require( '../mocks/mw.js' );
 globalThis.mw = mw;
 
-// Mirrors Notifications.mustache: a dropdown with a summary trigger and a
-// card whose content holds the skeleton, hidden error block, and see-all link.
+// Mirrors Notifications.mustache: a dropdown with a summary trigger and a card
+// whose content holds the placeholder frame (header, rows, footer) and the
+// hidden error block.
 const FIXTURE = `
 <div class="citizen-dropdown">
 	<details id="citizen-notifications-details" class="citizen-dropdown-details">
@@ -14,11 +15,20 @@ const FIXTURE = `
 	<div id="citizen-notifications-dropdown__card" class="citizen-menu__card">
 		<div class="citizen-menu__card-content">
 			<div id="citizen-notifications-content" class="citizen-notifications">
-				<div class="citizen-notifications__skeleton"></div>
+				<div class="citizen-notifications__placeholder">
+					<div class="citizen-notifications__placeholder-header">
+						<h2 class="citizen-notifications__placeholder-title">Notifications</h2>
+					</div>
+					<div class="citizen-notifications__placeholder-body">
+						<div class="citizen-notifications__placeholder-item"></div>
+					</div>
+					<footer class="citizen-notifications__placeholder-footer">
+						<a class="citizen-notifications__placeholder-history" href="/wiki/Special:Notifications">See all</a>
+					</footer>
+				</div>
 				<div class="citizen-notifications__error" hidden>
 					<button class="citizen-notifications__retry" type="button">Retry</button>
 				</div>
-				<a class="citizen-notifications__see-all" href="/wiki/Special:Notifications">See all</a>
 			</div>
 		</div>
 	</div>
@@ -26,6 +36,7 @@ const FIXTURE = `
 
 let mockApp;
 let mockRefresh;
+let mockMarkSeen;
 let mockInitApp;
 let resolveLoad;
 let rejectLoad;
@@ -47,13 +58,29 @@ function setOpen( open ) {
 	return tick();
 }
 
+/**
+ * Fire an intent event on the bell.
+ *
+ * @param {string} type
+ */
+function intent( type ) {
+	document.querySelector( '.citizen-dropdown-summary' )
+		.dispatchEvent( new Event( type ) );
+}
+
+function placeholder() {
+	return document.querySelector( '.citizen-notifications__placeholder' );
+}
+
 beforeEach( () => {
 	document.body.innerHTML = FIXTURE;
 	mw.loader.load.mockClear();
 	mw.loader.using.mockReset();
+	mw.requestIdleCallback.mockClear();
 
 	mockRefresh = vi.fn();
-	mockApp = { refresh: mockRefresh };
+	mockMarkSeen = vi.fn();
+	mockApp = { refresh: mockRefresh, markSeen: mockMarkSeen };
 	mockInitApp = vi.fn().mockReturnValue( mockApp );
 	const req = vi.fn().mockReturnValue( { initApp: mockInitApp } );
 	const usingPromise = new Promise( ( resolve, reject ) => {
@@ -81,13 +108,63 @@ describe( 'notifications trigger', () => {
 		expect( mw.loader.using ).not.toHaveBeenCalled();
 	} );
 
-	it( 'prefetches the module on pointer intent over the summary', () => {
+	it( 'mounts the panel on pointer intent, before the card is opened', async () => {
 		setup();
 
-		document.querySelector( '.citizen-dropdown-summary' )
-			.dispatchEvent( new Event( 'pointerenter' ) );
+		intent( 'pointerenter' );
+		resolveLoad();
+		await tick();
 
-		expect( mw.loader.load ).toHaveBeenCalledWith( 'skins.citizen.notifications' );
+		expect( mw.loader.using ).toHaveBeenCalledWith( 'skins.citizen.notifications' );
+		expect( mockInitApp ).toHaveBeenCalledTimes( 1 );
+		expect( document.getElementById( 'citizen-notifications-details' ).open ).toBe( false );
+	} );
+
+	it( 'defers a pointer-intent mount to idle', async () => {
+		setup();
+
+		intent( 'pointerenter' );
+		resolveLoad();
+		await tick();
+
+		expect( mw.requestIdleCallback ).toHaveBeenCalledTimes( 1 );
+	} );
+
+	it( 'mounts synchronously on touch intent, where an idle callback would lose the race', async () => {
+		setup();
+
+		intent( 'touchstart' );
+		resolveLoad();
+		await tick();
+
+		expect( mockInitApp ).toHaveBeenCalledTimes( 1 );
+		expect( mw.requestIdleCallback ).not.toHaveBeenCalled();
+	} );
+
+	it( 'does not mark the streams seen on intent alone', async () => {
+		setup();
+
+		intent( 'pointerenter' );
+		resolveLoad();
+		await tick();
+
+		expect( mockMarkSeen ).not.toHaveBeenCalled();
+
+		await setOpen( true );
+
+		expect( mockMarkSeen ).toHaveBeenCalledTimes( 1 );
+	} );
+
+	it( 'refreshes the already-mounted panel when opened after intent', async () => {
+		setup();
+
+		intent( 'pointerenter' );
+		resolveLoad();
+		await tick();
+		await setOpen( true );
+
+		expect( mw.loader.using ).toHaveBeenCalledTimes( 1 );
+		expect( mockRefresh ).toHaveBeenCalledTimes( 1 );
 	} );
 
 	it( 'lazy-loads and mounts the panel into the card on first open', async () => {
@@ -95,8 +172,8 @@ describe( 'notifications trigger', () => {
 
 		await setOpen( true );
 		expect( mw.loader.using ).toHaveBeenCalledWith( 'skins.citizen.notifications' );
-		// Skeleton revealed while loading.
-		expect( document.querySelector( '.citizen-notifications__skeleton' ).hidden ).toBe( false );
+		// Placeholder revealed while loading.
+		expect( placeholder().hidden ).toBe( false );
 
 		resolveLoad();
 		await tick();
@@ -105,6 +182,30 @@ describe( 'notifications trigger', () => {
 		expect( mockInitApp ).toHaveBeenCalledWith( contentEl, expect.objectContaining( {
 			onCountsChange: expect.any( Function )
 		} ) );
+		expect( mockMarkSeen ).toHaveBeenCalledTimes( 1 );
+	} );
+
+	it( 'hands the panel the unread count the server rendered', async () => {
+		setup();
+
+		await setOpen( true );
+		resolveLoad();
+		await tick();
+
+		expect( mockInitApp.mock.calls[ 0 ][ 1 ].initialCount ).toBe( 1 );
+	} );
+
+	it( 'reports an unknown count as null rather than guessing', async () => {
+		// Markup cached before the counter attribute existed.
+		document.querySelector( '.citizen-dropdown-summary' )
+			.removeAttribute( 'data-counter-text' );
+		setup();
+
+		await setOpen( true );
+		resolveLoad();
+		await tick();
+
+		expect( mockInitApp.mock.calls[ 0 ][ 1 ].initialCount ).toBeNull();
 	} );
 
 	it( 'refreshes instead of reloading on subsequent opens', async () => {
@@ -117,8 +218,10 @@ describe( 'notifications trigger', () => {
 
 		await setOpen( false );
 		await setOpen( true );
+
 		expect( mw.loader.using ).toHaveBeenCalledTimes( 1 );
 		expect( mockRefresh ).toHaveBeenCalledTimes( 1 );
+		expect( mockMarkSeen ).toHaveBeenCalledTimes( 2 );
 	} );
 
 	it( 'updates the bell badge when counts change', async () => {
@@ -145,11 +248,24 @@ describe( 'notifications trigger', () => {
 		await tick();
 
 		expect( document.querySelector( '.citizen-notifications__error' ).hidden ).toBe( false );
-		expect( document.querySelector( '.citizen-notifications__skeleton' ).hidden ).toBe( true );
+		expect( placeholder().hidden ).toBe( true );
 
 		// Retry re-attempts the load.
 		document.querySelector( '.citizen-notifications__retry' ).click();
 		expect( mw.loader.using ).toHaveBeenCalledTimes( 2 );
+	} );
+
+	it( 'stays silent when an intent-driven load fails', async () => {
+		setup();
+
+		intent( 'pointerenter' );
+		rejectLoad();
+		await tick();
+
+		// Nothing was asked for yet, so the error block stays hidden; the
+		// click path owns surfacing it.
+		expect( document.querySelector( '.citizen-notifications__error' ).hidden ).toBe( true );
+		expect( placeholder().hidden ).toBe( false );
 	} );
 
 	it( 'shows the error and stays reopenable when mounting throws', async () => {
@@ -164,6 +280,8 @@ describe( 'notifications trigger', () => {
 
 		// The thrown mount surfaces the error instead of silently hanging.
 		expect( document.querySelector( '.citizen-notifications__error' ).hidden ).toBe( false );
+		// A mount that never completed must not be marked seen.
+		expect( mockMarkSeen ).not.toHaveBeenCalled();
 
 		// `loading` was reset, so reopening re-attempts the load (not a no-op).
 		mw.loader.using.mockReturnValue( Promise.resolve(

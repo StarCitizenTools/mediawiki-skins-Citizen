@@ -1,9 +1,12 @@
 {{!
-	object data-notifications Merged notification data: count, href.
+	object data-notifications Merged notification data: count, href, prefs-href, has-unread, placeholder-rows.
 	string msg-citizen-notifications-label The accessible label for the notifications button.
+	string msg-citizen-notifications-title The heading of the notifications panel.
+	string msg-citizen-notifications-empty Message shown when nothing is waiting.
 	string msg-citizen-notifications-error Message shown when the notifications module fails to load.
 	string msg-citizen-notifications-retry Label of the retry button shown alongside the load error.
 	string msg-citizen-notifications-see-all Label of the link to Special:Notifications.
+	string msg-citizen-notifications-preferences Label of the link to the notification preferences.
 }}
 <div class="citizen-notifications-dropdown citizen-header__item citizen-dropdown">
 	<details id="citizen-notifications-details" class="citizen-dropdown-details">
@@ -19,32 +22,40 @@
 	<div id="citizen-notifications-dropdown__card" class="citizen-menu__card">
 		<div class="citizen-menu__card-content">
 			<div id="citizen-notifications-content" class="citizen-notifications">
-				<div class="citizen-notifications__skeleton" role="status" aria-busy="true" aria-live="polite">
-					<div class="citizen-notifications__skeleton-item citizen-notifications__skeleton-item--icon">
-						<span class="citizen-notifications__skeleton-icon"></span>
-						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--title"></span>
-						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--meta"></span>
+				{{!
+					Stand-in for the Vue panel, carrying its frame so the swap at
+					mount changes content rather than layout. With nothing waiting
+					this *is* the panel: the empty state is the final answer, not a
+					loading step, so the dropdown never shows a shimmer to a user
+					who has no notifications.
+				}}
+				<div class="citizen-notifications__placeholder">
+					<div class="citizen-notifications__placeholder-header">
+						<h2 class="citizen-notifications__placeholder-title">{{msg-citizen-notifications-title}}</h2>
 					</div>
-					<div class="citizen-notifications__skeleton-item citizen-notifications__skeleton-item--icon">
-						<span class="citizen-notifications__skeleton-icon"></span>
-						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--title"></span>
-						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--meta"></span>
-					</div>
-					<div class="citizen-notifications__skeleton-item citizen-notifications__skeleton-item--icon">
-						<span class="citizen-notifications__skeleton-icon"></span>
-						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--title"></span>
-						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--meta"></span>
-					</div>
-					<div class="citizen-notifications__skeleton-item citizen-notifications__skeleton-item--icon">
-						<span class="citizen-notifications__skeleton-icon"></span>
-						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--title"></span>
-						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--meta"></span>
-					</div>
-					<div class="citizen-notifications__skeleton-item citizen-notifications__skeleton-item--icon">
-						<span class="citizen-notifications__skeleton-icon"></span>
-						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--title"></span>
-						<span class="citizen-notifications__skeleton-line citizen-notifications__skeleton-line--meta"></span>
-					</div>
+					{{#data-notifications.has-unread}}
+						<div class="citizen-notifications__placeholder-body" role="status" aria-busy="true" aria-live="polite">
+							{{#data-notifications.placeholder-rows}}
+								<div class="citizen-notifications__placeholder-item">
+									<span class="citizen-notifications__placeholder-icon"></span>
+									<span class="citizen-notifications__placeholder-line citizen-notifications__placeholder-line--title"></span>
+									<span class="citizen-notifications__placeholder-line citizen-notifications__placeholder-line--meta"></span>
+								</div>
+							{{/data-notifications.placeholder-rows}}
+						</div>
+					{{/data-notifications.has-unread}}
+					{{^data-notifications.has-unread}}
+						<div class="citizen-notifications__empty">{{msg-citizen-notifications-empty}}</div>
+					{{/data-notifications.has-unread}}
+					<footer class="citizen-notifications__placeholder-footer">
+						<a class="citizen-notifications__placeholder-history cdx-button cdx-button--fake-button cdx-button--fake-button--enabled" href="{{data-notifications.href}}">
+							<span class="citizen-ui-icon mw-ui-icon-wikimedia-history"></span>
+							{{msg-citizen-notifications-see-all}}
+						</a>
+						<a class="citizen-notifications__placeholder-prefs cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--icon-only" href="{{data-notifications.prefs-href}}" title="{{msg-citizen-notifications-preferences}}" aria-label="{{msg-citizen-notifications-preferences}}">
+							<span class="citizen-ui-icon mw-ui-icon-wikimedia-settings"></span>
+						</a>
+					</footer>
 				</div>
 				<div class="citizen-notifications__error" role="alert" hidden>
 					<p>{{msg-citizen-notifications-error}}</p>
@@ -52,7 +63,6 @@
 						{{msg-citizen-notifications-retry}}
 					</button>
 				</div>
-				<a class="citizen-notifications__see-all" href="{{data-notifications.href}}">{{msg-citizen-notifications-see-all}}</a>
 			</div>
 		</div>
 	</div>
