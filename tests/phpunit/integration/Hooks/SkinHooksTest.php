@@ -441,6 +441,74 @@ class SkinHooksTest extends MediaWikiIntegrationTestCase {
 		// and the Special:Notifications target.
 		$this->assertSame( 5, $captured['count'] );
 		$this->assertSame( '/wiki/Special:Notifications', $captured['href'] );
+
+		// The panel's pre-mount placeholder previews what is waiting.
+		$this->assertTrue( $captured['has-unread'] );
+		$this->assertCount( 5, $captured['placeholder-rows'] );
+		$this->assertStringContainsString( '#mw-prefsection-echo', $captured['prefs-href'] );
+	}
+
+	public function testNotificationsPlaceholderPreviewsNothingWhenNothingIsWaiting(): void {
+		$captured = null;
+		$skin = $this->createCitizenMockCapturing( $captured );
+		// Echo still renders its badges at zero; the panel has nothing to preview.
+		$links = [
+			'notifications' => [
+				'notifications-alert' => [
+					'id' => 'pt-notifications-alert',
+					'href' => '/wiki/Special:Notifications',
+					'data' => [ 'counter-num' => 0 ],
+				],
+			],
+		];
+
+		SkinHooks::onSkinTemplateNavigation( $skin, $links );
+
+		// No rows and has-unread false, so the template renders the empty state
+		// outright rather than a shimmer that resolves into it.
+		$this->assertSame( 0, $captured['count'] );
+		$this->assertFalse( $captured['has-unread'] );
+		$this->assertSame( [], $captured['placeholder-rows'] );
+	}
+
+	public function testNotificationsPlaceholderCapsItsPreviewAtAPanelful(): void {
+		$captured = null;
+		$skin = $this->createCitizenMockCapturing( $captured );
+		$links = [
+			'notifications' => [
+				'notifications-alert' => [
+					'id' => 'pt-notifications-alert',
+					'href' => '/wiki/Special:Notifications',
+					'data' => [ 'counter-num' => 40 ],
+				],
+			],
+		];
+
+		SkinHooks::onSkinTemplateNavigation( $skin, $links );
+
+		// The preview fills the panel; the list itself scrolls once mounted.
+		$this->assertSame( 40, $captured['count'] );
+		$this->assertCount( 5, $captured['placeholder-rows'] );
+	}
+
+	public function testNotificationsPlaceholderPreviewsOneRowPerNotification(): void {
+		$captured = null;
+		$skin = $this->createCitizenMockCapturing( $captured );
+		$links = [
+			'notifications' => [
+				'notifications-alert' => [
+					'id' => 'pt-notifications-alert',
+					'href' => '/wiki/Special:Notifications',
+					'data' => [ 'counter-num' => 2 ],
+				],
+			],
+		];
+
+		SkinHooks::onSkinTemplateNavigation( $skin, $links );
+
+		// Below the cap the preview matches the count, so two notifications do
+		// not look like five on the way in.
+		$this->assertCount( 2, $captured['placeholder-rows'] );
 	}
 
 	public function testNotificationsMenuLeavesEmptyPortletAlone(): void {
