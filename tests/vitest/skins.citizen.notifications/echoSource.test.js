@@ -91,7 +91,13 @@ const RESPONSE = {
 			],
 			continue: null,
 			rawcount: 3,
-			count: '3'
+			count: '3',
+			// Echo keeps one marker per section; 'all' is the older of the two.
+			// Second precision, no milliseconds, as Echo's TS_ISO_8601 emits.
+			seenTime: {
+				alert: '2023-11-14T22:19:10Z',
+				message: '2023-11-14T22:15:00Z'
+			}
 		},
 		// Parsed echo-category-title-* messages, including one from an
 		// extension (edit-thank, Extension:Thanks).
@@ -477,17 +483,134 @@ describe( 'createEchoSource', () => {
 		} );
 	} );
 
-	describe( 'mutations', () => {
-		it( 'markSeen posts the given type with a csrf token', async () => {
-			const { ApiConstructor, postWithToken } = makeApi( RESPONSE );
+	describe( 'seen marker', () => {
+		it( 'asks for the seen time on the request it already makes', async () => {
+			const { ApiConstructor, get } = makeApi( RESPONSE );
 			const source = createEchoSource( ApiConstructor );
 
-			await source.markSeen( 'all' );
+			await source.fetch();
 
-			expect( postWithToken ).toHaveBeenCalledWith( 'csrf', {
-				action: 'echomarkseen',
-				type: 'all'
+			expect( get ).toHaveBeenCalledTimes( 1 );
+			expect( get.mock.calls[ 0 ][ 0 ].notprop ).toContain( 'seenTime' );
+		} );
+
+		it( 'takes the older of the two section markers, as Echo does for "all"', async () => {
+			const { ApiConstructor } = makeApi( RESPONSE );
+			const source = createEchoSource( ApiConstructor );
+
+			const result = await source.fetch();
+
+			// message (22:15:00) is older than alert (22:19:10).
+			expect( result.seenTime ).toBe( 1700000100 );
+		} );
+
+		it( 'reports the newest unread notification as what the marker must cover', async () => {
+			const { ApiConstructor } = makeApi( RESPONSE );
+			const source = createEchoSource( ApiConstructor );
+
+			const result = await source.fetch();
+
+			expect( result.newestWaiting ).toBe( 1700000400 );
+		} );
+
+		it( 'counts another wiki as something waiting, since it rides the same badge', async () => {
+			const recentWiki = {
+				examplewiki: {
+					title: 'Example Wiki',
+					url: 'https://example.org/w/api.php',
+					base: 'https://example.org/wiki/$1',
+					// Later than any local notification (22:20:00).
+					ts: '2023-11-14T23:00:00Z'
+				}
+			};
+			const { ApiConstructor } = makeApi( responseWithSummary( recentWiki ) );
+			const source = createEchoSource( ApiConstructor );
+
+			const result = await source.fetch();
+
+			expect( result.newestWaiting ).toBe( 1700002800 );
+		} );
+
+		it( 'ignores another wiki that is older than what is waiting here', async () => {
+			// The bundled fixture's wiki last saw activity well before the
+			// local notifications, so it must not drag the figure backwards.
+			const { ApiConstructor } = makeApi( responseWithSummary() );
+			const source = createEchoSource( ApiConstructor );
+
+			const result = await source.fetch();
+
+			expect( result.newestWaiting ).toBe( 1700000400 );
+		} );
+
+		it( 'reads Echo\'s never-seen sentinel as older than anything waiting', async () => {
+			// Echo has no "absent" marker: with nothing stored it reports
+			// unix 1, so this is what a user who has never opened the panel
+			// actually gets back.
+			const neverSeen = structuredClone( RESPONSE );
+			neverSeen.query.notifications.seenTime = {
+				alert: '1970-01-01T00:00:01Z',
+				message: '1970-01-01T00:00:01Z'
+			};
+			const { ApiConstructor } = makeApi( neverSeen );
+			const source = createEchoSource( ApiConstructor );
+
+			const result = await source.fetch();
+
+			expect( result.seenTime ).toBe( 1 );
+			expect( result.seenTime ).toBeLessThan( result.newestWaiting );
+		} );
+
+		it( 'treats a marker Echo did not send as unseen rather than as now', async () => {
+			const bare = structuredClone( RESPONSE );
+			delete bare.query.notifications.seenTime;
+			const { ApiConstructor } = makeApi( bare );
+			const source = createEchoSource( ApiConstructor );
+
+			const result = await source.fetch();
+
+			// Zero is older than anything waiting, so the panel marks seen.
+			expect( result.seenTime ).toBe( 0 );
+		} );
+
+		it( 'reports nothing waiting when the list and the wikis are both empty', async () => {
+			const { ApiConstructor } = makeApi( {
+				query: { notifications: { list: [], rawcount: 0 }, allmessages: [] }
 			} );
+			const source = createEchoSource( ApiConstructor );
+
+			const result = await source.fetch();
+
+			expect( result.newestWaiting ).toBe( 0 );
+		} );
+	} );
+
+	describe( 'mutations', () => {
+		it( 'marks seen with a plain GET, which multi-DC wikis can serve locally', async () => {
+			const { ApiConstructor, get, postWithToken } = makeApi( {
+				query: { echomarkseen: { result: 'success', timestamp: '2026-08-07T21:27:42Z' } }
+			} );
+			const source = createEchoSource( ApiConstructor );
+
+			const marked = await source.markSeen( 'all' );
+
+			// The module takes no token and is not write mode; POSTing it would
+			// pin the request to the primary datacentre for nothing.
+			expect( postWithToken ).not.toHaveBeenCalled();
+			expect( get ).toHaveBeenCalledWith( {
+				action: 'echomarkseen',
+				type: 'all',
+				timestampFormat: 'ISO_8601'
+			} );
+			// Echo's own marker comes back, so the panel can carry it forward
+			// instead of trusting the client clock.
+			expect( marked ).toBe( 1786138062 );
+		} );
+
+		it( 'reports an unparseable seen marker as zero rather than NaN', async () => {
+			const { ApiConstructor } = makeApi( { query: { echomarkseen: { result: 'success' } } } );
+			const source = createEchoSource( ApiConstructor );
+
+			await expect( source.markSeen( 'all' ) ).resolves.toBe( 0 );
 		} );
 
 		it( 'markRead posts the id list', async () => {
