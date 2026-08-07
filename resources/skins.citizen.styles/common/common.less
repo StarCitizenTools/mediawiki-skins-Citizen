@@ -5,7 +5,10 @@
 html {
 	box-sizing: border-box;
 	font-size: 100%;
-	scroll-padding-top: ~'calc( var( --header-offset-block-start ) + var( --space-xl ) )';
+	// Always reserves sticky header space: any anchor jump below the page
+	// title reveals the bar, and a root property that tracked visibility
+	// would recalc styles at subtree scale on every toggle.
+	scroll-padding-top: ~'calc( var( --header-offset-block-start ) + var( --height-sticky-header ) + var( --space-xl ) )';
 	scroll-padding-bottom: ~'calc( var( --header-offset-block-end ) + var( --space-xl ) )';
 }
 

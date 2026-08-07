@@ -35,8 +35,9 @@
 	--size-icon: @size-icon;
 	// Height of the bottom toolbar used by page tools and ToC toggle
 	--toolbar-size: 2.5rem;
-	// Used to offset sticky elements with sticky header
-	// This is overriden by inline styles in the html element when sticky header is active
+	// Measured sticky header bar height, written by stickyHeader.js. Not
+	// zeroed while the bar is hidden — visibility is gated per consumer by
+	// .mixin-citizen-header-offset-block-start.
 	// stylelint-disable-next-line length-zero-no-unit -- Need the unit for calc() (#1058)
 	--height-sticky-header: 0px;
 	// Width or height of citizen-header, depending on the orientation
@@ -239,9 +240,9 @@
 	}
 	/* stylelint-enable length-zero-no-unit */
 
-	// Derived header offset tokens
-	// These combine the static header size with the dynamic sticky header height
-	--header-offset-block-start: calc( var( --header-size-block-start ) + var( --height-sticky-header ) );
+	// Derived header offset tokens. Deliberately static at the root — the
+	// dynamic states live in .mixin-citizen-header-offset-block-start.
+	--header-offset-block-start: var( --header-size-block-start );
 	--header-offset-block-end: var( --header-size-block-end );
 
 	// Deprecated aliases — drop alongside the legacy pipeline.

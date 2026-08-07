@@ -251,6 +251,7 @@
 // CSS so the live --header-offset-block-start var chain resolves here.
 // The 9999px default keeps the band parked until the first write.
 .citizen-overflow-wrapper--sticky-js .citizen-overflow-sticky-row {
+	.mixin-citizen-header-offset-block-start();
 	transform: ~'translateY( clamp( 0px, calc( var( --header-offset-block-start ) - var( --citizen-overflow-sticky-top, 9999px ) ), var( --citizen-overflow-sticky-travel, 0px ) ) )';
 }
 
@@ -259,6 +260,7 @@
 // the table, which sits inside the horizontal scroller.
 @supports ( animation-timeline: view() ) and ( animation-range: exit-crossing 0% ) {
 	.citizen-overflow-wrapper--sticky-css {
+		.mixin-citizen-header-offset-block-start();
 		// Not yet baseline, but the enclosing feature check gates it and
 		// browsers that fail the probe take the JS drive instead.
 		// stylelint-disable-next-line plugin/use-baseline

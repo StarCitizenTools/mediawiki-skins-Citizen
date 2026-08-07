@@ -84,8 +84,14 @@
 
 #articleFeedbackv5-sort-filter-controls {
 	position: sticky;
-	top: calc( var( --height-sticky-header ) * 2 );
+	top: 0;
 	z-index: 5;
 	padding-top: var( --space-md );
 	.mixin-citizen-frosted-glass;
+
+	// --height-sticky-header keeps its measured value while the bar is
+	// hidden; consumers gate on the visibility class.
+	.citizen-sticky-header-visible & {
+		top: calc( var( --height-sticky-header ) * 2 );
+	}
 }

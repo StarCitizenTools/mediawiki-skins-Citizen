@@ -9,7 +9,9 @@
 @import '../../../resources/variables.less';
 
 .ve-activated {
-	--header-offset-block-start: calc( var( --header-size-block-start ) + var( --height-sticky-header ) + 48px );
+	// No --height-sticky-header term: the sticky header is disabled under
+	// VE and the token keeps its measured value while hidden.
+	--header-offset-block-start: calc( var( --header-size-block-start ) + 48px );
 
 	#citizen-page-header-sticky-sentinel {
 		display: none;

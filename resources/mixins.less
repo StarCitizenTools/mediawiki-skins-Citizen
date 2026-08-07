@@ -70,7 +70,24 @@
 	}
 }
 
+// Dynamic states of --header-offset-block-start, applied per consumer:
+// flipping an inherited custom property at the root or body recalcs the
+// whole document on every toggle. The default state inherits the root token.
+.mixin-citizen-header-offset-block-start() {
+	.citizen-sticky-header-visible & {
+		--header-offset-block-start: ~'calc( var( --header-size-block-start ) + var( --height-sticky-header ) )';
+	}
+
+	@media ( max-width: @max-width-breakpoint-tablet ) {
+		.citizen-feature-autohide-navigation-clientpref-1 .citizen-scroll--down & {
+			// Escaped zero keeps the unit calc() consumers need (#1058)
+			--header-offset-block-start: ~'0px';
+		}
+	}
+}
+
 .mixin-citizen-sticky-header-element() {
+	.mixin-citizen-header-offset-block-start();
 	top: var( --header-offset-block-start ) !important;
 	transition-timing-function: var( --transition-timing-function-ease );
 	transition-duration: var( --transition-duration-medium );
