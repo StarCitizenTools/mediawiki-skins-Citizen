@@ -78,7 +78,13 @@ class SkinCitizen extends SkinMustache {
 	 * parent::getTemplateData(), so the value is ready by the time this skin
 	 * assembles its own template data.
 	 *
-	 * @param array $data { count: int, href: string }
+	 * @param array $data {
+	 *     count: int,
+	 *     href: string,
+	 *     prefs-href: string,
+	 *     has-unread: bool,
+	 *     placeholder-rows: bool[]
+	 * }
 	 */
 	public function setNotificationData( array $data ): void {
 		$this->notificationData = $data;

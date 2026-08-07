@@ -167,6 +167,45 @@ describe( 'notifications trigger', () => {
 		expect( mockRefresh ).toHaveBeenCalledTimes( 1 );
 	} );
 
+	// The two halves of the `app || loading` guard on the deferred mount, one
+	// test each: a click can beat the intent mount, or be beaten by it.
+	it( 'mounts once when a click beats the intent-driven mount', async () => {
+		setup();
+
+		intent( 'pointerenter' );
+		// The card opens while the module is still in flight, so the click path
+		// takes over the mount the intent path had queued.
+		await setOpen( true );
+		resolveLoad();
+		await tick();
+
+		expect( mockInitApp ).toHaveBeenCalledTimes( 1 );
+		expect( mockMarkSeen ).toHaveBeenCalledTimes( 1 );
+	} );
+
+	it( 'mounts once when the idle mount lands after a click already mounted', async () => {
+		// Hold the idle callback rather than running it inline, so the deferred
+		// mount genuinely lands after the click-driven one.
+		let idleCallback = null;
+		mw.requestIdleCallback.mockImplementationOnce( ( fn ) => {
+			idleCallback = fn;
+		} );
+		setup();
+
+		intent( 'pointerenter' );
+		await setOpen( true );
+		resolveLoad();
+		await tick();
+
+		expect( mockInitApp ).toHaveBeenCalledTimes( 1 );
+
+		// `loading` is back to false by now, so only the mounted app itself can
+		// stop this second mount.
+		idleCallback();
+
+		expect( mockInitApp ).toHaveBeenCalledTimes( 1 );
+	} );
+
 	it( 'lazy-loads and mounts the panel into the card on first open', async () => {
 		setup();
 
