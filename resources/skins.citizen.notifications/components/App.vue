@@ -212,6 +212,19 @@ module.exports = exports = defineComponent( {
 		// second one.
 		let fetching = false;
 
+		// How far Echo's "seen" marker reaches, and the newest thing waiting
+		// behind it, both unix seconds from the last fetch. Marking seen is
+		// only worth a request when the second is past the first.
+		let seenTime = 0;
+		// Null until a fetch answers, and that is not the same as nothing
+		// waiting: the trigger marks seen as soon as the panel mounts, which is
+		// before the panel's own first fetch can possibly have landed. Reading
+		// that as "nothing waiting" would drop the marker for the whole visit.
+		// A server-confirmed zero is the one case we can answer up front.
+		let newestWaiting = seededEmpty ? 0 : null;
+		// True while a mark-seen request is outstanding.
+		let markingSeen = false;
+
 		function applyResult( result ) {
 			// Server truth supersedes a clear-all sweep still in flight (the
 			// panel was reopened mid-sweep): cancel the pending swap so it
@@ -230,6 +243,12 @@ module.exports = exports = defineComponent( {
 			if ( !wikis.value.length ) {
 				activeSource.value = 'local';
 			}
+			// Never backwards. A refresh issued before the marker was set comes
+			// back carrying the older value, and adopting it would cost a
+			// redundant mark on the next open. Echo has no way to move the
+			// marker back, so the later of the two is always the truth.
+			seenTime = Math.max( seenTime, result.seenTime || 0 );
+			newestWaiting = result.newestWaiting || 0;
 			hasLoaded.value = true;
 			reportCounts();
 		}
@@ -245,7 +264,46 @@ module.exports = exports = defineComponent( {
 		 * cosmetic to Echo alone.
 		 */
 		function markSeen() {
-			source.markSeen( 'all' ).catch( () => {} );
+			// Nothing waiting, or the marker already reaches past it: the
+			// request would set the marker to a later time that no notification
+			// is behind, which changes nothing anyone can observe. Reopening a
+			// panel therefore costs one request, not two.
+			//
+			// The figures come from the last completed fetch, not the refresh
+			// the same open just started, so a notification arriving in that
+			// window is not counted until the following open. It can only
+			// delay the decision, never the effect: Echo marks seen up to the
+			// server's clock rather than up to a notification, so a call made
+			// here covers whatever the refresh is about to bring anyway. The
+			// worst case is Echo's highlight surviving one extra open, which
+			// the next one clears.
+			// One in flight is enough: Echo marks up to its own clock, so the
+			// call already on its way covers anything a second would. Without
+			// this a close-and-reopen before the first lands pays twice, which
+			// is the cost this whole guard exists to avoid.
+			if ( markingSeen ) {
+				return;
+			}
+			if ( newestWaiting !== null && ( !newestWaiting || seenTime >= newestWaiting ) ) {
+				return;
+			}
+			markingSeen = true;
+			source.markSeen( 'all' ).then( ( marked ) => {
+				markingSeen = false;
+				// Carry Echo's own marker forward rather than a local clock, so
+				// a skewed client cannot leave this permanently re-marking or
+				// permanently skipping. Forward only for the same reason as
+				// applyResult, though the guard above is what actually rules
+				// out the reordering — nothing can reach this with two answers
+				// in flight, so treat it as holding the invariant rather than
+				// as a live defence.
+				if ( marked ) {
+					seenTime = Math.max( seenTime, marked );
+				}
+			} ).catch( () => {
+				// Let the next open try again rather than wedging the guard.
+				markingSeen = false;
+			} );
 		}
 
 		// Fetch, showing the skeleton only when there is nothing legitimate on

@@ -14,8 +14,13 @@
  *   FetchResult {
  *     items: NotificationItem[],
  *     counts: { total, local, foreign },
- *     wikis: Wiki[]
+ *     wikis: Wiki[],
+ *     seenTime: number,      — how far the "seen" marker reaches, unix seconds
+ *     newestWaiting: number  — newest thing waiting, unix seconds; 0 if nothing
  *   }
+ *
+ * `seenTime` and `newestWaiting` exist so the panel can tell whether marking
+ * seen would change anything, and skip the request when it would not.
  *
  * Only unread notifications are fetched — the panel shows what is waiting,
  * and Special:Notifications is where the history lives.
@@ -90,6 +95,18 @@ function normalizeEntry( entry, labels ) {
 }
 
 /**
+ * Parse an ISO 8601 instant into unix seconds, so seen times and notification
+ * timestamps can be compared as plain numbers.
+ *
+ * @param {string} iso
+ * @return {number} 0 when absent or unparseable
+ */
+function toUnixSeconds( iso ) {
+	const ms = Date.parse( iso );
+	return isNaN( ms ) ? 0 : Math.floor( ms / 1000 );
+}
+
+/**
  * Link target for a cross-wiki summary. Echo hands back each wiki's article
  * path with a `$1` placeholder; anything not shaped like that falls back to the
  * local special page, which is the only surface with a cross-wiki view.
@@ -122,14 +139,13 @@ function normalizeWikis( entry ) {
 	return Object.keys( sources )
 		.map( ( id ) => {
 			const source = sources[ id ];
-			const ts = Date.parse( source.ts );
 			return {
 				id: id,
 				name: source.title || id,
 				url: foreignNotificationsUrl( source ),
 				// That wiki's api.php, for previewing what is waiting there.
 				apiUrl: source.url || '',
-				timestamp: isNaN( ts ) ? 0 : Math.floor( ts / 1000 )
+				timestamp: toUnixSeconds( source.ts )
 			};
 		} )
 		.sort( ( a, b ) => b.timestamp - a.timestamp );
@@ -173,7 +189,9 @@ function createEchoSource( ApiConstructor, ForeignApiConstructor ) {
 			// typical user, whose unread are a handful among a long history.
 			notfilter: '!read',
 			notlimit: FETCH_LIMIT,
-			notprop: 'list|count',
+			// seenTime rides this request, so the panel can tell whether Echo's
+			// marker already covers everything waiting and skip re-marking it.
+			notprop: 'list|count|seenTime',
 			// Ask Echo for its "N unread on other wikis" row, and for
 			// cross-wiki-inclusive counts — the same figure the server already
 			// renders on the bell. Echo only registers this parameter where
@@ -221,7 +239,28 @@ function createEchoSource( ApiConstructor, ForeignApiConstructor ) {
 			// state left to sort on.
 			items.sort( ( a, b ) => b.timestamp - a.timestamp );
 
-			return { items, counts, wikis: rollup ? normalizeWikis( rollup ) : [] };
+			const wikis = rollup ? normalizeWikis( rollup ) : [];
+
+			// Echo keeps a seen time per section and treats the older of the
+			// two as the marker for 'all', so that is what has to cover the
+			// newest thing waiting.
+			const seen = notifications.seenTime || {};
+			const seenTime = Math.min(
+				toUnixSeconds( seen.alert ),
+				toUnixSeconds( seen.message )
+			);
+
+			// What the marker has to reach past to be worth re-setting. Only
+			// unread notifications count: Echo's own badge gates its unseen
+			// state on the unread count and the last unread timestamp, so a
+			// read one can never leave the badge flagged. Other wikis are
+			// included because their rollup rides the same badge.
+			const newestWaiting = Math.max(
+				items.length ? items[ 0 ].timestamp : 0,
+				wikis.reduce( ( max, wiki ) => Math.max( max, wiki.timestamp ), 0 )
+			);
+
+			return { items, counts, wikis, seenTime, newestWaiting };
 		} );
 	}
 
@@ -268,14 +307,31 @@ function createEchoSource( ApiConstructor, ForeignApiConstructor ) {
 	 * Reset the "seen" marker so the badge highlight clears. Items remain
 	 * unread until explicitly read.
 	 *
+	 * A GET, not a POST: the module takes no token, is not write mode, and
+	 * touches the seen-time cache rather than the database. It was made a GET
+	 * deliberately so multi-datacenter wikis can serve it locally instead of
+	 * routing it to the primary — POSTing it gives that up. Echo's own client
+	 * issues a GET here too.
+	 *
+	 * Echo additionally builds its API instance with `cache: false`; this one
+	 * does not, because the option would apply to every request the source
+	 * makes, and the response is already unreusable without it — MediaWiki
+	 * answers with `private, must-revalidate, max-age=0` and no validator, so
+	 * there is nothing a browser could serve from cache.
+	 *
 	 * @param {string} type 'alert' | 'message' | 'all'
-	 * @return {Promise<void>}
+	 * @return {Promise<number>} The marker Echo recorded, unix seconds; 0 when
+	 *   it did not say.
 	 */
 	function markSeen( type ) {
-		return api.postWithToken( 'csrf', {
+		return api.get( {
 			action: 'echomarkseen',
-			type: type
-		} ).then( () => undefined );
+			type: type,
+			timestampFormat: 'ISO_8601'
+		} ).then( ( data ) => {
+			const marked = ( ( ( data || {} ).query || {} ).echomarkseen || {} ).timestamp;
+			return toUnixSeconds( marked );
+		} );
 	}
 
 	/**

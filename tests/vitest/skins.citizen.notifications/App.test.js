@@ -65,11 +65,23 @@ function cloneItems() {
 	return ITEMS.map( ( item ) => Object.assign( {}, item ) );
 }
 
+// The seen marker sits behind the newest notification, so the panel has
+// something to mark; the tests that care override these.
+const SEEN_TIME = 1700000000;
+const NEWEST_WAITING = 1700000400;
+
 function makeSource( overrides ) {
 	return Object.assign( {
-		fetch: vi.fn().mockResolvedValue( { items: cloneItems(), counts: Object.assign( {}, COUNTS ), wikis: [] } ),
+		fetch: vi.fn().mockResolvedValue( {
+			items: cloneItems(),
+			counts: Object.assign( {}, COUNTS ),
+			wikis: [],
+			seenTime: SEEN_TIME,
+			newestWaiting: NEWEST_WAITING
+		} ),
 		fetchWiki: vi.fn().mockResolvedValue( { items: [] } ),
-		markSeen: vi.fn().mockResolvedValue(),
+		// Echo answers with the marker it recorded.
+		markSeen: vi.fn().mockResolvedValue( NEWEST_WAITING + 10 ),
 		markRead: vi.fn().mockResolvedValue(),
 		markAllRead: vi.fn().mockResolvedValue()
 	}, overrides );
@@ -111,6 +123,195 @@ describe( 'notifications App', () => {
 		wrapper.vm.markSeen();
 
 		expect( source.markSeen ).toHaveBeenCalledWith( 'all' );
+	} );
+
+	describe( 'marking seen', () => {
+		it( 'marks seen on a cold open, before its own first fetch has landed', () => {
+			// The trigger marks seen straight after mounting, so this runs with
+			// no fetch result yet. Treating that as "nothing waiting" would
+			// drop the marker for the whole visit.
+			const source = makeSource();
+			const wrapper = mountApp( source );
+
+			wrapper.vm.markSeen();
+
+			expect( source.markSeen ).toHaveBeenCalledWith( 'all' );
+		} );
+
+		it( 'trusts a server-confirmed zero without waiting for the fetch', () => {
+			// The one thing we can answer before fetching: the server rendered
+			// a count of zero, so there is nothing for a marker to cover.
+			const source = makeSource();
+			const wrapper = mountApp( source, { initialCount: 0 } );
+
+			wrapper.vm.markSeen();
+
+			expect( source.markSeen ).not.toHaveBeenCalled();
+		} );
+
+		it( 'skips the request when the marker sits exactly on the newest item', async () => {
+			const source = makeSource( {
+				fetch: vi.fn().mockResolvedValue( {
+					items: cloneItems(), counts: Object.assign( {}, COUNTS ), wikis: [],
+					seenTime: NEWEST_WAITING, newestWaiting: NEWEST_WAITING
+				} )
+			} );
+			const wrapper = mountApp( source );
+			await flushPromises();
+
+			wrapper.vm.markSeen();
+
+			expect( source.markSeen ).not.toHaveBeenCalled();
+		} );
+
+		it( 'keeps its own marker when a refresh answers with an older one', async () => {
+			const source = makeSource();
+			const wrapper = mountApp( source );
+			await flushPromises();
+
+			wrapper.vm.markSeen();
+			await flushPromises();
+			expect( source.markSeen ).toHaveBeenCalledTimes( 1 );
+
+			// A refresh already in flight when the marker was set comes back
+			// carrying the older value; adopting it would cost a second mark.
+			wrapper.vm.refresh();
+			await flushPromises();
+			wrapper.vm.markSeen();
+
+			expect( source.markSeen ).toHaveBeenCalledTimes( 1 );
+		} );
+
+		it( 'asks once while a mark is still in flight', async () => {
+			// Echo marks up to its own clock, so the call already on its way
+			// covers anything a second would.
+			let settle;
+			const source = makeSource( {
+				markSeen: vi.fn( () => new Promise( ( resolve ) => {
+					settle = resolve;
+				} ) )
+			} );
+			const wrapper = mountApp( source );
+			await flushPromises();
+
+			wrapper.vm.markSeen();
+			wrapper.vm.markSeen();
+			wrapper.vm.markSeen();
+
+			expect( source.markSeen ).toHaveBeenCalledTimes( 1 );
+
+			// Once it lands the guard lifts again, though the marker it carried
+			// forward now covers everything waiting.
+			settle( NEWEST_WAITING + 10 );
+			await flushPromises();
+			expect( source.markSeen ).toHaveBeenCalledTimes( 1 );
+		} );
+
+		it( 'keeps its previous marker when Echo answers without one', async () => {
+			const source = makeSource( { markSeen: vi.fn().mockResolvedValue( 0 ) } );
+			const wrapper = mountApp( source );
+			await flushPromises();
+
+			wrapper.vm.markSeen();
+			await flushPromises();
+
+			// Nothing to carry forward, so the next open asks again rather than
+			// recording a marker of zero and skipping forever.
+			wrapper.vm.markSeen();
+
+			expect( source.markSeen ).toHaveBeenCalledTimes( 2 );
+		} );
+
+		it( 'skips the request when the marker already covers everything waiting', async () => {
+			const source = makeSource( {
+				fetch: vi.fn().mockResolvedValue( {
+					items: cloneItems(),
+					counts: Object.assign( {}, COUNTS ),
+					wikis: [],
+					// Already past the newest notification.
+					seenTime: NEWEST_WAITING + 1,
+					newestWaiting: NEWEST_WAITING
+				} )
+			} );
+			const wrapper = mountApp( source );
+			await flushPromises();
+
+			wrapper.vm.markSeen();
+
+			expect( source.markSeen ).not.toHaveBeenCalled();
+		} );
+
+		it( 'skips the request when nothing is waiting at all', async () => {
+			const source = makeSource( {
+				fetch: vi.fn().mockResolvedValue( {
+					items: [], counts: { total: 0, local: 0, foreign: 0 }, wikis: [],
+					seenTime: 0, newestWaiting: 0
+				} )
+			} );
+			const wrapper = mountApp( source );
+			await flushPromises();
+
+			wrapper.vm.markSeen();
+
+			expect( source.markSeen ).not.toHaveBeenCalled();
+		} );
+
+		it( 'marks once, then stops asking until something newer arrives', async () => {
+			const source = makeSource();
+			const wrapper = mountApp( source );
+			await flushPromises();
+
+			// First open: the marker is behind, so Echo is told.
+			wrapper.vm.markSeen();
+			await flushPromises();
+			expect( source.markSeen ).toHaveBeenCalledTimes( 1 );
+
+			// Reopening with nothing new must not ask again — this is the
+			// second request per open that the guard exists to remove.
+			wrapper.vm.markSeen();
+			wrapper.vm.markSeen();
+
+			expect( source.markSeen ).toHaveBeenCalledTimes( 1 );
+		} );
+
+		it( 'marks again once a newer notification lands', async () => {
+			const source = makeSource();
+			const wrapper = mountApp( source );
+			await flushPromises();
+
+			wrapper.vm.markSeen();
+			await flushPromises();
+			expect( source.markSeen ).toHaveBeenCalledTimes( 1 );
+
+			// A refresh brings something newer than the marker Echo returned.
+			source.fetch.mockResolvedValueOnce( {
+				items: cloneItems(),
+				counts: Object.assign( {}, COUNTS ),
+				wikis: [],
+				seenTime: NEWEST_WAITING + 10,
+				newestWaiting: NEWEST_WAITING + 500
+			} );
+			wrapper.vm.refresh();
+			await flushPromises();
+
+			wrapper.vm.markSeen();
+
+			expect( source.markSeen ).toHaveBeenCalledTimes( 2 );
+		} );
+
+		it( 'keeps asking when the request fails, rather than assuming it landed', async () => {
+			const source = makeSource( {
+				markSeen: vi.fn().mockRejectedValue( new Error( 'network' ) )
+			} );
+			const wrapper = mountApp( source );
+			await flushPromises();
+
+			wrapper.vm.markSeen();
+			await flushPromises();
+			wrapper.vm.markSeen();
+
+			expect( source.markSeen ).toHaveBeenCalledTimes( 2 );
+		} );
 	} );
 
 	it( 'renders one list, in the order the source gave', async () => {
