@@ -25,7 +25,6 @@
 <script>
 const { defineComponent, ref, onBeforeUpdate, nextTick } = require( 'vue' );
 const { CdxIcon, CdxButton } = mw.loader.require( 'skins.citizen.commandPalette.codex' );
-const { CommandPaletteActionEvent } = require( '../types.js' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
@@ -120,7 +119,7 @@ module.exports = exports = defineComponent( {
 				actionType = 'navigate';
 			}
 
-			/** @type {CommandPaletteActionEvent} */
+			/** @type {import('../types.js').CommandPaletteActionEvent} */
 			const payload = {
 				type: actionType,
 				itemId: props.itemId, // Include parent item ID

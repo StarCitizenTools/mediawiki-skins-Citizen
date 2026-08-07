@@ -38,7 +38,6 @@
 <script>
 const { defineComponent, computed, ref } = require( 'vue' );
 const CommandPaletteImage = require( './CommandPaletteImage.vue' );
-const { CommandPaletteItem } = require( '../types.js' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
@@ -126,7 +125,7 @@ module.exports = exports = defineComponent( {
 				event.shiftKey
 			) );
 			emit( 'select',
-				/** @type {CommandPaletteItem} */ ( {
+				/** @type {import('../types.js').CommandPaletteItem} */ ( {
 					id: props.id,
 					label: props.label,
 					url: props.url,
