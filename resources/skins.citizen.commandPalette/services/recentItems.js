@@ -1,4 +1,3 @@
-const { CommandPaletteItem } = require( '../types.js' );
 const { cdxIconArticleSearch, cdxIconTrash } = require( '../icons.json' );
 const RECENT_ITEMS_KEY = 'skin-citizen-command-palette-recent-items';
 const MAX_RECENT_ITEMS = 5;
@@ -47,7 +46,7 @@ function createRecentItems() {
 	/**
 	 * Gets recent items from history
 	 *
-	 * @return {Array<CommandPaletteItem>} Recent items in the format expected by the command palette
+	 * @return {Array<import('../types.js').CommandPaletteItem>} Recent items in the format expected by the command palette
 	 */
 	function getRecentItems() {
 		const items = mw.storage.getObject( RECENT_ITEMS_KEY ) ?? [];

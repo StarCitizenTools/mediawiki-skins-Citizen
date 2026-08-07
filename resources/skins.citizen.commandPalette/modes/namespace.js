@@ -1,7 +1,7 @@
 /**
  * Command handler for retrieving namespace suggestions.
  */
-const { CommandPaletteItem, PaletteMode, CommandPaletteExitWithQueryAction, CommandPaletteNoneAction } = require( '../types.js' );
+
 const { cdxIconArticles } = require( '../icons.json' );
 const { defineMode } = require( '../services/defineMode.js' );
 
@@ -82,7 +82,7 @@ function getNamespaceIndex() {
 
 /**
  * @param {NamespaceResult} nsResult
- * @return {CommandPaletteItem}
+ * @return {import('../types.js').CommandPaletteItem}
  */
 function adaptNamespaceResult( nsResult ) {
 	return {
@@ -104,7 +104,7 @@ function adaptNamespaceResult( nsResult ) {
  * Gets namespace suggestions based on the sub-query by filtering local config.
  *
  * @param {string} subQuery The part of the query after "/ns" or "/ns ", or the ID part (e.g., "1").
- * @return {Promise<Array<CommandPaletteItem>>} A promise resolving to an array of adapted namespace items.
+ * @return {Promise<Array<import('../types.js').CommandPaletteItem>>} A promise resolving to an array of adapted namespace items.
  */
 function getNamespaceResults( subQuery ) {
 	const allNamespaces = getNamespaceEntries().map( ( entry ) => ( {
@@ -187,7 +187,7 @@ function matchNamespacePrefix( text ) {
 	return { label: name ? `${ name }:` : raw, raw };
 }
 
-/** @type {PaletteMode} */
+/** @type {import('../types.js').PaletteMode} */
 module.exports = defineMode( {
 	id: 'namespace',
 	triggers: [ '/ns:', ':' ],
@@ -209,8 +209,8 @@ module.exports = defineMode( {
 	/**
 	 * Handles selection of a namespace result item.
 	 *
-	 * @param {CommandPaletteItem} item The selected namespace result item.
-	 * @return {CommandPaletteExitWithQueryAction | CommandPaletteNoneAction}
+	 * @param {import('../types.js').CommandPaletteItem} item The selected namespace result item.
+	 * @return {import('../types.js').CommandPaletteExitWithQueryAction | import('../types.js').CommandPaletteNoneAction}
 	 */
 	onResultSelect( item ) {
 		// Default behavior: update query with the namespace trigger (e.g., "Talk:")

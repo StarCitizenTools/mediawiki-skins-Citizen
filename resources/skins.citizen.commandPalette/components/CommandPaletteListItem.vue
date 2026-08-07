@@ -44,7 +44,6 @@ const { defineComponent, computed, ref } = require( 'vue' );
 // Import the new sub-components
 const CommandPaletteListItemContent = require( './CommandPaletteListItemContent.vue' );
 const CommandPaletteListItemActions = require( './CommandPaletteListItemActions.vue' );
-const { CommandPaletteItem } = require( '../types.js' );
 
 // @vue/component
 module.exports = exports = defineComponent( {
@@ -157,7 +156,7 @@ module.exports = exports = defineComponent( {
 				event.shiftKey
 			) );
 			emit( 'select',
-				/** @type {CommandPaletteItem} */ ( {
+				/** @type {import('../types.js').CommandPaletteItem} */ ( {
 					id: props.id,
 					label: props.label,
 					url: props.url,
