@@ -29,4 +29,5 @@ Check out these amazing wikis powering their content with Citizen:
  <LinkCard title="Stella Sora Wiki" href="https://stellasora.miraheze.org" />
  <LinkCard title="CapoeiiraWiki" href="https://capoeirawiki.org" />
  <LinkCard title="The Petit Planet Wiki" href="https://petitplanet.wiki" />
+ <LinkCard title="Pleasant Goat Wiki" href="https://xyy.miraheze.org" />
 </LinkGrid>
