@@ -54,6 +54,11 @@ To add a new skill, create `.agents/skills/<name>/SKILL.md` with frontmatter (`n
 
 ## Coding conventions
 
+### Code comments
+
+- Add a comment only when the behavior is not obvious from the code itself
+- Write comments to be durable: state the constraint or invariant a future reader needs, not the change being made, its justification to a reviewer, or what the next line does
+
 ### PHP
 
 - All files start with `declare( strict_types=1 );`
