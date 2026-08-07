@@ -156,6 +156,21 @@ describe( 'StickyHeader', () => {
 			expect( document.documentElement.style.getPropertyValue( '--height-sticky-header' ) ).toBe( '64px' );
 		} );
 
+		it( 'should not rewrite the CSS variable when the height is unchanged', () => {
+			const { stickyHeader } = buildStickyHeaderDom();
+			const header = createStickyHeader( stickyHeader );
+			stickyHeader.getBoundingClientRect = vi.fn( () => ( {
+				height: 64, top: 0, bottom: 64, left: 0, right: 100, width: 100, x: 0, y: 0
+			} ) );
+			const setPropertySpy = vi.spyOn( document.documentElement.style, 'setProperty' );
+
+			header.show();
+			header.hide();
+			header.show();
+
+			expect( setPropertySpy ).toHaveBeenCalledTimes( 1 );
+		} );
+
 		it( 'should bind click listener on show', () => {
 			const { stickyHeader } = buildStickyHeaderDom();
 			const header = createStickyHeader( stickyHeader );
@@ -175,7 +190,7 @@ describe( 'StickyHeader', () => {
 	} );
 
 	describe( 'hide', () => {
-		it( 'should remove visible class and set CSS variable to 0', () => {
+		it( 'should remove visible class and keep the height variable in place', () => {
 			const { stickyHeader } = buildStickyHeaderDom();
 			const header = createStickyHeader( stickyHeader );
 			stickyHeader.getBoundingClientRect = vi.fn( () => ( {
@@ -186,7 +201,7 @@ describe( 'StickyHeader', () => {
 			header.hide();
 
 			expect( document.body.classList.contains( 'citizen-sticky-header-visible' ) ).toBe( false );
-			expect( document.documentElement.style.getPropertyValue( '--height-sticky-header' ) ).toBe( '0px' );
+			expect( document.documentElement.style.getPropertyValue( '--height-sticky-header' ) ).toBe( '64px' );
 		} );
 
 		it( 'should unbind click listener on hide', () => {
@@ -386,6 +401,50 @@ describe( 'StickyHeader', () => {
 			expect( document.getElementById( 'citizen-sticky-header-more' ).children ).toHaveLength( 1 );
 			expect( document.getElementById( 'citizen-sticky-header-languages' ).children ).toHaveLength( 1 );
 			expect( header.cloneDropdowns ).toHaveLength( 2 );
+		} );
+	} );
+
+	describe( 'init', () => {
+		it( 'should pre-measure the bar height into the CSS variable at idle', () => {
+			const { stickyHeader } = buildStickyHeaderDom();
+			stickyHeader.getBoundingClientRect = vi.fn( () => ( {
+				height: 64, top: 0, bottom: 64, left: 0, right: 100, width: 100, x: 0, y: 0
+			} ) );
+			const header = createStickyHeader( stickyHeader );
+
+			header.init();
+
+			expect( document.documentElement.style.getPropertyValue( '--height-sticky-header' ) ).toBe( '64px' );
+		} );
+
+		it( 'should make the first show() skip the variable write', () => {
+			const { stickyHeader } = buildStickyHeaderDom();
+			stickyHeader.getBoundingClientRect = vi.fn( () => ( {
+				height: 64, top: 0, bottom: 64, left: 0, right: 100, width: 100, x: 0, y: 0
+			} ) );
+			const header = createStickyHeader( stickyHeader );
+			const setPropertySpy = vi.spyOn( document.documentElement.style, 'setProperty' );
+
+			header.init();
+			header.show();
+
+			expect( setPropertySpy ).toHaveBeenCalledTimes( 1 );
+			expect( document.body.classList.contains( 'citizen-sticky-header-visible' ) ).toBe( true );
+		} );
+
+		it( 'should write a changed height on the next show()', () => {
+			const { stickyHeader } = buildStickyHeaderDom();
+			let height = 64;
+			stickyHeader.getBoundingClientRect = vi.fn( () => ( {
+				height, top: 0, bottom: height, left: 0, right: 100, width: 100, x: 0, y: 0
+			} ) );
+			const header = createStickyHeader( stickyHeader );
+			header.init();
+
+			height = 72;
+			header.show();
+
+			expect( document.documentElement.style.getPropertyValue( '--height-sticky-header' ) ).toBe( '72px' );
 		} );
 	} );
 

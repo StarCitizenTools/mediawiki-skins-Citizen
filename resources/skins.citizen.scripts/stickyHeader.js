@@ -87,15 +87,22 @@ class StickyHeader {
 		this.cloneDropdowns = [];
 		this.dropdownsBuilt = false;
 		this.dropdownsDirty = false;
+		this.lastHeight = null;
 		this.handleClick = this.handleClick.bind( this );
 	}
 
 	/**
-	 * Update sticky header CSS variable, used by other sticky elements.
+	 * Update the sticky header height CSS variable, used by other sticky
+	 * elements. Root-scoped writes recalc the whole document, so skip
+	 * writes when the measured height is unchanged.
 	 *
 	 * @param {number} value
 	 */
 	setCSSVariable( value ) {
+		if ( value === this.lastHeight ) {
+			return;
+		}
+		this.lastHeight = value;
 		this.document.documentElement.style.setProperty( '--height-sticky-header', `${ value }px` );
 	}
 
@@ -153,13 +160,13 @@ class StickyHeader {
 	}
 
 	/**
-	 * Hide the sticky header.
+	 * Hide the sticky header. The height variable stays — visibility is
+	 * gated by the body class.
 	 */
 	hide() {
 		// Scrolling away dismisses the cloned menus; closing the <details>
 		// unbinds their window listeners via the toggle handler.
 		this.cloneDropdowns.forEach( ( dropdown ) => dropdown.dismiss() );
-		this.setCSSVariable( 0 );
 		this.document.body.classList.remove( STICKY_HEADER_VISIBLE_CLASS );
 		this.unbind();
 	}
@@ -299,6 +306,12 @@ class StickyHeader {
 		this.initFakeButtons();
 		this.updateEditIcon();
 		this.initDropdowns();
+		// Pre-measure at idle: the hidden bar is laid out and measurable,
+		// and the tree-wide recalc of the first variable write happens off
+		// the scroll path.
+		this.requestIdleCallback( () => {
+			this.setCSSVariable( this.stickyHeaderElement.getBoundingClientRect().height );
+		} );
 	}
 }
 

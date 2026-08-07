@@ -28,8 +28,8 @@
 		position: fixed;
 		// Pinned to the raw viewport corner rather than the header tokens: the
 		// header can sit on any edge, --header-inset-block-start is `auto` in
-		// the bottom placements, and --header-offset-block-start is rewritten at
-		// runtime by stickyHeader.js, so a token-pinned link would drift while
+		// the bottom placements, and --header-offset-block-start changes with
+		// sticky header visibility, so a token-pinned link would drift while
 		// scrolling.
 		inset-block-start: var( --space-xs );
 		inset-inline-start: var( --space-xs );

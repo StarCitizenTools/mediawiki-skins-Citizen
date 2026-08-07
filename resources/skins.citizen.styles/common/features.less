@@ -147,14 +147,6 @@
 		}
 
 		.citizen-scroll--down {
-			// stylelint-disable-next-line length-zero-no-unit -- Need the unit for calc() (#1058)
-			--height-sticky-header: 0px !important;
-			// stylelint-disable-next-line length-zero-no-unit -- Need the unit for calc() (#1058)
-			--header-offset-block-start: 0px;
-			// Just do not modify --header-size-block-end
-			// Because we have already used `transform` to hide the header
-			// If we use bottom in the meantime, the transition will not work.
-
 			// header should use the same timing function
 			.citizen-sticky-header-container,
 			.citizen-header,
