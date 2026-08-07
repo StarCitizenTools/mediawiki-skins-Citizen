@@ -86,19 +86,31 @@ function mountApp( source, extraProvide ) {
 describe( 'notifications App', () => {
 	const rows = ( wrapper ) => wrapper.findAll( '.citizen-notifications__item' );
 
-	it( 'fetches and marks seen on mount, swapping skeleton for the list', async () => {
+	it( 'fetches on mount, swapping the skeleton for the list', async () => {
 		const source = makeSource();
 		const wrapper = mountApp( source );
 
 		// onMounted -> load() sets status loading synchronously.
-		expect( wrapper.find( '.citizen-notifications__skeleton' ).exists() ).toBe( true );
+		expect( wrapper.find( '.citizen-notifications__placeholder-body' ).exists() ).toBe( true );
 
 		await flushPromises();
 
 		expect( source.fetch ).toHaveBeenCalledTimes( 1 );
-		expect( source.markSeen ).toHaveBeenCalledWith( 'all' );
-		expect( wrapper.find( '.citizen-notifications__skeleton' ).exists() ).toBe( false );
+		expect( wrapper.find( '.citizen-notifications__placeholder-body' ).exists() ).toBe( false );
 		expect( rows( wrapper ) ).toHaveLength( 3 );
+	} );
+
+	it( 'leaves marking seen to the trigger, which knows when the panel is shown', async () => {
+		const source = makeSource();
+		const wrapper = mountApp( source );
+		await flushPromises();
+
+		// The panel now mounts on hover, so a fetch must not clear the streams.
+		expect( source.markSeen ).not.toHaveBeenCalled();
+
+		wrapper.vm.markSeen();
+
+		expect( source.markSeen ).toHaveBeenCalledWith( 'all' );
 	} );
 
 	it( 'renders one list, in the order the source gave', async () => {
@@ -237,9 +249,98 @@ describe( 'notifications App', () => {
 		expect( source.fetch ).toHaveBeenCalledTimes( 1 );
 
 		wrapper.vm.refresh();
-		expect( wrapper.find( '.citizen-notifications__skeleton' ).exists() ).toBe( false );
+		expect( wrapper.find( '.citizen-notifications__placeholder-body' ).exists() ).toBe( false );
 		await flushPromises();
 		expect( source.fetch ).toHaveBeenCalledTimes( 2 );
+	} );
+
+	it( 'rides an in-flight fetch instead of stacking a second one', async () => {
+		// A hover mounts the panel and a click follows before the first fetch
+		// has landed: the open must not cost a second request.
+		const source = makeSource();
+		const wrapper = mountApp( source );
+
+		wrapper.vm.refresh();
+
+		expect( source.fetch ).toHaveBeenCalledTimes( 1 );
+
+		await flushPromises();
+
+		expect( rows( wrapper ) ).toHaveLength( 3 );
+	} );
+
+	it( 'keeps a populated panel when a refresh fails', async () => {
+		const source = makeSource();
+		const wrapper = mountApp( source );
+		await flushPromises();
+
+		source.fetch.mockRejectedValueOnce( new Error( 'network' ) );
+		wrapper.vm.refresh();
+		await flushPromises();
+
+		expect( wrapper.find( '.citizen-notifications__error' ).exists() ).toBe( false );
+		expect( rows( wrapper ) ).toHaveLength( 3 );
+	} );
+
+	describe( 'server-rendered count', () => {
+		const mountWithCount = ( source, initialCount ) => mountApp( source, { initialCount } );
+
+		it( 'opens straight into the empty state when the server says nothing is waiting', async () => {
+			const source = makeSource( {
+				fetch: vi.fn().mockResolvedValue( {
+					items: [], counts: { total: 0, local: 0, foreign: 0 }, wikis: []
+				} )
+			} );
+			const wrapper = mountWithCount( source, 0 );
+
+			// No shimmer at any point: the empty state is the answer, not a
+			// step on the way to it.
+			expect( wrapper.find( '.citizen-notifications__placeholder-body' ).exists() ).toBe( false );
+			expect( wrapper.find( '.citizen-notifications__empty' ).exists() ).toBe( true );
+
+			await flushPromises();
+
+			expect( source.fetch ).toHaveBeenCalledTimes( 1 );
+			expect( wrapper.find( '.citizen-notifications__empty' ).exists() ).toBe( true );
+		} );
+
+		it( 'fills in a notification that arrived after the page was rendered', async () => {
+			const source = makeSource();
+			const wrapper = mountWithCount( source, 0 );
+			await flushPromises();
+
+			expect( rows( wrapper ) ).toHaveLength( 3 );
+		} );
+
+		it( 'keeps the server-confirmed empty state when the confirming fetch fails', async () => {
+			const source = makeSource( {
+				fetch: vi.fn().mockRejectedValue( new Error( 'network' ) )
+			} );
+			const wrapper = mountWithCount( source, 0 );
+			await flushPromises();
+
+			// The server counted zero; that is a fact worth more than an error.
+			expect( wrapper.find( '.citizen-notifications__error' ).exists() ).toBe( false );
+			expect( wrapper.find( '.citizen-notifications__empty' ).exists() ).toBe( true );
+		} );
+
+		it( 'previews only as many skeleton rows as there are notifications', () => {
+			const wrapper = mountWithCount( makeSource(), 2 );
+
+			expect( wrapper.findAll( '.citizen-notifications__placeholder-item' ) ).toHaveLength( 2 );
+		} );
+
+		it( 'caps the preview at a panelful for a large count', () => {
+			const wrapper = mountWithCount( makeSource(), 40 );
+
+			expect( wrapper.findAll( '.citizen-notifications__placeholder-item' ) ).toHaveLength( 5 );
+		} );
+
+		it( 'falls back to a full preview when the count is unknown', () => {
+			const wrapper = mountWithCount( makeSource(), null );
+
+			expect( wrapper.findAll( '.citizen-notifications__placeholder-item' ) ).toHaveLength( 5 );
+		} );
 	} );
 
 	it( 'renders footer links to the notifications and preferences pages', async () => {
@@ -294,10 +395,12 @@ describe( 'notifications App', () => {
 			expect( scroller.element.nextElementSibling ).toBe( footer( wrapper ).element );
 		} );
 
-		it( 'shows no footer while loading', () => {
+		it( 'shows the footer while loading, so it does not pop in when the fetch lands', () => {
 			const wrapper = mountApp( makeSource() );
 
-			expect( footer( wrapper ).exists() ).toBe( false );
+			expect( footer( wrapper ).exists() ).toBe( true );
+			// Nothing to clear yet, so only the history and preferences links.
+			expect( wrapper.find( '.citizen-notifications__footer-clear' ).exists() ).toBe( false );
 		} );
 
 		it( 'shows no footer on the error state', async () => {

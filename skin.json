@@ -83,9 +83,12 @@
 						"citizen-jumptotop",
 						"citizen-languages-toggle",
 						"citizen-notifications-label",
+						"citizen-notifications-title",
+						"citizen-notifications-empty",
 						"citizen-notifications-error",
 						"citizen-notifications-retry",
 						"citizen-notifications-see-all",
+						"citizen-notifications-preferences",
 						"citizen-preferences-load-error",
 						"citizen-preferences-load-retry",
 						"citizen-preferences-toggle",
@@ -696,9 +699,6 @@
 				"citizen-notifications-retry",
 				"citizen-notifications-see-all",
 				"citizen-notifications-preferences"
-			],
-			"styles": [
-				"resources/skins.citizen.notifications/notifications.less"
 			]
 		},
 		"skins.citizen.notifications.codex": {
