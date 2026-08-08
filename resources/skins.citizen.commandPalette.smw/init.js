@@ -180,7 +180,7 @@ function createSmwBrowseFetcher( browse, typePrefix, icon ) {
 				highlightQuery: true
 			} ) );
 		} ).catch( ( error ) => {
-			if ( error !== 'AbortError' ) {
+			if ( error && error.name !== 'AbortError' ) {
 				mw.log.error( '[commandPalette] SMW ' + browse + ' query failed:', error );
 			}
 			return [];
@@ -216,7 +216,7 @@ function fetchValueSuggestions( fragment, property ) {
 			highlightQuery: true
 		} ) );
 	} ).catch( ( error ) => {
-		if ( error !== 'AbortError' ) {
+		if ( error && error.name !== 'AbortError' ) {
 			mw.log.error( '[commandPalette] SMW pvalue query failed:', error );
 		}
 		return [];
@@ -282,9 +282,10 @@ function extractFreeText( fullQuery, tokens ) {
  * Executes an Ask API query and returns adapted results.
  *
  * @param {string} askQuery The complete Ask query string.
+ * @param {AbortSignal} [signal] Forwarded to mw.Api as an ajax option.
  * @return {Promise<Array>} Array of CommandPaletteItems.
  */
-async function executeAskQuery( askQuery ) {
+async function executeAskQuery( askQuery, signal ) {
 	const api = new mw.Api();
 	try {
 		const data = await api.get( {
@@ -293,7 +294,7 @@ async function executeAskQuery( askQuery ) {
 			format: 'json',
 			maxage: config.wgSearchSuggestCacheExpiry,
 			smaxage: config.wgSearchSuggestCacheExpiry
-		} );
+		}, { signal } );
 
 		const results = data?.query?.results;
 		if ( !results ) {
@@ -302,7 +303,7 @@ async function executeAskQuery( askQuery ) {
 
 		return Object.values( results ).map( adaptSmwResult );
 	} catch ( error ) {
-		if ( error !== 'AbortError' ) {
+		if ( error && error.name !== 'AbortError' ) {
 			mw.log.error( '[commandPalette] SMW query failed:', error );
 		}
 		return [];
@@ -313,12 +314,13 @@ async function executeAskQuery( askQuery ) {
  * Fetches results from the SMW Ask API.
  *
  * @param {string} subQuery The full serialized query (token raws + freeText).
- * @param {AbortSignal} [_signal] Unused — mw.Api does not support AbortSignal.
- *   Kept for interface conformance with PaletteMode.getResults.
+ * @param {AbortSignal} [signal] Forwarded to mw.Api. Honoured on
+ *   MediaWiki 1.44+; on 1.43 the option is ignored, so the request
+ *   simply runs to completion.
  * @param {Array} [tokens] Optional tokens array.
  * @return {Promise<Array>} Array of CommandPaletteItems.
  */
-async function getSmwResults( subQuery, _signal, tokens ) {
+async function getSmwResults( subQuery, signal, tokens ) {
 	// Extract the free-text tail for incomplete-condition detection.
 	// The orchestrator passes the full query (token raws + freeText),
 	// but the parser needs only the freeText portion.
@@ -371,7 +373,7 @@ async function getSmwResults( subQuery, _signal, tokens ) {
 	}
 
 	if ( askQuery.trim() && isCompleteAskQuery( askQuery ) ) {
-		return executeAskQuery( askQuery );
+		return executeAskQuery( askQuery, signal );
 	}
 
 	return [];

@@ -122,7 +122,7 @@
  * @property {function(string, Array?): StateContent} [noResults] Returns content shown when query produces no results. Receives the query string and optional tokens array. Falls back to default no-results messaging.
  * @property {TokenPattern|TokenPattern[]} [tokenPattern] Optional token detection pattern(s) for auto-tokenization.
  * @property {PaletteHelp} [help] Optional content surfaced by the help overlay when this mode is active.
- * @property {function(string, AbortSignal?, Array?, Array?): Promise<CommandPaletteItem[]>} getResults Returns result items for the given sub-query. Optional signal for abort, optional tokens array, optional mode context array (only meaningful for modes that opt in to drill-down state).
+ * @property {function(string, AbortSignal?, Array?, Array?): Promise<CommandPaletteItem[]>} getResults Returns result items for the given sub-query. Optional signal for abort, optional tokens array, optional mode context array (only meaningful for modes that opt in to drill-down state). The signal is honoured by mw.Api on MediaWiki 1.44+ and ignored on 1.43.
  * @property {function(CommandPaletteItem): (CommandPaletteActionResult|Promise<CommandPaletteActionResult>)} [onResultSelect] Handles selection of a result item.
  * @property {function(Array): string} [headerLabel] Optional breadcrumb label rendered in the header. Receives the current modeContext stack. Falls back to the input placeholder when absent.
  */
