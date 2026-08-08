@@ -160,17 +160,17 @@ function adaptSmwResult( subject, index ) {
  * @param {string} browse The smwbrowse type ('property' or 'category').
  * @param {string} typePrefix The item type prefix (e.g. 'smw-property').
  * @param {string} icon The icon for result items.
- * @return {function(string): Promise<Array>} Fetcher function.
+ * @return {function(string, AbortSignal=): Promise<Array>} Fetcher function.
  */
 function createSmwBrowseFetcher( browse, typePrefix, icon ) {
-	return function ( fragment ) {
+	return function ( fragment, signal ) {
 		return new mw.Api().get( {
 			action: 'smwbrowse',
 			browse: browse,
 			params: JSON.stringify( { search: fragment, limit: 10 } ),
 			maxage: config.wgSearchSuggestCacheExpiry,
 			smaxage: config.wgSearchSuggestCacheExpiry
-		} ).then( ( data ) => {
+		}, { signal } ).then( ( data ) => {
 			const items = Object.values( data.query || {} );
 			return items.map( ( item, index ) => ( {
 				id: 'citizen-command-palette-item-' + typePrefix + '-' + index,
@@ -196,16 +196,17 @@ const fetchCategorySuggestions = createSmwBrowseFetcher( 'category', 'smw-catego
  *
  * @param {string} fragment The partial value to search for.
  * @param {string} property The property name to fetch values for.
+ * @param {AbortSignal} [signal] Forwarded to mw.Api as an ajax option.
  * @return {Promise<Array>} Array of CommandPaletteItems.
  */
-function fetchValueSuggestions( fragment, property ) {
+function fetchValueSuggestions( fragment, property, signal ) {
 	return new mw.Api().get( {
 		action: 'smwbrowse',
 		browse: 'pvalue',
 		params: JSON.stringify( { search: fragment, property: property, limit: 10 } ),
 		maxage: config.wgSearchSuggestCacheExpiry,
 		smaxage: config.wgSearchSuggestCacheExpiry
-	} ).then( ( data ) => {
+	}, { signal } ).then( ( data ) => {
 		const values = data.query || [];
 		return values.map( ( value, index ) => ( {
 			id: 'citizen-command-palette-item-smw-value-' + index,
@@ -332,7 +333,7 @@ async function getSmwResults( subQuery, signal, tokens ) {
 	const incomplete = parseIncompleteCondition( freeText );
 	if ( incomplete ) {
 		if ( incomplete.stage === 'printout' ) {
-			return fetchPropertySuggestions( incomplete.fragment )
+			return fetchPropertySuggestions( incomplete.fragment, signal )
 				.then( ( items ) => items.map( ( item ) => Object.assign(
 					{}, item, {
 						id: item.id.replace( 'smw-property', 'smw-printout' ),
@@ -342,7 +343,7 @@ async function getSmwResults( subQuery, signal, tokens ) {
 				) ) );
 		}
 		if ( incomplete.stage === 'property' ) {
-			return fetchPropertySuggestions( incomplete.fragment ).then( ( items ) => {
+			return fetchPropertySuggestions( incomplete.fragment, signal ).then( ( items ) => {
 				// Surface "Category" as a primitive at the top of property
 				// suggestions so users can discover the category-namespace
 				// path (`[[Category:...]]`) without knowing the syntax.
@@ -364,10 +365,10 @@ async function getSmwResults( subQuery, signal, tokens ) {
 			} );
 		}
 		if ( incomplete.stage === 'category' ) {
-			return fetchCategorySuggestions( incomplete.fragment );
+			return fetchCategorySuggestions( incomplete.fragment, signal );
 		}
 		if ( incomplete.stage === 'value' ) {
-			return fetchValueSuggestions( incomplete.fragment, incomplete.property );
+			return fetchValueSuggestions( incomplete.fragment, incomplete.property, signal );
 		}
 		return [];
 	}
