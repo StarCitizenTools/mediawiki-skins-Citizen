@@ -38,7 +38,8 @@
 				"PermissionManager",
 				"UserGroupManager",
 				"UrlUtils",
-				"TempUserConfig"
+				"TempUserConfig",
+				"SpecialPageFactory"
 			],
 			"optional_services": [
 				"MobileFrontend.Context"
