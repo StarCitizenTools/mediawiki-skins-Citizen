@@ -12,6 +12,7 @@ use MediaWiki\Output\OutputPage;
 use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\ResourceLoader as RL;
 use MediaWiki\Skin\SkinComponentUtils;
+use MediaWiki\Skins\Citizen\Menu\MenuItemDecorator;
 use MediaWiki\Skins\Citizen\PreviewChannel;
 use MediaWiki\Skins\Citizen\SkinCitizen;
 use MediaWiki\Skins\Hook\SkinPageReadyConfigHook;
@@ -179,7 +180,7 @@ class SkinHooks implements
 				}
 
 				if ( !empty( $item['icon'] ) ) {
-					$item['link-html'] = self::getIconHtml( $item['icon'] );
+					$item['link-html'] = MenuItemDecorator::getIconHtml( $item['icon'] );
 				}
 			}
 		}
@@ -300,8 +301,8 @@ class SkinHooks implements
 			'dt-page-subscribe' => 'bell'
 		];
 
-		self::mapIconsToMenuItems( $links, 'actions', $iconMap );
-		self::addIconsToMenuItems( $links, 'actions' );
+		MenuItemDecorator::mapIconsToMenuItems( $links, 'actions', $iconMap );
+		MenuItemDecorator::addIconsToMenuItems( $links, 'actions' );
 	}
 
 	/**
@@ -330,9 +331,9 @@ class SkinHooks implements
 			}
 		}
 
-		self::mapIconsToMenuItems( $links, 'associated-pages', $iconMap );
-		self::addIconsToMenuItems( $links, 'associated-pages' );
-		self::addButtonClassesToMenuItems( $links, 'associated-pages' );
+		MenuItemDecorator::mapIconsToMenuItems( $links, 'associated-pages', $iconMap );
+		MenuItemDecorator::addIconsToMenuItems( $links, 'associated-pages' );
+		MenuItemDecorator::addButtonClassesToMenuItems( $links, 'associated-pages' );
 	}
 
 	/**
@@ -373,8 +374,8 @@ class SkinHooks implements
 			unset( $links['TOOLBOX'][$siteTool] );
 		}
 
-		self::mapIconsToMenuItems( $links, 'TOOLBOX', $iconMap );
-		self::addIconsToMenuItems( $links, 'TOOLBOX' );
+		MenuItemDecorator::mapIconsToMenuItems( $links, 'TOOLBOX', $iconMap );
+		MenuItemDecorator::addIconsToMenuItems( $links, 'TOOLBOX' );
 	}
 
 	/**
@@ -460,7 +461,7 @@ class SkinHooks implements
 			unset( $links['user-menu']['anonuserpage'] );
 		}
 
-		self::addIconsToMenuItems( $links, 'user-menu' );
+		MenuItemDecorator::addIconsToMenuItems( $links, 'user-menu' );
 	}
 
 	/**
@@ -469,7 +470,7 @@ class SkinHooks implements
 	 * @internal used inside Hooks\SkinHooks::onSkinTemplateNavigation
 	 */
 	private static function updateUserInterfacePreferencesMenu( array &$links ): void {
-		self::addIconsToMenuItems( $links, 'user-interface-preferences' );
+		MenuItemDecorator::addIconsToMenuItems( $links, 'user-interface-preferences' );
 	}
 
 	/**
@@ -497,116 +498,21 @@ class SkinHooks implements
 		// If both visual edit and source edit buttons are present
 		if ( isset( $links['views']['ve-edit'] ) && isset( $links['views']['edit'] ) ) {
 			// Add a class so that we can make a merged button through CSS
-			self::appendClassToItem( $links['views']['ve-edit']['class'], [ 'citizen-ve-edit-merged' ] );
-			self::appendClassToItem( $links['views']['edit']['class'], [ 'citizen-ve-edit-merged' ] );
+			MenuItemDecorator::appendClassToItem( $links['views']['ve-edit']['class'], [ 'citizen-ve-edit-merged' ] );
+			MenuItemDecorator::appendClassToItem( $links['views']['edit']['class'], [ 'citizen-ve-edit-merged' ] );
 			// Use wikiText icon instead of edit icon for source edit
 			$iconMap['edit'] = 'wikiText';
 		}
 
-		self::mapIconsToMenuItems( $links, 'views', $iconMap );
-		self::addIconsToMenuItems( $links, 'views' );
-		self::addButtonClassesToMenuItems( $links, 'views' );
+		MenuItemDecorator::mapIconsToMenuItems( $links, 'views', $iconMap );
+		MenuItemDecorator::addIconsToMenuItems( $links, 'views' );
+		MenuItemDecorator::addButtonClassesToMenuItems( $links, 'views' );
 
 		// Make edit buttons progressive primary instead of quiet
 		foreach ( [ 'edit', 've-edit' ] as $key ) {
 			if ( isset( $links['views'][$key] ) ) {
-				self::setProgressiveAction( $links['views'][$key]['link-class'] );
+				MenuItemDecorator::setProgressiveAction( $links['views'][$key]['link-class'] );
 			}
-		}
-	}
-
-	/**
-	 * Set the icon parameter of the menu item based on the mapping
-	 */
-	private static function mapIconsToMenuItems( array &$links, string $menu, array $map ): void {
-		foreach ( $map as $key => $icon ) {
-			if ( isset( $links[$menu][$key] ) ) {
-				$links[$menu][$key]['icon'] ??= $icon;
-			}
-		}
-	}
-
-	/**
-	 * Add Codex button classes to menu items
-	 */
-	private static function addButtonClassesToMenuItems( array &$links, string $menu ): void {
-		$buttonClasses = [
-			'citizen-cdx-button--size-large',
-			'cdx-button',
-			'cdx-button--fake-button',
-			'cdx-button--fake-button--enabled',
-			'cdx-button--weight-quiet',
-		];
-
-		foreach ( $links[$menu] as &$item ) {
-			if ( is_array( $item ) ) {
-				self::appendClassToItem( $item['link-class'], $buttonClasses );
-			}
-		}
-	}
-
-	/**
-	 * Add the HTML needed for icons to menu items
-	 */
-	private static function addIconsToMenuItems( array &$links, string $menu ): void {
-		// Loop through each menu to check/append its link classes.
-		foreach ( $links[$menu] as $key => $item ) {
-			$icon = $item['icon'] ?? '';
-
-			if ( $icon ) {
-				$links[$menu][$key]['link-html'] = self::getIconHtml( $icon );
-			}
-		}
-	}
-
-	/**
-	 * Get the HTML for an icon
-	 */
-	private static function getIconHtml( string $icon ): string {
-		// Html::makeLink will pass this through rawElement
-		// Avoid using mw-ui-icon in case its styles get loaded
-		// Sometimes extension includes the "wikimedia-" part in the icon key (e.g. ULS),
-		// so we apply both classes just to be safe
-		return '<span class="citizen-ui-icon mw-ui-icon-' . $icon . ' mw-ui-icon-wikimedia-' . $icon . '"></span>';
-	}
-
-	/**
-	 * Promote a menu item from quiet to progressive primary
-	 */
-	private static function setProgressiveAction( array|string|null &$linkClass ): void {
-		if ( is_array( $linkClass ) ) {
-			$linkClass = array_values( array_diff( $linkClass, [ 'cdx-button--weight-quiet' ] ) );
-		} elseif ( is_string( $linkClass ) ) {
-			$linkClass = trim( str_replace( 'cdx-button--weight-quiet', '', $linkClass ) );
-		}
-		self::appendClassToItem( $linkClass, [
-			'cdx-button--weight-primary',
-			'cdx-button--action-progressive',
-		] );
-	}
-
-	/**
-	 * Adds class to a property
-	 * Based on Vector
-	 */
-	private static function appendClassToItem( array|string|null &$item, array|string $classes ): void {
-		$existingClasses = $item;
-
-		if ( is_array( $existingClasses ) ) {
-			// Treat as array
-			$newArrayClasses = is_array( $classes ) ? $classes : [ trim( $classes ) ];
-			$item = array_merge( $existingClasses, $newArrayClasses );
-		} elseif ( is_string( $existingClasses ) ) {
-			// Treat as string
-			$newStrClasses = is_string( $classes ) ? trim( $classes ) : implode( ' ', $classes );
-			$item .= ' ' . $newStrClasses;
-		} else {
-			// Treat as whatever $classes is
-			$item = $classes;
-		}
-
-		if ( is_string( $item ) ) {
-			$item = trim( $item );
 		}
 	}
 }
