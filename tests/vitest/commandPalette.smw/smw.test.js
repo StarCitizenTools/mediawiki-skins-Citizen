@@ -489,7 +489,7 @@ describe( 'SMW mode', () => {
 				format: 'json',
 				maxage: 1200,
 				smaxage: 1200
-			} );
+			}, { signal: undefined } );
 		} );
 
 		it( 'should return empty array when freetext contains non-Ask text after tokens', async () => {
@@ -527,7 +527,7 @@ describe( 'SMW mode', () => {
 				format: 'json',
 				maxage: 1200,
 				smaxage: 1200
-			} );
+			}, { signal: undefined } );
 			expect( result ).toEqual( [
 				{
 					id: 'citizen-command-palette-item-smw-0',
@@ -561,7 +561,7 @@ describe( 'SMW mode', () => {
 				format: 'json',
 				maxage: 1200,
 				smaxage: 1200
-			} );
+			}, { signal: undefined } );
 		} );
 
 		it( 'should return empty array on API error', async () => {
@@ -714,7 +714,30 @@ describe( 'SMW mode', () => {
 				format: 'json',
 				maxage: 1200,
 				smaxage: 1200
-			} );
+			}, { signal: undefined } );
 		} );
+	} );
+} );
+
+describe( 'getResults', () => {
+	const originalApi = mw.Api;
+
+	afterEach( () => {
+		mw.Api = originalApi;
+	} );
+
+	it( 'forwards the abort signal to the Ask API request', async () => {
+		const get = vi.fn().mockResolvedValue( { query: { results: {} } } );
+		mw.Api = function () {
+			return { get };
+		};
+		const controller = new AbortController();
+
+		await smwMode.getResults( '[[Category:City]]', controller.signal, [] );
+
+		expect( get ).toHaveBeenCalledWith(
+			expect.any( Object ),
+			{ signal: controller.signal }
+		);
 	} );
 } );
