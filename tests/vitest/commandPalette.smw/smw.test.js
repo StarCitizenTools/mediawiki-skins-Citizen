@@ -315,6 +315,7 @@ describe( 'SMW mode', () => {
 			mw.Api = function () {
 				this.get = mockGet;
 			};
+			mw.log.error.mockClear();
 		} );
 
 		it( 'should return empty array for empty query', async () => {
@@ -339,7 +340,7 @@ describe( 'SMW mode', () => {
 				params: JSON.stringify( { search: 'Ci', limit: 10 } ),
 				maxage: 1200,
 				smaxage: 1200
-			} );
+			}, { signal: undefined } );
 			expect( result ).toEqual( [
 				{
 					id: 'citizen-command-palette-item-smw-category-0',
@@ -364,7 +365,7 @@ describe( 'SMW mode', () => {
 				params: JSON.stringify( { search: 'Ger', property: 'Located in', limit: 10 } ),
 				maxage: 1200,
 				smaxage: 1200
-			} );
+			}, { signal: undefined } );
 			expect( result ).toEqual( [
 				{
 					id: 'citizen-command-palette-item-smw-value-0',
@@ -400,7 +401,7 @@ describe( 'SMW mode', () => {
 				params: JSON.stringify( { search: 'Pop', limit: 10 } ),
 				maxage: 1200,
 				smaxage: 1200
-			} );
+			}, { signal: undefined } );
 			expect( result ).toEqual( [
 				{
 					id: 'citizen-command-palette-item-smw-printout-0',
@@ -421,7 +422,7 @@ describe( 'SMW mode', () => {
 				action: 'smwbrowse',
 				browse: 'property',
 				params: JSON.stringify( { search: '', limit: 10 } )
-			} ) );
+			} ), { signal: undefined } );
 		} );
 
 		it( 'should prepend Category namespace primitive at empty property fragment', async () => {
@@ -716,28 +717,124 @@ describe( 'SMW mode', () => {
 				smaxage: 1200
 			}, { signal: undefined } );
 		} );
-	} );
-} );
 
-describe( 'getResults', () => {
-	const originalApi = mw.Api;
+		describe( 'abort signal', () => {
+			// The suggestion paths fire once per debounced keystroke, so
+			// every request path — not just the Ask query — has to take the
+			// signal, or the abort checks below are unreachable.
+			it( 'should forward the abort signal to the Ask API request', async () => {
+				mockGet.mockResolvedValue( { query: { results: {} } } );
+				const controller = new AbortController();
 
-	afterEach( () => {
-		mw.Api = originalApi;
-	} );
+				await smwMode.getResults( '[[Category:City]]', controller.signal, [] );
 
-	it( 'forwards the abort signal to the Ask API request', async () => {
-		const get = vi.fn().mockResolvedValue( { query: { results: {} } } );
-		mw.Api = function () {
-			return { get };
-		};
-		const controller = new AbortController();
+				expect( mockGet ).toHaveBeenCalledWith(
+					expect.any( Object ),
+					{ signal: controller.signal }
+				);
+			} );
 
-		await smwMode.getResults( '[[Category:City]]', controller.signal, [] );
+			it( 'should forward the abort signal to the category browse request', async () => {
+				mockGet.mockResolvedValue( { query: {} } );
+				const controller = new AbortController();
 
-		expect( get ).toHaveBeenCalledWith(
-			expect.any( Object ),
-			{ signal: controller.signal }
-		);
+				await smwMode.getResults( '[[Category:Ci', controller.signal, [] );
+
+				expect( mockGet ).toHaveBeenCalledWith(
+					expect.objectContaining( { browse: 'category' } ),
+					{ signal: controller.signal }
+				);
+			} );
+
+			it( 'should forward the abort signal to the property browse request', async () => {
+				mockGet.mockResolvedValue( { query: {} } );
+				const controller = new AbortController();
+
+				await smwMode.getResults( '[[Lo', controller.signal, [] );
+
+				expect( mockGet ).toHaveBeenCalledWith(
+					expect.objectContaining( { browse: 'property' } ),
+					{ signal: controller.signal }
+				);
+			} );
+
+			it( 'should forward the abort signal to the printout browse request', async () => {
+				mockGet.mockResolvedValue( { query: {} } );
+				const controller = new AbortController();
+
+				await smwMode.getResults( '|?Pop', controller.signal, [] );
+
+				expect( mockGet ).toHaveBeenCalledWith(
+					expect.objectContaining( { browse: 'property' } ),
+					{ signal: controller.signal }
+				);
+			} );
+
+			it( 'should forward the abort signal to the value browse request', async () => {
+				mockGet.mockResolvedValue( { query: [] } );
+				const controller = new AbortController();
+
+				await smwMode.getResults( '[[Located in::Ger', controller.signal, [] );
+
+				expect( mockGet ).toHaveBeenCalledWith(
+					expect.objectContaining( { browse: 'pvalue' } ),
+					{ signal: controller.signal }
+				);
+			} );
+
+			it( 'should swallow an aborted Ask query without logging', async () => {
+				mockGet.mockRejectedValue( new DOMException( 'aborted', 'AbortError' ) );
+
+				const result = await smwMode.getResults( '[[Category:City]]' );
+
+				expect( result ).toEqual( [] );
+				expect( mw.log.error ).not.toHaveBeenCalled();
+			} );
+
+			it( 'should log a non-abort Ask query failure', async () => {
+				mockGet.mockRejectedValue( new Error( 'Network error' ) );
+
+				const result = await smwMode.getResults( '[[Category:City]]' );
+
+				expect( result ).toEqual( [] );
+				expect( mw.log.error ).toHaveBeenCalled();
+			} );
+
+			it( 'should swallow an aborted browse request without logging', async () => {
+				mockGet.mockRejectedValue( new DOMException( 'aborted', 'AbortError' ) );
+
+				const result = await smwMode.getResults( '[[Category:Ci' );
+
+				expect( result ).toEqual( [] );
+				expect( mw.log.error ).not.toHaveBeenCalled();
+			} );
+
+			it( 'should log a non-abort browse failure', async () => {
+				mockGet.mockRejectedValue( new Error( 'Network error' ) );
+
+				const result = await smwMode.getResults( '[[Category:Ci' );
+
+				expect( result ).toEqual( [] );
+				expect( mw.log.error ).toHaveBeenCalled();
+			} );
+
+			it( 'should swallow an aborted value request without logging', async () => {
+				mockGet.mockRejectedValue( new DOMException( 'aborted', 'AbortError' ) );
+
+				const result = await smwMode.getResults( '[[Located in::Ger' );
+
+				expect( result ).toEqual( [] );
+				expect( mw.log.error ).not.toHaveBeenCalled();
+			} );
+
+			it( 'should log a non-abort value request failure', async () => {
+				mockGet.mockRejectedValue( new Error( 'Network error' ) );
+
+				const result = await smwMode.getResults( '[[Located in::Ger' );
+
+				expect( result ).toEqual( [] );
+				expect( mw.log.error ).toHaveBeenCalled();
+			} );
+		} );
 	} );
 } );
