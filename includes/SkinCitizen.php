@@ -24,6 +24,8 @@ use MediaWiki\Skins\Citizen\Components\CitizenComponentSiteStats;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentStickyHeader;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentTableOfContents;
 use MediaWiki\Skins\Citizen\Components\CitizenComponentUserInfo;
+use MediaWiki\Skins\Citizen\Menu\NavigationMenuTransformer;
+use MediaWiki\SpecialPage\SpecialPageFactory;
 use MediaWiki\Title\Title;
 use MediaWiki\User\TempUser\TempUserConfig;
 use MediaWiki\User\UserFactory;
@@ -65,30 +67,16 @@ class SkinCitizen extends SkinMustache {
 	private ?array $languages = null;
 
 	/**
-	 * Merged notification data (count, alert state, link target) captured from
-	 * Echo's navigation links by SkinHooks during the SkinTemplateNavigation
-	 * hook. Null when the user has no notifications portlet. See
-	 * {@link setNotificationData}.
+	 * Merged notification data (count, alert state, link target) returned by
+	 * NavigationMenuTransformer from Echo's navigation links. Assigned while
+	 * the navigation menus are built inside parent::getTemplateData(), so the
+	 * value is ready by the time this skin assembles its own template data.
+	 * Null when the user has no notifications portlet.
+	 *
+	 * Shape: count: int, href: string, prefs-href: string, has-unread: bool,
+	 * placeholder-rows: bool[]
 	 */
 	private ?array $notificationData = null;
-
-	/**
-	 * Receive merged notification data from SkinHooks::updateNotificationsMenu.
-	 * Called while the SkinTemplateNavigation hook runs inside
-	 * parent::getTemplateData(), so the value is ready by the time this skin
-	 * assembles its own template data.
-	 *
-	 * @param array $data {
-	 *     count: int,
-	 *     href: string,
-	 *     prefs-href: string,
-	 *     has-unread: bool,
-	 *     placeholder-rows: bool[]
-	 * }
-	 */
-	public function setNotificationData( array $data ): void {
-		$this->notificationData = $data;
-	}
 
 	/**
 	 * Overrides template, styles and scripts module
@@ -105,6 +93,7 @@ class SkinCitizen extends SkinMustache {
 		private readonly UserGroupManager $userGroupManager,
 		private readonly UrlUtils $urlUtils,
 		private readonly TempUserConfig $tempUserConfig,
+		private readonly SpecialPageFactory $specialPageFactory,
 		// @phan-suppress-next-line PhanUndeclaredTypeParameter,PhanUndeclaredTypeProperty
 		private readonly ?MobileContext $mfContext,
 		array $options = []
@@ -202,7 +191,7 @@ class SkinCitizen extends SkinMustache {
 	}
 
 	/**
-	 * Ensure onSkinTemplateNavigation runs after all SkinTemplateNavigation hooks
+	 * Ensure Citizen's own decoration runs after all SkinTemplateNavigation hooks
 	 * @see T287622
 	 *
 	 * @param SkinTemplate $skin
@@ -210,7 +199,8 @@ class SkinCitizen extends SkinMustache {
 	 */
 	protected function runOnSkinTemplateNavigationHooks( SkinTemplate $skin, &$content_navigation ): void {
 		parent::runOnSkinTemplateNavigationHooks( $skin, $content_navigation );
-		Hooks\SkinHooks::onSkinTemplateNavigation( $skin, $content_navigation );
+		$this->notificationData = ( new NavigationMenuTransformer( $this->specialPageFactory ) )
+			->transform( $skin, $content_navigation );
 	}
 
 	/**
@@ -326,9 +316,9 @@ class SkinCitizen extends SkinMustache {
 		// TODO: Pass the home icon through the component instead of injecting into logos data
 		$parentData['data-logos']['icon-home'] = 'home';
 
-		// Captured by SkinHooks::updateNotificationsMenu during the
-		// SkinTemplateNavigation hook (which ran inside parent::getTemplateData
-		// above). Drives the notifications dropdown in Header.mustache.
+		// Returned by NavigationMenuTransformer while the navigation menus were
+		// built (inside parent::getTemplateData above). Drives the
+		// notifications dropdown in Header.mustache.
 		$parentData['data-notifications'] = $this->notificationData;
 
 		// Scope matches the .page-Main_Page.action-view main-page styles.
