@@ -50,5 +50,5 @@
 	"overrides": {
 		"eslint-plugin-mediawiki": "0.8.2"
 	},
-	"version": "3.19.0"
+	"version": "3.20.0"
 }
