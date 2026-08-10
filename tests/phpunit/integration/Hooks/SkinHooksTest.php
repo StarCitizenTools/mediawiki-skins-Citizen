@@ -94,10 +94,8 @@ class SkinHooksTest extends MediaWikiIntegrationTestCase {
 	}
 
 	public function testToolboxMenuRemovesSiteTools(): void {
-		$skinMock = $this->createMock( Skin::class );
-		$skinMock->method( 'getSkinName' )->willReturn( 'citizen' );
-
 		$sidebar = [
+			'navigation' => [],
 			'TOOLBOX' => [
 				'whatlinkshere' => [ 'id' => 't-whatlinkshere' ],
 				'upload' => [ 'id' => 't-upload' ],
@@ -106,7 +104,7 @@ class SkinHooksTest extends MediaWikiIntegrationTestCase {
 			],
 		];
 
-		$this->newSkinHooks()->onSidebarBeforeOutput( $skinMock, $sidebar );
+		$this->newSkinHooks()->onSidebarBeforeOutput( $this->createCitizenSkinMock(), $sidebar );
 
 		$this->assertArrayNotHasKey( 'upload', $sidebar['TOOLBOX'] );
 		$this->assertArrayNotHasKey( 'specialpages', $sidebar['TOOLBOX'] );
@@ -115,9 +113,6 @@ class SkinHooksTest extends MediaWikiIntegrationTestCase {
 	}
 
 	public function testToolboxMenuMapsIcons(): void {
-		$skinMock = $this->createMock( Skin::class );
-		$skinMock->method( 'getSkinName' )->willReturn( 'citizen' );
-
 		$sidebar = [
 			'TOOLBOX' => [
 				'print' => [ 'id' => 't-print' ],
@@ -125,10 +120,114 @@ class SkinHooksTest extends MediaWikiIntegrationTestCase {
 			],
 		];
 
-		$this->newSkinHooks()->onSidebarBeforeOutput( $skinMock, $sidebar );
+		$this->newSkinHooks()->onSidebarBeforeOutput( $this->createCitizenSkinMock(), $sidebar );
 
 		$this->assertSame( 'printer', $sidebar['TOOLBOX']['print']['icon'] );
 		$this->assertSame( 'recentChanges', $sidebar['TOOLBOX']['recentchangeslinked']['icon'] );
+	}
+
+	public function testUploadMovesToFirstSidebarMenuWithItsIcon(): void {
+		$sidebar = [
+			'navigation' => [ [ 'id' => 'n-mainpage' ] ],
+			'TOOLBOX' => [
+				'upload' => [ 'id' => 't-upload', 'href' => '/wiki/Special:Upload' ],
+			],
+			'LANGUAGES' => [],
+		];
+
+		$this->newSkinHooks()->onSidebarBeforeOutput( $this->createCitizenSkinMock(), $sidebar );
+
+		$this->assertArrayNotHasKey( 'upload', $sidebar['TOOLBOX'] );
+		$moved = end( $sidebar['navigation'] );
+		$this->assertSame( 't-upload', $moved['id'] );
+		$this->assertSame( '/wiki/Special:Upload', $moved['href'] );
+		$this->assertSame( 'upload', $moved['icon'] );
+		$this->assertStringContainsString( 'mw-ui-icon-upload', $moved['link-html'] );
+	}
+
+	public function testUploadCarriesItsLabelMessageOutOfTheToolbox(): void {
+		$sidebar = [
+			'navigation' => [ [ 'id' => 'n-mainpage' ], [ 'id' => 'n-help' ] ],
+			'TOOLBOX' => [
+				'upload' => [ 'id' => 't-upload', 'href' => '/wiki/Special:Upload' ],
+			],
+		];
+
+		$this->newSkinHooks()->onSidebarBeforeOutput( $this->createCitizenSkinMock(), $sidebar );
+
+		$this->assertSame( 'upload', end( $sidebar['navigation'] )['msg'] );
+	}
+
+	public function testUploadKeepsTheHrefMediaWikiResolved(): void {
+		$sidebar = [
+			'navigation' => [],
+			'TOOLBOX' => [
+				'upload' => [
+					'id' => 't-upload',
+					'href' => 'https://commons.example.org/wiki/Special:UploadWizard',
+				],
+			],
+		];
+
+		$this->newSkinHooks()->onSidebarBeforeOutput( $this->createCitizenSkinMock(), $sidebar );
+
+		$this->assertSame(
+			'https://commons.example.org/wiki/Special:UploadWizard',
+			$sidebar['navigation'][0]['href']
+		);
+	}
+
+	public function testUploadMovesToTheConfiguredGlobalToolsPortlet(): void {
+		$sidebar = [
+			'navigation' => [],
+			'TOOLBOX' => [
+				'upload' => [ 'id' => 't-upload', 'href' => '/wiki/Special:Upload' ],
+			],
+		];
+
+		$this->newSkinHooks()->onSidebarBeforeOutput(
+			$this->createCitizenSkinMock( 'p-mytools' ),
+			$sidebar
+		);
+
+		$this->assertSame( [], $sidebar['navigation'] );
+		$this->assertSame( 't-upload', $sidebar['mytools'][0]['id'] );
+	}
+
+	public function testUploadSkipsSkinProvidedMenusWhenPickingTheDefault(): void {
+		$sidebar = [
+			'TOOLBOX' => [
+				'upload' => [ 'id' => 't-upload', 'href' => '/wiki/Special:Upload' ],
+			],
+			'navigation' => [],
+		];
+
+		$this->newSkinHooks()->onSidebarBeforeOutput( $this->createCitizenSkinMock(), $sidebar );
+
+		$this->assertSame( 't-upload', $sidebar['navigation'][0]['id'] );
+	}
+
+	public function testUploadFallsBackToNavigationWhenTheSidebarHasNoMenus(): void {
+		$sidebar = [
+			'TOOLBOX' => [
+				'upload' => [ 'id' => 't-upload', 'href' => '/wiki/Special:Upload' ],
+			],
+		];
+
+		$this->newSkinHooks()->onSidebarBeforeOutput( $this->createCitizenSkinMock(), $sidebar );
+
+		$this->assertSame( 't-upload', $sidebar['navigation'][0]['id'] );
+	}
+
+	public function testNoUploadLinkIsAddedWhenMediaWikiOmitsIt(): void {
+		$sidebar = [
+			'navigation' => [ [ 'id' => 'n-mainpage' ] ],
+			'TOOLBOX' => [ 'print' => [ 'id' => 't-print' ] ],
+		];
+
+		$this->newSkinHooks()->onSidebarBeforeOutput( $this->createCitizenSkinMock(), $sidebar );
+
+		$this->assertSame( [ [ 'id' => 'n-mainpage' ] ], $sidebar['navigation'] );
 	}
 
 	/**
@@ -151,9 +250,12 @@ class SkinHooksTest extends MediaWikiIntegrationTestCase {
 		return $out;
 	}
 
-	private function createCitizenSkinMock(): Skin {
+	private function createCitizenSkinMock( string $globalToolsPortlet = '' ): Skin {
 		$skin = $this->createMock( Skin::class );
 		$skin->method( 'getSkinName' )->willReturn( 'citizen' );
+		$skin->method( 'getConfig' )->willReturn( new HashConfig( [
+			'CitizenGlobalToolsPortlet' => $globalToolsPortlet,
+		] ) );
 
 		return $skin;
 	}
