@@ -1,7 +1,7 @@
 import type { GetResponseDataTypeFromEndpointMethod } from "@octokit/types";
 import { Octokit } from "@octokit/rest";
 import { defineLoader } from "vitepress";
-import { GITHUB_OWNER, GITHUB_REPO } from "../../constants";
+import { GITHUB_OWNER, GITHUB_REPO } from "../../constants.ts";
 
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 

@@ -1,6 +1,6 @@
 import type MarkdownIt from "markdown-it";
-import { GITHUB_OWNER, GITHUB_REPO } from "../../constants";
-import { linkContributors } from "./contributors";
+import { GITHUB_OWNER, GITHUB_REPO } from "../../constants.ts";
+import { linkContributors } from "./contributors.ts";
 
 function removeVersionHeader(input: string): string {
 	return input.replace(/^\s*##\s+\[.*?\]\(.*?\)(?:\s+\(.*\))?\s*(\r?\n)+/, "");

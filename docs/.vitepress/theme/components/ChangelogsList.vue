@@ -22,10 +22,10 @@
 <script setup lang="ts">
 import { withBase } from "vitepress";
 import MarkdownIt from "markdown-it";
-import { data as changelogs } from "../data/changelogs.data";
+import { data as changelogs } from "../data/changelogs.data.ts";
 import { formatChangelog } from "../utils/formatChangelog.ts";
 import ContributorList from "./ContributorList.vue";
-import { GITHUB_OWNER, GITHUB_REPO } from "../../constants";
+import { GITHUB_OWNER, GITHUB_REPO } from "../../constants.ts";
 
 const md = new MarkdownIt({ html: true });
 

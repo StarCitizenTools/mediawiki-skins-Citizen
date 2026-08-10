@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { extractContributors } from "../utils/contributors";
+import { extractContributors } from "../utils/contributors.ts";
 
 const { body } = defineProps<{ body: string }>();
 
