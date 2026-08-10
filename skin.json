@@ -995,6 +995,7 @@
 			"+mediawiki.special.userlogin.common.styles": "skinStyles/mediawiki/special/mediawiki.special.userlogin.common.styles.less",
 			"+mediawiki.special.userlogin.login.styles": "skinStyles/mediawiki/special/mediawiki.special.userlogin.login.styles.less",
 			"+mediawiki.special.userlogin.signup.styles": "skinStyles/mediawiki/special/mediawiki.special.userlogin.signup.styles.less",
+			"+mediawiki.special.upload": "skinStyles/mediawiki/special/mediawiki.special.upload.styles.less",
 			"+mediawiki.ui": "skinStyles/mediawiki/ui/mediawiki.ui.less",
 			"+mediawiki.ui.checkbox": "skinStyles/mediawiki/ui/mediawiki.ui.checkbox.less",
 			"+mediawiki.ui.radio": "skinStyles/mediawiki/ui/mediawiki.ui.radio.less",

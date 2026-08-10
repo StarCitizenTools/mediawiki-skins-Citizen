@@ -1,0 +1,59 @@
+@import '../../../resources/variables.less';
+
+#mw-upload-form input[ name='wpUpload' ] {
+	width: 100%;
+	padding: var( --space-md );
+	font-weight: var( --font-weight-bold );
+	color: #fff;
+	cursor: pointer;
+	background-color: var( --background-color-progressive );
+	border-radius: var( --border-radius-medium );
+}
+
+#mw-upload-form input[ name='wpUpload' ]:not( :disabled ):hover {
+	background-color: var( --background-color-progressive--hover );
+}
+
+#mw-upload-form .mw-htmlform-field-HTMLCheckField .mw-input * {
+	cursor: pointer;
+}
+
+#mw-upload-form #wpUploadFile {
+	cursor: pointer;
+	border-radius: var( --border-radius-medium );
+}
+
+#mw-upload-form fieldset {
+	border-radius: var( --border-radius-medium );
+}
+
+#mw-upload-form input#wpDestFile {
+	padding: calc( var( --space-sm ) / 2 );
+	margin-bottom: 4px;
+	border-radius: var( --border-radius-medium );
+}
+
+#mw-upload-form textarea {
+	padding: calc( var( --space-sm ) / 2 );
+	border-radius: var( --border-radius-medium );
+}
+
+#mw-upload-form select#wpLicense {
+	padding: calc( var( --space-sm ) / 3 );
+	border-radius: var( --border-radius-medium );
+}
+
+#mw-upload-form #wpUploadFile::file-selector-button,
+#mw-upload-form #wpUploadFile::-webkit-file-upload-button {
+	padding: calc( var( --space-sm ) / 2 );
+	font-weight: var( --font-weight-medium );
+	color: #fff;
+	cursor: pointer;
+	background-color: var( --background-color-progressive );
+	border: 0;
+}
+
+#mw-upload-form #wpUploadFile::file-selector-button:hover,
+#mw-upload-form #wpUploadFile::-webkit-file-upload-button:hover {
+	background-color: var( --background-color-progressive--hover );
+}
