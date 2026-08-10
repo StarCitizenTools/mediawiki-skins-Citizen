@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import MarkdownIt from "markdown-it";
 import { computed } from "vue";
-import { data as changelogs } from "../data/changelogs.data";
+import { data as changelogs } from "../data/changelogs.data.ts";
 import { formatChangelog } from "../utils/formatChangelog.ts";
 import ContributorList from "./ContributorList.vue";
 
