@@ -82,8 +82,8 @@ async function copy() {
 
 .copy-btn:hover {
 	color: var(--vp-c-text-1);
-	background-color: var(--vp-c-bg-mute);
-	border-color: var(--vp-c-brand);
+	background-color: var(--vp-c-default-soft);
+	border-color: var(--vp-c-brand-1);
 }
 
 .icon-copy,
