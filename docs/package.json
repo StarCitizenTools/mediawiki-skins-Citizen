@@ -5,7 +5,7 @@
 	"private": true,
 	"scripts": {
 		"docs:dev": "vitepress dev",
-		"docs:build": "vitepress build",
+		"docs:build": "node scripts/build.js",
 		"docs:preview": "vitepress preview",
 		"format": "oxfmt \"**/*.{ts,js,vue}\"",
 		"format:check": "oxfmt --check \"**/*.{ts,js,vue}\"",
