@@ -9,7 +9,6 @@ use MediaWiki\Html\Html;
 use MediaWiki\Output\Hook\BeforePageDisplayHook;
 use MediaWiki\Output\Hook\OutputPageAfterGetHeadLinksArrayHook;
 use MediaWiki\Output\OutputPage;
-use MediaWiki\Registration\ExtensionRegistry;
 use MediaWiki\ResourceLoader as RL;
 use MediaWiki\Skin\SkinComponentUtils;
 use MediaWiki\Skins\Citizen\Menu\MenuItemDecorator;
@@ -27,6 +26,12 @@ class SkinHooks implements
 	SkinBuildSidebarHook,
 	SkinPageReadyConfigHook
 {
+	/**
+	 * Sidebar keys that name a skin-provided menu rather than one defined in
+	 * MediaWiki:Sidebar. They must never be picked as the site tools menu.
+	 */
+	private const MAGIC_PORTLETS = [ 'SEARCH', 'TOOLBOX', 'LANGUAGES' ];
+
 	private static ?string $inlineScript = null;
 
 	/**
@@ -116,7 +121,7 @@ class SkinHooks implements
 	}
 
 	/**
-	 * Modify toolbox links
+	 * Modify toolbox links and relocate the site-wide tools it holds
 	 * For some reason onSkinBuildSidebar was not able to get toolbox
 	 * So we need to use this hook instead
 	 *
@@ -130,9 +135,61 @@ class SkinHooks implements
 			return;
 		}
 
+		self::moveUploadToSiteTools( $skin, $sidebar );
+
 		if ( isset( $sidebar['TOOLBOX'] ) ) {
 			self::updateToolboxMenu( $sidebar );
 		}
+	}
+
+	/**
+	 * Move the "Upload file" link from the toolbox to the site tools menu.
+	 *
+	 * The item is taken from the toolbox rather than rebuilt: MediaWiki resolves
+	 * $wgUploadNavigationUrl and the viewer's upload permission when it builds
+	 * that entry, and this hook is the earliest one where the toolbox exists.
+	 * MediaWiki omits the entry when uploads are unavailable to the viewer, so
+	 * an absent entry means the menu must stay without an upload link.
+	 */
+	private static function moveUploadToSiteTools( Skin $skin, array &$sidebar ): void {
+		$item = $sidebar['TOOLBOX']['upload'] ?? null;
+
+		if ( $item === null ) {
+			return;
+		}
+
+		unset( $sidebar['TOOLBOX']['upload'] );
+
+		$item['msg'] = 'upload';
+		$item['icon'] = 'upload';
+		$item['link-html'] = MenuItemDecorator::getIconHtml( 'upload' );
+
+		$sidebar[self::getSiteToolsMenuId( $skin, $sidebar )][] = $item;
+	}
+
+	/**
+	 * Resolve the menu that site-wide tools are appended to.
+	 *
+	 * Called from both sidebar hooks, so the fallback skips the skin-provided
+	 * menus that only one of them sees.
+	 */
+	private static function getSiteToolsMenuId( Skin $skin, array $bar ): string {
+		$customSiteToolsMenuId = (string)$skin->getConfig()->get( 'CitizenGlobalToolsPortlet' );
+
+		if ( $customSiteToolsMenuId !== '' ) {
+			// remove initial p- for backward compatibility
+			return str_starts_with( $customSiteToolsMenuId, 'p-' )
+				? substr( $customSiteToolsMenuId, 2 )
+				: $customSiteToolsMenuId;
+		}
+
+		foreach ( array_keys( $bar ) as $key ) {
+			if ( !in_array( $key, self::MAGIC_PORTLETS, true ) ) {
+				return (string)$key;
+			}
+		}
+
+		return 'navigation';
 	}
 
 	/**
@@ -156,6 +213,8 @@ class SkinHooks implements
 			'n-specialpages' => 'specialPages',
 			// TODO: Remove when we drop MW 1.43 support
 			't-specialpages' => 'specialPages',
+			// Only reachable once upload moves into the sidebar upstream (T417298);
+			// until then the toolbox copy is decorated in moveUploadToSiteTools()
 			't-upload' => 'upload',
 		];
 
@@ -175,35 +234,14 @@ class SkinHooks implements
 	}
 
 	private function addSiteTools( Skin $skin, array &$bar ): void {
-		$out = $skin->getOutput();
-		$customSiteToolsMenuId = $out->getConfig()->get( 'CitizenGlobalToolsPortlet' );
-
-		$siteToolsMenuId = $customSiteToolsMenuId === ''
-			? array_key_first( $bar )
-			// remove initial p- for backward compatibility
-			: preg_replace( '/^p-/', '', $customSiteToolsMenuId );
-
 		// Do not override specialpages if it already exists (#1116)
 		// TODO: Revisit in next LTS release (T333211)
 		if ( version_compare( MW_VERSION, '1.44', '<' ) ) {
-			$bar[$siteToolsMenuId][] = [
+			$bar[self::getSiteToolsMenuId( $skin, $bar )][] = [
 				'text'  => $skin->msg( 'specialpages' ),
 				'href'  => SkinComponentUtils::makeSpecialUrl( 'Specialpages' ),
 				'title' => $skin->msg( 'tooltip-t-specialpages' ),
 				'id'    => 't-specialpages',
-			];
-		}
-
-		if ( !isset( $bar[$siteToolsMenuId]['upload'] ) && $out->getConfig()->get( 'EnableUploads' ) === true ) {
-			$isUploadWizardEnabled = ExtensionRegistry::getInstance()->isLoaded( 'Upload Wizard' );
-			$bar[$siteToolsMenuId][] = [
-				'text'  => $skin->msg( 'upload' ),
-				'href'  => SkinComponentUtils::makeSpecialUrl( $isUploadWizardEnabled ?
-					'UploadWizard' :
-					'Upload'
-				),
-				'title' => $skin->msg( 'tooltip-t-upload' ),
-				'id'    => 't-upload',
 			];
 		}
 	}
@@ -255,16 +293,9 @@ class SkinHooks implements
 			'wikibase' => 'logoWikidata'
 		];
 
-		// Remove upload and specialpages from toolbox as we moved them to drawer
+		// Remove specialpages from toolbox as we moved it to drawer
 		// TODO: Check again in the next LTS release, in case it's handled there
-		$siteTools = [
-			'upload',
-			'specialpages'
-		];
-
-		foreach ( $siteTools as $siteTool ) {
-			unset( $links['TOOLBOX'][$siteTool] );
-		}
+		unset( $links['TOOLBOX']['specialpages'] );
 
 		MenuItemDecorator::mapIconsToMenuItems( $links, 'TOOLBOX', $iconMap );
 		MenuItemDecorator::addIconsToMenuItems( $links, 'TOOLBOX' );

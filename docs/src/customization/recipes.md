@@ -113,3 +113,13 @@ To lock everyone into a single theme, give `skin-theme` a default and hide the p
 ::: warning
 Users who picked a different theme before you applied this change have it stored in their browser's local storage. They'll keep seeing their old choice until they clear site data — local storage doesn't expire on its own. New visitors get the forced theme immediately.
 :::
+
+## Point the upload link somewhere else
+
+The "Upload file" link in the site tools menu is the one MediaWiki builds, so [`$wgUploadNavigationUrl`](https://www.mediawiki.org/wiki/Manual:$wgUploadNavigationUrl) decides where it goes. Use it to send people to UploadWizard, a shared repository like Commons, or your own upload guide:
+
+```php [LocalSettings.php]
+$wgUploadNavigationUrl = '/wiki/Special:UploadWizard';
+```
+
+Leave it unset and the link points at `Special:Upload`, and only appears for people who are actually allowed to upload. Setting it shows the link to everyone, since MediaWiki can't know what permissions the destination needs.
