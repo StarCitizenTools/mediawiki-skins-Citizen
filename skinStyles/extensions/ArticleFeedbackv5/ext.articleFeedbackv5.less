@@ -8,28 +8,65 @@
 
 	#articleFeedbackv5 {
 		&-bucket6-toggle-wrapper {
-			&-yes {
-				.cdx-mixin-css-icon( @cdx-icon-check );
-
-				&:hover {
-					background-color: var( --color-success );
-				}
-			}
-
-			&-no {
-				.cdx-mixin-css-icon( @cdx-icon-close );
-
-				&:hover {
-					background-color: var( --color-destructive );
-				}
-			}
-
 			&-yes,
 			&-no {
+				.mixin-citizen-button-quiet();
+				position: relative;
+				display: flex;
+				align-items: center;
+				justify-content: center;
 				min-width: @min-size-interactive-touch;
 				min-height: @min-size-interactive-touch;
-				background-color: var( --color-neutral );
 				border-radius: var( --border-radius-base );
+
+				// The icon has to sit on a pseudo-element: a mask clips everything the
+				// element paints, including its descendants and its focus outline.
+				&::before {
+					content: '';
+				}
+
+				// The extension binds the click handler to this link alone, so it has to
+				// cover the whole target instead of just its own label text.
+				.articleFeedbackv5-button-placeholder {
+					position: absolute;
+					inset: 0;
+					height: auto !important; // The extension hardcodes a 22px height
+					// A margin would shrink the box back out of the corners: jQuery UI
+					// gives `.ui-button` one, and only the extension currently zeroes it.
+					margin: 0;
+					opacity: 0; // The icon above stands in for the label
+				}
+
+				// The link is invisible, so the focus ring goes on the target it covers.
+				// An inset ring keeps the whole target clickable, unlike a border.
+				&:has( .articleFeedbackv5-button-placeholder:focus-visible ) {
+					outline: @outline-base--focus;
+					box-shadow: @box-shadow-inset-small var( --color-progressive );
+				}
+			}
+
+			// Declared after the shared rule so the answer colour outranks the quiet
+			// button's own neutral hover colour.
+			&-yes {
+				&::before {
+					.cdx-mixin-css-icon( @cdx-icon-check, currentColor );
+				}
+
+				&:hover,
+				&:active {
+					color: var( --color-success );
+				}
+			}
+
+			&-no {
+				&::before {
+					.cdx-mixin-css-icon( @cdx-icon-close, currentColor );
+				}
+
+				&:hover,
+				&:active {
+					color: var( --color-destructive );
+				}
 			}
 		}
 	}
@@ -147,10 +184,6 @@
 					+ .form-item::before {
 						content: '';
 					}
-				}
-
-				.articleFeedbackv5-button-placeholder {
-					opacity: 0; // Needed to color the Codex icon
 				}
 			}
 
