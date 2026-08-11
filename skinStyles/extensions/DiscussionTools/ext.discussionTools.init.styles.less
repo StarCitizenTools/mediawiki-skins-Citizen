@@ -6,12 +6,128 @@
  * Version: REL1_43
  */
 
+@import '../../../resources/mixins.less';
+
 // T373875: Use fixed font size for DiscussionTools UI elements
 .ext-discussiontools-init-section-bar,
-.ext-discussiontools-init-replybutton.oo-ui-buttonElement,
-.ext-discussiontools-init-section-subscribe,
-.ext-discussiontools-init-section-subscribeButton {
+.ext-discussiontools-init-replybutton.oo-ui-buttonElement {
 	font-size: 0.875rem;
+}
+
+// Only the legacy heading DOM puts the edit-section link inside the <h2>,
+// where its float tracks the last text line instead of staying level with the
+// subscribe control. The `.mw-heading` DOM makes it a sibling, which the
+// wrapper's own flex already aligns — and flexing that <h2> would be actively
+// harmful, since it holds raw inline content and each run would become its own
+// anonymous flex item with the spaces between them dropped.
+.ext-discussiontools-init-section > h2:has( > .mw-editsection ) {
+	display: flex;
+	// Without this the heading claims max-content and pushes the subscribe
+	// control onto a flex line of its own once `flex-wrap` is in play.
+	flex-basis: 0;
+	align-items: center;
+
+	> .mw-editsection {
+		float: none;
+		margin-inline-start: auto;
+	}
+}
+
+// DiscussionTools renders an OOUI button where visual enhancements are enabled
+// and a bracketed `[subscribe]` link everywhere else. Both are styled as one
+// icon-only control so the heading reads the same either way.
+//
+// Both are also inserted as the heading's first child and positioned with
+// `float: right`, which is inert in a flex `.mw-heading` — hence the order.
+.ext-discussiontools-init-section-subscribe.mw-editsection-like,
+.ext-discussiontools-init-section-subscribeButton.oo-ui-buttonElement {
+	// Heading chrome icon size, as set for .mw-editsection in Sections.less.
+	--size-icon: 1.125rem;
+	order: 9999;
+}
+
+.ext-discussiontools-init-section-subscribe.mw-editsection-like {
+	// Baseline nudge, replaced by the 32px box below.
+	margin-top: 0;
+}
+
+.ext-discussiontools-init-section-subscribe-bracket {
+	display: none;
+}
+
+// Matches `.mw-editsection a` in skinning/interface-edit-section-links.less.
+//
+// HACK: the button selector repeats `.oo-ui-buttonElement` to outrank OOUI's
+// colour and padding for a frameless progressive button.
+.ext-discussiontools-init-section-subscribe > .ext-discussiontools-init-section-subscribe-link,
+.ext-discussiontools-init-section-subscribeButton.oo-ui-buttonElement.oo-ui-buttonElement.oo-ui-buttonElement > .oo-ui-buttonElement-button {
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: @min-size-interactive-pointer;
+	min-height: @min-size-interactive-pointer;
+	padding: 0;
+	// Collapses the label without dropping it from the accessibility tree — it
+	// carries the subscribed state, which the icon alone cannot.
+	font-size: 0;
+	// Reserved so the focus ring below does not resize the control.
+	border: @border-width-base solid transparent;
+	border-radius: var( --border-radius-base );
+
+	// Mirrors the Codex focus treatment the edit-section buttons get from
+	// skins.citizen.codex.styles/CdxButton.less.
+	&:focus-visible {
+		outline: @outline-base--focus;
+		border-color: var( --border-color-progressive--focus );
+		box-shadow: @box-shadow-inset-small var( --color-progressive );
+	}
+
+	&::before {
+		display: block;
+		width: var( --size-icon );
+		height: var( --size-icon );
+		content: '';
+		-webkit-mask-repeat: no-repeat;
+		mask-repeat: no-repeat;
+		-webkit-mask-position: center;
+		mask-position: center;
+		-webkit-mask-size: contain;
+		mask-size: contain;
+		.cdx-mixin-css-icon-background-image( @cdx-icon-bell-outline, currentColor );
+	}
+}
+
+// Only while the control is actually actionable: upstream greys the link and
+// disables the button for the duration of the request, and that feedback is
+// the only sign a click registered.
+.ext-discussiontools-init-section-subscribe > .ext-discussiontools-init-section-subscribe-link:not( .ext-discussiontools-init-section-subscribe-link-pending ),
+.ext-discussiontools-init-section-subscribeButton.oo-ui-buttonElement.oo-ui-buttonElement.oo-ui-buttonElement.oo-ui-widget-enabled > .oo-ui-buttonElement-button {
+	.mixin-citizen-button-quiet();
+}
+
+// Subscribed (1) and auto-subscribed (2) get the filled bell. The attribute
+// sits on the link itself but on the widget root for the button, and is absent
+// until the reader acts on the topic. Both selectors must repeat the classes
+// above or the outline bell outranks them and the icon never changes.
+.ext-discussiontools-init-section-subscribe > .ext-discussiontools-init-section-subscribe-link:is( [ data-mw-subscribed='1' ], [ data-mw-subscribed='2' ] )::before,
+.ext-discussiontools-init-section-subscribeButton.oo-ui-buttonElement.oo-ui-buttonElement.oo-ui-buttonElement:is( [ data-mw-subscribed='1' ], [ data-mw-subscribed='2' ] ) > .oo-ui-buttonElement-button::before {
+	.cdx-mixin-css-icon-background-image( @cdx-icon-bell, currentColor );
+}
+
+// OOUI paints its own icon, which the ::before above replaces. The label is
+// left in place for `font-size: 0` to collapse, so both variants take their
+// accessible name from the label rather than one falling back to `title`.
+.ext-discussiontools-init-section-subscribeButton.oo-ui-buttonElement {
+	.oo-ui-iconElement-icon,
+	.oo-ui-indicatorElement-indicator {
+		display: none;
+	}
+
+	.oo-ui-labelElement-label {
+		padding: 0;
+		margin: 0;
+	}
 }
 
 .ext-discussiontools-visualenhancements-enabled {
@@ -25,14 +141,14 @@
 
 		/* HACK: Needed the specificity to override DiscussionTools styles */
 		&-subscribeButton.oo-ui-buttonElement.oo-ui-buttonElement.oo-ui-buttonElement {
-			order: 9999;
-			margin-inline-start: 0 !important;
+			// Upstream declares a baseline nudge and inline-start gap with
+			// `!important`; the 32px box supplies both.
+			margin: 0 !important;
 		}
 
 		&-bar {
 			order: 10000;
 			width: 100%;
-			font-size: var( --font-size-x-small );
 		}
 
 		&-metaitem,
