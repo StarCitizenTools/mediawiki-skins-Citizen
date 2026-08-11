@@ -163,6 +163,27 @@
 	}
 }
 
+// Codex's enabled quiet button treatment, for a control that sits next to one
+// without being a `.cdx-button` itself. The resting colour is restated per
+// state so it survives a widget library that colours its own `:hover`.
+.mixin-citizen-button-quiet() {
+	&,
+	&:visited,
+	&:hover,
+	&:focus {
+		color: var( --color-neutral );
+	}
+
+	&:hover {
+		background-color: var( --background-color-button-quiet--hover );
+	}
+
+	&:active {
+		color: var( --color-emphasized );
+		background-color: var( --background-color-button-quiet--active );
+	}
+}
+
 // This is used to override MW dark mode styles
 // if they have hardcoded value instead of CSS variable
 .mixin-citizen-css-theme-clientpref-all( @prop, @value ) {
