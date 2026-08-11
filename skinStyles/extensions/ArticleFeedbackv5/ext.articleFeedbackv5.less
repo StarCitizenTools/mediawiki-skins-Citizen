@@ -87,6 +87,10 @@
 					display: flex;
 					gap: var( --space-xs );
 					align-items: center;
+					// The extension clips this box to contain the floats it lays the
+					// header out with. Flex contains them anyway, and the clip would
+					// swallow the back link's focus ring, which hugs the box's edge.
+					overflow: visible;
 				}
 			}
 		}
@@ -205,15 +209,30 @@
 		}
 
 		&-arrow-back {
-			.cdx-mixin-css-icon( @cdx-icon-previous );
+			.mixin-citizen-button-quiet();
+			position: relative;
 			min-width: @min-size-interactive-pointer;
 			min-height: @min-size-interactive-pointer;
 			padding: 0;
 			margin: 0;
-			background: var( --color-neutral );
+			background-image: none; // The extension paints a legacy arrow bitmap here
+			border-radius: var( --border-radius-base );
 
-			&:hover {
-				background: var( --color-emphasized );
+			// As above, the icon sits on a pseudo-element so the mask cannot clip the
+			// link's focus outline. It is taken out of flow because the element still
+			// relies on the extension's `text-indent` to hide its label.
+			&::before {
+				.cdx-mixin-css-icon( @cdx-icon-previous, currentColor );
+				position: absolute;
+				inset: 0;
+				margin: auto;
+				content: '';
+			}
+
+			// The mixin's own flip targets the element it is applied to, which is not
+			// expressible for a pseudo-element, so this chevron is flipped by hand.
+			html[ dir='rtl' ] &::before {
+				transform: scaleX( -1 );
 			}
 		}
 
