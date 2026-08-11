@@ -1,0 +1,133 @@
+@import '../../../resources/mixins.less';
+@import '../../../resources/variables.less';
+
+#mw-upload-form {
+	fieldset {
+		border-radius: var( --border-radius-medium );
+
+		/* Source field */
+		&:first-of-type {
+			display: flex;
+			flex-wrap: wrap;
+			gap: var( --space-lg );
+			padding: var( --space-md );
+			margin: var( --space-xl ) 0;
+			color: var( --color-subtle );
+		}
+	}
+
+	#mw-htmlform-source {
+		flex-grow: 1;
+		order: -1;
+		.mixin-citizen-font-styles( 'small' );
+
+		&,
+		tbody,
+		tr,
+		td {
+			display: block;
+		}
+
+		.mw-htmlform-field-UploadSourceField {
+			margin-bottom: var( --space-xs );
+
+			.mw-label {
+				display: none;
+			}
+		}
+	}
+
+	#wpUploadFile {
+		/* `align-content` and `text-align-last` are the only levers that reach the UA shadow content:
+		   flex and grid do not, and Blink and WebKit force `text-align: start !important` on file inputs. */
+		align-content: center;
+		width: 100%;
+		height: @size-1600;
+		color: inherit;
+		text-align-last: center;
+		cursor: pointer;
+		border-style: dashed;
+		border-radius: var( --border-radius-medium );
+
+		&:hover {
+			background-color: var( --background-color-button-quiet--hover );
+		}
+
+		&:active {
+			background-color: var( --background-color-button-quiet--active );
+		}
+
+		&::before {
+			width: @size-250 !important;
+			height: @size-250 !important;
+			margin-bottom: var( --space-sm );
+			content: '';
+			mask-size: @size-250 !important;
+			.cdx-mixin-css-icon( @cdx-icon-upload );
+		}
+
+		&::file-selector-button,
+		&::-webkit-file-upload-button {
+			display: block;
+			min-height: @min-size-interactive-pointer;
+			padding-inline: @spacing-horizontal-button;
+			margin-inline: auto;
+			margin-bottom: var( --space-sm );
+			font-family: inherit;
+			font-size: var( --font-size-medium );
+			font-weight: var( --font-weight-semi-bold );
+			appearance: none;
+			cursor: pointer;
+			background: transparent;
+			border: 1px solid var( --border-color-interactive );
+			border-radius: var( --border-radius-base );
+			.mixin-citizen-button-quiet();
+		}
+	}
+
+	#mw-upload-thumbnail {
+		margin: 0 auto;
+		text-align: center;
+		.mixin-citizen-font-styles( 'small' );
+
+		canvas {
+			border: var( --border-base );
+			border-radius: var( --border-radius-medium );
+		}
+	}
+
+	&:has( #mw-upload-thumbnail ) {
+		#wpUploadFile {
+			&::before {
+				.cdx-mixin-css-icon( @cdx-icon-success, @color-success );
+			}
+		}
+	}
+
+	#mw-upload-permitted > p {
+		margin: 0;
+	}
+
+	.mw-htmlform-field-HTMLCheckField .mw-input * {
+		cursor: pointer;
+	}
+
+	input#wpDestFile,
+	textarea,
+	select#wpLicense {
+		font-family: inherit;
+		.mixin-citizen-cdx-input();
+	}
+
+	input[ name='wpUpload' ] {
+		width: 100%;
+		min-height: @min-size-interactive-touch;
+		padding-inline: @spacing-horizontal-button;
+		font-size: var( --font-size-medium );
+		font-weight: var( --font-weight-semi-bold );
+		cursor: pointer;
+		border: 1px solid transparent;
+		border-radius: var( --border-radius-base );
+		.mixin-citizen-button-progressive();
+	}
+}
