@@ -28,11 +28,11 @@ Displays a short description under the page title and in command palette results
 
 ### [MobileFrontend](https://www.mediawiki.org/wiki/Extension:MobileFrontend)
 
-::: warning Not recommended
-Citizen is a fully responsive skin, so MobileFrontend's separate mobile experience is redundant and may conflict with Citizen's layout.
+::: warning Not recommended with Citizen as your default skin
+If Citizen is already your default skin, MobileFrontend is redundant — Citizen is fully responsive, so its separate mobile experience adds nothing and may conflict with Citizen's layout.
 :::
 
-If you still need MobileFrontend, set the default mobile skin to Citizen:
+If your wiki uses a different default skin but you want Citizen on mobile, MobileFrontend is a fine way to do that. Set the default mobile skin to Citizen:
 
 ```php [LocalSettings.php]
 $wgDefaultMobileSkin = 'citizen';
