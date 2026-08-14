@@ -24,8 +24,8 @@ function formatCVELinks(input: string): string {
 }
 
 function formatPRLinks(input: string): string {
-	const repoUrl = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}`;
-	const prRegex = new RegExp(`(?<!\\]\\()${repoUrl}/(pull|issues)/(\\d+)`, "g");
+	const repoUrl = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}`,
+		prRegex = new RegExp(`(?<!\\]\\()${repoUrl}/(pull|issues)/(\\d+)`, "g");
 	return input.replaceAll(prRegex, "[#$2]($&)");
 }
 

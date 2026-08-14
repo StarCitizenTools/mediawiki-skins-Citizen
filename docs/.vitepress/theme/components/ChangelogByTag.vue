@@ -27,24 +27,23 @@ import { data as changelogs } from "../data/changelogs.data.ts";
 import { formatChangelog } from "../utils/formatChangelog.ts";
 import ContributorList from "./ContributorList.vue";
 
-const { tag } = defineProps<{ tag: string }>();
-
-const md = new MarkdownIt({ html: true });
+const { tag } = defineProps<{ tag: string }>(),
+	md = new MarkdownIt({ html: true });
 
 function renderMarkdown(string: string | null | undefined) {
 	return formatChangelog(md, string);
 }
 
-const release = computed(() => changelogs.find((r) => r.tag_name === tag));
-const latestStableTag = computed(() => {
-	const stable = changelogs
-		.filter((r) => !r.draft && !r.prerelease)
-		.toSorted(
-			(a, b) => new Date(b.published_at!).getTime() - new Date(a.published_at!).getTime(),
-		);
-	return stable[0]?.tag_name;
-});
-const isLatest = computed(() => latestStableTag.value === tag);
+const release = computed(() => changelogs.find((r) => r.tag_name === tag)),
+	latestStableTag = computed(() => {
+		const stable = changelogs
+			.filter((r) => !r.draft && !r.prerelease)
+			.toSorted(
+				(a, b) => new Date(b.published_at!).getTime() - new Date(a.published_at!).getTime(),
+			);
+		return stable[0]?.tag_name;
+	}),
+	isLatest = computed(() => latestStableTag.value === tag);
 </script>
 
 <style lang="less" scoped>

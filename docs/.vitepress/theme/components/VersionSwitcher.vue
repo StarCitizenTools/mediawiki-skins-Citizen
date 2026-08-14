@@ -14,35 +14,33 @@ interface VersionsManifest {
 	versions: VersionEntry[];
 }
 
-const { theme, site } = useData();
-const route = useRoute();
-
-const currentVersion = computed<string>(() => {
-	const v = (theme.value as { docsVersion?: string }).docsVersion;
-	return v && v.length > 0 ? v : "main";
-});
-
-const siteRoot = computed<string>(() => {
-	const base = site.value.base;
-	const version = currentVersion.value;
-	if (version === "main") {
-		return base;
-	}
-	const segment = `${version}/`;
-	return base.endsWith(segment) ? base.slice(0, -segment.length) : base;
-});
+const { theme, site } = useData(),
+	route = useRoute(),
+	currentVersion = computed<string>(() => {
+		const v = (theme.value as { docsVersion?: string }).docsVersion;
+		return v && v.length > 0 ? v : "main";
+	}),
+	siteRoot = computed<string>(() => {
+		const base = site.value.base,
+			version = currentVersion.value;
+		if (version === "main") {
+			return base;
+		}
+		const segment = `${version}/`;
+		return base.endsWith(segment) ? base.slice(0, -segment.length) : base;
+	});
 
 function fromSiteRoot(rootRelative: string): string {
 	const stripped = rootRelative.startsWith("/") ? rootRelative.slice(1) : rootRelative;
 	return `${siteRoot.value}${stripped}`;
 }
 
-const manifest = ref<VersionsManifest | undefined>(undefined);
-const manifestError = ref(false);
-const open = ref(false);
-const root = ref<HTMLElement | undefined>(undefined);
-const buttonId = useId();
-const menuId = useId();
+const manifest = ref<VersionsManifest | undefined>(undefined),
+	manifestError = ref(false),
+	open = ref(false),
+	root = ref<HTMLElement | undefined>(undefined),
+	buttonId = useId(),
+	menuId = useId();
 
 onMounted(async () => {
 	try {
@@ -83,8 +81,8 @@ function basePathFor(entry: VersionEntry): string {
 }
 
 function pathAfterBase(): string {
-	const baseAttr = site.value.base;
-	const currentPath = route.path;
+	const baseAttr = site.value.base,
+		currentPath = route.path;
 	return currentPath.startsWith(baseAttr)
 		? currentPath.slice(baseAttr.length)
 		: currentPath.replace(/^\//, "");
@@ -104,8 +102,8 @@ async function selectVersion(entry: VersionEntry): Promise<void> {
 	if (entry.id === currentVersion.value) {
 		return;
 	}
-	const targetBase = fromSiteRoot(basePathFor(entry));
-	const candidate = `${targetBase}${pathAfterBase()}`;
+	const targetBase = fromSiteRoot(basePathFor(entry)),
+		candidate = `${targetBase}${pathAfterBase()}`;
 	globalThis.location.href = await resolveTarget(targetBase, candidate);
 }
 

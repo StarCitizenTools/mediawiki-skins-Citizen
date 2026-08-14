@@ -29,29 +29,25 @@
 import { computed, ref } from "vue";
 import { extractContributors } from "../utils/contributors.ts";
 
-const { body } = defineProps<{ body: string }>();
+const { body } = defineProps<{ body: string }>(),
+	nonExistent = ref<Set<string>>(new Set()),
+	contributors = computed(() =>
+		extractContributors(body).filter((user) => !nonExistent.value.has(user)),
+	),
+	listFormatter = new Intl.ListFormat("en", {
+		style: "long",
+		type: "conjunction",
+	}),
+	contributorsText = computed(() => {
+		if (contributors.value.length <= 3) {
+			return listFormatter.format(contributors.value);
+		}
 
-const nonExistent = ref<Set<string>>(new Set());
-
-const contributors = computed(() =>
-	extractContributors(body).filter((user) => !nonExistent.value.has(user)),
-);
-
-const listFormatter = new Intl.ListFormat("en", {
-	style: "long",
-	type: "conjunction",
-});
-
-const contributorsText = computed(() => {
-	if (contributors.value.length <= 3) {
-		return listFormatter.format(contributors.value);
-	}
-
-	return listFormatter.format([
-		...contributors.value.slice(0, 2),
-		`${contributors.value.length - 2} other contributors`,
-	]);
-});
+		return listFormatter.format([
+			...contributors.value.slice(0, 2),
+			`${contributors.value.length - 2} other contributors`,
+		]);
+	});
 
 function addToNonExistent(user: string) {
 	if (!nonExistent.value.has(user)) {
